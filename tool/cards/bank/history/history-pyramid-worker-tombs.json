@@ -1,0 +1,37 @@
+{
+  "id": "history-pyramid-worker-tombs",
+  "topic": "history",
+  "genre": "history.ordinary_people",
+  "strand": "history.ordinary_people.workers",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "What do the workers' graves near the pyramids say about who they were?",
+  "answer": "Their tombs sit right beside the pyramids, carefully built and well preserved. Slaves would not have been given such honourable burials, so these workers' hard labour was rewarded. The graves show they were skilled workers, not slaves.",
+  "move": "Honourable graves point to skilled workers, not slaves.",
+  "keywords": [
+    "pyramids",
+    "tombs",
+    "workers",
+    "slavery",
+    "burials"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Multiple-choice card asking what the workers' graves near the pyramids say about who they were. Options: slaves dumped where they fell; skilled workers honoured in death; no graves left; skilled workers, not slaves. The reader picks one, then rates how sure they are."
+  },
+  "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=100s",
+  "written": "2026-11-03"
+}

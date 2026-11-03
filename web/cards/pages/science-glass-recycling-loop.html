@@ -1,0 +1,160 @@
+<!doctype html>
+<!-- slug: science-glass-recycling-loop -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#plotbox{flex:1;min-height:0;position:relative}
+#plot{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;display:block}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Draw it · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RECYCLING</span></div>
+    <h2 class="q">Why can glass be recycled almost forever?</h2>
+    <div class="stagebox" id="stage">
+      <div id="plotbox"><svg id="plot"></svg></div>
+      <div id="why" class="gone">
+        <p class="big">1 kg in, 1 kg out. Every time.</p>
+        <p class="body">Glass does not degrade when it melts. A kilogram of waste glass becomes a kilogram of new glass, so the yield is almost 100%, round after round.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Start with 1 kg of old glass. Drag right: how much is left after each melt?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Melting doesn't wear glass out, so the loop barely loses anything.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 8, MAXKG = 1.2;
+let guess = new Array(N + 1).fill(null); guess[0] = 1;
+let done = false, revealed = false, animateNext = false;
+let G = null; // geometry
+const svg = Kit.$('plot');
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const end = guess[N], ok = end >= 0.85;
+  const said = `About ${end.toFixed(1)} kg left after ${N} melts`;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why');
+  revealed = true; animateNext = !Kit.calm; draw();
+  sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'too low'}`);
+  Kit.show('keep'); Kit.haptic('success');
+});
+
+function X(i){ return G.L + i * (G.W - G.L - G.R) / N; }
+function Y(kg){ return G.T + (MAXKG - kg) / MAXKG * (G.H - G.T - G.B); }
+
+function draw(){
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .9, 12);
+  G = {W, H, f: fs, L: fs * 3.4, R: fs * 1.2, T: fs * 1.2, B: fs * 3.4};
+  svg.innerHTML = '';
+  const ink = 'var(--k)';
+  // grid
+  [0, .5, 1].forEach(kg => {
+    Kit.mk('line', {x1: G.L, x2: W - G.R, y1: Y(kg), y2: Y(kg), stroke: ink, 'stroke-opacity': kg === 0 ? .6 : .18, 'stroke-width': kg === 0 ? 2 : 1.2}, svg);
+    const t = Kit.mk('text', {x: G.L - fs * .5, y: Y(kg) + fs * .35, 'text-anchor': 'end', fill: ink, 'font-size': fs, 'font-family': 'var(--mono)', opacity: .75}, svg);
+    t.textContent = (kg === 0 ? '0' : kg) + ' kg';
+  });
+  for (let i = 0; i <= N; i++) {
+    const t = Kit.mk('text', {x: X(i), y: Y(0) + fs * 1.3, 'text-anchor': 'middle', fill: ink, 'font-size': fs, 'font-family': 'var(--mono)', opacity: .7}, svg);
+    t.textContent = i;
+  }
+  const xl = Kit.mk('text', {x: W - G.R, y: H - fs * .2, 'text-anchor': 'end', fill: ink, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, opacity: .8}, svg);
+  xl.textContent = 'melts →';
+  // start dot
+  Kit.mk('circle', {cx: X(0), cy: Y(1), r: fs * .45, fill: ink}, svg);
+  // guess
+  const pts = [];
+  for (let i = 0; i <= N; i++) if (guess[i] != null) pts.push([X(i), Y(guess[i])]);
+  if (pts.length > 1) {
+    Kit.mk('path', {d: 'M' + pts.map(p => p.join(',')).join('L'), fill: 'none', stroke: ink, 'stroke-width': fs * .28, 'stroke-dasharray': `${fs*.6} ${fs*.45}`, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: revealed ? .45 : .9}, svg);
+  }
+  if (!done && pts.length < 2) {
+    const h = Kit.mk('text', {x: X(0) + fs * .9, y: Y(1) - fs * .7, fill: ink, 'font-size': fs, 'font-family': 'var(--hand)', opacity: .8}, svg);
+    h.textContent = 'start: 1 kg → drag';
+  }
+  if (revealed) {
+    const real = Kit.mk('path', {d: `M${X(0)},${Y(1)}L${X(N)},${Y(.99)}`, fill: 'none', stroke: ink, 'stroke-width': fs * .45, 'stroke-linecap': 'round'}, svg);
+    const dots = [];
+    for (let i = 1; i <= N; i++) dots.push(Kit.mk('circle', {cx: X(i), cy: Y(1 - i * .00125), r: fs * .38, fill: 'var(--c)', stroke: ink, 'stroke-width': fs * .2}, svg));
+    // labels, kept apart
+    const yr = Y(1) - fs * .9;
+    let yg = Y(guess[N]) + (guess[N] >= 1 ? -fs * .9 : fs * 1.4);
+    if (Math.abs(yg - yr) < fs * 1.4) yg = yr + fs * 2.4;
+    yg = Math.min(yg, Y(0) - fs * .4);
+    const lr = Kit.mk('text', {x: X(N), y: yr, 'text-anchor': 'end', fill: ink, 'font-size': fs * 1.05, 'font-family': 'var(--body)', 'font-weight': 800}, svg);
+    lr.textContent = 'real: ≈1 kg every melt';
+    const lg = Kit.mk('text', {x: X(N), y: yg, 'text-anchor': 'end', fill: ink, 'font-size': fs, 'font-family': 'var(--hand)', opacity: .7}, svg);
+    lg.textContent = 'your guess';
+    if (animateNext) {
+      animateNext = false;
+      const len = real.getTotalLength();
+      gsap.fromTo(real, {attr: {'stroke-dasharray': len, 'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: 1.4, ease: 'power2.inOut'});
+      gsap.from(dots, {attr: {r: 0}, duration: .35, stagger: .15, delay: .2, ease: 'back.out(3)'});
+      gsap.from([lr, lg], {opacity: 0, duration: .5, delay: 1.3});
+    }
+  }
+}
+
+let drawing = false, lastI = 0;
+function at(e){
+  const r = svg.getBoundingClientRect();
+  const x = e.clientX - r.left, y = e.clientY - r.top;
+  const fi = (x - G.L) / (W_() ) * N;
+  const i = Math.max(1, Math.min(N, Math.round(fi)));
+  const kg = Math.max(0, Math.min(MAXKG, MAXKG - (y - G.T) / (G.H - G.T - G.B) * MAXKG));
+  return {i, kg};
+}
+function W_(){ return G.W - G.L - G.R; }
+function put(e){
+  const {i, kg} = at(e);
+  if (i > lastI + 1) { // fill the gap smoothly
+    const from = guess[lastI] ?? 1;
+    for (let j = lastI + 1; j < i; j++) guess[j] = from + (kg - from) * (j - lastI) / (i - lastI);
+  }
+  guess[i] = kg; if (i > lastI) lastI = i;
+  draw();
+}
+svg.addEventListener('pointerdown', e => {
+  if (done) return; drawing = true;
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  put(e);
+});
+svg.addEventListener('pointermove', e => { if (drawing && !done) put(e); });
+const up = () => {
+  if (!drawing || done) return; drawing = false;
+  if (lastI >= N - 1) {
+    for (let i = 1; i <= N; i++) if (guess[i] == null) guess[i] = guess[i - 1];
+    done = true; draw(); Kit.haptic('selection'); sure.on();
+    Kit.$('say').textContent = 'Got your curve. How sure are you?';
+  } else {
+    Kit.$('say').textContent = 'Keep going all the way to melt 8.';
+  }
+};
+svg.addEventListener('pointerup', up);
+svg.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#plot', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect();
+  const ev = (type, i, kg) => svg.dispatchEvent(new PointerEvent(type, {bubbles: true, pointerId: 1, clientX: r.left + X(i), clientY: r.top + Y(kg), buttons: 1}));
+  ev('pointerdown', 1, .85);
+  for (let i = 2; i <= N; i++) ev('pointermove', i, .85 * Math.pow(.85, i - 1));
+  ev('pointerup', N, .3);
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1900));
+};
+Kit.single();
+</script>
+</html>

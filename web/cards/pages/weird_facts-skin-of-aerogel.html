@@ -1,0 +1,191 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The skin of an ice cube</title>
+<!-- A 2.5 cm cube of silica aerogel at the common 0.1 g/cm³ weighs 1.6 g. Its glass skeleton (about
+     2 g/cm³) is 0.8 cm³: melted into one cube, 9.3 mm a side, 5.2 cm² of skin. Split into beads of size s,
+     the same glass has 6V/s of skin: beads about 4 nm across (aerogel's are 2-10 nm) give about 1,200 m².
+     Measured: 600-1,000 m² per gram (Akhter et al. 2021), about 1,000-1,600 m² for this block, four to six
+     tennis courts (260.8 m²). Cutting a piece in two adds a third more skin; pieces half as wide double it.
+     Inspired by Veritasium, "I Waterproofed Myself With Aerogel!" (2019). Touch: slide. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#nums{display:flex;justify-content:space-between;align-items:flex-end;gap:4cqw}
+#nums .h{display:block;font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.1em;opacity:.75;margin-bottom:.7cqh}
+#nums .n{display:block;font:800 max(4.6cqh,24px)/1 var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.015em;white-space:nowrap}
+#nums .r{text-align:right}
+#nums .r .n{font-size:max(3cqh,17px)}
+#field{flex:1;min-height:0;width:100%;display:block;border-radius:2.4cqh}
+#slide{display:flex;flex-direction:column;gap:.6cqh}
+#cut{height:max(4cqh,28px);touch-action:none;cursor:pointer}
+#slide .ends{display:flex;justify-content:space-between;font:700 max(1.5cqh,11.5px)/1 var(--body);opacity:.8}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){
+  .answered .in{gap:1.5cqh}
+  .answered #stage{gap:.8cqh}
+  .answered #nums .n{font-size:max(3.6cqh,19px)}
+  .answered #slide{display:none}
+  .answered .say .extra{display:none}
+}
+</style>
+<article class="card" id="card" data-topic="weird_facts" data-kind="Slide to split · the skin inside">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPLIT IT</span></div>
+    <h2 class="q">An ice-cube-sized block of aerogel weighs 1.6&nbsp;g. How much surface is inside it?</h2>
+    <div class="stagebox" id="stage">
+      <div id="nums">
+        <div><span class="h">ITS SKIN, LAID FLAT</span><span class="n" id="area">5 cm²</span></div>
+        <div class="r"><span class="h">PIECES</span><span class="n" id="bead">one 9 mm lump</span></div>
+      </div>
+      <canvas id="field" role="img" aria-label="A square as large as the glass's skin, with a sheet of paper, a car and a tennis court for scale."></canvas>
+      <div id="slide">
+        <input type="range" id="cut" min="0" max="1000" value="0" data-drag aria-label="Split the glass into finer beads">
+        <div class="ends"><span>one lump</span><span>aerogel’s beads</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Melted down, its glass would be a 9&nbsp;mm lump with the skin of a postage stamp. Aerogel is that glass split into beads. Slide to split it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Pieces half as wide, twice the skin: why crushed ice melts faster than cubes.</div>
+    <div class="foot"><span class="src">Source · Akhter et al., J. Porous Mater. 28, 1387 (2021); aerogel.org, “What is Aerogel?”</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const V = 0.8e-6;                       // m³ of glass: 1.6 g at about 2 g/cm³
+  const S0 = Math.cbrt(V), S1 = 3.9e-9;   // one lump, 9.3 mm a side; beads about 4 nm across
+  const COURT = [23.77, 10.97];           // a doubles tennis court, metres
+  const card = Kit.$('card'), cv = Kit.$('field'), cut = Kit.$('cut'), say = Kit.$('say');
+  let t = 0, done = false, x, W, H;
+  const size = tt => S0 * Math.pow(S1 / S0, tt), area = tt => 6 * V / size(tt);
+  // Two figures are all the model knows.
+  const sig2 = v => { const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
+  const fmtA = a => a < .1 ? sig2(a * 1e4).toLocaleString('en') + ' cm²' : a < 10 ? sig2(a).toFixed(1).replace(/\.0$/, '') + ' m²' : sig2(a).toLocaleString('en') + ' m²';
+  const fmtL = m => m >= 1 ? sig2(m).toLocaleString('en') + ' m' : m >= .01 ? sig2(m * 100).toLocaleString('en') + ' cm' : sig2(m * 1000).toFixed(1).replace(/\.0$/, '') + ' mm';
+  const fmtS = s => s >= 1e-3 ? (s * 1e3).toFixed(s >= 5e-3 ? 0 : 1).replace(/\.0$/, '') + ' mm' : s >= 1e-6 ? (s * 1e6).toFixed(s >= 1e-5 ? 0 : 1).replace(/\.0$/, '') + ' µm' : (s * 1e9).toFixed(0) + ' nm';
+
+  function fit() { ({x, W, H} = Kit.fitCanvas(cv)); }
+  function rr(px, py, w, h, r) { r = Math.min(r, w / 2, h / 2); x.beginPath(); x.moveTo(px + r, py); x.arcTo(px + w, py, px + w, py + h, r); x.arcTo(px + w, py + h, px, py + h, r); x.arcTo(px, py + h, px, py, r); x.arcTo(px, py, px + w, py, r); x.closePath(); }
+  function court(px, py, w, h, vertical) {
+    // A tennis court from above: green, its outline, the net, the service lines.
+    x.fillStyle = '#2C8F55'; x.fillRect(px, py, w, h);
+    const i = Math.min(w, h) * .07;
+    x.strokeStyle = 'rgba(255,255,255,.9)'; x.lineWidth = 1;
+    x.strokeRect(px + i, py + i, w - 2 * i, h - 2 * i);
+    x.beginPath();
+    if (vertical) { x.moveTo(px + i, py + h * .29); x.lineTo(px + w - i, py + h * .29); x.moveTo(px + i, py + h * .71); x.lineTo(px + w - i, py + h * .71); x.moveTo(px + w / 2, py + h * .29); x.lineTo(px + w / 2, py + h * .71); }
+    else { x.moveTo(px + w * .29, py + i); x.lineTo(px + w * .29, py + h - i); x.moveTo(px + w * .71, py + i); x.lineTo(px + w * .71, py + h - i); x.moveTo(px + w * .29, py + h / 2); x.lineTo(px + w * .71, py + h / 2); }
+    x.stroke();
+    // The net, darker and across the middle.
+    x.strokeStyle = 'rgba(16,16,12,.7)'; x.lineWidth = Math.max(1.4, Math.min(w, h) * .03);
+    x.beginPath(); if (vertical) { x.moveTo(px + i * .4, py + h / 2); x.lineTo(px + w - i * .4, py + h / 2); } else { x.moveTo(px + w / 2, py + i * .4); x.lineTo(px + w / 2, py + h - i * .4); } x.stroke();
+  }
+  function label(s, px, py, align, dark) {
+    const fs = Math.max(11.5, Math.min(13, H * .045));
+    x.font = `800 ${fs}px Figtree`; x.textAlign = align || 'left'; x.textBaseline = 'alphabetic';
+    if (dark) { x.fillStyle = '#10100c'; x.fillText(s, px, py); return; }
+    x.lineWidth = 3.5; x.strokeStyle = '#6a1f78'; x.lineJoin = 'round'; x.strokeText(s, px, py);
+    x.fillStyle = '#fff'; x.fillText(s, px, py);
+  }
+
+  function draw() {
+    if (!x) return;
+    const A = area(t), a = Math.sqrt(A), fs = Math.max(11.5, Math.min(13, H * .045));
+    x.clearRect(0, 0, W, H);
+    x.save(); rr(0, 0, W, H, Math.min(W, H) * .08); x.clip();
+    x.fillStyle = '#9b2bb3'; x.fillRect(0, 0, W, H);
+    // The skin as one sheet, the same size on screen while the world shrinks around it.
+    const top = fs * 1.9, Q = Math.max(30, Math.min(W - 24, H - top - 12)), k = Q / a;     // px per metre
+    const sx = (W - Q) / 2, sy = top + (H - top - 12 - Q) / 2 + 2;
+    x.fillStyle = 'rgba(255,255,255,.95)'; x.fillRect(sx, sy, Q, Q);
+    const stamp = Math.max(0, 1 - t / .06);
+    if (stamp > 0) {
+      // While the skin is stamp-sized, it wears a stamp's perforated edge.
+      const n = 14, r = Q / n / 2.6;
+      x.globalAlpha = stamp; x.fillStyle = '#9b2bb3';
+      for (let i = 0; i <= n; i++) { const p = i / n * Q; for (const [cx_, cy_] of [[sx + p, sy], [sx + p, sy + Q], [sx, sy + p], [sx + Q, sy + p]]) { x.beginPath(); x.arc(cx_, cy_, r, 0, 2 * Math.PI); x.fill(); } }
+      x.strokeStyle = 'rgba(155,43,179,.5)'; x.lineWidth = 1; x.setLineDash([3, 3]); x.strokeRect(sx + Q * .07, sy + Q * .07, Q * .86, Q * .86); x.setLineDash([]);
+      x.globalAlpha = 1;
+    }
+    const end = t >= .999;
+    x.strokeStyle = 'rgba(155,43,179,.22)'; x.lineWidth = 1;
+    if (!end) for (let i = 1; i < 4; i++) { x.beginPath(); x.moveTo(sx + Q * i / 4, sy); x.lineTo(sx + Q * i / 4, sy + Q); x.moveTo(sx, sy + Q * i / 4); x.lineTo(sx + Q, sy + Q * i / 4); x.stroke(); }
+    // Its side: on the sheet while the lump sits on it, above it afterwards (and at the end, what is drawn on it).
+    const lumpOn = S0 * k >= 5;
+    label((lumpOn ? 'its skin as one sheet · ' : '') + fmtL(a) + ' a side' + (t >= .999 ? ' · courts to scale' : ''), W / 2, sy - 7, 'center');
+    if (end) {
+      // The sheet, laid out with tennis courts to scale: three across, one more below.
+      const cw = COURT[1] * k, ch = COURT[0] * k, g = Math.max(1, Q * .006);
+      for (let i = 0; i < 3; i++) court(sx + g + i * (cw + g), sy + g, cw, ch, true);
+      court(sx + g, sy + 2 * g + ch, ch, cw, false);
+
+    } else {
+      // Something to scale, standing on the sheet's corner: a sheet of paper, a car, a tennis court.
+      const refs = [
+        {name: 'A4 page', w: .21, h: .297, draw: (px, py, w, h) => { x.fillStyle = '#fff'; x.fillRect(px, py, w, h); x.strokeStyle = 'rgba(16,16,12,.55)'; x.lineWidth = 1.2; x.strokeRect(px, py, w, h); x.fillStyle = 'rgba(16,16,12,.18)'; for (let l = 1; l < 6; l++) x.fillRect(px + w * .15, py + h * l / 6.5, w * .7, Math.max(1, h * .02)); }},
+        {name: 'a car', w: 1.8, h: 4.5, draw: (px, py, w, h) => { x.fillStyle = '#FFB000'; rr(px, py, w, h, w * .35); x.fill(); x.fillStyle = 'rgba(16,16,12,.5)'; rr(px + w * .14, py + h * .2, w * .72, h * .2, w * .12); x.fill(); rr(px + w * .14, py + h * .64, w * .72, h * .13, w * .12); x.fill(); }},
+        {name: 'a tennis court', w: COURT[1], h: COURT[0], draw: (px, py, w, h) => court(px, py, w, h, true)},
+      ];
+      // All the glass, melted into one lump, to scale on its own skin: soon only a speck.
+      const L = S0 * k;
+      if (L >= 5) {
+        const d = L * .38, lx = sx + Q * .5 - L * .5 - d * .3, ly = sy + Q * .52 - L * .5 + d * .3;
+        x.lineWidth = 1.2; x.lineJoin = 'round'; x.strokeStyle = 'rgba(16,40,70,.55)';
+        let gr = x.createLinearGradient(lx, ly - d, lx + L + d, ly);
+        gr.addColorStop(0, 'rgba(230,248,255,.92)'); gr.addColorStop(1, 'rgba(170,222,250,.92)');
+        x.fillStyle = gr; x.beginPath(); x.moveTo(lx, ly); x.lineTo(lx + d, ly - d); x.lineTo(lx + L + d, ly - d); x.lineTo(lx + L, ly); x.closePath(); x.fill(); x.stroke();
+        gr = x.createLinearGradient(lx + L, 0, lx + L + d, 0);
+        gr.addColorStop(0, 'rgba(110,180,230,.9)'); gr.addColorStop(1, 'rgba(70,140,205,.9)');
+        x.fillStyle = gr; x.beginPath(); x.moveTo(lx + L, ly); x.lineTo(lx + L + d, ly - d); x.lineTo(lx + L + d, ly + L - d); x.lineTo(lx + L, ly + L); x.closePath(); x.fill(); x.stroke();
+        gr = x.createLinearGradient(lx, ly, lx + L, ly + L);
+        gr.addColorStop(0, 'rgba(205,238,255,.9)'); gr.addColorStop(.55, 'rgba(150,210,245,.88)'); gr.addColorStop(1, 'rgba(120,190,235,.9)');
+        x.fillStyle = gr; x.fillRect(lx, ly, L, L); x.strokeRect(lx, ly, L, L);
+        // Light on glass: a bright streak and a glint.
+        x.save(); x.beginPath(); x.rect(lx, ly, L, L); x.clip();
+        x.fillStyle = 'rgba(255,255,255,.55)';
+        x.beginPath(); x.moveTo(lx + L * .12, ly + L); x.lineTo(lx + L * .32, ly + L); x.lineTo(lx + L * .62, ly); x.lineTo(lx + L * .42, ly); x.closePath(); x.fill();
+        x.restore();
+        x.fillStyle = 'rgba(255,255,255,.95)'; x.beginPath(); x.arc(lx + L + d * .55, ly - d * .55, Math.max(1.5, L * .03), 0, 2 * Math.PI); x.fill();
+        if (L >= 26) label(L >= 70 ? 'all its glass: 9 mm' : '9 mm', lx + L / 2, ly + L + fs * 1.3, 'center', true);
+      }
+      let pick = null;
+      for (const r of refs) { const w = r.w * k, h = r.h * k; if (h <= Q * .72 && h >= 16) pick = {r, w, h}; }
+      if (pick) {
+        const {r, w, h} = pick, pad = Math.max(8, Q * .06), px = sx + pad, py = sy + Q - pad - h;
+        r.draw(px, py, w, h);
+        label(r.name, px + w + 8, sy + Q - pad - 2, 'left', true);
+      }
+    }
+    x.restore();
+  }
+
+  function update(v) {
+    t = v / 1000;
+    const A = area(t), s = size(t);
+    Kit.$('area').textContent = fmtA(A);
+    Kit.$('bead').textContent = t < .002 ? 'one 9 mm lump' : 'beads ' + fmtS(s);
+    draw();
+    if (t >= .999 && !done) finish();
+  }
+  function finish() {
+    done = true;
+    say.innerHTML = `Real aerogel measures <b>600 to 1,000&nbsp;m² per gram</b>: about 1,000 to 1,600&nbsp;m² in this block, four to six tennis courts.<span class="extra"> Its beads are only 2 to 10&nbsp;nm across.</span>`;
+    card.classList.add('answered');
+    Kit.show('keep');
+    Kit.haptic('success');
+  }
+  cut.addEventListener('input', () => { update(+cut.value); });
+  cut.addEventListener('change', () => Kit.haptic('light'));
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { fit(); draw(); }).observe(cv);
+  Kit.onShow.card = () => { fit(); update(+cut.value); };
+  Kit.play.card = async () => {
+    const run = v => { cut.value = v; update(v); };
+    if (Kit.calm || typeof gsap === 'undefined') { run(1000); return; }
+    await new Promise(res => gsap.to({v: +cut.value}, {v: 1000, duration: 1.6, ease: 'power1.inOut', onUpdate() { run(Math.round(this.targets()[0].v)); }, onComplete: res}));
+    run(1000);
+    await new Promise(r => setTimeout(r, 300));
+  };
+})();
+Kit.single();
+</script>
+</html>

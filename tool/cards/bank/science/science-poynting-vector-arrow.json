@@ -1,0 +1,37 @@
+{
+  "id": "science-poynting-vector-arrow",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the simple expression for electromagnetic energy flux?",
+  "answer": "The energy flux is S = (1/μ₀) E × B: the cross product of the electric and magnetic fields, times 1 over μ₀, the permeability of free space. S always points at right angles to both E and B. Turning B changes where the energy flows, and flipping E reverses it.",
+  "move": "Energy flows along S = (1/μ₀) E × B, square to both fields.",
+  "keywords": [
+    "poynting vector",
+    "electric field",
+    "magnetic field",
+    "energy flux",
+    "electromagnetism"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A ring with an arrow for magnetic field B, which can be dragged around the ring, and an arrow for electric field E, which flips when tapped. The page asks for the simple expression for electromagnetic energy flux, S = (1/μ₀) E × B."
+  },
+  "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=279s",
+  "written": "2026-11-03"
+}

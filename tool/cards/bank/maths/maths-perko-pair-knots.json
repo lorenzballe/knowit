@@ -1,0 +1,38 @@
+{
+  "id": "maths-perko-pair-knots",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What error in the knot tables did a lawyer spot in 1973?",
+  "answer": "In 1973 Kenneth Perko, a lawyer, spotted that two knots listed as different in the tables were the same knot. He sketched Reidemeister moves on a yellow legal pad to turn one drawing into the other. The pair had sat side by side for over 75 years, and the count dropped from 166 to 165.",
+  "move": "Two drawings that look different can be the very same knot.",
+  "keywords": [
+    "perko pair",
+    "knot tables",
+    "kenneth perko",
+    "reidemeister moves",
+    "knot theory"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two knot diagrams, knot A and knot B, shown side by side as the Perko pair. The reader picks one, then watches knot B move, turning one drawing into the other to show they are the same knot.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=1296s",
+  "written": "2026-11-03"
+}

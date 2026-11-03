@@ -1,0 +1,38 @@
+{
+  "id": "technology-weakest-floor-thirty",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Which floor held this skyscraper’s weakest structural joints?",
+  "answer": "The weakest structural joints were on the 30th floor. LeMessurier went back to the wind-tunnel data and checked every joint on every floor, one by one. If the 30th-floor joints had given way, the entire building would have fallen.",
+  "move": "A tower is only as strong as its weakest joint, and you find it by checking every one.",
+  "keywords": [
+    "lemessurier",
+    "skyscraper",
+    "structural joints",
+    "wind tunnel",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tall skyscraper drawn as a vertical tower of floors. The reader slides a finger up the tower and stops on the floor they think held the building's weakest structural joints. The question asks which floor that was. The text reveals the answer is the 30th floor.",
+    "graded": false
+  },
+  "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=1107s",
+  "written": "2026-11-03"
+}

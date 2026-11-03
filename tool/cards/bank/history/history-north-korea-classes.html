@@ -1,0 +1,127 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-north-korea-classes -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pw{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+#info,#why{min-height:12cqh;display:flex;flex-direction:column;justify-content:center;gap:.8cqh}
+#info .body,#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+.lay polygon{fill:color-mix(in srgb,var(--k) 9%,transparent);stroke:var(--k);stroke-width:2;cursor:pointer;transition:fill .45s}
+.lay text{fill:var(--k);font-family:var(--body);font-weight:800;pointer-events:none;text-anchor:middle;dominant-baseline:middle}
+.lay.on polygon{fill:color-mix(in srgb,var(--k) 32%,transparent)}
+.lay.on.e polygon{fill:var(--k)}
+.lay.on.e text{fill:var(--c)}
+.lay .sub{font-weight:600}
+.dot{fill:none;stroke:color-mix(in srgb,var(--k) 45%,transparent);stroke-width:1.5;transition:fill .4s,stroke .4s}
+.dot.e{fill:var(--k);stroke:var(--k)}
+.dot.l{fill:color-mix(in srgb,var(--k) 32%,transparent);stroke:var(--k)}
+.cap{fill:var(--muted);font-family:var(--body);font-weight:600;text-anchor:middle}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap to uncover">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NORTH KOREA</span></div>
+    <h2 class="q">How does North Korea classify its 25 million citizens?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pw"><svg id="pic"></svg></div>
+      <div id="info"><p class="body">A state ranking sorts every citizen into one of these layers. Tap each one.</p></div>
+      <div id="why" class="gone"><p class="big">Three classes, one ranking</p><p class="body">The state runs a “sociopolitical classification” that puts all 25 million citizens in three classes. One in five, about 5 million, is elite. The other four in five are split between two lower tiers.</p></div>
+    </div>
+    <p class="say" id="say">Tap each layer of the pyramid to see who is in it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One state ranking, three classes: only 1 North Korean in 5 is elite.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const seen = new Set();
+const TXT = [
+  '<b>Elite · 20%.</b> About 5 million of the 25 million people: the top class of the state’s ranking.',
+  '<b>Second tier.</b> With the bottom tier it shares the other 80%, about 20 million people.',
+  '<b>Third tier.</b> The lowest rank of the same state-run classification, inside that 80%.'
+];
+const NAMES = [['ELITE','20%'],['TIER 2','part of 80%'],['TIER 3','part of 80%']];
+const svg = Kit.$('pic');
+let done = false;
+
+function paint(){
+  svg.querySelectorAll('.lay').forEach(g => {
+    const i = +g.dataset.i, on = seen.has(i);
+    g.classList.toggle('on', on);
+    const t = g.querySelectorAll('text');
+    t[0].textContent = on ? NAMES[i][0] : '?';
+    t[1].textContent = on ? NAMES[i][1] : '';
+  });
+  svg.querySelectorAll('.dot').forEach(d => {
+    const j = +d.dataset.j;
+    d.classList.toggle('e', j < 5 && seen.has(0));
+    d.classList.toggle('l', j >= 5 && (seen.has(1) || seen.has(2)));
+  });
+}
+
+Kit.onShow.card = () => {
+  const {W,H,f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13), cs = Math.max(f*.8, 12);
+  const r = Math.max(3, Math.min(W*.9/25/2*.72, H*.025));
+  const capY = H - cs*.6;
+  const rowY = capY - cs*1.4 - r;
+  const top = 4, bot = rowY - r - fs*1.1;
+  const ph = bot - top, bw = Math.min(W*.94, ph*1.3), cx = W/2;
+  const T = [0, Math.sqrt(.2), (1+Math.sqrt(.2))/2, 1];
+  const P = t => [bw/2*t, top + ph*t];
+  for (let i = 0; i < 3; i++){
+    const g = Kit.mk('g', {class: 'lay' + (i === 0 ? ' e' : ''), 'data-i': i}, svg);
+    const [a, ya] = P(T[i]), [b, yb] = P(T[i+1]);
+    const pts = i === 0 ? `${cx},${ya} ${cx+b},${yb} ${cx-b},${yb}`
+      : `${cx-a},${ya} ${cx+a},${ya} ${cx+b},${yb} ${cx-b},${yb}`;
+    Kit.mk('polygon', {points: pts}, g);
+    const yc = i === 0 ? top + ph*T[1]*.66 : (ya + yb)/2;
+    const t1 = Kit.mk('text', {x: cx, y: yc - fs*.7, 'font-size': fs*1.05}, g);
+    const t2 = Kit.mk('text', {x: cx, y: yc + fs*.75, 'font-size': i === 0 ? fs*1.25 : cs, class: 'sub'}, g);
+    if (i === 0){ t1.setAttribute('y', yc - fs*.8); t2.setAttribute('y', yc + fs*.7); }
+  }
+  const span = W*.9, x0 = cx - span/2, step = span/24;
+  for (let j = 0; j < 25; j++) Kit.mk('circle', {class: 'dot', 'data-j': j, cx: x0 + j*step, cy: rowY, r}, svg);
+  const cap = Kit.mk('text', {class: 'cap', x: cx, y: capY, 'font-size': cs}, svg);
+  cap.textContent = 'Each dot = 1 million people · 25 million in all';
+  paint();
+};
+
+svg.addEventListener('click', e => {
+  const g = e.target.closest('.lay'); if (!g || done) return;
+  const i = +g.dataset.i;
+  const fresh = !seen.has(i);
+  seen.add(i); paint(); Kit.haptic('selection');
+  Kit.$('info').innerHTML = `<p class="body">${TXT[i]}</p>`;
+  if (!Kit.calm){
+    gsap.fromTo(g.querySelectorAll('text'), {opacity: 0, scale: .6, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .45, ease: 'back.out(2)'});
+    const sel = i === 0 ? '.dot.e' : '.dot.l';
+    if (fresh) gsap.fromTo(svg.querySelectorAll(sel), {scale: 0, transformOrigin: '50% 50%'}, {scale: 1, duration: .35, stagger: .02, ease: 'back.out(2)'});
+  }
+  if (seen.size === 3){
+    done = true;
+    setTimeout(() => {
+      Kit.hide('info'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+    }, 900);
+  }
+});
+
+Kit.onEnter.card = () => {
+  if (!Kit.calm) gsap.from('#pic .lay', {opacity: 0, y: 14, stagger: .12, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  for (const i of [0, 1, 2]){
+    svg.querySelector(`.lay[data-i="${i}"] polygon`).dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await new Promise(r => setTimeout(r, 250));
+  }
+  await new Promise(r => setTimeout(r, 1500));
+};
+Kit.single();
+</script>
+</html>

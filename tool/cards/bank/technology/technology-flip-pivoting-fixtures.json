@@ -1,0 +1,37 @@
+{
+  "id": "technology-flip-pivoting-fixtures",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On a ship that flips upright, how does the toilet still work?",
+  "answer": "On the FLIP, fridges, stoves, pantries and even toilets were mounted on pivots. As the ship swung from horizontal to vertical, each one turned on its pin and stayed upright. The furniture turns back when the whole room turns 90°.",
+  "move": "When the whole room turns 90°, the furniture turns back.",
+  "keywords": [
+    "flip ship",
+    "toilet",
+    "pivots",
+    "ship interiors",
+    "upright"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled FLIP SHIP asks how a toilet still works on a ship that flips upright. Readers can drag to tip the ship upright, then lock the pivots and try again."
+  },
+  "source": "Geopop, “Come funziona la manovra della FLIP, la \"nave\" che si immergeva in verticale sul mare” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=zAFFxBWjct0&t=140s",
+  "written": "2026-11-03"
+}

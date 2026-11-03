@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-patterson-clean-lab -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#lab{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation}
+#meter{font:700 max(1.9cqh,13px)/1.25 var(--mono);color:var(--k);text-align:center;overflow-wrap:anywhere}
+#meter b{font-size:1.25em}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.hit{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to fix · cleanroom">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CLEANROOM</span></div>
+    <h2 class="q">How did Clair Patterson keep lead off his samples at Caltech?</h2>
+    <div class="stagebox" id="stage">
+      <div id="meter">Lead specks on the zircon: <b id="cnt">0</b> · sources left: <b id="left">4</b></div>
+      <svg id="lab" role="img" aria-label="A lab where lead specks drift onto a zircon sample"></svg>
+    </div>
+    <p class="say" id="say">Lead keeps landing on his zircon. Tap each source to shut it off.</p>
+    <div id="why" class="gone"><p class="body">Lead was everywhere: in the wiring's solder, in dust, in air, on people. Specks of it on his zircon spoiled their age. So in 1952 at Caltech he built a lab from scratch to keep it out, and basically invented the cleanroom.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>To measure a trace of something, first remove it from everywhere else.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const fixed = [0,0,0,0];
+const OFF = ['Wall wiring','Outside air','Dust','People'];
+const ON = ['Cables torn out','Air blown out','Ammonia, daily','Bunny suit'];
+let count = 0, done = false, loop = null, G = null, pp = null, zirc = null, started = false;
+const INK = 'var(--k)', LEAD = '#4a4f5c';
+
+function left(){ return fixed.filter(v => !v).length; }
+function meter(){
+  Kit.$('cnt').textContent = count; Kit.$('left').textContent = left();
+  if (done) Kit.$('meter').innerHTML = 'Lead sources left: <b>0</b> · the zircon stays clean';
+}
+
+function draw(){
+  const svg = Kit.$('lab');
+  if (loop) { loop.kill(); loop = null; }
+  gsap.killTweensOf('#lab *');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .9);
+  const m = (t, a, p) => Kit.mk(t, a, p || svg);
+  const floorY = H * .84, px = W * .8, ph = H * .36;
+  const s = {x: W * .44, y: H * .6};
+  G = {W, H, floorY, px, ph, s};
+  // room
+  m('rect', {x: W*.03, y: H*.03, width: W*.94, height: H*.95, rx: Math.min(W,H)*.03, fill: 'color-mix(in srgb,var(--k) 5%,transparent)', stroke: INK, 'stroke-width': 2});
+  m('line', {x1: W*.03, x2: W*.97, y1: floorY, y2: floorY, stroke: INK, 'stroke-width': 2});
+  // bench
+  const bx0 = W*.24, bx1 = W*.64, by = H*.64;
+  m('rect', {x: bx0, y: by, width: bx1-bx0, height: H*.025, fill: INK, rx: 2});
+  m('line', {x1: bx0+W*.03, x2: bx0+W*.03, y1: by, y2: floorY, stroke: INK, 'stroke-width': 3});
+  m('line', {x1: bx1-W*.03, x2: bx1-W*.03, y1: by, y2: floorY, stroke: INK, 'stroke-width': 3});
+  // zircon crystal
+  const r = Math.min(W, H) * .045;
+  zirc = m('polygon', {points: `${s.x},${by-r*2.2} ${s.x+r*.7},${by-r*1.4} ${s.x+r*.7},${by-r*.5} ${s.x},${by} ${s.x-r*.7},${by-r*.5} ${s.x-r*.7},${by-r*1.4}`, fill: done ? '#f4c26b' : '#e39a54', stroke: INK, 'stroke-width': 1.5});
+  s.y = by - r * 1.2;
+  if (done) {
+    const glow = m('circle', {cx: s.x, cy: s.y, r: r*2.4, fill: 'none', stroke: '#f4c26b', 'stroke-width': 3});
+    if (!Kit.calm) gsap.fromTo(glow, {attr: {r: r*1.2}, opacity: 1}, {attr: {r: r*3}, opacity: 0, duration: 1.6, repeat: -1});
+  }
+  m('text', {x: s.x, y: by + H*.07, 'text-anchor': 'middle', fill: INK, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}).textContent = 'zircon';
+
+  // 0 wall wiring
+  const cx = W * .1;
+  if (!fixed[0]) {
+    m('path', {d: `M${cx},${H*.05} L${cx},${H*.78}`, stroke: INK, 'stroke-width': 3, fill: 'none'});
+    for (let i = 0; i < 5; i++) m('circle', {cx, cy: H*(.18 + i*.13), r: Math.max(4, W*.013), fill: LEAD, stroke: INK, 'stroke-width': 1});
+  } else {
+    m('path', {d: `M${cx},${H*.05} L${cx},${H*.78}`, stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '4 6', opacity: .35, fill: 'none'});
+  }
+  // 1 air vent
+  const vx = W * .97, vy0 = H * .1, vy1 = H * .26;
+  m('rect', {x: vx - W*.025, y: vy0, width: W*.025, height: vy1 - vy0, fill: INK});
+  for (let i = 0; i < 3; i++) {
+    const y = vy0 + (vy1 - vy0) * (i + .5) / 3, a = vx - W*.04, b = vx - W*.15;
+    const tip = fixed[1] ? a : b, tail = fixed[1] ? b : a, dir = fixed[1] ? 1 : -1;
+    const ar = m('path', {d: `M${tail},${y} L${tip},${y} M${tip},${y} l${-dir*7},-5 M${tip},${y} l${-dir*7},5`, stroke: fixed[1] ? '#2f8f5b' : LEAD, 'stroke-width': 2.5, fill: 'none', 'stroke-linecap': 'round'});
+    if (!Kit.calm) gsap.fromTo(ar, {x: dir * -6}, {x: dir * 6, duration: .8, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  }
+  // 2 dust
+  if (!fixed[2]) {
+    for (let i = 0; i < 22; i++) {
+      const onBench = i < 7;
+      m('circle', {cx: onBench ? bx0 + (bx1-bx0)*Kit.rnd() : W*(.06 + .58*Kit.rnd()), cy: onBench ? by - 2 : floorY + 3 + H*.04*Kit.rnd(), r: 2 + 2*Kit.rnd(), fill: LEAD, opacity: .8});
+    }
+  } else {
+    for (let i = 0; i < 4; i++) {
+      const x = W*(.1 + .14*i), y = floorY + H*.03;
+      m('path', {d: `M${x-5},${y} L${x+5},${y} M${x},${y-5} L${x},${y+5}`, stroke: '#2f8f5b', 'stroke-width': 2});
+    }
+  }
+  // 3 person
+  const feet = floorY, head = feet - ph, hr = ph * .1;
+  if (!fixed[3]) {
+    m('circle', {cx: px, cy: head + hr, r: hr, fill: '#e8c4a0', stroke: INK, 'stroke-width': 2});
+    m('path', {d: `M${px-ph*.13},${head+hr*2.3} L${px+ph*.13},${head+hr*2.3} L${px+ph*.11},${feet-ph*.42} L${px-ph*.11},${feet-ph*.42}Z`, fill: '#7a6a8f', stroke: INK, 'stroke-width': 2});
+    m('path', {d: `M${px-ph*.07},${feet-ph*.42} L${px-ph*.08},${feet} M${px+ph*.07},${feet-ph*.42} L${px+ph*.08},${feet}`, stroke: INK, 'stroke-width': 4, 'stroke-linecap': 'round'});
+  } else {
+    m('rect', {x: px - ph*.16, y: head, width: ph*.32, height: ph, rx: ph*.14, fill: '#fff', stroke: INK, 'stroke-width': 2});
+    m('rect', {x: px - ph*.09, y: head + hr*.8, width: ph*.18, height: hr*1.1, rx: hr*.4, fill: '#9fd3f0', stroke: INK, 'stroke-width': 1.5});
+    m('line', {x1: px, x2: px, y1: feet - ph*.4, y2: feet, stroke: INK, 'stroke-width': 1.5});
+  }
+
+  // labels
+  const lab = (i, x, y, anchor) => {
+    const t = m('text', {x, y, 'text-anchor': anchor, fill: fixed[i] ? '#2f8f5b' : INK, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800});
+    t.textContent = (fixed[i] ? '✓ ' : '') + (fixed[i] ? ON[i] : OFF[i]);
+    return t;
+  };
+  lab(0, W*.13, H*.1, 'start');
+  lab(1, W*.92, Math.min(H*.33, head - fs*2.1), 'end');
+  lab(2, W*.06, H*.95, 'start');
+  lab(3, Math.min(px, W*.95 - fs*3.5), head - fs*.6, 'middle');
+
+  // tap rings
+  const ringAt = [[cx, H*.44], [W*.88, H*.18], [W*.34, floorY + H*.03], [px, head + ph*.45]];
+  ringAt.forEach(([x, y], i) => {
+    if (fixed[i] || done) return;
+    const c = m('circle', {cx: x, cy: y, r: Math.min(W,H)*.05, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '4 4'});
+    if (!Kit.calm) gsap.fromTo(c, {opacity: .9, scale: .8, transformOrigin: '50% 50%'}, {opacity: .2, scale: 1.2, duration: 1, repeat: -1, yoyo: true});
+  });
+
+  pp = m('g', {});
+  // hit areas (person on top of floor)
+  const hits = [
+    [0, W*.03, H*.03, W*.2, floorY - H*.03],
+    [2, W*.03, floorY - H*.06, W*.6, H*.97 - floorY + H*.06],
+    [1, W*.66, H*.03, W*.31, H*.32],
+    [3, px - ph*.3, head - fs*1.6, ph*.6, ph + fs*1.6]
+  ];
+  hits.forEach(([i, x, y, w, h]) => {
+    const rc = m('rect', {x, y, width: w, height: h, fill: 'transparent', class: 'hit', 'data-h': i, 'pointer-events': 'all'});
+    rc.addEventListener('click', () => fix(i));
+  });
+
+  if (started && !done) run();
+}
+
+function origin(i){
+  const {W, H, floorY, px, ph} = G;
+  if (i === 0) return [W*.1, H*(.15 + .6*Kit.rnd())];
+  if (i === 1) return [W*.92, H*(.12 + .13*Kit.rnd())];
+  if (i === 2) return [W*(.08 + .5*Kit.rnd()), floorY + 4];
+  return [px + (Kit.rnd()-.5)*ph*.25, floorY - ph*(.2 + .6*Kit.rnd())];
+}
+
+function spawn(){
+  const act = [0,1,2,3].filter(i => !fixed[i]);
+  if (!act.length || done) return;
+  const i = act[Math.floor(Kit.rnd() * act.length)];
+  if (Kit.calm) { count++; meter(); return; }
+  const [x, y] = origin(i), {s, W, H} = G;
+  const p = Kit.mk('circle', {cx: x, cy: y, r: Math.max(2.5, Math.min(W,H)*.009), fill: LEAD, 'data-s': i}, pp);
+  const mx = (x + s.x)/2 + (Kit.rnd()-.5)*W*.2, my = Math.min(y, s.y) - H*(.05 + .15*Kit.rnd());
+  const o = {t: 0};
+  gsap.to(o, {t: 1, duration: 1.6 + Kit.rnd(), ease: 'sine.in', onUpdate(){
+    const t = o.t, u = 1 - t;
+    p.setAttribute('cx', u*u*x + 2*u*t*mx + t*t*(s.x + (Kit.rnd()-.5)*4));
+    p.setAttribute('cy', u*u*y + 2*u*t*my + t*t*s.y);
+  }, onComplete(){
+    p.remove(); if (fixed[i] || done) return;
+    count++; meter();
+    if (zirc) gsap.fromTo(zirc, {opacity: .55}, {opacity: 1, duration: .3});
+  }});
+  p._tw = o;
+}
+
+function run(){
+  if (loop) loop.kill();
+  const tick = () => { spawn(); loop = gsap.delayedCall(Kit.calm ? .6 : .22, tick); };
+  tick();
+}
+
+function fix(i){
+  if (fixed[i] || done) return;
+  fixed[i] = 1; Kit.haptic('light');
+  if (pp) pp.querySelectorAll(`[data-s="${i}"]`).forEach(p => { gsap.killTweensOf(p._tw); p.remove(); });
+  meter();
+  if (!left()) {
+    done = true;
+    if (loop) loop.kill();
+    gsap.delayedCall(.5, () => {
+      count = 0; meter();
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      Kit.haptic('success');
+      requestAnimationFrame(() => { draw(); if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .12, duration: .45}); });
+    });
+  }
+  draw();
+}
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  started = true;
+  if (!done) run();
+  if (!Kit.calm) gsap.from('#lab', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  started = true; if (!done && !loop) run();
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  await w(600);
+  for (const i of [0,1,2,3]) { const h = document.querySelector(`#lab [data-h="${i}"]`); if (h) h.dispatchEvent(new MouseEvent('click', {bubbles: true})); await w(250); }
+  await w(1200);
+};
+Kit.single();
+</script>
+</html>

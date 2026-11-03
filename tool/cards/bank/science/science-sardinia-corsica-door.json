@@ -1,0 +1,37 @@
+{
+  "id": "science-sardinia-corsica-door",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Sardinia and Corsica swung east like a door. What did that push build?",
+  "answer": "Between 25 and 10 million years ago, the Sardinia and Corsica block broke from France and pivoted east. Its push crumpled the crust in front of it, and the Apennines began to rise.",
+  "move": "Swing the door east, crumple the crust: Italy’s spine is born.",
+  "keywords": [
+    "sardinia",
+    "corsica",
+    "apennines",
+    "italy",
+    "france"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A diagram of Sardinia and Corsica as a block beside France. Drag Sardinia's tip east to swing the block off France, then the page asks what that push built."
+  },
+  "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=DTOssDc8keo&t=1398s",
+  "written": "2026-11-03"
+}

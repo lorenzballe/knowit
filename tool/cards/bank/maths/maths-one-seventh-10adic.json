@@ -1,0 +1,37 @@
+{
+  "id": "maths-one-seventh-10adic",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can the endless number …857142857143 be 1/7?",
+  "answer": "The endless number ...857142857143 is multiplied by 7, digit by digit from the right. Each step writes a 0 and sends a carry to the left, and the carries never run out, so every digit is 0 except the last, which is 1. Seven times this number is exactly 1, which is what 1/7 means.",
+  "move": "In the 10-adics, a number is 1/7 if 7 times it equals 1.",
+  "keywords": [
+    "10-adics",
+    "1/7",
+    "repeating digits",
+    "carries",
+    "veritasium"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled 'Astute free card: 10-adic numbers' asks how the endless number ...857142857143 can be 1/7. It shows multiplying that number by 7 digit by digit from the right, with each carry sent left, and a tap control to multiply one digit at a time."
+  },
+  "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=tRaq4aYPzCc&t=144s",
+  "written": "2026-11-03"
+}

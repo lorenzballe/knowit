@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-slinky-compression-wave -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;cursor:pointer}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLINKY DROP</span></div>
+    <h2 class="q">Drop a hanging slinky. What type of wave tells the bottom to fall?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A slinky hanging from a hand"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">A sideways wave, like a shaken rope</button>
+        <button class="opt" data-i="1">A compressional wave: coils squeezing together</button>
+        <button class="opt" data-i="2">No wave: the whole slinky falls at once</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">A compressional wave</p>
+        <p class="body">Letting go is news, and it has to travel down the slinky as a squeeze, coil bumping into coil. The bottom hangs still until that squeeze reaches it. Only then does it start to fall.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick an answer, then watch the slinky drop.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The bottom can't know you let go until the compression wave arrives.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Slinky Drop Answer” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, done = false, tl = null;
+const st = {t: 0};
+const N = 22;
+let G = null; // geometry + elements
+
+function draw() {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, H * 0.055));
+  const cx = W * 0.40;
+  const rx = Math.max(18, Math.min(W * 0.14, H * 0.11));
+  const ry = rx * 0.24;
+  const y0 = H * 0.12 + ry;
+  const L = H * 0.66;
+  const d = Math.max(2, ry * 0.45);
+  const hand = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: cx - rx * 0.7, y: y0 - ry - H * 0.07, width: rx * 1.4, height: H * 0.06, rx: H * 0.02, fill: 'var(--k)'}, hand);
+  const handTxt = Kit.mk('text', {x: cx + rx * 0.85, y: y0 - ry - H * 0.04, 'font-size': fs, 'dominant-baseline': 'middle'}, hand);
+  handTxt.textContent = 'hand';
+  const coils = [];
+  for (let i = 0; i < N; i++) {
+    coils.push(Kit.mk('ellipse', {cx, cy: y0, rx, ry, fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(1.6, ry * 0.32)}, svg));
+  }
+  // wave arrow on the right
+  const ax = cx + rx + Math.max(8, W * 0.03);
+  const arrow = Kit.mk('g', {opacity: 0}, svg);
+  const aLen = Math.max(24, H * 0.09);
+  Kit.mk('line', {x1: ax + 6, y1: -aLen, x2: ax + 6, y2: -8, stroke: 'var(--k)', 'stroke-width': 3, 'stroke-linecap': 'round'}, arrow);
+  Kit.mk('path', {d: `M${ax - 2},-12 L${ax + 14},-12 L${ax + 6},2 Z`, fill: 'var(--k)'}, arrow);
+  const at = Kit.mk('text', {x: ax + 20, y: -aLen * 0.5 - fs * 0.6, 'font-size': fs}, arrow);
+  const t1 = Kit.mk('tspan', {x: ax + 20}, at); t1.textContent = 'compression';
+  const t2 = Kit.mk('tspan', {x: ax + 20, dy: fs * 1.3}, at); t2.textContent = 'wave';
+  // bottom label on the left
+  const lx = cx - rx - Math.max(8, W * 0.03);
+  const bot = Kit.mk('text', {x: lx, y: 0, 'font-size': fs, 'text-anchor': 'end'}, svg);
+  const b1 = Kit.mk('tspan', {x: lx}, bot);
+  const b2 = Kit.mk('tspan', {x: lx, dy: fs * 1.3}, bot);
+  G = {W, H, cx, rx, ry, y0, L, d, hand, coils, arrow, bot, b1, b2, fs};
+  render();
+}
+
+const yHang = s => G.y0 + G.L * (2 * s - s * s);
+
+function render() {
+  if (!G) return;
+  const t = st.t, sf = Math.min(1, t);
+  const drop = t > 1 ? Math.min(G.H * 0.1, G.H * 0.1 * ((t - 1) / 0.4) ** 2) : 0;
+  const yf = yHang(sf);
+  G.coils.forEach((c, i) => {
+    const s = i / (N - 1);
+    let y, bunched = false;
+    if (t > 0 && s <= sf) {
+      const k = Math.round((sf - s) * (N - 1));
+      y = Math.max(yHang(s), yf - k * G.d) + drop;
+      bunched = true;
+    } else y = yHang(s);
+    c.setAttribute('cy', y);
+    c.setAttribute('opacity', bunched ? 1 : 0.55);
+  });
+  G.hand.setAttribute('transform', `translate(0,${-Math.min(1, t * 4) * G.H * 0.03})`);
+  G.hand.setAttribute('opacity', t > 0 ? 0.35 : 1);
+  G.arrow.setAttribute('opacity', t > 0.02 && t < 1.05 ? 1 : 0);
+  G.arrow.setAttribute('transform', `translate(0,${yf - G.ry})`);
+  const yb = yHang(1) + drop;
+  G.bot.setAttribute('y', yb - G.fs * 0.3);
+  if (t < 0.98) { G.b1.textContent = t > 0 ? 'bottom:' : 'bottom'; G.b2.textContent = t > 0 ? 'still waiting' : 'end'; }
+  else { G.b1.textContent = 'news arrives:'; G.b2.textContent = 'now it falls'; }
+}
+
+function drop() {
+  if (tl) tl.kill();
+  st.t = 0; render();
+  if (Kit.calm) { st.t = 1.4; render(); return; }
+  tl = gsap.timeline({onUpdate: render});
+  tl.to(st, {t: 1, duration: 1.8, ease: 'none'}).to(st, {t: 1.4, duration: 0.5, ease: 'none'});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  done = true;
+  requestAnimationFrame(() => { draw(); drop(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('pic').addEventListener('click', () => { if (done) { Kit.haptic('light'); drop(); } });
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2800));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "nature-trees-from-air",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Where does most of a tree's mass originate?",
+  "answer": "About 95% of a tree's dry mass comes from the air. The tree builds itself from the carbon dioxide it takes in, not from the soil.",
+  "move": "Trees are largely made of air.",
+  "keywords": [
+    "trees",
+    "carbon dioxide",
+    "soil",
+    "air",
+    "dry mass"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question page asking where most of a tree's mass originates, with a draggable knob to guess how much came from the soil. The reveal states that about 95% of dry mass comes from air, via carbon dioxide taken in.",
+    "graded": false
+  },
+  "source": "Veritasium, “Where Do Trees Get Their Mass?” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=2KZb2_vcNTg",
+  "written": "2026-11-03"
+}

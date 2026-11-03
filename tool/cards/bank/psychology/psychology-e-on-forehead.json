@@ -1,0 +1,37 @@
+{
+  "id": "psychology-e-on-forehead",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.empathy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Draw a capital E on your forehead with a finger. Which way does it face?",
+  "answer": "Draw a capital E on your forehead and see which way it points. The card notes that, seen from behind your head, its right is your right, and that the E shows whose eyes you see through. Whether adding power flips it is still unproven.",
+  "move": "The E shows whose eyes you see through.",
+  "keywords": [
+    "forehead",
+    "perspective",
+    "visual_perspective",
+    "power",
+    "empathy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Instruction card: draw a capital E on your forehead with a finger, then say which way it faces. Answer choices are 'Lines point to my right ear' or 'Lines point to my left ear'. A next section says 'Now add power', and the card notes the E shows whose eyes you see through."
+  },
+  "source": "Diventare Strong, “Diventa POTENTE in 8 Punti” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=n_cabfHr3L0",
+  "written": "2026-11-03"
+}

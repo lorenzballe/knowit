@@ -1,0 +1,36 @@
+{
+  "id": "psychology-stranger-distance",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.conformity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How close can a stranger stand before you step back?",
+  "answer": "Preferred interpersonal distances were compared across countries in Sorokowska et al. (2017). Standing close does not by itself show interest. What feels normal differs by country.",
+  "move": "Standing close isn’t interest by itself: what feels normal differs by country.",
+  "keywords": [
+    "personal_space",
+    "stranger",
+    "comfort_distance",
+    "country"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drag-to-place card. You are A. Drag stranger B to the closest spot where you would still be comfortable talking. The card asks how close a stranger can stand before you step back, and its box says standing close is not interest by itself."
+  },
+  "source": "Diventare Strong, “►MiniCorso: Come Capire Se Piaci A Qualcuno con il Linguaggio Del Corpo (completo)” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=i8FeDp1g5Ic",
+  "written": "2026-11-03"
+}

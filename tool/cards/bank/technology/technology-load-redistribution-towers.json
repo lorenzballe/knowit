@@ -1,0 +1,37 @@
+{
+  "id": "technology-load-redistribution-towers",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the aircraft's weight contribute to the towers' initial survival?",
+  "answer": "The plane weighed about 130,000 kg, while each tower weighed about 450,000 tonnes, almost ten times the Titanic. The structure was redundant, so when columns broke, their load moved onto the intact ones. That is why each tower stood for about an hour.",
+  "move": "In a redundant structure, a broken part's load moves onto the parts still standing.",
+  "keywords": [
+    "world-trade-center",
+    "twin-towers",
+    "september-2001",
+    "load-redistribution",
+    "new-york"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page on how the aircraft impact on the World Trade Center towers in 2001 was absorbed. A slider cuts columns so the reader can watch where their load goes after each break."
+  },
+  "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=TS8CgfiGFEE&t=160s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "technology-iron-armor-capacitance",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Iron armor made undersea telegraph cables stronger. Why did it make signals worse?",
+  "answer": "Iron armor made the undersea telegraph cable stronger, but it made the signal worse. Iron is a good conductor, so when it was wrapped around the insulated core, the cable acted like a capacitor. That raised the line's capacitance and hindered the electromagnetic fields that carry the signal. This is why most power lines today hang high in the air.",
+  "move": "A conductor close to a wire adds capacitance and hinders the signal.",
+  "keywords": [
+    "undersea cables",
+    "iron armor",
+    "capacitance",
+    "telegraph",
+    "veritasium"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section diagram of an undersea telegraph cable with an iron armor layer. The question asks why adding iron made signals worse, with three reasons to pick from. After a choice, the iron's effect on the line's capacitance is shown."
+  },
+  "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=672s",
+  "written": "2026-11-03"
+}

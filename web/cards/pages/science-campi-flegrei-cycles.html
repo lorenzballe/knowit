@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-campi-flegrei-cycles -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#plot{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#low{display:flex;flex-direction:column;justify-content:center;min-height:max(9cqh,64px)}
+#hold{font:800 max(2.3cqh,15px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:2cqh 6cqw;cursor:pointer;align-self:center;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;box-shadow:0 .6cqh 0 color-mix(in srgb,var(--k) 35%,transparent);transition:transform .08s}
+#hold.down{transform:translateY(.4cqh) scale(.98);box-shadow:0 .2cqh 0 color-mix(in srgb,var(--k) 35%,transparent)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANO RHYTHM</span></div>
+    <h2 class="q">What pattern did the model reveal about past Campi Flegrei eruptions?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="plot"></svg>
+      <div id="low">
+        <button id="hold">Hold to run time</button>
+        <div id="why" class="gone">
+          <p class="big">Quasi-regular cycles</p>
+          <p class="body">Pressure from the magma slowly builds up, an eruption releases it, and the cycle starts again. Because this rhythm repeats, the model can be used as a predictive tool. (The drawing is a sketch, not real dates.)</p>
+        </div>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button to run the last 60,000 years.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Campi Flegrei eruptions come in repeating cycles of build-up and release.</div>
+    <div class="foot"><span class="src">Source · Geopop, “▶️ALLARME CAMPI FLEGREI? ANALISI ARTICOLO SCIENTIFICO- ScienceAdvances (Nov-2018) -GeologiaPOP” (YouTube, 2018).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// Schematic cycles: quasi-regular, slightly uneven lengths.
+const N = 5, PEAK = .84;
+const lens = []; for (let i = 0; i < N; i++) lens.push(1 + (Kit.rnd() - .5) * .3);
+const sum = lens.reduce((a, b) => a + b, 0);
+const B = [0]; lens.forEach(l => B.push(B[B.length - 1] + l / sum));
+const peaks = lens.map((_, i) => B[i] + PEAK * (B[i + 1] - B[i]));
+function cyc(t){ let i = 0; while (i < N - 1 && t >= B[i + 1]) i++; return [i, (t - B[i]) / (B[i + 1] - B[i])]; }
+function P(t){
+  const [, u] = cyc(Math.min(t, .99999));
+  if (u < PEAK) return .16 + .72 * Math.pow(u / PEAK, 1.4);
+  const v = (u - PEAK) / (1 - PEAK); return .88 - .72 * Math.pow(v, .55);
+}
+function S(t){ const [i, u] = cyc(Math.min(t, .99999)); return .52 - .36 * Math.cos(2 * Math.PI * (u - PEAK)); }
+
+let T = 0, holding = false, done = false, count = 0, G = null;
+const svg = Kit.$('plot');
+
+function geo(){
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const L = W * .05, R = W * .95, top = fs * 3.8, ax = H - fs * 2.2;
+  return {W, H, fs, L, R, top, ax, x: t => L + t * (R - L), y: p => ax - p * (ax - top)};
+}
+function pathTo(t, fn){
+  let d = '', n = Math.max(2, Math.round(500 * t));
+  for (let k = 0; k <= n; k++){ const s = t * k / n; d += (k ? 'L' : 'M') + G.x(s).toFixed(1) + ',' + G.y(fn(s)).toFixed(1); }
+  return d;
+}
+let el = {};
+function marker(i, anim){
+  const x = G.x(peaks[i]), s = G.fs * .75;
+  const g = Kit.mk('g', {transform: `translate(${x},${G.ax})`}, el.marks);
+  Kit.mk('circle', {cx: 0, cy: G.y(.88) - G.ax, r: G.fs * .35, fill: 'var(--k)'}, g);
+  Kit.mk('line', {x1: 0, x2: 0, y1: -s, y2: G.y(.88) - G.ax + G.fs * .35, stroke: 'var(--k)', 'stroke-width': 1, 'stroke-dasharray': '2 4', opacity: .45}, g);
+  const tri = Kit.mk('path', {d: `M${-s},0 L${-s * .3},${-s * 1.1} L${s * .3},${-s * 1.1} L${s},0Z`, fill: 'var(--k)'}, g);
+  if (anim && !Kit.calm){
+    const ring = Kit.mk('circle', {cx: 0, cy: G.y(.88) - G.ax, r: G.fs * .35, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2}, g);
+    gsap.fromTo(ring, {attr: {r: G.fs * .35}, opacity: 1}, {attr: {r: G.fs * 2}, opacity: 0, duration: .7, ease: 'power2.out', onComplete: () => ring.remove()});
+    gsap.from(tri, {scale: 0, transformOrigin: '50% 100%', duration: .4, ease: 'back.out(3)'});
+  }
+}
+function draw(){
+  G = geo(); svg.innerHTML = '';
+  const fs = G.fs;
+  Kit.mk('line', {x1: G.L, x2: G.R, y1: G.ax, y2: G.ax, stroke: 'var(--k)', 'stroke-width': 2}, svg);
+  const t1 = Kit.mk('text', {x: G.L, y: G.ax + fs * 1.5, 'font-size': fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700}, svg); t1.textContent = '60,000 years ago';
+  const t2 = Kit.mk('text', {x: G.R, y: G.ax + fs * 1.5, 'font-size': fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'end'}, svg); t2.textContent = 'today';
+  const t3 = Kit.mk('text', {x: G.L, y: fs * 1.1, 'font-size': fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800}, svg); t3.textContent = 'Magma pressure under the caldera';
+  el.area = Kit.mk('path', {fill: 'var(--k)', opacity: .1}, svg);
+  el.sine = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, fs * .22), 'stroke-dasharray': `${fs * .5} ${fs * .5}`, opacity: 0}, svg);
+  el.line = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2.5, fs * .2), 'stroke-linejoin': 'round'}, svg);
+  el.marks = Kit.mk('g', {}, svg);
+  el.head = Kit.mk('circle', {r: fs * .45, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': 3}, svg);
+  el.lab = Kit.mk('g', {opacity: 0}, svg);
+  for (let i = 0; i < count; i++) marker(i, false);
+  update();
+  if (done) finishArt(false);
+}
+function update(){
+  const d = pathTo(T, P);
+  el.line.setAttribute('d', d);
+  el.area.setAttribute('d', d + `L${G.x(T)},${G.ax}L${G.x(0)},${G.ax}Z`);
+  el.head.setAttribute('cx', G.x(T)); el.head.setAttribute('cy', G.y(P(T)));
+  el.head.style.display = done ? 'none' : '';
+}
+function finishArt(anim){
+  el.sine.setAttribute('d', pathTo(1, S)); el.sine.setAttribute('opacity', .55);
+  el.lab.innerHTML = '';
+  const fs = G.fs;
+  // label a release above peak 2, a build-up below trough in cycle 4
+  const px = G.x(peaks[1]), py = G.y(.88) - fs * 1.2;
+  const a = Kit.mk('text', {x: px, y: py, 'font-size': fs, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--hand)', 'font-weight': 700}, el.lab); a.textContent = 'release';
+  const bx = G.x(B[3] + .45 * (B[4] - B[3])), by = G.y(.16) + fs * 1.2;
+  if (by < G.ax - fs * .4){ const b = Kit.mk('text', {x: bx, y: by, 'font-size': fs, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--hand)', 'font-weight': 700}, el.lab); b.textContent = 'build-up'; }
+  if (anim && !Kit.calm){
+    const len = el.sine.getTotalLength();
+    el.sine.style.strokeDasharray = len; el.sine.style.strokeDashoffset = len;
+    gsap.to(el.sine, {strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', onComplete: () => { el.sine.style.strokeDasharray = ''; el.sine.style.strokeDashoffset = ''; }});
+    gsap.to(el.lab, {opacity: 1, duration: .5, delay: 1});
+  } else el.lab.setAttribute('opacity', 1);
+}
+function finish(anim){
+  if (done) return; done = true; holding = false; T = 1;
+  while (count < N){ marker(count, false); count++; }
+  Kit.hide('hold'); Kit.show('why'); Kit.hide('say'); Kit.show('keep');
+  Kit.haptic('success');
+  draw(); finishArt(anim);
+}
+let last = 0;
+gsap.ticker.add(() => {
+  const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now;
+  if (!holding || done || !G) return;
+  T = Math.min(1, T + dt * .13);
+  while (count < N && T >= peaks[count]){ marker(count, true); count++; Kit.haptic('light'); Kit.$('say').textContent = `Eruptions so far: ${count}. Keep holding…`; }
+  update();
+  if (T >= 1) finish(true);
+});
+const hb = Kit.$('hold');
+const down = e => { e.preventDefault(); if (done) return; holding = true; hb.classList.add('down'); Kit.haptic('selection'); };
+const up = () => { holding = false; hb.classList.remove('down'); };
+hb.addEventListener('pointerdown', down);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(n => hb.addEventListener(n, up));
+hb.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { finish(false); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

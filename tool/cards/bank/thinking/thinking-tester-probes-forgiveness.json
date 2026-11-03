@@ -1,0 +1,34 @@
+{
+  "id": "thinking-tester-probes-forgiveness",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the Tester strategy probe its opponent, and does it pay?",
+  "answer": "Tester probes its opponent by defecting on move 1, throwing a stone to see whether the opponent strikes back. Probing with a first-move defection didn't pay; nice strategies that kept cooperating did better.",
+  "move": "Probing with a first-move defection didn't pay; nice strategies did better.",
+  "keywords": [
+    "tester strategy",
+    "tit for tat",
+    "tournament",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card: Tester throws a stone on move 1 in a two-player game. Choose to strike back by defecting on move 2, or let it go and keep cooperating, then try the other option."
+  },
+  "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=836s",
+  "written": "2026-11-03"
+}

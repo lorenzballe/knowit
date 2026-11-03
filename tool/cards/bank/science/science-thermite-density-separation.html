@@ -1,0 +1,162 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-thermite-density-separation -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#cvbox{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font:800 max(2.8cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THERMITE</span></div>
+    <h2 class="q">In a thermite reaction, how does pure iron separate from the slag?</h2>
+    <div class="stagebox" id="stage">
+      <div id="cvbox"><canvas id="cv"></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Liquid iron</button>
+        <button class="opt" data-i="1">Aluminum oxide (slag)</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The iron sinks</p><p class="body">Liquid iron is more than twice as dense as liquid aluminum oxide, so it settles while the slag floats. When the bottom melts through, pure iron drains out first; the slag comes only after.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Which liquid sinks to the bottom of the crucible? Tap it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Heavier liquid sinks: density sorts the metal from the slag for free.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1, tl = null;
+const S = {T: 0, P: 0};
+let G = null, clock = 0;
+const N = 150, parts = [];
+for (let i = 0; i < N; i++) {
+  parts.push({iron: i < N / 2, u: Kit.rnd(), v: Kit.rnd(), ph: Kit.rnd() * 6.283, d: Kit.rnd() * .35, s: .8 + Kit.rnd() * .4, ju: Kit.rnd()});
+}
+// rank: iron at the bottom, slag on top
+const order = parts.slice().sort((a, b) => (b.iron - a.iron) || (a.ju - b.ju));
+const NI = N / 2;
+order.forEach((p, k) => {
+  p.h = (k + .5) / N; p.tu = .04 + Kit.rnd() * .92;
+  p.pd = p.iron ? (k / NI) * .5 : .58 + ((k - NI) / (N - NI)) * .3;
+});
+const clamp = v => Math.max(0, Math.min(1, v));
+const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+function ink() { const v = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim(); return v || '#111'; }
+
+function draw() {
+  if (!G) return;
+  clock += 1 / 60;
+  const {x, W, H, f, k} = G;
+  x.clearRect(0, 0, W, H);
+  const cx = W * .33, top = H * .04, B = H * .64, wt = W * .46, wb = W * .3;
+  const Lh = (B - top) * .8;
+  const widthAt = y => wb + (wt - wb) * (B - y) / (B - top);
+  const mTop = H * .79, mBot = H * .97, mW = W * .26;
+  const r = Math.sqrt(((wb + widthAt(B - Lh)) / 2 * Lh) / N / Math.PI) * 1.18;
+  // crucible interior
+  x.fillStyle = '#1a1210';
+  x.beginPath(); x.moveTo(cx - wt / 2, top); x.lineTo(cx + wt / 2, top); x.lineTo(cx + wb / 2, B); x.lineTo(cx - wb / 2, B); x.closePath(); x.fill();
+  // mold
+  x.fillStyle = '#1a1210'; x.fillRect(cx - mW / 2, mTop, mW, mBot - mTop);
+  let ironIn = 0, slagIn = 0, passed = 0;
+  for (const p of parts) { const pp = clamp((S.P - p.pd) / .12); if (pp >= .5) passed++; if (pp >= 1) { p.iron ? ironIn++ : slagIn++; } }
+  const drop = passed / N * Lh;
+  // particles
+  for (const p of parts) {
+    const pp = clamp((S.P - p.pd) / .12);
+    if (pp >= 1) continue;
+    const ym0 = B - (.03 + p.v * .94) * Lh;
+    const wob = Math.sin(clock * 1.7 + p.ph) * r * .9, wob2 = Math.cos(clock * 1.3 + p.ph) * r * .9;
+    const xm = cx + (p.u - .5) * widthAt(ym0) * .9;
+    const yt = B - p.h * Lh + drop;
+    const xt = cx + (p.tu - .5) * widthAt(Math.min(yt, B)) * .9;
+    const e = ease(clamp((S.T - p.d) / .65));
+    let px = xm + (xt - xm) * e + wob * (1 - e) * 1.5 + wob * .15;
+    let py = ym0 + (yt - ym0) * e + wob2 * (1 - e) * 1.5;
+    if (pp > 0) {
+      if (pp < .5) { const q = pp / .5; px = px + (cx - px) * q; py = py + (B - py) * q; }
+      else { const q = (pp - .5) / .5, surf = mBot - (mBot - mTop) * .9 * ((ironIn + slagIn) / N); px = cx + Math.sin(p.ph) * r * .4; py = B + (surf - B) * q * q; }
+    }
+    x.fillStyle = p.iron ? '#ffb43a' : '#8d7f73';
+    x.beginPath(); x.arc(px, py, r * p.s, 0, 6.283); x.fill();
+    if (p.iron) { x.fillStyle = '#fff0b8'; x.beginPath(); x.arc(px - r * .25, py - r * .25, r * .38 * p.s, 0, 6.283); x.fill(); }
+  }
+  // mold contents
+  const mh = (mBot - mTop) * .9;
+  const ih = mh * ironIn / N, sh = mh * slagIn / N;
+  x.fillStyle = '#ffb43a'; x.fillRect(cx - mW / 2 + 2, mBot - ih, mW - 4, ih);
+  x.fillStyle = '#8d7f73'; x.fillRect(cx - mW / 2 + 2, mBot - ih - sh, mW - 4, sh);
+  // walls
+  x.strokeStyle = '#6b6560'; x.lineWidth = Math.max(4, W * .018); x.lineJoin = 'round'; x.lineCap = 'round';
+  const gap = S.P > 0 ? r * 1.6 : 0;
+  x.beginPath(); x.moveTo(cx - wt / 2, top); x.lineTo(cx - wb / 2, B); x.lineTo(cx - gap, B);
+  x.moveTo(cx + gap, B); x.lineTo(cx + wb / 2, B); x.lineTo(cx + wt / 2, top); x.stroke();
+  x.beginPath(); x.moveTo(cx - mW / 2, mTop); x.lineTo(cx - mW / 2, mBot); x.lineTo(cx + mW / 2, mBot); x.lineTo(cx + mW / 2, mTop); x.stroke();
+  if (S.P > 0 && S.P < 1) { x.fillStyle = 'rgba(255,200,90,.9)'; x.beginPath(); x.arc(cx, B, gap * .7, 0, 6.283); x.fill(); }
+  // labels
+  const lx = W * .6, maxW = W * .38;
+  const lab = (t, y, a, col) => {
+    if (a <= 0) return;
+    let fs = f; x.font = `700 ${fs}px ${k.body}`;
+    while (x.measureText(t).width > maxW && fs > 12) { fs -= .5; x.font = `700 ${fs}px ${k.body}`; }
+    x.globalAlpha = a; x.fillStyle = col; x.textBaseline = 'middle'; x.fillText(t, lx, y); x.globalAlpha = 1;
+  };
+  const la = clamp((S.T - .85) / .15) * (1 - clamp(S.P / .12));
+  const c = ink();
+  lab('← slag, lighter', B - Lh * .75, la, c);
+  lab('← iron, 2×+ denser', B - Lh * .25, la, c);
+  lab('mixed melt', B - Lh * .5, (1 - clamp(S.T / .3)) * (S.P > 0 ? 0 : 1), c);
+  lab('← iron drains first', mBot - (mBot - mTop) * .5, clamp(S.P / .1), c);
+}
+
+Kit.onShow.card = () => {
+  const cv = Kit.$('cv');
+  const {x, W, H} = Kit.fitCanvas(cv);
+  const cs = getComputedStyle(Kit.$('card'));
+  G = {x, W, H, f: Math.max(13, Math.min(H * .06, W * .045)), k: {body: cs.getPropertyValue('--body').trim() || 'sans-serif'}};
+  draw();
+};
+gsap.ticker.add(draw);
+
+function run() {
+  if (Kit.calm) { S.T = 1; S.P = 1; return; }
+  tl = gsap.timeline();
+  tl.to(S, {T: 1, duration: 2.6, ease: 'none'})
+    .to(S, {P: 1, duration: 3.6, ease: 'none', onStart: () => Kit.haptic('light')}, '+=.5');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  run();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tl) tl.progress(1); S.T = 1; S.P = 1; draw();
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

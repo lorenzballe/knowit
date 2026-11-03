@@ -1,0 +1,127 @@
+<!doctype html>
+<!-- slug: nature-glass-co2-savings -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{display:block;width:100%;flex:1;min-height:0}
+#ctl{display:flex;justify-content:center}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+.go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 6cqw;cursor:pointer;touch-action:manipulation}
+.go:active{transform:scale(.97)}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Try it · build up">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RECYCLING</span></div>
+    <h2 class="q">How much CO₂ is avoided by recycling six tons of glass?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Recycled glass on the left, CO₂ avoided on the right"></svg>
+      <div id="ctl"><button class="go" id="go">Recycle 1 ton of glass</button></div>
+      <div id="why" class="gone">
+        <p class="big">6 t of glass ≈ 1 t of CO₂ saved</p>
+        <p class="body">Melting old glass replaces making new glass from raw sand, and that is far more carbon‑intensive. So every six tons recycled keep about one ton of CO₂ out of the air.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to recycle glass, one ton at a time, and watch the CO₂ you avoid.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Six tons of glass recycled ≈ one ton of CO₂ never emitted.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let n = 0, G = null;
+const ink = 'var(--k)', card = 'var(--c)';
+const frac = k => k === 0 ? '0 t' : k === 6 ? '1 t' : `${k}/6 t`;
+
+function draw(prev) {
+  const svg = Kit.$('pic');
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0, 13);
+  svg.innerHTML = '';
+  const yb = H - f * 3.4;               // ground line
+  const top = f * 0.6;
+  const avail = yb - top;
+  // left: stack of glass tons
+  const cx = W * 0.26;
+  const bw = Math.min(W * 0.36, H * 0.4);
+  const bh = Math.min(avail / 6.5, bw * 0.34);
+  Kit.mk('line', {x1: W * 0.04, x2: W * 0.96, y1: yb, y2: yb, style: `stroke:${ink};stroke-width:${Math.max(2, f * .14)};opacity:.35`}, svg);
+  // ghost slots
+  for (let i = 0; i < 6; i++) {
+    const y = yb - (i + 1) * bh * 1.06;
+    Kit.mk('rect', {x: cx - bw / 2, y, width: bw, height: bh, rx: bh * .22, style: `fill:none;stroke:${ink};stroke-width:1.5;stroke-dasharray:4 4;opacity:.25`}, svg);
+  }
+  let newBlock = null;
+  const bf = Math.min(f, bh * .55);
+  for (let i = 0; i < n; i++) {
+    const y = yb - (i + 1) * bh * 1.06;
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: cx - bw / 2, y, width: bw, height: bh, rx: bh * .22, style: 'fill:#2e9c68;stroke:#14563a;stroke-width:2'}, g);
+    Kit.mk('rect', {x: cx - bw / 2 + bh * .25, y: y + bh * .18, width: bw * .35, height: bh * .16, rx: bh * .08, style: 'fill:#bff0d6;opacity:.7'}, g);
+    if (bf >= 12) {
+      const t = Kit.mk('text', {x: cx, y: y + bh * .68, 'text-anchor': 'middle', style: `font:700 ${bf}px var(--body);fill:#fff`}, g);
+      t.textContent = 'glass 1 t';
+    }
+    if (i === n - 1 && prev !== undefined && prev < n) newBlock = g;
+  }
+  const l1 = Kit.mk('text', {x: cx, y: yb + f * 1.4, 'text-anchor': 'middle', style: `font:600 ${f}px var(--body);fill:${ink};opacity:.75`}, svg);
+  l1.textContent = 'Glass recycled';
+  const v1 = Kit.mk('text', {x: cx, y: yb + f * 2.9, 'text-anchor': 'middle', style: `font:800 ${f * 1.25}px var(--display);fill:${ink}`}, svg);
+  v1.textContent = `${n} t`;
+
+  // right: one-ton CO2 bubble that fills up
+  const cx2 = W * 0.74;
+  const R = Math.min(W * 0.21, avail * 0.46);
+  const cy = yb - R - f * 0.3;
+  const clip = Kit.mk('clipPath', {id: 'bub'}, Kit.mk('defs', {}, svg));
+  Kit.mk('circle', {cx: cx2, cy, r: R}, clip);
+  Kit.mk('circle', {cx: cx2, cy, r: R, style: `fill:${ink};opacity:.06`}, svg);
+  const h = 2 * R * n / 6, hp = 2 * R * (prev || 0) / 6;
+  const fill = Kit.mk('rect', {x: cx2 - R, y: cy + R - h, width: 2 * R, height: h, 'clip-path': 'url(#bub)', style: 'fill:#3a3f4a'}, svg);
+  for (let i = 1; i < 6; i++) {
+    const y = cy + R - 2 * R * i / 6;
+    Kit.mk('line', {x1: cx2 - R, x2: cx2 + R, y1: y, y2: y, 'clip-path': 'url(#bub)', style: `stroke:${card};stroke-width:1;opacity:.35`}, svg);
+  }
+  Kit.mk('circle', {cx: cx2, cy, r: R, style: `fill:none;stroke:${ink};stroke-width:${Math.max(2, f * .16)};stroke-dasharray:${n === 6 ? 'none' : '6 5'}`}, svg);
+  const co = Kit.mk('text', {x: cx2, y: cy + f * .45, 'text-anchor': 'middle', style: `font:800 ${Math.min(R * .55, f * 2.2)}px var(--display);fill:${n >= 3 ? '#fff' : ink};opacity:${n >= 3 ? 1 : .45}`}, svg);
+  co.textContent = 'CO₂';
+  const l2 = Kit.mk('text', {x: cx2, y: yb + f * 1.4, 'text-anchor': 'middle', style: `font:600 ${f}px var(--body);fill:${ink};opacity:.75`}, svg);
+  l2.textContent = 'CO₂ avoided';
+  const v2 = Kit.mk('text', {x: cx2, y: yb + f * 2.9, 'text-anchor': 'middle', style: `font:800 ${f * 1.25}px var(--display);fill:${ink}`}, svg);
+  v2.textContent = n === 6 ? '≈ 1 t' : `≈ ${frac(n)}`;
+
+  // arrow between
+  const ax = W * 0.5, ay = cy;
+  Kit.mk('path', {d: `M${ax - W * .05},${ay} L${ax + W * .04},${ay} M${ax + W * .015},${ay - f * .6} L${ax + W * .045},${ay} L${ax + W * .015},${ay + f * .6}`, style: `fill:none;stroke:${ink};stroke-width:${Math.max(2, f * .16)};stroke-linecap:round;stroke-linejoin:round;opacity:.6`}, svg);
+
+  if (prev !== undefined && prev !== n && !Kit.calm) {
+    if (newBlock) gsap.from(newBlock, {y: -H * 0.35, opacity: 0, duration: .5, ease: 'bounce.out'});
+    gsap.fromTo(fill, {attr: {y: cy + R - hp, height: hp}}, {attr: {y: cy + R - h, height: h}, duration: .7, delay: .25, ease: 'power2.out'});
+    if (n === 6) gsap.from([v2, co], {scale: 1.3, transformOrigin: '50% 50%', duration: .5, delay: .8, ease: 'back.out(3)'});
+  }
+}
+
+Kit.$('go').addEventListener('click', () => {
+  if (n >= 6) return;
+  const prev = n; n++;
+  Kit.haptic(n === 6 ? 'success' : 'light');
+  draw(prev);
+  if (n === 6) {
+    setTimeout(() => { Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.onShow.card(); }, 900);
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 6; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 1300));
+};
+Kit.single();
+</script>
+</html>

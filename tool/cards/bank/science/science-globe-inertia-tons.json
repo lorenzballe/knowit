@@ -1,0 +1,37 @@
+{
+  "id": "science-globe-inertia-tons",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How much inertia does the video's giant spinning globe have?",
+  "answer": "The video's giant spinning globe has an inertia of 2 to 12 tons. That much mass resists every change in speed, so you really feel it: you have to push hard just to make the globe spin faster.",
+  "move": "Inertia is resistance to speeding up: this globe's is 2–12 tons.",
+  "keywords": [
+    "inertia",
+    "spinning globe",
+    "veritasium",
+    "earth rotation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A number line running from 2 tons to 12 tons, with a globe icon. It asks how much inertia the video's giant spinning globe has. The reader drags the globe along the line to their guess, in tons.",
+    "graded": false
+  },
+  "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=9zso7ChaQXQ&t=91s",
+  "written": "2026-11-03"
+}

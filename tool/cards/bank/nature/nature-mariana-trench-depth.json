@@ -1,0 +1,38 @@
+{
+  "id": "nature-mariana-trench-depth",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the deepest point on Earth?",
+  "answer": "The deepest point found so far is Challenger Deep in the Mariana Trench, at 10,994 m. That is almost 11 km below sea level. Dragging the probe down to the trench floor shows how far that is.",
+  "move": "Earth's deepest known spot, Challenger Deep, sits almost 11 km down.",
+  "keywords": [
+    "challenger_deep",
+    "mariana_trench",
+    "ocean_trench",
+    "deepest_point",
+    "sea_level"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dark ocean-depths page asks: What is the deepest point on Earth? A vertical probe can be dragged down toward the trench floor, which is marked 10,994 m for Challenger Deep in the Mariana Trench, almost 11 km below sea level.",
+    "ground": "#0f4a85"
+  },
+  "source": "Geopop, “Quanto è profonda la fossa delle marianne?#shorts” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=t_gYMAbeT9c",
+  "written": "2026-11-03"
+}

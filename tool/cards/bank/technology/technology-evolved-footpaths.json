@@ -1,0 +1,37 @@
+{
+  "id": "technology-evolved-footpaths",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Jansen evolve his Strandbeest legs instead of testing every design?",
+  "answer": "Testing all trillions of possible designs would take about 100,000 years of computer time. Breeding the flattest footpaths 1,500 at a time took months instead, until 13 \"holy numbers\" came out. Tapping lets the flattest footpaths breed, so each generation keeps the best designs.",
+  "move": "Can't test them all? Breed the best.",
+  "keywords": [
+    "strandbeest",
+    "theo_jansen",
+    "veritasium",
+    "evolution",
+    "leg_design"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Astute free card, tap to evolve. Asks why Jansen evolved his Strandbeest legs instead of testing every design. Shows generation 1 with 1,500 tried, next to a testing-them-all option of trillions. Tap to breed generation 2."
+  },
+  "source": "Veritasium, “34 Years Of Strandbeest Evolution” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=IFaAjR_RRJs",
+  "written": "2026-11-03"
+}

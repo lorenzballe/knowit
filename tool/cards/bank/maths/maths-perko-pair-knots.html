@@ -1,0 +1,132 @@
+<!doctype html>
+<!-- slug: maths-perko-pair-knots -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · The Perko pair</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{position:relative;flex:1;min-height:0}
+#pic canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.2cqh,20px)/1.1 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">KNOT TABLES</span></div>
+    <h2 class="q">What error in the knot tables did a lawyer spot in 1973?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><canvas id="cv"></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0">A 10-crossing knot was missing</button>
+        <button class="opt" data-i="1">Two knots listed as different were the same knot</button>
+        <button class="opt" data-i="2">One knot was really two knots tied together</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Same knot: 166 → 165</p>
+        <p class="body">Kenneth Perko, a lawyer who had studied knot theory, sketched Reidemeister moves on a yellow legal pad and turned one drawing into the other. They had sat side by side in the tables for over 75 years: the Perko pair.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch knot B move.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Two drawings that look different can be the very same knot.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const st = {ax: 1.05, az: 0.55, same: 0};
+let ctx = null, CW = 0, CH = 0;
+const N = 360;
+
+function knot(ax, az, cx, cy, R) {
+  const s = R / 3.25, out = [];
+  const ca = Math.cos(ax), sa = Math.sin(ax), cz = Math.cos(az), sz = Math.sin(az);
+  for (let i = 0; i < N; i++) {
+    const t = 2 * Math.PI * i / N, r = 2 + Math.cos(5 * t);
+    let x = r * Math.cos(3 * t), y = r * Math.sin(3 * t), z = 1.2 * Math.sin(5 * t);
+    const x1 = x * cz - y * sz, y1 = x * sz + y * cz;
+    const y2 = y1 * ca - z * sa, z2 = y1 * sa + z * ca;
+    out.push([cx + x1 * s, cy + y2 * s, z2]);
+  }
+  return out;
+}
+function crossings(p) {
+  const res = [];
+  for (let i = 0; i < N; i++) {
+    const a = p[i], b = p[(i + 1) % N];
+    for (let j = i + 2; j < N; j++) {
+      if (i === 0 && j === N - 1) continue;
+      const c = p[j], d = p[(j + 1) % N];
+      const rx = b[0] - a[0], ry = b[1] - a[1], sx = d[0] - c[0], sy = d[1] - c[1];
+      const den = rx * sy - ry * sx; if (Math.abs(den) < 1e-9) continue;
+      const qx = c[0] - a[0], qy = c[1] - a[1];
+      const u = (qx * sy - qy * sx) / den, v = (qx * ry - qy * rx) / den;
+      if (u < 0 || u > 1 || v < 0 || v > 1) continue;
+      const zi = a[2] + (b[2] - a[2]) * u, zj = c[2] + (d[2] - c[2]) * v;
+      res.push(zi > zj ? i : j);
+    }
+  }
+  return res;
+}
+function drawKnot(p, ink, bg, lw) {
+  const x = ctx;
+  x.lineJoin = 'round'; x.lineCap = 'round';
+  x.beginPath(); p.forEach((q, i) => i ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1])); x.closePath();
+  x.strokeStyle = ink; x.lineWidth = lw; x.stroke();
+  for (const k of crossings(p)) {
+    const seg = []; for (let d = -4; d <= 5; d++) seg.push(p[(k + d + N) % N]);
+    x.beginPath(); seg.forEach((q, i) => i ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1]));
+    x.lineCap = 'butt'; x.strokeStyle = bg; x.lineWidth = lw * 3.2; x.stroke();
+    x.lineCap = 'round'; x.strokeStyle = ink; x.lineWidth = lw; x.stroke();
+  }
+}
+function render() {
+  if (!ctx) return;
+  const cs = getComputedStyle(Kit.$('card'));
+  const ink = cs.getPropertyValue('--k').trim() || '#111', bg = cs.getPropertyValue('--c').trim() || '#fff';
+  const x = ctx; x.clearRect(0, 0, CW, CH);
+  const fs = Math.max(13, Math.min(CW * 0.045, CH * 0.075));
+  const top = fs * 1.9, R = Math.min(CW / 4.4, (CH - top - fs * 0.6) / 2);
+  const cy = top + (CH - top) / 2, lx = CW * 0.25, rx = CW * 0.75;
+  const lw = Math.max(2.4, R * 0.045);
+  x.font = `700 ${fs}px ${cs.getPropertyValue('--body') || 'sans-serif'}`;
+  x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = ink;
+  x.fillText('Knot A', lx, fs * 0.8); x.fillText('Knot B', rx, fs * 0.8);
+  drawKnot(knot(0, 0, lx, cy, R), ink, bg, lw);
+  drawKnot(knot(st.ax, st.az, rx, cy, R), ink, bg, lw);
+  x.font = `800 ${fs * 2}px ${cs.getPropertyValue('--display') || 'sans-serif'}`;
+  x.globalAlpha = 0.35 + 0.65 * st.same;
+  x.fillText(st.same > 0.5 ? '=' : '≠', CW / 2, cy);
+  x.globalAlpha = 1;
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { const r = Kit.fitCanvas(Kit.$('cv')); ctx = r.x; CW = r.W; CH = r.H; render(); });
+  if (Kit.calm) { st.ax = 0; st.az = 0; st.same = 1; render(); return; }
+  gsap.timeline({onUpdate: render})
+    .to(st, {ax: 0, az: 0, duration: 1.6, ease: 'power2.inOut', onUpdate: render})
+    .to(st, {same: 1, duration: .3, onUpdate: render, onComplete: () => Kit.haptic('success')});
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { const r = Kit.fitCanvas(Kit.$('cv')); ctx = r.x; CW = r.W; CH = r.H; render(); };
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); gsap.from('#pic', {opacity: 0, duration: .5}); } };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2400)); };
+Kit.single();
+</script>
+</html>

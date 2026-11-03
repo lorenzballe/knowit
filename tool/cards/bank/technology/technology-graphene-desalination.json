@@ -1,0 +1,37 @@
+{
+  "id": "technology-graphene-desalination",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "How can graphene be used for water purification?",
+  "answer": "Water molecules slip through a graphene oxide membrane, while salt ions stay behind. British researchers used this to desalinate seawater, and the process proved fast and low-cost. So a graphene oxide membrane lets water through and holds salt back.",
+  "move": "A graphene oxide membrane can turn seawater into fresh water, fast and cheap.",
+  "keywords": [
+    "graphene",
+    "desalination",
+    "seawater",
+    "salt",
+    "british-researchers"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled CLEAN WATER asks how graphene can purify water, with small labels for water and salt ions. Four answer choices describe a graphene oxide membrane's effect on seawater; the reader picks one."
+  },
+  "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=133s",
+  "written": "2026-11-03"
+}

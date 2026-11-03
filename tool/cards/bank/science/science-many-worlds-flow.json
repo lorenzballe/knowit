@@ -1,0 +1,37 @@
+{
+  "id": "science-many-worlds-flow",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do many physicists find Many-Worlds cleaner than the Copenhagen interpretation?",
+  "answer": "Copenhagen adds a special collapse rule that stops the wave at every measurement. Many-Worlds keeps only the Schrödinger equation: the wave branches, and you see the branch you are entangled with. The experience is the same, but the maths is cleaner.",
+  "move": "Many-Worlds drops collapse: wave functions just follow one equation.",
+  "keywords": [
+    "many-worlds",
+    "copenhagen interpretation",
+    "schrödinger equation",
+    "wave function collapse",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled QUANTUM asking why many physicists find Many-Worlds cleaner than Copenhagen. A 'Run to measurement' step counter reads 1 of 3, with a Run button. The reader taps Run three times to watch which wave branch keeps flowing."
+  },
+  "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=694s",
+  "written": "2026-11-03"
+}

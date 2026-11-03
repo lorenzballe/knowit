@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: life-material-trap -->
+<title>Astute free card · The material trap</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#skill{width:100%;margin:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
+.ends{display:flex;justify-content:space-between;gap:3cqw;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--k);opacity:.8}
+.ends span:last-child{text-align:right}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MINDSET</span></div>
+    <h2 class="q">Why is counting on money or looks for success a mistake?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A person holds a bag of gold while a wolf circles, waiting for them to drop it"></svg>
+      <div id="ctl">
+        <input id="skill" type="range" min="0" max="100" value="8" aria-label="Skills, know-how and mindset">
+        <div class="ends"><span>Gold only</span><span>Gold + skills · know-how · mindset</span></div>
+      </div>
+      <div id="why" class="gone"><p class="body">Money and beauty do make a difference, but they only count if you know how to use them. Without skills, know-how and the right mindset, others take them from you. Build yourself first, and your chances of getting money and the rest go up with it.</p></div>
+    </div>
+    <p class="say" id="say">Drag the slider: same bag of gold, more skill and mindset.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Gold is only a tool; the strength has to be yours.</div>
+    <div class="foot"><span class="src">Source · Diventare Strong, “Mentalità D'Acciaio: 7 Pensieri da Eliminare dalla Tua Mente (Atteggiamento Mentale Vincente Strong)” (YouTube, 2020).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const GOLD = '#f2b61f', GOLD_D = '#a8750a';
+let s = 0.08, angle = 0.6, G = null, revealed = false, ticking = false, acc = 0;
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const u = Math.min(W / 9.4, H / 7);
+  const cx = W * 0.5, gy = H - 1.15 * u, sw = 0.22 * u;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const g = {u, cx, gy, W, H};
+  g.status = mk('text', {x: cx, y: 0.95 * u, 'text-anchor': 'middle', fill: 'var(--k)',
+    style: `font:700 ${Math.max(f * 1.15, 15)}px var(--display)`}, svg);
+  g.ring = mk('ellipse', {cx, cy: gy, fill: 'color-mix(in srgb, var(--k) 8%, transparent)', stroke: 'var(--k)',
+    'stroke-width': 0.08 * u, 'stroke-dasharray': `${0.25 * u} ${0.18 * u}`}, svg);
+  g.back = mk('g', {}, svg);
+  // Person
+  const p = mk('g', {transform: `translate(${cx},${gy})`}, svg);
+  const line = (x1, y1, x2, y2, par) => mk('line', {x1, y1, x2, y2, stroke: 'var(--k)', 'stroke-width': sw, 'stroke-linecap': 'round'}, par);
+  line(0, -1.7 * u, -0.45 * u, 0, p); line(0, -1.7 * u, 0.45 * u, 0, p);
+  g.upper = mk('g', {}, p);
+  line(0, -1.7 * u, 0, -3.3 * u, g.upper);
+  mk('circle', {cx: 0, cy: -3.85 * u, r: 0.5 * u, fill: 'var(--k)'}, g.upper);
+  line(0, -3.0 * u, -0.8 * u, -2.1 * u, g.upper);
+  line(0, -3.0 * u, 1.0 * u, -2.15 * u, g.upper);
+  g.bag = mk('g', {}, g.upper);
+  mk('path', {d: `M${-0.15*u},${0.1*u} Q${-0.7*u},${0.5*u} ${-0.58*u},${0.98*u} Q0,${1.3*u} ${0.58*u},${0.98*u} Q${0.7*u},${0.5*u} ${0.15*u},${0.1*u} Z`,
+    fill: GOLD, stroke: 'var(--k)', 'stroke-width': 0.1 * u, 'stroke-linejoin': 'round'}, g.bag);
+  line(-0.2 * u, 0.1 * u, 0.2 * u, 0.1 * u, g.bag);
+  if (0.55 * u * 0.9 >= 12)
+    mk('text', {x: 0, y: 0.92 * u, 'text-anchor': 'middle', fill: GOLD_D, style: `font:800 ${0.55 * u}px var(--display)`}, g.bag).textContent = '€';
+  g.front = mk('g', {}, svg);
+  // Wolf, facing right, feet at origin
+  g.wolf = mk('g', {}, g.back);
+  const w = mk('g', {}, g.wolf); g.wolfInner = w;
+  const K = 'var(--k)';
+  [[-0.5, -0.15], [-0.25, 0.1], [0.3, -0.1], [0.5, 0.12]].forEach(([x, d]) =>
+    mk('line', {x1: x * u, y1: -0.6 * u, x2: (x + d) * u, y2: 0, stroke: K, 'stroke-width': 0.14 * u, 'stroke-linecap': 'round'}, w));
+  mk('path', {d: `M${-0.7*u},${-0.85*u} Q${-1.25*u},${-0.9*u} ${-1.3*u},${-0.35*u} Q${-1.0*u},${-0.65*u} ${-0.7*u},${-0.6*u} Z`, fill: K}, w);
+  mk('ellipse', {cx: 0, cy: -0.72 * u, rx: 0.78 * u, ry: 0.34 * u, fill: K}, w);
+  mk('path', {d: `M${0.45*u},${-1.0*u} L${0.62*u},${-1.45*u} L${0.78*u},${-1.05*u} Z M${0.75*u},${-1.02*u} L${0.92*u},${-1.42*u} L${1.0*u},${-0.98*u} Z`, fill: K}, w);
+  mk('circle', {cx: 0.75 * u, cy: -0.9 * u, r: 0.32 * u, fill: K}, w);
+  mk('path', {d: `M${0.85*u},${-1.05*u} L${1.45*u},${-0.82*u} L${0.85*u},${-0.68*u} Z`, fill: K}, w);
+  g.eye = mk('circle', {cx: 0.9 * u, cy: -0.95 * u, r: 0.07 * u, fill: GOLD}, w);
+  g.coins = mk('g', {}, svg);
+  G = g; place();
+}
+
+function place(){
+  if (!G) return;
+  const {u, cx, gy} = G;
+  const sr = (1.1 + 1.9 * s) * u;
+  G.ring.setAttribute('rx', sr); G.ring.setAttribute('ry', 0.22 * sr);
+  G.ring.setAttribute('opacity', 0.2 + 0.8 * s);
+  G.upper.setAttribute('transform', `rotate(${(1 - s) * 16},0,${-1.7 * u})`);
+  G.bag.setAttribute('transform', `translate(${1.0 * u},${-2.1 * u}) scale(${0.9 + 0.3 * s})`);
+  const R = sr + 1.45 * u, sn = Math.sin(angle);
+  const x = cx + R * Math.cos(angle), y = gy + 0.22 * R * sn;
+  const k = 0.82 + 0.18 * sn, dir = sn < 0 ? 1 : -1;
+  const layer = sn < 0 ? G.back : G.front;
+  if (G.wolf.parentNode !== layer) layer.appendChild(G.wolf);
+  G.wolf.setAttribute('transform', `translate(${x},${y}) scale(${dir * k},${k})`);
+  G.wolf.setAttribute('opacity', s > 0.7 ? 1 - (s - 0.7) * 2 : 1);
+  G.status.textContent = s < 0.35 ? 'Easy prey' : s < 0.7 ? 'Holding on' : 'In charge';
+}
+
+function coin(out){
+  if (!G || Kit.calm) return;
+  const {u, cx, gy, W} = G;
+  const c = Kit.mk('circle', {r: 0.17 * u, fill: GOLD, stroke: GOLD_D, 'stroke-width': 0.05 * u}, G.coins);
+  const bx = cx + 1.0 * u, by = gy - 1.4 * u;
+  if (out){
+    const side = Math.cos(angle) > 0 ? 1 : -1;
+    gsap.set(c, {attr: {cx: bx, cy: by}});
+    gsap.timeline({onComplete: () => c.remove()})
+      .to(c, {attr: {cx: bx + side * (0.6 + Kit.rnd() * 1.8) * u}, duration: .8, ease: 'none'}, 0)
+      .to(c, {attr: {cy: gy + 0.25 * u}, duration: .8, ease: 'bounce.out'}, 0)
+      .to(c, {opacity: 0, duration: .4}, .9);
+  } else {
+    gsap.set(c, {attr: {cx: Kit.rnd() * W, cy: -0.3 * u}});
+    gsap.timeline({onComplete: () => c.remove()})
+      .to(c, {attr: {cx: bx, cy: by}, duration: .9, ease: 'power2.in'})
+      .to(c, {opacity: 0, duration: .15});
+  }
+}
+
+function tick(t, delta){
+  const dt = Math.min(delta, 60) / 1000;
+  angle += (1.8 - 1.3 * s) * dt;
+  const rate = s < 0.45 ? (0.45 - s) * 7 : s > 0.55 ? (s - 0.55) * 7 : 0;
+  acc += rate * dt;
+  while (acc >= 1){ acc -= 1; coin(s < 0.5); }
+  place();
+}
+
+function reveal(){
+  if (revealed) return; revealed = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  draw();
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+let lastBand = -1;
+Kit.$('skill').addEventListener('input', e => {
+  s = +e.target.value / 100;
+  const band = s < 0.35 ? 0 : s < 0.7 ? 1 : 2;
+  if (band !== lastBand){ lastBand = band; Kit.haptic('selection'); }
+  place();
+  if (s >= 0.92) reveal();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || ticking) return;
+  ticking = true; gsap.ticker.add(tick);
+  gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const r = Kit.$('skill');
+  for (let v = 8; v <= 100; v += 8){ r.value = Math.min(v, 100); r.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(z => setTimeout(z, 40)); }
+  r.value = 100; r.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(z => setTimeout(z, 700));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,185 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-power-of-no -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#fun{flex:1;min-height:0;width:100%;display:block}
+#log{font:600 max(2.1cqh,13px)/1.3 var(--body);text-align:center;color:var(--k);margin:.6cqh 0 0;min-height:2.8cqh}
+#log.idle{color:var(--muted)}
+#log b{font-family:var(--mono)}
+#log .yes,#log .no{font-weight:800;letter-spacing:.04em}
+#tests{display:flex;flex-wrap:wrap;gap:1cqh 2.2cqw;justify-content:center}
+.tb{font:700 max(2.1cqh,13px)/1.1 var(--mono);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:1.6cqh;padding:1.4cqh 3.2cqw;cursor:pointer;white-space:nowrap}
+.tb.used{background:var(--k);color:var(--c);box-shadow:none;cursor:default}
+.tb .r{font-family:var(--body);font-weight:800;margin-left:1.4cqw}
+#why{display:flex;flex-direction:column;gap:1.2cqh}
+#whybig{font:800 max(2.5cqh,15px)/1.25 var(--display);color:var(--k);margin:0}
+#why .body{margin:0}
+.fn{fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:var(--k);stroke-width:2;stroke-linejoin:round}
+.chip rect{fill:var(--c);stroke:var(--k);stroke-width:1.6}
+.chip text{fill:var(--k);font-family:var(--body);font-weight:700}
+.chip.win rect{fill:var(--k)}
+.chip.win text{fill:var(--c)}
+.tt{fill:var(--k);font-family:var(--display);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Try it · test the rule">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NEGATIVE EVIDENCE</span></div>
+    <h2 class="q">Why does a “no” teach you more than a “yes”?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="fun"></svg>
+      <p id="log" class="idle">Eight guesses all fit 2 · 4 · 6. Which survive?</p>
+    </div>
+    <div id="tests">
+      <button class="tb" data-j="0">8 10 12</button>
+      <button class="tb" data-j="1">20 22 24</button>
+      <button class="tb" data-j="2">3 2 1</button>
+      <button class="tb" data-j="3">7 7 7</button>
+      <button class="tb" data-j="4">1 2 50</button>
+    </div>
+    <div id="why" class="gone">
+      <p id="whybig"></p>
+      <p class="body">Tests that fit your guess come back “yes”, but almost every other rule says yes too, so you learn little. One “no” wipes out a whole family of rules at once. That is the scientific method: try to disprove your idea.</p>
+    </div>
+    <p class="say" id="say">A secret rule fits 2 · 4 · 6. Tap a test to ask: does this fit too?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Ask the questions where you expect a “no”.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const R = [
+  ["Add 2", t => t[1] == t[0] + 2 && t[2] == t[1] + 2],
+  ["All even", t => t.every(v => v % 2 == 0)],
+  ["Going up", t => t[0] < t[1] && t[1] < t[2]],
+  ["Anything", t => true],
+  ["All different", t => t[0] != t[1] && t[1] != t[2] && t[0] != t[2]],
+  ["All positive", t => t.every(v => v > 0)],
+  ["Steps < 10", t => Math.abs(t[1] - t[0]) < 10 && Math.abs(t[2] - t[1]) < 10],
+  ["Sum < 100", t => t[0] + t[1] + t[2] < 100]
+];
+const TRUTH = 2;
+const T = [[8,10,12],[20,22,24],[3,2,1],[7,7,7],[1,2,50]];
+const alive = new Set(R.map((_, i) => i));
+const used = new Set();
+let yesK = 0, noK = 0, done = false;
+let G = null, chips = [], funnel = null, title = null, wbNow = 0;
+
+function geo() {
+  const {W, H, f} = G;
+  const ft = f * 3.1, fb = H - f * 0.6;
+  return {W, H, f, ft, fb};
+}
+function layout() {
+  const {W, f, ft, fb} = geo();
+  const n = alive.size, cols = n > 4 ? 2 : 1;
+  const ch = Math.min(f * 2.4, (fb - ft) / 5.8), gap = ch * .32, pad = ch * .3;
+  const wb = n > 4 ? W * .86 : n > 1 ? W * .6 : W * .5;
+  const cw = cols == 2 ? (wb - pad * 2 - gap) / 2 : wb - pad * 2;
+  const list = [...alive].sort((a, b) => a - b), rows = Math.ceil(n / cols), pos = {};
+  list.forEach((i, k) => {
+    const r = Math.floor(k / cols), c = k % cols;
+    const y = fb - pad - (rows - 1 - r) * (ch + gap) - ch / 2;
+    const lone = cols == 2 && k == n - 1 && n % 2 == 1;
+    const x = cols == 1 || lone ? W / 2 : W / 2 + (c == 0 ? -1 : 1) * (cw + gap) / 2;
+    pos[i] = {x, y, w: cw, h: ch};
+  });
+  return {pos, wb, ch};
+}
+function drawF(wb) {
+  const {W, ft, fb} = geo();
+  wbNow = wb;
+  funnel.setAttribute('d', `M${W*.02} ${ft} L${W*.98} ${ft} L${W/2+wb/2} ${fb} L${W/2-wb/2} ${fb} Z`);
+}
+function setTitle() {
+  const n = alive.size;
+  title.textContent = n == 1 ? 'The rule: numbers going up' : `${n} rules still fit 2 · 4 · 6`;
+}
+function place(anim) {
+  const L = layout(), d = anim && !Kit.calm ? .55 : 0;
+  const fs = Math.max(12, Math.min(G.f, L.ch * .44));
+  const o = {wb: wbNow || L.wb};
+  if (d) gsap.to(o, {wb: L.wb, duration: d, ease: 'power3.inOut', onUpdate: () => drawF(o.wb)});
+  else drawF(L.wb);
+  for (const i of alive) {
+    const g = chips[i], p = L.pos[i], rect = g.querySelector('rect'), tx = g.querySelector('text');
+    tx.setAttribute('font-size', fs);
+    const ra = {x: -p.w / 2, y: -p.h / 2, width: p.w, height: p.h, rx: p.h * .3};
+    if (d) { gsap.to(g, {x: p.x, y: p.y, duration: d, ease: 'power3.inOut'}); gsap.to(rect, {attr: ra, duration: d, ease: 'power3.inOut'}); }
+    else { gsap.set(g, {x: p.x, y: p.y}); gsap.set(rect, {attr: ra}); }
+    g.classList.toggle('win', alive.size == 1);
+  }
+}
+Kit.onShow.card = () => {
+  const svg = Kit.$('fun');
+  const {W, H, f} = Kit.fitSvg(svg);
+  G = {W, H, f};
+  svg.innerHTML = ''; wbNow = 0;
+  funnel = Kit.mk('path', {class: 'fn'}, svg);
+  title = Kit.mk('text', {class: 'tt', x: W / 2, y: f * 1.7, 'text-anchor': 'middle', 'font-size': Math.max(15, f * 1.3)}, svg);
+  setTitle();
+  chips = R.map((r, i) => {
+    const g = Kit.mk('g', {class: 'chip'}, svg);
+    Kit.mk('rect', {}, g);
+    const t = Kit.mk('text', {x: 0, y: 0, 'text-anchor': 'middle', 'dominant-baseline': 'central'}, g);
+    t.textContent = r[0];
+    if (!alive.has(i)) g.style.display = 'none';
+    return g;
+  });
+  place(false);
+};
+
+function test(j) {
+  if (used.has(j) || done || !G) return;
+  used.add(j);
+  const t = T[j], truth = R[TRUTH][1](t);
+  const killed = [...alive].filter(i => R[i][1](t) !== truth);
+  killed.forEach(i => alive.delete(i));
+  if (truth) yesK += killed.length; else noK += killed.length;
+  const b = Kit.$('tests').querySelector(`[data-j="${j}"]`);
+  b.classList.add('used');
+  b.innerHTML = `${t.join(' ')}<span class="r">${truth ? '✓ YES' : '✗ NO'}</span>`;
+  const log = Kit.$('log'); log.classList.remove('idle');
+  log.innerHTML = `<b>${t.join(' · ')}</b> → <span class="${truth ? 'yes' : 'no'}">${truth ? 'YES' : 'NO'}</span> · ${killed.length == 0 ? 'nothing ruled out' : killed.length + ' rule' + (killed.length > 1 ? 's' : '') + ' ruled out'}`;
+  Kit.haptic(killed.length ? 'light' : 'selection');
+  const {W} = G;
+  killed.forEach((i, k) => {
+    const g = chips[i];
+    if (Kit.calm) { g.style.display = 'none'; return; }
+    const cx = gsap.getProperty(g, 'x'), side = cx < W / 2 ? -W * .35 : W * .35;
+    gsap.to(g, {x: cx + side, y: '+=' + G.f * 3, rotation: side < 0 ? -25 : 25, opacity: 0, duration: .7, delay: k * .06, ease: 'power2.in', svgOrigin: `${cx} 0`, onComplete: () => g.style.display = 'none'});
+  });
+  if (!killed.length && !Kit.calm) {
+    const gs = [...alive].map(i => chips[i]);
+    gsap.fromTo(gs, {opacity: .55}, {opacity: 1, duration: .5, stagger: .03});
+  }
+  setTitle();
+  setTimeout(() => place(true), Kit.calm ? 0 : 420);
+  if (alive.size == 1) { done = true; setTimeout(finish, Kit.calm ? 50 : 1100); }
+}
+function finish() {
+  Kit.hide('tests'); Kit.hide('say');
+  Kit.$('whybig').textContent = `Your “yes” answers ruled out ${yesK}. Your “no” answers ruled out ${noK}.`;
+  Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 10, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+Kit.$('tests').addEventListener('click', e => {
+  const b = e.target.closest('.tb'); if (b) test(+b.dataset.j);
+});
+Kit.onEnter.card = () => {
+  if (Kit.calm || !chips.length) return;
+  gsap.from(chips.filter((c, i) => alive.has(i)), {opacity: 0, duration: .45, stagger: .06, ease: 'power2.out'});
+  gsap.from('.tb', {opacity: 0, y: 8, stagger: .06, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const j of [0, 2, 3, 4]) { Kit.$('tests').querySelector(`[data-j="${j}"]`).click(); await w(300); }
+  await w(1500);
+};
+Kit.single();
+</script>
+</html>

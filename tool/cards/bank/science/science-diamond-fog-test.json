@@ -1,0 +1,37 @@
+{
+  "id": "science-diamond-fog-test",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How does the condensation on a diamond react to heat?",
+  "answer": "On a real diamond, the fog from your breath disappears immediately. On a fake, it stays for several seconds. Stone B's fog vanished at once. Fakes now look very close to real gems, so this quick test helps.",
+  "move": "Breathe on it: a real diamond clears at once, a fake stays fogged.",
+  "keywords": [
+    "diamond",
+    "fake diamond",
+    "jewellery",
+    "breath test"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two stones, A and B, are shown with the question of how condensation on a diamond reacts to heat. Tap each stone to breathe on it and watch whether the fog clears at once or stays.",
+    "graded": false
+  },
+  "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5RAJM6Yi5wc",
+  "written": "2026-11-03"
+}

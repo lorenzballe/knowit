@@ -1,0 +1,310 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>One word</title>
+<!-- Be the witness: a short crash plays once; the clip goes away and the reader answers from memory,
+     as in Loftus & Palmer (1974). The speed question carries "smashed into" or "hit" (half the readers
+     each); then "Did you see any broken glass?" (there is none; that answer is graded). Then the study:
+     the mean speed for each verb (Experiment 1, 45 students) and the glass a week later (Experiment 2,
+     150 students). Inspired by Diventare Strong (Alex Onofri), "Frasi dei Manipolatori": phrases that
+     take for granted what they want you to accept.
+     Touch: taps, and a drag on the dial (a tap on it works too). -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center}
+#film{flex:1;min-height:0;display:flex;flex-direction:column;gap:.8cqh}
+#scene{flex:1;min-height:0;width:100%;display:block;cursor:pointer;border-radius:2.2cqh;background:color-mix(in srgb,var(--k) 5%,transparent)}
+.hint{margin:0;font:700 max(1.5cqh,11.5px)/1.2 var(--body);opacity:.6;letter-spacing:.04em}
+.form{background:#fff;color:#10100c;border-radius:2.2cqh;box-shadow:0 1cqh 2.6cqh rgba(16,16,12,.12),0 .2cqh .6cqh rgba(16,16,12,.08);padding:1.7cqh 4.6cqw 1.8cqh;display:flex;flex-direction:column;gap:1.1cqh;min-height:0}
+.form .hd{font:700 max(1.5cqh,11.5px)/1 var(--mono);letter-spacing:.08em;opacity:.5;text-transform:uppercase}
+.form .qq{margin:0;font:600 max(2.1cqh,13px)/1.4 var(--body);text-wrap:pretty}
+#dial{width:100%;height:min(27cqh,58cqw);display:block;cursor:pointer;touch-action:none;overflow:visible}
+/* At the glass question the clip comes back as a memory: blurred, grey, not to be replayed. */
+#film.fog #scene{filter:blur(1cqh) grayscale(1);opacity:.5;cursor:default}
+#stage.two{justify-content:flex-start;gap:1.4cqh}
+.yn{display:flex;gap:3cqw}
+.yn button{flex:1;display:flex;align-items:center;gap:2.4cqw;font:800 max(2.1cqh,13px)/1 var(--body);color:#10100c;background:#fff;border:0;box-shadow:inset 0 0 0 .22cqh rgba(16,16,12,.3);border-radius:1.4cqh;padding:1.5cqh 3.6cqw;cursor:pointer}
+.yn button i{width:2.2cqh;height:2.2cqh;min-width:14px;min-height:14px;border-radius:.5cqh;box-shadow:inset 0 0 0 .22cqh #10100c;display:grid;place-items:center;font-style:normal}
+.yn button.on{box-shadow:inset 0 0 0 .3cqh #10100c}
+.yn button.on i{background:#10100c;color:#fff}
+.yn button.on i::after{content:"";width:40%;height:22%;border:solid #fff;border-width:0 0 .3cqh .3cqh;transform:translateY(-20%) rotate(-45deg)}
+#why{flex:1;min-height:0;display:flex;flex-direction:column;gap:.9cqh}
+#chart{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+.cap{margin:0;font:600 max(1.5cqh,11.5px)/1.35 var(--body);opacity:.72;text-wrap:pretty}
+#go{align-self:flex-start}
+#go:disabled{opacity:.35;cursor:default}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* The smallest phone at the end: everything stays, set a little tighter. */
+@container (max-height:500px){
+  .answered .in{gap:1.5cqh}
+  .answered .keep{padding:1.3cqh 4.5cqw}
+  .answered .keep b{display:inline;margin:0 1.6cqw 0 0}
+}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Be the witness · answer from memory">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BE THE WITNESS</span></div>
+    <h2 class="q">Can one word change what you remember?</h2>
+    <div class="stagebox" id="stage">
+      <div id="film">
+        <svg id="scene" data-tap role="img" aria-label="Seen from above: two cars at a crossroads, one coming from the left, one from below. They collide in the middle and spin apart."></svg>
+        <p class="hint" id="hint">Tap the clip to watch it again</p>
+      </div>
+      <div id="ask" class="form gone">
+        <span class="hd">Witness questionnaire · Q4</span>
+        <p class="qq" id="qspeed"></p>
+        <svg id="dial" data-drag role="slider" aria-label="Speed in miles per hour" aria-valuemin="0" aria-valuemax="60" aria-valuenow="0"></svg>
+      </div>
+      <div id="glass" class="form gone">
+        <span class="hd">Witness questionnaire · Q7</span>
+        <p class="qq">Did you see any broken glass?</p>
+        <div class="yn"><button data-a="yes"><i></i>Yes</button><button data-a="no"><i></i>No</button></div>
+      </div>
+      <div id="why" class="gone">
+        <svg id="chart" role="img" aria-label="Mean speed guessed for each verb: smashed 40.8, collided 39.3, bumped 38.1, hit 34.0, contacted 31.8 miles per hour. A week later, yes to broken glass: smashed 16 of 50, hit 7 of 50, no verb 6 of 50."></svg>
+        <p class="cap">9 students per word, then 50 per group</p>
+      </div>
+    </div>
+    <div id="sure" class="gone"></div>
+    <p class="say" id="say">Watch the crash. Then the clip goes away and you answer from memory, like a witness.</p>
+    <button class="btn" id="go">Answer from memory</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Memory is rebuilt, not replayed. A question’s words can slip in.</div>
+    <div class="foot"><span class="src">Source · E. F. Loftus &amp; J. C. Palmer, Journal of Verbal Learning and Verbal Behavior 13:585 (1974)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const $ = Kit.$, INK = '#10100c', PAPER = '#ffffff', MAX = 60;
+  // Half the readers get each verb, as each student got one (Experiment 2 used these two).
+  const VERB = Math.random() < .5 ? 'smashed' : 'hit';
+  const PHRASE = {smashed: 'smashed into each other', hit: 'hit each other'};
+  $('qspeed').textContent = `About how fast were the cars going when they ${PHRASE[VERB]}?`;
+  // Experiment 1: mean speed estimate (mph) per verb, 9 students each. Experiment 2: "yes" to glass of 50.
+  const SPEED = [['smashed', 40.8], ['collided', 39.3], ['bumped', 38.1], ['hit', 34.0], ['contacted', 31.8]];
+  const GLASS = [['smashed', 16], ['hit', 7], ['no verb', 6]];
+  let step = 'film', speed = null, pick = null, tl = null;
+  const say = $('say'), go = $('go');
+
+  // ---------- the clip ----------
+  const scene = $('scene');
+  let S = null;
+  function car(g, L, Wd, dark) {
+    const body = dark ? INK : PAPER, line = INK;
+    for (const [x, y] of [[-L * .3, -Wd * .5], [L * .3, -Wd * .5], [-L * .3, Wd * .5], [L * .3, Wd * .5]])
+      Kit.mk('rect', {x: x - L * .1, y: y - Wd * .09, width: L * .2, height: Wd * .18, rx: Wd * .06, fill: INK}, g);
+    Kit.mk('rect', {x: -L / 2, y: -Wd / 2, width: L, height: Wd, rx: Wd * .32, fill: body, stroke: line, 'stroke-width': 2}, g);
+    Kit.mk('rect', {x: L * .1, y: -Wd * .36, width: L * .2, height: Wd * .72, rx: Wd * .12, fill: dark ? 'rgba(255,255,255,.55)' : 'rgba(16,16,12,.16)'}, g);
+    Kit.mk('rect', {x: -L * .36, y: -Wd * .32, width: L * .14, height: Wd * .64, rx: Wd * .1, fill: dark ? 'rgba(255,255,255,.4)' : 'rgba(16,16,12,.12)'}, g);
+  }
+  function drawScene() {
+    scene.innerHTML = '';
+    const {W, H} = Kit.fitSvg(scene);
+    const road = Math.min(W * .3, H * .34), cx = W * .5, cy = H * .5;
+    Kit.mk('rect', {x: 0, y: cy - road / 2, width: W, height: road, fill: 'rgba(16,16,12,.1)'}, scene);
+    Kit.mk('rect', {x: cx - road / 2, y: 0, width: road, height: H, fill: 'rgba(16,16,12,.1)'}, scene);
+    const dash = {stroke: 'rgba(16,16,12,.35)', 'stroke-width': 2, 'stroke-dasharray': '8 8'};
+    Kit.mk('line', Object.assign({x1: 0, y1: cy, x2: cx - road / 2, y2: cy}, dash), scene);
+    Kit.mk('line', Object.assign({x1: cx + road / 2, y1: cy, x2: W, y2: cy}, dash), scene);
+    Kit.mk('line', Object.assign({x1: cx, y1: 0, x2: cx, y2: cy - road / 2}, dash), scene);
+    Kit.mk('line', Object.assign({x1: cx, y1: cy + road / 2, x2: cx, y2: H}, dash), scene);
+    const L = road * .62, Wd = road * .34;
+    const a = Kit.mk('g', {}, scene), b = Kit.mk('g', {}, scene);
+    car(a, L, Wd, true); car(b, L, Wd, false);
+    // Car A comes from the left along the road's lower lane, car B from below up the left lane.
+    const laneA = cy + road * .24, laneB = cx - road * .24;
+    // The bump: short strokes where the front of A meets the side of B (no glass, nothing flying).
+    const bang = Kit.mk('g', {opacity: 0}, scene);
+    const hit = {x: laneB - Wd / 2, y: laneA - Wd * .2};
+    for (let i = 0; i < 4; i++) {
+      const t = -2.5 + i * .42, r1 = road * .24, r2 = road * .42;
+      Kit.mk('line', {x1: hit.x + Math.cos(t) * r1, y1: hit.y + Math.sin(t) * r1, x2: hit.x + Math.cos(t) * r2, y2: hit.y + Math.sin(t) * r2, stroke: INK, 'stroke-width': 2.6, 'stroke-linecap': 'round'}, bang);
+    }
+    S = {W, H, L, Wd, a, b, bang, laneA, laneB,
+      a0: {x: -L, y: laneA, rotation: 0}, b0: {x: laneB, y: H + L, rotation: -90},
+      a1: {x: laneB - Wd / 2 - L / 2 + 2, y: laneA, rotation: 0}, b1: {x: laneB, y: laneA, rotation: -90},
+      a2: {x: laneB - Wd / 2 - L / 2 + L * .3, y: laneA + Wd * .25, rotation: -16}, b2: {x: laneB + L * .55, y: laneA - Wd * .2, rotation: -52}};
+    if (played || Kit.calm) end(); else start();
+  }
+  let played = false;
+  // Each car is drawn around its own centre; where it is and how it is turned is set as an attribute.
+  const pos = {a: {}, b: {}};
+  const put = k => { const p = pos[k]; S[k].setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${p.rotation.toFixed(1)})`); };
+  const at = (k, p) => { Object.assign(pos[k], p); put(k); };
+  function start() { at('a', S.a0); at('b', S.b0); S.bang.setAttribute('opacity', 0); }
+  function end() { at('a', S.a2); at('b', S.b2); S.bang.setAttribute('opacity', 0); }
+  function playClip() {
+    if (!S) return;
+    if (tl) tl.kill();
+    if (Kit.calm) { end(); played = true; return; }
+    start();
+    const move = (k, to, d, ease, t) => tl.to(pos[k], Object.assign({duration: d, ease, onUpdate: () => put(k)}, to), t);
+    tl = gsap.timeline({onComplete: () => { played = true; }});
+    move('a', {x: S.a1.x}, 1.05, 'none', .25);
+    move('b', {y: S.b1.y}, 1.05, 'none', .25);
+    tl.add(() => Kit.haptic('light'), 1.3);
+    move('a', {x: S.a2.x, y: S.a2.y, rotation: S.a2.rotation}, .7, 'power3.out', 1.3);
+    move('b', {x: S.b2.x, y: S.b2.y, rotation: S.b2.rotation}, .8, 'power3.out', 1.3);
+    tl.fromTo(S.bang, {opacity: 0}, {opacity: 1, duration: .08}, 1.3).to(S.bang, {opacity: 0, duration: .45}, 1.6);
+  }
+  scene.addEventListener('click', () => { if (step === 'film') playClip(); });
+  if (Kit.calm) $('hint').textContent = 'Motion is off: this is how the crash ended';
+
+  // ---------- the dial ----------
+  const dial = $('dial');
+  let D = null;
+  function drawDial() {
+    dial.innerHTML = '';
+    const {W, H} = Kit.fitSvg(dial);
+    const r = Math.max(40, Math.min(W * .42, (H - 44) * .95)), cx = W / 2, cy = Math.min(H - 34, r + 14);
+    D = {cx, cy, r};
+    const pt = (v, rr) => { const t = Math.PI * (1 - v / MAX); return [cx + Math.cos(t) * rr, cy - Math.sin(t) * rr]; };
+    const [x0, y0] = pt(0, r), [x1, y1] = pt(MAX, r);
+    Kit.mk('path', {d: `M${x0} ${y0}A${r} ${r} 0 0 1 ${x1} ${y1}`, fill: 'none', stroke: 'rgba(16,16,12,.12)', 'stroke-width': Math.max(10, r * .14), 'stroke-linecap': 'round'}, dial);
+    for (let v = 0; v <= MAX; v += 5) {
+      const big = v % 10 === 0, [ax, ay] = pt(v, r * (big ? .76 : .82)), [bx, by] = pt(v, r * .9);
+      Kit.mk('line', {x1: ax, y1: ay, x2: bx, y2: by, stroke: INK, 'stroke-width': big ? 2.2 : 1.2, 'stroke-linecap': 'round', opacity: big ? .8 : .45}, dial);
+      if (big && r > 60) { const [lx, ly] = pt(v, r * .6); const t = Kit.mk('text', {x: lx, y: ly + 4, 'text-anchor': 'middle', 'font-family': 'Figtree', 'font-weight': 700, 'font-size': 11.5, fill: INK, opacity: .7}, dial); t.textContent = v; }
+    }
+    D.arc = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': Math.max(10, r * .14), 'stroke-linecap': 'round'}, dial);
+    D.needle = Kit.mk('line', {x1: cx, y1: cy, stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round'}, dial);
+    Kit.mk('circle', {cx, cy, r: 6, fill: INK}, dial);
+    // The reading sits under the pivot, where the needle never goes.
+    const rd = Kit.mk('text', {x: cx, y: cy + 30, 'text-anchor': 'middle', fill: INK}, dial);
+    D.read = Kit.mk('tspan', {'font-family': 'Fraunces', 'font-weight': 800, 'font-size': 22}, rd);
+    D.unit = Kit.mk('tspan', {'font-family': 'Figtree', 'font-weight': 700, 'font-size': 11.5, 'fill-opacity': .65, dx: 5}, rd);
+    D.pt = pt;
+    paintDial();
+  }
+  function paintDial() {
+    if (!D) return;
+    const v = speed ?? 0, [nx, ny] = D.pt(v, D.r * .7);
+    D.needle.setAttribute('x2', nx); D.needle.setAttribute('y2', ny);
+    if (speed) { const [x0, y0] = D.pt(0, D.r), [x1, y1] = D.pt(v, D.r); D.arc.setAttribute('d', `M${x0} ${y0}A${D.r} ${D.r} 0 0 1 ${x1} ${y1}`); } else D.arc.setAttribute('d', '');
+    D.read.textContent = speed === null ? '' : speed;
+    D.unit.textContent = speed === null ? 'tap or drag the dial' : `mph · ${Math.round(speed * 1.609)} km/h`;
+    D.unit.setAttribute('dx', speed === null ? 0 : 5);
+    dial.setAttribute('aria-valuenow', speed ?? 0);
+  }
+  function setSpeed(v) {
+    v = Math.max(1, Math.min(MAX, Math.round(v)));
+    if (v !== speed) { speed = v; paintDial(); Kit.haptic('selection'); }
+    go.disabled = false;
+  }
+  function fromPointer(e) {
+    const b = dial.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
+    let t = Math.atan2(D.cy - y, x - D.cx);
+    if (t < 0) t = x < D.cx ? Math.PI : 0;
+    setSpeed((1 - t / Math.PI) * MAX);
+  }
+  let dragging = false;
+  dial.addEventListener('pointerdown', e => { dragging = true; dial.setPointerCapture?.(e.pointerId); fromPointer(e); });
+  dial.addEventListener('pointermove', e => { if (dragging) fromPointer(e); });
+  dial.addEventListener('pointerup', () => { dragging = false; });
+  dial.addEventListener('pointercancel', () => { dragging = false; });
+
+  // ---------- what the study found ----------
+  const chart = $('chart');
+  function drawChart() {
+    chart.innerHTML = '';
+    const {W, H} = Kit.fitSvg(chart);
+    const G = Kit.mk('g', {}, chart);
+    const T = (x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-weight': 600, 'font-size': 11.5}, a), G); e.textContent = s; return e; };
+    // A short box (the smallest phone) gets one line under each group instead of two.
+    const tight = H < 190, head = 19, gap = tight ? 7 : Math.max(10, H * .05);
+    // Top: the speed bars, about half the height, never closer than 15 a row.
+    const topH = Math.max(head + 5 * 15, (H - gap) * .5), rowH = (topH - head) / 5, barH = Math.max(7, Math.min(15, rowH * .55));
+    T(0, 11, 'MEAN SPEED GUESSED, BY VERB (MPH)', {'font-weight': 800, 'letter-spacing': '.06em', opacity: .6});
+    // Room after the longest bar for its value and, on the reader's verb, their own guess.
+    const top = Math.max(50, Math.ceil((speed || 0) / 10) * 10), lab = 70, x0 = lab, x1 = W - 60, sx = v => x0 + (x1 - x0) * v / top;
+    SPEED.forEach(([w, v], i) => {
+      const y = head + i * rowH + rowH / 2, mine = w === VERB;
+      T(lab - 8, y + 4, w, {'text-anchor': 'end', 'font-weight': mine ? 800 : 600});
+      Kit.mk('rect', {x: x0, y: y - barH / 2, width: sx(v) - x0, height: barH, rx: barH / 2, fill: mine ? INK : 'rgba(16,16,12,.26)'}, G);
+      const dot = Math.max(4, barH * .62), you = mine && speed !== null;
+      // A guess past the end of the bar pushes the value out, so the dot never covers it.
+      const vx = Math.max(sx(v), you ? sx(speed) + dot : 0) + 5;
+      const val = T(vx, y + 4, v.toFixed(1), {'font-weight': 800, opacity: mine ? 1 : .7});
+      if (you) {
+        Kit.mk('circle', {cx: sx(speed), cy: y, r: dot, fill: '#f2f1ec', stroke: INK, 'stroke-width': 2}, G);
+        T(vx + val.getComputedTextLength() + 7, y + 4, `you: ${speed}`, {'font-weight': 800});
+      }
+    });
+    // Bottom: a week later, broken glass that was never there, 50 people per group.
+    const by = topH + gap;
+    T(0, by + 11, 'A WEEK LATER · “BROKEN GLASS?” YES:', {'font-weight': 800, 'letter-spacing': '.06em', opacity: .6});
+    const gw = (W - 2 * 10) / 3, labH = tight ? 20 : 33, gy = by + 19, gh = Math.max(20, H - gy - labH);
+    // Fifty people a group, laid out wide or tall, whichever gives them more room.
+    const wide = Math.min(gw / 10, gh / 5), tall = Math.min(gw / 5, gh / 10);
+    const [cols, rows, pitch] = wide >= tall ? [10, 5, wide] : [5, 10, Math.min(tall, 16)];
+    const dr = Math.max(1.6, pitch * .36);
+    GLASS.forEach(([w, n], k) => {
+      const gx = k * (gw + 10), mine = w === VERB, ox = gx + (gw - pitch * cols) / 2 + pitch / 2, oy = gy + pitch / 2;
+      for (let i = 0; i < 50; i++) {
+        const c = i % cols, r = rows - 1 - Math.floor(i / cols), on = i < n;
+        Kit.mk('circle', {cx: ox + c * pitch, cy: oy + r * pitch, r: dr, fill: on ? INK : 'none', stroke: INK, 'stroke-width': on ? 0 : 1, opacity: on ? 1 : .3}, G);
+      }
+      const ly = gy + pitch * rows + 14;
+      if (tight) { T(gx + gw / 2, ly, `${w} · ${n * 2}%`, {'text-anchor': 'middle', 'font-weight': mine ? 800 : 700}); return; }
+      T(gx + gw / 2, ly, w, {'text-anchor': 'middle', 'font-weight': mine ? 800 : 700});
+      T(gx + gw / 2, ly + 14, `${n} of 50 · ${n * 2}%`, {'text-anchor': 'middle', opacity: .75});
+    });
+    // A tall box: the chart sits in its middle rather than leaving a gap above the caption.
+    const h = G.getBBox().height + 4;
+    if (h < H) G.setAttribute('transform', `translate(0 ${((H - h) / 2).toFixed(1)})`);
+  }
+
+  // ---------- the steps ----------
+  const sure = Kit.sure($('sure'), 'How sure are you?', pct => {
+    const ok = pick === 'no';
+    Kit.answer({choice: ok ? 'No broken glass' : 'Saw broken glass', correct: ok, sure: pct});
+    reveal();
+    sure.grade(ok, pct, ok ? 'No glass: right' : 'There was no glass');
+  }, {said: n => $('card').clientHeight < 500 ? `${n}% sure` : `you were ${n}% sure`});
+  function show(...ids) { ['film', 'ask', 'glass', 'why'].forEach(k => ids.includes(k) ? Kit.show(k) : Kit.hide(k)); }
+  function next() {
+    if (step === 'film') {
+      if (tl) { tl.progress(1); tl.kill(); tl = null; }
+      step = 'ask'; show('ask'); go.textContent = 'That’s my answer'; go.disabled = speed === null;
+      say.innerHTML = 'The clip is gone. Set the needle to your best guess.';
+      requestAnimationFrame(drawDial);
+    } else if (step === 'ask') {
+      if (speed === null) return;
+      step = 'glass'; $('film').classList.add('fog'); $('hint').textContent = 'What you remember of it';
+      $('stage').classList.add('two'); show('film', 'glass'); Kit.hide('go');
+      say.innerHTML = 'One more question, from memory.';
+    }
+  }
+  go.addEventListener('click', next);
+  $('glass').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || step !== 'glass') return;
+    pick = b.dataset.a;
+    $('glass').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    Kit.haptic('selection'); Kit.show('sure'); sure.on();
+  });
+  function reveal() {
+    step = 'why'; $('stage').classList.remove('two'); show('why');
+    $('card').classList.add('answered');
+    say.innerHTML = 'The real speeds in their films, 20 to 40 mph, barely moved the guesses. <b>The word did.</b>';
+    Kit.show('keep');
+    requestAnimationFrame(drawChart);
+  }
+
+  Kit.onShow.card = () => { if (step === 'film') drawScene(); if (step === 'ask') drawDial(); if (step === 'why') drawChart(); };
+  // A drawing whose box changes size (the words around it changed) is drawn again at the new size.
+  const watch = (el, redraw) => { let last = ''; new ResizeObserver(() => { const r = el.getBoundingClientRect(); if (!r.width || !r.height) return; const k = `${Math.round(r.width)}x${Math.round(r.height)}`; if (k !== last) { const first = !last; last = k; if (!first) redraw(); } }).observe(el); };
+  watch(scene, () => { if (S) drawScene(); }); watch(dial, () => { if (D) drawDial(); }); watch(chart, () => { if (step === 'why') drawChart(); });
+  Kit.onEnter.card = () => playClip();
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.play.card = async () => {
+    await wait(Kit.calm ? 30 : 1800);
+    go.click(); await wait(Kit.calm ? 30 : 400);
+    setSpeed(35); await wait(Kit.calm ? 30 : 300);
+    go.click(); await wait(Kit.calm ? 30 : 400);
+    $('glass').querySelector('[data-a="no"]').click(); await wait(100);
+    $('sure').querySelector('[data-v="80"]').click(); await wait(Kit.calm ? 30 : 700);
+  };
+})();
+Kit.single();
+</script>
+</html>

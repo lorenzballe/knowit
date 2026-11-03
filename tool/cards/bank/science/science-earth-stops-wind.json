@@ -1,0 +1,37 @@
+{
+  "id": "science-earth-stops-wind",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If Earth suddenly stopped spinning, how strong would the wind be?",
+  "answer": "At the equator, ground and air both race east at about 1700 km/h, so we feel no wind. Stop the ground and the air keeps going, producing winds 3 to 4 times stronger than the most intense recorded storms. Drag the slider to zero to stop Earth and watch the air.",
+  "move": "We feel no wind because the air spins with us. Stop the ground, and the air won't stop.",
+  "keywords": [
+    "earth",
+    "equator",
+    "wind",
+    "atmosphere",
+    "rotation"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Map of wind arrows across the equator, all pointing east at 1700 km/h, with a slider for Earth's spin from 100% down to 0 to stop the planet and watch the air."
+  },
+  "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=OSECBud3lD4&t=2s",
+  "written": "2026-11-03"
+}

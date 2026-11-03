@@ -1,0 +1,39 @@
+{
+  "id": "history-swiss-axis-shells",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Neutral Switzerland's WWII factories made shells. Who mostly bought them?",
+  "answer": "Switzerland's WWII factories made shells, and the country mostly sold them to Germany and Italy, the Axis powers. The central bank also bought Reich gold without asking where it came from, and some of that gold had been taken from occupied countries and Holocaust victims. A neutral Switzerland was worth more to Hitler than an invaded one would have been.",
+  "move": "Neutral didn't mean uninvolved: Swiss shells and banks served the Axis.",
+  "keywords": [
+    "switzerland",
+    "shells",
+    "nazi germany",
+    "fascist italy",
+    "reich gold",
+    "neutrality"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A factory floor in Switzerland producing artillery shells, with a label marking export to Germany. The reader is asked to tap where the shells went, and the choices are Germany and Italy.",
+    "graded": false
+  },
+  "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=2Y0RgQmmESI&t=380s",
+  "written": "2026-11-03"
+}

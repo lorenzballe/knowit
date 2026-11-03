@@ -1,0 +1,37 @@
+{
+  "id": "technology-punctured-vine-robot",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens if a growing inflatable robot gets punctured?",
+  "answer": "A needle makes a hole in the inflated robot, not a pop. Air hisses out, but if enough air is pushed in, the pressure stays high and the tip keeps moving. The robot keeps growing as long as the pressure stays high enough.",
+  "move": "Punctured or not, the robot keeps going while the air pressure stays high enough.",
+  "keywords": [
+    "vine robot",
+    "inflatable robot",
+    "needle",
+    "air pressure",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "An interactive card titled Vine Robot. It asks what happens if a growing inflatable robot is punctured. The reader sets an air pressure and presses Grow, while three needles wait along the way to puncture the robot."
+  },
+  "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg&t=68s",
+  "written": "2026-11-03"
+}

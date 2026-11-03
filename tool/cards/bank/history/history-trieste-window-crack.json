@@ -1,0 +1,39 @@
+{
+  "id": "history-trieste-window-crack",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How deep was Trieste when its plexiglas window cracked?",
+  "answer": "In 1960, one outer plexiglas pane of Trieste's window cracked just past 9,000 m. Water presses harder the deeper you go, and the window takes the whole push of the sea against the cabin.",
+  "move": "A window is a deep sub's weak spot: there the sea's push meets the cabin.",
+  "keywords": [
+    "trieste",
+    "bathyscaphe",
+    "mariana trench",
+    "plexiglas",
+    "1960"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dark sea-depth scale with a yellow marker the reader drags downward. The question asks how deep the bathyscaphe Trieste was when one outer plexiglas window pane cracked in 1960.",
+    "graded": false,
+    "ground": "#1f6fa8"
+  },
+  "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=CYUaD_ROqGM&t=461s",
+  "written": "2026-11-03"
+}

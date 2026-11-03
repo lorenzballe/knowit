@@ -1,0 +1,212 @@
+<!doctype html>
+<!-- slug: maths-mandelbrot-bifurcation-slice -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#read{display:flex;flex-direction:column;gap:.5cqh;min-height:max(6cqh,40px)}
+#seq{font:500 max(1.8cqh,12px)/1.25 var(--mono);color:var(--k);opacity:.8;overflow-wrap:anywhere}
+#stat{font:700 max(2.1cqh,13px)/1.2 var(--body);color:var(--k)}
+#plot{position:relative;flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:ew-resize;display:block}
+#why{font:500 max(1.9cqh,12px)/1.3 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag · explore">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FRACTALS</span></div>
+    <h2 class="q">How is the logistic map's bifurcation diagram related to the Mandelbrot set?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read"><div id="seq">z: 0 → 1 → 2 → 5 → 26 → …</div><div id="stat">Blows up → c is NOT in the set</div></div>
+      <div id="plot"><canvas id="cv"></canvas></div>
+    </div>
+    <p class="say" id="say">Drag the dot left along the set's middle line. Watch the orbit below.</p>
+    <p id="why" class="gone">Start at z = 0 and repeat z² + c. Every c whose orbit stays finite lies in the Mandelbrot set, and along its middle line those orbits draw the bifurcation diagram: 1 value, then 2, then 4, then chaos. Each split lines up with a new bulb of the set.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The bifurcation diagram is the Mandelbrot set seen along its real axis.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const R0 = -2.15, R1 = 1.15, PAD = 6;
+const st = {c: 1};
+let G = null, mImg = null, bImg = null, ink = '#111', bg = '#fff', inkRGB = [17,17,17];
+const visited = new Set();
+let done = false, drag = false;
+
+function X(c){ return PAD + (c - R0) / (R1 - R0) * (G.W - 2*PAD); }
+function C(x){ return Math.max(R0, Math.min(R1, R0 + (x - PAD) / (G.W - 2*PAD) * (R1 - R0))); }
+function Yb(z){ return G.bt + G.bh/2 - z / 2.15 * (G.bh/2); }
+
+function rgbOf(col){
+  const t = document.createElement('canvas'); t.width = t.height = 1;
+  const x = t.getContext('2d'); x.fillStyle = col; x.fillRect(0,0,1,1);
+  const d = x.getImageData(0,0,1,1).data; return [d[0],d[1],d[2]];
+}
+
+function orbit(c){
+  let z = 0; const first = [0];
+  for (let i = 0; i < 6; i++){ z = z*z + c; first.push(z); if (Math.abs(z) > 1e6) break; }
+  z = 0;
+  for (let i = 0; i < 3000; i++){ z = z*z + c; if (Math.abs(z) > 2) return {esc: true, first}; }
+  const z0 = z, pts = [];
+  let k = 0;
+  for (let i = 1; i <= 64; i++){ z = z*z + c; pts.push(z); if (!k && Math.abs(z - z0) < 1e-5) k = i; }
+  return {esc: false, first, pts, k};
+}
+
+function fmt(v){
+  if (!isFinite(v) || Math.abs(v) >= 1e5) return '∞';
+  const r = Math.round(v * 100) / 100;
+  return (r === 0 ? 0 : r).toString().replace('-', '−');
+}
+
+function build(){
+  const r = Math.min(window.devicePixelRatio || 1, 2);
+  // Mandelbrot panel
+  const mw = Math.round(G.W * r), mh = Math.round(G.Hm * r);
+  const mc = document.createElement('canvas'); mc.width = mw; mc.height = mh;
+  const mx = mc.getContext('2d'), id = mx.createImageData(mw, mh), d = id.data;
+  const s = (R1 - R0) / (G.W - 2*PAD);
+  for (let py = 0; py < mh; py++){
+    const im = (G.Hm/2 - py / r) * s;
+    for (let px = 0; px < mw; px++){
+      const re = R0 + (px / r - PAD) * s;
+      let a = 0, b = 0, n = 0;
+      for (; n < 90; n++){ const a2 = a*a, b2 = b*b; if (a2 + b2 > 4) break; b = 2*a*b + im; a = a2 - b2 + re; }
+      const o = (py*mw + px) * 4;
+      d[o] = inkRGB[0]; d[o+1] = inkRGB[1]; d[o+2] = inkRGB[2];
+      d[o+3] = n >= 90 ? 235 : Math.min(70, n * 5);
+    }
+  }
+  mx.putImageData(id, 0, 0); mImg = mc;
+  // Bifurcation panel
+  const bw = Math.round(G.W * r), bh = Math.round(G.bh * r);
+  const bc = document.createElement('canvas'); bc.width = bw; bc.height = bh;
+  const bx = bc.getContext('2d'), bd = bx.createImageData(bw, bh), cnt = new Float32Array(bw*bh);
+  for (let px = 0; px < bw; px++){
+    const c = C(px / r); let z = 0, esc = false;
+    for (let i = 0; i < 300; i++){ z = z*z + c; if (Math.abs(z) > 2.0001){ esc = true; break; } }
+    if (esc) continue;
+    for (let i = 0; i < 260; i++){
+      z = z*z + c;
+      const py = Math.round((bh/2) - z / 2.15 * (bh/2));
+      if (py >= 0 && py < bh) cnt[py*bw + px]++;
+    }
+  }
+  for (let i = 0; i < cnt.length; i++){
+    const o = i*4; bd.data[o] = inkRGB[0]; bd.data[o+1] = inkRGB[1]; bd.data[o+2] = inkRGB[2];
+    bd.data[o+3] = cnt[i] ? Math.min(150, 25 + cnt[i] * 18) : 0;
+  }
+  bx.putImageData(bd, 0, 0); bImg = bc;
+}
+
+function render(){
+  if (!G) return;
+  const x = G.x, W = G.W, c = st.c, o = orbit(c), hx = X(c), ay = G.Hm/2;
+  x.clearRect(0, 0, W, G.H);
+  x.imageSmoothingEnabled = true;
+  x.drawImage(mImg, 0, 0, W, G.Hm);
+  x.drawImage(bImg, 0, G.bt, W, G.bh);
+  // real axis + separator
+  x.globalAlpha = .45; x.strokeStyle = ink; x.lineWidth = 1;
+  x.beginPath(); x.moveTo(0, ay); x.lineTo(W, ay); x.stroke();
+  x.beginPath(); x.moveTo(0, G.bt + G.bh/2); x.lineTo(W, G.bt + G.bh/2); x.stroke();
+  x.globalAlpha = 1;
+  // labels
+  const f = Math.max(12, G.H * 0.03);
+  x.font = `700 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  x.fillStyle = ink; x.textBaseline = 'top'; x.textAlign = 'left';
+  x.fillText('Mandelbrot set', 4, 4);
+  x.textAlign = 'right';
+  x.fillText('Where the orbit lands', W - 4, G.bt + 4);
+  // ticks
+  x.textAlign = 'center'; x.textBaseline = 'bottom'; x.globalAlpha = .75;
+  x.font = `600 ${Math.max(12, f*.9)}px ${getComputedStyle(document.body).getPropertyValue('--mono') || 'monospace'}`;
+  [[-2,'c = −2'],[0,'0'],[1,'1']].forEach(([v,t]) => {
+    const tx = Math.max(24, Math.min(W - 10, X(v)));
+    x.fillText(t, tx, G.H - 1);
+    x.fillRect(X(v) - .5, G.H - f*1.35, 1, 4);
+  });
+  x.globalAlpha = 1;
+  // guide
+  x.setLineDash([4, 4]); x.strokeStyle = ink; x.lineWidth = 1.5;
+  x.beginPath(); x.moveTo(hx, ay); x.lineTo(hx, G.bt + G.bh); x.stroke(); x.setLineDash([]);
+  // orbit
+  if (o.esc){
+    x.fillStyle = ink; x.textAlign = 'center'; x.textBaseline = 'top';
+    x.font = `800 ${f*1.4}px sans-serif`;
+    const ex = Math.max(20, Math.min(W - 20, hx));
+    x.fillText('↑ ∞', ex, G.bt + f*1.6);
+  } else {
+    o.pts.forEach(z => {
+      x.beginPath(); x.arc(hx, Yb(z), Math.max(3.5, W*0.011), 0, Math.PI*2);
+      x.fillStyle = ink; x.fill(); x.lineWidth = 2; x.strokeStyle = bg; x.stroke();
+    });
+  }
+  // handle
+  const R = Math.max(10, W * 0.028);
+  x.beginPath(); x.arc(hx, ay, R + 3, 0, Math.PI*2); x.fillStyle = bg; x.fill();
+  x.beginPath(); x.arc(hx, ay, R, 0, Math.PI*2);
+  x.lineWidth = 3; x.strokeStyle = ink; x.stroke();
+  if (!o.esc){ x.beginPath(); x.arc(hx, ay, R*.55, 0, Math.PI*2); x.fillStyle = ink; x.fill(); }
+  // readout
+  Kit.$('seq').textContent = 'c = ' + fmt(c) + '  ·  z: ' + o.first.slice(0, 6).map(fmt).join(' → ') + ' …';
+  let key, txt;
+  if (o.esc){ key = 'esc'; txt = 'Blows up → c is NOT in the set'; }
+  else if (o.k === 1){ key = 'p1'; txt = 'Settles on 1 value → c is in the set'; }
+  else if (o.k === 2){ key = 'p2'; txt = 'Bounces between 2 values → in the set'; }
+  else if (o.k){ key = 'pk'; txt = `Cycles through ${o.k} values → in the set`; }
+  else { key = 'chaos'; txt = 'Never settles, never escapes → in the set'; }
+  Kit.$('stat').textContent = txt;
+  if (drag) visited.add(key);
+}
+
+function reveal(){
+  if (done || visited.size < 4) return;
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  requestAnimationFrame(() => Kit.onShow.card());
+}
+
+const cv = Kit.$('cv');
+function setFrom(e){
+  const r = cv.getBoundingClientRect();
+  const nc = C(e.clientX - r.left);
+  const prev = orbit(st.c), now = orbit(nc);
+  st.c = nc; render();
+  if ((prev.esc !== now.esc) || (prev.k !== now.k)) Kit.haptic('selection');
+}
+cv.addEventListener('pointerdown', e => { drag = true; gsap.killTweensOf(st); try { cv.setPointerCapture(e.pointerId); } catch(_){} setFrom(e); });
+cv.addEventListener('pointermove', e => { if (drag) setFrom(e); });
+const up = () => { if (!drag) return; drag = false; reveal(); };
+cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => {
+  const fit = Kit.fitCanvas(cv);
+  const W = fit.W, H = fit.H, f = Math.max(12, H * 0.03);
+  const Hm = Math.round(H * 0.44), bt = Hm + 6, bh = H - bt - f * 1.5;
+  ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  bg = getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#fff';
+  inkRGB = rgbOf(ink);
+  G = {x: fit.x, W, H, Hm, bt, bh};
+  build(); render();
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.fromTo(st, {c: 1}, {c: 0.45, duration: .9, yoyo: true, repeat: 1, delay: .3, ease: 'sine.inOut', onUpdate: render});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = cv.getBoundingClientRect(), y = r.top + G.Hm/2;
+  const ev = (t, c) => cv.dispatchEvent(new PointerEvent(t, {clientX: r.left + X(c), clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', 1);
+  for (const c of [0.6, 0.2, -0.3, -1, -1.3, -1.6, -1.8]){ ev('pointermove', c); await wait(40); }
+  ev('pointerup', -1.8); await wait(700);
+};
+Kit.single();
+</script>
+</html>

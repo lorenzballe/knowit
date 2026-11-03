@@ -1,0 +1,38 @@
+{
+  "id": "psychology-spinning-tube-trick-3",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.blind_spots",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Spin a tube marked X and O, pressing the O. What do you see?",
+  "answer": "The spinning tube is a series of images, and your brain stitches them together into one continuous picture. The side you press is the one you are looking at, so that is the image your brain shows you. Pressing the O side shows only O's, and pressing the X side shows only X's.",
+  "move": "What you see in motion is a stream of images your brain stitches into one.",
+  "keywords": [
+    "spinning tube",
+    "persistence of vision",
+    "brain",
+    "optical illusion",
+    "flicker"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A spinning tube marked X on one side and O on the other, with a finger pressing the O side. The page asks what you see: only O's, only X's, or X and O flickering in turn. It then asks you to make a bet and say how sure you are.",
+    "graded": false
+  },
+  "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=wQTVcaA3PQw&t=18s",
+  "written": "2026-11-03"
+}

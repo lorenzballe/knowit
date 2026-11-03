@@ -1,0 +1,242 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The 10 a.m. rule</title>
+<!-- A forest-fire cellular automaton (after Drossel & Schwabl, Physical Review Letters 69, 1629,
+     1992): trees grow on empty ground, lightning strikes at random, fire spreads to the four
+     touching trees. Left alone the forest stays patchy and fires come in every size, a power law
+     (self-organized criticality, Bak, Tang & Wiesenfeld 1987). The reader switches on the US Forest
+     Service's 10 a.m. policy (1935, dropped in 1978): crews douse every fire while it is small, so
+     tree cover climbs past the point where touching trees link edge to edge (site percolation,
+     about 59%), and the next fire that outgrows the crews burns most of the map.
+     Crews here douse a fire at its second step if six or fewer trees are burning: in 32 trial runs
+     no fire got away below 57% cover. Below the map a fire log: one bar per fire, as tall as the
+     share of the forest it burned.
+     Inspired by Veritasium, "You've (Likely) Been Playing The Game Of Life Wrong". Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column}
+#panel{flex:1;min-height:0;display:flex;flex-direction:column;background:#0c150e;border-radius:2.4cqh;overflow:hidden;position:relative;color:#f2f1ec}
+#map{flex:none;width:100%;display:block}
+#log{flex:1;min-height:0;width:100%;display:block;border-top:1px solid rgba(242,241,236,.16)}
+#cover{position:absolute;left:2.4cqw;top:1.1cqh;font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.06em;padding:.7cqh 2.2cqw;border-radius:99px;background:rgba(12,21,14,.78);color:#f2f1ec;font-variant-numeric:tabular-nums;transition:background .3s,color .3s}
+#cover.full{background:#ffd23f;color:#10100c}
+#go{align-self:flex-start;transition:opacity .2s}
+#go.wait{opacity:.45;pointer-events:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* The end line in two lengths: the smallest phone keeps the short one, so the log keeps its height. */
+.short{display:none}
+@container (max-height:520px){.answered .long{display:none}.answered .short{display:inline}}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Switch on the rule · forest-fire model">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE 10 A.M. RULE</span></div>
+    <h2 class="q">Why does putting out every small fire make the big ones worse?</h2>
+    <div class="stagebox" id="stage">
+      <div id="panel">
+        <canvas id="map" role="img" aria-label="A forest seen from above: trees grow, lightning starts fires, fires spread to touching trees."></canvas>
+        <svg id="log" role="img" aria-label="Fire log: one bar per fire, placed by when it started, as tall as the share of the forest it burned."></svg>
+        <span id="cover">TREES 45%</span>
+      </div>
+    </div>
+    <p class="say" id="say">Trees grow, lightning strikes, fire jumps to touching trees. Each bar is a fire: most small, a few run far, as in real records.</p>
+    <button class="btn" id="go">Put out every fire by 10 a.m.</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Small fires keep a forest patchy. Put them all out and it fills up for one giant.</div>
+    <div class="foot"><span class="src">Source · Malamud, Morein &amp; Turcotte, Science, 1998 · Forest History Society</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const card = Kit.$('card'), map = Kit.$('map'), log = Kit.$('log'), go = Kit.$('go'), say = Kit.$('say'), cover = Kit.$('cover');
+  const mulberry = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const rnd = mulberry(11);
+  // The forest's rules: growth per empty cell per step, lightning per step, and the crews.
+  const COLS = 84, GROW = .0025, STRIKE = .1, CREW_AT = 2, CREW_CAN = 6, WINDOW = 1500, PER_FRAME = 2, GIANT = .45;
+  let ROWS = 0, N = 0, cell, burnt, doused, born, by, ids = 0, t = 0, fires = [], logged = [], rule = -1, ended = false, endAt = 0;
+  let caught = 0, caughtTrees = 0, giant = null, escaped = null, trees = 0, crossed = false;
+
+  function init(rows) {
+    ROWS = rows; N = COLS * ROWS;
+    cell = new Uint8Array(N); burnt = new Int32Array(N).fill(-1e6); doused = new Int32Array(N).fill(-1e6); born = new Int32Array(N); by = new Int32Array(N).fill(-1);
+    for (let i = 0; i < N; i++) { cell[i] = rnd() < .42 ? 1 : 0; born[i] = -((rnd() * 900) | 0); }
+    // Let the forest find its own state before anyone looks.
+    for (let k = 0; k < 2600; k++) step();
+    logged = logged.filter(f => f.t0 > t - WINDOW);
+  }
+  const count = () => { let n = 0; for (let i = 0; i < N; i++) n += cell[i] === 1; return n; };
+  const near = (i, f) => { const x = i % COLS; if (x > 0) f(i - 1); if (x < COLS - 1) f(i + 1); if (i >= COLS) f(i - COLS); if (i < N - COLS) f(i + COLS); };
+  function step() {
+    if (!giant) for (let i = 0; i < N; i++) if (cell[i] === 0 && rnd() < GROW) { cell[i] = 1; born[i] = t; }
+    if (rnd() < STRIKE) {
+      const i = (rnd() * N) | 0;
+      if (cell[i] === 1 && !giant) { cell[i] = 2; const f = {id: ids++, t0: t, size: 1, age: 0, front: [i], rule: rule >= 0, out: false, kind: 'wild'}; fires.push(f); logged.push(f); }
+    }
+    const still = [];
+    for (const f of fires) {
+      // 10 a.m.: the crews reach the fire. Small enough, it is out; too big, it has got away.
+      if (f.rule && f.kind === 'wild' && f.age === CREW_AT) {
+        if (f.front.length <= CREW_CAN) { for (const i of f.front) { cell[i] = 0; burnt[i] = t; doused[i] = t; } f.front = []; f.kind = 'caught'; caught++; caughtTrees += f.size; }
+        else { f.kind = 'away'; if (!escaped) escaped = f; }
+      }
+      const next = [];
+      for (const i of f.front) { cell[i] = 0; burnt[i] = t; by[i] = f.id; near(i, j => { if (cell[j] === 1) { cell[j] = 2; next.push(j); f.size++; } }); }
+      f.front = next; f.age++;
+      if (next.length) still.push(f);
+      else { f.out = true; if (f.kind === 'away' && f.size > N * GIANT && !giant) { giant = f; endAt = t + 30; } else if (escaped === f) escaped = null; }
+    }
+    fires = still; t++;
+  }
+
+  // ---------- drawing ----------
+  // The ground and the fire, one pixel a cell, scaled up; then every tree as a round crown on top,
+  // fresh regrowth light and old stands dark: fuel that has built up looks it.
+  const YOUNG = [156, 236, 132], OLD = [12, 92, 48], SOIL = [20, 25, 19], CHAR = [54, 29, 23], AGES = 10, OLD_AT = 700;
+  let off = null, img = null, mx = null, mapW = 0, mapH = 0, crowns = [], flame = null;
+  function sprite(r, rgb, soft) {
+    const c = document.createElement('canvas'), px = Math.max(2, Math.ceil(r * 2 * devicePixelRatio));
+    c.width = c.height = px; const x = c.getContext('2d'), g = x.createRadialGradient(px / 2, px / 2, 0, px / 2, px / 2, px / 2);
+    const col = a => `rgba(${rgb.map(Math.round).join(',')},${a})`;
+    if (soft) { g.addColorStop(0, col(1)); g.addColorStop(.5, col(.85)); g.addColorStop(1, col(0)); }
+    else { g.addColorStop(0, col(1)); g.addColorStop(.55, col(1)); g.addColorStop(1, col(0)); }
+    x.fillStyle = g; x.beginPath(); x.arc(px / 2, px / 2, px / 2, 0, 7); x.fill(); return c;
+  }
+  function paintMap() {
+    if (!img) return;
+    // Once the forest holds still, its last embers have cooled and the giant's footprint is all charcoal.
+    const d = img.data, now = ended ? t + 12 : t, gid = ended && giant ? giant.id : -2; let n = 0;
+    for (let i = 0; i < N; i++) {
+      const c = cell[i], o = i * 4; let rgb = SOIL;
+      if (c === 1) n++;
+      else if (c === 2) rgb = [255, 200, 70];
+      else {
+        const since = now - burnt[i], wet = now - doused[i];
+        if (wet < 50) { const k = wet / 50; rgb = [130 + (SOIL[0] - 130) * k, 210 + (SOIL[1] - 210) * k, 255 + (SOIL[2] - 255) * k]; }
+        else if (since < 6) rgb = [255, 118, 34];
+        else if (by[i] === gid) rgb = CHAR;
+        else if (since < 170) { const k = (since - 6) / 164; rgb = [CHAR[0] + (SOIL[0] - CHAR[0]) * k, CHAR[1] + (SOIL[1] - CHAR[1]) * k, CHAR[2] + (SOIL[2] - CHAR[2]) * k]; }
+      }
+      d[o] = rgb[0]; d[o + 1] = rgb[1]; d[o + 2] = rgb[2]; d[o + 3] = 255;
+    }
+    trees = n;
+    off.getContext('2d').putImageData(img, 0, 0);
+    mx.imageSmoothingEnabled = false;
+    mx.drawImage(off, 0, 0, mapW, mapH);
+    const cw = mapW / COLS, ch = mapH / ROWS, r = cw * .9;
+    for (let i = 0; i < N; i++) {
+      const c = cell[i]; if (c === 0) continue;
+      const x = (i % COLS + .5) * cw, y = (((i / COLS) | 0) + .5) * ch;
+      if (c === 1) mx.drawImage(crowns[Math.min(AGES - 1, ((now - born[i]) / OLD_AT * AGES) | 0)], x - r, y - r, r * 2, r * 2);
+      else mx.drawImage(flame, x - cw * 1.1, y - cw * 1.1, cw * 2.2, cw * 2.2);
+    }
+    const pct = Math.round(100 * n / N);
+    cover.textContent = `TREES ${pct}%`;
+    cover.classList.toggle('full', pct >= 59);
+    if (rule >= 0 && pct >= 59) crossed = true;
+  }
+
+  const INK = '#f2f1ec', AMBER = '#ffb547', BLUE = '#8fdcff', RED = '#ff6a2a', PANEL = '#0c150e';
+  // The fire log, a seismograph of fires: one bar per fire, as tall as the share of the forest it burned.
+  function paintLog() {
+    log.innerHTML = '';
+    const {W, H} = Kit.fitSvg(log), cq = card.clientHeight / 100, fs = Math.max(11.5, 1.5 * cq);
+    const top = fs * 1.55, bot = H - 3, left = 0, right = W;
+    const now = ended ? endAt : t, from = rule >= 0 ? Math.min(now - WINDOW, rule - 800) : now - WINDOW, span = now - from;
+    const X = t0 => left + (t0 - from) / span * (right - left), Y = s => bot - Math.min(1, s / (N * .8)) * (bot - top);
+    const halo = {stroke: PANEL, 'stroke-width': 4, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
+    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-size': fs, 'font-weight': 700}, halo, a), log); e.textContent = s; return e; };
+    Kit.mk('line', {x1: left, x2: right, y1: Y(N / 2), y2: Y(N / 2), stroke: 'rgba(242,241,236,.14)', 'stroke-width': 1, 'stroke-dasharray': '2 4'}, log);
+    Kit.mk('line', {x1: left, x2: right, y1: bot, y2: bot, stroke: 'rgba(242,241,236,.3)', 'stroke-width': 1}, log);
+    let ruleX = null;
+    if (rule >= 0 && rule > from) { ruleX = X(rule); Kit.mk('line', {x1: ruleX, x2: ruleX, y1: 3, y2: bot, stroke: BLUE, 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, log); }
+    const bw = Math.max(2.5, W / 260 * WINDOW / span);
+    for (const f of logged) {
+      if (f.t0 < from || f.t0 > now) continue;
+      const col = f.kind === 'caught' ? BLUE : f.rule ? RED : AMBER, h = Math.max(3.5, bot - Y(f.size));
+      Kit.mk('rect', {x: X(f.t0) - bw / 2, y: bot - h, width: bw, height: h, rx: bw / 2, fill: col}, log);
+    }
+    // The legend, top left: a swatch shaped like the bars, then what they are.
+    const key = (y, col, said) => { Kit.mk('rect', Object.assign({x: left + 3, y: y - fs * .74, width: Math.max(3, fs * .3), height: fs * .8, rx: 1.5, fill: col}, halo), log); return txt(left + 3 + fs * .62, y, said, {fill: col}); };
+    const faint = txt(left + 2, Y(N / 2) - 5, 'half the map', {opacity: .62, 'font-weight': 600}), labels = [];
+    labels.push(key(top - fs * .5, AMBER, 'fires left to burn'));
+    if (rule >= 0) labels.push(key(top + fs * .78, BLUE, 'put out by 10 a.m.'));
+    const hit = (a, b) => a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
+    const g = giant || escaped;
+    if (g && g.t0 >= from) {
+      const x = X(g.t0), y = Y(g.size), side = x < right * .5, cap = yy => Math.min(Math.max(yy, top + fs * .4), bot - 4);
+      const e = txt(side ? x + bw + 4 : x - bw - 4, cap(y + fs * .8), `${g.size.toLocaleString('en-US')} trees`, {fill: RED, 'font-weight': 800, 'text-anchor': side ? 'start' : 'end'});
+      // never on the legend: below it, still inside the log
+      if (labels.some(o => hit(e.getBBox(), o.getBBox()))) e.setAttribute('y', cap(top + fs * 2.1));
+      labels.push(e);
+    }
+    // The faint line label gives way to anything it would sit on.
+    if (labels.some(o => hit(faint.getBBox(), o.getBBox()))) faint.remove();
+  }
+
+  function layout() {
+    const box = Kit.$('panel').getBoundingClientRect();
+    if (!ROWS) {
+      // The map takes about three fifths of the panel; its grid is fixed once, its cells square.
+      const h = box.height * .6;
+      init(Math.max(28, Math.min(80, Math.round(COLS * h / box.width))));
+      off = document.createElement('canvas'); off.width = COLS; off.height = ROWS;
+      img = off.getContext('2d').createImageData(COLS, ROWS);
+    }
+    map.style.height = (box.width * ROWS / COLS) + 'px';
+    const fit = Kit.fitCanvas(map); mx = fit.x; mapW = fit.W; mapH = fit.H;
+    const r = mapW / COLS * .9;
+    crowns = Array.from({length: AGES}, (_, k) => sprite(r, YOUNG.map((v, j) => v + (OLD[j] - v) * k / (AGES - 1))));
+    flame = sprite(mapW / COLS * 1.1, [255, 170, 50], true);
+  }
+  function draw() { layout(); paintMap(); paintLog(); }
+
+  // ---------- the story ----------
+  // Once the rule is on, every line stays up at least HOLD ms: while a new line waits its turn the
+  // forest crawls, and the fire that got away runs at half speed while its line is read.
+  const HOLD = 2600, said = {}, FULL = 'Trees now cover over 59%, about where touching trees start to link from edge to edge.', AWAY = 'Then one fire grows faster than the crews can reach it.';
+  let lastSaid = 0, pace = PER_FRAME, owed = 0;
+  const line = (html, now) => { say.innerHTML = html; lastSaid = now; };
+  function end() {
+    ended = true;
+    const n = giant.size.toLocaleString('en-US'), share = Math.round(100 * giant.size / (giant.size + count())), fires = caught === 1 ? 'fire' : 'fires';
+    say.innerHTML = `<span class="long">The packed forest carries it everywhere: <b>${n} trees</b>, ${share}% of the forest, in one fire. The crews had put out ${caught} ${fires}, ${caughtTrees} trees in all.</span><span class="short">One fire: <b>${n} trees</b>. The crews had put out ${caught} small ${caught === 1 ? 'one' : 'ones'}.</span>`;
+    Kit.hide('go'); card.classList.add('answered'); Kit.show('keep'); Kit.haptic('success');
+    requestAnimationFrame(draw);
+  }
+  function tell(now) {
+    if (ended || rule < 0) return;
+    const ready = now - lastSaid >= HOLD;
+    pace = PER_FRAME;
+    if (escaped && !said.away || giant && !said.away) { if (ready) { said.away = true; line(AWAY, now); pace = 1; } else pace = .25; }
+    else if (said.away && !ready) pace = 1;
+    else if (giant) end();
+    else if (crossed && !said.full && !escaped) { if (ready) { said.full = true; line(FULL, now); } else pace = .25; }
+  }
+  let running = false, last = 0;
+  function frame(now) {
+    if (!running) return;
+    owed = Math.min(owed + pace, 4);
+    for (; owed >= 1 && !(giant && !fires.length); owed--) step();
+    paintMap(); if (now - last > 45 || giant || escaped) { paintLog(); last = now; }
+    tell(now);
+    if (ended && !fires.length) { running = false; paintLog(); return; }
+    requestAnimationFrame(frame);
+  }
+  function start() { if (running || Kit.calm) return; running = true; requestAnimationFrame(frame); }
+  // Run on, without drawing, until the first giant fire has burned out.
+  function hurry() { for (let k = 0; k < 8000 && !(giant && !fires.length); k++) step(); if (giant && !ended) end(); paintMap(); paintLog(); }
+
+  function rule10() {
+    if (rule >= 0) return;
+    rule = t; go.classList.add('wait'); go.textContent = 'Every fire out by 10 a.m.'; Kit.haptic('light');
+    line('The US Forest Service’s rule from 1935 to 1978: crews catch each fire while it is small, and the trees fill in.', performance.now());
+    if (Kit.calm) hurry(); else paintLog();
+  }
+  go.addEventListener('click', rule10);
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = start;
+  Kit.play.card = async () => { rule10(); hurry(); await new Promise(r => setTimeout(r, Kit.calm ? 30 : 400)); };
+})();
+Kit.single();
+</script>
+</html>

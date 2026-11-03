@@ -1,0 +1,207 @@
+<!doctype html>
+<!-- slug: science-tyres-stir-cesium -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#wrap{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:1cqh;margin-top:1.2cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · zoom in">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FALLOUT</span></div>
+    <h2 class="q">How can heavy vehicles reactivate old radiation in Belarus?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="why" class="gone"><p class="body">Chernobyl's Cesium-137 fell on the land in 1986 and, over decades, settled into the soil. Heavy tyres churn that soil up, and the cesium rides the dust back into the air. With the war with Russia, heavy vehicles have done exactly this in recent years.</p></div>
+    </div>
+    <p class="say" id="say">Drag the truck across the field and watch the close-up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Buried radiation is not gone: disturb the soil and it moves again.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv');
+let ctx = null, W = 0, H = 0, f = 14, K = '#111', C = '#fff', FONT = 'sans-serif';
+let tu = null, started = false, done = false, ru0 = null, hintA = 1, lastHap = 0;
+const dots = [], grains = [], air = [];
+for (let i = 0; i < 260; i++) dots.push({u: Kit.rnd(), d: 0.012 + 0.07 * Math.pow(Kit.rnd(), 1.6), out: false});
+for (let i = 0; i < 1400; i++) grains.push({u: Kit.rnd(), d: Kit.rnd() * 0.3, s: 0.6 + Kit.rnd() * 0.9, t: Math.floor(Kit.rnd() * 4)});
+const GCOL = ['#8a6640', '#a07a4c', '#5e4228', '#c29a62'];
+
+function geo() {
+  const G = H * 0.62, tl = Math.min(W * 0.4, H * 0.5), r = tl * 0.1, tx = tu * W;
+  return {G, tl, r, tx, wheels: [tx - tl * 0.84, tx - tl * 0.64, tx - tl * 0.16]};
+}
+function setup() {
+  const o = Kit.fitCanvas(cv); ctx = o.x; W = o.W; H = o.H;
+  f = Math.max(13, Math.min(W, H) * 0.045);
+  const cs = getComputedStyle(Kit.$('card'));
+  K = cs.getPropertyValue('--k').trim() || '#111'; C = cs.getPropertyValue('--c').trim() || '#fff';
+  FONT = cs.getPropertyValue('--body').trim() || 'sans-serif';
+  if (!started) { const tl = Math.min(W * 0.4, H * 0.5); tu = (tl + 6) / W; }
+  if (ru0 === null || !started) ru0 = geo().wheels[0] / W;
+  draw();
+}
+function moveTo(nx) {
+  const g = geo(), old = g.wheels.slice();
+  const maxTx = W * 0.95 + g.tl * 0.84;
+  nx = Math.min(Math.max(nx, g.tx), maxTx);
+  if (nx <= g.tx) return;
+  tu = nx / W; started = true;
+  const ng = geo(), dx = nx - g.tx;
+  ng.wheels.forEach((w, i) => {
+    const a = old[i] - g.r * 0.9, b = w + g.r * 0.9;
+    for (const d of dots) {
+      if (d.out) continue; const px = d.u * W;
+      if (px > a && px < b && Kit.rnd() < 0.85) {
+        d.out = true;
+        air.push({u: d.u, v: (g.G - g.r * 0.2) / H, vu: (Kit.rnd() - 0.6) * 0.08, vv: -(0.18 + Kit.rnd() * 0.3), cs: true, life: 1});
+      }
+    }
+    const n = Math.min(6, Math.ceil(dx / 3));
+    for (let k = 0; k < n; k++) air.push({u: (w + (Kit.rnd() - 0.5) * g.r * 1.6) / W, v: g.G / H, vu: -(0.05 + Kit.rnd() * 0.12), vv: -(0.08 + Kit.rnd() * 0.2), cs: false, life: 0.6 + Kit.rnd() * 0.6});
+  });
+  const now = performance.now();
+  if (now - lastHap > 220) { Kit.haptic('light'); lastHap = now; }
+  if (!done && ng.wheels[0] >= W * 0.93) {
+    done = true; Kit.haptic('success');
+    setTimeout(() => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .12, duration: .45}); }, 600);
+  }
+}
+function update(dt) {
+  dt = Math.min(dt, 0.05);
+  for (let i = air.length - 1; i >= 0; i--) {
+    const p = air[i];
+    p.u += p.vu * dt; p.v += p.vv * dt;
+    if (p.cs) {
+      p.vv *= Math.pow(0.3, dt); p.vu *= Math.pow(0.5, dt);
+      p.vu += (0.01 + (Kit.rnd() - 0.5) * 0.06) * dt; p.vv += (Kit.rnd() - 0.5) * 0.06 * dt;
+      if (p.v < 0.1) p.vv = Math.abs(p.vv);
+    } else {
+      p.vv += 0.35 * dt; p.life -= dt;
+      if (p.life <= 0 || p.v > 0.64) air.splice(i, 1);
+    }
+  }
+}
+function scene(z) {
+  const g = geo(), G = g.G;
+  // soil
+  const gr = ctx.createLinearGradient(0, G, 0, H);
+  gr.addColorStop(0, '#7a5534'); gr.addColorStop(1, '#3a2716');
+  ctx.fillStyle = gr; ctx.fillRect(-W, G, W * 3, H);
+  ctx.fillStyle = '#5f7a34'; ctx.fillRect(-W, G - 2, W * 3, 4);
+  if (z) for (const s of grains) { ctx.fillStyle = GCOL[s.t]; ctx.beginPath(); ctx.arc(s.u * W, G + s.d * H * 0.35, s.s, 0, 7); ctx.fill(); }
+  // ruts
+  const a = ru0 * W, b = g.wheels[0];
+  if (b > a) { ctx.fillStyle = '#2a1b0f'; ctx.fillRect(a, G - 1, b - a, g.r * 0.35); }
+  // cesium still in soil
+  const rr = Math.max(1.8, H * 0.0065);
+  for (const d of dots) if (!d.out) {
+    ctx.fillStyle = '#ffd21f'; ctx.globalAlpha = z ? 1 : 0.75;
+    ctx.beginPath(); ctx.arc(d.u * W, G + d.d * H, rr, 0, 7); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  // air
+  for (const p of air) {
+    const px = p.u * W, py = p.v * H;
+    if (p.cs) {
+      ctx.globalAlpha = 0.25; ctx.fillStyle = '#ffe14a';
+      ctx.beginPath(); ctx.arc(px, py, rr * 2.6, 0, 7); ctx.fill();
+      ctx.globalAlpha = 1; ctx.fillStyle = '#ffd21f';
+      ctx.beginPath(); ctx.arc(px, py, rr, 0, 7); ctx.fill();
+      ctx.strokeStyle = '#7a5a00'; ctx.lineWidth = 0.6; ctx.stroke();
+    } else {
+      ctx.globalAlpha = Math.max(0, Math.min(1, p.life)) * 0.7; ctx.fillStyle = '#9a7650';
+      ctx.beginPath(); ctx.arc(px, py, rr * 1.4, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+    }
+  }
+  // truck
+  const tx = g.tx, tl = g.tl, r = g.r, wy = G - r * 0.75;
+  ctx.fillStyle = '#2c3416'; ctx.fillRect(tx - tl * 0.95, wy - r * 0.5, tl * 0.93, r * 0.55);
+  ctx.fillStyle = '#4f5d2a';
+  ctx.beginPath(); ctx.roundRect(tx - tl * 0.95, wy - r * 0.5 - tl * 0.3, tl * 0.62, tl * 0.3, 3); ctx.fill();
+  ctx.beginPath(); ctx.roundRect(tx - tl * 0.3, wy - r * 0.5 - tl * 0.25, tl * 0.29, tl * 0.25, [6, 10, 3, 3]); ctx.fill();
+  ctx.fillStyle = '#bcd0d8'; ctx.fillRect(tx - tl * 0.14, wy - r * 0.5 - tl * 0.21, tl * 0.1, tl * 0.09);
+  ctx.strokeStyle = '#2c3416'; ctx.lineWidth = 2;
+  for (let i = 1; i < 5; i++) { const lx = tx - tl * 0.95 + tl * 0.124 * i; ctx.beginPath(); ctx.moveTo(lx, wy - r * 0.5 - tl * 0.28); ctx.lineTo(lx, wy - r * 0.55); ctx.stroke(); }
+  for (const w of g.wheels) {
+    ctx.fillStyle = '#121212'; ctx.beginPath(); ctx.arc(w, wy, r, 0, 7); ctx.fill();
+    ctx.fillStyle = '#777'; ctx.beginPath(); ctx.arc(w, wy, r * 0.38, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#333'; ctx.lineWidth = Math.max(1, r * 0.12);
+    const ang = tx / r;
+    for (let k = 0; k < 8; k++) { const t = ang + k * Math.PI / 4; ctx.beginPath(); ctx.moveTo(w + Math.cos(t) * r * 0.75, wy + Math.sin(t) * r * 0.75); ctx.lineTo(w + Math.cos(t) * r, wy + Math.sin(t) * r); ctx.stroke(); }
+  }
+  return g;
+}
+function draw() {
+  if (!ctx) return;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = 'color-mix(in srgb,' + K + ' 6%,' + C + ')'; ctx.fillStyle = ctx.fillStyle; ctx.fillRect(0, 0, W, H);
+  const g = scene(false);
+  const fs = Math.max(12, f * 0.82);
+  ctx.font = `700 ${fs}px ${FONT}`; ctx.textBaseline = 'alphabetic';
+  // soil label
+  ctx.fillStyle = '#fff'; ctx.textAlign = 'left';
+  ctx.fillText('Cs-137 settled here since 1986', 8, H - fs * 0.7);
+  // lens
+  const L = Math.min(W * 0.19, H * 0.17), lx = L + 8, ly = L + 8, Z = 3.4;
+  const cx = g.wheels[1] + g.r * 0.4, cy = g.G + g.r * 0.1;
+  ctx.save(); ctx.beginPath(); ctx.arc(lx, ly, L, 0, 7); ctx.clip();
+  ctx.fillStyle = C; ctx.fillRect(lx - L, ly - L, 2 * L, 2 * L);
+  ctx.translate(lx, ly); ctx.scale(Z, Z); ctx.translate(-cx, -cy);
+  scene(true); ctx.restore();
+  ctx.strokeStyle = K; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(lx, ly, L, 0, 7); ctx.stroke();
+  ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(lx + L * 0.7, ly + L * 0.7); ctx.lineTo(cx, cy - g.r); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = K; ctx.font = `800 ${fs}px ${FONT}`;
+  ctx.fillText('CLOSE-UP', lx + L + 8, 8 + fs);
+  // air label
+  const nAir = air.filter(p => p.cs).length;
+  if (nAir > 8) {
+    ctx.textAlign = 'right'; ctx.fillStyle = K; ctx.font = `700 ${fs}px ${FONT}`;
+    ctx.globalAlpha = Math.min(1, (nAir - 8) / 20);
+    ctx.fillText('Cs-137 back in the air', W - 8, 8 + fs * 3.4);
+    ctx.globalAlpha = 1; ctx.textAlign = 'left';
+  }
+  // hint
+  if (!started) {
+    ctx.globalAlpha = hintA; ctx.fillStyle = K; ctx.font = `800 ${fs}px ${FONT}`;
+    const hx = g.tx + 10, hy = g.G - g.r - g.tl * 0.12;
+    if (hx + fs * 4 < W) ctx.fillText('drag →', hx, hy);
+    ctx.globalAlpha = 1;
+  }
+}
+let drag = null;
+cv.addEventListener('pointerdown', e => {
+  const r = cv.getBoundingClientRect(); drag = geo().tx - (e.clientX - r.left);
+  try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+});
+cv.addEventListener('pointermove', e => { if (drag === null) return; const r = cv.getBoundingClientRect(); moveTo(e.clientX - r.left + drag); });
+const end = () => { drag = null; };
+cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+gsap.ticker.add((t, dms) => { if (!ctx) return; update(dms / 1000); draw(); });
+new ResizeObserver(() => { if (ctx) setup(); }).observe(Kit.$('wrap'));
+Kit.onShow.card = setup;
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {a: 1}; gsap.to(o, {a: 0.25, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut', onUpdate: () => { hintA = o.a; }});
+};
+Kit.play.card = async () => {
+  const r = cv.getBoundingClientRect(), g = geo();
+  const y = r.top + g.G - g.r, x0 = r.left + g.tx - 5;
+  const ev = (t, x) => cv.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', x0);
+  for (let i = 1; i <= 40; i++) { ev('pointermove', x0 + (r.width * 1.4) * i / 40); await new Promise(s => setTimeout(s, 25)); }
+  ev('pointerup', x0 + r.width * 1.4);
+  await new Promise(s => setTimeout(s, 1400));
+};
+Kit.single();
+</script>
+</html>

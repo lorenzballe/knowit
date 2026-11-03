@@ -1,0 +1,37 @@
+{
+  "id": "nature-delta-salinity-dam",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Hoover Dam change the water in the Colorado River delta?",
+  "answer": "Holding back the river at the Hoover Dam meant much less fresh water reached the Colorado River delta. With less water to dilute it, the delta's water grew far saltier, and its ecosystems were badly hit.",
+  "move": "Starve a delta of river water and it turns salty.",
+  "keywords": [
+    "hoover dam",
+    "colorado river",
+    "river delta",
+    "salinity",
+    "water flow"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking how the Hoover Dam changed the water in the Colorado River delta, with a slider from little to most water held back upstream. Dragging the slider holds back more of the river at the dam."
+  },
+  "source": "Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=aye7SUnEHDc&t=415s",
+  "written": "2026-11-03"
+}

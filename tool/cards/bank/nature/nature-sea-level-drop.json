@@ -1,0 +1,37 @@
+{
+  "id": "nature-sea-level-drop",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.greenhouse_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much lower was sea level 20,000 years ago?",
+  "answer": "At the peak of the last ice age, 20,000 years ago, so much water was locked in land glaciers that the sea stood about 120 m lower. Shallow sea floor became dry land. Since then the ice has melted and the sea has risen 120 m.",
+  "move": "Ice on land is water taken from the sea: 20,000 years ago, the sea was 120 m lower.",
+  "keywords": [
+    "ice age",
+    "sea level",
+    "glaciers",
+    "continental shelf",
+    "ice sheets"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A vertical sea-level scale with a 0 m line for today's sea level and a level 120 m below it. The question asks how much lower the sea was 20,000 years ago. Tapping locks 20 m of sea water into ice at a time, showing the sea dropping."
+  },
+  "source": "Geopop, “LE ERE GLACIALI - VI SPIEGO COME, QUANDO E PERCHÉ AVVENGONO” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=Y9E4A6bAtFQ&t=1042s",
+  "written": "2026-11-03"
+}

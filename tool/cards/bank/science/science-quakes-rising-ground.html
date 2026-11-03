@@ -1,0 +1,175 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-quakes-rising-ground -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#sv{flex:1;min-height:0;width:100%;display:block}
+#sw{display:flex;gap:2.5cqw}
+.sb{flex:1;text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 3.5cqw;cursor:pointer;transition:background .25s,color .25s}
+.sb .h{display:block;font:700 max(2.1cqh,14px)/1.15 var(--body);overflow-wrap:anywhere}
+.sb .n{display:block;font:600 max(1.6cqh,12px)/1.2 var(--mono);opacity:.8;margin-top:.5cqh}
+.sb.up.on{background:#d62828;color:#fff;box-shadow:none}
+.sb.down.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Flip a switch · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
+    <h2 class="q">When do earthquakes strike as the Campi Flegrei ground breathes?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sv"></svg>
+      <div id="sw">
+        <button class="sb up" data-d="up"><span class="h">↑ Ground rises</span><span class="n" id="nUp">0 quakes</span></button>
+        <button class="sb down" data-d="down"><span class="h">↓ Ground sinks</span><span class="n" id="nDown">0 quakes</span></button>
+      </div>
+      <div id="why" class="gone"><p class="big">Only while it rises.</p><p class="body">The ground at Campi Flegrei breathes: it slowly rises, then sinks. Earthquakes come only in the rising phase, called positive bradyseism. While it sinks, there are none.</p></div>
+    </div>
+    <p class="say" id="say">Flip the switch: make the ground rise, then make it sink.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Campi Flegrei shakes on the way up, never on the way down.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {u: .3};
+let G = null, dir = 0, tw = null, amp = 0, trace = [], fast = false, lastSpawn = 0, finished = false;
+const counts = {up: 0, down: 0}, done = {up: false, down: false};
+const N = 90;
+for (let i = 0; i < N; i++) trace.push(0);
+
+function surf(x){ return G.y0 - S.u * G.B * Math.exp(-Math.pow((x - G.cx) / (G.W * .26), 2)); }
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('sv'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .8, 12);
+  G = {W, H, f, fs, cx: W / 2, sh: Math.max(H * .2, fs * 3.4)};
+  G.y0 = G.sh + H * .27; G.B = H * .13;
+  G.cy = H * .84;
+  const defs = Kit.mk('defs', {}, svg);
+  const rg = Kit.mk('radialGradient', {id: 'mg', cx: '50%', cy: '45%', r: '60%'}, defs);
+  Kit.mk('stop', {offset: '0%', 'stop-color': '#ffd166'}, rg);
+  Kit.mk('stop', {offset: '55%', 'stop-color': '#f3722c'}, rg);
+  Kit.mk('stop', {offset: '100%', 'stop-color': '#9d0208'}, rg);
+  // seismograph strip
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: G.sh, rx: Math.min(14, H * .03), fill: '#111', opacity: .9}, svg);
+  const lab = Kit.mk('text', {x: 10, y: fs * 1.3, fill: '#bbb', 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 600}, svg);
+  lab.textContent = 'SEISMOGRAPH';
+  G.state = Kit.mk('text', {x: W - 10, y: fs * 1.3, fill: '#bbb', 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700, 'text-anchor': 'end'}, svg);
+  G.trace = Kit.mk('path', {fill: 'none', stroke: '#7CFC9A', 'stroke-width': Math.max(1.6, H * .004), 'stroke-linejoin': 'round'}, svg);
+  // ground
+  G.gnd = Kit.mk('g', {}, svg);
+  G.ground = Kit.mk('path', {fill: '#8a6a4d'}, G.gnd);
+  G.l1 = Kit.mk('path', {fill: 'none', stroke: '#5e4633', 'stroke-width': 2, 'stroke-dasharray': '7 5'}, G.gnd);
+  G.l2 = Kit.mk('path', {fill: 'none', stroke: '#5e4633', 'stroke-width': 2, 'stroke-dasharray': '7 5'}, G.gnd);
+  G.top = Kit.mk('path', {fill: 'none', stroke: '#4a7c3a', 'stroke-width': Math.max(4, H * .012), 'stroke-linecap': 'round'}, G.gnd);
+  G.houses = Kit.mk('path', {fill: '#f4f1ea', stroke: '#333', 'stroke-width': 1.2}, G.gnd);
+  G.ch = Kit.mk('ellipse', {fill: 'url(#mg)'}, G.gnd);
+  G.mt = Kit.mk('text', {fill: '#4a0000', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle'}, G.gnd);
+  G.mt.textContent = 'magma';
+  G.q = Kit.mk('g', {}, G.gnd);
+  render(); drawTrace(); setState();
+};
+
+function render(){
+  if (!G) return;
+  const {W, H} = G; let d = '', d1 = '', d2 = '';
+  for (let i = 0; i <= 48; i++){
+    const x = W * i / 48, y = surf(x), k = (y - G.y0);
+    d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+    d1 += (i ? 'L' : 'M') + x.toFixed(1) + ',' + (G.y0 + H * .1 + k * .8).toFixed(1);
+    d2 += (i ? 'L' : 'M') + x.toFixed(1) + ',' + (G.y0 + H * .2 + k * .6).toFixed(1);
+  }
+  G.top.setAttribute('d', d);
+  G.ground.setAttribute('d', d + `L${W},${H}L0,${H}Z`);
+  G.l1.setAttribute('d', d1); G.l2.setAttribute('d', d2);
+  let hd = ''; const hw = Math.min(W * .045, H * .05), hh = hw * .8;
+  for (let i = -2; i <= 2; i++){
+    const x = G.cx + i * W * .085, y = surf(x) - 2;
+    hd += `M${x - hw / 2},${y}L${x - hw / 2},${y - hh}L${x},${y - hh - hw * .5}L${x + hw / 2},${y - hh}L${x + hw / 2},${y}Z`;
+  }
+  G.houses.setAttribute('d', hd);
+  const rx = W * .2 * (.85 + .3 * S.u), ry = H * .065 * (.85 + .35 * S.u);
+  G.ch.setAttribute('cx', G.cx); G.ch.setAttribute('cy', G.cy);
+  G.ch.setAttribute('rx', rx); G.ch.setAttribute('ry', ry);
+  G.mt.setAttribute('x', G.cx); G.mt.setAttribute('y', G.cy + G.fs * .35);
+}
+
+function drawTrace(){
+  if (!G) return;
+  const {W, sh} = G, x0 = 10, x1 = W - 10, mid = sh * .62, A = sh * .28;
+  let d = '';
+  trace.forEach((v, i) => { d += (i ? 'L' : 'M') + (x0 + (x1 - x0) * i / (N - 1)).toFixed(1) + ',' + (mid + v * A).toFixed(1); });
+  G.trace.setAttribute('d', d);
+}
+
+function setState(){
+  if (!G) return;
+  const t = dir === 'up' ? ['SHAKING', '#ff5a5a'] : dir === 'down' ? ['QUIET', '#7CFC9A'] : ['STILL', '#bbb'];
+  G.state.textContent = t[0]; G.state.setAttribute('fill', t[1]);
+}
+
+function spawn(){
+  const {W, H} = G;
+  const x = G.cx + (Kit.rnd() - .5) * W * .5;
+  const yt = surf(x) + H * .04, yb = G.cy - H * .08;
+  const y = yt + Kit.rnd() * Math.max(10, yb - yt);
+  const c = Kit.mk('circle', {cx: x, cy: y, r: 3, fill: '#ff2d2d', stroke: '#ff2d2d', 'stroke-width': 2, 'fill-opacity': .9}, G.q);
+  gsap.to(c, {attr: {r: G.f * 1.4}, 'fill-opacity': 0, opacity: 0, duration: fast ? .5 : 1, ease: 'power2.out', onComplete: () => c.remove()});
+  counts.up++; Kit.$('nUp').textContent = counts.up + ' quakes';
+  amp = Math.min(1, amp + .55);
+}
+
+gsap.ticker.add(() => {
+  if (!G) return;
+  const now = performance.now();
+  if (dir === 'up' && tw && tw.isActive() && now - lastSpawn > (fast ? 70 : 230) * (0.6 + Kit.rnd())){ lastSpawn = now; spawn(); }
+  amp *= .9;
+  trace.shift(); trace.push((Kit.rnd() - .5) * 2 * amp + (Kit.rnd() - .5) * .03);
+  drawTrace(); render();
+  G.gnd.setAttribute('transform', amp > .05 ? `translate(${((Kit.rnd() - .5) * amp * 5).toFixed(1)},${((Kit.rnd() - .5) * amp * 3).toFixed(1)})` : '');
+});
+
+function finish(){
+  if (finished) return; finished = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  Kit.onShow.card();
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+
+function go(d){
+  if (tw) tw.kill();
+  document.querySelectorAll('.sb').forEach(b => b.classList.toggle('on', b.dataset.d === d));
+  Kit.haptic('selection');
+  const target = d === 'up' ? 1 : 0, dist = Math.abs(target - S.u);
+  dir = d; setState();
+  if (dist < .02){
+    Kit.$('say').textContent = d === 'up' ? 'It is at the top. Now make it sink.' : 'It is at the bottom. Now make it rise.';
+    dir = 0; setState(); return;
+  }
+  tw = gsap.to(S, {u: target, duration: fast ? .8 : Math.max(.4, 4.5 * dist), ease: 'sine.inOut', onComplete(){
+    if (dist > .3) done[d] = true;
+    dir = 0; setState();
+    if (done.up && done.down) finish();
+    else Kit.$('say').textContent = d === 'up' ? 'Now flip it: make the ground sink.' : 'Now flip it: make the ground rise.';
+  }});
+}
+
+Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('.sb'); if (b) go(b.dataset.d); });
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.sb', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  fast = true;
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  document.querySelector('.sb.up').click(); await w(1100);
+  document.querySelector('.sb.down').click(); await w(1100);
+  await w(600);
+};
+Kit.single();
+</script>
+</html>

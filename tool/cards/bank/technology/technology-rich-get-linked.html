@@ -1,0 +1,231 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Found, so found again</title>
+<!-- A web of 120 pages grows one page at a time; each new page links to one older page. It picks a
+     page at random and either links to it, or first clicks the link on that page and links to the
+     page it lands on (the redirection model). The slider sets how often newcomers click through.
+     At 0% it is growth with random attachment: link counts stay small, no hubs (Barabasi, Albert &
+     Jeong, Physica A 272, 1999, "model A": exponential). Following a random link lands on a page with
+     probability in proportion to the links it already has, so clicking through is preferential
+     attachment; at 50% it is exactly the Barabasi-Albert rule (Barabasi & Albert, Science 286, 509,
+     1999), and in general link counts follow a power law with exponent 1 + 1/r (Krapivsky & Redner,
+     Physical Review E 63, 066123, 2001). Same random draws at every setting, so the same newcomers
+     arrive with different habits. Simulated (120 pages, 300 seeds): biggest page about 8 links in at
+     0%, 25 at 50%, 50 at 75%; pages nobody links to about 50%, 67%, 80%.
+     Inspired by Veritasium, "You've (Likely) Been Playing The Game Of Life Wrong" (2025).
+     Touch: drags (the slider). -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#web{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#ctl .head{display:flex;align-items:baseline;justify-content:space-between;gap:2cqw;font:700 max(1.8cqh,12.5px)/1.2 var(--body)}
+#ctl .head b{font:800 max(2.6cqh,17px)/1 var(--display);font-variant-numeric:tabular-nums}
+#r{-webkit-appearance:none;appearance:none;width:100%;height:max(3.6cqh,24px);background:transparent;margin:0;touch-action:none;cursor:pointer}
+#r::-webkit-slider-runnable-track{height:max(.8cqh,5px);border-radius:99px;background:color-mix(in srgb,var(--k) 24%,transparent)}
+#r::-moz-range-track{height:max(.8cqh,5px);border-radius:99px;background:color-mix(in srgb,var(--k) 24%,transparent)}
+#r::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.2cqh,21px);height:max(3.2cqh,21px);border-radius:50%;background:var(--k);margin-top:calc((max(.8cqh,5px) - max(3.2cqh,21px)) / 2);box-shadow:0 0 0 max(.55cqh,3.5px) var(--c)}
+#r::-moz-range-thumb{width:max(3.2cqh,21px);height:max(3.2cqh,21px);border:0;border-radius:50%;background:var(--k)}
+#ticks{position:relative;height:max(1.9cqh,13px);font:700 max(1.5cqh,11.5px)/1 var(--body);opacity:.72}
+#ticks span{position:absolute;top:0;white-space:nowrap}
+#ticks .mid{transform:translateX(-50%)}
+#ticks .end{right:0}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){.answered .in{gap:1.3cqh}.answered #ticks{display:none}}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Slide · grow a web">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GROW A WEB</span></div>
+    <h2 class="q">Why do the pages with the most links keep getting even more?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="web" role="img" aria-label="A web of 120 pages, each dot a page, sized by how many pages link to it."></svg>
+      <div id="ctl" data-drag>
+        <div class="head"><span>Newcomers who follow a link first</span><b id="val">0%</b></div>
+        <input id="r" type="range" min="0" max="90" step="5" value="0" aria-label="Share of newcomers who follow a link first">
+        <div id="ticks"><span>0%</span><span class="mid" style="left:55.6%">50% · Barabási–Albert</span><span class="end">90%</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Each newcomer lands on a random page. Some link to it; others first click that page’s link and link to wherever it leads.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Being found makes you easier to find.</div>
+    <div class="foot"><span class="src">Source · Barabási &amp; Albert, Science, 1999 · Krapivsky &amp; Redner, Physical Review E, 2001</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('web'), say = Kit.$('say'), card = Kit.$('card'), slider = Kit.$('r'), val = Kit.$('val');
+  const N = 120, INK = '#10100c';
+  // The same newcomers at every setting: one draw for the page each picks, one for whether it clicks through.
+  const U1 = [], U2 = [];
+  { let s = 20251126; const r = () => (s = (s * 16807) % 2147483647) / 2147483647; for (let i = 0; i < N; i++) { U1.push(r()); U2.push(r()); } }
+  function grow(share) {
+    const parent = [-1, 0];
+    for (let i = 2; i < N; i++) { let x = Math.floor(U1[i] * i); if (U2[i] < share && parent[x] >= 0) x = parent[x]; parent.push(x); }
+    const inn = new Array(N).fill(0); for (let i = 1; i < N; i++) inn[parent[i]]++;
+    return {parent, inn};
+  }
+  // Force layout in its own units, started from where the pages were, so a change of habit is a morph.
+  let abs = null;
+  function layout(net) {
+    const nodes = d3.range(N).map(i => abs ? {x: abs[i].x, y: abs[i].y} : {x: Math.cos(i * 2.4) * Math.sqrt(i) * 6, y: Math.sin(i * 2.4) * Math.sqrt(i) * 6});
+    const links = net.parent.slice(1).map((p, i) => ({source: i + 1, target: p}));
+    const sim = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).distance(l => 7 + 1.6 * Math.sqrt(net.inn[l.target.index ?? l.target])).strength(.9))
+      .force('charge', d3.forceManyBody().strength(-26).distanceMax(160))
+      .force('x', d3.forceX(0).strength(.07)).force('y', d3.forceY(0).strength(.09))
+      .force('hit', d3.forceCollide(i => 2.2 + 1.1 * Math.sqrt(net.inn[i.index])))
+      .stop();
+    for (let t = 0; t < 260; t++) sim.tick();
+    abs = nodes.map(n => ({x: n.x, y: n.y}));
+    return abs;
+  }
+  let net = grow(0), pos = layout(net), share = 0, G = null, shown = null, ended = false, band = -1, tween = null, growing = null;
+  const rad = (k, u) => (2 + 1.15 * Math.sqrt(k)) * u;
+
+  // Fit the layout to the drawing's box: screen positions and radii.
+  function fit(p, inn) {
+    const {W, H} = G, u = Math.max(.75, Math.min(1.25, Math.min(W, H) / 240));
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    p.forEach((q, i) => { const r = rad(inn[i], u) / 1; x0 = Math.min(x0, q.x); x1 = Math.max(x1, q.x); y0 = Math.min(y0, q.y); y1 = Math.max(y1, q.y); });
+    const top = G.fs * (G.short ? 1.7 : 2.9), pad = 8 + rad(Math.max(...inn), u);
+    const k = Math.min((W - 2 * pad) / Math.max(1, x1 - x0), (H - top - pad - 6) / Math.max(1, y1 - y0));
+    const ox = W / 2 - (x0 + x1) / 2 * k, oy = top + (H - top - pad) / 2 - (y0 + y1) / 2 * k + 2;
+    return p.map((q, i) => ({x: q.x * k + ox, y: q.y * k + oy, r: rad(inn[i], u)}));
+  }
+
+  function draw() {
+    svg.innerHTML = '';
+    const b = svg.getBoundingClientRect(); if (b.height < 30) return;
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(11.5, Math.min(14, H / 18));
+    G = {W, H, fs};
+    G.lines = Kit.mk('g', {stroke: INK, 'stroke-opacity': .38, 'stroke-width': 1.1}, svg);
+    G.dots = Kit.mk('g', {}, svg);
+    G.L = d3.range(1, N).map(() => Kit.mk('line', {}, G.lines));
+    G.D = d3.range(N).map(() => Kit.mk('circle', {fill: INK}, G.dots));
+    G.pill = Kit.mk('rect', {fill: '#ffffff', stroke: INK, 'stroke-width': 1.6}, svg);
+    G.tag = Kit.mk('text', {'font-family': 'Fraunces', 'font-weight': 800, 'font-size': fs * 1.1, fill: INK, 'text-anchor': 'middle', 'dominant-baseline': 'central'}, svg);
+    // The newcomer shown on each change of habit, on top of everything.
+    G.fx = Kit.mk('g', {}, svg);
+    // The two numbers, top left: two lines where there is room, one on a short drawing.
+    G.short = H < 230;
+    G.n1 = Kit.mk('text', {x: 2, y: fs * 1.05, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: INK}, svg);
+    G.n2 = Kit.mk('text', {x: 2, y: fs * 2.35, 'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs * .92, fill: INK, opacity: G.short ? 0 : .75}, svg);
+    shown = fit(pos, net.inn);
+    paint(shown, net.parent, net.inn, N);
+  }
+
+  // Draw pages 0..upto-1 at the given screen places (each with its radius), with link counts inn.
+  function paint(S, parent, inn, upto) {
+    let top = 0; for (let i = 1; i < upto; i++) if (inn[i] > inn[top]) top = i;
+    for (let i = 0; i < N; i++) {
+      const on = i < upto, c = G.D[i], q = S[i];
+      c.setAttribute('cx', q.x.toFixed(1)); c.setAttribute('cy', q.y.toFixed(1)); c.setAttribute('r', q.r.toFixed(2));
+      c.setAttribute('opacity', on ? 1 : 0);
+      c.setAttribute('fill', i === top ? '#ffffff' : INK); c.setAttribute('stroke', i === top ? INK : 'none'); c.setAttribute('stroke-width', 2);
+      if (i > 0) { const l = G.L[i - 1], pp = S[parent[i]]; l.setAttribute('x1', q.x.toFixed(1)); l.setAttribute('y1', q.y.toFixed(1)); l.setAttribute('x2', pp.x.toFixed(1)); l.setAttribute('y2', pp.y.toFixed(1)); l.setAttribute('opacity', on ? 1 : 0); }
+    }
+    const t = S[top], n = inn[top];
+    // The count sits inside the top page when it is big enough to hold it, else on a solid pill
+    // just above it (below, when the numbers at the top leave no room).
+    const inside = t.r >= G.fs * .78, ph = G.fs * 1.4;
+    G.tag.textContent = n; G.tag.setAttribute('x', t.x.toFixed(1));
+    let cy = t.y + .5;
+    if (!inside) { cy = t.y - t.r - ph / 2 - 3; if (cy - ph / 2 < G.fs * (G.short ? 1.8 : 3.1)) cy = t.y + t.r + ph / 2 + 3; }
+    G.tag.setAttribute('y', cy.toFixed(1));
+    if (inside) G.pill.setAttribute('opacity', 0);
+    else { const w = (G.tag.getComputedTextLength ? G.tag.getComputedTextLength() : G.fs * n.toString().length * .6) + G.fs * .9; G.pill.setAttribute('opacity', 1); G.pill.setAttribute('x', (t.x - w / 2).toFixed(1)); G.pill.setAttribute('y', (cy - ph / 2).toFixed(1)); G.pill.setAttribute('width', w.toFixed(1)); G.pill.setAttribute('height', ph.toFixed(1)); G.pill.setAttribute('rx', (ph / 2).toFixed(1)); }
+    let none = 0; for (let i = 0; i < upto; i++) if (!inn[i]) none++;
+    const pc = Math.round(none / Math.max(1, upto) * 100);
+    G.n1.textContent = G.short ? `Top page: ${n} links · ${pc}% get none` : `Most-linked page: ${n} links`;
+    G.n2.textContent = `Pages nobody links to: ${pc}%`;
+  }
+
+  // The web grows in front of the reader, page by page.
+  function growIn() {
+    if (Kit.calm || typeof gsap === 'undefined' || !G || share) return;
+    const o = {t: 2}, live = new Array(N).fill(0), u = shown[0].r / rad(net.inn[0], 1);
+    growing = gsap.to(o, {t: N, duration: 1.3, ease: 'power1.in', onUpdate: () => {
+      const upto = Math.floor(o.t); live.fill(0); for (let i = 1; i < upto; i++) live[net.parent[i]]++;
+      paint(shown.map((q, i) => ({x: q.x, y: q.y, r: rad(live[i], u)})), net.parent, live, upto);
+    }, onComplete: () => { growing = null; paint(shown, net.parent, net.inn, N); }});
+  }
+
+  const TXT = [
+    [0, '<b>Nobody follows a link.</b> Each newcomer links to the random page it landed on, so no page pulls far ahead.'],
+    [5, '<b>A few follow a link.</b> A link leads to a page in proportion to the links it already has. Small hubs appear.'],
+    [40, '<b>Half follow a link:</b> that alone is Barabási and Albert’s rich-get-richer rule. Big hubs, and most pages ignored.'],
+    [65, '<b>Most follow a link.</b> One page grabs a huge share of the links. Nobody chose it: it was found first, then found more.']
+  ];
+  function setShare(v) {
+    if (v === share) return;
+    share = v; val.textContent = v + '%';
+    if (growing) { growing.kill(); growing = null; }
+    const old = shown, nt = grow(v / 100);
+    net = nt; pos = layout(nt);
+    const to = fit(pos, nt.inn);
+    const b = TXT.reduce((k, [min], i) => v >= min ? i : k, 0);
+    if (b !== band && !ended) { band = b; say.innerHTML = TXT[b][1]; }
+    if (tween) tween.kill();
+    if (demoTl) { demoTl.kill(); demoTl = null; G && (G.fx.innerHTML = ''); }
+    if (Kit.calm || typeof gsap === 'undefined' || !old) { shown = to; paint(to, nt.parent, nt.inn, N); return; }
+    const o = {t: 0};
+    tween = gsap.to(o, {t: 1, duration: .6, ease: 'power2.out', onUpdate: () => {
+      const t = o.t; shown = to.map((q, i) => ({x: old[i].x + (q.x - old[i].x) * t, y: old[i].y + (q.y - old[i].y) * t, r: old[i].r + (q.r - old[i].r) * t}));
+      paint(shown, nt.parent, nt.inn, N);
+    }, onComplete: () => { tween = null; shown = to; paint(to, nt.parent, nt.inn, N); demo(); }});
+  }
+
+  // One newcomer, played out: it lands on a random page, follows that page's link if it is one who
+  // follows links, and links to the page it ends on.
+  let demoTl = null, dSeed = 11;
+  function demo() {
+    if (Kit.calm || typeof gsap === 'undefined' || !G || !shown) return;
+    if (demoTl) demoTl.kill(); G.fx.innerHTML = '';
+    const S = shown, nt = net, follow = share > 0;
+    dSeed = (dSeed * 16807) % 2147483647;
+    const a = 1 + dSeed % (N - 1), b = follow ? nt.parent[a] : a, A = S[a], B = S[b];
+    const cx = S.reduce((k, q) => k + q.x, 0) / N, cy = S.reduce((k, q) => k + q.y, 0) / N;
+    const away = (q, d) => { let dx = q.x - cx, dy = q.y - cy; const l = Math.hypot(dx, dy) || 1; dx /= l; dy /= l; return {x: Math.max(8, Math.min(G.W - 8, q.x + dx * d)), y: Math.max(G.fs * 2, Math.min(G.H - 8, q.y + dy * d))}; };
+    const P = away(A, 52), Q = away(B, B.r + 13), r = Math.max(4.5, G.fs * .42);
+    const path = Kit.mk('line', {x1: A.x, y1: A.y, x2: B.x, y2: B.y, stroke: '#ffffff', 'stroke-width': 3.2, 'stroke-linecap': 'round', opacity: 0}, G.fx);
+    const ringA = Kit.mk('circle', {cx: A.x, cy: A.y, r: A.r + 2, fill: 'none', stroke: INK, 'stroke-width': 2, opacity: 0}, G.fx);
+    const ringB = Kit.mk('circle', {cx: B.x, cy: B.y, r: B.r + 2, fill: 'none', stroke: INK, 'stroke-width': 2, opacity: 0}, G.fx);
+    const link = Kit.mk('line', {x1: Q.x, y1: Q.y, x2: Q.x, y2: Q.y, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: 0}, G.fx);
+    const dot = Kit.mk('circle', {cx: P.x, cy: P.y, r, fill: '#ffffff', stroke: INK, 'stroke-width': 2, opacity: 0}, G.fx);
+    demoTl = gsap.timeline({onComplete: () => { G.fx.innerHTML = ''; demoTl = null; }})
+      .fromTo(dot, {attr: {r: 0, opacity: 1}}, {attr: {r}, duration: .2, ease: 'back.out(2)'})
+      .to(dot, {attr: {cx: A.x, cy: A.y}, duration: .45, ease: 'power2.inOut'}, '+=.1')
+      .fromTo(ringA, {attr: {opacity: 1, r: A.r + 2}}, {attr: {opacity: 0, r: A.r + 16}, duration: .45, ease: 'power2.out'}, '<.4');
+    if (follow) demoTl.set(path, {attr: {opacity: .95}}, '>-.2').to(dot, {attr: {cx: B.x, cy: B.y}, duration: .5, ease: 'power1.inOut'}, '<')
+      .fromTo(ringB, {attr: {opacity: 1, r: B.r + 2}}, {attr: {opacity: 0, r: B.r + 16}, duration: .4, ease: 'power2.out'}, '<.32');
+    demoTl.to(dot, {attr: {cx: Q.x, cy: Q.y}, duration: .2, ease: 'power2.out'}, '>-.2')
+      .set(link, {attr: {opacity: 1}})
+      .to(link, {attr: {x2: B.x, y2: B.y}, duration: .25, ease: 'power2.out'})
+      .to([dot, link, path], {attr: {opacity: 0}, duration: .4}, '+=.55');
+  }
+  function finish() {
+    if (ended || share < 40) return;
+    ended = true;
+    say.innerHTML = '<b>That’s the reason.</b> A random link lands on a page in proportion to the links it already has. Nobody has to prefer the popular.';
+    Kit.show('keep'); card.classList.add('answered'); Kit.haptic('success');
+  }
+  slider.addEventListener('input', () => { setShare(+slider.value); Kit.haptic('selection'); });
+  slider.addEventListener('change', finish);
+  // A redraw keeps the current web; the words and the box above may have changed its size.
+  let seen = '';
+  const redraw = () => { draw(); };
+  Kit.onShow.card = redraw;
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = Math.round(b.width) + 'x' + Math.round(b.height); if (k !== seen && G) { seen = k; if (tween) { tween.kill(); tween = null; } draw(); } }).observe(Kit.$('stage'));
+  Kit.onEnter.card = growIn;
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 30 : ms));
+    for (const v of [25, 50, 75]) { slider.value = v; slider.dispatchEvent(new Event('input')); await wait(750); }
+    slider.dispatchEvent(new Event('change'));
+    await wait(700);
+  };
+})();
+Kit.single();
+</script>
+</html>

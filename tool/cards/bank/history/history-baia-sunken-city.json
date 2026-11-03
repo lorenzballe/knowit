@@ -1,0 +1,37 @@
+{
+  "id": "history-baia-sunken-city",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the 'Atlantis of Italy'?",
+  "answer": "Baia is a Roman city in the Campi Flegrei, a volcanic area where the ground itself moves. The land slowly sank through bradyseism, and the sea closed over its mosaics, colonnades and houses. Today the city lies 5 to 8 meters under the sea.",
+  "move": "Baia didn't fall into the sea: the volcanic ground carried it down.",
+  "keywords": [
+    "baia",
+    "campi_flegrei",
+    "bradyseism",
+    "roman_city",
+    "mosaics"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drone view of underwater Roman ruins at Baia, with columns and mosaics visible below the sea. Asks: what is the 'Atlantis of Italy'? Drag the coast down to see how the sinking volcanic ground submerged the city."
+  },
+  "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=z_mawLbnXNQ&t=633s",
+  "written": "2026-11-03"
+}

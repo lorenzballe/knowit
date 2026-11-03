@@ -1,0 +1,38 @@
+{
+  "id": "science-lowside-vs-highside",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes a low-side crash different from a high-side in MotoGP?",
+  "answer": "A low-side happens when the rear tyre loses grip, so the bike drops to the inside and you slide. A high-side happens when the tyre slides, then suddenly grips again, and the bike flicks you up and over. Rossi says the high-side with the gas closed throws you higher and harder.",
+  "move": "Low-side: grip goes and you slide. High-side: grip comes back and you fly.",
+  "keywords": [
+    "motogp",
+    "valentino rossi",
+    "mugello",
+    "low-side",
+    "high-side",
+    "rear tyre"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Flip between two MotoGP crash sequences and watch the rear tyre: one where grip is lost and the bike slides out to the inside, and one where grip returns and the rider is flicked up and over. Asks what makes a low-side crash different from a high-side."
+  },
+  "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=9AvpiROfyUM&t=1299s",
+  "written": "2026-11-03"
+}

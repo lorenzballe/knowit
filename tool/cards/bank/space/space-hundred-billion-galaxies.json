@@ -1,0 +1,38 @@
+{
+  "id": "space-hundred-billion-galaxies",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.sizes",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many galaxies are thought to exist in the observable universe?",
+  "answer": "As far as we know, the observable universe holds about 100 billion galaxies, roughly as many as the stars in our own galaxy. Each of those galaxies has billions of stars of its own.",
+  "move": "About 100 billion galaxies: as many as the stars in our galaxy.",
+  "keywords": [
+    "galaxies",
+    "stars",
+    "milky_way",
+    "observable_universe"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks how many galaxies exist in the observable universe. You drag to zoom out across a space view until you think you see every galaxy.",
+    "graded": false,
+    "ground": "#010203"
+  },
+  "source": "Veritasium, “How Far Away is the Moon? (The Scale of the Universe)” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=Bz9D6xba9Og",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "history-iran-executions-2025",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.repeated_mistakes",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many people did Iran execute in 2025, per Amnesty International?",
+  "answer": "Iran carried out about 4 of every 5 of the roughly 2,700 executions confirmed worldwide in 2025. Across the world, 54 states still apply the death penalty. Your slider guess can be compared against the number of people Iran executed.",
+  "move": "One country did about 80% of the world's confirmed executions in 2025.",
+  "keywords": [
+    "iran",
+    "death-penalty",
+    "amnesty-international",
+    "executions",
+    "2025"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking how many people Iran executed in 2025, per Amnesty International. A row of dots is filled with a slider up to the reader's guess, and a button locks the guess in.",
+    "graded": false
+  },
+  "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=gsZ-We120mw&t=34s",
+  "written": "2026-11-03"
+}

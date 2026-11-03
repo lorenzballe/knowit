@@ -1,0 +1,37 @@
+{
+  "id": "science-half-life-clock",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Why do unstable atoms transform at a constant rate?",
+  "answer": "Each unstable atom has the same fixed chance of changing in every moment, set by the forces in its nucleus. So each half-life turns half of whatever is left into another atom: 64, 32, 16, 8. After 3 half-lives, 8 atoms are still unchanged.",
+  "move": "A fixed chance per atom means a fixed fraction, not a fixed amount, disappears each half-life.",
+  "keywords": [
+    "half-life",
+    "radioactive decay",
+    "unstable atoms",
+    "radiometric dating",
+    "geology"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question asks how many of 64 unstable atoms are still unchanged after 3 half-lives, with answer choices None, 8 and 16. A row of atoms shows the count halving at each step: 64, 32, 16, then 8 left."
+  },
+  "source": "Geopop, “▶️ LE ERE GEOLOGICHE: COME DIAVOLO LE ABBIAMO RICOSTRUITE? |GeologiaPOP” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=VOvkzSDR2Tg&t=87s",
+  "written": "2026-11-03"
+}

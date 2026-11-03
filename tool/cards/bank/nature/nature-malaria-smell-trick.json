@@ -1,0 +1,36 @@
+{
+  "id": "nature-malaria-smell-trick",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.coevolution",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "If you catch malaria, how do you smell to mosquitoes?",
+  "answer": "The malaria parasite changes your body chemistry, so you give off a smell that draws mosquitoes. That makes you more attractive to them, and the mosquitoes carry the parasite on to the next person.",
+  "move": "Malaria makes you smell better to the very mosquitoes that spread it.",
+  "keywords": [
+    "malaria",
+    "mosquitoes",
+    "parasites",
+    "body odor"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Asks how a person with malaria smells to mosquitoes, with three choices: they keep away, they stay the same, or they flock to you. The reader picks one, then watches the mosquitoes."
+  },
+  "source": "Veritasium, “Why Mosquitoes Bite Some People More Than Others” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=38gVZgE39K8",
+  "written": "2026-11-03"
+}

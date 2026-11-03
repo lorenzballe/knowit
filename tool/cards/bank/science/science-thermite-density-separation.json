@@ -1,0 +1,37 @@
+{
+  "id": "science-thermite-density-separation",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In a thermite reaction, how does pure iron separate from the slag?",
+  "answer": "Liquid iron is more than twice as dense as liquid aluminum oxide, so it settles while the slag floats. When the bottom melts through, pure iron drains out first; the slag comes only after.",
+  "move": "Heavier liquid sinks: density sorts the metal from the slag for free.",
+  "keywords": [
+    "thermite",
+    "iron",
+    "slag",
+    "aluminum",
+    "veritasium"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section of a crucible in a thermite reaction. The question asks which liquid sinks to the bottom: liquid iron or aluminum oxide slag. The reader taps one answer."
+  },
+  "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=725s",
+  "written": "2026-11-03"
+}

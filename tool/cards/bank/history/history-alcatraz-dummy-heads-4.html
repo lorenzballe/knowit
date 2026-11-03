@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-alcatraz-dummy-heads -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#scene{display:block;width:100%;flex:1;min-height:0;border-radius:2cqh;touch-action:none;-webkit-user-select:none;user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:700 max(2.6cqh,15px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body)}
+#hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.7cqh 4cqw;cursor:pointer;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;display:flex;align-items:center;justify-content:center;gap:2cqw}
+#hold .ic{display:inline-block;width:max(2.4cqh,15px);height:max(2.4cqh,15px);border-radius:50%;background:radial-gradient(circle,#fff6c8 0 35%,#ffd35a 36% 60%,transparent 62%)}
+#hold.on{transform:scale(.98);opacity:.9}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ALCATRAZ</span></div>
+    <h2 class="q">How did they fool the guards for 6 months?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scene" aria-label="A prison bed at night with a sleeping figure under the blanket"></svg>
+      <div id="why" class="gone">
+        <p class="big">The sleeper was a fake head.</p>
+        <p class="body">They mixed soap, toilet paper and the cement dust from their digging, then painted it pink with the paint kit. Under the sheets, in the dark, a guard's quick flashlight check saw a man asleep.</p>
+      </div>
+    </div>
+    <button id="hold" type="button"><span class="ic"></span><span>Hold the flashlight</span></button>
+    <p class="say" id="say">You're the night guard. Hold to shine the light on the bed; let go and you move on.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A fake only has to survive the look it will actually get.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {p: 0, done: false, holding: false, tw: null};
+let G = {};
+const cl = v => Math.max(0, Math.min(1, v));
+const ease = t => 1 - Math.pow(1 - t, 3);
+
+function drawLayer(parent, lit, D) {
+  const {W, H, r, hx, hy, mt} = D;
+  const sheet = lit ? '#ece6d8' : '#161d30', edge = lit ? 'none' : '#2c3754';
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: lit ? '#4d453b' : '#0a0f1c'}, parent);
+  if (lit) Kit.mk('rect', {x: 0, y: H * .9, width: W, height: H * .1, fill: '#3a332b'}, parent);
+  [W * .08, W * .9].forEach(x => Kit.mk('rect', {x, y: mt + H * .1, width: W * .025, height: H * .82 - mt - H * .1 + H * .08, fill: lit ? '#5d4c38' : '#141a2a'}, parent));
+  Kit.mk('rect', {x: W * .06, y: mt, width: W * .88, height: H * .13, rx: 5, fill: sheet, stroke: edge, 'stroke-width': 1.5}, parent);
+  Kit.mk('ellipse', {cx: hx - r * .1, cy: mt - r * .05, rx: r * 1.9, ry: r * .62, fill: lit ? '#f6f2ea' : '#1a2236', stroke: edge, 'stroke-width': 1.5}, parent);
+  if (lit) {
+    // the clothes under the blanket
+    const c = Kit.mk('g', {}, parent);
+    Kit.mk('path', {d: `M${hx + r * .7},${mt + H * .1} L${hx + r * .7},${mt - r * .45} Q${W * .4},${mt - r * 1.1} ${W * .52},${mt - r * .5} L${W * .68},${mt - r * .35} Q${W * .82},${mt - r * .6} ${W * .88},${mt - r * .1} L${W * .88},${mt + H * .1} Z`, fill: '#47679a'}, c);
+    Kit.mk('path', {d: `M${W * .5},${mt - r * .45} L${W * .5},${mt + H * .08} M${W * .66},${mt - r * .3} L${W * .66},${mt + H * .08}`, stroke: '#2f4a73', 'stroke-width': 2, fill: 'none'}, c);
+  }
+  Kit.mk('ellipse', {cx: hx, cy: hy, rx: r * 1.05, ry: r, fill: lit ? '#e9a797' : '#232a3e', stroke: edge, 'stroke-width': 1.5}, parent);
+  if (lit) {
+    Kit.mk('path', {d: `M${hx - r * .55},${hy - r * .05} q${r * .2},${r * .16} ${r * .4},0`, stroke: '#7a4a40', 'stroke-width': Math.max(1.5, r * .06), fill: 'none', 'stroke-linecap': 'round'}, parent);
+    Kit.mk('path', {d: `M${hx - r * .6},${hy - r * .3} q${r * .22},${-r * .1} ${r * .45},0`, stroke: '#8a5a48', 'stroke-width': Math.max(1.5, r * .07), fill: 'none', 'stroke-linecap': 'round'}, parent);
+    Kit.mk('path', {d: `M${hx + r * .55},${hy - r * .2} q${r * .25},${r * .2} 0,${r * .4}`, stroke: '#c98676', 'stroke-width': Math.max(1.5, r * .07), fill: 'none'}, parent);
+    const cr = Kit.mk('g', {opacity: 0}, parent);
+    const crack = `M${hx - r * .2},${hy - r * .95} l${r * .12},${r * .3} l${-r * .1},${r * .22} l${r * .15},${r * .25} M${hx + r * .35},${hy - r * .8} l${-r * .1},${r * .28} l${r * .14},${r * .2} M${hx - r * .9},${hy + r * .1} l${r * .25},${r * .05} l${r * .1},${r * .2}`;
+    Kit.mk('path', {d: crack, stroke: '#6b4038', 'stroke-width': Math.max(1.2, r * .05), fill: 'none', 'stroke-linejoin': 'round'}, cr);
+    for (let i = 0; i < 46; i++) {
+      const a = Kit.rnd() * Math.PI * 2, d = Math.sqrt(Kit.rnd()) * .92;
+      Kit.mk('circle', {cx: hx + Math.cos(a) * d * r * 1.05, cy: hy + Math.sin(a) * d * r, r: Math.max(.8, r * (.02 + Kit.rnd() * .03)), fill: Kit.rnd() < .5 ? '#9a8f84' : '#fff4ee'}, cr);
+    }
+    G.cracks = cr;
+  }
+  const b = Kit.mk('path', {d: `M${hx + r * .55},${mt + H * .12} L${hx + r * .55},${mt - r * .55} Q${W * .4},${mt - r * 1.5} ${W * .52},${mt - r * .75} Q${W * .62},${mt - r * 1.1} ${W * .72},${mt - r * .7} Q${W * .85},${mt - r * 1.05} ${W * .93},${mt - r * .2} L${W * .93},${mt + H * .12} Z`, fill: lit ? '#7c8b9b' : '#1d2740', stroke: edge, 'stroke-width': 1.5}, parent);
+  if (lit) {
+    G.blanket = b;
+    b.style.opacity = 1;
+  }
+}
+
+function render(p) {
+  if (!G.D) return;
+  const {W, H, r, hx, hy} = G.D;
+  const sw = ease(cl(p / .3)), look = cl((p - .3) / .7);
+  const sx = W * 1.25 + (hx - W * 1.25) * sw, sy = H * .8 + (hy - H * .8) * sw;
+  const R = r * (3.4 - 1.5 * look);
+  G.spot.setAttribute('cx', sx); G.spot.setAttribute('cy', sy); G.spot.setAttribute('r', R);
+  G.lit.setAttribute('opacity', p > 0.001 ? .55 + .45 * look : 0);
+  const px = x => Math.max(0, Math.min(W, x)), py = y => Math.max(0, Math.min(H, y));
+  const bx = px(sx);
+  G.beam.setAttribute('points', `${px(G.src[0])},${py(G.src[1])} ${bx},${py(sy - R)} ${bx},${py(sy + R)}`);
+  G.beam.setAttribute('opacity', p > 0.001 ? .7 + .3 * look : 0);
+  G.cracks.setAttribute('opacity', cl(look * 1.6 - .25));
+  G.blanket.style.opacity = 1 - .8 * cl((look - .55) / .4);
+  G.labels.forEach((l, i) => l.setAttribute('opacity', cl((look - .18 - i * .17) / .12)));
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('scene');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const r = Math.min(W * .085, H * .1);
+  const mt = H * .66;
+  const D = {W, H, r, mt, hx: W * .19, hy: mt - r * .55};
+  G = {D, src: [W * .96, H * .04]};
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'spotclip'}, defs);
+  G.spot = Kit.mk('circle', {cx: -999, cy: 0, r: 1}, cp);
+  const gr = Kit.mk('radialGradient', {id: 'beamg', cx: '100%', cy: '0%', r: '120%'}, defs);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#fff3c4', 'stop-opacity': .35}, gr);
+  Kit.mk('stop', {offset: '1', 'stop-color': '#fff3c4', 'stop-opacity': .06}, gr);
+  drawLayer(Kit.mk('g', {}, svg), false, D);
+  Kit.mk('rect', {x: W * .92, y: 0, width: W * .08, height: H * .08, fill: '#1c2539'}, svg);
+  G.lit = Kit.mk('g', {'clip-path': 'url(#spotclip)', opacity: 0}, svg);
+  drawLayer(G.lit, true, D);
+  G.beam = Kit.mk('polygon', {points: '', fill: 'url(#beamg)', opacity: 0}, svg);
+  const names = ['soap', 'toilet paper', 'cement dust', 'pink paint'];
+  const tg = [[D.hx - r * .55, D.hy - r * .6], [D.hx - r * .05, D.hy - r * .9], [D.hx + r * .5, D.hy - r * .6], [D.hx + r * .85, D.hy - r * .1]];
+  const gap = fs * 1.75, top = Math.max(H * .07, fs * 1.1);
+  const lx = W * .5;
+  G.labels = names.map((n, i) => {
+    const g = Kit.mk('g', {opacity: 0}, svg), y = top + i * gap;
+    Kit.mk('line', {x1: lx - 6, y1: y - fs * .32, x2: tg[i][0], y2: tg[i][1], stroke: '#ffe28a', 'stroke-width': 1.5, 'stroke-dasharray': '3 3'}, g);
+    Kit.mk('circle', {cx: tg[i][0], cy: tg[i][1], r: 3, fill: '#ffe28a'}, g);
+    const t = Kit.mk('text', {x: lx, y, fill: '#fff6d6', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, g);
+    t.textContent = n;
+    return g;
+  });
+  render(S.p);
+};
+
+const say = t => { Kit.$('say').textContent = t; };
+function finish() {
+  if (S.done) return;
+  S.done = true; S.holding = false;
+  Kit.haptic('success');
+  Kit.$('hold').classList.remove('on');
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.onShow.card();
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power2.out'});
+}
+function start(e) {
+  if (e) e.preventDefault();
+  if (S.done || S.holding) return;
+  S.holding = true;
+  Kit.$('hold').classList.add('on');
+  Kit.haptic('light');
+  say('Keep the light on him…');
+  if (S.tw) S.tw.kill();
+  S.tw = gsap.to(S, {p: 1, duration: (1 - S.p) * 2.6, ease: 'none', onUpdate: () => render(S.p), onComplete: finish});
+}
+function stop() {
+  if (S.done || !S.holding) return;
+  S.holding = false;
+  Kit.$('hold').classList.remove('on');
+  if (S.tw) S.tw.kill();
+  say('You move on: one inmate, fast asleep. Hold longer to look closer.');
+  S.tw = gsap.to(S, {p: 0, duration: Math.max(.2, S.p * .7), ease: 'power2.in', onUpdate: () => render(S.p)});
+}
+const hb = Kit.$('hold');
+hb.addEventListener('pointerdown', start);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hb.addEventListener(ev, stop));
+hb.addEventListener('contextmenu', e => e.preventDefault());
+hb.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) start(e); });
+hb.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') stop(); });
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#scene, #hold', {opacity: 0, y: 10, stagger: .1, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  hb.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 3100));
+};
+Kit.single();
+</script>
+</html>

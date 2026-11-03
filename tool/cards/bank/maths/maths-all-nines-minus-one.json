@@ -1,0 +1,37 @@
+{
+  "id": "maths-all-nines-minus-one",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can an endless string of 9s equal –1?",
+  "answer": "Adding 1 to …99999999 makes the carry run left forever, so every digit turns to 0 and …9999 + 1 = …0000 = 0. A number that gives 0 when you add 1 is –1. The algebra agrees: with m = …9999, m – 10m = 9, so –9m = 9 and m = –1.",
+  "move": "In 10-adics, all 9s is –1: add 1 and the carry never stops.",
+  "keywords": [
+    "10-adic numbers",
+    "infinite nines",
+    "carrying",
+    "negative one",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Astute free card: 10-adic numbers asks how an endless string of 9s can equal –1. It shows adding 1 to …99999999 with tap-to-carry steps that turn every digit to 0, plus an algebra line giving m = –1."
+  },
+  "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=tRaq4aYPzCc&t=292s",
+  "written": "2026-11-03"
+}

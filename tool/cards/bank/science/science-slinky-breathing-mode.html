@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-slinky-breathing-mode -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%}
+#status{font:700 max(2.1cqh,13px)/1.25 var(--body);text-align:center;color:var(--k);margin:0}
+#ctl{display:flex;align-items:center;gap:3cqw;font:700 max(1.7cqh,12px)/1.2 var(--body);color:var(--k)}
+#ctl span{white-space:nowrap}
+#k{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{margin:0}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · match the beat">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MODEL CHECK</span></div>
+    <h2 class="q">How can a slinky's breathing tell you if your model is right?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="sv"></svg></div>
+      <p id="status">Your model breathes slower than the real slinky.</p>
+      <div id="ctl"><span>Softer</span><input id="k" type="range" min="0.4" max="4" step="0.01" value="0.6" aria-label="Model stiffness"><span>Stiffer</span></div>
+      <div id="why" class="gone">
+        <p class="body">This is the breathing mode: every turn simply moves in and out together. Its period depends in a simple way on the slinky's parameters. So if the model's numbers give the right beat, the numbers pass the test.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the stiffness until your model breathes in step with the real slinky.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A simple mode with a predictable period is a quick check on a model's numbers.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const T0 = 1.6, KTRUE = 1.7, N = 24;
+let k = 0.6, Tm = T0 * Math.sqrt(KTRUE / k), pr = 0, pm = 0, done = false, matchSince = 0;
+let G = null; // drawing state
+
+function modelT(){ return T0 * Math.sqrt(KTRUE / k); }
+
+Kit.onShow.card = () => {
+  const sv = Kit.$('sv');
+  const {W, H, f} = Kit.fitSvg(sv);
+  sv.innerHTML = '';
+  const ink = 'var(--k)';
+  const top = Math.max(H * 0.13, f * 2.6);
+  const len = (H - top) * 0.78;
+  const rx = Math.min(W * 0.17, H * 0.16), ry = Math.max(rx * 0.22, 3);
+  const xs = [W * 0.28, W * 0.72];
+  Kit.mk('line', {x1: W * 0.06, x2: W * 0.94, y1: top, y2: top, stroke: ink, 'stroke-width': Math.max(f * 0.35, 4), 'stroke-linecap': 'round'}, sv);
+  const names = ['REAL SLINKY', 'YOUR MODEL'];
+  const sl = [];
+  xs.forEach((x, j) => {
+    const t = Kit.mk('text', {x, y: top - f * 1.1, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': Math.max(f * 0.9, 12), 'letter-spacing': '0.08em'}, sv);
+    t.textContent = names[j];
+    const g = Kit.mk('g', {opacity: j ? 0.6 : 1}, sv);
+    const coils = [];
+    for (let i = 0; i < N; i++) coils.push(Kit.mk('ellipse', {cx: x, rx, ry, fill: 'none', stroke: ink, 'stroke-width': Math.max(f * 0.2, 2.4)}, g));
+    sl.push({g, coils});
+  });
+  G = {sl, top, len};
+  draw();
+};
+
+function draw(){
+  if (!G) return;
+  const ph = [pr, pm];
+  G.sl.forEach((s, j) => {
+    const sc = 1 + 0.13 * Math.cos(2 * Math.PI * ph[j]);
+    s.coils.forEach((c, i) => {
+      const u = (i + 1) / N;                 // 0 top → 1 bottom
+      const z = G.len * (1 - (1 - u) * (1 - u)) * sc; // stretched more near the top
+      c.setAttribute('cy', G.top + z);
+    });
+  });
+}
+
+function status(){
+  const r = Tm / T0;
+  const st = Kit.$('status');
+  if (Math.abs(r - 1) < 0.04) st.textContent = 'In step! The model’s stiffness passes the test.';
+  else st.textContent = r > 1 ? 'Your model breathes slower than the real slinky.' : 'Your model breathes faster than the real slinky.';
+}
+
+function finish(){
+  if (done) return; done = true;
+  Tm = T0; pm = pr;
+  Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.$('status').textContent = 'In step! The model’s stiffness passes the test.';
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+const kin = Kit.$('k');
+kin.addEventListener('input', () => {
+  if (done) return;
+  k = +kin.value; Tm = modelT(); status();
+  if (Math.abs(Tm / T0 - 1) < 0.04) Kit.haptic('light');
+});
+kin.addEventListener('change', () => { if (!done && Math.abs(Tm / T0 - 1) < 0.04) finish(); });
+
+let last = 0;
+gsap.ticker.add((time) => {
+  const dt = last ? Math.min(time - last, 0.1) : 0; last = time;
+  if (Kit.calm && !done) { pr += dt / (T0 * 3); pm += dt / (Tm * 3); }
+  else { pr += dt / T0; pm += done ? dt / T0 : dt / Tm; }
+  if (done) pm = pr;
+  draw();
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#sv', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+
+Kit.play.card = async () => {
+  kin.value = '1.7';
+  kin.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 100));
+  kin.dispatchEvent(new Event('change', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

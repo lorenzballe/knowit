@@ -1,0 +1,36 @@
+{
+  "id": "science-teflon-mechanical-grip",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "How does Teflon stick to pans without chemical bonding?",
+  "answer": "Sandblasting cuts nanoscopic grooves into the pan. When heated, the water and C8 evaporate, but the Teflon only softens and flows into the grooves. There is no chemical bond, so the Teflon is mechanically stuck.",
+  "move": "Teflon doesn't glue to the pan; it locks into a rough surface.",
+  "keywords": [
+    "teflon",
+    "frying_pan",
+    "sandblasting",
+    "c8"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two close-up views of frying pan surfaces, one smooth and one sandblasted. The question asks which pan keeps its Teflon coating when scraped. Three choices are offered: smooth, sandblasted, or same."
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=662s",
+  "written": "2026-11-03"
+}

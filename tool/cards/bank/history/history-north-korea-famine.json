@@ -1,0 +1,37 @@
+{
+  "id": "history-north-korea-famine",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.what_came_after",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How many people died in the 1990s North Korean famine?",
+  "answer": "The correct answer is more than 3.5 million people, who died of hunger during the 1990s North Korean famine. Each dark dot on the page stands for 10,000 people who starved in North Korea in that decade. A defector names one cause: the collapse of the Soviet Union.",
+  "move": "In the 1990s, over 3.5 million North Koreans died of hunger.",
+  "keywords": [
+    "north_korea",
+    "famine",
+    "soviet_union",
+    "starvation",
+    "defectors"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A grid of dark dots, each standing for 10,000 people who starved in North Korea in the 1990s. The question asks how many died: about 100,000, about 1 million, or more than 3.5 million."
+  },
+  "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=uLqfa27S4TQ&t=621s",
+  "written": "2026-11-03"
+}

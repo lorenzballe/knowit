@@ -1,0 +1,37 @@
+{
+  "id": "science-big-globe-spin",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A globe twice as wide, same mass: how many pushes to spin as fast?",
+  "answer": "The answer is 4 pushes. Twice the radius puts the same mass twice as far from the axis, and spin inertia grows with the radius squared. So each push speeds the big globe only a quarter as much, so four pushes match the small globe's spin.",
+  "move": "Double the size, four times as hard to spin up fast.",
+  "keywords": [
+    "globe",
+    "moment of inertia",
+    "spin",
+    "earth rotation",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card asking: a globe twice as wide, same mass, how many pushes to spin as fast as the small globe that got one push? Choices: 2, 4, 8. Revealed answer: 4 pushes, because spin inertia scales with radius squared."
+  },
+  "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=9zso7ChaQXQ&t=121s",
+  "written": "2026-11-03"
+}

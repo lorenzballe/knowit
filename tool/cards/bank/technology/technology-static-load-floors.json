@@ -1,0 +1,38 @@
+{
+  "id": "technology-static-load-floors",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many extra floors could the intact floor below the impact hold?",
+  "answer": "Engineers calculated that the columns under the intact floor could carry 11 extra floors, applied statically: set down and held still. The top of the tower did not rest there. It fell.",
+  "move": "A weight that sits still is not the same as a weight that falls.",
+  "keywords": [
+    "twin_towers",
+    "static_load",
+    "september_11",
+    "structural_engineering",
+    "new_york"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card asking how many extra floors the intact floor below the impact could hold. Two choices are shown, 6 floors and 11 floors, with a button to lock in a guess before the reveal.",
+    "graded": false
+  },
+  "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=TS8CgfiGFEE&t=500s",
+  "written": "2026-11-03"
+}

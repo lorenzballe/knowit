@@ -1,0 +1,183 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-kola-coring -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.4cqh;flex:1;min-height:0}
+#pic{position:relative;flex:1;min-height:0}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">KOLA WELL</span></div>
+    <h2 class="q">Why did drilling the Kola hole get much slower after 7 km?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">The rock got too hard to break</button>
+        <button class="opt" data-i="1">It began pulling up whole rock cylinders</button>
+        <button class="opt" data-i="2">The pipe got too heavy to turn</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It switched to coring</p><p class="body">The drill stopped smashing the rock to go down. Instead it cut out intact rock cylinders, 6 cm across, to bring them up whole. That care is slow: the next 2 km took three more years.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch both drills at work.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Taking rock out whole costs far more time than smashing through it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, running = false, tl = null;
+const V = {show: 0, l: 0, r: 0, lift: 0, lab: 0};
+let S = null;
+const NS = 'http://www.w3.org/2000/svg';
+const ROCK = ['#6e5c4f', '#86705f', '#5a4b42', '#93806e', '#74604f', '#62524a'];
+const STEEL = '#cfd7de', STEEL_D = '#48525a', HOLE = '#1a1512';
+
+function draw() {
+  const svg = Kit.$('svg');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * 0.85);
+  const top = H * 0.44, D = H * 0.2, gap = H * 0.02, depthL = H * 0.46;
+  const bw = Math.min(W * 0.2, H * 0.16), cw = bw * 0.6, t = (bw - cw) / 2;
+  const lx = W * 0.27, cx = W * 0.72;
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'coreclip'}, defs);
+  Kit.mk('rect', {x: cx - cw / 2, y: top, width: cw, height: D}, cp);
+
+  // rock layers
+  const bands = []; let y = top, i = 0;
+  while (y < H) { const h = H * (0.035 + 0.03 * ((i * 37) % 5) / 4); bands.push({y, h, col: ROCK[i % ROCK.length]}); y += h; i++; }
+  bands.forEach(b => Kit.mk('rect', {x: 0, y: b.y, width: W, height: b.h + 0.5, fill: b.col}, svg));
+  Kit.mk('line', {x1: 0, x2: W, y1: top, y2: top, stroke: 'var(--k)', 'stroke-width': Math.max(1.5, H * 0.005)}, svg);
+
+  const holeL = Kit.mk('rect', {x: lx - bw / 2, y: top, width: bw, height: 0, fill: HOLE}, svg);
+  const holeR = Kit.mk('rect', {x: cx - bw / 2, y: top, width: bw, height: 0, fill: HOLE}, svg);
+
+  // ordinary bit: smashes everything
+  const bitL = Kit.mk('g', {}, svg);
+  const bH = bw * 0.55;
+  Kit.mk('rect', {x: lx - bw * 0.18, y: -H, width: bw * 0.36, height: H + top - bH, fill: STEEL, stroke: STEEL_D, 'stroke-width': 1.5}, bitL);
+  Kit.mk('rect', {x: lx - bw / 2, y: top - bH, width: bw, height: bH * 0.6, rx: bw * 0.06, fill: STEEL, stroke: STEEL_D, 'stroke-width': 1.5}, bitL);
+  for (let k = 0; k < 4; k++) {
+    const x0 = lx - bw / 2 + k * bw / 4;
+    Kit.mk('polygon', {points: `${x0},${top - bH * 0.4} ${x0 + bw / 4},${top - bH * 0.4} ${x0 + bw / 8},${top}`, fill: '#9aa4ad', stroke: STEEL_D, 'stroke-width': 1.2}, bitL);
+  }
+
+  // coring bit: a hollow tube with a ring of teeth
+  const tube = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: cx - cw / 2, y: -H, width: cw, height: H + top, fill: '#000', opacity: .28}, tube);
+  const tH = t * 1.3;
+  [cx - bw / 2, cx + cw / 2].forEach(x0 => {
+    Kit.mk('rect', {x: x0, y: -H, width: t, height: H + top - tH, fill: STEEL, stroke: STEEL_D, 'stroke-width': 1.5}, tube);
+    for (let k = 0; k < 2; k++) {
+      const a = x0 + k * t / 2;
+      Kit.mk('polygon', {points: `${a},${top - tH} ${a + t / 2},${top - tH} ${a + t / 4},${top}`, fill: '#9aa4ad', stroke: STEEL_D, 'stroke-width': 1}, tube);
+    }
+  });
+
+  // the core: the rock itself, cut free
+  const core = Kit.mk('g', {}, svg);
+  const inner = Kit.mk('g', {'clip-path': 'url(#coreclip)'}, core);
+  bands.filter(b => b.y < top + D).forEach(b => Kit.mk('rect', {x: cx - cw / 2, y: b.y, width: cw, height: b.h + 0.5, fill: b.col}, inner));
+  const outline = Kit.mk('rect', {x: cx - cw / 2, y: top, width: cw, height: 0, fill: 'none', stroke: '#f3e6d6', 'stroke-width': Math.max(1.5, H * 0.005)}, core);
+
+  const chips = Kit.mk('g', {}, svg);
+
+  // lane labels
+  const labs = Kit.mk('g', {opacity: 0}, svg);
+  const lab = (x, a, b) => {
+    const t1 = Kit.mk('text', {x, y: fs * 1.1, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, labs); t1.textContent = a;
+    const t2 = Kit.mk('text', {x, y: fs * 2.45, 'text-anchor': 'middle', fill: 'var(--k)', opacity: .7, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs}, labs); t2.textContent = b;
+  };
+  lab(lx, 'Ordinary drilling', 'smash it: fast');
+  lab(cx, 'Coring', 'keep it whole: slow');
+
+  // 6 cm dimension, shown once the core is up
+  const dim = Kit.mk('g', {opacity: 0}, svg);
+  const cTop = top - gap - D, dy = cTop - Math.max(6, fs * 0.5);
+  const sw = Math.max(1.5, H * 0.005);
+  Kit.mk('line', {x1: cx - cw / 2, x2: cx + cw / 2, y1: dy, y2: dy, stroke: 'var(--k)', 'stroke-width': sw}, dim);
+  [cx - cw / 2, cx + cw / 2].forEach(x => Kit.mk('line', {x1: x, x2: x, y1: dy - fs * 0.35, y2: dy + fs * 0.35, stroke: 'var(--k)', 'stroke-width': sw}, dim));
+  const dY = Math.max(cTop + D * 0.4, fs * 2.45 + fs * 0.5 + fs * 1.3);
+  const d1 = Kit.mk('text', {x: cx - bw / 2 - fs * 0.4, y: dY, 'text-anchor': 'end', fill: 'var(--k)', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.25}, dim); d1.textContent = '6 cm';
+  const d2 = Kit.mk('text', {x: cx - bw / 2 - fs * 0.4, y: dY + fs * 1.45, 'text-anchor': 'end', fill: 'var(--k)', opacity: .75, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs}, dim); d2.textContent = 'intact core';
+
+  S = {W, H, top, D, gap, depthL, bw, lx, cx, holeL, holeR, bitL, tube, core, outline, chips, labs, dim};
+  upd();
+}
+
+function upd() {
+  if (!S) return;
+  const dl = V.l * S.depthL, dr = V.r * S.D, up = V.lift * (S.D + S.gap);
+  S.holeL.setAttribute('height', dl);
+  S.bitL.setAttribute('transform', `translate(0,${dl})`);
+  S.holeR.setAttribute('height', dr);
+  S.outline.setAttribute('height', dr);
+  S.tube.setAttribute('transform', `translate(0,${dr - up})`);
+  S.core.setAttribute('transform', `translate(0,${-up})`);
+  S.labs.setAttribute('opacity', V.show);
+  S.dim.setAttribute('opacity', V.lab);
+}
+
+function spawn(x, w, y, n, size) {
+  for (let k = 0; k < n; k++) {
+    const s = size * (0.5 + Kit.rnd());
+    const px = x + (Kit.rnd() - .5) * w;
+    const p = Kit.mk('polygon', {points: `0,0 ${s},${s * .3} ${s * .6},${s}`, fill: ROCK[k % 4], stroke: '#f3e6d6', 'stroke-width': .6}, S.chips);
+    const side = px < x ? -1 : 1;
+    gsap.fromTo(p, {x: px, y}, {x: px + side * S.bw * (0.5 + Kit.rnd()), y: S.top - S.H * 0.03 * Kit.rnd(), rotation: 360 * Kit.rnd(), duration: .6, ease: 'power2.out', onComplete: () => gsap.to(p, {opacity: 0, duration: .5, onComplete: () => p.remove()})});
+  }
+}
+function chipsL() { if (!running || V.l >= 1 || !S) return; spawn(S.lx, S.bw, S.top + V.l * S.depthL - 4, 3, S.bw * 0.14); gsap.delayedCall(.07, chipsL); }
+function dustR() { if (!running || V.r >= 1 || !S) return; spawn(S.cx, S.bw, S.top + V.r * S.D - 4, 1, S.bw * 0.07); gsap.delayedCall(.35, dustR); }
+
+function run() {
+  running = true;
+  tl = gsap.timeline({onUpdate: upd, onComplete: () => { running = false; upd(); }});
+  tl.to(V, {show: 1, duration: .4})
+    .to(V, {l: 1, duration: 1.5, ease: 'none'}, '<')
+    .to(V, {r: 1, duration: 4.2, ease: 'none'}, '<')
+    .to(V, {lift: 1, duration: 1.3, ease: 'power2.inOut'})
+    .to(V, {lab: 1, duration: .4});
+  if (Kit.calm) { tl.progress(1); return; }
+  chipsL(); dustR();
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  run();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tl) { running = false; tl.progress(1); upd(); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

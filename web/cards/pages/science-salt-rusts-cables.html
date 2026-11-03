@@ -1,0 +1,202 @@
+<!doctype html>
+<!-- slug: science-salt-rusts-cables -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#row{display:flex;align-items:center;gap:3cqw}
+#go{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 5cqw;cursor:pointer}
+#go:disabled{opacity:.45;cursor:default}
+#dots{display:flex;gap:1.4cqw}
+#dots i{width:max(1cqh,7px);height:max(1cqh,7px);border-radius:50%;background:color-mix(in srgb,var(--k) 25%,transparent)}
+#dots i.on{background:var(--k)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Zoom in · step by step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CORROSION</span></div>
+    <h2 class="q">How did the sea air help bring down Genoa's Morandi bridge?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="row"><button id="go">Zoom in on a stay</button><div id="dots"><i class="on"></i><i></i><i></i><i></i></div></div>
+      <div id="why" class="gone"><p class="body">Humid, salty sea air seeped into the holes in the concrete of the stays. Inside, it slowly rusted the steel cables, out of sight, weakening the stays. The collapse started from there.</p></div>
+    </div>
+    <p class="say" id="say">Tap to zoom in, from the bridge down to its steel.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Concrete full of holes can't shield steel from salty, humid air.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il crollo del Ponte Morandi a Genova, l'inedita ricostruzione video in 3D al momento del collasso” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const CON = '#a9a49a', CON2 = '#8d887e', HOLE = '#3e3a34', STEEL = '#cfd6dd', RUST = '#b4501e', SEA = '#2f6f9a', DROP = '#8fd3f4';
+const LABELS = ['Zoom in on a stay', 'Zoom into the concrete', 'Let the sea air in'];
+let level = 0, done = false, busy = false, fast = false, tw = [], G = {};
+const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+const M = (t, a, p) => Kit.mk(t, a, p);
+
+function txt(p, x, y, s, fs, anchor, fill, w) {
+  const t = M('text', {x, y, 'font-size': fs, 'text-anchor': anchor || 'middle', fill: fill || ink(), 'font-weight': w || 700}, p);
+  t.style.fontFamily = 'var(--body)'; t.textContent = s; return t;
+}
+function loop(t) { tw.push(t); return t; }
+
+function draw() {
+  tw.forEach(t => t.kill()); tw = [];
+  while (svg.firstChild) svg.firstChild.remove();
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, W / 23));
+  const g = M('g', {}, svg); G.root = g;
+  [L0, L1, L2][level](g, W, H, fs);
+  return g;
+}
+
+/* Level 0: the bridge in salty sea air */
+function L0(g, W, H, fs) {
+  const K = ink(), deck = H * .56, sea = H * .8, top = H * .14;
+  M('rect', {x: 0, y: sea, width: W, height: H - sea, fill: SEA}, g);
+  let wv = `M0 ${sea}`; for (let x = 0; x <= W; x += 18) wv += ` Q${x + 9} ${sea - 5} ${x + 18} ${sea}`;
+  M('path', {d: wv, fill: 'none', stroke: '#cfe9f7', 'stroke-width': 2}, g);
+  // piers
+  [[.5, 0]].forEach(() => {
+    M('path', {d: `M${W*.44} ${deck} L${W*.47} ${sea} M${W*.56} ${deck} L${W*.53} ${sea}`, stroke: K, 'stroke-width': Math.max(3, W*.012), fill: 'none'}, g);
+  });
+  // A-frame
+  M('path', {d: `M${W*.45} ${deck} L${W*.5} ${top} L${W*.55} ${deck}`, stroke: K, 'stroke-width': Math.max(4, W*.016), fill: 'none', 'stroke-linejoin': 'round'}, g);
+  // stays
+  const sw = Math.max(5, W * .022);
+  [[.1], [.9]].forEach(([x]) => {
+    M('line', {x1: W*.5, y1: top + 6, x2: W*x, y2: deck, stroke: K, 'stroke-width': sw + 3, 'stroke-linecap': 'round'}, g);
+    M('line', {x1: W*.5, y1: top + 6, x2: W*x, y2: deck, stroke: CON, 'stroke-width': sw, 'stroke-linecap': 'round'}, g);
+  });
+  M('rect', {x: W*.04, y: deck - H*.012, width: W*.92, height: H*.03, fill: K, rx: 2}, g);
+  // ring on a stay
+  const rx = W*.3, ry = top + 6 + (deck - top - 6) * .5, rr = Math.max(18, W*.07);
+  const ring = M('circle', {cx: rx, cy: ry, r: rr, fill: 'none', stroke: '#ffd23f', 'stroke-width': 3}, g);
+  txt(g, rx - rr - 6, ry + fs * .35, 'a stay', fs, 'end');
+  if (!Kit.calm) loop(gsap.to(ring, {attr: {r: rr * 1.15}, duration: .8, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+  // rising salty mist
+  for (let i = 0; i < 26; i++) {
+    const x = Kit.rnd() * W, y0 = sea + Kit.rnd() * (H - sea) * .4;
+    const d = M('circle', {cx: x, cy: y0, r: 1.6 + Kit.rnd() * 2, fill: DROP, opacity: .9}, g);
+    if (!Kit.calm) loop(gsap.to(d, {attr: {cy: y0 - H * (.3 + Kit.rnd() * .4), cx: x + (Kit.rnd() - .5) * 30}, opacity: 0, duration: 3 + Kit.rnd() * 3, repeat: -1, delay: Kit.rnd() * 3, ease: 'none'}));
+    else d.setAttribute('cy', y0 - Kit.rnd() * H * .5);
+  }
+  txt(g, W / 2, sea + (H - sea) * .62, 'Genoa: a bridge in salty sea air', fs, 'middle', '#fff');
+}
+
+/* Level 1: the stay up close */
+function L1(g, W, H, fs) {
+  const K = ink(), cx = W / 2, cy = H * .5, len = Math.hypot(W, H) * 1.2, bw = Math.min(W, H) * .32;
+  const ang = -Math.atan2(H * .55, W) * 180 / Math.PI;
+  const b = M('g', {transform: `translate(${cx} ${cy}) rotate(${ang})`}, g);
+  M('rect', {x: -len / 2, y: -bw / 2 - 2, width: len, height: bw + 4, fill: K}, b);
+  M('rect', {x: -len / 2, y: -bw / 2, width: len, height: bw, fill: CON}, b);
+  for (let i = 0; i < 70; i++) M('circle', {cx: (Kit.rnd() - .5) * len, cy: (Kit.rnd() - .5) * bw * .9, r: .8 + Kit.rnd() * 1.4, fill: CON2}, b);
+  // cutaway window showing steel inside
+  const ww = bw * 1.3;
+  M('rect', {x: -ww / 2, y: -bw * .3, width: ww, height: bw * .6, fill: '#55514a', rx: 4}, b);
+  for (let k = 0; k < 4; k++) M('line', {x1: -ww / 2 + 4, x2: ww / 2 - 4, y1: -bw * .22 + k * bw * .147, y2: -bw * .22 + k * bw * .147, stroke: STEEL, 'stroke-width': Math.max(3, bw * .07), 'stroke-linecap': 'round'}, b);
+  // holes and cracks
+  const holes = [];
+  for (let i = 0; i < 9; i++) {
+    let x = (Kit.rnd() - .5) * len * .55; if (Math.abs(x) < ww * .7) x += Math.sign(x || 1) * ww * .8;
+    const y = (Kit.rnd() > .5 ? -1 : 1) * bw * (.33 + Kit.rnd() * .1);
+    M('ellipse', {cx: x, cy: y, rx: 2.5 + Kit.rnd() * 3, ry: 2 + Kit.rnd() * 2, fill: HOLE}, b);
+    M('path', {d: `M${x} ${y} l${(Kit.rnd() - .5) * 14} ${(y > 0 ? -1 : 1) * (5 + Kit.rnd() * 8)}`, stroke: HOLE, 'stroke-width': 1.4, fill: 'none'}, b);
+    holes.push([x, y]);
+  }
+  // droplets drifting into the holes
+  holes.forEach(([x, y], i) => {
+    const d = M('circle', {cx: x, cy: y + (y > 0 ? 1 : -1) * bw * .5, r: 3, fill: DROP, stroke: '#fff', 'stroke-width': 1}, b);
+    if (!Kit.calm) loop(gsap.to(d, {attr: {cy: y}, opacity: 0, duration: 2, repeat: -1, delay: i * .25, ease: 'power1.in'}));
+  });
+  txt(g, W / 2, fs * 1.3, 'Up close: steel cables wrapped in concrete', fs);
+  txt(g, W / 2, H - fs * .6, 'and the concrete is full of tiny holes', fs);
+}
+
+/* Level 2: a slice through the stay (and what the sea air does) */
+function L2(g, W, H, fs) {
+  const K = ink(), cx = W / 2, cy = H * .47, R = Math.min(W * .32, H * .27);
+  M('circle', {cx, cy, r: R + 2, fill: K}, g);
+  M('circle', {cx, cy, r: R, fill: CON}, g);
+  for (let i = 0; i < 60; i++) { const a = Kit.rnd() * 6.28, r = Math.sqrt(Kit.rnd()) * R * .95; M('circle', {cx: cx + Math.cos(a) * r, cy: cy + Math.sin(a) * r, r: .8 + Kit.rnd(), fill: CON2}, g); }
+  // cables
+  const cab = [];
+  for (let i = 0; i < 10; i++) { const a = i / 10 * 6.283; cab.push([cx + Math.cos(a) * R * .6, cy + Math.sin(a) * R * .6, a]); }
+  for (let i = 0; i < 4; i++) { const a = i / 4 * 6.283 + .4; cab.push([cx + Math.cos(a) * R * .27, cy + Math.sin(a) * R * .27, a]); }
+  const cr = R * .1;
+  // channels (pores) from surface to ring cables
+  const paths = [];
+  [0, 2, 3, 5, 7, 8].forEach(j => {
+    const [x3, y3, a] = cab[j], aj = a + (Kit.rnd() - .5) * .3;
+    const p = [[cx + Math.cos(aj) * R * 1.18, cy + Math.sin(aj) * R * 1.18], [cx + Math.cos(aj) * R, cy + Math.sin(aj) * R],
+      [cx + Math.cos(a + .18) * R * .82, cy + Math.sin(a + .18) * R * .82], [x3, y3]];
+    M('polyline', {points: p.slice(1).map(q => q.join(',')).join(' '), fill: 'none', stroke: HOLE, 'stroke-width': Math.max(2.5, R * .045), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
+    paths.push(p);
+  });
+  G.halos = cab.map(([x, y]) => M('circle', {cx: x, cy: y, r: cr * 1.9, fill: RUST, opacity: done ? .35 : 0}, g));
+  G.cab = cab.map(([x, y]) => M('circle', {cx: x, cy: y, r: done ? cr * .62 : cr, fill: done ? RUST : STEEL, stroke: K, 'stroke-width': 1.5}, g));
+  G.paths = paths; G.g = g;
+  // strength bar
+  const bx = W * .2, bwid = W * .6, by = H * .9, bh = Math.max(8, H * .03);
+  txt(g, bx, by - bh * .6 - 2, 'strength of the steel', fs, 'start');
+  M('rect', {x: bx, y: by, width: bwid, height: bh, rx: bh / 2, fill: 'none', stroke: K, 'stroke-width': 1.5}, g);
+  G.bar = M('rect', {x: bx, y: by, width: done ? bwid * .28 : bwid, height: bh, rx: bh / 2, fill: done ? '#d23a2a' : '#3aa35c'}, g);
+  G.bw = bwid;
+  G.title = txt(g, W / 2, fs * 1.3, done ? 'Salt water reached the steel: it rusts' : 'Slice across: steel cables in concrete', fs);
+  // waiting droplets outside the pores
+  G.drops = paths.map(p => M('circle', {cx: p[0][0], cy: p[0][1], r: Math.max(3, R * .055), fill: DROP, stroke: '#fff', 'stroke-width': 1, opacity: done ? 0 : 1}, g));
+  if (!done && !Kit.calm) G.drops.forEach((d, i) => loop(gsap.to(d, {attr: {r: Math.max(3.6, R * .07)}, duration: .6, yoyo: true, repeat: -1, delay: i * .1})));
+}
+
+function corrode() {
+  busy = true; Kit.$('go').disabled = true; tw.forEach(t => t.kill()); tw = [];
+  const tl = gsap.timeline({onComplete: finish});
+  G.drops.forEach((d, i) => {
+    const p = G.paths[i];
+    tl.to(d, {keyframes: p.slice(1).map(q => ({attr: {cx: q[0], cy: q[1]}, duration: .45})), ease: 'none'}, i * .12);
+  });
+  tl.to(G.drops, {opacity: 0, duration: .3}, '>-0.1');
+  tl.to(G.halos, {opacity: .35, duration: 1.2, stagger: .05}, '<');
+  tl.to(G.cab, {attr: {fill: RUST, r: G.cab[0].getAttribute('r') * .62}, duration: 1.4, stagger: .05}, '<');
+  tl.to(G.bar, {attr: {width: G.bw * .28, fill: '#d23a2a'}, duration: 1.8, ease: 'power1.in'}, '<');
+  tl.add(() => { G.title.textContent = 'Salt water reached the steel: it rusts'; }, '<0.6');
+  if (Kit.calm) tl.progress(1);
+  else if (fast) tl.timeScale(8);
+}
+
+function finish() {
+  done = true; busy = false;
+  Kit.hide('row'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(() => { draw(); });
+}
+
+function dots() { [...Kit.$('dots').children].forEach((d, i) => d.classList.toggle('on', i <= level + (busy ? 1 : 0))); }
+
+Kit.$('go').addEventListener('click', () => {
+  if (busy || done) return;
+  Kit.haptic('light');
+  if (level < 2) {
+    level++; Kit.$('go').textContent = LABELS[level];
+    const g = draw(); dots();
+    if (!Kit.calm) gsap.from(g, {scale: .35, opacity: 0, transformOrigin: '50% 50%', duration: .6, ease: 'power3.out'});
+  } else { busy = true; dots(); corrode(); }
+});
+
+Kit.onShow.card = () => { if (!busy) draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm && G.root) gsap.from(G.root, {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  fast = true; const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 3; i++) { Kit.$('go').click(); await w(700); }
+  await w(1200);
+};
+Kit.single();
+</script>
+</html>

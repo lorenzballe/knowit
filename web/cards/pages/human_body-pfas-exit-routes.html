@@ -1,0 +1,204 @@
+<!doctype html>
+<!-- slug: human_body-pfas-exit-routes -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#cv{display:block;width:100%;height:100%;flex:1;min-height:0;touch-action:none}
+#ctl{display:flex;justify-content:flex-start}
+.hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 6cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;transition:transform .15s}
+.hold.down{transform:scale(.96)}
+#why p.body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Hold · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FOREVER CHEMICALS</span></div>
+    <h2 class="q">Why do women have lower PFAS levels than men?</h2>
+    <div class="stagebox" id="stage"><canvas id="cv"></canvas></div>
+    <div id="ctl"><button class="hold" id="hold">Hold to add years</button></div>
+    <p class="say" id="say">Hold: both bodies take in the same PFAS. Watch where it can leave.</p>
+    <div id="why" class="gone"><p class="body">Both took in the same PFAS, and no approved medical treatment removes it. But in women it leaves in menstrual blood, crosses the placenta to the fetus and flows into breast milk. Men have no such exit, so their levels stay higher until about 50, when menopause usually starts.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Periods, birth and breastfeeding let PFAS out of women; men have no exit.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const R = 1/50;                 // same intake for both, per year (model)
+const S = {age:10, m:0, f:0, born:false, baby:0, done:false, hold:false};
+const acc = {in:0, men:0, milk:0};
+let parts = [];
+let G = null;                   // geometry
+
+// seeded dot positions inside a body (u relative to centre, v from top, both in body heights)
+function inBody(u,v){
+  if (u*u + (v-.09)*(v-.09) < .075*.075) return true;
+  if (v>.21 && v<.63 && Math.abs(u)<.16) return true;
+  if (v>.63 && v<.98 && Math.abs(u)>.025 && Math.abs(u)<.14) return true;
+  return false;
+}
+function sample(n, test, u0, u1, v0, v1){
+  const a=[]; let g=0;
+  while(a.length<n && g<20000){ g++; const u=u0+Kit.rnd()*(u1-u0), v=v0+Kit.rnd()*(v1-v0); if(test(u,v)) a.push([u,v]); }
+  return a;
+}
+const ptsM = sample(170, inBody, -.17,.17,0,1);
+const ptsF = sample(170, inBody, -.17,.17,0,1);
+const ptsB = sample(40, (u,v)=> (u*u+(v-.72)*(v-.72)<.045*.045) || (v>.78&&v<.97&&Math.abs(u)<.06), -.07,.07,.66,.98);
+
+function px(a){ // anchor -> pixels
+  const cx = a.f==='m' ? G.cxM : G.cxF;
+  return [cx + a.u*G.h, G.y0 + a.v*G.h];
+}
+function spawn(a,b,dur,arc,kind){ if(parts.length<320) parts.push({a,b,t:0,dur,arc,kind}); }
+
+function step(da){
+  const prev = S.age;
+  S.age = Math.min(60, S.age+da); da = S.age-prev;
+  S.m += R*da; S.f += R*da;
+  acc.in += 5*da;
+  while(acc.in>=1){ acc.in--; for(const f of ['m','f']) spawn({f,u:(Kit.rnd()-.5)*.3,v:-.16},{f,u:(Kit.rnd()-.5)*.06,v:.04},.8,0,'in'); }
+  if (S.age>13 && S.age<50){
+    S.f -= .3*R*da; acc.men += 3.2*da;
+    while(acc.men>=1){ acc.men--; spawn({f:'f',u:(Kit.rnd()-.5)*.04,v:.62},{f:'f',u:(Kit.rnd()-.5)*.12,v:1.06},1.1,0,'out'); }
+  }
+  if (prev<28 && S.age>=28){
+    S.born = true; S.f -= .05; Kit.haptic('light');
+    for(let i=0;i<12;i++){ const p=ptsB[i]; spawn({f:'f',u:(Kit.rnd()-.5)*.1,v:.46},{f:'f',u:G.bdx+p[0],v:p[1],baby:1},.9+i*.05,.18,'baby'); }
+  }
+  if (S.age>28.4 && S.age<31.2){
+    S.f -= .027*da; acc.milk += 7*da;
+    while(acc.milk>=1){ acc.milk--; const p=ptsB[Math.min(39,12+Math.floor(Kit.rnd()*28))]; spawn({f:'f',u:.07,v:.32},{f:'f',u:G.bdx+p[0],v:p[1],baby:1},1,.12,'baby'); }
+  }
+  S.f = Math.max(0,S.f);
+  if (S.age>=60 && !S.done) finish();
+}
+
+function caption(a){
+  if (a<13) return 'Same PFAS in, nowhere to go';
+  if (a<28) return 'Periods carry some PFAS out';
+  if (a<28.4) return 'Birth: PFAS crosses the placenta';
+  if (a<31.2) return 'Breast milk carries PFAS to the baby';
+  if (a<50) return 'Periods carry some PFAS out';
+  return 'Menopause: the exits close';
+}
+
+function body(x,cx,y0,h){
+  x.beginPath();
+  x.arc(cx,y0+.09*h,.08*h,0,Math.PI*2); x.closePath();
+  x.roundRect(cx-.17*h,y0+.2*h,.34*h,.45*h,.07*h);
+  x.roundRect(cx-.15*h,y0+.6*h,.13*h,.39*h,.05*h);
+  x.roundRect(cx+.02*h,y0+.6*h,.13*h,.39*h,.05*h);
+}
+function baby(x,cx,y0,h){
+  x.beginPath();
+  x.arc(cx,y0+.72*h,.05*h,0,Math.PI*2); x.closePath();
+  x.roundRect(cx-.065*h,y0+.78*h,.13*h,.2*h,.05*h);
+}
+
+let last = 0;
+function loop(){
+  if(!G) return;
+  const dt = Math.min(.05, gsap.ticker.deltaRatio()/60);
+  if (S.hold && !S.done) step(4.6*dt);
+  for(const p of parts){ p.t += dt/p.dur; if(p.t>=1 && p.kind==='baby' && !p.got){ p.got=1; S.baby=Math.min(40,S.baby+1); } }
+  parts = parts.filter(p=>p.t<1);
+  draw();
+}
+
+function draw(){
+  const {x,W,H,f,ink,fam,disp,h,y0,cxM,cxF} = G;
+  x.clearRect(0,0,W,H);
+  x.fillStyle = ink; x.strokeStyle = ink;
+  // header
+  x.textAlign='left'; x.textBaseline='alphabetic';
+  x.font = `800 ${f*1.5}px ${disp}`; x.globalAlpha=1;
+  x.fillText('Age '+Math.floor(S.age), W*.04, G.ageY);
+  x.font = `600 ${f}px ${fam}`; x.globalAlpha=.8;
+  x.fillText(caption(S.age), W*.04, G.capY);
+  // figures
+  const r = Math.max(1.6, h*.011);
+  const fig = (cx,lev,pts)=>{
+    x.save(); body(x,cx,y0,h); x.clip();
+    x.globalAlpha=.13; x.fillRect(cx-.2*h,y0,.4*h,h);
+    const ly = y0 + (1-Math.min(1,lev))*h;
+    x.globalAlpha=.28; x.fillRect(cx-.2*h,ly,.4*h,y0+h-ly);
+    x.globalAlpha=1;
+    for(const p of pts){ if(p[1] > 1-lev){ x.beginPath(); x.arc(cx+p[0]*h,y0+p[1]*h,r,0,7); x.fill(); } }
+    x.restore();
+    return ly;
+  };
+  const lyM = fig(cxM,S.m,ptsM);
+  fig(cxF,S.f,ptsF);
+  // dashed line: men's level carried across
+  if (S.m>.04){
+    x.save(); x.globalAlpha=.6; x.setLineDash([f*.4,f*.35]); x.lineWidth=Math.max(1.5,h*.006);
+    x.beginPath(); x.moveTo(cxM-.18*h,lyM); x.lineTo(cxF+.18*h,lyM); x.stroke(); x.restore();
+  }
+  // baby
+  if (S.born){
+    const bx = cxF + G.bdx*h;
+    x.save(); baby(x,bx,y0,h); x.clip(); x.globalAlpha=.13; x.fillRect(bx-.1*h,y0+.6*h,.2*h,.4*h);
+    x.globalAlpha=1; for(let i=0;i<S.baby;i++){ const p=ptsB[i]; x.beginPath(); x.arc(bx+p[0]*h,y0+p[1]*h,r,0,7); x.fill(); }
+    x.restore();
+  }
+  // moving dots
+  for(const p of parts){
+    const [ax,ay]=px(p.a), [bx,by]=px(p.b), t=p.t, e = p.kind==='out'? t*t : t;
+    const X = ax+(bx-ax)*e, Y = ay+(by-ay)*e - Math.sin(Math.PI*t)*p.arc*h;
+    x.globalAlpha = p.kind==='out' ? 1-t*.8 : 1;
+    x.beginPath(); x.arc(X,Y,r*(p.kind==='in'?1:1.15),0,7); x.fill();
+  }
+  x.globalAlpha=1;
+  // labels
+  x.textAlign='center'; x.font=`700 ${f}px ${fam}`;
+  const ly = y0+h+f*1.35;
+  x.fillText('MEN',cxM,ly); x.fillText('WOMEN',cxF,ly);
+  if (S.born) x.fillText('BABY',cxF+G.bdx*h,ly);
+}
+
+Kit.onShow.card = () => {
+  const cv = Kit.$('cv');
+  const {x,W,H} = Kit.fitCanvas(cv);
+  const cs = getComputedStyle(Kit.$('card'));
+  const f = Math.max(12, Math.min(W*.045, H*.05));
+  const ageY = f*1.5, capY = ageY + f*1.45;
+  const y0 = capY + f*.6 + f*2.2;
+  const h = Math.max(40, Math.min(H - y0 - f*2, W*.62));
+  G = {x,W,H,f,h,y0,ageY,capY,cxM:W*.22,cxF:W*.58,
+       ink:cs.getPropertyValue('--k').trim()||'#111',
+       fam:cs.getPropertyValue('--body').trim()||'sans-serif',
+       disp:cs.getPropertyValue('--display').trim()||'sans-serif'};
+  G.bdx = (W*.86 - G.cxF)/h;
+  draw();
+};
+
+function finish(){
+  S.done = true; S.hold = false;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(()=>Kit.onShow.card());
+}
+
+const btn = Kit.$('hold');
+const down = e => { e.preventDefault(); if(S.done) return; S.hold=true; btn.classList.add('down'); Kit.haptic('selection'); };
+const up = () => { S.hold=false; btn.classList.remove('down'); };
+btn.addEventListener('pointerdown', down);
+['pointerup','pointerleave','pointercancel'].forEach(t=>btn.addEventListener(t, up));
+btn.addEventListener('keydown', e=>{ if(e.key===' '||e.key==='Enter') down(e); });
+btn.addEventListener('keyup', up);
+
+gsap.ticker.add(loop);
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity:0, y:10, duration:.45, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  while(!S.done){ step(.05); }
+  parts = []; S.baby = 31; draw();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

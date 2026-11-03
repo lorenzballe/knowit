@@ -1,0 +1,37 @@
+{
+  "id": "psychology-niche-expertise-respect",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.first_impressions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does knowing one thing deeply make bullies back off?",
+  "answer": "Bullies tend to go after what looks weak. Showing you know more about something the group shares or cares about makes people listen to you, and mocking you then costs the bully face. That is why it works best early.",
+  "move": "Early on, show you know one relevant thing better than they do.",
+  "keywords": [
+    "bullying",
+    "expertise",
+    "status",
+    "classroom",
+    "respect"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled Astute free card, with a slider the reader drags to let a quiet person show what they know to a group. It asks why knowing one thing deeply makes bullies back off, and says to show expertise early."
+  },
+  "source": "Diventare Strong, “FATTI RISPETTARE! 7 Trucchi Psicologici Scientifici” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=37qaIIX5JqI&t=1202s",
+  "written": "2026-11-03"
+}

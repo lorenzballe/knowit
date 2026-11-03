@@ -1,0 +1,38 @@
+{
+  "id": "medicine-dose-makes-poison",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.risk_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Aluminium in antiperspirant: what makes a substance safe or poisonous?",
+  "answer": "The substance is the same aluminium salt in every case; only the amount changes. The law caps how much aluminium salt goes into antiperspirants, keeping it inside the safe range. At that dose they are not carcinogenic, and the skin doesn't absorb dangerous amounts.",
+  "move": "The dose makes the poison, and deodorant doses are safe.",
+  "keywords": [
+    "aluminium",
+    "antiperspirant",
+    "deodorant",
+    "dose",
+    "toxicity",
+    "skin"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider runs from a deodorant with a safe amount of aluminium salt to a much larger dose. Drag the dot right to pile on more of the same salt and see where it stops being safe."
+  },
+  "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=1P8szAIszo0&t=375s",
+  "written": "2026-11-03"
+}

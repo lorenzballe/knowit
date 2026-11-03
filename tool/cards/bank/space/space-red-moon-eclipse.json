@@ -1,0 +1,38 @@
+{
+  "id": "space-red-moon-eclipse",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the Moon turn red during a lunar eclipse?",
+  "answer": "In a lunar eclipse, no direct sunlight reaches the Moon. Earth's atmosphere bends sunlight into the shadow and filters it, letting through only the red. That red light is what paints the Moon.",
+  "move": "The red Moon is lit by sunlight bent and filtered by Earth's air.",
+  "keywords": [
+    "lunar eclipse",
+    "moon",
+    "earth",
+    "atmosphere",
+    "sunlight"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Diagram of Earth between the Sun and the Moon during a lunar eclipse. Tap the Sun, the atmosphere or the Moon to see how Earth's air bends and filters sunlight so that only red light reaches the Moon.",
+    "ground": "#0b1026"
+  },
+  "source": "Geopop, “Eclissi lunare: la spiegazione semplice per capire come avviene” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=Uba7HtQ3MiM&t=105s",
+  "written": "2026-11-03"
+}

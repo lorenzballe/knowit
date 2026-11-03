@@ -1,0 +1,36 @@
+{
+  "id": "technology-induction-it-control",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does IT Control keep a pan at an exact temperature?",
+  "answer": "Temperature sensors on the coil read the heat all the time. The hob turns power down as it nears the setting and back up when it drops, so the temperature stays constant and food doesn't burn.",
+  "move": "A sensor plus automatic power control lets you set degrees, like an oven.",
+  "keywords": [
+    "induction hob",
+    "temperature sensor",
+    "frying oil",
+    "it control"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question page: How does IT Control keep a pan at an exact temperature? Two steps show heating oil to 180°C, first with the sensor off, then with the sensor on, followed by dropping in cold food, then measuring and adjusting."
+  },
+  "source": "Geopop, “Consuma più un piano a induzione o un piano a gas? Abbiamo fatto un test per scoprirlo” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=fj1g14cwH0I&t=379s",
+  "written": "2026-11-03"
+}

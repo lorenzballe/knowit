@@ -1,0 +1,37 @@
+{
+  "id": "science-fukushima-tritium-grams",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much radioactive tritium is in Fukushima's 1.2 million m³ of water?",
+  "answer": "The whole 1.2 million m³ tank holds only about 23 grams of tritium. That is roughly 20 g of tritiated water, about 1 gram in every 60,000 tonnes. Diluted 500 times before release, it falls to about 1,500 Bq per litre, six times under the WHO drinking-water limit.",
+  "move": "A huge volume, a tiny mass: 1.2 million m³ hide just 23 g of tritium.",
+  "keywords": [
+    "fukushima",
+    "tritium",
+    "treated water",
+    "radioactivity",
+    "wastewater"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Shows a 106 m cube for the 1.2 million m³ tank, with a slider that zooms in toward the tritium. Asks how much tritium the water holds, and reveals about 23 g."
+  },
+  "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=IPH3uqi0a-w&t=221s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "science-apparent-dip",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.optical_illusions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the apparent dip, and how is it found?",
+  "answer": "A layer dipping 36° shows its full angle only in a section square to its strike. Turned toward the strike, the same layer looks flatter, and at 65° it reads about 33°. Geologists read the apparent dip off a true-to-apparent dip conversion diagram.",
+  "move": "Only a section square to the strike shows the true dip; any other shows less.",
+  "keywords": [
+    "apparent dip",
+    "true dip",
+    "strike",
+    "geological cross-section",
+    "geopop"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A geological cross-section showing a tilted rock layer, with a draggable control that turns the section away from the layer's strike. The page asks what apparent dip is and how geologists find it."
+  },
+  "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=792s",
+  "written": "2026-11-03"
+}

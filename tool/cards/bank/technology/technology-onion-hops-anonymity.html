@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-onion-hops-anonymity -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;touch-action:none;overflow:visible}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+#pk{cursor:grab}
+#pk:active{cursor:grabbing}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DARK WEB</span></div>
+    <h2 class="q">Why is the Dark Web almost completely untraceable?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <p class="say" id="say">Drag your wrapped message onto relay 1, then try to trace it back.</p>
+    <div id="why" class="gone">
+      <p class="big">The trail breaks at every hop.</p>
+      <p class="body">Darknet traffic hops through several relays, wrapped in layers of encryption. Each relay peels one layer and knows only its neighbours. The site sees just the last relay, so ordinary IP tracing never reaches you.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Many encrypted hops, each knowing only its neighbours: nobody sees the whole path.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let done = false, running = false, G = null, tl = null, pulse = null;
+const RED = '#e5484d';
+const ink = p => `color-mix(in srgb,var(--k) ${p}%,transparent)`;
+
+function finishText(){ Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  if (tl) { tl.kill(); tl = null; } if (pulse) { pulse.kill(); pulse = null; }
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .85);
+  const r = Math.max(14, Math.min(W * .075, H * .06, 30));
+  const bw = Math.max(W * .24, fs * 4.2), bh = Math.max(r * 1.6, fs * 2);
+  const N = [
+    {x: W * .22, y: H * .1, t: 'YOU', box: 1},
+    {x: W * .76, y: H * .29, t: '1', note: 'knows: you → 2'},
+    {x: W * .24, y: H * .5, t: '2', note: 'knows: 1 → 3'},
+    {x: W * .76, y: H * .7, t: '3', note: 'knows: 2 → site'},
+    {x: W * .3, y: H * .9, t: 'SITE', box: 1, note: 'sees: relay 3 only'}
+  ];
+  const links = [], notes = [];
+  const gl = Kit.mk('g', {}, svg);
+  for (let i = 0; i < 4; i++) links.push(Kit.mk('line', {x1: N[i].x, y1: N[i].y, x2: N[i+1].x, y2: N[i+1].y,
+    style: `stroke:${ink(30)};stroke-width:${Math.max(2, r * .12)};stroke-dasharray:${r*.3} ${r*.3};stroke-linecap:round`}, gl));
+  const trace = Kit.mk('path', {d: `M${N[4].x},${N[4].y} L${N[3].x},${N[3].y}`,
+    style: `fill:none;stroke:${RED};stroke-width:${Math.max(3, r*.16)};stroke-linecap:round;opacity:0`}, svg);
+  const els = N.map((n, i) => {
+    const g = Kit.mk('g', {}, svg);
+    if (n.box) Kit.mk('rect', {x: n.x - bw/2, y: n.y - bh/2, width: bw, height: bh, rx: bh * .3,
+      style: `fill:var(--k);stroke:none`}, g);
+    else Kit.mk('circle', {cx: n.x, cy: n.y, r, style: `fill:var(--c);stroke:var(--k);stroke-width:${Math.max(2.5, r*.13)}`}, g);
+    const tx = Kit.mk('text', {x: n.x, y: n.y, 'text-anchor': 'middle', 'dominant-baseline': 'central',
+      style: `font:800 ${n.box ? fs : Math.max(13, r * .9)}px var(--display);fill:${n.box ? 'var(--c)' : 'var(--k)'}`}, g);
+    tx.textContent = n.t;
+    if (n.note) {
+      const right = n.x < W / 2, nx = i === 4 ? n.x + bw/2 + 8 : (right ? n.x + r + 8 : n.x - r - 8);
+      const nt = Kit.mk('text', {x: nx, y: n.y, 'text-anchor': (i === 4 || right) ? 'start' : 'end', 'dominant-baseline': 'central',
+        style: `font:700 ${fs}px var(--body);fill:${i === 4 ? RED : 'var(--k)'};paint-order:stroke;stroke:var(--c);stroke-width:4px;opacity:0`}, svg);
+      nt.textContent = n.note; notes[i] = nt;
+    }
+    return g;
+  });
+  // the hidden-source mark beside YOU
+  const qm = Kit.mk('text', {x: N[0].x + bw/2 + 8, y: N[0].y, 'dominant-baseline': 'central',
+    style: `font:800 ${fs}px var(--body);fill:${RED};opacity:0`}, svg);
+  qm.textContent = 'trace lost: ?';
+  const stop = Kit.mk('text', {x: (N[3].x + N[2].x)/2, y: (N[3].y + N[2].y)/2, 'text-anchor': 'middle', 'dominant-baseline': 'central',
+    style: `font:900 ${Math.max(18, r*1.1)}px var(--display);fill:${RED};paint-order:stroke;stroke:var(--c);stroke-width:5px;opacity:0`}, svg);
+  stop.textContent = '?';
+  // R1 target ring
+  const ring = Kit.mk('circle', {cx: N[1].x, cy: N[1].y, r: r * 1.35, style: `fill:none;stroke:${RED};stroke-width:2.5;stroke-dasharray:5 5;opacity:0`}, svg);
+  // the onion packet
+  const rp = r * .95;
+  const pk = Kit.mk('g', {id: 'pk'}, svg);
+  const layers = [1, .74, .5].map((s, i) => Kit.mk('circle', {cx: 0, cy: 0, r: rp * s,
+    style: `fill:${ink(22 + i * 22)};stroke:var(--k);stroke-width:1.5`}, pk));
+  Kit.mk('circle', {cx: 0, cy: 0, r: rp * .24, style: `fill:${RED}`}, pk);
+  const home = {x: Math.min(W - rp - 4, N[0].x + bw/2 + rp + 14), y: N[0].y + bh * .2 + rp * .4};
+  gsap.set(pk, {x: home.x, y: home.y});
+  G = {svg, N, pk, home, r, links, notes, layers, trace, els, qm, stop, ring};
+
+  tl = gsap.timeline({paused: true, onComplete: () => { done = true; running = false; finishText(); Kit.haptic('success'); }});
+  tl.to(ring, {opacity: 0, duration: .2});
+  for (let i = 1; i <= 3; i++) {
+    tl.to(links[i-1], {style: `stroke:var(--k);stroke-width:${Math.max(2.5, r*.16)};stroke-dasharray:none;stroke-linecap:round`, duration: .25}, '<')
+      .to(pk, {x: N[i].x, y: N[i].y, duration: .55, ease: 'power2.inOut'}, '<')
+      .to(layers[i-1], {attr: {r: rp * 1.9}, opacity: 0, duration: .45, ease: 'power2.out'})
+      .to(notes[i], {opacity: 1, duration: .3}, '<.1');
+  }
+  tl.to(links[3], {style: `stroke:var(--k);stroke-width:${Math.max(2.5, r*.16)};stroke-dasharray:none;stroke-linecap:round`, duration: .25})
+    .to(pk, {x: N[4].x, y: N[4].y - bh/2 - rp*.3, duration: .55, ease: 'power2.inOut'}, '<')
+    .to(notes[4], {opacity: 1, duration: .3})
+    .to(trace, {opacity: 1, duration: .45})
+    .to(stop, {opacity: 1, scale: 1, duration: .35, transformOrigin: '50% 50%'})
+    .to(els[0], {opacity: .25, duration: .5}, '<')
+    .to(qm, {opacity: 1, duration: .3}, '<.2');
+
+  if (done) { tl.progress(1); return; }
+  pulse = gsap.to(ring, {opacity: 1, duration: .7, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+  bindDrag();
+}
+
+function bindDrag(){
+  const {svg, pk, N, home, r} = G;
+  let drag = null;
+  const pt = e => { const b = svg.getBoundingClientRect(); return {x: e.clientX - b.left, y: e.clientY - b.top}; };
+  pk.addEventListener('pointerdown', e => {
+    if (done || running) return;
+    const p = pt(e); drag = {dx: gsap.getProperty(pk, 'x') - p.x, dy: gsap.getProperty(pk, 'y') - p.y};
+    try { pk.setPointerCapture(e.pointerId); } catch (_) {}
+    Kit.haptic('selection'); e.preventDefault();
+  });
+  pk.addEventListener('pointermove', e => {
+    if (!drag) return; const p = pt(e);
+    gsap.set(pk, {x: p.x + drag.dx, y: p.y + drag.dy});
+  });
+  const up = () => {
+    if (!drag) return; drag = null;
+    const x = gsap.getProperty(pk, 'x'), y = gsap.getProperty(pk, 'y');
+    if (Math.hypot(x - N[1].x, y - N[1].y) < r * 2.4) {
+      running = true; if (pulse) pulse.kill(); Kit.haptic('light'); tl.play(0);
+    } else gsap.to(pk, {x: home.x, y: home.y, duration: .4, ease: 'back.out(2)'});
+  };
+  pk.addEventListener('pointerup', up);
+  pk.addEventListener('pointercancel', up);
+}
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || done || !G) return;
+  gsap.from(G.els, {opacity: 0, scale: .6, transformOrigin: '50% 50%', stagger: .08, duration: .45, ease: 'back.out(2)'});
+  gsap.from(G.pk, {scale: 0, duration: .5, delay: .4, ease: 'back.out(2.5)'});
+};
+Kit.play.card = async () => {
+  const {svg, pk, N} = G, b = svg.getBoundingClientRect();
+  const ev = (type, x, y) => pk.dispatchEvent(new PointerEvent(type, {bubbles: true, clientX: b.left + x, clientY: b.top + y, pointerId: 1, isPrimary: true}));
+  const hx = gsap.getProperty(pk, 'x'), hy = gsap.getProperty(pk, 'y');
+  ev('pointerdown', hx, hy);
+  ev('pointermove', (hx + N[1].x) / 2, (hy + N[1].y) / 2);
+  ev('pointermove', N[1].x, N[1].y);
+  ev('pointerup', N[1].x, N[1].y);
+  await new Promise(r => setTimeout(r, 100));
+  if (G.pk && tl) tl.progress(1);
+  done = true; finishText();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

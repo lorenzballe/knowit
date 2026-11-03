@@ -1,0 +1,37 @@
+{
+  "id": "science-campi-flegrei-cycles",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.testable_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What pattern did the model reveal about past Campi Flegrei eruptions?",
+  "answer": "Campi Flegrei eruptions tend to come in quasi-regular cycles. Pressure from the magma builds up slowly, an eruption releases it, and the cycle starts again. Because the rhythm repeats, the model can be used as a predictive tool.",
+  "move": "Campi Flegrei eruptions come in repeating cycles of build-up and release.",
+  "keywords": [
+    "campi flegrei",
+    "volcanoes",
+    "magma",
+    "eruption cycles",
+    "predictive model"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A page titled Volcano Rhythm shows a sketch of eruption timing as a wavy curve, not real dates. Holding the button runs the last 60,000 years of Campi Flegrei eruptions, and the page asks what pattern the model reveals."
+  },
+  "source": "Geopop, “▶️ALLARME CAMPI FLEGREI? ANALISI ARTICOLO SCIENTIFICO- ScienceAdvances (Nov-2018) -GeologiaPOP” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=u1Zjir6YhDc&t=63s",
+  "written": "2026-11-03"
+}

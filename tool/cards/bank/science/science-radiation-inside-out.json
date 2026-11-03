@@ -1,0 +1,37 @@
+{
+  "id": "science-radiation-inside-out",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a radioactive atom more dangerous than its radiation at a distance?",
+  "answer": "Radiation from a source falls off fast with distance, and much of it can't even get through air; a little material blocks it. A radioactive atom you breathe in sits right beside your cells and fires its radiation straight into them, so it can't miss.",
+  "move": "Radiation far away fades; a radioactive atom inside you hits cells directly.",
+  "keywords": [
+    "radiation",
+    "radioactive_atoms",
+    "geiger_counter",
+    "inhalation",
+    "cells"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Split-screen concept page: a draggable Geiger counter next to a radioactive source. Dragging the counter away makes the clicks fade. The page asks why a radioactive atom inside the body is more dangerous than radiation at a distance."
+  },
+  "source": "Veritasium, “Radiation vs Radioactive Atoms” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=sehKAccM8p0&t=28s",
+  "written": "2026-11-03"
+}

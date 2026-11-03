@@ -1,0 +1,139 @@
+<!doctype html>
+<!-- slug: science-bradyseism-breathing-ground -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+#scene{display:block;width:100%;height:100%;flex:1;min-height:0;touch-action:none;cursor:ew-resize;border-radius:1.6cqh}
+#why{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say,.q{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · time-lapse">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRADYSEISM</span></div>
+    <h2 class="q">What is bradyseism, and why are some ancient towns underwater?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scene"></svg>
+    </div>
+    <p class="say" id="say">Drag across the picture to run the centuries, from then to today.</p>
+    <p class="body gone" id="why">This coast sits on a huge caldera, a supervolcano. As magma moves below, the ground slowly rises and falls over centuries and millennia. Here the coastal strip sank below the sea, and its ruins now lie 5 to 8 metres down.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Bradyseism: the ground breathes, slowly rising and sinking over centuries.</div>
+    <div class="foot"><span class="src">Source · Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {t: 0};
+let G = null, done = false, lastDir = 0;
+const h = t => 2 - 9 * t + 2.5 * Math.sin(3 * Math.PI * t);          // metres vs sea level
+const dh = t => -9 + 7.5 * Math.PI * Math.cos(3 * Math.PI * t);
+
+function build() {
+  const svg = Kit.$('scene');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const m = H * 0.032, seaY = H * 0.36;
+  const P = (x, y) => [x * W, y];
+  const surf = [P(0, seaY - 4 * m), P(.12, seaY - 4 * m), P(.22, seaY), P(.62, seaY), P(.8, seaY + 10 * m), P(1, seaY + 10 * m)];
+  const line = (pts, dy = 0) => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + (p[1] + dy).toFixed(1)).join(' ');
+  const defs = Kit.mk('defs', {}, svg);
+  const rg = Kit.mk('radialGradient', {id: 'mg'}, defs);
+  Kit.mk('stop', {offset: '0%', 'stop-color': '#ffe08a'}, rg);
+  Kit.mk('stop', {offset: '55%', 'stop-color': '#ff6a1f'}, rg);
+  Kit.mk('stop', {offset: '100%', 'stop-color': '#a3160b'}, rg);
+  const cp = Kit.mk('clipPath', {id: 'wet'}, defs);
+  const wetPath = Kit.mk('path', {d: line(surf) + ` L${W},${-H} L0,${-H} Z`}, cp);
+
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#cfe6f2'}, svg);
+  Kit.mk('rect', {x: 0, y: seaY, width: W, height: H - seaY, fill: '#2d74a8'}, svg);
+  const grp = Kit.mk('g', {}, svg);
+  const surfD = line(surf);
+  const ground = Kit.mk('path', {d: surfD + ` L${W},${H} L0,${H} Z`, fill: '#8a5a36'}, grp);
+  [.09, .18, .28].forEach((d, i) => Kit.mk('path', {d: line(surf, H * d), fill: 'none', stroke: i % 2 ? '#7a4c2c' : '#a06b42', 'stroke-width': Math.max(2, H * .012)}, grp));
+  Kit.mk('path', {d: line(surf), fill: 'none', stroke: '#5b8a3a', 'stroke-width': Math.max(3, H * .012)}, grp);
+  // ruins
+  const rx = W * .45, cw = W * .022, ch = H * .1;
+  [-2.2, 0, 2.2].forEach((k, i) => Kit.mk('rect', {x: rx + k * cw * 1.6 - cw / 2, y: seaY - ch * (i === 2 ? .7 : 1), width: cw, height: ch * (i === 2 ? .7 : 1), fill: '#f3ead8', stroke: '#6d5a40', 'stroke-width': 1}, grp));
+  Kit.mk('rect', {x: rx - 2.2 * cw * 1.6 - cw, y: seaY - ch - cw * .7, width: 2.2 * cw * 1.6 + cw * 2, height: cw * .7, fill: '#f3ead8', stroke: '#6d5a40', 'stroke-width': 1}, grp);
+  Kit.mk('rect', {x: rx - W * .1, y: seaY - H * .012, width: W * .2, height: H * .012, fill: '#d9ccb2'}, grp);
+  const townLbl = Kit.mk('text', {x: rx - W * .06, y: seaY + f * 1.2, 'text-anchor': 'middle', 'font-size': f * .9, 'font-weight': 700, fill: '#fff3dc', 'font-family': 'var(--body)'}, grp);
+  townLbl.textContent = 'ancient town';
+  // underwater tint
+  Kit.mk('rect', {x: 0, y: seaY, width: W, height: H - seaY, fill: '#2d74a8', opacity: .45, 'clip-path': 'url(#wet)'}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: seaY, y2: seaY, stroke: '#0e3a5c', 'stroke-width': 2, 'stroke-dasharray': '6 5'}, svg);
+  const seaLbl = Kit.mk('text', {x: W - 8, y: seaY - f * .45, 'text-anchor': 'end', 'font-size': f * .85, 'font-weight': 700, fill: '#0e3a5c', 'font-family': 'var(--body)'}, svg);
+  seaLbl.textContent = 'sea level';
+  // magma
+  const mag = Kit.mk('ellipse', {cx: W * .3, cy: H * .8, rx: W * .22, ry: H * .07, fill: 'url(#mg)'}, svg);
+  const magLbl = Kit.mk('text', {x: W * .3, y: H * .8 + f * .35, 'text-anchor': 'middle', 'font-size': f * .85, 'font-weight': 700, fill: '#3a0a02', 'font-family': 'var(--body)'}, svg);
+  magLbl.textContent = 'magma';
+  // gauge
+  const gauge = Kit.mk('line', {x1: rx + W * .1, x2: rx + W * .1, stroke: '#111', 'stroke-width': 2.5}, svg);
+  const read = Kit.mk('text', {x: rx + W * .12, 'font-size': f * 1.15, 'font-weight': 800, fill: '#111', 'font-family': 'var(--mono)'}, svg);
+  const phase = Kit.mk('text', {x: 10, y: f * 1.5, 'font-size': f * 1.05, 'font-weight': 800, fill: '#0e3a5c', 'font-family': 'var(--body)'}, svg);
+  // timeline
+  const ty = H - f * 1.6, tx0 = W * .14, tx1 = W * .86;
+  Kit.mk('rect', {x: 0, y: ty - f * 1.4, width: W, height: f * 3, fill: '#000', opacity: .35}, svg);
+  Kit.mk('line', {x1: tx0, x2: tx1, y1: ty, y2: ty, stroke: '#fff', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+  const tl = Kit.mk('text', {x: tx0 - 8, y: ty + f * .35, 'text-anchor': 'end', 'font-size': f * .85, 'font-weight': 700, fill: '#fff', 'font-family': 'var(--body)'}, svg); tl.textContent = 'then';
+  const tr = Kit.mk('text', {x: tx1 + 8, y: ty + f * .35, 'font-size': f * .85, 'font-weight': 700, fill: '#fff', 'font-family': 'var(--body)'}, svg); tr.textContent = 'today';
+  const knob = Kit.mk('circle', {cy: ty, r: Math.max(9, f * .75), fill: '#ffcf3a', stroke: '#111', 'stroke-width': 2}, svg);
+  G = {svg, W, H, f, m, seaY, grp, ground, surfD, wetPath, mag, magLbl, gauge, read, phase, knob, tx0, tx1, rx};
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const t = st.t, hh = h(t), y = -hh * G.m;
+  G.grp.setAttribute('transform', `translate(0,${y})`);
+  G.ground.setAttribute('d', G.surfD + ` L${G.W},${(G.H - y).toFixed(1)} L0,${(G.H - y).toFixed(1)} Z`);
+  G.wetPath.setAttribute('transform', `translate(0,${y})`);
+  const ry = G.H * (.045 + .05 * (hh + 7) / 10);
+  G.mag.setAttribute('ry', ry);
+  const base = G.seaY + y;
+  G.gauge.setAttribute('y1', G.seaY); G.gauge.setAttribute('y2', base);
+  G.read.setAttribute('y', Math.max(G.seaY, base) + G.f * 1.3);
+  G.read.textContent = (hh >= 0 ? '+' : '−') + Math.abs(hh).toFixed(1) + ' m';
+  const d = dh(t) > 0 ? 1 : -1;
+  G.phase.textContent = t < .01 ? 'The town stands on dry land' : t > .97 ? 'Today: ruins about 7 m under the sea' : d > 0 ? 'Centuries pass… the ground rises' : 'Centuries pass… the ground sinks';
+  if (t > .01 && d !== lastDir) { if (lastDir) Kit.haptic('light'); lastDir = d; }
+  G.knob.setAttribute('cx', G.tx0 + t * (G.tx1 - G.tx0));
+  if (t > .97 && !done) finish();
+}
+
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .4});
+}
+
+function tFrom(e) {
+  const r = G.svg.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width * G.W;
+  return Math.min(1, Math.max(0, (x - G.tx0) / (G.tx1 - G.tx0)));
+}
+let dragging = false;
+const sc = Kit.$('scene');
+sc.addEventListener('pointerdown', e => { dragging = true; try { sc.setPointerCapture(e.pointerId); } catch (_) {} gsap.killTweensOf(st); st.t = Math.max(st.t, 0) ; st.t = tFrom(e); render(); Kit.haptic('selection'); });
+sc.addEventListener('pointermove', e => { if (!dragging) return; st.t = tFrom(e); render(); });
+['pointerup', 'pointercancel'].forEach(n => sc.addEventListener(n, () => { dragging = false; }));
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.knob, {attr: {r: G.f * .75}}, {attr: {r: G.f * 1.05}, repeat: 3, yoyo: true, duration: .45, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const r = sc.getBoundingClientRect(), y = r.top + r.height / 2;
+  const ev = (type, x) => sc.dispatchEvent(new PointerEvent(type, {bubbles: true, clientX: x, clientY: y, pointerId: 1}));
+  ev('pointerdown', r.left + r.width * .1);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', r.left + r.width * (.1 + .09 * i)); await new Promise(res => setTimeout(res, 30)); }
+  ev('pointerup', r.right);
+  await new Promise(res => setTimeout(res, 700));
+};
+Kit.single();
+</script>
+</html>

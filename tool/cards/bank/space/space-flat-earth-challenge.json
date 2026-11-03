@@ -1,0 +1,39 @@
+{
+  "id": "space-flat-earth-challenge",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.earth_from_above",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How to prove Earth is round to a Flat Earth believer?",
+  "answer": "The joke plan: build a big, comfortable ship with sofas, hot chocolate and Wi-Fi, and invite flat-Earth believers aboard. Once in orbit, they see the ball for themselves, since the curve is too huge to notice from the ground. Then they are sent straight on to Mars, where, the joke goes, it is flat too.",
+  "move": "Earth looks flat only because you stand so close to it.",
+  "keywords": [
+    "flat earth",
+    "elon musk",
+    "orbit",
+    "mars",
+    "geopop"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cartoon spaceship with Wi-Fi and hot chocolate flies past a flat Earth and a flat Mars. The question asks how to prove Earth is round to a flat-Earth believer. Four plan steps are shown to tap in the order you would do them.",
+    "graded": false,
+    "ground": "#0a0f2c"
+  },
+  "source": "Geopop, “▶️TERRA PIATTA, IENE, TERRAPIATTISTI: MESSAGGIO A ELON MUSK |GeologiaPOP🌍” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=Y9H-52XGLhg&t=60s",
+  "written": "2026-11-03"
+}

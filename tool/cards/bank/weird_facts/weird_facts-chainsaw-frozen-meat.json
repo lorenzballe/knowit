@@ -1,0 +1,36 @@
+{
+  "id": "weird_facts-chainsaw-frozen-meat",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How is meat sold at Yakutsk’s outdoor markets prepared for sale?",
+  "answer": "At Yakutsk's outdoor market, meat and fish are frozen solid, so a knife can't get in. To sell them, vendors cut them with a chainsaw. The cold turns market meat into wood, and you saw it.",
+  "move": "In Yakutsk the cold turns market meat into wood: you saw it.",
+  "keywords": [
+    "yakutsk",
+    "chainsaw",
+    "frozen_meat",
+    "outdoor_market"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page asking how meat is sold at Yakutsk's outdoor markets. A tool can be dragged onto a block of frozen meat to try cutting a slice. Shown: a vendor with a chainsaw over frozen meat."
+  },
+  "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=190s",
+  "written": "2026-11-03"
+}

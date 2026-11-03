@@ -1,0 +1,37 @@
+{
+  "id": "history-china-philippines-route",
+  "topic": "history",
+  "genre": "history.ordinary_people",
+  "strand": "history.ordinary_people.migrants",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "China held a group of North Korean defectors. Where did it send them?",
+  "answer": "China did not send the group back to North Korea. A South Korean and a Westerner arrived with news that China had decided to move them to the Philippines, where they would be safe. Being caught in China did not mean being sent home.",
+  "move": "Caught in China did not mean sent home: this group flew to a third country.",
+  "keywords": [
+    "north-korea",
+    "china",
+    "philippines",
+    "defectors",
+    "escape"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice question: where did China send a group of North Korean defectors? Choices: back to North Korea, kept in a Chinese prison, or flown to the Philippines. After a tap, a route arrow shows the path taken."
+  },
+  "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=uLqfa27S4TQ&t=1209s",
+  "written": "2026-11-03"
+}

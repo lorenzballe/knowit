@@ -1,0 +1,37 @@
+{
+  "id": "nature-tsunami-sea-retreat",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the main early warning sign of a tsunami?",
+  "answer": "The main early warning sign of a tsunami is a sudden retreat of the sea, which exposes the seabed and leaves boats stranded. It is practically the only real advance warning, and it comes about five minutes before the wave.",
+  "move": "If the sea suddenly retreats, leave the beach: the wave is about five minutes away.",
+  "keywords": [
+    "tsunami",
+    "seabed",
+    "boats",
+    "sea retreat",
+    "beach"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A calm beach scene with a slider for watching the sea in the minutes before a tsunami wave. The question asks what the main early warning sign of a tsunami is, with choices: Calm, Sea retreats, or Wave."
+  },
+  "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=937s",
+  "written": "2026-11-03"
+}

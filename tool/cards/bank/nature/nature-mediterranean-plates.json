@@ -1,0 +1,37 @@
+{
+  "id": "nature-mediterranean-plates",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the Mediterranean so geologically complex?",
+  "answer": "The Mediterranean is not one clean meeting of two plates. Big plates and many microplates move in different directions, so squeezed zones and stretched zones sit side by side and cross.",
+  "move": "Many plates moving many ways means compression and extension at once.",
+  "keywords": [
+    "mediterranean",
+    "tectonic plates",
+    "microplates",
+    "compression",
+    "extension"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A map of the Mediterranean with a toggle between two views, 'Two plates' and 'Plates + microplates'. The second view shows many plate borders, with squeezed (compression) and pulled-apart (extension) zones crossing each other. The question asks why the Mediterranean is so geologically complex."
+  },
+  "source": "Geopop, “Ponte sullo stretto di Messina: sarebbe un'assurdità dal punto di vista geologico ?” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=-Jcz-q5tih4&t=59s",
+  "written": "2026-11-03"
+}

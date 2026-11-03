@@ -1,0 +1,339 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* A card that says "statement g has no proof", where g is its own number. Two boxes: try to file it. */
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh}
+#pic{position:relative;flex:1 1 auto;min-height:0}
+#art{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+#why{flex:none;display:flex;flex-direction:column;gap:.8cqh}
+#art text{pointer-events:none}
+#art .zbox{cursor:pointer;outline:none}
+#art .zbin{fill:color-mix(in srgb,var(--k) 6%,transparent);stroke:var(--k);transition:fill .15s}
+#art .zbin.zhot,#art .zbox:focus-visible .zbin{fill:color-mix(in srgb,var(--k) 18%,transparent)}
+#art .zslot{fill:none;stroke:color-mix(in srgb,var(--k) 40%,transparent)}
+#art .zlab{fill:var(--k);font-family:var(--display);font-weight:800;letter-spacing:.06em}
+#art .zcap{fill:var(--k);font-family:var(--body);font-weight:600}
+#art .zverd{fill:var(--k);font-family:var(--display);font-weight:800;letter-spacing:.07em}
+#art .zgap{fill:none;stroke:var(--c);stroke-linejoin:round;stroke-linecap:round}
+#art .zcrack{fill:none;stroke:var(--k);stroke-linejoin:round;stroke-linecap:round}
+#art .znote{cursor:grab}
+#art .zface{fill:var(--k)}
+#art .zwords{fill:var(--c);font-family:var(--hand)}
+#art .zgee{fill:var(--c);font-family:var(--mono);font-weight:700}
+#art .ztag{fill:var(--c);stroke:var(--k)}
+#art .ztagg{fill:var(--k);font-family:var(--mono);font-weight:700}
+#art .zloop{fill:none;stroke:var(--c);stroke-linecap:round}
+#art .zhead{fill:var(--c)}
+#art .zstamp{fill:var(--c);stroke:var(--k)}
+#art .zstampw{fill:var(--k);font-family:var(--display);font-weight:800;letter-spacing:.08em}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag · try both boxes">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">INCOMPLETENESS</span></div>
+    <h2 class="q">Why can a consistent formal system not prove all true statements?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="art" role="group" aria-label="A card that reads: statement g has no proof. Its own number is g. Two boxes below: has a proof, has no proof."></svg></div>
+      <div id="why" class="gone"><p class="big">True, unprovable</p><p class="body">Proving it would prove a falsehood, so a consistent system can't. By numbering every symbol, Gödel showed any strong enough system can say this about itself.</p></div>
+    </div>
+    <p class="say" id="say">Drag the card into the box where it fits.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Any consistent system of maths leaves some truths unprovable.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Math's Fundamental Flaw” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const svg = Kit.$('art'), pic = Kit.$('pic');
+const BOX = ['HAS A PROOF', 'HAS NO PROOF'];
+const CAP = [['false, yet proved', 'INCONSISTENT'], ['true, with no proof', 'INCOMPLETE']];
+// where: -1 on top, 0 in "has a proof", 1 in "has no proof". The flow is held here, so a redraw only repaints it.
+const S = {where: -1, tried: [false, false], busy: false, done: false};
+const pose = {x: 0, y: 0, s: 1, r: 0};
+let G = null, el = {}, tl = null, drag = null, shown = false;
+
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const px = n => n.toFixed(2) + 'px';
+function mk(tag, a, p) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in a) e.setAttribute(k, a[k]);
+  if (p) p.appendChild(e);
+  return e;
+}
+function txt(p, s, x, y, size, cls, anchor) {
+  const t = mk('text', {x, y, class: cls, 'text-anchor': anchor || 'middle'}, p);
+  t.style.fontSize = px(size);
+  t.textContent = s;
+  return t;
+}
+function fit(t, max) {
+  const w = t.getComputedTextLength();
+  if (w > max) t.style.fontSize = px(parseFloat(t.style.fontSize) * max / w);
+  return t;
+}
+function applyPose() {
+  if (el.note) el.note.setAttribute('transform', `translate(${pose.x.toFixed(2)} ${pose.y.toFixed(2)}) rotate(${pose.r.toFixed(2)}) scale(${pose.s.toFixed(4)})`);
+}
+const restOf = w => (w < 0 ? G.top : G.rest[w]);
+
+// Hidden pieces are hidden for real (visibility), so nobody reads a stamp that is not there.
+function vis(n, on) { n.style.opacity = on ? 1 : 0; n.style.visibility = on ? 'inherit' : 'hidden'; }
+function stamp(p, word, fs, cw, ch) {
+  const at = mk('g', {transform: `translate(${(cw / 2 - fs * 2.1).toFixed(2)} ${(ch / 2 + fs * 0.8).toFixed(2)}) rotate(-7)`}, p);
+  const g = mk('g', {}, at);
+  const w = fs * 4.6, h = fs * 1.5;
+  mk('rect', {x: -w / 2, y: -h / 2, width: w, height: h, rx: h / 2, class: 'zstamp'}, g).style.strokeWidth = px(Math.max(1.5, fs * 0.14));
+  fit(txt(g, word, 0, fs * 0.31, fs * 0.88, 'zstampw'), w * 0.8);
+  vis(g, false);
+  return g;
+}
+// The layout: the largest type that fits, the card big on top, room in each box for the card and its verdict.
+const CH = 4.1;
+function plan(W, H, f) {
+  const gap = Math.max(10, W * 0.035), bw = (W - gap) / 2, cw = bw * 0.84;
+  const fs0 = clamp(Math.min(f || 15, cw / 9.2), 11, 22), maxTop = Math.max(1, Math.min(1.45, W * 0.64 / cw));
+  const sizes = [];
+  for (let x = fs0; x > 11; x *= 0.95) sizes.push(x);
+  sizes.push(11);
+  const fitAt = (fs, cap, minS) => {
+    const ch = fs * CH, u = ch + fs * 0.7, v = ch + fs * 2.55, base = fs * (cap ? 5.1 : 3.8);
+    if (S.done) { const sc = Math.min(1, (H - 2 - base) / v); return sc >= minS ? {fs, cap, sc, sTop: sc} : null; }
+    const A = H - 2 - base - fs * 1.25, sTop = Math.min(maxTop, (A - v) / u);
+    if (sTop >= 1) return {fs, cap, sc: 1, sTop};
+    const s = Math.min(1, A / (u + v));
+    return s >= minS ? {fs, cap, sc: s, sTop: s} : null;
+  };
+  const passes = S.done ? [[true, .85, 12.5], [false, .72, 11]] : [[true, 1, 12.5], [false, 1, 11.5], [false, .7, 11], [false, .3, 11]];
+  for (const [cap, minS, minFs] of passes) for (const fs of sizes) {
+    if (fs < minFs - 1e-6) continue;
+    const L = fitAt(fs, cap, minS);
+    if (L) return Object.assign(L, {gap, bw, cw});
+  }
+  return null;
+}
+
+function draw() {
+  if (tl) { tl.kill(); tl = null; }
+  gsap.killTweensOf(pose);
+  drag = null;
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.textContent = '';
+  el = {}; G = null;
+  if (!(W > 40 && H > 40)) return false;
+  const L = plan(W, H, f);
+  if (!L) return false;
+  const {fs, cap, sc, sTop, gap, bw, cw} = L, ch = fs * CH;
+  let topY = 0, by = 1;
+  if (!S.done) { topY = fs * 0.15 + sTop * (fs * 0.7 + ch / 2); by = fs * 0.15 + sTop * (ch + fs * 0.7) + fs * 1.1; }
+  const bh = H - by - 1, sw = Math.max(1.5, fs * 0.14), labY = by + fs * 1.45;
+  const block = sc * (ch + fs * 2.55), tail = cap ? fs * 2.55 : fs * 1.25;
+  const blockTop = by + fs * 2.0 + Math.max(0, (bh - fs * 2.55 - block - tail) / 2);
+  const cardY = blockTop + sc * (fs * 0.7 + ch / 2), blockBot = blockTop + block;
+  const capY = blockBot + fs * 1.15, verdY = cap ? capY + fs * 1.4 : blockBot + fs * 1.25;
+  G = {W, H, fs, bw, gap, cw, ch, by, bh, sc, sTop, cardY, top: {x: W / 2, y: topY, s: sTop},
+       rest: [{x: bw / 2, y: cardY, s: sc}, {x: bw + gap + bw / 2, y: cardY, s: sc}]};
+
+  // The two boxes.
+  el.box = []; el.caps = []; el.cracks = [];
+  for (let i = 0; i < 2; i++) {
+    const x = i * (bw + gap), cx = x + bw / 2;
+    const g = mk('g', {class: 'zbox', role: 'button', tabindex: '0', 'aria-label': 'Put the card in the box: ' + BOX[i].toLowerCase()}, svg);
+    const r = mk('rect', {x: x + sw / 2, y: by, width: bw - sw, height: bh, rx: fs * 0.9, class: 'zbin'}, g);
+    r.style.strokeWidth = px(sw);
+    const slot = mk('rect', {x: cx - cw * sc / 2, y: cardY - ch * sc / 2, width: cw * sc, height: ch * sc, rx: fs * 0.55 * sc, class: 'zslot'}, g);
+    slot.style.strokeWidth = px(Math.max(1, fs * 0.1));
+    slot.style.strokeDasharray = `${px(fs * 0.5)} ${px(fs * 0.38)}`;
+    if (i === 0) {
+      const J = [0, .8, -.6, .9, -.7, .5, -.8, 0];
+      const pts = J.map((j, k) => {
+        const t = k / (J.length - 1);
+        return `${(x + bw * (0.6 - 0.22 * t) + j * fs * 0.5).toFixed(1)},${(by - sw + t * (bh + 2 * sw)).toFixed(1)}`;
+      }).join(' ');
+      for (const c of ['zgap', 'zcrack']) {
+        const pl = mk('polyline', {points: pts, class: c}, g);
+        pl.style.strokeWidth = px(c === 'zgap' ? fs * 0.55 : fs * 0.17);
+        const L = pl.getTotalLength() + 4;
+        pl.style.strokeDasharray = px(L);
+        pl.style.strokeDashoffset = px(S.tried[0] ? 0 : L);
+        el.cracks.push(pl);
+      }
+    }
+    fit(txt(g, BOX[i], cx, labY, fs * 0.95, 'zlab'), bw * 0.86);
+    const cg = mk('g', {}, g);
+    if (cap) fit(txt(cg, CAP[i][0], cx, capY, fs * 0.9, 'zcap'), bw * 0.88);
+    fit(txt(cg, CAP[i][1], cx, verdY, fs, 'zverd'), bw * 0.88);
+    vis(cg, S.tried[i]);
+    el.caps.push(cg);
+    g.addEventListener('click', () => drop(i));
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); drop(i); } });
+    el.box.push({g, r});
+  }
+
+  // The card: "Statement g has no proof." and its own number, g.
+  const note = mk('g', {class: 'znote'}, svg);
+  if (S.done) note.style.cursor = 'default';
+  el.note = note;
+  mk('rect', {x: -cw / 2, y: -ch / 2, width: cw, height: ch, rx: fs * 0.55, class: 'zface'}, note);
+  // One text, two lines: "Statement g / has no proof." (the g in mono, like the card's number).
+  const fw = fs * 1.2, y1 = -ch / 2 + fs * 1.85, y2 = y1 + fs * 1.44, maxw = cw * 0.8;
+  const words = mk('text', {class: 'zwords', 'text-anchor': 'middle'}, note);
+  words.style.fontSize = px(fw);
+  const tA = mk('tspan', {x: 0, y: y1.toFixed(2)}, words); tA.textContent = 'Statement';
+  const tG = mk('tspan', {dx: (fw * 0.3).toFixed(2), class: 'zgee'}, words); tG.textContent = 'g';
+  const tB = mk('tspan', {x: 0, y: y2.toFixed(2)}, words); tB.textContent = 'has no proof.';
+  let wa = tA.getComputedTextLength(), wq = tG.getComputedTextLength(), sp = fw * 0.3;
+  const k = Math.min(1, maxw / (wa + sp + wq || 1), maxw / (tB.getComputedTextLength() || 1));
+  if (k < 1) { words.style.fontSize = px(fw * k); tG.setAttribute('dx', (sp * k).toFixed(2)); wa *= k; wq *= k; sp *= k; }
+  const tot = wa + sp + wq;
+  // The loop: the g in the sentence points back at the card's own number.
+  const tr = fs * 0.8, tx = -cw / 2 + fs * 0.2, ty = -ch / 2 + fs * 0.2;
+  const sx = -tot / 2 + wa + sp + wq / 2, sy = y1 - fw * k * 0.62 - fs * 0.15;
+  const ex = tx + tr + fs * 0.36, ey = ty + fs * 0.3;
+  const loop = mk('path', {d: `M${sx.toFixed(2)} ${sy.toFixed(2)} Q${sx.toFixed(2)} ${ey.toFixed(2)} ${ex.toFixed(2)} ${ey.toFixed(2)}`, class: 'zloop'}, note);
+  loop.style.strokeWidth = px(Math.max(1.2, fs * 0.12));
+  const LL = loop.getTotalLength() + 2;
+  loop.style.strokeDasharray = px(LL);
+  loop.style.strokeDashoffset = '0px';
+  const hl = fs * 0.42, hw = fs * 0.27;
+  const head = mk('path', {d: `M${(ex - hl).toFixed(2)} ${ey.toFixed(2)} L${ex.toFixed(2)} ${(ey - hw).toFixed(2)} L${ex.toFixed(2)} ${(ey + hw).toFixed(2)}Z`, class: 'zhead'}, note);
+  const tagG = mk('g', {}, note);
+  mk('circle', {cx: tx, cy: ty, r: tr, class: 'ztag'}, tagG).style.strokeWidth = px(Math.max(1.5, fs * 0.13));
+  txt(tagG, 'g', tx, ty + fs * 0.2, fs * 1.08, 'ztagg');
+  Object.assign(el, {tagG, loop, loopLen: LL, head});
+  el.sT = stamp(note, 'TRUE', fs, cw, ch);
+  el.sF = stamp(note, 'FALSE', fs, cw, ch);
+  if (S.where === 1 && S.tried[1]) vis(el.sT, true);
+  Object.assign(pose, restOf(S.where), {r: 0});
+  applyPose();
+  return true;
+}
+// A redraw that finds no room at the end leaves the why the whole stage.
+function paint() { if (!draw() && S.done) Kit.hide('pic'); }
+
+// Dragging the card.
+function pt(e) {
+  const r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
+  const k = Math.min(r.width / (vb.width || r.width), r.height / (vb.height || r.height)) || 1;
+  return {x: (e.clientX - r.left - (r.width - vb.width * k) / 2) / k, y: (e.clientY - r.top - (r.height - vb.height * k) / 2) / k};
+}
+const boxAt = () => (pose.y < G.by - G.ch * G.sc * 0.15 ? -1 : pose.x < G.W / 2 ? 0 : 1);
+function hot(i) { (el.box || []).forEach((b, k) => b.r.classList.toggle('zhot', k === i)); }
+function settle(wiggle) {
+  gsap.to(pose, {...restOf(S.where), r: 0, duration: .4, ease: 'back.out(1.6)', onUpdate: applyPose});
+  if (wiggle && !Kit.calm) gsap.fromTo(pose, {r: -6}, {r: 0, duration: .6, ease: 'elastic.out(1,.4)', onUpdate: applyPose});
+}
+svg.addEventListener('pointerdown', e => {
+  if (!G || S.busy || S.done) return;
+  const p = pt(e), m = G.fs * 0.6;
+  if (Math.abs(p.x - pose.x) > G.cw * pose.s / 2 + m || Math.abs(p.y - pose.y) > G.ch * pose.s / 2 + m) return;
+  e.preventDefault();
+  gsap.killTweensOf(pose);
+  drag = {id: e.pointerId, x: p.x, y: p.y, px: pose.x, py: pose.y, moved: false};
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const p = pt(e), dx = p.x - drag.x, dy = p.y - drag.y;
+  if (!drag.moved) { if (Math.hypot(dx, dy) < 6) return; drag.moved = true; Kit.haptic('selection'); }
+  pose.x = clamp(drag.px + dx, 0, G.W);
+  pose.y = clamp(drag.py + dy, 0, G.H);
+  pose.s = G.sTop + (G.sc - G.sTop) * clamp((pose.y - G.top.y) / ((G.cardY - G.top.y) || 1), 0, 1);
+  pose.r = clamp(dx * 0.04, -6, 6);
+  applyPose();
+  hot(boxAt());
+});
+function lift(e) {
+  if (!drag || e.pointerId !== drag.id) return;
+  const d = drag; drag = null; hot(-1);
+  const b = d.moved ? boxAt() : -1;
+  if (b >= 0 && b !== S.where) drop(b); else settle(!d.moved);
+}
+svg.addEventListener('pointerup', lift);
+svg.addEventListener('pointercancel', lift);
+
+function say(s) {
+  const n = Kit.$('say'); n.textContent = s;
+  if (!Kit.calm) gsap.fromTo(n, {opacity: 0, y: 4}, {opacity: 1, y: 0, duration: .35});
+}
+function pop(t, node) {
+  t.fromTo(node, {autoAlpha: 0, scale: 1.9}, {autoAlpha: 1, scale: 1, duration: .28, ease: 'back.out(2.2)', transformOrigin: '50% 50%'});
+}
+// The drawing answers: in "has a proof" the card is false yet proved, and the system cracks;
+// in "has no proof" the card is simply true. A consistent system can only leave it there.
+function drop(i) {
+  if (!G || S.busy || S.done) return;
+  if (i === S.where) { settle(); return; }
+  S.busy = true; drag = null; hot(-1);
+  gsap.killTweensOf(pose);
+  Kit.haptic('selection');
+  S.tried[i] = true;
+  const both = S.tried[0] && S.tried[1];
+  S.where = i === 1 || both ? 1 : -1;
+  const go = (p, d, ease) => ({x: p.x, y: p.y, s: p.s, r: 0, duration: d, ease: ease || 'power3.out', onUpdate: applyPose});
+  const t = tl = gsap.timeline();
+  t.to(el.sT, {autoAlpha: 0, duration: .15}, 0);
+  t.to(pose, go(G.rest[i], .42), 0);
+  t.add(() => Kit.haptic('light'));
+  if (i === 0) {
+    pop(t, el.sF);
+    t.to(el.cracks, {strokeDashoffset: 0, duration: .3, ease: 'power2.in'}, '-=.08');
+    t.to(el.box[0].g, {x: G.fs * 0.22, duration: .05, repeat: 5, yoyo: true, ease: 'none'}, '-=.06');
+    t.to(pose, {x: G.rest[0].x + G.fs * 0.22, duration: .05, repeat: 5, yoyo: true, ease: 'none', onUpdate: applyPose}, '<');
+    t.to(el.caps[0], {autoAlpha: 1, duration: .3}, '<');
+    t.to(el.sF, {autoAlpha: 0, duration: .2}, '+=.8');
+    t.to(pose, go(restOf(S.where), .55, 'power2.inOut'), '<');
+    if (both) pop(t, el.sT);
+  } else {
+    pop(t, el.sT);
+    t.to(el.caps[1], {autoAlpha: 1, duration: .3}, '<.1');
+  }
+  if (Kit.calm) t.timeScale(12);
+  setTimeout(() => {
+    S.busy = false;
+    if (both) finish();
+    else say(i === 0 ? 'That breaks the system. Try the other box.' : 'True, and unprovable. Try the other box.');
+  }, t.duration() / t.timeScale() * 1000 + 120);
+}
+function finish() {
+  S.done = true; S.where = 1;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  paint();
+  // The kit brings the why and the keep in itself; only the redrawn picture fades up.
+  if (!Kit.calm) gsap.from(svg, {opacity: 0, duration: .45, ease: 'power1.out'});
+}
+
+// Draw at the card's real size: once the fonts are in, on every resize, and when the why makes room.
+Kit.onShow.card = () => { shown = true; paint(); };
+let seen = '';
+new ResizeObserver(es => {
+  const c = es[0].contentRect, key = Math.round(c.width) + 'x' + Math.round(c.height);
+  if (key === seen) return;
+  seen = key;
+  if (shown && c.width && c.height) paint();
+}).observe(pic);
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G || S.busy || S.done || S.tried[0] || S.tried[1]) return;
+  gsap.from(el.box.map(b => b.g), {opacity: 0, y: G.fs, duration: .5, stagger: .1, ease: 'power3.out'});
+  gsap.from(pose, {y: pose.y - G.fs * 2.5, r: -7, s: pose.s * 0.92, duration: .75, ease: 'back.out(1.6)', onUpdate: applyPose});
+  gsap.from(el.loop, {strokeDashoffset: el.loopLen, duration: .55, delay: .65, ease: 'power2.inOut'});
+  gsap.from(el.head, {opacity: 0, duration: .15, delay: 1.15});
+  gsap.to(el.tagG, {scale: 1.3, duration: .16, yoyo: true, repeat: 1, delay: 1.2, transformOrigin: '50% 50%', ease: 'power2.out'});
+};
+// Plays the card through for the checker: tries "has no proof", then "has a proof".
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const idle = async () => { for (let n = 0; n < 120 && S.busy; n++) await wait(50); };
+  for (const i of [1, 0]) {
+    await idle();
+    if (el.box) el.box[i].g.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await wait(100);
+  }
+  await idle();
+  await wait(900);
+};
+Kit.single();
+</script>
+</html>

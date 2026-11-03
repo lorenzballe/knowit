@@ -1,0 +1,206 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-alcatraz-vent-duct -->
+<title>Astute · Where they dug out of Alcatraz</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say,.keep,.q{overflow-wrap:anywhere}
+/* drawing */
+.sky{fill:color-mix(in srgb,var(--k) 4%,transparent)}
+.cellbg{fill:color-mix(in srgb,var(--k) 7%,transparent)}
+.corr{fill:color-mix(in srgb,var(--k) 16%,transparent)}
+.stone{fill:var(--k)}
+.seam{stroke:var(--c);stroke-opacity:.35;stroke-width:1.2}
+.duct{fill:var(--c);fill-opacity:.55}
+.grille{fill:var(--c);stroke:var(--k);stroke-width:2}
+.slat{stroke:var(--k);stroke-width:1.6}
+.hole{fill:color-mix(in srgb,var(--k) 16%,var(--c))}
+.pipe{stroke:var(--k);stroke-opacity:.45;fill:none}
+.bunk{fill:color-mix(in srgb,var(--k) 22%,transparent)}
+.lbl{font-family:var(--body);font-weight:700;fill:var(--k)}
+.lbl.m{fill:var(--k);opacity:.6;font-weight:600}
+.lbl.inv{fill:var(--c);letter-spacing:.12em}
+.lbl.cap{letter-spacing:.14em;opacity:.55}
+.ring{fill:none;stroke:var(--k);stroke-width:2.4}
+.ring.ghost{stroke-opacity:.5}
+.dot{fill:var(--k)}
+.hit{fill:transparent;cursor:pointer}
+.route{fill:none;stroke:var(--k);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.arrow{fill:var(--k)}
+.chip{fill:var(--k)}
+.dim{opacity:.35}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap the picture · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ALCATRAZ</span></div>
+    <h2 class="q">Escaping Alcatraz: where in the cell did the prisoners dig their hole?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="why" class="gone">
+        <p class="big">Around the vent grille</p>
+        <p class="body">A hole in the bare wall would be hard to hide. So the four chipped away around the grille of the ventilation duct. It opened onto an unguarded service corridor, and from there they could reach the roof.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the spot where you would dig.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>They didn't break the wall: they widened the duct already through it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, NAMES = ['The bare wall', 'The vent grille'];
+let pick = -1, done = false, pulses = [];
+const svg = Kit.$('svg');
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = NAMES[pick];
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say');
+  done = true; draw(true);
+  Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+function choose(i){
+  if (pick >= 0) return;
+  pick = i; Kit.haptic('selection'); sure.on(); draw(false);
+}
+
+function text(p, x, y, arr, anchor, cls, fs){
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor, class: 'lbl ' + (cls||''), 'font-size': fs}, p);
+  arr.forEach((s, i) => { const sp = Kit.mk('tspan', {x, dy: i ? fs * 1.3 : 0}, t); sp.textContent = s; });
+  return t;
+}
+
+function draw(animate){
+  pulses.forEach(t => t.kill()); pulses = [];
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(Math.min(f, W * .045, H * .05), 12);
+  const m = W * .03, top = H * .02, roofB = H * .15, floor = H * .9, bot = H * .98;
+  const wx0 = W * .5, wx1 = W * .62, cw = (W - m) - wx1;
+  const gy0 = floor - H * .17, gy1 = floor - H * .05, gym = (gy0 + gy1) / 2;
+  const mk = Kit.mk;
+
+  // spaces
+  mk('rect', {x: m, y: roofB, width: wx0 - m, height: floor - roofB, class: 'cellbg'}, svg);
+  mk('rect', {x: wx1, y: roofB, width: cw, height: floor - roofB, class: 'corr'}, svg);
+  // roof, floor, back wall
+  mk('rect', {x: m, y: top, width: W - 2 * m, height: roofB - top, rx: 4, class: 'stone'}, svg);
+  mk('rect', {x: m, y: floor, width: W - 2 * m, height: bot - floor, rx: 3, class: 'stone'}, svg);
+  mk('rect', {x: wx0, y: roofB - 1, width: wx1 - wx0, height: floor - roofB + 2, class: 'stone'}, svg);
+  // masonry seams
+  const rows = 9, rh = (floor - roofB) / rows;
+  for (let r = 1; r < rows; r++) {
+    const y = roofB + r * rh;
+    mk('line', {x1: wx0, x2: wx1, y1: y, y2: y, class: 'seam'}, svg);
+    const xs = wx0 + (wx1 - wx0) * (r % 2 ? .35 : .7);
+    mk('line', {x1: xs, x2: xs, y1: y, y2: y + rh, class: 'seam'}, svg);
+  }
+  // corridor pipes
+  [.82, .9].forEach(k => mk('line', {x1: wx1 + cw * k, x2: wx1 + cw * k, y1: roofB, y2: floor, class: 'pipe', 'stroke-width': Math.max(W * .012, 3)}, svg));
+  // bunk
+  mk('rect', {x: m + W * .02, y: floor - H * .1, width: W * .14, height: H * .03, rx: 3, class: 'bunk'}, svg);
+  mk('rect', {x: m + W * .02, y: floor - H * .07, width: W * .012, height: H * .07, class: 'bunk'}, svg);
+  mk('rect', {x: m + W * .148, y: floor - H * .07, width: W * .012, height: H * .07, class: 'bunk'}, svg);
+
+  text(svg, m + W * .025, roofB + fs * 1.8, ['CELL'], 'start', 'cap', fs);
+  text(svg, W / 2, top + (roofB - top) / 2 + fs * .35, ['ROOF'], 'middle', 'inv', fs);
+
+  // the duct: small channel through the wall
+  const dh = (gy1 - gy0) * .32;
+  mk('rect', {x: wx0, y: gym - dh / 2, width: wx1 - wx0, height: dh, class: 'duct'}, svg);
+
+  const gw = W * .022;
+  const drawGrille = p => {
+    const g = mk('g', {}, p);
+    mk('rect', {x: wx0 - gw * .6, y: gy0, width: gw, height: gy1 - gy0, rx: 2, class: 'grille'}, g);
+    for (let i = 1; i < 6; i++) {
+      const y = gy0 + (gy1 - gy0) * i / 6;
+      mk('line', {x1: wx0 - gw * .6, x2: wx0 + gw * .4, y1: y, y2: y, class: 'slat'}, g);
+    }
+    return g;
+  };
+
+  if (!done) {
+    drawGrille(svg);
+    const spots = [
+      {i: 0, cx: (wx0 + wx1) / 2, cy: H * .4, lx: wx0 - W * .035, ly: H * .4 + fs * .35, words: ['The bare', 'wall?'],
+       hit: [wx0 - W * .3, roofB, wx1 - wx0 + W * .3, gy0 - H * .05 - roofB]},
+      {i: 1, cx: wx0, cy: gym, lx: wx0 - W * .045, ly: gy0 - H * .035, words: ['The vent', 'grille?'],
+       hit: [wx0 - W * .3, gy0 - H * .05 - fs * 2, wx1 - wx0 + W * .3, gy1 - gy0 + H * .05 + fs * 2]}
+    ];
+    spots.forEach(s => {
+      const g = mk('g', {class: pick >= 0 && pick !== s.i ? 'dim' : ''}, svg);
+      const r = Math.max(W * .05, 16);
+      const ring = mk('circle', {cx: s.cx, cy: s.cy, r, class: 'ring' + (pick === s.i ? '' : ' ghost')}, g);
+      if (pick === s.i) { ring.setAttribute('stroke-width', 4); ring.style.stroke = 'var(--c)'; mk('circle', {cx: s.cx, cy: s.cy, r: r + 3, class: 'ring'}, g); }
+      mk('circle', {cx: s.cx, cy: s.cy, r: Math.max(W * .012, 4), class: 'dot', style: s.i === 0 ? 'fill:var(--c)' : ''}, g);
+      text(g, s.lx, s.ly, s.words, 'end', '', fs);
+      const hit = mk('rect', {x: s.hit[0], y: s.hit[1], width: s.hit[2], height: s.hit[3], class: 'hit', 'data-spot': s.i}, g);
+      hit.addEventListener('click', () => choose(s.i));
+      if (pick < 0 && !Kit.calm) pulses.push(gsap.fromTo(ring, {attr: {r: r * .8}, opacity: 1}, {attr: {r: r * 1.35}, opacity: 0, duration: 1.4, repeat: -1, ease: 'power2.out', delay: s.i * .5}));
+    });
+    return;
+  }
+
+  // ---- the answer ----
+  const hole = mk('rect', {x: wx0 - 1, y: gy0, width: wx1 - wx0 + 2, height: gy1 - gy0, class: 'hole'}, svg);
+  // chipped edges
+  const edge = mk('g', {}, svg);
+  for (let i = 0; i < 7; i++) {
+    const x = wx0 + (wx1 - wx0) * (i + .5) / 7, s = 2 + Kit.rnd() * 3;
+    mk('rect', {x: x - s, y: gy0 - s * .6, width: s * 2, height: s, class: 'chip'}, edge);
+    mk('rect', {x: x - s, y: gy1 - s * .4, width: s * 2, height: s, class: 'chip'}, edge);
+  }
+  // route: through the hole, into the corridor, up to the roof
+  const px = wx1 + cw * .2, ry = roofB + H * .035;
+  const route = mk('path', {d: `M${wx0 - W * .06},${gym} L${px},${gym} L${px},${ry}`, class: 'route'}, svg);
+  const ah = Math.max(W * .022, 8);
+  const arrow = mk('path', {d: `M${px - ah},${ry + ah * 1.2} L${px},${ry - ah * .2} L${px + ah},${ry + ah * 1.2} Z`, class: 'arrow'}, svg);
+
+  const labs = mk('g', {}, svg);
+  text(labs, wx0 - W * .035, H * .4 + fs * .35, ['Bare wall:', 'hard to hide'], 'end', 'm', fs);
+  text(labs, wx0 - W * .07, gy0 - H * .035 - fs * 1.3, ['Chipped', 'around the', 'vent grille'], 'end', '', fs);
+  text(labs, wx1 + cw * .3, H * .42, ['Service', 'corridor,', 'unguarded'], 'start', '', fs);
+  text(labs, wx1 + cw * .3, ry + fs * 1.6, ['to the roof'], 'start', 'm', fs);
+
+  if (!animate || Kit.calm) return;
+  // grille comes off, chips fall, hole opens, route draws
+  const gr = drawGrille(svg);
+  gsap.to(gr, {x: -W * .06, y: floor - gy1, rotation: -70, svgOrigin: `${wx0} ${gy1}`, opacity: 0, duration: .8, ease: 'power2.in', delay: .5});
+  for (let i = 0; i < 14; i++) {
+    const s = 2 + Kit.rnd() * 3;
+    const c = mk('rect', {x: wx0 + Kit.rnd() * (wx1 - wx0), y: gy0 + Kit.rnd() * (gy1 - gy0), width: s, height: s, class: 'chip'}, svg);
+    gsap.fromTo(c, {opacity: 0}, {opacity: 1, duration: .05, delay: .1 + i * .04});
+    gsap.to(c, {x: -W * (.02 + Kit.rnd() * .12), y: floor - gy1 + Kit.rnd() * 6, duration: .7, ease: 'bounce.out', delay: .1 + i * .04, onComplete: () => gsap.to(c, {opacity: 0, delay: .6, duration: .4})});
+  }
+  gsap.from(hole, {scaleY: .32, transformOrigin: '50% 50%', duration: .7, ease: 'power2.out', delay: .1});
+  gsap.from(edge, {opacity: 0, duration: .4, delay: .5});
+  const L = route.getTotalLength();
+  gsap.fromTo(route, {strokeDasharray: L, strokeDashoffset: L}, {strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut', delay: 1.1});
+  gsap.from(arrow, {opacity: 0, scale: .3, transformOrigin: '50% 50%', duration: .3, delay: 2.3});
+  gsap.from(labs.children, {opacity: 0, y: 6, stagger: .25, duration: .4, delay: 1.2});
+}
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#svg', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  svg.querySelector('[data-spot="1"]').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 3000));
+};
+Kit.single();
+</script>
+</html>

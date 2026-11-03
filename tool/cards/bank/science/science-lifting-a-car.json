@@ -1,0 +1,36 @@
+{
+  "id": "science-lifting-a-car",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is it impossible to lift a car off the ground?",
+  "answer": "A car's weight is gravity pulling it down into the Earth. That pull is far stronger than any pull a person can make, so the car stays put. Set your pull to your hardest and press Lift to see weight win.",
+  "move": "Weight is a force: gravity pulling a thing down.",
+  "keywords": [
+    "car",
+    "gravity",
+    "weight",
+    "earth"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Astute free card asks why it is impossible to lift a car off the ground. An interactive pull slider sets your strength, and a Lift button tests it. A Switch gravity off option is also shown."
+  },
+  "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=_Z0X0yE8Ioc&t=158s",
+  "written": "2026-11-03"
+}

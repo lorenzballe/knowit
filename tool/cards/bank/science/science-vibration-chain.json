@@ -1,0 +1,37 @@
+{
+  "id": "science-vibration-chain",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does your voice's energy reach a wine glass?",
+  "answer": "Your vocal cords vibrate and shake the air. The air then shakes the glass. The glass shakes most when you sing its own note.",
+  "move": "Sound is a vibration handed on: from cords, to air, to glass.",
+  "keywords": [
+    "vocal cords",
+    "wine glass",
+    "sound waves",
+    "air",
+    "resonance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A row of three icons, vocal cords, air, and a wine glass, joined by arrows, under the question: how does a voice's energy reach a wine glass? A low-to-high scale sits above the diagram."
+  },
+  "source": "Geopop, “Si può rompere un calice di vetro solo con la voce?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=w7MQKNWAlpA",
+  "written": "2026-11-03"
+}

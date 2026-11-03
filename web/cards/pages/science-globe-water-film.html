@@ -1,0 +1,185 @@
+<!doctype html>
+<!-- slug: science-globe-water-film -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#viz{flex:1;min-height:0;position:relative;cursor:pointer;touch-action:manipulation}
+#viz svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#chips{display:flex;gap:2cqw}
+.chip{flex:1;font:700 max(1.8cqh,13px)/1.1 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:1.4cqh;padding:1cqh 2cqw;cursor:pointer}
+.chip.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font-size:max(2.6cqh,16px)}
+#why .body{font-size:max(1.8cqh,13px);line-height:1.3}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FRICTION</span></div>
+    <h2 class="q">Why is there very little friction on the globe’s bottom?</h2>
+    <div class="stagebox" id="stage">
+      <div id="viz"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">It is hollow, so it barely presses down</button>
+        <button class="opt" data-i="1">It rests on a thin film of water</button>
+        <button class="opt" data-i="2">Tiny ball bearings roll under it</button>
+      </div>
+      <div id="why" class="gone">
+        <div id="chips"><button class="chip" data-s="dry">Dry contact</button><button class="chip on" data-s="wet">Water film</button></div>
+        <p class="big">A thin film of water</p>
+        <p class="body">The globe is supported on a thin layer of water, not on its base. The water acts as a lubricant, so friction drops dramatically and a small push keeps it spinning.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch the globe on its base.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A thin layer of liquid between two surfaces makes friction almost vanish.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Does The Earth Spin?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, answered = false;
+// physics + view state
+const S = {theta: 0, omega: .5, wet: true, idle: true, cupY: 0, film: 0, caption: ''};
+let G = null; // geometry and element refs
+
+const LAND = [[0,.5,.32],[.9,.15,.26],[1.6,-.35,.3],[2.6,.45,.22],[3.4,-.1,.34],[4.4,.6,.2],[5.2,-.45,.24],[2.1,-.7,.18]];
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('why');
+  Kit.$('say').textContent = 'Tap the globe to push it. Switch between dry and water.';
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  answered = true; S.idle = false;
+  requestAnimationFrame(() => { Kit.onShow.card(); demo(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('chips').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  setState(b.dataset.s === 'wet'); Kit.haptic('selection');
+});
+Kit.$('viz').addEventListener('pointerdown', () => { if (!answered) return; push(5); Kit.haptic('light'); });
+
+function setState(wet, quick) {
+  S.wet = wet;
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', (c.dataset.s === 'wet') === wet));
+  S.caption = wet ? 'Water film: the globe rides on water' : 'Dry: the globe touches its base';
+  const g = G ? G.g : 6;
+  if (quick || Kit.calm) { S.cupY = wet ? 0 : -g; S.film = wet ? 1 : 0; return; }
+  gsap.to(S, {cupY: wet ? 0 : -g, film: wet ? 1 : 0, duration: .6, ease: 'power2.inOut'});
+}
+function push(v) { S.omega = Math.min(S.omega + v, 22); }
+function demo() {
+  if (Kit.calm) { setState(true, true); return; }
+  setState(false, true);
+  gsap.timeline()
+    .call(() => push(6), null, .4)
+    .call(() => setState(true), null, 2.2)
+    .call(() => push(6), null, 3.1);
+}
+
+function arc(cx, cy, r, a) { return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0, 12);
+  const R = Math.max(30, Math.min(W * .3, (H - 5.4 * f) / 2.6));
+  const cx = W / 2, cy = 2.3 * f + R;
+  const g = Math.max(5, R * .09), t = Math.max(6, R * .12);
+  const a1 = 25 * Math.PI / 180, a2 = 155 * Math.PI / 180;
+  const ink = 'fill:var(--k)';
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'gc'}, defs);
+  Kit.mk('circle', {cx, cy, r: R}, cp);
+  const mk = Kit.mk('marker', {id: 'ah', viewBox: '0 0 10 10', refX: 8, refY: 5, markerWidth: 4, markerHeight: 4, orient: 'auto'}, defs);
+  Kit.mk('path', {d: 'M0,0 L10,5 L0,10 z', fill: '#e5484d'}, mk);
+
+  // water film (fixed, between globe and wet cup)
+  const [o1x, o1y] = arc(cx, cy, R + g, a1), [o2x, o2y] = arc(cx, cy, R + g, a2);
+  const [i1x, i1y] = arc(cx, cy, R, a1), [i2x, i2y] = arc(cx, cy, R, a2);
+  const film = Kit.mk('path', {d: `M${o1x},${o1y} A${R+g},${R+g} 0 0 1 ${o2x},${o2y} L${i2x},${i2y} A${R},${R} 0 0 0 ${i1x},${i1y} Z`, fill: '#4cc3ff'}, svg);
+
+  // cup + stand
+  const cup = Kit.mk('g', {}, svg);
+  const ro = R + g + t, ri = R + g;
+  const [p1x, p1y] = arc(cx, cy, ro, a1), [p2x, p2y] = arc(cx, cy, ro, a2);
+  Kit.mk('path', {d: `M${p1x},${p1y} A${ro},${ro} 0 0 1 ${p2x},${p2y} L${o2x},${o2y} A${ri},${ri} 0 0 0 ${o1x},${o1y} Z`, style: ink}, cup);
+  const sb = cy + ro - 2, sh = R * .26;
+  Kit.mk('rect', {x: cx - R * .1, y: sb, width: R * .2, height: sh, style: ink}, cup);
+  Kit.mk('rect', {x: cx - R * .45, y: sb + sh - 1, width: R * .9, height: Math.max(5, R * .08), rx: 3, style: ink}, cup);
+  const baseBottom = sb + sh + Math.max(5, R * .08);
+
+  // globe
+  Kit.mk('circle', {cx, cy, r: R, fill: '#2f6fd6'}, svg);
+  const gg = Kit.mk('g', {'clip-path': 'url(#gc)'}, svg);
+  Kit.mk('line', {x1: cx - R, y1: cy, x2: cx + R, y2: cy, stroke: '#fff', 'stroke-opacity': .35, 'stroke-width': 1.5}, gg);
+  const blobs = LAND.map(() => Kit.mk('ellipse', {fill: '#3fbf6e'}, gg));
+  Kit.mk('circle', {cx: cx - R * .35, cy: cy - R * .4, r: R * .35, fill: '#fff', 'fill-opacity': .12}, svg);
+  Kit.mk('circle', {cx, cy, r: R, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 2}, svg);
+
+  // caption
+  const cap = Kit.mk('text', {x: cx, y: 1.2 * f, 'text-anchor': 'middle', style: `font:700 ${f}px var(--body);fill:var(--k)`}, svg);
+
+  // labels row
+  const rowY = Math.min(H - 1.6 * f, baseBottom + 1.4 * f);
+  const lx = cx - Math.max(R * .8, 3.6 * f), rx = cx + Math.max(R * .8, 3.6 * f);
+  const filmLab = Kit.mk('g', {}, svg);
+  const [fx, fy] = arc(cx, cy, R + g / 2, 118 * Math.PI / 180);
+  Kit.mk('line', {x1: fx, y1: fy, x2: lx, y2: rowY - f, stroke: '#4cc3ff', 'stroke-width': 2}, filmLab);
+  Kit.mk('text', {x: lx, y: rowY, 'text-anchor': 'middle', style: `font:700 ${f}px var(--body);fill:var(--k)`}, filmLab).textContent = 'thin water film';
+  const fricLab = Kit.mk('g', {}, svg);
+  Kit.mk('text', {x: rx, y: rowY, 'text-anchor': 'middle', style: `font:700 ${f}px var(--body);fill:#e5484d`}, fricLab).textContent = 'friction';
+  const arrow = Kit.mk('line', {y1: rowY + .9 * f, y2: rowY + .9 * f, stroke: '#e5484d', 'stroke-width': Math.max(3, f * .3), 'stroke-linecap': 'round', 'marker-end': 'url(#ah)'}, fricLab);
+
+  G = {cx, cy, R, g, f, film, cup, blobs, cap, filmLab, fricLab, arrow, rx};
+  if (!S.wet) S.cupY = -g;
+  render(0);
+};
+
+function render(dt) {
+  if (!G) return;
+  // physics
+  if (S.idle) S.omega = .5;
+  else if (S.wet) S.omega *= Math.exp(-.22 * dt);
+  else { S.omega *= Math.exp(-3 * dt); S.omega = Math.max(0, S.omega - 1.2 * dt); }
+  S.theta += S.omega * dt;
+  const {cx, cy, R} = G;
+  LAND.forEach(([lon, lat, s], i) => {
+    const a = lon + S.theta, c = Math.cos(a), el = G.blobs[i];
+    if (c <= 0) { el.setAttribute('opacity', 0); return; }
+    el.setAttribute('opacity', 1);
+    el.setAttribute('cx', cx + R * Math.sin(a) * Math.cos(lat));
+    el.setAttribute('cy', cy - R * Math.sin(lat));
+    el.setAttribute('rx', R * s * c * Math.cos(lat) + .5);
+    el.setAttribute('ry', R * s * .7);
+  });
+  G.cup.setAttribute('transform', `translate(0,${S.cupY})`);
+  G.film.setAttribute('opacity', S.film * .95);
+  G.filmLab.setAttribute('opacity', answered ? S.film : 0);
+  G.fricLab.setAttribute('opacity', answered ? 1 : 0);
+  G.cap.textContent = answered ? S.caption : '';
+  const sliding = answered && S.omega > .05;
+  const L = sliding ? (S.wet ? R * .12 : R * .7) * Math.min(1, .4 + S.omega / 8) : 2;
+  G.arrow.setAttribute('x1', G.rx + L / 2); G.arrow.setAttribute('x2', G.rx - L / 2);
+  G.arrow.setAttribute('opacity', sliding ? 1 : .25);
+}
+gsap.ticker.add(() => render(Math.min(gsap.ticker.deltaRatio() / 60, .05)));
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

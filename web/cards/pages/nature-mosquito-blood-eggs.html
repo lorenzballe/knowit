@@ -1,0 +1,163 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-mosquito-blood-eggs -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{display:block;flex:1;min-height:0;width:100%;overflow:visible}
+#pic .hit{cursor:pointer}
+#info{min-height:7.5cqh;display:flex;flex-direction:column;justify-content:center}
+#info p{margin:0;font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);overflow-wrap:anywhere}
+#info b{font-weight:800}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why p{margin:0;overflow-wrap:anywhere}
+#why .big{font:800 max(2.4cqh,15px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body)}
+.lbl{font-family:var(--body);font-weight:800;letter-spacing:.06em}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap the parts">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOSQUITOES</span></div>
+    <h2 class="q">What does a female mosquito actually live on?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A female mosquito biting skin, beside a flower"></svg>
+      <div id="info"><p>Three things around her: the <b>blood</b>, the <b>flower</b> and her <b>belly</b>.</p></div>
+      <div id="why" class="gone">
+        <p class="big">Nectar is her food. Blood is for her eggs.</p>
+        <p class="body">Like many insects, she drinks plant nectar for energy. She takes blood only for its proteins, which complete her eggs: 100 to 500 from one meal. That's why only females bite.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the blood, the flower and her belly.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Mosquitoes bite to make eggs, not to feed themselves.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const D = {w: 360, h: 400};
+const done = new Set();
+let R = {};
+const TEXT = {
+  blood: 'About <b>30 microlitres</b> per bite. Watch where it goes: not into her fuel, but down to her belly.',
+  flower: 'Her real food: <b>plant nectar</b>, like many other insects. This sugar is what keeps her flying.',
+  belly: 'Here the blood\'s <b>proteins finish her eggs</b>: <b>100 to 500</b> eggs from a single blood meal.'
+};
+const EGGS = [[248,338],[262,330],[276,338],[290,330],[304,338],[318,330],[255,352],[269,346],[283,354],[297,346],[311,354],[325,346]];
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const s = Math.min(W / D.w, H / D.h);
+  const g = Kit.mk('g', {transform: `translate(${(W - D.w * s) / 2},${(H - D.h * s) / 2}) scale(${s})`}, svg);
+  const fs = Math.max(f * .85, 13) / s, sw = 2.2;
+  const ink = 'var(--k)', bg = 'var(--c)';
+  const lbl = (x, y, t, a = 'middle') => { const e = Kit.mk('text', {x, y, 'text-anchor': a, class: 'lbl', 'font-size': fs, fill: ink}, g); e.textContent = t; return e; };
+
+  // skin
+  Kit.mk('path', {d: 'M-10 348 Q80 338 175 352 L175 410 L-10 410 Z', fill: '#f2c4a8', stroke: ink, 'stroke-width': sw}, g);
+  Kit.mk('path', {d: 'M10 380 Q70 372 150 384', fill: 'none', stroke: '#b3202a', 'stroke-width': 3, opacity: .5}, g);
+
+  // flower
+  Kit.mk('path', {d: 'M60 95 Q52 150 66 190', fill: 'none', stroke: '#2f7d32', 'stroke-width': 4}, g);
+  Kit.mk('path', {d: 'M58 150 Q36 140 30 122 Q50 126 58 150', fill: '#3f9a43', stroke: ink, 'stroke-width': 1.5}, g);
+  const fl = Kit.mk('g', {}, g);
+  for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; Kit.mk('ellipse', {cx: 60 + Math.cos(a) * 17, cy: 90 + Math.sin(a) * 17, rx: 13, ry: 9, transform: `rotate(${i * 60} ${60 + Math.cos(a) * 17} ${90 + Math.sin(a) * 17})`, fill: '#f6a6c8', stroke: ink, 'stroke-width': 1.6}, fl); }
+  Kit.mk('circle', {cx: 60, cy: 90, r: 10, fill: '#ffd23f', stroke: ink, 'stroke-width': 1.6}, fl);
+  lbl(60, 46, 'FLOWER');
+
+  // legs
+  [[160,205,140,250,128,312],[172,210,170,262,160,320],[186,208,206,258,214,318],[150,200,110,230,92,270],[194,204,240,240,258,290],[178,212,190,270,186,330]]
+    .forEach(p => Kit.mk('polyline', {points: `${p[0]},${p[1]} ${p[2]},${p[3]} ${p[4]},${p[5]}`, fill: 'none', stroke: ink, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g));
+  // wings
+  const wings = Kit.mk('g', {}, g);
+  Kit.mk('ellipse', {cx: 222, cy: 150, rx: 52, ry: 13, transform: 'rotate(-22 222 150)', fill: '#ffffff', 'fill-opacity': .55, stroke: ink, 'stroke-width': 1.4}, wings);
+  Kit.mk('ellipse', {cx: 228, cy: 162, rx: 46, ry: 11, transform: 'rotate(-10 228 162)', fill: '#ffffff', 'fill-opacity': .45, stroke: ink, 'stroke-width': 1.2}, wings);
+  // proboscis
+  Kit.mk('line', {x1: 120, y1: 206, x2: 76, y2: 346, stroke: ink, 'stroke-width': 2.6, 'stroke-linecap': 'round'}, g);
+  // antennae
+  Kit.mk('path', {d: 'M124 186 Q108 160 92 156 M128 184 Q118 156 108 146', fill: 'none', stroke: ink, 'stroke-width': 1.5}, g);
+  // abdomen
+  const belly = Kit.mk('g', {transform: 'rotate(12 258 214)'}, g);
+  Kit.mk('ellipse', {cx: 258, cy: 214, rx: 60, ry: 19, fill: ink}, belly);
+  const red = Kit.mk('ellipse', {cx: 258, cy: 214, rx: 57, ry: 16.5, fill: '#c81d2a', opacity: done.has('blood') ? .9 : 0}, belly);
+  for (let i = 0; i < 5; i++) Kit.mk('line', {x1: 222 + i * 16, y1: 198, x2: 222 + i * 16, y2: 230, stroke: bg, 'stroke-width': 2.2, opacity: .7}, belly);
+  // thorax + head
+  const thorax = Kit.mk('ellipse', {cx: 176, cy: 196, rx: 27, ry: 21, fill: ink}, g);
+  Kit.mk('circle', {cx: 130, cy: 198, r: 14, fill: ink}, g);
+  Kit.mk('circle', {cx: 125, cy: 194, r: 6, fill: bg, opacity: .85}, g);
+  lbl(262, 268, 'HER BELLY');
+
+  // blood drop
+  Kit.mk('path', {d: 'M96 342 Q90 352 90 358 A7 7 0 0 0 104 358 Q104 352 96 342 Z', fill: '#c81d2a', stroke: ink, 'stroke-width': 1.4}, g);
+  lbl(126, 402 - fs * .2, 'BLOOD');
+
+  // eggs
+  const eggs = Kit.mk('g', {}, g);
+  EGGS.forEach(([x, y]) => Kit.mk('ellipse', {cx: x, cy: y, rx: 5.5, ry: 8, transform: `rotate(-30 ${x} ${y})`, fill: '#fff7e0', stroke: ink, 'stroke-width': 1.3, class: 'egg', opacity: done.has('belly') ? 1 : 0}, eggs));
+  const eggT = lbl(286, 384, '100–500 EGGS'); eggT.setAttribute('opacity', done.has('belly') ? 1 : 0);
+
+  // hit areas + pulse rings
+  const spots = {flower: [60, 90, 36], blood: [96, 358, 30], belly: [258, 214, 62]};
+  const rings = {};
+  for (const k in spots) {
+    const [x, y, r] = spots[k];
+    rings[k] = Kit.mk('circle', {cx: x, cy: y, r, fill: 'none', stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '5 5', opacity: done.has(k) ? 0 : .7}, g);
+    Kit.mk('circle', {cx: x, cy: y, r: r + 6, fill: 'transparent', class: 'hit', 'data-k': k}, g);
+  }
+  R = {g, red, thorax, wings, eggs, eggT, rings};
+  if (!Kit.calm) for (const k in rings) if (!done.has(k)) gsap.to(rings[k], {attr: {r: spots[k][2] + 5}, opacity: .3, duration: .9, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+}
+
+function dots(path, color, n, onDone) {
+  if (Kit.calm) { onDone && onDone(); return; }
+  for (let i = 0; i < n; i++) {
+    const c = Kit.mk('circle', {cx: path[0][0], cy: path[0][1], r: 4, fill: color, stroke: 'var(--k)', 'stroke-width': .8}, R.g);
+    const tl = gsap.timeline({delay: i * .12, onComplete: () => { c.remove(); if (i === n - 1 && onDone) onDone(); }});
+    for (let j = 1; j < path.length; j++) tl.to(c, {attr: {cx: path[j][0], cy: path[j][1]}, duration: .35, ease: 'none'});
+  }
+}
+
+function tap(k) {
+  if (done.has(k)) return;
+  done.add(k); Kit.haptic('light');
+  gsap.killTweensOf(R.rings[k]); gsap.to(R.rings[k], {opacity: 0, duration: .3});
+  Kit.$('info').innerHTML = `<p>${TEXT[k]}</p>`;
+  if (!Kit.calm) gsap.from('#info p', {opacity: 0, y: 6, duration: .35});
+  if (k === 'blood') {
+    dots([[76, 346], [120, 206], [176, 200], [250, 214]], '#c81d2a', 6, () => gsap.to(R.red, {opacity: .9, duration: .5}));
+  } else if (k === 'flower') {
+    dots([[60, 90], [100, 140], [126, 198], [176, 196]], '#ffd23f', 6, () => {
+      if (!Kit.calm) gsap.fromTo(R.wings, {rotation: 0, transformOrigin: '190px 180px'}, {rotation: -8, duration: .07, yoyo: true, repeat: 9, ease: 'none'});
+    });
+  } else {
+    const show = () => {
+      if (Kit.calm) { gsap.set(R.eggs.children, {opacity: 1}); gsap.set(R.eggT, {opacity: 1}); return; }
+      gsap.fromTo(R.eggs.children, {opacity: 0, scale: 0, transformOrigin: 'center', transformBox: 'fill-box'}, {opacity: 1, scale: 1, stagger: .05, duration: .3, ease: 'back.out(2)'});
+      gsap.to(R.eggT, {opacity: 1, duration: .4, delay: .5});
+    };
+    dots([[300, 228], [292, 300]], '#fff7e0', 3, show);
+  }
+  if (done.size === 3) setTimeout(finish, Kit.calm ? 300 : 2600);
+}
+
+function finish() {
+  Kit.hide('info'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why p, #keep', {opacity: 0, y: 8, stagger: .12, duration: .4});
+}
+
+Kit.$('pic').addEventListener('click', e => { const t = e.target.closest('.hit'); if (t) tap(t.dataset.k); });
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, scale: .96, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (const k of ['blood', 'flower', 'belly']) {
+    Kit.$('pic').querySelector(`.hit[data-k="${k}"]`).dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await wait(200);
+  }
+  await wait(3300);
+};
+Kit.single();
+</script>
+</html>

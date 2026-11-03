@@ -1,0 +1,166 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-mosquito-winter-basement -->
+<title>Where does the common mosquito go in winter?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;border-radius:1.8cqh;touch-action:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#hold{position:relative;overflow:hidden;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;transition:transform .15s}
+#hold.on{transform:scale(.97)}
+#hold .bar{position:absolute;left:0;top:0;bottom:0;width:0;background:color-mix(in srgb,var(--c) 28%,transparent);pointer-events:none}
+#hold .lbl{position:relative}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Hold · watch it unfold">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WINTER HIDEOUT</span></div>
+    <h2 class="q">Where does the common mosquito go in winter?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A garden and a house cut open, with a mosquito outside"></svg>
+      <div id="why" class="gone">
+        <p class="big">It doesn't die. It hides.</p>
+        <p class="body">The adult common mosquito, Culex pipiens, survives winter. It shelters in protected spots like basements, where the temperature stays steady while it freezes outside.</p>
+      </div>
+      <button id="hold"><span class="bar"></span><span class="lbl">Hold to bring winter</span></button>
+    </div>
+    <p class="say" id="say">Hold the button and watch where the mosquito goes as it gets cold.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Common mosquitoes overwinter as adults, hidden in sheltered, steady-temperature places.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove vanno le #zanzare d’inverno? Saperlo, può aiutarci a ridurne la proliferazione” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let p = 0, held = false, done = false, t = 0, S = {}, looping = false;
+const MONTHS = ['September','October','November','December','January','February'];
+const lerp = (a,b,k)=>a+(b-a)*k, clamp = v=>Math.max(0,Math.min(1,v));
+const ease = k=>k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+const btn = Kit.$('hold');
+
+function build(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg); const fs = Math.max(f*.85,12);
+  const gy = H*.46, hx0 = W*.5, hx1 = W*.95, wallTop = gy-H*.2, by0 = gy+H*.035, by1 = H*.95;
+  const m = (tag,a,par)=>Kit.mk(tag,a,par||svg);
+  const defs = m('defs',{});
+  const rg = m('radialGradient',{id:'glow'},defs);
+  m('stop',{offset:'0%','stop-color':'#ffd27a','stop-opacity':.9},rg);
+  m('stop',{offset:'100%','stop-color':'#ffd27a','stop-opacity':0},rg);
+  S = {W,H,f:fs,gy};
+  S.sky = m('rect',{x:0,y:0,width:W,height:gy,fill:'#f6c77a'});
+  // snow
+  S.snow = []; const sg = m('g',{});
+  for(let i=0;i<45;i++){ S.snow.push({el:m('circle',{r:Math.max(1.5,H*.005*(.6+Kit.rnd())),fill:'#fff'},sg),x:Kit.rnd()*hx0*1.05,y0:Kit.rnd()*gy,v:H*(.06+Kit.rnd()*.06),ph:Kit.rnd()*6}); }
+  // soil and ground
+  m('rect',{x:0,y:gy,width:W,height:H-gy,fill:'#3b2a1e'});
+  S.grass = m('rect',{x:0,y:gy-H*.012,width:hx0,height:H*.02,fill:'#6f9a3d'});
+  S.cover = m('rect',{x:0,y:gy-H*.012,width:hx0,height:H*.02,fill:'#ffffff',opacity:0});
+  // house above ground
+  m('rect',{x:hx0,y:wallTop,width:hx1-hx0,height:gy-wallTop,fill:'#efe4d2',stroke:'#2b2118','stroke-width':Math.max(2,W*.006)});
+  m('path',{d:`M${hx0-W*.03},${wallTop} L${(hx0+hx1)/2},${wallTop-H*.12} L${hx1+W*.03},${wallTop} Z`,fill:'#a5452f',stroke:'#2b2118','stroke-width':Math.max(2,W*.006),'stroke-linejoin':'round'});
+  m('rect',{x:hx0+W*.2,y:wallTop+H*.04,width:W*.1,height:H*.08,fill:'#9cc6de',stroke:'#2b2118','stroke-width':Math.max(1.5,W*.004)});
+  // vent where the mosquito slips in
+  const V = {x:hx0, y:gy-H*.035};
+  m('rect',{x:hx0-W*.012,y:V.y-H*.012,width:W*.024,height:H*.024,fill:'#2b2118',rx:2});
+  // basement
+  m('rect',{x:hx0,y:by0,width:hx1-hx0,height:by1-by0,fill:'#f2d6a2',stroke:'#2b2118','stroke-width':Math.max(2,W*.006)});
+  // stairs
+  const st = m('g',{stroke:'#8a6a45','stroke-width':Math.max(2,W*.005),fill:'none'});
+  for(let i=0;i<5;i++){ const sx=hx0+W*.13+i*W*.03, sy=by0+(i+1)*(by1-by0)*.1; m('path',{d:`M${sx},${sy-(by1-by0)*.1} V${sy} H${sx+W*.03}`},st); }
+  // nook
+  const nk = {x:hx0+W*.025,w:W*.15,y:by1-H*.15,h:H*.12};
+  m('rect',{x:nk.x,y:nk.y,width:nk.w,height:nk.h,fill:'#c99a5b',rx:4});
+  S.glow = m('ellipse',{cx:nk.x+nk.w/2,cy:nk.y+nk.h*.55,rx:nk.w*.8,ry:nk.h*.9,fill:'url(#glow)'});
+  const N = {x:nk.x+nk.w*.5,y:nk.y+nk.h*.55};
+  // thermometers
+  function thermo(x,top,bot,label,lx,ly,anchor,col){
+    const w = Math.max(8,W*.028), g = m('g',{});
+    m('rect',{x:x-w/2,y:top,width:w,height:bot-top,rx:w/2,fill:'#fff',stroke:'#2b2118','stroke-width':1.5},g);
+    const fill = m('rect',{x:x-w*.25,y:top,width:w*.5,height:0,rx:w*.25,fill:col},g);
+    const bulb = m('circle',{cx:x,cy:bot+w*.4,r:w*.8,fill:col,stroke:'#2b2118','stroke-width':1.5},g);
+    const tx = m('text',{x:lx,y:ly,'text-anchor':anchor,fill:label.c,'font-family':'var(--body)','font-weight':700,'font-size':fs},g); tx.textContent = label.t;
+    return {fill,bulb,top,bot:bot-w*.2};
+  }
+  S.tOut = thermo(W*.08,gy-H*.3,gy-H*.08,{t:'Outside',c:'#ffffff'},W*.03,gy+fs*1.5,'start','#e4572e');
+  S.tIn = thermo(hx1-W*.05,by0+fs*1.9,by1-H*.06,{t:'Basement',c:'#2b2118'},hx1-W*.02,by0+fs*1.25,'end','#e9a23b');
+  // month
+  S.month = m('text',{x:W*.03,y:fs*1.4,fill:'#2b2118','font-family':'var(--display)','font-weight':800,'font-size':fs*1.15});
+  // alive label
+  S.alive = m('text',{x:N.x,y:nk.y-fs*.5,'text-anchor':'middle',fill:'#2b2118','font-family':'var(--body)','font-weight':800,'font-size':fs,opacity:0});
+  S.alive.textContent = 'still alive';
+  // mosquito
+  const s = Math.min(W,H)*.06; S.s = s;
+  S.mq = m('g',{});
+  const legs = m('g',{stroke:'#3a2716','stroke-width':Math.max(1,s*.05),fill:'none','stroke-linecap':'round'},S.mq);
+  [[-.1,.35,-.5,.75],[.25,.4,.15,.85],[.5,.35,.85,.75]].forEach(([kx,ky,ex,ey])=>m('path',{d:`M${s*.3},${s*.08} L${s*kx},${s*ky} L${s*ex},${s*ey}`},legs));
+  m('ellipse',{cx:-s*.3,cy:0,rx:s*.55,ry:s*.14,fill:'#7a5432',transform:`rotate(8 ${-s*.3} 0)`},S.mq);
+  m('circle',{cx:s*.3,cy:-s*.02,r:s*.2,fill:'#5e3f22'},S.mq);
+  m('circle',{cx:s*.55,cy:-s*.04,r:s*.12,fill:'#4a3320'},S.mq);
+  m('line',{x1:s*.65,y1:0,x2:s*1.1,y2:s*.14,stroke:'#3a2716','stroke-width':Math.max(1,s*.05),'stroke-linecap':'round'},S.mq);
+  S.wing = m('ellipse',{cx:-s*.2,cy:-s*.22,rx:s*.6,ry:s*.15,fill:'#d9ecf7','fill-opacity':.75,stroke:'#3a2716','stroke-width':1},S.mq);
+  S.pts = {A:{x:W*.28,y:gy-H*.15}, V, St:{x:hx0+W*.1,y:by0+H*.03}, N};
+  render();
+}
+
+function mqPos(){
+  const {A,V,St,N} = S.pts, H = S.H;
+  if(p<.2){ return {x:A.x+Math.sin(t*2.1)*S.W*.04,y:A.y+Math.sin(t*3.3)*H*.03,fly:true}; }
+  if(p<.5){ const k = ease((p-.2)/.3); return {x:lerp(A.x,V.x,k),y:lerp(A.y,V.y,k)-Math.sin(k*Math.PI)*H*.07+Math.sin(t*4)*H*.01,fly:true}; }
+  if(p<.62){ const k = ease((p-.5)/.12); return {x:lerp(V.x,St.x,k),y:lerp(V.y,St.y,k),fly:true}; }
+  if(p<.78){ const k = ease((p-.62)/.16); return {x:lerp(St.x,N.x,k),y:lerp(St.y,N.y,k)+Math.sin(k*Math.PI)*H*.02,fly:true}; }
+  return {x:N.x,y:N.y,fly:false};
+}
+
+function render(){
+  if(!S.sky) return;
+  const I = gsap.utils.interpolate;
+  S.sky.setAttribute('fill', I('#f6c77a','#9fb3c8',clamp(p*1.3)));
+  const sn = clamp((p-.3)/.3);
+  S.snow.forEach(o=>{ const y=(o.y0+t*o.v)%S.gy; o.el.setAttribute('cx',o.x+Math.sin(t+o.ph)*S.W*.01); o.el.setAttribute('cy',y); o.el.setAttribute('opacity',sn*.9); });
+  S.cover.setAttribute('opacity',clamp((p-.45)/.3));
+  S.month.textContent = MONTHS[Math.min(5,Math.floor(p*6))];
+  const setT = (th,val,col)=>{ const h=(th.bot-th.top)*val; th.fill.setAttribute('y',th.bot-h); th.fill.setAttribute('height',h); th.fill.setAttribute('fill',col); th.bulb.setAttribute('fill',col); };
+  setT(S.tOut, .78-.68*clamp(p*1.15), I('#e4572e','#3a7bd5',clamp(p*1.15)));
+  setT(S.tIn, .55, '#e9a23b');
+  const q = mqPos(), ang = q.fly ? -25+Math.sin(t*55)*35 : 8;
+  S.wing.setAttribute('transform',`rotate(${ang} ${S.s*.3} 0)`);
+  S.mq.setAttribute('transform',`translate(${q.x},${q.y})`);
+  const a = clamp((p-.8)/.1);
+  S.alive.setAttribute('opacity',a);
+  S.glow.setAttribute('opacity',.55+.25*Math.sin(t*2));
+}
+
+function tick(now){
+  const dt = Math.min(.05,(now-(tick.last||now))/1000); tick.last = now; t += dt;
+  if(held && !done){ p = Math.min(1,p+dt/3.4); btn.querySelector('.bar').style.width = (p*100)+'%'; if(p>=1) finish(); }
+  render(); requestAnimationFrame(tick);
+}
+
+function finish(){
+  if(done) return; done = true; held = false; p = 1;
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if(!Kit.calm) gsap.from('#why,#keep',{opacity:0,y:8,stagger:.1,duration:.45,ease:'power3.out'});
+}
+
+const start = e=>{ if(done) return; if(e) e.preventDefault(); held = true; btn.classList.add('on'); Kit.haptic('light'); btn.querySelector('.lbl').textContent='Winter is coming… keep holding'; };
+const stop = ()=>{ held = false; btn.classList.remove('on'); if(!done) btn.querySelector('.lbl').textContent='Hold to bring winter'; };
+btn.addEventListener('pointerdown',start);
+['pointerup','pointerleave','pointercancel'].forEach(ev=>btn.addEventListener(ev,stop));
+btn.addEventListener('contextmenu',e=>e.preventDefault());
+
+Kit.onShow.card = () => { build(); if(!looping){ looping = true; requestAnimationFrame(tick); } };
+Kit.onEnter.card = () => { if(!Kit.calm) gsap.from('#pic',{opacity:0,scale:.97,duration:.5,ease:'power3.out'}); };
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));
+  await new Promise(r=>setTimeout(r,3900));
+  if(!done){ p = 1; finish(); }
+  render();
+  await new Promise(r=>setTimeout(r,700));
+};
+Kit.single();
+</script>
+</html>

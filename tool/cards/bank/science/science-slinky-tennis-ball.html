@@ -1,0 +1,136 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-slinky-tennis-ball -->
+<title>Astute free card: the slinky and the tennis ball</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;cursor:pointer}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lbl{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLINKY DROP</span></div>
+    <h2 class="q">A tennis ball hangs from a slinky. Let go: what does the ball do?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A slinky held at the top with a tennis ball hanging from its bottom"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">It stays put, like the slinky's base</button>
+        <button class="opt" data-i="1">It falls straight away, at g</button>
+        <button class="opt" data-i="2">It jumps upwards</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It hovers in mid-air</p><p class="body">Until the falling coils reach it, the spring still pulls the ball up exactly as hard as gravity pulls it down. The bottom doesn't "know" you let go yet. Tap the drawing to drop it again.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick what you think happens, then let go.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>News travels down a spring as a wave; the bottom waits until it arrives.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Slinky Drop Answer” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1, done = false, G = null, els = null, tw = null;
+const N = 16, MB = 4; // coils, ball mass in coil masses
+
+function build(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const r = Math.max(10, Math.min(W, H) * 0.055);
+  const cx = W * 0.4, gx = W * 0.78;
+  const y0 = H * 0.12, ground = H * 0.94;
+  const L = H * 0.46, gap = Math.max(0, Math.min(Math.max(2, r * 0.16), L * 0.5 / (N - 1)));
+  // hanging spacing grows toward the top: each gap carries the coils and ball below it
+  const w = []; for (let j = 0; j < N - 1; j++) w.push(j + 1 + MB);
+  const sw = w.reduce((a, b) => a + b, 0);
+  const Y = new Array(N); Y[N - 1] = y0 + L;
+  for (let j = 0; j < N - 1; j++) Y[N - 2 - j] = Y[N - 1 - j] - L * w[j] / sw;
+  const by0 = Y[N - 1] + r;
+  const g = Math.max(1, 2 * (ground - r - by0));       // free ball hits the floor at t = 1
+  const A = 3 * g;
+  const tc = Math.sqrt(Math.max(0, 2 * (Y[N - 1] - y0 - (N - 1) * gap) / A));
+  const yTc = y0 + .5 * A * tc * tc, vc = A * tc * 0.4;
+  G = {W, H, f, r, cx, gx, y0, ground, gap, Y, by0, g, A, tc, yTc, vc};
+  let t = 0; while (t < 5 && state(t).ball < ground - r) t += 0.002; G.tEnd = t + 0.15;
+
+  const ink = 'var(--k)';
+  const fs = Math.max(12, f * 0.85);
+  Kit.mk('line', {x1: W * .04, x2: W * .96, y1: ground, y2: ground, stroke: ink, 'stroke-width': Math.max(2, H * .006), 'stroke-linecap': 'round'}, svg);
+  const startLine = Kit.mk('line', {x1: W * .1, x2: W * .96, y1: by0, y2: by0, stroke: ink, 'stroke-width': 1.5, 'stroke-dasharray': '5 6', opacity: .45}, svg);
+  const startTxt = Kit.mk('text', {x: W * .04, y: by0 - fs * .5, class: 'lbl', 'font-size': fs, fill: ink, opacity: .7}, svg); startTxt.textContent = 'start';
+  const ghostTxt = Kit.mk('text', {x: gx, y: Math.max(fs * 1.2, y0 - fs * .2), class: 'lbl', 'font-size': fs, fill: ink, 'text-anchor': 'middle', opacity: 0}, svg); ghostTxt.textContent = 'free ball, at g';
+  const ghost = Kit.mk('circle', {cx: gx, cy: by0, r, fill: 'none', stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '4 4', opacity: 0}, svg);
+  const coils = [];
+  for (let k = 0; k < N; k++) coils.push(Kit.mk('ellipse', {cx, cy: Y[k], rx: W * .13, ry: Math.max(3, r * .28), fill: 'none', stroke: ink, 'stroke-width': Math.max(2, H * .006), opacity: .85}, svg));
+  const ball = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {cx: 0, cy: 0, r, fill: '#d4e43c', stroke: '#2a2a2a', 'stroke-width': 2}, ball);
+  Kit.mk('path', {d: `M${-r * .9},${-r * .35} Q0,${r * .35} ${r * .9},${-r * .35}`, fill: 'none', stroke: '#fff', 'stroke-width': 2}, ball);
+  const hand = Kit.mk('rect', {x: cx - W * .05, y: 0, width: W * .1, height: Math.max(8, r * .8), rx: r * .4, fill: ink}, svg);
+  els = {coils, ball, hand, ghost, ghostTxt, startLine, startTxt};
+}
+
+function state(t){
+  const {y0, A, g, tc, yTc, vc, gap, Y, by0, ground, r} = G;
+  const yT = t < tc ? y0 + .5 * A * t * t : yTc + vc * (t - tc) + .5 * g * (t - tc) * (t - tc);
+  const ys = Y.map((y, k) => Math.max(y, yT + k * gap));
+  let ball = Math.max(by0, ys[N - 1] + r);
+  const over = ball - (ground - r);
+  if (over > 0){ ball -= over; for (let k = 0; k < N; k++) ys[k] = Math.min(ys[k], ground - 2 * r - (N - 1 - k) * gap); }
+  const ghost = Math.min(by0 + .5 * g * t * t, ground - r);
+  return {yT: ys[0], ys, ball, ghost};
+}
+
+function render(t, showGhost){
+  if (!G) return;
+  if (!Number.isFinite(t)) t = 0;
+  const s = state(t);
+  if (!Number.isFinite(s.ball) || !Number.isFinite(s.ghost) || s.ys.some(y => !Number.isFinite(y))) return;
+  s.ys.forEach((y, k) => els.coils[k].setAttribute('cy', y));
+  els.ball.setAttribute('transform', `translate(${G.cx},${s.ball})`);
+  els.hand.setAttribute('y', (t > 0 ? G.y0 - 3 * G.r : G.y0 - G.r * .9));
+  els.ghost.setAttribute('cy', s.ghost);
+  els.ghost.setAttribute('opacity', showGhost ? .8 : 0);
+  els.ghostTxt.setAttribute('opacity', showGhost ? .8 : 0);
+}
+
+const clock = {t: 0};
+function drop(){
+  if (tw) tw.kill();
+  clock.t = 0;
+  if (Kit.calm){ clock.t = G.tEnd; render(clock.t, true); return; }
+  tw = gsap.to(clock, {t: G.tEnd, duration: 3.2, ease: 'none', delay: .3, onUpdate: () => render(clock.t, true)});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep'); done = true; Kit.haptic('light');
+  requestAnimationFrame(() => { build(); render(0, true); drop(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('pic').addEventListener('click', () => { if (done){ Kit.haptic('selection'); drop(); } });
+
+Kit.onShow.card = () => { if (tw) tw.kill(); build(); render(done ? (tw ? clock.t : G.tEnd) : 0, done); };
+Kit.onEnter.card = () => { if (!Kit.calm){ gsap.from('#pic', {opacity: 0, y: 8, duration: .5, ease: 'power3.out'}); gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); } };
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 600));
+  if (tw) tw.progress(1); clock.t = G.tEnd; render(G.tEnd, true);
+};
+Kit.single();
+</script>
+</html>

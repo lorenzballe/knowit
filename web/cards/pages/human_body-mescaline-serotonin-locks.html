@@ -1,0 +1,171 @@
+<!doctype html>
+<!-- slug: human_body-mescaline-serotonin-locks -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;flex:1;min-height:0;gap:1.2cqh}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;color:var(--k);overflow:visible}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);overflow-wrap:anywhere}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.q{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRAIN CHEMISTRY</span></div>
+    <h2 class="q">Which brain receptors does mescaline, the peyote molecule, mainly lock onto?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Dopamine receptors D1 and D2</button>
+        <button class="opt" data-i="1">Serotonin receptors 5-HT2A and 5-HT2C</button>
+        <button class="opt" data-i="2">Opioid receptors mu and kappa</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Serotonin's 5-HT2A and 5-HT2C</p>
+        <p class="body">Mescaline mostly binds to receptors meant for serotonin, a messenger already in your brain, known as the "happiness neurotransmitter". It slips into those locks, chiefly 5-HT2A and 5-HT2C.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the two locks the key fits. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Mescaline borrows serotonin's locks: 5-HT2A and 5-HT2C.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, done = false, entered = false;
+let G = null;
+
+function mol(parent, r){
+  const g = Kit.mk('g', {}, parent);
+  const pts = [];
+  for (let k = 0; k < 6; k++){ const a = (30 + 60*k) * Math.PI/180; pts.push([Math.cos(a)*r, Math.sin(a)*r]); }
+  const sw = r*0.16;
+  [210, 270, 330].forEach(d => {
+    const a = d*Math.PI/180;
+    Kit.mk('line', {x1: Math.cos(a)*r, y1: Math.sin(a)*r, x2: Math.cos(a)*r*1.6, y2: Math.sin(a)*r*1.6, stroke: 'currentColor', 'stroke-width': sw, 'stroke-linecap': 'round'}, g);
+    Kit.mk('circle', {cx: Math.cos(a)*r*1.6, cy: Math.sin(a)*r*1.6, r: r*0.22, fill: 'currentColor'}, g);
+  });
+  Kit.mk('line', {x1: 0, y1: r, x2: 0, y2: r*1.45, stroke: 'currentColor', 'stroke-width': sw, 'stroke-linecap': 'round'}, g);
+  Kit.mk('circle', {cx: 0, cy: r*1.45, r: r*0.2, fill: 'currentColor'}, g);
+  const p = Kit.mk('polygon', {points: pts.map(q => q.join(',')).join(' '), stroke: 'currentColor', 'stroke-width': sw, 'stroke-linejoin': 'round'}, g);
+  p.style.fill = 'var(--c)';
+  Kit.mk('circle', {cx: 0, cy: 0, r: r*0.48, fill: 'none', stroke: 'currentColor', 'stroke-width': sw*0.6}, g);
+  return g;
+}
+
+function draw(){
+  const svg = Kit.$('pic');
+  gsap.killTweensOf('#pic *');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f*0.95);
+  const r = Math.min(W*0.07, H*0.075);
+  const yM1 = H*0.62, yM2 = H*0.80, yTop = H*0.5, yBot = H*0.97;
+  const xs = [W*0.27, W*0.73];
+  const w = Math.max(r*2.2, Math.min(W*0.15, fs*3.6));
+  const dy = yTop - r*0.5;
+  const fx = W*0.5, fy = H*0.27;
+
+  // membrane
+  Kit.mk('rect', {x: 0, y: yM1, width: W, height: yM2 - yM1, fill: 'currentColor', 'fill-opacity': .08}, svg);
+  const d = Math.max(8, H*0.035);
+  for (let x = d/2; x < W; x += d){
+    Kit.mk('circle', {cx: x, cy: yM1 + d*0.45, r: d*0.38, fill: 'none', stroke: 'currentColor', 'stroke-opacity': .35, 'stroke-width': 1.2}, svg);
+    Kit.mk('circle', {cx: x, cy: yM2 - d*0.45, r: d*0.38, fill: 'none', stroke: 'currentColor', 'stroke-opacity': .35, 'stroke-width': 1.2}, svg);
+  }
+
+  // receptors: a body with a pocket shaped for the key
+  const labels = [], rings = [];
+  xs.forEach((x, i) => {
+    const pr = r*1.15;
+    Kit.mk('path', {d: `M${x-w},${yTop} L${x-pr},${yTop} A${pr},${pr} 0 0 0 ${x+pr},${yTop} L${x+w},${yTop} L${x+w},${yBot} Q${x+w},${yBot} ${x+w-r*0.4},${yBot} L${x-w+r*0.4},${yBot} L${x-w},${yBot} Z`, fill: 'currentColor'}, svg);
+    const t = Kit.mk('text', {x, y: (yM1 + yM2)/2 + fs*0.35, 'text-anchor': 'middle', 'font-size': fs*1.05, 'font-weight': 800}, svg);
+    t.style.fill = 'var(--c)'; t.style.fontFamily = 'var(--mono)';
+    t.textContent = done ? (i ? '5-HT2C' : '5-HT2A') : '?';
+    labels.push(t);
+    const ring = Kit.mk('circle', {cx: x, cy: dy, r: r*1.3, fill: 'none', stroke: 'currentColor', 'stroke-width': 2, opacity: 0}, svg);
+    rings.push(ring);
+  });
+
+  const cap = Kit.mk('text', {x: W/2, y: Math.max(fs, fy - r*2.1), 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, fill: 'currentColor'}, svg);
+  cap.style.fontFamily = 'var(--body)';
+  cap.textContent = done ? 'Locks built for serotonin' : 'mescaline';
+
+  const m1 = mol(svg, r), m2 = mol(svg, r);
+  G = {W, H, r, xs, dy, fx, fy, m1, m2, labels, rings, cap};
+  if (done){
+    gsap.set(m1, {x: xs[0], y: dy}); gsap.set(m2, {x: xs[1], y: dy, opacity: 1});
+  } else {
+    gsap.set(m1, {x: fx, y: fy}); gsap.set(m2, {x: fx, y: fy, opacity: 0});
+    if (entered) bob();
+  }
+}
+
+function bob(){
+  if (Kit.calm || done || !G) return;
+  gsap.to(G.m1, {y: G.fy - G.r*0.35, rotation: 8, svgOrigin: '0 0', duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: -1});
+}
+
+function reveal(){
+  done = true;
+  const g = G; if (!g) return;
+  gsap.killTweensOf([g.m1, g.m2]);
+  const setLabels = () => {
+    g.labels[0].textContent = '5-HT2A'; g.labels[1].textContent = '5-HT2C';
+    g.cap.textContent = 'Locks built for serotonin';
+  };
+  if (Kit.calm){
+    setLabels();
+    gsap.set(g.m1, {x: g.xs[0], y: g.dy, rotation: 0}); gsap.set(g.m2, {x: g.xs[1], y: g.dy, opacity: 1, rotation: 0});
+    return;
+  }
+  const tl = gsap.timeline();
+  tl.to(g.cap, {opacity: 0, duration: .2})
+    .set(g.m2, {opacity: 1, x: gsap.getProperty(g.m1, 'x'), y: gsap.getProperty(g.m1, 'y')}, 0)
+    .to(g.m1, {x: g.xs[0], y: g.dy, rotation: 0, duration: .75, ease: 'back.out(1.1)'}, 0.1)
+    .to(g.m2, {x: g.xs[1], y: g.dy, rotation: 0, duration: .75, ease: 'back.out(1.1)'}, 0.1)
+    .add(() => { setLabels(); Kit.haptic('light'); }, 0.85)
+    .fromTo(g.labels, {opacity: 0}, {opacity: 1, duration: .3}, 0.85)
+    .to(g.cap, {opacity: 1, duration: .3}, 0.85)
+    .fromTo(g.rings, {opacity: .9, attr: {r: g.r*1.2}}, {opacity: 0, attr: {r: g.r*2.6}, duration: .7, ease: 'power2.out', repeat: 1}, 0.85);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  entered = true;
+  if (!Kit.calm){
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+    bob();
+  }
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2200));
+};
+Kit.single();
+</script>
+</html>

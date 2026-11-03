@@ -1,0 +1,37 @@
+{
+  "id": "maths-mandelbrot-bifurcation-slice",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How is the logistic map's bifurcation diagram related to the Mandelbrot set?",
+  "answer": "The bifurcation diagram is the Mandelbrot set seen along its real axis. Start at z = 0 and repeat z² + c. Every c whose orbit stays finite lies in the set, and along the middle line those orbits draw the diagram: 1 value, then 2, 4, then chaos. Each split lines up with a new bulb.",
+  "move": "The bifurcation diagram is the Mandelbrot set seen along its real axis.",
+  "keywords": [
+    "mandelbrot set",
+    "logistic map",
+    "bifurcation diagram",
+    "fractal",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page asking how the logistic map's bifurcation diagram relates to the Mandelbrot set. Drag a dot left along the set's middle line to watch the orbit of z squared plus c."
+  },
+  "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=ovJcsL7vyrk&t=388s",
+  "written": "2026-11-03"
+}

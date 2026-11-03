@@ -1,0 +1,186 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-osmotic-pressure-cells -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#legend{display:flex;gap:5cqw;justify-content:center;font:600 max(1.7cqh,12px)/1.2 var(--body);color:var(--k)}
+#legend i{display:inline-block;width:max(1.4cqh,10px);height:max(1.4cqh,10px);border-radius:50%;vertical-align:-.15em;margin-right:1.5cqw}
+#cap{font:700 max(2.1cqh,14px)/1.25 var(--body);color:var(--k);min-height:5.4cqh;overflow-wrap:break-word}
+#cap .lo{font-weight:500;color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;font-size:max(1.9cqh,13px);line-height:1.3}
+#scrub{width:100%;margin:.4cqh 0 0;-webkit-appearance:none;appearance:none;height:max(4.4cqh,32px);background:transparent;cursor:pointer;touch-action:none}
+#scrub::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#scrub::-moz-range-track{height:max(.9cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#scrub::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);margin-top:calc((max(.9cqh,6px) - max(3.6cqh,26px))/2);border:.4cqh solid var(--c)}
+#scrub::-moz-range-thumb{width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);border:.4cqh solid var(--c)}
+#ticks{display:flex;justify-content:space-between;font:600 max(1.5cqh,12px)/1.2 var(--body);color:var(--muted);margin-top:-.4cqh}
+.lab{font-family:var(--body);font-weight:800;letter-spacing:.06em;fill:var(--k)}
+.cellbody{fill:color-mix(in srgb,#ffb3a7 55%,var(--c));stroke:var(--k);stroke-dasharray:7 5}
+.na{fill:#f59e0b;stroke:var(--k);stroke-width:1}
+.h2o{fill:#2f7de1;stroke:#fff;stroke-width:1}
+.arr{stroke:#2f7de1;fill:none;stroke-linecap:round;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WATER &amp; SALT</span></div>
+    <h2 class="q">When water rushes into your cells, what is that push called?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="legend"><span><i style="background:#f59e0b"></i>sodium</span><span><i style="background:#2f7de1"></i>water</span></div>
+      <p id="cap"></p>
+      <div id="why" class="gone">
+        <p class="big">Osmotic pressure</p>
+        <p class="body">Water moves from the side with less dissolved sodium to the side with more. With too little sodium in the blood (hyponatremia), water pours into the cells and they swell. Luckily it almost never happens: nobody drinks 10 litres a day for a week.</p>
+      </div>
+      <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Timeline">
+      <div id="ticks"><span>balanced</span><span>too much water</span><span>swelling</span></div>
+    </div>
+    <p class="say" id="say">Drag the slider to step through what happens.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Water follows salt: it flows toward the saltier side.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('svg'), scrub = Kit.$('scrub'), cap = Kit.$('cap');
+let G = null, t = 0, done = false, lastPhase = -1;
+const cl = v => Math.max(0, Math.min(1, v));
+const ease = v => v * v * (3 - 2 * v);
+
+function build() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const fs = Math.max(f, 12);
+  const top = fs * 2.2;
+  const cx = W / 2, cy = top + (H - top) / 2;
+  const r0 = Math.min(W, H - top) * 0.23, rMax = r0 * 1.38;
+  const dr = Math.max(f * 0.48, 5), wr = Math.max(f * 0.32, 3.5);
+  const pts = [];
+  const pad = dr * 2;
+  let tries = 0;
+  while (pts.length < 44 && tries < 6000) {
+    tries++;
+    const x = pad + Kit.rnd() * (W - 2 * pad), y = top + pad + Kit.rnd() * (H - top - 2 * pad);
+    if (Math.hypot(x - cx, y - cy) < rMax + dr * 2) continue;
+    if (pts.some(p => Math.hypot(p.x - x, p.y - y) < dr * 3)) continue;
+    pts.push({x, y});
+  }
+  const naOut = pts.slice(0, 16), wOut = pts.slice(16);
+  const g = Kit.mk('g', {}, svg);
+  Kit.mk('text', {x: pad * .5, y: fs * 1.2, class: 'lab', 'font-size': fs}, g).textContent = 'BLOOD · OUTSIDE';
+  const cell = Kit.mk('circle', {cx, cy, r: r0, class: 'cellbody', 'stroke-width': Math.max(f * .22, 2.5)}, g);
+  const cellLab = Kit.mk('text', {x: cx, y: cy, class: 'lab', 'font-size': fs, 'text-anchor': 'middle'}, g);
+  cellLab.textContent = 'CELL';
+  const arrows = [];
+  for (let i = 0; i < 6; i++) {
+    const a = i / 6 * Math.PI * 2 + .5;
+    arrows.push({a, el: Kit.mk('path', {class: 'arr', 'stroke-width': Math.max(f * .3, 3), opacity: 0}, g)});
+  }
+  const naIn = [];
+  for (let i = 0; i < 9; i++) {
+    const a = i / 9 * Math.PI * 2 + .3, k = .35 + (i % 3) * .2;
+    naIn.push({a, k, el: Kit.mk('circle', {r: dr, class: 'na'}, g)});
+  }
+  const naO = naOut.map(p => ({...p, el: Kit.mk('circle', {cx: p.x, cy: p.y, r: dr, class: 'na'}, g)}));
+  const wO = wOut.map((p, i) => ({...p, a: i * 2.399, k: .25 + ((i * 37) % 60) / 100,
+    el: Kit.mk('circle', {cx: p.x, cy: p.y, r: wr, class: 'h2o'}, g)}));
+  G = {W, H, f, fs, cx, cy, r0, rMax, cell, cellLab, arrows, naIn, naO, wO, g};
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const {cx, cy, r0, rMax, fs, f} = G;
+  const grow = ease(cl((t - .4) / .58));
+  const r = r0 + (rMax - r0) * grow;
+  G.cell.setAttribute('r', r);
+  const strain = cl((t - .8) / .2);
+  G.cell.style.stroke = strain > 0 ? `color-mix(in srgb,#e11d48 ${Math.round(strain * 100)}%,var(--k))` : '';
+  G.cellLab.setAttribute('y', cy - r * .62 + fs * .35);
+  G.naIn.forEach(n => {
+    n.el.setAttribute('cx', cx + Math.cos(n.a) * n.k * r);
+    n.el.setAttribute('cy', cy + Math.sin(n.a) * n.k * r * .9 + fs * .3);
+  });
+  // drinking: outside sodium thins out (11 of 16 fade), new water appears
+  G.naO.forEach((n, j) => {
+    n.el.setAttribute('opacity', j < 11 ? 1 - cl((t - .1 - j * .018) / .08) : 1);
+  });
+  const nw = G.wO.length;
+  G.wO.forEach((w, i) => {
+    const extra = i >= 8;
+    const op = extra ? cl((t - .1 - (i - 8) * .012) / .08) : 1;
+    let x = w.x, y = w.y;
+    if (extra) {
+      const p = ease(cl((t - .4 - (i - 8) * .02) / .3));
+      const ex = cx + Math.cos(w.a) * w.k * r, ey = cy + Math.sin(w.a) * w.k * r;
+      x = w.x + (ex - w.x) * p; y = w.y + (ey - w.y) * p;
+    }
+    w.el.setAttribute('cx', x); w.el.setAttribute('cy', y); w.el.setAttribute('opacity', op);
+  });
+  const ao = cl((t - .36) / .08) * (1 - cl((t - .9) / .1));
+  const L = Math.max(f * 1.6, 16), h = Math.max(f * .55, 6);
+  G.arrows.forEach(a => {
+    const c = Math.cos(a.a), s = Math.sin(a.a);
+    const R = r + Math.max(f * .8, 8);
+    const x1 = cx + c * (R + L), y1 = cy + s * (R + L), x2 = cx + c * R, y2 = cy + s * R;
+    const px = -s, py = c;
+    a.el.setAttribute('d', `M${x1},${y1}L${x2},${y2}M${x2 + c * h + px * h},${y2 + s * h + py * h}L${x2},${y2}L${x2 + c * h - px * h},${y2 + s * h - py * h}`);
+    a.el.setAttribute('opacity', ao);
+  });
+  caption();
+}
+
+function caption() {
+  const ph = t < .1 ? 0 : t < .38 ? 1 : t < .8 ? 2 : 3;
+  if (ph === lastPhase || done) return;
+  lastPhase = ph;
+  cap.innerHTML = [
+    'Normal: sodium outside the cell roughly matches sodium inside. <span class="lo">Water stays put.</span>',
+    'You drink far too much water: blood sodium drops. <span class="lo">Hypo-natr-emia: little sodium in the blood.</span>',
+    'Water flows in, from the low-sodium side to the high-sodium side.',
+    'The cell swells, and can even burst.'][ph];
+}
+
+function finish() {
+  if (done) return;
+  done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); cap.classList.add('gone'); Kit.$('legend').classList.add('gone');
+  Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+let lastStep = 0;
+scrub.addEventListener('input', () => {
+  t = scrub.value / 1000;
+  const step = Math.floor(t * 4);
+  if (step !== lastStep) { lastStep = step; Kit.haptic('selection'); }
+  render();
+  if (t >= .985) finish();
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.g, {opacity: 0, duration: .5, ease: 'power2.out'});
+  const o = {v: 0};
+  gsap.to(o, {v: 60, duration: .5, delay: .6, yoyo: true, repeat: 1, ease: 'power2.inOut',
+    onUpdate: () => { if (!done && scrub.value < 70) { scrub.value = o.v; t = o.v / 1000; render(); } }});
+};
+Kit.play.card = async () => {
+  for (let v = 0; v <= 1000; v += 100) {
+    scrub.value = v; scrub.dispatchEvent(new Event('input', {bubbles: true}));
+    await new Promise(r => setTimeout(r, 40));
+  }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "psychology-once-in-a-while",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.rewards",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does giving in “just once in a while” make the begging harder to stop?",
+  "answer": "Occasional yeses keep the child asking longer than a steady no would. Each no that turns into a yes teaches the child to ask longer, and the child quits only once a run of no's is too long to be bad luck, so an unexpected yes after a long wait keeps the hope alive.",
+  "move": "Each no that turns into a yes teaches one thing: ask longer.",
+  "keywords": [
+    "begging",
+    "sweets",
+    "child",
+    "reward_schedule",
+    "humphreys"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A page asking why giving in just once in a while makes begging harder to stop. Three choices: always yes, 1 day in 4, or never. A pretend child asks for sweets, and the reader picks a rule for weeks 1 to 3, then the answer is no from day 22. Which child keeps asking longest?"
+  },
+  "source": "Diventare Strong, “Come Smettere di Essere Troppo Buoni” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=Gz7sy88tSQw",
+  "written": "2026-11-03"
+}

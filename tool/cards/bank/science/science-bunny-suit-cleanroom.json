@@ -1,0 +1,37 @@
+{
+  "id": "science-bunny-suit-cleanroom",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who invented the cleanroom, and what was he trying to keep out?",
+  "answer": "Clair Patterson invented the cleanroom while measuring tiny amounts of lead in meteorites, the oldest rocks in the solar system. Lead from the world around him kept getting into his samples, so he shut it out. In doing so he basically invented the cleanroom.",
+  "move": "To measure a tiny trace, first keep the whole world out.",
+  "keywords": [
+    "clair patterson",
+    "cleanroom",
+    "lead",
+    "meteorites",
+    "bunny suit"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Astute about the bunny suit inventor. It shows the question of who invented the cleanroom and what they tried to keep out, with a step about scrubbing with ammonia and a button to add one defence at a time."
+  },
+  "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=787s",
+  "written": "2026-11-03"
+}

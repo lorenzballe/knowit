@@ -1,0 +1,38 @@
+{
+  "id": "science-cerberus-heat-dome",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "What is the Cerberus anticyclone, and how does it make a heat wave?",
+  "answer": "Cerberus is a subtropical anticyclone from Africa: a dome of high pressure that pushes air down. Sinking air can't build clouds, so the sun heats the ground hard, and the dome stays, producing a long heat wave. The card says it is not El Niño and that Cerberus moves north.",
+  "move": "High pressure pushes air down: no clouds, full sun, lasting heat.",
+  "keywords": [
+    "cerberus",
+    "anticyclone",
+    "heat wave",
+    "africa",
+    "high pressure"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Diagram of Cerberus, a high-pressure dome over Africa, with arrows showing air sinking and rising around it. The question asks which way the air goes under the dome.",
+    "graded": false
+  },
+  "source": "Geopop, “Perché fa così tanto caldo? C'è una relazione con la crisi climatica?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=PYf8dpcHm_E&t=27s",
+  "written": "2026-11-03"
+}

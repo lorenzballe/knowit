@@ -1,0 +1,38 @@
+{
+  "id": "technology-engines-freeze-yakutsk",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why do some Yakutsk drivers leave their engines running all night?",
+  "answer": "In Yakutsk, where the record low is −63°C, a switched-off engine can freeze in just 20 minutes. So some drivers never turn their engines off, not even at night, to avoid the damage. The reader is asked to drag a marker to guess how many minutes it takes, and the reveal is about 20 minutes.",
+  "move": "At Yakutsk's cold, a parked engine freezes in about 20 minutes.",
+  "keywords": [
+    "yakutsk",
+    "car engine",
+    "siberia",
+    "winter",
+    "frozen car"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Frozen cars card: asks why some Yakutsk drivers leave engines running at night. A draggable marker asks how many minutes a switched-off engine takes to freeze. The reveal is about 20 minutes.",
+    "graded": false
+  },
+  "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=1s",
+  "written": "2026-11-03"
+}

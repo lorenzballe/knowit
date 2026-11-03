@@ -1,0 +1,37 @@
+{
+  "id": "nature-plastic-comes-back",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.plastic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the Pacific plastic island a problem on your own plate?",
+  "answer": "Ocean currents sweep floating plastic into the Pacific gyre, where it breaks into tiny pieces. Those pieces drift back to fishing coasts, get eaten by small fish and then big fish, and end up in our food and water.",
+  "move": "No ocean is far away: the plastic we throw in comes back to the table.",
+  "keywords": [
+    "ocean plastic",
+    "pacific gyre",
+    "microplastics",
+    "ocean currents",
+    "food chain"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "An open ocean scene. Tap the ocean three times to drop plastic and follow where it travels: into the Pacific gyre, then back to fishing coasts and up the food chain. Asks why the Pacific plastic island is a problem on your own plate."
+  },
+  "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=Lgr3FBt_QM8&t=178s",
+  "written": "2026-11-03"
+}

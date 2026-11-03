@@ -1,0 +1,149 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-fusion-fuel-grams -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;color:var(--k)}
+#scrub{display:flex;flex-direction:column;gap:.6cqh;margin-top:.6cqh}
+#t{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
+#t::-webkit-slider-runnable-track{height:max(.8cqh,5px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#t::-moz-range-track{height:max(.8cqh,5px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#t::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.8cqh,26px);height:max(3.8cqh,26px);border-radius:50%;background:var(--k);margin-top:calc((max(.8cqh,5px) - max(3.8cqh,26px))/2);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--k) 18%,transparent)}
+#t::-moz-range-thumb{width:max(3.8cqh,26px);height:max(3.8cqh,26px);border-radius:50%;border:0;background:var(--k)}
+#ticks{display:flex;justify-content:space-between;padding:0 .5cqw}
+#ticks button{font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--k);background:none;border:0;padding:.4cqh 0;cursor:pointer;opacity:.55;letter-spacing:.02em}
+#ticks button.on{opacity:1}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FUSION FUEL</span></div>
+    <h2 class="q">How much fuel would fusion need to power one person for ten years?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="scrub">
+      <input id="t" type="range" min="0" max="400" step="1" value="0" aria-label="Timeline">
+      <div id="ticks"><button data-s="0" class="on">WATER</button><button data-s="1">EXTRACT</button><button data-s="2">ADD</button><button data-s="3">FUSE</button><button data-s="4">USE</button></div>
+    </div>
+    <p class="say" id="say">Drag the slider from water to energy.</p>
+    <div id="why" class="gone"><p class="body">Every 50 litres of ordinary water hide 1.6 grams of deuterium. With 5 grams of lithium-6 it could give about 380,000 kWh: ten years of one person's energy. And there is no chain reaction: run out of fuel and it just stops, like a petrol engine.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fusion fuel is counted in grams: a few bottles of water could power a decade.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const BLUE='#4fb3ff', LI='#b39dff', GLOW='#ffb020';
+const CAP=[['50 L','of ordinary water'],['1.6 g','of deuterium hidden in it'],['+ 5 g','of lithium-6'],['≈ 380,000 kWh','if it all fuses'],['≈ 10 years','of one person’s energy needs']];
+let T=0, S=null, done=false;
+const cl=x=>Math.min(1,Math.max(0,x)), ez=p=>p*p*(3-2*p), lerp=(a,b,p)=>a+(b-a)*p;
+
+function build(){
+  const svg=Kit.$('pic'); svg.innerHTML='';
+  const {W,H,f}=Kit.fitSvg(svg);
+  const big=Math.min(f*2.4,W/8,H*0.13);
+  const sf=Math.max(f,12), capY2=big*1.05+big*0.35+sf*1.05;
+  const capB=Kit.mk('text',{x:W/2,y:big*1.05,'text-anchor':'middle',fill:'currentColor',style:`font:800 ${big}px var(--display)`},svg);
+  const capS=Kit.mk('text',{x:W/2,y:capY2,'text-anchor':'middle',fill:'currentColor',opacity:.75,style:`font:600 ${sf}px var(--body)`},svg);
+  const x0=W*0.06,x1=W*0.94,y0=capY2+f*1.3,y1=H*0.98,aw=x1-x0,ah=y1-y0;
+  // bottles
+  const gB=Kit.mk('g',{},svg), bottles=[];
+  const cw=aw/10,ch=ah/5,bh=Math.min(ch*0.82,cw*1.9),bw=bh*0.48;
+  for(let i=0;i<50;i++){
+    const cx=x0+cw*(i%10+.5), cy=y0+ch*(Math.floor(i/10)+.5);
+    const g=Kit.mk('g',{transform:`translate(${cx},${cy})`},gB);
+    Kit.mk('rect',{x:-bw*0.18,y:-bh/2,width:bw*0.36,height:bh*0.2,rx:bw*0.08,fill:'currentColor',opacity:.6},g);
+    Kit.mk('rect',{x:-bw/2,y:-bh/2+bh*0.18,width:bw,height:bh*0.82,rx:bw*0.25,fill:BLUE,stroke:'currentColor','stroke-width':Math.max(1,bw*0.08)},g);
+    bottles.push({g,cx,cy});
+  }
+  // vials
+  const vw=Math.min(W*0.09,ah*0.12), vh=vw*1.7, vy=y0+ah*0.42;
+  function vial(col,a,b){
+    const g=Kit.mk('g',{},svg);
+    Kit.mk('rect',{x:-vw*0.9,y:-vh*0.9,width:vw*1.8,height:vh*1.8,rx:vw*0.9,fill:'var(--c)',opacity:.85},g);
+    const fill=Kit.mk('rect',{x:-vw/2+2,width:vw-4,rx:vw*0.22,fill:col},g);
+    Kit.mk('rect',{x:-vw/2,y:-vh/2,width:vw,height:vh,rx:vw*0.28,fill:'none',stroke:'currentColor','stroke-width':Math.max(2,vw*0.08)},g);
+    const l1=Kit.mk('text',{y:vh/2+f*1.7,'text-anchor':'middle',fill:'currentColor',style:`font:800 ${f*1.25}px var(--display)`},g); l1.textContent=a;
+    const l2=Kit.mk('text',{y:vh/2+f*1.7+f*1.55,'text-anchor':'middle',fill:'currentColor',style:`font:600 ${Math.max(f*0.9,12)}px var(--body)`},g); l2.textContent=b;
+    return {g,fill};
+  }
+  const D=vial(BLUE,'1.6 g','deuterium'), L=vial(LI,'5 g','lithium-6');
+  // particles
+  const gP=Kit.mk('g',{},svg), parts=bottles.map(()=>Kit.mk('circle',{r:Math.max(2,f*0.22),fill:BLUE,stroke:'currentColor','stroke-width':1},gP));
+  // glow
+  const gG=Kit.mk('g',{},svg), rmax=Math.min(aw,ah)*0.3, rays=[];
+  for(let i=0;i<12;i++) rays.push(Kit.mk('line',{stroke:GLOW,'stroke-width':Math.max(2,f*0.25),'stroke-linecap':'round'},gG));
+  const halo=Kit.mk('circle',{fill:GLOW,opacity:.3},gG), core=Kit.mk('circle',{fill:GLOW},gG);
+  const bolt=Kit.mk('text',{'text-anchor':'middle','dominant-baseline':'central',fill:'#1a1a1a'},gG); bolt.textContent='⚡';
+  // years
+  const gY=Kit.mk('g',{},svg), yrs=[];
+  const yTop=y0+ah*0.46, yw=aw/5, yh=(y1-yTop)/2, bs=Math.min(yw*0.8,yh*0.8);
+  for(let i=0;i<10;i++){
+    const cx=x0+yw*(i%5+.5), cy=yTop+yh*(Math.floor(i/5)+.5);
+    Kit.mk('rect',{x:cx-bs/2,y:cy-bs/2,width:bs,height:bs,rx:bs*0.2,fill:'none',stroke:'currentColor','stroke-width':2,opacity:.5},gY);
+    const r=Kit.mk('rect',{x:cx-bs/2,y:cy-bs/2,width:bs,height:bs,rx:bs*0.2,fill:GLOW},gY);
+    const t=Kit.mk('text',{x:cx,y:cy+f*0.4,'text-anchor':'middle',fill:'currentColor',style:`font:800 ${Math.max(f*1.1,12)}px var(--mono)`},gY); t.textContent=i+1;
+    yrs.push(r);
+  }
+  const yl=Kit.mk('text',{x:x0+aw/2,y:yTop-f*0.6,'text-anchor':'middle',fill:'currentColor',style:`font:600 ${Math.max(f*0.9,12)}px var(--body)`},gY); yl.textContent='years of energy, one person';
+  S={W,H,f,capB,capS,gB,bottles,D,L,parts,gG,rays,halo,core,bolt,gY,yrs,vw,vh,vy,rmax,y0,ah};
+}
+
+function setT(t){
+  T=t; if(!S) return;
+  const {W,f,bottles,D,L,parts,vh,vy,rmax,y0,ah}=S;
+  const p1=ez(cl(t)),p2=ez(cl(t-1)),p3=ez(cl(t-2)),p4=ez(cl(t-3));
+  const k=Math.min(4,Math.max(0,Math.round(t)));
+  S.capB.textContent=CAP[k][0]; S.capS.textContent=CAP[k][1];
+  S.gB.setAttribute('opacity', t<1 ? 1-0.85*p1 : 0.15*(1-p3));
+  const dx=lerp(W*0.3,W/2,p3), lx=lerp(W*0.7,W/2,p3), sc=1-0.6*p3;
+  parts.forEach((c,i)=>{
+    const q=ez(cl((t-i/50*0.4)/0.6)), b=bottles[i];
+    c.setAttribute('cx',lerp(b.cx,dx,q)); c.setAttribute('cy',lerp(b.cy,vy,q));
+    c.setAttribute('opacity',q>0&&q<1?Math.sin(Math.PI*q)*0.9+0.1:0);
+  });
+  D.g.setAttribute('transform',`translate(${dx},${vy}) scale(${sc})`);
+  D.g.setAttribute('opacity',cl(t*3)*(1-p3));
+  const fh=(vh-4)*p1; D.fill.setAttribute('height',fh); D.fill.setAttribute('y',vh/2-2-fh);
+  L.g.setAttribute('transform',`translate(${lx},${vy}) scale(${(0.4+0.6*p2)*sc})`);
+  L.g.setAttribute('opacity',p2*(1-p3));
+  L.fill.setAttribute('height',vh-4); L.fill.setAttribute('y',-vh/2+2);
+  const gy=lerp(vy,y0+ah*0.2,p4), r=Math.max(0.01,rmax*p3*lerp(1,0.5,p4));
+  S.gG.setAttribute('opacity',p3);
+  S.core.setAttribute('cx',W/2);S.core.setAttribute('cy',gy);S.core.setAttribute('r',r*0.6);
+  S.halo.setAttribute('cx',W/2);S.halo.setAttribute('cy',gy);S.halo.setAttribute('r',r);
+  S.bolt.setAttribute('x',W/2);S.bolt.setAttribute('y',gy);S.bolt.style.font=`${Math.max(r*0.6,12)}px var(--body)`;
+  S.bolt.style.display = r*0.6<12 ? 'none' : '';
+  S.rays.forEach((l,i)=>{const a=i/12*Math.PI*2+t*0.4;
+    l.setAttribute('x1',W/2+Math.cos(a)*r*1.08);l.setAttribute('y1',gy+Math.sin(a)*r*1.08);
+    l.setAttribute('x2',W/2+Math.cos(a)*r*1.35);l.setAttribute('y2',gy+Math.sin(a)*r*1.35);});
+  S.gY.setAttribute('opacity',p4);
+  S.yrs.forEach((y,i)=>y.setAttribute('opacity',cl(p4*10-i)));
+  [...Kit.$('ticks').children].forEach((b,i)=>b.classList.toggle('on',i===k));
+  if(t>=3.95&&!done){done=true;Kit.haptic('success');Kit.hide('say');Kit.show('why');Kit.show('keep');}
+}
+
+const rng=Kit.$('t'), proxy={v:0}; let lastK=0;
+function fromSlider(){ gsap.killTweensOf(proxy); proxy.v=rng.value/100; setT(proxy.v);
+  const k=Math.round(proxy.v); if(k!==lastK){lastK=k;Kit.haptic('selection');} }
+function snapTo(s){ gsap.to(proxy,{v:s,duration:Kit.calm?0:.5,ease:'power2.out',onUpdate:()=>{rng.value=proxy.v*100;setT(proxy.v);}}); }
+rng.addEventListener('input',fromSlider);
+rng.addEventListener('change',()=>snapTo(Math.round(rng.value/100)));
+Kit.$('ticks').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;Kit.haptic('selection');snapTo(+b.dataset.s);});
+
+Kit.onShow.card = () => { build(); setT(T); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !S || T>0) return;
+  gsap.from(S.bottles.map(b=>b.g),{opacity:0,y:-8,stagger:.012,duration:.35,ease:'power2.out'});
+};
+Kit.play.card = async () => {
+  rng.value=400; rng.dispatchEvent(new Event('input',{bubbles:true}));
+  rng.dispatchEvent(new Event('change',{bubbles:true}));
+  await new Promise(r=>setTimeout(r,800));
+};
+Kit.single();
+</script>
+</html>

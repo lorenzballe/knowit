@@ -1,0 +1,182 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-tunnel-or-bridge -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#sw{display:flex;gap:2.5cqw}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;flex:1}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#slip{flex:0 0 auto;width:100%}
+#pic text{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Flip · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FAULT LINES</span></div>
+    <h2 class="q">Why is a tunnel under the Strait riskier than a bridge?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sw">
+        <button class="opt on" data-m="tunnel">Tunnel</button>
+        <button class="opt" data-m="bridge">Bridge</button>
+      </div>
+      <svg id="pic" aria-label="Cross-section of the Strait with a fault"></svg>
+      <button class="opt" id="slip">Slip the fault: a 4 m step</button>
+      <div id="why" class="gone">
+        <p class="body">A tunnel runs through the rock, so it inevitably crosses several faults. If one slips and makes a step of 2–4 metres, as in 1908, the tube is cut.</p>
+        <p class="body">A bridge only touches the ground at its towers, and it can be designed to absorb the step far more easily.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Slip the fault under the tunnel, then switch to the bridge.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>What crosses a fault breaks; what spans over it can flex.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {s: 0};
+let mode = 'tunnel', G = null, slipped = false, busy = false, done = false;
+const seen = {};
+const sm = u => { u = Math.max(0, Math.min(1, u)); return u * u * (3 - 2 * u); };
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .9);
+  const g = {W, H, fs};
+  g.landY = .40 * H; g.seaY = .43 * H; g.bedY = .60 * H; g.step = .07 * H;
+  g.xt = .55 * W; g.xb = .45 * W; g.tY = .78 * H; g.tw = Math.max(8, .045 * H);
+  g.xf = g.xt + (g.xb - g.xt) * (g.tY - g.bedY) / (H - g.bedY);
+  g.towerY = .05 * H; g.deckY = .20 * H; g.xL = .11 * W; g.xR = .89 * W;
+  const M = (t, a, p = svg) => Kit.mk(t, a, p);
+  const rock = '#a57b52', deep = '#3b2a1c', sea = '#2b6a93';
+  M('rect', {x: 0, y: g.seaY, width: W, height: H - g.seaY, fill: sea});
+  M('line', {x1: 0, y1: g.seaY, x2: W, y2: g.seaY, stroke: '#9fd0ee', 'stroke-width': 2});
+  g.deep = M('rect', {x: 0, y: g.bedY, width: W, height: H - g.bedY, fill: deep});
+  const pts = a => a.map(p => p.join(',')).join(' ');
+  M('polygon', {points: pts([[0, g.landY], [.2 * W, g.landY], [.32 * W, g.bedY], [g.xt, g.bedY], [g.xb, H], [0, H]]), fill: rock});
+  M('line', {x1: .40 * W, y1: g.bedY, x2: .34 * W, y2: H, stroke: deep, 'stroke-width': 1.5, 'stroke-dasharray': '5 5', opacity: .7});
+  M('text', {x: .02 * W, y: g.landY + 1.4 * fs, fill: '#fff', 'font-size': fs}).textContent = 'Sicily';
+  const tube = (par, d) => {
+    const gr = M('g', {}, par);
+    M('path', {d, fill: 'none', stroke: '#1b1b1b', 'stroke-width': g.tw + 4, 'stroke-linejoin': 'round', 'stroke-linecap': 'butt'}, gr);
+    M('path', {d, fill: 'none', stroke: '#e9e2d0', 'stroke-width': g.tw, 'stroke-linejoin': 'round', 'stroke-linecap': 'butt'}, gr);
+    M('path', {d, fill: 'none', stroke: '#f2b632', 'stroke-width': 2, 'stroke-dasharray': '4 6'}, gr);
+    return gr;
+  };
+  g.tun = []; g.bri = [];
+  g.tun.push(tube(svg, `M${.18 * W},${g.landY} L${.30 * W},${g.tY} L${g.xf},${g.tY}`));
+  // right block, moves with the fault
+  g.right = M('g', {});
+  M('polygon', {points: pts([[g.xt, g.bedY], [.68 * W, g.bedY], [.80 * W, g.landY], [W, g.landY], [W, H + g.step], [g.xb, H + g.step]]), fill: rock}, g.right);
+  M('line', {x1: .65 * W, y1: g.bedY, x2: .59 * W, y2: H, stroke: deep, 'stroke-width': 1.5, 'stroke-dasharray': '5 5', opacity: .7}, g.right);
+  M('text', {x: .98 * W, y: g.landY + 1.4 * fs, fill: '#fff', 'font-size': fs, 'text-anchor': 'end'}).textContent = 'Calabria';
+  g.right.appendChild(g.right.lastChild);
+  g.tun.push(tube(g.right, `M${g.xf},${g.tY} L${.70 * W},${g.tY} L${.82 * W},${g.landY}`));
+  const tw = Math.max(5, .022 * W);
+  const towR = M('rect', {x: g.xR - tw / 2, y: g.towerY, width: tw, height: g.landY - g.towerY, fill: '#1b1b1b', rx: 2}, g.right);
+  g.bri.push(towR);
+  // active fault
+  M('line', {x1: g.xt, y1: g.bedY, x2: g.xb, y2: H, stroke: '#ff4d3d', 'stroke-width': 3});
+  M('text', {x: g.xt - .4 * fs, y: g.bedY - .5 * fs, fill: '#fff', 'font-size': fs, 'text-anchor': 'end'}).textContent = 'active fault';
+  g.stepT = M('text', {x: g.xt + .4 * fs, y: g.bedY - .5 * fs, fill: '#ffd34d', 'font-size': fs, opacity: 0}); g.stepT.textContent = '4 m step';
+  // bridge (top level parts)
+  const bL = M('g', {}); g.bri.push(bL);
+  M('rect', {x: g.xL - tw / 2, y: g.towerY, width: tw, height: g.landY - g.towerY, fill: '#1b1b1b', rx: 2}, bL);
+  g.hang = M('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': 1.2, opacity: .7}, bL);
+  g.cable = M('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': 2.4}, bL);
+  g.deck = M('path', {fill: 'none', stroke: '#1b1b1b', 'stroke-width': Math.max(5, .018 * H), 'stroke-linecap': 'round'}, bL);
+  g.briT = M('text', {x: .5 * W, y: .35 * H, fill: 'var(--k)', 'font-size': fs, 'text-anchor': 'middle', opacity: 0}, bL);
+  g.briT.textContent = 'deck bends, stays whole';
+  // tunnel break
+  const tb = M('g', {}); g.tun.push(tb);
+  g.burst = M('circle', {cx: g.xf, cy: g.tY, r: g.tw * 1.1, fill: 'none', stroke: '#ff4d3d', 'stroke-width': 3, opacity: 0}, tb);
+  g.tunT = M('text', {x: g.xf, y: g.tY + g.tw / 2 + 1.5 * fs, fill: '#fff', 'font-size': fs, 'text-anchor': 'middle', opacity: 0}, tb);
+  g.tunT.textContent = 'tunnel sheared';
+  G = g;
+  setMode(mode, true); draw();
+}
+
+function draw() {
+  if (!G) return;
+  const g = G, d = st.s * g.step;
+  g.right.setAttribute('transform', `translate(0,${d})`);
+  g.deep.setAttribute('y', g.bedY + d);
+  g.deep.setAttribute('height', Math.max(0, g.H - g.bedY - d));
+  g.stepT.setAttribute('opacity', sm((st.s - .3) / .5));
+  // deck
+  const x0 = g.xL - .09 * g.W, x1 = g.xR + .09 * g.W;
+  const deckAt = x => g.deckY + d * sm((x - g.xL) / (g.xR - g.xL));
+  let p = '';
+  for (let i = 0; i <= 40; i++) { const x = x0 + (x1 - x0) * i / 40; p += (i ? 'L' : 'M') + x.toFixed(1) + ',' + deckAt(x).toFixed(1); }
+  g.deck.setAttribute('d', p);
+  const sag = (g.deckY - g.towerY) * .85;
+  const cab = u => [g.xL + (g.xR - g.xL) * u, g.towerY + d * u + sag * 4 * u * (1 - u)];
+  let c = `M${x0},${deckAt(x0)} L${g.xL},${g.towerY}`;
+  for (let i = 1; i <= 30; i++) { const [x, y] = cab(i / 30); c += `L${x.toFixed(1)},${y.toFixed(1)}`; }
+  c += `L${x1},${deckAt(x1)}`;
+  g.cable.setAttribute('d', c);
+  let h = '';
+  for (let i = 1; i < 12; i++) { const [x, y] = cab(i / 12); h += `M${x.toFixed(1)},${y.toFixed(1)}L${x.toFixed(1)},${deckAt(x).toFixed(1)}`; }
+  g.hang.setAttribute('d', h);
+  g.briT.setAttribute('opacity', sm((st.s - .5) / .4));
+  const b = sm((st.s - .25) / .4);
+  g.burst.setAttribute('cy', g.tY + d / 2);
+  g.burst.setAttribute('opacity', b);
+  g.burst.setAttribute('r', g.tw * (1 + .6 * b));
+  g.tunT.setAttribute('opacity', b);
+}
+
+function setMode(m, instant) {
+  mode = m;
+  document.querySelectorAll('#sw .opt').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+  if (!G) return;
+  const on = m === 'tunnel' ? G.tun : G.bri, off = m === 'tunnel' ? G.bri : G.tun;
+  if (instant || Kit.calm) { gsap.set(on, {opacity: 1}); gsap.set(off, {opacity: 0}); }
+  else { gsap.to(on, {opacity: 1, duration: .35}); gsap.to(off, {opacity: 0, duration: .35}); }
+}
+
+function check() {
+  if (st.s >= 1) seen[mode] = true;
+  const say = Kit.$('say');
+  if (done) return;
+  if (seen.tunnel && seen.bridge) {
+    done = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from('#why .body', {opacity: 0, y: 8, stagger: .12, duration: .4});
+  } else if (seen.tunnel) say.textContent = 'Now switch to the bridge: same step.';
+  else if (seen.bridge) say.textContent = 'Now switch to the tunnel: same step.';
+}
+
+Kit.$('sw').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || b.dataset.m === mode) return;
+  Kit.haptic('selection'); setMode(b.dataset.m); check();
+});
+Kit.$('slip').addEventListener('click', () => {
+  if (busy) return;
+  const btn = Kit.$('slip');
+  if (slipped) {
+    slipped = false; btn.textContent = 'Slip the fault: a 4 m step';
+    if (Kit.calm) { st.s = 0; draw(); } else gsap.to(st, {s: 0, duration: .6, ease: 'power2.inOut', onUpdate: draw});
+    return;
+  }
+  slipped = true; btn.textContent = 'Reset'; Kit.haptic('light');
+  if (Kit.calm) { st.s = 1; draw(); check(); return; }
+  busy = true;
+  gsap.fromTo('#pic', {x: -3}, {x: 3, repeat: 7, yoyo: true, duration: .05, onComplete: () => gsap.set('#pic', {x: 0})});
+  gsap.to(st, {s: 1, duration: .9, ease: 'power3.in', onUpdate: draw, onComplete: () => { busy = false; check(); }});
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('slip').click(); await w(1300);
+  Kit.$('sw').querySelector('[data-m="bridge"]').click(); await w(900);
+};
+Kit.single();
+</script>
+</html>

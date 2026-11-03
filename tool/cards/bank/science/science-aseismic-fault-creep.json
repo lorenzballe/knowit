@@ -1,0 +1,36 @@
+{
+  "id": "science-aseismic-fault-creep",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A deep fault creeps without quakes. How can it still cause them?",
+  "answer": "The deep fault creeps all the time, too slowly to shake anything. That steady creep strains the locked faults above it. When those shallow faults give way all at once, that is the earthquake.",
+  "move": "Silent creep deep down loads the shallow faults that quake.",
+  "keywords": [
+    "earthquake",
+    "fault",
+    "creep",
+    "messina"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Cross-section of rock layers with a deep fault and locked faults above it. Drag the blue arrow along the deep fault to watch the rocks above strain until the shallow faults give way in an earthquake."
+  },
+  "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=4cJ9IdeTZ2A&t=447s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "nature-po-valley-basin",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "How does the shape of the Po Valley affect its air?",
+  "answer": "The Po Valley is a basin between the Alps and the Apennines, so its air is hardly exchanged. No strong wind carries the pollution away, and the stable air the Alps bring favours an inversion that holds it down. So the smog stays trapped and builds up.",
+  "move": "A valley walled by mountains can't air itself out.",
+  "keywords": [
+    "po valley",
+    "alps",
+    "apennines",
+    "smog",
+    "air basin"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Page asking where smog from the Po Valley ends up when the valley is walled in by mountains. Three choices: swept out across the plain by wind, rising and escaping over the mountains, or staying trapped in the valley. The reader picks one."
+  },
+  "source": "Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=x75-xpsPT9c&t=227s",
+  "written": "2026-11-03"
+}

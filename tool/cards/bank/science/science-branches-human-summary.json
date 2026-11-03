@@ -1,0 +1,37 @@
+{
+  "id": "science-branches-human-summary",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Are parallel 'branches' a real part of reality, or just our description?",
+  "answer": "Branches are a human summary, not a fundamental part of reality. Only the universe's wave function truly exists. Cutting it into branches or worlds is handy for us, like describing air by temperature and pressure instead of listing every molecule. Both pictures make the same predictions.",
+  "move": "Branches are like temperature: a useful summary, not the fabric of reality.",
+  "keywords": [
+    "many worlds",
+    "wave function",
+    "branches",
+    "temperature",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled Many Worlds asks whether parallel branches are a real part of reality or just our description. A slide reveals the human summary and what lies underneath: only the universe's wave function truly exists."
+  },
+  "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=1072s",
+  "written": "2026-11-03"
+}

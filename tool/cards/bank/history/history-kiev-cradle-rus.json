@@ -1,0 +1,37 @@
+{
+  "id": "history-kiev-cradle-rus",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.disputed_borders",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Russia see Ukraine as a wound, not just a neighbor?",
+  "answer": "Kiev was the capital of the first great Russian state for about four centuries, from the late 800s to the early 1200s. Because of this, Kiev is seen as the cradle of the Russian people and of the later empire, and that cradle lies in Ukraine. So Ukraine feels like Russia's birthplace, not just a neighbor.",
+  "move": "Russia's story starts in Kiev, so Ukraine feels like its birthplace, not a neighbor.",
+  "keywords": [
+    "kiev",
+    "kievan rus",
+    "ukraine",
+    "russia",
+    "cradle of rus"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled 'Kiev, the cradle of Rus'' asking why Russia sees Ukraine as a wound, not just a neighbor. It shows Kiev as capital of the early Rus' state, with a prompt to draw today's border and a timeline to drag as Kiev's state grows."
+  },
+  "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=BkJY93_hauY&t=73s",
+  "written": "2026-11-03"
+}

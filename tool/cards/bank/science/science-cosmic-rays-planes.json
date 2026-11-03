@@ -1,0 +1,37 @@
+{
+  "id": "science-cosmic-rays-planes",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the extra radiation on a plane trip come from?",
+  "answer": "Cosmic radiation is particles streaming toward us from outer space. The atmosphere normally blocks them. At the high altitudes planes fly at, less air is above you, so more of these particles get through.",
+  "move": "Flying high trades the air's shield for more cosmic radiation.",
+  "keywords": [
+    "cosmic radiation",
+    "airplane",
+    "atmosphere",
+    "altitude",
+    "outer space"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A diagram of an airplane at an adjustable altitude above the ground, with a band of air overhead acting as a shield and falling particles from space. Drag the slider to fly higher and watch how many cosmic particles reach the plane."
+  },
+  "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=wQmnztyXwVA&t=177s",
+  "written": "2026-11-03"
+}

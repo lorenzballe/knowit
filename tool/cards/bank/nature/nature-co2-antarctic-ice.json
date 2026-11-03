@@ -1,0 +1,37 @@
+{
+  "id": "nature-co2-antarctic-ice",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.greenhouse_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did falling CO₂ give Antarctica its ice sheet?",
+  "answer": "About 32–33 million years ago, CO₂ fell from about 1000 to 600 ppm. Less CO₂ trapped less heat, so Antarctic snow stopped melting in summer and piled up into an ice sheet. As CO₂ kept falling, the ice grew thicker.",
+  "move": "Antarctica froze once CO₂ fell to about 600 ppm.",
+  "keywords": [
+    "co2",
+    "antarctica",
+    "ice-sheet",
+    "glaciation",
+    "greenhouse-gas"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A CO₂ meter drops from 1000 ppm beside a view of Antarctica, where summer snow melts each year. Hold the button to lower CO₂ and watch whether the snow stays and builds an ice sheet."
+  },
+  "source": "Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=nCRYmQqs-yc&t=575s",
+  "written": "2026-11-03"
+}

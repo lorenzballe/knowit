@@ -1,0 +1,37 @@
+{
+  "id": "science-tsar-bomba-stages",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "The Tsar Bomba has two parts. Which one goes off first?",
+  "answer": "The plutonium sphere goes first. Its explosive layers crush the plutonium core until its nuclei split in fission. That blast ignites the hydrogen in the surrounding cylinder, whose nuclei fuse in the second stage.",
+  "move": "Fission is the match; hydrogen fusion is the fire it lights.",
+  "keywords": [
+    "tsar bomba",
+    "fission",
+    "fusion",
+    "plutonium",
+    "hydrogen bomb"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section view of the Tsar Bomba asks which part explodes first: the plutonium sphere or the hydrogen cylinder. The reader taps the part they think goes off first."
+  },
+  "source": "Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=tesv0xoNhCo&t=289s",
+  "written": "2026-11-03"
+}

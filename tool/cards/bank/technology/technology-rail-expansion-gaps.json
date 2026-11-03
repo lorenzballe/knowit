@@ -1,0 +1,37 @@
+{
+  "id": "technology-rail-expansion-gaps",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Why are small gaps left between rail sections?",
+  "answer": "Steel rails grow in the heat: a 12 m rail is 6 mm longer at 40 °C warmer. With no gaps, that growth would force kilometres of joined rail to buckle sideways, which could derail trains. The small gaps give the extra length somewhere to go.",
+  "move": "Heat makes rails longer; the gaps gave that length somewhere to go.",
+  "keywords": [
+    "rail",
+    "steel",
+    "railway",
+    "thermal expansion",
+    "derailment"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A diagram of a continuous rail bending outward as temperature rises. The question asks why small gaps are left between rail sections, with three reasons to pick from and a choice of how sure the reader is."
+  },
+  "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=133s",
+  "written": "2026-11-03"
+}

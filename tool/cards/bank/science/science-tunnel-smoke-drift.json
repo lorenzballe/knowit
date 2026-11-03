@@ -1,0 +1,37 @@
+{
+  "id": "science-tunnel-smoke-drift",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "In a tunnel fire, which way does the smoke tend to drift?",
+  "answer": "Moving cars push the air ahead of them, so the tunnel's air flows in the direction the cars drive. The smoke rides that flow downstream, so it drifts with the traffic. That is why you should escape the other way, against the traffic.",
+  "move": "In a tunnel, smoke goes where the cars go: escape the other way.",
+  "keywords": [
+    "tunnel",
+    "smoke",
+    "fire",
+    "traffic",
+    "airflow"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A tunnel fire question asks which way smoke drifts: with the traffic, against the traffic, or nowhere, rising and spreading. Arrows show the traffic direction, and the reader bets on the smoke's direction."
+  },
+  "source": "Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=ZH5nAfBRtjQ&t=146s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,193 @@
+<!doctype html>
+<!-- slug: history-pyramid-worker-tombs -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;border-radius:1.6cqh;cursor:crosshair}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(1.95cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · then dig">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PYRAMID BUILDERS</span></div>
+    <h2 class="q">What do the workers' graves near the pyramids say about who they were?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A pyramid with a buried tomb beneath the sand"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">They were slaves, dumped where they fell</button>
+        <button class="opt" data-i="1">They were skilled workers, honoured in death</button>
+        <button class="opt" data-i="2">Nothing: the workers left no graves</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Skilled workers, not slaves</p>
+        <p class="body">Their tombs sit right beside the pyramids, carefully built and well preserved. Slaves would not have been given such honourable burials: these workers' hard labour was rewarded.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick an answer, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Honourable graves point to skilled workers, not slaves.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+const S = {pick: -1, answered: false, done: false, pts: []};
+let G = null; // geometry of the current drawing
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = S.pick === RIGHT, said = Kit.$('opts').children[S.pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: dig and see`);
+  S.answered = true;
+  Kit.$('say').textContent = 'Now brush the sand off the grave with your finger.';
+  if (G && !Kit.calm) gsap.fromTo(G.hint, {opacity: 0}, {opacity: 1, duration: .5});
+  else if (G) G.hint.setAttribute('opacity', 1);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || S.pick >= 0) return;
+  S.pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+const ink = (p, bg = 'var(--c)') => `color-mix(in srgb,var(--k) ${p}%,${bg})`;
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  const g = H * 0.38;               // ground line
+  const id = 'm' + Math.round(W) + 'x' + Math.round(H);
+  const defs = mk('defs', {});
+  const mask = mk('mask', {id, maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+  mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#fff'}, mask);
+  const holes = mk('g', {}, mask);
+
+  // sky
+  mk('rect', {x: 0, y: 0, width: W, height: g, style: `fill:${ink(5)}`});
+  // pyramid
+  const px = W * 0.74, pw = Math.min(W * 0.5, g * 1.7);
+  mk('polygon', {points: `${px},${g - pw * 0.6} ${px + pw / 2},${g} ${px - pw / 2},${g}`, style: `fill:${ink(22)};stroke:var(--k);stroke-width:${Math.max(2, f * .14)};stroke-linejoin:round`});
+  for (let i = 1; i < 6; i++) {
+    const y = g - pw * 0.6 * i / 6, hw = pw / 2 * (1 - i / 6);
+    mk('line', {x1: px - hw, x2: px + hw, y1: y, y2: y, style: `stroke:${ink(40)};stroke-width:1`});
+  }
+  // soil
+  mk('rect', {x: 0, y: g, width: W, height: H - g, style: `fill:${ink(34)}`});
+  mk('line', {x1: 0, x2: W, y1: g, y2: g, style: `stroke:var(--k);stroke-width:${Math.max(2, f * .14)}`});
+
+  // tomb chamber
+  const cx = W * 0.42, cw = Math.min(W * 0.68, (H - g) * 1.9), ch = (H - g) * 0.52;
+  const tx = cx - cw / 2, ty = g + (H - g) * 0.24;
+  const sw = Math.max(3, f * .3);
+  mk('rect', {x: tx, y: ty, width: cw, height: ch, rx: f * .3, style: `fill:var(--c);stroke:var(--k);stroke-width:${sw}`});
+  // stone blocks of the wall
+  const bh = ch / 3;
+  for (let r = 0; r < 3; r++) {
+    mk('line', {x1: tx, x2: tx + cw, y1: ty + bh * r, y2: ty + bh * r, style: `stroke:${ink(14)};stroke-width:1`});
+    for (let c = 1; c < 6; c++) {
+      const x = tx + cw * (c - (r % 2) * 0.5) / 6;
+      mk('line', {x1: x, x2: x, y1: ty + bh * r, y2: ty + bh * (r + 1), style: `stroke:${ink(14)};stroke-width:1`});
+    }
+  }
+  // skeleton, laid out with care
+  const sk = mk('g', {style: `stroke:var(--k);fill:none;stroke-linecap:round;stroke-width:${Math.max(2, f * .16)}`});
+  const L = cw * 0.78, sx = cx - L / 2, sy = ty + ch * 0.55, u = L / 10;
+  mk('circle', {cx: sx + u * .55, cy: sy, r: u * .55, style: 'fill:var(--c)'}, sk);
+  mk('line', {x1: sx + u * 1.1, y1: sy, x2: sx + u * 5, y2: sy}, sk);
+  for (let i = 0; i < 4; i++) {
+    const x = sx + u * (1.7 + i * .7), h = u * (.55 - i * .05);
+    mk('path', {d: `M${x} ${sy - h} Q${x + u * .25} ${sy} ${x} ${sy + h}`}, sk);
+  }
+  mk('ellipse', {cx: sx + u * 5.4, cy: sy, rx: u * .45, ry: u * .6}, sk);
+  mk('line', {x1: sx + u * 5.8, y1: sy - u * .3, x2: sx + u * 9.6, y2: sy - u * .25}, sk);
+  mk('line', {x1: sx + u * 5.8, y1: sy + u * .3, x2: sx + u * 9.6, y2: sy + u * .25}, sk);
+  // arms folded across the chest
+  mk('path', {d: `M${sx + u * 1.6} ${sy - u * .7} L${sx + u * 3.2} ${sy - u * .5} L${sx + u * 2.4} ${sy + u * .35}`}, sk);
+  mk('path', {d: `M${sx + u * 1.6} ${sy + u * .7} L${sx + u * 3.2} ${sy + u * .5} L${sx + u * 2.4} ${sy - u * .35}`}, sk);
+
+  // sand cover, brushed away through the mask
+  const cover = mk('g', {mask: `url(#${id})`});
+  mk('rect', {x: 0, y: g + sw / 2 + 1, width: W, height: H - g, style: `fill:${ink(46)}`}, cover);
+  const rand = (() => { let s = 7; return () => (s = (s * 9301 + 49297) % 233280) / 233280; })();
+  for (let i = 0; i < 140; i++)
+    mk('circle', {cx: rand() * W, cy: g + 4 + rand() * (H - g), r: 1 + rand() * f * .12, style: `fill:${ink(rand() < .5 ? 65 : 25)}`}, cover);
+  const hint = mk('text', {x: cx, y: ty + ch / 2, 'text-anchor': 'middle', 'dominant-baseline': 'middle', opacity: S.answered && !S.done ? 1 : 0, style: `font:700 ${Math.max(13, f)}px var(--body);fill:var(--c)`}, cover);
+  hint.textContent = 'Brush here ✋';
+
+  // label for the end, in the sky to the left of the pyramid
+  const fs = Math.max(12, Math.min(f, W * 0.045));
+  const lab = mk('text', {x: W * 0.04, y: g * 0.32, opacity: S.done ? 1 : 0, style: `font:800 ${fs}px var(--body);fill:var(--k)`});
+  lab.textContent = 'Buried with care,';
+  const lab2 = mk('text', {x: W * 0.04, y: g * 0.32 + fs * 1.4, opacity: S.done ? 1 : 0, style: `font:800 ${fs}px var(--body);fill:var(--k)`});
+  lab2.textContent = 'beside the pyramid';
+
+  const r = Math.max(W, H) * 0.075;
+  G = {W, H, r, holes, cover, hint, lab: [lab, lab2], box: {x: tx, y: ty, w: cw, h: ch}};
+  for (const p of S.pts) hole(p, false);
+  if (S.done) cover.setAttribute('opacity', 0);
+}
+
+function hole(p, live = true) {
+  Kit.mk('circle', {cx: p[0] * G.W, cy: p[1] * G.H, r: G.r, fill: '#000'}, G.holes);
+  if (live) check();
+}
+function check() {
+  if (S.done) return;
+  const b = G.box; let n = 0, hit = 0;
+  for (let i = 0; i < 10; i++) for (let j = 0; j < 5; j++) {
+    n++;
+    const x = b.x + b.w * (i + .5) / 10, y = b.y + b.h * (j + .5) / 5;
+    if (S.pts.some(p => Math.hypot(p[0] * G.W - x, p[1] * G.H - y) < G.r)) hit++;
+  }
+  if (hit / n >= 0.55) finish();
+}
+function finish() {
+  if (S.done) return; S.done = true; Kit.haptic('success');
+  const d = Kit.calm ? 0 : .7;
+  gsap.to(G.cover, {opacity: 0, duration: d});
+  gsap.to(G.lab, {opacity: 1, duration: d, delay: d * .5, stagger: .15});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+
+const pic = Kit.$('pic');
+let down = false;
+function brush(e) {
+  if (!S.answered || S.done || !G) return;
+  const rc = pic.getBoundingClientRect();
+  const p = [(e.clientX - rc.left) / rc.width, (e.clientY - rc.top) / rc.height];
+  const last = S.pts[S.pts.length - 1];
+  if (last && Math.hypot((p[0] - last[0]) * G.W, (p[1] - last[1]) * G.H) < G.r * .35) return;
+  S.pts.push(p); hole(p);
+  if (G.hint.getAttribute('opacity') !== '0') { gsap.to(G.hint, {opacity: 0, duration: .3}); }
+}
+pic.addEventListener('pointerdown', e => { down = true; pic.setPointerCapture?.(e.pointerId); brush(e); });
+pic.addEventListener('pointermove', e => { if (down) brush(e); });
+['pointerup', 'pointercancel'].forEach(t => pic.addEventListener(t, () => { down = false; }));
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[1].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(300);
+  const rc = pic.getBoundingClientRect(), b = G.box;
+  const ev = (t, x, y) => pic.dispatchEvent(new PointerEvent(t, {clientX: rc.left + x * rc.width / G.W, clientY: rc.top + y * rc.height / G.H, pointerId: 1, bubbles: true}));
+  ev('pointerdown', b.x, b.y);
+  for (let j = 0; j <= 4 && !S.done; j++) for (let i = 0; i <= 12 && !S.done; i++)
+    ev('pointermove', b.x + b.w * (j % 2 ? 12 - i : i) / 12, b.y + b.h * j / 4);
+  ev('pointerup', b.x, b.y);
+  finish(); await w(1200);
+};
+Kit.single();
+</script>
+</html>

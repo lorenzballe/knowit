@@ -1,0 +1,36 @@
+{
+  "id": "science-kola-rock-cores",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.estimating",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much rock was actually collected from the Kola borehole?",
+  "answer": "Kola brought up 3,700.1 m of rock cores, dozens of times more than the few tens of meters oil wells usually core. Studying all of that rock was one of the reasons the project lasted 25 years.",
+  "move": "Kola's treasure was not only depth: 3,700.1 m of rock cores.",
+  "keywords": [
+    "kola-borehole",
+    "rock-cores",
+    "oil-wells",
+    "russia"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A draggable column asks how many meters of rock cores came up from the Kola borehole. The reader drags it to guess, and the reveal gives 3,700.1 m, far more than oil wells usually core."
+  },
+  "source": "Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=88ZLlziYdZg&t=489s",
+  "written": "2026-11-03"
+}

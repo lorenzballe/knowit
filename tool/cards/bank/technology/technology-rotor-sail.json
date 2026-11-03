@@ -1,0 +1,37 @@
+{
+  "id": "technology-rotor-sail",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some cargo ships carry giant spinning cylinders?",
+  "answer": "A cylinder that stands still splits the air evenly around it, so it gets no push. Spin the cylinder and it is pushed across the wind, so a side wind drives the ship ahead. A 2019 trial on the Maersk Pelican, verified by Lloyd's Register, tested this rotor sail.",
+  "move": "A spinning cylinder is pushed across the wind, so a side wind drives the ship ahead.",
+  "keywords": [
+    "rotor_sail",
+    "cargo_ship",
+    "magnus_effect",
+    "maersk",
+    "wind_power"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Top-down view of a cargo ship with wind blowing from the side. A still cylinder splits the air evenly and gets no push; a spinning cylinder is pushed across the wind, driving the ship forward."
+  },
+  "source": "Veritasium, “Backspin Basketball Flies Off Dam” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=2OSrvzNW9FE",
+  "written": "2026-11-03"
+}

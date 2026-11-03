@@ -1,0 +1,37 @@
+{
+  "id": "history-dresden-twelve-bullets",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Dresden: Putin, a pistol, 12 bullets. How many did he threaten the crowd with?",
+  "answer": "A crowd of young people was at Putin's building in Dresden. Gun in hand, he said the building was Soviet territory and that if they did not leave, he would use all 12 bullets. Of those 12, 11 were meant for the first of them.",
+  "move": "Putin's Dresden threat: all 12 bullets, 11 of them for the crowd.",
+  "keywords": [
+    "putin",
+    "dresden",
+    "pistol",
+    "bullets",
+    "cold_war"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A photo of a young Putin holding a pistol. A red number 12 is on the gun and a smaller red number 11 is over a crowd. The reader drags across the bullets to say how many were meant for the crowd."
+  },
+  "source": "Geopop, “Perché Putin cammina come un pistolero? La vita di Vladimir tra risse, servizi segreti e politica” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=REFrqE1jOUI&t=230s",
+  "written": "2026-11-03"
+}

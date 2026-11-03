@@ -1,0 +1,37 @@
+{
+  "id": "nature-obsidian-natural-glass",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.tipping_points",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Where does natural glass, like obsidian, come from?",
+  "answer": "When a volcano throws out magma and it meets the air, it cools so fast that it hardens into shiny black glass called obsidian. Glass is not only made in factories. Natural glass forms this way, when magma cools very quickly.",
+  "move": "Magma that cools very fast becomes glass: obsidian.",
+  "keywords": [
+    "obsidian",
+    "magma",
+    "volcano",
+    "natural glass",
+    "cooling rate"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Page asks where natural glass, like obsidian, comes from. Four choices: magma that cools very fast in the air; magma that cools slowly deep underground; crystals pressed together under the sea; magma cooled in a hurry. The reader picks one, then a volcano animation shows the answer."
+  },
+  "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=QB4WuTk_ja8&t=258s",
+  "written": "2026-11-03"
+}

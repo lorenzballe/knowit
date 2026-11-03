@@ -1,0 +1,37 @@
+{
+  "id": "science-hypergravity-flame",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a candle flame grow longer at 1.8 g?",
+  "answer": "Hot air is lighter than the cool air around it, so gravity pulls the cool air down harder and the hot air gets pushed up. At 1.8 g that difference grows, so the hot air rises faster and stretches the flame. In zero-g there is barely any lift, so the flame burns poorly and smokes.",
+  "move": "Flames rise because gravity sinks cool air: more gravity, longer flame.",
+  "keywords": [
+    "candle",
+    "flame",
+    "gravity",
+    "hot air",
+    "hyper-g"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive: drag a gravity slider from 0 g up to 1.8 g and watch a candle flame stretch taller as gravity increases. Asks why the flame grows longer at 1.8 g."
+  },
+  "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=256s",
+  "written": "2026-11-03"
+}

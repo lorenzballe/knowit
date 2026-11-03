@@ -1,0 +1,37 @@
+{
+  "id": "technology-tunnel-water-table",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If you just dug this tunnel, how high would the water rise?",
+  "answer": "The volcanic rock here is soaked with water, and opening a hole lets it pour in. Dug as a tunnel, the water would reach 14.33 m above sea level, so the tunnel would be flooded.",
+  "move": "Dig below the water table and the hole fills up to it.",
+  "keywords": [
+    "tunnel",
+    "water_table",
+    "apennines",
+    "naples_bari_rail",
+    "volcanic_rock"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section diagram of a tunnel dug through volcanic rock, with the water level marked. A switch toggles between 'Rock as it is' and 'Just dig'. The question asks how high the water would rise if the tunnel were dug."
+  },
+  "source": "Geopop, “Alta Velocità Napoli-Bari: siamo andati a vedere come la stanno scavando attraverso gli Appennini” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=mJXC1Sn-xDM&t=181s",
+  "written": "2026-11-03"
+}

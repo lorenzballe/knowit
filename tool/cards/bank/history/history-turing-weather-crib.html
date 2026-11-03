@@ -1,0 +1,198 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-turing-weather-crib -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#svg{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+.stack{display:grid}
+.stack>*{grid-area:1/1;margin:0}
+.hid{visibility:hidden}
+#stat{font:700 max(2cqh,13px)/1.3 var(--body);color:var(--k);align-self:end}
+#stat .bad{color:#d8343b}
+#stat .ok{color:#1c8f4e}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font-size:max(1.85cqh,12.5px);line-height:1.3;overflow-wrap:break-word}
+.low{align-items:end}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Slide · find the fit">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CODEBREAKING</span></div>
+    <h2 class="q">How did weather reports help Alan Turing break Enigma?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="svg"></svg>
+      <div class="stack" id="txt">
+        <p id="stat"></p>
+        <div id="why" class="hid">
+          <p class="body">An Enigma key never lights its own lamp, so a letter can't encrypt to itself. That rules out every spot but one for the guessed weather report.</p>
+          <p class="body">There, the letter pairs chain into a loop: R→E→T→R. Turing wired machines into that same loop to test settings: only correct ones bring R back to R.</p>
+        </div>
+      </div>
+    </div>
+    <div class="stack low">
+      <p class="say" id="say">Drag the guessed weather report until no letter sits on itself.</p>
+      <div class="keep hid" id="keep"><b>WHAT TO KEEP</b>Boring, predictable messages gave away the unbreakable machine.</div>
+    </div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const X = "QWKDURBTEMZXLPSFNYIOJ";      // intercepted, 6 a.m., Biscay
+const C = "WETTERVORHERSAGE";           // the crib: "weather report"
+const GOOD = 3, MAXO = X.length - C.length;
+const LOOP = [{i:5,a:'R',b:'E'},{i:4,a:'E',b:'T'},{i:2,a:'T',b:'R'}];
+const RED = '#d8343b', GREEN = '#1c8f4e';
+const svg = Kit.$('svg');
+let off = 0, locked = false, G = {}, tl = null, drag = null;
+
+const clashes = o => { const r = []; for (let i = 0; i < C.length; i++) if (X[o + i] === C[i]) r.push(i); return r; };
+
+function status() {
+  const s = Kit.$('stat');
+  if (locked) { s.classList.add('hid'); return; }
+  const c = clashes(off);
+  s.innerHTML = c.length
+    ? `<span class="bad">${C[c[0]]} sits on ${C[c[0]]}${c.length > 1 ? ' (and more)' : ''}: impossible here.</span> A key never lights its own lamp.`
+    : `<span class="ok">No letter sits on itself.</span> The report could be here. Let go.`;
+}
+
+function paint() {
+  if (!G.crib) return;
+  const c = clashes(off), loopI = locked ? LOOP.map(l => l.i) : [];
+  G.cip.forEach(o => { o.r.style.stroke = 'none'; o.r.style.fill = 'color-mix(in srgb,var(--k) 10%,transparent)'; o.t.style.fill = 'var(--k)'; });
+  G.crib.forEach((o, i) => {
+    const j = off + i, bad = c.includes(i), lp = loopI.includes(i);
+    o.r.style.fill = bad ? RED : lp ? GREEN : locked ? 'color-mix(in srgb,var(--k) 75%,transparent)' : 'var(--k)';
+    o.t.style.fill = 'var(--c)';
+    if (bad) { G.cip[j].r.style.stroke = RED; G.cip[j].r.style.strokeWidth = 2.5; }
+    if (lp) { G.cip[j].r.style.fill = GREEN; G.cip[j].t.style.fill = '#fff'; o.t.style.fill = '#fff'; }
+  });
+}
+
+function fitLabel(t, W) {
+  let w = 0; try { w = t.getBBox().width; } catch (_) { return; }
+  if (!w) return;
+  const pad = 2;
+  if (w > W - pad * 2) {
+    const fs = parseFloat(t.getAttribute('font-size'));
+    t.setAttribute('font-size', fs * (W - pad * 2) / w * 0.98);
+    try { w = t.getBBox().width; } catch (_) {}
+  }
+  const x = parseFloat(t.getAttribute('x'));
+  if (x + w > W - pad) t.setAttribute('x', Math.max(pad, W - pad - w));
+}
+
+function draw() {
+  if (tl) { tl.kill(); tl = null; }
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fl = Math.max(Math.min(f * 0.78, H * 0.04), 12);
+  const cw = Math.min(W / 21.4, 34, Math.max(H * 0.075, 15)), ch = cw * 1.25, fs = Math.min(Math.max(cw * 0.62, 12), cw * 0.85);
+  const x0 = (W - X.length * cw) / 2;
+  const yC = fl * 1.7, yK = yC + ch + cw * 0.55, yKL = yK + ch + fl * 1.45;
+  Object.assign(G, {W, H, cw, ch, x0, yK});
+  const txt = (x, y, s, size, attrs = {}, p = svg) => { const t = Kit.mk('text', Object.assign({x, y, 'font-size': size}, attrs), p); t.textContent = s; return t; };
+  fitLabel(txt(x0, fl * 1.05, 'INTERCEPTED · 6 A.M. · BISCAY', fl, {style: 'fill:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:.04em'}), W);
+  G.cip = [...X].map((L, j) => {
+    const r = Kit.mk('rect', {x: x0 + j * cw + 1, y: yC, width: cw - 2, height: ch, rx: cw * 0.18}, svg);
+    const t = txt(x0 + j * cw + cw / 2, yC + ch / 2 + fs * 0.36, L, fs, {'text-anchor': 'middle', style: 'font-family:var(--mono);font-weight:700'});
+    return {r, t};
+  });
+  const g = Kit.mk('g', {}, svg); G.g = g;
+  G.crib = [...C].map((L, i) => {
+    const r = Kit.mk('rect', {x: x0 + i * cw + 1, y: yK, width: cw - 2, height: ch, rx: cw * 0.18}, g);
+    const t = txt(x0 + i * cw + cw / 2, yK + ch / 2 + fs * 0.36, L, fs, {'text-anchor': 'middle', style: 'font-family:var(--mono);font-weight:700'}, g);
+    return {r, t};
+  });
+  gsap.set(g, {x: off * cw});
+  fitLabel(txt(x0, yKL, 'GUESS · “WEATHER REPORT” IN GERMAN ⇆', fl, {style: 'fill:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:.04em'}), W);
+
+  // the loop: three machines wired back to back
+  const yL = yKL + fl * 0.8, h = H - yL;
+  const L = Kit.mk('g', {opacity: locked ? 1 : 0}, svg); G.loop = L;
+  if (h > 60) {
+    const rr = Math.min(h * 0.4, W * 0.3), nr = Math.max(Math.min(rr * 0.27, cw * 1.1), 13);
+    const cx = W / 2, cy = yL + h * 0.55;
+    const P = {R: [cx, cy - rr], E: [cx + rr * 0.866, cy + rr * 0.5], T: [cx - rr * 0.866, cy + rr * 0.5]};
+    LOOP.forEach(l => {
+      const [ax, ay] = P[l.a], [bx, by] = P[l.b];
+      Kit.mk('line', {x1: ax, y1: ay, x2: bx, y2: by, style: `stroke:${GREEN};stroke-width:${Math.max(2, nr * 0.16)}`}, L);
+      const mx = (ax + bx) / 2, my = (ay + by) / 2, bw = Math.max(fl * 3.6, nr * 2.2), bh = fl * 1.6;
+      Kit.mk('rect', {x: mx - bw / 2, y: my - bh / 2, width: bw, height: bh, rx: bh * 0.25, style: 'fill:var(--k)'}, L);
+      txt(mx, my + fl * 0.36, 'spot ' + (l.i + 1), fl, {'text-anchor': 'middle', style: 'fill:var(--c);font-family:var(--body);font-weight:700'}, L);
+    });
+    G.nodes = {};
+    for (const k in P) {
+      const n = Kit.mk('g', {}, L);
+      Kit.mk('circle', {cx: P[k][0], cy: P[k][1], r: nr, style: `fill:${GREEN}`}, n);
+      txt(P[k][0], P[k][1] + nr * 0.36, k, nr, {'text-anchor': 'middle', style: 'fill:#fff;font-family:var(--mono);font-weight:700'}, n);
+      G.nodes[k] = n;
+    }
+    const dot = Kit.mk('circle', {cx: P.R[0], cy: P.R[1], r: nr * 0.32, style: 'fill:var(--k);stroke:var(--c);stroke-width:2'}, L);
+    G.P = P; G.dot = dot; G.nr = nr;
+    if (locked) pulse();
+  }
+  paint(); status();
+}
+
+function pulse() {
+  if (!G.dot || Kit.calm) return;
+  const P = G.P, R = G.nodes.R;
+  tl = gsap.timeline({repeat: -1, repeatDelay: .5});
+  ['E', 'T', 'R'].forEach(k => tl.to(G.dot, {attr: {cx: P[k][0], cy: P[k][1]}, duration: .6, ease: 'power1.inOut'}));
+  tl.to(R, {scale: 1.25, transformOrigin: '50% 50%', duration: .18, yoyo: true, repeat: 1});
+}
+
+function lock() {
+  if (locked) return;
+  locked = true; Kit.haptic('success');
+  paint(); status();
+  Kit.$('why').classList.remove('hid'); Kit.$('say').classList.add('hid'); Kit.$('keep').classList.remove('hid');
+  svg.style.cursor = 'default';
+  if (G.loop) gsap.to(G.loop, {opacity: 1, duration: Kit.calm ? 0 : .6});
+  if (!Kit.calm) gsap.from('#why .body', {opacity: 0, y: 8, stagger: .15, duration: .45});
+  pulse();
+}
+
+function setOff(o) {
+  o = Math.max(0, Math.min(MAXO, o));
+  if (o === off) return;
+  off = o; Kit.haptic('selection');
+  gsap.to(G.g, {x: off * G.cw, duration: .18, ease: 'power2.out'});
+  paint(); status();
+}
+
+svg.addEventListener('pointerdown', e => {
+  if (locked) return;
+  drag = {sx: e.clientX, so: off};
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+});
+svg.addEventListener('pointermove', e => { if (drag) setOff(Math.round(drag.so + (e.clientX - drag.sx) / G.cw)); });
+const up = () => {
+  if (!drag) return; drag = null;
+  if (off === GOOD) lock();
+  else if (!Kit.calm) gsap.fromTo(G.g, {y: 0}, {y: -4, duration: .08, yoyo: true, repeat: 3});
+};
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G.cip) return;
+  gsap.from(G.cip.map(o => o.r).concat(G.cip.map(o => o.t)), {opacity: 0, duration: .35, stagger: .012});
+  gsap.from(G.crib.map(o => o.r).concat(G.crib.map(o => o.t)), {opacity: 0, y: 8, duration: .4, stagger: .015, delay: .25});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const rc = svg.getBoundingClientRect();
+  const x = rc.left + G.x0 + off * G.cw + G.cw * 2, y = rc.top + G.yK + G.ch / 2;
+  const ev = (t, cx) => svg.dispatchEvent(new PointerEvent(t, {clientX: cx, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', x); await wait(50);
+  for (let k = 1; k <= GOOD; k++) { ev('pointermove', x + k * G.cw); await wait(60); }
+  ev('pointerup', x + GOOD * G.cw); await wait(900);
+};
+Kit.single();
+</script>
+</html>

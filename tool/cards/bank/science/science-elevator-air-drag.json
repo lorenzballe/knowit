@@ -1,0 +1,37 @@
+{
+  "id": "science-elevator-air-drag",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does air resistance change a falling elevator's crash?",
+  "answer": "Air pushes up on the falling cabin, and that push grows as it speeds up. So the elevator falls slower than it would in a vacuum: from the 50th floor it takes 6.1 seconds and hits at about 148 km/h.",
+  "move": "Air resistance grows with speed and always slows a fall.",
+  "keywords": [
+    "elevator",
+    "air resistance",
+    "free fall",
+    "vacuum",
+    "50th floor"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "An elevator cabin drawn falling, with a slider running from Vacuum to Real air and an arrow pushing up on the cabin. The question asks how air resistance changes the elevator's crash."
+  },
+  "source": "Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=xM7FfVQMjPU&t=99s",
+  "written": "2026-11-03"
+}

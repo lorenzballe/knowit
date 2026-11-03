@@ -1,0 +1,194 @@
+<!doctype html>
+<!-- slug: history-nato-nuclear-yes -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#map{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.land{fill:color-mix(in srgb,var(--k) 12%,transparent);stroke:var(--k);stroke-width:2;stroke-linejoin:round}
+.ink{fill:var(--k)}
+.soft{fill:none;stroke:var(--k);stroke-width:2}
+.line{fill:none;stroke:var(--k);stroke-width:2.6;stroke-dasharray:1 8;stroke-linecap:round}
+.lbl{fill:var(--k);font-family:var(--body);font-weight:700}
+.lbl.inv{fill:var(--c)}
+.seatO{fill:var(--c);stroke:var(--k);stroke-width:2}
+.seatO.it{stroke-width:3.2}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WHO DECIDES</span></div>
+    <h2 class="q">Who decides if the nuclear bombs stored in Italy can be used?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map" aria-label="Italy with the Aviano base, Rome, the NATO council and Poland"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Rome: the Italian government</button>
+        <button class="opt" data-i="1">The NATO council</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The NATO council</p><p class="body">NATO is a defensive alliance, so the bombs could only be used to defend a member under attack. To use one from Aviano, say for Poland, NATO would not ask Rome’s permission but the Alliance’s council, where Italy is one seat.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Poland is attacked (an example). Whose yes does the bomb at Aviano need?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The bombs sit in Italy, but the yes comes from NATO’s council, not Rome.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché ci sono così tante basi USA e NATO in Italia? Ecco dove si trovano i 12.000 soldati americani” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, done = false, tl = null, pulse = null, G = {};
+const svg = Kit.$('map');
+
+function txt(x, y, s, fs, anchor, parent){
+  const t = Kit.mk('text', {x, y, class:'lbl', 'font-size':fs, 'text-anchor':anchor||'middle'}, parent||svg);
+  t.textContent = s; return t;
+}
+function trefoil(cx, cy, r, parent){
+  const g = Kit.mk('g', {}, parent);
+  Kit.mk('circle', {cx, cy, r:r*1.08, class:'soft'}, g);
+  Kit.mk('circle', {cx, cy, r:r*0.16, class:'ink'}, g);
+  const r0 = r*0.28, rad = a => a*Math.PI/180;
+  [-90, 30, 150].forEach(c => {
+    const a1 = rad(c-30), a2 = rad(c+30);
+    const d = `M${cx+r0*Math.cos(a1)} ${cy+r0*Math.sin(a1)}L${cx+r*Math.cos(a1)} ${cy+r*Math.sin(a1)}A${r} ${r} 0 0 1 ${cx+r*Math.cos(a2)} ${cy+r*Math.sin(a2)}L${cx+r0*Math.cos(a2)} ${cy+r0*Math.sin(a2)}A${r0} ${r0} 0 0 0 ${cx+r0*Math.cos(a1)} ${cy+r0*Math.sin(a1)}Z`;
+    Kit.mk('path', {d, class:'ink'}, g);
+  });
+  return g;
+}
+
+function draw(){
+  const prog = tl ? tl.progress() : (done ? 1 : 0);
+  if (tl) { tl.kill(); tl = null; }
+  if (pulse) { pulse.kill(); pulse = null; }
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(Math.round(f), 12), m = Math.min(W, H);
+
+  // Italy
+  const bh = H*0.54, bw = Math.min(W*0.46, bh*0.85), bx = W*0.52 - bw*0.5, by = H*0.42;
+  const P = (x, y) => [bx + x*bw, by + y*bh];
+  const boot = [[.05,.05],[.35,0],[.47,.07],[.42,.17],[.56,.42],[.76,.55],[.96,.62],[.9,.72],[.8,.7],[.86,.86],[.76,1],[.66,.86],[.6,.7],[.45,.58],[.25,.4],[.15,.22],[.03,.17]];
+  Kit.mk('path', {class:'land', d:'M' + boot.map(p => P(...p).join(' ')).join('L') + 'Z'}, svg);
+  const A = P(.33, .1), R = P(.39, .44);
+
+  // Poland (the video's example)
+  const Pc = [W*0.78, H*0.2], prx = Math.min(W*0.17, 90), pry = Math.max(H*0.09, fs*1.6);
+  G.ring = Kit.mk('ellipse', {cx:Pc[0], cy:Pc[1], rx:prx, ry:pry, class:'soft'}, svg);
+  Kit.mk('ellipse', {cx:Pc[0], cy:Pc[1], rx:prx, ry:pry, class:'land'}, svg);
+  txt(Pc[0], Pc[1] - fs*0.25, 'POLAND', fs);
+  txt(Pc[0], Pc[1] + fs*1.15, 'attacked', fs);
+
+  // NATO council
+  const C = [W*0.2, H*0.2], r = m*0.12, seatR = Math.max(r*0.24, 10);
+  const n = 10, IT = 3;
+  G.fills = []; G.itText = null;
+  for (let i = 0; i < n; i++){
+    const a = (-90 + i*360/n)*Math.PI/180, x = C[0] + r*Math.cos(a), y = C[1] + r*Math.sin(a);
+    Kit.mk('circle', {cx:x, cy:y, r:seatR, class:'seatO' + (i === IT ? ' it' : '')}, svg);
+    G.fills.push(Kit.mk('circle', {cx:x, cy:y, r:seatR, class:'ink', opacity:0}, svg));
+    if (i === IT) G.itText = txt(x, y + fs*0.36, 'IT', fs);
+  }
+  const s = r*0.5;
+  G.star = Kit.mk('path', {class:'ink', d:`M${C[0]} ${C[1]-s}L${C[0]+s*.22} ${C[1]-s*.22}L${C[0]+s} ${C[1]}L${C[0]+s*.22} ${C[1]+s*.22}L${C[0]} ${C[1]+s}L${C[0]-s*.22} ${C[1]+s*.22}L${C[0]-s} ${C[1]}L${C[0]-s*.22} ${C[1]-s*.22}Z`}, svg);
+  G.yes = txt(C[0], C[1] + fs*0.4, 'YES', Math.round(fs*1.25));
+  G.yes.setAttribute('opacity', 0);
+  txt(C[0], C[1] + r + seatR + fs*1.3, 'NATO COUNCIL', fs);
+
+  // Request lines
+  const ang = Math.atan2(A[1]-C[1], A[0]-C[0]);
+  const Ce = [C[0] + (r+seatR+4)*Math.cos(ang), C[1] + (r+seatR+4)*Math.sin(ang)];
+  G.lRome = Kit.mk('path', {class:'line', d:`M${A[0]} ${A[1]}L${R[0]} ${R[1]}`, opacity:0}, svg);
+  G.lCouncil = Kit.mk('path', {class:'line', d:`M${A[0]} ${A[1]}Q${A[0]-(A[0]-Ce[0])*0.15} ${Ce[1]} ${Ce[0]} ${Ce[1]}`, opacity:0}, svg);
+
+  // Rome
+  Kit.mk('circle', {cx:R[0], cy:R[1], r:6, class:'ink'}, svg);
+  txt(R[0] + 11, R[1] + fs*0.35, 'Rome', fs, 'start');
+  G.verdict = txt(R[0] + 11, R[1] + fs*1.75, '✕ not its call', fs, 'start');
+  G.verdict.setAttribute('opacity', 0);
+
+  // Aviano
+  const tr = Math.max(fs*0.85, 11);
+  G.bomb = trefoil(A[0], A[1], tr, svg);
+  txt(A[0] + tr + 8, A[1] + fs*0.35, 'Aviano', fs, 'start');
+  G.cleared = txt(A[0] + tr + 8, A[1] + fs*1.75, '✓ cleared', fs, 'start');
+  G.cleared.setAttribute('opacity', 0);
+
+  G.dot = Kit.mk('circle', {cx:A[0], cy:A[1], r:6, class:'ink', opacity:0}, svg);
+  G.A = A;
+
+  if (!Kit.calm && !done) pulse = gsap.to(G.ring, {attr:{rx:prx*1.25, ry:pry*1.3}, opacity:0, duration:1.4, repeat:-1, ease:'power1.out'});
+  else G.ring.setAttribute('opacity', 0);
+
+  if (done){ tl = build(); tl.progress(Kit.calm ? 1 : prog); }
+}
+
+function travel(t, path, at, back){
+  const L = path.getTotalLength(), o = {t: back ? 1 : 0};
+  t.set(G.dot, {opacity:1}, at);
+  t.to(o, {t: back ? 0 : 1, duration:.9, ease:'power1.inOut', onUpdate:() => {
+    const p = path.getPointAtLength(o.t*L); G.dot.setAttribute('cx', p.x); G.dot.setAttribute('cy', p.y);
+  }}, at === undefined ? '>' : '<');
+  t.set(G.dot, {opacity:0});
+}
+
+function build(){
+  const t = gsap.timeline({onComplete:() => Kit.haptic('success')});
+  // 1. Ask Rome? Not its call.
+  t.to(G.lRome, {opacity:1, duration:.3});
+  travel(t, G.lRome, '<');
+  t.to(G.verdict, {opacity:1, duration:.3});
+  t.to(G.lRome, {opacity:.25, duration:.4}, '<');
+  // 2. Ask the Alliance's council.
+  t.to(G.lCouncil, {opacity:1, duration:.3}, '+=.2');
+  travel(t, G.lCouncil, '<');
+  t.to(G.fills, {opacity:1, stagger:.08, duration:.15});
+  t.set(G.itText, {attr:{class:'lbl inv'}}, '-=.6');
+  t.to(G.star, {opacity:0, duration:.2});
+  t.to(G.yes, {opacity:1, duration:.3});
+  // 3. The yes travels back to Aviano.
+  travel(t, G.lCouncil, '+=.15', true);
+  t.to(G.cleared, {opacity:1, duration:.3});
+  t.fromTo(G.bomb, {scale:1}, {scale:1.25, svgOrigin:`${G.A[0]} ${G.A[1]}`, duration:.25, yoyo:true, repeat:1}, '<');
+  return t;
+}
+
+function reveal(){
+  done = true;
+  if (pulse) { pulse.kill(); pulse = null; G.ring.setAttribute('opacity', 0); }
+  tl = build();
+  if (Kit.calm) tl.progress(1);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 400));
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 200));
+};
+Kit.single();
+</script>
+</html>

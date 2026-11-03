@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-micromouse-diagonals -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#mazebox{flex:1;min-height:0;position:relative}
+#maze{position:absolute;inset:0;width:100%;height:100%;display:block}
+#legend{display:flex;flex-direction:column;gap:.6cqh;font:600 max(1.8cqh,12px)/1.3 var(--body);color:var(--k)}
+#legend .row{display:flex;align-items:center;gap:2.5cqw;overflow-wrap:anywhere}
+#legend .sw{flex:0 0 auto;width:7cqw;height:0;border-top:.5cqh dashed color-mix(in srgb,var(--k) 45%,transparent)}
+#legend .sw.new{border-top:.6cqh solid var(--k)}
+#legend .res{margin-left:auto;font:700 max(1.7cqh,12px)/1.3 var(--mono);opacity:.85;text-align:right}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font-size:max(2.6cqh,16px)}
+#why .body{font-size:max(1.8cqh,13px)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MICROMOUSE</span></div>
+    <h2 class="q">What was the first innovation that changed Micromouse?</h2>
+    <div class="stagebox" id="stage">
+      <div id="mazebox"><svg id="maze"></svg></div>
+      <div id="legend">
+        <div class="row"><span class="sw"></span><span>Corner by corner</span><span class="res" id="r0"></span></div>
+        <div class="row gone" id="rownew"><span class="sw new"></span><span>On the diagonal</span><span class="res" id="r1"></span></div>
+      </div>
+      <div id="opts">
+        <button class="opt" data-i="0">Turning each corner faster</button>
+        <button class="opt" data-i="1">Running diagonally across zigzags</button>
+        <button class="opt" data-i="2">A wider, steadier body</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Running on the diagonal</p><p class="body">Mitee Mouse 3 was the first to cut straight through a zigzag instead of turning every corner: a shorter road with no stops. To fit, mice had to shrink below 11 cm wide, and maze designers now add diagonals on purpose.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch the two mice race.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The fastest route ignores the grid it was drawn on.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, raced = false, done = false;
+const N = 6;
+const CELLS = [[0,5],[1,5],[1,4],[2,4],[2,3],[3,3],[3,2],[4,2],[4,1],[5,1],[5,0]];
+const SQ = CELLS.map(([c,r]) => [c+.5, r+.5]);
+const DG = [[.5,5.5],[1,5.5],[5.5,1],[5.5,.5]];
+const lenOf = p => { let L=[0]; for (let i=1;i<p.length;i++) L.push(L[i-1]+Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1])); return L; };
+const SQL = lenOf(SQ), DGL = lenOf(DG);
+const old = {d:0}, neu = {d:0};
+let G = {}, demo = null, race = null;
+
+function sample(p, L, d) {
+  d = Math.max(0, Math.min(d, L[L.length-1]));
+  let i = 1; while (i < L.length-1 && L[i] < d) i++;
+  const a = p[i-1], b = p[i], t = (d - L[i-1]) / (L[i]-L[i-1] || 1);
+  return {x:a[0]+(b[0]-a[0])*t, y:a[1]+(b[1]-a[1])*t, ang:Math.atan2(b[1]-a[1], b[0]-a[0])*180/Math.PI, i};
+}
+function trail(p, L, d) {
+  const s = sample(p, L, d), pts = p.slice(0, s.i).concat([[s.x, s.y]]);
+  return pts.map(q => (G.ox+q[0]*G.s).toFixed(1)+','+(G.oy+q[1]*G.s).toFixed(1)).join(' ');
+}
+function render() {
+  if (!G.s) return;
+  const place = (m, p, L, d) => { const q = sample(p, L, d); m.setAttribute('transform', `translate(${G.ox+q.x*G.s},${G.oy+q.y*G.s}) rotate(${q.ang})`); };
+  place(G.m0, SQ, SQL, old.d); G.t0.setAttribute('points', trail(SQ, SQL, old.d));
+  place(G.m1, DG, DGL, neu.d); G.t1.setAttribute('points', trail(DG, DGL, neu.d));
+  G.m1.style.opacity = G.t1.style.opacity = raced ? 1 : 0;
+}
+function mouse(parent, s, filled) {
+  const g = Kit.mk('g', {}, parent), w = s*.46, h = s*.36;
+  Kit.mk('rect', {x:-w/2, y:-h/2, width:w, height:h, rx:h*.3, fill: filled ? 'var(--k)' : 'var(--c)', stroke:'var(--k)', 'stroke-width':Math.max(1.5, s*.05)}, g);
+  Kit.mk('circle', {cx:w*.28, cy:0, r:h*.16, fill: filled ? 'var(--c)' : 'var(--k)'}, g);
+  return g;
+}
+function draw() {
+  const svg = Kit.$('maze'); const {W, H} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const s = Math.min(W, H) / (N + .3), ox = (W - N*s)/2, oy = (H - N*s)/2;
+  G = {s, ox, oy};
+  const inC = (c, r) => CELLS.some(([a,b]) => a===c && b===r);
+  for (let c=0;c<N;c++) for (let r=0;r<N;r++) if (!inC(c,r))
+    Kit.mk('rect', {x:ox+c*s, y:oy+r*s, width:s, height:s, fill:'color-mix(in srgb,var(--k) 13%,transparent)'}, svg);
+  const sw = Math.max(2.5, s*.09);
+  const wall = (x1,y1,x2,y2) => Kit.mk('line', {x1:ox+x1*s, y1:oy+y1*s, x2:ox+x2*s, y2:oy+y2*s, stroke:'var(--k)', 'stroke-width':sw, 'stroke-linecap':'round'}, svg);
+  CELLS.forEach(([c,r], k) => {
+    if (!inC(c,r-1) && !(k===CELLS.length-1)) wall(c,r,c+1,r);
+    if (!inC(c,r+1)) wall(c,r+1,c+1,r+1);
+    if (!inC(c-1,r) && k!==0) wall(c,r,c,r+1);
+    if (!inC(c+1,r)) wall(c+1,r,c+1,r+1);
+  });
+  // posts at grid corners along the corridor
+  CELLS.forEach(([c,r]) => [[0,0],[1,0],[0,1],[1,1]].forEach(([a,b]) => Kit.mk('circle', {cx:ox+(c+a)*s, cy:oy+(r+b)*s, r:sw*.75, fill:'var(--k)'}, svg)));
+  G.t0 = Kit.mk('polyline', {fill:'none', stroke:'color-mix(in srgb,var(--k) 45%,transparent)', 'stroke-width':Math.max(2, s*.07), 'stroke-dasharray':`${s*.12} ${s*.1}`, 'stroke-linejoin':'round'}, svg);
+  G.t1 = Kit.mk('polyline', {fill:'none', stroke:'var(--k)', 'stroke-width':Math.max(2.5, s*.09), 'stroke-linecap':'round', 'stroke-linejoin':'round'}, svg);
+  G.m0 = mouse(svg, s, false);
+  G.m1 = mouse(svg, s, true);
+  render();
+}
+function squareTL(tl, seg) {
+  for (let i=1;i<SQ.length;i++) tl.to(old, {d:SQL[i], duration:seg, ease:'power1.inOut', onUpdate:render});
+  return tl;
+}
+function results() {
+  Kit.$('r0').textContent = '10 cells · 9 turns';
+  Kit.$('r1').textContent = (DGL[DGL.length-1]).toFixed(1) + ' cells · 2 turns';
+}
+function finish() {
+  if (demo) demo.kill(); if (race) race.kill();
+  old.d = SQL[SQL.length-1]; neu.d = DGL[DGL.length-1]; done = true; results(); render();
+}
+function startRace() {
+  raced = true; Kit.show('rownew');
+  if (demo) demo.kill();
+  old.d = 0; neu.d = 0; render();
+  if (Kit.calm) { finish(); return; }
+  race = gsap.timeline({onComplete:() => { done = true; results(); Kit.haptic('success'); }});
+  const seg = .32;
+  race.add(squareTL(gsap.timeline(), seg), 0);
+  const dl = DGL[DGL.length-1];
+  race.to(neu, {d:DGL[1], duration:.25, ease:'power1.in', onUpdate:render}, 0)
+      .to(neu, {d:DGL[2], duration:(DGL[2]-DGL[1])*.2, ease:'none', onUpdate:render})
+      .to(neu, {d:dl, duration:.3, ease:'power1.out', onUpdate:render});
+}
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  startRace();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || raced) { if (!raced) { old.d = SQL[SQL.length-1]; render(); } return; }
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  old.d = 0;
+  demo = squareTL(gsap.timeline({repeat:-1, repeatDelay:.8, onRepeat:() => { old.d = 0; render(); }}), .38);
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  finish();
+  await new Promise(r => setTimeout(r, 400));
+};
+Kit.single();
+</script>
+</html>

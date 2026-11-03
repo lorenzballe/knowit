@@ -1,0 +1,104 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-ten-adic-third -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.4cqh}
+#pic{width:100%;flex:1;min-height:0;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,17px)/1.15 var(--display);overflow-wrap:anywhere}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;align-self:stretch}
+#go:active{transform:scale(.98)}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Try it · carry the digits">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">10-ADIC NUMBERS</span></div>
+    <h2 class="q">Why does …6667, with 6s going on forever, equal 1/3?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Three times …6667, worked column by column"></svg>
+      <button id="go">Multiply the next column</button>
+      <div id="why" class="gone">
+        <p class="big">3 × …6667 = …0001 = 1</p>
+        <p class="body">3 × 7 = 21: write 1, carry 2. Every 6 then gives 3 × 6 + 2 = 20: write 0, carry 2 again, forever. Three of this number make exactly 1, so it is 1/3.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to multiply by 3, one column at a time, right to left.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A number is 1/3 if three of it make 1, even with endless digits.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 7;           // digit columns shown
+let s = 0;             // columns done
+const svg = Kit.$('pic');
+const topDigit = i => i === 0 ? 7 : 6;
+const carryIn = i => i === 0 ? 0 : 2;
+const res = i => (3 * topDigit(i) + carryIn(i)) % 10;
+const note = i => i === 0 ? '3 × 7 = 21 → write 1, carry 2'
+                          : `3 × 6 + 2 = 20 → write 0, carry 2`;
+
+function draw(animate) {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const cols = N + 1;
+  const cw = Math.min(W / (cols + 0.8), H / 6.2);
+  const fs = cw * 0.78;
+  const cx = i => W - cw * 0.75 - i * cw;
+  const t0 = (H - 5.7 * cw) / 2;
+  const yC = t0 + 0.55 * cw, yT = yC + 1.05 * cw, yX = yT + 1.1 * cw, yL = yX + 0.5 * cw, yR = yL + 1.05 * cw, yN = yR + 1.15 * cw;
+  const T = (x, y, txt, o = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: 'var(--k)', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, o), svg); e.textContent = txt; return e; };
+
+  // highlight of the column being worked
+  if (s < N) Kit.mk('rect', {x: cx(s) - cw * .46, y: yC - cw * .45, width: cw * .92, height: yR - yC + cw * .9, rx: cw * .2, fill: 'var(--k)', opacity: .1}, svg);
+
+  for (let i = 0; i < N; i++) T(cx(i), yT, topDigit(i));
+  T(cx(N), yT, '…');
+  T(cx(0), yX, '3');
+  T(cx(N), yX, '×', {opacity: .7});
+  Kit.mk('line', {x1: cx(N) - cw * .4, x2: cx(0) + cw * .45, y1: yL, y2: yL, stroke: 'var(--k)', 'stroke-width': Math.max(2, cw * .06), 'stroke-linecap': 'round'}, svg);
+
+  let lastRes = null, lastCarry = null;
+  const cfs = Math.max(12, fs * .5);
+  for (let i = 0; i < s; i++) {
+    const r = T(cx(i), yR, res(i), {'font-size': fs * 1.05});
+    const c = T(cx(i + 1), yC, '2', {'font-size': cfs, 'font-family': 'var(--hand)', opacity: .75});
+    if (i === s - 1) { lastRes = r; lastCarry = c; }
+  }
+  if (s >= N) T(cx(N), yR, '…', {'font-size': fs * 1.05});
+  else for (let i = s; i < N; i++) T(cx(i), yR, '?', {opacity: .22});
+
+  const nfs = Math.max(12, Math.min(cw * .42, W / 19));
+  let msg = s === 0 ? 'Start at the right: 3 × 7' : s >= N ? 'The 0s never stop: …0001 = 1' : note(s - 1);
+  const n = T(W / 2, yN, msg, {'font-size': nfs, 'font-family': 'var(--body)', opacity: .85});
+
+  if (animate && lastRes && !Kit.calm) {
+    gsap.from(lastRes, {opacity: 0, y: -cw * .5, duration: .45, ease: 'back.out(2)'});
+    gsap.from(lastCarry, {opacity: 0, x: -cw * .2 + (cx(s - 1) - cx(s)) * 0, y: cw * 1.5, duration: .5, delay: .12, ease: 'power3.out'});
+    gsap.from(n, {opacity: 0, duration: .35});
+  }
+}
+
+Kit.$('go').addEventListener('click', () => {
+  if (s >= N) return;
+  s++; Kit.haptic(s >= N ? 'success' : 'selection');
+  draw(true);
+  if (s >= N) {
+    Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+    requestAnimationFrame(() => draw(false));
+  }
+});
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic text', {opacity: 0, y: 6, stagger: .03, duration: .35, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < N; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 80)); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

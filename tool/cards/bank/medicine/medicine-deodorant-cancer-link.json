@@ -1,0 +1,37 @@
+{
+  "id": "medicine-deodorant-cancer-link",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.folk_remedies",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does using deodorant raise your risk of cancer?",
+  "answer": "No study shows a link between using deodorant and cancer. If deodorant caused cancer, heavier users would fall ill more often and the dots would climb, but no such relationship has been found. There is also no proof against the usual deodorant ingredients.",
+  "move": "No study links using deodorant to cancer.",
+  "keywords": [
+    "deodorant",
+    "cancer",
+    "antiperspirant",
+    "aluminium salts",
+    "studies"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive myth-check card asking whether using deodorant raises cancer risk. A switch flips between an imagined link, where heavier users get ill more often and dots climb on a graph, and what the studies actually found."
+  },
+  "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=1P8szAIszo0&t=410s",
+  "written": "2026-11-03"
+}

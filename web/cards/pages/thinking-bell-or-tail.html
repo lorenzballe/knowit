@@ -1,0 +1,183 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bell or long tail</title>
+<!-- A sort: eight things, one at a time, into "bell curve" or "long tail"; then how sure, then the
+     reveal: wrong ones cross to the right box, the boxes' labels turn from shape to cause ("many
+     small causes add up" / "it feeds on itself"), and the reader's first slip is opened in the space
+     the sort used. A tap on any item shows why. Two items look like bells and are not: daily stock
+     moves and how often words are used.
+     Facts: heights of adults of one sex close to normal (NHANES-based teaching data; Schilling,
+     Watkins & Watkins, The American Statistician 56, 223, 2002, on the mixed sexes). IQ: Wechsler
+     scores scaled to mean 100, SD 15, so about 68% score 85-115 (SJSU StatPrimer; WAIS norms).
+     Daily stock moves: fat, power-law tails, exponent about 3 (Gopikrishnan, Meyer, Amaral & Stanley,
+     European Physical Journal B 3, 139, 1998); Black Monday, 19 October 1987, Dow -22.6%, its
+     largest one-day fall (Federal Reserve History; CNN 2017). City populations: power law, US places
+     in 2000, n = 19,447, mean 9,000, New York 8.0 million, so nearly 900 times (Clauset, Shalizi &
+     Newman, SIAM Review 51, 661, 2009). Words: Moby-Dick word counts, power law with alpha 1.95 from
+     x = 7 (same paper; poweRlaw package docs). Quakes: about 10 times fewer per step of magnitude
+     (Gutenberg-Richter), about 32 times the energy per step (USGS), so the largest dominate; the
+     2004 Sumatra rupture ran about 1,200-1,300 km (Ishii et al., Nature 435, 2005). Wealth: Forbes
+     400 tail Pareto, alpha about 1.5 (Klass et al., Eur. Phys. J. B 2006). Wars: battle deaths
+     1816-1980, power law (Clauset et al. 2009). Inspired by Veritasium, "You've (Likely) Been
+     Playing The Game Of Life Wrong" (2025). Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh}
+#now{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1cqh}
+#now .n{font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.6;font-variant-numeric:tabular-nums}
+#now .item{font:800 max(3.6cqh,19px)/1.12 var(--display);background:var(--k);color:var(--c);border-radius:max(1.8cqh,11px);padding:max(1.1cqh,8px) max(4cqw,14px);max-width:100%;box-sizing:border-box;text-wrap:balance}
+#why{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+#why .box{display:flex;flex-direction:column;gap:.8cqh;border-left:.5cqh solid var(--k);padding-left:max(3.4cqw,12px)}
+#why .wt{font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+#why p{margin:0;font:600 max(2.6cqh,13px)/1.42 var(--body);text-wrap:pretty}
+#why p b{font-weight:800}
+#bins{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:2.4cqw;align-items:start}
+.answered #bins{grid-template-columns:1fr 1.4fr}
+.bin{display:flex;flex-direction:column;gap:.7cqh;border-radius:2.4cqh;padding:max(1.3cqh,9px) max(2.6cqw,9px);background:color-mix(in srgb,var(--k) 6%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 22%,transparent);cursor:pointer;transition:background-color .16s}
+.bin:active{transform:scale(.97)}
+.bin.lock{cursor:default}
+.bin .hd{display:flex;flex-direction:column;gap:.7cqh}
+.bin .shape{width:100%;height:max(9cqh,30px);display:block;flex:none}
+.tally{display:flex;flex-wrap:wrap;gap:1.2cqw;min-height:max(1.4cqh,10px)}
+.tally i{width:max(1.4cqh,10px);height:max(1.4cqh,10px);border-radius:.4cqh;background:var(--k);opacity:.8}
+.tally:empty::before{content:"tap to drop it here";font:600 max(1.5cqh,11.5px)/1 var(--body);opacity:.38}
+.answered .tally,.sorted .tally:empty::before{display:none}
+.bin b{font:800 max(1.9cqh,13px)/1.1 var(--body);letter-spacing:.06em;text-transform:uppercase}
+.bin .hint{font:600 max(1.55cqh,11.5px)/1.2 var(--body);opacity:.7}
+.answered .bin .hint{display:block;opacity:.85;font-weight:700}
+.list{display:flex;flex-wrap:wrap;gap:.5cqh 1.2cqw;align-content:flex-start}
+.list:empty{display:none}
+.chip{display:block;flex:none;font:700 max(1.6cqh,11.5px)/1.15 var(--body);padding:max(.45cqh,2.5px) max(1.6cqw,6px);border-radius:99px;box-shadow:inset 0 0 0 .18cqh color-mix(in srgb,var(--k) 40%,transparent);white-space:nowrap}
+.chip.ok{background:var(--k);color:var(--c);box-shadow:none}
+.chip.no{box-shadow:inset 0 0 0 .2cqh var(--k);background:transparent}
+.chip.ok::before{content:"✓ "}.chip.no::before{content:"✗ "}
+.chip.on{outline:.3cqh solid var(--k);outline-offset:.2cqh}
+.answered .chip{cursor:pointer}
+.answered .q,.sorted .q{font-size:max(2.5cqh,15px)}
+.sorted .bin .shape,.answered .bin .shape{height:max(3.4cqh,18px)}
+@container (max-height:520px){
+  .answered .in{gap:1.2cqh}
+  .answered #why .wt{display:none}
+  .answered .bin .hd{flex-direction:row;align-items:center;gap:2cqw}
+  .answered .bin .shape{width:30%;height:16px}
+  .answered .bin{padding:7px;gap:.5cqh}
+}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Sort eight · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SORT EIGHT</span></div>
+    <h2 class="q">Nobody is twice your height, yet some people are a million times richer. Bell curve or long tail?</h2>
+    <div class="stagebox" id="stage">
+      <div id="now"><span class="n" id="count">1 of 8</span><span class="item" id="item">Adult heights</span></div>
+      <div id="why" class="gone"><div class="box"><span class="wt" id="wt">Your first slip</span><p id="wp"></p></div></div>
+      <div id="bins">
+        <div class="bin" data-b="0" role="button" tabindex="0" aria-label="Bell curve">
+          <span class="hd"><svg class="shape" viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true"></svg><b>Bell curve</b></span>
+          <span class="hint">most near the average</span>
+          <span class="tally"></span>
+          <div class="list"></div>
+        </div>
+        <div class="bin" data-b="1" role="button" tabindex="0" aria-label="Long tail">
+          <span class="hd"><svg class="shape" viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true"></svg><b>Long tail</b></span>
+          <span class="hint">a few giants</span>
+          <span class="tally"></span>
+          <div class="list"></div>
+        </div>
+      </div>
+    </div>
+    <div id="sure" class="gone"></div>
+    <p class="say" id="say">Tap the box whose shape it makes when you count lots of them.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>If one case can be 1,000 times the typical, the average will fool you.</div>
+    <div class="foot"><span class="src">Source · Clauset, Shalizi &amp; Newman, SIAM Review, 2009 · Gopikrishnan et al., Eur. Phys. J. B, 1998</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const card = Kit.$('card'), say = Kit.$('say'), item = Kit.$('item'), count = Kit.$('count');
+  const bins = [...document.querySelectorAll('.bin')], lists = bins.map(b => b.querySelector('.list'));
+  // name, short name, 0 = bell curve / 1 = long tail, why (name in bold first).
+  const ITEMS = [
+    ['Adult heights', 'Heights', 0, '<b>Adult heights.</b> Many genes, food and health add up: most of us sit near the middle, and nobody at twice the average.'],
+    ['Daily stock-market moves', 'Stocks', 1, '<b>Stock moves.</b> Most days look like a bell, but the tails are fat: on Black Monday 1987 the Dow fell 22.6% in one day.'],
+    ['City populations', 'Cities', 1, '<b>City populations.</b> Big cities draw people because they are big. In 2000 New York held nearly 900 times the average US town.'],
+    ['IQ scores', 'IQ', 0, '<b>IQ scores.</b> A bell by design: tests are scaled so the average is 100 and two in three people score 85 to 115.'],
+    ['How often words are used', 'Words', 1, '<b>Word use.</b> A few words like “the” and “of” turn up everywhere; most are rare. Moby-Dick’s word counts follow a clean power law.'],
+    ['Earthquake energy', 'Quakes', 1, '<b>Earthquake energy.</b> A slipping patch loads the next: most ruptures stop small, a few run hundreds of km and release most of the energy.'],
+    ['Personal wealth', 'Wealth', 1, '<b>Personal wealth.</b> Money makes money: gains grow on what you already have. That is how some end up a million times richer.'],
+    ['Deaths in wars', 'Wars', 1, '<b>Deaths in wars.</b> Wars escalate and draw others in: most are small, but a few have killed tens of millions.']
+  ];
+  // Each box's shape, drawn as a count: a bell of bars, and a tall first bar that dwindles into a
+  // long tail with a few lone giants far out.
+  const BARS = [Array.from({length: 21}, (_, i) => 29 * Math.exp(-(((i - 10) / 3.6) ** 2) / 2)), [29, 17, 10.5, 7, 5, 3.6, 2.7, 2, 1.6, 1.3, 1.1, .9, 0, .8, 0, 0, .7, 0, 0, 0, .7]];
+  document.querySelectorAll('.bin .shape').forEach((sv, k) => BARS[k].forEach((h, i) => { if (h <= 0) return; Kit.mk('rect', {x: i * 4.76 + .4, y: 31 - Math.max(h, .9), width: 3.9, height: Math.max(h, .9), rx: .8, fill: 'currentColor', 'fill-opacity': .78}, sv); }));
+  const put = [];          // where the reader put each one
+  let at = 0, revealed = false;
+  const chips = [];
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you that all eight are right?', pct => {
+    const right = put.filter((b, i) => b === ITEMS[i][2]).length, all = right === 8;
+    Kit.answer({choice: `${right} of 8 right`, correct: all, sure: pct});
+    reveal();
+    sure.grade(all, pct, `${right} of 8 right`);
+  });
+
+  function sort(b) {
+    if (at >= ITEMS.length || revealed) return;
+    put.push(b); Kit.haptic('selection');
+    const t = document.createElement('i'); bins[b].querySelector('.tally').appendChild(t);
+    if (!Kit.calm && typeof gsap !== 'undefined') gsap.from(t, {opacity: 0, y: -12, scale: .4, duration: .3, ease: 'back.out(2)'});
+    at++;
+    if (at < ITEMS.length) {
+      item.textContent = ITEMS[at][0]; count.textContent = `${at + 1} of 8`;
+      if (!Kit.calm && typeof gsap !== 'undefined') gsap.fromTo(item, {opacity: 0, x: 10}, {opacity: 1, x: 0, duration: .28, ease: 'power2.out'});
+    } else {
+      Kit.hide('now'); card.classList.add('sorted');
+      bins.forEach(x => x.classList.add('lock'));
+      say.textContent = 'All eight in. Pick how sure you are to see the answers.';
+      Kit.show('sure'); sure.on();
+    }
+  }
+  function reveal() {
+    revealed = true;
+    // Each one lands in the box of the shape it really makes; the ones put in the other box slide across.
+    ITEMS.forEach(([, short, truth], i) => {
+      const c = document.createElement('span'), ok = put[i] === truth;
+      c.className = 'chip ' + (ok ? 'ok' : 'no'); c.textContent = short; c.dataset.i = i;
+      lists[truth].appendChild(c); chips[i] = c;
+      if (!Kit.calm && typeof gsap !== 'undefined') gsap.from(c, ok ? {opacity: 0, y: -8, duration: .35, delay: i * .05, ease: 'power3.out'} : {opacity: 0, x: truth ? -40 : 40, duration: .5, delay: .2 + i * .05, ease: 'power3.out'});
+    });
+    // The boxes now say what makes each shape.
+    bins[0].querySelector('.hint').textContent = 'many small causes add up';
+    bins[1].querySelector('.hint').textContent = 'it feeds on itself';
+    card.classList.add('answered');
+    // The space the sort used opens the reader's first slip (or, with none, the sneakiest one).
+    const slip = put.findIndex((b, i) => b !== ITEMS[i][2]);
+    Kit.$('wt').textContent = slip >= 0 ? 'Your first slip' : 'All right · the sneakiest one';
+    why(slip >= 0 ? slip : 1, true);
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }
+  function why(i, first) {
+    chips.forEach(c => c.classList.toggle('on', +c.dataset.i === i));
+    if (!first) Kit.$('wt').textContent = 'Why';
+    Kit.$('wp').innerHTML = ITEMS[i][3];
+    if (!first) { Kit.haptic('light'); if (!Kit.calm && typeof gsap !== 'undefined') gsap.fromTo('#wp', {opacity: .2}, {opacity: 1, duration: .25}); }
+  }
+  bins.forEach((b, i) => {
+    b.addEventListener('click', e => { if (revealed) { const c = e.target.closest('.chip'); if (c) why(+c.dataset.i); return; } sort(i); });
+    b.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !revealed) { e.preventDefault(); sort(i); } });
+  });
+  Kit.onShow.card = () => {};
+  Kit.onEnter.card = () => { if (!Kit.calm && typeof gsap !== 'undefined') gsap.from('#now > *', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+  // The checker plays a reader fooled by the two sneaky ones (stock moves and words), then 70% sure.
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 20 : ms));
+    for (const b of [0, 0, 1, 0, 0, 1, 1, 1]) { bins[b].click(); await wait(140); }
+    await wait(200);
+    Kit.$('sure').querySelector('[data-v="70"]').click();
+    await wait(700);
+  };
+})();
+Kit.single();
+</script>
+</html>

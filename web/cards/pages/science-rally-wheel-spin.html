@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-rally-wheel-spin -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body)}
+#ctl{display:flex;align-items:center;gap:3cqw;margin:1cqh 0 .6cqh}
+#ctl label{font:700 max(1.8cqh,12px)/1.1 var(--body);color:var(--k);white-space:nowrap}
+#thr{flex:1;min-width:0;accent-color:var(--k);height:max(3.4cqh,24px)}
+#land{font:800 max(2cqh,14px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.6cqh;padding:1.4cqh 4.5cqw;cursor:pointer;white-space:nowrap}
+#land:disabled{opacity:.45}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · land the jump">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RALLY</span></div>
+    <h2 class="q">Why must drivers consider wheel spin rate when landing from a jump?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="why" class="gone">
+        <p class="big">Tyres grip when they turn at road speed.</p>
+        <p class="body">At touchdown, wheels spinning faster than the ground slip before they bite, and at full throttle the engine over-revs. So mid-air drivers ease off the throttle, land on all four wheels, then accelerate.</p>
+      </div>
+    </div>
+    <div id="ctl">
+      <label for="thr">Throttle mid-air</label>
+      <input id="thr" type="range" min="0" max="100" value="100">
+      <button id="land">Land</button>
+    </div>
+    <p class="say" id="say">Set the throttle in the air, then tap Land.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Land with wheels turning at road speed and grip comes back at once.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const GREEN='#1fa463', RED='#e5484d';
+const S={v:100,cur:100,phase:'air',tries:0,done:false};
+const air={h:1};
+let D=null, ang=0, off=0, smokeT=null;
+const thr=Kit.$('thr'), btn=Kit.$('land'), say=Kit.$('say');
+
+function st(s){return {style:s};}
+Kit.onShow.card=()=>{
+  const svg=Kit.$('pic'); svg.innerHTML='';
+  const {W,H,f}=Kit.fitSvg(svg); const fs=Math.max(f*0.9,12);
+  const gy=H*0.8, cw=Math.min(W*0.5,H*0.62), r=cw*0.12;
+  const my=fs*2.6, bx0=W*0.2, bx1=W*0.8, bh=Math.max(fs*0.7,9);
+  let airH=Math.max(0,Math.min(H*0.22,gy-r-cw*0.44-(my+3.6*fs)));
+  const g=Kit.mk('g',{},svg);
+  // hills
+  Kit.mk('path',{d:`M0 ${gy} Q${W*0.2} ${gy-H*0.14} ${W*0.45} ${gy-H*0.04} T${W} ${gy-H*0.08} L${W} ${gy} Z`,style:'fill:color-mix(in srgb,var(--k) 7%,transparent)'},g);
+  // ground
+  Kit.mk('rect',{x:0,y:gy,width:W,height:H-gy,style:'fill:color-mix(in srgb,var(--k) 14%,transparent)'},g);
+  Kit.mk('line',{x1:0,y1:gy,x2:W,y2:gy,style:`stroke:var(--k);stroke-width:${Math.max(2,fs*0.18)}`},g);
+  const dash=Kit.mk('line',{x1:0,y1:gy+(H-gy)*0.35,x2:W,y2:gy+(H-gy)*0.35,style:`stroke:var(--k);stroke-opacity:.45;stroke-width:${Math.max(2,fs*0.25)};stroke-dasharray:${fs*1.6} ${fs*2.4};stroke-linecap:round`},g);
+  // meter
+  const mg=Kit.mk('g',{},svg);
+  Kit.mk('rect',{x:bx0,y:my-bh/2,width:bx1-bx0,height:bh,rx:bh/2,style:'fill:color-mix(in srgb,var(--k) 12%,transparent)'},mg);
+  const zx=v=>bx0+(v/100)*(bx1-bx0);
+  Kit.mk('rect',{x:zx(42),y:my-bh/2,width:zx(58)-zx(42),height:bh,style:`fill:${GREEN}`},mg);
+  Kit.mk('rect',{x:zx(86),y:my-bh/2,width:zx(100)-zx(86),height:bh,rx:bh/2,style:`fill:${RED};opacity:.85`},mg);
+  const T=(x,y,s,a,c)=>{const t=Kit.mk('text',{x,y,'text-anchor':a,'dominant-baseline':'middle',style:`font:700 ${fs}px var(--mono);fill:${c||'var(--k)'}`},mg);t.textContent=s;return t;};
+  T(zx(50),my-fs*1.5,'ROAD SPEED','middle',GREEN);
+  T(zx(93),my-fs*1.5,'OVER-REV','middle',RED);
+  T(bx0-fs*0.5,my,'slow','end'); T(bx1+fs*0.5,my,'fast','start');
+  const mk=Kit.mk('g',{},mg);
+  Kit.mk('path',{d:`M0 ${my+bh/2+2} l${-fs*0.55} ${fs*0.75} h${fs*1.1} Z`,style:'fill:var(--k)'},mk);
+  const wl=Kit.mk('text',{x:0,y:my+bh/2+fs*1.9,'text-anchor':'middle','dominant-baseline':'middle',style:`font:800 ${fs}px var(--mono);fill:var(--k)`},mk); wl.textContent='WHEELS';
+  // shadow
+  const sh=Kit.mk('ellipse',{cx:W*0.5,cy:gy+2,rx:cw*0.45,ry:r*0.25,style:'fill:var(--k);opacity:.18'},svg);
+  // car
+  const car=Kit.mk('g',{},svg);
+  const bodyH=cw*0.17, by=-r*0.35-bodyH;
+  Kit.mk('path',{d:`M${-cw*0.2} ${by} L${-cw*0.1} ${by-cw*0.13} L${cw*0.16} ${by-cw*0.13} L${cw*0.28} ${by} Z`,style:'fill:var(--k);opacity:.75'},car);
+  Kit.mk('rect',{x:-cw/2,y:by,width:cw,height:bodyH,rx:bodyH*0.35,style:'fill:var(--k)'},car);
+  Kit.mk('rect',{x:-cw*0.06,y:by+bodyH*0.25,width:cw*0.16,height:bodyH*0.45,rx:bodyH*0.1,style:'fill:var(--c)'},car);
+  const wheels=[];
+  for(const wx of [-cw*0.32,cw*0.32]){
+    const wg=Kit.mk('g',{transform:`translate(${wx},0)`},car);
+    Kit.mk('circle',{r,style:'fill:var(--k)'},wg);
+    Kit.mk('circle',{r:r*0.62,style:'fill:var(--c)'},wg);
+    const sp=Kit.mk('g',{},wg);
+    for(let i=0;i<3;i++){const a=i*Math.PI/3;Kit.mk('line',{x1:Math.cos(a)*r*0.6,y1:Math.sin(a)*r*0.6,x2:-Math.cos(a)*r*0.6,y2:-Math.sin(a)*r*0.6,style:`stroke:var(--k);stroke-width:${Math.max(2,r*0.16)};stroke-linecap:round`},sp);}
+    wheels.push(sp);
+  }
+  const fx=Kit.mk('g',{},svg);
+  D={W,H,fs,gy,cw,r,airH,dash,mk,wl,zx,car,wheels,sh,fx,cx:W*0.5,roadV:W*0.9};
+};
+
+gsap.ticker.add((t,dt)=>{
+  if(!D) return;
+  const s=Math.min(dt,50)/1000;
+  const omR=D.roadV/D.r, om=(S.cur/50)*omR;
+  ang+=om*s; off+=D.roadV*s;
+  D.dash.style.strokeDashoffset=off;
+  for(const w of D.wheels) w.setAttribute('transform',`rotate(${ang*180/Math.PI})`);
+  const x=D.zx(S.cur); D.mk.setAttribute('transform',`translate(${x},0)`);
+  const ov=S.cur>86, ok=Math.abs(S.cur-50)<=8;
+  D.wl.style.fill=ov?RED:ok?GREEN:'var(--k)';
+  const shake=(ov&&!Kit.calm)?(Math.random()-.5)*D.r*0.08:0;
+  D.car.setAttribute('transform',`translate(${D.cx+shake},${D.gy-D.r-air.h*D.airH+shake})`);
+  const k=1-air.h*0.4; D.sh.setAttribute('rx',D.cw*0.45*k); D.sh.style.opacity=.1+.15*(1-air.h);
+});
+
+thr.addEventListener('input',()=>{S.v=+thr.value; if(S.phase==='air') S.cur=S.v; Kit.haptic('selection');});
+
+function puff(){
+  if(!D) return;
+  const c=Kit.mk('circle',{cx:D.cx-D.cw*0.32,cy:D.gy-D.r*0.3,r:D.r*0.3,style:'fill:var(--k);opacity:.35'},D.fx);
+  gsap.to(c,{attr:{cx:D.cx-D.cw*0.32-D.cw*0.5,cy:D.gy-D.r*1.2,r:D.r*0.9},opacity:0,duration:.8,ease:'power1.out',onComplete:()=>c.remove()});
+}
+function flash(txt,col){
+  const t=Kit.mk('text',{x:D.cx,y:D.gy+(D.H-D.gy)*0.72,'text-anchor':'middle','dominant-baseline':'middle',style:`font:800 ${D.fs*1.15}px var(--mono);fill:${col}`},D.fx);
+  t.textContent=txt;
+  gsap.fromTo(t,{opacity:0,scale:.8,transformOrigin:'50% 50%'},{opacity:1,scale:1,duration:.3,onComplete:()=>gsap.to(t,{opacity:0,delay:1.4,duration:.4,onComplete:()=>t.remove()})});
+}
+function finish(){
+  if(S.done) return; S.done=true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if(!Kit.calm) gsap.from('#why,#keep',{opacity:0,y:8,stagger:.1,duration:.4});
+  Kit.haptic('success');
+}
+btn.addEventListener('click',()=>{
+  if(S.phase==='land'){
+    S.phase='air'; S.cur=S.v; btn.textContent='Land';
+    gsap.to(air,{h:1,duration:Kit.calm?0:.6,ease:'power2.out'});
+    say.textContent='Set the throttle in the air, then tap Land.'; return;
+  }
+  if(S.phase!=='air') return;
+  S.phase='landing'; btn.disabled=true;
+  const v=S.v, diff=Math.abs(v-50), match=diff<=8;
+  const delay=match?0.2:+(0.2+diff/50*1.8).toFixed(1);
+  gsap.to(air,{h:0,duration:Kit.calm?0.05:.45,ease:'power2.in',onComplete:()=>{
+    Kit.haptic('light');
+    if(!match&&!Kit.calm) smokeT=setInterval(puff,110);
+    gsap.to(S,{cur:50,duration:delay,ease:'power1.inOut',onComplete:()=>{
+      clearInterval(smokeT);
+      S.tries++; S.phase='land';
+      flash(`GRIP in ${delay.toFixed(1)} s`,match?GREEN:RED);
+      if(match) say.textContent=`Matched the road: grip in ${delay.toFixed(1)} s.`;
+      else if(v>50) say.textContent=`Wheels spun too fast${v>86?' and the engine over-revved':''}: grip took ${delay.toFixed(1)} s. Try again.`;
+      else say.textContent=`Wheels too slow for the road: grip took ${delay.toFixed(1)} s. Try again.`;
+      if(match||S.tries>=3) setTimeout(finish,900);
+      else {btn.disabled=false; btn.textContent='Jump again';}
+    }});
+  }});
+});
+
+Kit.onEnter.card=()=>{ if(!Kit.calm) gsap.from('#ctl',{opacity:0,y:10,duration:.45,ease:'power3.out'}); };
+Kit.play.card=async()=>{
+  const w=ms=>new Promise(r=>setTimeout(r,ms));
+  thr.value=50; thr.dispatchEvent(new Event('input'));
+  btn.click(); await w(2200);
+};
+Kit.single();
+</script>
+</html>

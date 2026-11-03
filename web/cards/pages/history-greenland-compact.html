@@ -1,0 +1,128 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-greenland-compact -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#modes{display:flex;gap:3cqw}
+.mode{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer}
+.mode.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0}
+.col{fill:color-mix(in srgb,var(--k) 7%,transparent)}
+.colT{fill:var(--k);font-family:var(--display);font-weight:800;letter-spacing:.06em}
+.pill rect{fill:var(--k)}
+.pill text{fill:var(--c);font-family:var(--body);font-weight:700}
+.cap{fill:var(--k);font-family:var(--body);font-weight:700}
+.mid{stroke:color-mix(in srgb,var(--k) 25%,transparent);stroke-dasharray:4 5}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Compare · two deals">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOPOLITICS</span></div>
+    <h2 class="q">Instead of buying Greenland, what deal might Trump offer it?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="modes">
+        <button class="mode" data-m="buy">Buy it</button>
+        <button class="mode" data-m="compact">Compact</button>
+      </div>
+      <div id="why" class="gone"><p class="body">A compact, like those of the Marshall Islands or Palau, gives formal independence. The US runs defense and pays economic aid, and in exchange gets exclusive rights over the territory.</p></div>
+    </div>
+    <p class="say" id="say">Try both deals and watch who ends up holding what.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No purchase needed: defense and aid can be traded for exclusive rights.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NAMES = ['Sovereignty', 'Defense', 'Economic aid', 'Land rights'];
+const GL = .25, US = .75, MID = .5;
+const TARGET = {
+  none:    [[MID,1],[MID,1],[MID,1],[MID,1]],
+  buy:     [[US,1],[US,1],[MID,.18],[US,1]],
+  compact: [[GL,1],[US,1],[GL,1],[US,1]]
+};
+const CAP = {
+  none: 'Tap a deal to see who gets what',
+  buy: 'Bought: it all becomes US land',
+  compact: 'Compact: like the Marshall Islands, Palau'
+};
+let mode = 'none', geo = null, pills = [], cap = null;
+const pos = NAMES.map(() => ({x: MID, o: 1}));
+const tried = new Set();
+
+function place(i) {
+  const p = pills[i]; if (!p || !geo) return;
+  p.setAttribute('transform', `translate(${p.x0 = pos[i].x * geo.W - geo.w / 2},${geo.ys[i] - geo.h / 2})`);
+  p.setAttribute('opacity', pos[i].o);
+}
+
+function draw() {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const top = fs * 2.8, bot = H - fs * 2.6;
+  const rowH = (bot - top) / 4;
+  const h = Math.min(rowH * .72, fs * 2.5), w = Math.min(W * .44, fs * 10);
+  geo = {W, H, w, h, ys: NAMES.map((_, i) => top + rowH * (i + .5))};
+  const r = Math.min(W, H) * .03;
+  Kit.mk('rect', {x: W * .02, y: 0, width: W * .46, height: bot, rx: r, class: 'col'}, svg);
+  Kit.mk('rect', {x: W * .52, y: 0, width: W * .46, height: bot, rx: r, class: 'col'}, svg);
+  Kit.mk('line', {x1: W / 2, y1: fs * .6, x2: W / 2, y2: bot - fs * .6, class: 'mid'}, svg);
+  const t1 = Kit.mk('text', {x: W * GL, y: fs * 1.7, 'text-anchor': 'middle', class: 'colT', 'font-size': fs}, svg); t1.textContent = 'GREENLAND';
+  const t2 = Kit.mk('text', {x: W * US, y: fs * 1.7, 'text-anchor': 'middle', class: 'colT', 'font-size': fs}, svg); t2.textContent = 'USA';
+  pills = NAMES.map((n, i) => {
+    const g = Kit.mk('g', {class: 'pill'}, svg);
+    const inner = Kit.mk('g', {class: 'pin'}, g);
+    Kit.mk('rect', {width: w, height: h, rx: h / 2}, inner);
+    const t = Kit.mk('text', {x: w / 2, y: h / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': fs}, inner);
+    t.textContent = n;
+    return g;
+  });
+  NAMES.forEach((_, i) => place(i));
+  cap = Kit.mk('text', {x: W / 2, y: H - fs * .7, 'text-anchor': 'middle', class: 'cap', 'font-size': fs}, svg);
+  cap.textContent = CAP[mode];
+}
+
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll('.mode').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+  if (cap) cap.textContent = CAP[m];
+  TARGET[m].forEach(([x, o], i) => {
+    gsap.killTweensOf(pos[i]);
+    const d = Kit.calm ? 0 : .7;
+    if (m === 'compact' && i === 2) {
+      // Aid starts on the US side and flows to Greenland.
+      gsap.timeline()
+        .to(pos[i], {x: US, o: 1, duration: d * .6, delay: d ? i * .08 : 0, ease: 'power2.out', onUpdate: () => place(i)})
+        .to(pos[i], {x: GL, duration: d, ease: 'power2.inOut', onUpdate: () => place(i)});
+    } else {
+      gsap.to(pos[i], {x, o, duration: d, delay: d ? i * .08 : 0, ease: 'back.out(1.4)', onUpdate: () => place(i), onComplete: () => place(i)});
+    }
+  });
+  Kit.haptic('selection');
+  tried.add(m);
+  if (tried.size === 2 && Kit.$('why').classList.contains('gone')) {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  }
+}
+
+Kit.$('modes').addEventListener('click', e => {
+  const b = e.target.closest('.mode'); if (b) setMode(b.dataset.m);
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic .pill > .pin', {opacity: 0, scale: .9, transformOrigin: '50% 50%', stagger: .08, duration: .45, ease: 'power3.out', clearProps: 'opacity,scale'}); };
+Kit.play.card = async () => {
+  document.querySelector('.mode[data-m="buy"]').click();
+  await new Promise(r => setTimeout(r, 900));
+  document.querySelector('.mode[data-m="compact"]').click();
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

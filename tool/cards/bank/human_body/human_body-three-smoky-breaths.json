@@ -1,0 +1,37 @@
+{
+  "id": "human_body-three-smoky-breaths",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.breathing",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How many breaths of thick black smoke before you pass out?",
+  "answer": "Just 3 or 4 breaths. Hot smoke rises, spreads across the ceiling, then drops fast. In a few moments the air can't be breathed, and three or four breaths of dense black smoke are enough to make you lose consciousness.",
+  "move": "In thick smoke you don't get minutes, you get a few breaths.",
+  "keywords": [
+    "smoke",
+    "fire",
+    "breath",
+    "inhalation",
+    "crans-montana"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice question asking how many breaths of thick black smoke it takes to pass out, with options 3–4, 10–15, and 30+. The reader picks one answer, then rates how sure they are. Shows a fire and smoke illustration."
+  },
+  "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=ErPrRuFkc6s&t=152s",
+  "written": "2026-11-03"
+}

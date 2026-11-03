@@ -1,0 +1,164 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-smallest-eruption-volume -->
+<title>Astute free card · The smallest eruption</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#ctl{display:flex;justify-content:center}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+.go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 7cqw;cursor:pointer}
+.go[disabled]{opacity:.4}
+.face{stroke:var(--k);stroke-width:1.6;stroke-linejoin:round}
+.big0{fill:color-mix(in srgb,var(--k) 6%,transparent)}
+.big1{fill:color-mix(in srgb,var(--k) 12%,transparent)}
+.big2{fill:color-mix(in srgb,var(--k) 18%,transparent)}
+.g0{fill:color-mix(in srgb,var(--k) 22%,transparent);stroke-dasharray:5 4}
+.g1{fill:color-mix(in srgb,var(--k) 32%,transparent);stroke-dasharray:5 4}
+.g2{fill:color-mix(in srgb,var(--k) 42%,transparent);stroke-dasharray:5 4}
+.t0{fill:var(--k)}
+.t1{fill:color-mix(in srgb,var(--k) 75%,var(--c))}
+.t2{fill:color-mix(in srgb,var(--k) 55%,var(--c))}
+.s1{fill:none;stroke-width:1.4}
+.lbl{fill:var(--k);font-family:var(--body);font-weight:700}
+.lbl.m{fill:var(--k);opacity:.7;font-weight:600}
+.hd{fill:var(--c);stroke:var(--k);stroke-width:2.4}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag · guess the size">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ERUPTION SCALE</span></div>
+    <h2 class="q">The smallest step on the eruption scale: how much material comes out?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl"><button class="go" id="lock">Lock my guess</button></div>
+      <div id="why" class="gone">
+        <p class="big">0.0001 km³ ≈ a 46 m cube</p>
+        <p class="body">Step 0 is 0.0001 cubic kilometres: 100,000 m³, a cube about 46 m wide. Next to a kilometre cube it's a speck. Each step up is ten times more: Step 1 is 0.001 km³.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the corner: how wide a cube holds Step 0's erupted material?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Step 0 = 0.0001 km³ erupted; every step up multiplies it by ten.</div>
+    <div class="foot"><span class="src">Source · Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-1” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TRUE = Math.cbrt(100000); // metres: 0.0001 km³ = 100,000 m³
+let edge = 300, locked = false, done = false, G = null, dragging = false;
+const svg = Kit.$('pic');
+
+function cubePts(x, yb, s) {
+  const d = s * .35;
+  return {
+    front: `${x},${yb} ${x+s},${yb} ${x+s},${yb-s} ${x},${yb-s}`,
+    top: `${x},${yb-s} ${x+s},${yb-s} ${x+s+d},${yb-s-d} ${x+d},${yb-s-d}`,
+    side: `${x+s},${yb} ${x+s+d},${yb-d} ${x+s+d},${yb-s-d} ${x+s},${yb-s}`
+  };
+}
+function mkCube(parent, pre, extra) {
+  const g = Kit.mk('g', {}, parent);
+  const f = Kit.mk('polygon', {class: `face ${pre}0 ${extra||''}`}, g);
+  const t = Kit.mk('polygon', {class: `face ${pre}1 ${extra||''}`}, g);
+  const s = Kit.mk('polygon', {class: `face ${pre}2 ${extra||''}`}, g);
+  return {g, set(x, yb, sz) { const p = cubePts(x, yb, sz); f.setAttribute('points', p.front); t.setAttribute('points', p.top); s.setAttribute('points', p.side); }};
+}
+
+function updGuess() {
+  if (!G) return;
+  const s = edge / 1000 * G.S;
+  G.guess.set(G.x0, G.yb, s);
+  G.hd.setAttribute('cx', G.x0 + s); G.hd.setAttribute('cy', G.yb - s);
+  G.gl.textContent = `${Math.round(edge)} m wide`;
+  const lx = G.x0 + s + s * .35 + G.f * .5;
+  G.gl.setAttribute('x', Math.min(lx, G.W - G.f * 5.5));
+  G.gl.setAttribute('y', Math.max(G.yb - s - G.f * .2, G.f * 1.2));
+}
+
+Kit.onShow.card = () => {
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0 * .9, 12);
+  svg.innerHTML = '';
+  const S = Math.max(40, Math.min((W - f * 2) / 1.35, (H - f * 3.4) / 1.35));
+  const x0 = (W - S * 1.35) / 2, yb = H - f * 1.9;
+  const big = mkCube(svg, 'big'); big.set(x0, yb, S);
+  const d = S * .35;
+  Kit.mk('text', {class: 'lbl', x: x0 + S / 2 + d / 2, y: yb - S - d / 2 + f * .35, 'text-anchor': 'middle', 'font-size': f}, svg).textContent = '1 km³';
+  Kit.mk('text', {class: 'lbl m', x: x0, y: yb + f * 1.4, 'font-size': f}, svg).textContent = '0';
+  Kit.mk('text', {class: 'lbl m', x: x0 + S, y: yb + f * 1.4, 'text-anchor': 'end', 'font-size': f}, svg).textContent = '1 km';
+  const guess = mkCube(svg, 'g');
+  // the truth, hidden until the answer
+  const tg = Kit.mk('g', {opacity: done ? 1 : 0}, svg);
+  const s1 = 100 / 1000 * S, s0 = TRUE / 1000 * S;
+  const st1 = mkCube(tg, 'g', 's1'); st1.set(x0, yb, s1);
+  const st0 = mkCube(tg, 't'); st0.set(x0, yb, s0);
+  const lx = x0 + s1 * 1.35 + f * .7;
+  const y0 = yb - f * .2, y1 = Math.min(yb - s1, y0 - f * 1.6);
+  Kit.mk('text', {class: 'lbl', x: lx, y: y0, 'font-size': f}, tg).textContent = 'Step 0 = 0.0001 km³';
+  Kit.mk('text', {class: 'lbl m', x: lx, y: y1, 'font-size': f}, tg).textContent = 'Step 1 = 0.001 km³';
+  const gl = Kit.mk('text', {class: 'lbl', 'font-size': f, opacity: locked ? 0 : 1}, svg);
+  const hd = Kit.mk('circle', {class: 'hd', r: Math.max(f * .55, 8), opacity: locked ? 0 : 1}, svg);
+  G = {W, H, f, S, x0, yb, guess, gl, hd, tg};
+  updGuess();
+};
+
+function setFromPointer(e) {
+  const r = svg.getBoundingClientRect();
+  const px = e.clientX - r.left, py = e.clientY - r.top;
+  const dx = (px - G.x0), dy = (G.yb - py);
+  const s = Math.max(dx, dy * .6 + dx * .4);
+  edge = Math.max(5, Math.min(950, s / G.S * 1000));
+  updGuess();
+}
+svg.addEventListener('pointerdown', e => { if (locked || !G) return; dragging = true; svg.setPointerCapture?.(e.pointerId); setFromPointer(e); });
+svg.addEventListener('pointermove', e => { if (dragging && !locked) setFromPointer(e); });
+const end = () => { if (dragging) Kit.haptic('selection'); dragging = false; };
+svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = edge >= 30 && edge <= 70;
+  const said = `${Math.round(edge)} m cube`;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  done = true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why');
+  if (G) {
+    if (Kit.calm) G.tg.setAttribute('opacity', 1);
+    else { gsap.to(G.tg, {attr: {opacity: 1}, duration: .5}); gsap.from(G.tg, {y: -12, duration: .6, ease: 'bounce.out'}); }
+  }
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.haptic(ok ? 'success' : 'light');
+  Kit.show('keep');
+});
+Kit.$('lock').addEventListener('click', () => {
+  if (locked) return; locked = true;
+  Kit.$('lock').disabled = true;
+  if (G) { G.gl.setAttribute('opacity', 0); G.hd.setAttribute('opacity', 0); }
+  Kit.haptic('selection'); sure.on();
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  const o = {e: 600};
+  gsap.fromTo(o, {e: 600}, {e: 300, duration: 1, ease: 'power2.inOut', onUpdate: () => { if (!dragging && !locked) { edge = o.e; updGuess(); } }});
+};
+
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svg.getBoundingClientRect();
+  const s = 50 / 1000 * G.S;
+  const x = r.left + G.x0 + s, y = r.top + G.yb - s;
+  const ev = (t, X, Y) => svg.dispatchEvent(new PointerEvent(t, {clientX: X, clientY: Y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', x + 60, y - 60); ev('pointermove', x + 20, y - 20); ev('pointermove', x, y); ev('pointerup', x, y);
+  await wait(100);
+  Kit.$('lock').click();
+  await wait(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(800);
+};
+Kit.single();
+</script>
+</html>

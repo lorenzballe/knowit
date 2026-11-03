@@ -1,0 +1,37 @@
+{
+  "id": "human_body-mosquito-dna-spots",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which genetic findings explain differences in mosquito bites?",
+  "answer": "A 2017 study with 23andMe compared the DNA of 16,000 people who rated how much mosquitoes like them. At seven spots in the DNA, a single letter made a difference: at some spots it made people less attractive to mosquitoes, and at others it made them more attractive.",
+  "move": "Part of your bite risk is written in seven single DNA letters.",
+  "keywords": [
+    "mosquitoes",
+    "dna",
+    "23andme",
+    "genetics",
+    "bites"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A title asks which genetic findings explain why mosquitoes bite some people more than others. Seven rows, each tappable, compare two groups of people from a 2017 DNA study of 16,000 people rated by how much mosquitoes like them."
+  },
+  "source": "Veritasium, “Why Mosquitoes Bite Some People More Than Others” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=38gVZgE39K8",
+  "written": "2026-11-03"
+}

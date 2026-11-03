@@ -1,0 +1,37 @@
+{
+  "id": "history-senna-suspension-fragment",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What specific part of the car killed Senna?",
+  "answer": "The impact alone did not kill Senna. A piece of the car's front right suspension snapped off and, on an unlucky path at that exact instant, drove into his helmet. The suspension fragment pierced the helmet, and that was the fatal blow.",
+  "move": "A suspension fragment pierced Senna's helmet: that was the fatal blow.",
+  "keywords": [
+    "ayrton senna",
+    "imola",
+    "front suspension",
+    "helmet",
+    "formula 1"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: what specific part of the car killed Ayrton Senna at Imola? Shows Senna's car hitting a wall, with a Zoom in control to follow the crash step by step."
+  },
+  "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=gh5UkpxPTFA&t=134s",
+  "written": "2026-11-03"
+}

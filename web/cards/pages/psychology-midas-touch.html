@@ -1,0 +1,294 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Midas touch</title>
+<!-- Crusco & Wetzel, "The Midas touch: the effects of interpersonal touch on restaurant tipping",
+     Personality and Social Psychology Bulletin 10:512-517 (1984). Waitresses in two Mississippi
+     restaurants returned change with no touch, a brief touch on the shoulder, or two light touches on
+     the palm. Tips: 12.2%, 14.4% and 16.7% of the bill (Behavioral Scientist; Changing Minds, rounded
+     12/14/17). The two touches did not differ reliably from each other, nor by the diner's sex; touched
+     diners rated the waitress, the atmosphere and the dining experience no higher (the abstract).
+     Later: Lynn, Le & Sherwyn, Cornell HRA Quarterly 39(3):60-65 (1998), a male server, 105 dining
+     parties: 11.5% with no touch, 14.9% with a 2-second shoulder touch (Cornell news: "more than 3
+     percent"). Lynn, Int. J. Hospitality Management 69:65-74 (2018): p-curves show real effects across
+     tipping techniques, but an R-index of 0.55, so only about half would replicate.
+     The reader drags the waitress's hand onto the diner (palm, shoulder, or the plate for no touch) or
+     taps a receipt; each receipt prints its tip. The end gives the limits on the card itself: one small
+     study (three waitresses, two restaurants in a small Southern college town: in-mind.org, Behavioral
+     Scientist; the number of diners could not be confirmed, so none is given), the 1998 rerun, and the
+     2018 review. On taller phones it adds van Baaren et al. 2003 (repeating the order raised tips).
+     Inspired by Diventare Strong (Alex Onofri), "MiniCorso: Come Capire Se Piaci con il Linguaggio Del
+     Corpo" (touch as a signal). Touch: drags on the scene, taps on the receipts. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/rough.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:max(1.2cqh,7px)}
+#scene{flex:1;min-height:0;width:100%;display:block;overflow:visible;touch-action:none;user-select:none;-webkit-user-select:none}
+#slips{display:flex;gap:2.6cqw}
+.slip{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:max(.5cqh,3px);border:0;cursor:pointer;text-align:left;padding:max(1cqh,7px) max(2.6cqw,9px) max(1.5cqh,10px);color:#fff;background:transparent;box-shadow:inset 0 0 0 max(.22cqh,1.5px) rgba(255,255,255,.55);border-radius:max(.9cqh,5px);transition:background-color .3s,color .3s,box-shadow .3s}
+.slip .sk{font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.slip .sv{font:800 max(3cqh,17px)/1 var(--display);font-variant-numeric:tabular-nums}
+.slip.on{background:#fff;color:#26104f;box-shadow:none;clip-path:polygon(0 0,100% 0,100% calc(100% - 5px),91.6% 100%,83.3% calc(100% - 5px),75% 100%,66.6% calc(100% - 5px),58.3% 100%,50% calc(100% - 5px),41.6% 100%,33.3% calc(100% - 5px),25% 100%,16.6% calc(100% - 5px),8.3% 100%,0 calc(100% - 5px))}
+.slip.top .sv{color:#7a33ff}
+.answered .q{font-size:max(2.5cqh,15px)}
+#also{opacity:.84}
+@container (max-height:520px){
+  #also{display:none!important}
+  .src .j{display:none}
+  .answered .in{gap:7px}
+  .answered .keep{padding:9px 15px}
+  .slip{padding:6px 7px 9px}
+  .slip .sk{letter-spacing:.05em}
+}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Drag the hand · the Midas touch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE MIDAS TOUCH</span></div>
+    <h2 class="q">Does a light touch from your waiter change how much you tip?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scene" role="img" aria-label="A diner at a table holds out an open hand for the change. The waitress's hand holds the coins: drag it onto the diner's palm or shoulder, or onto the plate for no touch."></svg>
+      <div id="slips">
+        <button class="slip" data-k="none"><span class="sk">No touch</span><b class="sv">?</b></button>
+        <button class="slip" data-k="shoulder"><span class="sk">Shoulder</span><b class="sv">?</b></button>
+        <button class="slip" data-k="palm"><span class="sk">Palm</span><b class="sv">?</b></button>
+      </div>
+    </div>
+    <p class="say" id="say">Mississippi, 1984. The waitress hands back the change. Drag her hand onto the diner, or tap a receipt.</p>
+    <p class="say gone" id="also">Waitresses who repeated the order word for word also got bigger tips (van Baaren, 2003).</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Touched diners tipped more but rated the waitress no higher. Money moved; opinions didn’t.</div>
+    <div class="foot"><span class="src">Source · Crusco &amp; Wetzel<span class="j">, Pers. Soc. Psychol. Bull.</span> 1984 · Lynn, Le &amp; Sherwyn<span class="j">, Cornell HRA Q.</span> 1998 · Lynn<span class="j">, Int. J. Hosp. Manag.</span> 2018</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const card = Kit.$('card'), svg = Kit.$('scene'), say = Kit.$('say');
+  const TIP = {none: 12.2, shoulder: 14.4, palm: 16.7};
+  const LINE = {none: 'No touch: <b>12.2%</b> of the bill.', shoulder: 'A hand on the shoulder: <b>14.4%</b>.', palm: 'Two light touches on the palm: <b>16.7%</b>.'};
+  const INK = '#ffffff', GOLD = '#ffd45e', RIM = '#e3a93a', DEEP = '#26104f';
+  const anim = () => !Kit.calm && typeof gsap !== 'undefined';
+  // The scene is drawn in units: 1.6 wide, 1 high. Where things are, in those units.
+  const DW = 1.45;
+  const SPOT = {palm: [.665, .415], shoulder: [.315, .345], none: [1.04, .52]};
+  const REST = [1.2, .34], SHOULDER_V = .22;
+  const hand = {x: REST[0], y: REST[1]}, look = {alpha: 1};
+  const seen = new Set();
+  let G = null, busy = false, dragging = null, justDragged = false, change = null;
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    // A tall stage shows the wall and the lamp above the table; a short one only the table.
+    const top = -Math.max(.06, Math.min(.42, H / (W / DW) - 1));
+    const s = Math.min(W / DW, H / (1 - top)), ox = (W - DW * s) / 2, oy = (H - (1 - top) * s) / 2 - top * s;
+    const X = u => ox + u * s, Y = v => oy + v * s, P = (u, v) => [X(u), Y(v)];
+    const rc = rough.svg(svg), sw = Math.max(1.5, s * .011);
+    const o = (extra, seed) => Object.assign({stroke: INK, strokeWidth: sw, roughness: 1.1, bowing: .9, seed}, extra);
+    const add = n => { svg.appendChild(n); return n; };
+    const marker = (pts, w, seed) => { const n = add(rc.linearPath(pts.map(p => P(...p)), o({strokeWidth: w * s}, seed))); n.querySelectorAll('path').forEach(p => p.setAttribute('stroke-linecap', 'round')); return n; };
+    // Floor, chair and table.
+    add(rc.line(X(.02), Y(.975), X(1.43), Y(.975), o({strokeWidth: sw * .8, stroke: 'rgba(255,255,255,.55)'}, 3)));
+    if (top <= -.15) {
+      // The wall, as far as the stage has room: a lamp over the table, a picture behind the diner.
+      const shade = Math.min(.02, top + .2);
+      add(rc.line(X(.96), Y(top), X(.96), Y(shade - .1), o({strokeWidth: sw * .8, stroke: 'rgba(255,255,255,.7)'}, 32)));
+      Kit.mk('circle', {cx: X(.96), cy: Y(shade + .04), r: s * .14, fill: 'rgba(255,255,255,.08)'}, svg);
+      add(rc.polygon([P(.9, shade - .1), P(1.02, shade - .1), P(1.07, shade), P(.85, shade)], o({fill: 'rgba(255,255,255,.55)', fillStyle: 'hachure', hachureGap: Math.max(2.6, s * .016), fillWeight: sw * .6}, 33)));
+      const f0 = Math.max(top + .04, -.3);
+      if (f0 + .15 < .08) {
+        add(rc.rectangle(X(.06), Y(f0), s * .2, s * .14, o({strokeWidth: sw * .8, stroke: 'rgba(255,255,255,.7)'}, 30)));
+        add(rc.linearPath([P(.08, f0 + .115), P(.13, f0 + .04), P(.17, f0 + .085), P(.2, f0 + .055), P(.24, f0 + .115)], o({strokeWidth: sw * .7, stroke: 'rgba(255,255,255,.6)', roughness: .8}, 31)));
+      }
+    }
+    add(rc.linearPath([P(.1, .3), P(.13, .66), P(.4, .66)], o({}, 5)));
+    add(rc.line(X(.15), Y(.66), X(.15), Y(.97), o({}, 6)));
+    add(rc.line(X(.38), Y(.66), X(.38), Y(.97), o({}, 7)));
+    add(rc.rectangle(X(.56), Y(.575), s * .82, s * .03, o({fill: 'rgba(255,255,255,.35)', fillStyle: 'hachure', hachureGap: Math.max(3, s * .02), fillWeight: sw * .6}, 8)));
+    add(rc.line(X(.66), Y(.605), X(.66), Y(.97), o({}, 9)));
+    add(rc.line(X(1.3), Y(.605), X(1.3), Y(.97), o({}, 10)));
+    // On the table: a glass and the plate the change goes on when there is no touch.
+    add(rc.polygon([P(.86, .46), P(.93, .46), P(.92, .572), P(.87, .572)], o({fill: 'rgba(255,255,255,.18)', fillStyle: 'solid'}, 11)));
+    add(rc.ellipse(X(1.04), Y(.56), s * .22, s * .035, o({fill: 'rgba(255,255,255,.22)', fillStyle: 'solid'}, 12)));
+    // The diner, facing the waitress: legs under the table, one hand held out, palm up.
+    marker([[.23, .62], [.52, .63]], .055, 13);
+    marker([[.52, .63], [.53, .945], [.6, .95]], .045, 14);
+    add(rc.polygon([P(.215, .325), P(.345, .32), P(.375, .63), P(.2, .635)], o({fill: 'rgba(255,255,255,.5)', fillStyle: 'hachure', hachureAngle: -50, hachureGap: Math.max(3.2, s * .022), fillWeight: sw * .7}, 15)));
+    add(rc.line(X(.285), Y(.28), X(.29), Y(.33), o({strokeWidth: sw * 2.6}, 16)));
+    add(rc.circle(X(.285), Y(.2), s * .16, o({fill: 'rgba(255,255,255,.16)', fillStyle: 'solid'}, 17)));
+    add(rc.path(`M${P(.2, .21)} C${P(.19, .1)} ${P(.3, .07)} ${P(.36, .13)} C${P(.31, .13)} ${P(.27, .15)} ${P(.25, .2)} Z`, o({fill: INK, fillStyle: 'solid', strokeWidth: sw * .8}, 18)));
+    Kit.mk('circle', {cx: X(.33), cy: Y(.195), r: Math.max(1.6, s * .009), fill: INK}, svg);
+    add(rc.path(`M${P(.362, .2)} L${P(.378, .228)} L${P(.358, .232)}`, o({strokeWidth: sw * .9, roughness: .6}, 19)));
+    marker([[.31, .37], [.41, .535], [.6, .45]], .042, 20);
+    // The open hand: a cupped palm with the thumb up.
+    add(rc.path(`M${P(.585, .44)} C${P(.6, .475)} ${P(.7, .48)} ${P(.73, .425)} C${P(.7, .43)} ${P(.64, .43)} ${P(.6, .425)} Z`, o({fill: 'rgba(255,255,255,.75)', fillStyle: 'solid'}, 21)));
+    add(rc.path(`M${P(.61, .43)} C${P(.6, .395)} ${P(.615, .37)} ${P(.635, .38)}`, o({strokeWidth: sw * 1.3}, 22)));
+    // The places a touch can land (and the plate for none), as dashed rings.
+    const rings = {};
+    for (const k of ['shoulder', 'palm', 'none']) {
+      const [u, v] = SPOT[k], r = s * (k === 'none' ? .085 : .065);
+      const g = Kit.mk('g', {'data-tap': '', style: 'cursor:pointer'}, svg);
+      Kit.mk('circle', {cx: X(u), cy: Y(v), r: r * 1.5, fill: 'transparent'}, g);
+      const ring = Kit.mk('circle', {cx: X(u), cy: Y(v), r, fill: 'none', stroke: GOLD, 'stroke-width': Math.max(1.6, s * .01), 'stroke-dasharray': `${(s * .02).toFixed(1)} ${(s * .018).toFixed(1)}`, opacity: seen.has(k) ? .35 : .95}, g);
+      g.addEventListener('click', () => { if (!justDragged) act(k); });
+      rings[k] = ring;
+    }
+    // Coins already given: in the diner's palm, or on the plate.
+    const given = Kit.mk('g', {}, svg);
+    // The waitress's arm and hand, holding the change. Drawn last, on top.
+    const arm = Kit.mk('path', {fill: 'none', stroke: DEEP, 'stroke-width': s * .07, 'stroke-linecap': 'round'}, svg);
+    const cuff = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': s * .075, 'stroke-linecap': 'butt'}, svg);
+    const hg = Kit.mk('g', {style: 'cursor:grab'}, svg);
+    const body = Kit.mk('g', {}, hg);
+    // In the hand's own frame: the wrist at the origin, the fingers pointing along +x.
+    const U = s;
+    const ow = Math.max(1.2, U * .007), fw = U * .02;
+    const digits = [[.1, -.027, .182], [.1, -.009, .194], [.1, .009, .19], [.1, .027, .174]].map(([x0, y, x1]) => [U * x0, U * y, U * x1, U * y, fw]);
+    digits.push([U * .05, -U * .034, U * .112, -U * .064, U * .024]);
+    for (const [x1, y1, x2, y2, w] of digits) Kit.mk('line', {x1, y1, x2, y2, stroke: DEEP, 'stroke-width': w + ow * 2, 'stroke-linecap': 'round'}, body);
+    Kit.mk('path', {d: `M0 ${-U * .038} L${U * .094} ${-U * .041} Q${U * .112} ${-U * .041} ${U * .112} ${-U * .024} L${U * .112} ${U * .028} Q${U * .112} ${U * .043} ${U * .094} ${U * .043} L0 ${U * .04} Z`, fill: INK, stroke: DEEP, 'stroke-width': ow, 'stroke-linejoin': 'round'}, body);
+    for (const [x1, y1, x2, y2, w] of digits) Kit.mk('line', {x1, y1, x2, y2, stroke: INK, 'stroke-width': w, 'stroke-linecap': 'round'}, body);
+    const held = Kit.mk('g', {}, hg);
+    for (let i = 0; i < 3; i++) coin(held, U * (.09 + i * .026), U * (.055 + i * .004), U * .028);
+    Kit.mk('circle', {cx: U * .08, cy: 0, r: U * .16, fill: 'transparent'}, hg);
+    G = {X, Y, s, ox, oy, W, arm, cuff, hg, held, given, rings};
+    pose();
+    showChange();
+    hg.addEventListener('pointerdown', grab);
+  }
+
+  function coin(parent, cx, cy, r) {
+    Kit.mk('ellipse', {cx, cy: cy + r * .28, rx: r, ry: r * .55, fill: '#b9831f'}, parent);
+    Kit.mk('ellipse', {cx, cy, rx: r, ry: r * .55, fill: GOLD, stroke: RIM, 'stroke-width': Math.max(.8, r * .12)}, parent);
+  }
+
+  // Where the hand is, the arm follows from beyond the right edge; the fingers point along the arm.
+  function pose() {
+    if (!G) return;
+    const {X, Y, s, W, arm, cuff, hg} = G;
+    const hx = X(hand.x), hy = Y(hand.y), sx = W + 8, sy = Y(SHOULDER_V);
+    for (const n of [arm, cuff, hg]) n.setAttribute('opacity', look.alpha.toFixed(3));
+    hg.style.pointerEvents = look.alpha > .1 ? '' : 'none';
+    const ang = Math.atan2(hy - sy, hx - sx), deg = ang * 180 / Math.PI;
+    const ex = (sx + hx) / 2 + Math.sin(ang) * s * .06, ey = (sy + hy) / 2 - Math.cos(ang) * s * .06;
+    arm.setAttribute('d', `M${sx},${sy} Q${ex},${ey} ${hx - Math.cos(ang) * s * .04},${hy - Math.sin(ang) * s * .04}`);
+    const cx0 = hx - Math.cos(ang) * s * .06, cy0 = hy - Math.sin(ang) * s * .06, cx1 = hx - Math.cos(ang) * s * .025, cy1 = hy - Math.sin(ang) * s * .025;
+    cuff.setAttribute('d', `M${cx0},${cy0} L${cx1},${cy1}`);
+    hg.setAttribute('transform', `translate(${hx.toFixed(1)} ${hy.toFixed(1)}) rotate(${deg.toFixed(1)})`);
+  }
+
+  function showChange() {
+    if (!G) return;
+    const {X, Y, s, given, held} = G;
+    given.innerHTML = '';
+    held.setAttribute('opacity', change ? 0 : 1);
+    if (!change) return;
+    const [u, v] = change === 'plate' ? [1.02, .55] : [.655, .432];
+    for (let i = 0; i < 3; i++) coin(given, X(u + i * .028 - .028), Y(v) - i * s * .006, s * .028);
+  }
+
+  const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 0 : ms));
+  const go = (to, d, ease = 'power2.inOut') => new Promise(res => {
+    if (!anim()) { Object.assign(hand, to); pose(); return res(); }
+    gsap.to(hand, Object.assign({duration: d, ease, onUpdate: pose, onComplete: res, overwrite: true}, to));
+  });
+  // The waitress's arm leaves once the three receipts are out, and comes back for a replay.
+  const fade = (to, d = .6, delay = 0) => new Promise(res => {
+    if (!anim()) { look.alpha = to; pose(); return res(); }
+    gsap.to(look, {alpha: to, duration: d, delay, ease: 'power2.out', onUpdate: pose, onComplete: res, overwrite: true});
+  });
+  function ripple(k) {
+    if (!G || !anim()) return;
+    const [u, v] = SPOT[k], c = Kit.mk('circle', {cx: G.X(u), cy: G.Y(v), r: G.s * .03, fill: 'none', stroke: GOLD, 'stroke-width': 2.5}, svg);
+    gsap.to(c, {attr: {r: G.s * .13}, opacity: 0, duration: .7, ease: 'power2.out', onComplete: () => c.remove()});
+  }
+
+  async function act(k) {
+    if (busy) return;
+    busy = true;
+    if (look.alpha < 1) await fade(1, .3);
+    change = null; showChange();
+    const [u, v] = SPOT[k];
+    if (k === 'none') {
+      await go({x: u + .02, y: v - .09}, .55);
+      change = 'plate'; showChange();
+      await wait(250);
+    } else if (k === 'palm') {
+      await go({x: u + .05, y: v - .085}, .55);
+      change = 'palm'; showChange();
+      for (let i = 0; i < 2; i++) { await go({y: v - .055}, .12, 'power1.out'); Kit.haptic('light'); ripple(k); await go({y: v - .085}, .14, 'power1.in'); }
+    } else {
+      await go({x: .6 + .05, y: .45 - .085}, .45);
+      change = 'palm'; showChange();
+      await go({x: u + .02, y: v - .06}, .45);
+      Kit.haptic('light'); ripple(k);
+      await wait(650);
+    }
+    await go({x: REST[0], y: REST[1]}, .6);
+    reveal(k);
+    busy = false;
+    if (card.classList.contains('answered')) fade(0, .7, .35);
+  }
+
+  function reveal(k) {
+    const first = !seen.has(k);
+    seen.add(k);
+    const slip = document.querySelector(`.slip[data-k="${k}"]`);
+    slip.classList.add('on');
+    slip.querySelector('.sv').textContent = TIP[k].toFixed(1) + '%';
+    if (anim() && first) gsap.fromTo(slip, {y: -8, opacity: .3}, {y: 0, opacity: 1, duration: .45, ease: 'power3.out', clearProps: 'transform,opacity'});
+    if (G) G.rings[k].setAttribute('opacity', .35);
+    if (seen.size < 3) {
+      say.innerHTML = `${LINE[k]} ${seen.size === 1 ? 'Try another spot.' : 'One left.'}`;
+    } else if (!card.classList.contains('answered')) {
+      card.classList.add('answered');
+      document.querySelector('.slip[data-k="palm"]').classList.add('top');
+      say.innerHTML = 'One small study: three waitresses, two restaurants. A 1998 rerun found a similar lift (11.5% → 14.9%), yet a 2018 review expects only about half of tipping effects to replicate.';
+      Kit.show('also'); Kit.show('keep');
+      Kit.haptic('success');
+      requestAnimationFrame(draw);
+    }
+  }
+
+  // Dragging the hand: it follows the finger; let go near a ring and the touch lands there.
+  function toUnits(e) { const r = svg.getBoundingClientRect(); return [(e.clientX - r.left - G.ox) / G.s, (e.clientY - r.top - G.oy) / G.s]; }
+  function near([u, v]) {
+    let best = null, bd = .16;
+    for (const k of Object.keys(SPOT)) { const d = Math.hypot(SPOT[k][0] - u, SPOT[k][1] - v); if (d < bd) { bd = d; best = k; } }
+    return best;
+  }
+  function grab(e) {
+    if (busy) return;
+    e.preventDefault();
+    const [u, v] = toUnits(e);
+    dragging = {id: e.pointerId, dx: hand.x - u, dy: hand.y - v};
+    svg.setPointerCapture(e.pointerId);
+    G.hg.style.cursor = 'grabbing';
+  }
+  svg.addEventListener('pointermove', e => {
+    if (!dragging || e.pointerId !== dragging.id) return;
+    const [u, v] = toUnits(e);
+    hand.x = Math.max(.2, Math.min(1.4, u + dragging.dx)); hand.y = Math.max(0, Math.min(.9, v + dragging.dy));
+    pose();
+    const k = near([hand.x - .05, hand.y + .07]);
+    for (const [key, ring] of Object.entries(G.rings)) ring.setAttribute('stroke-width', key === k ? Math.max(3, G.s * .018) : Math.max(1.6, G.s * .01));
+  });
+  const drop = e => {
+    if (!dragging || e.pointerId !== dragging.id) return;
+    dragging = null; G.hg.style.cursor = 'grab';
+    justDragged = true; setTimeout(() => { justDragged = false; }, 80);
+    const k = near([hand.x - .05, hand.y + .07]);
+    if (k) act(k); else go({x: REST[0], y: REST[1]}, .45);
+  };
+  svg.addEventListener('pointerup', drop);
+  svg.addEventListener('pointercancel', drop);
+
+  document.querySelectorAll('.slip').forEach(b => b.addEventListener('click', () => act(b.dataset.k)));
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => { if (anim()) { hand.x = 1.5; hand.y = SHOULDER_V + .04; pose(); go({x: REST[0], y: REST[1]}, .8, 'power3.out'); } };
+  Kit.play.card = async () => {
+    const until = () => new Promise(r => { const t = setInterval(() => { if (!busy) { clearInterval(t); r(); } }, 30); });
+    for (const k of ['none', 'shoulder', 'palm']) { act(k); await until(); await wait(150); }
+  };
+})();
+Kit.single();
+</script>

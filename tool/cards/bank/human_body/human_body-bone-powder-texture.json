@@ -1,0 +1,37 @@
+{
+  "id": "human_body-bone-powder-texture",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does cremated bone powder differ from wood ash?",
+  "answer": "Burning wood leaves a fine, light, powdery ash, but cremated bone becomes a much denser, more pasty powder. From a whole body, only about 2.4 kg of it remains. So bone ash is not wood ash: it is dense and pasty, not fine and powdery.",
+  "move": "Bone ash is not wood ash: it is dense and pasty, not fine and powdery.",
+  "keywords": [
+    "cremation",
+    "bone ash",
+    "wood ash",
+    "bone powder",
+    "crematorium"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Close-up comparison of a pile of fine white wood ash and a pile of coarse grey bone powder. The question asks how cremated bone powder differs from wood ash. A Zoom in button reveals the answer step by step."
+  },
+  "source": "Geopop, “Come avviene la cremazione dal punto di vista tecnico” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=53_ck1r6kJs&t=230s",
+  "written": "2026-11-03"
+}

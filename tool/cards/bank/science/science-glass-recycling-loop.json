@@ -1,0 +1,38 @@
+{
+  "id": "science-glass-recycling-loop",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why can glass be recycled almost forever?",
+  "answer": "Glass does not degrade when it melts, so a kilogram of waste glass becomes a kilogram of new glass. That makes the yield almost 100%, and the loop can repeat round after round. The page lets the reader drag to see how much is left after each melt.",
+  "move": "Melting doesn't wear glass out, so the loop barely loses anything.",
+  "keywords": [
+    "glass",
+    "recycling",
+    "waste glass",
+    "kilogram",
+    "melting"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive loop starting with 1 kg of old glass. Drag right to see how much is left after each melt, showing a kilogram of waste glass becoming a kilogram of new glass.",
+    "graded": false
+  },
+  "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=QJNBtzPshVU&t=20s",
+  "written": "2026-11-03"
+}

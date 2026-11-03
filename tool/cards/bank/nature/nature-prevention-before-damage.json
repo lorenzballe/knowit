@@ -1,0 +1,38 @@
+{
+  "id": "nature-prevention-before-damage",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.adaptation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What's the main difference between how we handle landslides and how we should?",
+  "answer": "Institutions mostly step in after a landslide has done its damage, so repair money is spent once the harm is done. The better approach is to pay before anything moves, funding works further up the slope that cut the risk. Italy already has the ground maps, but it lacks the habit of investing upstream.",
+  "move": "Prevention money spent upstream beats repair money spent after.",
+  "keywords": [
+    "landslides",
+    "prevention",
+    "italy",
+    "sicily",
+    "niscemi",
+    "hazard maps"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Prevention asks what the main difference is between handling landslides after the fact and before it. A switch labeled 'Pay after' or 'Pay before' asks the reader to flip between spending after a slide or before it."
+  },
+  "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=v98N4kQ52io&t=920s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "human_body-water-overdose",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.wellness_trends",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens if you drink 10 liters of water a day for a week?",
+  "answer": "Drinking far too much liquid for too long pushes the body into hyperhydration, an overdose of water. At that dose water stops being harmless and becomes a real poison that can kill. The card asks you to drag the glass's timeline from day 0 to day 7 to see how this unfolds.",
+  "move": "Even water is a poison: it's the dose that kills.",
+  "keywords": [
+    "water",
+    "hyperhydration",
+    "overdose",
+    "glass",
+    "dose"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A glass of water with a timeline slider to drag from day 0 to day 7, asking what happens if you drink 10 liters of water a day for a week. The reveal explains hyperhydration, an overdose of water that turns it into a poison that can kill."
+  },
+  "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=-ow81G5Nydw&t=174s",
+  "written": "2026-11-03"
+}

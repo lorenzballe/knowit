@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: economics-congo-miner-deaths -->
+<title>Astute free card · A day in Congo's mines</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.8cqh}
+#ctl .row{display:flex;justify-content:space-between;font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
+#guess{width:100%;accent-color:var(--k);height:max(3.4cqh,26px);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0}
+.dt{transition:fill .15s}
+.dt.e{fill:color-mix(in srgb,var(--k) 13%,transparent)}
+.dt.g{fill:color-mix(in srgb,var(--k) 38%,transparent)}
+.dt.d{fill:var(--k)}
+.foot{padding-right:110px}
+.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MINING DEATHS</span></div>
+    <h2 class="q">How many Congolese miners die every day, according to the UN?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <input id="guess" type="range" min="0" max="1000" value="300" aria-label="Your guess, miners per day">
+        <div class="row"><span>10</span><span>100</span><span>1,000</span><span>5,000</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">About 1,000 a day</p>
+        <p class="body">That is one miner every 86 seconds. The UN figure counts gold, cobalt and diamond mines too, where conditions are often as bad as in coltan. No one keeps an exact count.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Slide to guess the deaths in one day. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Behind cheap minerals, around 1,000 Congolese miners die each day.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = 1000;
+const st = {guess: 0, moved: false, dead: 0, hour: 0, done: false};
+let dots = [], big, small, hand, tl = null;
+
+const toGuess = t => {
+  let v = Math.pow(10, 1 + 2.7 * t / 1000);
+  if (v > 1000) v = Math.round(v / 50) * 50; else if (v > 100) v = Math.round(v / 10) * 10; else v = Math.round(v);
+  return v;
+};
+const fmt = n => Math.round(n).toLocaleString('en-US');
+const clock = h => { const hh = Math.floor(h) % 24, mm = Math.floor((h % 1) * 60); return String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0'); };
+
+function paint() {
+  const g = st.moved ? Math.min(st.guess, REAL) : 0, d = Math.round(st.dead);
+  for (let i = 0; i < dots.length; i++) {
+    const c = i < d ? 'dt d' : i < g ? 'dt g' : 'dt e';
+    if (dots[i].getAttribute('class') !== c) dots[i].setAttribute('class', c);
+  }
+  if (!big) return;
+  if (st.done || st.dead > 0) {
+    big.textContent = fmt(st.dead);
+    small.textContent = 'miners dead by ' + (st.hour >= 24 ? '24:00' : clock(st.hour)) + ' · you said ' + fmt(st.guess);
+  } else if (st.moved) {
+    big.textContent = fmt(st.guess);
+    small.textContent = st.guess > REAL ? 'your guess · more than the grid holds' : 'your guess · in one day';
+  } else {
+    big.textContent = '?';
+    small.textContent = 'one dot = one miner';
+  }
+  if (hand) hand.setAttribute('transform', `rotate(${st.hour / 24 * 360})`);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(f, 13);
+  const topH = Math.max(fs * 4.6, H * 0.2), r = Math.min(topH * 0.42, W * 0.12);
+  // clock: one turn = one day
+  const cg = Kit.mk('g', {transform: `translate(${r + 2},${topH / 2})`}, svg);
+  Kit.mk('circle', {r, fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, r * 0.08)}, cg);
+  for (let i = 0; i < 24; i++) {
+    const a = i / 24 * Math.PI * 2, l = i % 6 ? r * 0.82 : r * 0.7;
+    Kit.mk('line', {x1: Math.sin(a) * l, y1: -Math.cos(a) * l, x2: Math.sin(a) * r * 0.92, y2: -Math.cos(a) * r * 0.92, stroke: 'var(--k)', 'stroke-width': i % 6 ? 1 : 2, opacity: .7}, cg);
+  }
+  hand = Kit.mk('g', {}, cg);
+  Kit.mk('line', {x1: 0, y1: r * 0.12, x2: 0, y2: -r * 0.78, stroke: 'var(--k)', 'stroke-width': Math.max(2.5, r * 0.1), 'stroke-linecap': 'round'}, hand);
+  Kit.mk('circle', {r: Math.max(2.5, r * 0.09), fill: 'var(--k)'}, cg);
+  // counter
+  const tx = r * 2 + fs * 1.2, bigF = Math.min(fs * 2.4, topH * 0.5), smF = fs * 0.92;
+  const blockH = bigF * 1.23 + fs * 0.3 + smF * 1.05;
+  const by = topH / 2 - blockH / 2 + bigF * 0.95;
+  const sy = by + bigF * 0.28 + fs * 0.3 + smF * 0.8;
+  big = Kit.mk('text', {x: tx, y: by, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': bigF, fill: 'var(--k)'}, svg);
+  small = Kit.mk('text', {x: tx, y: sy, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': smF, fill: 'var(--k)', opacity: .75}, svg);
+  // grid of 1,000
+  const gy = topH + fs * 0.4, gh = H - gy - 2;
+  let best = {s: 0};
+  for (let cols = 16; cols <= 60; cols++) {
+    const rows = Math.ceil(REAL / cols), s = Math.min(W / cols, gh / rows);
+    if (s > best.s) best = {s, cols, rows};
+  }
+  const {s, cols, rows} = best, ox = (W - s * cols) / 2, oy = gy + (gh - s * rows) / 2;
+  dots = [];
+  for (let i = 0; i < REAL; i++) {
+    const cx = ox + (i % cols + .5) * s, cy = oy + (Math.floor(i / cols) + .5) * s;
+    dots.push(Kit.mk('circle', {cx, cy, r: s * 0.36, class: 'dt e'}, svg));
+  }
+  paint();
+};
+
+function reveal() {
+  st.done = true;
+  const o = {d: 0, h: 0};
+  const run = () => { st.dead = o.d; st.hour = o.h; paint(); };
+  tl = gsap.timeline();
+  tl.to(o, {d: REAL, h: 24, duration: Kit.calm ? 0.01 : 4.2, ease: 'none', onUpdate: run, onComplete: () => { run(); Kit.haptic('success'); }});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = st.guess >= 600 && st.guess <= 1600;
+  Kit.answer({choice: fmt(st.guess) + ' a day', correct: ok, sure: pct});
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${fmt(st.guess)} a day, ${ok ? 'close' : 'far off'}`);
+  Kit.show('keep');
+  reveal();
+});
+
+Kit.$('guess').addEventListener('input', e => {
+  if (st.done) return;
+  st.guess = toGuess(+e.target.value);
+  if (!st.moved) { st.moved = true; sure.on(); }
+  Kit.haptic('selection');
+  paint();
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !dots.length) return;
+  gsap.from(dots, {opacity: 0, duration: .5, stagger: {each: .0012, from: 'start'}, ease: 'power2.out'});
+};
+
+Kit.play.card = async () => {
+  const g = Kit.$('guess'); g.value = 640; g.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 120));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 100));
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 500));
+};
+Kit.single();
+</script>
+</html>

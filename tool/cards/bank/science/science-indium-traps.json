@@ -1,0 +1,37 @@
+{
+  "id": "science-indium-traps",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A blue LED can hold billions of light-killing defects per square centimetre. Why does it still shine?",
+  "answer": "A blue LED can contain billions of light-killing defects per square centimetre, yet it still shines because indium is added. Each electron–hole pair could give one photon. In plain gallium nitride with no indium, most pairs wander into a defect first and die as heat instead of producing light.",
+  "move": "The white LED bulb at home is a blue LED like this, saved by uneven indium.",
+  "keywords": [
+    "blue-led",
+    "indium",
+    "gallium-nitride",
+    "nakamura",
+    "white-led-bulb"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Blue LED with two sliders, indium and heat, both at 0%. The page asks why it still shines despite billions of light-killing defects per square centimetre."
+  },
+  "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=AF8d72mA41M",
+  "written": "2026-11-03"
+}

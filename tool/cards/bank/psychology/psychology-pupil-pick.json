@@ -1,0 +1,37 @@
+{
+  "id": "psychology-pupil-pick",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.reading_faces",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which of these two faces looks more attractive to you?",
+  "answer": "Past tests disagreed. A 1965 magazine test and a 2004 study of men rating women both favoured big pupils, while a 1967 retest found no clear effect. A 2024 study of about 3,000 people across six tests favoured small pupils, so the famous 'big pupils attract' rule is shaky.",
+  "move": "Details you never notice sway your eye, and the famous ‘big pupils attract’ rule may be backwards.",
+  "keywords": [
+    "pupils",
+    "faces",
+    "attractiveness",
+    "iris",
+    "magazine"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A quiz asking which of two faces, differing in pupil size, looks more attractive, answered by tapping one. The reader is told to go with their gut and not study the topic. The reveal lists four past tests with mixed results."
+  },
+  "source": "Diventare Strong, “Come Capire Se Piaci Dal Suo Sguardo E Da Cosa Ti Guarda” (YouTube, 2016)",
+  "reference": "https://www.youtube.com/watch?v=2NECFXJG3A0",
+  "written": "2026-11-03"
+}

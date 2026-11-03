@@ -1,0 +1,117 @@
+<!doctype html>
+<!-- slug: technology-iter-eiffel-weight -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#chartbox{flex:1;min-height:0;position:relative}
+#chart{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#opts{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 2cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FUSION</span></div>
+    <h2 class="q">How many Eiffel Towers does the ITER fusion machine weigh?</h2>
+    <div class="stagebox" id="stage">
+      <div id="chartbox"><svg id="chart"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">About 1</button>
+        <button class="opt" data-i="1">About 3</button>
+        <button class="opt" data-i="2">About 10</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Almost 3 towers</p><p class="body">The ITER tokamak weighs about 23,000 tonnes. The Eiffel Tower weighs about 8,000. Stack the tower nearly three times and you reach one machine.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick your guess. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>ITER ≈ 23,000 t: nearly three Eiffel Towers in one machine.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, EIF = 8000, ITER = 23000;
+let pick = -1, shown = false, g = null, prog = {v: 0};
+
+function setITER(v){
+  if(!g) return;
+  const segs = [Math.min(v, EIF), Math.max(0, Math.min(v - EIF, EIF)), Math.max(0, v - 2*EIF)];
+  let y = g.bottom;
+  segs.forEach((s, i) => {
+    const h = s * g.s, r = g.seg[i];
+    y -= h;
+    r.setAttribute('y', y); r.setAttribute('height', Math.max(0, h - (h > 3 ? 2 : 0)));
+  });
+  g.val.setAttribute('y', g.bottom - v*g.s - g.fs*0.6);
+  g.val.textContent = v > 0 ? Math.round(v/100)*100 .toLocaleString('en-US') + ' t' : '?';
+  if (v <= 0) g.val.setAttribute('y', g.bottom - g.fs*1.2);
+  g.guides.forEach((gd, i) => gd.style.opacity = v >= EIF*(i+1) ? 1 : 0);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('chart');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13);
+  const top = fs*2.2, bottom = H - fs*2.4;
+  const s = (bottom - top) / ITER;
+  const bw = Math.min(W*0.24, 130);
+  const c1 = W*0.3, c2 = W*0.66;
+  const font = w => `font:${w} ${fs}px var(--body);fill:var(--k)`;
+  // baseline
+  Kit.mk('line', {x1: W*0.06, x2: W*0.94, y1: bottom, y2: bottom, style: 'stroke:var(--k);stroke-width:2;opacity:.5'}, svg);
+  // guides at 1x and 2x the Eiffel Tower
+  const guides = [1, 2].map(n => {
+    const gg = Kit.mk('g', {style: 'opacity:0;transition:opacity .3s'}, svg);
+    const y = bottom - EIF*n*s;
+    Kit.mk('line', {x1: c1 - bw/2, x2: c2 + bw/2 + 4, y1: y, y2: y, style: 'stroke:var(--k);stroke-width:1.5;stroke-dasharray:5 5;opacity:.6'}, gg);
+    const t = Kit.mk('text', {x: c2 + bw/2 + 8, y: y + fs*0.35, style: font(800)}, gg);
+    t.textContent = '×' + n;
+    return gg;
+  });
+  // Eiffel bar
+  const eh = EIF*s;
+  Kit.mk('rect', {x: c1 - bw/2, y: bottom - eh, width: bw, height: eh, rx: 4, style: 'fill:var(--k);opacity:.45'}, svg);
+  // tiny tower silhouette inside the Eiffel bar
+  const tw = bw*0.5, th = Math.min(eh*0.8, tw*2.2), tb = bottom - eh*0.1;
+  Kit.mk('path', {d: `M${c1-tw/2},${tb} Q${c1-tw*0.12},${tb-th*0.45} ${c1-tw*0.04},${tb-th} L${c1+tw*0.04},${tb-th} Q${c1+tw*0.12},${tb-th*0.45} ${c1+tw/2},${tb} L${c1+tw*0.2},${tb} Q${c1},${tb-th*0.22} ${c1-tw*0.2},${tb} Z`, style: 'fill:var(--c);opacity:.85'}, svg);
+  const ev = Kit.mk('text', {x: c1, y: bottom - eh - fs*0.6, 'text-anchor': 'middle', style: font(800)}, svg);
+  ev.textContent = '8,000 t';
+  const en = Kit.mk('text', {x: c1, y: bottom + fs*1.5, 'text-anchor': 'middle', style: font(700)}, svg);
+  en.textContent = 'Eiffel Tower';
+  // ITER slot
+  Kit.mk('rect', {x: c2 - bw/2, y: top, width: bw, height: bottom - top, rx: 4, style: 'fill:none;stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 6;opacity:.25'}, svg);
+  const seg = [0, 1, 2].map(i => Kit.mk('rect', {x: c2 - bw/2, y: bottom, width: bw, height: 0, rx: 4, style: `fill:var(--k);opacity:${[1, .82, .64][i]}`}, svg));
+  const val = Kit.mk('text', {x: c2, y: bottom - fs, 'text-anchor': 'middle', style: font(800)}, svg);
+  const inn = Kit.mk('text', {x: c2, y: bottom + fs*1.5, 'text-anchor': 'middle', style: font(700)}, svg);
+  inn.textContent = 'ITER tokamak';
+  g = {bottom, s, seg, val, guides, fs};
+  setITER(shown ? prog.v : 0);
+};
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  shown = true;
+  if (Kit.calm) { prog.v = ITER; setITER(ITER); }
+  else gsap.to(prog, {v: ITER, duration: 1.8, ease: 'power2.inOut', onUpdate: () => setITER(prog.v), onComplete: () => Kit.haptic('success')});
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('#chart', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out', delay: .15}); } };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2300)); };
+Kit.single();
+</script>
+</html>

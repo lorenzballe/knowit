@@ -1,0 +1,112 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-morandi-rusted-cables -->
+<title>Astute · Pile 9's rusted stays</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#figbox{flex:1;min-height:0;position:relative}
+#fig{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+#ctrl{display:flex;align-items:center;gap:3cqw}
+#g{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer}
+#gv{font:700 max(2.4cqh,15px)/1 var(--mono);min-width:3.2em;text-align:right;color:var(--k)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Slide · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRIDGE FAILURE</span></div>
+    <h2 class="q">What percentage of cables in Pile 9's stay were found to be corroded?</h2>
+    <div class="stagebox" id="stage">
+      <div id="figbox"><svg id="fig"></svg></div>
+      <div id="ctrl"><input type="range" id="g" min="0" max="100" step="1" value="10" aria-label="Your guess in percent"><span id="gv">10%</span></div>
+      <div id="why" class="gone">
+        <p class="big">99% were rusted</p>
+        <p class="body">Investigators studied fragment 132 of the fallen bridge: 99% of the steel cables inside Pile 9's stays were corroded. The stay did not break at one weak spot; almost all its steel was already eaten away.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag to your guess: each dot is 1% of the cables. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Pile 9 failed because nearly all its steel was rusted, not one bad spot.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il crollo del Ponte Morandi a Genova, l'inedita ricostruzione video in 3D al momento del collasso” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 100, RUST = '#d2462a', STEEL = '#e3e9ee', TRUTH = 99;
+let guess = 10, moved = false, revealed = false, dots = [], caption = null, ring = null;
+// a fixed random order: which strand rusts at which rank
+const order = Array.from({length: N}, (_, i) => i);
+for (let i = N - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+const rank = new Array(N); order.forEach((idx, r) => rank[idx] = r);
+const level = () => revealed ? TRUTH : guess;
+const capText = () => revealed ? 'Fragment 132: 99 of 100 rusted' : `Your guess: ${guess} of 100 rusted`;
+
+function paint() { dots.forEach((d, i) => d.setAttribute('fill', rank[i] < level() ? RUST : STEEL)); caption.textContent = capText(); }
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('fig'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const R = Math.max(20, Math.min(W * .9, H - fs * 3) / 2);
+  const cx = W / 2, cy = (H - fs * 2.4) / 2 + 2;
+  // concrete casing, then the steel bundle inside
+  Kit.mk('circle', {cx, cy, r: R, style: 'fill:var(--k)'}, svg);
+  Kit.mk('circle', {cx, cy, r: R * .86, fill: 'none', stroke: '#888', 'stroke-width': Math.max(1, R * .012), 'stroke-dasharray': '3 4', opacity: .6}, svg);
+  const inner = R * .8, sr = R * .068;
+  dots = [];
+  for (let i = 0; i < N; i++) {
+    const rr = inner * Math.sqrt((i + .5) / N), th = i * 2.39996;
+    dots.push(Kit.mk('circle', {cx: cx + rr * Math.cos(th), cy: cy + rr * Math.sin(th), r: sr, fill: STEEL}, svg));
+  }
+  const ci = order[TRUTH], c = dots[ci];
+  ring = Kit.mk('circle', {cx: c.getAttribute('cx'), cy: c.getAttribute('cy'), r: sr * 2.1, fill: 'none', stroke: '#ffffff', 'stroke-width': Math.max(2, sr * .35), opacity: revealed ? 1 : 0}, svg);
+  caption = Kit.mk('text', {x: cx, y: H - fs * .5, 'text-anchor': 'middle', style: `fill:var(--k);font:700 ${fs}px var(--body)`}, svg);
+  paint();
+};
+
+Kit.$('g').addEventListener('input', e => {
+  if (revealed) return;
+  guess = +e.target.value; Kit.$('gv').textContent = guess + '%';
+  if (dots.length) paint();
+  if (!moved) { moved = true; sure.on(); }
+});
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = guess >= 90;
+  Kit.answer({choice: guess + '%', correct: ok, sure: pct});
+  revealed = true;
+  Kit.hide('ctrl'); Kit.hide('say');
+  Kit.$('g').disabled = true;
+  caption.textContent = capText();
+  // animate each strand to its true state, in rust order
+  dots.forEach((d, i) => {
+    const target = rank[i] < TRUTH ? RUST : STEEL;
+    if (d.getAttribute('fill') === target) return;
+    if (Kit.calm) d.setAttribute('fill', target);
+    else gsap.to(d, {attr: {fill: target}, duration: .25, delay: Math.max(0, rank[i] - guess) * .012});
+  });
+  if (Kit.calm) ring.setAttribute('opacity', 1);
+  else gsap.fromTo(ring, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: .4, delay: .9, repeat: 3, yoyo: true, onComplete: () => ring.setAttribute('opacity', 1)});
+  Kit.haptic(ok ? 'success' : 'light');
+  Kit.show('why');
+  sure.grade(ok, pct, `${guess}%, ${ok ? 'close' : 'far off'}: it was 99%`);
+  Kit.show('keep');
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !dots.length) return;
+  gsap.from(dots, {attr: {r: 0}, duration: .5, stagger: .006, ease: 'back.out(2)'});
+};
+
+Kit.play.card = async () => {
+  const g = Kit.$('g'); g.value = 60; g.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

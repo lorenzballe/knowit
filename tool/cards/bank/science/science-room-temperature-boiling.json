@@ -1,0 +1,37 @@
+{
+  "id": "science-room-temperature-boiling",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can water boil at room temperature?",
+  "answer": "Water boils when its fastest molecules can escape. Air pressing down holds them in, so when the air is taken away they get out easily, and near 0.03 atm water boils at 25 °C. The fastest molecules leave, so the water left behind gets colder.",
+  "move": "Boiling point isn't fixed: less pressure, lower boiling point.",
+  "keywords": [
+    "water",
+    "boiling point",
+    "air pressure",
+    "vacuum pump",
+    "evaporative cooling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card showing a jar of water with a pump and a counter reading pump-outs: 0. Tapping the pump removes air from the jar. The question asked is how water can boil at room temperature."
+  },
+  "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=rM04U5BO3Ug&t=15s",
+  "written": "2026-11-03"
+}

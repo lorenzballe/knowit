@@ -1,0 +1,38 @@
+{
+  "id": "space-gps-relativity-clocks",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.gps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why must GPS satellite clocks be corrected for Einstein's relativity?",
+  "answer": "Einstein's special and general relativity say time passes at a different rate on the satellites than on Earth. Left alone, the satellites' atomic clocks slip out of step with ours and GPS loses accuracy. So the clocks get slight corrections.",
+  "move": "In orbit time runs at a different pace, so GPS clocks are corrected.",
+  "keywords": [
+    "gps",
+    "einstein",
+    "relativity",
+    "atomic clocks",
+    "satellites"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two clocks side by side: one on Earth and one on the right that you drag up into orbit. Watch both clocks run, then apply Einstein's correction to see whether they stay in step.",
+    "ground": "#0b1026"
+  },
+  "source": "Geopop, “Sai come funziona il GPS? FIGO! NON LO SAPEVO!” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=ac5iJvjd2pI&t=264s",
+  "written": "2026-11-03"
+}

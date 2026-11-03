@@ -1,0 +1,138 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-iran-executions-2025 -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#g{flex:1;min-height:0;width:100%;display:block}
+#g text{fill:var(--k);font-family:var(--body);font-weight:700}
+#g text.m{fill:var(--muted);font-weight:600}
+.d{fill:color-mix(in srgb,var(--k) 13%,transparent)}
+.d.g{fill:color-mix(in srgb,var(--k) 42%,transparent)}
+.rev .d.g{fill:color-mix(in srgb,var(--k) 13%,transparent);stroke:var(--k);stroke-width:1.4}
+.rev .d.r,.rev .d.r.g{fill:var(--k)}
+.sw{fill:color-mix(in srgb,var(--k) 42%,transparent)}
+.rev .sw{fill:none;stroke:var(--k);stroke-width:1.4}
+.sw2{fill:var(--k)}
+#ctl{display:flex;flex-direction:column;gap:1.1cqh}
+#rg{width:100%;accent-color:var(--k);height:max(3.4cqh,26px);margin:0;cursor:pointer}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEATH PENALTY</span></div>
+    <h2 class="q">How many people did Iran execute in 2025, per Amnesty International?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="g"></svg>
+      <div id="ctl">
+        <input type="range" id="rg" min="0" max="2700" step="10" value="600" aria-label="Your guess">
+        <button class="opt" id="lock">Lock in my guess</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">2,159 people</p>
+        <p class="body">About 2,700 executions were confirmed worldwide in 2025, and 54 states still apply the death penalty. Yet Iran alone carried out about 4 of every 5.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the slider: fill the dots up to your guess.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One country did about 80% of the world's confirmed executions in 2025.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 270, REAL = 2159, REALD = Math.round(REAL / 10);
+let guess = 600, locked = false, revealed = false, dots = [], tGuess = null, tIran = null;
+const fmt = n => n.toLocaleString('en');
+
+function paint() {
+  const gd = Math.round(guess / 10);
+  dots.forEach((d, i) => {
+    d.classList.toggle('g', i < gd);
+    d.classList.toggle('r', revealed && i < REALD);
+  });
+  if (tGuess) tGuess.textContent = `Your guess: ${fmt(guess)}`;
+  if (tIran) tIran.textContent = revealed ? `Iran: ${fmt(REAL)}` : 'Iran: ?';
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = Math.abs(guess - REAL) <= 300;
+  Kit.answer({choice: `${fmt(guess)} people`, correct: ok, sure: pct});
+  revealed = true;
+  Kit.$('g').classList.add('rev');
+  paint();
+  if (!Kit.calm) dots.slice(0, REALD).forEach((d, i) => {
+    const r = +d.getAttribute('r');
+    gsap.fromTo(d, {attr: {r: 0}}, {attr: {r}, duration: .3, delay: i * .005, ease: 'back.out(2)'});
+  });
+  Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${fmt(guess)}, ${ok ? 'close' : 'far off'}`);
+  Kit.show('keep');
+});
+
+Kit.$('rg').addEventListener('input', e => {
+  if (locked) return;
+  guess = +e.target.value; paint();
+});
+Kit.$('lock').addEventListener('click', () => {
+  if (locked) return;
+  locked = true; Kit.$('rg').disabled = true; Kit.$('lock').classList.add('gone');
+  Kit.haptic('selection');
+  Kit.$('say').textContent = 'Now say how sure you are.';
+  sure.on();
+});
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('g');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13), sm = Math.max(fs * .82, 12);
+  const y1 = fs * 1.05, y2 = y1 + fs * 1.6;
+  const sw = fs * .38;
+  const s1 = Kit.mk('circle', {cx: sw, cy: y1 - fs * .33, r: sw, class: 'sw'}, svg);
+  tGuess = Kit.mk('text', {x: sw * 2 + fs * .4, y: y1, 'font-size': fs}, svg);
+  Kit.mk('circle', {cx: sw, cy: y2 - fs * .33, r: sw, class: 'sw2'}, svg);
+  tIran = Kit.mk('text', {x: sw * 2 + fs * .4, y: y2, 'font-size': fs}, svg);
+  const top = y2 + fs * .9, foot = sm * 1.9;
+  const availH = Math.max(40, H - top - foot);
+  let best = {cell: 0, c: 15, r: 18};
+  for (let c = 8; c <= 45; c++) {
+    const r = Math.ceil(N / c), cell = Math.min(W / c, availH / r);
+    if (cell > best.cell) best = {cell, c, r};
+  }
+  const {cell, c, r} = best;
+  const ox = (W - cell * c) / 2, oy = top + (availH - cell * r) / 2;
+  const R = cell * .36;
+  dots = [];
+  for (let i = 0; i < N; i++) {
+    const cx = ox + (i % c + .5) * cell, cy = oy + (Math.floor(i / c) + .5) * cell;
+    dots.push(Kit.mk('circle', {cx, cy, r: R, class: 'd'}, svg));
+  }
+  const cap = Kit.mk('text', {x: W / 2, y: H - sm * .45, 'font-size': sm, 'text-anchor': 'middle', class: 'm'}, svg);
+  cap.textContent = '1 dot = 10 people · all dots ≈ 2,700 worldwide';
+  paint();
+};
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(dots, {opacity: 0, duration: .35, stagger: .002, ease: 'power2.out'});
+};
+
+Kit.play.card = async () => {
+  const rg = Kit.$('rg');
+  rg.value = 1200; rg.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('lock').click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

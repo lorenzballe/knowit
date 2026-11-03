@@ -1,0 +1,35 @@
+{
+  "id": "science-graphene-vs-steel",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much stronger is graphene than steel?",
+  "answer": "Graphene holds 200 to 300 times the load that snaps a steel strip. The same pull that breaks the steel does almost nothing to graphene. It is also harder than diamond and very light.",
+  "move": "Graphene is 200–300 times stronger than steel.",
+  "keywords": [
+    "graphene",
+    "steel",
+    "diamond"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two strips sit side by side, one steel and one graphene. Holding the button adds the same weight to both. The question asked is how much stronger graphene is than steel."
+  },
+  "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM",
+  "written": "2026-11-03"
+}

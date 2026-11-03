@@ -1,0 +1,183 @@
+<!doctype html>
+<!-- slug: thinking-easiest-to-fool -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.4cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.ink{fill:var(--k)}
+.inks{stroke:var(--k);fill:none}
+.lab{fill:var(--k);font-family:var(--body);font-weight:700}
+.mut{fill:var(--k);opacity:.6;font-family:var(--body);font-weight:600}
+.glass{fill:var(--k);fill-opacity:.09}
+.bg{fill:var(--c)}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Place it · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SELF-DECEPTION</span></div>
+    <h2 class="q">Richard Feynman named the easiest person to fool. How easy are you?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone">
+        <p class="big">The easiest of all.</p>
+        <p class="body" id="whytext">Feynman: “The first principle is that you must not fool yourself, and you are the easiest person to fool.” No one wants your ideas to be right more than you do.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag YOU along the scale: how easy are you to fool?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Check your own ideas hardest: you are the easiest person to fool.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Do You Make People Look Stupid?” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {pos: .22, moved: false, done: false, d: 0, ph: 0, g: null};
+const svg = Kit.$('pic');
+let face = null, marker = null, youLab = null, fey = null;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  S.done = true;
+  const ok = S.pos >= .8, p = Math.round(S.pos * 100);
+  Kit.answer({choice: `${p}% easy to fool`, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.$('whytext').textContent = `You put yourself at ${p}%. Feynman puts you at the very end: “The first principle is that you must not fool yourself, and you are the easiest person to fool.”`;
+  sure.grade(ok, pct, `${p}% easy to fool, ${ok ? 'right' : 'wrong'}`);
+  Kit.haptic(ok ? 'success' : 'light');
+  draw();
+  if (Kit.calm) { S.d = 1; draw(); return; }
+  S.fx = 0; drawFeynman();
+  gsap.to(S, {d: 1, duration: 1.4, ease: 'power2.inOut', onUpdate: drawFace});
+  gsap.to(S, {ph: Math.PI * 4, duration: 6, ease: 'none', repeat: -1, onUpdate: drawFace});
+});
+
+function faceGeom() {
+  const {R} = S.g, d = S.d, pts = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = i / 60 * Math.PI * 2;
+    const r = R * (1 + d * .16 * Math.sin(3 * t + S.ph) + d * .07 * Math.sin(7 * t - S.ph * 1.5));
+    pts.push([(r * Math.cos(t) * (1 + d * .18)).toFixed(1), (r * Math.sin(t) * (1 - d * .12)).toFixed(1)]);
+  }
+  return pts;
+}
+function drawFace() {
+  if (!face || !S.g) return;
+  const {R, sw} = S.g, d = S.d;
+  face.innerHTML = '';
+  const pts = faceGeom();
+  Kit.mk('path', {d: 'M' + pts.map(p => p.join(',')).join('L') + 'Z', class: 'inks', 'stroke-width': sw}, face);
+  const e1 = R * .12 * (1 + d * .7), e2 = R * .12 * (1 - d * .45);
+  Kit.mk('ellipse', {cx: -R * .38 - d * R * .1, cy: -R * .15 + d * R * .08 * Math.sin(S.ph), rx: e1, ry: e1 * (1 - d * .3), class: 'ink'}, face);
+  Kit.mk('ellipse', {cx: R * .38 + d * R * .14, cy: -R * .18 - d * R * .1, rx: e2 * (1 + d * .5), ry: e2, class: 'ink'}, face);
+  // smile: the more sure you can't be fooled, the smugger
+  const smile = R * (.12 + .28 * (1 - S.pos)) * (1 - d * .5), tilt = d * R * .25 * Math.sin(S.ph * .7 + 1);
+  const my = R * .38;
+  Kit.mk('path', {d: `M${-R * .42},${my - tilt} Q${d * R * .2},${my + smile * 2 + d * R * .2} ${R * .42 + d * R * .15},${my + tilt}`, class: 'inks', 'stroke-width': sw, 'stroke-linecap': 'round'}, face);
+}
+function drawFeynman() {
+  if (!fey || !S.g) return;
+  const {x0, x1, ly, r, f} = S.g;
+  fey.innerHTML = '';
+  const x = x1;
+  Kit.mk('circle', {cx: x, cy: ly, r: r * 1.15, class: 'ink'}, fey);
+  Kit.mk('circle', {cx: x, cy: ly, r: r * .45, class: 'bg'}, fey);
+  const t = Kit.mk('text', {x: x + r * 1.15, y: ly - r * 1.6 - f * .3, 'text-anchor': 'end', class: 'lab', 'font-size': f}, fey);
+  t.textContent = 'Feynman: YOU';
+  if (!Kit.calm) gsap.from(fey, {opacity: 0, y: -f, duration: .6, ease: 'back.out(2)'});
+}
+function placeMarker() {
+  if (!marker) return;
+  const {x0, x1, ly} = S.g, x = x0 + (x1 - x0) * S.pos;
+  marker.setAttribute('transform', `translate(${x},${ly})`);
+}
+function draw() {
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0, 12);
+  svg.innerHTML = '';
+  const pad = Math.max(W * .08, 16), x0 = pad, x1 = W - pad;
+  const r = Math.max(f * .75, 10);
+  const ly = H - f * 2.4;
+  const mTop = 6, mBot = ly - r * 1.6 - f * 1.8;
+  const mh = Math.max(mBot - mTop, 40);
+  const ry = mh / 2, rx = Math.min(W * .34, ry * .78), cx = W / 2, cy = mTop + ry;
+  const sw = Math.max(f * .18, 2.2);
+  S.g = {W, H, f, x0, x1, ly, r, R: rx * .55, sw};
+  // mirror
+  const defs = Kit.mk('defs', {}, svg), cp = Kit.mk('clipPath', {id: 'mc'}, defs);
+  Kit.mk('ellipse', {cx, cy, rx, ry}, cp);
+  Kit.mk('rect', {x: cx - sw * 1.2, y: cy + ry - 2, width: sw * 2.4, height: Math.max(mBot - (cy + ry), 0) + 2, class: 'ink', opacity: .5}, svg);
+  Kit.mk('ellipse', {cx, cy, rx, ry, class: 'glass'}, svg);
+  const inner = Kit.mk('g', {'clip-path': 'url(#mc)'}, svg);
+  Kit.mk('path', {d: `M${cx - rx * .7},${cy - ry * .2} L${cx - rx * .2},${cy - ry * .9} L${cx - rx * .05},${cy - ry * .9} L${cx - rx * .55},${cy - ry * .05}Z`, class: 'ink', opacity: .08}, inner);
+  face = Kit.mk('g', {transform: `translate(${cx},${cy + ry * .05})`}, inner);
+  Kit.mk('ellipse', {cx, cy, rx, ry, class: 'inks', 'stroke-width': sw * 2.2}, svg);
+  drawFace();
+  // scale
+  Kit.mk('line', {x1: x0, y1: ly, x2: x1, y2: ly, class: 'inks', 'stroke-width': sw, 'stroke-linecap': 'round', opacity: .5}, svg);
+  for (let i = 0; i <= 10; i++) {
+    const x = x0 + (x1 - x0) * i / 10, h = i % 5 ? r * .35 : r * .6;
+    Kit.mk('line', {x1: x, y1: ly - h, x2: x, y2: ly + h, class: 'inks', 'stroke-width': sw * .7, opacity: .45}, svg);
+  }
+  const a = Kit.mk('text', {x: x0, y: ly + r + f * 1.1, class: 'mut', 'font-size': f * .9}, svg); a.textContent = 'hard to fool';
+  const b = Kit.mk('text', {x: x1, y: ly + r + f * 1.1, 'text-anchor': 'end', class: 'mut', 'font-size': f * .9}, svg); b.textContent = 'easy to fool';
+  // your marker
+  marker = Kit.mk('g', {}, svg);
+  if (S.done) {
+    Kit.mk('circle', {cx: 0, cy: 0, r, class: 'inks', 'stroke-width': sw, opacity: .55}, marker);
+  } else {
+    Kit.mk('circle', {cx: 0, cy: 0, r: r * 1.6, class: 'ink', opacity: .12}, marker);
+    Kit.mk('circle', {cx: 0, cy: 0, r, class: 'ink'}, marker);
+    youLab = Kit.mk('text', {x: 0, y: -r * 1.6 - f * .3, 'text-anchor': 'middle', class: 'lab', 'font-size': f * 1.05}, marker);
+    youLab.textContent = 'YOU';
+  }
+  placeMarker();
+  fey = Kit.mk('g', {}, svg);
+  if (S.done) drawFeynman();
+}
+
+function setFrom(e) {
+  const box = svg.getBoundingClientRect(), {W, x0, x1} = S.g;
+  const x = (e.clientX - box.left) * W / box.width;
+  S.pos = Math.min(1, Math.max(0, (x - x0) / (x1 - x0)));
+  placeMarker(); drawFace();
+}
+let dragging = false;
+svg.addEventListener('pointerdown', e => {
+  if (S.done) return;
+  dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  setFrom(e); Kit.haptic('selection');
+});
+svg.addEventListener('pointermove', e => { if (dragging && !S.done) setFrom(e); });
+const end = () => {
+  if (!dragging) return; dragging = false;
+  if (!S.moved) { S.moved = true; sure.on(); }
+};
+svg.addEventListener('pointerup', end);
+svg.addEventListener('pointercancel', end);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !marker) return;
+  gsap.from('#pic', {opacity: 0, scale: .96, transformOrigin: '50% 50%', duration: .6, ease: 'power3.out'});
+  const o = {p: S.pos};
+  gsap.to(o, {p: S.pos + .06, duration: .35, yoyo: true, repeat: 3, delay: .6, ease: 'sine.inOut',
+    onUpdate: () => { if (!S.moved) { S.pos = o.p; placeMarker(); } }});
+};
+Kit.play.card = async () => {
+  const box = svg.getBoundingClientRect(), y = box.top + box.height * .9;
+  const ev = (t, x) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', box.left + box.width * .3);
+  ev('pointermove', box.left + box.width * .4);
+  ev('pointerup', box.left + box.width * .4);
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1700));
+};
+Kit.single();
+</script>
+</html>

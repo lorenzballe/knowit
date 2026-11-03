@@ -1,0 +1,37 @@
+{
+  "id": "history-elevator-fall-record",
+  "topic": "history",
+  "genre": "history.ordinary_people",
+  "strand": "history.ordinary_people.forgotten_heroes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the longest elevator fall anyone has ever survived?",
+  "answer": "In 1945 a plane hit the Empire State Building and one engine damaged an elevator's cables. Rescuers put the injured Betty Lou Oliver on a stretcher inside that elevator, and it fell 75 floors, over 300 metres. She survived, the longest elevator fall anyone has survived.",
+  "move": "The record elevator fall survived: 75 floors, Empire State Building, 1945.",
+  "keywords": [
+    "elevator",
+    "empire_state_building",
+    "betty_lou_oliver",
+    "new_york_city",
+    "1945"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled The longest elevator fall, with a photo of the Empire State Building and a red arrow marking the 75th floor. The reader drags an elevator down the shaft from the 75th floor to the ground."
+  },
+  "source": "Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=xM7FfVQMjPU&t=280s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,155 @@
+<!doctype html>
+<!-- slug: science-aluminium-ice-melt -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#timebox{display:flex;align-items:center;gap:3cqw;padding:0.6cqh 1cqw 0}
+#timebox span{font:700 max(1.7cqh,12px)/1.2 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+#t{flex:1;-webkit-appearance:none;appearance:none;height:max(1cqh,8px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 18%,transparent);outline:none;margin:0}
+#t::-webkit-slider-thumb{-webkit-appearance:none;width:max(4cqh,30px);height:max(4cqh,30px);border-radius:50%;background:var(--k);border:.4cqh solid var(--c);box-shadow:0 .3cqh 1cqh rgba(0,0,0,.25);cursor:grab}
+#t::-moz-range-thumb{width:max(4cqh,30px);height:max(4cqh,30px);border-radius:50%;background:var(--k);border:.4cqh solid var(--c);cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Slide · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HEAT FLOW</span></div>
+    <h2 class="q">Why does ice melt faster on aluminium than on plastic?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="timebox"><span>Now</span><input id="t" type="range" min="0" max="1000" value="0" aria-label="Time"><span>Later</span></div>
+    </div>
+    <p class="say" id="say">Drag time forward and watch where the heat flows.</p>
+    <div id="why" class="gone"><p class="body">Both plates are at room temperature, warmer than ice. Aluminium conducts heat much better, so it pours heat into the ice far faster. That same fast flow, out of your hand, is why it feels colder.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>“Feels cold” means heat leaves you fast, not a lower temperature.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Misconceptions About Temperature” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const clamp = v => Math.max(0, Math.min(1, v));
+let G = null, T = 0, done = false, last = performance.now();
+
+function build(){
+  const svg = Kit.$('pic');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f);
+  const colW = Math.min(W * 0.42, H * 0.75);
+  const plateH = Math.max(H * 0.11, 18);
+  const plateTop = H * 0.56;
+  const s = Math.min(colW * 0.46, H * 0.32);
+  const defs = Kit.mk('defs', {}, svg);
+  const gA = Kit.mk('linearGradient', {id: 'gal', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#f2f4f7'}, gA);
+  Kit.mk('stop', {offset: '.5', 'stop-color': '#b9c0c9'}, gA);
+  Kit.mk('stop', {offset: '1', 'stop-color': '#7d8692'}, gA);
+  const gP = Kit.mk('linearGradient', {id: 'gpl', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#4a4f5c'}, gP);
+  Kit.mk('stop', {offset: '1', 'stop-color': '#1f222a'}, gP);
+  const gI = Kit.mk('linearGradient', {id: 'gice', x1: 0, y1: 0, x2: 1, y2: 1}, defs);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#ffffff'}, gI);
+  Kit.mk('stop', {offset: '1', 'stop-color': '#a8dcf5'}, gI);
+
+  // caption at the top
+  const cap = Kit.mk('text', {x: W / 2, y: fs * 1.4, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
+  cap.textContent = 'Both plates: room temperature';
+
+  const sides = [
+    {name: 'ALUMINIUM', sub: 'feels colder', fill: 'url(#gal)', rate: 1.15, n: 10, speed: 1.1, cx: W * 0.27},
+    {name: 'PLASTIC', sub: 'feels warmer', fill: 'url(#gpl)', rate: 0.3, n: 3, speed: 0.3, cx: W * 0.73}
+  ];
+  sides.forEach(sd => {
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: sd.cx - colW / 2, y: plateTop, width: colW, height: plateH, rx: plateH * 0.2, fill: sd.fill, stroke: 'rgba(0,0,0,.35)', 'stroke-width': 1}, g);
+    sd.puddle = Kit.mk('ellipse', {cx: sd.cx, cy: plateTop, rx: 1, ry: 1, fill: '#7cc8ef', opacity: 0}, g);
+    sd.dotsG = Kit.mk('g', {}, g);
+    sd.dots = [];
+    for (let i = 0; i < sd.n; i++) {
+      sd.dots.push({el: Kit.mk('circle', {r: Math.max(2.5, s * 0.045), fill: '#ff7a1a'}, sd.dotsG), p: i / sd.n, lane: (i + 0.5) / sd.n});
+    }
+    sd.cube = Kit.mk('rect', {fill: 'url(#gice)', stroke: '#5fb3dd', 'stroke-width': 1.5}, g);
+    sd.shine = Kit.mk('rect', {fill: '#fff', opacity: .8}, g);
+    const t1 = Kit.mk('text', {x: sd.cx, y: plateTop + plateH + fs * 1.5, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.05}, svg);
+    t1.textContent = sd.name;
+    const t2 = Kit.mk('text', {x: sd.cx, y: plateTop + plateH + fs * 3.0, 'text-anchor': 'middle', fill: 'var(--k)', opacity: .7, 'font-family': 'var(--hand)', 'font-size': fs * 1.05}, svg);
+    t2.textContent = sd.sub;
+    sd.g = g;
+  });
+  G = {W, H, plateTop, plateH, s, colW, sides};
+  render();
+}
+
+function render(){
+  if (!G) return;
+  const {plateTop, s, colW} = G;
+  G.sides.forEach(sd => {
+    const m = clamp(T * sd.rate);
+    sd.m = m;
+    const h = s * (1 - 0.94 * m), w = s * (1 - 0.3 * m);
+    const r = Math.min(h / 2, s * 0.12 * (1 + m * 2));
+    sd.cube.setAttribute('x', sd.cx - w / 2); sd.cube.setAttribute('y', plateTop - h);
+    sd.cube.setAttribute('width', w); sd.cube.setAttribute('height', h); sd.cube.setAttribute('rx', r);
+    sd.cube.setAttribute('opacity', m >= 1 ? 0 : 1);
+    sd.shine.setAttribute('x', sd.cx - w / 2 + w * 0.14); sd.shine.setAttribute('y', plateTop - h + h * 0.14);
+    sd.shine.setAttribute('width', w * 0.12); sd.shine.setAttribute('height', Math.max(0, h * 0.45)); sd.shine.setAttribute('rx', w * 0.06);
+    sd.shine.setAttribute('opacity', m >= 0.9 ? 0 : 0.8);
+    const rx = s * 0.5 + m * colW * 0.36;
+    sd.puddle.setAttribute('rx', rx); sd.puddle.setAttribute('ry', Math.max(2, rx * 0.09));
+    sd.puddle.setAttribute('opacity', Math.min(0.9, m * 4));
+    sd.cubeH = h; sd.cubeW = w;
+  });
+  drawDots();
+}
+
+function drawDots(){
+  if (!G) return;
+  const {plateTop, plateH} = G;
+  G.sides.forEach(sd => {
+    sd.dots.forEach(d => {
+      const y0 = plateTop + plateH * 0.85, y1 = plateTop - sd.cubeH * 0.55;
+      const x = sd.cx - sd.cubeW * 0.4 + sd.cubeW * 0.8 * d.lane;
+      d.el.setAttribute('cx', x);
+      d.el.setAttribute('cy', y0 + (y1 - y0) * d.p);
+      d.el.setAttribute('opacity', sd.m >= 1 ? 0 : Math.sin(Math.PI * d.p) * 0.95);
+    });
+  });
+}
+
+gsap.ticker.add(() => {
+  const now = performance.now(), dt = Math.min(0.05, (now - last) / 1000); last = now;
+  if (!G || Kit.calm) return;
+  G.sides.forEach(sd => sd.dots.forEach(d => { d.p = (d.p + dt * sd.speed) % 1; }));
+  drawDots();
+});
+
+Kit.$('t').addEventListener('input', e => {
+  T = e.target.value / 1000;
+  render();
+  if (!done && T >= 0.97) {
+    done = true;
+    Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  }
+});
+
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  G.sides.forEach((sd, i) => gsap.from([sd.cube, sd.shine], {y: -G.H * 0.25, opacity: 0, duration: .6, delay: i * .15, ease: 'bounce.out'}));
+};
+Kit.play.card = async () => {
+  const r = Kit.$('t');
+  for (let v = 0; v <= 1000; v += 125) { r.value = v; r.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(z => setTimeout(z, 40)); }
+  await new Promise(z => setTimeout(z, 600));
+};
+Kit.single();
+</script>
+</html>

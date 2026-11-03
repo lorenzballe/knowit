@@ -1,0 +1,37 @@
+{
+  "id": "nature-tree-pressure-climb",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What pressure difference must a 100 m tree make to lift water?",
+  "answer": "A 100 m tree must create about a 10-atmosphere pressure difference between its roots and leaves to lift water. Each 10 m of water height adds roughly one atmosphere that has to be overcome. Evaporating leaves create suction, but that alone doesn't explain it.",
+  "move": "Every 10 m of water height costs about 1 atmosphere: 100 m needs 10.",
+  "keywords": [
+    "tree",
+    "trunk",
+    "water",
+    "pressure",
+    "atmosphere"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question: What pressure difference must a 100 m tall tree generate to lift water? A treetop can be dragged up until the tree stands 100 m tall, to show the height."
+  },
+  "source": "Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=BickMFHAZR0&t=38s",
+  "written": "2026-11-03"
+}

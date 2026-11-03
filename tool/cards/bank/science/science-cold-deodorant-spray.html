@@ -1,0 +1,157 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-cold-deodorant-spray -->
+<title>Why does a deodorant spray feel cold?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{display:block;width:100%;height:100%;flex:1;min-height:0;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+.hit{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap the parts">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COLD SPRAY</span></div>
+    <h2 class="q">Why does a deodorant spray feel cold?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A deodorant can spraying toward a thermometer"></svg>
+    </div>
+    <p class="say" id="say">Tap the three glowing spots: the can, the nozzle, the mist.</p>
+    <div id="why" class="gone"><p class="body">The can holds propane gas, packed in tight. As it leaves the nozzle it expands, and an expanding gas pulls in heat, just like a fridge's refrigerant. Propane also burns, so never use a spray near a flame.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The cold isn't the deodorant: it's the propane expanding.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {found: new Set(), temp: .74, g: null, done: false};
+const TXT = {
+  can: 'Propane gas, packed in tight',
+  noz: 'Nozzle: the gas bursts out and expands',
+  mist: 'Expanding gas soaks up heat: it feels cold'
+};
+const NS = 'http://www.w3.org/2000/svg';
+function wrap(str, maxW, fs){
+  const cw = fs * .56, out = []; let line = '';
+  str.split(' ').forEach(w => {
+    const t = line ? line + ' ' + w : w;
+    if (t.length * cw > maxW && line){ out.push(line); line = w; } else line = t;
+  });
+  if (line) out.push(line); return out;
+}
+function textBlock(parent, x, y, str, maxW, fs, fill, anchor){
+  const t = Kit.mk('text', {x, y, 'font-size': fs, 'font-weight': 700, fill, 'text-anchor': anchor || 'start', style: 'font-family:var(--body)'}, parent);
+  wrap(str, maxW, fs).forEach((l, i) => { const s = document.createElementNS(NS, 'tspan'); s.setAttribute('x', x); s.setAttribute('dy', i ? fs * 1.3 : 0); s.textContent = l; t.appendChild(s); });
+  return t;
+}
+function tempColor(t){ // t 1 warm -> 0 cold
+  const a = [229, 72, 77], b = [59, 130, 246];
+  return `rgb(${a.map((v, i) => Math.round(b[i] + (v - b[i]) * t)).join(',')})`;
+}
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f * .95, W * .045));
+  const G = {W, H, fs};
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'metal', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+  Kit.mk('stop', {offset: '0', style: 'stop-color:var(--k);stop-opacity:.75'}, lg);
+  Kit.mk('stop', {offset: '.35', style: 'stop-color:var(--k);stop-opacity:1'}, lg);
+  Kit.mk('stop', {offset: '1', style: 'stop-color:var(--k);stop-opacity:.85'}, lg);
+
+  // can
+  const cx = W * .25, cw = Math.min(W * .3, H * .3), bt = H * .44, bb = H * .96;
+  const capT = bt - H * .1;
+  Kit.mk('rect', {x: cx - cw / 2, y: bt, width: cw, height: bb - bt, rx: cw * .16, fill: 'url(#metal)'}, svg);
+  Kit.mk('rect', {x: cx - cw * .32, y: bt + 6, width: cw * .08, height: (bb - bt) - 12, rx: cw * .04, fill: '#fff', opacity: .22}, svg);
+  Kit.mk('rect', {x: cx - cw * .38, y: capT, width: cw * .76, height: bt - capT + 4, rx: cw * .1, fill: 'var(--k)', opacity: .55}, svg);
+  const nx = cx + cw * .38, ny = capT + (bt - capT) * .4;
+  Kit.mk('rect', {x: cx - cw * .14, y: capT - H * .03, width: cw * .28, height: H * .035, rx: 3, fill: 'var(--k)'}, svg);
+  Kit.mk('circle', {cx: nx, cy: ny, r: Math.max(3, cw * .05), fill: 'var(--k)'}, svg);
+  G.nx = nx; G.ny = ny;
+
+  // thermometer
+  const tx = W * .89, tw = Math.max(12, W * .055), tt = H * .14, tb = H * .74, br = tw * .95;
+  textBlock(svg, tx, H * .08, 'TEMP', 100, Math.max(12, fs * .85), 'var(--k)', 'middle');
+  Kit.mk('rect', {x: tx - tw / 2, y: tt, width: tw, height: tb - tt + br, rx: tw / 2, fill: 'none', stroke: 'var(--k)', 'stroke-width': 3}, svg);
+  for (let i = 1; i < 6; i++){ const y = tt + (tb - tt) * i / 6; Kit.mk('line', {x1: tx - tw / 2 - 8, x2: tx - tw / 2 - 2, y1: y, y2: y, stroke: 'var(--k)', 'stroke-width': 2, opacity: .5}, svg); }
+  const col = Kit.mk('rect', {x: tx - tw * .22, width: tw * .44, rx: tw * .22}, svg);
+  const bulb = Kit.mk('circle', {cx: tx, cy: tb + br * .6, r: br, stroke: 'var(--k)', 'stroke-width': 3}, svg);
+  G.setT = t => { const y = tt + 6 + (tb - tt - 6) * (1 - t); col.setAttribute('y', y); col.setAttribute('height', tb + br * .6 - y); const c = tempColor(t); col.setAttribute('fill', c); bulb.setAttribute('fill', c); };
+  G.setT(S.temp);
+
+  // spray layer
+  G.mist = Kit.mk('g', {}, svg);
+  G.mx = W * .62; G.my = ny;
+
+  // labels already found
+  G.labels = Kit.mk('g', {}, svg);
+  const L = {
+    can: () => textBlock(G.labels, cx, bt + (bb - bt) * .22, TXT.can, cw * .86, fs, 'var(--c)', 'middle'),
+    noz: () => textBlock(G.labels, W * .04, H * .05, TXT.noz, W * .66, fs, 'var(--k)'),
+    mist: () => textBlock(G.labels, W * .44, ny + H * .15, TXT.mist, W * .36, fs, 'var(--k)')
+  };
+  G.L = L;
+  S.found.forEach(k => L[k]());
+
+  // hotspots
+  G.spots = {};
+  const spots = {can: [cx, bt + (bb - bt) * .62], noz: [nx, ny], mist: [G.mx, ny]};
+  const r = Math.max(22, W * .07);
+  Object.entries(spots).forEach(([k, [x, y]]) => {
+    if (S.found.has(k)) return;
+    const g = Kit.mk('g', {class: 'hit', 'data-k': k}, svg);
+    const ring = Kit.mk('circle', {cx: x, cy: y, r: r * .55, fill: 'none', stroke: k === 'can' ? 'var(--c)' : 'var(--k)', 'stroke-width': 3}, g);
+    Kit.mk('circle', {cx: x, cy: y, r: r * .18, fill: k === 'can' ? 'var(--c)' : 'var(--k)'}, g);
+    Kit.mk('circle', {cx: x, cy: y, r, fill: 'transparent'}, g);
+    if (!Kit.calm) gsap.to(ring, {attr: {r: r * .85}, opacity: .2, duration: 1, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+    g.addEventListener('click', () => tap(k));
+    G.spots[k] = g;
+  });
+  S.g = G;
+}
+function spray(){
+  const G = S.g; if (!G) return;
+  const target = Math.max(.12, S.temp - .24);
+  if (Kit.calm){ S.temp = target; G.setT(S.temp); return; }
+  for (let i = 0; i < 46; i++){
+    const p = Kit.mk('circle', {cx: G.nx, cy: G.ny, r: 1.5 + Kit.rnd() * 3, fill: 'var(--k)', opacity: .6}, G.mist);
+    const d = G.W * (.4 + Kit.rnd() * .2), spread = (Kit.rnd() - .5) * G.H * .26;
+    gsap.to(p, {attr: {cx: G.nx + d, cy: G.ny + spread, r: 5 + Kit.rnd() * 6}, opacity: 0, duration: .9 + Kit.rnd() * .5, delay: Kit.rnd() * .9, ease: 'power2.out', onComplete: () => p.remove()});
+  }
+  gsap.to(S, {temp: target, duration: 1.4, ease: 'power2.out', onUpdate: () => S.g && S.g.setT(S.temp)});
+}
+function tap(k){
+  if (S.found.has(k)) return;
+  S.found.add(k); Kit.haptic('light');
+  const G = S.g;
+  const sp = G.spots[k]; if (sp){ gsap.killTweensOf(sp.querySelectorAll('circle')); sp.remove(); }
+  const t = G.L[k]();
+  if (!Kit.calm) gsap.from(t, {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+  if (k !== 'can') spray();
+  if (S.found.size === 3 && !S.done){
+    S.done = true;
+    setTimeout(() => {
+      Kit.haptic('success');
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      requestAnimationFrame(draw);
+      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, stagger: .1, duration: .45, ease: 'power3.out'});
+    }, Kit.calm ? 0 : 1300);
+  }
+}
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (const k of ['can', 'noz', 'mist']){
+    const el = Kit.$('pic').querySelector(`[data-k="${k}"]`);
+    if (el) el.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await wait(400);
+  }
+  await wait(2200);
+};
+Kit.single();
+</script>
+</html>

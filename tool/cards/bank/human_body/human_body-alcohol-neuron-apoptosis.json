@@ -1,0 +1,37 @@
+{
+  "id": "human_body-alcohol-neuron-apoptosis",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What can years of heavy drinking do to the neurons in your brain?",
+  "answer": "Heavy drinking over many years can trigger a neuron's own programmed death, called apoptosis. Ethanol can switch on a self-destruct program in the cell rather than leaving it numb and recovering. Lost neurons add up to cognitive decline and a higher risk of brain disease.",
+  "move": "Too much alcohol for too long can make neurons self-destruct.",
+  "keywords": [
+    "alcohol",
+    "neurons",
+    "apoptosis",
+    "ethanol",
+    "brain"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking what years of heavy drinking do to brain neurons. Three options: they go numb and fully recover, they grow faster to compensate, or they switch on a self-destruct program and die. The reader picks one, then rates how sure they are."
+  },
+  "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=r3KrMPQSUFs&t=444s",
+  "written": "2026-11-03"
+}

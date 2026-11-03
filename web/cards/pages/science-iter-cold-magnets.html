@@ -1,0 +1,157 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-iter-cold-magnets -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#pic{flex:1;min-height:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;border-radius:2cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,12.5px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Guess a number · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FUSION</span></div>
+    <h2 class="q">ITER's plasma hits 150 million °C. How cold must its magnets be?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the marker to guess the magnets' temperature.</p>
+    <div id="why" class="gone">
+      <p class="big">−269 °C</p>
+      <p class="body">ITER's magnets are superconductors: only at that deep cold do they carry current with no electrical resistance. That is how they make the huge magnetic field that holds the 150-million-degree plasma away from the walls, since no material could touch it.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>To hold the hottest thing on Earth, ITER needs some of the coldest magnets.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Fusione nucleare, a che punto è la ricerca? L'eccellenza del progetto ITER” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const T0 = 20, T1 = -273, REAL = -269;
+const S = {g: 20, moved: false, shown: false, locked: false, p: 0, w: 0, ready: false, armed: false};
+let G = {}, E = {};
+const fmt = t => t > 0 ? '+' + t : t < 0 ? '−' + (-t) : '0';
+const lerp = (a, b, k) => a + (b - a) * k;
+const coilCol = t => gsap.utils.interpolate('#d9733f', '#8fe6ff', Math.pow((T0 - t) / (T0 - T1), 1.4));
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = ''; E = {};
+  const {W, H, f} = Kit.fitSvg(svg); const fs = Math.max(12, f);
+  const xa = fs * 1.8, xb = W - fs * 1.8, sy = H - fs * 2.4;
+  const top = fs * 2.6, bot = sy - fs * 4.2, ch = Math.max(0, bot - top), cy = top + ch / 2, cx = W / 2;
+  const compact = ch < fs * 3;
+  const noRead = sy - fs * 3.8 < fs * 2.1;
+  const ry = ch * 0.36, rx = Math.max(0, Math.min(ry * 0.9, W * 0.3));
+  G = {W, H, fs, xa, xb, sy, cx, cy, rx, ry, compact, noRead};
+  const pos = t => xa + (t - T1) / (T0 - T1) * (xb - xa); G.pos = pos;
+  const defs = Kit.mk('defs', {}, svg);
+  const rg = Kit.mk('radialGradient', {id: 'pg'}, defs);
+  [['0', '#ffffff'], ['.3', '#ffe08a'], ['.65', '#ff8a3d'], ['1', '#ff3d6e']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, rg));
+  const lg = Kit.mk('linearGradient', {id: 'tg'}, defs);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#8fe6ff'}, lg); Kit.mk('stop', {offset: '1', 'stop-color': '#d9733f'}, lg);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: fs * 1.2, fill: '#0a1128'}, svg);
+  if (!noRead) E.read = Kit.mk('text', {x: fs, y: fs * 1.6, fill: '#fff', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700}, svg);
+  E.coils = [];
+  if (!compact) {
+    E.vessel = Kit.mk('ellipse', {cx, cy, rx, ry, fill: '#050818', 'stroke-width': fs * 0.25}, svg);
+    E.field = [.84, .68].map(k => Kit.mk('ellipse', {cx, cy, rx: rx * k * 0.82, ry: ry * k * 0.82, fill: 'none', stroke: '#8fe6ff', 'stroke-width': 2, 'stroke-dasharray': '6 5'}, svg));
+    E.plasma = Kit.mk('ellipse', {cx, cy, fill: 'url(#pg)'}, svg);
+    E.pl1 = Kit.mk('text', {x: cx, y: cy - fs * 0.15, 'text-anchor': 'middle', fill: '#2a0b00', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 800}, svg); E.pl1.textContent = '150 million';
+    E.pl2 = Kit.mk('text', {x: cx, y: cy + fs * 1.15, 'text-anchor': 'middle', fill: '#2a0b00', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 800}, svg); E.pl2.textContent = '°C';
+    const cw = Math.max(rx, ry) * 0.2, chh = cw * 0.55;
+    for (let i = 0; i < 10; i++) {
+      const a = i / 10 * Math.PI * 2 + Math.PI / 10;
+      const x = cx + rx * 1.24 * Math.cos(a), y = cy + ry * 1.2 * Math.sin(a);
+      const ang = Math.atan2(ry * Math.cos(a), -rx * Math.sin(a)) * 180 / Math.PI;
+      E.coils.push(Kit.mk('rect', {x: x - cw / 2, y: y - chh / 2, width: cw, height: chh, rx: chh * 0.3, transform: `rotate(${ang} ${x} ${y})`}, svg));
+    }
+  }
+  Kit.mk('line', {x1: xa, y1: sy, x2: xb, y2: sy, stroke: 'url(#tg)', 'stroke-width': fs * 0.5, 'stroke-linecap': 'round'}, svg);
+  [-273, -200, -100, 0].forEach(t => {
+    Kit.mk('line', {x1: pos(t), y1: sy + fs * 0.4, x2: pos(t), y2: sy + fs * 0.75, stroke: '#9fb0d8', 'stroke-width': 1.5}, svg);
+    const tx = Kit.mk('text', {x: pos(t), y: sy + fs * 1.8, 'text-anchor': 'middle', fill: '#9fb0d8', 'font-family': 'var(--mono)', 'font-size': fs}, svg);
+    tx.textContent = t === 0 ? '0 °C' : fmt(t);
+  });
+  E.real = Kit.mk('g', {}, svg);
+  const rxp = pos(REAL);
+  Kit.mk('path', {d: `M${rxp} ${sy - fs * 0.45}l${-fs * 0.45} ${-fs * 0.7}h${fs * 0.9}z`, fill: '#8fe6ff'}, E.real);
+  const rl = Kit.mk('text', {x: Math.max(fs * 0.6, rxp - fs * 0.6), y: sy - fs * 3.0, fill: '#8fe6ff', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 800}, E.real);
+  rl.textContent = 'real: −269 °C';
+  E.hand = Kit.mk('circle', {cy: sy, r: fs * 0.8, fill: '#fff', 'stroke-width': 3}, svg);
+  E.glab = Kit.mk('text', {y: sy - fs * 1.4, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, svg);
+  update();
+}
+
+function update() {
+  if (!E.hand) return;
+  const {cx, cy, rx, ry, fs, pos, W} = G, p = S.p;
+  const t = S.shown ? Math.round(lerp(S.g, REAL, p)) : S.g;
+  const col = coilCol(t);
+  E.coils.forEach(c => c.setAttribute('fill', col));
+  if (E.read) {
+    E.read.setAttribute('fill', col);
+    E.read.textContent = S.shown && p > .98 ? 'Magnets −269 °C · no resistance' : `Magnets at ${fmt(t)} °C`;
+  }
+  if (E.plasma) {
+    const wob = (1 - p) * S.w * 0.05;
+    E.plasma.setAttribute('rx', Math.max(0, rx * (lerp(0.96, 0.6, p) + wob)));
+    E.plasma.setAttribute('ry', Math.max(0, ry * (lerp(0.96, 0.6, p) - wob)));
+    E.vessel.setAttribute('stroke', gsap.utils.interpolate('#ff5a3d', '#4a5a8a', p));
+    E.field.forEach(l => l.setAttribute('opacity', p));
+  }
+  E.real.setAttribute('opacity', p);
+  const hx = pos(S.g);
+  E.hand.setAttribute('cx', hx); E.hand.setAttribute('stroke', coilCol(S.g));
+  E.glab.setAttribute('x', Math.min(Math.max(hx, fs * 5), W - fs * 5));
+  E.glab.textContent = S.moved ? `guess: ${fmt(S.g)} °C` : `drag me · ${fmt(S.g)} °C`;
+}
+
+function setFrom(e) {
+  const r = Kit.$('pic').getBoundingClientRect();
+  const x = e.clientX - r.left;
+  S.g = Math.round(Math.min(T0, Math.max(T1, T1 + (x - G.xa) / (G.xb - G.xa) * (T0 - T1))));
+  S.moved = true; update();
+}
+let dragging = false;
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  if (S.locked) return; dragging = true;
+  try { pic.setPointerCapture(e.pointerId); } catch (_) {}
+  setFrom(e); Kit.haptic('selection');
+});
+pic.addEventListener('pointermove', e => { if (dragging && !S.locked) setFrom(e); });
+const end = () => { if (!dragging) return; dragging = false; if (S.moved && !S.armed) { S.armed = true; sure.on(); } };
+pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  S.locked = true;
+  const ok = S.g <= -250, said = `${fmt(S.g)} °C`;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  S.shown = true;
+  if (Kit.calm) { S.p = 1; update(); }
+  else gsap.to(S, {p: 1, duration: 1.8, ease: 'power2.inOut', onUpdate: update});
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+Kit.onShow.card = () => { S.ready = true; draw(); };
+new ResizeObserver(() => { if (S.ready) draw(); }).observe(Kit.$('stage'));
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.to(S, {w: 1, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut', onUpdate: update});
+  gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const r = Kit.$('pic').getBoundingClientRect(), y = r.top + G.sy;
+  const ev = (type, t) => pic.dispatchEvent(new PointerEvent(type, {clientX: r.left + G.pos(t), clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', 0); ev('pointermove', -120); ev('pointermove', -200); ev('pointerup', -200);
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2100));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "history-pyramid-top-third",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How much of a pyramid's stone sits in its top third?",
+  "answer": "A pyramid narrows in both width and depth as it rises, so its top third is a third as tall, wide and deep. That makes it under 4% of the stone. That is why levers are suspected for the top levels.",
+  "move": "The top third of a pyramid's height holds only about 4% of its stone.",
+  "keywords": [
+    "pyramid",
+    "stone",
+    "levers",
+    "egypt",
+    "volume"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A 3D model of a pyramid with its top third of height highlighted in red. It asks what share of all the pyramid's stone is in that top third, with options about 33%, about 15%, about 4%, and only about 4%.",
+    "graded": false
+  },
+  "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=268s",
+  "written": "2026-11-03"
+}

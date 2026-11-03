@@ -1,0 +1,37 @@
+{
+  "id": "medicine-radiation-cancer",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is a major consequence of radiation exposure?",
+  "answer": "Radiation can cause cancer. It damages the DNA inside cells, and those changes are mutations. Mutations can ruin tissues and turn a healthy cell into a cancer cell.",
+  "move": "Radiation mutates cells, and mutations can become cancer.",
+  "keywords": [
+    "radiation",
+    "dna",
+    "cancer",
+    "mutation",
+    "cell"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cell is drawn on the page beneath the question 'What is a major consequence of radiation exposure?' Tapping the cell hits its DNA with radiation. The reveal says radiation can cause cancer by mutating cells."
+  },
+  "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=wQmnztyXwVA&t=42s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,188 @@
+<!doctype html>
+<!-- slug: science-kelvin-vortex-atoms -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#zoom{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 6cqw;cursor:pointer}
+#steps{font:700 max(1.7cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Zoom in · step by step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VORTEX ATOMS</span></div>
+    <h2 class="q">What was Lord Kelvin's theory of atoms?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl"><button id="zoom">Zoom in ›</button><span id="steps">1 / 4</span></div>
+      <div id="why" class="gone"><p class="big">Atoms as knotted smoke rings of ether</p><p class="body">Tait's smoke rings held their shape, and a vortex ring in a perfect fluid should last forever. So Kelvin said atoms are tiny vortex rings in the ether, and each kind of knot makes a different element.</p></div>
+    </div>
+    <p class="say" id="say">Tap Zoom in to go from a smoke box down to an atom.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Kelvin, 1867: an atom is a knotted, spinning ring of ether.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let step = 0, busy = false, scenes = [], origins = [], loops = [], W, H, fs;
+const M = (t, a, p) => Kit.mk(t, a, p);
+const INK = 'var(--k)', BG = 'var(--c)';
+
+function txt(p, x, y, s, opt = {}) {
+  const t = M('text', {x, y, 'text-anchor': opt.a || 'middle',
+    style: `font:${opt.w || 700} ${opt.size || fs}px var(--body);fill:${opt.fill || INK};${opt.op ? 'opacity:' + opt.op : ''}`}, p);
+  t.textContent = s; return t;
+}
+function caption(g, a, b) {
+  txt(g, W / 2, fs * 1.3, a, {size: fs * 1.15});
+  if (b) txt(g, W / 2, fs * 2.75, b, {w: 500, op: .7});
+}
+function spin(p, x, y, r, dir, sw) {
+  const o = M('g', {transform: `translate(${x},${y})`}, p);
+  const g = M('g', {}, o);
+  const a0 = 0, a1 = Math.PI * 1.5;
+  M('path', {d: `M${r},0 A${r},${r} 0 1 1 ${r * Math.cos(a1)},${r * Math.sin(a1) * 1}`,
+    style: `fill:none;stroke:${INK};stroke-width:${sw};stroke-linecap:round`}, g);
+  const hx = r * Math.cos(a1), hy = r * Math.sin(a1), h = sw * 2.6;
+  M('path', {d: `M${hx - h},${hy - h * .7} L${hx + h * .3},${hy} L${hx - h},${hy + h * .7}`,
+    style: `fill:none;stroke:${INK};stroke-width:${sw};stroke-linecap:round;stroke-linejoin:round`}, g);
+  if (dir < 0) g.setAttribute('transform', 'scale(1,-1)');
+  if (!Kit.calm) {
+    const inner = M('g', {}, o); inner.appendChild(g);
+    loops.push(gsap.to(inner, {rotation: dir * 360, svgOrigin: '0 0', duration: 2.2, ease: 'none', repeat: -1}));
+  }
+}
+
+function s0() {
+  const g = M('g', {}, Kit.$('pic'));
+  caption(g, '1867 · Tait\u2019s smoke box', 'Tap the cloth, out pops a ring');
+  const cy = H * .55, bw = W * .3, bh = Math.min(H * .36, bw * 1.15), bx = W * .07, by = cy - bh / 2;
+  M('rect', {x: bx, y: by, width: bw, height: bh, rx: 6, style: `fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:${INK};stroke-width:2.5`}, g);
+  // cloth on the back
+  let d = `M${bx},${by + 4}`; for (let i = 1; i <= 8; i++) d += ` Q${bx - 8 * (i % 2 ? 1 : -1)},${by + bh * (i - .5) / 8} ${bx},${by + bh * i / 8}`;
+  M('path', {d, style: `fill:none;stroke:${INK};stroke-width:2;opacity:.6`}, g);
+  const hx = bx + bw, rx = bh * .07, ry = bh * .22;
+  M('ellipse', {cx: hx, cy, rx: rx * .8, ry, style: `fill:${BG};stroke:${INK};stroke-width:2`}, g);
+  for (let i = 0; i < 3; i++) {
+    const e = M('ellipse', {cx: hx + (W * .85 - hx) * (i + .5) / 3, cy, rx, ry, style: `fill:none;stroke:${INK};stroke-width:${Math.max(4, bh * .06)};opacity:.75`}, g);
+    if (!Kit.calm) loops.push(gsap.fromTo(e, {attr: {cx: hx + rx}, opacity: .9}, {attr: {cx: W * .93}, opacity: 0, duration: 2.7, ease: 'power1.out', repeat: -1, delay: i * .9}));
+  }
+  txt(g, bx + bw / 2, by + bh + fs * 1.7, 'box of smoke', {w: 600});
+  txt(g, W * .7, by + bh + fs * 1.7, 'smoke rings', {w: 600});
+  return [g, `${W * .7} ${cy}`];
+}
+function s1() {
+  const g = M('g', {}, Kit.$('pic'));
+  caption(g, 'Zoom in: the ring spins', 'Smoke whirls round its own core');
+  const cx = W / 2, cy = H * .5, rx = W * .33, tw = Math.min(W, H) * .1, ry = Math.min(H * .14, rx * .38);
+  M('ellipse', {cx, cy, rx, ry, style: `fill:none;stroke:color-mix(in srgb,var(--k) 22%,transparent);stroke-width:${tw}`}, g);
+  M('ellipse', {cx, cy, rx, ry, style: `fill:none;stroke:${INK};stroke-width:1.5;stroke-dasharray:4 5;opacity:.6`}, g);
+  spin(g, cx - rx, cy, tw * .62, -1, Math.max(2.5, tw * .07));
+  spin(g, cx + rx, cy, tw * .62, 1, Math.max(2.5, tw * .07));
+  const y = cy + ry + tw + fs * 1.4;
+  txt(g, cx, y, 'In a perfect fluid this', {w: 600});
+  txt(g, cx, y + fs * 1.45, 'spin never stops: stable forever', {w: 600});
+  return [g, `${W / 2} ${H * .5}`];
+}
+function s2() {
+  const g = M('g', {}, Kit.$('pic'));
+  caption(g, 'Kelvin: that is an atom!', 'Made not of smoke, but of ether');
+  for (let i = 0; i < 150; i++) {
+    const c = M('circle', {cx: Kit.rnd() * W, cy: fs * 3.6 + Kit.rnd() * (H - fs * 5.6), r: 1.3 + Kit.rnd() * 1.6, style: `fill:${INK};opacity:${.15 + Kit.rnd() * .25}`}, g);
+    if (!Kit.calm) loops.push(gsap.to(c, {attr: {cx: '+=' + (Kit.rnd() * 12 - 6)}, duration: 2 + Kit.rnd() * 2, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+  }
+  const cx = W / 2, cy = H * .55, rx = Math.min(W, H) * .1, ry = rx * .4;
+  M('ellipse', {cx, cy, rx, ry, style: `fill:none;stroke:${INK};stroke-width:${Math.max(5, rx * .22)}`}, g);
+  spin(g, cx - rx, cy, rx * .2, -1, 2); spin(g, cx + rx, cy, rx * .2, 1, 2);
+  txt(g, cx, cy - ry - fs * 1.6, 'one atom = one ring', {w: 700});
+  txt(g, cx, H - fs * .6, 'ETHER: invisible, everywhere', {w: 700, op: .75});
+  return [g, `${W / 2} ${H * .55}`];
+}
+function trefoil(n) {
+  const pts = [];
+  for (let i = 0; i < n; i++) { const t = i / n * Math.PI * 2; pts.push([Math.sin(t) + 2 * Math.sin(2 * t), Math.cos(t) - 2 * Math.cos(2 * t)]); }
+  return pts;
+}
+function s3() {
+  const g = M('g', {}, Kit.$('pic'));
+  const full = H >= fs * 12;
+  caption(g, 'Each knot, one element', full ? 'Tie the ring a new way: new atom' : null);
+  const capB = full ? fs * 3.4 : fs * 1.9, below = full ? fs * 3.5 : fs * 2.0;
+  const room = Math.max(8, H - capB - below);
+  const r = Math.max(4, Math.min(W / 6 * .78, H * .2, room / 2 - 2)), cy = capB + room / 2, sw = Math.max(r < 12 ? 2 : 5, r * .15);
+  const ink = `fill:none;stroke:${INK};stroke-width:${sw};stroke-linecap:round`;
+  const under = `fill:none;stroke:${BG};stroke-width:${sw + 7};stroke-linecap:round`;
+  const cols = [W / 6, W / 2, W * 5 / 6], names = ['plain ring', 'linked', 'knotted'], el = ['element A', 'element B', 'element C'];
+  // plain ring
+  M('circle', {cx: cols[0], cy, r: r * .8, style: ink}, g);
+  // Hopf link
+  const R = r * .62, dx = r * .38, ax = cols[1] - dx, bx = cols[1] + dx;
+  M('circle', {cx: ax, cy, r: R, style: ink}, g);
+  M('circle', {cx: bx, cy, r: R, style: under}, g); M('circle', {cx: bx, cy, r: R, style: ink}, g);
+  const th = Math.atan2(-Math.sqrt(R * R - dx * dx), dx), arc = (a, b) => `M${ax + R * Math.cos(a)},${cy + R * Math.sin(a)} A${R},${R} 0 0 1 ${ax + R * Math.cos(b)},${cy + R * Math.sin(b)}`;
+  M('path', {d: arc(th - .35, th + .35), style: under.replace('round', 'butt')}, g); M('path', {d: arc(th - .4, th + .4), style: ink}, g);
+  // trefoil with alternating crossings
+  const N = 360, P = trefoil(N), s = r / 3.1, X = p => cols[2] + p[0] * s, Y = p => cy + p[1] * s;
+  const seg = (i0, i1) => { let d = ''; for (let i = i0; i <= i1; i++) { const p = P[(i + N) % N]; d += (i === i0 ? 'M' : 'L') + X(p).toFixed(1) + ',' + Y(p).toFixed(1); } return d; };
+  M('path', {d: seg(0, N), style: under}, g); M('path', {d: seg(0, N), style: ink}, g);
+  const cr = [];
+  for (let i = 0; i < N; i++) for (let j = i + 40; j < N; j++) {
+    if (N - (j - i) < 40) continue;
+    const dd = Math.hypot(P[i][0] - P[j][0], P[i][1] - P[j][1]);
+    if (dd < .12) { const c = cr.find(c => Math.abs(c.i - i) < 15 && Math.abs(c.j - j) < 15); if (!c) cr.push({i, j, d: dd}); else if (dd < c.d) Object.assign(c, {i, j, d: dd}); }
+  }
+  const passes = []; cr.forEach((c, k) => { passes.push({t: c.i, k, first: true}); passes.push({t: c.j, k, first: false}); });
+  passes.sort((a, b) => a.t - b.t);
+  passes.forEach((p, n) => { if (n % 2 === 0 && p.first) { M('path', {d: seg(p.t - 12, p.t + 12), style: under.replace('round', 'butt')}, g); M('path', {d: seg(p.t - 14, p.t + 14), style: ink}, g); } });
+  cols.forEach((x, i) => { txt(g, x, cy + r + fs * 1.4, names[i], {w: 700}); if (full) txt(g, x, cy + r + fs * 2.85, el[i], {w: 500, op: .65}); });
+  return [g, `${W / 2} ${cy}`];
+}
+
+function draw() {
+  loops.forEach(t => t.kill()); loops = [];
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  ({W, H} = Kit.fitSvg(svg)); fs = Math.max(12, Math.min(H * .05, W * .042));
+  const out = [s0(), s1(), s2(), s3()];
+  scenes = out.map(o => o[0]); origins = out.map(o => o[1]);
+  scenes.forEach((g, i) => { g.style.opacity = i === step ? 1 : 0; g.style.visibility = i === step ? 'visible' : 'hidden'; });
+}
+
+function goTo(n) {
+  const old = scenes[step], nw = scenes[n], o = origins[step];
+  step = n; Kit.$('steps').textContent = `${n + 1} / 4`;
+  nw.style.visibility = 'visible';
+  if (Kit.calm) { old.style.opacity = 0; old.style.visibility = 'hidden'; nw.style.opacity = 1; return Promise.resolve(); }
+  return new Promise(res => {
+    gsap.to(old, {scale: 4, opacity: 0, svgOrigin: o, duration: .6, ease: 'power2.in', onComplete: () => { old.style.visibility = 'hidden'; }});
+    gsap.fromTo(nw, {scale: .35, opacity: 0, svgOrigin: origins[n]}, {scale: 1, opacity: 1, svgOrigin: origins[n], duration: .6, delay: .35, ease: 'power3.out', onComplete: res});
+  });
+}
+
+Kit.$('zoom').addEventListener('click', async () => {
+  if (busy || step >= 3) return;
+  busy = true; Kit.haptic('light');
+  await goTo(step + 1);
+  busy = false;
+  if (step === 3) {
+    Kit.haptic('success');
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(draw);
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(scenes[step], {opacity: 0, scale: .9, svgOrigin: origins[step], duration: .6, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 3; i++) { Kit.$('zoom').click(); await w(1100); }
+  await w(600);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "nature-tsunami-no-wall",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do people often just stand and watch an approaching tsunami?",
+  "answer": "A tsunami rarely looks like the wall of water seen in films. It looks like a tide rising, only very fast. From far away you can't sense its speed, so people stay and watch.",
+  "move": "No wall doesn't mean no danger: a sea rising fast means run.",
+  "keywords": [
+    "tsunami",
+    "beach",
+    "sea",
+    "wave",
+    "danger"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A beach scene with the sea in view. The reader is asked to draw the sea's surface with a finger as a tsunami reaches the beach, then to see why people often just stand and watch."
+  },
+  "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=1065s",
+  "written": "2026-11-03"
+}

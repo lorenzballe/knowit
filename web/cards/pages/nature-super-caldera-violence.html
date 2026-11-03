@@ -1,0 +1,149 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-super-caldera-violence -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+#acts{display:flex;gap:2.4cqw}
+.btn{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.btn.on{background:var(--k);color:var(--c);box-shadow:none}
+.btn:disabled{opacity:.35;cursor:default}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0}
+.grd{fill:var(--k)}
+.pit{fill:#8d8278}
+.mag{fill:#e8502a}
+.cond{stroke:#e8502a;fill:none}
+.ash1{fill:#c9c1b8}
+.ash2{fill:#4a403a}
+.lab{fill:var(--k);stroke:var(--c);paint-order:stroke;stroke-linejoin:round;font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
+    <h2 class="q">Why can a flat caldera out-blast the tallest explosive volcano?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="acts">
+        <button class="btn" id="b1">1 · Erupt the tall volcano</button>
+        <button class="btn" id="b2" disabled>2 · Erupt the flat caldera</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">A super caldera barely shows on the surface, so it hides its power. Beneath it sits a huge magma chamber.</p>
+        <p class="body">When it erupts, the ground above collapses into the emptying chamber and it all blows out at once: energy orders of magnitude beyond an ultra-plinian eruption.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Erupt the tall volcano first, then the flat one.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Violence is set by the chamber below, not the mountain above.</div>
+    <div class="foot"><span class="src">Source · Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let step = 0, R = {};
+const NS = 'http://www.w3.org/2000/svg';
+function txt(p, x, y, s, size, cls){ const t = Kit.mk('text', {x, y, 'text-anchor':'middle', 'font-size':size, 'stroke-width':size*.28, class: cls||'lab'}, p); t.textContent = s; return t; }
+
+function build(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f*.9, 12), gy = H*.6;
+  // caldera cloud (behind everything above ground)
+  const cal = Kit.mk('g', {}, svg);
+  const col = Kit.mk('rect', {x:W*.6, y:H*.08, width:W*.24, height:gy-H*.08, class:'ash2'}, cal);
+  const cap = Kit.mk('g', {}, cal);
+  for (let i = 0; i < 10; i++){
+    Kit.mk('circle', {cx:W*(.04+.105*i), cy:H*(.11+.035*Math.sin(i*1.7)), r:H*(.075+.025*((i*37)%5)/5), class:'ash2'}, cap);
+  }
+  Kit.mk('rect', {x:W*.02, y:H*.1, width:W*.96, height:H*.1, class:'ash2'}, cap);
+  const flow = Kit.mk('ellipse', {cx:W*.72, cy:gy, rx:W*.3, ry:H*.045, class:'ash2'}, cal);
+  const calLab = txt(svg, W*.77, H*.05, 'super caldera column', fs);
+  // plinian plume
+  const pk = gy - H*.17, px = W*.25;
+  const pl = Kit.mk('g', {}, svg);
+  const pcol = Kit.mk('rect', {x:px-W*.02, y:H*.2, width:W*.04, height:pk-H*.2, class:'ash1'}, pl);
+  const pcap = Kit.mk('g', {}, pl);
+  Kit.mk('circle', {cx:px-W*.06, cy:H*.21, r:H*.045, class:'ash1'}, pcap);
+  Kit.mk('circle', {cx:px+W*.06, cy:H*.21, r:H*.045, class:'ash1'}, pcap);
+  Kit.mk('circle', {cx:px, cy:H*.19, r:H*.06, class:'ash1'}, pcap);
+  const plLab = txt(svg, px, H*.19 - H*.06 - fs*.5, 'ultra-plinian column', fs);
+  // ground
+  Kit.mk('rect', {x:0, y:gy, width:W, height:H-gy, class:'grd'}, svg);
+  Kit.mk('path', {d:`M${W*.04},${gy+1} L${px-W*.03},${pk} L${px-W*.012},${pk+H*.012} L${px+W*.012},${pk+H*.012} L${px+W*.03},${pk} L${W*.46},${gy+1}Z`, class:'grd'}, svg);
+  Kit.mk('path', {d:`M${W*.52},${gy+1} Q${W*.56},${gy-H*.025} ${W*.6},${gy+1} M${W*.84},${gy+1} Q${W*.88},${gy-H*.025} ${W*.93},${gy+1}`, class:'grd'}, svg);
+  const lw = Math.max(H*.008, 2.5);
+  const cond = Kit.mk('line', {x1:px, y1:gy+H*.17, x2:px, y2:pk+H*.012, class:'cond', 'stroke-width':lw}, svg);
+  Kit.mk('ellipse', {cx:px, cy:gy+H*.2, rx:W*.06, ry:H*.035, class:'mag'}, svg);
+  txt(svg, px, gy+H*.07, 'ultra-plinian volcano', fs);
+  txt(svg, px, gy+H*.29, 'small chamber', fs);
+  // super caldera
+  Kit.mk('rect', {x:W*.6, y:gy, width:W*.24, height:H*.11, class:'pit'}, svg);
+  const ch = Kit.mk('ellipse', {cx:W*.72, cy:gy+H*.19, rx:W*.21, ry:H*.085, class:'mag'}, svg);
+  const lid = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x:W*.6, y:gy-.5, width:W*.24, height:H*.11, class:'grd'}, lid);
+  txt(lid, W*.72, gy+H*.07, 'super caldera', fs);
+  const chLab = txt(svg, W*.72, gy+H*.235, 'huge chamber', fs);
+  R = {W, H, gy, col, cap, flow, calLab, pcol, pcap, plLab, cond, ch, lid, chLab};
+  gsap.set([col, pcol], {transformOrigin:'50% 100%'});
+  gsap.set([cap, pcap], {transformOrigin:'50% 100%'});
+  gsap.set(flow, {transformOrigin:'50% 50%'});
+  gsap.set(ch, {transformOrigin:'50% 100%'});
+  state();
+}
+function state(){
+  const s1 = step >= 1, s2 = step >= 2;
+  gsap.set(R.pcol, {scaleY: s1?1:0}); gsap.set(R.pcap, {scale: s1?1:0, opacity: s1?1:0}); gsap.set(R.plLab, {opacity: s1?1:0});
+  gsap.set(R.cond, {opacity: s1?1:.35});
+  gsap.set(R.col, {scaleY: s2?1:0}); gsap.set(R.cap, {scale: s2?1:0, opacity: s2?1:0}); gsap.set(R.flow, {scaleX: s2?1:0, opacity: s2?1:0}); gsap.set(R.calLab, {opacity: s2?1:0});
+  gsap.set(R.lid, {y: s2?R.H*.075:0}); gsap.set(R.ch, {scaleY: s2?.4:1});
+  gsap.set(R.chLab, {opacity: s2?0:1});
+}
+function erupt1(){
+  step = 1; Kit.haptic('light');
+  if (Kit.calm){ state(); return 0; }
+  const t = gsap.timeline();
+  t.to(R.cond, {opacity:1, duration:.25})
+   .fromTo(R.pcol, {scaleY:0}, {scaleY:1, duration:.7, ease:'power2.out'})
+   .fromTo(R.pcap, {scale:0, opacity:0}, {scale:1, opacity:1, duration:.5, ease:'back.out(1.6)'}, '-=.15')
+   .fromTo(R.plLab, {opacity:0}, {opacity:1, duration:.3});
+  return 1700;
+}
+function erupt2(){
+  step = 2; Kit.haptic('success');
+  if (Kit.calm){ state(); return 0; }
+  const t = gsap.timeline();
+  t.to(R.chLab, {opacity:0, duration:.2})
+   .to(R.lid, {y:R.H*.075, duration:.6, ease:'bounce.out'})
+   .to(R.ch, {scaleY:.4, duration:.9, ease:'power2.in'}, '<')
+   .fromTo(R.col, {scaleY:0}, {scaleY:1, duration:.8, ease:'power3.out'}, '<.1')
+   .fromTo(R.flow, {scaleX:0, opacity:0}, {scaleX:1, opacity:1, duration:.7, ease:'power2.out'}, '<.2')
+   .fromTo(R.cap, {scale:.1, opacity:0}, {scale:1, opacity:1, duration:.8, ease:'power2.out'}, '-=.3')
+   .fromTo(R.calLab, {opacity:0}, {opacity:1, duration:.3});
+  return 2600;
+}
+Kit.$('b1').addEventListener('click', () => {
+  if (step !== 0) return;
+  Kit.$('b1').classList.add('on'); Kit.$('b1').disabled = true; Kit.$('b2').disabled = false;
+  erupt1();
+});
+Kit.$('b2').addEventListener('click', () => {
+  if (step !== 1) return;
+  Kit.$('b2').classList.add('on'); Kit.$('b2').disabled = true;
+  const ms = erupt2();
+  setTimeout(() => { Kit.hide('acts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why .body,#keep', {opacity:0, y:8, stagger:.1, duration:.4}); }, ms);
+});
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.btn', {opacity:0, y:10, stagger:.08, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('b1').click(); await w(1900);
+  Kit.$('b2').click(); await w(3400);
+};
+Kit.single();
+</script>
+</html>

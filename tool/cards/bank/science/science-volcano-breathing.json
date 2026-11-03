@@ -1,0 +1,37 @@
+{
+  "id": "science-volcano-breathing",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.uncertainty",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What slowly lifts and sinks the ground at Campi Flegrei?",
+  "answer": "The cause is fluids and magma pushing from below. This is bradisismo: magma and fluids push the ground up, and it sinks back as they ease. The movement is slow and cyclic, like the volcano breathing. In the 1970s and 80s it was intense enough that quakes shook Pozzuoli and whole areas were evacuated.",
+  "move": "Under Campi Flegrei the ground breathes: up when fluids push, down when they ease.",
+  "keywords": [
+    "campi flegrei",
+    "bradisismo",
+    "pozzuoli",
+    "magma",
+    "fluids"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Animated diagram of ground rising and sinking at a coastline. Question: what causes it? Options: sea tides, fluids and magma pushing from below, or old buildings settling. Then choose how sure you are."
+  },
+  "source": "Geopop, “BRADISISMO: IL RESPIRO DEL SUPERVULCANO CAMPI FLEGREI - Documentario - Sub-Eng” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=e3gBmoEu47M&t=22s",
+  "written": "2026-11-03"
+}

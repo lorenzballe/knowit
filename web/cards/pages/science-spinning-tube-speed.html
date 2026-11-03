@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-spinning-tube-speed -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.4cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#opts{display:flex;flex-direction:column;gap:1.1cqh}
+#why{display:flex;flex-direction:column;gap:1.2cqh}
+.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.big,.body{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ADDING SPEEDS</span></div>
+    <h2 class="q">The tube moves forward; the O spins forward too. How fast does it pass?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Slower than the tube</button>
+        <button class="opt" data-i="1">Same speed as the tube</button>
+        <button class="opt" data-i="2">Faster than the tube</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Faster: the speeds add</p><p class="body">The O spins the way the tube moves, so the speeds add. The X spins backwards, so it's slower.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch the arrows add up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>On a spinning, moving object, spin adds on one side and subtracts on the other.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1;
+const st = {p: 0};
+let G = null, spinTw = null, rot = {a: 0};
+
+const ink = op => `fill:var(--k);opacity:${op}`;
+function arrow(g, x1, y, x2, w, op){
+  if (Math.abs(x2 - x1) < 2) return;
+  const d = Math.sign(x2 - x1), h = w * 2.6;
+  Kit.mk('line', {x1, y1: y, x2: x2 - d*h*0.7, y2: y, style: `stroke:var(--k);stroke-width:${w};opacity:${op};stroke-linecap:round`}, g);
+  Kit.mk('path', {d: `M${x2},${y} L${x2-d*h},${y-h*0.65} L${x2-d*h},${y+h*0.65}Z`, style: ink(op)}, g);
+}
+function txt(g, x, y, s, anchor, op){
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor, style: `font:700 ${G.f}px var(--body);${ink(op)}`}, g);
+  t.textContent = s; return t;
+}
+
+function paint(){
+  if (!G) return;
+  const {cx, cy, R, L, s, gap, f, w, streakG, arrG} = G, p = st.p;
+  streakG.innerHTML = ''; arrG.innerHTML = '';
+  // the tube's own motion, always shown
+  arrow(arrG, cx, cy, cx + L, w, .9);
+  txt(arrG, cx + L + f*0.5, cy + f*0.35, 'tube moves', 'start', 1);
+  if (p <= 0) return;
+  const a = Math.min(1, p*2), b = Math.max(0, p*2 - 1);
+  const mr = R*0.14;
+  // blur streaks: longer = faster across your view
+  const so = (L + s)*0.62*p, sx = (L - s)*0.62*p;
+  Kit.mk('rect', {x: cx - so, y: cy - R - mr, width: so, height: mr*2, rx: mr, fill: 'url(#blur)'}, streakG);
+  Kit.mk('rect', {x: cx - sx, y: cy + R - mr, width: sx, height: mr*2, rx: mr, fill: 'url(#blur)'}, streakG);
+  // O: tube + spin
+  const y1 = cy - R - gap;
+  arrow(arrG, cx, y1, cx + L*a, w*0.8, .38);
+  if (b > 0) arrow(arrG, cx + L, y1, cx + L + s*b, w*1.2, 1);
+  txt(arrG, cx - R*0.5, y1 - f*0.9, 'O: tube + spin = faster', 'start', p);
+  // X: tube − spin
+  const y2 = cy + R + gap;
+  arrow(arrG, cx, y2, cx + L*a, w*0.8, .38);
+  if (b > 0) arrow(arrG, cx + L, y2 + w*3.2, cx + L - s*b, w*1.2, 1);
+  txt(arrG, cx - R*0.5, y2 + w*3.2 + f*1.5, 'X: tube − spin = slower', 'start', p);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const R = Math.min(W*0.19, H*0.2);
+  const cx = W*0.38, cy = H*0.5;
+  const gap = Math.max(f*1.3, R*0.3);
+  const L = W*0.25, s = W*0.13, w = Math.max(2.5, f*0.2);
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'blur', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+  Kit.mk('stop', {offset: 0, style: 'stop-color:var(--k);stop-opacity:0'}, lg);
+  Kit.mk('stop', {offset: 1, style: 'stop-color:var(--k);stop-opacity:.55'}, lg);
+  // tube cross-section
+  Kit.mk('circle', {cx, cy, r: R, style: `fill:color-mix(in srgb,var(--k) 9%,transparent);stroke:var(--k);stroke-width:${w}`}, svg);
+  const stripes = Kit.mk('g', {}, svg);
+  for (let i = 0; i < 6; i++){
+    const t = i*Math.PI/6;
+    Kit.mk('line', {x1: cx - Math.cos(t)*R*0.82, y1: cy - Math.sin(t)*R*0.82, x2: cx + Math.cos(t)*R*0.82, y2: cy + Math.sin(t)*R*0.82, style: `stroke:var(--k);stroke-width:${w*0.5};opacity:.22`}, stripes);
+  }
+  stripes.setAttribute('transform', `rotate(${rot.a} ${cx} ${cy})`);
+  // spin arrow on the left side (clockwise: top goes forward)
+  const r = R + gap*0.45, t1 = 135*Math.PI/180, t2 = 220*Math.PI/180;
+  const P = t => [cx + r*Math.cos(t), cy + r*Math.sin(t)];
+  const [ax, ay] = P(t1), [bx, by] = P(t2);
+  Kit.mk('path', {d: `M${ax},${ay} A${r},${r} 0 0 1 ${bx},${by}`, style: `fill:none;stroke:var(--k);stroke-width:${w};stroke-linecap:round`}, svg);
+  const tx = -Math.sin(t2), ty = Math.cos(t2), nx = -ty, ny = tx, h = w*2.6;
+  Kit.mk('path', {d: `M${bx + tx*h},${by + ty*h} L${bx + nx*h*0.7},${by + ny*h*0.7} L${bx - nx*h*0.7},${by - ny*h*0.7}Z`, style: ink(1)}, svg);
+  const sl = Kit.mk('text', {x: cx - r - f*0.4, y: cy + f*0.35, 'text-anchor': 'end', style: `font:700 ${f}px var(--body);${ink(1)}`}, svg);
+  sl.textContent = 'spin';
+  const streakG = Kit.mk('g', {}, svg);
+  // marks: O on the side spinning forward, X on the side spinning back
+  const mr = R*0.14;
+  Kit.mk('circle', {cx, cy: cy - R, r: mr, style: `fill:var(--c);stroke:var(--k);stroke-width:${w}`}, svg);
+  const xg = Kit.mk('g', {style: `stroke:var(--k);stroke-width:${w};stroke-linecap:round`}, svg);
+  Kit.mk('circle', {cx, cy: cy + R, r: mr*1.15, style: 'fill:var(--c);stroke:none'}, xg);
+  Kit.mk('line', {x1: cx - mr*0.8, y1: cy + R - mr*0.8, x2: cx + mr*0.8, y2: cy + R + mr*0.8}, xg);
+  Kit.mk('line', {x1: cx - mr*0.8, y1: cy + R + mr*0.8, x2: cx + mr*0.8, y2: cy + R - mr*0.8}, xg);
+  const arrG = Kit.mk('g', {}, svg);
+  G = {cx, cy, R, L, s, gap, f, w, streakG, arrG, stripes};
+  paint();
+  if (spinTw) spinTw.kill();
+  if (!Kit.calm) spinTw = gsap.to(rot, {a: '+=360', duration: 2.4, ease: 'none', repeat: -1,
+    onUpdate: () => G.stripes.setAttribute('transform', `rotate(${rot.a} ${G.cx} ${G.cy})`)});
+};
+
+function reveal(){
+  if (Kit.calm) { st.p = 1; paint(); return; }
+  gsap.to(st, {p: 1, duration: 1.6, ease: 'power2.out', onUpdate: paint});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1900)); };
+Kit.single();
+</script>
+</html>

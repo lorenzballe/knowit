@@ -1,0 +1,326 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The wheel that swings</title>
+<!-- A 2 kg wheel hangs from a rope, with a luggage scale in it, tied to one end of its axle. A stand
+     holds the other end up; "Let go" takes it away. With no spin the wheel tips over and dangles; with
+     spin it stays level and swings round the rope (precession), slower the faster it spins. It is a
+     real rigid-body simulation (the heavy symmetric top: theta, phi, psi, a little friction at the
+     rope), drawn in 3D on a canvas: the spin arrow, the twist of the weight drawn at its tip, the
+     weight. Last step: Laithwaite's 1974 claim that spinning gyroscopes lose weight, against the scale
+     in the rope, which keeps reading the whole 2 kg.
+     Inspired by Veritasium, "Anti-Gravity Wheel?" and "Gyroscopic Precession". Touch: a slider, taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<style>
+#stage{display:flex}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block}
+.ctl{display:flex;align-items:center;gap:3cqw}
+.ctl label{display:flex;flex-direction:column;gap:.6cqh;flex:none;min-width:16cqw}
+.ctl label b{font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.ctl label span{font:800 max(2.1cqh,13px)/1 var(--body)}
+.ctl input{flex:1;min-width:0;touch-action:none;height:4.4cqh}
+.ctl .btn{flex:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* The smallest card has no room left for the controls once the story is told: the wheel keeps going. */
+@container (max-height:520px){.answered .ctl{display:none}.answered .in{gap:1.5cqh}}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Spin it, let go · a gyroscope">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPIN IT, LET GO</span></div>
+    <h2 class="q">A spinning wheel held by one end floats instead of falling. Does it get lighter?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A wheel hanging from a rope tied to one end of its axle, with a scale in the rope and arrows for its spin, the twist of its weight, and its weight."></canvas>
+    </div>
+    <div class="ctl">
+      <label for="spin"><b>Spin</b><span id="rpm" class="num">0 rpm</span></label>
+      <input type="range" id="spin" min="0" max="600" step="30" value="0" aria-label="Spin, in turns a minute" data-drag>
+      <button class="btn" id="go">Let go</button>
+    </div>
+    <p class="say" id="say">A 2 kg wheel hangs from a rope tied to one end of its axle. It isn't spinning. <b>Let go</b> of the other end.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The weight's twist turns the spin sideways, so it swings round instead of tipping.</div>
+    <div class="foot"><span class="src">Source · OpenStax, University Physics 1, §11.4; RI archive, Laithwaite 1974</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), spin = Kit.$('spin'), rpmEl = Kit.$('rpm'), go = Kit.$('go'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#10100c', WHITE = '#ffffff', HALO = 'rgba(0,229,160,.92)';
+  const ink = a => `rgba(16,16,12,${a})`;
+  // The wheel: 2 kg, most of it in the rim (I3), 30 cm from the rope to the hub (l), a rim 30 cm in radius (R).
+  const M = 2, l = 0.3, R = 0.3, G = 9.81, I3 = 0.16, I1 = 0.08 + M * l * l, FRICTION = 0.35, STUB = 0.1;
+  const EYE = 0.55, ce = Math.cos(EYE), se = Math.sin(EYE);  // looked at from a little above
+  const PHI0 = -0.55;                                           // the axle points right, a little towards you
+  const RPM = Math.PI / 30, SLOW = 150 * RPM;
+  let s = {th: Math.PI / 2, thd: 0, ph: PHI0, ps: 0};
+  let w3 = 0, free = false, alpha = 0, kg = null, rate = 0, prop = 0, sinceGo = 0, glowT = -1;
+  let phase = 0;   // 0 the start · 1 it has fallen · 2 it has swung · 3 the scale has spoken
+  let ctx = null, W = 0, H = 0, S = 1, cx = 0, cy = 0, last = 0, fs = 12, TOP = 40, FLOOR = 0;
+
+  // ---------- the physics: a heavy symmetric top hanging from a fixed point ----------
+  // theta is the axle's angle from straight up, phi its heading, psi the wheel's own turn. The spin w3
+  // and the angular momentum about the vertical (zero: it is let go from rest) never change.
+  function deriv(q) {
+    const sn = Math.sin(q.th), cs = Math.cos(q.th), s2 = sn * sn;
+    const phd = s2 > 1e-6 ? (-I3 * w3 * cs) / (I1 * s2) : 0;
+    const thdd = (I1 * phd * phd * sn * cs - I3 * w3 * phd * sn + M * G * l * sn - FRICTION * q.thd) / I1;
+    return {th: q.thd, thd: thdd, ph: phd, ps: w3 - phd * cs};
+  }
+  const KEYS = ['th', 'thd', 'ph', 'ps'];
+  const nudge = (q, d, h) => { const o = {}; for (const k of KEYS) o[k] = q[k] + d[k] * h; return o; };
+  function rk4(h) {
+    const a = deriv(s), b = deriv(nudge(s, a, h / 2)), c = deriv(nudge(s, b, h / 2)), d = deriv(nudge(s, c, h));
+    for (const k of KEYS) s[k] += h / 6 * (a[k] + 2 * b[k] + 2 * c[k] + d[k]);
+  }
+
+  // ---------- 3D on a flat canvas ----------
+  const add = (a, b, k = 1) => [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k];
+  const mul = (a, k) => [a[0] * k, a[1] * k, a[2] * k];
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const pr = p => [cx + p[0] * S, cy - S * (p[2] * ce + p[1] * se)];
+  const TOWARD_EYE = [0, -ce, se];
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    fs = Math.max(11.5, Math.min(14, W / 25));
+    TOP = fs * 3.2;                               // the beam, the hook and the scale
+    S = Math.min((W / 2 - 8) / 0.6, (H - TOP - 4 - fs * 1.1) / (R * ce + l * ce + R * se));
+    // Below the rope's end: the wheel hanging, and its label. Above: the rim, with room for the hub swinging
+    // to the back where the phone has it. What is left over goes mostly to a longer rope: the wheel hangs low.
+    const down = (l * ce + R * se) * S + fs * 1.1, room = H - TOP - 4 - down;
+    const up = Math.min((R * ce + l * se) * S, Math.max(R * ce * S, room));
+    cx = W / 2; cy = TOP + 4 + up + Math.max(0, room - up) * .7;
+    FLOOR = Math.min(H - fs * .55, cy + (l * ce + R * se) * S + fs * 1.3);
+  }
+
+  function poly(pts, close) { ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); if (close) ctx.closePath(); }
+  function arrow(a, b, w, head, col) {
+    const [x1, y1] = pr(a), [x2, y2] = pr(b), dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    if (len < 3) return null;
+    const ux = dx / len, uy = dy / len, hh = Math.min(head, len * .7);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = w; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2 - ux * hh * .7, y2 - uy * hh * .7); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - ux * hh - uy * hh * .5, y2 - uy * hh + ux * hh * .5); ctx.lineTo(x2 - ux * hh + uy * hh * .5, y2 - uy * hh - ux * hh * .5); ctx.closePath(); ctx.fill();
+    return [x2, y2, ux, uy];
+  }
+  // The twist: a white arrow outlined in ink, so it never reads as part of the spin.
+  function hollow(a, b) {
+    const [x1, y1] = pr(a), [x2, y2] = pr(b), dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+    if (len < 3) return null;
+    const ux = dx / len, uy = dy / len, hh = Math.min(fs * 1.05, len * .75), sw = Math.max(2.2, fs * .2), hw = hh * .62;
+    const nx = -uy, ny = ux, bx = x2 - ux * hh, by = y2 - uy * hh;
+    ctx.beginPath(); ctx.moveTo(x1 + nx * sw, y1 + ny * sw); ctx.lineTo(bx + nx * sw, by + ny * sw); ctx.lineTo(bx + nx * hw, by + ny * hw); ctx.lineTo(x2, y2);
+    ctx.lineTo(bx - nx * hw, by - ny * hw); ctx.lineTo(bx - nx * sw, by - ny * sw); ctx.lineTo(x1 - nx * sw, y1 - ny * sw); ctx.closePath();
+    ctx.fillStyle = WHITE; ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 1.6; ctx.lineJoin = 'round'; ctx.stroke();
+    return [x2, y2, ux, uy];
+  }
+  function text(t, x, y, weight = 700, col = INK) {
+    ctx.font = `${weight} ${fs}px Figtree`; ctx.lineJoin = 'round'; ctx.lineWidth = 3.5; ctx.strokeStyle = HALO;
+    ctx.strokeText(t, x, y); ctx.fillStyle = col; ctx.fillText(t, x, y);
+  }
+  const overlap = (a, b) => a[0] < b[0] + b[2] && b[0] < a[0] + a[2] && a[1] < b[1] + b[3] && b[1] < a[1] + a[3];
+  const inPoly = (x, y, pts) => { let c = false; for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) { const [xi, yi] = pts[i], [xj, yj] = pts[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
+  // A label beside an arrow's head, tried round the head and further out until it lands clear of the
+  // other labels, the scale, the rope and the wheel itself.
+  function place(t, head, bold, taken, wheelPts, hubXY) {
+    ctx.font = `${bold ? 800 : 700} ${fs}px Figtree`;
+    const w = ctx.measureText(t).width, h = fs * 1.15, [hx, hy, ux, uy] = head;
+    // On the wheel: a grid over the label falls inside the rim, or the rim (thin, seen edge on) runs through the label.
+    const onWheel = b => { for (let i = 0; i <= 2; i++) for (let j = 0; j <= 2; j++) if (inPoly(b[0] + b[2] * i / 2, b[1] + b[3] * j / 2, wheelPts)) return true;
+      return wheelPts.some(([x, y]) => x > b[0] - 2 && x < b[0] + b[2] + 2 && y > b[1] - 2 && y < b[1] + b[3] + 2); };
+    const cands = [];
+    for (const k of [.45, 1.4, 2.6]) for (const [dx, dy] of [[ux, uy], [uy, -ux], [-uy, ux], [0, 1], [0, -1], [1, 0], [-1, 0]]) {
+      const g = fs * k;
+      let x = hx + dx * g + (dx < -.35 ? -w : dx > .35 ? 0 : -w / 2), y = hy + dy * g + (dy > .35 ? 0 : dy < -.35 ? -h : -h / 2);
+      x = Math.max(2, Math.min(W - w - 2, x)); y = Math.max(TOP + 2, Math.min(H - h - 1, y));
+      cands.push([x, y, w, h]);
+    }
+    const free = b => !taken.some(o => overlap(o, [b[0] - 6, b[1] - 2, b[2] + 12, b[3] + 4]));   // with a gap, so two labels never read as one
+    let box = cands.find(b => free(b) && !onWheel(b));
+    if (!box) {
+      // Still on the wheel (the head lies over the disc): slide out from the hub, past the rim.
+      let dx = hx - hubXY[0], dy = hy - hubXY[1], d = Math.hypot(dx, dy);
+      if (d < 1) { dx = -1; dy = 0; d = 1; }
+      dx /= d; dy /= d;
+      for (let k = 1; k <= 16 && !box; k++) for (const [ex, ey] of [[dx, dy], [-dy, dx], [dy, -dx], [-dx, -dy]]) {
+        const g = fs * .8 * k, x = Math.max(2, Math.min(W - w - 2, hx + ex * g - w / 2 + ex * w / 2)), y = Math.max(TOP + 2, Math.min(H - h - 1, hy + ey * g - h / 2 + ey * h / 2));
+        const c = [x, y, w, h]; if (free(c) && !onWheel(c)) { box = c; break; }
+      }
+    }
+    box = box || cands.find(free) || cands[0];
+    taken.push(box); text(t, box[0], box[1] + fs * .88, bold ? 800 : 700);
+  }
+
+  function render() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+    const sn = Math.sin(s.th), cs = Math.cos(s.th);
+    const n = [sn * Math.cos(s.ph), sn * Math.sin(s.ph), cs];             // along the axle, rope to wheel
+    const u = [-Math.sin(s.ph), Math.cos(s.ph), 0], v = cross(n, u);       // the wheel's own plane
+    const hub = mul(n, l), pivot = [0, 0, 0], tipOf = add(hub, n, STUB);   // the axle runs on past the hub to its free end
+    const blur = Math.min(1, Math.abs(w3) / 25);
+    const rimAt = (a, r = R) => pr(add(hub, add(mul(u, Math.cos(a)), mul(v, Math.sin(a))), r));
+    const rimPts = []; for (let i = 0; i <= 64; i++) rimPts.push(rimAt(i / 64 * 2 * Math.PI));
+
+    // The floor: the wheel's shadow goes round with it.
+    const [shx] = pr(hub);
+    ctx.fillStyle = ink(.1); ctx.beginPath(); ctx.ellipse(shx, FLOOR - hub[1] * se * S * .3, R * S * .8, Math.max(3, R * S * .13), 0, 0, 2 * Math.PI); ctx.fill();
+
+    // The path the hub takes once it swings: a circle round the rope, with the way it goes drawn on the
+    // far side of the circle, where nothing else is.
+    const r0 = l * sn, z0 = l * cs, ringAt = a => pr([r0 * Math.cos(a), r0 * Math.sin(a), z0]);
+    let swingHead = null;
+    if (free && w3 > 0) {
+      ctx.setLineDash([3, 5]); ctx.strokeStyle = ink(.42); ctx.lineWidth = 1.4;
+      const ring = []; for (let i = 0; i <= 72; i++) ring.push(ringAt(i / 72 * 2 * Math.PI));
+      poly(ring); ctx.stroke(); ctx.setLineDash([]);
+      if (sinceGo > .6 && r0 > .15) {
+        const a0 = s.ph + Math.PI - .5, a1 = s.ph + Math.PI + .5, arc = [];
+        for (let i = 0; i <= 20; i++) arc.push(ringAt(a0 + (a1 - a0) * i / 20));
+        ctx.strokeStyle = INK; ctx.lineWidth = 2.2; ctx.lineCap = 'round'; poly(arc.slice(0, -2)); ctx.stroke();
+        const [ex, ey] = arc[20], [px, py] = arc[17], d = Math.hypot(ex - px, ey - py) || 1, ux = (ex - px) / d, uy = (ey - py) / d, hh = fs * .8;
+        ctx.fillStyle = INK; ctx.beginPath(); ctx.moveTo(ex, ey); ctx.lineTo(ex - ux * hh - uy * hh * .5, ey - uy * hh + ux * hh * .5); ctx.lineTo(ex - ux * hh + uy * hh * .5, ey - uy * hh - ux * hh * .5); ctx.closePath(); ctx.fill();
+        const [mx, my] = arc[10], [ox, oy] = pr([0, 0, z0]), od = Math.hypot(mx - ox, my - oy) || 1;
+        swingHead = [mx, my, (mx - ox) / od, (my - oy) / od];
+      }
+    }
+
+    // The beam and the hook the scale hangs from.
+    const bw = Math.max(fs * 5.2, 60), bh = fs * 1.7, bx = cx - bw / 2, by = fs * .7;
+    ctx.strokeStyle = INK; ctx.lineCap = 'round';
+    ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx - bw * .85, 2); ctx.lineTo(cx + bw * .85, 2); ctx.stroke();
+    ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(cx, 2); ctx.lineTo(cx, by); ctx.stroke();
+
+    const rope = () => { ctx.strokeStyle = INK; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.moveTo(cx, by + bh); ctx.lineTo(...pr(pivot)); ctx.stroke(); };
+    const wheel = () => {
+      ctx.fillStyle = ink(.07 + .1 * blur); poly(rimPts, true); ctx.fill();
+      ctx.strokeStyle = ink(.75 - .55 * blur); ctx.lineWidth = 1.2;            // spokes blur out as it spins faster
+      for (let k = 0; k < 8; k++) { ctx.beginPath(); ctx.moveTo(...pr(hub)); ctx.lineTo(...rimAt(alpha + k * Math.PI / 4, R * .97)); ctx.stroke(); }
+      ctx.strokeStyle = INK; ctx.lineWidth = Math.max(4, S * .03); poly(rimPts); ctx.stroke();
+      const inner = []; for (let i = 0; i <= 64; i++) inner.push(rimAt(i / 64 * 2 * Math.PI, R * .9));
+      ctx.strokeStyle = ink(.55); ctx.lineWidth = 1.2; poly(inner); ctx.stroke();
+      const trail = Math.min(1.6, .14 + blur * 1.45), steps = 14;               // white tape on the tyre, smeared by the spin
+      ctx.lineWidth = Math.max(2.5, S * .016);
+      for (let i = 0; i < steps; i++) { ctx.strokeStyle = `rgba(255,255,255,${(1 - i / steps) * .95})`; ctx.beginPath(); ctx.moveTo(...rimAt(alpha - trail * i / steps)); ctx.lineTo(...rimAt(alpha - trail * (i + 1) / steps)); ctx.stroke(); }
+      ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(...pr(hub), Math.max(3, S * .022), 0, 2 * Math.PI); ctx.fill();
+    };
+    const axle = () => {
+      ctx.strokeStyle = INK; ctx.lineWidth = Math.max(3, S * .02); ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(...pr(pivot)); ctx.lineTo(...pr(tipOf)); ctx.stroke();
+      ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(...pr(pivot), Math.max(3, S * .018), 0, 2 * Math.PI); ctx.fill();
+    };
+    // From the axle's free end: the spin, along the axle, as long as the spin is big, and the twist of
+    // the weight, flat and sideways. The weight itself hangs from the hub, past the rim.
+    const Llen = .18 * w3 / (600 * RPM), tdir = [-Math.sin(s.ph), Math.cos(s.ph), 0], tlen = .17 * sn;
+    const heads = [];
+    const spinArrow = () => { if (Llen > .012) heads.push(['spin', arrow(tipOf, add(tipOf, n, Llen), Math.max(3, S * .02), fs * .95, INK), true]); };
+    const twistArrow = () => { if (tlen > .03) heads.push(['twist', hollow(tipOf, add(tipOf, tdir, tlen)), true]); };
+    const weightArrow = () => { if (sn > .5) heads.push(['weight', arrow(hub, add(hub, [0, 0, -1], R + .08), 2, fs * .8, ink(.6)), false]); };
+    // The stand under the axle's free end, until you let go.
+    const stand = () => {
+      if (prop >= 1) return;
+      const [tx, ty] = pr(tipOf), foot = Math.min(H - 2, FLOOR - tipOf[1] * se * S * .3), d = prop * fs * 3, cw = fs * .55;
+      ctx.globalAlpha = 1 - prop; ctx.strokeStyle = INK; ctx.lineCap = 'round';
+      ctx.lineWidth = Math.max(3, S * .018); ctx.beginPath(); ctx.moveTo(tx, ty + cw + d); ctx.lineTo(tx, foot + d); ctx.stroke();
+      ctx.lineWidth = 2.4; ctx.beginPath(); ctx.moveTo(tx - cw, ty - cw * .5 + d); ctx.lineTo(tx - cw, ty + cw + d); ctx.lineTo(tx + cw, ty + cw + d); ctx.lineTo(tx + cw, ty - cw * .5 + d); ctx.stroke();
+      ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(tx - fs * 1.1, foot + d); ctx.lineTo(tx + fs * 1.1, foot + d); ctx.stroke();
+      ctx.globalAlpha = 1;
+    };
+
+    // Far to near: what is behind the wheel first.
+    const near = dot(n, TOWARD_EYE) > 0;     // the hub is nearer the eye than the rope
+    (near ? [rope, axle, wheel, weightArrow, stand, twistArrow, spinArrow] : [spinArrow, twistArrow, stand, wheel, weightArrow, axle, rope]).forEach(f => f());
+
+    // The scale in the rope: what the rope holds up, in kilograms. Its box and the rope are taken: no label lands on them.
+    const [, pvy] = pr(pivot);
+    const taken = [[bx - 6, 0, bw + 12, by + bh + 4], [cx - 3, by + bh, 6, Math.max(0, pvy - by - bh)]];
+    if (prop < 1) { const [tx, ty] = pr(tipOf), foot = FLOOR - tipOf[1] * se * S * .3; taken.push([tx - fs * 1.2, ty - fs * .6, fs * 2.4, foot - ty + fs * .6 + 3]); }
+    if (glowT >= 0) { const a = Kit.calm ? .7 : .45 + .3 * Math.sin(glowT * 5); ctx.strokeStyle = `rgba(255,255,255,${a})`; ctx.lineWidth = 4; ctx.beginPath(); ctx.roundRect(bx - 4, by - 4, bw + 8, bh + 8, 9); ctx.stroke(); }
+    ctx.fillStyle = INK; ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 6); ctx.fill();
+    ctx.fillStyle = WHITE; ctx.font = `700 ${fs}px "JetBrains Mono"`; ctx.textAlign = 'center';
+    ctx.fillText(kg == null ? 'scale' : `${Math.max(0, kg).toFixed(2)} kg`, cx, by + bh * .7); ctx.textAlign = 'left';
+
+    // Top left, once it swings: how long one turn round the rope takes.
+    let a1 = '', a2 = '';
+    if (free && w3 === 0) { a1 = 'no spin:'; a2 = 'it falls'; }
+    else if (free && sinceGo > .9 && Math.abs(rate) > .05) { a1 = `${(2 * Math.PI / Math.abs(rate)).toFixed(1)} s a turn`; a2 = 'round the rope'; }
+    if (a1) { text(a1, 0, fs * 1.05, 800); text(a2, 0, fs * 2.25, 600, ink(.75)); taken.push([0, 0, bx - 4, fs * 2.6]); }
+    if (phase >= 3 && kg != null) { const t = 'all 2 kg'; ctx.font = `800 ${fs}px Figtree`; const x = Math.min(W - ctx.measureText(t).width - 2, bx + bw + 9); text(t, x, by + bh * .7, 800); taken.push([x, 0, W - x, by + bh + 4]); }
+
+    const hubXY = pr(hub);
+    for (const [t, head, bold] of heads) if (head) place(t, head, bold, taken, rimPts, hubXY);
+    if (swingHead) place('swings this way', swingHead, false, taken, rimPts, hubXY);
+  }
+
+  // ---------- the clock ----------
+  function frame(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    if (free) {
+      let left = dt; while (left > 1e-9) { const h = Math.min(.0008, left); rk4(h); left -= h; }
+      const d = deriv(s), zdd = -l * (Math.cos(s.th) * s.thd * s.thd + Math.sin(s.th) * d.thd), want = M * (G + zdd) / G;
+      kg = kg == null ? want : kg + (want - kg) * Math.min(1, dt * 6);
+      rate += (d.ph - rate) * Math.min(1, dt * 1.6);
+      sinceGo += dt; prop = Math.min(1, prop + dt * 3.5);
+    }
+    if (glowT >= 0) glowT += dt;
+    alpha += (free ? deriv(s).ps : w3) * dt * .1;
+    render();
+    requestAnimationFrame(frame);
+  }
+
+  // ---------- the story ----------
+  const SAY = {
+    fell: 'No spin: its weight just tips it over, as you would expect. Now give it <b>spin</b> and let go again.',
+    sag: 'A little spin: it sags and whirls round fast. Give it more.',
+    swing: 'Like a spinning top, it stays up and swings round. The weight\'s <b>twist</b> adds spin sideways, so the <b>spin</b> turns instead of tipping. More spin, slower swing.',
+    scale: '<b>No.</b> The rope still holds <b>all 2 kg</b>, spinning or not. In 1974 the engineer Eric Laithwaite told the Royal Institution the opposite.',
+  };
+  function hold() {
+    free = false; s = {th: Math.PI / 2, thd: 0, ph: PHI0, ps: s.ps}; kg = null; rate = 0; prop = 0; sinceGo = 0;
+    go.textContent = 'Let go';
+  }
+  function letGo() {
+    free = true; kg = M; sinceGo = 0;
+    rate = w3 > 0 ? M * G * l / (I3 * w3) : 0;   // the steady swing, mgr / (I w): the reading starts near it
+    Kit.haptic('light');
+    if (w3 === 0) { phase = Math.max(phase, 1); say.innerHTML = SAY.fell; go.textContent = 'Catch it'; return; }
+    say.innerHTML = w3 < SLOW ? SAY.sag : SAY.swing;
+    if (phase < 2) phase = 2;
+    go.textContent = phase === 2 && w3 >= SLOW ? 'Is it lighter?' : 'Catch it';
+  }
+  function verdict() {
+    phase = 3; glowT = 0; say.innerHTML = SAY.scale; go.textContent = 'Catch it';
+    card.classList.add('answered'); Kit.show('keep'); Kit.haptic('success');
+  }
+  go.addEventListener('click', () => {
+    if (!free) letGo();
+    else if (go.textContent.startsWith('Is it')) verdict();
+    else { hold(); if (phase > 0 && phase < 3) say.innerHTML = 'Held level again. Set the spin, then <b>let go</b>.'; }
+  });
+  spin.addEventListener('input', () => {
+    const r = +spin.value; w3 = r * RPM; rpmEl.textContent = `${r} rpm`;
+    if (free) hold();
+    if (phase > 0 && phase < 3) say.innerHTML = r ? `Spinning at ${r} turns a minute. <b>Let go.</b>` : 'No spin. <b>Let go</b> and it falls.';
+  });
+
+  Kit.onShow.card = () => { layout(); render(); };
+  // The stage changes size as the story ends (the question shrinks, the box comes in): draw at the new size.
+  new ResizeObserver(() => { if (ctx) { layout(); render(); } }).observe(Kit.$('stage'));
+  let started = false;
+  const start = () => { if (!started) { started = true; requestAnimationFrame(frame); } };
+  Kit.onEnter.card = start;
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start();
+    go.click();                                   // no spin: it falls
+    await wait(Kit.calm ? 80 : 1300);
+    spin.value = 450; spin.dispatchEvent(new Event('input'));
+    await wait(60);
+    go.click();                                   // spinning: it swings round
+    await wait(Kit.calm ? 80 : 450);
+    go.click();                                   // is it lighter? the scale
+  };
+})();
+Kit.single();
+</script>
+</html>

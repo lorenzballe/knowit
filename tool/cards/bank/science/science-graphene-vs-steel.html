@@ -1,0 +1,177 @@
+<!doctype html>
+<!-- slug: science-graphene-vs-steel -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#sim{flex:1;min-height:0;width:100%;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+.hold{font:700 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.8cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
+.hold.on{transform:scale(.97);opacity:.85}
+.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Simulation · hold to load">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MATERIALS</span></div>
+    <h2 class="q">How much stronger is graphene than steel?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sim" aria-label="A steel strip and a graphene strip carrying the same growing weight"></svg>
+      <button class="hold" id="hold">Hold to add weight</button>
+      <div id="why" class="gone"><p class="big">200 to 300 times</p><p class="body">The same pull that snaps the steel strip is nothing to graphene: it keeps holding 200 to 300 times that load. It is also harder than diamond and very light.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button to hang the same weight on both strips.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Graphene is 200–300 times stronger than steel.</div>
+    <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let L = 0, holding = false, broken = false, done = false, speed = 1, last = 0;
+let g = null;
+const MAX = 300;
+
+function build(){
+  const svg = Kit.$('sim');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  g = {W, H, f, fs, svg};
+  const defs = Kit.mk('defs', {}, svg);
+  const pat = Kit.mk('pattern', {id: 'hex', width: 10, height: 17.32, patternUnits: 'userSpaceOnUse'}, defs);
+  Kit.mk('path', {d: 'M0 0 L5 2.89 L5 8.66 L0 11.55 M5 8.66 L10 11.55 M10 0 L5 2.89 M0 11.55 L0 17.32 M10 11.55 L10 17.32', fill: 'none', style: 'stroke:var(--c);opacity:.55', 'stroke-width': 1}, pat);
+  const grad = Kit.mk('linearGradient', {id: 'steelg', x1: 0, x2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#7d8792'}, grad);
+  Kit.mk('stop', {offset: .5, 'stop-color': '#d5dbe1'}, grad);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#7d8792'}, grad);
+
+  g.top = .09 * H; g.len0 = .32 * H;
+  g.xs = .15 * W; g.xg = .42 * W; g.sw = Math.max(.07 * W, 18);
+  // ceiling
+  Kit.mk('rect', {x: .03 * W, y: g.top - .025 * H, width: .52 * W, height: .025 * H, rx: 3, style: 'fill:var(--k)'}, svg);
+
+  // steel
+  g.sTop = Kit.mk('rect', {x: g.xs - g.sw / 2, y: g.top, width: g.sw, height: 10, fill: 'url(#steelg)', style: 'stroke:var(--k)', 'stroke-width': 1.5}, svg);
+  g.sLow = Kit.mk('g', {}, svg);
+  g.sLowR = Kit.mk('rect', {x: g.xs - g.sw / 2, width: g.sw, height: 10, fill: 'url(#steelg)', style: 'stroke:var(--k)', 'stroke-width': 1.5}, g.sLow);
+  g.sHook = Kit.mk('line', {x1: g.xs, x2: g.xs, style: 'stroke:var(--k)', 'stroke-width': 2}, g.sLow);
+  g.sW = Kit.mk('rect', {rx: 4, style: 'fill:var(--k)'}, g.sLow);
+  g.sT = Kit.mk('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', style: `fill:var(--c);font:700 ${fs}px var(--mono)`}, g.sLow);
+  if (broken) g.sLow.style.display = 'none';
+
+  // graphene
+  g.gR = Kit.mk('rect', {x: g.xg - g.sw / 2, y: g.top, width: g.sw, height: 10, style: 'fill:var(--k)'}, svg);
+  g.gP = Kit.mk('rect', {x: g.xg - g.sw / 2, y: g.top, width: g.sw, height: 10, fill: 'url(#hex)'}, svg);
+  g.gHook = Kit.mk('line', {x1: g.xg, x2: g.xg, style: 'stroke:var(--k)', 'stroke-width': 2}, svg);
+  g.gW = Kit.mk('rect', {rx: 4, style: 'fill:var(--k)'}, svg);
+  g.gT = Kit.mk('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', style: `fill:var(--c);font:700 ${fs}px var(--mono)`}, svg);
+
+  // names
+  const ny = H - fs * .6;
+  Kit.mk('text', {x: g.xs, y: ny, 'text-anchor': 'middle', style: `fill:var(--k);font:700 ${fs}px var(--body);letter-spacing:.05em`}, svg).textContent = 'STEEL';
+  Kit.mk('text', {x: g.xg, y: ny, 'text-anchor': 'middle', style: `fill:var(--k);font:700 ${fs}px var(--body);letter-spacing:.05em`}, svg).textContent = 'GRAPHENE';
+
+  // scale
+  g.ax = .7 * W; g.y0 = H - fs * 2.6; g.y1 = .06 * H;
+  const y = v => g.y0 - (g.y0 - g.y1) * v / MAX; g.y = y;
+  Kit.mk('rect', {x: g.ax - 7, y: y(300), width: 14, height: y(200) - y(300), rx: 3, style: 'fill:var(--k);opacity:.18'}, svg);
+  Kit.mk('line', {x1: g.ax, x2: g.ax, y1: g.y0, y2: g.y1, style: 'stroke:var(--k)', 'stroke-width': 2}, svg);
+  [100, 200, 300].forEach(v => {
+    Kit.mk('line', {x1: g.ax - 6, x2: g.ax, y1: y(v), y2: y(v), style: 'stroke:var(--k)', 'stroke-width': 2}, svg);
+    Kit.mk('text', {x: g.ax - 9, y: y(v), 'text-anchor': 'end', 'dominant-baseline': 'central', style: `fill:var(--k);font:600 ${fs}px var(--mono)`}, svg).textContent = '×' + v;
+  });
+  g.fill = Kit.mk('rect', {x: g.ax - 4, width: 8, rx: 2, style: 'fill:var(--k)'}, svg);
+  const lx = g.ax + 12, mid = y(250);
+  Kit.mk('text', {x: lx, y: mid - fs * .7, style: `fill:var(--k);font:700 ${fs}px var(--body)`}, svg).textContent = 'graphene';
+  Kit.mk('text', {x: lx, y: mid + fs * .7, style: `fill:var(--k);font:600 ${fs}px var(--mono)`}, svg).textContent = '200–300×';
+  Kit.mk('text', {x: lx, y: g.y0 - fs * .7, style: `fill:var(--k);font:700 ${fs}px var(--body)`}, svg).textContent = 'steel';
+  Kit.mk('text', {x: lx, y: g.y0 + fs * .7, style: `fill:var(--k);font:600 ${fs}px var(--mono)`}, svg).textContent = 'snaps ×1';
+  Kit.mk('line', {x1: g.ax - 8, x2: g.ax + 8, y1: y(1), y2: y(1), style: 'stroke:var(--k)', 'stroke-width': 3}, svg);
+  render();
+}
+
+function wsize(load){
+  const base = Math.min(.12 * g.W, .07 * g.H);
+  const k = 1 + .22 * Math.log2(1 + load);
+  return {w: Math.min(base * k, .24 * g.W), h: Math.min(base * .75 * k, .26 * g.H)};
+}
+function lab(v){ return '×' + (v < 10 ? v.toFixed(1) : Math.round(v)); }
+
+function render(){
+  if (!g) return;
+  const {top, len0, xs, xg} = g, hk = .03 * g.H;
+  if (!broken){
+    const len = len0 * (1 + .06 * Math.min(L, 1));
+    g.sTop.setAttribute('height', len * .55);
+    g.sLowR.setAttribute('y', top + len * .55); g.sLowR.setAttribute('height', len * .45);
+    const b = top + len, s = wsize(L);
+    g.sHook.setAttribute('y1', b); g.sHook.setAttribute('y2', b + hk);
+    g.sW.setAttribute('x', xs - s.w / 2); g.sW.setAttribute('y', b + hk); g.sW.setAttribute('width', s.w); g.sW.setAttribute('height', s.h);
+    g.sT.setAttribute('x', xs); g.sT.setAttribute('y', b + hk + s.h / 2); g.sT.textContent = lab(L);
+  } else {
+    g.sTop.setAttribute('height', len0 * .55);
+  }
+  const glen = len0 * (1 + .08 * L / MAX);
+  g.gR.setAttribute('height', glen); g.gP.setAttribute('height', glen);
+  const b = top + glen, s = wsize(L);
+  g.gHook.setAttribute('y1', b); g.gHook.setAttribute('y2', b + hk);
+  g.gW.setAttribute('x', xg - s.w / 2); g.gW.setAttribute('y', b + hk); g.gW.setAttribute('width', s.w); g.gW.setAttribute('height', s.h);
+  g.gT.setAttribute('x', xg); g.gT.setAttribute('y', b + hk + s.h / 2); g.gT.textContent = lab(L);
+  const fy = g.y(L);
+  g.fill.setAttribute('y', fy); g.fill.setAttribute('height', Math.max(0, g.y0 - fy));
+}
+
+function snap(){
+  broken = true; Kit.haptic('light');
+  render();
+  if (Kit.calm) { g.sLow.style.display = 'none'; return; }
+  gsap.to(g.sLow, {y: g.H, rotation: 14, transformOrigin: '50% 0%', opacity: 0, duration: .9, ease: 'power2.in', onComplete: () => { g.sLow.style.display = 'none'; }});
+}
+
+function say(){
+  const t = Kit.$('say');
+  if (L < 1) t.textContent = `Load ${lab(L)}. Keep holding…`;
+  else if (L < 200) t.textContent = `Steel snapped at ×1. Graphene still holds ${lab(L)}.`;
+  else t.textContent = `${lab(L)}: graphene's zone, 200 to 300 times steel.`;
+}
+
+function finish(){
+  done = true; holding = false;
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(build);
+}
+
+function tick(t){
+  const dt = last ? Math.min((t - last) / 1000, .05) : 0; last = t;
+  if (holding && !done){
+    L = Math.min(MAX, L + (.4 + 1.2 * L) * speed * dt);
+    if (L >= 1 && !broken) snap();
+    render(); say();
+    if (L >= MAX) finish();
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+const btn = Kit.$('hold');
+btn.addEventListener('pointerdown', e => { if (done) return; holding = true; btn.classList.add('on'); Kit.haptic('selection'); try { btn.setPointerCapture(e.pointerId); } catch(_){} e.preventDefault(); });
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => btn.addEventListener(ev, () => { holding = false; btn.classList.remove('on'); }));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onShow.card = build;
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#sim', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  speed = 6;
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1}));
+  const t0 = Date.now();
+  while (!done && Date.now() - t0 < 6000) await new Promise(r => setTimeout(r, 100));
+  if (!done){ L = MAX; render(); finish(); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

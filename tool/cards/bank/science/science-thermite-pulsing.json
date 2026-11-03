@@ -1,0 +1,38 @@
+{
+  "id": "science-thermite-pulsing",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How does a thermite flame front cross a bed of powder?",
+  "answer": "Thermite can cross powder steadily like a burning fuse, in bursts of pause and jump, or faster and faster all at once. Likely causes are trapped air between grains that expands and blasts unburnt powder away, or two grain kinds that must meet in the right ratio. People made thermite for 100 years before anyone noticed.",
+  "move": "Thermite doesn't flow: it builds up, bursts ahead, and pauses again.",
+  "keywords": [
+    "thermite",
+    "flame front",
+    "trapped air",
+    "powder",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page asking how a thermite flame front crosses a bed of powder: steadily like a burning fuse, in bursts of pause and jump, or faster and faster all at once. The reader picks a motion, then lights it.",
+    "graded": false
+  },
+  "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=507s",
+  "written": "2026-11-03"
+}

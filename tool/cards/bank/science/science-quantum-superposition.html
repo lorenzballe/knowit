@@ -1,0 +1,147 @@
+<!doctype html>
+<!-- slug: science-quantum-superposition -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · Quantum superposition</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#pic .ink{fill:var(--k)}
+#pic .line{stroke:var(--k);fill:none;stroke-linecap:round}
+#pic .orb{stroke:var(--k);fill:none;opacity:.35}
+#pic .lab{fill:var(--k);font-family:var(--body);font-weight:700}
+#pic .stat{fill:var(--k);font-family:var(--display);font-weight:700}
+#pic .tal{fill:var(--k);font-family:var(--mono);opacity:.85}
+.row{display:flex;align-items:center;gap:3cqw}
+.mix{display:flex;align-items:center;gap:2cqw;flex:1;min-width:0;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
+.mix input{flex:1;min-width:0;accent-color:var(--k)}
+.hold{font:700 max(2cqh,14px)/1.15 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;max-width:52cqw}
+.hold.down{transform:scale(.96);opacity:.85}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{margin:0}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · watch it unfold">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">QUANTUM BITS</span></div>
+    <h2 class="q">What is the state of an electron before it is measured?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div class="row">
+        <label class="mix">Up / down mix<input id="mix" type="range" min="10" max="90" value="50" step="5"></label>
+        <button class="hold" id="hold">Hold, then let go to measure</button>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button, let go to measure. Repeat a few times.</p>
+    <div id="why" class="gone"><p class="body">Before you measure it, the electron is in a superposition: spin up and spin down at once. Measuring always gives just one. The mix only sets how likely each one is.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Unmeasured, it is both at once; measured, it is one.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Does a Quantum Computer Work?” (YouTube, 2013)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let p = 0.5, state = 'super', last = null, nUp = 0, nDn = 0, holding = false, el = {}, spinT = null, flickT = null;
+const flick = {v: 0}, spin = {a: 0};
+
+function arrow(g, cx, y0, y1, dir, sw) {
+  Kit.mk('line', {x1: cx, y1: y0, x2: cx, y2: y1, class: 'line', 'stroke-width': sw}, g);
+  const h = sw * 2.6;
+  Kit.mk('polygon', {points: `${cx},${y1 - dir * h} ${cx - h * .8},${y1 + dir * h * .4} ${cx + h * .8},${y1 + dir * h * .4}`, class: 'ink'}, g);
+}
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const cx = W * .42, cy = H * .46, m = Math.min(W, H), r = m * .07, L = H * .21, sw = Math.max(3, m * .018);
+  const fs = Math.max(f, 13);
+  el.status = Kit.mk('text', {x: W / 2, y: fs * 1.3, 'text-anchor': 'middle', class: 'stat', 'font-size': fs * 1.15}, svg);
+  el.orbit = Kit.mk('g', {transform: `translate(${cx},${cy})`}, svg);
+  el.orb = Kit.mk('ellipse', {cx: 0, cy: 0, rx: r * 1.9, ry: r * .55, class: 'orb', 'stroke-width': Math.max(1.5, sw * .5)}, el.orbit);
+  el.up = Kit.mk('g', {}, svg); arrow(el.up, cx, cy - r - 4, cy - r - L, 1, sw);
+  el.dn = Kit.mk('g', {}, svg); arrow(el.dn, cx, cy + r + 4, cy + r + L, -1, sw);
+  el.e = Kit.mk('circle', {cx, cy, r, class: 'ink'}, svg);
+  Kit.mk('text', {x: cx, y: cy + r * .35, 'text-anchor': 'middle', 'font-size': r * 1.1, style: 'fill:var(--c);font-family:var(--display);font-weight:700'}, svg).textContent = 'e';
+  const lx = cx + sw * 3 + 8;
+  el.lu = Kit.mk('text', {x: lx, y: cy - r - L + fs * .4, class: 'lab', 'font-size': fs}, svg);
+  el.ld = Kit.mk('text', {x: lx, y: cy + r + L + fs * .4, class: 'lab', 'font-size': fs}, svg);
+  el.tal = Kit.mk('text', {x: W / 2, y: H - fs * .5, 'text-anchor': 'middle', class: 'tal', 'font-size': fs}, svg);
+  el.geo = {cx, cy};
+  render(false);
+}
+
+function labels() {
+  const u = Math.round(p * 100);
+  el.lu.textContent = `UP = 1 · ${u}%`;
+  el.ld.textContent = `DOWN = 0 · ${100 - u}%`;
+  el.tal.textContent = `Measured:  up × ${nUp}   ·   down × ${nDn}`;
+  el.status.textContent = state === 'super' ? (holding ? 'Both up and down at once' : (nUp + nDn ? 'Back in superposition' : 'Not measured yet: both at once'))
+                                             : `Measured: ${last === 'up' ? 'UP (1)' : 'DOWN (0)'}`;
+}
+
+function render(anim) {
+  if (!el.up) return;
+  labels();
+  let ou, od;
+  if (state === 'super') { ou = .25 + .7 * p; od = .25 + .7 * (1 - p); }
+  else { ou = last === 'up' ? 1 : .06; od = last === 'down' ? 1 : .06; }
+  if (anim && !Kit.calm) { gsap.to(el.up, {opacity: ou, duration: .35}); gsap.to(el.dn, {opacity: od, duration: .35}); }
+  else { gsap.set(el.up, {opacity: ou}); gsap.set(el.dn, {opacity: od}); }
+  gsap.set(el.orb, {opacity: state === 'super' ? .35 : 0});
+}
+
+function start() {
+  if (holding) return; holding = true; state = 'super';
+  Kit.$('hold').classList.add('down'); Kit.haptic('light');
+  render(true);
+  if (!Kit.calm) {
+    spinT = gsap.to(spin, {a: 360, duration: .5, repeat: -1, ease: 'none', onUpdate: () => { const {cx, cy} = el.geo; el.orbit.setAttribute('transform', `translate(${cx},${cy}) rotate(${spin.a})`); }});
+    flickT = gsap.to(flick, {v: 1, duration: .09, repeat: -1, yoyo: true, onUpdate: () => {
+      const bu = .25 + .7 * p, bd = .25 + .7 * (1 - p);
+      el.up.setAttribute('opacity', bu * (.55 + .45 * flick.v)); el.dn.setAttribute('opacity', bd * (1 - .45 * flick.v));
+    }});
+  }
+}
+
+function stop() {
+  if (!holding) return; holding = false;
+  Kit.$('hold').classList.remove('down');
+  if (spinT) spinT.kill(); if (flickT) flickT.kill(); spinT = flickT = null;
+  el.up.removeAttribute('opacity'); el.dn.removeAttribute('opacity');
+  last = Kit.rnd() < p ? 'up' : 'down';
+  if (last === 'up') nUp++; else nDn++;
+  state = 'measured';
+  render(true);
+  if (!Kit.calm) gsap.fromTo(el.e, {scale: 1.35, transformOrigin: '50% 50%'}, {scale: 1, duration: .4, ease: 'back.out(3)'});
+  Kit.haptic('selection');
+  if (nUp + nDn >= 5 && Kit.$('why').classList.contains('gone')) {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  }
+}
+
+const hb = Kit.$('hold');
+hb.addEventListener('pointerdown', e => { e.preventDefault(); try { hb.setPointerCapture(e.pointerId); } catch (_) {} start(); });
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => hb.addEventListener(t, stop));
+hb.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); start(); } });
+hb.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') stop(); });
+Kit.$('mix').addEventListener('input', e => {
+  p = +e.target.value / 100;
+  if (state === 'measured' && !holding) state = 'super';
+  render(false);
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && el.e) { gsap.from([el.up, el.dn], {opacity: 0, duration: .6, stagger: .1}); gsap.from(el.e, {scale: 0, transformOrigin: '50% 50%', duration: .5, ease: 'back.out(2)'}); } };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 5; i++) {
+    hb.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1}));
+    await w(250);
+    hb.dispatchEvent(new PointerEvent('pointerup', {bubbles: true, pointerId: 1}));
+    await w(150);
+  }
+  await w(500);
+};
+Kit.single();
+</script>
+</html>

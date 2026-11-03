@@ -1,0 +1,313 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Four copies of three stars</title>
+<!-- Burrau's three stars (Pythagorean problem): 3, 4 and 5 Suns at rest on a 3-4-5 triangle, sides in AU,
+     moved live by Newton's law (RK4, one shared step for all copies, so the copies differ only by where
+     they start). Three copies start 1,000,000 km, 1,000 km and 1 km off; a copy "parts" when any of its
+     stars is 0.2 AU (30 million km) from its twin in the exact copy. They part in years 5.3, 7.3 and 9.6
+     (shown to the half year): each 1,000x closer start adds about two years, and a million times closer
+     buys less than twice the time. The reader bets first (Kit.sure, Kit.answer). Inspired by Veritasium, "Do we know how magnets
+     work yet?" (2026). Touch: one tap. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh}
+#sky{flex:1;min-height:0;width:100%;display:block;border-radius:2.6cqh}
+#bars{display:flex;flex-direction:column;gap:.8cqh}
+.bar{display:grid;grid-template-columns:29cqw 1fr 12cqw;align-items:center;gap:2.2cqw;font:700 max(1.5cqh,11.5px)/1 var(--body)}
+.bar .k{display:flex;align-items:center;gap:1.6cqw;white-space:nowrap}
+.bar .k i{flex:none;width:max(1.1cqh,8px);height:max(1.1cqh,8px);border-radius:50%;background:var(--col)}
+.bar .track{position:relative;height:max(.9cqh,6px);border-radius:99px;background:rgba(255,255,255,.16)}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:99px;background:var(--col)}
+.bar.done .fill::after{content:"";position:absolute;right:calc(max(.9cqh,6px) * -.6);top:50%;width:max(1.7cqh,11px);height:max(1.7cqh,11px);border-radius:50%;transform:translateY(-50%);background:var(--col);box-shadow:0 0 0 max(.35cqh,2px) var(--c)}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums;opacity:.5}
+.bar.done .v{opacity:1}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw}
+.opt{font:700 max(1.85cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 10%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 32%,transparent);border-radius:1.6cqh;padding:1.3cqh 3cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.bhead{display:flex;justify-content:space-between;font:800 max(1.4cqh,11.5px)/1 var(--body);letter-spacing:.1em;opacity:.7;margin-bottom:.2cqh}
+
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){
+  .answered .in{gap:1.6cqh}
+  .answered #stage{gap:1cqh}
+  .answered .say .extra{display:none}
+}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Bet, then watch · four copies">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FOUR COPIES</span></div>
+    <h2 class="q">A million times sharper start: how much longer can you predict three orbiting stars?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="sky" role="img" aria-label="Three stars of 3, 4 and 5 solar masses at rest, in four stacked copies."></canvas>
+      <div id="opts">
+        <button class="opt" data-i="0">A million times</button>
+        <button class="opt" data-i="1">A thousand times</button>
+        <button class="opt" data-i="2">Ten times</button>
+        <button class="opt" data-i="3">Less than twice</button>
+      </div>
+      <div id="bars" class="gone">
+        <div class="bhead"><span>STARTED OFF BY</span><span>PARTED IN YEAR</span></div>
+        <div class="bar" style="--col:#6FF2C2" data-k="0"><span class="k"><i></i>1,000,000 km</span><span class="track"><span class="fill"></span></span><span class="v">–</span></div>
+        <div class="bar" style="--col:#FF9CC2" data-k="1"><span class="k"><i></i>1,000 km</span><span class="track"><span class="fill"></span></span><span class="v">–</span></div>
+        <div class="bar" style="--col:#FFD34D" data-k="2"><span class="k"><i></i>1 km</span><span class="track"><span class="fill"></span></span><span class="v">–</span></div>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Four copies of three stars, let go at rest: three start <b>1,000,000&nbsp;km</b>, <b>1,000&nbsp;km</b> and <b>1&nbsp;km</b> off. Bet: the 1&nbsp;km copy against the 1,000,000&nbsp;km one.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In chaos, every 1,000× sharper start buys the same small slice of extra forecast.</div>
+    <div class="foot"><span class="src">Source · Szebehely &amp; Peters, Astron. J. 72, 876 (1967)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  // ---------- the physics: G = 1 with lengths in AU and masses in Suns, so 2π time units are a year ----------
+  const M = [3, 4, 5], TAU = 2 * Math.PI, AU = 149597870.7;
+  const GAPS = [1e6, 1e3, 1];                          // km: how far the coloured copies start off
+  const COL = ['#FFFFFF', '#6FF2C2', '#FF9CC2', '#FFD34D'];
+  const ETA = 0.004, HMAX = 0.01, PART = 0.2, END = 10 * TAU, SAMPLE = 0.08, NTR = 34;
+  const N = 1 + GAPS.length;
+  const k1 = new Float64Array(12), k2 = new Float64Array(12), k3 = new Float64Array(12), k4 = new Float64Array(12), tmp = new Float64Array(12);
+  function deriv(s, o) {
+    for (let i = 0; i < 3; i++) { o[2 * i] = s[6 + 2 * i]; o[2 * i + 1] = s[7 + 2 * i]; o[6 + 2 * i] = 0; o[7 + 2 * i] = 0; }
+    for (let i = 0; i < 3; i++) for (let j = i + 1; j < 3; j++) {
+      const dx = s[2 * j] - s[2 * i], dy = s[2 * j + 1] - s[2 * i + 1], r2 = dx * dx + dy * dy, f = 1 / (r2 * Math.sqrt(r2));
+      o[6 + 2 * i] += M[j] * dx * f; o[7 + 2 * i] += M[j] * dy * f; o[6 + 2 * j] -= M[i] * dx * f; o[7 + 2 * j] -= M[i] * dy * f;
+    }
+  }
+  function rk4(s, h) {
+    deriv(s, k1); for (let i = 0; i < 12; i++) tmp[i] = s[i] + h / 2 * k1[i];
+    deriv(tmp, k2); for (let i = 0; i < 12; i++) tmp[i] = s[i] + h / 2 * k2[i];
+    deriv(tmp, k3); for (let i = 0; i < 12; i++) tmp[i] = s[i] + h * k3[i];
+    deriv(tmp, k4); for (let i = 0; i < 12; i++) s[i] += h / 6 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]);
+  }
+  // The step shrinks near a close pass: a fraction of the pair's own fall time and crossing time.
+  function scale(s) {
+    let m = Infinity;
+    for (let i = 0; i < 3; i++) for (let j = i + 1; j < 3; j++) {
+      const dx = s[2 * j] - s[2 * i], dy = s[2 * j + 1] - s[2 * i + 1], r = Math.sqrt(dx * dx + dy * dy);
+      const vx = s[6 + 2 * j] - s[6 + 2 * i], vy = s[7 + 2 * j] - s[7 + 2 * i], v = Math.sqrt(vx * vx + vy * vy);
+      m = Math.min(m, r * Math.sqrt(r) / Math.sqrt(M[i] + M[j]), r / (v + 1e-12));
+    }
+    return m;
+  }
+  let C, t, parted, trails, nextSample, flashes;
+  function reset() {
+    C = [0, ...GAPS].map(g => Float64Array.from([1 + g / AU, 3, -2, -1, 1, -1, 0, 0, 0, 0, 0, 0]));
+    t = 0; parted = GAPS.map(() => null); trails = C.map(() => []); nextSample = 0; flashes = []; sample();
+  }
+  function sample() { for (let k = 0; k < N; k++) { const tr = trails[k]; tr.push(Array.from(C[k].subarray(0, 6))); if (tr.length > NTR) tr.shift(); } nextSample += SAMPLE; }
+  // Whole steps only, never cut to a frame: the run is the same on every phone.
+  function step() {
+    let m = Infinity; for (const c of C) m = Math.min(m, scale(c));
+    const h = Math.min(ETA * m, HMAX);
+    for (const c of C) rk4(c, h);
+    t += h;
+    for (let k = 1; k < N; k++) if (parted[k - 1] === null) {
+      let d = 0; for (let i = 0; i < 6; i++) d = Math.max(d, Math.abs(C[k][i] - C[0][i]));
+      if (d > PART) part(k - 1);
+    }
+    if (t >= nextSample) sample();
+  }
+
+  // ---------- the page ----------
+  const cv = Kit.$('sky'), say = Kit.$('say'), card = Kit.$('card');
+  const rows = [...document.querySelectorAll('.bar')];
+  let x, W, H, sc, cx, cy, field = [], running = false, done = false, fast = false, last = 0;
+  const yr = tt => tt / TAU, f1 = v => v.toFixed(1), half = v => (Math.round(v * 2) / 2).toFixed(1);
+
+  function part(k) {
+    parted[k] = t;
+    rows[k].classList.add('done');
+    if (fast) return;
+    flashes.push({k, at: performance.now()});
+    Kit.haptic('light');
+    const y = parted.map(p => p === null ? null : yr(p));
+    if (k === 0) say.innerHTML = `<b>1,000,000&nbsp;km</b> off: it parted in about year <b>${half(y[0])}</b>.`;
+    if (k === 1) say.innerHTML = `<b>1,000&nbsp;km</b> off, a thousand times closer: only about <b>${Math.round(y[1] - y[0])}</b> years more.`;
+    if (k === 2) say.innerHTML = `<b>1&nbsp;km</b> off, a million times closer: about year <b>${half(y[2])}</b>.`;
+  }
+  function bars() {
+    rows.forEach((r, k) => {
+      const until = parted[k] === null ? t : parted[k];
+      r.querySelector('.fill').style.width = (100 * Math.min(1, until / END)) + '%';
+      r.querySelector('.v').textContent = parted[k] === null ? '' : '≈' + half(yr(parted[k]));
+    });
+  }
+
+  function fit() {
+    ({x, W, H} = Kit.fitCanvas(cv));
+    // The dance stays within about -3.9..3.4 AU across and -4.5..4.0 AU up and down until a star is flung out.
+    sc = Math.min(W / 8.4, H / 9.6);
+    cx = W / 2 + .25 * sc; cy = H / 2 - .25 * sc;
+    field = [];
+    let s = 11; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    for (let i = 0; i < 70; i++) field.push([r() * W, r() * H, r() < .15 ? 1.3 : .7, .25 + r() * .45]);
+  }
+  const P = (px, py) => [cx + px * sc, cy - py * sc];
+  const rad = i => Math.max(2.8, sc * .115) * Math.cbrt(M[i] / 4);
+
+  function render() {
+    if (!x) return;
+    x.clearRect(0, 0, W, H);
+    x.save();
+    const R = Math.min(W, H) * .07;
+    x.beginPath(); x.moveTo(R, 0); x.arcTo(W, 0, W, H, R); x.arcTo(W, H, 0, H, R); x.arcTo(0, H, 0, 0, R); x.arcTo(0, 0, W, 0, R); x.closePath(); x.clip();
+    const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0C1E66'); g.addColorStop(1, '#060E36');
+    x.fillStyle = g; x.fillRect(0, 0, W, H);
+    for (const [fx, fy, fr, fa] of field) { x.globalAlpha = fa; x.fillStyle = '#fff'; x.beginPath(); x.arc(fx, fy, fr, 0, TAU); x.fill(); }
+    x.globalAlpha = 1;
+    const fs = Math.max(11.5, Math.min(H * .05, 14));
+    // The triangle they start on, before they move.
+    if (t === 0) {
+      x.setLineDash([3, 5]); x.strokeStyle = 'rgba(255,255,255,.35)'; x.lineWidth = 1.2;
+      x.beginPath(); [[1, 3], [-2, -1], [1, -1], [1, 3]].forEach(([a, b], i) => { const [px, py] = P(a, b); i ? x.lineTo(px, py) : x.moveTo(px, py); }); x.stroke(); x.setLineDash([]);
+    }
+    // Trails, the coloured copies under the exact one.
+    const order = [1, 2, 3, 0];
+    x.lineCap = 'round'; x.lineJoin = 'round';
+    for (const k of order) {
+      const tr = trails[k]; if (tr.length < 2) continue;
+      x.strokeStyle = COL[k];
+      const runs = 6, per = Math.ceil((tr.length - 1) / runs);
+      for (let i = 0; i < 3; i++) {
+        x.lineWidth = Math.max(1.4, rad(i) * .5);
+        for (let q = 0; q < runs; q++) {
+          const a = q * per, b = Math.min(tr.length - 1, a + per); if (b <= a) continue;
+          x.globalAlpha = .6 * (q + 1) / runs;
+          x.beginPath();
+          for (let n = a; n <= b; n++) { const [px, py] = P(tr[n][2 * i], tr[n][2 * i + 1]); n === a ? x.moveTo(px, py) : x.lineTo(px, py); }
+          x.stroke();
+        }
+      }
+    }
+    x.globalAlpha = 1;
+    // The stars, and an arrow on the edge for any star flung out of the frame.
+    const now = performance.now(), pad = 9;
+    for (const k of order) for (let i = 0; i < 3; i++) {
+      const [px, py] = P(C[k][2 * i], C[k][2 * i + 1]), r = rad(i);
+      if (px < -r || px > W + r || py < -r || py > H + r) { edge(px, py, COL[k], pad); continue; }
+      const gl = x.createRadialGradient(px, py, 0, px, py, r * 3.4);
+      gl.addColorStop(0, COL[k] + '88'); gl.addColorStop(1, COL[k] + '00');
+      x.fillStyle = gl; x.beginPath(); x.arc(px, py, r * 3.4, 0, TAU); x.fill();
+      x.fillStyle = COL[k]; x.beginPath(); x.arc(px, py, r, 0, TAU); x.fill();
+    }
+    // A ring where a copy has just parted from the exact one.
+    for (const f of flashes) {
+      const a = (now - f.at) / 900; if (a > 1) continue;
+      x.strokeStyle = COL[f.k + 1]; x.globalAlpha = 1 - a; x.lineWidth = 2;
+      for (let i = 0; i < 3; i++) { const [px, py] = P(C[f.k + 1][2 * i], C[f.k + 1][2 * i + 1]); x.beginPath(); x.arc(px, py, rad(i) * (1.5 + 3.5 * a), 0, TAU); x.stroke(); }
+      x.globalAlpha = 1;
+    }
+    x.fillStyle = '#fff'; x.textBaseline = 'alphabetic'; x.shadowColor = 'rgba(4,10,40,.9)'; x.shadowBlur = 4;
+    // Their masses, at the start.
+    if (t === 0) {
+      x.font = `700 ${fs}px Figtree`;
+      if (H < 150) { x.textAlign = 'right'; x.fillText('3, 4 and 5 Suns, at rest', W - 12, H - 10); }
+      else {
+        const lab = [['3 Suns', 1, 3, 'left', 12, 4], ['4 Suns', -2, -1, 'left', -6, -16], ['5 Suns', 1, -1, 'left', 12, 4]];
+        for (const [s, a, b, al, dx, dy] of lab) { const [px, py] = P(a, b); x.textAlign = al; x.fillText(s, px + dx, py + dy); }
+      }
+    }
+    // The clock, top left.
+    x.textAlign = 'left';
+    if (H < 150) {
+      x.font = `800 ${Math.max(11.5, fs * .9)}px Figtree`;
+      x.fillText('YEAR ' + f1(yr(t)), 12, 10 + fs * .9);
+    } else {
+      x.font = `800 ${Math.max(11.5, fs * .85)}px Figtree`; x.globalAlpha = .7;
+      x.fillText('YEAR', 12, 12 + fs * .9); x.globalAlpha = 1;
+      const big = H < 200 ? fs * 1.3 : fs * 1.7;
+      x.font = `800 ${big}px Fraunces`;
+      x.fillText(f1(yr(t)), 12, 14 + fs * .9 + big * .95);
+    }
+    // What white is, top right, once they move.
+    if (t > 0) {
+      x.textAlign = 'right'; x.font = `700 ${Math.max(11.5, fs * .85)}px Figtree`;
+      const lw = x.measureText('the exact start').width;
+      x.fillText('the exact start', W - 12, 12 + fs * .9);
+      x.beginPath(); x.arc(W - 12 - lw - 9, 12 + fs * .9 - fs * .32, 4, 0, TAU); x.fill();
+      x.textAlign = 'left';
+    }
+    // The scale, bottom left: one Earth-Sun distance.
+    const by = H - 12;
+    if (H >= 150) {
+    x.strokeStyle = 'rgba(255,255,255,.8)'; x.lineWidth = 1.5;
+    x.beginPath(); x.moveTo(12, by - 4); x.lineTo(12, by); x.lineTo(12 + sc, by); x.lineTo(12 + sc, by - 4); x.stroke();
+    x.font = `600 ${Math.max(11.5, fs * .85)}px Figtree`; x.globalAlpha = .8;
+    x.fillText('150 million km', 18 + sc, by); x.globalAlpha = 1;
+    }
+    x.restore();
+  }
+  // A small arrow on the frame's edge, pointing where an off-screen star went.
+  function edge(px, py, col, pad) {
+    const dx = px - W / 2, dy = py - H / 2, k = Math.min((W / 2 - pad) / Math.abs(dx || 1e-9), (H / 2 - pad) / Math.abs(dy || 1e-9));
+    const ex = W / 2 + dx * k, ey = H / 2 + dy * k, a = Math.atan2(dy, dx), s = 7;
+    x.fillStyle = col; x.strokeStyle = '#081446'; x.lineWidth = 1.5; x.globalAlpha = .95;
+    x.beginPath(); x.moveTo(ex + Math.cos(a) * s, ey + Math.sin(a) * s);
+    x.lineTo(ex + Math.cos(a + 2.5) * s, ey + Math.sin(a + 2.5) * s); x.lineTo(ex + Math.cos(a - 2.5) * s, ey + Math.sin(a - 2.5) * s); x.closePath(); x.stroke(); x.fill();
+    x.globalAlpha = 1;
+  }
+
+  function frame(now) {
+    if (!running) return;
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    const target = Math.min(END, t + dt * 1.15 * TAU);
+    let n = 0; while (t < target && n < 40000) { step(); n++; }
+    bars(); render();
+    if (t >= END) end(); else requestAnimationFrame(frame);
+  }
+  function finish() { fast = true; while (t < END) step(); end(); }
+  function end() {
+    if (done) return;
+    running = false; done = true;
+    bars(); render();
+    // The last beat stays a moment before the ending comes in.
+    if (fast) close(); else setTimeout(close, 1500);
+  }
+  function close() {
+    say.innerHTML = `Each close pass multiplies the error. The same arithmetic caps every weather forecast.`;
+    bars();
+    if (bet) sure.grade(bet.ok, bet.pct, bet.ok ? 'Less than twice, right' : 'Wrong: less than twice');
+    card.classList.remove('running');
+    card.classList.add('answered');
+    Kit.show('keep');
+    Kit.haptic('success');
+    requestAnimationFrame(() => { fit(); render(); });
+  }
+  // The bet: how much longer the 1 km copy stays in step than the 1,000,000 km one.
+  const RIGHT = 3; let pick = -1, bet = null;
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const said = Kit.$('opts').children[pick].textContent, ok = pick === RIGHT;
+    bet = {said, ok, pct};
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('opts'); Kit.hide('sure'); Kit.show('bars');
+    say.innerHTML = `Watch when each coloured copy parts from the white one, the exact start.`;
+    release();
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || bet) return;
+    pick = +b.dataset.i; [...Kit.$('opts').children].forEach(o => o.classList.toggle('on', o === b));
+    Kit.haptic('selection'); sure.on();
+  });
+  function release() {
+    if (running || done) return;
+    card.classList.add('running');
+    if (Kit.calm) { finish(); return; }
+    running = true; last = performance.now();
+    requestAnimationFrame(now => { last = now; requestAnimationFrame(frame); });
+  }
+  // The canvas changes size when the button goes and the end box comes: draw again at the new size.
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { fit(); render(); }).observe(cv);
+  reset();
+  Kit.onShow.card = () => { fit(); bars(); render(); };
+  Kit.play.card = async () => {
+    Kit.$('opts').children[0].click(); await new Promise(r => setTimeout(r, 60));
+    Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 60));
+    if (!done) finish(); await new Promise(r => setTimeout(r, 150));
+  };
+})();
+Kit.single();
+</script>
+</html>

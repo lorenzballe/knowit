@@ -1,0 +1,37 @@
+{
+  "id": "nature-tristan-hot-spot",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is Tristan da Cunha volcanic?",
+  "answer": "Tristan da Cunha sits on a hot spot. A plume of hot rock rises from deep in the mantle and makes magma that pushes up through the crust and piles into a volcano 2062 m tall, still active today.",
+  "move": "No plume, no island: the hot spot below built the volcano above.",
+  "keywords": [
+    "tristan da cunha",
+    "hot spot",
+    "mantle plume",
+    "volcano",
+    "magma"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Cross-section of Earth showing a plume of hot rock rising from deep in the mantle beneath Tristan da Cunha. A button asks the reader to hold it to heat both seafloors and see which one grows an island."
+  },
+  "source": "Geopop, “L'insediamento umano più isolato del mondo è su un'isola sperduta nell'Atlantico: Tristan da Cunha” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=c-OafbhvBZM&t=18s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "history-ethyl-name-trick",
+  "topic": "history",
+  "genre": "history.propaganda",
+  "strand": "history.propaganda.posters_and_slogans",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why was the lead additive named ‘Ethyl’?",
+  "answer": "The lead additive was sold under the name 'Ethyl', but its full name was tetraethyl lead. Midgley and Kettering perhaps chose the friendly name so it might be confused with ethyl alcohol, a common additive. They made no mention of lead.",
+  "move": "A friendly name can hide what's inside: ask for the full one.",
+  "keywords": [
+    "tetraethyl lead",
+    "ethyl",
+    "midgley",
+    "kettering",
+    "ethyl alcohol"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question card asking why the lead additive was named 'Ethyl'. Two bottles are shown, and the reader taps the one holding the lead additive to reveal its full name, tetraethyl lead.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=548s",
+  "written": "2026-11-03"
+}

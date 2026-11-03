@@ -1,0 +1,133 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-firing-squad-return -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
+#opts{display:flex;flex-direction:column;gap:1.2cqh}
+.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#sim{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#sim.gone{display:none}
+#tl{flex:1;min-height:0;width:100%;display:block}
+#hold{align-self:center;font:800 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.6cqh 7cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
+#hold.down{transform:scale(.95)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRING SQUAD</span></div>
+    <h2 class="q">In which US state was the firing squad reintroduced and used in 2025?</h2>
+    <div class="stagebox" id="stage">
+      <div id="opts">
+        <button class="opt" data-i="0">Texas</button>
+        <button class="opt" data-i="1">South Carolina</button>
+        <button class="opt" data-i="2">Florida</button>
+      </div>
+      <div id="sim" class="gone">
+        <svg id="tl" aria-label="Years without a firing squad, 2010 to 2025"></svg>
+        <button id="hold">Hold to run the years</button>
+        <div id="why" class="gone"><p class="big">South Carolina, 2025</p><p class="body">The firing squad had not been used for 15 years. In 2025 South Carolina used it again: one of the older methods the US has brought back in recent years.</p></div>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a state. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The firing squad came back in South Carolina in 2025, after 15 unused years.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const st = {p: 0, done: false};
+let tw = null;
+const svg = Kit.$('tl');
+
+function draw() {
+  if (Kit.$('sim').classList.contains('gone')) return;
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (W < 10 || H < 10) return;
+  svg.innerHTML = '';
+  const gap = Math.max(4, W * 0.02);
+  const n = Math.floor(st.p);
+  const sub = Math.max(12, Math.min(f * 0.85, W / 22));
+  const bigSize = Math.max(16, Math.min(H * 0.2, W * 0.2));
+  const bigY = bigSize * 0.95;
+  const subY = bigY + bigSize * 0.3 + sub * 1.05;
+  const top = subY + sub * 0.35 + gap;
+  const big = Kit.mk('text', {x: W / 2, y: bigY, 'text-anchor': 'middle', style: `font:800 ${bigSize}px var(--display);fill:var(--k)`}, svg);
+  big.textContent = n;
+  const s = Kit.mk('text', {x: W / 2, y: subY, 'text-anchor': 'middle', style: `font:700 ${sub}px var(--body);fill:var(--k);opacity:.75`}, svg);
+  s.textContent = st.done ? 'years unused · then it returned' : (n === 1 ? 'year without a firing squad' : 'years without a firing squad');
+  const cols = 4, rows = 4;
+  const cw = (W - gap * (cols - 1)) / cols, ch = (H - top - gap * rows) / rows;
+  const fs = Math.max(12, Math.min(ch * 0.38, cw * 0.26, f * 1.05));
+  for (let i = 0; i < 16; i++) {
+    const c = i % cols, r = Math.floor(i / cols);
+    const x = c * (cw + gap), y = top + gap + r * (ch + gap);
+    const last = i === 15;
+    const lit = !last && i < n;
+    let fill = 'transparent', ink = 'var(--k)', op = .35;
+    if (lit) { fill = 'color-mix(in srgb,var(--k) 16%,transparent)'; op = .9; }
+    if (last && st.done) { fill = 'var(--k)'; ink = 'var(--c)'; op = 1; }
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x, y, width: cw, height: ch, rx: Math.min(ch, cw) * 0.18, style: `fill:${fill};stroke:var(--k);stroke-width:${Math.max(1.5, f * .09)};stroke-opacity:${last ? 1 : .45}`}, g);
+    const t = Kit.mk('text', {x: x + cw / 2, y: y + ch / 2 + fs * 0.35, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--mono);fill:${ink};opacity:${op}`}, g);
+    t.textContent = last && st.done ? 'SC 2025' : 2010 + i;
+    if (lit) Kit.mk('line', {x1: x + cw * .18, y1: y + ch * .5, x2: x + cw * .82, y2: y + ch * .5, style: `stroke:var(--k);stroke-width:${Math.max(1.5, f * .08)};opacity:.5`}, g);
+  }
+}
+
+function finish() {
+  if (st.done) return;
+  st.done = true; st.p = 15;
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.show('why'); Kit.show('keep');
+  draw();
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4, ease: 'power3.out'});
+}
+function startHold(e) {
+  if (st.done) return;
+  if (e) e.preventDefault();
+  Kit.$('hold').classList.add('down');
+  let last = -1;
+  tw = gsap.to(st, {p: 15, duration: (15 - st.p) * 0.2, ease: 'none',
+    onUpdate: () => { const n = Math.floor(st.p); if (n !== last) { last = n; Kit.haptic('light'); } draw(); },
+    onComplete: finish});
+}
+function stopHold() { Kit.$('hold').classList.remove('down'); if (tw && !st.done) tw.pause(); }
+const hb = Kit.$('hold');
+hb.addEventListener('pointerdown', startHold);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hb.addEventListener(ev, stopHold));
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('sim');
+  Kit.$('say').textContent = 'Hold the button: count the years with no firing squad.';
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  requestAnimationFrame(draw);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[1].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(300);
+  hb.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await w(3400);
+  hb.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  finish(); await w(600);
+};
+Kit.single();
+</script>
+</html>

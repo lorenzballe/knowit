@@ -1,0 +1,38 @@
+{
+  "id": "history-brothers-home-prisoners",
+  "topic": "history",
+  "genre": "history.propaganda",
+  "strand": "history.propaganda.enemies_made_up",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Brothers Home was said to hold the homeless. How many really were?",
+  "answer": "Brothers Home was said to hold homeless people, but fewer than 10% of those held there were actually homeless. Most were political opponents, along with people who were easy to kidnap, such as children waiting for the bus, disabled people, street vendors and prostitutes. \"Homeless\" was the label, not the truth.",
+  "move": "Who a place claims to hold can be very different from who it holds.",
+  "keywords": [
+    "brothers_home",
+    "south_korea",
+    "homelessness",
+    "political_opponents",
+    "kidnapping"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "An interactive card asks how many people held at Brothers Home were truly homeless. A 0 to 100 percent slider lets the reader guess a share and lock it in before the answer is revealed.",
+    "graded": false
+  },
+  "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=_pZ1C8ag1YM&t=234s",
+  "written": "2026-11-03"
+}

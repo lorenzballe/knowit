@@ -1,0 +1,162 @@
+<!doctype html>
+<!-- slug: space-apollo-slingshot -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative}
+#sv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block;cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0}
+.say{font:700 max(1.9cqh,13px)/1.25 var(--body);overflow-wrap:anywhere}
+.src{display:block;max-width:calc(100% - 115px);overflow-wrap:anywhere}
+.lbl{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Drag · aim">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GRAVITY ASSIST</span></div>
+    <h2 class="q">Why did Apollo 13 swing around the Moon to get home?</h2>
+    <div class="stagebox" id="stage"><svg id="sv"></svg></div>
+    <div id="why" class="gone">
+      <p class="big">The Moon did the turning.</p>
+      <p class="body">Turning straight back needed the rocket's strong third-stage engines, and the explosion may have damaged them. The LEM's weak thrusters could only nudge the aim, so the Moon's gravity swung the ship around and sped it home.</p>
+    </div>
+    <p class="say" id="say">Drag the orange dot to fire the LEM thrusters, then let go.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Can't turn around? A small nudge lets the Moon's gravity swing you home.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS='http://www.w3.org/2000/svg', ORANGE='#ff6a2b', BLUE='#3d7be0';
+const sv=Kit.$('sv');
+let hx=0,hy=0,state='aim',G=null,dragging=false,tw=null,gDyn,gPath,ship,shipTri;
+const add=(a,b)=>({x:a.x+b.x,y:a.y+b.y}), sub=(a,b)=>({x:a.x-b.x,y:a.y-b.y}), mul=(a,k)=>({x:a.x*k,y:a.y*k});
+const len=a=>Math.hypot(a.x,a.y), nrm=a=>{const l=len(a)||1;return{x:a.x/l,y:a.y/l}}, rp=u=>({x:-u.y,y:u.x});
+const dot=(a,b)=>a.x*b.x+a.y*b.y, lerp=(a,b,t)=>({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t});
+const mk=(t,a,p)=>Kit.mk(t,a,p);
+
+function cr(p){let d=`M${p[0].x},${p[0].y}`;for(let i=0;i<p.length-1;i++){const p0=p[i-1]||p[i],p1=p[i],p2=p[i+1],p3=p[i+2]||p2;
+  const c1=add(p1,mul(sub(p2,p0),1/6)),c2=sub(p2,mul(sub(p3,p1),1/6));d+=` C${c1.x},${c1.y} ${c2.x},${c2.y} ${p2.x},${p2.y}`;}return d;}
+function arrow(a,b,col,w,mid,parent){return mk('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:col,'stroke-width':w,'stroke-linecap':'round','marker-end':`url(#${mid})`},parent);}
+function label(txt,p,anchor,col,parent){const t=mk('text',{x:p.x,y:p.y,'text-anchor':anchor,'dominant-baseline':'middle',class:'lbl',fill:col,'font-size':G.fs},parent);t.textContent=txt;return t;}
+
+function draw(){
+  if(tw){tw.kill();tw=null;if(state==='fly')state='aim';}
+  sv.innerHTML='';
+  const {W,H,f}=Kit.fitSvg(sv), fs=Math.max(f,12), m=Math.min(W,H);
+  const E={x:.18*W,y:.8*H,r:Math.max(.075*m,22)}, M={x:.72*W,y:.26*H,r:Math.max(.055*m,18)}, S={x:.3*W,y:.58*H};
+  const u0=nrm(sub(M,S)), r0=rp(u0);
+  const dir0=nrm(sub(add(M,mul(r0,1.6*M.r)),S)), d=len(sub(M,S)), Lv=.3*d, rb=.45*Lv, T0=add(S,mul(dir0,Lv));
+  G={W,H,fs,m,E,M,S,dir0,d,Lv,rb,T0,sw:Math.max(2.2,m*.008)};
+  const defs=mk('defs',{},sv);
+  [['mk',getComputedStyle(sv).color||'#111'],['mo',ORANGE]].forEach(([id,c])=>{
+    const mm=mk('marker',{id,viewBox:'0 0 10 10',refX:7,refY:5,markerWidth:4,markerHeight:4,orient:'auto-start-reverse'},defs);
+    mk('path',{d:'M0,0 L10,5 L0,10 z',style:id==='mk'?'fill:var(--k)':`fill:${ORANGE}`},mm);});
+  // stars
+  let s=7;const rnd=()=>(s=(s*16807)%2147483647)/2147483647;
+  for(let i=0;i<40;i++)mk('circle',{cx:rnd()*W,cy:rnd()*H,r:.6+rnd()*1.1,style:'fill:var(--k)',opacity:.18},sv);
+  gPath=mk('g',{},sv);
+  mk('circle',{cx:E.x,cy:E.y,r:E.r,fill:BLUE,style:'stroke:var(--k)','stroke-width':2},sv);
+  label('Earth',{x:E.x,y:E.y},'middle','#fff',sv);
+  mk('circle',{cx:M.x,cy:M.y,r:M.r,fill:'#c9c9c9',style:'stroke:var(--k)','stroke-width':2},sv);
+  label('Moon',{x:M.x,y:M.y},'middle','#222',sv).setAttribute('font-size',Math.max(12,Math.min(fs,M.r*.62)));
+  gDyn=mk('g',{},sv);
+  ship=mk('g',{},sv);
+  shipTri=mk('path',{d:`M${G.sw*4},0 L${-G.sw*2.6},${G.sw*2.4} L${-G.sw*1.6},0 L${-G.sw*2.6},${-G.sw*2.4}z`,style:'fill:var(--k)',stroke:'#fff','stroke-width':1},ship);
+  if(state==='home')drawHome(); else {drawDyn(); placeShip(S,dir0Now());}
+}
+function dir0Now(){return nrm(sub(handle(),G.S));}
+function handle(){return add(G.T0,{x:hx*G.rb,y:hy*G.rb});}
+function placeShip(p,u){ship.setAttribute('transform',`translate(${p.x},${p.y}) rotate(${Math.atan2(u.y,u.x)*180/Math.PI})`);}
+
+function drawDyn(){
+  gDyn.innerHTML='';const {S,T0,rb,d,fs,sw}=G, Hp=handle(), u=nrm(sub(Hp,S));
+  mk('line',{x1:Hp.x,y1:Hp.y,x2:Hp.x+u.x*d*1.15,y2:Hp.y+u.y*d*1.15,style:'stroke:var(--k)','stroke-width':1.5,'stroke-dasharray':'4 6',opacity:.5},gDyn);
+  mk('circle',{cx:T0.x,cy:T0.y,r:rb,fill:'none',stroke:ORANGE,'stroke-width':1.6,'stroke-dasharray':'3 4',opacity:.85},gDyn);
+  arrow(S,Hp,'var(--k)',sw*1.3,'mk',gDyn).setAttribute('style','stroke:var(--k)');
+  if(len(sub(Hp,T0))>4)arrow(T0,Hp,ORANGE,sw*1.2,'mo',gDyn);
+  label('LEM thrust',{x:T0.x+rb+6,y:T0.y+rb*.75},'start',ORANGE,gDyn);
+  label('Apollo 13',{x:S.x-fs*.7,y:S.y+fs*.4},'end','var(--k)',gDyn).setAttribute('style','fill:var(--k)');
+  if(state==='aim'){
+    const ring=mk('circle',{id:'ring',cx:Hp.x,cy:Hp.y,r:Math.max(10,G.m*.035),fill:'none',stroke:ORANGE,'stroke-width':2},gDyn);
+    mk('circle',{id:'hdl',cx:Hp.x,cy:Hp.y,r:Math.max(10,G.m*.035),fill:ORANGE,stroke:'#fff','stroke-width':2.5},gDyn);
+    G.ring=ring;
+  }
+  placeShip(S,u);
+}
+
+function outcome(){
+  const {S,M,dir0,Lv}=G, nv=sub(handle(),S), u=nrm(nv), bpx=dot(sub(M,S),rp(u)), b=bpx/M.r;
+  const dv={x:hx,y:hy}, rev=len(dv)>.4&&dot(dv,dir0)<-.5*len(dv);
+  const type=Math.abs(b)<1.15?'crash':(b<=3.2&&b>0?'home':'lost');
+  return {u,bpx,b,rev,type};
+}
+function points(o){
+  const {S,M,E,m}=G,{u,bpx,type}=o,r=rp(u);
+  if(type==='home'){const ro=Math.min(Math.max(bpx,1.6*M.r),2.4*M.r), R=add(M,mul(r,ro)), mid=lerp(R,E,.45);
+    return [S,add(M,add(mul(r,-ro),mul(u,-ro*1.4))),add(M,mul(r,-ro)),add(M,mul(u,ro*1.05)),R,mid,add(E,mul(nrm(sub(mid,E)),E.r))];}
+  const C=sub(M,mul(r,bpx));
+  if(type==='crash'){const end=add(M,mul(nrm(sub(sub(C,M),mul(u,M.r*1.2))),M.r));return [S,lerp(S,end,.5),end];}
+  const ex=bpx>0?nrm(add(mul(u,.8),mul(r,.6))):nrm(sub(mul(u,.5),mul(r,.87)));
+  return [S,sub(C,mul(u,M.r*2)),C,add(C,mul(ex,M.r*2.5)),add(C,mul(ex,m*.9))];
+}
+
+function launch(){
+  const o=outcome(); state='fly'; gDyn.querySelectorAll('#hdl,#ring').forEach(e=>e.remove());
+  const p=mk('path',{d:cr(points(o)),fill:'none',style:'stroke:var(--k)','stroke-width':G.sw,'stroke-linecap':'round'},gPath);
+  const L=p.getTotalLength(); p.setAttribute('stroke-dasharray',L); p.setAttribute('stroke-dashoffset',L);
+  Kit.haptic('light'); const st={t:0};
+  tw=gsap.to(st,{t:1,duration:Kit.calm?.3:(o.type==='crash'?1.4:2.4),ease:'power1.inOut',onUpdate:()=>{
+    const l=st.t*L,a=p.getPointAtLength(l),b=p.getPointAtLength(Math.min(L,l+1)),c=p.getPointAtLength(Math.max(0,l-1));
+    p.setAttribute('stroke-dashoffset',L-l); placeShip(a,nrm(sub(b,c)));},
+    onComplete:()=>{tw=null;finish(o,p);}});
+}
+function finish(o,p){
+  const pre=o.rev?'Too weak to turn back: the ship still flies at the Moon. ':'';
+  if(o.type==='home'){state='home';Kit.haptic('success');Kit.hide('say');Kit.show('why');Kit.show('keep');requestAnimationFrame(()=>{draw();
+    if(!Kit.calm)gsap.from('#vec',{opacity:0,duration:.6});});return;}
+  state='aim'; p.setAttribute('opacity',.3); p.setAttribute('stroke-dasharray','5 6');
+  Kit.$('say').textContent=pre+(o.type==='crash'?'Too close: it hits the Moon. Drag again.':'It misses Earth and drifts off. Aim to pass just left of the Moon.');
+  drawDyn();
+}
+
+function drawHome(){
+  const o=outcome(),{M,E,sw,fs}=G,r=rp(o.u),u=o.u;
+  mk('path',{d:cr(points(o)),fill:'none',style:'stroke:var(--k)','stroke-width':sw,'stroke-linecap':'round'},gPath);
+  const ro=Math.min(Math.max(o.bpx,1.6*M.r),2.4*M.r), g=mk('g',{id:'vec'},gDyn);
+  const Pin=add(M,add(mul(r,-ro),mul(u,-ro*2.6))), tin=add(Pin,mul(u,1.5*M.r));
+  arrow(Pin,tin,ORANGE,sw*1.6,'mo',g); label('slow in',add(lerp(Pin,tin,.5),mul(r,-fs*1.3)),'middle',ORANGE,g);
+  const Pout=lerp(add(M,mul(r,ro)),E,.22), e=nrm(sub(E,Pout)), tout=add(Pout,mul(e,2.4*M.r));
+  arrow(Pout,tout,ORANGE,sw*1.6,'mo',g); label('faster out',add(lerp(Pout,tout,.5),mul(rp(e),-fs*1.3)),'middle',ORANGE,g);
+  placeShip(add(E,mul(nrm(sub(Pout,E)),E.r)),e);
+}
+
+function pt(e){const R=sv.getBoundingClientRect();return{x:(e.clientX-R.left)*G.W/R.width,y:(e.clientY-R.top)*G.H/R.height};}
+function move(p){let v=mul(sub(p,G.T0),1/G.rb);if(len(v)>1)v=nrm(v);hx=v.x;hy=v.y;drawDyn();}
+sv.addEventListener('pointerdown',e=>{if(state!=='aim'||!G)return;const p=pt(e);if(len(sub(p,G.T0))>G.rb*1.8+24)return;
+  dragging=true;try{sv.setPointerCapture(e.pointerId)}catch(_){}gPath.innerHTML='';Kit.haptic('selection');move(p);});
+sv.addEventListener('pointermove',e=>{if(dragging)move(pt(e));});
+const up=()=>{if(dragging){dragging=false;launch();}};
+sv.addEventListener('pointerup',up);sv.addEventListener('pointercancel',up);
+
+Kit.onShow.card=()=>draw();
+Kit.onEnter.card=()=>{if(Kit.calm||!G||!G.ring)return;gsap.fromTo(G.ring,{attr:{r:Math.max(10,G.m*.035)},opacity:1},{attr:{r:Math.max(24,G.m*.08)},opacity:0,duration:1.1,repeat:3,ease:'power2.out'});};
+Kit.play.card=async()=>{
+  // find a nudge that passes about 2 Moon-radii to the left of the Moon
+  let best=null,bd=1e9;const sx=hx,sy=hy;
+  for(let i=-20;i<=20;i++)for(let j=-20;j<=20;j++){const x=i/20,y=j/20;if(x*x+y*y>1)continue;hx=x;hy=y;const o=outcome();
+    const dd=Math.abs(o.b-2);if(o.b>0&&dd<bd){bd=dd;best={x,y};}}
+  hx=sx;hy=sy;const R=sv.getBoundingClientRect(),toC=p=>({clientX:R.left+p.x*R.width/G.W,clientY:R.top+p.y*R.height/G.H});
+  const h0=handle(),h1=add(G.T0,{x:best.x*G.rb,y:best.y*G.rb}),o={bubbles:true,pointerId:1,pointerType:'touch',isPrimary:true};
+  sv.dispatchEvent(new PointerEvent('pointerdown',{...o,...toC(h0)}));
+  for(let k=1;k<=6;k++)sv.dispatchEvent(new PointerEvent('pointermove',{...o,...toC(lerp(h0,h1,k/6))}));
+  sv.dispatchEvent(new PointerEvent('pointerup',{...o,...toC(h1)}));
+  await new Promise(r=>setTimeout(r,3300));
+};
+Kit.single();
+</script>
+</html>

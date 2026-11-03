@@ -1,0 +1,37 @@
+{
+  "id": "science-impact-vs-sumatra",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How much more energy did the impact release than the 2004 Sumatra earthquake?",
+  "answer": "The impact released an estimated 50,000 times the energy of the 2004 Sumatra earthquake, itself one of the strongest ever measured. It shook the whole planet for weeks. On the page, each dot stands for one Sumatra quake, so the impact would be equal to 50,000 dots.",
+  "move": "A magnitude 9.1 megaquake is one speck next to the dinosaur-killing impact.",
+  "keywords": [
+    "asteroid",
+    "sumatra earthquake",
+    "dinosaur extinction",
+    "energy comparison"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dot grid and a slider asking how many Sumatra earthquakes, a magnitude 9.1 quake from 2004, the dinosaur-killing asteroid impact released in energy. Each dot is one Sumatra quake.",
+    "graded": false
+  },
+  "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=_oHnlF70NaQ&t=171s",
+  "written": "2026-11-03"
+}

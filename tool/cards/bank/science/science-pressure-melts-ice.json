@@ -1,0 +1,38 @@
+{
+  "id": "science-pressure-melts-ice",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.cold_myths",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What happens to ice under pressure?",
+  "answer": "A weighted wire sinks all the way through the block, and the ice is still one piece afterward. The pressure turns the ice directly under the wire into water, so the wire slips down. Above the wire the pressure is gone, so the water freezes again. This process is called regelation.",
+  "move": "Pressure turns ice to water; take the pressure away and it freezes again.",
+  "keywords": [
+    "ice",
+    "pressure",
+    "regelation",
+    "melting",
+    "water"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Diagram of a weighted wire sinking through a block of ice. The question asks what is left: two separate halves, one whole block, a block with an open slot, or still one piece.",
+    "graded": false
+  },
+  "source": "Veritasium, “Does Pressure Melt Ice?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=gM3zP72-rJE",
+  "written": "2026-11-03"
+}

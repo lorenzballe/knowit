@@ -1,0 +1,37 @@
+{
+  "id": "science-shared-volcanic-rock",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.theories_and_laws",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do volcanic rocks prove Sardinia and Iberia were once joined?",
+  "answer": "Iberia and the Sardinia–Corsica block were once one landmass. A volcano sat right on the line where they would later split, so its rock fell on both pieces at once. Finding the same volcanic rock on both coasts therefore shows they were joined when it fell.",
+  "move": "Matching volcanic rock on two coasts means they were one piece when it fell.",
+  "keywords": [
+    "sardinia",
+    "iberia",
+    "corsica",
+    "volcanic rock",
+    "plate tectonics"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A time slider over a map of Iberia and the Sardinia–Corsica block. Long ago they are shown joined as one landmass, and today they are separate. The page asks how matching volcanic rock on both coasts proves they were once connected."
+  },
+  "source": "Geopop, “PERCHÉ CI SONO POCHISSIMI TERREMOTI IN SARDEGNA? Geologia POP” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=mu0U-eYaGxM&t=299s",
+  "written": "2026-11-03"
+}

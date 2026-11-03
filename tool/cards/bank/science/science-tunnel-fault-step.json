@@ -1,0 +1,37 @@
+{
+  "id": "science-tunnel-fault-step",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A fault jumps 4 metres. What happens to a tunnel crossing it?",
+  "answer": "In 1908 the Messina fault opened a step of two to four metres. A tunnel crossing it would be sliced, with one half dropping and the other staying put. A bridge can absorb such a step far more easily.",
+  "move": "Where a tunnel crosses an active fault, the fault can shear it in two.",
+  "keywords": [
+    "messina",
+    "fault",
+    "tunnel",
+    "earthquake",
+    "sicily"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Cross-section of a tunnel crossing a red fault line. The question asks what happens to the tunnel if the fault jumps 4 metres. Press and hold the button to make the fault slip, and watch the tunnel where it meets the red line."
+  },
+  "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=4cJ9IdeTZ2A&t=608s",
+  "written": "2026-11-03"
+}

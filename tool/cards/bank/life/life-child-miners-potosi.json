@@ -1,0 +1,37 @@
+{
+  "id": "life-child-miners-potosi",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.values",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do children work the narrow tunnels of Potosí's silver mine?",
+  "answer": "Some tunnels in Potosí's silver mine are too tight for a grown man. Children are small enough to squeeze through, so they are sent in to carry the material out. Kids are used because their small bodies fit where adults can't.",
+  "move": "Kids are used because their small bodies fit where adults can't.",
+  "keywords": [
+    "potosi",
+    "silver mining",
+    "child labour",
+    "bolivia",
+    "tunnels"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Text asks why children work the narrow tunnels of Potosí's silver mine, with a button to hold to send them in. Holding it shows two miners walking toward the silver, and only the small one fits the tunnel."
+  },
+  "source": "Geopop, “Viaggio a Potosi, nella miniera d'argento boliviana: una realtá sconcertante” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=88cWsU7e7js&t=396s",
+  "written": "2026-11-03"
+}

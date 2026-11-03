@@ -1,0 +1,178 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-vertical-faults-mistake -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#why .hint{font:700 max(1.7cqh,12px)/1.2 var(--body);color:var(--muted);margin:0}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">Why should a geological section never show a vertical fault?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="sec"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Vertical faults don't exist in nature</button>
+        <button class="opt" data-i="1">It hides whether the fault is normal or reverse</button>
+        <button class="opt" data-i="2">A vertical line is too hard to draw neatly</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">It hides the movement.</p>
+        <p class="body">A fault's lean tells which block lies on top, and so whether it slid down (normal) or was pushed up (reverse). Draw it vertical and you say neither: to a geologist it reads as "I didn't understand this place".</p>
+        <p class="hint">Drag the fault sideways to lean it, even a little.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a reason, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Always lean a fault: its tilt is the kinematics.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, done = false, tl = null;
+const st = {a: 0};
+const BANDS = ['#ecd08a', '#d9914a', '#b5543a', '#7f9a6e', '#4a5568'];
+const FR = [0.17, 0.2, 0.18, 0.22, 0.23];
+let G = null;
+
+function draw() {
+  const svg = Kit.$('sec');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const m = Math.min(W, H);
+  const fs = Math.max(f * 1.05, 13);
+  const x0 = W * 0.03, x1 = W * 0.97, top = Math.max(H * 0.2, fs * 3.2), bot = H * 0.98;
+  if (!(W > 0) || bot - top < fs * 2) { G = null; return; }
+  const h = bot - top, cx = W / 2, mid = top + h / 2, s = h * 0.13;
+  const defs = Kit.mk('defs', {}, svg);
+  const cs = Kit.mk('clipPath', {id: 'cS'}, defs);
+  Kit.mk('rect', {x: x0, y: top, width: x1 - x0, height: h, rx: m * 0.02}, cs);
+  const cL = Kit.mk('clipPath', {id: 'cL'}, defs), pL = Kit.mk('polygon', {}, cL);
+  const cR = Kit.mk('clipPath', {id: 'cR'}, defs), pR = Kit.mk('polygon', {}, cR);
+  const all = Kit.mk('g', {'clip-path': 'url(#cS)'}, svg);
+  const mkBlock = (clip, dy) => {
+    const g = Kit.mk('g', {'clip-path': `url(#${clip})`}, all);
+    const inner = Kit.mk('g', {transform: `translate(0,${dy})`}, g);
+    let y = top;
+    FR.forEach((fr, i) => {
+      const y0 = i === 0 ? top - dy : y;
+      const y1 = i === FR.length - 1 ? bot - dy : y + h * fr;
+      Kit.mk('rect', {x: x0, y: y0, width: x1 - x0, height: Math.max(0, y1 - y0), fill: BANDS[i]}, inner);
+      if (i) Kit.mk('line', {x1: x0, x2: x1, y1: y, y2: y, style: 'stroke:var(--k)', 'stroke-opacity': .35, 'stroke-width': m * 0.004}, inner);
+      y += h * fr;
+    });
+  };
+  mkBlock('cL', 0); mkBlock('cR', s);
+  Kit.mk('rect', {x: x0, y: top, width: x1 - x0, height: h, rx: m * 0.02, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': m * 0.006}, svg);
+  const halo = Kit.mk('line', {style: 'stroke:var(--c)', 'stroke-width': m * 0.022, 'stroke-linecap': 'round'}, svg);
+  const fl = Kit.mk('line', {style: 'stroke:var(--k)', 'stroke-width': m * 0.011, 'stroke-linecap': 'round'}, svg);
+  const grip = Kit.mk('circle', {r: m * 0.028, style: 'fill:var(--k);stroke:var(--c)', 'stroke-width': m * 0.008, opacity: 0}, svg);
+  const xr = m * 0.075;
+  const X = Kit.mk('g', {opacity: 0}, svg);
+  [[-1, -1, 1, 1], [-1, 1, 1, -1]].forEach(([a, b, c, d]) => {
+    Kit.mk('line', {x1: cx + a * xr, y1: mid + b * xr, x2: cx + c * xr, y2: mid + d * xr, stroke: '#fff', 'stroke-width': m * 0.04, 'stroke-linecap': 'round'}, X);
+    Kit.mk('line', {x1: cx + a * xr, y1: mid + b * xr, x2: cx + c * xr, y2: mid + d * xr, stroke: '#d62828', 'stroke-width': m * 0.024, 'stroke-linecap': 'round'}, X);
+  });
+  const pill = Kit.mk('g', {opacity: 0}, svg);
+  const pr = Kit.mk('rect', {rx: fs * 0.9, height: fs * 2}, pill);
+  const tip = Kit.mk('polygon', {}, pill);
+  const pt = Kit.mk('text', {x: cx, y: top - fs * 1.9, 'text-anchor': 'middle', 'dominant-baseline': 'central', style: `font:700 ${fs}px var(--body)`}, pill);
+  G = {W, H, m, fs, top, bot, cx, mid, s, pL, pR, fl, halo, grip, X, pill, pr, pt, tip, svg};
+  redraw();
+}
+
+function redraw() {
+  if (!G) return;
+  const {W, top, bot, cx, mid, fs, pL, pR, fl, halo, grip, X, pill, pr, pt, tip} = G;
+  const t = Math.tan(st.a * Math.PI / 180);
+  const xAt = y => cx + t * (y - mid);
+  const yA = top - G.H, yB = bot + G.H;
+  pL.setAttribute('points', `${-W},${yA} ${xAt(yA)},${yA} ${xAt(yB)},${yB} ${-W},${yB}`);
+  pR.setAttribute('points', `${xAt(yA)},${yA} ${W * 2},${yA} ${W * 2},${yB} ${xAt(yB)},${yB}`);
+  [fl, halo].forEach(l => { l.setAttribute('x1', xAt(top)); l.setAttribute('y1', top); l.setAttribute('x2', xAt(bot)); l.setAttribute('y2', bot); });
+  grip.setAttribute('cx', xAt(top)); grip.setAttribute('cy', top);
+  grip.setAttribute('opacity', done ? 1 : 0);
+  const vert = Math.abs(st.a) < 0.5;
+  X.setAttribute('opacity', done && vert ? 1 : 0);
+  pill.setAttribute('opacity', done ? 1 : 0);
+  if (!done) return;
+  let txt, bg, ink;
+  if (vert) { txt = 'Vertical: kinematics not understood'; bg = '#d62828'; ink = '#fff'; }
+  else if (st.a > 0) { txt = 'Normal: the block on top slid down'; bg = 'var(--k)'; ink = 'var(--c)'; }
+  else { txt = 'Reverse: the block on top went up'; bg = 'var(--k)'; ink = 'var(--c)'; }
+  pt.textContent = txt;
+  pt.setAttribute('style', `font:700 ${fs}px var(--body);fill:${ink}`);
+  let w = pt.getComputedTextLength() + fs * 1.6;
+  w = Math.min(w, W * 0.98);
+  const py = top - fs * 2.9;
+  pr.setAttribute('x', cx - w / 2); pr.setAttribute('y', py); pr.setAttribute('width', w);
+  pr.setAttribute('style', `fill:${bg}`);
+  const tx = xAt(top);
+  tip.setAttribute('points', `${cx - fs * 0.5},${py + fs * 1.9} ${cx + fs * 0.5},${py + fs * 1.9} ${(cx + tx) / 2},${top - fs * 0.35}`);
+  tip.setAttribute('style', `fill:${bg}`);
+}
+
+function playOut() {
+  done = true; st.a = 0; redraw();
+  if (Kit.calm || !G) return;
+  gsap.from(G.X, {opacity: 0, duration: .35});
+  tl = gsap.timeline({onUpdate: redraw})
+    .to(st, {a: 18, duration: 1, ease: 'power2.inOut'}, '+=1.6')
+    .to(st, {a: -18, duration: 1.4, ease: 'power2.inOut'}, '+=1.4')
+    .to(st, {a: 0, duration: 1, ease: 'power2.inOut'}, '+=1.4');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { draw(); playOut(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+let dragging = false, lastVert = true;
+function setFromPointer(e) {
+  if (!G) return;
+  const r = G.svg.getBoundingClientRect();
+  const px = (e.clientX - r.left) * (G.W / r.width);
+  let a = Math.atan((G.cx - px) / ((G.bot - G.top) / 2)) * 180 / Math.PI;
+  a = Math.max(-35, Math.min(35, a));
+  if (Math.abs(a) < 1.2) a = 0;
+  st.a = a;
+  const v = Math.abs(a) < 0.5;
+  if (v !== lastVert) { Kit.haptic('selection'); lastVert = v; }
+  redraw();
+}
+const svgEl = Kit.$('sec');
+svgEl.addEventListener('pointerdown', e => {
+  if (!done || !G) return;
+  if (tl) { tl.kill(); tl = null; }
+  dragging = true; svgEl.setPointerCapture(e.pointerId); setFromPointer(e);
+});
+svgEl.addEventListener('pointermove', e => { if (dragging) setFromPointer(e); });
+['pointerup', 'pointercancel'].forEach(n => svgEl.addEventListener(n, () => { dragging = false; }));
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

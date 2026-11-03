@@ -1,0 +1,194 @@
+<!doctype html>
+<!-- slug: technology-centrifugal-clutch -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0}
+.ink{fill:var(--k)}
+.drum{fill:color-mix(in srgb,var(--k) 42%,transparent)}
+.teeth{fill:color-mix(in srgb,var(--k) 28%,transparent)}
+.mark{fill:var(--c)}
+.flex{fill:none;stroke:var(--k);stroke-linecap:round}
+.shoe{fill:var(--k);stroke:var(--k);stroke-linejoin:round}
+.bolt{fill:var(--c)}
+.spark{fill:none;stroke:var(--c);stroke-linecap:round}
+.trk{fill:color-mix(in srgb,var(--k) 18%,transparent)}
+.trkOn{fill:var(--k)}
+.knob{fill:var(--c);stroke:var(--k)}
+.lab{fill:var(--k);font-family:var(--body);font-weight:700}
+.lab.mut{opacity:.65}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see it work">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CLUTCH</span></div>
+    <h2 class="q">How can one bending part act as a clutch that engages only at speed?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A flexible spinning part inside a drum, with a speed slider"></svg>
+      <div id="why" class="gone">
+        <p class="big">Speed makes it reach out.</p>
+        <p class="body">Spinning flings the heavy outer parts outward, and because the arms bend, they swing out further the faster it goes. Fast enough, they press on the drum and drag it round: a centrifugal clutch, the way a chainsaw engages its chain.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the speed slider right and watch the gap to the drum.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A part that bends can switch itself on: spin it fast and it grabs.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const TAU = Math.PI * 2, MAXW = 14;
+let L = null;            // layout + element refs
+let s = 0;               // throttle 0..1
+let hubW = 0, hubA = 0, drumW = 0, drumA = 0;
+let contactT = 0, done = false, wasContact = false, drag = false;
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13);
+  const trackH = fs * 5.6;
+  const R = Math.max(30, Math.min(W * 0.36, (H - trackH) * 0.40));
+  const cx = W / 2, cy = (H - trackH) / 2 + fs * 0.2;
+  const ty = H - fs * 2.6, x0 = W * 0.12, x1 = W * 0.88;
+
+  // Drum with gear teeth
+  const dg = Kit.mk('g', {}, svg);
+  let tp = '';
+  const n = 28, ro = R * 1.22, rt = R * 1.1;
+  for (let i = 0; i < n; i++) {
+    const a = i / n * TAU, w = TAU / n;
+    const pts = [[rt, a], [ro, a + w * .18], [ro, a + w * .5], [rt, a + w * .68]];
+    pts.forEach(([r, t], j) => tp += (i === 0 && j === 0 ? 'M' : 'L') + (r * Math.cos(t)).toFixed(1) + ' ' + (r * Math.sin(t)).toFixed(1));
+  }
+  Kit.mk('path', {d: tp + 'Z', class: 'teeth'}, dg);
+  Kit.mk('path', {d: ring(R * 1.12, R), class: 'drum', 'fill-rule': 'evenodd'}, dg);
+  Kit.mk('circle', {cx: R * 1.06, cy: 0, r: R * 0.035, class: 'mark'}, dg);
+  Kit.mk('circle', {cx: -R * 1.06, cy: 0, r: R * 0.035, class: 'mark'}, dg);
+
+  // Compliant mechanism: one piece
+  const mg = Kit.mk('g', {}, svg);
+  const flex = [], shoe = [], spark = [];
+  for (let i = 0; i < 3; i++) {
+    flex.push(Kit.mk('path', {class: 'flex', 'stroke-width': Math.max(2, R * 0.035)}, mg));
+    shoe.push(Kit.mk('path', {class: 'shoe', 'stroke-width': Math.max(1.5, R * 0.02)}, mg));
+    spark.push(Kit.mk('path', {class: 'spark', 'stroke-width': Math.max(2, R * 0.03), opacity: 0}, mg));
+  }
+  Kit.mk('circle', {cx: 0, cy: 0, r: R * 0.24, class: 'ink'}, mg);
+  Kit.mk('circle', {cx: 0, cy: 0, r: R * 0.08, class: 'bolt'}, mg);
+
+  // Labels
+  const lbDrum = Kit.mk('text', {x: cx, y: Math.max(fs * 1.1, cy - R * 1.22 - fs * 0.5), class: 'lab mut', 'text-anchor': 'middle', 'font-size': fs * 0.9}, svg);
+  lbDrum.textContent = 'outer drum';
+  const status = Kit.mk('text', {x: cx, y: ty - fs * 1.5, class: 'lab', 'text-anchor': 'middle', 'font-size': fs}, svg);
+
+  // Throttle
+  const th = Math.max(8, fs * 0.55);
+  Kit.mk('rect', {x: x0, y: ty - th / 2, width: x1 - x0, height: th, rx: th / 2, class: 'trk'}, svg);
+  const on = Kit.mk('rect', {x: x0, y: ty - th / 2, width: 0, height: th, rx: th / 2, class: 'trkOn'}, svg);
+  const knob = Kit.mk('circle', {cx: x0, cy: ty, r: Math.max(12, fs * 0.95), class: 'knob', 'stroke-width': Math.max(3, fs * 0.22)}, svg);
+  const ls = Kit.mk('text', {x: x0, y: ty + fs * 2.1, class: 'lab mut', 'font-size': fs * 0.85}, svg); ls.textContent = 'SLOW';
+  const lf = Kit.mk('text', {x: x1, y: ty + fs * 2.1, class: 'lab mut', 'text-anchor': 'end', 'font-size': fs * 0.85}, svg); lf.textContent = 'FAST';
+
+  L = {W, H, R, cx, cy, ty, x0, x1, th, dg, mg, flex, shoe, spark, status, on, knob};
+  frame(0);
+}
+
+function ring(ro, ri) {
+  const c = r => `M${r} 0A${r} ${r} 0 1 0 ${-r} 0A${r} ${r} 0 1 0 ${r} 0Z`;
+  return c(ro) + c(ri);
+}
+
+function ext() { const v = hubW / MAXW; return Math.min(1, v * v / 0.45); } // centrifugal ~ speed squared
+
+function frame(dt) {
+  if (!L) return;
+  const {R, cx, cy} = L;
+  // physics
+  const target = s * MAXW;
+  hubW += (target - hubW) * Math.min(1, dt * 2.2);
+  const e = ext();
+  const contact = e >= 0.999;
+  if (contact) drumW += (hubW - drumW) * Math.min(1, dt * 5);
+  else drumW *= Math.max(0, 1 - dt * 0.9);
+  hubA += hubW * dt; drumA += drumW * dt;
+
+  L.mg.setAttribute('transform', `translate(${cx} ${cy}) rotate(${hubA * 180 / Math.PI})`);
+  L.dg.setAttribute('transform', `translate(${cx} ${cy}) rotate(${drumA * 180 / Math.PI})`);
+
+  const E = R * 0.16 * e;
+  for (let i = 0; i < 3; i++) {
+    const b = i * TAU / 3, a0 = b + 0.45, a1 = b + 1.85;
+    const rAt = (t, base) => base + E * (0.35 + 0.65 * (t - a0) / (a1 - a0));
+    let d = '';
+    const N = 14;
+    for (let k = 0; k <= N; k++) { const t = a0 + (a1 - a0) * k / N, r = rAt(t, R * 0.84); d += (k ? 'L' : 'M') + (r * Math.cos(t)).toFixed(1) + ' ' + (r * Math.sin(t)).toFixed(1); }
+    for (let k = N; k >= 0; k--) { const t = a0 + (a1 - a0) * k / N, r = rAt(t, R * 0.68); d += 'L' + (r * Math.cos(t)).toFixed(1) + ' ' + (r * Math.sin(t)).toFixed(1); }
+    L.shoe[i].setAttribute('d', d + 'Z');
+    const rs = rAt(a0, R * 0.76), rh = R * 0.2;
+    const p = (r, t) => (r * Math.cos(t)).toFixed(1) + ' ' + (r * Math.sin(t)).toFixed(1);
+    L.flex[i].setAttribute('d', `M${p(rh, b)}Q${p(R * 0.62, b + 0.02 + e * 0.08)} ${p(rs, a0 + 0.04)}`);
+    // contact glow on the far end of each shoe
+    const ra = R * 0.985, s0 = a1 - 0.55, s1 = a1 - 0.05;
+    L.spark[i].setAttribute('d', `M${p(ra, s0)}A${ra} ${ra} 0 0 1 ${p(ra, s1)}`);
+    L.spark[i].setAttribute('opacity', contact ? 0.9 : 0);
+  }
+
+  // throttle
+  const kx = L.x0 + (L.x1 - L.x0) * s;
+  L.knob.setAttribute('cx', kx);
+  L.on.setAttribute('width', Math.max(L.th, kx - L.x0));
+  L.status.textContent = hubW < 0.3 ? 'Stopped: arms relaxed, a gap all round'
+    : contact ? 'Contact! The drum is dragged round'
+    : e > 0.55 ? 'Arms bending outward… almost touching'
+    : 'Spinning: the gap stays open';
+
+  if (contact && !wasContact) Kit.haptic('light');
+  wasContact = contact;
+  if (contact) contactT += dt;
+  if (!done && contactT > 1.0) {
+    done = true;
+    Kit.haptic('success');
+    Kit.$('say').textContent = 'Now slow down: the arms spring back and let go.';
+    Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  }
+}
+
+gsap.ticker.add((t, dms) => frame(Math.min(0.05, dms / 1000)));
+
+function setFrom(e) {
+  if (!L) return;
+  const r = svg.getBoundingClientRect();
+  const x = (e.clientX - r.left) * L.W / r.width;
+  s = Math.max(0, Math.min(1, (x - L.x0) / (L.x1 - L.x0)));
+}
+svg.addEventListener('pointerdown', e => { drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); Kit.haptic('selection'); });
+svg.addEventListener('pointermove', e => { if (drag) setFrom(e); });
+const end = () => { drag = false; };
+svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+new ResizeObserver(() => { if (L) draw(); }).observe(Kit.$('stage'));
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => { if (!Kit.calm && L) gsap.from(L.knob, {attr: {r: 2}, duration: .6, ease: 'back.out(3)'}); };
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect();
+  const y = r.top + r.height * (L.ty / L.H);
+  const X = v => r.left + r.width * ((L.x0 + (L.x1 - L.x0) * v) / L.W);
+  const ev = (type, v) => svg.dispatchEvent(new PointerEvent(type, {clientX: X(v), clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', 0);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', i / 10); await new Promise(r => setTimeout(r, 30)); }
+  ev('pointerup', 1);
+  await new Promise(r => setTimeout(r, 3200));
+};
+Kit.single();
+</script>
+</html>

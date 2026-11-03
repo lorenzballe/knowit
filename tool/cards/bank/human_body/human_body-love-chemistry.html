@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-love-chemistry -->
+<title>The chemical cocktail of love</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#scale{flex:1;min-height:0;width:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,12.5px)/1.35 var(--body);margin:0}
+.chip{cursor:grab}
+.chip text{pointer-events:none}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Drag · sort">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LOVE CHEMISTRY</span></div>
+    <h2 class="q">Love begins with four molecules shifting. Which rise, and which fall?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scale"></svg>
+      <div id="why" class="gone"><p class="big">Three rise, one falls</p><p class="body">As love begins, dopamine, noradrenaline and phenylethylamine go up while serotonin goes down. That swing of brain messengers cuts appetite and can cause insomnia.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag each molecule onto a pan: it rises or it falls.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Early love is a chemical swing: three messengers up, serotonin down.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede nel nostro cervello quando ci innamoriamo? La biochimica dell’amore” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MOL = [
+  {id:'dop', name:'Dopamine', up:true},
+  {id:'nor', name:'Noradrenaline', up:true},
+  {id:'pea', name:'Phenylethylamine', up:true},
+  {id:'ser', name:'Serotonin', up:false}
+];
+const svg = Kit.$('scale');
+const st = {side:{}, order:{up:[], down:[]}, a:0, done:false, wrong:{}, asked:false};
+let G = null, els = {}, chips = {}, drag = null, tw = [];
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = MOL.every(m => st.side[m.id] === (m.up ? 'up' : 'down'));
+  const nRight = MOL.filter(m => st.side[m.id] === (m.up ? 'up' : 'down')).length;
+  MOL.forEach(m => { st.wrong[m.id] = st.side[m.id] !== (m.up ? 'up' : 'down'); });
+  const choice = 'rise: ' + st.order.up.map(id => MOL.find(m => m.id === id).name).join(', ') +
+                 ' · fall: ' + st.order.down.map(id => MOL.find(m => m.id === id).name).join(', ');
+  Kit.answer({choice, correct: ok, sure: pct});
+  sure.grade(ok, pct, ok ? 'All four right' : `${nRight} of 4 right`);
+  st.done = true;
+  MOL.forEach(m => st.side[m.id] = m.up ? 'up' : 'down');
+  st.order.up = ['dop','nor','pea']; st.order.down = ['ser'];
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  requestAnimationFrame(() => { draw(); relayout(); });
+});
+
+function geo(){
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f * .95, W * .037));
+  const ch = fs * 2.15, cw = Math.min(W * .42, fs * 10.6), gap = 8;
+  const trayH = Math.max(H * .34, 2 * ch + 3 * gap);
+  const S = st.done ? H : H - trayH;
+  return {W, H, fs, S, ch, cw, gap, px: W/2, py: S * .1, L: W * .27, str: S * .5, pw: cw * 1.08};
+}
+function endPt(a, s){ return {x: G.px + s * G.L * Math.cos(a), y: G.py + s * G.L * Math.sin(a)}; }
+function panPt(a, side){ const e = endPt(a, side === 'up' ? -1 : 1); return {x: e.x, y: e.y + G.str}; }
+function targetTilt(){ return Math.max(-.21, Math.min(.21, (st.order.up.length - st.order.down.length) * -.07)); }
+function target(id, a){
+  const s = st.side[id];
+  if (s){
+    const p = panPt(a, s), i = st.order[s].indexOf(id);
+    return {x: p.x, y: p.y - G.ch/2 - 3 - i * (G.ch + 4)};
+  }
+  const k = MOL.findIndex(m => m.id === id), col = k % 2, row = Math.floor(k / 2);
+  return {x: G.W * (.26 + .48 * col), y: G.S + (G.H - G.S) / 2 + (row - .5) * (G.ch + G.gap)};
+}
+const css = (el, s) => el.setAttribute('style', s);
+
+function draw(){
+  G = geo();
+  svg.innerHTML = '';
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  if (!st.done){
+    const tr = mk('rect', {x: G.W*.02, y: G.S + 4, width: G.W*.96, height: G.H - G.S - 8, rx: G.fs});
+    css(tr, 'fill:none;stroke:var(--k);stroke-opacity:.3;stroke-width:1.5;stroke-dasharray:5 6');
+  }
+  // stand
+  els.post = mk('line', {x1: G.px, y1: G.py, x2: G.px, y2: G.S * .97});
+  css(els.post, 'stroke:var(--k);stroke-width:' + Math.max(3, G.fs*.35) + ';stroke-linecap:round');
+  els.foot = mk('path', {d: `M${G.px - G.W*.1},${G.S*.97} L${G.px + G.W*.1},${G.S*.97}`});
+  css(els.foot, 'stroke:var(--k);stroke-width:' + Math.max(4, G.fs*.45) + ';stroke-linecap:round');
+  // strings + pans + labels
+  els.sides = {};
+  ['up','down'].forEach(s => {
+    const o = {};
+    o.s1 = mk('line', {}); o.s2 = mk('line', {});
+    [o.s1, o.s2].forEach(l => css(l, 'stroke:var(--k);stroke-opacity:.55;stroke-width:1.5'));
+    o.pan = mk('path', {}); css(o.pan, 'fill:var(--k);stroke:var(--k);stroke-width:2;stroke-linejoin:round');
+    o.lab = mk('text', {'text-anchor': 'middle'});
+    o.lab.textContent = s === 'up' ? 'RISES ↑' : 'FALLS ↓';
+    css(o.lab, `fill:var(--k);font:800 ${G.fs*1.05}px var(--body);letter-spacing:.06em`);
+    els.sides[s] = o;
+  });
+  // beam
+  els.beam = mk('line', {}); css(els.beam, 'stroke:var(--k);stroke-width:' + Math.max(4, G.fs*.42) + ';stroke-linecap:round');
+  els.piv = mk('circle', {cx: G.px, cy: G.py, r: G.fs*.55}); css(els.piv, 'fill:var(--c);stroke:var(--k);stroke-width:3');
+  // chips
+  chips = {};
+  MOL.forEach(m => {
+    const g = mk('g', {class: 'chip', 'data-id': m.id});
+    const r = mk('rect', {x: -G.cw/2, y: -G.ch/2, width: G.cw, height: G.ch, rx: G.ch/2}, g);
+    const t = mk('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', y: 1}, g);
+    t.textContent = m.name;
+    const c = {g, r, t, p: target(m.id, st.a)};
+    chips[m.id] = c; style(m.id); place(m.id);
+  });
+  layoutScale(st.a);
+}
+function style(id){
+  const c = chips[id], on = !!st.side[id];
+  const wrong = st.done && st.wrong[id];
+  css(c.r, on && !wrong ? 'fill:var(--k);stroke:var(--k);stroke-width:2'
+                        : `fill:var(--c);stroke:var(--k);stroke-width:2.2${wrong ? ';stroke-dasharray:5 4' : ''}`);
+  css(c.t, `fill:${on && !wrong ? 'var(--c)' : 'var(--k)'};font:700 ${G.fs}px var(--body)`);
+}
+function place(id){ const c = chips[id]; c.g.setAttribute('transform', `translate(${c.p.x},${c.p.y})`); }
+function layoutScale(a){
+  const l = endPt(a, -1), r = endPt(a, 1);
+  els.beam.setAttribute('x1', l.x); els.beam.setAttribute('y1', l.y);
+  els.beam.setAttribute('x2', r.x); els.beam.setAttribute('y2', r.y);
+  ['up','down'].forEach(s => {
+    const e = endPt(a, s === 'up' ? -1 : 1), p = panPt(a, s), o = els.sides[s], hw = G.pw/2;
+    o.s1.setAttribute('x1', e.x); o.s1.setAttribute('y1', e.y); o.s1.setAttribute('x2', p.x - hw); o.s1.setAttribute('y2', p.y);
+    o.s2.setAttribute('x1', e.x); o.s2.setAttribute('y1', e.y); o.s2.setAttribute('x2', p.x + hw); o.s2.setAttribute('y2', p.y);
+    o.pan.setAttribute('d', `M${p.x - hw},${p.y} Q${p.x},${p.y + G.pw*.2} ${p.x + hw},${p.y} Z`);
+    o.lab.setAttribute('x', p.x); o.lab.setAttribute('y', p.y + G.pw*.1 + G.fs*1.5);
+  });
+}
+function relayout(){
+  tw.forEach(t => t.kill());
+  const starts = {}; MOL.forEach(m => starts[m.id] = {...chips[m.id].p});
+  const o = {a: st.a, k: 0}, ta = targetTilt();
+  const apply = () => {
+    st.a = o.a; layoutScale(o.a);
+    MOL.forEach(m => {
+      if (drag && drag.id === m.id) return;
+      const t = target(m.id, o.a), s = starts[m.id], c = chips[m.id];
+      c.p = {x: s.x + (t.x - s.x) * o.k, y: s.y + (t.y - s.y) * o.k}; place(m.id);
+    });
+  };
+  const d = Kit.calm ? .01 : 1;
+  tw = [gsap.to(o, {a: ta, duration: 1.3 * d, ease: 'elastic.out(1,.4)', onUpdate: apply}),
+        gsap.to(o, {k: 1, duration: .45 * d, ease: 'power3.out', onUpdate: apply})];
+}
+function toSvg(e){ const r = svg.getBoundingClientRect(); return {x: (e.clientX - r.left) * G.W / r.width, y: (e.clientY - r.top) * G.H / r.height}; }
+
+svg.addEventListener('pointerdown', e => {
+  if (st.done) return;
+  const g = e.target.closest && e.target.closest('.chip'); if (!g) return;
+  e.preventDefault();
+  const id = g.dataset.id, p = toSvg(e), c = chips[id];
+  drag = {id, dx: c.p.x - p.x, dy: c.p.y - p.y};
+  const s = st.side[id];
+  if (s){ st.order[s] = st.order[s].filter(x => x !== id); delete st.side[id]; style(id); }
+  svg.appendChild(g);
+  gsap.to(g, {scale: 1.06, transformOrigin: 'center', duration: .15});
+  Kit.haptic('selection');
+  relayout();
+});
+window.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const p = toSvg(e), c = chips[drag.id];
+  c.p = {x: p.x + drag.dx, y: p.y + drag.dy}; place(drag.id);
+});
+window.addEventListener('pointerup', e => {
+  if (!drag) return;
+  const id = drag.id, c = chips[id];
+  gsap.to(c.g, {scale: 1, duration: .15});
+  if (c.p.y < G.S || st.asked){
+    const s = c.p.x < G.px ? 'up' : 'down';
+    st.side[id] = s; st.order[s].push(id);
+    Kit.haptic('light');
+  }
+  drag = null; style(id); relayout();
+  if (!st.asked && MOL.every(m => st.side[m.id])){
+    st.asked = true; sure.on();
+  }
+});
+
+Kit.onShow.card = () => { if (!drag) draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.chip', {opacity: 0, y: 12, stagger: .08, duration: .45, ease: 'power3.out'});
+  const o = {a: .16};
+  gsap.to(o, {a: 0, duration: 1.6, ease: 'elastic.out(1,.35)', onUpdate: () => { st.a = o.a; layoutScale(o.a); }});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const fire = (el, type, x, y) => {
+    const r = svg.getBoundingClientRect();
+    el.dispatchEvent(new PointerEvent(type, {bubbles: true, cancelable: true, pointerId: 1, isPrimary: true,
+      clientX: r.left + x * r.width / G.W, clientY: r.top + y * r.height / G.H}));
+  };
+  for (const m of MOL){
+    const c = chips[m.id], to = {x: m.up ? G.px - G.L : G.px + G.L, y: G.S * .4};
+    fire(c.r, 'pointerdown', c.p.x, c.p.y); await wait(30);
+    fire(window, 'pointermove', to.x, to.y); await wait(30);
+    fire(window, 'pointerup', to.x, to.y); await wait(120);
+  }
+  await wait(200);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(1400);
+};
+Kit.single();
+</script>
+</html>

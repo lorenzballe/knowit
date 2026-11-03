@@ -1,0 +1,151 @@
+<!doctype html>
+<!-- slug: science-well-to-time -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#sv{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;gap:2.5cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{flex:1;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt.bad{opacity:.55}
+#why .big{font:800 max(2.4cqh,15px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body)}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Race · two ways">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">Wells are measured in metres, seismic in time. How do they meet?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sv" aria-label="A seismic section in time beside a well log with depth and time columns"></svg>
+      <div id="ctl">
+        <button class="opt" id="bD">Drop the well in by depth</button>
+        <button class="opt" id="bT">Convert the well to time first</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Convert the well to time.</p>
+        <p class="body">The seismic section is in time; the well's markers are in metres. Put the markers in time and they sit on their reflectors: hard data to interpret from. Depth conversion comes only at the end, once the interpretation is ready.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Try both ways of putting the well's H1 and H2 on the section.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Bring the wells into time first; the seismic goes to depth last.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {depth: false, time: false};
+const DF = [.45, .85], TF = [.32, .58], COL = ['#f5a524', '#2ec4b6'], NM = ['H1', 'H2'];
+let G = null;
+
+function draw() {
+  const svg = Kit.$('sv'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .85);
+  const top = fs * 2, bot = H - 2, h = bot - top;
+  const sx = 0, sw = W * .64, wx = sx + sw * .5;
+  const lx = W * .68, dx = lx + (W - lx) * .27, tx = lx + (W - lx) * .73, cw = (W - lx) * .2;
+  G = {W, H, fs, top, h, sw, wx, lx, dx, tx};
+  const m = (t, a, p) => Kit.mk(t, a, p || svg);
+  const txt = (x, y, s, a) => { const e = m('text', Object.assign({x, y, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: 'currentColor', 'text-anchor': 'middle'}, a || {})); e.textContent = s; return e; };
+  svg.style.color = 'var(--k)';
+
+  // headers
+  txt(sx + 2, top - fs * .6, 'SEISMIC · time ↓', {'text-anchor': 'start'});
+  txt(dx, top - fs * .6, 'DEPTH');
+  txt(tx, top - fs * .6, 'TIME');
+
+  // seismic section
+  const defs = m('defs');
+  const cp = m('clipPath', {id: 'cl'}, defs);
+  m('rect', {x: sx, y: top, width: sw, height: h, rx: fs * .6}, cp);
+  m('rect', {x: sx, y: top, width: sw, height: h, rx: fs * .6, fill: '#12151c'});
+  const g = m('g', {'clip-path': 'url(#cl)'});
+  const ry = (fr, x) => top + h * fr + h * .06 - h * .06 * Math.exp(-Math.pow((x - wx) / (sw * .38), 2));
+  let fr = [];
+  for (let k = 0; k < 19; k++) fr.push(.03 + k * .053);
+  fr = fr.filter(v => TF.every(t => Math.abs(v - t) > .028));
+  const rand = (() => { let s = 7; return () => (s = (s * 9301 + 49297) % 233280) / 233280; })();
+  const path = (v, j) => { let d = ''; for (let i = 0; i <= 40; i++) { const x = sx + sw * i / 40; d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + (ry(v, x) + (j ? (rand() - .5) * h * .006 : 0)).toFixed(1); } return d; };
+  fr.forEach(v => m('path', {d: path(v, 1), fill: 'none', stroke: '#e6ebf5', 'stroke-opacity': .25 + rand() * .5, 'stroke-width': Math.max(1, h * (.004 + rand() * .008))}, g));
+  G.keys = TF.map((v, i) => m('path', {d: path(v, 1), fill: 'none', stroke: S.time ? COL[i] : '#e6ebf5', 'stroke-opacity': S.time ? 1 : .7, 'stroke-width': S.time ? Math.max(2.5, h * .014) : Math.max(1, h * .009), class: 'key'}, g));
+
+  // well
+  m('line', {x1: wx, y1: top, x2: wx, y2: bot, stroke: '#fff', 'stroke-width': Math.max(2, fs * .18)});
+  m('circle', {cx: wx, cy: top + fs * .5, r: fs * .3, fill: '#fff'});
+
+  // log panel
+  m('rect', {x: lx, y: top, width: W - lx, height: h, rx: fs * .6, fill: 'color-mix(in srgb,var(--k) 7%,transparent)'});
+  [dx, tx].forEach(x => m('line', {x1: x, y1: top + fs * .4, x2: x, y2: bot - fs * .4, stroke: 'currentColor', 'stroke-opacity': .3, 'stroke-width': 1.5}));
+  const bar = (x, y, i, cls, solid) => {
+    const gg = m('g', {class: cls});
+    m('line', {x1: x - cw, y1: y, x2: x + cw, y2: y, stroke: COL[i], 'stroke-width': Math.max(3, fs * .3), 'stroke-linecap': 'round', 'stroke-dasharray': solid ? 'none' : '2 5'}, gg);
+    txt(x, y - fs * .5, NM[i], {fill: COL[i]}).remove(); gg.appendChild(txt(x, y - fs * .5, NM[i], {fill: COL[i]}));
+    return gg;
+  };
+  DF.forEach((v, i) => bar(dx, top + h * v, i, 'dm', true));
+  TF.forEach((v, i) => {
+    if (S.time) { const b = bar(tx, top + h * v, i, 'tm', true); b.dataset.dy = (DF[i] - v) * h; }
+    else txt(tx, top + h * v + fs * .35, '?', {'fill-opacity': .35});
+  });
+
+  // depth attempt: misses
+  if (S.depth) DF.forEach((v, i) => {
+    const y = top + h * v, gg = m('g', {class: 'miss', opacity: S.time ? .35 : 1});
+    m('line', {x1: wx - sw * .12, y1: y, x2: wx + sw * .12, y2: y, stroke: '#ff5a5a', 'stroke-width': Math.max(2.5, fs * .22), 'stroke-dasharray': '5 4'}, gg);
+    if (!S.time) gg.appendChild(txt(wx + sw * .14, y + fs * .35, NM[i] + ' ✕', {'text-anchor': 'start', fill: '#ff6b6b'}));
+  });
+
+  // time attempt: hits
+  if (S.time) TF.forEach((v, i) => {
+    const y = top + h * v, gg = m('g', {class: 'hit'});
+    m('circle', {cx: wx, cy: y, r: fs * .45, fill: COL[i], stroke: '#12151c', 'stroke-width': 2}, gg);
+    gg.appendChild(txt(sx + fs * .5, y - fs * .55, NM[i] + ' ✓', {'text-anchor': 'start', fill: COL[i]}));
+  });
+}
+
+function goDepth() {
+  if (S.depth || S.time) return;
+  S.depth = true; Kit.haptic('light');
+  Kit.$('bD').classList.add('bad');
+  draw();
+  if (!Kit.calm) gsap.from('.miss', {x: G.dx - G.wx, opacity: 0, duration: .7, stagger: .12, ease: 'power3.out'});
+  Kit.$('say').textContent = 'Missed: metres plotted on a time axis land on nothing. Try the other way.';
+}
+
+function goTime() {
+  if (S.time) return;
+  S.time = true; Kit.haptic('success');
+  Kit.$('bT').classList.add('on');
+  draw();
+  if (!Kit.calm) {
+    const tl = gsap.timeline();
+    tl.from('.tm', {x: -(G.tx - G.dx), y: (i, el) => +el.dataset.dy, duration: .8, stagger: .1, ease: 'power2.inOut'});
+    tl.from('.hit', {x: G.tx - G.wx, opacity: 0, duration: .7, stagger: .1, ease: 'power3.out'});
+    G.keys.forEach((p, i) => {
+      const L = p.getTotalLength();
+      gsap.set(p, {strokeDasharray: L, strokeDashoffset: L});
+      tl.to(p, {strokeDashoffset: 0, duration: .9, ease: 'power2.out', onComplete: () => p.removeAttribute('style')}, i ? '<.15' : '>');
+    });
+  }
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  setTimeout(() => { if (Kit.onShow.card) draw(); }, Kit.calm ? 0 : 3200);
+}
+
+Kit.$('bD').addEventListener('click', goDepth);
+Kit.$('bT').addEventListener('click', goTime);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('bD').click(); await new Promise(r => setTimeout(r, 1000));
+  Kit.$('bT').click(); await new Promise(r => setTimeout(r, 3500));
+};
+Kit.single();
+</script>
+</html>

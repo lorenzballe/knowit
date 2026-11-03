@@ -1,0 +1,225 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-rally-jump-throttle -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:1cqh;flex:none}
+.row{display:flex;gap:2cqw;align-items:stretch}
+.rl{font:800 max(1.8cqh,12px)/1.1 var(--body);width:15cqw;display:flex;align-items:center;color:var(--k)}
+.seg{flex:1;font:700 max(1.75cqh,12px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.4cqh;padding:1.1cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.seg.on{background:var(--k);color:var(--c);box-shadow:none}
+.go{font:800 max(2.1cqh,14px)/1.1 var(--body);background:var(--k);color:var(--c);border:0;border-radius:1.6cqh;padding:1.4cqh 4cqw;cursor:pointer;letter-spacing:.04em}
+.go:disabled{opacity:.35;cursor:default}
+#why{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+#again{align-self:flex-start;flex:none;padding:.9cqh 4cqw}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Try it · two jumps">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RALLY JUMPS</span></div>
+    <h2 class="q">Steep jump or gentle hump: when does a rally driver press the throttle?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Two rally cars, one on a steep tooth jump, one on a long soft hump"></svg>
+      <div id="ctl">
+        <div class="row" data-l="tooth"><span class="rl">Tooth</span><button class="seg" data-v="0">Lift, then kick at the top</button><button class="seg" data-v="1">Flat out all the way</button></div>
+        <div class="row" data-l="hump"><span class="rl">Hump</span><button class="seg" data-v="0">Lift, then kick at the top</button><button class="seg" data-v="1">Flat out all the way</button></div>
+        <button class="go" id="go" disabled>JUMP!</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big" id="score">Opposite pedals.</p>
+        <p class="body">Steep tooth: slow down going in, then a sharp kick of throttle at the top sets the flight straight. Soft hump: go in fast and never lift on the ramp, so the car flies parallel to the road and all four wheels land together.</p>
+        <button class="seg" id="again">Try again</button>
+      </div>
+    </div>
+    <p class="say" id="say">Pick a pedal plan for each jump, then hit Jump.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Steep tooth: lift, then kick at the top. Soft hump: never lift off the gas.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const ST = {tooth: -1, hump: -1};   // 0 = lift then kick, 1 = flat out
+const st = {t: 0};
+let G = {}, prevT = 0, played = false, running = false, tw = null, lastSize = '';
+const ORANGE = '#ff7a1a', GOOD = '#12803f', BAD = '#c8241a';
+const css = n => getComputedStyle(Kit.$('card')).getPropertyValue(n).trim();
+const lerp = (a, b, u) => a + (b - a) * u;
+const isGood = id => id === 'tooth' ? ST.tooth === 0 : ST.hump === 1;
+
+function slopeDeg(l, x) { return Math.atan2(l.ground(x + 1) - l.ground(x - 1), 2) * 180 / Math.PI; }
+
+function flightAngle(l, u, good) {
+  if (l.id === 'tooth') {
+    if (good) { const e = Math.min(u / 0.3, 1); return l.a0 * Math.pow(1 - e, 2); }
+    return l.a0 + (34 - l.a0) * Math.pow(u, 1.4);
+  }
+  return good ? -2 * Math.sin(Math.PI * u) : 30 * Math.pow(u, 1.5);
+}
+
+function stateAt(l, t, good) {
+  let x, y, a;
+  if (t < l.take) {
+    x = l.pre(t); y = l.ground(x); a = slopeDeg(l, x);
+  } else if (t < l.land) {
+    const u = (t - l.take) / (l.land - l.take);
+    x = lerp(l.x1, l.x2, u);
+    y = lerp(l.y1, l.y2, u) - 4 * l.k * u * (1 - u);
+    a = flightAngle(l, u, good);
+    y = Math.min(y, l.ground(x) - Math.abs(Math.sin(a * Math.PI / 180)) * l.L * 0.5);
+  } else {
+    const u = (t - l.land) / (1 - l.land);
+    x = lerp(l.x2, l.xEnd, 1 - Math.pow(1 - u, 2));
+    y = l.ground(x);
+    if (good) { a = 0; y += l.L * 0.04 * Math.sin(Math.PI * Math.min(u * 5, 1)); }
+    else {
+      const aL = flightAngle(l, 1, false);
+      a = aL * Math.exp(-u * 9) * Math.cos(u * 22);
+      y -= Math.abs(Math.sin(a * Math.PI / 180)) * l.L * 0.5 + l.L * 0.25 * Math.abs(Math.sin(u * 14)) * Math.exp(-u * 8);
+    }
+  }
+  return {x, y, a};
+}
+
+function thr(l, t) {
+  const v = ST[l.id];
+  if (v < 0) return {lv: 0, txt: '?'};
+  if (v === 1) return {lv: 1, txt: 'FLAT OUT'};
+  const k = l.take;
+  if (t < k - 0.2) return {lv: 1, txt: 'ON'};
+  if (t < k - 0.02) return {lv: 0.08, txt: 'LIFT'};
+  if (t < k + 0.08) return {lv: 1, txt: 'KICK!', kick: true};
+  return {lv: 0.55, txt: 'ON'};
+}
+
+function puff(l, good) {
+  const c = good ? css('--k') : BAD;
+  for (let i = 0; i < 4; i++) {
+    const p = Kit.mk('circle', {cx: l.x2 + (i - 1.5) * l.L * 0.25, cy: l.y2 - 2, r: l.L * 0.08, fill: c, opacity: good ? .25 : .55}, l.fx);
+    gsap.to(p, {attr: {r: l.L * (good ? 0.16 : 0.28), cy: l.y2 - l.L * (0.1 + Kit.rnd() * 0.2)}, opacity: 0, duration: .7, ease: 'power2.out', onComplete: () => p.remove()});
+  }
+}
+
+function render() {
+  if (!G.lanes) return;
+  const t = st.t, ink = css('--k');
+  G.lanes.forEach(l => {
+    const good = isGood(l.id), s = stateAt(l, t, good);
+    l.car.setAttribute('transform', `translate(${s.x},${s.y}) rotate(${s.a})`);
+    const th = thr(l, t);
+    l.bar.setAttribute('width', Math.max(0, l.bw * th.lv));
+    l.bar.setAttribute('fill', th.kick ? ORANGE : ink);
+    l.tt.textContent = 'throttle · ' + th.txt;
+    l.tt.setAttribute('fill', th.kick ? ORANGE : ink);
+    const len = th.lv * (th.kick ? 0.6 : 0.22) * l.L, r = l.r;
+    l.flame.setAttribute('d', `M${-l.L / 2},${-r - l.L * 0.05}L${-l.L / 2 - len},${-r - l.L * 0.1}L${-l.L / 2},${-r - l.L * 0.15}Z`);
+    l.flame.setAttribute('opacity', running && th.lv > 0.1 ? 1 : 0);
+    if (played && t >= l.land) { l.verdict.textContent = good ? '✓ Lands level' : '✗ Nose-first'; l.verdict.setAttribute('fill', good ? GOOD : BAD); }
+    else l.verdict.textContent = '';
+    if (running && prevT < l.land && t >= l.land) { puff(l, good); Kit.haptic(good ? 'light' : 'selection'); }
+  });
+  prevT = t;
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  lastSize = svg.clientWidth + 'x' + svg.clientHeight;
+  const ink = css('--k'), cc = css('--c') || '#fff';
+  const lh = H / 2, pad = W * 0.03;
+  const fs = Math.max(12, Math.min(f, lh * 0.11));
+  const hideThr = lh < fs * 3.6 ? {display: 'none'} : {};
+  Kit.mk('line', {x1: 0, x2: W, y1: lh, y2: lh, stroke: ink, 'stroke-opacity': .2, 'stroke-dasharray': '4 5'}, svg);
+  G.lanes = ['tooth', 'hump'].map((id, i) => {
+    const top = i * lh, Gy = top + lh * 0.9;
+    const L = Math.min(W * 0.12, lh * 0.36), r = L * 0.13;
+    const l = {id, L, r, xEnd: W * 0.9};
+    let d;
+    if (id === 'tooth') {
+      const xa = W * 0.30, xb = W * 0.40, hT = lh * 0.30;
+      l.ground = x => x < xa ? Gy : x <= xb ? Gy - hT * (x - xa) / (xb - xa) : Gy;
+      d = `M0,${Gy}L${xa},${Gy}L${xb},${Gy - hT}L${xb + W * 0.03},${Gy}L${W},${Gy}L${W},${top + lh}L0,${top + lh}Z`;
+      l.take = 0.5; l.land = 0.8; l.x1 = xb; l.y1 = Gy - hT; l.x2 = W * 0.72; l.y2 = Gy; l.k = lh * 0.08;
+      l.a0 = Math.atan2(-hT, xb - xa) * 180 / Math.PI;
+      l.pre = t => t < 0.3 ? lerp(W * 0.06, xa, t / 0.3) : (u => xa + (xb - xa) * (0.5 * u + 0.5 * u * (2 - u)))((t - 0.3) / 0.2);
+    } else {
+      const h0 = W * 0.10, h1 = W * 0.80, hH = lh * 0.24, xc = W * 0.45;
+      l.ground = x => x > h0 && x < h1 ? Gy - hH * (0.5 - 0.5 * Math.cos(2 * Math.PI * (x - h0) / (h1 - h0))) : Gy;
+      d = 'M0,' + Gy;
+      for (let x = 0; x <= W; x += W / 120) d += `L${x},${l.ground(x)}`;
+      d += `L${W},${top + lh}L0,${top + lh}Z`;
+      l.take = 0.4; l.land = 0.72; l.x1 = xc; l.y1 = l.ground(xc); l.x2 = W * 0.84; l.y2 = Gy; l.k = lh * 0.05;
+      l.a0 = 0;
+      l.pre = t => lerp(W * 0.06, xc, t / 0.4);
+    }
+    Kit.mk('path', {d, fill: ink, 'fill-opacity': .16, stroke: ink, 'stroke-width': Math.max(2, lh * 0.018), 'stroke-linejoin': 'round'}, svg);
+    // labels
+    Kit.mk('text', {x: pad, y: top + fs * 1.3, fill: ink, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg).textContent = id === 'tooth' ? 'TOOTH JUMP · steep' : 'SOFT HUMP · long';
+    l.verdict = Kit.mk('text', {x: W - pad, y: top + fs * 1.3, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, stroke: cc, 'stroke-width': 3, 'paint-order': 'stroke'}, svg);
+    l.bw = W * 0.2;
+    const by = top + fs * 2.15, bh = fs * 0.62;
+    Kit.mk('rect', {x: pad, y: by, width: l.bw, height: bh, rx: bh / 2, fill: 'none', stroke: ink, 'stroke-opacity': .5, 'stroke-width': 1.5, ...hideThr}, svg);
+    l.bar = Kit.mk('rect', {x: pad, y: by, width: 0, height: bh, rx: bh / 2, fill: ink, ...hideThr}, svg);
+    l.tt = Kit.mk('text', {x: pad + l.bw + fs * 0.5, y: by + bh * 0.9, fill: ink, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * 0.9, ...hideThr}, svg);
+    l.fx = Kit.mk('g', {}, svg);
+    // car
+    const car = Kit.mk('g', {}, svg);
+    l.flame = Kit.mk('path', {fill: ORANGE}, car);
+    Kit.mk('rect', {x: -L / 2, y: -r - L * 0.24, width: L, height: L * 0.2, rx: L * 0.06, fill: ink}, car);
+    Kit.mk('path', {d: `M${-L * 0.32},${-r - L * 0.22}L${-L * 0.2},${-r - L * 0.4}L${L * 0.1},${-r - L * 0.4}L${L * 0.3},${-r - L * 0.22}Z`, fill: ink}, car);
+    Kit.mk('path', {d: `M${-L * 0.24},${-r - L * 0.24}L${-L * 0.17},${-r - L * 0.35}L${L * 0.08},${-r - L * 0.35}L${L * 0.2},${-r - L * 0.24}Z`, fill: cc}, car);
+    Kit.mk('rect', {x: -L * 0.45, y: -r - L * 0.17, width: L * 0.9, height: L * 0.045, fill: ORANGE}, car);
+    [-0.3, 0.3].forEach(p => {
+      Kit.mk('circle', {cx: p * L, cy: -r, r, fill: ink, stroke: cc, 'stroke-width': Math.max(1.5, r * 0.3)}, car);
+    });
+    l.car = car;
+    return l;
+  });
+  render();
+};
+
+function updGo() { Kit.$('go').disabled = ST.tooth < 0 || ST.hump < 0 || running; }
+
+Kit.$('ctl').addEventListener('click', e => {
+  const b = e.target.closest('.seg'); if (!b || running) return;
+  const row = b.closest('.row'); ST[row.dataset.l] = +b.dataset.v;
+  row.querySelectorAll('.seg').forEach(s => s.classList.toggle('on', s === b));
+  Kit.haptic('selection'); st.t = 0; prevT = 0; played = false; render(); updGo();
+});
+
+function run(fast) {
+  if (ST.tooth < 0 || ST.hump < 0) return;
+  running = true; played = true; st.t = 0; prevT = 0; updGo();
+  const d = fast ? 0.4 : Kit.calm ? 1.4 : 3.4;
+  tw = gsap.to(st, {t: 1, duration: d, ease: 'none', onUpdate: render, onComplete: () => {
+    running = false; render(); updGo();
+    const n = (ST.tooth === 0) + (ST.hump === 1);
+    Kit.$('score').textContent = `${n} of 2 landed level. Opposite pedals!`;
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.haptic(n === 2 ? 'success' : 'light');
+  }});
+}
+Kit.$('go').addEventListener('click', () => run(false));
+Kit.$('again').addEventListener('click', () => {
+  Kit.hide('why'); Kit.show('ctl'); st.t = 0; prevT = 0; played = false; render(); updGo();
+});
+
+new ResizeObserver(() => {
+  const s = Kit.$('pic'); const k = s.clientWidth + 'x' + s.clientHeight;
+  if (G.lanes && k !== lastSize && s.clientWidth > 0) requestAnimationFrame(() => Kit.onShow.card());
+}).observe(Kit.$('pic'));
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('ctl').querySelector('[data-l="tooth"] [data-v="0"]').click();
+  Kit.$('ctl').querySelector('[data-l="hump"] [data-v="1"]').click();
+  run(true);
+  await new Promise(r => setTimeout(r, 1000));
+};
+Kit.single();
+</script>
+</html>

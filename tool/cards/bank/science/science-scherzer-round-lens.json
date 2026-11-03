@@ -1,0 +1,36 @@
+{
+  "id": "science-scherzer-round-lens",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does Scherzer's theorem prove about electron lenses?",
+  "answer": "Scherzer's theorem proves that round electron lenses can't diverge, and it does so for any radially symmetric lens. Without that symmetry a lens can make the beam spread, but the image breaks. Dragging the lens, or flipping it, shows the beam spreading.",
+  "move": "Round electron lenses can't diverge; breaking the symmetry breaks the image.",
+  "keywords": [
+    "scherzer",
+    "electron lens",
+    "electron optics",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A diagram of an electron lens, shown as a round or oval shape that can be flipped, with a beam of electrons passing through it. The reader is asked to drag or flip the lens to see the beam spread."
+  },
+  "source": "Veritasium, “Can You Keep Zooming In Infinitely?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=88bMVbx1dzM",
+  "written": "2026-11-03"
+}

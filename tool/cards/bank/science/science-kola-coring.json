@@ -1,0 +1,37 @@
+{
+  "id": "science-kola-coring",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Why did drilling the Kola hole get much slower after 7 km?",
+  "answer": "The drill stopped smashing the rock to go down. Instead it cut out intact rock cylinders, 6 cm across, to bring them up whole. That care is slow: the next 2 km took three more years.",
+  "move": "Taking rock out whole costs far more time than smashing through it.",
+  "keywords": [
+    "kola-well",
+    "coring",
+    "drill-bit",
+    "kola-peninsula",
+    "russia"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking why drilling the Kola well slowed after 7 km, with four choices: rock too hard, pulling up whole rock cylinders, pipe too heavy, or switching to coring. The reader picks one, then watches both drills at work."
+  },
+  "source": "Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=88ZLlziYdZg&t=428s",
+  "written": "2026-11-03"
+}

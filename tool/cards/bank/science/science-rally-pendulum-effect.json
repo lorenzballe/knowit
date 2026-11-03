@@ -1,0 +1,37 @@
+{
+  "id": "science-rally-pendulum-effect",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a rally driver steer away from a corner before turning in?",
+  "answer": "Steering away from the corner first throws the car's weight to one side. Turning back while lifting off swings that weight hard the other way, like a pendulum. The unloaded tyres lose grip, so the car rotates decisively.",
+  "move": "Swing the weight first, and the car pivots into the corner.",
+  "keywords": [
+    "rally driver",
+    "pendulum effect",
+    "weight transfer",
+    "tyre grip",
+    "car steering"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "An animated timeline of a car taking a right-hand corner, with a draggable scrubber. It shows the car's weight swinging one way when the driver steers away, then hard the other way as they turn back, with the unloaded tyres losing grip. The reader is asked to drag the timeline through the corner."
+  },
+  "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=2SCEUgazR_8&t=186s",
+  "written": "2026-11-03"
+}

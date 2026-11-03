@@ -1,0 +1,37 @@
+{
+  "id": "human_body-antiperspirant-pore-plug",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "How do antiperspirants work?",
+  "answer": "Antiperspirants contain aluminium salts, such as aluminium chlorohydrate. With sweat, these salts form a gel plug that blocks the duct, so the sweat stays in. Deodorants without these salts act on the bacteria instead, which means fewer bacteria and less smell.",
+  "move": "Antiperspirant stops the sweat; deodorant fights the smell.",
+  "keywords": [
+    "antiperspirant",
+    "deodorant",
+    "sweat",
+    "aluminium salts",
+    "bacteria"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A pore with sweat rising, and a question asking how antiperspirants work. The reader picks one of three answers: they kill smell bacteria, their aluminium salts plug the pore, or they soak up sweat like a sponge."
+  },
+  "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=1P8szAIszo0&t=109s",
+  "written": "2026-11-03"
+}

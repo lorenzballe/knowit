@@ -1,0 +1,38 @@
+{
+  "id": "maths-period-doubling-chaos",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.compounding",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How does the logistic map transition from regular cycles to chaos as R increases?",
+  "answer": "Each time R crosses a critical value, the cycle splits in two, going 1 → 2 → 4 → 8 → 16 and so on, faster each time. Past R ≈ 3.57 the population never settles into a repeating pattern. Order still returns in windows, such as the 3-year cycle at R = 3.83.",
+  "move": "Pushing R up doubles the cycle again and again until nothing repeats.",
+  "keywords": [
+    "logistic map",
+    "chaos",
+    "population growth",
+    "period doubling",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: how does the logistic map move from regular cycles to chaos as R rises? Shows cycles doubling 1, 2, 4, 8, 16 until chaos. Tap each growth rate R to sort it into settles-into-a-cycle or never-repeats, and tap again to switch sides.",
+    "graded": false
+  },
+  "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=ovJcsL7vyrk&t=308s",
+  "written": "2026-11-03"
+}

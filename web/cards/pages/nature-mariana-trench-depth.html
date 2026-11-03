@@ -1,0 +1,142 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-mariana-trench-depth -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#sea{width:100%;flex:1;min-height:0;display:block;touch-action:none;cursor:ns-resize;border-radius:1.8cqh;overflow:hidden}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.lab{font-family:var(--body);font-weight:700}
+.num{font-family:var(--mono);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag · find the bottom">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OCEAN DEPTHS</span></div>
+    <h2 class="q">What is the deepest point on Earth?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sea" aria-label="Cross-section of the ocean down into the Mariana Trench"></svg>
+    </div>
+    <p class="say" id="say">Drag the probe down until it hits the trench floor.</p>
+    <div id="why" class="gone"><p class="big">Challenger Deep: 10,994 m</p><p class="body">In the Mariana Trench lies the deepest point found so far: almost 11 km below sea level.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Earth's deepest known spot, Challenger Deep, sits almost 11 km down.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Quanto è profonda la fossa delle marianne?#shorts” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAX = 10994;
+let depth = 0, done = false, dragging = false, G = null;
+const fmt = n => Math.round(n).toLocaleString('en-US');
+
+function geo(){
+  const svg = Kit.$('sea');
+  const {W, H, f} = Kit.fitSvg(svg);
+  const top = H * 0.12, bot = H * 0.93, cx = W * 0.5;
+  const fs = Math.max(f * 0.85, 12);
+  const y = d => top + d / 11000 * (bot - top);
+  const floor = x => 4200 + (MAX - 4200) * Math.exp(-Math.pow((x - cx) / (W * 0.1), 2));
+  return {svg, W, H, f, fs, top, bot, cx, y, floor};
+}
+
+function draw(){
+  G = geo();
+  const {svg, W, H, fs, top, bot, cx, y, floor} = G;
+  svg.innerHTML = '';
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'wat', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#3a95d4'}, lg);
+  Kit.mk('stop', {offset: .35, 'stop-color': '#0f4a85'}, lg);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#030c1c'}, lg);
+  // sky
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: top, fill: '#cfe8f7'}, svg);
+  // water
+  Kit.mk('rect', {x: 0, y: top, width: W, height: H - top, fill: 'url(#wat)'}, svg);
+  // seabed
+  let p = `M0 ${H} L0 ${y(floor(0))}`;
+  for (let x = 0; x <= W; x += W / 120) p += ` L${x.toFixed(1)} ${y(floor(x)).toFixed(1)}`;
+  p += ` L${W} ${H} Z`;
+  Kit.mk('path', {d: p, fill: '#4a3a30', stroke: '#8a6a52', 'stroke-width': 2}, svg);
+  // surface line
+  Kit.mk('line', {x1: 0, x2: W, y1: top, y2: top, stroke: '#ffffff', 'stroke-width': 2}, svg);
+  // depth scale
+  const ax = W * 0.05;
+  for (let d = 0; d <= 10000; d += 2000) {
+    const yy = y(d);
+    Kit.mk('line', {x1: ax, x2: ax + fs * .7, y1: yy, y2: yy, stroke: '#ffffff', 'stroke-opacity': .7, 'stroke-width': 1.5}, svg);
+    const t = Kit.mk('text', {x: ax + fs * .9, y: yy + fs * .35, fill: '#ffffff', 'fill-opacity': .85, 'font-size': fs, class: 'num'}, svg);
+    t.textContent = d === 0 ? 'Sea level' : (d / 1000) + ' km';
+  }
+  // target line (revealed at the end)
+  G.mark = Kit.mk('line', {x1: 0, x2: W, y1: y(MAX), y2: y(MAX), stroke: '#ff5a4e', 'stroke-width': 2, 'stroke-dasharray': '6 5', opacity: done ? 1 : 0}, svg);
+  // boat
+  const bw = fs * 2.4;
+  Kit.mk('path', {d: `M${cx - bw / 2} ${top - fs * .9} L${cx + bw / 2} ${top - fs * .9} L${cx + bw * .35} ${top} L${cx - bw * .35} ${top} Z`, fill: '#ff8a2a', stroke: '#1b1b1b', 'stroke-width': 1.5}, svg);
+  Kit.mk('rect', {x: cx - fs * .5, y: top - fs * 1.7, width: fs, height: fs * .8, fill: '#ffffff', stroke: '#1b1b1b', 'stroke-width': 1.5}, svg);
+  // cable + probe
+  G.cable = Kit.mk('line', {x1: cx, x2: cx, y1: top, y2: y(depth), stroke: '#ffe066', 'stroke-width': 2}, svg);
+  G.probe = Kit.mk('g', {}, svg);
+  G.glow = Kit.mk('circle', {cx: 0, cy: 0, r: fs * 1.3, fill: '#ffe066', opacity: .25}, G.probe);
+  Kit.mk('circle', {cx: 0, cy: 0, r: fs * .7, fill: '#ffe066', stroke: '#1b1b1b', 'stroke-width': 2}, G.probe);
+  G.name = Kit.mk('text', {x: fs * 1.6, y: -fs * 1.7, fill: '#ff8a7f', 'font-size': fs, class: 'lab', opacity: done ? 1 : 0}, G.probe);
+  G.name.textContent = 'Challenger Deep';
+  G.read = Kit.mk('text', {x: fs * 1.6, y: fs * .45, fill: '#ffffff', 'font-size': fs * 1.25, class: 'num'}, G.probe);
+  place();
+}
+
+function place(){
+  if (!G) return;
+  const yy = G.y(depth);
+  G.probe.setAttribute('transform', `translate(${G.cx},${yy})`);
+  G.cable.setAttribute('y2', yy);
+  G.read.textContent = fmt(depth) + ' m';
+}
+
+function finish(){
+  if (done) return;
+  done = true; depth = MAX; place();
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) {
+    gsap.to([G.mark, G.name], {opacity: 1, duration: .5});
+    gsap.fromTo(G.glow, {attr: {r: G.fs * 1.3}}, {attr: {r: G.fs * 3}, opacity: 0, duration: .9, repeat: 2, ease: 'power2.out'});
+    gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+  } else { G.mark.setAttribute('opacity', 1); G.name.setAttribute('opacity', 1); }
+}
+
+let lastTick = 0;
+function setFromEvent(e){
+  if (done || !G) return;
+  const r = G.svg.getBoundingClientRect();
+  const yy = (e.clientY - r.top) * (G.H / r.height);
+  depth = Math.max(0, Math.min(MAX, (yy - G.top) / (G.bot - G.top) * 11000));
+  const k = Math.floor(depth / 1000);
+  if (k !== lastTick) { lastTick = k; Kit.haptic('selection'); }
+  place();
+  if (depth >= MAX) finish();
+}
+const sea = Kit.$('sea');
+sea.addEventListener('pointerdown', e => { dragging = true; try { sea.setPointerCapture(e.pointerId); } catch (_) {} setFromEvent(e); });
+sea.addEventListener('pointermove', e => { if (dragging) setFromEvent(e); });
+const up = () => { dragging = false; };
+sea.addEventListener('pointerup', up); sea.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.glow, {attr: {r: G.fs * 1.1}}, {attr: {r: G.fs * 1.8}, duration: .9, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const r = sea.getBoundingClientRect(), x = r.left + r.width / 2;
+  const ev = (t, yy) => sea.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: yy, pointerId: 1, bubbles: true}));
+  ev('pointerdown', r.top + r.height * .15);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', r.top + r.height * (.15 + .085 * i)); await new Promise(z => setTimeout(z, 30)); }
+  ev('pointermove', r.bottom + 40); ev('pointerup', r.bottom + 40);
+  await new Promise(z => setTimeout(z, 700));
+};
+Kit.single();
+</script>
+</html>

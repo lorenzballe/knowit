@@ -1,0 +1,38 @@
+{
+  "id": "science-seismic-time-axis",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What does the vertical axis of a raw seismic section measure?",
+  "answer": "The vertical axis of a raw seismic section measures time in seconds, not depth. Each wiggle is a wave that went down, bounced off a layer and came back up to be recorded, and the section shows how long that took. Depths come later, through a time-to-depth conversion.",
+  "move": "Seismic sections are in seconds of travel time, not metres.",
+  "keywords": [
+    "seismic sections",
+    "travel time",
+    "seismic waves",
+    "time-to-depth conversion",
+    "geopop"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card about a raw seismic section. It asks what the vertical '?' axis measures, with options Depth (m), Time (s) and Rock density. The reader picks an answer and rates how sure they are. The reveal says the axis shows time, not depth.",
+    "graded": false
+  },
+  "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=5515s",
+  "written": "2026-11-03"
+}

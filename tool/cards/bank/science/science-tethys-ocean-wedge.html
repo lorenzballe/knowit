@@ -1,0 +1,164 @@
+<!doctype html>
+<!-- slug: science-tethys-ocean-wedge -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · The Tethys Ocean</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#map{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;border-radius:2cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+.say{font:700 max(2cqh,14px)/1.25 var(--body)}
+.foot{padding-right:110px}
+.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Draw it · reveal">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEEP TIME</span></div>
+    <h2 class="q">Which ocean once split Gondwana from Laurasia, 200 million years ago?</h2>
+    <div class="stagebox" id="stage"><svg id="map" aria-label="Map of Laurasia and Gondwana 200 million years ago"></svg></div>
+    <p class="say" id="say">With a finger, draw where an ocean arm cut between the two blocks.</p>
+    <div id="why" class="gone">
+      <p class="big">The Tethys Ocean</p>
+      <p class="body">200 million years ago an arm of ocean wedged in between Gondwana and Laurasia: geologists call it the Tethys. When the two blocks collided, it closed.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Gondwana and Laurasia were split by the Tethys, an ocean arm that closed when they collided.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Vi mostro cosa è sepolto sotto lo Stretto di Messina - la geologia tra Calabria e Sicilia” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('map');
+// Shores of the ocean arm: same x for north (Laurasia) and south (Gondwana) shore.
+const SX = [.27,.42,.60,.75,.94], SN = [.505,.48,.44,.40,.36], SS = [.505,.54,.60,.66,.70];
+const TOP = [[.95,.24],[.82,.12],[.56,.07],[.30,.09],[.12,.18],[.06,.32],[.09,.44],[.18,.505]];
+const BOT = [[.93,.82],[.72,.90],[.46,.93],[.24,.87],[.10,.74],[.06,.60],[.10,.52],[.18,.505]];
+const st = {pts: [], phase: 'draw', wipe: 0, close: 0, label: 0};
+let W = 300, H = 300, f = 14;
+
+function shores(t){
+  const n = SN.map((v,i)=>v+((v+SS[i])/2-v)*t), s = SS.map((v,i)=>v+((SN[i]+v)/2-v)*t);
+  return {n, s};
+}
+function tethysPoly(t){
+  const {n,s} = shores(t);
+  const p = SX.map((x,i)=>[x,n[i]]);
+  const e = (n[4]+s[4])/2;
+  p.push([1, n[4]-.03*(1-t)+(e-n[4])*t*0], [1, s[4]+.03*(1-t)]);
+  for (let i=4;i>=1;i--) p.push([SX[i], s[i]]);
+  return p;
+}
+function inPoly(x,y,p){
+  let c=false;
+  for (let i=0,j=p.length-1;i<p.length;j=i++){
+    const [xi,yi]=p[i],[xj,yj]=p[j];
+    if ((yi>y)!==(yj>y) && x < (xj-xi)*(y-yi)/(yj-yi)+xi) c=!c;
+  }
+  return c;
+}
+const d = p => 'M' + p.map(([u,v])=>(u*W).toFixed(1)+','+(v*H).toFixed(1)).join('L') + 'Z';
+
+function layout(){ const r = Kit.fitSvg(svg); W = r.W; H = r.H; f = r.f; }
+function render(){
+  svg.innerHTML = '';
+  const defs = Kit.mk('defs', {}, svg);
+  const g = Kit.mk('linearGradient', {id:'oc', x1:0, y1:0, x2:0, y2:1}, defs);
+  Kit.mk('stop', {offset:0, 'stop-color':'#0f3354'}, g);
+  Kit.mk('stop', {offset:1, 'stop-color':'#0a2440'}, g);
+  const cp = Kit.mk('clipPath', {id:'wp'}, defs);
+  Kit.mk('rect', {x: W*(1-st.wipe), y:0, width: W*st.wipe+1, height:H}, cp);
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx: Math.min(W,H)*.05, fill:'url(#oc)'}, svg);
+
+  const {n,s} = shores(st.close);
+  const lau = SX.map((x,i)=>[x,n[i]]).concat(TOP);
+  const gon = SX.map((x,i)=>[x,s[i]]).concat(BOT);
+  const land = {fill:'#ead9ab', stroke:'#2a2112', 'stroke-width': Math.max(1.5, H*.004), 'stroke-linejoin':'round'};
+  Kit.mk('path', Object.assign({d: d(lau)}, land), svg);
+  Kit.mk('path', Object.assign({d: d(gon)}, land), svg);
+
+  if (st.wipe < 1){
+    // Before the reveal, the arm is hidden under land.
+    const cover = [[SX[0],SN[0]]].concat(SX.slice(1).map((x,i)=>[x,SN[i+1]]), SX.slice(1).reverse().map((x,i)=>[x,SS[4-i]]));
+    Kit.mk('path', {d: d(cover), fill:'#ead9ab'}, svg);
+  }
+  if (st.wipe > 0){
+    Kit.mk('path', {d: d(tethysPoly(st.close)), fill:'#38c6ea', stroke:'#bff1ff', 'stroke-width': Math.max(1.5,H*.004), 'clip-path':'url(#wp)', opacity: 1 - st.close*.85}, svg);
+  }
+  const fs = Math.max(13, Math.min(H*.06, W*.06));
+  const lab = (txt,u,v,fill,size,op=1) => { const t = Kit.mk('text', {x:u*W, y:v*H, 'text-anchor':'middle', 'dominant-baseline':'middle', fill, opacity:op, 'font-family':'var(--display)', 'font-weight':800, 'font-size':size, 'letter-spacing': size*.12}, svg); t.textContent = txt; return t; };
+  const small = Math.max(12, fs*.62);
+  const yrY = Math.max(H*.06, small*.6 + 2);
+  const lauY = Math.max(H*.25, yrY + small*.6 + fs*.6 + 4);
+  lab('LAURASIA', .5, lauY/H, '#2a2112', fs);
+  lab('GONDWANA', .5, .76, '#2a2112', fs);
+  const yr = Kit.mk('text', {x: W*.04, y: yrY, fill:'#cfe6ff', 'font-family':'var(--mono)', 'font-weight':700, 'font-size': small, 'dominant-baseline':'middle'}, svg);
+  yr.textContent = st.close > .5 ? 'LATER · COLLISION' : '200 MILLION YEARS AGO';
+  if (st.label > 0) lab('TETHYS', .71, .53, '#06324a', Math.max(12, fs*.8), st.label * (1 - st.close));
+
+  if (st.pts.length > 1){
+    Kit.mk('path', {d: 'M' + st.pts.map(([u,v])=>(u*W).toFixed(1)+','+(v*H).toFixed(1)).join('L'), fill:'none', stroke:'#ff4f45', 'stroke-width': Math.max(4, H*.014), 'stroke-linecap':'round', 'stroke-linejoin':'round', opacity: st.phase==='draw' ? 1 : .85}, svg);
+  }
+}
+
+function norm(e){ const r = svg.getBoundingClientRect(); return [(e.clientX-r.left)/r.width, (e.clientY-r.top)/r.height]; }
+let drawing = false;
+svg.addEventListener('pointerdown', e => {
+  if (st.phase !== 'draw') return;
+  drawing = true; st.pts = [norm(e)];
+  try { svg.setPointerCapture(e.pointerId); } catch(_) {}
+  render();
+});
+svg.addEventListener('pointermove', e => {
+  if (!drawing) return;
+  st.pts.push(norm(e)); render();
+});
+svg.addEventListener('pointerup', () => {
+  if (!drawing) return; drawing = false;
+  if (st.pts.length < 6){ st.pts = []; render(); return; }
+  reveal();
+});
+
+function reveal(){
+  st.phase = 'reveal'; Kit.haptic('light');
+  const poly = tethysPoly(0);
+  const inside = st.pts.filter(([u,v]) => inPoly(u,v,poly)).length;
+  const pct = Math.round(100*inside/st.pts.length);
+  const done = () => {
+    st.phase = 'close';
+    Kit.$('say').textContent = (pct >= 50 ? `Good eye: ${pct}% of your line is in it. ` : `Only ${pct}% of your line is in it. `) + 'Tap the map to push the blocks together.';
+    if (pct >= 50) Kit.haptic('success');
+  };
+  Kit.$('say').textContent = 'Here it comes, from the east…';
+  if (Kit.calm){ st.wipe = 1; st.label = 1; render(); done(); return; }
+  gsap.timeline({onUpdate: render, onComplete: done})
+    .to(st, {wipe: 1, duration: 1.3, ease: 'power2.inOut'})
+    .to(st, {label: 1, duration: .4}, '-=.2');
+}
+
+svg.addEventListener('click', () => {
+  if (st.phase !== 'close') return;
+  st.phase = 'end'; Kit.haptic('selection');
+  const fin = () => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); requestAnimationFrame(()=>{ layout(); render(); }); };
+  if (Kit.calm){ st.close = 1; render(); fin(); return; }
+  gsap.to(st, {close: 1, duration: 1.6, ease: 'power3.inOut', onUpdate: render, onComplete: fin});
+});
+
+Kit.onShow.card = () => { layout(); render(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#map', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svg.getBoundingClientRect();
+  const ev = (type,u,v) => svg.dispatchEvent(new PointerEvent(type, {clientX: r.left+u*r.width, clientY: r.top+v*r.height, bubbles: true, pointerId: 1, isPrimary: true}));
+  ev('pointerdown', .35, .51);
+  for (let i=1;i<=16;i++){ const u = .35 + i*.035; ev('pointermove', u, .51 + (u-.35)*.06); }
+  ev('pointerup', .91, .545);
+  await wait(1900);
+  svg.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await wait(2200);
+};
+Kit.single();
+</script>
+</html>

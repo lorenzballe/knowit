@@ -1,0 +1,37 @@
+{
+  "id": "economics-flies-window",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.tariffs",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Why did North Korea refuse to open its economy after the Soviet collapse?",
+  "answer": "North Korea chose to seal its border rather than open its economy after the Soviet collapse. Officials argued that opening the window would let in foreign influence, the flies. Isolating itself kept those ideas out, but it also cost the country its markets and trade partners.",
+  "move": "Shutting out foreign ideas also shut out trade.",
+  "keywords": [
+    "north korea",
+    "soviet union",
+    "isolation",
+    "trade partners",
+    "foreign influence"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Closed Door card asking why North Korea refused to open its economy after the Soviet collapse. Three reasons are offered, including that it could feed itself and that foreign influence would get in. Pick a reason, then watch an illustrated window with flies outside it."
+  },
+  "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=uLqfa27S4TQ&t=643s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "nature-red-sea-algae",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the Red Sea called red, when it looks blue?",
+  "answer": "The Red Sea takes its name from a tiny cyanobacterium called Trichodesmium. In some periods of the year, especially summer, it blooms massively. Its reddish-pink mats float on the water and colour it, which is the most scientific explanation for the name.",
+  "move": "The Red Sea is named after algae that tint it reddish-pink.",
+  "keywords": [
+    "red sea",
+    "trichodesmium",
+    "cyanobacteria",
+    "algae blooms"
+  ],
+  "era": "timeless",
+  "region": "middle_east",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Titled Why the Red Sea is red. Asks why the sea is called red when it looks blue. Shows the sea with a prompt to tap it six times to let the algae bloom, and the water turns pink."
+  },
+  "source": "Geopop, “IL Mar Rosso é un OCEANO!” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=6_AkkpTNgLY&t=2s",
+  "written": "2026-11-03"
+}

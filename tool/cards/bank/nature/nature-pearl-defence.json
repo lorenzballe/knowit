@@ -1,0 +1,37 @@
+{
+  "id": "nature-pearl-defence",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.animal_myths",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why does an oyster make a pearl?",
+  "answer": "A pearl is a defence, not a gift. A foreign body, like a grain of sand, gets in and irritates the oyster's soft flesh, so the oyster coats it in nacre, layer after layer, until the intruder is sealed off.",
+  "move": "A pearl is an oyster walling off an intruder.",
+  "keywords": [
+    "oyster",
+    "pearl",
+    "nacre",
+    "irritant"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question card asking why an oyster makes a pearl, with three choices: to store food for hard times, to seal off something that irritates it, or to attract a mate. A prompt asks the reader to pick a reason and then say how sure they are.",
+    "graded": false
+  },
+  "source": "Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=3RiQ05xqWwY&t=78s",
+  "written": "2026-11-03"
+}

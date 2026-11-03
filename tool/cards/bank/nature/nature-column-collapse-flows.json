@@ -1,0 +1,36 @@
+{
+  "id": "nature-column-collapse-flows",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the collapse of the eruptive column the most dangerous moment?",
+  "answer": "When the column turns dark and heavy, it collapses. That sets off pyroclastic flows: rivers of incandescent gas and volcanic material that race down the slopes and destroy what they reach.",
+  "move": "When the column falls, the deadliest part starts: flows racing downhill.",
+  "keywords": [
+    "vesuvius",
+    "pyroclastic flows",
+    "eruptive column",
+    "volcanoes"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: why is the collapse of the eruptive column the most dangerous moment? A side view shows a tall volcanic column rising from a volcano. Tapping the column loads it with heavy ash and rock until it falls."
+  },
+  "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=JxXQOLGsJuM&t=320s",
+  "written": "2026-11-03"
+}

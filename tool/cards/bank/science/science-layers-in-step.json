@@ -1,0 +1,38 @@
+{
+  "id": "science-layers-in-step",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "One pair of thin layers reflects 0.4% of chip-making light. What do 50 pairs reflect?",
+  "answer": "One pair of thin layers reflects 0.4% of the chip-making light. The card asks what 50 pairs reflect, and the chart's model curve shows the answer. The key is that echoes from layers in step add together, so the reflection grows much faster than the number of pairs.",
+  "move": "Two echoes in step make a wave twice as tall, and that carries four times the light.",
+  "keywords": [
+    "euv lithography",
+    "multilayer mirror",
+    "phone chips",
+    "interference",
+    "henke"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Chart of light reflected by stacked thin-layer mirrors, with a draggable guess. Text: one pair of layers reflects 0.4% of chip-making light. Asks what 50 pairs reflect. Reader drags on the chart to guess.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Closest Thing We Have to Alien Technology” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=MiUHjLxm3V0",
+  "written": "2026-11-03"
+}

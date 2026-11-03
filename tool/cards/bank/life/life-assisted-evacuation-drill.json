@@ -1,0 +1,37 @@
+{
+  "id": "life-assisted-evacuation-drill",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.circle_of_competence",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In the Campi Flegrei drill, what does “assisted mode” mean?",
+  "answer": "In the Campi Flegrei drill, assisted mode moves only the people who cannot leave on their own. They are picked up at point A and carried to point B. Anyone who would evacuate by themselves is not part of the test at all.",
+  "move": "An assisted drill tests the rides, not the whole crowd leaving.",
+  "keywords": [
+    "campi-flegrei",
+    "evacuation-drill",
+    "assisted-evacuation",
+    "volcanic-risk",
+    "italy"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking what 'assisted mode' means in the Campi Flegrei evacuation drill. Four choices: everyone leaves, guided by staff; only people who can't leave on their own are moved; only people driving their own cars; only those who can't leave alone."
+  },
+  "source": "Geopop, “RISCHIO VULCANICO CAMPI FLEGREI: LA SIMULAZIONE D'EVACUAZIONE FUNZIONERA? Considerazioni e dubbi” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=9fBuH-jXu3Y&t=272s",
+  "written": "2026-11-03"
+}

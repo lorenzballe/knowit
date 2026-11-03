@@ -1,0 +1,200 @@
+<!doctype html>
+<!-- slug: space-quake-shortened-day -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute · The quake that shortened the day</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{margin:0;overflow-wrap:anywhere}
+#go{align-self:flex-start;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4.5cqw;cursor:pointer;margin:.6cqh 0 0;max-width:72%;text-align:left}
+#go:active{transform:scale(.97)}
+.say{overflow-wrap:anywhere}
+.cap{font-family:var(--display);font-weight:700;fill:var(--k)}
+.lab{font-family:var(--body);font-weight:700;fill:var(--k)}
+.mut{font-family:var(--body);font-weight:600;fill:var(--k);opacity:.62}
+.num{font-family:var(--mono);font-weight:700;fill:var(--k)}
+.earth{fill:color-mix(in srgb,var(--k) 12%,transparent);stroke:var(--k)}
+.ln{fill:none;stroke:var(--k)}
+.soft{fill:none;stroke:color-mix(in srgb,var(--k) 40%,transparent)}
+.ink{fill:var(--k)}
+.pale{fill:color-mix(in srgb,var(--k) 14%,transparent);stroke:var(--k)}
+.hole{fill:none;stroke:var(--k);stroke-dasharray:5 4}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Zoom in · step by step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EARTH'S SPIN</span></div>
+    <h2 class="q">How did the 2011 Japan earthquake change the way Earth spins?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Earth, its axis and the length of a day"></svg>
+      <button id="go">Shake it: magnitude 9</button>
+    </div>
+    <p class="say" id="say">Tap to shake Earth, then keep zooming in.</p>
+    <div id="why" class="gone">
+      <p class="body">The magnitude 9 quake off Miyagi, Japan, was so violent that, according to NASA, it moved Earth's axis by 17 centimetres.</p>
+      <p class="body">Earth has spun a tiny bit faster ever since: every day is now 1.8 microseconds shorter.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A big enough quake nudges a whole planet: 17 cm of axis, 1.8 µs off every day.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let step = 0, busy = false, S = {}, tws = [];
+const BTN = ["Shake it: magnitude 9", "Zoom to the North Pole", "Now watch one day", "Zoom into its last second", "Zoom into the last millisecond", "Zoom into the last 10 microseconds"];
+const CAP = ["Earth, spinning on its axis", "March 2011: the axis moves", "Zoomed in at the pole", "One day: 24 hours", "The day's last second", "Its last millisecond", "The last 10 µs of a day"];
+
+function T(x, y, s, cls, anchor, size, parent) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'start', class: cls, 'font-size': Math.max(size || S.f, 12)}, parent || S.svg);
+  t.textContent = s; return t;
+}
+function M(tag, a, p) { return Kit.mk(tag, a, p || S.svg); }
+function tw(t) { tws.push(t); return t; }
+
+function draw(anim) {
+  tws.forEach(t => t.kill()); tws = [];
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  S = {W, H, f: Math.max(f, 13), svg};
+  T(W / 2, S.f * 1.3, CAP[step], 'cap', 'middle', S.f * 1.2);
+  SC[step](anim && !Kit.calm);
+}
+
+function globe(tiltNew, anim) {
+  const {W, H, f} = S;
+  const cx = W / 2, cy = H * 0.57, R = Math.min(W * 0.32, H * 0.28);
+  const shake = M('g', {});
+  const g = M('g', {}, shake);
+  M('circle', {cx, cy, r: R, class: 'earth', 'stroke-width': 2.5}, g);
+  const mer = M('g', {transform: `rotate(-20 ${cx} ${cy})`}, g);
+  M('line', {x1: cx - R, y1: cy, x2: cx + R, y2: cy, class: 'soft', 'stroke-width': 1.5}, mer);
+  [0, 1, 2].forEach(i => {
+    const e = M('ellipse', {cx, cy, rx: R, ry: R, class: 'soft', 'stroke-width': 1.5}, mer);
+    if (!Kit.calm) tw(gsap.fromTo(e, {attr: {rx: R}}, {attr: {rx: 0}, duration: 3, ease: 'none', repeat: -1, yoyo: true, delay: -i}));
+    else e.setAttribute('rx', R * (1 - i / 3));
+  });
+  const L = R * 1.38;
+  const axis = (a, cls, dash) => {
+    const l = M('line', {x1: cx, y1: cy - L, x2: cx, y2: cy + L, class: cls, 'stroke-width': 3, 'stroke-linecap': 'round', transform: `rotate(${a} ${cx} ${cy})`}, shake);
+    if (dash) l.setAttribute('stroke-dasharray', '6 6');
+    return l;
+  };
+  if (!tiltNew) { axis(-20, 'ln'); T(cx, cy + L + f * 1.6, 'axis: the line Earth spins around', 'mut', 'middle'); return; }
+  axis(-20, 'soft', true);
+  const nw = axis(-20, 'ln');
+  const end = gsap.to(nw, {attr: {transform: `rotate(-27 ${cx} ${cy})`}, duration: anim ? 1 : 0, delay: anim ? 0.9 : 0, ease: 'back.out(2)'});
+  tw(end);
+  if (anim) tw(gsap.fromTo(shake, {x: -9}, {x: 9, duration: .06, repeat: 13, yoyo: true, ease: 'none', onComplete: () => gsap.set(shake, {x: 0})}));
+  const lx = Math.min(cx + R * 0.35, W - 4), ly = cy - L * 0.92;
+  const a = T(lx, ly, '17 cm shift', 'num', 'start', f * 1.25);
+  const b = T(lx, ly + f * 1.5, '(drawn far bigger)', 'mut', 'start');
+  if (W - lx < f * 7) { a.setAttribute('x', W - 4); a.setAttribute('text-anchor', 'end'); b.setAttribute('x', W - 4); b.setAttribute('text-anchor', 'end'); }
+  if (anim) tw(gsap.from([a, b], {opacity: 0, duration: .4, delay: 1.6}));
+}
+
+const SC = [
+  anim => globe(false, anim),
+  anim => globe(true, anim),
+  anim => {
+    const {W, H, f} = S;
+    const g = M('g', {});
+    const x0 = W * 0.08, x1 = W * 0.92, ry = H * 0.6, rh = Math.max(H * 0.09, 30), cm = (x1 - x0) / 20;
+    M('rect', {x: x0, y: ry, width: x1 - x0, height: rh, rx: 6, class: 'pale', 'stroke-width': 2}, g);
+    for (let i = 0; i <= 20; i++) M('line', {x1: x0 + i * cm, y1: ry, x2: x0 + i * cm, y2: ry + rh * (i % 5 ? .3 : .55), class: 'ln', 'stroke-width': 1.5}, g);
+    [0, 5, 10, 15, 20].forEach(i => T(x0 + i * cm, ry + rh + f * 1.4, i + ' cm', 'num', i == 0 ? 'start' : i == 20 ? 'end' : 'middle', f, g));
+    const dy = ry - f * 1.2, r = Math.max(f * .45, 6);
+    M('circle', {cx: x0, cy: dy, r, class: 'hole', 'stroke-width': 2}, g);
+    const dot = M('circle', {cx: x0, cy: dy, r, class: 'ink'}, g);
+    const arr = M('line', {x1: x0 + r * 1.6, y1: dy, x2: x0 + r * 1.6, y2: dy, class: 'ln', 'stroke-width': 2.5}, g);
+    T(x0, dy - f * 1.3, 'pole before', 'mut', 'start', f, g);
+    const now = T(x0 + 17 * cm, dy - f * 1.3, 'pole now', 'lab', 'end', f, g);
+    const big = T((x0 + x0 + 17 * cm) / 2, dy - f * 3.2, '17 cm', 'num', 'middle', f * 1.7, g);
+    const d = anim ? 1 : 0;
+    if (anim) tw(gsap.from(g, {scale: 3, opacity: 0, transformOrigin: '50% 50%', duration: .7, ease: 'power3.out'}));
+    tw(gsap.to(dot, {attr: {cx: x0 + 17 * cm}, duration: d, delay: d * .8, ease: 'power2.inOut'}));
+    tw(gsap.to(arr, {attr: {x2: x0 + 17 * cm - r * 1.6}, duration: d, delay: d * .8, ease: 'power2.inOut'}));
+    if (anim) tw(gsap.from([now, big], {opacity: 0, duration: .4, delay: 1.8}));
+  },
+  anim => {
+    const {W, H, f} = S;
+    const cx = W / 2, cy = H * 0.52, R = Math.min(W * 0.3, H * 0.3);
+    M('circle', {cx, cy, r: R, class: 'pale', 'stroke-width': 3});
+    for (let i = 0; i < 24; i++) {
+      const a = i / 24 * Math.PI * 2, l = i % 6 ? .9 : .8;
+      M('line', {x1: cx + Math.sin(a) * R * l, y1: cy - Math.cos(a) * R * l, x2: cx + Math.sin(a) * R * .97, y2: cy - Math.cos(a) * R * .97, class: 'ln', 'stroke-width': i % 6 ? 1.5 : 3});
+    }
+    const hand = M('line', {x1: cx, y1: cy, x2: cx, y2: cy - R * .78, class: 'ln', 'stroke-width': 4, 'stroke-linecap': 'round'});
+    M('circle', {cx, cy, r: 5, class: 'ink'});
+    T(cx, cy + R + f * 1.7, '1 day = 86,400 seconds', 'num', 'middle', f * 1.15);
+    if (!Kit.calm) tw(gsap.fromTo(hand, {rotation: 0, svgOrigin: `${cx} ${cy}`}, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 3, ease: 'none', repeat: -1}));
+    if (anim) tw(gsap.from(S.svg.children, {opacity: 0, duration: .5}));
+  },
+  anim => bar('1 second', 1000, 'its last millisecond', anim),
+  anim => bar('1 millisecond', 100, 'its last 10 microseconds', anim),
+  anim => {
+    const {W, H, f} = S;
+    const x0 = W * 0.08, w = W * 0.84;
+    const y1 = Math.max(H * 0.3, f * 3.4);
+    const h = Math.max(Math.min(Math.max(H * 0.1, 28), (H - y1 - f * 6.8) / 2), 14);
+    const y2 = Math.max(H * 0.6, y1 + h + f * 3.4), cut = w * 8.2 / 10;
+    const ticks = (y) => { for (let i = 1; i < 10; i++) M('line', {x1: x0 + i * w / 10, y1: y, x2: x0 + i * w / 10, y2: y + h * .3, class: 'ln', 'stroke-width': 1.2}); };
+    T(x0, y1 - f * .6, 'A day before 2011', 'lab', 'start');
+    M('rect', {x: x0, y: y1, width: w, height: h, rx: 4, class: 'pale', 'stroke-width': 2}); ticks(y1);
+    T(x0 + w, y1 + h + f * 1.3, 'day ends', 'mut', 'end');
+    T(x0, y2 - f * .6, 'A day since the quake', 'lab', 'start');
+    M('rect', {x: x0, y: y2, width: w, height: h, rx: 4, class: 'hole', 'stroke-width': 2});
+    const bar2 = M('rect', {x: x0, y: y2, width: w, height: h, rx: 4, class: 'pale', 'stroke-width': 2}); ticks(y2);
+    const lab = T(x0 + w, y2 + h + f * 1.5, '1.8 µs shorter', 'num', 'end', f * 1.35);
+    const sub = T(x0 + w, y2 + h + f * 3, 'every single day', 'mut', 'end');
+    T(x0, y2 + h + f * 1.5, 'each tick: 1 µs', 'mut', 'start');
+    tw(gsap.to(bar2, {attr: {width: cut}, duration: anim ? 1.1 : 0, delay: anim ? .4 : 0, ease: 'power2.inOut'}));
+    if (anim) tw(gsap.from([lab, sub], {opacity: 0, duration: .4, delay: 1.5}));
+  }
+];
+
+function bar(name, parts, nextName, anim) {
+  const {W, H, f} = S;
+  const x0 = W * 0.08, w = W * 0.84, y = H * 0.5, h = Math.max(H * 0.12, 32);
+  T(x0, y - f * .7, name, 'num', 'start', f * 1.3);
+  const b = M('rect', {x: x0, y, width: w, height: h, rx: 4, class: 'pale', 'stroke-width': 2});
+  const sw = Math.max(w / parts, 4);
+  const s = M('rect', {x: x0 + w - sw, y, width: sw, height: h, class: 'ink'});
+  T(x0 + w, y + h + f * 1.5, '↑ ' + nextName, 'lab', 'end');
+  T(x0 + w, y + h + f * 3, `(1/${parts.toLocaleString('en')} of it)`, 'mut', 'end');
+  S.slice = s; S.sx = x0; S.sw = w;
+  if (anim) tw(gsap.from(b, {opacity: 0, scaleX: .2, transformOrigin: '100% 50%', duration: .6, ease: 'power3.out'}));
+}
+
+function next() {
+  if (busy) return;
+  Kit.haptic('light');
+  if (step >= 6) return;
+  const go = () => {
+    step++; busy = false;
+    draw(true);
+    if (step === 6) {
+      Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      Kit.haptic('success');
+      requestAnimationFrame(() => draw(true));
+    } else Kit.$('go').textContent = BTN[step];
+  };
+  if ((step === 4 || step === 5) && !Kit.calm && S.slice) {
+    busy = true;
+    gsap.to(S.slice, {attr: {x: S.sx, width: S.sw}, duration: .7, ease: 'power3.inOut', onComplete: go});
+  } else go();
+}
+Kit.$('go').addEventListener('click', next);
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 6; i++) { Kit.$('go').click(); await w(900); }
+  await w(1800);
+};
+Kit.single();
+</script>
+</html>

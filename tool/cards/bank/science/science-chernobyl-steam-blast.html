@@ -1,0 +1,214 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-chernobyl-steam-blast -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#hold{flex:none;align-self:center;font:800 max(2.3cqh,15px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.8cqh 8cqw;touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer;transition:transform .12s}
+#hold.on{transform:scale(.95)}
+#hold.run{background:#d9480f;color:#fff}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NUCLEAR</span></div>
+    <h2 class="q">Why did Chernobyl's reactor number four blow its top off?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <button id="hold">HOLD · add heat</button>
+      <div id="why" class="gone"><p class="big">Heat → steam → bang</p><p class="body">Runaway fission made heat far faster than the water could carry it away. The water flashed into steam, and the pressure ripped the reactor open, throwing out radioactive isotopes.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button to let fission heat the core. Watch the water.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Too much heat turns cooling water into steam, and trapped steam blows things apart.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {h: 0, holding: false, run: false, done: false};
+let G = null;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+function hex(c){ return [1,3,5].map(i => parseInt(c.slice(i, i+2), 16)); }
+function ramp(stops, t){
+  t = clamp(t, 0, 1);
+  for (let i = 1; i < stops.length; i++) if (t <= stops[i][0]) {
+    const [t0, c0] = stops[i-1], [t1, c1] = stops[i], u = (t - t0) / (t1 - t0 || 1);
+    const a = hex(c0), b = hex(c1);
+    return `rgb(${a.map((v, k) => Math.round(v + (b[k] - v) * u)).join(',')})`;
+  }
+  return stops[stops.length-1][1];
+}
+const ROD = [[0,'#4b5563'],[.4,'#e8590c'],[.75,'#ffb703'],[1,'#fff6c8']];
+const GAUGE = [[0,'#2f80d0'],[.6,'#f08c00'],[1,'#e03131']];
+
+function build(){
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .8, 12);
+  const gy = H - fs * 2.2;
+  const mk = Kit.mk;
+  const root = mk('g', {}, svg);
+  const g = {W, H, f, fs, gy, root, bubbles: []};
+  // building
+  const bx0 = W*.04, bx1 = W*.76, by = gy*.24;
+  mk('rect', {x: bx0, y: by, width: bx1-bx0, height: gy-by, style: 'fill:var(--k);fill-opacity:.08;stroke:var(--k);stroke-opacity:.35;stroke-width:2'}, root);
+  g.roof = [];
+  for (let i = 0; i < 3; i++){
+    const w = (bx1-bx0)/3;
+    g.roof.push(mk('rect', {x: bx0 + i*w, y: by - gy*.035, width: w + .5, height: gy*.035, style: 'fill:var(--k);fill-opacity:.55'}, root));
+  }
+  mk('line', {x1: 0, x2: W, y1: gy, y2: gy, style: 'stroke:var(--k);stroke-width:3'}, root);
+  // vessel
+  const vx0 = W*.14, vx1 = W*.66, vy0 = gy*.46, vy1 = gy*.95;
+  Object.assign(g, {vx0, vx1, vy0, vy1});
+  g.steam = mk('rect', {x: vx0, y: vy0, width: vx1-vx0, height: 0, fill: '#e6edf3', 'fill-opacity': .2}, root);
+  g.water = mk('rect', {x: vx0, y: vy0, width: vx1-vx0, height: vy1-vy0, fill: '#2f80d0'}, root);
+  g.glow = mk('rect', {x: vx0, y: vy0, width: vx1-vx0, height: vy1-vy0, fill: '#ff6b00', 'fill-opacity': 0}, root);
+  g.rods = []; g.rodX = [];
+  const n = 5, ry0 = vy0 + (vy1-vy0)*.3, ry1 = vy1 - (vy1-vy0)*.06, rw = Math.max(W*.026, 6);
+  for (let i = 0; i < n; i++){
+    const x = vx0 + (vx1-vx0)*(i+1)/(n+1);
+    g.rodX.push(x);
+    g.rods.push(mk('rect', {x: x - rw/2, y: ry0, width: rw, height: ry1-ry0, rx: rw/3}, root));
+  }
+  Object.assign(g, {ry0, ry1});
+  g.bubG = mk('g', {}, root);
+  for (let i = 0; i < 34; i++) g.bubbles.push({el: mk('circle', {r: 0, fill: '#fff', 'fill-opacity': .75}, g.bubG), alive: false});
+  mk('path', {d: `M${vx0},${vy0} V${vy1} H${vx1} V${vy0}`, style: 'fill:none;stroke:var(--k);stroke-width:5;stroke-linejoin:round'}, root);
+  g.wlab = mk('text', {x: vx0 + 8, 'font-size': fs, 'font-weight': 700, fill: '#fff', 'font-family': 'var(--body)', style: 'font-family:var(--body)'}, root);
+  g.wlab.textContent = 'cooling water';
+  // lid
+  const lh = Math.max(gy*.05, fs*1.5), lx = vx0 - W*.025, lw = (vx1-vx0) + W*.05, ly = vy0 - lh;
+  g.lidOuter = mk('g', {}, root);
+  g.lidIn = mk('g', {}, g.lidOuter);
+  mk('rect', {x: lx, y: ly, width: lw, height: lh, rx: 3, style: 'fill:var(--k)'}, g.lidIn);
+  const lt = mk('text', {x: lx + lw/2, y: ly + lh/2 + fs*.35, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, style: 'fill:var(--c);font-family:var(--body);letter-spacing:.08em'}, g.lidIn);
+  lt.textContent = 'LID · 1000s of tonnes';
+  if (lw < fs * 12) lt.textContent = 'LID';
+  Object.assign(g, {lx, ly, lw, lh});
+  // gauge
+  const gx = W*.83, gw = W*.08, gt = gy*.42, gb = vy1;
+  mk('rect', {x: gx, y: gt, width: gw, height: gb-gt, rx: gw/2, style: 'fill:var(--k);fill-opacity:.08;stroke:var(--k);stroke-width:2'}, root);
+  g.gfill = mk('rect', {x: gx + 3, y: gb, width: gw - 6, height: 0, rx: (gw-6)/2}, root);
+  Object.assign(g, {gt, gb, gx, gw});
+  const cx = gx + gw/2;
+  [['STEAM', gt - fs*2.9], ['PRESSURE', gt - fs*1.5]].forEach(([t, y]) => {
+    const e = mk('text', {x: Math.min(cx, W - fs*3), y, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'}, root); e.textContent = t;
+  });
+  const cap = mk('text', {x: 2, y: H - fs*.5, 'font-size': fs, 'font-weight': 600, style: 'fill:var(--k);opacity:.7;font-family:var(--body)'}, root);
+  cap.textContent = 'Chernobyl reactor 4 · 26 April 1986';
+  // explosion layers
+  g.puff = mk('circle', {cx: (vx0+vx1)/2, cy: vy0, r: 0, fill: '#eef2f5', 'fill-opacity': 0}, root);
+  g.iso = [];
+  for (let i = 0; i < 46; i++) g.iso.push(mk('circle', {cx: (vx0+vx1)/2, cy: vy0, r: Math.max(f*.22, 3), fill: '#a9e34b', stroke: '#2b8a3e', 'stroke-width': 1, opacity: 0}, root));
+  g.isoLab = mk('text', {x: W*.6, y: gy*.1, 'text-anchor': 'middle', 'font-size': fs*1.1, 'font-weight': 800, fill: '#2b8a3e', opacity: 0, style: 'font-family:var(--body)'}, root);
+  g.isoLab.textContent = 'radioactive isotopes';
+  g.flash = mk('rect', {x: -20, y: -20, width: W + 40, height: H + 40, fill: '#fff', opacity: 0, 'pointer-events': 'none'}, svg);
+  G = g;
+  render(0);
+  if (S.done) explode(true);
+}
+
+function render(dt){
+  if (!G) return;
+  const g = G, h = S.h;
+  const s = clamp((h - .28) / .67, 0, 1);
+  const wy = g.vy0 + (g.vy1 - g.vy0) * (.04 + .62 * s);
+  g.water.setAttribute('y', wy); g.water.setAttribute('height', Math.max(0, g.vy1 - wy));
+  g.steam.setAttribute('height', Math.max(0, wy - g.vy0));
+  g.steam.setAttribute('fill-opacity', .35 + .6 * s);
+  g.wlab.setAttribute('y', Math.min(wy + g.fs * 1.3, g.ry0 - 4));
+  g.wlab.setAttribute('opacity', wy + g.fs * 1.3 < g.ry0 - 2 ? 1 : 0);
+  const col = ramp(ROD, h);
+  g.rods.forEach(r => r.setAttribute('fill', col));
+  g.glow.setAttribute('fill-opacity', h * .28);
+  g.gfill.setAttribute('height', (g.gb - g.gt - 6) * s);
+  g.gfill.setAttribute('y', g.gb - 3 - (g.gb - g.gt - 6) * s);
+  g.gfill.setAttribute('fill', ramp(GAUGE, s));
+  if (!S.done){
+    const j = s > .45 ? (s - .45) * g.gy * .05 : 0;
+    g.lidIn.setAttribute('transform', `translate(${(Kit.rnd() - .5) * j * .4},${-Kit.rnd() * j})`);
+  }
+  // bubbles
+  const rate = h > .18 ? (h - .18) * 70 : 0;
+  let spawn = rate * dt + (Kit.rnd() < (rate * dt) % 1 ? 1 : 0);
+  for (const b of g.bubbles){
+    if (!b.alive && spawn >= 1 && !S.done){
+      spawn--; b.alive = true;
+      b.x = g.rodX[Math.floor(Kit.rnd() * g.rodX.length)] + (Kit.rnd() - .5) * g.W * .05;
+      b.y = g.ry0 + Kit.rnd() * (g.ry1 - g.ry0);
+      b.r = Math.max(g.f * (.15 + Kit.rnd() * .25), 2); b.v = g.gy * (.18 + .3 * h + Kit.rnd() * .1);
+    }
+    if (b.alive){
+      b.y -= b.v * dt; b.x += (Kit.rnd() - .5) * 1.2;
+      if (b.y < wy + b.r || S.done){ b.alive = false; b.el.setAttribute('r', 0); continue; }
+      b.el.setAttribute('cx', b.x); b.el.setAttribute('cy', b.y); b.el.setAttribute('r', b.r);
+    }
+  }
+}
+
+gsap.ticker.add((t, ms) => {
+  const dt = Math.min(ms, 60) / 1000;
+  if (!S.done){
+    if (S.run) S.h += dt * .45;
+    else if (S.holding) S.h += dt * .3;
+    else S.h = Math.max(0, S.h - dt * .2);
+    if (!S.run && S.h >= .5){
+      S.run = true; Kit.haptic('light');
+      const b = Kit.$('hold'); b.textContent = 'RUNAWAY · it heats itself'; b.classList.add('run');
+      Kit.$('say').textContent = 'Let go if you like. The fission no longer needs you.';
+    }
+    if (S.h >= 1){ S.h = 1; render(dt); explode(false); return; }
+  }
+  render(dt);
+});
+
+function explode(instant){
+  const g = G, k = instant ? 0 : 1, H = g.H, W = g.W, cx = (g.vx0 + g.vx1) / 2;
+  if (!S.done){
+    S.done = true; Kit.haptic('success');
+    Kit.hide('hold');
+    setTimeout(() => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }, instant ? 0 : 1300);
+  }
+  g.lidIn.setAttribute('transform', '');
+  const quiet = Kit.calm || instant;
+  if (!quiet){
+    gsap.fromTo(g.flash, {opacity: .85}, {opacity: 0, duration: .6});
+    gsap.fromTo(g.root, {x: -6}, {x: 0, duration: .5, ease: 'elastic.out(1,.2)'});
+  }
+  const lidTargetY = g.gy * .08 - g.ly;
+  gsap.to(g.lidOuter, {x: -W * .06, y: lidTargetY, rotation: -28, svgOrigin: `${g.lx + g.lw/2} ${g.ly + g.lh/2}`, duration: 1.2 * k, ease: 'power3.out'});
+  g.roof.forEach((r, i) => gsap.to(r, {x: (i - 1) * W * .12, y: -g.gy * (.12 + .05 * (i % 2)), rotation: (i - 1) * 50 + 15, svgOrigin: `${+r.getAttribute('x') + +r.getAttribute('width')/2} ${r.getAttribute('y')}`, duration: 1.1 * k, ease: 'power3.out'}));
+  gsap.fromTo(g.puff, {attr: {r: 0}, 'fill-opacity': .9}, {attr: {r: (g.vx1 - g.vx0) * .75}, 'fill-opacity': .35, duration: 1 * k, ease: 'power2.out'});
+  g.iso.forEach(p => {
+    const tx = cx + (Kit.rnd() - .3) * W * .65, ty = g.gy * (.18 + Kit.rnd() * .24);
+    gsap.fromTo(p, {attr: {cx, cy: g.vy0}, opacity: 1}, {attr: {cx: clamp(tx, 8, W - 8), cy: ty}, opacity: .85, duration: (1 + Kit.rnd() * .8) * k, ease: 'power2.out', delay: instant ? 0 : Kit.rnd() * .2});
+  });
+  gsap.to(g.isoLab, {opacity: 1, duration: .5 * k, delay: instant ? 0 : 1});
+}
+
+const hold = Kit.$('hold');
+const down = e => { if (S.done) return; e.preventDefault(); S.holding = true; hold.classList.add('on'); Kit.haptic('selection'); try { hold.setPointerCapture(e.pointerId); } catch(_){} };
+const up = () => { S.holding = false; hold.classList.remove('on'); };
+hold.addEventListener('pointerdown', down);
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => hold.addEventListener(t, up));
+hold.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.root, {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  hold.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1}));
+  await new Promise(r => setTimeout(r, 1900));
+  hold.dispatchEvent(new PointerEvent('pointerup', {bubbles: true, pointerId: 1}));
+  await new Promise(r => setTimeout(r, 3200));
+};
+Kit.single();
+</script>
+</html>

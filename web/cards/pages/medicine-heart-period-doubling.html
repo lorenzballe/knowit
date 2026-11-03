@@ -1,0 +1,139 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-heart-period-doubling -->
+<title>Astute · The heart's road to chaos</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#ecg{flex:1;min-height:14cqh;width:100%;display:block;border-radius:1.8cqh;background:color-mix(in srgb,var(--k) 6%,transparent)}
+#opts{display:flex;flex-direction:column;gap:1.1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#next{align-self:flex-start;font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.5cqh 6cqw;cursor:pointer}
+#steps{display:flex;gap:2cqw;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#steps span.on{color:var(--k)}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Pick one · then watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CHAOS</span></div>
+    <h2 class="q">On the road to fibrillation, how does a heart's rhythm change?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="ecg"></svg>
+      <div id="steps" class="gone"><span class="on">1 BEAT</span><span>2-CYCLE</span><span>4-CYCLE</span><span>CHAOS</span></div>
+      <div id="opts">
+        <button class="opt" data-i="0">It speeds up, faster and faster</button>
+        <button class="opt" data-i="1">It splits: pairs of beats, then fours</button>
+        <button class="opt" data-i="2">It turns random all at once</button>
+      </div>
+      <button id="next" class="gone">Push the heart further ›</button>
+      <div id="why" class="gone"><p class="big">1, then 2, then 4, then chaos</p><p class="body">The rabbit hearts went through the period-doubling route to chaos, just like the logistic map. By watching the rhythm in real time, researchers used chaos theory to time shocks that brought the heart back to a regular beat.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one. Then watch the heart's trace.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fibrillation isn't sudden noise: the beat splits 1, 2, 4, then chaos.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, level = 0;
+const NAMES = ['Steady beat · repeats every beat', 'Two-cycle · pairs close together', 'Four-cycle · four different beats', 'Chaos · never repeats: fibrillation'];
+const PATTERNS = [
+  {iv: [1], h: [1]},
+  {iv: [.55, 1.45], h: [1, .68]},
+  {iv: [.5, 1.2, .7, 1.5], h: [1, .55, .85, .4]},
+  null
+];
+function beats(W, lv) {
+  const d = Math.max(44, W / 9), out = [];
+  let x = d * .6, i = 0;
+  // fixed seed for chaos so redraws match
+  let s = 7; const r = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  while (x < W - 20) {
+    let h, iv;
+    if (lv === 3) { h = .25 + r() * .8; iv = .35 + r() * 1.2; }
+    else { const p = PATTERNS[lv], k = i % p.iv.length; h = p.h[k]; iv = p.iv[k]; }
+    out.push({x, h, k: i}); x += d * iv; i++;
+  }
+  return {list: out, d};
+}
+function draw(animate) {
+  const svg = Kit.$('ecg');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const base = H * .66, amp = H * .42;
+  const lbl = Kit.mk('text', {x: 14, y: f * 1.5, fill: 'currentColor', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': Math.max(f, 13)}, svg);
+  lbl.textContent = NAMES[level];
+  svg.style.color = 'var(--k)';
+  const {list, d} = beats(W, level);
+  let p = `M0 ${base}`;
+  list.forEach(b => {
+    const x = b.x, a = amp * b.h;
+    p += ` L${x - 7} ${base} L${x - 4} ${base + 5} L${x} ${base - a} L${x + 4} ${base + a * .22} L${x + 8} ${base}`;
+    p += ` Q${x + d * .16} ${base - amp * .1} ${x + d * .28} ${base}`;
+  });
+  p += ` L${W} ${base}`;
+  // repeat bracket
+  if (level < 3) {
+    const n = PATTERNS[level].iv.length, a = list[1], b = list[1 + n];
+    if (a && b) {
+      const y = H - Math.max(10, H * .08);
+      Kit.mk('path', {d: `M${a.x} ${y - 6} V${y} H${b.x} V${y - 6}`, fill: 'none', stroke: 'var(--muted)', 'stroke-width': 2}, svg);
+    }
+  }
+  const path = Kit.mk('path', {d: p, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(2.4, H * .013), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+  // peak dots coloured by position in the cycle
+  const tints = ['var(--k)', 'color-mix(in srgb,var(--k) 55%,transparent)'];
+  list.forEach(b => {
+    const k = level === 3 ? 0 : b.k % PATTERNS[level].iv.length;
+    Kit.mk('circle', {class: 'pk', cx: b.x, cy: base - amp * b.h - 7, r: Math.max(3, H * .016), fill: level === 3 ? 'var(--muted)' : tints[k % 2]}, svg);
+  });
+  if (animate && !Kit.calm) {
+    const L = path.getTotalLength();
+    path.style.strokeDasharray = L;
+    gsap.fromTo(path, {strokeDashoffset: L}, {strokeDashoffset: 0, duration: 1.5, ease: 'none'});
+    gsap.from(svg.querySelectorAll('.pk'), {opacity: 0, duration: .2, stagger: 1.5 / list.length});
+  }
+}
+function setLevel(l) {
+  level = l;
+  [...Kit.$('steps').children].forEach((s, i) => s.classList.toggle('on', i <= l));
+  draw(true);
+}
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('steps'); Kit.show('next');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.$('say').textContent = 'Push the heart further and watch its rhythm split.';
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('next').addEventListener('click', () => {
+  if (level >= 3) return;
+  Kit.haptic('light');
+  setLevel(level + 1);
+  if (level === 3) {
+    Kit.hide('next'); Kit.hide('say'); Kit.hide('sure'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4});
+  }
+});
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) { draw(true); gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); } };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[1].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(300);
+  for (let i = 0; i < 3; i++) { Kit.$('next').click(); await w(250); }
+  await w(1800);
+};
+Kit.single();
+</script>
+</html>

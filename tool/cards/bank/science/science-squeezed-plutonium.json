@@ -1,0 +1,37 @@
+{
+  "id": "science-squeezed-plutonium",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Why does compressing plutonium lower its critical mass?",
+  "answer": "Squeezing plutonium packs its nuclei closer together, so a stray neutron is more likely to hit one before it can escape, and each split sets off more. That is why less material is needed for a chain reaction at higher density. At normal density, 6 kg of plutonium-239 won't explode, but when crushed by explosives, it can.",
+  "move": "The higher the density, the lower the critical mass.",
+  "keywords": [
+    "plutonium",
+    "neutron",
+    "critical-mass",
+    "oppenheimer",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card titled Astute asking why squeezing plutonium lowers its critical mass. Four reasons are offered, including that nuclei sit closer so neutrons hit one more often. The reader picks one reason, then says how sure they are."
+  },
+  "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=1105s",
+  "written": "2026-11-03"
+}

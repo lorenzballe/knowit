@@ -1,0 +1,38 @@
+{
+  "id": "life-who-taught-your-scale",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.first_principles",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How does your kitchen scale know what a kilogram is?",
+  "answer": "Your kitchen scale reads to ±1 g, which is 50,000 times looser than the national kilogram's ±0.02 mg. Its doubt grows through a chain of copies: the national kilogram, then a lab reference weight (±0.5 mg), then a factory test weight (±50 mg), then your scale. The factory test weight is what taught your scale what a kilogram is.",
+  "move": "Every kilogram is a copy of a copy: from the national kilogram to your kitchen, doubt grows 50,000-fold.",
+  "keywords": [
+    "kilogram",
+    "kitchen scale",
+    "planck constant",
+    "test weight",
+    "calibration chain"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question card asking how many times looser a ±1 g kitchen scale is than the national kilogram's ±0.02 mg, with options ×50, ×5,000, and ×50,000. A chain of calibration tolerances runs from the Planck constant down to the kitchen scale.",
+    "graded": false
+  },
+  "source": "Veritasium, “World's Heaviest Weight” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=_k9egfWvb7Y",
+  "written": "2026-11-03"
+}

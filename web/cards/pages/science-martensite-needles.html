@@ -1,0 +1,225 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-martensite-needles -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:pointer;user-select:none;-webkit-user-select:none}
+#why{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
+.say{overflow-wrap:anywhere}
+.ink{fill:var(--k)}
+.trk{fill:color-mix(in srgb,var(--k) 8%,transparent);stroke:var(--k);stroke-width:2}
+.hotf{fill:#ff5a1f}
+.scope{fill:color-mix(in srgb,var(--k) 7%,var(--c))}
+.fe{fill:none;stroke:var(--k);stroke-opacity:.5}
+.cc{fill:var(--k)}
+.nd{fill:color-mix(in srgb,var(--k) 20%,transparent);stroke:var(--k);stroke-width:1.6}
+.ring{fill:none;stroke:var(--k);stroke-width:3}
+.halo{fill:none;stroke:var(--k);stroke-width:2}
+.crack{fill:none;stroke:#e01e37;stroke-linecap:round;stroke-linejoin:round}
+.crackw{fill:none;stroke:var(--c);stroke-linecap:round;stroke-linejoin:round}
+.lbl{fill:var(--k);font-family:var(--mono);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">METALLURGY</span></div>
+    <h2 class="q">What happens inside steel when a weld cools fast?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+    </div>
+    <p class="say" id="say">Drag the thermometer down: cool the hot weld fast.</p>
+    <p id="why" class="gone"><b>Martensite.</b> Cooling fast traps the carbon atoms in the iron lattice, and it locks into needles. That steel is really hard, but the lattice can no longer absorb energy, so a blow cracks it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fast-cooled steel traps carbon: hard, but brittle.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {t: 1, done: false, struck: false, crack: null};
+let G = null, time = 0, dragging = false;
+const NS = 'http://www.w3.org/2000/svg';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+function build() {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(12, f * 0.85);
+  const tw = Math.max(W * 0.055, 16);
+  const tx = Math.max(W * 0.1, tw + 8);
+  const top = fs * 2.4, bulbR = tw * 0.95, bulbY = H - fs * 2.4 - bulbR;
+  const bot = bulbY - bulbR * 0.6;
+  const g = {W, H, fs, tw, tx, top, bot, bulbY};
+
+  const t1 = Kit.mk('text', {x: tx, y: fs * 1.2, 'text-anchor': 'middle', 'font-size': fs, class: 'lbl'}, svg); t1.textContent = 'HOT';
+  const t2 = Kit.mk('text', {x: tx, y: H - fs * 0.6, 'text-anchor': 'middle', 'font-size': fs, class: 'lbl'}, svg); t2.textContent = 'COLD';
+  Kit.mk('rect', {x: tx - tw / 2, y: top - tw / 2, width: tw, height: bulbY - top + tw / 2, rx: tw / 2, class: 'trk'}, svg);
+  Kit.mk('circle', {cx: tx, cy: bulbY, r: bulbR, class: 'trk'}, svg);
+  g.bulb = Kit.mk('circle', {cx: tx, cy: bulbY, r: bulbR * 0.72, class: 'hotf'}, svg);
+  g.merc = Kit.mk('rect', {x: tx - tw * 0.28, width: tw * 0.56, rx: tw * 0.28, class: 'hotf'}, svg);
+  g.halo = Kit.mk('circle', {cx: tx, r: tw * 0.9, class: 'halo'}, svg);
+  g.handle = Kit.mk('circle', {cx: tx, r: tw * 0.85, class: 'ink'}, svg);
+
+  const left = tx + tw + fs * 1.2, right = W - fs * 0.6;
+  const R = Math.max(30, Math.min((right - left) / 2, H / 2 - fs * 2.6));
+  const cx = (left + right) / 2, cy = H / 2;
+  Object.assign(g, {left, R, cx, cy});
+
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'clipv'}, defs);
+  Kit.mk('circle', {cx, cy, r: R}, cp);
+
+  const leg = Kit.mk('text', {x: cx, y: cy - R - fs * 0.9, 'text-anchor': 'middle', 'font-size': fs, class: 'lbl'}, svg);
+  leg.textContent = '○ iron   ● carbon';
+  g.name = Kit.mk('text', {x: cx, y: cy + R + fs * 1.6, 'text-anchor': 'middle', 'font-size': fs * 1.1, class: 'lbl', opacity: 0}, svg);
+  g.name.textContent = 'NEEDLES = MARTENSITE';
+
+  g.scope = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {cx, cy, r: R, class: 'scope'}, g.scope);
+  g.glow = Kit.mk('circle', {cx, cy, r: R, class: 'hotf'}, g.scope);
+  const inner = Kit.mk('g', {'clip-path': 'url(#clipv)'}, g.scope);
+  const ng = Kit.mk('g', {}, inner), fg = Kit.mk('g', {}, inner), cg = Kit.mk('g', {}, inner);
+  g.crackG = Kit.mk('g', {}, inner);
+  Kit.mk('circle', {cx, cy, r: R, class: 'ring'}, g.scope);
+
+  const s = R / 4.6; g.s = s;
+  g.iron = []; g.carb = []; g.needles = [];
+  for (let i = -6; i <= 6; i++) for (let j = -6; j <= 6; j++) {
+    const x = cx + i * s, y = cy + j * s;
+    if (Math.hypot(x - cx, y - cy) < R + s) {
+      const el = Kit.mk('circle', {cx: x, cy: y, r: s * 0.3, class: 'fe', 'stroke-width': Math.max(1.2, s * 0.07)}, fg);
+      g.iron.push({el, x, y, p: Kit.rnd() * 6.28, q: Kit.rnd() * 6.28});
+    }
+    const x2 = x + s / 2, y2 = y + s / 2;
+    if (Math.hypot(x2 - cx, y2 - cy) < R - s * 0.3 && Kit.rnd() < 0.3) {
+      const el = Kit.mk('circle', {cx: x2, cy: y2, r: s * 0.17, class: 'cc'}, cg);
+      g.carb.push({el, x: x2, y: y2, p: Kit.rnd() * 6.28, q: Kit.rnd() * 6.28, w: 0.8 + Kit.rnd()});
+    }
+  }
+  const angs = [32, -32, 78, -58, 12, 55, -12, 100];
+  for (let k = 0; k < 16; k++) {
+    const L = R * (0.4 + Kit.rnd() * 0.6), w = L * 0.1;
+    const rr = R * 0.85 * Math.sqrt(Kit.rnd()), aa = Kit.rnd() * 6.28;
+    const el = Kit.mk('path', {d: `M${-L / 2} 0Q0 ${-w} ${L / 2} 0Q0 ${w} ${-L / 2} 0Z`, class: 'nd'}, ng);
+    g.needles.push({el, x: cx + rr * Math.cos(aa), y: cy + rr * Math.sin(aa), a: angs[k % angs.length] + Kit.rnd() * 10, th: 0.46 - (k / 15) * 0.4});
+  }
+  G = g;
+  if (S.crack) drawCrack(false);
+  update();
+}
+
+function update() {
+  if (!G) return;
+  const t = S.t, y = G.top + (1 - t) * (G.bot - G.top);
+  G.handle.setAttribute('cy', y); G.halo.setAttribute('cy', y);
+  G.merc.setAttribute('y', y); G.merc.setAttribute('height', Math.max(0, G.bulbY - y));
+  G.merc.setAttribute('opacity', 0.25 + 0.75 * t); G.bulb.setAttribute('opacity', 0.25 + 0.75 * t);
+  G.glow.setAttribute('opacity', 0.5 * t);
+  for (const n of G.needles) {
+    const k = clamp((n.th - t) / 0.1, 0, 1);
+    n.el.setAttribute('transform', `translate(${n.x} ${n.y}) rotate(${n.a}) scale(${Math.max(k, 0.001)} 1)`);
+    n.el.setAttribute('opacity', k);
+  }
+  if (S.done) G.name.setAttribute('opacity', 1);
+}
+
+gsap.ticker.add((tt, dt) => {
+  if (!G) return;
+  time += dt / 1000;
+  const t = S.t, s = G.s, sp = Kit.calm ? 0.3 : 1;
+  const ai = s * 0.12 * t, ac = s * 0.55 * t;
+  for (const a of G.iron) {
+    a.el.setAttribute('cx', a.x + ai * Math.sin(time * 9 * sp + a.p));
+    a.el.setAttribute('cy', a.y + ai * Math.cos(time * 11 * sp + a.q));
+  }
+  for (const c of G.carb) {
+    c.el.setAttribute('cx', c.x + ac * Math.sin(time * 2.3 * c.w * sp + c.p));
+    c.el.setAttribute('cy', c.y + ac * Math.sin(time * 1.7 * c.w * sp + c.q));
+  }
+});
+
+function toLocal(e) {
+  const r = Kit.$('pic').getBoundingClientRect();
+  return [(e.clientX - r.left) * G.W / r.width, (e.clientY - r.top) * G.H / r.height];
+}
+function setT(py) {
+  S.t = 1 - clamp((py - G.top) / (G.bot - G.top), 0, 1);
+  if (S.t <= 0.03) {
+    S.t = 0; S.done = true; dragging = false;
+    Kit.haptic('success');
+    gsap.killTweensOf(G.halo); G.halo.setAttribute('opacity', 0);
+    Kit.$('say').textContent = 'Now tap the cold steel to strike it.';
+    if (!Kit.calm) gsap.fromTo(G.name, {opacity: 0}, {opacity: 1, duration: .5});
+  }
+  update();
+}
+
+function makeCrack(px, py) {
+  const pts = [[(px - G.cx) / G.R, (py - G.cy) / G.R]];
+  const base = Kit.rnd() * 3.14;
+  const side = dir => {
+    const out = []; let [x, y] = pts[0], a = base + dir * Math.PI;
+    for (let i = 0; i < 20 && Math.hypot(x, y) < 1.1; i++) {
+      a += (Kit.rnd() - 0.5) * 1.1; const L = 0.1 + Kit.rnd() * 0.08;
+      x += L * Math.cos(a); y += L * Math.sin(a); out.push([x, y]);
+    }
+    return out;
+  };
+  return side(1).reverse().concat(pts, side(0));
+}
+function drawCrack(anim) {
+  G.crackG.innerHTML = '';
+  const d = S.crack.map((p, i) => (i ? 'L' : 'M') + (G.cx + p[0] * G.R).toFixed(1) + ' ' + (G.cy + p[1] * G.R).toFixed(1)).join('');
+  const w = Math.max(3, G.R * 0.03);
+  const p1 = Kit.mk('path', {d, class: 'crackw', 'stroke-width': w * 2.4}, G.crackG);
+  const p2 = Kit.mk('path', {d, class: 'crack', 'stroke-width': w}, G.crackG);
+  if (anim && !Kit.calm) {
+    for (const p of [p1, p2]) {
+      const L = p.getTotalLength();
+      gsap.fromTo(p, {attr: {'stroke-dasharray': L, 'stroke-dashoffset': L}}, {attr: {'stroke-dashoffset': 0}, duration: .45, ease: 'power2.out'});
+    }
+  }
+}
+function strike(px, py) {
+  S.struck = true; S.crack = makeCrack(px, py);
+  drawCrack(true); Kit.haptic('success');
+  if (!Kit.calm) gsap.fromTo(G.scope, {x: -8}, {x: 0, duration: .6, ease: 'elastic.out(1,0.3)'});
+  setTimeout(() => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }, Kit.calm ? 0 : 450);
+}
+
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  if (!G) return;
+  const [px, py] = toLocal(e);
+  if (!S.done && px < G.left) {
+    dragging = true; try { pic.setPointerCapture(e.pointerId); } catch (_) {}
+    gsap.killTweensOf(G.halo); G.halo.setAttribute('opacity', 0);
+    Kit.haptic('selection'); setT(py);
+  } else if (S.done && !S.struck && Math.hypot(px - G.cx, py - G.cy) < G.R) strike(px, py);
+});
+pic.addEventListener('pointermove', e => { if (dragging) setT(toLocal(e)[1]); });
+const stop = () => { dragging = false; };
+pic.addEventListener('pointerup', stop); pic.addEventListener('pointercancel', stop);
+
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G || S.done) return;
+  gsap.fromTo(G.halo, {attr: {r: G.tw * 0.9}, opacity: .8}, {attr: {r: G.tw * 2}, opacity: 0, duration: 1.2, repeat: -1, ease: 'power2.out'});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = pic.getBoundingClientRect();
+  const ev = (type, x, y) => pic.dispatchEvent(new PointerEvent(type, {clientX: r.left + x * r.width / G.W, clientY: r.top + y * r.height / G.H, bubbles: true, pointerId: 1, isPrimary: true}));
+  ev('pointerdown', G.tx, G.top);
+  for (let i = 1; i <= 12; i++) { ev('pointermove', G.tx, G.top + (G.bot - G.top + 20) * i / 12); await wait(30); }
+  ev('pointerup', G.tx, G.bot + 20);
+  await wait(300);
+  ev('pointerdown', G.cx + G.R * 0.2, G.cy - G.R * 0.1); ev('pointerup', G.cx + G.R * 0.2, G.cy - G.R * 0.1);
+  await wait(1000);
+};
+Kit.single();
+</script>
+</html>

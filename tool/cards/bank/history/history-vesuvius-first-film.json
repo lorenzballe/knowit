@@ -1,0 +1,37 @@
+{
+  "id": "history-vesuvius-first-film",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.who_wrote_it",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What made the 1944 eruption unique in Vesuvius's historical record?",
+  "answer": "The 1944 eruption of Vesuvius was the first ever caught on camera. It began at 16:30 on 18 March 1944, just as American and British troops had reached Naples, freed from Nazi occupation. Their cameras photographed and filmed it, making it the first Vesuvius eruption on record to be recorded that way.",
+  "move": "1944: Vesuvius's last eruption, and its first on film.",
+  "keywords": [
+    "vesuvius",
+    "naples",
+    "1944-eruption",
+    "eruption-film",
+    "allied-troops"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Three tappable steps in order: sketch an eruption, troops reach Naples, film 18 March 1944. The question asks what made the 1944 Vesuvius eruption unique in its historical record."
+  },
+  "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IxqDIGusjko",
+  "written": "2026-11-03"
+}

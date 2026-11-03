@@ -1,0 +1,145 @@
+<!doctype html>
+<!-- slug: history-swiss-cushion-state -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#map{width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+.say,.keep{overflow-wrap:break-word}
+#map text{font-family:var(--body);fill:var(--k);pointer-events:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOPOLITICS</span></div>
+    <h2 class="q">Why did the Great Powers make Switzerland neutral forever in 1815?</h2>
+    <div class="stagebox" id="stage"><svg id="map" role="img" aria-label="Schematic map: France, German states and Austria around Switzerland, with their armies on the borders"></svg></div>
+    <p class="say" id="say">Tap Switzerland to make it neutral, and watch where the armies go.</p>
+    <div id="why" class="gone">
+      <p class="big">A cushion between rivals</p>
+      <p class="body">French, Germans and Austrians often fought each other. A neutral Switzerland covered one side of each one's land, so each could mass its forces on a shorter border.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A neutral country in the middle was a defence for everyone around it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('map');
+const COL = {fr:'#2f5bd3', de:'#b07d10', at:'#d23a3a'};
+const N = 9;
+let neutral = false, done = false, pulse = null;
+let M = null, dots = {fr:[], de:[], at:[]}, sw = {};
+
+// Borders in map units (0..1). o = which side of the line each power stands on.
+const SEG = {
+  A:  {a:[.33,.04], b:[.33,.42]},  // France | German states
+  S1: {a:[.33,.42], b:[.33,.74]},  // France | Switzerland
+  S2: {a:[.33,.42], b:[.67,.42]},  // German states | Switzerland
+  S3: {a:[.67,.74], b:[.67,.42]},  // Austria | Switzerland
+  B:  {a:[.67,.42], b:[.97,.42]}   // German states | Austria
+};
+function fronts(p, neu){
+  if (p === 'fr') return neu ? [['A',-1,0]] : [['A',-1,0],['S1',-1,0]];
+  if (p === 'de') return neu ? [['A',1,0],['B',0,-1]] : [['A',1,0],['S2',0,-1],['B',0,-1]];
+  return neu ? [['B',0,1]] : [['S3',1,0],['B',0,1]];
+}
+function places(p, neu){
+  const segs = fronts(p, neu).map(([k,dx,dy]) => {
+    const s = SEG[k], a = M.P(...s.a), b = M.P(...s.b);
+    return {a, b, dx:dx*M.d, dy:dy*M.d, L:Math.hypot(b[0]-a[0], b[1]-a[1])};
+  });
+  const L = segs.reduce((t,s) => t + s.L, 0), out = [];
+  for (let i = 0; i < N; i++){
+    let t = (i + .5) / N * L, j = 0;
+    while (j < segs.length - 1 && t > segs[j].L){ t -= segs[j].L; j++; }
+    const s = segs[j], u = Math.min(1, t / s.L);
+    out.push([s.a[0] + (s.b[0]-s.a[0])*u + s.dx, s.a[1] + (s.b[1]-s.a[1])*u + s.dy]);
+  }
+  return out;
+}
+function swissLook(anim){
+  const d = anim && !Kit.calm ? .6 : 0;
+  gsap.to(sw.box, {attr:{'stroke-dasharray': neutral ? '0 0' : '6 5'}, fill: neutral ? '#ffffff' : 'rgba(128,128,128,.18)', duration:d});
+  gsap.to(sw.cross, {opacity: neutral ? 1 : 0, scale: neutral ? 1 : .3, transformOrigin:'50% 50%', duration:d, ease:'back.out(2)'});
+  sw.status.textContent = neutral ? 'NEUTRAL · covered' : 'open · must be guarded';
+}
+function moveDots(anim){
+  for (const p of ['fr','de','at']){
+    const pos = places(p, neutral);
+    dots[p].forEach((c, i) => {
+      if (anim && !Kit.calm) gsap.to(c, {attr:{cx:pos[i][0], cy:pos[i][1]}, duration:1.1, delay:i*.03, ease:'power3.inOut'});
+      else { c.setAttribute('cx', pos[i][0]); c.setAttribute('cy', pos[i][1]); }
+    });
+  }
+}
+function draw(){
+  if (pulse){ pulse.kill(); pulse = null; }
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const r = Math.max(4, Math.min(W, H) * .017), pad = r * 2.2;
+  const mx = pad, my = pad, mw = W - 2*pad, mh = H - 2*pad;
+  M = {P:(x,y) => [mx + x*mw, my + y*mh], d:r*1.5, r};
+  const fs = Math.max(12, f * .95), g = 2;
+  const rect = (x0,y0,x1,y1,fill,stroke) => {
+    const [a,b] = M.P(x0,y0), [c,d] = M.P(x1,y1);
+    return Kit.mk('rect', {x:a+g, y:b+g, width:c-a-2*g, height:d-b-2*g, rx:r*.8, fill, stroke:stroke||'none'}, svg);
+  };
+  rect(0,0,.33,1,'rgba(47,91,211,.16)');
+  rect(.33,0,1,.42,'rgba(176,125,16,.17)');
+  rect(.67,.42,1,1,'rgba(210,58,58,.15)');
+  rect(.33,.74,.67,1,'rgba(128,128,128,.08)');
+  const lbl = (x,y,t,c,w,s) => { const [a,b] = M.P(x,y); const e = Kit.mk('text',{x:a,y:b,'text-anchor':'middle','dominant-baseline':'middle','font-size':s||fs,'font-weight':w||800}, svg); e.textContent = t; if (c) e.style.fill = c; return e; };
+  lbl(.165,.62,'France',COL.fr);
+  lbl(.66,.2,'German states',COL.de);
+  lbl(.835,.72,'Austria',COL.at);
+  lbl(.5,.88,'Alps','var(--muted)',600);
+  // Switzerland
+  const [sx0,sy0] = M.P(.33,.42), [sx1,sy1] = M.P(.67,.74);
+  sw.g = Kit.mk('g', {}, svg);
+  sw.box = Kit.mk('rect', {x:sx0+g, y:sy0+g, width:sx1-sx0-2*g, height:sy1-sy0-2*g, rx:r*1.6, fill:'rgba(128,128,128,.18)', stroke:'var(--k)', 'stroke-width':Math.max(2,r*.4), 'stroke-dasharray':'6 5'}, sw.g);
+  const cx = (sx0+sx1)/2, cy = (sy0+sy1)/2, cs = Math.min(fs*1.3, (sy1-sy0)*.28);
+  sw.cross = Kit.mk('g', {}, sw.g);
+  Kit.mk('rect', {x:cx-cs/2, y:cy-fs*.7-cs, width:cs, height:cs, rx:cs*.12, fill:'#d52b1e'}, sw.cross);
+  Kit.mk('rect', {x:cx-cs*.1, y:cy-fs*.7-cs*.8, width:cs*.2, height:cs*.6, fill:'#fff'}, sw.cross);
+  Kit.mk('rect', {x:cx-cs*.3, y:cy-fs*.7-cs*.6, width:cs*.6, height:cs*.2, fill:'#fff'}, sw.cross);
+  const nm = Kit.mk('text', {x:cx, y:cy+fs*.35, 'text-anchor':'middle','dominant-baseline':'middle','font-size':fs,'font-weight':800}, sw.g); nm.textContent = 'Switzerland';
+  sw.status = Kit.mk('text', {x:cx, y:cy+fs*1.75, 'text-anchor':'middle','dominant-baseline':'middle','font-size':Math.max(12,fs*.78),'font-weight':600}, sw.g);
+  // shorten the status if the box is narrow
+  swissLook(false);
+  if (sw.status.getComputedTextLength && sw.status.getComputedTextLength() > (sx1-sx0)*.92) sw.status.textContent = neutral ? 'NEUTRAL' : 'open';
+  // the border lines that stay real fronts
+  for (const k of ['A','B']){ const [a,b] = M.P(...SEG[k].a), [c,d] = M.P(...SEG[k].b); Kit.mk('line', {x1:a,y1:b,x2:c,y2:d,stroke:'var(--k)','stroke-width':Math.max(2,r*.35),'stroke-linecap':'round'}, svg); }
+  // armies
+  for (const p of ['fr','de','at']){
+    dots[p] = [];
+    for (let i = 0; i < N; i++) dots[p].push(Kit.mk('circle', {r, fill:COL[p], stroke:'#fff', 'stroke-width':Math.max(1.2,r*.3)}, svg));
+  }
+  moveDots(false);
+  if (!neutral && !Kit.calm) pulse = gsap.to(sw.box, {attr:{'stroke-width':Math.max(2,r*.4)*2.2}, duration:.7, repeat:-1, yoyo:true, ease:'sine.inOut'});
+}
+function toggle(){
+  neutral = !neutral;
+  if (pulse){ pulse.kill(); pulse = null; sw.box.setAttribute('stroke-width', Math.max(2, M.r*.4)); }
+  Kit.haptic(neutral ? 'success' : 'light');
+  swissLook(true);
+  if (sw.status.getComputedTextLength() > sw.box.getBBox().width*.92) sw.status.textContent = neutral ? 'NEUTRAL' : 'open';
+  moveDots(true);
+  if (!done){ done = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why, #keep', {opacity:0, y:8, stagger:.12, duration:.5, delay:.5, ease:'power3.out'}); }
+}
+svg.addEventListener('click', toggle);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  for (const p of ['fr','de','at']) gsap.from(dots[p], {opacity:0, scale:0, transformOrigin:'50% 50%', stagger:.04, duration:.35, ease:'back.out(2)'});
+};
+Kit.play.card = async () => { svg.dispatchEvent(new MouseEvent('click', {bubbles:true})); await new Promise(r => setTimeout(r, 1800)); };
+Kit.single();
+</script>
+</html>

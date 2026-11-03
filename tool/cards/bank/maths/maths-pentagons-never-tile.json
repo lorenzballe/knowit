@@ -1,0 +1,37 @@
+{
+  "id": "maths-pentagons-never-tile",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do periodic crystals never have five-fold symmetry?",
+  "answer": "A repeating pattern needs corners that fit 360° exactly. Triangles, squares and hexagons do this, but a pentagon's 108° doesn't go into 360°, so pentagons always leave a gap or an overlap. That is why no repeating crystal can have five-fold symmetry. Only quasicrystals, whose pattern never repeats, have it.",
+  "move": "A repeating pattern needs corners that fit 360° exactly; pentagons never do.",
+  "keywords": [
+    "pentagon",
+    "crystal",
+    "quasicrystal",
+    "tiling",
+    "symmetry"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "The page shows one point on a floor with 360° around it, and four shapes to tap: triangle, square, pentagon and hexagon. It asks whether copies of a shape can close around one corner."
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=268s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,144 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-motogp-braking-distance -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw;padding:.6cqh 1cqw 0}
+#ctl .end{font:700 max(1.6cqh,12px)/1 var(--mono);color:var(--muted);white-space:nowrap}
+#slide{flex:1;-webkit-appearance:none;appearance:none;height:max(4.6cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
+#slide::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 18%,transparent)}
+#slide::-moz-range-track{height:max(.9cqh,6px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 18%,transparent)}
+#slide::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.8cqh,26px);height:max(3.8cqh,26px);border-radius:50%;background:var(--k);margin-top:calc((max(.9cqh,6px) - max(3.8cqh,26px))/2);box-shadow:0 .4cqh 1.2cqh rgba(0,0,0,.25)}
+#slide::-moz-range-thumb{width:max(3.8cqh,26px);height:max(3.8cqh,26px);border-radius:50%;background:var(--k);border:0}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#pic text{font-family:var(--body);fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Slider · braking">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOTOGP BRAKING</span></div>
+    <h2 class="q">How much road does a MotoGP rider get to brake from 350 km/h?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Braking from 350 km/h over 200 metres"></svg>
+      <div id="ctl"><span class="end">0 m</span><input id="slide" type="range" min="0" max="200" step="1" value="0" aria-label="Metres braked"><span class="end">200 m</span></div>
+    </div>
+    <p class="say" id="say">Drag the bike from the brake point to the corner.</p>
+    <div id="why" class="gone"><p class="body">At 350 km/h the rider has about 200 m before the corner: grab the brakes and slow to 100. Rossi says this is even more extreme than the throttle, which feels like a 1,300 kg car with nearly 2,000 hp.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>350 down to 100 km/h in roughly 200 metres.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const V0 = 350, V1 = 100, D = 200;
+const speed = d => Math.sqrt(V0*V0 - (V0*V0 - V1*V1) * d / D);
+const svg = Kit.$('pic'), slide = Kit.$('slide');
+let G = null, done = false;
+const RED = '#e8392f';
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const m = W*0.05, fs = Math.max(f, 12);
+  const x0 = m + fs*2.6;
+  const r = Math.min(H*0.17, W*0.13);
+  const roadW = Math.max(H*0.09, 22);
+  const x1 = W - m - r - roadW/2;
+  const ry = Math.max(r + roadW/2 + 4, H*0.27);
+  const sx = d => x0 + (x1 - x0) * d / D;
+  const gTop = ry + roadW/2 + fs*3.2, gBot = H - fs*2.2;
+  const sy = v => gBot - (gBot - gTop) * v / V0;
+  const ink = 'var(--k)';
+
+  // road
+  const roadD = `M${x0 - fs*2},${ry} L${x1},${ry} A${r},${r} 0 0 0 ${x1 + r},${ry - r} L${x1 + r},${-roadW}`;
+  Kit.mk('path', {d: roadD, fill: 'none', stroke: ink, 'stroke-width': roadW, 'stroke-linecap': 'butt', opacity: .9}, svg);
+  Kit.mk('path', {d: roadD, fill: 'none', stroke: 'var(--c)', 'stroke-width': Math.max(1.5, roadW*0.06), 'stroke-dasharray': `${roadW*0.5} ${roadW*0.5}`, opacity: .7}, svg);
+  // braking zone (painted as you go)
+  const zone = Kit.mk('rect', {x: x0, y: ry - roadW/2, width: 0, height: roadW, fill: RED, opacity: .55}, svg);
+  // brake line + corner
+  Kit.mk('line', {x1: x0, x2: x0, y1: ry - roadW/2, y2: ry + roadW/2, stroke: 'var(--c)', 'stroke-width': 3}, svg);
+  Kit.mk('text', {x: x0, y: ry + roadW/2 + fs*1.3, 'font-size': fs*0.9, 'font-weight': 700, 'text-anchor': 'start'}, svg).textContent = 'BRAKE HERE';
+  Kit.mk('text', {x: x1, y: ry + roadW/2 + fs*1.3, 'font-size': fs*0.9, 'font-weight': 700, 'text-anchor': 'end'}, svg).textContent = 'CORNER';
+
+  // bike
+  const bike = Kit.mk('g', {}, svg);
+  const glow = Kit.mk('circle', {cx: -roadW*0.35, cy: 0, r: roadW*0.32, fill: RED, opacity: 0}, bike);
+  Kit.mk('rect', {x: -roadW*0.45, y: -roadW*0.14, width: roadW*0.9, height: roadW*0.28, rx: roadW*0.14, fill: 'var(--c)'}, bike);
+  Kit.mk('circle', {cx: roadW*0.05, cy: 0, r: roadW*0.15, fill: RED, stroke: 'var(--c)', 'stroke-width': 2}, bike);
+
+  // graph
+  Kit.mk('line', {x1: x0, x2: x1, y1: gBot, y2: gBot, stroke: ink, 'stroke-width': 1.5, opacity: .6}, svg);
+  Kit.mk('line', {x1: x0, x2: x0, y1: gTop, y2: gBot, stroke: ink, 'stroke-width': 1.5, opacity: .6}, svg);
+  [0, 100, 200].forEach(d => {
+    Kit.mk('text', {x: sx(d), y: gBot + fs*1.3, 'font-size': fs*0.85, 'text-anchor': d === 0 ? 'start' : d === 200 ? 'end' : 'middle', opacity: .75}, svg).textContent = d + ' m';
+  });
+  [[V0, '350'], [V1, '100']].forEach(([v, t]) => {
+    Kit.mk('line', {x1: x0, x2: x1, y1: sy(v), y2: sy(v), stroke: ink, 'stroke-dasharray': '3 5', opacity: .3}, svg);
+    Kit.mk('text', {x: x0 - fs*0.4, y: sy(v) + fs*0.35, 'font-size': fs*0.85, 'text-anchor': 'end', 'font-weight': 700}, svg).textContent = t;
+  });
+  Kit.mk('text', {x: x0 - fs*0.4, y: gBot + fs*0.35, 'font-size': fs*0.75, 'text-anchor': 'end', opacity: .7}, svg).textContent = 'km/h';
+  let full = '';
+  for (let d = 0; d <= D; d += 2) full += (d ? 'L' : 'M') + sx(d).toFixed(1) + ',' + sy(speed(d)).toFixed(1);
+  Kit.mk('path', {d: full, fill: 'none', stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '2 5', opacity: .35}, svg);
+  const trace = Kit.mk('path', {d: '', fill: 'none', stroke: RED, 'stroke-width': Math.max(3, fs*0.25), 'stroke-linecap': 'round'}, svg);
+  const dot = Kit.mk('circle', {r: fs*0.45, fill: RED, stroke: 'var(--c)', 'stroke-width': 2}, svg);
+
+  // big readout, top-right of the graph (empty there: the curve falls away)
+  const bx = x1, by = gTop + fs*2.6;
+  const big = Kit.mk('text', {x: bx, y: by, 'font-size': fs*3, 'font-weight': 800, 'text-anchor': 'end', style: 'font-family:var(--display)'}, svg);
+  const unit = Kit.mk('text', {x: bx, y: by + fs*2.1, 'font-size': fs*0.95, 'text-anchor': 'end', 'font-weight': 700, opacity: .8}, svg);
+
+  G = {sx, sy, ry, x0, zone, bike, glow, trace, dot, big, unit};
+  update(+slide.value, true);
+}
+
+function update(d, quiet){
+  if (!G) return;
+  const v = speed(d), x = G.sx(d);
+  G.bike.setAttribute('transform', `translate(${x},${G.ry})`);
+  G.zone.setAttribute('width', Math.max(0, x - G.x0));
+  G.glow.setAttribute('opacity', d > 0 && d < D ? .85 : 0);
+  let p = '';
+  for (let s = 0; s <= d; s += 2) p += (s ? 'L' : 'M') + G.sx(s).toFixed(1) + ',' + G.sy(speed(s)).toFixed(1);
+  p += 'L' + x.toFixed(1) + ',' + G.sy(v).toFixed(1);
+  G.trace.setAttribute('d', p);
+  G.dot.setAttribute('cx', x); G.dot.setAttribute('cy', G.sy(v));
+  G.big.textContent = Math.round(v);
+  G.unit.textContent = `km/h · ${Math.round(d)} m braked`;
+}
+
+slide.addEventListener('input', () => {
+  const d = +slide.value;
+  update(d);
+  if (d % 25 === 0) Kit.haptic('light');
+  if (d >= D && !done) {
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+    if (!Kit.calm && G) gsap.fromTo(G.big, {scale: 1.25, transformOrigin: '100% 50%'}, {scale: 1, duration: .5, ease: 'back.out(3)'});
+  }
+});
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G || done) return;
+  const o = {d: 0};
+  gsap.to(o, {d: 28, duration: .7, ease: 'power2.out', yoyo: true, repeat: 1, delay: .3,
+    onUpdate: () => { if (!done && +slide.value === 0) update(o.d); },
+    onComplete: () => { if (+slide.value === 0) update(0); }});
+};
+Kit.play.card = async () => {
+  for (const v of [60, 130, 200]) {
+    slide.value = v; slide.dispatchEvent(new Event('input', {bubbles: true}));
+    await new Promise(r => setTimeout(r, 120));
+  }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

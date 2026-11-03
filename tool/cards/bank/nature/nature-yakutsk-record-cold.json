@@ -1,0 +1,38 @@
+{
+  "id": "nature-yakutsk-record-cold",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "What is the lowest temperature ever recorded in Yakutsk?",
+  "answer": "The lowest temperature ever recorded in Yakutsk is −63 °C, the coldest ever measured in a place where people live all year. Some residents leave their car engines running all night, because 20 minutes switched off would freeze everything.",
+  "move": "Yakutsk hit −63 °C: the coldest city people live in.",
+  "keywords": [
+    "yakutsk",
+    "siberia",
+    "russia",
+    "extreme cold",
+    "record low"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A thermometer you drag up or down to guess the lowest temperature ever recorded in Yakutsk. Its needle is stuck at -63 °C against a snowy skyline. The question asks for the record low.",
+    "graded": false
+  },
+  "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=1s",
+  "written": "2026-11-03"
+}

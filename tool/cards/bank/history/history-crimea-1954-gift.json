@@ -1,0 +1,37 @@
+{
+  "id": "history-crimea-1954-gift",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.disputed_borders",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Russia call Crimea “theirs” after giving it away?",
+  "answer": "In 1954 the transfer of Crimea from Russia to Ukraine was symbolic, because both were inside the same Union. When the Union dissolved, Crimea became a real loss of the peninsula that controls the Black Sea. Russia always meant to get it back and took it in 2014.",
+  "move": "A border drawn as a gesture inside one state turns real when that state breaks up.",
+  "keywords": [
+    "crimea",
+    "ukraine",
+    "russia",
+    "black_sea",
+    "soviet_union"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline of Crimea's administrative status with a draggable marker. The question asks why Russia called Crimea 'theirs' after giving it away in 1954. The view of Crimea changes as the marker moves along the years."
+  },
+  "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=BkJY93_hauY&t=328s",
+  "written": "2026-11-03"
+}

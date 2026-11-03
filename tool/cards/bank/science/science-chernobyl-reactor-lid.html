@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-chernobyl-reactor-lid -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#cap{font:700 max(2.1cqh,13px)/1.25 var(--body);color:var(--k);min-height:2.6em;display:flex;align-items:flex-end}
+#scrub{-webkit-appearance:none;appearance:none;width:100%;height:4.4cqh;min-height:32px;background:transparent;margin:0;cursor:pointer;touch-action:none}
+#scrub::-webkit-slider-runnable-track{height:max(1cqh,7px);border-radius:99px;background:color-mix(in srgb,var(--k) 18%,transparent)}
+#scrub::-moz-range-track{height:max(1cqh,7px);border-radius:99px;background:color-mix(in srgb,var(--k) 18%,transparent)}
+#scrub::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);margin-top:calc((max(1cqh,7px) - max(3.6cqh,26px))/2);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--c) 70%,transparent)}
+#scrub::-moz-range-thumb{width:max(3.6cqh,26px);height:max(3.6cqh,26px);border:0;border-radius:50%;background:var(--k)}
+#ends{display:flex;justify-content:space-between;font:600 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.q{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · slow motion">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STEAM BLAST</span></div>
+    <h2 class="q">What massive object was blown off by the explosion?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="cap">Reactor 4, just before: the core is sealed by a huge lid</div>
+      <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Timeline">
+      <div id="ends"><span>BEFORE</span><span>AFTER</span></div>
+    </div>
+    <p class="say" id="say">Drag the slider to play the explosion in slow motion.</p>
+    <div id="why" class="gone"><p class="body">Steam built up so violently inside the reactor that it blew the 1000‑tonne lid sealing it into the air. That wrecked the roof and let a great amount of radioactive material escape.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A steam explosion threw off the reactor's 1000‑tonne lid.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {t: 0};
+let G = null, done = false, lastCap = '';
+const cl = v => Math.max(0, Math.min(1, v));
+const seg = (t, a, b) => cl((t - a) / (b - a));
+const eOut = v => 1 - Math.pow(1 - v, 3);
+const caps = [
+  [0.02, 'Reactor 4, just before: the core is sealed by a huge lid'],
+  [0.30, 'Water in the core turns to steam'],
+  [0.49, 'Pressure soars under the sealed lid'],
+  [0.62, 'Steam explosion: the lid starts to lift'],
+  [0.86, 'The 1000‑tonne lid is hurled into the air and the roof is torn apart'],
+  [1.01, 'Radioactive material pours out into the environment']
+];
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const cx = W / 2, gy = H * 0.93, ry = H * 0.47;
+  const bx0 = W * 0.08, bx1 = W * 0.92;
+  const cw = W * 0.44, cy0 = H * 0.68, cy1 = gy - H * 0.02;
+  const lh = Math.max(H * 0.07, 24), lw = cw + W * 0.1, ly = cy0 - lh;
+  const ink = 'fill:var(--k)', stroke = 'stroke:var(--k);fill:none';
+  const g = {W, H, cx, ly, lh, cy0, cy1, cw, ry, gy};
+
+  // cloud (behind everything)
+  g.cloud = [];
+  for (let i = 0; i < 9; i++) {
+    g.cloud.push({el: mk('circle', {cx, cy: ry, r: 0, style: 'fill:#b9e04a;opacity:0'}),
+      dx: (Kit.rnd() - .5) * W * 0.6, dy: -H * (0.12 + Kit.rnd() * 0.3), r: W * (0.07 + Kit.rnd() * 0.07), d: Kit.rnd() * 0.15});
+  }
+  // ground
+  mk('rect', {x: 0, y: gy, width: W, height: H - gy + 2, style: 'fill:var(--k);opacity:.18'});
+  mk('line', {x1: 0, y1: gy, x2: W, y2: gy, style: 'stroke:var(--k);stroke-width:' + Math.max(2, H * .006)});
+  // building walls
+  const sw = Math.max(2.5, W * 0.01);
+  mk('path', {d: `M${bx0},${gy}V${ry}M${bx1},${gy}V${ry}`, style: stroke + ';stroke-width:' + sw + ';stroke-linecap:round'});
+  // concrete pit around core
+  const pw = W * 0.06;
+  mk('rect', {x: cx - cw / 2 - pw, y: cy0, width: pw, height: cy1 - cy0, style: ink + ';opacity:.55'});
+  mk('rect', {x: cx + cw / 2, y: cy0, width: pw, height: cy1 - cy0, style: ink + ';opacity:.55'});
+  mk('rect', {x: cx - cw / 2 - pw, y: cy1, width: cw + pw * 2, height: H * 0.015, style: ink + ';opacity:.55'});
+  // core
+  g.core = mk('rect', {x: cx - cw / 2, y: cy0, width: cw, height: cy1 - cy0, style: 'fill:#9fb6cc'});
+  g.glow = mk('rect', {x: cx - cw / 2, y: cy0, width: cw, height: cy1 - cy0, style: 'fill:#ff6a1f;opacity:0'});
+  for (let i = 1; i < 6; i++) {
+    const x = cx - cw / 2 + cw * i / 6;
+    mk('line', {x1: x, y1: cy0 + (cy1 - cy0) * .18, x2: x, y2: cy1, style: 'stroke:var(--k);opacity:.35;stroke-width:' + Math.max(2, W * .008)});
+  }
+  g.bub = [];
+  for (let i = 0; i < 14; i++) g.bub.push({el: mk('circle', {cx: 0, cy: 0, r: Math.max(2, W * (0.008 + Kit.rnd() * 0.01)), style: 'fill:#fff;opacity:0'}), x: cx - cw / 2 + cw * (0.06 + Kit.rnd() * 0.88), ph: Kit.rnd(), sp: 0.5 + Kit.rnd()});
+  g.steamT = mk('text', {x: cx, y: (cy0 + cy1) / 2 + fs * .35, 'text-anchor': 'middle', style: `fill:var(--k);font:800 ${fs}px var(--body);letter-spacing:.08em`});
+  g.steamT.textContent = 'STEAM';
+  // side puffs
+  g.puffs = [-1, 1].map(s => mk('circle', {cx: cx + s * lw / 2, cy: cy0 - lh * .2, r: 0, style: 'fill:#fff;opacity:0;stroke:var(--k);stroke-width:1.5'}));
+  // roof halves
+  const rh = Math.max(H * 0.03, 8);
+  g.roofL = mk('g', {});
+  mk('rect', {x: bx0 - sw, y: ry - rh, width: cx - bx0 + sw, height: rh, style: ink}, g.roofL);
+  g.roofR = mk('g', {});
+  mk('rect', {x: cx, y: ry - rh, width: bx1 - cx + sw, height: rh, style: ink}, g.roofR);
+  g.roofT = mk('text', {x: bx0 + W * 0.02, y: ry - rh - fs * .6, style: `fill:var(--k);font:700 ${fs}px var(--body)`});
+  g.roofT.textContent = 'ROOF';
+  g.rh = rh; g.bx0 = bx0; g.bx1 = bx1;
+  // debris
+  g.deb = [];
+  for (let i = 0; i < 26; i++) {
+    const a = -Math.PI / 2 + (Kit.rnd() - .5) * 2.2, sp = H * (0.3 + Kit.rnd() * 0.5);
+    const s = Math.max(3, W * (0.008 + Kit.rnd() * 0.018));
+    g.deb.push({el: mk('rect', {x: -s / 2, y: -s / 2, width: s, height: s, style: ink + ';opacity:0'}), vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, rot: (Kit.rnd() - .5) * 720, x0: cx + (Kit.rnd() - .5) * cw, y0: cy0});
+  }
+  // flash
+  g.flash = mk('circle', {cx, cy: cy0, r: 0, style: 'fill:#fff4c2;opacity:0'});
+  // lid
+  g.lid = mk('g', {});
+  mk('rect', {x: cx - lw / 2, y: ly, width: lw, height: lh, rx: lh * .12, style: ink}, g.lid);
+  const lfs = Math.max(12, Math.min(fs * 1.15, lh * 0.6));
+  const lt = mk('text', {x: cx, y: ly + lh / 2 + lfs * .35, 'text-anchor': 'middle', style: `fill:var(--c);font:800 ${lfs}px var(--body)`}, g.lid);
+  lt.textContent = 'LID · 1000 t';
+  // radioactive label — placed below the lid's final (rotated) position
+  const ra = 22 * Math.PI / 180;
+  const lidBot = H * 0.05 + lh / 2 + (lw / 2) * Math.sin(ra) + (lh / 2) * Math.cos(ra) + H * 0.01;
+  const radY = Math.min(Math.max(H * 0.36, lidBot + fs * 1.3), gy - fs * 0.5);
+  g.radT = mk('text', {x: W * 0.97, y: radY, 'text-anchor': 'end', style: `fill:var(--k);font:800 ${fs}px var(--body);opacity:0`});
+  g.radT.textContent = 'radioactive material';
+  g.lw = lw;
+  G = g; render();
+};
+
+function render(time) {
+  if (!G) return;
+  const g = G, t = st.t, {W, H, cx, ly, lh, cy0, cy1, ry} = g;
+  const now = time != null ? time : (performance.now() / 1000);
+  const p = seg(t, 0.05, 0.48);
+  g.core.style.fill = gsap.utils.interpolate('#9fb6cc', '#fff1cf', p);
+  g.glow.style.opacity = (0.85 * seg(t, 0.25, 0.6)).toFixed(3);
+  g.steamT.style.opacity = (0.4 + 0.6 * p) * (1 - seg(t, 0.55, 0.65));
+  // bubbles
+  g.bub.forEach(b => {
+    const v = ((b.ph + now * b.sp * (0.3 + p * 1.6)) % 1);
+    b.el.setAttribute('cx', b.x + Math.sin(v * 9 + b.ph * 6) * 3);
+    b.el.setAttribute('cy', cy1 - (cy1 - cy0) * v);
+    b.el.style.opacity = (p * 0.9 * (1 - v * .4) * (1 - seg(t, 0.55, 0.7))).toFixed(3);
+  });
+  // tremble
+  const tr = seg(t, 0.32, 0.5) * (1 - seg(t, 0.5, 0.52));
+  const jx = Math.sin(now * 60) * tr * W * 0.008, jy = Math.cos(now * 47) * tr * H * 0.004;
+  g.puffs.forEach((c, i) => {
+    const v = seg(t, 0.36, 0.5) * (1 - seg(t, 0.52, 0.58));
+    c.setAttribute('r', v * W * 0.035 * (1 + .15 * Math.sin(now * 20 + i)));
+    c.style.opacity = (v * .9).toFixed(3);
+  });
+  // lid launch
+  const L = eOut(seg(t, 0.5, 1));
+  const dy = -L * (ly - H * 0.05) - jy * -1;
+  const rot = 22 * L;
+  g.lid.setAttribute('transform', `translate(${jx},${dy}) rotate(${rot},${cx},${ly + lh / 2})`);
+  // flash
+  const fl = seg(t, 0.49, 0.62);
+  g.flash.setAttribute('r', fl * W * 0.45);
+  g.flash.style.opacity = (fl > 0 ? (1 - fl) * 0.9 : 0).toFixed(3);
+  // roof
+  const R = seg(t, 0.53, 1);
+  g.roofL.setAttribute('transform', `translate(${-W * 0.22 * R},${-H * 0.22 * R + H * 0.3 * R * R}) rotate(${-35 * R},${cx},${ry})`);
+  g.roofR.setAttribute('transform', `translate(${W * 0.22 * R},${-H * 0.2 * R + H * 0.3 * R * R}) rotate(${40 * R},${cx},${ry})`);
+  g.roofT.style.opacity = (1 - seg(t, 0.44, 0.52)).toFixed(3);
+  // debris
+  const D = seg(t, 0.52, 1);
+  g.deb.forEach(d => {
+    const x = d.x0 + d.vx * D, y = d.y0 + d.vy * D + H * 0.55 * D * D;
+    d.el.setAttribute('transform', `translate(${x},${y}) rotate(${d.rot * D})`);
+    d.el.style.opacity = D > 0 ? (1 - seg(D, .7, 1) * .6).toFixed(3) : 0;
+  });
+  // cloud
+  g.cloud.forEach(c => {
+    const v = eOut(seg(t, 0.6 + c.d, 1));
+    c.el.setAttribute('cx', cx + c.dx * v);
+    c.el.setAttribute('cy', cy0 + (ry - cy0) * Math.min(1, v * 2) + c.dy * v);
+    c.el.setAttribute('r', c.r * v);
+    c.el.style.opacity = (v * 0.55).toFixed(3);
+  });
+  g.radT.style.opacity = seg(t, 0.84, 0.95).toFixed(3);
+  // caption
+  const cap = caps.find(c => t < c[0])[1];
+  if (cap !== lastCap) { lastCap = cap; Kit.$('cap').textContent = cap; }
+}
+
+function finish() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+let lastHap = 0;
+Kit.$('scrub').addEventListener('input', e => {
+  const v = +e.target.value / 1000;
+  gsap.killTweensOf(st);
+  gsap.to(st, {t: v, duration: Kit.calm ? 0 : .25, ease: 'power2.out', onUpdate: render, onComplete: render});
+  const step = Math.floor(v * 10);
+  if (step !== lastHap) { lastHap = step; Kit.haptic('light'); }
+  if (v >= 0.98) finish();
+});
+
+gsap.ticker.add(() => { if (G && !Kit.calm && st.t > 0.04 && st.t < 0.75) render(); });
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.fromTo(st, {t: 0}, {t: .2, duration: .9, ease: 'sine.inOut', yoyo: true, repeat: 1, onUpdate: render});
+};
+Kit.play.card = async () => {
+  const s = Kit.$('scrub');
+  s.value = 1000; s.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

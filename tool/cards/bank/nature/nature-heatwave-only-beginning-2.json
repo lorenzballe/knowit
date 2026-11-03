@@ -1,0 +1,37 @@
+{
+  "id": "nature-heatwave-only-beginning-2",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Why is this record heatwave not the main problem?",
+  "answer": "The record heatwave is not the main problem because it is the start of a trend, not a one-off freak event. It killed about 1,300 people in Europe in one week, and decades ahead such events are expected to become more likely, more intense and longer. The record is not the ceiling but the beginning of the slope.",
+  "move": "The record isn't the ceiling: it's the start of the slope.",
+  "keywords": [
+    "heatwave",
+    "europe",
+    "record temperature",
+    "heat deaths",
+    "climate trend"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice question: why is this record heatwave not the main problem? Options: a freak one-off event, it only lasted a week, or it's only the beginning of a trend. A sketch shows a rising trend line with an arrow at the current event."
+  },
+  "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=TU196LhDGT4&t=19s",
+  "written": "2026-11-03"
+}

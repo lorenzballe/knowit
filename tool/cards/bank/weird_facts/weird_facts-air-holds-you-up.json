@@ -1,0 +1,37 @@
+{
+  "id": "weird_facts-air-holds-you-up",
+  "topic": "weird_facts",
+  "genre": "weird_facts.weird_but_useful",
+  "strand": "weird_facts.weird_but_useful.counterintuitive",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much of your weight is the air holding up right now?",
+  "answer": "Air holds you up the way water holds up a swimmer, but far less. You set your weight, then hold the pump to watch the scale as air leaves the jar. The air holds up about 1.2 g of every kilo of you.",
+  "move": "The air holds up about 1.2 g of every kilo of you.",
+  "keywords": [
+    "air",
+    "buoyancy",
+    "scale",
+    "nist",
+    "weight"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page titled 'The air holds you up'. A scale reads 70.000 kg in air beside a jar with a pump and an air-level control at 100%. A slider sets your weight, and holding the pump removes air from the jar. Asks: how much of your weight is the air holding up right now?"
+  },
+  "source": "Veritasium, “World's Heaviest Weight” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=_k9egfWvb7Y",
+  "written": "2026-11-03"
+}

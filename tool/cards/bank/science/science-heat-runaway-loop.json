@@ -1,0 +1,37 @@
+{
+  "id": "science-heat-runaway-loop",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a room fire, why does the temperature suddenly rise out of control?",
+  "answer": "Walls and furniture soak up heat only until they are full. After that, their surfaces give off the heat as hot, flammable gas under the ceiling. The radiation from that gas makes more gas, so the temperature runs away.",
+  "move": "Once a room can't absorb more heat, the heat starts feeding itself.",
+  "keywords": [
+    "room fire",
+    "furniture",
+    "ceiling",
+    "hot gas",
+    "radiation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page with a slider labelled 'Feed the fire' and a diagram showing heat going into walls and furniture while air temperature rises slowly, then runs away. Asks why the temperature in a room fire suddenly rises out of control."
+  },
+  "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=ErPrRuFkc6s&t=325s",
+  "written": "2026-11-03"
+}

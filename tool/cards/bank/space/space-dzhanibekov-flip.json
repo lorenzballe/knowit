@@ -1,0 +1,38 @@
+{
+  "id": "space-dzhanibekov-flip",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Spin a T-handle in zero-G. Which spin keeps flipping over?",
+  "answer": "A T-handle spun about its middle axis, the stem, is unstable: any tiny wobble grows until the handle flips, then flips back, again and again. Spins about the bar or flat, like a propeller, hold steady. Astronauts have seen this on the space station with a T-bar handle.",
+  "move": "Spin about the middle axis is unstable: it keeps flipping.",
+  "keywords": [
+    "dzhanibekov",
+    "astronauts",
+    "space-station",
+    "t-handle",
+    "moments-of-inertia"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking which of three spins of a T-handle in zero gravity keeps flipping over: around the bar, around the stem, or flat like a propeller. The reader picks one, then rates how sure they are.",
+    "graded": false
+  },
+  "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=SAQ-iIJkLzA&t=260s",
+  "written": "2026-11-03"
+}

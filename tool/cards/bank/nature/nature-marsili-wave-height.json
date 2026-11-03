@@ -1,0 +1,38 @@
+{
+  "id": "nature-marsili-wave-height",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "In the worst Marsili scenario, how high could the waves be?",
+  "answer": "In the study's worst case, the wave train reaches the coasts of Campania, Basilicata and Calabria about 20–30 minutes after it is triggered. Campania and Basilicata could be hit by waves of at least 5 metres.",
+  "move": "Worst case: waves of at least 5 m, within 20–30 minutes.",
+  "keywords": [
+    "marsili",
+    "tsunami",
+    "tyrrhenian sea",
+    "campania",
+    "submarine volcano"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card asking how high the waves could be in the worst Marsili tsunami scenario. A vertical line can be dragged up or down to set a wave height guess, followed by a choice of how sure the reader is.",
+    "graded": false
+  },
+  "source": "Geopop, “La futura eruzione sottomarina del Marsili e le cause del rischio tsunami - l'animazione realistica” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=lF4UA-9ksVI&t=359s",
+  "written": "2026-11-03"
+}

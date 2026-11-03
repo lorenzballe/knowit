@@ -1,0 +1,208 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-urchin-neutron-initiator -->
+<title>Astute free card · The urchin</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1cqh}
+#pic{display:block;width:100%;flex:1;min-height:0}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font-size:max(2.6cqh,17px);line-height:1.15}
+#why .body{font-size:max(1.8cqh,13px);line-height:1.3}
+.opt{display:flex;align-items:center;gap:3cqw;font:700 max(1.8cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 3.5cqw;cursor:pointer;overflow-wrap:anywhere;transition:background .25s,color .25s}
+.opt .n{flex:none;display:grid;place-items:center;width:max(3.4cqh,22px);height:max(3.4cqh,22px);border-radius:50%;font:800 max(1.7cqh,12px)/1 var(--mono);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 40%,transparent)}
+.opt .tx{flex:1}
+.opt .m{flex:none;font:700 max(1.5cqh,12px)/1.1 var(--mono);opacity:.85}
+.opt.on .n{background:var(--k);color:var(--c);box-shadow:none}
+.opt.done{cursor:default}
+.opt.now{background:var(--k);color:var(--c);box-shadow:none}
+.opt.now .n{background:var(--c);color:var(--k)}
+.say{min-height:1.2em}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Put in order">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TRINITY BOMB</span></div>
+    <h2 class="q">How did a 7‑gram pellet start the Trinity bomb’s chain reaction?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of the urchin: polonium core, nickel-gold layer, beryllium shell"></svg>
+      <div id="opts"></div>
+      <div id="why" class="gone">
+        <p class="big">A neutron gun, armed by the blast</p>
+        <p class="body">The urchin kept polonium and beryllium apart with a layer of nickel and gold. The implosion’s shockwave mixed them, and polonium’s alpha particles made the beryllium release a flood of neutrons. Those neutrons kick‑started the chain reaction.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the four steps in the order they happen.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Kept apart it was harmless; crushed together it fired neutrons.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const STEPS = [
+  'Explosives fire; a shockwave rushes inward',
+  'The shock breaks the nickel‑gold layer and mixes the metals',
+  'Polonium’s alpha particles strike the beryllium',
+  'Beryllium sprays a flood of neutrons: chain reaction'
+];
+const SHOW = [2, 0, 3, 1];
+let order = [], done = false, running = false, tl = null, fast = false, G = null;
+
+const opts = Kit.$('opts');
+SHOW.forEach(i => {
+  const b = document.createElement('button');
+  b.className = 'opt'; b.dataset.i = i;
+  b.innerHTML = `<span class="n"></span><span class="tx">${STEPS[i]}</span><span class="m"></span>`;
+  opts.appendChild(b);
+});
+const btn = i => opts.querySelector(`.opt[data-i="${i}"]`);
+
+function paintBadges() {
+  opts.querySelectorAll('.opt').forEach(b => {
+    const k = order.indexOf(+b.dataset.i);
+    b.classList.toggle('on', k >= 0);
+    b.querySelector('.n').textContent = k >= 0 ? k + 1 : '';
+  });
+}
+
+opts.addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || running || done) return;
+  const i = +b.dataset.i, k = order.indexOf(i);
+  if (k >= 0) order = order.slice(0, k); else order.push(i);
+  Kit.haptic('selection'); paintBadges();
+  if (order.length === 4) reveal();
+});
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const R = Math.min(W * 0.2, H * 0.3);
+  const cx = 1.5 * R + W * 0.03, cy = H / 2;
+  const fs = Math.max(12, Math.min(f, W * 0.042));
+  const ink = 'fill:var(--k)';
+  const g = {W, H, R, cx, cy, fs};
+  const rnd = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+  // inward arrows: the explosives' shockwave
+  g.arrows = [];
+  for (let k = 0; k < 12; k++) {
+    const a = k / 12 * Math.PI * 2, c = Math.cos(a), s = Math.sin(a), w = R * 0.09;
+    const t = [cx + c * 1.2 * R, cy + s * 1.2 * R], b1 = [cx + c * 1.42 * R - s * w, cy + s * 1.42 * R + c * w], b2 = [cx + c * 1.42 * R + s * w, cy + s * 1.42 * R - c * w];
+    const p = Kit.mk('polygon', {points: [t, b1, b2].map(q => q.join(',')).join(' '), fill: '#f28c28', stroke: '#1d2633', 'stroke-width': 1, opacity: 0}, svg);
+    p._d = [-c * R * 0.14, -s * R * 0.14];
+    g.arrows.push(p);
+  }
+  g.shell = Kit.mk('circle', {cx, cy, r: R, fill: '#cfd8e3', stroke: '#1d2633', 'stroke-width': 2}, svg);
+  g.ring = Kit.mk('circle', {cx, cy, r: R * 0.52, fill: 'none', stroke: '#e3b23c', 'stroke-width': R * 0.08}, svg);
+  g.core = Kit.mk('circle', {cx, cy, r: R * 0.46, fill: '#d9443a', stroke: '#1d2633', 'stroke-width': 1}, svg);
+  // polonium bits that get mixed through the beryllium
+  g.dots = []; g.halos = [];
+  for (let k = 0; k < 28; k++) {
+    const a0 = rnd() * 6.283, r0 = Math.sqrt(rnd()) * 0.4 * R;
+    const a1 = rnd() * 6.283, r1 = Math.sqrt(rnd()) * 0.9 * R;
+    const d = Kit.mk('circle', {cx: cx + Math.cos(a0) * r0, cy: cy + Math.sin(a0) * r0, r: R * 0.055, fill: '#d9443a', opacity: 0}, svg);
+    d._t = [cx + Math.cos(a1) * r1, cy + Math.sin(a1) * r1];
+    g.dots.push(d);
+    g.halos.push(Kit.mk('circle', {cx: d._t[0], cy: d._t[1], r: 0, fill: 'none', stroke: '#ffd23f', 'stroke-width': 2.5, opacity: 0}, svg));
+  }
+  // neutrons
+  g.neu = [];
+  for (let k = 0; k < 44; k++) {
+    const a0 = rnd() * 6.283, r0 = Math.sqrt(rnd()) * 0.85 * R, r1 = R * (1.08 + rnd() * 0.36);
+    const n = Kit.mk('circle', {cx: cx + Math.cos(a0) * r0, cy: cy + Math.sin(a0) * r0, r: Math.max(2.2, R * 0.04), fill: '#ffffff', stroke: '#1d2633', 'stroke-width': 1.2, opacity: 0}, svg);
+    n._t = [cx + Math.cos(a0) * r1, cy + Math.sin(a0) * r1];
+    g.neu.push(n);
+  }
+  // labels
+  const lx = cx + 1.5 * R + W * 0.03, L = 1.6 * fs;
+  const lab = (y, txt, px, py, bold) => {
+    const grp = Kit.mk('g', {}, svg);
+    if (px != null) Kit.mk('line', {x1: lx - 4, y1: y - fs * 0.35, x2: px, y2: py, stroke: '#1d2633', 'stroke-width': 1.2, opacity: .7}, grp);
+    if (px != null) Kit.mk('circle', {cx: px, cy: py, r: 2.5, fill: '#1d2633'}, grp);
+    const t = Kit.mk('text', {x: lx, y, style: `${ink};font:${bold ? 800 : 700} ${fs}px var(--body)`}, grp);
+    t.textContent = txt; return grp;
+  };
+  const ba = -0.6;
+  g.l0 = lab(cy - 2 * L, '7 g pellet', null, null, true);
+  g.l1 = lab(cy - L, 'Beryllium', cx + Math.cos(ba) * 0.78 * R, cy + Math.sin(ba) * 0.78 * R);
+  g.l2 = lab(cy, 'Nickel‑gold', cx + 0.52 * R, cy);
+  g.l3 = lab(cy + L, 'Polonium', cx + 0.2 * R, cy + 0.12 * R);
+  const na = 0.75;
+  g.l4 = lab(cy + 2 * L, 'Neutrons!', cx + Math.cos(na) * 1.3 * R, cy + Math.sin(na) * 1.3 * R, true);
+  g.l4.setAttribute('opacity', 0);
+  G = g;
+}
+
+function endState() {
+  const g = G;
+  gsap.set(g.arrows, {opacity: 0});
+  gsap.set([g.ring, g.core, g.l2], {opacity: 0});
+  g.dots.forEach(d => gsap.set(d, {opacity: 1, attr: {cx: d._t[0], cy: d._t[1]}}));
+  g.neu.forEach(n => gsap.set(n, {opacity: 1, attr: {cx: n._t[0], cy: n._t[1]}}));
+  gsap.set(g.l4, {opacity: 1});
+}
+
+function finish() {
+  running = false; done = true;
+  opts.querySelectorAll('.opt').forEach(b => b.classList.remove('now'));
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm && !fast) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .08, duration: .4, ease: 'power3.out'});
+}
+
+function reveal() {
+  running = true;
+  const got = order.slice();
+  const right = got.filter((v, k) => v === k).length;
+  // put the buttons in the real order and grade each
+  [0, 1, 2, 3].forEach(i => {
+    const b = btn(i); opts.appendChild(b); b.classList.add('done'); b.classList.remove('on');
+    b.querySelector('.n').textContent = i + 1;
+    const you = got.indexOf(i) + 1;
+    b.querySelector('.m').textContent = you === i + 1 ? '✓' : `you: ${you}`;
+  });
+  Kit.$('say').textContent = `${right} of 4 in place. Watch the real order.`;
+  const g = G, R = g.R;
+  tl = gsap.timeline({onComplete: finish});
+  const mark = i => () => {
+    opts.querySelectorAll('.opt').forEach(b => b.classList.toggle('now', +b.dataset.i === i));
+    Kit.$('say').textContent = `${i + 1} · ${STEPS[i]}`;
+    Kit.haptic('light');
+  };
+  tl.add(mark(0), .6)
+    .to(g.arrows, {opacity: 1, duration: .25}, .6)
+    .to(g.arrows, {x: i => g.arrows[i]._d[0], y: i => g.arrows[i]._d[1], duration: .5, ease: 'power2.in', repeat: 1, yoyo: true}, .8)
+    .to(g.shell, {attr: {r: R * 0.93}, duration: .25, yoyo: true, repeat: 1, ease: 'power2.inOut'}, 1.7)
+    .to(g.arrows, {opacity: 0, duration: .3}, 2)
+    .add(mark(1), 2.3)
+    .to(g.ring, {attr: {'stroke-dasharray': `${R * 0.15} ${R * 0.25}`}, duration: .3}, 2.4)
+    .to([g.ring, g.l2], {opacity: 0, duration: .6}, 2.7)
+    .to(g.dots, {opacity: 1, duration: .2}, 2.6)
+    .to(g.core, {attr: {r: R * 0.1}, opacity: 0, duration: .8}, 2.7);
+  g.dots.forEach(d => tl.to(d, {attr: {cx: d._t[0], cy: d._t[1]}, duration: 1, ease: 'power2.out'}, 2.7));
+  tl.add(mark(2), 4)
+    .fromTo(g.halos, {opacity: 1, attr: {r: 0}}, {opacity: 0, attr: {r: R * 0.16}, duration: .55, stagger: .03, repeat: 1, ease: 'power1.out'}, 4.1)
+    .add(mark(3), 6);
+  g.neu.forEach((n, k) => tl.to(n, {opacity: 1, attr: {cx: n._t[0], cy: n._t[1]}, duration: .7, ease: 'power3.out'}, 6.1 + k * .012));
+  tl.to(g.l4, {opacity: 1, duration: .4}, 6.6).to({}, {duration: 1.2});
+  if (Kit.calm || fast) tl.progress(1);
+}
+
+Kit.onShow.card = () => {
+  build();
+  if (running && tl) { tl.kill(); tl = null; endState(); finish(); }
+  else if (done) endState();
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from([G.shell, G.ring, G.core], {opacity: 0, scale: .6, transformOrigin: '50% 50%', stagger: .12, duration: .5, ease: 'back.out(1.6)'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  fast = true;
+  [...opts.querySelectorAll('.opt')].forEach(b => b.click());
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

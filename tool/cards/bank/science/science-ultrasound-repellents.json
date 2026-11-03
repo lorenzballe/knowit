@@ -1,0 +1,36 @@
+{
+  "id": "science-ultrasound-repellents",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.pseudoscience",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Do ultrasonic devices actually keep mosquitoes away?",
+  "answer": "The answer is 'No difference': ultrasonic devices don't keep mosquitoes away. Ultrasound is sound above 20,000 Hz, and the mosquitoes fly right through it. A dog, though, may be bothered by it.",
+  "move": "Ultrasonic repellents don't stop mosquitoes, and they can bother dogs.",
+  "keywords": [
+    "mosquitoes",
+    "ultrasound",
+    "dogs",
+    "ultrasonic-repellents"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz titled 'Ultrasound' asking whether ultrasonic devices keep mosquitoes away. Three choices: the ultrasound room gets fewer bites, no difference, or more bites. Reader guesses, then the reveal follows."
+  },
+  "source": "Geopop, “Quali antizanzare funzionano meglio? Zampironi, spray: analizziamoli dal punto di vista chimico” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=GOtrvOVaCpk&t=556s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,155 @@
+<!doctype html>
+<!-- slug: economics-australia-geologist-pay -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute: a top geologist's pay in Australia</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#g{width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Guess · drag the bar">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY PAY</span></div>
+    <h2 class="q">How much can a very experienced geologist earn per year in Australia?</h2>
+    <div class="stagebox" id="stage"><svg id="g" aria-label="Salary bar: drag up or down to set your guess"></svg></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the bar up or down to your guess, then say how sure you are.</p>
+    <div id="why" class="gone"><p class="big">$150k–180k a year, gross</p><p class="body">In Australia, geologists with great experience, around 5 to 10 years on the job, can reach 150,000 to 180,000 dollars gross a year. That's why the video jokes: “let's all go to Australia!”</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A seasoned geologist in Australia can top out at about $150–180k gross a year.</div>
+    <div class="foot"><span class="src">Source · Geopop, “▶️QUANTO GUADAGNA UN GEOLOGO? STIPENDI IN ITALIA E ALL'ESTERO |GeologiaPOP🌍” (YouTube, 2018).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAX = 250, LO = 150, HI = 180;
+let val = 60, moved = false, locked = false, revealed = false, dragging = false;
+let G = null; // geometry and live elements
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  locked = true;
+  const ok = val >= LO && val <= HI, said = `$${val}k`;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  reveal(true);
+  Kit.haptic('success');
+});
+
+function yOf(v){ return G.bot - v / MAX * (G.bot - G.top); }
+function vOf(y){ let v = (G.bot - y) / (G.bot - G.top) * MAX; v = Math.round(v / 5) * 5; return Math.max(0, Math.min(MAX, v)); }
+
+function placeGuess(){
+  if (!G) return;
+  const y = yOf(val);
+  G.fill.setAttribute('y', y); G.fill.setAttribute('height', Math.max(0, G.bot - y));
+  G.pill.setAttribute('transform', `translate(0,${y})`);
+  G.pillT.textContent = `$${val}k`;
+  if (G.hint) G.hint.setAttribute('transform', `translate(0,${y})`);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('g');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(12, f * .85);
+  const top = Math.max(fs * 1.2, H * .06), bot = H - Math.max(fs * 1.2, H * .06);
+  const bw = Math.min(W * .24, 110), bx = W * .34;
+  G = {W, H, top, bot, bx, bw, fs};
+  const ink = 'var(--k)';
+  // ticks
+  for (let v = 0; v <= MAX; v += 50) {
+    const y = yOf(v);
+    Kit.mk('line', {x1: bx - 6, x2: bx, y1: y, y2: y, stroke: ink, 'stroke-width': 1.5, opacity: .5}, svg);
+    const t = Kit.mk('text', {x: bx - 10, y: y + fs * .35, 'text-anchor': 'end', fill: ink, opacity: .7, style: `font:600 ${fs}px var(--mono)`}, svg);
+    t.textContent = v === 0 ? '$0' : `$${v}k`;
+  }
+  // track
+  const r = Math.min(bw / 2, 14);
+  Kit.mk('rect', {x: bx, y: top, width: bw, height: bot - top, rx: r, fill: 'color-mix(in srgb,var(--k) 8%,transparent)', stroke: 'color-mix(in srgb,var(--k) 35%,transparent)', 'stroke-width': 2}, svg);
+  G.fill = Kit.mk('rect', {x: bx, y: bot, width: bw, height: 0, rx: r, fill: 'color-mix(in srgb,var(--k) 22%,transparent)'}, svg);
+  // the real band (hidden until reveal)
+  const yH = yOf(HI), yL = yOf(LO), mid = (yH + yL) / 2;
+  G.band = Kit.mk('rect', {x: bx - 3, y: yH, width: bw + 6, height: yL - yH, rx: 4, fill: '#f2b705', stroke: ink, 'stroke-width': 2, opacity: 0}, svg);
+  // right side: trophy + label
+  const rx = bx + bw + 16;
+  const grp = Kit.mk('g', {opacity: 0}, svg); G.right = grp;
+  Kit.mk('line', {x1: bx + bw + 4, x2: rx - 4, y1: mid, y2: mid, stroke: ink, 'stroke-width': 2}, grp);
+  const big = Math.max(14, f * 1.25);
+  const lab = Kit.mk('text', {x: rx, y: mid + big * .35, fill: ink, style: `font:800 ${big}px var(--display)`}, grp);
+  lab.textContent = '$150–180k';
+  const sub = Kit.mk('text', {x: rx, y: mid + big * .35 + fs * 1.4, fill: ink, opacity: .75, style: `font:600 ${fs}px var(--body)`}, grp);
+  sub.textContent = 'gross a year';
+  // trophy
+  const ts = Math.min(W * .16, H * .16, 70);
+  const tx = rx, ty = Math.max(top, mid - big - ts * 1.15);
+  const tr = Kit.mk('g', {transform: `translate(${tx},${ty}) scale(${ts / 100})`}, grp); G.trophy = tr;
+  const st = {stroke: ink, 'stroke-width': 5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+  Kit.mk('path', {d: 'M22 18 C2 18 2 50 30 52 M78 18 C98 18 98 50 70 52', fill: 'none', ...st}, tr);
+  Kit.mk('path', {d: 'M20 6 H80 V30 C80 56 64 66 50 66 C36 66 20 56 20 30 Z', fill: '#f2b705', ...st}, tr);
+  Kit.mk('path', {d: 'M50 66 V80', fill: 'none', ...st}, tr);
+  Kit.mk('rect', {x: 30, y: 80, width: 40, height: 14, rx: 3, fill: '#f2b705', ...st}, tr);
+  Kit.mk('path', {d: 'M50 20 l4 9 10 1 -8 6 3 10 -9 -6 -9 6 3 -10 -8 -6 10 -1 z', fill: '#fff6cc', stroke: 'none'}, tr);
+  // guess pill
+  const ph = Math.max(fs * 1.9, 26);
+  G.pill = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: bx - 6, y: -ph / 2, width: bw + 12, height: ph, rx: ph / 2, fill: ink}, G.pill);
+  G.pillT = Kit.mk('text', {x: bx + bw / 2, y: fs * .38, 'text-anchor': 'middle', fill: 'var(--c)', style: `font:800 ${Math.max(13, fs * 1.05)}px var(--body)`}, G.pill);
+  G.hint = null;
+  if (!moved) {
+    G.hint = Kit.mk('g', {}, svg);
+    const ht = Kit.mk('text', {x: bx + bw + 14, y: fs * .38, fill: ink, style: `font:600 ${fs * 1.1}px var(--hand)`}, G.hint);
+    ht.textContent = '↕ drag me';
+  }
+  placeGuess();
+  if (revealed) reveal(false);
+};
+
+function reveal(anim){
+  revealed = true;
+  if (G.hint) { G.hint.remove(); G.hint = null; }
+  if (!anim || Kit.calm) { G.band.setAttribute('opacity', 1); G.right.setAttribute('opacity', 1); return; }
+  gsap.fromTo(G.band, {opacity: 0, scaleX: 0, transformOrigin: '50% 50%'}, {opacity: 1, scaleX: 1, duration: .5, ease: 'back.out(2)'});
+  gsap.to(G.right, {opacity: 1, duration: .5, delay: .3});
+  gsap.from(G.trophy.parentNode.lastChild === G.trophy ? G.trophy : G.trophy, {y: -20, duration: .7, delay: .3, ease: 'bounce.out'});
+}
+
+function setFromEvent(e){
+  const rect = Kit.$('g').getBoundingClientRect();
+  const nv = vOf(e.clientY - rect.top);
+  if (nv !== val) { val = nv; Kit.haptic('selection'); }
+  if (!moved) { moved = true; if (G.hint) { gsap.to(G.hint, {opacity: 0, duration: .3}); } sure.on(); }
+  placeGuess();
+}
+const svgEl = Kit.$('g');
+svgEl.addEventListener('pointerdown', e => { if (locked || !G) return; dragging = true; try { svgEl.setPointerCapture(e.pointerId); } catch (_) {} setFromEvent(e); });
+svgEl.addEventListener('pointermove', e => { if (dragging && !locked) setFromEvent(e); });
+const stop = () => { dragging = false; };
+svgEl.addEventListener('pointerup', stop); svgEl.addEventListener('pointercancel', stop);
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.pill, {opacity: 0, duration: .5});
+  if (G.hint) gsap.fromTo(G.hint, {x: 0}, {x: 6, duration: .6, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+};
+
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const rect = svgEl.getBoundingClientRect();
+  const cx = rect.left + G.bx + G.bw / 2;
+  const opt = y => ({clientX: cx, clientY: rect.top + y, bubbles: true, pointerId: 1, pointerType: 'touch'});
+  svgEl.dispatchEvent(new PointerEvent('pointerdown', opt(yOf(80))));
+  svgEl.dispatchEvent(new PointerEvent('pointermove', opt(yOf(130))));
+  svgEl.dispatchEvent(new PointerEvent('pointerup', opt(yOf(130))));
+  await wait(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(1200);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "maths-wang-never-repeats",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Wang guessed tiles that can cover the plane must repeat. Was he right?",
+  "answer": "Wang guessed that any set of tiles that covers the plane must repeat, but he was wrong. His student Robert Berger found a finite set of 20,426 tiles that covers the whole plane, but only without ever repeating. No slide of that set ever lands it back on itself.",
+  "move": "A finite set of tiles can cover the endless plane and never repeat.",
+  "keywords": [
+    "wang",
+    "berger",
+    "aperiodic",
+    "tiling",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two tiling patterns side by side, one repeating and one that never repeats. A see-through copy of a tile can be dragged over the pattern to check whether it lands exactly on itself again."
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=355s",
+  "written": "2026-11-03"
+}

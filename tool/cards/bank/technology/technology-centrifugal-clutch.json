@@ -1,0 +1,37 @@
+{
+  "id": "technology-centrifugal-clutch",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can one bending part act as a clutch that engages only at speed?",
+  "answer": "Spinning flings the heavy outer parts outward, and because the arms bend, they swing out further the faster it goes. Fast enough, they press on the drum and drag it round, a centrifugal clutch like the one that engages a chainsaw's chain. The speed slider shows the gap to the drum closing as speed rises.",
+  "move": "A part that bends can switch itself on: spin it fast and it grabs.",
+  "keywords": [
+    "centrifugal clutch",
+    "chainsaw",
+    "compliant mechanism",
+    "drum",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A bent plastic part spins on a slider-controlled speed, and its heavy outer arms swing outward until they press a drum. The reader drags the speed slider and watches the gap to the drum close, asking how a bending part can act as a clutch that engages only at speed."
+  },
+  "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=539s",
+  "written": "2026-11-03"
+}

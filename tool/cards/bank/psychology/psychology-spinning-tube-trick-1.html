@@ -1,0 +1,188 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-spinning-tube-trick -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#ctl{display:flex;gap:2.4cqw}
+.btn{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.btn.main{background:var(--k);color:var(--c);box-shadow:none}
+.btn:disabled{opacity:.55}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font-size:max(2.8cqh,17px)}
+#why .body{font-size:max(1.9cqh,13px)}
+.cap{font:700 max(1.5cqh,12px)/1 var(--body);letter-spacing:.08em;fill:var(--k);opacity:.7}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Tap to add · watch it grow">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PERSISTENCE OF VISION</span></div>
+    <h2 class="q">Flick a spinning tube labelled X and O. Why do you see only one?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="ctl">
+        <button class="btn" id="bO">Press the O</button>
+        <button class="btn" id="bX">Press the X</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big" id="whyBig">Only the side you pressed.</p>
+        <p class="body">The spinning tube is a series of images. Your brain stitches them together into one continuous image. The side you press is the one you keep looking at, so that's the only image your brain shows you.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Pick a side to press, then flick the tube.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>What you “see” is your brain stitching quick images into one picture.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Spinning Tube Trick” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 6, TAU = Math.PI * 2;
+let side = null, n = 0, busy = false, live = null, res = null, slots = [], cap3 = null;
+const S = {a: 0.7};
+const facing = () => side === 'X' ? Math.PI : 0;
+
+function makeTube(parent, cx, cy, w, h, uid, opts = {}) {
+  const g = Kit.mk('g', {}, parent);
+  const defs = Kit.mk('defs', {}, g);
+  const cp = Kit.mk('clipPath', {id: 'cp' + uid}, defs);
+  const rx = h * 0.16;
+  Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx}, cp);
+  Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx, style: 'fill:var(--c);stroke:none'}, g);
+  const inner = Kit.mk('g', {'clip-path': `url(#cp${uid})`}, g);
+  const stripes = [];
+  for (let i = 0; i < 8; i++) stripes.push({phi: i * TAU / 8, el: Kit.mk('line', {x1: cx - w / 2, x2: cx + w / 2, style: 'stroke:var(--k);stroke-width:1'}, inner)});
+  const lg = Kit.mk('g', {}, inner);
+  const labels = [['O', 0], ['X', Math.PI]].map(([s, phi]) => {
+    const t = Kit.mk('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', style: `font:900 ${Math.max(12, h * 0.62)}px var(--display);fill:var(--k)`}, lg);
+    t.textContent = s; return {s, phi, el: t};
+  });
+  Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, fill: 'url(#shd)'}, inner);
+  Kit.mk('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx, style: `fill:none;stroke:var(--k);stroke-width:${Math.max(1.5, h * 0.035)}`}, g);
+  Kit.mk('ellipse', {cx: cx + w / 2 - h * 0.08, cy, rx: h * 0.08, ry: h / 2 - 1, style: `fill:color-mix(in srgb,var(--k) 18%,var(--c));stroke:var(--k);stroke-width:${Math.max(1.2, h * 0.025)}`}, g);
+  const set = a => {
+    stripes.forEach(s => {
+      const c = Math.cos(a + s.phi), y = cy + (h / 2) * Math.sin(a + s.phi);
+      s.el.setAttribute('y1', y); s.el.setAttribute('y2', y);
+      s.el.setAttribute('opacity', c > 0 ? 0.18 * c : 0);
+    });
+    labels.forEach(l => {
+      const c = Math.cos(a + l.phi), y = cy + (h / 2) * 0.92 * Math.sin(a + l.phi);
+      const only = opts.only && l.s !== opts.only;
+      l.el.setAttribute('transform', `translate(${cx},${y}) scale(1,${Math.max(c, 0.001)})`);
+      l.el.setAttribute('opacity', c > 0 && !only ? Math.pow(c, 0.6) : 0);
+    });
+  };
+  set(0);
+  return {g, lg, set, cx, cy};
+}
+
+function draw() {
+  const svg = Kit.$('svg');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * 0.78);
+  const defs = Kit.mk('defs', {}, svg);
+  const gr = Kit.mk('linearGradient', {id: 'shd', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  [[0, .32], [.45, 0], [.6, 0], [1, .4]].forEach(([o, op]) => Kit.mk('stop', {offset: o, 'stop-color': '#000', 'stop-opacity': op}, gr));
+  const cap = (y, txt) => { const t = Kit.mk('text', {x: W / 2, y, 'text-anchor': 'middle', class: 'cap'}, svg); t.textContent = txt; return t; };
+
+  // Row 1: the tube
+  const l1 = fs;
+  cap(l1, 'THE TUBE, SPINNING');
+  const t1 = l1 + fs * 0.9, b1 = H * 0.5;
+  const th = Math.min(b1 - t1, W * 0.3), tw = Math.min(W * 0.86, th * 3.4);
+  live = makeTube(svg, W / 2, (t1 + b1) / 2, tw, th * 0.9, 'L');
+  live.set(S.a);
+
+  // Row 2: frames
+  const l2 = b1 + fs * 1.5;
+  cap(l2, 'FRAMES YOUR EYE CATCHES');
+  const gap = W * 0.02, sw = (W * 0.94 - gap * (N - 1)) / N;
+  const sh = Math.min(sw * 0.5, Math.max(H * 0.1, 18));
+  const st = l2 + fs * 0.8;
+  slots = [];
+  for (let i = 0; i < N; i++) {
+    const x = W * 0.03 + i * (sw + gap);
+    slots.push({cx: x + sw / 2, cy: st + sh / 2, w: sw * 0.94, h: sh});
+    Kit.mk('rect', {x, y: st, width: sw, height: sh, rx: sh * 0.16, style: 'fill:none;stroke:var(--k);stroke-opacity:.3;stroke-dasharray:3 3'}, svg);
+  }
+  for (let i = 0; i < n; i++) addThumb(i, false);
+
+  // Row 3: what you see
+  const l3 = st + sh + fs * 1.7;
+  cap3 = cap(l3, capText());
+  const rt = l3 + fs * 0.8, rb = H - 2;
+  const rh = Math.max(16, Math.min(rb - rt, W * 0.22)), rw = Math.min(W * 0.7, rh * 3.2);
+  res = makeTube(svg, W / 2, rt + rh / 2, rw, rh, 'R', {only: side || 'none'});
+  res.set(facing());
+  res.lg.setAttribute('opacity', n / N);
+}
+
+function capText() { return n ? `WHAT YOU SEE · ${n} FRAME${n > 1 ? 'S' : ''} STITCHED` : 'WHAT YOU SEE'; }
+
+function addThumb(i, anim) {
+  const s = slots[i];
+  const t = makeTube(Kit.$('svg'), s.cx, s.cy, s.w, s.h, 'T' + i + (anim ? 'a' : ''), {only: side});
+  t.set(facing());
+  if (anim && !Kit.calm) gsap.from(t.g, {x: live.cx - s.cx, y: live.cy - s.cy, opacity: 0, duration: .5, ease: 'power3.out'});
+}
+
+gsap.ticker.add(() => {
+  if (!side && !busy) S.a += 0.012;
+  if (live) live.set(S.a);
+});
+
+function choose(s) {
+  if (side) return;
+  side = s; Kit.haptic('selection');
+  const b = document.createElement('button');
+  b.className = 'btn main'; b.id = 'flick'; b.textContent = `Flick it · catch frame 1 of ${N}`;
+  b.onclick = flick;
+  const ctl = Kit.$('ctl'); ctl.innerHTML = ''; ctl.appendChild(b);
+  Kit.$('say').textContent = `Your finger is on the ${s}. Tap to flick: each spin, your eye catches one image.`;
+  const tgt = facing() + TAU * Math.ceil((S.a - facing()) / TAU);
+  gsap.to(S, {a: tgt, duration: Kit.calm ? .01 : .6, ease: 'power2.out'});
+  draw();
+}
+
+function flick() {
+  if (busy || n >= N || !side) return;
+  busy = true; Kit.$('flick').disabled = true; Kit.haptic('light');
+  const tgt = facing() + TAU * Math.ceil((S.a - facing()) / TAU) + TAU * 4;
+  gsap.to(S, {a: tgt, duration: Kit.calm ? .05 : .8, ease: 'power2.inOut', onComplete: () => {
+    addThumb(n, true);
+    n++;
+    cap3.textContent = capText();
+    gsap.to(res.lg, {opacity: n / N, duration: Kit.calm ? 0 : .5});
+    busy = false;
+    const b = Kit.$('flick');
+    if (n < N) { b.disabled = false; b.textContent = `Flick again · catch frame ${n + 1} of ${N}`; }
+    else finish();
+  }});
+}
+
+function finish() {
+  Kit.hide('ctl'); Kit.hide('say');
+  Kit.$('whyBig').textContent = `Only the ${side}: the side you pressed.`;
+  Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(draw);
+}
+
+Kit.$('bO').onclick = () => choose('O');
+Kit.$('bX').onclick = () => choose('X');
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('bO').click(); await w(700);
+  for (let i = 0; i < N; i++) { Kit.$('flick').click(); await w(1000); }
+  await w(400);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<!-- slug: nature-po-valley-basin -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why the Po Valley keeps its smog</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lbl{font-family:var(--body);font-weight:800;letter-spacing:.06em}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">AIR BASIN</span></div>
+    <h2 class="q">How does the shape of the Po Valley affect its air?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of the Po Valley between the Alps and the Apennines"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Wind sweeps the smog out across the open plain</button>
+        <button class="opt" data-i="1">The smog rises and escapes over the mountains</button>
+        <button class="opt" data-i="2">The air stays trapped, so the smog builds up</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It stays trapped.</p><p class="body">The Po Valley is a basin between the Alps and the Apennines, so its air is hardly exchanged. No strong wind carries the pollution away, and the stable air the Alps bring favours an inversion that holds it down.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Smoke rises from the plain. Pick where it ends up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A valley walled by mountains can't air itself out.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, done = false, G = null, tweens = [];
+
+function killAll(){ tweens.forEach(t => t.kill()); tweens = []; }
+
+function draw(){
+  killAll();
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * 0.85, 12);
+  const y0 = H * 0.80, lid = H * 0.46;
+  const P = a => a.map(([x, y]) => `${x * W},${y * H}`).join(' ');
+  // haze inside basin
+  const basin = `${0.27*W},${lid} ${0.74*W},${lid} ${0.66*W},${y0} ${0.33*W},${y0}`;
+  const haze = Kit.mk('polygon', {points: basin, fill: 'currentColor', opacity: 0}, svg);
+  // wind lines over the top
+  const winds = [];
+  [[0.04, 0.0], [0.09, 0.04]].forEach(([y, d]) => {
+    const p = Kit.mk('path', {d: `M${-0.02*W},${(y+0.08)*H} C${0.12*W},${(y-0.02)*H} ${0.35*W},${y*H} ${0.5*W},${(y+0.01)*H} S${0.88*W},${(y+0.02)*H} ${1.02*W},${(y+0.12)*H}`,
+      fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(H*0.006, 2), 'stroke-linecap': 'round', 'stroke-dasharray': `${W*0.08} ${W*0.06}`, opacity: 0}, svg);
+    winds.push(p);
+  });
+  const windL = Kit.mk('text', {x: W*0.5, y: H*0.20, 'text-anchor': 'middle', 'font-size': fs, fill: 'currentColor', class: 'lbl', opacity: 0}, svg);
+  windL.textContent = 'wind passes over →';
+  // particles
+  const parts = [], chim = [0.43, 0.56];
+  const rr = Kit.rnd;
+  for (let i = 0; i < 70; i++) {
+    const c = chim[i % 2];
+    const ty = lid + (y0 - lid) * (0.08 + 0.82 * rr());
+    const k = (y0 - ty) / (y0 - lid);
+    const lx = 0.33 - 0.06 * k + 0.02, rx = 0.66 + 0.08 * k - 0.02;
+    const tx = lx + (rx - lx) * rr();
+    const p = Kit.mk('circle', {cx: c*W, cy: y0 - H*0.06, r: H*(0.012 + 0.012*rr()), fill: 'currentColor', opacity: 0}, svg);
+    parts.push({p, tx: tx*W, ty, c});
+  }
+  // mountains
+  Kit.mk('polygon', {points: P([[0,0.80],[0,0.30],[0.05,0.20],[0.10,0.12],[0.15,0.22],[0.20,0.16],[0.27,0.45],[0.33,0.80]]), fill: 'currentColor'}, svg);
+  Kit.mk('polygon', {points: P([[0.66,0.80],[0.74,0.50],[0.80,0.36],[0.86,0.42],[0.92,0.32],[1,0.44],[1,0.80]]), fill: 'currentColor'}, svg);
+  Kit.mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: 'currentColor'}, svg);
+  chim.forEach(c => Kit.mk('rect', {x: c*W - W*0.012, y: y0 - H*0.06, width: W*0.024, height: H*0.06, fill: 'currentColor'}, svg));
+  const T = (x, y, s, a) => { const t = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle', 'font-size': fs, fill: 'var(--c)', class: 'lbl'}, a || {}), svg); t.textContent = s; return t; };
+  T(W*0.13, H*0.50, 'ALPS');
+  T(W*0.86, H*0.64, 'APENNINES');
+  T(W*0.5, y0 + (H - y0)*0.62, 'PO VALLEY');
+  // lid
+  const lidL = Kit.mk('line', {x1: W*0.27, x2: W*0.74, y1: lid, y2: lid, stroke: 'currentColor', 'stroke-width': Math.max(H*0.005, 2), 'stroke-dasharray': '6 5', opacity: 0}, svg);
+  const lidT = T(W*0.5, lid - fs*0.55, 'stable air holds it in', {fill: 'currentColor', opacity: 0});
+  G = {W, H, y0, lid, haze, winds, windL, parts, lidL, lidT};
+  // a few early puffs
+  parts.slice(0, 6).forEach((o, i) => {
+    o.p.setAttribute('opacity', .55);
+    o.p.setAttribute('cy', y0 - H*0.09 - i*H*0.025);
+    o.p.setAttribute('cx', o.c*W + (i%2 ? 1 : -1) * W*0.01);
+  });
+  if (done) reveal(true);
+}
+
+function idle(){
+  if (Kit.calm) return;
+  G.winds.forEach((w, i) => tweens.push(gsap.fromTo(w, {attr: {'stroke-dashoffset': 0}}, {attr: {'stroke-dashoffset': -G.W*0.28}, duration: 1.4 + i*.3, ease: 'none', repeat: -1})));
+  G.parts.forEach(o => tweens.push(gsap.to(o.p, {attr: {cx: o.tx + (Kit.rnd() - .5)*G.W*0.04}, duration: 2 + Kit.rnd()*2, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
+}
+
+function reveal(instant){
+  const g = G;
+  if (instant || Kit.calm) {
+    gsap.set(g.winds, {opacity: .8}); gsap.set([g.windL, g.lidL, g.lidT], {opacity: 1});
+    gsap.set(g.haze, {opacity: .22});
+    g.parts.forEach(o => gsap.set(o.p, {attr: {cx: o.tx, cy: o.ty}, opacity: .5}));
+    idle(); return;
+  }
+  const tl = gsap.timeline({onComplete: idle});
+  tweens.push(tl);
+  tl.to(g.winds, {opacity: .8, duration: .4})
+    .to(g.windL, {opacity: 1, duration: .4}, '<');
+  g.winds.forEach((w, i) => tl.fromTo(w, {attr: {'stroke-dashoffset': 0}}, {attr: {'stroke-dashoffset': -g.W*0.6}, duration: 2.6, ease: 'none'}, i*.1));
+  g.parts.forEach((o, i) => tl.to(o.p, {attr: {cx: o.tx, cy: o.ty}, opacity: .5, duration: 1.6, ease: 'power2.out'}, .3 + i*.035));
+  tl.to(g.lidL, {opacity: 1, duration: .5}, 1.2).to(g.lidT, {opacity: 1, duration: .5}, 1.4)
+    .to(g.haze, {opacity: .22, duration: 2}, .6);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: the air stays trapped`);
+  Kit.show('keep');
+  done = true; Kit.haptic('success');
+  draw(); killAll();
+  // replay with motion after redraw resets the scene
+  if (!Kit.calm) {
+    gsap.set(G.winds, {opacity: 0}); gsap.set([G.windL, G.lidL, G.lidT], {opacity: 0}); gsap.set(G.haze, {opacity: 0});
+    G.parts.forEach(o => gsap.set(o.p, {attr: {cx: o.c*G.W, cy: G.y0 - G.H*0.06}, opacity: 0}));
+    reveal(false);
+  }
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (G && !done) G.parts.slice(0, 6).forEach((o, i) => tweens.push(gsap.to(o.p, {attr: {cy: '-=' + G.H*0.02}, duration: 1.2 + i*.1, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
+};
+Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 4500)); };
+Kit.single();
+</script>
+</html>

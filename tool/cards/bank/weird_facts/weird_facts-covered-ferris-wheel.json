@@ -1,0 +1,36 @@
+{
+  "id": "weird_facts-covered-ferris-wheel",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Ashgabat has a record-breaking Ferris wheel. What record does it hold?",
+  "answer": "Ashgabat's Ferris wheel is the tallest covered one in the world, at 47.6 m. The whole wheel sits inside a building beneath a glass dome, so it never turns in the open air. The page lets you hold the button to ride the dark cabin to the top.",
+  "move": "Ashgabat's record wheel is the tallest one built fully indoors: 47.6 m.",
+  "keywords": [
+    "ashgabat",
+    "turkmenistan",
+    "ferris-wheel",
+    "covered-structure"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Illustration of a Ferris wheel under a roof, with a height label. The reader holds a button to ride a dark cabin to the top and is asked which record the wheel holds."
+  },
+  "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=JswYQiixMT8&t=248s",
+  "written": "2026-11-03"
+}

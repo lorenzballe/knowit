@@ -1,0 +1,37 @@
+{
+  "id": "medicine-resonance-radio-push",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the MRI machine excite the protons?",
+  "answer": "The magnet makes each proton spin around a small cone. The machine then sends radio waves at exactly that cone's rhythm, the resonance frequency. Like timed pushes on a swing, these waves hand the proton energy and tip it over, while radio waves that are too slow or too fast miss its rhythm.",
+  "move": "Matching the protons' own frequency is the “resonance” in magnetic resonance.",
+  "keywords": [
+    "mri machine",
+    "protons",
+    "radio waves",
+    "resonance",
+    "magnet"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks how an MRI machine excites protons. Shows three radio-wave timings against a proton's spinning cone: too slow, too fast, or matching its rhythm. A slider tunes the radio wave until the proton tips over."
+  },
+  "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=WS2LAuwpFzM&t=133s",
+  "written": "2026-11-03"
+}

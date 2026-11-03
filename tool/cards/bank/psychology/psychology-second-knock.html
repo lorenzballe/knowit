@@ -1,0 +1,156 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The second knock</title>
+<!-- Three streets, one huge ugly DRIVE CAREFULLY lawn sign. Street A is asked cold; B was asked two
+     weeks earlier to show a 3-inch "Be a safe driver" sign; C was asked to sign a petition for another cause
+     (keep California beautiful). The reader knocks on each street in any order and the signs go up
+     at the real rates of Freedman & Fraser (1966, experiment 2): 17%, 76%, 47%. Then what later
+     research found: replicable but weak (Beaman et al. 1983, 120 groups), and re-runs in Poland and
+     Ukraine that worked once in four (Gamian-Wilk & Dolinski 2020). Framed as something to notice.
+     Inspired by Diventare Strong (Alex Onofri), "Frasi dei Manipolatori".
+     Each street draws 17 houses, so the signs match the percentages: 3, 13 and 8 of 17.
+     Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh}
+.street{flex:1 1 0;min-height:0;display:flex;flex-direction:column;gap:.5cqh;padding:1cqh 3.2cqw 1.1cqh;border:0;border-radius:1.8cqh;background:color-mix(in srgb,var(--k) 8%,transparent);box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 26%,transparent);color:var(--k);text-align:left;cursor:pointer;font:inherit;transition:background-color .3s,box-shadow .3s}
+.street .hd{display:flex;align-items:center;justify-content:space-between;gap:2cqw}
+.plan{font:700 max(1.5cqh,11.5px)/1.2 var(--body)}
+.plan b{display:inline-block;width:2.4cqh;min-width:15px;font-weight:900}
+.pct{font:800 max(2.1cqh,13px)/1 var(--display);flex:none}
+.street:not(.done) .pct{font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:.6cqh 2.2cqw;border-radius:99px;background:var(--k);color:var(--c)}
+.homes{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+.street.done{cursor:default;box-shadow:none;background:color-mix(in srgb,var(--k) 13%,transparent)}
+.street:active:not(.done){transform:scale(.985)}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){
+  .answered #stage{gap:.7cqh}
+  .answered .street{padding:.6cqh 2.6cqw .7cqh;gap:.3cqh}
+  .answered .keep{padding:1.3cqh 4.5cqw}
+}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Knock on each street · the lawn sign">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE LAWN SIGN</span></div>
+    <h2 class="q">Does saying yes to a small favour make the big one easier?</h2>
+    <div class="stagebox" id="stage">
+      <button class="street" data-s="0" aria-label="Street A, just the big ask. Tap to ask."><span class="hd"><span class="plan"><b>A</b>Just the big ask</span><span class="pct num">Knock</span></span><svg class="homes" aria-hidden="true"></svg></button>
+      <button class="street" data-s="1" aria-label="Street B, first asked to show a small safe-driving sign. Tap to ask."><span class="hd"><span class="plan"><b>B</b>First: a tiny safe-driving sign</span><span class="pct num">Knock</span></span><svg class="homes" aria-hidden="true"></svg></button>
+      <button class="street" data-s="2" aria-label="Street C, first asked to sign a petition for another cause. Tap to ask."><span class="hd"><span class="plan"><b>C</b>First: a petition, another cause</span><span class="pct num">Knock</span></span><svg class="homes" aria-hidden="true"></svg></button>
+    </div>
+    <p class="say" id="say">1966: a stranger asks you to plant a big, ugly DRIVE CAREFULLY sign on your lawn. Knock on each street.</p>
+    <button class="btn gone" id="go">And since 1966?</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One small yes can become “I’m someone who says yes”. Notice the second knock.</div>
+    <div class="foot"><span class="src">Source · Freedman &amp; Fraser, JPSP 1966; Beaman et al., PSPB 1983; Gamian-Wilk &amp; Dolinski, Psychol. Rep. 2020</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const $ = Kit.$, N = 17, INK = '#ffffff', DEEP = '#5a2ea6';
+  // The real rates (experiment 2), drawn as 3, 13 and 8 houses of 17.
+  const STREETS = [
+    {pct: 17, yes: 3, say: 'Asked cold, <b>17%</b> said yes.'},
+    {pct: 76, yes: 13, say: 'Two weeks after a request to show a 3-inch “Be a safe driver” sign: <b>76%</b> said yes.'},
+    {pct: 47, yes: 8, say: 'Two weeks after a petition to “Keep California Beautiful”, a different cause: <b>47%</b>, nearly triple the cold ask.'},
+  ];
+  const WHY = 'Their explanation: one yes changes how people see themselves, as someone who backs good causes. So even another cause opened the door.';
+  const LATER = 'Since then it looks far weaker. A 1983 review of 120 test groups: nearly half the studies found nothing or the reverse. Of four re-runs in Poland and Ukraine, one worked.';
+  // Which houses say yes on each street: fixed, so every phone shows the same street.
+  const pick = (k, seed) => { let s = seed; const idx = [...Array(N).keys()]; for (let i = N - 1; i > 0; i--) { s = (s * 16807) % 2147483647; const j = s % (i + 1); [idx[i], idx[j]] = [idx[j], idx[i]]; } return new Set(idx.slice(0, k)); };
+  const YES = STREETS.map((st, i) => pick(st.yes, 1013 + i * 7919));
+  const TILT = [...Array(N)].map((_, i) => ((i * 37) % 11) - 5);
+  const done = [false, false, false];
+  const streets = [...document.querySelectorAll('.street')], say = $('say'), go = $('go');
+  let signs = [[], [], []];
+
+  function house(g, x, y, s) {
+    const bw = s * .68, bh = s * .46, rh = s * .32, sw = Math.max(1, s * .065);
+    Kit.mk('path', {d: `M${x - bw / 2},${y} V${y - bh} L${x},${y - bh - rh} L${x + bw / 2},${y - bh} V${y} Z`, fill: 'rgba(255,255,255,.13)', stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round', opacity: .9}, g);
+    Kit.mk('rect', {x: x - s * .08, y: y - s * .23, width: s * .16, height: s * .23, fill: INK, opacity: .75}, g);
+  }
+  function sign(g, x, y, s, tilt) {
+    const sw = s * .96, sh = s * .44, post = s * .1, top = y - post - sh;
+    const e = Kit.mk('g', {}, Kit.mk('g', {transform: `rotate(${tilt} ${x} ${y})`}, g));
+    for (const dx of [-.27, .27]) Kit.mk('line', {x1: x + sw * dx, y1: top + sh, x2: x + sw * dx, y2: y, stroke: INK, 'stroke-width': Math.max(1.2, s * .07), 'stroke-linecap': 'round'}, e);
+    Kit.mk('rect', {x: x - sw / 2, y: top, width: sw, height: sh, rx: s * .04, fill: INK}, e);
+    const lw = Math.max(1, s * .055);
+    Kit.mk('line', {x1: x - sw * .34, y1: top + sh * .36, x2: x + sw * .34, y2: top + sh * .36, stroke: DEEP, 'stroke-width': lw, 'stroke-linecap': 'round'}, e);
+    Kit.mk('line', {x1: x - sw * .24, y1: top + sh * .68, x2: x + sw * .24, y2: top + sh * .68, stroke: DEEP, 'stroke-width': lw, 'stroke-linecap': 'round'}, e);
+    return e;
+  }
+
+  // One street: a row of 17 houses, or two rows facing a road when the street is tall enough.
+  function drawStreet(i) {
+    const svg = streets[i].querySelector('.homes');
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const s1 = Math.min(W / N, H / .9), s2 = Math.min(W / 9, H / 2.05), two = s2 > s1 * 1.15;
+    const s = Math.min(two ? s2 : s1, 44), spots = [];
+    if (two) {
+      const y2 = Math.min(H - 1, (H + s * 1.98) / 2), y1 = y2 - s * 1.2;
+      for (let k = 0; k < 9; k++) spots.push([W / 9 * (k + .5), y1]);
+      for (let k = 0; k < 8; k++) spots.push([W / 9 * (k + 1), y2]);
+      // The road between the two rows.
+      const ry = y1 + (y2 - s * .78 - y1) / 2;
+      Kit.mk('line', {x1: 0, y1: ry, x2: W, y2: ry, stroke: INK, 'stroke-width': 1.2, 'stroke-dasharray': '6 6', opacity: .35}, svg);
+      for (const y of [y1, y2]) Kit.mk('line', {x1: 0, y1: y, x2: W, y2: y, stroke: INK, 'stroke-width': 1, opacity: .4}, svg);
+    } else {
+      const y = Math.min(H - 1, (H + s * .8) / 2);
+      for (let k = 0; k < N; k++) spots.push([W / N * (k + .5), y]);
+      Kit.mk('line', {x1: 0, y1: y, x2: W, y2: y, stroke: INK, 'stroke-width': 1, opacity: .4}, svg);
+    }
+    const homes = Kit.mk('g', {}, svg), boards = Kit.mk('g', {}, svg);
+    signs[i] = [];
+    spots.forEach(([x, y], k) => {
+      house(homes, x, y, s);
+      if (YES[i].has(k)) { const e = sign(boards, x, y, s, TILT[k]); if (!done[i]) e.setAttribute('opacity', 0); signs[i].push({e, k, o: `${x} ${y}`}); }
+    });
+  }
+  function draw() { for (let i = 0; i < 3; i++) drawStreet(i); }
+
+  function knock(i) {
+    if (done[i]) return;
+    done[i] = true;
+    const el = streets[i], pct = el.querySelector('.pct');
+    el.classList.add('done'); el.setAttribute('aria-label', el.getAttribute('aria-label').replace('Tap to ask.', `${STREETS[i].pct}% said yes.`));
+    say.innerHTML = STREETS[i].say;
+    Kit.haptic('light');
+    if (Kit.calm || typeof gsap === 'undefined') {
+      signs[i].forEach(({e}) => e.setAttribute('opacity', 1));
+      pct.textContent = STREETS[i].pct + '%';
+    } else {
+      // Door to door, left to right: a sign goes up where the answer is yes.
+      const step = 1.25 / N;
+      signs[i].forEach(({e, k, o}) => { e.setAttribute('opacity', 1); gsap.fromTo(e, {scale: 0, svgOrigin: o}, {scale: 1, svgOrigin: o, duration: .38, delay: k * step, ease: 'back.out(2.2)'}); });
+      const c = {v: 0};
+      gsap.to(c, {v: STREETS[i].pct, duration: 1.25, ease: 'none', onUpdate: () => { pct.textContent = Math.round(c.v) + '%'; }});
+    }
+    if (done.every(Boolean)) setTimeout(() => { say.innerHTML = WHY; Kit.show('go'); }, Kit.calm ? 0 : 1500);
+  }
+  streets.forEach((el, i) => el.addEventListener('click', () => knock(i)));
+  go.addEventListener('click', () => {
+    Kit.hide('go');
+    say.innerHTML = LATER;
+    $('card').classList.add('answered');
+    Kit.show('keep');
+    Kit.haptic('success');
+    requestAnimationFrame(draw);
+  });
+
+  Kit.onShow.card = draw;
+  // The streets change size as the words under them grow: each redraws at its new size.
+  if (typeof ResizeObserver !== 'undefined') {
+    const seen = new Map();
+    const ro = new ResizeObserver(list => { for (const en of list) { const i = streets.findIndex(el => el.querySelector('.homes') === en.target), r = en.contentRect, key = Math.round(r.width) + 'x' + Math.round(r.height); if (i < 0 || seen.get(i) === key) continue; const first = !seen.has(i); seen.set(i, key); if (!first) drawStreet(i); } });
+    streets.forEach(el => ro.observe(el.querySelector('.homes')));
+  }
+  Kit.onEnter.card = () => { if (!Kit.calm && typeof gsap !== 'undefined') gsap.from('.street', {opacity: 0, y: 10, stagger: .08, duration: .45, ease: 'power3.out'}); };
+  const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 30 : ms));
+  Kit.play.card = async () => { for (const i of [0, 2, 1]) { streets[i].click(); await wait(1500); } await wait(300); go.click(); await wait(600); };
+})();
+Kit.single();
+</script>
+</html>

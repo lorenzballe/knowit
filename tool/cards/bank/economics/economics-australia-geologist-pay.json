@@ -1,0 +1,38 @@
+{
+  "id": "economics-australia-geologist-pay",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.why_pay_differs",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How much can a very experienced geologist earn per year in Australia?",
+  "answer": "In Australia, geologists with great experience, around 5 to 10 years on the job, can reach 150,000 to 180,000 dollars gross a year. That is why the source video jokes, \"let's all go to Australia!\"",
+  "move": "A seasoned geologist in Australia can top out at about $150–180k gross a year.",
+  "keywords": [
+    "geologist",
+    "australia",
+    "salary",
+    "experience",
+    "gross pay"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive guess page titled 'Astute: a top geologist's pay in Australia'. A draggable bar asks how much a very experienced geologist earns per year gross, and the reader then rates how sure they are of the guess.",
+    "graded": false
+  },
+  "source": "Geopop, “▶️QUANTO GUADAGNA UN GEOLOGO? STIPENDI IN ITALIA E ALL'ESTERO |GeologiaPOP🌍” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=6dfqhXf8JGk&t=215s",
+  "written": "2026-11-03"
+}

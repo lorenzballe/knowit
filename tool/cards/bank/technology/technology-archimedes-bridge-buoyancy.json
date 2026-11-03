@@ -1,0 +1,37 @@
+{
+  "id": "technology-archimedes-bridge-buoyancy",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the Archimedes bridge let the sea carry its weight?",
+  "answer": "Underwater, the tunnel pushes water aside. That displaced water pushes up with a force equal to its own weight, so the pillars only carry what is left.",
+  "move": "Anything underwater is pushed up by the weight of the water it moves aside.",
+  "keywords": [
+    "archimedes",
+    "buoyancy",
+    "messina",
+    "strait of messina",
+    "submerged tunnel"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A diagram of a bridge tunnel under a draggable sea level. The reader drags the sea up until the tunnel is fully underwater, then reads how the displaced water pushes back on the structure."
+  },
+  "source": "Geopop, “Ponte sullo Stretto di Messina: il progetto costruttivo ufficiale e le altre alternative” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bwPQHnbeYpo&t=86s",
+  "written": "2026-11-03"
+}

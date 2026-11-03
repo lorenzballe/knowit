@@ -1,0 +1,36 @@
+{
+  "id": "maths-wyoming-mercator-pole",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to Wyoming’s size when you slide it toward the North Pole?",
+  "answer": "Wyoming keeps the same land and square kilometres, but Mercator stretches lengths at latitude φ by 1/cos φ in both directions, so its area grows by that factor squared. Near the pole cos φ approaches zero, so the stretch has no limit, and 90° N never fits on the map.",
+  "move": "On a Mercator map, the closer to a pole, the bigger things look.",
+  "keywords": [
+    "wyoming",
+    "mercator projection",
+    "north pole",
+    "latitude"
+  ],
+  "era": "early_modern",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A Mercator world map with a draggable outline of Wyoming, drawn at latitude 43°N. The reader drags Wyoming up the map toward the North Pole and watches its drawn size grow. The page asks what happens to Wyoming's size there and why."
+  },
+  "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=cKRRHQStYH0&t=55s",
+  "written": "2026-11-03"
+}

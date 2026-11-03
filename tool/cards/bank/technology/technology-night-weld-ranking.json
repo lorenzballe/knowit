@@ -1,0 +1,38 @@
+{
+  "id": "technology-night-weld-ranking",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many joints were welded overnight, and which came first?",
+  "answer": "Over 200 structural joints were welded overnight by the night crew. Each joint received two steel plates, 5 cm thick and 2 m long, one on each side, like Band-Aids. The joints were ranked by importance, and LeMessurier started with the 30th floor, so the most critical joints were fixed first.",
+  "move": "Too much to fix in time? Rank it, and fix the worst first.",
+  "keywords": [
+    "lemessurier",
+    "welding",
+    "steel-plates",
+    "retrofit",
+    "structural-joints"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card reveals that over 200 structural joints were welded overnight by a night crew, ranked by importance, starting with the 30th floor. It asks how many joints were welded overnight and which came first.",
+    "ground": "#0d1430"
+  },
+  "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=1270s",
+  "written": "2026-11-03"
+}

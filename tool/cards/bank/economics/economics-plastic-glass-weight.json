@@ -1,0 +1,37 @@
+{
+  "id": "economics-plastic-glass-weight",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is plastic cheaper than glass to produce?",
+  "answer": "Making a plastic bottle saves only about one cent compared with glass. The real saving is on the road: plastic is far lighter, so moving it costs less and pollutes a bit less too.",
+  "move": "Plastic's price edge is its light weight, not its making.",
+  "keywords": [
+    "plastic",
+    "glass",
+    "bottle",
+    "truck",
+    "freight"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page asking why plastic is cheaper than glass to produce. A slider follows one bottle through three stages, make, weigh and ship, from factory to shop, showing that the making saves about one cent while the lighter weight cuts transport costs."
+  },
+  "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=MRju0pJp3mk&t=293s",
+  "written": "2026-11-03"
+}

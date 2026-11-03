@@ -1,0 +1,37 @@
+{
+  "id": "science-fukushima-hydrogen-blast",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What actually blew up the Fukushima reactor buildings?",
+  "answer": "With no cooling, the water and fuel overheated and made lots of steam and hydrogen. The pressure rose, so technicians vented steam, and the hydrogen went out with it. In the building, the hydrogen mixed with air and exploded.",
+  "move": "No cooling → hot fuel makes hydrogen → venting lets it meet air → explosion.",
+  "keywords": [
+    "fukushima",
+    "hydrogen",
+    "reactor",
+    "venting",
+    "explosion"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Page asking what actually blew up the Fukushima reactor buildings, with a Hold button that keeps heating the fuel with no cooling. The text explains a chain: no cooling, hot fuel makes hydrogen, venting lets it meet air, then explosion."
+  },
+  "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=yoTTJ9BJYIM&t=293s",
+  "written": "2026-11-03"
+}

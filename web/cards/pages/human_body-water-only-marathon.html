@@ -1,0 +1,201 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-water-only-marathon -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 2cqw;cursor:pointer;transition:opacity .2s}
+.opt.off{opacity:.4;pointer-events:none}
+.opt:active{background:var(--k);color:var(--c)}
+.say{font:600 max(1.8cqh,12px)/1.3 var(--body)}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Try it · four stations">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SWEAT &amp; SALT</span></div>
+    <h2 class="q">Why is drinking only water dangerous for marathon runners?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <button class="opt off" data-s="0">💧 Water only</button>
+        <button class="opt off" data-s="1">💧 Water + salts</button>
+      </div>
+      <div id="why" class="gone"><p class="big" id="verdict">Diluted: hyponatremia</p><p class="body">Hours and hours of running cost water and lots of mineral salts in sweat. Water alone puts back only the water, so body fluids get too diluted: hyperhydration and hyponatremia. A one-hour jog doesn't need this.</p></div>
+    </div>
+    <p class="say" id="say">The runner sweats every hour. At each station, pick the drink.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>On very long runs, put back the salts you sweat, not just the water.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const N0 = 60, STEP = 7, HOURS = 4, CMIN = .45, CMAX = 1.1;
+const RICH = [43,123,214], PALE = [222,236,248];
+let D = Kit.calm ? .02 : 1;
+let dots = []; for (let i = 0; i < N0; i++) dots.push({u: Kit.rnd(), v: Kit.rnd(), o: 1});
+const st = {lev: 1, conc: 1, pour: 0};
+let S = 1, hour = 0, busy = true, started = false, done = false, G = null;
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+function fluidCol(c){
+  const t = Math.max(0, Math.min(1, (c - CMIN) / (1 - CMIN)));
+  const m = PALE.map((p, i) => Math.round(p + (RICH[i] - p) * t));
+  return `rgb(${m.join(',')})`;
+}
+function zoneCol(c){ return c < .7 ? '#d64545' : c < .9 ? '#e9a32c' : '#3aa76d'; }
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, W * .042));
+  const tx = W * .05, tw = W * .58, ty = fs * 2.4, tb = H - fs * 4.4;
+  const r = Math.min(tw, tb - ty) * .18;
+  const gx = W * .05, gw = W * .9, gy = H - fs * 3.0, gh = fs * .75;
+  const d = `M${tx},${ty} L${tx},${tb-r} Q${tx},${tb} ${tx+r},${tb} L${tx+tw-r},${tb} Q${tx+tw},${tb} ${tx+tw},${tb-r} L${tx+tw},${ty}`;
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'tk'}, defs);
+  Kit.mk('path', {d: d + 'Z'}, cp);
+  Kit.mk('path', {d: d + 'Z', fill: '#ffffff', 'fill-opacity': .92}, svg);
+  const fluid = Kit.mk('rect', {x: tx, width: tw, 'clip-path': 'url(#tk)'}, svg);
+  const dotG = Kit.mk('g', {'clip-path': 'url(#tk)'}, svg);
+  const sx = tx + tw * .72, sTop = ty - fs * .9;
+  const stream = Kit.mk('rect', {x: sx - fs * .32, y: sTop, width: fs * .64, height: 0, rx: fs * .32, fill: '#2b7bd6'}, svg);
+  Kit.mk('path', {d, fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, fs * .2), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  const title = Kit.mk('text', {x: tx, y: fs * 1.2, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg);
+  title.textContent = "Runner's body fluids";
+  // side column
+  const sideX = W * .68;
+  const side = [0, 1, 2].map(i => {
+    const t = Kit.mk('text', {x: sideX, y: ty + fs * (1 + i * 1.45), fill: i ? 'var(--k)' : '#2b7bd6', 'font-family': 'var(--body)', 'font-weight': i ? 600 : 800, 'font-size': fs}, svg);
+    return t;
+  });
+  const dropG = Kit.mk('g', {}, svg);
+  // gauge
+  const cx = c => gx + gw * (Math.max(CMIN, Math.min(CMAX, c)) - CMIN) / (CMAX - CMIN);
+  [[CMIN, .7, '#d64545', 'Hyponatremia'], [.7, .9, '#e9a32c', 'Diluted'], [.9, CMAX, '#3aa76d', 'Balanced']].forEach(([a, b, col, lab], i) => {
+    Kit.mk('rect', {x: cx(a), y: gy, width: cx(b) - cx(a), height: gh, fill: col}, svg);
+    const t = Kit.mk('text', {x: (cx(a) + cx(b)) / 2, y: gy + gh + fs * 1.35, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .92}, svg);
+    t.textContent = lab;
+  });
+  Kit.mk('rect', {x: gx, y: gy, width: gw, height: gh, fill: 'none', stroke: 'var(--k)', 'stroke-width': 1.5}, svg);
+  const marker = Kit.mk('path', {d: `M${-fs*.6},${-fs*.9} L${fs*.6},${-fs*.9} L0,${-fs*.1}Z`, fill: 'var(--k)'}, svg);
+  marker.setAttribute('transform', `translate(0,${gy})`);
+  G = {W, H, fs, tx, tw, ty, tb, fluid, dotG, stream, sTop, sx, side, dropG, marker, gy, cx};
+  dots.forEach(mkDot);
+  setSide(...(G.lastSide || ['', '', '']));
+  place();
+}
+function mkDot(dt){
+  const s = G.fs * .42;
+  dt.el = Kit.mk('rect', {width: s, height: s, x: -s / 2, y: -s / 2, fill: '#ffffff', stroke: '#14304f', 'stroke-width': 1.3, opacity: dt.o}, G.dotG);
+}
+function dotPos(dt){
+  const pad = G.fs * .7, fh = fluidH();
+  return {x: G.tx + pad + dt.u * (G.tw - 2 * pad), y: G.tb - pad * .8 - dt.v * Math.max(0, fh - 2 * pad)};
+}
+function fluidH(){ return (G.tb - G.ty) * .86 * st.lev; }
+function place(){
+  if (!G) return;
+  const fh = fluidH(), top = G.tb - fh;
+  G.fluid.setAttribute('y', top); G.fluid.setAttribute('height', fh + 4);
+  G.fluid.setAttribute('fill', fluidCol(st.conc));
+  dots.forEach(dt => { const p = dotPos(dt); dt.el.setAttribute('transform', `translate(${p.x},${p.y})`); });
+  G.stream.setAttribute('height', Math.max(0, (top - G.sTop) * st.pour));
+  G.marker.setAttribute('transform', `translate(${G.cx(st.conc)},${G.gy})`);
+  G.marker.setAttribute('fill', done ? zoneCol(st.conc) : 'var(--k)');
+}
+function setSide(a, b, c){
+  if (!G) return; G.lastSide = [a, b, c];
+  [a, b, c].forEach((t, i) => G.side[i].textContent = t);
+}
+
+function sweat(){
+  return new Promise(res => {
+    setSide('SWEAT', 'water', '+ salts');
+    Kit.haptic('light');
+    const out = [];
+    for (let k = 0; k < STEP && dots.length; k++) out.push(dots.splice(Math.floor(Kit.rnd() * dots.length), 1)[0]);
+    S = Math.max(0, S - .12);
+    const tl = gsap.timeline({onComplete: res});
+    tl.to(st, {lev: .8, duration: 1.3 * D, ease: 'power1.inOut', onUpdate: place}, 0);
+    const fs = G.fs;
+    const n = out.length + 3;
+    for (let i = 0; i < n; i++) {
+      const salty = i < out.length;
+      const p = salty ? dotPos(out[i]) : {x: G.tx + G.tw * (.3 + .5 * Kit.rnd()), y: G.tb - fluidH() * .6};
+      if (salty) out[i].el.remove();
+      const g = Kit.mk('g', {}, G.dropG);
+      Kit.mk('path', {d: `M0,${-fs*.95} C${fs*.55},${-fs*.25} ${fs*.6},${fs*.55} 0,${fs*.6} C${-fs*.6},${fs*.55} ${-fs*.55},${-fs*.25} 0,${-fs*.95}Z`, fill: '#2b7bd6', stroke: '#ffffff', 'stroke-width': 1.2}, g);
+      if (salty) { const s = fs * .4; Kit.mk('rect', {x: -s / 2, y: -s / 2 + fs * .05, width: s, height: s, fill: '#fff', stroke: '#14304f', 'stroke-width': 1.2}, g); }
+      const ex = G.W * (.71 + .23 * Kit.rnd()), ey = G.ty + fs * 4.6 + (G.tb - G.ty - fs * 5) * Kit.rnd();
+      const t0 = .09 * i * D;
+      tl.fromTo(g, {x: p.x, y: p.y}, {x: ex, y: ey, duration: .9 * D, ease: 'power2.inOut'}, t0);
+      tl.to(g, {opacity: 0, duration: .4 * D}, t0 + 1.1 * D);
+    }
+  });
+}
+function pour(salt){
+  return new Promise(res => {
+    setSide('DRINK', 'water', salt ? '+ salts' : 'only');
+    G.dropG.innerHTML = '';
+    const tl = gsap.timeline({onComplete: res});
+    tl.to(st, {pour: 1, duration: .35 * D, ease: 'power2.in', onUpdate: place});
+    tl.to(st, {lev: 1, duration: 1 * D, ease: 'power1.inOut', onUpdate: place});
+    if (salt) {
+      S += .12;
+      const add = [];
+      for (let k = 0; k < STEP; k++) { const dt = {u: Kit.rnd(), v: Kit.rnd(), o: 0}; dots.push(dt); mkDot(dt); add.push(dt); }
+      tl.to(add, {o: 1, duration: .5 * D, stagger: .08 * D, onUpdate: () => add.forEach(dt => dt.el && dt.el.setAttribute('opacity', dt.o))}, '<');
+    }
+    tl.to(st, {pour: 0, duration: .25 * D, onUpdate: place});
+    tl.to(st, {conc: S, duration: .8 * D, ease: 'power2.out', onUpdate: place});
+  });
+}
+function ready(){
+  busy = false;
+  Kit.$('say').textContent = `Hour ${hour + 1} of ${HOURS}: sweat took water and salts. Refill with…`;
+  Kit.$('ctl').querySelectorAll('.opt').forEach(b => b.classList.remove('off'));
+}
+function lock(){ busy = true; Kit.$('ctl').querySelectorAll('.opt').forEach(b => b.classList.add('off')); }
+async function start(){
+  if (started) return; started = true;
+  await sweat(); ready();
+}
+function finish(){
+  done = true; place();
+  const c = st.conc;
+  Kit.$('verdict').textContent = c < .7 ? 'Too diluted: hyponatremia' : c < .9 ? 'Getting diluted' : 'Balanced — water only would have diluted it';
+  setSide('', '', '');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+}
+Kit.$('ctl').addEventListener('click', async e => {
+  const b = e.target.closest('.opt'); if (!b || busy || done) return;
+  lock(); Kit.haptic('selection');
+  await pour(b.dataset.s === '1');
+  hour++;
+  if (hour >= HOURS) { finish(); return; }
+  await sweat(); ready();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { start(); };
+Kit.play.card = async () => {
+  D = .03; if (!started) start();
+  for (let i = 0; i < HOURS; i++) {
+    while (busy) await wait(40);
+    Kit.$('ctl').children[0].click();
+    await wait(40);
+  }
+  while (!done) await wait(40);
+  await wait(400);
+};
+Kit.single();
+</script>
+</html>

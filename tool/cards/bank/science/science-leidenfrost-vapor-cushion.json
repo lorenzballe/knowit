@@ -1,0 +1,37 @@
+{
+  "id": "science-leidenfrost-vapor-cushion",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a hot ball sit in water without water touching it?",
+  "answer": "A hot enough ball sits on water without touching it. The gap between the hot ball and the water is so large that the water flash boils the instant it comes near. The resulting vapor makes a layer around the ball, so the liquid never reaches the solid.",
+  "move": "Hot enough, a solid wraps itself in its own cushion of vapor.",
+  "keywords": [
+    "leidenfrost",
+    "water",
+    "vapor",
+    "boiling",
+    "hot ball"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider heats a ball sitting above water. Drag the slider to heat the ball, then watch where the water is, as the page asks."
+  },
+  "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=EQCzO4RfZAM&t=174s",
+  "written": "2026-11-03"
+}

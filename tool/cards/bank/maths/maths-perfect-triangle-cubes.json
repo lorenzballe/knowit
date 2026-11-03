@@ -1,0 +1,37 @@
+{
+  "id": "maths-perfect-triangle-cubes",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are perfect numbers also triangles and stacks of odd cubes?",
+  "answer": "Each perfect number 2^(p−1)(2^p−1) lands on a triangle with 2^p−1 rows, so it holds exactly that many dots: the perfect-number formula itself. The first m odd cubes add to m²(2m²−1), which is the same formula when m² = 2^(p−1). So one shape can be seen as a triangle or as a stack of odd cubes.",
+  "move": "2 p−1 (2 p −1) is one shape seen two ways: a triangle and a stack of odd cubes.",
+  "keywords": [
+    "perfect numbers",
+    "triangular numbers",
+    "odd cubes",
+    "triangle",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dot grid where you drag a dot right to stack rows into a triangle. The page asks why perfect numbers are also triangles and stacks of odd cubes, and shows the triangle with 2^p−1 rows holding the perfect-number formula."
+  },
+  "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=171s",
+  "written": "2026-11-03"
+}

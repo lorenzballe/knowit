@@ -1,0 +1,37 @@
+{
+  "id": "science-neutron-slips-in",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did discovering the neutron in 1932 change nuclear research?",
+  "answer": "The neutron was found in 1932. It is about 0.1% heavier than a proton but has no charge, so the nucleus's positive charge does not push it away and it slips straight in. That lets it reach the nucleus and split it.",
+  "move": "No charge, no push: the neutron could reach the nucleus and split it.",
+  "keywords": [
+    "neutron",
+    "proton",
+    "nucleus",
+    "nuclear fission",
+    "1932"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two buttons select a proton (+) or a neutron (0) to fire at a positive nucleus. Hold the button to fire, and count how many of each get in. The page asks why discovering the neutron in 1932 changed nuclear research."
+  },
+  "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=396s",
+  "written": "2026-11-03"
+}

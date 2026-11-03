@@ -1,0 +1,38 @@
+{
+  "id": "human_body-freediving-burning-phase",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.breathing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the phase around 35–40 m the most dangerous?",
+  "answer": "Pulling the diver up from 100 m still means fighting the pull that dragged them down, so every stroke and kick burns oxygen. Around 35 to 40 m that effort meets a tank already running low. Hypoxia sets in, air hunger hits, and the diaphragm starts to contract.",
+  "move": "The danger is not the bottom but the hard climb back, when oxygen runs out.",
+  "keywords": [
+    "freediving",
+    "hypoxia",
+    "oxygen",
+    "diaphragm",
+    "apnea"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A freediving card asking why the phase around 35 to 40 metres is the most dangerous. A KICK button: press and hold it to swim the diver up from 100 m.",
+    "ground": "#061a3a"
+  },
+  "source": "Geopop, “Immergersi in apnea a 100 metri di profondità. Le tecniche del freediving con Antonio Mogavero” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=gFnFsXjqoHo&t=284s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "science-falling-elevator-flat",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A lift's cable snaps. What's your best chance of surviving the fall?",
+  "answer": "Jumping at the last second would mean leaping up at the lift's own speed, about 130 km/h, which no person can do. Lying flat spreads the same impact over your whole body instead of concentrating it on two small feet. So lying flat is the best of the three poses.",
+  "move": "Same force, bigger area: each part of you takes less.",
+  "keywords": [
+    "lift",
+    "free fall",
+    "superman",
+    "impact force"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card asks what is the best chance of surviving a lift cable snapping and falling: stand still, jump at the last second, or lie flat on the floor. Pick a pose to watch it change in the lift.",
+    "graded": false
+  },
+  "source": "Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=xM7FfVQMjPU&t=218s",
+  "written": "2026-11-03"
+}

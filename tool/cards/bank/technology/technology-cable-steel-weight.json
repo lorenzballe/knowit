@@ -1,0 +1,37 @@
+{
+  "id": "technology-cable-steel-weight",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How much steel is in one main cable of the Messina bridge?",
+  "answer": "The answer is 13,000 tons of steel in one main cable. Each strand is made of 127 steel wires, and each wire is 5.40 mm thick. Many strands are bundled into one main cable, and all that thin steel adds up to 13,000 tons.",
+  "move": "Thin wires, bundled in huge numbers, make one 13,000-ton cable.",
+  "keywords": [
+    "messina bridge",
+    "main cable",
+    "steel",
+    "strand"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking how much steel is in one main cable of the Messina bridge. Choices: 1,300 t, 13,000 t, 130,000 t. The reader picks a weight and rates how sure they are.",
+    "graded": false
+  },
+  "source": "Geopop, “Come sarà il Ponte sullo stretto di Messina? La ricostruzione 3D dai progetti originali” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=hdLF8GyPO_o&t=147s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "nature-marsili-water-shield",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How would an explosive eruption of Marsili lose its energy?",
+  "answer": "The top of Marsili sits about 500 m below the surface, so an explosive eruption would release its energy into the water, not the air. Studies cited by INGV say the 500 m water column would absorb all of that energy, turning it into shock waves and heat in the sea. Little would be left for the atmosphere.",
+  "move": "500 m of sea works as a giant shock absorber.",
+  "keywords": [
+    "marsili",
+    "undersea volcano",
+    "tyrrhenian sea",
+    "eruption",
+    "shock waves"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Undersea Volcano asks how an explosive eruption of Marsili would lose its energy. A timeline sits below the text. Dragging it sets off an eruption 500 m down in the sea, with energy arrows spreading through the water column.",
+    "ground": "#061629"
+  },
+  "source": "Geopop, “Marsili: cosa accadrebbe in caso di eruzione del vulcano più grande d'Europa?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=Zc1cuRnqFIg&t=152s",
+  "written": "2026-11-03"
+}

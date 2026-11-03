@@ -1,0 +1,36 @@
+{
+  "id": "science-gibraltar-mega-cascade",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When the Atlantic refilled the dry Mediterranean, how big was the flow?",
+  "answer": "The Mediterranean had dried into a giant, salty hollow far below the ocean. When Gibraltar opened, the Atlantic poured in with violence and refilled it in only about one or two centuries. The flow was bigger than any waterfall on Earth today.",
+  "move": "The Mediterranean refilled through a Gibraltar mega-cascade, in a blink of geologic time.",
+  "keywords": [
+    "gibraltar",
+    "mediterranean",
+    "atlantic",
+    "messinian"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive card asking how big the Atlantic's flow was when it refilled the dried Mediterranean. Drag the Gibraltar rock down to open the strait and watch the water pour in."
+  },
+  "source": "Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=K3pwfIsKCjY&t=302s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,167 @@
+<!doctype html>
+<!-- slug: science-pressure-melts-ice -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card: Does pressure melt ice?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#pre{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);margin:0}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · hold">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">REGELATION</span></div>
+    <h2 class="q">What happens to ice under pressure?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A block of ice with a weighted wire looped over it"></svg>
+      <div id="opts">
+        <p id="pre">A weighted wire sinks all the way through this ice. What is left?</p>
+        <button class="opt" data-i="0">Two separate halves</button>
+        <button class="opt" data-i="1">One whole block</button>
+        <button class="opt" data-i="2">A block with an open slot</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Still one piece</p><p class="body">Right under the wire, the pressure turns the ice into water, so the wire slips down. Above it the pressure is gone, and the water freezes again. That is regelation.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess first. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Pressure turns ice to water; take the pressure away and it freezes again.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Does Pressure Melt Ice?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, armed = false, done = false, holding = false, speed = 1;
+const st = {p: 0, wet: 0, flash: 0};
+let L = null, specks = null, ringTw = null;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').querySelectorAll('.opt')[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.$('say').textContent = 'Now hold the weight down to press the wire into the ice.';
+  armed = true; draw(); startRing();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function build(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const bh = H * .32, bw = Math.min(W * .52, H * .62), bx = (W - bw) / 2, top = H * .07, gap = H * .1;
+  const ws = Math.min(H * .1, W * .2), cx = W / 2;
+  const fs = Math.max(12, Math.min(f, (bx - 10) / 5));
+  if (!specks) { specks = []; for (let i = 0; i < 16; i++) specks.push([Kit.rnd(), Kit.rnd(), Kit.rnd()]); }
+  const m = (t, a, p = svg) => Kit.mk(t, a, p);
+  const defs = m('defs', {});
+  const gi = m('linearGradient', {id: 'gIce', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  m('stop', {offset: 0, 'stop-color': '#e9f8ff'}, gi); m('stop', {offset: 1, 'stop-color': '#9fd6ef'}, gi);
+  const gw = m('linearGradient', {id: 'gWat', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  m('stop', {offset: 0, 'stop-color': '#1fa3e0', 'stop-opacity': 0}, gw); m('stop', {offset: 1, 'stop-color': '#0b84c6', 'stop-opacity': .9}, gw);
+  const cp = m('clipPath', {id: 'cIce'}, defs); m('rect', {x: bx, y: top, width: bw, height: bh, rx: Math.min(10, bw * .04)}, cp);
+  // shadow
+  m('ellipse', {cx, cy: top + bh + H * .015, rx: bw * .55, ry: H * .012, fill: 'var(--k)', opacity: .12});
+  m('rect', {x: bx, y: top, width: bw, height: bh, rx: Math.min(10, bw * .04), fill: 'url(#gIce)', stroke: '#ffffff', 'stroke-width': 2});
+  const g = m('g', {'clip-path': 'url(#cIce)'});
+  specks.forEach(([a, b, c]) => m('circle', {cx: bx + a * bw, cy: top + b * bh, r: 1 + c * Math.max(2, bw * .012), fill: '#fff', opacity: .55}, g));
+  m('path', {d: `M${bx + bw * .12},${top + bh * .2} l${bw * .1},${bh * .12} l${bw * .05},-${bh * .05}`, stroke: '#fff', 'stroke-width': 1.4, fill: 'none', opacity: .7}, g);
+  m('path', {d: `M${bx + bw * .8},${top + bh * .7} l-${bw * .08},${bh * .1}`, stroke: '#fff', 'stroke-width': 1.4, fill: 'none', opacity: .7}, g);
+  const trail = m('rect', {x: bx, y: top, width: bw, height: 0, fill: '#ffffff', opacity: .3}, g);
+  const wUp = m('rect', {x: bx, y: top, width: bw, height: 0, fill: 'url(#gWat)', opacity: 0}, g);
+  const wDn = m('rect', {x: bx, y: top, width: bw, height: Math.max(3, H * .012), fill: '#0b84c6', opacity: 0}, g);
+  const wire = m('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2.5, W * .008), 'stroke-linejoin': 'round'});
+  const hook = m('line', {stroke: 'var(--k)', 'stroke-width': Math.max(2.5, W * .008)});
+  const ring = m('circle', {fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, opacity: 0, r: ws * .75});
+  const wt = m('rect', {width: ws, height: ws * .8, rx: ws * .14, fill: 'var(--k)'});
+  const wl = m('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', fill: 'var(--c)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': Math.max(12, ws * .26), 'letter-spacing': '.05em'});
+  wl.textContent = 'HOLD';
+  const labW = m('text', {'text-anchor': 'start', fill: '#0b6fa8', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, opacity: 0});
+  labW.textContent = 'water';
+  const labI = m('text', {'text-anchor': 'end', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, opacity: 0});
+  labI.textContent = 'ice again';
+  L = {W, H, bw, bh, bx, top, gap, ws, cx, fs, trail, wUp, wDn, wire, hook, ring, wt, wl, labW, labI};
+  draw();
+}
+
+function draw(){
+  if (!L) return;
+  const {H, bw, bh, bx, top, gap, ws, cx, fs} = L;
+  const d = st.p * bh, y = top + d, bot = top + bh, hookY = bot + gap + d;
+  L.wire.setAttribute('d', `M${bx - 3},${y} L${bx + bw + 3},${y} L${bx + bw + 3},${bot} L${cx},${hookY} L${bx - 3},${bot} Z`);
+  L.trail.setAttribute('height', d); L.trail.setAttribute('opacity', .25 + st.flash * .5);
+  const wu = Math.min(d, H * .05);
+  L.wUp.setAttribute('y', y - wu); L.wUp.setAttribute('height', wu); L.wUp.setAttribute('opacity', st.wet);
+  L.wDn.setAttribute('y', y); L.wDn.setAttribute('opacity', st.wet * (st.p < 1 ? 1 : 0));
+  const wy = hookY + ws * .2;
+  L.hook.setAttribute('x1', cx); L.hook.setAttribute('x2', cx); L.hook.setAttribute('y1', hookY); L.hook.setAttribute('y2', wy);
+  L.wt.setAttribute('x', cx - ws / 2); L.wt.setAttribute('y', wy);
+  L.wl.setAttribute('x', cx); L.wl.setAttribute('y', wy + ws * .4);
+  L.wl.setAttribute('opacity', armed && !done ? 1 : 0);
+  L.ring.setAttribute('cx', cx); L.ring.setAttribute('cy', wy + ws * .4);
+  const show = st.wet * (st.p > .04 && st.p < 1 ? 1 : 0);
+  L.labW.setAttribute('x', bx + bw + 9); L.labW.setAttribute('y', Math.min(bot + fs, y + fs * 1.15)); L.labW.setAttribute('opacity', show);
+  L.labI.setAttribute('x', bx - 9); L.labI.setAttribute('y', Math.max(fs, y - fs * .35)); L.labI.setAttribute('opacity', show);
+}
+
+function startRing(){
+  if (Kit.calm || !L) return;
+  ringTw = gsap.fromTo(L.ring, {attr: {r: L.ws * .55}, opacity: .7}, {attr: {r: L.ws * 1.1}, opacity: 0, duration: 1.1, repeat: -1, ease: 'power2.out'});
+}
+function stopRing(){ if (ringTw) { ringTw.kill(); ringTw = null; } if (L) L.ring.setAttribute('opacity', 0); }
+
+function press(){
+  if (!armed || done || holding) return;
+  holding = true; stopRing(); Kit.haptic('light');
+  gsap.to(st, {wet: 1, duration: .2, overwrite: 'auto', onUpdate: draw});
+}
+function release(){
+  if (!holding) return;
+  holding = false;
+  // pressure gone: the water freezes again
+  gsap.to(st, {wet: 0, duration: .7, overwrite: 'auto', onUpdate: draw});
+  if (!done) gsap.fromTo(st, {flash: 1}, {flash: 0, duration: .8, onUpdate: draw});
+}
+function finish(){
+  done = true; holding = false; Kit.haptic('success');
+  gsap.to(st, {wet: 0, duration: .7, overwrite: 'auto', onUpdate: draw});
+  gsap.fromTo(st, {flash: 1}, {flash: 0, duration: 1.2, onUpdate: draw});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => { if (!armed || done) return; try { pic.setPointerCapture(e.pointerId); } catch (_) {} press(); });
+['pointerup', 'pointercancel'].forEach(t => window.addEventListener(t, release));
+pic.addEventListener('lostpointercapture', release);
+
+gsap.ticker.add((t, dt) => {
+  if (!holding || done) return;
+  st.p = Math.min(1, st.p + (dt / 1000) / 2.6 * speed);
+  draw();
+  if (st.p >= 1) finish();
+});
+
+Kit.onShow.card = () => { build(); if (armed && !done && !holding) startRing(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#opts > *', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').querySelectorAll('.opt')[1].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(400);
+  speed = 10; press(); await w(700);
+  if (!done) { st.p = 1; draw(); finish(); }
+  await w(900);
+};
+Kit.single();
+</script>
+</html>

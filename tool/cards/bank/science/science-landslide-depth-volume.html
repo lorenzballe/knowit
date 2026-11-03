@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-landslide-depth-volume -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 3cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+.lbl{font-family:var(--body);font-weight:800;fill:var(--k)}
+.sub{font-family:var(--body);font-weight:600;fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">How does the depth of the surface of rupture affect a landslide's speed?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Shallow one is faster</button>
+        <button class="opt" data-i="1">Deep one is faster</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The shallow one</p><p class="body">The deeper the surface of rupture, the more rock sits above it: a larger volume on the move. More volume tends to make the landslide move more slowly.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Same hill, two cuts. Pick the slide that moves faster.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Deep cut, big volume, slow slide. Shallow cut, small volume, fast slide.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1, revealed = false, masses = [], tweens = [], speedLbls = [];
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  revealed = true; Kit.haptic('light'); Kit.onShow.card(); animate(true);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function area(p){let a=0;for(let i=0;i<p.length;i++){const q=p[i],r=p[(i+1)%p.length];a+=q[0]*r[1]-r[0]*q[1];}return Math.abs(a/2);}
+
+function panel(svg, W, oy, h, depthFrac, title, f){
+  const m = W*0.04;
+  const y0 = oy+h*0.34, y1 = oy+h*0.88, x1 = W*0.30, x2 = W*0.78;
+  const ink = 'var(--k)';
+  Kit.mk('path',{d:`M0 ${y0} L${x1} ${y0} L${x2} ${y1} L${W} ${y1} L${W} ${oy+h} L0 ${oy+h} Z`,
+    style:'fill:color-mix(in srgb,var(--k) 16%,transparent)'},svg);
+  const xc = W*0.20, yc = y0;
+  const t = 0.8, xt = x1+(x2-x1)*t, yt = y0+(y1-y0)*t;
+  const dx = xt-xc, dy = yt-yc, L = Math.hypot(dx,dy);
+  const nx = -dy/L, ny = dx/L;
+  const d = h*depthFrac;
+  const cx = (xc+xt)/2 + nx*d*2, cy = (yc+yt)/2 + ny*d*2;
+  // sampled outline for area
+  const pts = [[xc,yc],[x1,y0],[xt,yt]];
+  for(let i=1;i<20;i++){const s=i/20,u=1-s;
+    pts.push([u*u*xt+2*u*s*cx+s*s*xc, u*u*yt+2*u*s*cy+s*s*yc]);}
+  // rupture surface (stays put)
+  Kit.mk('path',{d:`M${xt} ${yt} Q${cx} ${cy} ${xc} ${yc}`,fill:'none',
+    style:`stroke:${ink};stroke-width:${Math.max(2,f*0.16)};stroke-dasharray:${f*0.5} ${f*0.35}`},svg);
+  const g = Kit.mk('g',{},svg);
+  Kit.mk('path',{d:`M${xc} ${yc} L${x1} ${y0} L${xt} ${yt} Q${cx} ${cy} ${xc} ${yc} Z`,
+    style:`fill:${ink};fill-opacity:.82;stroke:${ink};stroke-width:1.5`},g);
+  const tx = Kit.mk('text',{x:m,y:oy+f*1.3,class:'lbl','font-size':Math.max(f*1.05,13)},svg);
+  tx.textContent = title;
+  const sl = Math.hypot(x2-x1,y1-y0);
+  return {g, a:area(pts), ux:(x2-x1)/sl, uy:(y1-y0)/sl, dist:h*0.14, W, m, oy, h, f};
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  tweens.forEach(t=>t.kill()); tweens=[];
+  const {W,H,f} = Kit.fitSvg(svg);
+  const fs = Math.max(f,12), h = H/2 - 4;
+  masses = [panel(svg,W,0,h,0.05,'SHALLOW CUT',fs), panel(svg,W,H/2+4,h,0.24,'DEEP CUT',fs)];
+  Kit.mk('line',{x1:0,x2:W,y1:H/2,y2:H/2,style:'stroke:var(--k);stroke-opacity:.25;stroke-width:1'},svg);
+  const base = masses[0].a;
+  speedLbls = [];
+  masses.forEach((p,i)=>{
+    const ratio = (p.a/base);
+    const ly = p.oy+fs*1.3;
+    const v = Kit.mk('text',{x:p.W-p.m,y:ly,'text-anchor':'end',class:'sub','font-size':fs},svg);
+    v.textContent = i===0 ? 'volume ×1' : `volume ×${ratio.toFixed(0)}`;
+    let vw = 0; try { vw = v.getComputedTextLength(); } catch(e) {}
+    if (!vw) vw = v.textContent.length*fs*0.55;
+    const s = Kit.mk('text',{x:p.W-p.m-vw-fs*0.9,y:ly,'text-anchor':'end',class:'lbl','font-size':fs*1.1,opacity:revealed?1:0},svg);
+    s.textContent = i===0 ? 'FAST' : 'slow…';
+    speedLbls.push(s);
+  });
+  if (revealed) animate(false);
+};
+
+function animate(fresh){
+  tweens.forEach(t=>t.kill()); tweens=[];
+  if (fresh && !Kit.calm) speedLbls.forEach((s,i)=>gsap.fromTo(s,{opacity:0},{opacity:1,duration:.5,delay:i*.3}));
+  masses.forEach((p,i)=>{
+    const tx = p.ux*p.dist, ty = p.uy*p.dist;
+    if (Kit.calm){ gsap.set(p.g,{x:tx,y:ty}); return; }
+    tweens.push(gsap.fromTo(p.g,{x:0,y:0},{x:tx,y:ty,duration:i===0?1.1:5,ease:'power2.in',repeat:-1,repeatDelay:.6}));
+  });
+}
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[0].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 900)); };
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-knotted-molecule -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#wrap{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see what it does">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOLECULAR KNOTS</span></div>
+    <h2 class="q">When was the first synthetic knotted molecule created?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="why" class="gone">
+        <p class="big">1989</p>
+        <p class="body">Chemist Jean-Pierre Sauvage tied molecules around copper ions into a trefoil knot. The knot stops the atoms from unfurling, trapping them in higher energy states that give the molecule new properties.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the copper ion into the ring and watch the strand.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Tie a molecule in a different knot and you get a different material.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv');
+let G = null;                       // {x,W,H}
+const st = {p: 0, ion: null, drag: false, done: false, time: 0, ringA: 1};
+let ionX = 0, ionY = 0;
+
+function css(v){ return getComputedStyle(Kit.$('card')).getPropertyValue(v).trim() || '#000'; }
+function geo(){
+  const {W, H} = G, S = Math.min(W, H * 0.82);
+  return {W, H, S, cx: W / 2, cy: H * 0.42, k: S * 0.125, r: Math.max(S * 0.065, 16), sx: W / 2, sy: H * 0.86};
+}
+function points(g){
+  const N = 240, out = [], p = st.p, e = p * p * (3 - 2 * p), jig = 1 - e, t0 = st.time;
+  for (let i = 0; i <= N; i++){
+    const u = i / N, t = u * Math.PI * 2;
+    const lx = g.cx + (u - .5) * g.W * .84;
+    const ly = g.cy + (Math.sin(u * 9 + t0 * 1.4) * .06 + Math.sin(u * 4 - t0) * .04) * g.S * jig;
+    const tx = g.cx + g.k * (Math.sin(t) + 2 * Math.sin(2 * t));
+    const ty = g.cy - g.k * (Math.cos(t) - 2 * Math.cos(2 * t)) + g.k * .45;
+    out.push({x: lx + (tx - lx) * e, y: ly + (ty - ly) * e, z: -Math.sin(3 * t) * e});
+  }
+  return out;
+}
+function draw(){
+  if (!G) return;
+  const x = G.x, g = geo(), ink = css('--k'), bg = css('--c'), body = css('--body') || 'sans-serif', mono = css('--mono') || 'monospace';
+  x.clearRect(0, 0, g.W, g.H);
+  // target ring
+  if (st.ringA > 0){
+    x.save(); x.globalAlpha = st.ringA * .55; x.strokeStyle = ink; x.lineWidth = Math.max(g.S * .008, 2);
+    x.setLineDash([g.S * .02, g.S * .018]);
+    x.beginPath(); x.arc(g.cx, g.cy + g.k * .45, g.r * 1.35, 0, Math.PI * 2); x.stroke(); x.restore();
+  }
+  // strand, drawn by depth so crossings go over and under
+  const P = points(g), segs = [];
+  for (let i = 0; i < P.length - 1; i++) segs.push({a: P[i], b: P[i + 1], z: (P[i].z + P[i + 1].z) / 2, i});
+  segs.sort((m, n) => m.z - n.z || m.i - n.i);
+  const w = Math.max(g.S * .028, 6);
+  for (const s of segs){
+    x.lineCap = 'butt'; x.strokeStyle = bg; x.lineWidth = w + Math.max(g.S * .03, 7);
+    x.beginPath(); x.moveTo(s.a.x, s.a.y); x.lineTo(s.b.x, s.b.y); x.stroke();
+    x.lineCap = 'round'; x.strokeStyle = ink; x.lineWidth = w;
+    x.beginPath(); x.moveTo(s.a.x, s.a.y); x.lineTo(s.b.x, s.b.y); x.stroke();
+  }
+  // atoms along the chain
+  x.fillStyle = bg;
+  for (let i = 0; i < P.length - 1; i += 12){ x.beginPath(); x.arc(P[i].x, P[i].y, w * .26, 0, Math.PI * 2); x.fill(); }
+  // copper ion
+  x.save();
+  x.shadowColor = 'rgba(0,0,0,.25)'; x.shadowBlur = st.drag ? 14 : 6;
+  x.fillStyle = '#c66a2b'; x.beginPath(); x.arc(ionX, ionY, g.r, 0, Math.PI * 2); x.fill(); x.restore();
+  x.strokeStyle = '#7a3a10'; x.lineWidth = Math.max(g.S * .006, 2); x.beginPath(); x.arc(ionX, ionY, g.r, 0, Math.PI * 2); x.stroke();
+  x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.font = `700 ${Math.max(g.r * .7, 13)}px ${mono}`; x.fillText('Cu⁺', ionX, ionY + 1);
+  // caption under the drawing
+  x.fillStyle = ink; x.globalAlpha = .75; x.font = `600 ${Math.max(g.S * .042, 12)}px ${body}`;
+  const cap = st.done ? 'trefoil knot · locked shape' : (st.p > 0 ? 'self-assembling…' : 'a loose strand: free to unfurl');
+  if (!(st.p === 0 && !st.done && ionY > g.H * .78 && false)) x.fillText(cap, g.cx, st.done || st.p > 0 ? g.H * .9 + 0 : g.cy - g.S * .2);
+  x.globalAlpha = 1;
+}
+Kit.onShow.card = () => {
+  G = Kit.fitCanvas(cv);
+  const g = geo();
+  if (st.p > 0){ ionX = g.cx; ionY = g.cy + g.k * .45; }
+  else if (!st.drag){ ionX = g.sx; ionY = g.sy; }
+  draw();
+};
+gsap.ticker.add(() => { if (!Kit.calm && st.p < 1) st.time += .03; draw(); });
+
+function loc(e){ const r = cv.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; }
+cv.addEventListener('pointerdown', e => {
+  if (st.p > 0 || !G) return; const q = loc(e), g = geo();
+  if (Math.hypot(q.x - ionX, q.y - ionY) < g.r * 1.8){ st.drag = true; cv.setPointerCapture && cv.setPointerCapture(e.pointerId); Kit.haptic('selection'); }
+});
+cv.addEventListener('pointermove', e => { if (!st.drag) return; const q = loc(e); ionX = q.x; ionY = q.y; });
+cv.addEventListener('pointerup', () => {
+  if (!st.drag) return; st.drag = false; const g = geo(), tx = g.cx, ty = g.cy + g.k * .45;
+  if (Math.hypot(ionX - tx, ionY - ty) < g.r * 2.2) tie(tx, ty);
+  else gsap.to({}, {duration: .35, onUpdate(){ const k = this.progress(); ionX += (g.sx - ionX) * k; ionY += (g.sy - ionY) * k; }});
+});
+function tie(tx, ty){
+  Kit.haptic('light');
+  const d = Kit.calm ? 0 : 1;
+  gsap.to(window, {duration: .25 * d, onUpdate(){ ionX += (tx - ionX) * .4; ionY += (ty - ionY) * .4; }, onComplete(){ ionX = tx; ionY = ty; }});
+  gsap.to(st, {ringA: 0, duration: .3 * d});
+  gsap.to(st, {p: 1, duration: 1.6 * d, ease: 'power2.inOut', onComplete: finish});
+}
+function finish(){
+  if (st.done) return; st.done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.onShow.card();
+  if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return; const g = geo();
+  gsap.fromTo({v: 0}, {v: 0}, {v: 1, duration: .9, ease: 'sine.inOut', yoyo: true, repeat: 1,
+    onUpdate(){ if (!st.drag && st.p === 0) ionY = g.sy - this.targets()[0].v * g.r * .5; }});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms)), r = cv.getBoundingClientRect(), g = geo();
+  const ev = (t, X, Y) => cv.dispatchEvent(new PointerEvent(t, {bubbles: true, pointerId: 1, clientX: r.left + X, clientY: r.top + Y}));
+  ev('pointerdown', ionX, ionY); await w(50);
+  for (let i = 1; i <= 8; i++){ ev('pointermove', g.sx + (g.cx - g.sx) * i / 8, g.sy + (g.cy + g.k * .45 - g.sy) * i / 8); await w(20); }
+  ev('pointerup', g.cx, g.cy + g.k * .45); await w(2300);
+};
+Kit.single();
+</script>
+</html>

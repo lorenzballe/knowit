@@ -1,0 +1,35 @@
+{
+  "id": "thinking-confusion-helps-memory",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What good comes from feeling confused while learning?",
+  "answer": "Confusion makes learning stick. When a lesson is confusing, System 2, your slow careful thinking, works harder. That extra effort makes you more likely to reach the right answer and to remember the experience.",
+  "move": "A little struggle while learning is what makes it stay.",
+  "keywords": [
+    "confusion",
+    "system 2",
+    "memory",
+    "retention",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question: What good comes from feeling confused while learning? A slider picks how confusing a lesson is, and a Launch button runs it, with a counter showing 0 of 3 launches used. The reveal says confusion makes learning stick."
+  },
+  "source": "Veritasium, “The Science of Thinking” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=UBVV8pch1dM&t=550s",
+  "written": "2026-11-03"
+}

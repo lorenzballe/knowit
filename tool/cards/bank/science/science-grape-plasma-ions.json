@@ -1,0 +1,38 @@
+{
+  "id": "science-grape-plasma-ions",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How does a strong electric field turn air into glowing plasma?",
+  "answer": "A strong electric field tears air molecules apart into ions, and those ions are the sparks. The ions can then absorb more energy from the microwaves, and that energy makes them glow as plasma. With the same microwaves and the same air, the strong field wins and makes plasma first.",
+  "move": "Strong fields make ions; ions soak up microwave energy; that glow is plasma.",
+  "keywords": [
+    "plasma",
+    "ions",
+    "microwaves",
+    "air",
+    "electric field"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking how a strong electric field turns air into glowing plasma. Two gaps are offered, a weak field and a strong field, and the reader must pick which gap makes plasma first.",
+    "graded": false
+  },
+  "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=301s",
+  "written": "2026-11-03"
+}

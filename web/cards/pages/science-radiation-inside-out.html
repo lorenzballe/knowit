@@ -1,0 +1,240 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-radiation-inside-out -->
+<title>Astute free card · Radiation vs radioactive atoms</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RADIATION</span></div>
+    <h2 class="q">Why is a radioactive atom more dangerous than its radiation at a distance?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A Geiger counter near a radioactive source, and a lung with an atom inside"></svg>
+    </div>
+    <p class="say" id="say">Drag the Geiger counter away from the source. Listen to the clicks.</p>
+    <div id="why" class="gone"><p class="big">Out there it fades. Inside, it can't miss.</p><p class="body">Radiation falls off fast with distance, and a lot of it can't even get through air; a little material blocks it. Breathe the atom in and it sits right beside your cells, firing straight into them.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Radiation far away fades; a radioactive atom inside you hits cells directly.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Radiation vs Radioactive Atoms” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const S = {df: 0, phase: 0, atomIn: false, hits: 0, disp: 0, cellHits: []};
+let G = null, parts = [], drag = false, last = performance.now(), accT = 0, accB = 0, atomTween = null;
+const RED = '#d7261e';
+
+function el(t, a, st, p) { const e = Kit.mk(t, a, p || svg); if (st) e.setAttribute('style', st); return e; }
+function txt(x, y, s, anchor, size, w, p, fam) {
+  const t = el('text', {x, y, 'text-anchor': anchor}, `font:${w} ${size}px ${fam || 'var(--body)'};fill:var(--k)`, p);
+  t.textContent = s; return t;
+}
+function nucleus(p, r) {
+  const pts = [[0,0],[.55,0],[-.55,0],[.28,.48],[-.28,.48],[.28,-.48],[-.28,-.48]];
+  el('circle', {cx: 0, cy: 0, r: r * 1.9}, 'fill:#ffcf3f;opacity:.35', p);
+  pts.forEach(([a, b], i) => el('circle', {cx: a * r, cy: b * r, r: r * .42}, `fill:${i % 2 ? '#ffcf3f' : 'var(--k)'};stroke:var(--k);stroke-width:1.2`, p));
+}
+
+function build() {
+  svg.innerHTML = ''; parts = [];
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, W / 20, H / 26));
+  const fs = Math.max(12, f * .8);
+  const pad = Math.max(4, W * .015);
+  const T = {x: pad, y: pad, w: W - 2 * pad, h: H * .5 - pad * 1.5};
+  const B = {x: pad, y: H * .5 + pad * .5, w: W - 2 * pad, h: H * .5 - pad * 1.5};
+  const g = {W, H, f, fs, T, B};
+  for (const P of [T, B]) el('rect', {x: P.x, y: P.y, width: P.w, height: P.h, rx: f * .8}, 'fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:color-mix(in srgb,var(--k) 25%,transparent);stroke-width:1.5');
+
+  // ---- TOP: the atom stays out there
+  txt(T.x + f * .7, T.y + fs * 1.5, 'OUT THERE', 'start', fs, 800);
+  g.rd = txt(T.x + T.w - f * .7, T.y + fs * 1.5, '', 'end', fs, 800, svg, 'var(--mono)');
+  g.sx = T.x + f * 1.9; g.sy = T.y + T.h * .56; g.R = T.w * .24;
+  el('line', {x1: T.x + f * .6, x2: T.x + T.w - f * .6, y1: g.sy + f * 1.4, y2: g.sy + f * 1.4}, 'stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-width:1.5;stroke-dasharray:4 5');
+  {
+    let d = '', on = false; const N = 120, m = 3;
+    for (let i = 0; i <= N; i++) {
+      const a = i / N * Math.PI * 2, x = g.sx + g.R * Math.cos(a), y = g.sy + g.R * Math.sin(a);
+      const ins = x >= T.x + m && x <= T.x + T.w - m && y >= T.y + m && y <= T.y + T.h - m;
+      if (ins) { d += `${on ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)} `; on = true; } else on = false;
+    }
+    if (d) el('path', {d}, 'fill:none;stroke:color-mix(in srgb,var(--k) 22%,transparent);stroke-width:1.2;stroke-dasharray:2 4');
+  }
+  g.pg = el('g', {});
+  const sg = el('g', {transform: `translate(${g.sx},${g.sy})`}); nucleus(sg, f * .6);
+  txt(g.sx, g.sy + f * 2.6, 'source', 'middle', fs, 600);
+  g.probe = f * 1.6;
+  g.lo = g.sx + f * .9 + g.probe; g.hi = T.x + T.w - f * 2.9;
+  g.meter = el('g', {});
+  el('line', {x1: -g.probe, y1: 0, x2: 0, y2: 0}, `stroke:var(--k);stroke-width:${f * .22};stroke-linecap:round`, g.meter);
+  g.tip = el('circle', {cx: -g.probe, cy: 0, r: f * .33}, 'fill:var(--k)', g.meter);
+  el('rect', {x: 0, y: -f * 1.1, width: f * 2.2, height: f * 2.2, rx: f * .35}, 'fill:var(--k)', g.meter);
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) el('circle', {cx: f * (.6 + i * .5), cy: f * (-.5 + j * .5), r: f * .1}, 'fill:var(--c)', g.meter);
+  g.hint = txt(f * 1.1, -f * 1.6, 'drag →', 'middle', Math.max(14, f), 700, g.meter, 'var(--hand)');
+  if (S.df > .02) g.hint.style.opacity = 0;
+
+  // ---- BOTTOM: the atom breathed in
+  g.bot = el('g', {}); g.bot.style.opacity = S.phase >= 1 ? 1 : .32;
+  txt(B.x + f * .7, B.y + fs * 1.5, 'BREATHED IN', 'start', fs, 800, g.bot);
+  g.rb = txt(B.x + B.w - f * .7, B.y + fs * 1.5, '', 'end', fs, 800, g.bot, 'var(--mono)');
+  const cx = B.x + B.w * .6, cy = B.y + B.h * .6;
+  const ry = B.h * .3, rx = Math.min(B.w * .16, ry * .75);
+  const lobes = [[cx - rx * 1.12, cy], [cx + rx * 1.12, cy]];
+  lobes.forEach(([x, y]) => el('ellipse', {cx: x, cy: y, rx, ry}, 'fill:#ffd3d9;stroke:#c45a6a;stroke-width:2', g.bot));
+  const tTop = B.y + fs * 2.4, tBot = cy - ry * .75;
+  el('path', {d: `M${cx},${tTop} L${cx},${tBot} M${cx},${tBot} L${cx - rx * .7},${cy - ry * .25} M${cx},${tBot} L${cx + rx * .7},${cy - ry * .25}`}, `fill:none;stroke:#c45a6a;stroke-width:${f * .3};stroke-linecap:round`, g.bot);
+  g.target = [lobes[0][0] + rx * .1, cy + ry * .1];
+  g.cells = [];
+  const sp = Math.max(f * .8, 10), cr = sp * .3;
+  let idx = 0;
+  for (let y = cy - ry; y <= cy + ry; y += sp) for (let x = cx - rx * 2.2; x <= cx + rx * 2.2; x += sp) {
+    const inL = lobes.some(([lx, ly]) => ((x - lx) / rx) ** 2 + ((y - ly) / ry) ** 2 < .78);
+    if (!inL || Math.hypot(x - g.target[0], y - g.target[1]) < f * .9) continue;
+    const hit = S.cellHits[idx] || 0;
+    const c = el('circle', {cx: x, cy: y, r: cr}, `fill:${hit ? RED : '#f19aa6'}`, g.bot);
+    g.cells.push({x, y, r: cr, el: c, i: idx}); idx++;
+  }
+  g.pb = el('g', {}, null, g.bot);
+  g.a0 = [B.x + B.w * .13 + f * .4, cy - f * .3];
+  g.path = [g.a0, [cx, tTop], [cx, tBot], g.target];
+  g.ring = el('circle', {cx: g.a0[0], cy: g.a0[1], r: f * 1.4}, `fill:none;stroke:var(--k);stroke-width:2;opacity:${S.phase === 1 ? 1 : 0}`, g.bot);
+  g.alab = txt(g.a0[0], g.a0[1] + f * 2.5, 'one atom', 'middle', fs, 600, g.bot);
+  if (S.phase >= 2) g.alab.style.opacity = 0;
+  g.atom = el('g', {}, null, g.bot); nucleus(g.atom, f * .5);
+  const p = S.atomIn ? g.target : g.a0;
+  g.atom.setAttribute('transform', `translate(${p[0]},${p[1]})`);
+  G = g;
+  placeMeter();
+  if (S.phase === 1) pulse();
+  g.rb.textContent = `cells hit: ${S.hits}`;
+  if (S.phase === 2 && !S.atomIn) { if (atomTween) atomTween.kill(); S.atomIn = true; G.atom.setAttribute('transform', `translate(${g.target[0]},${g.target[1]})`); }
+}
+
+function placeMeter() {
+  G.mx = G.lo + S.df * (G.hi - G.lo);
+  G.meter.setAttribute('transform', `translate(${G.mx},${G.sy})`);
+}
+function pulse() {
+  if (Kit.calm) return;
+  gsap.fromTo(G.ring, {attr: {r: G.f * .9}, opacity: 1}, {attr: {r: G.f * 1.8}, opacity: 0, duration: 1.1, repeat: -1, ease: 'power2.out'});
+}
+
+function spawn(x, y, grp, kind) {
+  const a = Math.random() * Math.PI * 2, v = G.R / .55;
+  const pr = Math.max(2, G.f * .16);
+  const e = el('circle', {cx: x, cy: y, r: pr}, `fill:${kind === 'b' ? RED : 'var(--k)'}`, grp);
+  parts.push({x, y, ox: x, oy: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, e, kind, pr});
+}
+
+function tick() {
+  const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now;
+  if (!G) return;
+  accT += dt * 34; while (accT > 1) { accT--; spawn(G.sx, G.sy, G.pg, 't'); }
+  if (S.atomIn) { accB += dt * 26; while (accB > 1) { accB--; spawn(G.target[0], G.target[1], G.pb, 'b'); } }
+  const Rb = G.R * .7;
+  parts = parts.filter(p => {
+    p.x += p.vx * dt; p.y += p.vy * dt;
+    const d = Math.hypot(p.x - p.ox, p.y - p.oy), R = p.kind === 'b' ? Rb : G.R;
+    if (d > R) { p.e.remove(); return false; }
+    const P = p.kind === 'b' ? G.B : G.T, m = p.pr + 2;
+    if (p.x < P.x + m || p.x > P.x + P.w - m || p.y < P.y + m || p.y > P.y + P.h - m) { p.e.remove(); return false; }
+    if (p.kind === 'b') {
+      for (const c of G.cells) if (Math.hypot(p.x - c.x, p.y - c.y) < c.r + 2) {
+        p.e.remove();
+        if (!S.cellHits[c.i]) { S.cellHits[c.i] = 1; S.hits++; G.rb.textContent = `cells hit: ${S.hits}`; }
+        c.el.style.fill = RED;
+        if (!Kit.calm) gsap.fromTo(c.el, {attr: {r: c.r * 1.9}}, {attr: {r: c.r}, duration: .3});
+        if (S.hits >= 14 && S.phase === 2) finish();
+        return false;
+      }
+    }
+    p.e.setAttribute('cx', p.x); p.e.setAttribute('cy', p.y);
+    p.e.style.opacity = 1 - d / R;
+    return true;
+  });
+  const d = G.mx - G.probe - G.sx;
+  const rate = d < G.R ? 60 * (1 - d / G.R) ** 2 : 0;
+  S.disp += (rate - S.disp) * Math.min(1, dt * 6);
+  const shown = rate === 0 && S.disp < .5 ? 0 : Math.round(S.disp);
+  G.rd.textContent = `${shown} clicks/s`;
+  if (Math.random() < rate * dt) {
+    G.tip.style.fill = RED;
+    gsap.fromTo(G.tip, {attr: {r: G.f * .65}}, {attr: {r: G.f * .33}, duration: .15, onComplete: () => { G.tip.style.fill = 'var(--k)'; }});
+  }
+  if (S.phase === 0 && S.df > .85 && d > G.R * 1.05 && shown === 0) unlock();
+}
+gsap.ticker.add(tick);
+
+function unlock() {
+  S.phase = 1; Kit.haptic('success');
+  Kit.$('say').textContent = 'Zero. Now tap the atom: breathe it into the lung.';
+  gsap.to(G.bot, {opacity: 1, duration: Kit.calm ? 0 : .5});
+  G.ring.style.opacity = 1; pulse();
+}
+function inhale() {
+  S.phase = 2; Kit.haptic('selection');
+  Kit.$('say').textContent = 'Now watch where its radiation lands.';
+  gsap.killTweensOf(G.ring); G.ring.style.opacity = 0;
+  gsap.to(G.alab, {opacity: 0, duration: .3});
+  const pt = {x: G.a0[0], y: G.a0[1]};
+  const set = () => G.atom.setAttribute('transform', `translate(${pt.x},${pt.y})`);
+  if (Kit.calm) { pt.x = G.target[0]; pt.y = G.target[1]; set(); S.atomIn = true; return; }
+  const tl = gsap.timeline({onComplete: () => { S.atomIn = true; Kit.haptic('light'); }});
+  G.path.slice(1).forEach(([x, y], i) => tl.to(pt, {x, y, duration: i === 1 ? .45 : .5, ease: 'sine.inOut', onUpdate: set}));
+  atomTween = tl;
+}
+function finish() {
+  S.phase = 3; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+function toSvg(e) { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
+svg.addEventListener('pointerdown', e => {
+  if (!G) return; const p = toSvg(e);
+  if (p.y < G.T.y + G.T.h) {
+    drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    moveTo(p.x);
+  } else if (S.phase === 1) inhale();
+});
+svg.addEventListener('pointermove', e => { if (drag) moveTo(toSvg(e).x); });
+['pointerup', 'pointercancel'].forEach(t => svg.addEventListener(t, () => { drag = false; }));
+function moveTo(x) {
+  S.df = Math.max(0, Math.min(1, (x - G.lo) / (G.hi - G.lo)));
+  placeMeter();
+  if (S.df > .02 && G.hint.style.opacity !== '0') gsap.to(G.hint, {opacity: 0, duration: .3});
+}
+
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G || S.df > .02) return;
+  gsap.fromTo(G.hint, {opacity: 0, x: -6}, {opacity: 1, x: 6, duration: .7, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const s = ms => new Promise(r => setTimeout(r, ms));
+  const fire = (type, x, y) => {
+    const ctm = svg.getScreenCTM(), p = svg.createSVGPoint(); p.x = x; p.y = y;
+    const q = p.matrixTransform(ctm);
+    svg.dispatchEvent(new PointerEvent(type, {clientX: q.x, clientY: q.y, bubbles: true, pointerId: 1, isPrimary: true}));
+  };
+  fire('pointerdown', G.mx, G.sy);
+  for (let i = 1; i <= 12; i++) { fire('pointermove', G.lo + (G.hi - G.lo) * i / 12, G.sy); await s(30); }
+  fire('pointerup', G.hi, G.sy);
+  for (let i = 0; i < 40 && S.phase < 1; i++) await s(50);
+  if (S.phase < 1) unlock();
+  fire('pointerdown', G.a0[0], G.a0[1]);
+  for (let i = 0; i < 120 && S.phase < 3; i++) await s(50);
+  if (S.phase < 3) finish();
+  await s(500);
+};
+Kit.single();
+</script>
+</html>

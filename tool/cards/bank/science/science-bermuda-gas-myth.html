@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-bermuda-gas-myth -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.4cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1.1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#pic text{font-family:var(--body);fill:var(--k)}
+#pic .mut{fill:var(--muted)}
+#pic .wat{fill:color-mix(in srgb,var(--k) 10%,transparent)}
+#pic .ln{stroke:var(--k);fill:none}
+#pic .bnd{fill:var(--k);opacity:.85}
+#pic .bub{fill:none;stroke:var(--k)}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BERMUDA MYTHS</span></div>
+    <h2 class="q">When did big methane eruptions last rise in the Bermuda Triangle?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A timeline under the sea, from the last big gas rise to today"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0" data-y="3">In the last few years</button>
+        <button class="opt" data-i="1" data-y="100">About a century ago</button>
+        <button class="opt" data-i="2" data-y="15000">At least 15,000 years ago</button>
+      </div>
+      <div id="why" class="gone"><p class="big">At least 15,000 years ago</p><p class="body">Enough gas really can sink a small ship. But the US Geological Survey says no big gas rises have happened in the area for at least 15,000 years. So gas can't explain ships lost in modern times.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch the seabed's clock run.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A cause that could work is not a cause that is happening now.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa c'è di vero nel "mistero" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, done = false, guessY = 0;
+const svg = Kit.$('pic');
+let G = null;
+
+function draw(animate){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const x0 = W*0.07, x1 = W*0.93, ly = H*0.56, sy = H*0.13;
+  const fs = Math.max(f, 12);
+  G = {W, H, f: fs, x0, x1, ly, sy};
+  // water
+  let d = `M0 ${sy}`;
+  for (let x = 0; x <= W; x += W/12) d += ` Q ${x + W/24} ${sy - fs*0.35} ${x + W/12} ${sy}`;
+  Kit.mk('path', {d: d + ` L${W} ${ly} L0 ${ly}Z`, class: 'wat'}, svg);
+  // ship at today
+  const sx = x1 - fs*1.8, s = fs*0.9;
+  Kit.mk('path', {d: `M${sx-s*1.6} ${sy-s*0.5} L${sx+s*1.6} ${sy-s*0.5} L${sx+s*1.1} ${sy+s*0.2} L${sx-s*1.1} ${sy+s*0.2}Z M${sx-s*0.4} ${sy-s*0.5} L${sx-s*0.4} ${sy-s*1.6} L${sx+s*0.6} ${sy-s*0.7}Z`, fill: 'var(--k)'}, svg);
+  // seabed timeline
+  Kit.mk('line', {x1: x0, y1: ly, x2: x1, y2: ly, class: 'ln', 'stroke-width': Math.max(2, fs*0.18), 'stroke-dasharray': done ? 'none' : `${fs*0.4} ${fs*0.35}`, opacity: done ? 1 : .5}, svg);
+  Kit.mk('circle', {cx: x1, cy: ly, r: fs*0.35, fill: 'var(--k)'}, svg);
+  const today = Kit.mk('text', {x: x1, y: ly + fs*1.6, 'text-anchor': 'end', 'font-size': fs, 'font-weight': 800}, svg); today.textContent = 'Today';
+  if (!done){
+    const q = Kit.mk('text', {x: x0, y: ly + fs*1.6, 'font-size': fs*1.3, 'font-weight': 800, class: 'mut'}, svg); q.textContent = '← ?';
+    const t = Kit.mk('text', {x: W/2, y: (sy + ly)/2 + fs*0.4, 'text-anchor': 'middle', 'font-size': fs, class: 'mut'}, svg); t.textContent = 'Seabed clock: how long since gas?';
+    return;
+  }
+  // quiet band
+  const bh = fs*0.5;
+  const band = Kit.mk('rect', {x: animate ? x1 : x0, y: ly - bh/2, width: animate ? 0 : x1 - x0, height: bh, rx: bh/2, class: 'bnd'}, svg);
+  const num = Kit.mk('text', {x: W/2, y: ly - fs*2.9, 'text-anchor': 'middle', 'font-size': fs*1.6, 'font-weight': 800}, svg);
+  const sub = Kit.mk('text', {x: W/2, y: ly - fs*0.9, 'text-anchor': 'middle', 'font-size': fs*0.95, 'font-weight': 600}, svg);
+  sub.textContent = 'with no big gas rises';
+  const l1 = Kit.mk('text', {x: x0, y: ly + fs*1.6, 'font-size': fs, 'font-weight': 800}, svg); l1.textContent = '15,000+ years ago';
+  const l2 = Kit.mk('text', {x: x0, y: ly + fs*2.9, 'font-size': fs*0.9, class: 'mut'}, svg); l2.textContent = 'last big gas rise';
+  // reader's guess
+  const gx = x1 - (guessY/15000)*(x1 - x0);
+  const right = gx > W/2;
+  const tri = Kit.mk('path', {d: `M${gx} ${ly + bh*0.6} l${-fs*0.45} ${fs*0.75} l${fs*0.9} 0Z`, fill: 'var(--k)'}, svg);
+  const gl = Kit.mk('text', {x: right ? Math.min(gx + fs*0.45, W) : Math.max(gx - fs*0.45, 0), y: ly + fs*4.3, 'text-anchor': right ? 'end' : 'start', 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--hand)'}, svg);
+  gl.textContent = pick === RIGHT ? 'Your guess ✓' : 'Your guess: ' + (guessY < 50 ? 'a few years ago' : '100 years ago');
+  // ancient bubbles at the left end
+  const bubs = [];
+  for (let i = 0; i < 6; i++){
+    const b = Kit.mk('circle', {cx: x0 + fs*(0.4 + (i%3)*0.7), cy: ly - fs*(0.8 + i*1.1), r: fs*(0.18 + (i%3)*0.1), class: 'bub', 'stroke-width': Math.max(1.2, fs*0.08), opacity: done && !animate ? .35 : 0}, svg);
+    bubs.push(b);
+  }
+  if (!animate || Kit.calm){ num.textContent = '15,000 years'; bubs.forEach(b => b.setAttribute('opacity', .35)); return; }
+  const c = {v: 0};
+  gsap.set([num, sub, l1, l2], {opacity: 0});
+  gsap.from([tri, gl], {opacity: 0, y: fs, duration: .4});
+  const tl = gsap.timeline({delay: .35});
+  tl.to(band, {attr: {x: x0, width: x1 - x0}, duration: 2.2, ease: 'power2.inOut'}, 0)
+    .to([num, sub], {opacity: 1, duration: .3}, 0)
+    .to(c, {v: 15000, duration: 2.2, ease: 'power2.inOut', onUpdate: () => num.textContent = Math.round(c.v/100)*100 .toLocaleString('en-US') + ' years'}, 0)
+    .to([l1, l2], {opacity: 1, duration: .4}, 2.1)
+    .fromTo(bubs, {opacity: 0, attr: {cy: ly}}, {opacity: .35, attr: {cy: (i) => ly - fs*(0.8 + i*1.1)}, duration: 1, stagger: .08, ease: 'power1.out'}, 2.1)
+    .add(() => { num.textContent = '15,000 years'; Kit.haptic('success'); }, 2.2);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  done = true;
+  requestAnimationFrame(() => draw(true));
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; guessY = +b.dataset.y; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3600)); };
+Kit.single();
+</script>
+</html>

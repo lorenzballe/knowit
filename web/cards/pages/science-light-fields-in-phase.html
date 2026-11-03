@@ -1,0 +1,156 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-light-fields-in-phase -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{flex:1;min-height:0;position:relative}
+#wave{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);overflow-wrap:anywhere}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LIGHT</span></div>
+    <h2 class="q">In a light wave, how do the electric and magnetic fields line up?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><svg id="wave"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">At right angles, peaks staggered</button>
+        <button class="opt" data-i="1">At right angles, peaks together</button>
+        <button class="opt" data-i="2">Same plane, peaks together</button>
+      </div>
+      <div id="why" class="gone"><p class="big">At right angles, peaking together</p><p class="body">The electric field swings one way, the magnetic field swings across it. They are in phase: when one is at its maximum, so is the other.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap each picture to add the magnetic wave. Pick the real light.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In light, E and B cross at right angles and peak at the same moment.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+const OPT = [{ang:0, ph:Math.PI/2}, {ang:0, ph:0}, {ang:1, ph:0}];
+let pick = -1, done = false, t = 0, G = null;
+const P = {ang:0, ph:0, bo:0, mo:0};
+const svg = Kit.$('wave');
+let el = {};
+
+function build(){
+  svg.innerHTML = '';
+  const S = (tag, a, st) => { const e = Kit.mk(tag, a, svg); Object.assign(e.style, st || {}); return e; };
+  el.axis = S('path', {fill:'none','stroke-width':1.5}, {stroke:'var(--k)', opacity:.45});
+  el.head = S('path', {}, {fill:'var(--k)', opacity:.6});
+  el.bStem = S('path', {fill:'none','stroke-width':1.2}, {stroke:'var(--k)', opacity:.3});
+  el.b = S('path', {fill:'none','stroke-width':3,'stroke-dasharray':'7 5','stroke-linecap':'round'}, {stroke:'var(--k)'});
+  el.eStem = S('path', {fill:'none','stroke-width':1.2}, {stroke:'var(--k)', opacity:.4});
+  el.e = S('path', {fill:'none','stroke-width':4,'stroke-linecap':'round'}, {stroke:'var(--k)'});
+  el.mk = S('path', {fill:'none','stroke-width':2,'stroke-dasharray':'3 4'}, {stroke:'var(--k)'});
+  el.dot = S('path', {}, {fill:'var(--k)'});
+  const fs = Math.max(G.f, 12);
+  el.lgE = S('path', {fill:'none','stroke-width':4}, {stroke:'var(--k)'});
+  el.lgB = S('path', {fill:'none','stroke-width':3,'stroke-dasharray':'7 5'}, {stroke:'var(--k)'});
+  const tx = (y, s) => { const e = S('text', {x:G.W*.06 + fs*2.4, y:y, 'dominant-baseline':'middle'}, {fill:'var(--k)', font:`700 ${fs}px var(--body)`}); e.textContent = s; return e; };
+  const y1 = fs*1.1, y2 = fs*2.7;
+  el.lgE.setAttribute('d', `M${G.W*.06},${y1}h${fs*1.8}`);
+  el.lgB.setAttribute('d', `M${G.W*.06},${y2}h${fs*1.8}`);
+  tx(y1, 'E · electric field');
+  el.lgBt = tx(y2, 'B · magnetic field');
+  el.lgB.style.opacity = el.lgBt.style.opacity = P.bo;
+}
+
+function draw(){
+  if (!G) return;
+  const {W, x0, x1, cy, A, k} = G, N = 120, L = x1 - x0;
+  // B direction: oblique "into the page" (perpendicular) blended toward vertical (same plane)
+  const zx = -0.55, zy = 0.6, vx = 0, vy = -0.75;
+  const bx = zx + (vx - zx)*P.ang, by = zy + (vy - zy)*P.ang, bA = A*.85;
+  let e = '', b = '', es = '', bs = '';
+  for (let i = 0; i <= N; i++){
+    const x = x0 + L*i/N, ph = k*(x - x0) - t;
+    const se = Math.sin(ph), sb = Math.sin(ph + P.ph);
+    const ey = cy - A*se, bxp = x + bx*sb*bA, byp = cy + by*sb*bA;
+    e += (i ? 'L' : 'M') + x.toFixed(1) + ',' + ey.toFixed(1);
+    b += (i ? 'L' : 'M') + bxp.toFixed(1) + ',' + byp.toFixed(1);
+    if (i % 5 === 0 && i < N){ es += `M${x.toFixed(1)},${cy}L${x.toFixed(1)},${ey.toFixed(1)}`; bs += `M${x.toFixed(1)},${cy}L${bxp.toFixed(1)},${byp.toFixed(1)}`; }
+  }
+  el.e.setAttribute('d', e); el.eStem.setAttribute('d', es);
+  el.b.setAttribute('d', b); el.bStem.setAttribute('d', bs);
+  el.b.style.opacity = P.bo; el.bStem.style.opacity = .3*P.bo;
+  el.lgB.style.opacity = el.lgBt.style.opacity = P.bo;
+  el.axis.setAttribute('d', `M${x0 - 6},${cy}L${x1 + 4},${cy}`);
+  const h = Math.max(G.f*.5, 7);
+  el.head.setAttribute('d', `M${x1 + 4 + h*1.4},${cy}L${x1 + 4},${cy - h*.7}L${x1 + 4},${cy + h*.7}Z`);
+  // peak markers: where E is at its crest, B is at its crest too
+  let m = '', d = '';
+  if (P.mo > 0){
+    const r = Math.max(G.f*.35, 5);
+    for (let n = -2; n < 6; n++){
+      const x = x0 + (Math.PI/2 + 2*Math.PI*n + t)/k;
+      if (x < x0 + 2 || x > x1 - 2) continue;
+      const ey = cy - A, bxp = x + bx*bA, byp = cy + by*bA;
+      m += `M${x},${ey}L${bxp},${byp}`;
+      d += `M${x - r},${ey}a${r},${r} 0 1,0 ${2*r},0a${r},${r} 0 1,0 ${-2*r},0`;
+      d += `M${bxp - r},${byp}a${r},${r} 0 1,0 ${2*r},0a${r},${r} 0 1,0 ${-2*r},0`;
+    }
+  }
+  el.mk.setAttribute('d', m); el.dot.setAttribute('d', d);
+  el.mk.style.opacity = el.dot.style.opacity = P.mo;
+}
+
+function setTo(i, extra){
+  gsap.killTweensOf(P);
+  gsap.to(P, Object.assign({ang:OPT[i].ang, ph:OPT[i].ph, bo:1, duration:Kit.calm ? 0 : .7, ease:'power2.inOut', onUpdate:draw}, extra || {}));
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (done) return; done = true;
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  setTo(RIGHT, {onComplete: () => gsap.to(P, {mo:1, duration:Kit.calm ? 0 : .5, onUpdate:draw})});
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+let armed = false;
+Kit.$('opts').addEventListener('click', ev => {
+  const b = ev.target.closest('.opt'); if (!b || done) return;
+  pick = +b.dataset.i;
+  [...Kit.$('opts').children].forEach(c => c.classList.toggle('on', c === b));
+  Kit.haptic('selection'); setTo(pick);
+  if (!armed){ armed = true; sure.on(); }
+});
+
+Kit.onShow.card = () => {
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12), top = fs*3.6;
+  const A = Math.max(10, Math.min((H - top - fs*.6)/1.55, W*.26));
+  const x0 = W*.05 + A*.5, x1 = W*.9, cy = top + A;
+  G = {W, H, f:fs, x0, x1, cy, A, k:2*Math.PI*1.5/(x1 - x0)};
+  build(); draw();
+};
+
+let ticking = false;
+Kit.onEnter.card = () => {
+  if (Kit.calm || ticking) return; ticking = true;
+  gsap.ticker.add(() => { t += .035; draw(); });
+};
+
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 300));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1500));
+};
+Kit.single();
+</script>
+</html>

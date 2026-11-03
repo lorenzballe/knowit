@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-rail-expansion-gaps -->
+<title>Astute free card · Rail gaps</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#draw{flex:1;min-height:0;position:relative;cursor:pointer}
+#draw svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body)}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RAILWAYS</span></div>
+    <h2 class="q">Why are small gaps left between rail sections?</h2>
+    <div class="stagebox" id="stage">
+      <div id="draw"><svg id="rail"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">So rails can grow in summer heat</button>
+        <button class="opt" data-i="1">So rainwater can drain away</button>
+        <button class="opt" data-i="2">To save on steel</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Room to grow in the heat</p><p class="body">Steel shrinks in the cold and grows in the heat: 40 °C warmer, a 12 m rail is 6 mm longer. With no gaps, people expected kilometres of joined rail to buckle sideways and derail trains.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a reason, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Heat makes rails longer; the gaps gave that length somewhere to go.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1, revealed = false;
+const S = {T: 0};
+let G = null, tw = null;
+const svg = Kit.$('rail');
+
+function draw(){
+  if (!G) return;
+  const {W, H, f} = G, T = S.T;
+  const cs = getComputedStyle(Kit.$('card'));
+  const ink = cs.getPropertyValue('--k').trim() || '#111';
+  const muted = cs.getPropertyValue('--muted').trim() || '#888';
+  const hot = '#d6342b';
+  const fs = Math.max(f, 12);
+  svg.innerHTML = '';
+  const pad = W * 0.05, x0 = pad, x1 = W - pad, L = x1 - x0;
+  const gauge = Math.max(14, H * 0.075), sw = Math.max(3, H * 0.016);
+  const rowY = fs * 1.25;
+  const labA = rowY + fs * 1.9;
+  const laneA = Math.max(labA + gauge / 2 + fs * 0.9, H * 0.36);
+  const laneB = H - (gauge / 2 + fs * 1.5);
+  const k = T / 40;
+
+  // top row: temperature and growth
+  const tcol = T > 25 ? hot : ink;
+  Kit.mk('text', {x: x0, y: rowY, fill: tcol, 'font-family': 'var(--mono)', 'font-weight': 800, 'font-size': fs * 1.35}, svg).textContent = `+${Math.round(T)} °C`;
+  Kit.mk('text', {x: x1, y: rowY, fill: ink, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, svg).textContent = `12 m rail: +${(k * 6).toFixed(1)} mm`;
+  Kit.mk('text', {x: x0, y: labA, fill: ink, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, 'letter-spacing': '.06em'}, svg).textContent = 'WITH GAPS';
+  Kit.mk('text', {x: x0, y: laneB + gauge / 2 + fs * 1.35, fill: ink, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, 'letter-spacing': '.06em'}, svg).textContent = 'WELDED · NO GAPS';
+
+  const n = 5, cell = L / n, g0 = cell * 0.12, seg = cell - g0;
+  const gr = k * g0 * 0.85;
+
+  // continuous lane shape: extra length goes into a bump
+  const dL = n * gr, Lb = L * 0.42, xa = x0 + (L - Lb) / 2;
+  const Amax = (laneB - laneA) - gauge * 1.1;
+  const A = Math.min(Amax, (2 / Math.PI) * Math.sqrt(Lb * dL) * 1.4);
+  const yB = x => (x < xa || x > xa + Lb) ? 0 : -A * Math.pow(Math.sin(Math.PI * (x - xa) / Lb), 2);
+
+  // sleepers
+  const ns = 24;
+  for (let i = 0; i <= ns; i++) {
+    const x = x0 + L * i / ns;
+    Kit.mk('rect', {x: x - 2, y: laneA - gauge * 0.95, width: 4, height: gauge * 1.9, rx: 1, fill: muted, opacity: .55}, svg);
+    Kit.mk('rect', {x: x - 2, y: laneB + yB(x) - gauge * 0.95, width: 4, height: gauge * 1.9, rx: 1, fill: muted, opacity: .55}, svg);
+  }
+  // end stops
+  for (const y of [laneA, laneB]) for (const x of [x0, x1])
+    Kit.mk('rect', {x: x - 3, y: y - gauge, width: 6, height: gauge * 2, rx: 2, fill: ink}, svg);
+
+  // lane A: segments grow, gaps close
+  for (let i = 0; i < n; i++) {
+    const c = x0 + cell * (i + .5), a = c - (seg + gr) / 2, b = c + (seg + gr) / 2;
+    for (const s of [-1, 1])
+      Kit.mk('line', {x1: a, y1: laneA + s * gauge / 2, x2: b, y2: laneA + s * gauge / 2, stroke: ink, 'stroke-width': sw, 'stroke-linecap': 'butt'}, svg);
+  }
+  // lane B: one welded rail, bending out
+  const bcol = A > gauge * 0.8 ? hot : ink;
+  for (const s of [-1, 1]) {
+    let d = '';
+    for (let i = 0; i <= 120; i++) {
+      const x = x0 + L * i / 120;
+      d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + (laneB + yB(x) + s * gauge / 2).toFixed(1);
+    }
+    Kit.mk('path', {d, fill: 'none', stroke: bcol, 'stroke-width': sw, 'stroke-linejoin': 'round'}, svg);
+  }
+  if (A > gauge * 0.8)
+    Kit.mk('text', {x: x1, y: laneB + gauge / 2 + fs * 1.35, fill: hot, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg).textContent = 'buckles!';
+}
+
+function heat(){
+  if (tw) tw.kill();
+  if (Kit.calm) { S.T = 40; draw(); return; }
+  S.T = 0; draw();
+  tw = gsap.to(S, {T: 40, duration: 3, ease: 'power1.inOut', onUpdate: draw, onComplete: () => Kit.haptic('light')});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  revealed = true;
+  heat();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('draw').addEventListener('click', () => { if (revealed) { Kit.haptic('selection'); heat(); } });
+
+Kit.onShow.card = () => { G = Kit.fitSvg(svg); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tw) tw.progress(1); S.T = 40; draw();
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

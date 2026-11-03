@@ -1,0 +1,35 @@
+{
+  "id": "thinking-noisy-tit-for-tat",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Two Tit for Tats mishear one move. How much long-run score survives?",
+  "answer": "About one-third of the long-run score survives. One misread friendly move starts a back-and-forth of hits, since each copies the other's last move. A second misread locks both into defecting for good.",
+  "move": "Copying every move turns one mistake into an endless echo.",
+  "keywords": [
+    "tit for tat",
+    "game theory",
+    "retaliation",
+    "misread move",
+    "cooperation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Astute free card on game theory. Asks how much long-run score survives when two Tit for Tat players mishear one move. Options: nearly all, about two-thirds, about one-third. Reader bets, then watches one misread play out."
+  },
+  "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=1244s",
+  "written": "2026-11-03"
+}

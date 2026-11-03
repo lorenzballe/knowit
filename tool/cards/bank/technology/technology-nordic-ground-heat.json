@@ -1,0 +1,38 @@
+{
+  "id": "technology-nordic-ground-heat",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Out of 100 Scandinavian buildings, how many use low-enthalpy geothermal heat?",
+  "answer": "In Sweden and across Scandinavia, almost 70% of buildings run on low-enthalpy geothermal heat, which draws on the mild warmth of the ground just below them. Tuscany used this technology in the early 1900s and then forgot it. Because the Swedes rely on it so widely, the technology clearly works.",
+  "move": "Shallow ground heat is no niche: in Scandinavia it heats most buildings.",
+  "keywords": [
+    "geothermal",
+    "scandinavia",
+    "sweden",
+    "tuscany",
+    "home heating"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive card titled Ground Heat asking how many of 100 Scandinavian buildings use low-enthalpy geothermal heat. The reader taps or drags across a row of houses to set a guess out of 100, which is shown beside a question mark.",
+    "graded": false
+  },
+  "source": "Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=1HiwKPHVc-8&t=639s",
+  "written": "2026-11-03"
+}

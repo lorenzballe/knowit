@@ -1,0 +1,120 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-pier-magnitude-seven -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;justify-content:space-between;gap:4cqw}
+#shake{font:700 max(2.3cqh,15px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 6cqw;cursor:pointer}
+#shake:active{transform:scale(.97)}
+#read{font:700 max(4.6cqh,26px)/1.25 var(--mono);color:var(--k);white-space:nowrap;flex:none}
+#read small{font:600 max(1.6cqh,12px)/1 var(--body);color:var(--muted);display:block;text-align:right;margin-bottom:.5cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap to build · seismic design">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SEISMIC DESIGN</span></div>
+    <h2 class="q">What earthquake strength is each pier of Eshima Ohashi built to survive?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <button id="shake">Shake +1</button>
+        <div id="read"><small>quake</small>M <span id="mv">0</span></div>
+      </div>
+      <div id="why" class="gone"><p class="big">Up to magnitude 7</p><p class="body">Japan gets earthquakes and typhoons, so each pier is designed to resist quakes up to magnitude 7. Moving parts let the bridge carry heavy loads and spread forces evenly.</p></div>
+    </div>
+    <p class="say" id="say">Tap Shake to raise the quake one magnitude at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In quake country each pier is built for a set limit: here, magnitude 7.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAX = 7;
+let m = 0, S = null;
+const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+const bg = () => getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#fff';
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const K = ink(), C = bg(), fs = Math.max(f * .8, 12);
+  const mx = W * .88, sx = W * .78;            // meter x, scene width
+  const top = H * .2, water = H * .6, bed = H * .86;
+  const px = sx * .5, pw = Math.max(sx * .17, 30);
+  const deckY = H * .24, deckH = Math.max(H * .045, 8);
+  // water
+  Kit.mk('rect', {x: 0, y: water, width: sx, height: Math.max(bed - water, 0), fill: K, 'fill-opacity': .1}, svg);
+  for (let i = 0; i < 3; i++) Kit.mk('path', {d: `M0 ${water + i * (bed - water) / 3 + 2} q ${sx/8} -5 ${sx/4} 0 t ${sx/4} 0 t ${sx/4} 0 t ${sx/4} 0`, fill: 'none', stroke: K, 'stroke-opacity': .18, 'stroke-width': 1.5}, svg);
+  const q = Kit.mk('g', {}, svg);
+  // seabed
+  Kit.mk('rect', {x: -20, y: bed, width: sx + 40, height: Math.max(H - bed, 0), fill: K, 'fill-opacity': .55}, q);
+  // pier
+  const pier = Kit.mk('g', {}, q);
+  Kit.mk('path', {d: `M${px - pw * .65} ${bed} L${px - pw/2} ${deckY + deckH + 10} L${px + pw/2} ${deckY + deckH + 10} L${px + pw * .65} ${bed} Z`, fill: K}, pier);
+  for (let i = 1; i < 4; i++) Kit.mk('line', {x1: px - pw * .3 + i * pw * .15, x2: px - pw * .3 + i * pw * .15, y1: deckY + deckH + 18, y2: bed - 6, stroke: C, 'stroke-opacity': .35, 'stroke-width': 1.5}, pier);
+  const pt = Kit.mk('text', {x: px, y: (water + bed) / 2, fill: C, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle', 'dominant-baseline': 'middle', transform: `rotate(-90 ${px} ${(water + bed) / 2})`}, pier);
+  pt.textContent = 'PIER';
+  // moving parts (bearings)
+  const bw = pw * .3, by = deckY + deckH;
+  [px - pw * .27, px + pw * .27].forEach(x => Kit.mk('rect', {x: x - bw/2, y: by, width: bw, height: 10, rx: 4, fill: C, stroke: K, 'stroke-width': 2}, pier));
+  // deck
+  const deck = Kit.mk('g', {}, q);
+  Kit.mk('rect', {x: -20, y: deckY, width: sx + 40, height: deckH, rx: 2, fill: K}, deck);
+  // force-spreading arrows
+  const arr = Kit.mk('g', {opacity: 0}, q);
+  [-1, 1].forEach(d => Kit.mk('path', {d: `M${px + d * pw * .5} ${deckY - 8} h ${d * sx * .22} m ${-d * 8} -6 l ${d * 8} 6 l ${-d * 8} 6`, fill: 'none', stroke: K, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, arr));
+  // label
+  const ly = deckY - Math.max(fs * 2.4, 30);
+  const lt = Kit.mk('text', {x: px, y: ly, fill: K, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle'}, svg);
+  lt.textContent = 'moving parts spread the force';
+  // meter
+  const mh = Math.max(bed - top, 0), seg = mh / MAX, mw = Math.max(W * .07, 18);
+  const gp = Math.min(2, seg * .15);
+  const segs = [];
+  for (let i = 0; i < MAX; i++) {
+    segs.push(Kit.mk('rect', {x: mx - mw/2, y: bed - (i + 1) * seg + gp, width: mw, height: Math.max(seg - 2 * gp, 0), rx: Math.min(3, seg / 4), fill: K, 'fill-opacity': i < m ? .9 : .12}, svg));
+  }
+  Kit.mk('line', {x1: mx - mw, x2: mx + mw * .6, y1: top, y2: top, stroke: K, 'stroke-width': 2.5}, svg);
+  const mt = Kit.mk('text', {x: Math.min(mx + mw * .6, W - 2), y: top - fs * .7, fill: K, 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700, 'text-anchor': 'end'}, svg);
+  mt.textContent = 'M7 limit';
+  S = {q, arr, segs, W: sx};
+}
+
+function shake(){
+  if (!S) return;
+  const a = (m / MAX) * S.W * .035 + 1;
+  gsap.killTweensOf(S.q);
+  if (Kit.calm) { gsap.set(S.q, {x: 0}); }
+  else gsap.fromTo(S.q, {x: -a}, {x: a, duration: .05, repeat: 5 + m, yoyo: true, ease: 'sine.inOut', onComplete: () => gsap.to(S.q, {x: 0, duration: .15})});
+  gsap.fromTo(S.arr, {opacity: 1}, {opacity: m === MAX ? 1 : 0, duration: 1.2, delay: .2});
+  S.segs.forEach((r, i) => gsap.to(r, {attr: {'fill-opacity': i < m ? .9 : .12}, duration: .25}));
+}
+
+Kit.$('shake').addEventListener('click', () => {
+  if (m >= MAX) return;
+  m++; Kit.$('mv').textContent = m;
+  Kit.haptic(m === MAX ? 'success' : 'light');
+  shake();
+  if (m === MAX) {
+    setTimeout(() => {
+      Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      draw(); if (S) gsap.set(S.arr, {opacity: 1});
+      if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 10, duration: .4});
+    }, Kit.calm ? 50 : 700);
+  }
+});
+
+Kit.onShow.card = () => { draw(); if (m === MAX && S) gsap.set(S.arr, {opacity: 1}); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#ctl', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < MAX; i++) { Kit.$('shake').click(); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 1000));
+};
+Kit.single();
+</script>
+</html>

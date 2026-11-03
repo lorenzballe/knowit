@@ -1,0 +1,177 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: economics-hormuz-pipeline-shortfall -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#picbox{position:relative;flex:1;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+#pic [data-hit]{cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,12.5px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#why .body b{font-weight:800}
+.src{display:block;max-width:calc(100% - 112px);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Tap to explore">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OIL ROUTES</span></div>
+    <h2 class="q">Why can't Saudi and Emirati pipelines replace the oil flowing through Hormuz?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic" aria-label="Map of the Gulf with the Strait of Hormuz and two bypass pipelines, and a row of 20 barrels"></svg></div>
+    </div>
+    <div id="why" class="gone"><p class="body">Saudi Arabia's pipeline to the Red Sea and the Emirates' pipeline to the Indian Ocean are real. But together they carry only <b>2–3 million barrels a day</b>, against the <b>20 million</b> that normally pass through Hormuz.</p></div>
+    <p class="say" id="say">Tap the Strait of Hormuz to close it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Hormuz's detours are real but tiny: 2–3 million barrels a day, not 20.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {closed: false, p: [false, false], done: false};
+let tw = [];
+const INK = 'var(--k)';
+const mix = n => `color-mix(in srgb,var(--k) ${n}%,transparent)`;
+const RED = '#e63946';
+const NAMES = ['Saudi pipeline to the Red Sea: open', 'Emirati pipeline to the Indian Ocean: open'];
+
+function caption() {
+  if (!S.closed) return 'Through Hormuz: 20 million barrels a day';
+  if (S.p[0] && S.p[1]) return 'Both pipelines together: only 2–3 million';
+  if (S.p[0]) return NAMES[0];
+  if (S.p[1]) return NAMES[1];
+  return 'Hormuz shut: 20 million barrels a day stuck';
+}
+
+function draw(anim) {
+  tw.forEach(t => t.kill()); tw = [];
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fl = Math.max(12, f * .85), fb = Math.max(12, f * .8);
+  const txt = caption();
+  const fc = Math.max(12, Math.min(f * 1.1, (W - 8) / (txt.length * .56)));
+  // bottom block: 20 barrels in two rows
+  const bh = Math.max(14, Math.min(W / 10 * .6 * 1.3, H * .085)), bw = bh / 1.3, gap = bh * .35;
+  const yB2 = H - 2 - bh, yB1 = yB2 - bh - gap;
+  const yL = yB1 - fb * .7;
+  const yC = yL - Math.max(fb, fc) * 1.5;
+  const Hm = Math.max(60, yC - fc * 1.5);
+  const P = (x, y) => [x * W, y * Hm];
+  const pts = a => a.map(([x, y]) => P(x, y).join(',')).join(' ');
+
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'mapclip'}, defs);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: Hm, rx: f * .8}, cp);
+  const map = Kit.mk('g', {'clip-path': 'url(#mapclip)'}, svg);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: Hm, style: `fill:${mix(8)}`}, map);
+  const water = `fill:${mix(24)}`;
+  Kit.mk('polygon', {points: pts([[0, .15], [.09, .15], [.24, 1], [.10, 1]]), style: water}, map);
+  Kit.mk('polygon', {points: pts([[.28, .02], [.42, .02], [.74, .22], [.86, .30], [.86, .40], [.70, .40], [.56, .36], [.40, .30], [.30, .16]]), style: water}, map);
+  Kit.mk('polygon', {points: pts([[.84, .30], [1, .30], [1, 1], [.60, 1], [.80, .62], [.90, .50], [.84, .42]]), style: water}, map);
+
+  // labels
+  const lab = (t, x, y, anchor) => { const e = Kit.mk('text', {x, y, 'text-anchor': anchor, style: `font:700 ${fl}px var(--body);fill:${mix(70)};letter-spacing:.06em`}, map); e.textContent = t; };
+  lab('IRAN', W - 8, Hm * .09 + fl * .4, 'end');
+  lab('Hormuz', W - 8, Math.max(Hm * .22, Hm * .09 + fl * 1.75), 'end');
+  lab('ARABIA', W * .47, Hm * .78, 'middle');
+  lab('Red Sea', 6, Hm - 8, 'start');
+  lab('Indian Ocean', W - 8, Hm - 8, 'end');
+
+  // tanker route through Hormuz
+  const [hx, hy] = P(.82, .35);
+  const rA = P(.40, .22), rB = P(.66, .31), rC = P(.90, .62);
+  const route = Kit.mk('path', {d: `M${rA} Q${rB} ${hx},${hy} T${rC}`, style: `fill:none;stroke:${S.closed ? mix(35) : INK};stroke-width:${f * .45};stroke-linecap:round;stroke-dasharray:0.1 ${f * 1.1}`}, svg);
+  if (!S.closed && !Kit.calm) tw.push(gsap.to(route, {strokeDashoffset: -f * 1.1, repeat: -1, ease: 'none', duration: .35}));
+
+  // pipelines
+  const pipeD = [
+    `M${P(.45, .33)} Q${P(.30, .54)} ${P(.16, .62)}`,
+    `M${P(.66, .40)} Q${P(.76, .52)} ${P(.83, .585)}`
+  ];
+  const hits = [];
+  pipeD.forEach((d, i) => {
+    const open = S.p[i];
+    const base = Kit.mk('path', {d, style: `fill:none;stroke:${open ? INK : mix(40)};stroke-width:${f * (open ? .6 : .42)};stroke-linecap:round;${open ? '' : `stroke-dasharray:${f * .5} ${f * .4}`}`}, svg);
+    if (open) {
+      const flow = Kit.mk('path', {d, style: `fill:none;stroke:var(--c);stroke-width:${f * .22};stroke-linecap:round;stroke-dasharray:0.1 ${f * .9}`}, svg);
+      if (!Kit.calm) tw.push(gsap.to(flow, {strokeDashoffset: -f * .9, repeat: -1, ease: 'none', duration: .5}));
+      if (anim === 'p' + i && !Kit.calm) {
+        const L = base.getTotalLength();
+        gsap.fromTo(base, {strokeDasharray: L, strokeDashoffset: L}, {strokeDashoffset: 0, duration: .7, ease: 'power2.out'});
+        gsap.from(flow, {opacity: 0, delay: .5, duration: .3});
+      }
+    }
+    if (S.closed && !open) {
+      const L = base.getTotalLength(), m = base.getPointAtLength(L / 2);
+      Kit.mk('path', {d, 'data-hit': String(i), style: `fill:none;stroke:transparent;stroke-width:${Math.max(30, f * 2)}`}, svg);
+      hits.push([m.x, m.y, String(i)]);
+    }
+  });
+
+  // Hormuz: open hotspot or a red X
+  if (!S.closed) hits.push([hx, hy, 'h']);
+  else {
+    const s = f * .75, g = Kit.mk('g', {}, svg);
+    Kit.mk('circle', {cx: hx, cy: hy, r: s * 1.25, style: `fill:var(--c);stroke:${RED};stroke-width:${f * .16}`}, g);
+    Kit.mk('path', {d: `M${hx - s * .6},${hy - s * .6}L${hx + s * .6},${hy + s * .6}M${hx + s * .6},${hy - s * .6}L${hx - s * .6},${hy + s * .6}`, style: `stroke:${RED};stroke-width:${f * .3};stroke-linecap:round`}, g);
+    if (anim === 'h' && !Kit.calm) gsap.from(g, {scale: 0, transformOrigin: `${hx}px ${hy}px`, duration: .45, ease: 'back.out(2)'});
+  }
+  hits.forEach(([x, y, k]) => {
+    const R = Math.max(11, f * .85);
+    const ring = Kit.mk('circle', {cx: x, cy: y, r: R, style: `fill:none;stroke:${INK};stroke-width:2.5`}, svg);
+    Kit.mk('circle', {cx: x, cy: y, r: R, style: `fill:${mix(18)};stroke:${INK};stroke-width:2.5`}, svg);
+    Kit.mk('circle', {cx: x, cy: y, r: R * .32, style: `fill:${INK}`}, svg);
+    Kit.mk('circle', {cx: x, cy: y, r: Math.max(24, R * 1.7), 'data-hit': k, style: 'fill:transparent'}, svg);
+    if (!Kit.calm) tw.push(gsap.to(ring, {attr: {r: R * 1.9}, opacity: 0, repeat: -1, duration: 1.2, ease: 'power1.out'}));
+  });
+
+  // caption + legend
+  const cap = Kit.mk('text', {x: W / 2, y: yC, 'text-anchor': 'middle', style: `font:800 ${fc}px var(--body);fill:${INK}`}, svg);
+  cap.textContent = txt;
+  if (anim && !Kit.calm) gsap.from(cap, {opacity: 0, y: 6, duration: .35});
+  const leg = Kit.mk('text', {x: W / 2, y: yL, 'text-anchor': 'middle', style: `font:600 ${fb}px var(--body);fill:${mix(65)}`}, svg);
+  leg.textContent = '1 barrel = 1 million barrels a day';
+
+  // barrels
+  const cell = W / 10, lit = [], off = [];
+  for (let i = 0; i < 20; i++) {
+    const x = (i % 10) * cell + (cell - bw) / 2, y = i < 10 ? yB1 : yB2;
+    let st = 'lit';
+    if (S.closed) st = (S.p[0] && S.p[1]) ? (i < 2 ? 'lit' : i === 2 ? 'half' : 'off') : 'off';
+    const g = Kit.mk('g', {}, svg);
+    const sty = st === 'lit' ? `fill:${INK}` : st === 'half' ? `fill:${mix(45)};stroke:${INK};stroke-width:1.6;stroke-dasharray:3 2.5` : `fill:none;stroke:${mix(35)};stroke-width:1.6`;
+    Kit.mk('rect', {x, y, width: bw, height: bh, rx: bw * .28, style: sty}, g);
+    const hoop = st === 'off' ? mix(35) : 'var(--c)';
+    [.3, .7].forEach(t => Kit.mk('line', {x1: x + 1.5, x2: x + bw - 1.5, y1: y + bh * t, y2: y + bh * t, style: `stroke:${hoop};stroke-width:1.4`}, g));
+    (st === 'off' ? off : lit).push(g);
+  }
+  if (!Kit.calm) {
+    if (anim === 'h') gsap.from(off, {opacity: .9, scale: 1.12, transformOrigin: '50% 50%', stagger: .025, duration: .3});
+    if (anim === 'done') gsap.from(lit, {scale: 0, transformOrigin: '50% 100%', stagger: .18, duration: .45, ease: 'back.out(2)'});
+  }
+}
+
+function tap(k) {
+  if (k === 'h' && !S.closed) {
+    S.closed = true; Kit.haptic('light'); draw('h');
+    Kit.$('say').textContent = 'Now tap the two pipelines that go around it.';
+  } else if ((k === '0' || k === '1') && S.closed && !S.p[+k]) {
+    S.p[+k] = true; Kit.haptic('selection');
+    if (S.p[0] && S.p[1]) {
+      S.done = true; Kit.haptic('success');
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      requestAnimationFrame(() => draw('done'));
+    } else draw('p' + k);
+  }
+}
+Kit.$('pic').addEventListener('click', e => { const h = e.target.closest('[data-hit]'); if (h) tap(h.dataset.hit); });
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+const hitClick = k => { const el = Kit.$('pic').querySelector(`[data-hit="${k}"]`); if (el) el.dispatchEvent(new MouseEvent('click', {bubbles: true})); };
+const wait = ms => new Promise(r => setTimeout(r, ms));
+Kit.play.card = async () => { hitClick('h'); await wait(400); hitClick('0'); await wait(400); hitClick('1'); await wait(1200); };
+Kit.single();
+</script>
+</html>

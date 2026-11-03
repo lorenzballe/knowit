@@ -1,0 +1,37 @@
+{
+  "id": "nature-gulf-stream-storms-2",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the Gulf Stream contribute to accidents in the Bermuda Triangle?",
+  "answer": "The Gulf Stream carries warm surface water, about 26 °C, right through the Bermuda Triangle. That heat fuels strong storms that change fast, shaking ships and aircraft with turbulence. Warm water makes wild weather, so the accidents have a weather explanation rather than a mystery.",
+  "move": "No mystery: a warm current breeds sudden storms.",
+  "keywords": [
+    "gulf stream",
+    "bermuda triangle",
+    "warm surface water",
+    "storms",
+    "turbulence"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A diagram of warm Gulf Stream water meeting cooler air above the Bermuda Triangle, generating storms. It asks why the Gulf Stream contributes to accidents there. The reader adds warm-current layers one by one to watch the weather change from a calm sea to a storm."
+  },
+  "source": "Geopop, “Esiste davvero il triangolo delle Bermuda? In realtà il \"mistero\" ha una spiegazione scientifica” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=xZiI-xXYZiA&t=19s",
+  "written": "2026-11-03"
+}

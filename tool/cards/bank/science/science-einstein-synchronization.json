@@ -1,0 +1,36 @@
+{
+  "id": "science-einstein-synchronization",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What convention did Einstein adopt for clock synchronization?",
+  "answer": "Einstein stipulated equal halves: light is taken to travel A to B in the same time it takes to return. This is a definition, not a measurement. Timing the trip to B alone would require B's clock to already be in sync, which is the very thing being set. Only the round trip can actually be measured.",
+  "move": "Light's speed is the same both ways by Einstein's choice; only the round trip is measured.",
+  "keywords": [
+    "einstein",
+    "speed of light",
+    "clock synchronization",
+    "relativity"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question card asking what convention Einstein adopted for clock synchronization, with two choices: equal halves or fast out, slow back. A diagram shows a light flip between clocks A and B, with the same 10 ticks at A either way."
+  },
+  "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=pTn6Ewhb27k&t=440s",
+  "written": "2026-11-03"
+}

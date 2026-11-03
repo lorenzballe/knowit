@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-niche-expertise-respect -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#scene{display:block;flex:1 1 0;min-height:0;width:100%;height:0;color:var(--k)}
+#ctrl{display:flex;flex-direction:column;gap:.6cqh}
+#ctrl input{width:100%;height:max(4cqh,28px);accent-color:var(--k);margin:0;cursor:pointer}
+#ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted);letter-spacing:.04em}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Slider · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOCIAL POWER</span></div>
+    <h2 class="q">Why does knowing one thing deeply make bullies back off?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scene" aria-label="A quiet person, a bully and onlookers"></svg>
+      <div id="ctrl">
+        <input id="sl" type="range" min="0" max="100" value="0" aria-label="How much you show what you know">
+        <div id="ends"><span>SILENT</span><span>SHOWS EXPERTISE</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">Bullies go after what looks weak. Showing you know more about something the group shares (the team, the class, the job) or something they care about makes you the one people listen to. Mocking you now costs the bully face, so do it early.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider: let the quiet one show what they know.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Early on, show you know one relevant thing better than they do.</div>
+    <div class="foot"><span class="src">Source · Diventare Strong, “FATTI RISPETTARE! 7 Trucchi Psicologici Scientifici” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('scene'), sl = Kit.$('sl');
+const S = {t: 0};
+let G = null, done = false, lastStage = -1;
+const lerp = (a, b, t) => a + (b - a) * t;
+const youLines = t => t < .15 ? ['…'] : t < .45 ? ['Well, actually,', 'the rule says…'] : t < .72 ? ['The play failed', 'on timing.'] : ['Two steps earlier', 'and the gap opens.'];
+const bullyLines = t => t < .4 ? ['Who asked you?'] : t < .72 ? ['…ok, go on.'] : ['Huh. Fair point.'];
+
+function person(ph, bw) {
+  const g = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: -bw / 2, y: -ph * .62, width: bw, height: ph * .62, rx: bw * .42, fill: 'currentColor'}, g);
+  const hg = Kit.mk('g', {}, g), r = ph * .17;
+  Kit.mk('circle', {cx: 0, cy: -ph * .8, r, fill: 'currentColor'}, hg);
+  const e1 = Kit.mk('circle', {r: r * .14, style: 'fill:var(--c)'}, hg);
+  const e2 = Kit.mk('circle', {r: r * .14, style: 'fill:var(--c)'}, hg);
+  return {g, hg, e1, e2, r, ph};
+}
+function eyes(p, dx, dy) {
+  const cy = -p.ph * .82 + dy * p.r * .3;
+  p.e1.setAttribute('cx', -p.r * .3 + dx * p.r * .38); p.e1.setAttribute('cy', cy);
+  p.e2.setAttribute('cx', p.r * .3 + dx * p.r * .38); p.e2.setAttribute('cy', cy);
+}
+function bubble(x, y, w, h) {
+  const g = Kit.mk('g', {}, svg);
+  const tail = Kit.mk('path', {style: 'fill:var(--c)', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+  Kit.mk('rect', {x, y, width: w, height: h, rx: h * .3, style: 'fill:var(--c)', stroke: 'currentColor', 'stroke-width': 2}, g);
+  const txt = Kit.mk('text', {x: x + w / 2, 'text-anchor': 'middle', fill: 'currentColor', style: 'font-family:var(--body);font-weight:700'}, g);
+  return {g, tail, txt, x, y, w, h, key: ''};
+}
+function setText(b, lines, fs) {
+  const key = lines.join('|'); if (b.key === key) return; b.key = key;
+  b.txt.textContent = ''; b.txt.setAttribute('font-size', fs);
+  const lh = fs * 1.3, top = b.y + b.h / 2 - (lines.length - 1) * lh / 2 + fs * .35;
+  lines.forEach((l, i) => Kit.mk('tspan', {x: b.x + b.w / 2, y: top + i * lh}, b.txt).textContent = l);
+}
+function draw() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const lf = Math.max(12, f * .8);
+  const ml = Kit.mk('text', {x: W * .04, y: lf * 1.1, 'font-size': lf, fill: 'currentColor', style: 'font-family:var(--mono);font-weight:700;letter-spacing:.06em'}, svg);
+  ml.textContent = 'COST OF MOCKING YOU';
+  const barY = lf * 1.6, barH = Math.max(8, f * .55);
+  Kit.mk('rect', {x: W * .04, y: barY, width: W * .92, height: barH, rx: barH / 2, fill: 'currentColor', opacity: .15}, svg);
+  const bar = Kit.mk('rect', {x: W * .04, y: barY, width: 0, height: barH, rx: barH / 2, fill: 'currentColor'}, svg);
+  const bH = Math.max(2 * 1.3 * 12 + 14, f * 3);
+  let gap1 = f * 1.1, gap2 = f * 1.2, labH = Math.max(lf * 1.9, f * 1.9), showLab = true;
+  const need = () => barY + barH + gap1 + bH + gap2 + 40 * 1.12 + labH;
+  if (H < need()) { gap1 = Math.min(gap1, lf * .5); gap2 = Math.min(gap2, lf * .5); }
+  if (H < need()) { showLab = false; labH = 4; }
+  const bY = barY + barH + gap1;
+  const yb = bubble(W * .03, bY, W * .5, bH), bb = bubble(W * .57, bY, W * .4, bH);
+  const ground = H - labH;
+  Kit.mk('line', {x1: 0, x2: W, y1: ground, y2: ground, stroke: 'currentColor', 'stroke-width': 2, opacity: .3}, svg);
+  const avail = ground - (bY + bH + gap2);
+  const ph = Math.max(40, Math.min(avail / 1.12, W * .4)), bw = ph * .36;
+  const crowd = [person(ph, bw), person(ph, bw)];
+  const you = person(ph, bw), bully = person(ph, bw);
+  const lab = (t) => { const e = Kit.mk('text', {y: H - lf * .45, 'font-size': lf, 'text-anchor': 'middle', fill: 'currentColor', style: 'font-family:var(--mono);font-weight:700'}, svg); e.textContent = t; return e; };
+  const yl = lab('YOU'), bl = lab('BULLY');
+  if (!showLab) { yl.remove(); bl.remove(); }
+  const yfs = Math.max(12, Math.min(f * .95, yb.w / (18 * .56))), bfs = Math.max(12, Math.min(f * .95, bb.w / (16 * .56)));
+  G = {W, H, f, ground, ph, bar, yb, bb, you, bully, crowd, yl, bl, yfs, bfs};
+  render(S.t);
+}
+function tailTo(b, hx, hy, show) {
+  const bx = Math.min(Math.max(hx, b.x + b.h * .4), b.x + b.w - b.h * .4), by = b.y + b.h - 1;
+  const tipY = Math.max(by + 6, hy);
+  b.tail.setAttribute('d', `M${bx - 8},${by} L${bx + 8},${by} L${lerp(bx, hx, .5)},${tipY} Z`);
+}
+function render(t) {
+  if (!G) return;
+  const {W, ground, ph, you, bully, crowd} = G;
+  G.bar.setAttribute('width', W * .92 * t);
+  // You: grows, head lifts, eyes rise from the floor to the group
+  const ys = .82 + .25 * t, yx = W * .3;
+  you.g.setAttribute('transform', `translate(${yx},${ground}) scale(${ys})`);
+  you.hg.setAttribute('transform', `translate(0,${(1 - t) * ph * .07})`);
+  eyes(you, t * .8, (1 - t) * 1.2);
+  // Bully: looms close, then steps back and straightens
+  const bx = W * lerp(.5, .74, t), bs = lerp(1.1, .95, t);
+  bully.g.setAttribute('transform', `translate(${bx},${ground}) rotate(${lerp(-14, 3, t)}) scale(${bs})`);
+  eyes(bully, -1, 0);
+  // Crowd: looks away, then turns and leans in
+  const cx = [W * .09, W * .9];
+  crowd.forEach((p, i) => {
+    const toward = i === 0 ? 1 : -1;
+    p.g.setAttribute('transform', `translate(${cx[i]},${ground}) rotate(${toward * 8 * t}) scale(.88)`);
+    p.g.setAttribute('opacity', lerp(.35, 1, t));
+    eyes(p, lerp(-toward, toward, t), 0);
+  });
+  G.yl.setAttribute('x', yx); G.bl.setAttribute('x', bx);
+  // Bubbles
+  setText(G.yb, youLines(t), G.yfs); setText(G.bb, bullyLines(t), G.bfs);
+  G.yb.g.setAttribute('opacity', lerp(.45, 1, Math.min(1, t * 2)));
+  G.bb.g.setAttribute('opacity', lerp(1, .6, t));
+  tailTo(G.yb, yx, ground - ph * ys * 1.0, true);
+  tailTo(G.bb, bx - (1 - t) * ph * .2, ground - ph * bs * 1.0, true);
+}
+function stageOf(t) { return t < .15 ? 0 : t < .45 ? 1 : t < .72 ? 2 : 3; }
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+sl.addEventListener('input', () => {
+  const v = +sl.value / 100;
+  if (Kit.calm) { S.t = v; render(v); }
+  else gsap.to(S, {t: v, duration: .45, ease: 'power2.out', overwrite: true, onUpdate: () => render(S.t)});
+  const st = stageOf(v); if (st !== lastStage) { lastStage = st; Kit.haptic('selection'); }
+  if (v >= .9) finish();
+});
+let raf = 0;
+new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (G) draw(); }); }).observe(svg);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#scene', {opacity: 0, duration: .5});
+  gsap.to(S, {t: .12, duration: .5, delay: .5, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => render(S.t)});
+};
+Kit.play.card = async () => {
+  sl.value = 100; sl.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

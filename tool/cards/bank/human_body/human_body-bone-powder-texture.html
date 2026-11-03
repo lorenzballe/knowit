@@ -1,0 +1,107 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-bone-powder-texture -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#cvbox{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#zoom{align-self:center;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 6cqw;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Zoom in · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CREMATION</span></div>
+    <h2 class="q">How does cremated bone powder differ from wood ash?</h2>
+    <div class="stagebox" id="stage">
+      <div id="cvbox"><canvas id="cv"></canvas></div>
+      <button id="zoom">Zoom in: a pinch</button>
+      <div id="why" class="gone">
+        <p class="big">Denser and pastier</p>
+        <p class="body">Burning wood leaves a fine, light, powdery ash. Cremated bone becomes a much denser, more pasty powder. From a whole body, only about 2.4 kg of it remains.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap Zoom in to look closer, step by step.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Bone ash is not wood ash: it is dense and pasty, not fine and powdery.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come avviene la cremazione dal punto di vista tecnico” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv'), card = Kit.$('card');
+const st = {z: 0}; let level = 0, geom = null, T = 0;
+const R = Kit.rnd;
+function poly(n, j){ const a=[]; for(let i=0;i<n;i++) a.push(1-j+j*R()*2*.5+ j*.5*R()); return a; }
+// particle data in normalized panel coordinates
+const D = {wood:{s0:[],s1:[],s2:[]}, bone:{s0:[],s1:[],s2:[]}};
+for(let i=0;i<260;i++) D.wood.s0.push({u:R()*2-1,v:R(),r:.003+R()*.004,c:R()<.5?'#d9d5cd':'#fbfaf6'});
+for(let i=0;i<170;i++) D.bone.s0.push({u:R()*2-1,v:R(),r:.008+R()*.02,c:['#a9a298','#6f6a63','#b9b2a6'][i%3]});
+for(let i=0;i<900;i++) D.wood.s1.push({u:R(),v:R(),r:.003+R()*.006,a:.35+R()*.6});
+for(let i=0;i<22;i++)for(let j=0;j<22;j++) D.bone.s1.push({u:(i+.5+(R()-.5)*.8)/22,v:(j+.5+(R()-.5)*.8)/22,r:.028+R()*.018,c:['#9a948a','#857f76','#b2ab9f','#746f68'][(i*7+j*3)%4],p:poly(7,.35)});
+for(let i=0;i<55;i++) D.wood.s2.push({u:R(),v:R(),r:.012+R()*.03,p:poly(5,.6),rot:R()*6.3,ph:R()*6.3,a:.6+R()*.4});
+for(let i=0;i<8;i++)for(let j=0;j<8;j++) D.bone.s2.push({u:(i+.5+(R()-.5)*.6)/8,v:(j+.5+(R()-.5)*.6)/8,r:.09+R()*.04,c:['#9d978d','#8a847b','#b0a99d','#7a756d'][(i+2*j)%4],p:poly(9,.3),rot:R()*6.3});
+const CAP = [
+  [['pale, soft','heap'],['grey, compact','heap']],
+  [['fine dust,','air between'],['coarse grains,','tightly packed']],
+  [['light, loose','flakes'],['dense, pasty','clumps']]
+];
+function blob(x,px,py,r,p,rot){ x.beginPath(); const n=p.length; for(let i=0;i<=n;i++){const a=rot+i/n*6.283, rr=r*p[i%n]; const X=px+Math.cos(a)*rr, Y=py+Math.sin(a)*rr; i?x.lineTo(X,Y):x.moveTo(X,Y);} x.closePath(); }
+function scene(x,k,side,r,s,al){
+  const cx=r.x+r.w/2, cy=r.y+r.h/2, m=Math.min(r.w,r.h), d=D[side];
+  x.save(); x.globalAlpha=al; x.translate(cx,cy); x.scale(s,s); x.translate(-cx,-cy);
+  if(k===0){
+    const base=r.y+r.h*.8, hw=r.w*.42, hh=r.h*.5, wood=side==='wood';
+    const top=u=>base-hh*Math.pow(Math.max(0,1-u*u),wood?1.6:1.1)*(wood?1:(1+.07*Math.sin(u*9)));
+    x.fillStyle='rgba(0,0,0,.4)'; x.beginPath(); x.ellipse(cx,base,hw*1.05,r.h*.04,0,0,6.283); x.fill();
+    x.beginPath(); x.moveTo(cx-hw,base); for(let i=0;i<=48;i++){const u=-1+2*i/48; x.lineTo(cx+u*hw,top(u));} x.closePath();
+    x.fillStyle=wood?'#efece6':'#8e887f'; x.fill(); x.save(); x.clip();
+    for(const p of d.s0){x.fillStyle=p.c; x.beginPath(); x.arc(cx+p.u*hw,base-p.v*hh,p.r*m,0,6.283); x.fill();}
+    x.restore();
+  } else if(k===1){
+    if(side==='wood'){ for(const p of d.s1){x.fillStyle=`rgba(242,238,230,${p.a})`; x.beginPath(); x.arc(r.x+p.u*r.w,r.y+p.v*r.h,p.r*m,0,6.283); x.fill();} }
+    else { x.fillStyle='#5d5852'; x.fillRect(r.x,r.y,r.w,r.h); for(const p of d.s1){x.fillStyle=p.c; blob(x,r.x+p.u*r.w,r.y+p.v*r.h,p.r*m,p.p,0); x.fill();} }
+  } else {
+    if(side==='wood'){ for(const p of d.s2){const dx=Math.sin(T*.6+p.ph)*.012*m, dy=Math.cos(T*.5+p.ph)*.012*m; x.fillStyle=`rgba(246,243,236,${p.a})`; blob(x,r.x+p.u*r.w+dx,r.y+p.v*r.h+dy,p.r*m,p.p,p.rot+T*.2); x.fill();} }
+    else { x.fillStyle='#655f58'; x.fillRect(r.x,r.y,r.w,r.h); x.strokeStyle='rgba(0,0,0,.3)'; x.lineWidth=Math.max(1,m*.006);
+      for(const p of d.s2){const X=r.x+p.u*r.w, Y=r.y+p.v*r.h; x.fillStyle=p.c; blob(x,X,Y,p.r*m,p.p,p.rot); x.fill(); x.stroke();
+        x.fillStyle='rgba(255,255,255,.12)'; x.beginPath(); x.arc(X-p.r*m*.3,Y-p.r*m*.3,p.r*m*.3,0,6.283); x.fill();} }
+  }
+  x.restore();
+}
+function draw(){
+  if(!geom) return; const {x,W,H}=geom; x.clearRect(0,0,W,H);
+  const cs=getComputedStyle(card), ink=cs.getPropertyValue('--k').trim()||'#111', font=cs.getPropertyValue('--body').trim()||'sans-serif';
+  const fs=Math.max(12,Math.min(H*.05,W*.045)), lh=fs*1.3, top=lh*1.5, cap=lh*2+fs*.7, pad=Math.max(8,W*.03);
+  const pw=(W-pad)/2, ph=Math.max(20,H-top-cap), L=Math.round(st.z);
+  ['wood','bone'].forEach((side,i)=>{
+    const r={x:i*(pw+pad),y:top,w:pw,h:ph};
+    x.fillStyle=ink; x.textAlign='center'; x.textBaseline='middle';
+    x.font=`800 ${fs}px ${font}`; x.fillText(side==='wood'?'WOOD ASH':'BONE POWDER',r.x+pw/2,lh*.6);
+    x.save(); x.beginPath(); x.roundRect(r.x,r.y,r.w,r.h,Math.min(18,pw*.06)); x.fillStyle='#1f1c19'; x.fill(); x.clip();
+    const z=st.z, k=Math.min(1,Math.floor(z)), f=z-k;
+    if(z>=2) scene(x,2,side,r,1,1);
+    else { scene(x,k,side,r,1+3*f,1-f); if(f>0) scene(x,k+1,side,r,.4+.6*f,f); }
+    x.restore();
+    x.font=`600 ${fs}px ${font}`; x.fillStyle=ink;
+    CAP[L][i].forEach((t,j)=>x.fillText(t,r.x+pw/2,top+ph+fs*.7+lh*(j+.5)));
+  });
+}
+const NEXT=['Zoom in: a pinch','Zoom in: the grains'];
+Kit.$('zoom').addEventListener('click',()=>{
+  if(level>=2) return; level++; Kit.haptic('light');
+  const done=()=>{ if(level===2){ Kit.hide('zoom'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); requestAnimationFrame(()=>Kit.onShow.card()); } };
+  if(level<2) Kit.$('zoom').textContent=NEXT[level];
+  if(Kit.calm){ st.z=level; draw(); done(); }
+  else gsap.to(st,{z:level,duration:.9,ease:'power2.inOut',onComplete:done});
+});
+gsap.ticker.add((time,dt)=>{ if(!Kit.calm) T+=dt/1000; draw(); });
+Kit.onShow.card = () => { geom = Kit.fitCanvas(cv); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cvbox,#zoom', {opacity: 0, y: 10, stagger: .1, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { const w=ms=>new Promise(r=>setTimeout(r,ms)); Kit.$('zoom').click(); await w(1100); Kit.$('zoom').click(); await w(1300); };
+Kit.single();
+</script>
+</html>

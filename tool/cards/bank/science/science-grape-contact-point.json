@@ -1,0 +1,36 @@
+{
+  "id": "science-grape-contact-point",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where is the electromagnetic field strongest in two touching grapes?",
+  "answer": "The strongest oscillating electromagnetic field in two touching grapes sits at the contact point between them. That tiny spot is where they get hottest, hot enough to make plasma.",
+  "move": "Two touching grapes get hottest at the point where they meet.",
+  "keywords": [
+    "grape",
+    "microwave_oven",
+    "plasma",
+    "electromagnetic_field"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A close-up of two touching grapes, with a bright, intense spot at their contact point. The reader is asked to drag the right grape until it touches the other one."
+  },
+  "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=260s",
+  "written": "2026-11-03"
+}

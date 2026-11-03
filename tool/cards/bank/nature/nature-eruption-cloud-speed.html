@@ -1,0 +1,172 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-eruption-cloud-speed -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative}
+#svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:pointer;overflow:visible}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Guess a number">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
+    <h2 class="q">How fast can the fastest eruption clouds race across the land?</h2>
+    <div class="stagebox" id="stage"><svg id="svg"></svg></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the marker on the scale to your guess of the top speed.</p>
+    <div id="why" class="gone"><p class="body">They run from 50 km/h up to 700 km/h. In Plinian eruptions, very viscous magma builds towering columns; when a column collapses it races out as flows. The fastest is 14 times quicker than the slowest.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Eruption clouds race at 50 to 700 km/h, spreading danger fast.</div>
+    <div class="foot"><span class="src">Source · Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('svg');
+const S = {g: 120, moved: false, locked: false, rev: false, t: 0};
+const T = 0.8;                    // seconds for the 700 km/h cloud to cross
+const END = T * 700 / 50;         // the 50 km/h cloud's crossing time
+let G = {}, drag = false, sureOn = false, raceTw = null;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const v2x = v => G.x0 + (G.x1 - G.x0) * v / 1000;
+const x2v = x => Math.round(clamp((x - G.x0) / (G.x1 - G.x0) * 1000, 10, 1000) / 10) * 10;
+const INK = 'var(--k)', CARD = 'var(--c)';
+const mix = p => `color-mix(in srgb,var(--k) ${p}%,var(--c))`;
+const LAVA = '#e2482b';
+
+function txt(p, x, y, s, size, weight, anchor, fill) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'middle', style: `font:${weight || 700} ${size}px var(--body);fill:${fill || INK}`}, p);
+  t.textContent = s; return t;
+}
+
+function draw() {
+  if (G.plume) gsap.killTweensOf(G.plume.children);
+  svg.innerHTML = '';
+  const r = Kit.fitSvg(svg), W = r.W, H = r.H, f = Math.max(r.f, 13);
+  G = {W, H, f, x0: W * .07, x1: W * .93};
+  const scaleH = f * 6.4, yA = H - f * 2.6, sceneB = H - scaleH;
+  const gY = sceneB - f * .4;
+  G.yA = yA;
+  // ground
+  Kit.mk('line', {x1: 0, x2: W, y1: gY, y2: gY, style: `stroke:${INK};stroke-width:${f * .14}`}, svg);
+  // volcano
+  const vh = clamp(sceneB * .42, f * 3, f * 7.5), cy = gY - vh;
+  const plume = Kit.mk('g', {}, svg); G.plume = plume;
+  const cx = W * .16;
+  const pr = [1.3, 1.6, 1.9, 2.2];
+  let py = cy - f * 1.1;
+  pr.forEach((k, i) => {
+    if (py - f * k < f * .2) return;
+    Kit.mk('circle', {cx: cx + (i % 2 ? f * .5 : -f * .4), cy: py, r: f * k, style: `fill:${mix(30 + i * 6)}`}, plume);
+    py -= f * k * 1.3;
+  });
+  Kit.mk('path', {d: `M${W * .01} ${gY} L${W * .13} ${cy} L${W * .19} ${cy} L${W * .31} ${gY} Z`, style: `fill:${mix(85)}`}, svg);
+  Kit.mk('ellipse', {cx, cy, rx: W * .03, ry: f * .35, style: `fill:${LAVA}`}, svg);
+  if (!Kit.calm) gsap.to(plume.children, {y: -f * .5, scale: 1.08, transformOrigin: '50% 50%', yoyo: true, repeat: -1, duration: 1.6, stagger: .3, ease: 'sine.inOut'});
+
+  // race lanes
+  G.xs = W * .34; G.xe = W * .93; G.puffs = [];
+  const L = f * 3.2, rr = f * .75;
+  Kit.mk('line', {x1: G.xe + rr, x2: G.xe + rr, y1: gY - rr - L * 2 - f * 1.6, y2: gY, style: `stroke:${INK};stroke-width:${f * .1};stroke-dasharray:${f * .4} ${f * .3};opacity:.5`}, svg);
+  if (S.rev) {
+    const lanes = [
+      {v: 50, name: '50 km/h', fill: mix(45), stroke: 'none'},
+      {v: 700, name: '700 km/h', fill: INK, stroke: 'none'},
+      {v: S.g, name: `you: ${S.g} km/h`, fill: 'none', stroke: INK}
+    ];
+    lanes.forEach((l, i) => {
+      const y = gY - rr - f * .1 - L * i;
+      Kit.mk('line', {x1: G.xs, x2: G.xe, y1: y + rr, y2: y + rr, style: `stroke:${INK};stroke-width:1;opacity:.18`}, svg);
+      const g = Kit.mk('g', {}, svg);
+      const st = `fill:${l.fill};stroke:${l.stroke};stroke-width:${f * .14}`;
+      Kit.mk('circle', {cx: -rr * .9, cy: rr * .3, r: rr * .7, style: st}, g);
+      Kit.mk('circle', {cx: 0, cy: 0, r: rr, style: st}, g);
+      Kit.mk('circle', {cx: rr * .8, cy: rr * .25, r: rr * .75, style: st}, g);
+      const lab = txt(g, 0, -rr - f * .45, l.name, f, 700);
+      G.puffs.push({g, lab, v: l.v, y, w: l.name.length * f * .55});
+    });
+    upd();
+  }
+
+  // scale
+  Kit.mk('line', {x1: G.x0, x2: G.x1, y1: yA, y2: yA, style: `stroke:${INK};stroke-width:${f * .16};stroke-linecap:round`}, svg);
+  for (let v = 0; v <= 1000; v += 100)
+    Kit.mk('line', {x1: v2x(v), x2: v2x(v), y1: yA - f * .3, y2: yA + f * .3, style: `stroke:${INK};stroke-width:${f * .1}`}, svg);
+  if (!S.rev) {
+    [0, 250, 500, 750, 1000].forEach(v => txt(svg, v2x(v), yA + f * 1.6, v === 0 ? '0 km/h' : String(v), f * .9, 600, v === 0 ? 'start' : v === 1000 ? 'end' : 'middle', mix(70)));
+  } else {
+    Kit.mk('rect', {x: v2x(50), y: yA - f * .4, width: v2x(700) - v2x(50), height: f * .8, rx: f * .4, style: `fill:${LAVA}`}, svg);
+    txt(svg, v2x(50), yA + f * 1.7, '50', f * 1.05, 800, 'start');
+    txt(svg, v2x(700), yA + f * 1.7, '700 km/h', f * 1.05, 800, 'middle');
+  }
+  G.mk = Kit.mk('g', {}, svg);
+  drawMarker();
+}
+
+function drawMarker() {
+  const {f, yA, W} = G, m = G.mk; m.innerHTML = '';
+  const x = v2x(S.g);
+  Kit.mk('line', {x1: x, x2: x, y1: yA - f * 1.1, y2: yA, style: `stroke:${INK};stroke-width:${f * .14}`}, m);
+  Kit.mk('circle', {cx: x, cy: yA, r: f * .8, style: `fill:${INK};stroke:${CARD};stroke-width:${f * .2}`}, m);
+  const s = S.rev ? `you: ${S.g}` : S.moved ? `${S.g} km/h` : 'drag me ↔';
+  const w = s.length * f * .6;
+  const anchor = x - w / 2 < 2 ? 'start' : x + w / 2 > W - 2 ? 'end' : 'middle';
+  txt(m, anchor === 'start' ? Math.max(x - f * .8, 2) : anchor === 'end' ? Math.min(x + f * .8, W - 2) : x, yA - f * 1.6, s, f * 1.1, 800, anchor);
+}
+
+function upd() {
+  if (!G.puffs) return;
+  G.puffs.forEach(p => {
+    const x = G.xs + (G.xe - G.xs) * Math.min(1, S.t / (T * 700 / p.v));
+    p.g.setAttribute('transform', `translate(${x},${p.y})`);
+    const lx = clamp(x, G.W * .3 + p.w / 2, G.W * .99 - p.w / 2);
+    p.lab.setAttribute('x', lx - x);
+  });
+}
+
+function setFrom(e) {
+  const rc = svg.getBoundingClientRect();
+  S.g = x2v((e.clientX - rc.left) * G.W / rc.width); S.moved = true; drawMarker();
+}
+svg.addEventListener('pointerdown', e => { if (S.locked) return; drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); });
+svg.addEventListener('pointermove', e => { if (drag && !S.locked) setFrom(e); });
+const up = () => {
+  if (!drag) return; drag = false; Kit.haptic('selection');
+  if (!sureOn) { sureOn = true; sure.on(); }
+};
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  S.locked = true; S.rev = true;
+  const ok = Math.abs(S.g - 700) <= 200;
+  Kit.answer({choice: `${S.g} km/h`, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${S.g} km/h, ${ok ? 'close' : 'off'}: up to 700`);
+  Kit.haptic('success');
+  if (Kit.calm) { S.t = END; draw(); return; }
+  S.t = 0; draw();
+  raceTw = gsap.to(S, {t: END, duration: END, ease: 'none', onUpdate: upd});
+});
+
+Kit.onShow.card = () => draw();
+if (window.ResizeObserver) new ResizeObserver(() => { if (G.W) draw(); }).observe(Kit.$('stage'));
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G.mk) return;
+  gsap.fromTo(G.mk, {x: 0}, {x: G.f * 1.2, yoyo: true, repeat: 3, duration: .35, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const rc = svg.getBoundingClientRect();
+  const y = rc.top + G.yA * rc.height / G.H;
+  const xAt = v => rc.left + v2x(v) * rc.width / G.W;
+  const ev = (t, v) => svg.dispatchEvent(new PointerEvent(t, {clientX: xAt(v), clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', 200); ev('pointermove', 400); ev('pointermove', 600); ev('pointerup', 600);
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

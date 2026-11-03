@@ -1,0 +1,264 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Drying a jelly</title>
+<!-- Carbon dioxide's phase diagram with a wet gel on it. The reader drags the gel from liquid to gas.
+     Across the boiling line the liquid's surface sweeps the pores and the skeleton caves in; round the
+     critical point there is never a surface, and the skeleton is left whole: aerogel.
+     Inspired by Veritasium, "World's Lightest Solid!". Touch: drags, on the diagram only. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.3cqh}
+#gelrow{flex:none;display:flex;align-items:center;gap:3.6cqw;height:13.5cqh}
+#gel{height:100%;aspect-ratio:1;flex:none;display:block;overflow:visible}
+#state{display:flex;flex-direction:column;gap:.6cqh;min-width:0}
+#state b{font:800 max(1.5cqh,11.5px)/1.15 var(--body);letter-spacing:.1em;text-transform:uppercase}
+#state span{font:600 max(2.1cqh,13px)/1.3 var(--body)}
+#plot{flex:1;min-height:0;position:relative;touch-action:none;cursor:grab}
+#plot.held{cursor:grabbing}
+#plot.done{touch-action:auto;cursor:default}
+#plot svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;user-select:none;-webkit-user-select:none}
+#again{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){.answered .in{gap:1.45cqh}.answered #gelrow{display:none}.failed #sd{display:none}.failed #gelrow{height:10.5cqh}}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag a path · the phase diagram">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE 1931 BET</span></div>
+    <h2 class="q">How do you dry a jelly without crushing it?</h2>
+    <div class="stagebox" id="stage">
+      <div id="gelrow">
+        <svg id="gel" role="img" aria-label="The gel, magnified: a skeleton of fine strands with liquid in its pores."></svg>
+        <div id="state"><b id="st">Liquid CO₂ · 12 °C · 60 bar</b><span id="sd">Its pores are full of liquid.</span></div>
+      </div>
+      <div id="plot" data-drag>
+        <svg id="chart" role="img" aria-label="Carbon dioxide's phase diagram, temperature across and pressure up. The boiling line separates liquid from gas and ends at the critical point, 31 °C and 74 bar. A dot, the wet gel, starts in the liquid."></svg>
+      </div>
+    </div>
+    <p class="say" id="say">The story goes that in 1931 Samuel Kistler bet Charles Learned he could do it. <b>Drag the wet gel from liquid to gas.</b></p>
+    <button class="btn ghost gone" id="again">Try another way</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The boiling line ends. Go round its end and liquid turns to gas without boiling.</div>
+    <div class="foot"><span class="src">Source · S. S. Kistler, Nature 127, 741 (1931) · NIST WebBook</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  // Carbon dioxide: critical point 31.0 °C and 73.8 bar (NIST). Below it the boiling line, fitted to
+  // NIST's vapour pressures: 34.9 bar at 0 °C, 57.3 at 20, 72.1 at 30.
+  const TC = 31, PC = 73.8, TMAX = 50, PMAX = 110, START = [12, 60];
+  const pv = T => 34.85 + .8774 * T + .01223 * T * T;
+  const zone = (T, P) => T < TC ? (P > pv(T) ? 'L' : 'G') : (P >= PC ? 'S' : 'G');
+  const INK = '#10100c', PAPER = '#ffffff';
+  const card = Kit.$('card'), plot = Kit.$('plot'), svg = Kit.$('chart'), gel = Kit.$('gel');
+  const say = Kit.$('say'), again = Kit.$('again'), st = Kit.$('st'), sd = Kit.$('sd');
+  const has = () => typeof gsap !== 'undefined';
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const txt = (p, x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree'}, a), p); e.textContent = s; return e; };
+
+  // Everything so far in degrees and bars, so a resize draws it all again.
+  // phase: ready (the gel can be dragged), drag, boiling, failed, venting, won.
+  let at = START.slice(), path = [START.slice()], ghosts = [], bursts = [], phase = 'ready', geo = null, grab = [0, 0], moved = false;
+
+  // The gel: a skeleton of strands in a disc (the same on every phone), and the molecules of what
+  // fills its pores. s: the skeleton's size (1 whole, .38 caved in); crush: how crumpled; fill: the
+  // liquid's shade; mols: the molecules showing (the supercritical haze, then the gas); surf: the
+  // liquid's surface, the thing that pulls.
+  let seed = 11; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+  const NODES = [];
+  for (let k = 0; NODES.length < 21 && k < 5000; k++) { const a = rnd() * Math.PI * 2, r = Math.sqrt(rnd()) * .86, p = [r * Math.cos(a), r * Math.sin(a)]; if (NODES.every(q => Math.hypot(p[0] - q[0], p[1] - q[1]) > .29)) NODES.push(p); }
+  const EDGES = [];
+  NODES.forEach((p, i) => NODES.map((q, j) => [Math.hypot(p[0] - q[0], p[1] - q[1]), j]).filter(x => x[1] !== i).sort((a, b) => a[0] - b[0]).slice(0, 3)
+    .forEach(([d, j]) => { if (d < .62 && !EDGES.some(e => (e[0] === i && e[1] === j) || (e[0] === j && e[1] === i))) EDGES.push([i, j]); }));
+  const JIT = NODES.map(() => [rnd() * 2 - 1, rnd() * 2 - 1]);
+  const MOLS = Array.from({length: 64}, () => { const a = rnd() * Math.PI * 2, r = Math.sqrt(rnd()) * .94; return [r * Math.cos(a), r * Math.sin(a)]; });
+  const G = {s: 1, crush: 0, fill: .3, mols: 0, surf: 0};
+
+  function drawGel() {
+    gel.innerHTML = '';
+    // A short phone puts the gel away at the end, to give the diagram the room.
+    if (gel.getBoundingClientRect().width < 8) return;
+    const {W, H} = Kit.fitSvg(gel), cx = W / 2, cy = H / 2, R = Math.min(W, H) / 2 - 2;
+    Kit.mk('circle', {cx, cy, r: R, fill: PAPER, 'fill-opacity': .34}, gel);
+    Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-opacity': .4, 'stroke-width': 1.2, 'stroke-dasharray': '3 3'}, gel);
+    const rr = R * Math.max(G.s, .02);
+    if (G.fill > .005) Kit.mk('circle', {cx, cy, r: rr, fill: INK, 'fill-opacity': G.fill}, gel);
+    if (G.mols > .01) MOLS.forEach(([x, y]) => Kit.mk('circle', {cx: cx + x * rr, cy: cy + y * rr, r: Math.max(.9, R * .028), fill: INK, 'fill-opacity': G.mols}, gel));
+    if (G.surf > .01) Kit.mk('circle', {cx, cy, r: rr + 1.5, fill: 'none', stroke: PAPER, 'stroke-width': 2.6, 'stroke-opacity': G.surf}, gel);
+    const P = NODES.map((n, i) => [cx + R * (G.s * n[0] + G.crush * .075 * JIT[i][0]), cy + R * (G.s * n[1] + G.crush * .075 * JIT[i][1])]);
+    const sw = Math.max(1.4, R * .045);
+    EDGES.forEach(([i, j]) => Kit.mk('line', {x1: P[i][0], y1: P[i][1], x2: P[j][0], y2: P[j][1], stroke: INK, 'stroke-width': sw, 'stroke-linecap': 'round'}, gel));
+    P.forEach(([x, y]) => Kit.mk('circle', {cx: x, cy: y, r: sw * 1.15, fill: INK}, gel));
+  }
+  // What fills the pores, as the dot moves between liquid and supercritical.
+  let filled = 'L';
+  function fluid(z) {
+    if (z === filled || phase === 'boiling' || phase === 'failed') return;
+    filled = z;
+    const to = z === 'S' ? {fill: .1, mols: .75} : {fill: .3, mols: 0};
+    if (has()) gsap.killTweensOf(G);
+    if (Kit.calm || !has()) { Object.assign(G, to); drawGel(); } else gsap.to(G, Object.assign({duration: .5, ease: 'power2.out', onUpdate: drawGel}, to));
+  }
+  function readout() {
+    const z = zone(at[0], at[1]), T = Math.round(at[0]), P = Math.round(at[1]);
+    if (phase === 'won') { st.textContent = 'Aerogel · 1 bar'; sd.textContent = 'The same skeleton, now full of air.'; return; }
+    if (phase === 'venting') { st.textContent = `Gas · ${T} °C · ${P} bar`; sd.textContent = 'The fluid thins away. The skeleton stays.'; return; }
+    if (z === 'S') { st.textContent = `Supercritical · ${T} °C · ${P} bar`; sd.textContent = 'Neither liquid nor gas: no surface anywhere.'; }
+    else { st.textContent = `Liquid CO₂ · ${T} °C · ${P} bar`; sd.textContent = 'Its pores are full of liquid.'; }
+  }
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = Math.max(11, Math.min(13, H / 22, W / 26));
+    const ML = fs * 2.3, MR = 3, MT = fs * 1.6, MB = fs * 1.8;
+    const X = T => ML + T / TMAX * (W - ML - MR), Y = P => H - MB - P / PMAX * (H - MB - MT);
+    geo = {W, H, ML, MR, MT, MB, X, Y, fs};
+    // Layers, bottom to top: the diagram, the ways taken, the names (ringed in the card's colour so a
+    // way drawn across them leaves them readable), the gel.
+    const base = Kit.mk('g', {}, svg), ways = Kit.mk('g', {}, svg), names = Kit.mk('g', {}, svg), top = Kit.mk('g', {}, svg);
+    const ground = getComputedStyle(card).getPropertyValue('--c').trim() || '#00E5A0';
+    const mix = (a, b, t) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.slice(i, i + 2), 16) * (1 - t) + parseInt(b.slice(i, i + 2), 16) * t).toString(16).padStart(2, '0')).join('');
+    const ring = {stroke: ground, 'stroke-width': 4, 'stroke-linejoin': 'round', 'paint-order': 'stroke'};
+    const wet = Object.assign({}, ring, {stroke: /^#[0-9a-f]{6}$/i.test(ground) ? mix(ground, INK, .11) : ground});
+    const defs = Kit.mk('defs', {}, base);
+    const hatch = Kit.mk('pattern', {id: 'hatch', width: 7, height: 7, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 7, stroke: INK, 'stroke-opacity': .16, 'stroke-width': 2.4}, hatch);
+    const curve = []; for (let T = 0; T < TC; T += .5) curve.push([X(T), Y(pv(T))]); curve.push([X(TC), Y(PC)]);
+    // The liquid, above the boiling line; the supercritical fluid, past both critical values.
+    Kit.mk('path', {d: `M${X(0)},${Y(PMAX)}L${X(TC)},${Y(PMAX)}L${X(TC)},${Y(PC)}` + curve.slice().reverse().map(p => `L${p[0]},${p[1]}`).join('') + 'Z', fill: INK, 'fill-opacity': .11}, base);
+    Kit.mk('rect', {x: X(TC), y: Y(PMAX), width: X(TMAX) - X(TC), height: Y(PC) - Y(PMAX), fill: 'url(#hatch)'}, base);
+    Kit.mk('path', {d: `M${X(TC)},${Y(PC)}V${Y(PMAX)}M${X(TC)},${Y(PC)}H${X(TMAX)}`, fill: 'none', stroke: INK, 'stroke-opacity': .45, 'stroke-width': 1.3, 'stroke-dasharray': '4 4'}, base);
+    // Axes and their numbers.
+    Kit.mk('path', {d: `M${X(0)},${Y(PMAX)}V${Y(0)}H${X(TMAX)}`, fill: 'none', stroke: INK, 'stroke-opacity': .55, 'stroke-width': 1.2}, base);
+    const tick = {'font-size': fs, 'font-weight': 700, 'fill-opacity': .7};
+    for (const P of (Y(0) - Y(25) < fs * 1.5 ? [50, 100] : [25, 50, 75, 100])) { Kit.mk('line', {x1: X(0) - 4, y1: Y(P), x2: X(0), y2: Y(P), stroke: INK, 'stroke-opacity': .55}, base); txt(base, X(0) - 6, Y(P) + fs * .35, P, Object.assign({'text-anchor': 'end'}, tick)); }
+    for (const T of [0, 10, 20, 30, 40, 50]) { Kit.mk('line', {x1: X(T), y1: Y(0), x2: X(T), y2: Y(0) + 4, stroke: INK, 'stroke-opacity': .55}, base); txt(base, X(T), Y(0) + fs * 1.3, T === 50 ? '50 °C' : T, Object.assign({'text-anchor': T === 50 ? 'end' : T === 0 ? 'start' : 'middle'}, tick)); }
+    txt(base, X(0), MT - fs * .55, 'pressure, bar', Object.assign({}, tick, {'font-weight': 800}));
+    // The boiling line and its end.
+    Kit.mk('path', {d: 'M' + curve.map(p => p.join(',')).join('L'), fill: 'none', stroke: INK, 'stroke-width': 3.4, 'stroke-linecap': 'round'}, base);
+    geo.cp = Kit.mk('circle', {cx: X(TC), cy: Y(PC), r: Math.max(4.5, fs * .42), fill: INK, stroke: PAPER, 'stroke-width': 2}, top);
+    // The names of the three states, of the line, and of its end.
+    const big = Object.assign({'font-size': fs * 1.05, 'font-weight': 800, 'letter-spacing': '.12em', 'fill-opacity': .78}, ring);
+    txt(names, X(1.6), Y(PMAX) + fs * 1.7, 'LIQUID', Object.assign({}, big, wet));
+    txt(names, X(21), Y(13), 'GAS', Object.assign({'text-anchor': 'middle'}, big));
+    const sx = (X(TC) + X(TMAX)) / 2, sy = Y(PMAX) + fs * 1.6, sa = Object.assign({'text-anchor': 'middle'}, big, {'font-size': fs * .9, 'letter-spacing': '.06em'});
+    const sc = txt(names, sx, sy, 'SUPERCRITICAL', sa);
+    if (sc.getComputedTextLength() > X(TMAX) - X(TC) - 8) { sc.remove(); txt(names, sx, sy - fs * .1, 'SUPER-', sa); txt(names, sx, sy + fs * 1.05, 'CRITICAL', sa); }
+    const b0 = [X(1.5), Y(pv(1.5))], b1 = [X(10.5), Y(pv(10.5))], ang = Math.atan2(b1[1] - b0[1], b1[0] - b0[0]) * 180 / Math.PI;
+    const bm = [(b0[0] + b1[0]) / 2, (b0[1] + b1[1]) / 2 + fs * 1.25];
+    txt(names, bm[0], bm[1], 'boiling line', Object.assign({'font-size': fs, 'font-weight': 700, 'font-style': 'italic', 'text-anchor': 'middle', transform: `rotate(${ang} ${bm[0]} ${bm[1]})`, 'fill-opacity': .8}, ring));
+    txt(names, X(TC) + fs * .7, Y(PC) + fs * 1.35, 'critical point', Object.assign({'font-size': fs, 'font-weight': 800}, ring));
+    txt(names, X(TC) + fs * .7, Y(PC) + fs * 2.7, '31 °C · 74 bar', Object.assign({'font-size': fs, 'font-weight': 600, 'fill-opacity': .75}, ring));
+    // The ways tried before, and where they boiled; then this one.
+    const line = pts => 'M' + pts.map(([T, P]) => `${X(T)},${Y(P)}`).join('L');
+    for (const g of ghosts) Kit.mk('path', {d: line(g), fill: 'none', stroke: INK, 'stroke-opacity': .38, 'stroke-width': 2, 'stroke-dasharray': '2 5', 'stroke-linecap': 'round'}, ways);
+    for (const [T, P] of bursts) {
+      const bx = X(T), by = Y(P), r = fs * .75;
+      for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; Kit.mk('line', {x1: bx + Math.cos(a) * r * .45, y1: by + Math.sin(a) * r * .45, x2: bx + Math.cos(a) * r * (k % 2 ? .9 : 1.25), y2: by + Math.sin(a) * r * (k % 2 ? .9 : 1.25), stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, top); }
+    }
+    geo.trail = Kit.mk('path', {d: line(path), fill: 'none', stroke: INK, 'stroke-width': 2.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, ways);
+    geo.line = line;
+    // The wet gel.
+    const r = geo.r = Math.max(8, fs * .78);
+    geo.dot = Kit.mk('g', {}, top);
+    geo.halo = Kit.mk('circle', {r: r * 1.9, fill: INK, 'fill-opacity': .12}, geo.dot);
+    Kit.mk('circle', {r, fill: phase === 'failed' || phase === 'boiling' ? INK : PAPER, stroke: INK, 'stroke-width': 2.6}, geo.dot);
+    Kit.mk('circle', {r: r * .32, fill: phase === 'failed' || phase === 'boiling' ? PAPER : INK}, geo.dot);
+    geo.tag = txt(names, X(START[0]) + r + 6, Y(START[1]) - r - 2, 'wet gel', Object.assign({'font-size': fs, 'font-weight': 800, opacity: moved ? 0 : 1}, wet));
+    if (phase === 'failed' || phase === 'boiling') geo.dot.setAttribute('opacity', 0);
+    if (phase === 'won') txt(names, X(at[0]) - r - 7, Y(0) - r * .55, 'aerogel', Object.assign({'font-size': fs, 'font-weight': 800, 'text-anchor': 'end'}, ring));
+    place();
+  }
+  function place() {
+    if (!geo) return;
+    geo.dot.setAttribute('transform', `translate(${geo.X(at[0])} ${Math.min(geo.Y(at[1]), geo.Y(0) - geo.r - 1.5)})`);
+    geo.trail.setAttribute('d', geo.line(path));
+  }
+  new ResizeObserver(() => { draw(); drawGel(); }).observe(plot);
+
+  // Moving toward a point, in small steps: whatever the finger skips over still counts.
+  function toward([T, P]) {
+    const [T0, P0] = at, n = Math.max(1, Math.ceil(Math.max(Math.abs(T - T0) / .2, Math.abs(P - P0) / .4)));
+    let z = zone(T0, P0);
+    if (!moved) { moved = true; if (geo) geo.tag.setAttribute('opacity', 0); }
+    for (let k = 1; k <= n; k++) {
+      const t = T0 + (T - T0) * k / n, p = P0 + (P - P0) * k / n, nz = zone(t, p);
+      if ((z === 'L' && nz === 'G') || (z === 'G' && nz === 'L')) { at = [t, p]; path.push(at.slice()); place(); boil(); return; }
+      if (z === 'S' && nz === 'G') { at = [t, p]; path.push(at.slice()); place(); win(); return; }
+      z = nz;
+    }
+    at = [T, P]; path.push(at.slice()); place(); fluid(z); readout();
+  }
+  const pointAt = e => { const b = svg.getBoundingClientRect(), x = e.clientX - b.left - grab[0], y = e.clientY - b.top - grab[1];
+    return [Math.max(0, Math.min(TMAX, (x - geo.ML) / (geo.W - geo.ML - geo.MR) * TMAX)), Math.max(.5, Math.min(PMAX, (geo.H - geo.MB - y) / (geo.H - geo.MB - geo.MT) * PMAX))]; };
+  plot.addEventListener('pointerdown', e => {
+    if (phase !== 'ready' || !geo) return;
+    const b = svg.getBoundingClientRect(), dx = e.clientX - b.left - geo.X(at[0]), dy = e.clientY - b.top - geo.Y(at[1]);
+    if (Math.hypot(dx, dy) > 46) return;
+    grab = [dx, dy]; phase = 'drag'; plot.classList.add('held'); try { plot.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault();
+    if (has()) gsap.to(geo.halo, {attr: {r: geo.fs * 2}, duration: .2});
+  });
+  plot.addEventListener('pointermove', e => { if (phase === 'drag') toward(pointAt(e)); });
+  const let_go = () => { plot.classList.remove('held'); if (phase === 'drag') phase = 'ready'; };
+  plot.addEventListener('pointerup', let_go); plot.addEventListener('pointercancel', let_go);
+
+  // Across the boiling line: the liquid's surface sweeps the pores and the skeleton caves in.
+  async function boil() {
+    phase = 'boiling'; plot.classList.remove('held'); bursts.push(at.slice()); Kit.haptic('light');
+    st.textContent = `Boiling · ${Math.round(at[0])} °C · ${Math.round(at[1])} bar`; sd.textContent = 'The liquid’s surface drags the strands together.';
+    draw();
+    if (has()) gsap.killTweensOf(G);
+    if (Kit.calm || !has()) { Object.assign(G, {s: .38, crush: 1, fill: 0, mols: 0, surf: 0}); drawGel(); }
+    else {
+      Object.assign(G, {fill: .3, mols: 0, surf: 0});
+      await gsap.timeline({onUpdate: drawGel}).to(G, {surf: 1, duration: .25}).to(G, {s: .38, crush: 1, duration: 1.7, ease: 'power2.inOut'}).to(G, {fill: 0, surf: 0, duration: .45}, '-=.35');
+    }
+    phase = 'failed'; filled = 'L';
+    st.textContent = 'Crushed'; sd.textContent = 'The skeleton caved in to a hard crumb.';
+    say.innerHTML = 'It <b>boiled</b>. The liquid’s retreating surface pulled the strands together, as a wet brush clumps. But look where the boiling line <b>ends</b>.'; card.classList.add('failed');
+    Kit.show('again');
+    if (has() && !Kit.calm && geo) gsap.fromTo(geo.cp, {attr: {r: geo.fs * .42}}, {attr: {r: geo.fs * .85}, duration: .45, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+  }
+  again.addEventListener('click', () => {
+    if (phase !== 'failed') return;
+    ghosts.push(path); at = START.slice(); path = [START.slice()]; phase = 'ready'; filled = 'L';
+    if (has()) gsap.killTweensOf(G);
+    Object.assign(G, {s: 1, crush: 0, fill: .3, mols: 0, surf: 0});
+    card.classList.remove('failed'); Kit.hide('again'); Kit.haptic('light'); draw(); drawGel(); readout();
+    say.innerHTML = 'Find a way from liquid to gas that never <b>crosses</b> the boiling line.';
+  });
+
+  // Round the critical point: no surface ever forms. Vent it, and the skeleton stands.
+  async function win() {
+    phase = 'venting'; plot.classList.remove('held'); plot.classList.add('done'); Kit.haptic('success');
+    if (has()) gsap.killTweensOf(G);
+    const from = at[1], T = at[0];
+    if (Kit.calm || !has()) { at = [T, 1]; path.push(at.slice()); Object.assign(G, {fill: 0, mols: 0}); place(); drawGel(); }
+    else {
+      const v = {p: from};
+      readout();
+      await Promise.all([
+        gsap.to(v, {p: 1, duration: 1.2, ease: 'power1.inOut', onUpdate: () => { at = [T, v.p]; path.push(at.slice()); place(); readout(); }}),
+        gsap.to(G, {fill: 0, mols: 0, duration: 1.2, ease: 'power1.in', onUpdate: drawGel})]);
+    }
+    phase = 'won'; readout(); draw();
+    say.innerHTML = '<b>No surface, no pull:</b> past the critical point it thins away, leaving a skeleton up to 99.8% air. Kistler went round alcohol’s, at about 240 °C; labs now use CO₂’s, a mild 31 °C.';
+    Kit.$('card').classList.add('answered'); Kit.show('keep');
+  }
+
+  Kit.onShow.card = () => { draw(); drawGel(); readout(); };
+  Kit.onEnter.card = () => { if (!Kit.calm && has() && geo && phase === 'ready') gsap.fromTo(geo.halo, {attr: {r: geo.fs * .8}}, {attr: {r: geo.fs * 2.2}, duration: .7, repeat: 3, yoyo: true, ease: 'sine.inOut'}); };
+  // Plays the card through: the obvious way first (straight down, it boils), then round the end.
+  Kit.play.card = async () => {
+    const walk = async pts => { for (const [T, P] of pts) { const [T0, P0] = at; for (let k = 1; k <= 14; k++) { if (phase !== 'ready' && phase !== 'drag') return; phase = 'drag'; toward([T0 + (T - T0) * k / 14, P0 + (P - P0) * k / 14]); if (!Kit.calm) await sleep(18); } } if (phase === 'drag') phase = 'ready'; };
+    const until = async ok => { for (let i = 0; i < 300 && !ok(); i++) await sleep(20); };
+    await walk([[12, 38]]);
+    await until(() => phase === 'failed');
+    again.click();
+    await walk([[13, 88], [40, 88], [40, 45]]);
+    await until(() => phase === 'won');
+  };
+})();
+Kit.single();
+</script>

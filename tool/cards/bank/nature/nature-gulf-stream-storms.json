@@ -1,0 +1,37 @@
+{
+  "id": "nature-gulf-stream-storms",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What really causes the Bermuda Triangle's extreme storms?",
+  "answer": "The Gulf Stream carries warm water past Florida and through the Bermuda Triangle. That hot ocean surface is ideal fuel for hurricanes and sudden, violent storms. The area's extreme weather comes from a warm current, not a mystery.",
+  "move": "No mystery: a warm current feeds the area's extreme weather.",
+  "keywords": [
+    "gulf stream",
+    "bermuda triangle",
+    "hurricanes",
+    "warm water",
+    "florida"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question: What really causes the Bermuda Triangle's extreme storms? Hold the button to let the current flow and watch warm Gulf Stream water move past Florida and through the triangle."
+  },
+  "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=322s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,172 @@
+<!doctype html>
+<!-- slug: technology-chernobyl-arch-slide -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#meter{display:flex;align-items:center;gap:2.5cqw;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
+#meter .bar{flex:1;height:max(1.1cqh,7px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 14%,transparent);overflow:hidden}
+#meter .bar i{display:block;height:100%;width:0;background:var(--k);border-radius:1cqh}
+#meter .lab{white-space:nowrap}
+#pct{min-width:9ch;text-align:right;font-family:var(--mono)}
+#art{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;display:block}
+#pic.dragging{cursor:grabbing}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{overflow-wrap:anywhere}
+#why .body{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · watch it seal">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CHERNOBYL</span></div>
+    <h2 class="q">How do you put a new lid over Chernobyl's old sarcophagus?</h2>
+    <div class="stagebox" id="stage">
+      <div id="meter"><span class="lab">Sealed</span><div class="bar"><i id="fill"></i></div><span id="pct">0%</span></div>
+      <div id="art"><svg id="pic" aria-label="A steel arch on rails beside the old sarcophagus"></svg></div>
+      <div id="why" class="gone"><p class="big">Build it beside, then slide it over.</p><p class="body">The new containment is a giant steel arch built next to the old sarcophagus, not on top of it. Once finished, it slides sideways into place and covers the old structure like a lid.</p></div>
+    </div>
+    <p class="say" id="say">Drag the steel arch along its rails onto the old sarcophagus.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Build the giant lid off to the side, then slide it over.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+let p = 0, done = false, G = null, drag = null, leakTweens = [];
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const S = s => ({style: s});
+
+function draw() {
+  leakTweens.forEach(t => t.kill()); leakTweens = [];
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (W < 10 || H < 10) return;
+  const fs = Math.max(12, Math.min(f * 0.85, H * 0.06));
+  const gy = H - fs * 3.6;
+  const sx0 = W * .08, sx1 = W * .44, sw = sx1 - sx0;
+  const s = W * .46, t = Math.max(6, W * .032);
+  const endCx = (sx0 + sx1) / 2, startCx = W - s / 2 - W * .02;
+  const h = Math.max(40, Math.min(gy - fs * 2.2, s * .78));
+  const hs = h * .55;
+  G = {W, H, fs, gy, sx0, sx1, sw, s, t, endCx, startCx, h};
+  const txt = (x, y, str, extra = '') => { const e = Kit.mk('text', {x, y, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);letter-spacing:.06em;fill:var(--k);${extra}`}, svg); e.textContent = str; return e; };
+
+  // ground and rails
+  Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
+  for (let x = W * .03; x < W * .99; x += W * .035)
+    Kit.mk('line', {x1: x, y1: gy + 2, x2: x, y2: gy + fs * .5, style: 'stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:2'}, svg);
+  Kit.mk('line', {x1: W * .02, y1: gy, x2: W * .98, y2: gy, style: 'stroke:var(--k);stroke-width:3;stroke-linecap:round'}, svg);
+
+  // old sarcophagus: stepped concrete block
+  const r = [sx0, sx0 + sw * .3, sx0 + sw * .62, sx1];
+  const d = `M${r[0]} ${gy} V${gy - hs * .55} H${r[1]} V${gy - hs * .85} L${r[1] + sw * .05} ${gy - hs} H${r[2]} V${gy - hs * .7} H${r[3]} V${gy} Z`;
+  Kit.mk('path', {d, style: 'fill:color-mix(in srgb,var(--k) 38%,var(--c));stroke:var(--k);stroke-width:2;stroke-linejoin:round'}, svg);
+  for (let i = 1; i < 4; i++) Kit.mk('line', {x1: sx0 + 4, y1: gy - hs * .14 * i, x2: sx1 - 4, y2: gy - hs * .14 * i, style: 'stroke:color-mix(in srgb,var(--k) 25%,transparent);stroke-width:1.5'}, svg);
+
+  // leaks rising from the old roof
+  G.leaks = [];
+  const roofY = x => x < r[1] ? gy - hs * .55 : x < r[2] ? gy - hs : gy - hs * .7;
+  [.12, .3, .5, .7, .88].forEach((u, i) => {
+    const x = sx0 + sw * u, y = roofY(x) - 3;
+    const g = Kit.mk('g', {}, svg);
+    const inner = Kit.mk('path', {d: `M${x} ${y} q${fs * .35} ${-fs * .45} 0 ${-fs * .9} q${-fs * .35} ${-fs * .45} 0 ${-fs * .9}`, style: 'fill:none;stroke:var(--k);stroke-width:2.2;stroke-linecap:round'}, g);
+    G.leaks.push({x, g});
+    if (!Kit.calm) leakTweens.push(gsap.fromTo(inner, {y: 0, opacity: .9}, {y: -h * .28, opacity: 0, duration: 1.6, repeat: -1, delay: i * .3, ease: 'none'}));
+  });
+
+  // ground labels
+  txt(endCx, gy + fs * 1.6, 'OLD');
+  txt(endCx, gy + fs * 2.95, 'SARCOPHAGUS');
+  G.built = Kit.mk('g', {}, svg);
+  const b1 = txt(startCx, gy + fs * 1.6, 'BUILT'), b2 = txt(startCx, gy + fs * 2.95, 'NEXT DOOR');
+  G.built.append(b1, b2);
+
+  // the arch, drawn at its final spot and translated
+  const A = Kit.mk('g', {}, svg); G.arch = A;
+  const R = s / 2, Ri = R - t, hi = h - t;
+  Kit.mk('path', {d: `M${endCx - R} ${gy} A${R} ${h} 0 0 1 ${endCx + R} ${gy} Z`, style: 'fill:color-mix(in srgb,var(--k) 10%,transparent)'}, A);
+  const P = (rx, ry, th) => [endCx + rx * Math.cos(th), gy - ry * Math.sin(th)];
+  const N = 14;
+  let truss = '';
+  for (let i = 0; i < N; i++) {
+    const a = Math.PI * i / N, b = Math.PI * (i + 1) / N;
+    const o = P(R, h, a), n = P(Ri, hi, b), o2 = P(R, h, b);
+    truss += `M${o[0]} ${o[1]} L${n[0]} ${n[1]} L${o2[0]} ${o2[1]} `;
+    const ii = P(Ri, hi, a); truss += `M${o[0]} ${o[1]} L${ii[0]} ${ii[1]} `;
+  }
+  Kit.mk('path', {d: truss, style: 'fill:none;stroke:var(--k);stroke-width:1.6'}, A);
+  Kit.mk('path', {d: `M${endCx - R} ${gy} A${R} ${h} 0 0 1 ${endCx + R} ${gy}`, style: 'fill:none;stroke:var(--k);stroke-width:3.2'}, A);
+  Kit.mk('path', {d: `M${endCx - Ri} ${gy} A${Ri} ${hi} 0 0 1 ${endCx + Ri} ${gy}`, style: 'fill:none;stroke:var(--k);stroke-width:2.4'}, A);
+  [endCx - R + t / 2, endCx + R - t / 2].forEach(x => Kit.mk('circle', {cx: x, cy: gy - t * .35, r: t * .45, style: 'fill:var(--c);stroke:var(--k);stroke-width:2.2'}, A));
+  const top = Kit.mk('text', {x: endCx, y: gy - h - fs * .55, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--body);letter-spacing:.08em;fill:var(--k)`}, A); top.textContent = 'NEW STEEL ARCH';
+  G.hint = Kit.mk('text', {x: endCx, y: gy - h * .42, 'text-anchor': 'middle', style: `font:800 ${fs * 1.1}px var(--body);letter-spacing:.06em;fill:var(--k)`}, A); G.hint.textContent = '◀ DRAG';
+  setP(p);
+}
+
+function cxOf(v) { return G.startCx + (G.endCx - G.startCx) * v; }
+
+function setP(v) {
+  p = clamp(v, 0, 1);
+  if (!G) return;
+  const cx = cxOf(p), half = G.s / 2 - G.t;
+  G.arch.setAttribute('transform', `translate(${cx - G.endCx},0)`);
+  const ov = Math.max(0, Math.min(G.sx1, cx + half) - Math.max(G.sx0, cx - half));
+  const cover = clamp(ov / G.sw, 0, 1);
+  G.leaks.forEach(L => L.g.style.opacity = Math.abs(L.x - cx) < half - 2 ? .08 : 1);
+  G.hint.style.opacity = done ? 0 : clamp(1 - p * 6, 0, 1);
+  G.built.style.opacity = p > .02 ? .45 : 1;
+  Kit.$('fill').style.width = (cover * 100) + '%';
+  Kit.$('pct').textContent = Math.round(cover * 100) + '%';
+  if (!done && cover > .995) finish();
+}
+
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.$('pct').textContent = '100% ✓';
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+}
+
+function svgX(e) { const r = svg.getBoundingClientRect(); return (e.clientX - r.left) * (G.W / r.width); }
+svg.addEventListener('pointerdown', e => {
+  if (!G) return;
+  gsap.killTweensOf(nudge);
+  drag = {off: cxOf(p) - svgX(e)};
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  svg.classList.add('dragging'); Kit.haptic('selection');
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const cx = svgX(e) + drag.off;
+  setP((G.startCx - cx) / (G.startCx - G.endCx));
+});
+const end = () => { if (!drag) return; drag = null; svg.classList.remove('dragging'); if (!done && p > .9) setP(1); };
+svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+const nudge = {v: 0};
+let lastSize = '';
+new ResizeObserver(() => { const r = Kit.$('art').getBoundingClientRect(), k = Math.round(r.width) + 'x' + Math.round(r.height); if (k !== lastSize) { lastSize = k; draw(); } }).observe(Kit.$('art'));
+
+Kit.onShow.card = () => { lastSize = ''; draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || done || p > 0) return;
+  nudge.v = 0;
+  gsap.to(nudge, {v: .09, duration: .5, delay: .5, ease: 'power2.inOut', yoyo: true, repeat: 1, onUpdate: () => { if (!drag && !done) setP(nudge.v); }});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svg.getBoundingClientRect(), k = r.width / G.W, y = r.top + (G.gy - G.h * .4) * (r.height / G.H);
+  const at = x => r.left + x * k;
+  const ev = (type, x) => svg.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, pointerId: 1, bubbles: true, isPrimary: true}));
+  ev('pointerdown', at(G.startCx));
+  for (let i = 1; i <= 20; i++) { ev('pointermove', at(G.startCx + (G.endCx - G.startCx) * i / 20)); await wait(25); }
+  ev('pointerup', at(G.endCx));
+  await wait(700);
+};
+Kit.single();
+</script>
+</html>

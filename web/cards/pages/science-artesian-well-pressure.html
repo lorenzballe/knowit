@@ -1,0 +1,203 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-artesian-well-pressure -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;border-radius:1.6cqh;overflow:hidden}
+#cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);min-height:calc(3 * 1.3 * max(1.9cqh,13px));overflow-wrap:break-word}
+#cap b{font-family:var(--mono)}
+#scrub{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
+#scrub::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#scrub::-moz-range-track{height:max(.9cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#scrub::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,24px);height:max(3.6cqh,24px);border-radius:50%;background:var(--k);margin-top:calc((max(.9cqh,6px) - max(3.6cqh,24px))/2);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--k) 18%,transparent)}
+#scrub::-moz-range-thumb{width:max(3.6cqh,24px);height:max(3.6cqh,24px);border:0;border-radius:50%;background:var(--k)}
+.lab{font-family:var(--body);font-weight:700;paint-order:stroke;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ARTESIAN WELL</span></div>
+    <h2 class="q">Why does water gush out of an artesian well with no pump?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Layers of rock with a drilled well reaching a confined aquifer"></svg>
+      <div id="cap"></div>
+      <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Timeline">
+    </div>
+    <p class="say" id="say">Drag the slider to drill the well, step by step.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Trapped water is pressurised water: open a way out and it climbs by itself.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ricostruzione 3D inedita dell'incidente di Vermicino: come hanno estratto il corpo di Alfredino” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let G = null, T = 0, ended = false;
+const cl = v => Math.max(0, Math.min(1, v)), lerp = (a, b, p) => a + (b - a) * p;
+const NS = (tag, a, p) => Kit.mk(tag, a, p);
+
+function build(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (!W || !H) return;
+  const fs = Math.max(f * .82, 12), lh = fs * 1.3;
+  const yG = H * .2, yC = H * .38, yA = H * .58, yB = H * .8;
+  const px = W * .6, pw = Math.max(W * .055, 14), yHead = yG - H * .03, yP = yA + (yB - yA) * .38;
+  const g = {W, H, fs, yG, yC, yA, yB, px, pw, yHead, yP};
+  // layers
+  NS('rect', {x:0, y:0, width:W, height:yG, fill:'#cfe7f6'}, svg);
+  NS('rect', {x:0, y:yG, width:W, height:yC-yG, fill:'#8a5a3b'}, svg);
+  NS('rect', {x:0, y:yC, width:W, height:yA-yC, fill:'#c9b593'}, svg);
+  NS('rect', {x:0, y:yA, width:W, height:yB-yA, fill:'#2c74c4'}, svg);
+  NS('rect', {x:0, y:yB, width:W, height:H-yB, fill:'#55504d'}, svg);
+  NS('rect', {x:0, y:yG-2, width:W, height:5, fill:'#4f9a3c'}, svg);
+  // textures
+  for (let i = 0; i < 40; i++) NS('circle', {cx:Kit.rnd()*W, cy:lerp(yG+6, yC-3, Kit.rnd()), r:1+Kit.rnd()*1.6, fill:'#6d442b'}, svg);
+  for (let y = yC + 7; y < yA - 3; y += 7) NS('line', {x1:0, x2:W, y1:y, y2:y, stroke:'#b29d79', 'stroke-width':1}, svg);
+  for (let i = 0; i < 46; i++) NS('circle', {cx:Kit.rnd()*W, cy:lerp(yA+4, yB-4, Kit.rnd()), r:2+Kit.rnd()*3, fill:'none', stroke:'#5ea2e8', 'stroke-width':1.2}, svg);
+  for (let i = 0; i < 26; i++) NS('rect', {x:Kit.rnd()*W, y:lerp(yB+4, H-6, Kit.rnd()), width:4+Kit.rnd()*8, height:2+Kit.rnd()*3, fill:'#6b6562', rx:1}, svg);
+  NS('line', {x1:0, x2:W, y1:yA, y2:yA, stroke:'#3a2f22', 'stroke-width':2.4}, svg);
+  NS('line', {x1:0, x2:W, y1:yB, y2:yB, stroke:'#2a2624', 'stroke-width':2.4}, svg);
+  // labels
+  const lab = (t, y, light) => {
+    const e = NS('text', {x:W*.04, y, class:'lab', 'font-size':fs, fill:light?'#fff':'#2b2116', stroke:light?'rgba(0,0,0,.45)':'rgba(255,255,255,.5)', 'stroke-width':3, 'dominant-baseline':'middle'}, svg);
+    e.textContent = t; return e;
+  };
+  lab('Soil', (yG+yC)/2, true);
+  lab('Watertight layer', (yC+yA)/2, false);
+  if (yB - yA >= 2 * lh + 8) {
+    lab('Trapped water', (yA+yB)/2 - lh/2, true);
+    lab('under pressure', (yA+yB)/2 + lh/2, true);
+  } else {
+    lab('Trapped water under pressure', (yA+yB)/2, true);
+  }
+  lab('Watertight layer', (yB+H)/2, true);
+  // ruler
+  const rx = W * .8;
+  NS('line', {x1:rx, x2:rx, y1:yG, y2:yA, stroke:'rgba(255,255,255,.85)', 'stroke-width':1.5, 'stroke-dasharray':'3 3'}, svg);
+  [[0, yG], [50, (yG+yA)/2], [100, yA]].forEach(([m, y]) => {
+    NS('line', {x1:rx-5, x2:rx+5, y1:y, y2:y, stroke:'#fff', 'stroke-width':2}, svg);
+    const e = NS('text', {x:rx+8, y, class:'lab', 'font-size':fs, fill:'#fff', stroke:'rgba(0,0,0,.5)', 'stroke-width':3, 'dominant-baseline':'middle', 'font-family':'var(--mono)'}, svg);
+    e.textContent = m + ' m';
+  });
+  // pressure arrows
+  g.arrows = [];
+  const L = Math.min((yB - yA) * .45, 26);
+  [.08, .3, .45, .75, .92].forEach(fx => {
+    const a = NS('g', {}, svg); a._x = W * fx;
+    NS('path', {d:`M0 ${L} L0 0 M-5 7 L0 0 L5 7`, fill:'none', stroke:'#ffd84a', 'stroke-width':2.6, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, a);
+    g.arrows.push(a);
+  });
+  g.arrows.forEach(a => a.style.display = 'none');
+  g.arrows[0].style.display = g.arrows[2].style.display = g.arrows[4].style.display = '';
+  g.arrows = [g.arrows[0], g.arrows[2], g.arrows[4], g.arrows[1], g.arrows[3]];
+  g.arrows.slice(3).forEach(a => a.remove()); g.arrows = g.arrows.slice(0, 3);
+  // flowing particles in the aquifer
+  g.parts = [];
+  for (let i = 0; i < 16; i++) g.parts.push({e:NS('circle', {r:2.6, fill:'#bfe2ff'}, svg), x0:Kit.rnd()*W, y0:lerp(yA+6, yB-6, Kit.rnd()), o:Kit.rnd()});
+  // rig
+  g.rig = NS('g', {}, svg);
+  NS('path', {d:`M${px-W*.07} ${yG} L${px} ${yG-H*.17} L${px+W*.07} ${yG}`, fill:'none', stroke:'#3b3b3b', 'stroke-width':3, 'stroke-linejoin':'round'}, g.rig);
+  g.rod = NS('line', {x1:px, x2:px, y1:yG-H*.17, y2:yHead, stroke:'#3b3b3b', 'stroke-width':2}, g.rig);
+  // casing + water
+  g.casing = NS('rect', {x:px-pw/2, y:yHead, width:pw, height:0, fill:'#dfe3e8', stroke:'#2a2a2a', 'stroke-width':1.5}, svg);
+  g.inner = NS('rect', {x:px-pw*.3, y:yHead, width:pw*.6, height:0, fill:'#1f2328'}, svg);
+  g.water = NS('rect', {x:px-pw*.3, y:yHead, width:pw*.6, height:0, fill:'#4fa8ff'}, svg);
+  g.pipeParts = [];
+  for (let i = 0; i < 6; i++) g.pipeParts.push({e:NS('circle', {cx:px, r:Math.max(pw*.12, 1.6), fill:'#e4f3ff'}, svg), o:i/6});
+  g.bit = NS('polygon', {fill:'#9aa1a8', stroke:'#2a2a2a', 'stroke-width':1.5}, svg);
+  // breach flash
+  g.flash = NS('g', {opacity:0}, svg);
+  for (let i = 0; i < 8; i++) { const an = i/8*Math.PI*2; NS('line', {x1:px+Math.cos(an)*pw*.8, y1:yA+Math.sin(an)*pw*.8, x2:px+Math.cos(an)*pw*1.9, y2:yA+Math.sin(an)*pw*1.9, stroke:'#fff36b', 'stroke-width':3, 'stroke-linecap':'round'}, g.flash); }
+  // fountain
+  g.pud = NS('ellipse', {cx:px, cy:yG+1, rx:0, ry:H*.012, fill:'#4fa8ff'}, svg);
+  g.jets = [];
+  [-1, -.55, .55, 1, 0].forEach(s => g.jets.push({s, e:NS('path', {fill:'none', stroke:'#5fb3ff', 'stroke-width':Math.max(W*.012, 3), 'stroke-linecap':'round', 'stroke-dasharray':'7 6'}, svg)}));
+  G = g; render(T); tick();
+}
+
+function render(t){
+  T = t; if (!G) return;
+  const g = G;
+  const p1 = cl((t - .15) / .4), p2 = cl((t - .55) / .07);
+  const by = p1 < 1 ? lerp(g.yHead, g.yA, p1) : lerp(g.yA, g.yP, p2);
+  const depth = Math.round(cl((by - g.yG) / (g.yA - g.yG)) * 100);
+  const drilled = t > .15;
+  g.casing.setAttribute('height', drilled ? by - g.yHead : 0);
+  g.inner.setAttribute('height', drilled ? Math.max(0, by - g.yHead) : 0);
+  g.bit.setAttribute('points', `${g.px-g.pw/2},${by} ${g.px+g.pw/2},${by} ${g.px},${by+g.pw*.9}`);
+  g.bit.style.display = drilled && t < .64 ? '' : 'none';
+  g.rig.setAttribute('opacity', t > .08 && t < .64 ? 1 : 0);
+  const w = cl((t - .62) / .26);
+  g.level = t > .6 ? lerp(g.yA, g.yHead, w) : by;
+  g.water.setAttribute('y', g.level);
+  g.water.setAttribute('height', t > .6 ? Math.max(0, by - g.level) : 0);
+  g.flash.setAttribute('opacity', cl(1 - Math.abs(t - .6) / .04));
+  g.ft = cl((t - .88) / .12);
+  g.pud.setAttribute('rx', g.ft * g.W * .22);
+  // caption
+  const cap = Kit.$('cap');
+  if (t < .15) cap.textContent = 'Deep down, water is trapped between two watertight layers. Squeezed, it pushes on its seal.';
+  else if (t < .55) cap.innerHTML = `A narrow, deep hole is drilled down, as deep as 100 m. Depth: <b>${depth} m</b>`;
+  else if (t < .63) cap.textContent = 'Breakthrough: the drill pierces the upper watertight layer.';
+  else if (t < .88) cap.textContent = 'The natural pressure now pushes the water up the pipe. No pump is running.';
+  else cap.textContent = 'Sealed between watertight layers, the water is under strong natural pressure. Pierce the top seal and that pressure drives it up and out. Ordinary wells need a pump.';
+  if (t >= .97 && !ended) { ended = true; Kit.hide('say'); Kit.show('keep'); Kit.haptic('success'); }
+  if (!Kit.calm || true) tick(true);
+}
+
+function tick(once){
+  if (!G) return;
+  const g = G, s = Kit.calm ? 0 : performance.now() / 1000, t = T;
+  const open = cl((t - .6) / .05);
+  g.arrows.forEach((a, i) => {
+    const k = .8 + .25 * Math.sin(s * 5 + i * 1.7);
+    a.setAttribute('transform', `translate(${a._x},${g.yA + 4}) scale(1,${k})`);
+    a.setAttribute('opacity', 1 - open);
+  });
+  g.parts.forEach(p => {
+    const jx = p.x0 + Math.sin(s * 6 + p.o * 20) * 1.8, jy = p.y0 + Math.cos(s * 7 + p.o * 20) * 1.8;
+    const ph = (s * .3 + p.o) % 1;
+    const fx = lerp(p.x0, g.px, ph), fy = lerp(p.y0, g.yP, ph * ph);
+    p.e.setAttribute('cx', lerp(jx, fx, open)); p.e.setAttribute('cy', lerp(jy, fy, open));
+  });
+  g.pipeParts.forEach(p => {
+    const ph = (s * .9 + p.o) % 1, y = lerp(g.yP, g.yHead, ph);
+    p.e.setAttribute('cy', y);
+    p.e.style.display = t > .62 && y >= g.level ? '' : 'none';
+  });
+  const h = g.ft * g.H * .16;
+  g.jets.forEach(j => {
+    let d;
+    if (j.s === 0) d = `M${g.px} ${g.yHead} L${g.px} ${g.yHead - h * 1.1}`;
+    else { const dx = j.s * g.W * .17 * g.ft; d = `M${g.px} ${g.yHead} Q${g.px + dx * .35} ${g.yHead - h * 2} ${g.px + dx} ${g.yG}`; }
+    j.e.setAttribute('d', d);
+    j.e.setAttribute('stroke-dashoffset', -s * 45);
+    j.e.style.display = g.ft > 0 ? '' : 'none';
+  });
+}
+if (!Kit.calm) gsap.ticker.add(() => tick());
+
+Kit.$('scrub').addEventListener('input', e => {
+  const v = e.target.value / 1000;
+  if (Math.floor(v * 20) !== Math.floor(T * 20)) Kit.haptic('selection');
+  render(v);
+});
+
+let raf = 0;
+new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (G) build(); }); }).observe(Kit.$('pic'));
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
+  gsap.from('#scrub', {opacity: 0, duration: .5, delay: .25});
+};
+Kit.play.card = async () => {
+  const s = Kit.$('scrub');
+  for (const v of [300, 600, 800, 1000]) { s.value = v; s.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 500));
+};
+Kit.single();
+</script>
+</html>

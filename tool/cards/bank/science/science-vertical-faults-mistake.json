@@ -1,0 +1,37 @@
+{
+  "id": "science-vertical-faults-mistake",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Why should a geological section never show a vertical fault?",
+  "answer": "A fault's lean shows which block lies on top, and so whether the rock slid down (normal) or was pushed up (reverse). A vertical fault hides both, so to a geologist it reads as a sign that the setting was not understood. Leaning the fault, even a little, keeps the movement visible.",
+  "move": "Always lean a fault: its tilt is the kinematics.",
+  "keywords": [
+    "fault",
+    "geological section",
+    "normal fault",
+    "reverse fault",
+    "kinematics"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A geological cross-section with a fault drawn as a perfectly vertical line, which the reader can drag sideways to lean. The reader picks the reason a section should never show a vertical fault from several options, then rates how sure they are."
+  },
+  "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=4103s",
+  "written": "2026-11-03"
+}

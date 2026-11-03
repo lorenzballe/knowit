@@ -1,0 +1,37 @@
+{
+  "id": "technology-bending-solid-titanium",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a solid piece of titanium bend 180 degrees?",
+  "answer": "The titanium is one piece of 3D-printed metal, designed with thin, flexible beams. Those beams let the solid metal bend ±90°, which gives 180° of motion, and then it springs back. No hinge or alloy is needed; the shape does the work.",
+  "move": "The right shape can make even solid metal bend.",
+  "keywords": [
+    "titanium",
+    "3d printing",
+    "flexure",
+    "metal",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive card with a draggable knob. Dragging it bends a solid titanium bar, with no hinge visible, from full left to full right. The page asks the reader to bend it all the way left, then all the way right."
+  },
+  "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=466s",
+  "written": "2026-11-03"
+}

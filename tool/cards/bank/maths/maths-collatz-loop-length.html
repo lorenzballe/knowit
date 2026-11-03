@@ -1,0 +1,211 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Collatz loop length</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1cqh}
+#read{display:flex;flex-direction:column;align-items:center;gap:.4cqh;text-align:center}
+#rp{font:700 max(1.45cqh,10.5px)/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+#rl{display:flex;align-items:baseline;justify-content:center;gap:2cqw;white-space:nowrap}
+#rn{font:800 max(4cqh,24px)/1 var(--display);color:var(--k)}
+#ru{font:700 max(2cqh,13px)/1 var(--body);color:var(--k)}
+#rd{font:500 max(1.5cqh,11px)/1.1 var(--mono);color:var(--muted)}
+#pic{flex:1 1 0;min-height:8cqh;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.7cqh}
+#track{position:relative;height:max(4.8cqh,36px);touch-action:none;cursor:grab;outline:none;--kn:max(3.6cqh,26px)}
+#track.off{cursor:default;opacity:.5}
+#rail{position:absolute;left:calc(var(--kn)/2);right:calc(var(--kn)/2);top:50%;height:max(.8cqh,5px);transform:translateY(-50%);border-radius:99px;background:color-mix(in srgb,var(--k) 18%,transparent)}
+#rail i{position:absolute;top:50%;width:max(.35cqh,2px);height:max(1.8cqh,12px);transform:translate(-50%,-50%);border-radius:2px;background:color-mix(in srgb,var(--k) 40%,transparent)}
+#fill{position:absolute;left:0;top:0;bottom:0;width:20%;border-radius:inherit;background:var(--k)}
+#knob{position:absolute;top:50%;left:20%;width:var(--kn);height:var(--kn);margin:calc(var(--kn)/-2) 0 0 calc(var(--kn)/-2);border-radius:50%;background:var(--k);box-shadow:0 0 0 max(.5cqh,3px) var(--c),0 .5cqh 1.4cqh color-mix(in srgb,var(--k) 35%,transparent)}
+#track:focus-visible #knob{outline:max(.3cqh,2px) solid var(--k);outline-offset:max(.6cqh,4px)}
+#ticks{position:relative;height:max(1.8cqh,12px);margin:0 calc(max(3.6cqh,26px)/2);font:600 max(1.4cqh,10px)/1 var(--mono);color:var(--muted)}
+#ticks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+#ticks span:first-child{transform:none}
+#lock{align-self:center;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.1cqh 7cqw;cursor:pointer}
+#why{display:flex;flex-direction:column}
+#pic .rl{fill:none;stroke:var(--k);stroke-opacity:.25}
+#pic .rd{fill:var(--k)}
+#pic .sl{fill:none;stroke:var(--k)}
+#pic .sd{fill:var(--k);stroke:var(--c)}
+#pic .st{fill:var(--c);font-family:var(--display);font-weight:800;text-anchor:middle;dominant-baseline:central}
+#pic .ar{fill:var(--k)}
+#pic .bub{fill:var(--c);stroke:var(--k);stroke-width:2}
+#pic .lead{fill:none;stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 3}
+#pic .gs{fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:6 5}
+#pic .cap{fill:var(--k);font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Slide · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COLLATZ</span></div>
+    <h2 class="q">If a Collatz loop besides 4→2→1 existed, how long must it be?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read"><span id="rp" class="">Your guess</span><div id="rl"><span id="rn">1,000</span><span id="ru">numbers</span></div><span id="rd" class="">each dot ≈ 17 numbers</span></div>
+      <svg id="pic" role="img" aria-label="A loop of numbers drawn as a ring of dots, next to the tiny loop 4, 2, 1"></svg>
+      <div id="ctl">
+        <div id="track" role="slider" tabindex="0" aria-label="Your guess: how many numbers the loop must hold"><div id="rail"><i style="left:20.15%"></i><i style="left:44.1%"></i><i style="left:68.06%"></i><i style="left:92.02%"></i><div id="fill"></div><div id="knob"></div></div></div>
+        <div id="ticks"><span style="left:0">3</span><span style="left:20.15%">thousand</span><span style="left:44.1%">million</span><span style="left:68.06%">billion</span><span style="left:92.02%">trillion</span></div>
+        <button id="lock">Lock in my guess</button>
+      </div>
+      <div id="why" class="gone"><p class="body">Every number checked so far falls into 4→2→1; from that, mathematicians calculate this minimum. Likely true, then, but not proved.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag to guess the shortest such loop, then lock it in.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Another loop isn't ruled out, but it would need at least 186 billion numbers.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const T0 = Math.log10(3), T1 = 13, TA = Math.log10(186e9), KMAX = 184;
+const S = {t: 3, g: 3}, rot = {a: 0};
+let G = {}, phase = 0, drag = false, band = 1, raf = 0;
+const $ = Kit.$, svg = $('pic'), track = $('track'), rail = $('rail'), knob = $('knob'), fill = $('fill');
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+function fmt(N) {
+  const n = +N.toPrecision(3);
+  if (n < 1e4) return Math.round(N).toLocaleString('en-US');
+  if (n < 1e6) return n.toLocaleString('en-US');
+  const [d, w] = n < 1e9 ? [1e6, 'million'] : n < 1e12 ? [1e9, 'billion'] : [1e12, 'trillion'];
+  return `${+(n / d).toPrecision(3)} ${w}`;
+}
+
+// The loop 4 → 2 → 1 → 4: three numbers on a little circle, arrows clockwise.
+function loop421(g, x, y, r, f, q = .34) {
+  Kit.mk('circle', {class: 'sl', cx: x, cy: y, r, 'stroke-width': clamp(r * .07, 1.2, 2.6)}, g);
+  const dr = Math.min(r * q, f * 1.2);
+  if (dr >= 2.5) [-30, 90, 210].forEach(deg => {
+    const a = deg * Math.PI / 180, c = Math.cos(a), s = Math.sin(a), mx = x + r * c, my = y + r * s, tx = -s, ty = c, z = dr * .7;
+    const p = [[mx + tx * z, my + ty * z], [mx - tx * z * .7 + c * z * .65, my - ty * z * .7 + s * z * .65], [mx - tx * z * .7 - c * z * .65, my - ty * z * .7 - s * z * .65]];
+    Kit.mk('polygon', {class: 'ar', points: p.map(q => q.join(',')).join(' ')}, g);
+  });
+  [[-90, '4'], [30, '2'], [150, '1']].forEach(([deg, n]) => {
+    const a = deg * Math.PI / 180, px = x + r * Math.cos(a), py = y + r * Math.sin(a);
+    Kit.mk('circle', {class: 'sd', cx: px, cy: py, r: Math.max(dr, 1.6), 'stroke-width': Math.max(1, dr * .2)}, g);
+    if (dr >= 7) Kit.mk('text', {class: 'st', x: px, y: py, 'font-size': Math.max(10.5, dr * 1.2)}, g).textContent = n;
+  });
+}
+
+function draw() {
+  const fit = Kit.fitSvg(svg), W = fit.W, H = fit.H, f = fit.f;
+  svg.textContent = '';
+  if (!(W > 40 && H > 40)) { G = {}; return; }
+  const half = Math.min(W, H) / 2, R = half * .88, cx = W / 2, cy = H / 2;
+  G = {W, H, f, R, cx, cy, dots: []};
+  G.ring = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {class: 'rl', cx, cy, r: R, 'stroke-width': Math.max(1, f * .1)}, G.ring);
+  for (let i = 0; i < KMAX; i++) G.dots.push(Kit.mk('circle', {class: 'rd', cx, cy, r: 0}, G.ring));
+  G.guess = Kit.mk('g', {}, svg);
+  G.small = Kit.mk('g', {}, svg);
+  // A magnifying bubble: the 4-2-1 loop blown up, tied to its true-scale speck on the ring.
+  const rb = R * .56, bcy = cy - R * .1;
+  G.bub = Kit.mk('g', {}, svg);
+  Kit.mk('line', {class: 'lead', x1: cx, y1: bcy + rb, x2: cx, y2: cy + R - 9}, G.bub);
+  Kit.mk('circle', {class: 'lead', cx, cy: cy + R, r: 7}, G.bub);
+  Kit.mk('circle', {class: 'bub', cx, cy: bcy, r: rb}, G.bub);
+  loop421(G.bub, cx, bcy - rb * .14, rb * .5, f, .44);
+  Kit.mk('text', {class: 'cap', x: cx, y: bcy + rb * .64, 'font-size': Math.max(10.5, Math.min(rb * .19, f * .9)), 'dominant-baseline': 'central', 'text-anchor': 'middle'}, G.bub).textContent = '3 numbers';
+  render();
+}
+
+function render() {
+  const u = (S.t - T0) / (T1 - T0);
+  knob.style.left = fill.style.width = (u * 100) + '%';
+  const N = 10 ** S.t, name = fmt(N);
+  track.setAttribute('aria-valuenow', N.toPrecision(3));
+  track.setAttribute('aria-valuetext', name + ' numbers');
+  $('rn').textContent = name;
+  const k = Math.max(1, Math.round(Math.min(N, 24 + 12 * S.t)));
+  $('rd').textContent = N > k * 1.02 ? `each dot ≈ ${fmt(N / k)} numbers` : 'each dot = 1 number';
+  if (!G.dots) return;
+  const {cx, cy, R, f} = G, sp = 2 * Math.PI * R / k, rd = clamp(sp * .3, 1.3, R * .07);
+  G.dots.forEach((d, i) => {
+    if (i >= k) { d.setAttribute('r', 0); return; }
+    const a = -Math.PI / 2 + 2 * Math.PI * i / k;
+    d.setAttribute('cx', cx + R * Math.cos(a)); d.setAttribute('cy', cy + R * Math.sin(a)); d.setAttribute('r', rd);
+  });
+  G.ring.setAttribute('transform', `rotate(${rot.a} ${cx} ${cy})`);
+  // Same spacing per number: the 3-number loop shrinks as the big loop grows.
+  const r4 = 3 * R / N, by = cy + R;
+  G.small.textContent = '';
+  if (r4 >= 3) loop421(G.small, cx, by - r4, r4, f);
+  else Kit.mk('circle', {class: 'rd', cx, cy: by, r: 2.4}, G.small);
+  G.bub.style.opacity = clamp((26 - r4) / 16, 0, 1);
+  G.guess.textContent = '';
+  if (phase > 1) {
+    const rg = R * 10 ** (S.g - S.t);
+    if (rg > 4 && rg <= R * 1.001) {
+      Kit.mk('circle', {class: 'gs', cx, cy: by - rg, r: rg}, G.guess);
+      const fs = Math.max(11, f * .9), inside = cx - rg - 6 < fs * 5.5;
+      Kit.mk('text', {class: 'cap', x: inside ? cx - rg + 8 : cx - rg - 6, y: by - rg, 'font-size': fs, 'dominant-baseline': 'central', 'text-anchor': inside ? 'start' : 'end'}, G.guess).textContent = 'your guess';
+    }
+  }
+}
+
+function setT(t) {
+  S.t = clamp(t, T0, T1);
+  const b = Math.floor(S.t / 3);
+  if (b !== band) { band = b; Kit.haptic('light'); }
+  render();
+}
+function fromX(x) { const r = rail.getBoundingClientRect(); setT(T0 + clamp((x - r.left) / r.width, 0, 1) * (T1 - T0)); }
+track.addEventListener('pointerdown', e => {
+  if (phase) return;
+  drag = true; gsap.killTweensOf(S);
+  try { track.setPointerCapture(e.pointerId); } catch (_) {}
+  fromX(e.clientX); e.preventDefault();
+});
+track.addEventListener('pointermove', e => { if (drag) fromX(e.clientX); });
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(n => track.addEventListener(n, () => { drag = false; }));
+track.addEventListener('keydown', e => {
+  if (phase) return;
+  const d = {ArrowRight: .25, ArrowUp: .25, ArrowLeft: -.25, ArrowDown: -.25}[e.key];
+  if (d) { gsap.killTweensOf(S); setT(S.t + d); e.preventDefault(); }
+});
+
+// How sure, after the guess. When both are in, Kit.answer tells the app.
+const sure = Kit.sure($('sure'), 'How sure are you?', pct => {
+  if (phase !== 1) return;
+  phase = 2;
+  const said = fmt(10 ** S.g), ok = Math.abs(S.g - TA) <= 1;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  sure.grade(ok, pct, `${said}: ${ok ? 'within 10× of it' : S.g < TA ? 'far too short' : 'far too long'}`);
+  $('ru').textContent = 'numbers, at least';
+  Kit.hide('rp'); Kit.hide('rd'); Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (Kit.calm) { S.t = TA; render(); }
+  else gsap.to(S, {t: TA, duration: 2, ease: 'power2.inOut', onUpdate: render, onComplete: () => Kit.haptic('success')});
+});
+$('lock').addEventListener('click', () => {
+  if (phase) return;
+  phase = 1; drag = false; gsap.killTweensOf(S);
+  S.g = S.t; track.classList.add('off'); track.setAttribute('aria-disabled', 'true');
+  Kit.hide('lock'); Kit.haptic('selection'); sure.on();
+});
+
+if (window.ResizeObserver) new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }).observe(svg);
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = draw;
+// Motion the reader should see starts here: the 4-2-1 loop swells into a loop of 1,000.
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  if (!phase) gsap.fromTo(S, {t: T0}, {t: 3, duration: 1.6, ease: 'power2.inOut', onUpdate: render});
+  gsap.to(rot, {a: 360, duration: 120, repeat: -1, ease: 'none', onUpdate: () => { if (G.ring) G.ring.setAttribute('transform', `rotate(${rot.a} ${G.cx} ${G.cy})`); }});
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const r = rail.getBoundingClientRect(), y = r.top + r.height / 2;
+  const ev = (type, u) => track.dispatchEvent(new PointerEvent(type, {bubbles: true, cancelable: true, clientX: r.left + u * r.width, clientY: y, pointerId: 1, isPrimary: true, pointerType: 'touch'}));
+  ev('pointerdown', .3);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', .3 + i * .05); await w(25); }
+  ev('pointerup', .8); await w(200);
+  $('lock').click(); await w(200);
+  $('sure').querySelector('[data-v="80"]').click(); await w(2400);
+};
+Kit.single();
+</script>
+</html>

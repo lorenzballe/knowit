@@ -1,0 +1,179 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-sea-water-harm -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#fig{flex:1;min-height:0;width:100%;display:block}
+#row{display:flex;align-items:center;gap:3.5cqw}
+#drink{font:700 max(2.1cqh,14px)/1.1 var(--body);background:var(--k);color:var(--c);border:0;border-radius:99px;padding:1.5cqh 5cqw;cursor:pointer;flex:none}
+#step{font:600 max(1.9cqh,13px)/1.25 var(--body);margin:0;color:var(--k);overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{margin:0}
+#why .body{margin:0;font:500 max(1.9cqh,13px)/1.3 var(--body)}
+.bg{fill:color-mix(in srgb,var(--k) 7%,transparent)}
+.bo{fill:none;stroke:var(--k);stroke-linejoin:round}
+.salt{fill:color-mix(in srgb,var(--k) 55%,transparent)}
+.wave{fill:none;stroke:var(--k);stroke-opacity:.6}
+.eye{stroke:var(--k);fill:var(--k);stroke-linecap:round}
+.mk{fill:#e5483b;stroke:var(--c)}
+.ring{fill:none;stroke:#e5483b}
+.ln{stroke:var(--k);stroke-opacity:.55}
+.lb{fill:var(--k);font-family:var(--body);font-weight:800}
+.meter{fill:var(--k);font-family:var(--mono);font-weight:700;opacity:.7}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Tap · watch it climb">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SALT OVERLOAD</span></div>
+    <h2 class="q">What can happen to you if you keep drinking sea water?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="fig" aria-label="A body filling up with salt"></svg>
+      <div id="row">
+        <button id="drink">Drink a glass</button>
+        <p id="step">Salt in your blood: normal.</p>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Too much salt: hypernatremia</p>
+        <p class="body">Sea water pushes the salt in your blood too high and dries you out. One glass may do nothing at first. Keep drinking and it climbs: kidneys, brain, stomach, then coma or death.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to keep drinking sea water and watch the body.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>With sea water the dose decides: the more you drink, the worse it gets.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 7;
+let n = 0;
+// Each glass: what the step line says and, if any, which warning lights up.
+const ST = [
+  {say: 'Salt in your blood: normal.'},
+  {say: 'Glass 1, about 200 ml: maybe nothing, at first.'},
+  {say: 'Keep going: the kidneys get damaged.', m: 0},
+  {say: 'The brain suffers: mental confusion.', m: 1},
+  {say: 'The stomach rebels: nausea.', m: 2},
+  {say: 'Then vomiting.', m: 3},
+  {say: 'In the worst cases: coma.', m: 4},
+  {say: 'And at the end: death.', m: 5}
+];
+// Markers: point (relative to body unit s), side of the label, label text.
+const MK = [
+  {x: .06, y: .42, side: 1, ly: .42, t: 'Kidneys'},
+  {x: .02, y: .07, side: 1, ly: .07, t: 'Confusion'},
+  {x: -.04, y: .36, side: -1, ly: .38, t: 'Nausea'},
+  {x: -.02, y: .2, side: -1, ly: .25, t: 'Vomiting'},
+  {x: -.03, y: .1, side: -1, ly: .1, t: 'Coma'},
+  {x: .06, y: .72, side: 1, ly: .72, t: 'Death'}
+];
+let G = null;
+
+function shapes(p, cx, top, s) {
+  const r = (x, y, w, h, rx) => Kit.mk('rect', {x: cx + x * s, y: top + y * s, width: w * s, height: h * s, rx: rx * s}, p);
+  Kit.mk('circle', {cx, cy: top + .08 * s, r: .075 * s}, p);
+  r(-.03, .14, .06, .05, .01);
+  r(-.13, .17, .26, .36, .05);
+  r(-.205, .18, .06, .32, .03);
+  r(.145, .18, .06, .32, .03);
+  r(-.115, .48, .1, .52, .035);
+  r(.015, .48, .1, .52, .035);
+}
+
+function eyes() {
+  const {cx, top, s, eg} = G; eg.innerHTML = '';
+  const y = top + .075 * s, w = Math.max(1.6, s * .008);
+  [-.028, .028].forEach(dx => {
+    const x = cx + dx * s, e = .011 * s;
+    if (n >= 7) {
+      Kit.mk('path', {class: 'eye', d: `M${x - e} ${y - e}L${x + e} ${y + e}M${x + e} ${y - e}L${x - e} ${y + e}`, 'stroke-width': w}, eg);
+    } else if (n >= 6) {
+      Kit.mk('path', {class: 'eye', d: `M${x - e} ${y}L${x + e} ${y}`, 'stroke-width': w}, eg);
+    } else {
+      Kit.mk('circle', {class: 'eye', cx: x, cy: y, r: e * .7}, eg);
+    }
+  });
+}
+
+function level(k) { const {top, s} = G; const h = s * 1.02 * k / N; return {y: top + s * 1.01 - h, height: h + 2}; }
+
+function draw() {
+  const svg = Kit.$('fig'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const s = Math.max(60, Math.min(H * .9, (W / 2 - fs * 5.6) / .25));
+  const cx = W / 2, top = (H - s) / 2;
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'bodyclip'}, defs);
+  shapes(cp, cx, top, s);
+  const bg = Kit.mk('g', {class: 'bg'}, svg); shapes(bg, cx, top, s);
+  const sg = Kit.mk('g', {'clip-path': 'url(#bodyclip)'}, svg);
+  G = {cx, top, s, fs};
+  const L = level(n);
+  G.salt = Kit.mk('rect', {class: 'salt', x: cx - s * .3, width: s * .6, y: L.y, height: L.height}, sg);
+  G.wave = Kit.mk('path', {class: 'wave', 'stroke-width': Math.max(1.5, s * .006), d: wavePath(L.y)}, sg);
+  const bo = Kit.mk('g', {class: 'bo', 'stroke-width': Math.max(2, s * .01)}, svg); shapes(bo, cx, top, s);
+  G.eg = Kit.mk('g', {}, svg); eyes();
+  G.mks = MK.map((m, i) => {
+    const g = Kit.mk('g', {}, svg);
+    const px = cx + m.x * s, py = top + m.y * s, lx = cx + m.side * .25 * s, ly = top + m.ly * s;
+    Kit.mk('path', {class: 'ln', d: `M${px} ${py}L${lx - m.side * 4} ${ly}`, 'stroke-width': 1.5}, g);
+    const ring = Kit.mk('circle', {class: 'ring', cx: px, cy: py, r: s * .022, 'stroke-width': 2}, g);
+    Kit.mk('circle', {class: 'mk', cx: px, cy: py, r: s * .018, 'stroke-width': 2}, g);
+    const t = Kit.mk('text', {class: 'lb', x: lx, y: ly, 'dominant-baseline': 'middle', 'text-anchor': m.side > 0 ? 'start' : 'end', 'font-size': fs}, g);
+    t.textContent = m.t;
+    const shown = ST.findIndex(x => x.m === i) <= n;
+    g.style.opacity = shown ? 1 : 0;
+    return {g, ring};
+  });
+  const mt = Kit.mk('text', {class: 'meter', x: 4, y: top + s - 2, 'font-size': Math.max(fs * .85, 12)}, svg);
+  G.meter = mt; mt.textContent = `${n}/${N} glasses`;
+}
+
+function wavePath(y) {
+  const {cx, s} = G; let d = `M${cx - s * .3} ${y}`;
+  for (let i = 0; i < 12; i++) { const x = cx - s * .3 + (i + 1) * s * .05; d += `Q${x - s * .025} ${y + (i % 2 ? 3 : -3)} ${x} ${y}`; }
+  return d;
+}
+
+Kit.$('drink').addEventListener('click', () => {
+  if (n >= N || !G) return;
+  n++;
+  const st = ST[n];
+  Kit.$('step').textContent = st.say;
+  G.meter.textContent = `${n}/${N} glasses`;
+  Kit.haptic(n >= N ? 'success' : 'light');
+  const L = level(n);
+  if (Kit.calm) { G.salt.setAttribute('y', L.y); G.salt.setAttribute('height', L.height); G.wave.setAttribute('d', wavePath(L.y)); }
+  else {
+    const o = {y: +G.salt.getAttribute('y')};
+    gsap.to(G.salt, {attr: {y: L.y, height: L.height}, duration: .7, ease: 'power2.out'});
+    gsap.to(o, {y: L.y, duration: .7, ease: 'power2.out', onUpdate: () => G.wave.setAttribute('d', wavePath(o.y))});
+  }
+  eyes();
+  if (st.m !== undefined) {
+    const m = G.mks[st.m];
+    if (Kit.calm) m.g.style.opacity = 1;
+    else {
+      gsap.fromTo(m.g, {opacity: 0}, {opacity: 1, duration: .4});
+      gsap.fromTo(m.ring, {attr: {r: G.s * .02}, opacity: 1}, {attr: {r: G.s * .07}, opacity: 0, duration: 1, repeat: 2, ease: 'power1.out'});
+    }
+  }
+  if (n >= N) {
+    setTimeout(() => {
+      Kit.hide('row'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+    }, Kit.calm ? 0 : 500);
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#fig', {opacity: 0, scale: .96, transformOrigin: '50% 50%', duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < N; i++) { Kit.$('drink').click(); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 1200));
+};
+Kit.single();
+</script>
+</html>

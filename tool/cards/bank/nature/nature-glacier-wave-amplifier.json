@@ -1,0 +1,37 @@
+{
+  "id": "nature-glacier-wave-amplifier",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What effect does a landslide hitting a glacier have on tsunami size?",
+  "answer": "In the 1958 Lituya Bay case, the rockslide alone was 55 million m³. Striking the glacier also tore loose 245 million m³ of ice and water. That far larger mass shoved into the bay makes a far taller wave.",
+  "move": "A slide that hits ice drags the ice in with it: more volume, bigger wave.",
+  "keywords": [
+    "lituya bay",
+    "glacier",
+    "landslide",
+    "tsunami",
+    "alaska"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card: a wave simulation that flips between a rockslide alone and a rockslide hitting a glacier, Lituya Bay 1958. It asks what effect a glacier impact has on tsunami size."
+  },
+  "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bEL4wbv_nOo&t=320s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-vesuvius-one-eruption -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#art{display:block;width:100%;height:100%;touch-action:none;cursor:grab;user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.pan{fill:color-mix(in srgb,var(--c) 70%,white);stroke:var(--k);stroke-width:2}
+.gr{fill:color-mix(in srgb,var(--k) 22%,var(--c))}
+.cone{fill:var(--k)}
+.plume{fill:color-mix(in srgb,var(--k) 45%,var(--c))}
+.tk{fill:var(--k)}
+.tm{fill:var(--k);opacity:.7}
+.hd{fill:var(--k)}
+.hdt{fill:var(--c)}
+.deep{fill:#1b1210;stroke:var(--k);stroke-width:2}
+.lt{fill:#ffe0cf}
+.mg{fill:none;stroke:#c2360f;stroke-linecap:round;stroke-linejoin:round}
+.mf{fill:none;stroke:#ffb347;stroke-linecap:round;stroke-linejoin:round}
+.lnk{stroke:var(--k);stroke-width:1.5;stroke-dasharray:4 5;opacity:.5}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pull apart · layers">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VESUVIUS</span></div>
+    <h2 class="q">Why is Vesuvius's 1944 eruption seen as a continuation of 1906?</h2>
+    <div class="stagebox" id="stage"><svg id="art"></svg></div>
+    <p class="say" id="say">Drag the drawing apart: lift the surface off what lies beneath.</p>
+    <div id="why" class="gone">
+      <p class="big">One process, two outbursts</p>
+      <p class="body">At the surface, 1906 and 1944 look like two separate eruptions. Scientists agree 1944 was in every sense a continuation of the strong 1906 eruption: the same magmatic process, still going.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>1944 wasn't a new start for Vesuvius: it was 1906, carried on.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('art');
+const st = {p: 0};
+let done = false, G = null, flow = null;
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .8, 12);
+  const m = Math.max(W * .03, 6);
+  const ph = Math.min(H * .46, Math.max(H * .4, fs * 8));
+  const y0 = (H - ph) / 2;
+  const d = y0 - H * .02;
+  const x1 = W * .2, x2 = W * .8;
+  const pw = W - 2 * m, r = Math.max(fs * .8, 8);
+
+  // links between the layers (visible once apart)
+  const links = Kit.mk('g', {}, svg);
+  [x1, x2].forEach(x => Kit.mk('line', {x1: x, x2: x, y1: y0, y2: y0 + ph, class: 'lnk'}, links));
+
+  // DEEP layer
+  const deep = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: m, y: y0, width: pw, height: ph, rx: r, class: 'deep'}, deep);
+  const t2 = Kit.mk('text', {x: W / 2, y: y0 + fs * 1.5, 'text-anchor': 'middle', class: 'lt', style: `font:700 ${fs}px var(--mono);letter-spacing:.08em`}, deep);
+  t2.textContent = 'WHAT LIES BENEATH';
+  const ym = y0 + ph * .62, k = Math.min(ph * .16, W * .06), top = y0 + fs * 2.2;
+  const span = (x2 - k) - (x1 + k), amp = ph * .09;
+  const pd = `M${x1},${top} L${x1},${ym - k} Q${x1},${ym} ${x1 + k},${ym} C${x1 + k + span / 3},${ym + amp} ${x2 - k - span / 3},${ym - amp} ${x2 - k},${ym} Q${x2},${ym} ${x2},${ym - k} L${x2},${top}`;
+  Kit.mk('path', {d: pd, class: 'mg', 'stroke-width': Math.max(fs * .9, 10)}, deep);
+  const fl = Kit.mk('path', {d: pd, class: 'mf', 'stroke-width': Math.max(fs * .3, 3), 'stroke-dasharray': `${fs * .7} ${fs * .8}`}, deep);
+  // arrow tip at 1944 vent
+  Kit.mk('path', {d: `M${x2 - fs * .7},${top + fs * .6} L${x2},${top - fs * .2} L${x2 + fs * .7},${top + fs * .6} Z`, fill: '#ffb347'}, deep);
+  const lb = Kit.mk('text', {x: W / 2, y: ym + amp + fs * 2, 'text-anchor': 'middle', class: 'lt', style: `font:700 ${fs * 1.05}px var(--body)`}, deep);
+  lb.textContent = 'one magmatic process';
+  [[x1, '1906'], [x2, '1944']].forEach(([x, t]) => {
+    const e = Kit.mk('text', {x: x + (x < W / 2 ? fs * .9 : -fs * .9), y: top + fs * 1.4, 'text-anchor': x < W / 2 ? 'start' : 'end', class: 'lt', style: `font:700 ${fs}px var(--mono)`}, deep);
+    e.textContent = t;
+  });
+
+  // TOP layer
+  const topg = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: m, y: y0, width: pw, height: ph, rx: r, class: 'pan'}, topg);
+  const gy = y0 + ph * .7;
+  Kit.mk('path', {d: `M${m + 1},${gy} L${W - m - 1},${gy} L${W - m - 1},${y0 + ph - r} Q${W - m - 1},${y0 + ph - 1} ${W - m - r},${y0 + ph - 1} L${m + r},${y0 + ph - 1} Q${m + 1},${y0 + ph - 1} ${m + 1},${y0 + ph - r} Z`, class: 'gr'}, topg);
+  const t1 = Kit.mk('text', {x: W / 2, y: y0 + fs * 1.5, 'text-anchor': 'middle', class: 'tk', style: `font:700 ${fs}px var(--mono);letter-spacing:.08em`}, topg);
+  t1.textContent = 'WHAT THE SURFACE SHOWS';
+  const ch = ph * .2, cw = Math.min(W * .09, ch * 1.3);
+  [[x1, '1906', 1.15], [x2, '1944', 1]].forEach(([x, t, s]) => {
+    const tip = gy - ch;
+    Kit.mk('path', {d: `M${x - cw},${gy} L${x - cw * .18},${tip} L${x + cw * .18},${tip} L${x + cw},${gy} Z`, class: 'cone'}, topg);
+    const pr = ph * .05 * s;
+    [[0, pr * 1.1, 1], [-pr * .9, pr * 2.6, .8], [pr * .8, pr * 3.4, .7]].forEach(([dx, dy, k2]) =>
+      Kit.mk('circle', {cx: x + dx, cy: tip - dy, r: pr * k2, class: 'plume'}, topg));
+    const e = Kit.mk('text', {x, y: gy + fs * 1.5, 'text-anchor': 'middle', class: 'tk', style: `font:800 ${fs * 1.05}px var(--mono)`}, topg);
+    e.textContent = t;
+  });
+  const q = Kit.mk('text', {x: W / 2, y: gy - fs * .7, 'text-anchor': 'middle', class: 'tm', style: `font:700 ${fs}px var(--body)`}, topg);
+  q.textContent = 'two eruptions?';
+  const hand = Kit.mk('g', {}, topg);
+  const hw = fs * 4.4, hh = fs * 1.6;
+  Kit.mk('rect', {x: W / 2 - hw / 2, y: y0 + ph - hh / 2, width: hw, height: hh, rx: hh / 2, class: 'hd'}, hand);
+  const ht = Kit.mk('text', {x: W / 2, y: y0 + ph + fs * .35, 'text-anchor': 'middle', class: 'hdt', style: `font:700 ${fs}px var(--body)`}, hand);
+  ht.textContent = '⇕ pull';
+
+  G = {top: topg, deep, links, hand, d};
+  if (flow) flow.kill();
+  flow = Kit.calm ? null : gsap.to(fl, {attr: {'stroke-dashoffset': -fs * 15}, duration: 3, ease: 'none', repeat: -1});
+  apply();
+}
+
+function apply(){
+  if (!G) return;
+  const p = st.p;
+  G.top.setAttribute('transform', `translate(0,${-p * G.d})`);
+  G.deep.setAttribute('transform', `translate(0,${p * G.d})`);
+  G.deep.setAttribute('visibility', p > 0 ? 'visible' : 'hidden');
+  G.links.setAttribute('opacity', p);
+  G.hand.setAttribute('opacity', Math.max(0, 1 - p * 2));
+}
+
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  gsap.to(st, {p: 1, duration: Kit.calm ? .01 : .6, ease: 'power3.out', onUpdate: apply});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+let drag = null;
+svg.addEventListener('pointerdown', e => {
+  if (done) return;
+  drag = {y: e.clientY, p: st.p, moved: false};
+  gsap.killTweensOf(st);
+  svg.setPointerCapture && svg.setPointerCapture(e.pointerId);
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag || done) return;
+  const dy = Math.abs(e.clientY - drag.y);
+  if (dy > 4) drag.moved = true;
+  st.p = Math.min(1, drag.p + dy / Math.max(G.d * 1.2, 40));
+  apply();
+  if (st.p >= .9) { drag = null; finish(); }
+});
+const up = () => {
+  if (!drag || done) { drag = null; return; }
+  const moved = drag.moved; drag = null;
+  if (!moved || st.p > .45) finish();
+  else gsap.to(st, {p: 0, duration: .35, ease: 'power2.out', onUpdate: apply});
+};
+svg.addEventListener('pointerup', up);
+svg.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || done) return;
+  gsap.fromTo(st, {p: 0}, {p: .12, duration: .5, delay: .4, yoyo: true, repeat: 1, ease: 'power2.inOut', onUpdate: apply});
+};
+Kit.play.card = async () => {
+  finish();
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

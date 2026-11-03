@@ -1,0 +1,37 @@
+{
+  "id": "history-firing-squad-return",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.repeated_mistakes",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In which US state was the firing squad reintroduced and used in 2025?",
+  "answer": "The firing squad had not been used for 15 years. In 2025, South Carolina used it again, one of the older execution methods the US has brought back in recent years.",
+  "move": "The firing squad came back in South Carolina in 2025, after 15 unused years.",
+  "keywords": [
+    "firing squad",
+    "south carolina",
+    "death penalty",
+    "capital punishment",
+    "united states"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Multiple-choice quiz asking which US state reintroduced and used the firing squad in 2025. Options are Texas, South Carolina and Florida. Below, the reader is asked to pick a state and rate how sure they are."
+  },
+  "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=gsZ-We120mw&t=791s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,200 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-inertia-car-push -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#ctl{display:flex;gap:3cqw;justify-content:center;flex-wrap:wrap}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.btn{font:800 max(2.3cqh,15px)/1 var(--body);letter-spacing:.04em;color:var(--c);background:var(--k);border:0;border-radius:2cqh;padding:1.8cqh 7cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none}
+.btn.alt{color:var(--k);background:color-mix(in srgb,var(--k) 10%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent)}
+.btn.held{transform:scale(.96)}
+.foot .src{display:block;max-width:calc(100% - 115px);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.ink{fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round}
+.fk{fill:var(--k)}
+.fc{fill:var(--c)}
+.fm{fill:color-mix(in srgb,var(--k) 14%,transparent)}
+.tx{fill:var(--k);font-family:var(--body);font-weight:700}
+.hand{fill:var(--k);font-family:var(--hand);font-weight:700}
+.sc{stroke:var(--c);fill:none;stroke-linecap:round}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Build it · push">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">INERTIA</span></div>
+    <h2 class="q">Why is a parked car so hard to push on a level road?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <button class="btn" id="push">HOLD TO PUSH</button>
+        <button class="btn alt gone" id="swap">Swap for a cart</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">Same push, but the car barely creeps. A car has a lot of inertia: it resists any change in its motion, so getting it rolling takes a big force. On a level road you are not lifting it. The road holds its weight.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold PUSH to shove the parked car.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Weight makes a thing hard to lift; inertia makes it hard to push.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+let G = null;                 // geometry and handles of the current drawing
+let obj = 'car', xf = 0.36, v = 0, pushing = false, carT = 0, cartT = 0, step = 0, startXf = 0.36;
+const ACC = {car: 0.03, cart: 1.0};   // same push, very different response (in widths per s²)
+
+function build(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const gy = H * 0.74, cw = Math.min(W * 0.46, H * 0.9), lw = Math.max(2, cw * 0.012);
+  const fs = Math.max(f, 12);
+  const g = {W, H, f: fs, gy, cw, lw};
+  // road
+  Kit.mk('line', {x1: 0, y1: gy, x2: W, y2: gy, class: 'ink', 'stroke-width': lw * 1.4}, svg);
+  for (let x = 6; x < W; x += cw * 0.09)
+    Kit.mk('line', {x1: x, y1: gy + lw * 2, x2: x - cw * 0.04, y2: gy + cw * 0.05, class: 'ink', 'stroke-width': lw * 0.6, opacity: .35}, svg);
+  const lab = Kit.mk('text', {x: W / 2, y: Math.min(H - fs * 0.4, gy + cw * 0.05 + fs * 1.5), 'text-anchor': 'middle', class: 'tx', 'font-size': fs * 0.9, opacity: .75}, svg);
+  lab.textContent = 'Level road: it holds the weight up';
+  // speed meter
+  const sy = Math.max(fs * 1.1, H * 0.07);
+  const st = Kit.mk('text', {x: W * 0.04, y: sy, class: 'tx', 'font-size': fs}, svg); st.textContent = 'speed';
+  const bx = W * 0.04 + fs * 3.6, bw = W * 0.92 - fs * 3.6, bh = fs * 0.7;
+  Kit.mk('rect', {x: bx, y: sy - bh * 0.95, width: bw, height: bh, rx: bh / 2, class: 'fm'}, svg);
+  g.bar = Kit.mk('rect', {x: bx, y: sy - bh * 0.95, width: 0, height: bh, rx: bh / 2, class: 'fk'}, svg);
+  g.bw = bw;
+  // object
+  g.og = Kit.mk('g', {}, svg);
+  g.wheels = [];
+  const wheel = (cx, r) => {
+    const w = Kit.mk('g', {transform: `translate(${cx},${gy - r})`}, g.og);
+    Kit.mk('circle', {r, class: 'fk'}, w);
+    const sp = Kit.mk('g', {}, w);
+    Kit.mk('circle', {r: r * 0.45, class: 'sc', 'stroke-width': lw}, sp);
+    for (let i = 0; i < 3; i++) { const a = i * Math.PI / 3; Kit.mk('line', {x1: Math.cos(a) * r * 0.7, y1: Math.sin(a) * r * 0.7, x2: -Math.cos(a) * r * 0.7, y2: -Math.sin(a) * r * 0.7, class: 'sc', 'stroke-width': lw * 0.8}, sp); }
+    g.wheels.push({sp, r});
+  };
+  if (obj === 'car') {
+    const r = cw * 0.09, bb = gy - r * 0.9, bhh = cw * 0.2, top = bb - bhh, ct = top - cw * 0.15;
+    Kit.mk('path', {d: `M${cw*0.2},${top} L${cw*0.3},${ct} L${cw*0.66},${ct} L${cw*0.78},${top} Z`, class: 'fk'}, g.og);
+    Kit.mk('path', {d: `M${cw*0.25},${top-lw} L${cw*0.32},${ct+cw*0.025} L${cw*0.46},${ct+cw*0.025} L${cw*0.46},${top-lw} Z M${cw*0.5},${top-lw} L${cw*0.5},${ct+cw*0.025} L${cw*0.64},${ct+cw*0.025} L${cw*0.73},${top-lw} Z`, class: 'fc'}, g.og);
+    Kit.mk('rect', {x: 0, y: top, width: cw, height: bhh, rx: cw * 0.05, class: 'fk'}, g.og);
+    Kit.mk('rect', {x: cw * 0.9, y: top + bhh * 0.25, width: cw * 0.07, height: bhh * 0.22, rx: 3, class: 'fc'}, g.og);
+    wheel(cw * 0.2, r); wheel(cw * 0.8, r);
+    g.ow = cw; g.hx = 0; g.hy = top + bhh * 0.45; g.top = ct;
+  } else {
+    const cc = cw * 0.42, r = cc * 0.12, bb = gy - r * 1.6, top = bb - cc * 0.45;
+    Kit.mk('path', {d: `M0,${top} L${cc},${top} L${cc*0.92},${bb} L${cc*0.08},${bb} Z`, class: 'ink', 'stroke-width': lw * 1.4}, g.og);
+    for (let i = 1; i < 4; i++) Kit.mk('line', {x1: cc * i / 4, y1: top, x2: cc * i / 4, y2: bb, class: 'ink', 'stroke-width': lw * 0.7}, g.og);
+    Kit.mk('line', {x1: cc * 0.15, y1: bb, x2: cc * 0.15, y2: gy - r, class: 'ink', 'stroke-width': lw}, g.og);
+    Kit.mk('line', {x1: cc * 0.85, y1: bb, x2: cc * 0.85, y2: gy - r, class: 'ink', 'stroke-width': lw}, g.og);
+    Kit.mk('line', {x1: 0, y1: top, x2: -cc * 0.14, y2: top - cc * 0.18, class: 'ink', 'stroke-width': lw * 1.4}, g.og);
+    wheel(cc * 0.15, r); wheel(cc * 0.85, r);
+    g.ow = cc; g.hx = -cc * 0.14; g.hy = top - cc * 0.18; g.top = top - cc * 0.18;
+  }
+  // person, attached to the back of the object
+  g.pg = Kit.mk('g', {}, svg);
+  const ph = cw * 0.5, hx = g.hx, P = (dx, dy) => [hx + dx * ph, gy - dy * ph];
+  const foot1 = P(-0.62, 0), hip = P(-0.4, 0.42), knee = P(-0.24, 0.2), foot2 = P(-0.3, 0), sh = P(-0.17, 0.74), hd = P(-0.06, 0.86);
+  const pl = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  Kit.mk('path', {d: pl([foot1, hip, knee, foot2]), class: 'ink', 'stroke-width': lw * 2.2}, g.pg);
+  Kit.mk('path', {d: pl([hip, sh]), class: 'ink', 'stroke-width': lw * 2.6}, g.pg);
+  Kit.mk('path', {d: pl([sh, [hx - lw, g.hy]]), class: 'ink', 'stroke-width': lw * 1.8}, g.pg);
+  Kit.mk('circle', {cx: hd[0], cy: hd[1], r: ph * 0.08, class: 'fk'}, g.pg);
+  g.sweat = Kit.mk('path', {d: `M${hd[0]-ph*0.13},${hd[1]-ph*0.05} q-${ph*0.02},${ph*0.04} 0,${ph*0.05} q${ph*0.02},-${ph*0.01} 0,-${ph*0.05}`, class: 'fk', opacity: 0}, g.pg);
+  // thought bubble
+  g.bg = Kit.mk('g', {opacity: 0}, svg);
+  const bt = Kit.mk('text', {x: 0, y: 0, 'text-anchor': 'middle', class: 'hand', 'font-size': fs * 1.15, 'dominant-baseline': 'middle'}, null);
+  bt.textContent = obj === 'car' ? 'I don’t want to move!' : 'Easy!';
+  const tw = Math.min(W * 0.8, bt.textContent.length * fs * 0.55);
+  const rx = tw / 2 + fs * 0.9, ry = fs * 1.2;
+  const by = Math.max(sy + fs * 0.8 + ry, g.top - fs * 2.6 - ry);
+  g.bub = {rx, ry, by, ow: g.ow};
+  Kit.mk('ellipse', {cx: 0, cy: by, rx, ry, class: 'fc ink', 'stroke-width': lw * 1.2, style: 'fill:var(--c)'}, g.bg);
+  Kit.mk('circle', {cx: -rx * 0.25, cy: by + ry + fs * 0.55, r: fs * 0.35, class: 'ink', 'stroke-width': lw, style: 'fill:var(--c)'}, g.bg);
+  Kit.mk('circle', {cx: -rx * 0.38, cy: by + ry + fs * 1.4, r: fs * 0.2, class: 'ink', 'stroke-width': lw, style: 'fill:var(--c)'}, g.bg);
+  bt.setAttribute('y', by); bt.setAttribute('textLength', tw); bt.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+  g.bg.appendChild(bt);
+  G = g; draw(0);
+}
+
+function draw(jit){
+  if (!G) return;
+  const ox = xf * G.W;
+  G.og.setAttribute('transform', `translate(${ox},0)`);
+  G.pg.setAttribute('transform', `translate(${ox + jit},0)`);
+  const ang = (xf - startXf) * G.W;
+  for (const w of G.wheels) w.sp.setAttribute('transform', `rotate(${(ang / w.r) * 57.2958})`);
+  const bxc = Math.min(G.W - G.bub.rx - 4, Math.max(G.bub.rx + 4, ox + G.bub.ow * 0.62));
+  G.bg.setAttribute('transform', `translate(${bxc},0)`);
+  G.bar.setAttribute('width', Math.min(1, v / 0.6) * G.bw);
+}
+
+function xfMax(){ return G ? (G.W * 0.97 - G.ow) / G.W : 1; }
+
+gsap.ticker.add((t, dms) => {
+  const dt = Math.min(dms / 1000, 0.05);
+  if (pushing && step < 2) { v += ACC[obj] * dt; if (obj === 'car') carT += dt; else cartT += dt; }
+  else v *= Math.exp(-1.2 * dt);
+  if (v < 1e-4) v = 0;
+  xf += v * dt;
+  if (xf >= xfMax()) { xf = xfMax(); v = 0; if (obj === 'cart') finish(); }
+  draw(pushing && obj === 'car' ? Math.sin(t * 60) * 1.2 : 0);
+  if (step === 0 && carT > 1.6) {
+    step = 1; Kit.show('swap');
+    Kit.$('say').textContent = 'Barely moving. Now give a light cart the same push.';
+  }
+  if (obj === 'cart' && cartT > 0.8) finish();
+});
+
+function setPush(on){
+  if (step >= 2 && on) return;
+  pushing = on;
+  Kit.$('push').classList.toggle('held', on);
+  if (!G) return;
+  gsap.to(G.bg, {opacity: on ? 1 : 0, duration: on ? .25 : .5});
+  gsap.to(G.sweat, {opacity: on && obj === 'car' ? 1 : 0, duration: .3});
+  if (on) Kit.haptic('light');
+}
+
+function finish(){
+  if (step >= 2) return;
+  step = 2; pushing = false;
+  Kit.haptic('success');
+  setTimeout(() => {
+    if (G) gsap.to(G.bg, {opacity: 0, duration: .4});
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
+  }, 450);
+}
+
+const pb = Kit.$('push');
+pb.addEventListener('pointerdown', e => { e.preventDefault(); try { pb.setPointerCapture(e.pointerId); } catch (_) {} setPush(true); });
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(n => pb.addEventListener(n, () => setPush(false)));
+pb.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.$('swap').addEventListener('click', () => {
+  obj = 'cart'; xf = startXf = 0.3; v = 0;
+  Kit.hide('swap'); Kit.haptic('selection');
+  Kit.$('say').textContent = 'Hold PUSH again: same push, a cart.';
+  build();
+  if (!Kit.calm) gsap.from(G.og, {opacity: 0, duration: .4});
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#ctl', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const ev = n => pb.dispatchEvent(new PointerEvent(n, {bubbles: true, pointerId: 1}));
+  ev('pointerdown'); await w(1900); ev('pointerup'); await w(100);
+  Kit.$('swap').click(); await w(150);
+  ev('pointerdown'); await w(1000); ev('pointerup'); await w(800);
+};
+Kit.single();
+</script>
+</html>

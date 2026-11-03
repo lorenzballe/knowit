@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-coin-extra-turn -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block}
+#meters{display:flex;gap:2.4cqw}
+.m{flex:1;min-width:0;border-radius:1.6cqh;padding:.7cqh 3cqw;background:color-mix(in srgb,var(--k) 8%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 22%,transparent);transition:background .3s,color .3s}
+.m small{display:block;font:600 max(1.5cqh,12px)/1.25 var(--body);opacity:.75;overflow-wrap:anywhere}
+.m b{display:block;font:800 max(3.4cqh,20px)/1.1 var(--display);font-variant-numeric:tabular-nums}
+.m.win{background:var(--k);color:var(--c);box-shadow:none}
+#opts{display:flex;gap:2.4cqw}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex:none}
+#why .big{margin:0}
+#why .body{margin:0}
+@media (max-height:700px){#why .big{font-size:max(2.6cqh,17px);line-height:1.15}#why .body{font-size:max(1.8cqh,13px);line-height:1.3}}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 2cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#chips{display:flex;align-items:center;gap:1.8cqw;flex-wrap:wrap}
+#chips span{font:600 max(1.7cqh,12px)/1.2 var(--body)}
+.chip{font:700 max(1.9cqh,13px)/1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:99px;padding:1cqh 3.2cqw;cursor:pointer}
+.chip.on{background:var(--k);color:var(--c);box-shadow:none}
+#pic .road{stroke:var(--k);stroke-width:3;stroke-linecap:round}
+#pic .tick{stroke:var(--k);stroke-width:2;opacity:.55}
+#pic .big{fill:color-mix(in srgb,var(--k) 16%,transparent);stroke:var(--k);stroke-width:3}
+#pic .coin{fill:var(--k)}
+#pic .spoke{stroke:var(--c);stroke-width:2.5;stroke-linecap:round}
+#pic .dot{fill:var(--c)}
+#pic .path{fill:none;stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 5;opacity:.45}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Race · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COIN PARADOX</span></div>
+    <h2 class="q">A coin rolls once around a circle with 3× its circumference. How many turns?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="meters">
+        <div class="m" id="mRoad"><small id="lRoad">Flat road, 3 coins long</small><b id="nRoad">0.0</b></div>
+        <div class="m" id="mLoop"><small id="lLoop">Around a circle 3 coins round</small><b id="nLoop">0.0</b></div>
+      </div>
+      <div id="opts">
+        <button class="opt" data-i="0">3 turns</button>
+        <button class="opt" data-i="1">4 turns</button>
+        <button class="opt" data-i="2">9 turns</button>
+      </div>
+      <div id="why" class="gone"><p class="big">4 turns: N + 1</p><p class="body">Rolling over the 3-coin rim gives 3 turns; circling the path once adds one more.</p></div>
+      <div id="chips" class="gone"><span>Race other sizes:</span><button class="chip" data-n="1">1×</button><button class="chip" data-n="2">2×</button><button class="chip on" data-n="3">3×</button><button class="chip" data-n="4">4×</button></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess, say how sure you are, then watch both coins race.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Around the outside: ratio of circumferences, plus one turn.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const st = {N: 3, p: 0};
+let G = null, lastTurn = 0;
+const svg = Kit.$('pic');
+
+function coin(parent, r){
+  const g = Kit.mk('g', {}, parent);
+  Kit.mk('circle', {class: 'coin', cx: 0, cy: 0, r}, g);
+  Kit.mk('line', {class: 'spoke', x1: 0, y1: 0, x2: 0, y2: -r * .82}, g);
+  Kit.mk('circle', {class: 'dot', cx: 0, cy: -r * .62, r: Math.max(2, r * .16)}, g);
+  return g;
+}
+
+function draw(){
+  const {W, H} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const N = st.N, pad = 8;
+  const yr = H * .3;
+  const r = Math.max(5, Math.min(
+    (W - 2 * pad) / (2 * Math.PI * N + 2),
+    (H - yr - 2 * pad) / (2 * (N + 2)),
+    (yr - pad) / 2.2,
+    H * .07));
+  const L = 2 * Math.PI * r * N, x0 = (W - L) / 2;
+  Kit.mk('line', {class: 'road', x1: x0 - r * .6, y1: yr, x2: x0 + L + r * .6, y2: yr}, svg);
+  for (let k = 0; k <= N; k++){ const x = x0 + k * 2 * Math.PI * r; Kit.mk('line', {class: 'tick', x1: x, y1: yr + 3, x2: x, y2: yr + 10}, svg); }
+  const R = N * r, Cx = W / 2, Cy = yr + (H - yr) / 2 + 2;
+  Kit.mk('circle', {class: 'path', cx: Cx, cy: Cy, r: R + r}, svg);
+  Kit.mk('circle', {class: 'big', cx: Cx, cy: Cy, r: R}, svg);
+  for (let k = 0; k < N; k++){
+    const a = k * 2 * Math.PI / N, s = Math.sin(a), c = -Math.cos(a);
+    Kit.mk('line', {class: 'tick', x1: Cx + s * (R - 9), y1: Cy + c * (R - 9), x2: Cx + s * (R - 2), y2: Cy + c * (R - 2)}, svg);
+  }
+  G = {N, r, R, x0, yr, Cx, Cy, a: coin(svg, r), b: coin(svg, r)};
+  Kit.$('lRoad').textContent = `Flat road, ${N} coin${N > 1 ? 's' : ''} long`;
+  Kit.$('lLoop').textContent = `Around a circle ${N} coin${N > 1 ? 's' : ''} round`;
+  pos(st.p);
+}
+
+function pos(p){
+  if (!G) return;
+  const {N, r, R, x0, yr, Cx, Cy} = G;
+  const s = p * 2 * Math.PI * r * N;
+  G.a.setAttribute('transform', `translate(${x0 + s},${yr - r}) rotate(${s / r * 180 / Math.PI})`);
+  const ph = p * 2 * Math.PI;
+  G.b.setAttribute('transform', `translate(${Cx + (R + r) * Math.sin(ph)},${Cy - (R + r) * Math.cos(ph)}) rotate(${ph * (N + 1) * 180 / Math.PI})`);
+  const tr = p * N, tl = p * (N + 1);
+  Kit.$('nRoad').textContent = p >= 1 ? `${N} turn${N > 1 ? 's' : ''}` : tr.toFixed(1);
+  Kit.$('nLoop').textContent = p >= 1 ? `${N + 1} turns` : tl.toFixed(1);
+  const f = Math.floor(tl + 1e-6);
+  if (f > lastTurn){ lastTurn = f; Kit.haptic('light'); }
+}
+
+function race(){
+  gsap.killTweensOf(st);
+  Kit.$('mLoop').classList.remove('win');
+  st.p = 0; lastTurn = 0; pos(0);
+  const end = () => { Kit.$('mLoop').classList.add('win'); Kit.haptic('success'); };
+  if (Kit.calm){ st.p = 1; pos(1); end(); return; }
+  gsap.to(st, {p: 1, duration: 3.2, ease: 'power1.inOut', onUpdate: () => pos(st.p), onComplete: end});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('chips');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { draw(); race(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('chips').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  [...Kit.$('chips').querySelectorAll('.chip')].forEach(c => c.classList.toggle('on', c === b));
+  Kit.haptic('selection');
+  gsap.killTweensOf(st); st.N = +b.dataset.n; st.p = 0; draw(); race();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, duration: .5, ease: 'power2.out'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 3800));
+};
+Kit.single();
+</script>
+</html>

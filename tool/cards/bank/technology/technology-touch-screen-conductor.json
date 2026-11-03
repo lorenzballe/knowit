@@ -1,0 +1,37 @@
+{
+  "id": "technology-touch-screen-conductor",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a touch screen work when you touch it?",
+  "answer": "Under the glass, a layer of indium tin oxide carries an electric current. Your skin conducts electricity, so your finger gives that current a path to the ground and changes the electric field at that spot. The phone reads the change as a touch right there.",
+  "move": "A touch screen senses a conductor, so it's about conductivity.",
+  "keywords": [
+    "touch screen",
+    "indium tin oxide",
+    "electric field",
+    "human skin",
+    "conductivity"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two side-by-side panels show a sensor field under glass. One panel has a finger held on the screen, and the field changes at that spot. The other has a plastic stick held on the screen, and the field stays steady. Hold buttons let the reader press a finger or a plastic stick to try both."
+  },
+  "source": "Geopop, “Sai come funziona uno schermo touch screen? FIGO! NON LO SAPEVO” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=RDLaITwXBVk&t=22s",
+  "written": "2026-11-03"
+}

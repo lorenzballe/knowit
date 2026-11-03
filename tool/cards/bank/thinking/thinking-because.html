@@ -1,0 +1,174 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The copier test</title>
+<!-- The famous "because" study, one real person per figure. The reader picks how to ask for 5 pages,
+     then for 20, and the people from Langer, Blank & Chanowitz (1978, Table 1) answer yes or no. Then
+     the 1985 repeat by Folkes (Experiment 3, 24 people per ask): no "because" boost, and a bad reason
+     gets the fewest yeses. Inspired by Diventare Strong, "Come Smettere di Essere Troppo Buoni" and
+     "Come Farsi Valere" (asking for what you want). Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh}
+#cap{display:flex;align-items:center;gap:2.6cqw;margin:0}
+#pg{font:900 max(5.4cqh,26px)/.9 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+#cap span{display:flex;flex-direction:column;gap:.6cqh}
+#cap i{font:800 max(1.9cqh,12.5px)/1 var(--body);font-style:normal}
+#capsub{font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.62}
+.answered #pg,.answered #cap i{display:none}
+#rows{display:flex;flex-direction:column;gap:1.5cqh}
+.row{display:flex;flex-direction:column;gap:.7cqh}
+.bub{align-self:flex-start;max-width:100%;font:700 max(1.9cqh,12.5px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 7%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 26%,transparent);border-radius:1.6cqh 1.6cqh 1.6cqh .3cqh;padding:1cqh 3cqw;cursor:pointer}
+.bub.on{background:var(--k);color:var(--c);box-shadow:none}
+.bub:disabled{cursor:default}
+.bub.bad{background:none;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 26%,transparent);border-style:dashed}
+.ppl{display:flex;align-items:center;gap:2cqw;min-height:2.6cqh}
+.ppl svg{flex:none;overflow:visible}
+.pct{margin-left:auto;font:800 max(2.1cqh,13px)/1 var(--display);font-variant-numeric:tabular-nums}
+.pct.dim{opacity:.35}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* taller cards: the asks get more air */
+@container (min-height:560px){
+  #stage{gap:2.6cqh}
+  #rows{gap:2.5cqh}
+  .row{gap:1.1cqh}
+  .bub{font-size:max(2.1cqh,12.5px);padding:1.3cqh 3.4cqw}
+  .answered #stage{gap:1.6cqh}
+  .answered #rows{gap:1.6cqh}
+  .answered .row{gap:.7cqh}
+  .answered .bub{padding:.9cqh 3cqw}
+}
+/* the small phone at the end: the four asks sit closer, the sentence below names the sample */
+@container (max-height:520px){
+  .answered #cap{display:none}
+  .answered #rows{gap:.7cqh}
+  .answered .row{gap:.3cqh}
+  .answered .bub{padding:.45cqh 2.6cqw;font-size:max(1.7cqh,12px)}
+}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Tap to ask · the copier test">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE COPIER TEST</span></div>
+    <h2 class="q">“May I use the copier, because I have to make copies?” Does a reason that says nothing still get a yes?</h2>
+    <div class="stagebox" id="stage">
+      <p id="cap"><b id="pg">5</b><span><i>pages to copy</i><em id="capsub">1978 · 15–16 people per ask</em></span></p>
+      <div id="rows"></div>
+    </div>
+    <p class="say" id="say">You need 5 pages copied and a stranger is at the machine. Tap how you’d ask. Each figure is one person from the study.</p>
+    <button class="btn gone" id="go">Now ask for 20 pages</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A small favour gets a yes anyway. For a real ask, give a real reason.</div>
+    <div class="foot"><span class="src">Source · Langer, Blank &amp; Chanowitz, JPSP 1978; Folkes, JPSP 1985</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const ASKS = {none: 'May I use the copier?', empty: '…because I have to make copies?', real: '…because I’m in a rush?', bad: '…because I don’t want to wait?'};
+  // [ask, people asked, said yes]: Langer et al. 1978, Table 1; Folkes 1985, Table 1, Experiment 3.
+  const PHASES = [
+    {pg: 5, cap: '1978 · 15–16 people per ask', rows: [['none', 15, 9], ['empty', 15, 14], ['real', 16, 15]], pick: true, btn: 'Now ask for 20 pages'},
+    {pg: 20, cap: '1978 · 24–25 people per ask', rows: [['none', 25, 6], ['empty', 25, 6], ['real', 24, 10]], pick: true, btn: 'Did it hold up?'},
+    {pg: 5, cap: '1985 repeat · 5 pages · 24 per ask', rows: [['none', 24, 20], ['empty', 24, 16], ['real', 24, 19], ['bad', 24, 13]], pick: false, btn: null}
+  ];
+  const SAY = [
+    {none: 'You’d have got <b>60%</b>. Any reason lifted it to 93 or 94%, the empty one included.',
+     empty: 'You’d have got <b>93%</b>, as much as a real reason (94%). With no reason: 60%.',
+     real: 'You’d have got <b>94%</b>. But the empty reason did as well, 93%. No reason: 60%.'},
+    {none: '<b>24%</b>. The empty reason did no better, 24%. A real one got 42%, a gap so small it could be chance.',
+     empty: '<b>24%</b>, no better than no reason at all. A real one got 42%, a gap so small it could be chance.',
+     real: '<b>42%</b>, the only ask that helped, by a gap so small it could be chance. The empty reason: 24%, same as none.'},
+    'Repeated with 96 people: no “because” boost at all, and the bad reason got the fewest yeses. People were listening.'
+  ];
+  const rowsEl = Kit.$('rows'), say = Kit.$('say'), go = Kit.$('go'), card = Kit.$('card');
+  let phase = 0, filled = false, picked = null;
+  const pctOf = (n, y) => Math.round(y / n * 100);
+
+  // One figure per person: a head and shoulders, filled if they said yes.
+  function people(svg, n, yes, show) {
+    svg.innerHTML = '';
+    const room = rowsEl.getBoundingClientRect().width - Math.max(44, rowsEl.getBoundingClientRect().width * .15);
+    const small = card.getBoundingClientRect().height < 520 && card.classList.contains('answered');
+    const pitch = Math.min(12, room / 25) * (small ? .86 : 1), h = pitch * 1.3;
+    svg.setAttribute('width', n * pitch); svg.setAttribute('height', h); svg.setAttribute('viewBox', `0 0 ${n * pitch} ${h}`);
+    const ink = getComputedStyle(card).getPropertyValue('--k').trim() || '#10100c';
+    for (let i = 0; i < n; i++) {
+      const g = Kit.mk('g', {class: 'p', 'data-yes': i < yes ? 1 : 0}, svg), cx = i * pitch + pitch / 2, r = pitch * .2;
+      const on = show && i < yes;
+      const attrs = on ? {fill: ink} : {fill: 'none', stroke: ink, 'stroke-width': Math.max(1, pitch * .09), opacity: show ? .5 : .22};
+      Kit.mk('circle', Object.assign({cx, cy: h * .24, r}, attrs), g);
+      const w = pitch * .32, top = h * .5;
+      Kit.mk('path', Object.assign({d: `M${cx - w} ${h * .98}V${top + w * .9}a${w} ${w * .9} 0 0 1 ${2 * w} 0V${h * .98}z`}, attrs), g);
+    }
+  }
+
+  function build() {
+    const P = PHASES[phase];
+    Kit.$('capsub').textContent = P.cap;
+    const pg = Kit.$('pg'), from = +pg.textContent;
+    if (from !== P.pg && !Kit.calm && Kit.ready) { const t = {v: from}; gsap.to(t, {v: P.pg, duration: .6, ease: 'power2.out', onUpdate: () => { pg.textContent = Math.round(t.v); }}); }
+    else pg.textContent = P.pg;
+    rowsEl.innerHTML = '';
+    P.rows.forEach(([k, n, y], i) => {
+      const row = document.createElement('div'); row.className = 'row'; row.dataset.k = k;
+      const b = document.createElement(P.pick && !filled ? 'button' : 'div');
+      b.className = 'bub' + (k === 'bad' ? ' bad' : '') + (picked === k && phase < 2 ? ' on' : ''); b.textContent = ASKS[k]; b.dataset.k = k;
+      const line = document.createElement('div'); line.className = 'ppl';
+      const svg = Kit.mk('svg', {'aria-hidden': 'true'}, line);
+      const pc = document.createElement('b'); pc.className = 'pct' + (filled ? '' : ' dim'); pc.textContent = filled ? pctOf(n, y) + '%' : '?';
+      line.appendChild(pc); row.append(b, line); rowsEl.appendChild(row);
+      people(svg, n, y, filled);
+    });
+  }
+
+  // The people answer, one after another; the share counts up beside them.
+  function answer() {
+    filled = true;
+    const P = PHASES[phase];
+    [...rowsEl.children].forEach((row, i) => {
+      const [k, n, y] = P.rows[i], b = row.querySelector('.bub');
+      if (b.tagName === 'BUTTON') b.disabled = true;
+      const pc = row.querySelector('.pct'), ps = [...row.querySelectorAll('g.p')].slice(0, y);
+      const ink = getComputedStyle(card).getPropertyValue('--k').trim() || '#10100c';
+      pc.classList.remove('dim');
+      const fill = g => g.querySelectorAll('circle,path').forEach(e => { e.setAttribute('fill', ink); e.removeAttribute('stroke'); e.setAttribute('opacity', 1); });
+      row.querySelectorAll('g.p').forEach(g => { if (g.dataset.yes !== '1') g.querySelectorAll('circle,path').forEach(e => e.setAttribute('opacity', .5)); });
+      if (Kit.calm) { ps.forEach(fill); pc.textContent = pctOf(n, y) + '%'; return; }
+      const t = {v: 0};
+      ps.forEach((g, j) => gsap.delayedCall(.15 + i * .22 + j * .045, () => fill(g)));
+      gsap.to(t, {v: y, duration: .045 * y + .01, delay: .15 + i * .22, ease: 'none', onUpdate: () => { pc.textContent = pctOf(n, Math.round(t.v)) + '%'; }});
+    });
+    const s = SAY[phase];
+    say.innerHTML = typeof s === 'string' ? s : s[picked];
+    if (PHASES[phase].btn) { go.textContent = PHASES[phase].btn; Kit.show('go'); }
+    else { go.classList.add('gone'); card.classList.add('answered'); Kit.show('keep'); }
+    Kit.haptic(phase === 2 ? 'success' : 'light');
+  }
+
+  rowsEl.addEventListener('click', e => {
+    const b = e.target.closest('button.bub'); if (!b || filled) return;
+    picked = b.dataset.k;
+    rowsEl.querySelectorAll('.bub').forEach(x => x.classList.toggle('on', x === b));
+    answer();
+  });
+  go.addEventListener('click', () => {
+    phase++; filled = false;
+    Kit.hide('go');
+    if (phase === 1) { picked = null; say.innerHTML = 'Now you need 20 pages, a bigger favour. Tap how you’d ask this time.'; build(); }
+    else { picked = null; build(); answer(); }
+    if (!Kit.calm) gsap.from('#rows .row', {opacity: 0, y: 8, stagger: .06, duration: .35, ease: 'power3.out'});
+  });
+
+  Kit.onShow.card = () => build();
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#rows .row', {opacity: 0, y: 8, stagger: .08, duration: .4, ease: 'power3.out'}); };
+  const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 60 : ms));
+  Kit.play.card = async () => {
+    rowsEl.querySelectorAll('button.bub')[1].click(); await wait(1600);
+    go.click(); await wait(500);
+    rowsEl.querySelectorAll('button.bub')[1].click(); await wait(1800);
+    go.click(); await wait(2200);
+  };
+})();
+Kit.single();
+</script>
+</html>

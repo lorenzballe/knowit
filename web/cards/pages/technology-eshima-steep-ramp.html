@@ -1,0 +1,153 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-eshima-steep-ramp -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#wrap{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.h{cursor:grab}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · find the limit">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRIDGES</span></div>
+    <h2 class="q">Why couldn’t a gentler ramp be built on Eshima Island?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><svg id="pic"></svg></div>
+      <div id="why" class="gone">
+        <p class="big">Height is fixed. Land is not there.</p>
+        <p class="body">The deck must stay high so ships pass underneath without stopping. Eshima Island is too small for a longer, gentler ramp, so the bridge has to climb that height in a short run: steeply.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Make the ramp gentler: drag its foot outward, or the deck down.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fixed height + little land = a steep slope.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#e0412f';
+let footF = 0.78, topF = 0.24, footHit = false, topHit = false, done = false, drag = null;
+let G = null; // geometry of the last draw
+
+function geo(){
+  const svg = Kit.$('pic'), {W,H,f} = Kit.fitSvg(svg);
+  const waterY = H*0.70, groundY = H*0.64;
+  return {svg,W,H,f,waterY,groundY,
+    xTop:W*0.50, iL:W*0.44, iR:W*0.84,
+    shipX:W*0.22, shipTop:H*0.40,
+    footX:W*footF, topY:H*topF, deck:Math.max(H*0.025,5)};
+}
+
+function draw(){
+  G = geo();
+  const {svg,W,H,f,waterY,groundY,xTop,iL,iR,shipX,shipTop,footX,topY,deck} = G;
+  svg.innerHTML = '';
+  const fs = Math.max(f*0.85,12);
+  const offIsland = footX > iR, tooLow = topY + deck > shipTop - H*0.015;
+  const mk = (t,a,p=svg) => Kit.mk(t,a,p);
+
+  // water
+  mk('rect',{x:0,y:waterY,width:W,height:H-waterY,style:'fill:color-mix(in srgb,var(--k) 14%,transparent)'});
+  for(let i=0;i<5;i++){
+    const y = waterY + (H-waterY)*(0.2+i*0.17);
+    mk('path',{d:`M${W*0.03+i*9} ${y} q8 -4 16 0 t16 0`,style:'fill:none;stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-width:1.5'});
+  }
+  // island
+  mk('path',{d:`M${iL} ${H} L${iL+W*0.03} ${groundY} L${iR-W*0.03} ${groundY} L${iR} ${H} Z`,
+    style:'fill:color-mix(in srgb,var(--k) 32%,var(--c))'});
+  mk('text',{x:(iL+iR)/2,y:H-fs*0.8,'text-anchor':'middle',
+    style:`font:800 ${fs}px var(--body);fill:var(--c);letter-spacing:.06em`}).textContent='ESHIMA ISLAND';
+
+  // ship
+  const hullY = waterY - H*0.01, hw = W*0.11;
+  mk('path',{d:`M${shipX-hw} ${hullY-H*0.04} L${shipX+hw} ${hullY-H*0.04} L${shipX+hw*0.75} ${hullY+H*0.02} L${shipX-hw*0.75} ${hullY+H*0.02} Z`,style:'fill:var(--k)'});
+  mk('rect',{x:shipX-hw*0.45,y:hullY-H*0.10,width:hw*0.9,height:H*0.06,style:'fill:var(--k)'});
+  mk('line',{x1:shipX,y1:hullY-H*0.10,x2:shipX,y2:shipTop,style:`stroke:${tooLow?RED:'var(--k)'};stroke-width:3;stroke-linecap:round`});
+  mk('text',{x:shipX,y:hullY+H*0.02+fs*1.4,'text-anchor':'middle',style:`font:700 ${fs}px var(--body);fill:var(--k)`}).textContent='ship';
+
+  // bridge: pillars
+  const pil = 'stroke:color-mix(in srgb,var(--k) 55%,transparent);stroke-width:4';
+  [W*0.06, xTop-W*0.02].forEach(x => mk('line',{x1:x,y1:topY+deck,x2:x,y2:x>iL?groundY:waterY+H*0.05,style:pil}));
+  for(let i=1;i<4;i++){
+    const t=i/4, x = xTop+(footX-xTop)*t, y = topY+(groundY-topY)*t;
+    const base = (x>iL && x<iR) ? groundY : waterY+H*0.05;
+    mk('line',{x1:x,y1:y+deck,x2:x,y2:base,style:pil+(x>iR?`;stroke:${RED}`:'')});
+  }
+  // deck + ramp
+  mk('path',{d:`M0 ${topY} L${xTop} ${topY} L${footX} ${groundY} L${footX} ${groundY+deck*0.6} L${xTop} ${topY+deck} L0 ${topY+deck} Z`,
+    style:`fill:${(offIsland||tooLow)?RED:'var(--k)'}`});
+  // clearance band
+  mk('line',{x1:shipX-hw,y1:shipTop,x2:shipX+hw,y2:shipTop,style:'stroke:var(--k);stroke-width:1.5;stroke-dasharray:4 4;opacity:.6'});
+
+  // status
+  let msg = 'Ships pass · ramp fits the island', col='var(--k)';
+  if(offIsland && tooLow){msg='Off the island, and blocks ships';col=RED;}
+  else if(offIsland){msg='Off the island: no land to stand on';col=RED;}
+  else if(tooLow){msg='Too low: the ship can’t pass';col=RED;}
+  mk('text',{x:W*0.03,y:fs*1.3,style:`font:800 ${fs}px var(--body);fill:${col}`}).textContent=msg;
+  const ang = Math.atan2(groundY-topY, footX-xTop)*180/Math.PI;
+  const word = ang>34?'very steep':ang>24?'steep':ang>15?'moderate':'gentle';
+  mk('text',{x:W*0.03,y:fs*2.75,style:`font:600 ${fs}px var(--body);fill:var(--k);opacity:.75`}).textContent='Ramp: '+word;
+
+  // handles
+  const r = Math.max(Math.min(W,H)*0.035,14);
+  const hs = 'fill:var(--c);stroke:var(--k);stroke-width:3';
+  const hf = mk('g',{class:'h',id:'hFoot'});
+  mk('circle',{cx:footX,cy:groundY,r,style:hs},hf);
+  mk('path',{d:`M${footX-r*0.5} ${groundY} h${r} M${footX+r*0.2} ${groundY-r*0.3} l${r*0.3} ${r*0.3} l${-r*0.3} ${r*0.3} M${footX-r*0.2} ${groundY-r*0.3} l${-r*0.3} ${r*0.3} l${r*0.3} ${r*0.3}`,style:'fill:none;stroke:var(--k);stroke-width:2.2;stroke-linecap:round'},hf);
+  const ht = mk('g',{class:'h',id:'hTop'});
+  const tx = xTop*0.62, ty = topY+deck/2;
+  mk('circle',{cx:tx,cy:ty,r,style:hs},ht);
+  mk('path',{d:`M${tx} ${ty-r*0.5} v${r} M${tx-r*0.3} ${ty-r*0.2} l${r*0.3} ${-r*0.3} l${r*0.3} ${r*0.3} M${tx-r*0.3} ${ty+r*0.2} l${r*0.3} ${r*0.3} l${r*0.3} ${-r*0.3}`,style:'fill:none;stroke:var(--k);stroke-width:2.2;stroke-linecap:round'},ht);
+  hf.addEventListener('pointerdown',e=>start(e,'foot'));
+  ht.addEventListener('pointerdown',e=>start(e,'top'));
+}
+
+function check(){
+  const offIsland = G.footX > G.iR, tooLow = G.topY + G.deck > G.shipTop - G.H*0.015;
+  if(offIsland && !footHit){footHit=true;Kit.haptic('light');}
+  if(tooLow && !topHit){topHit=true;Kit.haptic('light');}
+}
+function setFoot(v){footF=Math.min(0.98,Math.max(0.6,v));draw();check();}
+function setTop(v){topF=Math.min(0.52,Math.max(0.14,v));draw();check();}
+function reveal(){
+  if(done) return; done=true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  requestAnimationFrame(()=>{footF=Math.min(footF,0.8);topF=0.24;draw();});
+  if(!Kit.calm) gsap.from('#why > *',{opacity:0,y:8,stagger:.08,duration:.4,ease:'power3.out'});
+}
+function start(e,m){
+  drag=m; e.preventDefault();
+  Kit.$('pic').setPointerCapture(e.pointerId);
+  Kit.haptic('selection');
+}
+Kit.$('pic').addEventListener('pointermove',e=>{
+  if(!drag) return;
+  const b = Kit.$('pic').getBoundingClientRect();
+  if(drag==='foot') setFoot((e.clientX-b.left)/b.width);
+  else setTop((e.clientY-b.top)/b.height);
+});
+const end = ()=>{ if(!drag) return; drag=null; if(footHit && topHit) setTimeout(reveal,500); };
+Kit.$('pic').addEventListener('pointerup',end);
+Kit.$('pic').addEventListener('pointercancel',end);
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if(Kit.calm) return;
+  gsap.fromTo('#hFoot',{opacity:.3},{opacity:1,duration:.6,repeat:3,yoyo:true});
+  gsap.fromTo('#hTop',{opacity:.3},{opacity:1,duration:.6,repeat:3,yoyo:true,delay:.3});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r=>setTimeout(r,ms));
+  setFoot(0.97); await w(150); setTop(0.5); await w(150);
+  reveal(); await w(800);
+};
+Kit.single();
+</script>
+</html>

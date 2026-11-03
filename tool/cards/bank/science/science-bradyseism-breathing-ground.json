@@ -1,0 +1,37 @@
+{
+  "id": "science-bradyseism-breathing-ground",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is bradyseism, and why are some ancient towns underwater?",
+  "answer": "Bradyseism is the slow rise and fall of the ground over centuries and millennia. This coast sits on a huge caldera, a supervolcano, and as magma moves below, the land slowly rises and falls. Here the coastal strip sank below the sea, and its ruins now lie 5 to 8 metres down.",
+  "move": "Bradyseism: the ground breathes, slowly rising and sinking over centuries.",
+  "keywords": [
+    "bradyseism",
+    "caldera",
+    "supervolcano",
+    "magma",
+    "sunken_ruins"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Drag across a coastal picture to run the centuries from then to today and watch the ground rise and sink. The page asks what bradyseism is and why some ancient towns lie underwater."
+  },
+  "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=z_mawLbnXNQ&t=673s",
+  "written": "2026-11-03"
+}

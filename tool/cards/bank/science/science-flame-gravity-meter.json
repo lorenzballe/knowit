@@ -1,0 +1,37 @@
+{
+  "id": "science-flame-gravity-meter",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a candle flame tell you how strong gravity is?",
+  "answer": "A flame heats the air around it, and hot air is lighter. Gravity pulls the cooler, heavier air down underneath and shoves the hot gas up, so stronger gravity gives a taller, thinner, flickering flame. With no gravity there is no up, and the flame stays a dim blue ball.",
+  "move": "A flame is a gravity meter: the taller it stands, the stronger g.",
+  "keywords": [
+    "candle",
+    "flame",
+    "gravity",
+    "convection",
+    "zero-g"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A gauge showing a candle flame beside a slider for gravity, running from 0 g (float) through 1 g (Earth) to 2 g. The reader slides gravity until the flame matches a mystery flame, then checks their guess."
+  },
+  "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=336s",
+  "written": "2026-11-03"
+}

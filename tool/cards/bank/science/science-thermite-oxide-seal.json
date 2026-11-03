@@ -1,0 +1,37 @@
+{
+  "id": "science-thermite-oxide-seal",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why won't a lighter, or even a propane torch, set off thermite?",
+  "answer": "Every aluminum grain wears a skin of aluminum oxide, which is very stable, so nothing reacts until heat breaks that seal in a great many grains at once. That barrier has a very high activation energy, which a lighter or propane torch cannot reach. A barium hydroxide igniter, the kind in sparklers, can.",
+  "move": "Thermite's fuel comes sealed: no broken oxide skin, no reaction.",
+  "keywords": [
+    "thermite",
+    "aluminum",
+    "aluminum_oxide",
+    "propane_torch",
+    "sparklers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Three heat sources to pick from, a lighter, a propane torch, and a sparkler igniter, to hold against a pile of thermite powder. The question asked: why won't a lighter or propane torch set off thermite?"
+  },
+  "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1947s",
+  "written": "2026-11-03"
+}

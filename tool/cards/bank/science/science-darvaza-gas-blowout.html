@@ -1,0 +1,185 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-darvaza-gas-blowout -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh;overflow:hidden;touch-action:manipulation}
+#cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:5.4cqh;overflow-wrap:anywhere}
+#cap b{font-weight:800}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.hit{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to uncover">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GAS BLOWOUT</span></div>
+    <h2 class="q">How did a pressure blowout during gas drilling form the Darvaza crater?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Drill rig above an underground pocket of gas under pressure"></svg>
+      <p id="cap">Turkmenistan, the desert near Darvaza. A crew is looking for a natural gas deposit.</p>
+      <div id="why" class="gone"><p class="big">The ground fell into the void.</p><p class="body">The drill hit gas under high pressure. Its sudden rush upward set off the accident: a chasm opened under the crew's feet, and the ground and all the drilling gear collapsed into it.</p></div>
+    </div>
+    <p class="say" id="say">Tap the drill rig to start drilling.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Let high-pressure gas escape from below, and the ground above can cave in.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La "Porta dell'Inferno", come si è formata e perché dopo 50 anni brucia nel deserto in Turkmenistan?” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let step = 0, busy = false;
+const E = {};
+const d = s => Kit.calm ? 0 : s;
+const SAY = ['Tap the drill rig to start drilling.', 'Now tap the gas pocket the drill reached.', 'Tap the ground above the pocket.', ''];
+const CAP = [
+  'Turkmenistan, the desert near Darvaza. A crew is looking for a natural gas deposit.',
+  '<b>The drill</b> bores down through sand and rock, searching for the gas deposit.',
+  '<b>The gas pocket</b>: gas held under high pressure rushes up all at once. Something has gone wrong.',
+  ''
+];
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .8);
+  const gy = H * .3, cx = W / 2, cy = H * .72, rx = W * .32, ry = H * .1;
+  const roofBot = cy - ry * .45;
+  const roofPts = `${cx - rx * .62},${gy} ${cx + rx * .62},${gy} ${cx + rx * .86},${roofBot} ${cx - rx * .86},${roofBot}`;
+  Object.assign(E, {W, H, gy, cx, cy, rx, ry, roofBot});
+
+  // sky
+  const defs = Kit.mk('defs', {}, svg);
+  const sk = Kit.mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#16213a'}, sk);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#3c4a6b'}, sk);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: gy, fill: 'url(#sky)'}, svg);
+  for (let i = 0; i < 18; i++) Kit.mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * gy * .7, r: .8 + Kit.rnd(), fill: '#fff', opacity: .5}, svg);
+
+  // strata
+  const strata = [[gy, gy + H * .1, '#e2b46c'], [gy + H * .1, gy + H * .24, '#bd7d47'], [gy + H * .24, gy + H * .38, '#8f5934'], [gy + H * .38, H, '#5b3823']];
+  const layers = g => strata.forEach(([a, b, c]) => Kit.mk('rect', {x: 0, y: a, width: W, height: b - a, fill: c}, g));
+  layers(svg);
+  Kit.mk('text', {x: W * .04, y: gy + H * .07, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: '#5b3823'}, svg).textContent = 'sand';
+  Kit.mk('text', {x: W * .04, y: gy + H * .32, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: '#f2dcc0'}, svg).textContent = 'rock';
+
+  // the void (hidden behind roof and gas)
+  Kit.mk('polygon', {points: roofPts, fill: '#21140c'}, svg);
+  Kit.mk('ellipse', {cx, cy, rx, ry, fill: '#1a0f09'}, svg);
+
+  // rubble at the bottom (end state)
+  E.rubble = Kit.mk('g', {opacity: step >= 3 ? 1 : 0}, svg);
+  let rp = `${cx - rx * .9},${cy + ry * .35} `;
+  for (let i = 0; i <= 10; i++) rp += `${cx - rx * .85 + i * rx * .17},${cy + ry * (.05 - Kit.rnd() * .45)} `;
+  rp += `${cx + rx * .9},${cy + ry * .35} ${cx},${cy + ry}`;
+  Kit.mk('polygon', {points: rp, fill: '#a0663b'}, E.rubble);
+  for (let i = 0; i < 7; i++) Kit.mk('circle', {cx: cx - rx * .6 + Kit.rnd() * rx * 1.2, cy: cy + ry * (Kit.rnd() * .5), r: 2 + Kit.rnd() * W * .012, fill: '#d7a56a'}, E.rubble);
+  Kit.mk('path', {d: `M${cx - rx * .3},${cy + ry * .2} l${rx * .22},${-ry * .5} l${rx * .14},${ry * .45}`, stroke: '#cfd6e2', 'stroke-width': Math.max(2, W * .006), fill: 'none'}, E.rubble);
+
+  // gas
+  E.gas = Kit.mk('g', {opacity: step >= 2 ? 0 : 1}, svg);
+  Kit.mk('ellipse', {cx, cy, rx, ry, fill: '#7fc4ff'}, E.gas);
+  for (let i = 0; i < 22; i++) {
+    const a = Kit.rnd() * 6.28, r = Math.sqrt(Kit.rnd()) * .8;
+    Kit.mk('circle', {cx: cx + Math.cos(a) * rx * r, cy: cy + Math.sin(a) * ry * r, r: Math.max(2, W * .008), fill: '#e8f6ff', opacity: .8}, E.gas);
+  }
+  Kit.mk('text', {x: cx, y: cy + fs * .35, 'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, fill: '#0d2a45'}, E.gas).textContent = 'gas under pressure';
+
+  // roof
+  const clip = Kit.mk('clipPath', {id: 'roofc'}, defs);
+  Kit.mk('polygon', {points: roofPts}, clip);
+  E.roof = Kit.mk('g', {}, svg);
+  const rin = Kit.mk('g', {'clip-path': 'url(#roofc)'}, E.roof);
+  layers(rin);
+  E.cracks = Kit.mk('g', {opacity: step >= 2 ? 1 : 0, stroke: '#1a0f09', 'stroke-width': Math.max(2, W * .006), fill: 'none', 'stroke-linecap': 'round'}, E.roof);
+  Kit.mk('path', {d: `M${cx - rx * .62},${gy} l${rx * .05},${(roofBot - gy) * .3} l${-rx * .06},${(roofBot - gy) * .3} l${rx * .1},${(roofBot - gy) * .4}`}, E.cracks);
+  Kit.mk('path', {d: `M${cx + rx * .62},${gy} l${-rx * .06},${(roofBot - gy) * .35} l${rx * .08},${(roofBot - gy) * .3} l${rx * .08},${(roofBot - gy) * .35}`}, E.cracks);
+  Kit.mk('path', {d: `M${cx - rx * .2},${roofBot} l${rx * .1},${-(roofBot - gy) * .3} l${rx * .15},${-(roofBot - gy) * .15}`}, E.cracks);
+  if (step >= 3) gsap.set(E.roof, {opacity: 0});
+
+  // pipe
+  E.py = cy - ry * .6;
+  E.pipe = Kit.mk('line', {x1: cx, y1: gy - 2, x2: cx, y2: step >= 1 ? E.py : gy + H * .05, stroke: '#cfd6e2', 'stroke-width': Math.max(3, W * .01), 'stroke-linecap': 'round', opacity: step >= 3 ? 0 : 1}, svg);
+
+  // rig
+  const h = H * .19, w = W * .075;
+  const rigO = Kit.mk('g', {transform: `translate(${cx},${gy})`}, svg);
+  E.rig = Kit.mk('g', {}, rigO);
+  const sw = Math.max(2, W * .006);
+  Kit.mk('path', {d: `M${-w},0 L${-w * .15},${-h} L${w * .15},${-h} L${w},0 M${-w * .72},${-h * .3} L${w * .72},${-h * .3} M${-w * .45},${-h * .6} L${w * .45},${-h * .6} M${-w * .72},${-h * .3} L${w * .45},${-h * .6} M${w * .72},${-h * .3} L${-w * .45},${-h * .6}`, stroke: '#eef2f8', 'stroke-width': sw, fill: 'none', 'stroke-linejoin': 'round'}, E.rig);
+  Kit.mk('rect', {x: -w * 1.4, y: -h * .08, width: w * 2.8, height: h * .08, rx: 2, fill: '#ff8a3d'}, E.rig);
+  Kit.mk('rect', {x: -w * .3, y: -h * 1.08, width: w * .6, height: h * .08, fill: '#ff8a3d'}, E.rig);
+  if (step >= 3) gsap.set(E.rig, {opacity: 0});
+
+  E.fx = Kit.mk('g', {}, svg);
+
+  // hotspot
+  const targets = [[cx, gy - h * .5], [cx + rx * .55, cy], [cx - rx * .35, gy + (roofBot - gy) * .45]];
+  if (step < 3) {
+    const [tx, ty] = targets[step], r = Math.max(26, Math.min(W, H) * .085);
+    const hs = Kit.mk('g', {class: 'hit'}, svg);
+    E.ring = Kit.mk('circle', {cx: tx, cy: ty, r, fill: 'none', stroke: '#fff', 'stroke-width': Math.max(2.5, W * .007), 'stroke-dasharray': '6 5'}, hs);
+    Kit.mk('circle', {cx: tx, cy: ty, r: r * 1.15, fill: 'transparent'}, hs);
+    hs.addEventListener('click', advance);
+    E.hs = hs;
+    if (!Kit.calm) gsap.fromTo(E.ring, {attr: {r: r * .85}}, {attr: {r: r * 1.08}, repeat: -1, yoyo: true, duration: .7, ease: 'sine.inOut'});
+  }
+}
+
+function setText() {
+  Kit.$('say').textContent = SAY[step];
+  if (step < 3) Kit.$('cap').innerHTML = CAP[step];
+}
+
+function advance() {
+  if (busy || step >= 3) return;
+  busy = true; Kit.haptic('light');
+  gsap.killTweensOf(E.ring); E.hs.remove();
+  if (step === 0) {
+    step = 1; setText();
+    gsap.to(E.rig, {x: 1.5, repeat: 9, yoyo: true, duration: d(.06)});
+    gsap.to(E.pipe, {attr: {y2: E.py}, duration: d(1.3), ease: 'power1.in', onComplete: done});
+  } else if (step === 1) {
+    step = 2; setText();
+    const tl = gsap.timeline({onComplete: done});
+    for (let i = 0; i < 26; i++) {
+      const c = Kit.mk('circle', {cx: E.cx + (Kit.rnd() - .5) * 10, cy: E.py, r: Math.max(2.5, E.W * .012), fill: '#bfe3ff'}, E.fx);
+      tl.to(c, {attr: {cy: -10, cx: E.cx + (Kit.rnd() - .5) * E.W * .5}, opacity: 0, duration: d(1.1), ease: 'power2.out'}, d(i * .04));
+    }
+    tl.to(E.gas, {opacity: 0, duration: d(1.2)}, 0);
+    tl.to(E.cracks, {opacity: 1, duration: d(.4)}, d(.7));
+    tl.to(E.roof, {x: 2, repeat: 7, yoyo: true, duration: d(.05)}, d(.8));
+  } else {
+    step = 3; setText();
+    const drop = E.cy - E.roofBot + E.ry * .6;
+    const tl = gsap.timeline({onComplete: () => { done(); finish(); }});
+    tl.to(E.roof, {y: drop, opacity: 0, duration: d(1), ease: 'power2.in'}, 0);
+    tl.to(E.rig, {y: drop * 1.1, rotation: 28, opacity: 0, transformOrigin: '50% 100%', duration: d(1), ease: 'power2.in'}, d(.1));
+    tl.to(E.pipe, {opacity: 0, duration: d(.4)}, d(.2));
+    tl.to(E.rubble, {opacity: 1, duration: d(.5)}, d(.8));
+  }
+}
+function done() { busy = false; if (step < 3) draw(); }
+function finish() {
+  Kit.haptic('success');
+  Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 3; i++) {
+    while (busy) await w(50);
+    E.hs.querySelector('circle:last-child').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await w(100);
+  }
+  while (busy) await w(50);
+  await w(600);
+};
+Kit.single();
+</script>
+</html>

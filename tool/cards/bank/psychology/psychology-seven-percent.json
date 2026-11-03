@@ -1,0 +1,36 @@
+{
+  "id": "psychology-seven-percent",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.reading_faces",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is 93% of what we say really non-verbal?",
+  "answer": "Words carry 7% of a message, tone 38%, and face 55%, per two 1967 studies. Study 1 used single words in a tone that may clash; Study 2 used \"maybe\" in a tone beside a face. The card's point is narrower: it's about guessing a feeling from one word when word, tone and face disagree.",
+  "move": "7-38-55 is about guessing a feeling from one word when the word, the tone and the face disagree.",
+  "keywords": [
+    "mehrabian",
+    "tone_of_voice",
+    "body_language",
+    "facial_expression"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled THE 7-38-55 RULE with a bar of 7% words, 38% tone and 55% face, plus two 1967 studies: a single word like 'dear' said coldly, and 'maybe' said warmly beside a photo. It asks whether 93% of what we say is non-verbal."
+  },
+  "source": "Diventare Strong, “5 Segnali che PIACI ad una Persona (linguaggio del corpo)” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=X4ux3a_UAuM",
+  "written": "2026-11-03"
+}

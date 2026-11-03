@@ -1,0 +1,173 @@
+<!doctype html>
+<!-- slug: science-chernobyl-lingering-cesium -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why Chernobyl still clicks</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#row{display:flex;align-items:center;gap:3cqw}
+#row span{font:700 max(1.7cqh,12px)/1.2 var(--mono);color:var(--k)}
+#yr{flex:1;min-width:0;accent-color:var(--k);height:max(3.2cqh,24px);cursor:pointer}
+#dig{font:700 max(2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;align-self:stretch}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.foot{padding-right:112px}
+.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RADIATION</span></div>
+    <h2 class="q">Why can we still detect radiation at Chernobyl today?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="row"><span>1986</span><input id="yr" type="range" min="0" max="34" step="0.05" value="0" aria-label="Years since the accident"><span>2020</span></div>
+      <button id="dig" class="gone">Dig out the cesium and strontium</button>
+    </div>
+    <p class="say" id="say">Drag the years from 1986 to 2020. Watch the Geiger counter.</p>
+    <div id="why" class="gone"><p class="body">The short-lived atoms burned out fast. Cesium-137 and strontium-90 last for decades, and they are still in the soil, so the counter still clicks. Take them out and it goes quiet.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Contamination lasts as long as its longest-lived atoms.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// Atoms: data made once, drawn on every resize.
+const SHORT_MEAN = 0.15, LONG_MEAN = 43;
+const atoms = [];
+for (let i = 0; i < 100; i++) {
+  const long = i >= 70;
+  const mean = long ? LONG_MEAN : SHORT_MEAN;
+  atoms.push({long, fx: Kit.rnd(), fy: Kit.rnd(), die: -mean * Math.log(1 - Kit.rnd() * .999), el: null});
+}
+let t = 0, dug = false, done = false;
+let G = null; // drawing refs
+let needleV = 0;
+
+const COL = {soil:'#2a1d15', short:'#ff8a3d', long:'#d9ff3a', dead:'#6d5a4b', box:'#18181b', light:'#f4f4f2', needle:'#ff4b3a'};
+
+function alive(a){ return t < a.die && !(a.long && dug); }
+function counts(){ let s=0,l=0; for(const a of atoms){ if(alive(a)) a.long ? l++ : s++; } return {s,l}; }
+function target(){
+  const {s,l} = counts(); const A = s / SHORT_MEAN + l / LONG_MEAN;
+  return A > 0 ? Math.min(1, Math.max(.06, (Math.log10(A) + 1) / 4.2)) : 0;
+}
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12), sh = H * .45, mk = Kit.mk;
+  G = {W, H, f: fs, sh};
+  // year
+  G.year = mk('text', {x: W*.05, y: sh*.08 + fs*2, style:`font:800 ${fs*2.2}px var(--display);fill:var(--k)`}, svg);
+  // sarcophagus
+  const bx = W*.05, bw = W*.46, bt = sh*.58;
+  mk('path', {d:`M${bx} ${sh} L${bx} ${bt+sh*.12} L${bx+bw*.25} ${bt+sh*.12} L${bx+bw*.25} ${bt} L${bx+bw*.8} ${bt} L${bx+bw*.8} ${bt+sh*.08} L${bx+bw} ${bt+sh*.08} L${bx+bw} ${sh} Z`, style:'fill:color-mix(in srgb,var(--k) 82%,transparent)'}, svg);
+  const cx = bx + bw*.62;
+  mk('rect', {x:cx, y:sh*.3, width:bw*.08, height:bt-sh*.3, style:'fill:color-mix(in srgb,var(--k) 82%,transparent)'}, svg);
+  mk('path', {d:`M${bx+bw*.4} ${bt} l${bw*.05} ${sh*.1} l-${bw*.04} ${sh*.08} l${bw*.05} ${sh*.1}`, style:'fill:none;stroke:var(--c);stroke-width:2'}, svg);
+  mk('text', {x: bx + bw*.5, y: sh - fs*.6, 'text-anchor':'middle', style:`font:700 ${fs*.85}px var(--body);fill:var(--c)`}, svg).textContent = 'sarcophagus';
+  // Geiger counter
+  const gx = W*.58, gw = W*.38, gy = sh*.06, gh = sh*.7;
+  mk('line', {x1:gx+gw*.5, y1:gy+gh, x2:gx+gw*.5, y2:sh+fs*.4, style:`stroke:var(--k);stroke-width:${Math.max(2,fs*.2)}`}, svg);
+  mk('rect', {x:gx, y:gy, width:gw, height:gh, rx:fs*.7, style:`fill:${COL.box}`}, svg);
+  mk('text', {x:gx+gw/2, y:gy+fs*1.4, 'text-anchor':'middle', style:`font:800 ${fs*.85}px var(--mono);fill:${COL.light};letter-spacing:.08em`}, svg).textContent = 'GEIGER';
+  G.led = mk('circle', {cx:gx+gw-fs*.9, cy:gy+fs*.95, r:fs*.32, style:`fill:${COL.needle};opacity:.15`}, svg);
+  const dcx = gx+gw/2, dcy = gy+gh-fs*1.6, R = Math.min(gw*.38, gh-fs*3.6);
+  G.dial = {dcx, dcy, R};
+  mk('path', {d:`M${dcx-R} ${dcy} A${R} ${R} 0 0 1 ${dcx+R} ${dcy}`, style:`fill:none;stroke:#3a3a40;stroke-width:${fs*.55};stroke-linecap:round`}, svg);
+  G.arc = mk('path', {d:'', style:`fill:none;stroke:${COL.needle};stroke-width:${fs*.55};stroke-linecap:round`}, svg);
+  G.needle = mk('line', {x1:dcx, y1:dcy, x2:dcx-R, y2:dcy, style:`stroke:${COL.light};stroke-width:${Math.max(2,fs*.18)};stroke-linecap:round`}, svg);
+  mk('circle', {cx:dcx, cy:dcy, r:fs*.3, style:`fill:${COL.light}`}, svg);
+  mk('text', {x:gx+fs*.5, y:gy+gh-fs*.4, style:`font:600 ${Math.max(12,fs*.75)}px var(--body);fill:#b8b8bc`}, svg).textContent = 'quiet';
+  mk('text', {x:gx+gw-fs*.5, y:gy+gh-fs*.4, 'text-anchor':'end', style:`font:600 ${Math.max(12,fs*.75)}px var(--body);fill:#b8b8bc`}, svg).textContent = 'loud';
+  // soil
+  mk('rect', {x:0, y:sh, width:W, height:H-sh, rx:fs*.6, style:`fill:${COL.soil}`}, svg);
+  const ly1 = sh + fs*1.5, ly2 = ly1 + fs*1.5;
+  mk('circle', {cx:W*.05+fs*.4, cy:ly1-fs*.35, r:fs*.38, style:`fill:${COL.short}`}, svg);
+  G.l1 = mk('text', {x:W*.05+fs*1.2, y:ly1, style:`font:700 ${fs*.9}px var(--body);fill:${COL.light}`}, svg);
+  mk('circle', {cx:W*.05+fs*.4, cy:ly2-fs*.35, r:fs*.38, style:`fill:${COL.long}`}, svg);
+  G.l2 = mk('text', {x:W*.05+fs*1.2, y:ly2, style:`font:700 ${fs*.9}px var(--body);fill:${COL.light}`}, svg);
+  const top = ly2 + fs*1.1, bot = H - fs*.9, ar = Math.max(3.5, Math.min(W, H) * .013);
+  G.ar = ar;
+  G.sparks = mk('g', {}, svg);
+  for (const a of atoms) {
+    a.x = W*.05 + a.fx * W*.9; a.y = top + a.fy * Math.max(4, bot - top);
+    a.el = mk('circle', {cx:a.x, cy:a.y, r:ar}, svg);
+  }
+  render(true);
+}
+
+function render(now){
+  if (!G) return;
+  G.year.textContent = Math.floor(1986 + t + 1e-6);
+  const {s, l} = counts();
+  G.l1.textContent = `short-lived atoms: ${s}`;
+  G.l2.textContent = `cesium-137 · strontium-90: ${l}`;
+  for (const a of atoms) {
+    if (a.long && dug && t < a.die) continue; // being dug out, gsap owns it
+    const on = alive(a);
+    a.el.setAttribute('r', on ? G.ar : G.ar*.55);
+    a.el.style.fill = on ? (a.long ? COL.long : COL.short) : COL.dead;
+  }
+}
+
+function setNeedle(v){
+  const {dcx, dcy, R} = G.dial, ang = Math.PI * (1 + v);
+  const x = dcx + R*Math.cos(ang), y = dcy + R*Math.sin(ang);
+  G.needle.setAttribute('x2', x); G.needle.setAttribute('y2', y);
+  G.arc.setAttribute('d', v > .01 ? `M${dcx-R} ${dcy} A${R} ${R} 0 0 1 ${x} ${y}` : '');
+}
+
+function spark(a){
+  const c = Kit.mk('circle', {cx:a.x, cy:a.y, r:G.ar, style:`fill:none;stroke:${a.long?COL.long:COL.short};stroke-width:2`}, G.sparks);
+  gsap.to(c, {attr:{r:G.ar*4}, opacity:0, duration:.6, ease:'power2.out', onComplete:()=>c.remove()});
+  gsap.fromTo(G.led, {opacity:1}, {opacity:.15, duration:.18});
+}
+
+gsap.ticker.add(() => {
+  if (!G) return;
+  const tg = target();
+  needleV += (tg + (tg ? (Math.random()-.5)*.05 : 0) - needleV) * .15;
+  setNeedle(Math.max(0, needleV));
+  if (Kit.calm) return;
+  if (G.sparks.childNodes.length > 40) return;
+  for (const a of atoms) if (alive(a) && Math.random() < (a.long ? .006 : .05)) spark(a);
+});
+
+const yr = Kit.$('yr');
+yr.addEventListener('input', () => {
+  if (done) return;
+  const old = Math.floor(t); t = +yr.value;
+  if (Math.floor(t) !== old) Kit.haptic('selection');
+  render();
+  if (t >= 34) {
+    Kit.$('say').textContent = 'Still clicking. Now dig out the long-lived atoms.';
+    Kit.show('dig');
+  }
+});
+
+Kit.$('dig').addEventListener('click', () => {
+  if (done) return; done = true; dug = true; yr.disabled = true;
+  Kit.haptic('success');
+  for (const a of atoms) if (a.long && t < a.die) {
+    gsap.to(a.el, {attr:{cy: G.sh - G.f*2}, opacity:0, duration: Kit.calm ? 0 : .8, delay: Kit.calm ? 0 : Math.random()*.3, ease:'power2.in',
+      onComplete(){ a.el.setAttribute('cy', a.y); a.el.style.opacity = 1; a.el.setAttribute('r', G.ar*.55); a.el.style.fill = COL.dead; }});
+  }
+  render();
+  Kit.hide('dig'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic circle', {opacity:0, scale:.3, transformOrigin:'center', stagger:.005, duration:.4, ease:'back.out(2)'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  yr.value = 34; yr.dispatchEvent(new Event('input', {bubbles:true}));
+  await w(200); Kit.$('dig').click(); await w(1300);
+};
+Kit.single();
+</script>
+</html>

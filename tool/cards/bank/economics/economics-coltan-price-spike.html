@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: economics-coltan-price-spike -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#plot{flex:1;min-height:0;position:relative}
+#g{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:ns-resize;overflow:visible}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.ax{font-family:var(--mono);fill:var(--muted)}
+.lb{font-family:var(--body);font-weight:700;fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Drag a guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PRICE SHOCK</span></div>
+    <h2 class="q">After the early-2000s gadget boom, what did a kilo of coltan cost?</h2>
+    <div class="stagebox" id="stage">
+      <div id="plot"><svg id="g"></svg></div>
+      <div id="why" class="gone"><p class="big">€15 → €180 a kilo</p><p class="body">Coltan is essential for smartphones and other electronics. When electronic devices boomed in the early 2000s, its price shot up twelvefold.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">It cost €15 a kilo. Drag the dot up to your guess.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The gadget boom made coltan 12× pricier: €15 to €180 per kilo.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = 180, YMAX = 240;
+let g = 15, moved = false, locked = false, revealed = false, geo = null;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  locked = true;
+  const ok = Math.abs(g - REAL) <= 30;
+  Kit.answer({choice: '€' + g, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why');
+  revealed = true;
+  draw(); animateReveal();
+  sure.grade(ok, pct, `You said €${g}, ${ok ? 'close enough' : 'off'}`);
+  Kit.show('keep');
+  Kit.haptic('success');
+});
+
+function draw() {
+  const svg = Kit.$('g');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  const padL = Math.max(fs * 3.2, W * .13), padR = Math.max(fs * 5, W * .2), padT = fs * 1.2, padB = fs * 2.2;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const y = v => padT + (1 - v / YMAX) * plotH;
+  const xA = padL + plotW * .04, xM = padL + plotW * .5, xR = xM + plotW * .14, x1 = W - padR;
+  geo = {y, xA, xM, xR, x1, padT, plotH, fs};
+
+  for (const v of [0, 60, 120, 180, 240]) {
+    Kit.mk('line', {x1: padL, x2: x1, y1: y(v), y2: y(v), stroke: 'var(--k)', 'stroke-opacity': v ? .1 : .35, 'stroke-width': 1}, svg);
+    const t = Kit.mk('text', {x: padL - fs * .4, y: y(v) + fs * .35, 'text-anchor': 'end', class: 'ax', 'font-size': fs}, svg);
+    t.textContent = '€' + v;
+  }
+  const xl = (x, s) => { const t = Kit.mk('text', {x, y: H - fs * .5, 'text-anchor': 'middle', class: 'ax', 'font-size': fs}, svg); t.textContent = s; };
+  xl(xA + plotW * .12, 'late 1990s'); xl(x1, 'early 2000s');
+
+  // known start
+  Kit.mk('path', {d: `M${xA},${y(15)}H${xM}`, stroke: 'var(--k)', 'stroke-width': Math.max(fs * .3, 4), 'stroke-linecap': 'round', fill: 'none'}, svg);
+  Kit.mk('circle', {cx: xA, cy: y(15), r: fs * .3, fill: 'var(--k)'}, svg);
+  const t15 = Kit.mk('text', {x: xA, y: y(15) - fs * .7, class: 'lb', 'font-size': fs}, svg); t15.textContent = '€15/kg';
+
+  // guess
+  Kit.mk('path', {id: 'gl', d: `M${xM},${y(15)}L${x1},${y(g)}`, stroke: 'var(--k)', 'stroke-opacity': .5, 'stroke-width': Math.max(fs * .2, 3), 'stroke-dasharray': `${fs * .5} ${fs * .4}`, fill: 'none'}, svg);
+  if (!locked) Kit.mk('circle', {id: 'ring', cx: x1, cy: y(g), r: fs * 1.1, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-opacity': .4}, svg);
+  Kit.mk('circle', {id: 'gh', cx: x1, cy: y(g), r: fs * .6, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': Math.max(fs * .2, 3)}, svg);
+  let gy = y(g) + fs * .35;
+  if (revealed && Math.abs(y(g) - y(REAL)) < fs * 1.5) gy = y(REAL) + fs * 1.9;
+  const gt = Kit.mk('text', {id: 'gt', x: x1 + fs * 1.1, y: gy, class: 'lb', 'font-size': fs, 'fill-opacity': .6}, svg);
+  gt.textContent = (moved || locked ? 'you €' : '€') + g;
+
+  if (revealed) {
+    const sw = Math.max(fs * .38, 5);
+    Kit.mk('path', {id: 'rl', d: `M${xM},${y(15)}L${xR},${y(REAL)}H${x1}`, stroke: 'var(--k)', 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none'}, svg);
+    for (let i = 2; i <= 11; i++) {
+      const v = 15 * i, px = xM + (xR - xM) * (v - 15) / (REAL - 15);
+      Kit.mk('circle', {class: 'tk', cx: px, cy: y(v), r: sw * .32, fill: 'var(--c)'}, svg);
+    }
+    Kit.mk('circle', {id: 'rd', cx: x1, cy: y(REAL), r: fs * .45, fill: 'var(--k)'}, svg);
+    const rt = Kit.mk('text', {id: 'rt', x: x1 + fs * 1.1, y: y(REAL) + fs * .45, class: 'lb', 'font-size': fs * 1.3}, svg);
+    rt.textContent = '€180';
+    const xt = Kit.mk('text', {id: 'xt', x: (xM + xR) / 2 - fs * .9, y: y(100), 'text-anchor': 'end', class: 'lb', 'font-size': fs * 1.6, style: 'font-family:var(--display)'}, svg);
+    xt.textContent = '×12';
+  }
+}
+
+function animateReveal() {
+  if (Kit.calm) return;
+  const rl = Kit.$('rl'); const L = rl.getTotalLength();
+  gsap.fromTo(rl, {strokeDasharray: L, strokeDashoffset: L}, {strokeDashoffset: 0, duration: 1.2, ease: 'power2.in'});
+  const n = {v: 15}, rt = Kit.$('rt');
+  gsap.to(n, {v: 180, duration: 1.2, ease: 'power2.in', onUpdate: () => rt.textContent = '€' + Math.round(n.v)});
+  gsap.from('.tk', {opacity: 0, duration: .2, stagger: .06, delay: .6});
+  gsap.from(['#rd', '#xt'], {opacity: 0, scale: .4, transformOrigin: 'center', duration: .4, delay: 1.2, ease: 'back.out(2)'});
+}
+
+function setFromEvent(e) {
+  if (!geo) return;
+  const r = Kit.$('g').getBoundingClientRect();
+  const py = e.clientY - r.top;
+  let v = (1 - (py - geo.padT) / geo.plotH) * YMAX;
+  v = Math.max(5, Math.min(YMAX, Math.round(v / 5) * 5));
+  if (v === g && moved) return;
+  g = v;
+  if (g !== 15 && !moved) { moved = true; sure.on(); }
+  const yy = geo.y(g);
+  Kit.$('gl').setAttribute('d', `M${geo.xM},${geo.y(15)}L${geo.x1},${yy}`);
+  Kit.$('gh').setAttribute('cy', yy);
+  const ring = Kit.$('ring'); if (ring) ring.setAttribute('cy', yy);
+  const gt = Kit.$('gt'); gt.setAttribute('y', yy + geo.fs * .35); gt.textContent = 'you €' + g;
+  if (g % 30 === 0) Kit.haptic('selection');
+}
+let dragging = false;
+const svgEl = Kit.$('g');
+svgEl.addEventListener('pointerdown', e => { if (locked) return; dragging = true; try { svgEl.setPointerCapture(e.pointerId); } catch (_) {} setFromEvent(e); });
+svgEl.addEventListener('pointermove', e => { if (dragging && !locked) setFromEvent(e); });
+const stop = () => { dragging = false; };
+svgEl.addEventListener('pointerup', stop); svgEl.addEventListener('pointercancel', stop);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const ring = Kit.$('ring');
+  if (ring) gsap.fromTo(ring, {opacity: .9, scale: .6, transformOrigin: 'center', transformBox: 'fill-box'}, {opacity: 0, scale: 1.4, duration: 1.2, repeat: 3, ease: 'power1.out'});
+};
+Kit.play.card = async () => {
+  const r = svgEl.getBoundingClientRect();
+  const cy = v => r.top + geo.padT + (1 - v / YMAX) * geo.plotH;
+  const cx = r.left + geo.x1;
+  const fire = (type, v) => svgEl.dispatchEvent(new PointerEvent(type, {clientX: cx, clientY: cy(v), bubbles: true, pointerId: 1}));
+  fire('pointerdown', 20); fire('pointermove', 70); fire('pointermove', 120); fire('pointerup', 120);
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

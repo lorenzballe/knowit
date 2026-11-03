@@ -1,0 +1,38 @@
+{
+  "id": "science-burning-plastic-energy",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.recycling_claims",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does burning plastic give back the energy it takes to make new plastic?",
+  "answer": "Burning plastic does release energy, but less than the energy spent making new plastic from fossil fuels. Burn it, and that plastic must be made all over again; recycle it well, and those fossil fuels are spared.",
+  "move": "Burning plastic recovers less energy than making new plastic costs, so recycle.",
+  "keywords": [
+    "plastic",
+    "recycling",
+    "incineration",
+    "energy",
+    "fossil-fuels"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A flame bar you drag up or down to show how much energy burning plastic gives back, compared with the energy needed to make new plastic. It asks: how much energy does burning give back?",
+    "graded": false
+  },
+  "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=WALo6GLp_to&t=468s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "science-plastic-sediment-layer",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes plastic a useful Anthropocene indicator?",
+  "answer": "Synthetic polymers resist chemical attack, so they do not rot away like leaf bits. Micro-plastics pile up in sediment and stay there for millennia. That forms a layer no earlier age has, a band that says \"humans were here.\"",
+  "move": "Plastic marks our age because it lasts, in a layer found nowhere before us.",
+  "keywords": [
+    "plastic",
+    "micro-plastics",
+    "sediment",
+    "anthropocene",
+    "geology"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A sediment column of layered mud is shown. Tapping the Add a layer button lays down each new age, one layer at a time. The question asked is: what makes plastic a useful Anthropocene indicator?"
+  },
+  "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=CpGW8eA6Qik&t=72s",
+  "written": "2026-11-03"
+}

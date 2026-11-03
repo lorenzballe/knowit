@@ -1,0 +1,37 @@
+{
+  "id": "science-adiabatic-compression",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is adiabatic compression, and why can it set cotton on fire?",
+  "answer": "Squeezing air heats it. Push the plunger slowly and the heat leaks away. Push it fast and the heat is trapped, hot enough to light the cotton on its own.",
+  "move": "Adiabatic compression: so fast the heat has no time to escape.",
+  "keywords": [
+    "fire_syringe",
+    "adiabatic_compression",
+    "cotton",
+    "plunger",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled Fire Syringe asks what adiabatic compression is and why it can set cotton on fire. It says fast compression traps heat, and tells the reader to push the plunger slowly, then slam it."
+  },
+  "source": "Veritasium, “Fire Syringe” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=4qe1Ueifekg",
+  "written": "2026-11-03"
+}

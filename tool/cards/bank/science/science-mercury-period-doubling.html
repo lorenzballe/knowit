@@ -1,0 +1,136 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-mercury-period-doubling -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#pic{width:100%;flex:1;min-height:0;display:block}
+#ctl{display:flex;gap:1.6cqw;margin-top:1cqh}
+.lv{flex:1;font:700 max(1.9cqh,12px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 1cqw;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.5cqh}
+.lv i{display:block;height:max(.7cqh,4px);border-radius:1cqh;background:#e4572e}
+.lv.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Explore · heat it up">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CHAOS</span></div>
+    <h2 class="q">What physical experiment first confirmed period-doubling in the logistic map?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <button class="lv on" data-i="0"><i style="width:20%"></i>Gentle</button>
+        <button class="lv" data-i="1"><i style="width:45%"></i>Warmer</button>
+        <button class="lv" data-i="2"><i style="width:70%"></i>Hot</button>
+        <button class="lv" data-i="3"><i style="width:95%"></i>Hotter</button>
+      </div>
+    </div>
+    <p class="say" id="say">Heat the mercury box from below, step by step. Watch the spikes.</p>
+    <div id="why" class="gone"><p class="body">Albert Libchaber heated a box of mercury from below, and it turned in convection rolls. Raising the temperature gradient made the rolls wobble at half the frequency: spikes of two heights, then four, then eight.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A real fluid doubled its period just as the logistic map predicts.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const R = [2.8, 3.2, 3.5, 3.555], P = [1, 2, 4, 8], T = 0.62, SPAN = 11;
+let level = 0, seen = new Set([0]);
+let x = 0.5; for (let i = 0; i < 300; i++) x = R[0] * x * (1 - x);
+const spikes = [];
+function spike(k) { while (spikes.length <= k) { x = R[level] * x * (1 - x); spikes.push(x); } return spikes[Math.max(0, k)]; }
+let tt = SPAN + 0.01;
+let G = null;
+function signal(t) { const k = Math.floor(t / T), ph = t / T - k; return spike(k) * Math.pow(Math.sin(Math.PI * ph), 6); }
+function levels(r, p) { let y = 0.5; for (let i = 0; i < 3000; i++) y = r * y * (1 - y); const a = []; for (let i = 0; i < p; i++) { y = r * y * (1 - y); a.push(y); } return a; }
+const inkF = a => `fill:color-mix(in srgb,var(--k) ${a}%,transparent)`;
+const inkS = a => `stroke:color-mix(in srgb,var(--k) ${a}%,transparent)`;
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const pad = W * 0.04, plate = Math.max(f * 1.35, 16);
+  const bx0 = pad, bx1 = W - pad, top = H * 0.03, boxH = H * 0.5;
+  const by0 = top + plate, by1 = top + boxH - plate;
+  Kit.mk('rect', {x: bx0, y: by0, width: bx1 - bx0, height: by1 - by0, style: inkF(10)}, svg);
+  Kit.mk('rect', {x: bx0, y: top, width: bx1 - bx0, height: plate, rx: 4, fill: '#3a86ff'}, svg);
+  Kit.mk('rect', {x: bx0, y: by1, width: bx1 - bx0, height: plate, rx: 4, fill: '#e4572e'}, svg);
+  const lab = (t, y) => { const e = Kit.mk('text', {x: bx0 + f * 0.6, y, 'font-size': Math.max(f * 0.85, 11), 'font-weight': 700, fill: '#fff', 'dominant-baseline': 'central', style: 'font-family:var(--body)'}, svg); e.textContent = t; };
+  lab('COLD', top + plate / 2); lab('HOT  ·  mercury heated from below', by1 + plate / 2);
+  const rolls = [], n = 4, w = (bx1 - bx0) / n, cy = (by0 + by1) / 2;
+  for (let i = 0; i < n; i++) {
+    const cx = bx0 + w * (i + 0.5);
+    const ell = Kit.mk('ellipse', {cx, cy, rx: w * 0.4, ry: (by1 - by0) * 0.38, fill: 'none', 'stroke-width': 1.5, style: inkS(28)}, svg);
+    const dots = []; for (let j = 0; j < 9; j++) dots.push(Kit.mk('circle', {r: Math.max(2.2, f * 0.2), style: inkF(j === 0 ? 100 : 70)}, svg));
+    rolls.push({cx, dir: i % 2 ? -1 : 1, ell, dots});
+  }
+  const probe = Kit.mk('circle', {cx: bx0 + w * 2, cy: by0 + f * 0.7, r: f * 0.42, fill: '#ffd166', stroke: '#000', 'stroke-width': 1.5}, svg);
+  // trace
+  const ty = top + boxH + f * 1.6, tx0 = pad, tx1 = W - pad, y1 = H - f * 0.6, y0 = ty + f * 1.2;
+  const t1 = Kit.mk('text', {x: tx0, y: ty, 'font-size': f * 0.9, 'font-weight': 700, style: 'font-family:var(--body);fill:var(--k)', 'dominant-baseline': 'central'}, svg);
+  t1.textContent = 'Temperature at the probe ●';
+  const pl = Kit.mk('text', {x: tx1, y: ty, 'font-size': f * 1.05, 'font-weight': 800, 'text-anchor': 'end', style: 'font-family:var(--mono);fill:var(--k)', 'dominant-baseline': 'central'}, svg);
+  Kit.mk('line', {x1: tx0, x2: tx1, y1, y2: y1, 'stroke-width': 1.5, style: inkS(40)}, svg);
+  const guides = Kit.mk('g', {}, svg);
+  const path = Kit.mk('path', {fill: 'none', 'stroke-width': Math.max(2, f * 0.16), 'stroke-linejoin': 'round', style: 'stroke:var(--k)'}, svg);
+  const peaks = []; for (let i = 0; i < SPAN + 2; i++) peaks.push(Kit.mk('circle', {r: f * 0.3, fill: '#ffd166', stroke: '#000', 'stroke-width': 1.2}, svg));
+  G = {W, H, f, w, cy, by0, by1, rolls, probe, path, peaks, guides, pl, tx0, tx1, y0, y1};
+  drawGuides(false); frame(0);
+};
+
+function drawGuides(anim) {
+  if (!G) return;
+  const {guides, tx0, tx1, y0, y1, pl} = G; guides.innerHTML = '';
+  levels(R[level], P[level]).forEach(v => Kit.mk('line', {x1: tx0, x2: tx1, y1: y1 - v * (y1 - y0), y2: y1 - v * (y1 - y0), 'stroke-dasharray': '4 5', 'stroke-width': 1.2, style: inkS(45)}, guides));
+  pl.textContent = 'period ' + P[level];
+  if (anim && !Kit.calm) gsap.from([guides, pl], {opacity: 0, duration: 0.8});
+}
+
+function frame(dt) {
+  if (!G) return;
+  tt += dt;
+  const {rolls, w, cy, by0, by1, path, peaks, tx0, tx1, y0, y1, probe} = G;
+  const k = Math.floor(tt / T), ph = tt / T - k, h = spike(k), s = Math.pow(Math.sin(Math.PI * ph), 2);
+  const ry0 = (by1 - by0) * 0.38;
+  rolls.forEach((r, i) => {
+    const lean = r.dir * (h - 0.6) * w * 0.35 * s, sc = 1 + (h - 0.6) * 0.5 * s;
+    const cx = r.cx + lean, rx = w * 0.4 * sc, ry = ry0 * (2 - sc);
+    r.ell.setAttribute('cx', cx); r.ell.setAttribute('rx', rx); r.ell.setAttribute('ry', ry);
+    r.dots.forEach((d, j) => { const a = r.dir * tt * 2.2 + j * Math.PI * 2 / r.dots.length; d.setAttribute('cx', cx + rx * Math.cos(a)); d.setAttribute('cy', cy + ry * Math.sin(a)); });
+  });
+  probe.setAttribute('r', G.f * (0.32 + 0.35 * signal(tt)));
+  const X = t => tx0 + (t - (tt - SPAN)) / SPAN * (tx1 - tx0), Y = v => y1 - v * (y1 - y0);
+  let d = ''; const N = 360;
+  for (let i = 0; i <= N; i++) { const t = tt - SPAN + SPAN * i / N; d += (i ? 'L' : 'M') + X(t).toFixed(1) + ',' + Y(signal(t)).toFixed(1); }
+  path.setAttribute('d', d);
+  const kFirst = Math.ceil((tt - SPAN) / T - 0.5);
+  peaks.forEach((c, i) => {
+    const kk = kFirst + i, tp = (kk + 0.5) * T;
+    if (tp > tt || kk < 0) { c.setAttribute('opacity', 0); return; }
+    c.setAttribute('opacity', 1); c.setAttribute('cx', X(tp)); c.setAttribute('cy', Y(spike(kk)));
+  });
+}
+gsap.ticker.add((time, delta) => frame(Kit.calm ? 0 : Math.min(delta, 50) / 1000));
+
+function setLevel(i) {
+  level = i; seen.add(i);
+  document.querySelectorAll('.lv').forEach(b => b.classList.toggle('on', +b.dataset.i === i));
+  if (Kit.calm) { for (let j = 0; j < 400; j++) x = R[level] * x * (1 - x); spikes.length = Math.max(0, Math.floor(tt / T) - 30); spikes.length = 0; tt = SPAN + 0.01; frame(0); }
+  drawGuides(true);
+  Kit.haptic('selection');
+  if (i === 3) { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .5}); }
+}
+Kit.$('ctl').addEventListener('click', e => { const b = e.target.closest('.lv'); if (b) setLevel(+b.dataset.i); });
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.lv', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const i of [1, 2, 3]) { Kit.$('ctl').children[i].click(); await w(250); }
+  await w(500);
+};
+Kit.single();
+</script>
+</html>

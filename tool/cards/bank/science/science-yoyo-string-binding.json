@@ -1,0 +1,36 @@
+{
+  "id": "science-yoyo-string-binding",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes a yo-yo climb back up its string?",
+  "answer": "The string binds to the spool. When a tug pulls the string from one side of the spool to the other, the yo-yo keeps spinning the same way, so the spool grabs the string and rolls itself back up it. At the bottom of the string the yo-yo is \"sleeping\": it is still spinning there, waiting for the tug.",
+  "move": "The spin was there all along; the tug just lets the spool catch the string.",
+  "keywords": [
+    "yo-yo",
+    "spool",
+    "string",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A close-up of a yo-yo spool with string wrapping around it, asking what makes a yo-yo climb back up its string. Zoomed-in views and a short explanation follow."
+  },
+  "source": "Veritasium, “Stringless Yo-Yo!” (YouTube, 2016)",
+  "reference": "https://www.youtube.com/watch?v=-i0InwW0V9k&t=82s",
+  "written": "2026-11-03"
+}

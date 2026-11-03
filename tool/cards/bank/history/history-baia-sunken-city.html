@@ -1,0 +1,224 @@
+<!doctype html>
+<!-- slug: history-baia-sunken-city -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;border-radius:1.8cqh;cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+.hs{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag · tap the ruins">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SUNKEN CITY</span></div>
+    <h2 class="q">What is the 'Atlantis of Italy'?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Cross-section of the Roman ruins of Baia sinking under the sea"></svg>
+    </div>
+    <p class="say" id="say">Drag the coast down, the way the volcanic ground of Baia did.</p>
+    <div id="why" class="gone"><p class="big">Baia: a Roman city 5–8 m under the sea</p><p class="body">Baia sits in the Campi Flegrei, a volcanic area where the ground itself moves. The land slowly sank (bradyseism), and the sea closed over its mosaics, colonnades and houses.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Baia didn't fall into the sea: the volcanic ground carried it down.</div>
+    <div class="foot"><span class="src">Source · Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const ST = {s: 0};          // metres the coast has sunk, 0 to 8.3
+const MAX = 8.3;
+let done = false, finished = false, found = new Set(), G = {};
+const MSG = {
+  walls: 'House walls: the outlines of the homes are so clear you can see them from Google Maps.',
+  mosaic: 'Mosaics: the decorated floors of Roman rooms, still lying on the seabed.',
+  cols: 'Colonnades: rows of Roman columns, standing under the water.'
+};
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const m = H / 13.5, y0 = 4 * m, floorY = y0 + 8 * m, fs = Math.max(f * .85, 12);
+  G = {W, H, m, y0, f: fs, floorY};
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const defs = mk('defs', {}, svg);
+  const sky = mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#f7d9a8'}, sky); mk('stop', {offset: 1, 'stop-color': '#fdf0d8'}, sky);
+  const sea = mk('linearGradient', {id: 'sea', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#1fa3b8', 'stop-opacity': .55}, sea);
+  mk('stop', {offset: 1, 'stop-color': '#08355a', 'stop-opacity': .82}, sea);
+  const rock = mk('linearGradient', {id: 'rock', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#c9a26a'}, rock); mk('stop', {offset: .15, 'stop-color': '#8a6438'}, rock); mk('stop', {offset: 1, 'stop-color': '#3a2414'}, rock);
+
+  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#sky)'}, svg);
+  mk('circle', {cx: W * .86, cy: y0 * .32, r: m * .7, fill: '#f6a64b', opacity: .85}, svg);
+
+  // The land and the city on it: drawn at its final place, moved up by (MAX - s)
+  const g = mk('g', {}, svg); G.g = g;
+  G.rock = mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: 'url(#rock)'}, g);
+  // magma glow deep below: the volcanic ground
+  mk('ellipse', {cx: W * .55, cy: floorY + .85 * m, rx: W * .35, ry: m * .55, fill: '#ff6a2a', opacity: .45}, g);
+  const marble = '#f3ead8', marbleEdge = '#b8a888';
+  // house walls
+  const walls = mk('g', {}, g); G.walls = walls;
+  [.17, .27, .37].forEach((x, i) => mk('rect', {x: W * x, y: floorY - (i === 1 ? .9 : 1.4) * m, width: W * .022, height: (i === 1 ? .9 : 1.4) * m, fill: '#d9b98c', stroke: '#7a5a34', 'stroke-width': 1}, walls));
+  mk('rect', {x: W * .17, y: floorY - .25 * m, width: W * .222, height: .25 * m, fill: '#cfae80', stroke: '#7a5a34', 'stroke-width': 1}, walls);
+  // mosaic floor
+  const mos = mk('g', {}, g); G.mosaic = mos;
+  const mx0 = W * .41, mx1 = W * .61, n = 12, tw = (mx1 - mx0) / n, cols = ['#c0392b', '#f0c419', '#f3ead8', '#1b6f8a', '#2d2d2d'];
+  for (let i = 0; i < n; i++) for (let j = 0; j < 2; j++)
+    mk('rect', {x: mx0 + i * tw, y: floorY - .4 * m + j * .2 * m, width: tw, height: .2 * m, fill: cols[(i + j * 2) % cols.length], stroke: '#00000033', 'stroke-width': .5}, mos);
+  // colonnade
+  const col = mk('g', {}, g); G.cols = col;
+  const cw = W * .036;
+  [[.66, 2.7], [.74, 2.7], [.82, 1.8], [.90, 2.7]].forEach(([x, h]) => {
+    const cx = W * x;
+    mk('rect', {x: cx - cw * .75, y: floorY - .25 * m, width: cw * 1.5, height: .25 * m, fill: marble, stroke: marbleEdge}, col);
+    mk('rect', {x: cx - cw / 2, y: floorY - h * m, width: cw, height: (h - .25) * m, fill: marble, stroke: marbleEdge}, col);
+    for (let k = 1; k < 3; k++) mk('line', {x1: cx - cw / 2 + k * cw / 3, y1: floorY - h * m + 2, x2: cx - cw / 2 + k * cw / 3, y2: floorY - .3 * m, stroke: marbleEdge, 'stroke-width': .8}, col);
+    if (h > 2) mk('rect', {x: cx - cw * .8, y: floorY - 3 * m, width: cw * 1.6, height: .3 * m, fill: marble, stroke: marbleEdge}, col);
+    else mk('path', {d: `M${cx - cw / 2} ${floorY - h * m} l${cw * .3} ${-.25 * m} l${cw * .3} ${.2 * m} l${cw * .4} ${-.15 * m} v${.2 * m}z`, fill: marble, stroke: marbleEdge}, col);
+  });
+
+  // the sea, drawn over the city
+  mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: 'url(#sea)', 'pointer-events': 'none'}, svg);
+  G.wave = mk('path', {d: wave(W, y0, m, 0), fill: 'none', stroke: '#ffffff', 'stroke-width': 2, opacity: .8}, svg);
+  for (let i = 0; i < 4; i++) mk('path', {d: `M${W * (.25 + i * .2)} ${y0} l${-W * .06} ${H}`, stroke: '#ffffff', 'stroke-width': W * .03, opacity: .05}, svg);
+
+  // depth ruler
+  const rx = W * .11, ink = '#ffffff';
+  G.band = mk('rect', {x: rx - 3, y: y0 + 5 * m, width: 6, height: 3 * m, fill: '#ff7a59', rx: 3, opacity: finished ? 1 : 0}, svg);
+  mk('line', {x1: rx, y1: y0, x2: rx, y2: y0 + 8 * m, stroke: ink, 'stroke-width': 1.5}, svg);
+  [0, 2, 4, 6, 8].forEach(d => {
+    mk('line', {x1: rx - 6, y1: y0 + d * m, x2: rx, y2: y0 + d * m, stroke: ink, 'stroke-width': 1.5}, svg);
+    const t = mk('text', {x: rx - 9, y: y0 + d * m + fs * .35, 'text-anchor': 'end', fill: d === 0 ? '#08355a' : ink, 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+    t.textContent = d === 0 ? '0 m' : d === 8 ? '8 m' : String(d);
+  });
+  G.bandT = mk('text', {x: rx + 8, y: y0 + 6.5 * m + fs * .35, fill: '#ffd2c4', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, opacity: finished ? 1 : 0}, svg);
+  G.bandT.textContent = '5–8 m';
+
+  // live readout
+  G.read = mk('text', {x: W * .15, y: y0 - 2 * m, fill: '#5a3a1a', 'font-size': fs * 1.15, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+
+  // drag hint
+  G.hint = mk('g', {opacity: done ? 0 : 1, 'pointer-events': 'none'}, svg);
+  const hx = W * .51, hy = y0 - 2.2 * m;
+  mk('path', {d: `M${hx} ${hy - m * .8} v${m * 1.2} m${-m * .4} ${-m * .4} l${m * .4} ${m * .4} l${m * .4} ${-m * .4}`, fill: 'none', stroke: '#5a3a1a', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.hint);
+
+  // hotspots (placed on the sunken ruins, shown once the land has sunk)
+  const hs = mk('g', {opacity: done ? 1 : 0, 'pointer-events': done ? 'auto' : 'none'}, svg); G.hs = hs;
+  const r = Math.max(m * .6, 18);
+  [['walls', .28, 1.9], ['mosaic', .51, 1.2], ['cols', .78, 3.7]].forEach(([k, x, h]) => {
+    const grp = mk('g', {class: 'hs', 'data-k': k}, hs);
+    const c = mk('circle', {cx: W * x, cy: floorY - h * m, r, fill: found.has(k) ? '#ff7a59' : '#ffffff33', stroke: '#ffffff', 'stroke-width': 2.5}, grp);
+    const t = mk('text', {x: W * x, y: floorY - h * m + fs * .38, 'text-anchor': 'middle', fill: '#fff', 'font-size': fs * 1.1, 'font-weight': 800, 'font-family': 'var(--body)'}, grp);
+    t.textContent = found.has(k) ? '✓' : '?';
+    if (!found.has(k) && !Kit.calm) gsap.to(c, {attr: {r: r * 1.15}, repeat: -1, yoyo: true, duration: .7, ease: 'sine.inOut'});
+    grp.addEventListener('click', e => { e.stopPropagation(); tapRuin(k); });
+  });
+  found.forEach(k => light(k, true));
+  apply();
+}
+
+function wave(W, y, m, p) {
+  let d = `M0 ${y}`;
+  for (let x = 0; x <= W; x += 8) d += ` L${x} ${y + Math.sin(x / (m * .9) + p) * m * .08}`;
+  return d;
+}
+
+function apply() {
+  const dy = -(MAX - ST.s) * G.m;
+  G.g.setAttribute('transform', `translate(0,${dy})`);
+  G.rock.setAttribute('height', Math.max(0, G.H - G.floorY - dy));
+  const fl = ST.s - .3;
+  G.read.textContent = fl <= 0 ? `Floor +${(-fl).toFixed(1)} m` : `Floor −${fl.toFixed(1)} m`;
+}
+
+function light(k, on) {
+  const el = G[k]; if (!el) return;
+  el.style.filter = on ? 'drop-shadow(0 0 4px #fff) brightness(1.15)' : '';
+}
+
+function sunk() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  gsap.to(G.hint, {opacity: 0, duration: .3});
+  G.hs.setAttribute('pointer-events', 'auto');
+  gsap.to(G.hs, {opacity: 1, duration: .5, delay: .2});
+  Kit.$('pic').style.cursor = 'default';
+  Kit.$('say').textContent = 'The whole port is under water now. Tap the glowing ruins.';
+}
+
+function sinkAll() {
+  return new Promise(res => gsap.to(ST, {s: MAX, duration: Kit.calm ? .01 : 1.6, ease: 'power2.inOut', onUpdate: apply, onComplete: () => { sunk(); res(); }}));
+}
+
+function tapRuin(k) {
+  if (!done || finished) return;
+  Kit.haptic('selection');
+  Kit.$('say').textContent = MSG[k] + (found.has(k) ? '' : ` (${found.size + 1}/3)`);
+  if (!found.has(k)) {
+    found.add(k);
+    const grp = G.hs.querySelector(`[data-k="${k}"]`);
+    if (grp) { const c = grp.querySelector('circle'); gsap.killTweensOf(c); c.setAttribute('fill', '#ff7a59'); grp.querySelector('text').textContent = '✓'; }
+    light(k, true);
+  }
+  if (found.size === 3) setTimeout(finish, 1400);
+}
+
+function finish() {
+  if (finished) return; finished = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  gsap.to([G.band, G.bandT], {opacity: 1, duration: .6});
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .5});
+  Kit.haptic('success');
+}
+
+// dragging the coast down
+(() => {
+  const svg = Kit.$('pic'); let y = null, s0 = 0, moved = 0;
+  svg.addEventListener('pointerdown', e => {
+    if (done) return; y = e.clientY; s0 = ST.s; moved = 0;
+    svg.setPointerCapture(e.pointerId); gsap.killTweensOf(ST);
+    gsap.to(G.hint, {opacity: 0, duration: .3});
+  });
+  svg.addEventListener('pointermove', e => {
+    if (y === null || done) return;
+    const dy = e.clientY - y; moved = Math.max(moved, Math.abs(dy));
+    const scale = G.m * 1.2;
+    ST.s = Math.max(0, Math.min(MAX, s0 + dy / G.m * (G.m / scale) * 1.2));
+    apply();
+    if (ST.s >= MAX - .05) { y = null; ST.s = MAX; apply(); sunk(); }
+  });
+  const up = () => {
+    if (y === null) return; y = null;
+    if (done) return;
+    if (moved < 6 || ST.s > MAX * .6) sinkAll();
+    else Kit.$('say').textContent = 'Keep dragging down: the ground sank about 8 meters.';
+  };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+})();
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.to(G.hint, {y: 8, repeat: 5, yoyo: true, duration: .5, ease: 'sine.inOut'});
+  const p = {v: 0};
+  gsap.to(p, {v: Math.PI * 2, duration: 4, repeat: -1, ease: 'none', onUpdate: () => G.wave && G.wave.setAttribute('d', wave(G.W, G.y0, G.m, p.v))});
+};
+Kit.play.card = async () => {
+  await sinkAll();
+  await new Promise(r => setTimeout(r, 300));
+  for (const k of ['walls', 'mosaic', 'cols']) {
+    G.hs.querySelector(`[data-k="${k}"]`).dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await new Promise(r => setTimeout(r, 150));
+  }
+  finish();
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

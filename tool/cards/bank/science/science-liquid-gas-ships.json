@@ -1,0 +1,37 @@
+{
+  "id": "science-liquid-gas-ships",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much does natural gas shrink when it is turned into liquid?",
+  "answer": "Once chilled until it becomes liquid, natural gas takes about 600 times less room. So one LNG carrier can hold what 600 ships would carry as gas. Holding the button shows the gas cooling, turning liquid and moving into one ship.",
+  "move": "Liquid gas is 600 times smaller, so one ship does the work of 600.",
+  "keywords": [
+    "natural gas",
+    "lng",
+    "liquefaction",
+    "lng carrier",
+    "gas tanker"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question: how much does natural gas shrink when it is liquefied? An illustration compares one large LNG ship with 600 small gas tankers. A hold-to-chill button moves gas into one ship as it cools to liquid."
+  },
+  "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Zfk7QT4zhZQ&t=717s",
+  "written": "2026-11-03"
+}

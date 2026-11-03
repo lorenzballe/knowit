@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-dream-logic-filter -->
+<title>Astute free card · Why dreams feel normal</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.8cqh}
+#ctl .row{display:flex;justify-content:space-between;align-items:baseline;font:700 max(1.6cqh,12px)/1.2 var(--mono);letter-spacing:.04em;color:var(--k)}
+#lvl{font:800 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);text-align:center}
+#slide{width:100%;height:max(3.6cqh,28px);margin:0;accent-color:var(--k);cursor:pointer;touch-action:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);color:var(--k);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
+.lab{font-family:var(--mono);font-weight:700;letter-spacing:.06em;fill:var(--k)}
+.bar{fill:var(--k)}
+.barbg{fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:1.5}
+.chip rect{fill:#fff;stroke:#1d1d1f;stroke-width:1.5}
+.chip text{fill:#111;font-family:var(--body);font-weight:700}
+.chip.no rect{stroke:#d33;stroke-width:2.5}
+.chip.no text{fill:#b3141b}
+.chip.ok rect{stroke:#1a8a55;stroke-width:2.5}
+.chip.ok text{fill:#0d6b3f}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DREAMS</span></div>
+    <h2 class="q">Why do absurd dream events seem perfectly normal?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="ctl">
+      <div id="lvl">Logic filter (prefrontal cortex): 100% on</div>
+      <input id="slide" type="range" min="0" max="100" value="100" aria-label="From awake to asleep">
+      <div class="row"><span>ASLEEP</span><span>AWAKE</span></div>
+    </div>
+    <div id="why" class="gone">
+      <p class="big">The logic filter is turned down.</p>
+      <p class="body">The prefrontal cortex handles critical thinking: logic, planning, the sense of time. During sleep it is less active, so the rational filter shrinks. The brain lets go and builds strange stories that we accept without questions.</p>
+    </div>
+    <p class="say" id="say">Slide the brain from awake to asleep. Watch what gets through.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In dreams the part of you that asks “really?” is turned down.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const EVENTS = ['I can fly','My dog talks','The sea is in the kitchen','Night turns to noon','The house has no doors','I am late and early','My teacher is a fish','The stairs go sideways'];
+let geo = null, level = 1, ok = 0, no = 0, sleepOk = 0, done = false, ei = 0, timer = null;
+let layer = null, tally = null, bars = [];
+const tweens = new Set();
+
+function setTally(){ if (tally) tally.textContent = `Accepted: ${ok}   ·   Questioned: ${no}`; }
+
+function paintFilter(){
+  const o = .1 + .9 * level;
+  bars.forEach((b, i) => { b.setAttribute('opacity', (i % 2 ? o * .7 : o).toFixed(2)); });
+  Kit.$('lvl').textContent = `Logic filter (prefrontal cortex): ${Math.round(level*100)}% on`;
+}
+
+Kit.onShow.card = () => {
+  tweens.forEach(t => t.kill()); tweens.clear();
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const fy = H * .52, bh = Math.max(fs * .9, 12), x0 = W * .05, x1 = W * .95;
+  geo = {W, H, fs, fy, bh, x0, x1};
+  const t = Kit.mk('text', {x: W/2, y: fs * 1.1, 'text-anchor': 'middle', class: 'lab', 'font-size': Math.max(fs*.85,12)}, svg);
+  t.textContent = 'DREAM EVENTS';
+  Kit.mk('rect', {x: x0, y: fy, width: x1 - x0, height: bh, rx: bh/2, class: 'barbg'}, svg);
+  bars = [];
+  const n = 28, step = (x1 - x0 - bh) / n;
+  for (let i = 0; i < n; i++) bars.push(Kit.mk('rect', {x: x0 + bh/2 + i*step + step*.2, y: fy + bh*.15, width: step*.6, height: bh*.7, rx: 1.5, class: 'bar'}, svg));
+  layer = Kit.mk('g', {}, svg);
+  tally = Kit.mk('text', {x: W/2, y: H - fs * .4, 'text-anchor': 'middle', class: 'lab', 'font-size': Math.max(fs*.85,12)}, svg);
+  setTally(); paintFilter();
+};
+
+function chipText(g, s){
+  const tx = g.querySelector('text'), r = g.querySelector('rect');
+  tx.textContent = s;
+  const pad = geo.fs * .6, w = tx.getComputedTextLength() + pad * 2;
+  r.setAttribute('width', w); tx.setAttribute('x', pad);
+  return w;
+}
+
+function spawn(){
+  if (!geo || !layer) return;
+  const {W, H, fs, fy, bh, x0, x1} = geo;
+  const label = EVENTS[ei++ % EVENTS.length];
+  const h = fs * 1.9;
+  const g = Kit.mk('g', {class: 'chip'}, layer);
+  Kit.mk('rect', {x: 0, y: 0, height: h, rx: h/2}, g);
+  Kit.mk('text', {y: h * .66, 'font-size': fs}, g);
+  let w = chipText(g, label);
+  const p = {x: x0 + Kit.rnd() * Math.max(0, (x1 - x0) - w - fs*2.4), y: fs * 1.8, o: 0};
+  const put = () => { g.setAttribute('transform', `translate(${p.x},${p.y})`); g.setAttribute('opacity', p.o); };
+  put();
+  const tw = gsap.timeline({onUpdate: put, onComplete: () => { g.remove(); tweens.delete(tw); }});
+  tweens.add(tw);
+  tw.to(p, {o: 1, duration: .25});
+  tw.to(p, {y: fy - h - 3, duration: 1.7, ease: 'power1.in'}, 0);
+  tw.call(() => {
+    if (Kit.rnd() < level) {
+      g.classList.add('no'); chipText(g, '?! ' + label); no++; setTally();
+      tw.pause();
+      const t2 = gsap.timeline({onUpdate: put, onComplete: () => { g.remove(); tweens.delete(t2); }});
+      tweens.add(t2);
+      t2.to(p, {x: p.x + 6, duration: .06, repeat: 5, yoyo: true}).to(p, {o: 0, duration: .5});
+    } else {
+      g.classList.add('ok'); chipText(g, '✓ ' + label); ok++;
+      if (level <= .2) sleepOk++;
+      setTally(); check();
+    }
+  });
+  tw.to(p, {y: H - fs * 2.4 - h, duration: 1.5, ease: 'power1.out'});
+  tw.to(p, {o: 0, duration: .4}, '-=.4');
+}
+
+function finish(){
+  if (done) return; done = true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+function check(){ if (!done && sleepOk >= 3) finish(); }
+
+Kit.$('slide').addEventListener('input', e => {
+  const old = level; level = +e.target.value / 100; paintFilter();
+  if (Math.floor(old * 10) !== Math.floor(level * 10)) Kit.haptic('selection');
+});
+
+Kit.onEnter.card = () => {
+  if (timer) return;
+  spawn(); timer = setInterval(spawn, 1250);
+};
+
+Kit.play.card = async () => {
+  const s = Kit.$('slide'); s.value = 5; s.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 300));
+  finish();
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

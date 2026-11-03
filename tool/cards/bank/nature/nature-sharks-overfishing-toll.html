@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-sharks-overfishing-toll -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:break-word}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 3.4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#yr{display:flex;flex-direction:column;gap:.8cqh}
+#yr .ends{display:flex;justify-content:space-between;font:700 max(1.7cqh,12px)/1.2 var(--mono);color:var(--k)}
+#range{width:100%;height:max(4.2cqh,28px);accent-color:var(--k);margin:0;cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · then scrub a year">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SHARK CRISIS</span></div>
+    <h2 class="q">What share of shark and ray species is over-fishing pushing toward extinction?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Thirty marks, each one thirtieth of all shark and ray species"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">About 1 in 20</button>
+        <button class="opt" data-i="1">About 1 in 10</button>
+        <button class="opt" data-i="2">More than 1 in 3</button>
+        <button class="opt" data-i="3">About 9 in 10</button>
+      </div>
+      <div id="yr" class="gone">
+        <input type="range" id="range" min="0" max="365" value="0" step="1" aria-label="Days of one year">
+        <div class="ends"><span>1 JAN</span><span>31 DEC</span></div>
+      </div>
+      <div id="why" class="gone"><p class="big">Over 1 in 3 species</p><p class="body">Over-fishing is pushing more than a third of all shark and ray species toward a global extinction crisis. It kills about 100 million sharks and rays every year, roughly 274,000 a day.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a share. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Over-fishing threatens over 1 in 3 shark and ray species: 100 million die a year.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+const N = 30;
+const THREAT = [1, 4, 7, 9, 12, 15, 18, 20, 23, 26, 28];   // 11 of 30: more than a third
+const RAYS = new Set([3, 8, 11, 16, 21, 25, 29]);
+const SHARK = 'M5,30 Q30,16 62,20 L70,5 L77,21 Q87,23 94,13 L90,29 L98,44 Q85,36 77,36 Q60,42 42,40 L48,50 L35,40 Q18,38 5,30 Z';
+const RAY = 'M50,6 Q72,16 95,27 Q71,33 52,42 L51,56 L49,56 L48,42 Q29,33 5,27 Q28,16 50,6 Z';
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+let pick = -1, phase = 0, day = 0, marks = [], numT = null, labT = null;
+
+function counterText() {
+  if (phase === 0) return ['?', 'Each mark: 1/30 of all shark and ray species'];
+  if (phase === 1) return ['> 1 in 3', 'species pushed toward extinction'];
+  const n = Math.round(100e6 * day / 365);
+  const m = MONTHS[Math.min(11, Math.floor(day / 365 * 12))];
+  return [n.toLocaleString('en-US'), day >= 365 ? 'sharks and rays killed in one year' : `sharks and rays killed · ${m}`];
+}
+function setCounter() {
+  if (!numT) return;
+  const [a, b] = counterText();
+  numT.textContent = a; labT.textContent = b;
+}
+function draw() {
+  const s = Kit.$('pic'); s.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(s);
+  const fs = Math.max(12, f);
+  const textH = fs * 4.8;
+  const gridH = Math.max(40, H - textH);
+  let best = {sc: 0};
+  for (let c = 3; c <= 10; c++) {
+    const r = Math.ceil(N / c), sc = Math.min(W / c / 112, gridH / r / 64);
+    if (sc > best.sc) best = {sc, c, r};
+  }
+  const {sc, c, r} = best, cw = 112 * sc, ch = 64 * sc;
+  const ox = (W - cw * c) / 2, oy = (gridH - ch * r) / 2;
+  marks = [];
+  for (let i = 0; i < N; i++) {
+    const col = i % c, row = Math.floor(i / c);
+    const g = Kit.mk('g', {transform: `translate(${ox + col * cw + 6 * sc},${oy + row * ch + 4 * sc}) scale(${sc})`}, s);
+    const on = phase >= 1 && THREAT.includes(i);
+    const p = Kit.mk('path', {d: RAYS.has(i) ? RAY : SHARK, fill: 'var(--k)'}, g);
+    p.style.opacity = on ? 1 : .2;
+    marks.push(p);
+  }
+  numT = Kit.mk('text', {x: W / 2, y: gridH + fs * 2.3, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.2}, s);
+  labT = Kit.mk('text', {x: W / 2, y: gridH + fs * 4.1, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, s);
+  setCounter();
+}
+function reveal() {
+  phase = 1; setCounter();
+  const els = THREAT.map(i => marks[i]);
+  if (Kit.calm) els.forEach(e => e.style.opacity = 1);
+  else gsap.to(els, {opacity: 1, duration: .35, stagger: .08, ease: 'power2.out'});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('yr');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.$('say').textContent = 'Now drag through one year and count the dead.';
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('range').addEventListener('input', e => {
+  day = +e.target.value; phase = 2; setCounter();
+  if (day % 30 === 0) Kit.haptic('light');
+  if (day >= 365) {
+    Kit.haptic('success');
+    Kit.hide('yr'); Kit.hide('say'); Kit.hide('sure'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(numT, {scale: 1.08, transformOrigin: '50% 50%', duration: .4, ease: 'back.out(3)'});
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(marks, {opacity: 0, y: 6, stagger: .02, duration: .35, ease: 'power3.out'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[2].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(900);
+  const rg = Kit.$('range');
+  for (const v of [120, 240, 365]) { rg.value = v; rg.dispatchEvent(new Event('input', {bubbles: true})); await w(150); }
+  await w(500);
+};
+Kit.single();
+</script>
+</html>

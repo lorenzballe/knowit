@@ -1,0 +1,37 @@
+{
+  "id": "history-gardening-mines-crib",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Allies trick the Germans into revealing their Enigma settings?",
+  "answer": "To clear a mine, the Germans had to radio its location. The Allies already knew that location, so they knew part of the coded message: a crib. With a crib, the day's Enigma settings could be solved.",
+  "move": "Make the enemy say something you already know, and their code opens.",
+  "keywords": [
+    "enigma",
+    "crib",
+    "sea mines",
+    "codebreaking",
+    "gardening deception"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A grid of squares representing sea. The page asks how the Allies tricked the Germans into revealing their Enigma settings. Tap a square to lay a mine there and learn how a known location gave the Allies a crib."
+  },
+  "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=JsBZOcqZerk&t=2550s",
+  "written": "2026-11-03"
+}

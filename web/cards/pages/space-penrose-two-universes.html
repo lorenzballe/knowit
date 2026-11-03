@@ -1,0 +1,260 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#art{flex:1;min-height:100px;position:relative;align-self:stretch;width:100%}
+#pd{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+#why{flex:none;align-self:stretch}
+#why .body{margin:0;overflow-wrap:break-word}
+#pd .uni{fill:color-mix(in srgb,var(--k) 11%,var(--c))}
+#pd .bh{fill:#0b0b11}
+#pd .wh{fill:#fffdf7}
+#pd .star{fill:var(--k);opacity:.42}
+#pd .hz{stroke:var(--k);stroke-opacity:.55;stroke-width:1.4}
+#pd .hz.open{stroke-opacity:1;stroke-width:2.4;stroke-dasharray:7 6;stroke-linecap:round}
+#pd .inf{stroke:var(--k);stroke-width:2;stroke-linecap:round}
+#pd .sing{fill:none;stroke:#ff5a36;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#pd text{font-family:var(--body);font-weight:700;text-anchor:middle;dominant-baseline:central;fill:var(--k);pointer-events:none}
+#pd text.note{font-weight:600}
+#pd text.inf8{font-weight:400;opacity:.85}
+#pd text.onbh{fill:#fff}
+#pd text.onwh{fill:#15151c}
+#pd text.halo{paint-order:stroke;stroke:color-mix(in srgb,var(--k) 11%,var(--c));stroke-width:5px;stroke-linejoin:round}
+#pd .ghost{cursor:pointer}
+#pd .gpoly{fill:color-mix(in srgb,var(--k) 5%,transparent);stroke:var(--k);stroke-opacity:.4;stroke-width:1.3;stroke-dasharray:2 5;stroke-linecap:round}
+#pd .qbtn circle{fill:var(--k)}
+#pd .qbtn text{fill:var(--c)}
+#pd .slice{fill:none;stroke:var(--k);stroke-width:3;stroke-linecap:round}
+#pd .slice.glow{stroke-width:10;stroke-opacity:.16}
+#pd .dot{fill:var(--k);stroke:var(--c);stroke-width:2.2}
+#pd .ring{fill:none;stroke:var(--k);stroke-width:2;opacity:0}
+#pd .badge rect,#pd .badge path{fill:var(--k)}
+#pd .badge text{fill:var(--c)}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="space" data-kind="Tap · complete the map">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COMPLETE THE MAP</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">How does the simplest Einstein solution link black and white holes to two universes?</h2>
+    <div class="stagebox" id="stage">
+      <div id="art"><svg id="pd" role="img" aria-label="Penrose diagram: our universe, a black hole, a white hole and a second universe meeting at one point, the Einstein–Rosen bridge"></svg></div>
+      <!-- The why joins the drawing once the map is complete. -->
+      <div id="why" class="gone"><p class="body">Edges can't just stop, so a white hole and a second universe appear.</p></div>
+    </div>
+    <p class="say" id="say">Tap each ? to extend the map until every edge ends at a singularity or infinity.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Even the simplest solution holds two universes.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pd'), art = Kit.$('art');
+const ORDER = ['I', 'II', 'III', 'IV'];
+// I our universe (right), II black hole (top), III second universe (left), IV white hole (bottom).
+const shown = {I: true, II: true, III: false, IV: false};
+const ADJ = {I: ['II', 'IV'], II: ['I', 'III'], III: ['II', 'IV'], IV: ['I', 'III']};
+const HZ = [['I', 'II', 'T1'], ['I', 'IV', 'B1'], ['III', 'II', 'T3'], ['III', 'IV', 'B3']];
+const PTS = {I: ['O', 'T1', 'R', 'B1'], II: ['O', 'T3', 'T1'], III: ['O', 'T3', 'L', 'B3'], IV: ['O', 'B3', 'B1']};
+const NAME = {I: 'our universe', II: 'black hole', III: 'second universe', IV: 'white hole'};
+const KIND = {I: 'uni', II: 'bh', III: 'uni', IV: 'wh'};
+const TCLS = {uni: 'halo', bh: 'onbh', wh: 'onwh'};
+const STARS = [];
+while (STARS.length < 22) { const u = Kit.rnd() * 2 - 1, v = Kit.rnd() * 2 - 1; if (Math.abs(u) + Math.abs(v) < .8 && Math.abs(v) > .26) STARS.push([u, v, .8 + Kit.rnd() * .9]); }
+let fresh = null, done = false, finaleDone = false, whyShown = false, entered = false;
+let lastW = -1, lastH = -1, tmr = 0, ro = null, ftl = null;
+const f1 = n => (+n).toFixed(1);
+const has = c => e => e.classList.contains(c);
+
+function geo(W, H) {
+  let a = Math.min((W - 6) / 4, (H - 55) / 2);
+  const fs = Math.max(12.5, Math.min(14.5, a / 5.4));
+  a = Math.max(24, Math.min((W - 6) / 4, (H - 3.6 * fs - 6) / 2));
+  const cx = W / 2, cy = H / 2, fu = Math.max(12.5, fs * .97), bfs = Math.max(12.5, fs * .92), bh = bfs * 1.6;
+  // badge just under the bridge, white-hole name under the badge, both above the lower singularity
+  const wyMax = a - fs * .6 - 4;
+  const bo = Math.max(fu * .6 + bh / 2 + 2, Math.min(fs * 1.85, wyMax - fs * .6 - bh / 2 - 3));
+  const wy = Math.max(a * .45, Math.min(wyMax, Math.max(a * .62, bo + bh / 2 + fs * .6 + 3)));
+  return {a, fs, fu, bfs, bh, bo, cx, cy, wy, O: [cx, cy], T1: [cx + a, cy - a], R: [cx + 2 * a, cy], B1: [cx + a, cy + a], T3: [cx - a, cy - a], L: [cx - 2 * a, cy], B3: [cx - a, cy + a]};
+}
+const pts = (g, r) => PTS[r].map(k => f1(g[k][0]) + ',' + f1(g[k][1])).join(' ');
+const lp = (g, r) => r === 'I' ? [g.cx + g.a, g.cy] : r === 'III' ? [g.cx - g.a, g.cy] : [g.cx, g.cy + (r === 'II' ? -g.wy : g.wy)];
+function tx(p, x, y, s, size, cls) { const t = Kit.mk('text', {x: f1(x), y: f1(y), class: cls}, p); t.style.fontSize = f1(size) + 'px'; t.textContent = s; return t; }
+function line(p, P, Q, cls) { return Kit.mk('line', {x1: f1(P[0]), y1: f1(P[1]), x2: f1(Q[0]), y2: f1(Q[1]), class: cls}, p); }
+function wave(x0, x1, y, A) {
+  const n = 2 * Math.max(4, Math.round((x1 - x0) / 18)), s = (x1 - x0) / n;
+  let d = 'M' + f1(x0) + ',' + f1(y);
+  for (let i = 0; i < n; i++) d += ' Q' + f1(x0 + (i + .5) * s) + ',' + f1(y + (i % 2 ? 2 : -2) * A) + ' ' + f1(x0 + (i + 1) * s) + ',' + f1(y);
+  return d;
+}
+
+function startLoops() {
+  svg.querySelectorAll('.hz.open').forEach(l => gsap.fromTo(l, {strokeDashoffset: 0}, {strokeDashoffset: -26, duration: 1.2, ease: 'none', repeat: -1}));
+  svg.querySelectorAll('.qbtn').forEach((b, i) => gsap.to(b, {scale: 1.13, svgOrigin: b.dataset.o, duration: .75, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .3}));
+  const st = svg.querySelectorAll('.star');
+  if (st.length) gsap.to(st, {opacity: .12, duration: 1.5, ease: 'sine.inOut', delay: 1.2, stagger: {each: .2, from: 'random', repeat: -1, yoyo: true}});
+}
+
+function showWhy() {
+  if (whyShown) return;
+  whyShown = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (entered && !Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, duration: .45, stagger: .12, ease: 'power3.out'});
+  later(160);
+}
+
+function draw() {
+  if (ftl) { const t = ftl; ftl = null; t.progress(1).kill(); }
+  gsap.killTweensOf(svg.querySelectorAll('*'));
+  svg.replaceChildren();
+  const fit = Kit.fitSvg(svg); lastW = fit.W; lastH = fit.H;
+  const g = geo(fit.W, fit.H), {a, fs, cx, cy} = g, anim = entered && !Kit.calm;
+  const Ly = {};
+  ['fill', 'stars', 'edges', 'slice', 'labels', 'ghost', 'top'].forEach(k => Ly[k] = Kit.mk('g', {}, svg));
+  const own = {I: [], II: [], III: [], IV: []};
+  // the bridge, once the map is complete (built first, so the other labels keep clear of it)
+  let fin = null, avoid = null;
+  if (done) {
+    const dr = Math.max(4.5, fs * .36), sl = [], bfs = g.bfs, bh = g.bh, by = cy + g.bo;
+    [g.R, g.L].forEach(P => ['slice glow', 'slice'].forEach(c => sl.push(Kit.mk('path', {d: 'M' + f1(cx) + ',' + f1(cy) + ' L' + f1(P[0]) + ',' + f1(P[1]), class: c}, Ly.slice))));
+    const ring = Kit.mk('circle', {cx: f1(cx), cy: f1(cy), r: f1(dr), class: 'ring'}, Ly.top);
+    const dot = Kit.mk('circle', {cx: f1(cx), cy: f1(cy), r: f1(dr), class: 'dot'}, Ly.top);
+    const badge = Kit.mk('g', {class: 'badge'}, Ly.top), tip = Kit.mk('path', {}, badge), box = Kit.mk('rect', {}, badge);
+    const bt = tx(badge, cx, by, 'Einstein–Rosen bridge', bfs, 'bt');
+    let bw = bfs * 12;
+    try { bw = bt.getComputedTextLength() + bfs * 1.3; } catch (e) {}
+    bw = Math.min(bw, 4 * a - 4);
+    [['x', cx - bw / 2], ['y', by - bh / 2], ['width', bw], ['height', bh], ['rx', bh / 2]].forEach(([k, v]) => box.setAttribute(k, f1(v)));
+    tip.setAttribute('d', 'M' + f1(cx - 5) + ',' + f1(by - bh / 2 + 1) + ' L' + f1(cx) + ',' + f1(cy + dr + 2.5) + ' L' + f1(cx + 5) + ',' + f1(by - bh / 2 + 1) + 'Z');
+    fin = {sl, ring, dot, badge, dr};
+    avoid = {x1: cx - bw / 2, x2: cx + bw / 2, y1: by - bh / 2, y2: by + bh / 2};
+  }
+  // regions that exist
+  ORDER.forEach(r => { if (shown[r]) own[r].push(Kit.mk('polygon', {points: pts(g, r), class: 'reg ' + KIND[r]}, Ly.fill)); });
+  [['I', 0, 1], ['III', 11, -1]].forEach(([r, o, s]) => {
+    if (shown[r]) for (let i = o; i < o + 11; i++) own[r].push(Kit.mk('circle', {cx: f1(cx + s * a + STARS[i][0] * a), cy: f1(cy + STARS[i][1] * a), r: STARS[i][2].toFixed(2), class: 'star'}, Ly.stars));
+  });
+  // horizons: solid between two regions, dashed where the map just stops
+  HZ.forEach(([p, q, k]) => { const n = shown[p] + shown[q]; if (n) line(Ly.edges, g.O, g[k], n === 2 ? 'hz' : 'hz open'); });
+  // edges at infinity, each marked with its own ∞ (slid along the edge if the badge is in the way)
+  const d = fs * .72;
+  [['I', [['T1', 'R'], ['R', 'B1']]], ['III', [['T3', 'L'], ['L', 'B3']]]].forEach(([r, es]) => {
+    if (shown[r]) es.forEach(([p, q]) => {
+      own[r].push(line(Ly.edges, g[p], g[q], 'inf draw'));
+      const el = tx(Ly.labels, 0, 0, '∞', fs * 1.4, 'inf8 pop'), P = g[p], Q = g[q];
+      for (const t of [.5, .42, .34, .26, .2]) {
+        const x = P[0] + (Q[0] - P[0]) * t, y = P[1] + (Q[1] - P[1]) * t;
+        el.setAttribute('x', f1(x + Math.sign(x - cx) * d)); el.setAttribute('y', f1(y + Math.sign(y - cy) * d));
+        if (!avoid) break;
+        let b = null;
+        try { b = el.getBBox(); } catch (e) { break; }
+        if (b.x > avoid.x2 + 3 || b.x + b.width < avoid.x1 - 3 || b.y > avoid.y2 + 3 || b.y + b.height < avoid.y1 - 3) break;
+      }
+      own[r].push(el);
+    });
+  });
+  // edges at a singularity
+  [['II', -1], ['IV', 1]].forEach(([r, s]) => {
+    if (!shown[r]) return;
+    own[r].push(Kit.mk('path', {d: wave(cx - a, cx + a, cy + s * a, Math.max(2, a * .035)), class: 'sing draw'}, Ly.edges));
+    own[r].push(tx(Ly.labels, cx, cy + s * (a + fs * 1.1), 'singularity', Math.max(12.5, fs * .95), 'note pop'));
+  });
+  ORDER.forEach(r => {
+    if (!shown[r]) return;
+    const [x, y] = lp(g, r);
+    own[r].push(tx(Ly.labels, x, y, NAME[r], KIND[r] === 'uni' ? g.fu : fs, TCLS[KIND[r]] + ' pop'));
+  });
+  // what lies past each dashed edge
+  ORDER.forEach(r => {
+    if (shown[r] || !ADJ[r].some(q => shown[q])) return;
+    const gg = Kit.mk('g', {class: 'ghost', 'data-ghost': r}, Ly.ghost);
+    Kit.mk('polygon', {points: pts(g, r), class: 'gpoly'}, gg);
+    const [x, y] = lp(g, r), b = Kit.mk('g', {class: 'qbtn', 'data-o': f1(x) + ' ' + f1(y)}, gg);
+    Kit.mk('circle', {cx: f1(x), cy: f1(y), r: f1(fs * .9)}, b);
+    tx(b, x, y + .5, '?', fs * 1.15, 'qm');
+  });
+  if (anim) startLoops();
+  // the region just added unfolds from the edge it was pushed across
+  if (fresh && anim) {
+    const r = fresh, els = own[r];
+    const mids = HZ.filter(([p, q]) => (p === r && shown[q]) || (q === r && shown[p])).map(([, , k]) => [(cx + g[k][0]) / 2, (cy + g[k][1]) / 2]);
+    if (!mids.length) mids.push([cx, cy]);
+    const ox = mids.reduce((s, m) => s + m[0], 0) / mids.length, oy = mids.reduce((s, m) => s + m[1], 0) / mids.length;
+    gsap.from(els[0], {scale: .1, opacity: 0, svgOrigin: f1(ox) + ' ' + f1(oy), duration: .6, ease: 'power3.out'});
+    const st = els.filter(has('star'));
+    if (st.length) gsap.from(st, {opacity: 0, duration: .4, delay: .35, stagger: .03});
+    els.filter(has('draw')).forEach(e => {
+      const L = e.getTotalLength();
+      e.style.strokeDasharray = L + ' ' + L;
+      gsap.fromTo(e, {strokeDashoffset: L}, {strokeDashoffset: 0, duration: .55, delay: .3, ease: 'power2.out', onComplete: () => { e.style.strokeDasharray = ''; e.style.strokeDashoffset = ''; }});
+    });
+    gsap.from(els.filter(has('pop')), {opacity: 0, y: 6, duration: .4, delay: .45, stagger: .07, ease: 'power3.out'});
+  }
+  fresh = null;
+  if (done && !finaleDone) {
+    finaleDone = true;
+    if (anim && fin) {
+      fin.sl.forEach(e => { const L = e.getTotalLength(); e.style.strokeDasharray = L + ' ' + L; e.style.strokeDashoffset = L; });
+      ftl = gsap.timeline({delay: .85, onComplete: () => { ftl = null; }});
+      ftl.to(fin.sl, {strokeDashoffset: 0, duration: .7, ease: 'power2.inOut'}, 0)
+        .from(fin.dot, {scale: 0, svgOrigin: f1(cx) + ' ' + f1(cy), duration: .4, ease: 'back.out(3)'}, .4)
+        .fromTo(fin.ring, {attr: {r: fin.dr}, opacity: .9}, {attr: {r: fin.dr * 4.5}, opacity: 0, duration: .7, ease: 'power2.out', immediateRender: false}, .4)
+        .from(fin.badge, {opacity: 0, y: 8, duration: .4, ease: 'power3.out'}, .5)
+        .call(showWhy, null, 1.15);
+    } else showWhy();
+  }
+}
+
+function render(force) {
+  const w = art.clientWidth, h = art.clientHeight;
+  if (w < 10 || h < 10) return;
+  if (!force && Math.abs(w - lastW) < 1.5 && Math.abs(h - lastH) < 1.5) return;
+  draw();
+}
+function later(ms) { clearTimeout(tmr); tmr = setTimeout(() => render(false), ms); }
+
+svg.addEventListener('click', e => {
+  const gh = e.target.closest && e.target.closest('[data-ghost]');
+  if (!gh || done) return;
+  const r = gh.dataset.ghost;
+  if (shown[r]) return;
+  shown[r] = true; fresh = r; done = ORDER.every(q => shown[q]);
+  Kit.haptic(done ? 'success' : 'light');
+  draw();
+});
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => {
+  render(true);
+  if (!ro && window.ResizeObserver) { ro = new ResizeObserver(() => later(150)); ro.observe(art); }
+};
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => {
+  entered = true;
+  if (Kit.calm) return;
+  gsap.from('#pd .reg, #pd .inf, #pd .sing', {opacity: 0, duration: .5, stagger: .07, ease: 'power2.out'});
+  gsap.from('#pd .ghost', {opacity: 0, duration: .5, delay: .45, stagger: .15});
+  startLoops();
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const tap = r => { const el = svg.querySelector('[data-ghost="' + r + '"] .gpoly'); if (el) el.dispatchEvent(new MouseEvent('click', {bubbles: true})); };
+  tap('IV'); await wait(1000); tap('III'); await wait(3400);
+};
+Kit.single();
+</script>
+</html>

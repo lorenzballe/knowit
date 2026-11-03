@@ -1,0 +1,214 @@
+<!doctype html>
+<!-- slug: science-iron-sand-concentration -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#wrap{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;display:block}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see what happens">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">IRON SAND</span></div>
+    <h2 class="q">How rich in iron oxide can Japanese iron sand get?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="why" class="gone">
+        <p class="big">About 80 % iron oxides</p>
+        <p class="body">Running water carries the light sand downstream; the heavy iron grains stay behind. Done in engineered river channels, this leaves sand that is about 80 % iron oxides by weight: richer than high-quality iron ore, and with fewer impurities.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the gate up to let the river run.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Let water do the sorting: light sand leaves, heavy iron stays.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NL = 600, ND = 120, WD = 2, STUCK = 60;
+const S = {g: 0};
+let ctx, W = 0, H = 0, grains = [], done = false, touched = false, t = 0, drag = null, L = {};
+const cv = Kit.$('cv');
+
+function init() {
+  grains = [];
+  let stuck = 0;
+  for (let i = 0; i < ND + NL; i++) {
+    const dark = i < ND, x = 0.22 + 0.38 * Kit.rnd();
+    const heap = Math.max(0, 1 - Math.abs((x - 0.41) / 0.19));
+    const o = heap * Kit.rnd() * 0.45;
+    const st = !dark && stuck < STUCK && Kit.rnd() < 0.2 ? (stuck++, true) : false;
+    grains.push({dark, stuck: st, x, o, h: o, sp: 0.5 + Kit.rnd(), ph: Kit.rnd() * 6, out: false, sh: Kit.rnd()});
+  }
+  // make sure exactly STUCK light grains stay lodged
+  for (const p of grains) { if (stuck >= STUCK) break; if (!p.dark && !p.stuck) { p.stuck = true; stuck++; } }
+  for (let i = grains.length - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [grains[i], grains[j]] = [grains[j], grains[i]]; }
+}
+
+function layout() {
+  const fs = Math.max(13, Math.min(W * 0.045, H * 0.05));
+  const titleY = fs * 1.4, barY = titleY + fs * 0.55, barH = Math.max(10, H * 0.035);
+  const tickY = barY + barH + fs * 1.25;
+  const chanTop = Math.max(H * 0.34, tickY + fs * 1.6);
+  const bedY = H - fs * 2.7;
+  const r = Math.max(2.2, Math.min(W, (bedY - chanTop) * 2) * 0.0085);
+  L = {fs, titleY, barY, barH, tickY, chanTop, bedY, chanH: bedY - chanTop, r, gx: W * 0.11, bx0: W * 0.24, bx1: W * 0.94};
+}
+
+function fit() {
+  const o = Kit.fitCanvas(cv); ctx = o.x; W = o.W; H = o.H;
+  if (!grains.length) init();
+  layout(); draw();
+}
+
+function frac() {
+  let lw = 0; for (const p of grains) if (!p.dark && !p.out) lw++;
+  return {f: ND * WD / (ND * WD + lw), lw};
+}
+
+function update(dt) {
+  t += dt;
+  const fl = S.g;
+  const {lw} = frac();
+  const moving = Math.max(0, lw - STUCK) / (NL - STUCK);
+  const k = 0.4 + 0.6 * moving;
+  for (const p of grains) {
+    if (p.out) continue;
+    if (!p.dark && !p.stuck) {
+      if (fl > 0.04) {
+        p.x += dt * fl * p.sp * 0.22;
+        p.ph += dt * 12 * fl;
+        const hop = fl * 0.06 * Math.abs(Math.sin(p.ph));
+        p.h += (hop - p.h) * Math.min(1, dt * 3 * fl);
+        if (p.x > 1.03) p.out = true;
+      }
+    } else {
+      p.h += (p.o * k - p.h) * Math.min(1, dt * 2);
+      if (fl > 0.04) p.x += dt * fl * 0.006 * (p.sp - 1);
+    }
+  }
+  if (!done && frac().f >= 0.799) finish();
+}
+
+function finish() {
+  done = true;
+  Kit.haptic('success');
+  gsap.to(S, {g: 0, duration: 1.2, ease: 'power2.inOut'});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+function rr(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+
+function draw() {
+  if (!ctx) return;
+  const {fs, titleY, barY, barH, tickY, chanTop, bedY, chanH, r, gx, bx0, bx1} = L;
+  const fl = S.g;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#f4efe5'; ctx.fillRect(0, 0, W, H);
+
+  // meter
+  const {f} = frac();
+  ctx.fillStyle = '#1b1b20'; ctx.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  ctx.fillText('Iron oxides, by weight', bx0, titleY);
+  rr(bx0, barY, bx1 - bx0, barH, barH / 2); ctx.fillStyle = '#ddd4c3'; ctx.fill();
+  rr(bx0, barY, (bx1 - bx0) * f, barH, barH / 2); ctx.fillStyle = done ? '#b8321f' : '#1b1b20'; ctx.fill();
+  const tx = bx0 + (bx1 - bx0) * 0.8;
+  ctx.strokeStyle = '#b8321f'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(tx, barY - 4); ctx.lineTo(tx, barY + barH + 4); ctx.stroke();
+  ctx.fillStyle = '#b8321f'; ctx.textAlign = 'center'; ctx.fillText('80 %', tx, tickY);
+
+  // reservoir
+  ctx.fillStyle = 'rgba(60,135,210,.38)';
+  ctx.fillRect(0, chanTop, gx, chanH);
+  // channel water
+  const depth = chanH * (0.08 + 0.72 * fl);
+  ctx.fillStyle = 'rgba(60,135,210,.26)';
+  ctx.fillRect(gx, bedY - depth, W - gx, depth);
+  if (fl > 0.04) {
+    ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.lineWidth = Math.max(1.5, r * 0.6); ctx.lineCap = 'round';
+    for (let i = 0; i < 14; i++) {
+      const lane = (i * 0.37) % 1, y = bedY - depth * (0.15 + 0.75 * lane);
+      const sx = ((i * 0.19 + t * fl * 0.5 * (0.7 + lane)) % 1) * (W - gx) + gx;
+      ctx.beginPath(); ctx.moveTo(sx, y); ctx.lineTo(Math.min(W, sx + W * 0.06 * fl), y); ctx.stroke();
+    }
+  }
+
+  // bed
+  ctx.fillStyle = '#6d5d4b'; ctx.fillRect(0, bedY, W, H - fs * 1.9 - bedY);
+
+  // grains
+  for (const p of grains) {
+    if (p.out) continue;
+    const x = p.x * W, y = bedY - r - p.h * chanH;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283);
+    ctx.fillStyle = p.dark ? (p.sh < .5 ? '#1a1a1f' : '#2b2b33') : (p.sh < .5 ? '#e2c27e' : '#d4ad62');
+    ctx.fill();
+  }
+
+  // gate
+  const gw = Math.max(8, W * 0.025), lift = fl * chanH * 0.5;
+  const gTop = chanTop - fs * 0.6 - lift, gBot = bedY - lift;
+  ctx.fillStyle = '#7a4a26'; ctx.fillRect(gx - gw / 2, gTop, gw, gBot - gTop);
+  ctx.fillStyle = '#4a2c16';
+  for (let y = gTop + gw; y < gBot - 2; y += gw * 1.4) ctx.fillRect(gx - gw / 2, y, gw, 2);
+  const kr = Math.max(10, fs * 0.75);
+  ctx.beginPath(); ctx.arc(gx, gTop, kr, 0, 6.283);
+  ctx.fillStyle = '#b8321f'; ctx.fill();
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+  // hint arrow
+  if (!touched) {
+    const a = 0.5 + 0.5 * Math.sin(t * 4), dy = Kit.calm ? 0 : a * fs * 0.4;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.moveTo(gx, gTop - kr * 0.5 - dy); ctx.lineTo(gx - kr * 0.45, gTop + kr * 0.25 - dy); ctx.lineTo(gx + kr * 0.45, gTop + kr * 0.25 - dy); ctx.fill();
+  }
+
+  // bottom labels
+  ctx.fillStyle = '#1b1b20'; ctx.font = `600 ${Math.max(12, fs * 0.8)}px sans-serif`;
+  ctx.textAlign = 'left'; ctx.fillText('upstream', W * 0.03, H - fs * 0.6);
+  ctx.textAlign = 'right'; ctx.fillText('downstream →', W * 0.97, H - fs * 0.6);
+
+  if (done) {
+    ctx.textAlign = 'center'; ctx.fillStyle = '#b8321f';
+    ctx.font = `800 ${fs * 1.2}px sans-serif`;
+    ctx.fillText('80 % Fe₂O₃', W * 0.41, bedY - chanH * 0.3);
+  }
+}
+
+// dragging the gate
+cv.addEventListener('pointerdown', e => {
+  if (done) return;
+  cv.setPointerCapture?.(e.pointerId);
+  drag = {y: e.clientY, g: S.g}; touched = true; Kit.haptic('light');
+});
+cv.addEventListener('pointermove', e => {
+  if (!drag || done) return;
+  const box = cv.getBoundingClientRect(), scale = H / (box.height || H);
+  S.g = Math.max(0, Math.min(1, drag.g + (drag.y - e.clientY) * scale / (L.chanH * 0.5)));
+});
+const end = () => { drag = null; };
+cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+gsap.ticker.add(() => { if (!ctx) return; update(Math.min(0.05, gsap.ticker.deltaRatio(60) / 60)); draw(); });
+new ResizeObserver(() => { if (ctx) fit(); }).observe(Kit.$('wrap'));
+
+Kit.onShow.card = () => fit();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#wrap', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const b = cv.getBoundingClientRect(), x = b.left + b.width * 0.11, y = b.top + b.height * 0.5;
+  const ev = (type, yy) => cv.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: yy, pointerId: 1, bubbles: true}));
+  ev('pointerdown', y); ev('pointermove', y - b.height * 0.4); ev('pointerup', y - b.height * 0.4);
+  for (let i = 0; i < 2000 && !done; i++) update(0.05);
+  draw();
+  await new Promise(r => setTimeout(r, 1500));
+};
+Kit.single();
+</script>
+</html>

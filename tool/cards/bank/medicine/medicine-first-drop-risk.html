@@ -1,0 +1,137 @@
+<!doctype html>
+<!-- slug: medicine-first-drop-risk -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;cursor:pointer;touch-action:manipulation}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.say{font:600 max(1.9cqh,13px)/1.25 var(--body)}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ALCOHOL</span></div>
+    <h2 class="q">According to the WHO, what is the safest amount of alcohol to drink?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A glass under a dropper, beside a health-risk gauge"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">One small glass a day</button>
+        <button class="opt" data-i="1">A glass of wine with meals</button>
+        <button class="opt" data-i="2">None: not even one drop</button>
+      </div>
+      <div id="why" class="gone"><p class="big">No amount is safe</p><p class="body">The WHO says no level of drinking is safe for health, just like cigarette smoke. Whatever the drink, the risk begins with the first drop, and the more you drink, the more it grows.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick an answer. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>There is no safe dose of alcohol: the risk starts at the first drop.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2, MAX = 12;
+let pick = -1, answered = false, n = 0, busy = false, G = null;
+const lvl = k => Math.min(1, k / MAX) * 0.85;
+const risk = k => k ? Math.min(1, 0.1 + k * 0.075) : 0;
+const RED = '#e0412b', AMBER = '#e8a33a';
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, H * 0.07, 20));
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const cx = W * 0.32, bot = H * 0.94;
+  const gw = Math.min(W * 0.34, H * 0.46), gh = Math.min(gw * 1.15, H * 0.58), top = bot - gh;
+  const tipY = top - H * 0.06, dTop = Math.max(H * 0.03, tipY - H * 0.24);
+  // glass
+  const pts = `${cx - gw / 2},${top} ${cx - gw * .35},${bot} ${cx + gw * .35},${bot} ${cx + gw / 2},${top}`;
+  const defs = mk('defs', {}); const cp = mk('clipPath', {id: 'gl'}, defs);
+  mk('polygon', {points: pts}, cp);
+  const liq = mk('rect', {x: cx - gw / 2, y: bot, width: gw, height: 0, 'clip-path': 'url(#gl)', style: `fill:${AMBER}`});
+  mk('polygon', {points: pts, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent);stroke:var(--k);stroke-width:3;stroke-linejoin:round'});
+  // dropper
+  const dw = Math.max(10, gw * 0.09);
+  mk('rect', {x: cx - dw / 2, y: dTop + (tipY - dTop) * .35, width: dw, height: (tipY - dTop) * .65, rx: dw / 2, style: 'fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:2.5'});
+  mk('ellipse', {cx, cy: dTop + (tipY - dTop) * .2, rx: dw * .9, ry: (tipY - dTop) * .2, style: 'fill:var(--k)'});
+  // gauge
+  const gx = W * 0.84, gaw = Math.max(16, W * 0.08), gTop = H * 0.14, gBot = bot, gH = gBot - gTop;
+  const rt = mk('text', {x: gx, y: gTop - fs * .7, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--body);fill:var(--k);letter-spacing:.06em`}); rt.textContent = 'RISK';
+  mk('rect', {x: gx - gaw / 2, y: gTop, width: gaw, height: gH, rx: gaw / 2, style: 'fill:color-mix(in srgb,var(--k) 8%,transparent)'});
+  const fill = mk('rect', {x: gx - gaw / 2, y: gBot, width: gaw, height: 0, rx: gaw / 2, style: `fill:${RED}`});
+  mk('rect', {x: gx - gaw / 2, y: gTop, width: gaw, height: gH, rx: gaw / 2, style: 'fill:none;stroke:var(--k);stroke-width:3'});
+  const bh = gH * 0.2;
+  const band = mk('rect', {x: gx - gaw / 2 - 4, y: gBot - bh, width: gaw + 8, height: bh, rx: 4, style: 'fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:5 4'});
+  const bandTxt = mk('text', {x: gx - gaw / 2 - 10, y: gBot - bh / 2 + fs * .35, 'text-anchor': 'end', style: `font:700 ${fs}px var(--body);fill:var(--k)`}); bandTxt.textContent = 'safe zone?';
+  const strike = mk('line', {x1: gx - gaw / 2 - 6, y1: gBot - 2, x2: gx + gaw / 2 + 6, y2: gBot - bh + 2, style: `stroke:${RED};stroke-width:4;stroke-linecap:round;opacity:0`});
+  // note: risk starts here
+  const nx = cx + dw * 1.6, hf = fs * 1.15;
+  const note = mk('g', {style: 'opacity:0'});
+  mk('path', {d: `M${nx + 4},${tipY + hf * .2} Q${nx - 2},${tipY + hf * 1.3} ${cx + dw * .5},${tipY + hf * 1.5}`, style: `fill:none;stroke:${RED};stroke-width:2.5;stroke-linecap:round`}, note);
+  const t1 = mk('text', {x: nx, y: tipY - hf * 1.1, style: `font:700 ${hf}px var(--hand);fill:${RED}`}, note); t1.textContent = 'risk starts';
+  const t2 = mk('text', {x: nx, y: tipY - hf * 1.1 + hf * 1.35, style: `font:700 ${hf}px var(--hand);fill:${RED}`}, note); t2.textContent = 'here';
+  G = {svg, liq, fill, band, bandTxt, strike, note, cx, tipY, bot, gh, gBot, gH, r: Math.max(5, gw * .035)};
+  setState(false);
+}
+
+function setState(anim) {
+  if (!G) return;
+  const L = lvl(n) * G.gh, R = risk(n) * G.gH;
+  const a1 = {y: G.bot - L, height: L}, a2 = {y: G.gBot - R, height: R};
+  if (anim && !Kit.calm) { gsap.to(G.liq, {attr: a1, duration: .35, ease: 'power2.out'}); gsap.to(G.fill, {attr: a2, duration: .5, ease: 'back.out(2)'}); }
+  else { gsap.set(G.liq, {attr: a1}); gsap.set(G.fill, {attr: a2}); }
+  if (n >= 1) {
+    G.bandTxt.textContent = 'no safe zone';
+    G.bandTxt.style.fill = RED; G.band.style.stroke = RED;
+    if (anim && !Kit.calm) { gsap.to(G.strike, {opacity: 1, duration: .3}); gsap.to(G.note, {opacity: 1, duration: .5, delay: .15}); }
+    else { G.strike.style.opacity = 1; G.note.style.opacity = 1; }
+  }
+}
+
+function addDrop() {
+  if (!answered || busy || n >= MAX || !G) return;
+  busy = true; Kit.haptic('light');
+  const land = G.bot - lvl(n) * G.gh;
+  const done = () => {
+    n++; setState(true); busy = false;
+    if (n >= MAX) Kit.$('say').textContent = 'Every drop added to the risk.';
+  };
+  if (Kit.calm) { done(); return; }
+  const d = Kit.mk('circle', {cx: G.cx, cy: G.tipY, r: G.r, style: `fill:${AMBER};stroke:var(--k);stroke-width:1.5`}, G.svg);
+  gsap.to(d, {attr: {cy: land}, duration: .42, ease: 'power2.in', onComplete: () => { d.remove(); done(); }});
+}
+Kit.$('pic').addEventListener('click', addDrop);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  answered = true;
+  Kit.$('say').textContent = 'Tap the glass to add more drops.';
+  setTimeout(addDrop, Kit.calm ? 0 : 350);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); gsap.from('#pic', {opacity: 0, duration: .5}); } };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[RIGHT].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(1000);
+  for (let i = 0; i < 4; i++) { addDrop(); await w(550); }
+  await w(400);
+};
+Kit.single();
+</script>
+</html>

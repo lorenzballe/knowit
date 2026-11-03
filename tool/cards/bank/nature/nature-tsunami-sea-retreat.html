@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-tsunami-sea-retreat -->
+<title>Astute free card: the sea pulls back</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#tl{-webkit-appearance:none;appearance:none;width:100%;height:max(1.2cqh,8px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 18%,transparent);outline:none;margin:.6cqh 0 0;touch-action:none}
+#tl::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:var(--k);border:max(.5cqh,3px) solid var(--c);box-shadow:0 .3cqh 1cqh rgba(0,0,0,.3);cursor:grab}
+#tl::-moz-range-thumb{width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:var(--k);border:max(.5cqh,3px) solid var(--c);cursor:grab}
+.ticks{display:flex;justify-content:space-between;font:700 max(1.5cqh,12px)/1.2 var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EARLY WARNING</span></div>
+    <h2 class="q">What is the main early warning sign of a tsunami?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="sea" aria-label="A beach seen from the side: the sea pulls back, then the wave arrives"></svg></div>
+      <input type="range" id="tl" min="0" max="1000" value="0" aria-label="Time">
+      <div class="ticks"><span>Calm</span><span>Sea retreats</span><span>Wave</span></div>
+    </div>
+    <p class="say" id="say">Drag the slider: watch the sea in the minutes before the wave.</p>
+    <div id="why" class="gone"><p class="body">Before the first wave arrives, the sea suddenly pulls back. The seabed is exposed and boats are left stranded. It is practically the only real advance warning, and it comes about five minutes before the wave.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>If the sea suddenly retreats, leave the beach: the wave is about five minutes away.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {t: 0};
+let D = null, E = {}, done = false, lastPhase = -1;
+const svg = Kit.$('sea'), N = 80;
+const L0f = .6, LLf = .845, LHf = .48;
+
+function g(x){ const {W,H} = D, u = x / W; return u < .32 ? H*(.55 + .07*u/.32) : H*(.62 + .28*(u - .32)/.68); }
+function level(t){ const {H} = D; if (t < .15) return H*L0f; const p = Math.min(1, (t - .15)/.65), e = 1 - (1 - p)*(1 - p); return H*(L0f + (LLf - L0f)*e); }
+function surf(x, t, now){
+  const {W,H} = D;
+  let L = level(t);
+  if (t < .8) return L + (Kit.calm ? 0 : Math.sin(x/W*14 + now*2.2)*H*.004);
+  const p = (t - .8)/.2, xw = W*(1.3 - 1.4*p), w = W*.035;
+  const sig = 1/(1 + Math.exp(-(x - xw)/w));
+  let s = H*LLf + (H*LHf - H*LLf)*sig - H*.2*Math.exp(-Math.pow((x - xw - W*.06)/(W*.06), 2));
+  return Math.max(s, H*.2);
+}
+function phaseOf(t){ return t < .15 ? 0 : t < .45 ? 1 : t < .8 ? 2 : 3; }
+const PH = ['Calm sea, a day at the beach', 'The sea suddenly pulls back', 'Seabed exposed, boats stranded', 'The first wave arrives'];
+
+function build(){
+  svg.innerHTML = '';
+  D = Kit.fitSvg(svg);
+  const {W,H,f} = D, mk = (t,a,p) => Kit.mk(t, a, p || svg);
+  const defs = mk('defs', {});
+  const cp = mk('clipPath', {id: 'clip'}, defs); mk('rect', {x:0, y:0, width:W, height:H, rx:Math.min(W,H)*.05}, cp);
+  const sk = mk('linearGradient', {id:'sky', x1:0, y1:0, x2:0, y2:1}, defs);
+  mk('stop', {offset:0, 'stop-color':'#bfe3f5'}, sk); mk('stop', {offset:1, 'stop-color':'#f4f1df'}, sk);
+  const root = mk('g', {'clip-path':'url(#clip)'});
+  mk('rect', {x:0, y:0, width:W, height:H, fill:'url(#sky)'}, root);
+  mk('circle', {cx:W*.86, cy:H*.33, r:Math.min(W,H)*.06, fill:'#ffd35a'}, root);
+  // ground
+  let gp = `M0 ${H}`; for (let i = 0; i <= N; i++){ const x = W*i/N; gp += ` L${x} ${g(x)}`; } gp += ` L${W} ${H} Z`;
+  mk('path', {d: gp, fill:'#ecd093'}, root);
+  // seabed: the part normally under water, wet and darker
+  const xs0 = W*.32*(.05/.07);
+  let sp = `M${xs0} ${H}`; for (let i = 0; i <= N; i++){ const x = xs0 + (W - xs0)*i/N; sp += ` L${x} ${g(x)}`; } sp += ` L${W} ${H} Z`;
+  mk('path', {d: sp, fill:'#a9814f'}, root);
+  // rocks, weed, a fish
+  [.4,.5,.57,.69,.8,.9].forEach((u,i) => { const x = W*u, y = g(x); mk('ellipse', {cx:x, cy:y - H*.008, rx:W*(.018 + (i%3)*.006), ry:H*.016, fill:'#6d5a48'}, root); });
+  [.45,.63,.75,.86].forEach(u => { const x = W*u, y = g(x); mk('path', {d:`M${x} ${y} q${-W*.012} ${-H*.03} ${W*.004} ${-H*.06} M${x+W*.01} ${y} q${W*.012} ${-H*.025} 0 ${-H*.045}`, stroke:'#3d7a3a', 'stroke-width':Math.max(2, W*.006), fill:'none', 'stroke-linecap':'round'}, root); });
+  { const x = W*.66, y = g(x) - H*.012; const fg = mk('g', {transform:`translate(${x} ${y}) rotate(12)`}, root);
+    mk('ellipse', {cx:0, cy:0, rx:W*.02, ry:H*.011, fill:'#f08a3c'}, fg); mk('path', {d:`M${W*.018} 0 l${W*.016} ${-H*.012} l0 ${H*.024} Z`, fill:'#f08a3c'}, fg); }
+  // beach: towel, umbrella, person
+  { const x = W*.07, y = g(x); mk('rect', {x:x - W*.035, y:y - H*.008, width:W*.07, height:H*.01, fill:'#e5484d', rx:2}, root);
+    const ux = W*.17, uy = g(ux), uh = H*.13, ur = W*.065;
+    mk('line', {x1:ux, y1:uy, x2:ux, y2:uy - uh, stroke:'#333', 'stroke-width':Math.max(2,W*.005)}, root);
+    mk('path', {d:`M${ux-ur} ${uy-uh} A${ur} ${ur*.7} 0 0 1 ${ux+ur} ${uy-uh} Z`, fill:'#ff6b4a'}, root);
+    mk('path', {d:`M${ux-ur*.33} ${uy-uh} A${ur*.33} ${ur*.66} 0 0 1 ${ux+ur*.33} ${uy-uh} Z`, fill:'#fff'}, root);
+    const px = W*.25, py = g(px), ph = H*.1, sw = Math.max(3, W*.009);
+    const pg = mk('g', {stroke:'#1d2b3a', 'stroke-width':sw, 'stroke-linecap':'round', fill:'none'}, root);
+    mk('path', {d:`M${px-W*.012} ${py} L${px} ${py-ph*.45} L${px+W*.012} ${py} M${px} ${py-ph*.45} L${px} ${py-ph*.85} M${px-W*.018} ${py-ph*.62} L${px} ${py-ph*.75} L${px+W*.02} ${py-ph*.86}`}, pg);
+    mk('circle', {cx:px, cy:py - ph, r:H*.016, fill:'#1d2b3a', stroke:'none'}, root); }
+  // boat
+  E.boat = mk('g', {}, root);
+  const bw = W*.13, bh = H*.045;
+  mk('path', {d:`M${-bw/2} ${-bh} L${bw/2} ${-bh} L${bw*.36} 0 L${-bw*.38} 0 Z`, fill:'#f5f5f0', stroke:'#1d2b3a', 'stroke-width':Math.max(1.5,W*.004)}, E.boat);
+  mk('rect', {x:-bw*.5, y:-bh*1.05, width:bw, height:bh*.25, fill:'#2a6fdb'}, E.boat);
+  mk('line', {x1:-bw*.05, y1:-bh, x2:-bw*.05, y2:-bh*4.2, stroke:'#1d2b3a', 'stroke-width':Math.max(1.5,W*.004)}, E.boat);
+  mk('path', {d:`M${-bw*.02} ${-bh*4} L${bw*.32} ${-bh*1.3} L${-bw*.02} ${-bh*1.3} Z`, fill:'#ffd35a'}, E.boat);
+  // water
+  E.water = mk('path', {fill:'#1f6fb2', opacity:.92}, root);
+  E.foam = mk('path', {fill:'none', stroke:'#e8f6ff', 'stroke-width':Math.max(2, H*.007), 'stroke-linecap':'round', 'stroke-linejoin':'round'}, root);
+  // labels
+  const fs = Math.max(13, f*1.05);
+  E.phase = mk('text', {x:W/2, y:H*.04 + fs, 'text-anchor':'middle', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs, fill:'#0f1c2b'}, root);
+  E.clock = mk('text', {x:W/2, y:H*.04 + fs*2.6, 'text-anchor':'middle', 'font-family':'var(--mono)', 'font-weight':700, 'font-size':Math.max(12, fs*.9), fill:'#c2362b'}, root);
+  draw();
+}
+
+function draw(){
+  if (!D) return;
+  const {W,H} = D, t = S.t, now = performance.now()/1000;
+  let top = '', bot = '', foam = '', pen = false;
+  for (let i = 0; i <= N; i++){
+    const x = W*i/N, s = surf(x, t, now), gg = g(x), y = Math.min(s, gg);
+    top += (i ? ' L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+    if (s < gg - 1){ foam += (pen ? ' L' : ' M') + x.toFixed(1) + ' ' + s.toFixed(1); pen = true; } else pen = false;
+  }
+  for (let i = N; i >= 0; i--){ const x = W*i/N; bot += ` L${x.toFixed(1)} ${g(x).toFixed(1)}`; }
+  E.water.setAttribute('d', top + bot + ' Z');
+  E.foam.setAttribute('d', foam || 'M0 0');
+  // boat
+  let bx = W*.6;
+  if (t >= .8){ const p = (t - .8)/.2, xw = W*(1.3 - 1.4*p); bx = Math.max(W*.22, Math.min(bx, xw + W*.06)); }
+  const s = surf(bx, t, now), gg = g(bx);
+  let by, ang;
+  if (s < gg - H*.012){ by = s + H*.02; const d = W*.02; ang = Math.atan2(surf(bx + d, t, now) - surf(bx - d, t, now), 2*d)*180/Math.PI; ang = Math.max(-25, Math.min(25, ang)); }
+  else { by = gg; ang = Math.atan2(g(bx + 5) - g(bx - 5), 10)*180/Math.PI; }
+  E.boat.setAttribute('transform', `translate(${bx.toFixed(1)} ${by.toFixed(1)}) rotate(${ang.toFixed(1)})`);
+  const ph = phaseOf(t);
+  E.phase.textContent = PH[ph];
+  if (t < .15) E.clock.textContent = '';
+  else if (t < .95){ const sec = Math.round(300*(.95 - t)/.8), m = Math.floor(sec/60), ss = String(sec%60).padStart(2,'0'); E.clock.textContent = `Wave in about ${m}:${ss}`; }
+  else E.clock.textContent = 'About 5 minutes after the retreat';
+  if (ph !== lastPhase){ if (lastPhase >= 0) Kit.haptic('selection'); lastPhase = ph; }
+}
+
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:8, stagger:.1, duration:.4, ease:'power3.out'});
+}
+
+Kit.$('tl').addEventListener('input', e => {
+  const v = +e.target.value/1000;
+  if (Kit.calm){ S.t = v; draw(); } else gsap.to(S, {t:v, duration:.3, ease:'power2.out', overwrite:true, onUpdate:draw});
+  if (v >= .97) finish();
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.ticker.add(draw);
+  gsap.from('#tl', {opacity:0, y:8, duration:.5, ease:'power3.out'});
+};
+Kit.play.card = async () => {
+  const r = Kit.$('tl');
+  for (let v = 0; v <= 1000; v += 100){ r.value = v; r.dispatchEvent(new Event('input', {bubbles:true})); await new Promise(z => setTimeout(z, 60)); }
+  S.t = 1; draw();
+  await new Promise(z => setTimeout(z, 600));
+};
+Kit.single();
+</script>
+</html>

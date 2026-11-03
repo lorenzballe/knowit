@@ -1,0 +1,184 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-fractures-reach-aquifer -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#pump{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer;touch-action:manipulation}
+#pump:active{transform:scale(.97)}
+#meter{display:flex;gap:1.2cqw;align-items:center}
+#meter i{display:block;width:max(3cqw,12px);height:max(1.4cqh,10px);border-radius:.6cqh;background:color-mix(in srgb,var(--k) 18%,transparent)}
+#meter i.on{background:#ff6a1a}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pull apart · cross-section">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FRACKING</span></div>
+    <h2 class="q">How can fracking cracks reach the water we drink?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic" aria-label="Cross-section of the ground: aquifer near the top, rock layers, shale with a horizontal well at the bottom"></svg></div>
+      <div id="ctl"><button id="pump">Pump fluid</button><div id="meter"><i></i><i></i><i></i><i></i></div></div>
+      <div id="why" class="gone"><p class="big">The crack became a pipe.</p><p class="body">Pumping fluid at high pressure cracks the shale open. If a crack runs far enough upward, it meets the aquifer above, and the fluid has a direct road into the water.</p></div>
+    </div>
+    <p class="say" id="say">Tap Pump four times to push fluid into the shale.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A crack that reaches the aquifer is an open road for contaminants.</div>
+    <div class="foot"><span class="src">Source · Geopop, “IL FRACKING - La spiegazione geologica con parole semplici” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const FLUID = '#ff6a1a';
+// fractures, normalized once (x along the well, how far up toward the aquifer)
+const FR = [
+  {x:.36, reach:.5,  drift:-.02},
+  {x:.5,  reach:.72, drift:.02},
+  {x:.64, reach:1,   drift:.07, main:true},
+  {x:.8,  reach:.58, drift:-.03},
+  {x:.9,  reach:.36, drift:.01}
+];
+FR.forEach(fr => { fr.j = Array.from({length:10}, () => (Kit.rnd() - .5) * .045); fr.dj = Array.from({length:4}, () => (Kit.rnd() - .5) * .04); });
+let lvl = 0, done = false, st = {f:0}, P = [], anims = [], G = null;
+
+function kill(){ anims.forEach(a => a.kill && a.kill()); anims = []; }
+function apply(f){
+  P.forEach(p => p.forEach(o => o.el.setAttribute('stroke-dashoffset', o.len * (1 - f))));
+  if (G && G.feed) G.feed.setAttribute('opacity', f > 0 ? 1 : 0);
+}
+
+function draw(grow){
+  kill();
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f * .8, 12);
+  const sy = .14 * H, a0 = sy + .06 * H, a1 = a0 + .14 * H, s0 = .68 * H, s1 = .88 * H;
+  const wy = s0 + .35 * (s1 - s0), rx = .09 * W, hx = .76 * W, end = .95 * W;
+  G = {};
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const defs = mk('defs', {});
+  const cp = mk('clipPath', {id:'aqclip'}, defs); mk('rect', {x:0, y:a0, width:W, height:a1 - a0}, cp);
+  const gc = mk('clipPath', {id:'gclip'}, defs); mk('rect', {x:0, y:sy, width:W, height:H - sy, rx:Math.min(14, W * .03)}, gc);
+  const ground = mk('g', {'clip-path':'url(#gclip)'});
+  // layers
+  mk('rect', {x:0, y:sy, width:W, height:a0 - sy, fill:'#7a5a3c'}, ground);
+  mk('rect', {x:0, y:a0, width:W, height:a1 - a0, fill:'#2f86d3'}, ground);
+  const rb = ['#d8c6a6', '#c4b08e', '#d0bd9b', '#b9a582'];
+  const bh = (s0 - a1) / rb.length;
+  rb.forEach((c, i) => mk('rect', {x:0, y:a1 + i * bh, width:W, height:bh + 1, fill:c}, ground));
+  mk('rect', {x:0, y:s0, width:W, height:s1 - s0, fill:'#3f3a36'}, ground);
+  mk('rect', {x:0, y:s1, width:W, height:H - s1, fill:'#8f7c63'}, ground);
+  // shale lamination
+  for (let i = 1; i < 5; i++) mk('line', {x1:0, x2:W, y1:s0 + i * (s1 - s0) / 5, y2:s0 + i * (s1 - s0) / 5, stroke:'#56504a', 'stroke-width':1}, ground);
+  // aquifer ripples
+  for (let r = 0; r < 3; r++) {
+    let d = '', y = a0 + (r + .7) * (a1 - a0) / 3.4, step = W / 14;
+    for (let x = (r % 2) * step / 2; x < W; x += step * 1.6) d += `M${x} ${y}q${step / 4} ${-4} ${step / 2} 0t${step / 2} 0`;
+    mk('path', {d, stroke:'#8cc7f5', 'stroke-width':1.6, fill:'none', 'stroke-linecap':'round', opacity:.8}, ground);
+  }
+  // stain (contamination) clipped to aquifer
+  const main = FR.find(x => x.main);
+  const mx = (main.x + main.drift) * W;
+  const stain = mk('ellipse', {cx:mx, cy:a1, rx:done ? .34 * W : 0, ry:done ? (a1 - a0) * 1.1 : 0, fill:FLUID, opacity:.8, 'clip-path':'url(#aqclip)'}, ground);
+  // fractures
+  P = [];
+  FR.forEach(fr => {
+    const top = fr.main ? a0 + .55 * (a1 - a0) : wy - fr.reach * (wy - a1 - .02 * H);
+    let d = `M${fr.x * W} ${wy}`;
+    const n = fr.j.length;
+    for (let i = 1; i <= n; i++) {
+      const t = i / n;
+      d += `L${(fr.x + fr.drift * t + fr.j[i - 1] * (i < n ? 1 : .3)) * W} ${wy - (wy - top) * t}`;
+    }
+    let dd = `M${fr.x * W} ${wy}`;
+    fr.dj.forEach((j, i) => dd += `L${(fr.x + j) * W} ${wy + (s1 - wy - .01 * H) * (i + 1) / fr.dj.length * .8}`);
+    const set = [];
+    [d, dd].forEach(path => {
+      const c = mk('path', {d:path, stroke:'#1b1511', 'stroke-width':Math.max(4, W * .012), fill:'none', 'stroke-linejoin':'round', 'stroke-linecap':'round'}, ground);
+      const u = mk('path', {d:path, stroke:FLUID, 'stroke-width':Math.max(1.8, W * .005), fill:'none', 'stroke-linejoin':'round', 'stroke-linecap':'round'}, ground);
+      [c, u].forEach(el => { const len = el.getTotalLength(); el.setAttribute('stroke-dasharray', len); set.push({el, len}); });
+      if (path === d && fr.main) G.mainPath = u;
+    });
+    P.push(set);
+  });
+  // gas well
+  const wd = `M${rx} ${sy - 2}L${rx} ${wy - .03 * H}Q${rx} ${wy} ${rx + .03 * H} ${wy}L${end} ${wy}`;
+  mk('path', {d:wd, stroke:'#9aa3ab', 'stroke-width':Math.max(6, W * .018), fill:'none', 'stroke-linecap':'round'});
+  mk('path', {d:wd, stroke:'#e9eef2', 'stroke-width':Math.max(2, W * .006), fill:'none', 'stroke-linecap':'round'});
+  G.feed = mk('path', {d:wd, stroke:FLUID, 'stroke-width':Math.max(2.4, W * .007), fill:'none', 'stroke-dasharray':'6 8', 'stroke-linecap':'round', opacity:0});
+  // water well
+  const ww = mk('line', {x1:hx, x2:hx, y1:sy - 2, y2:a1 - .02 * H, stroke:done ? FLUID : '#bfe2ff', 'stroke-width':Math.max(5, W * .015), 'stroke-linecap':'round'});
+  // surface: rig and house
+  const k = getComputedStyle(document.getElementById('card')).getPropertyValue('--k').trim() || '#111';
+  const rh = .1 * H, rw = .05 * W;
+  mk('path', {d:`M${rx - rw} ${sy}L${rx} ${sy - rh}L${rx + rw} ${sy}M${rx - rw * .5} ${sy - rh * .5}L${rx + rw * .5} ${sy - rh * .5}M${rx - rw * .7} ${sy - rh * .3}L${rx + rw * .5} ${sy - rh * .5}`, stroke:k, 'stroke-width':2.4, fill:'none', 'stroke-linejoin':'round'});
+  const hw = .1 * W, hh = .055 * H, hx0 = hx - hw - .02 * W;
+  mk('path', {d:`M${hx0} ${sy}V${sy - hh}L${hx0 + hw / 2} ${sy - hh * 1.7}L${hx0 + hw} ${sy - hh}V${sy}Z`, fill:'none', stroke:k, 'stroke-width':2.4, 'stroke-linejoin':'round'});
+  mk('path', {d:`M${hx} ${sy}V${sy - hh * .9}H${hx + .035 * W}V${sy - hh * .7}`, fill:'none', stroke:k, 'stroke-width':2.4, 'stroke-linecap':'round'});
+  const drop = mk('circle', {cx:hx + .035 * W, cy:sy - hh * .45, r:Math.max(3, W * .01), fill:done ? FLUID : '#2f86d3'});
+  mk('line', {x1:0, x2:W, y1:sy, y2:sy, stroke:k, 'stroke-width':2});
+  // labels
+  const lab = (t, y, c, w) => { const e = mk('text', {x:.15 * W, y, fill:c, 'font-family':'var(--body)', 'font-weight':w || 700, 'font-size':fs, 'dominant-baseline':'middle'}); e.textContent = t; return e; };
+  lab('AQUIFER · drinking water', (a0 + a1) / 2, '#ffffff');
+  lab('ROCK LAYERS', a1 + bh * 1.5, '#3a2e22');
+  lab('SHALE · gas inside', s0 + .78 * (s1 - s0), '#ffffff');
+  const tl = mk('text', {x:rx + rw + 6, y:sy - rh * .55, fill:k, 'font-family':'var(--body)', 'font-weight':700, 'font-size':fs, 'dominant-baseline':'middle'}); tl.textContent = 'gas well';
+  apply(st.f);
+  if (lvl > 0 && !Kit.calm) {
+    anims.push(gsap.to(G.feed, {attr:{'stroke-dashoffset':-28}, duration:.6, repeat:-1, ease:'none'}));
+  }
+  if (done) {
+    if (grow && !Kit.calm) {
+      stain.setAttribute('rx', 0); stain.setAttribute('ry', 0);
+      ww.setAttribute('stroke', '#bfe2ff'); drop.setAttribute('fill', '#2f86d3');
+      anims.push(gsap.to(stain, {attr:{rx:.34 * W, ry:(a1 - a0) * 1.1}, duration:1.8, delay:.3, ease:'power2.out'}));
+      anims.push(gsap.to(ww, {attr:{stroke:FLUID}, duration:.6, delay:1.4}));
+      anims.push(gsap.to(drop, {attr:{fill:FLUID}, duration:.4, delay:1.9}));
+    }
+    if (!Kit.calm && G.mainPath) {
+      const mp = G.mainPath, len = mp.getTotalLength();
+      for (let i = 0; i < 3; i++) {
+        const c = mk('circle', {r:Math.max(3.5, W * .011), fill:FLUID, stroke:'#fff', 'stroke-width':1.5});
+        const o = {t:0}, put = () => { const p = mp.getPointAtLength(o.t * len); c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('opacity', o.t > .95 ? (1 - o.t) * 20 : 1); };
+        put();
+        anims.push(gsap.to(o, {t:1, duration:2.2, delay:i * .73, repeat:-1, ease:'none', onUpdate:put}));
+      }
+    }
+  }
+}
+
+function finish(){
+  done = true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(() => draw(true));
+}
+
+Kit.$('pump').addEventListener('click', () => {
+  if (lvl >= 4) return;
+  lvl++;
+  Kit.haptic('light');
+  [...Kit.$('meter').children].forEach((m, i) => m.classList.toggle('on', i < lvl));
+  Kit.$('pump').textContent = lvl < 4 ? 'Pump harder' : 'Pumping…';
+  if (lvl === 1 && G && G.feed && !Kit.calm) anims.push(gsap.to(G.feed, {attr:{'stroke-dashoffset':-28}, duration:.6, repeat:-1, ease:'none'}));
+  const target = lvl / 4;
+  if (Kit.calm) { st.f = target; apply(st.f); if (lvl === 4) finish(); return; }
+  gsap.to(st, {f:target, duration:.7, ease:'power2.out', onUpdate:() => apply(st.f), onComplete:() => { if (lvl === 4 && !done && st.f >= 1) finish(); }});
+});
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pump, #meter i', {opacity:0, y:8, stagger:.06, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 4; i++) { Kit.$('pump').click(); await w(800); }
+  await w(900);
+};
+Kit.single();
+</script>
+</html>

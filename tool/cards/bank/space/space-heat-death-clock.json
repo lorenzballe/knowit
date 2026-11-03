@@ -1,0 +1,37 @@
+{
+  "id": "space-heat-death-clock",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.the_end_of_everything",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When will the universe reach heat death?",
+  "answer": "Heat death waits for the last black hole to evaporate, which takes over 10^100 years. By then the universe is in its most probable state, and time no longer has a direction. Tapping the card adds ten zeros to the years.",
+  "move": "Heat death waits for the last black hole: over 10 100 years.",
+  "keywords": [
+    "heat death",
+    "black holes",
+    "universe",
+    "hawking radiation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question card asking when the universe will reach heat death. Answer choices are 1 year from now, 100 years, and more than 10 to the 100 years, with a tap button that adds ten zeros to the years. Revealed text says heat death waits for the last black hole to evaporate, and time no longer has a direction.",
+    "ground": "#1b1720"
+  },
+  "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=DxL2HoqLbyA",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,241 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-carbon-filter-pores -->
+<title>Astute free card · Inside a carbon filter</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;border-radius:1.8cqh;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh;margin-top:1.2cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+#why .body b{font-weight:800}
+.say{overflow-wrap:break-word}
+.foot .src{display:block;padding-right:100px;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Aim and launch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">AIM AND LAUNCH</span></div>
+    <h2 class="q">What does a carbon filter look like under a microscope?</h2>
+    <div class="stagebox" id="stage"><canvas id="cv"></canvas></div>
+    <div id="why" class="gone">
+      <p class="body"><b>A huge maze of pores.</b> Seen under a microscope, activated carbon is super-porous: channels and holes branch all through every grain. Smelly molecules wander in, touch the walls and stay stuck, so the air that comes out no longer smells.</p>
+    </div>
+    <p class="say" id="say">Drag to aim the puff of smelly air, let go to fire it at the carbon.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Activated carbon cleans air by trapping smells in a maze of tiny pores.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const C = Kit.$('cv'), N = 32;
+const CARBON = '#17181c', RIM = '#5d6370', LIME = '#c8ff3a';
+let x, W = 0, H = 0, sx, SW, k, bg, open, Wm, Hm, net = null, f = 14, ink = '#111';
+let mols = [], puff = null, aim = null, doneOnce = false, lastTrapped = 0, lastThrough = 0, t0 = performance.now();
+
+function gen(aspect) {
+  const R = Kit.rnd, cols = 5, rows = Math.max(5, Math.round(cols * aspect));
+  const nd = [], segs = [], dots = [], face = [];
+  for (let i = 0; i < cols; i++) { nd.push([]); for (let j = 0; j < rows; j++)
+    nd[i].push([(i + .5) / cols + (R() - .5) * .5 / cols, (j + .5) / rows + (R() - .5) * .5 / rows]); }
+  const seg = (a, b, w) => segs.push({a, b, w});
+  for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) {
+    const p = nd[i][j];
+    dots.push([p[0], p[1], .045 + R() * .04]);
+    if (i < cols - 1 && R() < .78) seg(p, nd[i + 1][j], .04 + R() * .03);
+    if (j < rows - 1 && R() < .62) seg(p, nd[i][j + 1], .035 + R() * .03);
+    if (i < cols - 1 && j < rows - 1 && R() < .25) seg(p, nd[i + 1][j + 1], .03 + R() * .02);
+    for (let t = 0; t < 3; t++) {
+      const a = R() * 6.283, L = (.25 + .35 * R()) / cols;
+      const e = [p[0] + Math.cos(a) * L, p[1] + Math.sin(a) * L / aspect];
+      seg(p, e, .013 + R() * .01);
+      const a2 = a + (R() - .5) * 2, L2 = L * .55;
+      seg(e, [e[0] + Math.cos(a2) * L2, e[1] + Math.sin(a2) * L2 / aspect], .008);
+    }
+  }
+  for (let j = 0; j < rows; j++) {
+    if (R() < .88) seg([-.07, nd[0][j][1] + (R() - .5) * .3 / rows], nd[0][j], .06 + R() * .025);
+    if (R() < .2) seg(nd[cols - 1][j], [1.06, nd[cols - 1][j][1]], .03);
+  }
+  for (let i = 0; i < 25; i++) face.push((R() - .5) * .05);
+  return {segs, dots, face};
+}
+const X = u => sx + u * SW, Y = v => v * H;
+function slab(c) {
+  c.beginPath(); c.moveTo(W + 2, -2);
+  net.face.forEach((o, i) => c.lineTo(sx + o * SW, i / (net.face.length - 1) * H));
+  c.lineTo(W + 2, H + 2); c.closePath();
+}
+function pores(c, add) {
+  c.lineCap = 'round';
+  for (const s of net.segs) { c.lineWidth = Math.max(2, s.w * SW + add); c.beginPath(); c.moveTo(X(s.a[0]), Y(s.a[1])); c.lineTo(X(s.b[0]), Y(s.b[1])); c.stroke(); }
+  for (const d of net.dots) { c.beginPath(); c.arc(X(d[0]), Y(d[1]), Math.max(1.5, d[2] * SW + add / 2), 0, 7); c.fill(); }
+}
+const isOpen = (px, py) => open[(py | 0) * Wm + (px | 0)] === 1;
+
+Kit.onShow.card = () => {
+  const oW = W, oH = H;
+  const r = Kit.fitCanvas(C); x = r.x; W = r.W; H = r.H;
+  sx = W * .4; SW = W - sx; k = Math.max(.7, W / 360);
+  f = Math.max(12, Math.min(16, W * .042));
+  if (!net) net = gen(H / SW);
+  const css = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim();
+  x.fillStyle = '#010203'; if (css) x.fillStyle = css; ink = x.fillStyle === '#010203' ? '#111' : css;
+  // static picture
+  const dpr = C.width / W;
+  bg = document.createElement('canvas'); bg.width = C.width; bg.height = C.height;
+  const b = bg.getContext('2d'); b.scale(dpr, dpr);
+  b.save(); slab(b); b.clip();
+  b.fillStyle = CARBON; b.fillRect(0, 0, W, H);
+  const R = Kit.rnd; b.fillStyle = '#262830';
+  for (let i = 0; i < 260; i++) b.fillRect(sx + R() * SW, R() * H, 1.5, 1.5);
+  b.strokeStyle = b.fillStyle = RIM; pores(b, 3);
+  b.globalCompositeOperation = 'destination-out'; b.strokeStyle = b.fillStyle = '#000'; pores(b, 0);
+  b.restore();
+  // collision mask
+  Wm = Math.ceil(W); Hm = Math.ceil(H);
+  const m = document.createElement('canvas'); m.width = Wm; m.height = Hm;
+  const mc = m.getContext('2d');
+  mc.fillStyle = '#fff'; mc.fillRect(0, 0, Wm, Hm);
+  mc.fillStyle = '#000'; slab(mc); mc.fill();
+  mc.strokeStyle = mc.fillStyle = '#fff'; pores(mc, -1);
+  const d = mc.getImageData(0, 0, Wm, Hm).data; open = new Uint8Array(Wm * Hm);
+  for (let i = 0; i < open.length; i++) open[i] = d[i * 4] > 128 ? 1 : 0;
+  // keep molecules where they were
+  if (oW) for (const q of mols) { q.x *= W / oW; q.y *= H / oH; if (q.st === 0 && q.wait <= 0 && !isOpen(q.x, q.y)) q.st = 1; }
+  render();
+};
+
+const nozzle = () => ({x: W * .09, y: H * .56});
+function pt(e) { const r = C.getBoundingClientRect(); return {x: (e.clientX - r.left) * W / r.width, y: (e.clientY - r.top) * H / r.height}; }
+C.addEventListener('pointerdown', e => { if (puff && puff.on) return; aim = pt(e); try { C.setPointerCapture(e.pointerId); } catch (_) {} Kit.haptic('selection'); });
+C.addEventListener('pointermove', e => { if (aim) aim = pt(e); });
+C.addEventListener('pointerup', () => { if (aim) { launch(aim); aim = null; } });
+C.addEventListener('pointercancel', () => { aim = null; });
+
+function launch(p) {
+  const n = nozzle();
+  let ang = Math.atan2(p.y - n.y, Math.max(4, p.x - n.x)); ang = Math.max(-1.2, Math.min(1.2, ang));
+  const pw = Math.max(.5, Math.min(1, Math.hypot(p.x - n.x, p.y - n.y) / (W * .3)));
+  const base = (2.4 + 3.4 * pw) * k, list = [];
+  for (let i = 0; i < N; i++) {
+    const a = ang + (Math.random() - .5) * .35, s = base * (.75 + .5 * Math.random());
+    list.push({x: n.x, y: n.y + (Math.random() - .5) * 6 * k, vx: Math.cos(a) * s, vy: Math.sin(a) * s, st: 0, wait: i * 1.5, fl: 0});
+  }
+  mols.push(...list); if (mols.length > N * 6) mols.splice(0, mols.length - N * 6);
+  puff = {on: true, steps: 0, list};
+  Kit.haptic('light');
+}
+
+function step() {
+  for (const m of mols) {
+    if (m.st !== 0) continue;
+    if (m.wait > 0) { m.wait--; continue; }
+    const inslab = m.x > sx + W * .015;
+    if (inslab) { m.vx = m.vx * .9 + (Math.random() - .5) * 1.4 * k + .015 * k; m.vy = m.vy * .9 + (Math.random() - .5) * 1.4 * k; }
+    else { m.vx = m.vx * .996 + (Math.random() - .5) * .25 * k + .02 * k; m.vy = m.vy * .996 + (Math.random() - .5) * .25 * k; }
+    const nx = m.x + m.vx, ny = m.y + m.vy;
+    if (ny < 2 || ny > H - 2) { m.vy = -m.vy; continue; }
+    if (nx < 2) { m.vx = Math.abs(m.vx); continue; }
+    if (nx >= W - 1) { m.st = 2; continue; }
+    if (isOpen(nx, ny)) { m.x = nx; m.y = ny; continue; }
+    if (inslab) {
+      if (Math.random() < .1) { m.st = 1; m.fl = 1; }
+      else { m.vx = -m.vx * .5 + (Math.random() - .5) * k; m.vy = -m.vy * .5 + (Math.random() - .5) * k; }
+    } else {
+      if (Math.random() < .08) { m.st = 1; m.fl = 1; }
+      else { m.vx = -Math.abs(m.vx) * .4; m.vy += (Math.random() - .5) * 2 * k; }
+    }
+  }
+  if (puff && puff.on) {
+    puff.steps++;
+    lastTrapped = puff.list.filter(m => m.st === 1).length;
+    lastThrough = puff.list.filter(m => m.st === 2).length;
+    if (puff.list.every(m => m.st !== 0) || puff.steps > 1400) endPuff();
+  }
+}
+function endPuff() {
+  puff.on = false;
+  if (!doneOnce) { doneOnce = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
+}
+
+function fitText(s, maxW, size, weight) {
+  let z = size; x.font = `${weight} ${z}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  while (x.measureText(s).width > maxW && z > 12) { z -= .5; x.font = `${weight} ${z}px sans-serif`; }
+  return z;
+}
+function render() {
+  if (!x || !bg) return;
+  const t = (performance.now() - t0) / 1000;
+  x.clearRect(0, 0, W, H);
+  x.drawImage(bg, 0, 0, W, H);
+  const n = nozzle(), r = Math.max(2.5, W * .009);
+  // vent
+  x.fillStyle = ink; x.globalAlpha = .85;
+  x.beginPath(); x.roundRect ? x.roundRect(-6, n.y - H * .035, n.x + 6, H * .07, 6) : x.rect(0, n.y - H * .035, n.x, H * .07); x.fill();
+  x.globalAlpha = 1;
+  x.strokeStyle = LIME; x.lineWidth = 2; x.lineCap = 'round';
+  for (let i = 0; i < 3; i++) {
+    const bx = n.x * .25 + i * n.x * .3, by = n.y - H * .05;
+    x.globalAlpha = .55 + .35 * Math.sin(t * 3 + i);
+    x.beginPath(); x.moveTo(bx, by);
+    x.bezierCurveTo(bx - 5, by - 7, bx + 5, by - 11, bx, by - 18); x.stroke();
+  }
+  x.globalAlpha = 1;
+  // labels
+  const pad = 10;
+  x.fillStyle = ink; x.textBaseline = 'alphabetic'; x.textAlign = 'left';
+  const z1 = fitText(`${lastTrapped} / ${N} trapped`, sx - pad * 2, f * 1.1, 800);
+  x.fillText(`${lastTrapped} / ${N} trapped`, pad, f * 1.5);
+  fitText(`got through: ${lastThrough}`, sx - pad * 2, f * .9, 600);
+  x.globalAlpha = .75; x.fillText(`got through: ${lastThrough}`, pad, f * 1.5 + z1 * 1.45); x.globalAlpha = 1;
+  fitText('SMELLY AIR', sx - pad * 2, f * .85, 800);
+  x.fillText('SMELLY AIR', pad, n.y - H * .05 - 26);
+  // slab label on a plate
+  const lz = fitText('ACTIVATED CARBON', SW - pad * 3, f * .9, 800);
+  const lw = Math.min(SW - pad * 2, Math.max(x.measureText('ACTIVATED CARBON').width, lz * 9.5) + 16);
+  x.fillStyle = 'rgba(23,24,28,.88)'; x.fillRect(sx + pad - 6, 4, lw, lz * 3.2);
+  x.fillStyle = '#fff'; x.fillText('ACTIVATED CARBON', sx + pad + 2, 4 + lz * 1.3);
+  fitText('under the microscope', lw - 16, lz * .95, 500);
+  x.globalAlpha = .8; x.fillText('under the microscope', sx + pad + 2, 4 + lz * 2.7); x.globalAlpha = 1;
+  // aim
+  const drawArrow = (p, alpha, dash) => {
+    let ang = Math.atan2(p.y - n.y, Math.max(4, p.x - n.x)); ang = Math.max(-1.2, Math.min(1.2, ang));
+    const L = Math.max(30, Math.min(W * .3, Math.hypot(p.x - n.x, p.y - n.y)));
+    const ex = n.x + Math.cos(ang) * L, ey = n.y + Math.sin(ang) * L;
+    x.globalAlpha = alpha; x.strokeStyle = LIME; x.fillStyle = LIME; x.lineWidth = 4;
+    x.setLineDash(dash ? [7, 7] : []); x.beginPath(); x.moveTo(n.x, n.y); x.lineTo(ex, ey); x.stroke(); x.setLineDash([]);
+    x.beginPath(); x.moveTo(ex + Math.cos(ang) * 12, ey + Math.sin(ang) * 12);
+    x.lineTo(ex + Math.cos(ang + 2.4) * 12, ey + Math.sin(ang + 2.4) * 12);
+    x.lineTo(ex + Math.cos(ang - 2.4) * 12, ey + Math.sin(ang - 2.4) * 12); x.fill();
+    x.strokeStyle = CARBON; x.lineWidth = 1.5; x.stroke(); x.globalAlpha = 1;
+  };
+  if (aim) drawArrow(aim, 1, false);
+  else if (!puff) drawArrow({x: sx + SW * .2, y: n.y - H * .08}, Kit.calm ? .6 : .35 + .3 * Math.sin(t * 3), true);
+  // molecules
+  for (const m of mols) {
+    if (m.st === 2 || m.wait > 0) continue;
+    if (m.fl > 0) {
+      x.strokeStyle = LIME; x.lineWidth = 2; x.globalAlpha = m.fl;
+      x.beginPath(); x.arc(m.x, m.y, r + (1 - m.fl) * 10, 0, 7); x.stroke(); x.globalAlpha = 1;
+      m.fl = Math.max(0, m.fl - .04);
+    }
+    x.fillStyle = LIME; x.strokeStyle = CARBON; x.lineWidth = 1.2;
+    x.beginPath(); x.arc(m.x, m.y, r, 0, 7); x.fill(); x.stroke();
+  }
+}
+
+gsap.ticker.add(() => { if (mols.some(m => m.st === 0)) { step(); step(); } render(); });
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#stage', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = C.getBoundingClientRect(), n = nozzle();
+  const ev = (type, px, py) => C.dispatchEvent(new PointerEvent(type, {clientX: r.left + px * r.width / W, clientY: r.top + py * r.height / H, bubbles: true, pointerId: 1, pointerType: 'touch', isPrimary: true}));
+  ev('pointerdown', n.x + 20, n.y); ev('pointermove', sx + SW * .25, n.y - H * .05); ev('pointerup', sx + SW * .25, n.y - H * .05);
+  for (let i = 0; i < 1600 && puff && puff.on; i++) step();
+  render();
+  await new Promise(res => setTimeout(res, 600));
+};
+Kit.single();
+</script>
+</html>

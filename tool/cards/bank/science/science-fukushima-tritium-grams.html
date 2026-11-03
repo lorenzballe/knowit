@@ -1,0 +1,121 @@
+<!doctype html>
+<!-- slug: science-fukushima-tritium-grams -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#cv{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#0b1626}
+#cv canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#read{font:700 max(1.8cqh,12px)/1.25 var(--mono);color:var(--k);text-align:center}
+#sl{width:100%;accent-color:var(--k);height:max(3.4cqh,26px);margin:0;cursor:pointer}
+.ends{display:flex;justify-content:space-between;font:600 max(1.55cqh,12px)/1.2 var(--body);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.7cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Slide · zoom in">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FUKUSHIMA</span></div>
+    <h2 class="q">How much radioactive tritium is in Fukushima's 1.2 million m³ of water?</h2>
+    <div class="stagebox" id="stage">
+      <div id="cv"><canvas id="c"></canvas></div>
+      <div id="read">Whole tank: 1.2 million m³ · a cube 106 m wide</div>
+      <input id="sl" type="range" min="0" max="1000" value="0" aria-label="Zoom into the tank">
+      <div class="ends"><span>the whole tank</span><span>the tritium</span></div>
+    </div>
+    <p class="say" id="say">Drag the slider to zoom in on where all the tritium is.</p>
+    <div id="why" class="gone"><p class="big">≈23 g of tritium. That's all.</p><p class="body">It makes about 20 g of tritiated water: 1 gram in every 60,000 tonnes. Diluted 500 times before release, it falls to about 1,500 Bq per litre, six times under the WHO drinking-water limit.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A huge volume, a tiny mass: 1.2 million m³ hide just 23 g of tritium.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S0 = Math.cbrt(1.2e6);      // tank as a cube, metres (≈106 m)
+const D = Math.cbrt(20e-6);       // 20 cm³ of tritiated water, metres (≈2.7 cm)
+const st = {t: 0}; let G = null, done = false, clock = 0;
+const cvs = Kit.$('c');
+
+function fmtLen(m){
+  if (m >= 1) return (m >= 10 ? Math.round(m) : +m.toPrecision(2)) + ' m';
+  if (m >= 0.01) return +(m*100).toPrecision(2) + ' cm';
+  return +(m*1000).toPrecision(2) + ' mm';
+}
+function geom(){
+  const {W,H} = G, m = Math.min(W,H);
+  const p0 = m*0.78/S0, p1 = m*0.3/D, L = Math.log10(p1/p0);
+  return {W,H,m,ppm: p0*Math.pow(10, st.t*L), zoom: Math.pow(10, st.t*L)};
+}
+function draw(){
+  if (!G) return;
+  const x = G.x, {W,H,ppm,zoom} = geom(), cx = W/2, cy = H/2;
+  const fs = Math.max(12, H*0.045);
+  x.clearRect(0,0,W,H); x.fillStyle = '#0b1626'; x.fillRect(0,0,W,H);
+  // tank
+  const h = S0/2*ppm;
+  const l = Math.max(-4, cx-h), r = Math.min(W+4, cx+h), tp = Math.max(-4, cy-h), bt = Math.min(H+4, cy+h);
+  const gr = x.createLinearGradient(0,0,0,H); gr.addColorStop(0,'#1f6fae'); gr.addColorStop(1,'#123f6b');
+  x.fillStyle = gr; x.fillRect(l,tp,r-l,bt-tp);
+  // grid at a scale matching the view
+  const view = W/ppm, g = Math.pow(10, Math.floor(Math.log10(view/3)));
+  x.strokeStyle = 'rgba(200,230,255,.12)'; x.lineWidth = 1; x.beginPath();
+  const i0 = Math.ceil((l-cx)/ppm/g), i1 = Math.floor((r-cx)/ppm/g);
+  for (let i=i0;i<=i1 && i-i0<60;i++){ const X = cx+i*g*ppm; x.moveTo(X,tp); x.lineTo(X,bt); }
+  const j0 = Math.ceil((tp-cy)/ppm/g), j1 = Math.floor((bt-cy)/ppm/g);
+  for (let j=j0;j<=j1 && j-j0<60;j++){ const Y = cy+j*g*ppm; x.moveTo(l,Y); x.lineTo(r,Y); }
+  x.stroke();
+  if (h < W) { x.strokeStyle = '#d6ecff'; x.lineWidth = 3; x.strokeRect(cx-h,cy-h,2*h,2*h); }
+  // the tritiated water
+  const ds = Math.max(D*ppm, 1.5);
+  x.save(); x.shadowColor = '#8dff6a'; x.shadowBlur = Math.min(30, 8+ds*.2);
+  x.fillStyle = '#8dff6a'; x.fillRect(cx-ds/2, cy-ds/2, ds, ds); x.restore();
+  x.fillStyle = '#e9ffe0'; x.textAlign = 'center'; x.textBaseline = 'top';
+  if (ds < 40) {
+    const rr = 16 + 5*Math.sin(clock*4);
+    x.strokeStyle = 'rgba(141,255,106,.9)'; x.lineWidth = 2;
+    x.beginPath(); x.arc(cx,cy,rr,0,Math.PI*2); x.stroke();
+    x.font = `700 ${fs}px sans-serif`;
+    x.fillText('all the tritium is in here', cx, cy + 28);
+  } else {
+    x.font = `800 ${fs*1.15}px sans-serif`;
+    x.fillText('≈20 g of tritiated water', cx, cy + ds/2 + fs*.8);
+    x.font = `600 ${fs}px sans-serif`;
+    x.fillText('a cube 2.7 cm wide', cx, cy + ds/2 + fs*2.3);
+  }
+  // scale bar
+  const raw = W*0.25/ppm, n = Math.pow(10, Math.floor(Math.log10(raw)));
+  const len = [5,2,1].map(k=>k*n).find(v=>v<=raw) || n, bp = len*ppm;
+  const bx = fs, by = H - fs*1.6;
+  x.fillStyle = '#ffffff'; x.fillRect(bx, by, bp, 3); x.fillRect(bx, by-6, 2, 9); x.fillRect(bx+bp-2, by-6, 2, 9);
+  x.textAlign = 'left'; x.textBaseline = 'bottom'; x.font = `700 ${fs}px sans-serif`;
+  x.fillText(fmtLen(len), bx, by - 8);
+  // readout
+  Kit.$('read').textContent = st.t < 0.02
+    ? 'Whole tank: 1.2 million m³ · a cube 106 m wide'
+    : `View ${fmtLen(view)} wide · zoom ×${Math.round(zoom).toLocaleString('en')}`;
+}
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity:0, y:8, stagger:.1, duration:.4, ease:'power3.out'});
+}
+Kit.$('sl').addEventListener('input', e => {
+  const v = +e.target.value/1000;
+  gsap.to(st, {t: v, duration: Kit.calm ? 0 : .25, ease: 'power2.out', overwrite: true});
+  if (v > .2 && v < .22) Kit.haptic('light');
+  if (v >= .97) finish();
+});
+Kit.onShow.card = () => { G = Kit.fitCanvas(cvs); draw(); };
+gsap.ticker.add((time) => { clock = time; draw(); });
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cv', {opacity: 0, scale: .96, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const s = Kit.$('sl'); s.value = 1000; s.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "psychology-gaze-limit",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.reading_faces",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long can you hold a stranger’s gaze before it feels too long?",
+  "answer": "A stranger's gaze feels right for about 3 seconds. Past 5 seconds, nine in ten people find it too long. The figures come from Binetti et al., \"Pupil dilation as an index of preferred mutual gaze duration\", Royal Society Open Science, 2016.",
+  "move": "A stranger’s gaze feels right for about 3 s.",
+  "keywords": [
+    "eye contact",
+    "stranger",
+    "gaze",
+    "train",
+    "social comfort"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Eye contact card. A stranger on a train looks up at you after you tap Start. Tap again when their gaze feels too long. Shows that about 3 seconds feels right and that past 5 seconds nine in ten people find it too long."
+  },
+  "source": "Diventare Strong, “Come Avere Uno Sguardo Penetrante Incisivo e Intrigante” (YouTube, 2016)",
+  "reference": "https://www.youtube.com/watch?v=S83J-bYz060",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,162 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-dry-ice-frost -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#cv{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;border-radius:2cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRY ICE</span></div>
+    <h2 class="q">Why does CO₂ solidify on the water surface?</h2>
+    <div class="stagebox" id="stage"><canvas id="cv"></canvas></div>
+    <p class="say" id="say">Drag the thermometer down: pour in solid nitrogen and chill the surface.</p>
+    <div id="why" class="gone"><p class="big">The surface got colder than –78 °C.</p><p class="body">That is CO₂’s sublimation point. Below it, CO₂ gas from the air skips the liquid stage and deposits straight onto the surface as solid dry ice.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Make a surface cold enough and the air itself turns to frost on it.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv');
+const T_TOP = 20, T_BOT = -120, SUB = -78, GOAL = 60, NB = 26;
+let ctx = null, W = 0, H = 0, G = {};
+let T = T_TOP, target = T_TOP, below = false, count = 0, done = false, flash = 0;
+const bins = new Array(NB).fill(0);
+const parts = [];
+for (let i = 0; i < 46; i++) parts.push({u: Kit.rnd(), v: Kit.rnd(), vu: (Kit.rnd() - .5) * .006, vv: (Kit.rnd() - .5) * .014, a: Kit.rnd() * 6.28, s: (Kit.rnd() - .5) * .08});
+
+function geom() {
+  const fs = Math.max(12, Math.min(H * .045, W * .05));
+  const thX = W * .88, tubeT = H * .14, tubeB = H * .86;
+  G = {fs, thX, tubeT, tubeB, tw: Math.max(10, W * .045),
+    bx0: W * .05, bx1: W * .74, sy: H * .62, by: H * .93, ay: H * .1};
+}
+function yOfT(t) { return G.tubeT + (T_TOP - t) / (T_TOP - T_BOT) * (G.tubeB - G.tubeT); }
+function tOfY(y) { const f = Math.min(1, Math.max(0, (y - G.tubeT) / (G.tubeB - G.tubeT))); return T_TOP - f * (T_TOP - T_BOT); }
+
+function flake(x, y, r, a) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(a);
+  ctx.strokeStyle = '#ffffff'; ctx.lineWidth = Math.max(1.2, r * .28); ctx.lineCap = 'round';
+  ctx.beginPath();
+  for (let k = 0; k < 6; k++) { const q = k * Math.PI / 3; ctx.moveTo(0, 0); ctx.lineTo(Math.cos(q) * r, Math.sin(q) * r); }
+  ctx.stroke(); ctx.restore();
+}
+
+function draw() {
+  if (!ctx) return;
+  const css = getComputedStyle(Kit.$('card'));
+  const ink = css.getPropertyValue('--k').trim() || '#111', body = css.getPropertyValue('--body').trim() || 'sans-serif';
+  const {fs, thX, tubeT, tubeB, tw, bx0, bx1, sy, by, ay} = G;
+  const cold = Math.min(1, Math.max(0, (T_TOP - T) / (T_TOP - SUB)));
+  ctx.clearRect(0, 0, W, H);
+  // panel
+  ctx.fillStyle = '#0d1b2a'; ctx.beginPath(); ctx.roundRect(0, 0, W, H, Math.min(W, H) * .04); ctx.fill();
+  // air label
+  ctx.fillStyle = '#9fc3e0'; ctx.font = `600 ${fs}px ${body}`; ctx.textBaseline = 'middle';
+  ctx.fillText('CO₂ in the air', bx0, ay);
+  // water bath
+  const g = ctx.createLinearGradient(0, sy, 0, by);
+  const top = `rgb(${43 + 180 * cold},${123 + 110 * cold},${217 + 30 * cold})`;
+  g.addColorStop(0, top); g.addColorStop(1, `rgb(${20 + 60 * cold},${60 + 70 * cold},${120 + 60 * cold})`);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.roundRect(bx0, sy, bx1 - bx0, by - sy, fs * .4); ctx.fill();
+  ctx.strokeStyle = below ? '#ffffff' : '#7fb6e6'; ctx.lineWidth = Math.max(2, fs * .15);
+  ctx.beginPath(); ctx.moveTo(bx0, sy); ctx.lineTo(bx1, sy); ctx.stroke();
+  ctx.fillStyle = cold > .6 ? '#0d1b2a' : '#e8f3ff';
+  ctx.font = `600 ${fs * .95}px ${body}`;
+  ctx.fillText(count > 0 ? `dry ice: ${count} crystals` : 'water bath', bx0 + fs * .6, sy + fs * 1.4);
+  // crystals
+  const bw = (bx1 - bx0) / NB, r = Math.min(bw * .5, fs * .45);
+  for (let i = 0; i < NB; i++) for (let k = 0; k < bins[i]; k++)
+    flake(bx0 + bw * (i + .5) + ((k % 2) ? r * .4 : -r * .3), sy - r * (1 + k * 1.5), r, i + k);
+  // molecules
+  for (const p of parts) {
+    const x = bx0 + p.u * (bx1 - bx0), y = ay + fs + p.v * (sy - ay - fs - 2), d = Math.max(2.4, fs * .2);
+    ctx.save(); ctx.translate(x, y); ctx.rotate(p.a);
+    ctx.fillStyle = '#ff6b5a'; ctx.beginPath(); ctx.arc(-d * 1.6, 0, d, 0, 7); ctx.arc(d * 1.6, 0, d, 0, 7); ctx.fill();
+    ctx.fillStyle = '#d6dde6'; ctx.beginPath(); ctx.arc(0, 0, d * .9, 0, 7); ctx.fill();
+    ctx.restore();
+  }
+  // thermometer
+  const ly = yOfT(SUB), ty = yOfT(T);
+  ctx.fillStyle = '#1e3248'; ctx.beginPath(); ctx.roundRect(thX - tw / 2, tubeT, tw, tubeB - tubeT, tw / 2); ctx.fill();
+  ctx.fillStyle = below ? '#7fd4ff' : '#ff6b5a';
+  ctx.beginPath(); ctx.roundRect(thX - tw * .3, ty, tw * .6, tubeB - ty, tw * .3); ctx.fill();
+  ctx.strokeStyle = flash > 0 ? '#ffffff' : '#ffd166'; ctx.lineWidth = Math.max(2, fs * .14); ctx.setLineDash([fs * .35, fs * .25]);
+  ctx.beginPath(); ctx.moveTo(thX - tw * 1.2, ly); ctx.lineTo(thX + tw * .8, ly); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = '#ffd166'; ctx.font = `700 ${fs}px ${body}`; ctx.textAlign = 'right';
+  ctx.fillText('–78 °C', thX - tw * 1.4, ly);
+  // handle
+  ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(thX, ty, tw * .85, 0, 7); ctx.fill();
+  ctx.strokeStyle = '#0d1b2a'; ctx.lineWidth = 2; ctx.beginPath();
+  ctx.moveTo(thX - tw * .35, ty - tw * .1); ctx.lineTo(thX, ty + tw * .3); ctx.lineTo(thX + tw * .35, ty - tw * .1); ctx.stroke();
+  // readout
+  ctx.textAlign = 'center'; ctx.fillStyle = below ? '#7fd4ff' : '#ffffff'; ctx.font = `700 ${fs}px ${body}`;
+  ctx.fillText(`${Math.round(T)} °C`, thX - tw * .4, tubeT - fs * .9);
+  ctx.textAlign = 'left';
+}
+
+function step() {
+  if (!ctx) return;
+  T += (target - T) * .08;
+  const was = below; below = T <= SUB;
+  if (below && !was) { Kit.haptic('light'); flash = 30; }
+  if (flash > 0) flash--;
+  const speed = 1 + Math.max(0, (T - SUB)) / 200;
+  for (const p of parts) {
+    p.u += p.vu * speed; p.v += p.vv * speed; p.a += p.s;
+    p.vu += (Kit.rnd() - .5) * .0008; p.vv += (Kit.rnd() - .5) * .0016 + .00012;
+    p.vu = Math.max(-.008, Math.min(.008, p.vu)); p.vv = Math.max(-.02, Math.min(.02, p.vv));
+    if (p.u < 0) { p.u = 0; p.vu = Math.abs(p.vu); } if (p.u > 1) { p.u = 1; p.vu = -Math.abs(p.vu); }
+    if (p.v < 0) { p.v = 0; p.vv = Math.abs(p.vv); }
+    if (p.v >= 1) {
+      if (below && !done) {
+        const i = Math.min(NB - 1, Math.floor(p.u * NB));
+        if (bins[i] < 5) { bins[i]++; count++; }
+        p.v = 0; p.u = Kit.rnd(); p.vv = Math.abs(p.vv);
+        if (count >= GOAL) finish();
+      } else { p.v = 1; p.vv = -Math.abs(p.vv); }
+    }
+  }
+  draw();
+}
+gsap.ticker.add(step);
+
+function finish() {
+  if (done) return; done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+let dragging = false;
+function setFrom(e) { const r = cv.getBoundingClientRect(); target = tOfY(e.clientY - r.top); }
+cv.addEventListener('pointerdown', e => { dragging = true; try { cv.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); Kit.haptic('selection'); });
+cv.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+cv.addEventListener('pointerup', () => dragging = false);
+cv.addEventListener('pointercancel', () => dragging = false);
+
+Kit.onShow.card = () => { const r = Kit.fitCanvas(cv); ctx = r.x; W = r.W; H = r.H; geom(); draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G.thX) return;
+  // a little nudge on the handle to show it can be dragged
+  const o = {t: T_TOP}; gsap.to(o, {t: T_TOP - 18, duration: .5, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => { if (!dragging && target >= T_TOP - 18) { target = o.t; } }});
+};
+Kit.play.card = async () => {
+  const r = cv.getBoundingClientRect();
+  const opt = {bubbles: true, pointerId: 1, clientX: r.left + G.thX, clientY: r.top + G.tubeT};
+  cv.dispatchEvent(new PointerEvent('pointerdown', opt));
+  cv.dispatchEvent(new PointerEvent('pointermove', {...opt, clientY: r.top + G.tubeB}));
+  cv.dispatchEvent(new PointerEvent('pointerup', opt));
+  for (let i = 0; i < 80 && !done; i++) await new Promise(res => setTimeout(res, 100));
+  if (!done) finish();
+  await new Promise(res => setTimeout(res, 700));
+};
+Kit.single();
+</script>
+</html>

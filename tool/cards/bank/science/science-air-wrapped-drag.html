@@ -1,0 +1,125 @@
+<!doctype html>
+<!-- slug: science-air-wrapped-drag -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · Air-wrapped drag</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#pic text{font-family:var(--body);font-weight:700}
+#scrub{width:100%;height:max(4.5cqh,30px);accent-color:var(--k);cursor:pointer;margin:0}
+.ticks{display:flex;justify-content:space-between;font:700 max(1.5cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG</span></div>
+    <h2 class="q">What drag coefficient does a projectile wrapped in air get underwater?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Two spheres falling through water, then a drag bar chart"></svg>
+      <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Time">
+      <div class="ticks"><span>drop</span><span>air shell</span><span>race</span><span>measure</span></div>
+    </div>
+    <div id="why" class="gone"><p class="body">The water-repelling sphere carries a shell of air, so it moves as a smooth torpedo of gas, not a solid. Researchers measured it in 2017 (Science Advances): a drag coefficient of only 0.02 to 0.03, ten times lower than the same shape made solid.</p></div>
+    <p class="say" id="say">Drag the slider to drop both spheres into the water.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Wrap a body in air and its drag in water falls by a whole order of magnitude.</div>
+    <div class="foot"><span class="src">Source · The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic'), scrub = Kit.$('scrub');
+let dims = null, t = 0, done = false;
+const bubbles = Array.from({length: 16}, (_, i) => ({a: Kit.rnd() * 6.28, d: .6 + i * .35, r: .12 + Kit.rnd() * .2, s: .5 + Kit.rnd()}));
+const cl = v => Math.max(0, Math.min(1, v));
+
+function render() {
+  if (!dims) return;
+  const {W, H, f} = dims;
+  svg.innerHTML = '';
+  const fs = Math.max(12, f), fsS = Math.max(12, f * .85);
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k') || '#111';
+  const top = fs * 2.6, bot = H - fs * 2.2;
+  const tankW = W * .58, tx = 0, th = bot - top;
+  const defs = Kit.mk('defs', {}, svg);
+  const g = Kit.mk('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#2f7fc4'}, g);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#0b2f5e'}, g);
+  const cp = Kit.mk('clipPath', {id: 'tc'}, defs);
+  Kit.mk('rect', {x: tx, y: top, width: tankW, height: th, rx: fs * .6}, cp);
+
+  // caption
+  const cap = t < .18 ? 'Both spheres hit the water' : t < .4 ? 'One wraps itself in an air torpedo' : t < .62 ? 'It falls about 33% faster' : 'Drag coefficient: 10× lower';
+  Kit.mk('text', {x: 0, y: fs * 1.2, 'font-size': fs * 1.1, fill: ink}, svg).textContent = cap;
+
+  // tank
+  Kit.mk('rect', {x: tx, y: top, width: tankW, height: th, rx: fs * .6, fill: 'url(#wg)'}, svg);
+  const layer = Kit.mk('g', {'clip-path': 'url(#tc)'}, svg);
+  const R = Math.min(tankW * .09, th * .06);
+  const p = cl(t / .6), y0 = top + R * 1.2, D = th - R * 2.6;
+  const xA = tankW * .27, xB = tankW * .73;
+  const yA = y0 + p * D * .75, yB = y0 + p * D;
+
+  // plain sphere wake
+  bubbles.forEach((b, i) => {
+    const dy = b.d * R * Math.min(1, p * 4);
+    if (yA - dy < top) return;
+    Kit.mk('circle', {cx: xA + Math.sin(b.a + t * 30 * b.s) * R * (.4 + b.d * .25), cy: yA - R * .6 - dy, r: R * b.r * (1 + b.d * .15), fill: 'none', stroke: 'rgba(255,255,255,.55)', 'stroke-width': Math.max(1, R * .08)}, layer);
+  });
+  Kit.mk('circle', {cx: xA, cy: yA, r: R, fill: '#c9cdd3', stroke: '#fff', 'stroke-width': 1.5}, layer);
+
+  // air torpedo
+  const form = cl(t / .25), L = R * (1.1 + 5.5 * form), rr = R * 1.12;
+  const d = `M${xB - rr},${yB} C${xB - rr},${yB - L * .5} ${xB - R * .2},${yB - L * .9} ${xB},${yB - L} C${xB + R * .2},${yB - L * .9} ${xB + rr},${yB - L * .5} ${xB + rr},${yB} A${rr} ${rr} 0 0 1 ${xB - rr} ${yB} Z`;
+  Kit.mk('path', {d, fill: 'rgba(235,245,255,.85)', stroke: '#fff', 'stroke-width': 1.5}, layer);
+  Kit.mk('circle', {cx: xB, cy: yB, r: R, fill: '#7f8894', stroke: '#fff', 'stroke-width': 1}, layer);
+
+  // lane labels
+  Kit.mk('text', {x: xA, y: bot + fs * 1.4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink}, svg).textContent = 'Plain';
+  Kit.mk('text', {x: xB, y: bot + fs * 1.4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink}, svg).textContent = 'Repels water';
+
+  // chart
+  const cx0 = tankW + W * .06, cw = W - cx0, gr = cl((t - .62) / .3);
+  const base = bot, maxH = th - fs * 3;
+  Kit.mk('line', {x1: cx0, x2: W, y1: base, y2: base, stroke: ink, 'stroke-width': 2}, svg);
+  Kit.mk('text', {x: cx0, y: top + fs * .3, 'font-size': fsS, fill: ink, opacity: .75}, svg).textContent = 'Drag coeff.';
+  const bw = cw * .34, b1 = cx0 + cw * .08, b2 = cx0 + cw * .58;
+  const h1 = maxH * gr, h2 = maxH / 10 * gr;
+  Kit.mk('rect', {x: b1, y: base - h1, width: bw, height: h1, fill: '#9aa1ab', rx: 3}, svg);
+  Kit.mk('rect', {x: b2, y: base - h2, width: bw, height: h2, fill: '#2f7fc4', rx: 3}, svg);
+  if (gr > 0) {
+    Kit.mk('text', {x: b1 + bw / 2, y: base - h1 - fs * .4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink, opacity: gr}, svg).textContent = '10×';
+    Kit.mk('text', {x: b2 + bw / 2, y: base - h2 - fs * .4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink, opacity: gr}, svg).textContent = '0.02–0.03';
+  }
+  Kit.mk('text', {x: b1 + bw / 2, y: bot + fs * 1.4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink}, svg).textContent = 'Solid';
+  Kit.mk('text', {x: b2 + bw / 2, y: bot + fs * 1.4, 'text-anchor': 'middle', 'font-size': fsS, fill: ink}, svg).textContent = 'Air';
+
+  if (t >= .97 && !done) {
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }
+}
+
+scrub.addEventListener('input', () => {
+  const nt = scrub.value / 1000;
+  if (Math.floor(nt * 4) !== Math.floor(t * 4)) Kit.haptic('selection');
+  t = nt; render();
+});
+Kit.onShow.card = () => { dims = Kit.fitSvg(svg); render(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+  const o = {v: 0};
+  gsap.to(o, {v: 60, duration: .5, delay: .5, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => { if (scrub.value <= 60 && !done) { scrub.value = o.v; t = o.v / 1000; render(); } }});
+};
+Kit.play.card = async () => {
+  for (let v = 0; v <= 1000; v += 100) { scrub.value = v; scrub.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 30)); }
+  await new Promise(r => setTimeout(r, 500));
+};
+Kit.single();
+</script>
+</html>

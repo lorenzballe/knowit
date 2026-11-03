@@ -1,0 +1,38 @@
+{
+  "id": "technology-micromouse-diagonals-16",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What was the first innovation that changed Micromouse?",
+  "answer": "The first innovation that changed Micromouse was running diagonally across zigzags. Mitee Mouse 3 was the first to cut straight through a zigzag instead of turning every corner, which gave it a shorter road with no stops. To fit, mice had to shrink below 11 cm wide, and maze designers now add diagonals on purpose.",
+  "move": "The fastest route ignores the grid it was drawn on.",
+  "keywords": [
+    "micromouse",
+    "mitee_mouse_3",
+    "maze",
+    "diagonal_corridors",
+    "robot_mice"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A multiple-choice question asks what was the first innovation that changed Micromouse, a robot-mouse maze competition. Six answer options are listed, such as corner by corner, turning each corner faster, and running diagonally across zigzags. The reader picks one, then watches two mice race.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=844s",
+  "written": "2026-11-03"
+}

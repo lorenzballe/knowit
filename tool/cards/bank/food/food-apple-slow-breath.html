@@ -1,0 +1,154 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: food-apple-slow-breath -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#pic{width:100%;height:100%;flex:1;min-height:0;display:block;touch-action:none}
+#time{margin-top:1.2cqh;touch-action:none;user-select:none;-webkit-user-select:none}
+#time .tl{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted);margin-bottom:.8cqh}
+#time .tl b{color:var(--k);font-weight:800}
+#track{position:relative;height:max(4.4cqh,30px);border-radius:999px;background:color-mix(in srgb,var(--k) 10%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent);cursor:pointer;touch-action:none}
+#fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#knob{position:absolute;top:50%;left:0;width:max(5cqh,34px);height:max(5cqh,34px);margin-left:calc(max(5cqh,34px) / -2);transform:translateY(-50%);border-radius:50%;background:var(--k);box-shadow:0 .4cqh 1.2cqh rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;color:var(--c);font:800 max(1.8cqh,13px)/1 var(--body)}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:600 max(1.85cqh,13px)/1.3 var(--body);margin:0}
+.say{overflow-wrap:anywhere}
+.foot{padding-right:112px}
+</style>
+<article class="card" id="card" data-topic="food" data-kind="Drag · time lapse">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLOW BREATH</span></div>
+    <h2 class="q">How does cool, dark storage slow an apple's ripening?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="time">
+        <div class="tl"><span>Harvest</span><b>Time in storage</b><span>Later</span></div>
+        <div id="track"><div id="fill"></div><div id="knob">⟷</div></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider to let time pass for both apples.</p>
+    <div id="why" class="gone"><p class="body">In a cool, dark place an apple breathes slowly. Slower breathing means a slower metabolism, so ripening is delayed and the apple keeps for a long time.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Cool and dark slows the apple's breath, so it ripens later.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+let t = 0, entered = false, finished = false, loops = [];
+const sides = [
+  {name:'Warm & bright', bg:'#f7dcae', ink:'#3a210c', soft:'#7a5534', bar:'#d9572b', puff:'#a8682f', speed:1.15, breath:.9, met:.85, bw:'fast', mw:'high', period:.45},
+  {name:'Cool & dark',   bg:'#172235', ink:'#eef3ff', soft:'#a9b8d6', bar:'#7fb2ff', puff:'#cfe0ff', speed:.3,  breath:.22, met:.22, bw:'slow', mw:'low', period:1.9}
+];
+const stops = [[0,'#9cc441'],[.3,'#e3b23c'],[.55,'#d8332f'],[.8,'#9e1f2a'],[1,'#6b4226']];
+function hex(h){return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16));}
+function col(p){
+  for(let i=1;i<stops.length;i++){ if(p<=stops[i][0]){ const [a,ca]=stops[i-1],[b,cb]=stops[i],u=(p-a)/(b-a),A=hex(ca),B=hex(cb);
+    return 'rgb('+A.map((v,j)=>Math.round(v+(B[j]-v)*u)).join(',')+')'; } }
+  return stops[stops.length-1][1];
+}
+function applePath(cx,cy,r){
+  const P=(x,y)=>(cx+x*r).toFixed(1)+','+(cy+y*r).toFixed(1);
+  return `M${P(0,-.7)} C${P(-.3,-1)} ${P(-1,-.9)} ${P(-1,-.1)} C${P(-1,.7)} ${P(-.5,1)} ${P(-.25,.95)} C${P(-.1,.92)} ${P(.1,.92)} ${P(.25,.95)} C${P(.5,1)} ${P(1,.7)} ${P(1,-.1)} C${P(1,-.9)} ${P(.3,-1)} ${P(0,-.7)} Z`;
+}
+function txt(p,x,y,s,fs,fill,w,anchor){const e=Kit.mk('text',{x,y,'font-size':fs,fill,'font-weight':w||700,'text-anchor':anchor||'start',style:'font-family:var(--body)'},p);e.textContent=s;return e;}
+function build(){
+  loops.forEach(l=>l.kill()); loops=[];
+  svg.innerHTML='';
+  const {W,H,f}=Kit.fitSvg(svg);
+  const fs=Math.max(12,Math.min(f,H*.05,W*.045));
+  const gap=W*.03, pw=(W-gap)/2, pad=Math.max(8,pw*.08);
+  sides.forEach((s,i)=>{
+    const x0=i*(pw+gap), g=Kit.mk('g',{},svg);
+    Kit.mk('rect',{x:x0,y:0,width:pw,height:H,rx:Math.min(18,pw*.08),fill:s.bg},g);
+    txt(g,x0+pw/2,fs*1.5,s.name,fs*1.05,s.ink,800,'middle');
+    const statusY=H*.55, my=statusY+fs*.9;
+    const top=fs*2.4, bot=statusY-fs*1.3;
+    const r=Math.max(8,Math.min(pw*.28,(bot-top)/2.3)), cx=x0+pw/2, cy=top+1.25*r;
+    s.cx=cx; s.cy=cy; s.r=r;
+    s.puffs=Kit.mk('g',{},g);
+    const ag=Kit.mk('g',{},g); s.ag=ag;
+    Kit.mk('path',{d:`M${cx},${cy-.68*r} Q${cx+.05*r},${cy-.95*r} ${cx+.12*r},${cy-1.15*r}`,stroke:'#5a3a1c','stroke-width':Math.max(2,r*.07),fill:'none','stroke-linecap':'round'},ag);
+    Kit.mk('ellipse',{cx:cx+.32*r,cy:cy-.98*r,rx:.24*r,ry:.1*r,fill:'#4f9a3a',transform:`rotate(-25 ${cx+.32*r} ${cy-.98*r})`},ag);
+    s.body=Kit.mk('path',{d:applePath(cx,cy,r),fill:col(0)},ag);
+    Kit.mk('ellipse',{cx:cx-.45*r,cy:cy-.25*r,rx:.15*r,ry:.3*r,fill:'#fff',opacity:.35,transform:`rotate(20 ${cx-.45*r} ${cy-.25*r})`},ag);
+    s.wr=Kit.mk('g',{opacity:0,stroke:'#3b2414','stroke-width':Math.max(1.5,r*.035),fill:'none','stroke-linecap':'round'},ag);
+    [[-.5,.1],[.35,-.2],[.1,.5],[-.2,-.35]].forEach(([a,b])=>Kit.mk('path',{d:`M${cx+a*r},${cy+b*r} q${.12*r},${-.08*r} ${.24*r},0 t${.24*r},0`},s.wr));
+    [[.5,.35,.09],[-.35,.55,.07],[.15,-.1,.06]].forEach(([a,b,c])=>Kit.mk('circle',{cx:cx+a*r,cy:cy+b*r,r:c*r,fill:'#3b2414',stroke:'none',opacity:.7},s.wr));
+    s.status=txt(g,cx,statusY,'Crisp',fs*1.05,s.ink,800,'middle');
+    const rowH=(H-my-fs*.4)/3, bh=Math.max(6,Math.min(fs*.55,rowH*.22)), bwid=pw-2*pad;
+    const rows=[['Breathing',s.bw,s.breath],['Metabolism',s.mw,s.met],['Ripening','',0]];
+    rows.forEach(([lab,word,v],j)=>{
+      const ry=my+j*rowH;
+      txt(g,x0+pad,ry+fs,lab,fs*.92,s.soft,700);
+      const wt=txt(g,x0+pw-pad,ry+fs,word,fs*.92,s.ink,800,'end');
+      Kit.mk('rect',{x:x0+pad,y:ry+fs*1.45,width:bwid,height:bh,rx:bh/2,fill:s.ink,opacity:.15},g);
+      const fl=Kit.mk('rect',{x:x0+pad,y:ry+fs*1.45,width:Math.max(bh,bwid*v),height:bh,rx:bh/2,fill:s.bar},g);
+      if(j===0) s.breathBar=fl;
+      if(j===2){ s.rip=fl; s.ripW=bwid; s.ripWord=wt; s.bh=bh; }
+    });
+  });
+  if(entered && !Kit.calm) startLoops();
+}
+function startLoops(){
+  loops.forEach(l=>l.kill()); loops=[];
+  sides.forEach(s=>{
+    const spawn=()=>{
+      const c=Kit.mk('circle',{cx:s.cx+(Kit.rnd()-.5)*s.r*.6,cy:s.cy-.75*s.r,r:s.r*.1,fill:'none',stroke:s.puff,'stroke-width':Math.max(1.5,s.r*.04)},s.puffs);
+      gsap.to(c,{attr:{cy:s.cy-1.7*s.r,r:s.r*.2},opacity:0,duration:s.period*3,ease:'sine.out',onComplete:()=>c.remove()});
+    };
+    loops.push(gsap.timeline({repeat:-1}).call(spawn).to({}, {duration:s.period}));
+    loops.push(gsap.fromTo(s.breathBar,{opacity:1},{opacity:.45,duration:s.period/2,yoyo:true,repeat:-1,ease:'sine.inOut'}));
+  });
+}
+function render(){
+  sides.forEach(s=>{
+    if(!s.body) return;
+    const p=Math.min(1,t*s.speed), over=Math.max(0,(p-.78)/.22);
+    s.body.setAttribute('fill',col(p));
+    s.wr.setAttribute('opacity',over);
+    const sc=1-.1*over;
+    s.ag.setAttribute('transform',`translate(${s.cx} ${s.cy}) scale(${sc}) translate(${-s.cx} ${-s.cy})`);
+    const w=p<.35?'Crisp':p<.75?'Ripe':'Overripe';
+    s.status.textContent=w; s.ripWord.textContent=w.toLowerCase();
+    s.rip.setAttribute('width',Math.max(s.bh,s.ripW*p));
+  });
+  Kit.$('fill').style.width=(t*100)+'%';
+  Kit.$('knob').style.left=(t*100)+'%';
+}
+function finish(){
+  if(finished) return; finished=true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if(!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.1,duration:.4,ease:'power3.out'});
+}
+const track=Kit.$('track'); let drag=false, lastStep=0;
+function setFrom(e){
+  const b=track.getBoundingClientRect();
+  t=Math.max(0,Math.min(1,(e.clientX-b.left)/b.width));
+  const step=Math.floor(t*8); if(step!==lastStep){lastStep=step;Kit.haptic('selection');}
+  render();
+}
+track.addEventListener('pointerdown',e=>{drag=true;try{track.setPointerCapture(e.pointerId);}catch(_){} gsap.killTweensOf('#knob'); setFrom(e);});
+window.addEventListener('pointermove',e=>{if(drag) setFrom(e);});
+window.addEventListener('pointerup',()=>{if(!drag) return; drag=false; if(t>.95) finish();});
+Kit.onShow.card = () => { build(); render(); };
+Kit.onEnter.card = () => {
+  entered=true;
+  if(Kit.calm) return;
+  startLoops();
+  gsap.fromTo('#knob',{x:0},{x:14,duration:.5,yoyo:true,repeat:3,ease:'sine.inOut',delay:.6});
+};
+Kit.play.card = async () => {
+  const b=track.getBoundingClientRect(), y=b.top+b.height/2;
+  const ev=(type,x)=>new PointerEvent(type,{clientX:x,clientY:y,bubbles:true,pointerId:1});
+  track.dispatchEvent(ev('pointerdown',b.left+2));
+  for(let i=1;i<=10;i++){ window.dispatchEvent(ev('pointermove',b.left+b.width*i/10)); await new Promise(r=>setTimeout(r,30)); }
+  window.dispatchEvent(ev('pointerup',b.right));
+  await new Promise(r=>setTimeout(r,700));
+};
+Kit.single();
+</script>
+</html>

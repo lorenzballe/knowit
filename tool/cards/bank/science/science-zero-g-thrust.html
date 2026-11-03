@@ -1,0 +1,180 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-zero-g-thrust -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#fig{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#ctl label{font:700 max(1.9cqh,13px)/1.2 var(--body);color:var(--k)}
+#thr{flex:1;min-width:0;accent-color:var(--k);height:max(3cqh,24px)}
+#go{font:700 max(2.1cqh,14px)/1 var(--body);background:var(--k);color:var(--c);border:0;border-radius:1.6cqh;padding:1.4cqh 4cqw;cursor:pointer;white-space:nowrap}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+#fig text{font-family:var(--body);fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · balance">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ZERO-G</span></div>
+    <h2 class="q">How does a plane fall exactly like a pen in a vacuum?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="fig"></svg>
+      <div id="ctl">
+        <label for="thr">Thrust</label>
+        <input type="range" id="thr" min="0" max="10" step="1" value="1" aria-label="Engine thrust">
+        <button id="go">Fly zero-G</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Thrust cancels drag. Only gravity is left.</p>
+        <p class="body">Air drag would slow the plane, so the pen would drift ahead of it. Pilots add just enough thrust to cancel drag, so plane and pen both fall at 9.8 m/s², and nothing presses on you.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Slide the thrust, then fly. Keep the pen floating.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Zero-G means gravity is the only force left acting on the plane.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const DRAG = 5;
+let T = 1, done = false, tw = null, S = null, penX = 0;
+const thr = Kit.$('thr'), go = Kit.$('go');
+
+function arrow(p, x1, y1, x2, y2, w){
+  const g = Kit.mk('g', {}, p);
+  const dx = x2-x1, dy = y2-y1, L = Math.hypot(dx,dy);
+  if (L < 2) return g;
+  const ux = dx/L, uy = dy/L, h = Math.min(w*3.2, L*0.6);
+  const bx = x2-ux*h, by = y2-uy*h;
+  Kit.mk('line', {x1, y1, x2:bx, y2:by, stroke:'var(--k)', 'stroke-width':w, 'stroke-linecap':'round'}, g);
+  Kit.mk('polygon', {points:`${x2},${y2} ${bx-uy*h*0.55},${by+ux*h*0.55} ${bx+uy*h*0.55},${by-ux*h*0.55}`, fill:'var(--k)'}, g);
+  return g;
+}
+
+function setRead(a, b){ S.r1.textContent = a; S.r2.textContent = b; }
+
+function drawArrows(){
+  const {arr, cx, cy, cw, ch, side, fs, gl} = S;
+  arr.innerHTML = '';
+  const w = Math.max(3, fs*0.28);
+  const max = side - 8;
+  const dl = max*DRAG/10, tl = max*T/10;
+  const xl = cx - cw/2, xr = cx + cw/2;
+  arrow(arr, xl-4, cy, xl-4-dl, cy, w);
+  Kit.mk('text', {x:xl-4-dl/2, y:cy-fs*0.9, 'text-anchor':'middle', 'font-size':fs, 'font-weight':700}, arr).textContent = 'drag';
+  if (T > 0) arrow(arr, xr+4, cy, xr+4+tl, cy, w);
+  Kit.mk('text', {x:xr+4+Math.max(tl,fs*2)/2, y:cy-fs*0.9, 'text-anchor':'middle', 'font-size':fs, 'font-weight':700}, arr).textContent = 'thrust';
+  const yb = cy + ch/2 + 4;
+  arrow(arr, cx, yb, cx, yb+gl, w*1.2);
+  Kit.mk('text', {x:cx+fs*0.8, y:yb+gl*0.6, 'font-size':fs, 'font-weight':700}, arr).textContent = 'gravity · 9.8 m/s²';
+}
+
+function placePen(x, rot, dy){
+  penX = x;
+  S.pen.setAttribute('transform', `translate(${S.cx+x},${S.cy+(dy||0)}) rotate(${rot||0})`);
+}
+
+Kit.onShow.card = () => {
+  if (tw) { tw.kill(); tw = null; }
+  const svg = Kit.$('fig'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(13, f);
+  const top = fs*3.4;
+  const gl = Math.max(fs*2.2, Math.min(H*0.2, fs*4));
+  let cw = Math.min(W*0.56, 520), ch = cw*0.42;
+  const avail = H - top - gl - fs*1.2;
+  if (ch > avail) { ch = Math.max(fs*3, avail); cw = ch/0.42; }
+  const cx = W/2, cy = top + (H - top - gl - fs*0.6)/2;
+  const side = (W - cw)/2;
+  S = {W, H, fs, cx, cy, cw, ch, side, gl};
+
+  const sg = Kit.mk('g', {opacity:.22}, svg);
+  S.streaks = [];
+  for (let i = 0; i < 16; i++){
+    const x = Kit.rnd()*W, y0 = Kit.rnd()*H, l = fs*(1+Kit.rnd()*2);
+    const ln = Kit.mk('line', {x1:x, x2:x, y1:y0, y2:y0+l, stroke:'var(--k)', 'stroke-width':2, 'stroke-linecap':'round'}, sg);
+    S.streaks.push({ln, y0, l, v:0.8+Kit.rnd()*0.8});
+  }
+
+  S.r1 = Kit.mk('text', {x:cx, y:fs*1.2, 'text-anchor':'middle', 'font-size':fs*1.15, 'font-weight':800}, svg);
+  S.r2 = Kit.mk('text', {x:cx, y:fs*1.2 + fs*1.6, 'text-anchor':'middle', 'font-size':fs, 'font-weight':500}, svg);
+
+  const x0 = cx-cw/2, x1 = cx+cw/2, y0 = cy-ch/2, y1 = cy+ch/2, r = ch/2;
+  Kit.mk('path', {d:`M${x0+ch*0.05},${y0} L${x0+ch*0.05},${y0-ch*0.35} L${x0+ch*0.45},${y0} Z`, fill:'var(--k)'}, svg);
+  Kit.mk('path', {d:`M${x0+ch*0.15},${y0} L${x1-r},${y0} A${r},${r} 0 0 1 ${x1-r},${y1} L${x0+ch*0.15},${y1} Q${x0},${y1} ${x0},${y1-ch*0.15} L${x0},${y0+ch*0.15} Q${x0},${y0} ${x0+ch*0.15},${y0} Z`,
+    fill:'color-mix(in srgb,var(--k) 9%,transparent)', stroke:'var(--k)', 'stroke-width':Math.max(3,fs*0.25)}, svg);
+
+  const pl = Math.min(cw*0.22, ch*0.9), pw = Math.max(5, pl*0.11);
+  S.pen = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x:-pl/2, y:-pw/2, width:pl*0.82, height:pw, rx:pw*0.3, fill:'var(--k)'}, S.pen);
+  Kit.mk('polygon', {points:`${pl*0.32},${-pw/2} ${pl/2},0 ${pl*0.32},${pw/2}`, fill:'var(--k)'}, S.pen);
+  S.half = cw/2 - r*0.55 - pl/2;
+  S.halfL = cw/2 - ch*0.12 - pl/2;
+
+  S.arr = Kit.mk('g', {}, svg);
+  drawArrows();
+  if (done){ placePen(0, -25); setRead('Only gravity is left', 'plane and pen both fall at 9.8 m/s²'); }
+  else { placePen(0, -8); setRead('Will the pen float?', `drag ${DRAG} · thrust ${T}`); }
+};
+
+thr.addEventListener('input', () => {
+  if (done) return;
+  T = +thr.value; if (tw){ tw.kill(); tw = null; }
+  drawArrows(); placePen(0, -8);
+  setRead('Will the pen float?', `drag ${DRAG} · thrust ${T}`);
+  Kit.haptic('selection');
+});
+
+function fly(){
+  if (done || !S) return;
+  if (tw) tw.kill();
+  const d = DRAG - T;
+  const lim = d > 0 ? S.half : S.halfL;
+  const c = S.halfL/0.49;
+  const o = {p:0};
+  go.disabled = true;
+  setRead('Falling…', `drag ${DRAG} · thrust ${T}`);
+  Kit.haptic('light');
+  tw = gsap.to(o, {p:1, duration: Kit.calm ? 0.05 : 2.6, ease:'none',
+    onUpdate(){
+      const p = o.p;
+      let x = c*d*p*p; x = Math.max(-lim, Math.min(lim, x));
+      const hit = Math.abs(x) >= lim - 0.5;
+      placePen(x, d === 0 ? -8 - p*30 : (hit ? 0 : -8), d === 0 ? Math.sin(p*7)*S.fs*0.25 : 0);
+      for (const s of S.streaks){
+        let y = s.y0 - p*S.H*1.6*s.v; y = ((y % (S.H+s.l)) + S.H + s.l) % (S.H+s.l) - s.l;
+        s.ln.setAttribute('y1', y); s.ln.setAttribute('y2', y+s.l);
+      }
+    },
+    onComplete(){
+      tw = null; go.disabled = false;
+      if (d === 0){
+        done = true;
+        setRead('Only gravity is left', 'plane and pen both fall at 9.8 m/s²');
+        Kit.haptic('success');
+        Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+        if (!Kit.calm) gsap.from('#why,#keep', {opacity:0, y:8, stagger:.1, duration:.45, ease:'power3.out'});
+      } else if (d > 0){
+        setRead('Drag wins: the plane slows', 'the pen slams into the nose');
+        go.textContent = 'Fly again';
+      } else {
+        setRead('Thrust wins: the plane speeds up', 'the pen slams into the tail');
+        go.textContent = 'Fly again';
+      }
+    }});
+}
+go.addEventListener('click', fly);
+
+Kit.onEnter.card = () => { if (!Kit.calm && S) gsap.from(S.arr, {opacity:0, duration:.5, ease:'power2.out'}); };
+Kit.play.card = async () => {
+  thr.value = 5; thr.dispatchEvent(new Event('input'));
+  await new Promise(r => setTimeout(r, 100));
+  go.click();
+  await new Promise(r => setTimeout(r, 3400));
+};
+Kit.single();
+</script>
+</html>

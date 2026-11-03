@@ -1,0 +1,37 @@
+{
+  "id": "medicine-codeine-to-morphine",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What share of codeine does your liver turn into morphine?",
+  "answer": "Only about 10% of codeine becomes morphine, and the liver is where that conversion happens. The page asks what share of codeine the liver turns into morphine, and it points to swallowing cough syrup as the way codeine gets into the body.",
+  "move": "Only about 10% of codeine becomes morphine, in the liver.",
+  "keywords": [
+    "codeine",
+    "morphine",
+    "liver",
+    "cough syrup",
+    "opioids"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question asks what share of codeine the liver turns into morphine, beside a prompt to tap the gut by swallowing cough syrup. The reveal says only about 10% of codeine becomes morphine, in the liver."
+  },
+  "source": "Geopop, “Lean, la droga viola che si fa dallo sciroppo per la tosse con la codeina: cosa fa la Purple Drank” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=XUgqO5XKzB0&t=312s",
+  "written": "2026-11-03"
+}

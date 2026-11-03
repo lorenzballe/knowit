@@ -1,0 +1,38 @@
+{
+  "id": "history-senna-throttle-lift",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.hindsight_in_history",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What did Senna do at the Tamburello corner?",
+  "answer": "Tamburello was taken flat out, and nobody lifted there, least of all Senna. Yet the telemetry shows his throttle suddenly at half and the car slowing. After 1994 the track was changed, with two corners added to cut the speed there.",
+  "move": "Senna lifted off where everyone stayed flat out: that is the anomaly.",
+  "keywords": [
+    "senna",
+    "imola",
+    "tamburello",
+    "throttle",
+    "telemetry"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A throttle telemetry graph from Senna's 1994 Imola Tamburello corner, with a draggable control. The reader drags the throttle up or down to guess how much throttle Senna used through the corner.",
+    "graded": false
+  },
+  "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=gh5UkpxPTFA&t=448s",
+  "written": "2026-11-03"
+}

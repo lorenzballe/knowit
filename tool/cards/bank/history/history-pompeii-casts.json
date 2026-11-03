@@ -1,0 +1,38 @@
+{
+  "id": "history-pompeii-casts",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What are the famous “stone” bodies of Pompeii, really?",
+  "answer": "Pompeii's famous bodies are casts, not petrified people. Ash and lapilli buried the victims in an instant, and the material cooled into rock called tuff. The rock kept each shape as a hollow, a negative mould, and filling that hollow produces the positive cast.",
+  "move": "Pompeii’s “stone bodies” are fillings of the shapes left in the rock.",
+  "keywords": [
+    "pompeii",
+    "vesuvius",
+    "casts",
+    "tuff",
+    "lapilli"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A quiz card asking what the famous stone bodies of Pompeii really are, with four options: people turned to stone, fillings of hollows left in the rock, bodies baked hard by heat, or casts. The reader picks one, then rates how sure they are.",
+    "graded": false
+  },
+  "source": "Geopop, “\"Lo sapevate che i corpi di Pompei in realtà non sono “pietrificati”?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=mpjXhnluCv4",
+  "written": "2026-11-03"
+}

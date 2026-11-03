@@ -1,0 +1,207 @@
+<!doctype html>
+<!-- slug: human_body-radiation-breaks-dna -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#dna{width:100%;height:100%;display:block;overflow:visible}
+#stats{display:flex;gap:2cqw;justify-content:space-between}
+.st{flex:1;text-align:center;font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:1.4cqh;padding:.9cqh 1cqw}
+.st b{display:block;font:800 max(2.6cqh,16px)/1.1 var(--display)}
+#hold{position:relative;overflow:hidden;font:800 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.8cqh 6cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;width:78%;align-self:flex-start}
+#hold .fill{position:absolute;inset:0;width:0;background:color-mix(in srgb,var(--c) 30%,transparent);pointer-events:none}
+#hold .t{position:relative}
+#hold.on{transform:scale(.97)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RADIATION</span></div>
+    <h2 class="q">What does radiation actually do to the cells in your body?</h2>
+    <div class="stagebox" id="stage"><svg id="dna"></svg></div>
+    <div id="stats">
+      <div class="st"><b id="sHits">0/8</b>hits</div>
+      <div class="st"><b id="sBreaks">0</b>strand breaks</div>
+      <div class="st"><b id="sMut">0</b>letters changed</div>
+    </div>
+    <button id="hold"><span class="fill" id="fill"></span><span class="t" id="holdT">Hold to irradiate</span></button>
+    <p class="say" id="say">Press and hold: send radiation into a strand of DNA.</p>
+    <div id="why" class="gone"><p class="body">Radiation strikes DNA, snapping its strands or changing its letters. A changed letter is a mutation: the cell now follows altered instructions. Enough damage ruins tissue and can lead to cancer.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Radiation harms the body by damaging DNA, and its mutations can lead to cancer.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Damaging is Radiation?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 12, TOTAL = 8, HOT = '#ff2d55', RAY = '#ffd400';
+const PAIR = {A:'T', T:'A', G:'C', C:'G'};
+const seq = 'ATGCGTACCTGA'.split('');
+const svg = Kit.$('dna');
+let W, H, f, m, bs, stripY, cy, A, xs = [], pts = [];
+let g, fx;
+// state
+const hits = [], broken = new Set(), mutated = {};
+let breaks = 0, muts = 0, done = false, timer = null, inFlight = 0, fired = 0;
+
+// the plan of hits, seeded so every reader sees a fair mix
+const types = ['single','mutate','double','mutate','single','mutate','double','single'];
+const plan = []; {
+  const segs = [1,2,3,4,5,6,7,8,9,10,11], rungs = [0,1,2,3,4,5,6,7,8,9,10,11];
+  const take = a => a.splice(Math.floor(Kit.rnd() * a.length), 1)[0];
+  for (const t of types) {
+    if (t === 'mutate') {
+      const i = take(rungs); const opts = 'ATGC'.split('').filter(b => b !== seq[i]);
+      plan.push({type: t, i, nb: opts[Math.floor(Kit.rnd() * 3)]});
+    } else {
+      const k = take(segs); plan.push({type: t, k, s: Kit.rnd() < .5 ? 0 : 1});
+    }
+  }
+}
+
+const yOf = (s, x) => cy + (s ? -1 : 1) * A * Math.sin(2 * Math.PI * 1.25 * (x - m) / (W - 2 * m) + 0.6);
+function path(s, xa, xb) {
+  let d = ''; const n = 14;
+  for (let j = 0; j <= n; j++) { const x = xa + (xb - xa) * j / n; d += (j ? 'L' : 'M') + x.toFixed(1) + ' ' + yOf(s, x).toFixed(1); }
+  return d;
+}
+function layout() {
+  const r = Kit.fitSvg(svg); W = r.W; H = r.H; f = Math.max(r.f, 12);
+  m = W * 0.05;
+  bs = Math.min((W - 2 * m) / N * 0.84, H * 0.12, 46);
+  stripY = H - bs - 2;
+  const top = H * 0.05, bot = stripY - f * 2.2;
+  cy = (top + bot) / 2; A = (bot - top) * 0.42;
+  xs = []; for (let i = 0; i < N; i++) xs.push(m + (i + .5) * (W - 2 * m) / N);
+  pts = [m, ...xs, W - m];
+}
+function draw() {
+  if (g) g.remove();
+  g = Kit.mk('g', {}, svg);
+  if (fx) svg.appendChild(fx);
+  const sw = Math.max(3, H * 0.014);
+  // rungs (base pairs)
+  for (let i = 0; i < N; i++) {
+    const x = xs[i], mt = mutated[i];
+    Kit.mk('line', {x1: x, y1: yOf(0, x), x2: x, y2: yOf(1, x), style: mt
+      ? `stroke:${HOT};stroke-width:${sw * 1.3};stroke-linecap:round`
+      : `stroke:var(--k);stroke-opacity:.35;stroke-width:${sw * .8};stroke-linecap:round`}, g);
+  }
+  // the two backbones
+  for (let s = 0; s < 2; s++) {
+    const st = `fill:none;stroke:var(--k);stroke-opacity:${s ? .55 : 1};stroke-width:${sw};stroke-linecap:round`;
+    for (let k = 0; k < pts.length - 1; k++) {
+      const xa = pts[k], xb = pts[k + 1];
+      if (broken.has(s + ':' + k)) {
+        const g1 = xa + (xb - xa) * .34, g2 = xa + (xb - xa) * .66;
+        Kit.mk('path', {d: path(s, xa, g1), style: st}, g);
+        Kit.mk('path', {d: path(s, g2, xb), style: st}, g);
+        for (const gx of [g1, g2]) {
+          const gy = yOf(s, gx), r = sw * 1.6;
+          Kit.mk('path', {d: `M${gx - r} ${gy - r}L${gx + r} ${gy + r}M${gx + r} ${gy - r}L${gx - r} ${gy + r}`,
+            style: `stroke:${HOT};stroke-width:${sw * .7};stroke-linecap:round`}, g);
+        }
+      } else Kit.mk('path', {d: path(s, xa, xb), style: st}, g);
+    }
+  }
+  // the letters of one strand
+  const lab = Kit.mk('text', {x: m, y: stripY - f * .6, style: `font:600 ${f * .9}px var(--body);fill:var(--k);opacity:.75`}, g);
+  lab.textContent = 'DNA letters, one strand';
+  for (let i = 0; i < N; i++) {
+    const x = xs[i], mt = mutated[i];
+    Kit.mk('rect', {x: x - bs / 2, y: stripY, width: bs, height: bs, rx: bs * .22, style: mt
+      ? 'fill:var(--k)' : 'fill:none;stroke:var(--k);stroke-opacity:.3;stroke-width:1.5'}, g);
+    const t = Kit.mk('text', {x, y: stripY + bs * .68, 'text-anchor': 'middle',
+      style: `font:800 ${Math.max(bs * .5, 12)}px var(--mono);fill:${mt ? 'var(--c)' : 'var(--k)'}`}, g);
+    t.textContent = mt || seq[i];
+  }
+}
+function stats() {
+  Kit.$('sHits').textContent = hits.length + '/' + TOTAL;
+  Kit.$('sBreaks').textContent = breaks;
+  Kit.$('sMut').textContent = muts;
+  Kit.$('fill').style.width = (hits.length / TOTAL * 100) + '%';
+}
+function target(h) {
+  if (h.type === 'mutate') return [xs[h.i], cy];
+  const x = (pts[h.k] + pts[h.k + 1]) / 2;
+  return h.type === 'double' ? [x, cy] : [x, yOf(h.s, x)];
+}
+function apply(h) {
+  hits.push(h);
+  if (h.type === 'mutate') { mutated[h.i] = h.nb; muts++; }
+  else if (h.type === 'double') { broken.add('0:' + h.k); broken.add('1:' + h.k); breaks += 2; }
+  else { broken.add(h.s + ':' + h.k); breaks++; }
+  draw(); stats(); Kit.haptic('light');
+  if (!Kit.calm) {
+    const [tx, ty] = target(h);
+    const ring = Kit.mk('circle', {cx: tx, cy: ty, r: 4, style: `fill:none;stroke:${HOT};stroke-width:3`}, fx);
+    gsap.to(ring, {attr: {r: H * .09}, opacity: 0, duration: .5, ease: 'power2.out', onComplete: () => ring.remove()});
+  }
+  if (hits.length >= TOTAL) finish();
+}
+function fire() {
+  if (fired >= TOTAL) { stopHold(); return; }
+  const h = plan[fired++];
+  if (Kit.calm) { apply(h); return; }
+  const [tx, ty] = target(h);
+  const sx = tx + H * .35 + Kit.rnd() * W * .1, sy = -H * .05;
+  const o = {x: sx, y: sy};
+  const trail = Kit.mk('line', {x1: sx, y1: sy, x2: sx, y2: sy, style: `stroke:${RAY};stroke-width:${Math.max(2, H * .008)};stroke-linecap:round;opacity:.8`}, fx);
+  const dot = Kit.mk('circle', {cx: sx, cy: sy, r: Math.max(5, f * .4), style: `fill:${RAY};stroke:var(--k);stroke-width:2`}, fx);
+  inFlight++;
+  gsap.to(o, {x: tx, y: ty, duration: .3, ease: 'power1.in',
+    onUpdate: () => {
+      dot.setAttribute('cx', o.x); dot.setAttribute('cy', o.y);
+      trail.setAttribute('x1', o.x + (sx - tx) * .25); trail.setAttribute('y1', o.y + (sy - ty) * .25);
+      trail.setAttribute('x2', o.x); trail.setAttribute('y2', o.y);
+    },
+    onComplete: () => { dot.remove(); trail.remove(); inFlight--; apply(h); }});
+}
+function startHold(e) {
+  if (e) e.preventDefault();
+  if (done || timer) return;
+  Kit.$('hold').classList.add('on'); Kit.$('holdT').textContent = 'Irradiating…';
+  fire(); timer = setInterval(fire, 380);
+}
+function stopHold() {
+  clearInterval(timer); timer = null;
+  Kit.$('hold').classList.remove('on');
+  if (!done) Kit.$('holdT').textContent = fired ? 'Hold to keep going' : 'Hold to irradiate';
+}
+function finish() {
+  if (done) return; done = true; stopHold();
+  setTimeout(() => {
+    Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.haptic('success');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .4, ease: 'power3.out'});
+  }, 500);
+}
+const hb = Kit.$('hold');
+hb.addEventListener('pointerdown', startHold);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hb.addEventListener(ev, stopHold));
+hb.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onShow.card = () => {
+  if (fx) fx.remove();
+  fx = null; layout(); draw();
+  fx = Kit.mk('g', {}, svg);
+  stats();
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm || !g) return;
+  gsap.from(g, {opacity: 0, duration: .6, ease: 'power2.out'});
+  gsap.from('#hold', {opacity: 0, y: 10, duration: .4, delay: .2, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  hb.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, TOTAL * 380 + 900));
+  hb.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 400));
+};
+Kit.single();
+</script>
+</html>

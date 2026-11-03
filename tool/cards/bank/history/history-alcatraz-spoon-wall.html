@@ -1,0 +1,164 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-alcatraz-spoon-wall -->
+<title>Astute free card · The spoon flaw</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.q,.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ALCATRAZ</span></div>
+    <h2 class="q">What did it take to dig through Alcatraz's cell walls?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone"><p class="big">A spoon.</p><p class="body">The salt water all around the island deposited chlorine and other ions on the concrete, year after year. With little upkeep, the walls grew so brittle that a spoon could chip them away.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the marker to the tool you think was enough.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Salt slowly eats concrete: a fortress is only as strong as its upkeep.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TOOLS = ['Spoon', 'Chisel', 'Drill', 'Dynamite'];
+const RIGHT = 0;
+let g = -1, t = 0.62, done = false, dragging = false, geo = null;
+const m = (tag, a, p) => Kit.mk(tag, a, p);
+
+// Shapes generated once so every redraw is the same picture.
+const AGG = Array.from({length: 46}, () => ({x: Kit.rnd(), y: Kit.rnd(), r: .4 + Kit.rnd() * .8}));
+const IONS = Array.from({length: 22}, () => ({sx: Kit.rnd(), sy: Kit.rnd(), ex: Math.pow(Kit.rnd(), 1.6), ey: Kit.rnd()}));
+const CRACKS = Array.from({length: 6}, (_, i) => {
+  let a = i / 6 * Math.PI * 2 + Kit.rnd() * .6, pts = [[0, 0]], x = 0, y = 0;
+  for (let k = 0; k < 4; k++) { a += (Kit.rnd() - .5) * .9; x += Math.cos(a) * .12; y += Math.sin(a) * .12; pts.push([x, y]); }
+  return pts;
+});
+const CHIPS = Array.from({length: 12}, () => ({dx: (Kit.rnd() - .5) * 1.6, s: .5 + Kit.rnd() * .7, r: Kit.rnd() * 90}));
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg), f = Math.max(f0, 12);
+  const sy = H - f * 3.4, wb = sy - f * 3.2;
+  const wx = W * .3, wy = Math.max(wb * .04, 2), ww = W * .66, wh = wb - wy;
+  const x0 = W * .13, x1 = W * .87, px = i => x0 + i * (x1 - x0) / 3;
+  geo = {W, H, f, sy, x0, x1, px};
+  const ink = 'fill:var(--k)';
+
+  // Sea
+  const seaTop = wb * .34, sw = W * .25;
+  let d = `M0 ${seaTop}`;
+  for (let x = 0; x <= sw; x += sw / 6) d += ` Q${x + sw / 12} ${seaTop - f * .5} ${x + sw / 6} ${seaTop}`;
+  d += ` L${sw} ${wb} L0 ${wb}Z`;
+  const sea = m('path', {d, style: 'fill:#1f5f86'}, svg);
+  m('text', {x: sw / 2, y: seaTop - f * 1.1, 'text-anchor': 'middle', style: `${ink};font:700 ${f}px var(--body)`}, svg).textContent = 'salt water';
+
+  // Wall
+  const wall = m('g', {}, svg);
+  m('rect', {x: wx, y: wy, width: ww, height: wh, rx: f * .3, style: 'fill:#cfc8b8;stroke:var(--k);stroke-width:2'}, wall);
+  AGG.forEach(a => m('circle', {cx: wx + a.x * ww, cy: wy + a.y * wh, r: a.r * f * .22, style: 'fill:#9d9686'}, wall));
+  m('rect', {x: wx, y: wb, width: W - wx, height: 2, style: 'fill:var(--k)'}, svg);
+  m('text', {x: wx + ww / 2, y: wy + f * 1.4, 'text-anchor': 'middle', style: `fill:#2a2620;font:800 ${f}px var(--body)`}, svg).textContent = 'concrete wall';
+
+  const hx = wx + ww * .62, hy = wy + wh * .62, hrx = ww * .15, hry = wh * .16;
+  const R = {};
+  if (done) {
+    R.stain = m('rect', {x: wx, y: wy, width: ww * .6, height: wh, style: 'fill:#6f7f63;opacity:.38'}, svg);
+    R.ions = IONS.map(o => {
+      const c = m('circle', {cx: wx + f * .6 + o.ex * ww * .55, cy: wy + f * 2.4 + o.ey * (wh - f * 3), r: f * .22, style: 'fill:#1aa36b;stroke:#fff;stroke-width:1'}, svg);
+      c._s = {x: o.sx * sw * .9 - (wx + f * .6 + o.ex * ww * .55), y: seaTop + o.sy * (wb - seaTop) * .9 - (wy + f * 2.4 + o.ey * (wh - f * 3))};
+      return c;
+    });
+    m('text', {x: wx + f * .5, y: wy + f * 3.1, style: `fill:#0d4f33;font:800 ${f * .95}px var(--body)`}, svg).textContent = 'Cl⁻ + ions';
+    R.cracks = CRACKS.map(p => m('path', {d: 'M' + p.map(q => `${hx + q[0] * ww} ${hy + q[1] * wh}`).join(' L'), style: 'fill:none;stroke:#2a2620;stroke-width:1.6;stroke-linecap:round'}, svg));
+    R.hole = m('ellipse', {cx: hx, cy: hy, rx: hrx, ry: hry, style: 'fill:#1a1714;stroke:#5c5548;stroke-width:3'}, svg);
+    R.chips = CHIPS.map(c => {
+      const s = f * .35 * c.s, cx = hx + c.dx * hrx * 1.4, cy = wb - s;
+      const p = m('rect', {x: cx - s, y: cy - s, width: s * 2, height: s * 1.4, transform: `rotate(${c.r} ${cx} ${cy})`, style: 'fill:#b3ab99;stroke:#2a2620;stroke-width:1'}, svg);
+      p._dy = hy - cy; return p;
+    });
+    const so = m('g', {transform: `translate(${hx + hrx * .55} ${hy - hry * .1}) rotate(-38)`}, svg);
+    R.spoon = m('g', {}, so);
+    m('rect', {x: -f * .22, y: f * .6, width: f * .44, height: f * 4.6, rx: f * .22, style: 'fill:#d9dde2;stroke:#2a2620;stroke-width:1.5'}, R.spoon);
+    m('ellipse', {cx: 0, cy: 0, rx: f * .75, ry: f * 1.05, style: 'fill:#e9ecef;stroke:#2a2620;stroke-width:1.5'}, R.spoon);
+  }
+
+  // Scale
+  m('line', {x1: x0, y1: sy, x2: x1, y2: sy, style: 'stroke:var(--k);stroke-width:3;stroke-linecap:round'}, svg);
+  TOOLS.forEach((n, i) => {
+    const isR = done && i === RIGHT;
+    m('line', {x1: px(i), y1: sy - f * .35, x2: px(i), y2: sy + f * .35, style: 'stroke:var(--k);stroke-width:2'}, svg);
+    m('text', {x: px(i), y: sy + f * 1.75, 'text-anchor': 'middle', style: `${ink};font:${isR ? 800 : 600} ${f}px var(--body)`}, svg).textContent = n;
+  });
+  const mx = done ? px(g) : x0 + t * (x1 - x0);
+  const mk = m('g', {}, svg);
+  m('circle', {cx: mx, cy: sy, r: f * .75, style: `fill:${done ? 'transparent' : 'var(--k)'};stroke:var(--k);stroke-width:3`}, mk);
+  if (!done) {
+    m('path', {d: `M${mx} ${sy - f * 1.1} l${-f * .5} ${-f * .8} h${f} z`, style: 'fill:var(--k)'}, mk);
+  }
+  R.marker = mk;
+  if (done) {
+    const rx = px(RIGHT);
+    R.real = m('g', {}, svg);
+    m('circle', {cx: rx, cy: sy, r: f * .5, style: 'fill:#1aa36b'}, R.real);
+    m('text', {x: rx, y: sy - f * 1.1, 'text-anchor': 'middle', style: `fill:#1aa36b;font:800 ${f}px var(--body)`}, R.real).textContent = g === RIGHT ? 'yes!' : 'real';
+    if (g !== RIGHT) m('text', {x: px(g), y: sy - f * 1.1, 'text-anchor': 'middle', style: `${ink};font:700 ${f}px var(--body)`}, svg).textContent = 'you';
+  }
+  geo.R = R;
+}
+
+function animate() {
+  const R = geo.R; if (Kit.calm || !R.hole) return;
+  const tl = gsap.timeline();
+  tl.from(R.ions, {x: (i, el) => el._s.x, y: (i, el) => el._s.y, opacity: 0, duration: 1.1, stagger: .04, ease: 'power2.inOut'})
+    .from(R.stain, {opacity: 0, duration: .6}, '-=.4')
+    .from(R.cracks, {opacity: 0, scale: 0, transformOrigin: '0% 0%', duration: .5, stagger: .06}, '-=.2')
+    .from(R.spoon, {opacity: 0, x: geo.f * 3, duration: .4})
+    .to(R.spoon, {y: geo.f * 1.2, duration: .14, yoyo: true, repeat: 7, ease: 'sine.inOut'})
+    .from(R.hole, {scale: 0, transformOrigin: '50% 50%', duration: 1.1, ease: 'power1.in'}, '<')
+    .from(R.chips, {y: (i, el) => el._dy, opacity: 0, duration: .45, stagger: .09, ease: 'bounce.out'}, '<.15');
+}
+
+// Dragging the marker along the scale
+const svgEl = Kit.$('pic');
+const toT = e => { const r = svgEl.getBoundingClientRect(); return Math.min(1, Math.max(0, (e.clientX - r.left - geo.x0) / (geo.x1 - geo.x0))); };
+svgEl.addEventListener('pointerdown', e => { if (done || !geo) return; dragging = true; try { svgEl.setPointerCapture(e.pointerId); } catch (_) {} t = toT(e); draw(); });
+svgEl.addEventListener('pointermove', e => { if (!dragging) return; t = toT(e); draw(); });
+const release = () => {
+  if (!dragging) return; dragging = false;
+  g = Math.round(t * 3); t = g / 3; draw();
+  Kit.haptic('selection'); sure.on();
+  Kit.$('say').textContent = `You picked: ${TOOLS[g]}. Now, how sure?`;
+};
+svgEl.addEventListener('pointerup', release);
+svgEl.addEventListener('pointercancel', release);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = g === RIGHT;
+  Kit.answer({choice: TOOLS[g], correct: ok, sure: pct});
+  done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${TOOLS[g]}, ${ok ? 'right' : 'wrong'}`);
+  draw(); animate(); Kit.haptic('success');
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && geo && geo.R.marker) gsap.from(geo.R.marker, {x: -geo.f * 3, opacity: 0, duration: .6, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = svgEl.getBoundingClientRect(), x = r.left + geo.px(RIGHT) + 1, y = r.top + geo.sy;
+  svgEl.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  svgEl.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,36 @@
+{
+  "id": "nature-vesuvius-inside-somma",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did today's Vesuvius grow out of Monte Somma?",
+  "answer": "A series of huge Plinian eruptions wrecked the much bigger Monte Somma and left a huge crater. A new vent opened inside that crater, and eruption after eruption piled up a fresh cone. That cone is today's Vesuvius.",
+  "move": "Vesuvius is a young cone built inside the ruins of Monte Somma.",
+  "keywords": [
+    "vesuvius",
+    "monte somma",
+    "volcano",
+    "plinian eruptions"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive step card on how today's Vesuvius formed. It asks how Vesuvius grew out of Monte Somma. Step 0 of 5 shows the start. A Tap Erupt control triggers Plinian eruptions that wreck Monte Somma."
+  },
+  "source": "Geopop, “VESUVIO - Prima era molto più grande! Uno dei miei primissimi video” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=b1Keep6snGg&t=83s",
+  "written": "2026-11-03"
+}

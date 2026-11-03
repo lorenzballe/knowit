@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-pyramid-top-third -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#read{display:flex;gap:3cqw;justify-content:space-between;align-items:flex-end}
+.rd{display:flex;flex-direction:column;gap:.3cqh;min-width:0}
+.rd.r{text-align:right;align-items:flex-end}
+.rl{font:700 max(1.5cqh,12px)/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.rv{font:800 max(3.6cqh,20px)/1 var(--display);color:var(--k)}
+.rd.r .rv{color:#d63a28}
+#bar{height:max(.9cqh,6px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 14%,transparent);overflow:hidden}
+#barf{height:100%;width:0;background:#d63a28;border-radius:1cqh}
+#pv{flex:1 1 0;min-height:0;width:100%;display:block;touch-action:none}
+#opts{display:flex;gap:2.4cqw}
+#why{display:flex;flex-direction:column;gap:.4cqh;flex-shrink:0;min-width:0}
+#why .big{font-size:max(2.4cqh,16px);line-height:1.1;margin:0}
+#why .body{overflow-wrap:anywhere;font-size:max(1.6cqh,12px);line-height:1.3;margin:0}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · drag">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PYRAMIDS</span></div>
+    <h2 class="q">How much of a pyramid's stone sits in its top third?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read">
+        <div class="rd"><span class="rl">Top of height</span><span class="rv" id="rh">33%</span></div>
+        <div class="rd r"><span class="rl">Share of stone</span><span class="rv" id="rm">?</span></div>
+      </div>
+      <div id="bar"><div id="barf"></div></div>
+      <svg id="pv"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">About 33%</button>
+        <button class="opt" data-i="1">About 15%</button>
+        <button class="opt" data-i="2">About 4%</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Only about 4%</p><p class="body">A pyramid narrows in both width and depth as it rises, so the top third is a third as tall, wide and deep: under 4% of the stone. That's why levers are suspected for the top levels.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess: how much of all the stone is in the red top third?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The top third of a pyramid's height holds only about 4% of its stone.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, done = false;
+const st = {t: 1/3};
+let G = null, el = {};
+const lerp = (P, Q, s) => [P[0] + (Q[0] - P[0]) * s, P[1] + (Q[1] - P[1]) * s];
+const pts = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+
+function readout(){
+  const t = st.t;
+  Kit.$('rh').textContent = Math.round(t * 100) + '%';
+  const m = t * t * t * 100;
+  if (done) {
+    Kit.$('rm').textContent = (m < 10 ? m.toFixed(1) : Math.round(m)) + '%';
+    Kit.$('barf').style.width = m + '%';
+  }
+}
+function update(){
+  if (!G) return;
+  if (!isFinite(st.t)) st.t = 1/3;
+  const {A, L, F, R, W} = G, t = st.t;
+  const Lt = lerp(A, L, t), Ft = lerp(A, F, t), Rt = lerp(A, R, t);
+  el.tl.setAttribute('points', pts([A, Lt, Ft]));
+  el.tr.setAttribute('points', pts([A, Ft, Rt]));
+  el.cut.setAttribute('points', pts([Lt, Ft, Rt]));
+  const hx = Math.min(W - G.r - 4, R[0] + G.r * 2.2);
+  el.guide.setAttribute('x1', Rt[0]); el.guide.setAttribute('y1', Rt[1]);
+  el.guide.setAttribute('x2', hx); el.guide.setAttribute('y2', Rt[1]);
+  el.hd.setAttribute('cx', hx); el.hd.setAttribute('cy', Rt[1]);
+  readout();
+}
+function draw(){
+  const svg = Kit.$('pv');
+  const {W, H} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const w = Math.min(W * 0.4, H * 0.62);
+  const cx = W / 2 - w * 0.05;
+  const A = [cx + w * 0.06, H * 0.05], L = [cx - w, H * 0.83], F = [cx + w * 0.22, H * 0.95], R = [cx + w, H * 0.8];
+  const r = Math.max(10, Math.min(W, H) * 0.035);
+  G = {A, L, F, R, W, H, r};
+  Kit.mk('ellipse', {cx: cx + w * 0.1, cy: H * 0.9, rx: w * 1.15, ry: H * 0.06, fill: 'var(--k)', opacity: .12}, svg);
+  const ink = 'var(--k)';
+  Kit.mk('polygon', {points: pts([A, L, F]), fill: '#ecc781', stroke: ink, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('polygon', {points: pts([A, F, R]), fill: '#bf8d45', stroke: ink, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, svg);
+  const g = Kit.mk('g', {stroke: '#6b4a1c', 'stroke-width': 1, opacity: .45, fill: 'none'}, svg);
+  const N = 16;
+  for (let k = 1; k < N; k++) { const s = k / N; Kit.mk('polyline', {points: pts([lerp(A, L, s), lerp(A, F, s), lerp(A, R, s)])}, g); }
+  el.tl = Kit.mk('polygon', {fill: '#e8442f', stroke: ink, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, svg);
+  el.tr = Kit.mk('polygon', {fill: '#a82a1b', stroke: ink, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, svg);
+  el.cut = Kit.mk('polyline', {fill: 'none', stroke: '#fff', 'stroke-width': 3, 'stroke-linejoin': 'round'}, svg);
+  el.guide = Kit.mk('line', {stroke: '#d63a28', 'stroke-width': 2, 'stroke-dasharray': '5 4'}, svg);
+  el.hd = Kit.mk('circle', {r, fill: '#d63a28', stroke: '#fff', 'stroke-width': 3, opacity: done ? 1 : 0}, svg);
+  update();
+}
+function setFromY(y){
+  if (!G || !isFinite(y)) return;
+  const den = G.R[1] - G.A[1];
+  if (!(Math.abs(den) > 0)) return;
+  const s = (y - G.A[1]) / den;
+  if (!isFinite(s)) return;
+  st.t = Math.max(0.05, Math.min(1, s)); update();
+}
+const svgEl = Kit.$('pv');
+let dragging = false;
+function yOf(e){ const b = svgEl.getBoundingClientRect(); if (!(b.height > 0)) return NaN; return (e.clientY - b.top) * (G ? G.H / b.height : 1); }
+svgEl.addEventListener('pointerdown', e => { if (!done) return; dragging = true; try{svgEl.setPointerCapture(e.pointerId);}catch(_){} gsap.killTweensOf(st); setFromY(yOf(e)); Kit.haptic('selection'); });
+svgEl.addEventListener('pointermove', e => { if (dragging) setFromY(yOf(e)); });
+const end = () => { dragging = false; };
+svgEl.addEventListener('pointerup', end); svgEl.addEventListener('pointercancel', end);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  done = true;
+  Kit.hide('opts'); Kit.show('why');
+  Kit.$('say').textContent = 'Drag the red handle to cut the pyramid anywhere.';
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  st.t = 1/3; draw();
+  Kit.haptic('success');
+  if (!Kit.calm) {
+    gsap.from('#barf', {width: 0, duration: .8, ease: 'power3.out'});
+    gsap.from(el.hd, {attr: {r: 0}, duration: .5, ease: 'back.out(2)'});
+  }
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  st.t = 0.05; update();
+  gsap.to(st, {t: 1/3, duration: 1.1, delay: .2, ease: 'power2.inOut', onUpdate: update});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[2].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(400);
+  const b = svgEl.getBoundingClientRect();
+  if (!G || !(b.height > 0)) { await w(600); return; }
+  const k = b.height / G.H;
+  const at = s => b.top + (G.A[1] + (G.R[1] - G.A[1]) * s) * k, x = b.left + b.width * 0.9;
+  svgEl.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: at(0.6), bubbles: true, pointerId: 1}));
+  svgEl.dispatchEvent(new PointerEvent('pointermove', {clientX: x, clientY: at(1/3), bubbles: true, pointerId: 1}));
+  svgEl.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: at(1/3), bubbles: true, pointerId: 1}));
+  await w(600);
+};
+Kit.single();
+</script>
+</html>

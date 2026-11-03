@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-lowside-vs-highside -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{position:relative;flex:1;min-height:0}
+#sv{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.sw{display:flex;gap:2cqw;background:color-mix(in srgb,var(--k) 8%,transparent);padding:.6cqh;border-radius:2.4cqh;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 22%,transparent)}
+.sw button{flex:1;font:700 max(2.1cqh,14px)/1.15 var(--body);border:0;border-radius:1.8cqh;padding:1.2cqh 2cqw;background:transparent;color:var(--k);cursor:pointer;overflow-wrap:anywhere}
+.sw button small{display:block;font:500 max(1.5cqh,12px)/1.2 var(--body);opacity:.75;margin-top:.3cqh}
+.sw button.on{background:var(--k);color:var(--c)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Switch · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOTOGP CRASHES</span></div>
+    <h2 class="q">What makes a low-side crash different from a high-side in MotoGP?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="sv"></svg></div>
+      <div class="sw" id="sw">
+        <button data-m="low">Low-side<small>grip goes</small></button>
+        <button data-m="high">High-side<small>grip comes back</small></button>
+      </div>
+    </div>
+    <p class="say" id="say">Flip between the two crashes and watch the rear tyre.</p>
+    <div id="why" class="gone"><p class="big">Slide out vs. thrown off</p><p class="body">Low-side: the rear tyre loses grip and the bike drops to the inside, so you slide. High-side: the tyre slides, then suddenly grips again, and the bike flicks you up and over. Rossi says the one with the gas closed throws you higher and harder; he was hurt that way at Mugello, at 180 km/h on a cold tyre.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Low-side: grip goes and you slide. High-side: grip comes back and you fly.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('sv');
+const ACC = '#ff5a36';
+let G, W, H, u, cx, f, tl = null, mode = null, st = {}, el = {}, dots = [], seen = new Set(), finished = false, fly = null;
+
+function attach(){
+  const a = st.bRot * Math.PI / 180;
+  st.px = cx + st.bx + Math.sin(a) * 26 * u;
+  st.py = G - Math.cos(a) * 26 * u;
+  st.rRot = st.bRot;
+}
+function render(){
+  if (!el.bike) return;
+  if (st.att) attach();
+  el.bike.setAttribute('transform', `translate(${cx + st.bx},${G}) rotate(${st.bRot})`);
+  el.rider.setAttribute('transform', `translate(${st.px},${st.py}) rotate(${st.rRot})`);
+  el.skid.setAttribute('x2', cx + st.bx);
+  dots.forEach((d, i) => d.setAttribute('opacity', (i + 1) / dots.length <= st.trail + 1e-6 ? .6 : 0));
+}
+function status(t){ if (el.status) el.status.textContent = t; }
+function reset(){
+  st = {bx: 0, bRot: -42, att: 1, px: 0, py: 0, rRot: 0, trail: 0};
+  attach();
+}
+function draw(){
+  const r = Kit.fitSvg(svg); W = r.W; H = r.H; f = Math.max(r.f, 13);
+  svg.innerHTML = '';
+  G = H * 0.82; u = Math.min(W / 130, H / 80); cx = W * 0.34;
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  mk('rect', {x: 0, y: G, width: W, height: H - G, style: 'fill:color-mix(in srgb,var(--k) 12%,transparent)'});
+  mk('line', {x1: 0, x2: W, y1: G, y2: G, style: 'stroke:var(--k);stroke-width:2'});
+  const lab = (x, anchor, t) => { const e = mk('text', {x, y: G + f * 1.5, 'text-anchor': anchor, style: `font:600 ${f * .85}px var(--body);fill:var(--k);opacity:.6`}); e.textContent = t; };
+  lab(8, 'start', '← inside of bend'); lab(W - 8, 'end', 'outside →');
+  el.skid = mk('line', {x1: cx, x2: cx, y1: G - 1, y2: G - 1, style: `stroke:${ACC};stroke-width:${Math.max(3, u * 1.2)};stroke-linecap:round;opacity:.85`});
+  // trail dots for the high-side flight
+  dots = [];
+  const tg = mk('g', {});
+  const a = 25 * Math.PI / 180;
+  const lx = cx + W * .06 + Math.sin(a) * 26 * u, ly = G - Math.cos(a) * 26 * u;
+  const ex = W - 13 * u, ey = G - 3 * u, peak = f * 2.4 + 22 * u;
+  const qx = (lx + ex) / 2, qy = 2 * peak - (ly + ey) / 2;
+  fly = {lx, ly, ex, ey, peak};
+  for (let i = 1; i <= 16; i++){
+    const t = i / 16, x = (1 - t) * (1 - t) * lx + 2 * t * (1 - t) * qx + t * t * ex, y = (1 - t) * (1 - t) * ly + 2 * t * (1 - t) * qy + t * t * ey;
+    dots.push(mk('circle', {cx: x, cy: y, r: Math.max(2, u * .7), opacity: 0, style: 'fill:var(--k)'}, tg));
+  }
+  // bike, rear view, contact patch at origin
+  el.bike = mk('g', {});
+  mk('path', {d: `M${-7*u},${-15*u} L${7*u},${-15*u} L${5*u},${-25*u} L${-5*u},${-25*u} Z`, style: 'fill:var(--k);opacity:.85'}, el.bike);
+  mk('rect', {x: -3 * u, y: -17 * u, width: 6 * u, height: 17 * u, rx: 3 * u, style: 'fill:var(--k)'}, el.bike);
+  mk('rect', {x: -3 * u, y: -24 * u, width: 6 * u, height: 2 * u, rx: u, style: `fill:${ACC}`}, el.bike);
+  // rider, origin at the hip
+  el.rider = mk('g', {});
+  const sw = Math.max(3, u * 3.2), ln = (x1, y1, x2, y2, w, c) => mk('path', {d: `M${x1},${y1} L${x2},${y2}`, style: `stroke:${c};stroke-width:${w};stroke-linecap:round;stroke-linejoin:round;fill:none`}, el.rider);
+  mk('path', {d: `M${-5*u},${8*u} L${-3*u},${2*u} L0,0 L${3*u},${2*u} L${5*u},${8*u}`, style: `stroke:${ACC};stroke-width:${sw*.8};stroke-linecap:round;stroke-linejoin:round;fill:none`}, el.rider);
+  ln(0, 0, 0, -12 * u, sw * 1.3, ACC);
+  mk('path', {d: `M${-6*u},${-6*u} L${-3*u},${-11*u} L${3*u},${-11*u} L${6*u},${-6*u}`, style: `stroke:${ACC};stroke-width:${sw*.7};stroke-linecap:round;stroke-linejoin:round;fill:none`}, el.rider);
+  mk('circle', {cx: 0, cy: -17 * u, r: 4.6 * u, style: 'fill:#fff;stroke:var(--k);stroke-width:2'}, el.rider);
+  mk('rect', {x: -1 * u, y: -21.6 * u, width: 2 * u, height: 9.2 * u, style: `fill:${ACC}`}, el.rider);
+  el.status = mk('text', {x: W / 2, y: f * 1.3, 'text-anchor': 'middle', style: `font:700 ${f * 1.05}px var(--body);fill:var(--k)`});
+  if (mode){ build(mode); tl.progress(1); render(); }
+  else { reset(); status('Seen from behind, leaning left'); render(); }
+}
+function done(){
+  seen.add(mode);
+  if (seen.size === 2 && !finished){
+    finished = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  }
+}
+function build(m){
+  if (tl) tl.kill();
+  mode = m; reset();
+  const F = fly;
+  const cut = () => { attach(); st.att = 0; };
+  tl = gsap.timeline({onUpdate: render, onComplete: done});
+  if (m === 'low'){
+    tl.call(() => status('Rear tyre slides out'))
+      .to(st, {bx: W * .07, bRot: -58, duration: .55, ease: 'power1.in'})
+      .call(() => status('Bike drops to the inside'))
+      .to(st, {bx: W * .16, bRot: -88, duration: .4, ease: 'power2.in'})
+      .call(() => { cut(); status('You slide along the ground'); })
+      .to(st, {bx: W * .5, duration: 1.3, ease: 'power2.out'})
+      .to(st, {px: '+=' + W * .26, py: G - 4 * u, rRot: -95, duration: 1.4, ease: 'power2.out'}, '<');
+  } else {
+    tl.call(() => status('Rear tyre slides out'))
+      .to(st, {bx: W * .06, bRot: -56, duration: .5, ease: 'power1.in'})
+      .call(() => status('Grip comes back!'))
+      .to(st, {bRot: 25, duration: .2, ease: 'power3.in'})
+      .call(() => { cut(); status('Bike snaps up, rider is thrown'); })
+      .addLabel('fly')
+      .to(st, {px: F.ex, trail: 1, duration: 1.1, ease: 'none'}, 'fly')
+      .to(st, {py: F.peak, duration: .5, ease: 'power2.out'}, 'fly')
+      .to(st, {py: F.ey, duration: .6, ease: 'power2.in'}, 'fly+=0.5')
+      .to(st, {rRot: 630, duration: 1.1, ease: 'none'}, 'fly')
+      .to(st, {bRot: 88, bx: W * .16, duration: .7, ease: 'power2.in'}, 'fly');
+  }
+  render();
+}
+function pick(m){
+  Kit.$('sw').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+  Kit.haptic('selection');
+  build(m);
+  if (Kit.calm) tl.progress(1);
+}
+Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('button'); if (b) pick(b.dataset.m); });
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.sw button', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('sw').children[0].click(); tl.progress(1); done();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sw').children[1].click(); tl.progress(1); render(); done();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

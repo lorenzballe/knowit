@@ -1,0 +1,37 @@
+{
+  "id": "nature-asteroid-tsunami-energy",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does an asteroid's tsunami compare to a landslide's?",
+  "answer": "A landslide and an asteroid both push water aside by shoving a rocky body into it. The difference is speed: space hurls the asteroid in like a stone thrown hard into a pond, so it sets off a train of much bigger, faster waves. The card's point is that the speed of the impact makes the monster.",
+  "move": "Same rock-into-water push; the speed of the impact makes the monster.",
+  "keywords": [
+    "asteroid",
+    "tsunami",
+    "landslide",
+    "ocean",
+    "impact"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two side-by-side comparisons of water waves: a slow stone dropped into a pond versus a large asteroid hitting the ocean. The question asks how an asteroid tsunami's energy compares to a landslide's."
+  },
+  "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=666s",
+  "written": "2026-11-03"
+}

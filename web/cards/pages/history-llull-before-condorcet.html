@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-llull-before-condorcet -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#tl{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:7.8cqh;margin:0;overflow-wrap:anywhere}
+#cap b{font-family:var(--mono);font-weight:700}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOTING</span></div>
+    <h2 class="q">Who actually invented the Condorcet voting method first?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="tl"></svg>
+      <p id="cap"></p>
+      <div id="why" class="gone">
+        <p class="big">Ramon Llull, a monk, 450 years earlier</p>
+        <p class="body">Llull found it while studying how church leaders were chosen. His book, Ars eleccionis, was lost, so his idea made no impact and the method got Condorcet's name. The book was only found again in 2001.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the dot along the timeline, from the monk to today.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The name on an idea is not always the first person who had it.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Y0 = 1250, Y1 = 2010;
+let year = Y0, done = false, G = null, lastCap = '';
+const svg = Kit.$('tl');
+const cl = v => Math.max(0, Math.min(1, v));
+
+function bookShape(g, s, dashed){
+  const st = dashed ? 'fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:4 3' : 'fill:var(--k)';
+  Kit.mk('rect', {x:-s*0.6, y:-s*0.75, width:s*1.2, height:s*1.5, rx:s*0.12, style:st}, g);
+  const ln = dashed ? 'stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 3' : 'stroke:var(--c);stroke-width:2';
+  Kit.mk('line', {x1:-s*0.38, y1:-s*0.75, x2:-s*0.38, y2:s*0.75, style:ln}, g);
+  Kit.mk('line', {x1:-s*0.18, y1:-s*0.35, x2:s*0.4, y2:-s*0.35, style:ln}, g);
+  Kit.mk('line', {x1:-s*0.18, y1:-s*0.1, x2:s*0.3, y2:-s*0.1, style:ln}, g);
+}
+
+function draw(){
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const mL = W*0.1, mR = W*0.13;
+  const X = y => mL + (y - Y0)/(Y1 - Y0)*(W - mL - mR);
+  const lineY = H*0.6, s = Math.max(f*1.5, 18), bookY = lineY - Math.max(H*0.26, s*2.4);
+  const fs = Math.max(f, 13);
+  const T = (x, y, txt, extra = {}) => { const t = Kit.mk('text', Object.assign({x, y, 'text-anchor':'middle', style:`font:700 ${fs}px var(--body);fill:var(--k)`}, extra), svg); t.textContent = txt; return t; };
+
+  Kit.mk('line', {x1:X(Y0), y1:lineY, x2:X(Y1), y2:lineY, style:'stroke:var(--k);stroke-opacity:.22;stroke-width:4;stroke-linecap:round'}, svg);
+  const prog = Kit.mk('line', {x1:X(Y0), y1:lineY, x2:X(Y0), y2:lineY, style:'stroke:var(--k);stroke-width:5;stroke-linecap:round'}, svg);
+  [[1300,'1300s'],[1750,'1700s'],[2001,'2001']].forEach(([y, l]) => {
+    Kit.mk('line', {x1:X(y), y1:lineY-7, x2:X(y), y2:lineY+7, style:'stroke:var(--k);stroke-width:2'}, svg);
+    T(X(y), lineY + fs*1.9, l, {style:`font:700 ${fs}px var(--mono);fill:var(--k)`});
+  });
+  const by = lineY + fs*3.3;
+  const brk = Kit.mk('g', {}, svg);
+  Kit.mk('path', {d:`M${X(1300)},${by-6} V${by} H${X(1750)} V${by-6}`, style:'fill:none;stroke:var(--k);stroke-width:2'}, brk);
+  const bt = Kit.mk('text', {x:(X(1300)+X(1750))/2, y:by + fs*1.4, 'text-anchor':'middle', style:`font:800 ${fs}px var(--body);fill:var(--k)`}, brk); bt.textContent = '450 years';
+
+  const lFull = Kit.mk('g', {}, svg); bookShape(lFull, s, false);
+  const lGhost = Kit.mk('g', {}, svg); bookShape(lGhost, s, true);
+  const lLab = T(X(1300), bookY + s*0.75 + fs*1.5, 'Llull');
+
+  const cond = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {cx:0, cy:-s*0.35, r:s*0.38, style:'fill:var(--k)'}, cond);
+  Kit.mk('path', {d:`M${-s*0.7},${s*0.75} Q${-s*0.7},${s*0.08} 0,${s*0.08} Q${s*0.7},${s*0.08} ${s*0.7},${s*0.75} Z`, style:'fill:var(--k)'}, cond);
+  const cLab = T(X(1750), bookY + s*0.75 + fs*1.5, 'Condorcet');
+
+  const found = Kit.mk('g', {}, svg); bookShape(found, s, false);
+  const fLab = T(X(2001), bookY + s*0.75 + fs*1.5, 'Found');
+
+  const handle = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {r:Math.max(fs*0.95, 12), style:'fill:var(--c);stroke:var(--k);stroke-width:4'}, handle);
+  Kit.mk('circle', {r:Math.max(fs*0.35, 5), style:'fill:var(--k)'}, handle);
+
+  G = {X, lineY, bookY, H, s, prog, brk, lFull, lGhost, lLab, cond, cLab, found, fLab, handle};
+  update();
+}
+
+function update(){
+  if (!G) return;
+  const {X, lineY, bookY, H, s} = G, xn = X(year);
+  G.prog.setAttribute('x2', xn);
+  G.handle.setAttribute('transform', `translate(${xn},${lineY})`);
+  const pL = cl((year - 1280)/20), lost = cl((year - 1450)/60);
+  G.lFull.setAttribute('transform', `translate(${X(1300)},${bookY}) scale(${0.6 + 0.4*pL})`);
+  G.lFull.style.opacity = pL*(1 - lost);
+  G.lGhost.setAttribute('transform', `translate(${X(1300)},${bookY})`);
+  G.lGhost.style.opacity = lost*0.55;
+  G.lLab.style.opacity = pL;
+  G.lLab.textContent = lost > 0.5 ? 'Llull · lost' : 'Llull';
+  const pC = cl((year - 1730)/30);
+  G.cond.setAttribute('transform', `translate(${X(1750)},${bookY}) scale(${0.6 + 0.4*pC})`);
+  G.cond.style.opacity = pC; G.cLab.style.opacity = pC; G.brk.style.opacity = pC;
+  const t = cl((year - 1970)/31);
+  const fx = X(1300) + (X(2001) - X(1300))*t, fy = bookY - Math.sin(Math.PI*t)*Math.min(H*0.18, bookY - s*1.1);
+  G.found.setAttribute('transform', `translate(${fx},${fy}) rotate(${(1 - t)*-12})`);
+  G.found.style.opacity = year >= 1970 ? 1 : 0;
+  G.fLab.style.opacity = cl((year - 1995)/6);
+
+  let c;
+  if (year < 1285) c = '<b>1200s</b> · A monk, Ramon Llull, looks at how church leaders are chosen.';
+  else if (year < 1450) c = '<b>1300s</b> · Llull writes <i>Ars eleccionis</i>, the art of elections: the winner must beat each other candidate head to head.';
+  else if (year < 1730) c = '<b>Lost</b> · His book disappears. Llull\u2019s idea makes no impact.';
+  else if (year < 1970) c = '<b>1700s</b> · 450 years later, Condorcet proposes the same method. It gets his name.';
+  else if (year < 2001) c = '<b>Searching…</b> · Llull\u2019s book is still missing.';
+  else c = '<b>2001</b> · <i>Ars eleccionis</i> is rediscovered.';
+  if (c !== lastCap){ Kit.$('cap').innerHTML = c; lastCap = c; Kit.haptic('selection'); }
+
+  if (year >= 2001 && !done){
+    done = true; Kit.haptic('success');
+    setTimeout(() => { Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      if (!Kit.calm) gsap.from('#why,#keep', {opacity:0, y:8, stagger:.1, duration:.4, ease:'power3.out'}); }, 500);
+  }
+}
+
+function setFromX(clientX){
+  if (!G) return;
+  const r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
+  const px = (clientX - r.left) * (vb.width / r.width);
+  const x0 = G.X(Y0), x1 = G.X(Y1);
+  year = Y0 + cl((px - x0)/(x1 - x0))*(Y1 - Y0);
+  update();
+}
+let drag = false;
+svg.addEventListener('pointerdown', e => { drag = true; try{ svg.setPointerCapture(e.pointerId); }catch(_){} setFromX(e.clientX); });
+svg.addEventListener('pointermove', e => { if (drag) setFromX(e.clientX); });
+['pointerup','pointercancel'].forEach(n => svg.addEventListener(n, () => { drag = false; }));
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.handle.firstChild, {attr:{r:G.handle.firstChild.getAttribute('r')*1.6}}, {attr:{r:G.handle.firstChild.getAttribute('r')}, duration:.8, ease:'elastic.out(1,.4)', repeat:2, repeatDelay:.6});
+};
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal, k = r.width / vb.width;
+  const cx = y => r.left + G.X(y)*k, cy = r.top + G.lineY*(r.height / vb.height);
+  const ev = (n, x) => svg.dispatchEvent(new PointerEvent(n, {clientX:x, clientY:cy, pointerId:1, bubbles:true}));
+  ev('pointerdown', cx(Y0));
+  for (let y = Y0; y <= Y1; y += 40){ ev('pointermove', cx(y)); await new Promise(r => setTimeout(r, 20)); }
+  ev('pointermove', cx(Y1)); ev('pointerup', cx(Y1));
+  await new Promise(r => setTimeout(r, 1000));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-delayed-club-jolt -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#t{width:100%;accent-color:var(--k);height:max(4cqh,28px);margin:0;cursor:pointer}
+#ends{display:flex;justify-content:space-between;font:600 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Slider · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPORTS PHYSICS</span></div>
+    <h2 class="q">Why does a golf club feel light after you hit the ball?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <input id="t" type="range" min="0" max="100" value="0" step="0.5" aria-label="Time after impact">
+        <div id="ends"><span>impact</span><span>time →</span><span>later</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag time forward from the hit. Watch the shaft and your hand.</p>
+    <div id="why" class="gone"><p class="body">The hit is a huge jolt at the club head. It has to travel up the shaft as a wave, so your hand feels it only when it arrives, with the ball already well on its way. And what reaches you is much smaller than what the ball got.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A force isn't felt everywhere at once: it travels, like the slinky's message.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Slinky Drop Answer” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic'), slider = Kit.$('t');
+let G = null, dyn = null, T = 0, done = false;
+const g = (x, m, w) => Math.exp(-(((x - m) / w) ** 2));
+const clamp = v => Math.max(0, Math.min(1, v));
+const headF = t => g(t, 0.012, 0.018);
+const handF = t => 0.3 * g(t, 0.5, 0.035);
+
+function pulse(t) {
+  if (t < 0.02) return null;
+  if (t <= 0.5) { const p = (t - 0.02) / 0.48; return {pos: p, amp: 1 - 0.45 * p}; }
+  if (t <= 0.98) { const p = (t - 0.5) / 0.48; return {pos: 1 - p, amp: 0.4 - 0.15 * p}; }
+  return null;
+}
+
+Kit.onShow.card = () => {
+  while (svg.firstChild) svg.firstChild.remove();
+  const {W, H, f} = Kit.fitSvg(svg);
+  const m = Math.min(W, H);
+  const fs = Math.max(f, 12);
+  G = {W, H, f: fs, m,
+    hd: {x: 0.40 * W, y: 0.55 * H}, hn: {x: 0.14 * W, y: 0.07 * H},
+    ground: 0.58 * H, r: Math.max(0.028 * m, 6),
+    tx0: 0.04 * W, tx1: 0.96 * W, rowA: 0.80 * H, rowB: 0.975 * H, amp: 0.12 * H};
+  // ground
+  Kit.mk('line', {x1: 0, x2: W, y1: G.ground, y2: G.ground, stroke: 'currentColor', 'stroke-opacity': .25, 'stroke-width': 2}, svg);
+  // traces (static)
+  const trace = (fn, base) => {
+    let d = '';
+    for (let i = 0; i <= 200; i++) { const t = i / 200, x = G.tx0 + t * (G.tx1 - G.tx0), y = base - fn(t) * G.amp; d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }
+    Kit.mk('line', {x1: G.tx0, x2: G.tx1, y1: base, y2: base, stroke: 'currentColor', 'stroke-opacity': .2, 'stroke-width': 1.5}, svg);
+    Kit.mk('path', {d, fill: 'none', stroke: 'currentColor', 'stroke-width': 2.5, 'stroke-linejoin': 'round'}, svg);
+  };
+  trace(headF, G.rowA); trace(handF, G.rowB);
+  const lab = (txt, y) => { const e = Kit.mk('text', {x: G.tx1, y, 'text-anchor': 'end', fill: 'currentColor', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); e.textContent = txt; };
+  lab('force at the head', G.rowA - 6);
+  lab('force at your hand', G.rowB - 6);
+  dyn = Kit.mk('g', {}, svg);
+  draw(T);
+};
+
+function draw(t) {
+  if (!G) return;
+  T = t;
+  while (dyn.firstChild) dyn.firstChild.remove();
+  const {W, H, f, m, hd, hn} = G;
+  const dx = hn.x - hd.x, dy = hn.y - hd.y, L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L;
+  const P = pulse(t), A = 0.05 * m;
+  // hand glow
+  const hf = handF(t) / 0.3;
+  const hp = {x: hd.x + dx * 0.92, y: hd.y + dy * 0.92};
+  Kit.mk('circle', {cx: hp.x, cy: hp.y, r: 0.06 * m + hf * 0.06 * m, fill: 'currentColor', 'fill-opacity': 0.08 + hf * 0.3}, dyn);
+  // shaft
+  let d = '';
+  for (let i = 0; i <= 80; i++) {
+    const s = i / 80, off = P ? A * P.amp * g(s, P.pos, 0.06) : 0;
+    const x = hd.x + dx * s + nx * off, y = hd.y + dy * s + ny * off;
+    d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+  }
+  Kit.mk('path', {d, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(3, 0.012 * m), 'stroke-linecap': 'round'}, dyn);
+  if (P) {
+    const off = A * P.amp;
+    Kit.mk('circle', {cx: hd.x + dx * P.pos + nx * off, cy: hd.y + dy * P.pos + ny * off, r: 0.018 * m + 0.012 * m * P.amp, fill: 'currentColor'}, dyn);
+  }
+  // hand (grip)
+  Kit.mk('line', {x1: hd.x + dx * 0.84, y1: hd.y + dy * 0.84, x2: hd.x + dx * 1.0, y2: hd.y + dy * 1.0, stroke: 'currentColor', 'stroke-opacity': .45, 'stroke-width': 0.07 * m, 'stroke-linecap': 'round'}, dyn);
+  // club head
+  Kit.mk('ellipse', {cx: hd.x + 0.025 * m, cy: hd.y + 0.012 * m, rx: 0.045 * m, ry: 0.022 * m, fill: 'currentColor'}, dyn);
+  // ball
+  const u = clamp((t - 0.01) / 0.75);
+  const bx0 = hd.x + 0.07 * m + G.r, by0 = G.ground - G.r;
+  const bx = bx0 + u * (W * 1.1 - bx0), by = by0 - 4 * u * (1 - u) * 0.38 * H;
+  Kit.mk('circle', {cx: bx, cy: by, r: G.r, fill: 'none', stroke: 'currentColor', 'stroke-width': 2.5}, dyn);
+  // impact burst
+  const hf2 = headF(t);
+  if (hf2 > 0.05) {
+    for (let k = 0; k < 7; k++) {
+      const a = -Math.PI / 2 + (k - 3) * 0.4, r1 = 0.06 * m, r2 = r1 + hf2 * 0.06 * m;
+      Kit.mk('line', {x1: bx0 + Math.cos(a) * r1, y1: by0 + Math.sin(a) * r1, x2: bx0 + Math.cos(a) * r2, y2: by0 + Math.sin(a) * r2, stroke: 'currentColor', 'stroke-width': 2.5, 'stroke-linecap': 'round'}, dyn);
+    }
+  }
+  // labels in the scene
+  const tx = (txt, x, y, anchor, op) => { const e = Kit.mk('text', {x, y, 'text-anchor': anchor, fill: 'currentColor', 'fill-opacity': op, 'font-size': f, 'font-weight': 800, 'font-family': 'var(--body)'}, dyn); e.textContent = txt; };
+  if (t < 0.06) tx('huge force on the ball', hd.x + 0.05 * m, G.ground + 1.5 * f, 'start', 1);
+  else if (P && t <= 0.5) tx('the jolt climbs the shaft…', hd.x + 0.05 * m, G.ground + 1.5 * f, 'start', 1);
+  else if (P) tx('…and bounces back down', hd.x + 0.05 * m, G.ground + 1.5 * f, 'start', 1);
+  if (hf > 0.25) tx('your hand feels it now', hn.x + 0.09 * m, hn.y + 0.9 * f, 'start', Math.min(1, hf * 1.5));
+  // time cursor on traces
+  const cx = G.tx0 + t * (G.tx1 - G.tx0);
+  Kit.mk('line', {x1: cx, x2: cx, y1: G.rowA - G.amp - 4, y2: G.rowB + 2, stroke: 'currentColor', 'stroke-width': 2, 'stroke-dasharray': '4 4', 'stroke-opacity': .7}, dyn);
+  Kit.mk('circle', {cx, cy: G.rowA - headF(t) * G.amp, r: 4.5, fill: 'currentColor'}, dyn);
+  Kit.mk('circle', {cx, cy: G.rowB - handF(t) * G.amp, r: 4.5, fill: 'currentColor'}, dyn);
+  if (!done && t >= 0.9) {
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }
+}
+
+let lastHapt = false;
+slider.addEventListener('input', () => {
+  const t = slider.value / 100;
+  const felt = handF(t) > 0.15;
+  if (felt && !lastHapt) Kit.haptic('light');
+  lastHapt = felt;
+  draw(t);
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {t: 0};
+  gsap.timeline()
+    .to(o, {t: 0.12, duration: .9, ease: 'power1.inOut', onUpdate: () => { slider.value = o.t * 100; draw(o.t); }})
+    .to(o, {t: 0, duration: .6, ease: 'power2.in', onUpdate: () => { slider.value = o.t * 100; draw(o.t); }});
+};
+Kit.play.card = async () => {
+  for (const v of [20, 50, 75, 100]) {
+    slider.value = v; slider.dispatchEvent(new Event('input', {bubbles: true}));
+    await new Promise(r => setTimeout(r, 120));
+  }
+  await new Promise(r => setTimeout(r, 500));
+};
+Kit.single();
+</script>
+</html>

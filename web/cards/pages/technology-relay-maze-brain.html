@@ -1,0 +1,172 @@
+<!doctype html>
+<!-- slug: technology-relay-maze-brain -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#maze{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RELAY MAZE</span></div>
+    <h2 class="q">How was the first intelligent mouse's brain built?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="maze"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">A tiny circuit inside the mouse</button>
+        <button class="opt" data-i="1">Switches hidden in the maze itself</button>
+        <button class="opt" data-i="2">A person steering it by remote</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The maze was the brain.</p><p class="body">Under the floor sat a computer made of telephone relay switches. The mouse was just a magnet on wheels, following an electromagnet that the relays moved.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Watch it find its way. Where does the thinking happen?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The clever part was in the maze, not in the mouse.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, N = 5;
+let pick = -1, revealed = false;
+// Maze: seeded depth-first carve, then the path from top-left to bottom-right.
+const R = [], B = []; // right wall, bottom wall
+for (let i = 0; i < N*N; i++) { R[i] = true; B[i] = true; }
+(() => {
+  const seen = new Array(N*N).fill(false), st = [0]; seen[0] = true;
+  while (st.length) {
+    const c = st[st.length-1], x = c % N, y = (c / N) | 0, nb = [];
+    if (x > 0 && !seen[c-1]) nb.push(c-1);
+    if (x < N-1 && !seen[c+1]) nb.push(c+1);
+    if (y > 0 && !seen[c-N]) nb.push(c-N);
+    if (y < N-1 && !seen[c+N]) nb.push(c+N);
+    if (!nb.length) { st.pop(); continue; }
+    const n = nb[Math.floor(Kit.rnd()*nb.length)];
+    if (n === c+1) R[c] = false; else if (n === c-1) R[n] = false;
+    else if (n === c+N) B[c] = false; else B[n] = false;
+    seen[n] = true; st.push(n);
+  }
+})();
+const open = (a, b) => b === a+1 ? !R[a] : b === a-1 ? !R[b] : b === a+N ? !B[a] : b === a-N ? !B[b] : false;
+const PATH = (() => {
+  const prev = new Array(N*N).fill(-1), q = [0]; prev[0] = 0;
+  while (q.length) { const c = q.shift(); for (const n of [c-1,c+1,c-N,c+N]) {
+    if (n < 0 || n >= N*N || prev[n] >= 0) continue;
+    if ((n === c-1 || n === c+1) && ((n/N)|0) !== ((c/N)|0)) continue;
+    if (open(c, n)) { prev[n] = c; q.push(n); } } }
+  const p = [N*N-1]; while (p[0] !== 0) p.unshift(prev[p[0]]); return p;
+})();
+
+let G = null, prog = {t: 0}, tween = null, lit = -2;
+const svg = Kit.$('maze');
+const ctr = i => [G.ox + (i % N + .5)*G.cell, G.oy + (((i / N)|0) + .5)*G.cell];
+function at(t) {
+  t = Math.max(0, Math.min(PATH.length-1, t));
+  const a = Math.floor(t), b = Math.min(a+1, PATH.length-1), u = t - a;
+  const [x1,y1] = ctr(PATH[a]), [x2,y2] = ctr(PATH[b]);
+  return [x1 + (x2-x1)*u, y1 + (y2-y1)*u, Math.atan2(y2-y1, x2-x1)*180/Math.PI];
+}
+function place() {
+  if (!G) return;
+  const t = prog.t, [mx,my] = at(t), [x,y,ang] = at(t - .22);
+  G.mag.setAttribute('transform', `translate(${mx},${my})`);
+  G.mouse.setAttribute('transform', `translate(${x},${y}) rotate(${PATH.length > 1 ? ang : 0})`);
+  const k = Math.floor(t);
+  if (k !== lit) { lit = k;
+    G.levers.forEach((l, i) => {
+      const on = PATH.indexOf(i) >= 0 && PATH.indexOf(i) <= k;
+      l.setAttribute('transform', `rotate(${on ? 40 : -40} ${l.dataset.px} ${l.dataset.py})`);
+      l.style.stroke = on ? 'var(--k)' : 'color-mix(in srgb,var(--k) 45%,transparent)';
+    });
+  }
+}
+Kit.onShow.card = () => {
+  const {W, H} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const size = Math.min(W, H) * .96, cell = size / N, ox = (W-size)/2, oy = (H-size)/2;
+  G = {cell, ox, oy, levers: []};
+  const under = Kit.mk('g', {}, svg);
+  // wiring between relays
+  for (let i = 0; i < N*N; i++) {
+    const [cx, cy] = ctr(i);
+    if (i % N < N-1) Kit.mk('line', {x1: cx, y1: cy + cell*.18, x2: cx + cell, y2: cy + cell*.18, style: 'stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:1.2'}, under);
+    if (i < N*(N-1)) Kit.mk('line', {x1: cx - cell*.22, y1: cy, x2: cx - cell*.22, y2: cy + cell, style: 'stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:1.2'}, under);
+  }
+  // one relay switch per square
+  for (let i = 0; i < N*N; i++) {
+    const [cx, cy] = ctr(i), w = cell*.44, h = cell*.3;
+    Kit.mk('rect', {x: cx-w/2, y: cy+cell*.08, width: w, height: h, rx: h*.2, style: 'fill:color-mix(in srgb,var(--k) 14%,transparent);stroke:var(--k);stroke-width:1.3'}, under);
+    const px = cx - w*.3, py = cy + cell*.08 + h*.55;
+    Kit.mk('circle', {cx: px, cy: py, r: cell*.03, style: 'fill:var(--k)'}, under);
+    const l = Kit.mk('line', {x1: px, y1: py, x2: px + w*.6, y2: py, style: 'stroke-width:' + Math.max(2, cell*.045) + ';stroke-linecap:round'}, under);
+    l.dataset.px = px; l.dataset.py = py; G.levers.push(l);
+  }
+  // the electromagnet under the floor
+  G.mag = Kit.mk('g', {}, under);
+  Kit.mk('circle', {r: cell*.36, style: 'fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:4 4;opacity:.7'}, G.mag);
+  Kit.mk('circle', {r: cell*.2, style: 'fill:color-mix(in srgb,var(--k) 30%,transparent);stroke:var(--k);stroke-width:2'}, G.mag);
+  // the floor that hides it all
+  G.cover = Kit.mk('rect', {x: ox, y: oy, width: size, height: size, rx: cell*.12, style: 'fill:var(--c);stroke:none'}, svg);
+  G.cover.style.opacity = revealed ? .2 : 1;
+  const floorLine = Kit.mk('rect', {x: ox, y: oy, width: size, height: size, rx: cell*.12, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent);stroke:none'}, svg);
+  G.floor = floorLine; floorLine.style.opacity = revealed ? 0 : 1;
+  // walls
+  const ws = `stroke:var(--k);stroke-width:${Math.max(3, cell*.07)};stroke-linecap:round`;
+  Kit.mk('rect', {x: ox, y: oy, width: size, height: size, style: ws + ';fill:none'}, svg);
+  for (let i = 0; i < N*N; i++) {
+    const x = ox + (i % N)*cell, y = oy + ((i / N)|0)*cell;
+    if (R[i] && i % N < N-1) Kit.mk('line', {x1: x+cell, y1: y, x2: x+cell, y2: y+cell, style: ws}, svg);
+    if (B[i] && i < N*(N-1)) Kit.mk('line', {x1: x, y1: y+cell, x2: x+cell, y2: y+cell, style: ws}, svg);
+  }
+  // goal
+  const [gx, gy] = ctr(N*N-1);
+  Kit.mk('circle', {cx: gx, cy: gy, r: cell*.12, style: 'fill:none;stroke:var(--k);stroke-width:2.5'}, svg);
+  // the mouse: a magnet on wheels
+  G.mouse = Kit.mk('g', {}, svg);
+  const s = cell*.2;
+  Kit.mk('rect', {x: -s*.6, y: -s*1.15, width: s*.9, height: s*.35, rx: s*.12, style: 'fill:var(--k)'}, G.mouse);
+  Kit.mk('rect', {x: -s*.6, y: s*.8, width: s*.9, height: s*.35, rx: s*.12, style: 'fill:var(--k)'}, G.mouse);
+  Kit.mk('ellipse', {cx: 0, cy: 0, rx: s*1.15, ry: s*.85, style: 'fill:var(--k)'}, G.mouse);
+  Kit.mk('circle', {cx: s*.9, cy: -s*.65, r: s*.32, style: 'fill:var(--k)'}, G.mouse);
+  Kit.mk('circle', {cx: s*.9, cy: s*.65, r: s*.32, style: 'fill:var(--k)'}, G.mouse);
+  Kit.mk('circle', {cx: s*.75, cy: -s*.25, r: s*.12, style: 'fill:var(--c)'}, G.mouse);
+  Kit.mk('circle', {cx: s*.75, cy: s*.25, r: s*.12, style: 'fill:var(--c)'}, G.mouse);
+  lit = -2;
+  if (Kit.calm) prog.t = Math.floor(PATH.length*.6);
+  place();
+};
+function reveal() {
+  revealed = true; if (!G) return;
+  if (Kit.calm) { G.cover.style.opacity = .2; G.floor.style.opacity = 0; }
+  else { gsap.to(G.cover, {opacity: .2, duration: 1.2, ease: 'power2.inOut'}); gsap.to(G.floor, {opacity: 0, duration: 1.2}); }
+}
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep'); reveal(); Kit.haptic('success');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onEnter.card = () => {
+  if (Kit.calm || tween) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  prog.t = 0;
+  tween = gsap.to(prog, {t: PATH.length - 1 + .22, duration: PATH.length*.5, ease: 'none', repeat: -1, repeatDelay: .8, onUpdate: place, onRepeat: () => { lit = -2; }});
+};
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1400)); };
+Kit.single();
+</script>
+</html>

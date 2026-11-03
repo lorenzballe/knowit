@@ -1,0 +1,37 @@
+{
+  "id": "science-slinky-compression-wave",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Drop a hanging slinky. What type of wave tells the bottom to fall?",
+  "answer": "The answer is a compressional wave: coils squeezing together. Letting go is news, and it has to travel down the slinky as a squeeze, coil bumping into coil. The bottom hangs still until that squeeze reaches it, and only then does it start to fall.",
+  "move": "The bottom can't know you let go until the compression wave arrives.",
+  "keywords": [
+    "slinky",
+    "compressional wave",
+    "wave propagation",
+    "free fall",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card showing a hanging slinky and the question: what type of wave tells the bottom to fall? Three choices are offered: a sideways wave like a shaken rope, a compressional wave with coils squeezing together, or no wave, with the whole slinky falling at once. Pick one to watch the slinky drop."
+  },
+  "source": "Veritasium, “Slinky Drop Answer” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=eCMmmEEyOO0&t=92s",
+  "written": "2026-11-03"
+}

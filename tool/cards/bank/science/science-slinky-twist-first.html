@@ -1,0 +1,149 @@
+<!doctype html>
+<!-- slug: science-slinky-twist-first -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#sl{flex:1;min-height:0;width:100%;display:block;cursor:pointer;touch-action:manipulation}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:700 max(2.4cqh,15px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+.opt{font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer;overflow-wrap:break-word}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lbl{font-family:var(--mono);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FALLING SLINKY</span></div>
+    <h2 class="q">What signal reaches the slinky bottom first?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sl" aria-label="A slinky hanging from a hand"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Nothing: the bottom waits for the collapse</button>
+        <button class="opt" data-i="1">A twist, and it makes the bottom fall</button>
+        <button class="opt" data-i="2">A twist, but the bottom stays put</button>
+      </div>
+      <div id="why" class="gone"><p class="big">A twist, but the bottom stays put</p><p class="body">When the top is let go, a twisting signal rushes down ahead of the collapse, so the bottom coil starts to rotate. A twist releases no tension, so the bottom keeps sitting there until the collapse arrives.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick what you think, then watch the slinky let go.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The first signal to arrive isn't always the one that lets go.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2, N = 22;
+let pick = -1, played = false, done = false, tl = null;
+const st = {tw: 0, col: 0, fall: 0, bar: 1};
+let G = null;
+
+function hy(i){ // hanging y, continuous index
+  const a = Math.floor(Math.min(Math.max(i,0),N-1)), b = Math.min(a+1,N-1), t = i - a;
+  return G.ys[a] + (G.ys[b]-G.ys[a])*t;
+}
+function render(){
+  if (!G) return;
+  const {cx, rx, ry, g0, H, coils, dots, drop} = G;
+  const k = st.col*(N-1), yk = hy(k), off = st.fall*drop;
+  for (let i=0;i<N;i++){
+    const y = (i<=k ? yk-(k-i)*g0 : G.ys[i]) + off;
+    const local = st.tw*1 - i/N;
+    const a = local>0 ? 1.25*Math.sin(local*13)*Math.exp(-local*1.4) : 0;
+    coils[i].setAttribute('cy', y);
+    const tw = local>0 && local<1.2;
+    coils[i].setAttribute('stroke-width', i===N-1 ? 3.2 : (tw ? 2.4 : 1.6));
+    dots[i].setAttribute('cx', cx + rx*Math.sin(a));
+    dots[i].setAttribute('cy', y + ry*Math.cos(a));
+    dots[i].setAttribute('opacity', Math.cos(a)<0 ? .35 : 1);
+  }
+  G.bar.setAttribute('opacity', st.bar);
+  // twist label (right side)
+  const ti = Math.min(N-1, st.tw*N);
+  G.tl.setAttribute('y', hy(ti) + off + G.f*.35);
+  G.tl.setAttribute('opacity', st.tw>0 && st.tw<1.12 ? 1 : 0);
+  // release label (left side)
+  G.cl.setAttribute('y', yk + off + G.f*.35);
+  G.cl.setAttribute('opacity', st.col>0.01 && st.col<0.93 ? 1 : 0);
+  // bottom label (right side, after twist arrives)
+  G.bl.setAttribute('y', G.ys[N-1] + off + G.f*.35);
+  G.bl.textContent = st.col>=1 ? 'now it falls' : 'bottom: still here';
+  G.bl.setAttribute('opacity', st.tw>=1.12 ? 1 : 0);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('sl');
+  const {W,H,f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const fs = Math.max(f, 12);
+  const cx = W*.5, rx = Math.min(W*.17, H*.2, 70), ry = rx*.24;
+  const top = H*.07 + ry, bot = H*.8;
+  const g0 = Math.max(ry*.45, 2);
+  const L = bot - top, n = N-1;
+  // gaps grow toward the top: more weight below
+  const raw = []; let sum = 0;
+  for (let i=0;i<n;i++){ const g = 1 + (n-1-i)*1.0; raw.push(g); sum += g; }
+  const ys = [top]; for (let i=0;i<n;i++) ys.push(ys[i] + raw[i]/sum*L);
+  // reference line at the bottom's height
+  Kit.mk('line',{x1:W*.06,x2:W*.94,y1:bot,y2:bot,stroke:ink,'stroke-opacity':.3,'stroke-dasharray':'4 5','stroke-width':1.2},svg);
+  const bar = Kit.mk('rect',{x:cx-rx*1.3,y:top-ry-7,width:rx*2.6,height:6,rx:3,fill:ink},svg);
+  const coils = [], dots = [];
+  for (let i=0;i<N;i++) coils.push(Kit.mk('ellipse',{cx,cy:ys[i],rx,ry,fill:'none',stroke:ink,'stroke-width':1.6},svg));
+  for (let i=0;i<N;i++) dots.push(Kit.mk('circle',{cx,cy:ys[i]+ry,r:Math.max(2.6,ry*.38),fill:ink},svg));
+  const mkT = (x, anchor, txt) => { const t = Kit.mk('text',{x,y:0,'text-anchor':anchor,fill:ink,class:'lbl','font-size':fs,opacity:0},svg); t.textContent = txt; return t; };
+  const tl = mkT(cx+rx+8, 'start', 'twist ↓');
+  const cl = mkT(cx-rx-8, 'end', 'release ↓');
+  const bl = mkT(cx+rx+8, 'start', 'bottom: still here');
+  if (cx+rx+8 + fs*9.5 > W) { bl.setAttribute('x', W-4); bl.setAttribute('text-anchor','end'); bl.setAttribute('dy', ry+fs*1.3); }
+  G = {cx,rx,ry,g0,H,ys,coils,dots,bar,tl,cl,bl,f:fs,drop:H*.12};
+  render();
+};
+
+function finish(){
+  if (done) return; done = true;
+  Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why,#keep',{opacity:0,y:8,stagger:.1,duration:.4,ease:'power3.out'});
+}
+function run(){
+  played = true;
+  Object.assign(st,{tw:0,col:0,fall:0,bar:1}); render();
+  if (Kit.calm){ Object.assign(st,{tw:2,col:1,fall:1,bar:0}); render(); finish(); return; }
+  if (tl) tl.kill();
+  tl = gsap.timeline();
+  tl.to(st,{bar:0,duration:.25,onUpdate:render});
+  tl.addLabel('go');
+  tl.to(st,{tw:2,duration:2.1,ease:'none',onUpdate:render},'go');
+  tl.to(st,{col:1,duration:2.6,ease:'power1.in',onUpdate:render},'go');
+  tl.call(()=>Kit.haptic('light'));
+  tl.to(st,{fall:1,duration:.45,ease:'power2.in',onUpdate:render});
+  tl.call(finish);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say');
+  sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'wrong'}`);
+  run();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('sl').addEventListener('click', () => { if (done) run(); });
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, Kit.calm ? 600 : 4300));
+};
+Kit.single();
+</script>
+</html>

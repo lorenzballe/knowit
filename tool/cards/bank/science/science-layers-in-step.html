@@ -1,0 +1,216 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Layers in step</title>
+<!-- The mirrors in an EUV chip machine are stacks of molybdenum and silicon, each pair of layers about
+     7 nm thick and on its own reflecting only about 0.4% of the 13.5 nm light. The reader guesses what
+     50 pairs reflect; the stack then builds pair by pair. Echoes that leave in step add their heights,
+     so the reflection grows like the square of the pairs (2 pairs: 4 times one, 10 pairs: 60 times),
+     until the light runs out deeper down: about 70%, as real mirrors reach, not the 20% of plain adding.
+     Inspired by Veritasium, "The Closest Thing We Have to Alien Technology".
+     The curve is a Parratt model at normal incidence: period 6.91 nm, molybdenum 41%, Henke/CXRO optical
+     constants at 13.5 nm (Mo n = 0.9238, k = 0.00643; Si n = 0.9990, k = 0.00182), and interfaces
+     blurred over 0.6 nm (Nevot-Croce), a typical Mo/Si interdiffusion width. Perfect layers would give
+     75%; with the blur the model gives 70.7%, the value real mirrors reach (Fraunhofer IOF: 68.8-69.6%).
+     Touch: drags (on the chart, to set the guess) and taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+.done #pic{cursor:default}
+.say b{font-weight:800}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* A short phone keeps the first line of the why; the rest of it gives way to the chart. */
+@container (max-height:540px){.answered #say .more{display:none}.answered .in{gap:1.5cqh}.answered .keep{padding-block:max(1.4cqh,9px)}}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Guess, then build · layers in step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS, THEN BUILD</span></div>
+    <h2 class="q">One pair of thin layers reflects 0.4% of chip-making light. What do 50 pairs reflect?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A chart of the light bounced back by a stack of layer pairs, from none to 50 pairs, with your guess for 50 pairs."></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Glass and even air swallow the light that prints new phone chips, so it is bounced off layered mirrors. <b>Drag on the chart to guess.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Two echoes in step make a wave twice as tall, and that carries four times the light.</div>
+    <div class="foot"><span class="src">Source · Laser Focus World, EUV multilayer mirrors; curve: our model, optical constants from Henke et al. 1993</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  // Light bounced back (%) by 0..50 pairs, and each pair's own echo (its share of the wave's height):
+  // a Parratt model of a molybdenum/silicon stack at 13.5 nm with real, slightly blurred interfaces (see the note at the top).
+  const R = [0,0.41,1.56,3.37,5.74,8.55,11.7,15.09,18.63,22.22,25.81,29.33,32.73,35.99,39.09,41.99,44.71,47.22,49.55,51.68,53.64,55.42,57.03,58.5,59.83,61.03,62.1,63.07,63.95,64.73,65.43,66.05,66.61,67.12,67.56,67.96,68.32,68.64,68.92,69.17,69.4,69.6,69.78,69.94,70.08,70.2,70.31,70.41,70.5,70.58,70.65];
+  const ECHO = [0.0631,0.0611,0.0588,0.0561,0.0532,0.0502,0.047,0.0438,0.0406,0.0375,0.0344,0.0315,0.0288,0.0262,0.0238,0.0216,0.0195,0.0176,0.0158,0.0143,0.0128,0.0115,0.0103,0.0092,0.0083,0.0074,0.0066,0.0059,0.0053,0.0047,0.0042,0.0037,0.0033,0.003,0.0026,0.0024,0.0021,0.0019,0.0017,0.0015,0.0013,0.0012,0.001,0.0009,0.0008,0.0007,0.0007,0.0006,0.0005,0.0005];
+  const ONE = .4, NP = 50;   // the 0.4% the question states, so plain adding gives 20%
+  const css = getComputedStyle(card), INK = css.getPropertyValue('--k').trim() || '#10100c', BG = css.getPropertyValue('--c').trim() || '#00E5A0';
+  const st = {n: 0, guess: 50, set: false, phase: 'guess'};   // phase: guess -> sure -> build -> done
+  let G = null, pct = null;
+  const txt = (x, y, s, a, parent) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK}, a), parent); e.textContent = s; return e; };
+  const Rat = n => { const i = Math.min(NP - 1, Math.floor(n)), f = n - i; return R[i] + (R[i + 1] - R[i]) * f; };
+  const halo = {stroke: BG, 'stroke-width': 5, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = Math.max(11.5, Math.min(14, H / 19, W / 26));
+    const x0 = fs * 2.9, x1 = W - 2;
+    const bh = Math.max(12, Math.min(26, H * .075)), ch = Math.max(23, Math.min(32, H * .11));
+    const yLab = H - fs * .35, yBand1 = yLab - fs * 1.15, yBand0 = yBand1 - bh, yComb = yBand0 - 2, yPlot = yComb - ch - fs * .5;
+    // A short chart gives its caption's line to the plot.
+    const caption = yPlot - fs * 1.5 > fs * 7.5, y0 = caption ? fs * 1.5 : fs * .7;
+    const X = n => x0 + (x1 - x0) * n / NP, Y = r => yPlot - (yPlot - y0) * r / 100;
+    const g = Kit.mk('g', {}, svg);
+    // The grid: what share of the light comes back.
+    for (const r of [0, 25, 50, 75, 100]) {
+      Kit.mk('line', {x1: x0, x2: x1, y1: Y(r), y2: Y(r), stroke: INK, 'stroke-width': r ? 1 : 1.6, opacity: r ? .16 : .5}, g);
+      if (r % 50 === 0) txt(x0 - fs * .45, Y(r) + fs * .36, r ? r + '%' : '0', {'font-size': Math.max(11, fs * .88), 'font-weight': 700, 'font-family': 'Figtree', 'text-anchor': 'end', opacity: .7}, g);
+    }
+    if (caption) txt(x0, y0 - fs * .7, 'LIGHT BOUNCED BACK', {'font-size': 11, 'font-weight': 800, 'font-family': 'Figtree', 'letter-spacing': '1.2', opacity: .62}, g);
+    // The mirror itself, laid on its side: light comes in at the surface (left), each pair a dark
+    // molybdenum line and a pale silicon one.
+    const band = Kit.mk('g', {}, svg), pw = (x1 - x0) / NP;
+    const pairs = [];
+    for (let i = 0; i < NP; i++) {
+      const p = Kit.mk('g', {opacity: .28}, band);
+      Kit.mk('rect', {x: x0 + i * pw, y: yBand0, width: pw * .41, height: bh, fill: INK}, p);
+      Kit.mk('rect', {x: x0 + i * pw + pw * .41, y: yBand0, width: pw * .59, height: bh, fill: '#fff', opacity: .7}, p);
+      pairs.push(p);
+    }
+    txt(x0, yLab, '← surface', {'font-size': Math.max(11, fs * .85), 'font-weight': 700, 'font-family': 'Figtree', opacity: .75}, g);
+    const cnt = txt(x1, yLab, '50 pairs', {'font-size': Math.max(11, fs * .85), 'font-weight': 700, 'font-family': 'Figtree', 'text-anchor': 'end', opacity: .75}, g);
+    // Each pair's own echo: a tick as tall as its share of the wave that comes back.
+    const comb = [];
+    for (let i = 0; i < NP; i++) comb.push(Kit.mk('line', {x1: x0 + (i + .5) * pw, x2: x0 + (i + .5) * pw, y1: yComb, y2: yComb - Math.max(1.5, ch * ECHO[i] / ECHO[0]), stroke: INK, 'stroke-width': Math.max(1.4, pw * .45), 'stroke-linecap': 'round', opacity: 0}, g));
+    // Its label starts where the ticks have shrunk, and floats just above the tallest one to its right.
+    const echoLab = txt(X(22), yComb - Math.max(1.5, ch * ECHO[22] / ECHO[0]) - 5, '← echo of each pair', {'font-size': 11, 'font-weight': 700, 'font-family': 'Figtree', opacity: 0}, g);
+    // Plain adding, the curve, the moving point.
+    const naive = Kit.mk('line', {x1: X(0), y1: Y(0), x2: X(NP), y2: Y(ONE * NP), stroke: INK, 'stroke-width': 1.8, 'stroke-dasharray': '5 5', opacity: 0}, g);
+    const naiveLab = txt(X(NP) - 2, Y(ONE * NP) - fs * .55, `${Math.round(ONE * NP)}% if just added`, Object.assign({'font-size': Math.max(11, fs * .86), 'font-weight': 700, 'font-family': 'Figtree', 'text-anchor': 'end', opacity: 0}, halo), g);
+    const curve = Kit.mk('path', {d: '', fill: 'none', stroke: INK, 'stroke-width': Math.max(2.6, fs * .24), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    const dot = Kit.mk('circle', {r: Math.max(4, fs * .36), fill: INK, opacity: 0}, g);
+    // Where the reader starts from: one pair, 0.4%.
+    const one = Kit.mk('g', {}, g);
+    Kit.mk('circle', {cx: X(1), cy: Y(R[1]), r: Math.max(3.5, fs * .3), fill: INK}, one);
+    txt(X(1) + fs * .2, Y(R[1]) - fs * .75, '1 pair: 0.4%', Object.assign({'font-size': Math.max(11, fs * .9), 'font-weight': 800, 'font-family': 'Figtree'}, halo), one);
+    const now = txt(0, 0, '', Object.assign({'font-size': fs * 1.05, 'font-weight': 800, 'font-family': 'Fraunces'}, halo), g);
+    // The answer sits above the curve's plateau, or just under it when a short chart leaves no room above.
+    const above = Y(R[NP]) - fs * .75, roomAbove = above - fs * 1.15 > (caption ? y0 - fs * .7 + 5 : 0);
+    const res = txt(X(31), roomAbove ? above : Y(R[NP]) + fs * 1.55, '', Object.assign({'font-size': fs * 1.5, 'font-weight': 800, 'font-family': 'Fraunces', 'text-anchor': 'middle'}, halo), g);
+    // The reader's guess: a line across the chart, and its value at the right.
+    const gl = Kit.mk('line', {x1: x0, x2: x1, y1: 0, y2: 0, stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '2 5', 'stroke-linecap': 'round'}, g);
+    const pill = Kit.mk('g', {}, g);
+    const pr = Kit.mk('rect', {x: 0, y: 0, rx: fs * .9, ry: fs * .9, height: fs * 1.8, width: 10, fill: INK, stroke: INK, 'stroke-width': 1.6}, pill);
+    const pt = txt(0, 0, '', {'font-size': Math.max(11.5, fs * .95), 'font-weight': 800, 'font-family': 'Figtree', 'text-anchor': 'middle', fill: BG}, pill);
+    G = {W, H, fs, x0, x1, y0, yPlot, X, Y, pairs, comb, echoLab, naive, naiveLab, curve, dot, now, res, gl, pill, pr, pt, cnt, one};
+    paint();
+  }
+
+  // Everything that moves, drawn from the state.
+  function paint() {
+    if (!G) return;
+    const {fs, x0, x1, X, Y} = G, n = st.n;
+    // the guess
+    const gy = Y(st.guess), label = st.set ? `you: ${st.guess}%` : '↕ your guess';
+    G.pt.textContent = label;
+    // The pill is its words plus a margin; the guess line stops at its edge.
+    const tw = G.pt.getComputedTextLength() + fs * 1.5, px = x1 - tw - .8;
+    G.pr.setAttribute('x', px); G.pr.setAttribute('width', tw); G.pr.setAttribute('y', gy - fs * .9);
+    G.pt.setAttribute('x', px + tw / 2); G.pt.setAttribute('y', gy + fs * .35);
+    // Before a guess the pill is pale but solid, so nothing shows through it.
+    G.pr.setAttribute('fill', st.set ? INK : BG); G.pt.setAttribute('fill', st.set ? BG : INK);
+    G.gl.setAttribute('x2', px - 3); G.gl.setAttribute('y1', gy); G.gl.setAttribute('y2', gy); G.gl.setAttribute('opacity', st.set ? .85 : .45);
+    G.one.setAttribute('opacity', st.phase === 'guess' || st.phase === 'sure' ? 1 : 0);
+    // the stack built so far, and each pair's echo
+    G.pairs.forEach((p, i) => p.setAttribute('opacity', i < n ? 1 : .28));
+    G.comb.forEach((c, i) => c.setAttribute('opacity', i < n ? .75 : 0));
+    G.echoLab.setAttribute('opacity', n >= 6 ? .75 : 0);
+    // the curve up to n
+    let d = `M${X(0)} ${Y(0)}`;
+    for (let i = 1; i <= Math.floor(n); i++) d += ` L${X(i)} ${Y(R[i])}`;
+    if (n % 1) d += ` L${X(n)} ${Y(Rat(n))}`;
+    G.curve.setAttribute('d', n > 0 ? d : '');
+    const live = st.phase === 'build' && n > 0;
+    G.dot.setAttribute('opacity', live ? 1 : 0);
+    G.dot.setAttribute('cx', X(n)); G.dot.setAttribute('cy', Y(Rat(n)));
+    G.now.textContent = live ? `${Math.round(Rat(n))}%` : '';
+    const nx = X(n), right = nx > x0 + (x1 - x0) * .7;
+    G.now.setAttribute('x', right ? nx - fs * .6 : nx + fs * .7); G.now.setAttribute('y', Y(Rat(n)) - fs * .55);
+    G.now.setAttribute('text-anchor', right ? 'end' : 'start');
+    G.cnt.textContent = st.phase === 'build' ? `${Math.floor(n)} pairs` : '50 pairs';
+    const done = st.phase === 'done';
+    G.naive.setAttribute('opacity', done ? .6 : 0);
+    // Plain adding's label sits at the end of its own line: above it, or below it if the guess's pill
+    // is there, or just before the pill if the pill covers both.
+    const yEnd = Y(ONE * NP), hits = yl => yl - fs * .95 < gy + fs * .9 && yl + fs * .3 > gy - fs * .9;
+    let lx = x1, ly = yEnd - fs * .55;
+    if (hits(ly)) ly = yEnd + fs * 1.3;
+    if (hits(ly)) {
+      // The pill covers the line's end: step left of it, on the side of the line away from the guess.
+      lx = px - fs * .6;
+      const at = ONE * (lx - x0) / (x1 - x0) * NP;
+      ly = st.guess > at ? Y(at) + fs * 1.3 : Y(at) - fs * .55;
+    }
+    G.naiveLab.setAttribute('x', lx); G.naiveLab.setAttribute('y', ly);
+    G.naiveLab.setAttribute('opacity', done ? .85 : 0);
+    G.res.textContent = done ? `${Math.round(R[NP])}%` : '';
+  }
+
+  // Setting the guess: a finger anywhere on the chart, up for more, down for less.
+  let held = false;
+  const guessAt = e => {
+    if (!G) return;
+    const r = svg.getBoundingClientRect(), y = e.clientY - r.top;
+    st.guess = Math.max(0, Math.min(100, Math.round((G.yPlot - y) / (G.yPlot - G.y0) * 100)));
+  };
+  svg.addEventListener('pointerdown', e => {
+    if (st.phase !== 'guess' && st.phase !== 'sure') return;
+    gsap.killTweensOf(st);
+    held = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    guessAt(e); st.set = true; paint();
+  });
+  svg.addEventListener('pointermove', e => { if (!held) return; guessAt(e); paint(); });
+  const release = () => {
+    if (!held) return; held = false;
+    if (st.phase === 'guess') { st.phase = 'sure'; sure.on(); }
+    say.innerHTML = `You say <b>${st.guess}%</b>. Drag again to change it, or say how sure you are.`;
+    Kit.haptic('selection');
+  };
+  svg.addEventListener('pointerup', release); svg.addEventListener('pointercancel', release);
+
+  const right = g => g >= 58 && g <= 86;
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', p => {
+    if (st.phase !== 'sure') return;
+    pct = p; st.phase = 'build';
+    Kit.answer({choice: `${st.guess}%`, correct: right(st.guess), sure: p});
+    say.innerHTML = 'Now the stack, pair by pair: watch what each new pair adds.';
+    build();
+  }, {said: n => `you were ${n}% sure`});
+  function build() {
+    const end = () => {
+      st.n = NP; st.phase = 'done'; paint();
+      sure.grade(right(st.guess), pct, `You guessed ${st.guess}%, it is about 70%`);
+      say.innerHTML = `<b>Not ${Math.round(ONE * NP)}%: echoes in step add up.</b><span class="more"> 10 pairs make a wave 8 times taller than one, so 8&nbsp;×&nbsp;8&nbsp;≈&nbsp;60 times the light, until it runs out deeper down. Soap bubbles and morpho wings shine the same way.</span>`;
+      card.classList.add('answered', 'done'); Kit.show('keep'); Kit.haptic('success');
+      requestAnimationFrame(draw);
+    };
+    if (Kit.calm) return end();
+    gsap.to(st, {n: NP, duration: 3.2, ease: 'none', onUpdate: paint, onComplete: end});
+  }
+  Kit.onShow.card = draw;
+  // A hint the chart can be pulled: the guess line breathes once.
+  Kit.onEnter.card = () => { if (Kit.calm || st.set) return; gsap.fromTo(st, {guess: 50}, {guess: 62, duration: .45, yoyo: true, repeat: 1, ease: 'power2.inOut', delay: .3, onUpdate: () => { st.guess = Math.round(st.guess); paint(); }}); };
+  Kit.play.card = async () => {
+    const r = svg.getBoundingClientRect(), y = r.top + G.yPlot - (G.yPlot - G.y0) * .3;
+    svg.dispatchEvent(new PointerEvent('pointerdown', {clientX: r.left + r.width / 2, clientY: y, pointerId: 1, bubbles: true}));
+    svg.dispatchEvent(new PointerEvent('pointerup', {clientX: r.left + r.width / 2, clientY: y, pointerId: 1, bubbles: true}));
+    await new Promise(res => setTimeout(res, 120));
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await new Promise(res => setTimeout(res, Kit.calm ? 60 : 3600));
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "nature-vesuvius-one-eruption",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is Vesuvius's 1944 eruption seen as a continuation of 1906?",
+  "answer": "At the surface, the 1906 and 1944 eruptions look like two separate events. Scientists agree that 1944 was in every sense a continuation of the strong 1906 eruption, driven by the same magmatic process still going. Lifting the surface off what lies beneath shows one process behind both outbursts.",
+  "move": "1944 wasn't a new start for Vesuvius: it was 1906, carried on.",
+  "keywords": [
+    "vesuvius",
+    "1944 eruption",
+    "1906 eruption",
+    "magma",
+    "naples"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drag-apart drawing of Vesuvius. Lifting the surface shows the 1906 and 1944 eruptions as one shared magma process beneath. Asks why 1944 is seen as a continuation of 1906, not a new start."
+  },
+  "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IxqDIGusjko&t=44s",
+  "written": "2026-11-03"
+}

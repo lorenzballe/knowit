@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-campi-flegrei-uplift -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#row{display:flex;gap:2.4cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+.opt{flex:1;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt small{display:block;font:600 max(1.5cqh,12px)/1.2 var(--body);opacity:.75;margin-top:.4cqh}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lbl{font-family:var(--body);font-weight:700}
+.val{font-family:var(--display);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
+    <h2 class="q">How much did the ground rise in two years after the 1538 eruption?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Two blocks of ground with a person on top for scale"></svg>
+      <div id="row">
+        <button class="opt" data-i="0">Since 2016<small>about 8 years</small></button>
+        <button class="opt" data-i="1">1538, Monte Nuovo<small>just 2 years</small></button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Almost 20 m in 2 years</p>
+        <p class="body">When Monte Nuovo erupted in 1538, the Campi Flegrei ground rose almost 20 metres in two years. Since 2016 it has risen about 80 cm: real, but some 25 times smaller.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap both buttons to lift the ground. The little figure is a person, for scale.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>1538: ~20 m in 2 years. Since 2016: ~80 cm.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TARGET = [0.8, 20];
+const S = [{v: 0}, {v: 0}];
+const started = [false, false], finished = [false, false];
+let G = null;
+
+function personPath(h){
+  const w = h * .34, r = h * .12;
+  return `M${-w/2} 0 L${-w*.28} ${-h*.45} L${-w/2} ${-h*.74} L${w/2} ${-h*.74} L${w*.28} ${-h*.45} L${w/2} 0 Z` +
+         `M0 ${-h+ 2*r} m${-r} 0 a${r} ${r} 0 1 0 ${2*r} 0 a${r} ${r} 0 1 0 ${-2*r} 0`;
+}
+function fmt(m){ return m < 2 ? '+' + Math.round(m * 100) + ' cm' : '+' + m.toFixed(m >= 19.95 ? 0 : 1) + ' m'; }
+
+function render(){
+  if (!G) return;
+  for (let i = 0; i < 2; i++){
+    const c = G.cols[i], m = S[i].v, top = G.gy - m * G.k;
+    c.rise.setAttribute('y', top); c.rise.setAttribute('height', Math.max(0, m * G.k));
+    c.man.setAttribute('transform', `translate(${c.cx},${top})`);
+    c.val.setAttribute('y', top - G.ph - G.f * .5);
+    c.val.textContent = started[i] ? fmt(m) : '?';
+  }
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const base = Math.max(fs * 2.4, H * .11);
+  const gy = H - base;
+  const k = (gy - fs * 1.9) / 21.75;
+  const ph = 1.75 * k;
+  const rw = fs * 2.8;
+  const gap = W * .04;
+  const cw = (W - rw - gap * 2) / 2;
+  // ruler
+  [0, 5, 10, 15, 20].forEach(m => {
+    const y = gy - m * k;
+    Kit.mk('line', {x1: rw - fs * .5, x2: rw - fs * .1, y1: y, y2: y, style: 'stroke:var(--k);stroke-width:1.5'}, svg);
+    const t = Kit.mk('text', {x: rw - fs * .7, y: y + fs * .35, 'text-anchor': 'end', class: 'lbl', style: `fill:var(--k);font-size:${fs*.85}px;opacity:.75`}, svg);
+    t.textContent = m + ' m';
+  });
+  Kit.mk('line', {x1: rw - fs * .1, x2: rw - fs * .1, y1: gy - 20 * k, y2: gy, style: 'stroke:var(--k);stroke-width:1.5;opacity:.5'}, svg);
+  const caps = ['2016 → today', '1538, in 2 yrs'];
+  G = {k, gy, f: fs, ph, cols: []};
+  for (let i = 0; i < 2; i++){
+    const x = rw + gap + i * (cw + gap), cx = x + cw / 2;
+    Kit.mk('rect', {x, y: gy, width: cw, height: base, rx: 4, style: 'fill:var(--k)'}, svg);
+    const cap = Kit.mk('text', {x: cx, y: gy + base / 2 + fs * .35, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--c);font-size:${fs*.9}px`}, svg);
+    cap.textContent = caps[i];
+    const rise = Kit.mk('rect', {x, y: gy, width: cw, height: 0, style: 'fill:#e8572a;stroke:var(--k);stroke-width:1.5'}, svg);
+    const man = Kit.mk('path', {d: personPath(ph), style: 'fill:var(--k)'}, svg);
+    const val = Kit.mk('text', {x: cx, y: gy, 'text-anchor': 'middle', class: 'val', style: `fill:var(--k);font-size:${fs*1.25}px`}, svg);
+    G.cols.push({cx, rise, man, val});
+  }
+  Kit.mk('line', {x1: rw, x2: W, y1: gy, y2: gy, style: 'stroke:var(--k);stroke-width:1.5;stroke-dasharray:5 4;opacity:.6'}, svg);
+  render();
+};
+
+function maybeEnd(){
+  if (!(finished[0] && finished[1])) return;
+  Kit.hide('row'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+}
+Kit.$('row').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  const i = +b.dataset.i; if (started[i]) return;
+  started[i] = true; b.classList.add('on'); Kit.haptic('light');
+  const done = () => { finished[i] = true; render(); maybeEnd(); };
+  if (Kit.calm){ S[i].v = TARGET[i]; done(); }
+  else gsap.to(S[i], {v: TARGET[i], duration: i ? 2.6 : 1.2, ease: 'power2.inOut', onUpdate: render, onComplete: done});
+  render();
+});
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const bs = Kit.$('row').querySelectorAll('.opt');
+  bs[0].click(); bs[1].click();
+  await new Promise(r => setTimeout(r, 3200));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "medicine-firefighters-blood-donation",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Firefighters donate blood often for a year. What happens to their PFAS?",
+  "answer": "Firefighters' gear and foams contain PFAS. Each blood or plasma donation physically carries some of these chemicals out of the body. In a 2022 study, frequent donors cut their PFAS levels by up to 30% within a year.",
+  "move": "Frequent blood or plasma donation lowered firefighters’ PFAS by up to 30% in a year.",
+  "keywords": [
+    "pfas",
+    "firefighters",
+    "blood donation",
+    "plasma",
+    "protective gear"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline bar from “Today” to “1 year” with a prompt to drag along it to draw a guess about how firefighters' PFAS levels change with frequent blood donation. Red drops mark donations that carry chemicals out of the body."
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=3030s",
+  "written": "2026-11-03"
+}

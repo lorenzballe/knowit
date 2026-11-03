@@ -1,0 +1,150 @@
+<!doctype html>
+<!-- slug: nature-mosquito-ear-heat -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why mosquitoes go for your ears</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#cam{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body)}
+.q,.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOSQUITOES</span></div>
+    <h2 class="q">Why do mosquitoes keep buzzing right around your ears?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="cam" aria-label="A head in profile with a mosquito flying around it"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">They smell the earwax</button>
+        <button class="opt" data-i="1">The ear canal gives off heat</button>
+        <button class="opt" data-i="2">They like the sound of breathing</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Your ears run hot</p><p class="body">The ear canal gives off heat, and mosquitoes are drawn to warm spots. So the whine lands right where you hear it best, at 3 a.m.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a reason. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Mosquitoes follow heat, and your ear canal is a warm beacon.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, revealed = false;
+const st = {k: 0, th: 0};
+let G = null; // drawing refs
+const EAR = {x: .3, y: .05};
+
+function reveal(){
+  revealed = true;
+  if (Kit.calm){ st.k = 1; st.th = 1; apply(); return; }
+  gsap.to(st, {th: 1, duration: 1.2, ease: 'power2.inOut', onUpdate: apply});
+  gsap.to(st, {k: 1, duration: 3, delay: .6, ease: 'power2.inOut'});
+}
+function apply(){
+  if (!G) return;
+  G.plain.setAttribute('opacity', 1 - st.th);
+  G.therm.setAttribute('opacity', st.th);
+  G.lab1.textContent = st.th > .5 ? 'THERMAL VIEW' : 'NORMAL VIEW';
+  G.lab1.setAttribute('fill', st.th > .5 ? '#ffe14a' : 'var(--k)');
+  G.lab2.setAttribute('opacity', Math.max(0, st.th * 2 - 1));
+  G.line.setAttribute('opacity', Math.max(0, st.th * 2 - 1));
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+const HEAD = 'M0.55,-0.95 C0.95,-0.85 1.0,-0.2 0.85,0.25 C0.75,0.55 0.55,0.65 0.45,0.75 L0.45,1.1 L-0.25,1.1 L-0.25,0.85 C-0.45,0.85 -0.55,0.75 -0.55,0.6 L-0.6,0.45 C-0.7,0.42 -0.7,0.35 -0.62,0.3 L-0.66,0.22 C-0.72,0.18 -0.68,0.12 -0.62,0.1 L-0.74,-0.05 C-0.77,-0.1 -0.72,-0.14 -0.66,-0.18 C-0.68,-0.6 -0.4,-0.98 0.0,-1.0 C0.2,-1.01 0.4,-0.99 0.55,-0.95 Z';
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('cam');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .9, 12);
+  const top = fs * 2.2;
+  const s = Math.min(W / 2.3, (H - top) / 2.35);
+  const cx = W / 2 - .12 * s, cy = top + (H - top) / 2 - .02 * s;
+  const defs = Kit.mk('defs', {}, svg);
+  const rg = Kit.mk('radialGradient', {id: 'heat', gradientUnits: 'userSpaceOnUse', cx: EAR.x, cy: EAR.y, r: 1.35}, defs);
+  [[0,'#fffbe0'],[.07,'#ffe14a'],[.2,'#ff8a1f'],[.4,'#e0245e'],[.68,'#7a1fa2'],[1,'#2a1070']].forEach(([o,c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, rg));
+  const fl = Kit.mk('filter', {id: 'blur', x: '-1', y: '-1', width: '3', height: '3'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: .05}, fl);
+
+  // backgrounds
+  const plain = Kit.mk('g', {}, svg), therm = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: 14, fill: 'color-mix(in srgb, var(--k) 7%, transparent)'}, plain);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: 14, fill: '#0b0630'}, therm);
+  const T = `translate(${cx},${cy}) scale(${s})`;
+  const pg = Kit.mk('g', {transform: T}, plain);
+  Kit.mk('path', {d: HEAD, fill: 'color-mix(in srgb, var(--k) 18%, transparent)', stroke: 'var(--k)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round'}, pg);
+  Kit.mk('ellipse', {cx: EAR.x, cy: EAR.y, rx: .12, ry: .19, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke'}, pg);
+  Kit.mk('circle', {cx: EAR.x - .01, cy: EAR.y + .02, r: .03, fill: 'var(--k)'}, pg);
+  const tg = Kit.mk('g', {transform: T}, therm);
+  Kit.mk('path', {d: HEAD, fill: 'url(#heat)'}, tg);
+  Kit.mk('ellipse', {cx: EAR.x, cy: EAR.y, rx: .12, ry: .19, fill: 'none', stroke: '#ffe14a', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke', opacity: .7}, tg);
+  const glow = Kit.mk('circle', {cx: EAR.x - .01, cy: EAR.y + .02, r: .1, fill: '#ffffff', filter: 'url(#blur)'}, tg);
+  if (!Kit.calm) gsap.to(glow, {attr: {r: .15}, opacity: .6, duration: .9, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+
+  // labels
+  const lab1 = Kit.mk('text', {x: fs * .9, y: fs * 1.5, 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+  const lab2 = Kit.mk('text', {x: W - fs * .9, y: fs * 1.5, 'text-anchor': 'end', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: '#fffbe0'}, svg);
+  lab2.textContent = 'Hottest: ear canal';
+  const ex = cx + EAR.x * s, ey = cy + EAR.y * s;
+  const line = Kit.mk('path', {d: `M${W - fs * 3},${fs * 2} L${ex + .06 * s},${ey - .08 * s}`, stroke: '#fffbe0', 'stroke-width': 1.5, 'stroke-dasharray': '4 4', fill: 'none'}, svg);
+
+  // mosquito
+  const mWrap = Kit.mk('g', {transform: T}, svg);
+  const mos = Kit.mk('g', {}, mWrap);
+  const mb = Kit.mk('g', {}, mos);
+  const wa = Kit.mk('ellipse', {cx: .01, cy: -.03, rx: .045, ry: .018, fill: 'rgba(220,235,255,.75)', stroke: '#fff', 'stroke-width': .8, 'vector-effect': 'non-scaling-stroke'}, mb);
+  const ws = {a: wa};
+  [[-.02,.03],[.01,.035],[.04,.03]].forEach(([x,y]) => Kit.mk('line', {x1: x, y1: .005, x2: x - .015, y2: y, stroke: '#111', 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke'}, mb));
+  Kit.mk('ellipse', {cx: .02, cy: 0, rx: .05, ry: .012, fill: '#151515', stroke: '#fff', 'stroke-width': .8, 'vector-effect': 'non-scaling-stroke'}, mb);
+  Kit.mk('circle', {cx: -.035, cy: -.003, r: .013, fill: '#151515', stroke: '#fff', 'stroke-width': .8, 'vector-effect': 'non-scaling-stroke'}, mb);
+  Kit.mk('line', {x1: -.045, y1: 0, x2: -.09, y2: .01, stroke: '#151515', 'stroke-width': 1.4, 'vector-effect': 'non-scaling-stroke'}, mb);
+
+  G = {plain, therm, lab1, lab2, line, mos, wing: ws.a};
+  apply();
+  place(0);
+};
+
+let tt = 0, lastX = 0;
+function place(dt){
+  if (!G) return;
+  tt += dt;
+  const t = tt;
+  const wx = .1 + .85 * Math.cos(.7 * t) + .12 * Math.sin(5 * t);
+  const wy = -.15 + .75 * Math.sin(1.1 * t) + .12 * Math.cos(6 * t);
+  const nx = EAR.x + .05 + .1 * Math.cos(4 * t) + .04 * Math.sin(11 * t);
+  const ny = EAR.y - .12 + .07 * Math.sin(5 * t) + .03 * Math.cos(13 * t);
+  const k = st.k;
+  const x = wx + (nx - wx) * k, y = wy + (ny - wy) * k;
+  const face = x - lastX > 0 ? -1 : 1; lastX = x;
+  const sc = 1.3;
+  G.mos.setAttribute('transform', `translate(${x},${y}) scale(${sc * face},${sc})`);
+  G.wing.setAttribute('ry', (.006 + .014 * Math.abs(Math.sin(t * 40))).toFixed(4));
+}
+gsap.ticker.add((time, dms) => { if (!Kit.calm) place(Math.min(dms, 50) / 1000); });
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3800)); };
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "technology-graphene-flagship-billion",
+  "topic": "technology",
+  "genre": "technology.tech_and_society",
+  "strand": "technology.tech_and_society.who_decides",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How big was the EU's bet on graphene research?",
+  "answer": "In 2013 the EU launched the Graphene Flagship: one billion euros over ten years, about 100 million a year, to study graphene and develop its uses. The project runs until 2023. Dragging through the years shows the money piling up, one hexagon per year.",
+  "move": "Graphene Flagship: €1 billion over 10 years, 2013–2023.",
+  "keywords": [
+    "graphene",
+    "graphene-flagship",
+    "european-union",
+    "research-funding",
+    "materials-science"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive timeline from 2013 to 2023 with a draggable slider. Each year adds one hexagon as the euro total of the EU's Graphene Flagship grows toward 1 billion euros."
+  },
+  "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=262s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "history-glass-that-fell",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "The first atomic bomb turned desert sand into green glass. Where did the sand melt?",
+  "answer": "The first atomic bomb turned desert sand into green glass called trinitite. A piece from the 1945 Trinity test, cut in half, shows where the sand melted: a smooth top, bubbles, a sandy base, and beads. Its two faces tell the story: smooth where it set in air, rough where it landed.",
+  "move": "Before trusting the obvious story, read both faces: smooth where it set in air, rough where it landed.",
+  "keywords": [
+    "trinitite",
+    "trinity_test",
+    "atomic_bomb",
+    "desert_sand",
+    "green_glass"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A cut-in-half piece of green glass called trinitite, from the 1945 Trinity atomic test, with a draggable lens. Four clues show where the sand melted: a smooth top, bubbles, a sandy base, and beads. The page asks where the sand melted."
+  },
+  "source": "Veritasium, “The Most Radioactive Places on Earth” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=TRL7o2kPqw0",
+  "written": "2026-11-03"
+}

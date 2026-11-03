@@ -1,0 +1,174 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-bridge-quake-test -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block;overflow:visible}
+#opts{display:flex;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:break-word}
+.opt{flex:1;font:700 max(1.9cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:break-word}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SEISMIC TEST</span></div>
+    <h2 class="q">A 6.8 earthquake hit this bridge while it was being built. What happened?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A suspension bridge under construction on a timeline, with the 1995 quake marked"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">It collapsed</button>
+        <button class="opt" data-i="1">Badly damaged</button>
+        <button class="opt" data-i="2">It survived</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It survived.</p><p class="body">In 1995, still unfinished, the structure took a magnitude 6.8 earthquake and stayed standing. A real quake was the hardest test it could get, and it showed the bridge can endure strong seismic shaking.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess its fate, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A 6.8 quake struck the bridge mid-construction, and it stood.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ponte sullo Stretto di Messina: il progetto costruttivo ufficiale e le altre alternative” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2, HOT = '#d64933';
+let pick = -1, done = false, R = {};
+const S = Kit.$('pic');
+const st = (o) => Object.entries(o).map(([k, v]) => `${k}:${v}`).join(';');
+const ink = (p) => p === 100 ? 'var(--k)' : `color-mix(in srgb,var(--k) ${p}%,transparent)`;
+
+function txt(s, attrs, sty, parent) { const t = Kit.mk('text', attrs, parent); t.setAttribute('style', sty); t.textContent = s; return t; }
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(S);
+  S.innerHTML = '';
+  const fs = Math.max(f, 12);
+  R = {fs, W, H};
+  const compact = H < fs * 16;
+  // timeline
+  const x0 = W * .06, x1 = W * .94, xm = W * .5, ty = Math.max(fs * 1.7, H * .1);
+  const tl = Kit.mk('g', {}, S);
+  const l1 = Kit.mk('line', {x1: x0, y1: ty, x2: xm, y2: ty}, tl); l1.setAttribute('style', st({stroke: ink(100), 'stroke-width': fs * .28, 'stroke-linecap': 'round'}));
+  const l2 = Kit.mk('line', {x1: xm, y1: ty, x2: x1, y2: ty}, tl); l2.setAttribute('style', st({stroke: ink(35), 'stroke-width': fs * .2, 'stroke-dasharray': `${fs * .4} ${fs * .4}`, 'stroke-linecap': 'round'}));
+  txt('being built', {x: x0, y: ty + fs * 1.6}, st({font: `600 ${fs}px var(--body)`, fill: ink(70)}), tl);
+  txt('finished', {x: x1, y: ty + fs * 1.6, 'text-anchor': 'end'}, st({font: `600 ${fs}px var(--body)`, fill: ink(45)}), tl);
+  R.year = txt('1995', {x: xm, y: ty - fs * .9, 'text-anchor': 'middle'}, st({font: `800 ${fs * 1.05}px var(--mono)`, fill: ink(100)}), tl);
+  R.dot = Kit.mk('circle', {cx: xm, cy: ty, r: fs * .5}, tl); R.dot.setAttribute('style', st({fill: 'var(--c)', stroke: ink(100), 'stroke-width': fs * .2}));
+  R.ring = Kit.mk('circle', {cx: xm, cy: ty, r: fs * .5}, tl); R.ring.setAttribute('style', st({fill: 'none', stroke: HOT, 'stroke-width': fs * .15, opacity: 0}));
+
+  // scene
+  const seaY = H * .82, deckY = H * .66, xL = W * .24, xR = W * .76;
+  const top = Math.min(Math.max(ty + fs * 3.4, H * .3), deckY - fs), sag = deckY - fs * .7, c = 2 * sag - top;
+  const sea = Kit.mk('rect', {x: 0, y: seaY, width: W, height: Math.max(0, H - seaY)}, S); sea.setAttribute('style', st({fill: ink(10)}));
+  R.seismo = Kit.mk('path', {}, S);
+  let d = `M ${W * .04} ${(seaY + H) / 2}`;
+  const n = 46;
+  for (let i = 1; i <= n; i++) {
+    const t = i / n, x = W * .04 + t * W * .92;
+    const env = Math.exp(-Math.pow((t - .3) / .18, 2)) * (H - seaY) * .38;
+    d += ` L ${x} ${(seaY + H) / 2 + (i % 2 ? -1 : 1) * env * (.6 + .4 * Math.abs(Math.sin(i * 1.7)))}`;
+  }
+  R.seismo.setAttribute('d', d);
+  R.seismo.setAttribute('style', st({fill: 'none', stroke: HOT, 'stroke-width': Math.max(1.5, fs * .14), 'stroke-linejoin': 'round'}));
+  const len = R.seismo.getTotalLength();
+  R.len = len;
+  R.seismo.style.strokeDasharray = len; R.seismo.style.strokeDashoffset = done ? 0 : len;
+
+  const br = Kit.mk('g', {}, S); R.br = br;
+  for (const [a, b] of [[0, W * .08], [W * .92, W]]) {
+    const r = Kit.mk('rect', {x: a, y: deckY + fs * .35, width: b - a, height: Math.max(0, H - deckY)}, br); r.setAttribute('style', st({fill: ink(28)}));
+  }
+  const cab = st({fill: 'none', stroke: ink(100), 'stroke-width': Math.max(1.5, fs * .16)});
+  const p = (dd) => { const e = Kit.mk('path', {d: dd}, br); e.setAttribute('style', cab); };
+  p(`M ${W * .07} ${deckY} Q ${(W * .07 + xL) / 2} ${(deckY + top) / 2 + fs} ${xL} ${top}`);
+  p(`M ${W * .93} ${deckY} Q ${(W * .93 + xR) / 2} ${(deckY + top) / 2 + fs} ${xR} ${top}`);
+  p(`M ${xL} ${top} Q ${xm} ${c} ${xR} ${top}`);
+  for (let i = 1; i < 12; i++) {
+    const t = i / 12, x = xL + (xR - xL) * t, y = (1 - t) * (1 - t) * top + 2 * t * (1 - t) * c + t * t * top;
+    const h = Kit.mk('line', {x1: x, y1: y, x2: x, y2: deckY}, br); h.setAttribute('style', st({stroke: ink(55), 'stroke-width': Math.max(1, fs * .07)}));
+  }
+  // deck: main span partly placed (under construction)
+  const dh = fs * .38, segs = 12, sw = (xR - xL) / segs;
+  for (let i = 0; i < segs; i++) {
+    const r = Kit.mk('rect', {x: xL + i * sw + 1, y: deckY, width: Math.max(0, sw - 2), height: dh, rx: 1}, br);
+    const missing = i === 5 || i === 6;
+    r.setAttribute('style', missing ? st({fill: 'none', stroke: ink(45), 'stroke-width': 1, 'stroke-dasharray': '3 3'}) : st({fill: ink(100)}));
+  }
+  for (const [a, b] of [[W * .07, xL], [xR, W * .93]]) {
+    const r = Kit.mk('rect', {x: a, y: deckY, width: b - a, height: dh}, br); r.setAttribute('style', st({fill: ink(100)}));
+  }
+  R.towers = [];
+  for (const x of [xL, xR]) {
+    const g = Kit.mk('g', {}, br);
+    const tw = fs * .55;
+    const r = Kit.mk('rect', {x: x - tw / 2, y: top - fs * .3, width: tw, height: Math.max(0, seaY - top + fs * .3 + fs * .4), rx: 2}, g); r.setAttribute('style', st({fill: ink(100)}));
+    const cb = Kit.mk('rect', {x: x - tw, y: top + (deckY - top) * .35, width: tw * 2, height: fs * .25}, g); cb.setAttribute('style', st({fill: ink(100)}));
+    const ft = Kit.mk('rect', {x: x - tw, y: seaY, width: tw * 2, height: fs * .6}, g); ft.setAttribute('style', st({fill: ink(60)}));
+    g.dataset.ox = x; g.dataset.oy = seaY;
+    R.towers.push(g);
+  }
+  // magnitude label in the sky between towers
+  const my = ty + fs * 1.6 + Math.max(fs * 1.5, (sag - ty - fs * 1.6) * .35);
+  R.mag = Kit.mk('g', {}, S);
+  txt('MAGNITUDE', {x: xm, y: my, 'text-anchor': 'middle'}, st({font: `700 ${fs * .9}px var(--body)`, fill: HOT, 'letter-spacing': '.08em'}), R.mag);
+  R.num = txt(done ? '6.8' : '0.0', {x: xm, y: my + fs * 3.2, 'text-anchor': 'middle'}, st({font: `800 ${fs * 2.5}px var(--display)`, fill: HOT}), R.mag);
+  R.mag.style.opacity = done ? 1 : 0;
+  if (compact) R.mag.setAttribute('display', 'none');
+  // "still standing" between deck and sea
+  R.ok = txt('STILL STANDING ✓', {x: xm, y: (deckY + dh + seaY) / 2 + fs * .4, 'text-anchor': 'middle'}, st({font: `800 ${fs * 1.05}px var(--body)`, fill: ink(100), 'letter-spacing': '.06em'}), S);
+  R.ok.style.opacity = done ? 1 : 0;
+  if (compact) R.ok.setAttribute('display', 'none');
+  if (done) { R.dot.style.fill = HOT; R.dot.style.stroke = HOT; }
+}
+
+function quake() {
+  done = true;
+  if (Kit.calm || !window.gsap) { draw(); return; }
+  const fs = R.fs, tl = gsap.timeline();
+  tl.to(R.dot, {attr: {r: fs * .7}, duration: .2, yoyo: true, repeat: 1})
+    .set(R.dot, {style: `fill:${HOT};stroke:${HOT};stroke-width:${fs * .2}`}, '<.2')
+    .fromTo(R.ring, {attr: {r: fs * .5}, opacity: 1}, {attr: {r: fs * 2.2}, opacity: 0, duration: .8}, '<');
+  tl.to(R.seismo, {strokeDashoffset: 0, duration: 1.6, ease: 'none'}, .3);
+  tl.to(R.mag, {opacity: 1, duration: .3}, .3);
+  const o = {v: 0};
+  tl.to(o, {v: 6.8, duration: 1.1, ease: 'power2.out', onUpdate: () => { R.num.textContent = o.v.toFixed(1); }}, .3);
+  const amps = [1, -1, .9, -.85, .7, -.6, .45, -.3, .18, -.08, 0];
+  const kx = amps.map(a => ({x: a * fs * .55, duration: .12, ease: 'sine.inOut'}));
+  tl.to(R.br, {keyframes: kx}, .45);
+  R.towers.forEach(g => {
+    tl.to(g, {keyframes: amps.map(a => ({rotation: a * 2.2, duration: .12, ease: 'sine.inOut'})), svgOrigin: `${g.dataset.ox} ${g.dataset.oy}`}, .45);
+  });
+  tl.fromTo(R.ok, {opacity: 0, y: fs * .5}, {opacity: 1, y: 0, duration: .45, ease: 'back.out(2)', onStart: () => Kit.haptic('success')}, '>-.05');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { draw(); quake(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (R.br) gsap.from(R.br, {opacity: 0, y: R.fs, duration: .6, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 3200));
+};
+Kit.single();
+</script>
+</html>

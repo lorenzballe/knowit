@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>A stranger's distance</title>
+<!-- The task of Sorokowska et al. 2017 (J. Cross-Cultural Psychology 48(4):577-92), as its
+     participants saw it: you are A, a stranger B stands on a 0-220 cm scale, and you mark where B
+     should stop for a comfortable conversation. The reader drags B along a tape measure on the floor;
+     then flagged posts stand at the averages of Argentina (77 cm) and Romania (135 cm), the two ends
+     of 42 countries, every country's average hangs as a tick under the tape, and the USA (96 cm) and
+     the UK (99 cm) are marked. Country means are read off the paper's figure 2 (accepted manuscript,
+     WRAP 100226), within about 2 cm; Wikipedia's Proxemics article gives the same ends (over 120 cm
+     in Romania, Hungary, Saudi Arabia; under 90 cm in Argentina, Peru, Ukraine, Bulgaria).
+     N = 8,943. Note: the 135.1 cm in the paper's text is a model intercept (table 2), not a mean.
+     Inspired by Diventare Strong (Alex Onofri), "Come Capire Se Piaci con il Linguaggio Del Corpo"
+     and "5 Segnali che PIACI": closeness read as interest.
+     Touch: drags, on the scene only, until the spot is chosen. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/rough.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;touch-action:none;cursor:ew-resize}
+#stage.done{touch-action:auto;cursor:default}
+#scene{flex:1;min-height:0;width:100%;display:block;overflow:visible;user-select:none;-webkit-user-select:none}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){.answered .in{gap:7px}.answered .keep{padding:9px 15px}.answered .more{display:none}}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Drag to place · personal space">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PERSONAL SPACE</span></div>
+    <h2 class="q">How close can a stranger stand before you step back?</h2>
+    <div class="stagebox" id="stage" data-drag>
+      <svg id="scene" role="img" aria-label="You, A, at the start of a tape measure from 0 to 220 centimetres on the floor, and a stranger, B, at the far end. Drag B toward you."></svg>
+    </div>
+    <p class="say" id="say">You are <b>A</b>. Drag the stranger <b>B</b> to the closest spot where you’d still be comfortable talking.</p>
+    <p class="say gone" id="res"></p>
+    <button class="btn gone" id="go">That’s my limit</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Standing close isn’t interest by itself: what feels normal differs by country.</div>
+    <div class="foot"><span class="src">Source · Sorokowska et al., “Preferred interpersonal distances”, Journal of Cross-Cultural Psychology, 2017</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const card = Kit.$('card'), stage = Kit.$('stage'), svg = Kit.$('scene'), go = Kit.$('go'), say = Kit.$('say');
+  // Mean preferred distance to a stranger, in cm, 42 countries (figure 2 of the paper, read off the chart).
+  const COUNTRIES = [['Romania', 134.6], ['Hungary', 129.7], ['Saudi Arabia', 125.5], ['Turkey', 122.4], ['Uganda', 120.0], ['Pakistan', 118.2], ['Estonia', 117.6], ['Colombia', 116.4], ['Hong Kong', 115.1], ['China', 114.5], ['Iran', 112.1], ['Switzerland', 110.3], ['Portugal', 110.3], ['Malaysia', 110.3], ['the Czech Republic', 110.3], ['Kenya', 110.3], ['India', 109.7], ['Indonesia', 109.7], ['Croatia', 108.4], ['Ghana', 106.6], ['South Korea', 105.4], ['Norway', 104.2], ['Canada', 103.0], ['Nigeria', 103.0], ['Brazil', 101.1], ['the UK', 99.3], ['Mexico', 99.3], ['Poland', 96.9], ['Germany', 96.3], ['the USA', 95.7], ['Kazakhstan', 94.5], ['Italy', 93.2], ['Serbia', 92.6], ['Greece', 92.0], ['Spain', 90.2], ['Russia', 89.6], ['Slovakia', 89.0], ['Austria', 88.4], ['Ukraine', 85.9], ['Bulgaria', 82.9], ['Peru', 81.1], ['Argentina', 77.4]];
+  const LOW = 77.4, HIGH = 134.6, USA = 95.7, UK = 99.3;
+  // Below about 30 cm the two figures would stand inside each other.
+  const MAX = 220, MIN = 30, INK = '#ffffff';
+  let BG = '#9B5CFF', EDGE = '#5a2ea6';
+  let d = MAX, moved = false, done = false, held = false, geo = null;
+  const anim = () => !Kit.calm && typeof gsap !== 'undefined';
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  // A person seen from the side, drawn by hand: feet at (x, ground), height h, facing +1 (right) or
+  // -1 (left). A wears a jumper and a bun, B a long coat. Drawn at the origin and moved, so the
+  // pencil's wobble stays the same while B is dragged.
+  function person(parent, x, ground, h, facing, who) {
+    const u = h / 170, g = Kit.mk('g', {transform: `translate(${x.toFixed(1)} ${ground.toFixed(1)})`}, parent);
+    const rc = rough.svg(svg), seed = who === 'a' ? 7 : 19, sw = Math.max(1.3, 1.9 * u), coat = who === 'b';
+    const P = (cx, cy) => [facing * cx * u, cy * u], p = (cx, cy) => P(cx, cy).map(v => v.toFixed(1)).join(' ');
+    const add = n => { n.querySelectorAll('path').forEach(e => { e.setAttribute('stroke-linecap', 'round'); e.setAttribute('stroke-linejoin', 'round'); }); g.appendChild(n); return n; };
+    const o = extra => Object.assign({stroke: INK, strokeWidth: sw, roughness: .8, bowing: .6, seed}, extra);
+    const limb = (a, b, w) => { add(rc.line(...a, ...b, o({stroke: BG, strokeWidth: w + 2.4, roughness: .4}))); add(rc.line(...a, ...b, o({strokeWidth: w, roughness: .45}))); };
+    // Legs and shoes.
+    limb(P(-1, -86), P(-3.5, -6), 8.5 * u);
+    limb(P(2.5, -86), P(4.5, -6), 8.5 * u);
+    for (const dx of [-4, 4.5]) add(rc.path(`M${p(dx - 5, -.5)} Q${p(dx - 4.5, -7)} ${p(dx + 3, -6.5)} Q${p(dx + 9, -4)} ${p(dx + 8, -.5)} Z`, o({fill: INK, fillStyle: 'solid', strokeWidth: 1, roughness: .5})));
+    // A jumper for A; for B a long coat, shaded, with a lapel and buttons.
+    const hem = coat ? -68 : -84;
+    add(rc.path(`M${p(-10, -141)} C${p(-14, -120)} ${p(-12.5, -100)} ${p(coat ? -13 : -10.5, hem)} L${p(coat ? 13 : 10.5, hem)} C${p(12, -104)} ${p(15, -126)} ${p(9, -142)} Q${p(0, -147)} ${p(-10, -141)} Z`,
+      o({fill: INK, fillStyle: coat ? 'hachure' : 'solid', hachureAngle: facing > 0 ? -50 : 50, hachureGap: Math.max(2.4, 3.6 * u), fillWeight: Math.max(1, 1.2 * u)})));
+    if (coat) {
+      add(rc.path(`M${p(7, -141)} L${p(2, -118)} L${p(9, -104)}`, o({strokeWidth: sw * .9})));
+      for (const yb of [-108, -94]) Kit.mk('circle', {cx: facing * 9 * u, cy: yb * u, r: Math.max(1.2, 1.5 * u), fill: INK}, g);
+    } else {
+      add(rc.line(...P(-10.5, -89), ...P(10.5, -89), o({stroke: BG, strokeWidth: Math.max(1.2, 1.7 * u), roughness: .4})));
+      add(rc.path(`M${p(-3, -143)} Q${p(3, -138)} ${p(8, -142)}`, o({stroke: BG, strokeWidth: Math.max(1.2, 1.6 * u), roughness: .4})));
+    }
+    // The arm, outlined so it reads over the body, and a hand.
+    limb(P(.5, -135), P(6, -91), 7 * u);
+    add(rc.circle(...P(6.5, -87), 7.5 * u, o({fill: INK, fillStyle: 'solid', strokeWidth: 1, roughness: .4})));
+    // The head: an outline, hair (with a bun for A), an eye and a nose.
+    add(rc.circle(...P(2, -159), 23 * u, o({fill: BG, fillStyle: 'solid'})));
+    const hair = coat
+      ? `M${p(-10, -157)} C${p(-12, -167)} ${p(-5, -173)} ${p(2, -172.5)} C${p(8, -172)} ${p(12.5, -169)} ${p(12, -166)} C${p(7, -168)} ${p(1, -168)} ${p(-3, -165)} C${p(-6, -163)} ${p(-8, -159)} ${p(-10, -157)} Z`
+      : `M${p(-9.5, -155)} C${p(-12.5, -166)} ${p(-6, -174)} ${p(2, -173.5)} C${p(9, -173)} ${p(13.5, -168)} ${p(12.8, -164)} C${p(8, -167.5)} ${p(2, -167)} ${p(-1, -163)} C${p(-3, -160)} ${p(-5, -155)} ${p(-9.5, -155)} Z`;
+    add(rc.path(hair, o({fill: INK, fillStyle: 'solid', strokeWidth: 1, roughness: .6})));
+    if (!coat) add(rc.circle(...P(-12, -166), 8.5 * u, o({fill: INK, fillStyle: 'solid', strokeWidth: 1, roughness: .5})));
+    Kit.mk('circle', {cx: facing * 8 * u, cy: -160.5 * u, r: Math.max(1, 1.4 * u), fill: INK}, g);
+    add(rc.path(`M${p(12.8, -163)} L${p(15, -158.5)} L${p(12.6, -156.8)}`, o({strokeWidth: sw * .9, roughness: .4})));
+    return g;
+  }
+
+  // The tape measure on the floor: 0 at A, a tick every 10 cm, a number every 50 (or 100 when tight).
+  function tape(X, ground, th) {
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: X(0) - 4, y: ground, width: X(MAX) - X(0) + 8, height: th, rx: 3, fill: INK, 'fill-opacity': .95}, g);
+    for (let c = 0; c <= MAX; c += 10) Kit.mk('line', {x1: X(c), x2: X(c), y1: ground, y2: ground + th * (c % 50 ? .26 : .5), stroke: EDGE, 'stroke-width': c % 50 ? 1 : 1.5}, g);
+    const step = X(50) - X(0) > 36 ? 50 : 100;
+    for (let c = step; c <= 200; c += step) {
+      const t = Kit.mk('text', {x: X(c) + 2.5, y: ground + th - 3, fill: EDGE, 'font-family': 'Figtree', 'font-size': 11, 'font-weight': 800}, g);
+      t.textContent = c === step ? `${c} cm` : String(c);
+    }
+    return g;
+  }
+
+  function draw() {
+    svg.innerHTML = '';
+    BG = getComputedStyle(card).getPropertyValue('--c').trim() || BG;
+    EDGE = getComputedStyle(card).getPropertyValue('--edge').trim() || EDGE;
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = Math.max(11, Math.min(13, H / 15)), th = Math.max(15, fs * 1.3);
+    const qs = parseFloat(getComputedStyle(card.querySelector('.q')).fontSize) || 20;
+    // The tape runs the full width; people are drawn to its scale (170 cm tall) when there is room.
+    const sx = (W - 8) / 274, L = (W - MAX * sx) / 2, X = cm => L + cm * sx;
+    const above = done ? fs * 2.9 : fs * 1.9, under = done ? th + fs * 3.9 : th + fs * .6;
+    const room = H - above - under;
+    const readout = !done && room - 170 * sx > qs * 2.8 ? qs * 2.6 : 0;
+    const h = Math.max(36, Math.min(170 * sx, room - readout));
+    const y0 = Math.max(0, (H - readout - above - h - under) / 2), ground = y0 + readout + above + h;
+    geo = {W, H, X, sx, L};
+    const txt = (x, y, str, a, parent = svg) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-size': fs, 'font-weight': 600}, a), parent); e.textContent = str; return e; };
+    const fit = (e, x, anchor) => { const w = e.getComputedTextLength(), l = Math.max(0, Math.min(W - w, anchor === 'middle' ? x - w / 2 : anchor === 'end' ? x - w : x)); e.setAttribute('x', l.toFixed(1)); e.setAttribute('text-anchor', 'start'); return [l, l + w]; };
+    // The floor, fading out below the tape.
+    const fade = Kit.mk('linearGradient', {id: 'floor', x1: 0, y1: 0, x2: 0, y2: 1}, Kit.mk('defs', {}, svg));
+    [[0, .1], [1, 0]].forEach(([o, a]) => Kit.mk('stop', {offset: o, 'stop-color': INK, 'stop-opacity': a}, fade));
+    Kit.mk('rect', {x: 0, y: ground, width: W, height: Math.max(0, Math.min(H - ground, th + fs * 4.2)), fill: 'url(#floor)'}, svg);
+    Kit.mk('line', {x1: 0, x2: W, y1: ground, y2: ground, stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1}, svg);
+    // While dragging, how far apart you are, large.
+    if (readout) {
+      const big = txt(W / 2, y0 + qs * 1.05, `${Math.round(d)} cm`, {'text-anchor': 'middle', 'font-family': 'Fraunces', 'font-size': qs, 'font-weight': 800, class: 'num'});
+      txt(W / 2, y0 + qs * 1.05 + fs * 1.75, 'between you and the stranger', {'text-anchor': 'middle', 'font-weight': 500, opacity: .85});
+    }
+    tape(X, ground, th);
+    if (done) {
+      // Every country's average hangs as a tick under the tape; the USA and the UK are marked.
+      const ticks = Kit.mk('g', {class: 'ticks'}, svg), ty = ground + th;
+      for (const [, cm] of COUNTRIES) Kit.mk('line', {x1: X(cm), x2: X(cm), y1: ty, y2: ty + fs * .95, stroke: INK, 'stroke-width': 1.4, 'stroke-opacity': .72}, ticks);
+      for (const cm of [USA, UK]) Kit.mk('line', {x1: X(cm), x2: X(cm), y1: ty, y2: ty + fs * .95, stroke: INK, 'stroke-width': 2.8}, ticks);
+      const mk = txt(X((USA + UK) / 2), ty + fs * 2.15, 'USA 96 · UK 99', {'font-weight': 700}, ticks); fit(mk, X((USA + UK) / 2), 'middle');
+      const cap = txt(X((LOW + HIGH) / 2), ty + fs * 3.5, 'each tick: one country’s average', {'font-weight': 500, opacity: .9}, ticks); fit(cap, X((LOW + HIGH) / 2), 'middle');
+      // The two ends of the world as flagged posts on the floor.
+      const posts = Kit.mk('g', {class: 'posts'}, svg), fy = y0 + fs * 2.35;
+      for (const [cm, name, side] of [[LOW, 'Argentina 77', -1], [HIGH, 'Romania 135', 1]]) {
+        const pg = Kit.mk('g', {}, posts), px = X(cm);
+        Kit.mk('line', {x1: px, x2: px, y1: ground, y2: fy - fs * .35, stroke: INK, 'stroke-width': 1.5, 'stroke-dasharray': '3 3', 'stroke-opacity': .85}, pg);
+        Kit.mk('line', {x1: px, x2: px + side * 5, y1: fy - fs * .35, y2: fy - fs * .35, stroke: INK, 'stroke-width': 1.5}, pg);
+        Kit.mk('circle', {cx: px, cy: ground - 2.5, r: 2.6, fill: INK}, pg);
+        const t = txt(px + side * 7, fy, name, {'font-weight': 700}, pg); fit(t, px + side * 7, side < 0 ? 'end' : 'start');
+      }
+    }
+    // A, the reader, and B, the stranger.
+    person(svg, X(0), ground, h, 1, 'a');
+    if (!done) fit(txt(X(0), ground - h - fs * .6, 'A · you', {'font-weight': 700}), X(0) + 2 * sx, 'middle');
+    const b = person(svg, X(d), ground, h, -1, 'b'); b.setAttribute('id', 'b');
+    const lab = txt(X(d), done ? y0 + fs * 1.0 : ground - h - fs * .6, done ? `your limit: ${Math.round(d)} cm` : moved ? (readout ? 'B · stranger' : `B · ${Math.round(d)} cm`) : 'B · drag me', {'font-weight': 800});
+    fit(lab, X(d) - 2 * sx, 'middle');
+  }
+
+  // Dragging: B follows the finger along the tape.
+  const cmAt = e => { const r = svg.getBoundingClientRect(), x = e.clientX - r.left; return Math.max(MIN, Math.min(MAX, (x - geo.L) / geo.sx)); };
+  function move(e) {
+    d = cmAt(e);
+    if (!moved) { moved = true; Kit.show('go'); }
+    draw();
+  }
+  stage.addEventListener('pointerdown', e => { if (done) return; held = true; stage.setPointerCapture?.(e.pointerId); e.preventDefault(); move(e); });
+  stage.addEventListener('pointermove', e => { if (held && !done) move(e); });
+  const let_go = () => { if (held) { held = false; Kit.haptic('light'); } };
+  stage.addEventListener('pointerup', let_go); stage.addEventListener('pointercancel', let_go);
+
+  // The reader's spot against the countries: the nearest average.
+  function nearest(cm) { let best = COUNTRIES[0]; for (const c of COUNTRIES) if (Math.abs(c[1] - cm) < Math.abs(best[1] - cm)) best = c; return best; }
+  function choose() {
+    if (done || !moved) return;
+    done = true;
+    const cm = Math.round(d), [name] = nearest(d);
+    let lead;
+    if (d < 75) lead = `<b>You: ${cm} cm, closer than any country’s average.</b>`;
+    else if (d > 137) lead = `<b>You: ${cm} cm, farther than any country’s average.</b>`;
+    else lead = `<b>You: ${cm} cm, about the average in ${name}.</b>`;
+    Kit.$('res').innerHTML = `${lead} Nearly 9,000 people in 42 countries marked a drawing like this; it records what people say, not how they stand.<span class="more"> Women, and people in colder countries, kept strangers farther off.</span>`;
+    stage.classList.add('done'); stage.removeAttribute('data-drag');
+    card.classList.add('answered');
+    Kit.hide('say'); Kit.hide('go'); Kit.show('res'); Kit.show('keep');
+    Kit.haptic('success');
+    requestAnimationFrame(() => {
+      draw();
+      if (anim()) {
+        svg.querySelectorAll('.ticks line').forEach((el, i) => gsap.from(el, {attr: {y2: +el.getAttribute('y1')}, duration: .5, delay: i * .01, ease: 'power2.out'}));
+        gsap.from('#scene .ticks text', {opacity: 0, duration: .4, delay: .5});
+        gsap.from('#scene .posts > g', {opacity: 0, y: 10, duration: .5, stagger: .2, delay: .3, ease: 'power2.out'});
+      }
+    });
+  }
+  go.addEventListener('click', choose);
+
+  Kit.onShow.card = draw;
+  // B steps in from the far end and back, so it reads as someone who can be moved.
+  Kit.onEnter.card = () => {
+    if (!anim() || moved) return;
+    const o = {v: MAX}; d = MAX;
+    gsap.fromTo(o, {v: MAX}, {v: 196, duration: .55, ease: 'power2.out', yoyo: true, repeat: 1, delay: .4, onUpdate: () => { if (!moved) { d = o.v; draw(); } }, onComplete: () => { if (!moved) { d = MAX; draw(); } }});
+  };
+  Kit.play.card = async () => {
+    const r = svg.getBoundingClientRect(), x = r.left + geo.X(104), y = r.top + r.height * .6;
+    stage.dispatchEvent(new PointerEvent('pointerdown', {clientX: r.left + geo.X(160), clientY: y, bubbles: true, pointerId: 1}));
+    stage.dispatchEvent(new PointerEvent('pointermove', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+    stage.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+    await wait(Kit.calm ? 20 : 300);
+    go.click();
+    await wait(Kit.calm ? 60 : 1300);
+  };
+})();
+Kit.single();
+</script>

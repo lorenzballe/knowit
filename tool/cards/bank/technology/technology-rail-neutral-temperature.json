@@ -1,0 +1,37 @@
+{
+  "id": "technology-rail-neutral-temperature",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do railways weld rails at as high a temperature as possible?",
+  "answer": "A welded rail is relaxed only at the temperature it was welded at. Welding it hot means it is rarely squeezed in summer, so it hardly ever buckles, but it is pulled harder in winter. A winter crack is less of a problem than a summer buckle, and it is easier to find by measuring the rail's conductivity.",
+  "move": "Weld rails hot: a crack in winter beats a buckle in summer.",
+  "keywords": [
+    "railways",
+    "rail welding",
+    "buckling",
+    "neutral temperature",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A draggable slider for the welding temperature of a railway rail, showing two risks: summer buckling and winter cracking. Drag the welding line up and down to see how the two risks trade off."
+  },
+  "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=1553s",
+  "written": "2026-11-03"
+}

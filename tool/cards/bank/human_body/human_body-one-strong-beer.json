@@ -1,0 +1,38 @@
+{
+  "id": "human_body-one-strong-beer",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.small_daily_habits",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Can a single 8.6% beer get you arrested for driving in Italy?",
+  "answer": "One 44 cl beer at 8.6% was followed, 15 minutes later, by a reading of 1.09 g/L on a professional breathalyzer. The limit is 0.5 g/L, so driving at that level could mean arrest.",
+  "move": "One strong beer can be enough to make driving illegal.",
+  "keywords": [
+    "alcohol",
+    "beer",
+    "breathalyzer",
+    "driving",
+    "italy"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking whether one 44 cl beer at 8.6% can push a driver over Italy's 0.5 g/L blood alcohol limit. A minus and plus counter lets the reader guess the breathalyzer reading 15 minutes later. The reveal shows 1.09 g/L.",
+    "graded": false
+  },
+  "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=iEM_OvUoolY",
+  "written": "2026-11-03"
+}

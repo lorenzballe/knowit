@@ -1,0 +1,36 @@
+{
+  "id": "science-ocean-salt-mass",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.big_numbers",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "How much sodium chloride is dissolved in the world’s oceans?",
+  "answer": "The world's oceans hold about 4 × 10¹⁹ kg of dissolved sodium chloride, which is 40 billion billion kilograms. Sodium in nature is not a shiny metal; it sits in seas and oceans as salt. The page asks the reader to guess that mass before revealing it.",
+  "move": "Nature’s sodium hides in the sea as salt: about 4 × 10¹⁹ kg.",
+  "keywords": [
+    "ocean",
+    "sodium",
+    "sodium chloride",
+    "sea salt"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice question: How much sodium chloride is dissolved in the world's oceans? Three options: about 4 billion kg, about 4 million billion kg, and about 40 billion billion kg. The last option is marked correct: about 4 × 10¹⁹ kg."
+  },
+  "source": "Geopop, “Perché il sodio esplode a contatto con l’acqua? La reazione chimica spiegata con un esperimento” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=x-7g0VrlPQ0&t=698s",
+  "written": "2026-11-03"
+}

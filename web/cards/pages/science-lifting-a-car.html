@@ -1,0 +1,167 @@
+<!doctype html>
+<!-- slug: science-lifting-a-car -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#ctl label{font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k);white-space:nowrap}
+#pull{flex:1;min-width:0;accent-color:var(--k);height:max(3.4cqh,26px)}
+.btn{font:800 max(2.1cqh,14px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 5cqw;cursor:pointer;white-space:nowrap}
+.btn.ghost{color:var(--k);background:color-mix(in srgb,var(--k) 10%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+#why .big{font:800 max(2.4cqh,15px)/1.15 var(--display)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · lift">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WEIGHT</span></div>
+    <h2 class="q">Why is it impossible to lift a car off the ground?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <label for="pull">Your pull</label>
+        <input id="pull" type="range" min="0" max="100" value="30">
+        <button class="btn" id="lift">Lift!</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Weight wins.</p>
+        <p class="body">The car's weight is gravity pulling it down into the Earth. That pull is far stronger than any pull a person can make, so the car stays put.</p>
+        <button class="btn ghost" id="grav">Switch gravity off</button>
+      </div>
+    </div>
+    <p class="say" id="say">Set your pull to your hardest, then press Lift.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Weight is a force: gravity pulling a thing down.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {v: .3, tried: false, off: false};
+let G = null;
+const st = (fill, stroke, sw) => `fill:${fill};stroke:${stroke||'none'};stroke-width:${sw||0};stroke-linecap:round;stroke-linejoin:round`;
+const INK = 'var(--k)', SOFT = 'color-mix(in srgb,var(--k) 55%,transparent)';
+
+function arrow(parent, x, y0, y1, w, col) {
+  const g = Kit.mk('g', {}, parent);
+  const dir = Math.sign(y1 - y0) || -1, head = w * 3.2;
+  const len = Math.abs(y1 - y0);
+  const h = Math.min(head, len);
+  Kit.mk('line', {x1: x, y1: y0, x2: x, y2: y1 - dir * h * .8, style: st('none', col, w)}, g);
+  Kit.mk('polygon', {points: `${x - h * .7},${y1 - dir * h} ${x + h * .7},${y1 - dir * h} ${x},${y1}`, style: st(col)}, g);
+  return g;
+}
+
+function drawPull() {
+  if (!G) return;
+  G.pullG.innerHTML = '';
+  const L = Math.max(2, S.v * G.maxP);
+  if (S.v > .01) arrow(G.pullG, G.px, G.bodyTop, G.bodyTop - L, G.aw * .8, SOFT);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const gy = H * .62;
+  const carW = Math.min(W * .58, H * .9);
+  const carH = carW * .36;
+  const carX = W * .37;
+  const r = carH * .24;
+  const bodyH = carH * .5;
+  const bodyBot = gy - r * 1.3;
+  const bodyTop = bodyBot - bodyH;
+  const cx = carX + carW / 2, cy = bodyTop + bodyH / 2;
+  const aw = Math.max(3, W * .012);
+  const wEnd = H - f * .6;
+  const maxP = Math.min(carH * .6, (wEnd - cy) * .22);
+  const px = carX + carW * .05;
+  G = {W, H, f, gy, bodyTop, px, maxP, aw};
+
+  // Earth
+  Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, style: st('color-mix(in srgb,var(--k) 12%,transparent)')}, svg);
+  Kit.mk('line', {x1: 0, y1: gy, x2: W, y2: gy, style: st('none', INK, Math.max(2, aw * .6))}, svg);
+  const et = Kit.mk('text', {x: f * .6, y: H - f * .7, style: `fill:var(--muted);font:700 ${f * .9}px var(--body)`}, svg);
+  et.textContent = 'Earth';
+
+  // Car + its pull arrow move together
+  const carG = Kit.mk('g', {}, svg); G.carG = carG;
+  Kit.mk('path', {d: `M${carX + carW * .2},${bodyTop} L${carX + carW * .32},${bodyTop - carH * .45} L${carX + carW * .7},${bodyTop - carH * .45} L${carX + carW * .84},${bodyTop} Z`, style: st('color-mix(in srgb,var(--k) 22%,var(--c))', INK, aw * .7)}, carG);
+  Kit.mk('line', {x1: carX + carW * .52, y1: bodyTop - carH * .45, x2: carX + carW * .52, y2: bodyTop, style: st('none', INK, aw * .6)}, carG);
+  Kit.mk('rect', {x: carX, y: bodyTop, width: carW, height: bodyH, rx: bodyH * .3, style: st(INK)}, carG);
+  [.2, .8].forEach(t => {
+    Kit.mk('circle', {cx: carX + carW * t, cy: gy - r, r, style: st('var(--c)', INK, aw * .9)}, carG);
+    Kit.mk('circle', {cx: carX + carW * t, cy: gy - r, r: r * .35, style: st(INK)}, carG);
+  });
+  G.pullG = Kit.mk('g', {}, carG);
+  const pt = Kit.mk('text', {x: px, y: Math.max(f, bodyTop - maxP - f * .5), 'text-anchor': 'middle', style: `fill:var(--k);font:800 ${f}px var(--body)`}, carG);
+  pt.textContent = 'Your pull';
+
+  // Weight arrow, car to Earth
+  G.wG = Kit.mk('g', {}, svg);
+  arrow(G.wG, cx, cy, wEnd, aw * 1.3, INK);
+  const wt = Kit.mk('text', {x: cx + f * .7, y: (gy + wEnd) / 2 + f * .3, style: `fill:var(--k);font:900 ${f * 1.15}px var(--display)`}, G.wG);
+  wt.textContent = 'Weight';
+
+  // Person straining at the front bumper
+  const pg = Kit.mk('g', {}, svg); G.pG = pg;
+  const hp = carH * 1.35, bx = carX - carH * .55;
+  const hip = gy - hp * .45, sh = gy - hp * .8, hr = hp * .1;
+  const lw = Math.max(3, aw * 1.1), s = st('none', INK, lw);
+  Kit.mk('line', {x1: bx, y1: hip, x2: bx - hp * .16, y2: gy, style: s}, pg);
+  Kit.mk('line', {x1: bx, y1: hip, x2: bx + hp * .14, y2: gy, style: s}, pg);
+  Kit.mk('line', {x1: bx, y1: hip, x2: bx + hp * .08, y2: sh, style: s}, pg);
+  Kit.mk('line', {x1: bx + hp * .08, y1: sh, x2: carX + 2, y2: bodyBot - bodyH * .2, style: s}, pg);
+  Kit.mk('circle', {cx: bx + hp * .12, cy: sh - hr * 1.2, r: hr, style: st(INK)}, pg);
+
+  drawPull();
+  if (S.off) { G.wG.style.opacity = 0; gsap.set(carG, {y: -H * .14}); }
+};
+
+Kit.$('pull').addEventListener('input', e => { S.v = e.target.value / 100; drawPull(); });
+
+Kit.$('lift').addEventListener('click', () => {
+  if (!G) return;
+  Kit.haptic('light');
+  if (!Kit.calm) {
+    gsap.fromTo(G.carG, {x: 0}, {x: 1.5, duration: .05, repeat: 9, yoyo: true, ease: 'none', onComplete: () => gsap.set(G.carG, {x: 0})});
+    gsap.fromTo(G.pG, {y: 0}, {y: G.H * .012, duration: .25, repeat: 1, yoyo: true, ease: 'power2.inOut'});
+  }
+  S.tried = true;
+  Kit.$('say').textContent = S.v > .95 ? 'Your hardest pull. Not a millimetre.' : 'Nothing. Try your hardest pull.';
+  if (S.v > .95) setTimeout(() => {
+    Kit.hide('ctl'); Kit.show('why'); Kit.show('keep');
+    Kit.$('say').textContent = 'Compare the two arrows.';
+    if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4});
+  }, 550);
+});
+
+Kit.$('grav').addEventListener('click', () => {
+  if (!G || S.off) return;
+  S.off = true; Kit.haptic('success');
+  gsap.to(G.wG, {opacity: 0, duration: Kit.calm ? 0 : .5});
+  gsap.to(G.carG, {y: -G.H * .14, duration: Kit.calm ? 0 : 1.4, ease: 'power2.out', delay: Kit.calm ? 0 : .3});
+  Kit.$('grav').textContent = 'No weight: up it goes';
+  Kit.$('say').textContent = 'No gravity, no weight, nothing holding it down.';
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.wG, {opacity: 0, y: -10, duration: .6, ease: 'power3.out'});
+  const o = {v: 0}, end = S.v;
+  gsap.to(o, {v: end, duration: .8, delay: .3, onUpdate: () => { S.v = o.v; drawPull(); }});
+};
+
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const p = Kit.$('pull'); p.value = 100; p.dispatchEvent(new Event('input'));
+  await w(100); Kit.$('lift').click(); await w(800);
+  Kit.$('grav').click(); await w(1900);
+};
+Kit.single();
+</script>
+</html>

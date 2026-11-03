@@ -1,0 +1,37 @@
+{
+  "id": "human_body-mescaline-serotonin-locks",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which brain receptors does mescaline, the peyote molecule, mainly lock onto?",
+  "answer": "Mescaline mostly binds to receptors meant for serotonin, a messenger already in your brain that is known as the \"happiness neurotransmitter.\" It fits into those locks, chiefly 5-HT2A and 5-HT2C. So the two locks it fits are serotonin's 5-HT2A and 5-HT2C receptors.",
+  "move": "Mescaline borrows serotonin's locks: 5-HT2A and 5-HT2C.",
+  "keywords": [
+    "mescaline",
+    "peyote",
+    "serotonin",
+    "5-ht2a",
+    "5-ht2c"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking which brain receptors mescaline, the peyote molecule, mainly lock onto. Four options: dopamine D1 and D2; serotonin 5-HT2A and 5-HT2C; opioid mu and kappa; serotonin's 5-HT2A and 5-HT2C. The reader picks two and rates their confidence."
+  },
+  "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=tfQTsycN6KQ&t=499s",
+  "written": "2026-11-03"
+}

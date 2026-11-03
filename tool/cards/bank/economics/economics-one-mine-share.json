@@ -1,0 +1,37 @@
+{
+  "id": "economics-one-mine-share",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What share of the world's uranium came from one mine, McArthur River?",
+  "answer": "For many years, McArthur River in Saskatchewan, Canada, produced about 15% of the world's uranium on its own. That is roughly 3 kilos in every 20 mined anywhere on Earth.",
+  "move": "Uranium supply is concentrated: one Canadian mine once made 15% of it.",
+  "keywords": [
+    "uranium",
+    "mcarthur_river",
+    "saskatchewan",
+    "canada",
+    "nuclear_fuel"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled 'One mine' asks what share of the world's uranium came from the McArthur River mine. The reader sets a guess with -1% and +1% buttons on a 0 to 100 scale, then taps Check to reveal the answer of 15%."
+  },
+  "source": "Geopop, “Uranio: la risorsa chiave per la fissione nucleare tra estrazione e Paesi produttori più ricchi” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=adkGcJt0P6s&t=494s",
+  "written": "2026-11-03"
+}

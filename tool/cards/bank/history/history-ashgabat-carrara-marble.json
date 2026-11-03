@@ -1,0 +1,37 @@
+{
+  "id": "history-ashgabat-carrara-marble",
+  "topic": "history",
+  "genre": "history.propaganda",
+  "strand": "history.propaganda.propaganda_today",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How much Carrara marble has been used for Ashgabat’s construction?",
+  "answer": "About 4.5 million m² of Carrara marble has been used to clad more than 540 new buildings in Ashgabat, the capital of Turkmenistan. The marble was brought mainly from Italy to make the city gleam. Laid flat, that area would be a square about 2.1 km on each side.",
+  "move": "Ashgabat: 540+ buildings dressed in about 4.5 million m² of Carrara marble.",
+  "keywords": [
+    "ashgabat",
+    "carrara marble",
+    "turkmenistan",
+    "marble",
+    "italy"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card: How much Carrara marble has been used for Ashgabat's construction? Four options are shown: 45,000 m², 450,000 m², 4.5 million m², and 45 million m². The reader picks one and rates how sure they are."
+  },
+  "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=JswYQiixMT8&t=172s",
+  "written": "2026-11-03"
+}

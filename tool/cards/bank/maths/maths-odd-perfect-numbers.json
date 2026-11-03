@@ -1,0 +1,37 @@
+{
+  "id": "maths-odd-perfect-numbers",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What must the prime powers of an odd perfect number look like?",
+  "answer": "Euler showed that in the factorisation of an odd perfect number, exactly one prime appears to an odd exponent while all others appear to even exponents. Each σ(p^a) adds a+1 odd terms, so it is even only when a is odd. Since σ(n) = 2n holds the factor 2 just once, only one σ can be even.",
+  "move": "An odd perfect number has exactly one prime raised to an odd power.",
+  "keywords": [
+    "perfect numbers",
+    "euler",
+    "sigma function",
+    "prime factorisation",
+    "odd numbers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A balance scale with prime-power weights for the question: what must the prime powers of an odd perfect number look like? Tapping a prime changes its power until the scale balances."
+  },
+  "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=925s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "technology-micromouse-navigation-speed",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the true challenge of Micromouse?",
+  "answer": "Finding the route through a maze is the easy part: the mouse knows the way almost at once. The hard part is driving that route fast, flat out on the straights and clean through every turn without touching a wall. That is why the robots keep getting smaller, faster and lighter.",
+  "move": "In Micromouse, solving is easy; navigating fast is the real race.",
+  "keywords": [
+    "micromouse",
+    "maze",
+    "robots",
+    "navigation",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page: a Micromouse robot drives a maze route. Sliders set speed (30%) and sharp turns, and a Launch button starts the run. Text says finding the route is easy and driving it fast is hard, and asks the reader to set the speed, pick the turns and launch."
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=743s",
+  "written": "2026-11-03"
+}

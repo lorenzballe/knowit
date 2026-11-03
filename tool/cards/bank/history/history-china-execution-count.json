@@ -1,0 +1,37 @@
+{
+  "id": "history-china-execution-count",
+  "topic": "history",
+  "genre": "history.propaganda",
+  "strand": "history.propaganda.censorship",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Why is China's exact number of executions unknown?",
+  "answer": "The reason the exact number is unknown is that the government publishes no official figures. China does not publish its execution statistics. Groups such as Amnesty International and ECPM can only estimate, putting the number at thousands of people executed in 2025, but the precise figure is unknown.",
+  "move": "China tops the list, yet its real total stays a secret: only estimates exist.",
+  "keywords": [
+    "china",
+    "executions",
+    "death penalty",
+    "amnesty international",
+    "ecpm"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled DEATH PENALTY asking why China's exact number of executions is unknown, with four reasons to pick from, including 'There are too many to count', 'The government publishes no official figures', and 'Each province counts in a different way'."
+  },
+  "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=gsZ-We120mw&t=360s",
+  "written": "2026-11-03"
+}

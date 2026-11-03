@@ -1,0 +1,37 @@
+{
+  "id": "science-stratovolcano-explosivity",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are stratovolcanoes more explosive than shield volcanoes?",
+  "answer": "Sticky magma traps gas. A shield volcano's runny magma lets gas slip away, so its lava flows calmly. A stratovolcano's thick magma keeps gas in, and the trapped gas builds pressure that is released all at once.",
+  "move": "Thick magma traps gas; trapped gas becomes pressure; pressure explodes.",
+  "keywords": [
+    "stratovolcano",
+    "shield volcano",
+    "magma",
+    "volcanic gas",
+    "pressure"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two volcano cross-sections, a shield volcano and a stratovolcano, each with magma inside. Drag a gas bubble into each volcano's magma. Asks why stratovolcanoes are more explosive than shield volcanoes."
+  },
+  "source": "Geopop, “Vulcani: i tipi di vulcani, come si formano” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=r4mRzXmQ6mY&t=265s",
+  "written": "2026-11-03"
+}

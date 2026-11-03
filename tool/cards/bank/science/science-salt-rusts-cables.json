@@ -1,0 +1,37 @@
+{
+  "id": "science-salt-rusts-cables",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the sea air help bring down Genoa's Morandi bridge?",
+  "answer": "Humid, salty sea air seeped into the holes in the concrete of the stays. Inside, it slowly rusted the steel cables, out of sight, weakening the stays. The collapse started from there.",
+  "move": "Concrete full of holes can't shield steel from salty, humid air.",
+  "keywords": [
+    "morandi bridge",
+    "genoa",
+    "steel cables",
+    "concrete",
+    "salt air"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cutaway zoom takes the viewer from a whole bridge down to the steel cable inside one of its stays. Humid, salty air seeps into holes in the concrete and rusts the cable out of sight. Tap to zoom in."
+  },
+  "source": "Geopop, “Il crollo del Ponte Morandi a Genova, l'inedita ricostruzione video in 3D al momento del collasso” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=mh5JHir3bYQ&t=177s",
+  "written": "2026-11-03"
+}

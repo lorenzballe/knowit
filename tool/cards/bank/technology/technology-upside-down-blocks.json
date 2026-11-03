@@ -1,0 +1,37 @@
+{
+  "id": "technology-upside-down-blocks",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are a ship's hull blocks built upside down?",
+  "answer": "Upside down is not the block's final position. It is chosen for the next phase. Built that way and then flipped, the block is easier to reach and to line up when it is joined to the others into the full hull.",
+  "move": "A block is built in whatever position makes joining the hull easier.",
+  "keywords": [
+    "shipyard",
+    "hull",
+    "steel",
+    "welding",
+    "ship"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four step tiles to tap in the order a ship's hull block is made: build it upside down, weld steel plates into panels, flip it upright, and join it to the hull. The page reads 'You placed 4 of 4'."
+  },
+  "source": "Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Q0FlhJ7-P-g&t=149s",
+  "written": "2026-11-03"
+}

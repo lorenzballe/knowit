@@ -1,0 +1,37 @@
+{
+  "id": "science-solid-inner-core",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do we know Earth's inner core is solid?",
+  "answer": "P-waves slow down in the liquid outer core, then at about 5,100 km deep they suddenly speed up again. That jump means they have entered something denser and solid: the inner core.",
+  "move": "A sudden jump in wave speed at ~5,100 km reveals the solid inner core.",
+  "keywords": [
+    "earth",
+    "inner-core",
+    "outer-core",
+    "p-waves",
+    "earthquakes"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Cross-section of Earth with a P-wave from an earthquake waiting at the surface. A tap sends it one layer deeper, where its speed drops in the liquid outer core and jumps back up at about 5,100 km. Asks how we know the inner core is solid."
+  },
+  "source": "Geopop, “LA STRUTTURA INTERNA DELLA TERRA” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=ybWJKthgRcg&t=229s",
+  "written": "2026-11-03"
+}

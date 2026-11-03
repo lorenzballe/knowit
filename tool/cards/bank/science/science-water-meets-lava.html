@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- slug: science-water-meets-lava -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#pic{display:block;width:100%;height:100%;flex:1;min-height:0;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere;margin:0}
+.q,.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · zoom in">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LAVA &amp; WATER</span></div>
+    <h2 class="q">What happens to water the instant it touches lava?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A drop of water above glowing lava"></svg></div>
+    <p class="say" id="say">Tap the picture to drop the water on the lava.</p>
+    <div id="why" class="gone"><p class="body">Lava is so hot that water turns to steam the moment it touches it. The steam expands inside the molten rock and blows bubbles, so the lava seems to breathe: a violent, explosive reaction.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Water on lava doesn't cool it quietly: it flashes to steam and bursts.</div>
+    <div class="foot"><span class="src">Source · Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let S = 0, busy = false, entered = false, tw = [];
+let W, H, f, fs, surfY, iy, el = {};
+const R = () => Kit.rnd();
+const PUFFS = [...Array(8)].map(() => ({dx: R()*2-1, dy: R(), r: R()}));
+const SMALL = [...Array(3)].map(() => ({dx: R()*2-1, dy: R(), r: R()}));
+const BUBS = [
+  {x:.13,row:0,r:.6},{x:.38,row:0,r:.9},{x:.63,row:0,r:.4},{x:.87,row:0,r:.8},
+  {x:.24,row:1,r:.7},{x:.52,row:1,r:1},{x:.8,row:1,r:.5}
+];
+const ISTEAM = [{x:.22,r:.8},{x:.5,r:1},{x:.78,r:.7}];
+
+function T(x, y, txt, anchor, parent){
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'middle',
+    style:`font:700 ${fs}px var(--body);fill:#fff;stroke:#17110f;stroke-width:${fs*.3}px;paint-order:stroke;stroke-linejoin:round`}, parent);
+  t.textContent = txt; return t;
+}
+function kill(){ tw.forEach(t => t.kill()); tw = []; }
+
+function draw(){
+  const svg = Kit.$('pic'); kill(); svg.innerHTML = '';
+  ({W, H, f} = Kit.fitSvg(svg)); fs = Math.max(f, 13);
+  surfY = H*.62; iy = H*.3;
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id:'lg', x1:0, y1:0, x2:0, y2:1}, defs);
+  [['0','#ffe27a'],['.22','#ff8a1a'],['.7','#d8340f'],['1','#7a1608']].forEach(([o,c]) => Kit.mk('stop', {offset:o, 'stop-color':c}, lg));
+  const cp = Kit.mk('clipPath', {id:'cp'}, defs);
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:f*.9}, cp);
+  const root = Kit.mk('g', {'clip-path':'url(#cp)'}, svg);
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, fill:'#17110f'}, root);
+
+  // ---- the everyday scale: a drop above a lava flow
+  const scene = el.scene = Kit.mk('g', {}, root);
+  Kit.mk('rect', {x:0, y:surfY, width:W, height:H-surfY, fill:'url(#lg)'}, scene);
+  Kit.mk('rect', {x:0, y:surfY-f*.15, width:W, height:f*.3, fill:'#fff3b0', opacity:.55}, scene);
+  for (let i = 0; i < 5; i++){
+    const cx = W*(.1 + i*.2), cy = surfY + (H-surfY)*(.25 + (i%2)*.35);
+    Kit.mk('ellipse', {cx, cy, rx:f*2.4, ry:f*.6, fill:'#4a1a0a', opacity:.45}, scene);
+  }
+  T(W/2, surfY + (H-surfY)*.62, 'molten lava', 'middle', scene);
+  const s = f*1.3, dx0 = W/2, dy0 = H*.16;
+  const dropG = el.drop = Kit.mk('g', {}, scene);
+  Kit.mk('path', {d:`M${dx0} ${dy0-s} C ${dx0+s*.5} ${dy0-s*.4} ${dx0+s*.8} ${dy0} ${dx0+s*.8} ${dy0+s*.35} A ${s*.8} ${s*.8} 0 0 1 ${dx0-s*.8} ${dy0+s*.35} C ${dx0-s*.8} ${dy0} ${dx0-s*.5} ${dy0-s*.4} ${dx0} ${dy0-s} Z`, fill:'#4fb3ff', stroke:'#cdeaff', 'stroke-width':f*.12}, dropG);
+  el.dropLabel = T(dx0 + s*1.5, dy0 + fs*.35, 'a drop of water', 'start', scene);
+  const steam = el.steam = Kit.mk('g', {}, scene);
+  el.puffs = PUFFS.map(p => Kit.mk('circle', {cx: W/2 + p.dx*3*f, cy: surfY - (.8 + p.dy*3)*f, r:(1.2 + p.r*1.2)*f, fill:'#eef0f2', opacity:.92}, steam));
+  el.small = SMALL.map(p => Kit.mk('circle', {cx: W/2 + p.dx*2*f, cy: surfY + (.8 + p.dy*1.4)*f, r:(.35 + p.r*.35)*f, fill:'#fff6e6', stroke:'#ffd36b', 'stroke-width':f*.08}, steam));
+  el.steamLabel = T(W/2, Math.max(fs*1.4, surfY - f*7.6), 'instantly: steam!', 'middle', scene);
+  el.flash = Kit.mk('circle', {cx:W/2, cy:surfY, r:f*2.5, fill:'#fffbe0', opacity:0}, scene);
+
+  // ---- zoomed in: inside the molten rock
+  const inner = el.inner = Kit.mk('g', {}, root);
+  ISTEAM.forEach(p => Kit.mk('circle', {cx:W*p.x, cy:iy - f*1.1, r:(1 + p.r)*f, fill:'#eef0f2', opacity:.5}, inner));
+  const il = el.ilava = Kit.mk('g', {}, inner);
+  Kit.mk('rect', {x:0, y:iy, width:W, height:H - iy + f*3, fill:'url(#lg)'}, il);
+  Kit.mk('rect', {x:0, y:iy - f*.15, width:W, height:f*.3, fill:'#fff3b0', opacity:.6}, il);
+  const L = H - iy;
+  el.bubs = BUBS.map(b => Kit.mk('circle', {cx:W*b.x, cy: iy + L*(b.row ? .83 : .27), r:Math.min((1 + b.r*.8)*f, L*.11), fill:'#fff6e6', stroke:'#ffd36b', 'stroke-width':f*.12, opacity:.95}, il));
+  el.bubLabel = T(W/2, iy + L*.55 + fs*.35, 'steam swells into bubbles', 'middle', inner);
+  el.topLabel = T(f, Math.max(fs*1.4, iy - f*3), S >= 3 ? 'the lava seems to breathe' : 'zoomed into the lava', 'start', inner);
+
+  // static state for the current step
+  gsap.set(el.steam, {opacity: S >= 1 ? 1 : 0});
+  gsap.set(el.steamLabel, {opacity: S >= 1 ? 1 : 0});
+  gsap.set([dropG, el.dropLabel], {opacity: S >= 1 ? 0 : 1});
+  gsap.set(scene, {opacity: S >= 2 ? 0 : 1, display: S >= 2 ? 'none' : ''});
+  gsap.set(inner, {opacity: S >= 2 ? 1 : 0});
+  if (S === 0 && entered) bob();
+  if (S >= 3) breathe();
+}
+
+function bob(){ if (!Kit.calm) tw.push(gsap.to(el.drop, {y:-f*.4, duration:.9, yoyo:true, repeat:-1, ease:'sine.inOut'})); }
+function breathe(){
+  if (Kit.calm) return;
+  tw.push(gsap.to(el.ilava, {scaleY:1.08, svgOrigin:`${W/2} ${H}`, duration:1.4, yoyo:true, repeat:-1, ease:'sine.inOut'}));
+  tw.push(gsap.to(el.bubs, {scale:1.25, transformOrigin:'50% 50%', duration:1.4, yoyo:true, repeat:-1, ease:'sine.inOut', stagger:.12}));
+}
+
+function act(){
+  if (busy || S >= 3) return;
+  Kit.haptic('light');
+  if (S === 0){
+    S = 1; kill();
+    if (Kit.calm){ draw(); Kit.$('say').textContent = 'Tap again to zoom inside the lava.'; return; }
+    busy = true;
+    gsap.set(el.drop, {y:0});
+    const tl = gsap.timeline({onComplete: () => { busy = false; Kit.$('say').textContent = 'Tap again to zoom inside the lava.'; }});
+    tl.to(el.dropLabel, {opacity:0, duration:.2}, 0)
+      .to(el.drop, {y: surfY - H*.16, duration:.5, ease:'power2.in'}, 0)
+      .set(el.drop, {opacity:0})
+      .set(el.steam, {opacity:1})
+      .fromTo(el.flash, {opacity:.95, attr:{r:f*.5}}, {opacity:0, attr:{r:f*4}, duration:.35, ease:'power2.out'})
+      .from(el.puffs, {attr:{cx:W/2, cy:surfY, r:0}, duration:.35, ease:'power3.out', stagger:.02}, '<')
+      .from(el.small, {attr:{r:0}, duration:.4, ease:'back.out(2)'}, '<.1')
+      .to(el.steamLabel, {opacity:1, duration:.25}, '<');
+    tw.push(tl);
+  } else if (S === 1){
+    S = 2;
+    if (Kit.calm){ draw(); Kit.$('say').textContent = 'Tap to see what the bubbles do.'; return; }
+    busy = true;
+    const tl = gsap.timeline({onComplete: () => { busy = false; Kit.$('say').textContent = 'Tap to see what the bubbles do.'; }});
+    tl.to(el.scene, {scale:5, svgOrigin:`${W/2} ${surfY}`, opacity:0, duration:.7, ease:'power2.in'}, 0)
+      .set(el.scene, {scale:1, display:'none'}, .7)
+      .to(el.inner, {opacity:1, duration:.4}, .45)
+      .from(el.bubs, {scale:0, transformOrigin:'50% 50%', duration:.6, ease:'back.out(1.8)', stagger:.1}, .6)
+      .from(el.bubLabel, {opacity:0, duration:.3}, 1.1);
+    tw.push(tl);
+  } else if (S === 2){
+    S = 3;
+    el.topLabel.textContent = 'the lava seems to breathe';
+    if (!Kit.calm) gsap.from(el.topLabel, {opacity:0, duration:.4});
+    breathe();
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.haptic('success');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:8, duration:.45, stagger:.12, ease:'power3.out'});
+  }
+}
+
+Kit.$('stage').addEventListener('click', act);
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => { entered = true; if (S === 0 && !Kit.calm){ kill(); gsap.set(el.drop, {y:0}); bob(); } };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  act(); await wait(1300); act(); await wait(1600); act(); await wait(800);
+};
+Kit.single();
+</script>
+</html>

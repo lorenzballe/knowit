@@ -1,0 +1,37 @@
+{
+  "id": "nature-etna-flank-collapse",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.tipping_points",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens if faults on Etna's flank slip in the same instant?",
+  "answer": "If several faults on Etna's flank slipped in the same instant, the slope would lose its support all at once. The flank, or part of it, could then collapse. Faults usually move in an instant rather than creeping, so the collapse would come without slow warning.",
+  "move": "Faults slip in an instant, so a collapse would come without slow warning.",
+  "keywords": [
+    "etna",
+    "faults",
+    "landslide",
+    "volcano",
+    "collapse"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A diagram of Mount Etna's flank with fault lines. Tapping adds one more fault slipping in the same instant, and the slope loses its support. The page asks what happens if faults slip together."
+  },
+  "source": "Geopop, “▶️ETNA: \"POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI\". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=cwdZkSbbYhw&t=187s",
+  "written": "2026-11-03"
+}

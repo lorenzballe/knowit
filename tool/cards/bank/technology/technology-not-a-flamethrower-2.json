@@ -1,0 +1,37 @@
+{
+  "id": "technology-not-a-flamethrower-2",
+  "topic": "technology",
+  "genre": "technology.tech_and_society",
+  "strand": "technology.tech_and_society.regulation",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "What is the official name of Elon Musk’s consumer flamethrower?",
+  "answer": "The official name was the Not-a-Flamethrower, or NAF. Calling it \"not a flamethrower\" was a legal dodge that helped it sidestep the rules on flamethrowers. Yet it still throws real fire.",
+  "move": "A product's name can be a legal move, not a description.",
+  "keywords": [
+    "elon-musk",
+    "flamethrower",
+    "not-a-flamethrower",
+    "legal-loophole",
+    "product-naming"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking the official name of Elon Musk's consumer flamethrower. Four options: The Musk Flame X, The Not-a-Flamethrower, The Mars Torch M9, and XM42 NAF. The reader picks one, then rates how sure they are."
+  },
+  "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=CKMyBFiiED8",
+  "written": "2026-11-03"
+}

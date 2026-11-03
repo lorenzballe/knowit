@@ -1,0 +1,179 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-the-weak-weld -->
+<title>The Weak Weld</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#art{flex:1;min-height:0;position:relative}
+#art svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt b{font-family:var(--mono);margin-right:.6em}
+svg text{font-family:var(--body);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPOT THE BREAK</span></div>
+    <h2 class="q">Senna's steering column snapped. Where exactly did it break?</h2>
+    <div class="stagebox" id="stage">
+      <div id="art"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0"><b>A</b>Right by the steering wheel</button>
+        <button class="opt" data-i="1"><b>B</b>At the joint in the middle</button>
+        <button class="opt" data-i="2"><b>C</b>Down at the base</button>
+      </div>
+      <div id="why" class="gone"><p class="big">At the weld: joint B</p><p class="body">The column had been lengthened so the wheel stuck out further and Senna's knuckles stopped hitting the bodywork. It snapped exactly at that weld, made with a less resistant material.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick where you think it snapped, then say how sure.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A joint is only as strong as the material holding it together.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, revealed = false, G = null;
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent.slice(1);
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  revealed = true; draw(); reveal(!Kit.calm);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on(); mark();
+});
+
+function S(el, s){ el.setAttribute('style', s); return el; }
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg); const fs = Math.max(f, 12);
+  const P0 = {x: W*.15, y: H*.17}, P1 = {x: W*.86, y: H*.88};
+  const dx = P1.x-P0.x, dy = P1.y-P0.y, len = Math.hypot(dx, dy);
+  const u = {x: dx/len, y: dy/len}, n = {x: -u.y, y: u.x};
+  const at = t => ({x: P0.x+dx*t, y: P0.y+dy*t});
+  const ang = Math.atan2(dy, dx)*180/Math.PI;
+  const th = Math.max(fs*.8, 9);
+  const J = at(.47);
+  const mk = Kit.mk;
+
+  // lower (original) column
+  const low = mk('g', {}, svg);
+  S(mk('line', {x1: J.x, y1: J.y, x2: P1.x, y2: P1.y}, low), `stroke:var(--k);stroke-width:${th}px`);
+  S(mk('line', {x1: J.x+n.x*th*.2, y1: J.y+n.y*th*.2, x2: P1.x+n.x*th*.2, y2: P1.y+n.y*th*.2}, low), `stroke:var(--c);stroke-width:${th*.18}px;opacity:.35`);
+  S(mk('rect', {x: P1.x-th*1.4, y: P1.y-th*1.1, width: th*2.8, height: th*2.2, rx: th*.4, transform: `rotate(${ang} ${P1.x} ${P1.y})`}, low), 'fill:var(--k)');
+
+  // upper (added extension + wheel)
+  const up = mk('g', {}, svg);
+  S(mk('line', {x1: P0.x, y1: P0.y, x2: J.x, y2: J.y}, up), `stroke:var(--k);stroke-width:${th*.86}px`);
+  S(mk('line', {x1: P0.x+n.x*th*.18, y1: P0.y+n.y*th*.18, x2: J.x+n.x*th*.18, y2: J.y+n.y*th*.18}, up), `stroke:var(--c);stroke-width:${th*.16}px;opacity:.35`);
+  S(mk('ellipse', {cx: P0.x, cy: P0.y, rx: th*.9, ry: fs*3.1, transform: `rotate(${ang} ${P0.x} ${P0.y})`}, up), `fill:none;stroke:var(--k);stroke-width:${th*.6}px`);
+  S(mk('circle', {cx: P0.x, cy: P0.y, r: th*.75}, up), 'fill:var(--k)');
+
+  // weld bead
+  const bead = mk('g', {}, svg);
+  S(mk('ellipse', {cx: J.x, cy: J.y, rx: th*.75, ry: th*1.0, transform: `rotate(${ang} ${J.x} ${J.y})`}, bead), `fill:var(--k);stroke:var(--k);stroke-width:${th*.15}px`);
+  for (let k = -1; k <= 1; k++){
+    const c = {x: J.x+u.x*k*th*.32, y: J.y+u.y*k*th*.32};
+    S(mk('ellipse', {cx: c.x, cy: c.y, rx: th*.14, ry: th*.7, transform: `rotate(${ang} ${c.x} ${c.y})`}, bead), `fill:none;stroke:var(--c);stroke-width:${Math.max(1, th*.08)}px;opacity:.6`);
+  }
+
+  // crack across the weld
+  let pts = [];
+  for (let i = 0; i <= 6; i++){ const s = -th*1.15 + i*th*2.3/6, j = (i%2 ? 1 : -1)*th*.18; pts.push(`${J.x+n.x*s+u.x*j},${J.y+n.y*s+u.y*j}`); }
+  const crack = S(mk('polyline', {points: pts.join(' ')}, svg), `fill:none;stroke:var(--c);stroke-width:${th*.28}px;stroke-linejoin:round;opacity:0`);
+
+  // choice markers
+  const marks = mk('g', {}, svg), mlist = [];
+  [.17, .47, .82].forEach((t, i) => {
+    const p = at(t), r = fs*1.05, o = th*1.1 + r + fs*.5, m = {x: p.x+n.x*o, y: p.y+n.y*o};
+    const g = mk('g', {}, marks);
+    S(mk('line', {x1: p.x+n.x*th*.7, y1: p.y+n.y*th*.7, x2: m.x-n.x*r, y2: m.y-n.y*r}, g), `stroke:var(--k);stroke-width:${Math.max(1.5, fs*.1)}px`);
+    const c = S(mk('circle', {cx: m.x, cy: m.y, r}, g), `fill:var(--c);stroke:var(--k);stroke-width:${Math.max(1.5, fs*.14)}px`);
+    const tx = S(mk('text', {x: m.x, y: m.y, 'text-anchor': 'middle', 'dominant-baseline': 'central'}, g), `fill:var(--k);font-size:${fs}px`);
+    tx.textContent = 'ABC'[i]; mlist.push({c, tx});
+  });
+
+  // magnified view of the weld
+  const R = Math.min(W*.21, H*.24), C = {x: W*.75, y: Math.max(R + fs*.4, H*.28)};
+  const dJC = Math.hypot(C.x-J.x, C.y-J.y);
+  const edge = {x: C.x-(C.x-J.x)/dJC*R, y: C.y-(C.y-J.y)/dJC*R};
+  const link = S(mk('line', {x1: J.x, y1: J.y, x2: edge.x, y2: edge.y}, svg), `stroke:var(--k);stroke-width:${Math.max(1.5, fs*.12)}px;stroke-dasharray:${fs*.4} ${fs*.3};opacity:0`);
+  const zoom = mk('g', {opacity: 0}, svg), zin = mk('g', {}, zoom);
+  const cid = 'zc' + Math.round(W) + '_' + Math.round(H);
+  const defs = mk('defs', {}, svg), cp = mk('clipPath', {id: cid}, defs);
+  mk('circle', {cx: 0, cy: 0, r: R}, cp);
+  S(mk('circle', {cx: 0, cy: 0, r: R}, zin), 'fill:var(--c)');
+  const body = mk('g', {'clip-path': `url(#${cid})`}, zin);
+  const ww = R*.3, cr = R/11;
+  // base metal: tight, even grains
+  for (let y = -R, row = 0; y <= R + cr; y += cr*1.75, row++)
+    for (let x = -R + (row%2 ? cr : 0); x <= R + cr; x += cr*2)
+      if (Math.abs(x) > ww + cr*.6) S(mk('circle', {cx: x, cy: y, r: cr*.9}, body), `fill:none;stroke:var(--k);stroke-width:${Math.max(1, R*.012)}px;opacity:.55`);
+  // weld: coarse, uneven, with pores
+  S(mk('rect', {x: -ww, y: -R, width: ww*2, height: R*2}, body), 'fill:var(--k);opacity:.1');
+  let seed = 7; const rr = () => (seed = (seed*9301 + 49297) % 233280) / 233280;
+  for (let k = 0; k < 16; k++) S(mk('circle', {cx: (rr()*2-1)*ww*.85, cy: (rr()*2-1)*R, r: R*(.07 + rr()*.09)}, body), `fill:none;stroke:var(--k);stroke-width:${Math.max(1, R*.016)}px;opacity:.7`);
+  for (let k = 0; k < 9; k++) S(mk('circle', {cx: (rr()*2-1)*ww*.8, cy: (rr()*2-1)*R*.9, r: R*(.02 + rr()*.035)}, body), 'fill:var(--k)');
+  [-1, 1].forEach(sx => { let d = `M${sx*ww},${-R}`; for (let y = -R; y <= R; y += R/6) d += ` Q${sx*ww + sx*R*.05},${y + R/12} ${sx*ww},${y + R/6}`; S(mk('path', {d}, body), `fill:none;stroke:var(--k);stroke-width:${Math.max(1.5, R*.025)}px`); });
+  let cp2 = []; for (let i = 0; i <= 8; i++) cp2.push(`${(i%2 ? 1 : -1)*ww*.35*(.4 + rr()*.6)},${-R + i*R/4}`);
+  S(mk('polyline', {points: cp2.join(' ')}, body), `fill:none;stroke:var(--c);stroke-width:${fs*.75}px;stroke-linejoin:round`);
+  const zcrack = S(mk('polyline', {points: cp2.join(' ')}, body), `fill:none;stroke:var(--k);stroke-width:${fs*.3}px;stroke-linejoin:round`);
+  S(mk('circle', {cx: 0, cy: 0, r: R}, zin), `fill:none;stroke:var(--k);stroke-width:${Math.max(2, fs*.24)}px`);
+  const lab = S(mk('text', {x: 0, y: R + fs*1.3, 'text-anchor': 'middle'}, zin), `fill:var(--k);font-size:${fs}px`);
+  lab.textContent = 'the weld: weaker metal';
+  let tw = fs*11; try { const m = lab.getComputedTextLength(); if (m > 0) tw = m; } catch (e) {}
+  const lo = tw/2 + 2 - C.x, hi = W - 2 - tw/2 - C.x;
+  lab.setAttribute('x', Math.max(lo, Math.min(0, hi)));
+
+  G = {up, crack, marks, mlist, zoom, link, zcrack, J, C, u, fs};
+  mark();
+  if (revealed) setEnd(); else { upT(0); zT(0); }
+}
+
+function upT(k){ const d = G.fs*.9; G.up.setAttribute('transform', `translate(${-G.u.x*d*k},${-G.u.y*d*k}) rotate(${-8*k} ${G.J.x} ${G.J.y})`); }
+function zT(k){ const s = Math.max(k, .001); G.zoom.setAttribute('transform', `translate(${G.J.x + (G.C.x-G.J.x)*k},${G.J.y + (G.C.y-G.J.y)*k}) scale(${s})`); }
+
+function mark(){
+  if (!G) return;
+  G.mlist.forEach((m, i) => {
+    const on = i === pick;
+    m.c.style.fill = on ? 'var(--k)' : 'var(--c)';
+    m.tx.style.fill = on ? 'var(--c)' : 'var(--k)';
+  });
+}
+function setEnd(){
+  upT(1); zT(1); G.zoom.setAttribute('opacity', 1); G.marks.setAttribute('opacity', 0);
+  G.crack.style.opacity = 1; G.link.style.opacity = 1;
+}
+function reveal(anim){
+  if (!anim){ setEnd(); return; }
+  upT(0); zT(0); G.zoom.setAttribute('opacity', 0); G.crack.style.opacity = 0; G.link.style.opacity = 0; G.marks.setAttribute('opacity', 1);
+  const p = {a: 0, z: 0}, L = G.zcrack.getTotalLength ? G.zcrack.getTotalLength() : 300;
+  G.zcrack.style.strokeDasharray = L; G.zcrack.style.strokeDashoffset = L;
+  const tl = gsap.timeline();
+  tl.to(G.marks, {attr: {opacity: 0}, duration: .25})
+    .to(G.crack, {opacity: 1, duration: .12, repeat: 3, yoyo: true})
+    .set(G.crack, {opacity: 1})
+    .to(p, {a: 1, duration: .5, ease: 'back.out(2)', onUpdate: () => upT(p.a), onStart: () => Kit.haptic('light')})
+    .to(G.link, {opacity: 1, duration: .2})
+    .to(p, {z: 1, duration: .6, ease: 'power3.out', onUpdate: () => { zT(p.z); G.zoom.setAttribute('opacity', Math.min(1, p.z*1.5)); }}, '<')
+    .to(G.zcrack, {strokeDashoffset: 0, duration: .5, ease: 'power2.in'});
+}
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2200)); };
+Kit.single();
+</script>
+</html>

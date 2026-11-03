@@ -1,0 +1,37 @@
+{
+  "id": "science-rally-thousandth-second",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a thousandth of a second decide a rally championship?",
+  "answer": "A tiny late or extra input pushes the car off its best line, and off the line it loses grip and time. Those losses add up stage after stage, and over a season they can swing a world championship.",
+  "move": "In rally, a title can hang on half a degree or a thousandth of a second.",
+  "keywords": [
+    "rally",
+    "racing line",
+    "grip",
+    "steering wheel",
+    "world championship"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "An interactive page titled 'A thousandth of a second in rally', showing three tappable controls for wheel, brake and throttle, each given a tiny error, beside a readout of 0.001 s. It asks how a thousandth of a second can decide a rally championship."
+  },
+  "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=2SCEUgazR_8&t=4s",
+  "written": "2026-11-03"
+}

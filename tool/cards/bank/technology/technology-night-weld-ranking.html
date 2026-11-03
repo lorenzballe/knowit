@@ -1,0 +1,181 @@
+<!doctype html>
+<!-- slug: technology-night-weld-ranking -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#art{flex:1;min-height:0;position:relative}
+#art svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;justify-content:center}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
+#go:active{transform:scale(.97)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap · watch it grow">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NIGHT REPAIR</span></div>
+    <h2 class="q">How many joints were welded overnight, and which came first?</h2>
+    <div class="stagebox" id="stage">
+      <div id="art"><svg id="svg"></svg></div>
+      <div id="ctl"><button id="go">Send in the night crew</button></div>
+      <div id="why" class="gone">
+        <p class="big">Over 200 joints, ranked by importance.</p>
+        <p class="body">Every night, welders put two steel plates, 5 cm thick and 2 m long, on each joint, like Band‑Aids on both sides. LeMessurier started with the 30th floor, so the most critical joints were fixed first.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap: the crew welds the next joints on the ranked list.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Too much to fix in time? Rank it, and fix the worst first.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const ROWS = 24, COLS = 9, N = ROWS * COLS, R30 = 11, BATCH = 27;
+// The ranked list: the 30th-floor joints first, then the rest by importance.
+const rowsOrder = [];
+for (let r = 0; r < ROWS; r++) if (r !== R30) rowsOrder.push(r);
+for (let i = rowsOrder.length - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [rowsOrder[i], rowsOrder[j]] = [rowsOrder[j], rowsOrder[i]]; }
+rowsOrder.unshift(R30);
+const order = [];
+rowsOrder.forEach(r => { for (let c = 0; c < COLS; c++) order.push(r * COLS + c); });
+
+let done = 0, nights = 0, finished = false;
+let J = [], G = {}, geo = null;
+
+const PLATE = '#d6e6ff', HOT = '#ffb03b', COLD = '#5a6688', NIGHT = '#0d1430';
+
+function draw() {
+  const svg = Kit.$('svg');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: NIGHT}, svg);
+  // stars + moon
+  for (let i = 0; i < 26; i++) Kit.mk('circle', {cx: ((i * 97) % 100) / 100 * W, cy: ((i * 53) % 100) / 100 * H * .9, r: 1 + (i % 3) * .4, fill: '#fff', opacity: .25 + (i % 4) * .1}, svg);
+  Kit.mk('circle', {cx: W * .9, cy: H * .08, r: Math.min(W, H) * .035, fill: '#f4ecc8'}, svg);
+
+  const th = H * .88, tw = Math.min(W * .44, th * .42);
+  const cx = W * .66, tx = cx - tw / 2, ty = H * .07;
+  const rg = th / ROWS, cg = tw / COLS;
+  geo = {fs, W, H};
+  // tower body
+  Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, fill: '#1c2648', stroke: '#3a4878', 'stroke-width': 1.5}, svg);
+  // chevron braces
+  const br = Kit.mk('g', {stroke: '#3d4c80', 'stroke-width': 1, fill: 'none'}, svg);
+  for (let r = 0; r < ROWS; r++) {
+    const y0 = ty + r * rg, y1 = y0 + rg;
+    for (let c = 0; c < COLS; c++) {
+      const x0 = tx + c * cg, xm = x0 + cg / 2, x1 = x0 + cg;
+      Kit.mk('path', {d: `M${x0} ${y1} L${xm} ${y0 + rg * .5} L${x1} ${y1}`}, br);
+    }
+  }
+  // floor 30 marker
+  const y30 = ty + R30 * rg + rg * .5;
+  const barBottom = H * .1 + fs * 6.6 + fs * .5;
+  const ly = Math.max(y30 - fs * .15, barBottom + fs * 1.6);
+  const lm = ly - fs * .35;
+  Kit.mk('rect', {x: tx - 3, y: ty + R30 * rg, width: tw + 6, height: rg, fill: 'none', stroke: HOT, 'stroke-width': 1.5, rx: 2}, svg);
+  Kit.mk('path', {d: `M${tx - 22} ${lm} L${tx - 14} ${lm} L${tx - 7} ${y30}`, stroke: HOT, 'stroke-width': 2, fill: 'none'}, svg);
+  const lx = tx - 26;
+  Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'end', fill: HOT, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg).textContent = 'Floor 30';
+  Kit.mk('text', {x: lx, y: ly + fs * 1.3, 'text-anchor': 'end', fill: '#ffd59a', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .9}, svg).textContent = 'rank #1';
+
+  // counter
+  const left = W * .06;
+  Kit.mk('text', {x: left, y: H * .1, fill: '#9fb0dd', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .85, 'letter-spacing': '.06em'}, svg).textContent = 'JOINTS';
+  Kit.mk('text', {x: left, y: H * .1 + fs * 1.15, fill: '#9fb0dd', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .85, 'letter-spacing': '.06em'}, svg).textContent = 'WELDED';
+  G.count = Kit.mk('text', {x: left, y: H * .1 + fs * 4, fill: '#fff', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.6}, svg);
+  G.night = Kit.mk('text', {x: left, y: H * .1 + fs * 5.6, fill: '#c9d4f2', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .9}, svg);
+  // bar
+  const by = H * .1 + fs * 6.6, bw = Math.max(20, tx - 30 - left);
+  Kit.mk('rect', {x: left, y: by, width: bw, height: fs * .5, rx: fs * .25, fill: '#26315a'}, svg);
+  G.bar = Kit.mk('rect', {x: left, y: by, width: bw * done / N, height: fs * .5, rx: fs * .25, fill: HOT}, svg);
+  geo.bw = bw;
+  // bottom-left note
+  G.note = Kit.mk('text', {x: left, y: H * .93, fill: '#8d9cc8', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .85}, svg);
+  G.note2 = Kit.mk('text', {x: left, y: H * .93 - fs * 1.3, fill: '#8d9cc8', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .85}, svg);
+
+  // joints
+  const jr = Math.max(1.6, Math.min(cg, rg) * .2);
+  geo.jr = jr;
+  const jg = Kit.mk('g', {}, svg);
+  G.fx = Kit.mk('g', {}, svg);
+  J = [];
+  const weldedSet = new Set(order.slice(0, done));
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const x = tx + c * cg + cg / 2, y = ty + r * rg + rg * .5, i = r * COLS + c, w = weldedSet.has(i);
+    const g = Kit.mk('g', {}, jg);
+    const pL = Kit.mk('rect', {x: x - jr * 2.2, y: y - jr * .9, width: jr * .8, height: jr * 2.6, fill: PLATE, opacity: w ? 1 : 0}, g);
+    const pR = Kit.mk('rect', {x: x + jr * 1.4, y: y - jr * .9, width: jr * .8, height: jr * 2.6, fill: PLATE, opacity: w ? 1 : 0}, g);
+    const dot = Kit.mk('circle', {cx: x, cy: y, r: jr, fill: w ? PLATE : COLD}, g);
+    J[i] = {x, y, dot, pL, pR};
+  }
+  text();
+}
+
+function text() {
+  if (!G.count) return;
+  G.count.textContent = finished ? '200+' : String(done);
+  G.night.textContent = nights ? `Night ${nights}` : 'Before night 1';
+  G.bar.setAttribute('width', geo.bw * done / N);
+  G.note2.textContent = finished ? 'Walls back up' : 'Crew in after';
+  G.note.textContent = finished ? 'every morning.' : 'offices empty.';
+}
+
+function weld() {
+  if (finished) return;
+  nights++;
+  const batch = order.slice(done, Math.min(N, done + BATCH));
+  done += batch.length;
+  Kit.haptic('light');
+  const calm = Kit.calm;
+  batch.forEach((i, k) => {
+    const j = J[i];
+    if (calm) { j.dot.setAttribute('fill', PLATE); j.pL.setAttribute('opacity', 1); j.pR.setAttribute('opacity', 1); return; }
+    const t = k * .035;
+    gsap.timeline({delay: t})
+      .to(j.dot, {attr: {fill: HOT, r: geo.jr * 1.8}, duration: .12})
+      .add(() => sparks(j.x, j.y))
+      .to(j.dot, {attr: {fill: PLATE, r: geo.jr}, duration: .35})
+      .to([j.pL, j.pR], {opacity: 1, duration: .25}, '<');
+  });
+  if (!calm && G.count) {
+    const o = {v: done - batch.length};
+    gsap.to(o, {v: done, duration: .9, ease: 'power1.out', onUpdate: () => { G.count.textContent = Math.round(o.v); }, onComplete: text});
+    G.night.textContent = `Night ${nights}`;
+    gsap.to(G.bar, {attr: {width: geo.bw * done / N}, duration: .9});
+  } else text();
+  if (done >= N) {
+    finished = true;
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.haptic('success');
+    setTimeout(text, calm ? 0 : 1000);
+  } else {
+    Kit.$('say').textContent = `Night ${nights} done. Tap for the next joints on the list.`;
+  }
+}
+
+function sparks(x, y) {
+  if (!G.fx) return;
+  for (let s = 0; s < 5; s++) {
+    const a = Kit.rnd() * Math.PI * 2, d = geo.jr * (3 + Kit.rnd() * 4);
+    const l = Kit.mk('line', {x1: x, y1: y, x2: x, y2: y, stroke: '#ffe08a', 'stroke-width': 1.4, 'stroke-linecap': 'round'}, G.fx);
+    gsap.to(l, {attr: {x2: x + Math.cos(a) * d, y2: y + Math.sin(a) * d}, opacity: 0, duration: .4, ease: 'power2.out', onComplete: () => l.remove()});
+  }
+}
+
+Kit.$('go').addEventListener('click', weld);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 9 && !finished; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 1300));
+};
+Kit.single();
+</script>
+</html>

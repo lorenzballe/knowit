@@ -1,0 +1,37 @@
+{
+  "id": "history-kilogram-prefix",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.france",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Your scale says kilograms, your pills say milligrams. Why is the kilogram the only SI base unit with a prefix?",
+  "answer": "In 1793 France named its new unit of mass the grave, the mass of a litre of water. It was renamed in 1795. The kilogram is that grave under a gram's name, which is why a pill box says 500 mg, never 500 µkg.",
+  "move": "The kilogram is the 1793 grave under a gram’s name. That’s why a pill box says 500 mg, never 500 µkg.",
+  "keywords": [
+    "kilogram",
+    "gram",
+    "grave",
+    "france",
+    "milligram"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled 'The prefix that stuck' asks why the kilogram is the only SI base unit with a prefix. The reveal says France named its 1793 unit of mass the grave, renamed it in 1795, and that the kilogram is that grave under a gram's name."
+  },
+  "source": "Veritasium, “World's Roundest Object!” (YouTube, 2013)",
+  "reference": "https://www.youtube.com/watch?v=ZMByI4s-D-Y",
+  "written": "2026-11-03"
+}

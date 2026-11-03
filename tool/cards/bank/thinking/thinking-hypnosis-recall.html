@@ -1,0 +1,202 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The recall line</title>
+<!-- A sketch of recall under hypnosis, labelled as a sketch: sixteen line drawings (Dywan & Bowers
+     used line drawings) are what comes to mind about drawings seen a week ago, half really shown,
+     half never shown. Height is how sure each feels; above the dashed line you say "I remember".
+     Hypnosis lowers that line: what felt like a guess now counts as a memory (Whitehouse et al.
+     1988: confidence rose most for answers first called guesses, a shift in what counts as a
+     memory). Then the check against the slides sorts what was "remembered" before and what was
+     added. The words carry what studies found: more correct and more false recall (Dywan & Bowers,
+     Science 1983), no extra correct items but more errors (Dinges et al. 1992), less reliable than
+     ordinary recall (AMA Council on Scientific Affairs, JAMA 1985); and the courts (Rock v. Arkansas,
+     1987, notes the states that bar it). The counts are the sketch's own, not data.
+     Inspired by Diventare Strong (Alex Onofri), "Persuasione Ipnotica": hypnotic suggestion.
+     Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:.8cqh}
+.count{margin:0;font:700 max(1.5cqh,11.5px)/1.2 var(--body)}
+.count b{font:800 max(2.1cqh,13px)/1 var(--display);margin-left:1cqw}
+#field{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+.cap{margin:0;font:600 max(1.5cqh,11.5px)/1.35 var(--body);color:color-mix(in srgb,var(--k) 70%,transparent);text-wrap:pretty}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){
+  .answered .in{gap:1.5cqh}
+  .answered .keep{padding:1.3cqh 4.5cqw}
+}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Hypnotise · then check the slides">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE RECALL LINE</span></div>
+    <h2 class="q">Can hypnosis bring back lost memories?</h2>
+    <div class="stagebox" id="stage">
+      <p class="count">In this sketch, you “remember”:<b class="num" id="n">5</b></p>
+      <svg id="field" role="img" aria-label="Sixteen small line drawings at different heights. A dashed line marks the point where something feels like a memory; five drawings sit above it."></svg>
+    </div>
+    <p class="say" id="say">A week ago you saw 60 drawings. These 16 come to mind; the higher one floats, the surer it feels. Above the line you’d say “I remember”.</p>
+    <p class="cap gone" id="cap">That is why many US courts bar or limit testimony “refreshed” by hypnosis.</p>
+    <button class="btn" id="go">Go under hypnosis</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Hypnosis turns up how sure you feel, not how right you are.</div>
+    <div class="foot"><span class="src">Source · Dywan &amp; Bowers, Science 222:184 (1983); AMA Council on Scientific Affairs, JAMA 253:1918 (1985)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const $ = Kit.$, INK = '#10100c', PAPER = '#F2F1EC', AWAKE = .62, TRANCE = .33, VMIN = -.03, VMAX = 1;
+  // Line drawings in a 24-unit box around 0,0.
+  const ICON = {
+    key: 'M-9,0a3.5,3.5 0 1 0 7,0a3.5,3.5 0 1 0 -7,0 M-2,0H10 M6,0v3.5 M9,0v3',
+    cup: 'M-8,-5H5v5a6.5,6.5 0 0 1 -13,0z M5,-3a3,3 0 0 1 0,6 M-9,9H6',
+    umbrella: 'M-10,0a10,9 0 0 1 20,0z M0,0v8a2.5,2.5 0 0 1 -5,0 M0,-9v-1.5',
+    fish: 'M-9,0q8,-9 15,0q-7,9 -15,0z M6,0l5,-4.5v9z M-4,-1.5h.01',
+    bell: 'M-7,5q0,-13 7,-13q7,0 7,13z M-9,5H9 M-1.5,8.5a1.5,1.5 0 0 0 3,0',
+    leaf: 'M-9,9C-9,-3 -2,-9 9,-9C9,2 3,9 -9,9z M-9,9L4,-4',
+    clock: 'M-9,0a9,9 0 1 0 18,0a9,9 0 1 0 -18,0 M0,0V-6 M0,0H4.5',
+    star: 'M0,-10L2.9,-3.1L10,-3.1L4.3,1.4L6.5,8.5L0,4.2L-6.5,8.5L-4.3,1.4L-10,-3.1L-2.9,-3.1z',
+    hat: 'M-11,6H11 M-7,6V-5H7V6 M-7,1H7',
+    apple: 'M0,-4C-8,-8 -11,2 -7,8C-5,11 -2,10 0,9C2,10 5,11 7,8C11,2 8,-8 0,-4z M0,-4Q1,-8 4,-10',
+    glasses: 'M-10,1a4,4 0 1 0 8,0a4,4 0 1 0 -8,0 M2,1a4,4 0 1 0 8,0a4,4 0 1 0 -8,0 M-2,0Q0,-2 2,0',
+    bike: 'M-11,4a4,4 0 1 0 8,0a4,4 0 1 0 -8,0 M3,4a4,4 0 1 0 8,0a4,4 0 1 0 -8,0 M-7,4L-2,-4H5L7,4 M-2,-4L0,4L5,-4 M-4,-7H0',
+    kite: 'M0,-11L7,-2L0,6L-7,-2z M0,-11V6 M-7,-2H7 M0,6q-3,2 0,4',
+    moon: 'M3,-10A10,10 0 1 0 10,3A7.5,7.5 0 1 1 3,-10z',
+    letter: 'M-10,-6H10V7H-10z M-10,-6L0,2L10,-6',
+    heart: 'M0,8C-12,0 -9,-10 0,-4C9,-10 12,0 0,8z',
+  };
+  // Eight columns, in each one drawing that was shown (real) and one that never was; base = how sure
+  // it feels, kept clear of both lines.
+  const ITEMS = [
+    ['key', 1, .95, 0], ['hat', 0, .46, 0], ['cup', 1, .48, 1], ['apple', 0, .08, 1],
+    ['umbrella', 1, .9, 2], ['glasses', 0, .44, 2], ['fish', 1, .1, 3], ['kite', 0, .8, 3],
+    ['leaf', 1, .88, 4], ['bike', 0, .48, 4], ['bell', 1, .46, 5], ['moon', 0, 0, 5],
+    ['clock', 1, .79, 6], ['letter', 0, .14, 6], ['star', 1, .02, 7], ['heart', 0, .44, 7],
+  ].map(([name, real, base, col]) => ({name, real: !!real, base, col}));
+  ITEMS.forEach(it => { it.before = it.base > AWAKE; it.after = it.base > TRANCE; });
+  let phase = 0, line = AWAKE, g = null;
+  const say = $('say'), go = $('go');
+  const txt = (x, y, str, a, parent) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-size': 11.5, 'font-weight': 800}, a), parent); e.textContent = str; return e; };
+  const yOf = v => g.bot - (v - VMIN) / (VMAX - VMIN) * (g.bot - g.top);
+
+  function icon(it, parent, x, y, s) {
+    const e = Kit.mk('g', {transform: `translate(${x} ${y}) scale(${s / 24})`}, parent);
+    const p = Kit.mk('path', {d: ICON[it.name], fill: 'none', stroke: INK, 'stroke-width': 1.7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'}, e);
+    return [e, p];
+  }
+  // A filled tick on what was on the slides; a dashed outline and an open cross on what never was.
+  function badge(it, x, y, r, parent) {
+    const m = Kit.mk('g', {transform: `translate(${x} ${y})`}, parent);
+    if (it.real) {
+      Kit.mk('circle', {r, fill: INK}, m);
+      Kit.mk('path', {d: `M${-r * .45},0 L${-r * .1},${r * .38} L${r * .5},${-r * .38}`, fill: 'none', stroke: PAPER, 'stroke-width': Math.max(1.5, r * .3), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, m);
+    } else {
+      Kit.mk('circle', {r, fill: PAPER, stroke: INK, 'stroke-width': 1.4}, m);
+      Kit.mk('path', {d: `M${-r * .38},${-r * .38} L${r * .38},${r * .38} M${r * .38},${-r * .38} L${-r * .38},${r * .38}`, fill: 'none', stroke: INK, 'stroke-width': Math.max(1.3, r * .26), 'stroke-linecap': 'round'}, m);
+    }
+    return m;
+  }
+
+  // The field: what comes to mind, at the height of how sure it feels, and the line for "I remember".
+  function place() {
+    const ly = yOf(line);
+    g.band.setAttribute('height', Math.max(0, ly));
+    g.line.setAttribute('y1', ly); g.line.setAttribute('y2', ly);
+    let n = 0;
+    for (const it of ITEMS) { const up = it.base > line; it.el.setAttribute('opacity', up ? 1 : .3); if (up) n++; }
+    $('n').textContent = n;
+  }
+  function drawField(svg, W, H) {
+    const slot = W / 8, s = Math.min(slot * .68, H / 5.4, 32), head = 22;
+    g = {W, H, s, top: head + s * .6, bot: H - s * .6};
+    g.band = Kit.mk('rect', {x: 0, y: 0, width: W, height: 0, rx: 10, fill: INK, opacity: .055}, svg);
+    txt(8, 15, 'ABOVE THE LINE: “I REMEMBER”', {'letter-spacing': '.08em', opacity: .7}, svg);
+    // Where the line was before hypnosis, once it has moved.
+    g.ghost = Kit.mk('line', {x1: 0, y1: yOf(AWAKE), x2: W, y2: yOf(AWAKE), stroke: INK, 'stroke-width': 1.2, 'stroke-dasharray': '2 5', opacity: line < AWAKE ? .35 : 0}, svg);
+    g.rings = Kit.mk('g', {opacity: 0}, svg);
+    for (let k = 1; k <= 4; k++) Kit.mk('circle', {cx: W / 2, cy: H * .55, r: Math.min(W, H) * .15 * k, fill: 'none', stroke: INK, 'stroke-width': 1.2, opacity: .5 - k * .09}, g.rings);
+    const lay = Kit.mk('g', {}, svg);
+    for (const it of ITEMS) [it.el] = icon(it, lay, slot * (it.col + .5) + (it.real ? -1 : 1) * slot * .08, yOf(it.base), s);
+    g.line = Kit.mk('line', {x1: 0, x2: W, stroke: INK, 'stroke-width': 1.7, 'stroke-dasharray': '7 6', opacity: .8}, svg);
+    place();
+  }
+
+  // The check: what was said to be remembered, before and added, in two panels. On a tall card each
+  // drawing gets a tile with its name; on a short one they stand in a row.
+  function drawPanels(svg, W, H, now) {
+    const before = ITEMS.filter(it => it.before), added = ITEMS.filter(it => it.after && !it.before), gap = 8, ph = (H - gap) / 2;
+    const th = (ph - 30 - 8 - 6) / 2, grid = th >= 38, made = [];
+    svg.setAttribute('aria-label', `Before hypnosis: ${before.length} things remembered, ${before.filter(it => it.real).length} of them shown. Added under hypnosis: ${added.length} more, ${added.filter(it => it.real).length} of them shown.`);
+    [[before, 'BEFORE HYPNOSIS'], [added, 'ADDED UNDER HYPNOSIS']].forEach(([list, name], r) => {
+      const y0 = r * (ph + gap), shown = list.filter(it => it.real).length, panel = Kit.mk('g', {}, svg);
+      Kit.mk('rect', {x: 0, y: y0, width: W, height: ph, rx: 10, fill: INK, opacity: r ? .06 : .035}, panel);
+      txt(10, y0 + 17, name, {'letter-spacing': '.08em', opacity: .75}, panel);
+      txt(W - 10, y0 + 17, `${shown} of ${list.length} shown`, {'text-anchor': 'end', 'font-weight': 700}, panel);
+      if (grid) {
+        // Two rows of three tiles: the drawing, its mark, its name.
+        const cols = 3, tg = 6, tw = (W - 16 - tg * (cols - 1)) / cols;
+        const s = Math.min(th * .74, 34, tw * .34);
+        list.forEach((it, k) => {
+          const row = Math.floor(k / cols), inRow = Math.min(cols, list.length - row * cols), col = k % cols;
+          const x0 = 8 + (cols - inRow) * (tw + tg) / 2 + col * (tw + tg), ty = y0 + 30 + row * (th + tg), cy = ty + th / 2;
+          const tile = Kit.mk('g', {}, panel);
+          Kit.mk('rect', {x: x0, y: ty, width: tw, height: th, rx: 8, fill: PAPER, opacity: .8}, tile);
+          const ix = x0 + 8 + s / 2, [, p] = icon(it, tile, ix, cy, s);
+          if (!it.real) { p.setAttribute('stroke-dasharray', '2.6 2.4'); p.setAttribute('opacity', .75); }
+          txt(x0 + 14 + s + 6, cy + 4, it.name, {'font-weight': 700, opacity: it.real ? 1 : .72}, tile);
+          made.push(badge(it, ix + s * .48, cy - s * .4, Math.max(6, s * .2), tile));
+        });
+      } else {
+        const n = Math.max(before.length, added.length), s = Math.min((W - 16) / n * .6, (ph - 24) * .6, 40), slot = (W - 8 - s * .7) / n;
+        const named = ph - 30 >= s + 22, y = y0 + 24 + (ph - 24 - (named ? 18 : 0)) / 2;
+        list.forEach((it, k) => {
+          const x = 4 + slot * (k + .5), [, p] = icon(it, panel, x, y, s);
+          if (!it.real) { p.setAttribute('stroke-dasharray', '2.6 2.4'); p.setAttribute('opacity', .75); }
+          if (named) txt(x, y + s * .5 + 16, it.name, {'text-anchor': 'middle', 'font-weight': 700, opacity: it.real ? 1 : .72}, panel);
+          made.push(badge(it, x + s * .5, y - s * .42, Math.max(5.5, s * .22), panel));
+        });
+      }
+    });
+    if (!now && !Kit.calm && typeof gsap !== 'undefined') gsap.from(made, {opacity: 0, duration: .3, stagger: .05, delay: .2});
+  }
+
+  function draw(now = true) {
+    const svg = $('field');
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    if (phase === 2) drawPanels(svg, W, H, now); else drawField(svg, W, H);
+  }
+
+  go.addEventListener('click', () => {
+    if (phase === 0) {
+      phase = 1; go.disabled = true;
+      const end = () => { line = TRANCE; place(); g.ghost.setAttribute('opacity', .35); go.disabled = false; go.textContent = 'Check against the slides'; say.innerHTML = 'Hypnosis lowers the bar: what felt like a guess now counts as a memory. Twice as many things clear the line.'; Kit.haptic('light'); };
+      if (Kit.calm || typeof gsap === 'undefined') { end(); return; }
+      gsap.fromTo(g.rings, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: .4, yoyo: true, repeat: 3, ease: 'sine.inOut'});
+      gsap.to(g.ghost, {attr: {opacity: .35}, duration: .4});
+      const t = {v: AWAKE};
+      gsap.to(t, {v: TRANCE, duration: 1.5, ease: 'sine.inOut', onUpdate: () => { line = t.v; place(); }, onComplete: end});
+    } else if (phase === 1) {
+      phase = 2;
+      Kit.hide('go');
+      say.innerHTML = 'Most of the new “memories” were never shown. Lab studies find the same: more errors and more confidence, little or no gain in accuracy.';
+      Kit.show('cap');
+      $('card').classList.add('answered');
+      Kit.show('keep');
+      Kit.haptic('success');
+      // The words under the field have grown: the panels are laid out at the field's new size.
+      requestAnimationFrame(() => draw(false));
+    }
+  });
+
+  Kit.onShow.card = () => draw();
+  if (typeof ResizeObserver !== 'undefined') { let last = ''; new ResizeObserver(([en]) => { const k = Math.round(en.contentRect.width) + 'x' + Math.round(en.contentRect.height); if (last && k !== last) draw(); last = k; }).observe($('field')); }
+  Kit.onEnter.card = () => { if (!Kit.calm && typeof gsap !== 'undefined' && phase === 0) gsap.from(ITEMS.map(it => it.el), {opacity: 0, duration: .4, stagger: .03, clearProps: 'opacity'}); };
+  const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 30 : ms));
+  const until = async (f, ms = 8000) => { const t0 = Date.now(); while (!f() && Date.now() - t0 < ms) await new Promise(r => setTimeout(r, 50)); };
+  Kit.play.card = async () => { go.click(); await until(() => phase === 1 && !go.disabled); await wait(300); go.click(); await wait(900); };
+})();
+Kit.single();
+</script>
+</html>

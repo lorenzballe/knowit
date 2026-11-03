@@ -1,0 +1,269 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bared teeth</title>
+<!-- One face, dragged across our cousins: the silent bared-teeth display of a rhesus macaque (one way,
+     low rank to high: "don't hurt me"), of a tolerant Tonkean macaque (both ways: peace), of a
+     chimpanzee (friendly contact follows), and the human smile, which comes in kinds (reward, bonding,
+     dominance: Rychlowska et al. 2017; tap them at the end). The face is drawn from numbers, and the
+     numbers of one species slide into the next, so every point of the drag is a face.
+     Inspired by Diventare Strong (Alex Onofri), "Come apparire Dominanti": "a small smile signals
+     inferiority, like a dog lowering its ears".
+     Touch: a drag along the line of species (taps on their names work too), then taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#face{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#kinds{display:flex;gap:2cqw}
+#kinds button{flex:1;font:800 max(1.9cqh,12.5px)/1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 32%,transparent);border-radius:99px;padding:1.2cqh 0;cursor:pointer;transition:background-color .2s,color .2s}
+#kinds button.on{background:var(--k);color:var(--c);box-shadow:none}
+#scrub{position:relative;height:max(7.4cqh,40px);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#scrub .track{position:absolute;left:12.5%;right:12.5%;top:1.3cqh;height:.6cqh;min-height:4px;border-radius:9px;background:color-mix(in srgb,var(--k) 18%,transparent)}
+#scrub .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:9px;background:var(--k)}
+#scrub .thumb{position:absolute;top:calc(1.3cqh + .3cqh);width:max(3.6cqh,22px);height:max(3.6cqh,22px);margin:calc(max(3.6cqh,22px) / -2) 0 0 calc(max(3.6cqh,22px) / -2);border-radius:50%;background:var(--k);box-shadow:0 0 0 .5cqh var(--c),0 .4cqh 1cqh rgba(0,0,0,.25);left:12.5%}
+#scrub .stops{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr)}
+#scrub .stop{font:700 max(1.6cqh,11.5px)/1.1 var(--body);color:var(--k);background:none;border:0;padding:0;cursor:pointer;opacity:.62;text-align:center}
+#scrub .stop.on{opacity:1;font-weight:800}
+.keep b{display:inline;margin:0 1.6cqw 0 0}
+.answered .keep{padding:1.4cqh 4.8cqw}
+#kinds button{padding:1cqh 0}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:500px){
+  .answered .in{gap:1.5cqh}
+  .answered #stage{gap:.9cqh}
+  .answered .keep{padding:1.3cqh 4.5cqw}
+}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag across species · one face">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ONE FACE, FOUR SPECIES</span></div>
+    <h2 class="q">Why do we bare our teeth when we’re happy?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="face" role="img" aria-label="A drawn face showing bared teeth, which changes from a rhesus macaque to a Tonkean macaque, a chimpanzee and a human as you drag."></svg>
+      <div id="kinds" class="gone" role="group" aria-label="Three kinds of human smile">
+        <button data-k="reward" class="on">Reward</button><button data-k="bond">Bonding</button><button data-k="dom">Dominance</button>
+      </div>
+      <div id="scrub" data-drag role="slider" aria-label="Species" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0">
+        <div class="track"><i class="fill"></i></div>
+        <span class="thumb"></span>
+        <div class="stops"><button class="stop on" data-i="0">Rhesus</button><button class="stop" data-i="1">Tonkean</button><button class="stop" data-i="2">Chimp</button><button class="stop" data-i="3">Human</button></div>
+      </div>
+    </div>
+    <p class="say" id="say"></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Our smile likely began as “don’t hurt me”. Tolerant societies made it “we’re friends”.</div>
+    <div class="foot"><span class="src">Source · de Waal &amp; Luttrell 1985; Thierry et al. 1989; Waller &amp; Dunbar 2005; Rychlowska et al. 2017; Martin et al. 2018</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const $ = Kit.$, svg = $('face'), say = $('say');
+  // ---------- the faces, as numbers ----------
+  // fur: hw half-width, top, mid (widest), bot · ears: ex, ey, erx, ery · skin: st top, stw forehead
+  // half-width, sw cheek half-width, sm cheek height, sb chin, mw jaw half-width · eyes: ey, edx, erx,
+  // ery, lid (0 open, .6 a smiling crescent) · brows: by, bdx, bl length, bo/bi outer/inner drop, ba arch,
+  // bw weight · nose: ny, nw, nh, wr (wrinkles) · mouth: my, mw, mh opening, ll/lr corner lift, tk upper
+  // lip, lo lower teeth shown, to teeth shown · colours: skin, feature.
+  const RHESUS = {hw: 70, top: 26, mid: 100, bot: 178, ex: 63, ey: 90, erx: 11, ery: 14, st: 58, stw: 30, sw: 46, sm: 108, sb: 172, mw: 30,
+    px: 0, pl: 0, pr: 0, eyy: 90, edx: 17, eyx: 8, eyh: 8.5, lid: 0, by: 75, bdx: 18, bl: 24, bo: 3, bi: -4, ba: 4, bw: 5, ny: 113, nw: 8, nh: 6, wr: 0,
+    my: 141, mwd: 35, mh: 11, ll: 0, lr: 0, tk: 1, lo: 1, to: 1, skin: '#f2a79a', feat: '#10100c', fur: '#7d5d3b'};
+  const TONKEAN = Object.assign({}, RHESUS, {hw: 73, top: 20, mw: 32, eyx: 7.5, eyh: 6.5, lid: .18, by: 79, bo: 1, bi: -1, ba: 3, mh: 13.5, ll: 2, lr: 2, tk: 1.1, skin: '#2b2421', feat: '#f2f1ec', fur: '#141110'});
+  const CHIMP = {hw: 64, top: 30, mid: 98, bot: 180, ex: 70, ey: 96, erx: 20, ery: 24, st: 60, stw: 40, sw: 52, sm: 110, sb: 178, mw: 40,
+    px: 0, pl: 0, pr: 0, eyy: 92, edx: 18, eyx: 6.5, eyh: 6, lid: .1, by: 80, bdx: 20, bl: 30, bo: 0, bi: 0, ba: 1, bw: 8, ny: 118, nw: 11, nh: 5, wr: 0,
+    my: 151, mwd: 43, mh: 12, ll: 0, lr: 0, tk: .9, lo: 1, to: 1, skin: '#e7d3bc', feat: '#10100c', fur: '#10100c'};
+  const SMILES = {
+    reward: {hw: 63, top: 26, mid: 82, bot: 124, ex: 63, ey: 112, erx: 9, ery: 14, st: 58, stw: 50, sw: 58, sm: 112, sb: 182, mw: 34,
+      px: 13, pl: 10, pr: -3, eyy: 103, edx: 22, eyx: 7.5, eyh: 6.5, lid: .42, by: 84, bdx: 22, bl: 24, bo: 2, bi: 0, ba: 6, bw: 4, ny: 130, nw: 7, nh: 8, wr: 0,
+      my: 153, mwd: 30, mh: 9.5, ll: 12, lr: 12, tk: .3, lo: 0, to: 1, skin: '#f4e9dc', feat: '#10100c', fur: '#3b2a1f'},
+  };
+  SMILES.bond = Object.assign({}, SMILES.reward, {lid: .08, by: 88, ba: 3, mwd: 26, mh: 1.3, ll: 7, lr: 7, tk: .2, to: 0});
+  SMILES.dom = Object.assign({}, SMILES.reward, {lid: .05, by: 89, bo: 0, bi: 1.5, ba: 2, wr: 1, mwd: 28, mh: 6, ll: 11, lr: 0, tk: 1.15});
+  const human = Object.assign({}, SMILES.reward);
+  const SPECIES = [RHESUS, TONKEAN, CHIMP, human];
+  const SAY = [
+    'Rhesus monkeys keep strict ranks. The low-ranked flash this <b>silent bared-teeth</b> face at the high-ranked, often while backing away: “don’t hurt me”.',
+    'Tonkean macaques are tolerant. Both sides make the same face, as a sign of peace, and it blends into their play face.',
+    'In chimpanzees, friendly contact goes up after this face. Cousins, not ancestors: they hint at how our smile grew from it (van Hooff, 1972).',
+  ];
+  const KIND = {
+    reward: 'Ours does three jobs, a 2017 study found. <b>Reward</b>: symmetrical, eyebrows up, “more of that”. Tap the other two.',
+    bond: '<b>Bonding</b>: lips pressed. It says “no threat”, much like the macaque face, and keeps bonds going.',
+    dom: '<b>Dominance</b>: lopsided, nose wrinkled. From a judge on video, it raised men’s cortisol more than a reward smile did (27 men a group).'
+  };
+  const BUBBLE = ['I’m no threat.', 'We’re at peace.', 'We’re fine.'];
+  const KIND_BUBBLE = {reward: 'More of that!', bond: 'We’re good.', dom: 'I’m above you.'};
+
+  const lerp = (a, b, f) => a + (b - a) * f;
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mixC = (a, b, f) => { const A = hex(a), B = hex(b); return '#' + A.map((v, i) => Math.round(lerp(v, B[i], f)).toString(16).padStart(2, '0')).join(''); };
+  function blend(a, b, f) { const o = {}; for (const k in a) o[k] = typeof a[k] === 'string' ? mixC(a[k], b[k], f) : lerp(a[k], b[k], f); return o; }
+
+  // ---------- drawing a face from its numbers (a 200 by 200 box) ----------
+  const K = .5523, C = 100, n = v => +v.toFixed(2);
+  const ell = (cx, cy, rx, ry, lid = 0) => { const b = ry * (1 - 2 * lid); return `M${n(cx - rx)},${n(cy)}C${n(cx - rx)},${n(cy - K * ry)} ${n(cx - K * rx)},${n(cy - ry)} ${n(cx)},${n(cy - ry)}C${n(cx + K * rx)},${n(cy - ry)} ${n(cx + rx)},${n(cy - K * ry)} ${n(cx + rx)},${n(cy)}C${n(cx + rx)},${n(cy + K * b)} ${n(cx + K * rx)},${n(cy + b)} ${n(cx)},${n(cy + b)}C${n(cx - K * rx)},${n(cy + b)} ${n(cx - rx)},${n(cy + K * b)} ${n(cx - rx)},${n(cy)}Z`; };
+  const furD = p => `M${C},${p.top}C${n(C + p.hw * .56)},${p.top} ${n(C + p.hw)},${n(p.mid - (p.mid - p.top) * .56)} ${n(C + p.hw)},${n(p.mid)}C${n(C + p.hw)},${n(p.mid + (p.bot - p.mid) * .62)} ${n(C + p.hw * .52)},${n(p.bot)} ${C},${n(p.bot)}C${n(C - p.hw * .52)},${n(p.bot)} ${n(C - p.hw)},${n(p.mid + (p.bot - p.mid) * .62)} ${n(C - p.hw)},${n(p.mid)}C${n(C - p.hw)},${n(p.mid - (p.mid - p.top) * .56)} ${n(C - p.hw * .56)},${p.top} ${C},${p.top}Z`;
+  function skinD(p) {
+    const y1 = p.st + (p.sm - p.st) * .6, y2 = p.sm + (p.sb - p.sm) * .55, r = p.mw + (p.sw - p.mw) * .4;
+    // px, pl, pr: a hairline parted to one side (zero for the apes).
+    return `M${n(C + p.px)},${n(p.st)}C${n(C + p.px + p.stw * .5)},${n(p.st + p.pr)} ${n(C + p.stw)},${n(p.st + (p.sm - p.st) * .25 + p.pr)} ${n(C + p.sw * .92)},${n(y1)}C${n(C + p.sw)},${n(p.sm)} ${n(C + p.sw)},${n(p.sm + 12)} ${n(C + r)},${n(y2)}C${n(C + p.mw)},${n(p.sb - 6)} ${n(C + p.mw * .5)},${n(p.sb)} ${C},${n(p.sb)}C${n(C - p.mw * .5)},${n(p.sb)} ${n(C - p.mw)},${n(p.sb - 6)} ${n(C - r)},${n(y2)}C${n(C - p.sw)},${n(p.sm + 12)} ${n(C - p.sw)},${n(p.sm)} ${n(C - p.sw * .92)},${n(y1)}C${n(C - p.stw)},${n(p.st + (p.sm - p.st) * .25 + p.pl)} ${n(C + p.px - p.stw * .6)},${n(p.st + p.pl)} ${n(C + p.px)},${n(p.st)}Z`;
+  }
+  const browD = (p, s) => { const xo = C + s * (p.bdx + p.bl / 2), xi = C + s * (p.bdx - p.bl / 2), yo = p.by + p.bo, yi = p.by + p.bi; return `M${n(xo)},${n(yo)}C${n(xo - s * p.bl * .3)},${n(yo - p.ba)} ${n(xi + s * p.bl * .3)},${n(yi - p.ba)} ${n(xi)},${n(yi)}`; };
+  const noseD = p => `M${n(C - p.nw)},${n(p.ny)}C${n(C - p.nw)},${n(p.ny - p.nh)} ${n(C + p.nw)},${n(p.ny - p.nh)} ${n(C + p.nw)},${n(p.ny)}C${n(C + p.nw)},${n(p.ny + p.nh * .55)} ${n(C + p.nw * .3)},${n(p.ny + p.nh * .6)} ${C},${n(p.ny + p.nh * .6)}C${n(C - p.nw * .3)},${n(p.ny + p.nh * .6)} ${n(C - p.nw)},${n(p.ny + p.nh * .55)} ${n(C - p.nw)},${n(p.ny)}Z`;
+  const wrinkD = p => { const y1 = p.ny - p.nh - 4, y2 = p.ny - p.nh - 9, w = p.nw * 1.1; return `M${n(C - w)},${n(y1 + 1.5)}Q${C},${n(y1 - 2.5)} ${n(C + w)},${n(y1 + 1.5)}M${n(C - w * .8)},${n(y2 + 1.5)}Q${C},${n(y2 - 2)} ${n(C + w * .8)},${n(y2 + 1.5)}`; };
+  const mouthD = p => { const yl = p.my - p.ll, yr = p.my - p.lr, t = p.my - p.mh * p.tk, b = p.my + p.mh * 1.3; return `M${n(C - p.mwd)},${n(yl)}C${n(C - p.mwd * .55)},${n(t)} ${n(C + p.mwd * .55)},${n(t)} ${n(C + p.mwd)},${n(yr)}C${n(C + p.mwd * .8)},${n(b)} ${n(C - p.mwd * .8)},${n(b)} ${n(C - p.mwd)},${n(yl)}Z`; };
+  // The teeth sit inside the mouth: under its upper edge, and down to its lower edge (both rows, a
+  // bared-teeth face) or only a band of upper teeth (a human smile).
+  function teethGeo(p) {
+    const tw = p.mwd * .84, yl = p.my - p.ll * .92 + 1.5, yr = p.my - p.lr * .92 + 1.5, top = p.my - p.mh * p.tk + 2.2;
+    const full = p.my + p.mh * 1.3 - 2.6, upper = top + p.mh * .78 + 1, bot = upper + (full - upper) * p.lo, seam = (top + full) / 2;
+    return {tw, yl, yr, top, seam, bot};
+  }
+  const teethD = p => { const g = teethGeo(p); return `M${n(C - g.tw)},${n(g.yl)}C${n(C - g.tw * .55)},${n(g.top)} ${n(C + g.tw * .55)},${n(g.top)} ${n(C + g.tw)},${n(g.yr)}C${n(C + g.tw * .8)},${n(g.bot)} ${n(C - g.tw * .8)},${n(g.bot)} ${n(C - g.tw)},${n(g.yl)}Z`; };
+  // A point on a symmetric cubic edge from (x0,y0) to (x1,y1) with both handles at height h, at x.
+  function edgeY(x0, y0, x1, y1, hx0, hx1, h, x) {
+    let lo = 0, hi = 1;
+    for (let i = 0; i < 24; i++) { const t = (lo + hi) / 2, u = 1 - t, xt = u * u * u * x0 + 3 * u * u * t * hx0 + 3 * u * t * t * hx1 + t * t * t * x1; if ((xt < x) === (x1 > x0)) lo = t; else hi = t; }
+    const t = (lo + hi) / 2, u = 1 - t; return u * u * u * y0 + 3 * u * u * t * h + 3 * u * t * t * h + t * t * t * y1;
+  }
+  function sepsD(p) {
+    const g = teethGeo(p); let d = '';
+    for (const f of [-.62, -.22, .22, .62]) {
+      const x = C + f * g.tw, yt = edgeY(C - g.tw, g.yl, C + g.tw, g.yr, C - g.tw * .55, C + g.tw * .55, g.top, x), yb = edgeY(C + g.tw, g.yr, C - g.tw, g.yl, C + g.tw * .8, C - g.tw * .8, g.bot, x);
+      d += `M${n(x)},${n(yt + 1.2)}L${n(x)},${n(Math.max(yt + 1.2, yb - 1.2))}`;
+    }
+    return d;
+  }
+  const seamD = p => { const g = teethGeo(p); return `M${n(C - g.tw * .9)},${n(g.yl + .5)}C${n(C - g.tw * .4)},${n(g.seam + 2)} ${n(C + g.tw * .4)},${n(g.seam + 2)} ${n(C + g.tw * .9)},${n(g.yr + .5)}`; };
+
+  // ---------- the picture ----------
+  let P = null, t = 0, kind = 'reward', bubble = null;
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const F = Math.min(H * .98, W * .94), s = F / 200, ox = (W - F) / 2 - W * .02, oy = (H - F) / 2;
+    const g = Kit.mk('g', {transform: `translate(${n(ox)} ${n(oy)}) scale(${n(s)})`}, svg);
+    const ink = '#10100c', st = {stroke: ink, 'stroke-width': 2.4 / s * s, 'stroke-linejoin': 'round'};
+    P = {
+      fur: Kit.mk('path', {}, g),
+      earL: Kit.mk('path', st, g), earR: Kit.mk('path', st, g),
+      skin: Kit.mk('path', st, g),
+      browL: Kit.mk('path', {fill: 'none', 'stroke-linecap': 'round'}, g), browR: Kit.mk('path', {fill: 'none', 'stroke-linecap': 'round'}, g),
+      eyeL: Kit.mk('path', {}, g), eyeR: Kit.mk('path', {}, g),
+      nose: Kit.mk('path', {}, g), wrink: Kit.mk('path', {fill: 'none', 'stroke-width': 2, 'stroke-linecap': 'round'}, g),
+      mouth: Kit.mk('path', {fill: ink, stroke: ink, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, g),
+      teeth: Kit.mk('path', {fill: '#ffffff'}, g),
+      seps: Kit.mk('path', {fill: 'none', stroke: ink, 'stroke-width': 1.3, 'stroke-linecap': 'round', opacity: .55}, g),
+      seam: Kit.mk('path', {fill: 'none', stroke: ink, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, g)
+    };
+    // The speech bubble, to the right of the face.
+    const bx = Math.min(ox + F * .68, W - 118), by = oy;
+    bubble = {g: Kit.mk('g', {}, svg), x: bx, w: W - bx, y: by};
+    paint();
+    const i = Math.round(t); speak(i < 3 ? BUBBLE[i] : KIND_BUBBLE[kind]);
+  }
+  function current() {
+    const i = Math.min(2, Math.floor(t)), f = t - i;
+    return f <= 0 ? SPECIES[i] : blend(SPECIES[i], SPECIES[i + 1], f);
+  }
+  function paint() {
+    if (!P) return;
+    const p = current();
+    P.fur.setAttribute('d', furD(p)); P.fur.setAttribute('fill', p.fur);
+    for (const [k, sx] of [['earL', -1], ['earR', 1]]) { P[k].setAttribute('d', ell(C + sx * p.ex, p.ey, p.erx, p.ery)); P[k].setAttribute('fill', p.skin); }
+    P.skin.setAttribute('d', skinD(p)); P.skin.setAttribute('fill', p.skin);
+    for (const [k, sx] of [['browL', -1], ['browR', 1]]) { P[k].setAttribute('d', browD(p, sx)); P[k].setAttribute('stroke', p.feat); P[k].setAttribute('stroke-width', p.bw); }
+    P.eyeL.setAttribute('d', ell(C - p.edx, p.eyy, p.eyx, p.eyh, p.lid)); P.eyeR.setAttribute('d', ell(C + p.edx, p.eyy, p.eyx, p.eyh, p.lid));
+    P.eyeL.setAttribute('fill', p.feat); P.eyeR.setAttribute('fill', p.feat);
+    P.nose.setAttribute('d', noseD(p)); P.nose.setAttribute('fill', p.feat);
+    P.wrink.setAttribute('d', wrinkD(p)); P.wrink.setAttribute('stroke', p.feat); P.wrink.setAttribute('opacity', p.wr);
+    P.mouth.setAttribute('d', mouthD(p));
+    P.teeth.setAttribute('d', teethD(p)); P.teeth.setAttribute('opacity', p.to);
+    P.seps.setAttribute('d', sepsD(p)); P.seps.setAttribute('opacity', .55 * p.to);
+    P.seam.setAttribute('d', seamD(p)); P.seam.setAttribute('opacity', p.lo * p.to);
+    // The thumb and the fill of the line of species.
+    const pct = 12.5 + 75 * t / 3;
+    document.querySelector('#scrub .thumb').style.left = pct + '%';
+    document.querySelector('#scrub .fill').style.width = (t / 3 * 100) + '%';
+  }
+  function speak(text) {
+    const b = bubble; if (!b) return;
+    b.g.innerHTML = '';
+    if (b.w < 70) return;
+    const T = Kit.mk('text', {'font-family': 'Figtree', 'font-weight': 800, 'font-size': 12.5, fill: '#10100c'}, b.g);
+    // Up to two lines, broken at a space, inside the room the face leaves.
+    const words = text.split(' '), lines = [''];
+    T.textContent = text;
+    if (T.getComputedTextLength() > b.w - 24) { lines[0] = words.slice(0, Math.ceil(words.length / 2)).join(' '); lines[1] = words.slice(Math.ceil(words.length / 2)).join(' '); } else lines[0] = text;
+    T.textContent = '';
+    lines.forEach((l, i) => { const s = Kit.mk('tspan', {x: b.x + 12, y: b.y + 20 + i * 16}, T); s.textContent = l; });
+    let w = 0; T.querySelectorAll('tspan').forEach(s => { w = Math.max(w, s.getComputedTextLength()); });
+    const h = 14 + lines.length * 16, x0 = b.x, y0 = b.y, x1 = b.x + w + 24;
+    const box = Kit.mk('path', {d: `M${x0 + 10},${y0}H${x1 - 10}Q${x1},${y0} ${x1},${y0 + 10}V${y0 + h - 10}Q${x1},${y0 + h} ${x1 - 10},${y0 + h}H${x0 + 26}L${x0 + 2},${y0 + h + 12}L${x0 + 14},${y0 + h}H${x0 + 10}Q${x0},${y0 + h} ${x0},${y0 + h - 10}V${y0 + 10}Q${x0},${y0} ${x0 + 10},${y0}Z`, fill: '#ffffff', stroke: '#10100c', 'stroke-width': 2, 'stroke-linejoin': 'round'}, b.g);
+    b.g.insertBefore(box, T);
+  }
+
+  // ---------- the line of species ----------
+  const scrub = $('scrub');
+  let at = 0, tw = null, dragging = false;
+  function words() {
+    const i = Math.round(t);
+    document.querySelectorAll('#scrub .stop').forEach(b => b.classList.toggle('on', +b.dataset.i === i));
+    scrub.setAttribute('aria-valuenow', i);
+    // The kinds of human smile, and what to keep, come only once the line rests on Human: a drag
+    // passing by leaves no empty band behind.
+    const home = !dragging && t === 3;
+    $('kinds').classList.toggle('gone', !home);
+    if (home && Kit.$('keep').classList.contains('gone')) { Kit.$('card').classList.add('answered'); Kit.show('keep'); Kit.haptic('success'); }
+    if (i === at && say.innerHTML) return;
+    at = i;
+    say.innerHTML = i < 3 ? SAY[i] : KIND[kind];
+    speak(i < 3 ? BUBBLE[i] : KIND_BUBBLE[kind]);
+    if (i < 3) Kit.haptic('light');
+  }
+  function go(to) {
+    if (tw) tw.kill();
+    const o = {t};
+    const done = () => { t = to; paint(); words(); };
+    if (Kit.calm) { done(); return; }
+    tw = gsap.to(o, {t: to, duration: .45 + .35 * Math.abs(to - t), ease: 'power2.inOut', onUpdate: () => { t = o.t; paint(); words(); }, onComplete: done});
+  }
+  const fromX = e => { const r = scrub.getBoundingClientRect(), x0 = r.left + r.width * .125, x1 = r.left + r.width * .875; return Math.max(0, Math.min(3, 3 * (e.clientX - x0) / (x1 - x0))); };
+  scrub.addEventListener('pointerdown', e => {
+    const stop = e.target.closest('.stop');
+    if (stop) return;   // a name is a tap: handled on click
+    dragging = true; scrub.setPointerCapture?.(e.pointerId); if (tw) tw.kill();
+    t = fromX(e); paint(); words();
+  });
+  scrub.addEventListener('pointermove', e => { if (!dragging) return; t = fromX(e); paint(); words(); });
+  const release = () => { if (!dragging) return; dragging = false; go(Math.round(t)); };
+  scrub.addEventListener('pointerup', release); scrub.addEventListener('pointercancel', release);
+  scrub.addEventListener('click', e => { const b = e.target.closest('.stop'); if (b) go(+b.dataset.i); });
+
+  // ---------- the kinds of human smile ----------
+  $('kinds').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || Math.round(t) !== 3) return;
+    kind = b.dataset.k;
+    document.querySelectorAll('#kinds button').forEach(x => x.classList.toggle('on', x === b));
+    Kit.haptic('selection');
+    const target = SMILES[kind];
+    say.innerHTML = KIND[kind]; speak(KIND_BUBBLE[kind]);
+    if (Kit.calm) { Object.assign(human, target); paint(); return; }
+    const from = Object.assign({}, human), o = {f: 0};
+    gsap.to(o, {f: 1, duration: .6, ease: 'power2.inOut', onUpdate: () => { Object.assign(human, blend(from, target, o.f)); paint(); }});
+  });
+
+  Kit.onShow.card = () => { words(); draw(); };
+  // The words under the face change length from one species to the next: the face is drawn again at
+  // its new size, so nothing in it is ever stretched.
+  let lastBox = '';
+  new ResizeObserver(() => { const r = svg.getBoundingClientRect(), k = `${Math.round(r.width)}x${Math.round(r.height)}`; if (k !== lastBox && P) { lastBox = k; draw(); } }).observe(svg);
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#scrub .thumb', {scale: .4, duration: .5, ease: 'back.out(2)', clearProps: 'transform'}); };
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.play.card = async () => {
+    for (const i of [1, 2, 3]) { go(i); await wait(Kit.calm ? 30 : 1100); }
+    for (const k of ['bond', 'dom']) { document.querySelector(`#kinds [data-k="${k}"]`).click(); await wait(Kit.calm ? 30 : 900); }
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,36 @@
+{
+  "id": "science-mediterranean-salt-layer",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How thick is the salt left under the Mediterranean when it dried out?",
+  "answer": "Under the Mediterranean lies salt 2 to 3 km thick. Drilling in the 1970s dated it to about 5.6 million years ago. Only a sea that dried out could leave that much salt.",
+  "move": "Under the Mediterranean lies salt 2–3 km thick: proof the sea once dried up.",
+  "keywords": [
+    "mediterranean",
+    "salt giant",
+    "messinian",
+    "deep sea drilling program"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card titled 'Salt giant' asking how thick the salt left under the Mediterranean is. A 'Dry the sea' button lays down half a kilometre of salt per tap, building a stack toward the 2 to 3 km answer."
+  },
+  "source": "Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=K3pwfIsKCjY&t=242s",
+  "written": "2026-11-03"
+}

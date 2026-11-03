@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-three-smoky-breaths -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;gap:2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#breathe{width:100%;font:800 max(2.4cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;letter-spacing:.04em}
+#breathe:active{transform:scale(.98)}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRE SMOKE</span></div>
+    <h2 class="q">How many breaths of thick black smoke before you pass out?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A room filling with smoke from the ceiling down, and a close-up of the lungs"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">3–4</button>
+        <button class="opt" data-i="1">10–15</button>
+        <button class="opt" data-i="2">30+</button>
+      </div>
+      <button id="breathe" class="gone">INHALE</button>
+      <div id="why" class="gone"><p class="big">Just 3 or 4 breaths</p><p class="body">Hot smoke rises, spreads across the ceiling, then drops fast. In a few moments the air can't be breathed, and three or four breaths of dense black smoke are enough to make you lose consciousness.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess how many breaths. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In thick smoke you don't get minutes, you get a few breaths.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1, n = 0, busy = false, done = false, said = '';
+const LV=[0,.3,.55,.8,1], AW=[100,70,40,15,0], SM=[.25,.45,.65,.82,.96], DIM=[0,0,.1,.25,.42];
+let R = {};
+const say = t => Kit.$('say').textContent = t;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT; said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  R.ok = ok; R.pct = pct;
+  Kit.hide('opts'); Kit.hide('sure'); Kit.show('breathe');
+  say('Now you are in the room. Tap Inhale, one breath at a time.');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function finish(){
+  if (done) return; done = true;
+  Kit.hide('breathe'); Kit.hide('say'); Kit.show('why'); Kit.show('sure');
+  sure.grade(R.ok, R.pct, `${said} breaths, ${R.ok ? 'right' : 'wrong'}`);
+  Kit.show('keep'); Kit.haptic('success');
+}
+
+Kit.$('breathe').addEventListener('click', () => {
+  if (busy || n >= 4) return;
+  busy = true; n++; Kit.haptic('light');
+  const d = Kit.calm ? 0 : 1;
+  if (!Kit.calm) {
+    gsap.fromTo(R.inner, {scale: 1}, {scale: 1.07, yoyo: true, repeat: 1, duration: .45, transformOrigin: '50% 50%', ease: 'sine.inOut'});
+    R.puffs.forEach((p, i) => gsap.fromTo(p, {attr: {cy: -6 + i * 2}, opacity: 0}, {attr: {cy: 40}, opacity: 1, duration: .7, delay: i * .08, ease: 'power1.in', onComplete: () => gsap.set(p, {opacity: 0})}));
+  }
+  apply(true);
+  Kit.$('breathe').textContent = n >= 4 ? '…' : `INHALE (${n} so far)`;
+  setTimeout(() => { busy = false; if (n >= 4) finish(); }, d * 1000 + 50);
+});
+
+function apply(anim){
+  if (!R.smoke) return;
+  const d = anim && !Kit.calm ? .9 : 0;
+  gsap.to(R.smoke, {attr: {height: SM[n] * R.rh}, duration: d, ease: 'power2.out'});
+  gsap.to(R.fill, {attr: {y: 96 - LV[n] * 80, height: LV[n] * 80 + 4}, duration: d, ease: 'power2.out'});
+  gsap.to(R.bar, {attr: {width: AW[n] / 100 * R.bw}, duration: d});
+  gsap.to(R.dim, {opacity: DIM[n], duration: d});
+  gsap.to(R.person, {rotation: n >= 4 ? -84 : 0, svgOrigin: R.origin, duration: n >= 4 ? d * 1.2 : 0, ease: 'power2.in'});
+  R.lab.textContent = n >= 4 ? 'Unconscious' : n >= 3 ? 'Fading' : n >= 2 ? 'Dizzy' : 'Awake';
+  R.cnt.textContent = `Breaths: ${n}`;
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); const {W, H, f} = Kit.fitSvg(svg); svg.innerHTML = '';
+  const fs = Math.max(f, 12), mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const ink = 'fill:var(--k)', sk = 'stroke:var(--k)';
+  // room
+  const rx = W * .04, ry = 2, rw = W * .92, rh = H * .36; R.rh = rh;
+  const defs = mk('defs', {});
+  const cr = mk('clipPath', {id: 'roomclip'}, defs); mk('rect', {x: rx, y: ry, width: rw, height: rh}, cr);
+  const bl = mk('filter', {id: 'soft', x: '-10%', y: '-30%', width: '120%', height: '160%'}, defs);
+  mk('feGaussianBlur', {stdDeviation: Math.max(2, rh * .03)}, bl);
+  mk('rect', {x: rx, y: ry, width: rw, height: rh, rx: 6, style: 'fill:rgba(255,255,255,.6)'});
+  const rg = mk('g', {'clip-path': 'url(#roomclip)'});
+  R.smoke = mk('rect', {x: rx - 10, y: ry - 20, width: rw + 20, height: SM[n] * rh + 20, filter: 'url(#soft)', style: 'fill:#141414;opacity:.93'}, rg);
+  // person
+  const px = rx + rw * .32, feet = ry + rh - 3, ph = rh * .62, sw = Math.max(3, W * .012);
+  R.origin = `${px} ${feet}`;
+  R.person = mk('g', {style: `${sk};stroke-width:${sw};stroke-linecap:round;fill:none`}, rg);
+  const hr = ph * .11, hy = feet - ph + hr;
+  mk('circle', {cx: px, cy: hy, r: hr, style: 'fill:var(--k)'}, R.person);
+  const neck = hy + hr, hip = feet - ph * .42;
+  mk('line', {x1: px, y1: neck, x2: px, y2: hip}, R.person);
+  mk('line', {x1: px, y1: hip, x2: px - ph * .14, y2: feet}, R.person);
+  mk('line', {x1: px, y1: hip, x2: px + ph * .14, y2: feet}, R.person);
+  mk('line', {x1: px, y1: neck + ph * .08, x2: px - ph * .16, y2: neck + ph * .3}, R.person);
+  mk('line', {x1: px, y1: neck + ph * .08, x2: px + ph * .18, y2: neck + ph * .26}, R.person);
+  // floor & ceiling labels
+  mk('rect', {x: rx, y: ry, width: rw, height: rh, rx: 6, style: `fill:none;${sk};stroke-width:${Math.max(2, W * .006)}`});
+  const ct = mk('text', {x: rx + rw - 8, y: ry + fs * 1.15, 'text-anchor': 'end', style: `fill:#fff;font:700 ${fs}px var(--body)`}); ct.textContent = 'hot smoke';
+  // lungs panel
+  const barH = Math.max(H * .035, 10), bottom = fs * 1.6 + barH + 6, gap = H * .05;
+  const ls = Math.max(40, Math.min(W * .62, H - rh - gap - bottom - 6));
+  const lx = W / 2 - ls / 2 + W * .08, ly = rh + gap;
+  // zoom lines from chest
+  const chy = neck + ph * .16;
+  mk('line', {x1: px, y1: chy, x2: lx + ls * .1, y2: ly + ls * .15, style: `${sk};stroke-width:1.5;stroke-dasharray:4 4;opacity:.5`});
+  mk('line', {x1: px, y1: chy, x2: lx + ls * .1, y2: ly + ls * .9, style: `${sk};stroke-width:1.5;stroke-dasharray:4 4;opacity:.5`});
+  mk('circle', {cx: px, cy: chy, r: Math.max(4, ph * .07), style: `fill:none;${sk};stroke-width:2;opacity:.7`});
+  const g = mk('g', {transform: `translate(${lx},${ly}) scale(${ls / 100})`});
+  R.inner = mk('g', {}, g);
+  const L = 'M45 24 C30 20 12 42 9 70 C7 88 17 97 30 95 C41 93 46 86 46 76 Z';
+  const Rr = 'M55 24 C70 20 88 42 91 70 C93 88 83 97 70 95 C59 93 54 86 54 76 Z';
+  const lc = mk('clipPath', {id: 'lungclip'}, defs);
+  mk('path', {d: L}, lc); mk('path', {d: Rr}, lc); mk('rect', {x: 46.5, y: -2, width: 7, height: 30}, lc);
+  const ls2 = 'vector-effect:non-scaling-stroke;stroke-width:' + Math.max(2.5, W * .008);
+  mk('path', {d: L, style: `fill:#f6c4bd;${sk};${ls2}`}, R.inner);
+  mk('path', {d: Rr, style: `fill:#f6c4bd;${sk};${ls2}`}, R.inner);
+  mk('rect', {x: 46.5, y: -2, width: 7, height: 30, rx: 2, style: `fill:#f6c4bd;${sk};${ls2}`}, R.inner);
+  const fg = mk('g', {'clip-path': 'url(#lungclip)'}, R.inner);
+  R.fill = mk('rect', {x: 0, y: 96 - LV[n] * 80, width: 100, height: LV[n] * 80 + 4, style: 'fill:#141414'}, fg);
+  R.puffs = [0, 1, 2].map(i => mk('circle', {cx: 50 + (i - 1) * 1.2, cy: -6, r: 3, style: 'fill:#141414;opacity:0'}, fg));
+  const bs = `fill:none;stroke:#8a3b35;opacity:.7;vector-effect:non-scaling-stroke;stroke-width:${Math.max(1.5, W * .004)};stroke-linecap:round`;
+  mk('path', {d: 'M50 28 L50 34 M50 34 L38 46 L30 62 M38 46 L36 72 M50 34 L62 46 L70 62 M62 46 L64 72', style: bs}, R.inner);
+  // labels by the lungs
+  const lt = mk('text', {x: lx - 6, y: ly + ls * .35, 'text-anchor': 'end', style: `${ink};font:700 ${fs}px var(--body)`}); lt.textContent = 'your';
+  const lt2 = mk('text', {x: lx - 6, y: ly + ls * .35 + fs * 1.35, 'text-anchor': 'end', style: `${ink};font:700 ${fs}px var(--body)`}); lt2.textContent = 'lungs';
+  // awake bar
+  const by = H - barH - 2; R.bw = W - 2 * rx;
+  R.lab = mk('text', {x: rx, y: by - fs * .45, style: `${ink};font:800 ${fs}px var(--body)`});
+  R.cnt = mk('text', {x: rx + R.bw, y: by - fs * .45, 'text-anchor': 'end', style: `${ink};font:700 ${fs}px var(--mono)`});
+  mk('rect', {x: rx, y: by, width: R.bw, height: barH, rx: barH / 2, style: 'fill:var(--k);opacity:.15'});
+  R.bar = mk('rect', {x: rx, y: by, width: AW[n] / 100 * R.bw, height: barH, rx: barH / 2, style: 'fill:var(--k)'});
+  R.dim = mk('rect', {x: 0, y: 0, width: W, height: by - fs * 1.6, style: 'fill:#000;pointer-events:none', opacity: DIM[n]});
+  apply(false);
+};
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !R.smoke) return;
+  gsap.from(R.smoke, {attr: {height: 0}, duration: 1.6, ease: 'power2.out'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+};
+
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[0].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(200);
+  for (let i = 0; i < 4; i++) { Kit.$('breathe').click(); await w(Kit.calm ? 120 : 1150); }
+  await w(600);
+};
+Kit.single();
+</script>
+</html>

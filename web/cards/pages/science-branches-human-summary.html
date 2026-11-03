@@ -1,0 +1,138 @@
+<!doctype html>
+<!-- slug: science-branches-human-summary -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{position:relative;flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#ctl input{width:100%;accent-color:var(--k);height:max(3.4cqh,24px);margin:0;cursor:pointer}
+#ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--k);opacity:.8}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Slide · see it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MANY WORLDS</span></div>
+    <h2 class="q">Are parallel 'branches' a real part of reality, or just our description?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="ctl">
+        <input id="zoom" type="range" min="0" max="100" value="0" aria-label="From every detail to the human summary">
+        <div id="ends"><span>Every detail</span><span>Human summary</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">No. Branches are our summary.</p>
+        <p class="body">Only the wave function of the universe truly exists. Cutting it into branches or worlds is handy for us, exactly like temperature and pressure for air instead of listing every molecule. Both pictures make the same predictions.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Slide to the human summary. Watch what is really underneath.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Branches are like temperature: a useful summary, not the fabric of reality.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv'), zoom = Kit.$('zoom'), card = Kit.$('card');
+let G = null, m = 0, t = 0, done = false;
+const st = {m: 0};
+const P = [];
+for (let i = 0; i < 200; i++) {
+  const a = Kit.rnd() * Math.PI * 2, s = .08 + Kit.rnd() * .25;
+  P.push({x: Kit.rnd(), y: Kit.rnd(), vx: Math.cos(a) * s, vy: Math.sin(a) * s});
+}
+const DET = [];
+for (let i = 0; i < 7; i++) DET.push({k: 40 + Kit.rnd() * 120, w: 1 + Kit.rnd() * 4, p: Kit.rnd() * 6, a: .3 + Kit.rnd() * .7});
+function col(v, d) { const s = getComputedStyle(card).getPropertyValue(v).trim(); return s || d; }
+function rr(x, X, Y, w, h, r) { x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); }
+function cap(x, a, b, X, Y, fs, ink) {
+  x.font = `700 ${fs}px ${col('--body', 'sans-serif')}`; x.fillStyle = ink; x.textBaseline = 'top';
+  x.globalAlpha = 1 - m; x.fillText(a, X, Y);
+  x.globalAlpha = m; x.fillText(b, X, Y); x.globalAlpha = 1;
+}
+function draw() {
+  if (!G) return;
+  const {x, W, H} = G, ink = col('--k', '#111'), bg = col('--c', '#fff');
+  x.clearRect(0, 0, W, H);
+  const fs = Math.max(12, Math.min(W * .042, H * .045)), pad = fs * .7;
+  const ph = (H - fs) / 2;
+  // ---------- AIR ----------
+  const ay = 0;
+  x.lineWidth = 1.5; x.strokeStyle = ink; x.globalAlpha = .3; rr(x, 0, ay, W, ph, fs * .8); x.stroke(); x.globalAlpha = 1;
+  cap(x, 'AIR · every molecule, position + speed', 'AIR · temperature and pressure', pad, ay + pad, fs * .85, ink);
+  const bx = pad, by = ay + pad * 2 + fs, bw = W - pad * 2, bh = ph - (by - ay) - pad;
+  x.save(); rr(x, bx, by, bw, bh, fs * .5); x.clip();
+  x.globalAlpha = m * .22; x.fillStyle = ink; x.fillRect(bx, by, bw, bh);
+  const r = Math.max(1.6, Math.min(bw, bh) * .012);
+  x.globalAlpha = .2 + .8 * (1 - m); x.fillStyle = ink;
+  for (const p of P) { x.beginPath(); x.arc(bx + p.x * bw, by + p.y * bh, r, 0, 7); x.fill(); }
+  x.restore();
+  x.globalAlpha = m; x.fillStyle = ink; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.font = `800 ${Math.max(14, fs * 1.4)}px ${col('--display', 'sans-serif')}`;
+  x.fillText('Temperature', W / 2, by + bh * .38);
+  x.font = `800 ${Math.max(14, fs * 1.4)}px ${col('--display', 'sans-serif')}`;
+  x.fillText('Pressure', W / 2, by + bh * .38 + fs * 1.9);
+  x.textAlign = 'left'; x.globalAlpha = 1;
+  // ---------- UNIVERSE ----------
+  const uy = ph + fs;
+  x.globalAlpha = .3; rr(x, 0, uy, W, ph, fs * .8); x.stroke(); x.globalAlpha = 1;
+  cap(x, 'UNIVERSE · one wave function', 'UNIVERSE · two "branches" or "worlds"', pad, uy + pad, fs * .85, ink);
+  const gx = pad, gw = W - pad * 2, base = uy + ph - pad * 1.2, amp = ph - pad * 4.6 - fs * 1.4;
+  const env = u => Math.exp(-(((u - .3) / .09) ** 2)) + Math.exp(-(((u - .7) / .09) ** 2));
+  const det = u => { let s = 0; for (const d of DET) s += d.a * Math.sin(u * d.k + t * d.w + d.p); return s / 2.5; };
+  // full detail, always there
+  x.beginPath();
+  for (let i = 0; i <= 300; i++) { const u = i / 300; const y = base - amp * (env(u) * (1 + .35 * det(u)) * .85 + .07 * det(u * 1.7) + .07); i ? x.lineTo(gx + u * gw, y) : x.moveTo(gx + u * gw, y); }
+  x.globalAlpha = .25 + .75 * (1 - m); x.lineWidth = 2; x.stroke();
+  // the smooth human summary
+  if (m > .01) {
+    x.beginPath();
+    for (let i = 0; i <= 200; i++) { const u = i / 200; const y = base - amp * (env(u) * .85 + .07); i ? x.lineTo(gx + u * gw, y) : x.moveTo(gx + u * gw, y); }
+    x.globalAlpha = m; x.lineWidth = Math.max(3, fs * .3); x.stroke();
+    x.setLineDash([fs * .4, fs * .4]); x.lineWidth = 1.5; x.globalAlpha = m * .6;
+    x.beginPath(); x.moveTo(gx + gw / 2, uy + pad * 2 + fs * 1.2); x.lineTo(gx + gw / 2, base); x.stroke(); x.setLineDash([]);
+    x.globalAlpha = m; x.textAlign = 'center'; x.textBaseline = 'bottom'; x.fillStyle = ink;
+    x.font = `800 ${fs}px ${col('--display', 'sans-serif')}`;
+    const ly = base - amp * .95 - fs * .4;
+    x.fillText('Branch A', gx + gw * .3, ly); x.fillText('Branch B', gx + gw * .7, ly);
+    x.textAlign = 'left';
+  }
+  x.globalAlpha = 1;
+}
+function tick(_, dt) {
+  const s = Math.min(dt, 50) / 1000;
+  if (!Kit.calm) {
+    t += s;
+    for (const p of P) { p.x += p.vx * s; p.y += p.vy * s; if (p.x < 0 || p.x > 1) { p.vx *= -1; p.x = Math.max(0, Math.min(1, p.x)); } if (p.y < 0 || p.y > 1) { p.vy *= -1; p.y = Math.max(0, Math.min(1, p.y)); } }
+  }
+  m = st.m; draw();
+}
+function finish() {
+  if (done) return; done = true;
+  Kit.haptic('success'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => { Kit.onShow.card(); });
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+zoom.addEventListener('input', () => {
+  const v = +zoom.value / 100;
+  gsap.to(st, {m: v, duration: Kit.calm ? 0 : .35, ease: 'power2.out', overwrite: true, onUpdate: draw});
+  if (v >= .95) finish();
+});
+Kit.onShow.card = () => { G = Kit.fitCanvas(cv); draw(); };
+Kit.onEnter.card = () => {
+  gsap.ticker.add(tick);
+  if (!Kit.calm) gsap.from('#wrap', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  zoom.value = 100; zoom.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

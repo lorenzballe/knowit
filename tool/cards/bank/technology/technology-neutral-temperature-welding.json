@@ -1,0 +1,37 @@
+{
+  "id": "technology-neutral-temperature-welding",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do crews weld rail at its neutral temperature?",
+  "answer": "A rail has no stress at its neutral temperature. Welding it there means it starts out relaxed, with no force locked in as it cools. That's why crews in a German summer weld at night.",
+  "move": "Join the rail when it is stress-free, so cooling locks in no force.",
+  "keywords": [
+    "rail welding",
+    "neutral temperature",
+    "germany",
+    "thermal stress",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking why crews weld rail at its neutral temperature. Two choices: wait an hour for a summer rail to cool, or weld now. Choosing to weld at neutral shows a relaxed rail with zero stress."
+  },
+  "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=243s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,136 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-straight-ramp-waste -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:700 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PYRAMIDS</span></div>
+    <h2 class="q">Why couldn't the Egyptians just use one long, straight ramp?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone"><p class="big">More stone than the pyramid itself.</p><p class="body">A straight ramp has to climb all the way to the top, so it becomes a giant wedge of its own. It ends up taking more material than the pyramid. The best guess is a ramp that wraps around the pyramid instead.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the ramp bar: how much stone would that straight ramp need?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A straight ramp to the top outgrows the pyramid it serves.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+let g = 0.12, moved = false, locked = false, revealed = false, drag = false, G = {};
+const PF = 0.36; // pyramid bar, as a share of the bar track
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * 0.9);
+  const ink = 'var(--k)';
+  const groundY = H * 0.58;
+  const b = W * 0.17, apexX = W * 0.78;
+  const ph = Math.min(b * 1.27, groundY - fs * 1.2);
+  const apexY = groundY - ph, footX = W * 0.04;
+  // stone in each, as drawn from the side
+  const rampOnly = 0.5 * (apexX - footX) * ph - 0.5 * b * ph, pyr = b * ph;
+  const ratio = rampOnly / pyr;
+  // ground
+  Kit.mk('line', {x1: 0, x2: W, y1: groundY, y2: groundY, style: `stroke:${ink};stroke-width:2;opacity:.5`}, svg);
+  // ramp (behind)
+  const ramp = Kit.mk('polygon', {id: 'ramp', points: `${footX},${groundY} ${apexX},${apexY} ${apexX},${groundY}`,
+    style: `fill:${ink};fill-opacity:${revealed ? .38 : 0};stroke:${ink};stroke-width:2;stroke-dasharray:${revealed ? 'none' : '7 6'};stroke-linejoin:round`}, svg);
+  // pyramid
+  const pg = Kit.mk('g', {id: 'pyr'}, svg);
+  Kit.mk('polygon', {points: `${apexX - b},${groundY} ${apexX},${apexY} ${apexX + b},${groundY}`, style: `fill:${ink};fill-opacity:.88`}, pg);
+  for (let i = 1; i < 6; i++) {
+    const y = groundY - ph * i / 6, hw = b * (1 - i / 6);
+    Kit.mk('line', {x1: apexX - hw, x2: apexX + hw, y1: y, y2: y, style: 'stroke:var(--c);stroke-width:1.2;opacity:.45'}, pg);
+  }
+  // ramp label along its slope
+  const ang = -Math.atan2(ph, apexX - footX) * 180 / Math.PI;
+  const mx = footX + (apexX - footX) * 0.36, my = groundY - ph * 0.36 - fs * 0.55;
+  const t = Kit.mk('text', {x: mx, y: my, transform: `rotate(${ang} ${mx} ${my})`, 'text-anchor': 'middle',
+    style: `fill:${ink};font:700 ${fs}px var(--body)`}, svg);
+  t.textContent = 'straight ramp to the top';
+  // bars
+  const below = H - groundY;
+  const y1 = groundY + below * 0.34, y2 = groundY + below * 0.74;
+  const th = Math.max(10, Math.min(below * 0.2, 24));
+  const x0 = Math.max(W * 0.27, fs * 5.2), maxL = W * 0.96 - x0;
+  const Lp = maxL * PF, tl = Math.min(Lp * ratio, maxL * 0.97);
+  const lab = (y, s) => { const e = Kit.mk('text', {x: footX, y: y + fs * 0.35, style: `fill:${ink};font:700 ${fs}px var(--body)`}, svg); e.textContent = s; };
+  lab(y1, 'Pyramid'); lab(y2, 'Ramp');
+  Kit.mk('rect', {id: 'pbar', x: x0, y: y1 - th / 2, width: Lp, height: th, rx: th / 3, style: `fill:${ink}`}, svg);
+  Kit.mk('rect', {x: x0, y: y2 - th / 2, width: maxL, height: th, rx: th / 3, style: `fill:${ink};opacity:.08`}, svg);
+  Kit.mk('rect', {id: 'tbar', x: x0, y: y2 - th / 2, width: revealed ? tl : 0, height: th, rx: th / 3, style: `fill:${ink};fill-opacity:.45`}, svg);
+  Kit.mk('rect', {id: 'gbar', x: x0, y: y2 - th / 2, width: g * maxL, height: th, rx: th / 3,
+    style: `fill:none;stroke:${ink};stroke-width:2;stroke-dasharray:5 4`}, svg);
+  Kit.mk('line', {x1: x0 + Lp, x2: x0 + Lp, y1: y1 - th, y2: y2 + th, style: `stroke:${ink};stroke-width:1.5;stroke-dasharray:3 4;opacity:.55`}, svg);
+  const hr = Math.max(9, th * 0.7);
+  Kit.mk('circle', {id: 'knob', cx: x0 + g * maxL, cy: y2, r: hr, style: `fill:var(--c);stroke:${ink};stroke-width:3;opacity:${locked ? 0 : 1}`}, svg);
+  const hint = Kit.mk('text', {id: 'hint', x: x0 + g * maxL + hr + 6, y: y2 + fs * 0.35, style: `fill:${ink};font:700 ${fs}px var(--hand);opacity:${moved ? 0 : .8}`}, svg);
+  hint.textContent = 'drag →';
+  G = {W, x0, maxL, y2, th, tl, Lp, below};
+}
+function setG(clientX){
+  const r = svg.getBoundingClientRect();
+  const x = (clientX - r.left) * G.W / r.width;
+  g = Math.max(0.03, Math.min(1, (x - G.x0) / G.maxL));
+  Kit.$('gbar').setAttribute('width', g * G.maxL);
+  Kit.$('knob').setAttribute('cx', G.x0 + g * G.maxL);
+  if (!moved) { moved = true; Kit.$('hint').style.opacity = 0; sure.on(); Kit.haptic('selection'); }
+}
+svg.addEventListener('pointerdown', e => {
+  if (locked) return;
+  const r = svg.getBoundingClientRect();
+  const y = (e.clientY - r.top) * G.W / r.width;
+  if (Math.abs(y - G.y2) > Math.max(G.th * 2.2, 30)) return;
+  drag = true; setG(e.clientX); e.preventDefault();
+});
+window.addEventListener('pointermove', e => { if (drag) setG(e.clientX); });
+window.addEventListener('pointerup', () => { drag = false; });
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = g * G.maxL > G.Lp;
+  const said = ok ? 'More than the pyramid' : 'Less than the pyramid';
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  locked = true; revealed = true;
+  Kit.$('knob').style.opacity = 0;
+  const d = Kit.calm ? 0 : 1.2;
+  gsap.to('#ramp', {attr: {'stroke-dasharray': 'none'}, fillOpacity: .38, duration: d * .8, ease: 'power2.out'});
+  Kit.$('ramp').style.strokeDasharray = 'none';
+  gsap.to('#tbar', {attr: {width: G.tl}, duration: d, delay: d * .3, ease: 'power3.out'});
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pyr', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
+  gsap.from('#ramp', {opacity: 0, duration: .6, delay: .2});
+  gsap.from('#pbar', {attr: {width: 0}, duration: .7, delay: .3, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const k = Kit.$('knob').getBoundingClientRect(), r = svg.getBoundingClientRect();
+  const cx = k.left + k.width / 2, cy = k.top + k.height / 2;
+  svg.dispatchEvent(new PointerEvent('pointerdown', {clientX: cx, clientY: cy, bubbles: true}));
+  window.dispatchEvent(new PointerEvent('pointermove', {clientX: cx + r.width * 0.3, clientY: cy, bubbles: true}));
+  window.dispatchEvent(new PointerEvent('pointerup', {clientX: cx + r.width * 0.3, clientY: cy, bubbles: true}));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "nature-bay-funnel-tide",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the shape of Mont Saint‑Michel’s bay raise water levels up to 15 m?",
+  "answer": "The bay is shaped like a funnel. As the tide comes in wide, the shores close in, so the water has nowhere to go but up. This lifts the water 10–12 m at the Mont, with peaks near 15 m.",
+  "move": "Squeeze a tide into a funnel and it climbs.",
+  "keywords": [
+    "mont saint-michel",
+    "tide",
+    "bay",
+    "funnel",
+    "normandy"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Top-down view of a bay at low tide, shown as open sand. Tap the bay to bring the tide in one step at a time, watching the water rise as the shores close in toward the Mont."
+  },
+  "source": "Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=jlAFmfMFSDE&t=121s",
+  "written": "2026-11-03"
+}

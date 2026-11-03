@@ -1,0 +1,37 @@
+{
+  "id": "nature-landslide-speed-range",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.tipping_points",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How fast does a landslide move: in seconds, or over years?",
+  "answer": "A rockfall or a mud flow like Sarno in 1998 comes down like a snow avalanche, in seconds or minutes at most. A slide like Niscemi's moves millimetres a year, so it takes years to see. Landslides therefore span a huge range of speeds.",
+  "move": "A landslide can be over in seconds or creep millimetres a year.",
+  "keywords": [
+    "landslide",
+    "niscemi",
+    "sarno",
+    "rockfall",
+    "mudflow"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A timeline slider from 0 seconds to 10 years. A rockfall breaks loose and comes down fast, while a slide like Niscemi's has not visibly moved. The reader drags the slider to see both slopes over time and asks how fast a landslide moves."
+  },
+  "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=v98N4kQ52io&t=518s",
+  "written": "2026-11-03"
+}

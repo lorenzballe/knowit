@@ -1,0 +1,37 @@
+{
+  "id": "nature-landslide-volume-estimate",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How much rock did the first 1958 Alaska landslide drop into the bay?",
+  "answer": "The professor estimated the rock that fell at 5.5 × 10⁷ m³, or 55 million m³. That is a block about 380 m on each side. With the depth and shape of the bay's floor, this volume was a key number for simulating the wave.",
+  "move": "To simulate a tsunami you need how much rock fell and the shape of the seafloor.",
+  "keywords": [
+    "tsunami",
+    "landslide",
+    "alaska",
+    "bay",
+    "seafloor"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice card asking how much rock the first 1958 Alaska landslide dropped into the bay, with three options: 5.5×10⁵, 5.5×10⁷, and 5.5×10⁹ m³. A 3-D block on the cliff shows the chosen volume."
+  },
+  "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bEL4wbv_nOo&t=157s",
+  "written": "2026-11-03"
+}

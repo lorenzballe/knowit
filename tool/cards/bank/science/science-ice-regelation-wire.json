@@ -1,0 +1,37 @@
+{
+  "id": "science-ice-regelation-wire",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.why_ice_floats",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "A weighted wire is pulled down through a block of ice. What's left?",
+  "answer": "The wire is pulled down through the ice, but the pressure under the thin wire is huge, so the ice directly below it melts. The meltwater slips above the wire, where the pressure is gone, and freezes again. The block ends up one solid piece, still whole. This is called regelation.",
+  "move": "Regelation: pressure melts ice, and it refreezes once the pressure is gone.",
+  "keywords": [
+    "regelation",
+    "ice",
+    "pressure",
+    "melting",
+    "wire"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card showing a weighted wire pulled down through a block of ice. The reader bets what is left: two separate halves, one solid whole block, a block with an open slit, or one solid block. Then the reader rates their confidence."
+  },
+  "source": "Veritasium, “Does Pressure Melt Ice?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=gM3zP72-rJE",
+  "written": "2026-11-03"
+}

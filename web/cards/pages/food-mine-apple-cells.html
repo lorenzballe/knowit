@@ -1,0 +1,123 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: food-mine-apple-cells -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#art{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#slide{width:100%;margin:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer;touch-action:none}
+.ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="food" data-kind="Drag · before and after">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">UNDER THE MOUNTAIN</span></div>
+    <h2 class="q">Where do the underground apple-storage cells inside the mountain come from?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="art" aria-label="A cave in the rock turning into an apple store"></svg>
+      <div id="ctl">
+        <input id="slide" type="range" min="0" max="100" value="0" aria-label="From mine to apple store">
+        <div class="ends"><span>Mine void</span><span>Apple store</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">They are holes left by a mine.</p>
+        <p class="body">The cells are quarry voids of a mine that is still working, about 600 m up inside a mountain. Some 35,000 m² of empty rock was recovered to keep apples.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider: turn the mine's empty void into a store.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The apple cellars are a working mine's leftover holes, put to new use.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('art'), slide = Kit.$('slide');
+let G = null, p = 0, done = false;
+const cl = v => Math.max(0, Math.min(1, v));
+
+function draw(){
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(f * .95, 12);
+  const mk = (t, a, par) => Kit.mk(t, a, par || svg);
+  // mountain
+  mk('path', {d:`M0 ${H*.3} L${W*.18} ${H*.14} L${W*.32} ${H*.22} L${W*.55} ${H*.03} L${W*.74} ${H*.17} L${W*.88} ${H*.1} L${W} ${H*.2} L${W} ${H} L0 ${H} Z`, fill:'#3a352f'});
+  mk('path', {d:`M${W*.48} ${H*.09} L${W*.55} ${H*.03} L${W*.62} ${H*.09} L${W*.58} ${H*.08} L${W*.55} ${H*.1} L${W*.52} ${H*.08} Z`, fill:'#f2f2ee', opacity:.85});
+  for (let i = 0; i < 60; i++){ const x = Kit.rnd()*W, y = H*.25 + Kit.rnd()*H*.75;
+    mk('circle', {cx:x, cy:y, r:1 + Kit.rnd()*2.2, fill:'#56504a'}); }
+  // altitude label
+  mk('text', {x:W/2, y:H*.33, 'text-anchor':'middle', fill:'#f4efe6', 'font-family':'var(--body)', 'font-weight':700, 'font-size':fs}).textContent = '≈ 600 m up · deep in the mountain';
+  // chamber
+  const x0 = W*.07, x1 = W*.93, y0 = H*.4, y1 = H*.82, r = Math.min(W, H)*.12;
+  const arch = `M${x0} ${y1} L${x0} ${y0+r} Q${x0} ${y0} ${x0+r} ${y0} L${x1-r} ${y0} Q${x1} ${y0} ${x1} ${y0+r} L${x1} ${y1} Z`;
+  mk('path', {d:arch, fill:'#110f0c', stroke:'#6b645b', 'stroke-width':2});
+  const lit = mk('path', {d:arch, fill:'#e6eef1', opacity:0});
+  // mine stuff
+  const mine = mk('g', {});
+  const fl = y1;
+  [[.12,.1],[.3,.07],[.62,.12],[.82,.08]].forEach(([cx, h]) => {
+    const bx = x0 + (x1-x0)*cx, w = (x1-x0)*.14;
+    mk('path', {d:`M${bx-w/2} ${fl} L${bx-w*.2} ${fl-H*h} L${bx+w*.15} ${fl-H*h*.8} L${bx+w/2} ${fl} Z`, fill:'#5b5249'}, mine);
+  });
+  mk('line', {x1:x0, y1:fl-3, x2:x1, y2:fl-3, stroke:'#8a7d6c', 'stroke-width':3}, mine);
+  const cx = x0 + (x1-x0)*.45, cw = (x1-x0)*.18, ch = H*.07;
+  mk('path', {d:`M${cx-cw/2} ${fl-ch-10} L${cx+cw/2} ${fl-ch-10} L${cx+cw*.4} ${fl-10} L${cx-cw*.4} ${fl-10} Z`, fill:'#9b5b2e'}, mine);
+  mk('circle', {cx:cx-cw*.25, cy:fl-8, r:5, fill:'#2a2a2a', stroke:'#aaa'}, mine);
+  mk('circle', {cx:cx+cw*.25, cy:fl-8, r:5, fill:'#2a2a2a', stroke:'#aaa'}, mine);
+  mk('circle', {cx:x0+(x1-x0)*.5, cy:y0+H*.03, r:3, fill:'#f7c948'}, mine);
+  // storage stuff
+  const store = mk('g', {opacity:0});
+  for (let i = 0; i < 3; i++) mk('rect', {x:x0+(x1-x0)*(.3+i*.2)-12, y:y0+4, width:24, height:5, rx:2, fill:'#fff6c8'}, store);
+  const dw = (x1-x0)*.13, dh = (y1-y0)*.72;
+  mk('rect', {x:x0+6, y:y1-dh, width:dw, height:dh, fill:'#9fb8c4', stroke:'#4d6773', 'stroke-width':2}, store);
+  mk('line', {x1:x0+6+dw/2, y1:y1-dh, x2:x0+6+dw/2, y2:y1, stroke:'#4d6773', 'stroke-width':2}, store);
+  const crates = [], cols = 5, rows = 3, ax = x0 + dw + 16, aw = x1 - 10 - ax;
+  const bw = Math.max(2, aw/cols - 4), bh = Math.max(2, Math.min((y1-y0-r*.6)/rows - 6, bw*.75));
+  for (let rr = 0; rr < rows; rr++) for (let c = 0; c < cols; c++){
+    const g = mk('g', {opacity:0}, store), x = ax + c*(bw+4), y = y1 - (rr+1)*(bh+4);
+    mk('rect', {x, y, width:bw, height:bh, fill:'#c08a4e', stroke:'#7a5228', 'stroke-width':1.5}, g);
+    mk('line', {x1:x, y1:y+bh/2, x2:x+bw, y2:y+bh/2, stroke:'#7a5228'}, g);
+    const ar = Math.max(.5, Math.min(bw/8, bh/4));
+    for (let k = 0; k < 3; k++) mk('circle', {cx:x+bw*(.25+k*.25), cy:y+ar*.6, r:ar, fill:k===1?'#7cb342':'#d32f2f'}, g);
+    crates.push(g);
+  }
+  // bottom label
+  const lab = mk('text', {x:W/2, y:y1 + (H-y1)/2 + fs*.35, 'text-anchor':'middle', fill:'#f4efe6', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs, 'letter-spacing':'.05em'});
+  G = {lit, mine, store, crates, lab};
+  update(p);
+}
+function update(v){
+  p = v; if (!G) return;
+  G.lit.setAttribute('opacity', cl((p-.15)/.3) * .95);
+  G.mine.setAttribute('opacity', 1 - cl(p/.35));
+  G.store.setAttribute('opacity', cl((p-.15)/.2));
+  const n = G.crates.length;
+  G.crates.forEach((g, i) => g.setAttribute('opacity', cl((p - .3 - .6*i/n)/.06)));
+  const t = p < .5 ? 'MINE VOID · the mine still works' : 'APPLE STORAGE CELL';
+  if (G.lab.textContent !== t) G.lab.textContent = t;
+  G.lab.setAttribute('opacity', .4 + .6*Math.abs(p-.5)*2);
+}
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity:0, y:8, stagger:.1, duration:.4});
+}
+slide.addEventListener('input', () => {
+  const v = slide.value/100; update(v);
+  if (v > .97) finish();
+});
+new ResizeObserver(() => { if (G) draw(); }).observe(svg);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {v:0};
+  gsap.to(o, {v:.18, duration:.6, yoyo:true, repeat:1, delay:.4, ease:'sine.inOut', onUpdate:() => { if (slide.value == 0) update(o.v); }, onComplete:() => { if (slide.value == 0) update(0); }});
+};
+Kit.play.card = async () => { slide.value = 100; slide.dispatchEvent(new Event('input', {bubbles:true})); await new Promise(r => setTimeout(r, 700)); };
+Kit.single();
+</script>
+</html>

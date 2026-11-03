@@ -1,0 +1,197 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-bending-solid-titanium -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#fx{width:100%;height:100%;flex:1;min-height:0;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#fx.drag{cursor:grabbing}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(2cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLEXURES</span></div>
+    <h2 class="q">How can a solid piece of titanium bend 180 degrees?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="fx" aria-label="A one-piece titanium flexure you can bend"></svg>
+    </div>
+    <p class="say" id="say">Drag the knob: bend the titanium all the way left, then all the way right.</p>
+    <div id="why" class="gone">
+      <p class="big">No hinge. No alloy. Just shape.</p>
+      <p class="body">It is one piece of 3D-printed titanium. It is designed with thin, flexible beams, so the solid metal bends ±90°: 180° of motion, then springs back.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The right shape can make even solid metal bend.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('fx');
+const st = {a: 0};
+let G = null, left = false, right = false, done = false, dragging = false;
+const NS = 'http://www.w3.org/2000/svg';
+
+function leafPts(th, d, n) {
+  const {bx, by, L} = G, out = [];
+  for (let i = 0; i <= n; i++) {
+    const s = L * i / n;
+    if (Math.abs(th) < 1e-4) { out.push([bx + d, by - s]); continue; }
+    const R = L / th, p = th * i / n;
+    out.push([bx + R * (1 - Math.cos(p)) + d * Math.cos(p), by - R * Math.sin(p) + d * Math.sin(p)]);
+  }
+  return out;
+}
+const ptsStr = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+
+function redraw() {
+  if (!G) return;
+  const th = st.a * Math.PI / 180;
+  G.leaves.forEach((lf, i) => {
+    const s = ptsStr(leafPts(th, G.offs[i], 28));
+    lf[0].setAttribute('points', s); lf[1].setAttribute('points', s);
+  });
+  const e = leafPts(th, 0, 1)[1];
+  G.arm.setAttribute('transform', `translate(${e[0].toFixed(1)},${e[1].toFixed(1)}) rotate(${st.a.toFixed(2)})`);
+  const r = Math.round(st.a);
+  G.read.textContent = (r > 0 ? '+' : r < 0 ? '−' : '') + Math.abs(r) + '°';
+}
+
+function markGhosts() {
+  if (!G) return;
+  [[-1, left], [1, right]].forEach(([s, ok]) => {
+    const g = G.ghost[s];
+    g.line.setAttribute('stroke-dasharray', ok ? 'none' : `${G.f * 0.5} ${G.f * 0.5}`);
+    g.line.setAttribute('opacity', ok ? 0.55 : 0.4);
+    g.txt.textContent = (ok ? '✓ ' : '') + (s < 0 ? '−90°' : '+90°');
+    g.txt.setAttribute('font-weight', ok ? 800 : 600);
+  });
+  G.sub.textContent = done ? '180° of bending, one solid piece' : 'one solid piece of titanium';
+}
+
+Kit.onShow.card = () => {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const k = Math.max(Math.min(W, H) * 0.04, 13);
+  const L = Math.max(30, Math.min((0.46 * W - k) / 1.537, (0.62 * H - k) / 1.9));
+  const A = 0.9 * L, wid = L * 0.42, bx = W / 2, by = H * 0.88;
+  G = {W, H, f, k, L, A, wid, bx, by, leaves: [], offs: [], ghost: {}};
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const defs = mk('defs', {});
+  const gr = mk('linearGradient', {id: 'ti', x1: 0, y1: 0, x2: 1, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#e9ecf0'}, gr);
+  mk('stop', {offset: .5, 'stop-color': '#aeb4bc'}, gr);
+  mk('stop', {offset: 1, 'stop-color': '#7d848e'}, gr);
+
+  // ghost targets at -90 and +90
+  [-1, 1].forEach(s => {
+    const R = L / (Math.PI / 2), pts = [];
+    for (let i = 0; i <= 20; i++) { const p = s * Math.PI / 2 * i / 20; pts.push([bx + s * R * (1 - Math.cos(p)), by - R * Math.sin(Math.abs(p))]); }
+    const tip = [bx + s * (R + A), by - R];
+    pts.push(tip);
+    const line = mk('polyline', {points: ptsStr(pts), fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, f * 0.12), 'stroke-linecap': 'round'});
+    const txt = mk('text', {x: tip[0] - s * k * 0.2, y: tip[1] - k - f * 0.6, 'text-anchor': s < 0 ? 'start' : 'end', fill: 'var(--k)', 'font-size': Math.max(f, 13), 'font-family': 'var(--mono)'});
+    G.ghost[s] = {line, txt};
+  });
+
+  // base block
+  const bh = H - by - 2;
+  mk('rect', {x: bx - wid * 1.1, y: by - 1, width: wid * 2.2, height: Math.max(bh, 8), rx: wid * 0.12, fill: 'url(#ti)', stroke: 'var(--k)', 'stroke-width': 2});
+  [-1, 1].forEach(s => mk('circle', {cx: bx + s * wid * 0.75, cy: by + bh * 0.5, r: Math.min(wid * 0.12, bh * 0.25), fill: 'var(--k)', opacity: .55}));
+
+  // leaves (thin beams)
+  const N = 5, sw = wid / (N * 1.9);
+  for (let i = 0; i < N; i++) {
+    G.offs.push(-wid / 2 + sw / 2 + i * (wid - sw) / (N - 1));
+    const o = mk('polyline', {fill: 'none', stroke: 'var(--k)', 'stroke-width': sw + 3, 'stroke-linejoin': 'round'});
+    const m = mk('polyline', {fill: 'none', stroke: '#c3c8cf', 'stroke-width': sw, 'stroke-linejoin': 'round'});
+    G.leaves.push([o, m]);
+  }
+
+  // arm
+  const arm = mk('g', {});
+  mk('rect', {x: -wid / 2 - 2, y: -A, width: wid + 4, height: A + 2, rx: wid * 0.14, fill: 'url(#ti)', stroke: 'var(--k)', 'stroke-width': 2}, arm);
+  mk('line', {x1: 0, y1: -A * 0.2, x2: 0, y2: -A * 0.85, stroke: 'var(--k)', 'stroke-width': 1.5, opacity: .3}, arm);
+  mk('circle', {cx: 0, cy: -A, r: k, fill: 'var(--k)'}, arm);
+  mk('circle', {cx: 0, cy: -A, r: k * 0.4, fill: 'var(--c)'}, arm);
+  G.arm = arm;
+
+  // readout
+  const fs = Math.max(f * 2.1, 26);
+  const subFs = Math.max(f * 0.85, 12);
+  G.read = mk('text', {x: bx, y: fs * 0.95, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--display)'});
+  G.sub = mk('text', {x: bx, y: fs * 0.95 + Math.max(fs * 0.45 + subFs * 1.05, f * 1.4, 18), 'text-anchor': 'middle', fill: 'var(--k)', opacity: .7, 'font-size': subFs, 'font-family': 'var(--body)'});
+  markGhosts();
+  redraw();
+};
+
+function angleFrom(e) {
+  const r = svg.getBoundingClientRect();
+  const x = e.clientX - r.left, y = e.clientY - r.top;
+  const cx = G.bx, cy = G.by - G.L * 0.45;
+  let a = Math.atan2(x - cx, cy - y) * 180 / Math.PI;
+  return Math.max(-90, Math.min(90, a));
+}
+function check() {
+  let ch = false;
+  if (!left && st.a <= -88) { left = true; ch = true; }
+  if (!right && st.a >= 88) { right = true; ch = true; }
+  if (ch) { Kit.haptic('light'); markGhosts(); }
+  if (left && right && !done) {
+    done = true; Kit.haptic('success'); markGhosts();
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  }
+}
+svg.addEventListener('pointerdown', e => {
+  if (!G) return;
+  dragging = true; svg.classList.add('drag');
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  gsap.killTweensOf(st);
+  Kit.haptic('selection');
+  gsap.to(st, {a: angleFrom(e), duration: .15, ease: 'power2.out', onUpdate: () => { redraw(); check(); }});
+});
+svg.addEventListener('pointermove', e => {
+  if (!dragging) return;
+  gsap.killTweensOf(st);
+  st.a = angleFrom(e); redraw(); check();
+});
+const up = () => {
+  if (!dragging) return;
+  dragging = false; svg.classList.remove('drag');
+  gsap.to(st, {a: 0, duration: Kit.calm ? .4 : 1.4, ease: Kit.calm ? 'power2.out' : 'elastic.out(1,0.3)', onUpdate: redraw});
+};
+svg.addEventListener('pointerup', up);
+svg.addEventListener('pointercancel', up);
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || dragging) return;
+  gsap.timeline({onUpdate: redraw})
+    .to(st, {a: 18, duration: .45, ease: 'power2.inOut', onUpdate: redraw})
+    .to(st, {a: -14, duration: .5, ease: 'power2.inOut', onUpdate: redraw})
+    .to(st, {a: 0, duration: .9, ease: 'elastic.out(1,0.35)', onUpdate: redraw});
+};
+
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svg.getBoundingClientRect();
+  const fire = (t, x, y) => svg.dispatchEvent(new PointerEvent(t, {bubbles: true, pointerId: 1, clientX: r.left + x, clientY: r.top + y, isPrimary: true}));
+  const cx = G.bx, cy = G.by - G.L * 0.45;
+  for (const s of [-1, 1]) {
+    fire('pointerdown', cx, cy - G.L);
+    await wait(60);
+    for (let i = 1; i <= 6; i++) { const a = s * i / 6 * Math.PI / 2; fire('pointermove', cx + Math.sin(a) * G.L, cy - Math.cos(a) * G.L); await wait(30); }
+    fire('pointermove', cx + s * G.L, cy + 2);
+    await wait(80);
+    fire('pointerup', cx + s * G.L, cy + 2);
+    await wait(150);
+  }
+  await wait(900);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "nature-la-luna-shale",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "What Cretaceous rock is the main source of Venezuela's oil?",
+  "answer": "The main source rock is organic-rich marine shale, the La Luna formation. It was laid down 120–90 million years ago, when warm, shallow, life-filled seas covered much of northern Venezuela. Dead plankton, algae and microbes piled up on the seabed in thick, organic-rich layers, which became the oil's source.",
+  "move": "Venezuela's oil began as Cretaceous sea life buried in mud.",
+  "keywords": [
+    "venezuela",
+    "la luna formation",
+    "cretaceous",
+    "oil",
+    "shale",
+    "source rock"
+  ],
+  "era": "ancient",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four-choice quiz asking which Cretaceous rock is the main source of Venezuela's oil. Options: coarse sandstone, organic-rich shale from shallow seas, granite, and organic-rich marine shale. The reader picks one, then rates confidence."
+  },
+  "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=pp21fmWKe48&t=133s",
+  "written": "2026-11-03"
+}

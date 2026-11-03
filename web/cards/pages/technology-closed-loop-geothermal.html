@@ -1,0 +1,151 @@
+<!doctype html>
+<!-- slug: technology-closed-loop-geothermal -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · Closed-loop geothermal</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#scene{flex:1;min-height:0;width:100%;display:block;border-radius:1.8cqh}
+#ctl{display:flex;flex-direction:column;align-items:center;gap:1cqh}
+#meter{font:600 max(1.7cqh,12px)/1.3 var(--mono);color:var(--k);text-align:center;margin:0}
+#meter b{font-weight:800}
+#hold{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.6cqh 8cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .15s}
+#hold.on{transform:scale(.95)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0}
+#why .big{margin:0}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Hold · simulate">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOTHERMAL</span></div>
+    <h2 class="q">Why do closed-loop geothermal systems not exchange fluids with groundwater?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scene"></svg>
+      <div id="ctl">
+        <p id="meter">Water swapped with the aquifer: <b id="swap">0 L</b> · laps: <b id="laps">0</b></p>
+        <button id="hold">Hold to run the pump</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">It never opens.</p>
+        <p class="body">The pipe is one sealed loop: the same fluid goes down cold, picks up the rock's heat and comes back up to the heat pump. No water is drawn from the aquifer and none is put back, so there is nothing to contaminate it with.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button and watch where the fluid goes.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A closed loop trades heat with the ground, never water.</div>
+    <div class="foot"><span class="src">Source · Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 24;
+const temps = Array.from({length: N}, (_, i) => i < N / 2 ? 0 : 0.6);
+const aq = Array.from({length: 40}, () => ({u: Kit.rnd(), v: 0.12 + Kit.rnd() * 0.76, s: 0.7 + Kit.rnd() * 0.6}));
+let G = null, base = 0, speed = 0, held = 0, travelled = 0, done = false, lastLaps = -1;
+const col = gsap.utils.interpolate('#4aa8ff', '#ff7a2f');
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('scene');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const gy = H * 0.15, bh = H * 0.1, cx = W * 0.5, dx = Math.min(W * 0.08, H * 0.06);
+  const xL = cx - dx, xR = cx + dx, yB = H * 0.9, r = dx;
+  const aT = H * 0.33, aB = H * 0.5;
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'rock', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#3a3330'}, lg);
+  Kit.mk('stop', {offset: '0.55', 'stop-color': '#5a3a2a'}, lg);
+  Kit.mk('stop', {offset: '1', 'stop-color': '#b4512a'}, lg);
+  const clip = Kit.mk('clipPath', {id: 'clp'}, defs);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * 0.04}, clip);
+  const g = Kit.mk('g', {'clip-path': 'url(#clp)'}, svg);
+  // layers
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: gy, fill: '#cfe6f5'}, g);
+  Kit.mk('rect', {x: 0, y: gy, width: W, height: aT - gy, fill: '#6b5236'}, g);
+  Kit.mk('rect', {x: 0, y: aB, width: W, height: H - aB, fill: 'url(#rock)'}, g);
+  Kit.mk('rect', {x: 0, y: aT, width: W, height: aB - aT, fill: '#1f5f8f'}, g);
+  Kit.mk('line', {x1: 0, y1: gy, x2: W, y2: gy, stroke: '#3b2a1a', 'stroke-width': 2}, g);
+  // aquifer water
+  const aqG = Kit.mk('g', {}, g);
+  const aqDots = aq.map(() => Kit.mk('circle', {r: Math.max(2, H * 0.006), fill: '#9fd8ff', opacity: 0.85}, aqG));
+  // heat pump box
+  const box = Kit.mk('rect', {x: cx - W * 0.2, y: gy - bh, width: W * 0.4, height: bh, rx: bh * 0.2, fill: '#ffffff', stroke: '#1d2433', 'stroke-width': 2}, g);
+  // pipe
+  const d = `M${xL},${gy - bh * 0.55} L${xL},${yB - r} A${r},${r} 0 0 0 ${xR},${yB - r} L${xR},${gy - bh * 0.55} Z`;
+  const pw = Math.max(8, dx * 0.55);
+  Kit.mk('path', {d, fill: 'none', stroke: '#1d2433', 'stroke-width': pw + 4, 'stroke-linejoin': 'round'}, g);
+  Kit.mk('path', {d, fill: 'none', stroke: '#e9edf2', 'stroke-width': pw, 'stroke-linejoin': 'round'}, g);
+  const path = Kit.mk('path', {d, fill: 'none', stroke: 'none'}, g);
+  const L = path.getTotalLength();
+  const fl = Kit.mk('g', {}, g);
+  const dots = temps.map(() => Kit.mk('circle', {r: pw * 0.36, fill: '#4aa8ff'}, fl));
+  // labels
+  const T = (x, y, s, a, c) => { const t = Kit.mk('text', {x, y, 'text-anchor': a, fill: c, 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, g); t.textContent = s; return t; };
+  T(cx, gy - bh * 0.25, 'Heat pump', 'middle', '#1d2433');
+  T(W * 0.03, aT + (aB - aT) * 0.5 + fs * 0.35, 'Groundwater', 'start', '#ffffff');
+  T(xL - dx * 0.7, gy + (aT - gy) * 0.5 + fs * 0.35, 'cold ↓', 'end', '#cfe6f5');
+  T(xR + dx * 0.7, gy + (aT - gy) * 0.5 + fs * 0.35, '↑ warm', 'start', '#ffd2b0');
+  T(xR + dx * 0.7, H * 0.66, 'Sealed loop', 'start', '#ffffff');
+  T(xL - dx * 0.7, H * 0.84, 'Warm rock', 'end', '#ffe0c8');
+  G = {W, H, gy, aT, aB, L, path, dots, aqDots, box};
+  draw(0);
+};
+
+function draw(dt) {
+  if (!G) return;
+  const {W, H, gy, aT, aB, L, path, dots, aqDots, box} = G;
+  aq.forEach((p, i) => {
+    p.u = (p.u + dt * 0.035 * p.s) % 1;
+    aqDots[i].setAttribute('cx', p.u * W);
+    aqDots[i].setAttribute('cy', aT + p.v * (aB - aT));
+  });
+  const ds = speed * dt * L * 0.22;
+  base = (base + ds) % L; travelled += ds;
+  let warmInBox = 0;
+  dots.forEach((c, i) => {
+    const s = (base + i * L / N) % L;
+    const p = path.getPointAtLength(s);
+    if (p.y > H * 0.62) temps[i] = Math.min(1, temps[i] + ds / (H * 0.25));
+    if (p.y < gy) { temps[i] = Math.max(0, temps[i] - ds / (W * 0.1)); warmInBox += temps[i]; }
+    c.setAttribute('cx', p.x); c.setAttribute('cy', p.y);
+    c.setAttribute('fill', col(temps[i]));
+  });
+  box.setAttribute('fill', gsap.utils.interpolate('#ffffff', '#ffc79a', Math.min(1, warmInBox * speed * 0.6)));
+  const laps = Math.floor(travelled / L);
+  if (laps !== lastLaps) { lastLaps = laps; Kit.$('laps').textContent = laps; }
+}
+
+gsap.ticker.add((t, dms) => {
+  const dt = Math.min(dms, 50) / 1000;
+  if (speed > 0.5) { held += dt; if (held > 4 && !done) finish(); }
+  draw(dt);
+});
+
+function finish() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  gsap.to({}, {duration: 0}); speed = 0.4;
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+const btn = Kit.$('hold');
+const press = e => { e.preventDefault(); if (done) return; btn.classList.add('on'); Kit.haptic('light'); gsap.to(window, {duration: Kit.calm ? 0 : .5, onUpdate: null}); gsap.killTweensOf(sp); gsap.to(sp, {v: 1, duration: Kit.calm ? 0 : .5, onUpdate: () => speed = sp.v}); };
+const release = () => { btn.classList.remove('on'); if (done) return; gsap.killTweensOf(sp); gsap.to(sp, {v: 0, duration: Kit.calm ? 0 : .6, onUpdate: () => speed = sp.v}); };
+const sp = {v: 0};
+btn.addEventListener('pointerdown', press);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, release));
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#scene', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 1200));
+  btn.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  finish();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

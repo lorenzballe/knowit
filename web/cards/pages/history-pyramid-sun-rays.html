@@ -1,0 +1,165 @@
+<!doctype html>
+<!-- slug: history-pyramid-sun-rays -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#wrap{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 20%,transparent)}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;flex:none}
+#go:active{transform:scale(.98)}
+#why{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ANCIENT EGYPT</span></div>
+    <h2 class="q">What shape were the pyramids meant to stand for?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><svg id="pic" aria-label="A pyramid being finished, then lit by sun rays"></svg></div>
+      <button id="go">1 · Add the smooth white sides</button>
+      <div id="why" class="gone">
+        <p class="big">The sun's rays</p>
+        <p class="body">The sloping sides copy sunlight fanning down from the sky. When new, each pyramid had a shiny metallic top and smooth white sides: a sight to behold.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to finish the pyramid as it looked when new.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A pyramid is sun rays in stone, fanning down from a shining tip.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let S = 0, R = {}, busy = false;
+const LABELS = ['1 · Add the smooth white sides', '2 · Add the shiny metal top', '3 · Let the sun shine'];
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (!W || !H) return;
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  const defs = mk('defs', {});
+  const sky = mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: '0', 'stop-color': '#16223f'}, sky);
+  mk('stop', {offset: '.6', 'stop-color': '#5a3f63'}, sky);
+  mk('stop', {offset: '1', 'stop-color': '#e9945a'}, sky);
+  const glow = mk('radialGradient', {id: 'glow'}, defs);
+  mk('stop', {offset: '0', 'stop-color': '#fff6cf', 'stop-opacity': '1'}, glow);
+  mk('stop', {offset: '.35', 'stop-color': '#ffd36b', 'stop-opacity': '.7'}, glow);
+  mk('stop', {offset: '1', 'stop-color': '#ffb347', 'stop-opacity': '0'}, glow);
+
+  const gy = H * .86, cx = W / 2;
+  let h = gy - H * .2, hb = h / 1.27;
+  if (hb > W * .43) { hb = W * .43; h = hb * 1.27; }
+  const ay = gy - h;
+  R = {gy, ay, h, hb, cx};
+
+  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#sky)'});
+  // burst behind
+  R.burst = mk('g', {opacity: S >= 3 ? 1 : 0});
+  const m = f * .3 + 1;
+  for (let i = 0; i < 20; i++) {
+    const a = Math.PI + (i + .5) / 20 * Math.PI;
+    const r1 = h * .1;
+    const dx = Math.cos(a), dy = Math.sin(a);
+    let t = Infinity;
+    if (dy < 0) t = Math.min(t, (ay - m) / -dy);
+    if (dx > 0) t = Math.min(t, (W - m - cx) / dx);
+    if (dx < 0) t = Math.min(t, (cx - m) / -dx);
+    t = Math.max(t, r1);
+    mk('line', {x1: cx + dx * r1, y1: ay + dy * r1, x2: cx + dx * t, y2: ay + dy * t,
+      stroke: '#ffe7a0', 'stroke-width': i % 2 ? f * .12 : f * .3, 'stroke-opacity': i % 2 ? .25 : .45,
+      'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': S >= 3 ? 0 : 1, class: 'bl'}, R.burst);
+  }
+  R.glow = mk('circle', {cx, cy: ay, r: Math.min(h * .55, ay, cx), fill: 'url(#glow)', opacity: S >= 3 ? 1 : 0});
+  mk('rect', {x: 0, y: gy, width: W, height: H - gy, fill: '#c99a5c'});
+  mk('line', {x1: 0, y1: gy, x2: W, y2: gy, stroke: '#7d5a33', 'stroke-width': Math.max(1, f * .08)});
+
+  // stone core
+  R.rows = [];
+  const n = 8, rh = h / n;
+  for (let i = 0; i < n; i++) {
+    const g = mk('g', {class: 'row'});
+    const w = hb * (1 - i / n) - rh * .25, y = gy - (i + 1) * rh;
+    const k = Math.max(1, Math.round(2 * w / (rh * 1.7))), bw = 2 * w / k;
+    for (let j = 0; j < k; j++)
+      mk('rect', {x: cx - w + j * bw, y, width: bw, height: rh, fill: (i + j) % 2 ? '#b7a07a' : '#ad966f', stroke: '#7c6849', 'stroke-width': Math.max(1, f * .06)}, g);
+    R.rows.push(g);
+  }
+  // white casing
+  const cp = mk('clipPath', {id: 'cc'}, defs);
+  R.clip = mk('rect', {x: 0, y: S >= 1 ? ay - 2 : gy, width: W, height: S >= 1 ? h + 4 : 0}, cp);
+  const cs = mk('g', {'clip-path': 'url(#cc)'});
+  mk('polygon', {points: `${cx},${ay} ${cx - hb},${gy} ${cx},${gy}`, fill: '#f8f3e8'}, cs);
+  mk('polygon', {points: `${cx},${ay} ${cx + hb},${gy} ${cx},${gy}`, fill: '#d8cfbd'}, cs);
+  // front rays along the faces
+  R.rays = mk('g', {opacity: S >= 3 ? 1 : 0});
+  const k = 9;
+  for (let i = 0; i < k; i++) {
+    const t = i / (k - 1), edge = i === 0 || i === k - 1;
+    const x2 = cx - hb + 2 * hb * t;
+    mk('line', {x1: cx, y1: ay, x2, y2: gy, stroke: edge ? '#ffd24a' : '#f2b928',
+      'stroke-width': edge ? f * .28 : f * .12, 'stroke-opacity': edge ? 1 : .55, 'stroke-linecap': 'round',
+      pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': S >= 3 ? 0 : 1, class: 'fr'}, R.rays);
+  }
+  // metal top
+  const c = .15;
+  R.cap = mk('g', {opacity: S >= 2 ? 1 : 0});
+  mk('polygon', {points: `${cx},${ay} ${cx - hb * c},${ay + h * c} ${cx},${ay + h * c}`, fill: '#ffdd6e'}, R.cap);
+  mk('polygon', {points: `${cx},${ay} ${cx + hb * c},${ay + h * c} ${cx},${ay + h * c}`, fill: '#c8962a'}, R.cap);
+  const s = h * .09;
+  R.glint = mk('path', {d: `M${cx},${ay - s} L${cx + s * .18},${ay - s * .18} L${cx + s},${ay} L${cx + s * .18},${ay + s * .18} L${cx},${ay + s} L${cx - s * .18},${ay + s * .18} L${cx - s},${ay} L${cx - s * .18},${ay - s * .18}Z`,
+    fill: '#fffbe6', opacity: S >= 2 ? .9 : 0});
+}
+
+function step(){
+  if (busy || S >= 3) return;
+  S++; Kit.haptic(S === 3 ? 'success' : 'light');
+  const calm = Kit.calm;
+  if (S < 3) Kit.$('go').textContent = LABELS[S];
+  if (calm) { draw(); if (S === 3) finish(); return; }
+  busy = true;
+  const done = () => { busy = false; };
+  if (S === 1) {
+    gsap.fromTo(R.clip, {attr: {y: R.gy, height: 0}}, {attr: {y: R.ay - 2, height: R.h + 4}, duration: 1.2, ease: 'power2.inOut', onComplete: done});
+  } else if (S === 2) {
+    gsap.fromTo(R.cap, {opacity: 0, y: -R.h * .25}, {opacity: 1, y: 0, duration: .6, ease: 'back.out(2)'});
+    gsap.fromTo(R.glint, {opacity: 0, scale: .2, svgOrigin: `${R.cx} ${R.ay}`}, {opacity: 1, scale: 1.4, duration: .35, delay: .55, yoyo: true, repeat: 1, ease: 'power2.out',
+      onComplete: () => { gsap.to(R.glint, {opacity: .9, scale: 1, duration: .3}); done(); }});
+  } else {
+    Kit.$('go').disabled = true;
+    gsap.to(R.glow, {opacity: 1, duration: .8});
+    gsap.fromTo(R.glow, {scale: .3, svgOrigin: `${R.cx} ${R.ay}`}, {scale: 1, duration: 1.2, ease: 'power2.out'});
+    gsap.set([R.burst, R.rays], {opacity: 1});
+    gsap.to(R.burst.querySelectorAll('.bl'), {attr: {'stroke-dashoffset': 0}, duration: 1, stagger: .03, ease: 'power2.out'});
+    gsap.to(R.rays.querySelectorAll('.fr'), {attr: {'stroke-dashoffset': 0}, duration: .9, stagger: .08, delay: .4, ease: 'power2.inOut',
+      onComplete: () => { done(); finish(); }});
+  }
+}
+function finish(){
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, duration: .4, stagger: .1});
+}
+Kit.$('go').addEventListener('click', step);
+
+Kit.onShow.card = () => { if (!busy) draw(); };
+let rq = 0;
+new ResizeObserver(() => { cancelAnimationFrame(rq); rq = requestAnimationFrame(() => { if (!busy) draw(); }); }).observe(Kit.$('wrap'));
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !R.rows) return;
+  gsap.from(R.rows, {opacity: 0, y: R.h * .06, stagger: .06, duration: .35, ease: 'power2.out'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 3; i++) { Kit.$('go').click(); await w(1700); }
+  await w(1500);
+};
+Kit.single();
+</script>
+</html>

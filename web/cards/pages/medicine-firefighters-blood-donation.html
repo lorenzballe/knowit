@@ -1,0 +1,175 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-firefighters-blood-donation -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#plot{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:crosshair;-webkit-user-select:none;user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Draw your guess">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PFAS</span></div>
+    <h2 class="q">Firefighters donate blood often for a year. What happens to their PFAS?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="plot" aria-label="Draw your guess of PFAS levels over one year"></svg>
+    </div>
+    <p class="say" id="say">Drag your finger from “Today” to “1 year” to draw your guess.</p>
+    <div id="why" class="gone">
+      <p class="big" id="big">Up to 30% lower in a year</p>
+      <p class="body">Their gear and foams are laced with PFAS. Each blood or plasma donation (red drops) physically carries some of the chemicals out of the body. In a 2022 study, frequent donors cut their levels by up to 30% within a year.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Frequent blood or plasma donation lowered firefighters’ PFAS by up to 30% in a year.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 49, LO = .4, HI = 1.1;
+const DON = [3, 9, 15, 21, 27, 33, 39, 45];
+const FAC = Math.pow(.7, 1 / DON.length);
+const RED = '#d7263d';
+let g = new Array(N).fill(null); g[0] = 1;
+let last = 0, drawing = false, done = false, geo = null, guessPath = null, startDot = null;
+const svg = Kit.$('plot');
+
+function txt(s, x, y, fs, anchor, weight, parent, fill) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'start', fill: fill || 'var(--k)',
+    style: `font:${weight || 600} ${fs}px var(--body)`}, parent);
+  t.textContent = s; return t;
+}
+function guessD() {
+  let d = '';
+  for (let i = 0; i < N; i++) if (g[i] != null) d += (d ? 'L' : 'M') + geo.X(i).toFixed(1) + ',' + geo.Y(g[i]).toFixed(1);
+  return d;
+}
+function realD() {
+  const {X, Y} = geo; let v = 1, d = `M${X(0)},${Y(1)}`;
+  DON.forEach(i => { d += `L${X(i)},${Y(v)}`; v *= FAC; d += `L${X(i)},${Y(v)}`; });
+  return d + `L${X(N - 1)},${Y(v)}`;
+}
+function dropPath(s) {
+  return `M0,${-s}C${s*.9},${-s*.05} ${s*.75},${s*.85} 0,${s*.85}C${-s*.75},${s*.85} ${-s*.9},${-s*.05} 0,${-s}Z`;
+}
+
+function render(anim) {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const L = fs * 3.3, R = fs * 1.2, T = fs * 2.2, B = fs * 3.4;
+  const X = i => L + (W - L - R) * i / (N - 1);
+  const Y = v => T + (H - T - B) * (HI - v) / (HI - LO);
+  geo = {W, H, L, R, T, B, X, Y, fs};
+  const ink = 'var(--k)';
+  txt('PFAS in blood', L, fs * 1.2, fs, 'start', 800);
+  [1, .8, .6].forEach(v => {
+    Kit.mk('line', {x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: ink, 'stroke-opacity': v === 1 ? .35 : .15,
+      'stroke-width': Math.max(1, fs * .08), 'stroke-dasharray': v === 1 ? '' : `${fs*.3} ${fs*.3}`}, svg);
+    txt(Math.round(v * 100) + '%', L - fs * .5, Y(v) + fs * .35, fs, 'end', 600);
+  });
+  Kit.mk('line', {x1: L, x2: W - R, y1: H - B, y2: H - B, stroke: ink, 'stroke-width': Math.max(1.5, fs * .12)}, svg);
+  Kit.mk('line', {x1: X(N - 1), x2: X(N - 1), y1: T, y2: H - B, stroke: ink, 'stroke-opacity': .25,
+    'stroke-width': Math.max(1, fs * .08), 'stroke-dasharray': `${fs*.2} ${fs*.25}`}, svg);
+  const ly = H - B + fs * 2.6;
+  txt('Today', L, ly, fs, 'start', 700);
+  txt('6 months', X(24), ly, fs, 'middle', 600);
+  txt('1 year', W - R, ly, fs, 'end', 700);
+
+  // guess
+  guessPath = Kit.mk('path', {d: guessD(), fill: 'none', stroke: ink, 'stroke-width': fs * .3,
+    'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-opacity': done ? .45 : 1,
+    'stroke-dasharray': done ? `${fs*.5} ${fs*.45}` : ''}, svg);
+  startDot = Kit.mk('circle', {cx: X(0), cy: Y(1), r: fs * .55, fill: ink}, svg);
+
+  if (!done) return;
+  // real curve
+  const real = Kit.mk('path', {d: realD(), fill: 'none', stroke: RED, 'stroke-width': fs * .38,
+    'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  const drops = DON.map(i => {
+    const gD = Kit.mk('g', {transform: `translate(${X(i)},${H - B + fs * .95})`}, svg);
+    Kit.mk('path', {d: dropPath(fs * .55), fill: RED}, gD);
+    return gD;
+  });
+  const endV = Math.pow(FAC, DON.length), ge = g[N - 1];
+  const gPct = Math.round((1 - ge) * 100);
+  const sep = fs * 1.4, top = T + fs, bot = H - B - fs * .4;
+  let yr, yg;
+  if (ge >= endV) { yg = Y(ge) - fs * .6; yr = Y(endV) + fs * 1.4; }
+  else { yr = Y(endV) - fs * .6; yg = Y(ge) + fs * 1.4; }
+  yr = Math.min(bot, Math.max(top, yr)); yg = Math.min(bot, Math.max(top, yg));
+  if (Math.abs(yr - yg) < sep) {
+    const mid = (yr + yg) / 2, up = ge >= endV;
+    yg = mid + (up ? -sep / 2 : sep / 2); yr = mid + (up ? sep / 2 : -sep / 2);
+    if (Math.max(yg, yr) > bot) { const d = Math.max(yg, yr) - bot; yg -= d; yr -= d; }
+    if (Math.min(yg, yr) < top) { const d = top - Math.min(yg, yr); yg += d; yr += d; }
+  }
+  const lr = txt('Study: −30%', W - R - fs * .2, yr, fs * 1.1, 'end', 800, svg, RED);
+  const lg = txt('You: ' + (gPct >= 0 ? '−' : '+') + Math.abs(gPct) + '%', W - R - fs * .2, yg, fs, 'end', 700);
+  if (anim && !Kit.calm) {
+    const len = real.getTotalLength();
+    gsap.fromTo(real, {strokeDasharray: len, strokeDashoffset: len}, {strokeDashoffset: 0, duration: 1.8, ease: 'power1.inOut'});
+    drops.forEach((d, k) => gsap.from(d, {opacity: 0, y: -fs, duration: .35, delay: .1 + 1.8 * DON[k] / (N - 1), ease: 'back.out(2)'}));
+    gsap.from([lr, lg], {opacity: 0, duration: .5, delay: 1.8, stagger: .15});
+  }
+}
+
+function at(e) {
+  const r = svg.getBoundingClientRect();
+  return [(e.clientX - r.left) * geo.W / r.width, (e.clientY - r.top) * geo.H / r.height];
+}
+function handle(e) {
+  const [x, y] = at(e), {L, R, T, B, W, H} = geo;
+  let i = Math.round((x - L) / (W - L - R) * (N - 1));
+  i = Math.max(1, Math.min(N - 1, i));
+  const v = Math.max(LO, Math.min(HI, HI - (y - T) / (H - T - B) * (HI - LO)));
+  if (i > last) {
+    const v0 = g[last];
+    for (let j = last + 1; j <= i; j++) g[j] = v0 + (v - v0) * (j - last) / (i - last);
+  } else {
+    g[i] = v; for (let j = i + 1; j < N; j++) g[j] = null;
+  }
+  last = i;
+  guessPath.setAttribute('d', guessD());
+}
+svg.addEventListener('pointerdown', e => {
+  if (done || !geo) return;
+  drawing = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  Kit.haptic('selection'); handle(e);
+});
+svg.addEventListener('pointermove', e => { if (drawing) handle(e); });
+const up = () => {
+  if (!drawing) return; drawing = false;
+  if (last >= Math.floor((N - 1) * .85)) finish();
+  else Kit.$('say').textContent = 'Keep going: draw all the way to “1 year”.';
+};
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+function finish() {
+  for (let j = last + 1; j < N; j++) g[j] = g[last];
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => requestAnimationFrame(() => render(true)));
+}
+
+Kit.onShow.card = () => render(false);
+Kit.onEnter.card = () => {
+  if (Kit.calm || done || !startDot) return;
+  gsap.fromTo(startDot, {attr: {r: geo.fs * .55}}, {attr: {r: geo.fs * .9}, duration: .6, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect();
+  const cx = px => r.left + px * r.width / geo.W, cy = py => r.top + py * r.height / geo.H;
+  const fire = (type, i, v) => svg.dispatchEvent(new PointerEvent(type, {clientX: cx(geo.X(i)), clientY: cy(geo.Y(v)), bubbles: true, pointerId: 1, isPrimary: true}));
+  fire('pointerdown', 1, .99);
+  for (let i = 2; i < N; i += 2) { fire('pointermove', i, 1 - .1 * i / (N - 1)); await new Promise(r => setTimeout(r, 10)); }
+  fire('pointermove', N - 1, .9); fire('pointerup', N - 1, .9);
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

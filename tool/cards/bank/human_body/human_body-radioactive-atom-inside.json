@@ -1,0 +1,38 @@
+{
+  "id": "human_body-radioactive-atom-inside",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.breathing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a radioactive atom far worse inside you than outside?",
+  "answer": "Outside the body, the dust's radiation is spent on the air and your skin. Once breathed in or eaten, the atom fires from right beside your cells, so its energy lands directly on their molecules, DNA included.",
+  "move": "Radioactive dust does its damage once it is inside you, next to your cells.",
+  "keywords": [
+    "radioactive atom",
+    "radiation",
+    "dna",
+    "breathing",
+    "cell"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A glowing radioactive atom sits outside a body outline. The reader drags it down, past the skin and into a cell, to see how close range changes where its radiation lands.",
+    "ground": "#0b1026"
+  },
+  "source": "Veritasium, “Radiation vs Radioactive Atoms” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=sehKAccM8p0&t=139s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-plastic-sediment-layer -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#core{flex:1;min-height:0;width:100%;display:block}
+#ctrl{display:flex;gap:2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.main{background:var(--k);color:var(--c);box-shadow:none}
+.opt[disabled]{opacity:.3;cursor:default}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">What makes plastic a useful Anthropocene indicator?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="core" aria-label="A sediment core built layer by layer"></svg>
+      <div id="ctrl">
+        <button class="opt main" id="add">Add a layer</button>
+        <button class="opt" id="wait" disabled>Let millennia pass</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">The leaf bits rot away. Synthetic polymers resist chemical attack, so micro-plastics pile up in the sediment and stay for millennia.</p>
+        <p class="body">That leaves a layer no earlier age has: a band that says “humans were here”.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap “Add a layer” to lay down mud, one age at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Plastic marks our age because it lasts, in a layer found nowhere before us.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 6, P = 4;
+const MUD = ['#5b4129', '#7a5634', '#4f3c2b', '#6e5236', '#4a3828', '#5f4934'];
+const PCOL = ['#ff3d7f', '#2ec4ff', '#ffd23f', '#9dff5c', '#ffffff'];
+const R = () => Kit.rnd();
+const layers = [...Array(N)].map((_, i) => ({
+  sand: [...Array(18)].map(() => [R(), R(), .6 + R() * .8]),
+  org: [...Array(9)].map(() => [R(), R(), R() * 180, .7 + R() * .6]),
+  pl: i >= P ? [...Array(28)].map(() => [R(), R(), R() * 180, Math.floor(R() * PCOL.length), .6 + R() * .9]) : []
+}));
+let laid = 0, aged = false;
+let G = null;
+
+function draw() {
+  const svg = Kit.$('core'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const cw = Math.min(W * .38, H * .45), cx = W / 2, top = H * .05, bot = H * .97;
+  const lh = (bot - top) / N, x0 = cx - cw / 2;
+  G = {W, H, f, cw, cx, top, bot, lh, x0};
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'cl'}, defs);
+  Kit.mk('rect', {x: x0, y: top, width: cw, height: bot - top, rx: cw * .12}, cp);
+  // empty tube
+  Kit.mk('rect', {id: 'tube', x: x0, y: top, width: cw, height: bot - top, rx: cw * .12, fill: 'color-mix(in srgb,var(--k) 6%,transparent)', stroke: 'var(--k)', 'stroke-opacity': .35, 'stroke-width': 1.5, 'stroke-dasharray': '5 5'}, svg);
+  const inner = Kit.mk('g', {'clip-path': 'url(#cl)'}, svg);
+  for (let i = 0; i < laid; i++) drawLayer(inner, i);
+  // side labels
+  const lx = x0 - f * .7;
+  const t1 = Kit.mk('text', {x: lx, y: top + f * 1.1, 'text-anchor': 'end', fill: 'var(--k)', 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 700}, svg); t1.textContent = 'newer';
+  const t2 = Kit.mk('text', {x: lx, y: bot - f * .3, 'text-anchor': 'end', fill: 'var(--k)', 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 700}, svg); t2.textContent = 'older';
+  Kit.mk('line', {x1: lx - f, y1: top + f * 1.9, x2: lx - f, y2: bot - f * 1.6, stroke: 'var(--k)', 'stroke-opacity': .4, 'stroke-width': 1.5, 'marker-end': ''}, svg);
+  // plastic band label
+  const bandTop = bot - N * lh, bandBot = bot - P * lh, bm = (bandTop + bandBot) / 2;
+  const lab = Kit.mk('g', {id: 'plab', opacity: aged ? 1 : 0}, svg);
+  Kit.mk('rect', {x: x0 - 3, y: bandTop + 2, width: cw + 6, height: bandBot - bandTop - 2, rx: cw * .1, fill: 'none', stroke: '#ff3d7f', 'stroke-width': 3}, lab);
+  const rx = x0 + cw + f * .7;
+  Kit.mk('line', {x1: x0 + cw + 3, y1: bm, x2: rx - 3, y2: bm, stroke: '#ff3d7f', 'stroke-width': 2}, lab);
+  ['micro-', 'plastic', 'layer'].forEach((w, k) => {
+    const t = Kit.mk('text', {x: rx, y: bm + (k - 1) * f * 1.35 + f * .35, fill: 'var(--k)', 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 800}, lab); t.textContent = w;
+  });
+}
+
+function drawLayer(parent, i) {
+  const {x0, cw, bot, lh} = G, y = bot - (i + 1) * lh, L = layers[i];
+  const g = Kit.mk('g', {class: 'lay', 'data-i': i}, parent);
+  Kit.mk('rect', {x: x0, y, width: cw, height: lh + 1, fill: MUD[i]}, g);
+  Kit.mk('line', {x1: x0, y1: y, x2: x0 + cw, y2: y, stroke: '#000', 'stroke-opacity': .25, 'stroke-width': 1}, g);
+  L.sand.forEach(([u, v, s]) => Kit.mk('circle', {cx: x0 + u * cw, cy: y + (.08 + v * .84) * lh, r: lh * .03 * s, fill: '#e9d4a6', opacity: .55}, g));
+  if (!aged) L.org.forEach(([u, v, a, s]) => {
+    const px = x0 + (.08 + u * .84) * cw, py = y + (.15 + v * .7) * lh;
+    Kit.mk('ellipse', {class: 'org', cx: px, cy: py, rx: lh * .1 * s, ry: lh * .035 * s, fill: '#4f9a35', transform: `rotate(${a} ${px} ${py})`}, g);
+  });
+  L.pl.forEach(([u, v, a, c, s]) => {
+    const px = x0 + (.06 + u * .88) * cw, py = y + (.12 + v * .76) * lh, w = lh * .09 * s, h = lh * .045 * s;
+    Kit.mk('rect', {class: 'pl', x: px - w / 2, y: py - h / 2, width: w, height: h, rx: h * .3, fill: PCOL[c], transform: `rotate(${a} ${px} ${py})`}, g);
+  });
+  return g;
+}
+
+const say = t => { Kit.$('say').textContent = t; };
+Kit.$('add').addEventListener('click', () => {
+  if (laid >= N) return;
+  laid++; draw(); Kit.haptic('light');
+  const g = Kit.$('core').querySelector(`.lay[data-i="${laid - 1}"]`);
+  if (g && !Kit.calm) gsap.from(g, {y: -G.lh * 1.5, opacity: 0, duration: .5, ease: 'bounce.out'});
+  if (laid < P) say(`Layer ${laid} of ${N}: mud, sand and bits of leaves. Add another.`);
+  else if (laid === P) say('Now people start making plastic. Add the next layer.');
+  else if (laid < N) say('Bright specks: micro-plastics settle with the mud. One more.');
+  else { say('Now let thousands of years pass.'); Kit.$('add').disabled = true; Kit.$('add').classList.remove('main'); const w = Kit.$('wait'); w.disabled = false; w.classList.add('main'); }
+});
+Kit.$('wait').addEventListener('click', () => {
+  if (laid < N || aged) return;
+  Kit.$('wait').disabled = true; Kit.haptic('success');
+  const finish = () => {
+    aged = true; draw();
+    if (!Kit.calm) gsap.from('#plab', {opacity: 0, duration: .6});
+    Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  };
+  if (Kit.calm) return finish();
+  gsap.to('#core .org', {opacity: 0, duration: 1.3, stagger: {each: .015, from: 'random'}, onComplete: finish});
+  gsap.to('#core .lay rect:first-child', {filter: 'brightness(.85)', duration: 1.3});
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#tube', {opacity: 0, scaleY: .8, transformOrigin: '50% 100%', duration: .6, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < N; i++) { Kit.$('add').click(); await w(120); }
+  Kit.$('wait').click(); await w(2400);
+};
+Kit.single();
+</script>
+</html>

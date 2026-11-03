@@ -1,0 +1,37 @@
+{
+  "id": "history-greenland-compact",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.disputed_borders",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Instead of buying Greenland, what deal might Trump offer it?",
+  "answer": "Instead of buying Greenland, Trump could offer a compact like those of the Marshall Islands or Palau. The territory would gain formal independence, while the US runs its defense and pays economic aid. In exchange, the US gets exclusive rights over the territory.",
+  "move": "No purchase needed: defense and aid can be traded for exclusive rights.",
+  "keywords": [
+    "greenland",
+    "marshall islands",
+    "palau",
+    "united states",
+    "sovereignty"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive comparison of two deals for Greenland: buying it outright versus a compact giving formal independence, with US defense and economic aid in exchange for exclusive territorial rights. The reader tries both deals and watches who ends up holding what."
+  },
+  "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=P0PF8r7i6Zw&t=985s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "nature-landslide-speed-water",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.tipping_points",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Soak a clay slope with water: does the landslide speed up?",
+  "answer": "Water fills the clay, which lowers friction as if the slope were lubricated and weakens its cohesion, so the mass slides and flows. Drier ground moves more slowly. Steepness, the material and the volume of the mass also affect speed.",
+  "move": "Speed depends on saturation, cohesion, slope and volume.",
+  "keywords": [
+    "landslide",
+    "clay",
+    "slope",
+    "sicily"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A clay slope at 30 degrees with a water slider at 20%. Asks the reader whether lots of water makes the landslide faster or slower, and they pick Faster or Slower."
+  },
+  "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=v98N4kQ52io&t=650s",
+  "written": "2026-11-03"
+}

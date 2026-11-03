@@ -1,0 +1,37 @@
+{
+  "id": "technology-human-hair-mechanism",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How thin is the thinnest part of a hardened-steel bending mechanism?",
+  "answer": "The thinnest part of the mechanism is as thin as a human hair. It has no hinges: the steel blades themselves bend. Swiss watchmakers cut it from hardened stainless steel.",
+  "move": "Make steel thin enough and it bends like a hinge, as fine as a hair.",
+  "keywords": [
+    "steel",
+    "human hair",
+    "swiss watchmakers",
+    "bending mechanism",
+    "watchmaking"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice card asking how thin the thinnest part of a hardened-steel bending mechanism is. Options: a matchstick, a pencil lead, or a human hair. The reader picks a size, then rates how sure they are."
+  },
+  "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=641s",
+  "written": "2026-11-03"
+}

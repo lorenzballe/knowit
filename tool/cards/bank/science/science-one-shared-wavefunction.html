@@ -1,0 +1,180 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-one-shared-wavefunction -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
+#web{display:block;width:100%;height:100%;flex:1;min-height:0;color:var(--k);overflow:visible}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+.lab{font-family:var(--body);font-weight:700;fill:currentColor}
+.src{display:block;padding-right:min(112px,30cqw);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ENTANGLEMENT</span></div>
+    <h2 class="q">Why does measuring one entangled electron instantly affect the other, light-years away?</h2>
+    <div class="stagebox" id="stage"><svg id="web" aria-label="Two electrons and their wave functions"></svg></div>
+    <div id="why" class="gone"><p class="body">After they interact, the two electrons no longer have separate wave functions: one single wave function describes both. Measure either one and that whole wave function collapses, so the other is set at the same instant, however far away.</p></div>
+    <p class="say" id="say">Tap the picture to let the two electrons collide.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Entangled means one wave function for two particles: collapse it anywhere, it collapses everywhere.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const M = 20;
+const S = {ax:.17, bx:.83, merge:0, tight:0, pulse:-1, flash:0, res:0,
+  top:'two electrons, two wave functions', bot:''};
+let step = 0, busy = false, sA = 1, G = null, T = 0;
+const svg = Kit.$('web');
+const th = i => 2*Math.PI*(i+.5)/M;
+const isA = i => Math.cos(th(i)) < 0;
+
+function build(){
+  const {W,H,f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(12, f);
+  const r = Math.min(W*.12, H*.2);
+  const re = Math.max(11, r*.24);
+  const edges = [];
+  for (let i=0;i<M;i++){
+    const j=(i+1)%M;
+    edges.push({i,j,k: isA(i)===isA(j) ? 'ring' : 'gap'});
+    edges.push({i,k:'spoke'});
+    if (isA(i)) edges.push({i, j:((M/2-1-i)%M+M)%M, k:'cross'});
+  }
+  // closures of each separate circle
+  const aIdx=[...Array(M).keys()].filter(isA), bIdx=[...Array(M).keys()].filter(i=>!isA(i));
+  edges.push({i:aIdx[0], j:aIdx[aIdx.length-1], k:'close'});
+  // B half wraps around index 0, so its ends are the two neighbours of the A half
+  edges.push({i:(aIdx[0]-1+M)%M, j:(aIdx[aIdx.length-1]+1)%M, k:'close'});
+  edges.push({k:'ab'});
+  const gE = Kit.mk('g',{fill:'none',stroke:'currentColor','stroke-linecap':'round'},svg);
+  edges.forEach(e=> e.el = Kit.mk('path',{},gE));
+  const nodes = [...Array(M)].map(()=>Kit.mk('circle',{r:Math.max(2,r*.035),fill:'currentColor'},svg));
+  const mkArrow = () => {
+    const g = Kit.mk('g',{stroke:'currentColor','stroke-width':Math.max(2,re*.22),fill:'none','stroke-linecap':'round','stroke-linejoin':'round'},svg);
+    return {g, line:Kit.mk('path',{},g), hr:Kit.mk('path',{},g), hl:Kit.mk('path',{},g)};
+  };
+  const arrA = mkArrow(), arrB = mkArrow();
+  const flA = Kit.mk('circle',{fill:'none',stroke:'currentColor','stroke-width':2},svg);
+  const flB = Kit.mk('circle',{fill:'none',stroke:'currentColor','stroke-width':2},svg);
+  const mkE = (t) => {
+    const g = Kit.mk('g',{},svg);
+    Kit.mk('circle',{r:re,fill:'currentColor'},g);
+    const tx = Kit.mk('text',{'text-anchor':'middle','dominant-baseline':'central',class:'lab',style:`fill:var(--c);font-size:${Math.max(12,re*1.05)}px`},g);
+    tx.textContent = t; return g;
+  };
+  const eA = mkE('A'), eB = mkE('B');
+  const dot = Kit.mk('circle',{r:Math.max(5,re*.45),fill:'var(--c)',stroke:'currentColor','stroke-width':Math.max(2.5,re*.2)},svg);
+  const top = Kit.mk('text',{'text-anchor':'middle',class:'lab',style:`font-size:${fs}px`},svg);
+  const bot = Kit.mk('text',{'text-anchor':'middle',class:'lab',style:`font-size:${fs}px;font-weight:600`},svg);
+  G = {W,H,fs,r,re,edges,nodes,arrA,arrB,flA,flB,eA,eB,dot,top,bot};
+  render();
+}
+
+function render(){
+  if (!G) return;
+  const {W,H,fs,r,re,edges,nodes} = G;
+  const cy = H*.5, ax = S.ax*W, bx = S.bx*W, m = S.merge, wob = 1-S.tight;
+  const cx = (ax+bx)/2, rx = (bx-ax)/2 + r, ry = r*1.05;
+  const P = [];
+  for (let i=0;i<M;i++){
+    const t = th(i);
+    let sx, sy;
+    if (isA(i)){ const p=(t-Math.PI/2)*2+Math.PI/2; sx=ax+r*Math.cos(p); sy=cy+r*Math.sin(p); }
+    else { const p=t*2; sx=bx+r*Math.cos(p); sy=cy+r*Math.sin(p); }
+    const mx = cx+rx*Math.cos(t), my = cy+ry*Math.sin(t);
+    const j = r*.06*wob;
+    P.push([sx+(mx-sx)*m + j*Math.sin(T*2.1+i*1.7), sy+(my-sy)*m + j*Math.cos(T*1.8+i*2.3)]);
+  }
+  const alpha = .28 + .62*S.tight, sw = 1 + 1.4*S.tight;
+  const path = (x1,y1,x2,y2,k) => {
+    const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy)||1;
+    const o = wob*L*.14*Math.sin(T*2.4+k);
+    const qx=(x1+x2)/2 - dy/L*o, qy=(y1+y2)/2 + dx/L*o;
+    return `M${x1.toFixed(1)} ${y1.toFixed(1)}Q${qx.toFixed(1)} ${qy.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  };
+  edges.forEach((e,n)=>{
+    let a = 1, d;
+    if (e.k==='spoke'){ const ex = isA(e.i)?ax:bx; d = path(P[e.i][0],P[e.i][1],ex,cy,n); }
+    else if (e.k==='ab'){ d = path(ax,cy,bx,cy,n); a = m; }
+    else { d = path(P[e.i][0],P[e.i][1],P[e.j][0],P[e.j][1],n);
+      if (e.k==='gap'||e.k==='cross') a = m; else if (e.k==='close') a = 1-m; }
+    e.el.setAttribute('d', d);
+    e.el.setAttribute('stroke-opacity', (a*alpha).toFixed(3));
+    e.el.setAttribute('stroke-width', (e.k==='ab'?sw*1.6:sw).toFixed(2));
+  });
+  nodes.forEach((c,i)=>{ c.setAttribute('cx',P[i][0]); c.setAttribute('cy',P[i][1]); c.setAttribute('opacity', .4+.5*S.tight); });
+  G.eA.setAttribute('transform',`translate(${ax},${cy})`);
+  G.eB.setAttribute('transform',`translate(${bx},${cy})`);
+  // momentum arrows: double-headed (both at once) until measured
+  const L = Math.max(re*2.4, r*.62), hy = cy - re - Math.max(10, r*.32), h = Math.max(6, re*.55);
+  const arrow = (A, x, dir, ph) => {
+    A.line.setAttribute('d',`M${x-L/2} ${hy}H${x+L/2}`);
+    A.hr.setAttribute('d',`M${x+L/2-h} ${hy-h*.8}L${x+L/2} ${hy}L${x+L/2-h} ${hy+h*.8}`);
+    A.hl.setAttribute('d',`M${x-L/2+h} ${hy-h*.8}L${x-L/2} ${hy}L${x-L/2+h} ${hy+h*.8}`);
+    if (S.res){ A.g.setAttribute('opacity',m); A.hr.setAttribute('opacity',dir>0?1:0); A.hl.setAttribute('opacity',dir<0?1:0); }
+    else { A.g.setAttribute('opacity',(m*(.45+.25*Math.sin(T*4+ph))).toFixed(3)); A.hr.setAttribute('opacity',1); A.hl.setAttribute('opacity',1); }
+  };
+  arrow(G.arrA, ax, sA, 0); arrow(G.arrB, bx, -sA, 2);
+  [[G.flA,ax],[G.flB,bx]].forEach(([c,x])=>{
+    c.setAttribute('cx',x); c.setAttribute('cy',cy);
+    c.setAttribute('r', re + S.flash*r*.9);
+    c.setAttribute('opacity', S.flash>0 ? (1-S.flash).toFixed(3) : 0);
+  });
+  if (S.pulse >= 0){ G.dot.setAttribute('cx', ax+(bx-ax)*S.pulse); G.dot.setAttribute('cy', cy); G.dot.setAttribute('opacity', S.pulse<1?1:0); }
+  else G.dot.setAttribute('opacity',0);
+  G.top.setAttribute('x', W/2); G.top.setAttribute('y', Math.max(fs, cy-ry-fs*1.1));
+  G.bot.setAttribute('x', W/2); G.bot.setAttribute('y', Math.min(H-fs*.3, cy+ry+fs*1.7));
+  if (G.top.textContent !== S.top) G.top.textContent = S.top;
+  if (G.bot.textContent !== S.bot) G.bot.textContent = S.bot;
+}
+
+gsap.ticker.add(()=>{ if (!Kit.calm) T = performance.now()/1000; render(); });
+
+function collide(){
+  busy = true; Kit.haptic('light');
+  const tl = gsap.timeline({onComplete(){ step = 1; busy = false; Kit.$('say').textContent = 'Now tap anywhere to measure electron A.'; }});
+  tl.call(()=>{ S.top = 'they collide…'; })
+    .to(S,{ax:.38,bx:.62,duration:1,ease:'power2.inOut'})
+    .call(()=>{ S.top = '…and share ONE wave function'; })
+    .to(S,{merge:1,duration:.8,ease:'power2.out'})
+    .to(S,{duration:.5})
+    .call(()=>{ S.top = 'flying apart: still one'; })
+    .to(S,{ax:.13,bx:.87,duration:1.3,ease:'power2.inOut'})
+    .call(()=>{ S.bot = 'imagine light-years between them'; });
+}
+
+function measure(){
+  busy = true; step = 2; Kit.haptic('success');
+  sA = Kit.rnd() < .5 ? 1 : -1;
+  S.res = 1; S.top = 'measure A: B is set at once';
+  S.bot = 'light from A: still on its way';
+  gsap.to(S,{tight:1,duration:.14,ease:'power4.out'});
+  gsap.fromTo(S,{flash:0},{flash:1,duration:.9,ease:'power2.out'});
+  gsap.fromTo(S,{pulse:0},{pulse:1,duration:3.4,ease:'none',onComplete(){ S.bot = 'it reaches B long after B was set'; busy = false; }});
+  gsap.delayedCall(1,()=>{ Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why,#keep',{opacity:0,y:8,duration:.45,stagger:.1,ease:'power3.out'}); });
+}
+
+Kit.$('stage').addEventListener('click',()=>{
+  if (busy) return;
+  if (step === 0) collide(); else if (step === 1) measure();
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(S,{merge:0,ax:.05,bx:.95,duration:.9,ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  gsap.globalTimeline.timeScale(12);
+  Kit.$('stage').click(); await wait(600);
+  Kit.$('stage').click(); await wait(700);
+  gsap.globalTimeline.timeScale(1);
+};
+Kit.single();
+</script>
+</html>

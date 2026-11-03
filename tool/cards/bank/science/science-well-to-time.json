@@ -1,0 +1,37 @@
+{
+  "id": "science-well-to-time",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Wells are measured in metres, seismic in time. How do they meet?",
+  "answer": "Well markers are recorded in metres, but the seismic section is in time, so the two must be reconciled. Converting the well to time first puts its markers onto their reflectors, giving hard data to interpret from. The seismic is converted to depth only at the end, once the interpretation is ready.",
+  "move": "Bring the wells into time first; the seismic goes to depth last.",
+  "keywords": [
+    "seismic-section",
+    "well-log",
+    "depth-conversion",
+    "reflectors",
+    "geology"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two options for putting a well's depth markers onto a seismic time section, asking which way to convert the data first: drop the well in by depth, or convert the well to time first."
+  },
+  "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=5687s",
+  "written": "2026-11-03"
+}

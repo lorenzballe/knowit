@@ -1,0 +1,165 @@
+<!doctype html>
+<!-- slug: nature-tree-pressure-climb -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+#tree{width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+#why .big{font:800 max(2.6cqh,15px)/1.1 var(--display)}
+.say,.q,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag · grow the tree">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TREES</span></div>
+    <h2 class="q">What pressure difference must a 100 m tree make to lift water?</h2>
+    <div class="stagebox" id="stage"><svg id="tree" aria-label="A tree whose trunk fills with water, ten-metre slice by ten-metre slice"></svg></div>
+    <p class="say" id="say">Drag the treetop up until it stands 100 m tall.</p>
+    <div id="why" class="gone"><p class="big">About 10 atmospheres</p><p class="body">Each 10 m of water in the trunk adds about one atmosphere to overcome. At 100 m that stacks up to a 10‑atmosphere difference between roots and leaves. Evaporating leaves give suction, but that alone doesn’t explain it.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Every 10 m of water height costs about 1 atmosphere: 100 m needs 10.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let h = 12, done = false, dragging = false;
+let G = null; // geometry and elements
+const NS = 'http://www.w3.org/2000/svg';
+
+function hideHint(){
+  if (!G) return;
+  if (window.gsap) gsap.killTweensOf(G.hint);
+  G.hint.style.opacity = 0;
+  G.hint.style.display = 'none';
+}
+
+function setH(v){
+  if (!G) return;
+  h = Math.max(5, Math.min(100, v));
+  if (h > 98.5) h = 100;
+  const top = G.g - h * G.s;
+  G.trunk.setAttribute('y', top); G.trunk.setAttribute('height', G.g - top);
+  G.water.setAttribute('y', top + 2); G.water.setAttribute('height', Math.max(0, G.g - top - 2));
+  G.crown.setAttribute('transform', `translate(${G.cx},${top})`);
+  G.labels.forEach(l => { l.el.style.opacity = (l.m <= h + 0.01) ? 1 : 0; });
+  G.lines.forEach(l => { l.el.style.opacity = (l.m < h - 0.5) ? 1 : 0; });
+  if (done) hideHint(); else G.hint.style.opacity = 1;
+  G.hint.setAttribute('transform', `translate(${G.cx},${top - G.R - G.fs * 0.3})`);
+  G.read.textContent = `${Math.round(h)} m tall → ${(h/10).toFixed(1)} atm`;
+  if (h >= 100 && !done) finish();
+}
+
+function finish(){
+  done = true; dragging = false;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  hideHint();
+  if (!Kit.calm && G) gsap.fromTo(G.labels.map(l => l.el), {scale: 1.25, transformOrigin: 'left center'}, {scale: 1, stagger: .06, duration: .35, ease: 'back.out(2)'});
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('tree');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13);
+  const R = Math.min(W * 0.13, H * 0.085);
+  const cx = W * 0.42;
+  const g = H - fs * 1.4;
+  const yTop = fs * 2.6 + R * 1.05;
+  const s = (g - yTop) / 100;
+  const tw = Math.max(W * 0.06, 16);
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+
+  // ground
+  mk('rect', {x: 0, y: g, width: W, height: H - g, fill: '#6b4a2b', opacity: .35});
+  mk('line', {x1: 0, x2: W, y1: g, y2: g, stroke: 'var(--k)', 'stroke-width': 2});
+  mk('text', {x: cx, y: H - fs * .25, 'text-anchor': 'middle', 'font-size': fs * .9, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700}).textContent = 'roots';
+
+  // ruler
+  const rx = W * 0.12;
+  mk('line', {x1: rx, x2: rx, y1: g, y2: g - 100 * s, stroke: 'var(--k)', 'stroke-width': 1.5, opacity: .6});
+  for (let m = 0; m <= 100; m += 10) {
+    const y = g - m * s;
+    mk('line', {x1: rx - 5, x2: rx + 5, y1: y, y2: y, stroke: 'var(--k)', 'stroke-width': 1.5, opacity: .6});
+    if (m % 20 === 0 && m > 0) mk('text', {x: rx - 8, y: y + fs * .35, 'text-anchor': 'end', 'font-size': fs * .85, fill: 'var(--k)', 'font-family': 'var(--mono)', opacity: .8}).textContent = m + ' m';
+  }
+
+  // trunk and water
+  const trunk = mk('rect', {x: cx - tw / 2, width: tw, rx: 3, fill: '#7a5233', stroke: 'var(--k)', 'stroke-width': 1.5});
+  const water = mk('rect', {x: cx - tw / 2 + 3, width: tw - 6, fill: '#2a7de1'});
+
+  // slice lines and cumulative pressure labels
+  const every = (10 * s >= 1.45 * fs * 1.0) ? 10 : 20;
+  const lines = [], labels = [];
+  const lx = cx + R + fs * 0.5;
+  for (let m = 10; m <= 100; m += 10) {
+    const y = g - m * s;
+    const ln = mk('line', {x1: cx - tw / 2 + 3, x2: cx + tw / 2 - 3, y1: y, y2: y, stroke: '#fff', 'stroke-width': 1.5, opacity: 0});
+    lines.push({m, el: ln});
+    if (m % every === 0) {
+      const gEl = mk('g', {});
+      mk('line', {x1: cx + tw / 2 + 2, x2: lx - 4, y1: y, y2: y, stroke: 'var(--k)', 'stroke-width': 1, 'stroke-dasharray': '2 3', opacity: .5}, gEl);
+      const t = mk('text', {x: lx, y: y + fs * .35, 'font-size': fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800}, gEl);
+      t.textContent = (m / 10) + ' atm';
+      gEl.style.opacity = 0; gEl.style.transition = 'opacity .2s';
+      labels.push({m, el: gEl});
+    }
+  }
+
+  // crown
+  const crown = mk('g', {});
+  [[-.55, .15, .62], [.55, .15, .62], [0, -.25, .75], [0, .3, .6]].forEach(([dx, dy, r]) =>
+    mk('circle', {cx: dx * R, cy: dy * R, r: r * R, fill: '#2f7d3a', stroke: 'var(--k)', 'stroke-width': 1.5}, crown));
+  mk('text', {x: 0, y: R * .1 + fs * .35, 'text-anchor': 'middle', 'font-size': fs * .85, fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 700}, crown).textContent = 'leaves';
+
+  const hint = mk('text', {'text-anchor': 'middle', 'font-size': fs * 1.1, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800});
+  hint.textContent = '↑';
+
+  // readout
+  const read = mk('text', {x: 4, y: fs * 1.5, 'font-size': fs * 1.4, fill: 'var(--k)', 'font-family': 'var(--display)', 'font-weight': 800});
+
+  G = {W, H, g, s, cx, R, fs, trunk, water, crown, labels, lines, hint, read};
+  setH(h);
+};
+
+(function(){
+  const svg = Kit.$('tree');
+  const toH = e => {
+    if (!G) return h;
+    const r = svg.getBoundingClientRect();
+    const y = (e.clientY - r.top) * G.H / r.height;
+    return (G.g - y) / G.s;
+  };
+  svg.addEventListener('pointerdown', e => {
+    if (done) return; dragging = true;
+    try { svg.setPointerCapture(e.pointerId); } catch(_) {}
+    Kit.haptic('selection'); setH(Math.max(h, toH(e)));
+  });
+  svg.addEventListener('pointermove', e => { if (dragging && !done) setH(toH(e)); });
+  const up = () => { dragging = false; };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+})();
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G || done) return;
+  gsap.fromTo(G.hint, {opacity: .2}, {opacity: 1, repeat: 5, yoyo: true, duration: .5, ease: 'sine.inOut'});
+};
+
+Kit.play.card = async () => {
+  const svg = Kit.$('tree'), r = svg.getBoundingClientRect();
+  const x = r.left + r.width * 0.42;
+  const ev = (type, y) => svg.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, pointerId: 1, bubbles: true, isPrimary: true}));
+  const y0 = r.bottom - r.height * 0.2, y1 = r.top + 2;
+  ev('pointerdown', y0);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', y0 + (y1 - y0) * i / 10); await new Promise(res => setTimeout(res, 40)); }
+  ev('pointerup', y1);
+  if (!done) setH(100);
+  await new Promise(res => setTimeout(res, 600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "history-welchman-diagonal-board",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did linking wires in pairs make the Bombe give fewer false answers?",
+  "answer": "Guessing that R is plugged to Y is the same guess as Y plugged to R. Welchman wired each such pair together, so one live wire makes its twin live too. One input rules out more plugboard swaps at once: about 4 stops to check instead of 100.",
+  "move": "Wire together facts that must agree, and false answers die faster.",
+  "keywords": [
+    "bombe",
+    "welchman",
+    "enigma",
+    "plugboard",
+    "diagonal board"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A diagram of Welchman's diagonal board for the Bombe codebreaking machine: a grid where each square is a plugboard guess pairing a row letter with a column letter. Paired squares are wired together. The question asks how wiring pairs together made the Bombe give fewer false answers."
+  },
+  "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=JsBZOcqZerk&t=2344s",
+  "written": "2026-11-03"
+}

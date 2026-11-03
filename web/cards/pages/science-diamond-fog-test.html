@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-diamond-fog-test -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;display:block;width:100%}
+#opts{display:flex;flex-direction:row;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.stone{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · pick one">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEM TEST</span></div>
+    <h2 class="q">How does the condensation on a diamond react to heat?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="opts" class="gone">
+        <button class="opt" data-i="0">Stone A is real</button>
+        <button class="opt" data-i="1">Stone B is real</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Stone B: its fog vanished at once</p><p class="body">On a real diamond, the fog from your breath disappears immediately. On a fake it stays for several seconds. Fakes now look very close to real gems, so this quick test helps.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap each stone to breathe on it. Watch the fog.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Breathe on it: a real diamond clears at once, a fake stays fogged.</div>
+    <div class="foot"><span class="src">Source · Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = 1;
+let pick = -1, asked = false;
+const result = [null, null];      // seconds of fog per stone
+const busy = [false, false];
+let parts = [];                   // drawn elements per stone
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === REAL, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function timerText(i){
+  if (busy[i]) return 'fogged…';
+  if (result[i] == null) return 'tap to breathe';
+  return `fog gone in ${result[i].toFixed(1)} s`;
+}
+
+function breathe(i){
+  if (busy[i] || !parts[i]) return;
+  busy[i] = true; Kit.haptic('light');
+  const p = parts[i], real = i === REAL;
+  const t0 = performance.now();
+  p.timer.textContent = timerText(i);
+  // the puff of breath
+  gsap.fromTo(p.puff, {opacity: .7, scale: .3, transformOrigin: '50% 50%'}, {opacity: 0, scale: 1.4, duration: .5, ease: 'power2.out'});
+  const tl = gsap.timeline({onUpdate(){
+      const s = (performance.now() - t0) / 1000;
+      if (busy[i]) p.timer.textContent = `fogged… ${s.toFixed(1)} s`;
+    }, onComplete(){
+      result[i] = (performance.now() - t0) / 1000;
+      busy[i] = false;
+      p.timer.textContent = timerText(i);
+      if (result[0] != null && result[1] != null && !asked){
+        asked = true;
+        Kit.$('say').textContent = 'Which one is the real diamond?';
+        Kit.show('opts');
+        if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+      }
+    }});
+  tl.to([p.fog, p.drops], {opacity: .92, duration: .22, ease: 'power2.out'});
+  if (real) tl.to([p.fog, p.drops], {opacity: 0, duration: .3, ease: 'power1.in'});
+  else tl.to([p.fog, p.drops], {opacity: .85, duration: 1.6}).to([p.fog, p.drops], {opacity: 0, duration: 3, ease: 'power1.in'});
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const defs = Kit.mk('defs', {}, svg);
+  const g = Kit.mk('linearGradient', {id: 'gem', x1: 0, y1: 0, x2: 1, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#d6f0ff'}, g);
+  Kit.mk('stop', {offset: .55, 'stop-color': '#6fb6ec'}, g);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#2f6fb3'}, g);
+  const fl = Kit.mk('filter', {id: 'blur', x: '-20%', y: '-20%', width: '140%', height: '140%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: Math.max(2, f * .25)}, fl);
+
+  const lab = Math.max(f, 13);
+  const r = Math.min(W * .2, (H - lab * 4) / 1.6);
+  const cy = Math.max(r * .55, (H - lab * 3.4 - r * 1.25) / 2 + r * .5);
+  parts = [];
+  [0, 1].forEach(i => {
+    const cx = W * (i ? .73 : .27);
+    const st = Kit.mk('g', {class: 'stone'}, svg);
+    const gy = cy, ty = cy - .42 * r, by = cy + .78 * r;
+    const pts = [[cx - .55 * r, ty], [cx + .55 * r, ty], [cx + r, gy], [cx, by], [cx - r, gy]];
+    const poly = pts.map(p => p.join(',')).join(' ');
+    const cp = Kit.mk('clipPath', {id: 'cp' + i}, defs);
+    Kit.mk('polygon', {points: poly}, cp);
+    Kit.mk('ellipse', {cx, cy: by + r * .12, rx: r * .7, ry: r * .07, style: 'fill:var(--k);opacity:.15'}, st);
+    Kit.mk('polygon', {points: poly, fill: 'url(#gem)', style: 'stroke:var(--k);stroke-width:' + Math.max(1.5, r * .025) + ';stroke-linejoin:round'}, st);
+    const fac = Kit.mk('g', {style: 'stroke:var(--k);stroke-opacity:.45;stroke-width:' + Math.max(1, r * .012) + ';fill:none'}, st);
+    Kit.mk('line', {x1: cx - r, y1: gy, x2: cx + r, y2: gy}, fac);
+    [[-.55, -.3], [.55, .3], [-.18, -.3], [.18, .3]].forEach(([a, b]) => Kit.mk('line', {x1: cx + a * r, y1: ty, x2: cx + b * r * 2.2, y2: gy}, fac));
+    [-.66, -.33, .33, .66].forEach(a => Kit.mk('line', {x1: cx + a * r, y1: gy, x2: cx, y2: by}, fac));
+    Kit.mk('polygon', {points: `${cx - .3 * r},${ty + r * .06} ${cx - .05 * r},${ty + r * .06} ${cx - .35 * r},${gy - r * .06}`, fill: '#fff', opacity: .55}, st);
+    // fog layer
+    const fogG = Kit.mk('g', {'clip-path': `url(#cp${i})`}, st);
+    const fog = Kit.mk('polygon', {points: poly, fill: '#f3f6f9', filter: 'url(#blur)', opacity: 0}, fogG);
+    const drops = Kit.mk('g', {opacity: 0}, fogG);
+    for (let k = 0; k < 28; k++){
+      const x = cx + (Kit.rnd() * 2 - 1) * r * .9, y = ty + Kit.rnd() * (by - ty) * .8;
+      Kit.mk('circle', {cx: x, cy: y, r: r * (.015 + Kit.rnd() * .025), fill: '#c9d6e2'}, drops);
+    }
+    const puff = Kit.mk('ellipse', {cx, cy: by - r * .2, rx: r * .9, ry: r * .45, fill: '#fff', opacity: 0, filter: 'url(#blur)'}, st);
+    Kit.mk('text', {x: cx, y: by + r * .12 + lab * 1.9, 'text-anchor': 'middle', style: `font:800 ${lab * 1.1}px var(--display);fill:var(--k)`}, st).textContent = i ? 'Stone B' : 'Stone A';
+    const timer = Kit.mk('text', {x: cx, y: by + r * .12 + lab * 3.5, 'text-anchor': 'middle', style: `font:600 ${lab * .9}px var(--mono);fill:var(--k);opacity:.8`}, st);
+    Kit.mk('rect', {x: cx - r * 1.05, y: ty - r * .15, width: r * 2.1, height: by - ty + r * .2 + lab * 3.8, fill: 'transparent'}, st);
+    parts[i] = {fog, drops, puff, timer};
+    timer.textContent = timerText(i);
+    st.addEventListener('click', () => breathe(i));
+  });
+};
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic .stone', {opacity: 0, y: 14, stagger: .12, duration: .5, ease: 'power3.out'});
+};
+
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  breathe(0); breathe(1);
+  await w(5400);
+  Kit.$('opts').children[1].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(600);
+};
+Kit.single();
+</script>
+</html>

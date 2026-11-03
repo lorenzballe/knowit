@@ -1,0 +1,348 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{display:flex;flex-direction:column;gap:1.4cqh}
+/* The sky: a dark window with the black hole and the things that fall in. It takes the free height. */
+#view{position:relative;flex:1 1 0;min-height:0;border-radius:2.4cqh;overflow:hidden;background:radial-gradient(130% 100% at 50% 50%,#11142b 0%,#07080f 55%,#020206 100%);box-shadow:0 0 0 .2cqh color-mix(in srgb,var(--k) 22%,transparent)}
+#sky{position:absolute;inset:0;width:100%;height:100%;display:block}
+#sky text{font-family:var(--body);font-weight:700}
+#cap{position:absolute;left:3.4cqw;top:1.2cqh;margin:0;font:700 max(1.7cqh,12px)/1.2 var(--body);letter-spacing:.03em;color:#e9eefc;text-shadow:0 0 .8cqh #000,0 0 .3cqh #000;pointer-events:none}
+#dock{flex:none}
+#opts{display:flex;gap:1.6cqw}
+.opt{flex:1 1 auto;min-height:max(6.4cqh,40px);font:700 max(2.1cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:.9cqh 2cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{margin:0;font:500 max(2.2cqh,13px)/1.35 var(--body);color:var(--k)}
+#track{--kh:max(6cqh,42px);position:relative;height:var(--kh);border-radius:99px;background:#06060c;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;outline-offset:.4cqh;transition:opacity .4s}
+#boost.wait{pointer-events:none}
+#boost.wait #track{opacity:.35}
+#fill{position:absolute;inset:0;border-radius:99px;background:linear-gradient(90deg,#3d0603,#a81c0b 28%,#ff6d27 55%,#ffc98a 80%,#fff6e8);clip-path:inset(0 100% 0 0 round 99px)}
+#chev{position:absolute;right:6%;top:50%;transform:translateY(-50%);font:700 max(2.2cqh,14px)/1 var(--body);letter-spacing:.25em;color:#f4eee4;opacity:.6;pointer-events:none}
+#knob{position:absolute;left:0;top:0;width:var(--kh);height:var(--kh);border-radius:50%;background:#fff6e8;box-shadow:inset 0 0 0 .3cqh #06060c,0 .4cqh 1.2cqh rgba(0,0,0,.45);display:grid;place-items:center}
+#dot{display:block;width:40%;height:40%;border-radius:50%;background:#4a0603}
+#sky .tw{animation:tw 2.8s ease-in-out infinite alternate}
+#sky .pulse{animation:pulse 1.9s ease-in-out infinite}
+#sky.lit .spin{animation:spin 18s linear infinite}
+#sky.lit #things{filter:drop-shadow(0 0 4px rgba(255,196,128,.7))}
+@keyframes tw{from{opacity:.12}to{opacity:.9}}
+@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes spin{to{stroke-dashoffset:-280}}
+.calm #sky .tw,.calm #sky .pulse,.calm #sky .spin{animation:none}
+@media (prefers-reduced-motion:reduce){#sky .tw,#sky .pulse,#sky .spin{animation:none}}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="space" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BLACK HOLES</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">With perfect eyes, what would a black hole's edge show you?</h2>
+    <div class="stagebox" id="stage">
+      <div id="view"><svg id="sky" aria-hidden="true"></svg><p id="cap">Seen from afar</p></div>
+      <div id="dock">
+        <div id="opts">
+          <button class="opt" data-i="0">Nothing</button>
+          <button class="opt" data-i="1">The last one in</button>
+          <button class="opt" data-i="2">All that ever fell in</button>
+        </div>
+        <!-- After the answer: the reader turns up the light that still leaves the edge. -->
+        <div id="boost" class="gone wait">
+          <div id="track" role="slider" tabindex="0" aria-label="Boost the light from the edge" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="fill"></div><span id="chev">›››</span><div id="knob"><i id="dot"></i></div></div>
+        </div>
+        <!-- The why takes the slider's place once the light is all the way up. -->
+        <p id="why" class="gone">Seen from afar, time at the edge stands still, so their light keeps coming.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In theory, the edge shows all that fell in.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+// Seconds: the first fall (when the card comes up), then the ages that follow the answer.
+const SETUP = 3.6, AGES = 4.6;
+const clock = {setup: 0, ages: 0}, fx = {flash: 0};
+let pick = -1, phase = 'bet', bv = 0, fast = false, scene = null, setupTw = null, dragging = false;
+let geo = null, geoTw = null, dims = null, rCap = 0;   // the hole's place and size, eased when the window changes
+let boostOK; const boostReady = new Promise(r => { boostOK = r; });
+const track = Kit.$('track');
+
+const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+// What a faraway eye sees as a thing nears the edge, and the same light boosted back.
+const FALL = ['#fff4e2', '#ffc47e', '#ff6a2b', '#cf200e', '#4a0603'].map(hex);
+const BOOST = ['#4a0603', '#c4230f', '#ff8a3a', '#ffd7a0', '#fff6ea'].map(hex);
+const clamp = v => v < 0 ? 0 : v > 1 ? 1 : v;
+const smooth = v => (v = clamp(v), v * v * (3 - 2 * v));
+function mix(stops, u) {
+  u = clamp(u) * (stops.length - 1);
+  const i = Math.min(stops.length - 2, Math.floor(u)), f = u - i, a = stops[i], b = stops[i + 1];
+  return 'rgb(' + a.map((v, j) => Math.round(v + (b[j] - v) * f)).join(',') + ')';
+}
+// Seen from far away the fall never quite ends: the way left shrinks like 2^(-9t), ever slower.
+const Z = Math.pow(2, -9), remain = t => (Math.pow(2, -9 * t) - Z) / (1 - Z);
+const fallLook = t => ({c: mix(FALL, smooth((t - .08) / .78)), o: 1 - smooth((t - .4) / .58)});
+
+// Drawn once, so a resize never reshuffles the sky.
+const STARS = Array.from({length: 170}, () => [Kit.rnd(), Kit.rnd(), Kit.rnd(), Kit.rnd()]);
+const THINGS = [
+  {kind: 'astro', ang: 152, rot0: 16, spin: -70, k: 1},
+  {kind: 'rocket', ang: 10, t0: 0, dur: 2.7, k: 1},
+  {kind: 'sat', ang: -60, t0: .5, dur: 2.7, rot0: -14, spin: 210, k: .95},
+  {kind: 'rock', ang: -145, t0: 1, dur: 2.7, rot0: 8, spin: -190, k: .8},
+  {kind: 'pebble', ang: 80, t0: 1.5, dur: 2.7, rot0: 0, spin: 260, k: .55},
+];
+const SPECKS = Array.from({length: 30}, () => ({ang: Kit.rnd() * 360, t0: Kit.rnd() * 2.3, dur: 1.5 + Kit.rnd() * .8, r: .035 + Kit.rnd() * .05, k: .45 + Kit.rnd() * .55}));
+
+const INK = '#12172a';
+function glyph(kind, parent) {
+  const g = Kit.mk('g', {}, parent), add = (tag, a) => Kit.mk(tag, a, g), C = 'currentColor';
+  const line = (d, w) => add('path', {d, stroke: C, 'stroke-width': w, 'stroke-linecap': 'round', fill: 'none'});
+  if (kind === 'astro') {
+    add('rect', {x: -27, y: -17, width: 54, height: 44, rx: 11, fill: C, opacity: .7});
+    line('M-21 -5 L-37 15 M21 -5 L35 -19', 12);
+    line('M-10 26 L-14 45 M10 26 L16 43', 13);
+    add('rect', {x: -21, y: -15, width: 42, height: 45, rx: 13, fill: C});
+    add('circle', {cx: 0, cy: -30, r: 19, fill: C});
+    add('rect', {x: -13, y: -38, width: 26, height: 17, rx: 8.5, fill: INK});
+    add('rect', {x: -8, y: -1, width: 16, height: 9, rx: 2, fill: INK, opacity: .3});
+  } else if (kind === 'rocket') {
+    add('path', {d: 'M-15 6 L-29 31 L-14 26 Z M15 6 L29 31 L14 26 Z', fill: C, opacity: .8});
+    add('rect', {x: -8, y: 22, width: 16, height: 8, rx: 2, fill: C, opacity: .65});
+    add('path', {d: 'M0 -50 C15 -34 17 -10 15 23 L-15 23 C-17 -10 -15 -34 0 -50 Z', fill: C});
+    add('circle', {cx: 0, cy: -13, r: 7.5, fill: INK});
+  } else if (kind === 'sat') {
+    line('M-19 0 H19', 4);
+    add('rect', {x: -49, y: -10, width: 30, height: 20, rx: 2, fill: C, opacity: .9});
+    add('rect', {x: 19, y: -10, width: 30, height: 20, rx: 2, fill: C, opacity: .9});
+    add('path', {d: 'M-39 -10 V10 M-29 -10 V10 M29 -10 V10 M39 -10 V10 M-49 0 H-19 M19 0 H49', stroke: INK, 'stroke-width': 1.8, opacity: .45, fill: 'none'});
+    add('rect', {x: -12, y: -15, width: 24, height: 31, rx: 4, fill: C});
+    add('path', {d: 'M-12 -16 Q0 -34 12 -16 Z', fill: C, opacity: .85});
+    line('M0 -26 V-37', 2.5);
+    add('circle', {cx: 0, cy: -39, r: 3.5, fill: C});
+  } else {
+    add('path', {d: kind === 'rock' ? 'M-30 -8 L-18 -29 L5 -33 L27 -21 L33 3 L22 27 L-3 33 L-27 22 Z' : 'M-27 -5 L-11 -27 L15 -25 L30 0 L18 25 L-12 27 Z', fill: C, stroke: C, 'stroke-width': 7, 'stroke-linejoin': 'round'});
+    add('circle', {cx: -9, cy: -9, r: 7, fill: INK, opacity: .28});
+    add('circle', {cx: 11, cy: 10, r: 8.5, fill: INK, opacity: .22});
+  }
+  return g;
+}
+
+// Draw at the card's real size: called once the fonts are in, again on every resize. When the
+// window changes size (after the answer, at the why), the hole eases to its new place.
+function layout() {
+  Kit.$('card').classList.toggle('calm', !!Kit.calm);
+  const {W, H, f} = Kit.fitSvg(Kit.$('sky'));
+  if (!(W > 40 && H > 40)) return;
+  dims = {W, H, f};
+  // The hole keeps the size it has when the card comes up; it only shrinks if the window must.
+  const fit = Math.max(14, Math.min(W * .21, (H - 12) / 2.9));
+  if (phase === 'bet' || !rCap) rCap = fit;
+  const tgt = {cy: H / 2, R: Math.min(fit, rCap)};
+  if (geoTw) geoTw.kill();
+  if (!geo || Kit.calm) geo = tgt;
+  else geoTw = gsap.to(geo, {cy: tgt.cy, R: tgt.R, duration: .6, ease: 'power3.out', onUpdate: render});
+  render(); paintSlider();
+}
+function render() {
+  if (!dims || !geo) return;
+  const {W, H, f} = dims, svg = Kit.$('sky');
+  svg.textContent = '';
+  const mk = (tag, a, p) => Kit.mk(tag, a, p || svg);
+  const cx = W / 2, cy = geo.cy, R = geo.R, s = R * .52;
+  const defs = mk('defs');
+  const grad = (id, stops, at) => { const gr = mk('radialGradient', Object.assign({id}, at || {}), defs); stops.forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gr)); };
+  grad('halo', [[.5, '#cfe0ff', 0], [.56, '#cfe0ff', .5], [.64, '#8fb0ff', .16], [.8, '#5f7fff', .05], [1, '#5f7fff', 0]], {gradientUnits: 'userSpaceOnUse', cx: cx.toFixed(1), cy: cy.toFixed(1), r: (R * 1.8).toFixed(1)});
+  grad('glint', [[0, '#ff4a1f', .95], [.5, '#c81a0a', .35], [1, '#c81a0a', 0]]);
+  const sky = mk('g');
+  const n = Math.min(STARS.length, Math.round(W * H / 620));
+  for (let i = 0; i < n; i++) {
+    const [x, y, r, a] = STARS[i];
+    const at = {cx: (2 + x * (W - 4)).toFixed(1), cy: (2 + y * (H - 4)).toFixed(1), r: (.3 + r * r * 1.3).toFixed(2), fill: a > .88 ? '#ffe3bd' : a < .1 ? '#c4d6ff' : '#fff', opacity: (.18 + a * .62).toFixed(2)};
+    if (i % 6 === 0) { at.class = 'tw'; at.style = `animation-delay:${(-a * 2.8).toFixed(2)}s`; }
+    mk('circle', at, sky);
+  }
+  // The glow of bent starlight around the hole, painted on the whole sky so nothing leaves the window.
+  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#halo)'});
+  // The boosted edge: a glowing screen in layers, where the frozen pictures sit.
+  const screen = mk('g', {opacity: 0});
+  const band = mk('circle', {cx, cy, r: R + s * .44, fill: 'none', stroke: '#ffc477', 'stroke-width': (s * 1.02).toFixed(1), opacity: .16}, screen);
+  mk('circle', {cx, cy, r: R + s * .1, fill: 'none', stroke: '#ffd9a6', 'stroke-width': 1, opacity: .6, 'stroke-dasharray': '2 5', class: 'spin'}, screen);
+  mk('circle', {cx, cy, r: R + s * .84, fill: 'none', stroke: '#ffd9a6', 'stroke-width': 1, opacity: .4, 'stroke-dasharray': '1 6', class: 'spin'}, screen);
+  const glints = mk('g');
+  mk('circle', {cx, cy, r: R, fill: '#000'});
+  mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#d8e6ff', 'stroke-width': Math.max(1, R * .018).toFixed(2), opacity: .55});
+  // The edge, named along the bottom of its rim.
+  const fs = Math.max(12, f * .78), lab = mk('g', {opacity: phase === 'bet' ? 1 : 0}), ar = R + fs * .95 + 2;
+  mk('path', {id: 'edgeArc', d: `M${(cx - ar).toFixed(1)} ${cy.toFixed(1)} A${ar.toFixed(1)} ${ar.toFixed(1)} 0 0 0 ${(cx + ar).toFixed(1)} ${cy.toFixed(1)}`, fill: 'none'}, lab);
+  const tx = mk('text', {'font-size': fs.toFixed(1), fill: '#e6eeff', 'text-anchor': 'middle', 'letter-spacing': '.16em', stroke: '#05060c', 'stroke-width': 3, 'paint-order': 'stroke'}, lab);
+  mk('textPath', {href: '#edgeArc', startOffset: '50%'}, tx).textContent = 'THE EDGE';
+  const specks = mk('g'), things = mk('g', {id: 'things'});
+  const edge = (dx, dy) => Math.min(dx > 1e-6 ? (W - cx) / dx : dx < -1e-6 ? -cx / dx : 1e9, dy > 1e-6 ? (H - cy) / dy : dy < -1e-6 ? -cy / dy : 1e9);
+  scene = {cx, cy, screen, band, lab, things: [], specks: []};
+  THINGS.forEach((T, i) => {
+    const a = T.ang * Math.PI / 180, dx = Math.cos(a), dy = Math.sin(a), d = edge(dx, dy), rEnd = R + s * T.k * .44;
+    const gl = mk('g', {opacity: 0}, glints);
+    mk('circle', {cx: (cx + dx * (R + s * .06)).toFixed(1), cy: (cy + dy * (R + s * .06)).toFixed(1), r: (s * .55).toFixed(1), fill: 'url(#glint)', class: 'pulse'}, gl);
+    scene.things.push(Object.assign({}, T, {dx, dy, rEnd, rStart: i ? d + s * .9 : Math.max(rEnd + s * 1.3, d - s * .9), sc: s * T.k / 100, gl, el: glyph(T.kind, things)}));
+  });
+  SPECKS.forEach(P => {
+    const a = P.ang * Math.PI / 180, dx = Math.cos(a), dy = Math.sin(a);
+    scene.specks.push(Object.assign({}, P, {dx, dy, rEnd: R + s * .12, rStart: edge(dx, dy) + 6, el: mk('circle', {r: Math.max(1, s * P.r).toFixed(2), fill: '#fff', opacity: 0}, specks)}));
+  });
+  svg.classList.toggle('lit', phase === 'end');
+  draw();
+}
+
+// Everything on the sky follows from the two clocks and the boost.
+function draw() {
+  if (!scene) return;
+  const lit = phase === 'boost' || phase === 'end', bc = mix(BOOST, bv), bo = Math.pow(bv, .8), {cx, cy} = scene;
+  scene.things.forEach((o, i) => {
+    const t = i ? clamp((clock.ages - o.t0) / o.dur) : clock.setup, g = remain(t), r = o.rEnd + (o.rStart - o.rEnd) * g;
+    const rot = o.kind === 'rocket' ? o.ang - 90 : o.rot0 + o.spin * g;
+    o.el.setAttribute('transform', `translate(${(cx + o.dx * r).toFixed(1)} ${(cy + o.dy * r).toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${o.sc.toFixed(4)})`);
+    const L = lit ? {c: bc, o: bo} : fallLook(t);
+    o.el.style.display = i && t <= 0 ? 'none' : '';   // not yet on its way: kept out of the window
+    o.el.style.color = L.c; o.el.setAttribute('opacity', L.o.toFixed(3));
+    o.gl.setAttribute('opacity', (smooth((t - .8) / .18) * (1 - bo) * .7).toFixed(3));
+  });
+  scene.specks.forEach(p => {
+    const t = clamp((clock.ages - p.t0) / p.dur), r = p.rEnd + (p.rStart - p.rEnd) * remain(t);
+    const L = lit ? {c: bc, o: bo * p.k} : fallLook(t);
+    p.el.style.display = t <= 0 ? 'none' : '';
+    p.el.setAttribute('cx', (cx + p.dx * r).toFixed(1)); p.el.setAttribute('cy', (cy + p.dy * r).toFixed(1));
+    p.el.setAttribute('fill', L.c); p.el.setAttribute('opacity', L.o.toFixed(3));
+  });
+  scene.screen.setAttribute('opacity', bo.toFixed(3));
+  scene.band.setAttribute('opacity', (.16 + .34 * fx.flash).toFixed(3));
+}
+
+function paintSlider() {
+  const w = track.offsetWidth, h = track.offsetHeight, run = Math.max(0, w - h);
+  if (!w) return;   // hidden for now: painted when it shows
+  Kit.$('knob').style.transform = `translateX(${(bv * run).toFixed(1)}px)`;
+  Kit.$('fill').style.clipPath = `inset(0 ${((1 - bv) * run).toFixed(1)}px 0 0 round ${(h / 2).toFixed(1)}px)`;
+  Kit.$('dot').style.background = mix(BOOST, bv);
+  Kit.$('chev').style.opacity = (.6 * (1 - bv)).toFixed(2);
+  track.setAttribute('aria-valuenow', Math.round(bv * 100));
+}
+
+function setText(id, t) {
+  const el = Kit.$(id); gsap.killTweensOf(el);
+  if (Kit.calm) { el.textContent = t; el.style.opacity = ''; return; }
+  gsap.to(el, {opacity: 0, duration: .18, onComplete: () => { el.textContent = t; gsap.to(el, {opacity: 1, duration: .4}); }});
+}
+function swap(outId, inId) {
+  Kit.$(outId).classList.add('gone');
+  const b = Kit.$(inId); b.classList.remove('gone');
+  if (!Kit.calm) gsap.fromTo(b, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: .5, ease: 'power3.out', clearProps: 'transform'});
+}
+
+// After the answer: ages pass, and everything that falls in fades the same way.
+function startAges() {
+  phase = 'ages';
+  if (scene) { if (Kit.calm) gsap.set(scene.lab, {opacity: 0}); else gsap.to(scene.lab, {opacity: 0, duration: .5}); }
+  setText('cap', 'Ages pass');
+  setText('say', 'Watch: ages pass, seen from far away.');
+  if (setupTw) setupTw.kill();
+  if (Kit.calm) { clock.setup = 1; clock.ages = AGES; draw(); toBoost(); return; }
+  if (clock.setup < 1) {
+    setupTw = gsap.to(clock, {setup: 1, duration: SETUP * (1 - clock.setup), ease: 'none', onUpdate: draw});
+    if (fast) setupTw.timeScale(8);
+  }
+  const tw = gsap.to(clock, {ages: AGES, duration: AGES, ease: 'none', onUpdate: draw, onComplete: () => {
+    if (setupTw) setupTw.kill();
+    clock.setup = 1; draw(); toBoost();
+  }});
+  if (fast) tw.timeScale(8);
+}
+function toBoost() {
+  if (phase !== 'ages') return;
+  phase = 'boost'; draw();
+  setText('cap', 'Too red to see');
+  setText('say', 'Drag to make that light visible.');
+  Kit.$('boost').classList.remove('wait');
+  if (!Kit.calm) gsap.fromTo('#dot', {scale: 1}, {scale: 1.5, duration: .35, yoyo: true, repeat: 3, ease: 'sine.inOut'});
+  boostOK();
+}
+function finish() {
+  if (phase !== 'boost') return;
+  phase = 'end'; dragging = false; bv = 1; paintSlider(); draw();
+  Kit.$('sky').classList.add('lit');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.fromTo(fx, {flash: 1}, {flash: 0, duration: 1.4, ease: 'power2.out', onUpdate: draw});
+  setText('cap', 'Light boosted');
+  swap('boost', 'why'); swap('say', 'keep');
+}
+
+// The slider: drag it (or use the arrow keys) to turn the faint light back up.
+const vAt = x => { const r = track.getBoundingClientRect(); return clamp((x - r.left - r.height / 2) / Math.max(1, r.width - r.height)); };
+function setBoost(v) { if (phase !== 'boost') return; bv = v; paintSlider(); draw(); if (bv >= .97) finish(); }
+track.addEventListener('pointerdown', e => {
+  if (phase !== 'boost') return;
+  dragging = true; try { track.setPointerCapture(e.pointerId); } catch (_) {}
+  Kit.haptic('light'); setBoost(vAt(e.clientX)); e.preventDefault();
+});
+track.addEventListener('pointermove', e => { if (dragging) setBoost(vAt(e.clientX)); });
+['pointerup', 'pointercancel'].forEach(n => track.addEventListener(n, () => { dragging = false; }));
+track.addEventListener('keydown', e => {
+  const d = {ArrowRight: .1, ArrowUp: .1, ArrowLeft: -.1, ArrowDown: -.1}[e.key];
+  if (d && phase === 'boost') { setBoost(clamp(bv + d)); e.preventDefault(); }
+});
+
+// How sure, after the answer. When both are in, Kit.answer tells the app.
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (phase !== 'bet' || pick < 0) return;
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  swap('opts', 'boost'); paintSlider();
+  startAges();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+Kit.onShow.card = layout;
+if (window.ResizeObserver) new ResizeObserver(() => { if (dims) layout(); }).observe(Kit.$('view'));
+// Motion the reader should see starts here: the first astronaut falls in.
+Kit.onEnter.card = () => {
+  if (Kit.calm) { if (phase === 'bet' && clock.setup < .62) { clock.setup = .62; draw(); } return; }
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (phase === 'bet' && clock.setup === 0 && !setupTw) setupTw = gsap.to(clock, {setup: 1, duration: SETUP, delay: .6, ease: 'none', onUpdate: draw});
+};
+// Plays the card through for the checker: answer, how sure, then drag the light all the way up.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  fast = true;
+  if (setupTw) setupTw.timeScale(8);
+  Kit.$('opts').children[RIGHT].click();
+  await wait(150);
+  const v = Kit.$('sure').querySelector('[data-v="80"]'); if (v) v.click();
+  await Promise.race([boostReady, wait(8000)]);
+  await wait(250);
+  const r = track.getBoundingClientRect(), y = r.top + r.height / 2, x0 = r.left + r.height / 2, run = r.width - r.height;
+  const ev = (type, x) => track.dispatchEvent(new PointerEvent(type, {bubbles: true, cancelable: true, clientX: x, clientY: y, pointerId: 9, pointerType: 'touch', isPrimary: true}));
+  ev('pointerdown', x0);
+  for (let i = 1; i <= 16; i++) { await wait(30); ev('pointermove', x0 + run * i / 16); }
+  ev('pointerup', x0 + run);
+  await wait(1000);
+};
+Kit.single();
+</script>
+</html>

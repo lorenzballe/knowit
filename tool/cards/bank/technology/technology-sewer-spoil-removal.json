@@ -1,0 +1,37 @@
+{
+  "id": "technology-sewer-spoil-removal",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Naples bank robbers hide the dirt they dug?",
+  "answer": "The robbers dug 12 metres by hand or with a small pick, filled one bucket at a time, and tipped the spoil into the sewer collector. The flowing water carried it away silently, so no pile was left to see. That is why the dirt on the tunnel floor didn't add up.",
+  "move": "Running water is a free conveyor belt: no trucks, no noise, no pile.",
+  "keywords": [
+    "naples",
+    "bank-robbery",
+    "sewer",
+    "tunnel",
+    "excavation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card asking how bank robbers in Naples hid the dirt they dug. A slider moves from 0% to 100% of the spoil sent into a sewer, showing how much stays in the tunnel versus how much the sewer water carries away."
+  },
+  "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=aRTxjOeJRbY&t=518s",
+  "written": "2026-11-03"
+}

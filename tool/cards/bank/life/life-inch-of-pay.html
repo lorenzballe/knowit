@@ -1,0 +1,228 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>An inch of pay</title>
+<!-- Pencil marks on a door frame: drag the pencil to mark your height beside a 5'5" (165 cm)
+     colleague's mark. Beside the frame, what the difference was worth in Judge & Cable (Journal of
+     Applied Psychology 89:428-441, 2004): about $789 a year per inch, from four large US and UK
+     studies, controlling for sex, weight and age (6'0" against 5'5" = about $5,525 a year, nearly
+     $166,000 over a 30-year career: University of Florida release; APA Monitor, July 2004). Under it,
+     the 30-year career line for every inch, the reader's in bold. Then why, led by its one twist:
+     for white men, height at 16, not adult height, predicted pay; with teen height held equal, adult
+     height added almost nothing, and tall teens took part in more sports and clubs (Persico,
+     Postlewaite & Silverman, J. Political Economy 112:1019, 2004). Two smaller leads: taller children
+     score higher on tests from age 3 (Case & Paxson, J. Political Economy 116:499, 2008); others rate
+     tall people higher (Judge & Cable's meta-analysis of 45 studies). Inspired by Diventare Strong
+     (Alex Onofri), "Come apparire Dominanti, Sicuri di se". Touch: drags. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/rough.js"></script>
+<style>
+#stage{display:flex;flex-direction:column}
+#play{flex:1;min-height:0;display:grid;grid-template-columns:46% 1fr;gap:3cqw}
+#door{width:100%;height:100%;display:block;overflow:hidden;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#right{min-width:0;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+.pay{display:flex;flex-direction:column;gap:.5cqh}
+.pay .k{margin:0;font:800 max(1.5cqh,11.5px)/1.1 var(--body);letter-spacing:.12em;opacity:.65}
+.pay .amt{margin:0 0 .4cqh;font:900 max(5cqh,26px)/1 var(--display);letter-spacing:-.025em;white-space:nowrap}
+.pay .r{margin:0;display:flex;justify-content:space-between;gap:2cqw;font:600 max(1.7cqh,12px)/1.25 var(--body);padding-top:.5cqh;border-top:1.5px solid color-mix(in srgb,var(--k) 16%,transparent)}
+.pay .r b{font-weight:800;white-space:nowrap}
+#chart{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#why{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:2.2cqh}
+.sum{margin:0;font:700 max(1.9cqh,13px)/1.25 var(--body)}
+.sum b{font-weight:900}
+.twist{background:color-mix(in srgb,#fff 42%,transparent);border-radius:2.2cqh;padding:1.8cqh 4.6cqw 2cqh;display:flex;flex-direction:column;gap:.9cqh}
+.age{font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.14em;opacity:.65}
+.twist .hl{margin:0;font:900 max(3.4cqh,18px)/1.1 var(--display);letter-spacing:-.012em;text-wrap:balance}
+.twist .det{margin:0;font:600 max(1.8cqh,12.5px)/1.32 var(--body)}
+.also{display:flex;flex-direction:column;gap:1.1cqh;padding:0 1cqw}
+.also p{margin:0;display:grid;grid-template-columns:max(20cqw,66px) 1fr;align-items:baseline;font:600 max(1.7cqh,12px)/1.3 var(--body)}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){
+  .wide{display:none}
+  .answered #why{gap:1.2cqh}
+  .answered .twist{padding:1.2cqh 4cqw 1.3cqh;gap:.6cqh}
+  .answered .twist .det span,.answered .more{display:none}
+}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Drag · pencil marks on a door frame">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">YOUR HEIGHT</span></div>
+    <h2 class="q">Does every inch of height add to your pay?</h2>
+    <div class="stagebox" id="stage">
+      <div id="play">
+        <svg id="door" role="slider" tabindex="0" aria-label="Your height" aria-valuemin="60" aria-valuemax="76" data-drag></svg>
+        <div id="right">
+          <div class="pay" aria-live="polite">
+            <p class="k">A YEAR<span class="wide">, ON AVERAGE</span></p>
+            <p class="amt num" id="pYear">+$5,523</p>
+            <p class="r"><span>you</span><b id="hYou">6′0″ · 183 cm</b></p>
+            <p class="r"><span>vs 5′5″ colleague</span><b id="hDiff">+7 in</b></p>
+            <p class="r"><span>over 30 years</span><b id="pCareer">+$166,000</b></p>
+          </div>
+          <svg id="chart" role="img" aria-label="Extra pay piling up over a 30-year career, one line for each inch of height."></svg>
+        </div>
+      </div>
+      <div id="why" class="gone">
+        <p class="sum" id="sum"></p>
+        <div class="twist">
+          <span class="age">AGE 16</span>
+          <p class="hl">Height at 16, not as an adult, predicted white men’s pay.</p>
+          <p class="det">Men equally tall at 16 earned about the same, however much they grew later.<span> Tall teens took part in more sports and clubs.</span></p>
+        </div>
+        <div class="also">
+          <p><span class="age">AGE 3</span><span>Taller kids already test higher.</span></p>
+          <p><span class="age">AT WORK</span><span>Others rate tall people higher<span class="more"> (45 studies)</span>.</span></p>
+        </div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the pencil to mark your height on the door frame. In four big US and UK studies, each inch was worth about <b>$789 a year</b>.</p>
+    <button class="btn" id="go">Why would height pay?</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>For men, the inches that pay may be those you had at 16, not now.</div>
+    <div class="foot"><span class="src">Source · Judge &amp; Cable, J. Appl. Psychol. 2004; Persico et al., J. Polit. Econ. 2004; Case &amp; Paxson 2008</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const PER_INCH = 789, BASE = 65, LO = 60, HI = 76, WIN = [56, 80], YEARS = 30;
+  const INK = '#10100c', LEAD = '#3b3a37', PAINT = '#fffaf2';
+  const door = Kit.$('door'), chart = Kit.$('chart'), say = Kit.$('say'), go = Kit.$('go');
+  let h = 72, geo = null, dragging = false;
+  const ftin = v => `${Math.floor(v / 12)}′${v % 12}″`;
+  const cm = v => Math.round(v * 2.54);
+  const money = v => (v > 0 ? '+' : v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v)).toLocaleString('en-US');
+
+  // ---------- the door frame, its pencil marks, and the pencil ----------
+  const pencilLine = (g, x1, x2, y, seed, w = 1.9) => {
+    if (typeof rough !== 'undefined') { const rc = rough.svg(door); g.appendChild(rc.line(x1, y, x2, y, {stroke: LEAD, strokeWidth: w, roughness: .9, bowing: .6, seed})); }
+    else Kit.mk('line', {x1, x2, y1: y, y2: y, stroke: LEAD, 'stroke-width': w}, g);
+  };
+  function drawDoor() {
+    door.innerHTML = '';
+    const {W, H} = Kit.fitSvg(door);
+    const fs = Math.max(11, Math.min(W / 9.5, H / 17));
+    const pt = fs * .8, pb = fs * .8, yOf = v => pt + (H - pt - pb) * (WIN[1] - v) / (WIN[1] - WIN[0]);
+    const sx = fs * 2.5, cx0 = sx + fs * .35, cx1 = Math.max(cx0 + fs * 2.6, W * .57);     // scale on the left, then the painted casing
+    geo = {H, W, fs, yOf, cx0, cx1, vOf: y => WIN[1] - (y - pt) * (WIN[1] - WIN[0]) / (H - pt - pb)};
+    // The casing: painted wood, a moulding groove, the shadow of the doorway on its right.
+    Kit.mk('rect', {x: cx1, y: -4, width: W - cx1 + 4, height: H + 8, fill: INK, 'fill-opacity': .07}, door);
+    Kit.mk('rect', {x: cx0, y: -4, width: cx1 - cx0, height: H + 8, fill: PAINT}, door);
+    Kit.mk('line', {x1: cx0 + (cx1 - cx0) * .2, x2: cx0 + (cx1 - cx0) * .2, y1: -4, y2: H + 4, stroke: INK, 'stroke-opacity': .1, 'stroke-width': 1.4}, door);
+    Kit.mk('line', {x1: cx1 - 1, x2: cx1 - 1, y1: -4, y2: H + 4, stroke: INK, 'stroke-opacity': .22, 'stroke-width': 2}, door);
+    // Someone once measured the feet on the edge of the frame.
+    for (let v = WIN[0]; v <= WIN[1]; v++) {
+      const y = yOf(v), big = v % 6 === 0;
+      Kit.mk('line', {x1: cx0, x2: cx0 + (big ? fs * .9 : fs * .45), y1: y, y2: y, stroke: LEAD, 'stroke-opacity': big ? .75 : .4, 'stroke-width': big ? 1.4 : 1}, door);
+      if (big && v > WIN[0] && v < WIN[1]) { const t = Kit.mk('text', {x: sx, y: y + fs * .36, 'text-anchor': 'end', fill: INK, 'fill-opacity': .72, 'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs}, door); t.textContent = v % 12 ? ftin(v) : `${v / 12}′`; }
+    }
+    // The colleague's mark, pencilled once.
+    const col = Kit.mk('g', {}, door), yc = yOf(BASE);
+    pencilLine(col, cx0 + fs * .2, cx1 - fs * .2, yc, 11, 1.7);
+    geo.col = Kit.mk('text', {x: cx1 + fs * .45, fill: LEAD, 'font-family': 'Caveat', 'font-weight': 700, 'font-size': fs * 1.45}, door);
+    geo.col.textContent = '5′5″';
+    // Your mark, and the pencil that draws it: you drag the pencil.
+    geo.you = Kit.mk('g', {}, door);
+    pencilLine(geo.you, cx0 + fs * .2, cx1 - fs * .2, 0, 5, 2.4);
+    const len = W - cx1 - 3, bh = fs * .8, tip = bh * 1.6;
+    const p = Kit.mk('g', {}, geo.you);   // pointing left, its point on the mark at the casing's edge
+    const x0 = cx1 - fs * .1;
+    Kit.mk('path', {d: `M${x0} 0 L${x0 + tip * .38} ${-bh * .2} L${x0 + tip * .38} ${bh * .2} Z`, fill: LEAD}, p);
+    Kit.mk('path', {d: `M${x0 + tip * .36} ${-bh * .22} L${x0 + tip} ${-bh / 2} L${x0 + tip} ${bh / 2} L${x0 + tip * .36} ${bh * .22} Z`, fill: '#e9c99b'}, p);
+    Kit.mk('rect', {x: x0 + tip, y: -bh / 2, width: len - tip - bh * 1.5, height: bh, fill: INK}, p);
+    Kit.mk('line', {x1: x0 + tip, x2: x0 + len - bh * 1.5, y1: -bh * .12, y2: -bh * .12, stroke: '#fff', 'stroke-opacity': .22, 'stroke-width': 1}, p);
+    Kit.mk('rect', {x: x0 + len - bh * 1.5, y: -bh / 2 - .5, width: bh * .6, height: bh + 1, fill: '#9a9a9a'}, p);
+    Kit.mk('rect', {x: x0 + len - bh * .9, y: -bh / 2, width: bh * .9, height: bh, rx: bh * .3, fill: '#ef8f9a'}, p);
+    geo.tag = Kit.mk('text', {x: cx1 + fs * .45, fill: INK, 'font-family': 'Caveat', 'font-weight': 700, 'font-size': fs * 1.55}, geo.you);
+    geo.tag.textContent = 'you';
+    paintDoor();
+  }
+  function paintDoor(at) {
+    if (!geo) return;
+    const v = at ?? h, y = geo.yOf(v), yc = geo.yOf(BASE), fs = geo.fs;
+    geo.you.setAttribute('transform', `translate(0 ${y})`);
+    // Each label on the outer side of its own mark, so the two never sit on each other.
+    const above = v >= BASE;
+    geo.tag.setAttribute('y', above ? -fs * .95 : fs * 1.9);
+    geo.col.setAttribute('y', above ? yc + fs * 1.45 : yc - fs * .45);
+    geo.col.setAttribute('opacity', Math.abs(v - BASE) < 1.5 ? 0 : 1);
+    door.setAttribute('aria-valuenow', h); door.setAttribute('aria-valuetext', `${ftin(h)}, ${cm(h)} centimetres`);
+  }
+
+  // ---------- the career lines: one per inch, yours in bold ----------
+  function drawChart() {
+    chart.innerHTML = ''; chart._g = null;
+    const {W, H} = Kit.fitSvg(chart);
+    if (H < 30) return;
+    const fs = Math.max(11, Math.min(H / 7, W / 15));
+    const lo = (LO - BASE) * PER_INCH * YEARS, hi = (HI - BASE) * PER_INCH * YEARS;
+    const padR = fs * 4.4, x1 = W - padR, top = fs * .7, bot = H - fs * 1.5;
+    const X = t => x1 * t / YEARS, Y = v => top + (bot - top) * (hi - v) / (hi - lo);
+    for (let v = LO; v <= HI; v++) {
+      if (v === BASE) continue;
+      Kit.mk('line', {x1: X(0), y1: Y(0), x2: X(YEARS), y2: Y((v - BASE) * PER_INCH * YEARS), stroke: INK, 'stroke-opacity': .16, 'stroke-width': 1.2}, chart);
+    }
+    Kit.mk('line', {x1: X(0), y1: Y(0), x2: X(YEARS), y2: Y(0), stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1.4, 'stroke-dasharray': '4 3'}, chart);
+    const t0 = Kit.mk('text', {x: X(0), y: H - fs * .2, fill: INK, 'fill-opacity': .7, 'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs}, chart); t0.textContent = 'year 1';
+    const t1 = Kit.mk('text', {x: X(YEARS), y: H - fs * .2, 'text-anchor': 'end', fill: INK, 'fill-opacity': .7, 'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs}, chart); t1.textContent = 'year 30';
+    chart._g = {X, Y, fs, x1, top, bot, line: Kit.mk('line', {stroke: INK, 'stroke-width': 2.8, 'stroke-linecap': 'round'}, chart), dot: Kit.mk('circle', {r: fs * .32, fill: INK}, chart),
+      val: Kit.mk('text', {fill: INK, 'font-family': 'Fraunces', 'font-weight': 900, 'font-size': fs * 1.12}, chart)};
+    paintChart();
+  }
+  function paintChart() {
+    const g = chart._g; if (!g) return;
+    const end = (h - BASE) * PER_INCH * YEARS;
+    g.line.setAttribute('x1', g.X(0)); g.line.setAttribute('y1', g.Y(0)); g.line.setAttribute('x2', g.X(YEARS)); g.line.setAttribute('y2', g.Y(end));
+    g.dot.setAttribute('cx', g.X(YEARS)); g.dot.setAttribute('cy', g.Y(end));
+    const k = Math.round(end / 1000);
+    g.val.textContent = (k > 0 ? '+' : k < 0 ? '−' : '') + '$' + Math.abs(k) + 'k';
+    g.val.setAttribute('x', g.x1 + g.fs * .6);
+    g.val.setAttribute('y', Math.min(g.bot, Math.max(g.top + g.fs * .8, g.Y(end) + g.fs * .38)));
+  }
+
+  // ---------- the figures beside the frame ----------
+  function paintPay() {
+    const d = h - BASE, year = d * PER_INCH, career = Math.round(year * YEARS / 1000) * 1000;
+    Kit.$('hYou').textContent = `${ftin(h)} · ${cm(h)} cm`;
+    Kit.$('hDiff').textContent = d === 0 ? 'same' : `${d > 0 ? '+' : '−'}${Math.abs(d)} in`;
+    Kit.$('pYear').textContent = d === 0 ? '$0' : money(year);
+    Kit.$('pCareer').textContent = d === 0 ? '$0' : money(career);
+  }
+  function setH(v) {
+    v = Math.max(LO, Math.min(HI, Math.round(v)));
+    if (v === h) return;
+    h = v; paintDoor(); paintChart(); paintPay(); Kit.haptic('selection');
+  }
+  const fromEvent = e => { const r = door.getBoundingClientRect(); return geo.vOf((e.clientY - r.top) * geo.H / r.height); };
+  door.addEventListener('pointerdown', e => { dragging = true; door.setPointerCapture(e.pointerId); setH(fromEvent(e)); e.preventDefault(); });
+  door.addEventListener('pointermove', e => { if (dragging) setH(fromEvent(e)); });
+  const end = () => { dragging = false; };
+  door.addEventListener('pointerup', end); door.addEventListener('pointercancel', end);
+  door.addEventListener('keydown', e => { if (e.key === 'ArrowUp' || e.key === 'ArrowRight') { setH(h + 1); e.preventDefault(); } if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') { setH(h - 1); e.preventDefault(); } });
+
+  // ---------- why: the twist first ----------
+  function why() {
+    const d = h - BASE;
+    Kit.$('sum').innerHTML = d === 0 ? 'At 5′5″ you are the baseline. So why does height pay?' : `${ftin(h)} vs 5′5″: <b>${money(d * PER_INCH)}</b> a year. So why?`;
+    Kit.hide('play'); Kit.show('why');
+    Kit.$('card').classList.add('answered');
+    say.innerHTML = 'The twist: the pay followed the teenager, not the grown-up.<span class="more"> All survey averages, not a verdict on anyone.</span>';
+    go.classList.add('gone'); Kit.show('keep');
+    if (!Kit.calm) { gsap.from('.twist', {opacity: 0, y: 8, duration: .5, ease: 'power2.out', delay: .1}); gsap.from('.also p', {opacity: 0, duration: .4, stagger: .2, delay: .6}); }
+    Kit.haptic('success');
+  }
+  go.addEventListener('click', why);
+
+  Kit.onShow.card = () => { drawDoor(); drawChart(); paintPay(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    // The pencil nudges once, so the reader sees it moves.
+    const o = {v: h}; gsap.to(o, {v: h + 2, duration: .45, ease: 'power2.inOut', yoyo: true, repeat: 1, delay: .5, onUpdate: () => { if (!dragging) paintDoor(o.v); }, onComplete: () => paintDoor()});
+  };
+  Kit.play.card = async () => {
+    for (const v of [70, 68, 70]) { setH(v); await new Promise(r => setTimeout(r, Kit.calm ? 20 : 160)); }
+    go.click(); await new Promise(r => setTimeout(r, Kit.calm ? 40 : 300));
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-tunnel-smoke-drift -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TUNNEL SMOKE</span></div>
+    <h2 class="q">In a tunnel fire, which way does the smoke tend to drift?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A road tunnel seen from the side, with traffic moving right and smoke rising from a crash"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">With the traffic →</button>
+        <button class="opt" data-i="1">← Against the traffic</button>
+        <button class="opt" data-i="2">Nowhere: it just rises and spreads</button>
+      </div>
+      <div id="why" class="gone"><p class="big">With the traffic →</p><p class="body">Moving cars push the air ahead of them, so the tunnel's air flows the way they drive. The smoke rides that flow downstream. That's why you escape the other way, against the traffic.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Watch the traffic, then bet where the smoke will go.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In a tunnel, smoke goes where the cars go: escape the other way.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1;
+const S = {wind: 0, air: 0, man: 0, manX: .43};
+const P = [];
+const N = 44;
+for (let i = 0; i < N; i++) P.push(spawn(Kit.rnd() * 7));
+const CARS = [{x: .05, c: '#e8b04a'}, {x: .4, c: '#5fb7e8'}, {x: .75, c: '#e86a5f'}];
+const ARROWS = [0, .17, .34, .51, .68, .85].map((x, i) => ({x, y: .3 + (i % 3) * .14}));
+let G = null;
+
+function spawn(age = 0) {
+  return {x: .5 + (Kit.rnd() - .5) * .03, y: .82, vx: (Kit.rnd() - .5) * .06, vy: -.22 - Kit.rnd() * .1, r: .02 + Kit.rnd() * .02, age, life: 6 + Kit.rnd() * 2};
+}
+function step(dt) {
+  for (const c of CARS) { c.x += .16 * dt; if (c.x > 1.12) c.x -= 1.24; }
+  for (const a of ARROWS) { a.x += .22 * dt; if (a.x > 1.05) a.x -= 1.1; }
+  for (let i = 0; i < N; i++) {
+    const p = P[i];
+    p.age += dt;
+    if (p.age > p.life) { P[i] = spawn(); continue; }
+    if (p.y > .14) p.y += p.vy * dt; else p.vy = 0;
+    p.vx += (S.wind - p.vx) * Math.min(1, dt * .9) + (Kit.rnd() - .5) * .02 * dt * (1 - S.wind * 5);
+    p.x += p.vx * dt;
+    p.r += .012 * dt;
+  }
+}
+function car(parent, w, h, color) {
+  const g = Kit.mk('g', {}, parent);
+  Kit.mk('rect', {x: 0, y: -h * .62, width: w, height: h * .45, rx: h * .14, fill: color}, g);
+  Kit.mk('rect', {x: w * .22, y: -h, width: w * .5, height: h * .42, rx: h * .14, fill: color}, g);
+  Kit.mk('rect', {x: w * .28, y: -h * .92, width: w * .38, height: h * .26, rx: h * .06, fill: '#cfe3f2', opacity: .75}, g);
+  Kit.mk('circle', {cx: w * .22, cy: -h * .17, r: h * .17, fill: '#111'}, g);
+  Kit.mk('circle', {cx: w * .78, cy: -h * .17, r: h * .17, fill: '#111'}, g);
+  return g;
+}
+function render() {
+  if (!G) return;
+  const {W, top, road, cars, puffs, arrows, man, cw} = G;
+  const yy = v => top + v * (road - top);
+  CARS.forEach((c, i) => {
+    const left = c.x * W - cw / 2;
+    cars[i].setAttribute('transform', `translate(${left},${road - G.H * .02}) scale(.86)`);
+    cars[i].style.display = (left < 0 || left + cw * .86 > W) ? 'none' : '';
+  });
+  P.forEach((p, i) => {
+    const fade = Math.min(1, p.age / .6) * Math.max(0, 1 - p.age / p.life);
+    const e = puffs[i];
+    e.setAttribute('cx', p.x * W); e.setAttribute('cy', yy(p.y));
+    e.setAttribute('r', p.r * Math.min(W, G.H * 1.6));
+    e.setAttribute('opacity', (.55 * fade).toFixed(3));
+  });
+  ARROWS.forEach((a, i) => {
+    const ax = a.x * W;
+    arrows[i].setAttribute('transform', `translate(${ax},${yy(a.y)})`); arrows[i].setAttribute('opacity', S.air * .85);
+    arrows[i].style.display = (ax - G.al < 0 || ax + G.al * .1 > W) ? 'none' : '';
+  });
+  man.setAttribute('transform', `translate(${S.manX * W},${road})`);
+  man.setAttribute('opacity', S.man);
+  G.airLbl.setAttribute('opacity', S.air);
+}
+const tick = (t, dms) => { step(Math.min(dms, 50) / 1000); render(); };
+for (let i = 0; i < 140; i++) step(.05);
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .8, 12);
+  const top = H * .14, road = H * .8, rx = Math.min(H * .1, W * .1);
+  Kit.mk('text', {x: W * .03, y: top - fs * .5, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: 'var(--k)'}, svg).textContent = 'TRAFFIC →';
+  Kit.mk('rect', {x: 0, y: top, width: W, height: H * .76 - (top - H * .1), rx, fill: '#1b1f2b'}, svg);
+  Kit.mk('rect', {x: 0, y: road, width: W, height: H * .07, fill: '#2d3343'}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: road + H * .035, y2: road + H * .035, stroke: '#f2e6b8', 'stroke-width': Math.max(2, H * .006), 'stroke-dasharray': `${W * .05} ${W * .04}`}, svg);
+  for (let i = 1; i < 8; i++) Kit.mk('circle', {cx: W * i / 8, cy: top + H * .025, r: Math.max(2, H * .008), fill: '#ffd979', opacity: .8}, svg);
+  // exit
+  const dh = (road - top) * .38, dw = W * .07, dx = W * .05;
+  Kit.mk('rect', {x: dx, y: road - dh, width: dw, height: dh, rx: 3, fill: '#0f3d24', stroke: '#3ee07a', 'stroke-width': Math.max(2, H * .006)}, svg);
+  const sw = Math.max(fs * 2.9, dw * 1.4);
+  Kit.mk('rect', {x: dx + dw / 2 - sw / 2, y: road - dh - fs * 1.9, width: sw, height: fs * 1.5, rx: 4, fill: '#2bc764'}, svg);
+  Kit.mk('text', {x: dx + dw / 2, y: road - dh - fs * .8, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: '#fff'}, svg).textContent = 'EXIT';
+  const cw = W * .13, ch = cw * .55;
+  const cars = CARS.map(c => { const g = car(svg, cw, ch, c.c); g.setAttribute('opacity', .9); return g; });
+  // crashed car
+  const crash = car(svg, cw, ch, '#8a8f9c');
+  crash.setAttribute('transform', `translate(${W * .5 - cw / 2},${road + H * .03}) rotate(-12 ${cw / 2} 0)`);
+  Kit.mk('circle', {cx: W * .5, cy: road - ch * .5, r: ch * .32, fill: '#ff7a2f', opacity: .9}, svg);
+  Kit.mk('circle', {cx: W * .5, cy: road - ch * .55, r: ch * .16, fill: '#ffd25a'}, svg);
+  const puffs = P.map(() => Kit.mk('circle', {fill: '#a9adb6'}, svg));
+  const al = W * .06;
+  const arrows = ARROWS.map(() => {
+    const g = Kit.mk('g', {opacity: 0}, svg);
+    Kit.mk('path', {d: `M${-al} 0H0M${-al * .35} ${-al * .3}L0 0L${-al * .35} ${al * .3}`, fill: 'none', stroke: '#9fe7ff', 'stroke-width': Math.max(2.5, H * .009), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    return g;
+  });
+  const m = Kit.mk('g', {opacity: 0}, svg), ms = (road - top) * .22;
+  Kit.mk('circle', {cx: 0, cy: -ms, r: ms * .14, fill: '#fff'}, m);
+  Kit.mk('path', {d: `M0 ${-ms * .85}V${-ms * .4}M0 ${-ms * .4}L${-ms * .2} 0M0 ${-ms * .4}L${ms * .2} 0M0 ${-ms * .72}L${-ms * .25} ${-ms * .5}M0 ${-ms * .72}L${ms * .2} ${-ms * .55}`, stroke: '#fff', 'stroke-width': Math.max(2, ms * .09), 'stroke-linecap': 'round', fill: 'none'}, m);
+  const airLbl = Kit.mk('text', {x: W * .97, y: H * .97, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: 'var(--k)', opacity: 0}, svg);
+  airLbl.textContent = 'air pushed along by cars →';
+  G = {W, H, top, road, cars, puffs, arrows, man: m, cw, airLbl, al};
+  render();
+};
+
+function reveal() {
+  if (Kit.calm) {
+    S.wind = .14; S.air = 1; S.man = 1; S.manX = .16;
+    for (let i = 0; i < 160; i++) step(.05);
+    render();
+  } else {
+    gsap.to(S, {wind: .14, air: 1, duration: 1.6, ease: 'power2.out'});
+    gsap.to(S, {man: 1, duration: .4});
+    gsap.to(S, {manX: .16, duration: 4, ease: 'none', delay: .3});
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.ticker.add(tick);
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => { Kit.$('opts').children[0].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

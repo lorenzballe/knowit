@@ -1,0 +1,37 @@
+{
+  "id": "technology-carbon-fibre-buckling",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Carbon fibre is super strong. So why is it risky deep underwater?",
+  "answer": "Carbon fibre is light and very strong when pulled. When it is squeezed, its thin fibres can bend sideways and buckle, and it is hard to predict when that starts. A deep-sea hull like Titan's is squeezed at up to 300 times atmospheric pressure.",
+  "move": "Carbon fibre is strong when pulled, unpredictable when squeezed.",
+  "keywords": [
+    "carbon fibre",
+    "titan submersible",
+    "deep sea",
+    "buckling",
+    "hull"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: why is carbon fibre risky deep underwater? A panel of thin fibres is shown. Pull and Squeeze controls and a pressure slider up to 300 times atmospheric let the reader watch the fibres buckle sideways under squeeze."
+  },
+  "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=607s",
+  "written": "2026-11-03"
+}

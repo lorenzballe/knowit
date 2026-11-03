@@ -1,0 +1,37 @@
+{
+  "id": "human_body-egg-breaks-spell",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to the egg's chemical signals once one sperm gets in?",
+  "answer": "Once one sperm gets inside, the egg switches off all the chemical signals that drew sperm in. Its wall then closes, so the remaining sperm bump into it and cannot get in.",
+  "move": "One sperm in, signals off, wall shut: only one gets through.",
+  "keywords": [
+    "sperm",
+    "egg",
+    "fertilisation",
+    "egg wall",
+    "chemical signals"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page about fertilisation. Tap a sperm to send it through the egg's wall, then see the egg switch off its chemical attraction signals and close its wall so the other sperm cannot get in."
+  },
+  "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=vCWzf0yxik8&t=193s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,212 @@
+<!doctype html>
+<!-- slug: technology-induction-it-control -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt:disabled{opacity:.35;cursor:default}
+.opt.hot{background:#ff5a2a;color:#fff;box-shadow:none}
+#pic text{font-family:var(--mono);font-weight:700}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Try it · two runs">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">INDUCTION HOB</span></div>
+    <h2 class="q">How does IT Control keep a pan at an exact temperature?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <button class="opt" id="b1">1 · Heat to 180°C, sensor OFF</button>
+        <button class="opt" id="b2" disabled>2 · Heat to 180°C, sensor ON</button>
+        <button class="opt hot gone" id="b3">Drop in cold food</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Measure, then adjust</p>
+        <p class="body">Temperature sensors on the coil read the heat all the time. The hob turns power down as it nears the setting and back up when it drops, so the temperature stays constant and food doesn't burn.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Heat the oil to 180°C: first with the sensor off, then on.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A sensor plus automatic power control lets you set degrees, like an oven.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Consuma più un piano a induzione o un piano a gas? Abbiamo fatto un test per scoprirlo” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const SET = 180, TMIN = 20, TMAX = 260, WIN = 12;
+const S = {T: 20, P: 0, mode: null, t: 0, trace: [], ghost: [], steady: 0, food: false, stage: 0, done: false, lastPush: -1};
+let G = null;
+const svg = Kit.$('pic');
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const mixHex = (a, b, k) => { const p = h => [1,3,5].map(i => parseInt(h.substr(i,2),16)); const A = p(a), B = p(b); return '#' + A.map((v,i) => Math.round(v + (B[i]-v)*k).toString(16).padStart(2,'0')).join(''); };
+const say = t => { Kit.$('say').textContent = t; };
+
+Kit.onShow.card = () => {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * 0.8, 12), mk = Kit.mk;
+  const ink = 'var(--k)';
+  const cx = W * 0.37, panTop = H * 0.27, panBot = H * 0.47, tw = W * 0.46, bw = W * 0.38;
+  // display
+  const dx = W * 0.04, dw = W * 0.62, dy = H * 0.02, dh = Math.max(H * 0.12, fs * 2.6);
+  mk('rect', {x: dx, y: dy, width: dw, height: dh, rx: dh * 0.2, fill: '#141414', stroke: ink, 'stroke-width': 2}, svg);
+  mk('text', {x: dx + dw * 0.05, y: dy + dh * 0.62, fill: '#7dd3fc', 'font-size': fs}, svg).textContent = 'SET 180°';
+  const tPan = mk('text', {x: dx + dw * 0.95, y: dy + dh * 0.62, fill: '#fde68a', 'font-size': fs * 1.15, 'text-anchor': 'end'}, svg);
+  // smoke
+  const smoke = mk('g', {opacity: 0}, svg);
+  [-0.12, 0, 0.12].forEach((o, i) => {
+    const x = cx + o * W;
+    mk('path', {d: `M${x},${panTop - 4} q${W*0.04},${-H*0.03} 0,${-H*0.06} q${-W*0.04},${-H*0.03} 0,${-H*0.06}`, fill: 'none', stroke: '#777', 'stroke-width': Math.max(4, W * 0.018), 'stroke-linecap': 'round', opacity: 0.8 - i * 0.1}, smoke);
+  });
+  // pan
+  const oilTop = panTop + (panBot - panTop) * 0.45;
+  const k1 = (oilTop - panTop) / (panBot - panTop);
+  const ow = tw + (bw - tw) * k1;
+  const oil = mk('path', {d: `M${cx - ow/2 + 3},${oilTop} L${cx + ow/2 - 3},${oilTop} L${cx + bw/2 - 3},${panBot - 3} L${cx - bw/2 + 3},${panBot - 3}Z`, fill: '#e8b13a'}, svg);
+  mk('path', {d: `M${cx - tw/2},${panTop} L${cx - bw/2},${panBot} L${cx + bw/2},${panBot} L${cx + tw/2},${panTop}`, fill: 'none', stroke: ink, 'stroke-width': Math.max(3, W * 0.012), 'stroke-linejoin': 'round'}, svg);
+  mk('line', {x1: cx + tw/2, y1: panTop + H * 0.02, x2: cx + tw/2 + W * 0.12, y2: panTop - H * 0.01, stroke: ink, 'stroke-width': Math.max(5, W * 0.02), 'stroke-linecap': 'round'}, svg);
+  // glass
+  const gy = panBot + 2;
+  mk('rect', {x: W * 0.04, y: gy, width: W * 0.66, height: H * 0.02, fill: 'color-mix(in srgb,var(--k) 25%,transparent)', stroke: ink, 'stroke-width': 1.5}, svg);
+  // field arcs
+  const coilY = gy + H * 0.06;
+  const field = mk('g', {opacity: 0}, svg);
+  const arcs = [0.08, 0.15].map(r => mk('path', {d: `M${cx - r * W},${coilY} A${r * W},${(coilY - panBot) * 1.1} 0 0 1 ${cx + r * W},${coilY}`, fill: 'none', stroke: '#ff5a2a', 'stroke-width': 2.5, 'stroke-dasharray': '6 6'}, field));
+  // coil
+  const coil = mk('g', {}, svg);
+  const coilEls = [];
+  for (let i = 0; i < 8; i++) {
+    const x = cx - bw / 2 + (i + 0.5) * bw / 8;
+    if (i === 3 || i === 4) continue;
+    coilEls.push(mk('ellipse', {cx: x, cy: coilY, rx: bw / 18, ry: H * 0.018, fill: 'none', stroke: '#c2410c', 'stroke-width': Math.max(3, W * 0.01)}, coil));
+  }
+  const sensor = mk('rect', {x: cx - W * 0.035, y: coilY - H * 0.015, width: W * 0.07, height: H * 0.03, rx: 4, fill: '#888', stroke: ink, 'stroke-width': 2}, svg);
+  const lab1 = H * 0.66 > coilY + fs * 1.6 ? H * 0.66 : coilY + fs * 1.6;
+  mk('text', {x: cx - bw / 2, y: lab1, fill: ink, 'font-size': fs}, svg).textContent = 'COIL';
+  const tSen = mk('text', {x: cx + bw / 2, y: lab1, fill: ink, 'font-size': fs, 'text-anchor': 'end'}, svg);
+  // power bar
+  const px = W * 0.8, pw = W * 0.1, py0 = H * 0.06 + fs, ph = lab1 - fs * 1.4 - py0;
+  mk('text', {x: px + pw / 2, y: H * 0.06, fill: ink, 'font-size': fs, 'text-anchor': 'middle'}, svg).textContent = 'POWER';
+  mk('rect', {x: px, y: py0, width: pw, height: ph, rx: 4, fill: 'none', stroke: ink, 'stroke-width': 2}, svg);
+  const pFill = mk('rect', {x: px + 3, y: py0 + ph - 3, width: pw - 6, height: 0, rx: 2, fill: '#ff5a2a'}, svg);
+  const tPow = mk('text', {x: px + pw / 2, y: lab1, fill: ink, 'font-size': fs, 'text-anchor': 'middle'}, svg);
+  // graph
+  const gx0 = W * 0.04, gx1 = W * 0.96, gy0 = lab1 + fs * 1.0, gy1 = H - 4;
+  mk('rect', {x: gx0, y: gy0, width: gx1 - gx0, height: gy1 - gy0, fill: 'color-mix(in srgb,var(--k) 6%,transparent)', rx: 6}, svg);
+  const yOf = T => gy1 - (clamp(T, TMIN, TMAX) - TMIN) / (TMAX - TMIN) * (gy1 - gy0);
+  mk('line', {x1: gx0, x2: gx1, y1: yOf(SET), y2: yOf(SET), stroke: '#2563eb', 'stroke-width': 2, 'stroke-dasharray': '5 4'}, svg);
+  mk('text', {x: gx1 - 4, y: yOf(SET) - 4, fill: '#2563eb', 'font-size': fs * 0.9, 'text-anchor': 'end'}, svg).textContent = '180°';
+  const ghost = mk('polyline', {fill: 'none', stroke: '#b91c1c', 'stroke-width': 2, opacity: 0.45, points: ''}, svg);
+  const line = mk('polyline', {fill: 'none', stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round', points: ''}, svg);
+  G = {W, H, tPan, smoke, oil, field, arcs, coilEls, sensor, tSen, pFill, py0, ph, tPow, gx0, gx1, yOf, ghost, line};
+  render();
+};
+
+function pts(tr) {
+  if (!tr.length) return '';
+  const tEnd = tr[tr.length - 1].t, t0 = Math.max(0, tEnd - WIN);
+  return tr.filter(p => p.t >= t0).map(p => `${(G.gx0 + (p.t - t0) / WIN * (G.gx1 - G.gx0)).toFixed(1)},${G.yOf(p.T).toFixed(1)}`).join(' ');
+}
+
+function render() {
+  if (!G) return;
+  const {T, P} = S;
+  G.tPan.textContent = `PAN ${Math.round(T)}°`;
+  G.tPan.setAttribute('fill', T > 200 ? '#f87171' : '#fde68a');
+  G.smoke.setAttribute('opacity', clamp((T - 200) / 45, 0, 1));
+  G.oil.setAttribute('fill', mixHex('#e8b13a', '#3b200a', clamp((T - 195) / 55, 0, 1)));
+  G.field.setAttribute('opacity', (P / 100) * 0.9);
+  G.arcs.forEach(a => a.setAttribute('stroke-dashoffset', -S.t * 30));
+  const glow = mixHex('#7c2d12', '#ff7a2a', P / 100);
+  G.coilEls.forEach(e => e.setAttribute('stroke', glow));
+  const on = S.mode === 'on';
+  G.sensor.setAttribute('fill', on ? (Math.sin(S.t * 8) > 0 ? '#22c55e' : '#15803d') : '#888');
+  G.tSen.textContent = on ? 'SENSOR ON' : 'SENSOR OFF';
+  G.tSen.setAttribute('fill', on ? '#15803d' : 'var(--k)');
+  const h = (G.ph - 6) * P / 100;
+  G.pFill.setAttribute('height', Math.max(0, h));
+  G.pFill.setAttribute('y', G.py0 + G.ph - 3 - h);
+  G.tPow.textContent = `${Math.round(P)}%`;
+  G.ghost.setAttribute('points', pts(S.ghost));
+  G.line.setAttribute('points', pts(S.trace));
+}
+
+function step(dt) {
+  if (!S.mode || S.done && S.stage === 2) return;
+  if (S.mode === 'off') S.P = 100;
+  else S.P = clamp(40 + 6 * (SET - S.T), 0, 100);
+  S.T += (0.48 * S.P - 0.12 * (S.T - 20)) * dt;
+  S.t += dt;
+  if (S.t - S.lastPush >= 0.05) { S.trace.push({t: S.t, T: S.T}); S.lastPush = S.t; }
+  if (S.mode === 'off' && S.T >= 250) {
+    S.mode = null; S.P = 0; S.stage = 1;
+    Kit.$('b1').classList.add('on'); Kit.$('b2').disabled = false;
+    say('Full power nonstop: the oil overshot 180°C and burnt. Now run 2.');
+    Kit.haptic('light');
+  }
+  if (S.mode === 'on') {
+    if (Math.abs(S.T - SET) < 2) S.steady += dt; else S.steady = 0;
+    if (!S.food && S.steady > 1.5 && Kit.$('b3').classList.contains('gone')) {
+      Kit.show('b3'); say('The sensor saw 180°C, so power eased to hold it. Now drop in cold food.');
+    }
+    if (S.food && S.steady > 1.5) finish();
+  }
+}
+
+function finish() {
+  S.done = true; S.stage = 2; S.mode = 'on';
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+let held = false;
+gsap.ticker.add((time, dms) => {
+  if (held) return;
+  const dt = Math.min(dms / 1000, 0.05);
+  if (S.mode && !(S.stage === 2)) step(dt);
+  else if (S.stage === 2) { S.t += dt; }
+  render();
+});
+
+Kit.$('b1').addEventListener('click', () => {
+  if (S.mode || S.stage > 0) return;
+  Object.assign(S, {T: 20, t: 0, trace: [], lastPush: -1, mode: 'off'});
+  Kit.$('b1').disabled = true; Kit.haptic('selection');
+  say('No sensor: the coil just pushes full power…');
+});
+Kit.$('b2').addEventListener('click', () => {
+  if (S.stage !== 1 || S.mode) return;
+  S.ghost = S.trace.slice();
+  Object.assign(S, {T: 20, t: 0, trace: [], lastPush: -1, mode: 'on', steady: 0});
+  Kit.$('b2').disabled = true; Kit.$('b2').classList.add('on'); Kit.haptic('selection');
+  say('Sensor on: watch power drop as the pan nears 180°C…');
+});
+Kit.$('b3').addEventListener('click', () => {
+  if (S.food || S.mode !== 'on') return;
+  S.food = true; S.T -= 60; S.steady = 0;
+  Kit.hide('b3'); Kit.haptic('light');
+  say('The temperature dips, the sensor notices, power jumps back up.');
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic, .opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+
+const ff = sec => { for (let i = 0; i < sec * 60; i++) step(1 / 60); render(); };
+Kit.play.card = async () => {
+  held = true;
+  Kit.$('b1').click(); ff(10);
+  Kit.$('b2').click(); ff(6);
+  Kit.$('b3').click(); ff(5);
+  held = false;
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

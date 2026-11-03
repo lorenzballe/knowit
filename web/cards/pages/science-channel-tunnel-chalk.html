@@ -1,0 +1,215 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-channel-tunnel-chalk -->
+<title>Astute · Why the Channel Tunnel runs through chalk</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#box{flex:1;min-height:0;position:relative;border-radius:1.6cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation}
+#ctl{display:flex;flex-direction:column;gap:1cqh}
+#chips{display:flex;gap:1.6cqw}
+.chip{flex:1;font:700 max(1.7cqh,12px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.4cqh;padding:1.1cqh 1.5cqw;cursor:pointer;overflow-wrap:anywhere}
+.chip.on{background:var(--k);color:var(--c);box-shadow:none}
+.chip.bad{text-decoration:line-through;opacity:.6}
+#bore{font:800 max(2.3cqh,15px)/1.1 var(--body);letter-spacing:.04em;color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.9cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
+#bore.held{transform:scale(.97)}
+#bore:disabled{opacity:.45}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold to bore">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">What is the West Melbury Marly Chalk, and why tunnel through it?</h2>
+    <div class="stagebox" id="stage">
+      <div id="box"><svg id="pic"></svg></div>
+      <div id="ctl">
+        <div id="chips">
+          <button class="chip" data-l="0">Upper rock</button>
+          <button class="chip" data-l="1">Marly chalk</button>
+          <button class="chip" data-l="2">Lower rock</button>
+        </div>
+        <button id="bore" disabled>HOLD TO BORE</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">A chalk that is tight and the same all the way</p>
+        <p class="body">The West Melbury Marly Chalk is a carbonate rock that lets very little water through, and it is compact and homogeneous. So the machine cuts the same rock from end to end, in the dry, with walls that hold.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Pick a layer to aim at, then hold the button to bore.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The best rock to tunnel is the one that stays the same and keeps water out.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const L = [ // layer bands as fractions of height
+  {a:.2, b:.45, name:'Cracked, porous rock', lim:.5, fail:'Water seeps through the cracks and floods the bore. Try another layer.'},
+  {a:.45, b:.72, name:'West Melbury Marly Chalk', lim:1, fail:''},
+  {a:.72, b:1, name:'Uneven, changing layers', lim:.42, fail:'The rock changes every few metres: walls crumble, the machine stalls. Try another layer.'}
+];
+// seeded textures, stored as fractions so a redraw at a new size looks the same
+const cracks = [], stripes = [], drips = [], rubble = [];
+for (let i = 0; i < 16; i++) {
+  const x = Kit.rnd(), pts = []; let y = L[0].a + Kit.rnd() * .04, xx = x;
+  while (y < L[0].b - .01) { pts.push([xx, y]); xx += (Kit.rnd() - .5) * .05; y += .02 + Kit.rnd() * .04; }
+  pts.push([xx, L[0].b - .005]); cracks.push(pts);
+}
+{ let y = L[2].a; while (y < 1) { const h = .015 + Kit.rnd() * .05; stripes.push([y, h, Math.floor(Kit.rnd() * 4), Kit.rnd() * 6]); y += h; } }
+for (let i = 0; i < 9; i++) drips.push([.1 + .8 * (i + Kit.rnd() * .6) / 9, Kit.rnd()]);
+for (let i = 0; i < 10; i++) rubble.push([.1 + .32 * Kit.rnd(), .4 + Kit.rnd() * .6, .6 + Kit.rnd() * .8]);
+const STRIPE = ['#6d5d4b', '#a58c6c', '#4f5a57', '#8b7356'];
+
+let sel = -1, prog = 0, holding = false, done = false, stalled = false, speed = .32, dims = null, dyn = null;
+const svg = Kit.$('pic'), say = Kit.$('say'), bore = Kit.$('bore');
+
+function txt(x, y, s, size, anchor, fill, parent, weight) {
+  const t = Kit.mk('text', {x, y, 'font-size': size, 'text-anchor': anchor, fill, 'font-weight': weight || 700,
+    'font-family': 'var(--body)', 'paint-order': 'stroke', stroke: 'rgba(0,0,0,.35)', 'stroke-width': size * .18}, parent);
+  t.textContent = s; return t;
+}
+function drawStatic() {
+  svg.innerHTML = '';
+  dims = Kit.fitSvg(svg);
+  const {W, H, f} = dims, fs = Math.max(12, f * .82);
+  // sea and land
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: .2 * H, fill: '#2f6fa3'}, svg);
+  Kit.mk('path', {d: `M0 ${.07 * H} L${.12 * W} ${.08 * H} Q${.16 * W} ${.15 * H} ${.2 * W} ${.2 * H} L0 ${.2 * H}Z`, fill: '#5f8a4c'}, svg);
+  Kit.mk('path', {d: `M${W} ${.07 * H} L${.88 * W} ${.08 * H} Q${.84 * W} ${.15 * H} ${.8 * W} ${.2 * H} L${W} ${.2 * H}Z`, fill: '#5f8a4c'}, svg);
+  txt(.02 * W, .055 * H + fs * .4, 'ENGLAND', fs, 'start', '#fff', svg);
+  txt(.98 * W, .055 * H + fs * .4, 'FRANCE', fs, 'end', '#fff', svg);
+  txt(.5 * W, .13 * H + fs * .35, 'THE CHANNEL', fs * .9, 'middle', 'rgba(255,255,255,.85)', svg, 600);
+  // upper: cracked porous rock
+  Kit.mk('rect', {x: 0, y: L[0].a * H, width: W, height: (L[0].b - L[0].a) * H, fill: '#8f8a7c'}, svg);
+  cracks.forEach(p => Kit.mk('polyline', {points: p.map(q => `${q[0] * W},${q[1] * H}`).join(' '), fill: 'none', stroke: '#3b382f', 'stroke-width': Math.max(1.2, W * .004), 'stroke-linejoin': 'round'}, svg));
+  // chalk: one smooth, even band
+  Kit.mk('rect', {x: 0, y: L[1].a * H, width: W, height: (L[1].b - L[1].a) * H, fill: '#efe7d2'}, svg);
+  // lower: changing stripes
+  stripes.forEach(s => {
+    const y = s[0] * H, h = s[1] * H, ph = s[3];
+    let d = `M0 ${y}`;
+    for (let i = 0; i <= 20; i++) d += ` L${W * i / 20} ${y + Math.sin(i * .9 + ph) * h * .35}`;
+    d += ` L${W} ${H} L0 ${H}Z`;
+    Kit.mk('path', {d, fill: STRIPE[s[2]]}, svg);
+  });
+  // highlight for the chosen layer
+  if (sel >= 0) Kit.mk('rect', {x: 1.5, y: L[sel].a * H + 1.5, width: W - 3, height: (L[sel].b - L[sel].a) * H - 3, fill: 'none', stroke: '#ffd23f', 'stroke-width': 3, 'stroke-dasharray': '8 5', rx: 4}, svg);
+  // layer names, near the top of each band, clear of the tunnel; kept inside their band
+  L.forEach((l, i) => {
+    const bh = (l.b - l.a) * H, lfs = Math.min(fs, bh * .6);
+    if (lfs < 8) return;
+    const ly = l.a * H + Math.min(fs * 1.35, (bh + lfs * .7) / 2);
+    txt(.04 * W, ly, l.name, lfs, 'start', i === 1 ? '#3a2f1c' : '#fff', svg, 800);
+  });
+  svg.querySelectorAll('text').forEach(t => { if (t.getAttribute('fill') === '#3a2f1c') t.setAttribute('stroke', 'rgba(255,255,255,.6)'); });
+  dyn = Kit.mk('g', {}, svg);
+  render(0);
+}
+function render(t) {
+  if (!dyn) return;
+  dyn.innerHTML = '';
+  if (sel < 0) return;
+  const {W, H} = dims, l = L[sel];
+  const y = (l.a + l.b) / 2 * H + (sel === 0 ? H * .02 : sel === 1 ? H * .015 : 0);
+  const th = .07 * H, x0 = .08 * W, x1 = .92 * W, front = x0 + prog * (x1 - x0);
+  // access shaft from the English coast
+  Kit.mk('rect', {x: x0 - th * .45, y: .08 * H, width: th * .9, height: y - .08 * H, fill: '#1d2326'}, dyn);
+  // tunnel
+  if (sel === 2) {
+    let top = `M${x0} ${y - th / 2}`, bot = '';
+    const n = Math.max(2, Math.round((front - x0) / 10));
+    const pts = [];
+    for (let i = 0; i <= n; i++) { const x = x0 + (front - x0) * i / n, j = Math.sin(i * 2.3) * th * .18 + Math.sin(i * 5.1) * th * .1; pts.push([x, j]); }
+    pts.forEach(p => top += ` L${p[0]} ${y - th / 2 + p[1]}`);
+    pts.slice().reverse().forEach(p => bot += ` L${p[0]} ${y + th / 2 - p[1] * .8}`);
+    Kit.mk('path', {d: top + bot + 'Z', fill: '#1d2326'}, dyn);
+    rubble.forEach(r => { const rx = x0 + (front - x0) * r[0] / .42 * .42 / Math.max(prog, .01) * prog; if (rx < front - th * .3 && prog > .1) Kit.mk('rect', {x: x0 + (front - x0) * (r[0] - .1) / .32 * .9, y: y + th / 2 - th * .28 * r[2], width: th * .3 * r[2], height: th * .28 * r[2], fill: STRIPE[1], transform: `rotate(${r[1] * 40 - 20})`, 'transform-origin': 'center'}, dyn); });
+  } else {
+    Kit.mk('rect', {x: x0, y: y - th / 2, width: Math.max(0, front - x0), height: th, fill: '#1d2326'}, dyn);
+    if (sel === 1) Kit.mk('rect', {x: x0, y: y - th / 2, width: Math.max(0, front - x0), height: th, fill: 'none', stroke: '#b7ad95', 'stroke-width': 2}, dyn);
+  }
+  // water in the porous layer
+  if (sel === 0 && prog > 0) {
+    const lvl = th * Math.min(1, prog / l.lim) * .85;
+    Kit.mk('rect', {x: x0 - th * .45, y: y + th / 2 - lvl, width: Math.max(0, front - x0 + th * .45), height: lvl, fill: '#3d8fd1', opacity: .9}, dyn);
+    drips.forEach(d => {
+      const dx = x0 + d[0] * (x1 - x0);
+      if (dx > front) return;
+      Kit.mk('line', {x1: dx, y1: L[0].a * H, x2: dx, y2: y - th / 2, stroke: '#5fb2f0', 'stroke-width': 2, opacity: .7}, dyn);
+      const k = ((t * .9 + d[1]) % 1);
+      Kit.mk('circle', {cx: dx, cy: y - th / 2 + k * (th - lvl), r: Math.max(2, th * .07), fill: '#7cc4ff'}, dyn);
+    });
+  }
+  // cutter head
+  const r = th * .58, g = Kit.mk('g', {transform: `translate(${front},${y})`}, dyn);
+  Kit.mk('circle', {r, fill: stalled ? '#d9483b' : done ? '#3ca55c' : '#ffd23f', stroke: '#1d2326', 'stroke-width': 2}, g);
+  const ang = t * (holding && !stalled ? 400 : 0);
+  for (let i = 0; i < 4; i++) Kit.mk('line', {x1: 0, y1: 0, x2: r * .85, y2: 0, stroke: '#1d2326', 'stroke-width': 2.5, transform: `rotate(${ang + i * 45})`}, g);
+  for (let i = 0; i < 4; i++) Kit.mk('line', {x1: -r * .85, y1: 0, x2: 0, y2: 0, stroke: '#1d2326', 'stroke-width': 2.5, transform: `rotate(${ang + i * 45})`}, g);
+}
+function choose(i) {
+  if (done || i < 0 || i > 2) return;
+  sel = i; prog = 0; stalled = false; holding = false;
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', +c.dataset.l === i));
+  bore.disabled = false; bore.textContent = 'HOLD TO BORE';
+  say.textContent = 'Now hold the button and watch the tunnel advance.';
+  Kit.haptic('selection');
+  drawStatic();
+}
+Kit.$('chips').addEventListener('click', e => { const c = e.target.closest('.chip'); if (c) choose(+c.dataset.l); });
+svg.addEventListener('click', e => {
+  if (holding) return;
+  const b = svg.getBoundingClientRect(), fy = (e.clientY - b.top) / b.height;
+  const i = L.findIndex(l => fy >= l.a && fy < l.b); if (i >= 0) choose(i);
+});
+const down = e => { if (bore.disabled) return; e.preventDefault(); holding = true; bore.classList.add('held'); if (!stalled) say.textContent = 'Boring…'; };
+const up = () => { holding = false; bore.classList.remove('held'); };
+bore.addEventListener('pointerdown', down);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => bore.addEventListener(ev, up));
+bore.addEventListener('contextmenu', e => e.preventDefault());
+
+function finish() {
+  done = true; holding = false; Kit.haptic('success');
+  gsap.delayedCall(.6, () => {
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(drawStatic);
+    if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+  });
+}
+gsap.ticker.add((time, dt) => {
+  if (sel < 0) return;
+  if (holding && !stalled && !done) {
+    prog = Math.min(L[sel].lim, prog + dt / 1000 * speed);
+    if (Math.floor(prog * 30) !== Math.floor((prog - dt / 1000 * speed) * 30)) Kit.haptic('light');
+    if (prog >= L[sel].lim) {
+      if (sel === 1) { say.textContent = 'Clean, dry, steady: all the way across.'; finish(); }
+      else {
+        stalled = true; holding = false; bore.disabled = true; bore.classList.remove('held');
+        say.textContent = L[sel].fail;
+        document.querySelector(`.chip[data-l="${sel}"]`).classList.add('bad');
+        if (!Kit.calm) gsap.fromTo('#box', {x: -5}, {x: 0, duration: .4, ease: 'elastic.out(1,.3)'});
+      }
+    }
+  }
+  render(time);
+});
+
+Kit.onShow.card = () => drawStatic();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.chip', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  speed = 2.5;
+  document.querySelector('.chip[data-l="1"]').click(); await wait(100);
+  bore.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await wait(700);
+  bore.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  await wait(1300);
+};
+Kit.single();
+</script>
+</html>

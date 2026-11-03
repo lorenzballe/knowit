@@ -1,0 +1,37 @@
+{
+  "id": "life-death-penalty-homosexuality",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.values",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many countries have the death penalty for homosexuality?",
+  "answer": "Of the 62 countries that make homosexuality a crime, 7 set death as the legal penalty, and 5 more have unclear laws. According to ILGA, only 4 of them regularly carry out executions, including Iran, Saudi Arabia and Sudan.",
+  "move": "7 countries allow death for homosexuality; 4 actually apply it.",
+  "keywords": [
+    "death penalty",
+    "homosexuality",
+    "iran",
+    "saudi arabia",
+    "sudan"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Human Rights asking how many countries have the death penalty for homosexuality. Three figures: 62 countries make it a crime, 7 set death by law, 4 carry it out. Tap each step to narrow the 62 countries down."
+  },
+  "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=gsZ-We120mw&t=619s",
+  "written": "2026-11-03"
+}

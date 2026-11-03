@@ -1,0 +1,175 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh}
+#pic{position:relative;flex:1 1 0;min-height:0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#pic canvas,#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hud{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:3cqw;pointer-events:none}
+#hud>div{display:flex;flex-direction:column;gap:.7cqh}
+#hud .r{align-items:flex-end;text-align:right}
+#hud small{font:700 max(1.5cqh,12px)/1 var(--mono);letter-spacing:.06em;color:var(--muted)}
+#hud b{font:700 max(2.9cqh,18px)/1 var(--display);color:var(--k);font-variant-numeric:tabular-nums}
+#go{flex:none;font:700 max(2.2cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.6cqh 5cqw;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:2.4cqw}
+#go:active{transform:scale(.98)}
+#go svg{width:max(2.2cqh,15px);height:max(2.2cqh,15px);flex:none}
+#why{flex:none;display:flex;flex-direction:column;gap:.8cqh}
+#fg .lab{font-family:var(--body);font-weight:700;fill:var(--k);paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round}
+#fg .tube{stroke:var(--k);stroke-opacity:.62;stroke-linecap:round}
+#fg .core{stroke:var(--c);stroke-linecap:round}
+#fg .plate{fill:var(--k);fill-opacity:.1}
+#fg .joint{fill:var(--c);stroke:var(--k);stroke-opacity:.8}
+#fg .pin{fill:var(--k)}
+#fg .ink{stroke:var(--k);fill:none;stroke-linecap:round;stroke-linejoin:round}
+#fg .halo{stroke:var(--c);fill:none;stroke-linecap:round;stroke-linejoin:round}
+#fg .band{fill:var(--k);fill-opacity:.08}
+#fg .dot{fill:var(--k);stroke:var(--c)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap · watch it evolve">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO EVOLVE</span></div>
+    <h2 class="q">Why did Jansen evolve his Strandbeest legs instead of testing every design?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic" role="img" aria-label="A Strandbeest leg over 1,500 footpaths, one per leg design, sitting on a line of ground. The flattest is drawn bold.">
+        <canvas id="cloud" aria-hidden="true"></canvas>
+        <svg id="fg" aria-hidden="true"></svg>
+        <div id="hud">
+          <div><small>GENERATION <span id="gen">1</span></small><b id="tried">1,500 tried</b></div>
+          <div class="r"><small>TESTING THEM ALL</small><b>trillions</b></div>
+        </div>
+      </div>
+      <button id="go" type="button"><span id="goT">Breed generation 2</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div id="why" class="gone"><p class="body"><b>Testing all trillions:</b> 100,000 years of computer time. <b>Breeding the flattest,</b> 1,500 at a time: months, until 13 “holy numbers” came out.</p></div>
+    </div>
+    <p class="say" id="say">Tap to let the flattest footpaths breed.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Can't test them all? Breed the best.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “34 Years Of Strandbeest Evolution” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// ---- Jansen's leg: 13 numbers (size and place of every tube) give one footpath ----
+const HOLY=[38,41.5,39.3,55.8,40.1,39.4,36.7,65.7,49,50,61.9,7.8,15],SUM=HOLY.reduce((a,b)=>a+b);
+const N=1500,NS=72,KEEP=75,SIG=.015,SPREAD=.35,TAU=.3,LIFT=.25,HMAX=.55,STEP=.12,GENS=7;
+// Its own seeded random, rounded so that the run is the same on every phone.
+let seed=20;
+const R=()=>{seed=(seed+0x6D2B79F5)>>>0;let t=seed;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};
+const gauss=()=>{let u=0,v=0;while(!u)u=R();v=R();return Math.round(Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)*1e6)/1e6;};
+const CS=[],SN=[];for(let n=0;n<NS;n++){CS.push(Math.round(Math.cos(n/NS*2*Math.PI)*1e9)/1e9);SN.push(Math.round(Math.sin(n/NS*2*Math.PI)*1e9)/1e9);}
+function X(x0,y0,r0,x1,y1,r1,s,o){const dx=x1-x0,dy=y1-y0,dd=dx*dx+dy*dy,d=Math.sqrt(dd);if(d>r0+r1||d<Math.abs(r0-r1)||d<1e-9)return false;const a=(r0*r0-r1*r1+dd)/(2*d),h=Math.sqrt(Math.max(0,r0*r0-a*a));o[0]=x0+(a*dx-s*h*dy)/d;o[1]=y0+(a*dy+s*h*dx)/d;return true;}
+const J={O:[0,0],B:[0,0],M:[0,0],C:[0,0],D:[0,0],E:[0,0],F:[0,0],G:[0,0]};
+function pose(p,c,s){const B=J.B,M=J.M;B[0]=-p[0];B[1]=-p[11];M[0]=p[12]*c;M[1]=p[12]*s;
+  return X(M[0],M[1],p[9],B[0],B[1],p[1],-1,J.C)&&X(M[0],M[1],p[10],B[0],B[1],p[2],1,J.D)&&X(B[0],B[1],p[4],J.C[0],J.C[1],p[3],1,J.E)&&X(J.E[0],J.E[1],p[5],J.D[0],J.D[1],p[6],-1,J.F)&&X(J.F[0],J.F[1],p[7],J.D[0],J.D[1],p[8],-1,J.G);}
+function path(p){const xy=new Float64Array(NS*2);for(let n=0;n<NS;n++){if(!pose(p,CS[n],SN[n]))return null;xy[2*n]=J.G[0];xy[2*n+1]=J.G[1];}return xy;}
+// How flat: the longest stretch of the path that stays on its lowest line.
+function score(xy){let y0=1e9,y1=-1e9,x0=1e9,x1=-1e9,ib=0;for(let n=0;n<NS;n++){const x=xy[2*n],y=xy[2*n+1];if(y<y0){y0=y;ib=n;}if(y>y1)y1=y;if(x<x0)x0=x;if(x>x1)x1=x;}
+  const W=x1-x0,Hh=y1-y0;let lo=ib,hi=ib;while(hi-lo<NS-1&&xy[2*((lo-1+NS)%NS)+1]-y0<TAU)lo--;while(hi-lo<NS-1&&xy[2*((hi+1)%NS)+1]-y0<TAU)hi++;
+  let mn=1e9,mx=-1e9;for(let n=lo;n<=hi;n++){const x=xy[2*((n+NS)%NS)];if(x<mn)mn=x;if(x>mx)mx=x;}
+  const flat=mx-mn,lift=Math.min(1,Hh/(LIFT*W));return {flat,fit:flat*lift*lift,W,Hh,x0,x1,y0,y1,lo,hi,mn,mx};}
+function sane(xy,s){if(s.Hh>HMAX*s.W)return false;const lim=STEP*s.W;for(let n=0;n<NS;n++){const m=(n+1)%NS,dx=xy[2*m]-xy[2*n],dy=xy[2*m+1]-xy[2*n+1];if(dx*dx+dy*dy>lim*lim)return false;}return true;}
+function make(p){let t=0;for(const v of p)t+=v;p=p.map(v=>v*SUM/t);const xy=path(p);if(!xy)return null;const s=score(xy);return sane(xy,s)?{p,xy,s}:null;}
+// ---- evolution: 1,500 designs; the flattest 75 have the next 1,500, with slight changes ----
+const gens=[],byFit=(A,B)=>B.s.fit-A.s.fit;let job=null,idleOn=false;
+function first(){const pop=[];while(pop.length<N){const q=make(HOLY.map(v=>v*(1+SPREAD*(2*R()-1))));if(q)pop.push(q);}gens.push(pop.sort(byFit));}
+function work(ms){if(gens.length>=GENS)return true;const t0=performance.now();
+  if(!job){const pop=gens[gens.length-1];job={pop,next:[pop[0]],i:0};}
+  while(job.next.length<N){const q=make(job.pop[job.i++%KEEP].p.map(v=>v*(1+SIG*gauss())));if(q)job.next.push(q);if(ms&&!(job.i&15)&&performance.now()-t0>ms)return false;}
+  gens.push(job.next.sort(byFit));job=null;return true;}
+function idle(){if(idleOn)return;idleOn=true;const go=()=>{if(gens.length>=GENS){idleOn=false;return;}work(6);setTimeout(go,0);};setTimeout(go,80);}
+
+// ---- drawing ----
+const $=Kit.$,pic=$('pic'),cv=$('cloud'),svg=$('fg');
+let W=0,H=0,cx=0,gy=0,sc=1,gb=30,fs=12,hudH=0,tw=3,dpr=1,ctx=null,INK='#000',g=0,shown=null,busy=false,done=false,FAST=false,ready=false,running=false,th=0,TL=null,TL0=null;
+const L={},E={};
+const off=d=>[-(d.s.x0+d.s.x1)/2,-d.s.y0];
+const alphaFor=i=>Math.max(.012,.055*Math.pow(.7,i));
+const fmt=v=>Math.round(v).toLocaleString('en-US');
+const mid=d=>(d.s.lo+d.s.hi)/2/NS*2*Math.PI;
+function inkColor(){const p=document.createElement('span');p.style.color='var(--k)';$('card').appendChild(p);const c=getComputedStyle(p).color;p.remove();return c;}
+function paint(c,pop,count,a,lw){const x=c.getContext('2d');x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,c.width,c.height);x.setTransform(dpr,0,0,dpr,0,0);x.strokeStyle=INK;x.globalAlpha=a;x.lineWidth=lw;x.lineJoin='round';
+  for(let q=count-1;q>=0;q--){const d=pop[q],xy=d.xy,o=off(d);x.beginPath();for(let n=0;n<NS;n++){const px=cx+(xy[2*n]+o[0])*sc,py=gy-(xy[2*n+1]+o[1])*sc;n?x.lineTo(px,py):x.moveTo(px,py);}x.closePath();x.stroke();}}
+function comp(T){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);
+  for(const [k,a] of [['cur',T.old],['par',T.par],['neu',T.neu]])if(a>.001){ctx.globalAlpha=Math.min(1,a);ctx.drawImage(L[k],0,0);}ctx.globalAlpha=1;}
+const TUBES=[['O','B'],['O','M'],['M','C'],['M','D'],['B','C'],['B','D'],['B','E'],['C','E'],['E','F'],['D','F'],['F','G'],['D','G']],KN=['M','C','D','E','F'];
+function build(){svg.textContent='';const mk=(t,a,p)=>Kit.mk(t,a,p||svg);
+  const defs=mk('defs',{}),o1=Math.min(.9,hudH*.7/H),lg=mk('linearGradient',{id:'p09fade',x1:0,y1:0,x2:0,y2:H,gradientUnits:'userSpaceOnUse'},defs);
+  mk('stop',{offset:o1,'stop-color':'#000'},lg);mk('stop',{offset:Math.min(.97,o1+.3),'stop-color':'#fff'},lg);
+  const m=mk('mask',{id:'p09mask',maskUnits:'userSpaceOnUse',x:0,y:0,width:W,height:H},defs);mk('rect',{x:0,y:0,width:W,height:H,fill:'url(#p09fade)'},m);
+  mk('rect',{x:0,y:gy,width:W,height:H-gy,class:'band'});
+  const leg=mk('g',{mask:'url(#p09mask)'});
+  E.plates=[mk('path',{class:'plate'},leg),mk('path',{class:'plate'},leg)];
+  E.tubes=[];E.cores=[];for(const t of TUBES){E.tubes.push(mk('line',{class:'tube','stroke-width':tw},leg));E.cores.push(mk('line',{class:'core','stroke-width':tw*.36},leg));}
+  E.pins=['O','B'].map(()=>mk('circle',{class:'pin',r:tw*.95},leg));
+  E.joints=KN.map(()=>mk('circle',{class:'joint',r:tw*.78,'stroke-width':1.3},leg));
+  mk('line',{x1:0,x2:W,y1:gy,y2:gy,class:'ink','stroke-width':2});
+  E.halo=mk('path',{class:'halo','stroke-width':7});
+  E.best=mk('path',{class:'ink','stroke-width':2.6});
+  E.flatH=mk('path',{class:'halo','stroke-width':10});
+  E.flat=mk('path',{class:'ink','stroke-width':5});
+  E.br=mk('path',{class:'ink','stroke-width':1.7});
+  E.brT=mk('text',{class:'lab','text-anchor':'middle','font-size':fs.toFixed(1)});E.brT.textContent='flat bottom';
+  E.cloudT=mk('text',{class:'lab','text-anchor':'end','font-size':fs.toFixed(1),x:(W-2).toFixed(1),y:Math.max(hudH+fs*1.8,gy-36*sc).toFixed(1)});E.cloudT.textContent='1,500 footpaths';
+  E.dot=mk('circle',{class:'dot',r:Math.max(4,tw*1.3).toFixed(1),'stroke-width':2});}
+const P=new Float64Array(13);
+function drawLeg(){if(!shown||!E.tubes)return;const a=shown.a,b=shown.b,u=shown.u;for(let k=0;k<13;k++)P[k]=a.p[k]+(b.p[k]-a.p[k])*u;
+  const oa=off(a),ob=off(b);let ox=oa[0]+(ob[0]-oa[0])*u,oy=oa[1]+(ob[1]-oa[1])*u;const t=running?th:mid(b);
+  if(!pose(P,Math.cos(t),Math.sin(t))){if(!pose(b.p,Math.cos(t),Math.sin(t)))return;ox=ob[0];oy=ob[1];}
+  const sx=q=>(cx+(q[0]+ox)*sc).toFixed(1),sy=q=>(gy-(q[1]+oy)*sc).toFixed(1);
+  TUBES.forEach(([p,q],k)=>{const x1=sx(J[p]),y1=sy(J[p]),x2=sx(J[q]),y2=sy(J[q]);for(const el of [E.tubes[k],E.cores[k]]){el.setAttribute('x1',x1);el.setAttribute('y1',y1);el.setAttribute('x2',x2);el.setAttribute('y2',y2);}});
+  E.plates[0].setAttribute('d',`M${sx(J.B)} ${sy(J.B)}L${sx(J.C)} ${sy(J.C)}L${sx(J.E)} ${sy(J.E)}Z`);
+  E.plates[1].setAttribute('d',`M${sx(J.D)} ${sy(J.D)}L${sx(J.F)} ${sy(J.F)}L${sx(J.G)} ${sy(J.G)}Z`);
+  ['O','B'].forEach((k,i)=>{E.pins[i].setAttribute('cx',sx(J[k]));E.pins[i].setAttribute('cy',sy(J[k]));});
+  KN.forEach((k,i)=>{E.joints[i].setAttribute('cx',sx(J[k]));E.joints[i].setAttribute('cy',sy(J[k]));});
+  E.dot.setAttribute('cx',sx(J.G));E.dot.setAttribute('cy',sy(J.G));}
+function drawBest(){if(!shown||!E.best)return;const a=shown.a,b=shown.b,u=shown.u,oa=off(a),ob=off(b),v=1-u;let d='';
+  for(let n=0;n<NS;n++){const x=(a.xy[2*n]+oa[0])*v+(b.xy[2*n]+ob[0])*u,y=(a.xy[2*n+1]+oa[1])*v+(b.xy[2*n+1]+ob[1])*u;d+=(n?'L':'M')+(cx+x*sc).toFixed(1)+' '+(gy-y*sc).toFixed(1);}
+  d+='Z';E.best.setAttribute('d',d);E.halo.setAttribute('d',d);
+  const mn=(a.s.mn+oa[0])*v+(b.s.mn+ob[0])*u,mx=(a.s.mx+oa[0])*v+(b.s.mx+ob[0])*u,X0=(cx+mn*sc).toFixed(1),X1=(cx+mx*sc).toFixed(1),yb=gy+gb*.3,tk=gb*.15;
+  E.br.setAttribute('d',`M${X0} ${(yb-tk).toFixed(1)}V${(yb+tk).toFixed(1)}M${X0} ${yb.toFixed(1)}H${X1}M${X1} ${(yb-tk).toFixed(1)}V${(yb+tk).toFixed(1)}`);
+  E.brT.setAttribute('x',((+X0+ +X1)/2).toFixed(1));E.brT.setAttribute('y',(yb+tk+fs*.95).toFixed(1));
+  let f='';for(let n=b.s.lo;n<=b.s.hi;n++){const m=(n+NS)%NS;f+=(n===b.s.lo?'M':'L')+(cx+(b.xy[2*m]+ob[0])*sc).toFixed(1)+' '+(gy-(b.xy[2*m+1]+ob[1])*sc).toFixed(1);}
+  const fo=u>=1?1:Math.max(0,(u-.85)/.15);for(const el of [E.flat,E.flatH]){el.setAttribute('d',f);el.style.opacity=fo;}
+  if(!running)drawLeg();}
+function label(){$('gen').textContent=g+1;$('tried').textContent=fmt((g+1)*N)+' tried';$('goT').textContent='Breed generation '+(g+2);}
+function layout(){if(TL)TL.progress(1);if(!gens.length)first();
+  const r=Kit.fitCanvas(cv);ctx=r.x;W=r.W;H=r.H;dpr=cv.width/W||1;const s=Kit.fitSvg(svg);fs=Math.max(12,(s.f||14)*.85);
+  INK=inkColor();hudH=$('hud').offsetHeight;gb=Math.max(30,fs*2.7);gy=H-gb;cx=W/2;sc=Math.max(.5,Math.min(W/104,done&&shown?Math.min((gy-4)/26,(gy-hudH-6)/shown.b.s.Hh):(gy-hudH-4)/46));tw=Math.max(2.4,Math.min(4.6,sc*1.15));
+  const fade=`linear-gradient(to bottom,transparent ${(hudH*.55).toFixed(0)}px,#000 ${(hudH+18).toFixed(0)}px)`;cv.style.webkitMaskImage=fade;cv.style.maskImage=fade;
+  for(const k of ['cur','par','neu']){const c=L[k]||(L[k]=document.createElement('canvas'));c.width=cv.width;c.height=cv.height;}
+  paint(L.cur,gens[g],N,alphaFor(g),.8);comp({old:1,par:0,neu:0});
+  if(!shown)shown={a:gens[0][0],b:gens[0][0],u:1};
+  build();drawBest();drawLeg();ready=true;if(!done)idle();}
+function tick(t,dt){th-=Math.min(dt,50)/1000*2*Math.PI/2.8;drawLeg();}
+function step(){if(!ready)layout();if(busy||done)return;while(gens.length<g+2)work(0);busy=true;Kit.haptic('light');
+  if(TL0){TL0.progress(1);TL0=null;}
+  const A=gens[g],B=gens[g+1],from=g;paint(L.par,A,KEEP,.3,1.3);paint(L.neu,B,N,alphaFor(from+1),.8);shown={a:A[0],b:B[0],u:0};
+  const T={old:1,par:0,neu:0,u:0},C={v:(from+1)*N};
+  const fin=()=>{TL=null;const t=L.cur;L.cur=L.neu;L.neu=t;g=from+1;shown={a:B[0],b:B[0],u:1};comp({old:1,par:0,neu:0});drawBest();label();busy=false;if(g>=GENS-1)finish();};
+  if(Kit.calm){fin();return;}
+  TL=gsap.timeline({onUpdate:()=>{comp(T);shown.u=T.u;drawBest();},onComplete:fin});
+  TL.to(T,{old:.14,par:1,duration:.45,ease:'power2.out'})
+    .call(()=>{$('gen').textContent=from+2;})
+    .to(T,{neu:1,old:0,duration:.7,ease:'power2.inOut'})
+    .to(T,{par:0,duration:.5,ease:'power1.in'},'<.2')
+    .to(T,{u:1,duration:.8,ease:'power3.inOut'},'<-.1')
+    .to(C,{v:(from+2)*N,duration:.6,ease:'power1.out',onUpdate:()=>{$('tried').textContent=fmt(C.v)+' tried';}},'<');
+  if(FAST)TL.timeScale(6);}
+function finish(){done=true;Kit.haptic('success');Kit.hide('go');Kit.hide('say');Kit.show('why');Kit.show('keep');
+  requestAnimationFrame(()=>{layout();if(!Kit.calm&&!FAST)gsap.from(['#why .body','#keep'],{opacity:0,y:10,stagger:.12,duration:.5,ease:'power3.out',clearProps:'opacity,transform'});});}
+$('go').addEventListener('click',step);pic.addEventListener('click',step);
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card=()=>layout();
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card=()=>{if(Kit.calm||!E.best)return;if(!running){running=true;gsap.ticker.add(tick);}
+  gsap.fromTo(cv,{opacity:0},{opacity:1,duration:.8,ease:'power2.out'});
+  const len=E.best.getTotalLength();for(const el of [E.best,E.halo])el.style.strokeDasharray=len;
+  TL0=gsap.fromTo([E.best,E.halo],{strokeDashoffset:len},{strokeDashoffset:0,duration:1.1,ease:'power2.inOut',onComplete:()=>{for(const el of [E.best,E.halo]){el.style.strokeDasharray='';el.style.strokeDashoffset='';}TL0=null;}});};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card=async()=>{FAST=true;const wait=ms=>new Promise(r=>setTimeout(r,ms));for(let k=0;k<GENS-1&&!done;k++){$('go').click();while(busy)await wait(30);}await wait(800);};
+Kit.single();
+</script>
+</html>

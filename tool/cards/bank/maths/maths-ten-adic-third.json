@@ -1,0 +1,37 @@
+{
+  "id": "maths-ten-adic-third",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does …6667, with 6s going on forever, equal 1/3?",
+  "answer": "Multiplying the endless string …6667 by 3, one column at a time from the right, carries 2 at each step. The result is …0001, which equals 1. Three copies of the string make exactly 1, so the string is 1/3.",
+  "move": "A number is 1/3 if three of it make 1, even with endless digits.",
+  "keywords": [
+    "10-adic numbers",
+    "infinite string of 6s",
+    "one third",
+    "carrying",
+    "multiplication"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A column-by-column multiplication of an endless string of 6s ending in 7 by 3, showing the carries and the result …0001. The question asks why this infinite string equals 1/3. Tap to multiply one column at a time, right to left."
+  },
+  "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=tRaq4aYPzCc&t=251s",
+  "written": "2026-11-03"
+}

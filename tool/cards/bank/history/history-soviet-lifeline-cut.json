@@ -1,0 +1,37 @@
+{
+  "id": "history-soviet-lifeline-cut",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.why_empires_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What outside event set off North Korea's 1990s famine?",
+  "answer": "North Korea relied on aid and trade from the Soviet Union. When the Soviet Union broke apart, both stopped. In the 1990s, over 3.5 million people died of hunger. The collapse was not the only cause, but it was a big one.",
+  "move": "The Soviet collapse cut North Korea's aid and trade, and famine followed.",
+  "keywords": [
+    "north korea",
+    "soviet union",
+    "famine",
+    "1990s",
+    "aid and trade"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Astute free card titled FAMINE asking what outside event set off North Korea's 1990s famine. Step 1 of 4 of a Next sequence, with a Next button to follow the story one step at a time."
+  },
+  "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=uLqfa27S4TQ&t=621s",
+  "written": "2026-11-03"
+}

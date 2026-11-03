@@ -1,0 +1,228 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#chart{display:block;width:100%;flex:1 1 0;min-height:0;touch-action:none;cursor:ns-resize;-webkit-user-select:none;user-select:none;outline:none}
+#chart:focus-visible{outline:2px solid var(--k);outline-offset:2px;border-radius:8px}
+#why{display:flex;flex-direction:column;gap:.5cqh}
+#chart text{font-family:var(--body);font-weight:700;paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round}
+#chart .lab{fill:color-mix(in srgb,var(--k) 55%,var(--c))}
+#chart .lab.on,#chart .ink{fill:var(--k)}
+#chart .rung{stroke:color-mix(in srgb,var(--k) 22%,var(--c));stroke-width:1.5}
+#chart .floor{stroke:color-mix(in srgb,var(--k) 40%,var(--c));stroke-width:2.5}
+#chart .rung.on{stroke:color-mix(in srgb,var(--k) 55%,var(--c))}
+#chart .axis{stroke:var(--k);stroke-width:2.5;stroke-linecap:round}
+#chart .band{fill:color-mix(in srgb,var(--k) 11%,var(--c))}
+#chart .path{fill:none;stroke:var(--k);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+#chart .faint{fill:none;stroke:color-mix(in srgb,var(--k) 32%,var(--c));stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+#chart .tail{fill:none;stroke:var(--k);stroke-width:3;stroke-linecap:round;stroke-dasharray:.1 7}
+#chart .guess{stroke:var(--k);stroke-width:3;stroke-linecap:round}
+#chart .ghost{stroke:color-mix(in srgb,var(--k) 50%,var(--c));stroke-width:2;stroke-dasharray:6 6}
+#chart .knob{fill:var(--k)}
+#chart .ring{fill:none;stroke:var(--k);stroke-width:2;opacity:0}
+#chart .tri{fill:var(--c)}
+#chart .dot{fill:var(--c);stroke:var(--k);stroke-width:2.5}
+#chart .start{fill:var(--k)}
+#chart .hollow{fill:var(--c);stroke:color-mix(in srgb,var(--k) 50%,var(--c));stroke-width:2}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="maths" data-kind="Drag to guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COLLATZ</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">What did Terry Tao demonstrate about small numbers in Collatz sequences?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="chart" tabindex="0" role="img" aria-label="A scale from the starting number x down to 1, with the levels the 1994 curve, log x and log log log log x, and a line to drag up or down."></svg>
+      <!-- The why joins the drawing once the reader has answered. -->
+      <div id="why" class="gone"><p class="big">As low as you like</p><p class="body">Any bar that grows to infinity works, even log log log log x. Almost every, not all: Collatz stays unsolved.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the line to how low he proved sequences fall.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Almost every Collatz sequence dips as low as you like.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('chart');
+// The scale, top to bottom (not to scale): the start x, the 1994 curve, Tao's examples, and 1.
+const RUNGS = [
+  {t: 'x (start)', r: .06},
+  {t: '1994 curve', r: .295},
+  {t: 'log x', r: .53},
+  {t: 'log log log log x', r: .765},
+  {t: '1', r: 1}
+];
+const SAID = ['Not below its start', 'Just below its start', 'Below the 1994 curve', 'Below log x', 'Below log log log log x'];
+const ONE = .94, TOL = .015;
+// One sequence on the scale: it climbs first, then falls through every level.
+const MAIN = [.06, .04, .07, .02, .05, .09, .13, .08, .15, .2, .25, .18, .26, .32, .29, .35, .41, .34, .4, .45, .5, .44, .52, .57, .61, .55, .62, .68, .73, .66, .74, .78, .85, .79, .87, .9];
+// Other starting numbers, faint: random walks that fall the same way.
+function bridge(n, end) {
+  const h = [0];
+  for (let i = 0; i < n; i++) h.push(h[i] + (Kit.rnd() < .43 ? .06 : -.045));
+  const hn = h[n];
+  return h.map((v, i) => Math.min(.95, Math.max(.015, .06 - (v - i / n * (hn + 1)) * (end - .06))));
+}
+const FAINT = [[30, .72, .9], [36, .93, .88], [33, .84, .93], [40, .97, .86]].map(([n, ex, end]) => ({ex, r: bridge(n, end)}));
+
+let m = .19, phase = 0, drag = false, touched = false, lastKey = -1, ready = false, G = null, E = {}, tl = null;
+const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+const txt = (s, a, p) => { const e = mk('text', a, p); e.textContent = s; return e; };
+const below = (v, i) => RUNGS[i].r + TOL < v;
+const kOf = v => [0, 1, 2, 3].filter(i => below(v, i)).length;
+const poly = pts => 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L');
+
+function draw() {
+  ready = true;
+  if (tl) { tl.kill(); tl = null; }
+  svg.textContent = '';
+  const fit = Kit.fitSvg(svg), W = fit.W, H = fit.H;
+  if (!(W > 60 && H > 60)) { G = null; return; }
+  const top = 6;
+  let fs = Math.min(16, Math.max(12.5, (fit.f || 14) * .8));
+  let ph = H - top - fs * .6 - 6;
+  fs = Math.max(12, Math.min(fs, ph * .235 / 2.2));
+  ph = H - top - fs * .6 - 6;
+  const y = r => top + r * ph, F = fs.toFixed(1);
+  const back = mk('g', {}), plot = mk('g', {});
+  const labs = RUNGS.map(R => txt(R.t, {class: 'lab', 'font-size': F, 'text-anchor': 'end', x: 0, y: (y(R.r) + fs * .36).toFixed(1)}));
+  const lw = Math.max(...labs.map((e, i) => e.getComputedTextLength() || RUNGS[i].t.length * fs * .6)) + 12;
+  labs.forEach(e => e.setAttribute('x', (lw - 6).toFixed(1)));
+  const L = lw, xr = W - 3, pw = xr - L, px = t => L + 8 + t * (pw - 12);
+  E.labs = labs;
+  E.rungs = RUNGS.map((R, i) => mk('line', {class: i === 4 ? 'rung floor' : 'rung', x1: L, x2: xr, y1: y(R.r).toFixed(1), y2: y(R.r).toFixed(1)}, back));
+  mk('line', {class: 'axis', x1: L, x2: L, y1: y(0).toFixed(1), y2: y(1).toFixed(1)}, back);
+  const pts = MAIN.map((r, i) => [px(i / (MAIN.length - 1) * .8), y(r)]);
+  G = {W, H, y, top, ph, fs, cw: svg.clientWidth, ch: svg.clientHeight};
+  if (!phase) {
+    // The guess: the scale, where a sequence starts, and the reader's line.
+    mk('path', {class: 'faint', d: poly(pts.slice(0, 8))}, plot);
+    mk('circle', {class: 'start', cx: px(0).toFixed(1), cy: y(.06).toFixed(1), r: 5}, plot);
+    const kr = 11, kx = xr - kr - 2;
+    E.line = mk('line', {class: 'guess', x1: L, x2: xr}, plot);
+    E.ring = mk('circle', {class: 'ring', cx: kx, r: kr}, plot);
+    E.knob = mk('circle', {class: 'knob', cx: kx, r: kr}, plot);
+    E.tri = mk('path', {class: 'tri', d: `M${kx - 4.5} -2.5L${kx + 4.5} -2.5L${kx} -7.5ZM${kx - 4.5} 2.5L${kx + 4.5} 2.5L${kx} 7.5Z`}, plot);
+    E.you = txt('your line', {class: 'ink', 'font-size': F, 'text-anchor': 'end', x: (kx - kr - 6).toFixed(1)});
+    G.kx = kx;
+    setM(m, true);
+    return;
+  }
+  // The answer: sequences fall under every level; Tao's band reaches as low as you like, not to 1.
+  E.band = mk('rect', {class: 'band', x: L, y: y(.53).toFixed(1), width: pw.toFixed(1), height: (y(.955) - y(.53)).toFixed(1), rx: 6});
+  svg.insertBefore(E.band, svg.firstChild);
+  E.faint = FAINT.map(Fp => mk('path', {class: 'faint', d: poly(Fp.r.map((r, i) => [px(i / (Fp.r.length - 1) * Fp.ex), y(r)]))}, plot));
+  const gy = y(m >= ONE ? 1 : m).toFixed(1);
+  mk('line', {class: 'ghost', x1: L, x2: xr, y1: gy, y2: gy}, plot);
+  mk('circle', {class: 'hollow', cx: (xr - 9).toFixed(1), cy: gy, r: 6}, plot);
+  E.main = mk('path', {class: 'path', d: poly(pts)}, plot);
+  const end = pts[pts.length - 1], tx = px(.86);
+  E.tail = mk('path', {class: 'tail', d: `M${end[0].toFixed(1)} ${end[1].toFixed(1)}L${tx.toFixed(1)} ${y(1).toFixed(1)}`}, plot);
+  mk('circle', {class: 'start', cx: px(0).toFixed(1), cy: y(.06).toFixed(1), r: 5}, plot);
+  const cum = [0];
+  for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  const total = cum[cum.length - 1];
+  E.dots = [1, 2, 3].map(k => {
+    const rr = RUNGS[k].r, i = MAIN.findIndex(v => v > rr), s = (rr - MAIN[i - 1]) / (MAIN[i] - MAIN[i - 1]);
+    const a = pts[i - 1], b = pts[i];
+    return {
+      el: mk('circle', {class: 'dot', cx: (a[0] + s * (b[0] - a[0])).toFixed(1), cy: y(rr).toFixed(1), r: 5}, plot),
+      f: (cum[i - 1] + s * (cum[i] - cum[i - 1])) / total, lab: labs[k], rung: E.rungs[k]
+    };
+  });
+  labs.forEach((e, i) => e.classList.toggle('on', i < 4));
+  E.rungs.forEach((e, i) => e.classList.toggle('on', i < 4));
+  E.tao = txt('Tao, 2019', {class: 'ink', 'font-size': F, x: (L + 8).toFixed(1), y: (y(.6475) + fs * .36).toFixed(1)});
+  E.qm = txt('?', {class: 'ink', 'font-size': (fs * 1.3).toFixed(1), x: Math.min(tx + 7, W - fs).toFixed(1), y: (y(1) - 5).toFixed(1)});
+}
+
+function setM(v, quiet) {
+  m = Math.max(.06, Math.min(1, v));
+  if (!G || phase || !E.line) return;
+  const one = m >= ONE, gy = G.y(one ? 1 : m), s = gy.toFixed(1);
+  E.line.setAttribute('y1', s); E.line.setAttribute('y2', s);
+  E.ring.setAttribute('cy', s); E.knob.setAttribute('cy', s);
+  E.tri.setAttribute('transform', `translate(0 ${s})`);
+  E.you.setAttribute('y', (gy - 9 < G.fs + 2 ? gy + G.fs + 6 : gy - 9).toFixed(1));
+  E.labs.forEach((e, i) => e.classList.toggle('on', i < 4 ? below(m, i) : one));
+  E.rungs.forEach((e, i) => e.classList.toggle('on', i < 4 ? below(m, i) : one));
+  const key = one ? 9 : kOf(m);
+  if (!quiet && key !== lastKey) Kit.haptic('selection');
+  lastKey = key;
+}
+
+function reveal() {
+  if (!E.main) return;
+  const D = 2.2, paths = [...E.faint, E.main];
+  paths.forEach(p => { const n = p.getTotalLength(); p.setAttribute('stroke-dasharray', n + ' ' + n); p.setAttribute('stroke-dashoffset', n); });
+  tl = gsap.timeline({onComplete: () => { tl = null; }});
+  tl.to(paths, {attr: {'stroke-dashoffset': 0}, duration: D, ease: 'none'}, 0);
+  E.dots.forEach(d => {
+    d.lab.classList.remove('on'); d.rung.classList.remove('on');
+    tl.fromTo(d.el, {attr: {r: 0}}, {attr: {r: 5}, duration: .35, ease: 'back.out(3)'}, D * d.f);
+    tl.call(() => { d.lab.classList.add('on'); d.rung.classList.add('on'); }, null, D * d.f);
+  });
+  tl.fromTo([E.band, E.tao], {opacity: 0}, {opacity: 1, duration: .6}, D * E.dots[1].f);
+  tl.fromTo([E.tail, E.qm], {opacity: 0}, {opacity: 1, duration: .5}, D);
+}
+
+// How sure, after the guess. When both are in, Kit.answer tells the app.
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const one = m >= ONE, k = kOf(m), ok = !one && k >= 3, said = one ? 'All the way to 1' : SAID[k];
+  phase = 1; drag = false;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  draw();
+  if (!Kit.calm) reveal();
+});
+const first = () => { if (!touched) { touched = true; sure.on(); } };
+const toM = cy => { const b = svg.getBoundingClientRect(); return ((cy - b.top) * G.H / b.height - G.top) / G.ph; };
+svg.addEventListener('pointerdown', e => { if (phase || !G) return; drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setM(toM(e.clientY)); });
+svg.addEventListener('pointermove', e => { if (drag && !phase && G) setM(toM(e.clientY)); });
+['pointerup', 'pointercancel'].forEach(t => svg.addEventListener(t, () => { if (drag) { drag = false; first(); } }));
+svg.addEventListener('keydown', e => { if (phase || !G || !/^Arrow(Up|Down)$/.test(e.key)) return; e.preventDefault(); setM(m + (e.key === 'ArrowDown' ? .03 : -.03)); first(); });
+if (window.ResizeObserver) new ResizeObserver(es => {
+  const c = es[0].contentRect;
+  if (ready && (!G || Math.abs(c.width - G.cw) > 2 || Math.abs(c.height - G.ch) > 2)) draw();
+}).observe(svg);
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = draw;
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => {
+  if (Kit.calm || phase || !E.ring) return;
+  gsap.from(E.labs, {opacity: 0, x: -6, stagger: .06, duration: .35, ease: 'power3.out'});
+  gsap.fromTo(E.ring, {attr: {r: 11}, opacity: .8}, {attr: {r: 26}, opacity: 0, duration: 1.1, repeat: 2, delay: .5, ease: 'power2.out'});
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  if (!G) return;
+  const b = svg.getBoundingClientRect(), s = b.height / G.H, cx = b.left + G.kx * s;
+  const fire = (t, v) => svg.dispatchEvent(new PointerEvent(t, {clientX: cx, clientY: b.top + G.y(v) * s, bubbles: true, cancelable: true, pointerId: 1, isPrimary: true, pointerType: 'touch'}));
+  fire('pointerdown', m); await wait(60);
+  fire('pointermove', .45); await wait(60);
+  fire('pointermove', .72); await wait(60);
+  fire('pointerup', .72); await wait(250);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(3300);
+};
+Kit.single();
+</script>
+</html>

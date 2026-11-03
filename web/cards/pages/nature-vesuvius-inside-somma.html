@@ -1,0 +1,141 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-vesuvius-inside-somma -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#vol{flex:1;min-height:0;width:100%;display:block}
+#ctrl{display:flex;align-items:center;gap:3cqw}
+#go{font:700 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
+#go:disabled{opacity:.5}
+#cnt{font:600 max(1.8cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body)}
+.mt{fill:color-mix(in srgb,var(--k) 72%,var(--c));stroke:var(--k);stroke-width:2;stroke-linejoin:round}
+.ghost{fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:6 6;opacity:.55}
+.lay{stroke:var(--k);stroke-width:1.5;stroke-linejoin:round}
+.lay0{fill:#4a3a36}.lay1{fill:#6b4f45}
+.ol{fill:none;stroke:#ffb37a;stroke-width:1.5;opacity:.7}
+.mag{fill:#ff6a2b}
+.ground{stroke:var(--k);stroke-width:2.5}
+.lbl{font-family:var(--body);font-weight:700;fill:var(--k);paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round}
+.lbl.h{fill:#d8461a}
+.ash{fill:color-mix(in srgb,var(--k) 45%,var(--c))}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Build it · volcano">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
+    <h2 class="q">How did today's Vesuvius grow out of Monte Somma?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="vol"></svg>
+      <div id="ctrl"><button id="go">Erupt</button><span id="cnt">step 0 / 5</span></div>
+      <div id="why" class="gone"><p class="big">A volcano inside a volcano</p><p class="body">A series of Plinian eruptions wrecked the much bigger Monte Somma and left a huge crater. A new vent opened inside it, and eruption after eruption piled up a fresh cone: Vesuvius.</p></div>
+    </div>
+    <p class="say" id="say">Tap Erupt: a series of huge Plinian eruptions hits Monte Somma.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Vesuvius is a young cone built inside the ruins of Monte Somma.</div>
+    <div class="foot"><span class="src">Source · Geopop, “VESUVIO - Prima era molto più grande! Uno dei miei primissimi video” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('vol'), LAYERS = 4, LAST = 1 + LAYERS;
+let step = 0, busy = false, fast = false, G = null;
+const SAY = [
+  'Tap Erupt: a series of huge Plinian eruptions hits Monte Somma.',
+  'The top is gone. A new vent opens in the crater. Tap Erupt.',
+  'Each eruption adds a layer of lava and ash. Keep tapping.',
+  'A new cone is rising inside the old crater. Again.',
+  'One more eruption.',
+  ''
+];
+const pts = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+
+function geo() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  const cx = W / 2, yB = H * .86, yT = H * .1;
+  const hw = Math.min(W * .48, (yB - yT) * 1.25);
+  const d = hw * .42, yRim = yT + (yB - yT) * (d / hw), yFloor = yRim + (yB - yRim) * .3;
+  const nub = hw * .02, inset = hw * .07;
+  const full = [[cx - hw, yB], [cx - d, yRim], [cx - nub, yT], [cx + nub, yT], [cx + d, yRim], [cx + hw, yB]];
+  const cut = [[cx - hw, yB], [cx - d, yRim], [cx - d + inset, yFloor], [cx + d - inset, yFloor], [cx + d, yRim], [cx + hw, yB]];
+  const top = yRim - (yRim - yT) * .1;
+  const layer = k => { const t = k / LAYERS, w = (d - inset) * (.35 + .65 * t), p = yFloor - (yFloor - top) * (.3 + .7 * t);
+    return [[cx - w, yFloor + 1], [cx - w * .08, p], [cx + w * .08, p], [cx + w, yFloor + 1]]; };
+  return {W, H, f, cx, yB, yT, hw, d, yRim, yFloor, full, cut, layer};
+}
+
+function build() {
+  G = geo(); svg.innerHTML = '';
+  const {W, H, f, cx, yB, yT, yFloor, hw, d, yRim} = G, R = {};
+  Kit.mk('ellipse', {cx, cy: H * .95, rx: hw * .3, ry: H * .035, class: 'mag'}, svg);
+  R.cond = Kit.mk('rect', {x: cx - hw * .015, y: step ? yFloor : yT, width: hw * .03, height: H * .95 - (step ? yFloor : yT), class: 'mag'}, svg);
+  R.mt = Kit.mk('polygon', {points: pts(step ? G.cut : G.full), class: 'mt'}, svg);
+  R.cond2 = Kit.mk('rect', {x: cx - hw * .015, y: step ? yFloor : yT, width: hw * .03, height: (step ? yFloor : yT) < yB ? yB - (step ? yFloor : yT) : 0, class: 'mag', opacity: .9}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: yB, y2: yB, class: 'ground'}, svg);
+  if (step >= 1) R.ghost = Kit.mk('polyline', {points: pts(G.full.slice(1, 5)), class: 'ghost'}, svg);
+  R.layers = Kit.mk('g', {}, svg); R.outl = Kit.mk('g', {}, svg);
+  const n = Math.max(0, step - 1);
+  for (let k = 1; k <= n; k++) {
+    R.last = Kit.mk('polygon', {points: pts(G.layer(k)), class: 'lay lay' + (k % 2)}, R.layers);
+    if (k < n) Kit.mk('polyline', {points: pts(G.layer(k)), class: 'ol'}, R.outl);
+  }
+  if (step >= 1) R.vent = Kit.mk('circle', {cx, cy: n ? G.layer(n)[1][1] : yFloor, r: hw * .025, class: 'mag'}, svg);
+  const fs = Math.max(f, 12);
+  const lab = (x, y, t, a, c) => { const e = Kit.mk('text', {x, y, 'text-anchor': a, class: 'lbl' + (c ? ' h' : ''), 'font-size': fs}, svg); e.textContent = t; return e; };
+  if (step === 0) R.l0 = lab(cx + hw * .32, yT + (yB - yT) * .25, 'Monte Somma', 'start');
+  if (step >= 1) {
+    R.l1 = lab(cx - hw * .62, yRim + (yB - yRim) * .45, 'Monte Somma', 'middle');
+    R.l2 = lab(cx + hw * .06, yT + fs * .4, 'old summit, gone', 'start');
+  }
+  if (step >= LAST) R.l3 = lab(cx, G.layer(LAYERS)[1][1] - fs * .9, 'Vesuvius', 'middle', true);
+  return R;
+}
+
+function fountain(x, y, n, col) {
+  const g = Kit.mk('g', {}, svg);
+  for (let i = 0; i < n; i++) {
+    const c = Kit.mk('circle', {cx: x, cy: y, r: G.hw * (.012 + Kit.rnd() * .02), class: col}, g);
+    gsap.to(c, {attr: {cx: x + (Kit.rnd() - .5) * G.hw * .7, cy: y - G.H * (.08 + Kit.rnd() * .2)}, opacity: 0, duration: .9 + Kit.rnd() * .5, ease: 'power2.out', delay: Kit.rnd() * .3});
+  }
+  gsap.delayedCall(1.8, () => g.remove());
+}
+
+function next() {
+  if (busy || step >= LAST) return;
+  step++; Kit.haptic('light');
+  const R = build(), anim = !fast && !Kit.calm;
+  Kit.$('cnt').textContent = `step ${step} / ${LAST}`;
+  if (step < LAST) Kit.$('say').textContent = SAY[step];
+  if (anim) {
+    busy = true; Kit.$('go').disabled = true;
+    const tl = gsap.timeline({onComplete: () => { busy = false; Kit.$('go').disabled = false; if (step >= LAST) finish(); }});
+    if (step === 1) {
+      R.mt.setAttribute('points', pts(G.full));
+      fountain(G.cx, G.yT, 30, 'ash');
+      tl.to(R.mt, {attr: {points: pts(G.cut)}, duration: .9, ease: 'power2.in'}, .5)
+        .from(R.ghost, {opacity: 0, duration: .5}, 1.2)
+        .from([R.l1, R.l2, R.vent], {opacity: 0, duration: .4, stagger: .1}, 1.3);
+    } else {
+      const L = G.layer(step - 1), flat = L.map(p => [p[0], G.yFloor + 1]);
+      fountain(G.cx, G.yFloor, 18, 'mag');
+      R.last.setAttribute('points', pts(flat));
+      tl.to(R.last, {attr: {points: pts(L)}, duration: .9, ease: 'power2.out'}, .3)
+        .from(R.vent, {opacity: 0, duration: .3}, 1.1);
+      if (R.l3) tl.from(R.l3, {opacity: 0, y: 8, duration: .5}, 1.2);
+    }
+  } else if (step >= LAST) finish();
+}
+
+function finish() {
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+}
+
+Kit.$('go').addEventListener('click', next);
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#vol', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { fast = true; for (let i = 0; i < LAST; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 80)); } await new Promise(r => setTimeout(r, 500)); };
+Kit.single();
+</script>
+</html>

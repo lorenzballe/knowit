@@ -1,0 +1,38 @@
+{
+  "id": "science-water-meets-lava",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to water the instant it touches lava?",
+  "answer": "Lava is so hot that water turns to steam the moment it touches it. The steam expands inside the molten rock and blows bubbles, so the lava seems to breathe. It is a violent, explosive reaction.",
+  "move": "Water on lava doesn't cool it quietly: it flashes to steam and bursts.",
+  "keywords": [
+    "lava",
+    "water",
+    "steam",
+    "volcano",
+    "evaporation"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A picture of lava with a prompt asking what happens to water the instant it touches lava. Tapping the picture drops water onto the lava, which then reveals the reaction.",
+    "ground": "#17110f"
+  },
+  "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=DdSUTw-a4Ls&t=26s",
+  "written": "2026-11-03"
+}

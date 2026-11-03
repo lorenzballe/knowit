@@ -1,0 +1,37 @@
+{
+  "id": "science-seismic-chalk-map",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did engineers find the right rock under the Channel without drilling?",
+  "answer": "Engineers fired sound pulses from the surface, and they bounced back from every boundary between rock formations. Timing the echoes mapped structures kilometres deep, which let them trace the continuous chalk formation for the tunnel without drilling.",
+  "move": "Echoes, not drills, drew the map of the rock under the sea.",
+  "keywords": [
+    "eurotunnel",
+    "chalk",
+    "sound waves",
+    "english channel",
+    "seismic reflection"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Sound pulses sent down from the surface bounce off rock layers under the English Channel. Draw with your finger where you think the chalk formation runs, then send sound down to check."
+  },
+  "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=1i1Z63xL3MQ&t=106s",
+  "written": "2026-11-03"
+}

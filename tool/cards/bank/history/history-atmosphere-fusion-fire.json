@@ -1,0 +1,37 @@
+{
+  "id": "history-atmosphere-fusion-fire",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.what_if",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did scientists fear one bomb could do to Earth's atmosphere?",
+  "answer": "Scientists feared that one bomb's heat might make the hydrogen in the air fuse. Each fusion's energy would fuse more hydrogen and split water vapor to feed the fire, until the whole atmosphere became one giant fusion bomb. Oppenheimer also feared the nitrogen in the air could join in.",
+  "move": "The fear wasn't one blast, but a chain that feeds itself.",
+  "keywords": [
+    "oppenheimer",
+    "atmosphere",
+    "fusion",
+    "hydrogen",
+    "manhattan project"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A picture of air containing hydrogen, water vapor and nitrogen, marked as not to scale. The question asks what scientists feared one bomb could do to Earth's atmosphere. Tap the picture to set off one bomb."
+  },
+  "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=1314s",
+  "written": "2026-11-03"
+}

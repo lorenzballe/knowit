@@ -1,0 +1,37 @@
+{
+  "id": "science-phone-microwaves-dna",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Can microwaves from mobile phones damage molecules?",
+  "answer": "No, microwaves from phones should not damage molecules. Phones transmit microwaves, which are waves very similar to light, not fast particles. The radiation that can damage molecules like DNA is UV, X-rays, gamma rays, alpha and beta, and microwaves are not in that group.",
+  "move": "Phone microwaves are not the kind of radiation that damages DNA.",
+  "keywords": [
+    "microwaves",
+    "mobile phones",
+    "dna",
+    "radiation",
+    "uv light"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: Can microwaves from mobile phones damage molecules? Four answer choices are offered. After picking one, the reader watches a phone's microwave wave travel toward a DNA molecule."
+  },
+  "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=wQmnztyXwVA&t=109s",
+  "written": "2026-11-03"
+}

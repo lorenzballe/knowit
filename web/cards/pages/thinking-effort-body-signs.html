@@ -1,0 +1,185 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-effort-body-signs -->
+<title>Astute: the body of a hard thought</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.seg{display:flex;gap:2.4cqw;margin-top:1cqh}
+.seg button{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:99px;padding:1.4cqh 3cqw;cursor:pointer;transition:background .25s,color .25s}
+.seg button.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Flip a switch · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MENTAL EFFORT</span></div>
+    <h2 class="q">When your mind works hard, what does your body show?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" aria-label="An eye, sweat drops and a heart trace that change with mental effort"></svg></div>
+    <div class="seg" id="seg">
+      <button data-m="0" class="on">Rest</button>
+      <button data-m="1">Add Three</button>
+    </div>
+    <p class="say" id="say">Flip to Add Three and watch the eye, the skin and the heart.</p>
+    <div id="why" class="gone"><p class="body">Add Three makes System 2 work hard, and the body answers: the heart beats faster, sweat rises and the pupils widen. Go back to rest and they settle.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Hard thinking is physical: it shows in the pupils, the pulse and the sweat.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Science of Thinking” (YouTube, 2017)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const DIG=[4,3,9,7,2], ANS=DIG.map(d=>(d+3)%10);
+const st={e:0};
+let mode=0, G=null, ecg=[], phase=0, acc=0, step=-1, loopCall=null, revealed=false, seenWork=false;
+const K='var(--k)', C='var(--c)';
+
+function reveal(){
+  if(revealed) return; revealed=true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if(!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.12,duration:.45,ease:'power3.out'});
+}
+
+function renderTask(){
+  if(!G) return;
+  G.title.textContent = mode ? 'Add Three: add 3 to each digit' : 'Resting: nothing to work out';
+  G.dig.forEach((t,i)=>{
+    const shown = mode && step>=i;
+    t.setAttribute('opacity', mode ? (shown ? (step===i?1:.55) : .12) : .12);
+  });
+  G.ans.forEach((t,i)=>{
+    const s=step-5;
+    t.setAttribute('opacity', mode && s>=i ? (s===i?1:.6) : 0);
+  });
+}
+
+function runSeq(){
+  if(loopCall) loopCall.kill();
+  step=-1; renderTask();
+  const next=()=>{
+    if(!mode) return;
+    step++;
+    if(step>10){ step=-1; if(seenWork) reveal(); }
+    if(step===10) seenWork=true;
+    renderTask();
+    loopCall=gsap.delayedCall(step===-1?.6:.85,next);
+  };
+  loopCall=gsap.delayedCall(.5,next);
+}
+
+function setMode(m){
+  if(m===mode) return;
+  mode=m;
+  Kit.$('seg').querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.m===m));
+  Kit.haptic('selection');
+  gsap.to(st,{e:m,duration:m?1.6:2.2,ease:'sine.inOut',overwrite:true});
+  if(m) runSeq(); else { if(loopCall) loopCall.kill(); step=-1; renderTask(); if(seenWork||st.e>.6) reveal(); }
+}
+Kit.$('seg').addEventListener('click',e=>{const b=e.target.closest('button'); if(b) setMode(+b.dataset.m);});
+
+Kit.onShow.card=()=>{
+  const svg=Kit.$('pic'); svg.innerHTML='';
+  const {W,H,f}=Kit.fitSvg(svg);
+  const fs=Math.max(13,Math.min(f,W*0.045));
+  const g={W,H,fs};
+  // task area
+  const taskH=fs*6.4;
+  g.title=Kit.mk('text',{x:W/2,y:fs*1.2,'text-anchor':'middle',style:`font:700 ${fs}px var(--body);fill:${K}`},svg);
+  const dx=Math.min(W*0.13,fs*2.6), dsz=fs*1.55;
+  g.dig=DIG.map((d,i)=>{const t=Kit.mk('text',{x:W/2+(i-2)*dx,y:fs*1.2+fs*2.3,'text-anchor':'middle',style:`font:700 ${dsz}px var(--mono);fill:${K}`},svg);t.textContent=d;return t;});
+  g.ans=ANS.map((d,i)=>{const t=Kit.mk('text',{x:W/2+(i-2)*dx,y:fs*1.2+fs*4.6,'text-anchor':'middle',style:`font:700 ${dsz}px var(--mono);fill:${K}`},svg);t.textContent=d;return t;});
+  // ECG area
+  const ecgH=Math.max(H*0.22,fs*4.6), ey0=H-ecgH;
+  // eye area
+  const eh0=H-taskH-ecgH, cx=W/2, cy=taskH+eh0/2;
+  const ew=Math.min(W*0.56,eh0*1.7), eh=ew*0.55;
+  g.ir=eh*0.42;
+  const defs=Kit.mk('defs',{},svg);
+  const cp=Kit.mk('clipPath',{id:'eyeclip'},defs);
+  const almond=`M${cx-ew/2},${cy} Q${cx},${cy-eh} ${cx+ew/2},${cy} Q${cx},${cy+eh} ${cx-ew/2},${cy}Z`;
+  Kit.mk('path',{d:almond},cp);
+  Kit.mk('path',{d:almond,style:`fill:#fff`},svg);
+  const ig=Kit.mk('g',{'clip-path':'url(#eyeclip)'},svg);
+  Kit.mk('circle',{cx,cy,r:g.ir,style:`fill:color-mix(in srgb,${K} 45%,${C})`},ig);
+  for(let a=0;a<24;a++){const an=a/24*Math.PI*2;Kit.mk('line',{x1:cx+Math.cos(an)*g.ir*.35,y1:cy+Math.sin(an)*g.ir*.35,x2:cx+Math.cos(an)*g.ir*.95,y2:cy+Math.sin(an)*g.ir*.95,style:`stroke:${K};stroke-opacity:.35;stroke-width:1`},ig);}
+  g.pupil=Kit.mk('circle',{cx,cy,r:g.ir*.3,style:'fill:#000'},ig);
+  Kit.mk('circle',{cx:cx+g.ir*.3,cy:cy-g.ir*.3,r:g.ir*.11,style:'fill:#fff;opacity:.9'},ig);
+  Kit.mk('path',{d:almond,style:`fill:none;stroke:${K};stroke-width:${Math.max(2,fs*.18)}`},svg);
+  // side labels
+  const lx=(cx-ew/2)/2, rx=(cx+ew/2+W)/2;
+  const lab=(x,y,txt,b)=>{const t=Kit.mk('text',{x,y,'text-anchor':'middle',style:`font:${b?700:500} ${fs}px var(--body);fill:${K}`},svg);t.textContent=txt;return t;};
+  lab(lx,cy-fs*.4,'pupil',1); g.pS=lab(lx,cy+fs*1.1,'');
+  // sweat drops
+  const ds=fs*.55; g.drops=[];
+  for(let i=0;i<3;i++){
+    const x=rx+(i-1)*ds*2.6;
+    const d=Kit.mk('path',{d:`M0,${-ds*1.6} C${ds*.9},${-ds*.3} ${ds},${ds*.2} ${ds},${ds*.4} A${ds},${ds} 0 1 1 ${-ds},${ds*.4} C${-ds},${ds*.2} ${-ds*.9},${-ds*.3} 0,${-ds*1.6}Z`,style:`fill:color-mix(in srgb,#3aa7ff 70%,${K})`},svg);
+    g.drops.push({el:d,x,y0:cy-fs*3.9,off:i*.33});
+  }
+  lab(rx,cy-fs*.4,'sweat',1); g.sS=lab(rx,cy+fs*1.1,'');
+  // ECG
+  Kit.mk('rect',{x:0,y:ey0,width:W,height:ecgH,rx:fs*.8,style:`fill:color-mix(in srgb,${K} 7%,transparent)`},svg);
+  g.heart=Kit.mk('path',{d:'M0,3 C-6,-3 -12,2 0,11 C12,2 6,-3 0,3Z',transform:`translate(${fs*1.1},${ey0+fs*1.0}) scale(${fs/13})`,style:`fill:#e0313d`},svg);
+  const ht=Kit.mk('text',{x:fs*2.1,y:ey0+fs*1.55,style:`font:700 ${fs}px var(--body);fill:${K}`},svg);ht.textContent='heart rate';
+  g.hS=Kit.mk('text',{x:W-fs*.9,y:ey0+fs*1.55,'text-anchor':'end',style:`font:500 ${fs}px var(--body);fill:${K}`},svg);
+  g.ecgTop=ey0+fs*2.2; g.ecgBase=ey0+fs*2.2+(ecgH-fs*2.2)*.68; g.ecgAmp=(ecgH-fs*2.2)*.6;
+  g.trace=Kit.mk('path',{style:`fill:none;stroke:#e0313d;stroke-width:${Math.max(2,fs*.17)};stroke-linejoin:round;stroke-linecap:round`},svg);
+  g.N=Math.max(60,Math.round(W/4));
+  if(ecg.length!==g.N) ecg=new Array(g.N).fill(0);
+  G=g; renderTask(); draw();
+};
+
+function ecgShape(p,e){
+  const a=1+.35*e;
+  if(p<.06) return .12*Math.sin(p/.06*Math.PI);
+  if(p<.1) return 0;
+  if(p<.12) return -.15*((p-.1)/.02);
+  if(p<.15) return -.15+1.15*a*((p-.12)/.03);
+  if(p<.19) return 1*a-1.35*a*((p-.15)/.04);
+  if(p<.22) return -.35*a*(1-(p-.19)/.03);
+  if(p<.4) return .22*Math.sin((p-.22)/.18*Math.PI);
+  return 0;
+}
+
+function draw(){
+  if(!G) return;
+  const e=st.e, g=G;
+  g.pupil.setAttribute('r',g.ir*(.3+.36*e));
+  g.pS.textContent=e>.5?'wider':'normal';
+  g.sS.textContent=e>.5?'more':'dry';
+  g.hS.textContent=e>.5?'faster':'steady';
+  let d='';
+  for(let i=0;i<g.N;i++){const x=i*g.W/(g.N-1), y=g.ecgBase-ecg[i]*g.ecgAmp; d+=(i?'L':'M')+x.toFixed(1)+','+y.toFixed(1);}
+  g.trace.setAttribute('d',d);
+  const t=performance.now()/1000;
+  g.drops.forEach(o=>{
+    const c=((t*.55+o.off)%1);
+    o.el.setAttribute('transform',`translate(${o.x},${o.y0+c*g.fs*1.8})`);
+    o.el.setAttribute('opacity',(Math.max(0,e-.15)/.85*Math.sin(c*Math.PI)).toFixed(2));
+  });
+}
+
+gsap.ticker.add((time,dt)=>{
+  if(!G) return;
+  const s=Math.min(dt,100)/1000, e=st.e, T=1.05-.5*e;
+  acc+=s; const rate=1/45;
+  while(acc>rate){
+    acc-=rate; const prev=phase; phase=(phase+rate/T)%1;
+    if(phase<prev){ gsap.fromTo(G.heart,{scale:1},{scale:1,duration:.01}); G.heart.style.opacity=1; gsap.fromTo(G.heart.style,{opacity:1},{opacity:.45,duration:T*.8}); }
+    ecg.push(ecgShape(phase,e)); ecg.shift();
+  }
+  draw();
+});
+
+Kit.onEnter.card=()=>{ if(!Kit.calm) gsap.from('#pic',{opacity:0,y:10,duration:.5,ease:'power3.out'}); };
+Kit.play.card=async()=>{
+  const w=ms=>new Promise(r=>setTimeout(r,ms));
+  Kit.$('seg').children[1].click(); await w(1800);
+  Kit.$('seg').children[0].click(); await w(300);
+  Kit.$('seg').children[1].click(); await w(1800);
+};
+Kit.single();
+</script>
+</html>

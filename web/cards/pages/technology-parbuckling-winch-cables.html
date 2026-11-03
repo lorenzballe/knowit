@@ -1,0 +1,151 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-parbuckling-winch-cables -->
+<title>Astute free card · Parbuckling</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;position:relative}
+#pic{width:100%;height:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw;padding:0.6cqh 1cqw}
+#ctl .lab{font:700 max(1.8cqh,12px)/1.1 var(--mono);color:var(--k);white-space:nowrap}
+#winch{flex:1;-webkit-appearance:none;appearance:none;height:max(1.4cqh,10px);border-radius:99px;background:color-mix(in srgb,var(--k) 18%,transparent);outline:none;margin:1.2cqh 0}
+#winch::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:max(4.4cqh,30px);height:max(4.4cqh,30px);border-radius:50%;background:var(--k);border:max(.5cqh,3px) solid var(--c);box-shadow:0 0 0 max(.25cqh,2px) var(--k);cursor:grab}
+#winch::-moz-range-thumb{width:max(4.4cqh,30px);height:max(4.4cqh,30px);border-radius:50%;background:var(--k);border:max(.5cqh,3px) solid var(--c);box-shadow:0 0 0 max(.25cqh,2px) var(--k);cursor:grab}
+#why{display:flex;flex-direction:column;gap:0.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.q,.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SALVAGE</span></div>
+    <h2 class="q">What is the parbuckling technique used to right the ship?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="ctl"><span class="lab">WINCH</span><input id="winch" type="range" min="0" max="1000" value="0" aria-label="Reel in the cables"><span class="lab" id="pct">0%</span></div>
+    <div id="why" class="gone">
+      <p class="big">Cables + winches = a slow, steady turn</p>
+      <p class="body">Massive cables are fixed to the hull, and winches reel them in, rotating the ship upright. The ship turns only as far as the cable is reeled, so every degree is under control. That precision is why the method was chosen for the Costa Concordia.</p>
+    </div>
+    <p class="say" id="say">Drag the winch to reel in the cables. Stop anytime: the ship stops too.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Parbuckling: pull a ship upright with cables and winches, slowly and precisely.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Costa Concordia, la ricostruzione del naufragio dal momento dell’impatto alla rimozione del relitto” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TILT = 65;
+const st = {v: 0};        // smoothed winch progress 0..1
+let target = 0, done = false, lastTick = 0, G = null;
+
+function draw(){
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const seaY = H*0.40, bedY = H*0.90;
+  const h = Math.min(H*0.62, W*0.62), w = h*0.5, hullH = h*0.45;
+  const px = W*0.46, py = bedY;
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const m = (t,a,p) => Kit.mk(t,a,p||svg);
+
+  // sky / water / seabed
+  m('rect',{x:0,y:seaY,width:W,height:bedY-seaY,fill:'#2b6f9e',opacity:.22});
+  m('path',{d:`M0 ${bedY} Q${W*.3} ${bedY-H*.02} ${W*.6} ${bedY} T${W} ${bedY-H*.01} V${H} H0Z`,fill:'#8a6a45',opacity:.55});
+
+  // ghost of the upright target
+  const ghost = m('g',{transform:`translate(${px},${py})`,opacity:.35});
+  m('rect',{x:-w,y:-h,width:w,height:h,rx:w*.06,fill:'none',stroke:ink,'stroke-width':Math.max(1.5,fs*.09),'stroke-dasharray':`${fs*.4} ${fs*.35}`},ghost);
+
+  // the ship (cross-section, pivot at the starboard bottom corner)
+  const ship = m('g',{});
+  const sup = m('g',{},ship);
+  const sw = w*.86, sx = -w+(w-sw)/2;
+  m('rect',{x:sx,y:-h,width:sw,height:h-hullH,rx:w*.04,fill:'#f4f1ea',stroke:'#1d2b3a','stroke-width':Math.max(1.5,fs*.08)},sup);
+  const decks = 5;
+  for(let i=1;i<decks;i++){
+    const y = -h + (h-hullH)*i/decks;
+    m('line',{x1:sx+sw*.08,x2:sx+sw*.92,y1:y,y2:y,stroke:'#5b7fa3','stroke-width':Math.max(2,fs*.22),'stroke-linecap':'round','stroke-dasharray':`${fs*.3} ${fs*.25}`},sup);
+  }
+  m('path',{d:`M${-w} ${-hullH} H0 V${-w*.12} Q0 0 ${-w*.12} 0 H${-w*.88} Q${-w} 0 ${-w} ${-w*.12}Z`,fill:'#1d3557',stroke:'#0e1c2e','stroke-width':Math.max(1.5,fs*.08)},ship);
+  m('rect',{x:-w,y:-hullH,width:w,height:hullH*.12,fill:'#e0b23a'},ship);
+
+  // water veil over the submerged part
+  m('rect',{x:0,y:seaY,width:W,height:bedY-seaY,fill:'#2b6f9e',opacity:.28,'pointer-events':'none'});
+  m('line',{x1:0,x2:W,y1:seaY,y2:seaY,stroke:'#2b6f9e','stroke-width':Math.max(2,fs*.12)});
+
+  // winch tower
+  const tx = W*0.09, tTop = seaY - H*0.14, r = Math.max(fs*.9, W*.035);
+  m('rect',{x:tx-r*.45,y:tTop,width:r*.9,height:bedY-tTop,fill:ink,opacity:.8});
+  const drum = m('g',{transform:`translate(${tx},${tTop})`});
+  m('circle',{r:r,fill:'#e0b23a',stroke:ink,'stroke-width':Math.max(2,fs*.12)},drum);
+  const spokes = m('g',{},drum);
+  for(let i=0;i<3;i++) m('line',{x1:0,y1:0,x2:r*.9*Math.cos(i*2.094),y2:r*.9*Math.sin(i*2.094),stroke:ink,'stroke-width':Math.max(2,fs*.14),'stroke-linecap':'round'},spokes);
+  m('text',{x:Math.max(tx-r,4),y:tTop-r-fs*.5,'font-size':fs,'font-weight':800,'font-family':'var(--mono)',fill:ink},spokes.ownerSVGElement).textContent='WINCHES';
+
+  // cables
+  const cables = [0,1,2].map(i => m('line',{stroke:'#c0392b','stroke-width':Math.max(2.2,fs*.16),'stroke-linecap':'round'}));
+  const cLab = m('text',{'font-size':fs,'font-weight':800,'font-family':'var(--mono)',fill:'#c0392b','text-anchor':'middle'});
+  cLab.textContent = 'CABLES';
+
+  // readout
+  const read = m('text',{x:W-6,y:fs*1.4,'font-size':fs*1.25,'font-weight':800,'font-family':'var(--mono)',fill:ink,'text-anchor':'end'});
+
+  G = {ship, cables, cLab, read, spokes, px, py, w, h, hullH, tx, tTop, r, fs};
+  update();
+}
+
+function update(){
+  if(!G) return;
+  const v = st.v, th = TILT*(1-v), a = th*Math.PI/180;
+  G.ship.setAttribute('transform',`translate(${G.px},${G.py}) rotate(${th})`);
+  const pts = [[-G.w, -G.hullH*.98],[-G.w, -G.hullH*.6],[-G.w, -G.hullH*.25]];
+  let mx=0,my=0;
+  pts.forEach(([ax,ay],i)=>{
+    const x = G.px + ax*Math.cos(a) - ay*Math.sin(a);
+    const y = G.py + ax*Math.sin(a) + ay*Math.cos(a);
+    const sx = G.tx, sy = G.tTop + (i-1)*G.r*.5;
+    const c = G.cables[i];
+    c.setAttribute('x1',sx);c.setAttribute('y1',sy);c.setAttribute('x2',x);c.setAttribute('y2',y);
+    if(i===0){mx=(sx+x)/2;my=(sy+y)/2;}
+  });
+  G.cLab.setAttribute('x',mx); G.cLab.setAttribute('y',my - G.fs*.9);
+  G.spokes.setAttribute('transform',`rotate(${-v*900})`);
+  G.read.textContent = th < 0.5 ? 'UPRIGHT ✓' : `TILT ${Math.round(th)}°`;
+  Kit.$('pct').textContent = Math.round(v*100)+'%';
+}
+
+function finish(){
+  if(done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if(!Kit.calm) gsap.from('#why, #keep',{opacity:0,y:8,stagger:.1,duration:.45,ease:'power3.out'});
+}
+
+Kit.$('winch').addEventListener('input', e => {
+  if(done) return;
+  target = +e.target.value/1000;
+  gsap.to(st,{v:target,duration:Kit.calm?0.01:0.6,ease:'power2.out',overwrite:true,onUpdate:()=>{
+    update();
+    const deg = Math.floor(TILT*st.v/10);
+    if(deg!==lastTick){lastTick=deg;Kit.haptic('light');}
+    if(st.v>0.995) finish();
+  },onComplete:()=>{ if(target>=0.995) finish(); }});
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if(Kit.calm) return;
+  gsap.from('#pic',{opacity:0,duration:.5,ease:'power2.out'});
+  gsap.fromTo('#winch',{x:0},{x:6,duration:.25,repeat:3,yoyo:true,delay:.6,ease:'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const s = Kit.$('winch');
+  for(const v of [300,650,1000]){ s.value = v; s.dispatchEvent(new Event('input',{bubbles:true})); await new Promise(r=>setTimeout(r,250)); }
+  await new Promise(r=>setTimeout(r,900));
+  st.v = 1; update(); finish();
+  await new Promise(r=>setTimeout(r,600));
+};
+Kit.single();
+</script>
+</html>

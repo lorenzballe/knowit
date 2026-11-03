@@ -1,0 +1,36 @@
+{
+  "id": "science-knotted-molecule",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When was the first synthetic knotted molecule created?",
+  "answer": "In 1989, chemist Jean-Pierre Sauvage tied molecules around copper ions into a trefoil knot, the first synthetic knotted molecule. The knot stops the atoms from unfurling, trapping them in higher energy states that give the molecule new properties.",
+  "move": "Tie a molecule in a different knot and you get a different material.",
+  "keywords": [
+    "jean-pierre_sauvage",
+    "copper_ions",
+    "trefoil_knot",
+    "molecular_knots"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A molecular strand is shown next to a copper ion. The reader drags the copper ion into the ring to watch the strand wrap into a trefoil knot. The page asks when the first synthetic knotted molecule was created."
+  },
+  "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=1467s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,168 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-nacre-two-components -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.4cqh;flex:1;min-height:0}
+#wall{flex:1;min-height:0;width:100%;display:block}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2cqh,13px)/1.15 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt small{display:block;font:500 max(1.5cqh,12px)/1.2 var(--body);opacity:.75;margin-top:.3cqh}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt:disabled{cursor:default}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body)}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick two · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK TWO</span></div>
+    <h2 class="q">What are the two main components of nacre?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="wall"></svg>
+      <div id="opts">
+        <button class="opt" data-k="sil">Silica<small>a glassy mineral</small></button>
+        <button class="opt" data-k="ara">Aragonite crystals<small>calcium carbonate</small></button>
+        <button class="opt" data-k="ker">Keratin<small>the protein of hair</small></button>
+        <button class="opt" data-k="con">Conchiolin<small>an organic protein</small></button>
+      </div>
+      <div id="why" class="gone"><p class="big">Aragonite + conchiolin</p><p class="body">Nacre is tablets of aragonite, a mineral made of calcium carbonate, held together by conchiolin, an organic protein. The protein is the binding matrix, so the whole is stronger than the mineral alone.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick two ingredients and watch your nacre build up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Nacre is mineral bricks glued by protein mortar.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const picks = [];
+let done = false;
+const svg = Kit.$('wall');
+const G = {};
+
+function draw(animKey){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  const defs = Kit.mk('defs', {}, svg);
+  const gr = Kit.mk('linearGradient', {id:'pearl', x1:0, y1:0, x2:1, y2:1}, defs);
+  [['0','#fffdf8'],['.5','#ece4f7'],['1','#dcf1ef']].forEach(([o,c]) => Kit.mk('stop', {offset:o, 'stop-color':c}, gr));
+  const top = fs * 2.4, bot = fs * 2.4;
+  const x0 = W * .07, w = W * .86, y0 = top, h = Math.max(40, H - top - bot);
+  const cp = Kit.mk('clipPath', {id:'wc'}, defs);
+  Kit.mk('rect', {x:x0, y:y0, width:w, height:h, rx:fs*.6}, cp);
+
+  Kit.mk('rect', {x:x0, y:y0, width:w, height:h, rx:fs*.6, fill:'none', style:'stroke:var(--k);stroke-opacity:.35', 'stroke-width':2, 'stroke-dasharray':'6 6'}, svg);
+  const body = Kit.mk('g', {'clip-path':'url(#wc)'}, svg);
+
+  const show = k => done ? (k === 'ara' || k === 'con') : picks.includes(k);
+
+  // protein matrix
+  G.con = Kit.mk('g', {}, body);
+  Kit.mk('rect', {x:x0, y:y0, width:w, height:h, fill:'#8a5a2e'}, G.con);
+  for (let i = 0; i < 9; i++) {
+    const yy = y0 + h * (i + .5) / 9; let d = `M${x0} ${yy}`;
+    for (let s = 1; s <= 8; s++) d += ` Q${x0 + w*(s-.5)/8} ${yy + (s%2?1:-1)*h*.04} ${x0 + w*s/8} ${yy}`;
+    Kit.mk('path', {d, fill:'none', stroke:'#c99559', 'stroke-width':1.4, opacity:.7}, G.con);
+  }
+  // aragonite tablets
+  G.ara = Kit.mk('g', {}, body);
+  const rows = Math.max(4, Math.round(h / (fs * 2.3))), bh = h / rows, cols = 4, bw = w / cols;
+  const gap = Math.max(3, bh * .2);
+  for (let r = 0; r < rows; r++) {
+    const off = r % 2 ? -bw / 2 : 0;
+    for (let c = 0; c < cols + 1; c++) {
+      const left = Math.max(x0 + off + c*bw + gap/2, x0 + gap/2);
+      const right = Math.min(x0 + off + (c+1)*bw - gap/2, x0 + w - gap/2);
+      if (right - left <= gap) continue;
+      Kit.mk('rect', {x:left, y:y0 + r*bh + gap/2, width:right - left, height:bh - gap, rx:bh*.16, fill:'url(#pearl)', style:'stroke:var(--k);stroke-opacity:.25', 'stroke-width':1, class:'brick'}, G.ara);
+    }
+  }
+  // distractors
+  G.sil = Kit.mk('g', {}, body);
+  Kit.rndSeed = 1;
+  for (let i = 0; i < 14; i++) {
+    const s = fs * (.7 + (i % 3) * .3);
+    const cx = x0 + s + (w - 2*s) * ((i * 37) % 100) / 100, cy = y0 + s + (h - 2*s) * ((i * 61 + 13) % 100) / 100;
+    Kit.mk('path', {d:`M${cx} ${cy - s} L${cx + s*.8} ${cy + s*.6} L${cx - s*.7} ${cy + s*.4}Z`, fill:'#9aa7b1', opacity:.85, class:'bit'}, G.sil);
+  }
+  G.ker = Kit.mk('g', {}, body);
+  const amp = Math.min(fs, w / 14 * .8);
+  for (let i = 0; i < 7; i++) {
+    const xx = x0 + w * (i + .5) / 7; let d = `M${xx} ${y0}`;
+    for (let s = 1; s <= 6; s++) d += ` Q${xx + (s%2?1:-1)*amp} ${y0 + h*(s-.5)/6} ${xx} ${y0 + h*s/6}`;
+    Kit.mk('path', {d, fill:'none', stroke:'#7d6b8f', 'stroke-width':3, 'stroke-linecap':'round', class:'bit'}, G.ker);
+  }
+  ['con','ara','sil','ker'].forEach(k => G[k].style.opacity = show(k) ? 1 : 0);
+
+  // labels
+  if (done) {
+    const bx = x0 + bw * 1.5, by = y0 + bh * .5;
+    const t1 = Kit.mk('text', {x:W/2, y:fs*1.3, 'text-anchor':'middle', 'font-size':fs, 'font-weight':700, style:'fill:var(--k);font-family:var(--body)'}, svg);
+    t1.textContent = 'Aragonite · calcium carbonate';
+    Kit.mk('line', {x1:W/2, y1:fs*1.7, x2:bx, y2:by, style:'stroke:var(--k)', 'stroke-width':1.5}, svg);
+    Kit.mk('circle', {cx:bx, cy:by, r:4, style:'fill:var(--k)'}, svg);
+    const gx = x0 + bw * 2, gy = y0 + bh * (rows - 1) + gap / 4;
+    const t2 = Kit.mk('text', {x:W/2, y:H - fs*.5, 'text-anchor':'middle', 'font-size':fs, 'font-weight':700, style:'fill:var(--k);font-family:var(--body)'}, svg);
+    t2.textContent = 'Conchiolin · protein glue';
+    Kit.mk('line', {x1:W/2, y1:H - fs*1.5, x2:gx, y2:gy, style:'stroke:var(--k)', 'stroke-width':1.5}, svg);
+    Kit.mk('circle', {cx:gx, cy:gy, r:4, style:'fill:var(--k)'}, svg);
+  } else {
+    const t = Kit.mk('text', {x:W/2, y:fs*1.4, 'text-anchor':'middle', 'font-size':fs, 'font-weight':600, style:'fill:var(--k);opacity:.6;font-family:var(--body)'}, svg);
+    t.textContent = picks.length ? 'Your nacre, close up' : 'Your nacre: empty so far';
+  }
+
+  if (animKey && !Kit.calm) {
+    if (animKey === 'final') {
+      gsap.from(svg.querySelectorAll('text,line,circle'), {opacity:0, duration:.6, stagger:.1});
+    } else {
+      const g = G[animKey];
+      if (animKey === 'ara') gsap.from(g.querySelectorAll('.brick'), {y:-h*.3, opacity:0, stagger:{each:.025, from:'start'}, duration:.45, ease:'power3.out'});
+      else if (animKey === 'con') gsap.from(g, {opacity:0, duration:.7, ease:'power2.out'});
+      else gsap.from(g.querySelectorAll('.bit'), {opacity:0, scale:.3, transformOrigin:'50% 50%', stagger:.03, duration:.4});
+    }
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = picks.includes('ara') && picks.includes('con');
+  const names = picks.map(k => Kit.$('opts').querySelector(`[data-k="${k}"]`).firstChild.textContent.trim());
+  const said = names.join(' + ');
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  done = true;
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  draw('final');
+  if (!Kit.calm) {
+    gsap.from(G.ara.querySelectorAll('.brick'), {opacity:0, duration:.5, stagger:.015});
+  }
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || done || picks.length >= 2) return;
+  const k = b.dataset.k; if (picks.includes(k)) return;
+  picks.push(k); b.classList.add('on'); Kit.haptic('selection');
+  draw(k);
+  if (picks.length === 2) {
+    Kit.$('opts').querySelectorAll('.opt').forEach(o => o.disabled = true);
+    Kit.$('say').textContent = 'Now say how sure you are.';
+    sure.on();
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').querySelector('[data-k="ara"]').click(); await w(150);
+  Kit.$('opts').querySelector('[data-k="con"]').click(); await w(150);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(900);
+};
+Kit.single();
+</script>
+</html>

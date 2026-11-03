@@ -1,0 +1,115 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-brothers-home-prisoners -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:safe center;gap:1.4cqh;flex:1;min-height:0}
+#pie{display:block;width:100%;flex:1 1 0;min-height:0}
+#ctl{display:flex;flex-direction:column;gap:1.2cqh}
+#ctl .row{display:flex;justify-content:space-between;font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
+#rng{width:100%;height:max(4cqh,28px);accent-color:var(--k);cursor:pointer;margin:0}
+#lock{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer}
+#lock:disabled{opacity:.45;cursor:default}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex:0 0 auto;min-width:0}
+#why .big{margin:0;line-height:1.05}
+#why .body{overflow-wrap:break-word;margin:0;font-size:max(1.8cqh,13px);line-height:1.3}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Guess a share · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BROTHERS HOME</span></div>
+    <h2 class="q">Brothers Home was said to hold the homeless. How many really were?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pie" aria-label="Ring chart of the prisoners"></svg>
+      <div id="ctl">
+        <input id="rng" type="range" min="0" max="100" step="1" value="50" aria-label="Share truly homeless">
+        <div class="row"><span>0%</span><span>100%</span></div>
+        <button id="lock">Lock my guess</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Under 10%</p>
+        <p class="body">Most were political opponents, plus people easy to kidnap: children waiting for the bus, disabled people, street vendors and prostitutes. “Homeless” was the label, not the truth.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Slide to guess the share that were truly homeless, then lock it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Who a place claims to hold can be very different from who it holds.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let guess = 50, done = false, locked = false;
+const st = {s: 50};
+const rng = Kit.$('rng');
+
+function pt(cx, cy, rad, fr){ const a = fr * Math.PI * 2 - Math.PI / 2; return [cx + rad * Math.cos(a), cy + rad * Math.sin(a)]; }
+function seg(cx, cy, R, r, f0, f1){
+  if (f1 - f0 >= 0.9999) f1 = f0 + 0.9999;
+  const big = (f1 - f0) > 0.5 ? 1 : 0;
+  const [x0,y0] = pt(cx,cy,R,f0), [x1,y1] = pt(cx,cy,R,f1), [x2,y2] = pt(cx,cy,r,f1), [x3,y3] = pt(cx,cy,r,f0);
+  return `M${x0},${y0}A${R},${R} 0 ${big} 1 ${x1},${y1}L${x2},${y2}A${r},${r} 0 ${big} 0 ${x3},${y3}Z`;
+}
+function draw(){
+  const svg = Kit.$('pie'); const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const cx = W / 2, cy = H / 2, R = Math.min(W, H) / 2 * 0.86, r = R * 0.6;
+  const s = Math.max(0, Math.min(100, st.s)) / 100;
+  // everyone else
+  Kit.mk('path', {d: seg(cx, cy, R, r, s, 1), style: 'fill:color-mix(in srgb,var(--k) 18%,transparent)'}, svg);
+  // homeless slice
+  if (s > 0.001) Kit.mk('path', {d: seg(cx, cy, R, r, 0, s), style: 'fill:var(--k)'}, svg);
+  // the reader's guess, once the truth is shown
+  if (done && guess > 0) {
+    const Ro = R * 1.08;
+    const [a,b] = pt(cx,cy,Ro,0), g = Math.min(guess/100, .9999), [c,d] = pt(cx,cy,Ro,g);
+    Kit.mk('path', {d: `M${a},${b}A${Ro},${Ro} 0 ${g > .5 ? 1 : 0} 1 ${c},${d}`, style: 'fill:none;stroke:var(--k);stroke-width:' + Math.max(2, R*.025) + ';stroke-dasharray:' + (R*.05) + ' ' + (R*.05) + ';opacity:.6'}, svg);
+  }
+  const fs = Math.max(r * 0.42, 18), ls = Math.max(Math.min(r * 0.17, f), 12);
+  const t1 = Kit.mk('text', {x: cx, y: cy + fs * 0.12, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--display);fill:var(--k)`}, svg);
+  t1.textContent = done ? '<10%' : Math.round(st.s) + '%';
+  const t2 = Kit.mk('text', {x: cx, y: cy + fs * 0.12 + ls * 1.7, 'text-anchor': 'middle', style: `font:600 ${ls}px var(--body);fill:var(--k);opacity:.75`}, svg);
+  t2.textContent = done ? 'truly homeless' : 'your guess';
+}
+
+rng.addEventListener('input', () => {
+  if (locked) return;
+  guess = +rng.value; st.s = guess; draw();
+});
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = guess <= 15;
+  Kit.answer({choice: guess + '%', correct: ok, sure: pct});
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why');
+  done = true;
+  if (Kit.calm) { st.s = 9; draw(); }
+  else { draw(); gsap.to(st, {s: 9, duration: 1.3, ease: 'power3.inOut', onUpdate: draw}); }
+  sure.grade(ok, pct, `You guessed ${guess}%: ${ok ? 'close' : 'far too high'}`);
+  Kit.haptic(ok ? 'success' : 'light');
+  Kit.show('keep');
+});
+
+Kit.$('lock').addEventListener('click', () => {
+  if (locked) return;
+  locked = true; rng.disabled = true; Kit.$('lock').disabled = true;
+  Kit.haptic('selection'); sure.on();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {s: 0};
+  gsap.to(o, {s: 50, duration: 1, ease: 'power3.out', onUpdate: () => { if (!locked) { st.s = o.s; draw(); } }});
+};
+Kit.play.card = async () => {
+  rng.value = 40; rng.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('lock').click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1600));
+};
+Kit.single();
+</script>
+</html>

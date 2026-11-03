@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-wave-base-depth -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#wv{flex:1;min-height:0;width:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.water{fill:color-mix(in srgb,var(--k) 11%,transparent)}
+.surf{fill:none;stroke:var(--k);stroke-width:3;stroke-linejoin:round}
+.brk{fill:none;stroke:var(--k);stroke-width:1.6;opacity:.75}
+.lbl{fill:var(--k);font-family:var(--body);font-weight:700;paint-order:stroke;stroke:var(--c);stroke-width:4;stroke-linejoin:round}
+.tick{stroke:var(--k);stroke-width:1.2;stroke-dasharray:3 5;opacity:.45}
+.base{stroke:var(--k);stroke-width:2.6;stroke-dasharray:10 6}
+.orb{fill:none;stroke:var(--k);stroke-width:1;opacity:.35}
+.dot{fill:var(--k)}
+.porb{fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:4 4}
+.ball{fill:var(--c);stroke:var(--k);stroke-width:3.5}
+.hit{fill:transparent;cursor:grab}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · explore">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WAVES</span></div>
+    <h2 class="q">How deep under a wave does the water stop moving?</h2>
+    <div class="stagebox" id="stage"><svg id="wv"></svg></div>
+    <p class="say" id="say">Drag the ball down into the water and watch its circle.</p>
+    <div id="why" class="gone"><p class="big">At half a wavelength</p><p class="body">Under a wave, each bit of water rides in a circle, and the circles shrink the deeper you go. In an ideal wave they reach zero at half a wavelength down: the wave base. Below it, the water is still.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A wave stirs the water only down to half its wavelength.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {d: 0.05, xf: 0.62, revealed: false, drag: false, t: 0, lastPct: -1};
+let G = null;
+const E = Math.exp(-Math.PI);
+// Orbit size relative to the surface: shrinks with depth and is zero at half a wavelength.
+const ratio = d => Math.max(0, (Math.exp(-2 * Math.PI * d) - E) / (1 - E));
+
+function draw() {
+  const svg = Kit.$('wv'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .85);
+  const top = fs * 2.5;
+  const lam = Math.max(60, Math.min(W * .82, (H - top - 8) / .83));
+  const A = lam * .08, y0 = top + A + 6, k = 2 * Math.PI / lam;
+  const g = {W, H, fs, lam, A, y0, k, dots: []};
+  g.water = Kit.mk('path', {class: 'water'}, svg);
+  // depth ticks
+  const xl = (W - lam) / 2;
+  [[.25, '¼ wavelength'], [.5, '½ wavelength']].forEach(([d, s]) => {
+    const y = y0 + d * lam; if (y > H - 4) return;
+    const ln = Kit.mk('line', {x1: 0, x2: W, y1: y, y2: y, class: d === .5 ? 'base' : 'tick'}, svg);
+    if (d === .5) { g.baseLine = ln; ln.style.opacity = S.revealed ? 1 : .4; ln.style.strokeWidth = S.revealed ? 2.6 : 1.2; }
+    const t = Kit.mk('text', {x: 6, y: y - fs * .45, class: 'lbl', 'font-size': fs}, svg);
+    t.textContent = (d === .5 && S.revealed) ? 'WAVE BASE · ½ wavelength' : s;
+    if (d === .5) g.baseTxt = t;
+  });
+  // grid of water bits, shown at the end
+  g.grid = Kit.mk('g', {}, svg); g.grid.style.opacity = S.revealed ? 1 : 0;
+  const rows = [.07, .16, .25, .34, .43, .5, .58, .66];
+  for (let x = lam / 16; x < W; x += lam / 8) rows.forEach(d => {
+    const yr = y0 + d * lam; if (yr > H - 6) return;
+    const r = A * ratio(d);
+    if (r > .6) Kit.mk('circle', {cx: x, cy: yr, r, class: 'orb'}, g.grid);
+    g.dots.push({x, d, yr, r, el: Kit.mk('circle', {r: Math.max(2, fs * .2), class: 'dot'}, g.grid)});
+  });
+  g.surf = Kit.mk('path', {class: 'surf'}, svg);
+  // wavelength bracket
+  const by = fs * 1.9;
+  Kit.mk('path', {class: 'brk', d: `M${xl},${by + 5}V${by}H${xl + lam}V${by + 5}`}, svg);
+  const bt = Kit.mk('text', {x: W / 2, y: by - fs * .45, class: 'lbl', 'font-size': fs, 'text-anchor': 'middle'}, svg);
+  bt.textContent = '1 wavelength';
+  // probe
+  g.br = Math.max(9, fs * .75);
+  g.porb = Kit.mk('circle', {class: 'porb'}, svg);
+  g.ball = Kit.mk('circle', {r: g.br, class: 'ball'}, svg);
+  g.hit = Kit.mk('circle', {r: Math.max(26, g.br * 2.4), class: 'hit'}, svg);
+  g.hit.addEventListener('pointerdown', down);
+  g.maxD = (H - y0 - g.br - 2) / lam;
+  G = g; frame();
+}
+
+function frame() {
+  const g = G; if (!g) return;
+  const {W, H, A, y0, k, lam} = g, th = x => k * x - S.t;
+  let p = `M0,${H}L0,${y0 - A * Math.cos(th(0))}`;
+  for (let x = 4; x <= W + 4; x += 4) p += `L${x},${(y0 - A * Math.cos(th(x))).toFixed(1)}`;
+  g.water.setAttribute('d', p + `L${W},${H}Z`);
+  g.surf.setAttribute('d', p.replace(/^M0,[^L]*L/, 'M'));
+  if (S.revealed) g.dots.forEach(o => {
+    const t = th(o.x);
+    o.el.setAttribute('cx', o.x - o.r * Math.sin(t)); o.el.setAttribute('cy', o.yr - o.r * Math.cos(t));
+  });
+  const d = Math.min(S.d, g.maxD), x0 = S.xf * W, yr = y0 + d * lam, r = A * ratio(d), t = th(x0);
+  g.porb.setAttribute('cx', x0); g.porb.setAttribute('cy', yr); g.porb.setAttribute('r', Math.max(0, r));
+  g.porb.style.opacity = r > 1 ? .7 : 0;
+  const bx = x0 - r * Math.sin(t), by = yr - r * Math.cos(t);
+  g.ball.setAttribute('cx', bx); g.ball.setAttribute('cy', by);
+  g.hit.setAttribute('cx', bx); g.hit.setAttribute('cy', by);
+}
+
+function sayDepth() {
+  if (S.revealed) return;
+  const pct = Math.round(100 * ratio(S.d));
+  if (pct === S.lastPct) return; S.lastPct = pct;
+  Kit.$('say').textContent = pct > 0
+    ? `Deeper. Its circle here is ${pct}% of the size at the surface.`
+    : 'Here the water does not move at all. Let go.';
+}
+
+function place(e) {
+  const g = G, rc = Kit.$('wv').getBoundingClientRect();
+  const x = e.clientX - rc.left, y = e.clientY - rc.top;
+  S.xf = Math.min(.9, Math.max(Math.max(.3, (g.fs * 9) / g.W), x / g.W));
+  S.d = Math.min(g.maxD, Math.max(0, (y - g.y0) / g.lam));
+  sayDepth();
+}
+function down(e) {
+  e.preventDefault(); S.drag = true; Kit.haptic('light'); place(e);
+  try { G.hit.setPointerCapture(e.pointerId); } catch (_) {}
+}
+window.addEventListener('pointermove', e => { if (S.drag) place(e); });
+window.addEventListener('pointerup', () => {
+  if (!S.drag) return; S.drag = false;
+  if (!S.revealed && ratio(S.d) === 0) reveal();
+});
+
+function reveal() {
+  S.revealed = true; Kit.haptic('success');
+  const g = G;
+  if (g.baseTxt) g.baseTxt.textContent = 'WAVE BASE · ½ wavelength';
+  if (g.baseLine) { g.baseLine.style.opacity = 1; g.baseLine.style.strokeWidth = 2.6; }
+  if (!Kit.calm) gsap.fromTo(g.grid, {opacity: 0}, {opacity: 1, duration: .9, ease: 'power2.out'}); else g.grid.style.opacity = 1;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+gsap.ticker.add((time, dt) => { S.t += (dt / 1000) * (Kit.calm ? 1.2 : 2.1); frame(); });
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.ball, {attr: {r: 0}, duration: .5, ease: 'back.out(2)'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const rc = Kit.$('wv').getBoundingClientRect(), hb = G.hit.getBoundingClientRect();
+  const o = {bubbles: true, pointerId: 1, pointerType: 'touch', isPrimary: true};
+  G.hit.dispatchEvent(new PointerEvent('pointerdown', {...o, clientX: hb.left + hb.width / 2, clientY: hb.top + hb.height / 2}));
+  const tx = rc.left + S.xf * G.W, ty = rc.top + G.y0 + Math.min(.56, G.maxD) * G.lam;
+  for (let i = 1; i <= 6; i++) { window.dispatchEvent(new PointerEvent('pointermove', {...o, clientX: tx, clientY: hb.top + (ty - hb.top) * i / 6})); await wait(40); }
+  window.dispatchEvent(new PointerEvent('pointerup', {...o, clientX: tx, clientY: ty}));
+  await wait(1100);
+};
+Kit.single();
+</script>
+</html>

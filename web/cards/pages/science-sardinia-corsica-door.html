@@ -1,0 +1,158 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-sardinia-corsica-door -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#map{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body)}
+.sea{fill:color-mix(in srgb,var(--k) 7%,transparent)}
+.fr{fill:color-mix(in srgb,var(--k) 22%,transparent)}
+.it{fill:color-mix(in srgb,var(--k) 30%,transparent)}
+.blk{fill:var(--k)}
+.ghost{fill:none;stroke:var(--k);stroke-width:1.5;stroke-dasharray:5 5;opacity:.45}
+.ridge{fill:none;stroke:var(--k);stroke-linejoin:round;stroke-linecap:round}
+.arw{stroke:var(--k);stroke-width:3;fill:none;stroke-linecap:round}
+.arh{fill:var(--k)}
+.lab{fill:var(--k);font-family:var(--body);font-weight:800;paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round}
+.lab.inv{fill:var(--c);stroke:var(--k)}
+.lab.mono{font-family:var(--mono);font-weight:700}
+.hinge{fill:var(--c);stroke:var(--k);stroke-width:3}
+.hand{fill:var(--c);stroke:var(--k);stroke-width:3}
+.ring{fill:none;stroke:var(--k);stroke-width:2}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see it happen">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PLATE MOTION</span></div>
+    <h2 class="q">Sardinia and Corsica swung east like a door. What did that push build?</h2>
+    <div class="stagebox" id="stage"><svg id="map"></svg></div>
+    <p class="say" id="say">Drag Sardinia’s tip east and swing the block off France.</p>
+    <div id="why" class="gone"><p class="big">The Apennines</p><p class="body">Between 25 and 10 million years ago the block broke from France and pivoted east. Its push crumpled the crust in front, and the Apennines began to rise.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Swing the door east, crumple the crust: Italy’s spine is born.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const A0 = -24, A1 = 12;
+let p = 0, done = false, G = null, dragging = false;
+const svg = Kit.$('map');
+const rad = d => d * Math.PI / 180;
+
+function blockPaths(W, L) {
+  const c = `M0,${.02*L} C${.07*W},${.05*L} ${.065*W},${.3*L} ${.01*W},${.37*L} C${-.05*W},${.34*L} ${-.065*W},${.1*L} 0,${.02*L}Z`;
+  const s = `M${.005*W},${.42*L} C${.09*W},${.42*L} ${.1*W},${.85*L} ${.04*W},${L} C${-.06*W},${1.01*L} ${-.095*W},${.7*L} ${-.075*W},${.52*L} C${-.065*W},${.45*L} ${-.03*W},${.42*L} ${.005*W},${.42*L}Z`;
+  return c + ' ' + s;
+}
+function rot(x, y, a) { // local point -> screen, a = degrees bottom-east
+  const t = rad(a);
+  return [G.hx + x * Math.cos(t) + y * Math.sin(t), G.hy - x * Math.sin(t) + y * Math.cos(t)];
+}
+
+Kit.onShow.card = () => {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f * .9, 12);
+  const hx = .46 * W, hy = .13 * H, L = Math.min(.62 * H, .85 * W);
+  G = {W, H, hx, hy, L, fs};
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, class: 'sea', rx: 14}, svg);
+  Kit.mk('path', {class: 'fr', d: `M0,0 L${.64*W},0 L${hx+.03*W},${hy-.03*H} L${hx-.05*W},${hy+.01*H} L${.12*W},${hy+.1*H} L0,${hy+.16*H}Z`}, svg);
+  G.it = Kit.mk('path', {class: 'it'}, svg);
+  G.ridges = [0, 1, 2].map(() => Kit.mk('path', {class: 'ridge'}, svg));
+  Kit.mk('path', {class: 'ghost', d: blockPaths(W, L), transform: `translate(${hx},${hy}) rotate(${-A0})`}, svg);
+  G.arc = Kit.mk('path', {class: 'ghost', style: 'opacity:.7;stroke-dasharray:2 6;stroke-width:3', d: (() => {
+    const r = .93 * L, a = rot(0, r, A0 + 4), b = rot(0, r, A1 - 2);
+    return `M${a[0]},${a[1]} A${r},${r} 0 0 0 ${b[0]},${b[1]}`; })()}, svg);
+  G.blk = Kit.mk('path', {class: 'blk', d: blockPaths(W, L)}, svg);
+  G.arrows = [0, 1].map(() => {
+    const g = Kit.mk('g', {opacity: 0}, svg);
+    return {g, l: Kit.mk('path', {class: 'arw'}, g), h: Kit.mk('path', {class: 'arh'}, g)};
+  });
+  Kit.mk('circle', {class: 'hinge', cx: hx, cy: hy, r: Math.max(5, .018 * W)}, svg);
+  Kit.mk('text', {class: 'lab', x: hx + .045 * W, y: hy + fs * .1, 'font-size': fs}, svg).textContent = 'hinge';
+  Kit.mk('text', {class: 'lab', x: .05 * W, y: .065 * H, 'font-size': fs}, svg).textContent = 'FRANCE';
+  G.lc = Kit.mk('text', {class: 'lab inv', 'text-anchor': 'middle', 'font-size': Math.max(fs * .8, 12)}, svg); G.lc.textContent = 'Corsica';
+  G.ls = Kit.mk('text', {class: 'lab inv', 'text-anchor': 'middle', 'font-size': Math.max(fs * .8, 12)}, svg); G.ls.textContent = 'Sardinia';
+  G.lit = Kit.mk('text', {class: 'lab', 'text-anchor': 'middle', 'font-size': fs}, svg);
+  G.time = Kit.mk('text', {class: 'lab mono', x: .04 * W, y: H - fs * .8, 'font-size': fs}, svg);
+  G.ring = Kit.mk('circle', {class: 'ring', r: Math.max(12, .04 * W)}, svg);
+  G.hand = Kit.mk('circle', {class: 'hand', r: Math.max(8, .026 * W)}, svg);
+  draw();
+};
+
+function draw() {
+  if (!G) return;
+  const {W, H, hx, hy, L, fs} = G, a = A0 + (A1 - A0) * p;
+  G.blk.setAttribute('transform', `translate(${hx},${hy}) rotate(${-a})`);
+  const c = rot(0, .2 * L, a), s = rot(0, .7 * L, a), t = rot(0, .95 * L, a);
+  G.lc.setAttribute('x', c[0]); G.lc.setAttribute('y', c[1] + fs * .35);
+  G.ls.setAttribute('x', s[0]); G.ls.setAttribute('y', s[1] + fs * .35);
+  for (const el of [G.hand, G.ring]) { el.setAttribute('cx', t[0]); el.setAttribute('cy', t[1]); }
+  G.arc.style.opacity = .7 * (1 - p);
+  // Italy's crust: pushed east and squeezed
+  const e = .68 * W + .05 * W * p, sl = .08 * W;
+  G.it.setAttribute('d', `M${e},0 L${W},0 L${W},${H} L${e+sl},${H}Z`);
+  const mid0 = (e + W) / 2, mid1 = (e + sl + W) / 2, sp = .07 * W * (1 - .45 * p), amp = 1.5 + .045 * W * p, n = 10;
+  G.ridges.forEach((r, k) => {
+    const off = (k - 1) * sp; let d = '';
+    for (let i = 0; i <= n; i++) {
+      const u = i / n, x = mid0 + (mid1 - mid0) * u + off + (i % 2 ? amp : -amp) * .5, y = .04 * H + .92 * H * u;
+      d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    r.setAttribute('d', d); r.setAttribute('stroke-width', 1.5 + 3 * p);
+    r.style.opacity = .35 + .65 * p;
+  });
+  G.lit.textContent = p > .5 ? 'Apennines' : 'crust';
+  G.lit.setAttribute('x', (mid0 + mid1) / 2 + .02 * W); G.lit.setAttribute('y', .5 * H);
+  // push arrows from the block's east side
+  [.55, .82].forEach((y, i) => {
+    const q = rot(.085 * W, y * L, a), len = .06 * W, ar = G.arrows[i];
+    ar.g.setAttribute('opacity', p > .03 && p < .995 ? 1 : (p >= .995 ? .5 : 0));
+    ar.l.setAttribute('d', `M${q[0]+6},${q[1]} L${q[0]+len},${q[1]}`);
+    ar.h.setAttribute('d', `M${q[0]+len+8},${q[1]} L${q[0]+len-1},${q[1]-6} L${q[0]+len-1},${q[1]+6}Z`);
+  });
+  G.time.textContent = `${Math.round(25 - 15 * p)} million years ago`;
+}
+
+function setFrom(ev) {
+  const r = svg.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  let a = Math.atan2(x - G.hx, Math.max(y - G.hy, 1)) * 180 / Math.PI;
+  a = Math.min(A1, Math.max(A0, a));
+  const np = (a - A0) / (A1 - A0);
+  if (Math.abs(np - p) > .08) Kit.haptic('light');
+  p = np; draw();
+  if (p > .97 && !done) finish();
+}
+function finish() {
+  done = true; p = 1; draw(); Kit.haptic('success');
+  gsap.killTweensOf(G.ring);
+  G.ring.style.opacity = 0;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+svg.addEventListener('pointerdown', e => { dragging = true; gsap.killTweensOf(G); try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); });
+svg.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+const up = () => { dragging = false; };
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.ring, {attr: {r: Math.max(10, .03 * G.W)}, opacity: .9}, {attr: {r: Math.max(22, .07 * G.W)}, opacity: 0, duration: 1.2, repeat: -1, ease: 'power2.out'});
+  const o = {v: 0};
+  gsap.to(o, {v: .1, duration: .6, delay: .4, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => { if (!dragging && !done) { p = o.v; draw(); } }});
+};
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), wait = ms => new Promise(z => setTimeout(z, ms));
+  const at = a => { const q = rot(0, .95 * G.L, a); return {clientX: r.left + q[0], clientY: r.top + q[1], pointerId: 1, bubbles: true}; };
+  svg.dispatchEvent(new PointerEvent('pointerdown', at(A0)));
+  for (let i = 1; i <= 12; i++) { svg.dispatchEvent(new PointerEvent('pointermove', at(A0 + (A1 - A0 + 2) * i / 12))); await wait(30); }
+  svg.dispatchEvent(new PointerEvent('pointerup', at(A1)));
+  await wait(700);
+};
+Kit.single();
+</script>
+</html>

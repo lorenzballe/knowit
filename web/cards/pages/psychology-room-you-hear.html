@@ -1,0 +1,277 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The room you hear</title>
+<!-- One big hall, three linings. Each tap is a clap: its echoes are drawn as wavefronts from the
+     walls' mirror images (an image-source model of the room) and as the echo trail that reaches the
+     ears; with sound on, Tone.js plays the clap through a reverb of the same length. The dashed box is
+     the room the brain hears: it grows while echoes keep coming, and with foam wedges it stays the size
+     of a box round the listener's head. Inspired by Veritasium, "Testing if 60 minutes of silence drives
+     you crazy". Touch: taps. Sound: only after a tap, and only when the app plays sound. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/Tone.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh}
+#hall{flex:1;min-height:0;position:relative}
+#rows{display:flex;flex-direction:column;gap:.7cqh}
+.row{display:flex;align-items:center;gap:2.6cqw;height:max(5.2cqh,31px);padding:0 3cqw 0 3.4cqw;border:0;border-radius:99px;background:color-mix(in srgb,var(--k) 10%,transparent);box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 28%,transparent);color:var(--k);cursor:pointer;text-align:left;transition:background .25s,box-shadow .25s}
+.row .nm{flex:none;width:25cqw;font:800 max(1.75cqh,12px)/1.05 var(--body)}
+.row svg{flex:1;min-width:0;height:72%;display:block;overflow:visible}
+.row.on{background:var(--k);color:var(--c);box-shadow:none}
+.row:active{transform:scale(.985)}
+#rows.fresh .row:first-child{animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{0%,100%{box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 28%,transparent)}50%{box-shadow:inset 0 0 0 .45cqh var(--k)}}
+.say b{font-weight:800}
+.answered .q{font-size:max(2.6cqh,16px)}
+/* From the first clap the box under the words holds the evidence, then the keep: the hall keeps one size through all three linings. */
+@container (max-height:520px){
+  .answered .in{gap:1.6cqh}
+  .answered #rows{gap:.5cqh}
+  .answered .row{height:max(4.2cqh,24px)}
+  .answered .say .extra{display:none}
+}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Tap to clap · the room you hear">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO CLAP</span></div>
+    <h2 class="q">Why can a huge room with no echoes sound as small as a box?</h2>
+    <div class="stagebox" id="stage">
+      <div id="hall"><canvas id="waves" class="full" aria-hidden="true"></canvas><svg id="pic" class="full" role="img" aria-label="A big hall in cross-section with a small person clapping in the middle. A dashed box marks the room the person hears."></svg></div>
+      <div id="rows" class="fresh">
+        <button class="row" data-k="stone"><span class="nm">Bare stone</span><svg aria-hidden="true"></svg></button>
+        <button class="row" data-k="curtains"><span class="nm">Curtains</span><svg aria-hidden="true"></svg></button>
+        <button class="row" data-k="wedges"><span class="nm">Foam wedges</span><svg aria-hidden="true"></svg></button>
+      </div>
+    </div>
+    <p class="say" id="say">Clap in this big stone hall, then line its walls. Tap a lining and watch, or hear, how long each clap rings.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Your ears size a room by its echoes. Take them away and the room shrinks.</div>
+    <div class="foot"><span class="src">Source · Kolarik et al., Perception (2021), a test of 15 blindfolded listeners in virtual rooms</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), cv = Kit.$('waves'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#ffffff', GOLD = '#FFE600';
+  // How much of each echo a lining sends back, how big a room its echoes say, and its reverb in seconds.
+  const LINING = {
+    stone: {rho: .9, heard: 1, tau: .7, decay: 3.8, wet: .7,
+      say: '<b>Bare stone</b> sends almost every echo back, so the clap rings on and on. A long ring is how your brain hears a big room.'},
+    curtains: {rho: .5, heard: .5, tau: .3, decay: 1, wet: .42,
+      say: '<b>Curtains</b> soak up echoes, and the room you hear shrinks: why an empty flat sounds bigger than a furnished one.'},
+    wedges: {rho: .02, heard: 0, tau: .12, decay: 0, wet: 0,
+      say: '<b>Foam wedges</b> swallow nearly every echo, so even a hall sounds like a box.'}
+  };
+  let ctx = null, W = 1, H = 1, R = null;       // R: the room on this phone
+  let lining = 'stone', clapAt = null, images = [], heard = {s: .18}, heardFrom = .18, done = {}, running = false;
+  const now = () => performance.now() / 1000;
+  const T = 3.2;                                  // how long a clap is followed, in the drawing's slowed time
+
+  function room() {
+    const r = Kit.fitSvg(svg); W = r.W; H = r.H;
+    const f = Kit.fitCanvas(cv); ctx = f.x;
+    const fs = Math.max(11.5, Math.min(13, W / 26));
+    const cap = H >= 120, x0 = 3, x1 = W - 3, y0 = cap ? fs * 1.9 : 3, y1 = H - 3;
+    const ph = Math.min((y1 - y0) * .3, 46);      // the person's height
+    const px = (x0 + x1) / 2, foot = y1 - 2;
+    R = {fs, cap, x0, x1, y0, y1, px, foot, ph, sx: px, sy: foot - ph * .62, c: (x1 - x0) / 2 / .42};
+  }
+
+  // The mirror images of the clap in the four walls, out to the echoes that arrive within T.
+  function mirror(rho) {
+    const {x0, x1, y0, y1, sx, sy, c} = R, Lx = x1 - x0, Ly = y1 - y0, list = [];
+    const xs = [], ys = [];
+    for (let k = -6; k <= 6; k++) { xs.push([sx + 2 * k * Lx, Math.abs(2 * k)]); xs.push([2 * x0 - sx + 2 * k * Lx, Math.abs(2 * k - 1)]); }
+    for (let k = -9; k <= 9; k++) { ys.push([sy + 2 * k * Ly, Math.abs(2 * k)]); ys.push([2 * y0 - sy + 2 * k * Ly, Math.abs(2 * k - 1)]); }
+    for (const [x, nx] of xs) for (const [y, ny] of ys) {
+      const n = nx + ny, d = Math.hypot(x - sx, y - sy), a = Math.pow(rho, n) * Math.min(1, 60 / Math.max(60, d) * 1.6);
+      if (n > 14 || d / c > T || (n > 0 && a < .02)) continue;
+      list.push({x, y, n, d, a});
+    }
+    return list;
+  }
+
+  // ---------- the drawing: hall, lining, listener, the room heard ----------
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  function txt(s, x, y, a, p) { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-weight': 700, 'font-size': R.fs}, a), p); e.textContent = s; return e; }
+  function drawHall() {
+    svg.innerHTML = '';
+    const {fs, x0, x1, y0, y1, px, foot, ph} = R, g = mk('g', {}, svg);
+    // The lining, on every wall.
+    const lin = mk('g', {stroke: INK, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .55}, g);
+    if (lining === 'stone') {
+      const bh = Math.max(9, Math.min(15, (y1 - y0) / 9)), b = bh * .75;
+      const band = (ax, ay, bx, by, nx, ny) => {
+        const L = Math.hypot(bx - ax, by - ay), n = Math.max(2, Math.round(L / (bh * 1.5))), ux = (bx - ax) / n, uy = (by - ay) / n;
+        let d = `M${ax + nx * b} ${ay + ny * b} L${bx + nx * b} ${by + ny * b}`;
+        for (let i = 1; i < n; i++) d += ` M${ax + ux * i} ${ay + uy * i} l${nx * b} ${ny * b}`;
+        return d;
+      };
+      mk('path', {d: [band(x0, y0, x1, y0, 0, 1), band(x1, y0, x1, y1, -1, 0), band(x0, y1, x1, y1, 0, -1), band(x0, y0, x0, y1, 1, 0)].join(' '), 'stroke-width': 1.3}, lin);
+    } else if (lining === 'curtains') {
+      const fw = Math.max(7, (x1 - x0) / 34), top = y0 + 2;
+      for (const side of [0, 1]) for (let i = 0; i < 4; i++) {
+        const x = side ? x1 - fw * (i + .7) : x0 + fw * (i + .7), d = [`M${x} ${top}`];
+        for (let y = top; y < y1 - 4; y += fw * 1.6) d.push(`q${(i % 2 ? -1 : 1) * fw * .45} ${fw * .8} 0 ${fw * 1.6}`);
+        mk('path', {d: d.join(' '), 'stroke-width': 1.4}, lin);
+      }
+      mk('path', {d: `M${x0} ${top} H${x0 + fw * 4.4} M${x1 - fw * 4.4} ${top} H${x1}`, 'stroke-width': 3}, lin);
+    } else {
+      const s = Math.max(8, Math.min(13, (x1 - x0) / 26)), zig = (ax, ay, bx, by) => {
+        const L = Math.hypot(bx - ax, by - ay), n = Math.max(2, Math.round(L / s)), ux = (bx - ax) / n, uy = (by - ay) / n, nx = -uy / Math.hypot(ux, uy), ny = ux / Math.hypot(ux, uy);
+        let d = `M${ax} ${ay}`; for (let i = 0; i < n; i++) d += ` L${ax + ux * (i + .5) + nx * s * .8} ${ay + uy * (i + .5) + ny * s * .8} L${ax + ux * (i + 1)} ${ay + uy * (i + 1)}`; return d;
+      };
+      mk('path', {d: [zig(x0, y0, x1, y0), zig(x1, y0, x1, y1), zig(x1, y1, x0, y1), zig(x0, y1, x0, y0)].join(' '), 'stroke-width': 1.3}, lin);
+    }
+    // Tall windows on the far wall, for a stone or curtained hall: it is a church-sized room.
+    if (lining !== 'wedges') {
+      const wh = (y1 - y0) * .5, ww = Math.min(wh * .3, (x1 - x0) * .09), wy = y0 + (y1 - y0) * .2;
+      for (const k of [-1, 0, 1]) { const cx = px + k * (x1 - x0) * .26, x = cx - ww / 2;
+        mk('path', {d: `M${x} ${wy + wh} V${wy + ww * .9} Q${x} ${wy} ${cx} ${wy - ww * .35} Q${x + ww} ${wy} ${x + ww} ${wy + ww * .9} V${wy + wh} Z`, fill: 'rgba(255,255,255,.1)', stroke: INK, 'stroke-width': 1.3, opacity: .45}, g); }
+    }
+    // The walls.
+    mk('rect', {x: x0, y: y0, width: x1 - x0, height: y1 - y0, rx: 3, fill: 'none', stroke: INK, 'stroke-width': 2.6}, g);
+    if (R.cap) txt(lining === 'wedges' ? 'the same hall, lined with foam' : lining === 'curtains' ? 'the same hall, with curtains' : 'a stone hall, as big as a church', x0 + 2, y0 - fs * .55, {'font-size': fs, opacity: .85}, g);
+    // The listener, clapping.
+    const p = mk('g', {fill: INK}, g), hr = ph * .13;
+    mk('circle', {cx: px, cy: foot - ph + hr, r: hr}, p);
+    mk('path', {d: `M${px - ph * .13} ${foot} L${px - ph * .09} ${foot - ph * .45} L${px - ph * .12} ${foot - ph * .7} Q${px} ${foot - ph * .78} ${px + ph * .12} ${foot - ph * .7} L${px + ph * .09} ${foot - ph * .45} L${px + ph * .13} ${foot} Z`}, p);
+    mk('path', {d: `M${px - ph * .1} ${foot - ph * .66} L${px - ph * .02} ${foot - ph * .58} M${px + ph * .1} ${foot - ph * .66} L${px + ph * .02} ${foot - ph * .58}`, stroke: INK, 'stroke-width': Math.max(2, ph * .06), 'stroke-linecap': 'round', fill: 'none'}, p);
+    // The room you hear.
+    R.box = mk('rect', {fill: 'none', stroke: GOLD, 'stroke-width': 2.4, 'stroke-dasharray': '6 5', rx: 4, opacity: 0}, g);
+    R.boxLabel = txt('the room you hear', px, foot - ph * 1.5, {fill: GOLD, 'font-weight': 800, 'text-anchor': 'middle', opacity: 0}, g);
+  }
+  // The dashed box: s = 1 is the hall itself; s = 0 hugs the listener.
+  function placeBox(s) {
+    const {x0, x1, y0, y1, px, foot, ph, fs} = R;
+    const bw = ph * .62 + (x1 - x0 - 10 - ph * .62) * s, bh = ph * 1.25 + (y1 - y0 - 10 - ph * 1.25) * s;
+    const bx = Math.max(x0 + 5, Math.min(px - bw / 2, x1 - 5 - bw)), by = Math.max(y0 + 5, foot + 3 - bh);
+    for (const [k, v] of Object.entries({x: bx, y: by, width: bw, height: Math.min(bh, foot + 3 - by)})) R.box.setAttribute(k, v);
+    const lw = fs * 8.6, hgt = Math.min(bh, foot + 3 - by);
+    let lx, ly, anchor = 'middle';
+    if (bw >= lw + 12 && hgt >= fs * 2.2) { lx = bx + bw / 2; ly = by + fs * 1.3; }
+    else if (bx + bw + 8 + lw < x1 - 4) { lx = bx + bw + 8; ly = by + fs * .9; anchor = 'start'; }
+    else if (bx - 8 - lw > x0 + 4) { lx = bx - 8; ly = by + fs * .9; anchor = 'end'; }
+    else { lx = Math.max(x0 + 4 + lw / 2, Math.min(x1 - 4 - lw / 2, bx + bw / 2)); ly = Math.max(y0 + fs * 1.2, by - fs * .5); }
+    R.boxLabel.setAttribute('x', lx); R.boxLabel.setAttribute('y', ly); R.boxLabel.setAttribute('text-anchor', anchor);
+    R.box.setAttribute('opacity', clapAt === null ? 0 : 1); R.boxLabel.setAttribute('opacity', clapAt === null ? 0 : 1);
+  }
+
+  // ---------- each lining's echo trail, in its own row ----------
+  function trail(k, upTo) {
+    const s = document.querySelector(`.row[data-k="${k}"] svg`);
+    s.innerHTML = '';
+    const {W: w, H: h} = Kit.fitSvg(s), list = done[k]; if (!list) { mk('line', {x1: 0, y1: h / 2, x2: w, y2: h / 2, stroke: 'currentColor', 'stroke-width': 1.4, 'stroke-dasharray': '2 4', opacity: .45}, s); return; }
+    // Each echo is a tick: its height is its loudness on a 40 dB scale, its place its arrival time.
+    // Echoes closer than two pixels apart share a tick, the loudest one's.
+    const col = new Map();
+    for (const e of list) { const t = e.d / R.c; if (t > upTo) continue; const lv = Math.max(0, 1 + Math.log10(e.a) / 2); if (lv <= 0) continue; const x = Math.round((1 + t / T * (w - 2)) / 2.5) * 2.5; if (!(col.get(x) >= lv)) col.set(x, lv); }
+    let d = ''; for (const [x, lv] of col) d += `M${x.toFixed(1)} ${h}V${(h * (1 - lv)).toFixed(1)}`;
+    mk('line', {x1: 0, y1: h - .5, x2: w, y2: h - .5, stroke: 'currentColor', 'stroke-width': 1, opacity: .4}, s);
+    mk('path', {d, stroke: 'currentColor', 'stroke-width': 1.3, 'stroke-linecap': 'round', fill: 'none'}, s);
+  }
+
+  // ---------- the waves, on a canvas under the drawing ----------
+  function waves() {
+    ctx.clearRect(0, 0, W, H);
+    if (clapAt === null || Kit.calm) return;
+    const t = now() - clapAt, {x0, x1, y0, y1, c} = R;
+    if (t > T + .4) return;
+    ctx.save(); ctx.beginPath(); ctx.rect(x0 + 1, y0 + 1, x1 - x0 - 2, y1 - y0 - 2); ctx.clip();
+    ctx.strokeStyle = INK;
+    const fade = Math.max(0, 1 - t / (T + .4)), r = c * t, live = [];
+    if (r > 1) for (const e of images) {
+      // Only fronts that are crossing the hall right now: the rest have not reached it or have left it.
+      const near = Math.hypot(Math.max(x0 - e.x, 0, e.x - x1), Math.max(y0 - e.y, 0, e.y - y1)), far = Math.max(Math.hypot(e.x - x0, e.y - y0), Math.hypot(e.x - x1, e.y - y0), Math.hypot(e.x - x0, e.y - y1), Math.hypot(e.x - x1, e.y - y1));
+      if (r < near || r > far) continue;
+      const a = Math.pow(LINING[lining].rho, e.n) * fade * (e.n ? .75 : 1);
+      if (a > .05) live.push([a, e]);
+    }
+    live.sort((p, q) => q[0] - p[0]);
+    for (const [a, e] of live.slice(0, 70)) { ctx.globalAlpha = Math.min(.85, a); ctx.lineWidth = e.n ? 1.2 : 2.4; ctx.beginPath(); ctx.arc(e.x, e.y, r, 0, Math.PI * 2); ctx.stroke(); }
+    ctx.restore(); ctx.globalAlpha = 1;
+  }
+
+  function tick() {
+    if (clapAt === null) { running = false; return; }
+    const t = now() - clapAt, L = LINING[lining];
+    waves();
+    heard.s = L.heard + (heardFrom - L.heard) * Math.exp(-t / L.tau);
+    placeBox(heard.s);
+    trail(lining, t);
+    if (t < T + .5) requestAnimationFrame(tick); else { running = false; waves(); }
+  }
+
+  // ---------- the clap ----------
+  let audio = null;
+  async function sound(k) {
+    if (!Kit.sound || typeof Tone === 'undefined') return;
+    try {
+      await Tone.start();
+      if (!audio) {
+        const out = new Tone.Gain(.9).toDestination();
+        const bp = new Tone.Filter({type: 'bandpass', frequency: 1400, Q: .7});
+        const dry = new Tone.Gain(1).connect(out);
+        const rev = {stone: new Tone.Reverb({decay: LINING.stone.decay, preDelay: .03, wet: 1}), curtains: new Tone.Reverb({decay: LINING.curtains.decay, preDelay: .012, wet: 1})};
+        const send = {stone: new Tone.Gain(0), curtains: new Tone.Gain(0)};
+        for (const n of ['stone', 'curtains']) { send[n].connect(rev[n]); rev[n].connect(out); bp.connect(send[n]); }
+        bp.connect(dry);
+        const clap = new Tone.NoiseSynth({noise: {type: 'white'}, envelope: {attack: .001, decay: .085, sustain: 0, release: .03}, volume: -6}).connect(bp);
+        audio = {clap, send, dry};
+        await Promise.all(Object.values(rev).map(r => r.ready));
+      }
+      for (const n of ['stone', 'curtains']) audio.send[n].gain.value = n === k ? LINING[n].wet : 0;
+      audio.dry.gain.value = k === 'wedges' ? 1 : .75;
+      audio.clap.triggerAttackRelease(.09);
+    } catch (e) { /* no sound here: the drawing tells the same story */ }
+  }
+
+  // The words under the hall take the height of the longest of the three, so the hall never changes size.
+  function fitSay() {
+    const cur = say.innerHTML; say.style.minHeight = '';
+    let h = 0; for (const k of Object.keys(LINING)) { say.innerHTML = LINING[k].say; h = Math.max(h, say.getBoundingClientRect().height); }
+    say.innerHTML = cur; say.style.minHeight = Math.ceil(h) + 'px';
+  }
+  let clapped = false;
+  const KEEP = Kit.$('keep').innerHTML, PROOF = '<b>THE EVIDENCE</b>15 blindfolded listeners heard virtual rooms as bigger with echoes.';
+  function clap(k) {
+    if (!clapped) { clapped = true; card.classList.add('answered'); Kit.$('keep').innerHTML = PROOF; Kit.show('keep'); fitSay(); }
+    Kit.$('rows').classList.remove('fresh');
+    const first = !done[k];
+    heardFrom = clapAt === null ? .18 : heard.s;
+    // A lining left before its echoes died away keeps its whole trail in its row.
+    for (const j of Object.keys(done)) if (j !== k) trail(j, T);
+    lining = k; images = mirror(LINING[k].rho); done[k] = images.slice().sort((a, b) => a.d - b.d);
+    document.querySelectorAll('.row').forEach(b => b.classList.toggle('on', b.dataset.k === k));
+    drawHall();
+    clapAt = now();
+    say.innerHTML = LINING[k].say;
+    Kit.haptic(k === 'wedges' ? 'success' : 'light');
+    sound(k);
+    if (k === 'wedges' && first) { const kp = Kit.$('keep'); kp.innerHTML = KEEP; if (typeof gsap !== 'undefined' && !Kit.calm) gsap.fromTo(kp, {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .45, ease: 'power2.out'}); }
+    if (Kit.calm) { clapAt = now() - T - 1; heard.s = LINING[k].heard; placeBox(heard.s); trail(k, T); return; }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  }
+  Kit.$('rows').addEventListener('click', e => { const b = e.target.closest('.row'); if (b) clap(b.dataset.k); });
+
+  function redraw() {
+    room(); drawHall();
+    for (const k of Object.keys(done)) done[k] = mirror(LINING[k].rho).sort((a, b) => a.d - b.d);
+    const settled = clapAt === null || Kit.calm || now() - clapAt > T + .5;
+    if (clapAt !== null) placeBox(settled ? LINING[lining].heard : heard.s);
+    for (const k of Object.keys(LINING)) trail(k, k === lining && !settled ? now() - clapAt : T);
+    document.querySelectorAll('.row').forEach(b => b.classList.toggle('on', clapAt !== null && b.dataset.k === lining));
+    if (clapAt !== null) images = mirror(LINING[lining].rho);
+    waves();
+  }
+  Kit.onShow.card = () => { if (clapped) fitSay(); redraw(); };
+  let lastBox = '';
+  new ResizeObserver(() => { const b = Kit.$('hall').getBoundingClientRect(), k = Math.round(b.width) + 'x' + Math.round(b.height); if (k !== lastBox && R) { lastBox = k; redraw(); } }).observe(Kit.$('hall'));
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 40 : ms));
+    for (const k of ['stone', 'curtains', 'wedges']) { document.querySelector(`.row[data-k="${k}"]`).click(); await wait(k === 'stone' ? 2200 : 1500); }
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-sardinia-stable-block",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Sardinia have so few earthquakes, unlike the rest of Italy?",
+  "answer": "The Apennines are an active zone full of active faults, and when those faults slip, the ground shakes. Sardinia is a stable continental block with no active faults and no colliding plates, so it barely moves. The page lets you flip between the two regions to compare them underground.",
+  "move": "Earthquakes need active faults: no active faults, almost no quakes.",
+  "keywords": [
+    "sardinia",
+    "apennines",
+    "italy",
+    "earthquakes",
+    "faults"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two underground views: the Apennines in Italy, an active zone with faults that shake when they slip, and Sardinia, a stable block with no active faults. A switch flips between them, asking why Sardinia barely shakes."
+  },
+  "source": "Geopop, “PERCHÉ CI SONO POCHISSIMI TERREMOTI IN SARDEGNA? Geologia POP” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=mu0U-eYaGxM&t=584s",
+  "written": "2026-11-03"
+}

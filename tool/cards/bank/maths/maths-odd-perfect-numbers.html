@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-odd-perfect-numbers -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#fig{width:100%;height:100%;display:block;overflow:visible}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.ink{fill:var(--k)}
+.paper{fill:var(--c)}
+.lin{stroke:var(--k);fill:none;stroke-linecap:round}
+.soft{fill:color-mix(in srgb,var(--k) 10%,transparent)}
+.mut{fill:var(--muted)}
+.hit{fill:transparent;cursor:pointer}
+text{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Balance it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PERFECT NUMBERS</span></div>
+    <h2 class="q">What must the prime powers of an odd perfect number look like?</h2>
+    <div class="stagebox" id="stage"><svg id="fig"></svg></div>
+    <p class="say" id="say">Tap a prime to change its power. Make the scale balance.</p>
+    <div id="why" class="gone"><p class="body">Each σ(p<sup>a</sup>) = 1 + p + … + p<sup>a</sup> adds a+1 odd terms, so it is even only when a is odd. But σ(n) = 2n holds the factor 2 just once, so only one σ can be even.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An odd perfect number has exactly one prime raised to an odd power.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const ex = [2, 2, 2, 2], L = ['p', 'q', 'r', 's'];
+const st = {a: -8};
+let G = null, done = false, entered = false;
+const evens = () => ex.filter(a => a % 2).length;
+const target = () => Math.max(-12, Math.min(14, (evens() - 1) * 8));
+const mk = (t, a, p) => Kit.mk(t, a, p);
+
+function txt(p, x, y, s, size, cls, anchor) {
+  const t = mk('text', {x, y, class: cls || 'ink', 'font-size': size, 'text-anchor': anchor || 'middle', 'dominant-baseline': 'middle'}, p);
+  t.textContent = s; return t;
+}
+
+function draw() {
+  const svg = Kit.$('fig'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, W / 20, H / 21));
+  const sm = Math.max(12, fs * 0.85);
+  const arm = W * 0.32, tilt = arm * Math.sin(14 * Math.PI / 180);
+  const bh = fs * 1.5, hang = bh + fs * 0.9, pw = W * 0.27;
+  const rows = g => {
+    const r = {};
+    r.eq = fs * 0.8;
+    r.piv = r.eq + fs * 1.2 + tilt + g;
+    r.base = r.piv + tilt + hang + fs * 1.7;
+    r.status = r.base + fs * 1.3 + g;
+    r.tile = r.status + fs * 1.1 + g;
+    r.th = fs * 2.4;
+    r.dots = r.tile + r.th + fs * 1.1 + g;
+    r.terms = r.dots + fs * 1.5;
+    r.verd = r.terms + fs * 1.4;
+    r.end = r.verd + fs * 0.7;
+    return r;
+  };
+  let R = rows(0);
+  R = rows(Math.max(0, (H - R.end) / 4));
+  const cx = W / 2;
+
+  // equation
+  txt(svg, cx, R.eq, 'σ(n) = 2n = 2 × odd', fs, 'ink');
+
+  // stand
+  mk('path', {d: `M${cx} ${R.piv} L${cx} ${R.base} M${cx - fs * 1.6} ${R.base} L${cx + fs * 1.6} ${R.base}`, class: 'lin', 'stroke-width': Math.max(2, fs * .2)}, svg);
+  const beam = mk('line', {class: 'lin', 'stroke-width': Math.max(3, fs * .28)}, svg);
+  mk('circle', {cx, cy: R.piv, r: fs * .35, class: 'ink'}, svg);
+  const strings = mk('path', {class: 'lin', 'stroke-width': 1.5, opacity: .6}, svg);
+
+  // pans
+  const mkPan = (blocks, label) => {
+    const g = mk('g', {}, svg);
+    mk('path', {d: `M${-pw / 2} 0 Q0 ${fs * .7} ${pw / 2} 0`, class: 'lin', 'stroke-width': Math.max(2, fs * .2)}, g);
+    const tot = blocks.reduce((s, b) => s + b.w, 0) + (blocks.length - 1) * 4;
+    let x = -tot / 2;
+    blocks.forEach(b => {
+      mk('rect', {x, y: -bh - 2, width: b.w, height: bh, rx: 4, class: b.even ? 'ink' : 'soft', style: b.even ? '' : 'stroke:var(--k);stroke-width:1.5'}, g);
+      txt(g, x + b.w / 2, -bh / 2 - 2, b.t, sm, b.even ? 'paper' : 'ink');
+      x += b.w + 4;
+    });
+    txt(g, 0, fs * 1.25, label, sm, 'mut');
+    return g;
+  };
+  const bw = Math.max(sm * 1.4, Math.min(pw / 4.6, fs * 2.2));
+  const lp = mkPan(ex.map((a, i) => ({w: bw, t: L[i], even: a % 2 === 1})), 'σ(p^a)·σ(q^b)·…');
+  const rp = mkPan([{w: bw, t: '2', even: true}, {w: bw * 2.2, t: 'odd', even: false}], '2n');
+
+  // status
+  const e = evens();
+  const status = e === 1 ? 'Balanced: one even factor, one 2'
+    : e === 0 ? 'No even factor: the 2 is missing'
+    : `${e} even factors: too many 2s`;
+  txt(svg, cx, R.status, status, fs, 'ink');
+
+  // columns
+  const colW = W / 4, tw = Math.min(colW * .78, fs * 4.2);
+  const cols = [];
+  ex.forEach((a, i) => {
+    const x = colW * (i + .5), even = a % 2 === 1;
+    const g = mk('g', {}, svg);
+    mk('rect', {x: x - tw / 2, y: R.tile, width: tw, height: R.th, rx: fs * .5, class: even ? 'ink' : 'soft', style: 'stroke:var(--k);stroke-width:2'}, g);
+    const big = fs * 1.35;
+    txt(g, x - fs * .1, R.tile + R.th / 2 + 2, L[i], big, even ? 'paper' : 'ink', 'end');
+    txt(g, x + fs * .15, R.tile + R.th / 2 - fs * .45, String(a), sm, even ? 'paper' : 'ink', 'start');
+    const n = a + 1, r = Math.min(fs * .32, colW / (n * 2.8)), sp = r * 2.6;
+    const dots = [];
+    for (let k = 0; k < n; k++) dots.push(mk('circle', {cx: x + (k - (n - 1) / 2) * sp, cy: R.dots, r, class: 'ink'}, g));
+    txt(g, x, R.terms, `${n} odd terms`, sm, 'mut');
+    txt(g, x, R.verd, even ? 'σ EVEN' : 'σ odd', fs, 'ink');
+    const hit = mk('rect', {x: colW * i, y: R.tile - 4, width: colW, height: R.verd + fs * .7 - R.tile + 4, class: 'hit', 'data-i': i}, svg);
+    cols.push({g, dots, hit});
+  });
+
+  G = {beam, strings, lp, rp, cx, piv: R.piv, arm, hang, pw, cols};
+  place();
+}
+
+function place() {
+  if (!G) return;
+  const a = st.a * Math.PI / 180, dx = G.arm * Math.cos(a), dy = G.arm * Math.sin(a);
+  const lx = G.cx - dx, ly = G.piv + dy, rx = G.cx + dx, ry = G.piv - dy;
+  G.beam.setAttribute('x1', lx); G.beam.setAttribute('y1', ly);
+  G.beam.setAttribute('x2', rx); G.beam.setAttribute('y2', ry);
+  G.lp.setAttribute('transform', `translate(${lx},${ly + G.hang})`);
+  G.rp.setAttribute('transform', `translate(${rx},${ry + G.hang})`);
+  const h = G.pw / 2, H = G.hang;
+  G.strings.setAttribute('d', `M${lx} ${ly}L${lx - h} ${ly + H}M${lx} ${ly}L${lx + h} ${ly + H}M${rx} ${ry}L${rx - h} ${ry + H}M${rx} ${ry}L${rx + h} ${ry + H}`);
+}
+
+function tilt() {
+  if (Kit.calm) { st.a = target(); place(); return; }
+  gsap.to(st, {a: target(), duration: 1, ease: 'elastic.out(1,.45)', onUpdate: place});
+}
+
+Kit.$('fig').addEventListener('click', ev => {
+  const h = ev.target.closest('.hit'); if (!h) return;
+  const i = +h.dataset.i;
+  ex[i] = ex[i] % 4 + 1;
+  Kit.haptic('light');
+  draw();
+  if (!Kit.calm) gsap.from(G.cols[i].dots, {scale: 0, transformOrigin: 'center', stagger: .05, duration: .35, ease: 'back.out(2)'});
+  tilt();
+  if (evens() === 1 && !done) {
+    done = true;
+    setTimeout(() => { Kit.haptic('success'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }, 500);
+  }
+});
+
+Kit.onShow.card = () => { draw(); if (!entered) { st.a = Kit.calm ? target() : 0; place(); } };
+Kit.onEnter.card = () => {
+  entered = true;
+  if (Kit.calm) { st.a = target(); place(); return; }
+  G && G.cols.forEach((c, i) => gsap.from(c.g, {opacity: 0, y: 10, delay: i * .07, duration: .4, ease: 'power3.out'}));
+  gsap.to(st, {a: target(), duration: 1.2, delay: .3, ease: 'elastic.out(1,.45)', onUpdate: place});
+};
+Kit.play.card = async () => {
+  G.cols[0].hit.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 1400));
+};
+Kit.single();
+</script>
+</html>

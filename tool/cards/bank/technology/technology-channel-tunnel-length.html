@@ -1,0 +1,144 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-channel-tunnel-length -->
+<title>Astute free card: 39 km under the sea</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#why .big{margin:0}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · cross-section">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ENGINEERING</span></div>
+    <h2 class="q">How long is the Eurotunnel's stretch under the sea, and why does it matter?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of the Channel: England, the sea, the rock below and the tunnel to France"></svg>
+    </div>
+    <p class="say" id="say">Drag the drill from England to France and watch the kilometres pile up.</p>
+    <div id="why" class="gone">
+      <p class="big">39 km under the sea</p>
+      <p class="body">No rail tunnel in the world has a longer stretch beneath the sea. Digging that far under the water took seven years and about 4,000 workers following one plan. Their secret weapon was the geology below the seabed.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The Eurotunnel runs 39 km under the sea: the longest undersea rail stretch on Earth.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+let p = 0, done = false, G = null, dragging = false;
+
+function geo(W, H) {
+  const x0 = W * .05, x1 = W * .95, L0 = W * .17, R0 = W * .83;
+  const sea = H * .34;
+  const yT = x => { // tunnel depth: shallow under land, deepest mid-Channel
+    const t = (x - x0) / (x1 - x0);
+    return H * .52 + Math.sin(Math.PI * t) * H * .16;
+  };
+  const bed = x => sea + H * .11 + Math.sin(Math.PI * (x - L0) / (R0 - L0)) * H * .05;
+  return {W, H, x0, x1, L0, R0, sea, yT, bed};
+}
+const km = x => Math.max(0, Math.min(39, (x - G.L0) / (G.R0 - G.L0) * 39));
+
+Kit.onShow.card = () => {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  G = geo(W, H);
+  const {x0, x1, L0, R0, sea, yT, bed} = G;
+  const fs = Math.max(f, 12), mk = (t, a) => Kit.mk(t, a, svg);
+  // chalk / rock layer
+  mk('rect', {x: 0, y: sea, width: W, height: H - sea, fill: '#c9b48a'});
+  // sea
+  let d = `M${L0},${sea} L${R0},${sea}`;
+  for (let i = 40; i >= 0; i--) { const x = L0 + (R0 - L0) * i / 40; d += ` L${x},${bed(x)}`; }
+  mk('path', {d: d + 'Z', fill: '#2f6fb0'});
+  // land, white cliffs
+  mk('path', {d: `M0,${sea - H * .06} L${L0 - W * .02},${sea - H * .06} L${L0},${sea} L${L0},${H} L0,${H}Z`, fill: '#e9e3d2'});
+  mk('path', {d: `M${W},${sea - H * .05} L${R0 + W * .02},${sea - H * .05} L${R0},${sea} L${R0},${H} L${W},${H}Z`, fill: '#e9e3d2'});
+  mk('rect', {x: 0, y: sea - H * .06 - 3, width: L0 - W * .02, height: 4, fill: '#5c9a4f'});
+  mk('rect', {x: R0 + W * .02, y: sea - H * .05 - 3, width: W - R0 - W * .02, height: 4, fill: '#5c9a4f'});
+  // labels
+  const lab = (x, y, s, a, size, w, fill) => { const t = mk('text', {x, y, 'text-anchor': a, fill: fill || 'var(--k)', style: `font:${w || 700} ${size}px var(--body)`}); t.textContent = s; return t; };
+  lab(W * .03, sea - H * .09, 'ENGLAND', 'start', fs * .85, 800);
+  lab(W * .97, sea - H * .08, 'FRANCE', 'end', fs * .85, 800);
+  lab(W / 2, sea + H * .065, 'THE CHANNEL', 'middle', fs * .8, 700, '#ffffff');
+  // tunnel ghost
+  const pts = []; for (let i = 0; i <= 80; i++) { const x = x0 + (x1 - x0) * i / 80; pts.push([x, yT(x)]); }
+  mk('polyline', {points: pts.map(q => q.join(',')).join(' '), fill: 'none', stroke: '#7a6a4c', 'stroke-width': Math.max(H * .012, 3), 'stroke-dasharray': '5 6', 'stroke-linecap': 'round'});
+  G.dug = mk('polyline', {fill: 'none', stroke: '#1d1d1f', 'stroke-width': Math.max(H * .03, 8), 'stroke-linecap': 'round'});
+  G.lit = mk('polyline', {fill: 'none', stroke: '#ffd34d', 'stroke-width': Math.max(H * .008, 2), 'stroke-linecap': 'round'});
+  // km scale under the undersea section
+  const ys = H * .9;
+  mk('line', {x1: L0, y1: ys, x2: R0, y2: ys, stroke: 'var(--k)', 'stroke-width': 2});
+  [0, 10, 20, 30, 39].forEach(k => {
+    const x = L0 + (R0 - L0) * k / 39;
+    mk('line', {x1: x, y1: ys - 5, x2: x, y2: ys + 5, stroke: 'var(--k)', 'stroke-width': 2});
+    if (k !== 30) lab(x, ys + fs * 1.25, k === 39 ? '39 km' : String(k), k === 39 ? 'end' : k === 0 ? 'start' : 'middle', fs * .75, 700);
+  });
+  // readout
+  G.read = lab(W / 2, H * .1, '', 'middle', fs * 1.7, 800);
+  G.sub = lab(W / 2, H * .1 + fs * 1.4, 'dug under the sea', 'middle', fs * .8, 600, 'var(--muted)');
+  // drill
+  G.drill = mk('g', {});
+  const r = Math.max(H * .035, 11);
+  Kit.mk('circle', {r: r * 1.6, fill: '#ffd34d', opacity: .35, class: 'halo'}, G.drill);
+  Kit.mk('circle', {r, fill: '#e2462f', stroke: '#fff', 'stroke-width': 2.5}, G.drill);
+  Kit.mk('path', {d: `M${-r * .45},0 L${r * .45},0 M0,${-r * .45} L0,${r * .45}`, stroke: '#fff', 'stroke-width': 2}, G.drill);
+  render();
+};
+
+function render() {
+  if (!G) return;
+  const {x0, x1, yT} = G, xe = x0 + (x1 - x0) * p;
+  const pts = []; for (let i = 0; i <= 80; i++) { const x = x0 + (xe - x0) * i / 80; pts.push(`${x},${yT(x)}`); }
+  G.dug.setAttribute('points', pts.join(' '));
+  G.lit.setAttribute('points', pts.join(' '));
+  G.drill.setAttribute('transform', `translate(${xe},${yT(xe)})`);
+  const k = km(xe);
+  G.read.textContent = (k >= 39 ? '39' : k.toFixed(1)) + ' km';
+}
+
+function setFromEvent(e) {
+  const b = svg.getBoundingClientRect(), x = (e.clientX - b.left) / b.width * G.W;
+  const np = Math.max(0, Math.min(1, (x - G.x0) / (G.x1 - G.x0)));
+  if (np > p) { // the drill only moves forward
+    const before = Math.floor(km(G.x0 + (G.x1 - G.x0) * p) / 10);
+    p = np;
+    if (Math.floor(km(G.x0 + (G.x1 - G.x0) * p) / 10) > before) Kit.haptic('light');
+    render();
+  }
+  if (!done && G.x0 + (G.x1 - G.x0) * p >= G.R0) finish();
+}
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) {
+    gsap.from('#why, #keep', {opacity: 0, y: 10, stagger: .12, duration: .45, ease: 'power3.out'});
+    gsap.fromTo(G.read, {scale: 1.25, transformOrigin: 'center'}, {scale: 1, duration: .5, ease: 'back.out(3)'});
+  }
+}
+svg.addEventListener('pointerdown', e => { dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFromEvent(e); });
+svg.addEventListener('pointermove', e => { if (dragging) setFromEvent(e); });
+svg.addEventListener('pointerup', () => { dragging = false; });
+svg.addEventListener('pointercancel', () => { dragging = false; });
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo('#pic .halo', {attr: {r: 8}, opacity: .6}, {attr: {r: Math.max(G.H * .07, 24)}, opacity: 0, duration: 1.1, repeat: 3, ease: 'power2.out'});
+};
+
+Kit.play.card = async () => {
+  const b = svg.getBoundingClientRect(), y = b.top + b.height * .6;
+  const ev = (t, x) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', b.left + b.width * .06);
+  for (let i = 1; i <= 12; i++) { ev('pointermove', b.left + b.width * (.06 + .9 * i / 12)); await new Promise(r => setTimeout(r, 30)); }
+  ev('pointerup', b.right);
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

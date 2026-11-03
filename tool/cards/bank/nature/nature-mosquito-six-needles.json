@@ -1,0 +1,37 @@
+{
+  "id": "nature-mosquito-six-needles",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.pests",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What are the six needles inside a mosquito's proboscis doing?",
+  "answer": "Two dark-green divaricators pry the skin open, and two red saw-edged lancets cut like knives. A light-green stylet injects chemicals, and the blue syringe drinks the blood.",
+  "move": "A bite is a six-needle kit: open, cut, inject, drink.",
+  "keywords": [
+    "mosquito",
+    "proboscis",
+    "stylet",
+    "syringe",
+    "blood"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Close-up diagram of a mosquito's proboscis showing its six needles: two dark-green divaricators, two red saw-edged lancets, a light-green stylet and a blue syringe. The question asks what the needles do. Tap each tool to watch it work."
+  },
+  "source": "Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=pZcUFk1fcsg&t=113s",
+  "written": "2026-11-03"
+}

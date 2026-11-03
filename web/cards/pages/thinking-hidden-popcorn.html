@@ -1,0 +1,205 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hidden popcorn</title>
+<!-- A flash test: a word is shown between two rows of X's, as in Karremans, Stroebe & Claus (2006),
+     for as long as the reader picks, down to one frame of their own screen. Then Vicary's 1957 claim
+     (1/3000 s, every 5 seconds, popcorn +58%, Coke +18%), which he admitted in 1962 rested on data
+     "too small to be meaningful", drawn against that frame; then what a real lab found: a 23 ms
+     "Lipton Ice" tipped a two-drink choice only for people already thirsty: 80% vs 20% as publicly reported
+     (the paper's Fig. 2 plots about 85%), no significant effect for the not thirsty (105 students, Study 2).
+     Inspired by Diventare Strong (Alex Onofri), "Persuasione Ipnotica. Comandi Nascosti". Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh}
+#screen{flex:1;min-height:0;position:relative;background:#0d0d10;border-radius:2.4cqh;color:#fff;overflow:hidden;box-shadow:0 .5cqh 1.4cqh rgba(0,0,0,.16)}
+#screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 45%,rgba(255,255,255,.07),transparent 75%);pointer-events:none}
+.layer{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;padding:2cqh 5cqw}
+.mid{align-items:center;text-align:center}
+#mask{font:800 max(4.4cqh,22px)/1 var(--mono);letter-spacing:.06em;margin:0;white-space:nowrap}
+#meter{position:absolute;left:5cqw;bottom:1.6cqh;margin:0;font:600 max(1.5cqh,11.5px)/1 var(--body);opacity:.55}
+.sq{font:700 max(1.8cqh,12.5px)/1.2 var(--body);margin:0;opacity:.9}
+#opts{display:flex;gap:2cqw;flex-wrap:wrap;justify-content:center}
+.opt{font:800 max(1.75cqh,12.5px)/1 var(--mono);color:#fff;background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh rgba(255,255,255,.55);border-radius:99px;padding:1.3cqh 3.2cqw;cursor:pointer;letter-spacing:.04em}
+#fbw{font:800 max(3.4cqh,18px)/1.1 var(--mono);margin:0;letter-spacing:.04em}
+#fbs{font:600 max(1.6cqh,12px)/1.3 var(--body);margin:0;opacity:.75}
+#picker{display:flex;gap:1.6cqw}
+.dur{flex:1;font:800 max(1.75cqh,12.5px)/1 var(--body);padding:1.3cqh 0;border-radius:99px;border:0;background:color-mix(in srgb,var(--k) 7%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 26%,transparent);color:var(--k);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:1.2cqw;white-space:nowrap}
+.dur.on{background:var(--k);color:var(--c);box-shadow:none}
+.dur::after{content:'';display:none;width:1.1cqh;height:1.1cqh;min-width:7px;min-height:7px;border-radius:50%;box-sizing:border-box}
+.dur.hit::after{display:block;background:currentColor}
+.dur.miss::after{display:block;border:.22cqh solid currentColor}
+.sc{font:800 max(1.5cqh,11.5px)/1.25 var(--body);letter-spacing:.1em;text-transform:uppercase;margin:0;opacity:.7}
+.bl{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;font:600 max(1.65cqh,12px)/1.2 var(--body)}
+.bl b{font:800 max(1.75cqh,12.5px)/1 var(--mono);white-space:nowrap}
+.track{height:1.3cqh;min-height:7px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden;margin-bottom:.6cqh}
+.track i{display:block;height:100%;border-radius:99px;background:#fff;min-width:2px}
+#ratio{font:800 max(3.2cqh,17px)/1.05 var(--display);margin:.4cqh 0 0}
+.note{font:600 max(1.5cqh,11.5px)/1.3 var(--body);margin:0;opacity:.75}
+.ppl{display:grid;grid-template-columns:repeat(20,1fr);gap:.9cqw;margin-bottom:.4cqh}
+.ppl i{display:block;aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 max(.22cqh,1.3px) rgba(255,255,255,.42)}
+.ppl i.on{background:#fff;box-shadow:none}
+#btns{display:flex;gap:2.4cqw;flex-wrap:wrap}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (min-height:560px){
+  #Llab{gap:1.5cqh}
+  #Llab .bl{font-size:max(1.95cqh,12px)}
+  #Llab .bl b{font-size:max(1.95cqh,12.5px)}
+  .ppl{grid-template-columns:repeat(10,1fr);gap:1.2cqh 2.4cqw;margin-bottom:.8cqh}
+  #Llab .note{font-size:max(1.7cqh,11.5px)}
+}
+@container (max-height:520px){
+  .layer{gap:.8cqh;padding:1.4cqh 4.6cqw}
+  .track{margin-bottom:.2cqh}
+  #ratio{margin:0}
+}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Flash test · hidden messages">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLASH TEST</span></div>
+    <h2 class="q">Can a hidden message in a film make you buy popcorn?</h2>
+    <div class="stagebox" id="stage">
+      <div id="screen" role="img" aria-label="A dark cinema screen showing a row of X's, where a word will flash.">
+        <div class="layer mid" id="Lmask"><p id="mask">XXXXXXXX</p></div>
+        <div class="layer mid gone" id="Lask"><p class="sq">Which word flashed?</p><div id="opts"><button class="opt">POPCORN</button><button class="opt">PRETZEL</button><button class="opt">CRACKER</button></div></div>
+        <div class="layer mid gone" id="Lfb"><p class="sq" id="fbh"></p><p id="fbw"></p><p id="fbs"></p></div>
+        <div class="layer gone" id="Lvic">
+          <p class="sc">How long each flash lasted</p>
+          <div class="bl"><span>One frame on this screen</span><b id="fms">17 ms</b></div>
+          <div class="track"><i id="b1"></i></div>
+          <div class="bl"><span>Vicary’s claim, 1957</span><b>0.33 ms</b></div>
+          <div class="track"><i id="b2"></i></div>
+          <p id="ratio">50 times shorter</p>
+        </div>
+        <div class="layer gone" id="Llab">
+          <p class="sc">2006 lab · “Lipton Ice” · 23 ms</p>
+          <div class="bl"><span>Thirsty, no flash</span><b>20% chose it</b></div>
+          <div class="ppl" data-on="4" aria-label="4 in 20 chose Lipton Ice"></div>
+          <div class="bl"><span>Thirsty, with the flash</span><b>80% chose it</b></div>
+          <div class="ppl" data-on="16" aria-label="16 in 20 chose Lipton Ice"></div>
+          <p class="note">Not thirsty: no significant effect</p>
+        </div>
+        <p id="meter"></p>
+      </div>
+      <div id="picker"></div>
+    </div>
+    <p class="say" id="say">A word will flash between rows of X’s, the way labs hide it. Pick how long, then flash it.</p>
+    <div id="btns"><button class="btn" id="go">Flash it</button><button class="btn ghost gone" id="story">The 1957 story</button></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A hidden flash can’t create a want. At most it tips a choice you were already making.</div>
+    <div class="foot"><span class="src">Source · Pratkanis, Skeptical Inquirer 1992; Karremans, Stroebe &amp; Claus, J. Exp. Soc. Psychol. 2006</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const $ = Kit.$, go = $('go'), story = $('story'), say = $('say'), card = $('card'), mask = $('mask');
+  const WORDS = ['POPCORN', 'PRETZEL', 'CRACKER'], MASK = 'XXXXXXXX', VICARY_MS = 1000 / 3000;
+  const DUR = [{label: '½ s', ms: 500, name: '½ second'}, {label: '1/10 s', ms: 100, name: '1/10 second'}, {label: '1/30 s', ms: 33, name: '1/30 second'}, {label: '1 frame', frames: 1, name: '1 frame'}];
+  let pick = 0, frameMs = 1000 / 60, measured = false, phase = 'test', busy = false, shown = '', tries = 0;
+  const moving = () => !Kit.calm && typeof gsap !== 'undefined';
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const frame = () => new Promise(r => requestAnimationFrame(r));
+  const layer = id => { for (const l of ['Lmask', 'Lask', 'Lfb', 'Lvic', 'Llab']) $(l).classList.toggle('gone', l !== id); };
+  const frames = d => d.frames || Math.max(1, Math.round(d.ms / frameMs));
+  // How long a flash really lasts on this screen: whole frames, called by its round name when it is that.
+  const msOf = d => { const real = frames(d) * frameMs; return Math.round(d.ms && Math.abs(real - d.ms) / d.ms < .05 ? d.ms : real); };
+  const meter = () => { const d = DUR[pick], n = frames(d); $('meter').textContent = phase !== 'test' ? '' : d.frames ? `flash: 1 frame · ${msOf(d)} ms` : `flash: ${d.name} · ${n} frames · ${msOf(d)} ms`; };
+
+  // The durations to pick from, each marked after a try: a dot if read, a ring if missed.
+  DUR.forEach((d, i) => { const b = document.createElement('button'); b.className = 'dur' + (i === pick ? ' on' : ''); b.dataset.i = i; b.textContent = d.label; $('picker').appendChild(b); });
+  $('picker').addEventListener('click', e => {
+    const b = e.target.closest('.dur'); if (!b || busy || phase !== 'test') return;
+    pick = +b.dataset.i; document.querySelectorAll('.dur').forEach(x => x.classList.toggle('on', x === b)); Kit.haptic('selection'); meter();
+  });
+
+  // How long one frame of this screen lasts, from the frames themselves.
+  async function measure() {
+    const t = []; let last = await frame();
+    for (let i = 0; i < 14; i++) { const now = await frame(); t.push(now - last); last = now; }
+    t.sort((a, b) => a - b); const m = t[7];
+    if (m > 4 && m < 50) frameMs = m;
+    measured = true;
+  }
+
+  async function flash() {
+    if (busy || phase !== 'test') return;
+    busy = true; Kit.haptic('light');
+    layer('Lmask'); mask.textContent = MASK;
+    // A blink to say "look", then the first mask, as long as the lab's.
+    mask.style.opacity = .3; await sleep(220); mask.style.opacity = 1;
+    await Promise.all([measured ? null : measure(), sleep(500)]);
+    meter();
+    shown = WORDS[Math.floor(Math.random() * WORDS.length)];
+    const n = frames(DUR[pick]);
+    // The word is painted on this frame and replaced n frames later: on screen for exactly n frames.
+    await frame(); mask.textContent = shown;
+    for (let i = 0; i < n; i++) await frame();
+    mask.textContent = MASK;
+    await sleep(500);
+    layer('Lask');
+    if (moving()) gsap.from('#Lask .opt', {opacity: 0, y: 6, duration: .3, stagger: .06});
+    busy = false;
+  }
+
+  function answer(word) {
+    const ok = word === shown, chip = document.querySelector(`.dur[data-i="${pick}"]`), ms = msOf(DUR[pick]);
+    tries++;
+    chip.classList.remove('hit', 'miss'); chip.classList.add(ok ? 'hit' : 'miss');
+    $('fbh').textContent = ok ? 'Right, it was' : 'It was';
+    $('fbw').textContent = shown;
+    $('fbs').textContent = `on screen for ${ms} ms`;
+    layer('Lfb');
+    Kit.haptic(ok ? 'success' : 'light');
+    say.innerHTML = pick === 3
+      ? `One frame, about ${Math.round(frameMs)} ms, is the briefest flash this screen can draw. ${ok ? 'Right, but 1 guess in 3 is right by luck.' : 'Most people can only guess here.'}`
+      : ok ? (pick === 2 ? 'Caught it even at 1/30 s? Now try <b>1 frame</b>.' : 'Easy at that speed. Now make it <b>shorter</b>.')
+           : pick === 2 ? 'Gone already at 1/30 s. Try <b>1 frame</b>, then read the 1957 story.' : 'Missed? Keep your eyes on the X’s and flash again.';
+    go.textContent = 'Flash again'; story.classList.remove('gone');
+  }
+  $('opts').addEventListener('click', e => { const b = e.target.closest('.opt'); if (b && phase === 'test' && !$('Lask').classList.contains('gone')) answer(b.textContent); });
+
+  const grow = (ids, widths) => ids.forEach((id, k) => { const el = $(id); el.style.width = widths[k]; if (moving()) gsap.fromTo(el, {width: 0}, {width: widths[k], duration: .8, delay: .2 + k * .35, ease: 'power2.out'}); });
+  function next() {
+    if (busy) return;
+    if (phase === 'test') {
+      // Vicary's claimed flash against the shortest one this screen can show.
+      phase = 'story'; meter();
+      Kit.hide('picker'); go.classList.add('gone');
+      story.textContent = 'What did a real lab find?'; story.classList.remove('ghost');
+      $('fms').textContent = `${Math.round(frameMs)} ms`;
+      const times = Math.round(frameMs / VICARY_MS / 5) * 5;
+      $('ratio').textContent = `${times} times shorter`;
+      layer('Lvic'); grow(['b1', 'b2'], ['100%', `${(VICARY_MS / frameMs * 100).toFixed(2)}%`]);
+      say.innerHTML = '1957: James Vicary claimed that flashing “Eat Popcorn” and “Drink Coca-Cola” for <b>1/3000 s</b> every 5 seconds lifted their sales 58% and 18%. In 1962 he admitted his data were “too small to be meaningful”.';
+      Kit.haptic('light');
+    } else if (phase === 'story') {
+      phase = 'lab';
+      // Twenty students a row; one dot fills for each one in twenty who chose Lipton Ice.
+      document.querySelectorAll('.ppl').forEach(row => { row.innerHTML = ''; for (let k = 0; k < 20; k++) row.appendChild(document.createElement('i')); });
+      layer('Llab');
+      Kit.hide('btns'); card.classList.add('answered'); Kit.show('keep');
+      say.innerHTML = 'In one 2006 lab test with about 100 students, it tipped a choice between Lipton Ice and water, only for those already thirsty, and with a brand they didn’t usually have.';
+      document.querySelectorAll('.ppl').forEach((row, r) => {
+        const on = [...row.children].slice(0, +row.dataset.on);
+        if (moving()) on.forEach((d, k) => gsap.delayedCall(.3 + r * .5 + k * .04, () => d.classList.add('on')));
+        else on.forEach(d => d.classList.add('on'));
+      });
+      Kit.haptic('success');
+    }
+  }
+  go.addEventListener('click', flash);
+  story.addEventListener('click', next);
+  Kit.onShow.card = meter;
+  Kit.onEnter.card = () => { measure().then(meter); if (moving()) gsap.from('#screen', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+  // Plays it through for the checker: the shortest flash, a guess, then the story and the lab.
+  Kit.play.card = async () => {
+    document.querySelector('.dur[data-i="3"]').click();
+    await flash();
+    document.querySelector('#opts .opt').click(); await sleep(Kit.calm ? 50 : 500);
+    story.click(); await sleep(Kit.calm ? 50 : 1400);
+    story.click(); await sleep(Kit.calm ? 50 : 600);
+  };
+})();
+Kit.single();
+</script>
+</html>

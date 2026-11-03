@@ -1,0 +1,37 @@
+{
+  "id": "psychology-spinning-tube",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Spin a labelled tube: why do you only see the side you press?",
+  "answer": "The spinning tube is a series of quick images, and your brain stitches them into one continuous picture. The side under your finger is the one you keep looking at, so that is the image your brain shows you.",
+  "move": "What you see is a stitch of quick images, not the object itself.",
+  "keywords": [
+    "spinning tube",
+    "persistence of vision",
+    "brain",
+    "vision",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A labelled tube shown spinning, with two buttons, Press the O and Press the X. The question asks why you only see the side you press."
+  },
+  "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=wQTVcaA3PQw&t=18s",
+  "written": "2026-11-03"
+}

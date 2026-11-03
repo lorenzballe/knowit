@@ -1,0 +1,224 @@
+<!doctype html>
+<!-- slug: science-rock-atom-clocks -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card: rocks as clocks</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh;padding-top:.6cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12.5px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · match the clock">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ROCK CLOCKS</span></div>
+    <h2 class="q">How can a rock tell us how old it is?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Two rocks full of atoms and a time slider"></svg>
+      <div id="why" class="gone">
+        <p class="big">The mix is the clock.</p>
+        <p class="body">Rocks hold unstable atoms that slowly turn into stable ones. Compare how many have turned with how many are left, and you know how much time has passed. Some atoms take millions of years, others thousands, minutes or a fraction of a second.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag time until the fresh rock’s mix matches the found rock.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Unstable vs stable atoms in a rock: a clock that started when it formed.</div>
+    <div class="foot"><span class="src">Source · Geopop, “▶️ LE ERE GEOLOGICHE: COME DIAVOLO LE ABBIAMO RICOSTRUITE? |GeologiaPOP” (YouTube, 2018).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 40, COLS = 8, ROWS = 5, TARGET = 30, K = 4;
+const T_STAR = Math.log(N / (N - TARGET)) / K;           // time at which 30 of 40 have turned
+const AMBER = '#ffb32e', STABLE = '#d9d4cb', ROCK = '#3b342e', ROCK2 = '#2a2420';
+const turnedAt = t => Math.round(N * (1 - Math.exp(-K * t)));
+
+// Seeded choices, made once so the picture never reshuffles.
+const foundUnstable = new Set();
+const order = [];
+const rockShapeA = [], rockShapeB = [];
+(function seed(){
+  const idx = [...Array(N).keys()];
+  for (let i = N - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  idx.slice(0, N - TARGET).forEach(i => foundUnstable.add(i));
+  const o = [...Array(N).keys()];
+  for (let i = N - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [o[i], o[j]] = [o[j], o[i]]; }
+  o.forEach((a, r) => order[a] = r);                      // rank in which each atom turns
+  for (let i = 0; i < 14; i++) { rockShapeA.push(.9 + Kit.rnd() * .16); rockShapeB.push(.9 + Kit.rnd() * .16); }
+})();
+
+let t = 0, solved = false, dragging = false;
+let G = {};   // geometry + live elements
+
+function ink(){ return getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111'; }
+
+function rockPath(cx, cy, rx, ry, shape){
+  const n = shape.length, pts = [];
+  for (let i = 0; i < n; i++) {
+    const a = i / n * Math.PI * 2;
+    pts.push([cx + Math.cos(a) * rx * shape[i], cy + Math.sin(a) * ry * shape[i]]);
+  }
+  let d = '';
+  for (let i = 0; i < n; i++) {
+    const p = pts[i], q = pts[(i + 1) % n];
+    const m = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+    d += (i === 0 ? `M${m[0]},${m[1]}` : '') ;
+  }
+  for (let i = 0; i < n; i++) {
+    const q = pts[(i + 1) % n], r = pts[(i + 2) % n];
+    d += ` Q${q[0]},${q[1]} ${(q[0] + r[0]) / 2},${(q[1] + r[1]) / 2}`;
+  }
+  return d + 'Z';
+}
+
+function drawRock(svg, cx, cy, rw, rh, shape, title, fs, k){
+  const g = Kit.mk('g', {}, svg);
+  Kit.mk('path', {d: rockPath(cx, cy + rh * .04, rw / 2, rh / 2, shape), fill: ROCK2}, g);
+  const body = Kit.mk('path', {d: rockPath(cx, cy, rw / 2, rh / 2, shape), fill: ROCK, stroke: k, 'stroke-width': Math.max(1.5, fs * .12)}, g);
+  const tt = Kit.mk('text', {x: cx, y: cy - rh / 2 - fs * .55, 'text-anchor': 'middle', fill: k,
+    style: `font:800 ${fs}px var(--display)`}, g); tt.textContent = title;
+  const w = rw * .66, h = rh * .56, sx = w / COLS, sy = h / ROWS, r = Math.min(sx, sy) * .33;
+  const dots = [];
+  for (let i = 0; i < N; i++) {
+    const c = i % COLS, rr = Math.floor(i / COLS);
+    const jx = (Kit.rnd() - .5) * sx * .25, jy = (Kit.rnd() - .5) * sy * .25;
+    dots.push(Kit.mk('circle', {cx: cx - w / 2 + sx * (c + .5) + jx, cy: cy - h / 2 + sy * (rr + .5) + jy, r}, g));
+  }
+  return {g, body, dots, r};
+}
+
+function countRows(svg, cx, y, fs, k){
+  const fsz = Math.max(12, fs * .82), r = fsz * .32;
+  const mkRow = (yy, col) => {
+    Kit.mk('circle', {cx: cx - fsz * 3.4, cy: yy - fsz * .33, r, fill: col, stroke: k, 'stroke-width': 1}, svg);
+    const tx = Kit.mk('text', {x: cx - fsz * 2.8, y: yy, fill: k, style: `font:700 ${fsz}px var(--body)`}, svg);
+    return tx;
+  };
+  return {u: mkRow(y, AMBER), s: mkRow(y + fsz * 1.35, STABLE)};
+}
+
+function paintFresh(){
+  const n = turnedAt(t);
+  G.fresh.dots.forEach((d, i) => {
+    const st = order[i] < n;
+    d.setAttribute('fill', st ? STABLE : AMBER);
+    d.setAttribute('r', st ? G.fresh.r * .85 : G.fresh.r);
+  });
+  G.fc.u.textContent = `${N - n} unstable`;
+  G.fc.s.textContent = `${n} stable`;
+  if (G.knob) {
+    const x = G.x0 + (G.x1 - G.x0) * t;
+    G.knob.setAttribute('transform', `translate(${x},${G.ty})`);
+    G.fill.setAttribute('x2', x);
+  }
+  const match = Math.abs(n - TARGET) <= 1;
+  G.fresh.body.setAttribute('stroke', match ? AMBER : G.k);
+  G.fresh.body.setAttribute('stroke-width', match ? Math.max(3, G.fs * .25) : Math.max(1.5, G.fs * .12));
+}
+
+function draw(){
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const k = ink(), fs = Math.max(13, Math.min(f, H * .06));
+  G = {k, fs};
+  const showTimeline = !solved;
+  const tl = showTimeline ? fs * 4.6 : 0, cnt = Math.max(12, fs * .82) * 2.9, top = fs * 1.6;
+  const rh = Math.max(24, Math.min(W * .44 * .78, H - tl - cnt - top - fs * .4));
+  const rw = Math.min(W * .45, rh / .78);
+  const cy = top + rh / 2 + fs * .2;
+  const cxA = W * .26, cxB = W * .74;
+  G.found = drawRock(svg, cxA, cy, rw, rh, rockShapeA, 'Found rock', fs, k);
+  G.found.dots.forEach((d, i) => d.setAttribute('fill', foundUnstable.has(i) ? AMBER : STABLE));
+  G.found.dots.forEach((d, i) => { if (!foundUnstable.has(i)) d.setAttribute('r', G.found.r * .85); });
+  G.fresh = drawRock(svg, cxB, cy, rw, rh, rockShapeB, 'Fresh rock', fs, k);
+  const cyCount = cy + rh / 2 + Math.max(12, fs * .82) * 1.35;
+  const fa = countRows(svg, cxA, cyCount, fs, k);
+  fa.u.textContent = `${N - TARGET} unstable`; fa.s.textContent = `${TARGET} stable`;
+  G.fc = countRows(svg, cxB, cyCount, fs, k);
+
+  if (showTimeline) {
+    // Timeline
+    G.x0 = W * .08; G.x1 = W * .92; G.ty = H - fs * 2.3;
+    const lab = Math.max(12, fs * .8);
+    const tt = Kit.mk('text', {x: W / 2, y: G.ty - fs * 1.25, 'text-anchor': 'middle', fill: k,
+      style: `font:800 ${lab}px var(--body);letter-spacing:.08em`}, svg); tt.textContent = 'TIME PASSED →';
+    Kit.mk('line', {x1: G.x0, x2: G.x1, y1: G.ty, y2: G.ty, stroke: k, 'stroke-opacity': .25, 'stroke-width': fs * .45, 'stroke-linecap': 'round'}, svg);
+    G.fill = Kit.mk('line', {x1: G.x0, x2: G.x0, y1: G.ty, y2: G.ty, stroke: k, 'stroke-width': fs * .45, 'stroke-linecap': 'round'}, svg);
+    const l1 = Kit.mk('text', {x: G.x0 - fs * .3, y: G.ty + fs * 1.75, fill: k, style: `font:600 ${lab}px var(--body)`}, svg); l1.textContent = 'rock forms';
+    const l2 = Kit.mk('text', {x: G.x1 + fs * .3, y: G.ty + fs * 1.75, 'text-anchor': 'end', fill: k, style: `font:600 ${lab}px var(--body)`}, svg); l2.textContent = 'much later';
+    // Knob: an hourglass
+    G.knob = Kit.mk('g', {}, svg);
+    const R = fs * 1.05;
+    Kit.mk('circle', {r: R, fill: ROCK, stroke: k, 'stroke-width': 2}, G.knob);
+    const hw = R * .48, hh = R * .6;
+    Kit.mk('path', {d: `M${-hw},${-hh} L${hw},${-hh} L0,0 Z`, fill: AMBER}, G.knob);
+    Kit.mk('path', {d: `M${-hw},${hh} L${hw},${hh} L0,0 Z`, fill: STABLE}, G.knob);
+  }
+  paintFresh();
+}
+
+function setFromClientX(cx){
+  const r = Kit.$('pic').getBoundingClientRect();
+  const W = Kit.$('pic').viewBox.baseVal.width || r.width;
+  const x = (cx - r.left) * W / r.width;
+  t = Math.max(0, Math.min(1, (x - G.x0) / (G.x1 - G.x0)));
+  const before = G.lastN; paintFresh(); G.lastN = turnedAt(t);
+  if (before !== undefined && before !== G.lastN) Kit.haptic('selection');
+}
+
+function release(){
+  const n = turnedAt(t);
+  if (Math.abs(n - TARGET) <= 1) return solve();
+  Kit.$('say').textContent = n < TARGET
+    ? `Only ${n} have turned, the found rock has ${TARGET}. Let more time pass.`
+    : `${n} have turned, more than the found rock’s ${TARGET}. Go back in time.`;
+}
+
+function solve(){
+  if (solved) return; solved = true; Kit.haptic('success');
+  const o = {v: t};
+  const end = () => {
+    t = T_STAR; paintFresh();
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => { draw(); if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .08, duration: .45, ease: 'power3.out'}); });
+  };
+  if (Kit.calm) return end();
+  gsap.to(o, {v: T_STAR, duration: .35, ease: 'power2.out', onUpdate(){ t = o.v; paintFresh(); }, onComplete: end});
+}
+
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  if (solved) return; dragging = true;
+  try { pic.setPointerCapture(e.pointerId); } catch (_) {}
+  setFromClientX(e.clientX);
+});
+pic.addEventListener('pointermove', e => { if (dragging && !solved) setFromClientX(e.clientX); });
+const up = () => { if (!dragging) return; dragging = false; if (!solved) release(); };
+pic.addEventListener('pointerup', up);
+pic.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G.found) return;
+  gsap.from(G.found.dots, {attr: {r: 0}, stagger: .012, duration: .35, ease: 'back.out(2)'});
+  gsap.from(G.fresh.dots, {attr: {r: 0}, stagger: .012, delay: .25, duration: .35, ease: 'back.out(2)'});
+  if (G.knob) gsap.fromTo(G.knob, {scale: 1}, {scale: 1.15, yoyo: true, repeat: 3, duration: .3, delay: .9, transformOrigin: '50% 50%', ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const r = pic.getBoundingClientRect();
+  const W = pic.viewBox.baseVal.width || r.width;
+  const clientAt = tt => r.left + (G.x0 + (G.x1 - G.x0) * tt) * r.width / W;
+  const y = r.top + G.ty * r.height / (pic.viewBox.baseVal.height || r.height);
+  const ev = (type, x) => pic.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', clientAt(.05));
+  for (let i = 1; i <= 6; i++) { ev('pointermove', clientAt(.05 + (T_STAR - .05) * i / 6)); await new Promise(r => setTimeout(r, 30)); }
+  ev('pointerup', clientAt(T_STAR));
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

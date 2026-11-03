@@ -1,0 +1,233 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1 1 0;min-height:0}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{font-size:max(3cqh,18px);line-height:1.12}
+#why .body{font-size:max(2cqh,13px);line-height:1.3}
+.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#pic .ink{fill:var(--k)}
+#pic .gr{stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:2;stroke-linecap:round}
+#pic .sm{fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round}
+#pic .par{fill:var(--c)}
+#pic .par2{fill:var(--c);stroke:var(--k);stroke-width:1.2}
+#pic .mo{stroke:var(--c);stroke-linecap:round}
+#pic .mo2{fill:var(--c)}
+#pic .mb{stroke:var(--k);stroke-linecap:round}
+#pic .mh{fill:var(--k)}
+#pic .ml{stroke:var(--k);stroke-width:1.1;stroke-linecap:round;fill:none}
+#pic .mw{fill:color-mix(in srgb,var(--k) 16%,var(--c));stroke:var(--k);stroke-width:.9}
+#pic .lab{fill:var(--k);font-family:var(--body);font-weight:700}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MALARIA</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">If you catch malaria, how do you smell to mosquitoes?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A healthy person and a person with malaria, with a cloud of mosquitoes between them"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Worse: they keep away</button>
+        <button class="opt" data-i="1">Just the same</button>
+        <button class="opt" data-i="2">Better: they flock to you</button>
+      </div>
+      <!-- The why takes the options' place once the reader has answered. -->
+      <div id="why" class="gone"><p class="big">Better: they flock to you</p><p class="body">The malaria parasite changes your body chemistry, so you give off a smell that draws mosquitoes. And mosquitoes are its ride to the next person.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch the mosquitoes.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Malaria makes you smell better to the very mosquitoes that spread it.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Mosquitoes Bite Some People More Than Others” (YouTube, 2018).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, phase = 0, entered = false, tl = null, live = [], lastW = 0, lastH = 0, R = null, S = null;
+const pic = Kit.$('pic'), NS = 'http://www.w3.org/2000/svg';
+const T_PLUME = .35, T_FLY = 1.3, T_PICK = 3.5, T_GO = 3.75, D_GO = 1.2, T_INF = T_GO + D_GO;
+// Where the mosquitoes end up, in person-heights from each head.
+const MAL = [[-.44,-.26],[-.22,-.5],[.08,-.64],[.36,-.42],[.46,-.1],[-.42,.08],[.42,.3],[-.4,.38],[0,-.34],[.22,-.2]];
+const HEA = [[-.4,-.3],[.36,-.22]], CARRY = 5, LAND = [.4,.3];
+const PAR = [[-.1,.36],[.09,.44],[-.03,.56],[.12,.62],[-.12,.72]];
+
+function mk(t, a, p) { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); (p || pic).appendChild(e); return e; }
+function wave(x0, y0, h, a0, a1, lam, drift, ph) {
+  const n = Math.max(14, Math.round(h / 3)); let d = '';
+  for (let k = 0; k <= n; k++) {
+    const t = k / n, x = x0 + drift * t * t + (a0 + (a1 - a0) * t) * Math.sin(ph + t * h / lam * 6.2832);
+    d += (k ? 'L' : 'M') + x.toFixed(1) + ' ' + (y0 - t * h).toFixed(1);
+  }
+  return d;
+}
+function bug(s, carrier) {
+  const o = mk('g', {}), b = mk('g', {}, o), fl = mk('g', {}, b), bw = Math.max(2, s * .16);
+  mk('path', {class: 'ml', d: `M${-s*.06} ${s*.03}L${-s*.42} ${s*.44}M${s*.06} ${s*.04}L${-s*.02} ${s*.52}M${s*.18} ${s*.03}L${s*.4} ${s*.46}`}, fl);
+  mk('line', {class: 'mo', x1: -s*.5, y1: -s*.05, x2: s*.24, y2: 0, 'stroke-width': bw + 2.4}, fl);
+  mk('circle', {class: 'mo2', cx: s*.34, cy: -s*.01, r: bw*.62 + 1.2}, fl);
+  mk('line', {class: 'mb', x1: -s*.5, y1: -s*.05, x2: s*.24, y2: 0, 'stroke-width': bw}, fl);
+  mk('circle', {class: 'mh', cx: s*.34, cy: -s*.01, r: bw*.62}, fl);
+  mk('line', {class: 'ml', x1: s*.4, y1: s*.02, x2: s*.7, y2: s*.17}, fl);
+  const w = mk('g', {}, fl);
+  mk('ellipse', {class: 'mw', cx: -s*.14, cy: -s*.2, rx: s*.3, ry: s*.1, transform: `rotate(-16 ${-s*.14} ${-s*.2})`}, w);
+  const dot = carrier ? mk('circle', {class: 'par2', cx: -s*.28, cy: -s*.05, r: Math.max(2.4, s*.13)}, fl) : null;
+  return {o, b, fl, w, dot};
+}
+function syncLab() {
+  if (!S) return;
+  const t = phase === 2 && tl && tl.time() >= T_INF - .001 ? 'Now infected' : 'Healthy';
+  if (S.labL.textContent !== t) S.labL.textContent = t;
+}
+// Life that never decides anything: wings, hovering, the scent flowing up.
+function startLife() {
+  live.forEach(t => t.kill()); live = [];
+  if (Kit.calm || !S) return;
+  S.bugs.forEach((g, i) => {
+    live.push(gsap.to(g.w, {scaleY: .3, transformOrigin: '50% 100%', duration: .05 + R[i] * .03, yoyo: true, repeat: -1, ease: 'none'}));
+    live.push(gsap.fromTo(g.b, {y: -1.5}, {y: 1.5, duration: .45 + R[i + 6] * .4, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+    if (phase < 2) { const h = S.home[i]; live.push(gsap.to(g.o, {x: h[0] + (R[i + 3] - .5) * S.m * 2.4, y: Math.max(S.m * .6, h[1] + (R[i + 9] - .5) * S.m), duration: 1.1 + R[i + 5] * .9, yoyo: true, repeat: -1, ease: 'sine.inOut'})); }
+  });
+  S.flows.forEach(p => live.push(gsap.fromTo(p, {attr: {'stroke-dashoffset': 0}}, {attr: {'stroke-dashoffset': -S.per * 2}, duration: 1.3, ease: 'none', repeat: -1})));
+}
+function draw(start) {
+  if (!R) { R = []; for (let i = 0; i < 48; i++) R.push(Kit.rnd()); }
+  let prog = phase === 2 ? (start ? 0 : tl ? tl.progress() : 1) : 0;
+  if (Kit.calm) prog = 1;
+  live.forEach(t => t.kill()); live = [];
+  if (tl) { tl.kill(); tl = null; }
+  while (pic.firstChild) pic.removeChild(pic.firstChild);
+  S = null;
+  const fit = Kit.fitSvg(pic), W = fit.W, H = fit.H;
+  lastW = W; lastH = H;
+  if (!(W > 60 && H > 40)) return;
+  const fs = Math.max(13, Math.min(fit.f || 14, 19));
+  const labY = H - fs * .42, G = H - fs * 1.75;
+  const P = Math.max(24, Math.min(G * .56, W * .42)), r = P * .17, top = G - P, hcy = top + r;
+  const m = Math.max(8, Math.min(P * .17, 20)), hx = W * .27, mx = W * .71;
+  const cxW = x => Math.max(m, Math.min(W - m, x)), cyH = y => Math.max(m * .7, Math.min(G - m * .3, y));
+  const per = Math.max(9, P * .085), dash = (per * .55).toFixed(1) + ' ' + (per * .45).toFixed(1), y0 = top - P * .06;
+
+  mk('line', {class: 'gr', x1: W * .05, y1: G, x2: W * .95, y2: G});
+  const flows = [];
+  // Everyone gives off a faint smell.
+  const faint = x => [-1, 0, 1].map(i => { const p = mk('path', {class: 'sm', d: wave(x + i * P * .11, y0, Math.max(6, Math.min(P * .4, y0 - 4)), P * .025, P * .045, P * .2, i * P * .05, i * 1.3), 'stroke-width': Math.max(1.6, P * .016).toFixed(1), 'stroke-dasharray': dash, opacity: .4}); flows.push(p); return p; });
+  faint(hx); const fM = faint(mx);
+  // The parasite's smell: a long trail that leans into the mosquito cloud.
+  const sOp = [.45, .7, .92, .7, .45];
+  const strong = phase === 2 ? [-2, -1, 0, 1, 2].map(i => { const p = mk('path', {class: 'sm', d: wave(mx + i * P * .06, y0, Math.max(10, y0 - m * .6), P * .025, P * .085, P * .26, (W * .49 - mx) * .55 + i * P * .13, i * .9), 'stroke-width': (Math.max(2.2, P * .03) * (1 - Math.abs(i) * .18)).toFixed(1), 'stroke-dasharray': dash, opacity: 0}); flows.push(p); return p; }) : [];
+  const person = x => {
+    const bw = P * .5, bt = top + 2 * r + P * .05, rr = bw * .42, l = x - bw / 2, rt = x + bw / 2;
+    mk('path', {class: 'ink', d: `M${l} ${G}V${bt + rr}A${rr} ${rr} 0 0 1 ${l + rr} ${bt}H${rt - rr}A${rr} ${rr} 0 0 1 ${rt} ${bt + rr}V${G}Z`});
+    mk('circle', {class: 'ink', cx: x, cy: hcy, r});
+  };
+  person(hx); person(mx);
+  const pr = Math.max(2, P * .03);
+  const pars = PAR.map(([dx, dy]) => mk('circle', {class: 'par', cx: mx + dx * P, cy: hcy + dy * P, r: pr}));
+  const hDot = phase === 2 ? mk('circle', {class: 'par', cx: hx + .04 * P, cy: hcy + .52 * P, r: pr}) : null;
+  const lab = (x, t) => { const e = mk('text', {class: 'lab', x, y: labY, 'font-size': fs, 'text-anchor': 'middle'}); e.textContent = t; return e; };
+  const labL = lab(hx, 'Healthy'); lab(mx, 'Has malaria');
+  // The mosquitoes: a loose cloud between the two people.
+  const cT = m * .9, cB = Math.max(cT + m * 3, G - P * 1.08), cx = W * .49, cy = (cT + cB) / 2, rx = W * .19, ry = (cB - cT) / 2;
+  const home = [];
+  for (let i = 0; i < 12; i++) { const q = Math.sqrt((i + .5) / 12) * .9, a = i * 2.39996 + .6; home.push([cxW(cx + rx * q * Math.cos(a) + (R[i] - .5) * m * .4), cyH(cy + ry * q * Math.sin(a) + (R[i + 12] - .5) * m * .4)]); }
+  const byX = home.map((h, i) => i).sort((a, b) => home[a][0] - home[b][0]);
+  const malX = MAL.map((s, k) => k).sort((a, b) => MAL[a][0] - MAL[b][0]);
+  const target = [], spot = [];
+  byX.forEach((i, n) => { const k = n < 2 ? -1 : malX[n - 2], s = n < 2 ? HEA[n] : MAL[k], px = n < 2 ? hx : mx; spot[i] = k; target[i] = [cxW(px + s[0] * P), cyH(hcy + s[1] * P)]; });
+  const carrier = spot.indexOf(CARRY);
+  const bugs = home.map((h, i) => { const g = bug(m, i === carrier); g.face = R[i + 24] > .5 ? 1 : -1; g.fl.setAttribute('transform', `scale(${g.face},1)`); gsap.set(g.o, {x: h[0], y: h[1]}); return g; });
+  S = {bugs, home, flows, m, per, labL};
+  if (phase === 2) {
+    tl = gsap.timeline({paused: true, onUpdate: syncLab});
+    const ft = (el, a, b, t) => tl.fromTo(el, a, Object.assign({immediateRender: false}, b), t);
+    const flip = (g, a, b, t) => ft(g.fl, {attr: {transform: `scale(${a},1)`}}, {attr: {transform: `scale(${b},1)`}, duration: .01}, t);
+    // 1. The parasites get to work: the body chemistry changes.
+    pars.forEach((d, k) => { gsap.set(d, {transformOrigin: '50% 50%'}); ft(d, {scale: 1, transformOrigin: '50% 50%'}, {scale: 1.9, duration: .2, yoyo: true, repeat: 1, ease: 'sine.inOut'}, k * .06); });
+    // 2. The smell grows strong.
+    fM.forEach(p => ft(p, {opacity: .4}, {opacity: 0, duration: .5}, T_PLUME));
+    strong.forEach((p, k) => { gsap.set(p, {scaleY: 0, opacity: 0, transformOrigin: '50% 100%'}); ft(p, {scaleY: 0, opacity: 0, transformOrigin: '50% 100%'}, {scaleY: 1, opacity: sOp[k], duration: .9, ease: 'power2.out'}, T_PLUME + Math.abs(k - 2) * .1); });
+    // 3. The mosquitoes follow it.
+    bugs.forEach((g, i) => {
+      const [xa, ya] = home[i], [xb, yb] = target[i], t0 = T_FLY + i * .055, d = 1.25 + R[i + 30] * .35;
+      const fly = xb < xa ? -1 : 1, look = (spot[i] < 0 ? hx : mx) < xb ? -1 : 1;
+      g.look = look;
+      flip(g, g.face, fly, t0);
+      ft(g.o, {x: xa}, {x: xb, duration: d, ease: 'sine.inOut'}, t0);
+      ft(g.o, {y: ya}, {y: yb, duration: d, ease: yb > ya ? 'power2.in' : 'power2.out'}, t0);
+      flip(g, fly, look, t0 + d);
+    });
+    // 4. One of them carries the parasite on to the next person.
+    if (carrier >= 0) {
+      const g = bugs[carrier], [xb, yb] = target[carrier], x2 = cxW(hx + LAND[0] * P), y2 = cyH(hcy + LAND[1] * P), ap = Math.max(m * .7, Math.min(yb, y2) - P * .32);
+      gsap.set(g.dot, {scale: 0, transformOrigin: '50% 50%'});
+      ft(g.dot, {scale: 0, transformOrigin: '50% 50%'}, {scale: 1, duration: .3, ease: 'back.out(3)'}, T_PICK);
+      flip(g, g.look, -1, T_GO);
+      ft(g.o, {x: xb}, {x: x2, duration: D_GO, ease: 'sine.inOut'}, T_GO);
+      ft(g.o, {y: yb}, {y: ap, duration: D_GO / 2, ease: 'power1.out'}, T_GO);
+      ft(g.o, {y: ap}, {y: y2, duration: D_GO / 2, ease: 'power1.in'}, T_GO + D_GO / 2);
+      ft(g.dot, {scale: 1}, {scale: 0, duration: .2}, T_INF);
+      gsap.set(hDot, {scale: 0, transformOrigin: '50% 50%'});
+      ft(hDot, {scale: 0, transformOrigin: '50% 50%'}, {scale: 1, duration: .35, ease: 'back.out(3)'}, T_INF);
+      ft(labL, {opacity: 1}, {opacity: 0, duration: .18}, T_INF - .18);
+      ft(labL, {opacity: 0}, {opacity: 1, duration: .3}, T_INF);
+    }
+    tl.progress(prog); syncLab();
+    if (prog < 1) tl.play();
+  }
+  if (entered) startLife();
+}
+
+// How sure, after the answer. When both are in, Kit.answer tells the app.
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  phase = 2; draw(true);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; phase = 1; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+// The drawing follows its own box: the sure row, the why and the keep change its height.
+if (window.ResizeObserver) new ResizeObserver(() => requestAnimationFrame(() => {
+  const b = pic.getBoundingClientRect();
+  if (Math.abs(b.width - lastW) > 1.5 || Math.abs(b.height - lastH) > 1.5) draw(false);
+})).observe(pic);
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => draw(false);
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => {
+  entered = true; startLife();
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (S && phase < 2) S.bugs.forEach((g, i) => gsap.from(g.fl, {opacity: 0, duration: .45, delay: .1 + i * .045}));
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[RIGHT].click(); await w(150);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(500);
+  if (tl) tl.progress(1); syncLab(); await w(500);
+};
+Kit.single();
+</script>
+</html>

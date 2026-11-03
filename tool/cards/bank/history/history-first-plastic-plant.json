@@ -1,0 +1,37 @@
+{
+  "id": "history-first-plastic-plant",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the world’s first plastic recycling centre?",
+  "answer": "The world's first plastic recycling centre was the Plastic Waste Recycling Mill. Aluminium and glass were reused in wartime because they were scarce, but plastic needed another reason: it was realised that it can badly damage the environment. So it got a plant of its own, and this mill was the world's first.",
+  "move": "Plastic recycling began to protect nature, not to make up for scarcity.",
+  "keywords": [
+    "plastic",
+    "recycling",
+    "waste recycling mill",
+    "aluminium",
+    "glass"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question asks what the world's first plastic recycling centre was. Tap each material (plastic, aluminium, glass) to see why it was recycled. Shows a historic photo of the Plastic Waste Recycling Mill with a banner reading First Plastic Recycling Plant."
+  },
+  "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=WALo6GLp_to&t=333s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "science-shade-ball-raft",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many shade balls must be trapped under you to keep you above water?",
+  "answer": "Each shade ball is almost half full of water, so underwater it holds up only about 300 g. It takes more than 260 of them, about 78 kg, to lift a person clear. The page asks how many must be trapped under the swimmer, and you drag shade balls under them to find out.",
+  "move": "A shade ball lifts only ~300 g, so standing on them takes 260+.",
+  "keywords": [
+    "shade balls",
+    "buoyancy",
+    "swimming",
+    "veritasium",
+    "water"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page asking how many floating shade balls must be trapped under a swimmer to keep them above water, with a drag control to trap balls under the swimmer."
+  },
+  "source": "Veritasium, “Can You Swim in Shade Balls?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=BZbChKzedEk",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,196 @@
+<!doctype html>
+<!-- slug: history-granite-five-millimetres -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{position:relative;flex:1;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+#row{display:flex;gap:2.5cqw;flex-wrap:wrap}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body)}
+.btn{font:700 max(2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 4.5cqw;cursor:pointer}
+.btn:disabled{opacity:.35;cursor:default}
+.ink{fill:var(--k)}
+.inks{stroke:var(--k);fill:none}
+.lbl{fill:var(--k);font-family:var(--body);font-weight:700}
+.num{fill:var(--k);font-family:var(--mono);font-weight:600}
+.halo{paint-order:stroke;stroke:#fff;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Aim · time-lapse">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PYRAMIDS</span></div>
+    <h2 class="q">Pounding granite with a stone ball: how deep do you get in an hour?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><svg id="pic"></svg></div>
+      <div id="why" class="gone"><p class="big">About 5 mm in an hour.</p><p class="body" id="whyt"></p></div>
+      <div id="row">
+        <button class="btn" id="go" disabled>Pound for 1 hour</button>
+        <button class="btn gone" id="day">Now a 10-hour day</button>
+      </div>
+    </div>
+    <p class="say" id="say">Drag on the rock to guess the depth, then pound for an hour.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Quarrying granite by pounding: about 5 mm of progress per hour.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const S = {guess: null, d: 0, t: 0, lift: 1, phase: 'guess', res: ''};
+let G = null, E = {}, speed = 1;
+
+function seeded(s){ return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const y0 = H * 0.42, bottom = H - f * 0.5, px = (bottom - y0) / 100;
+  const rulerX = f * 3.4, cx = rulerX + (W - rulerX) * 0.56, tw = (W - rulerX) * 0.22;
+  const u = y0 * 0.11;
+  G = {W, H, f, y0, px, rulerX, cx, tw, u};
+  const m = (t, a, p = svg) => Kit.mk(t, a, p);
+  // granite
+  m('rect', {x: rulerX + 4, y: y0, width: W - rulerX - 4, height: H - y0, fill: '#c3b2a4'});
+  const r = seeded(7), cols = ['#3b3330', '#efe6dc', '#b9705c', '#7d726b'];
+  for (let i = 0; i < 260; i++) m('circle', {cx: rulerX + 4 + r() * (W - rulerX - 4), cy: y0 + 2 + r() * (H - y0 - 2), r: .6 + r() * f * .14, fill: cols[i % 4], opacity: .8});
+  m('line', {x1: rulerX + 4, x2: W, y1: y0, y2: y0, class: 'inks', 'stroke-width': Math.max(2, f * .14)});
+  // trench
+  E.tr = m('rect', {x: cx - tw / 2, y: y0, width: tw, height: 0, fill: '#3a2f2a'});
+  // ruler
+  const step = [10, 20, 25, 50].find(s => s * px >= f * 1.5) || 50;
+  for (let mm = 0; mm <= 100; mm += 5) {
+    const y = y0 + mm * px, big = mm % step === 0;
+    m('line', {x1: rulerX - (big ? f * .5 : f * .25), x2: rulerX + 2, y1: y, y2: y, class: 'inks', 'stroke-width': big ? 1.6 : 1});
+    if (big) { const t = m('text', {x: rulerX - f * .65, y: y + f * .35, 'text-anchor': 'end', 'font-size': Math.max(f * .85, 10), class: 'num'}); t.textContent = mm === 0 ? '0 mm' : mm; }
+  }
+  m('line', {x1: rulerX + 2, x2: rulerX + 2, y1: y0, y2: y0 + 100 * px, class: 'inks', 'stroke-width': 1.6});
+  // worker
+  const fx = cx - 2.4 * u, sw = Math.max(2.5, u * .32);
+  E.fx = fx;
+  m('circle', {cx: fx, cy: y0 - 6.5 * u, r: .8 * u, class: 'ink'});
+  m('line', {x1: fx, y1: y0 - 5.6 * u, x2: fx, y2: y0 - 3 * u, class: 'inks', 'stroke-width': sw, 'stroke-linecap': 'round'});
+  m('polyline', {points: `${fx - u},${y0} ${fx},${y0 - 3 * u} ${fx + .9 * u},${y0}`, class: 'inks', 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+  E.arm = m('polyline', {class: 'inks', 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+  E.rb = u * .95;
+  E.ball = m('circle', {r: E.rb, fill: '#2b2b2e', stroke: '#111', 'stroke-width': 1});
+  E.chips = m('g', {});
+  // clock
+  const cr = f * 1.5, ccx = W - cr - 6, ccy = cr + 6;
+  m('circle', {cx: ccx, cy: ccy, r: cr, fill: '#fff', class: 'inks', 'stroke-width': 2});
+  for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; m('line', {x1: ccx + Math.sin(a) * cr * .78, y1: ccy - Math.cos(a) * cr * .78, x2: ccx + Math.sin(a) * cr * .92, y2: ccy - Math.cos(a) * cr * .92, class: 'inks', 'stroke-width': 1.2}); }
+  E.hand = m('line', {x1: ccx, y1: ccy, x2: ccx, y2: ccy - cr * .75, class: 'inks', 'stroke-width': 2.4, 'stroke-linecap': 'round'});
+  E.clock = [ccx, ccy];
+  E.hrs = m('text', {x: ccx, y: ccy + cr + f * 1.15, 'text-anchor': 'middle', 'font-size': f * .9, class: 'num'});
+  E.dep = m('text', {x: 6, y: f * 1.1, 'font-size': f * .95, class: 'num'});
+  // guess
+  E.gl = m('line', {x1: rulerX + 4, x2: W, class: 'inks', 'stroke-width': 2, 'stroke-dasharray': '6 5'});
+  E.gt = m('text', {x: W - 6, 'text-anchor': 'end', 'font-size': f * .9, class: 'lbl halo', 'stroke-width': 4});
+  E.res = m('text', {x: cx - tw / 2 - 6, 'text-anchor': 'end', 'font-size': f, class: 'lbl halo', 'stroke-width': 4});
+  update();
+}
+
+function update(){
+  if (!G) return;
+  const {y0, px, cx, u, f} = G;
+  const dpx = S.d * px;
+  E.tr.setAttribute('height', dpx);
+  const bot = y0 + dpx - E.rb, top = y0 - 3.4 * u - E.rb;
+  const by = bot + (top - bot) * S.lift;
+  E.ball.setAttribute('cx', cx); E.ball.setAttribute('cy', by);
+  E.arm.setAttribute('points', `${cx - E.rb * .8},${by - E.rb * .4} ${E.fx + .4 * u},${y0 - 4.2 * u} ${E.fx},${y0 - 5.2 * u}`);
+  const a = S.t * 360;
+  E.hand.setAttribute('transform', `rotate(${a} ${E.clock[0]} ${E.clock[1]})`);
+  const h = Math.floor(S.t + 1e-6), mi = Math.floor((S.t - h) * 60 + 1e-6);
+  E.hrs.textContent = `${h}:${String(mi).padStart(2, '0')} h`;
+  E.dep.textContent = `depth ${S.d.toFixed(1)} mm`;
+  const show = S.guess != null;
+  [E.gl, E.gt].forEach(e => e.style.display = show ? '' : 'none');
+  if (show) {
+    const gy = y0 + S.guess * px;
+    E.gl.setAttribute('y1', gy); E.gl.setAttribute('y2', gy);
+    E.gt.setAttribute('y', gy - f * .45);
+    E.gt.textContent = `your guess · ${Math.round(S.guess)} mm`;
+  }
+  E.res.textContent = S.res;
+  E.res.setAttribute('y', y0 + Math.max(dpx, f * .3) + f * .35 + f * .1);
+}
+
+function chips(){
+  if (!G || Kit.calm) return;
+  const {cx, y0, px, f} = G;
+  for (let i = 0; i < 6; i++) {
+    const c = Kit.mk('circle', {cx, cy: y0 + S.d * px, r: f * (.08 + Kit.rnd() * .12), fill: '#e9dccf'}, E.chips);
+    gsap.to(c, {attr: {cx: cx + (Kit.rnd() - .5) * f * 5, cy: y0 - f * (.5 + Kit.rnd() * 2)}, opacity: 0, duration: .5 * Math.max(speed, .3), ease: 'power2.out', onComplete: () => c.remove()});
+  }
+}
+
+function pound(h1, dd, blows, dur, done){
+  const d0 = S.d, per = dur / blows;
+  const tl = gsap.timeline({onUpdate: update, onComplete: () => { update(); done(); }});
+  tl.to(S, {t: h1, duration: dur, ease: 'none'}, 0);
+  for (let i = 0; i < blows; i++) {
+    tl.to(S, {lift: 1, duration: per * .6, ease: 'power2.out'}, i * per)
+      .to(S, {lift: 0, duration: per * .4, ease: 'power2.in', onComplete: () => { S.d = d0 + dd * (i + 1) / blows; chips(); }}, i * per + per * .6);
+  }
+  tl.to(S, {lift: 1, duration: .3 * speed});
+}
+
+// guess by dragging
+function setGuess(e){
+  if (S.phase !== 'guess' || !G) return;
+  const rc = svg.getBoundingClientRect();
+  const y = (e.clientY - rc.top) * G.H / rc.height;
+  S.guess = Math.max(1, Math.min(100, (y - G.y0) / G.px));
+  Kit.$('go').disabled = false;
+  update();
+}
+let drag = false;
+svg.addEventListener('pointerdown', e => { drag = true; setGuess(e); Kit.haptic('selection'); });
+svg.addEventListener('pointermove', e => { if (drag) setGuess(e); });
+addEventListener('pointerup', () => drag = false);
+
+Kit.$('go').addEventListener('click', () => {
+  if (S.phase !== 'guess' || S.guess == null) return;
+  S.phase = 'hour'; Kit.$('go').disabled = true; Kit.haptic('light');
+  pound(1, 5, 14, 4.2 * speed, () => {
+    S.res = '1 h → 5 mm'; update();
+    Kit.haptic('success');
+    Kit.$('whyt').textContent = `You guessed ${Math.round(S.guess)} mm. The technique was just to smash a dolerite stone into the granite, over and over again. Each blow knocks off only crumbs.`;
+    Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('day');
+  });
+});
+Kit.$('day').addEventListener('click', () => {
+  if (S.phase !== 'hour') return;
+  S.phase = 'day'; Kit.$('day').disabled = true; Kit.haptic('light');
+  pound(10, 45, 40, 5 * speed, () => {
+    S.res = '10 h → 50 mm'; update();
+    Kit.haptic('success');
+    Kit.hide('day'); Kit.hide('row'); Kit.show('keep');
+  });
+});
+
+new ResizeObserver(() => { if (G) draw(); }).observe(Kit.$('wrap'));
+Kit.onShow.card = () => { if (Kit.calm) speed = .15; draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(S, {lift: 1}, {lift: .55, duration: .5, yoyo: true, repeat: 3, ease: 'sine.inOut', onUpdate: update});
+};
+Kit.play.card = async () => {
+  speed = .08;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const rc = svg.getBoundingClientRect();
+  const y = rc.top + (G.y0 + 40 * G.px) * rc.height / G.H, x = rc.left + rc.width * .7;
+  svg.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, bubbles: true}));
+  dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y}));
+  await wait(100);
+  Kit.$('go').click(); await wait(900);
+  Kit.$('day').click(); await wait(1100);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-inertia-car-push",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a parked car so hard to push on a level road?",
+  "answer": "A car has a lot of inertia: it resists any change in its motion, so getting it rolling takes a big force. On a level road you are not lifting it, because the road holds its weight. Swapping it for a cart gives the same push, but the car barely creeps.",
+  "move": "Weight makes a thing hard to lift; inertia makes it hard to push.",
+  "keywords": [
+    "inertia",
+    "car",
+    "mass",
+    "weight",
+    "level road"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card asking why a parked car is so hard to push on a level road. It has a HOLD TO PUSH control and a note that swapping the car for a cart gives the same push, but the car barely creeps."
+  },
+  "source": "Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=_Z0X0yE8Ioc&t=158s",
+  "written": "2026-11-03"
+}

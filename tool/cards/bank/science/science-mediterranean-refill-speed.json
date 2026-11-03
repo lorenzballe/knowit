@@ -1,0 +1,37 @@
+{
+  "id": "science-mediterranean-refill-speed",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.big_numbers",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How quickly did the Atlantic refill the dried-up Mediterranean?",
+  "answer": "When Gibraltar reopened at the start of the Pliocene, the Atlantic crashed into the dry Mediterranean basin through waterfalls bigger than any on Earth today. It filled the whole sea in about a hundred years, an instant in geology. The answer is one to two centuries, far shorter than the 10,000 or 100,000 years offered as guesses.",
+  "move": "The Mediterranean refilled in a geological instant: one or two centuries.",
+  "keywords": [
+    "mediterranean",
+    "atlantic",
+    "gibraltar",
+    "pliocene",
+    "waterfalls"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz: how long the Atlantic took to refill the dried-up Mediterranean. Options: about 100,000 years, about 10,000 years, 1 to 2 centuries. The reader picks one, then watches Gibraltar open."
+  },
+  "source": "Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=K3pwfIsKCjY&t=283s",
+  "written": "2026-11-03"
+}

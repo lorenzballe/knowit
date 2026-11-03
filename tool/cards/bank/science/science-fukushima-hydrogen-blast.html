@@ -1,0 +1,229 @@
+<!doctype html>
+<!-- slug: science-fukushima-hydrogen-blast -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#cv{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh}
+#go{--p:0;font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;
+  background:linear-gradient(90deg,#e8462a calc(var(--p)*100%),var(--k) calc(var(--p)*100%))}
+#go.hot{background:#e8462a;color:#fff}
+#go:disabled{opacity:.55}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HYDROGEN BLAST</span></div>
+    <h2 class="q">What actually blew up the Fukushima reactor buildings?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv"></canvas>
+      <button id="go">Hold: the cooling has failed</button>
+      <div id="why" class="gone"><p class="big">Hydrogen met air.</p><p class="body">With no cooling, the water and fuel overheated and made lots of steam and hydrogen. The pressure rose, so technicians vented steam, and the hydrogen went out with it. In the building it mixed with air and exploded.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button to keep heating the fuel with no cooling.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No cooling → hot fuel makes hydrogen → venting lets it meet air → explosion.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {p:0, tmp:0, pr:0, heat:false, phase:0, boom:0, valve:0, parts:[], air:[], resolve:null};
+let C = null, G = null, last = performance.now();
+const go = Kit.$('go'), say = Kit.$('say');
+const R = () => Kit.rnd();
+for (let i = 0; i < 16; i++) S.air.push({t:'a', r:'h', x:R(), y:R(), vx:(R()-.5)*.3, vy:(R()-.5)*.3});
+
+const hex = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16));
+const mixC = (a,b,t) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')})`; };
+const lerp = (a,b,t) => a + (b-a)*t;
+
+function geo(W, H){
+  const f = Math.max(12, Math.min(W*.04, H*.036));
+  const bx = W*.07, bw = W*.86, by = H*.14, bB = H*.97;
+  const hallB = by + (bB-by)*.32;
+  const vT = hallB + H*.07, vB = bB - H*.035, vh = vB - vT;
+  const cx = W*.44, vw = Math.min(W*.38, vh*.75), vL = cx - vw/2;
+  return {W,H,f,bx,bw,by,bB,hallB,vT,vB,vh,cx,vw,vL,vR:vL+vw,
+    hL:bx+12, hR:bx+bw-12, hT:by+10, hB:hallB-10,
+    gx:W*.82, gw:Math.max(10,W*.04), gT:vT+f*1.6, gBot:vB, pw:Math.max(5,vw*.06)};
+}
+const waterY = () => G.vT + G.vh*(.32 + .1*S.tmp);
+function pos(q){
+  if (q.r === 'v'){ const gL=G.vL+G.vw*.18, gR=G.vR-G.vw*.18, gT=G.vT+G.vw*.2, gB=waterY()-8;
+    return [lerp(gL,gR,q.x), lerp(gT,gB,q.y)]; }
+  if (q.r === 'p'){ const k = Math.max(0,q.k), gL=G.vL+G.vw*.18, gR=G.vR-G.vw*.18, gT=G.vT+G.vw*.2, gB=waterY()-8;
+    const sx = lerp(gL,gR,q.x), sy = lerp(gT,gB,q.y);
+    if (k < .5){ const t = k*2; return [lerp(sx,G.cx,t), lerp(sy,G.vT,t)]; }
+    return [G.cx, lerp(G.vT, G.hallB, (k-.5)*2)]; }
+  return [lerp(G.hL,G.hR,q.x), lerp(G.hT,G.hB,q.y)];
+}
+
+function update(dt){
+  if (S.phase === 0 && S.heat){ S.p = Math.min(1, S.p + dt/3.2); S.tmp = S.p; S.pr = S.p; go.style.setProperty('--p', S.p); if (S.p >= 1) ready(); }
+  if (S.phase < 2){
+    const v = S.parts.filter(q => q.r === 'v');
+    const ns = v.filter(q => q.t === 's').length, nh = v.length - ns;
+    if (ns < Math.round(S.p*28) && R() < .35) S.parts.push({t:'s', r:'v', x:R(), y:1, vx:(R()-.5)*.6, vy:-(.3+R()*.4)});
+    if (nh < Math.round(S.p*14) && R() < .25) S.parts.push({t:'h', r:'v', x:R(), y:1, vx:(R()-.5)*.6, vy:-(.3+R()*.4)});
+  }
+  const sp = .6 + S.tmp;
+  for (const q of S.parts.concat(S.air)){
+    if (q.r === 'p'){ q.k += dt/.55; if (q.k >= 1){ q.r='h'; q.x=(G.cx-G.hL)/(G.hR-G.hL); q.y=1; q.vx=(R()-.5)*1.4; q.vy=-(.8+R()*.6); q.age=0; } continue; }
+    const s = q.r === 'v' ? sp : 1;
+    q.vx += (R()-.5)*dt*1.2; q.vy += (R()-.5)*dt*1.2;
+    const m = Math.hypot(q.vx,q.vy), cap = q.r==='h' && q.t!=='a' ? 1.2 : .6;
+    if (m > cap){ q.vx *= .97; q.vy *= .97; }
+    q.x += q.vx*dt*s; q.y += q.vy*dt*s;
+    if (q.x < 0){ q.x = 0; q.vx = Math.abs(q.vx); } if (q.x > 1){ q.x = 1; q.vx = -Math.abs(q.vx); }
+    if (q.y < 0){ q.y = 0; q.vy = Math.abs(q.vy); } if (q.y > 1){ q.y = 1; q.vy = -Math.abs(q.vy); }
+    if (q.r === 'h' && q.t === 's') q.age += dt;
+  }
+  S.parts = S.parts.filter(q => !(q.t === 's' && q.r === 'h' && q.age > 2.6));
+}
+
+function draw(now){
+  if (!C) return;
+  const {x} = C, {W,H,f} = G;
+  x.clearRect(0,0,W,H);
+  x.fillStyle = '#10131a'; x.beginPath(); x.roundRect(0,0,W,H,Math.min(W,H)*.04); x.fill();
+  x.font = `600 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  x.textBaseline = 'middle';
+  // legend
+  [['steam','#eef3f8',.08],['hydrogen','#ffc23a',.37],['air','#5aa9ff',.7]].forEach(([t,c,p]) => {
+    x.fillStyle = c; x.beginPath(); x.arc(W*p + f*.4, H*.065, f*.38, 0, 7); x.fill();
+    x.fillStyle = '#dfe5ee'; x.textAlign = 'left'; x.fillText(t, W*p + f*1.1, H*.065);
+  });
+  const b = S.boom;
+  // hall
+  x.fillStyle = b > .2 ? '#20180f' : '#192031'; x.fillRect(G.bx, G.by, G.bw, G.hallB-G.by);
+  x.strokeStyle = '#9aa3b2'; x.lineWidth = 2.5; x.lineCap = 'round';
+  const line = (a,c,d,e) => { x.beginPath(); x.moveTo(a,c); x.lineTo(d,e); x.stroke(); };
+  // lower walls and base
+  line(G.bx, G.hallB, G.bx, G.bB); line(G.bx+G.bw, G.hallB, G.bx+G.bw, G.bB); line(G.bx, G.bB, G.bx+G.bw, G.bB);
+  // upper walls (fly out)
+  const wd = b*G.W*.06;
+  x.save(); x.translate(-wd, -b*H*.03); line(G.bx, G.by, G.bx, G.hallB); x.restore();
+  x.save(); x.translate(wd, -b*H*.03); line(G.bx+G.bw, G.by, G.bx+G.bw, G.hallB); x.restore();
+  // roof in three pieces
+  for (let i = 0; i < 3; i++){
+    const a0 = G.bx + G.bw*i/3, a1 = G.bx + G.bw*(i+1)/3, mx = (a0+a1)/2;
+    x.save(); x.translate(mx + (i-1)*b*W*.09, G.by - b*H*.09*(1+.4*(i%2)));
+    x.rotate((i-1)*b*.7 + (i===1 ? b*.25 : 0)); x.lineWidth = 4; line(a0-mx, 0, a1-mx, 0); x.restore();
+  }
+  // floor with pipe gap
+  x.lineWidth = 2.5; line(G.bx, G.hallB, G.cx-G.pw, G.hallB); line(G.cx+G.pw, G.hallB, G.bx+G.bw, G.hallB);
+  x.fillStyle = '#9fb3cc'; x.textAlign = 'left'; x.fillText('upper building', G.hL+2, G.hT+f*.7);
+  // pipe and valve
+  x.strokeStyle = '#c8d0dc'; line(G.cx-G.pw, G.vT+2, G.cx-G.pw, G.hallB); line(G.cx+G.pw, G.vT+2, G.cx+G.pw, G.hallB);
+  const vy = (G.vT+G.hallB)/2, vs = G.pw*1.4;
+  x.fillStyle = S.valve ? '#6ee07a' : '#7d8794';
+  x.beginPath(); x.moveTo(G.cx-vs, vy-vs*.7); x.lineTo(G.cx+vs, vy+vs*.7); x.lineTo(G.cx+vs, vy-vs*.7); x.lineTo(G.cx-vs, vy+vs*.7); x.closePath(); x.fill();
+  x.fillStyle = '#dfe5ee'; x.textAlign = 'left'; x.fillText(S.valve ? 'vent open' : 'vent', G.cx+vs+6, vy);
+  // vessel
+  const rr = G.vw*.38;
+  x.beginPath(); x.roundRect(G.vL, G.vT, G.vw, G.vh, [rr,rr,10,10]);
+  x.fillStyle = '#1b2433'; x.fill();
+  x.save(); x.clip();
+  const wy = waterY();
+  x.fillStyle = '#2466c4'; x.fillRect(G.vL, wy, G.vw, G.vB-wy);
+  const nb = Math.round(S.tmp*16);
+  x.fillStyle = 'rgba(255,255,255,.55)';
+  for (let i = 0; i < nb; i++){
+    const bx = G.vL + G.vw*(((i*.37+.1)%.8)+.1), by = G.vB - ((now*.00025*(1+i%3)+i*.13)%1)*(G.vB-wy);
+    x.beginPath(); x.arc(bx, by, Math.max(1.5,f*.18), 0, 7); x.fill();
+  }
+  const fc = mixC('#8a8f98', '#ff5a2a', S.tmp);
+  x.shadowColor = '#ff7a2a'; x.shadowBlur = S.tmp*22;
+  for (let i = 0; i < 4; i++){
+    const rx = G.vL + G.vw*(.22 + i*.18), rw = G.vw*.08;
+    x.fillStyle = fc; x.beginPath(); x.roundRect(rx, G.vT+G.vh*.56, rw, G.vh*.38, rw*.4); x.fill();
+  }
+  x.restore();
+  x.strokeStyle = '#c8d0dc'; x.lineWidth = 3;
+  x.beginPath(); x.roundRect(G.vL, G.vT, G.vw, G.vh, [rr,rr,10,10]); x.stroke();
+  x.fillStyle = '#dfe5ee'; x.textAlign = 'right';
+  x.fillText('water', G.vL-8, wy + f*.2);
+  x.fillText('fuel', G.vL-8, G.vT+G.vh*.76);
+  // particles
+  for (const q of S.air.concat(S.parts)){
+    if (q.r === 'p' && q.k < 0) { const [px,py] = pos({...q, r:'v'}); dot(q, px, py); continue; }
+    const [px,py] = pos(q); dot(q, px, py);
+  }
+  function dot(q, px, py){
+    let a = 1, r = f*.3, c = '#5aa9ff';
+    if (q.t === 's'){ c = '#eef3f8'; r = f*.42; a = .8*(q.r==='h' ? Math.max(0,1-q.age/2.6) : 1); }
+    if (q.t === 'h'){ c = '#ffc23a'; r = f*.34; }
+    x.globalAlpha = a; x.fillStyle = c; x.beginPath(); x.arc(px, py, r, 0, 7); x.fill(); x.globalAlpha = 1;
+  }
+  // gauge
+  x.fillStyle = '#dfe5ee'; x.textAlign = 'center'; x.fillText('pressure', G.gx, G.vT + f*.3);
+  const gh = G.gBot - G.gT;
+  x.strokeStyle = '#c8d0dc'; x.lineWidth = 2; x.beginPath(); x.roundRect(G.gx-G.gw/2, G.gT, G.gw, gh, G.gw/2); x.stroke();
+  x.fillStyle = mixC('#4cc777', '#ff3b2a', S.pr);
+  if (S.pr > .01){ x.beginPath(); x.roundRect(G.gx-G.gw/2+2, G.gT+2+(gh-4)*(1-S.pr), G.gw-4, (gh-4)*S.pr, (G.gw-4)/2); x.fill(); }
+  // explosion
+  if (b > 0){
+    const cxh = W*.5, cyh = (G.hT+G.hB)/2;
+    if (b < 1){
+      const a = Math.sin(b*Math.PI), r = W*(.15 + .75*b);
+      const g = x.createRadialGradient(cxh, cyh, 0, cxh, cyh, r);
+      g.addColorStop(0, `rgba(255,245,190,${a})`); g.addColorStop(.45, `rgba(255,130,30,${a*.75})`); g.addColorStop(1, 'rgba(255,80,20,0)');
+      x.fillStyle = g; x.fillRect(0, 0, W, H);
+    }
+    x.fillStyle = 'rgba(120,120,128,.55)';
+    for (let i = 0; i < 9; i++){
+      const sx = G.bx + G.bw*(.1 + i*.1), sy = G.by - b*H*(.03 + (i%3)*.025);
+      x.globalAlpha = Math.min(1, b*1.5)*.6; x.beginPath(); x.arc(sx, sy, f*(.8 + (i%2)*.5)*b, 0, 7); x.fill();
+    }
+    x.globalAlpha = 1;
+    if (b >= 1){ x.fillStyle = '#ffc23a'; x.textAlign = 'center'; x.font = `800 ${f*1.1}px sans-serif`; x.fillText('hydrogen + air exploded', cxh, cyh + f*.6); }
+  }
+}
+
+gsap.ticker.add(() => { const now = performance.now(), dt = Math.min(.05, (now-last)/1000); last = now; if (G){ update(dt); draw(now); } });
+
+function ready(){
+  S.phase = 1; S.heat = false; go.classList.add('hot'); go.textContent = 'Vent the steam';
+  say.textContent = 'The pressure is too high. Vent some steam, as the technicians did.';
+  Kit.haptic('selection');
+}
+function vent(){
+  return new Promise(res => {
+    S.phase = 2; S.valve = 1; go.disabled = true; Kit.haptic('light');
+    say.textContent = 'The steam leaves the reactor… and the hydrogen goes with it.';
+    S.parts.filter(q => q.r === 'v').forEach((q,i) => { q.r = 'p'; q.k = -i*.035; });
+    gsap.to(S, {pr:.3, duration:1.5});
+    gsap.to(S, {boom:1, duration:1.4, delay:Kit.calm ? 2 : 2.8, ease:'power2.out',
+      onStart(){ S.parts = S.parts.filter(q => q.t !== 'h'); Kit.haptic('success'); },
+      onComplete(){ done(); res(); }});
+  });
+}
+function done(){
+  S.phase = 3; Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => Kit.onShow.card());
+}
+let ventP = null;
+go.addEventListener('pointerdown', e => { if (S.phase === 0){ S.heat = true; Kit.haptic('light'); try{ go.setPointerCapture(e.pointerId); }catch(_){} } });
+['pointerup','pointercancel','pointerleave'].forEach(t => go.addEventListener(t, () => { S.heat = false; }));
+go.addEventListener('keydown', e => { if ((e.key===' '||e.key==='Enter') && S.phase === 0){ S.heat = true; e.preventDefault(); } });
+go.addEventListener('keyup', () => { S.heat = false; });
+go.addEventListener('click', () => { if (S.phase === 1 && !ventP) ventP = vent(); });
+
+Kit.onShow.card = () => { const cv = Kit.$('cv'); C = Kit.fitCanvas(cv); G = geo(C.W, C.H); draw(performance.now()); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity:0, y:10, duration:.45, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  go.dispatchEvent(new PointerEvent('pointerdown', {bubbles:true, pointerId:1}));
+  await w(300); S.p = .99; await w(200);
+  go.dispatchEvent(new PointerEvent('pointerup', {bubbles:true, pointerId:1}));
+  go.click(); if (ventP) await ventP; await w(400);
+};
+Kit.single();
+</script>
+</html>

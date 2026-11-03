@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-transtensional-fault -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#map{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:crosshair}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+#why .big{font:800 max(2.4cqh,14px)/1.15 var(--display)}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Draw it · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EARTHQUAKES</span></div>
+    <h2 class="q">How do the two sides of Messina's West Fault move?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map" aria-label="Two blocks of crust seen from above, split by a fault"></svg>
+      <div id="why" class="gone"><p class="big">Trans-tensional: apart and sideways</p><p class="body">The west block heads southwest. Part of that move pulls it away from the other block (extension: the Strait of Messina is opening). Part slides it along the fault, to the left (strike-slip).</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag on the map: draw the way the west block moves.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A trans-tensional fault pulls apart and slides sideways at the same time.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {gx: null, gy: null, drawn: false, locked: false, shown: false};
+let G = null, dragging = false;
+const BLUE = '#2f6fb0', RED = '#e8463a';
+
+function classify(dx, dy){
+  const L = Math.hypot(dx, dy) || 1, ux = dx / L, uy = dy / L;
+  const ns = uy > .38 ? 'south' : uy < -.38 ? 'north' : '';
+  const ew = ux < -.38 ? 'west' : ux > .38 ? 'east' : '';
+  const dir = (ns + ew) || 'here';
+  const parts = [];
+  if (ew === 'west') parts.push('pull apart'); else if (ew === 'east') parts.push('push together');
+  if (ns) parts.push('slide');
+  return {dir, text: parts.join(' + ') || 'no move', ok: ew === 'west' && ns === 'south'};
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  S.locked = true;
+  const c = classify(S.gx, S.gy);
+  const said = `${c.dir}: ${c.text}`;
+  Kit.answer({choice: said, correct: c.ok, sure: pct});
+  Kit.hide('say');
+  sure.grade(c.ok, pct, `${said}, ${c.ok ? 'right' : 'not quite'}`);
+  reveal(true);
+});
+
+function arrow(p, x1, y1, x2, y2, st, w){
+  const g = Kit.mk('g', {}, p);
+  const a = Math.atan2(y2 - y1, x2 - x1), h = w * 3.2;
+  const bx = x2 - Math.cos(a) * h * .8, by = y2 - Math.sin(a) * h * .8;
+  Kit.mk('line', {x1, y1, x2: bx, y2: by, style: `stroke:${st.c};stroke-width:${w}px;stroke-linecap:round;${st.dash ? 'stroke-dasharray:' + st.dash : ''};opacity:${st.o || 1}`}, g);
+  const p1 = [x2, y2], p2 = [x2 - Math.cos(a - .45) * h, y2 - Math.sin(a - .45) * h], p3 = [x2 - Math.cos(a + .45) * h, y2 - Math.sin(a + .45) * h];
+  Kit.mk('polygon', {points: [p1, p2, p3].map(q => q.join(',')).join(' '), style: `fill:${st.c};opacity:${st.o || 1}`}, g);
+  return g;
+}
+function txt(p, x, y, s, f, anchor, extra){
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'middle', style: `font:700 ${f}px var(--body);fill:var(--k);${extra || ''}`}, p);
+  t.textContent = s; return t;
+}
+
+function draw(){
+  const svg = Kit.$('map'); svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg), f = Math.max(f0, 12);
+  const m = W * .05, top = H * .05, bot = H * .95, fx = W / 2;
+  const gap = W * .06, slide = H * .09, cx = W * .29, cy = H * .3;
+  const kA = 2.3, ax = -gap * kA, ay = slide * kA, lw = Math.max(3, Math.min(W, H) * .012);
+  G = {W, H, f, m, top, bot, fx, gap, slide, cx, cy, ax, ay, lw, svg};
+  // zigzag fault edge
+  const zz = []; const n = 9;
+  for (let i = 0; i <= n; i++) zz.push([fx + (i % 2 ? W * .012 : -W * .012) * (i > 0 && i < n ? 1 : 0), top + (bot - top) * i / n]);
+  Kit.mk('rect', {x: fx - gap - W * .03, y: top - slide, width: gap + W * .06, height: bot - top + slide * 2, style: `fill:${BLUE}`}, svg);
+  const fill = 'fill:color-mix(in srgb,var(--k) 16%,var(--c));stroke:var(--k);stroke-width:2px';
+  // east block
+  const ge = Kit.mk('g', {}, svg);
+  Kit.mk('polygon', {points: [...zz, [W - m, bot], [W - m, top]].map(q => q.join(',')).join(' '), style: fill}, ge);
+  // west block
+  const gw = Kit.mk('g', {}, svg); G.gw = gw;
+  Kit.mk('polygon', {points: [[m, top], ...zz, [m, bot]].map(q => q.join(',')).join(' '), style: fill}, gw);
+  const yR = H * .8;
+  Kit.mk('line', {x1: m, y1: yR, x2: fx, y2: yR, style: `stroke:${RED};stroke-width:${lw}px`}, gw);
+  Kit.mk('line', {x1: fx, y1: yR, x2: W - m, y2: yR, style: `stroke:${RED};stroke-width:${lw}px`}, ge);
+  txt(gw, (m + fx) / 2, top + 1.6 * f, 'WEST BLOCK', f, 'middle', 'letter-spacing:.06em');
+  txt(ge, (fx + W - m) / 2, top + 1.6 * f, 'EAST BLOCK', f, 'middle', 'letter-spacing:.06em');
+  txt(ge, W - m - f * .6, top + 3.6 * f, '↑ N', f, 'end', 'fill:var(--muted)');
+  txt(ge, (fx + W - m) / 2, yR - f * .9, 'a road', f, 'middle', `fill:${RED}`);
+  txt(ge, (fx + W - m) / 2, H * .5, 'fault', f, 'middle', 'fill:var(--muted);font-weight:500');
+  G.over = Kit.mk('g', {}, svg);
+  G.dot = Kit.mk('circle', {cx, cy, r: lw * 1.8, style: 'fill:var(--k)'}, svg);
+  if (!S.drawn){ G.hint = txt(svg, cx + f * .9, cy + f * 1.9, 'drag from here', f * 1.15, 'start', 'font-family:var(--hand);font-weight:400'); }
+  paint();
+  if (S.shown){ gsap.set(gw, {x: -gap, y: slide}); showTruth(false); }
+}
+
+function paint(){
+  if (!G) return; G.over.innerHTML = '';
+  if (S.gx == null) return;
+  const {cx, cy, lw, f} = G, ex = cx + S.gx * G.W, ey = cy + S.gy * G.H;
+  arrow(G.over, cx, cy, ex, ey, {c: 'var(--k)', dash: '1 ' + lw * 2.6, o: .5}, lw * 1.1);
+  const L = Math.hypot(ex - cx, ey - cy) || 1;
+  txt(G.over, ex + (ex - cx) / L * f * 1.3, ey + (ey - cy) / L * f * 1.3 + f * .35, 'you', f * 1.2, 'middle', 'font-family:var(--hand);font-weight:400;opacity:.7');
+}
+
+function showTruth(anim){
+  const {cx, cy, ax, ay, lw, f, svg} = G, g = Kit.mk('g', {}, svg);
+  const c1 = arrow(g, cx, cy, cx, cy + ay, {c: BLUE}, lw * .8);
+  const c2 = arrow(g, cx, cy + ay, cx + ax, cy + ay, {c: BLUE}, lw * .8);
+  const t1 = txt(g, cx + f * .7, cy + ay * .55, 'slides', f, 'start', `fill:${BLUE}`);
+  const t2 = txt(g, cx + f * .7, cy + ay + f * .35, 'pulls apart', f, 'start', `fill:${BLUE}`);
+  const tr = arrow(g, cx, cy, cx + ax, cy + ay, {c: 'var(--k)'}, lw * 1.4);
+  const t3 = txt(g, cx + ax - f * .2, cy + ay * .45, 'real', f, 'end');
+  if (anim && !Kit.calm){
+    gsap.from(tr, {opacity: 0, duration: .4, delay: .9});
+    gsap.from([c1, t1], {opacity: 0, duration: .4, delay: 1.3});
+    gsap.from([c2, t2, t3], {opacity: 0, duration: .4, delay: 1.7});
+  }
+}
+
+function reveal(anim){
+  S.shown = true;
+  if (anim && !Kit.calm) gsap.to(G.gw, {x: -G.gap, y: G.slide, duration: 1.1, ease: 'power2.inOut'});
+  else gsap.set(G.gw, {x: -G.gap, y: G.slide});
+  showTruth(anim);
+  Kit.haptic('success');
+  Kit.show('why'); Kit.show('keep');
+}
+
+function pt(e){ const r = Kit.$('map').getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+function setGuess(e){ const [x, y] = pt(e); S.gx = (x - G.cx) / G.W; S.gy = (y - G.cy) / G.H; paint(); }
+const map = Kit.$('map');
+map.addEventListener('pointerdown', e => { if (S.locked || !G) return; dragging = true; try { map.setPointerCapture(e.pointerId); } catch (_) {} setGuess(e); });
+map.addEventListener('pointermove', e => { if (dragging) setGuess(e); });
+map.addEventListener('pointerup', e => {
+  if (!dragging) return; dragging = false; setGuess(e);
+  const L = Math.hypot(S.gx * G.W, S.gy * G.H);
+  if (L < Math.min(G.W, G.H) * .08) return;
+  if (!S.drawn){ S.drawn = true; if (G.hint) G.hint.remove(); sure.on(); Kit.haptic('selection');
+    Kit.$('say').textContent = 'Redraw if you like, then say how sure you are.'; }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && G && G.hint) gsap.fromTo(G.dot, {attr: {r: G.lw * 1.8}}, {attr: {r: G.lw * 3}, repeat: 3, yoyo: true, duration: .5}); };
+Kit.play.card = async () => {
+  const r = map.getBoundingClientRect(), sx = r.left + G.cx, sy = r.top + G.cy;
+  const ev = (t, x, y) => map.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', sx, sy); ev('pointermove', sx - G.W * .1, sy + G.H * .12); ev('pointerup', sx - G.W * .13, sy + G.H * .18);
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

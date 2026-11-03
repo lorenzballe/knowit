@@ -1,0 +1,37 @@
+{
+  "id": "science-glass-pass-window",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is glass transparent to light but not to UV rays?",
+  "answer": "Light comes in many frequencies, and a material lets only some of them through. Glass lets visible light pass, so it looks clear. Ultraviolet lies outside that window, so glass stops it.",
+  "move": "Transparent is never absolute: it always means \"transparent to which frequencies\".",
+  "keywords": [
+    "glass",
+    "ultraviolet",
+    "visible light",
+    "frequency",
+    "transparency"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question: why is glass clear to visible light but not to UV rays? A colour bar of light frequencies: drag along it to see visible light pass through glass, then go past violet to see ultraviolet get stopped."
+  },
+  "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=QB4WuTk_ja8&t=275s",
+  "written": "2026-11-03"
+}

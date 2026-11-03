@@ -1,0 +1,37 @@
+{
+  "id": "history-san-marino-appeals",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.faith_and_power",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did tiny San Marino dodge taxes from neighbouring feudal lords?",
+  "answer": "A neighbouring feudal lord sent San Marino a tax bill, claiming the land was under his control. Paying would have meant accepting that claim, so the Sammarinese took each dispute to a third power instead, first the Pope and then the Holy Roman Empire. They won their autonomy in court rather than on the battlefield.",
+  "move": "San Marino out-ranked its neighbours in court instead of fighting them.",
+  "keywords": [
+    "san marino",
+    "pope",
+    "holy roman empire",
+    "feudal lords",
+    "taxes"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card titled 'San Marino in court' showing a neighbouring lord's tax bill that claims the land is under his control. Below it, a draggable slider asks the reader to take the case to ever higher judges, from the local lord up to higher courts."
+  },
+  "source": "Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=KniHBbR_Nv4&t=227s",
+  "written": "2026-11-03"
+}

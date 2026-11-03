@@ -1,0 +1,108 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: food-estimated-weight-mark -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#plotbox{flex:1;min-height:0;position:relative}
+#plot{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(1.8cqh,12px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="food" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE ℮ MARK</span></div>
+    <h2 class="q">A pack says 500 g ℮. Is it likelier to weigh less or more?</h2>
+    <div class="stagebox" id="stage">
+      <div id="plotbox"><svg id="plot"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Less than 500 g</button>
+        <button class="opt" data-i="1">500 g or a bit more</button>
+        <button class="opt" data-i="2">Equal odds</button>
+      </div>
+      <div id="why" class="gone"><p class="big">500 g or a bit more</p><p class="body">℮ means “estimated”: one pack may be off by up to 15 g either way. But on average the content must never be below the label. So the packs pile up on the label or just above it.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, say how sure you are, then watch 60 packs get weighed.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>℮ allows ±15 g, but on average you get at least what’s printed.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+// 60 illustrative packs: within ±15 g, average above the label.
+const S = [];
+for (let i = 0; i < 60; i++) { let v = 505 + 3.5 * Kit.gauss(); v = Math.max(485.5, Math.min(514.5, v)); S.push(v); }
+const binOf = v => Math.floor((v - 484) / 2);
+const maxc = (() => { const c = {}; let m = 1; S.forEach(v => { const b = binOf(v); c[b] = (c[b] || 0) + 1; m = Math.max(m, c[b]); }); return m; })();
+const st = {n: 0};
+let shown = 0;
+
+function T(svg, x, y, s, fs, anchor, w) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'middle', 'font-size': fs, style: `fill:var(--k);font-family:var(--body);font-weight:${w || 700}`}, svg);
+  t.textContent = s; return t;
+}
+function draw() {
+  const svg = Kit.$('plot'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f * .8, H * .07));
+  const x0 = fs * .6, x1 = W - fs * .6;
+  const top = fs * 2.4, axisY = H - fs * 2.2, plotH = axisY - top;
+  const bw = (x1 - x0) / 16, xOf = v => x0 + (v - 484) / 32 * (x1 - x0), xn = xOf(500);
+  // lighter side, shaded
+  Kit.mk('rect', {x: x0, y: top, width: xn - x0, height: plotH, style: 'fill:color-mix(in srgb,var(--k) 7%,transparent)'}, svg);
+  const ph = Math.min(plotH / maxc, bw * .8);
+  const c = {};
+  let low = 0, high = 0;
+  for (let i = 0; i < shown; i++) {
+    const v = S[i], b = binOf(v); c[b] = (c[b] || 0) + 1;
+    const lighter = v < 500; lighter ? low++ : high++;
+    Kit.mk('rect', {x: x0 + b * bw + bw * .12, y: axisY - c[b] * ph + ph * .09, width: bw * .76, height: ph * .82, rx: Math.min(4, ph * .2),
+      style: lighter ? 'fill:none;stroke:var(--k);stroke-width:2' : 'fill:var(--k)'}, svg);
+  }
+  // axis and the label line
+  Kit.mk('line', {x1: x0, x2: x1, y1: axisY, y2: axisY, style: 'stroke:var(--k);stroke-width:2.5'}, svg);
+  Kit.mk('line', {x1: xn, x2: xn, y1: top - fs * .3, y2: axisY + fs * .3, style: 'stroke:var(--k);stroke-width:2;stroke-dasharray:5 4'}, svg);
+  [485, 515].forEach(v => Kit.mk('line', {x1: xOf(v), x2: xOf(v), y1: axisY, y2: axisY + fs * .4, style: 'stroke:var(--k);stroke-width:2'}, svg));
+  const ly = axisY + fs * 1.5;
+  T(svg, x0, ly, '−15 g', fs, 'start', 600);
+  T(svg, xn, ly, '500 g', fs, 'middle', 800);
+  T(svg, x1, ly, '+15 g', fs, 'end', 600);
+  if (shown === 0) {
+    T(svg, x0, fs * 1.2, '← lighter', fs, 'start');
+    T(svg, x1, fs * 1.2, 'heavier →', fs, 'end');
+    T(svg, (x0 + x1) / 2, top + plotH * .5, '60 packs labelled 500 g ℮', fs, 'middle', 600).setAttribute('style', 'fill:var(--muted);font-family:var(--body);font-weight:600');
+  } else {
+    T(svg, x0, fs * 1.2, `◻ lighter: ${low}`, fs, 'start');
+    T(svg, x1, fs * 1.2, `label or more: ${high} ■`, fs, 'end');
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  draw();
+  if (Kit.calm) { st.n = 60; shown = 60; draw(); Kit.haptic('success'); return; }
+  gsap.to(st, {n: 60, duration: 2.2, ease: 'none', onUpdate: () => { const n = Math.floor(st.n); if (n !== shown) { shown = n; draw(); } }, onComplete: () => { shown = 60; draw(); Kit.haptic('success'); }});
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2800)); };
+Kit.single();
+</script>
+</html>

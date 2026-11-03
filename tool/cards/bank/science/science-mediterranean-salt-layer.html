@@ -1,0 +1,140 @@
+<!doctype html>
+<!-- slug: science-mediterranean-salt-layer -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#row{display:flex;justify-content:center;align-items:center;gap:3cqw}
+#dry{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
+#dry:active{transform:scale(.97)}
+#dry[disabled]{opacity:.55}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say,.keep,.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · build it up">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SALT GIANT</span></div>
+    <h2 class="q">How thick is the salt left under the Mediterranean when it dried out?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of the Mediterranean basin with salt layers, beside Mount Everest at the same scale"></svg>
+      <div id="row"><button id="dry">Dry the sea</button></div>
+      <div id="why" class="gone">
+        <p class="big">2 to 3 km of salt</p>
+        <p class="body">Not a thin crust: a giant salt bank. Drilling in the 1970s (the Deep Sea Drilling Program) hit it under the seafloor and dated it to about 5.6 million years ago. Only a sea that dried out could leave that much.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap “Dry the sea”: each tap lays down half a kilometre of salt.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Under the Mediterranean lies salt 2–3 km thick: proof the sea once dried up.</div>
+    <div class="foot"><span class="src">Source · Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const STEPS = 6, STEP_KM = 0.5, WALL_KM = 4, EVEREST_KM = 8.85;
+let n = 0, busy = false, G = null;
+const svg = Kit.$('pic');
+const SALT = ['#fbf8f1', '#e9e1cf'], SALT_LINE = '#c9bea6', ROCK = '#6e5b4a', ROCK2 = '#56473a', SEA = '#2f86d0';
+
+function draw() {
+  gsap.killTweensOf('#pic *');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .8);
+  const top = Math.max(fs * 2.9, f * 2.8), bottom = Math.max(fs * 1.4, f * 1.4);
+  const axisW = fs * 3.2;
+  const kmPx = (H - top - bottom) / 9.2;
+  const baseY = H - bottom;
+  const y = km => baseY - km * kmPx;
+  const x0 = axisW + fs * .4, x1 = W * 0.6, wall = Math.max(6, fs * .6);
+  const ix0 = x0 + wall, ix1 = x1 - wall;
+  G = {W, H, f, fs, y, ix0, ix1, kmPx, baseY};
+
+  // axis
+  let step = 1;
+  while (step < 9 && step * kmPx < fs * 1.35) step++;
+  for (let k = 0; k <= 9; k += step) {
+    Kit.mk('line', {x1: axisW - fs * .2, x2: x0, y1: y(k), y2: y(k), stroke: 'var(--k)', 'stroke-opacity': .35, 'stroke-width': 1}, svg);
+    const t = Kit.mk('text', {x: axisW - fs * .35, y: y(k), 'text-anchor': 'end', 'dominant-baseline': 'middle', fill: 'var(--k)', 'fill-opacity': .7, style: `font:600 ${fs}px var(--mono)`}, svg);
+    t.textContent = k === 0 ? '0' : k + ' km';
+  }
+
+  // Everest at the same scale
+  const ex0 = W * 0.64, ex1 = W - 4, px = W * 0.82, py = y(EVEREST_KM);
+  Kit.mk('polygon', {points: `${ex0},${baseY} ${px},${py} ${ex1},${baseY}`, fill: '#8a8f99'}, svg);
+  Kit.mk('polygon', {points: `${px},${py} ${ex1},${baseY} ${px + (ex1 - px) * .25},${baseY}`, fill: '#6c717b'}, svg);
+  const s = .22;
+  Kit.mk('polygon', {points: `${px},${py} ${px + (ex1 - px) * s},${py + (baseY - py) * s} ${px + (ex1 - px) * s * .3},${py + (baseY - py) * s * .8} ${px - (px - ex0) * s * .2},${py + (baseY - py) * s * .95} ${px - (px - ex0) * s},${py + (baseY - py) * s}`, fill: '#ffffff'}, svg);
+  const el = Kit.mk('text', {x: Math.min(px, W - fs * 3), y: py - fs * .55, 'text-anchor': 'middle', fill: 'var(--k)', style: `font:700 ${fs}px var(--body)`}, svg);
+  el.textContent = 'Everest';
+
+  // basin rock
+  Kit.mk('rect', {x: x0, y: baseY, width: x1 - x0, height: H - baseY, fill: ROCK}, svg);
+  Kit.mk('rect', {x: x0, y: y(WALL_KM), width: wall, height: baseY - y(WALL_KM), fill: ROCK2}, svg);
+  Kit.mk('rect', {x: ix1, y: y(WALL_KM), width: wall, height: baseY - y(WALL_KM), fill: ROCK2}, svg);
+  Kit.mk('rect', {x: ex0 - 2, y: baseY, width: ex1 - ex0 + 2, height: H - baseY, fill: ROCK}, svg);
+
+  // salt layers
+  G.salt = Kit.mk('g', {}, svg);
+  for (let i = 0; i < n; i++) addLayer(i);
+  // sea
+  const st = y(n * STEP_KM);
+  G.water = Kit.mk('rect', {x: ix0, y: y(WALL_KM), width: ix1 - ix0, height: n < STEPS ? Math.max(0, st - y(WALL_KM)) : 0, fill: SEA, 'fill-opacity': .88}, svg);
+  G.seaT = Kit.mk('text', {x: (ix0 + ix1) / 2, y: (y(WALL_KM) + st) / 2, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: '#fff', style: `font:700 ${fs}px var(--body)`, opacity: n < STEPS && st - y(WALL_KM) > fs * 1.6 ? 1 : 0}, svg);
+  G.seaT.textContent = 'SEA';
+  // salt label
+  const sh = n * STEP_KM * kmPx;
+  if (sh > fs * 1.5) {
+    const t = Kit.mk('text', {x: (ix0 + ix1) / 2, y: baseY - sh / 2, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: '#5a4a35', style: `font:800 ${fs}px var(--body)`}, svg);
+    t.textContent = n >= STEPS ? 'SALT · 2–3 km' : 'SALT';
+  }
+  // readout
+  G.read = Kit.mk('text', {x: fs * .2, y: Math.max(fs, f) * 1.55, fill: 'var(--k)', style: `font:800 ${Math.max(fs * 1.35, f * 1.4)}px var(--display)`}, svg);
+  setRead(n * STEP_KM);
+}
+function addLayer(i, grow) {
+  const {y, ix0, ix1} = G;
+  const r = Kit.mk('rect', {x: ix0, width: ix1 - ix0, y: y((i + 1) * STEP_KM), height: y(i * STEP_KM) - y((i + 1) * STEP_KM), fill: SALT[i % 2], stroke: SALT_LINE, 'stroke-width': 1}, G.salt);
+  if (grow) gsap.from(r, {attr: {y: y(i * STEP_KM), height: 0}, duration: .55, ease: 'power2.out'});
+  return r;
+}
+function setRead(km) {
+  G.read.textContent = n >= STEPS && !busy ? '2–3 km of salt' : km.toFixed(1) + ' km of salt';
+}
+
+function tap() {
+  if (busy || n >= STEPS) return;
+  busy = true; Kit.haptic('light');
+  const old = n; n++;
+  const {y} = G, newTop = y(n * STEP_KM);
+  addLayer(old, true);
+  const cnt = {v: old * STEP_KM};
+  gsap.to(cnt, {v: n * STEP_KM, duration: .55, onUpdate: () => setRead(cnt.v)});
+  gsap.to(G.seaT, {opacity: 0, duration: .2});
+  gsap.to(G.water, {attr: {y: newTop, height: 0}, duration: .55, ease: 'power2.in', onComplete: () => {
+    busy = false; draw();
+    if (n < STEPS) { if (!Kit.calm) gsap.from(G.water, {attr: {y: G.y(n * STEP_KM), height: 0}, duration: .35, ease: 'power2.out'}); }
+    else finish();
+  }});
+}
+function finish() {
+  Kit.haptic('success');
+  Kit.hide('row'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  draw();
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+Kit.$('dry').addEventListener('click', tap);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.water, {opacity: 0, duration: .6}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < STEPS; i++) { Kit.$('dry').click(); await new Promise(r => setTimeout(r, 800)); }
+  await new Promise(r => setTimeout(r, 500));
+};
+Kit.single();
+</script>
+</html>

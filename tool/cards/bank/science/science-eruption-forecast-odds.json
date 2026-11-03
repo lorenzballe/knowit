@@ -1,0 +1,36 @@
+{
+  "id": "science-eruption-forecast-odds",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.uncertainty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many expert eruption forecasts from 1990–2013 turned out correct?",
+  "answer": "A study checked what scientists had forecast for 190 eruptions between 1990 and 2013. Only about 1 forecast in 5 proved right, which is 19%. So there is still no single reliable way to say when a volcano will erupt.",
+  "move": "Eruption forecasts were right only about 1 time in 5.",
+  "keywords": [
+    "volcanoes",
+    "eruptions",
+    "volcanologists",
+    "forecasting"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A grid of dots, one per volcanic eruption, under a hold-to-check button. Holding it reveals that only 19% of 190 expert eruption forecasts from 1990 to 2013 were correct."
+  },
+  "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=D3ftPHDNXPg&t=582s",
+  "written": "2026-11-03"
+}

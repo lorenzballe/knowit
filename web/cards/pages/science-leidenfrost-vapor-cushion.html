@@ -1,0 +1,141 @@
+<!doctype html>
+<!-- slug: science-leidenfrost-vapor-cushion -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#cap{font:700 max(2cqh,13px)/1.25 var(--body);color:var(--k);text-align:center;margin:0;min-height:2.6em;overflow-wrap:anywhere}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#heat{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
+#heat::-webkit-slider-runnable-track{height:max(1.2cqh,8px);border-radius:99px;background:linear-gradient(90deg,#7c8794,#f59e0b,#ff3b1f)}
+#heat::-moz-range-track{height:max(1.2cqh,8px);border-radius:99px;background:linear-gradient(90deg,#7c8794,#f59e0b,#ff3b1f)}
+#heat::-webkit-slider-thumb{-webkit-appearance:none;width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);border:.4cqh solid var(--c);margin-top:calc((max(1.2cqh,8px) - max(4cqh,28px))/2)}
+#heat::-moz-range-thumb{width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);border:.4cqh solid var(--c)}
+.ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted);letter-spacing:.04em}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{margin:0;font-size:max(1.9cqh,13px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · see it happen">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LEIDENFROST</span></div>
+    <h2 class="q">How can a hot ball sit in water without water touching it?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <p id="cap">Warm ball: the water presses right against it.</p>
+      <div id="ctl">
+        <input id="heat" type="range" min="0" max="100" value="0" aria-label="Ball temperature">
+        <div class="ends"><span>WARM BALL</span><span>VERY HOT BALL</span></div>
+      </div>
+      <div id="why" class="gone"><p class="body">The gap between hot ball and water is so big that water flash boils the instant it comes near. The vapor makes a layer around the ball, so the liquid never reaches the solid.</p></div>
+    </div>
+    <p class="say" id="say">Drag the slider to heat the ball. Watch where the water is.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Hot enough, a solid wraps itself in its own cushion of vapor.</div>
+    <div class="foot"><span class="src">Source · The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {t: 0, done: false, g: null, time: 0};
+const svg = Kit.$('pic'), heat = Kit.$('heat'), cap = Kit.$('cap');
+const caps = [
+  'Warm ball: the water presses right against it.',
+  'Hot ball: water boils where it touches, but it still touches.',
+  'Very hot: it boils so fast that vapor forms a layer. No contact.'
+];
+let stage = -1;
+const cold = gsap.utils.interpolate('#7c8794', '#ff4d1a');
+const gapOf = t => t < .68 ? 0 : (t - .68) / .32;
+
+function setT(t) {
+  S.t = t;
+  const s = t < .3 ? 0 : t < .68 ? 1 : 2;
+  if (s !== stage) { stage = s; cap.textContent = caps[s]; Kit.haptic('selection'); }
+  if (t >= .97 && !S.done) {
+    S.done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.hide('ctl'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, duration: .45, stagger: .1});
+  }
+}
+heat.addEventListener('input', () => setT(heat.value / 100));
+
+Kit.onShow.card = () => {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const top = f * 2.4;
+  const avail = H - top - f * 2.6;
+  const R = Math.max(20, Math.min(W * .26, avail * .38));
+  const cx = W / 2, cy = top + avail / 2 + f * .4;
+  const maxGap = R * .2;
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#3b9bd9'}, lg);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#0f4c81'}, lg);
+  const rg = Kit.mk('radialGradient', {id: 'glow'}, defs);
+  Kit.mk('stop', {offset: .5, 'stop-color': '#ff7a1a', 'stop-opacity': .55}, rg);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#ff7a1a', 'stop-opacity': 0}, rg);
+  Kit.mk('rect', {x: 0, y: top, width: W, height: H - top, rx: f * .6, fill: 'url(#wg)'}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: top, y2: top, stroke: '#bfe3ff', 'stroke-width': 2}, svg);
+  const wl = Kit.mk('text', {x: 4, y: top - f * .6, fill: 'currentColor', 'font-size': f * .9, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+  wl.textContent = 'WATER, NEAR BOILING ↓'; wl.style.color = 'var(--k)';
+  const glow = Kit.mk('circle', {cx, cy, r: R * 1.7, fill: 'url(#glow)', opacity: 0}, svg);
+  const film = Kit.mk('path', {fill: '#eaf6ff', 'fill-opacity': .85, stroke: '#ffffff', 'stroke-width': 1.5}, svg);
+  const bub = [];
+  const bg = Kit.mk('g', {}, svg);
+  for (let i = 0; i < 46; i++) bub.push({el: Kit.mk('circle', {r: 0, fill: '#eaf6ff', 'fill-opacity': .8, stroke: '#fff', 'stroke-width': 1}, bg), on: false});
+  const ball = Kit.mk('circle', {cx, cy, r: R, stroke: '#1b1b1b', 'stroke-width': 2}, svg);
+  Kit.mk('circle', {cx: cx - R * .35, cy: cy - R * .38, r: R * .18, fill: '#fff', opacity: .35}, svg);
+  const vl = Kit.mk('text', {x: cx, y: cy + R + maxGap + f * 1.5, 'text-anchor': 'middle', fill: '#ffffff', 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 800, opacity: 0}, svg);
+  vl.textContent = 'vapor layer';
+  S.g = {W, H, f, R, cx, cy, top, maxGap, glow, film, bub, ball, vl};
+};
+
+function spawn(g, onFilm, gap) {
+  const b = g.bub.find(b => !b.on); if (!b) return;
+  const a = -Math.PI / 2 + (Kit.rnd() - .5) * (onFilm ? 1.6 : 2.6);
+  const rr = g.R + gap;
+  b.on = true; b.x = g.cx + Math.cos(a) * rr; b.y = g.cy + Math.sin(a) * rr;
+  b.r = g.f * (.25 + Kit.rnd() * .35); b.v = g.f * (2 + Kit.rnd() * 2.5);
+}
+
+gsap.ticker.add((time, dt) => {
+  const g = S.g; if (!g || !svg.isConnected) return;
+  dt = Math.min(dt, 50) / 1000; S.time += dt;
+  const t = S.t, gap = gapOf(t) * g.maxGap;
+  g.ball.setAttribute('fill', cold(t));
+  g.glow.setAttribute('opacity', Math.max(0, (t - .2) / .8));
+  if (gap > .5) {
+    let d = '';
+    for (let i = 0; i <= 64; i++) {
+      const a = i / 64 * Math.PI * 2;
+      const r = g.R + gap * (1 + (Kit.calm ? 0 : .22 * Math.sin(7 * a + S.time * 5)));
+      d += (i ? 'L' : 'M') + (g.cx + Math.cos(a) * r).toFixed(1) + ' ' + (g.cy + Math.sin(a) * r).toFixed(1);
+    }
+    g.film.setAttribute('d', d + 'Z');
+  } else g.film.setAttribute('d', '');
+  g.vl.setAttribute('opacity', gapOf(t) > .25 ? 1 : 0);
+  const rate = t < .3 ? 0 : t < .68 ? 10 + (t - .3) * 90 : 8;
+  if (!Kit.calm && Kit.rnd() < rate * dt) spawn(g, gap > .5, gap);
+  for (const b of g.bub) {
+    if (!b.on) { b.el.setAttribute('r', 0); continue; }
+    b.y -= b.v * dt * 10; b.x += Math.sin(S.time * 6 + b.r) * .3;
+    if (b.y < g.top + b.r) b.on = false;
+    b.el.setAttribute('cx', b.x); b.el.setAttribute('cy', b.y); b.el.setAttribute('r', b.on ? b.r : 0);
+  }
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.fromTo(S, {t: 0}, {t: .18, duration: .9, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => { if (!stage && heat.value == 0) {} }});
+};
+
+Kit.play.card = async () => {
+  for (const v of [40, 80, 100]) { heat.value = v; heat.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 200)); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

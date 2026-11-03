@@ -1,0 +1,38 @@
+{
+  "id": "technology-relay-maze-brain",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How was the first intelligent mouse's brain built?",
+  "answer": "The first intelligent mouse had no brain of its own. The maze was the brain, with a computer built from telephone relay switches under its floor. The mouse was just a magnet on wheels, following an electromagnet that the relays moved.",
+  "move": "The clever part was in the maze, not in the mouse.",
+  "keywords": [
+    "telephone relay",
+    "maze",
+    "electromagnet",
+    "mouse",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A quiz card titled Relay Maze asks how the first intelligent mouse's brain was built, offering three choices: a tiny circuit inside the mouse, switches hidden in the maze, or a person steering it by remote.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=55s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "space-moon-flag-wave",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_landing_doubts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the flag seem to wave on the airless Moon?",
+  "answer": "Driving the pole into the lunar soil shakes it, and the shake passes into the cloth. With no air to brake it, the fabric keeps swinging slowly and freely long after the hands let go. The flag moves on the Moon without any wind.",
+  "move": "On the Moon the flag moves because it was shaken, and nothing stops it.",
+  "keywords": [
+    "moon",
+    "lunar soil",
+    "vacuum",
+    "flag",
+    "apollo"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Shows a flag on a pole with two timers, Moon (no air) and Earth (air), each reading seconds. Asks the reader to plant the pole on the Moon and time how long the flag keeps moving.",
+    "ground": "#05070d"
+  },
+  "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=FeVJxB41oNY&t=77s",
+  "written": "2026-11-03"
+}

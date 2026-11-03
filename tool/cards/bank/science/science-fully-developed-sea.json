@@ -1,0 +1,36 @@
+{
+  "id": "science-fully-developed-sea",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When do wind waves reach their maximum size?",
+  "answer": "The wind pours energy into the waves at a steady rate. The bigger the waves get, the more they break, turning their energy into swirling eddies and heat. When these losses match the energy the wind adds, the waves stop growing, creating a fully developed sea.",
+  "move": "Waves stop growing when energy out equals energy in.",
+  "keywords": [
+    "wind waves",
+    "breaking waves",
+    "fully developed sea",
+    "ocean"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Ocean-wave card asking when wind waves reach their maximum size. Tap to let the wind blow one gust at a time. The page explains that waves stop growing when energy lost to breaking equals the energy the wind adds."
+  },
+  "source": "Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=pir_muTzYM8&t=760s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,212 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-steel-softens-first -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize;user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · heat the beam">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HEAT IT UP</span></div>
+    <h2 class="q">Did the fires need to melt the steel to bring the towers down?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone">
+        <p class="big">No. The steel only had to soften.</p>
+        <p class="body">Steel doesn't have to turn liquid to fail. As it heats it weakens until it can no longer hold the floors above. NIST's simulations point to that weakening, not melting at about 1500 °C, as the trigger of the collapse.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag along the heat bar to warm the beam.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Hot steel gives way long before it melts.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const FAIL = 0.6;
+const S = {t: 0, done: false, falling: false};
+let G = {}, drag = false, lastBuzz = 0;
+const STOPS = [[0,[107,114,128]],[0.35,[185,28,28]],[0.65,[249,115,22]],[1,[253,230,138]]];
+function heat(t){
+  for (let i = 1; i < STOPS.length; i++){
+    if (t <= STOPS[i][0]){
+      const [a, ca] = STOPS[i-1], [b, cb] = STOPS[i], u = (t - a) / (b - a);
+      const c = ca.map((v, k) => Math.round(v + (cb[k] - v) * u));
+      return `rgb(${c[0]},${c[1]},${c[2]})`;
+    }
+  }
+  return 'rgb(253,230,138)';
+}
+const mk = (tag, attrs, parent) => Kit.mk(tag, attrs, parent);
+function txt(parent, x, y, s, size, anchor, weight, style){
+  const t = mk('text', {x, y, 'text-anchor': anchor || 'start', style: `font:${weight||700} ${size}px var(--body);fill:var(--k);${style||''}`}, parent);
+  t.textContent = s; return t;
+}
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * 0.95, 12);
+  const g = G = {W, H, fs, svg};
+  // strength row
+  txt(svg, W*0.06, fs*1.15, 'steel strength', fs, 'start', 700);
+  g.sx = W*0.48; g.sw = W*0.46;
+  mk('rect', {x: g.sx, y: fs*0.35, width: g.sw, height: fs*0.9, rx: fs*0.45, style: 'fill:none;stroke:var(--k);stroke-width:1.5;opacity:.5'}, svg);
+  g.sbar = mk('rect', {x: g.sx, y: fs*0.35, width: g.sw, height: fs*0.9, rx: fs*0.45, style: 'fill:var(--k)'}, svg);
+  // heat bar geometry
+  g.bh = Math.max(fs*0.95, 12);
+  g.barY = H - g.bh - fs*1.8;
+  g.bx = W*0.06; g.bw = W*0.88;
+  g.yt = fs*2.5; g.yg = g.barY - fs*2.3;
+  g.xa = W*0.12; g.xb = W*0.88;
+  g.cw = Math.max(W*0.035, 8);
+  g.yb = g.yt + (g.yg - g.yt)*0.5;
+  g.hb = Math.max((g.yg - g.yt)*0.06, 8);
+  // flames
+  g.flames = mk('g', {}, svg);
+  g.fl = [];
+  const n = 5;
+  for (let i = 0; i < n; i++){
+    const x = g.xa + (g.xb - g.xa)*(i + 0.5)/n;
+    const o = mk('path', {style: 'fill:#f97316'}, g.flames);
+    const inn = mk('path', {style: 'fill:#fde047'}, g.flames);
+    g.fl.push({x, o, inn, w: (g.xb - g.xa)/n*0.38, k: 0.8 + 0.4*((i*7)%5)/4});
+  }
+  // ground + columns
+  mk('line', {x1: W*0.03, y1: g.yg, x2: W*0.97, y2: g.yg, style: 'stroke:var(--k);stroke-width:3'}, svg);
+  [g.xa, g.xb].forEach(x => mk('rect', {x: x - g.cw/2, y: g.yt, width: g.cw, height: g.yg - g.yt, style: 'fill:var(--k)'}, svg));
+  // slabs
+  g.slabs = mk('g', {}, svg);
+  const sh = Math.max((g.yb - g.yt)*0.34, fs*1.5), gap = sh*0.18;
+  g.sh = sh;
+  const sx0 = g.xa + g.cw/2 + (g.xb - g.xa)*0.03, sx1 = g.xb - g.cw/2 - (g.xb - g.xa)*0.03;
+  for (let k = 0; k < 2; k++){
+    const y = g.yb - g.hb/2 - (k+1)*sh - k*gap;
+    mk('rect', {x: sx0, y, width: sx1 - sx0, height: sh, rx: 3, style: `fill:var(--k);opacity:${k ? .6 : .88}`}, g.slabs);
+    if (!k) txt(g.slabs, (sx0+sx1)/2, y + sh/2 + fs*0.35, 'floors above', fs, 'middle', 700, 'fill:var(--c)');
+  }
+  // beam halves
+  g.glow = [0,1].map(() => mk('path', {style: 'fill:none;stroke-linecap:round'}, svg));
+  g.beam = [0,1].map(() => mk('path', {style: 'fill:none;stroke-linecap:butt'}, svg));
+  // heat bar
+  const defs = mk('defs', {}, svg);
+  const lg = mk('linearGradient', {id: 'hg', gradientUnits: 'userSpaceOnUse', x1: g.bx, y1: 0, x2: g.bx + g.bw, y2: 0}, defs);
+  STOPS.forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': `rgb(${c})`}, lg));
+  const pat = mk('pattern', {id: 'hatch', width: 7, height: 7, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+  mk('line', {x1: 0, y1: 0, x2: 0, y2: 7, style: 'stroke:var(--k);stroke-width:2;opacity:.45'}, pat);
+  mk('rect', {x: g.bx, y: g.barY, width: g.bw, height: g.bh, rx: g.bh/2, style: 'fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:1.5'}, svg);
+  g.fill = mk('rect', {x: g.bx, y: g.barY, width: 0, height: g.bh, rx: g.bh/2, fill: 'url(#hg)'}, svg);
+  mk('line', {x1: g.bx + g.bw, y1: g.barY - fs*0.3, x2: g.bx + g.bw, y2: g.barY + g.bh + fs*0.3, style: 'stroke:var(--k);stroke-width:3'}, svg);
+  txt(svg, g.bx, g.barY + g.bh + fs*1.35, 'cool', fs, 'start', 600, 'opacity:.75');
+  txt(svg, g.bx + g.bw, g.barY + g.bh + fs*1.35, '1500 °C · steel melts', fs, 'end', 800);
+  g.fx = g.bx + g.bw*FAIL;
+  g.endG = mk('g', {style: S.done ? '' : 'opacity:0'}, svg);
+  mk('rect', {x: g.fx, y: g.barY, width: g.bx + g.bw - g.fx, height: g.bh, fill: 'url(#hatch)'}, g.endG);
+  mk('line', {x1: g.fx, y1: g.barY - fs*1.1, x2: g.fx, y2: g.barY + g.bh, style: 'stroke:var(--k);stroke-width:2.5'}, g.endG);
+  txt(g.endG, g.fx - fs*0.4, g.barY - fs*0.45, 'collapse here', fs, 'end', 800);
+  txt(g.endG, g.fx + fs*0.4, g.barY - fs*0.45, 'never reached', fs, 'start', 600, 'opacity:.75');
+  g.handle = mk('circle', {r: Math.max(fs*0.85, 11), cy: g.barY + g.bh/2, style: 'fill:#fff;stroke:var(--k);stroke-width:3'}, svg);
+  update();
+}
+function beamPath(side, d){
+  const g = G, L = g.xb - g.xa, mid = (g.xa + g.xb)/2;
+  return side === 0
+    ? `M${g.xa} ${g.yb} Q${g.xa + L*0.3} ${g.yb + d} ${mid} ${g.yb + d}`
+    : `M${g.xb} ${g.yb} Q${g.xb - L*0.3} ${g.yb + d} ${mid} ${g.yb + d}`;
+}
+function update(){
+  const g = G, t = S.t, s = Math.min(t / FAIL, 1);
+  const d = (g.yg - g.yb)*0.22*s*s*s;
+  const col = heat(t);
+  g.beam.forEach((p, i) => { p.setAttribute('d', beamPath(i, d)); p.style.stroke = col; p.style.strokeWidth = g.hb; });
+  g.glow.forEach((p, i) => { p.setAttribute('d', beamPath(i, d)); p.style.stroke = col; p.style.strokeWidth = g.hb*2.6; p.style.opacity = (t*0.45).toFixed(2); });
+  g.sbar.setAttribute('width', Math.max(0, g.sw*(1 - s*s)));
+  g.fill.setAttribute('width', g.bw*t);
+  g.handle.setAttribute('cx', g.bx + g.bw*t);
+  const room = g.yg - g.yb - g.hb;
+  g.fl.forEach(F => {
+    const h = room*(0.1 + 0.78*t)*F.k, w = F.w, x = F.x, y = g.yg;
+    F.o.setAttribute('d', `M${x-w} ${y} Q${x-w} ${y-h*0.55} ${x} ${y-h} Q${x+w} ${y-h*0.55} ${x+w} ${y} Z`);
+    const h2 = h*0.55, w2 = w*0.55;
+    F.inn.setAttribute('d', `M${x-w2} ${y} Q${x-w2} ${y-h2*0.55} ${x} ${y-h2} Q${x+w2} ${y-h2*0.55} ${x+w2} ${y} Z`);
+  });
+  g.flames.style.opacity = (0.35 + 0.65*t).toFixed(2);
+  if (S.done) endPose(false);
+}
+function endPose(animate){
+  const g = G, L = (g.xb - g.xa)/2;
+  const ang = Math.asin(Math.min(0.85, (g.yg - g.yb - g.hb)/L))*180/Math.PI*0.85;
+  const dy = g.yg - (g.yb - g.hb/2) - g.sh*0.15;
+  if (animate && !Kit.calm){
+    const tl = gsap.timeline();
+    tl.to(g.beam[0], {rotation: ang, svgOrigin: `${g.xa} ${g.yb}`, duration: .5, ease: 'power2.in'}, 0)
+      .to(g.glow[0], {rotation: ang, svgOrigin: `${g.xa} ${g.yb}`, duration: .5, ease: 'power2.in'}, 0)
+      .to(g.beam[1], {rotation: -ang, svgOrigin: `${g.xb} ${g.yb}`, duration: .5, ease: 'power2.in'}, 0)
+      .to(g.glow[1], {rotation: -ang, svgOrigin: `${g.xb} ${g.yb}`, duration: .5, ease: 'power2.in'}, 0)
+      .to(g.slabs, {y: dy, duration: .55, ease: 'bounce.out'}, 0.05)
+      .to(g.endG, {opacity: 1, duration: .4}, 0.6);
+    return tl;
+  }
+  g.beam[0].setAttribute('transform', `rotate(${ang} ${g.xa} ${g.yb})`);
+  g.glow[0].setAttribute('transform', `rotate(${ang} ${g.xa} ${g.yb})`);
+  g.beam[1].setAttribute('transform', `rotate(${-ang} ${g.xb} ${g.yb})`);
+  g.glow[1].setAttribute('transform', `rotate(${-ang} ${g.xb} ${g.yb})`);
+  g.slabs.setAttribute('transform', `translate(0 ${dy})`);
+  g.endG.style.opacity = 1;
+}
+function finish(){
+  if (S.finished) return; S.finished = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  draw();
+}
+function fail(){
+  S.t = FAIL; S.falling = true; drag = false;
+  update();
+  Kit.haptic('success');
+  S.done = true;
+  if (Kit.calm){ finish(); return; }
+  endPose(true);
+  setTimeout(finish, 1300);
+}
+function setFromEvent(e){
+  const g = G, r = g.svg.getBoundingClientRect();
+  const x = (e.clientX - r.left)*(g.W / r.width);
+  let t = Math.max(0, Math.min(1, (x - g.bx)/g.bw));
+  if (t >= FAIL){ fail(); return; }
+  S.t = t; update();
+  if (Math.abs(t - lastBuzz) > 0.1){ lastBuzz = t; Kit.haptic('light'); }
+}
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  if (S.done) return; drag = true;
+  try { pic.setPointerCapture(e.pointerId); } catch(_) {}
+  gsap.killTweensOf(G.handle);
+  setFromEvent(e);
+});
+pic.addEventListener('pointermove', e => { if (drag && !S.done) setFromEvent(e); });
+['pointerup','pointercancel'].forEach(n => pic.addEventListener(n, () => { drag = false; }));
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || S.done) return;
+  gsap.fromTo(G.handle, {attr: {cx: G.bx}}, {attr: {cx: G.bx + G.bw*0.12}, duration: .7, ease: 'sine.inOut', yoyo: true, repeat: 3, delay: .4, onComplete: () => update()});
+};
+Kit.play.card = async () => {
+  const r = pic.getBoundingClientRect(), g = G, k = r.width / g.W;
+  const y = r.top + (g.barY + g.bh/2)*k;
+  const at = t => ({clientX: r.left + (g.bx + g.bw*t)*k, clientY: y, bubbles: true, pointerId: 1});
+  pic.dispatchEvent(new PointerEvent('pointerdown', at(0.02)));
+  for (let i = 1; i <= 12; i++){
+    pic.dispatchEvent(new PointerEvent('pointermove', at(i/12*0.7)));
+    await new Promise(r => setTimeout(r, 40));
+  }
+  pic.dispatchEvent(new PointerEvent('pointerup', at(0.7)));
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

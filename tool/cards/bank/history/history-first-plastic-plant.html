@@ -1,0 +1,190 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-first-plastic-plant -->
+<title>The first plastic recycling plant</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{display:block;width:100%;flex:1;min-height:0;overflow:visible;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);overflow-wrap:anywhere}
+#why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);overflow-wrap:anywhere}
+[data-m]{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap · history">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRST PLANT</span></div>
+    <h2 class="q">What was the world’s first plastic recycling centre?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Aluminium, glass and plastic, and why each was recycled"></svg>
+    </div>
+    <p class="say" id="say">Tap each material to see why we started recycling it.</p>
+    <div id="why" class="gone">
+      <p class="big">The Plastic Waste Recycling Mill</p>
+      <p class="body">Aluminium and glass were already reused in wartime, because they were scarce. Plastic needed another reason: we realised it can badly damage the environment. So it got a plant of its own, and this mill was the world’s first.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Plastic recycling began to protect nature, not to make up for scarcity.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const done = {al:false, gl:false, pl:false};
+let ended = false, G = null, busy = false;
+const M = {
+  al:{fill:'#b9c2cc', l1:'WARTIME', l2:'it was scarce'},
+  gl:{fill:'#2e9a62', l1:'WARTIME', l2:'it was scarce'},
+  pl:{fill:'#6cc6f2', l1:'NATURE', l2:'it harms it'}
+};
+const st = (s) => ({style:s});
+
+function shape(m, cx, cy, s, parent){
+  const g = Kit.mk('g', {}, parent);
+  const ink = 'stroke:var(--k);stroke-width:' + Math.max(1.5, s*.025) + ';stroke-linejoin:round';
+  if (m === 'al'){
+    Kit.mk('rect', {x:cx-s*.24, y:cy-s*.4, width:s*.48, height:s*.8, rx:s*.07, style:'fill:'+M.al.fill+';'+ink}, g);
+    Kit.mk('ellipse', {cx, cy:cy-s*.4, rx:s*.24, ry:s*.07, style:'fill:#dfe4ea;'+ink}, g);
+    Kit.mk('rect', {x:cx-s*.24, y:cy-s*.1, width:s*.48, height:s*.22, style:'fill:#d6453d;'+ink}, g);
+  } else {
+    const nw = m==='gl' ? s*.07 : s*.08, bw = m==='gl' ? s*.22 : s*.24, top = cy-s*.46, sh = cy-s*.18, bot = cy+s*.44;
+    const d = `M${cx-nw},${top} L${cx+nw},${top} L${cx+nw},${sh-s*.08} Q${cx+bw},${sh-s*.02} ${cx+bw},${sh+s*.12} L${cx+bw},${bot-s*.05} Q${cx+bw},${bot} ${cx+bw-s*.05},${bot} L${cx-bw+s*.05},${bot} Q${cx-bw},${bot} ${cx-bw},${bot-s*.05} L${cx-bw},${sh+s*.12} Q${cx-bw},${sh-s*.02} ${cx-nw},${sh-s*.08} Z`;
+    Kit.mk('path', {d, style:'fill:'+M[m].fill+';'+ink}, g);
+    if (m==='pl'){
+      Kit.mk('rect', {x:cx-nw*1.3, y:top-s*.08, width:nw*2.6, height:s*.1, rx:s*.02, style:'fill:#1f6fd1;'+ink}, g);
+      Kit.mk('rect', {x:cx-bw, y:cy+s*.02, width:bw*2, height:s*.16, style:'fill:#fff;'+ink}, g);
+    } else {
+      Kit.mk('rect', {x:cx-bw, y:cy+s*.04, width:bw*2, height:s*.14, style:'fill:#f3e7c4;'+ink}, g);
+    }
+  }
+  return g;
+}
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f*.85, W/26));
+  const s = Math.min(W*.22, H*.2);
+  const rowY = s*.58 + 4;
+  const cols = {al:W/6, gl:W/2, pl:W*5/6};
+  const cap1 = rowY + s*.56 + fs*1.25, cap2 = cap1 + fs*1.35;
+  G = {W, H, fs, s, rowY, cols};
+
+  for (const m of ['al','gl','pl']){
+    const g = Kit.mk('g', {'data-m':m, id:'it-'+m}, svg);
+    Kit.mk('rect', {x:cols[m]-W/6+3, y:2, width:W/3-6, height:cap2+fs*.5, rx:fs*.8,
+      style: done[m] ? 'fill:none' : 'fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-width:1.5;stroke-dasharray:4 4'}, g);
+    const sh = shape(m, cols[m], rowY, s, g); sh.id = 'sh-'+m;
+    if (m==='pl' && done.pl) sh.setAttribute('opacity', .18);
+    const c = Kit.mk('g', {id:'cap-'+m, opacity: done[m] ? 1 : 0}, g);
+    const t1 = Kit.mk('text', {x:cols[m], y:cap1, 'text-anchor':'middle', style:`font:800 ${fs}px var(--body);fill:var(--k);letter-spacing:.06em`}, c); t1.textContent = M[m].l1;
+    const t2 = Kit.mk('text', {x:cols[m], y:cap2, 'text-anchor':'middle', style:`font:500 ${fs}px var(--body);fill:var(--k)`}, c); t2.textContent = M[m].l2;
+    if (!done[m]){
+      const q = Kit.mk('text', {x:cols[m], y:cap1 + fs*.6, 'text-anchor':'middle', style:`font:700 ${fs}px var(--body);fill:var(--muted)`}, g); q.textContent = 'tap';
+    }
+  }
+
+  // The plant
+  const top = cap2 + fs*1.6, bottom = Math.max(H - 3, top + 40), fh = Math.max(40, bottom - top);
+  const fw = Math.min(W*.92, fh*1.7), x0 = (W - fw)/2;
+  const bh = Math.min(fs*2.1, fh*.3), by = top + bh + Math.min(fs*.5, fh*.05);
+  const rh = Math.min(fh*.16, fs*2.2, (bottom-by)*.3), bodyY = by + rh;
+  G.door = {x: W/2, y: bottom - (bottom-bodyY)*.22};
+  const ghost = Kit.mk('g', {id:'ghost', opacity: done.pl ? 0 : 1}, svg);
+  Kit.mk('rect', {x:x0, y:by, width:fw, height:Math.max(0, bottom-by), rx:fs*.4, style:'fill:none;stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-width:2;stroke-dasharray:6 6'}, ghost);
+  const gq = Kit.mk('text', {x:W/2, y:(by+bottom)/2 + fs*.6, 'text-anchor':'middle', style:`font:800 ${fs*2.4}px var(--display);fill:color-mix(in srgb,var(--k) 35%,transparent)`}, ghost); gq.textContent = '?';
+
+  const P = Kit.mk('g', {id:'plant', opacity: done.pl ? 1 : 0}, svg);
+  // chimney + smoke
+  const chx = x0 + fw*.12, chw = fw*.08;
+  Kit.mk('rect', {x:chx, y:by - rh*.6, width:chw, height:rh*1.7, style:'fill:var(--k)'}, P);
+  for (let i = 0; i < 3; i++){
+    Kit.mk('circle', {class:'smoke', cx:chx+chw/2, cy:by - rh*.8, r:chw*.45, style:'fill:color-mix(in srgb,var(--k) 25%,transparent)'}, P);
+  }
+  // sawtooth roof
+  const n = 4, tw = fw/n; let d = `M${x0},${bodyY}`;
+  for (let i = 0; i < n; i++) d += ` L${x0+i*tw},${by} L${x0+(i+1)*tw},${bodyY}`;
+  d += ' Z';
+  Kit.mk('path', {d, style:'fill:var(--k)'}, P);
+  for (let i = 0; i < n; i++) Kit.mk('path', {d:`M${x0+i*tw+tw*.12},${by+rh*.2} L${x0+i*tw+tw*.12},${bodyY-2} L${x0+i*tw+tw*.6},${bodyY-2} Z`, style:'fill:#7fd0f5'}, P);
+  // body
+  Kit.mk('rect', {x:x0, y:bodyY, width:fw, height:Math.max(0, bottom-bodyY), style:'fill:color-mix(in srgb,var(--k) 88%,var(--c))'}, P);
+  const nfs = Math.max(12, Math.min(fs*1.05, fw/(28*.6)));
+  const signH = nfs*1.9, signY = bodyY + (bottom-bodyY)*.14;
+  Kit.mk('rect', {x:x0+fw*.05, y:signY, width:fw*.9, height:signH, rx:nfs*.3, style:'fill:var(--c)'}, P);
+  const nt = Kit.mk('text', {x:W/2, y:signY + signH*.66, 'text-anchor':'middle', style:`font:800 ${nfs}px var(--body);fill:var(--k)`}, P); nt.textContent = 'Plastic Waste Recycling Mill';
+  const dh = Math.min((bottom-bodyY)*.42, bottom - (signY+signH) - 4), dw = Math.max(dh*.7, fw*.12);
+  if (dh > 6) Kit.mk('rect', {x:W/2-dw/2, y:bottom-dh, width:dw, height:dh, rx:dw*.12, style:'fill:#6cc6f2'}, P);
+  // banner
+  const B = Kit.mk('g', {id:'banner'}, P);
+  const bfs = Math.max(12, Math.min(fs*.95, fw/(29*.68)));
+  Kit.mk('path', {d:`M${x0-fs*.6},${top} L${x0+fw+fs*.6},${top} L${x0+fw},${top+bh/2} L${x0+fw+fs*.6},${top+bh} L${x0-fs*.6},${top+bh} L${x0},${top+bh/2} Z`, style:'fill:#e8b923;stroke:var(--k);stroke-width:2'}, B);
+  const bt = Kit.mk('text', {x:W/2, y:top + bh/2 + bfs*.36, 'text-anchor':'middle', style:`font:900 ${bfs}px var(--body);fill:#1a1a1a;letter-spacing:.04em`}, B); bt.textContent = 'FIRST PLASTIC RECYCLING PLANT';
+
+  if (done.pl && !Kit.calm) smoke();
+}
+
+function smoke(){
+  gsap.killTweensOf('.smoke');
+  document.querySelectorAll('.smoke').forEach((c, i) => {
+    gsap.fromTo(c, {y:0, x:0, opacity:.9, scale:.6, transformOrigin:'50% 50%'},
+      {y:-G.fs*2.2, x:G.fs*.8, opacity:0, scale:1.6, duration:2.4, repeat:-1, delay:i*.8, ease:'sine.out'});
+  });
+}
+
+function finish(){
+  if (ended || !(done.al && done.gl && done.pl)) return;
+  ended = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(() => { draw(); if (!Kit.calm) gsap.from(['#why','#keep'], {opacity:0, y:8, stagger:.12, duration:.45, ease:'power3.out'}); });
+}
+
+Kit.$('pic').addEventListener('click', e => {
+  const g = e.target.closest('[data-m]'); if (!g || busy) return;
+  const m = g.dataset.m; if (done[m]) return;
+  done[m] = true; Kit.haptic('light');
+  if (m !== 'pl'){
+    draw();
+    if (!Kit.calm){
+      gsap.from('#sh-'+m, {scale:1.25, rotation:-8, transformOrigin:'50% 50%', duration:.6, ease:'elastic.out(1,.45)'});
+      gsap.from('#cap-'+m, {opacity:0, y:8, duration:.4, ease:'power3.out'});
+    }
+    finish();
+    return;
+  }
+  // plastic: fly into the first plant
+  busy = true;
+  draw();
+  const svg = Kit.$('pic');
+  if (Kit.calm){ busy = false; finish(); return; }
+  gsap.set('#plant', {opacity:0}); gsap.set('#ghost', {opacity:1});
+  const fly = shape('pl', G.cols.pl, G.rowY, G.s, svg);
+  const tl = gsap.timeline({onComplete(){ fly.remove(); busy = false; finish(); }});
+  tl.from('#cap-pl', {opacity:0, y:8, duration:.4})
+    .to(fly, {x:G.door.x - G.cols.pl, y:G.door.y - G.rowY, scale:.35, transformOrigin:'50% 50%', rotation:200, duration:.8, ease:'power2.in'}, .1)
+    .to('#ghost', {opacity:0, duration:.3}, .55)
+    .fromTo('#plant', {opacity:0, y:G.fs*1.5}, {opacity:1, y:0, duration:.5, ease:'back.out(1.6)'}, .6)
+    .to(fly, {opacity:0, duration:.2}, .85)
+    .from('#banner', {scaleX:0, transformOrigin:'50% 50%', duration:.45, ease:'back.out(1.8)'}, 1);
+  smoke();
+});
+
+Kit.onShow.card = () => { if (!busy) draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(['#it-al','#it-gl','#it-pl'], {opacity:0, y:12, stagger:.1, duration:.45, ease:'power3.out'});
+  gsap.from('#ghost', {opacity:0, duration:.6, delay:.3});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (const m of ['al','gl','pl']){
+    const el = Kit.$('it-'+m);
+    if (el) el.dispatchEvent(new MouseEvent('click', {bubbles:true}));
+    await wait(m === 'pl' ? 1800 : 300);
+  }
+  await wait(400);
+};
+Kit.single();
+</script>
+</html>

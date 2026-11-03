@@ -1,0 +1,169 @@
+<!doctype html>
+<!-- slug: nature-delta-salinity-dam -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+#map{flex:1;min-height:0;width:100%;display:block}
+.ctl{display:flex;flex-direction:column;gap:.6cqh}
+.ctl .lab{font:700 max(1.8cqh,13px)/1.2 var(--body);color:var(--k)}
+.ctl .ends{display:flex;justify-content:space-between;font:600 max(1.5cqh,12px)/1.2 var(--body);color:var(--muted)}
+#dial{width:100%;height:max(4cqh,30px);accent-color:var(--k);margin:0;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0}
+.foot{padding-right:110px}
+.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Turn the dial">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RIVER DELTA</span></div>
+    <h2 class="q">How did the Hoover Dam change the water in the Colorado River delta?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map" role="img" aria-label="Map of the river from the dam to its delta, with bars for fresh water flow and salt"></svg>
+      <div class="ctl">
+        <span class="lab">Water held back upstream</span>
+        <input id="dial" type="range" min="0" max="100" value="0" aria-label="Water held back upstream">
+        <div class="ends"><span>little</span><span>most</span></div>
+      </div>
+      <div id="why" class="gone"><p class="body">With the river held back, much less fresh water reached the delta. Less water to dilute it meant the delta's water grew far saltier, and its ecosystems were badly hit.</p></div>
+    </div>
+    <p class="say" id="say">Drag the slider to hold back more of the river at the dam.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Starve a delta of river water and it turns salty.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {v: 0};
+let G = null, done = false;
+const BLUE = '#2a78cf', SALT = '#efe6cc', GREEN = '#3c9a4b', DRY = '#b8a47a';
+const lerpC = (a, b, t) => gsap.utils.interpolate(a, b, t);
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+
+function draw(){
+  const svg = Kit.$('map'); svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, f0);
+  const mapW = W * 0.64;
+  const g = {W, H, f, mapW};
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'mclip'}, defs);
+  Kit.mk('rect', {x: 0, y: 0, width: mapW, height: H, rx: f * .8}, cp);
+  const m = Kit.mk('g', {'clip-path': 'url(#mclip)'}, svg);
+  Kit.mk('rect', {x: 0, y: 0, width: mapW, height: H, fill: '#e8d6ad'}, m);
+
+  const dx = mapW * .3, damY = H * .17, damH = Math.max(6, H * .028);
+  const ax = mapW * .52, apexY = H * .64, seaY = H * .84;
+  const lx = mapW * .1, rx = mapW * .94;
+  Object.assign(g, {dx, damY, damH, ax, apexY, seaY, lx, rx});
+
+  // reservoir
+  Kit.mk('ellipse', {cx: dx, cy: H * .09, rx: mapW * .22, ry: H * .075, fill: BLUE}, m);
+  // wetland fan
+  g.wet = Kit.mk('path', {d: `M${ax},${apexY} L${lx},${seaY} L${rx},${seaY} Z`, fill: GREEN}, m);
+  // salt wedge
+  g.wedge = Kit.mk('path', {fill: SALT, opacity: .95}, m);
+  // branches
+  g.br = [];
+  [-1, -.55, -.1, .35, .8].forEach(t => {
+    const ex = ax + t * (t < 0 ? ax - lx : rx - ax) * .92;
+    g.br.push(Kit.mk('path', {d: `M${ax},${apexY} Q${ax + (ex - ax) * .3},${apexY + (seaY - apexY) * .55} ${ex},${seaY + 2}`, fill: 'none', 'stroke-linecap': 'round'}, m));
+  });
+  // salt crystals
+  g.cr = [];
+  for (let i = 0; i < 46; i++){
+    const y = apexY + (seaY - apexY) * (.15 + .85 * Math.sqrt(Kit.rnd()));
+    const hw = (y - apexY) / (seaY - apexY);
+    const x = ax + (Kit.rnd() * 2 - 1) * hw * (Kit.rnd() < .5 ? ax - lx : rx - ax) * .8;
+    const s = f * (.22 + Kit.rnd() * .18);
+    g.cr.push({y, el: Kit.mk('rect', {x: x - s / 2, y: y - s / 2, width: s, height: s, fill: '#fff', stroke: '#8a7a55', 'stroke-width': .8, transform: `rotate(45 ${x} ${y})`, opacity: 0}, m)});
+  }
+  // sea
+  Kit.mk('rect', {x: 0, y: seaY, width: mapW, height: H - seaY, fill: '#1d5c9e'}, m);
+  Kit.mk('text', {x: mapW / 2, y: seaY + (H - seaY) / 2 + f * .35, 'text-anchor': 'middle', fill: '#fff', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)'}, m).textContent = 'Sea';
+  // river
+  g.river = Kit.mk('path', {d: `M${dx},${damY + damH} C${dx - mapW * .12},${H * .32} ${ax + mapW * .14},${H * .44} ${ax},${apexY}`, fill: 'none', stroke: BLUE, 'stroke-linecap': 'round'}, m);
+  // dam
+  Kit.mk('rect', {x: dx - mapW * .12, y: damY, width: mapW * .24, height: damH, fill: '#555', rx: 2}, m);
+  const lab = (x, y, t, a) => { const e = Kit.mk('text', {x, y, 'text-anchor': a, fill: '#2a2418', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)'}, m); e.textContent = t; return e; };
+  lab(dx + mapW * .14, damY + damH, 'Hoover Dam', 'start');
+  lab(ax + f * .5, apexY - f * .1, 'Delta', 'start');
+
+  // bars
+  const bw = (W - mapW) * .26, b0 = H * .05, b1 = H - f * 3.4;
+  g.b0 = b0; g.b1 = b1;
+  const labs = [];
+  [[.32, 'Fresh water', 'to delta', BLUE], [.74, 'Salt', 'in delta', '#c7791f']].forEach(([p, l1, l2, col], i) => {
+    const cx = mapW + (W - mapW) * p;
+    Kit.mk('rect', {x: cx - bw / 2, y: b0, width: bw, height: b1 - b0, rx: bw * .25, style: 'fill:color-mix(in srgb,var(--k) 12%,transparent)'}, svg);
+    g['bar' + i] = Kit.mk('rect', {x: cx - bw / 2, width: bw, rx: bw * .25, fill: col}, svg);
+    const fs = Math.max(12, f * .9);
+    const t1 = Kit.mk('text', {x: cx, y: b1 + fs * 1.4, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)', style: 'fill:var(--k)'}, svg);
+    t1.textContent = l1;
+    const t2 = Kit.mk('text', {x: cx, y: b1 + fs * 2.75, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 500, 'font-family': 'var(--body)', style: 'fill:var(--k)'}, svg);
+    t2.textContent = l2;
+    labs.push({cx, els: [t1, t2]});
+  });
+  // keep bar labels from overlapping on narrow screens
+  const gap = 6;
+  const wOf = L => Math.max(...L.els.map(e => { try { return e.getBBox().width; } catch (_) { return 0; } }));
+  let fs = Math.max(12, f * .9);
+  const setFs = s => labs.forEach(L => { L.els[0].setAttribute('font-size', s); L.els[1].setAttribute('font-size', s); L.els[0].setAttribute('y', g.b1 + s * 1.4); L.els[1].setAttribute('y', g.b1 + s * 2.75); });
+  let w0 = wOf(labs[0]), w1 = wOf(labs[1]);
+  while (fs > 10 && labs[0].cx + w0 / 2 + gap > labs[1].cx - w1 / 2){
+    fs = Math.max(10, fs - .5); setFs(fs);
+    w0 = wOf(labs[0]); w1 = wOf(labs[1]);
+  }
+  if (labs[0].cx + w0 / 2 + gap > labs[1].cx - w1 / 2){
+    const total = w0 + gap + w1;
+    const mid = (labs[0].cx + labs[1].cx) / 2;
+    const left = clamp(mid - total / 2, mapW + 2, Math.max(mapW + 2, W - 2 - total));
+    const x0 = left + w0 / 2, x1 = left + w0 + gap + w1 / 2;
+    labs[0].els.forEach(e => e.setAttribute('x', x0));
+    labs[1].els.forEach(e => e.setAttribute('x', x1));
+  }
+  G = g; render();
+}
+
+function render(){
+  if (!G) return;
+  const g = G, v = S.v, flow = 1 - .95 * v, s = v;
+  g.river.setAttribute('stroke-width', Math.max(1.2, g.f * 1.1 * flow));
+  g.wet.setAttribute('fill', lerpC(GREEN, DRY, v));
+  g.wet.setAttribute('opacity', .35 + .65 * flow);
+  const bc = lerpC(BLUE, '#a9b0a0', v);
+  g.br.forEach(b => { b.setAttribute('stroke', bc); b.setAttribute('stroke-width', Math.max(1, g.f * .5 * flow)); });
+  const span = g.seaY - g.apexY, yT = g.seaY - span * .85 * s, bump = span * .15 * s;
+  const fr = (yT - g.apexY) / span;
+  const xl = g.ax + (g.lx - g.ax) * fr, xr = g.ax + (g.rx - g.ax) * fr;
+  g.wedge.setAttribute('d', `M${g.lx},${g.seaY} L${xl},${yT} Q${g.ax},${yT - bump * 2} ${xr},${yT} L${g.rx},${g.seaY} Z`);
+  const thr = yT - bump;
+  g.cr.forEach(c => c.el.setAttribute('opacity', clamp((c.y - thr) / g.f, 0, 1) * clamp(s * 3, 0, 1)));
+  const h = g.b1 - g.b0;
+  const fh = h * flow, sh = h * (.1 + .9 * s);
+  g.bar0.setAttribute('y', g.b1 - fh); g.bar0.setAttribute('height', fh);
+  g.bar1.setAttribute('y', g.b1 - sh); g.bar1.setAttribute('height', sh);
+}
+
+Kit.$('dial').addEventListener('input', e => {
+  const t = +e.target.value / 100;
+  gsap.to(S, {v: t, duration: Kit.calm ? 0 : .35, ease: 'power2.out', overwrite: true, onUpdate: render});
+  if (!done && t >= .9){
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => { draw(); });
+  } else if (Math.round(t * 100) % 10 === 0) Kit.haptic('selection');
+});
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#map', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const d = Kit.$('dial'); d.value = 100; d.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 800));
+};
+Kit.single();
+</script>
+</html>

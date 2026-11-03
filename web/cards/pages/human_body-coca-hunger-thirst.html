@@ -1,0 +1,144 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-coca-hunger-thirst -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#ring{flex:1;min-height:0;width:100%;display:block;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Count · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO COUNT</span></div>
+    <h2 class="q">Chewing coca leaves, how many hours do Potosí miners go without food or water?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="ring" role="img" aria-label="Shift clock: tap to add one hour"></svg>
+      <div id="why" class="gone">
+        <p class="big">12 to 14 hours</p>
+        <p class="body">In the Potosí silver mine, miners chew coca leaves to avoid eating and drinking: the leaves make hunger and thirst go away. So they work 12–14 hour shifts on nothing. Inner ring: your guess. Outer ring: the miners.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the clock: each tap is one hour without food or water.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Coca doesn't feed the miners; it silences their hunger and thirst.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Viaggio a Potosi, nella miniera d'argento boliviana: una realtá sconcertante” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 18;            // hours on the shift clock
+let n = 0, revealed = false, done = false;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  done = true;
+  const ok = n >= 12 && n <= 14, said = `${n} hours`;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why');
+  revealed = true; draw('reveal');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic('success');
+});
+
+function sector(cx, cy, r1, r2, a1, a2) {
+  const p = (r, a) => [cx + r * Math.sin(a), cy - r * Math.cos(a)];
+  const large = a2 - a1 > Math.PI ? 1 : 0;
+  const [x1, y1] = p(r2, a1), [x2, y2] = p(r2, a2), [x3, y3] = p(r1, a2), [x4, y4] = p(r1, a1);
+  return `M${x1},${y1}A${r2},${r2} 0 ${large} 1 ${x2},${y2}L${x3},${y3}A${r1},${r1} 0 ${large} 0 ${x4},${y4}Z`;
+}
+
+function draw(mode) {
+  const svg = Kit.$('ring'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const cx = W / 2, cy = H / 2;
+  const R = Math.max(44, Math.min(W / 2, H / 2) - f * 1.9);
+  const a = 2 * Math.PI / N, gap = 0.035;
+  const mk = (t, at) => Kit.mk(t, at, svg);
+  const segs = [];
+  for (let i = 0; i < N; i++) {
+    segs.push(mk('path', {d: sector(cx, cy, R * .62, R * .84, i * a + gap, (i + 1) * a - gap),
+      fill: i < n ? 'var(--k)' : 'color-mix(in srgb,var(--k) 14%,transparent)'}));
+  }
+  if (!revealed) {
+    const big = Math.max(f * 1.6, R * .36);
+    const ls = Math.max(12, f * .9);
+    const num = mk('text', {x: cx, y: cy + big * .25, 'text-anchor': 'middle', fill: 'var(--k)',
+      style: `font:800 ${big}px var(--display)`});
+    num.textContent = n;
+    const lab = mk('text', {x: cx, y: cy + big * .25 + big * .32 + ls * 1.05, 'text-anchor': 'middle',
+      fill: 'var(--k)', style: `font:700 ${ls}px var(--body);opacity:.75`});
+    lab.textContent = n === 1 ? 'hour' : 'hours';
+    if (mode === 'tap' && !Kit.calm && n > 0) {
+      gsap.from(segs[n - 1], {opacity: .15, duration: .35, ease: 'power2.out'});
+      gsap.from(num, {scale: 1.25, svgOrigin: `${cx} ${cy}`, duration: .3, ease: 'back.out(3)'});
+    }
+    return;
+  }
+  // miners' real shift on the outer ring: solid to 12, lighter 12 to 14
+  const miner = [];
+  for (let i = 0; i < 14; i++) {
+    miner.push(mk('path', {d: sector(cx, cy, R * .89, R, i * a + gap, (i + 1) * a - gap),
+      fill: 'var(--k)', opacity: i < 12 ? .95 : .5}));
+  }
+  const fs = Math.max(12, f * .9);
+  const ticks = [12, 14].map(h => {
+    const ang = h * a, rr = R + fs * 1.1;
+    const t = mk('text', {x: cx + rr * Math.sin(ang), y: cy - rr * Math.cos(ang) + fs * .35, 'text-anchor': 'middle',
+      fill: 'var(--k)', style: `font:800 ${fs}px var(--body)`});
+    t.textContent = h + 'h'; return t;
+  });
+  // coca leaf silencing hunger and thirst
+  const s = R * .3, lx = cx - R * .24, ly = cy;
+  const leaf = mk('g', {transform: `translate(${lx},${ly}) rotate(-18)`});
+  Kit.mk('path', {d: `M0,${-s}C${s * .62},${-s * .5} ${s * .62},${s * .5} 0,${s}C${-s * .62},${s * .5} ${-s * .62},${-s * .5} 0,${-s}Z`,
+    fill: '#3f9a45', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, f * .12)}, leaf);
+  Kit.mk('path', {d: `M0,${-s * .85}L0,${s * 1.15}`, stroke: 'var(--k)', 'stroke-width': Math.max(1.2, f * .1), fill: 'none'}, leaf);
+  const words = ['hunger', 'thirst'], dy = Math.max(fs * 1.5, R * .2), tx = cx - R * .02;
+  const parts = [];
+  words.forEach((w, k) => {
+    const y = cy + (k ? dy : -dy) * .55;
+    const ar = mk('path', {d: `M${lx + s * .35},${ly + (k ? .25 : -.25) * s}L${tx - fs * .4},${y - fs * .35}`,
+      stroke: 'var(--k)', 'stroke-width': Math.max(1.2, f * .1), fill: 'none', 'stroke-linecap': 'round'});
+    const t = mk('text', {x: tx, y, fill: 'var(--k)', style: `font:800 ${fs}px var(--body)`});
+    t.textContent = w;
+    const wd = t.getComputedTextLength ? t.getComputedTextLength() : fs * 3.2;
+    const st = mk('line', {x1: tx - 2, y1: y - fs * .33, x2: tx + wd + 2, y2: y - fs * .33,
+      stroke: '#d6332a', 'stroke-width': Math.max(2, fs * .16), 'stroke-linecap': 'round'});
+    parts.push([ar, t, st, tx - 2]);
+  });
+  if (mode === 'reveal' && !Kit.calm) {
+    const tl = gsap.timeline();
+    tl.from(miner, {opacity: 0, duration: .25, stagger: .06, ease: 'power1.out'})
+      .from(ticks, {opacity: 0, duration: .3}, '-=.2')
+      .from(leaf, {scale: 0, svgOrigin: `${lx} ${ly}`, duration: .5, ease: 'back.out(2)'}, '-=.1');
+    parts.forEach(([ar, t, st, x0], k) => {
+      tl.from([ar, t], {opacity: 0, duration: .25}, k ? '-=.1' : '+=0')
+        .from(st, {attr: {x2: x0}, duration: .3, ease: 'power2.in'});
+    });
+  }
+}
+
+Kit.$('ring').addEventListener('click', () => {
+  if (done) return;
+  n = n >= N ? 0 : n + 1;
+  Kit.haptic('selection');
+  draw('tap');
+  if (n === 1) sure.on();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#ring path', {opacity: 0, duration: .3, stagger: .025, ease: 'power2.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 13; i++) Kit.$('ring').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

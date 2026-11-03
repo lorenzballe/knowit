@@ -1,0 +1,36 @@
+{
+  "id": "thinking-three-letters",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many of the 300,000 SAT takers wrote in about the error?",
+  "answer": "Only three of the 300,000 SAT takers wrote in about the error: Shivan Kartha, Bruce Taub and Doug Jungreis. Everyone else trusted the test over their own reasoning. The card's lesson is to speak up when an answer looks wrong.",
+  "move": "If an answer looks wrong to you, say so: almost nobody else will.",
+  "keywords": [
+    "sat",
+    "college board",
+    "test takers",
+    "veritasium",
+    "shivan kartha"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A crowd of 300,000 SAT test takers beside a tiny stack of three letters. The page asks how many of them wrote to the College Board about an error in the test. The reader drags a letter to guess the number.",
+    "graded": false
+  },
+  "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=130s",
+  "written": "2026-11-03"
+}

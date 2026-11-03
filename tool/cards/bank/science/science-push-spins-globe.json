@@ -1,0 +1,37 @@
+{
+  "id": "science-push-spins-globe",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does pushing a globe make it spin like Earth?",
+  "answer": "Your push lands away from the axis, so it makes a torque: a twist. Torque gives angular acceleration, so every push adds spin. Earth turns the same way, from a torque of its own.",
+  "move": "A force off the axis makes a torque, and torque speeds up spin.",
+  "keywords": [
+    "globe",
+    "torque",
+    "earth",
+    "spin",
+    "axis"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A hand pushes a globe away from its axis, with arrows showing the torque and the spin that builds up. Asks how pushing the globe makes it spin like Earth. Tap the globe to push it and watch the spin grow."
+  },
+  "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=9zso7ChaQXQ",
+  "written": "2026-11-03"
+}

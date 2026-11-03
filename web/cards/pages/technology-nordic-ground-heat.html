@@ -1,0 +1,119 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-nordic-ground-heat -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#read{font:700 max(2.4cqh,14px)/1.2 var(--mono);text-align:center;color:var(--k)}
+#read .n{font-size:max(3.4cqh,18px)}
+#grid{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Guess the share · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GROUND HEAT</span></div>
+    <h2 class="q">Out of 100 Scandinavian buildings, how many use low-enthalpy geothermal heat?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read">Your guess · <span class="n" id="num">?</span> of 100</div>
+      <svg id="grid" role="img" aria-label="100 buildings: fill in your guess"></svg>
+      <div id="why" class="gone">
+        <p class="big">Nearly 70 of 100</p>
+        <p class="body">In Sweden and across Scandinavia, almost 70% of buildings run on low‑enthalpy geothermal: the mild warmth of the ground just below them. Tuscany used it in the early 1900s, then forgot it. If the Swedes rely on it this widely, the technology works.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap or drag across the houses to fill in your guess.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Shallow ground heat is no niche: in Scandinavia it heats most buildings.</div>
+    <div class="foot"><span class="src">Source · Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TRUTH = 70;
+let guess = 0, revealed = false, done = false;
+let houses = [], dots = [], geo = null;
+const svg = Kit.$('grid');
+
+function paint(){
+  houses.forEach((h, i) => {
+    let o;
+    if (!done) o = i < guess ? .9 : .14;
+    else o = i < TRUTH ? .9 : .12;
+    h.setAttribute('fill-opacity', o);
+  });
+  dots.forEach((d, i) => {
+    d.style.display = (done && i < guess) ? '' : 'none';
+    d.style.fill = i < TRUTH ? 'var(--c)' : 'var(--k)';
+  });
+}
+
+Kit.onShow.card = () => {
+  const {W, H} = Kit.fitSvg(svg);
+  svg.innerHTML = ''; houses = []; dots = [];
+  const s = Math.min(W / 10, H / 10), x0 = (W - 10 * s) / 2, y0 = (H - 10 * s) / 2;
+  geo = {s, x0, y0};
+  for (let i = 0; i < 100; i++) {
+    const r = Math.floor(i / 10), c = i % 10, x = x0 + c * s, y = y0 + r * s;
+    const p = s * .13, eave = y + p + (s - 2 * p) * .42, bot = y + s - p;
+    const h = Kit.mk('path', {d: `M${x+p},${eave}L${x+s/2},${y+p}L${x+s-p},${eave}L${x+s-p},${bot}L${x+p},${bot}Z`, 'stroke-linejoin': 'round'}, svg);
+    h.style.fill = 'var(--k)';
+    houses.push(h);
+    const d = Kit.mk('circle', {cx: x + s / 2, cy: (eave + bot) / 2, r: s * .11}, svg);
+    dots.push(d);
+  }
+  paint();
+};
+
+function setFrom(e){
+  if (revealed || !geo) return;
+  const b = svg.getBoundingClientRect();
+  const x = e.clientX - b.left, y = e.clientY - b.top;
+  const c = Math.max(0, Math.min(9, Math.floor((x - geo.x0) / geo.s)));
+  const r = Math.max(0, Math.min(9, Math.floor((y - geo.y0) / geo.s)));
+  const n = r * 10 + c + 1;
+  if (n !== guess) { guess = n; Kit.haptic('selection'); Kit.$('num').textContent = guess; paint(); }
+  sure.on();
+}
+let dragging = false;
+svg.addEventListener('pointerdown', e => { dragging = true; try { svg.setPointerCapture(e.pointerId); } catch(_){} setFrom(e); });
+svg.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+svg.addEventListener('pointerup', () => dragging = false);
+svg.addEventListener('pointercancel', () => dragging = false);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = Math.abs(guess - TRUTH) <= 10;
+  Kit.answer({choice: `${guess} of 100`, correct: ok, sure: pct});
+  revealed = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `You said ${guess}, ${ok ? 'close' : 'off'}`);
+  const read = Kit.$('read');
+  read.innerHTML = `Geothermal · <span class="n" id="num">0</span> of 100 · you: ${guess}`;
+  const finish = () => { done = true; paint(); Kit.$('num').textContent = TRUTH; Kit.haptic('success'); };
+  if (Kit.calm) { finish(); return; }
+  houses.forEach((h, i) => h.setAttribute('fill-opacity', .14));
+  dots.forEach(d => d.style.display = 'none');
+  const cnt = {v: 0};
+  gsap.to(cnt, {v: TRUTH, duration: 1.4, ease: 'power2.out', onUpdate: () => { const n = Kit.$('num'); if (n) n.textContent = Math.round(cnt.v); }});
+  houses.slice(0, TRUTH).forEach((h, i) => gsap.to(h, {attr: {'fill-opacity': .9}, duration: .25, delay: i * .018}));
+  gsap.delayedCall(TRUTH * .018 + .3, finish);
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(houses, {opacity: 0, y: 6, stagger: .006, duration: .35, ease: 'power3.out'}); };
+
+Kit.play.card = async () => {
+  const b = svg.getBoundingClientRect();
+  const x = b.left + geo.x0 + geo.s * 9.5, y = b.top + geo.y0 + geo.s * 3.5;
+  svg.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  svg.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2200));
+};
+Kit.single();
+</script>
+</html>

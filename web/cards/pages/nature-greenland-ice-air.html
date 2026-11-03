@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-greenland-ice-air -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh;touch-action:manipulation}
+#panel{min-height:14cqh;display:flex;flex-direction:column;gap:.6cqh}
+#panel h3{margin:0;font:800 max(2.4cqh,15px)/1.15 var(--display);color:var(--k);overflow-wrap:anywhere}
+#panel p{margin:0;font:500 max(1.8cqh,13px)/1.3 var(--body);color:var(--k);overflow-wrap:anywhere}
+.hot{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap to explore">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GREENLAND ICE</span></div>
+    <h2 class="q">How does Greenland's ice mass influence global weather patterns?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of the Greenland ice sheet with winds flowing over it"></svg>
+      <div id="panel"><h3 id="ph">A dome of ice, seen from the side</h3><p id="pp">Red is where the ice is thickest, blue where it thins out.</p></div>
+    </div>
+    <p class="say" id="say">Tap ICE, SEA and AIR to see what each one does.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Greenland's ice shapes the seas and winds of half the planet.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const INFO = {
+  ice: ['Ice up to about 3 km thick', 'In the middle, the red part, the ice sheet reaches about 3 km. It thins out towards the coasts, in blue.'],
+  sea: ['Water parked on land', 'All that ice is water held on land instead of in the sea. This mass on its own influences the level of the seas.'],
+  air: ['A dome in the wind’s way', 'Air moving across the north meets a 3 km mountain of ice. This mass steers the air circulation of the whole Northern Hemisphere.']
+};
+const WHY = ['So that’s why it matters', 'Greenland holds a mass of ice up to about 3 km thick. That mass alone influences the level of the seas and how air moves across the whole Northern Hemisphere.'];
+let mode = null, done = false, entered = false, whyTimer = null;
+const seen = new Set();
+const svg = Kit.$('pic');
+let G = {};
+
+function setPanel(h, p) {
+  Kit.$('ph').textContent = h; Kit.$('pp').textContent = p;
+  if (!Kit.calm) gsap.fromTo('#panel', {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .35, ease: 'power2.out'});
+}
+
+function draw() {
+  gsap.killTweensOf('#pic *');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const defs = mk('defs', {});
+  const lg = mk('linearGradient', {id: 'iceg', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+  [[0, '#2f63d6'], [.25, '#7cc8ff'], [.4, '#f5c98a'], [.5, '#e2413a'], [.6, '#f5c98a'], [.75, '#7cc8ff'], [1, '#2f63d6']]
+    .forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, lg));
+  const sk = mk('linearGradient', {id: 'skyg', x1: 0, x2: 0, y1: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#08121f'}, sk); mk('stop', {offset: 1, 'stop-color': '#1a3350'}, sk);
+  const mkr = mk('marker', {id: 'ar', viewBox: '0 0 10 10', refX: 5, refY: 5, markerWidth: 5, markerHeight: 5, orient: 'auto-start-reverse'}, defs);
+  mk('path', {d: 'M0,0 L10,5 L0,10 z', fill: '#ffd34d'}, mkr);
+
+  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#skyg)'});
+  const sl = H * .74, top = H * .32, L = W * .12, R = W * .88;
+  // sea
+  const sea = mk('rect', {x: 0, y: sl, width: W, height: H - sl, fill: '#15476e'});
+  // bedrock
+  mk('path', {d: `M${L - W * .03},${sl} L${R + W * .03},${sl} L${R - W * .02},${sl + H * .09} L${L + W * .02},${sl + H * .09} Z`, fill: '#4a3a30'});
+  // ice dome
+  const dome = mk('path', {d: `M${L},${sl} C${L + W * .05},${top + H * .1} ${W * .34},${top} ${W * .5},${top} C${W * .66},${top} ${R - W * .05},${top + H * .1} ${R},${sl} Z`,
+    fill: 'url(#iceg)', stroke: '#ffffff', 'stroke-width': 1.5, 'stroke-opacity': .7});
+
+  // air streams
+  const streams = mk('g', {});
+  G.streams = [];
+  [[.56, .25], [.46, .18], [.36, .115], [.26, .06]].forEach(([y0, yp]) => {
+    const a = H * y0, p = H * yp;
+    const d = `M-10,${a} C${W * .12},${a} ${W * .26},${p} ${W * .5},${p} C${W * .74},${p} ${W * .88},${a} ${W + 10},${a}`;
+    G.streams.push(mk('path', {d, fill: 'none', stroke: '#cfe8ff', 'stroke-width': 2, 'stroke-opacity': .45, 'stroke-dasharray': '10 14', 'stroke-linecap': 'round'}, streams));
+  });
+
+  // ICE overlay: 3 km arrow
+  G.ice = mk('g', {opacity: 0});
+  mk('line', {x1: W * .5, y1: top + 4, x2: W * .5, y2: sl - 4, stroke: '#ffffff', 'stroke-width': 2.5, 'marker-start': 'url(#ar)', 'marker-end': 'url(#ar)'}, G.ice);
+  const t3 = mk('text', {x: W * .5 + fs * .6, y: (top + sl) / 2 + fs * .35, fill: '#ffffff', 'font-size': fs * 1.15, 'font-weight': 800, 'font-family': 'var(--display)'}, G.ice);
+  t3.textContent = '≈ 3 km';
+
+  // SEA overlay
+  G.sea = mk('g', {opacity: 0});
+  mk('line', {x1: 0, y1: sl, x2: W, y2: sl, stroke: '#ffd34d', 'stroke-width': 2.5, 'stroke-dasharray': '6 6'}, G.sea);
+  const ts = mk('text', {x: W * .97, y: sl + fs * 1.5, 'text-anchor': 'end', fill: '#ffd34d', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, G.sea);
+  ts.textContent = 'sea level';
+  G.seaArrows = [W * .62, W * .78].map(x => mk('line', {x1: x, y1: H * .97, x2: x, y2: sl + fs * 2.6, stroke: '#ffd34d', 'stroke-width': 2.5, 'marker-end': 'url(#ar)'}, G.sea));
+
+  // AIR overlay
+  G.air = mk('g', {opacity: 0});
+  const ta = mk('text', {x: W * .38, y: fs * 1.4, 'text-anchor': 'middle', fill: '#ffd34d', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, G.air);
+  ta.textContent = '← whole Northern Hemisphere →';
+
+  // hotspots
+  G.pills = {};
+  const pill = (k, label, x, y) => {
+    const g = mk('g', {class: 'hot', 'data-k': k, transform: `translate(${x},${y})`});
+    const w = fs * 4, h = fs * 2;
+    const ring = mk('rect', {x: -w / 2, y: -h / 2, width: w, height: h, rx: h / 2, fill: 'none', stroke: '#ffffff', 'stroke-width': 2}, g);
+    const bg = mk('rect', {x: -w / 2, y: -h / 2, width: w, height: h, rx: h / 2, fill: '#ffffff'}, g);
+    const t = mk('text', {x: 0, y: fs * .36, 'text-anchor': 'middle', fill: '#0b1726', 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)'}, g);
+    t.textContent = label;
+    g.addEventListener('click', () => tap(k));
+    G.pills[k] = {g, bg, ring};
+    if (!Kit.calm) gsap.fromTo(ring, {attr: {'stroke-opacity': .9}, scale: 1, transformOrigin: '50% 50%'}, {attr: {'stroke-opacity': 0}, scale: 1.35, duration: 1.4, repeat: -1, ease: 'power1.out', delay: Kit.rnd()});
+  };
+  pill('ice', 'ICE', W * .32, sl - H * .13);
+  pill('sea', 'SEA', W * .2, sl + (H - sl) * .55);
+  pill('air', 'AIR', W * .84, H * .15);
+  G.H = H; G.sl = sl;
+  apply(false);
+  if (entered && !Kit.calm) flow();
+}
+
+function flow() {
+  G.streams.forEach((s, i) => gsap.to(s, {attr: {'stroke-dashoffset': -240}, duration: mode === 'air' ? 1.6 : 4, repeat: -1, ease: 'none', delay: -i * .3}));
+}
+
+function apply(anim) {
+  const d = anim && !Kit.calm ? .4 : 0;
+  ['ice', 'sea', 'air'].forEach(k => {
+    gsap.to(G[k], {opacity: mode === k ? 1 : 0, duration: d});
+    const p = G.pills[k];
+    p.bg.setAttribute('fill', mode === k ? '#ffd34d' : (seen.has(k) ? '#bfe3ff' : '#ffffff'));
+  });
+  G.streams.forEach(s => gsap.to(s, {attr: {'stroke-opacity': mode === 'air' ? .95 : .45, 'stroke-width': mode === 'air' ? 3 : 2, stroke: mode === 'air' ? '#ffd34d' : '#cfe8ff'}, duration: d}));
+  if (mode === 'sea' && d) G.seaArrows.forEach(a => gsap.fromTo(a, {opacity: 0, y: 12}, {opacity: 1, y: 0, duration: .6, repeat: 2, ease: 'power2.out'}));
+}
+
+function tap(k) {
+  clearTimeout(whyTimer);
+  mode = k; seen.add(k); Kit.haptic('selection');
+  setPanel(...INFO[k]);
+  apply(true);
+  if (entered && !Kit.calm) { G.streams.forEach(s => gsap.killTweensOf(s, 'attr.stroke-dashoffset')); flow(); }
+  if (seen.size === 3 && !done) {
+    done = true; Kit.hide('say'); Kit.show('keep'); Kit.haptic('success');
+    whyTimer = setTimeout(() => setPanel(...WHY), 1800);
+  }
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  entered = true;
+  if (!Kit.calm) {
+    flow();
+    gsap.from('#pic .hot', {opacity: 0, scale: .6, transformOrigin: '50% 50%', stagger: .12, duration: .45, ease: 'back.out(2)'});
+  }
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const k of ['ice', 'sea', 'air']) { G.pills[k].g.dispatchEvent(new MouseEvent('click', {bubbles: true})); await w(300); }
+  await w(2200);
+};
+Kit.single();
+</script>
+</html>

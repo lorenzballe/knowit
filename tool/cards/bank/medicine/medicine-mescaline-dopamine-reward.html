@@ -1,0 +1,146 @@
+<!doctype html>
+<!-- slug: medicine-mescaline-dopamine-reward -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why mescaline is rarely addictive</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.4cqh}
+#plotbox{flex:1;min-height:0;position:relative}
+#plot{position:absolute;inset:0;width:100%;height:100%;display:block}
+#plot text{font-family:var(--body);fill:var(--k)}
+#plot .ttl{font-weight:800;letter-spacing:.04em}
+#plot .st{font-weight:700;fill:var(--muted)}
+#plot .thr{font-family:var(--hand)}
+#ctrl{display:flex;gap:3cqw}
+.opt{flex:1;font:700 max(2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none;cursor:default}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0}
+#why .big{margin:0}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Try it · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">REWARD SYSTEM</span></div>
+    <h2 class="q">Why is mescaline considered to have low addiction potential?</h2>
+    <div class="stagebox" id="stage">
+      <div id="plotbox"><svg id="plot"></svg></div>
+      <div id="ctrl">
+        <button class="opt" data-i="0">Dose: cocaine</button>
+        <button class="opt" data-i="1">Dose: mescaline</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">No dopamine surge, little pull</p>
+        <p class="body">Addictive drugs fire up the brain's dopamine reward system, the signal that says “do that again”. Mescaline barely switches it on, so its dependence potential is low. Low is not zero risk. (Curves are illustrative.)</p>
+      </div>
+    </div>
+    <p class="say" id="say">Give each drug a dose and watch the brain's reward signal.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Addiction rides on dopamine reward; mescaline hardly triggers it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {p: [0, 0], done: [false, false], fired: false};
+const LANES = [
+  {title: 'COCAINE', status: 'dopamine surges', fn: t => .95 * Math.exp(-Math.pow((t - .3) / .09, 2))},
+  {title: 'MESCALINE', status: 'dopamine barely moves', fn: t => .12 * Math.exp(-Math.pow((t - .45) / .22, 2))}
+];
+let G = null;
+
+function curve(i, closed) {
+  const L = G.lanes[i], p = S.p[i];
+  if (p <= 0) return '';
+  const N = 90, pts = [];
+  for (let k = 0; k <= N; k++) {
+    const t = (k / N) * p;
+    pts.push([L.x0 + t * (L.x1 - L.x0), L.yb - LANES[i].fn(t) * (L.yb - L.yt)]);
+  }
+  let d = 'M' + pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('L');
+  if (closed) d += `L${pts[pts.length - 1][0].toFixed(1)},${L.yb}L${pts[0][0].toFixed(1)},${L.yb}Z`;
+  return d;
+}
+function draw() {
+  if (!G) return;
+  G.lanes.forEach((L, i) => {
+    L.area.setAttribute('d', curve(i, true));
+    L.line.setAttribute('d', curve(i, false));
+    L.st.textContent = S.done[i] ? LANES[i].status : (S.p[i] > 0 ? '…' : 'waiting for a dose');
+  });
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('plot');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .9), fs2 = Math.max(12, f * .8);
+  const pad = Math.max(8, W * .03), gap = fs * 1.4, laneH = (H - gap) / 2;
+  G = {lanes: []};
+  LANES.forEach((D, i) => {
+    const top = i * (laneH + gap);
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: 0, y: top, width: W, height: laneH, rx: fs * .8, fill: 'color-mix(in srgb, var(--k) 6%, transparent)'}, g);
+    const ttl = Kit.mk('text', {x: pad + fs * .4, y: top + fs * 1.4, 'font-size': fs, class: 'ttl'}, g); ttl.textContent = D.title;
+    const st = Kit.mk('text', {x: W - pad - fs * .4, y: top + fs * 1.4, 'font-size': fs2, 'text-anchor': 'end', class: 'st'}, g);
+    const x0 = pad + fs * .4, x1 = W - pad - fs * .4;
+    const yt = top + fs * 3.2, yb = top + laneH - fs * .7;
+    const yThr = yb - .5 * (yb - yt);
+    Kit.mk('line', {x1: x0, x2: x1, y1: yb, y2: yb, stroke: 'var(--k)', 'stroke-width': Math.max(1.5, fs * .12), 'stroke-linecap': 'round'}, g);
+    Kit.mk('line', {x1: x0, x2: x1, y1: yThr, y2: yThr, stroke: 'var(--k)', 'stroke-width': 1.5, 'stroke-dasharray': '5 5', opacity: .55}, g);
+    const tl = Kit.mk('text', {x: x1, y: yThr - fs * .35, 'font-size': fs2 * 1.1, 'text-anchor': 'end', class: 'thr', opacity: .8}, g); tl.textContent = '“want more” line';
+    const area = Kit.mk('path', {fill: 'var(--k)', opacity: .22}, g);
+    const line = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2.5, fs * .22), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
+    const L = {x0, x1, yt, yb, yThr, area, line, st};
+    if (i === 0) {
+      const bx = x0 + .45 * (x1 - x0), by = yThr + (yb - yThr) * .55;
+      const b = Kit.mk('g', {opacity: S.fired ? 1 : 0}, g);
+      const bw = fs * 6.2, bh = fs * 1.6;
+      Kit.mk('rect', {x: bx, y: by - bh / 2, width: bw, height: bh, rx: bh / 2, fill: 'var(--k)'}, b);
+      const bt = Kit.mk('text', {x: bx + bw / 2, y: by + fs * .35, 'font-size': fs2, 'text-anchor': 'middle', 'font-weight': 800}, b);
+      bt.textContent = '↻ do it again!'; bt.style.fill = 'var(--c)';
+      L.badge = b;
+    }
+    G.lanes.push(L);
+  });
+  draw();
+};
+
+function finish() {
+  if (!(S.done[0] && S.done[1])) return;
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+function dose(i) {
+  const o = {p: 0};
+  gsap.to(o, {p: 1, duration: Kit.calm ? .2 : 1.6, ease: 'none',
+    onUpdate: () => {
+      S.p[i] = o.p;
+      if (i === 0 && !S.fired && o.p > .26) {
+        S.fired = true; Kit.haptic('light');
+        const b = G.lanes[0].badge;
+        if (b) gsap.fromTo(b, {opacity: 0, scale: .8, transformOrigin: 'left center'}, {opacity: 1, scale: 1, duration: .3, ease: 'back.out(2)'});
+      }
+      draw();
+    },
+    onComplete: () => {
+      S.done[i] = true; draw();
+      if (!(S.done[0] && S.done[1])) Kit.$('say').textContent = 'Now dose the other one.';
+      finish();
+    }
+  });
+}
+Kit.$('ctrl').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || b.classList.contains('on')) return;
+  b.classList.add('on'); Kit.haptic('selection'); dose(+b.dataset.i);
+});
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('ctrl').children[0].click(); await w(150);
+  Kit.$('ctrl').children[1].click(); await w(2400);
+};
+Kit.single();
+</script>
+</html>

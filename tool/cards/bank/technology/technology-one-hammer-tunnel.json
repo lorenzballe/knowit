@@ -1,0 +1,37 @@
+{
+  "id": "technology-one-hammer-tunnel",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the robbers use a pneumatic hammer only once?",
+  "answer": "The robbers needed a pneumatic hammer at only one spot: a hard cement conglomerate sewer wall. Everything after it was soft waste, dug by hand or with small chisels, so the job stayed quiet. Tapping Dig pushes the tunnel forward one stretch at a time.",
+  "move": "The loud tool went only where the material demanded it: one cement wall.",
+  "keywords": [
+    "bank heist",
+    "naples",
+    "sewer tunnel",
+    "pneumatic hammer",
+    "cement wall"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Bank heist card asking why robbers used a pneumatic hammer only once. It shows a counter for hammer uses (0) and hand-dug stretches (0 of 6), with a Dig button that advances the tunnel one stretch at a time."
+  },
+  "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=aRTxjOeJRbY&t=202s",
+  "written": "2026-11-03"
+}

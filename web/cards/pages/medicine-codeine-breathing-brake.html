@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-codeine-breathing-brake -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;position:relative;touch-action:none;cursor:ew-resize}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Turn a dial · trade-off">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BREATHING</span></div>
+    <h2 class="q">What life-threatening effect can high doses of codeine cause?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="why" class="gone">
+        <p class="big">It can stop you breathing.</p>
+        <p class="body">Codeine doesn't only hold back the cough: it holds back breathing too. In large doses it depresses breathing and circulation, a danger to life that in extreme cases ends in death.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the dose up and watch the lungs.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Codeine's brake on coughing is also a brake on breathing.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Lean, la droga viola che si fa dallo sciroppo per la tosse con la codeina: cosa fa la Purple Drank” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let dose = 0, shown = false, G = null, zone = -1;
+let t1 = 0, t2 = 0, rate = .3, amp = .06, hr = 1.1;
+const LL = "M92 56 C70 40 40 62 32 102 C24 142 30 176 50 183 C70 189 88 177 92 160 Z";
+const RL = "M108 56 C130 40 160 62 168 102 C176 142 170 176 150 183 C130 189 112 177 108 160 Z";
+const HEART = "M100 186 C80 170 78 154 90 150 C96 148 100 154 100 158 C100 154 104 148 110 150 C122 154 120 170 100 186Z";
+const lerpCol = gsap.utils.interpolate("#e8506a", "#8c9099");
+
+function draw() {
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+
+  // slider position first, so everything above stays clear of its label
+  const tx0 = W * 0.08, tx1 = W * 0.92, ty = H - Math.max(fs * 1.4, H * 0.07);
+  const ly = ty - Math.max(fs * 1.5, 20);
+  const rowGap = Math.max(fs * 2.3, H * 0.085);
+  const rMax = ly - fs * 1.8 - rowGap;
+
+  const s = Math.max(0.1, Math.min(W * 0.62, H * 0.52, (rMax - fs * 1.6 - H * 0.02) / 1.07) / 200);
+  const cx = W / 2, cy = H * 0.02 + 100 * s;
+  const lungG = Kit.mk('g', {}, svg);
+  const inner = Kit.mk('g', {}, lungG);
+  const lungs = [LL, RL].map(d => Kit.mk('path', {d, stroke: 'var(--k)', 'stroke-width': 2.4 / s, 'stroke-linejoin': 'round'}, inner));
+  Kit.mk('path', {d: 'M100 8 L100 62 M100 62 L84 80 M100 62 L116 80 M84 80 L70 100 M84 80 L80 112 M116 80 L130 100 M116 80 L120 112', fill: 'none', stroke: 'var(--k)', 'stroke-width': 3 / s, 'stroke-linecap': 'round', opacity: .7}, inner);
+  const heartG = Kit.mk('g', {}, svg);
+  const heart = Kit.mk('path', {d: HEART, fill: '#d8283c', stroke: 'var(--k)', 'stroke-width': 2 / s}, heartG);
+
+  // two quantities
+  const x0 = W * 0.06, bx = W * 0.44, bw = W * 0.5, bh = Math.max(fs * 0.9, 10);
+  const r1 = Math.min(H * 0.6, rMax, cy + 100 * s + fs * 1.6), r2 = r1 + rowGap;
+  const mkRow = (y, label) => {
+    Kit.mk('text', {x: x0, y: y + fs * 0.35, style: `font:700 ${fs}px var(--body)`, fill: 'var(--k)'}, svg).textContent = label;
+    Kit.mk('rect', {x: bx, y: y - bh / 2, width: bw, height: bh, rx: bh / 2, fill: 'color-mix(in srgb,var(--k) 14%,transparent)'}, svg);
+    return Kit.mk('rect', {x: bx, y: y - bh / 2, width: 0, height: bh, rx: bh / 2, fill: 'var(--k)'}, svg);
+  };
+  const barC = mkRow(r1, 'Cough calmed');
+  const barB = mkRow(r2, 'Breathing');
+
+  // dose slider
+  Kit.mk('text', {x: tx0, y: ly, style: `font:800 ${fs}px var(--body)`, fill: 'var(--k)'}, svg).textContent = 'CODEINE DOSE →';
+  Kit.mk('text', {x: tx1, y: ly, 'text-anchor': 'end', style: `font:800 ${fs}px var(--body)`, fill: '#d8283c'}, svg).textContent = 'DANGER';
+  const th = Math.max(fs * 0.55, 7);
+  Kit.mk('rect', {x: tx0, y: ty - th / 2, width: tx1 - tx0, height: th, rx: th / 2, fill: 'color-mix(in srgb,var(--k) 18%,transparent)'}, svg);
+  const dz = tx0 + (tx1 - tx0) * 0.65;
+  Kit.mk('rect', {x: dz, y: ty - th / 2, width: tx1 - dz, height: th, rx: th / 2, fill: '#d8283c', opacity: .85}, svg);
+  const fill = Kit.mk('rect', {x: tx0, y: ty - th / 2, width: 0, height: th, rx: th / 2, fill: 'var(--k)'}, svg);
+  const knob = Kit.mk('circle', {cx: tx0, cy: ty, r: Math.max(fs * 0.9, 12), fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': 3}, svg);
+
+  G = {svg, W, H, s, cx, cy, inner, lungs, heartG, heart, barC, barB, bw, tx0, tx1, fill, knob, lungG};
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const d = dose;
+  const b = Math.max(0.03, 1 - Math.pow(d, 1.8));
+  const c = Math.min(1, d * 1.8);
+  rate = 0.05 + 0.3 * b; amp = 0.07 * b; hr = 1.15 - 0.55 * d * d;
+  G.lungs.forEach(p => { p.setAttribute('fill', lerpCol(1 - b)); p.setAttribute('fill-opacity', 0.25 + 0.75 * b); });
+  G.lungG.setAttribute('opacity', 0.35 + 0.65 * b);
+  G.heart.setAttribute('opacity', 1 - 0.55 * d * d);
+  G.barC.setAttribute('width', Math.max(0.001, G.bw * c));
+  G.barB.setAttribute('width', G.bw * b);
+  G.barB.setAttribute('fill', b < 0.4 ? '#d8283c' : 'var(--k)');
+  const x = G.tx0 + (G.tx1 - G.tx0) * d;
+  G.fill.setAttribute('width', x - G.tx0);
+  G.knob.setAttribute('cx', x);
+  const z = d < 0.3 ? 0 : d < 0.65 ? 1 : 2;
+  if (z !== zone && !shown) {
+    zone = z;
+    Kit.$('say').textContent = d < 0.02 ? 'Drag the dose up and watch the lungs.' :
+      z === 0 ? 'A little: the cough quiets, breathing holds.' :
+      z === 1 ? 'More: breathing slows down too.' : 'Too much: breathing nearly stops.';
+  }
+  if (d >= 0.92 && !shown) {
+    shown = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => draw());
+  }
+}
+
+function tick(time, dtMs) {
+  if (!G) return;
+  const dt = Math.min(dtMs, 100) / 1000;
+  t1 += dt * rate; t2 += dt * hr;
+  const k = G.s * (1 + amp * Math.sin(t1 * Math.PI * 2));
+  G.inner.setAttribute('transform', `translate(${G.cx},${G.cy}) scale(${k}) translate(-100,-100)`);
+  const p = Math.pow(Math.max(0, Math.sin(t2 * Math.PI * 2)), 8) * 0.14;
+  G.heartG.setAttribute('transform', `translate(${G.cx},${G.cy}) scale(${G.s * (1 + p)}) translate(-100,-100)`);
+}
+gsap.ticker.add(tick);
+
+let drag = false, lastZ = -1;
+function setFrom(e) {
+  const r = Kit.$('svg').getBoundingClientRect();
+  const x = (e.clientX - r.left) * (G.W / r.width);
+  dose = Math.max(0, Math.min(1, (x - G.tx0) / (G.tx1 - G.tx0)));
+  const z = Math.floor(dose * 6);
+  if (z !== lastZ) { lastZ = z; Kit.haptic('selection'); }
+  render();
+}
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => { drag = true; try { pic.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); });
+pic.addEventListener('pointermove', e => { if (drag) setFrom(e); });
+const end = () => { drag = false; };
+pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.lungG, {opacity: 0, duration: .6, ease: 'power2.out'});
+  const o = {d: 0};
+  gsap.to(o, {d: 0.12, duration: .5, delay: .4, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => { if (!drag && !shown && dose < 0.13) { dose = o.d; render(); } }});
+};
+Kit.play.card = async () => {
+  const r = Kit.$('svg').getBoundingClientRect();
+  const y = r.top + r.height * 0.9;
+  const ev = (t, x) => pic.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  const a = r.left + r.width * 0.08, b = r.left + r.width * 0.95;
+  ev('pointerdown', a);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', a + (b - a) * i / 10); await new Promise(r => setTimeout(r, 40)); }
+  ev('pointerup', b);
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

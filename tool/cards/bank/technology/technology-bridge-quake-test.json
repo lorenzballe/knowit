@@ -1,0 +1,36 @@
+{
+  "id": "technology-bridge-quake-test",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A 6.8 earthquake hit this bridge while it was being built. What happened?",
+  "answer": "In 1995, while still unfinished, the bridge was struck by a magnitude 6.8 earthquake. It survived and stayed standing. The card says this showed the bridge can endure strong seismic shaking.",
+  "move": "A 6.8 quake struck the bridge mid-construction, and it stood.",
+  "keywords": [
+    "messina",
+    "earthquake",
+    "bridge",
+    "seismic-testing"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card: a bridge still under construction in 1995 is hit by a magnitude 6.8 earthquake. Guess its fate: it collapsed, was badly damaged, or survived. Then rate how sure you are."
+  },
+  "source": "Geopop, “Ponte sullo Stretto di Messina: il progetto costruttivo ufficiale e le altre alternative” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bwPQHnbeYpo&t=145s",
+  "written": "2026-11-03"
+}

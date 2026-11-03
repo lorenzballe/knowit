@@ -1,0 +1,173 @@
+<!doctype html>
+<!-- slug: technology-punctured-vine-robot -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#scene{flex:1;min-height:0;width:100%;display:block}
+#ctrl{display:flex;align-items:center;gap:3cqw}
+#ctrl label{font:700 max(1.9cqh,12px)/1.2 var(--body);color:var(--k)}
+#pr{flex:1;min-width:0;accent-color:var(--k);height:max(3cqh,24px)}
+#pv{font:700 max(2cqh,13px)/1 var(--mono);color:var(--k);min-width:3ch;text-align:right}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.3cqh 5cqw;cursor:pointer}
+#go:disabled{opacity:.45}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Aim and launch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VINE ROBOT</span></div>
+    <h2 class="q">What happens if a growing inflatable robot gets punctured?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scene"></svg>
+      <div id="ctrl">
+        <label for="pr">Air</label>
+        <input id="pr" type="range" min="20" max="100" step="10" value="50">
+        <span id="pv">50</span>
+        <button id="go">Grow</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">It keeps growing.</p>
+        <p class="body">A needle makes a hole, not a pop. Air hisses out, but if you push air in hard enough, the pressure stays high and the tip keeps moving.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Set the air pressure, then hit Grow. Three needles wait on the way.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Punctured or not, the robot keeps going while the air pressure stays high enough.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const LEAK = 20, MIN = 30, FR = [.28, .52, .76];
+let P = 50, len = 0, holes = 0, run = false, done = false, stalled = false, last = 0, puffT = 0;
+let G = {};
+
+function eff(){ return P - LEAK * holes; }
+
+function build(){
+  const svg = Kit.$('scene'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const x0 = W * .12, x1 = W * .86, y = H * .62;
+  const w = Math.max(10, Math.min(H * .09, W * .07));
+  const d = `M${x0},${y} C${x0 + W * .2},${y - H * .2} ${x0 + W * .3},${y + H * .2} ${(x0 + x1) / 2},${y} S${x1 - W * .14},${y - H * .17} ${x1},${y}`;
+  const route = Kit.mk('path', {d, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(1.5, w * .08), 'stroke-dasharray': `${w * .2} ${w * .35}`, opacity: .3}, svg);
+  route.style.color = 'var(--k)';
+  const L = route.getTotalLength();
+  // pump
+  const pump = Kit.mk('rect', {x: x0 - w * 1.6, y: y - w * 1.1, width: w * 1.6, height: w * 2.2, rx: w * .3}, svg);
+  pump.style.fill = 'var(--k)';
+  // goal flag
+  const gp = Kit.mk('line', {x1: x1 + w * .9, y1: y + w * .8, x2: x1 + w * .9, y2: y - w * 2.6, 'stroke-width': Math.max(2, w * .14), 'stroke-linecap': 'round'}, svg);
+  gp.style.stroke = 'var(--k)';
+  const flag = Kit.mk('path', {d: `M${x1 + w * .9},${y - w * 2.6} l${-w * 1.3},${w * .45} l${w * 1.3},${w * .45}Z`}, svg);
+  flag.style.fill = 'var(--k)';
+  const gl = Kit.mk('text', {x: x1 + w * .9, y: y + w * .8 + f * 1.4, 'text-anchor': 'middle', 'font-size': f, 'font-weight': 700}, svg);
+  gl.style.fill = 'var(--k)'; gl.style.fontFamily = 'var(--body)'; gl.textContent = 'Goal';
+  // tube
+  const outer = Kit.mk('path', {d, fill: 'none', 'stroke-width': w, 'stroke-linecap': 'round'}, svg);
+  outer.style.stroke = 'var(--k)';
+  const inner = Kit.mk('path', {d, fill: 'none', 'stroke-width': w * .58, 'stroke-linecap': 'round'}, svg);
+  inner.style.stroke = 'color-mix(in srgb, var(--c) 35%, white)';
+  const flow = Kit.mk('g', {}, svg);
+  const dots = [];
+  for (let i = 0; i < 6; i++){ const c = Kit.mk('circle', {r: w * .1, opacity: 0}, flow); c.style.fill = 'var(--k)'; dots.push(c); }
+  // needles
+  const sp = FR.map(fr => {
+    const l = fr * L, p = route.getPointAtLength(l);
+    const g = Kit.mk('g', {}, svg);
+    const top = Math.max(H * .2, p.y - H * .3);
+    const shaft = Kit.mk('line', {x1: p.x, y1: top, x2: p.x, y2: p.y + w * .15, 'stroke-width': Math.max(1.5, w * .1), 'stroke-linecap': 'round'}, g);
+    shaft.style.stroke = 'var(--k)';
+    const hub = Kit.mk('rect', {x: p.x - w * .3, y: top - w * .9, width: w * .6, height: w * .9, rx: w * .12}, g);
+    hub.style.fill = 'var(--k)';
+    const hole = Kit.mk('circle', {cx: p.x, cy: p.y - w * .28, r: w * .13, opacity: 0}, svg);
+    hole.style.fill = 'var(--k)';
+    return {l, p, hole};
+  });
+  // gauge
+  const gx = W * .05, gy = H * .05, gw = W * .5, gh = Math.max(8, H * .03);
+  const gt = Kit.mk('text', {x: gx, y: gy + f, 'font-size': f, 'font-weight': 700}, svg);
+  gt.style.fill = 'var(--k)'; gt.style.fontFamily = 'var(--body)';
+  const gb = Kit.mk('rect', {x: gx, y: gy + f * 1.5, width: gw, height: gh, rx: gh / 2, opacity: .18}, svg);
+  gb.style.fill = 'var(--k)';
+  const gf = Kit.mk('rect', {x: gx, y: gy + f * 1.5, width: 0, height: gh, rx: gh / 2}, svg);
+  gf.style.fill = 'var(--k)';
+  const mark = Kit.mk('line', {x1: gx + gw * MIN / 100, x2: gx + gw * MIN / 100, y1: gy + f * 1.5 - 3, y2: gy + f * 1.5 + gh + 3, 'stroke-width': 2, 'stroke-dasharray': '3 2'}, svg);
+  mark.style.stroke = 'var(--k)';
+  const puffs = Kit.mk('g', {}, svg);
+  G = {svg, W, H, f, w, L, outer, inner, route, sp, gt, gf, gw, dots, puffs, flag};
+  update();
+}
+
+function update(){
+  if (!G.L) return;
+  const l = Math.min(len, G.L);
+  [G.outer, G.inner].forEach(p => p.setAttribute('stroke-dasharray', `${Math.max(.01, l)} ${G.L + 50}`));
+  G.outer.style.opacity = G.inner.style.opacity = stalled ? .45 : 1;
+  G.sp.forEach((s, i) => s.hole.setAttribute('opacity', i < holes ? 1 : 0));
+  const e = run || done || stalled ? eff() : P;
+  G.gt.textContent = (stalled ? 'Pressure too low: ' : 'Pressure inside: ') + Math.max(0, e);
+  G.gf.setAttribute('width', G.gw * Math.max(0, e) / 100);
+}
+
+function puff(s){
+  if (Kit.calm) return;
+  const w = G.w, a = -Math.PI / 2 + (Kit.rnd() - .5) * 1.6, r = w * (1 + Kit.rnd());
+  const ln = Kit.mk('line', {x1: s.p.x, y1: s.p.y - w * .3, x2: s.p.x + Math.cos(a) * w * .3, y2: s.p.y - w * .3 + Math.sin(a) * w * .3, 'stroke-width': Math.max(1.5, w * .08), 'stroke-linecap': 'round'}, G.puffs);
+  ln.style.stroke = 'var(--k)';
+  gsap.to(ln, {x: Math.cos(a) * r, y: Math.sin(a) * r, opacity: 0, duration: .6, ease: 'power2.out', onComplete: () => ln.remove()});
+}
+
+function tick(){
+  const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now;
+  if (!run) return;
+  const e = eff();
+  if (e < MIN){ run = false; stalled = true; finish(false); update(); return; }
+  len += G.L * (.12 + .4 * (e - MIN) / 70) * dt;
+  G.sp.forEach((s, i) => { if (i >= holes && len >= s.l){ holes = i + 1; Kit.haptic('light'); gsap.fromTo(s.hole, {attr: {r: G.w * .3}}, {attr: {r: G.w * .13}, duration: .3}); } });
+  puffT += dt;
+  if (puffT > .07){ puffT = 0; G.sp.slice(0, holes).forEach(puff); }
+  const l = Math.min(len, G.L);
+  G.dots.forEach((c, i) => { const t = ((now / 900 + i / 6) % 1) * l, p = G.route.getPointAtLength(t); c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('opacity', l > 5 ? .5 : 0); });
+  if (len >= G.L){ len = G.L; run = false; done = true; finish(true); }
+  update();
+}
+
+function finish(ok){
+  gsap.ticker.remove(tick);
+  G.dots.forEach(c => c.setAttribute('opacity', 0));
+  Kit.$('go').disabled = false;
+  if (ok){
+    Kit.haptic('success');
+    if (!Kit.calm) gsap.fromTo(G.flag, {rotation: -12, transformOrigin: '100% 0%'}, {rotation: 0, duration: .6, ease: 'elastic.out(1,.4)'});
+    Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  } else {
+    Kit.$('say').textContent = `Stalled after ${holes} puncture${holes === 1 ? '' : 's'}: the leaks won. Turn up the air and grow again.`;
+  }
+}
+
+function launch(){
+  len = 0; holes = 0; stalled = false; done = false; run = true; puffT = 0;
+  Kit.$('go').disabled = true; Kit.haptic('selection');
+  Kit.$('say').textContent = 'Growing from the tip… watch the needles.';
+  last = performance.now(); gsap.ticker.remove(tick); gsap.ticker.add(tick); update();
+}
+
+Kit.$('pr').addEventListener('input', e => { P = +e.target.value; Kit.$('pv').textContent = P; if (!run){ stalled = false; len = 0; holes = 0; done = false; update(); } });
+Kit.$('go').addEventListener('click', () => { if (!run) launch(); });
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm && G.outer) gsap.from('#ctrl', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = Kit.$('pr'); r.value = 100; r.dispatchEvent(new Event('input', {bubbles: true}));
+  Kit.$('go').click();
+  for (let i = 0; i < 100 && !done; i++) await new Promise(res => setTimeout(res, 100));
+  await new Promise(res => setTimeout(res, 700));
+};
+Kit.single();
+</script>
+</html>

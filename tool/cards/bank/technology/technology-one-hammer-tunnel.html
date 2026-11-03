@@ -1,0 +1,180 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-one-hammer-tunnel -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#dig{font:700 max(2.3cqh,15px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer;flex:none}
+#dig:active{transform:scale(.97)}
+#tally{font:600 max(1.7cqh,12px)/1.3 var(--mono);color:var(--k);overflow-wrap:anywhere}
+#tally b{color:#d23a2f}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap to dig · watch the noise">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BANK HEIST</span></div>
+    <h2 class="q">Why did the robbers use a pneumatic hammer only once?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="ctl">
+        <button id="dig">Dig ▸</button>
+        <div id="tally">Hammer: 0 · hand-dug: 0/6</div>
+      </div>
+      <div id="why" class="gone"><p class="body">The sewer wall is cement conglomerate, really hard: the one spot that needed a pneumatic hammer. Everything after it was soft waste, dug by hand or with small chisels, so the job stayed quiet.</p></div>
+    </div>
+    <p class="say" id="say">Tap Dig to push the tunnel on, one stretch at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The loud tool went only where the material demanded it: one cement wall.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 7;              // 1 wall stretch + 6 waste stretches
+let step = 0, busy = false, G = null;
+const noise = [1, .15, .12, .17, .13, .16, .14];
+const RED = '#e2483d', GREEN = '#8fc46a';
+
+function iconHammer(g, s){
+  const st = 'fill:#f4efe6;stroke:#111;stroke-width:1.5';
+  Kit.mk('rect',{x:-s*.42,y:-s*.55,width:s*.84,height:s*.13,rx:s*.05,style:st},g);
+  Kit.mk('rect',{x:-s*.17,y:-s*.45,width:s*.34,height:s*.58,rx:s*.06,style:st},g);
+  Kit.mk('rect',{x:-s*.05,y:s*.13,width:s*.1,height:s*.34,style:st},g);
+}
+function iconHand(g, s){
+  const st = 'fill:#f4efe6;stroke:#111;stroke-width:1.5';
+  Kit.mk('rect',{x:-s*.07,y:-s*.55,width:s*.14,height:s*.36,rx:s*.05,style:st},g);
+  Kit.mk('path',{d:`M${-s*.22},${-s*.2} L${s*.22},${-s*.2} L0,${s*.45} Z`,style:st},g);
+}
+
+function draw(){
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f*.82, 12);
+  const y0 = .42*H, cy = .63*H, cx = .14*W;
+  const rO = Math.min(.1*W, .14*H), rI = rO*.74;
+  const tw = Math.max(.045*W, 12);
+  const ex = .84*W;
+  // ground of waste
+  Kit.mk('rect',{x:0,y:y0,width:W,height:H-y0,style:'fill:#3e3224'},svg);
+  const cols = ['#6f5f45','#857755','#5c6b45','#8a6f4f','#4f5a63','#9a8b68'];
+  const rr = (()=>{let s=7;return()=>(s=(s*16807)%2147483647)/2147483647;})();
+  for (let i=0;i<Math.round(W*H/420);i++){
+    const x = rr()*W, y = y0+4+rr()*(H-y0-4), w = 3+rr()*9, h = 2+rr()*5;
+    Kit.mk('rect',{x,y,width:w,height:h,rx:1.5,transform:`rotate(${rr()*180} ${x} ${y})`,style:`fill:${cols[i%6]};opacity:.75`},svg);
+  }
+  // building
+  const bx = .40*W, by = .13*H;
+  Kit.mk('rect',{x:bx,y:by,width:.57*W,height:y0-by,style:'fill:none;stroke:var(--k);stroke-width:2.5'},svg);
+  // vault
+  const vx = .43*W, vw = .25*W, vy = .2*H;
+  Kit.mk('rect',{x:vx,y:vy,width:vw,height:y0-vy,style:'fill:#2b2f37'},svg);
+  const slab = Math.max(.035*H, 7);
+  Kit.mk('rect',{x:vx,y:y0,width:vw,height:slab,style:'fill:#1b1d22'},svg);
+  for (let x=vx+4;x<vx+vw;x+=7) Kit.mk('line',{x1:x,y1:y0+slab,x2:x+slab*.7,y2:y0,style:'stroke:#666;stroke-width:1.2'},svg);
+  Kit.mk('text',{x:vx+vw/2,y:(vy+y0)/2+fs*.35,'text-anchor':'middle',style:`font:800 ${fs}px var(--body);fill:#fff;letter-spacing:.08em`},svg).textContent='VAULT';
+  // room
+  Kit.mk('line',{x1:.70*W,y1:by,x2:.70*W,y2:y0,style:'stroke:var(--k);stroke-width:2'},svg);
+  Kit.mk('text',{x:.835*W,y:(by+y0)/2,'text-anchor':'middle',style:`font:800 ${fs}px var(--body);fill:var(--k);letter-spacing:.06em`},svg).textContent='ROOM';
+  // sewer
+  Kit.mk('circle',{cx,cy,r:rO,style:'fill:#a9a8a1'},svg);
+  for (let a=0;a<360;a+=14){const t=a*Math.PI/180;
+    Kit.mk('line',{x1:cx+Math.cos(t)*rI,y1:cy+Math.sin(t)*rI,x2:cx+Math.cos(t+.2)*rO,y2:cy+Math.sin(t+.2)*rO,style:'stroke:#7c7b74;stroke-width:1.2'},svg);}
+  Kit.mk('circle',{cx,cy,r:rI,style:'fill:#1d2328'},svg);
+  Kit.mk('path',{d:`M${cx-rI*.92},${cy+rI*.4} A${rI},${rI} 0 0 0 ${cx+rI*.92},${cy+rI*.4} Z`,style:'fill:#3d5a63'},svg);
+  Kit.mk('text',{x:cx,y:cy-rO-fs*.45,'text-anchor':'middle',style:`font:700 ${fs}px var(--body);fill:#e8e2d4`},svg).textContent='cement wall';
+  Kit.mk('text',{x:cx,y:cy+rO+fs*1.2,'text-anchor':'middle',style:`font:800 ${fs}px var(--body);fill:#e8e2d4;letter-spacing:.06em`},svg).textContent='SEWER';
+  Kit.mk('text',{x:.6*W,y:H-fs*.5,'text-anchor':'middle',style:`font:800 ${fs}px var(--body);fill:#e8e2d4;letter-spacing:.1em`},svg).textContent='SOFT WASTE FILL';
+  // tunnel
+  const d = `M${cx+rI},${cy} L${cx+rO},${cy} L${ex},${y0+tw} L${ex},${y0-1}`;
+  Kit.mk('path',{d,style:`fill:none;stroke:#e8e2d4;stroke-width:1.5;stroke-dasharray:3 5;opacity:.45`},svg);
+  const tun = Kit.mk('path',{d,style:`fill:none;stroke:#0e0a07;stroke-width:${tw};stroke-linejoin:round`},svg);
+  const L = tun.getTotalLength(), Lw = rO-rI;
+  const ends = [Lw]; for (let k=1;k<=6;k++) ends.push(Lw+(L-Lw)*k/6);
+  const prog = step ? ends[step-1] : 0;
+  tun.style.strokeDasharray = L; tun.style.strokeDashoffset = L-prog;
+  // tunnel note (end)
+  const note = Kit.mk('g',{opacity: step>=N?1:0},svg);
+  Kit.mk('text',{x:.6*W,y:.7*H,'text-anchor':'middle',style:`font:700 ${fs}px var(--body);fill:#fff`},note).textContent='~12 m long, 70–80 cm wide';
+  Kit.mk('text',{x:.6*W,y:.7*H+fs*1.4,'text-anchor':'middle',style:`font:700 ${fs}px var(--body);fill:#fff`},note).textContent='crawl only · rises ~1 m';
+  // noise meter
+  const mx = .04*W, mw = .32*W, mb = y0-.06*H, mh = Math.max(mb-.08*H-fs*1.4, 20);
+  Kit.mk('text',{x:mx,y:.08*H+fs*.4,style:`font:800 ${fs}px var(--body);fill:var(--k);letter-spacing:.08em`},svg).textContent='NOISE';
+  const bw = mw/N;
+  const bars = [];
+  for (let i=0;i<N;i++){
+    Kit.mk('rect',{x:mx+i*bw+1,y:mb-mh,width:bw-3,height:mh,style:'fill:none;stroke:var(--k);stroke-opacity:.18;stroke-width:1'},svg);
+    const h = i<step ? noise[i]*mh : 0;
+    bars.push(Kit.mk('rect',{x:mx+i*bw+1,y:mb-h,width:bw-3,height:h,style:`fill:${i?GREEN:RED}`},svg));
+  }
+  Kit.mk('line',{x1:mx,y1:mb,x2:mx+mw,y2:mb,style:'stroke:var(--k);stroke-width:2'},svg);
+  // head icon
+  const head = Kit.mk('g',{opacity:0},svg);
+  const fx = Kit.mk('g',{},svg);
+  G = {svg,W,H,fs,tun,L,ends,bars,mb,mh,head,fx,tw,note,s:Math.max(.075*W,26)};
+}
+
+function placeHead(len, tool){
+  const p = G.tun.getPointAtLength(len), s = G.s;
+  G.head.innerHTML = '';
+  const g = Kit.mk('g',{},G.head);
+  (tool==='hammer'?iconHammer:iconHand)(g, s);
+  G.head.setAttribute('transform',`translate(${p.x},${p.y-G.tw*.5-s*.5})`);
+  return p;
+}
+
+function dig(){
+  if (busy || step>=N) return;
+  busy = true; const i = step; step++;
+  const hammer = i===0;
+  Kit.haptic(hammer?'success':'light');
+  const from = i ? G.ends[i-1] : 0, to = G.ends[i];
+  const o = {v:from};
+  const p = placeHead(from, hammer?'hammer':'hand');
+  G.head.setAttribute('opacity',1);
+  const dur = Kit.calm ? .01 : (hammer ? .9 : .55);
+  gsap.to(o,{v:to,duration:dur,ease:'none',onUpdate(){
+    G.tun.style.strokeDashoffset = G.L - o.v;
+    const q = G.tun.getPointAtLength(o.v);
+    G.head.setAttribute('transform',`translate(${q.x},${q.y-G.tw*.5-G.s*.5})`);
+  }});
+  if (hammer && !Kit.calm){
+    gsap.fromTo(G.head.firstChild,{x:-2},{x:2,duration:.05,repeat:17,yoyo:true});
+    for (let k=0;k<4;k++){
+      const c = Kit.mk('circle',{cx:p.x,cy:p.y,r:4,style:`fill:none;stroke:${RED};stroke-width:3`},G.fx);
+      gsap.to(c,{attr:{r:G.W*.22},opacity:0,duration:.8,delay:k*.18,onComplete:()=>c.remove()});
+    }
+  }
+  const h = noise[i]*G.mh, b = G.bars[i];
+  gsap.to(b,{attr:{height:h,y:G.mb-h},duration:Kit.calm?.01:.4,ease:'back.out(2)'});
+  const hand = Math.max(0, step-1);
+  Kit.$('tally').innerHTML = `Hammer: <b>${step?1:0}</b> · hand-dug: ${hand}/6`;
+  Kit.$('say').textContent = hammer
+    ? 'Cement sewer wall: really hard. Only a pneumatic hammer gets through.'
+    : 'Soft waste: hands and small chisels are enough, and quiet.';
+  setTimeout(()=>{
+    busy = false;
+    if (step>=N){
+      gsap.to(G.head,{opacity:0,duration:.3});
+      gsap.to(G.note,{opacity:1,duration:.5});
+      Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      Kit.haptic('success');
+    }
+  }, dur*1000+60);
+}
+
+Kit.$('dig').addEventListener('click', dig);
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#svg',{opacity:0,y:10,duration:.5,ease:'power3.out'}); };
+Kit.play.card = async () => {
+  for (let k=0;k<N;k++){ Kit.$('dig').click(); await new Promise(r=>setTimeout(r, k===0?1050:700)); }
+  await new Promise(r=>setTimeout(r,600));
+};
+Kit.single();
+</script>
+</html>

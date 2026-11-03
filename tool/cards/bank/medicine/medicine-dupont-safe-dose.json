@@ -1,0 +1,37 @@
+{
+  "id": "medicine-dupont-safe-dose",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.clean_water",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did DuPont pick its “safe” C8 limit for drinking water?",
+  "answer": "DuPont's scientists calculated about 0.6 parts per billion and then rounded it up to 1 ppb. At the time, 1 ppb was about the lowest level detectable in water, roughly one drop in 50,000 litres. DuPont's own limit said that if C8 can be detected in water, it is too high.",
+  "move": "DuPont's own limit said: if you can detect C8 in water, it's too high.",
+  "keywords": [
+    "dupont",
+    "c8",
+    "drinking_water",
+    "parts_per_billion",
+    "safety_limit"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Safe Dose asks how DuPont picked its safe C8 drinking-water limit. A tap-to-reveal panel shows scientists getting 0.6 ppb and rounding it up to 1 ppb, the lowest detectable level then, one drop in 50,000 litres."
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=1405s",
+  "written": "2026-11-03"
+}

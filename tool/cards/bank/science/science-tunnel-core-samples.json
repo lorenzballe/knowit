@@ -1,0 +1,38 @@
+{
+  "id": "science-tunnel-core-samples",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.big_numbers",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How much rock core was drilled to map the Turin–Lyon tunnel's geology?",
+  "answer": "Along the Turin–Lyon route, every cylinder of rock core pulled up was examined. Together they identified the rock formations, the faults and the water before digging. Laid end to end, all the core comes to about 65 km.",
+  "move": "A big tunnel is first read in rock: here, about 65 km of it.",
+  "keywords": [
+    "turin-lyon tunnel",
+    "rock core",
+    "geological mapping",
+    "faults",
+    "turin"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A photo of a long core barrel with labelled rock layers, beside a draggable drill. The question asks how long all the rock core drilled along the Turin–Lyon tunnel route would be laid end to end.",
+    "graded": false
+  },
+  "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Jo7Sd0wxNE0&t=266s",
+  "written": "2026-11-03"
+}

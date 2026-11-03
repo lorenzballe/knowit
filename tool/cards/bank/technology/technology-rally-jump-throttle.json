@@ -1,0 +1,37 @@
+{
+  "id": "technology-rally-jump-throttle",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Steep jump or gentle hump: when does a rally driver press the throttle?",
+  "answer": "On a steep tooth jump, the driver slows down going in, then gives a sharp kick of throttle at the top, which sets the flight straight. On a soft hump, the driver goes in fast and never lifts on the ramp, so the car flies parallel to the road and all four wheels land together.",
+  "move": "Steep tooth: lift, then kick at the top.",
+  "keywords": [
+    "rally",
+    "throttle",
+    "jumps",
+    "driving",
+    "hump"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A side-view car on a rally course with two jump shapes, a steep tooth and a soft hump. The question asks when a rally driver presses the throttle. Each jump has a pedal plan to pick (lift or never lift, then kick or stay flat out), followed by a Jump button to try it."
+  },
+  "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=2SCEUgazR_8&t=382s",
+  "written": "2026-11-03"
+}

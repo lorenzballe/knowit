@@ -1,0 +1,37 @@
+{
+  "id": "maths-hundred-good-bets",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Win $20 on heads, lose $10 on tails. What do 100 tosses bring?",
+  "answer": "Each toss is pure luck, either +$20 or −$10, but heads pays twice what tails costs, so each bet is worth +$5 on average. In 100 tosses heads comes up about 45 to 55 times, so every run lands near +$500. The chance of losing any money at all is about 1 in 2300.",
+  "move": "One good bet is a gamble; a hundred of them is close to a sure win.",
+  "keywords": [
+    "coin toss",
+    "expected value",
+    "law of large numbers",
+    "betting",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Coin-toss betting page: win $20 on heads, lose $10 on tails. A Toss 100 button runs 100 bets, drawing each run as a line, and the page asks what 100 tosses bring."
+  },
+  "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=vBX-KulgJ1o&t=237s",
+  "written": "2026-11-03"
+}

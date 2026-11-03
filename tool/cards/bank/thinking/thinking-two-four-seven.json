@@ -1,0 +1,35 @@
+{
+  "id": "thinking-two-four-seven",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does guessing 2, 4, 7 crack the rule faster than 3, 6, 12?",
+  "answer": "The hidden rule is just \"numbers in ascending order\". Every doubling triple also rises, so its yes can't tell ×2 apart from the real rule. 2, 4, 7 is the test where ×2 says no, and the rule still says yes, so the guess breaks.",
+  "move": "Test what could prove you wrong, not what agrees with you.",
+  "keywords": [
+    "confirmation bias",
+    "hypothesis testing",
+    "ascending numbers",
+    "doubling sequence",
+    "wason rule"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Tap-to-test card on confirmation bias. Four number triples (3, 6, 12; 10, 20, 40; 2, 4, 7; 100, 200, 400) can be tapped to test a hidden rule. Asks why guessing 2, 4, 7 cracks the rule faster than the doubling triples."
+  },
+  "source": "Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=vKA4w2O61Xo&t=14s",
+  "written": "2026-11-03"
+}

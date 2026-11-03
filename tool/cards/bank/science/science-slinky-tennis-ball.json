@@ -1,0 +1,38 @@
+{
+  "id": "science-slinky-tennis-ball",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "A tennis ball hangs from a slinky. Let go: what does the ball do?",
+  "answer": "The ball falls straight away, at g. Until the falling coils reach it, the spring still pulls the ball up exactly as hard as gravity pulls it down. The bottom doesn't \"know\" you let go yet.",
+  "move": "News travels down a spring as a wave; the bottom waits until it arrives.",
+  "keywords": [
+    "slinky",
+    "tennis ball",
+    "gravity",
+    "spring waves",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Drawing of a tennis ball hanging from the bottom of a slinky spring. Question: after you let go, what does the ball do? Options: it stays put, it falls straight away at g, it jumps upwards, or it hovers in mid-air.",
+    "graded": false
+  },
+  "source": "Veritasium, “Slinky Drop Answer” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=eCMmmEEyOO0&t=186s",
+  "written": "2026-11-03"
+}

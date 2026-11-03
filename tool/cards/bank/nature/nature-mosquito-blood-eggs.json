@@ -1,0 +1,37 @@
+{
+  "id": "nature-mosquito-blood-eggs",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.animal_myths",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a female mosquito actually live on?",
+  "answer": "A female mosquito gets her energy from plant nectar, the way many insects do. She takes blood only for its proteins, which complete her eggs: 100 to 500 from one meal. That is why only females bite.",
+  "move": "Mosquitoes bite to make eggs, not to feed themselves.",
+  "keywords": [
+    "mosquito",
+    "blood",
+    "nectar",
+    "eggs",
+    "proteins"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Three labeled parts around a female mosquito: the blood, the flower and her belly. The question asks what a female mosquito actually lives on. Tap each part to reveal the answer."
+  },
+  "source": "Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=pZcUFk1fcsg&t=206s",
+  "written": "2026-11-03"
+}

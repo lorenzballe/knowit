@@ -1,0 +1,261 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#plotbox{position:relative;flex:1 1 0;min-height:0}
+#plot{position:absolute;inset:0;width:100%;height:100%;display:block;color:var(--k);touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:crosshair}
+#why{flex:none;display:flex;flex-direction:column;gap:.5cqh}
+#plot .grid{stroke:currentColor;stroke-opacity:.13;stroke-width:1}
+#plot .base{stroke:currentColor;stroke-opacity:.6;stroke-width:1.5}
+#plot .tick{fill:currentColor;fill-opacity:.62;font-family:var(--mono)}
+#plot .cap{fill:currentColor;fill-opacity:.8;font-family:var(--body);font-weight:700}
+#plot .hand{fill:currentColor;font-family:var(--hand)}
+#plot .num{fill:currentColor;font-family:var(--mono);font-weight:700}
+#plot .halo{paint-order:stroke fill;stroke:var(--c);stroke-width:5px;stroke-linejoin:round}
+#plot .guess{fill:none;stroke:currentColor;stroke-opacity:.42;stroke-linecap:round;stroke-linejoin:round}
+#plot .real{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+#plot .glow{fill:none;stroke:currentColor;stroke-opacity:.13;stroke-linecap:round;stroke-linejoin:round}
+#plot .mass{fill:currentColor;fill-opacity:.07}
+#plot .ink{fill:currentColor}
+#plot .ring{fill:none;stroke:currentColor}
+#plot .link{stroke:currentColor;stroke-opacity:.65;stroke-linecap:round}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="science" data-kind="Draw your guess">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CHAIN REACTION</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">Every split frees 2.5 neutrons, each splitting another nucleus. How does it grow?</h2>
+    <div class="stagebox" id="stage">
+      <div id="plotbox"><svg id="plot" role="img" aria-label="Chart of uranium nuclei split in each of ten rounds"></svg></div>
+      <!-- The why joins the chart once the real curve has been drawn over the guess. -->
+      <div id="why" class="gone"><p class="body"><b>×2.5 every round:</b> it crawls, then explodes. By round 24, 3.6 billion at once.</p></div>
+    </div>
+    <p class="say" id="say">Draw your guess with a finger, round by round.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>More than one neutron per split makes the chain multiply: slow, then all at once.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Einstein Thought Nuclear Weapons Were Impossible” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+// Ten rounds of a chain reaction. A uranium-235 split frees 2.5 neutrons on average; if each one
+// splits another nucleus, round r splits 2.5^r nuclei. The reader draws a guess, the real curve answers.
+const R = 10, K = 2.5, YMAX = 10000, N = 200;
+const real = t => Math.pow(K, t);
+const fmt = v => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const nice = v => { if (v < 100) return Math.round(v); const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
+const svg = Kit.$('plot');
+const guess = new Array(N + 1).fill(null); guess[0] = 1;      // the reader's line, a value every 1/20 round
+const st = {shown: 0, cmp: 0, burst: 0, pulse: 0, hint: 1};     // what gsap moves
+let G = null, back = null, front = null, rq = 0, pulseTw = null;
+let reach = 0, phase = 'draw', drawing = false, lastI = null, lastV = 1, pen = null, started = false;
+let markDone; const revealed = new Promise(r => { markDone = r; });
+
+function txt(cls, x, y, size, s, parent, more) {
+  const t = Kit.mk('text', Object.assign({class: cls, x: x.toFixed(1), y: y.toFixed(1), 'font-size': size.toFixed(1)}, more || {}), parent);
+  t.textContent = s; return t;
+}
+const P = (x, y) => x.toFixed(1) + ' ' + y.toFixed(1);
+// Words in the drawing never touch: each label tries its spots in order and keeps the first free one.
+let boxes = [];
+function free(b) {
+  if (b.x < -1 || b.y < -1 || b.x + b.width > G.W + 1 || b.y + b.height > G.H + 1) return false;
+  return !boxes.some(o => b.x < o.x + o.width + 3 && b.x + b.width + 3 > o.x && b.y < o.y + o.height + 2 && b.y + b.height + 2 > o.y);
+}
+function label(cls, size, s, parent, spots, more) {
+  const t = txt(cls, 0, 0, size, s, parent, more);
+  for (const [x, y, a] of spots) {
+    t.setAttribute('x', x.toFixed(1)); t.setAttribute('y', y.toFixed(1)); t.setAttribute('text-anchor', a || 'start');
+    let b = null; try { b = t.getBBox(); } catch (e) {}
+    if (!b || !b.width) return t;
+    if (free(b)) { boxes.push({x: b.x, y: b.y, width: b.width, height: b.height}); return t; }
+  }
+  t.remove(); return null;
+}
+
+// Axes at the real size: rounds 0 to 10 across, 0 to 10,000 nuclei up.
+function fit() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 14), sm = Math.max(fs * .78, 12);
+  G = {W, H, fs, sm, l: fs * .9, r: W - fs * 1.1, t: fs * 1.55, b: H - sm * 1.8};
+  G.x = rd => G.l + (G.r - G.l) * rd / R;
+  G.y = v => G.b - (G.b - G.t) * Math.min(v, YMAX * 1.05) / YMAX;
+  svg.textContent = ''; boxes = [];
+  back = Kit.mk('g', {}, svg); front = Kit.mk('g', {}, svg);
+  for (let v = 2500; v <= YMAX; v += 2500) Kit.mk('line', {class: 'grid', x1: 0, x2: G.r, y1: G.y(v), y2: G.y(v)}, back);
+  Kit.mk('line', {class: 'base', x1: 0, x2: G.r, y1: G.b, y2: G.b}, back);
+  const cap = txt('cap', 0, fs * .95, fs * .95, 'Uranium nuclei split each round', back);
+  try { const w = cap.getComputedTextLength(); if (w > W) cap.setAttribute('font-size', (fs * .95 * W / w * .97).toFixed(1)); const b = cap.getBBox(); boxes.push({x: b.x, y: b.y, width: b.width, height: b.height}); } catch (e) {}
+  for (let r = 0; r <= R; r++) label('tick', sm, String(r), back, [[G.x(r), G.b + sm * 1.35, 'middle']]);
+  for (const v of [10000, 5000]) label('tick', sm, fmt(v), back, [[0, G.y(v) + sm * 1.05]]);
+  G.fixed = boxes.slice();
+}
+
+function render() {
+  if (!G) return;
+  front.textContent = ''; boxes = G.fixed.slice();
+  const {fs, sm} = G, w = Math.max(fs * .28, 4), x0 = G.x(0), y0 = G.y(1);
+  // the reader's guess, in pencil
+  if (reach > 0) {
+    let d = 'M' + P(x0, y0);
+    for (let i = 1; i <= reach; i++) d += 'L' + P(G.x(i * R / N), G.y(guess[i]));
+    Kit.mk('path', {class: 'guess', d, 'stroke-width': (w * .95).toFixed(1)}, front);
+  }
+  // the real chain: each round 2.5 times the one before
+  let head = null;
+  if (st.shown > 0) {
+    const u = st.shown; let d = 'M' + P(x0, y0);
+    for (let t = .04; t < u; t += .04) d += 'L' + P(G.x(t), G.y(real(t)));
+    const hx = G.x(u), hy = G.y(real(u)); d += 'L' + P(hx, hy);
+    Kit.mk('path', {class: 'mass', d: d + 'L' + P(hx, G.b) + 'L' + P(x0, G.b) + 'Z'}, front);
+    Kit.mk('path', {class: 'glow', d, 'stroke-width': (w * 3.4).toFixed(1)}, front);
+    Kit.mk('path', {class: 'real', d, 'stroke-width': w.toFixed(1)}, front);
+    for (let r = 1; r <= u + 1e-6; r++) Kit.mk('circle', {class: 'ink', cx: G.x(r).toFixed(1), cy: G.y(real(r)).toFixed(1), r: (w * .9).toFixed(1)}, front);
+    Kit.mk('circle', {class: 'ink', cx: hx.toFixed(1), cy: hy.toFixed(1), r: (w * 1.6).toFixed(1)}, front);
+    head = {hx, hy, u};
+  }
+  // where it starts: one nucleus splits
+  const hint = phase === 'draw' && st.hint > 0;
+  if (hint) Kit.mk('circle', {class: 'ring', cx: x0.toFixed(1), cy: y0.toFixed(1), r: (w * 1.6 + fs * 1.2 * st.pulse).toFixed(1), 'stroke-width': 2, opacity: ((1 - st.pulse) * st.hint).toFixed(2)}, front);
+  Kit.mk('circle', {class: 'ink', cx: x0.toFixed(1), cy: y0.toFixed(1), r: (w * 1.6).toFixed(1)}, front);
+  // halfway: the guess against the real count
+  let cmp = null;
+  if (st.cmp > 0) {
+    const g5 = guess[N / 2], x5 = G.x(5), yG = G.y(g5), yR = G.y(real(5));
+    cmp = {g5, x5, yG, yR, g: Kit.mk('g', {opacity: st.cmp.toFixed(2)}, front)};
+    Kit.mk('line', {class: 'link', x1: x5.toFixed(1), x2: x5.toFixed(1), y1: yG.toFixed(1), y2: yR.toFixed(1), 'stroke-width': 2.4, 'stroke-dasharray': '0.1 5'}, cmp.g);
+    Kit.mk('circle', {class: 'ring', cx: x5.toFixed(1), cy: yG.toFixed(1), r: (w * 1.25).toFixed(1), 'stroke-width': 2.2}, cmp.g);
+  }
+  // all at once
+  if (st.burst > 0 && st.burst < 1) {
+    const hx = G.x(R), hy = G.y(real(R));
+    for (let k = 0; k < 3; k++) {
+      const p = st.burst * 1.5 - k * .25;
+      if (p > 0 && p < 1) Kit.mk('circle', {class: 'ring', cx: hx.toFixed(1), cy: hy.toFixed(1), r: (w * 1.6 + fs * 3.6 * p).toFixed(1), 'stroke-width': (3 * (1 - p) + .5).toFixed(2), opacity: (1 - p).toFixed(2)}, front);
+    }
+  }
+  // the words, most important first, each where it touches no other
+  if (head) {
+    const {hx, hy} = head;
+    label('num halo', fs * 1.2, fmt(real(head.u)), front, head.u < 6.5
+      ? [[hx + fs * .6, hy - fs * .6], [hx - fs * .7, hy - fs * .6, 'end'], [hx - fs * .7, hy - fs * 1.7, 'end']]
+      : [[hx - fs * .8, hy - fs * .6, 'end'], [hx - fs * .8, hy + fs * 1.35, 'end'], [hx - fs * 1.2, hy + fs * .4, 'end']]);
+  }
+  if (cmp) {
+    const {x5, yG, yR, g} = cmp, a = fs * .55;
+    label('num halo', sm * 1.15, fmt(real(5)), g, [[x5 + a, yR - fs * .5], [x5 - a, yR - fs * .5, 'end'], [x5 + a, yR - fs * 1.6]]);
+    label('hand halo', fs * 1.15, 'you: ' + fmt(nice(cmp.g5)), g, [[x5 + a, yG + fs * 1.2], [x5 + a, yG - fs * .6], [x5 - a, yG - fs * .6, 'end'], [x5 - a, yG + fs * 1.2, 'end'], [x5 + a, yR - fs * 1.9], [x5 + a, yR - fs * 3.1]]);
+  }
+  if (hint) label('hand halo', fs * 1.1, 'start: 1 split', front, [[x0 + fs * .5, y0 - fs * .95], [x0 + fs * .5, y0 - fs * 2.1]], {opacity: st.hint.toFixed(2)});
+  // the pencil tip while drawing, with the number it stands for
+  if (drawing && pen) {
+    const px = G.x(pen.i * R / N), py = G.y(pen.v), cx = Math.min(Math.max(px, G.l + fs * 1.6), G.W - fs * 1.8);
+    Kit.mk('circle', {class: 'ink', cx: px.toFixed(1), cy: py.toFixed(1), r: (w * 1.2).toFixed(1), opacity: .6}, front);
+    label('num halo', sm * 1.15, fmt(nice(pen.v)), front, [[cx, py - fs * 1.8, 'middle'], [px - fs * 1.2, py + fs * .4, 'end'], [px + fs * 1.2, py + fs * .4], [cx, py + fs * 2.4, 'middle']]);
+  }
+}
+
+// Drawing: the finger sets the guess at every point it passes, gaps are joined with straight lines.
+function toData(e) {
+  const m = svg.getScreenCTM(), p = svg.createSVGPoint();
+  p.x = e.clientX; p.y = e.clientY;
+  const q = m ? p.matrixTransform(m.inverse()) : p;
+  const rd = Math.max(0, Math.min(R, (q.x - G.l) / (G.r - G.l) * R));
+  return {i: Math.round(rd / R * N), v: Math.max(0, Math.min(YMAX, (G.b - q.y) / (G.b - G.t) * YMAX))};
+}
+function put(i, v) {
+  i = Math.max(1, i);
+  if (lastI === null) { if (i > reach) { lastI = reach; lastV = guess[reach]; } else { lastI = i; lastV = v; } }
+  const n = Math.abs(i - lastI), s = Math.sign(i - lastI);
+  for (let k = 0; k <= n; k++) { const j = lastI + s * k; if (j >= 1) guess[j] = lastV + (v - lastV) * (n ? k / n : 1); }
+  reach = Math.max(reach, i); lastI = i; lastV = v; pen = {i, v};
+}
+function stroke(e) {
+  const list = e.getCoalescedEvents ? e.getCoalescedEvents() : [];
+  for (const ev of (list && list.length ? list : [e])) { const d = toData(ev); put(d.i, d.v); }
+  render();
+}
+svg.addEventListener('pointerdown', e => {
+  if (phase !== 'draw') return;
+  if (!G) fit();
+  e.preventDefault();
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  drawing = true; lastI = null;
+  if (!started) {
+    started = true; if (pulseTw) pulseTw.kill(); Kit.haptic('selection');
+    if (Kit.calm) st.hint = 0; else gsap.to(st, {hint: 0, duration: .3, onUpdate: render});
+  }
+  stroke(e);
+});
+svg.addEventListener('pointermove', e => { if (drawing) { e.preventDefault(); stroke(e); } });
+function lift() {
+  if (!drawing) return;
+  drawing = false; lastI = null;
+  if (reach >= N * .95) finish();
+  else { Kit.$('say').textContent = 'Keep going, all the way to round 10.'; render(); }
+}
+svg.addEventListener('pointerup', lift);
+svg.addEventListener('pointercancel', lift);
+
+// The answer: the real curve grows over the guess, round by round, then the why.
+function finish() {
+  phase = 'reveal';
+  for (let i = reach + 1; i <= N; i++) guess[i] = guess[reach];
+  reach = N;
+  Kit.haptic('light');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  gsap.set(['#why', '#keep'], {opacity: 0});
+  fit(); render();
+  if (Kit.calm) { st.shown = R; st.cmp = 1; phase = 'done'; render(); gsap.set(['#why', '#keep'], {opacity: 1}); markDone(); return; }
+  gsap.to(st, {shown: R, duration: 2.6, delay: .3, ease: 'none', onUpdate: render, onComplete: outro});
+}
+function outro() {
+  phase = 'done'; Kit.haptic('success');
+  gsap.to(st, {burst: 1, duration: 1.2, ease: 'power1.out', onUpdate: render});
+  gsap.to(st, {cmp: 1, duration: .5, delay: .3, onUpdate: render});
+  gsap.to('#why', {opacity: 1, duration: .5, delay: .5});
+  gsap.to('#keep', {opacity: 1, duration: .5, delay: .8, onComplete: () => markDone()});
+}
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => { fit(); render(); };
+if (window.ResizeObserver) new ResizeObserver(() => { cancelAnimationFrame(rq); rq = requestAnimationFrame(() => { if (G) { fit(); render(); } }); }).observe(Kit.$('plotbox'));
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => {
+  if (Kit.calm || started) return;
+  gsap.from('#plotbox', {opacity: 0, y: 8, duration: .5, ease: 'power3.out'});
+  pulseTw = gsap.to(st, {pulse: 1, duration: 1.5, ease: 'power1.out', repeat: 7, onUpdate: render, onComplete: () => { st.pulse = 0; render(); }});
+};
+// Plays the card through for the checker: a typical guess drawn left to right, then the answer.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  if (!G) { fit(); render(); }
+  gsap.globalTimeline.timeScale(3);
+  const at = (rd, v) => { const p = svg.createSVGPoint(); p.x = G.x(rd); p.y = G.y(v); const q = p.matrixTransform(svg.getScreenCTM()); return {clientX: q.x, clientY: q.y}; };
+  const fire = (type, rd, v) => svg.dispatchEvent(new PointerEvent(type, Object.assign({bubbles: true, cancelable: true, pointerId: 7, pointerType: 'touch', isPrimary: true}, at(rd, v))));
+  const shape = rd => 300 + 8600 * Math.pow(rd / R, 1.3);
+  fire('pointerdown', .25, shape(.25));
+  for (let s = 1; s <= 30; s++) { const rd = .25 + (R - .25) * s / 30; fire('pointermove', rd, shape(rd)); await wait(12); }
+  fire('pointerup', R, shape(R));
+  await Promise.race([revealed, wait(6000)]);
+  gsap.globalTimeline.timeScale(1);
+  await wait(150);
+};
+})();
+Kit.single();
+</script>
+</html>

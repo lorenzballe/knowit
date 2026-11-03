@@ -1,0 +1,240 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Thin air, same heat</title>
+<!-- How much heat the air in a gap carries does not depend on how much air there is: pump out 99 of every
+     100 molecules and each of the rest flies 100 times farther before handing its heat on. Only when a
+     molecule's free flight (68 nm at room pressure, growing as the air thins) outgrows the gap does it
+     conduct less: Kaganer's k/k0 = 1/(1 + 2 beta Kn), Kn = flight / gap, 2 beta about 3.2 for air (sources
+     give 3.2 to 4, so the numbers are "about"). A 1 cm gap: 1% of the air still conducts 99.8% as well,
+     0.01% 82%, a millionth 4%. Vacuum flasks are pumped to a millionth of an atmosphere or less (vip-bau.de:
+     about 1e-6 mbar; Normandale: well below 10 mTorr). The reader guesses first (Kit.sure, Kit.answer).
+     Inspired by Veritasium, "I Waterproofed Myself With Aerogel!" (2019). Touch: a drag, then taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#box{flex:1;min-height:max(7cqh,40px);width:100%;display:block;border-radius:2.2cqh}
+#ruler{width:100%;height:max(11cqh,66px);display:block;overflow:visible}
+#meters{display:grid;grid-template-columns:auto 1fr;gap:.4cqh 5cqw;align-items:end}
+#meters .h{font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.1em;opacity:.7}
+#meters .n{font:800 max(4cqh,22px)/1 var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+#bar{grid-column:1 / -1;height:max(1cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 14%,transparent);position:relative;overflow:hidden;margin-top:.4cqh}
+#bar i{position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:99px;background:var(--k)}
+#guess{grid-column:1 / -1;height:max(3.4cqh,24px);margin-top:.2cqh;touch-action:none;cursor:pointer}
+#bar b{position:absolute;top:0;bottom:0;width:.6cqh;min-width:4px;border-radius:2px;background:#fff;box-shadow:inset 0 0 0 1px var(--k);transform:translateX(-50%)}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){
+  .in{gap:1.7cqh}
+  #stage{gap:.8cqh}
+  #box{min-height:28px}
+  #ruler{height:max(10cqh,52px)}
+  #meters .n{font-size:max(3.4cqh,18px)}
+  #guess{height:22px}
+  .answered .in{gap:1.5cqh}
+  .answered #stage{gap:.8cqh}
+  .answered #box{display:none}
+  .answered #ruler{height:max(10cqh,54px)}
+  .answered #meters .n{font-size:max(3.4cqh,18px)}
+  .answered .say .extra{display:none}
+}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to pump · the heat in a gap">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PUMP IT OUT</span></div>
+    <h2 class="q">Pump 99% of the air out of a 1&nbsp;cm gap. How much less heat does the air carry across?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="box" role="img" aria-label="Air molecules between a warm wall and a cold wall, 1 cm apart."></canvas>
+      <svg id="ruler" role="img" aria-label="How far a molecule flies between collisions, against the width of the gap."></svg>
+      <div id="meters">
+        <span class="h">AIR LEFT</span><span class="h" id="hh">HOW WELL IT CONDUCTS</span>
+        <span class="n" id="air">100%</span><span class="n" id="heat">100%</span>
+        <div id="bar" class="gone"><i></i><b class="gone" id="tick"></b></div>
+        <input type="range" id="guess" min="0" max="100" value="50" data-drag aria-label="Your guess, in percent">
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Molecules carry heat from the warm wall to the cold one. Pump out 99% of them: how well will the rest conduct? Drag your guess.</p>
+    <button class="btn gone" id="go">Pump out 99% again</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Thin air conducts heat as well as thick air: a flask’s vacuum must be near perfect.</div>
+    <div class="foot"><span class="src">Source · Jennings, J. Aerosol Sci. 19 (1988); Kaganer model, Sci. Rep. 12 (2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const FLIGHT0 = 68e-9;                                   // m: a molecule's flight between collisions in room air
+  // The steps: share of the air left, the gap (m), dots drawn, the button that leads on.
+  const STEPS = [
+    {air: 1,    gap: .01, dots: 90, btn: null},
+    {air: 1e-2, gap: .01, dots: 44, btn: 'Pump out 99% of the rest'},
+    {air: 1e-4, gap: .01, dots: 18, btn: 'Pump out 99% again'},
+    {air: 1e-6, gap: .01, dots: 7,  btn: null},
+  ];
+  const SAY = [
+    null,
+    `<b>About 99.8%.</b> 100 times fewer molecules, but each flies 100 times farther before handing its heat on.`,
+    `<b>About 82%.</b> A molecule now flies 0.7&nbsp;mm between collisions, still short of the 1&nbsp;cm gap.`,
+    `<b>About 4%:</b> now molecules fly wall to wall. That is why a vacuum flask is pumped to a millionth of an atmosphere or less.<span class="extra"> Aerogel cheats: its pores are narrower than a flight.</span>`,
+  ];
+  const flight = s => FLIGHT0 / s.air;
+  const heat = s => 1 / (1 + 3.2 * flight(s) / s.gap);
+  const pct = v => v >= .9995 ? '100%' : v >= .99 ? '≈' + (v * 100).toFixed(1) + '%' : '≈' + Math.round(v * 100) + '%';
+  const airTxt = v => v >= 1 ? '100%' : v >= .01 ? (v * 100) + '%' : v >= 1e-4 ? '0.01%' : '0.0001%';
+  const len = m => m >= 1e-2 ? (m * 100).toFixed(m >= .1 ? 0 : 1).replace(/\.0$/, '') + ' cm' : m >= 1e-3 ? (m * 1e3).toFixed(1).replace(/\.0$/, '') + ' mm' : m >= 1e-4 ? (m * 1e3).toFixed(1) + ' mm' : m >= 1e-6 ? (m * 1e6).toFixed(m >= 1e-5 ? 0 : 1).replace(/\.0$/, '') + ' µm' : Math.round(m * 1e9) + ' nm';
+  const INK = '#10100c', WARM = [255, 106, 61], COLD = [52, 110, 255];
+  const card = Kit.$('card'), cv = Kit.$('box'), ru = Kit.$('ruler'), go = Kit.$('go'), say = Kit.$('say');
+  let at = 0, shown = {air: 1, heat: 1}, x, W, H, dots = [], last = 0, raf = 0;
+
+  // ---------- the gap: molecules between a warm wall and a cold one ----------
+  let r = 13; const rnd = () => (r = (r * 16807) % 2147483647) / 2147483647;
+  function seat(n) {
+    const keep = dots.slice(0, n);
+    while (keep.length < n) keep.push(newDot());
+    dots = keep;
+  }
+  function newDot() {
+    const a = rnd() * 2 * Math.PI, u = rnd(), v = rnd();
+    return {u, v, a, left: 0, t: 1 - u};
+  }
+  function fitBox() { ({x, W, H} = Kit.fitCanvas(cv)); }
+  const wallW = () => Math.max(10, W * .045);
+  function stepDots(dt) {
+    const s = STEPS[at], wall = wallW(), iw = W - 2 * wall, ih = H;
+    if (!(iw > 20 && ih > 10)) return;                    // the box is hidden or too small to move in
+    const kn = flight(s) / s.gap, mean = Math.max(1, Math.min(4, Math.max(.006, kn)) * iw);   // the flight as drawn, in px
+    const speed = Math.max(60, iw * .45);
+    for (const d of dots) {
+      let px = wall + d.u * iw, py = d.v * ih, rem = speed * dt;
+      while (rem > 0) {
+        if (d.left <= 0) { d.a = rnd() * 2 * Math.PI; d.left = -Math.log(1 - rnd() * .999) * mean; d.t += (1 - (px - wall) / iw - d.t) * .85; }
+        const stepLen = Math.min(rem, d.left);
+        let nx = px + Math.cos(d.a) * stepLen, ny = py + Math.sin(d.a) * stepLen;
+        if (nx < wall + 3) { nx = 2 * (wall + 3) - nx; d.a = Math.PI - d.a; d.t = 1; }
+        if (nx > W - wall - 3) { nx = 2 * (W - wall - 3) - nx; d.a = Math.PI - d.a; d.t = 0; }
+        if (ny < 3) { ny = 6 - ny; d.a = -d.a; }
+        if (ny > ih - 3) { ny = 2 * (ih - 3) - ny; d.a = -d.a; }
+        px = nx; py = ny; d.left -= stepLen; rem -= stepLen;
+      }
+      d.u = (px - wall) / iw; d.v = py / ih;
+    }
+  }
+  const mix = (t, o = 1) => `rgba(${WARM.map((w, i) => Math.round(COLD[i] + (w - COLD[i]) * t)).join(',')},${o})`;
+  function drawBox() {
+    if (!x) return;
+    const wall = wallW(), R = Math.min(W, H) * .12;
+    x.clearRect(0, 0, W, H);
+    x.save();
+    x.beginPath(); x.moveTo(R, 0); x.arcTo(W, 0, W, H, R); x.arcTo(W, H, 0, H, R); x.arcTo(0, H, 0, 0, R); x.arcTo(0, 0, W, 0, R); x.closePath(); x.clip();
+    x.fillStyle = 'rgba(16,16,12,.07)'; x.fillRect(0, 0, W, H);
+    const gw = x.createLinearGradient(0, 0, wall, 0); gw.addColorStop(0, mix(1)); gw.addColorStop(1, mix(1, .85));
+    x.fillStyle = gw; x.fillRect(0, 0, wall, H);
+    const gc = x.createLinearGradient(W - wall, 0, W, 0); gc.addColorStop(0, mix(0, .85)); gc.addColorStop(1, mix(0));
+    x.fillStyle = gc; x.fillRect(W - wall, 0, wall, H);
+    const rr = Math.max(2.6, Math.min(4.2, H * .022));
+    for (const d of dots) {
+      const px = wall + d.u * (W - 2 * wall), py = d.v * H;
+      x.fillStyle = mix(Math.max(0, Math.min(1, d.t)));
+      x.beginPath(); x.arc(px, py, rr, 0, 2 * Math.PI); x.fill();
+    }
+    // The gap's width, on a pill at the foot of the box.
+    const cap = '1 cm', cf = Math.max(11.5, Math.min(13, H * .07));
+    x.font = `800 ${cf}px Figtree`; const cw = x.measureText(cap).width + cf * 1.4, ch = cf * 1.5, cx0 = W / 2 - cw / 2, cy0 = H - ch - 5;
+    x.fillStyle = 'rgba(16,16,12,.82)'; x.beginPath(); x.moveTo(cx0 + ch / 2, cy0); x.arcTo(cx0 + cw, cy0, cx0 + cw, cy0 + ch, ch / 2); x.arcTo(cx0 + cw, cy0 + ch, cx0, cy0 + ch, ch / 2); x.arcTo(cx0, cy0 + ch, cx0, cy0, ch / 2); x.arcTo(cx0, cy0, cx0 + cw, cy0, ch / 2); x.closePath(); x.fill();
+    x.fillStyle = '#00E5A0'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(cap, W / 2, cy0 + ch / 2 + 1);
+    // The walls' names, written along them.
+    const fs = Math.max(11.5, Math.min(13, H * .07));
+    x.fillStyle = '#fff'; x.font = `800 ${fs}px Figtree`; x.textAlign = 'center'; x.textBaseline = 'middle';
+    if (H > fs * 5) {
+      x.save(); x.translate(wall / 2, H / 2); x.rotate(-Math.PI / 2); x.fillText('WARM', 0, 1); x.restore();
+      x.save(); x.translate(W - wall / 2, H / 2); x.rotate(Math.PI / 2); x.fillText('COLD', 0, 1); x.restore();
+    }
+    x.restore();
+  }
+  function loop(now) {
+    const dt = Math.min(.05, (now - last) / 1000 || 0); last = now;
+    stepDots(dt); drawBox();
+    raf = requestAnimationFrame(loop);
+  }
+
+  // ---------- the ruler: how far a molecule flies, and where the wall is ----------
+  const LO = -8, HI = -1;                                   // 10 nm to 10 cm, as powers of ten
+  function drawRuler() {
+    ru.innerHTML = '';
+    const {W: w, H: h} = Kit.fitSvg(ru), s = STEPS[at];
+    const fs = Math.max(11.5, Math.min(13, h * .2)), x0 = 6, x1 = w - 6, X = m => x0 + (Math.log10(m) - LO) / (HI - LO) * (x1 - x0);
+    const ay = h * .52, mk = (t, a, p) => Kit.mk(t, a, p || ru);
+    const T = (px, py, str, a) => { const e = mk('text', Object.assign({x: px, y: py, fill: INK, 'font-family': 'Figtree', 'font-size': fs, 'font-weight': 700}, a)); e.textContent = str; return e; };
+    const defs = mk('defs', {}), pat = mk('pattern', {id: 'past', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: INK, 'stroke-width': 1.4, 'stroke-opacity': .4}, pat);
+    // Past the wall: no flight can be longer than the gap.
+    const gx = X(s.gap);
+    mk('rect', {x: gx, y: ay - 7, width: Math.max(0, x1 - gx), height: 14, fill: 'url(#past)'});
+    mk('line', {x1: x0, y1: ay, x2: x1, y2: ay, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'});
+    for (let p = LO; p <= HI; p++) { const px = X(Math.pow(10, p)); mk('line', {x1: px, y1: ay - 4, x2: px, y2: ay + 4, stroke: INK, 'stroke-width': 1.4}); }
+    // The wall: the gap's width.
+    mk('line', {x1: gx, y1: ay - 9, x2: gx, y2: ay + 12, stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round'});
+    const gLab = 'wall: gap ' + len(s.gap), gAnchor = gx > w * .7 ? 'end' : gx < w * .3 ? 'start' : 'middle';
+    T(gx + (gAnchor === 'end' ? 4 : gAnchor === 'start' ? -4 : 0), ay + 12 + fs * 1.05, gLab, {'text-anchor': gAnchor});
+    // The flight: a dot on the line, its length above it.
+    const fx = Math.min(x1, X(flight(s))), over = flight(s) > s.gap;
+    mk('circle', {cx: fx, cy: ay, r: 6, fill: over ? '#fff' : INK, stroke: INK, 'stroke-width': 2.4});
+    const fl = 'a molecule flies ' + len(flight(s)), fAnchor = fx > w * .62 ? 'end' : fx < w * .38 ? 'start' : 'middle';
+    T(fx + (fAnchor === 'end' ? 4 : fAnchor === 'start' ? -4 : 0), ay - 15, fl, {'text-anchor': fAnchor});
+    // Two scale words at the ends, when the wall's label leaves room.
+    const ends = [['10 nm', x0, 'start'], ['10 cm', x1, 'end']];
+    for (const [str, px, an] of ends) if (Math.abs(px - gx) > fs * 7) T(px, ay + 12 + fs * 1.05, str, {'text-anchor': an, 'font-weight': 600, opacity: .6});
+  }
+
+  // ---------- the numbers ----------
+  function meters(now) {
+    if (guessing) { Kit.$('air').textContent = '100%'; Kit.$('heat').textContent = guessed ? Kit.$('guess').value + '%' : '?'; return; }
+    const s = STEPS[at], h = at === 0 ? 1 : heat(s);
+    const set = () => { Kit.$('air').textContent = airTxt(shown.air); Kit.$('heat').textContent = pct(shown.heat); Kit.$('bar').firstElementChild.style.width = (shown.heat * 100) + '%'; };
+    if (now || playing || Kit.calm || typeof gsap === 'undefined') { if (typeof gsap !== 'undefined') gsap.killTweensOf(shown); shown.air = s.air; shown.heat = h; set(); return; }
+    gsap.to(shown, {heat: h, duration: .9, ease: 'power2.out', onUpdate: set});
+    shown.air = s.air; set();
+  }
+
+  function next() {
+    if (at >= STEPS.length - 1) return;
+    at++;
+    const s = STEPS[at];
+    seat(s.dots);
+    drawRuler(); meters();
+    say.innerHTML = SAY[at];
+    Kit.haptic(at === STEPS.length - 1 ? 'success' : 'light');
+    if (s.btn) { go.textContent = s.btn; Kit.show('go'); }
+    else { go.classList.add('gone'); card.classList.add('answered'); Kit.show('keep'); if (playing && typeof gsap !== 'undefined') { gsap.killTweensOf('#keep'); gsap.set('#keep', {opacity: 1, y: 0}); } }
+  }
+  // First the reader's guess: how well will 1% of the air conduct?
+  let guessing = true, guessed = false, playing = false;
+  const gin = Kit.$('guess');
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pctSure => {
+    const g = +gin.value, ok = g >= 90;
+    Kit.answer({choice: g + '%', correct: ok, sure: pctSure});
+    guessing = false;
+    Kit.hide('guess'); Kit.show('bar');
+    const tk = Kit.$('tick'); tk.style.left = g + '%'; tk.classList.remove('gone');
+    Kit.$('hh').textContent = 'HOW WELL IT CONDUCTS';
+    next();
+    sure.grade(ok, pctSure, `${g}%, ${ok ? 'right' : 'wrong'}`);
+  });
+  gin.addEventListener('input', () => { if (!guessing) return; if (!guessed) { guessed = true; sure.on(); } Kit.$('hh').textContent = 'YOUR GUESS, AT 1% AIR'; meters(true); });
+  go.addEventListener('click', next);
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { fitBox(); drawBox(); drawRuler(); }).observe(cv);
+  seat(STEPS[0].dots);
+  // A first shuffle, so the start is a crowd and not a grid.
+  Kit.onShow.card = () => { fitBox(); for (let i = 0; i < 30; i++) stepDots(.03); drawBox(); drawRuler(); meters(true); };
+  Kit.onEnter.card = () => { if (!Kit.calm && !raf) { last = performance.now(); raf = requestAnimationFrame(loop); } };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, Kit.calm ? 40 : ms));
+    playing = true;   // the checker's photograph must not wait on a tween
+    gin.value = 40; gin.dispatchEvent(new Event('input')); await w(200);
+    Kit.$('sure').querySelector('[data-v="80"]').click(); await w(700);
+    go.click(); await w(700); go.click(); await w(300);
+  };
+})();
+Kit.single();
+</script>
+</html>

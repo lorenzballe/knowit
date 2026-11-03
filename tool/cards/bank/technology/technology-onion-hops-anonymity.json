@@ -1,0 +1,37 @@
+{
+  "id": "technology-onion-hops-anonymity",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.privacy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the Dark Web almost completely untraceable?",
+  "answer": "Darknet traffic hops through several relays, wrapped in layers of encryption. Each relay peels one layer and knows only its neighbours. The site sees just the last relay, so ordinary IP tracing never reaches you.",
+  "move": "Many encrypted hops, each knowing only its neighbours: nobody sees the whole path.",
+  "keywords": [
+    "dark web",
+    "onion routing",
+    "relays",
+    "encryption",
+    "ip tracing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive card titled Dark Web. A wrapped message can be dragged onto relay 1, then the reader tries to trace it back through several relays. The trail breaks at every hop, showing why the path is hard to follow."
+  },
+  "source": "Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=vW8FrJywMhA&t=214s",
+  "written": "2026-11-03"
+}

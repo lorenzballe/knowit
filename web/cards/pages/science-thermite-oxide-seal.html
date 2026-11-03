@@ -1,0 +1,197 @@
+<!doctype html>
+<!-- slug: science-thermite-oxide-seal -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why thermite won't light</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#pic{width:100%;height:100%;display:block;flex:1;min-height:0}
+#pic text{font-family:var(--body);font-weight:700}
+#ctrl{display:flex;gap:2cqw;margin-top:1.2cqh}
+.heat{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.heat.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.8cqh;margin-top:1.2cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · heat">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THERMITE</span></div>
+    <h2 class="q">Why won't a lighter, or even a propane torch, set off thermite?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="ctrl">
+      <button class="heat" data-i="0">Lighter</button>
+      <button class="heat" data-i="1">Propane torch</button>
+      <button class="heat" data-i="2">Sparkler igniter</button>
+    </div>
+    <div id="why" class="gone">
+      <p class="body">Every aluminum grain wears a skin of aluminum oxide, which is very stable. Nothing reacts until heat breaks that seal in a great many grains at once.</p>
+      <p class="body">That barrier, a very high activation energy, is out of reach for a lighter or a propane torch. A barium hydroxide igniter, the stuff in sparklers, gets there.</p>
+    </div>
+    <p class="say" id="say">Pick a heat source and hold it to the thermite.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Thermite's fuel comes sealed: no broken oxide skin, no reaction.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const LV = [
+  {h:.3,  fs:.6, out:'#ffb020', inn:'#fff1a8', msg:'Lighter: nothing. The thermite just sits there and ignores you.'},
+  {h:.58, fs:1,  out:'#3f8cff', inn:'#c9e4ff', msg:'Propane torch: still nothing. The oxide skins hold. Try more heat.'},
+  {h:1,   fs:0}
+];
+const SEAL = .8;
+let S = null, cur = -1, done = false, tl = null, live = [];
+
+function draw(){
+  if (tl) tl.kill(); live.forEach(t => t.kill()); live = [];
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f: ff} = Kit.fitSvg(svg); const f = Math.max(ff, 12), fs = Math.max(12, f * .85);
+  const m = (t, a, p) => Kit.mk(t, a, p || svg);
+  const defs = m('defs');
+  const hot = m('radialGradient', {id:'hot'}, defs);
+  m('stop', {offset:'0', 'stop-color':'#ffffff'}, hot);
+  m('stop', {offset:'.35', 'stop-color':'#ffd25a', 'stop-opacity':'.9'}, hot);
+  m('stop', {offset:'1', 'stop-color':'#ff6a00', 'stop-opacity':'0'}, hot);
+  const gf = m('linearGradient', {id:'gfill', x1:'0', y1:'1', x2:'0', y2:'0'}, defs);
+  m('stop', {offset:'0', 'stop-color':'#ff5a00'}, gf);
+  m('stop', {offset:'1', 'stop-color':'#fff3c4'}, gf);
+  m('rect', {x:0, y:0, width:W, height:H, rx:Math.min(W, H) * .05, fill:'#12161d'});
+
+  // heat gauge
+  const gx = W * .05, gw = Math.max(12, W * .04), gt = H * .08 + f, gb = Math.max(gt, H * .9 - f * 1.6);
+  m('rect', {x:gx, y:gt, width:gw, height:Math.max(0, gb - gt), rx:gw / 2, fill:'#262d38'});
+  const fill = m('rect', {x:gx, y:gb, width:gw, height:0, rx:gw / 2, fill:'url(#gfill)'});
+  const sy = gb - SEAL * (gb - gt);
+  m('line', {x1:gx - 5, x2:gx + gw + 5, y1:sy, y2:sy, stroke:'#fff', 'stroke-width':2, 'stroke-dasharray':'4 3'});
+  const heatY = gb + f * 1.4;
+  if (sy + fs * .35 + fs * 1.2 < heatY - fs * .9) m('text', {x:gx + gw + 8, y:sy + fs * .35, fill:'#fff', 'font-size':fs}).textContent = 'seal breaks';
+  if (heatY <= H) m('text', {x:gx + gw / 2, y:heatY, fill:'#9aa6b4', 'font-size':fs, 'text-anchor':'middle'}).textContent = 'HEAT';
+
+  // pile of thermite
+  const left = gx + gw + W * .06, right = W * .96;
+  const r = Math.max(6, Math.min(W * .042, H * .048));
+  const cx = (left + right) / 2, base = H * .96;
+  const n0 = Math.floor((right - left) / (2.1 * r));
+  let rows = Math.max(2, Math.min(5, Math.ceil(n0 / 2)));
+  rows = Math.max(1, Math.min(rows, Math.floor((base - 2 * r - H * .3) / (1.8 * r)) + 1));
+  const apexY = base - r - (rows - 1) * 1.8 * r - r;
+  const glowG = m('g'), grainG = m('g');
+  const al = [], fe = [];
+  let seed = 0; const rr = () => { seed = (seed * 9301 + 49297 + 7) % 233280; return seed / 233280; };
+  for (let k = 0; k < rows; k++) {
+    const n = n0 - 2 * k; if (n < 1) break;
+    for (let j = 0; j < n; j++) {
+      const x = cx + (j - (n - 1) / 2) * 2.1 * r + (rr() - .5) * r * .3;
+      const y = base - r - k * 1.8 * r + (rr() - .5) * r * .2;
+      const d = Math.hypot(x - cx, y - apexY);
+      if (rr() < .35) {
+        fe.push(m('circle', {cx:x, cy:y, r:r * .78, fill:'#8a3b22', stroke:'#b8582f', 'stroke-width':1.5}, grainG));
+      } else {
+        const glow = m('circle', {cx:x, cy:y, r:r * 1.7, fill:'url(#hot)', opacity:0}, glowG);
+        const skin = m('circle', {cx:x, cy:y, r:r, fill:'#e6edf1'}, grainG);
+        const core = m('circle', {cx:x, cy:y, r:r * .7, fill:'#7d8894'}, grainG);
+        al.push({glow, skin, core, d});
+      }
+    }
+  }
+  const reach = Math.max(right - left, base - apexY) * .6;
+  const by = apexY + r * 2;
+  const boomR = Math.max(0, Math.min(reach * 1.9, cx - 1, W - cx - 1, by - 1, H - by - 1));
+  const boom = m('circle', {cx, cy:by, r:0, fill:'url(#hot)', opacity:0});
+
+  // flame
+  const hF = H * .22, wF = hF * .42;
+  const fOut = m('g'), fIn = m('g', {}, fOut);
+  const fp = (h, w) => `M${cx},${apexY} C${cx + w},${apexY} ${cx + w * .6},${apexY - h * .5} ${cx},${apexY - h} C${cx - w * .6},${apexY - h * .5} ${cx - w},${apexY} ${cx},${apexY}Z`;
+  const flA = m('path', {d:fp(hF, wF), fill:'#ffb020', opacity:.9}, fIn);
+  const flB = m('path', {d:fp(hF * .55, wF * .5), fill:'#fff1a8'}, fIn);
+  gsap.set(fOut, {scale:0, svgOrigin:`${cx} ${apexY}`});
+
+  // igniter stick and sparks
+  const tipX = cx + H * .05, tipY = apexY - H * .15;
+  const stick = m('line', {x1:cx, y1:apexY + r * .3, x2:tipX, y2:tipY, stroke:'#a9a9a9', 'stroke-width':Math.max(3, r * .35), 'stroke-linecap':'round', opacity:0});
+  const sparkG = m('g', {opacity:0}), sparks = [];
+  const sr = Math.max(1.5, r * .16);
+  for (let i = 0; i < 18; i++) sparks.push(m('circle', {cx:tipX, cy:tipY, r:sr, fill:i % 3 ? '#fff6c8' : '#ffc23a'}, sparkG));
+  const sparkMax = Math.max(0, Math.min(tipY, H - tipY, tipX, W - tipX) - sr - 2);
+
+  // zoom on one aluminum grain
+  const R = Math.max(22, Math.min(W * .12, H * .11));
+  const icx = W * .95 - R, icy = H * .06 + f * 1.3 + R;
+  m('text', {x:W * .96, y:icy - R - f * .55, fill:'#9aa6b4', 'font-size':fs, 'text-anchor':'end'}).textContent = 'one aluminum grain';
+  const igR = Math.max(R, Math.min(R * 1.6, W - icx - 1, icy - 1, icx - 1, H - icy - 1));
+  const iglow = m('circle', {cx:icx, cy:icy, r:igR, fill:'url(#hot)', opacity:0});
+  const iskin = m('circle', {cx:icx, cy:icy, r:R, fill:'#e6edf1'});
+  const icrack = m('path', {d:`M${icx - R * .2},${icy - R} l${R * .15},${R * .2} l-${R * .1},${R * .12} M${icx + R * .95},${icy + R * .2} l-${R * .2},-${R * .05} l-${R * .05},${R * .15} M${icx - R * .9},${icy + R * .4} l${R * .2},-${R * .05}`, stroke:'#12161d', 'stroke-width':2, fill:'none', opacity:0});
+  const icore = m('circle', {cx:icx, cy:icy, r:R * .7, fill:'#7d8894'});
+  m('text', {x:icx, y:icy + fs * .35, fill:'#fff', 'font-size':Math.max(12, Math.min(fs, R * .32)), 'text-anchor':'middle'}).textContent = 'aluminum';
+  m('text', {x:W * .96, y:icy + R + f * 1.3, fill:'#fff', 'font-size':fs, 'text-anchor':'end'}).textContent = 'oxide skin';
+
+  S = {W, H, gt, gb, fill, al, fe, reach, boom, boomR, fOut, fIn, flA, flB, stick, sparkG, sparks, sparkMax, tipX, tipY, cx, apexY, r, iglow, iskin, icrack, icore};
+}
+
+function apply(i, inst){
+  draw();
+  const L = LV[i], q = (inst || Kit.calm) ? 0 : 1, o = `${S.cx} ${S.apexY}`;
+  tl = gsap.timeline();
+  if (i < 2) {
+    S.flA.setAttribute('fill', L.out); S.flB.setAttribute('fill', L.inn);
+    tl.to(S.fOut, {scale:L.fs, svgOrigin:o, duration:.4 * q, ease:'back.out(2)'}, 0);
+    if (!Kit.calm) live.push(gsap.to(S.fIn, {scaleY:1.08, scaleX:.94, svgOrigin:o, duration:.11, repeat:-1, yoyo:true}));
+  } else {
+    tl.to(S.stick, {opacity:1, duration:.2 * q}, 0).to(S.sparkG, {opacity:1, duration:.2 * q}, 0);
+    if (!Kit.calm) S.sparks.forEach((s, k) => {
+      const a = Math.PI * 2 * k / S.sparks.length, d = Math.min(S.sparkMax, S.H * (.06 + .06 * ((k * 7) % 5) / 5));
+      live.push(gsap.fromTo(s, {attr:{cx:S.tipX, cy:S.tipY}, opacity:1}, {attr:{cx:S.tipX + Math.cos(a) * d, cy:S.tipY + Math.sin(a) * d}, opacity:0, duration:.45, repeat:-1, delay:k * .03, ease:'power1.out'}));
+    });
+  }
+  const span = Math.max(0, S.gb - S.gt);
+  const y = S.gb - L.h * span;
+  tl.to(S.fill, {attr:{y, height:Math.max(0, S.gb - y)}, duration:1.1 * q, ease:'power2.out'}, .1 * q);
+  S.al.forEach(g => tl.to(g.glow, {opacity:Math.min(1, L.h * Math.exp(-g.d / S.reach)), duration:.9 * q}, .2 * q));
+  tl.to(S.iglow, {opacity:L.h * .7, duration:.9 * q}, .2 * q);
+  if (i < 2) {
+    if (!inst) tl.call(() => { Kit.$('say').textContent = L.msg; }, null, 1.2 * q);
+  } else {
+    const t0 = 1.1 * q;
+    tl.to(S.icrack, {opacity:1, duration:.15 * q}, t0);
+    tl.to(S.iskin, {opacity:0, scale:1.3, transformOrigin:'50% 50%', duration:.4 * q}, t0 + .2 * q);
+    tl.to(S.icore, {attr:{fill:'#fff6cf'}, duration:.3 * q}, t0 + .2 * q);
+    S.al.forEach(g => {
+      const t = t0 + .3 * q + (g.d / S.reach) * .5 * q;
+      tl.to(g.skin, {opacity:0, scale:1.3, transformOrigin:'50% 50%', duration:.3 * q}, t);
+      tl.to(g.core, {attr:{fill:'#fff6cf'}, duration:.3 * q}, t);
+    });
+    S.fe.forEach(c => tl.to(c, {attr:{fill:'#ff8a2a'}, duration:.4 * q}, t0 + .5 * q));
+    tl.to(S.boom, {attr:{r:S.boomR}, opacity:.95, duration:.9 * q, ease:'power2.out'}, t0 + .5 * q);
+  }
+}
+
+Kit.$('ctrl').addEventListener('click', e => {
+  const b = e.target.closest('.heat'); if (!b || done) return;
+  const i = +b.dataset.i; cur = i; Kit.haptic('light');
+  [...Kit.$('ctrl').children].forEach(x => x.classList.toggle('on', x === b));
+  if (i === 2) {
+    done = true;
+    Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => { apply(2, false); setTimeout(() => Kit.haptic('success'), Kit.calm ? 0 : 1300); });
+  } else {
+    Kit.$('say').textContent = 'Heating…';
+    apply(i, false);
+  }
+});
+
+Kit.onShow.card = () => { cur >= 0 ? apply(cur, true) : draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.heat', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const btn = k => Kit.$('ctrl').children[k];
+  btn(0).click(); await w(1500);
+  btn(1).click(); await w(1500);
+  btn(2).click(); await w(2800);
+};
+Kit.single();
+</script>
+</html>

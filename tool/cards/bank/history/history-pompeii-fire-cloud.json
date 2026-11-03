@@ -1,0 +1,38 @@
+{
+  "id": "history-pompeii-fire-cloud",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How hot was the pyroclastic flow that buried Pompeii?",
+  "answer": "The pyroclastic flow that buried Pompeii was a burning cloud at 500–600°C. Being very dense, it flooded the towns and filled every space it found.",
+  "move": "Pompeii was flooded by a dense, burning cloud at 500–600°C.",
+  "keywords": [
+    "pompeii",
+    "vesuvius",
+    "pyroclastic-flow",
+    "eruption-79",
+    "temperature"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A thermometer to drag up to your guess of how hot the pyroclastic flow that buried Pompeii was. The question asks how hot the burning cloud was.",
+    "graded": false
+  },
+  "source": "Geopop, “\"Lo sapevate che i corpi di Pompei in realtà non sono “pietrificati”?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=mpjXhnluCv4&t=42s",
+  "written": "2026-11-03"
+}

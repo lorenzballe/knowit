@@ -1,0 +1,39 @@
+{
+  "id": "nature-mosquito-ear-heat",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.seeing_like_an_animal",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why do mosquitoes keep buzzing right around your ears?",
+  "answer": "Mosquitoes are drawn to warm spots, and the ear canal gives off heat. That warmth acts like a beacon, so the whine lands right where you hear it best. The reason is heat, not earwax smell or the sound of breathing.",
+  "move": "Mosquitoes follow heat, and your ear canal is a warm beacon.",
+  "keywords": [
+    "mosquitoes",
+    "ears",
+    "body heat",
+    "earwax",
+    "thermal camera"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice card asking why mosquitoes buzz around your ears. Four reasons are offered: they smell earwax, the ear canal gives off heat, they like the sound of breathing, or your ears run hot. The reader picks one and rates how sure they are.",
+    "graded": false,
+    "ground": "#0b0630"
+  },
+  "source": "Geopop, “La zanzara che ciuccia il sangue al microscopio: ha una maledetta proboscide a sei aghi” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=pZcUFk1fcsg&t=351s",
+  "written": "2026-11-03"
+}

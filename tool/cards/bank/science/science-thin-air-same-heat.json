@@ -1,0 +1,38 @@
+{
+  "id": "science-thin-air-same-heat",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Pump 99% of the air out of a 1 cm gap. How much less heat does the air carry across?",
+  "answer": "Pumping out 99% of the air from the 1 cm gap barely changes how well it conducts heat. The few molecules left still carry heat from the warm wall to the cold one almost as well. That is why a flask's vacuum must be nearly perfect.",
+  "move": "Thin air conducts heat as well as thick air: a flask’s vacuum must be near perfect.",
+  "keywords": [
+    "vacuum flask",
+    "air molecules",
+    "heat conduction",
+    "jennings",
+    "kaganer"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card asking how much less heat a 1 cm gap of air carries once 99% of the air is pumped out. Two bars start at 100%: air left and how well it conducts. A slider takes the reader's guess at how well the remaining air conducts.",
+    "graded": false
+  },
+  "source": "Veritasium, “I Waterproofed Myself With Aerogel!” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=GcdB5bFwio4",
+  "written": "2026-11-03"
+}

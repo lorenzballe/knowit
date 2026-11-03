@@ -1,0 +1,37 @@
+{
+  "id": "science-greenland-craton-ores",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are Greenland's rocks such a big deal for mining?",
+  "answer": "Greenland holds some of the planet's oldest rocks, part of the great North Atlantic cratons. Complex magmatic systems cross them, and they gather rare, strategic elements from thinly scattered to concentrated pockets worth mining.",
+  "move": "Ancient cratons plus magma gather rare elements into mineable pockets.",
+  "keywords": [
+    "greenland",
+    "cratons",
+    "magma",
+    "rare elements",
+    "mining"
+  ],
+  "era": "ancient",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card asking why Greenland's rocks matter for mining. A button is held to animate magma rising through ancient crust, showing rare elements gathering into mineable pockets."
+  },
+  "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=P0PF8r7i6Zw&t=231s",
+  "written": "2026-11-03"
+}

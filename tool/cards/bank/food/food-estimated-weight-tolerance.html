@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: food-estimated-weight-tolerance -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0;display:block;touch-action:none}
+#sv{position:absolute;inset:0;width:100%;height:100%;cursor:ew-resize;touch-action:none;user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="food" data-kind="Drag · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PACKAGE WEIGHT</span></div>
+    <h2 class="q">How far from 500 g can a 500 g pack really weigh?</h2>
+    <div class="stagebox" id="stage"><svg id="sv"></svg></div>
+    <div id="why" class="gone"><p class="big">At most 15 g either way</p><p class="body">The small ℮ beside the weight means it is estimated. EU rules cap the gap: a 500 g pack can hold 485 to 515 g, and on average packs are not lighter than the label.</p></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag across the scale to set how wide the allowed gap is.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>℮ means estimated, within ±15 g on 500 g, and usually a bit more, not less.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = 15, LO = 440, HI = 560;
+let d = 30, moved = false, revealed = false, G = null, animateReveal = false;
+const dots = [];
+for (let i = 0; i < 26; i++) { let v = 503 + Kit.gauss() * 4.5; v = Math.max(489, Math.min(514, v)); dots.push({v, r: Kit.rnd()}); }
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = Math.abs(d - REAL) <= 4;
+  Kit.answer({choice: `±${d} g`, correct: ok, sure: pct});
+  revealed = true; animateReveal = !Kit.calm;
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `±${d} g, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(() => Kit.onShow.card());
+});
+
+function draw() {
+  const svg = Kit.$('sv');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const pad = W * 0.07;
+  const x = g => pad + (g - LO) / (HI - LO) * (W - 2 * pad);
+  const ink = 'var(--k)';
+  const tf = Math.max(11, f * .85), lf = Math.max(12, f * 1.05);
+  // axis (from bottom up)
+  const rlY = H - lf * 0.35;
+  const axisY = rlY - lf * 1.3 - tf * 1.1 - f * 0.6;
+  const minBand = f * 2.5;
+  // package
+  const pkY = f * 0.4;
+  const avail = axisY - minBand - lf * 1.4 - f * 0.5 - pkY;
+  let pkH = Math.min(H * 0.3, f * 6.5, avail);
+  const showPk = pkH >= 30;
+  if (!showPk) pkH = 0;
+  const pkW = Math.min(W * 0.5, pkH * 1.6);
+  const pkX = W / 2 - pkW / 2;
+  if (showPk) {
+    Kit.mk('rect', {x: pkX, y: pkY, width: pkW, height: pkH, rx: f * 0.6, fill: 'none', stroke: ink, 'stroke-width': Math.max(2, f * 0.14)}, svg);
+    Kit.mk('line', {x1: pkX, x2: pkX + pkW, y1: pkY + pkH * 0.28, y2: pkY + pkH * 0.28, stroke: ink, 'stroke-width': Math.max(1.5, f * 0.08), opacity: .5}, svg);
+    const t = Kit.mk('text', {x: W / 2, y: pkY + pkH * 0.72, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': Math.max(11, Math.min(pkH * 0.38, f * 2.2))}, svg);
+    t.textContent = '500 g ℮';
+  }
+  const gLabY = showPk ? pkY + pkH + lf * 1.3 : pkY + lf;
+  const bTop = gLabY + f * 0.5;
+  const bandH = Math.max(0, axisY - bTop);
+  Kit.mk('line', {x1: x(LO), x2: x(HI), y1: axisY, y2: axisY, stroke: ink, 'stroke-width': Math.max(2, f * 0.12)}, svg);
+  for (let g = LO; g <= HI; g += 10) {
+    const big = (g - 440) % 30 === 0;
+    Kit.mk('line', {x1: x(g), x2: x(g), y1: axisY, y2: axisY + f * (big ? .6 : .35), stroke: ink, 'stroke-width': Math.max(1.5, f * .08)}, svg);
+    if (big) { const l = Kit.mk('text', {x: x(g), y: axisY + f * 0.6 + tf * 1.1, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--mono)', 'font-size': tf, 'font-weight': g === 500 ? 800 : 500}, svg); l.textContent = g; }
+  }
+  Kit.mk('line', {x1: x(500), x2: x(500), y1: Math.min(axisY, bTop - f * .3), y2: axisY, stroke: ink, 'stroke-width': Math.max(1.5, f * .08), 'stroke-dasharray': `${f*.25} ${f*.25}`, opacity: .6}, svg);
+  // guess band
+  const gb = Kit.mk('rect', {x: x(500 - d), y: bTop, width: x(500 + d) - x(500 - d), height: bandH, fill: ink, 'fill-opacity': .12, stroke: ink, 'stroke-width': Math.max(1.5, f * .09), 'stroke-dasharray': `${f*.35} ${f*.25}`}, svg);
+  const hR = f * 0.75;
+  const h1 = Kit.mk('circle', {cx: x(500 + d), cy: axisY, r: hR, fill: ink}, svg);
+  const h2 = Kit.mk('circle', {cx: x(500 - d), cy: axisY, r: hR * .7, fill: ink, opacity: .55}, svg);
+  const gl = Kit.mk('text', {x: W / 2, y: gLabY, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': lf}, svg);
+  gl.textContent = (revealed ? 'your guess ' : 'your guess: ') + `±${d} g`;
+  G = {x, gb, h1, h2, gl, W, pad};
+  if (!revealed) return;
+  gl.setAttribute('opacity', .6);
+  // real band
+  const rb = Kit.mk('rect', {x: x(500 - REAL), y: bTop, width: x(500 + REAL) - x(500 - REAL), height: bandH, fill: 'var(--c)', 'fill-opacity': .0, stroke: ink, 'stroke-width': Math.max(3, f * .22), rx: f * .2}, svg);
+  const rl = Kit.mk('text', {x: W / 2, y: rlY, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': lf}, svg);
+  rl.textContent = 'real limit: 485 to 515 g (±15 g)';
+  // packs
+  const dr = Math.max(3, f * .3);
+  let dTop = bTop + f * 0.9, dBot = axisY - f * 1.1;
+  if (dBot < dTop) { const m = (bTop + axisY) / 2; dTop = dBot = m; }
+  const ds = dots.map(p => Kit.mk('circle', {cx: x(p.v), cy: dTop + p.r * (dBot - dTop), r: dr, fill: ink}, svg));
+  if (animateReveal) {
+    animateReveal = false;
+    gsap.from(rb, {attr: {x: x(500), width: 0}, duration: .8, ease: 'power3.out'});
+    gsap.from(rl, {opacity: 0, y: f * .5, duration: .5, delay: .4});
+    gsap.from(ds, {opacity: 0, attr: {cy: dTop - f}, duration: .4, stagger: .04, delay: .7, ease: 'power2.out'});
+  }
+}
+function setD(nd) {
+  d = nd; if (!G) return;
+  const {x, gb, h1, h2, gl} = G;
+  gb.setAttribute('x', x(500 - d)); gb.setAttribute('width', x(500 + d) - x(500 - d));
+  h1.setAttribute('cx', x(500 + d)); h2.setAttribute('cx', x(500 - d));
+  gl.textContent = `your guess: ±${d} g`;
+}
+let drag = false;
+function fromEvent(e) {
+  const r = Kit.$('sv').getBoundingClientRect();
+  const px = (e.clientX - r.left) / r.width * G.W;
+  const g = LO + (px - G.pad) / (G.W - 2 * G.pad) * (HI - LO);
+  return Math.max(1, Math.min(60, Math.round(Math.abs(g - 500))));
+}
+const sv = Kit.$('sv');
+sv.addEventListener('pointerdown', e => { if (revealed || !G) return; drag = true; try { sv.setPointerCapture(e.pointerId); } catch (_) {} const v = fromEvent(e); if (v !== d) Kit.haptic('selection'); setD(v); });
+sv.addEventListener('pointermove', e => { if (!drag) return; const v = fromEvent(e); if (v !== d) { setD(v); if (v % 5 === 0) Kit.haptic('selection'); } });
+const up = () => { if (!drag) return; drag = false; if (!moved) { moved = true; sure.on(); Kit.$('say').textContent = 'Happy with your band? Say how sure you are.'; } };
+sv.addEventListener('pointerup', up); sv.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G || moved) return;
+  const o = {v: 2};
+  gsap.to(o, {v: 30, duration: 1.1, ease: 'power3.out', onUpdate: () => { if (!moved) setD(Math.round(o.v)); }});
+};
+Kit.play.card = async () => {
+  const r = sv.getBoundingClientRect();
+  const gx = G.x(525) / G.W * r.width + r.left, gy = r.top + r.height * .6;
+  const o = {clientX: gx, clientY: gy, pointerId: 1, bubbles: true};
+  sv.dispatchEvent(new PointerEvent('pointerdown', o));
+  sv.dispatchEvent(new PointerEvent('pointermove', o));
+  sv.dispatchEvent(new PointerEvent('pointerup', o));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2200));
+};
+Kit.single();
+</script>
+</html>

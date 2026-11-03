@@ -1,0 +1,37 @@
+{
+  "id": "history-russia-warhead-share",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Russia has 4,489 warheads. Is a bigger share ready than America's?",
+  "answer": "Russia has more warheads in total, 4,489, but a smaller share of them is ready to use. The USA has 1,770 of its 3,708 warheads ready, while 1,938 sit in storage and need work before use. So the USA has the bigger ready share, and the correct answer is No.",
+  "move": "More warheads is not more ready: count the ready slice, not the pile.",
+  "keywords": [
+    "nuclear arsenal",
+    "russia",
+    "usa",
+    "warheads",
+    "ready-to-use"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two pie charts show Russia's 4,489 nuclear warheads and America's 3,708, each split into ready-to-use and not-ready slices. The question asks: is a bigger share of Russia's warheads ready than America's? Answer Yes or No."
+  },
+  "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=59s",
+  "written": "2026-11-03"
+}

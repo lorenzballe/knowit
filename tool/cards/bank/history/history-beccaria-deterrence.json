@@ -1,0 +1,37 @@
+{
+  "id": "history-beccaria-deterrence",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.who_wrote_it",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was Cesare Beccaria's main argument against the death penalty?",
+  "answer": "In 1764 Cesare Beccaria argued that the death penalty is not only inhumane but useless, because the terror of execution does not reduce crime. Data has backed his idea over time. The page lets you flip a switch to compare crime with and without the death penalty.",
+  "move": "Fear of the gallows doesn't cut crime, so Beccaria called it cruel and useless.",
+  "keywords": [
+    "cesare beccaria",
+    "death penalty",
+    "deterrence",
+    "capital punishment",
+    "1764"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question asks what Cesare Beccaria's main argument against the death penalty was. A switch toggles between crime figures without and with the death penalty, labeled Cruel and it doesn't work, next to a portrait of Beccaria."
+  },
+  "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=gsZ-We120mw&t=1001s",
+  "written": "2026-11-03"
+}

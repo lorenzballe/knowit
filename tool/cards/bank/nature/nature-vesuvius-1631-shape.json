@@ -1,0 +1,36 @@
+{
+  "id": "nature-vesuvius-1631-shape",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.cute_and_dangerous",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What kind of eruption was 1631, and how big is Vesuvius?",
+  "answer": "The 1631 eruption that the video uses as its model was Sub-Plinian. Today's cone has a crater about 450 m across and a summit of 1 281 m, but its base spreads about 20 km, more than 15 times wider than tall. Drawn to true scale, it is a broad swell rather than a spike.",
+  "move": "1631 was Sub-Plinian. Vesuvius: crater ≈450 m, summit 1 281 m, base ≈20 km.",
+  "keywords": [
+    "vesuvius",
+    "1631-eruption",
+    "sub-plinian",
+    "volcanic-cone"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A wide, low volcano cone drawn to true scale, with a slider to restore its real height. It asks what kind of eruption occurred in 1631 and how big Vesuvius is."
+  },
+  "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=JxXQOLGsJuM&t=197s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "science-spinning-slinky-zerog",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "Why doesn't a rotating slinky contract when released in zero-G?",
+  "answer": "A slinky with no weight does not contract just because it is released in zero-G. While it spins, the tension in its coils keeps each end moving in its circle, and that tension is what keeps it stretched. The spin made the stretch, and weight was never part of it.",
+  "move": "A spinning slinky stays stretched: its tension is what keeps it circling.",
+  "keywords": [
+    "slinky",
+    "zero-g",
+    "centripetal force",
+    "tension",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking why a rotating slinky does not contract when released in zero gravity. Offers a Let go button, which the reader taps to watch the slinky spin stretched out with no weight pulling it shut.",
+    "graded": false
+  },
+  "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=385s",
+  "written": "2026-11-03"
+}

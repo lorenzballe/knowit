@@ -1,0 +1,36 @@
+{
+  "id": "science-caps-bottles-sorting",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are caps and bottles sorted apart if they're the same plastic?",
+  "answer": "Caps and bottles can both be PET, but a cap may contain additives such as aluminium or glass fillers. If the two were mixed, those additives would contaminate the recycled bottle plastic. Plants therefore sort by product: caps with caps, bottles with bottles.",
+  "move": "Same plastic isn't the same recipe: additives decide what melts together.",
+  "keywords": [
+    "pet",
+    "bottle caps",
+    "additives",
+    "recycling plants"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card asks why caps and bottles are sorted apart when both are PET. The reader drags a cap flake into the bottle bin. Text says caps may hold additives like aluminium or glass fillers that would contaminate recycled bottle plastic."
+  },
+  "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=WALo6GLp_to&t=217s",
+  "written": "2026-11-03"
+}

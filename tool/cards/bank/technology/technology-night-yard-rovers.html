@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-night-yard-rovers -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#yard{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh;touch-action:manipulation;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#why .big{margin:0}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Try it · drop crates">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ROBOT LOGISTICS</span></div>
+    <h2 class="q">How are heavy components moved around the shipyard at night?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="yard" aria-label="A shipyard floor at night with a rover finding its way"></svg>
+      <div id="why" class="gone"><p class="big">Robot rovers, alone</p><p class="body">At night, automatic rovers carry the parts. Each one calculates the shortest route and steers around obstacles in total autonomy: no driver needed.</p></div>
+    </div>
+    <p class="say" id="say">Tap the floor to drop a crate in the rover's way (0/3).</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Night shift: the rover finds the shortest path and dodges what's in it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const C = 7, R = 9, START = {x:0, y:8}, GOAL = {x:6, y:0}, NEED = 3;
+const fixed = [[1,2],[2,2],[3,2],[5,1],[3,4],[4,5],[5,5],[1,6],[2,6],[5,7]];
+const blocked = new Set(fixed.map(([x,y]) => x+','+y));
+const crates = new Set();
+let path = [], G = null, rv = {gx:START.x, gy:START.y, a:0}, tl = null, placed = 0, done = false;
+const svg = Kit.$('yard');
+const isBlocked = (x,y) => blocked.has(x+','+y) || crates.has(x+','+y);
+
+function bfs(){
+  const prev = {}, q = [[START.x,START.y]], seen = new Set([START.x+','+START.y]);
+  while (q.length){
+    const [x,y] = q.shift();
+    if (x === GOAL.x && y === GOAL.y){
+      const p = [[x,y]]; let k = x+','+y;
+      while (prev[k]){ p.unshift(prev[k]); k = prev[k].join(','); }
+      return p;
+    }
+    for (const [dx,dy] of [[0,-1],[1,0],[-1,0],[0,1]]){
+      const nx = x+dx, ny = y+dy, k = nx+','+ny;
+      if (nx<0||ny<0||nx>=C||ny>=R||seen.has(k)||isBlocked(nx,ny)) continue;
+      seen.add(k); prev[k] = [x,y]; q.push([nx,ny]);
+    }
+  }
+  return null;
+}
+
+function draw(){
+  const {W,H,f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const cs = Math.min((W-8)/C, (H-8)/R), ox = (W-cs*C)/2, oy = (H-cs*R)/2;
+  G = {W,H,f,cs,ox,oy};
+  const fs = Math.max(12, Math.min(f, cs*.3));
+  Kit.mk('rect',{x:0,y:0,width:W,height:H,rx:Math.min(16,W*.04),fill:'#0b1220'},svg);
+  const defs = Kit.mk('defs',{},svg);
+  const rg = Kit.mk('radialGradient',{id:'beam'},defs);
+  Kit.mk('stop',{offset:'0','stop-color':'#ffd76a','stop-opacity':.55},rg);
+  Kit.mk('stop',{offset:'1','stop-color':'#ffd76a','stop-opacity':0},rg);
+  // floor grid
+  for (let i=0;i<=C;i++) Kit.mk('line',{x1:ox+i*cs,y1:oy,x2:ox+i*cs,y2:oy+R*cs,stroke:'#1f2b44','stroke-width':1},svg);
+  for (let j=0;j<=R;j++) Kit.mk('line',{x1:ox,y1:oy+j*cs,x2:ox+C*cs,y2:oy+j*cs,stroke:'#1f2b44','stroke-width':1},svg);
+  // steel stacks
+  for (const k of blocked){ const [x,y] = k.split(',').map(Number);
+    Kit.mk('rect',{x:ox+x*cs+cs*.08,y:oy+y*cs+cs*.08,width:cs*.84,height:cs*.84,rx:cs*.08,fill:'#3a4560',stroke:'#58658a','stroke-width':1.5},svg);
+    Kit.mk('line',{x1:ox+x*cs+cs*.2,y1:oy+y*cs+cs*.5,x2:ox+x*cs+cs*.8,y2:oy+y*cs+cs*.5,stroke:'#58658a','stroke-width':1.5},svg);
+  }
+  // crates dropped by the reader
+  for (const k of crates){ const [x,y] = k.split(',').map(Number);
+    const g = Kit.mk('g',{class:'crate','data-k':k},svg);
+    Kit.mk('rect',{x:ox+x*cs+cs*.1,y:oy+y*cs+cs*.1,width:cs*.8,height:cs*.8,rx:cs*.06,fill:'#c8553d',stroke:'#ff8a6b','stroke-width':2},g);
+    Kit.mk('path',{d:`M${ox+x*cs+cs*.1} ${oy+y*cs+cs*.1}L${ox+x*cs+cs*.9} ${oy+y*cs+cs*.9}M${ox+x*cs+cs*.9} ${oy+y*cs+cs*.1}L${ox+x*cs+cs*.1} ${oy+y*cs+cs*.9}`,stroke:'#ff8a6b','stroke-width':2},g);
+  }
+  // goal: the ship block waiting
+  const gx = ox+GOAL.x*cs, gy = oy+GOAL.y*cs;
+  Kit.mk('rect',{x:gx+cs*.06,y:gy+cs*.06,width:cs*.88,height:cs*.88,rx:cs*.12,fill:'none',stroke:'#5ee6c8','stroke-width':2.5,'stroke-dasharray':'5 4'},svg);
+  Kit.mk('path',{d:`M${gx+cs*.22} ${gy+cs*.42}h${cs*.56}l-${cs*.1} ${cs*.3}h-${cs*.36}z`,fill:'#5ee6c8'},svg);
+  // path
+  if (path.length){
+    const pts = path.map(([x,y]) => `${ox+(x+.5)*cs},${oy+(y+.5)*cs}`).join(' ');
+    Kit.mk('polyline',{points:pts,fill:'none',stroke:'#38bdf8','stroke-opacity':.25,'stroke-width':cs*.32,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+    Kit.mk('polyline',{id:'route',points:pts,fill:'none',stroke:'#7dd3fc','stroke-width':2.5,'stroke-dasharray':'2 6','stroke-linecap':'round','stroke-linejoin':'round'},svg);
+  }
+  // labels, far apart: top-left and bottom-right of the floor
+  const tx = Kit.mk('text',{x:ox+cs*.15,y:oy+cs*.5,'dominant-baseline':'middle',fill:'#9fb0d0','font-family':'var(--mono)','font-size':fs,'font-weight':700},svg);
+  tx.textContent = 'NIGHT · ' + (path.length ? (path.length-1)+' STEPS' : '');
+  // rover
+  const r = Kit.mk('g',{id:'rover'},svg);
+  Kit.mk('circle',{cx:cs*.55,cy:0,r:cs*.9,fill:'url(#beam)'},r);
+  Kit.mk('rect',{x:-cs*.32,y:-cs*.26,width:cs*.64,height:cs*.52,rx:cs*.1,fill:'#ffc93c',stroke:'#fff3c4','stroke-width':1.5},r);
+  Kit.mk('rect',{x:-cs*.2,y:-cs*.14,width:cs*.28,height:cs*.28,rx:cs*.04,fill:'#0b1220'},r);
+  Kit.mk('circle',{cx:cs*.24,cy:0,r:cs*.06,fill:'#0b1220'},r);
+  placeRover();
+}
+function placeRover(){
+  const r = document.getElementById('rover'); if (!r || !G) return;
+  const {cs,ox,oy} = G;
+  r.setAttribute('transform',`translate(${ox+(rv.gx+.5)*cs},${oy+(rv.gy+.5)*cs}) rotate(${rv.a})`);
+}
+function drive(){
+  if (tl) tl.kill();
+  path = bfs() || [];
+  rv.gx = START.x; rv.gy = START.y;
+  draw();
+  if (Kit.calm){ const e = path[path.length-1]; rv.gx = e[0]; rv.gy = e[1]; placeRover(); return; }
+  tl = gsap.timeline();
+  for (let i=1;i<path.length;i++){
+    const [x,y] = path[i], [px,py] = path[i-1];
+    const a = Math.atan2(y-py, x-px)*180/Math.PI;
+    tl.set(rv,{a,onComplete:placeRover});
+    tl.to(rv,{gx:x,gy:y,duration:.16,ease:'none',onUpdate:placeRover});
+  }
+}
+function tapCell(x,y){
+  if (done && placed >= NEED) return;
+  const k = x+','+y;
+  if (x<0||y<0||x>=C||y>=R||blocked.has(k)||crates.has(k)||(x===START.x&&y===START.y)||(x===GOAL.x&&y===GOAL.y)) return;
+  crates.add(k);
+  if (!bfs()){ crates.delete(k); Kit.haptic('light'); Kit.$('say').textContent = 'That would wall it in. Try another spot.'; return; }
+  placed++; Kit.haptic('selection');
+  drive();
+  const g = svg.querySelector(`.crate[data-k="${k}"]`);
+  if (g && !Kit.calm) gsap.from(g,{opacity:0,y:-G.cs*.6,duration:.3,ease:'back.out(2)'});
+  if (placed >= NEED){
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => { const t = tl && tl.time(); draw(); placeRover(); });
+  } else {
+    Kit.$('say').textContent = `It re-routed by itself. Drop another crate (${placed}/${NEED}).`;
+  }
+}
+svg.addEventListener('pointerdown', e => {
+  if (!G) return;
+  const b = svg.getBoundingClientRect();
+  const px = (e.clientX-b.left)*G.W/b.width, py = (e.clientY-b.top)*G.H/b.height;
+  tapCell(Math.floor((px-G.ox)/G.cs), Math.floor((py-G.oy)/G.cs));
+});
+Kit.onShow.card = () => { if (!path.length) path = bfs() || []; draw(); };
+Kit.onEnter.card = () => { drive(); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (let n=0;n<NEED;n++){
+    const p = bfs(); const [x,y] = p[Math.floor(p.length/2)];
+    const b = svg.getBoundingClientRect();
+    const cx = b.left + (G.ox+(x+.5)*G.cs)*b.width/G.W, cy = b.top + (G.oy+(y+.5)*G.cs)*b.height/G.H;
+    svg.dispatchEvent(new PointerEvent('pointerdown',{clientX:cx,clientY:cy,bubbles:true}));
+    await wait(150);
+  }
+  await wait(600);
+};
+Kit.single();
+</script>
+</html>

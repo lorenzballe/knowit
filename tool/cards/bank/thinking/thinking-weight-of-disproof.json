@@ -1,0 +1,35 @@
+{
+  "id": "thinking-weight-of-disproof",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does science decide a theory is worth trusting?",
+  "answer": "Science tries to disprove its theories rather than prove them. A pile of cases that fit proves little, because the next one could still say no. Only when a theory survives attempts to break it do we say it is getting at something true.",
+  "move": "If you think something is true, try as hard as you can to disprove it.",
+  "keywords": [
+    "scientific method",
+    "falsification",
+    "theory",
+    "disproof",
+    "cognitive bias"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A balance scale weighing yeses against a no. Each case that fits is a light yes, while surviving an attempt to disprove the theory is heavy. The reader can pile up yeses and watch the scale, then try to break the theory."
+  },
+  "source": "Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=vKA4w2O61Xo&t=243s",
+  "written": "2026-11-03"
+}

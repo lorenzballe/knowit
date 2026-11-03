@@ -1,0 +1,125 @@
+<!doctype html>
+<!-- slug: medicine-hidden-opioid-dose -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#pic{display:block;width:100%;height:100%;flex:1;min-height:0}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.hit{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HIDDEN DOSE</span></div>
+    <h2 class="q">Why is pink cocaine likelier to cause overdose than a pure drug?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Three pinches of the same pink mix. Tap the one hiding the least opioid.</p>
+    <div id="why" class="gone"><p class="body">You couldn't tell, and neither can anyone using it: in a mix you don't know what's inside, or how much. One pinch can carry far more of a potent opioid like fentanyl than the next, so it's easy to overdo it without knowing, and an overdose can kill.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In an unknown mix, you can't know your dose of anything.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 150, TH = 10, MAX = 30;
+const PINK = '#ff6fb0', FENT = '#ff2a2a', OTHER = ['#ffc83d', '#59b8ff', '#9be27a', '#c9a7ff'];
+// Hidden opioid grains per pinch, shuffled
+const counts = [4, 13, 27];
+for (let i = counts.length - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [counts[i], counts[j]] = [counts[j], counts[i]]; }
+const SAFE = counts.indexOf(Math.min(...counts));
+const piles = counts.map(fc => {
+  const types = [];
+  for (let k = 0; k < N; k++) types.push(k < fc ? 'f' : OTHER[Math.floor(Kit.rnd() * OTHER.length)]);
+  for (let k = N - 1; k > 0; k--) { const j = Math.floor(Kit.rnd() * (k + 1)); [types[k], types[j]] = [types[j], types[k]]; }
+  return types.map(t => {
+    let u = Kit.gauss() * .42; u = Math.max(-.97, Math.min(.97, u));
+    const v = Math.pow(Kit.rnd(), .8) * (1 - u * u);
+    return {u, v, t};
+  });
+});
+let pick = -1, revealed = false, els = [];
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(12, f);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: 'var(--k)'}, svg);
+  const cw = W / 3, pw = cw * .78, base = H * .56, mh = H * .44, r = Math.max(1.6, pw / 42);
+  els = [];
+  piles.forEach((g, i) => {
+    const cx = cw * (i + .5);
+    const grp = Kit.mk('g', {class: 'hit', 'data-i': i}, svg);
+    Kit.mk('rect', {x: cx - cw / 2 + 4, y: H * .04, width: cw - 8, height: H * .74, rx: 10, fill: 'transparent',
+      stroke: 'var(--c)', 'stroke-width': 2.5, opacity: pick === i ? 1 : 0, class: 'ring'}, grp);
+    const cs = g.map(p => {
+      const col = p.t === 'f' ? FENT : p.t;
+      return Kit.mk('circle', {cx: cx + p.u * pw / 2, cy: base - p.v * mh, r: p.t === 'f' && revealed ? r * 1.25 : r,
+        style: `fill:${revealed ? col : PINK}`, 'data-col': col}, grp);
+    });
+    els.push(cs);
+    Kit.mk('text', {x: cx, y: H * .65, 'text-anchor': 'middle', fill: 'var(--c)',
+      style: `font:700 ${fs * 1.1}px var(--display)`}, grp).textContent = 'ABC'[i];
+    const my = H * .71, mhh = Math.max(8, H * .04), mx = cx - pw / 2;
+    Kit.mk('rect', {x: mx, y: my, width: pw, height: mhh, rx: mhh / 2, fill: 'var(--c)', opacity: .18}, svg);
+    Kit.mk('rect', {x: mx, y: my, width: revealed ? counts[i] / MAX * pw : 0, height: mhh, rx: mhh / 2, fill: FENT, class: 'mf', 'data-w': counts[i] / MAX * pw}, svg);
+    const lx = mx + TH / MAX * pw;
+    Kit.mk('line', {x1: lx, x2: lx, y1: my - mhh * .6, y2: my + mhh * 1.6, stroke: 'var(--c)', 'stroke-width': 2.5,
+      'stroke-dasharray': '3 2', class: 'th', opacity: revealed ? 1 : 0}, svg);
+    const over = counts[i] > TH;
+    Kit.mk('text', {x: cx, y: H * .84, 'text-anchor': 'middle', fill: over ? FENT : 'var(--c)', class: 'vd', opacity: revealed ? 1 : 0,
+      style: `font:700 ${fs}px var(--body)`}, svg).textContent = over ? 'too much' : 'under';
+  });
+  const lg = Kit.mk('g', {class: 'lg', opacity: revealed ? 1 : 0}, svg), ly = H * .945;
+  OTHER.forEach((c, k) => Kit.mk('circle', {cx: W * .06 + k * r * 2.8, cy: ly - fs * .35, r: r * 1.1, fill: c}, lg));
+  Kit.mk('text', {x: W * .06 + 4 * r * 2.8, y: ly, fill: 'var(--c)', style: `font:600 ${fs}px var(--body)`}, lg).textContent = 'other stuff';
+  Kit.mk('circle', {cx: W * .56, cy: ly - fs * .35, r: r * 1.3, fill: FENT}, lg);
+  Kit.mk('text', {x: W * .56 + r * 2.8, y: ly, fill: 'var(--c)', style: `font:600 ${fs}px var(--body)`}, lg).textContent = 'fentanyl-type';
+}
+
+function reveal() {
+  revealed = true;
+  const svg = Kit.$('pic');
+  if (Kit.calm) { draw(); return; }
+  els.forEach(cs => gsap.to(cs, {fill: (k, el) => el.dataset.col, duration: .35, stagger: {each: .006, from: 'random'}}));
+  els.forEach(cs => cs.forEach(c => { if (c.dataset.col === FENT) gsap.to(c, {attr: {r: +c.getAttribute('r') * 1.25}, delay: .9, duration: .3}); }));
+  svg.querySelectorAll('.mf').forEach(m => gsap.to(m, {attr: {width: +m.dataset.w}, delay: 1, duration: .9, ease: 'power2.out'}));
+  gsap.to(svg.querySelectorAll('.th, .lg'), {opacity: 1, delay: .9, duration: .4});
+  gsap.to(svg.querySelectorAll('.vd'), {opacity: 1, delay: 1.8, duration: .4});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === SAFE, said = 'Pinch ' + 'ABC'[pick];
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why');
+  reveal();
+  sure.grade(ok, pct, `${said}: ${ok ? 'least opioid, by luck' : 'more opioid than you thought'}`);
+  Kit.show('keep');
+  Kit.haptic('light');
+});
+
+Kit.$('pic').addEventListener('click', e => {
+  const g = e.target.closest('.hit'); if (!g || pick >= 0) return;
+  pick = +g.dataset.i;
+  const ring = g.querySelector('.ring'); ring.setAttribute('opacity', 1);
+  if (!Kit.calm) gsap.from(ring, {opacity: 0, duration: .3});
+  Kit.haptic('selection'); sure.on();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  els.forEach((cs, i) => gsap.from(cs, {attr: {cy: '-=40'}, opacity: 0, duration: .6, delay: i * .12, stagger: {each: .002, from: 'random'}, ease: 'power2.out'}));
+};
+Kit.play.card = async () => {
+  Kit.$('pic').querySelector('.hit circle').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

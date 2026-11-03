@@ -1,0 +1,169 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-static-load-floors -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:1cqh}
+#row{display:flex;align-items:center;gap:3cqw}
+#val{font:700 max(2.4cqh,15px)/1.1 var(--display);color:var(--k);min-width:9ch}
+#rng{flex:1;accent-color:var(--k);height:max(3.4cqh,26px);cursor:pointer}
+#go{font:700 max(2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.3cqh 5cqw;cursor:pointer;align-self:center}
+#go:disabled{opacity:.35;cursor:default}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+.q,.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Slide · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STATIC LOAD</span></div>
+    <h2 class="q">How many extra floors could the intact floor below the impact hold?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Floors stacked on the intact floor"></svg>
+      <div id="ctl">
+        <div id="row"><span id="val">6 floors</span><input id="rng" type="range" min="1" max="20" step="1" value="6" aria-label="Extra floors"></div>
+        <button id="go">Lock in my guess</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">11 floors</p>
+        <p class="body">Engineers calculated that the columns under the intact floor could carry 11 extra floors, applied statically: set down and held still. The top of the tower did not rest there. It fell.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Stack floors on the intact floor. Stop where you think the columns give up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A weight that sits still is not the same as a weight that falls.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const LIMIT = 11, MAXF = 20, RED = '#d8362b';
+const st = {n: 6, shown: 6, revealed: false, guess: -1};
+const rng = Kit.$('rng'), val = Kit.$('val');
+
+function draw(){
+  const svg = Kit.$('pic'); if (!svg) return;
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const ink = 'var(--k)';
+  const groundY = H - Math.max(H * .03, 4);
+  const colH = H * .15;
+  const slabH = Math.max(H * .035, 7);
+  const slabTop = groundY - colH - slabH;
+  const top = fs * 1.4;
+  const fh = Math.max(0, (slabTop - top) / MAXF);
+  const bw = Math.min(W * .4, H * .5);
+  const x0 = (W - bw) / 2;
+  const over = st.revealed && st.shown > LIMIT;
+
+  // ground
+  Kit.mk('line', {x1: W * .08, x2: W * .92, y1: groundY, y2: groundY, stroke: ink, 'stroke-width': Math.max(H * .006, 2), 'stroke-linecap': 'round'}, svg);
+
+  // columns
+  const nc = 4;
+  for (let i = 0; i < nc; i++){
+    const cx = x0 + bw * (.08 + .84 * i / (nc - 1));
+    const bend = over ? (i % 2 ? -1 : 1) * bw * .07 : 0;
+    Kit.mk('path', {d: `M${cx},${groundY} Q${cx + bend},${groundY - colH / 2} ${cx},${slabTop + slabH}`,
+      fill: 'none', stroke: over ? RED : ink, 'stroke-width': Math.max(bw * .045, 4), 'stroke-linecap': 'round'}, svg);
+  }
+
+  // intact floor slab
+  Kit.mk('rect', {x: x0 - bw * .06, y: slabTop, width: bw * 1.12, height: slabH, rx: slabH * .25,
+    fill: st.revealed ? (over ? RED : '#2f9e5b') : ink}, svg);
+  const lab = Kit.mk('text', {x: x0 - bw * .1, y: slabTop + slabH / 2 + fs * .35, 'text-anchor': 'end',
+    'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: ink}, svg);
+  lab.textContent = 'intact floor';
+
+  // stacked floors
+  const n = Math.round(st.shown);
+  for (let i = 0; i < n; i++){
+    const y = slabTop - (i + 1) * fh;
+    const bad = st.revealed && i >= LIMIT;
+    Kit.mk('rect', {x: x0, y: y + fh * .08, width: bw, height: fh * .84, rx: Math.min(fh * .15, 4),
+      fill: bad ? RED : ink, opacity: bad ? .9 : (st.revealed ? .85 : .7)}, svg);
+  }
+
+  // count label on the left of the stack top
+  if (n > 0){
+    const ty = Math.max(top + fs * .2, slabTop - n * fh + fh / 2 + fs * .35);
+    const t = Kit.mk('text', {x: x0 - bw * .1, y: ty, 'text-anchor': 'end', 'font-family': 'var(--display)',
+      'font-weight': 700, 'font-size': fs * 1.15, fill: ink}, svg);
+    t.textContent = `+${n}`;
+    if (Math.abs(ty - (slabTop + slabH / 2 + fs * .35)) < fs * 1.4) t.setAttribute('opacity', 0);
+  }
+
+  // static limit line, after the answer
+  if (st.revealed){
+    const ly = slabTop - LIMIT * fh;
+    Kit.mk('line', {x1: x0 - bw * .08, x2: x0 + bw * 1.08, y1: ly, y2: ly, stroke: '#2f9e5b',
+      'stroke-width': Math.max(H * .005, 2), 'stroke-dasharray': '6 5'}, svg);
+    const t1 = Kit.mk('text', {x: x0 + bw * 1.12, y: ly - fs * .25, 'font-family': 'var(--body)', 'font-weight': 700,
+      'font-size': fs, fill: '#2f9e5b'}, svg);
+    t1.textContent = 'static limit';
+    const t2 = Kit.mk('text', {x: x0 + bw * 1.12, y: ly + fs * 1.15, 'font-family': 'var(--display)', 'font-weight': 700,
+      'font-size': fs * 1.1, fill: '#2f9e5b'}, svg);
+    t2.textContent = '11 floors';
+    if (st.guess > 0){
+      const gy = slabTop - st.guess * fh;
+      if (Math.abs(gy - ly) > fs * 2.8){
+        Kit.mk('line', {x1: x0 + bw, x2: x0 + bw * 1.08, y1: gy, y2: gy, stroke: ink, 'stroke-width': 2}, svg);
+        const tg = Kit.mk('text', {x: x0 + bw * 1.12, y: gy + fs * .35, 'font-family': 'var(--body)', 'font-weight': 700,
+          'font-size': fs, fill: ink}, svg);
+        tg.textContent = 'your guess';
+      }
+    }
+  }
+}
+
+function setN(v){
+  st.n = st.shown = v;
+  val.textContent = `${v} floor${v === 1 ? '' : 's'}`;
+  draw();
+}
+rng.addEventListener('input', () => { if (st.guess < 0){ setN(+rng.value); Kit.haptic('selection'); } });
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const g = st.guess, ok = Math.abs(g - LIMIT) <= 1;
+  Kit.answer({choice: `${g} floors`, correct: ok, sure: pct});
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${g} floors, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  st.revealed = true;
+  const target = Math.max(g, LIMIT + 2);
+  if (Kit.calm){ st.shown = target; draw(); }
+  else {
+    st.shown = 0; draw();
+    gsap.to(st, {shown: target, duration: 1.6, ease: 'power1.in', onUpdate: draw,
+      onComplete: () => Kit.haptic(target > LIMIT ? 'light' : 'success')});
+  }
+});
+
+Kit.$('go').addEventListener('click', () => {
+  if (st.guess >= 0) return;
+  st.guess = +rng.value; rng.disabled = true; Kit.$('go').disabled = true;
+  Kit.haptic('selection'); sure.on();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const end = st.n; st.shown = 0; draw();
+  gsap.to(st, {shown: end, duration: .9, ease: 'power2.out', onUpdate: draw});
+};
+Kit.play.card = async () => {
+  rng.value = 10; rng.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('go').click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2000));
+};
+Kit.single();
+</script>
+</html>

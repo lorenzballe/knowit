@@ -1,0 +1,179 @@
+<!doctype html>
+<!-- slug: science-poynting-vector-arrow -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:1cqh;padding-top:.6cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see what it does">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ENERGY FLOW</span></div>
+    <h2 class="q">What is the simple expression for electromagnetic energy flux?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Electric field E, magnetic field B and the energy flow S"></svg>
+      <div id="why" class="gone">
+        <p class="big">S = (1/μ₀) E × B</p>
+        <p class="body">S is the cross product of the electric and magnetic fields, times one constant: 1 over μ₀, the permeability of free space. It always points at right angles to both, so turning B turns where the energy flows, and flipping E flips it.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag B's tip around the ring. Tap E to flip it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Energy flows along S = (1/μ₀) E × B, square to both fields.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const CE = '#e0442e', CB = '#2d6fe0', CS = '#f0a800';
+const st = {bx: 1, by: 0, ef: 1, turned: 0, done: false, hint: false, last: 0};
+let G = null, el = {}, phase = 0;
+
+function arrowHead(x1, y1, x2, y2, s){
+  const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, ux = dx / L, uy = dy / L;
+  const bx = x2 - ux * s, by = y2 - uy * s, px = -uy * s * .55, py = ux * s * .55;
+  return `${x2},${y2} ${bx + px},${by + py} ${bx - px},${by - py}`;
+}
+function mkArrow(svg, col, w, name){
+  const g = Kit.mk('g', {}, svg);
+  const line = Kit.mk('line', {stroke: col, 'stroke-width': w, 'stroke-linecap': 'round'}, g);
+  const head = Kit.mk('polygon', {fill: col}, g);
+  const lab = Kit.mk('text', {fill: col, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': G.f * 1.45, 'text-anchor': 'middle', 'dominant-baseline': 'middle'}, g);
+  lab.textContent = name;
+  return {g, line, head, lab};
+}
+function setArrow(a, x1, y1, x2, y2){
+  const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, s = G.f * 1.1;
+  const ex = x2 - dx / L * s * .6, ey = y2 - dy / L * s * .6;
+  a.line.setAttribute('x1', x1); a.line.setAttribute('y1', y1);
+  a.line.setAttribute('x2', ex); a.line.setAttribute('y2', ey);
+  a.head.setAttribute('points', arrowHead(x1, y1, x2, y2, s));
+  return {ux: dx / L, uy: dy / L};
+}
+const scr = (wx, wy) => [G.cx + wx * G.rx, G.cy - wy * G.ry];
+
+function update(){
+  if (!G) return;
+  const {cx, cy, f, Elen} = G;
+  // E: straight up (or down when flipped)
+  const ety = cy - st.ef * Elen;
+  setArrow(el.E, cx, cy, cx, ety);
+  el.E.lab.setAttribute('x', cx + f * 1.3); el.E.lab.setAttribute('y', ety + st.ef * f * .7);
+  el.Ehit.setAttribute('y1', cy); el.Ehit.setAttribute('y2', ety);
+  // B: in the floor plane
+  const [bxs, bys] = scr(st.bx, st.by);
+  const ub = setArrow(el.B, cx, cy, bxs, bys);
+  el.B.lab.setAttribute('x', bxs + ub.ux * f * 1.3); el.B.lab.setAttribute('y', bys + ub.uy * f * 1.3);
+  el.handle.setAttribute('cx', bxs); el.handle.setAttribute('cy', bys);
+  el.ring.setAttribute('cx', bxs); el.ring.setAttribute('cy', bys);
+  // S = E x B  (E along z, B in plane): S = ef * (-by, bx)
+  const sx = -st.by * st.ef, sy = st.bx * st.ef;
+  const [sxs, sys] = scr(sx, sy);
+  const us = setArrow(el.S, cx, cy, sxs, sys);
+  let lx = sxs + us.ux * f * 1.4, ly = sys + us.uy * f * 1.3;
+  if (Math.abs(lx - (cx + f * 1.3)) < f * 1.6 && Math.abs(ly - (ety + st.ef * f * .7)) < f * 1.8) lx = cx - f * 1.6;
+  el.S.lab.setAttribute('x', lx); el.S.lab.setAttribute('y', ly);
+  el.sv = [cx, cy, sxs, sys];
+  drawDots();
+}
+function drawDots(){
+  if (!el.dots || !el.sv) return;
+  const [x1, y1, x2, y2] = el.sv;
+  el.dots.forEach((d, i) => {
+    const t = ((phase + i / el.dots.length) % 1) * .85 + .08;
+    d.setAttribute('cx', x1 + (x2 - x1) * t); d.setAttribute('cy', y1 + (y2 - y1) * t);
+    d.setAttribute('opacity', Math.sin(t * Math.PI).toFixed(2));
+  });
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const top = f * 3.6;
+  const cy = top + (H - top) / 2;
+  const rx = Math.min(W * .4, (H - top) * .75);
+  const ry = rx * .36;
+  const Elen = Math.max(f * 2.5, Math.min(rx * .9, (H - top) / 2 - f * 1.1));
+  G = {W, H, f, cx: W / 2, cy, rx, ry, Elen};
+  // formula
+  const t = Kit.mk('text', {x: W / 2, y: f * 1.9, 'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': f * 1.55, fill: 'var(--k)'}, svg);
+  t.innerHTML = `<tspan fill="${CS}">S</tspan> = (1/μ₀) <tspan fill="${CE}">E</tspan> × <tspan fill="${CB}">B</tspan>`;
+  // floor plane
+  Kit.mk('ellipse', {cx: W / 2, cy, rx, ry, fill: 'color-mix(in srgb,var(--k) 7%,transparent)', stroke: 'var(--k)', 'stroke-opacity': .35, 'stroke-width': Math.max(1.5, f * .12), 'stroke-dasharray': `${f * .5} ${f * .4}`}, svg);
+  el.S = mkArrow(svg, CS, Math.max(5, f * .42), 'S');
+  el.dots = Array.from({length: 5}, () => Kit.mk('circle', {r: f * .32, fill: '#fff', stroke: CS, 'stroke-width': f * .12}, svg));
+  el.B = mkArrow(svg, CB, Math.max(3, f * .26), 'B');
+  el.E = mkArrow(svg, CE, Math.max(3, f * .26), 'E');
+  el.Ehit = Kit.mk('line', {x1: W / 2, x2: W / 2, stroke: '#000', 'stroke-opacity': 0, 'stroke-width': f * 3, style: 'cursor:pointer'}, svg);
+  el.ring = Kit.mk('circle', {r: f * 1.3, fill: 'none', stroke: CB, 'stroke-width': f * .14, 'stroke-opacity': .45}, svg);
+  el.handle = Kit.mk('circle', {r: f * .55, fill: CB, stroke: '#fff', 'stroke-width': f * .14}, svg);
+  Kit.mk('circle', {cx: W / 2, cy, r: f * .3, fill: 'var(--k)'}, svg);
+  update();
+};
+
+// interaction
+let drag = false;
+function toWorld(e){
+  const r = Kit.$('pic').getBoundingClientRect();
+  let wx = (e.clientX - r.left - G.cx) / G.rx, wy = -(e.clientY - r.top - G.cy) / G.ry;
+  const m = Math.hypot(wx, wy) || 1, c = Math.min(1, Math.max(.35, m));
+  return [wx / m * c, wy / m * c];
+}
+function moveB(wx, wy, count){
+  const a = Math.atan2(wy, wx);
+  if (count){
+    let d = a - st.last; d = Math.atan2(Math.sin(d), Math.cos(d));
+    st.turned += Math.abs(d);
+  }
+  st.last = a; st.bx = wx; st.by = wy; update();
+  if (count && !st.done && st.turned > Math.PI) finish();
+}
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  if (!G) return;
+  if (e.target === el.Ehit){
+    st.ef *= -1; Kit.haptic('light'); update();
+    if (!Kit.calm) gsap.fromTo(el.S.g, {opacity: .2}, {opacity: 1, duration: .4});
+    return;
+  }
+  drag = true; st.last = Math.atan2(st.by, st.bx); Kit.haptic('selection');
+  try { pic.setPointerCapture(e.pointerId); } catch(_) {}
+  const [wx, wy] = toWorld(e); moveB(wx, wy, true);
+});
+pic.addEventListener('pointermove', e => { if (!drag) return; const [wx, wy] = toWorld(e); moveB(wx, wy, true); });
+const stop = () => { drag = false; };
+pic.addEventListener('pointerup', stop); pic.addEventListener('pointercancel', stop);
+
+function finish(){
+  st.done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => Kit.onShow.card());
+}
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.ticker.add((t, dt) => { phase = (phase + dt / 1400) % 1; drawDots(); });
+  const p = {a: 0};
+  gsap.to(p, {a: .55, duration: .7, ease: 'sine.inOut', yoyo: true, repeat: 1, delay: .4,
+    onUpdate: () => { if (!drag && !st.done && st.turned === 0){ st.bx = Math.cos(p.a); st.by = Math.sin(p.a); update(); } }});
+};
+
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = pic.getBoundingClientRect();
+  const at = a => ({clientX: r.left + G.cx + Math.cos(a) * G.rx, clientY: r.top + G.cy - Math.sin(a) * G.ry, bubbles: true, pointerId: 1});
+  pic.dispatchEvent(new PointerEvent('pointerdown', at(0)));
+  for (let i = 1; i <= 24; i++){ pic.dispatchEvent(new PointerEvent('pointermove', at(i / 24 * Math.PI * 1.3))); await wait(20); }
+  pic.dispatchEvent(new PointerEvent('pointerup', at(Math.PI * 1.3)));
+  await wait(700);
+};
+Kit.single();
+</script>
+</html>

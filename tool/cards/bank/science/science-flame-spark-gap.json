@@ -1,0 +1,37 @@
+{
+  "id": "science-flame-spark-gap",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Why does a flame let a spark jump a wider gap?",
+  "answer": "Air is a good insulator: about 10,000 V breaks down just 1 cm, so a 20,000 V plate sparks only a little. A flame holds ions, charged particles that conduct, so the same voltage breaks down a much longer stretch.",
+  "move": "Charged particles in a gas let electricity break through further.",
+  "keywords": [
+    "flame",
+    "spark",
+    "ions",
+    "air",
+    "voltage"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card on flame and spark. Two sides compare a spark in plain air with a longer spark through a flame. The reader bets why a flame lets a spark jump a wider gap, choosing among three options."
+  },
+  "source": "Veritasium, “What's In A Candle Flame?” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=a7_8Gc_Llr8&t=62s",
+  "written": "2026-11-03"
+}

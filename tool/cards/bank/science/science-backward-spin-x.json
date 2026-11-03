@@ -1,0 +1,37 @@
+{
+  "id": "science-backward-spin-x",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.optical_illusions",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Press the X: which way does it spin against the tube?",
+  "answer": "Pressing the X makes it spin backwards relative to the tube's horizontal rotation. When the X faces up, that backward spin works against the tube's sweep, so the X moves slowly and you can see it. The other symbol moves fast and blurs.",
+  "move": "Backward spin cancels the forward sweep, so the pressed symbol looks still.",
+  "keywords": [
+    "spinning tube",
+    "x symbol",
+    "backward spin",
+    "optical illusion",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A spinning tube with symbols on it. Press the X to see which way it spins against the tube's motion. Choose forward or backwards, then say how sure you are."
+  },
+  "source": "Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=7rAiZR_zasg&t=27s",
+  "written": "2026-11-03"
+}

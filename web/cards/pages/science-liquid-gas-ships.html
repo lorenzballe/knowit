@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-liquid-gas-ships -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#cw{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none;align-self:stretch}
+#hold.on{transform:scale(.97);opacity:.88}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:700 max(3.4cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LIQUID GAS</span></div>
+    <h2 class="q">How much does natural gas shrink when it is turned into liquid?</h2>
+    <div class="stagebox" id="stage">
+      <div id="cw"><canvas id="cv"></canvas></div>
+      <button id="hold">Hold to chill the gas</button>
+      <div id="why" class="gone"><p class="big">About 600 times</p><p class="body">Chilled until it turns liquid, natural gas takes 600 times less room. So one LNG carrier holds what 600 ships would carry as gas.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button: the gas cools, turns liquid and moves into one ship.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Liquid gas is 600 times smaller, so one ship does the work of 600.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 600, COLS = 30, ROWS = 20, FLY = .12;
+const st = {p: 0};
+let G = null, done = false;
+// Order in which the small ships hand over their gas: shuffled once.
+const order = Array.from({length: N}, (_, i) => i);
+for (let i = N - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+const tStart = new Array(N);
+order.forEach((ship, k) => { tStart[ship] = k / N * (1 - FLY); });
+
+function css(v){ return getComputedStyle(Kit.$('card')).getPropertyValue(v).trim(); }
+function fit(){ G = Kit.fitCanvas(Kit.$('cv')); draw(); }
+function ease(t){ return t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
+
+function draw(){
+  if (!G) return;
+  const {x, W, H} = G, p = st.p, ink = css('--k') || '#111', bg = css('--c') || '#fff';
+  const disp = css('--display') || 'system-ui', body = css('--body') || 'system-ui';
+  x.clearRect(0, 0, W, H);
+  const fs = Math.max(12, Math.min(H * .045, W * .045));
+  const m = W * .03;
+  // Top labels
+  x.fillStyle = ink; x.textBaseline = 'alphabetic';
+  x.font = `700 ${fs}px ${body}`; x.textAlign = 'left';
+  x.fillText('As gas', m, fs * 1.05);
+  let emptied = 0;
+  for (let i = 0; i < N; i++) if (p >= tStart[i] + FLY) emptied++;
+  const need = Math.max(1, N - emptied);
+  x.textAlign = 'right'; x.font = `800 ${fs * 1.25}px ${disp}`;
+  x.fillText(`${need} ${need === 1 ? 'ship' : 'ships'}`, W - m, fs * 1.15);
+  // Grid of small gas ships
+  const gy0 = fs * 1.7, gy1 = H * .58;
+  const cw = (W - 2*m) / COLS, ch = (gy1 - gy0) / ROWS;
+  const hw = cw * .78, hh = Math.min(ch * .32, cw * .3);
+  // Big LNG carrier geometry
+  const bx0 = W * .07, bx1 = W * .93, bw = bx1 - bx0;
+  const deck = H * .83, hullH = Math.min(H * .07, bw * .08);
+  const r = Math.min(bw / 11, (deck - H * .64) * .95);
+  const domes = [0,1,2,3].map(k => ({cx: bx0 + bw * (.22 + k * .19), cy: deck}));
+  // Small ships
+  for (let i = 0; i < N; i++) {
+    const c = i % COLS, rr = Math.floor(i / COLS);
+    const sx = m + c * cw + cw/2, sy = gy0 + rr * ch + ch * .62;
+    const t0 = tStart[i];
+    let a = 1;
+    if (p > t0) a = Math.max(0, 1 - (p - t0) / FLY);
+    if (a <= 0) continue;
+    x.globalAlpha = .2 + .8 * a;
+    x.fillStyle = ink;
+    x.beginPath();
+    x.moveTo(sx - hw/2, sy); x.lineTo(sx + hw/2, sy);
+    x.lineTo(sx + hw*.36, sy + hh); x.lineTo(sx - hw*.36, sy + hh); x.closePath(); x.fill();
+    // its gas: a puffy cloud on deck
+    x.beginPath(); x.arc(sx, sy - hh*.55, Math.min(cw, ch) * .22 * a + .5, 0, 7); x.fill();
+  }
+  x.globalAlpha = 1;
+  // Middle label
+  const midY = gy1 + (H * .64 - gy1) * .5 + fs * .35 + fs * .4;
+  x.font = `700 ${fs}px ${body}`; x.textAlign = 'left'; x.fillStyle = ink;
+  x.fillText('Liquefied', m, midY);
+  // LNG hull
+  x.fillStyle = ink;
+  x.beginPath();
+  x.moveTo(bx0, deck); x.lineTo(bx1 + bw*.02, deck - hullH*.25);
+  x.lineTo(bx1 - bw*.05, deck + hullH); x.lineTo(bx0 + bw*.03, deck + hullH); x.closePath(); x.fill();
+  // bridge
+  x.fillRect(bx0 + bw*.02, deck - r*.9, bw*.07, r*.9);
+  // domes: outline + liquid level
+  domes.forEach(d => {
+    x.save();
+    x.beginPath(); x.arc(d.cx, d.cy, r, Math.PI, 0); x.closePath();
+    x.fillStyle = bg; x.fill();
+    x.lineWidth = Math.max(2, r * .09); x.strokeStyle = ink; x.stroke();
+    x.clip();
+    const lvl = d.cy - r * ease(Math.min(1, p));
+    x.fillStyle = ink; x.globalAlpha = .85;
+    x.fillRect(d.cx - r, lvl, 2*r, d.cy - lvl + 1);
+    x.restore();
+  });
+  // flying drops of liquid
+  for (let i = 0; i < N; i++) {
+    const t0 = tStart[i];
+    if (p <= t0 || p >= t0 + FLY) continue;
+    const u = ease((p - t0) / FLY);
+    const c = i % COLS, rr = Math.floor(i / COLS);
+    const sx = m + c * cw + cw/2, sy = gy0 + rr * ch + ch * .62 - hh*.55;
+    const d = domes[i % 4];
+    const tx = d.cx + (((i * 37) % 11) - 5) / 6 * r * .5, ty = d.cy - r * .4;
+    const px = sx + (tx - sx) * u, py = sy + (ty - sy) * u - Math.sin(u * Math.PI) * H * .04;
+    const rad = Math.max(1.2, Math.min(cw, ch) * .22 * (1 - u * .7));
+    x.globalAlpha = 1 - u * .3; x.fillStyle = ink;
+    x.beginPath(); x.arc(px, py, rad, 0, 7); x.fill();
+  }
+  x.globalAlpha = 1;
+  // bottom label
+  x.font = `600 ${fs * .95}px ${body}`; x.textAlign = 'center'; x.fillStyle = ink;
+  const bl = H - fs * .35;
+  x.fillText(p >= 1 ? 'One LNG carrier: the gas of 600 ships' : 'One LNG carrier', W/2, Math.max(bl, deck + hullH + fs * 1.3));
+}
+
+const tw = gsap.to(st, {p: 1, duration: 6, ease: 'none', paused: true, onUpdate: draw, onComplete: finish});
+const btn = Kit.$('hold');
+function press(e){ if (done) return; if (e) e.preventDefault(); btn.classList.add('on'); btn.textContent = 'Chilling… keep holding'; Kit.haptic('light'); tw.play(); }
+function release(){ if (done) return; btn.classList.remove('on'); btn.textContent = st.p > 0 ? 'Hold to keep chilling' : 'Hold to chill the gas'; tw.pause(); }
+btn.addEventListener('pointerdown', press);
+['pointerup','pointerleave','pointercancel'].forEach(ev => btn.addEventListener(ev, release));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+btn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) press(e); });
+btn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') release(); });
+function finish(){
+  if (done) return; done = true; st.p = 1;
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => { fit(); });
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+}
+
+Kit.onShow.card = () => { fit(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cw', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 100));
+  tw.progress(1);
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "science-count-the-ball",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.estimating",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Physicists know how many atoms are in this 1 kg silicon ball, without counting one. Roughly how many?",
+  "answer": "The ball holds about 2.15 × 10^25 atoms, so the answer is 10^25. The ball's width divided by one cell's width gives 172.6 million cells across; cubed, that is a box of 5.14 × 10^24 cells. Taking the 0.52 share inside the ball and multiplying by 8 atoms per cell gives the total, counted without counting any atoms.",
+  "move": "Measure the whole and one repeating piece, then divide: that counts a book's pages, or a ball's atoms.",
+  "keywords": [
+    "silicon",
+    "silicon_ball",
+    "unit_cell",
+    "avogadro_style_counting",
+    "andreas_et_al",
+    "bartl_et_al"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Shows how a 1 kg silicon ball's atom count is found by measuring a crystal cell, then asks the reader to pick the power of ten (10^15, 10^20, 10^25 or 10^30)."
+  },
+  "source": "Veritasium, “World's Roundest Object!” (YouTube, 2013)",
+  "reference": "https://www.youtube.com/watch?v=ZMByI4s-D-Y",
+  "written": "2026-11-03"
+}

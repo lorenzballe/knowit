@@ -1,0 +1,37 @@
+{
+  "id": "science-anthropocene-boundary-layer",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.testable_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What would the line between Holocene and Anthropocene look like in rock?",
+  "answer": "A new epoch would need one thin layer found in rock everywhere on Earth, laid down at the same moment. That layer would hold radioactive particles, plastics, and carbon and nitrogen thrown off their natural cycles, partly by fertilizers. Until that signal is confirmed, we are officially still in the Holocene.",
+  "move": "An epoch becomes official only when one worldwide layer marks the break.",
+  "keywords": [
+    "anthropocene",
+    "holocene",
+    "stratigraphy",
+    "radionuclides",
+    "plastics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A stratigraphic column of rock layers with a thin dark line separating the Holocene from the Anthropocene. The reader is asked to drag the columns up or down to pull the thin line apart and see how the boundary would look in rock."
+  },
+  "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=CpGW8eA6Qik&t=99s",
+  "written": "2026-11-03"
+}

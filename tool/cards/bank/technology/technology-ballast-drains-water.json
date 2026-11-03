@@ -1,0 +1,37 @@
+{
+  "id": "technology-ballast-drains-water",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the ballast layer protect the track from water damage?",
+  "answer": "The stones under a track have gaps between them that let rain flow straight through and away from the track. Without those gaps the water stays put, the soil turns to mud, and the sleepers sink. The ballast layer works as a drain.",
+  "move": "Ballast is a drain: no standing water, no mud under the rails.",
+  "keywords": [
+    "railways",
+    "ballast",
+    "train tracks",
+    "sleepers",
+    "drainage"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two side-by-side panels compare rain on a track bed. In the left panel rain falls on the stones and drains through the gaps, away from the track. In the right panel rain falls on bare soil and pools, turning to mud. The question asked is why there are stones under train tracks."
+  },
+  "source": "Geopop, “A cosa servono le pietre sui binari?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=UQV7O6qHxYU",
+  "written": "2026-11-03"
+}

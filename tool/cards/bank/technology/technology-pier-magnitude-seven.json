@@ -1,0 +1,37 @@
+{
+  "id": "technology-pier-magnitude-seven",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What earthquake strength is each pier of Eshima Ohashi built to survive?",
+  "answer": "Each pier of Eshima Ohashi is built to resist earthquakes up to magnitude 7. Japan has both earthquakes and typhoons, which is why the pier design sets this limit. Moving parts let the bridge carry heavy loads and spread forces evenly.",
+  "move": "In quake country each pier is built for a set limit: here, magnitude 7.",
+  "keywords": [
+    "eshima ohashi",
+    "japan",
+    "bridge",
+    "seismic design",
+    "pier"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Seismic Design with a Shake button and a quake gauge reading M 0, asking what earthquake strength each pier of Eshima Ohashi is built to survive. Tapping Shake raises the magnitude one step."
+  },
+  "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=aU4aGIzz1W4&t=339s",
+  "written": "2026-11-03"
+}

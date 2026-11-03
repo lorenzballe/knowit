@@ -1,0 +1,198 @@
+<!doctype html>
+<!-- slug: medicine-soft-robot-throat -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · Passive intelligence</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#throat{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 5cqw;cursor:pointer;white-space:nowrap;flex:none}
+#go:active{transform:scale(.97)}
+#cap{flex:1;margin:0;font:600 max(1.9cqh,12px)/1.25 var(--body);color:var(--k);min-height:2.5em;display:flex;align-items:center;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font-size:max(1.9cqh,12px);line-height:1.3;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Tap to grow · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOFT ROBOTS</span></div>
+    <h2 class="q">How does a growing robot find the right tube inside your throat?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="throat" aria-label="A soft robot growing down a model of the throat"></svg>
+      <div id="ctl">
+        <button id="go">Grow ▸</button>
+        <p id="cap">The robot lengthens from its tip.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap Grow, one step at a time, and watch the side branch.</p>
+    <div id="why" class="gone"><p class="body">The side branch is soft: when it hits the throat wall, it bends and slides along it into the opening. The body’s own shape does the steering, so no exact map is needed. Engineers call this passive, or mechanical, intelligence.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A soft robot lets the body guide it, so it finds the way without knowing the shape.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('throat');
+let shape = {bend: .03, sx: .02, ys: .47, tx: 0, ex: 0, tc: 0};
+let step = 0, runs = 0, busy = false, revealed = false, G = null;
+const cur = {m: 0, b: 0};
+const CAP1 = [
+  'The robot lengthens from its tip.',
+  'It grows down the throat, toward the esophagus.',
+  'A soft side branch sprouts toward the front.',
+  'It hits the wall. Being soft, it bends instead of jamming.',
+  'Sliding along the wall, it slips into the trachea.',
+  'Main body down the esophagus, branch down the trachea.'
+];
+const CAP2 = ['A new throat shape. Same robot, no map. Tap Grow.', ...CAP1.slice(1, 5), 'New shape, same result: the walls did the steering.'];
+function cap() { Kit.$('cap').textContent = (runs ? CAP2 : CAP1)[step]; }
+
+function rndShape() {
+  const r = Kit.rnd;
+  return {bend: (r() - .5) * .16, sx: (r() - .5) * .12, ys: .40 + r() * .15, tx: (r() - .5) * .1, ex: (r() - .5) * .08, tc: (r() - .5) * .12};
+}
+function ptN(p, L, fr) {
+  const l = Math.max(0, Math.min(L, fr * L));
+  const a = p.getPointAtLength(Math.max(0, l - 1)), b = p.getPointAtLength(Math.min(L, l + 1)), q = p.getPointAtLength(l);
+  let dx = b.x - a.x, dy = b.y - a.y; const n = Math.hypot(dx, dy) || 1; dx /= n; dy /= n;
+  return {x: q.x, y: q.y, lx: -dy, ly: dx};
+}
+
+function build() {
+  gsap.killTweensOf(cur); busy = false;
+  const {W, H, f} = Kit.fitSvg(svg); if (!W || !H) return;
+  svg.innerHTML = '';
+  const fs = Math.max(12, f * .8), r = Math.max(9, Math.min(W * .075, H * .065)), wall = Math.max(3, r * .32);
+  const yb = H - r - wall - fs * 2.6, s = shape;
+  const P = (x, y) => [+x.toFixed(1), +y.toFixed(1)];
+  const A = P(W * .5, -r * 2), B = P(W * (.5 + s.bend), H * .22), S = P(W * (.52 + s.sx), H * s.ys);
+  const E = P(W * (.72 + s.ex), yb), Ec = P(S[0] + W * .12, S[1] + (yb - S[1]) * .45);
+  const T = P(W * (.27 + s.tx), yb), Tc = P(S[0] - W * (.14 + s.tc), S[1] + (yb - S[1]) * .35);
+  const ph = `M${A} Q${B} ${S}`, es = `M${S} Q${Ec} ${E}`, tr = `M${S} Q${Tc} ${T}`;
+  const WALL = 'color-mix(in srgb,var(--k) 55%,var(--c))', LUM = 'color-mix(in srgb,var(--k) 9%,var(--c))';
+  [ph, es, tr].forEach(d => Kit.mk('path', {d, style: `fill:none;stroke:${WALL};stroke-width:${2 * r + 2 * wall};stroke-linecap:round`}, svg));
+  const lum = [ph, es, tr].map(d => Kit.mk('path', {d, style: `fill:none;stroke:${LUM};stroke-width:${2 * r};stroke-linecap:round`}, svg));
+  const pPh = lum[0], pTr = lum[2], Lph = pPh.getTotalLength(), Ltr = pTr.getTotalLength();
+  // cartilage rings of the trachea
+  const nR = Math.max(3, Math.floor(Ltr * .6 / (r * .8)));
+  for (let i = 0; i < nR; i++) {
+    const q = ptN(pTr, Ltr, .32 + .62 * i / (nR - 1));
+    Kit.mk('line', {x1: q.x + q.lx * r, y1: q.y + q.ly * r, x2: q.x - q.lx * r, y2: q.y - q.ly * r, style: `stroke:${WALL};stroke-width:${Math.max(1.5, r * .14)};opacity:.45`}, svg);
+  }
+  // labels
+  const labs = [];
+  const lab = (x, y, t, bold, chars) => {
+    const half = chars * fs * .3; x = Math.max(half + 4, Math.min(W - half - 4, x));
+    const e = Kit.mk('text', {x, y, 'text-anchor': 'middle', style: `font:${bold ? 700 : 500} ${fs}px var(--body);fill:${bold ? 'var(--k)' : 'var(--muted)'}`}, svg);
+    e.textContent = t; labs.push(e);
+  };
+  const ly1 = yb + r + wall + fs * 1.05, ly2 = ly1 + fs * 1.3;
+  lab(T[0], ly1, 'trachea', 1, 14); lab(T[0], ly2, 'to the lungs', 0, 14);
+  lab(E[0], ly1, 'esophagus', 1, 14); lab(E[0], ly2, 'to the stomach', 0, 14);
+  const mt = Kit.mk('text', {x: Math.min(W - 4, Math.max(B[0], A[0]) + r + wall + 8), y: fs * 1.3, 'text-anchor': 'start', style: `font:500 ${fs}px var(--body);fill:var(--muted)`}, svg);
+  mt.textContent = 'from the mouth';
+  // drop the mouth label when the stage is too short to keep it clear of the bottom labels
+  try {
+    const m = mt.getBBox(), pad = 3;
+    const hit = labs.some(e => { const b = e.getBBox();
+      return m.x < b.x + b.width + pad && b.x < m.x + m.width + pad && m.y < b.y + b.height + pad && b.y < m.y + m.height + pad; });
+    if (hit || m.x + m.width > W) mt.remove();
+  } catch (e) { if (fs * 1.3 + fs * .5 > ly1 - fs) mt.remove(); }
+
+  // the side branch: launched toward the front wall, then pressed along it
+  const rb = r * .3, off = r - rb - 1, rm = r * .42, pts = [];
+  const p0 = ptN(pPh, Lph, .36); pts.push([p0.x + p0.lx * rm * .5, p0.y + p0.ly * rm * .5]);
+  const mn = ptN(pPh, Lph, .45); pts.push([mn.x + mn.lx * off * .6, mn.y + mn.ly * off * .6]);
+  const cn = ptN(pPh, Lph, .52); pts.push([cn.x + cn.lx * off, cn.y + cn.ly * off]); const iC = 2;
+  for (let fr = .56; fr <= .861; fr += .03) { const q = ptN(pPh, Lph, fr); pts.push([q.x + q.lx * off, q.y + q.ly * off]); }
+  const iS = pts.length - 1;
+  for (let fr = .14; fr <= 1.0001; fr += .03) {
+    const q = ptN(pTr, Ltr, Math.min(fr, 1)), k = Math.max(0, 1 - (fr - .14) / .35), sm = k * k * (3 - 2 * k);
+    pts.push([q.x + q.lx * off * sm, q.y + q.ly * off * sm]);
+  }
+  const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  const bd = 'M' + pts.map(p => p.map(v => v.toFixed(1)).join(',')).join(' L');
+  const dash = (p, L) => { p.style.strokeDasharray = `${L} ${L + 2}`; p.style.strokeDashoffset = L; return p; };
+  const brO = Kit.mk('path', {d: bd, style: `fill:none;stroke:${LUM};stroke-width:${2 * rb + 3};stroke-linecap:round;stroke-linejoin:round`}, svg);
+  const br = Kit.mk('path', {d: bd, style: `fill:none;stroke:var(--k);stroke-width:${2 * rb};stroke-linecap:round;stroke-linejoin:round`}, svg);
+  const Lb = br.getTotalLength();
+  const tipB = Kit.mk('circle', {r: rb * 1.15, style: 'fill:var(--k);opacity:0'}, svg);
+
+  const md = `M${A} Q${B} ${S} Q${Ec} ${E}`;
+  const mainO = Kit.mk('path', {d: md, style: `fill:none;stroke:${LUM};stroke-width:${2 * rm + 3};stroke-linecap:round`}, svg);
+  const main = Kit.mk('path', {d: md, style: `fill:none;stroke:var(--k);stroke-width:${2 * rm};stroke-linecap:round`}, svg);
+  const mainH = Kit.mk('path', {d: md, style: `fill:none;stroke:${LUM};stroke-width:${rm * .5};stroke-linecap:round;opacity:.35`}, svg);
+  const Lm = main.getTotalLength();
+  const tipM = Kit.mk('circle', {r: rm * 1.12, style: 'fill:var(--k);opacity:0'}, svg);
+  [mainO, main, mainH].forEach(p => dash(p, Lm)); [brO, br].forEach(p => dash(p, Lb));
+
+  const ratio = Lb / (cum[cum.length - 1] || 1);
+  const lenC = cum[iC] * ratio, lenS = cum[iS] * ratio;
+  const op = ptN(pTr, Ltr, .2);
+  const tg = k => [
+    {m: 0, b: 0}, {m: Lph * .3, b: 0}, {m: Lph * .6, b: lenC * .4}, {m: Lph * .7, b: lenC},
+    {m: Lph * .86, b: lenS + .25 * (Lb - lenS)}, {m: Lm, b: Lb}][k];
+  G = {main, mainO, mainH, br, brO, tipM, tipB, Lm, Lb, tg, rb, r, C: pts[iC], O: [op.x, op.y]};
+  const t = tg(step); cur.m = t.m; cur.b = t.b; upd();
+}
+
+function upd() {
+  if (!G) return;
+  const m = Math.max(0, Math.min(cur.m, G.Lm)), b = Math.max(0, Math.min(cur.b, G.Lb));
+  [G.main, G.mainO, G.mainH].forEach(p => p.style.strokeDashoffset = G.Lm - m);
+  [G.br, G.brO].forEach(p => p.style.strokeDashoffset = G.Lb - b);
+  const pm = G.main.getPointAtLength(m); G.tipM.setAttribute('cx', pm.x); G.tipM.setAttribute('cy', pm.y); G.tipM.style.opacity = m > 2 ? 1 : 0;
+  const pb = G.br.getPointAtLength(b); G.tipB.setAttribute('cx', pb.x); G.tipB.setAttribute('cy', pb.y); G.tipB.style.opacity = b > 1 ? 1 : 0;
+}
+
+function pulse(x, y, r0, r1) {
+  if (Kit.calm) return;
+  const c = Kit.mk('circle', {cx: x, cy: y, r: r0, style: 'fill:none;stroke:var(--k);stroke-width:2.5'}, svg);
+  gsap.fromTo(c, {attr: {r: r0}, opacity: 1}, {attr: {r: r1}, opacity: 0, duration: .8, ease: 'power2.out', onComplete: () => c.remove()});
+}
+
+function after(k) {
+  if (k === 3) { pulse(G.C[0], G.C[1], G.rb, G.rb * 3.2); Kit.haptic('light'); }
+  if (k === 4) { pulse(G.O[0], G.O[1], G.r * .6, G.r * 1.8); }
+  if (k === 5) {
+    Kit.$('go').textContent = 'New throat ↻';
+    Kit.haptic('success');
+    if (!revealed) { revealed = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'}); }
+  }
+}
+
+Kit.$('go').addEventListener('click', () => {
+  if (!G) return;
+  if (step >= 5) {
+    shape = rndShape(); runs++; step = 0; build(); cap();
+    Kit.$('go').textContent = 'Grow ▸'; Kit.haptic('light');
+    if (!Kit.calm) gsap.from(svg, {opacity: 0, duration: .4});
+    return;
+  }
+  if (busy) return;
+  busy = true; step++; cap(); Kit.haptic('selection');
+  const t = G.tg(step), k = step;
+  gsap.to(cur, {m: t.m, b: t.b, duration: Kit.calm ? 0 : 1.1, ease: 'power2.inOut', onUpdate: upd, onComplete: () => { busy = false; after(k); }});
+});
+
+// Redraw whenever the stage changes size (e.g. when the why appears).
+let lastSz = '';
+new ResizeObserver(() => requestAnimationFrame(() => {
+  const b = svg.getBoundingClientRect(), sz = Math.round(b.width) + 'x' + Math.round(b.height);
+  if (sz !== lastSz && b.width > 0) { lastSz = sz; build(); }
+})).observe(svg);
+
+Kit.onShow.card = () => { build(); cap(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#throat', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  gsap.globalTimeline.timeScale(6);
+  for (let i = 0; i < 5; i++) { Kit.$('go').click(); await wait(380); }
+  await wait(500);
+};
+Kit.single();
+</script>
+</html>

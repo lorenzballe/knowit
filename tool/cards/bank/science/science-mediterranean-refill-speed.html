@@ -1,0 +1,175 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-mediterranean-refill-speed -->
+<title>How fast the Mediterranean refilled</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;border-radius:1.8cqh}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">How quickly did the Atlantic refill the dried-up Mediterranean?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="The Atlantic pouring through Gibraltar into the dry Mediterranean basin"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">About 100,000 years</button>
+        <button class="opt" data-i="1">About 10,000 years</button>
+        <button class="opt" data-i="2">1 to 2 centuries</button>
+      </div>
+      <div id="why" class="gone"><p class="big">1 to 2 centuries</p><p class="body">When Gibraltar reopened at the start of the Pliocene, the ocean stood far above the dry basin floor. It crashed in as waterfalls bigger than any on Earth today and filled the whole sea in about a hundred years: an instant in geology.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess how long the fill took, then watch Gibraltar open.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The Mediterranean refilled in a geological instant: one or two centuries.</div>
+    <div class="foot"><span class="src">Source · Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, tl = null;
+const S = {open: 0, fill: 0, year: 0, flow: 0, done: 0};
+const WATER = '#2577c9', DEEP = '#164f8f', ROCK = '#6b4f3a', SALT = '#f4efe2';
+let E = null, G = null;
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg); const fs = Math.max(f, 12);
+  G = {W, H, fs};
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const defs = mk('defs', {});
+  const lg = mk('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': WATER}, lg); mk('stop', {offset: 1, 'stop-color': DEEP}, lg);
+  E = {};
+  // Atlantic
+  mk('rect', {x: 0, y: .3 * H, width: .27 * W, height: .7 * H, fill: 'url(#wg)'});
+  // Mediterranean water (drawn beneath the land, so the land shapes it)
+  E.sea = mk('rect', {x: .27 * W, y: H, width: .73 * W, height: H, fill: 'url(#wg)'});
+  E.seaTop = mk('line', {x1: .3 * W, x2: W, y1: H, y2: H, stroke: '#fff', 'stroke-opacity': .5, 'stroke-width': 2});
+  // Land
+  mk('path', {fill: ROCK, d: `M0,${H} L0,${.66 * H} L${.17 * W},${.66 * H} L${.235 * W},${.32 * H} L${.3 * W},${.32 * H} L${.31 * W},${.84 * H} Q${.32 * W},${.9 * H} ${.38 * W},${.9 * H} L${.84 * W},${.9 * H} Q${.94 * W},${.9 * H} ${W},${.34 * H} L${W},${H} Z`});
+  // Salt crust on the dry floor
+  E.salt = mk('path', {d: `M${.34 * W},${.9 * H} L${.86 * W},${.9 * H}`, stroke: SALT, 'stroke-width': Math.max(3, .012 * H), 'stroke-linecap': 'round', fill: 'none'});
+  // The dam at Gibraltar
+  E.dam = mk('rect', {x: .235 * W, y: .2 * H, width: .065 * W, height: .125 * H, fill: ROCK});
+  // Waterfall
+  E.fall = mk('path', {fill: 'none', stroke: WATER, 'stroke-linecap': 'round'});
+  E.foamLine = mk('path', {fill: 'none', stroke: '#fff', 'stroke-opacity': .75, 'stroke-linecap': 'round'});
+  E.foam = mk('ellipse', {fill: '#fff', 'fill-opacity': .85});
+  // Labels
+  const lab = (x, y, s, a, fill, size, weight) => { const t = mk('text', {x, y, 'text-anchor': a, fill, 'font-size': size, 'font-family': 'var(--body)', 'font-weight': weight || 800}); t.textContent = s; return t; };
+  lab(.12 * W, .48 * H, 'ATLANTIC', 'middle', '#fff', fs);
+  E.gib = lab(.27 * W, .13 * H, 'GIBRALTAR', 'middle', 'var(--k)', fs);
+  E.basin = lab(.62 * W, .68 * H, 'DRY BASIN', 'middle', 'var(--k)', fs);
+  E.year = lab(.96 * W, .1 * H + fs * 1.4, '', 'end', 'var(--k)', fs * 1.7, 900);
+  E.year.setAttribute('font-family', 'var(--display)');
+  E.sub = lab(.96 * W, .1 * H + fs * 3, '', 'end', 'var(--k)', Math.max(fs * .85, 12), 600);
+  render();
+}
+
+function hitsBasin() {
+  let b; try { b = E.basin.getBBox(); } catch (e) { return false; }
+  return [E.year, E.sub].some(t => {
+    let r; try { r = t.getBBox(); } catch (e) { return false; }
+    return r.width > 0 && b.x < r.x + r.width + 4 && r.x < b.x + b.width + 4 && b.y < r.y + r.height + 2 && r.y < b.y + b.height + 2;
+  });
+}
+
+function placeLabels() {
+  const {W, H, fs} = G;
+  let sz = fs * 1.7, by = .68 * H;
+  const setYear = s => {
+    E.year.setAttribute('font-size', s);
+    E.year.setAttribute('y', .1 * H + s * .82);
+    E.sub.setAttribute('y', .1 * H + s * .82 + fs * 1.6);
+  };
+  setYear(sz);
+  E.basin.setAttribute('y', by);
+  if (!E.year.textContent) return by;
+  if (hitsBasin()) {
+    let sb; try { sb = E.sub.getBBox(); } catch (e) { sb = null; }
+    if (sb) { by = Math.min(H - fs * .3, Math.max(by, sb.y + sb.height + fs)); E.basin.setAttribute('y', by); }
+  }
+  while (hitsBasin() && sz > fs) { sz *= .9; setYear(Math.max(sz, fs)); }
+  return by;
+}
+
+function render() {
+  if (!E) return;
+  const {W, H, fs} = G;
+  const floor = .9 * H, top = .335 * H;
+  const lvl = floor - S.fill * (floor - top);
+  E.sea.setAttribute('y', lvl);
+  E.seaTop.setAttribute('y1', lvl); E.seaTop.setAttribute('y2', lvl);
+  E.seaTop.setAttribute('opacity', S.fill > .01 ? 1 : 0);
+  E.salt.setAttribute('opacity', Math.max(0, 1 - S.fill * 6));
+  E.dam.setAttribute('transform', `translate(0,${S.open * .14 * H})`);
+  E.dam.setAttribute('opacity', 1 - S.open);
+  const fw = .035 * W * (1 - S.fill * .75);
+  const d = `M${.25 * W},${.315 * H} C${.32 * W},${.31 * H} ${.335 * W},${lvl - .1 * H} ${.345 * W},${lvl}`;
+  E.fall.setAttribute('d', d); E.foamLine.setAttribute('d', d);
+  E.fall.setAttribute('stroke-width', fw);
+  E.foamLine.setAttribute('stroke-width', Math.max(1.5, fw * .25));
+  E.foamLine.setAttribute('stroke-dasharray', `${.02 * H} ${.04 * H}`);
+  E.foamLine.setAttribute('stroke-dashoffset', -S.flow);
+  const vis = S.open > .3 ? (S.done ? .25 : 1) : 0;
+  E.fall.setAttribute('opacity', vis); E.foamLine.setAttribute('opacity', vis);
+  E.foam.setAttribute('cx', .35 * W); E.foam.setAttribute('cy', lvl);
+  E.foam.setAttribute('rx', .05 * W * (1 - S.fill * .6) * (1 + .1 * Math.sin(S.flow * .3)));
+  E.foam.setAttribute('ry', .018 * H);
+  E.foam.setAttribute('opacity', vis);
+  E.basin.textContent = S.fill > .5 ? 'MEDITERRANEAN' : 'DRY BASIN';
+  if (S.open > 0) {
+    E.year.textContent = S.done ? '1–2 centuries' : 'Year ' + Math.round(S.year);
+    E.sub.textContent = S.done ? 'to fill the whole sea' : 'since Gibraltar opened';
+  } else { E.year.textContent = ''; E.sub.textContent = ''; }
+  const by = placeLabels();
+  const under = lvl < by - fs * .4 || by > floor;
+  E.basin.setAttribute('fill', under ? '#fff' : 'var(--k)');
+}
+
+gsap.ticker.add(() => { if (S.open > 0 && !S.done) { S.flow += 2.5; render(); } });
+
+function pour() {
+  tl = gsap.timeline({onUpdate: render});
+  tl.to(S, {open: 1, duration: .8, ease: 'power2.in'})
+    .to(S, {fill: 1, duration: 5, ease: 'power1.inOut'})
+    .to(S, {year: 100, duration: 5, ease: 'none'}, '<')
+    .set(S, {done: 1}).call(() => { render(); Kit.haptic('success'); });
+  if (Kit.calm) tl.progress(1);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  pour();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tl) tl.progress(1);
+  render();
+  await new Promise(r => setTimeout(r, 400));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-pile-one-reactor -->
+<title>Astute free card · Pile-1</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body)}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRST REACTOR</span></div>
+    <h2 class="q">Pile-1 held 375 tons of uranium and graphite. How much power did it make?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Half a watt</button>
+        <button class="opt" data-i="1">500 watts</button>
+        <button class="opt" data-i="2">500 kilowatts</button>
+        <button class="opt" data-i="3">500 megawatts</button>
+      </div>
+      <div id="why" class="gone"><p class="big">About half a watt</p><p class="body">Fermi's team wasn't after power. On 2 December 1942 they proved a chain reaction could be started and kept under control. A bomb differs only in how many neutrons go on to split the next atom.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the power output, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Pile-1's power was tiny; its proof, a controlled chain reaction, was huge.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+const TICKS = ['0.5 W','500 W','500 kW','500 MW'];
+let pick = -1, revealed = false, G = null, neutronTl = null;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  revealed = true; reveal(true);
+  Kit.haptic(ok ? 'success' : 'light');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  moveGuess(true);
+});
+
+function tx(i){ return G.x0 + (G.x1 - G.x0) * i / 3; }
+
+function moveGuess(anim){
+  if (!G || pick < 0) return;
+  G.guess.style.opacity = 1;
+  const x = tx(pick);
+  if (anim && !Kit.calm) gsap.fromTo(G.guess, {x: tx(3) - tx(0) > 0 ? tx(1.5) : x}, {x, duration: .6, ease: 'back.out(1.6)'});
+  else gsap.set(G.guess, {x});
+}
+
+function reveal(anim){
+  if (!G) return;
+  G.truth.style.opacity = 1;
+  G.tickLabels[0].style.fontWeight = 800;
+  if (anim && !Kit.calm) {
+    gsap.fromTo(G.truth, {x: tx(3)}, {x: tx(0), duration: 1.1, ease: 'power3.out'});
+    gsap.to(G.glow, {opacity: .55, duration: 1.2, delay: .4});
+  } else { gsap.set(G.truth, {x: tx(0)}); G.glow.style.opacity = .55; }
+  startNeutrons();
+}
+
+function startNeutrons(){
+  if (neutronTl) neutronTl.kill();
+  if (!G || Kit.calm) return;
+  neutronTl = gsap.timeline({repeat: -1});
+  G.neutrons.forEach((n, i) => {
+    const d = n.__d;
+    neutronTl.fromTo(n, {attr: {cx: d.x, cy: d.y}, opacity: 1},
+      {attr: {cx: d.x + d.dx, cy: d.y + d.dy}, opacity: 0, duration: .9, ease: 'power1.out'}, i * .18);
+  });
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('svg');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, H / 13));
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const ink = 'var(--k)';
+
+  // vertical plan
+  const tickY = H - fs * 0.5;
+  const axisY = H - fs * 2.1;
+  const legY = H - fs * 4.0;
+  const gy = H - fs * 5.4;
+  const ty = Math.max(fs * 3.4, H * 0.06);
+
+  // title
+  mk('text', {x: W * .03, y: fs * 1.15, style: `font:800 ${fs * 1.05}px var(--display);fill:${ink}`}, svg).textContent = 'Under the football stands';
+  if (legY - fs * 1.2 > fs * 2.45) {
+    mk('text', {x: W * .03, y: fs * 2.45, style: `font:600 ${fs * .9}px var(--body);fill:${ink};opacity:.7`}, svg).textContent = 'Chicago · 2 December 1942';
+  }
+
+  // ground
+  mk('line', {x1: 0, x2: W, y1: gy, y2: gy, style: `stroke:${ink};stroke-width:${Math.max(2, fs * .15)}`});
+
+  // stands: stepped slab rising to the right
+  const xa = W * .02, xb = W * .98, thick = Math.max(fs * .9, (gy - ty) * .09);
+  const steps = 9; let pts = `${xa},${gy} `;
+  for (let i = 0; i < steps; i++) {
+    const xL = xa + (xb - xa) * i / steps, xR = xa + (xb - xa) * (i + 1) / steps;
+    const y = gy - (gy - ty) * (i + 1) / steps;
+    pts += `${xL},${y} ${xR},${y} `;
+  }
+  pts += `${xb},${ty + thick} ${xa + (xb - xa) / steps},${gy}`;
+  mk('polygon', {points: pts, style: `fill:color-mix(in srgb,${ink} 16%,transparent);stroke:${ink};stroke-width:1.5;stroke-linejoin:round`});
+  const under = x => gy - (gy - ty) * (x - xa) / (xb - xa) + thick + (gy - ty) / steps;
+  // posts
+  for (let i = 3; i < steps; i += 2) {
+    const x = xa + (xb - xa) * i / steps;
+    mk('line', {x1: x, x2: x, y1: under(x), y2: gy, style: `stroke:${ink};stroke-width:2;opacity:.35`});
+  }
+
+  // the pile: dome of graphite blocks with uranium lumps
+  const cx = W * .67, a = W * .17;
+  const hMax = Math.max(fs * 2, (gy - under(cx - a * .5)) * .85);
+  const glow = mk('ellipse', {cx, cy: gy - hMax * .45, rx: a * 1.25, ry: hMax * .85, style: 'fill:#ffb02e;opacity:0;filter:blur(8px)'});
+  const rows = Math.max(4, Math.min(8, Math.round(hMax / (fs * .7))));
+  const rh = hMax / rows, uran = [];
+  Kit.rnd && Kit.rnd();
+  for (let r = 0; r < rows; r++) {
+    const yc = (r + .5) / rows;
+    const half = a * Math.sqrt(Math.max(0, 1 - yc * yc));
+    const y = gy - (r + 1) * rh;
+    const bw = Math.max(fs * .9, rh * 1.6);
+    const n = Math.max(1, Math.round(2 * half / bw));
+    const w = 2 * half / n;
+    for (let k = 0; k < n; k++) {
+      const x = cx - half + k * w;
+      mk('rect', {x, y, width: w, height: rh, style: 'fill:#1d1d22;stroke:#55555e;stroke-width:1'});
+      if ((k + r) % 2 === 0) {
+        const c = mk('circle', {cx: x + w / 2, cy: y + rh / 2, r: Math.max(1.6, rh * .2), style: 'fill:#ffb02e'});
+        uran.push({x: x + w / 2, y: y + rh / 2});
+      }
+    }
+  }
+
+  // neutrons (shown after the answer)
+  const neutrons = [];
+  for (let i = 0; i < Math.min(8, uran.length); i++) {
+    const u = uran[Math.floor((i * 7919) % uran.length)];
+    const ang = i * 2.4, d = rh * 1.6;
+    const n = mk('circle', {cx: u.x, cy: u.y, r: Math.max(1.5, rh * .12), style: 'fill:#fff;opacity:0'});
+    n.__d = {x: u.x, y: u.y, dx: Math.cos(ang) * d, dy: Math.sin(ang) * d};
+    neutrons.push(n);
+  }
+
+  // legend
+  const lx1 = W * .04, lx2 = W * .52, sw = fs * .8;
+  mk('rect', {x: lx1, y: legY - sw * .8, width: sw, height: sw, style: 'fill:#1d1d22;stroke:#55555e'});
+  mk('text', {x: lx1 + sw * 1.5, y: legY, style: `font:700 ${fs}px var(--body);fill:${ink}`}).textContent = '330 t graphite';
+  mk('circle', {cx: lx2 + sw / 2, cy: legY - sw * .4, r: sw * .45, style: 'fill:#ffb02e;stroke:#1d1d22;stroke-width:1'});
+  mk('text', {x: lx2 + sw * 1.5, y: legY, style: `font:700 ${fs}px var(--body);fill:${ink}`}).textContent = '45 t uranium';
+
+  // power meter (log scale)
+  const x0 = W * .1, x1 = W * .9;
+  mk('line', {x1: x0, x2: x1, y1: axisY, y2: axisY, style: `stroke:${ink};stroke-width:${Math.max(2, fs * .14)};stroke-linecap:round`});
+  const tickLabels = [];
+  TICKS.forEach((t, i) => {
+    const x = x0 + (x1 - x0) * i / 3;
+    mk('line', {x1: x, x2: x, y1: axisY - fs * .3, y2: axisY + fs * .3, style: `stroke:${ink};stroke-width:2`});
+    const tl = mk('text', {x, y: tickY, 'text-anchor': 'middle', style: `font:600 ${fs * .95}px var(--mono);fill:${ink}`});
+    tl.textContent = t; tickLabels.push(tl);
+  });
+  const ts = fs * .7;
+  const guess = mk('path', {d: `M0,${axisY - fs * .35} l${-ts},${-ts * 1.4} h${ts * 2} z`, style: `fill:none;stroke:${ink};stroke-width:2;opacity:0`});
+  const truth = mk('path', {d: `M0,${axisY - fs * .35} l${-ts * .8},${-ts * 1.15} h${ts * 1.6} z`, style: 'fill:#ffb02e;stroke:#1d1d22;stroke-width:1.5;opacity:0'});
+
+  G = {x0, x1, guess, truth, glow, neutrons, tickLabels};
+  if (pick >= 0) moveGuess(false);
+  if (revealed) reveal(false);
+};
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  gsap.from('#svg rect, #svg circle', {opacity: 0, duration: .5, stagger: .004, ease: 'power2.out'});
+};
+
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1300));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "life-cage-home-size",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.enough_money",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What are the exact dimensions of a 'cage home'?",
+  "answer": "A cage home is a metal cage of 1.5 m², just big enough for a mattress. The cages are stacked on top of each other in tiny rooms, with one bathroom shared by about 20 people. More than 220,000 people in Hong Kong live this way.",
+  "move": "A cage home is 1.5 m²: the bed is the whole home.",
+  "keywords": [
+    "hong kong",
+    "cage homes",
+    "housing",
+    "square metres",
+    "mattress"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive square grid of 1 m² tiles. Drag the corner to show the floor space you think one Hong Kong cage home gets, then see the actual 1.5 m² size.",
+    "graded": false
+  },
+  "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=6fBSVSmYSaE",
+  "written": "2026-11-03"
+}

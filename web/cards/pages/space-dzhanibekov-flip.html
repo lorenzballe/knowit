@@ -1,0 +1,158 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: space-dzhanibekov-flip -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:min-content;gap:1cqh}
+#view{flex:1;min-height:0;position:relative}
+#view svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#meter{font:700 max(1.8cqh,12px)/1.3 var(--mono);color:var(--k);text-align:center;letter-spacing:.02em;flex:none}
+#meter b{display:inline-block;min-width:2ch}
+#opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2cqw;flex:none}
+.opt{font:700 max(1.8cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 1.5cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{font:500 max(1.8cqh,12px)/1.3 var(--body);color:var(--k);margin:0}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ZERO-G</span></div>
+    <h2 class="q">Spin a T-handle in zero-G. Which spin keeps flipping over?</h2>
+    <div class="stagebox" id="stage">
+      <div id="meter">Pick a spin, then watch it.</div>
+      <div id="view"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Around the bar</button>
+        <button class="opt" data-i="1">Around the stem</button>
+        <button class="opt" data-i="2">Flat, like a propeller</button>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the spin you think flips. Then say how sure you are.</p>
+    <p class="body gone" id="why">Around the bar or flat, the spin holds steady. Around the stem, the middle axis (neither the least nor the greatest moment of inertia), any tiny wobble grows until the handle flips, then flips back, again and again. Astronauts have seen it on the space station with a T-bar handle.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Spin about the middle axis is unstable: it keeps flipping.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+const NAMES = ['Around the bar', 'Around the stem', 'Flat'];
+let pick = -1, answered = false;
+
+/* ---------- rigid body: torque-free spin, moments I1 < I2 < I3 ---------- */
+const I = [1, 2, 3];               // x = bar axis (least), y = stem axis (middle), z = flat (greatest)
+let mode = 'idle', axis = 1, w = [0,0,0], R = [[1,0,0],[0,1,0],[0,0,1]], flips = 0, lastSign = 1, tIdle = 0;
+function R0(a){
+  if (a === 0) return [[0,-1,0],[1,0,0],[0,0,1]];
+  if (a === 2) return [[1,0,0],[0,0,1],[0,-1,0]];
+  return [[1,0,0],[0,1,0],[0,0,1]];
+}
+function startSpin(a){
+  axis = a; R = R0(a); w = [.03,.025,.03]; w[a] = 5; flips = 0; lastSign = 1; mode = 'spin';
+  [...Kit.$('opts').children].forEach((b,i) => b.classList.toggle('on', i === a));
+  meter();
+}
+function dw(v){ return [(I[1]-I[2])*v[1]*v[2]/I[0], (I[2]-I[0])*v[2]*v[0]/I[1], (I[0]-I[1])*v[0]*v[1]/I[2]]; }
+function add(a,b,k){ return [a[0]+b[0]*k, a[1]+b[1]*k, a[2]+b[2]*k]; }
+function mul(A,B){ const C=[[0,0,0],[0,0,0],[0,0,0]]; for(let i=0;i<3;i++)for(let j=0;j<3;j++)for(let k=0;k<3;k++)C[i][j]+=A[i][k]*B[k][j]; return C; }
+function step(dt){
+  const k1=dw(w), k2=dw(add(w,k1,dt/2)), k3=dw(add(w,k2,dt/2)), k4=dw(add(w,k3,dt));
+  for (let i=0;i<3;i++) w[i] += dt/6*(k1[i]+2*k2[i]+2*k3[i]+k4[i]);
+  const O = [0,1,2].map(i => R[i][0]*w[0]+R[i][1]*w[1]+R[i][2]*w[2]);
+  const n = Math.hypot(...O); if (n < 1e-9) return;
+  const x=O[0]/n, y=O[1]/n, z=O[2]/n, th=n*dt, c=Math.cos(th), s=Math.sin(th), C=1-c;
+  const M=[[c+x*x*C, x*y*C-z*s, x*z*C+y*s],[y*x*C+z*s, c+y*y*C, y*z*C-x*s],[z*x*C-y*s, z*y*C+x*s, c+z*z*C]];
+  R = mul(M,R);
+  // re-orthonormalise columns
+  const col = j => [R[0][j],R[1][j],R[2][j]];
+  let a=col(0), b=col(1); const na=Math.hypot(...a); a=a.map(v=>v/na);
+  const d=a[0]*b[0]+a[1]*b[1]+a[2]*b[2]; b=b.map((v,i)=>v-d*a[i]); const nb=Math.hypot(...b); b=b.map(v=>v/nb);
+  const cc=[a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];
+  for (let i=0;i<3;i++){ R[i][0]=a[i]; R[i][1]=b[i]; R[i][2]=cc[i]; }
+  const sY = R[1][axis];
+  if (sY*lastSign < -.5){ lastSign = -lastSign; flips++; meter(); if (axis===1) Kit.haptic('light'); }
+}
+function meter(){
+  if (mode !== 'spin') return;
+  Kit.$('meter').innerHTML = `${NAMES[axis]} · flips: <b>${flips}</b>`;
+}
+
+/* ---------- drawing ---------- */
+const P = {A:[-1,-.45,0], B:[1,-.45,0], C:[0,-.45,0], D:[0,.65,0]};
+let G = null, sc = 100, cx = 0, cy = 0;
+const TILT = .42, ct = Math.cos(TILT), st = Math.sin(TILT);
+function proj(p){
+  const X = R[0][0]*p[0]+R[0][1]*p[1]+R[0][2]*p[2];
+  const Y = R[1][0]*p[0]+R[1][1]*p[1]+R[1][2]*p[2];
+  const Z = R[2][0]*p[0]+R[2][1]*p[1]+R[2][2]*p[2];
+  return world(X,Y,Z);
+}
+function world(X,Y,Z){
+  const Y2 = Y*ct - Z*st, Z2 = Y*st + Z*ct, k = 1/(1 - Z2*.12);
+  return {x: cx + X*sc*k, y: cy - Y2*sc*k, z: Z2, k};
+}
+function draw(){
+  if (!G) return;
+  const a = world(0,-1.25,0), b = world(0,1.25,0);
+  G.axis.setAttribute('x1',a.x); G.axis.setAttribute('y1',a.y); G.axis.setAttribute('x2',b.x); G.axis.setAttribute('y2',b.y);
+  const A=proj(P.A), B=proj(P.B), C=proj(P.C), D=proj(P.D);
+  const op = z => .55 + .45*Math.max(0,Math.min(1,(z+1)/2));
+  const seg = (el,p,q) => { el.setAttribute('x1',p.x); el.setAttribute('y1',p.y); el.setAttribute('x2',q.x); el.setAttribute('y2',q.y);
+    el.setAttribute('stroke-width', sc*.15*(p.k+q.k)/2); el.setAttribute('opacity', op((p.z+q.z)/2)); };
+  seg(G.bar,A,B); seg(G.stem,C,D);
+  G.knob.setAttribute('cx',D.x); G.knob.setAttribute('cy',D.y); G.knob.setAttribute('r',sc*.17*D.k);
+  G.knob.setAttribute('stroke-width', sc*.07*D.k);
+  const items = [{e:G.bar,z:(A.z+B.z)/2},{e:G.stem,z:(C.z+D.z)/2},{e:G.knob,z:D.z+.02}].sort((p,q)=>p.z-q.z);
+  items.forEach(i => G.root.appendChild(i.e));
+}
+Kit.onShow.card = () => {
+  const svg = Kit.$('svg'), {W,H} = Kit.fitSvg(svg);
+  sc = Math.min(W*.36, H*.34); cx = W/2; cy = H/2;
+  if (!G){
+    const root = Kit.mk('g',{},svg);
+    G = {root,
+      axis: Kit.mk('line',{stroke:'var(--k)','stroke-opacity':.35,'stroke-dasharray':'4 6','stroke-linecap':'round'},svg),
+      bar: Kit.mk('line',{stroke:'var(--k)','stroke-linecap':'round'},root),
+      stem: Kit.mk('line',{stroke:'var(--k)','stroke-linecap':'round'},root),
+      knob: Kit.mk('circle',{fill:'var(--c)',stroke:'var(--k)'},root)};
+    svg.insertBefore(G.axis, root);
+  }
+  G.axis.setAttribute('stroke-width', Math.max(1.5, sc*.02));
+  draw();
+};
+
+gsap.ticker.add((time, dms) => {
+  const d = Math.min(dms, 50)/1000;
+  if (mode === 'spin'){ const n = Math.ceil(d*300); for (let i=0;i<n;i++) step(d/n); draw(); }
+  else if (!Kit.calm){
+    tIdle += d; const th = .7*Math.sin(tIdle*.9), c=Math.cos(th), s=Math.sin(th);
+    R = [[c,0,s],[0,1,0],[-s,0,c]]; draw();
+  }
+});
+
+/* ---------- answer ---------- */
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  answered = true;
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  startSpin(RIGHT);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  if (answered){ startSpin(+b.dataset.i); Kit.haptic('selection'); return; }
+  if (pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2200));
+};
+Kit.single();
+</script>
+</html>

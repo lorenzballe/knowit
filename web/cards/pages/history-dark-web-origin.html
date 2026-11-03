@@ -1,0 +1,179 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-dark-web-origin -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.ink{fill:none;stroke:var(--k);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.thin{fill:none;stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:1.4}
+.dash{fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:5 6;opacity:.75}
+.solid{fill:var(--k)}
+.soft{fill:color-mix(in srgb,var(--k) 10%,transparent)}
+.paper{fill:var(--c)}
+.lab{fill:var(--k);font-family:var(--body);font-weight:700}
+.mut{fill:var(--k);opacity:.7;font-family:var(--body);font-weight:600}
+.mono{fill:var(--k);font-family:var(--mono);font-weight:700}
+.guess{stroke:var(--k);stroke-width:2.4;stroke-dasharray:3 5}
+.real{stroke:var(--k);stroke-width:3.4}
+.tunnel{fill:var(--k)}
+.pk{fill:var(--c);stroke:var(--k);stroke-width:1.5}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Guess the year · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DARK WEB</span></div>
+    <h2 class="q">When did the US government create the Dark Web, and why?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone"><p class="body">In 1998, with the internet growing exponentially, the US government needed a network that was secure, anonymous and secret. Intelligence could travel through it without being intercepted.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag along the timeline to guess the year.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The Dark Web began as a US government tunnel for passing intelligence unseen.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Y0 = 1970, Y1 = 2010, REAL = 1998;
+let guess = null, revealed = false, armed = false, G = null, tweens = [];
+const svg = Kit.$('pic');
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (guess === null) return;
+  const ok = Math.abs(guess - REAL) <= 2;
+  Kit.answer({choice: String(guess), correct: ok, sure: pct});
+  revealed = true;
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${guess}, ${ok ? 'close' : 'off'}: it was 1998`);
+  Kit.show('keep');
+  Kit.haptic('success');
+  draw(true);
+});
+
+function growth(t){ const k = 5; return (Math.exp(k*t)-1)/(Math.exp(k)-1); }
+
+function draw(animate){
+  tweens.forEach(t => t.kill()); tweens = [];
+  const {W, H, f} = Kit.fitSvg(svg);
+  while (svg.firstChild) svg.firstChild.remove();
+  const fs = Math.max(12, f*0.82);
+  const x0 = Math.max(18, W*.07), x1 = W - Math.max(18, W*.07);
+  const cTop = fs*4.4, cBot = H*.58 - fs*1.6;
+  const xOf = y => x0 + (y - Y0)/(Y1 - Y0)*(x1 - x0);
+  const yOf = t => cBot - growth(t)*(cBot - cTop);
+  G = {W, H, x0, x1, xOf};
+
+  // chart
+  Kit.mk('text', {x: x0, y: fs*1.1, class: 'mut', 'font-size': fs}, svg).textContent = 'internet growth ↑ (sketch)';
+  Kit.mk('line', {x1: x0, y1: cBot, x2: x1, y2: cBot, class: 'thin'}, svg);
+  for (let y = Y0; y <= Y1; y += 10){
+    const x = xOf(y);
+    Kit.mk('line', {x1: x, y1: cBot, x2: x, y2: cBot + 5, class: 'thin'}, svg);
+    Kit.mk('text', {x, y: cBot + fs*1.3, class: 'mono', 'font-size': fs*.9, 'text-anchor': 'middle'}, svg).textContent = y;
+  }
+  let d = '';
+  for (let i = 0; i <= 80; i++){ const t = i/80; d += (i ? 'L' : 'M') + (x0 + t*(x1-x0)).toFixed(1) + ',' + yOf(t).toFixed(1); }
+  Kit.mk('path', {d: d + `L${x1},${cBot}L${x0},${cBot}Z`, class: 'soft'}, svg);
+  const curve = Kit.mk('path', {d, class: 'ink'}, svg);
+
+  const lx = x => Math.min(x1 - fs*3.2, Math.max(x0 + fs*3.2, x));
+  if (guess !== null){
+    const gx = xOf(guess);
+    Kit.mk('line', {x1: gx, y1: fs*2.9, x2: gx, y2: cBot, class: 'guess'}, svg);
+    Kit.mk('text', {x: lx(gx), y: fs*2.5, class: 'lab', 'font-size': fs, 'text-anchor': 'middle'}, svg).textContent = 'you: ' + guess;
+  } else {
+    Kit.mk('text', {x: (x0+x1)/2, y: fs*2.5, class: 'mut', 'font-size': fs, 'text-anchor': 'middle'}, svg).textContent = '← drag here →';
+  }
+  let realG = null;
+  if (revealed){
+    realG = Kit.mk('g', {}, svg);
+    const rx = xOf(REAL), ry = yOf((REAL - Y0)/(Y1 - Y0));
+    Kit.mk('line', {x1: rx, y1: fs*4.1, x2: rx, y2: cBot, class: 'real'}, realG);
+    Kit.mk('circle', {cx: rx, cy: ry, r: 5, class: 'solid'}, realG);
+    Kit.mk('text', {x: lx(rx), y: fs*3.8, class: 'lab', 'font-size': fs*1.05, 'text-anchor': 'middle'}, realG).textContent = '1998 · mid-boom';
+  }
+
+  // scene: gov computer → line → agents, with an eavesdropper
+  const sTop = H*.62, sBot = H - 2, sh = sBot - sTop;
+  const s = Math.min(sh*.5, W*.15), cy = sTop + sh*.36;
+  const lxC = Math.max(s*.7, W*.12), rxC = W - lxC;
+  const comp = (x, gov) => {
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: x - s*.6, y: cy - s*.5, width: s*1.2, height: s*.85, rx: 3, class: 'paper'}, g);
+    Kit.mk('rect', {x: x - s*.6, y: cy - s*.5, width: s*1.2, height: s*.85, rx: 3, class: 'ink'}, g);
+    Kit.mk('rect', {x: x - s*.4, y: cy + s*.35, width: s*.8, height: s*.18, class: 'ink'}, g);
+    if (gov){
+      const r = s*.28, sx = x, sy = cy - s*.1;
+      Kit.mk('path', {d: `M${sx},${sy-r}L${sx+r},${sy-r*.6}Q${sx+r},${sy+r*.6} ${sx},${sy+r*1.1}Q${sx-r},${sy+r*.6} ${sx-r},${sy-r*.6}Z`, class: 'solid'}, g);
+    } else {
+      for (let i = 0; i < 3; i++) Kit.mk('line', {x1: x - s*.4, y1: cy - s*.3 + i*s*.2, x2: x + s*(.1 + .1*i), y2: cy - s*.3 + i*s*.2, class: 'ink'}, g);
+    }
+    return g;
+  };
+  const a = lxC + s*.7, b = rxC - s*.7;
+  const tun = Kit.mk('rect', {x: a, y: cy - s*.28, width: b - a, height: s*.56, rx: s*.28, class: 'tunnel', opacity: revealed ? 1 : 0}, svg);
+  const open = Kit.mk('line', {x1: a, y1: cy, x2: b, y2: cy, class: 'dash', opacity: revealed ? 0 : .75}, svg);
+  comp(lxC, true); comp(rxC, false);
+  const ly = cy + s*.53 + fs*1.2;
+  Kit.mk('text', {x: lxC, y: ly, class: 'lab', 'font-size': fs, 'text-anchor': 'middle'}, svg).textContent = 'US GOV';
+  Kit.mk('text', {x: rxC, y: ly, class: 'lab', 'font-size': fs, 'text-anchor': 'middle'}, svg).textContent = 'agents';
+  // eye
+  const ex = W/2, ey = cy - s*.75, er = Math.min(s*.35, sh*.16);
+  const eye = Kit.mk('g', {}, svg);
+  Kit.mk('path', {d: `M${ex-er*1.6},${ey}Q${ex},${ey-er*1.2} ${ex+er*1.6},${ey}Q${ex},${ey+er*1.2} ${ex-er*1.6},${ey}Z`, class: 'ink'}, eye);
+  Kit.mk('circle', {cx: ex, cy: ey, r: er*.42, class: 'solid'}, eye);
+  const blind = Kit.mk('line', {x1: ex-er*1.7, y1: ey+er*.9, x2: ex+er*1.7, y2: ey-er*.9, class: 'ink', 'stroke-width': 3, opacity: revealed ? 1 : 0}, svg);
+  const midLab = Kit.mk('text', {x: ex, y: ly, class: 'mut', 'font-size': fs, 'text-anchor': 'middle'}, svg);
+  midLab.textContent = revealed ? 'spy sees nothing' : 'spy can read it';
+  // packet
+  const pk = Kit.mk('rect', {x: -s*.18, y: -s*.12, width: s*.36, height: s*.24, rx: 2, class: 'pk'}, svg);
+  pk.setAttribute('transform', `translate(${a},${cy})`);
+  const pos = {x: a};
+  if (!Kit.calm){
+    tweens.push(gsap.to(pos, {x: b, duration: 1.8, ease: 'none', repeat: -1, onUpdate: () => pk.setAttribute('transform', `translate(${pos.x},${cy})`)}));
+  } else pk.setAttribute('transform', `translate(${(a+b)/2},${cy})`);
+
+  if (revealed && animate && !Kit.calm){
+    const len = curve.getTotalLength();
+    gsap.from(realG, {opacity: 0, duration: .5});
+    gsap.fromTo(tun, {opacity: 0}, {opacity: 1, duration: .8, delay: .3});
+    gsap.fromTo(open, {opacity: .75}, {opacity: 0, duration: .5, delay: .3});
+    gsap.fromTo(blind, {opacity: 0}, {opacity: 1, duration: .4, delay: .9});
+    gsap.from(midLab, {opacity: 0, duration: .4, delay: .9});
+    curve.style.strokeDasharray = len; gsap.fromTo(curve, {strokeDashoffset: len}, {strokeDashoffset: 0, duration: .8, onComplete: () => curve.style.strokeDasharray = ''});
+  }
+}
+
+function setFrom(clientX){
+  if (revealed || !G) return;
+  const r = svg.getBoundingClientRect();
+  const x = (clientX - r.left) * G.W / r.width;
+  const t = Math.min(1, Math.max(0, (x - G.x0)/(G.x1 - G.x0)));
+  const y = Math.round(Y0 + t*(Y1 - Y0));
+  if (y !== guess){ guess = y; Kit.haptic('selection'); draw(false); }
+}
+let dragging = false;
+svg.addEventListener('pointerdown', e => { if (revealed) return; dragging = true; try{ svg.setPointerCapture(e.pointerId); }catch(_){} setFrom(e.clientX); });
+svg.addEventListener('pointermove', e => { if (dragging) setFrom(e.clientX); });
+const up = () => { if (!dragging) return; dragging = false; if (guess !== null && !armed){ armed = true; sure.on(); Kit.$('say').textContent = 'Drag again to adjust, then say how sure.'; } };
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect();
+  const cx = r.left + r.width*.62, cy = r.top + r.height*.3;
+  const ev = (t, x) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: cy, bubbles: true, pointerId: 1}));
+  ev('pointerdown', cx - 40); ev('pointermove', cx - 10); ev('pointermove', cx); ev('pointerup', cx);
+  await new Promise(r => setTimeout(r, 120));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1400));
+};
+Kit.single();
+</script>
+</html>

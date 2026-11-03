@@ -1,0 +1,38 @@
+{
+  "id": "space-entropy-then-now",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.big_bang",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How does today’s universal entropy compare to the early universe?",
+  "answer": "Black holes hold almost all of today's universal entropy, about 3×10¹⁰⁴ k_B. The early universe had only a tiny sliver of that total, and everything that has happened since has raised it. The page asks you to guess the early universe's share by dragging an edge.",
+  "move": "Entropy started tiny; today black holes hold nearly all of it.",
+  "keywords": [
+    "entropy",
+    "black holes",
+    "early universe",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A guess page titled 'Entropy then and now'. It states that black holes hold almost all of today's universal entropy, about 3×10^104 k_B, and asks the reader to drag an edge to guess the early universe's share of that total.",
+    "graded": false,
+    "ground": "#0b1026"
+  },
+  "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=DxL2HoqLbyA",
+  "written": "2026-11-03"
+}

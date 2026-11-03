@@ -1,0 +1,189 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-shared-volcanic-rock -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:.9cqh;flex:1;min-height:0}
+#map{flex:1;min-height:0;width:100%;display:block}
+#scrubrow{display:flex;flex-direction:column;gap:.2cqh}
+#scrub{-webkit-appearance:none;appearance:none;width:100%;height:max(4.6cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
+#scrub::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 25%,transparent)}
+#scrub::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:max(4cqh,26px);height:max(4cqh,26px);border-radius:50%;background:var(--k);border:0;margin-top:calc((max(.9cqh,6px) - max(4cqh,26px)) / 2);box-shadow:0 .3cqh 1cqh color-mix(in srgb,var(--k) 35%,transparent)}
+#scrub::-moz-range-track{height:max(.9cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 25%,transparent)}
+#scrub::-moz-range-thumb{width:max(4cqh,26px);height:max(4cqh,26px);border-radius:50%;background:var(--k);border:0}
+.ends{display:flex;justify-content:space-between;font:600 max(1.5cqh,12px)/1.2 var(--mono);color:var(--muted);letter-spacing:.04em}
+#cap{font:700 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:2.6em;margin:0;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.4cqh;flex-shrink:0}
+#why .big{margin:0;font-size:max(2.4cqh,15px);line-height:1.2;overflow-wrap:anywhere}
+#why .body{margin:0;font-size:max(1.7cqh,12px);line-height:1.3;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">How do volcanic rocks prove Sardinia and Iberia were once joined?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map" role="img" aria-label="Iberia and the Sardinia–Corsica block, splitting apart over time"></svg>
+      <div id="scrubrow">
+        <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Time">
+        <div class="ends"><span>LONG AGO</span><span>TODAY</span></div>
+      </div>
+      <p id="cap">One landmass: Iberia and the Sardinia–Corsica block are joined.</p>
+      <div id="why" class="gone">
+        <p class="big">The same rock, on both sides.</p>
+        <p class="body">A volcano sat right on the split, so its rock fell on both pieces at once. If they had already been apart, the same rock could not have landed on both.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider to roll time forward.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Matching volcanic rock on two coasts means they were one piece when it fell.</div>
+    <div class="foot"><span class="src">Source · Geopop, “PERCHÉ CI SONO POCHISSIMI TERREMOTI IN SARDEGNA? Geologia POP” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {t: 0};
+let R = null, done = false, lastPhase = 0;
+const IB = [[6,22],[30,14],[48,22],[46,44],[41,64],[30,80],[12,82],[4,60]];
+const BK = [[48,22],[55,18],[58,35],[54,52],[48,66],[41,64],[46,44]];
+const SEAM = [[48,22],[46,44],[41,64]];
+const PIV = [50,42], END = {dx:30, dy:6, rot:-28};
+const APEX = [44.6,49.5];
+const clamp = v => Math.max(0, Math.min(1, v));
+const ph = (t,a,b) => clamp((t-a)/(b-a));
+const ease = p => p*p*(3-2*p);
+const seamX = y => y < 44 ? 48 + (46-48)*(y-22)/22 : 46 + (41-46)*(y-44)/20;
+const CAPS = [
+  'One landmass: Iberia and the Sardinia–Corsica block are joined.',
+  'The land starts to split, and a volcano erupts right on the split.',
+  'Its lava and ash fall on both sides of the split and turn to rock.',
+  'The block breaks away and drifts off, carrying its half of the rock.'
+];
+// Particles: fixed once, so a resize keeps the same eruption.
+const PARTS = [];
+for (let i = 0; i < 34; i++) {
+  const side = i % 2 ? 1 : -1, ly = 25 + Kit.rnd()*36;
+  PARTS.push({d: Kit.rnd(), side, ly, off: 0.6 + Kit.rnd()*5, h: 10 + Kit.rnd()*14});
+}
+
+function build() {
+  const svg = Kit.$('map'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const s = Math.min(W/100, H/92), ox = (W-100*s)/2, oy = (H-92*s)/2;
+  const P = (x,y) => [ox + x*s, oy + y*s];
+  const pts = a => a.map(p => P(p[0],p[1]).map(v => v.toFixed(1)).join(',')).join(' ');
+  const fs = Math.max(12, Math.min(f, s*3.6));
+  const mk = (t,a,p) => Kit.mk(t,a,p||svg);
+
+  const defs = mk('defs',{});
+  const pat = mk('pattern',{id:'vr',patternUnits:'userSpaceOnUse',width:9,height:9},defs);
+  mk('rect',{width:9,height:9,fill:'#3a2b34'},pat);
+  mk('circle',{cx:2,cy:2,r:1.1,fill:'#ef7a3c'},pat);
+  mk('circle',{cx:6.5,cy:6,r:.9,fill:'#f2b04a'},pat);
+
+  mk('rect',{x:0,y:0,width:W,height:H,rx:Math.min(W,H)*.05,fill:'#1d5a75'});
+  // faint waves
+  for (let i = 0; i < 6; i++) {
+    const [x,y] = P(8 + (i%3)*32, 10 + Math.floor(i/3)*78);
+    mk('path',{d:`M${x} ${y} q${s*2} ${-s*1.4} ${s*4} 0 t${s*4} 0`,fill:'none',stroke:'#ffffff',
+      'stroke-opacity':.18,'stroke-width':Math.max(1.2,s*.35),'stroke-linecap':'round'});
+  }
+  const land = {fill:'#ecdcb0',stroke:'#8a774a','stroke-width':Math.max(1.5,s*.45),'stroke-linejoin':'round'};
+  mk('polygon',Object.assign({points:pts(IB)},land));
+  const ibBand = mk('polygon',{fill:'url(#vr)',stroke:'#3a2b34','stroke-width':1});
+
+  const blk = mk('g',{});
+  mk('polygon',Object.assign({points:pts(BK)},land),blk);
+  const bkBand = mk('polygon',{fill:'url(#vr)',stroke:'#3a2b34','stroke-width':1},blk);
+
+  const rift = mk('polyline',{points:pts(SEAM),fill:'none',stroke:'#ff7a2f','stroke-linecap':'round','stroke-linejoin':'round',opacity:0});
+
+  const volc = mk('g',{opacity:0});
+  const plume = [];
+  for (let i = 0; i < 3; i++) plume.push(mk('circle',{fill:'#d9d2c8',opacity:.75},volc));
+  mk('polygon',{points:pts([[40,56],[APEX[0]-1.1,APEX[1]],[APEX[0]+1.1,APEX[1]],[49.2,56]]),fill:'#5a3f33',stroke:'#2e201b','stroke-width':1},volc);
+  const [cx0,cy0] = P(APEX[0],APEX[1]);
+  mk('ellipse',{cx:cx0,cy:cy0,rx:s*1.3,ry:s*.55,fill:'#ff8a2f'},volc);
+
+  const parts = PARTS.map(() => mk('circle',{r:Math.max(1.6,s*.7),fill:'#ff9a3c',opacity:0}));
+
+  const label = (txt,x,y,a) => { const [px,py] = P(x,y); const t = mk('text',{x:px,y:py,'text-anchor':a||'middle',
+    fill:'#3b3020','font-family':'var(--display)','font-weight':800,'font-size':fs,'letter-spacing':'.06em'}); t.textContent = txt; return t; };
+  label('IBERIA', 20, 50);
+  const bl = mk('g',{opacity:0});
+  const bfs = Math.max(12, fs*.9);
+  const [b1x,b1y] = P(82,79);
+  [['SARDINIA–',0],['CORSICA',1]].forEach(([w,i]) => { const t = mk('text',{x:b1x,y:b1y+i*bfs*1.6,'text-anchor':'middle',
+    fill:'#ffffff','font-family':'var(--display)','font-weight':800,'font-size':bfs,'letter-spacing':'.05em'},bl); t.textContent = w; });
+
+  const call = mk('g',{opacity:0});
+  const [tx,ty] = P(60,6);
+  const ct = mk('text',{x:tx,y:ty+fs*.35,'text-anchor':'middle',fill:'#ffffff','font-family':'var(--body)','font-weight':800,'font-size':fs},call);
+  ct.textContent = 'same volcanic rock';
+  const ln = (a,b) => { const [x1,y1] = P(a[0],a[1]), [x2,y2] = P(b[0],b[1]);
+    mk('line',{x1,y1,x2,y2,stroke:'#ffffff','stroke-width':Math.max(1.5,s*.4),'stroke-dasharray':`${s*1.2} ${s*1}`},call);
+    mk('circle',{cx:x2,cy:y2,r:Math.max(3,s*.9),fill:'#ffffff'},call); };
+  ln([50,10.5],[44,32]); ln([70,10.5],[78,45]);
+  const sea = mk('text',{x:P(60,62)[0],y:P(60,62)[1],'text-anchor':'middle',fill:'#ffffff','fill-opacity':.75,
+    'font-family':'var(--body)','font-style':'italic','font-weight':600,'font-size':fs},call);
+  sea.textContent = 'sea';
+
+  R = {P, pts, s, blk, ibBand, bkBand, rift, volc, plume, parts, bl, call};
+  update(S.t);
+}
+
+function update(t) {
+  if (!R) return;
+  const {P, pts, s} = R;
+  const rf = ph(t,.2,.32)*(1-ph(t,.62,.7));
+  R.rift.setAttribute('opacity', rf);
+  R.rift.setAttribute('stroke-width', Math.max(1, s*1.2*rf));
+  const vo = ph(t,.26,.34)*(1-ph(t,.64,.72));
+  R.volc.setAttribute('opacity', vo);
+  const pg = ph(t,.3,.45);
+  R.plume.forEach((c,i) => { const [x,y] = P(APEX[0] + (i-1)*1.6, APEX[1] - 3 - i*3.2*pg);
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r', s*(1.4+i*.9)*pg); });
+  const w = 6*ease(ph(t,.38,.62));
+  R.ibBand.setAttribute('points', pts([[48,22],[46,44],[41,64],[41-w*.9,63.8],[46-w,44],[48-w,22]]));
+  R.bkBand.setAttribute('points', pts([[48,22],[46,44],[41,64],[41+w,64.6],[46+w,44],[48+w,22]]));
+  R.ibBand.setAttribute('opacity', w > .05 ? 1 : 0);
+  R.bkBand.setAttribute('opacity', w > .05 ? 1 : 0);
+  const er = ph(t,.3,.62);
+  R.parts.forEach((c,i) => { const p = PARTS[i]; const q = clamp((er - p.d*.6)/.4);
+    const lx = seamX(p.ly) + p.side*p.off;
+    const x = APEX[0] + (lx-APEX[0])*q, y = APEX[1] + (p.ly-APEX[1])*q - p.h*4*q*(1-q);
+    const [px,py] = P(x,y); c.setAttribute('cx',px); c.setAttribute('cy',py);
+    c.setAttribute('opacity', q > 0 && q < 1 ? 1 : 0); });
+  const d = ease(ph(t,.66,.95));
+  const [pvx,pvy] = P(PIV[0],PIV[1]);
+  R.blk.setAttribute('transform', `translate(${END.dx*d*s} ${END.dy*d*s}) rotate(${END.rot*d} ${pvx} ${pvy})`);
+  const lab = ph(t,.84,.96);
+  R.bl.setAttribute('opacity', lab); R.call.setAttribute('opacity', lab);
+
+  const phase = t < .22 ? 0 : t < .4 ? 1 : t < .64 ? 2 : 3;
+  if (phase !== lastPhase) { lastPhase = phase; Kit.$('cap').textContent = CAPS[phase]; Kit.haptic('selection'); }
+  if (t >= .95 && !done) finish();
+}
+
+function finish() {
+  done = true;
+  Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+Kit.$('scrub').addEventListener('input', e => { S.t = e.target.value/1000; update(S.t); });
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#map', {opacity: 0, scale: .97, transformOrigin: '50% 50%', duration: .6, ease: 'power3.out'});
+  gsap.fromTo('#scrub', {x: 0}, {x: 6, duration: .25, repeat: 3, yoyo: true, delay: .7, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const sl = Kit.$('scrub');
+  for (const v of [300, 550, 800, 1000]) { sl.value = v; sl.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

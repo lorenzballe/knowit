@@ -1,0 +1,38 @@
+{
+  "id": "psychology-spotlight",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.blind_spots",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "You walk into a room in an embarrassing T-shirt. How many people noticed?",
+  "answer": "In the study, Cornell students wore a shirt with a big face of Barry Manilow on it. The wearers guessed that 46% of people would notice the shirt, but only 23% really did. The effect held for flattering shirts too, though most of the evidence comes from one team's studies of students.",
+  "move": "People notice you far less than you think: your slips, and your shine.",
+  "keywords": [
+    "t-shirt",
+    "barry manilow",
+    "cornell university",
+    "spotlight effect",
+    "embarrassment"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider asking how many of 13 people noticed a person's embarrassing T-shirt, ranging from 0 of 13 (0%). The reader's guess is set against the 46% average guess of wearers and the 23% who actually noticed.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Come apparire Dominanti, Sicuri di sé stessi, Determinati, Alpha, Tosti e Produttivi” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=ztJI8JOLJmY",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,139 @@
+<!doctype html>
+<!-- slug: science-room-temperature-boiling -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#pump{font:800 max(2.3cqh,15px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 6cqw;cursor:pointer;touch-action:manipulation}
+#pump:active{transform:scale(.96)}
+#pump:disabled{opacity:.35;cursor:default}
+#count{font:700 max(1.9cqh,13px)/1.2 var(--mono);color:var(--k);opacity:.75}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · pump">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LOW PRESSURE</span></div>
+    <h2 class="q">How can water boil at room temperature?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Boiling point against air pressure, and a jar of water at 25 °C"></svg>
+      <div id="ctl"><button id="pump">Pump out air</button><span id="count">pumps: 0</span></div>
+      <div id="why" class="gone">
+        <p class="body">Water boils when its fastest molecules can escape. Air pressing down holds them in; take the air away and they get out easily, so near 0.03 atm water boils at 25 °C.</p>
+        <p class="body">The fastest molecules leave, so the water left behind gets colder.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the pump to pull air out of the jar.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Boiling point isn't fixed: less pressure, lower boiling point.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const PS = [1, .5, .25, .12, .06, .03];
+const LMIN = Math.log10(0.02);
+const tb = p => 1730.63 / (8.07131 - Math.log10(p * 760)) - 233.426;
+const S = {step: 0, lp: 0, boil: false, cool: false};
+const R = {}; let G = null, bubT = null;
+const NAIR = 30;
+
+function update(){
+  if (!G) return;
+  const p = Math.pow(10, S.lp), t = Math.max(tb(p), 0);
+  R.dot.setAttribute('cx', G.x(p)); R.dot.setAttribute('cy', G.y(t));
+  R.halo.setAttribute('cx', G.x(p)); R.halo.setAttribute('cy', G.y(t));
+  R.air.forEach((c, i) => c.setAttribute('opacity', i < NAIR * p ? .8 : 0));
+  R.tP.textContent = `Air: ${p.toFixed(2)} atm`;
+  R.tB.textContent = `Boils at: ${Math.round(t)} °C`;
+  R.tW.textContent = S.cool ? 'Water: getting colder ↓' : 'Water: 25 °C';
+  R.tW.setAttribute('font-weight', S.boil ? 800 : 600);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); const {W, H, f} = Kit.fitSvg(svg); svg.innerHTML = '';
+  const fs = Math.max(f * .85, 12.5), ink = 'var(--k)';
+  const x0 = Math.max(W * .17, fs * 3.6), x1 = W * .93, y0 = fs * 2.2, y1 = H * .55;
+  const x = p => x0 + (0 - Math.log10(p)) / (0 - LMIN) * (x1 - x0);
+  const y = T => y1 - T / 100 * (y1 - y0);
+  G = {x, y};
+  const T = (s, a, p = svg) => { const e = Kit.mk('text', Object.assign({fill: ink, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 600}, a), p); e.textContent = s; return e; };
+  // axes
+  Kit.mk('path', {d: `M${x0} ${y0 - fs * .5}V${y1}H${x1}`, stroke: ink, 'stroke-width': 2, fill: 'none', opacity: .6}, svg);
+  T('boiling point', {x: x0 - fs * .3, y: y0 - fs * 1.1, 'font-weight': 800});
+  T('100 °C', {x: x0 - fs * .4, y: y(100) + fs * .35, 'text-anchor': 'end', 'font-size': fs * .9});
+  T('25 °C', {x: x0 - fs * .4, y: y(25) + fs * .35, 'text-anchor': 'end', 'font-size': fs * .9});
+  [[1, '1 atm', 'start'], [.1, '0.1', 'middle'], [.03, '0.03', 'middle']].forEach(([p, s, a]) => {
+    Kit.mk('line', {x1: x(p), x2: x(p), y1: y1, y2: y1 + fs * .4, stroke: ink, 'stroke-width': 2, opacity: .6}, svg);
+    T(s, {x: p === 1 ? x(p) - fs * .3 : x(p), y: y1 + fs * 1.5, 'text-anchor': a, 'font-size': fs * .9});
+  });
+  T('less air →', {x: x1, y: y1 + fs * 2.9, 'text-anchor': 'end', 'font-size': fs * .9, opacity: .7});
+  // room temperature line
+  Kit.mk('line', {x1: x0, x2: x1, y1: y(25), y2: y(25), stroke: '#2f8fd8', 'stroke-width': 2.5, 'stroke-dasharray': '6 5'}, svg);
+  T('your water', {x: x0 + fs * .4, y: y(25) - fs * .55, fill: '#2f8fd8', 'font-weight': 800});
+  // curve
+  let d = ''; for (let i = 0; i <= 60; i++){ const p = Math.pow(10, LMIN * i / 60); d += (i ? 'L' : 'M') + x(p).toFixed(1) + ' ' + y(Math.max(tb(p), 0)).toFixed(1); }
+  Kit.mk('path', {d, stroke: '#e0553b', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round'}, svg);
+  R.halo = Kit.mk('circle', {r: fs * 1.1, fill: '#e0553b', opacity: .2}, svg);
+  R.dot = Kit.mk('circle', {r: fs * .5, fill: '#e0553b', stroke: 'var(--c)', 'stroke-width': 2}, svg);
+  // jar
+  const jt = y1 + fs * 4.2, jb = H - 4, jw = Math.min(W * .4, (jb - jt) * 1.1), jx = 4;
+  const jh = jb - jt;
+  if (jh > fs * 3){
+    Kit.mk('path', {d: `M${jx} ${jb}V${jt + jw * .25}Q${jx} ${jt} ${jx + jw / 2} ${jt}Q${jx + jw} ${jt} ${jx + jw} ${jt + jw * .25}V${jb}Z`, fill: 'none', stroke: ink, 'stroke-width': 2.5, opacity: .7}, svg);
+    Kit.mk('line', {x1: jx + jw / 2, x2: jx + jw / 2, y1: jt - fs * .9, y2: jt, stroke: ink, 'stroke-width': 4, opacity: .7}, svg);
+    const wx = jx + jw * .2, ww = jw * .6, wt = jt + jh * .5;
+    Kit.mk('rect', {x: wx, y: wt, width: ww, height: jb - wt - 3, fill: '#2f8fd8', opacity: .85, rx: 4}, svg);
+    G.w = {x: wx, w: ww, t: wt, b: jb - 3};
+    R.bub = Kit.mk('g', {}, svg);
+    R.air = [];
+    for (let i = 0; i < NAIR; i++){
+      const ax = jx + jw * (.1 + .8 * Kit.rnd()), ay = jt + jw * .15 + (wt - jt - jw * .2) * Kit.rnd();
+      R.air.push(Kit.mk('circle', {cx: ax, cy: ay, r: Math.max(fs * .17, 2.2), fill: ink}, svg));
+    }
+    const rx = jx + jw + fs * .9, lh = fs * 1.6, ry = jt + Math.max((jh - lh * 2) / 2, fs);
+    R.tP = T('', {x: rx, y: ry}); R.tB = T('', {x: rx, y: ry + lh, fill: '#e0553b', 'font-weight': 800}); R.tW = T('', {x: rx, y: ry + lh * 2, fill: '#2f8fd8'});
+  } else { R.air = []; R.tP = T('', {}); R.tB = T('', {}); R.tW = T('', {}); R.bub = Kit.mk('g', {}, svg); G.w = null; }
+  update();
+};
+
+function bubble(){
+  if (G && G.w && R.bub){
+    const {x, w, t, b} = G.w, r = 2 + Kit.rnd() * 4;
+    const c = Kit.mk('circle', {cx: x + r + Kit.rnd() * (w - 2 * r), cy: b - r, r, fill: 'none', stroke: '#fff', 'stroke-width': 1.6}, R.bub);
+    gsap.to(c, {attr: {cy: t}, duration: Kit.calm ? .01 : .9 + Kit.rnd() * .6, ease: 'power1.in', onComplete: () => c.remove()});
+  }
+  bubT = gsap.delayedCall(.09, bubble);
+}
+
+function finish(){
+  S.boil = true; Kit.haptic('success'); update(); bubble();
+  gsap.delayedCall(Kit.calm ? 0 : 1.2, () => {
+    S.cool = true; update();
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why .body, #keep', {opacity: 0, y: 8, stagger: .15, duration: .5});
+  });
+}
+
+Kit.$('pump').addEventListener('click', () => {
+  if (S.step >= 5) return;
+  S.step++; Kit.haptic('light');
+  Kit.$('count').textContent = `pumps: ${S.step}`;
+  const to = Math.log10(PS[S.step]);
+  if (S.step === 5) Kit.$('pump').disabled = true;
+  gsap.to(S, {lp: to, duration: Kit.calm ? .01 : .6, ease: 'power2.out', onUpdate: update, onComplete: () => { if (S.step === 5 && !S.boil) finish(); }});
+  if (!Kit.calm && R.dot) gsap.fromTo(R.halo, {attr: {r: 30}}, {attr: {r: 12}, duration: .5});
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pump', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 5; i++){ Kit.$('pump').click(); await new Promise(r => setTimeout(r, 700)); }
+  await new Promise(r => setTimeout(r, 2000));
+};
+Kit.single();
+</script>
+</html>

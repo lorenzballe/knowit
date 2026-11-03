@@ -1,0 +1,199 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Do jerks get ahead</title>
+<!-- The reader bets who holds more power at work 14 years after university, the jerk or the kind one,
+     or neither, and says how sure. Then both climb toward the "more power" banner and stop on the same
+     rung; the jerk's climb shows why (pushiness lifts it a rung, coldness takes the rung back). Then a
+     third ladder rises between them: the outgoing one, who goes one rung higher. Drawn by hand
+     (rough.js). Anderson, Sharps, Soto & John (PNAS 2020): two preregistered studies, 457 and 214
+     graduates of US universities, personality measured in school (Big Five Inventory), power about 14
+     years later; disagreeableness predicted no power (beta about .02-.05), extraversion did (about
+     .24), the first through offsetting dominant-aggressive and less communal behaviour. One rung here
+     stands for a quarter of a standard deviation of power, so the outgoing one's rung is about the size
+     the paper found. Inspired by Diventare Strong (Alex Onofri), "Come Diventare STRONZI - 4 Metodi
+     Insoliti". Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/rough.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#opts{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
+.opt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4cqh;font:800 max(1.5cqh,11.5px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1cqh 1cqw;cursor:pointer}
+.opt .tr{font-weight:600;opacity:.75}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt.on .tr{opacity:.85}
+#keep{text-wrap:pretty}
+.lim{margin:-.8cqh 0 0;font:600 max(1.5cqh,11.5px)/1.3 var(--body);opacity:.7;text-wrap:pretty}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){ .answered .keep{padding-top:9px;padding-bottom:9px} .lim{display:none} }
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Bet · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PLACE YOUR BET</span></div>
+    <h2 class="q">Do jerks get ahead? Bet: who holds more power at work 14&nbsp;years after university?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Two hand-drawn ladders reaching up to a banner that says more power, a jerk at the foot of one and a kind person at the foot of the other."></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">The jerk<span class="tr">selfish, combative, manipulative</span></button>
+        <button class="opt" data-i="1">A tie<span class="tr">they end up level</span></button>
+        <button class="opt" data-i="2">The kind one<span class="tr">warm, trusting, generous</span></button>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap your bet, then say how sure you are.</p>
+    <p class="lim gone" id="lim">Limits: graduates of a few US universities, and in the first study only a third of those asked replied.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Being a jerk buys no power: pushiness helps, coldness costs about as much.</div>
+    <div class="foot"><span class="src">Source · Anderson, Sharps, Soto &amp; John, PNAS 2020</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const INK = '#10100c', C = '#FFC49B', NAMES = ['The jerk', 'A tie', 'The kind one'], RIGHT = 1;
+  // Columns, left to right: the jerk, the outgoing one (only once the bet is in), the kind one.
+  // Rungs reached: a rung is a quarter of a standard deviation of power, rung 3 is the average.
+  // Jerk and kind one: no difference (beta .02-.05). Outgoing: about a quarter SD more (beta .24).
+  const RUNGS = 6, END = [3, 4, 3], WHO = [0, 2, 1], LABEL = ['jerk', 'outgoing', 'kind'], XS = [.2, .5, .8];
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  let pick = -1, over = false, pos = [0, 0, 0], mid = 0, notesOn = 0, notes = null, fig = [], midG = null, geo = null, rc = null;
+
+  const mkText = (x, y, s, a, p) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-size': 11.5, 'font-weight': 800}, a), p || svg); e.textContent = s; return e; };
+  const heart = (x, y, s) => `M${x},${y + s * .9} C${x - s * 1.4},${y} ${x - s * .7},${y - s * .9} ${x},${y - s * .25} C${x + s * .7},${y - s * .9} ${x + s * 1.4},${y} ${x},${y + s * .9} Z`;
+  const rough1 = (seed, x) => Object.assign({stroke: INK, strokeWidth: 2, roughness: .9, bowing: .8, seed}, x || {});
+
+  // A person drawn by hand, feet at (0,0), h tall: the jerk (0) scowls with elbows out, the kind one
+  // (1) smiles holding a heart, the outgoing one (2) waves and talks. Faces stay crisp to read small.
+  function person(g, h, kind) {
+    const hr = h * .17, hy = -h + hr, sw = Math.max(1.7, h * .065), fw = Math.max(1.3, sw * .7), s0 = 40 + kind * 20;
+    const o = (k, x) => rough1(s0 + k, Object.assign({strokeWidth: sw, roughness: .7, bowing: .5}, x || {}));
+    const crisp = (d, w) => Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': w || fw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    g.appendChild(rc.linearPath([[-h * .13, 0], [0, -h * .38], [h * .13, 0]], o(1)));
+    g.appendChild(rc.line(0, -h * .38, 0, hy + hr, o(2)));
+    if (kind === 0) { g.appendChild(rc.linearPath([[0, -h * .66], [-h * .2, -h * .52], [-h * .05, -h * .42]], o(3))); g.appendChild(rc.linearPath([[0, -h * .66], [h * .2, -h * .52], [h * .05, -h * .42]], o(4))); }
+    if (kind === 1) { g.appendChild(rc.linearPath([[0, -h * .66], [-h * .15, -h * .5], [-h * .03, -h * .48]], o(3))); g.appendChild(rc.linearPath([[0, -h * .66], [h * .15, -h * .5], [h * .03, -h * .48]], o(4))); Kit.mk('path', {d: heart(0, -h * .52, h * .13), fill: INK}, g); }
+    if (kind === 2) { g.appendChild(rc.line(0, -h * .66, -h * .2, -h * .44, o(3))); g.appendChild(rc.linearPath([[0, -h * .66], [h * .18, -h * .82], [h * .24, -h * 1.02]], o(4))); }
+    g.appendChild(rc.circle(0, hy, hr * 2, o(5, {fill: C, fillStyle: 'solid', strokeWidth: Math.max(1.4, sw * .75), roughness: .45})));
+    if (kind === 0) { crisp(`M${-hr * .62},${hy - hr * .38} L${-hr * .15},${hy - hr * .12} M${hr * .62},${hy - hr * .38} L${hr * .15},${hy - hr * .12}`); crisp(`M${-hr * .4},${hy + hr * .5} Q0,${hy + hr * .25} ${hr * .4},${hy + hr * .5}`); }
+    else { for (const s of [-1, 1]) Kit.mk('circle', {cx: s * hr * .35, cy: hy - hr * .1, r: Math.max(1, hr * .12), fill: INK}, g); crisp(`M${-hr * .42},${hy + hr * .3} Q0,${hy + hr * (kind === 2 ? .85 : .65)} ${hr * .42},${hy + hr * .3}`); }
+    if (kind === 2) for (let k = 0; k < 3; k++) { const a = -1.15 + k * .42, r1 = hr * 1.55, r2 = hr * 2.1; crisp(`M${Math.cos(a) * r1 + hr * .2},${hy + Math.sin(a) * r1} L${Math.cos(a) * r2 + hr * .2},${hy + Math.sin(a) * r2}`); }
+  }
+
+  function ladder(g, cx, lw, top, bot, step, seed) {
+    for (const s of [-1, 1]) g.appendChild(rc.line(cx + s * lw / 2, top, cx + s * lw / 2, bot, rough1(seed + s + 2, {strokeWidth: 2.3})));
+    for (let k = 1; k <= RUNGS; k++) g.appendChild(rc.line(cx - lw / 2 - 1, bot - k * step, cx + lw / 2 + 1, bot - k * step, rough1(seed + 10 + k, {strokeWidth: 2})));
+  }
+
+  // The goal: a ribbon across the top that says more power.
+  function banner(W, bh) {
+    const x1 = W * .17, x2 = W * .83, y = 2, tw = Math.min(26, W * .07), dy = 5;
+    for (const [a, b, s] of [[x1 + 8, x1 - tw, 1], [x2 - 8, x2 + tw, 2]]) {
+      const n = b < a ? 9 : -9;
+      svg.appendChild(rc.polygon([[a, y + dy], [b, y + dy], [b + n, y + dy + bh / 2], [b, y + dy + bh], [a, y + dy + bh]], rough1(80 + s, {strokeWidth: 1.6, fill: INK, fillStyle: 'hachure', hachureGap: 4, fillWeight: 1})));
+    }
+    svg.appendChild(rc.rectangle(x1, y, x2 - x1, bh, rough1(83, {strokeWidth: 1.8, fill: C, fillStyle: 'solid'})));
+    const t = mkText(W / 2 + 7, y + bh / 2 + 4.2, 'MORE POWER', {'text-anchor': 'middle', 'letter-spacing': '.14em', 'font-size': 11.5});
+    const tx = t.getBBox().x - 9, ay = y + bh / 2;
+    Kit.mk('path', {d: `M${tx},${ay + 5} V${ay - 5} M${tx - 3.5},${ay - 1.5} L${tx},${ay - 5} L${tx + 3.5},${ay - 1.5}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  }
+
+  function draw() {
+    svg.innerHTML = ''; fig = []; notes = null; midG = null;
+    rc = rough.svg(svg);
+    const {W, H} = Kit.fitSvg(svg);
+    const bh = Math.max(17, Math.min(24, H * .1)), labels = over ? 19 : 0, top = bh + 9, bot = Math.max(top + 40, H - 4 - labels);
+    const step = (bot - top) / (RUNGS + .6), lw = Math.min(W * .11, 36), h = Math.max(14, Math.min(step * 2.2, W * .16, 64));
+    const X = XS.map(f => W * f);
+    geo = {X, bot, step};
+    banner(W, bh);
+    svg.appendChild(rc.line(0, bot + 1, W, bot + 1, rough1(5, {strokeWidth: 2, roughness: 1.3, bowing: 1.5})));
+    if (over) {
+      const ya = bot - END[0] * step;
+      Kit.mk('line', {x1: 0, y1: ya, x2: W, y2: ya, stroke: INK, 'stroke-width': 1.5, 'stroke-dasharray': '4 5', opacity: .6}, svg);
+      // The tie, named where it is: on the line, right of the kind one's ladder.
+      mkText(W, ya - 21, 'same', {'text-anchor': 'end'}); mkText(W, ya - 5, 'rung', {'text-anchor': 'end'});
+    }
+    for (const c of [0, 2]) ladder(Kit.mk('g', {opacity: .78}, svg), X[c], lw, top, bot, step, 10 + c * 30);
+    // Between them: "vs" while the bet is open; the outgoing one's ladder once it is in.
+    if (!over) {
+      const vy = bot - RUNGS * step * .5, d = Math.max(30, Math.min(48, step * 2.4));
+      svg.appendChild(rc.circle(X[1], vy, d, rough1(70, {strokeWidth: 1.8, roughness: 1.2})));
+      mkText(X[1], vy + d * .17, 'vs', {'text-anchor': 'middle', 'font-family': 'Fraunces', 'font-size': Math.round(d * .46), 'font-weight': 800});
+    } else { midG = Kit.mk('g', {opacity: mid}, svg); ladder(Kit.mk('g', {opacity: .78}, midG), X[1], lw, top, bot, step, 30); }
+    for (let c = 0; c < 3; c++) {
+      if (c === 1 && !over) { fig.push(null); continue; }
+      const f = Kit.mk('g', {}, c === 1 ? midG : svg); person(f, h, WHO[c]); fig.push(f);
+    }
+    // Once the bet is in, names under the ladders; the reader's own bet on a person in a pill.
+    if (over) for (let c = 0; c < 3; c++) {
+      const parent = c === 1 ? midG : svg, mine = (pick === 0 && c === 0) || (pick === 2 && c === 2);
+      const t = mkText(X[c], H - 4, LABEL[c], {'text-anchor': 'middle', 'font-size': 12.5, fill: mine ? C : INK}, parent);
+      if (mine) { const b = t.getBBox(); parent.insertBefore(Kit.mk('rect', {x: b.x - 8, y: b.y - 2, width: b.width + 16, height: b.height + 4, rx: (b.height + 4) / 2, fill: INK}), t); }
+    }
+    // What lifts the jerk and what pulls it back, between its ladder and the next.
+    if (over && step >= 10) {
+      const nx = X[0] + lw / 2 + 5, ya = bot - END[0] * step;
+      notes = Kit.mk('g', {opacity: notesOn}, svg);
+      const arrow = (x, y, up) => Kit.mk('path', {d: up ? `M${x},${y} v-9 m-3,3 l3,-3 l3,3` : `M${x},${y - 9} v9 m-3,-3 l3,3 l3,-3`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, notes);
+      const y1 = ya - step * .95, y2 = ya + step * .95 + 4;
+      arrow(nx + 3, y1, true); mkText(nx + 9, y1, 'pushy', {}, notes);
+      arrow(nx + 3, y2, false); mkText(nx + 9, y2, 'cold', {}, notes);
+    }
+    place();
+  }
+  // Feet on rung pos[c] (fractions while climbing, with a small hop between rungs).
+  function place() {
+    if (!geo) return;
+    fig.forEach((f, c) => {
+      if (!f) return;
+      const r = pos[c], hop = Math.sin((r % 1) * Math.PI) * geo.step * .25;
+      f.setAttribute('transform', `translate(${geo.X[c]} ${geo.bot - r * geo.step - hop})`);
+    });
+  }
+
+  function climb() {
+    if (Kit.calm) { pos = END.slice(); mid = 1; notesOn = 1; draw(); return; }
+    const p = {a: 0, b: 0, c: 0, m: 0};
+    const tl = gsap.timeline({onUpdate: () => { pos = [p.a, p.b, p.c]; place(); }});
+    // The jerk and the kind one climb together and stop level.
+    tl.to(p, {a: END[0], c: END[2], duration: END[0] * .36, ease: 'none'});
+    // The jerk: pushiness lifts it a rung, coldness takes the rung back.
+    tl.to(p, {a: END[0] + 1, duration: .38, ease: 'power1.out'}, '+=.15');
+    tl.call(() => { notesOn = 1; if (notes) gsap.to(notes, {attr: {opacity: 1}, duration: .35}); });
+    tl.to(p, {a: END[0], duration: .5, ease: 'power2.in'}, '+=.3');
+    // Then the outgoing one, between them, goes one rung higher.
+    tl.to(p, {m: 1, duration: .4, onUpdate: () => { mid = p.m; if (midG) midG.setAttribute('opacity', p.m); }}, '+=.2');
+    tl.to(p, {b: END[1], duration: END[1] * .3, ease: 'none'});
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (over) return;
+    over = true;
+    const ok = pick === RIGHT;
+    Kit.answer({choice: NAMES[pick], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${NAMES[pick]}, ${ok ? 'right' : 'wrong'}`);
+    Kit.$('card').classList.add('answered');
+    Kit.hide('opts');
+    say.innerHTML = '<b>A tie.</b> Two studies followed 671 US graduates for about 14 years: jerks got no more power than the kind. Being <b>outgoing</b> did lift people.';
+    Kit.show('lim'); Kit.show('keep');
+    Kit.haptic(ok ? 'success' : 'light');
+    requestAnimationFrame(() => { draw(); climb(); });
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || over) return;
+    pick = +b.dataset.i;
+    document.querySelectorAll('.opt').forEach(o => o.classList.toggle('on', o === b));
+    Kit.haptic('selection'); sure.on();
+  });
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    Kit.$('opts').children[0].click();
+    await new Promise(r => setTimeout(r, 120));
+    Kit.$('sure').querySelector('[data-v="70"]').click();
+    await new Promise(r => setTimeout(r, Kit.calm ? 100 : 4200));
+  };
+})();
+Kit.single();
+</script>
+</html>

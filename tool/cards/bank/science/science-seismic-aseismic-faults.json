@@ -1,0 +1,37 @@
+{
+  "id": "science-seismic-aseismic-faults",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Messina 1908: how does the West Fault differ from the fault beneath it?",
+  "answer": "The West Fault is shallow and seismic: it sticks, bends under stress, then slips all at once, and that sudden slip is the earthquake. The deeper fault beneath it is aseismic, creeping so slowly it never jolts. Its creep loads the West Fault above, which eventually snaps.",
+  "move": "A fault that creeps stays quiet; a fault that sticks and snaps makes quakes.",
+  "keywords": [
+    "messina-1908",
+    "sicily",
+    "west-fault",
+    "aseismic-creep",
+    "earthquakes"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Cross-section diagram of two faults: a shallow West Fault and a deeper fault beneath it. A time slider animates both faults moving. The question asks how the West Fault differs from the deeper one."
+  },
+  "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=4cJ9IdeTZ2A&t=428s",
+  "written": "2026-11-03"
+}

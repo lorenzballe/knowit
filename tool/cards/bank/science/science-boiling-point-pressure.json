@@ -1,0 +1,37 @@
+{
+  "id": "science-boiling-point-pressure",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does water boil at 100 °C at 1 atm?",
+  "answer": "Water boils when its vapor pressure pushes as hard as the air pressing down on it. In open air that push is 1 atm, and water's vapor pressure only reaches that at 100 °C. Pump the air away and the fast molecules escape sooner, so water can even boil at room temperature.",
+  "move": "Boiling point isn't fixed: less pressure on top, cooler boil.",
+  "keywords": [
+    "water",
+    "air pressure",
+    "vapor pressure",
+    "boiling point",
+    "atmosphere"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two pots of water on a page, with a slider labelled pot B that pumps air out. The page asks why water boils at 100 °C at 1 atm. Heat both pots to see the difference."
+  },
+  "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=rM04U5BO3Ug&t=1s",
+  "written": "2026-11-03"
+}

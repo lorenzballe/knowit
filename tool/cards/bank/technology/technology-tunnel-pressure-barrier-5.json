@@ -1,0 +1,37 @@
+{
+  "id": "technology-tunnel-pressure-barrier-5",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why doesn't tunnel smoke flow into the emergency escape passage?",
+  "answer": "The fans keep the emergency escape passage at a slightly higher pressure than the road tunnel. Its air keeps pushing out through the door, a moving wall that smoke can't cross. So the air inside the passage stays clean to breathe.",
+  "move": "Air flows from high to low pressure: keep the shelter higher and smoke stays out.",
+  "keywords": [
+    "road-tunnel",
+    "smoke",
+    "emergency-passage",
+    "ventilation-fans",
+    "air-pressure"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive card titled TUNNEL SAFETY asking why tunnel smoke doesn't flow into the emergency escape passage. A Hold button switches on the fans, and the smoke at the doorway is shown being pushed back by the air flowing out of the passage."
+  },
+  "source": "Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=ZH5nAfBRtjQ&t=323s",
+  "written": "2026-11-03"
+}

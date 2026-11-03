@@ -1,0 +1,233 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-core-fire-temperature -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden;background:#07071a}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#legend{display:flex;flex-wrap:wrap;justify-content:center;gap:.6cqh 4cqw;font:600 max(1.6cqh,12px)/1.3 var(--body);color:var(--k)}
+#legend span{display:inline-flex;align-items:center;gap:1.5cqw}
+#legend i{display:inline-block;width:max(1.6cqh,11px);height:max(1.6cqh,11px);border-radius:2px}
+.ins{background:#1a1a22;box-shadow:inset 0 0 0 2px #fff}
+.bare{background:#fbae17;box-shadow:inset 0 0 0 1px #000}
+.air{background:#7fe3ff;height:3px!important;width:max(2.4cqh,16px)!important}
+#hold{font:700 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.8cqh 6cqw;cursor:pointer;align-self:center;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none}
+#hold.on{transform:scale(.97);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STEEL &amp; FIRE</span></div>
+    <h2 class="q">How hot did the fire get around the Twin Towers' core columns?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="legend"><span><i class="ins"></i>insulated steel</span><span><i class="bare"></i>bare steel</span><span><i class="air"></i>fresh air</span></div>
+      <button id="hold">Hold to let air in</button>
+      <div id="why" class="gone"><p class="big">Up to 1,000 degrees</p><p class="body">Air rushing in through the broken windows kept feeding the fire. NIST's simulations show peaks of 1,000 degrees where the steel had lost its insulation, and at that heat it could no longer hold the load.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button: air pours in through the broken windows.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fresh air fed the fire; bare steel at 1,000 degrees gave way.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv'), btn = Kit.$('hold');
+let L = null, p = 0, holding = false, done = false, fast = false, failT = 0, air = 0.12, t = 0, lastMile = 0;
+
+// thermal palette
+const STOPS = [[0,[7,7,30]],[.18,[48,10,110]],[.38,[150,20,110]],[.58,[230,70,28]],[.78,[251,174,23]],[1,[255,252,225]]];
+const LUT = [];
+for (let i = 0; i < 256; i++) {
+  const s = i / 255; let k = 0; while (k < STOPS.length - 2 && s > STOPS[k + 1][0]) k++;
+  const [a, ca] = STOPS[k], [b, cb] = STOPS[k + 1], f = Math.min(1, Math.max(0, (s - a) / (b - a)));
+  LUT.push(ca.map((c, j) => Math.round(c + (cb[j] - c) * f)));
+}
+const col = T => LUT[Math.max(0, Math.min(255, Math.round((T - 20) / 980 * 255)))];
+const rgb = T => { const c = col(T); return `rgb(${c[0]},${c[1]},${c[2]})`; };
+
+const g = (dx, dy, sx, sy) => Math.exp(-(dx * dx) / (sx * sx) - (dy * dy) / (sy * sy));
+function temp(u, v) {
+  const fw = Math.min(1, p * 1.5);
+  const fl = 1 + 0.06 * Math.sin(t * 7 + u * 20) * Math.sin(t * 5 + v * 17);
+  const a1 = 0.6 * fw * g(u - 0.13, v - 0.5, 0.17, 0.26) * fl;
+  const a2 = p * g(u - 0.395, v - 0.5, 0.09, 0.1);
+  const a3 = 0.75 * p * g(u - 0.25, v - 0.48, 0.14, 0.2) * fl;
+  const a4 = 0.28 * p * g(u - 0.5, v - 0.5, 0.45, 0.45);
+  return 20 + 980 * Math.min(1, Math.max(a1, a2, a3, a4));
+}
+
+// core columns: 6 x 4, some stripped of insulation
+const COLS = [];
+const BARE = new Set(['0,1','1,1','1,2','0,2','2,1']);
+for (let i = 0; i < 6; i++) for (let j = 0; j < 4; j++)
+  COLS.push({u: .36 + i * .056, v: .40 + j * (.2 / 3), bare: BARE.has(i + ',' + j), r: Kit.rnd()});
+
+const N = 56, off = document.createElement('canvas'); off.width = off.height = N;
+const ox = off.getContext('2d'), img = ox.createImageData(N, N);
+
+Kit.onShow.card = () => {
+  const {x, W, H} = Kit.fitCanvas(cv);
+  const fs = Math.max(12, Math.min(W, H) * 0.045);
+  const top = fs * 3.6, scaleW = fs * 4.4, pad = fs * 0.6;
+  const side = Math.max(40, Math.min(W - scaleW - pad * 2, H - top - pad));
+  const px = pad + (W - scaleW - pad * 2 - side) / 2, py = top;
+  L = {x, W, H, fs, top, scaleW, side, px, py};
+  draw();
+};
+
+function draw() {
+  if (!L) return;
+  const {x, W, H, fs, side, px, py} = L;
+  x.clearRect(0, 0, W, H);
+  x.fillStyle = '#07071a'; x.fillRect(0, 0, W, H);
+
+  // heat field
+  const d = img.data;
+  for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+    const c = col(temp((i + .5) / N, (j + .5) / N)), k = (j * N + i) * 4;
+    d[k] = c[0]; d[k + 1] = c[1]; d[k + 2] = c[2]; d[k + 3] = 255;
+  }
+  ox.putImageData(img, 0, 0);
+  x.imageSmoothingEnabled = true; x.drawImage(off, px, py, side, side);
+
+  const U = u => px + u * side, V = v => py + v * side;
+
+  // perimeter columns (gap = broken windows on the left)
+  x.fillStyle = 'rgba(255,255,255,.85)';
+  const cs = Math.max(2, side * 0.012);
+  for (let k = 0; k <= 24; k++) {
+    const s = k / 24;
+    x.fillRect(U(s) - cs / 2, V(0) - cs / 2, cs, cs);
+    x.fillRect(U(s) - cs / 2, V(1) - cs / 2, cs, cs);
+    x.fillRect(U(1) - cs / 2, V(s) - cs / 2, cs, cs);
+    if (s < .3 || s > .7) x.fillRect(U(0) - cs / 2, V(s) - cs / 2, cs, cs);
+  }
+  // broken window shards
+  x.strokeStyle = '#7fe3ff'; x.lineWidth = 1.5; x.setLineDash([3, 4]);
+  x.beginPath(); x.moveTo(U(0), V(.3)); x.lineTo(U(0), V(.7)); x.stroke(); x.setLineDash([]);
+
+  // air streaks
+  x.globalAlpha = air; x.strokeStyle = '#7fe3ff'; x.fillStyle = '#7fe3ff'; x.lineWidth = Math.max(2, side * .008);
+  for (let k = 0; k < 7; k++) {
+    const ph = ((t * (0.25 + air * 0.5) + k * 0.37) % 1);
+    const u = ph * 0.28, v = .33 + k * .056, a = U(u), b = V(v), len = side * .06;
+    x.beginPath(); x.moveTo(a - len, b); x.lineTo(a, b); x.stroke();
+    x.beginPath(); x.moveTo(a + 5, b); x.lineTo(a - 3, b - 4); x.lineTo(a - 3, b + 4); x.fill();
+  }
+  x.globalAlpha = 1;
+
+  // core outline
+  x.strokeStyle = 'rgba(255,255,255,.55)'; x.lineWidth = 1.5;
+  x.strokeRect(U(.33), V(.37), side * .34, side * .26);
+
+  // columns
+  const cz = Math.max(6, side * 0.032);
+  COLS.forEach(c => {
+    const a = U(c.u), b = V(c.v);
+    x.save(); x.translate(a, b);
+    if (c.bare) {
+      const tilt = failT * (c.r > .5 ? 1 : -1) * (0.35 + c.r * 0.3);
+      x.translate(0, failT * cz * 0.4); x.rotate(tilt); x.scale(1, 1 - failT * 0.35);
+      x.fillStyle = rgb(temp(c.u, c.v)); x.fillRect(-cz / 2, -cz / 2, cz, cz);
+      x.strokeStyle = '#000'; x.lineWidth = 1; x.strokeRect(-cz / 2, -cz / 2, cz, cz);
+      if (failT > 0) {
+        x.strokeStyle = `rgba(0,0,0,${failT})`; x.lineWidth = 2;
+        x.beginPath(); x.moveTo(-cz / 2, -cz / 4); x.lineTo(0, cz / 6); x.lineTo(cz / 2, -cz / 5); x.stroke();
+      }
+    } else {
+      x.fillStyle = '#1a1a22'; x.fillRect(-cz / 2, -cz / 2, cz, cz);
+      x.strokeStyle = '#fff'; x.lineWidth = 2; x.strokeRect(-cz / 2, -cz / 2, cz, cz);
+    }
+    x.restore();
+  });
+
+  // labels inside plan
+  const lf = Math.max(12, fs * 0.75);
+  x.font = `700 ${lf}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  x.textBaseline = 'middle';
+  x.shadowColor = '#000'; x.shadowBlur = 4; x.fillStyle = '#fff';
+  x.textAlign = 'left'; x.fillText('broken windows', U(.03), V(.24));
+  x.textAlign = 'center'; x.fillText('core', U(.5), V(.37) - lf * 0.9);
+  x.shadowBlur = 0;
+
+  // readout
+  const T = done ? 1000 : Math.round(20 + 980 * p);
+  const body = getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
+  const disp = getComputedStyle(document.body).getPropertyValue('--display') || body;
+  x.textAlign = 'left'; x.textBaseline = 'alphabetic';
+  x.font = `800 ${fs * 1.9}px ${disp}`; x.fillStyle = rgb(Math.max(400, T));
+  const num = T.toLocaleString('en-US') + '°';
+  x.fillText(num, fs * 0.6, fs * 2.1);
+  const nw = x.measureText(num).width;
+  x.font = `600 ${Math.max(12, fs * 0.72)}px ${body}`; x.fillStyle = 'rgba(255,255,255,.8)';
+  const cap = done ? 'bare steel can no longer hold the load' : 'hottest bare steel in the core';
+  const capX = fs * 0.6 + nw + fs * 0.5, capW = W - capX - fs * 0.4;
+  wrapText(x, cap, capX, fs * 1.2, capW, Math.max(12, fs * 0.72) * 1.3, 2);
+
+  // scale bar
+  const sx = W - L.scaleW + fs * 0.4, bw = fs * 0.8, y0 = py, y1 = py + side;
+  const gr = x.createLinearGradient(0, y1, 0, y0);
+  STOPS.forEach(([s, c]) => gr.addColorStop(s, `rgb(${c})`));
+  x.fillStyle = gr; x.fillRect(sx, y0, bw, side);
+  x.strokeStyle = 'rgba(255,255,255,.5)'; x.lineWidth = 1; x.strokeRect(sx, y0, bw, side);
+  x.font = `600 ${Math.max(12, fs * 0.7)}px ${body}`; x.fillStyle = '#fff'; x.textBaseline = 'middle';
+  [0, 500, 1000].forEach(v => {
+    const y = y1 - (v - 20) / 980 * side;
+    x.fillText(v.toLocaleString('en-US') + '°', sx + bw + fs * 0.35, Math.min(y1 - 6, Math.max(y0 + 6, y)));
+  });
+  const yp = y1 - (T - 20) / 980 * side;
+  x.fillStyle = '#fff'; x.beginPath();
+  x.moveTo(sx - 2, yp); x.lineTo(sx - fs * 0.55, yp - fs * 0.35); x.lineTo(sx - fs * 0.55, yp + fs * 0.35); x.fill();
+}
+
+function wrapText(x, s, X, Y, w, lh, max) {
+  const words = s.split(' '); let line = '', n = 0;
+  for (const wd of words) {
+    const tr = line ? line + ' ' + wd : wd;
+    if (x.measureText(tr).width > w && line) { x.fillText(line, X, Y + n * lh); n++; line = wd; if (n >= max) return; }
+    else line = tr;
+  }
+  if (line) x.fillText(line, X, Y + n * lh);
+}
+
+function finish() {
+  done = true; holding = false; btn.classList.remove('on');
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.hide('legend'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (Kit.calm) failT = 1; else gsap.to(window, {failT: 1, duration: .9, ease: 'power2.in', onUpdate: draw});
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+}
+
+gsap.ticker.add((time, dt) => {
+  const s = Math.min(dt, 60) / 1000; t += s;
+  air += ((holding ? 1 : 0.12) - air) * Math.min(1, s * 4);
+  if (holding && !done) {
+    p = Math.min(1, p + s / (fast ? 0.9 : 4.2));
+    const mile = Math.floor(p * 4);
+    if (mile > lastMile) { lastMile = mile; Kit.haptic('light'); }
+    if (p >= 1) finish();
+  }
+  draw();
+});
+
+const start = e => { if (done) return; e.preventDefault(); holding = true; btn.classList.add('on'); btn.textContent = 'Feeding the fire…'; Kit.haptic('selection'); };
+const stop = () => { if (done) return; holding = false; btn.classList.remove('on'); btn.textContent = p > 0 ? 'Keep holding' : 'Hold to let air in'; };
+btn.addEventListener('pointerdown', start);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, stop));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#wrap', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  fast = true;
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, cancelable: true}));
+  await new Promise(r => { const c = () => done ? r() : setTimeout(c, 50); c(); });
+  await new Promise(r => setTimeout(r, 1100));
+};
+Kit.single();
+</script>
+</html>

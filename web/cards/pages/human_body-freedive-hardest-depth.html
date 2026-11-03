@@ -1,0 +1,164 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-freedive-hardest-depth -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+#art{width:100%;height:100%;display:block;flex:1;min-height:0}
+#art .pill{cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Tap one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FREEDIVING</span></div>
+    <h2 class="q">At what depth does a freedive become the most tiring?</h2>
+    <div class="stagebox" id="stage"><svg id="art"></svg></div>
+    <div id="sure"></div>
+    <div id="why" class="gone"><p class="big">Around 35–40 m, on the way up</p><p class="body">There the water's pressure has made the body dense enough to be pulled toward the bottom. To climb back, the diver must beat that pull, burning energy and oxygen, and hypoxia begins.</p></div>
+    <p class="say" id="say">Tap the depth on the right you think is hardest.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The hardest stretch is climbing back past 35–40 m.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Immergersi in apnea a 100 metri di profondità. Le tecniche del freediving con Antonio Mogavero” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const CH = [10, 40, 70, 100], RIGHT = 1;
+let pick = -1, revealed = false, tl = null;
+const st = {d: 3, asc: false, note: 0};
+const G = {};
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = CH[pick] + ' m';
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  reveal();
+});
+Kit.$('art').addEventListener('click', e => {
+  const p = e.target.closest('.pill'); if (!p || pick >= 0) return;
+  pick = +p.dataset.i; Kit.haptic('selection'); paintPills(); sure.on();
+});
+function yOf(d){ return G.yS + d / 100 * (G.yB - G.yS); }
+function paintPills(){
+  (G.pills || []).forEach((p, i) => {
+    const on = i === pick;
+    p.r.setAttribute('fill', on ? '#ffffff' : 'rgba(255,255,255,.14)');
+    p.t.setAttribute('fill', on ? '#0a2a52' : '#ffffff');
+    p.g.setAttribute('opacity', revealed ? 0 : 1);
+  });
+}
+function draw(){
+  const svg = Kit.$('art'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  Object.assign(G, {W, H, fs, yS: Math.max(H * .07, fs * 1.4), yB: H - fs * 1.4});
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'wat', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#2f8fd8'}, lg);
+  Kit.mk('stop', {offset: .45, 'stop-color': '#0c3f80'}, lg);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#040f26'}, lg);
+  Kit.mk('rect', {x: 0, y: G.yS, width: W, height: H - G.yS, rx: Math.min(W, H) * .04, fill: 'url(#wat)'}, svg);
+  // surface wave
+  let dp = `M0 ${G.yS}`;
+  for (let x = 0; x <= W; x += 8) dp += ` L${x} ${G.yS + Math.sin(x / 14) * 2.5}`;
+  Kit.mk('path', {d: dp, stroke: '#bfe6ff', 'stroke-width': 2.5, fill: 'none'}, svg);
+  // red band 35-40
+  G.band = Kit.mk('rect', {x: 0, y: yOf(35), width: W, height: yOf(40) - yOf(35), fill: '#ff3b3b', opacity: revealed ? .35 : 0}, svg);
+  // depth ticks
+  const ax = Math.max(W * .2, fs * 3.4);
+  for (let d = 0; d <= 100; d += 20) {
+    const y = yOf(d);
+    Kit.mk('line', {x1: ax - 6, x2: ax + 6, y1: y, y2: y, stroke: 'rgba(255,255,255,.7)', 'stroke-width': 2}, svg);
+    const t = Kit.mk('text', {x: ax - 10, y: y + fs * .35, 'text-anchor': 'end', fill: d === 0 ? '#bfe6ff' : 'rgba(255,255,255,.85)', 'font-size': fs, 'font-family': 'var(--mono)'}, svg);
+    t.textContent = d + ' m';
+  }
+  Kit.mk('line', {x1: ax, x2: ax, y1: G.yS, y2: G.yB, stroke: 'rgba(255,255,255,.35)', 'stroke-width': 1.5}, svg);
+  // red X at 40 m
+  const xr = fs * .55, xx = ax + fs * 1.3, xy = yOf(37.5);
+  G.X = Kit.mk('g', {opacity: revealed ? 1 : 0, transform: `translate(${xx},${xy})`}, svg);
+  Kit.mk('path', {d: `M${-xr} ${-xr} L${xr} ${xr} M${xr} ${-xr} L${-xr} ${xr}`, stroke: '#ff4545', 'stroke-width': Math.max(3, fs * .28), 'stroke-linecap': 'round'}, G.X);
+  // choice pills
+  G.pills = CH.map((d, i) => {
+    const g = Kit.mk('g', {class: 'pill', 'data-i': i}, svg);
+    const pw = fs * 4.2, ph = fs * 1.8, px = W - pw - fs * .6, py = yOf(d) - ph / 2;
+    const cy = Math.min(Math.max(py, G.yS + 4), H - ph - 4);
+    const r = Kit.mk('rect', {x: px, y: cy, width: pw, height: ph, rx: ph / 2, 'stroke': '#fff', 'stroke-width': 1.5, 'data-i': i}, g);
+    const t = Kit.mk('text', {x: px + pw / 2, y: cy + ph / 2 + fs * .36, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)', 'data-i': i, 'pointer-events': 'none'}, g);
+    t.textContent = d + ' m';
+    return {g, r, t};
+  });
+  // notes after reveal
+  G.notes = Kit.mk('g', {opacity: st.note}, svg);
+  const nx = W - fs * .6;
+  const n1 = Kit.mk('text', {x: nx, y: yOf(35) - fs * 1.7, 'text-anchor': 'end', fill: '#ffd0d0', 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)'}, G.notes);
+  n1.textContent = 'most tiring';
+  const n2 = Kit.mk('text', {x: nx, y: yOf(35) - fs * .45, 'text-anchor': 'end', fill: '#fff', 'font-size': fs, 'font-family': 'var(--body)'}, G.notes);
+  n2.textContent = '35–40 m';
+  const n3 = Kit.mk('text', {x: nx, y: yOf(40) + fs * 1.3, 'text-anchor': 'end', fill: 'rgba(255,255,255,.85)', 'font-size': fs, 'font-family': 'var(--body)'}, G.notes);
+  n3.textContent = 'water pulls';
+  const n4 = Kit.mk('text', {x: nx, y: yOf(40) + fs * 2.6, 'text-anchor': 'end', fill: 'rgba(255,255,255,.85)', 'font-size': fs, 'font-family': 'var(--body)'}, G.notes);
+  n4.textContent = 'you down ↓';
+  // diver
+  const s = Math.max(Math.min(H * .085, W * .16), 26);
+  G.s = s; G.dx = ax + (W - fs * 5 - ax) * .55;
+  G.pull = Kit.mk('g', {opacity: 0}, svg);
+  Kit.mk('path', {d: `M0 ${s * .55} L0 ${s * 1.35} M${-s * .14} ${s * 1.18} L0 ${s * 1.38} L${s * .14} ${s * 1.18}`, stroke: '#ff5a5a', 'stroke-width': Math.max(3, s * .08), fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.pull);
+  G.diver = Kit.mk('g', {}, svg);
+  const c = '#0b0f1a', e = '#e8f4ff';
+  Kit.mk('path', {d: `M${-s*.09} ${s*.42} L${-s*.22} ${s*.78} L${-s*.02} ${s*.62} Z M${s*.09} ${s*.42} L${s*.22} ${s*.78} L${s*.02} ${s*.62} Z`, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
+  Kit.mk('rect', {x: -s * .06, y: 0, width: s * .05, height: s * .46, rx: s * .02, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
+  Kit.mk('rect', {x: s * .01, y: 0, width: s * .05, height: s * .46, rx: s * .02, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
+  Kit.mk('ellipse', {cx: 0, cy: -s * .1, rx: s * .12, ry: s * .26, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
+  Kit.mk('path', {d: `M${-s*.1} ${-s*.25} L${-s*.08} ${-s*.62} M${s*.1} ${-s*.25} L${s*.08} ${-s*.62}`, stroke: c, 'stroke-width': s * .06, 'stroke-linecap': 'round'}, G.diver);
+  Kit.mk('circle', {cx: 0, cy: -s * .44, r: s * .1, fill: c, stroke: e, 'stroke-width': 1}, G.diver);
+  paintPills(); place();
+}
+function place(){
+  if (!G.diver) return;
+  const d = st.d; let y = yOf(d), x = G.dx;
+  const fight = st.asc && d > 34.5 && d < 40.5;
+  if (fight) x += Math.sin(performance.now() / 40) * G.s * .05;
+  G.diver.setAttribute('transform', `translate(${x},${y})`);
+  G.pull.setAttribute('transform', `translate(${x},${y})`);
+  G.pull.setAttribute('opacity', d > 35 && revealed ? 1 : 0);
+  G.notes.setAttribute('opacity', st.note);
+}
+function reveal(){
+  revealed = true; paintPills();
+  if (Kit.calm) { st.d = 5; st.note = 1; st.asc = true; finish(); return; }
+  tl = gsap.timeline({onUpdate: place, onComplete: finish});
+  tl.to(G.band, {attr: {opacity: .35}, duration: .4}, 0)
+    .to(st, {d: 100, duration: 1.3, ease: 'power1.in'}, 0)
+    .add(() => { st.asc = true; }, '+=.2')
+    .to(st, {d: 40, duration: 1.1, ease: 'power1.out'})
+    .to(G.X, {attr: {opacity: 1}, duration: .3})
+    .to(st, {note: 1, duration: .4}, '<')
+    .to(st, {d: 35, duration: 2, ease: 'none', onStart: () => Kit.haptic('light')})
+    .to(st, {d: 5, duration: 1.1, ease: 'power2.out'});
+}
+function finish(){
+  st.d = 5; st.note = 1; st.asc = true;
+  if (G.band) { G.band.setAttribute('opacity', .35); G.X.setAttribute('opacity', 1); }
+  place(); Kit.haptic('success');
+}
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || revealed) return;
+  gsap.from(st, {d: -4, duration: 1.2, ease: 'elastic.out(1,.5)', onUpdate: place});
+  gsap.from('#art .pill', {opacity: 0, x: 12, stagger: .08, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  Kit.$('art').querySelector('rect[data-i="1"]').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<!-- slug: science-truck-car-forces -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Who pushes harder in a crash?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#simbox{flex:1;min-height:0;position:relative}
+#sim{display:block;width:100%;height:100%}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#hold{font:800 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.8cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none}
+#hold.down{transform:scale(.97);opacity:.85}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{overflow-wrap:break-word}
+.lbl{font-family:var(--body);font-weight:700;fill:var(--k)}
+.num{font-family:var(--mono);font-weight:700;fill:var(--k)}
+.veh{fill:color-mix(in srgb,var(--k) 16%,var(--c));stroke:var(--k)}
+.veh2{fill:color-mix(in srgb,var(--k) 30%,var(--c));stroke:var(--k)}
+.win{fill:var(--c);stroke:var(--k)}
+.whl{fill:var(--k)}
+.arr{stroke:var(--k);fill:none;stroke-linecap:round}
+.arrh{fill:var(--k)}
+.gbg{fill:color-mix(in srgb,var(--k) 12%,transparent)}
+.gfg{fill:var(--k)}
+.road{stroke:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Predict · hold to run">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THIRD LAW</span></div>
+    <h2 class="q">When a truck hits a car, which one pushes harder?</h2>
+    <div class="stagebox" id="stage">
+      <div id="simbox"><svg id="sim"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">The truck pushes the car harder</button>
+        <button class="opt" data-i="1">They push each other equally hard</button>
+        <button class="opt" data-i="2">The car pushes the truck harder</button>
+      </div>
+      <button id="hold" class="gone">Hold to crash</button>
+      <div id="why" class="gone"><p class="big">Exactly equal.</p><p class="body">At every instant the truck pushes the car just as hard as the car pushes the truck, whatever their size. The car's speed changes far more only because it has far less mass to move.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Forces come in equal, opposite pairs; mass only decides who moves more.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Three Incorrect Laws of Motion” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, surePct = null, holding = false;
+const MT = 4, MC = 1, K = 125, FMAX = 50;
+let S;
+function reset(){ S = {xt:2, xc:8, vt:5, vc:0, F:0, peak:0, hit:false, done:false}; }
+reset();
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  surePct = pct;
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('hold');
+  Kit.$('say').textContent = 'Hold the button to drive the truck in. Watch both force bars.';
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+const hb = Kit.$('hold');
+const down = e => { e.preventDefault(); if (S.done) return; holding = true; hb.classList.add('down'); };
+const up = () => { holding = false; hb.classList.remove('down'); };
+hb.addEventListener('pointerdown', down);
+['pointerup','pointerleave','pointercancel'].forEach(t => hb.addEventListener(t, up));
+
+function step(dt){
+  const ov = S.xt - S.xc;
+  S.F = ov > 0 ? K * ov : 0;
+  if (S.F > 0 && !S.hit){ S.hit = true; Kit.haptic('light'); }
+  S.peak = Math.max(S.peak, S.F);
+  S.vt += -S.F / MT * dt; S.vc += S.F / MC * dt;
+  S.xt += S.vt * dt; S.xc += S.vc * dt;
+}
+function advance(simDt){
+  let t = simDt;
+  while (t > 0){ const d = Math.min(.002, t); step(d); t -= d; }
+  if (S.xc > 18.5) finish();
+}
+function finish(){
+  if (S.done) return;
+  S.done = true; holding = false; S.F = 0;
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why');
+  const ok = pick === RIGHT, said = pick >= 0 ? Kit.$('opts').children[pick].textContent : '';
+  sure.grade(ok, surePct ?? 50, `${said}: ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep'); Kit.haptic('success');
+  render();
+}
+gsap.ticker.add(() => {
+  if (!holding || S.done) return;
+  const dt = Math.min(gsap.ticker.deltaRatio(60), 3) / 60;
+  const close = (S.xc - S.xt) < 1 && S.vt > S.vc - .01;
+  advance(dt * (close ? .1 : 1));
+  render();
+});
+
+let G = null;
+function R(tag, a, p){ return Kit.mk(tag, a, p); }
+Kit.onShow.card = () => {
+  const svg = Kit.$('sim'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const gy1 = fs * 1.2, gy2 = gy1 + fs * 2.1;
+  const bx0 = W * .40, bx1 = W * .80, bh = fs * .75;
+  const roadY = H - fs * 2.3;
+  const s = Math.max(4, Math.min(W / 30, (roadY - gy2 - fs * 1.4) / 4));
+  const ox = (W - 30 * s) / 2;
+  const px = x => (x + 7) * s + ox;
+  const g = {W, H, fs, s, roadY, px, bx0, bx1};
+  // gauges
+  const mkG = (y, name) => {
+    R('text', {x: 0, y: y + bh * .8, class: 'lbl', 'font-size': fs}, svg).textContent = name;
+    R('rect', {x: bx0, y, width: bx1 - bx0, height: bh, rx: bh / 2, class: 'gbg'}, svg);
+    const bar = R('rect', {x: bx0, y, width: 0, height: bh, rx: bh / 2, class: 'gfg'}, svg);
+    const pk = R('rect', {x: bx0, y: y - fs * .2, width: Math.max(2, fs * .15), height: bh + fs * .4, class: 'gfg', opacity: 0}, svg);
+    const num = R('text', {x: bx1 + fs * .5, y: y + bh * .8, class: 'num', 'font-size': fs}, svg);
+    return {bar, pk, num};
+  };
+  g.g1 = mkG(gy1, 'Truck → car'); g.g2 = mkG(gy2, 'Car → truck');
+  // road
+  R('line', {x1: 0, x2: W, y1: roadY, y2: roadY, class: 'road', 'stroke-width': Math.max(2, fs * .15)}, svg);
+  // truck (origin = front bumper on road)
+  const sw = {'vector-effect': 'non-scaling-stroke', 'stroke-width': 2};
+  g.truck = R('g', {}, svg);
+  const tr = (x, y, w, h, c, rx = .2) => R('rect', Object.assign({x, y, width: w, height: h, rx, class: c}, sw), g.truck);
+  tr(-8, -3.6, 5.3, 3.0, 'veh');
+  tr(-2.55, -2.7, 2.55, 2.1, 'veh2', .35);
+  tr(-1.25, -2.4, .95, .8, 'win', .1);
+  tr(-8, -.75, 8, .35, 'veh2', .05);
+  [-7, -5.8, -1.6].forEach(cx => R('circle', {cx, cy: -.45, r: .55, class: 'whl'}, g.truck));
+  // car (origin = rear bumper on road)
+  g.car = R('g', {}, svg);
+  R('path', Object.assign({d: 'M0.9,-1.3 L1.5,-2.15 L2.8,-2.15 L3.4,-1.3 Z', class: 'win'}, sw), g.car);
+  R('rect', Object.assign({x: 0, y: -1.35, width: 4, height: .95, rx: .3, class: 'veh2'}, sw), g.car);
+  [.9, 3.1].forEach(cx => R('circle', {cx, cy: -.4, r: .42, class: 'whl'}, g.car));
+  // arrows
+  const sw2 = Math.max(3, fs * .32);
+  const mkA = () => ({line: R('line', {class: 'arr', 'stroke-width': sw2}, svg), head: R('path', {class: 'arrh'}, svg)});
+  g.aC = mkA(); g.aT = mkA();
+  // speeds
+  g.vT = R('text', {class: 'num', 'font-size': fs, 'text-anchor': 'middle', y: roadY + fs * 1.5}, svg);
+  g.vC = R('text', {class: 'num', 'font-size': fs, 'text-anchor': 'middle', y: roadY + fs * 1.5}, svg);
+  G = g; render();
+};
+function setArrow(a, x0, dir, len, y){
+  const g = G, hs = g.fs * .7;
+  if (len < 2){ a.line.setAttribute('opacity', 0); a.head.setAttribute('opacity', 0); return; }
+  const x1 = x0 + dir * len, xb = x1 - dir * Math.min(hs, len);
+  a.line.setAttribute('opacity', 1); a.head.setAttribute('opacity', 1);
+  a.line.setAttribute('x1', x0); a.line.setAttribute('x2', xb); a.line.setAttribute('y1', y); a.line.setAttribute('y2', y);
+  a.head.setAttribute('d', `M${x1},${y} L${xb},${y - hs * .7} L${xb},${y + hs * .7} Z`);
+}
+function textW(el){
+  let m = 0;
+  try { m = el.getComputedTextLength(); } catch (e) {}
+  return Math.max(m || 0, el.textContent.length * G.fs * .62);
+}
+function render(){
+  if (!G) return;
+  const g = G, s = g.s;
+  g.truck.setAttribute('transform', `translate(${g.px(S.xt)},${g.roadY}) scale(${s})`);
+  g.car.setAttribute('transform', `translate(${g.px(S.xc)},${g.roadY}) scale(${s})`);
+  const fr = Math.min(1, S.F / FMAX), w = (g.bx1 - g.bx0) * fr;
+  const pr = Math.min(1, S.peak / FMAX), pxk = g.bx0 + (g.bx1 - g.bx0) * pr;
+  const val = S.done ? Math.round(S.peak * 2) : Math.round(S.F * 2);
+  [g.g1, g.g2].forEach(q => {
+    q.bar.setAttribute('width', S.done ? (g.bx1 - g.bx0) * pr : w);
+    q.pk.setAttribute('x', pxk - 1); q.pk.setAttribute('opacity', S.peak > 0 ? 1 : 0);
+    q.num.textContent = val;
+  });
+  const cx = (g.px(S.xt) + g.px(S.xc)) / 2, ay = g.roadY - .9 * s, L = 3.3 * s;
+  const len = S.done ? 0 : fr * L;
+  setArrow(g.aC, cx, 1, len, ay);
+  setArrow(g.aT, cx, -1, len, ay);
+  g.vT.textContent = Math.round(S.vt * 10) + ' km/h';
+  g.vC.textContent = Math.round(S.vc * 10) + ' km/h';
+  const wT = textW(g.vT), wC = textW(g.vC), pad = g.fs * .8;
+  let xT = g.px(S.xt - 4), xC = g.px(S.xc + 2);
+  const need = (wT + wC) / 2 + pad;
+  if (xC - xT < need){ const m = (xT + xC) / 2; xT = m - need / 2; xC = m + need / 2; }
+  if (xT - wT / 2 < 0){ const d = wT / 2 - xT; xT += d; xC = Math.max(xC, xT + need); }
+  if (xC + wC / 2 > g.W){ const d = xC + wC / 2 - g.W; xC -= d; xT = Math.min(xT, xC - need); }
+  g.vT.setAttribute('x', xT);
+  g.vC.setAttribute('x', xC);
+}
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  gsap.from('#sim', {opacity: 0, duration: .5});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 100));
+  let n = 0; while (!S.done && n++ < 5000) advance(1 / 60);
+  render();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

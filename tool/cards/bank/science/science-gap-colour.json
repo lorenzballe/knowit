@@ -1,0 +1,37 @@
+{
+  "id": "science-gap-colour",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "An LED in clear plastic still glows red. So where does its colour come from?",
+  "answer": "An LED's colour is set by the size of the drop one electron makes, which the card calls the gap. The wavelength in nanometres is about 1240 divided by the gap in electronvolts. Blue needs a far bigger drop than red.",
+  "move": "An LED’s colour is the size of one electron’s drop: nm ≈ 1240 ÷ eV. Blue needs a far bigger drop than red.",
+  "keywords": [
+    "led",
+    "electron",
+    "band-gap",
+    "nakamura",
+    "toshiba"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A clear plastic LED glowing red, under the title 'The gap is the colour'. It asks where the colour comes from, and gives the rule that wavelength in nanometres is about 1240 divided by the energy gap in electronvolts."
+  },
+  "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=AF8d72mA41M",
+  "written": "2026-11-03"
+}

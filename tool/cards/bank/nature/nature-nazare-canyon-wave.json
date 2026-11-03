@@ -1,0 +1,37 @@
+{
+  "id": "nature-nazare-canyon-wave",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the Nazaré canyon make a wave grow so tall?",
+  "answer": "Over the deep canyon, the wave's circling motion fades before it ever touches the floor. Near Nazaré the floor rises fast, so the circles hit bottom, the water column is squeezed, and the wave has nowhere to go but up.",
+  "move": "Less water under a wave squeezes it upward: the crest grows taller.",
+  "keywords": [
+    "nazare",
+    "submarine canyon",
+    "wave crest",
+    "seafloor",
+    "portugal"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card asking how the Nazaré canyon makes waves grow so tall. It shows a water-under-the-crest diagram and a wave height slider, contrasting the deep canyon with the rapidly rising seafloor near the coast."
+  },
+  "source": "Geopop, “Perché le onde più alte del mondo si formano proprio a Nazarè in Portogallo? E come si creano?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=eJwBf76MMBs&t=124s",
+  "written": "2026-11-03"
+}

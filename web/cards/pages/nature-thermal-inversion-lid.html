@@ -1,0 +1,164 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-thermal-inversion-lid -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{position:relative;flex:1;min-height:0;border-radius:1.8cqh;overflow:hidden;background:#0f1b29}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#t{width:100%;margin:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
+.ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--k)}
+.ends span:nth-child(2){color:var(--muted);font-weight:600}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{margin:0;font:500 max(1.85cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THERMAL INVERSION</span></div>
+    <h2 class="q">Why does Po Valley smog get stuck near the ground in winter?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="ctl">
+        <input id="t" type="range" min="0" max="100" value="15" aria-label="Air near the ground compared with the air above">
+        <div class="ends"><span>Ground air warmer</span><span>vs air above</span><span>colder</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">Under high pressure, mostly in winter, the air at the ground ends up colder, so heavier, than the air above it. Heavy air doesn't rise to mix: it stays there, stale, with the smog in it. In the Po Valley, a basin between Alps and Apennines with few strong winds, nothing sweeps it away.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider to cool the air at the ground. Watch the smog.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Cold air under warm air is a lid: the smog can't rise out.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv'), sl = Kit.$('t');
+let x = null, W = 0, H = 0, t = .15, ps = [], done = false, timer = null, started = false, acc = 0, lidGlow = {v: 0};
+const LID = .5, GROUND = .87, MAX = 420, CITIES = [.36, .5, .64];
+const lerp = (a, b, k) => a + (b - a) * k, cl = (v, a, b) => Math.max(a, Math.min(b, v));
+function mix(c1, c2, k) { return c1.map((v, i) => Math.round(lerp(v, c2[i], k))); }
+
+function fit() {
+  const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H; draw();
+}
+function groundY(px) { // valley floor with mountains at both sides
+  if (px < .2) return GROUND - (.2 - px) / .2 * .55;
+  if (px > .8) return GROUND - (px - .8) / .2 * .45;
+  return GROUND;
+}
+function spawn(n) {
+  for (let i = 0; i < n; i++) {
+    const c = CITIES[(Math.random() * 3) | 0];
+    ps.push({x: c + (Math.random() - .5) * .02, y: GROUND - .03, vx: (Math.random() - .5) * .03, vy: -.05, a: 0});
+  }
+  while (ps.length > MAX) ps.splice(ps.findIndex(p => p.y > LID) >= 0 ? ps.findIndex(p => p.y > LID) : 0, 1);
+}
+function step(dt) {
+  const b = 1 - 2 * t, pass = cl((.62 - t) / .24, 0, 1);
+  acc += dt * 45; const n = acc | 0; acc -= n; spawn(n);
+  for (const p of ps) {
+    p.a = Math.min(1, p.a + dt * 3);
+    p.vx += (Math.random() - .5) * .5 * dt; p.vx *= .97;
+    if (p.y > LID) {
+      const target = -(.02 + .2 * Math.max(b, 0));
+      p.vy += (target - p.vy) * dt * 2 + (Math.random() - .5) * .35 * dt;
+    } else {
+      p.vy += (-.16 - p.vy) * dt * 2; p.vx += .04 * dt; p.a -= dt * .5 * (1 - p.y / LID + .2);
+    }
+    const oy = p.y;
+    p.x += p.vx * dt; p.y += p.vy * dt;
+    if (oy > LID && p.y <= LID && Math.random() > pass) { p.y = LID + .005; p.vy = Math.abs(p.vy) * .6; }
+    const g = groundY(p.x) - .01;
+    if (p.y > g) { p.y = g; p.vy = -Math.abs(p.vy) * .5; }
+    if (p.y > LID && (p.x < .05 || p.x > .95)) { p.x = cl(p.x, .05, .95); p.vx *= -1; }
+  }
+  ps = ps.filter(p => p.y > -.02 && p.a > 0);
+}
+function draw() {
+  if (!x) return;
+  const fs = Math.max(12, Math.min(W * .045, H * .06));
+  const ly = LID * H, gy = GROUND * H;
+  x.clearRect(0, 0, W, H);
+  // air above
+  x.fillStyle = '#1b2c40'; x.fillRect(0, 0, W, ly);
+  const warmTop = t > .5 ? cl((t - .5) * 2, 0, 1) : 0;
+  x.fillStyle = `rgba(255,176,90,${.08 + .22 * warmTop})`; x.fillRect(0, 0, W, ly);
+  // air near the ground: warm orange -> cold blue
+  const c = mix([232, 116, 59], [70, 145, 255], t);
+  x.fillStyle = '#16263a'; x.fillRect(0, ly, W, H - ly);
+  x.fillStyle = `rgba(${c},${.38})`; x.fillRect(0, ly, W, H - ly);
+  // haze of trapped smog
+  const below = ps.filter(p => p.y > LID).length, frac = below / MAX;
+  x.fillStyle = `rgba(170,170,160,${.45 * frac})`; x.fillRect(0, ly, W, gy - ly);
+  // particles
+  const r = Math.max(2, H * .011);
+  for (const p of ps) {
+    x.globalAlpha = cl(p.a, 0, 1) * .75; x.fillStyle = '#c9c6bd';
+    x.beginPath(); x.arc(p.x * W, p.y * H, r, 0, 7); x.fill();
+  }
+  x.globalAlpha = 1;
+  // lid
+  const lidA = cl((t - .42) / .25, 0, 1);
+  if (lidA > 0) {
+    x.save(); x.strokeStyle = `rgba(255,214,120,${lidA})`; x.lineWidth = Math.max(2, H * .008);
+    x.setLineDash([H * .03, H * .018]); x.shadowColor = '#ffd678'; x.shadowBlur = 8 + 14 * lidGlow.v;
+    x.beginPath(); x.moveTo(0, ly); x.lineTo(W, ly); x.stroke(); x.restore();
+  }
+  // valley: Alps left, Apennines right
+  x.fillStyle = '#e9ecef';
+  x.beginPath(); x.moveTo(0, H);
+  for (let i = 0; i <= 60; i++) { const px = i / 60; x.lineTo(px * W, groundY(px) * H); }
+  x.lineTo(W, H); x.closePath(); x.fillStyle = '#2f3b2a'; x.fill();
+  x.fillStyle = '#5b6b4c'; x.fillRect(.2 * W, gy, .6 * W, H - gy);
+  // cities / chimneys
+  x.fillStyle = '#1a1a1a';
+  for (const cx of CITIES) { x.fillRect(cx * W - H * .012, gy - H * .045, H * .024, H * .045); }
+  // labels
+  x.textBaseline = 'middle'; x.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  x.fillStyle = '#fff';
+  x.textAlign = 'left'; x.fillText('Smog near the ground', fs * .8, fs * 1.3);
+  const bw = Math.max(40, W - fs * .8 - x.measureText('Smog near the ground').width - fs * 2.2);
+  const bx = W - fs * .8 - bw;
+  x.fillStyle = 'rgba(255,255,255,.18)'; x.fillRect(bx, fs * .95, bw, fs * .7);
+  x.fillStyle = frac > .55 ? '#ff7a5c' : '#c9c6bd'; x.fillRect(bx, fs * .95, bw * frac, fs * .7);
+  x.fillStyle = '#ffe2b0';
+  x.fillText(t > .55 ? 'Air above: warmer, lighter' : t < .45 ? 'Air above: cooler' : 'Air above: about the same', fs * .8, ly - fs * .8);
+  x.fillStyle = '#fff';
+  x.fillText(t > .55 ? 'Ground air: colder, heavier → stays' : t < .45 ? 'Ground air: warmer, lighter → rises' : 'Ground air: barely moves', fs * .8, ly + fs * 1.1);
+  x.font = `600 ${fs * .9}px sans-serif`; x.fillStyle = 'rgba(255,255,255,.85)';
+  x.fillText('Alps', fs * .5, H - fs * .7);
+  x.textAlign = 'right'; x.fillText('Apennines', W - fs * .5, H - fs * .7);
+}
+function tick() { if (!x) return; step(Math.min(gsap.ticker.deltaRatio() / 60, .05)); draw(); }
+function prefill(sec) { for (let i = 0; i < sec * 30; i++) step(1 / 30); }
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+sl.addEventListener('input', () => {
+  const old = t; t = sl.value / 100;
+  if ((old <= .55) !== (t <= .55)) { Kit.haptic('selection'); if (t > .55) gsap.fromTo(lidGlow, {v: 1}, {v: 0, duration: .8}); }
+  clearTimeout(timer);
+  if (t >= .8 && !done) timer = setTimeout(() => { if (t >= .7) finish(); }, 1800);
+});
+new ResizeObserver(() => fit()).observe(Kit.$('wrap'));
+Kit.onShow.card = () => {
+  fit();
+  if (!started) { started = true; prefill(3); draw(); gsap.ticker.add(tick); }
+};
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#wrap', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  sl.value = 100; sl.dispatchEvent(new Event('input', {bubbles: true}));
+  prefill(6);
+  await new Promise(r => setTimeout(r, 2300));
+  finish();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "technology-dry-plastic-fizz",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why is the plastic dried before it's melted into Coke bottles?",
+  "answer": "Water in the melt makes the plastic runnier, because its viscosity drops. A bottle made from runnier plastic holds less CO₂, and a fizzy drink needs its CO₂ kept in. So the plastic is dried before it is melted.",
+  "move": "Dry plastic melts thicker, and thicker plastic keeps the CO₂ in.",
+  "keywords": [
+    "coca-cola",
+    "plastic bottles",
+    "carbon dioxide",
+    "viscosity",
+    "humidity"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Slider card with a dot on its right end: drag it to show how much CO₂ stays in a bottle made from humid plastic. Asks why plastic is dried before it is melted into Coke bottles.",
+    "graded": false
+  },
+  "source": "Geopop, “Controllate se la vostra prossima bottiglia di Coca-Cola ha la sigla CCHBC 70: ecco cosa significa” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=x3aSdfmYbZM",
+  "written": "2026-11-03"
+}

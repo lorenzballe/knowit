@@ -1,0 +1,38 @@
+{
+  "id": "economics-congo-miner-deaths",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.hidden_costs",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many Congolese miners die every day, according to the UN?",
+  "answer": "The UN estimates that about 1,000 Congolese miners die each day. That figure counts gold, cobalt and diamond mines as well as coltan, where conditions are often as bad. It works out to one miner every 86 seconds. No one keeps an exact count.",
+  "move": "Behind cheap minerals, around 1,000 Congolese miners die each day.",
+  "keywords": [
+    "congo",
+    "coltan",
+    "mining",
+    "smartphones",
+    "united_nations"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A slider asks readers to guess how many Congolese miners die each day according to the UN, with marks at 10, 100, 1,000 and 5,000. Then the page reveals about 1,000 a day, or one miner every 86 seconds, and asks how sure they are.",
+    "graded": false
+  },
+  "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=I-MMteT9YTM&t=319s",
+  "written": "2026-11-03"
+}

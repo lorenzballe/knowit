@@ -1,0 +1,37 @@
+{
+  "id": "science-graphene-one-atom",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the thickness of a graphene sheet?",
+  "answer": "Graphene is a single sheet of carbon, only one atom thick. Pencil graphite is many of these sheets piled up, so it is three-dimensional. Graphene was discovered in 2004.",
+  "move": "Graphene is a single sheet of carbon: one atom thick.",
+  "keywords": [
+    "graphene",
+    "carbon",
+    "graphite",
+    "atom",
+    "pencil"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Asks: what is the thickness of a graphene sheet? A stack of carbon sheets, as in pencil graphite, sits on the page. Tapping peels them off one at a time until a single sheet, one atom thick, is left."
+  },
+  "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=55s",
+  "written": "2026-11-03"
+}

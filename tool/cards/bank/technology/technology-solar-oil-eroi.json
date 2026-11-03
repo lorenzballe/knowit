@@ -1,0 +1,36 @@
+{
+  "id": "technology-solar-oil-eroi",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much energy does solar return, compared with 1960s oil?",
+  "answer": "In the 1960s, the energy of one barrel of oil returned about a hundred barrels' worth of oil. Solar panels today return only 5 to 17 times the energy spent to make them, which leaves far less surplus for everything else.",
+  "move": "EROI = energy you get back ÷ energy you spend to get it.",
+  "keywords": [
+    "solar_panels",
+    "oil",
+    "eroi",
+    "energy_return"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A page with two sides to flip between, oil in the 1960s and solar panels today, comparing energy returned for energy spent. Oil shows about 100 times back; solar shows 5 to 17 times."
+  },
+  "source": "Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=VTtMdKzQn48&t=465s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,154 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-air-off-bacteria -->
+<title>Astute · When the air goes off</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{flex:1;min-height:0;position:relative}
+#wrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#ctl{display:flex;align-items:center;justify-content:center;gap:3cqw}
+#sw{position:relative;width:max(15cqw,58px);height:max(4.6cqh,30px);border-radius:99px;border:0;cursor:pointer;background:color-mix(in srgb,var(--k) 18%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);transition:background .3s}
+#sw .knob{position:absolute;top:12%;left:6%;height:76%;aspect-ratio:1;border-radius:50%;background:var(--k);transition:left .3s cubic-bezier(.3,1.4,.5,1)}
+#sw.on{background:#2fa8e0}
+#sw.on .knob{left:calc(94% - 76% * var(--r,1));background:#fff}
+#swt{font:700 max(2.3cqh,14px)/1.2 var(--body);color:var(--k);min-width:9ch}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Flip a switch · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SEWAGE</span></div>
+    <h2 class="q">What happens in a sewage tank after the air is turned off?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><svg id="tank"></svg></div>
+      <div id="ctl"><button id="sw" aria-label="Air switch" aria-pressed="false"><span class="knob"></span></button><span id="swt">Air: OFF</span></div>
+      <div id="why" class="gone"><p class="body">Air feeds bacteria that eat the organic matter and the nitrogen compounds. Switch it off and anaerobic bacteria, which work without oxygen, finish the remaining pollutants. Nothing is added: just bacteria and a natural process.</p></div>
+    </div>
+    <p class="say" id="say">Flip the air ON, watch the tank, then flip it OFF.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Sewage is cleaned by two crews of bacteria: one with air, one without.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const R = Kit.rnd;
+const PS = [...Array(30)].map((_, i) => ({u: R(), v: R(), org: R() < .55, late: i % 3 === 0}));
+const AE = [...Array(12)].map(() => ({u: R(), v: R()}));
+const AN = [...Array(12)].map((_, i) => ({u: (i + .2 + .6 * R()) / 12, v: R()}));
+const BU = [...Array(16)].map((_, i) => ({u: (i + .5) / 16, d: R()}));
+const WC = ['#5a4630', '#3d4a3c', '#1f5468'];
+const ST = ['Air off · raw sewage', 'Air on · bubbling', 'Air off · settled'];
+const DIRT = [1, .38, .04];
+let s = 0, busy = false, E = {}, G = {}, tws = [];
+const T = t => (tws.push(t), t);
+
+function draw() {
+  tws.forEach(t => t.kill()); tws = [];
+  const svg = Kit.$('tank'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const TY = fs * 2.1, BY = H - fs * .3, TX = 2, TW = W * .74, TH = BY - TY, sedH = TH * .12;
+  G = {W, H, fs, TY, BY, TX, TW, TH, sedH};
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  E.status = mk('text', {x: TX, y: fs * 1.25, style: `font:700 ${fs}px var(--body);fill:var(--k)`});
+  E.status.textContent = ST[s];
+  E.water = mk('rect', {x: TX, y: TY, width: TW, height: TH, rx: fs * .6, fill: WC[s]});
+  for (let i = 0; i < 4; i++) mk('rect', {x: TX + TW * (.1 + .22 * i), y: BY - fs * .5, width: TW * .14, height: fs * .3, rx: fs * .15, fill: '#9aa7ad'});
+  E.sed = mk('rect', {x: TX + 2, y: BY - (s === 2 ? sedH : 0), width: TW - 4, height: s === 2 ? sedH : 0, fill: '#3a2a1c'});
+  E.ana = AN.map(a => mk('rect', {x: TX + TW * (.04 + .9 * a.u) - fs * .45, y: BY - sedH * (.3 + .45 * a.v) - fs * .17, width: fs * .9, height: fs * .34, rx: fs * .17, fill: '#c58bff', opacity: s === 2 ? 1 : 0}));
+  E.parts = PS.map(p => {
+    const x = TX + TW * (.08 + .84 * p.u), y = TY + TH * (.1 + .7 * p.v), r = fs * .34;
+    const el = p.org ? mk('circle', {cx: x, cy: y, r, fill: '#b07a3e'})
+      : mk('path', {d: `M${x} ${y - r}L${x + r} ${y}L${x} ${y + r}L${x - r} ${y}Z`, fill: '#b9e36c'});
+    const gone = s === 2 || (s === 1 && !p.late);
+    if (gone) gsap.set(el, {scale: 0, opacity: 0, transformOrigin: '50% 50%'});
+    return el;
+  });
+  E.aer = AE.map(a => mk('circle', {cx: TX + TW * (.08 + .84 * a.u), cy: s === 2 ? BY - sedH * (.25 + .5 * a.v) : TY + TH * (.12 + .65 * a.v), r: fs * .3, fill: '#7fd1ff', opacity: s === 1 ? 1 : .35}));
+  E.bub = BU.map(b => mk('circle', {cx: TX + TW * (.06 + .88 * b.u), cy: BY - fs, r: fs * (.18 + .14 * b.d), fill: 'none', stroke: '#fff', 'stroke-width': Math.max(1.2, fs * .08), opacity: 0}));
+  mk('rect', {x: TX, y: TY, width: TW, height: TH, rx: fs * .6, fill: 'none', style: `stroke:var(--k);stroke-width:${fs * .18}px`});
+  const ls = Math.max(fs * .85, 12);
+  E.lab1 = mk('text', {x: TX + TW / 2, y: TY + fs * 1.3, 'text-anchor': 'middle', opacity: s === 1 ? 1 : 0, style: `font:700 ${ls}px var(--body);fill:#7fd1ff`});
+  E.lab1.textContent = 'air-loving bacteria eat';
+  E.lab2 = mk('text', {x: TX + TW / 2, y: BY - sedH - fs * .8, 'text-anchor': 'middle', opacity: s === 2 ? 1 : 0, style: `font:700 ${ls}px var(--body);fill:#d9b3ff`});
+  E.lab2.textContent = 'anaerobic bacteria finish';
+  const MX = W * .83, MW = W * .1, mt = TY, mb = BY - fs * 1.8;
+  G.mt = mt; G.mb = mb;
+  mk('rect', {x: MX, y: mt, width: MW, height: mb - mt, rx: fs * .3, fill: 'none', style: `stroke:var(--k);stroke-width:${fs * .14}px`});
+  const h = (mb - mt) * DIRT[s];
+  E.meter = mk('rect', {x: MX + fs * .2, y: mb - h, width: MW - fs * .4, height: Math.max(0, h - fs * .2), rx: fs * .2, fill: '#b07a3e'});
+  const ml = mk('text', {x: MX + MW / 2, y: BY - fs * .2, 'text-anchor': 'middle', style: `font:700 ${Math.max(fs * .8, 12)}px var(--body);fill:var(--k)`});
+  ml.textContent = 'DIRT';
+  if (s === 1) loops();
+  if (busy) { busy = false; after(); }
+}
+
+function loops() {
+  const {fs, TY, TH, BY} = G;
+  E.bub.forEach((b, i) => {
+    if (Kit.calm) { gsap.set(b, {attr: {cy: TY + TH * (.15 + .7 * BU[i].d)}, opacity: .8}); return; }
+    T(gsap.fromTo(b, {attr: {cy: BY - fs}, opacity: .9}, {attr: {cy: TY + TH * .06}, opacity: 0, duration: 1.3 + BU[i].d, repeat: -1, delay: BU[i].d * 1.4, ease: 'none'}));
+  });
+  if (!Kit.calm) E.aer.forEach(c => T(gsap.to(c, {attr: {cx: '+=' + fs * (Math.random() - .5) * 2.4, cy: '+=' + fs * (Math.random() - .5) * 2}, duration: .7 + Math.random(), yoyo: true, repeat: -1, ease: 'sine.inOut'})));
+}
+
+function meterTo(v, d) {
+  const h = (G.mb - G.mt) * v;
+  T(gsap.to(E.meter, {attr: {y: G.mb - h, height: Math.max(0, h - G.fs * .2)}, duration: d, ease: 'power2.inOut'}));
+}
+
+function go() {
+  if (busy || s >= 2) return;
+  busy = true; s++; Kit.haptic('selection');
+  const sw = Kit.$('sw'); sw.classList.toggle('on', s === 1); sw.setAttribute('aria-pressed', s === 1);
+  Kit.$('swt').textContent = s === 1 ? 'Air: ON' : 'Air: OFF';
+  E.status.textContent = ST[s];
+  const d = Kit.calm ? .01 : 1;
+  if (s === 1) {
+    T(gsap.to(E.water, {attr: {fill: WC[1]}, duration: 1.8 * d}));
+    T(gsap.to(E.aer, {opacity: 1, duration: .4 * d}));
+    T(gsap.to(E.lab1, {opacity: 1, duration: .4 * d}));
+    const eat = E.parts.filter((_, i) => !PS[i].late);
+    T(gsap.to(eat, {scale: 0, opacity: 0, transformOrigin: '50% 50%', duration: .4 * d, stagger: 1.4 * d / eat.length, delay: .3 * d, ease: 'back.in'}));
+    meterTo(DIRT[1], 1.9 * d);
+    loops();
+    T(gsap.delayedCall(2.2 * d, () => { busy = false; after(); }));
+  } else {
+    tws.forEach(t => t.kill()); tws = [];
+    const {BY, sedH, fs} = G;
+    T(gsap.to(E.bub, {opacity: 0, duration: .4 * d}));
+    T(gsap.to(E.lab1, {opacity: 0, duration: .3 * d}));
+    E.aer.forEach((c, i) => T(gsap.to(c, {attr: {cy: BY - sedH * (.25 + .5 * AE[i].v)}, opacity: .35, duration: .9 * d, delay: i * .03 * d, ease: 'power2.in'})));
+    T(gsap.to(E.sed, {attr: {y: BY - sedH, height: sedH}, duration: .9 * d, ease: 'power2.out'}));
+    T(gsap.to(E.ana, {opacity: 1, duration: .3 * d, stagger: .05 * d, delay: .8 * d}));
+    T(gsap.to(E.lab2, {opacity: 1, duration: .4 * d, delay: .9 * d}));
+    const rest = E.parts.filter((_, i) => PS[i].late);
+    T(gsap.to(rest, {scale: 0, opacity: 0, transformOrigin: '50% 50%', duration: .4 * d, stagger: .9 * d / rest.length, delay: 1.1 * d, ease: 'back.in'}));
+    T(gsap.to(E.water, {attr: {fill: WC[2]}, duration: 1.8 * d, delay: .5 * d}));
+    meterTo(DIRT[2], 1.8 * d);
+    T(gsap.delayedCall(2.4 * d, () => { busy = false; after(); }));
+  }
+}
+
+function after() {
+  if (s === 1) Kit.$('say').textContent = 'Dirt went down, but not to zero. Now flip the air OFF.';
+  if (s === 2) {
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.haptic('success');
+    requestAnimationFrame(() => draw());
+  }
+}
+
+Kit.$('sw').addEventListener('click', go);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(E.parts, {scale: 0, opacity: 0, transformOrigin: '50% 50%', stagger: .02, duration: .4, ease: 'back.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('sw').click(); await w(Kit.calm ? 200 : 2600);
+  Kit.$('sw').click(); await w(Kit.calm ? 300 : 2900);
+};
+Kit.single();
+</script>
+</html>

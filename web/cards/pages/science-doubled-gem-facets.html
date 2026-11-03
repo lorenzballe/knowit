@@ -1,0 +1,155 @@
+<!doctype html>
+<!-- slug: science-doubled-gem-facets -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;color:var(--k)}
+#pic.drag{cursor:grabbing}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BIREFRINGENCE</span></div>
+    <h2 class="q">What happens when you look at a gemstone through a magnifying glass?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A cut gemstone seen from above, and a magnifying glass you can drag"></svg>
+      <div id="why" class="gone">
+        <p class="big">Every main edge doubles.</p>
+        <p class="body">Many gems split each ray of light into two rays that take slightly different paths. So under a simple lens, the stone's fundamental faces show up twice. This is birefringence.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the magnifying glass over the gem.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Under a lens, birefringence makes a gem's facet edges look doubled.</div>
+    <div class="foot"><span class="src">Source · Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// Lens position kept relative to the gem centre, in units of the gem radius, so redraws keep it.
+let rel = {x: -1.3, y: 0.95};
+let done = false, G = null, dragging = false, grab = {x: 0, y: 0};
+
+function gem(parent, cx, cy, R, ghost) {
+  const g = Kit.mk('g', {fill: 'none', 'stroke-linejoin': 'round'}, parent);
+  const sw = Math.max(1.2, R * 0.018);
+  const st = ghost ? {stroke: 'currentColor', 'stroke-width': sw, opacity: .5} : {stroke: 'currentColor', 'stroke-width': sw};
+  if (!ghost) Kit.mk('circle', {cx, cy, r: R, fill: 'currentColor', 'fill-opacity': .07, stroke: 'none'}, g);
+  Kit.mk('circle', Object.assign({cx, cy, r: R}, st), g);
+  const tr = R * 0.5, pts = [];
+  for (let k = 0; k < 8; k++) {
+    const a = (k * 45 + 22.5) * Math.PI / 180;
+    pts.push([cx + tr * Math.cos(a), cy + tr * Math.sin(a), a]);
+  }
+  Kit.mk('polygon', Object.assign({points: pts.map(p => p[0] + ',' + p[1]).join(' ')}, st), g);
+  pts.forEach(([x, y, a]) => {
+    [-22.5, 0, 22.5].forEach(d => {
+      const b = a + d * Math.PI / 180;
+      Kit.mk('line', Object.assign({x1: x, y1: y, x2: cx + R * Math.cos(b), y2: cy + R * Math.sin(b)}, st), g);
+    });
+  });
+  return g;
+}
+
+function place() {
+  if (!G) return;
+  const {cx, cy, R, Lr, W, H, m, mag, clip, lensImg, rim, handle, glint} = G;
+  let lx = cx + rel.x * R, ly = cy + rel.y * R;
+  lx = Math.max(Lr + 2, Math.min(W - Lr - 2, lx));
+  ly = Math.max(Lr + 2, Math.min(H - Lr - 2, ly));
+  rel = {x: (lx - cx) / R, y: (ly - cy) / R};
+  clip.setAttribute('cx', lx); clip.setAttribute('cy', ly);
+  lensImg.setAttribute('cx', lx); lensImg.setAttribute('cy', ly);
+  mag.setAttribute('transform', `translate(${lx},${ly}) scale(${m}) translate(${-lx},${-ly})`);
+  rim.setAttribute('cx', lx); rim.setAttribute('cy', ly);
+  glint.setAttribute('d', `M ${lx - Lr * .62} ${ly - Lr * .2} A ${Lr * .66} ${Lr * .66} 0 0 1 ${lx - Lr * .2} ${ly - Lr * .62}`);
+  const a = 3 * Math.PI / 4, hl = Lr * 0.85;
+  handle.setAttribute('x1', lx + Lr * Math.cos(a)); handle.setAttribute('y1', ly + Lr * Math.sin(a));
+  handle.setAttribute('x2', lx + (Lr + hl) * Math.cos(a)); handle.setAttribute('y2', ly + (Lr + hl) * Math.sin(a));
+  if (!done && Math.hypot(rel.x, rel.y) < 0.45) reveal();
+}
+
+function reveal() {
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => {
+    Kit.onShow.card();
+    if (!Kit.calm && G) {
+      gsap.from(G.ghostG, {x: 0, y: 0, duration: .01});
+      gsap.fromTo(G.rim, {attr: {'stroke-width': G.rw * 2.2}}, {attr: {'stroke-width': G.rw}, duration: .6, ease: 'power2.out'});
+      gsap.from('#why > *', {opacity: 0, y: 8, stagger: .08, duration: .4, ease: 'power3.out'});
+    }
+  });
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const R = Math.min(W * 0.36, H * 0.4), cx = W / 2, cy = H / 2;
+  const Lr = R * 0.62, m = 1.7, off = R * 0.045;
+  gem(svg, cx, cy, R, false);
+  const defs = Kit.mk('defs', {}, svg);
+  const pat = Kit.mk('pattern', {id: 'lp', patternUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+  const mag = Kit.mk('g', {}, pat);
+  const ghostG = Kit.mk('g', {transform: `translate(${off},${off * 0.55})`}, mag);
+  gem(ghostG, cx, cy, R, true);
+  gem(mag, cx, cy, R, false);
+  const lens = Kit.mk('g', {}, svg);
+  const clip = Kit.mk('circle', {r: Lr, fill: '#fff', 'fill-opacity': .55}, lens);
+  const lensImg = Kit.mk('circle', {r: Lr, fill: 'url(#lp)'}, lens);
+  const rw = Math.max(3, R * 0.06);
+  const handle = Kit.mk('line', {stroke: 'currentColor', 'stroke-width': rw * 2.1, 'stroke-linecap': 'round'}, svg);
+  const rim = Kit.mk('circle', {r: Lr, fill: 'none', stroke: 'currentColor', 'stroke-width': rw}, svg);
+  const glint = Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': Math.max(2, rw * .5), 'stroke-linecap': 'round', opacity: .8}, svg);
+  G = {svg, W, H, R, cx, cy, Lr, m, mag, clip, lensImg, rim, handle, glint, ghostG, rw};
+  place();
+};
+
+function local(e) {
+  const r = Kit.$('pic').getBoundingClientRect();
+  return {x: e.clientX - r.left, y: e.clientY - r.top};
+}
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  if (!G) return;
+  const p = local(e), lx = G.cx + rel.x * G.R, ly = G.cy + rel.y * G.R;
+  if (Math.hypot(p.x - lx, p.y - ly) > G.Lr * 2.2) return;
+  dragging = true; grab = {x: p.x - lx, y: p.y - ly};
+  pic.classList.add('drag'); Kit.haptic('selection');
+  try { pic.setPointerCapture(e.pointerId); } catch (_) {}
+  gsap.killTweensOf(rel);
+});
+pic.addEventListener('pointermove', e => {
+  if (!dragging) return;
+  const p = local(e);
+  rel = {x: (p.x - grab.x - G.cx) / G.R, y: (p.y - grab.y - G.cy) / G.R};
+  place();
+});
+const stop = () => { dragging = false; pic.classList.remove('drag'); };
+pic.addEventListener('pointerup', stop);
+pic.addEventListener('pointercancel', stop);
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || done) return;
+  gsap.to(rel, {x: rel.x + 0.18, y: rel.y - 0.12, duration: .5, ease: 'sine.inOut', yoyo: true, repeat: 3, delay: .4, onUpdate: place});
+};
+
+Kit.play.card = async () => {
+  const r = pic.getBoundingClientRect();
+  const sx = r.left + G.cx + rel.x * G.R, sy = r.top + G.cy + rel.y * G.R;
+  const ev = (t, x, y) => pic.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', sx, sy);
+  const ex = r.left + G.cx + G.R * 0.1, ey = r.top + G.cy + G.R * 0.05;
+  for (let i = 1; i <= 10; i++) ev('pointermove', sx + (ex - sx) * i / 10, sy + (ey - sy) * i / 10);
+  ev('pointerup', ex, ey);
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-steel-heat-capacity -->
+<title>Astute free card: steel at 1000 °C</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctrl{display:flex;align-items:center;gap:3cqw;padding:1cqh 1cqw 0}
+#tval{font:700 max(3.2cqh,18px)/1 var(--mono);color:var(--k);min-width:4.6em;white-space:nowrap}
+#heat{flex:1;min-width:0;-webkit-appearance:none;appearance:none;height:max(1.6cqh,12px);border-radius:99px;
+  background:linear-gradient(90deg,#8a929c 0%,#7f1d1d 35%,#dc2626 60%,#f97316 82%,#fde68a 100%);outline:none;margin:0;touch-action:none}
+#heat::-webkit-slider-thumb{-webkit-appearance:none;width:max(4.4cqh,30px);height:max(4.4cqh,30px);border-radius:50%;background:var(--c);border:max(.5cqh,4px) solid var(--k);cursor:grab;box-shadow:0 .4cqh 1.2cqh rgba(0,0,0,.3)}
+#heat::-moz-range-thumb{width:max(4.4cqh,30px);height:max(4.4cqh,30px);border-radius:50%;background:var(--c);border:max(.5cqh,4px) solid var(--k);cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · heat the steel">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOT STEEL</span></div>
+    <h2 class="q">How much load can a steel column still carry at 1000 °C?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctrl"><span id="tval">20 °C</span><input id="heat" type="range" min="20" max="1000" step="1" value="20" aria-label="Temperature"></div>
+    </div>
+    <p class="say" id="say">Drag the slider to heat the column, from room temperature to 1000 °C.</p>
+    <div id="why" class="gone">
+      <p class="big">Only about 5% is left</p>
+      <p class="body">As steel heats up it loses stiffness and strength. At 1000 °C, as NIST notes, it has lost 95% of its ability to carry loads, so the floors it holds become too heavy and it gives way.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>At 1000 °C steel keeps just 5% of its load-bearing capacity.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const slider = Kit.$('heat'), tval = Kit.$('tval');
+const st = {b: 0, drop: 0};
+let done = false, G = null;
+
+const STOPS = [[0,[138,146,156]],[.35,[127,29,29]],[.6,[220,38,38]],[.82,[249,115,22]],[1,[253,230,138]]];
+function heatCol(u){
+  for (let i = 1; i < STOPS.length; i++) if (u <= STOPS[i][0]) {
+    const [a, ca] = STOPS[i-1], [b, cb] = STOPS[i], t = (u - a) / (b - a);
+    return `rgb(${ca.map((v, j) => Math.round(v + (cb[j] - v) * t)).join(',')})`;
+  }
+  return 'rgb(253,230,138)';
+}
+const capOf = u => 1 - .95 * (u * u * (3 - 2 * u));
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const defs = Kit.mk('defs', {}, svg);
+  const flt = Kit.mk('filter', {id: 'glow', x: '-80%', y: '-20%', width: '260%', height: '140%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: Math.max(6, W * .03)}, flt);
+
+  const cx = W * .32, cw = Math.min(W * .13, H * .1), top = H * .25, bot = H * .9;
+  const bx = W * .66, bw = Math.min(W * .2, 110), bTop = H * .16, bBot = H * .9;
+
+  // ground
+  Kit.mk('line', {x1: W * .04, x2: W * .6, y1: bot, y2: bot, stroke: 'var(--k)', 'stroke-width': Math.max(2, f * .18), 'stroke-linecap': 'round'}, svg);
+  // glow + column
+  const halo = Kit.mk('path', {filter: 'url(#glow)', opacity: 0}, svg);
+  const col = Kit.mk('path', {stroke: 'var(--k)', 'stroke-width': Math.max(1.5, f * .12), 'stroke-linejoin': 'round'}, svg);
+  const web1 = Kit.mk('path', {fill: 'none', stroke: 'rgba(0,0,0,.35)', 'stroke-width': Math.max(1, f * .08)}, svg);
+  const web2 = Kit.mk('path', {fill: 'none', stroke: 'rgba(0,0,0,.35)', 'stroke-width': Math.max(1, f * .08)}, svg);
+  // flames at the base
+  const flames = Kit.mk('g', {opacity: 0}, svg);
+  const fl = [];
+  [-1.6, -.6, .5, 1.5].forEach((k, i) => {
+    const p = Kit.mk('path', {fill: i % 2 ? '#f97316' : '#fbbf24'}, flames);
+    fl.push({p, x: cx + k * cw * .7, s: cw * (i % 2 ? .55 : .42)});
+  });
+  // slab + loads
+  const slabG = Kit.mk('g', {}, svg);
+  const sw = W * .5, sx = cx - sw / 2, sh = H * .045;
+  Kit.mk('rect', {x: Math.max(W * .03, sx), y: top - sh, width: sw, height: sh, rx: sh * .2, fill: 'var(--k)'}, slabG);
+  const loadTxt = Kit.mk('text', {x: cx, y: top - sh - H * .1 - f * .4, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': Math.max(12, f * .9)}, slabG);
+  loadTxt.textContent = 'floors above';
+  [-1, 0, 1].forEach(k => {
+    const x = cx + k * sw * .3, y1 = top - sh - H * .09, y2 = top - sh - f * .3;
+    Kit.mk('line', {x1: x, x2: x, y1, y2: y2 - f * .5, stroke: 'var(--k)', 'stroke-width': Math.max(2, f * .2), 'stroke-linecap': 'round'}, slabG);
+    Kit.mk('path', {d: `M${x - f * .45},${y2 - f * .6} L${x + f * .45},${y2 - f * .6} L${x},${y2} Z`, fill: 'var(--k)'}, slabG);
+  });
+
+  // capacity bar
+  const capLbl = Kit.mk('text', {x: bx + bw / 2, y: bTop - f * .9, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': Math.max(12, f * .9)}, svg);
+  capLbl.textContent = 'Load capacity';
+  Kit.mk('rect', {x: bx, y: bTop, width: bw, height: bBot - bTop, rx: bw * .12, fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, f * .12), 'stroke-dasharray': `${f * .5} ${f * .35}`, opacity: .6}, svg);
+  const bar = Kit.mk('rect', {x: bx, width: bw, rx: bw * .12, fill: 'var(--k)'}, svg);
+  const pct = Kit.mk('text', {x: bx + bw / 2, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': Math.max(14, f * 1.3)}, svg);
+  const lost = Kit.mk('text', {x: bx + bw / 2, y: (bTop + bBot) / 2, 'text-anchor': 'middle', fill: '#dc2626', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': Math.max(16, f * 1.7), opacity: 0}, svg);
+  lost.textContent = '−95%';
+
+  G = {W, H, f, cx, cw, top, bot, bx, bw, bTop, bBot, halo, col, web1, web2, flames, fl, slabG, bar, pct, lost};
+  render();
+};
+
+function edge(x, t, b, bow){ const m = (t + b) / 2; return `M${x},${t} Q${x + bow * 2},${m} ${x},${b}`; }
+function render(){
+  if (!G) return;
+  const T = +slider.value, u = (T - 20) / 980, cap = capOf(u);
+  tval.textContent = `${T} °C`;
+  const {cx, cw, bot, bx, bw, bTop, bBot, f} = G, top = G.top + st.drop, b = st.b, m = (top + bot) / 2;
+  const L = cx - cw / 2, R = cx + cw / 2;
+  const d = `M${L},${top} L${R},${top} Q${R + b * 2},${m} ${R},${bot} L${L},${bot} Q${L + b * 2},${m} ${L},${top} Z`;
+  const c = heatCol(u);
+  G.col.setAttribute('d', d); G.col.setAttribute('fill', c);
+  G.halo.setAttribute('d', d); G.halo.setAttribute('fill', c); G.halo.setAttribute('opacity', Math.max(0, (u - .3) / .7) * .9);
+  G.web1.setAttribute('d', edge(L + cw * .22, top, bot, b));
+  G.web2.setAttribute('d', edge(R - cw * .22, top, bot, b));
+  G.slabG.setAttribute('transform', `translate(0,${st.drop})`);
+  G.flames.setAttribute('opacity', Math.min(1, u * 1.6));
+  G.fl.forEach(o => { const s = o.s * (.4 + u * .9); o.p.setAttribute('d', `M${o.x - s * .6},${bot} Q${o.x - s * .7},${bot - s * 1.2} ${o.x},${bot - s * 2.2} Q${o.x + s * .7},${bot - s * 1.2} ${o.x + s * .6},${bot} Z`); });
+  const h = (bBot - bTop) * cap, y = bBot - h;
+  G.bar.setAttribute('y', y); G.bar.setAttribute('height', h);
+  G.bar.setAttribute('fill', u > .98 ? '#dc2626' : 'var(--k)');
+  if (u < .03) { G.pct.textContent = '100%'; G.pct.setAttribute('y', bTop + f * 1.8); G.pct.setAttribute('fill', 'var(--c)'); }
+  else if (u > .98) { G.pct.textContent = '5%'; G.pct.setAttribute('y', y - f * .5); G.pct.setAttribute('fill', '#dc2626'); }
+  else { G.pct.textContent = 'falling'; G.pct.setAttribute('y', y + f * 1.8); G.pct.setAttribute('fill', 'var(--c)'); G.pct.setAttribute('font-size', Math.max(12, f * .9)); }
+  if (u < .03 || u > .98) G.pct.setAttribute('font-size', Math.max(14, f * 1.3));
+  if (h < f * 2.6 && !(u > .98)) G.pct.textContent = '';
+  G.lost.setAttribute('opacity', done ? 1 : 0);
+}
+
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  const tgt = {b: G ? G.cw * .55 : 20, drop: G ? G.H * .035 : 10};
+  if (Kit.calm) { Object.assign(st, tgt); render(); }
+  else gsap.to(st, {...tgt, duration: 1.1, ease: 'power2.in', onUpdate: render});
+  render();
+}
+
+let last = 20;
+slider.addEventListener('input', () => {
+  const v = +slider.value;
+  if (Math.floor(v / 100) !== Math.floor(last / 100)) Kit.haptic('light');
+  last = v; render();
+  if (v >= 1000) finish();
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
+  gsap.from('#ctrl', {opacity: 0, y: 8, duration: .4, delay: .15, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  for (const v of [300, 600, 850, 1000]) { slider.value = v; slider.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 1300));
+};
+Kit.single();
+</script>
+</html>

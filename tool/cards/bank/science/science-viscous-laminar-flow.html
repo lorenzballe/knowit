@@ -1,0 +1,140 @@
+<!doctype html>
+<!-- slug: science-viscous-laminar-flow -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · Why honey flows smooth</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#cv{display:block;width:100%;flex:1;min-height:0}
+#ctl{display:flex;align-items:center;gap:3cqw;padding:0 1cqw}
+#ctl label{font:700 max(1.9cqh,13px)/1.2 var(--body);color:var(--k);white-space:nowrap}
+#ctl .end{font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted);white-space:nowrap}
+#spd{flex:1;min-width:0;accent-color:var(--k);height:max(3.6cqh,28px);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.4cqh,15px)/1.15 var(--display);color:var(--k);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);color:var(--k);margin:0;overflow-wrap:break-word}
+.say,.keep,.q{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Race · two fluids">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLUID FLOW</span></div>
+    <h2 class="q">Why does honey pour in smooth layers while water turns turbulent?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv"></canvas>
+      <div id="ctl"><label for="spd">Speed</label><span class="end">slow</span><input type="range" id="spd" min="0" max="100" value="8" aria-label="Flow speed"><span class="end">fast</span></div>
+      <div id="why" class="gone">
+        <p class="big">Honey wins: it stays smooth.</p>
+        <p class="body">The Reynolds number weighs speed, density and pipe size against viscosity. Keep those three the same and raise the viscosity: the number drops, so the flow stays laminar instead of turning turbulent.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Push the speed up. Same pipe, same speed, two fluids.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>More viscous means a lower Reynolds number: smooth, parallel layers.</div>
+    <div class="foot"><span class="src">Source · Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let C = null, v = 0.08, vs = 0.08, t = 0, done = false, ink = '#111';
+const spd = Kit.$('spd');
+const TH = 0.3;              // speed at which water's Reynolds number crosses into turbulence
+const HONEY = 400;           // honey's viscosity divides its Reynolds number by far more
+const clamp = (a, lo, hi) => Math.max(lo, Math.min(hi, a));
+const sstep = (a, b, x) => { const u = clamp((x - a) / (b - a), 0, 1); return u * u * (3 - 2 * u); };
+
+function noise(xn, tt, i) {
+  return Math.sin(xn * 9 + tt * 3 + i * 1.7) * .5 + Math.sin(xn * 17 - tt * 5 + i * 2.9) * .32 + Math.sin(xn * 31 + tt * 8 + i * .7) * .18;
+}
+
+function lane(x, W, by, bh, name, fill, re, f) {
+  const pad = W * .04, turb = clamp((re - 1) / 1.2, 0, 1);
+  const lx = pad, lw = Math.max(0, W - 2 * pad);
+  const ly = by + f * 1.7, lh = Math.max(0, bh - f * 4.4);
+  // label row
+  x.fillStyle = ink; x.textBaseline = 'alphabetic';
+  x.font = `800 ${f}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
+  x.textAlign = 'left'; x.fillText(name, lx, by + f * 1.1);
+  x.font = `700 ${f * .9}px sans-serif`; x.textAlign = 'right';
+  x.fillText(turb > .04 ? 'turbulent' : 'smooth · laminar', lx + lw, by + f * 1.1);
+  // pipe
+  const r = Math.max(0, Math.min(14, lh * .2, lw / 2));
+  x.save();
+  x.beginPath(); x.roundRect(lx, ly, lw, lh, r);
+  x.fillStyle = fill; x.fill();
+  x.lineWidth = 2; x.strokeStyle = ink; x.stroke();
+  x.clip();
+  const n = 7, step = Math.max(4, lw / 90), tt = t;
+  for (let i = 0; i < n; i++) {
+    const yr = (i + .5) / n, base = ly + yr * lh;
+    const yAt = xn => base + turb * lh * .32 * sstep(.08, .6, xn) * noise(xn, tt, i);
+    x.beginPath();
+    for (let px = 0; px <= lw + step; px += step) {
+      const xn = lw > 0 ? px / lw : 0, y = yAt(xn);
+      px === 0 ? x.moveTo(lx + px, y) : x.lineTo(lx + px, y);
+    }
+    x.strokeStyle = ink; x.globalAlpha = .55; x.lineWidth = Math.max(1.5, lh * .018); x.stroke();
+    x.globalAlpha = 1;
+    // tracer dots move with the layer's own speed: middle fast, walls slow
+    const u = 1 - Math.pow(2 * yr - 1, 2), K = 4;
+    for (let k = 0; k < K; k++) {
+      const xn = ((t * .06 * u + k / K + i * .13) % 1 + 1) % 1;
+      x.beginPath(); x.arc(lx + xn * lw, yAt(xn), Math.max(2.5, lh * .035), 0, 7);
+      x.fillStyle = ink; x.fill();
+    }
+  }
+  x.restore();
+  // Reynolds bar
+  const yb = ly + lh + f * 1.7;
+  x.font = `600 ${f * .85}px sans-serif`; x.textAlign = 'left'; x.fillStyle = ink;
+  x.fillText('Reynolds number', lx, yb + f * .3);
+  const bx = lx + lw * .42, bw = lw * .58, bhh = Math.max(6, f * .55);
+  x.globalAlpha = .15; x.fillStyle = ink; x.fillRect(bx, yb - bhh / 2, bw, bhh);
+  x.globalAlpha = .3; x.fillRect(bx + bw / 2, yb - bhh / 2, bw / 2, bhh);
+  x.globalAlpha = 1;
+  const fr = clamp(re * .5, .012, 1);
+  x.fillStyle = ink; x.fillRect(bx, yb - bhh / 2, bw * fr, bhh);
+  x.fillRect(bx + bw / 2 - 1, yb - bhh, 2, bhh * 2);
+}
+
+function draw() {
+  if (!C) return;
+  const {x, W, H} = C;
+  x.clearRect(0, 0, W, H);
+  const f = Math.min(clamp(H * .05, 12, 20), H / 14);
+  const reW = vs / TH, reH = reW / HONEY;
+  lane(x, W, 0, H / 2, 'WATER', 'rgba(70,140,230,.28)', reW, f);
+  lane(x, W, H / 2, H / 2, 'HONEY', 'rgba(232,165,30,.45)', reH, f);
+}
+
+Kit.onShow.card = () => {
+  ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  C = Kit.fitCanvas(Kit.$('cv'));
+  draw();
+};
+
+gsap.ticker.add((time, dt) => {
+  vs += (v - vs) * .12;
+  t += (dt / 1000) * (Kit.calm ? .4 : 1) * (1 + vs * 6);
+  draw();
+});
+
+spd.addEventListener('input', () => {
+  v = spd.value / 100;
+  if (!done && v >= .85) {
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => Kit.onShow.card());
+    if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+  }
+});
+spd.addEventListener('change', () => Kit.haptic('light'));
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#ctl', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  spd.value = 100; spd.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

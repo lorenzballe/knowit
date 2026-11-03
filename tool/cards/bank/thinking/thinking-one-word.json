@@ -1,0 +1,36 @@
+{
+  "id": "thinking-one-word",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Can one word change what you remember?",
+  "answer": "Watch the crash, then the clip goes away and you answer from memory, like a witness. Questions can change what you recall, because a question's words can slip in. Memory is rebuilt, not replayed. Source: Loftus and Palmer, 1974.",
+  "move": "Memory is rebuilt, not replayed. A question’s words can slip in.",
+  "keywords": [
+    "eyewitness memory",
+    "elizabeth loftus",
+    "leading questions",
+    "car crash",
+    "broken glass"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Titled 'One word: Be the witness', asking whether one word can change what you remember. A crash clip can be tapped to rewatch. Below are witness questionnaire items Q4 and Q7, the second asking 'Did you see any broken glass?' with Yes and No buttons, and an 'Answer from memory' button.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Frasi dei Manipolatori: Non Farti Fregare” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=56T0yfszBkk",
+  "written": "2026-11-03"
+}

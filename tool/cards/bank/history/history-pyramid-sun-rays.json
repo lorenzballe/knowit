@@ -1,0 +1,36 @@
+{
+  "id": "history-pyramid-sun-rays",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What shape were the pyramids meant to stand for?",
+  "answer": "The pyramids were meant to stand for the sun's rays, because their sloping sides copy sunlight fanning down from the sky. When new, each pyramid had a shiny metallic top and smooth white sides, a sight to behold.",
+  "move": "A pyramid is sun rays in stone, fanning down from a shining tip.",
+  "keywords": [
+    "pyramids",
+    "sunlight",
+    "egypt",
+    "capstone"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A pyramid drawn without its smooth white sides or shiny top, shown as it looks today. The question asks what shape the pyramids were meant to stand for: add the smooth white sides, the sun's rays, or the sloping sides."
+  },
+  "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=305s",
+  "written": "2026-11-03"
+}

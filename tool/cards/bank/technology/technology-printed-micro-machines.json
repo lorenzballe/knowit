@@ -1,0 +1,37 @@
+{
+  "id": "technology-printed-micro-machines",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How are bending machines made at microscopic size?",
+  "answer": "Bending machines are made with photolithography, the same process used for computer chips. Light through a mask draws the whole shape at once, then etching carves it out. Because a bending machine is one shape with no separate parts, it can be made far smaller than machines with parts.",
+  "move": "Machines that bend can be printed like chips, so they can be microscopic.",
+  "keywords": [
+    "photolithography",
+    "computer chips",
+    "silicon",
+    "etching",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Astute free card on micro machines. It asks how bending machines are made at microscopic size. It shows a tiny, complex mechanism that looks like a circuit board, on silicon with a film that reacts to light."
+  },
+  "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=418s",
+  "written": "2026-11-03"
+}

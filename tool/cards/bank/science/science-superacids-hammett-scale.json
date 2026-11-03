@@ -1,0 +1,37 @@
+{
+  "id": "science-superacids-hammett-scale",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.mixing_cleaners",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can't the pH scale measure the strongest acids?",
+  "answer": "Superacids are so strong that they protonate even weak bases, so the pH scale stops being accurate. Chemists use Hammett's acidity function, H₀, where the lower the value, the stronger the acid. Pure sulfuric acid sits at −12, and fluoroantimonic acid is at about −28.",
+  "move": "Past pH 0, acidity is measured with Hammett's H₀, which runs far below zero.",
+  "keywords": [
+    "superacids",
+    "hammett_function",
+    "sulfuric_acid",
+    "fluoroantimonic_acid",
+    "ph_scale"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A scale running from 0 down past zero to about −28, with two acids to tap and race. The question asks which acid reaches further."
+  },
+  "source": "Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=5G0YVPLSbW8&t=270s",
+  "written": "2026-11-03"
+}

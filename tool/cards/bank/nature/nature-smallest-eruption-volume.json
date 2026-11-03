@@ -1,0 +1,38 @@
+{
+  "id": "nature-smallest-eruption-volume",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "The smallest step on the eruption scale: how much material comes out?",
+  "answer": "The smallest step on the eruption scale, Step 0, is 0.0001 cubic kilometres, or 100,000 cubic metres. That is a cube about 46 m wide, a speck next to a kilometre cube. Each step up is ten times larger, so Step 1 is 0.001 km³.",
+  "move": "Step 0 = 0.0001 km³ erupted; every step up multiplies it by ten.",
+  "keywords": [
+    "volcano",
+    "eruption-scale",
+    "cubic-kilometre",
+    "erupted-material",
+    "geopop"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drag-to-size task asking how wide a cube would hold the material of the smallest eruption step. A kilometre cube is shown for scale, and the reader drags a corner of a cube outline and presses Lock my guess.",
+    "graded": false
+  },
+  "source": "Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-1” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=XWY6k59MgvE&t=94s",
+  "written": "2026-11-03"
+}

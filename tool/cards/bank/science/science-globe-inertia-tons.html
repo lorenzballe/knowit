@@ -1,0 +1,181 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-globe-inertia-tons -->
+<title>Astute free card · The globe's inertia</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:anywhere}
+.ink{fill:var(--k)}
+.sk{stroke:var(--k);fill:none}
+.cardf{fill:var(--c)}
+.glob{fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k)}
+.mer{stroke:color-mix(in srgb,var(--k) 45%,transparent);fill:none}
+.band{fill:color-mix(in srgb,var(--k) 85%,transparent)}
+.lbl{fill:var(--k);font-family:var(--body);font-weight:700}
+.mut{fill:var(--k);opacity:.7;font-family:var(--body);font-weight:600}
+.mono{fill:var(--k);font-family:var(--mono);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Guess · number line">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">INERTIA</span></div>
+    <h2 class="q">How much inertia does the video's giant spinning globe have?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A spinning globe above a number line from 0 to 20 tons"></svg>
+      <div id="why" class="gone"><p class="big">2 to 12 tons</p><p class="body">That much mass resists every change in speed. So you really feel it: you have to push hard just to make the globe spin faster.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the globe along the line to your guess, in tons.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Inertia is resistance to speeding up: this globe's is 2–12 tons.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Does The Earth Spin?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const LO = 2, HI = 12, MAX = 20;
+let v = 1, armed = false, locked = false, revealed = false, animBand = false, dragging = false, phase = 0;
+const G = {};
+const svg = Kit.$('pic');
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  locked = true;
+  const ok = v >= LO && v <= HI, said = `${v} t`;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why');
+  revealed = true; animBand = true;
+  draw();
+  sure.grade(ok, pct, `${said}, ${ok ? 'inside' : 'outside'} 2–12 t`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+function draw() {
+  svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0, 12);
+  const pad = Math.max(f * 1.6, W * 0.08);
+  const x0 = pad, x1 = W - pad, X = t => x0 + (t / MAX) * (x1 - x0);
+  const lineY = H - f * 3.7;
+  const r = Math.max(f * 0.85, 9);
+  const labelY = lineY - r * 2.4 - f * 0.5;
+  const capY = labelY - f * 1.7;
+  const gBot = capY - f * 1.2;
+  const R = Math.max(10, Math.min(W * 0.27, (gBot - f * 0.4) / 2));
+  const cx = W / 2, cy = gBot - R;
+  Object.assign(G, {W, H, f, x0, x1, X, lineY, r, labelY, R, cx, cy});
+
+  // globe
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'gc'}, defs);
+  Kit.mk('circle', {cx, cy, r: R}, cp);
+  Kit.mk('circle', {cx, cy, r: R, class: 'glob', 'stroke-width': Math.max(2, R * 0.03)}, svg);
+  const gg = Kit.mk('g', {'clip-path': 'url(#gc)'}, svg);
+  [-0.6, -0.3, 0, 0.3, 0.6].forEach(s => {
+    const y = cy + s * R, hw = R * Math.sqrt(1 - s * s);
+    Kit.mk('line', {x1: cx - hw, x2: cx + hw, y1: y, y2: y, class: 'mer', 'stroke-width': Math.max(1.2, R * 0.015)}, gg);
+  });
+  G.mers = [];
+  for (let i = 0; i < 6; i++) G.mers.push(Kit.mk('ellipse', {cx, cy, rx: R, ry: R, class: 'mer', 'stroke-width': Math.max(1.2, R * 0.015)}, gg));
+  G.dot = Kit.mk('circle', {cx, cy, r: Math.max(5, R * 0.08), class: 'ink'}, gg);
+  Kit.mk('line', {x1: cx, x2: cx, y1: cy - R * 1.08, y2: cy + R * 1.08, class: 'sk', 'stroke-width': Math.max(2, R * 0.025), 'stroke-linecap': 'round'}, svg);
+  const cap = Kit.mk('text', {x: cx, y: capY, 'text-anchor': 'middle', class: 'mut', 'font-size': f * 0.95}, svg);
+  cap.textContent = 'Same push: more inertia, slower spin-up';
+
+  // axis
+  Kit.mk('line', {x1: x0, x2: x1, y1: lineY, y2: lineY, class: 'sk', 'stroke-width': Math.max(2, f * 0.14), 'stroke-linecap': 'round'}, svg);
+  for (let t = 0; t <= MAX; t += 2) {
+    const big = t % 4 === 0;
+    Kit.mk('line', {x1: X(t), x2: X(t), y1: lineY - (big ? f * 0.45 : f * 0.25), y2: lineY + (big ? f * 0.45 : f * 0.25), class: 'sk', 'stroke-width': Math.max(1.5, f * 0.1)}, svg);
+    if (big) {
+      const tx = Kit.mk('text', {x: X(t), y: lineY + f * 1.6, 'text-anchor': 'middle', class: 'mono', 'font-size': f * 0.9}, svg);
+      tx.textContent = t === MAX ? '20 t' : String(t);
+    }
+  }
+
+  // revealed band 2–12 t
+  if (revealed) {
+    const band = Kit.mk('rect', {x: X(LO), y: lineY - f * 0.35, width: X(HI) - X(LO), height: f * 0.7, rx: f * 0.35, class: 'band'}, svg);
+    const a = Kit.mk('text', {x: X(LO), y: lineY + f * 3.15, 'text-anchor': 'middle', class: 'lbl', 'font-size': f}, svg);
+    a.textContent = '2 t';
+    const b = Kit.mk('text', {x: X(HI), y: lineY + f * 3.15, 'text-anchor': 'middle', class: 'lbl', 'font-size': f}, svg);
+    b.textContent = '12 t';
+    if (animBand && !Kit.calm) {
+      animBand = false;
+      const o = {w: 0};
+      gsap.to(o, {w: X(HI) - X(LO), duration: 0.9, ease: 'power3.out', onUpdate: () => band.setAttribute('width', o.w)});
+      gsap.from([a, b], {opacity: 0, duration: 0.5, delay: 0.4});
+    }
+  }
+
+  // marker: a small globe on the line
+  const mk = Kit.mk('g', {}, svg);
+  const my = lineY - r * 1.35;
+  Kit.mk('path', {d: `M${-r * 0.45},${my + r * 0.8} L0,${lineY - f * 0.1} L${r * 0.45},${my + r * 0.8}Z`, class: 'ink'}, mk);
+  Kit.mk('circle', {cx: 0, cy: my, r, class: 'cardf'}, mk);
+  Kit.mk('circle', {cx: 0, cy: my, r, class: 'sk', 'stroke-width': Math.max(2, r * 0.16)}, mk);
+  Kit.mk('ellipse', {cx: 0, cy: my, rx: r * 0.45, ry: r, class: 'sk', 'stroke-width': Math.max(1.2, r * 0.1)}, mk);
+  Kit.mk('line', {x1: -r, x2: r, y1: my, y2: my, class: 'sk', 'stroke-width': Math.max(1.2, r * 0.1)}, mk);
+  G.lab = Kit.mk('text', {x: 0, y: labelY, 'text-anchor': 'middle', class: 'lbl', 'font-size': f * 1.15}, mk);
+  G.mk = mk;
+  place();
+}
+
+function place() {
+  if (!G.mk) return;
+  const lx = Math.min(Math.max(G.X(v), G.x0), G.x1);
+  G.mk.setAttribute('transform', `translate(${lx},0)`);
+  G.lab.textContent = `${v} t`;
+}
+
+function setV(e) {
+  const rc = svg.getBoundingClientRect();
+  const px = (e.clientX - rc.left) * (G.W / rc.width);
+  let t = Math.round(((px - G.x0) / (G.x1 - G.x0)) * MAX * 2) / 2;
+  t = Math.max(0.5, Math.min(MAX, t));
+  if (t !== v) { v = t; place(); }
+}
+svg.addEventListener('pointerdown', e => {
+  if (locked) return;
+  dragging = true; svg.setPointerCapture && svg.setPointerCapture(e.pointerId); setV(e);
+});
+svg.addEventListener('pointermove', e => { if (dragging && !locked) setV(e); });
+const up = () => {
+  if (!dragging) return; dragging = false;
+  if (!armed && !locked) { armed = true; sure.on(); Kit.haptic('selection'); }
+};
+svg.addEventListener('pointerup', up);
+svg.addEventListener('pointercancel', up);
+
+// spin: the same push gives less spin the more inertia there is
+let last = performance.now();
+gsap.ticker.add(() => {
+  const now = performance.now(), dt = Math.min(0.05, (now - last) / 1000); last = now;
+  if (!G.mers) return;
+  const w = 6 / v * (Kit.calm ? 0.3 : 1);
+  phase += w * dt;
+  G.mers.forEach((m, i) => m.setAttribute('rx', Math.max(0.5, G.R * Math.abs(Math.sin(phase + i * Math.PI / 6)))));
+  const s = Math.sin(phase), c = Math.cos(phase), lat = 0.3;
+  G.dot.setAttribute('cx', G.cx + G.R * Math.cos(lat) * s);
+  G.dot.setAttribute('cy', G.cy - G.R * Math.sin(lat));
+  G.dot.style.opacity = c > 0 ? 1 : 0;
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && G.mk) gsap.from(G.mk, {opacity: 0, y: -12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const rc = svg.getBoundingClientRect();
+  const x = rc.left + (G.X(8) / G.W) * rc.width, y = rc.top + (G.lineY / G.H) * rc.height;
+  const o = {clientX: x, clientY: y, pointerId: 1, bubbles: true};
+  svg.dispatchEvent(new PointerEvent('pointerdown', o));
+  svg.dispatchEvent(new PointerEvent('pointermove', o));
+  svg.dispatchEvent(new PointerEvent('pointerup', o));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1100));
+};
+Kit.single();
+</script>
+</html>

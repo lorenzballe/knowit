@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-titanic-lifeboat-shortfall -->
+<title>Titanic's lifeboats</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#count{display:flex;justify-content:space-between;align-items:flex-end;gap:3cqw}
+#count .n{font:800 max(4.4cqh,22px)/1 var(--display);color:var(--k);font-variant-numeric:tabular-nums}
+#count .l{font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:.5cqh}
+#count .r{text-align:right}
+#count .r .n{color:#c8372d}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#go{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;width:100%}
+#go:active{transform:scale(.98)}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex-shrink:0}
+#why .big{overflow-wrap:anywhere;font-size:max(2.8cqh,17px);line-height:1.15;margin:0}
+#why .body{margin:0}
+.boat{fill:var(--k)}
+.slot{fill:none;stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:1.4;stroke-dasharray:3 3}
+.dot{fill:none;stroke:color-mix(in srgb,var(--k) 40%,transparent);stroke-width:1.3}
+.dot.on{fill:var(--k);stroke:var(--k)}
+.dot.no{fill:#c8372d;stroke:#c8372d}
+.lab{fill:var(--muted);font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap · build up">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TITANIC</span></div>
+    <h2 class="q">Titanic's lifeboats: how many of the 2 200 aboard could they carry?</h2>
+    <div class="stagebox" id="stage">
+      <div id="count">
+        <div><div class="n" id="seats">0</div><div class="l">lifeboat seats · <span id="nb">0</span>/20 boats</div></div>
+        <div class="r"><div class="n" id="left">2 200</div><div class="l">people with no seat</div></div>
+      </div>
+      <svg id="pic"></svg>
+      <button id="go">Lower a lifeboat</button>
+      <div id="why" class="gone"><p class="big">1 178 seats for 2 200 people</p><p class="body">20 lifeboats held 1 178 at most: even in the best case, about half of those aboard had nowhere to go.</p></div>
+    </div>
+    <p class="say" id="say">Tap to lower the lifeboats one by one and fill the seats.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Titanic's 20 lifeboats could carry only about half of the 2 200 aboard.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Titanic, la ricostruzione del naufragio della nave "inaffondabile" il cui relitto giace nell'Oceano” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TOTAL = 2200, BOATS = 20;
+const per = i => i < 18 ? 59 : 58;            // 18×59 + 2×58 = 1 178
+let n = 0, boats = [], dots = [];
+const seatsAt = k => { let s = 0; for (let i = 0; i < k; i++) s += per(i); return s; };
+const fmt = v => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+const svg = Kit.$('pic');
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .8, 12);
+  // boats: 2 rows of 10
+  const bAreaH = H * .24, bw = Math.min(W / 10 * .82, bAreaH / 2 * 2.2), bh = bw * .38;
+  const gapX = (W - bw * 10) / 9, rowH = bAreaH / 2;
+  boats = [];
+  for (let i = 0; i < BOATS; i++) {
+    const c = i % 10, r = Math.floor(i / 10);
+    const x = c * (bw + gapX), y = r * rowH + (rowH - bh) / 2;
+    const d = `M${x},${y} L${x + bw},${y} L${x + bw * .82},${y + bh} L${x + bw * .18},${y + bh} Z`;
+    Kit.mk('path', {d, class: 'slot'}, svg);
+    boats.push(Kit.mk('path', {d, class: 'boat', opacity: i < n ? 1 : 0}, svg));
+  }
+  // people: 220 dots, each 10 people
+  const top = bAreaH + H * .03, labH = fs * 2, gH = H - top - labH;
+  const cols = 20, rows = 11, cell = Math.min(W / cols, gH / rows), rad = cell * .36;
+  const ox = (W - cell * cols) / 2, oy = top + (gH - cell * rows) / 2;
+  dots = [];
+  const filled = Math.round(seatsAt(n) / 10);
+  for (let i = 0; i < 220; i++) {
+    const c = i % cols, r = Math.floor(i / cols);
+    const el = Kit.mk('circle', {cx: ox + c * cell + cell / 2, cy: oy + r * cell + cell / 2, r: rad, class: 'dot'}, svg);
+    if (i < filled) el.classList.add('on'); else if (n === BOATS) el.classList.add('no');
+    dots.push(el);
+  }
+  const t = Kit.mk('text', {x: W / 2, y: H - fs * .5, 'text-anchor': 'middle', class: 'lab', 'font-size': fs}, svg);
+  t.textContent = 'each dot = 10 people aboard';
+}
+
+function update(){
+  const s = seatsAt(n);
+  Kit.$('seats').textContent = fmt(s);
+  Kit.$('left').textContent = fmt(TOTAL - s);
+  Kit.$('nb').textContent = n;
+}
+
+function lower(){
+  if (n >= BOATS) return;
+  const before = Math.round(seatsAt(n) / 10);
+  const b = boats[n]; n++;
+  const after = Math.round(seatsAt(n) / 10);
+  Kit.haptic('light');
+  b.setAttribute('opacity', 1);
+  const fresh = dots.slice(before, after);
+  fresh.forEach(d => d.classList.add('on'));
+  if (!Kit.calm) {
+    gsap.from(b, {y: -12, opacity: 0, duration: .35, ease: 'power3.out'});
+    gsap.from(fresh, {scale: 0, transformOrigin: '50% 50%', transformBox: 'fill-box', stagger: .02, duration: .25, ease: 'back.out(2)'});
+  }
+  update();
+  if (n === BOATS) finish();
+}
+
+function finish(){
+  const rest = dots.slice(Math.round(seatsAt(n) / 10));
+  rest.forEach(d => d.classList.add('no'));
+  if (!Kit.calm) gsap.from(rest, {scale: .4, transformOrigin: '50% 50%', transformBox: 'fill-box', stagger: .004, duration: .3, delay: .2});
+  Kit.haptic('success');
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+}
+
+Kit.$('go').addEventListener('click', lower);
+svg.addEventListener('click', lower);
+Kit.onShow.card = () => { draw(); update(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.slot', {opacity: 0, y: 6, stagger: .03, duration: .35, ease: 'power3.out'}); };
+Kit.play.card = async () => { for (let i = 0; i < BOATS; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 40)); } await new Promise(r => setTimeout(r, 900)); };
+Kit.single();
+</script>
+</html>

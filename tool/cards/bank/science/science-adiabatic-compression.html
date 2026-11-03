@@ -1,0 +1,321 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* The stage: a fire syringe the reader pushes, beside the graph of the air's temperature. */
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#picbox{position:relative;flex:1 1 auto;min-height:0;overflow:hidden}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+#pic:active{cursor:grabbing}
+#pic text{font-family:var(--body);font-weight:600;fill:var(--k)}
+#pic text.b{font-weight:800}
+#pic text.m{font-family:var(--mono);font-weight:500}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:0 0 auto}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="science" data-kind="Push · slow vs fast">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRE SYRINGE</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">What is adiabatic compression, and why can it set cotton on fire?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic" role="img" aria-label="A fire syringe with cotton at the bottom, beside a graph of the air temperature inside it over time"></svg></div>
+      <!-- The why joins the drawing once the reader has pushed both ways; the drawing shrinks to make room. -->
+      <div id="why" class="gone"><p class="body">Squeezing air heats it. Push slowly and the heat leaks away. Push fast and it’s trapped, hot enough to light the cotton on its own.</p></div>
+    </div>
+    <p class="say" id="say">Push the plunger slowly. Then slam it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Adiabatic compression: so fast the heat has no time to escape.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Fire Syringe” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// The model. The plunger squeezes the air from volume 1 to 1/R. Each bit of squeeze heats it the
+// adiabatic way (T·V^0.4 stays the same), and all the while heat leaks out through the glass toward
+// room temperature (T = 1) with time constant TAU. A fast push leaves no time to leak: the air spikes
+// past the cotton's ignition line. A slow push lets the heat seep away as it is made.
+const R = 8, K = 1 - 1 / R, GAM = 1.4, TAU = .25, TIGN = 1.8, TTOP = 2.4, HOLD = .7;
+const HOT = '#ff6a13', HOT2 = '#ffd24a', ASH = '#2b211b', COT = '#fffdf6';
+const FLAME = 'M0 0C-.36 0-.42-.36-.22-.6C-.12-.72-.1-.86 0-1C.08-.84.36-.66.34-.36C.33-.12.2 0 0 0Z';
+const NS = 'http://www.w3.org/2000/svg', svg = Kit.$('pic'), INK = 'fill:var(--k)', LINE = 'stroke:var(--k)';
+const el = (tag, a, p) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const txt = (s, a, p) => { const e = el('text', a, p); e.textContent = s; return e; };
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const S = {p: 0, V: 1, T: 1, mode: 'idle', drag: false, y0: 0, target: 0, started: false, t: 0, pts: [], fired: false, tIgn: null, tNear: null, tBot: null, tUp: null, leak: 0};
+const done = {slow: null, fast: null};
+let g = null, tMax = 2.5, raf = 0, last = 0, hintOn = true, entered = false, revealed = false, nSlow = 0, nFast = 0, bob = null;
+
+const X = t => g.gx0 + t / tMax * (g.gx1 - g.gx0);
+const Y = T => g.gy1 - (T - 1) / (TTOP - 1) * (g.gy1 - g.gy0);
+const pathOf = pts => pts.map((q, i) => (i ? 'L' : 'M') + X(q[0]).toFixed(1) + ' ' + Y(q[1]).toFixed(1)).join('');
+const areaOf = pts => pathOf(pts) + 'L' + X(pts[pts.length - 1][0]).toFixed(1) + ' ' + g.gy1 + 'L' + X(pts[0][0]).toFixed(1) + ' ' + g.gy1 + 'Z';
+const fmt = d => (d < 1 ? d.toFixed(2) : d.toFixed(1)) + ' s push';
+const textW = (e, s) => { try { const l = e.getComputedTextLength(); if (l > 0) return l; } catch (_) {} return s.length * g.fs * .56; };
+const box = e => { try { const b = e.getBBox(); return b.width ? {x: b.x, y: b.y, width: b.width, height: b.height} : null; } catch (_) { return null; } };
+// A label goes to the first spot that stays in the plot and clear of every other label; else it is left out.
+function place(e, cands, boxes) {
+  for (const [x, y, a] of cands) {
+    e.setAttribute('x', x.toFixed(1)); e.setAttribute('y', y.toFixed(1)); e.setAttribute('text-anchor', a);
+    const b = box(e);
+    if (!b) return;
+    const ok = b.x >= g.gx0 + 2 && b.x + b.width <= g.gx1 + 1 && b.y >= 1 && b.y + b.height <= g.gy1 - 1 &&
+      !boxes.some(o => b.x < o.x + o.width + 3 && o.x < b.x + b.width + 3 && b.y < o.y + o.height + 2 && o.y < b.y + b.height + 2);
+    if (ok) { boxes.push(b); return; }
+  }
+  e.remove();
+}
+const flameIcon = (x, y, s, p) => {
+  const k = el('g', {transform: `translate(${x} ${y}) scale(${s * .8} ${s})`}, p);
+  el('path', {d: FLAME, fill: HOT, style: LINE, 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke'}, k);
+  el('path', {d: FLAME, fill: HOT2, transform: 'scale(.5 .55)'}, k);
+  return k;
+};
+function cotton(fill, p) {
+  const {ix, iw, yI1, hc} = g, n = 4, bw = (iw - 1) / n;
+  let d = `M${ix + .5} ${yI1}V${yI1 - hc * .55}`;
+  for (let i = 0; i < n; i++) d += `a${bw / 2} ${hc * .45} 0 0 1 ${bw} 0`;
+  return el('path', {d: d + `V${yI1}Z`, fill, style: LINE, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, p);
+}
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+function draw() {
+  svg.replaceChildren(); svg.style.width = svg.style.height = ''; svg.removeAttribute('width'); svg.removeAttribute('height');
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (!(W > 60 && H > 60)) { g = null; return; }
+  const fs = Math.max(12, f * .85), fb = Math.max(13, f), pad = Math.max(6, f * .45);
+  // The syringe: a handle, a rod, a piston in a glass tube on a base. Its height splits between the
+  // tube and the rod's travel above it, so the handle lands on the tube when the push is complete.
+  const colW = Math.min(W * .34, H * .42), cx = pad + colW / 2;
+  const tubeW = Math.min(colW * .46, H * .13), w = Math.max(2, tubeW * .07);
+  const baseH = Math.max(7, H * .035), handleH = Math.max(11, H * .045), capH = Math.max(4, H * .016), gap = capH + 2;
+  const yBot = H - pad - baseH, B = yBot - pad - handleH - gap;
+  const Lt = (B + K * (2 * w + 1)) / (1 + K * .93), hp = Lt * .07, travel = K * (.93 * Lt - 2 * w - 1);
+  const yTop = yBot - Lt, yI0 = yTop + w, yI1 = yBot - w, yh0 = yI0 + 1, rodLen = w + 1 + travel + gap, handleY0 = yh0 - rodLen - handleH;
+  const iw = tubeW - 2 * w, ix = cx - iw / 2, hc = Math.min((yI1 - yh0 - hp) / R * .72, Lt * .06);
+  const gx0 = pad + colW + Math.max(W * .05, fs), gx1 = W - pad, gy0 = pad + fb * 1.7, gy1 = H - pad - fs * 1.7;
+  g = {W, H, f, fs, colW, cx, tubeW, iw, ix, yI1, yh0, hp, travel, handleY0, handleH, hc, gx0, gx1, gy0, gy1, lw: Math.max(2.5, f * .2)};
+
+  const defs = el('defs', {}, svg);
+  const grad = (tag, a, stops) => { const e = el(tag, a, defs); for (const [o, c, op] of stops) el('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, e); };
+  grad('radialGradient', {id: 'hgGlow'}, [[0, HOT, .55], [1, HOT, 0]]);
+  grad('radialGradient', {id: 'hgFlash'}, [[0, '#fffbe6', 1], [.35, HOT2, .9], [1, HOT, 0]]);
+  grad('linearGradient', {id: 'hgArea', gradientUnits: 'userSpaceOnUse', x1: 0, y1: gy0, x2: 0, y2: gy1}, [[0, HOT2, .7], [.5, HOT, .32], [1, HOT, 0]]);
+  g.clip = el('rect', {x: ix, width: iw, y: yI1, height: 0}, el('clipPath', {id: 'hgClip'}, defs));
+
+  // The graph: air temperature against time, with the line where the cotton catches fire.
+  const yi = Y(TIGN);
+  el('path', {d: `M${gx0} ${gy0 - fs * .55}V${gy1}H${gx1}`, fill: 'none', style: LINE, 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+  el('path', {d: `M${gx0 - fs * .32} ${gy0 - fs * .2}L${gx0} ${gy0 - fs * .62}L${gx0 + fs * .32} ${gy0 - fs * .2}`, fill: 'none', style: LINE, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  const tA = txt('air temperature', {x: gx0 + fs * .6, y: gy0 - fs * .25, 'font-size': fs, class: 'b'}, svg);
+  el('line', {x1: gx0, x2: gx1, y1: yi, y2: yi, style: LINE, 'stroke-width': 1.5, 'stroke-dasharray': '5 4'}, svg);
+  flameIcon(gx1 - fs * .4, yi - 2, fs * 1.05, svg);
+  const tC = txt('cotton ignites', {x: gx1, y: yi + fs * 1.3, 'text-anchor': 'end', 'font-size': fs}, svg);
+  g.fixed = [box(tA), box(tC), {x: gx1 - fs * .8, y: yi - 2 - fs * 1.05, width: fs * .75, height: fs * 1.05}].filter(Boolean);
+  g.stat = el('g', {}, svg);
+  g.liveA = el('path', {fill: 'url(#hgArea)'}, svg);
+  g.liveL = el('path', {fill: 'none', style: LINE, 'stroke-width': g.lw, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+  g.mark = el('g', {}, svg);
+
+  // The syringe, back to front.
+  g.glow = el('ellipse', {cx, cy: yI1, rx: tubeW * 1.15, ry: 1, fill: 'url(#hgGlow)', opacity: 0}, svg);
+  g.flash = el('circle', {cx, cy: yI1 - hc * .6, r: tubeW * .5, fill: 'url(#hgFlash)', opacity: 0}, svg);
+  el('rect', {x: cx - tubeW * .85, y: yBot, width: tubeW * 1.7, height: baseH, rx: Math.min(4, baseH * .35), style: INK}, svg);
+  el('rect', {x: cx - tubeW / 2, y: yTop, width: tubeW, height: Lt, rx: Math.min(6, tubeW * .15), style: INK, 'fill-opacity': .08}, svg);
+  g.gas = el('rect', {x: ix, width: iw, y: yI1, height: 0, fill: HOT, 'fill-opacity': 0}, svg);
+  g.cot = cotton(COT, svg); g.ash = cotton(ASH, svg); g.ash.setAttribute('opacity', S.fired && S.mode !== 'idle' ? 1 : 0);
+  g.flame = el('g', {'clip-path': 'url(#hgClip)', opacity: 0}, svg);
+  const fo = el('g', {transform: `translate(${cx} ${yI1 - hc * .4}) scale(${iw * .8 / .78} ${Math.min(Lt * .3, tubeW * 1.4)})`}, g.flame);
+  g.flick = el('g', {}, fo);
+  el('path', {d: FLAME, fill: HOT}, g.flick); el('path', {d: FLAME, fill: HOT2, transform: 'scale(.55 .6)'}, g.flick);
+  g.plunger = el('g', {}, svg);
+  const handleW = Math.min(colW * .92, tubeW * 2.1), rodW = Math.max(4, tubeW * .22);
+  el('rect', {x: cx - rodW / 2, y: handleY0 + handleH - 1, width: rodW, height: rodLen + 2, style: INK}, g.plunger);
+  el('rect', {x: cx - handleW / 2, y: handleY0, width: handleW, height: handleH, rx: handleH / 2, style: INK}, g.plunger);
+  el('rect', {x: ix, y: yh0, width: iw, height: hp, rx: Math.min(3, hp * .3), style: INK}, g.plunger);
+  for (const k of [.33, .67]) el('line', {x1: ix + 1.5, x2: ix + iw - 1.5, y1: yh0 + hp * k, y2: yh0 + hp * k, style: 'stroke:var(--c)', 'stroke-width': Math.max(1, hp * .09)}, g.plunger);
+  el('rect', {x: cx - tubeW / 2 + w / 2, y: yTop + w / 2, width: tubeW - w, height: Lt - w, rx: Math.min(6, tubeW * .15), fill: 'none', style: LINE, 'stroke-width': w}, svg);
+  el('line', {x1: ix + iw * .2, x2: ix + iw * .2, y1: yI0 + capH + 3, y2: yI1 - hc - 4, stroke: '#fff', 'stroke-opacity': .4, 'stroke-width': Math.max(1.5, iw * .08), 'stroke-linecap': 'round'}, svg);
+  el('rect', {x: cx - tubeW / 2 - w, y: yTop - capH + w, width: tubeW + 2 * w, height: capH, rx: Math.min(2, capH * .3), style: INK}, svg);
+  // Heat leaking out through the glass: little waves that drift away from the tube.
+  const L = Math.max(6, Math.min((colW - tubeW) / 2 * .42, tubeW * .5)), amp = L * .2;
+  g.sqL = L; g.sq = [];
+  for (const side of [-1, 1]) for (let i = 0; i < 3; i++) g.sq.push({side, i, e: el('path', {d: `M0 0q${L / 4} ${-amp * 2} ${L / 2} 0t${L / 2} 0`, fill: 'none', stroke: HOT, 'stroke-width': Math.max(1.8, tubeW * .07), 'stroke-linecap': 'round', opacity: 0}, svg)});
+  // Push here: chevrons beside the rod until the first push.
+  g.hint = el('g', {opacity: hintOn ? 1 : 0}, svg);
+  const cs = fs * .42, hx = cx + tubeW / 2 + fs * .55 + cs, hy = handleY0 + handleH + (travel - capH) * .28;
+  for (let k = 0; k < 3; k++) el('path', {d: `M${hx - cs} ${hy + k * cs * 1.15}l${cs} ${cs * .75}l${cs} ${-cs * .75}`, fill: 'none', style: LINE, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 1 - k * .3}, g.hint);
+
+  graphStatic();
+  if (hintOn && entered) startBob();
+  render(performance.now() / 1000);
+}
+
+// Ticks and the finished pushes, kept side by side: they move when the time axis grows.
+function graphStatic() {
+  if (!g) return;
+  const {fs, gx0, gx1, gy1} = g, st = g.stat, boxes = g.fixed.slice();
+  st.replaceChildren();
+  const step = tMax > 5.5 ? 2 : 1;
+  for (let s = step; s <= tMax + 1e-6; s += step) {
+    const x = X(s);
+    el('line', {x1: x, x2: x, y1: gy1, y2: gy1 + fs * .35, style: LINE, 'stroke-width': 1.5}, st);
+    txt(s + ' s', {x: Math.min(x, gx1 - fs * .9), y: gy1 + fs * 1.35, 'text-anchor': 'middle', 'font-size': fs, class: 'm'}, st);
+  }
+  const trs = [done.fast, done.slow].filter(Boolean);
+  for (const tr of trs) el('path', {d: areaOf(tr.pts), fill: 'url(#hgArea)'}, st);
+  for (const tr of trs) el('path', {d: pathOf(tr.pts), fill: 'none', style: LINE, 'stroke-width': g.lw, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, st);
+  for (const tr of trs) {
+    let m = tr.pts[0]; for (const q of tr.pts) if (q[1] > m[1]) m = q;
+    const s = fmt(tr.dur), xm = X(m[0]), ym = Y(m[1]), yi = Y(TIGN), e = txt(s, {'font-size': fs, class: 'b'}, st);
+    const xc = clamp(xm, gx0 + textW(e, s) / 2 + fs * .3, gx1 - textW(e, s) / 2);
+    if (tr.fired) {
+      const xi = X(tr.tIgn), k = fs * 1.1, yt = Math.min(ym + fs * .35, yi - fs);
+      flameIcon(xi, yi, k, st); boxes.push({x: xi - .34 * k, y: yi - k, width: .63 * k, height: k});
+      place(e, [[xm + fs * .55, yt, 'start'], [xm - fs * .55, yt, 'end'], [xm + fs * .55, yi - fs * .45, 'start'], [xm + fs * .7, yi + fs * 1.35, 'start'], [xc, ym - fs * .5, 'middle']], boxes);
+    } else {
+      place(e, [[xc, ym - fs * .75, 'middle'], [xm + fs * .5, ym - fs * .45, 'start'], [xc, ym + fs * 1.4, 'middle'], [xm - fs * .5, ym - fs * .45, 'end']], boxes);
+    }
+  }
+}
+
+// One frame of the picture from the state: plunger, hot air, heat leaking out, the live trace.
+function render(now) {
+  if (!g) return;
+  const dy = g.travel * S.p, gTop = g.yh0 + g.hp + dy, G = Math.max(0, g.yI1 - gTop);
+  const h = clamp((S.T - 1) / (TTOP - 1), 0, 1), k = clamp((h - .3) / .6, 0, 1);
+  g.plunger.setAttribute('transform', `translate(0 ${dy.toFixed(2)})`);
+  g.gas.setAttribute('y', gTop); g.gas.setAttribute('height', G);
+  g.gas.setAttribute('fill', `rgb(255,${Math.round(106 + 112 * k)},${Math.round(19 + 80 * k)})`);
+  g.gas.setAttribute('fill-opacity', Math.min(.95, h * 1.35).toFixed(3));
+  g.clip.setAttribute('y', gTop); g.clip.setAttribute('height', G);
+  g.glow.setAttribute('cy', gTop + G / 2); g.glow.setAttribute('ry', G / 2 + g.tubeW * .55); g.glow.setAttribute('opacity', Math.min(1, h * h * 1.8).toFixed(3));
+  const D = Math.max(2, (g.colW - g.tubeW) / 2 - g.sqL - 4), sp = clamp(G * .3, 5, g.fs * 1.1), yc = gTop + G / 2;
+  for (const q of g.sq) {
+    const ph = (now * 1.3 + q.i / 3 + (q.side > 0 ? .17 : 0)) % 1, x = g.cx + q.side * (g.tubeW / 2 + 2 + ph * D);
+    q.e.setAttribute('transform', `translate(${x.toFixed(1)} ${(yc + (q.i - 1) * sp).toFixed(1)}) scale(${q.side} 1)`);
+    q.e.setAttribute('opacity', (S.leak * Math.sin(Math.PI * ph)).toFixed(3));
+  }
+  if (S.started && S.pts.length > 1) { g.liveL.setAttribute('d', pathOf(S.pts)); g.liveA.setAttribute('d', areaOf(S.pts)); }
+}
+
+// The physics, one time step: squeeze (adiabatic), then leak toward room temperature.
+function step(dt) {
+  if (S.mode === 'push' || S.mode === 'hold') {
+    const np = S.target;
+    if (!S.started && np > .004) { S.started = true; S.t = 0; S.pts = [[0, 1]]; hideHint(); Kit.haptic('light'); }
+    if (!S.started) return;
+    S.t += dt;
+    const nV = 1 - K * np;
+    S.T *= Math.pow(S.V / nV, GAM - 1); S.V = nV; S.p = np;
+    S.T = 1 + (S.T - 1) * Math.exp(-dt / TAU);
+    S.pts.push([S.t, S.T]);
+    if (!S.fired && S.T >= TIGN) ignite();
+    if (S.tNear === null && S.p >= .9) S.tNear = S.t;
+    if (S.tBot === null && S.p >= .999) S.tBot = S.t;
+    const tEnd = S.tBot !== null ? S.tBot : S.tUp;
+    if ((tEnd !== null && S.t - tEnd >= HOLD) || (S.tNear !== null && S.t - S.tNear > 3) || S.t > 12) finish();
+    else if (S.t > tMax - .1) { tMax = Math.ceil(S.t + 1); graphStatic(); }
+  } else if (S.mode === 'back') {
+    S.p *= Math.exp(-dt / .09); S.V = 1 - K * S.p;
+    S.T = 1 + (S.T - 1) * Math.exp(-dt / .1);
+    if (S.p < .004) { S.p = 0; S.V = 1; S.T = 1; S.mode = 'idle'; atRest(); }
+  }
+  S.leak += (clamp((S.T - 1) / (TIGN - 1) * 1.6, 0, 1) - S.leak) * (1 - Math.exp(-dt / .25));
+}
+function frame(ms) {
+  const dt = Math.min(.05, Math.max(0, (ms - last) / 1000)); last = ms;
+  if (!g) { raf = 0; return; }
+  step(dt); render(ms / 1000);
+  raf = (S.mode !== 'idle' || S.leak > .004) ? requestAnimationFrame(frame) : 0;
+}
+function kick() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } }
+
+function ignite() {
+  S.fired = true; S.tIgn = S.t; Kit.haptic('success');
+  const {flash, flame, flick, ash, tubeW, fs} = g;
+  flameIcon(X(S.t), Y(TIGN), fs * 1.1, g.mark);
+  gsap.killTweensOf([flash, flame, flick, ash]);
+  gsap.fromTo(flash, {opacity: Kit.calm ? .6 : 1, attr: {r: tubeW * .5}}, {opacity: 0, attr: {r: tubeW * 2}, duration: .9, ease: 'power2.out'});
+  gsap.to(ash, {opacity: 1, duration: .5, delay: .15});
+  gsap.fromTo(flame, {opacity: 0}, {opacity: 1, duration: .08});
+  gsap.to(flame, {opacity: 0, duration: .5, delay: 1.25});
+  if (!Kit.calm) gsap.fromTo(flick, {scaleY: .78, scaleX: 1.1}, {scaleY: 1.08, scaleX: .92, duration: .09, repeat: 17, yoyo: true, ease: 'sine.inOut', transformOrigin: '50% 100%'});
+}
+function finish() {
+  const tr = {pts: S.pts, dur: S.tNear !== null ? S.tNear : S.tUp !== null ? S.tUp : S.t, fired: S.fired, tIgn: S.tIgn};
+  if (tr.fired) { done.fast = tr; nFast++; } else { done.slow = tr; nSlow++; }
+  S.mode = 'back'; S.drag = false; S.started = false;
+  g.liveL.setAttribute('d', ''); g.liveA.setAttribute('d', ''); g.mark.replaceChildren();
+  tMax = Math.max(tMax, Math.ceil(tr.pts[tr.pts.length - 1][0] + .4));
+  graphStatic();
+  if (!done.fast) say(nSlow > 1 ? 'Faster! Slam it down in one go.' : 'No fire. Now slam it down fast.');
+  else if (!done.slow) say(nFast > 1 ? 'Slower: take a second or two.' : 'It lit! Now push it down slowly.');
+}
+function atRest() {
+  if (S.fired) gsap.to(g.ash, {opacity: 0, duration: .5, delay: .2});
+  if (!revealed && done.slow && done.fast) reveal();
+}
+function say(s) { const e = Kit.$('say'); e.textContent = s; if (!Kit.calm) gsap.fromTo(e, {opacity: .25}, {opacity: 1, duration: .4}); }
+function reveal() {
+  revealed = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => { draw(); if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, duration: .45, stagger: .12, ease: 'power2.out'}); });
+}
+function startBob() { if (bob) bob.kill(); bob = null; if (!g || !hintOn || Kit.calm) return; bob = gsap.to(g.hint, {y: g.fs * .5, duration: .6, repeat: -1, yoyo: true, ease: 'sine.inOut'}); }
+function hideHint() { if (!hintOn) return; hintOn = false; if (bob) bob.kill(); bob = null; gsap.to(g.hint, {opacity: 0, duration: .25}); }
+
+// The reader's push: the plunger follows the finger down, wherever on the drawing the drag starts.
+const toY = e => { const r = svg.getBoundingClientRect(); return (e.clientY - r.top) * g.H / (r.height || 1); };
+svg.addEventListener('pointerdown', e => {
+  if (S.mode !== 'idle' || !g) return;
+  e.preventDefault();
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  Object.assign(S, {drag: true, mode: 'push', y0: toY(e), target: 0, started: false, t: 0, pts: [], fired: false, tIgn: null, tNear: null, tBot: null, tUp: null, p: 0, V: 1, T: 1});
+  gsap.killTweensOf(g.ash); g.ash.setAttribute('opacity', 0);
+  kick();
+});
+addEventListener('pointermove', e => {
+  if (!S.drag || S.mode !== 'push' || !g) return;
+  const pf = clamp((toY(e) - S.y0) / g.travel, 0, 1);
+  S.target = Math.max(S.target, pf > .97 ? 1 : pf);
+});
+const up = () => {
+  if (!S.drag) return; S.drag = false;
+  if (S.mode !== 'push') return;
+  if (!S.started) { S.mode = 'idle'; S.target = 0; return; }
+  if (S.target < .85) { S.mode = 'back'; S.started = false; g.liveL.setAttribute('d', ''); g.liveA.setAttribute('d', ''); say('Push it all the way down.'); return; }
+  S.tUp = S.t; S.mode = 'hold';
+};
+addEventListener('pointerup', up); addEventListener('pointercancel', up);
+
+Kit.onShow.card = draw;
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => { entered = true; if (Kit.calm) return; gsap.from('#pic', {opacity: 0, y: 14, duration: .55, ease: 'power3.out'}); startBob(); };
+// Plays the card through for the checker, which photographs the end too: a slow push, then a slam.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const push = async ms => {
+    if (!g) return;
+    const r = svg.getBoundingClientRect(), k = r.height / g.H, x = r.left + g.cx * k, y = r.top + (g.handleY0 + g.handleH / 2) * k, d = g.travel * k * 1.1;
+    const ev = (type, yy) => svg.dispatchEvent(new PointerEvent(type, {bubbles: true, cancelable: true, clientX: x, clientY: yy, pointerId: 9, pointerType: 'touch', isPrimary: true}));
+    ev('pointerdown', y);
+    const n = Math.max(3, Math.round(ms / 16));
+    for (let i = 1; i <= n; i++) { await wait(ms / n); ev('pointermove', y + d * i / n); }
+    await wait(HOLD * 1000 + 200); ev('pointerup', y + d); await wait(800);
+  };
+  await push(1300); await push(70); await wait(700);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-antarctica-ancient-craton",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do we know rocks under Antarctica are over 3 billion years old?",
+  "answer": "With the ice removed, a drill through East Antarctica reaches igneous and metamorphic rocks. Radiometric dating of these rocks gives ages above 3 billion years. They form an ancient shield, called a craton, that sits under younger layers, while West Antarctica is built very differently.",
+  "move": "East Antarctica hides some of Earth's oldest continent: over 3 billion years.",
+  "keywords": [
+    "antarctica",
+    "east antarctica",
+    "craton",
+    "radiometric dating",
+    "west antarctica"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Cross-section diagram of Antarctica with the ice sheet lifted away, showing an ancient craton under younger layers. The reader is asked to drag a drill bit down through East Antarctica to see how old its rocks are."
+  },
+  "source": "Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=nCRYmQqs-yc&t=90s",
+  "written": "2026-11-03"
+}

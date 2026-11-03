@@ -1,0 +1,36 @@
+{
+  "id": "science-glass-shatters-voice",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When a voice breaks a glass, what happens at the very end?",
+  "answer": "When a voice breaks a glass, the glass shatters. Each note pushes the glass and makes it swing a bit wider, until it bends further than it can take and breaks.",
+  "move": "Small pushes add up into a swing big enough to break the glass.",
+  "keywords": [
+    "glass",
+    "voice",
+    "singing",
+    "geopop"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page titled 'The glass that breaks'. It asks what happens when a voice breaks a glass, and offers a tap-to-sing control that makes a glass wobble in slow motion until it shatters."
+  },
+  "source": "Geopop, “Si può rompere un calice di vetro solo con la voce?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=w7MQKNWAlpA&t=78s",
+  "written": "2026-11-03"
+}

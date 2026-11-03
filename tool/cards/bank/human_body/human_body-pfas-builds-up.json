@@ -1,0 +1,37 @@
+{
+  "id": "human_body-pfas-builds-up",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can tap water with trace PFAS lead to high blood levels?",
+  "answer": "PFAS build up in the body over time: every glass adds a little, and little leaves. So water with just 4 parts per trillion, plus other exposure, can keep blood at 2 parts per billion, 500 times higher than the water.",
+  "move": "Tiny doses that stay add up: trace water can keep blood high.",
+  "keywords": [
+    "pfas",
+    "pfoa",
+    "tap water",
+    "blood",
+    "bioaccumulation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A blood level counter starts at 0 parts per billion beside a glass of tap water. Tapping keeps drinking water with 4 parts per trillion of PFOA, and blood rises toward 2 parts per billion. Asks how trace PFAS in tap water can lead to high blood levels."
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=2531s",
+  "written": "2026-11-03"
+}

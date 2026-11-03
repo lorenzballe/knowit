@@ -1,0 +1,37 @@
+{
+  "id": "science-magnetic-plasma-cage",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How is plasma held without touching any wall?",
+  "answer": "Plasma at millions of degrees would wreck any material it touched, so nothing solid holds it. Instead, a complex system of magnetic fields keeps it isolated from the walls and under control.",
+  "move": "In a fusion reactor, the real wall is made of magnetic fields.",
+  "keywords": [
+    "nuclear fusion",
+    "plasma",
+    "magnetic fields",
+    "fusion reactor"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A ring-shaped reactor view with a button to release hot plasma into the ring and a switch to turn on the magnets. It asks how plasma is held without touching any wall, and invites you to watch the wall as the plasma is released.",
+    "ground": "#0c1022"
+  },
+  "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=MFSwkFK7_ws&t=199s",
+  "written": "2026-11-03"
+}

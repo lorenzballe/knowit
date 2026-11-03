@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-vine-robot-camera -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body)}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lab{font-family:var(--body);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VINE ROBOT</span></div>
+    <h2 class="q">A vine robot grows from its tip. How does its camera stay on?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Glued to the skin at the very tip</button>
+        <button class="opt" data-i="1">An outer frame locks onto a frame inside the tube</button>
+        <button class="opt" data-i="2">Pulled along by a cable from the base</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Two frames, locked through the skin</p><p class="body">The camera sits on an outer frame whose wheels interlock with an inner frame inside the pressurized body, like a roller coaster's wheels around its track. So it can't fall off as the robot grows.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick how the camera is held, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Grip the skin from both sides and you ride the growing tip.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, revealed = false;
+const st = {g: 0, fr: 0};
+const IN = '#e8590c', OUT = '#1971c2';
+let G = null; // geometry + elements
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('why');
+  Kit.$('say').textContent = 'Drag across the robot to make it grow.';
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function reveal() {
+  revealed = true;
+  if (Kit.calm) { st.fr = 1; st.g = .6; draw(); return; }
+  gsap.to(st, {fr: 1, duration: .6, ease: 'power2.out', onUpdate: draw});
+  gsap.to(st, {g: .7, duration: 2.2, delay: .5, ease: 'power1.inOut', onUpdate: draw});
+}
+
+function wheel(par, col, wr) {
+  const g = Kit.mk('g', {}, par);
+  Kit.mk('circle', {r: wr, fill: '#fff', stroke: col, 'stroke-width': wr * .38}, g);
+  Kit.mk('line', {x1: -wr * .7, y1: 0, x2: wr * .7, y2: 0, stroke: col, 'stroke-width': wr * .3, 'stroke-linecap': 'round'}, g);
+  return g;
+}
+
+function build() {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 12);
+  const r = Math.min(H * .2, W * .12), sw = r * .09, wr = r * .17, cy = H * .5;
+  const x0 = W * .05, txA = W * .5, txB = W * .78;
+  const E = {};
+  E.tube = Kit.mk('path', {fill: 'color-mix(in srgb, var(--k) 10%, transparent)', stroke: 'var(--k)', 'stroke-width': sw, 'stroke-linejoin': 'round'}, svg);
+  E.base = Kit.mk('rect', {x: x0 - r * .25, y: cy - r * 1.25, width: r * .3, height: r * 2.5, rx: r * .06, fill: 'var(--k)'}, svg);
+  E.air = Kit.mk('text', {class: 'lab', x: x0 + r * .35, y: cy + fs * .35, 'font-size': fs * .9, fill: 'var(--k)', opacity: .7}, svg);
+  E.air.textContent = 'air inside';
+  E.inner = Kit.mk('g', {}, svg);
+  E.ibars = [0, 1].map(() => Kit.mk('line', {stroke: IN, 'stroke-width': wr * .9, 'stroke-linecap': 'round'}, E.inner));
+  E.istrut = Kit.mk('line', {stroke: IN, 'stroke-width': wr * .9, 'stroke-linecap': 'round'}, E.inner);
+  E.iw = [0, 1, 2, 3].map(() => wheel(E.inner, IN, wr));
+  E.ilab = Kit.mk('text', {class: 'lab', 'text-anchor': 'middle', 'font-size': fs, fill: IN}, E.inner);
+  E.ilab.textContent = 'inner frame';
+  E.outer = Kit.mk('g', {}, svg);
+  E.obar = Kit.mk('path', {fill: 'none', stroke: OUT, 'stroke-width': wr * .9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.outer);
+  E.ow = [0, 1, 2, 3].map(() => wheel(E.outer, OUT, wr));
+  E.olab = Kit.mk('text', {class: 'lab', 'text-anchor': 'middle', 'font-size': fs, fill: OUT}, E.outer);
+  E.olab.textContent = 'outer frame';
+  E.cam = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: 0, y: -r * .32, width: r * .55, height: r * .64, rx: r * .1, fill: '#1d1d1f'}, E.cam);
+  Kit.mk('circle', {cx: r * .55, cy: 0, r: r * .2, fill: '#1d1d1f'}, E.cam);
+  Kit.mk('circle', {cx: r * .58, cy: 0, r: r * .11, fill: '#4dabf7'}, E.cam);
+  E.clab = Kit.mk('text', {class: 'lab', 'text-anchor': 'middle', 'font-size': fs, fill: 'var(--k)'}, svg);
+  E.clab.textContent = 'camera';
+  E.qm = Kit.mk('text', {'text-anchor': 'middle', 'font-size': fs * 2.2, 'font-family': 'var(--display)', 'font-weight': 800, fill: 'var(--k)'}, svg);
+  E.qm.textContent = '?';
+  G = {W, H, fs, r, sw, wr, cy, x0, txA, txB, E};
+  draw();
+}
+
+function draw() {
+  if (!G) return;
+  const {fs, r, sw, wr, cy, x0, txA, txB, E} = G;
+  const tx = txA + (txB - txA) * st.g;
+  const k = r * .55;
+  E.tube.setAttribute('d', `M${x0},${cy - r} L${tx},${cy - r} C${tx + k},${cy - r} ${tx + k},${cy + r} ${tx},${cy + r} L${x0},${cy + r} Z`);
+  const fx0 = tx - r * 1.15, fx1 = tx - r * .3;
+  const wx = [fx0 + r * .15, fx1 - r * .1];
+  const yi = [cy - r + sw / 2 + wr, cy + r - sw / 2 - wr];
+  const yo = [cy - r - sw / 2 - wr, cy + r + sw / 2 + wr];
+  const ang = (tx - txA) / wr * 180 / Math.PI;
+  E.ibars.forEach((b, i) => { b.setAttribute('x1', fx0); b.setAttribute('x2', fx1); b.setAttribute('y1', yi[i]); b.setAttribute('y2', yi[i]); });
+  E.istrut.setAttribute('x1', fx0); E.istrut.setAttribute('x2', fx0); E.istrut.setAttribute('y1', yi[0]); E.istrut.setAttribute('y2', yi[1]);
+  E.iw.forEach((w, i) => w.setAttribute('transform', `translate(${wx[i % 2]},${yi[i >> 1]}) rotate(${-ang})`));
+  E.ilab.setAttribute('x', (fx0 + fx1) / 2 + r * .1); E.ilab.setAttribute('y', cy + fs * .35);
+  const fr = tx + r * .62;
+  E.obar.setAttribute('d', `M${fx0},${yo[0]} L${fr},${yo[0]} L${fr},${yo[1]} L${fx0},${yo[1]}`);
+  E.ow.forEach((w, i) => w.setAttribute('transform', `translate(${wx[i % 2]},${yo[i >> 1]}) rotate(${ang})`));
+  E.olab.setAttribute('x', (fx0 + fr) / 2); E.olab.setAttribute('y', yo[1] + wr + fs * 1.3);
+  E.cam.setAttribute('transform', `translate(${fr},${cy})`);
+  E.clab.setAttribute('x', fr + r * .35); E.clab.setAttribute('y', yo[0] - wr - fs * .7);
+  E.inner.setAttribute('opacity', st.fr); E.outer.setAttribute('opacity', st.fr);
+  E.qm.setAttribute('x', tx + r * .5); E.qm.setAttribute('y', cy + r + sw + fs * 2);
+  E.qm.setAttribute('opacity', 1 - st.fr);
+  // keep the two inside labels apart
+  const a = E.air.getBBox(), b = E.ilab.getBBox();
+  E.air.setAttribute('visibility', a.x + a.width + fs * .6 < b.x || st.fr < .5 ? 'visible' : 'hidden');
+}
+
+const pic = Kit.$('pic');
+let dragging = false;
+function setFrom(e) {
+  if (!G) return;
+  const rc = pic.getBoundingClientRect();
+  const x = (e.clientX - rc.left) / rc.width * G.W;
+  const g = Math.max(0, Math.min(1, (x - G.txA) / (G.txB - G.txA)));
+  gsap.killTweensOf(st, 'g');
+  if (Math.abs(g - st.g) > .02) Kit.haptic('light');
+  st.g = g; draw();
+}
+pic.addEventListener('pointerdown', e => { if (!revealed) return; dragging = true; pic.setPointerCapture(e.pointerId); setFrom(e); });
+pic.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+pic.addEventListener('pointerup', () => dragging = false);
+pic.addEventListener('pointercancel', () => dragging = false);
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); gsap.from(st, {g: 0, duration: 0}); } };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2900));
+  gsap.killTweensOf(st); st.fr = 1; st.g = .8; draw();
+};
+Kit.single();
+</script>
+</html>

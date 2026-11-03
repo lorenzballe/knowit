@@ -1,0 +1,162 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-rbmk-crane-dome -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#ctl .ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--k);opacity:.8}
+#sl{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;touch-action:none}
+#sl::-webkit-slider-runnable-track{height:max(1cqh,7px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#sl::-moz-range-track{height:max(1cqh,7px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#sl::-webkit-slider-thumb{-webkit-appearance:none;width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:var(--k);margin-top:calc((max(1cqh,7px) - max(4.2cqh,28px))/2);box-shadow:0 .4cqh 1.2cqh rgba(0,0,0,.25)}
+#sl::-moz-range-thumb{width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:var(--k);border:0}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12.5px)/1.3 var(--body);overflow-wrap:anywhere}
+.q,.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Slide · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NUCLEAR DESIGN</span></div>
+    <h2 class="q">Why did Chernobyl's reactor have no strong containment dome over it?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Reactor, crane and containment dome"></svg>
+      <div id="ctl">
+        <input id="sl" type="range" min="0" max="1000" value="0" aria-label="How to swap fuel">
+        <div class="ends"><span>Stop to refuel</span><span>Refuel while running</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">The RBMK was also built to make military plutonium. To pull out the fuel where plutonium formed without stopping the reactor, it needed a huge crane above the core. A dome big enough to cover that crane would have been enormous and far too costly, so it was left out.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Slide right: let the reactor swap fuel without stopping.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Refuelling non-stop for plutonium meant a giant crane, and no dome to cover it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic'), sl = Kit.$('sl');
+let E = null, G = null, p = 0, done = false;
+const RED = '#e0462f', GLOW = '#ffb21e';
+
+function build(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  G = {W, H, fs};
+  const m = (t, a, par = svg) => Kit.mk(t, a, par);
+  const ink = 'var(--k)';
+  E = {};
+  E.hall = m('rect', {fill: 'none', stroke: ink, 'stroke-width': 1.5, 'stroke-dasharray': '2 5', opacity: 0});
+  E.dome = m('path', {fill: 'color-mix(in srgb, var(--k) 6%, transparent)', stroke: ink, 'stroke-linejoin': 'round'});
+  E.domeL = m('text', {'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink, 'text-anchor': 'middle'});
+  E.ground = m('line', {stroke: ink, 'stroke-width': 3, 'stroke-linecap': 'round'});
+  E.core = m('rect', {fill: ink, rx: 4});
+  E.coreL = m('text', {'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: 'var(--c)', 'text-anchor': 'middle'});
+  E.channels = m('g', {});
+  for (let i = 0; i < 7; i++) m('rect', {fill: GLOW, opacity: .55, rx: 1}, E.channels);
+  E.legL = m('line', {stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round'});
+  E.legR = m('line', {stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round'});
+  E.beam = m('rect', {fill: ink, rx: 2});
+  E.cable = m('line', {stroke: ink, 'stroke-width': 1.8});
+  E.rod = m('rect', {fill: GLOW, stroke: RED, 'stroke-width': 1.5, rx: 2});
+  E.craneL = m('text', {'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink, 'text-anchor': 'start'});
+  E.rodL = m('text', {'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: ink, 'text-anchor': 'start'});
+  // cost meter
+  E.costL = m('text', {'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink, x: 6, y: fs * 1.1});
+  E.costBg = m('rect', {x: 6, y: fs * 1.55, height: Math.max(fs * .55, 7), rx: 4, fill: 'color-mix(in srgb, var(--k) 15%, transparent)'});
+  E.costBar = m('rect', {x: 6, y: fs * 1.55, height: Math.max(fs * .55, 7), rx: 4, fill: ink});
+  render(p);
+}
+
+function render(v){
+  if (!E) return;
+  const {W, H, fs} = G;
+  const cx = W / 2, gy = H - fs * .8, top0 = fs * 3.4;
+  const cw = Math.min(W * .4, H * .5), ch = Math.max(H * .13, fs * 2);
+  const T = gy - ch;
+  const avail = T - top0 - fs * 2.7;
+  const craneTop = T - (fs * 1.6 + v * Math.max(avail - fs * 1.6, 10));
+  // ground & core
+  E.ground.setAttribute('x1', 4); E.ground.setAttribute('x2', W - 4);
+  E.ground.setAttribute('y1', gy); E.ground.setAttribute('y2', gy);
+  Object.entries({x: cx - cw / 2, y: T, width: cw, height: ch}).forEach(([k, a]) => E.core.setAttribute(k, a));
+  [...E.channels.children].forEach((r, i) => {
+    const x = cx - cw / 2 + cw * (i + 1) / 8 - 2;
+    r.setAttribute('x', x); r.setAttribute('y', T + 4); r.setAttribute('width', 4); r.setAttribute('height', ch - 8);
+  });
+  E.coreL.setAttribute('x', cx); E.coreL.setAttribute('y', gy - ch * .25); E.coreL.textContent = 'reactor core';
+  // crane
+  const lx = cx - cw * .62, rx = cx + cw * .62, show = v > .02 ? 1 : 0;
+  [[E.legL, lx], [E.legR, rx]].forEach(([l, x]) => { l.setAttribute('x1', x); l.setAttribute('x2', x); l.setAttribute('y1', T); l.setAttribute('y2', craneTop); l.setAttribute('opacity', show); });
+  const bh = Math.max(fs * .55, 6);
+  Object.entries({x: lx - 6, y: craneTop - bh, width: rx - lx + 12, height: bh, opacity: show}).forEach(([k, a]) => E.beam.setAttribute(k, a));
+  // fuel assembly lifted out
+  const rw = Math.max(cw * .07, 8), rh = ch * .9;
+  const rodTop = T + ch * .05 - v * Math.max(T + ch * .05 - (craneTop + fs * 1.2), 0);
+  const rcx = cx + cw / 8;
+  Object.entries({x: rcx - rw / 2, y: rodTop, width: rw, height: rh, opacity: v > .02 ? 1 : 0}).forEach(([k, a]) => E.rod.setAttribute(k, a));
+  E.cable.setAttribute('x1', rcx); E.cable.setAttribute('x2', rcx); E.cable.setAttribute('y1', craneTop); E.cable.setAttribute('y2', rodTop); E.cable.setAttribute('opacity', show);
+  E.craneL.setAttribute('x', lx - 6); E.craneL.setAttribute('y', craneTop - bh - fs * .45);
+  E.craneL.textContent = v > .02 ? 'refuelling crane' : '';
+  const lab = rodTop + rh / 2 + fs * .35;
+  E.rodL.setAttribute('x', rcx + rw / 2 + 6);
+  E.rodL.setAttribute('y', Math.min(lab, T - fs * .5));
+  E.rodL.textContent = v > .15 && rodTop + rh < T - fs * .2 ? 'plutonium fuel' : '';
+  // dome: must enclose everything
+  const ry = gy - craneTop + fs * (v > .02 ? 2.8 : 1.6);
+  const needX = (v > .02 ? cw * .62 + 14 : cw / 2 + 12) + v * cw * .3;
+  const rX = Math.min(Math.max(needX, cw * .62), W / 2 - 4);
+  const drop = v >= .9;
+  E.dome.setAttribute('d', `M${cx - rX},${gy} L${cx - rX},${gy - ry * .35} A${rX},${ry * .65} 0 0 1 ${cx + rX},${gy - ry * .35} L${cx + rX},${gy} Z`);
+  const sw = 3 + v * Math.max(fs * .9, 8);
+  E.dome.setAttribute('stroke-width', drop ? 2 : sw);
+  E.dome.setAttribute('stroke', drop ? RED : 'var(--k)');
+  E.dome.setAttribute('stroke-dasharray', drop ? '8 7' : 'none');
+  E.dome.setAttribute('opacity', drop ? .7 : 1);
+  E.domeL.setAttribute('x', cx);
+  E.domeL.setAttribute('y', Math.max(gy - ry - sw / 2 - fs * .6, top0 - fs * .1));
+  E.domeL.setAttribute('fill', drop ? RED : 'var(--k)');
+  E.domeL.textContent = drop ? 'Dome dropped: too big, too costly' : (v > .5 ? 'Containment dome: huge, heavy' : 'Containment dome');
+  // plain hall instead
+  Object.entries({x: cx - rX + 10, y: craneTop - bh - fs * 1.9, width: 2 * rX - 20, height: gy - (craneTop - bh - fs * 1.9)}).forEach(([k, a]) => E.hall.setAttribute(k, a));
+  E.hall.setAttribute('opacity', drop ? .9 : 0);
+  // cost
+  const mw = Math.min(W * .45, 220);
+  E.costBg.setAttribute('width', mw);
+  E.costBar.setAttribute('width', Math.max(8, mw * (.12 + .88 * v * v)));
+  E.costBar.setAttribute('fill', v > .6 ? RED : 'var(--k)');
+  E.costL.textContent = 'Cost of the dome';
+}
+
+sl.addEventListener('input', () => {
+  p = sl.value / 1000; render(p);
+  if (p >= .9 && !done) finish();
+});
+function finish(){
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+let lastStep = 0;
+sl.addEventListener('input', () => { const s = Math.floor(p * 5); if (s !== lastStep) { lastStep = s; Kit.haptic('selection'); } });
+
+new ResizeObserver(() => { if (E) build(); }).observe(svg);
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
+  const o = {v: 0};
+  gsap.to(o, {v: .12, duration: .5, delay: .6, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => { if (sl.value == 0 || p < .13) render(o.v); }, onComplete: () => render(p)});
+};
+Kit.play.card = async () => {
+  for (let i = 1; i <= 10; i++) { sl.value = i * 100; sl.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 40)); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

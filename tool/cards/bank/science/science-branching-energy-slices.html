@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-branching-energy-slices -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pie{flex:1;min-height:0;width:100%;display:block}
+#read{display:grid;grid-template-columns:1fr auto;gap:.5cqh 3cqw;font:700 max(1.9cqh,12px)/1.25 var(--mono);color:var(--k);padding:0 2cqw}
+#read .l{font-weight:500;color:var(--muted)}
+#read .x{text-decoration:line-through;color:var(--muted);font-weight:500}
+#cut{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;align-self:center;min-width:60%}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · slice the universe">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MANY WORLDS</span></div>
+    <h2 class="q">If the universe splits into copies, where does the extra energy come from?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pie"></svg>
+      <div id="read">
+        <span class="l">Branches</span><span id="rN">1</span>
+        <span class="l">Energy in each branch</span><span id="rE">100%</span>
+        <span class="l">Whole wave function</span><span id="rT">100%</span>
+        <span class="l">If they were copies</span><span class="x" id="rC">100%</span>
+      </div>
+      <button id="cut">Measure a spin ✂</button>
+      <div id="why" class="gone"><p class="body">Branching doesn’t copy the universe, it slices it. Each branch looks complete from the inside, but carries a smaller share of the total. Add the slices up and the energy of the whole wave function is exactly what it was.</p></div>
+    </div>
+    <p class="say" id="say">Tap to measure a spin. Watch the universe branch.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Branches are slices, not copies: total energy never changes.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAX = 4, svg = Kit.$('pie'), st = {t: 1};
+let L = 0, dim = null;
+const TAU = Math.PI * 2;
+function pt(cx, cy, r, a){ return [cx + r*Math.cos(a - Math.PI/2), cy + r*Math.sin(a - Math.PI/2)]; }
+function draw(){
+  if (!dim) return;
+  const {W, H, f} = dim, t = st.t;
+  svg.innerHTML = '';
+  const cx = W/2, cy = H/2, r = Math.min(W, H)/2 * 0.88, N = 2**L;
+  if (N === 1) {
+    Kit.mk('circle', {cx, cy, r, fill: 'var(--k)'}, svg);
+    const tx = Kit.mk('text', {x: cx, y: cy, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: 'var(--c)', style: `font:700 ${Math.max(f*1.1,14)}px var(--body)`}, svg);
+    tx.textContent = 'One universe';
+    return;
+  }
+  const P = 0.06;
+  for (let i = 0; i < N; i++) {
+    const nb = b => L === 1 || b % 2 === 1;           // boundary b is freshly cut?
+    const ps = (nb(i) ? P*t : P)/2, pe = (nb((i+1)%N) ? P*t : P)/2;
+    const a0 = i*TAU/N + ps, a1 = (i+1)*TAU/N - pe, am = (a0 + a1)/2;
+    const e = r*0.04*(L === 1 ? t : 1);
+    const ox = e*Math.cos(am - Math.PI/2), oy = e*Math.sin(am - Math.PI/2);
+    const [x0, y0] = pt(cx+ox, cy+oy, r, a0), [x1, y1] = pt(cx+ox, cy+oy, r, a1);
+    const large = (a1 - a0) > Math.PI ? 1 : 0;
+    const up = i % 2 === 0;
+    Kit.mk('path', {d: `M${cx+ox},${cy+oy} L${x0},${y0} A${r},${r} 0 ${large} 1 ${x1},${y1} Z`, fill: 'var(--k)', 'fill-opacity': up ? 0.92 : 0.62}, svg);
+    if (N <= 8) {
+      const [lx, ly] = pt(cx+ox, cy+oy, r*0.62, am);
+      const tx = Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: 'var(--c)', opacity: t, style: `font:700 ${Math.max(f*(N <= 2 ? 1.6 : 1.2),14)}px var(--body)`}, svg);
+      tx.textContent = up ? '↑' : '↓';
+    }
+  }
+}
+function readout(){
+  const N = 2**L, e = 100/N;
+  Kit.$('rN').textContent = N;
+  Kit.$('rE').textContent = (Number.isInteger(e) ? e : e.toFixed(2).replace(/0+$/,'')) + '%';
+  Kit.$('rT').textContent = '100%';
+  Kit.$('rC').textContent = (N*100) + '%';
+}
+Kit.$('cut').addEventListener('click', () => {
+  if (L >= MAX) return;
+  L++; Kit.haptic(L === MAX ? 'success' : 'light'); readout();
+  if (Kit.calm) { st.t = 1; draw(); }
+  else { st.t = 0; gsap.to(st, {t: 1, duration: .7, ease: 'power3.out', onUpdate: draw}); }
+  if (!Kit.calm) gsap.fromTo('#rE,#rC', {scale: 1.25}, {scale: 1, duration: .4, ease: 'power2.out', transformOrigin: 'right center'});
+  if (L === MAX) { Kit.hide('cut'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }
+  else Kit.$('say').textContent = 'Again: every branch splits once more.';
+});
+Kit.onShow.card = () => { dim = Kit.fitSvg(svg); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pie', {scale: .85, opacity: 0, duration: .6, ease: 'back.out(1.6)', transformOrigin: '50% 50%'}); };
+Kit.play.card = async () => { for (let k = 0; k < MAX; k++) { Kit.$('cut').click(); await new Promise(r => setTimeout(r, 850)); } };
+readout();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "psychology-lead-crime-echo",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.anger",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Kids' blood lead rose, then fell. What did US crime do next?",
+  "answer": "Arrested teens were four times as likely to have high lead in their bones as similar teens. Childhood lead is linked to violent, antisocial behaviour. That likely explains some of the US crime wave, but not all of it.",
+  "move": "A child's lead exposure can echo as crime twenty years later.",
+  "keywords": [
+    "lead",
+    "crime",
+    "children",
+    "teenagers",
+    "blood",
+    "united-states"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Guess-the-curve page: a line graph of kids' blood lead levels that rises, then falls. The reader draws the US crime curve from 1960 to 2015 with a finger, then sees the real curve."
+  },
+  "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=1083s",
+  "written": "2026-11-03"
+}

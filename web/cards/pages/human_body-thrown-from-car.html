@@ -1,0 +1,214 @@
+<!doctype html>
+<!-- slug: human_body-thrown-from-car -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#scene{position:relative;flex:1;min-height:0}
+#scene svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#go{align-self:center;font:700 max(2.3cqh,15px)/1.2 var(--body);background:var(--k);color:var(--c);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer;min-height:44px}
+#go:active{transform:scale(.97)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Tap to build · 150 km/h">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CRASH FEEL</span></div>
+    <h2 class="q">How does a MotoGP crash compare to being thrown from a car?</h2>
+    <div class="stagebox" id="stage">
+      <div id="scene"><svg id="sv"></svg></div>
+      <button id="go">Faster · 30 km/h</button>
+      <div id="why" class="gone">
+        <p class="big">Like being thrown off a car roof at 150 km/h</p>
+        <p class="body">That is Valentino Rossi’s own picture of a big crash: motorway, 150 km/h, roof open, you in riding leathers, and someone throws you out. Your body leaves at the car’s speed, and only the road can stop it.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to speed up the car, 30 km/h at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A MotoGP crash is your body meeting the road at motorway speed.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('sv'), go = Kit.$('go');
+const S = {speed: 0, shown: 0, phase: 'drive', open: false};
+const G = {};
+let off = 0;
+const el = (t, a, p) => Kit.mk(t, a, p || svg);
+
+function road() {
+  if (!G.dashR) return;
+  const {W, dw, wm} = G, sh = off % dw;
+  G.dashR.forEach((rc, i) => {
+    const x = i * dw - sh, a = Math.max(0, x), b = Math.min(W, x + dw * .5);
+    rc.setAttribute('x', a); rc.setAttribute('width', Math.max(0, b - a));
+  });
+  const span = W - wm * 2, ws = (off * 1.4) % span;
+  for (const w of G.windL) {
+    const s = ((w.x - ws) % span + span) % span, e = s + w.len;
+    w.a.setAttribute('x1', wm + s); w.a.setAttribute('x2', wm + Math.min(e, span));
+    if (e > span) { w.b.setAttribute('x1', wm); w.b.setAttribute('x2', wm + e - span); }
+    else { w.b.setAttribute('x1', wm); w.b.setAttribute('x2', wm); }
+  }
+}
+
+function draw() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const gy = H * .74, L = Math.min(W * .62, gy * 1.1), r = L * .09, cx = W * .5, x0 = cx - L / 2;
+  const bodyTop = gy - r * 2.5, bodyBot = gy - r * .55, roofY = bodyTop - L * .2;
+  const hx = x0 + L * .5, hy = roofY + L * .085, hr = L * .055;
+  Object.assign(G, {W, H, f, gy, L, r, hx, hy, hr, roofY, dw: W * .18});
+
+  // wind lines
+  G.wind = el('g', {opacity: 0});
+  G.windL = [];
+  const wsw = Math.max(1.5, f * .12);
+  G.wm = wsw;
+  for (let i = 0; i < 12; i++) {
+    const x = Kit.rnd() * W, y = H * .05 + Kit.rnd() * (gy - r * 3 - H * .05), len = W * (.05 + .08 * Kit.rnd());
+    const st = `stroke:var(--k);stroke-width:${wsw};stroke-linecap:round`;
+    const a = el('line', {x1: wsw, y1: y, x2: wsw, y2: y, style: st}, G.wind);
+    const b = el('line', {x1: wsw, y1: y, x2: wsw, y2: y, style: st}, G.wind);
+    G.windL.push({x, len, a, b});
+  }
+  // road
+  el('rect', {x: 0, y: gy, width: W, height: H - gy + 2, style: 'fill:var(--k)'});
+  G.dash = el('g', {});
+  G.dashR = [];
+  const dy = gy + (H - gy) * .5, n = Math.ceil(W / G.dw) + 2;
+  for (let i = 0; i < n; i++) G.dashR.push(el('rect', {x: 0, y: dy - Math.max(H * .006, 1.5), width: 0, height: Math.max(H * .012, 3), rx: 1.5, style: 'fill:var(--c)'}, G.dash));
+  road();
+
+  // cabin
+  const sw = Math.max(L * .02, 2);
+  el('polygon', {points: `${x0 + L * .16},${bodyTop + 1} ${x0 + L * .3},${roofY} ${x0 + L * .7},${roofY} ${x0 + L * .84},${bodyTop + 1}`, style: `fill:color-mix(in srgb,var(--k) 14%,var(--c));stroke:var(--k);stroke-width:${sw};stroke-linejoin:round`});
+  el('line', {x1: hx + L * .14, y1: roofY, x2: hx + L * .14, y2: bodyTop, style: `stroke:var(--k);stroke-width:${sw}`});
+  // sunroof hole
+  el('rect', {x: x0 + L * .39, y: roofY - sw, width: L * .22, height: sw * 2, style: 'fill:var(--c)'});
+
+  // rider
+  G.fig = null;
+  if (S.phase === 'drive') {
+    const g = G.fig = el('g', {});
+    const lim = `stroke:var(--k);stroke-width:${hr * .55};stroke-linecap:round`;
+    el('line', {x1: hx - hr * .3, y1: hy + hr * 3.2, x2: hx - hr * .9, y2: hy + hr * 5.6, style: lim}, g);
+    el('line', {x1: hx + hr * .3, y1: hy + hr * 3.2, x2: hx + hr * .6, y2: hy + hr * 5.6, style: lim}, g);
+    el('rect', {x: hx - hr * .85, y: hy + hr * .8, width: hr * 1.7, height: hr * 2.6, rx: hr * .45, style: 'fill:var(--k)'}, g);
+    el('line', {x1: hx + hr * .5, y1: hy + hr * 1.3, x2: hx + hr * 1.6, y2: hy + hr * 2.4, style: lim}, g);
+    el('circle', {cx: hx, cy: hy, r: hr, style: 'fill:var(--k)'}, g);
+    el('rect', {x: hx - hr * .05, y: hy - hr * .3, width: hr * .95, height: hr * .5, rx: hr * .25, style: 'fill:var(--c)'}, g);
+  }
+  // sunroof lid
+  G.lid = el('rect', {x: x0 + L * .39, y: roofY - L * .035, width: L * .22, height: L * .03, rx: L * .01, style: 'fill:var(--k)'});
+  if (S.open) G.lid.setAttribute('transform', `translate(${-L * .22},0)`);
+
+  // body
+  el('rect', {x: x0, y: bodyTop, width: L, height: bodyBot - bodyTop, rx: r * .7, style: 'fill:var(--k)'});
+  el('line', {x1: x0 + L * .5, y1: bodyTop + r * .3, x2: x0 + L * .5, y2: bodyBot - r * .3, style: `stroke:var(--c);stroke-width:${Math.max(1.5, sw * .6)};opacity:.5`});
+  el('rect', {x: x0 + L - r * .55, y: bodyTop + r * .35, width: r * .4, height: r * .35, rx: r * .1, style: 'fill:var(--c)'});
+
+  // wheels
+  G.wheels = [];
+  for (const wx of [x0 + L * .2, x0 + L * .8]) {
+    const g = el('g', {}), wy = gy - r;
+    el('circle', {cx: wx, cy: wy, r, style: `fill:var(--k);stroke:var(--c);stroke-width:${r * .14}`}, g);
+    el('circle', {cx: wx, cy: wy, r: r * .42, style: 'fill:var(--c)'}, g);
+    for (let a = 0; a < 3; a++) {
+      const t = a * Math.PI * 2 / 3;
+      el('line', {x1: wx, y1: wy, x2: wx + Math.cos(t) * r * .42, y2: wy + Math.sin(t) * r * .42, style: `stroke:var(--k);stroke-width:${r * .12}`}, g);
+    }
+    G.wheels.push({g, wx, wy});
+  }
+
+  // speedometer
+  const R = Math.min(W * .15, H * .16), sx = W - R - W * .05, sy = R * 1.05 + H * .04;
+  const arc = `M${sx - R},${sy} A${R},${R} 0 0 1 ${sx + R},${sy}`;
+  el('path', {d: arc, style: `fill:none;stroke:var(--k);stroke-opacity:.18;stroke-width:${R * .16};stroke-linecap:round`});
+  G.arc = el('path', {d: arc, pathLength: 100, style: `fill:none;stroke:var(--k);stroke-width:${R * .16};stroke-linecap:round;stroke-dasharray:100 100`});
+  G.num = el('text', {x: sx, y: sy - R * .1, 'text-anchor': 'middle', 'font-size': Math.max(R * .6, 16), style: 'fill:var(--k);font-family:var(--mono);font-weight:700'});
+  const u = el('text', {x: sx, y: sy + Math.max(R * .38, 16), 'text-anchor': 'middle', 'font-size': Math.max(f * .75, 12), style: 'fill:var(--k);font-family:var(--body);font-weight:700'});
+  u.textContent = 'km/h';
+  G.sx = sx; G.sy = sy; G.R = R;
+
+  // after the throw: the path the body took
+  if (S.phase === 'done') {
+    el('path', {d: `M${hx},${roofY} Q${hx - L * .12},${H * .02} ${hx - L * .24},${gy - hr} L0,${gy - hr}`, style: `fill:none;stroke:var(--k);stroke-width:${Math.max(2, f * .14)};stroke-dasharray:${f * .5} ${f * .4}`});
+    const fs = Math.max(f * .85, 12);
+    const t1 = el('text', {x: W * .04, y: H * .08 + fs, 'font-size': fs, style: 'fill:var(--k);font-family:var(--body);font-weight:800'});
+    t1.textContent = 'you, thrown out';
+    const t2 = el('text', {x: W * .04, y: H * .08 + fs * 2.4, 'font-size': fs, style: 'fill:var(--k);font-family:var(--body);font-weight:800'});
+    t2.textContent = 'at 150 km/h';
+  }
+}
+
+gsap.ticker.add((t, dt) => {
+  if (!G.dash) return;
+  const v = S.shown / 150;
+  if (!Kit.calm) off += v * G.W * 1.9 * Math.min(dt, 50) / 1000;
+  road();
+  G.wind.setAttribute('opacity', (v * .45).toFixed(3));
+  const a = off / G.r * 57.3;
+  for (const w of G.wheels) w.g.setAttribute('transform', `rotate(${a % 360} ${w.wx} ${w.wy})`);
+  G.num.textContent = Math.round(S.shown);
+  G.arc.style.strokeDashoffset = 100 - v * 100;
+});
+
+function pop() {
+  if (Kit.calm) return;
+  const p = el('text', {x: G.sx, y: G.sy - G.R * 1.05, 'text-anchor': 'middle', 'font-size': Math.max(G.f, 13), style: 'fill:var(--k);font-family:var(--mono);font-weight:700'});
+  p.textContent = '+30';
+  gsap.to(p, {y: -G.f * 1.2, opacity: 0, duration: .8, ease: 'power2.out', onComplete: () => p.remove()});
+}
+
+function finish() {
+  S.phase = 'done';
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(draw);
+}
+
+function throwOut() {
+  S.phase = 'thrown';
+  go.disabled = true;
+  Kit.haptic('light');
+  if (Kit.calm || !G.fig) { finish(); return; }
+  const g = G.fig, {hy, hr, gy, L, hx, H} = G;
+  gsap.set(g, {transformOrigin: '50% 30%'});
+  gsap.timeline({onComplete: finish})
+    .to(g, {y: -L * .3, duration: .16, ease: 'none'})
+    .call(() => svg.appendChild(g))
+    .to(g, {y: H * .1 - hy, x: -L * .1, rotation: -200, duration: .55, ease: 'power2.out'})
+    .to(g, {y: gy - hr * 1.1 - hy, x: -L * .22, rotation: -450, duration: .45, ease: 'power2.in'})
+    .to(g, {x: -(hx + hr * 9), rotation: -810, duration: 1.3, ease: 'power2.in'});
+}
+
+go.addEventListener('click', () => {
+  if (S.phase !== 'drive') return;
+  if (S.speed < 150) {
+    S.speed += 30;
+    gsap.to(S, {shown: S.speed, duration: Kit.calm ? 0 : .6, ease: 'power2.out'});
+    pop(); Kit.haptic('selection');
+    if (S.speed === 150) {
+      S.open = true;
+      gsap.to(G.lid, {x: -G.L * .22, duration: Kit.calm ? 0 : .6, ease: 'power2.inOut'});
+      go.textContent = 'Get thrown out';
+      Kit.$('say').textContent = 'Motorway, 150 km/h, roof open. Now be thrown out.';
+    } else go.textContent = `Faster · ${S.speed + 30} km/h`;
+  } else throwOut();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 6; i++) { go.click(); await w(250); }
+  await w(3200);
+};
+Kit.single();
+</script>
+</html>

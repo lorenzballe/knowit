@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-push-spins-globe -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#wrap{position:relative;flex:1;min-height:0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to build · spin">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TORQUE</span></div>
+    <h2 class="q">How does pushing a globe make it spin like Earth?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="why" class="gone"><p class="body">Your push lands away from the axis, so it makes a torque: a twist. Torque gives angular acceleration, so every push adds spin. Earth turns the same way, from a torque of its own.</p></div>
+    </div>
+    <p class="say" id="say">Tap the globe to push it. Watch the spin build up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A force off the axis makes a torque, and torque speeds up spin.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Does The Earth Spin?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TILT = 0.36, STEP = 1.2, END = 4, MAXP = 6, WMAX = STEP * MAXP;
+let G = null, theta = 0, omega = 0, pushes = 0, done = false;
+const fx = {arrow: 0, slide: 0, glow: 0};
+const D = Math.PI / 180;
+
+// land as dots, from rough blobs
+const blobs = [[48,15,22],[8,20,26],[-18,25,16],[52,90,34],[28,105,22],[45,-100,28],[12,-75,12],[-15,-60,20],[-25,135,14],[72,-40,11],[60,-150,12]];
+const land = [];
+for (let la = -78; la <= 78; la += 5.5) {
+  const step = 5.5 / Math.max(Math.cos(la * D), .2);
+  for (let lo = -180; lo < 180; lo += step) {
+    for (const [bl, bo, r] of blobs) {
+      const c = Math.sin(la*D)*Math.sin(bl*D) + Math.cos(la*D)*Math.cos(bl*D)*Math.cos((lo-bo)*D);
+      if (Math.acos(Math.min(1, c)) < r * D * (0.85 + 0.3 * Kit.rnd())) { land.push([la*D, lo*D]); break; }
+    }
+  }
+}
+function proj(lat, lon) {
+  const x = Math.cos(lat) * Math.sin(lon + theta), y = Math.sin(lat), z = Math.cos(lat) * Math.cos(lon + theta);
+  const yp = y * Math.cos(TILT) - z * Math.sin(TILT), zp = z * Math.cos(TILT) + y * Math.sin(TILT);
+  return [G.cx + G.R * x, G.cy - G.R * yp, zp];
+}
+function line(pts) {
+  const x = G.x; let on = false;
+  x.beginPath();
+  for (const [a, b] of pts) { const [X, Y, Z] = proj(a, b); if (Z > 0) { on ? x.lineTo(X, Y) : x.moveTo(X, Y); on = true; } else on = false; }
+  x.stroke();
+}
+function arrowHead(x, X, Y, dx, dy, s) {
+  const L = Math.hypot(dx, dy) || 1; dx /= L; dy /= L;
+  x.beginPath(); x.moveTo(X + dx * s, Y + dy * s);
+  x.lineTo(X - dy * s * .7, Y + dx * s * .7); x.lineTo(X + dy * s * .7, Y - dx * s * .7); x.closePath(); x.fill();
+}
+function txt(s, X, Y, align, col) {
+  const x = G.x; x.textAlign = align; x.lineWidth = Math.max(3, G.fs * .3); x.lineJoin = 'round';
+  x.strokeStyle = G.bg; x.strokeText(s, X, Y); x.fillStyle = col; x.fillText(s, X, Y);
+}
+function draw() {
+  if (!G) return;
+  const {x, W, H, cx, cy, R, fs, ink} = G;
+  x.clearRect(0, 0, W, H);
+  x.font = `800 ${fs}px ${G.font}`; x.textBaseline = 'alphabetic';
+  // axis stubs
+  x.strokeStyle = ink; x.lineWidth = Math.max(2, R * .025); x.lineCap = 'round';
+  x.beginPath(); x.moveTo(cx, cy + R); x.lineTo(cx, cy + R * 1.14); x.stroke();
+  // ocean
+  const g = x.createRadialGradient(cx - R * .35, cy - R * .4, R * .1, cx, cy, R);
+  g.addColorStop(0, '#3d86e8'); g.addColorStop(1, '#0d2f6e');
+  x.fillStyle = g; x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.fill();
+  // grid
+  x.strokeStyle = 'rgba(255,255,255,.2)'; x.lineWidth = 1;
+  for (let k = 0; k < 12; k++) { const lo = k * 30 * D, p = []; for (let la = -90; la <= 90; la += 6) p.push([la * D, lo]); line(p); }
+  for (let la = -60; la <= 60; la += 30) { const p = []; for (let lo = 0; lo <= 360; lo += 6) p.push([la * D, lo * D]); line(p); }
+  // land
+  const ds = Math.max(1.4, R * .022);
+  for (const [la, lo] of land) {
+    const [X, Y, Z] = proj(la, lo); if (Z <= 0) continue;
+    x.fillStyle = `rgba(150,235,160,${.35 + .65 * Z})`;
+    x.beginPath(); x.arc(X, Y, ds * (.55 + .45 * Z), 0, Math.PI * 2); x.fill();
+  }
+  // a marker to follow
+  const [mX, mY, mZ] = proj(40 * D, 0);
+  if (mZ > 0) { x.fillStyle = '#ffd23f'; x.strokeStyle = '#000'; x.lineWidth = 1.5; x.beginPath(); x.arc(mX, mY, ds * 2.4, 0, Math.PI * 2); x.fill(); x.stroke(); }
+  // rim
+  x.strokeStyle = ink; x.lineWidth = Math.max(2, R * .02); x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.stroke();
+  // north axis
+  const np = cy - R * Math.cos(TILT);
+  x.strokeStyle = ink; x.lineWidth = Math.max(2, R * .025);
+  x.beginPath(); x.moveTo(cx, np); x.lineTo(cx, cy - R * 1.32); x.stroke();
+  x.fillStyle = ink; x.beginPath(); x.arc(cx, np, Math.max(2.5, R * .03), 0, Math.PI * 2); x.fill();
+  // torque arc
+  const ac = cy - R * 1.2, rx = R * .42, ry = rx * Math.sin(TILT) * 1.3;
+  const ga = .3 + .7 * fx.glow, tc = '#ff5a36';
+  x.globalAlpha = .25; x.strokeStyle = ink; x.lineWidth = 1.5;
+  x.beginPath(); x.ellipse(cx, ac, rx, ry, 0, Math.PI, Math.PI * 2); x.stroke();
+  x.globalAlpha = ga; x.strokeStyle = tc; x.fillStyle = tc; x.lineWidth = Math.max(3, R * .035) * (1 + .4 * fx.glow);
+  x.beginPath(); x.ellipse(cx, ac, rx, ry, 0, .3, Math.PI * .92); x.stroke();
+  const u = .3; arrowHead(x, cx + rx * Math.cos(u), ac + ry * Math.sin(u), rx * Math.sin(u), -ry * Math.cos(u), Math.max(8, R * .1));
+  x.globalAlpha = 1;
+  txt('TORQUE', cx + rx + fs * .5, ac + fs * .35, 'left', tc);
+  // force arrow
+  if (fx.arrow > 0.01) {
+    const Y = cy + R * Math.sin(TILT), tip = cx - R * .25 + R * .5 * fx.slide, tail = tip - R * .85;
+    x.globalAlpha = fx.arrow; x.strokeStyle = '#000'; x.lineWidth = Math.max(9, R * .1);
+    x.beginPath(); x.moveTo(tail, Y); x.lineTo(tip - R * .08, Y); x.stroke();
+    x.strokeStyle = '#ff9d1a'; x.lineWidth = Math.max(5, R * .065);
+    x.beginPath(); x.moveTo(tail, Y); x.lineTo(tip - R * .08, Y); x.stroke();
+    x.fillStyle = '#000'; arrowHead(x, tip - R * .1, Y, 1, 0, Math.max(12, R * .16));
+    x.fillStyle = '#ff9d1a'; arrowHead(x, tip - R * .1, Y, 1, 0, Math.max(9, R * .12));
+    txt('FORCE', tail, Y - fs * .9, 'left', '#ff9d1a');
+    x.globalAlpha = 1;
+  }
+  // spin bar
+  const by = H - fs * .9, bx0 = W * .08, bw = W * .84, bh = fs * .75;
+  x.font = `800 ${fs}px ${G.font}`;
+  txt('SPIN SPEED', bx0, by - bh - fs * .45, 'left', ink);
+  txt(`pushes: ${pushes}`, bx0 + bw, by - bh - fs * .45, 'right', ink);
+  x.fillStyle = 'rgba(0,0,0,.18)'; x.beginPath(); x.roundRect(bx0, by - bh, bw, bh, bh / 2); x.fill();
+  x.fillStyle = tc; x.beginPath(); x.roundRect(bx0, by - bh, Math.max(bh, bw * omega / WMAX) * (omega > 0 ? 1 : 0), bh, bh / 2); x.fill();
+  x.strokeStyle = ink; x.lineWidth = 1.5; x.beginPath(); x.roundRect(bx0, by - bh, bw, bh, bh / 2); x.stroke();
+  x.globalAlpha = .45;
+  for (let k = 1; k < MAXP; k++) { const X = bx0 + bw * k / MAXP; x.beginPath(); x.moveTo(X, by - bh); x.lineTo(X, by); x.stroke(); }
+  x.globalAlpha = 1;
+}
+Kit.onShow.card = () => {
+  const c = Kit.$('cv'), r = Kit.fitCanvas(c), cs = getComputedStyle(Kit.$('card'));
+  const W = r.W, H = r.H, fs = Math.max(12, Math.min(H * .045, W * .045));
+  const R = Math.max(30, Math.min(W * .36, (H - fs * 4.6) / 2.55));
+  G = {x: r.x, W, H, fs, R, cx: W / 2, cy: fs * .4 + R * 1.45,
+       ink: cs.getPropertyValue('--k').trim() || '#111', bg: cs.getPropertyValue('--c').trim() || '#fff',
+       font: getComputedStyle(Kit.$('say')).fontFamily || 'sans-serif'};
+  draw();
+};
+gsap.ticker.add((t, dt) => { theta += omega * Math.min(dt, 60) / 1000; draw(); });
+
+function push() {
+  if (pushes >= MAXP) return;
+  pushes++; Kit.haptic('light');
+  const k = Kit.calm ? .3 : 1, w0 = omega;
+  gsap.killTweensOf(fx);
+  const tl = gsap.timeline();
+  tl.set(fx, {arrow: 0, slide: 0})
+    .to(fx, {arrow: 1, duration: .15 * k})
+    .to(fx, {slide: 1, glow: 1, duration: .45 * k, ease: 'power1.inOut'}, '<')
+    .to(fx, {arrow: 0, glow: 0, duration: .4 * k}, '>-0.05');
+  gsap.to({v: w0}, {v: w0 + STEP, duration: .5 * k, ease: 'none', onUpdate() { omega = this.targets()[0].v; }});
+  if (pushes === END && !done) {
+    done = true;
+    setTimeout(() => {
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      requestAnimationFrame(() => Kit.onShow.card());
+    }, 650 * k);
+  }
+}
+Kit.$('wrap').addEventListener('click', push);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.fromTo(fx, {glow: 0}, {glow: 1, duration: .6, yoyo: true, repeat: 1}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < END; i++) { Kit.$('wrap').click(); await new Promise(r => setTimeout(r, 700)); }
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

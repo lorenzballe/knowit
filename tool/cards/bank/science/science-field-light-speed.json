@@ -1,0 +1,37 @@
+{
+  "id": "science-field-light-speed",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How fast do electric and magnetic fields reach a bulb 1 m away?",
+  "answer": "Electric and magnetic fields spread through space at essentially light speed, so they reach a bulb 1 m away in a few nanoseconds. The electrons drift far more slowly. What matters is what happens around the wires, not in them.",
+  "move": "The fields around the wire light the bulb, at light speed, not the slow electrons.",
+  "keywords": [
+    "electricity",
+    "electrons",
+    "electric field",
+    "light speed",
+    "bulb"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A bulb sits 1 m away from a switch in a circuit. The question asks how fast the electric and magnetic fields reach the bulb. Tapping the switch closes the circuit and reveals the answer."
+  },
+  "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=729s",
+  "written": "2026-11-03"
+}

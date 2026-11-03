@@ -1,0 +1,37 @@
+{
+  "id": "history-bermuda-triangle-name",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who coined the name “Bermuda Triangle”, and when?",
+  "answer": "In 1964, journalist Edward Van Winkle Jones kept claiming that strange things happened in the area, all from one mysterious cause. That year another newspaper, citing Jones, introduced the name \"Bermuda Triangle\", and the legend was born. The name was born in print, not out at sea.",
+  "move": "The “Bermuda Triangle” was born in print in 1964, not out at sea.",
+  "keywords": [
+    "bermuda triangle",
+    "edward van winkle jones",
+    "1964 newspaper",
+    "legend",
+    "name origin"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A photo of a 1964 newspaper headline with the words 'Bermuda Triangle' in bold. The question asks who coined the name Bermuda Triangle, and when. A press-and-hold button shows the legend forming."
+  },
+  "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=238s",
+  "written": "2026-11-03"
+}

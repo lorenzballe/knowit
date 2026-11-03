@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-caffeine-steals-seat -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#ctl{display:flex;align-items:center;gap:3cqw;font:700 max(1.9cqh,13px)/1.2 var(--body);color:var(--k)}
+#ctl span{white-space:nowrap}
+#dose{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);color:var(--k);overflow-wrap:anywhere}
+.ink{fill:var(--k)}
+.inkS{stroke:var(--k)}
+.bg{fill:var(--c)}
+.lbl{fill:var(--k);font-family:var(--body);font-weight:700}
+.lblC{fill:var(--c);font-family:var(--body);font-weight:700}
+.mol{fill:#fff;font-family:var(--body);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Slide · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STOLEN SEATS</span></div>
+    <h2 class="q">How does caffeine stop you from feeling tired?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Receptors on a nerve cell, taken by adenosine or by caffeine"></svg>
+      <div id="ctl"><span>No coffee</span><input id="dose" type="range" min="0" max="6" step="0.01" value="0" aria-label="Caffeine"><span>Lots</span></div>
+      <div id="why" class="gone"><p class="body">Caffeine binds to the very receptors meant for adenosine, the tiredness molecule. With the seats taken, adenosine can't attach and signal fatigue. Scientists call this a competitive antagonist.</p></div>
+    </div>
+    <p class="say" id="say">Slide to pour in caffeine and watch who gets the seats.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Caffeine wakes you by stealing the tiredness molecule's seat.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ho bevuto 4 caffè tutti insieme: gli effetti della caffeina sul corpo umano e sul cervello” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 6, ORDER = [2, 4, 0, 5, 1, 3], AC = '#4f6ef2', CC = '#b85a12';
+let k = 0, done = false, D = null;
+
+function hex(cx, cy, r) {
+  let p = [];
+  for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; p.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1)); }
+  return p.join(' ');
+}
+
+function molecule(parent, kind, s, n, d) {
+  const g = Kit.mk('g', {}, parent), col = kind === 'a' ? AC : CC;
+  Kit.mk('rect', {x: -n * 0.4, y: -1, width: n * 0.8, height: d + 1, rx: 2, fill: col, class: 'inkS', 'stroke-width': 1.5}, g);
+  if (kind === 'a') Kit.mk('circle', {cx: 0, cy: -s * 0.75, r: s * 0.78, fill: col, class: 'inkS', 'stroke-width': 2}, g);
+  else Kit.mk('polygon', {points: hex(0, -s * 0.8, s * 0.88), fill: col, class: 'inkS', 'stroke-width': 2}, g);
+  const t = Kit.mk('text', {x: 0, y: -s * 0.75, 'text-anchor': 'middle', 'dominant-baseline': 'central', class: 'mol', 'font-size': Math.max(s * 0.85, 12)}, g);
+  t.textContent = kind === 'a' ? 'A' : 'C';
+  return g;
+}
+
+function build() {
+  const svg = Kit.$('pic');
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0, 12);
+  svg.innerHTML = '';
+  const cell = W / N;
+  const my = H * 0.58;
+  const s = Math.max(10, Math.min(cell * 0.3, (my - 3.9 * f) / 4.9));
+  const n = s * 0.9, d = s * 0.6, r = s * 0.9, lift = s * 2.4;
+  const mt = Math.max(s * 1.1, f * 1.6);
+  const seatY = my - r;
+
+  // legend
+  const l1 = f * 1.1, l2 = f * 2.7;
+  Kit.mk('circle', {cx: f * 0.6, cy: l1, r: f * 0.5, fill: AC}, svg);
+  Kit.mk('text', {x: f * 1.5, y: l1, 'dominant-baseline': 'central', class: 'lbl', 'font-size': f}, svg).textContent = 'Adenosine, the tiredness molecule';
+  Kit.mk('polygon', {points: hex(f * 0.6, l2, f * 0.55), fill: CC}, svg);
+  Kit.mk('text', {x: f * 1.5, y: l2, 'dominant-baseline': 'central', class: 'lbl', 'font-size': f}, svg).textContent = 'Caffeine';
+
+  // membrane
+  Kit.mk('rect', {x: 0, y: my, width: W, height: mt, rx: mt * 0.3, class: 'ink'}, svg);
+  Kit.mk('text', {x: W / 2, y: my + mt / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', class: 'lblC', 'font-size': Math.max(f * 0.85, 12)}, svg).textContent = 'NERVE CELL';
+
+  // signals and bar
+  const barH = Math.max(f * 1, 12), barY = H - barH - 2, labY = barY - f * 0.9;
+  const y1 = my + mt + 4, y2 = labY - f * 1.0;
+  const sigs = [], rec = [], As = [], Cs = [];
+  for (let i = 0; i < N; i++) {
+    const x = cell * (i + 0.5);
+    let p = `M${x},${y1}`, steps = 6, h = (y2 - y1) / steps;
+    for (let j = 1; j <= steps; j++) p += ` L${x + (j % 2 ? s * 0.35 : -s * 0.35)},${y1 + h * j}`;
+    sigs.push(Kit.mk('path', {d: p, fill: 'none', stroke: AC, 'stroke-width': Math.max(3, s * 0.18), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg));
+    rec.push(Kit.mk('path', {d: `M${x - s},${my + 1} L${x - s},${seatY} L${x - n / 2},${seatY} L${x - n / 2},${seatY + d} L${x + n / 2},${seatY + d} L${x + n / 2},${seatY} L${x + s},${seatY} L${x + s},${my + 1} Z`, class: 'ink'}, svg));
+  }
+  Kit.mk('text', {x: 0, y: labY, 'dominant-baseline': 'central', class: 'lbl', 'font-size': f}, svg).textContent = 'Tiredness signal';
+  const cnt = Kit.mk('text', {x: W, y: labY, 'text-anchor': 'end', 'dominant-baseline': 'central', class: 'lbl', 'font-size': f}, svg);
+  Kit.mk('rect', {x: 1, y: barY, width: W - 2, height: barH, rx: barH / 2, fill: 'none', class: 'inkS', 'stroke-width': 2}, svg);
+  const bar = Kit.mk('rect', {x: 1, y: barY, width: W - 2, height: barH, rx: barH / 2, fill: AC}, svg);
+
+  for (let i = 0; i < N; i++) {
+    As.push(molecule(svg, 'a', s, n, d));
+    Cs.push(molecule(svg, 'c', s, n, d));
+  }
+  D = {W, cell, seatY, lift, s, sigs, As, Cs, bar, cnt};
+  update(true);
+}
+
+function update(instant) {
+  if (!D) return;
+  const dur = instant || Kit.calm ? 0 : 0.55;
+  const blockedAt = i => ORDER.indexOf(i) < k;
+  for (let i = 0; i < N; i++) {
+    const x = D.cell * (i + 0.5), b = blockedAt(i);
+    gsap.to(D.As[i], {x, y: b ? D.seatY - D.lift : D.seatY, opacity: b ? 0.45 : 1, duration: dur, ease: 'power3.out', overwrite: true});
+    gsap.to(D.Cs[i], {x: b ? x : x + D.cell * 0.35, y: b ? D.seatY : D.seatY - D.lift - D.s, opacity: b ? 1 : 0, duration: dur, delay: b && dur ? 0.08 : 0, ease: 'back.out(1.6)', overwrite: true});
+    gsap.to(D.sigs[i], {opacity: b ? 0.08 : 1, duration: dur});
+  }
+  const left = N - k;
+  gsap.to(D.bar, {attr: {width: Math.max(0.001, (D.W - 2) * left / N)}, opacity: left ? 1 : 0, duration: dur});
+  D.cnt.textContent = left === 0 ? 'blocked' : `${left} of ${N} receptors`;
+}
+
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+
+Kit.$('dose').addEventListener('input', e => {
+  const nk = Math.round(+e.target.value);
+  if (nk !== k) { k = nk; Kit.haptic('selection'); update(false); }
+  if (k === N) finish();
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !D) return;
+  gsap.from(D.As, {y: '-=' + D.lift, opacity: 0, stagger: .07, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const el = Kit.$('dose');
+  el.value = 6; el.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

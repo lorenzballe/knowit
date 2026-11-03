@@ -1,0 +1,38 @@
+{
+  "id": "science-bank-floor-rubbish",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the bank's floor rest on, letting thieves dig silently?",
+  "answer": "The bank floor sits on metres of fill: soil, shards, tiles, blocks and rubble piled up over decades, maybe centuries. This loose historic rubbish digs out easily, while only the foundations go down to hard tuff.",
+  "move": "Under the vault's floor lay loose historic rubbish, not rock.",
+  "keywords": [
+    "naples",
+    "tuff",
+    "bank robbery",
+    "tunnelling",
+    "made ground"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive card titled Underground asking what the bank's floor rests on, which lets thieves dig silently. Holding the button tunnels under the vault and reveals the answer.",
+    "ground": "#1c1712"
+  },
+  "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=aRTxjOeJRbY&t=391s",
+  "written": "2026-11-03"
+}

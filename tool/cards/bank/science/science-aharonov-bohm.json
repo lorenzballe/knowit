@@ -1,0 +1,37 @@
+{
+  "id": "science-aharonov-bohm",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can a magnet move electrons that never touch its field?",
+  "answer": "Textbooks say an electron feels only the magnetic field where it is. Here, electrons fly past a long coil one at a time, each wave going round both sides, and land as dots that pile into stripes. Where the field is zero, electrons still feel its potential, a effect long dismissed as mere maths.",
+  "move": "Where the field is zero, electrons still feel its potential, long called mere maths.",
+  "keywords": [
+    "aharonov-bohm",
+    "electrons",
+    "magnetic-flux",
+    "tonomura",
+    "solenoid"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page titled 'Slide the flux' showing a long coil with a flux readout from 0.00 to 2 h/e, marked at 0, ½, 1, 1½ and 2. It asks whether a magnet can move electrons that never touch its field, and invites the reader to turn up the coil."
+  },
+  "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=XKSjCOKDtpk",
+  "written": "2026-11-03"
+}

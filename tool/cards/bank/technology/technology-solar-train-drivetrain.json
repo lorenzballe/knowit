@@ -1,0 +1,37 @@
+{
+  "id": "technology-solar-train-drivetrain",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What replaced the diesel engine in the Byron Bay Solar Train?",
+  "answer": "One diesel engine came out. A lithium‑ion battery pack, power inverters and electric traction motors went in, so the train runs on electricity alone. The second diesel stayed, partly to balance the weight.",
+  "move": "Battery, inverters and traction motors together do the diesel's job, electrically.",
+  "keywords": [
+    "byron-bay",
+    "solar-train",
+    "diesel-engine",
+    "lithium-ion-battery",
+    "traction-motors"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A train diagram with two diesel engines. The user can tap or drag the first diesel engine out of the train. The question asks what replaced the diesel engine in the Byron Bay Solar Train. The answer shows a lithium-ion battery pack, power inverters and electric traction motors."
+  },
+  "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=1famKvkfFKM&t=19s",
+  "written": "2026-11-03"
+}

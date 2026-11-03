@@ -1,0 +1,230 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/. -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1cqh}
+#rule{margin:0;font:600 max(1.8cqh,12px)/1.2 var(--mono);color:var(--muted);text-align:center}
+#rule b{color:var(--k);font-weight:800}
+#plot{position:relative;flex:1;min-height:0;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#sv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex:none}
+#why .big{margin:0;font-size:max(3.1cqh,18px);line-height:1.15}
+#why .body{margin:0}
+#ctrl{flex:none;height:max(6.4cqh,48px);display:flex;align-items:center;justify-content:center}
+#ctrl .say{margin:0;text-align:center}
+#go{font:800 max(2.3cqh,15px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:999px;padding:0 8cqw;height:max(5.6cqh,44px);cursor:pointer}
+#sv .grid{stroke:color-mix(in srgb,var(--k) 13%,transparent);stroke-width:1}
+#sv .tick,#sv .axis{fill:var(--muted);font-family:var(--mono);font-weight:600}
+#sv .earth{fill:color-mix(in srgb,var(--k) 7%,transparent)}
+#sv .gnd{stroke:var(--k);stroke-width:2.4;stroke-linecap:round}
+#sv .mtn{fill:color-mix(in srgb,var(--k) 17%,transparent)}
+#sv .ln{fill:none;stroke:var(--k);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+#sv .ev{fill:color-mix(in srgb,var(--k) 8%,transparent);stroke:color-mix(in srgb,var(--k) 32%,transparent);stroke-width:1.3;stroke-linejoin:round}
+#sv .evl{stroke:color-mix(in srgb,var(--k) 50%,transparent);stroke-width:1.3;stroke-dasharray:2 4}
+#sv .gs{stroke:var(--k);stroke-width:1.8;stroke-dasharray:7 6}
+#sv .lab,#sv .hand{fill:var(--k);paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round}
+#sv .lab{font-family:var(--body);font-weight:800}
+#sv .hand{font-family:var(--hand);font-weight:700}
+#sv .tagb,#sv .flag{fill:var(--k)}
+#sv .tagt{fill:var(--c);font-family:var(--mono);font-weight:700}
+#sv .dot{fill:var(--k);stroke:var(--c);stroke-width:2}
+#sv .pole{stroke:var(--k);stroke-width:2;stroke-linecap:round}
+#sv .chev{fill:none;stroke:var(--c);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Aim and launch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE PEAK</span></div>
+    <h2 class="q">How high does the Collatz sequence for 27 climb before descending?</h2>
+    <div class="stagebox" id="stage">
+      <p id="rule"><b>if odd</b> ×3 + 1 &nbsp;·&nbsp; <b>if even</b> ÷ 2</p>
+      <div id="plot"><svg id="sv" aria-label="The path of 27 read as an altitude: it climbs to 9,232 m, above Everest, then falls to 1 at step 111."></svg></div>
+      <div id="why" class="gone"><p class="big" id="big">9,232 m</p><p class="body">An odd number is tripled plus one, then halved: it grows by about half. Land on odd numbers again and again and 27 climbs past Everest, until the halvings win and it falls to 1.</p></div>
+    </div>
+    <div id="ctrl"><p class="say" id="say">Drag to guess the peak, then launch.</p><button id="go" class="gone">Launch 27</button></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Two simple rules lift little 27 to 9,232 before it falls to 1.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// 27's whole path, made by the rule itself: 112 numbers, steps 0 to 111, peak 9,232 at step 77.
+const SEQ = [27];
+while (SEQ[SEQ.length - 1] !== 1) { const n = SEQ[SEQ.length - 1]; SEQ.push(n % 2 ? 3 * n + 1 : n / 2); }
+const N = SEQ.length - 1, PEAK = Math.max(...SEQ), PI = SEQ.indexOf(PEAK);
+const PM = SEQ.map((v, i) => Math.max(...SEQ.slice(0, i + 1)));
+// Everest, drawn as a ghost behind (summit at step ES); only its name is written.
+const EV = 8849, ES = 30;
+const EVP = [[1,0],[6,1300],[10,2100],[13,3300],[16,3900],[19,5300],[22,5900],[25,7200],[27.5,7800],[ES,EV],[32.5,8100],[35,8400],[38,7500],[41,6900],[45,5400],[49,4500],[53,2800],[57,1700],[62,0]];
+const S = {guess: 400, touched: false, yMax: 1000, aimMax: 1000, p: 0, launched: false, peaked: false, done: false, flag: 0, ev: 0, bob: 0};
+const NS = 'http://www.w3.org/2000/svg', svg = Kit.$('sv'), plot = Kit.$('plot'), placed = [];
+const cl = (v, a, b) => Math.max(a, Math.min(b, v)), fmt = v => Math.round(v).toLocaleString('en-US');
+let F = null, GEO = null, G = null, tl = null, bobTw = null, drag = false, py = 0;
+
+function el(tag, at, par) { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); par.appendChild(e); return e; }
+function tx(at, s, par) { const e = el('text', at, par); e.textContent = s; return e; }
+function bb(e) { try { const b = e.getBBox(); return {x: b.x, y: b.y, w: b.width, h: b.height}; } catch (_) { return {x: 0, y: 0, w: 0, h: 0}; } }
+function hits(b, d) { return placed.some(q => b.x < q.x + q.w + d && b.x + b.w + d > q.x && b.y < q.y + q.h + d && b.y + b.h + d > q.y); }
+function nice(x) { const p = Math.pow(10, Math.floor(Math.log10(x))); return [1, 2, 2.5, 5, 10].map(m => m * p).find(v => v >= x); }
+
+function render() {
+  if (!F) return;
+  const W = F.W, H = F.H, f = F.f || 16;
+  const fs = cl(f * .78, 12, 17), Lf = cl(f * 1.1, 15, 24), tf = cl(f * .82, 12.5, 18), hf = cl(f * 1.02, 14, 22), pad = fs * .45;
+  const T = Math.max(Lf * 1.3, 22), B = Math.max(fs * 1.9, 24), x0 = 7, x1 = W - 7, yG = H - B, ph = Math.max(yG - T, 40);
+  let k = 0, t = 0, hv = SEQ[0];
+  if (S.launched) {
+    k = Math.min(Math.floor(S.p), N); t = S.p - k;
+    hv = k < N ? SEQ[k] + (SEQ[k + 1] - SEQ[k]) * t : SEQ[N];
+    S.yMax = Math.max(S.aimMax, Math.max(PM[k], hv) * 1.15);   // the camera pulls back as it climbs
+  }
+  GEO = {yG, ph};
+  const X = i => x0 + (x1 - x0) * i / N, Y = v => yG - v / S.yMax * ph, r1 = v => v.toFixed(1);
+  if (!G || !G.isConnected) G = el('g', {}, svg);
+  G.replaceChildren(); placed.length = 0;
+  const gT = el('g', {}, G);
+  el('rect', {x: 0, y: yG, width: W, height: H - yG, class: 'earth'}, G);
+  if (S.ev > 0) {
+    el('polygon', {points: EVP.map(([s, m]) => r1(X(s)) + ',' + r1(Y(m))).join(' '), class: 'ev', opacity: S.ev}, G);
+    el('line', {x1: X(ES), x2: W, y1: Y(EV), y2: Y(EV), class: 'evl', opacity: S.ev}, G);
+  }
+  const hx = S.launched ? X(k < N ? k + t : N) : X(0), hy = Y(S.launched ? hv : SEQ[0]);
+  if (S.launched) {
+    let d = '';
+    for (let i = 0; i <= k; i++) d += (i ? 'L' : 'M') + r1(X(i)) + ' ' + r1(Y(SEQ[i]));
+    if (k < N) d += 'L' + r1(hx) + ' ' + r1(hy);
+    el('path', {d: 'M' + r1(X(0)) + ' ' + r1(yG) + 'L' + d.slice(1) + 'L' + r1(hx) + ' ' + r1(yG) + 'Z', class: 'mtn'}, G);
+    el('path', {d, class: 'ln'}, G);
+  }
+  el('line', {x1: 0, x2: W, y1: yG, y2: yG, class: 'gnd'}, G);
+  // the reader's guess
+  const gy = Y(S.guess) + (S.touched ? 0 : S.bob * ph * .05);
+  el('line', {x1: 0, x2: W, y1: gy, y2: gy, class: 'gs', opacity: S.touched ? .9 : .5}, G);
+  if (!S.launched) {
+    const hr = cl(f * .8, 11, 16), cx = W - hr - 3, cy = Math.min(gy, yG - hr - 1), c = hr * .38;
+    el('circle', {cx, cy, r: hr, class: 'tagb'}, G);
+    el('path', {d: `M${cx - c} ${cy - c * .4}L${cx} ${cy - c * 1.4}L${cx + c} ${cy - c * .4}M${cx - c} ${cy + c * .4}L${cx} ${cy + c * 1.4}L${cx + c} ${cy + c * .4}`, class: 'chev'}, G);
+  }
+  // the summit flag
+  if (S.peaked) {
+    const px = X(PI), pk = Y(PEAK), s = S.flag, pole = fs * 1.5 * s;
+    el('line', {x1: px, x2: px, y1: pk, y2: pk - pole, class: 'pole'}, G);
+    el('path', {d: `M${px} ${pk - pole}L${px + fs * .95 * s} ${pk - pole + fs * .36 * s}L${px} ${pk - pole + fs * .72 * s}Z`, class: 'flag'}, G);
+    const l = tx({x: px + fs * 1.2, y: pk - fs * .85, 'font-size': Lf, class: 'lab', opacity: s}, '9,232 m', G);
+    let b = bb(l);
+    if (b.x + b.w > W - 2) { l.setAttribute('x', px - fs * .45); l.setAttribute('text-anchor', 'end'); b = bb(l); }
+    placed.push(b);
+  }
+  if (S.ev > 0) placed.push(bb(tx({x: X(ES), y: Y(EV) - fs * .6, 'text-anchor': 'middle', 'font-size': cl(f * .86, 12.5, 18), class: 'lab', opacity: S.ev}, 'Everest', G)));
+  // the climber and its number
+  el('circle', {cx: hx, cy: hy, r: cl(f * .3, 4, 6), class: 'dot'}, G);
+  if (!(S.launched && !S.done && S.p >= PI && S.p < PI + 1.4)) {
+    const g = el('g', {}, G), rc = el('rect', {class: 'tagb'}, g);
+    const tt = tx({'font-size': tf, class: 'tagt', 'text-anchor': 'middle'}, fmt(SEQ[S.launched ? Math.min(N, Math.round(S.p)) : 0]), g);
+    const w = bb(tt).w + tf, h = tf * 1.55;
+    let x = hx + tf * .45, y = hy - tf * .45 - h;
+    if (x + w > W - 2) x = hx - tf * .45 - w;
+    x = Math.max(2, x); if (y < 2) y = Math.min(hy + tf * .45, yG - h - 2);
+    rc.setAttribute('x', x); rc.setAttribute('y', y); rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('rx', h / 2);
+    tt.setAttribute('x', x + w / 2); tt.setAttribute('y', y + h / 2 + tf * .36);
+    placed.push({x, y, w, h});
+  }
+  const gl = tx({'font-size': hf, class: 'hand'}, S.touched ? `your guess: ${fmt(S.guess)} m` : 'drag to guess', G);
+  let best = null;
+  for (const [cx, cy] of [[W * .2, gy - hf * .4], [W * .2, gy + hf * 1.05], [W * .44, gy - hf * .4], [W * .44, gy + hf * 1.05]]) {
+    gl.setAttribute('x', cx); gl.setAttribute('y', cy);
+    const b = bb(gl);
+    if (b.y >= 1 && b.y + b.h <= yG - 1 && b.x + b.w <= W - 2 && !hits(b, pad)) { best = b; break; }
+  }
+  if (!best) { gl.setAttribute('x', W * .2); gl.setAttribute('y', Math.max(gy - hf * .4, hf)); best = bb(gl); }
+  placed.push(best);
+  placed.push(bb(tx({x: 2, y: yG + fs * 1.35, 'font-size': fs, class: 'axis'}, 'step 0', G)));
+  placed.push(bb(tx({x: W - 2, y: yG + fs * 1.35, 'font-size': fs, class: 'axis', 'text-anchor': 'end'}, 'step 111', G)));
+  // the altitude scale, minus any label that would touch another
+  const st = nice(S.yMax / 4.2);
+  for (let v = st; v <= S.yMax * 1.0001; v += st) {
+    const y = Y(v);
+    el('line', {x1: 0, x2: W, y1: y, y2: y, class: 'grid'}, gT);
+    const l = tx({x: 2, y: y - fs * .32, 'font-size': fs, class: 'tick'}, fmt(v) + ' m', gT), b = bb(l);
+    if (b.y < 0 || hits(b, pad)) l.remove(); else placed.push(b);
+  }
+}
+
+function fit() { svg.removeAttribute('width'); svg.removeAttribute('height'); svg.style.width = svg.style.height = ''; F = Kit.fitSvg(svg); render(); }
+
+// Aim: drag sets the guess; holding near the top raises the sky.
+function frac() { const r = svg.getBoundingClientRect(); if (!GEO || !r.height) return 0; return cl((GEO.yG - (py - r.top) * F.H / r.height) / GEO.ph, 0, 1); }
+function setGuess() { const v = frac() * S.yMax, s = v < 100 ? 5 : v < 1000 ? 10 : v < 10000 ? 50 : 100; S.guess = Math.max(30, Math.round(v / s) * s); S.aimMax = S.yMax; render(); }
+plot.addEventListener('pointerdown', e => {
+  if (S.launched || !F) return;
+  drag = true; py = e.clientY;
+  try { plot.setPointerCapture(e.pointerId); } catch (_) {}
+  if (!S.touched) { S.touched = true; if (bobTw) bobTw.kill(); S.bob = 0; Kit.hide('say'); Kit.show('go'); Kit.haptic('selection'); }
+  setGuess();
+});
+plot.addEventListener('pointermove', e => { if (drag && !S.launched) { py = e.clientY; setGuess(); } });
+for (const n of ['pointerup', 'pointercancel']) plot.addEventListener(n, () => { drag = false; });
+gsap.ticker.add(() => {
+  if (!drag || S.launched || !F) return;
+  const fr = frac();
+  if (fr > .88 && S.yMax < 40000) { S.yMax = Math.min(40000, S.yMax * (1 + .045 * (fr - .88) / .12 * gsap.ticker.deltaRatio())); setGuess(); }
+});
+
+// Launch: the rule runs step by step and the camera pulls back as 27 climbs.
+Kit.$('go').addEventListener('click', () => {
+  if (S.launched || !S.touched) return;
+  S.launched = true; drag = false; S.aimMax = S.yMax;
+  Kit.hide('go'); Kit.haptic('light');
+  if (Kit.calm) { finish(); return; }
+  tl = gsap.timeline({onUpdate: render})
+    .to(S, {p: 55, duration: 2.6, ease: 'none'})
+    .to(S, {p: PI, duration: 2.2, ease: 'none'})
+    .call(() => { S.peaked = true; Kit.haptic('success'); })
+    .to(S, {flag: 1, duration: .5, ease: 'back.out(2.2)'})
+    .to(S, {ev: 1, duration: .9, ease: 'power2.out'}, '<')
+    .to(S, {p: N, duration: 2, ease: 'none'}, '-=.35')
+    .call(finish);
+});
+
+function finish() {
+  if (S.done) return;
+  if (tl) { const x = tl; tl = null; x.kill(); }
+  if (bobTw) bobTw.kill();
+  drag = false;
+  Object.assign(S, {touched: true, launched: true, done: true, peaked: true, p: N, flag: 1, ev: 1, bob: 0});
+  const r = PEAK / S.guess;
+  Kit.$('big').textContent = '9,232 m, ' + (r >= 1.5 ? (r >= 10 ? Math.round(r) : Math.round(r * 10) / 10) + '× your guess' : r > .67 ? 'close to your guess' : 'below your guess');
+  Kit.hide('ctrl'); Kit.hide('rule'); Kit.show('why'); Kit.show('keep');
+  render();
+}
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = fit;
+if ('ResizeObserver' in window) new ResizeObserver(() => { if (F) fit(); }).observe(plot);
+// Motion the reader should see starts here: the guess line bobs to invite a drag.
+Kit.onEnter.card = () => {
+  if (Kit.calm || S.touched || bobTw) return;
+  bobTw = gsap.fromTo(S, {bob: -1}, {bob: 1, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: -1, onUpdate: render});
+};
+// Plays the card through for the checker, which photographs the end too.
+const wait = ms => new Promise(r => setTimeout(r, ms));
+Kit.play.card = async () => {
+  const r = plot.getBoundingClientRect(), o = {bubbles: true, cancelable: true, pointerId: 7, pointerType: 'touch', isPrimary: true, clientX: r.left + r.width * .5};
+  plot.dispatchEvent(new PointerEvent('pointerdown', {...o, clientY: r.top + r.height * .6}));
+  await wait(80);
+  plot.dispatchEvent(new PointerEvent('pointermove', {...o, clientY: r.top + r.height * .5}));
+  await wait(80);
+  plot.dispatchEvent(new PointerEvent('pointerup', {...o, clientY: r.top + r.height * .5}));
+  await wait(150);
+  Kit.$('go').click();
+  await wait(300);
+  finish();
+  await wait(800);
+};
+Kit.single();
+</script>
+</html>

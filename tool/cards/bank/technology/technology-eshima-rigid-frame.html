@@ -1,0 +1,167 @@
+<!doctype html>
+<!-- slug: technology-eshima-rigid-frame -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#go{font:700 max(2.1cqh,14px)/1.2 var(--body);background:var(--k);color:var(--c);border:0;border-radius:1.8cqh;padding:1.5cqh 4.5cqw;cursor:pointer;align-self:flex-start}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+#pic text{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Build it · piece by piece">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRIDGES</span></div>
+    <h2 class="q">How long and tall is Eshima Ohashi, and why is it special?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <button id="go">Lay the deck</button>
+      <div id="why" class="gone">
+        <p class="big">1.7 km long, about 45 m high</p>
+        <p class="body">Spread over 1.7 km, a 45 m rise is a gentle slope: the steep look is an illusion. Deck and piers are locked into one rigid frame, the largest in Japan, so the load spreads evenly with no moving parts.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the button to build the bridge, one piece at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Long and low keeps it gentle; one rigid frame shares the load.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+let G = {W:300, H:240, f:14};
+let FAST = false;
+const S = {len:0, rise:0, exK:0, ghost:0, piers:0, truck:-1, load:0};
+let step = 0;
+const BTN = ['Lay the deck','Raise it to 45 m','Fix the piers','Send a truck across'];
+const CAP = ['Eshima Ohashi, side view','1.7 km of road deck','Top at about 45 m · true scale','Piers locked to the deck · one rigid frame','Load spreads evenly · no moving parts'];
+const PIERS = [0.15,0.25,0.35,0.45,0.55,0.65,0.75,0.85];
+const dur = x => (Kit.calm || FAST) ? 0.01 : x;
+const prof = t => Math.pow(Math.sin(Math.PI*t), 2);
+
+function geo(){
+  const {W,H,f} = G;
+  const mL = W*0.07, span = W - 2*mL, sx = span/1700;
+  const wy = H*0.64;
+  const exMax = (wy - 4 - 3.6*f) / (45*sx);
+  const ghostEx = Math.max(1, Math.min(20, exMax));
+  const zoomEx = Math.max(1, Math.min(7, exMax*0.55));
+  const ex = 1 + S.exK*(zoomEx-1);
+  const y = (t, e=ex) => wy - 4 - S.rise*prof(t)*45*sx*e;
+  const x = t => mL + span*t;
+  return {W,H,f,mL,span,sx,wy,ghostEx,zoomEx,ex,x,y};
+}
+const mk = (t,a,p=svg) => Kit.mk(t,a,p);
+
+function path(g, e, upto=1){
+  let d = '';
+  const n = 80;
+  for (let i=0;i<=n;i++){ const t = upto*i/n; d += (i?'L':'M') + g.x(t).toFixed(1) + ' ' + g.y(t,e).toFixed(1); }
+  return d;
+}
+
+function draw(){
+  svg.innerHTML = '';
+  const g = geo(), {W,H,f,wy,mL,span} = g;
+  // caption
+  mk('text',{x:mL, y:f*1.3, 'font-size':f, fill:'currentColor', opacity:.8}).textContent = CAP[step];
+  // water
+  const band = H*0.06;
+  mk('rect',{x:0, y:wy, width:W, height:band, fill:'currentColor', opacity:.14});
+  for (let i=0;i<6;i++){ const xx = W*(i+0.3)/6; mk('path',{d:`M${xx} ${wy+band*0.5} q${f*0.4} ${-f*0.25} ${f*0.8} 0`, fill:'none', stroke:'currentColor', 'stroke-width':1.2, opacity:.3}); }
+  // ghost (how zoom photos look)
+  if (S.ghost > 0.01){
+    mk('path',{d:path(g, g.ghostEx), fill:'none', stroke:'currentColor', 'stroke-width':Math.max(2,f*0.14), 'stroke-dasharray':`${f*0.4} ${f*0.3}`, opacity:.45*S.ghost});
+    const py = g.y(0.5, g.ghostEx);
+    mk('text',{x:W/2, y:py - f*0.7, 'font-size':f*0.9, 'text-anchor':'middle', fill:'currentColor', opacity:.7*S.ghost}).textContent = 'how zoom photos make it look';
+  }
+  // piers
+  if (S.piers > 0.01){
+    PIERS.forEach(t => {
+      const xx = g.x(t), top = g.y(t), bot = top + (wy - top)*S.piers;
+      mk('line',{x1:xx, y1:top, x2:xx, y2:bot, stroke:'currentColor', 'stroke-width':Math.max(2.5,f*0.22), 'stroke-linecap':'butt'});
+      const s = f*0.55*S.piers;
+      mk('rect',{x:xx-s/2, y:top-s/2, width:s, height:s, fill:'currentColor'});
+      if (S.load > 0.01){
+        const a = band*0.8;
+        mk('path',{d:`M${xx-f*0.32} ${wy+2} L${xx+f*0.32} ${wy+2} L${xx} ${wy+2+a} Z`, fill:'currentColor', opacity:.85*S.load});
+      }
+    });
+  }
+  // deck
+  if (S.len > 0.005){
+    mk('path',{d:path(g, g.ex, S.len), fill:'none', stroke:'currentColor', 'stroke-width':Math.max(3,f*0.3), 'stroke-linecap':'round'});
+  }
+  // 45 m mark
+  if (S.rise > 0.01){
+    const py = g.y(0.5);
+    mk('line',{x1:W/2, y1:wy, x2:W/2, y2:py+f*0.2, stroke:'currentColor', 'stroke-width':1.3, 'stroke-dasharray':'3 3', opacity:.6*S.rise});
+    const lbl = mk('text',{x:W/2, y:py - f*1.7, 'font-size':f*1.05, 'text-anchor':'middle', fill:'currentColor', opacity:S.rise, stroke:'var(--c)', 'stroke-width':4, 'paint-order':'stroke'});
+    lbl.textContent = S.exK > 0.05 ? `45 m (height drawn ×${Math.round(g.ex)})` : '45 m';
+  }
+  // truck
+  if (S.truck >= 0){
+    const t = S.truck, xx = g.x(t), yy = g.y(t);
+    const dt = 0.002, ang = Math.atan2(g.y(Math.min(1,t+dt)) - g.y(Math.max(0,t-dt)), g.x(Math.min(1,t+dt)) - g.x(Math.max(0,t-dt))) * 180/Math.PI;
+    const gT = mk('g',{transform:`translate(${xx} ${yy - f*0.15}) rotate(${ang})`});
+    const L = f*1.3, h = f*0.6;
+    mk('rect',{x:-L/2, y:-h, width:L*0.68, height:h, rx:2, fill:'currentColor'}, gT);
+    mk('rect',{x:-L/2+L*0.72, y:-h*0.75, width:L*0.28, height:h*0.75, rx:2, fill:'currentColor'}, gT);
+  }
+  // 1.7 km dimension
+  if (S.len > 0.01){
+    const y1 = wy + band + f*0.9, x2 = mL + span*S.len;
+    mk('line',{x1:mL, y1, x2, y2:y1, stroke:'currentColor', 'stroke-width':1.5, opacity:.8});
+    mk('line',{x1:mL, y1:y1-f*0.35, x2:mL, y2:y1+f*0.35, stroke:'currentColor', 'stroke-width':1.5});
+    mk('line',{x1:x2, y1:y1-f*0.35, x2:x2, y2:y1+f*0.35, stroke:'currentColor', 'stroke-width':1.5});
+    if (S.len > 0.5) mk('text',{x:mL+span/2, y:y1+f*1.6, 'font-size':f*1.1, 'text-anchor':'middle', fill:'currentColor'}).textContent = '1.7 km';
+  }
+}
+
+function fit(){ G = Kit.fitSvg(svg); draw(); }
+new ResizeObserver(() => fit()).observe(svg);
+
+function finish(){
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity:0, y:8, stagger:.1, duration:.4, ease:'power3.out'});
+}
+
+Kit.$('go').addEventListener('click', () => {
+  if (step >= 4) return;
+  step++; Kit.haptic('light');
+  const go = Kit.$('go');
+  if (step < 4) go.textContent = BTN[step]; else go.disabled = true;
+  if (step === 1) gsap.to(S, {len:1, duration:dur(1.2), ease:'power2.inOut', onUpdate:draw});
+  if (step === 2) gsap.timeline({onUpdate:draw})
+      .to(S, {ghost:1, duration:dur(.6), onUpdate:draw})
+      .to(S, {rise:1, duration:dur(1), ease:'power2.out', onUpdate:draw}, '<.2');
+  if (step === 3) gsap.timeline()
+      .to(S, {ghost:0, duration:dur(.4), onUpdate:draw})
+      .to(S, {exK:1, duration:dur(.8), ease:'power2.inOut', onUpdate:draw})
+      .to(S, {piers:1, duration:dur(.9), ease:'power3.out', onUpdate:draw});
+  if (step === 4){
+    S.truck = 0;
+    gsap.timeline({onComplete:finish})
+      .to(S, {load:1, duration:dur(.4), onUpdate:draw})
+      .to(S, {truck:1, duration:dur(3), ease:'none', onUpdate:draw}, 0);
+  }
+  draw();
+});
+
+Kit.onShow.card = () => fit();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity:0, y:10, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  FAST = true;
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i=0;i<4;i++){ Kit.$('go').click(); await w(150); }
+  await w(700);
+};
+Kit.single();
+</script>
+</html>

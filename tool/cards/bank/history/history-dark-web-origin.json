@@ -1,0 +1,38 @@
+{
+  "id": "history-dark-web-origin",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "When did the US government create the Dark Web, and why?",
+  "answer": "In 1998, with the internet growing exponentially, the US government needed a network that was secure, anonymous and secret. Intelligence could travel through it without being intercepted. The Dark Web began as that government tunnel for passing intelligence unseen.",
+  "move": "The Dark Web began as a US government tunnel for passing intelligence unseen.",
+  "keywords": [
+    "dark web",
+    "us government",
+    "internet",
+    "intelligence",
+    "1998"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline you drag to guess the year the US government created the Dark Web. The question asks when it was created and why, with a credit to the source video.",
+    "graded": false
+  },
+  "source": "Geopop, “Dark Web: cos'è di preciso, dove si trova e chi l'ha creato? Spoiler: il governo USA” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=vW8FrJywMhA&t=391s",
+  "written": "2026-11-03"
+}

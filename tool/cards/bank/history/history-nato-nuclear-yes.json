@@ -1,0 +1,37 @@
+{
+  "id": "history-nato-nuclear-yes",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Who decides if the nuclear bombs stored in Italy can be used?",
+  "answer": "The NATO council decides, not the Italian government. NATO is a defensive alliance, so a bomb at Aviano could only be used to defend a member under attack, such as Poland. Italy holds one seat on that council, so the required yes comes from the alliance rather than Rome.",
+  "move": "The bombs sit in Italy, but the yes comes from NATO’s council, not Rome.",
+  "keywords": [
+    "nato",
+    "nuclear weapons",
+    "italy",
+    "aviano",
+    "nato council"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Asks who decides whether the nuclear bombs stored in Italy can be used, offering Rome's Italian government or the NATO council. The revealed answer is the NATO council, with Italy holding one seat, using a Poland-attacked example."
+  },
+  "source": "Geopop, “Perché ci sono così tante basi USA e NATO in Italia? Ecco dove si trovano i 12.000 soldati americani” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=LnPbJEl6dH0&t=385s",
+  "written": "2026-11-03"
+}

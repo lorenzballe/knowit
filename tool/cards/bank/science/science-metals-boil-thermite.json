@@ -1,0 +1,37 @@
+{
+  "id": "science-metals-boil-thermite",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can metals boil during a thermite reaction?",
+  "answer": "Yes. The metal itself boils. Manganese boils at just 2,000°C, aluminum around 2,500°C, iron above 2,800°C. In a thermite melt, those bubbles can be metal turning into gas.",
+  "move": "Metals boil too, just at thousands of degrees, each at its own.",
+  "keywords": [
+    "thermite",
+    "manganese",
+    "aluminum",
+    "iron",
+    "boiling"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks whether metals can boil during a thermite reaction. A drawing of molten metal heats as the reader drags upward, and bubbles form and rise in the melt."
+  },
+  "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=695s",
+  "written": "2026-11-03"
+}

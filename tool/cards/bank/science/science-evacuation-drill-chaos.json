@@ -1,0 +1,36 @@
+{
+  "id": "science-evacuation-drill-chaos",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can't a calm evacuation drill test a real Campi Flegrei escape?",
+  "answer": "A real eruption means chaos: everyone leaves at once, on their own. A small, voluntary, assisted drill never feels that stress, so it cannot expose the problems a drill is meant to find. Like F1 tests that run a few laps at race speed, the page asks readers to flip each switch from drill to real and watch the road.",
+  "move": "A test that is too calm can't find what chaos will break.",
+  "keywords": [
+    "campi-flegrei",
+    "volcano",
+    "evacuation-drill",
+    "geopop"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Cards titled Volcano Drills. Three DRILL switches show a small group of volunteers leaving on schedule with assisted buses. Flipping each switch to real shows everyone leaving at once. The question asks why a calm drill cannot test a real Campi Flegrei escape."
+  },
+  "source": "Geopop, “RISCHIO VULCANICO CAMPI FLEGREI: LA SIMULAZIONE D'EVACUAZIONE FUNZIONERA? Considerazioni e dubbi” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=9fBuH-jXu3Y&t=323s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,205 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-ballast-drains-water -->
+<title>Why are there stones under train tracks?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#btns{display:flex;gap:2.4cqw}
+.opt{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt.done:not(.on){box-shadow:inset 0 0 0 .3cqh var(--k)}
+#why{font:500 max(1.9cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Try both · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RAILWAYS</span></div>
+    <h2 class="q">How does the ballast layer protect the track from water damage?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of a railway track in the rain"></svg>
+      <div id="btns">
+        <button class="opt" data-m="stones">Rain on the stones</button>
+        <button class="opt" data-m="soil">Rain on bare soil</button>
+      </div>
+    </div>
+    <p class="say" id="say">Make it rain on the stones, then on bare soil.</p>
+    <p class="body gone" id="why">The gaps between the stones let rain flow straight through and away from the track. Without them the water stays put, the soil turns to mud and the sleepers sink.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Ballast is a drain: no standing water, no mud under the rails.</div>
+    <div class="foot"><span class="src">Source · Geopop, “A cosa servono le pietre sui binari?” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let S = {}, scene = 'stones', busy = false, fast = false;
+const done = {stones: false, soil: false};
+const WATER = '#3fa9ff';
+
+function draw() {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const cx = W / 2, bt = H * 0.44, gy = H * 0.66, bw = W * 0.94, tw = W * 0.6;
+  const sh = Math.max(10, H * 0.055), sw = W * 0.58;
+  const r = Math.max(6, Math.min(W, H) * 0.032);
+  S = {W, H, f, cx, bt, gy, bw, tw, sh, sw, r};
+
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'bc'}, defs);
+  const pts = `${cx - tw / 2},${bt} ${cx + tw / 2},${bt} ${cx + bw / 2},${gy} ${cx - bw / 2},${gy}`;
+  Kit.mk('polygon', {points: pts}, cp);
+
+  // soil
+  Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, fill: '#7a4e2d'}, svg);
+  for (let i = 0; i < 40; i++) Kit.mk('circle', {cx: Kit.rnd() * W, cy: gy + 6 + Kit.rnd() * (H - gy - 8), r: r * (0.12 + Kit.rnd() * 0.18), fill: '#5e3b20'}, svg);
+  S.mud = Kit.mk('rect', {x: 0, y: gy, width: W, height: H * 0.13, fill: '#3a2513', opacity: 0}, svg);
+  Kit.mk('text', {x: W * 0.04, y: H - f * 0.6, fill: '#fff', 'font-size': Math.max(12, f * 0.8), 'font-weight': 700, 'font-family': 'var(--body)', 'letter-spacing': '.08em'}, svg).textContent = 'SOIL';
+
+  // ballast
+  S.gB = Kit.mk('g', {}, svg);
+  Kit.mk('polygon', {points: pts, fill: '#262626'}, S.gB);
+  const gs = Kit.mk('g', {'clip-path': 'url(#bc)'}, S.gB);
+  let row = 0;
+  for (let y = bt + r * 0.7; y < gy + r; y += r * 1.85, row++) {
+    for (let x = cx - bw / 2 + (row % 2) * r; x < cx + bw / 2 + r; x += r * 2.15) {
+      const px = x + (Kit.rnd() - 0.5) * r * 0.4, py = y + (Kit.rnd() - 0.5) * r * 0.3;
+      const n = 6 + Math.floor(Kit.rnd() * 2), a0 = Kit.rnd() * 6;
+      let p = '';
+      for (let k = 0; k < n; k++) {
+        const a = a0 + k * Math.PI * 2 / n, rr = r * (0.72 + Kit.rnd() * 0.22);
+        p += `${px + Math.cos(a) * rr},${py + Math.sin(a) * rr * 0.85} `;
+      }
+      const g = 140 + Math.floor(Kit.rnd() * 70);
+      Kit.mk('polygon', {points: p, fill: `rgb(${g},${g - 4},${g - 10})`, stroke: '#1a1a1a', 'stroke-width': 1}, gs);
+    }
+  }
+
+  S.puddle = Kit.mk('ellipse', {cx, cy: gy, rx: 0, ry: H * 0.014, fill: WATER, opacity: 0.9}, svg);
+
+  // track
+  S.gT = Kit.mk('g', {}, svg);
+  const sy = bt - sh * 0.45;
+  Kit.mk('rect', {x: cx - sw / 2, y: sy, width: sw, height: sh, rx: sh * 0.15, fill: '#8a8f96', stroke: '#2a2a2a', 'stroke-width': 1.5}, S.gT);
+  [-1, 1].forEach(s => {
+    const x = cx + s * W * 0.17, fw = W * 0.06, hh = sh * 1.1;
+    Kit.mk('rect', {x: x - fw / 2, y: sy - sh * 0.22, width: fw, height: sh * 0.22, fill: '#b8bec7', stroke: '#2a2a2a'}, S.gT);
+    Kit.mk('rect', {x: x - W * 0.008, y: sy - sh * 0.22 - hh * 0.6, width: W * 0.016, height: hh * 0.6, fill: '#b8bec7', stroke: '#2a2a2a'}, S.gT);
+    Kit.mk('rect', {x: x - W * 0.02, y: sy - sh * 0.22 - hh, width: W * 0.04, height: hh * 0.4, rx: 2, fill: '#dfe3e8', stroke: '#2a2a2a'}, S.gT);
+  });
+
+  S.gD = Kit.mk('g', {}, svg);
+  S.cap = Kit.mk('text', {x: cx, y: f * 1.3, 'text-anchor': 'middle', style: 'fill:var(--k)', 'font-size': Math.max(13, f), 'font-weight': 700, 'font-family': 'var(--body)'}, svg);
+
+  // static state after a resize
+  const dy = gy - bt;
+  if (scene === 'stones') { setCap(done.stones ? 'Water runs through the gaps and away' : 'Stones under the sleepers'); }
+  else {
+    gsap.set(S.gB, {opacity: 0});
+    if (scene === 'mud') {
+      gsap.set(S.gT, {y: dy + sh * 0.6, rotation: 3, transformOrigin: '50% 50%'});
+      gsap.set(S.mud, {attr: {opacity: 0.85}}); gsap.set(S.puddle, {attr: {rx: bw * 0.48}});
+      setCap('The water stays: mud, and the track sinks');
+    } else { gsap.set(S.gT, {y: dy}); setCap('No stones: the sleeper sits on soil'); }
+  }
+}
+function setCap(t) { if (S.cap) S.cap.textContent = t; }
+
+function rain(tl, land) {
+  const {H, cx, bw, r} = S;
+  for (let i = 0; i < 44; i++) {
+    const x = cx + (Kit.rnd() - 0.5) * bw * 0.86;
+    const d = Kit.mk('ellipse', {cx: 0, cy: 0, rx: r * 0.22, ry: r * 0.38, fill: WATER, stroke: '#0b4f8a', 'stroke-width': .8}, S.gD);
+    gsap.set(d, {x, y: H * 0.1 - Kit.rnd() * H * 0.05, opacity: 0});
+    const t = i * 0.045;
+    tl.to(d, {opacity: 1, duration: .05}, t);
+    land(d, x, tl, t);
+  }
+}
+function surface(x) {
+  const {cx, bt, gy, tw, bw} = S, a = Math.abs(x - cx);
+  return a < tw / 2 ? bt : bt + (a - tw / 2) / ((bw - tw) / 2) * (gy - bt);
+}
+
+function playStones() {
+  scene = 'stones';
+  const tl = gsap.timeline();
+  tl.to(S.gB, {opacity: 1, duration: .3}, 0).to(S.gT, {y: 0, rotation: 0, duration: .4}, 0)
+    .to(S.mud, {attr: {opacity: 0}, duration: .3}, 0).to(S.puddle, {attr: {rx: 0}, duration: .3}, 0);
+  tl.call(() => setCap('Rain falls on the stones…'), null, .3);
+  const {cx, sw, sh, bt, gy, r, H} = S;
+  const tl2 = gsap.timeline();
+  rain(tl2, (d, x, t2, t) => {
+    let y = surface(x), xx = x, tt = t;
+    if (Math.abs(x - cx) < sw / 2) {
+      t2.to(d, {y: bt - sh * 0.5, duration: .45, ease: 'power1.in'}, tt); tt += .45;
+      xx = cx + Math.sign(x - cx || 1) * (sw / 2 + r * 0.4);
+      t2.to(d, {x: xx, duration: .25}, tt); tt += .25; y = bt;
+    } else { t2.to(d, {y, duration: .45, ease: 'power1.in'}, tt); tt += .45; }
+    const steps = 3;
+    for (let k = 1; k <= steps; k++) {
+      xx += (Kit.rnd() - 0.5) * r * 1.6;
+      t2.to(d, {x: xx, y: y + (gy - y) * k / steps, duration: .22, ease: 'none'}, tt); tt += .22;
+    }
+    t2.to(d, {y: gy + H * 0.1, opacity: 0, duration: .5}, tt);
+  });
+  tl2.call(() => setCap('Water runs through the gaps and away'), null, 1.1);
+  tl.add(tl2, .4);
+  return tl;
+}
+
+function playSoil() {
+  scene = 'bare';
+  const {gy, bt, sh, sw, cx, bw, r} = S, dy = gy - bt;
+  const tl = gsap.timeline();
+  tl.to(S.mud, {attr: {opacity: 0}, duration: .2}, 0).to(S.puddle, {attr: {rx: 0}, duration: .2}, 0)
+    .to(S.gT, {rotation: 0, duration: .2, transformOrigin: '50% 50%'}, 0)
+    .to(S.gB, {opacity: 0, duration: .4}, 0).to(S.gT, {y: dy, duration: .5, ease: 'power2.in'}, .2);
+  tl.call(() => setCap('No stones: rain falls on soil…'), null, .7);
+  const tl2 = gsap.timeline();
+  rain(tl2, (d, x, t2, t) => {
+    let tt = t;
+    if (Math.abs(x - cx) < sw / 2) {
+      t2.to(d, {y: gy - sh * 0.5, duration: .5, ease: 'power1.in'}, tt); tt += .5;
+      t2.to(d, {x: cx + Math.sign(x - cx || 1) * (sw / 2 + r * 0.4), duration: .25}, tt); tt += .25;
+    }
+    t2.to(d, {y: gy - r * 0.2, duration: .5, ease: 'power1.in'}, tt); tt += .5;
+    t2.to(d, {opacity: 0, scaleY: .3, duration: .25}, tt);
+  });
+  tl2.to(S.puddle, {attr: {rx: bw * 0.48}, duration: 2.2, ease: 'power1.out'}, .5)
+     .to(S.mud, {attr: {opacity: 0.85}, duration: 2.2}, .6)
+     .to(S.gT, {y: dy + sh * 0.6, rotation: 3, transformOrigin: '50% 50%', duration: 1.4, ease: 'power2.inOut'}, 1.6)
+     .call(() => { scene = 'mud'; setCap('The water stays: mud, and the track sinks'); }, null, 1.6);
+  tl.add(tl2, .8);
+  return tl;
+}
+
+Kit.$('btns').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || busy) return;
+  const m = b.dataset.m;
+  [...Kit.$('btns').children].forEach(x => x.classList.toggle('on', x === b));
+  Kit.haptic('selection'); busy = true;
+  S.gD.innerHTML = '';
+  const tl = m === 'stones' ? playStones() : playSoil();
+  tl.timeScale(fast || Kit.calm ? 8 : 1);
+  tl.eventCallback('onComplete', () => {
+    busy = false; done[m] = true; S.gD.innerHTML = '';
+    b.classList.add('done');
+    if (done.stones && done.soil && Kit.$('why').classList.contains('gone')) {
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
+    }
+  });
+});
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  fast = true;
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('btns').children[0].click(); await w(1200);
+  Kit.$('btns').children[1].click(); await w(1400);
+};
+Kit.single();
+</script>
+</html>

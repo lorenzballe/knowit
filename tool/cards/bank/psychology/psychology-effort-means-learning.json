@@ -1,0 +1,38 @@
+{
+  "id": "psychology-effort-means-learning",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.remembering_better",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Which science video made students learn more?",
+  "answer": "The dialogue that airs the wrong ideas first taught more. Students who watched it rated their mental effort a whole point higher, and that extra effort turned into more learning. The easy, clear video felt fine but asked less of them.",
+  "move": "A video that makes you think hard teaches more than one that feels easy.",
+  "keywords": [
+    "veritasium",
+    "science videos",
+    "mental effort",
+    "misconceptions",
+    "students"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two science video options, one a clear explanation with no wrong ideas and one a dialogue that airs misconceptions first. The question asks which taught more: clear, dialogue, or about the same. The reader picks an answer and then rates how sure they are.",
+    "graded": false
+  },
+  "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=eVtCO84MDj8&t=362s",
+  "written": "2026-11-03"
+}

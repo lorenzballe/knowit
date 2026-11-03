@@ -1,0 +1,37 @@
+{
+  "id": "human_body-hyper-g-dizziness",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does 1.8g make you dizzy and hard to stand?",
+  "answer": "The plane accelerates upward, so the floor presses you with 1.8 times your weight. That same push drains blood from your head into your feet. Less blood reaches your brain, so you get dizzy.",
+  "move": "More g pulls blood down, away from your brain.",
+  "keywords": [
+    "hyper-g",
+    "blood",
+    "brain",
+    "plane",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "An interactive page with a plane and a draggable slider up to 1.8g, beside a figure whose blood level shifts from head to feet. The page asks why 1.8g makes you dizzy and hard to stand."
+  },
+  "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=78s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "human_body-ink-meets-macrophages",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the body react to tattoo ink?",
+  "answer": "The needle leaves ink in the dermis, and the immune system sees it as a foreign body and sends macrophages, cells that engulf invaders. Because the ink is inorganic, the macrophages cannot break it down, so they keep it there.",
+  "move": "A tattoo is ink that your cells swallowed but can't digest.",
+  "keywords": [
+    "tattoo ink",
+    "macrophage",
+    "dermis",
+    "immune system"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A tap-to-tattoo page. The reader taps the dermis in three places to tattoo it and watches which cells arrive. The page asks how the body reacts to tattoo ink, and shows a macrophage engulfing an ink particle it cannot digest."
+  },
+  "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=305s",
+  "written": "2026-11-03"
+}

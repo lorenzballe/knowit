@@ -1,0 +1,37 @@
+{
+  "id": "nature-twin-landslide-tsunami",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did two landslides make one giant tsunami?",
+  "answer": "The first slide plunged into the bay and raised a wave. The second, farther away, struck the glacier and made no new wave; it added its force to the first. Together the two slides summed their destructive power into one bigger tsunami.",
+  "move": "A push that lands on a passing wave adds to it: two slides, one bigger tsunami.",
+  "keywords": [
+    "tsunami",
+    "landslide",
+    "glacier",
+    "alaska",
+    "wave"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Animated diagram of two landslides entering a bay. The first slide raises a wave; the second hits a glacier and adds its force to that wave. Press and hold to play the slides."
+  },
+  "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bEL4wbv_nOo&t=359s",
+  "written": "2026-11-03"
+}

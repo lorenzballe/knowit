@@ -1,0 +1,204 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The coil the electrons never touch</title>
+<!-- Electrons arrive one at a time and build an interference pattern, dot by dot. Their waves pass on
+     both sides of a long coil whose field stays inside it (B = 0 on both paths). Turning up the flux
+     slides the stripes anyway, by one whole stripe per h/e: the Aharonov-Bohm effect.
+     Inspired by Veritasium, "Do we know how magnets work yet?". Night card: dark ground, the subject's mint.
+     Touch: drags (the slider). -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:.9cqh}
+#box{flex:1;min-height:0;position:relative}
+#ctl{display:flex;flex-direction:column;gap:.3cqh}
+#ctl .hd{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;font:700 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.1em;text-transform:uppercase}
+#ctl .hd span{opacity:.72}
+#ctl output{font:700 max(1.5cqh,11.5px)/1 var(--mono);letter-spacing:0;text-transform:none;color:var(--mint);white-space:nowrap}
+#flux{-webkit-appearance:none;appearance:none;display:block;width:100%;height:max(4.2cqh,28px);background:transparent;margin:0;touch-action:none;cursor:pointer}
+#flux::-webkit-slider-runnable-track{height:max(.55cqh,3px);border-radius:9px;background:linear-gradient(90deg,var(--mint) var(--p,0%),rgba(234,255,246,.2) var(--p,0%))}
+#flux::-moz-range-track{height:max(.55cqh,3px);border-radius:9px;background:rgba(234,255,246,.2)}
+#flux::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:50%;background:var(--mint);margin-top:calc(max(.55cqh,3px)/2 - max(3.2cqh,22px)/2);box-shadow:0 0 0 .5cqh rgba(0,229,160,.22),0 0 2cqh rgba(0,229,160,.55)}
+#flux::-moz-range-thumb{width:22px;height:22px;border:0;border-radius:50%;background:var(--mint)}
+#ticks{position:relative;height:max(1.5cqh,11.5px);font:600 max(1.5cqh,11.5px)/1 var(--mono);opacity:.6;margin:0 max(1.6cqh,11px)}
+#ticks i{position:absolute;top:0;font-style:normal;transform:translateX(-50%)}
+.say b{color:var(--mint)}
+.answered .q{font-size:max(2.6cqh,16px)}
+@container (max-height:520px){
+  .answered .in{gap:1.5cqh}
+  .answered #ticks,.answered #ctl .hd{display:none}
+}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Slide · the Aharonov-Bohm effect" style="--c:#08120f;--k:#eafff6;--edge:#000;--mint:#00E5A0">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLIDE THE FLUX</span></div>
+    <h2 class="q">Can a magnet move electrons that never touch its field?</h2>
+    <div class="stagebox" id="stage">
+      <div id="box"><canvas id="cv" class="full" role="img" aria-label="Electrons pass on both sides of a long coil seen end-on and land one by one on a screen, where their dots pile up into stripes."></canvas></div>
+      <div id="ctl" data-drag>
+        <div class="hd"><span>Flux inside the coil</span><output id="out">0.00 h/e</output></div>
+        <input id="flux" type="range" min="0" max="2" step="0.01" value="0" aria-label="Magnetic flux inside the coil, in units of h over e">
+        <div id="ticks"><i style="left:0%">0</i><i style="left:25%">½</i><i style="left:50%">1</i><i style="left:75%">1½</i><i style="left:100%">2</i></div>
+      </div>
+    </div>
+    <p class="say" id="say">Textbooks say an electron feels only the field where it is. These fly past a long coil one at a time, each wave going round both sides, and land as dots that pile into stripes. Turn up the coil.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Where the field is zero, electrons still feel its potential, long called mere maths.</div>
+    <div class="foot"><span class="src">Source · Aharonov &amp; Bohm, Phys. Rev. (1959); Tonomura et al., Phys. Rev. Lett. (1986)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), slider = Kit.$('flux'), out = Kit.$('out'), say = Kit.$('say'), card = Kit.$('card');
+  const MINT = '#00E5A0', INK = '#eafff6', AMBER = '#FFB000', SCREEN = '#010604';
+  const P = 0.13, ENV = 0.31;                       // stripe spacing and the beam's envelope, as fractions of the screen
+  let ctx = null, W = 1, H = 1, G = null;           // G: the drawing's geometry on this phone
+  let flux = 0, running = false, t0 = 0, lastT = 0, acc = 0, burstUntil = 0, singles = 0;
+  const dots = [], pulses = [];
+  // Seeded, so the card looks the same on every phone.
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  // The card's own clock: it only runs while frames are drawn, so a card left and come back to keeps its dots.
+  let clock = 0; const now = () => clock, real = () => performance.now() / 1000;
+
+  // Where an electron lands: its two half-waves add, cos² of half their phase difference, under the beam's envelope.
+  // The flux adds a phase difference of 2π for every h/e.
+  const I = (u, f) => { const c = Math.cos(Math.PI * (u - .5) / P - Math.PI * f); return c * c * Math.exp(-((((u - .5) / ENV)) ** 2)); };
+  function sample(f) { for (;;) { const u = .02 + rnd() * .96; if (rnd() < I(u, f)) return u; } }
+  const target = () => Math.max(350, Math.min(1400, G.scr.w * G.scr.h / 34));
+  function land(t, life, single) { dots.push({u: sample(flux), v: .05 + rnd() * .9, born: t, die: t + life, single}); if (dots.length > 3000) dots.splice(0, dots.length - 3000); }
+
+  function geometry() {
+    const fs = Math.max(12, Math.min(14, W / 24));
+    let ya = Math.max(78, Math.min(172, H * .52)); if (H - ya < 50) ya = Math.max(70, H - 50);   // the apparatus, then the screen
+    const rc = Math.max(10, Math.min(21, (ya - 24) * .125)), rOut = rc * 2.4, rIn = rc * 1.6;
+    const S = [W / 2, fs * 1.6 + 4], sy = ya + 4;
+    const C = [W / 2, Math.min(sy - rOut - 6, Math.max(S[1] + rOut + 8, (S[1] + sy) / 2))];
+    const w = Math.max(rIn + 14, Math.min(W / 2 - 52, Math.max(rOut + 20, W * .22), (sy - S[1]) * .62)), k = w / .75;
+    const L = [[S[0], S[1]], [W / 2 - k, S[1] + (C[1] - S[1]) * .25], [W / 2 - k, C[1] + (sy - C[1]) * .55], [W / 2, sy]];
+    const R = L.map(p => [W - p[0], p[1]]);
+    G = {fs, sy, S, C, rc, rOut, rIn, L, R, scr: {x: 0, y: sy, w: W, h: H - sy - 14}};
+  }
+  const bez = (p, t) => { const m = 1 - t; return [0, 1].map(k => m * m * m * p[0][k] + 3 * m * m * t * p[1][k] + 3 * m * t * t * p[2][k] + t * t * t * p[3][k]); };
+
+  function text(s, x, y, o = {}) { ctx.font = `${o.w || 700} ${o.size || G.fs}px ${o.font || 'Figtree'}`; ctx.fillStyle = o.color || INK; ctx.globalAlpha = o.a ?? 1; ctx.textAlign = o.align || 'left'; ctx.textBaseline = 'middle'; ctx.fillText(s, x, y); ctx.globalAlpha = 1; }
+  function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  function head(x, y, ang, s) { ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.beginPath(); ctx.moveTo(s, 0); ctx.lineTo(-s * .8, s * .75); ctx.lineTo(-s * .8, -s * .75); ctx.closePath(); ctx.fill(); ctx.restore(); }
+
+  function frame() {
+    const t = now();
+    ctx.clearRect(0, 0, W, H);
+    const {fs, S, C, rc, rOut, rIn, L, R, scr} = G, on = Math.min(1, flux / .3);
+    // The vector potential A: it circles the coil, outside it, with the wave on one side and against it on the other.
+    if (flux > .004) {
+      ctx.save(); ctx.strokeStyle = INK; ctx.fillStyle = INK; ctx.lineWidth = 1.5; ctx.setLineDash([3, 4.5]);
+      ctx.globalAlpha = .85 * (.3 + .7 * on); ctx.beginPath(); ctx.arc(C[0], C[1], rIn, 0, Math.PI * 2); ctx.stroke();
+      head(C[0], C[1] - rIn, Math.PI, 4.4); head(C[0], C[1] + rIn, 0, 4.4);
+      ctx.restore();
+    }
+    // The two paths, the source.
+    ctx.lineWidth = 2; ctx.strokeStyle = MINT; ctx.globalAlpha = .5;
+    for (const p of [L, R]) { ctx.beginPath(); ctx.moveTo(...p[0]); ctx.bezierCurveTo(...p[1], ...p[2], ...p[3]); ctx.stroke(); }
+    ctx.globalAlpha = 1; ctx.fillStyle = MINT; ctx.beginPath(); ctx.arc(S[0], S[1], 4.5, 0, Math.PI * 2); ctx.fill();
+    text('electrons', S[0], S[1] - fs * 1.05, {size: fs * .95, w: 600, a: .8, align: 'center'});
+    // A along the paths: with the electrons on the left, against them on the right.
+    if (flux > .004) {
+      ctx.save(); ctx.strokeStyle = INK; ctx.fillStyle = INK; ctx.lineWidth = 1.8; ctx.globalAlpha = .4 + .6 * on;
+      for (const [p, sgn] of [[L, 1], [R, -1]]) for (const t of [.56, .82]) {
+        const q = bez(p, t), m = 1 - t, d = [0, 1].map(k => 3 * m * m * (p[1][k] - p[0][k]) + 6 * m * t * (p[2][k] - p[1][k]) + 3 * t * t * (p[3][k] - p[2][k]));
+        const n = Math.hypot(d[0], d[1]), ux = sgn * d[0] / n, uy = sgn * d[1] / n;
+        ctx.beginPath(); ctx.moveTo(q[0] - ux * 6, q[1] - uy * 6); ctx.lineTo(q[0] + ux * 4, q[1] + uy * 4); ctx.stroke();
+        head(q[0] + ux * 5, q[1] + uy * 5, Math.atan2(uy, ux), 4.8);
+        if (t > .8) text('A', q[0] - sgn * 10, q[1] + 1, {font: 'Fraunces', w: 800, size: fs * 1.15, align: sgn > 0 ? 'right' : 'left', a: .4 + .6 * on});
+      }
+      ctx.restore();
+    }
+    // B = 0 where the electrons go.
+    const ml = bez(L, .5), mr = bez(R, .5);
+    text('B = 0', ml[0] - 8, ml[1], {font: 'JetBrains Mono', size: fs * .95, align: 'right', a: .92});
+    text('B = 0', mr[0] + 8, mr[1], {font: 'JetBrains Mono', size: fs * .95, a: .92});
+    // The coil, seen end-on, its field held inside.
+    const g = ctx.createRadialGradient(C[0], C[1], 0, C[0], C[1], rc); g.addColorStop(0, `rgba(255,176,0,${.12 + .5 * on})`); g.addColorStop(1, `rgba(255,176,0,${.05 + .2 * on})`);
+    ctx.fillStyle = '#140d02'; ctx.beginPath(); ctx.arc(C[0], C[1], rc, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = g; ctx.fill();
+    ctx.lineWidth = 3; ctx.strokeStyle = AMBER; ctx.globalAlpha = .6 + .4 * on; ctx.stroke(); ctx.globalAlpha = 1;
+    if (flux > .004) text('B', C[0], C[1] + 1, {font: 'Fraunces', w: 800, size: Math.min(rc * 1.15, fs * 1.4), color: '#fff3d1', align: 'center'});
+    else text('coil', C[0], C[1] + rc + fs * .8, {size: fs * .95, w: 700, color: AMBER, align: 'center'});
+    // A wave on its way: one electron's wave runs down both sides at once.
+    for (let i = pulses.length - 1; i >= 0; i--) {
+      const k = (t - pulses[i]) / .55; if (k > 1) { pulses.splice(i, 1); continue; }
+      for (const p of [L, R]) { const q = bez(p, k), gl = ctx.createRadialGradient(q[0], q[1], 0, q[0], q[1], 9); gl.addColorStop(0, 'rgba(234,255,246,.95)'); gl.addColorStop(1, 'rgba(0,229,160,0)'); ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(q[0], q[1], 9, 0, Math.PI * 2); ctx.fill(); }
+    }
+    // The screen, and every electron that has landed on it.
+    ctx.fillStyle = SCREEN; rr(scr.x, scr.y, scr.w, scr.h, 10); ctx.fill();
+    ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(0,229,160,.3)'; ctx.stroke();
+    ctx.save(); rr(scr.x, scr.y, scr.w, scr.h, 10); ctx.clip();
+    const r = Math.max(1.2, W / 250);
+    for (const d of dots) {
+      let a = 1; if (t > d.die - .5) a = Math.max(0, (d.die - t) / .5); if (a <= 0) continue;
+      const x = scr.x + d.u * scr.w, y = scr.y + d.v * scr.h;
+      ctx.globalAlpha = .85 * a; ctx.fillStyle = MINT; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      const age = t - d.born;
+      if (d.single && age < .6 && !Kit.calm) { ctx.globalAlpha = 1 - age / .6; ctx.strokeStyle = INK; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.arc(x, y, 3 + age * 26, 0, Math.PI * 2); ctx.stroke(); }
+    }
+    ctx.globalAlpha = 1; ctx.restore();
+    // Under the screen, a ruler: one mark where each bright stripe sat with the coil off.
+    ctx.strokeStyle = INK; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.globalAlpha = .7;
+    for (let m = -5; m <= 5; m++) { const u0 = .5 + P * m; if (u0 > .03 && u0 < .97) { const x = scr.x + u0 * scr.w; ctx.beginPath(); ctx.moveTo(x, H - 10); ctx.lineTo(x, H - 2); ctx.stroke(); } }
+    ctx.globalAlpha = 1;
+  }
+
+  // The clock: single electrons first, so each one is seen arriving; then the pile-up.
+  function tick() {
+    if (!running) return;
+    const r = real(), dt = Math.min(.05, r - lastT); lastT = r; clock += dt;
+    const t = clock;
+    const s = t - t0, N = target(), life = 9;
+    if (s < 2.7) { if (singles < Math.floor(s / .45) + 1) { singles++; pulses.push(t); setTimeout(() => land(now(), life, true), 540); } }
+    else {
+      const rate = t < burstUntil ? N / 1.2 : s < 5.7 ? N / 3 : N / life;
+      acc += rate * dt; while (acc >= 1) { acc--; land(t - rnd() * dt, life * (.85 + rnd() * .3)); }
+    }
+    while (dots.length && dots[0].die < t) dots.shift();
+    frame();
+    requestAnimationFrame(tick);
+  }
+  // Motion reduced: the screen as it looks after a minute of electrons.
+  function fill() { dots.length = 0; const t = now(), N = target(); for (let i = 0; i < N; i++) dots.push({u: sample(flux), v: .05 + rnd() * .9, born: t - 5, die: t + 1e6}); }
+
+  function draw() { const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H; geometry(); if (Kit.calm) fill(); frame(); }
+
+  // What the screen shows at this flux. The stripes repeat every h/e, so only the part past a whole h/e counts.
+  function words(f) {
+    const fr = f - Math.floor(f);
+    if (f < .06) return 'Coil off: the stripes sit on their marks.';
+    if (f >= .95 && (fr <= .05 || fr >= .95)) return Math.round(f) === 1 ? 'At <b>h/e</b> (Planck’s constant over the electron’s charge) the stripes are back on their marks, as if the coil were off.' : 'At <b>2 h/e</b> they are back on their marks again: the stripes repeat every h/e.';
+    if (Math.abs(fr - .5) <= .1) return f < 1 ? 'Half of h/e: bright stripes sit where dark ones were. Tonomura’s team saw this in 1986, the field sealed in a superconductor.' : 'One and a half h/e: bright and dark have swapped again.';
+    return '<b>B = 0</b> on both paths, but the coil’s <b>vector potential A</b> runs with one and against the other: each wave’s two halves fall out of step.';
+  }
+  let moved = false, reached = false, said = '';
+  function setFlux(v) {
+    flux = +v; out.textContent = flux.toFixed(2) + ' h/e'; slider.style.setProperty('--p', (flux / 2 * 100) + '%');
+    const t = now();
+    if (Kit.calm) fill(); else { for (const d of dots) if (d.die > t + .9) d.die = t + .3 + rnd() * .6; burstUntil = t + 1.2; }
+    if (flux > .06) moved = true;
+    if (moved) { const w = words(flux); if (w !== said) { said = w; say.innerHTML = w; Kit.haptic('light'); } }
+    if (flux >= .95 && !reached) { reached = true; card.classList.add('answered'); Kit.show('keep'); Kit.haptic('success'); }
+    if (!running) frame();
+  }
+  slider.addEventListener('input', e => setFlux(e.target.value));
+
+  Kit.onShow.card = draw;
+  // The words under the drawing change length as the story goes on: redraw at the box's new size.
+  let lastBox = '';
+  new ResizeObserver(() => { const r = Kit.$('box').getBoundingClientRect(), k = Math.round(r.width) + 'x' + Math.round(r.height); if (k !== lastBox && ctx) { lastBox = k; draw(); } }).observe(Kit.$('box'));
+  Kit.onEnter.card = () => { if (Kit.calm) return; running = true; t0 = now(); lastT = real(); requestAnimationFrame(tick); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 40 : ms));
+    const go = v => { slider.value = v; slider.dispatchEvent(new Event('input', {bubbles: true})); };
+    for (const v of [.15, .3, .5]) { go(v); await wait(450); }
+    await wait(900);
+    for (const v of [.7, .85, 1]) { go(v); await wait(400); }
+  };
+})();
+Kit.single();
+</script>
+</html>

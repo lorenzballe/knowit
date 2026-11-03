@@ -1,0 +1,36 @@
+{
+  "id": "technology-old-solar-train",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was a 1949 two-car convoy chosen for the world's first solar train?",
+  "answer": "Australia didn't build a new vehicle. In 2017 it converted a two-car convoy from 1949 into a solar train. Reusing it skipped the cost and time of a new train and showed that old trains can also go solar.",
+  "move": "Converting what already runs is cheaper and faster than building new.",
+  "keywords": [
+    "solar train",
+    "1949 convoy",
+    "australia",
+    "train conversion"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two options are shown: build a new train, or convert the 1949 two-car convoy. The question asks why the 1949 convoy was chosen for the world's first solar train. Sliding left swaps building new for converting the old convoy."
+  },
+  "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=1famKvkfFKM&t=1s",
+  "written": "2026-11-03"
+}

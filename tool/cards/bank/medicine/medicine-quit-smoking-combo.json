@@ -1,0 +1,37 @@
+{
+  "id": "medicine-quit-smoking-combo",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.smoking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Willpower alone: 4 in 100 smokers quit. With medication plus support, how many?",
+  "answer": "Willpower alone helps about 4 in 100 smokers quit. With medication plus behavioural support, up to 60 in 100 succeed, which is 15 times more. Behavioural support teaches you to spot when you are at risk of relapse, and the two together are what reach that success rate.",
+  "move": "To quit smoking, combine medication and support: willpower alone rarely works.",
+  "keywords": [
+    "smoking",
+    "quitting",
+    "willpower",
+    "medication",
+    "behavioural support"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Quiz card asking how many of 100 smokers quit with medication plus support. Willpower alone is shown as 4 in 100. Tap a grid to enter a guess, then reveal the answer: up to 60 in 100."
+  },
+  "source": "Geopop, “Il 96% delle persone non riesce a smettere di fumare da solo: perché e quali sono i metodi migliori” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=BqJhH7s_s74&t=353s",
+  "written": "2026-11-03"
+}

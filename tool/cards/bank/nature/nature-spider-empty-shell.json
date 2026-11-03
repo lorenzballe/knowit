@@ -1,0 +1,37 @@
+{
+  "id": "nature-spider-empty-shell",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.coevolution",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "What is left after a spider eats its prey?",
+  "answer": "A spider doesn't chew its prey; it drinks it. Its juices turn the soft insides to liquid, which the spider sucks up. The hard exoskeleton stays in the web, hollow, so the empty shell is what is left.",
+  "move": "A spider drinks its prey and leaves the empty shell behind.",
+  "keywords": [
+    "spider",
+    "insect",
+    "exoskeleton",
+    "web",
+    "digestion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking what is left after a spider eats its prey, with three choices: nothing at all, only the wings and legs, or the insect's whole shell, empty. Shows a spider's web with an empty insect exoskeleton hanging from it."
+  },
+  "source": "Geopop, “Ragnatele in 3D: ecco come fanno i ragni a crearle così geometriche, letali e resistenti” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=_Uch42IMwbM&t=133s",
+  "written": "2026-11-03"
+}

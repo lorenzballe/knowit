@@ -1,0 +1,37 @@
+{
+  "id": "history-swiss-cushion-state",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.disputed_borders",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Great Powers make Switzerland neutral forever in 1815?",
+  "answer": "In 1815 the Great Powers made Switzerland permanently neutral because it lay between rivals: the French, Germans and Austrians often fought each other. A neutral Switzerland covered one side of each one's land, so each could mass its forces on a shorter border.",
+  "move": "A neutral country in the middle was a defence for everyone around it.",
+  "keywords": [
+    "switzerland",
+    "neutrality",
+    "buffer-state",
+    "france",
+    "austria"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Map of 19th-century Europe with Switzerland in the centre. Tap Switzerland to make it neutral and watch where the armies go. The page asks why the Great Powers made Switzerland neutral forever in 1815."
+  },
+  "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=2Y0RgQmmESI&t=193s",
+  "written": "2026-11-03"
+}

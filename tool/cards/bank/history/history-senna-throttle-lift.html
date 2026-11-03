@@ -1,0 +1,130 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-senna-throttle-lift -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#g{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:ns-resize}
+#g text{font-family:var(--body);fill:var(--k)}
+#g .mono{font-family:var(--mono)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Aim · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">IMOLA 1994</span></div>
+    <h2 class="q">What did Senna do at the Tamburello corner?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="g" role="img" aria-label="Throttle telemetry approaching Tamburello"></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag up or down: how much throttle did Senna use through the corner?</p>
+    <div id="why" class="gone"><p class="body">Tamburello was taken flat out. Nobody lifted there, least of all Senna. Yet the telemetry shows his throttle suddenly at half and the car slowing. After 1994 the track was changed, with two corners added to cut the speed there.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Senna lifted off where everyone stayed flat out: that is the anomaly.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {guess: null, rev: false, fresh: false};
+const Z0 = .42, Z1 = .8, HX = .56;
+let geo = null;
+
+function draw() {
+  const svg = Kit.$('g'); svg.innerHTML = '';
+  const fit = Kit.fitSvg(svg), W = fit.W, H = fit.H, f = Math.max(fit.f, 12);
+  const L = f * 3.6, R = W - f * .8, T = f * 3, B = H - f * 2.4;
+  const X = t => L + t * (R - L), Y = v => B - v / 100 * (B - T);
+  geo = {T, B, Y};
+  const mk = (t, a) => Kit.mk(t, a, svg);
+  const txt = (s, a) => { const e = mk('text', Object.assign({'font-size': f}, a)); e.textContent = s; return e; };
+
+  // Tamburello zone
+  mk('rect', {x: X(Z0), y: T - f * .6, width: X(Z1) - X(Z0), height: B - T + f * .6, rx: f * .5, fill: 'var(--k)', opacity: .09});
+  // grid
+  [0, 50, 100].forEach(v => {
+    mk('line', {x1: L, x2: R, y1: Y(v), y2: Y(v), stroke: 'var(--k)', 'stroke-width': 1, opacity: v ? .18 : .5});
+    txt(v ? v + '%' : '0', {x: L - f * .5, y: Y(v) + f * .35, 'text-anchor': 'end', class: 'mono', opacity: .8});
+  });
+  txt('THROTTLE', {x: L - f * .5 - f * 2.4, y: Y(100) - f * 1.5, 'font-weight': 800, 'font-size': f * .9, 'letter-spacing': '.08em'});
+  txt('main straight', {x: X(Z0 / 2), y: B + f * 1.5, 'text-anchor': 'middle', opacity: .75});
+  txt('TAMBURELLO', {x: X((Z0 + Z1) / 2), y: B + f * 1.5, 'text-anchor': 'middle', 'font-weight': 800, 'letter-spacing': '.06em'});
+
+  // the approach: flat out, as always
+  mk('path', {d: `M${X(0)},${Y(100)}L${X(Z0)},${Y(100)}`, stroke: 'var(--k)', 'stroke-width': f * .28, fill: 'none', 'stroke-linecap': 'round'});
+
+  // the handle's track
+  mk('line', {x1: X(HX), x2: X(HX), y1: Y(100), y2: Y(0), stroke: 'var(--k)', 'stroke-width': 1.5, 'stroke-dasharray': '3 5', opacity: .45});
+
+  let usual, senna, lu, ls;
+  if (S.rev) {
+    usual = mk('path', {d: `M${X(Z0)},${Y(100)}L${X(1)},${Y(100)}`, stroke: 'var(--k)', 'stroke-width': f * .16, fill: 'none', 'stroke-dasharray': `${f * .5} ${f * .45}`, opacity: .55});
+    senna = mk('path', {d: `M${X(Z0)},${Y(100)}L${X(.48)},${Y(100)}C${X(.52)},${Y(100)} ${X(.52)},${Y(50)} ${X(.6)},${Y(50)}L${X(1)},${Y(50)}`, stroke: 'var(--k)', 'stroke-width': f * .32, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+    lu = txt('usual: flat out', {x: R, y: Y(100) - f * .7, 'text-anchor': 'end', opacity: .8});
+    ls = txt('Senna: lifted to half', {x: R, y: Y(50) + f * 1.5, 'text-anchor': 'end', 'font-weight': 800});
+  }
+
+  // the reader's guess
+  const gv = S.guess == null ? 15 : S.guess;
+  const ring = mk('circle', {cx: X(HX), cy: Y(gv), r: f * .75, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': f * .22});
+  if (!S.rev) {
+    txt(S.guess == null ? 'drag ↕' : 'you: ' + S.guess + '%', {x: X(HX) - f * 1.2, y: Y(gv) + f * .35, 'text-anchor': 'end', 'font-weight': 800});
+    if (S.guess == null && !Kit.calm) gsap.fromTo(ring, {attr: {r: f * .75}}, {attr: {r: f * 1}, yoyo: true, repeat: -1, duration: .7, ease: 'sine.inOut'});
+  } else {
+    gsap.set(ring, {opacity: .55});
+  }
+
+  if (S.rev && S.fresh && !Kit.calm) {
+    S.fresh = false;
+    const len = senna.getTotalLength();
+    gsap.fromTo(senna, {strokeDasharray: len, strokeDashoffset: len}, {strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', onComplete: () => senna.removeAttribute('stroke-dasharray')});
+    gsap.from(usual, {opacity: 0, duration: .6});
+    gsap.from([lu, ls], {opacity: 0, y: 6, stagger: .3, delay: 1.1, duration: .4});
+  }
+  S.fresh = false;
+}
+
+let started = false;
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const g = S.guess, ok = g < 85;
+  Kit.answer({choice: g + '% throttle', correct: ok, sure: pct});
+  S.rev = true; S.fresh = true; draw();
+  Kit.hide('say');
+  sure.grade(ok, pct, `${g}%, ${ok ? 'right: he lifted' : 'wrong: he lifted to half'}`);
+  Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+});
+
+function setFrom(e) {
+  if (S.rev || !geo) return;
+  const r = Kit.$('g').getBoundingClientRect();
+  const y = e.clientY - r.top;
+  let v = (geo.B - y) / (geo.B - geo.T) * 100;
+  v = Math.max(0, Math.min(100, Math.round(v / 5) * 5));
+  if (v !== S.guess) { S.guess = v; Kit.haptic('selection'); draw(); }
+  if (!started) { started = true; sure.on(); }
+}
+const svgEl = Kit.$('g');
+let dragging = false;
+svgEl.addEventListener('pointerdown', e => { dragging = true; try { svgEl.setPointerCapture(e.pointerId); } catch (_) {} setFrom(e); });
+svgEl.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+['pointerup', 'pointercancel'].forEach(t => svgEl.addEventListener(t, () => { dragging = false; }));
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#g', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = svgEl.getBoundingClientRect();
+  const x = r.left + r.width * .55, y = r.top + r.height * .2;
+  const o = {bubbles: true, pointerId: 1, clientX: x, clientY: y};
+  svgEl.dispatchEvent(new PointerEvent('pointerdown', o));
+  svgEl.dispatchEvent(new PointerEvent('pointerup', o));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1900));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-heat-pump-savings -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative;color:var(--k)}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#opts{display:flex;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 1cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#go{font:800 max(2.4cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.8cqh 4cqw;cursor:pointer;width:100%}
+#go:active{transform:scale(.97)}
+#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Guess · tap to heat">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HEAT PUMPS</span></div>
+    <h2 class="q">How much can a home heat pump cut energy use?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-v="20">20%</button>
+        <button class="opt" data-v="40">40%</button>
+        <button class="opt" data-v="60">60%</button>
+        <button class="opt" data-v="80">80%</button>
+      </div>
+      <button id="go" class="gone">Heat both homes · 0/10</button>
+      <div id="why" class="gone">
+        <p class="big">About 60% less</p>
+        <p class="body" id="whytxt">Both homes got the same 10 units of heat. The heater makes every unit from electricity. The pump only spends energy to move heat already in the ground, so it buys about 4.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess first: how much less energy does the heat pump use?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Moving heat costs far less than making it: up to 60% less energy.</div>
+    <div class="foot"><span class="src">Source · Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 60, TOTAL = 10, YEL = '#ffc928', ORA = '#ff5a2a';
+let guess = -1, sureP = -1, n = 0, refs = null;
+const svg = Kit.$('svg');
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 12), sm = Math.max(fs * .82, 12);
+  const pw = W / 2;
+  const mh = fs * 1.1, readY = H - fs * .3, my = readY - fs * 1.35 - mh;
+  const gh = Math.max(H * .11, fs * 1.6), gb = my - fs * .5, groundY = gb - gh;
+  const y0 = fs * 1.9;
+  refs = {sides: []};
+  [0, 1].forEach(side => {
+    const cx = pw * side + pw / 2;
+    const avail = groundY - y0;
+    const hw = Math.min(pw * .62, avail / 1.25);
+    const roofH = hw * .32, yb = groundY - Math.max(avail - roofH, hw * .5);
+    const yr = yb - roofH;
+    const g = Kit.mk('g', {}, svg);
+    const t = Kit.mk('text', {x: cx, y: Math.max(yr - fs * .5, fs), 'text-anchor': 'middle', fill: 'currentColor', style: `font:800 ${fs}px var(--body)`}, g);
+    t.textContent = side ? 'Heat pump' : 'Electric heater';
+    // ground
+    Kit.mk('rect', {x: pw * side + pw * .06, y: groundY, width: pw * .88, height: gh, rx: fs * .3, fill: 'currentColor', 'fill-opacity': .12}, g);
+    // wire from meter to house
+    const wx = cx - hw * .3;
+    Kit.mk('path', {d: `M${wx} ${my} V${groundY}`, stroke: YEL, 'stroke-width': fs * .22, 'stroke-dasharray': `${fs * .4} ${fs * .3}`, fill: 'none'}, g);
+    let px = cx + hw * .25;
+    if (side) {
+      const pb = groundY + gh * .78, l = cx + hw * .08;
+      Kit.mk('path', {d: `M${l} ${groundY} V${pb} H${px} V${groundY}`, stroke: ORA, 'stroke-width': fs * .28, fill: 'none', 'stroke-linejoin': 'round'}, g);
+      const gt = Kit.mk('text', {x: cx + hw * .32, y: groundY + gh / 2 + sm * .35, fill: ORA, style: `font:800 ${sm}px var(--body)`}, g);
+      gt.textContent = 'ground heat';
+      refs.pipe = {x: px, y1: pb, y2: groundY};
+    }
+    // heat blocks
+    const pad = fs * .3, ix = cx - hw / 2 + pad, iw = hw - pad * 2;
+    const rows = TOTAL, rh = (groundY - yb - pad * 2) / rows;
+    let last = null;
+    for (let k = 0; k < n; k++) {
+      const y = groundY - pad - rh * (k + 1);
+      const bg = Kit.mk('g', {}, g);
+      if (side) {
+        Kit.mk('rect', {x: ix, y: y + rh * .08, width: iw * .4, height: rh * .84, fill: YEL}, bg);
+        Kit.mk('rect', {x: ix + iw * .4, y: y + rh * .08, width: iw * .6, height: rh * .84, fill: ORA}, bg);
+      } else {
+        Kit.mk('rect', {x: ix, y: y + rh * .08, width: iw, height: rh * .84, fill: YEL}, bg);
+      }
+      last = bg;
+    }
+    Kit.mk('path', {d: `M${cx - hw / 2} ${groundY} V${yb} L${cx} ${yr} L${cx + hw / 2} ${yb} V${groundY}`, stroke: 'currentColor', 'stroke-width': fs * .2, fill: 'none', 'stroke-linejoin': 'round'}, g);
+    // meter
+    const mw = pw * .8, mx = cx - mw / 2, val = side ? n * .4 : n;
+    Kit.mk('rect', {x: mx, y: my, width: mw, height: mh, rx: mh * .25, fill: 'currentColor', 'fill-opacity': .08}, g);
+    const fill = Kit.mk('rect', {x: mx, y: my, width: mw * val / TOTAL, height: mh, rx: mh * .25, fill: YEL}, g);
+    for (let k = 1; k < TOTAL; k++) Kit.mk('line', {x1: mx + mw * k / TOTAL, x2: mx + mw * k / TOTAL, y1: my + mh * .6, y2: my + mh, stroke: 'currentColor', 'stroke-opacity': .35, 'stroke-width': 1}, g);
+    Kit.mk('rect', {x: mx, y: my, width: mw, height: mh, rx: mh * .25, fill: 'none', stroke: 'currentColor', 'stroke-width': fs * .12}, g);
+    const rd = Kit.mk('text', {x: cx, y: readY, 'text-anchor': 'middle', fill: 'currentColor', style: `font:700 ${sm}px var(--body)`}, g);
+    rd.textContent = `${val.toFixed(1)} units bought`;
+    refs.sides.push({last, fill, mw, val, wx, my, groundY, g});
+  });
+  refs.fs = fs;
+}
+
+function tap() {
+  if (n >= TOTAL) return;
+  n++; draw(); Kit.haptic('light');
+  Kit.$('go').textContent = `Heat both homes · ${n}/${TOTAL}`;
+  if (!Kit.calm) {
+    refs.sides.forEach((s, side) => {
+      if (s.last) gsap.from(s.last, {scaleY: 0, transformOrigin: '50% 100%', opacity: 0, duration: .35, ease: 'back.out(2)'});
+      const prev = s.mw * (side ? (n - 1) * .4 : n - 1) / TOTAL;
+      gsap.from(s.fill, {attr: {width: prev}, duration: .35, ease: 'power2.out'});
+      const d = Kit.mk('circle', {cx: s.wx, cy: s.my, r: refs.fs * (side ? .25 : .4), fill: YEL}, s.g);
+      gsap.to(d, {attr: {cy: s.groundY}, duration: .4, ease: 'power1.in', onComplete: () => d.remove()});
+    });
+    const p = refs.pipe, g = refs.sides[1].g;
+    for (let i = 0; i < 3; i++) {
+      const d = Kit.mk('circle', {cx: p.x, cy: p.y1, r: refs.fs * .3, fill: ORA}, g);
+      gsap.to(d, {attr: {cy: p.y2}, duration: .45, delay: i * .1, ease: 'power1.in', onComplete: () => d.remove()});
+    }
+  }
+  if (n === TOTAL) finish();
+}
+
+function finish() {
+  const ok = guess === RIGHT;
+  sure.grade(ok, sureP, `You said ${guess}%, ${ok ? 'right' : 'the real figure is 60%'}`);
+  Kit.haptic('success');
+  setTimeout(() => {
+    Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+  }, Kit.calm ? 0 : 450);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  sureP = pct;
+  Kit.answer({choice: guess + '%', correct: guess === RIGHT, sure: pct});
+  Kit.hide('opts'); Kit.show('go');
+  Kit.$('say').textContent = 'Tap 10 times. Both homes get the same heat. Watch the meters.';
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || guess >= 0) return;
+  guess = +b.dataset.v; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('go').addEventListener('click', tap);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').querySelector('[data-v="60"]').click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(150);
+  for (let i = 0; i < TOTAL; i++) { Kit.$('go').click(); await w(80); }
+  await w(900);
+};
+Kit.single();
+</script>
+</html>

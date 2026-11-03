@@ -1,0 +1,38 @@
+{
+  "id": "maths-pools-of-rock",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How much rock is 17 cubic kilometers?",
+  "answer": "The rock block would fill about 6.8 million Olympic pools. A pool holds about 2,500 m³, and 17 km³ is 17 billion m³, which gives that count. The video's 6,800 pools fill only the small blue cube.",
+  "move": "1 km³ is a billion m³, about 400,000 Olympic pools.",
+  "keywords": [
+    "marsili",
+    "olympic pool",
+    "cubic kilometer",
+    "submarine eruption",
+    "tsunami"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Side-by-side picture: a small blue cube of rock next to 6,800 blue pools. Asks how many Olympic pools a 17 cubic kilometer rock block would fill, with choices 6,800, 68,000 and 6.8 million.",
+    "graded": false
+  },
+  "source": "Geopop, “La futura eruzione sottomarina del Marsili e le cause del rischio tsunami - l'animazione realistica” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=lF4UA-9ksVI&t=313s",
+  "written": "2026-11-03"
+}

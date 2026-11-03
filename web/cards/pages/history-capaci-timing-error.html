@@ -1,0 +1,185 @@
+<!doctype html>
+<!-- slug: history-capaci-timing-error -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute · Why the first car exploded first</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#road{flex:1;min-height:0;width:100%;display:block}
+#panel{flex:none}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.sl{display:flex;align-items:center;gap:3cqw;font:700 max(1.8cqh,13px)/1.2 var(--body)}
+.sl input{flex:1;accent-color:var(--k);height:max(3cqh,24px);margin:0}
+.sl output{font:700 max(1.8cqh,13px)/1 var(--mono);min-width:5.5em;text-align:right}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CAPACI, 1992</span></div>
+    <h2 class="q">Why did the first car explode before Falcone's?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="road" aria-label="Road with the trigger point, the charge and the three-car convoy"></svg>
+      <div id="panel">
+        <div id="opts">
+          <button class="opt" data-i="0">The timing was set for a faster car</button>
+          <button class="opt" data-i="1">The remote fired by accident</button>
+          <button class="opt" data-i="2">The lead car was the real target</button>
+        </div>
+        <div id="why" class="gone">
+          <p class="body">The trigger was rehearsed with a car at a steady 160–170 km/h, until the flash fired exactly on the spot. Falcone was driving at 100–120 km/h, so at the blast his car hadn't reached the charge yet. The lead car had.</p>
+          <label class="sl">Speed<input id="spd" type="range" min="100" max="170" step="5" value="110"><output id="spdv">110 km/h</output></label>
+        </div>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a reason, then watch the test run and the real convoy.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A timing tuned at one speed lands somewhere else at another.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La ricostruzione 3D dell’attentato a Giovanni Falcone – Le dinamiche tecniche della strage Capaci” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1, tl = null;
+const S = {mode: 'idle', v: 110, p: 0, b: 0, range: false};
+let G = null; // geometry + elements
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  run();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function finish() {
+  S.mode = 'convoy'; S.p = 1; S.b = 1; S.range = true; render();
+  Kit.show('why'); Kit.show('keep');
+}
+function run() {
+  if (tl) tl.kill();
+  tl = gsap.timeline({onUpdate: render, onComplete: finish});
+  tl.call(() => { S.mode = 'test'; S.v = 160; S.p = 0; S.b = 0; S.range = false; })
+    .to(S, {p: 1, duration: 1.7, ease: 'none'})
+    .to(S, {b: 1, duration: .25, ease: 'power2.out'})
+    .call(() => Kit.haptic('light'))
+    .to({}, {duration: .8})
+    .call(() => { S.mode = 'convoy'; S.v = 110; S.p = 0; S.b = 0; })
+    .to(S, {p: 1, duration: 2.2, ease: 'none'})
+    .to(S, {b: 1, duration: .35, ease: 'power3.out'})
+    .call(() => Kit.haptic('success'));
+  if (Kit.calm) tl.progress(1);
+}
+
+Kit.$('spd').addEventListener('input', e => {
+  S.v = +e.target.value; S.mode = 'convoy'; S.p = 1; S.b = 1; S.range = true;
+  Kit.$('spdv').textContent = S.v + ' km/h'; render();
+});
+
+function build() {
+  const svg = Kit.$('road');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f);
+  const M = W * .1, C = W * .74, D = C - M, g = D * .3125;
+  const carW = Math.min(W * .1, 64), carH = Math.min(carW * .5, H * .09);
+  const h1y = fs * 1.1, h2y = h1y + fs * 2.5, hdrBot = h2y + fs * .5;
+  let roadH = Math.max(carH * 2, H * .16);
+  roadH = Math.max(carH * 1.4, Math.min(roadH, H - hdrBot - fs * 6.6));
+  const topNeed = hdrBot + fs * 1.8 + roadH / 2, botLimit = H - fs * 4.7 - roadH / 2;
+  const roadY = Math.max(topNeed, Math.min(H * .47, botLimit));
+  const ink = 'var(--k)', bg = 'var(--c)';
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  const E = {};
+  E.h1 = mk('text', {x: 0, y: h1y, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink, 'letter-spacing': '.06em'});
+  E.h2 = mk('text', {x: 0, y: h2y, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.7, fill: ink});
+  mk('rect', {x: 0, y: roadY - roadH / 2, width: W, height: roadH, rx: roadH * .12, fill: ink, opacity: .9});
+  mk('line', {x1: 0, x2: W, y1: roadY, y2: roadY, stroke: bg, 'stroke-width': 2, 'stroke-dasharray': `${W * .03} ${W * .03}`, opacity: .5});
+  // charge under the road
+  mk('rect', {x: C - carW * .45, y: roadY + roadH / 2 - roadH * .18, width: carW * .9, height: roadH * .14, fill: '#ff6a2b'});
+  // trigger point
+  E.trig = mk('line', {x1: M, x2: M, y1: roadY - roadH / 2 - 4, y2: roadY + roadH / 2 + 4, stroke: bg, 'stroke-width': 3});
+  mk('line', {x1: C, x2: C, y1: roadY - roadH / 2 - 4, y2: roadY + roadH / 2 + 4, stroke: '#ff6a2b', 'stroke-width': 2, 'stroke-dasharray': '4 3'});
+  const ly = roadY + roadH / 2 + fs * 1.3;
+  mk('text', {x: Math.max(2, M - 4), y: ly, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: ink}).textContent = 'trigger point';
+  mk('text', {x: C, y: ly, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: '#d24a12'}).textContent = 'charge';
+  const car = (fill, stroke) => {
+    const gr = mk('g', {});
+    mk('rect', {x: -carW / 2, y: -carH / 2, width: carW, height: carH, rx: carH * .28, fill, stroke, 'stroke-width': 2}, gr);
+    mk('rect', {x: carW * .1, y: -carH * .32, width: carW * .18, height: carH * .64, rx: 2, fill: stroke, opacity: .55}, gr);
+    return gr;
+  };
+  E.test = car('#ffffff', '#222');
+  E.last = car('#3a3a3a', '#bbb');
+  E.fal = car(bg, '#111');
+  E.lead = car('#3a3a3a', '#bbb');
+  E.flash = mk('circle', {cx: C, cy: roadY, r: carH * 1.1, fill: '#fff6a8', stroke: '#ffe14d', 'stroke-width': 3, opacity: 0});
+  E.blastG = mk('g', {transform: `translate(${C},${roadY})`});
+  E.blast2 = mk('circle', {r: carW * .95, fill: '#ffb21e', opacity: .55}, E.blastG);
+  E.blast = mk('circle', {r: carW * .62, fill: '#ff5a1f'}, E.blastG);
+  mk('circle', {r: carW * .28, fill: '#fff2c2'}, E.blastG);
+  const fy = roadY - roadH / 2 - fs * .55;
+  E.fl = mk('text', {y: fy, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink});
+  E.fl.textContent = "Falcone's car";
+  E.tl = mk('text', {y: fy, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink});
+  E.tl.textContent = 'test car';
+  const by = ly + fs * 1.4;
+  E.br = mk('path', {fill: 'none', stroke: ink, 'stroke-width': 2});
+  E.bt = mk('text', {y: by + fs * 1.35, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: ink});
+  G = {W, H, M, C, D, g, carW, carH, roadY, by, E};
+}
+
+function render() {
+  if (!G) return;
+  const {W, M, C, D, g, carW, roadY, by, E} = G;
+  const xFin = M + D * S.v / 160;
+  const x0 = M - D * .4;
+  let xF = x0 + (xFin - x0) * S.p;
+  if (S.mode === 'idle') xF = Math.max(xF, g + carW * .6);
+  const set = (el, x, vis) => { el.setAttribute('transform', `translate(${x},${roadY})`); el.style.display = vis ? '' : 'none'; };
+  const test = S.mode === 'test', conv = S.mode !== 'test';
+  set(E.test, xF, test);
+  set(E.fal, xF, conv); set(E.lead, xF + g, conv); set(E.last, xF - g, conv);
+  E.tl.style.display = test ? '' : 'none'; E.tl.setAttribute('x', Math.min(W - carW, Math.max(carW, xF)));
+  E.fl.style.display = conv ? '' : 'none'; E.fl.setAttribute('x', Math.min(W - carW * 1.2, Math.max(carW * 1.2, xF)));
+  E.trig.setAttribute('stroke', S.mode !== 'idle' && xF >= M && S.b < 1 ? '#ffe14d' : 'var(--c)');
+  E.flash.setAttribute('opacity', test ? S.b : 0);
+  const showB = conv && S.mode === 'convoy';
+  E.blastG.style.display = showB && S.b > 0 ? '' : 'none';
+  E.blastG.setAttribute('transform', `translate(${C},${roadY}) scale(${Math.max(.01, S.b)})`);
+  E.blastG.setAttribute('opacity', .92);
+  if (test) { E.h1.textContent = 'TEST RUN · CALIBRATION'; E.h2.textContent = '160 km/h'; }
+  else if (S.mode === 'idle') { E.h1.textContent = 'THE CONVOY · 3 CARS'; E.h2.textContent = 'Falcone in the middle'; }
+  else { E.h1.textContent = S.range ? 'THE CONVOY · TRY A SPEED' : 'THE CONVOY · REAL SPEED'; E.h2.textContent = S.range ? S.v + ' km/h' : '100–120 km/h'; }
+  const gap = C - xF, showBr = showB && S.b >= 1 && Math.abs(gap) > carW * .6;
+  E.br.style.display = E.bt.style.display = showBr ? '' : 'none';
+  if (showBr) {
+    const a = Math.min(xF, C), b = Math.max(xF, C);
+    E.br.setAttribute('d', `M${a},${by - 6}V${by}H${b}V${by - 6}`);
+    E.bt.setAttribute('x', Math.min(W * .8, Math.max(W * .2, (a + b) / 2)));
+    E.bt.textContent = gap > 0 ? 'his car: not there yet' : 'his car: already past';
+  }
+}
+
+Kit.onShow.card = () => { build(); render(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 100));
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 500));
+};
+Kit.single();
+</script>
+</html>

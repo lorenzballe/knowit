@@ -1,0 +1,37 @@
+{
+  "id": "human_body-salt-free-deodorant",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.wellness_trends",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why might a light sweater use a salt-free deodorant?",
+  "answer": "Aluminum salts work by plugging sweat pores. If you sweat little, there is almost nothing to plug, so their action is wasted. The salts are not harmful; they are simply pointless when there is little sweat.",
+  "move": "Salt-free is fine when there is little sweat to stop.",
+  "keywords": [
+    "aluminum salts",
+    "deodorant",
+    "antiperspirant",
+    "sweat",
+    "sweat pores"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question card: Why might a light sweater use a salt-free deodorant? A slider runs from 'I sweat a little' to 'I sweat a lot'. Drag it to a light sweater to reveal that aluminum salts plug sweat pores, so with little sweat their action is wasted."
+  },
+  "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=1P8szAIszo0&t=556s",
+  "written": "2026-11-03"
+}

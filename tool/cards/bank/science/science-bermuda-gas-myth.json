@@ -1,0 +1,37 @@
+{
+  "id": "science-bermuda-gas-myth",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.pseudoscience",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "When did big methane eruptions last rise in the Bermuda Triangle?",
+  "answer": "The US Geological Survey says no big methane gas rises have happened in the Bermuda Triangle area for at least 15,000 years. Gas can sink a small ship, but it cannot explain ships lost in modern times. The correct choice is \"At least 15,000 years ago.\"",
+  "move": "A cause that could work is not a cause that is happening now.",
+  "keywords": [
+    "bermuda-triangle",
+    "methane",
+    "usgs",
+    "seabed",
+    "ship-losses"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A quiz card asking when big methane gas eruptions last rose in the Bermuda Triangle. Three options: in the last few years, about a century ago, or at least 15,000 years ago. The card asks the reader to pick one."
+  },
+  "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=301s",
+  "written": "2026-11-03"
+}

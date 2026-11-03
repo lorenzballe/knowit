@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-obsidian-natural-glass -->
+<title>Astute free card · Obsidian is natural glass</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#scene{display:block;width:100%;flex:1;min-height:0;border-radius:1.8cqh;cursor:pointer}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NATURAL GLASS</span></div>
+    <h2 class="q">Where does natural glass, like obsidian, come from?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scene" aria-label="A volcano erupting"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Magma that cools very fast in the air</button>
+        <button class="opt" data-i="1">Magma that cools slowly, deep underground</button>
+        <button class="opt" data-i="2">Crystals pressed together under the sea</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Magma, cooled in a hurry</p><p class="body">Glass is not only made in factories. When a volcano throws out magma and it meets the air, it cools so fast that it hardens into shiny black glass: obsidian.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch the volcano answer.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Magma that cools very fast becomes glass: obsidian.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1, done = false, S = null, tl = null, pulse = null;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  erupt();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('scene').addEventListener('click', () => { if (done) erupt(); });
+
+function lcg(seed){ let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+
+function draw(){
+  const svg = Kit.$('scene'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .9, 12);
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const defs = mk('defs', {});
+  const sky = mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#0d1026'}, sky);
+  mk('stop', {offset: 1, 'stop-color': '#3a1d2a'}, sky);
+  const cone = mk('linearGradient', {id: 'cone', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#4a3a36'}, cone);
+  mk('stop', {offset: 1, 'stop-color': '#231a19'}, cone);
+  const glowG = mk('radialGradient', {id: 'glowG'}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#ffd23a', 'stop-opacity': 1}, glowG);
+  mk('stop', {offset: .5, 'stop-color': '#ff5a1a', 'stop-opacity': .55}, glowG);
+  mk('stop', {offset: 1, 'stop-color': '#ff5a1a', 'stop-opacity': 0}, glowG);
+
+  mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: 'url(#sky)'});
+  const r = lcg(7);
+  for (let i = 0; i < 26; i++) mk('circle', {cx: r() * W, cy: r() * H * .5, r: .6 + r() * 1.2, fill: '#fff', opacity: .25 + r() * .5});
+
+  const gy = H * .86, cx = W * .5, cy = H * .44, cw = W * .07;
+  const L = W * .06, R = W * .94;
+  const surf = x => {
+    if (x < L || x > R) return gy;
+    if (x < cx - cw) return gy - (gy - cy) * (x - L) / (cx - cw - L);
+    if (x > cx + cw) return gy - (gy - cy) * (R - x) / (R - cx - cw);
+    return cy;
+  };
+  const glow = mk('ellipse', {cx, cy: cy - 2, rx: cw * 2.4, ry: cw * 1.6, fill: 'url(#glowG)'});
+  mk('polygon', {points: `${L},${gy} ${cx - cw},${cy} ${cx - cw * .4},${cy + cw * .25} ${cx + cw * .4},${cy + cw * .25} ${cx + cw},${cy} ${R},${gy}`, fill: 'url(#cone)'});
+  mk('ellipse', {cx, cy: cy + cw * .1, rx: cw * .85, ry: cw * .2, fill: '#ff7a1a'});
+  mk('rect', {x: 0, y: gy, width: W, height: H - gy, fill: '#1a1414'});
+
+  const labA = mk('text', {x: W / 2, y: H * .09 + fs * .4, 'text-anchor': 'middle', fill: '#ffd9a8', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, opacity: 0});
+  labA.textContent = 'hot magma meets cold air';
+
+  const g = mk('g', {});
+  const shards = [];
+  const N = 14, base = Math.max(Math.min(W, H) * .028, 6);
+  for (let i = 0; i < N; i++) {
+    const side = i % 2 ? 1 : -1;
+    const lx = cx + side * (W * .1 + r() * W * .34);
+    const rad = base * (.8 + r() * .7);
+    const ly = Math.min(surf(lx), gy) - rad * .35;
+    const pts = [];
+    const k = 5 + Math.floor(r() * 3);
+    for (let j = 0; j < k; j++) {
+      const a = j / k * Math.PI * 2 + r() * .4, d = rad * (.55 + r() * .6);
+      pts.push([Math.cos(a) * d, Math.sin(a) * d * .75]);
+    }
+    const sg = mk('g', {}, g);
+    const halo = mk('circle', {r: rad * 2, fill: 'url(#glowG)', opacity: 0}, sg);
+    const poly = mk('polygon', {points: pts.map(p => p.join(',')).join(' '), fill: '#0b0b10', stroke: '#000', 'stroke-width': .6}, sg);
+    const hl = mk('polyline', {points: `${pts[0][0] * .6},${pts[0][1] * .6} ${pts[1][0] * .6},${pts[1][1] * .6} ${pts[2][0] * .5},${pts[2][1] * .5}`, fill: 'none', stroke: '#cfe3ff', 'stroke-width': Math.max(rad * .14, 1.2), 'stroke-linecap': 'round', opacity: .85}, sg);
+    const apex = H * (.12 + r() * .1);
+    shards.push({sg, halo, poly, hl, lx, ly, apex, rot: (r() - .5) * 540});
+    sg.setAttribute('transform', `translate(${lx},${ly})`);
+  }
+
+  const labB = mk('text', {x: W / 2, y: gy + (H - gy) / 2 + fs * .36, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, opacity: 0});
+  labB.textContent = 'cooled very fast → obsidian, a glass';
+
+  S = {W, H, cx, cy, shards, labA, labB, glow, g};
+  g.style.display = done ? '' : 'none';
+  if (done) { labA.setAttribute('opacity', 1); labB.setAttribute('opacity', 1); }
+  if (pulse) pulse.kill();
+  if (!Kit.calm) pulse = gsap.to(glow, {attr: {rx: cw * 3, ry: cw * 2}, opacity: .7, duration: 1.1, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+}
+
+function place(s, t){
+  const x = S.cx + (s.lx - S.cx) * t;
+  const y = (1 - t) * (1 - t) * S.cy + 2 * (1 - t) * t * s.apex + t * t * s.ly;
+  s.sg.setAttribute('transform', `translate(${x},${y}) rotate(${s.rot * t})`);
+}
+
+function erupt(){
+  done = true;
+  if (!S) return;
+  if (tl) tl.kill();
+  S.g.style.display = '';
+  Kit.haptic('light');
+  if (Kit.calm) {
+    S.shards.forEach(s => { place(s, 1); s.poly.setAttribute('fill', '#0b0b10'); s.hl.setAttribute('opacity', .85); s.halo.setAttribute('opacity', 0); });
+    S.labA.setAttribute('opacity', 1); S.labB.setAttribute('opacity', 1);
+    return;
+  }
+  tl = gsap.timeline();
+  tl.set([S.labA, S.labB], {attr: {opacity: 0}});
+  tl.to(S.labA, {attr: {opacity: 1}, duration: .4}, .2);
+  S.shards.forEach((s, i) => {
+    const p = {t: 0}, at = i * .07;
+    place(s, 0);
+    s.poly.setAttribute('fill', '#ffe066'); s.hl.setAttribute('opacity', 0); s.halo.setAttribute('opacity', 1);
+    tl.to(p, {t: 1, duration: 1.4, ease: 'none', onUpdate: () => place(s, p.t)}, at);
+    tl.to(s.poly, {attr: {fill: '#ff5a1a'}, duration: .45, ease: 'none'}, at + .1);
+    tl.to(s.poly, {attr: {fill: '#0b0b10'}, duration: .6, ease: 'power1.in'}, at + .55);
+    tl.to(s.halo, {attr: {opacity: 0}, duration: .8}, at + .4);
+    tl.to(s.hl, {attr: {opacity: .85}, duration: .3}, at + 1.3);
+  });
+  tl.to(S.labB, {attr: {opacity: 1}, duration: .5}, 2.1);
+  tl.call(() => Kit.haptic('success'), null, 2.2);
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 3200));
+};
+Kit.single();
+</script>
+</html>

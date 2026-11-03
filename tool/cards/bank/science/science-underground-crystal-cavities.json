@@ -1,0 +1,37 @@
+{
+  "id": "science-underground-crystal-cavities",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What natural process fills cavities in rocks with crystals?",
+  "answer": "Underground water seeps through rock and is often full of salt. Once it carries more than it can keep dissolved and finds a cavity, the extra comes out as crystals on the walls. Crystal-filled cavities are where salty underground water dropped its load.",
+  "move": "Crystal-filled cavities are where salty underground water dropped its load.",
+  "keywords": [
+    "crystals",
+    "salt",
+    "groundwater",
+    "cavities",
+    "rock"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Underground Crystals asking what natural process fills cavities in rocks with crystals. A drag control loads underground water with salt, going from none to too much."
+  },
+  "source": "Geopop, “Come creare i cristalli fatti in casa? Esperimento facile” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=6d8wdEsQBEo&t=148s",
+  "written": "2026-11-03"
+}

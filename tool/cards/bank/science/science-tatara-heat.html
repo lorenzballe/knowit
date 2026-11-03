@@ -1,0 +1,151 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-tatara-heat -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#ctl span{font:700 max(1.7cqh,12px)/1.2 var(--mono);color:var(--k);white-space:nowrap}
+#h{flex:1;-webkit-appearance:none;appearance:none;height:max(1.2cqh,8px);border-radius:1cqh;background:linear-gradient(90deg,#3a2418,#ff5a1f 60%,#ffd27a);outline:none;margin:1.4cqh 0}
+#h::-webkit-slider-thumb{-webkit-appearance:none;width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);border:max(.5cqh,3px) solid var(--c);box-shadow:0 0 0 .25cqh var(--k);cursor:grab}
+#h::-moz-range-thumb{width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);border:max(.5cqh,3px) solid var(--c);cursor:grab}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">METALLURGY</span></div>
+    <h2 class="q">What is the temperature inside a tatara smelter and why is it important?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A tatara smelter beside a thermometer"></svg>
+      <div id="ctl"><span>0 h</span><input id="h" type="range" min="0" max="24" step="0.1" value="0" aria-label="Hours of bellows"><span>24 h</span></div>
+      <div id="why" class="gone"><p class="body">The tatara peaks around 1,500 °C, just below iron's melting point of 1,538 °C. That is hot enough to turn the iron sand into iron, but the iron never becomes liquid: it stays solid and workable.</p></div>
+    </div>
+    <p class="say" id="say">Drag to pump the bellows for 24 hours.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Hot enough to make iron, just too cool to melt it.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {h: 0, done: false};
+let G = null;
+const TMAX = 1600, MELT = 1538;
+const T = h => { const p = Math.min(1, h / 24); return 20 + 1480 * (1 - Math.pow(1 - p, 3)); };
+const fmt = t => Math.round(t).toLocaleString('en-US') + ' °C';
+const heat = p => p < .6 ? gsap.utils.interpolate('#3a2418', '#ff5a1f', p / .6) : gsap.utils.interpolate('#ff5a1f', '#ffd27a', (p - .6) / .4);
+
+function build() {
+  const svg = Kit.$('pic');
+  gsap.killTweensOf('.fl, .gr');
+  svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, H / 16));
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  const g = {W, H, f};
+  // smelter
+  const sx0 = W * .05, sx1 = W * .44, yT = Math.max(H * .26, 3 * f), yB = H - 2.4 * f;
+  const wall = Math.max(8, W * .035);
+  mk('line', {x1: 0, x2: W * .5, y1: yB, y2: yB, stroke: 'currentColor', 'stroke-width': 2, opacity: .4});
+  // flames
+  const flg = mk('g', {});
+  g.flames = flg;
+  const cx = (sx0 + sx1) / 2, fw = (sx1 - sx0 - 2 * wall);
+  [[-.3, .7, '#ff5a1f'], [0, 1, '#ffb13b'], [.3, .75, '#ff5a1f'], [-.1, .55, '#ffe08a'], [.15, .5, '#ffe08a']].forEach(([dx, s, c]) => {
+    const x = cx + dx * fw, w = fw * .22, h = (yT - 2.2 * f) * s;
+    mk('path', {class: 'fl', d: `M${x - w / 2},${yT} Q${x - w / 2},${yT - h * .5} ${x},${yT - h} Q${x + w / 2},${yT - h * .5} ${x + w / 2},${yT} Z`, fill: c, opacity: .9}, flg);
+  });
+  // body
+  mk('rect', {x: sx0, y: yT, width: sx1 - sx0, height: yB - yT, rx: 6, fill: '#6b4428'});
+  g.inner = mk('rect', {x: sx0 + wall, y: yT, width: sx1 - sx0 - 2 * wall, height: yB - yT - wall, fill: '#3a2418'});
+  // grains
+  g.grains = mk('g', {});
+  for (let i = 0; i < 7; i++) mk('circle', {class: 'gr', cx: sx0 + wall + (i + .5) * fw / 7, cy: yT + 4, r: Math.max(2, f * .16), fill: '#1a1a1a'}, g.grains);
+  g.lump = mk('ellipse', {cx, cy: yB - wall, rx: 1, ry: 1, fill: '#3a2418', stroke: '#1b0d05', 'stroke-width': 2});
+  g.lumpT = mk('text', {x: cx, y: yT + (yB - yT) * .42, 'text-anchor': 'middle', 'font-size': f * .9, 'font-weight': 700, fill: '#1b0d05', 'font-family': 'var(--body)'});
+  g.lumpT.textContent = 'iron: solid';
+  const lab = mk('text', {x: cx, y: yB + 1.5 * f, 'text-anchor': 'middle', 'font-size': f * .85, fill: 'currentColor', opacity: .75, 'font-family': 'var(--body)'});
+  lab.textContent = 'tatara smelter';
+  g.hour = mk('text', {x: sx0, y: 1.2 * f, 'font-size': f, 'font-weight': 700, fill: 'currentColor', 'font-family': 'var(--mono)'});
+  Object.assign(g, {sx0, sx1, yT, yB, wall, cx, fw});
+  // thermometer
+  const tx = W * .70, tw = Math.max(14, W * .05), br = tw * 1.05;
+  const yTop = 3 * f, yBot = H - 1.4 * f - br * 2;
+  const yOf = t => yTop + (1 - t / TMAX) * (yBot - yTop);
+  g.yOf = yOf; g.tx = tx; g.tw = tw;
+  mk('rect', {x: tx - tw / 2 - 3, y: yTop - tw / 2 - 3, width: tw + 6, height: yBot - yTop + tw / 2 + 6, rx: tw / 2 + 3, fill: 'none', stroke: 'currentColor', 'stroke-width': 2});
+  mk('circle', {cx: tx, cy: yBot + br, r: br + 3, fill: 'none', stroke: 'currentColor', 'stroke-width': 2});
+  g.fill = mk('rect', {x: tx - tw / 2, y: yBot, width: tw, height: 0, fill: '#ff5a1f'});
+  g.bulb = mk('circle', {cx: tx, cy: yBot + br, r: br, fill: '#ff5a1f'});
+  // melting point
+  const ym = yOf(MELT);
+  mk('line', {x1: tx - tw, x2: tx + tw / 2 + 10, y1: ym, y2: ym, stroke: '#d7263d', 'stroke-width': 3, 'stroke-dasharray': '6 4'});
+  const mx = tx + tw / 2 + 12;
+  const m1 = mk('text', {x: mx, y: ym - 1.8 * f, 'font-size': f * .9, 'font-weight': 700, fill: '#d7263d', 'font-family': 'var(--body)'}); m1.textContent = 'iron melts';
+  const m2 = mk('text', {x: mx, y: ym - .4 * f, 'font-size': f * .9, 'font-weight': 700, fill: '#d7263d', 'font-family': 'var(--mono)'}); m2.textContent = '1,538 °C';
+  g.gap = mk('text', {x: mx, y: ym + 1.5 * f, 'font-size': f * .85, 'font-weight': 700, fill: 'currentColor', 'font-family': 'var(--body)', opacity: S.done ? 1 : 0}); g.gap.textContent = '38 °C short';
+  // reading
+  g.read = mk('text', {x: tx - tw / 2 - 12, y: yBot, 'text-anchor': 'end', 'font-size': f * 1.05, 'font-weight': 800, fill: 'currentColor', 'font-family': 'var(--mono)'});
+  g.ptr = mk('path', {d: '', fill: 'currentColor'});
+  G = g;
+  update();
+  if (!Kit.calm) animate();
+}
+
+function update() {
+  if (!G) return;
+  const t = T(S.h), p = (t - 20) / 1480, c = heat(p);
+  const y = G.yOf(t), yb = G.yOf(0);
+  G.fill.setAttribute('y', y); G.fill.setAttribute('height', Math.max(0, yb - y));
+  G.fill.setAttribute('fill', c); G.bulb.setAttribute('fill', c);
+  G.read.setAttribute('y', y + .35 * G.f); G.read.textContent = fmt(t);
+  const px = G.tx - G.tw / 2 - 2, s = G.f * .35;
+  G.ptr.setAttribute('d', `M${px},${y} L${px - 8},${y - s} L${px - 8},${y + s} Z`);
+  G.inner.setAttribute('fill', c);
+  G.flames.setAttribute('opacity', .1 + .9 * p);
+  G.grains.setAttribute('opacity', S.h > .2 ? 1 : 0);
+  const rx = Math.max(1, G.fw * .42 * Math.min(1, S.h / 24)), ry = rx * .45;
+  G.lump.setAttribute('rx', rx); G.lump.setAttribute('ry', ry);
+  G.lump.setAttribute('cy', G.yB - G.wall - ry * .6);
+  G.lump.setAttribute('fill', heat(Math.min(1, p * .85)));
+  G.lumpT.setAttribute('opacity', S.h > 1 ? 1 : 0);
+  G.hour.textContent = `Bellows: hour ${Math.floor(S.h)} of 24`;
+}
+
+function animate() {
+  gsap.utils.toArray('.fl').forEach((el, i) => gsap.to(el, {scaleY: .7 + .2 * (i % 2), scaleX: 1.08, transformOrigin: '50% 100%', duration: .25 + .08 * i, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+  const fall = G.yB - G.wall - G.yT - G.fw * .2;
+  gsap.utils.toArray('.gr').forEach((el, i) => gsap.fromTo(el, {y: 0, opacity: 1}, {y: fall, opacity: 0, duration: 1.4, delay: i * .21, repeat: -1, ease: 'power1.in'}));
+}
+
+function finish() {
+  if (S.done) return;
+  S.done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (G) Kit.calm ? G.gap.setAttribute('opacity', 1) : gsap.to(G.gap, {opacity: 1, duration: .6});
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+let lastWhole = 0;
+Kit.$('h').addEventListener('input', e => {
+  S.h = +e.target.value;
+  const w = Math.floor(S.h / 4);
+  if (w !== lastWhole) { lastWhole = w; Kit.haptic('light'); }
+  update();
+  if (S.h >= 24) finish();
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = Kit.$('h');
+  r.value = 24; r.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(res => setTimeout(res, 900));
+};
+Kit.single();
+</script>
+</html>

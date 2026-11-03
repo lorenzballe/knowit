@@ -1,0 +1,169 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-ink-meets-macrophages -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:block}
+#sk{display:block;width:100%;height:100%;touch-action:manipulation;cursor:crosshair;border-radius:2cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Tap · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">IMMUNE SYSTEM</span></div>
+    <h2 class="q">How does the body react to tattoo ink?</h2>
+    <div class="stagebox" id="stage"><svg id="sk"></svg></div>
+    <p class="say" id="say">Tap the dermis in three places to tattoo it. Watch who comes.</p>
+    <div id="why" class="gone"><p class="body">The needle leaves ink in the dermis. The immune system sees a foreign body and sends macrophages, cells that engulf invaders to eliminate them. But ink is inorganic: they can't break it all down, so they keep it there.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A tattoo is ink that your cells swallowed but can't digest.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const INK = ['#14151b', '#1f3a8f', '#9b1230'];
+const S = {
+  mac: [0, 1, 2].map(i => ({x: (i + .5) / 3, y: null, st: 'idle', ph: i * 2, p: 0})),
+  inks: [], done: 0,
+  fib: Array.from({length: 9}, () => ({y: .22 + Kit.rnd() * .76, a: Kit.rnd() * 6, k: 2 + Kit.rnd() * 3}))
+};
+const G = {};
+const NS = 'http://www.w3.org/2000/svg';
+const LAB = {idle: ['MACROPHAGE', ''], coming: ['on its way…', ''], eating: ['engulfing…', ''], digest: ['digesting…', ''], fail: ["can't digest", 'INK STAYS']};
+
+function blob(cx, cy, r, ph, p) {
+  let d = '';
+  for (let k = 0; k <= 48; k++) {
+    const t = k / 48 * Math.PI * 2;
+    const rr = r * (1 + p * .08) * (1 + .12 * Math.sin(3 * t + ph) + .07 * Math.sin(5 * t - ph * 1.3));
+    d += (k ? 'L' : 'M') + (cx + rr * Math.cos(t)).toFixed(1) + ' ' + (cy + rr * Math.sin(t)).toFixed(1);
+  }
+  return d + 'Z';
+}
+
+function render() {
+  if (!G.W) return;
+  const {W, H, r, fs} = G;
+  S.mac.forEach((m, i) => {
+    const e = G.m[i], cx = m.x * W, cy = m.y * H;
+    e.body.setAttribute('d', blob(cx, cy, r, m.ph, m.p));
+    e.nuc.setAttribute('cx', cx - r * .3); e.nuc.setAttribute('cy', cy - r * .25);
+    const L = LAB[m.st];
+    e.l1.setAttribute('x', cx); e.l1.setAttribute('y', cy + r * 1.2 + fs * 1.1); e.l1.textContent = L[0];
+    e.l2.setAttribute('x', cx); e.l2.setAttribute('y', cy + r * 1.2 + fs * 2.5); e.l2.textContent = L[1];
+    e.l1.setAttribute('font-weight', m.st === 'fail' ? 700 : 500);
+  });
+  S.inks.forEach(ink => {
+    const m = S.mac[ink.i], mx = m.x * W, my = m.y * H, ix = ink.x * W, iy = ink.y * H;
+    ink.dots.forEach((d, j) => {
+      const o = ink.off[j], wig = m.st === 'digest' || m.st === 'fail' ? Math.sin(m.ph * 2 + j) * r * .04 : 0;
+      const ax = ix + o[0] * r, ay = iy + o[1] * r, bx = mx + o[0] * r * .5 + wig, by = my + o[1] * r * .5 + r * .1;
+      d.setAttribute('cx', ax + (bx - ax) * ink.t); d.setAttribute('cy', ay + (by - ay) * ink.t);
+    });
+  });
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('sk');
+  const {W, H, f} = Kit.fitSvg(svg);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const fs = Math.max(12, f * .85), r = Math.max(18, Math.min(W / 9, H * .1));
+  Object.assign(G, {W, H, fs, r, ep: H * .16});
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#f7d6c4'}, svg);
+  S.fib.forEach(b => {
+    let d = '';
+    for (let k = 0; k <= 20; k++) { const x = W * k / 20; d += (k ? 'L' : 'M') + x.toFixed(1) + ' ' + (b.y * H + Math.sin(k / b.k + b.a) * H * .02).toFixed(1); }
+    Kit.mk('path', {d, fill: 'none', stroke: '#ebb59d', 'stroke-width': Math.max(1.5, H * .006), 'stroke-linecap': 'round'}, svg);
+  });
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: G.ep, fill: '#d99a74'}, svg);
+  Kit.mk('line', {x1: 0, y1: G.ep, x2: W, y2: G.ep, stroke: '#a8643f', 'stroke-width': 2}, svg);
+  const tl = (x, y, s, w, fill) => { const t = Kit.mk('text', {x, y, fill, 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': w, 'letter-spacing': '.06em'}, svg); t.textContent = s; return t; };
+  tl(W * .03, G.ep / 2 + fs * .35, 'EPIDERMIS', 700, '#4a2412');
+  tl(W * .03, G.ep + fs * 1.5, 'DERMIS', 700, '#7a3d22');
+  G.inkLayer = Kit.mk('g', {}, svg);
+  G.m = S.mac.map((m, i) => {
+    if (m.y === null || m.st === 'idle') m.y = (H - r * 1.2 - fs * 3) / H;
+    const g = Kit.mk('g', {}, svg);
+    const body = Kit.mk('path', {fill: 'rgba(120,196,168,.78)', stroke: '#2c7a5f', 'stroke-width': Math.max(2, r * .07)}, g);
+    const nuc = Kit.mk('ellipse', {rx: r * .32, ry: r * .24, fill: '#6b4fa0', opacity: .85}, g);
+    const mk2 = (w) => { const t = Kit.mk('text', {'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': w, fill: '#3b1d14'}, svg); return t; };
+    return {g, body, nuc, l1: mk2(500), l2: mk2(700)};
+  });
+  G.dotLayer = Kit.mk('g', {}, svg);
+  S.inks.forEach(ink => {
+    ink.dots = ink.off.map(() => Kit.mk('circle', {r: r * .1, fill: INK[ink.i]}, G.dotLayer));
+  });
+  render();
+};
+
+function tattoo(px, py) {
+  const {W, H, r, fs, ep} = G;
+  const i = Math.max(0, Math.min(2, Math.floor(px / W * 3)));
+  const m = S.mac[i];
+  if (m.st !== 'idle') { Kit.haptic('light'); return; }
+  const cc = (i + .5) * W / 3, half = Math.max(0, W / 6 - Math.max(r * 1.2, 50));
+  const x = Math.max(cc - half, Math.min(cc + half, px));
+  const y = Math.max(ep + r * 1.3 + fs, Math.min(H * .62, py, H - r * 1.2 - fs * 3.2 - r * 1.6));
+  m.st = 'coming'; Kit.haptic('selection');
+  const svg = Kit.$('sk');
+  const nd = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: x - r * .14, y: -H - 10, width: r * .28, height: H * .6, rx: r * .1, fill: '#5b6470'}, nd);
+  Kit.mk('line', {x1: x, y1: -H * .4, x2: x, y2: y, stroke: '#c7ced6', 'stroke-width': Math.max(2, r * .08)}, nd);
+  Kit.mk('path', {d: `M${x - r * .05} ${y - r * .2}L${x} ${y}L${x + r * .05} ${y - r * .2}Z`, fill: '#c7ced6'}, nd);
+  const st = {v: -y - 10};
+  const setN = () => nd.setAttribute('transform', `translate(0 ${st.v})`); setN();
+  const off = Array.from({length: 8}, (_, k) => { const a = k / 8 * 6.283 + Kit.rnd(), d = .2 + Kit.rnd() * .4; return [Math.cos(a) * d, Math.sin(a) * d]; });
+  const ink = {i, x: x / W, y: y / H, t: 0, off, dots: []};
+  const t = gsap.timeline();
+  t.to(st, {v: 0, duration: .35, ease: 'power2.in', onUpdate: setN})
+   .call(() => {
+     S.inks.push(ink);
+     ink.dots = off.map(() => Kit.mk('circle', {r: r * .1, fill: INK[i]}, G.dotLayer));
+     render(); Kit.haptic('light');
+   })
+   .to(st, {v: -y - 10, duration: .3, ease: 'power2.out', onUpdate: setN, onComplete: () => nd.remove()})
+   .to(m, {x: ink.x, y: ink.y, ph: m.ph + 4, duration: 1.2, ease: 'power2.inOut', onUpdate: render}, '+=.2')
+   .call(() => { m.st = 'eating'; render(); })
+   .to(ink, {t: 1, duration: .8, ease: 'power2.inOut', onUpdate: render})
+   .call(() => { m.st = 'digest'; render(); })
+   .to(m, {p: 1, ph: m.ph + 8, duration: .35, yoyo: true, repeat: 5, ease: 'sine.inOut', onUpdate: render})
+   .call(() => {
+     m.st = 'fail'; m.p = 0; render(); Kit.haptic('success');
+     S.done++;
+     if (S.done === 3) finish();
+     else Kit.$('say').textContent = S.done === 1 ? 'It ate the ink and kept it. Tattoo two more spots.' : 'One more spot.';
+   });
+  if (Kit.calm) t.timeScale(4);
+}
+
+function finish() {
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+Kit.$('sk').addEventListener('pointerdown', e => {
+  const b = Kit.$('sk').getBoundingClientRect();
+  tattoo((e.clientX - b.left) / b.width * G.W, (e.clientY - b.top) / b.height * G.H);
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  S.mac.forEach((m, i) => gsap.to(m, {ph: m.ph + 1.5, duration: 2.4 + i * .3, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: render}));
+};
+
+Kit.play.card = async () => {
+  gsap.globalTimeline.timeScale(12);
+  const b = Kit.$('sk').getBoundingClientRect();
+  [.2, .5, .8].forEach((fx, k) => {
+    Kit.$('sk').dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, clientX: b.left + b.width * fx, clientY: b.top + b.height * (.4 + k * .05)}));
+  });
+  await new Promise(r => setTimeout(r, 1400));
+  gsap.globalTimeline.timeScale(1);
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

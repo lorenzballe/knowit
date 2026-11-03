@@ -1,0 +1,37 @@
+{
+  "id": "science-channel-tunnel-chalk",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the West Melbury Marly Chalk, and why tunnel through it?",
+  "answer": "The West Melbury Marly Chalk is a carbonate rock that lets very little water through, and it is compact and homogeneous. Because it is the same rock from end to end, the machine cuts through it in the dry, and its walls hold.",
+  "move": "The best rock to tunnel is the one that stays the same and keeps water out.",
+  "keywords": [
+    "channel tunnel",
+    "west melbury marly chalk",
+    "chalk",
+    "tunnel boring",
+    "england and france"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A cross-section of rock layers, with a marly chalk band between upper and lower rock highlighted. The page asks what the chalk is and why to tunnel through it, and invites the reader to pick a layer and hold a button to bore."
+  },
+  "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=1i1Z63xL3MQ&t=106s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "history-franklin-cannon-shutters",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "What bizarre measures did Benjamin Franklin propose in 1784 to save candle oil?",
+  "answer": "Franklin's satirical proposal was to fire cannons at dawn and tax window shutters. He wrote it in the Journal de Paris to mock Parisians who slept through sunny mornings and burned candles at night. He never moved a clock.",
+  "move": "Franklin's \"daylight saving\" was a joke about late risers, not about clocks.",
+  "keywords": [
+    "franklin",
+    "paris",
+    "candles",
+    "shutters",
+    "cannons"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card titled 'Franklin's cannons at dawn' asking what bizarre measures Benjamin Franklin proposed in 1784 to save candle oil. Four choices: move every clock an hour forward; make candles cheaper; fire cannons at dawn and tax window shutters; cannons at dawn with a shutter tax. The reader picks one and rates their confidence.",
+    "graded": false
+  },
+  "source": "Geopop, “Dall'ora legale all'ora solare: i pro e contro del cambio orario e perché si parla di abolizione” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Fu6AT5WLgJg&t=37s",
+  "written": "2026-11-03"
+}

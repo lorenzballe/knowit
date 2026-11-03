@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-column-collapse-flows -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation}
+#why{position:absolute;top:1.2cqh;left:3cqw;right:3cqw;display:flex;flex-direction:column;gap:.8cqh;padding:1.4cqh 3.5cqw;border-radius:1.6cqh;background:rgba(255,249,240,.92);color:#2a201a;box-shadow:0 .4cqh 1.6cqh rgba(40,25,15,.18)}
+#why p{margin:0;overflow-wrap:break-word}
+#why .wbig{font:800 max(2.5cqh,15px)/1.15 var(--display)}
+#why .wbody{font:500 max(1.8cqh,12.5px)/1.3 var(--body)}
+.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap · watch it fall">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VESUVIUS</span></div>
+    <h2 class="q">Why is the collapse of the eruptive column the most dangerous moment?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A volcano with an eruptive column; tap to load it"></svg>
+      <div id="why" class="gone">
+        <p class="wbig">The fall unleashes pyroclastic flows</p>
+        <p class="wbody">Once the column turns dark and heavy, it collapses. That sets off pyroclastic flows: rivers of incandescent gas and volcanic material that race down the slopes and destroy what they reach.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the column to load it with heavy ash and rock.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>When the column falls, the deadliest part starts: flows racing downhill.</div>
+    <div class="foot"><span class="src">Source · Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 6;
+let n = 0, done = false, busy = false;
+const G = {};
+const hh = i => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+function lerpC(a, b, t){
+  t = Math.max(0, Math.min(1, t));
+  const p = s => [1,3,5].map(i => parseInt(s.slice(i, i+2), 16));
+  const A = p(a), B = p(b);
+  return '#' + A.map((v,i) => Math.round(v + (B[i]-v)*t).toString(16).padStart(2,'0')).join('');
+}
+const WORDS = ['light','light','greyer','grey','darker','dark','dark & heavy'];
+
+function draw(){
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  Object.assign(G, {W, H, f, cx: W*.5, cy: H*.56, cw: W*.065, gy: H*.86, fs: Math.max(12, Math.min(f*.85, W*.046))});
+  const {cx, cy, cw, gy, fs} = G;
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id:'sky', x1:0, y1:0, x2:0, y2:1}, defs);
+  Kit.mk('stop', {offset:0, 'stop-color':'#fcf5ea'}, lg);
+  Kit.mk('stop', {offset:1, 'stop-color':'#ecd8c1'}, lg);
+  const fl = Kit.mk('filter', {id:'glow', x:'-50%', y:'-50%', width:'200%', height:'200%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: Math.max(2, W*.008), result:'b'}, fl);
+  const fm = Kit.mk('feMerge', {}, fl);
+  Kit.mk('feMergeNode', {in:'b'}, fm); Kit.mk('feMergeNode', {in:'SourceGraphic'}, fm);
+  const cp = Kit.mk('clipPath', {id:'clip'}, defs);
+  const rr = Math.min(W, H) * .045;
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:rr}, cp);
+  const root = Kit.mk('g', {'clip-path':'url(#clip)'}, svg);
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, fill:'url(#sky)'}, root);
+  // volcano
+  Kit.mk('path', {d:`M${W*.18},${gy} L${cx-cw},${cy} Q${cx},${cy+H*.03} ${cx+cw},${cy} L${W*.82},${gy} Z`, fill:'#7d604d'}, root);
+  Kit.mk('path', {d:`M${cx+cw*.2},${cy+H*.02} L${cx+cw},${cy} L${W*.82},${gy} L${W*.56},${gy} Z`, fill:'#5f4738', opacity:.7}, root);
+  G.glowE = Kit.mk('ellipse', {cx, cy:cy+H*.008, rx:cw*.8, ry:Math.max(3,H*.012), fill:'#ff7a2e', filter:'url(#glow)'}, root);
+  Kit.mk('rect', {x:0, y:gy, width:W, height:H-gy, fill:'#4f3c31'}, root);
+  // towns
+  G.houses = [];
+  const town = (x0, x1) => {
+    const k = 4, step = (x1-x0)/k, w = step*.72;
+    for (let i = 0; i < k; i++){
+      const x = x0 + i*step + (step-w)/2, h = H*(.03 + .015*hh(i*3+x0));
+      G.houses.push(Kit.mk('rect', {x, y:gy-h, width:w, height:h, fill:'#f4e7d4', stroke:'#2a201a', 'stroke-width':1}, root));
+      G.houses.push(Kit.mk('path', {d:`M${x-1},${gy-h} L${x+w/2},${gy-h-w*.45} L${x+w+1},${gy-h} Z`, fill:'#b8553a', stroke:'#2a201a', 'stroke-width':1}, root));
+    }
+  };
+  town(W*.03, W*.17); town(W*.83, W*.97);
+  G.flows = Kit.mk('g', {}, root);
+  const ly = gy + (H-gy)*.62;
+  for (const x of [W*.1, W*.9]){
+    const t = Kit.mk('text', {x, y:ly, 'text-anchor':'middle', 'dominant-baseline':'middle', fill:'#f4e7d4', 'font-size':fs, 'font-weight':700, 'font-family':'var(--body)'}, root);
+    t.textContent = 'town';
+  }
+  G.col = Kit.mk('g', {}, root);
+  G.st = Kit.mk('g', {}, root);
+  const t1 = Kit.mk('text', {x:W*.045, y:H*.24, fill:'#6b5a4c', 'font-size':fs, 'font-weight':600, 'font-family':'var(--body)'}, G.st);
+  t1.textContent = 'Column';
+  G.st2 = Kit.mk('text', {x:W*.045, y:H*.24 + fs*1.45, fill:'#2a201a', 'font-size':fs*1.05, 'font-weight':800, 'font-family':'var(--body)'}, G.st);
+  G.st3 = Kit.mk('text', {x:W*.045, y:H*.24 + fs*2.9, fill:'#8a6f5c', 'font-size':fs, 'font-weight':600, 'font-family':'var(--mono)'}, G.st);
+  if (done) final(); else { buildCol(-1); status(); }
+}
+
+function status(){
+  G.st2.textContent = WORDS[n];
+  G.st3.textContent = '▮'.repeat(n) + '▯'.repeat(N-n);
+}
+
+function buildCol(prevK){
+  const {W, H, cx, cy} = G;
+  G.col.innerHTML = '';
+  const d = n / N, h = H*(.1 + n*.075), k = 3 + n*2, made = [];
+  for (let i = 0; i < k; i++){
+    const t = (i+.5)/k, y = cy - h*t, r0 = W*(.03 + .045*t)*(1 + n*.05);
+    for (const s of [-1, 1]){
+      const r = r0*(.85 + .3*hh(i*7+s+3));
+      const c = Kit.mk('circle', {
+        cx: cx + s*r0*.38*hh(i*2+s+5), cy: y, r,
+        fill: lerpC('#ece6dd', '#2e2622', d*(.75 + .35*hh(i*11+s))),
+        stroke: lerpC('#cfc6b8', '#18120f', d), 'stroke-width': 1
+      }, G.col);
+      c._i = i*2 + (s > 0 ? 1 : 0);
+      if (i >= prevK && prevK >= 0) made.push(c);
+    }
+  }
+  if (made.length && !Kit.calm) gsap.from(made, {attr:{r:0}, duration:.45, ease:'back.out(2)', stagger:.04});
+  return k;
+}
+
+function settled(i){
+  const {W, H, cx, cy} = G;
+  return {cx: cx + (hh(i+50)-.5)*W*.34, cy: cy - H*.02 + hh(i+90)*H*.07};
+}
+
+function buildFlows(){
+  const {W, H, cx, cy, cw, gy} = G;
+  G.flows.innerHTML = '';
+  const sides = [];
+  for (const s of [-1, 1]){
+    const d = `M${cx + s*cw*.9},${cy+H*.005} L${cx + s*W*.32},${gy-2} L${cx + s*W*.49},${gy-2}`;
+    const path = Kit.mk('path', {d, fill:'none', stroke:'#ff6a1a', 'stroke-width':Math.max(4, H*.028), 'stroke-linecap':'round', 'stroke-linejoin':'round', filter:'url(#glow)'}, G.flows);
+    const core = Kit.mk('path', {d, fill:'none', stroke:'#ffd36b', 'stroke-width':Math.max(1.5, H*.008), 'stroke-linecap':'round'}, G.flows);
+    const len = path.getTotalLength();
+    const clouds = [];
+    for (let j = 0; j < 10; j++){
+      clouds.push(Kit.mk('circle', {cx:0, cy:0, r:W*(.026 + .02*hh(j*5+s)), fill:lerpC('#3b302a', '#6a564a', hh(j+s*9)), opacity:0}, G.flows));
+    }
+    sides.push({path, core, len, clouds});
+  }
+  return sides;
+}
+function place(side, p){
+  side.clouds.forEach((c, j) => {
+    const q = Math.max(0, Math.min(1, p - j*.08));
+    const pt = side.path.getPointAtLength(q*side.len), r = +c.getAttribute('r');
+    c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y - r*.55);
+    c.setAttribute('opacity', p - j*.08 > 0 ? .95 : 0);
+  });
+}
+
+function darkHouses(){ G.houses.forEach(h => { h.setAttribute('fill', '#3a2c24'); h.setAttribute('stroke', '#ff6a1a'); }); }
+
+function final(){
+  n = N; buildCol(-1);
+  [...G.col.children].forEach(c => { const s = settled(c._i); c.setAttribute('cx', s.cx); c.setAttribute('cy', s.cy); c.setAttribute('fill', '#2a221e'); });
+  const sides = buildFlows();
+  sides.forEach(s => place(s, 1));
+  darkHouses();
+  G.st.setAttribute('opacity', 0);
+}
+
+function end(){
+  busy = false;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:-8, duration:.5, stagger:.12, ease:'power3.out'});
+}
+
+function collapse(){
+  done = true;
+  Kit.hide('say');
+  const tl = gsap.timeline({onComplete:end});
+  tl.to(G.st, {opacity:0, duration:.3}, 0);
+  [...G.col.children].forEach(c => {
+    const s = settled(c._i);
+    tl.to(c, {attr:{cx:s.cx, cy:s.cy, fill:'#2a221e'}, duration:.9, ease:'power2.in'}, hh(c._i+20)*.2);
+  });
+  const sides = buildFlows();
+  sides.forEach(s => {
+    s.path.setAttribute('stroke-dasharray', s.len); s.path.setAttribute('stroke-dashoffset', s.len);
+    s.core.setAttribute('stroke-dasharray', s.len); s.core.setAttribute('stroke-dashoffset', s.len);
+    tl.to([s.path, s.core], {attr:{'stroke-dashoffset':0}, duration:1.6, ease:'power1.out'}, .8);
+    const o = {p:0};
+    tl.to(o, {p:1, duration:1.6, ease:'power1.out', onUpdate:() => place(s, o.p)}, .8);
+  });
+  tl.call(() => Kit.haptic('light'), null, .8);
+  tl.to(G.houses, {attr:{fill:'#3a2c24', stroke:'#ff6a1a'}, duration:.4, stagger:.03}, 1.9);
+}
+
+Kit.$('pic').addEventListener('click', () => {
+  if (done || busy) return;
+  const prevK = 3 + n*2;
+  n++; Kit.haptic('light');
+  buildCol(prevK); status();
+  if (n >= N){
+    busy = true;
+    if (Kit.calm){ done = true; draw(); end(); }
+    else setTimeout(collapse, 500);
+  }
+});
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => {
+  if (Kit.calm || done) return;
+  gsap.from(G.col.children, {attr:{r:0}, duration:.5, stagger:.05, ease:'back.out(2)'});
+  gsap.to(G.glowE, {opacity:.45, duration:.8, yoyo:true, repeat:5, ease:'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const svg = Kit.$('pic');
+  for (let i = 0; i < N; i++){ svg.dispatchEvent(new MouseEvent('click', {bubbles:true})); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 3600));
+};
+Kit.single();
+</script>
+</html>

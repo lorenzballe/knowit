@@ -1,0 +1,323 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Caught before the flaw</title>
+<!-- A top view of a blue LED's glowing layer, 400 nm wide, pierced by defects (threading dislocations)
+     at 10 billion per cm² (as Lester measured in 1995 LEDs; today's run lower, 1e8-1e9), one every
+     100 nm or so. Electron-hole pairs appear and wander. Without
+     indium they wander far, and most reach a defect, where their energy becomes heat. The reader
+     switches the indium on: it mixes unevenly, and spots a few nanometres wide richer in indium are
+     dips in energy; the pairs fall in, hop between them, and give their photon before reaching a defect.
+     A toy model, and the layer says so (sizes of the spots and the walk are drawn for the eye; plain
+     GaN's own light is ultraviolet, drawn violet), of the leading explanation:
+     Nakamura, Science 281, 956 (1998): efficient InGaN LEDs at 1e8-1e12 dislocations per cm², carriers
+     caught by localized states from In fluctuations before they reach the dislocations; Lester et al.,
+     Appl. Phys. Lett. 66, 1249 (1995): over 2e10 per cm² in LEDs of 4% efficiency, far more tolerant
+     than arsenide and phosphide LEDs; Chichibu et al., Nature Materials 5, 810 (2006): In-N
+     condensates trap holes; Watson-Parris et al., Phys. Rev. B (2011, arXiv 1006.1232): localization
+     is the prevailing explanation, its precise nature debated (random alloy fluctuations, well-width
+     steps, indium clusters). Inspired by Veritasium, "Why It Was Almost Impossible to Make the Blue LED".
+     Touch: taps (the switch). With motion reduced the layer is a long exposure: each pair's path, and
+     where it ended, in light or in heat. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh}
+#well{flex:1;min-height:0;width:100%;display:block;border-radius:2.2cqh;background:#07100d}
+#ctl{display:flex;align-items:center;gap:3.2cqw;flex:none}
+#sw{flex:none;display:flex;align-items:center;gap:2cqw;border:0;background:none;padding:0;cursor:pointer;color:var(--k);font:800 max(2cqh,13px)/1 var(--body)}
+#sw i{position:relative;width:max(6.6cqh,42px);height:max(3.9cqh,25px);border-radius:99px;box-shadow:inset 0 0 0 .28cqh var(--k);transition:background .25s}
+#sw i::after{content:"";position:absolute;top:18%;left:10%;width:max(2.6cqh,16.5px);aspect-ratio:1;border-radius:50%;background:var(--k);transition:left .25s cubic-bezier(.23,1,.32,1),background .25s}
+#sw[aria-checked=true] i{background:var(--k)}
+#sw[aria-checked=true] i::after{left:calc(90% - max(2.6cqh,16.5px));background:var(--c)}
+#sw:focus-visible{outline:2px solid var(--k);outline-offset:4px;border-radius:99px}
+#meter{flex:1;min-width:0;display:flex;flex-direction:column;gap:.7cqh}
+#nums{display:flex;justify-content:space-between;font:800 max(1.9cqh,12.5px)/1 var(--body)}
+#nums .l{color:#1430d9}#nums .h{color:#b52a00}
+#bar{display:flex;height:max(1.1cqh,7px);border-radius:99px;overflow:hidden;background:color-mix(in srgb,var(--k) 14%,transparent)}
+#bar b{display:block;height:100%;transition:width .35s ease}
+#bl{background:#2440ff}#bh{background:#ff4a12}
+#say{min-height:calc(3 * 1.42em)}
+.answered .q{font-size:max(2.5cqh,15px)}
+#keep{text-wrap:pretty}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Simulation · light or heat">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LIGHT OR HEAT</span></div>
+    <h2 class="q">A blue LED can hold billions of light-killing defects per square centimetre. Why does it still shine?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="well" role="img" aria-label="A top view of the LED's glowing layer, 400 nanometres wide, with a defect about every 100 nanometres. Electron and hole pairs wander; most reach a defect and turn to heat."></canvas>
+      <div id="ctl">
+        <button id="sw" role="switch" aria-checked="false" aria-label="Indium"><i></i><span id="swl">add indium</span></button>
+        <div id="meter" aria-live="polite">
+          <div id="nums"><span class="l" id="nl">light 0%</span><span class="h" id="nh">heat 0%</span></div>
+          <div id="bar"><b id="bl" style="width:0%"></b><b id="bh" style="width:0%"></b></div>
+        </div>
+      </div>
+    </div>
+    <p class="say" id="say">Each electron–hole pair could give one photon. In plain gallium nitride, with no indium, most wander into a defect first and die as heat.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The white LED bulb at home is a blue LED like this, saved by uneven indium.</div>
+    <div class="foot"><span class="src">Source · S. Nakamura, Science 281, 956 (1998)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('well'), sw = Kit.$('sw'), swl = Kit.$('swl'), say = Kit.$('say'), card = Kit.$('card');
+  const BLUE = '#4a6cff', UV = '#b27cff', HEAT = '#ff5a1f';
+  // The layer, in nanometres: 400 wide, drawn as deep as the box allows.
+  const WN = 400, DEEP = 560, DEF = 100 / 1e6;        // defects per nm² (10 billion per cm²)
+  const CATCH = 7, DIP = 4.5;                          // how near a defect kills a pair; a spot's reach
+  const SAY_OFF = 'Each electron–hole pair could give one photon. In plain gallium nitride, with no indium, most wander into a defect first and die as heat.';
+  const SAY_ON = '<b>Leading explanation:</b> indium mixes unevenly. Its nanometre-wide spots trap the pairs, which shine before reaching a defect.';
+  let on = false, done = false, g = null, x = null, raf = 0, last = 0, clock = 0, sinceOn = 0, spawnAcc = 0;
+  let pairs = [], flashes = [], tally = [], lastKind = null, onCount = 0, warm = false;
+
+  // Where the defects and the indium-rich spots are: seeded, the same on every phone.
+  let sd = 11; const rn = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+  const defects = [], dips = [];
+  (() => {
+    const n = Math.round(DEF * WN * DEEP);
+    for (let tries = 0; defects.length < n && tries < 5000; tries++) {
+      const p = {x: 12 + rn() * (WN - 24), y: 12 + rn() * (DEEP - 24)};
+      if (defects.every(d => Math.hypot(d.x - p.x, d.y - p.y) > 58)) defects.push(p);
+    }
+    for (let tries = 0; dips.length < 300 && tries < 14000; tries++) {
+      const p = {x: rn() * WN, y: rn() * DEEP, r: DIP * (.8 + rn() * .55), k: .55 + rn() * .45};
+      if (dips.every(d => Math.hypot(d.x - p.x, d.y - p.y) > 16)) dips.push(p);
+    }
+  })();
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); x = f.x;
+    const W = f.W, H = f.H, s = W / WN;
+    g = {W, H, s, hn: Math.min(DEEP, H / s), fs: Math.max(11.5, Math.min(13, H / 14, W / 25))};
+    g.key = keyLayout();
+  }
+  // The key, the scale and the model's tag: where each sits, so that no pair walks under them.
+  function keyLayout() {
+    const {W, H, s, fs} = g, k = {rows: null, key: null, scale: null};
+    x.font = `800 ${fs}px Figtree`; const tw = x.measureText('TOY MODEL').width + 16;
+    k.tag = [W - 5 - tw, H - 9 - fs * 1.25, W - 5, H - 9 + fs * .35];
+    x.font = `700 ${fs}px Figtree`;
+    const wOf = t => x.measureText(t).width + fs * 1.45 + 12; k.wOf = wOf;
+    if (H >= 112) {
+      let rows = [[['defect', 'def'], ['electron + hole', 'pair']]];
+      if (wOf('defect') + wOf('electron + hole') > W - 16) rows = [[['defect', 'def']], [['electron + hole', 'pair']]];
+      if (on) rows.push([['indium-rich spot', 'dip']]);
+      const rh = fs * 1.5, bw = Math.max(...rows.map(r => r.reduce((a, [t]) => a + wOf(t), 0))) + 4;
+      k.rows = rows; k.rh = rh; k.key = [4, 4, 4 + Math.min(W - 8, bw), 8 + rh * rows.length];
+      const sw = 100 * s; k.scale = [5, H - 9 - fs * 1.25, 27 + sw + x.measureText('100 nm').width, H - 9 + fs * .35];
+    }
+    k.blocks = [k.key, k.scale, k.tag].filter(Boolean).map(b => b.map(v => v / s));
+    return k;
+  }
+  const blocked = (px, py) => g.key.blocks.some(b => px > b[0] - 3 && px < b[2] + 3 && py > b[1] - 3 && py < b[3] + 3);
+
+  // ---------- the walk ----------
+  function spawn() {
+    let p = null;
+    for (let i = 0; i < 30 && (!p || blocked(p.x, p.y)); i++) p = {x: 4 + rn() * (WN - 8), y: 4 + rn() * (g.hn - 8), a: rn() * 6.283, held: null, wait: 0, trail: []};
+    pairs.push(p);
+  }
+  function outcome(kind, px, py) {
+    lastKind = kind;
+    flashes.push({x: px, y: py, kind, t: 0, uv: !on});
+    tally.push(kind); if (tally.length > 50) tally.shift();
+    if (on) onCount++;
+    meter();
+  }
+  function step(p) {
+    // held in a spot: it waits, now and then hops out, and in the end gives its photon
+    if (p.held) {
+      p.wait -= 1;
+      p.x = p.held.x + Math.cos(clock * 13 + p.a) * .9; p.y = p.held.y + Math.sin(clock * 11 + p.a) * .9;
+      if (p.wait <= 0) { outcome('light', p.x, p.y); return false; }
+      if (rn() < .003) { p.held = null; p.a = rn() * 6.283; p.free = 6; }
+      return true;
+    }
+    p.a += Kit.gauss() * .5;
+    const v = on ? 2.2 : 3.2, ox = p.x, oy = p.y;
+    p.x += Math.cos(p.a) * v; p.y += Math.sin(p.a) * v;
+    if (blocked(p.x, p.y) && !blocked(ox, oy)) { p.x = ox; p.y = oy; p.a += Math.PI + Kit.gauss() * .4; }
+    if (p.x < 2 || p.x > WN - 2) { p.a = Math.PI - p.a; p.x = Math.min(WN - 2, Math.max(2, p.x)); }
+    if (p.y < 2 || p.y > g.hn - 2) { p.a = -p.a; p.y = Math.min(g.hn - 2, Math.max(2, p.y)); }
+    p.trail.push([p.x, p.y]); if (p.trail.length > 14) p.trail.shift();
+    for (const d of defects) if (d.y < g.hn && Math.hypot(d.x - p.x, d.y - p.y) < CATCH) { outcome('heat', d.x, d.y); return false; }
+    if (on && !(p.free > 0)) for (const d of dips) if (d.y < g.hn && Math.hypot(d.x - p.x, d.y - p.y) < d.r * 1.7) { p.held = d; p.wait = 26 + rn() * 34; p.trail = []; return true; }
+    if (p.free > 0) p.free -= 1;
+    // now and then a pair gives its photon wherever it is
+    if (rn() < 1 / 900) { outcome('light', p.x, p.y); return false; }
+    return true;
+  }
+  function tick() {
+    clock += 1 / 60;
+    if (on) sinceOn += 1 / 60;
+    spawnAcc += on ? .2 : .2;
+    while (spawnAcc >= 1 && pairs.length < 34) { spawn(); spawnAcc -= 1; }
+    if (spawnAcc >= 1) spawnAcc = 0;
+    pairs = pairs.filter(step);
+    flashes.forEach(f => f.t += 1 / 60); flashes = flashes.filter(f => f.t < .7);
+    if (on && !done && sinceOn > 2.2 && onCount >= 15) finish();
+  }
+
+  // ---------- the picture ----------
+  function hexPath(cx, cy, r) { x.beginPath(); for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; i ? x.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a)) : x.moveTo(cx + r * Math.cos(a), cy + r * Math.sin(a)); } x.closePath(); }
+  function rr(a, b, w, h, q) { x.beginPath(); x.moveTo(a + q, b); x.arcTo(a + w, b, a + w, b + h, q); x.arcTo(a + w, b + h, a, b + h, q); x.arcTo(a, b + h, a, b, q); x.arcTo(a, b, a + w, b, q); x.closePath(); }
+  function paint(paths) {
+    if (!g) return;
+    const {W, H, s, fs} = g, P = v => v * s;
+    x.clearRect(0, 0, W, H);
+    // the layer, dark, so that light shows as light
+    const bg = x.createRadialGradient(W / 2, H * .5, 0, W / 2, H * .5, Math.max(W, H) * .75);
+    bg.addColorStop(0, '#10201b'); bg.addColorStop(1, '#050b09');
+    x.fillStyle = bg; x.fillRect(0, 0, W, H);
+    const lit = tally.length ? tally.filter(k => k === 'light').length / tally.length : 0;
+    if (lit > 0 && on) { const gr = x.createRadialGradient(W / 2, H * .45, 0, W / 2, H * .45, Math.max(W, H) * .75); gr.addColorStop(0, `rgba(70,100,255,${.24 * lit})`); gr.addColorStop(1, 'rgba(70,100,255,0)'); x.fillStyle = gr; x.fillRect(0, 0, W, H); }
+    // the crystal's hexagonal grain, faint
+    x.strokeStyle = 'rgba(0,229,160,.075)'; x.lineWidth = 1;
+    const hr = 9, hw = hr * Math.sqrt(3);
+    for (let row = 0, yy = 0; yy < H + hr; row++, yy += hr * 1.5) for (let xx = row % 2 ? hw / 2 : 0; xx < W + hw; xx += hw) { hexPath(xx, yy, hr); x.stroke(); }
+    // the indium-rich spots
+    if (on) for (const d of dips) {
+      if (d.y > g.hn + 6) continue;
+      const cx = P(d.x), cy = P(d.y), r = Math.max(4, P(d.r) * 1.3), gr = x.createRadialGradient(cx, cy, 0, cx, cy, r);
+      gr.addColorStop(0, `rgba(90,125,255,${.62 * d.k})`); gr.addColorStop(.5, `rgba(70,100,255,${.3 * d.k})`); gr.addColorStop(1, 'rgba(70,100,255,0)');
+      x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
+    }
+    // the long exposure, when nothing moves: every path, and where it ended
+    if (Array.isArray(paths)) for (const q of paths) {
+      x.strokeStyle = 'rgba(255,255,255,.6)'; x.lineWidth = 1.1; x.beginPath(); q.pts.forEach(([a, b], i) => i ? x.lineTo(P(a), P(b)) : x.moveTo(P(a), P(b))); x.stroke();
+      const [ex, ey] = q.pts[q.pts.length - 1];
+      if (q.kind === 'light') star(P(ex), P(ey), Math.max(5, fs * .5), on ? BLUE : UV); else { x.strokeStyle = HEAT; x.lineWidth = 2.2; const c = Math.max(4, fs * .38); x.beginPath(); x.moveTo(P(ex) - c, P(ey) - c); x.lineTo(P(ex) + c, P(ey) + c); x.moveTo(P(ex) + c, P(ey) - c); x.lineTo(P(ex) - c, P(ey) + c); x.stroke(); }
+    }
+    // the defects, each with the reach where a pair dies
+    for (const d of defects) {
+      if (d.y > g.hn + 8) continue;
+      const cx = P(d.x), cy = P(d.y);
+      x.fillStyle = 'rgba(255,90,30,.17)'; x.beginPath(); x.arc(cx, cy, P(CATCH) + 2, 0, 7); x.fill();
+      x.fillStyle = '#1a2320'; hexPath(cx, cy, Math.max(4.4, P(4))); x.fill();
+      x.strokeStyle = 'rgba(255,255,255,.78)'; x.lineWidth = 1.3; x.stroke();
+    }
+    // the flashes: light where a pair gave its photon, heat where a defect took it
+    for (const f of flashes) {
+      const u = f.t / .7, cx = P(f.x), cy = P(f.y), a = 1 - u, c = f.uv ? '178,124,255' : '80,115,255';
+      if (f.kind === 'light') {
+        const gr = x.createRadialGradient(cx, cy, 0, cx, cy, 7 + 17 * u);
+        gr.addColorStop(0, `rgba(255,255,255,${a})`); gr.addColorStop(.32, `rgba(${c},${.95 * a})`); gr.addColorStop(1, `rgba(${c},0)`);
+        x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, 7 + 17 * u, 0, 7); x.fill();
+        x.strokeStyle = `rgba(${c},${a})`; x.lineWidth = 1.6; x.beginPath(); x.arc(cx, cy, 4 + 15 * u, 0, 7); x.stroke();
+      } else {
+        const gr = x.createRadialGradient(cx, cy, 0, cx, cy, 8 + 8 * u);
+        gr.addColorStop(0, `rgba(255,150,80,${.7 * a})`); gr.addColorStop(1, 'rgba(255,90,30,0)');
+        x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, 8 + 8 * u, 0, 7); x.fill();
+        x.strokeStyle = `rgba(255,90,31,${a})`; x.lineWidth = 2;
+        x.beginPath(); x.arc(cx, cy, 6 + 9 * u, 0, 7); x.stroke();
+        for (let i = 0; i < 6; i++) { const an = i * Math.PI / 3 + .3, r1 = 9 + 6 * u, r2 = 13 + 9 * u; x.beginPath(); x.moveTo(cx + Math.cos(an) * r1, cy + Math.sin(an) * r1); x.lineTo(cx + Math.cos(an) * r2, cy + Math.sin(an) * r2); x.stroke(); }
+      }
+    }
+    // the pairs, with their short trails
+    if (!Array.isArray(paths)) for (const p of pairs) {
+      if (p.trail.length > 1) { x.strokeStyle = 'rgba(255,255,255,.42)'; x.lineWidth = 1.2; x.beginPath(); p.trail.forEach(([a, b], i) => i ? x.lineTo(P(a), P(b)) : x.moveTo(P(a), P(b))); x.stroke(); }
+      if (p.held) { const gr = x.createRadialGradient(P(p.x), P(p.y), 0, P(p.x), P(p.y), 10); gr.addColorStop(0, 'rgba(100,135,255,.7)'); gr.addColorStop(1, 'rgba(100,135,255,0)'); x.fillStyle = gr; x.beginPath(); x.arc(P(p.x), P(p.y), 10, 0, 7); x.fill(); }
+      x.fillStyle = '#fff'; x.beginPath(); x.arc(P(p.x), P(p.y), 2.8, 0, 7); x.fill();
+    }
+    legend();
+  }
+  function star(cx, cy, r, color) {
+    x.fillStyle = color; x.beginPath();
+    for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, q = i % 2 ? r * .42 : r; i ? x.lineTo(cx + q * Math.cos(a), cy + q * Math.sin(a)) : x.moveTo(cx + q * Math.cos(a), cy + q * Math.sin(a)); }
+    x.closePath(); x.fill(); x.strokeStyle = '#fff'; x.lineWidth = 1; x.stroke();
+  }
+  // What the marks are, how long 100 nm is, and that this is a model.
+  function legend() {
+    const {H, s, fs} = g, k = g.key, back = 'rgba(4,9,7,.86)';
+    // the tag, always
+    const [t0, t1, t2, t3] = k.tag;
+    x.fillStyle = back; rr(t0, t1, t2 - t0, t3 - t1, fs * .55); x.fill();
+    x.font = `800 ${fs}px Figtree`; x.textBaseline = 'middle'; x.textAlign = 'center'; x.fillStyle = '#00E5A0';
+    x.fillText('TOY MODEL', (t0 + t2) / 2, (t1 + t3) / 2 + .5);
+    // A layer too short for a key keeps its picture: the reader met the key when it was taller.
+    if (!k.key) return;
+    const [k0, k1, k2, k3] = k.key;
+    x.fillStyle = back; rr(k0, k1, k2 - k0, k3 - k1, fs * .55); x.fill();
+    x.font = `700 ${fs}px Figtree`; x.textAlign = 'left';
+    k.rows.forEach((row, ri) => {
+      let lx = 9; const ly = 6 + k.rh * (ri + .5);
+      for (const [t, kind] of row) {
+        const cx = lx + fs * .5;
+        if (kind === 'def') { x.fillStyle = '#1a2320'; hexPath(cx, ly, fs * .42); x.fill(); x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 1.3; x.stroke(); }
+        else if (kind === 'pair') { x.fillStyle = '#fff'; x.beginPath(); x.arc(cx, ly, 3.2, 0, 7); x.fill(); }
+        else { const gr = x.createRadialGradient(cx, ly, 0, cx, ly, fs * .62); gr.addColorStop(0, 'rgba(90,125,255,.95)'); gr.addColorStop(.6, 'rgba(70,100,255,.45)'); gr.addColorStop(1, 'rgba(70,100,255,0)'); x.fillStyle = gr; x.beginPath(); x.arc(cx, ly, fs * .62, 0, 7); x.fill(); }
+        x.fillStyle = '#ffffff'; x.fillText(t, lx + fs * 1.25, ly + .5);
+        lx += k.wOf(t);
+      }
+    });
+    // the scale: how long 100 nm is
+    const [s0, s1, s2, s3] = k.scale, sw = 100 * s, bx = 12, by = H - 9;
+    x.fillStyle = back; rr(s0, s1, s2 - s0, s3 - s1, fs * .55); x.fill();
+    x.strokeStyle = '#ffffff'; x.lineWidth = 2; x.beginPath(); x.moveTo(bx, by - 4); x.lineTo(bx, by); x.lineTo(bx + sw, by); x.lineTo(bx + sw, by - 4); x.stroke();
+    x.fillStyle = '#ffffff'; x.textBaseline = 'alphabetic'; x.fillText('100 nm', bx + sw + 7, by + 1);
+  }
+
+  // ---------- the meter and the switch ----------
+  function meter(fr) {
+    const n = fr ? fr.n : tally.length, l = fr ? fr.l : tally.filter(k => k === 'light').length;
+    const pl = n ? Math.round(100 * l / n) : 0, ph = n ? 100 - pl : 0;
+    Kit.$('nl').textContent = `light ${pl}%`; Kit.$('nh').textContent = `heat ${ph}%`;
+    Kit.$('bl').style.width = pl + '%'; Kit.$('bh').style.width = ph + '%';
+  }
+  // With motion reduced: the same walk, run out at once, drawn as a long exposure.
+  function exposure() {
+    const keep = [], saved = {pairs, flashes, tally}; pairs = []; flashes = []; tally = [];
+    let l = 0, n = 0; sd = on ? 29 : 23;
+    for (let i = 0; i < 160; i++) {
+      spawn(); const p = pairs.pop(), pts = [[p.x, p.y]];
+      let alive = true, k = 0;
+      lastKind = 'light';
+      while (alive && k++ < 4000) { alive = step(p); if (!p.held) pts.push([p.x, p.y]); }
+      const kind = lastKind;
+      n++; if (kind === 'light') l++;
+      if (keep.length < (g.hn < 150 ? 8 : 13)) keep.push({pts: pts.filter((_, j) => j % 2 === 0 || j === pts.length - 1), kind});
+    }
+    pairs = saved.pairs; flashes = []; tally = saved.tally;
+    meter({n, l});
+    paint(keep);
+  }
+  function render() { if (Kit.calm) exposure(); else paint(); }
+
+  function setOn(v) {
+    on = v; sinceOn = 0; onCount = 0; if (g) g.key = keyLayout();
+    sw.setAttribute('aria-checked', String(on)); swl.textContent = on ? 'indium on' : 'add indium';
+    pairs.forEach(p => { p.held = null; });
+    say.innerHTML = on ? SAY_ON : SAY_OFF;
+    cv.setAttribute('aria-label', on ? 'Indium-rich spots now dot the layer. Most pairs fall into one and flash blue before they reach a defect.' : 'Without indium, most electron and hole pairs wander into a defect and turn to heat.');
+    Kit.haptic(on ? 'success' : 'light');
+    if (Kit.calm) { render(); if (on) finish(); }
+  }
+  function finish() { if (done) return; done = true; card.classList.add('answered'); Kit.show('keep'); }
+  sw.addEventListener('click', () => setOn(!on));
+
+  function frame(now) {
+    raf = 0;
+    const dt = last ? Math.min(.1, (now - last) / 1000) : 1 / 60; last = now;
+    let n = Math.max(1, Math.round(dt * 60)); while (n--) tick();
+    paint();
+    raf = requestAnimationFrame(frame);
+  }
+  // The layer has been running for a while when the reader first sees it, so its count is already fair.
+  function prewarm() { if (warm || Kit.calm) return; warm = true; for (let i = 0; i < 420; i++) tick(); flashes = flashes.filter(f => f.t < .7); meter(); }
+  Kit.onShow.card = () => { layout(); prewarm(); render(); };
+  let box = '';
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { const r = cv.getBoundingClientRect(), k = Math.round(r.width) + 'x' + Math.round(r.height); if (g && k !== box) { box = k; layout(); pairs = pairs.filter(p => p.y < g.hn); render(); } }).observe(cv);
+  Kit.onEnter.card = () => {
+    if (!Kit.calm && !raf) { last = 0; raf = requestAnimationFrame(frame); }
+    // the switch asks to be pressed
+    if (!Kit.calm && !on) sw.querySelector('i').animate([{transform: 'scale(1)'}, {transform: 'scale(1.12)'}, {transform: 'scale(1)'}], {duration: 700, iterations: 2, delay: 600, easing: 'ease-in-out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    sw.click(); await wait(Kit.calm ? 60 : 3400);
+  };
+})();
+Kit.single();
+</script>
+</html>

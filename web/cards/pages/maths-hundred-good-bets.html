@@ -1,0 +1,137 @@
+<!doctype html>
+<!-- slug: maths-hundred-good-bets -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#plot{display:block;width:100%;flex:1;min-height:0}
+#ctl{display:flex;align-items:center;gap:3cqw;flex-wrap:wrap}
+.go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 5cqw;cursor:pointer}
+.go:active{transform:scale(.97)}
+#read{font:700 max(1.9cqh,13px)/1.25 var(--mono);color:var(--k);flex:1;min-width:0;overflow-wrap:anywhere}
+#read small{display:block;font:500 max(1.6cqh,12px)/1.25 var(--body);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body)}
+.ax{stroke:var(--k);stroke-opacity:.3;stroke-width:1}
+.ex{stroke:var(--k);stroke-width:2;stroke-dasharray:6 5}
+.tl{fill:var(--k);font-family:var(--mono);font-weight:700}
+.tm{fill:var(--muted);font-family:var(--body);font-weight:600}
+.old{fill:none;stroke:var(--k);stroke-opacity:.22;stroke-width:1.5;stroke-linejoin:round}
+.live{fill:none;stroke:var(--k);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.head{fill:var(--k)}
+.strip{fill:var(--k);fill-opacity:.07}
+.dot{fill:var(--k);stroke:var(--c);stroke-width:1.5}
+.dot.lose{fill:#c0392b}
+.lbl{paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Launch · watch it land">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MANY BETS</span></div>
+    <h2 class="q">Win $20 on heads, lose $10 on tails. What do 100 tosses bring?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="plot"></svg>
+      <div id="ctl">
+        <button class="go" id="go">Toss 100</button>
+        <div id="read">$0<small>Each line is one run of 100 bets</small></div>
+      </div>
+    </div>
+    <p class="say" id="say">Tap “Toss 100” a few times and watch where each run lands.</p>
+    <div id="why" class="gone"><p class="body">One toss is pure luck: +$20 or −$10. But heads pays twice what tails costs, so each bet is worth +$5 on average. In 100 tosses heads comes up about 45 to 55 times, so every run lands near +$500. Losing any money at all: about 1 in 2300.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One good bet is a gamble; a hundred of them is close to a sure win.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Would You Take This Bet?” (YouTube, 2015)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('plot');
+const runs = [];
+let busy = false, fast = false, g = null;
+const VMIN = -400, VMAX = 1100;
+
+function geom(){
+  const {W,H,f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const L = fs*3.8, R = fs*3.4, T = fs*1.6, B = fs*2.2;
+  const pw = W - L - R - fs*.8;
+  g = {W,H,fs,L,R,T,B,
+    x: i => L + pw*i/100,
+    y: v => T + (H-T-B)*(VMAX-v)/(VMAX-VMIN),
+    sx: W - R + fs*.4, sw: R - fs*.4};
+}
+function pts(c, k){ let s=''; for(let i=0;i<=k;i++) s += g.x(i).toFixed(1)+','+g.y(c[i]).toFixed(1)+' '; return s; }
+function dotX(r){ return g.sx + g.sw*(.2 + .6*r.j); }
+
+function draw(){
+  geom();
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {fs,L,W,H,B,T} = g;
+  Kit.mk('rect',{class:'strip',x:g.sx,y:T-fs*.4,width:g.sw,height:H-T-B+fs*.8,rx:fs*.5},svg);
+  Kit.mk('text',{class:'tm',x:g.sx+g.sw/2,y:T-fs*.65,'text-anchor':'middle','font-size':fs},svg).textContent='lands';
+  const gap = g.y(0) - g.y(500);
+  [[0,'$0'],[500,'+$500'],[1000,'+$1000']].forEach(([v,t])=>{
+    Kit.mk('line',{class: v===500?'ex':'ax',x1:L,x2:g.x(100),y1:g.y(v),y2:g.y(v)},svg);
+    if (v===500 && gap < fs*1.2) return;
+    if (v===1000 && gap*2 < fs*1.2) return;
+    Kit.mk('text',{class:'tl',x:L-fs*.4,y:g.y(v)+fs*.35,'text-anchor':'end','font-size':fs},svg).textContent=t;
+  });
+  Kit.mk('text',{class:'tm',x:L,y:H-fs*.6,'font-size':fs},svg).textContent='toss 1';
+  Kit.mk('text',{class:'tm',x:g.x(100),y:H-fs*.6,'text-anchor':'end','font-size':fs},svg).textContent='toss 100';
+  runs.forEach((r,n)=>{
+    Kit.mk('polyline',{class: n===runs.length-1?'live':'old',points:pts(r.c,100)},svg);
+  });
+  Kit.mk('text',{class:'tl lbl',x:g.x(3),y:g.y(500)-fs*.55,'font-size':fs},svg).textContent='expected +$500';
+  runs.forEach(r=>{
+    const d = Kit.mk('circle',{class:'dot'+(r.c[100]<0?' lose':''),cx:dotX(r),cy:g.y(r.c[100]),r:fs*.42},svg);
+    r.el = d;
+  });
+}
+
+function makeRun(){
+  const c=[0]; let h=0;
+  for(let i=1;i<=100;i++){ const heads = Kit.rnd()<.5; if(heads) h++; c.push(c[i-1] + (heads?20:-10)); }
+  return {c,h,j:Kit.rnd()};
+}
+const money = v => (v<0?'−$':'+$')+Math.abs(v);
+
+function setRead(r,k){
+  const lost = runs.filter(q=>q.c[100]<0).length;
+  Kit.$('read').innerHTML = `${money(r.c[k])}<small>${k<100?'toss '+k:r.h+' heads, '+(100-r.h)+' tails'} · run ${runs.length+(k<100?1:0)} · lost money: ${lost}</small>`;
+}
+
+function launch(){
+  if (busy) return; busy = true; Kit.haptic('light');
+  const r = makeRun();
+  draw();
+  svg.querySelectorAll('.live').forEach(e=>e.setAttribute('class','old'));
+  const live = Kit.mk('polyline',{class:'live',points:''},svg);
+  const head = Kit.mk('circle',{class:'head',r:g.fs*.35,cx:g.x(0),cy:g.y(0)},svg);
+  const finish = () => {
+    runs.push(r); draw(); setRead(r,100);
+    if (!Kit.calm && !fast) gsap.from(r.el,{attr:{cx:g.x(100),r:g.fs*.8},duration:.5,ease:'power3.out'});
+    Kit.haptic('selection'); busy = false;
+    if (runs.length===3){ Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); requestAnimationFrame(draw); }
+  };
+  if (Kit.calm || fast){ finish(); return; }
+  const o={i:0};
+  gsap.to(o,{i:100,duration:1.8,ease:'none',onUpdate(){
+    const k=Math.floor(o.i);
+    live.setAttribute('points',pts(r.c,k));
+    head.setAttribute('cx',g.x(k)); head.setAttribute('cy',g.y(r.c[k]));
+    setRead(r,k);
+  },onComplete:finish});
+}
+Kit.$('go').addEventListener('click', launch);
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#plot .ex, #plot .tl',{opacity:0,duration:.6,stagger:.05,ease:'power2.out'}); };
+Kit.play.card = async () => {
+  fast = true;
+  for (let n=0;n<4;n++){ Kit.$('go').click(); await new Promise(r=>setTimeout(r,120)); }
+  await new Promise(r=>setTimeout(r,500));
+};
+Kit.single();
+</script>
+</html>

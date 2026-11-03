@@ -1,0 +1,37 @@
+{
+  "id": "technology-steel-softens-first",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did the fires need to melt the steel to bring the towers down?",
+  "answer": "The fires did not need to melt the steel to bring the towers down. The steel only had to soften, because as it heats it weakens until it can no longer hold the floors above. NIST's simulations point to that weakening, at lower temperatures than the roughly 1500 °C melting point, as the trigger of the collapse.",
+  "move": "Hot steel gives way long before it melts.",
+  "keywords": [
+    "steel",
+    "nist",
+    "twin towers",
+    "wtc",
+    "fire"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page asking whether the fires had to melt steel to bring down the Twin Towers. A draggable heat bar warms a steel beam, showing it weakening well before it melts. The page explains that steel softens and fails at lower temperatures than its melting point."
+  },
+  "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=PvhMUg70Jtc&t=528s",
+  "written": "2026-11-03"
+}

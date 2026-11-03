@@ -1,0 +1,139 @@
+<!doctype html>
+<!-- slug: science-wire-through-ice -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative;touch-action:manipulation}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#pic.live{cursor:pointer}
+#opts{display:flex;flex-direction:row;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Predict · tap">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ICE &amp; PRESSURE</span></div>
+    <h2 class="q">A weighted guitar string sinks through ice. What is left behind?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Two halves</button>
+        <button class="opt" data-i="1">One whole block</button>
+      </div>
+      <div id="why" class="gone"><p class="big">One whole block</p><p class="body">Under the thin wire the pressure turns ice into water, so the wire sinks. Behind it the pressure is gone, so the water freezes again. This is regelation, and it is why the thinnest string, the high E, was used.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Predict first, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Pressure can melt ice; remove the pressure and it freezes again.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Does Pressure Melt Ice?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, STEPS = 6;
+let pick = -1, phase = 'pick', step = 0, said = '', ok = false, pctSaid = 0, D = null;
+const st = {p: 0, drop: 0};
+const svg = Kit.$('svg');
+
+function render() {
+  if (!D) return;
+  const {W, H, f} = D;
+  svg.innerHTML = '';
+  const fs = Math.max(12, f * .85);
+  const bw = Math.min(W * .56, H * .75), bx = (W - bw) / 2, top = H * .12, bh = H * .5, cx = W / 2;
+  const wy = top + st.p * bh;
+  // temperature tag
+  const t = Kit.mk('text', {x: cx, y: top - fs * .7, 'text-anchor': 'middle', fill: 'currentColor', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, opacity: .75}, svg);
+  t.textContent = 'Outside, above 0 °C';
+  // ice block
+  Kit.mk('rect', {x: bx, y: top, width: bw, height: bh, rx: Math.max(6, f * .4), fill: '#e4f5ff', stroke: '#8fcbea', 'stroke-width': 2}, svg);
+  Kit.mk('path', {d: `M${bx + bw * .1} ${top + bh * .12} l${bw * .18} 0 M${bx + bw * .1} ${top + bh * .2} l${bw * .1} 0`, stroke: '#ffffff', 'stroke-width': Math.max(3, f * .25), 'stroke-linecap': 'round'}, svg);
+  const melt = Math.min(bh * .06, Math.max(0, wy - top));
+  if (st.p > 0) {
+    // refrozen trail
+    Kit.mk('rect', {x: cx - 2, y: top, width: 4, height: Math.max(0, wy - top - melt), fill: '#bcdff2'}, svg);
+    // water under the wire
+    if (st.drop < 1) Kit.mk('rect', {x: cx - 4, y: wy - melt, width: 8, height: melt, rx: 3, fill: '#1f86d4', opacity: 1 - st.drop}, svg);
+  }
+  // labels inside the ice
+  if (st.p > .1 && st.drop === 0) {
+    const a = Kit.mk('text', {x: cx + 10, y: wy - melt / 2 + fs * .35, fill: '#0e5f9e', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800}, svg);
+    a.textContent = 'water';
+    const trailMid = (top + wy - melt) / 2;
+    if (wy - melt - top > fs * 2.2 && (wy - melt / 2) - trailMid > fs * 1.5) {
+      const b = Kit.mk('text', {x: cx - 10, y: trailMid + fs * .35, 'text-anchor': 'end', fill: '#3a6f8f', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800}, svg);
+      b.textContent = 'ice again';
+    }
+  }
+  // wire and bottles
+  const g = Kit.mk('g', {transform: `translate(0 ${st.drop * H * .45})`, opacity: 1 - st.drop}, svg);
+  const lx = bx - W * .09, rx = bx + bw + W * .09;
+  const str = H * .07, bwid = Math.min(W * .1, H * .12), bht = H * .21;
+  const sw = Math.max(2, f * .14);
+  Kit.mk('path', {d: `M${lx} ${wy + str} L${lx} ${wy} L${rx} ${wy} L${rx} ${wy + str}`, fill: 'none', stroke: '#2b2b2b', 'stroke-width': sw, 'stroke-linejoin': 'round'}, g);
+  Kit.mk('path', {d: `M${lx} ${wy + str} L${lx} ${wy} L${rx} ${wy} L${rx} ${wy + str}`, fill: 'none', stroke: '#c9c9c9', 'stroke-width': sw * .35, 'stroke-linejoin': 'round'}, g);
+  [lx, rx].forEach(x => {
+    const y = wy + str;
+    Kit.mk('rect', {x: x - bwid * .18, y, width: bwid * .36, height: bht * .12, rx: 2, fill: '#2b6cb0'}, g);
+    Kit.mk('rect', {x: x - bwid / 2, y: y + bht * .12, width: bwid, height: bht * .88, rx: bwid * .25, fill: '#ffffff', stroke: '#2b2b2b', 'stroke-width': 2}, g);
+    Kit.mk('rect', {x: x - bwid / 2 + 3, y: y + bht * .3, width: bwid - 6, height: bht * .67, rx: bwid * .2, fill: '#5fb4ef'}, g);
+  });
+  // ending
+  if (st.drop > .5) {
+    const e = Kit.mk('text', {x: cx, y: top + bh + fs * 2, 'text-anchor': 'middle', fill: 'currentColor', 'font-size': fs * 1.15, 'font-family': 'var(--body)', 'font-weight': 800, opacity: (st.drop - .5) * 2}, svg);
+    e.textContent = 'Wire through. Block still whole.';
+  }
+}
+
+function finish() {
+  phase = 'done';
+  Kit.$('pic').classList.remove('live');
+  gsap.to(st, {drop: 1, duration: Kit.calm ? .2 : 1, ease: 'power2.in', onUpdate: render, onComplete: () => {
+    render();
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    sure.grade(ok, pctSaid, `${said}, ${ok ? 'right' : 'wrong'}`);
+    Kit.haptic('success');
+  }});
+}
+
+function tap() {
+  if (phase !== 'run') return;
+  step++; Kit.haptic('light');
+  gsap.to(st, {p: step / STEPS, duration: Kit.calm ? .15 : .45, ease: 'power2.out', onUpdate: render, onComplete: () => { if (step >= STEPS && phase === 'run') finish(); }});
+  if (step >= STEPS) phase = 'ending';
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  ok = pick === RIGHT; said = Kit.$('opts').children[pick].textContent; pctSaid = pct;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts');
+  Kit.$('say').textContent = 'Now tap the ice: each tap lets the weight press down.';
+  phase = 'run'; Kit.$('pic').classList.add('live');
+  if (!Kit.calm) gsap.fromTo('#pic', {scale: .98}, {scale: 1, duration: .5, ease: 'back.out(3)'});
+});
+
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('pic').addEventListener('click', tap);
+
+Kit.onShow.card = () => { D = Kit.fitSvg(svg); render(); };
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); } };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[1].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(300);
+  for (let i = 0; i < STEPS; i++) { tap(); await w(500); }
+  await w(1600);
+};
+Kit.single();
+</script>
+</html>

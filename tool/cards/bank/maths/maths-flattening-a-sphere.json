@@ -1,0 +1,37 @@
+{
+  "id": "maths-flattening-a-sphere",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can't you flatten a balloon without tearing or stretching it?",
+  "answer": "A balloon's skin curves two ways at once, so laid flat it must split or stretch. Closing the gaps, as Mercator's map does, keeps shapes right but makes lands near the poles swell. No flat map of a round world is free of distortion.",
+  "move": "No flat map of a round world is free of distortion.",
+  "keywords": [
+    "balloon",
+    "mercator",
+    "map projection",
+    "sphere",
+    "poles"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A balloon-shaped skin with a Torn open control showing 0% area at 60 degrees and a ×1.0 scale, plus Keep true sizes and Close the gaps options. It asks why a balloon cannot be flattened without tearing or stretching. Tap the balloon to cut it open."
+  },
+  "source": "Geopop, “L'inganno delle mappe: le vere dimensioni dei Paesi come Russia e USA non sono come crediamo” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=JCLxcJNIU4U&t=17s",
+  "written": "2026-11-03"
+}

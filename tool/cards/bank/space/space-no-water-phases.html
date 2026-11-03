@@ -1,0 +1,176 @@
+<!doctype html>
+<!-- slug: space-no-water-phases -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#sv{width:100%;height:100%;display:block;touch-action:none;flex:1;min-height:0}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.ink{fill:var(--k)}
+.lab{fill:var(--k);font-family:var(--mono);font-weight:700;letter-spacing:.04em}
+.txt{fill:var(--k);font-family:var(--body);font-weight:700}
+.mut{fill:var(--k);opacity:.65;font-family:var(--mono);font-weight:700;letter-spacing:.05em}
+.pbox{fill:color-mix(in srgb,var(--k) 8%,transparent);stroke:color-mix(in srgb,var(--k) 25%,transparent)}
+.stk{stroke:var(--k)}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ARTEMIS II</span></div>
+    <h2 class="q">When can't Artemis II astronauts add water to food, and what do they eat?</h2>
+    <div class="stagebox" id="stage"><svg id="sv"></svg></div>
+    <p class="say" id="say">Drag the capsule from launch, around the Moon, and home. Watch the water.</p>
+    <div id="why" class="gone"><p class="body">Most Artemis II food is freeze-dried: water must be added. During launch and re-entry the water dispenser is not available, so for those hours the crew eats only ready-to-eat food, like tortillas.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Launch and re-entry: no water, so only ready-to-eat food like tortillas.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa si mangia su Artemis II, la navicella spaziale che sta facendo il giro attorno alla luna?” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 240, RED = '#e5484d', BLUE = '#2f80ed';
+let idx = 0, pts = [], G = {}, cur = '', dragging = false, done = false;
+const seen = {L: 0, F: 0, R: 0};
+let flash = null, halo = null, W = 0, H = 0;
+const NS = 'http://www.w3.org/2000/svg';
+const mk = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const phaseOf = i => { const t = i / (N - 1); return t < .16 ? 'L' : t > .84 ? 'R' : 'F'; };
+
+function drop(cx, cy, s, fill, p) {
+  return mk('path', {d: `M${cx},${cy - s} C${cx + s * .2},${cy - s * .5} ${cx + s * .75},${cy - s * .05} ${cx + s * .75},${cy + s * .35} A${s * .75} ${s * .75} 0 0 1 ${cx - s * .75},${cy + s * .35} C${cx - s * .75},${cy - s * .05} ${cx - s * .2},${cy - s * .5} ${cx},${cy - s} Z`, fill, 'stroke-width': Math.max(s * .08, 1.5), class: 'stk'}, p);
+}
+
+function apply() {
+  const p = pts[idx], q = pts[Math.min(idx + 1, N - 1)], o = pts[Math.max(idx - 1, 0)];
+  const ang = Math.atan2(q.y - o.y, q.x - o.x) * 180 / Math.PI;
+  G.cap.setAttribute('transform', `translate(${p.x},${p.y}) rotate(${ang})`);
+  G.halo.setAttribute('cx', p.x); G.halo.setAttribute('cy', p.y);
+  const ph = phaseOf(idx);
+  seen[ph] = 1;
+  if (ph !== cur) {
+    if (cur) Kit.haptic('light');
+    cur = ph;
+    const off = ph !== 'F';
+    G.no.style.display = off ? '' : 'none';
+    G.dropI.setAttribute('fill', off ? 'none' : BLUE);
+    G.stat.textContent = off ? 'OFF' : 'ON';
+    G.stat.setAttribute('fill', off ? RED : BLUE);
+    G.pouch.style.display = off ? 'none' : '';
+    G.tort.style.display = off ? '' : 'none';
+    G.l1.textContent = off ? 'Tortillas' : 'Freeze-dried';
+    G.l2.textContent = off ? 'ready to eat' : 'add water';
+    G.phase.textContent = ph === 'L' ? 'LAUNCH' : ph === 'R' ? 'RE-ENTRY' : 'AROUND THE MOON';
+    G.phase.setAttribute('fill', off ? RED : BLUE);
+    if (flash) { flash.kill(); flash = null; }
+    G.no.style.opacity = 1;
+    if (off && !Kit.calm) flash = gsap.to(G.no, {opacity: .2, repeat: -1, yoyo: true, duration: .38, ease: 'sine.inOut'});
+  }
+  if (!done && seen.L && seen.F && ph === 'R' && idx >= N - 4) {
+    done = true; dragging = false; Kit.haptic('success');
+    if (halo) { halo.kill(); halo = null; } G.halo.style.opacity = 0;
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('sv');
+  const fit = Kit.fitSvg(svg); W = fit.W; H = fit.H;
+  svg.innerHTML = ''; cur = '';
+  const fs = Math.max(12, Math.min(fit.f * .85, W * .042));
+  const pH = H * .6;
+  const er = Math.min(W * .13, pH * .17), ex = W / 2, ey = pH - er - fs * .4;
+  const mr = er * .45, mx = W / 2, my = fs * 2.2 + mr;
+  const g = mr * .7;
+  const d = `M${ex - er * .7},${ey - er * .7} C${W * .05},${ey - pH * .3} ${mx - W * .38},${my + pH * .12} ${mx - mr - g},${my} A${mr + g} ${mr + g} 0 0 1 ${mx + mr + g},${my} C${mx + W * .38},${my + pH * .12} ${W * .95},${ey - pH * .3} ${ex + er * .7},${ey - er * .7}`;
+  const path = mk('path', {d, fill: 'none', stroke: 'none'}, svg);
+  const L = path.getTotalLength();
+  pts = []; for (let i = 0; i < N; i++) { const p = path.getPointAtLength(L * i / (N - 1)); pts.push({x: p.x, y: p.y}); }
+  const k1 = Math.round(.16 * (N - 1)), k2 = Math.round(.84 * (N - 1));
+  const sw = Math.max(fs * .28, 3);
+  const line = (a, b, c, dash) => mk('polyline', {points: pts.slice(a, b + 1).map(p => `${p.x},${p.y}`).join(' '), fill: 'none', stroke: c, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-dasharray': dash || ''}, svg);
+  line(k1, k2, BLUE); line(0, k1, RED, `${sw * 1.6} ${sw * 1.4}`); line(k2, N - 1, RED, `${sw * 1.6} ${sw * 1.4}`);
+  // Earth and Moon
+  mk('circle', {cx: ex, cy: ey, r: er, fill: '#2f6fd0', class: 'stk', 'stroke-width': 2}, svg);
+  mk('path', {d: `M${ex - er * .55},${ey - er * .2} q${er * .3},${-er * .45} ${er * .6},${-er * .1} q${er * .2},${er * .4} ${-er * .1},${er * .55} q${-er * .4},${er * .1} ${-er * .5},${-er * .45}Z`, fill: '#4caf6a'}, svg);
+  mk('circle', {cx: mx, cy: my, r: mr, fill: '#d6d6d6', class: 'stk', 'stroke-width': 2}, svg);
+  mk('circle', {cx: mx - mr * .3, cy: my - mr * .2, r: mr * .22, fill: '#b5b5b5'}, svg);
+  const lab = (x, y, t, anc, c) => { const e = mk('text', {x, y, 'text-anchor': anc, 'font-size': fs * .9, class: 'lab'}, svg); e.textContent = t; if (c) e.setAttribute('fill', c); return e; };
+  lab(ex - er - fs * .5, ey + fs * .35, 'LAUNCH', 'end', RED);
+  lab(ex + er + fs * .5, ey + fs * .35, 'RE-ENTRY', 'start', RED);
+  lab(mx, my - mr - g - fs * .5, 'AROUND THE MOON', 'middle', BLUE);
+  // Capsule
+  const cs = Math.max(W * .032, 10);
+  G.halo = mk('circle', {r: cs * 1.9, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, opacity: done ? 0 : .5}, svg);
+  G.cap = mk('g', {}, svg);
+  mk('path', {d: `M${cs},0 L${-cs * .7},${-cs * .8} L${-cs * .7},${cs * .8} Z`, fill: '#f4f4f4', class: 'stk', 'stroke-width': 2, 'stroke-linejoin': 'round'}, G.cap);
+  mk('rect', {x: -cs * 1.15, y: -cs * .55, width: cs * .45, height: cs * 1.1, fill: '#555', rx: 2}, G.cap);
+  // Panel
+  const y0 = pH + fs * .5, bh = H - y0, gap = fs * .6, bw = (W - gap) / 2, rx = fs * .6;
+  mk('rect', {x: 1, y: y0, width: bw - 2, height: bh - 1, rx, class: 'pbox', 'stroke-width': 1.5}, svg);
+  mk('rect', {x: bw + gap, y: y0, width: bw - 1, height: bh - 1, rx, class: 'pbox', 'stroke-width': 1.5}, svg);
+  const tt = (x, y, t, cls, size) => { const e = mk('text', {x, y, 'font-size': size, class: cls}, svg); e.textContent = t; return e; };
+  const ts = Math.max(12, fs * .78);
+  tt(fs * .6, y0 + ts * 1.5, 'WATER DISPENSER', 'mut', ts);
+  tt(bw + gap + fs * .6, y0 + ts * 1.5, 'ON THE MENU', 'mut', ts);
+  const iy = y0 + ts * 1.5 + (bh - ts * 1.5) * .5;
+  const s = Math.max(10, Math.min((bh - ts * 2.2) * .3, bw * .14));
+  const ix = fs * .6 + s * 1.2;
+  G.dropI = drop(ix, iy, s, BLUE, svg);
+  G.no = mk('g', {}, svg);
+  mk('circle', {cx: ix, cy: iy, r: s * 1.15, fill: 'none', stroke: RED, 'stroke-width': Math.max(s * .2, 3)}, G.no);
+  mk('line', {x1: ix - s * .8, y1: iy + s * .8, x2: ix + s * .8, y2: iy - s * .8, stroke: RED, 'stroke-width': Math.max(s * .2, 3), 'stroke-linecap': 'round'}, G.no);
+  G.stat = mk('text', {x: ix + s * 1.6, y: iy + fs * .55, 'font-size': fs * 1.6, class: 'txt'}, svg);
+  G.stat.style.fontFamily = 'var(--display)';
+  const fx = bw + gap + fs * .6 + s * 1.2;
+  G.pouch = mk('g', {}, svg);
+  mk('rect', {x: fx - s * .7, y: iy - s, width: s * 1.4, height: s * 2, rx: s * .15, fill: '#e6e6e6', class: 'stk', 'stroke-width': 1.5}, G.pouch);
+  mk('rect', {x: fx - s * .7, y: iy - s * .55, width: s * 1.4, height: s * .3, fill: '#bbb'}, G.pouch);
+  drop(fx + s * .45, iy + s * .55, s * .45, BLUE, G.pouch);
+  G.tort = mk('g', {}, svg);
+  mk('circle', {cx: fx, cy: iy, r: s * 1.05, fill: '#efcf8a', stroke: '#a8732b', 'stroke-width': 2}, G.tort);
+  [[-.4, -.3, .14], [.35, -.45, .11], [.2, .3, .16], [-.3, .45, .1], [.55, .1, .09]].forEach(([a, b, r]) => mk('circle', {cx: fx + a * s, cy: iy + b * s, r: r * s, fill: '#b9792f'}, G.tort));
+  const tx = fx + s * 1.5;
+  G.l1 = tt(tx, iy - fs * .35, '', 'txt', fs);
+  G.l2 = tt(tx, iy + fs * 1.35, '', 'mut', Math.max(12, fs * .85));
+  G.phase = mk('text', {x: W / 2, y: fs * 1.1, 'text-anchor': 'middle', 'font-size': fs * .9, class: 'lab'}, svg);
+  G.phase.style.display = 'none';
+  if (halo) halo.kill(); halo = null;
+  if (!Kit.calm && !done) halo = gsap.fromTo(G.halo, {attr: {r: cs * 1.3}, opacity: .6}, {attr: {r: cs * 2.4}, opacity: 0, duration: 1.2, repeat: -1, ease: 'power1.out'});
+  apply();
+};
+
+const svgEl = Kit.$('sv');
+const loc = e => { const r = svgEl.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
+svgEl.addEventListener('pointerdown', e => {
+  if (done || !pts.length) return;
+  const p = loc(e), c = pts[idx];
+  if (Math.hypot(p.x - c.x, p.y - c.y) < Math.max(W * .14, 34)) {
+    dragging = true; try { svgEl.setPointerCapture(e.pointerId); } catch (_) {}
+    Kit.haptic('selection');
+  }
+});
+svgEl.addEventListener('pointermove', e => {
+  if (!dragging || done) return;
+  const p = loc(e); let best = idx, bd = 1e9;
+  for (let j = Math.max(0, idx - 30); j <= Math.min(N - 1, idx + 30); j++) {
+    const dd = (pts[j].x - p.x) ** 2 + (pts[j].y - p.y) ** 2; if (dd < bd) { bd = dd; best = j; }
+  }
+  if (best !== idx) { idx = best; apply(); }
+});
+const up = () => { dragging = false; };
+svgEl.addEventListener('pointerup', up); svgEl.addEventListener('pointercancel', up);
+
+Kit.onEnter.card = () => { if (!Kit.calm && G.cap) gsap.from(G.cap, {opacity: 0, duration: .5, ease: 'power2.out'}); };
+Kit.play.card = async () => {
+  const r = svgEl.getBoundingClientRect();
+  const ev = (t, p) => svgEl.dispatchEvent(new PointerEvent(t, {clientX: r.left + p.x, clientY: r.top + p.y, bubbles: true, pointerId: 1, isPrimary: true}));
+  ev('pointerdown', pts[idx]);
+  for (let j = idx; j < N; j += 5) { ev('pointermove', pts[j]); await new Promise(res => setTimeout(res, 8)); }
+  ev('pointermove', pts[N - 1]); ev('pointerup', pts[N - 1]);
+  await new Promise(res => setTimeout(res, 600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-motogp-braking-zone",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many metres does a MotoGP bike need from 350 to 100 km/h?",
+  "answer": "From 350 to 100 km/h takes only about 200 m of road. Rossi grabs the brakes about 200 m from the corner, so losing 250 km/h in that short stretch means the squeeze must be exact.",
+  "move": "From 350 to 100 km/h takes only about 200 m of road.",
+  "keywords": [
+    "motogp",
+    "valentino rossi",
+    "brakes",
+    "braking distance",
+    "speed"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A speed-versus-distance graph of a MotoGP bike braking from 350 km/h toward a corner 420 m away, with red dashes showing Valentino Rossi's braking point. Asks how many metres the bike needs to slow from 350 to 100 km/h."
+  },
+  "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=9AvpiROfyUM&t=129s",
+  "written": "2026-11-03"
+}

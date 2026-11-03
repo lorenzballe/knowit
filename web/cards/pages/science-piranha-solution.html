@@ -1,0 +1,135 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-piranha-solution -->
+<title>Astute free card · Piranha solution</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{width:100%;flex:1;min-height:0;display:block;cursor:pointer;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.steps{display:flex;gap:2cqw;justify-content:center;margin:.6cqh 0}
+.dot{width:max(1.2cqh,8px);height:max(1.2cqh,8px);border-radius:50%;background:color-mix(in srgb,var(--k) 22%,transparent)}
+.dot.on{background:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap through · watch it go">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CHEMISTRY</span></div>
+    <h2 class="q">What is the most corrosive substance for organic matter?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A beaker of piranha solution and a piece of mandarin"></svg>
+      <div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    </div>
+    <p class="say" id="say">Tap the beaker to drop a piece of mandarin in.</p>
+    <div id="why" class="gone">
+      <p class="big">Piranha solution</p>
+      <p class="body">It is sulfuric acid mixed with hydrogen peroxide. The fruit first turns into black carbon, then the carbon leaves as carbon dioxide gas: it literally vaporizes.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Piranha doesn't just eat organic matter: it turns it into gas.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let step = 0, busy = false, G = null, fizzT = null;
+const SAY = [
+  'Tap the beaker to drop a piece of mandarin in.',
+  'Tap again and watch what the solution does to it.',
+  'It went black: that is carbon. Tap to see where it goes.'
+];
+const ORANGE = '#f39a1e', PEEL = '#c96a0a', COAL = '#151515';
+
+function dots(){ document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on', i < step)); }
+
+function draw(){
+  const svg = Kit.$('pic');
+  gsap.killTweensOf('*');
+  svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg);
+  const bw = Math.min(W*.62, H*.6), bh = H*.6, cx = W/2, by = H*.96, bt = by-bh;
+  const lt = bt + bh*.26, lip = bw*.06, rad = bw*.08, sw = Math.max(2, f*.14);
+  const L = cx-bw/2, R = cx+bw/2;
+  const r = bw*.2;
+  G = {W,H,f,cx,by,bt,lt,L,R,r, startY: Math.max(bt - r*1.6, H*.14), inY: bt + bh*.5};
+  // liquid
+  Kit.mk('path',{d:`M${L+sw},${lt} L${L+sw},${by-rad} Q${L+sw},${by-sw} ${L+rad},${by-sw} L${R-rad},${by-sw} Q${R-sw},${by-sw} ${R-sw},${by-rad} L${R-sw},${lt} Z`,
+    style:'fill:var(--k);opacity:.13'}, svg);
+  Kit.mk('line',{x1:L+sw,x2:R-sw,y1:lt,y2:lt,style:`stroke:var(--k);stroke-width:${sw*.6};opacity:.45`}, svg);
+  G.bub = Kit.mk('g',{}, svg);
+  // fruit
+  G.fruit = Kit.mk('g',{}, svg);
+  G.flesh = Kit.mk('path',{d:`M${-r},0 A${r} ${r*.95} 0 0 1 ${r},0 Q0 ${r*.55} ${-r},0 Z`, fill:ORANGE, stroke:PEEL, 'stroke-width':sw, 'stroke-linejoin':'round'}, G.fruit);
+  G.veins = Kit.mk('g',{stroke:PEEL,'stroke-width':sw*.5,'stroke-linecap':'round',fill:'none',opacity:.6}, G.fruit);
+  [-.45,0,.45].forEach(k=>Kit.mk('path',{d:`M${k*r*.6},${r*.12} L${k*r*1.1},${-r*.62}`}, G.veins));
+  G.cLab = Kit.mk('text',{x:0,y:-r*.2,'text-anchor':'middle','dominant-baseline':'middle',fill:'#fff',
+    style:`font:800 ${f*1.1}px var(--display);opacity:0`}, G.fruit);
+  G.cLab.textContent = 'C';
+  // beaker
+  Kit.mk('path',{d:`M${L-lip},${bt} L${L},${bt+lip} L${L},${by-rad} Q${L},${by} ${L+rad},${by} L${R-rad},${by} Q${R},${by} ${R},${by-rad} L${R},${bt+lip} L${R+lip},${bt}`,
+    style:`fill:none;stroke:var(--k);stroke-width:${sw*1.4};stroke-linejoin:round;stroke-linecap:round`}, svg);
+  const gap = Math.max(bh*.1, f*1.45);
+  const t1 = Kit.mk('text',{x:cx,y:by-bh*.08-gap,'text-anchor':'middle',style:`fill:var(--k);font:800 ${f}px var(--display)`}, svg);
+  t1.textContent = 'Piranha solution';
+  const t2 = Kit.mk('text',{x:cx,y:by-bh*.08,'text-anchor':'middle',style:`fill:var(--k);opacity:.75;font:600 ${f*.85}px var(--mono)`}, svg);
+  t2.textContent = 'H₂SO₄ + H₂O₂';
+  G.gas = Kit.mk('text',{x:cx,y:Math.max(f*1.2, G.startY - r*.4),'text-anchor':'middle',style:`fill:var(--k);font:800 ${f*1.15}px var(--display);opacity:0`}, svg);
+  G.gas.textContent = 'CO₂ gas ↑';
+  // state
+  gsap.set(G.fruit,{x:cx, y: step ? G.inY : G.startY, scale: step>=3 ? 0 : 1, transformOrigin:'50% 50%'});
+  if (step>=2){ G.flesh.setAttribute('fill',COAL); G.flesh.setAttribute('stroke',COAL); G.veins.setAttribute('opacity',0); G.cLab.style.opacity=1; }
+  if (step>=3) G.gas.style.opacity = 1;
+  if (step===1 || step===2) fizz();
+  dots();
+}
+
+function bubble(big){
+  if (!G) return;
+  const x = G.cx + (Kit.rnd()-.5)*G.r*1.6, y = G.inY - G.r*.2;
+  const c = Kit.mk('circle',{cx:x,cy:y,r:G.f*(big?.22:.12)*(.6+Kit.rnd()*.8),style:`fill:none;stroke:var(--k);stroke-width:${Math.max(1.2,G.f*.07)}`}, G.bub);
+  const top = big ? G.f*.5 + Kit.rnd()*G.H*.25 : G.lt + 2;
+  gsap.to(c,{attr:{cy:top, cx:x+(Kit.rnd()-.5)*G.f*2}, opacity: big?0:.2, duration: big?1.6+Kit.rnd():.8+Kit.rnd()*.6, ease:'power1.in', onComplete:()=>c.remove()});
+}
+function fizz(){
+  clearInterval(fizzT);
+  if (Kit.calm) return;
+  fizzT = setInterval(()=>{ if (step===1||step===2) bubble(false); else clearInterval(fizzT); }, 160);
+}
+
+function next(){
+  if (busy || step>=3 || !G) return;
+  busy = true; step++; dots(); Kit.haptic('light');
+  const d = Kit.calm ? .01 : 1;
+  if (step===1){
+    gsap.to(G.fruit,{y:G.inY, duration:.8*d, ease:'bounce.out', onComplete:()=>{ fizz(); busy=false; Kit.$('say').textContent = SAY[1]; }});
+  } else if (step===2){
+    gsap.to(G.flesh,{attr:{fill:COAL, stroke:COAL}, duration:1.4*d});
+    gsap.to(G.veins,{opacity:0, duration:1.2*d});
+    gsap.to(G.cLab,{opacity:1, duration:.5*d, delay:1.1*d, onComplete:()=>{ busy=false; Kit.$('say').textContent = SAY[2]; }});
+  } else {
+    clearInterval(fizzT);
+    if (!Kit.calm) for (let i=0;i<34;i++) gsap.delayedCall(i*.05, ()=>bubble(true));
+    gsap.to(G.fruit,{scale:0, opacity:.2, duration:1.6*d, ease:'power2.in'});
+    gsap.to(G.gas,{opacity:1, duration:.6*d, delay:.6*d, onComplete:()=>{
+      busy=false; Kit.haptic('success');
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      if (!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.1,duration:.4});
+    }});
+  }
+}
+
+Kit.$('pic').addEventListener('click', next);
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G || step) return;
+  gsap.fromTo(G.fruit,{y:G.startY - G.r*.5, opacity:0},{y:G.startY, opacity:1, duration:.6, ease:'power3.out'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i=0;i<3;i++){ Kit.$('pic').dispatchEvent(new MouseEvent('click',{bubbles:true})); await w(Kit.calm?200:2200); }
+  await w(800);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-superacids-hammett-scale -->
+<title>Astute free card · Superacids</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#race{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;justify-content:center}
+.go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
+.go:disabled{opacity:.45;cursor:default}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Race · two acids">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SUPERACIDS</span></div>
+    <h2 class="q">Why can't the pH scale measure the strongest acids?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="race" aria-label="Two acids racing down an acidity scale"></svg>
+      <div id="ctl"><button class="go" id="go">Race them on the pH scale</button></div>
+      <div id="why" class="gone">
+        <p class="body">Superacids are so strong they protonate even weak bases, so pH stops being accurate. Chemists switch to the Hammett acidity function, H₀: the lower, the stronger. Pure sulfuric acid sits at −12, fluoroantimonic acid at about −28.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to race two acids. Which reaches further?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Past pH 0, acidity is measured with Hammett's H₀, which runs far below zero.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('race'), btn = Kit.$('go');
+const S = {lo: 0, a: 14, b: 14, mode: 'pH', wall: 1, shake: 0, cap: 0};
+let G = null, phase = 0;
+const COL_A = '#f2a516', COL_B = '#e0287a';
+const sp = () => Kit.calm ? 0.02 : 1;
+const fmt = v => (v < 0 ? '−' : '') + Math.abs(Math.round(v));
+
+function draw() {
+  if (!G) return;
+  const {W, H} = G, fs = Math.max(G.f, 12), r = fs * .75;
+  svg.innerHTML = '';
+  const padL = r + fs * .4, padR = r + fs * .4, w = W - padL - padR;
+  const x = v => padL + (14 - v) / (14 - S.lo) * w;
+  const axisY = H - fs * 3.3, barH = fs * .9;
+  const top = fs * 1.6 + r;
+  const l2 = axisY - barH / 2 - fs * 1.9 - r;
+  const l1 = Math.max(top, Math.min(top + (l2 - top) * .3, l2 - 2 * r - fs * 2.6));
+
+  const defs = Kit.mk('defs', {}, svg);
+  const g1 = Kit.mk('linearGradient', {id: 'gph', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+  [['0', '#3a5bd9'], ['.5', '#3fbf6a'], ['1', '#e8412c']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, g1));
+  const g2 = Kit.mk('linearGradient', {id: 'gh', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+  [['0', '#e8412c'], ['1', '#4b0a63']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, g2));
+
+  // scale bar
+  Kit.mk('rect', {x: x(14), y: axisY - barH / 2, width: x(0) - x(14), height: barH, rx: barH / 2, fill: 'url(#gph)'}, svg);
+  if (S.lo < -0.3) Kit.mk('rect', {x: x(0) - barH / 2, y: axisY - barH / 2, width: x(S.lo) - x(0) + barH / 2, height: barH, rx: barH / 2, fill: 'url(#gh)'}, svg);
+
+  // ticks
+  const cands = S.mode === 'pH' ? [14, 12, 10, 8, 6, 4, 2, 0] : [14, 7, 0, -12, -28];
+  let last = -1e9;
+  cands.forEach(v => {
+    if (v < S.lo) return;
+    const tx = x(v); if (tx - last < fs * 2.4) return; last = tx;
+    Kit.mk('line', {x1: tx, x2: tx, y1: axisY + barH / 2, y2: axisY + barH / 2 + fs * .35, stroke: 'var(--k)', 'stroke-width': 1.5}, svg);
+    const t = Kit.mk('text', {x: tx, y: axisY + barH / 2 + fs * 1.35, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+    t.textContent = fmt(v);
+  });
+  // captions
+  const cy = axisY + barH / 2 + fs * 2.75;
+  const c1 = Kit.mk('text', {x: (x(14) + x(0)) / 2, y: cy, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
+  c1.textContent = 'pH scale';
+  if (S.lo < -6) {
+    const c2 = Kit.mk('text', {x: (x(0) + x(S.lo)) / 2, y: cy, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, opacity: S.cap}, svg);
+    c2.textContent = 'Hammett H₀';
+  }
+
+  // wall at 0
+  if (S.wall > 0.01) {
+    Kit.mk('line', {x1: x(0), x2: x(0), y1: l1 - r - fs * .2, y2: axisY + barH / 2, stroke: 'var(--k)', 'stroke-width': Math.max(3, fs * .25), 'stroke-linecap': 'round', opacity: S.wall}, svg);
+  }
+
+  // lanes
+  [[l1, S.a, COL_A, 'Pure sulfuric acid'], [l2, S.b, COL_B, 'Fluoroantimonic acid']].forEach(([ly, v, col, name]) => {
+    Kit.mk('line', {x1: x(14), x2: x(S.lo), y1: ly, y2: ly, stroke: 'var(--k)', 'stroke-width': 1.5, 'stroke-dasharray': '3 5', opacity: .35}, svg);
+    const n = Kit.mk('text', {x: padL - r, y: ly + r + fs * 1.2, fill: 'var(--k)', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
+    n.textContent = name;
+    const dx = x(v) + (v <= 0.01 && S.mode === 'pH' ? S.shake : 0);
+    Kit.mk('circle', {cx: dx, cy: ly, r, fill: col, stroke: 'var(--k)', 'stroke-width': 2}, svg);
+    const lx = Math.min(Math.max(dx, fs * 2.2), W - fs * 2.2);
+    const t = Kit.mk('text', {x: lx, y: ly - r - fs * .4, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+    const approx = S.mode !== 'pH' && name[0] === 'F' && Math.round(v) === -28 ? '≈ ' : '';
+    t.textContent = (S.mode === 'pH' ? 'pH ' : 'H₀ ') + approx + fmt(v);
+  });
+}
+
+function layout() { G = Kit.fitSvg(svg); draw(); }
+
+btn.addEventListener('click', () => {
+  if (phase === 0) {
+    phase = 1; btn.disabled = true; Kit.haptic('light');
+    gsap.to(S, {a: 0, b: 0, duration: 1.6 * sp(), ease: 'power2.in', onUpdate: draw, onComplete: () => {
+      Kit.haptic('selection');
+      gsap.fromTo(S, {shake: -8}, {shake: 0, duration: .6 * sp(), ease: 'elastic.out(1,0.3)', onUpdate: draw});
+      Kit.$('say').textContent = 'Both slam into 0. The pH scale can’t tell them apart.';
+      btn.textContent = 'Switch to the Hammett scale'; btn.disabled = false; phase = 2;
+    }});
+  } else if (phase === 2) {
+    phase = 3; btn.disabled = true; Kit.haptic('light');
+    S.mode = 'H0';
+    const tl = gsap.timeline({onUpdate: draw, onComplete: finish});
+    tl.to(S, {wall: 0, duration: .4 * sp()})
+      .to(S, {lo: -30, duration: 1 * sp(), ease: 'power2.inOut'}, '<')
+      .to(S, {cap: 1, duration: .4 * sp()})
+      .to(S, {a: -12, duration: 1.3 * sp(), ease: 'power2.out'}, '<')
+      .to(S, {b: -28, duration: 2.2 * sp(), ease: 'power2.out'}, '<');
+  }
+});
+
+function finish() {
+  phase = 4; Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  layout();
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .12, duration: .4, ease: 'power3.out'});
+}
+
+Kit.onShow.card = () => layout();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#race', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  btn.click(); await wait(Kit.calm ? 300 : 2500);
+  btn.click(); await wait(Kit.calm ? 500 : 4200);
+};
+Kit.single();
+</script>
+</html>

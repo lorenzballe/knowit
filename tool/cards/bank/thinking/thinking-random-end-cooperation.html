@@ -1,0 +1,163 @@
+<!doctype html>
+<!-- slug: thinking-random-end-cooperation -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#go{align-self:center;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Tap · see it unravel">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GAME THEORY</span></div>
+    <h2 class="q">Why does not knowing when a game ends keep players cooperating?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <button id="go">Think backward · 0/10</button>
+      <div id="why" class="gone">
+        <p class="big">No sure last round, no unravelling.</p>
+        <p class="body">With a known end, betraying in the last round is safe, and that logic slides back to round 1. With a random end (200 rounds on average), any round might be followed by another, so you keep cooperating: you might still need them.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to reason backward from the known last round.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>When the end is uncertain, the future keeps people cooperating.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 10, MAXC = 600, COLS = 30, ROWS = 20;
+const GREEN = '#22a85a', RED = '#e2443a';
+let k = 0, games = [], shown = 0, face = 6, rolling = false, fast = false;
+let counterTxt = 'Roll: nobody knows which round is last.';
+let boxes = [], cells = [], dieG = null, counterEl = null, capEl = null, histEl = null, G = null;
+
+function capText() {
+  if (k === 0) return 'Everyone knows round 10 is the last.';
+  if (k === 1) return 'Round 10: no future → betray.';
+  if (k < N) return `So round ${N - k + 1} is now last → betray.`;
+  return 'Unravelled to round 1: all betray.';
+}
+function histText() { return games.length ? 'Game lengths: ' + games.join(' · ') : 'Every round so far: cooperate.'; }
+
+function txt(s, x, y, size, opts = {}) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': opts.a || 'start',
+    style: `fill:${opts.fill || 'var(--k)'};font:${opts.w || 700} ${size}px ${opts.fam || 'var(--body)'}`}, Kit.$('pic'));
+  t.textContent = s; return t;
+}
+function drawDie() {
+  if (!dieG) return;
+  dieG.innerHTML = '';
+  const {dx, dy, d} = G;
+  Kit.mk('rect', {x: dx, y: dy, width: d, height: d, rx: d * .18, style: 'fill:var(--k)'}, dieG);
+  const P = {1: [[.5,.5]], 2: [[.27,.27],[.73,.73]], 3: [[.27,.27],[.5,.5],[.73,.73]],
+    4: [[.27,.27],[.73,.27],[.27,.73],[.73,.73]], 5: [[.27,.27],[.73,.27],[.5,.5],[.27,.73],[.73,.73]],
+    6: [[.27,.25],[.73,.25],[.27,.5],[.73,.5],[.27,.75],[.73,.75]]}[face];
+  P.forEach(([a, b]) => Kit.mk('circle', {cx: dx + a * d, cy: dy + b * d, r: d * .085, style: 'fill:var(--c)'}, dieG));
+}
+function setShown(n) {
+  shown = n;
+  for (let i = 0; i < cells.length; i++) cells[i].style.opacity = i < n ? 1 : 0;
+}
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, H / 22, W / 26));
+  const pad = fs * .3;
+  let y = fs * 1.1;
+  txt('KNOWN END · 10 ROUNDS', pad, y, fs * .9, {fam: 'var(--mono)', w: 700});
+  const gapR = .15, s = Math.min((W - 2 * pad) / (N + (N - 1) * gapR), H * .11);
+  const g = s * gapR, x0 = (W - (N * s + (N - 1) * g)) / 2, yA = y + fs * .8;
+  boxes = [];
+  for (let i = 0; i < N; i++) {
+    const bad = i >= N - k, gp = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: x0 + i * (s + g), y: yA, width: s, height: s, rx: s * .18, style: `fill:${bad ? RED : GREEN}`}, gp);
+    const t = Kit.mk('text', {x: x0 + i * (s + g) + s / 2, y: yA + s / 2 + fs * .35, 'text-anchor': 'middle',
+      style: `fill:#fff;font:800 ${Math.max(12, Math.min(fs, s * .5))}px var(--body)`}, gp);
+    t.textContent = bad ? 'D' : 'C';
+    boxes.push(gp);
+  }
+  txt('round 1', x0, yA + s + fs * 1.1, fs * .85, {w: 500, fill: 'var(--muted)'});
+  txt('round 10', x0 + N * s + (N - 1) * g, yA + s + fs * 1.1, fs * .85, {w: 500, fill: 'var(--muted)', a: 'end'});
+  capEl = txt(capText(), W / 2, yA + s + fs * 2.6, fs, {a: 'middle', w: 800, fill: k ? RED : 'var(--k)'});
+  const yB = yA + s + fs * 4.9;
+  Kit.mk('line', {x1: pad, x2: W - pad, y1: yB - fs * 1.6, y2: yB - fs * 1.6, style: 'stroke:var(--edge);stroke-width:1'}, svg);
+  txt('RANDOM END · AVG 200 ROUNDS', pad, yB, fs * .9, {fam: 'var(--mono)', w: 700, fill: k === N ? 'var(--k)' : 'var(--muted)'});
+  const d = fs * 2.1;
+  G = {dx: W - pad - d, dy: yB - fs * 1.05, d};
+  dieG = Kit.mk('g', {style: 'cursor:pointer'}, svg);
+  dieG.addEventListener('click', () => { if (k === N) Kit.$('go').click(); });
+  drawDie();
+  const gTop = yB + fs * 1.6, gBot = H - fs * 3.2;
+  const c = Math.max(2, Math.min((W - 2 * pad) / COLS, (gBot - gTop) / ROWS));
+  const gx = (W - c * COLS) / 2;
+  Kit.mk('rect', {x: gx - 2, y: gTop - 2, width: c * COLS + 4, height: c * ROWS + 4, rx: 4,
+    style: 'fill:color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
+  cells = [];
+  for (let i = 0; i < MAXC; i++) {
+    const r = Math.floor(i / COLS), cc = i % COLS;
+    cells.push(Kit.mk('rect', {x: gx + cc * c + c * .1, y: gTop + r * c + c * .1, width: c * .8, height: c * .8, rx: c * .15,
+      style: `fill:${GREEN};opacity:0`}, svg));
+  }
+  setShown(shown);
+  const yC = gTop + c * ROWS + fs * 1.3;
+  counterEl = txt(counterTxt, W / 2, yC, fs, {a: 'middle', w: 800});
+  histEl = txt(histText(), W / 2, yC + fs * 1.4, fs * .9, {a: 'middle', w: 500, fill: 'var(--muted)'});
+}
+function gameLength() { let n = 1; while (Kit.rnd() >= 1 / 200 && n < 5000) n++; return n; }
+function roll() {
+  rolling = true; Kit.haptic('light');
+  const len = gameLength(), o = {n: 0};
+  const dur = (fast || Kit.calm) ? .05 : Math.min(2.6, .7 + len / 220);
+  gsap.to(o, {n: len, duration: dur, ease: 'none',
+    onUpdate() {
+      const n = Math.floor(o.n); setShown(Math.min(n, MAXC));
+      face = 1 + Math.floor(Math.random() * 6); drawDie();
+      counterTxt = `Round ${Math.max(n, 1)}: will there be another?`;
+      counterEl.textContent = counterTxt;
+    },
+    onComplete() {
+      setShown(Math.min(len, MAXC));
+      games.push(len);
+      counterTxt = `Game ${games.length} ended after ${len} rounds.`;
+      counterEl.textContent = counterTxt; histEl.textContent = histText();
+      rolling = false; Kit.haptic('selection');
+      if (games.length >= 3) finish();
+      else Kit.$('go').textContent = `Roll again · ${games.length}/3`;
+    }});
+}
+function finish() {
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(draw);
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, duration: .45, stagger: .1});
+}
+Kit.$('go').addEventListener('click', () => {
+  if (k < N) {
+    k++; Kit.haptic('light'); draw();
+    if (!Kit.calm) gsap.from(boxes[N - k], {scale: 1.35, transformOrigin: '50% 50%', duration: .35, ease: 'back.out(3)'});
+    if (k < N) Kit.$('go').textContent = `Think backward · ${k}/10`;
+    else {
+      Kit.$('go').textContent = 'Roll the die';
+      Kit.$('say').textContent = 'Now the end is random. Roll the die to play a game.';
+    }
+  } else if (!rolling && games.length < 3) roll();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(boxes, {opacity: 0, y: 8, stagger: .05, duration: .35, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  fast = true;
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < N; i++) { Kit.$('go').click(); await w(30); }
+  for (let i = 0; i < 3; i++) { Kit.$('go').click(); await w(300); }
+  await w(600);
+};
+Kit.single();
+</script>
+</html>

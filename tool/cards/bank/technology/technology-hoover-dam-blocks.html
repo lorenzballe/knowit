@@ -1,0 +1,170 @@
+<!doctype html>
+<!-- slug: technology-hoover-dam-blocks -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why the Hoover Dam was poured in blocks</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#wrap{position:relative;flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%}
+#opts{display:flex;gap:1.6cqw}
+.opt{flex:1;font:700 max(1.8cqh,12px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 1.5cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Try it · watch it cool">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DAM BUILDING</span></div>
+    <h2 class="q">Why was the Hoover Dam poured as many separate blocks?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="opts">
+        <button class="opt" data-n="1">One pour</button>
+        <button class="opt" data-n="2">4 blocks</button>
+        <button class="opt" data-n="4">16 blocks</button>
+        <button class="opt" data-n="8">64 blocks</button>
+      </div>
+    </div>
+    <div id="why" class="gone"><p class="body">Setting concrete makes its own heat. In one giant pour the outside cools and shrinks while the core stays hot, and that thermal stress cracks it. Blocks of limited length and width let the inside cool too.</p></div>
+    <p class="say" id="say">Pick how to pour the concrete and watch its heat escape. Then try another way.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Big concrete cools from the outside in: cut it small so the inside cools too.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NX = 48, NY = 32, A = 0.22, Q0 = 0.004, TAU = 300, STEPS = 1800, PER = 8, TH = 0.25, SCALE = 0.8;
+let T = new Float32Array(NX * NY), N2 = new Float32Array(NX * NY);
+let n = 1, step = 0, state = 'none', gapNow = 0, gapPeak = 0, crack = [], seeds = [], raf = 0, geo = null, revealed = false;
+const tried = new Set();
+
+function setup(k) {
+  n = k; T.fill(0); step = 0; gapNow = 0; gapPeak = 0;
+  crack = new Array(n * n).fill(0); seeds = [];
+  for (let b = 0; b < n * n; b++) {
+    const list = [], cnt = n === 1 ? 9 : n === 2 ? 3 : 2;
+    for (let c = 0; c < cnt; c++) {
+      const side = Math.floor(Kit.rnd() * 4), pos = .12 + Kit.rnd() * .76, pts = [];
+      for (let s = 0; s < 6; s++) pts.push((Kit.rnd() - .5) * .9);
+      list.push({side, pos, pts, len: .6 + Kit.rnd() * .5});
+    }
+    seeds.push(list);
+  }
+}
+function sim() {
+  const bw = NX / n, bh = NY / n, q = Q0 * Math.exp(-step / TAU);
+  for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) {
+    const bi = Math.floor(i / bw), bj = Math.floor(j / bh), id = j * NX + i, t = T[id];
+    const nb = (ii, jj) => (ii < 0 || jj < 0 || ii >= NX || jj >= NY || Math.floor(ii / bw) !== bi || Math.floor(jj / bh) !== bj) ? 0 : T[jj * NX + ii];
+    N2[id] = t + A * (nb(i - 1, j) + nb(i + 1, j) + nb(i, j - 1) + nb(i, j + 1) - 4 * t) + q;
+  }
+  [T, N2] = [N2, T]; step++;
+  gapNow = 0;
+  for (let bj = 0; bj < n; bj++) for (let bi = 0; bi < n; bi++) {
+    let mx = -1, mn = 9;
+    for (let j = bj * bh; j < (bj + 1) * bh; j++) for (let i = bi * bw; i < (bi + 1) * bw; i++) { const v = T[j * NX + i]; if (v > mx) mx = v; if (v < mn) mn = v; }
+    const g = mx - mn, b = bj * n + bi;
+    if (g > crack[b]) crack[b] = g;
+    if (g > gapNow) gapNow = g;
+  }
+  if (gapNow > gapPeak) gapPeak = gapNow;
+}
+const STOPS = [[0, [61, 110, 148]], [.33, [242, 177, 52]], [.66, [232, 89, 12]], [1, [179, 0, 27]]];
+function col(v) {
+  const t = Math.max(0, Math.min(1, v / SCALE));
+  for (let s = 1; s < STOPS.length; s++) if (t <= STOPS[s][0]) {
+    const [a, ca] = STOPS[s - 1], [b, cb] = STOPS[s], u = (t - a) / (b - a);
+    return `rgb(${ca.map((c, k) => Math.round(c + (cb[k] - c) * u)).join(',')})`;
+  }
+  return 'rgb(179,0,27)';
+}
+function draw() {
+  if (!geo) return;
+  const {x, W, H} = geo, cs = getComputedStyle(Kit.$('card'));
+  const ink = cs.getPropertyValue('--k').trim() || '#111', bg = cs.getPropertyValue('--c').trim() || '#fff', muted = cs.getPropertyValue('--muted').trim() || ink;
+  const f = Math.max(12, Math.min(18, Math.min(W, H) * 0.05));
+  x.clearRect(0, 0, W, H);
+  x.font = `600 ${f}px ${cs.getPropertyValue('--body')}`; x.textBaseline = 'alphabetic';
+  const mapTop = f * 1.9, gaugeH = f * 5;
+  const mw = Math.max(40, Math.min(W, (H - mapTop - gaugeH) * 1.5)), mh = mw / 1.5, mx = (W - mw) / 2, cell = mw / NX;
+  x.fillStyle = muted; x.textAlign = 'left';
+  x.fillText('A layer of dam concrete, from above', mx, f * 1.2);
+  for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) {
+    x.fillStyle = state === 'none' ? '#9aa3ab' : col(T[j * NX + i]);
+    x.fillRect(mx + i * cell, mapTop + j * cell, cell + .6, cell + .6);
+  }
+  const bwp = mw / n, bhp = mh / n;
+  if (n > 1) {
+    x.strokeStyle = bg; x.lineWidth = Math.max(2, cell * .5);
+    for (let k = 1; k < n; k++) {
+      x.beginPath(); x.moveTo(mx + k * bwp, mapTop); x.lineTo(mx + k * bwp, mapTop + mh); x.stroke();
+      x.beginPath(); x.moveTo(mx, mapTop + k * bhp); x.lineTo(mx + mw, mapTop + k * bhp); x.stroke();
+    }
+  }
+  if (state !== 'none') {
+    x.strokeStyle = '#14181f'; x.lineCap = 'round'; x.lineJoin = 'round';
+    for (let b = 0; b < n * n; b++) {
+      const s = Math.min(1, (crack[b] - TH) / 0.35); if (s <= 0) continue;
+      const ox = mx + (b % n) * bwp, oy = mapTop + Math.floor(b / n) * bhp, L = Math.min(bwp, bhp) * .42 * s;
+      x.lineWidth = Math.max(1.5, cell * .35);
+      for (const c of seeds[b]) {
+        let px, py, dx, dy;
+        if (c.side === 0) { px = ox + c.pos * bwp; py = oy; dx = 0; dy = 1; }
+        else if (c.side === 1) { px = ox + bwp; py = oy + c.pos * bhp; dx = -1; dy = 0; }
+        else if (c.side === 2) { px = ox + c.pos * bwp; py = oy + bhp; dx = 0; dy = -1; }
+        else { px = ox; py = oy + c.pos * bhp; dx = 1; dy = 0; }
+        x.beginPath(); x.moveTo(px, py);
+        const seg = L * c.len / c.pts.length;
+        c.pts.forEach(p => { px += dx * seg + dy * p * seg; py += dy * seg + dx * p * seg; x.lineTo(px, py); });
+        x.stroke();
+      }
+    }
+  }
+  // gauge
+  const gy = mapTop + mh + f * 1.7, by = gy + f * .55, bh = f * .9;
+  x.fillStyle = ink; x.textAlign = 'left';
+  x.fillText('How much hotter the core is than the skin', mx, gy);
+  x.fillStyle = 'color-mix(in srgb,' + ink + ' 12%,transparent)';
+  x.fillStyle = ink; x.globalAlpha = .12; x.fillRect(mx, by, mw, bh); x.globalAlpha = 1;
+  const fr = v => Math.min(1, v / SCALE) * mw;
+  x.fillStyle = gapNow > TH ? '#e8590c' : '#3d6e94'; x.fillRect(mx, by, fr(gapNow), bh);
+  if (gapPeak > 0) { x.fillStyle = ink; x.fillRect(mx + fr(gapPeak) - 1, by - f * .2, 2, bh + f * .4); }
+  const tx = mx + fr(TH);
+  x.fillStyle = '#c1121f'; x.fillRect(tx - 1.5, by - f * .25, 3, bh + f * .5);
+  x.textAlign = 'left'; x.fillText('◂ cracks beyond here', tx - f * .3, by + bh + f * 1.35);
+}
+function finish() {
+  state = 'done'; draw();
+  if (tried.size >= 2 && !revealed) {
+    revealed = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    requestAnimationFrame(() => { Kit.onShow.card(); });
+  }
+}
+function run(k) {
+  cancelAnimationFrame(raf); setup(k); state = 'run'; tried.add(k);
+  if (Kit.calm || run.fast) { while (step < STEPS) sim(); finish(); return; }
+  const loop = () => {
+    for (let s = 0; s < PER && step < STEPS; s++) sim();
+    draw();
+    if (step < STEPS) raf = requestAnimationFrame(loop); else finish();
+  };
+  loop();
+}
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  [...Kit.$('opts').children].forEach(o => o.classList.toggle('on', o === b));
+  Kit.haptic('selection'); run(+b.dataset.n);
+});
+Kit.onShow.card = () => { geo = Kit.fitCanvas(Kit.$('cv')); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  run.fast = true;
+  Kit.$('opts').children[3].click(); await new Promise(r => setTimeout(r, 150));
+  Kit.$('opts').children[0].click(); await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

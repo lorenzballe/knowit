@@ -1,0 +1,37 @@
+{
+  "id": "science-iron-sand-concentration",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How rich in iron oxide can Japanese iron sand get?",
+  "answer": "Running water carries the light sand downstream, while the heavy iron grains stay behind. Done in engineered river channels, this leaves sand that is about 80 % iron oxides by weight. That is richer than high-quality iron ore, with fewer impurities.",
+  "move": "Let water do the sorting: light sand leaves, heavy iron stays.",
+  "keywords": [
+    "iron sand",
+    "japan",
+    "iron oxide",
+    "river",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A river channel with a gate you drag upward to let water run. The question asks how rich in iron oxide Japanese iron sand can get. The revealed answer is about 80 % iron oxides by weight."
+  },
+  "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=341s",
+  "written": "2026-11-03"
+}

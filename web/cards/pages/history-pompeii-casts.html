@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-pompeii-casts -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;display:block;width:100%;height:100%}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:break-word}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:break-word}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POMPEII</span></div>
+    <h2 class="q">What are the famous “stone” bodies of Pompeii, really?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A body from Pompeii, buried in ash that turns to rock"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">People turned to stone</button>
+        <button class="opt" data-i="1">Fillings of hollows left in the rock</button>
+        <button class="opt" data-i="2">Bodies baked hard by the heat</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Casts</p><p class="body">Ash and lapilli buried people in an instant, then cooled into rock: tuff. The rock kept each shape as a hollow, a negative mould. Fill it and you get the positive: a cast.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Pompeii’s “stone bodies” are fillings of the shapes left in the rock.</div>
+    <div class="foot"><span class="src">Source · Geopop, “"Lo sapevate che i corpi di Pompei in realtà non sono “pietrificati”?” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, answered = false, tl = null;
+
+const C = {floor:'#4a3a2e', person:'#c77b4f', ash:'#cfc8bb', tuff:'#8c7c66', lap:'#5f5243', hollow:'#1f1a16', cast:'#f4eee2', edge:'#2b221b'};
+
+function figure(parent, fill){
+  const g = Kit.mk('g', {}, parent);
+  Kit.mk('circle', {cx:24, cy:51, r:5, fill}, g);
+  Kit.mk('ellipse', {cx:39, cy:57, rx:10.5, ry:5.5, fill, transform:'rotate(18.4 39 57)'}, g);
+  Kit.mk('ellipse', {cx:29, cy:58, rx:5, ry:2, fill, transform:'rotate(30 29 58)'}, g);
+  Kit.mk('ellipse', {cx:54, cy:57, rx:7.5, ry:4, fill, transform:'rotate(-26.6 54 57)'}, g);
+  Kit.mk('ellipse', {cx:63, cy:58, rx:5.5, ry:2.8, fill, transform:'rotate(53 63 58)'}, g);
+  Kit.mk('ellipse', {cx:68, cy:62, rx:3, ry:1.5, fill}, g);
+  return g;
+}
+
+function draw(){
+  const svg = Kit.$('pic');
+  const keepT = tl ? tl.time() : 0, wasActive = tl && tl.isActive();
+  if (tl) tl.kill();
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(Math.min(f * 1.1, W / 18), 13);
+  const capH = fs * 2;
+  const s = Math.min(W / 100, (H - capH) / 52);
+  const tx = (W - 100 * s) / 2, ty = capH - 18 * s;
+
+  const cap = Kit.mk('text', {x:W/2, y:fs*1.2, 'text-anchor':'middle', fill:'var(--k)', 'font-family':'var(--display)', 'font-weight':700, 'font-size':fs}, svg);
+  cap.textContent = 'The famous “stone” body?';
+
+  const g = Kit.mk('g', {transform:`translate(${tx},${ty}) scale(${s})`}, svg);
+  const defs = Kit.mk('defs', {}, g);
+  const clip = Kit.mk('clipPath', {id:'castclip', clipPathUnits:'userSpaceOnUse'}, defs);
+  const clipR = Kit.mk('rect', {x:0, y:66, width:100, height:0}, clip);
+
+  Kit.mk('rect', {x:0, y:64, width:100, height:6, rx:1, fill:C.floor}, g);
+  const person = figure(g, C.person); person.setAttribute('opacity', 0);
+
+  const rock = Kit.mk('g', {}, g);
+  const ash = Kit.mk('rect', {x:0, y:64, width:100, height:0, fill:C.ash}, rock);
+  const laps = Kit.mk('g', {opacity:0}, rock);
+  for (let i = 0; i < 70; i++) Kit.mk('circle', {cx:2 + Kit.rnd()*96, cy:22 + Kit.rnd()*41, r:.4 + Kit.rnd()*.9, fill:C.lap}, laps);
+  const fall = Kit.mk('g', {opacity:0}, rock);
+  const drops = [];
+  for (let i = 0; i < 40; i++) drops.push(Kit.mk('circle', {cx:2 + Kit.rnd()*96, cy:-8 - Kit.rnd()*20, r:.5 + Kit.rnd()*.7, fill:C.ash}, fall));
+
+  const hollow = figure(g, C.hollow); hollow.setAttribute('opacity', 0);
+  const castG = Kit.mk('g', {opacity:1}, g);
+  const cast = figure(castG, C.cast);
+  const startCast = figure(g, '#9a948a'); // the grey "stone" look at the start
+  castG.setAttribute('clip-path', 'url(#castclip)');
+
+  tl = gsap.timeline({paused:true});
+  tl.to(startCast, {opacity:0, duration:.6})
+    .to(person, {opacity:1, duration:.6}, '<')
+    .call(() => cap.textContent = '79 AD: ash and lapilli fall')
+    .to(fall, {opacity:1, duration:.2})
+    .to(drops, {attr:{cy:i => 30 + (i*7)%30}, duration:1.1, stagger:.02, ease:'power1.in'}, '<')
+    .to(ash, {attr:{y:20, height:44}, duration:1.6, ease:'power1.inOut'}, '<.3')
+    .to(fall, {opacity:0, duration:.3})
+    .call(() => cap.textContent = 'Ash cools into rock: tuff', null, '+=.4')
+    .to(ash, {attr:{fill:C.tuff}, duration:.8})
+    .to(laps, {opacity:1, duration:.8}, '<')
+    .call(() => cap.textContent = 'A hollow stays: the negative', null, '+=.6')
+    .set(person, {opacity:0})
+    .to(hollow, {opacity:1, duration:.8})
+    .call(() => cap.textContent = 'Fill it: the positive', null, '+=.8')
+    .set(castG, {opacity:1})
+    .to(clipR, {attr:{y:40, height:26}, duration:1.4, ease:'power1.inOut'})
+    .call(() => cap.textContent = 'Dig away the rock: a cast', null, '+=.5')
+    .to(rock, {opacity:.14, duration:1})
+    .to(hollow, {opacity:0, duration:.6}, '<');
+  gsap.set(castG, {opacity:0});
+
+  if (answered){
+    tl.time(keepT);
+    if (Kit.calm) tl.progress(1); else if (wasActive || keepT === 0) tl.play();
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  answered = true;
+  draw();
+  if (Kit.calm) tl.progress(1); else tl.play(0);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

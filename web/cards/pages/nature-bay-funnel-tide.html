@@ -1,0 +1,119 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-bay-funnel-tide -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#cap{font:700 max(2.1cqh,14px)/1.25 var(--body);color:var(--k);margin:0;min-height:2.6em;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#bay{flex:1;min-height:0;width:100%;display:block}
+#bay text{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap · watch it rise">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TIDES</span></div>
+    <h2 class="q">How does the shape of Mont Saint‑Michel’s bay raise water levels up to 15 m?</h2>
+    <div class="stagebox" id="stage">
+      <p id="cap">Low tide: the bay is open sand, seen from above.</p>
+      <div id="why" class="gone"><p class="body">The bay is a funnel. The tide comes in wide, the shores close in, and the water has nowhere to go but up: 10–12 m at the Mont, peaks near 15 m.</p></div>
+      <svg id="bay"></svg>
+    </div>
+    <p class="say" id="say">Tap the bay to bring the tide in, one step at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Squeeze a tide into a funnel and it climbs.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const STEPS = [
+  {front:0,   lvl:0,  arr:0, cap:'Low tide: the bay is open sand, seen from above.'},
+  {front:.45, lvl:2,  arr:0, cap:'The tide pours in through the wide mouth of the bay.'},
+  {front:.8,  lvl:10, arr:1, cap:'The shores close in. Less room, so the water climbs: 10 m.'},
+  {front:1,   lvl:12, arr:1, cap:'Squeezed into the narrow end: about 12 m on a normal tide.'},
+  {front:1,   lvl:15, arr:1, cap:'On the biggest tides it peaks at around 15 m.'}
+];
+const S = {front:0, lvl:0, arr:0};
+let step = 0, busy = false, R = null;
+
+function draw(){
+  const svg = Kit.$('bay'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f*.85, 12), mk = Kit.mk;
+  const gW = Math.max(W*.27, 96);
+  const x0 = 2, x1 = W - gW - 8, L = x1 - x0, cy = H*.52;
+  const top = H*.06, bot = H*.98, n = Math.max(H*.06, 8);
+  const funnel = `M${x0},${top} Q${x0+L*.55},${top} ${x1},${cy-n} L${x1},${cy+n} Q${x0+L*.55},${bot} ${x0},${bot} Z`;
+  const defs = mk('defs', {}, svg);
+  const cp = mk('clipPath', {id:'fc'}, defs); mk('path', {d:funnel}, cp);
+  const g = mk('linearGradient', {id:'wg', x1:0, x2:1, y1:0, y2:0}, defs);
+  mk('stop', {offset:0, 'stop-color':'#4aa3e8'}, g); mk('stop', {offset:1, 'stop-color':'#0d4f9c'}, g);
+  const gg = mk('linearGradient', {id:'gg', x1:0, x2:0, y1:1, y2:0}, defs);
+  mk('stop', {offset:0, 'stop-color':'#0d4f9c'}, gg); mk('stop', {offset:1, 'stop-color':'#4aa3e8'}, gg);
+  // land and sand
+  mk('rect', {x:0, y:0, width:x1+6, height:H, rx:8, fill:'color-mix(in srgb,var(--k) 12%,transparent)'}, svg);
+  mk('path', {d:funnel, fill:'#e4cf99'}, svg);
+  const water = mk('rect', {x:x0, y:0, width:0, height:H, fill:'url(#wg)', 'clip-path':'url(#fc)'}, svg);
+  const edge = mk('rect', {x:x0, y:0, width:Math.max(3, W*.008), height:H, fill:'#fff', opacity:0, 'clip-path':'url(#fc)'}, svg);
+  mk('path', {d:funnel, fill:'none', stroke:'var(--k)', 'stroke-width':Math.max(2, f*.16)}, svg);
+  // squeeze arrows
+  const ax = x0 + L*.62, ya = top + (cy-n-top)*.45, yb = bot - (bot-cy-n)*.45, a = f*.9;
+  const arrows = mk('g', {opacity:0, stroke:'#fff', 'stroke-width':Math.max(2.5, f*.22), fill:'none', 'stroke-linecap':'round', 'stroke-linejoin':'round'}, svg);
+  mk('path', {d:`M${ax},${ya-a} L${ax},${ya+a} M${ax-a*.6},${ya+a*.4} L${ax},${ya+a} L${ax+a*.6},${ya+a*.4}`}, arrows);
+  mk('path', {d:`M${ax},${yb+a} L${ax},${yb-a} M${ax-a*.6},${yb-a*.4} L${ax},${yb-a} L${ax+a*.6},${yb-a*.4}`}, arrows);
+  // the Mont
+  const mx = x1 - n*.2, mh = n*1.6;
+  mk('path', {d:`M${mx-n*.9},${cy+n*.5} L${mx-n*.2},${cy-mh*.6} L${mx},${cy-mh} L${mx+n*.2},${cy-mh*.6} L${mx+n*.6},${cy+n*.5} Z`, fill:'var(--k)'}, svg);
+  const lm = mk('text', {x:x1, y:cy-n-fs*1.1, 'text-anchor':'end', 'font-size':fs, fill:'var(--k)'}, svg); lm.textContent = 'Mont';
+  const ls = mk('text', {x:x0+fs*.6, y:cy+fs*.35, 'font-size':fs, fill:'var(--k)'}, svg); ls.textContent = 'open sea →';
+  // gauge
+  const gx = x1 + 8 + gW*.42, bw = gW*.22, gy0 = H*.97, gy1 = fs*3.1;
+  const ro = mk('text', {x:x1 + 8 + gW/2, y:fs*1.35, 'text-anchor':'middle', 'font-size':fs*1.35, fill:'var(--k)'}, svg);
+  mk('rect', {x:gx, y:gy1, width:bw, height:gy0-gy1, rx:bw*.3, fill:'color-mix(in srgb,var(--k) 10%,transparent)', stroke:'var(--k)', 'stroke-width':1.5}, svg);
+  const col = mk('rect', {x:gx, y:gy0, width:bw, height:0, rx:bw*.3, fill:'url(#gg)'}, svg);
+  const ym = m => gy0 - (gy0-gy1)*m/15;
+  [[0,-1],[10,-1],[12,1],[15,-1]].forEach(([m, side]) => {
+    const y = ym(m);
+    mk('line', {x1:gx-4, x2:gx+bw+4, y1:y, y2:y, stroke:'var(--k)', 'stroke-width':1.5}, svg);
+    const t = mk('text', {x: side<0 ? gx-7 : gx+bw+7, y:y+fs*.35, 'text-anchor': side<0 ? 'end' : 'start', 'font-size':fs, fill:'var(--k)'}, svg);
+    t.textContent = m + ' m';
+  });
+  R = {water, edge, arrows, col, ro, x0, L, gy0, ym, gy1};
+  paint();
+}
+function paint(){
+  if (!R) return;
+  const w = S.front * (R.L + 10);
+  R.water.setAttribute('width', w);
+  R.edge.setAttribute('x', R.x0 + w - 2);
+  R.edge.setAttribute('opacity', S.front > 0 && S.front < 1 ? .7 : 0);
+  R.arrows.setAttribute('opacity', S.arr);
+  const y = R.ym(S.lvl);
+  R.col.setAttribute('y', y); R.col.setAttribute('height', R.gy0 - y);
+  R.ro.textContent = step === 0 ? 'at the Mont' : step === 1 ? 'rising…' : (step === 4 ? '≈' : '') + Math.round(S.lvl) + ' m';
+}
+function next(){
+  if (busy || step >= STEPS.length - 1) return;
+  step++; busy = true; Kit.haptic(step === 4 ? 'success' : 'light');
+  const s = STEPS[step], cap = Kit.$('cap');
+  cap.textContent = s.cap;
+  if (!Kit.calm) gsap.fromTo(cap, {opacity:0, y:6}, {opacity:1, y:0, duration:.35});
+  gsap.to(S, {front:s.front, lvl:s.lvl, arr:s.arr, duration: Kit.calm ? 0 : .9, ease:'power2.inOut', onUpdate:paint,
+    onComplete:() => { busy = false; paint(); if (step === 4) finish(); }});
+}
+function finish(){
+  Kit.hide('cap'); Kit.show('why'); Kit.hide('say'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:8, stagger:.12, duration:.4});
+}
+Kit.$('stage').addEventListener('click', next);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#bay', {opacity:0, y:10, duration:.5, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 4; i++) { Kit.$('stage').click(); await new Promise(r => setTimeout(r, 1100)); }
+  await new Promise(r => setTimeout(r, 500));
+};
+Kit.single();
+</script>
+</html>

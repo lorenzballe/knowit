@@ -1,0 +1,153 @@
+<!doctype html>
+<!-- slug: science-yoyo-string-binding -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+#go{align-self:flex-start;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer}
+#go:disabled{opacity:.35;cursor:default}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.lb{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Zoom in · step by step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">YO-YO PHYSICS</span></div>
+    <h2 class="q">What makes a yo-yo climb back up its string?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic"></svg></div>
+      <button id="go">Zoom in</button>
+      <div id="why" class="gone">
+        <p class="big">The string binds to the spool.</p>
+        <p class="body">A tug pulls the string from one side of the spool to the other. The yo-yo keeps spinning the same way, so the spool grabs the string and rolls itself up it.</p>
+      </div>
+    </div>
+    <p class="say" id="say">It is “sleeping”: spinning at the bottom of the string. Zoom in.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The spin was there all along; the tug just lets the spool catch the string.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Stringless Yo-Yo!” (YouTube, 2016)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const S = {zt:0, s:1, lt:1, rt:0, wt:0, ang:0, l0:1, l1:0, l2:0, l3:0};
+let G = null, step = 0;
+const D = d => Kit.calm ? 0.01 : d;
+const lerp = (a,b,t) => a + (b-a)*t;
+
+function build(){
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W,H,f} = Kit.fitSvg(svg);
+  const R = Math.min(W*0.17, H*0.12), r = R*0.3;
+  const g = {W,H,f:Math.max(f,13),R,r,cx:W/2,cy0:H*0.66,hy:H*0.1};
+  g.Z = Math.min(W,H)*0.42/R;
+  const k = 'var(--k)';
+  g.world = Kit.mk('g',{},svg);
+  g.yo = Kit.mk('g',{},g.world);
+  g.rot = Kit.mk('g',{},g.yo);
+  const {cx,cy0} = g;
+  Kit.mk('circle',{cx,cy:cy0,r:R,style:`fill:color-mix(in srgb,${k} 10%,transparent);stroke:${k};stroke-width:${R*0.05}`},g.rot);
+  for (let i=0;i<3;i++){
+    const a = i*Math.PI*2/3;
+    Kit.mk('line',{x1:cx+Math.cos(a)*r*1.1,y1:cy0+Math.sin(a)*r*1.1,x2:cx+Math.cos(a)*R*0.92,y2:cy0+Math.sin(a)*R*0.92,style:`stroke:color-mix(in srgb,${k} 35%,transparent);stroke-width:${R*0.035};stroke-linecap:round`},g.rot);
+  }
+  Kit.mk('circle',{cx:cx+R*0.72,cy:cy0,r:R*0.07,style:`fill:${k}`},g.rot);
+  Kit.mk('circle',{cx,cy:cy0,r,style:`fill:color-mix(in srgb,${k} 70%,transparent)`},g.rot);
+  g.wound = Kit.mk('circle',{cx,cy:cy0,r,style:`fill:none;stroke:${k};stroke-dasharray:${r*0.25} ${r*0.12}`},g.rot);
+  // spin arrow (counter-clockwise)
+  const rho = R*0.55, p = t => [cx+rho*Math.cos(t), cy0-rho*Math.sin(t)];
+  const a0 = -0.4, a1 = 1.3, [x0,y0] = p(a0), [x1,y1] = p(a1);
+  g.arrow = Kit.mk('g',{},g.yo);
+  Kit.mk('path',{d:`M${x0},${y0} A${rho},${rho} 0 0 0 ${x1},${y1}`,style:`fill:none;stroke:${k};stroke-width:${R*0.035};stroke-linecap:round`},g.arrow);
+  const dx = -Math.sin(a1), dy = -Math.cos(a1), h = R*0.09;
+  Kit.mk('path',{d:`M${x1+dx*h},${y1+dy*h} L${x1-dy*h*0.7},${y1+dx*h*0.7} L${x1+dy*h*0.7},${y1-dx*h*0.7}Z`,style:`fill:${k}`},g.arrow);
+  const sw = Math.max(1.6, r*0.14);
+  g.loop = Kit.mk('circle',{style:`fill:none;stroke:${k};stroke-width:${sw}`},g.world);
+  g.str = Kit.mk('line',{style:`stroke:${k};stroke-width:${sw};stroke-linecap:round`},g.world);
+  g.hand = Kit.mk('rect',{rx:R*0.2,style:`fill:${k}`},g.world);
+  const lab = (txt, anchor) => { const t = Kit.mk('text',{class:'lb','text-anchor':anchor,'font-size':g.f,style:`fill:${k}`},svg); t.textContent = txt; return t; };
+  g.t0 = lab('spinning about as fast as a car engine','middle');
+  g.t1a = lab('string','start'); g.t1b = lab('loose loop','middle');
+  g.t1c = lab('spool','middle'); g.t1c.style.fill = 'var(--c)';
+  g.t2 = lab('binds!','end'); g.t2.setAttribute('font-size', g.f*1.25);
+  g.t3 = lab('rolls up the string','middle');
+  G = g; render();
+}
+
+function render(){
+  if (!G) return;
+  const {W,H,R,r,cx,cy0,hy,Z,f} = G;
+  const z = 1 + S.zt*(Z-1), Tx = lerp(cx,W/2,S.zt), Ty = lerp(cy0,H*0.55,S.zt);
+  const sc = (x,y) => [Tx + z*(x-cx), Ty + z*(y-cy0)];
+  G.world.setAttribute('transform',`translate(${Tx},${Ty}) scale(${z}) translate(${-cx},${-cy0})`);
+  const top = hy + R*1.3, y = cy0 - S.rt*(cy0 - top), dy = y - cy0;
+  G.yo.setAttribute('transform',`translate(0,${dy})`);
+  G.rot.setAttribute('transform',`rotate(${S.ang} ${cx} ${cy0})`);
+  G.arrow.style.opacity = S.zt*(1-S.rt);
+  const wth = S.wt*r*0.7;
+  G.wound.setAttribute('r', r + wth/2); G.wound.style.strokeWidth = Math.max(wth,0.001); G.wound.style.opacity = S.wt>0.01?1:0;
+  const base = r + wth, lr = base + r*0.65*S.lt, Ly = y - (lr - base);
+  G.loop.setAttribute('cx',cx); G.loop.setAttribute('cy',Ly); G.loop.setAttribute('r',lr);
+  const s = S.s, tx = cx + s*lr, ty = Ly - Math.sqrt(Math.max(0,1-s*s))*lr;
+  const hx = tx;
+  G.str.setAttribute('x1',hx); G.str.setAttribute('y1',hy); G.str.setAttribute('x2',tx); G.str.setAttribute('y2',ty);
+  const hw = R*0.38;
+  G.hand.setAttribute('x',hx-hw/2); G.hand.setAttribute('y',-R); G.hand.setAttribute('width',hw); G.hand.setAttribute('height',hy+R);
+  const place = (t,x,yy,o) => { t.setAttribute('x',x); t.setAttribute('y',yy); t.style.opacity = o; };
+  const [, by] = sc(cx, y+R);
+  place(G.t0, W/2, Math.min(by + f*1.5, H - f*0.3), S.l0);
+  const [sx] = sc(tx, ty), [, sy1] = sc(cx, Ly+lr), [ax, ay] = sc(cx, y);
+  place(G.t1a, Math.min(sx + f*0.6, W - f*3.5), H*0.2, S.l1);
+  place(G.t1b, W/2, Math.min(sy1 + f*1.4, H - f*0.3), S.l1);
+  place(G.t1c, ax, ay + f*0.35, S.l1);
+  const [bx, byy] = sc(tx, ty);
+  place(G.t2, Math.max(bx - f*0.6, f*4), byy - f*0.3, S.l2);
+  place(G.t3, W/2, Math.min(by + f*1.5, H - f*0.3), S.l3);
+}
+
+gsap.ticker.add((t, dt) => { S.ang -= dt * (Kit.calm ? 0.08 : 0.45); render(); });
+
+const go = Kit.$('go'), say = Kit.$('say');
+go.addEventListener('click', () => {
+  if (step === 0){
+    step = 1; Kit.haptic('light');
+    go.textContent = 'Tug the string';
+    say.textContent = 'The loop is loose, so the spinning spool just slips inside it. Now tug.';
+    gsap.to(S,{l0:0,duration:D(.3)});
+    gsap.to(S,{zt:1,duration:D(1.4),ease:'power2.inOut'});
+    gsap.to(S,{l1:1,duration:D(.4),delay:D(1.2)});
+  } else if (step === 1){
+    step = 2; go.disabled = true; Kit.haptic('selection');
+    say.textContent = 'The tug pulls the string over to the other side of the spool…';
+    const tl = gsap.timeline({onComplete:()=>{
+      Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      if (!Kit.calm) gsap.from('#why,#keep',{opacity:0,y:8,stagger:.1,duration:.4});
+    }});
+    tl.to(S,{l1:0,duration:D(.3)})
+      .to(S,{s:-1,duration:D(.9),ease:'power2.inOut'})
+      .to(S,{lt:0,duration:D(.35),ease:'power2.in',onComplete:()=>Kit.haptic('light')})
+      .to(S,{l2:1,duration:D(.25)},'<.2')
+      .to(S,{},{duration:D(.5)})
+      .to(S,{l2:0,duration:D(.3)})
+      .to(S,{wt:1,rt:1,zt:0,duration:D(2.2),ease:'power1.inOut'},'<')
+      .to(S,{l3:1,duration:D(.4)});
+  }
+});
+
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic',{opacity:0,duration:.5,ease:'power2.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  go.click(); await w(Kit.calm ? 200 : 1800);
+  go.click(); await w(Kit.calm ? 400 : 5200);
+};
+Kit.single();
+</script>
+</html>

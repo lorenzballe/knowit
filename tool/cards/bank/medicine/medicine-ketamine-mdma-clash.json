@@ -1,0 +1,36 @@
+{
+  "id": "medicine-ketamine-mdma-clash",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens when one dose mixes ketamine and MDMA?",
+  "answer": "Ketamine and MDMA don't cancel each other out when taken in one dose. They collide in the nervous system. The slider adds one drug, then the other, then both, to show the effect of the mix.",
+  "move": "Opposite drugs don't cancel out: they collide in your nervous system.",
+  "keywords": [
+    "ketamine",
+    "mdma",
+    "drug mixing",
+    "nervous system"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two drug names, ketamine and MDMA, with buttons for MDMA, Ketamine, Both and Unknown mix, and a slider. Asks what happens when one dose mixes both drugs. Drag the slider to add one drug, then the other, then both."
+  },
+  "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=meoJvw-9tM4&t=292s",
+  "written": "2026-11-03"
+}

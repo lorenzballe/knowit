@@ -1,0 +1,116 @@
+<!doctype html>
+<!-- slug: maths-windows-of-order -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Windows of order inside chaos</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#wrap{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+#go{align-self:center;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.3cqh 6cqw;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Race two · chaos">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LOGISTIC MAP</span></div>
+    <h2 class="q">Past chaos, does the logistic map ever find order again?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <button id="go">Race 40 years ▸</button>
+    </div>
+    <p class="say" id="say">Tap the diagram to pick an R, then race it against R = 3.83.</p>
+    <div id="why" class="gone"><p class="body">Past about 3.57 the map is chaotic, but not everywhere. At R = 3.83 it locks into a stable 3-year cycle, which then splits into 6, 12, 24… before chaos returns. Islands like this hide cycles of every length.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Chaos has windows of order: the right R gives a stable cycle.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const R0 = 3.55, R1 = 4.0, RB = 3.83, N = 40;
+let RA = 3.80, st = {n: 0}, tw = null, done = false, G = null;
+const cv = Kit.$('cv');
+
+function seq(R){ const a=[]; let x=0.2; for(let i=0;i<=N;i++){ a.push(x); x=R*x*(1-x); } return a; }
+function period(R){
+  let x=0.2; for(let i=0;i<4000;i++) x=R*x*(1-x);
+  const x0=x; for(let p=1;p<=64;p++){ x=R*x*(1-x); if(Math.abs(x-x0)<1e-6) return p; } return 0;
+}
+function setup(){
+  const {x, W, H} = Kit.fitCanvas(cv);
+  if (W < 10 || H < 10) return;
+  const fs = Math.max(12, Math.min(W*0.04, H*0.042));
+  const L = fs*0.6, Rp = fs*0.6, T = fs*1.9, D = H*0.5;
+  const g = {x, W, H, fs, L, Rp, T, D, pw: W-L-Rp};
+  g.rx = r => L + (r-R0)/(R1-R0)*g.pw;
+  g.Y0 = D + fs*2.6; g.lh = (H - g.Y0)/2;
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  g.ink = ink;
+  // bifurcation diagram, once per size
+  const dpr = cv.width / W, oc = document.createElement('canvas');
+  oc.width = cv.width; oc.height = cv.height;
+  const o = oc.getContext('2d'); o.scale(dpr, dpr); o.fillStyle = ink; o.globalAlpha = .28;
+  for (let px = 0; px <= g.pw; px += .5){
+    const R = R0 + px/g.pw*(R1-R0); let v = .5;
+    for (let i=0;i<400;i++) v = R*v*(1-v);
+    for (let i=0;i<140;i++){ v = R*v*(1-v); o.fillRect(L+px, T+(1-v)*(D-T), .9, .9); }
+  }
+  g.oc = oc; G = g; draw();
+}
+function lane(g, i, R, a){
+  const {x, fs, L, pw, ink} = g, top = g.Y0 + i*g.lh, y0 = top + fs*1.5, h = g.lh - fs*1.9;
+  const n = Math.floor(st.n);
+  x.globalAlpha = 1; x.fillStyle = ink; x.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body')||'sans-serif'}`;
+  let lab = `R = ${R.toFixed(3)}`;
+  if (st.n >= N){ const p = period(R); lab += p===0 ? ' · never repeats' : p===1 ? ' · settles on one value' : ` · repeats every ${p} years`; }
+  x.textAlign='left'; x.textBaseline='alphabetic'; x.fillText(lab, L, top + fs*1.1);
+  x.globalAlpha = .15; x.fillRect(L, y0, pw, h); x.globalAlpha = 1;
+  x.strokeStyle = ink; x.lineWidth = 2; x.beginPath();
+  for (let t=0;t<=n;t++){ const px=L+t/N*pw, py=y0+(1-a[t])*h; t?x.lineTo(px,py):x.moveTo(px,py); }
+  x.stroke();
+  for (let t=0;t<=n;t++){ x.beginPath(); x.arc(L+t/N*pw, y0+(1-a[t])*h, Math.max(2,fs*.18), 0, 7); x.fill(); }
+}
+function draw(){
+  const g = G; if (!g) return; const {x, W, H, fs, L, T, D, ink} = g;
+  const font = getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
+  x.clearRect(0,0,W,H); x.drawImage(g.oc, 0, 0, W, H);
+  x.fillStyle = ink; x.strokeStyle = ink; x.font = `700 ${fs}px ${font}`; x.textAlign='center';
+  // ticks
+  x.globalAlpha = .7; x.textBaseline='top';
+  [3.6,3.7,3.8,3.9,4.0].forEach(r=>{ const px=g.rx(r); x.fillRect(px-.5, D, 1, fs*.35); x.fillText(r.toFixed(1), Math.min(px, W-fs), D+fs*.45); });
+  x.globalAlpha = 1; x.textBaseline='alphabetic';
+  // window of order at 3.83
+  const bx = g.rx(RB);
+  x.setLineDash([4,4]); x.lineWidth = 1.5; x.beginPath(); x.moveTo(bx, T-fs*.3); x.lineTo(bx, D); x.stroke(); x.setLineDash([]);
+  x.fillText('calm: period 3', bx, T - fs*.6);
+  x.globalAlpha = .7; x.textAlign='left'; x.fillText('order', L, T - fs*.6); x.globalAlpha = 1;
+  // chosen R
+  const ax = g.rx(RA); x.lineWidth = 2.5; x.beginPath(); x.moveTo(ax, T); x.lineTo(ax, D); x.stroke();
+  x.beginPath(); x.moveTo(ax, D-fs*.1); x.lineTo(ax-fs*.45, D+fs*.6); x.lineTo(ax+fs*.45, D+fs*.6); x.closePath(); x.fill();
+  lane(g, 0, RA, seq(RA)); lane(g, 1, RB, seq(RB));
+}
+function pick(e){
+  if (!G) return; const b = cv.getBoundingClientRect(), px = e.clientX - b.left, py = e.clientY - b.top;
+  if (py > G.D + G.fs*1.6) return;
+  RA = Math.min(3.99, Math.max(3.56, R0 + (px-G.L)/G.pw*(R1-R0)));
+  if (tw) tw.kill(); st.n = 0; draw();
+}
+let down = false;
+cv.addEventListener('pointerdown', e=>{ down = true; cv.setPointerCapture(e.pointerId); pick(e); Kit.haptic('selection'); });
+cv.addEventListener('pointermove', e=>{ if (down) pick(e); });
+cv.addEventListener('pointerup', ()=>{ down = false; });
+Kit.$('go').addEventListener('click', ()=>{
+  if (tw) tw.kill(); st.n = 0; Kit.haptic('light');
+  const end = ()=>{ st.n = N; draw(); if (!done){ done = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); } };
+  if (Kit.calm) return end();
+  tw = gsap.to(st, {n: N, duration: 2.4, ease: 'none', onUpdate: draw, onComplete: end});
+});
+new ResizeObserver(()=>setup()).observe(Kit.$('wrap'));
+Kit.onShow.card = () => setup();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cv', {opacity: 0, duration: .6, ease: 'power2.out'}); };
+Kit.play.card = async () => { Kit.$('go').click(); await new Promise(r => setTimeout(r, 2900)); };
+Kit.single();
+</script>
+</html>

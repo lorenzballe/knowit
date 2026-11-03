@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-pearl-defence -->
+<title>Why does an oyster make a pearl?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OYSTERS</span></div>
+    <h2 class="q">Why does an oyster make a pearl?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of an oyster"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">To store food for hard times</button>
+        <button class="opt" data-i="1">To seal off something that irritates it</button>
+        <button class="opt" data-i="2">To attract a mate</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It's a defence, not a gift.</p><p class="body">A foreign body, like a grain of sand, gets in and irritates the oyster's soft flesh. So the oyster coats it in nacre, layer after layer, until the intruder is sealed off.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a reason. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A pearl is an oyster walling off an intruder.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, phase = 'start', tl = null, G = {};
+
+function cap(t){ if (G.cap) G.cap.textContent = t; }
+
+function draw(){
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const top = f * 2.6;
+  const s = Math.max(20, Math.min(W * 0.42, (H - top) / 1.6));
+  const cx = W / 2, cy = top + 0.95 * s + Math.max(0, (H - top - 1.6 * s) / 2);
+  const hx = cx - s, hy = cy;
+  const ink = 'var(--k)', sw = Math.max(1.5, s * 0.018);
+  G = {s, cx, cy, hx, hy};
+
+  G.cap = Kit.mk('text', {x: cx, y: f * 1.5, 'text-anchor': 'middle', 'font-size': f * 1.05, 'font-weight': 700, fill: ink, style: 'font-family:var(--body)'}, svg);
+
+  // upper shell (hinged on the left)
+  G.upper = Kit.mk('g', {}, svg);
+  Kit.mk('path', {d: `M${hx},${cy} Q${cx - s * .9},${cy - s * .5} ${cx},${cy - s * .52} Q${cx + s * .92},${cy - s * .48} ${cx + s},${cy} Z`, fill: '#6b5d52', stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'}, G.upper);
+  Kit.mk('path', {d: `M${hx + s * .1},${cy - s * .02} Q${cx},${cy - s * .3} ${cx + s * .9},${cy - s * .02}`, fill: 'none', stroke: '#d9d2e6', 'stroke-width': sw * 2, opacity: .7, 'stroke-linecap': 'round'}, G.upper);
+  for (let i = 1; i < 4; i++) Kit.mk('path', {d: `M${hx + s * .15 * i},${cy - s * .08 * i} Q${cx},${cy - s * (.18 + .1 * i)} ${cx + s * (1 - .12 * i)},${cy - s * .07 * i}`, fill: 'none', stroke: '#4a4038', 'stroke-width': sw * .7, opacity: .8}, G.upper);
+
+  // lower shell
+  Kit.mk('path', {d: `M${hx},${cy} Q${cx - s * .9},${cy + s * .62} ${cx},${cy + s * .64} Q${cx + s * .92},${cy + s * .58} ${cx + s},${cy} Z`, fill: '#6b5d52', stroke: ink, 'stroke-width': sw, 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('path', {d: `M${hx + s * .08},${cy + s * .02} Q${cx - s * .8},${cy + s * .5} ${cx},${cy + s * .52} Q${cx + s * .82},${cy + s * .46} ${cx + s * .92},${cy + s * .02} Z`, fill: '#e8e3ef'}, svg);
+
+  // soft tissue
+  const tx = cx + s * .02, ty = cy + s * .14;
+  Kit.mk('path', {d: `M${hx + s * .2},${cy + s * .06} Q${cx - s * .4},${cy - s * .06} ${cx},${cy - s * .02} Q${cx + s * .5},${cy - s * .08} ${cx + s * .8},${cy + s * .08} Q${cx + s * .7},${cy + s * .42} ${cx},${cy + s * .42} Q${cx - s * .6},${cy + s * .42} ${hx + s * .2},${cy + s * .06} Z`, fill: '#f0b4a6', stroke: '#b5655a', 'stroke-width': sw * .8}, svg);
+  Kit.mk('ellipse', {cx: tx - s * .15, cy: ty + s * .06, rx: s * .22, ry: s * .08, fill: '#e39a8c', opacity: .7}, svg);
+
+  // irritation glow
+  const px = cx + s * .18, py = cy + s * .14;
+  G.px = px; G.py = py;
+  G.glow = Kit.mk('circle', {cx: px, cy: py, r: s * .2, fill: '#e0332b', opacity: 0}, svg);
+
+  // the grain
+  G.grain = Kit.mk('g', {}, svg);
+  const g = s * .045, gx = cx + s * .95, gy = cy - s * .78;
+  G.g0 = {x: gx, y: gy};
+  const pts = [[-1, -.6], [.2, -1], [1, -.3], [.8, .7], [-.2, 1], [-1, .4]].map(([a, b]) => `${gx + a * g},${gy + b * g}`).join(' ');
+  Kit.mk('polygon', {points: pts, fill: '#c9a253', stroke: ink, 'stroke-width': sw * .8, 'stroke-linejoin': 'round'}, G.grain);
+
+  // nacre layers: largest first in the DOM so each new outer layer slides under the inner ones
+  const N = 6, r0 = s * .06, r1 = s * .14;
+  G.rings = [];
+  const cols = ['#fbf8f1', '#ece4d6', '#fffdf7', '#e6dccb', '#faf5ea', '#efe7da'];
+  for (let i = N - 1; i >= 0; i--) {
+    const R = r0 + (r1 - r0) * i / (N - 1);
+    const c = Kit.mk('circle', {cx: px, cy: py, r: 0, fill: cols[i], stroke: '#b8a98f', 'stroke-width': Math.max(1, sw * .5)}, svg);
+    G.rings[i] = {el: c, R};
+  }
+  G.shine = Kit.mk('ellipse', {cx: px - r1 * .35, cy: py - r1 * .4, rx: r1 * .28, ry: r1 * .16, fill: '#fff', opacity: 0, transform: `rotate(-30 ${px - r1 * .35} ${py - r1 * .4})`}, svg);
+
+  if (phase === 'done') setEnd();
+  else { gsap.set(G.upper, {rotation: -22, svgOrigin: `${hx} ${hy}`}); cap('A grain of sand drifts close…'); }
+}
+
+function setEnd(){
+  gsap.set(G.upper, {rotation: -3, svgOrigin: `${G.hx} ${G.hy}`});
+  gsap.set(G.grain, {x: G.px - G.g0.x, y: G.py - G.g0.y});
+  G.rings.forEach(r => r.el.setAttribute('r', r.R));
+  G.shine.setAttribute('opacity', .9);
+  G.glow.setAttribute('opacity', 0);
+  cap('…sealed in nacre: a pearl');
+}
+
+function playStory(){
+  phase = 'done';
+  if (Kit.calm) { setEnd(); return; }
+  tl = gsap.timeline({onComplete: () => { tl = null; }});
+  tl.call(cap, ['A grain slips inside the shell'])
+    .to(G.grain, {x: G.px - G.g0.x, y: G.py - G.g0.y, rotation: 220, transformOrigin: '50% 50%', duration: 1.2, ease: 'power2.inOut'})
+    .to(G.upper, {rotation: -3, svgOrigin: `${G.hx} ${G.hy}`, duration: .7, ease: 'power2.inOut'}, '-=.4')
+    .call(cap, ['It irritates the soft flesh'])
+    .to(G.glow, {attr: {opacity: .55}, duration: .3, repeat: 3, yoyo: true})
+    .call(cap, ['The oyster coats it in nacre…']);
+  G.rings.forEach((r, i) => tl.to(r.el, {attr: {r: r.R}, duration: .45, ease: 'back.out(1.6)'}, i ? '-=.15' : '>'));
+  tl.to(G.glow, {attr: {opacity: 0}, duration: .4}, '-=.6')
+    .call(cap, ['…sealed in nacre: a pearl'])
+    .to(G.shine, {attr: {opacity: .9}, duration: .5});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { draw(); phase = 'start'; draw(); playStory(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { if (tl) { tl.kill(); tl = null; } draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (G.grain && phase === 'start') gsap.to(G.grain, {y: '+=' + G.s * .06, duration: 1.4, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tl) { tl.progress(1); tl = null; }
+  if (G.rings) setEnd();
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

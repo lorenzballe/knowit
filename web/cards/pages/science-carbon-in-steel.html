@@ -1,0 +1,210 @@
+<!doctype html>
+<!-- slug: science-carbon-in-steel -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#why{margin:0;font:600 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Zoom in · try it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STEEL ATOMS</span></div>
+    <h2 class="q">How do tiny carbon atoms make iron so much harder?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A steel blade, then the iron atoms inside it"></svg>
+    </div>
+    <p class="body gone" id="why">Carbon atoms are much smaller than iron atoms, so they fit inside the iron's crystal. Trapped there, they push the lattice outward and put the steel under stress: more carbon, harder and more rigid steel. The cost: it also turns brittle.</p>
+    <p class="say" id="say">Tap the blade to zoom in to its atoms.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Small carbon atoms wedged in iron push outward; that stress is what makes steel hard.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#e8452c', MAXC = 6;
+const svg = Kit.$('pic');
+let phase = 'blade', carbons = [], done = false;
+let G = null, cur = null, el = null, tw = null;
+
+function home(){ // base atom positions
+  const P = [];
+  for (let j = 0; j < G.rows; j++) for (let i = 0; i < G.cols; i++) P.push([G.x0 + i*G.s, G.y0 + j*G.s]);
+  return P;
+}
+function target(){
+  const P = home(), d = G.s*0.1;
+  carbons.forEach(([ci,cj]) => {
+    [[0,0,-1,-1],[1,0,1,-1],[0,1,-1,1],[1,1,1,1]].forEach(([a,b,ux,uy]) => {
+      const k = (cj+b)*G.cols + (ci+a); P[k][0] += ux*d*0.707; P[k][1] += uy*d*0.707;
+    });
+  });
+  return P;
+}
+function cpos(P, ci, cj){
+  const a = P[cj*G.cols+ci], b = P[cj*G.cols+ci+1], c = P[(cj+1)*G.cols+ci], e = P[(cj+1)*G.cols+ci+1];
+  return [(a[0]+b[0]+c[0]+e[0])/4, (a[1]+b[1]+c[1]+e[1])/4];
+}
+
+function build(){
+  if (tw){ tw.kill(); tw = null; }
+  const fit = Kit.fitSvg(svg); const W = fit.W, H = fit.H, f = Math.max(fit.f, 13);
+  svg.innerHTML = '';
+  const mh = f*5;
+  const Hl = Math.max(H - mh, 60);
+  let s = W/5.3, cols = 5, rows = Math.floor(Hl/s - 0.3) + 1;
+  if (rows < 3){ s = Hl/2.6; rows = 3; cols = Math.max(4, Math.min(7, Math.floor(W/s - 0.3) + 1)); }
+  rows = Math.min(rows, 7);
+  G = {W, H, f, s, cols, rows, Hl, x0:(W-(cols-1)*s)/2, y0:(Hl-(rows-1)*s)/2};
+  carbons = carbons.filter(([ci,cj]) => ci < cols-1 && cj < rows-1);
+  cur = target();
+  el = {};
+  const T = (txt, x, y, attrs={}, parent) => { const t = Kit.mk('text', Object.assign({x, y, 'font-size': f, style:'fill:var(--k);font-family:var(--body);font-weight:700'}, attrs), parent); t.textContent = txt; return t; };
+
+  // ---- blade (everyday scale)
+  const gB = Kit.mk('g', {}, svg); el.gB = gB;
+  const p0 = [W*0.24, H*0.74], pc = [W*0.62, H*0.62], p1 = [W*0.94, H*0.2];
+  const q = t => [(1-t)*(1-t)*p0[0]+2*(1-t)*t*pc[0]+t*t*p1[0], (1-t)*(1-t)*p0[1]+2*(1-t)*t*pc[1]+t*t*p1[1]];
+  const bw = Math.max(H*0.05, 14);
+  Kit.mk('path', {d:`M${p0[0]} ${p0[1]} Q${pc[0]} ${pc[1]} ${p1[0]} ${p1[1]}`, style:`fill:none;stroke:#c9d0d8;stroke-width:${bw};stroke-linecap:round`}, gB);
+  Kit.mk('path', {d:`M${p0[0]} ${p0[1]+bw*0.38} Q${pc[0]} ${pc[1]+bw*0.38} ${p1[0]} ${p1[1]+bw*0.2}`, style:`fill:none;stroke:#eef2f5;stroke-width:${bw*0.25};stroke-linecap:round`}, gB);
+  Kit.mk('path', {d:`M${p0[0]} ${p0[1]} Q${pc[0]} ${pc[1]} ${p1[0]} ${p1[1]}`, style:`fill:none;stroke:var(--k);stroke-opacity:.5;stroke-width:1.5`}, gB);
+  Kit.mk('line', {x1:p0[0]-W*0.01, y1:p0[1]+bw*1.2, x2:p0[0]+W*0.01, y2:p0[1]-bw*1.2, style:`stroke:var(--k);stroke-width:${bw*0.5};stroke-linecap:round`}, gB);
+  Kit.mk('line', {x1:p0[0]-W*0.02, y1:p0[1]+bw*0.2, x2:W*0.05, y2:H*0.86, style:`stroke:var(--k);stroke-width:${bw*1.1};stroke-linecap:round`}, gB);
+  const m = q(0.55); el.m = m;
+  const mr = Math.min(W, H)*0.13;
+  el.ring = Kit.mk('circle', {cx:m[0], cy:m[1], r:mr, style:`fill:none;stroke:${RED};stroke-width:3;stroke-dasharray:6 5`}, gB);
+  Kit.mk('line', {x1:m[0]-mr*0.7, y1:m[1]+mr*0.7, x2:m[0]-mr*1.5, y2:m[1]+mr*1.5, style:`stroke:${RED};stroke-width:5;stroke-linecap:round`}, gB);
+  T('Steel', m[0] - mr*0.2, m[1] - mr - f*0.7, {'text-anchor':'middle'}, gB);
+
+  // ---- lattice (atomic scale)
+  const gL = Kit.mk('g', {}, svg); el.gL = gL;
+  el.bonds = [];
+  const gb = Kit.mk('g', {}, gL);
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){
+    if (i < cols-1) el.bonds.push([j*cols+i, j*cols+i+1, Kit.mk('line', {style:'stroke:var(--k);stroke-opacity:.28;stroke-width:2'}, gb)]);
+    if (j < rows-1) el.bonds.push([j*cols+i, (j+1)*cols+i, Kit.mk('line', {style:'stroke:var(--k);stroke-opacity:.28;stroke-width:2'}, gb)]);
+  }
+  el.arrows = Kit.mk('g', {}, gL);
+  el.atoms = [];
+  const ga = Kit.mk('g', {}, gL);
+  for (let k = 0; k < rows*cols; k++){
+    const g = Kit.mk('g', {}, ga);
+    Kit.mk('circle', {cx:0, cy:0, r:s*0.27, style:'fill:var(--k);fill-opacity:.88'}, g);
+    Kit.mk('circle', {cx:-s*0.08, cy:-s*0.08, r:s*0.07, style:'fill:var(--c);fill-opacity:.35'}, g);
+    el.atoms.push(g);
+  }
+  el.gc = Kit.mk('g', {}, gL);
+  el.cs = [];
+  carbons.forEach(() => el.cs.push(newCarbon()));
+
+  // legend + meters
+  const gM = Kit.mk('g', {}, gL); el.gM = gM;
+  const y1 = Hl + f*1.3, y2 = y1 + f*1.7, y3 = y2 + f*1.7, bx = W*0.38;
+  Kit.mk('circle', {cx:f*0.55, cy:y1 - f*0.35, r:f*0.5, style:'fill:var(--k);fill-opacity:.88'}, gM);
+  T('Iron', f*1.4, y1, {}, gM);
+  Kit.mk('circle', {cx:bx + f*0.3, cy:y1 - f*0.35, r:f*0.24, style:`fill:${RED}`}, gM);
+  T('Carbon: much smaller', bx + f*0.9, y1, {}, gM);
+  T('Hardness', 0, y2, {}, gM);
+  T('Brittleness', 0, y3, {}, gM);
+  const bh = f*0.7, bwid = W - bx - 2;
+  Kit.mk('rect', {x:bx, y:y2 - bh, width:bwid, height:bh, rx:bh/2, style:'fill:var(--k);fill-opacity:.12'}, gM);
+  Kit.mk('rect', {x:bx, y:y3 - bh, width:bwid, height:bh, rx:bh/2, style:'fill:var(--k);fill-opacity:.12'}, gM);
+  el.hb = Kit.mk('rect', {x:bx, y:y2 - bh, width:0, height:bh, rx:bh/2, style:'fill:var(--k)'}, gM);
+  el.bb = Kit.mk('rect', {x:bx, y:y3 - bh, width:0, height:bh, rx:bh/2, style:`fill:${RED}`}, gM);
+  el.bwid = bwid; el.bh = bh;
+  meters(false);
+
+  if (phase === 'blade'){ gL.style.opacity = 0; } else { gB.style.display = 'none'; }
+  render(cur);
+}
+function newCarbon(){ return Kit.mk('circle', {r:G.s*0.12, style:`fill:${RED};stroke:var(--c);stroke-width:2`}, el.gc); }
+function meters(anim){
+  const fr = carbons.length / MAXC, w1 = el.bwid*Math.max(fr, 0.06), w2 = el.bwid*Math.max(fr*fr, 0.03);
+  const minw = el.bh;
+  if (anim && !Kit.calm){ gsap.to(el.hb, {attr:{width:Math.max(w1,minw)}, duration:.5}); gsap.to(el.bb, {attr:{width:Math.max(w2,minw)}, duration:.5}); }
+  else { el.hb.setAttribute('width', Math.max(w1,minw)); el.bb.setAttribute('width', Math.max(w2,minw)); }
+}
+function render(P){
+  if (!P || !el || P.length !== el.atoms.length) return;
+  el.atoms.forEach((g,k) => g.setAttribute('transform', `translate(${P[k][0]} ${P[k][1]})`));
+  el.bonds.forEach(([a,b,l]) => {
+    l.setAttribute('x1', P[a][0]); l.setAttribute('y1', P[a][1]); l.setAttribute('x2', P[b][0]); l.setAttribute('y2', P[b][1]);
+    const strain = Math.hypot(P[b][0]-P[a][0], P[b][1]-P[a][1]) - G.s;
+    l.style.stroke = Math.abs(strain) > G.s*0.03 ? RED : '';
+    l.style.strokeOpacity = Math.abs(strain) > G.s*0.03 ? .8 : .28;
+  });
+  el.arrows.innerHTML = '';
+  carbons.forEach(([ci,cj], n) => {
+    if (!el.cs[n]) return;
+    const c = cpos(P, ci, cj);
+    el.cs[n].setAttribute('cx', c[0]); el.cs[n].setAttribute('cy', c[1]);
+    [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([ux,uy]) => {
+      const u = 0.707, a = [c[0]+ux*u*G.s*0.15, c[1]+uy*u*G.s*0.15], b = [c[0]+ux*u*G.s*0.4, c[1]+uy*u*G.s*0.4];
+      const h = G.s*0.08, px = -uy*u, py = ux*u;
+      const h1 = [b[0]-ux*u*h+px*h*0.7, b[1]-uy*u*h+py*h*0.7], h2 = [b[0]-ux*u*h-px*h*0.7, b[1]-uy*u*h-py*h*0.7];
+      Kit.mk('path', {d:`M${a[0]} ${a[1]}L${b[0]} ${b[1]}M${h1[0]} ${h1[1]}L${b[0]} ${b[1]}L${h2[0]} ${h2[1]}`, style:`fill:none;stroke:${RED};stroke-width:${Math.max(G.s*0.035,2)};stroke-linecap:round;stroke-linejoin:round`}, el.arrows);
+    });
+  });
+}
+
+function zoom(){
+  if (phase !== 'blade') return;
+  phase = 'lattice'; Kit.haptic('light');
+  Kit.$('say').textContent = 'Tap the gaps between iron atoms to push carbon in.';
+  const cx = G.W/2, cy = G.Hl/2;
+  if (Kit.calm){ el.gB.style.display = 'none'; el.gL.style.opacity = 1; return; }
+  gsap.to(el.gB, {scale:10, svgOrigin:`${el.m[0]} ${el.m[1]}`, opacity:0, duration:.9, ease:'power2.in', onComplete:() => { el.gB.style.display = 'none'; }});
+  gsap.fromTo(el.gL, {opacity:0, scale:.25, svgOrigin:`${cx} ${cy}`}, {opacity:1, scale:1, svgOrigin:`${cx} ${cy}`, duration:.8, delay:.55, ease:'power3.out'});
+}
+function addNear(x, y){
+  if (done || carbons.length >= MAXC) return;
+  let best = null, bd = Infinity;
+  for (let cj = 0; cj < G.rows-1; cj++) for (let ci = 0; ci < G.cols-1; ci++){
+    if (carbons.some(c => c[0]===ci && c[1]===cj)) continue;
+    const c = cpos(cur, ci, cj), d = Math.hypot(c[0]-x, c[1]-y);
+    if (d < bd){ bd = d; best = [ci,cj]; }
+  }
+  if (!best) return;
+  carbons.push(best); Kit.haptic('selection');
+  const from = cur.map(p => p.slice()), to = target();
+  const c = newCarbon(); el.cs.push(c);
+  if (Kit.calm){ cur = to; render(cur); }
+  else {
+    const o = {t:0};
+    if (tw) tw.kill();
+    tw = gsap.to(o, {t:1, duration:.7, ease:'back.out(2.5)', onUpdate:() => { cur = from.map((p,k) => [p[0]+(to[k][0]-p[0])*o.t, p[1]+(to[k][1]-p[1])*o.t]); render(cur); }, onComplete:() => { cur = to; render(cur); tw = null; }});
+    gsap.from(c, {attr:{r:0}, duration:.35, ease:'back.out(3)'});
+  }
+  meters(true);
+  const n = carbons.length;
+  Kit.$('say').textContent = n < MAXC ? `Carbon squeezed in: ${n} of ${MAXC}. See the push? Add more.` : 'Full of carbon: hard, rigid… and brittle.';
+  if (n >= MAXC){ done = true; setTimeout(finish, 800); }
+}
+function finish(){
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:8, stagger:.12, duration:.4});
+}
+svg.addEventListener('pointerdown', e => {
+  if (phase === 'blade'){ zoom(); return; }
+  const r = svg.getBoundingClientRect();
+  addNear((e.clientX - r.left)*G.W/r.width, (e.clientY - r.top)*G.H/r.height);
+});
+let raf = 0;
+new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (G) build(); }); }).observe(svg);
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm && phase === 'blade' && el) gsap.fromTo(el.ring, {scale:.85, svgOrigin:`${el.m[0]} ${el.m[1]}`}, {scale:1.08, svgOrigin:`${el.m[0]} ${el.m[1]}`, duration:.8, repeat:3, yoyo:true, ease:'sine.inOut'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  zoom(); await wait(1500);
+  for (let i = 0; i < MAXC; i++){ addNear(G.W/2 + (i%3-1)*G.s, G.Hl/2 + (i<3?-1:1)*G.s*0.5); await wait(200); }
+  await wait(1500);
+};
+Kit.single();
+</script>
+</html>

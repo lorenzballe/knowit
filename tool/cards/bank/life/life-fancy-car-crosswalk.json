@@ -1,0 +1,38 @@
+{
+  "id": "life-fancy-car-crosswalk",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.gut_or_data",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do drivers of fancier cars stop less for pedestrians?",
+  "answer": "The 2012 UC Berkeley study found a big gap: the cheapest cars never drove on, while the priciest nearly half the time. A 2020 Las Vegas study found a small link, and the 2023 exact re-run with more cars found no clear link.",
+  "move": "When a study flatters what you already think about “them”, look for the re-run.",
+  "keywords": [
+    "crosswalk",
+    "pedestrians",
+    "luxury cars",
+    "drivers",
+    "las vegas"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A page titled The crosswalk test asks whether drivers of fancier cars stop less for pedestrians waiting at a crosswalk. It offers three choices: a big gap, a smaller gap, or no clear link. Below, three studies from 2012, 2020 and 2023 are summarized with their results.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Diventa POTENTE in 8 Punti” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=n_cabfHr3L0",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "technology-closed-loop-geothermal",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do closed-loop geothermal systems not exchange fluids with groundwater?",
+  "answer": "A closed-loop geothermal system never exchanges water with the aquifer. Its pipe is one sealed loop: the same fluid goes down cold, picks up the rock's heat, and returns to the heat pump. No water is drawn out or put back, so there is nothing to contaminate it with.",
+  "move": "A closed loop trades heat with the ground, never water.",
+  "keywords": [
+    "geothermal",
+    "aquifer",
+    "groundwater",
+    "heat_pump"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A pipe loop under the ground next to a counter reading 'Water swapped with the aquifer: 0 L' and a hold-to-run button. Asks why closed-loop geothermal systems do not exchange fluids with groundwater."
+  },
+  "source": "Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=1HiwKPHVc-8&t=233s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "space-sunward-blind-spot",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.asteroid_risk",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some asteroids hit Earth before any telescope has seen them coming?",
+  "answer": "Asteroids can hit Earth before any telescope has seen them because the Sun's side of the sky is a blind spot. A ground telescope's circle of view does not cover that part of the sky. Switching to infrared changes what you can see, which the page invites you to compare.",
+  "move": "The Sun’s side of the sky is our blind spot.",
+  "keywords": [
+    "asteroids",
+    "telescopes",
+    "sun",
+    "earth",
+    "infrared",
+    "mainzer"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A sky view with Earth at the centre and a rock you can drag around it. A circle marks what a ground telescope can see. A switch changes the view to infrared. The question asks why some asteroids hit before telescopes spot them.",
+    "ground": "#071140"
+  },
+  "source": "Veritasium, “These are the asteroids to worry about” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=4Wrc4fHSCpw",
+  "written": "2026-11-03"
+}

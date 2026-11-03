@@ -1,0 +1,37 @@
+{
+  "id": "technology-deep-alpine-tunnel",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "At what depth and gradient will the Turin–Lyon tunnel run, and why?",
+  "answer": "The Turin–Lyon tunnel will run 1,000 to 2,200 metres below the peaks, with a slope between 2 and 12 percent. Because it sits so deep, the track never has to climb over the mountains. Its gentle slope lets it run more like a railway on a plain than a mountain line.",
+  "move": "Dig deep enough and the Alps become a flat railway.",
+  "keywords": [
+    "alps",
+    "turin",
+    "lyon",
+    "tunnel",
+    "railway"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A side-view profile of a mountain range with the Turin–Lyon tunnel drawn deep beneath the peaks, flipping between a track climbing over the Alps and one bored under them. It asks at what depth and slope the tunnel will run, and why."
+  },
+  "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Jo7Sd0wxNE0&t=198s",
+  "written": "2026-11-03"
+}

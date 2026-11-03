@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- slug: human_body-blastocyst-membrane-shield -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why the blastocyst keeps its membrane</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:9cqh;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex-shrink:0}
+.opt{font:700 max(2cqh,13px)/1.15 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .body{font:500 max(1.8cqh,12px)/1.25 var(--body);margin:0}
+#why .big{margin:0}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <h2 class="q">Why does the blastocyst keep its membrane as it rolls through the uterus?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A cluster of cells inside a transparent membrane rolling along the uterus"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">It's a leftover that hasn't dissolved yet</button>
+        <button class="opt" data-i="1">It shields the cells until they find the right spot</button>
+        <button class="opt" data-i="2">It feeds the cells as they grow</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It's a shield.</p><p class="body">It's the same membrane the winning sperm crossed. It protects the cluster of cells while it rolls along the uterine cavity, and it only breaks open where the uterus offers the right conditions.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a reason, then watch the bubble roll.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The membrane stays shut until the right spot, then it opens.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const GREEN = '#2fae66';
+const ZONES = [{at:.3, ok:false, t:'not here'}, {at:.58, ok:false, t:'not here'}, {at:.9, ok:true, t:'OK ✓'}];
+const CELLS = [[0,0],[.42,0],[-.42,0],[.21,.36],[-.21,.36],[.21,-.36],[-.21,-.36]];
+const st = {p:0, o:0, fl:0, cap:'Membrane closed around the cells', hit:-1};
+let G = null;
+
+function build(){
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const R = Math.max(14, Math.min(W * .085, H * .13));
+  const top = fs * 2.2, bot = H - R * .6;
+  const y = v => top + (bot - top) * v;
+  const d = `M ${W*.1} ${y(.45)} C ${W*.35} ${y(.05)}, ${W*.6} ${y(1.05)}, ${W*.88} ${y(.5)}`;
+  const cav = Kit.mk('path', {d, fill:'none', 'stroke-linecap':'round', 'stroke-width':R*2.9, style:'stroke:color-mix(in srgb,var(--k) 9%,transparent)'}, svg);
+  Kit.mk('path', {d, fill:'none', 'stroke-dasharray':`${R*.25} ${R*.35}`, 'stroke-width':Math.max(1.5,R*.06), style:'stroke:color-mix(in srgb,var(--k) 22%,transparent)'}, svg);
+  const L = cav.getTotalLength();
+  const capBot = fs * 1.5;
+  const zones = ZONES.map((z, i) => {
+    const pt = cav.getPointAtLength(z.at * L);
+    const c = Kit.mk('circle', {cx:pt.x, cy:pt.y, r:R*1.35, fill: z.ok ? GREEN : 'none', 'fill-opacity': z.ok ? .3 : 1,
+      'stroke-width':Math.max(1.5,R*.07), 'stroke-dasharray': z.ok ? 'none' : `${R*.18} ${R*.14}`,
+      style: z.ok ? `stroke:${GREEN}` : 'stroke:color-mix(in srgb,var(--k) 40%,transparent)'}, svg);
+    let ly = pt.y - R*1.35 - fs*.45;
+    if (ly - fs < capBot) ly = pt.y + R*1.35 + fs*1.05;
+    const t = Kit.mk('text', {x:pt.x, y:ly, 'text-anchor':'middle',
+      style:`font:${z.ok?800:600} ${fs}px var(--body);fill:var(--k);opacity:${z.ok?1:.65}`}, svg);
+    t.textContent = z.t;
+    return {c, t};
+  });
+  const cap = Kit.mk('text', {x:W/2, y:fs*1.1, 'text-anchor':'middle', style:`font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+  const g = Kit.mk('g', {}, svg);
+  const fillC = Kit.mk('circle', {r:R, style:'fill:color-mix(in srgb,var(--k) 7%,transparent)'}, g);
+  const cells = Kit.mk('g', {}, g);
+  const cellEls = CELLS.map(([cx, cy]) => Kit.mk('circle', {cx:cx*R, cy:cy*R, r:R*.21, 'stroke-width':Math.max(1,R*.04),
+    style:'fill:color-mix(in srgb,var(--c) 55%,#e86f7e);stroke:var(--k)'}, cells));
+  const sw = Math.max(2, R*.13);
+  const mt = Kit.mk('path', {d:`M ${-R} 0 A ${R} ${R} 0 0 1 ${R} 0`, fill:'none', 'stroke-width':sw, 'stroke-linecap':'round', style:'stroke:var(--k)'}, g);
+  const mb = Kit.mk('path', {d:`M ${R} 0 A ${R} ${R} 0 0 1 ${-R} 0`, fill:'none', 'stroke-width':sw, 'stroke-linecap':'round', style:'stroke:var(--k)'}, g);
+  G = {cav, L, R, sw, zones, cap, g, fillC, cells, cellEls, mt, mb};
+  render();
+}
+
+function render(){
+  if (!G) return;
+  const {cav, L, R, sw, zones, cap, g, fillC, cells, cellEls, mt, mb} = G;
+  const pt = cav.getPointAtLength(st.p * L);
+  g.setAttribute('transform', `translate(${pt.x} ${pt.y})`);
+  const ang = (st.p * L / R) * 180 / Math.PI;
+  const o = st.o;
+  cells.setAttribute('transform', `translate(0 ${o*R*.25}) rotate(${ang*(1-o)})`);
+  cellEls.forEach((c, i) => {
+    const [cx, cy] = CELLS[i];
+    c.setAttribute('cx', cx * R * (1 + o*.35)); c.setAttribute('cy', cy * R * (1 + o*.2));
+  });
+  const w = sw * (1 + st.fl * .9);
+  mt.setAttribute('stroke-width', w); mb.setAttribute('stroke-width', w);
+  mt.setAttribute('transform', `translate(${-o*R*.25} ${-o*R*.75}) rotate(${-o*40})`);
+  mb.setAttribute('transform', `translate(${o*R*.25} ${o*R*.75}) rotate(${-o*40})`);
+  mt.style.opacity = mb.style.opacity = 1 - o*.55;
+  fillC.style.opacity = 1 - o;
+  zones.forEach((z, i) => {
+    if (ZONES[i].ok) z.c.setAttribute('fill-opacity', .3 + o*.4);
+    else z.t.style.opacity = st.hit === i ? 1 : .65;
+  });
+  cap.textContent = st.cap;
+}
+
+function roll(){
+  const set = (k, v) => () => { st[k] = v; render(); };
+  if (Kit.calm){ Object.assign(st, {p:.9, o:1, fl:0, hit:-1, cap:'Right spot: now it opens'}); render(); return; }
+  Object.assign(st, {p:0, o:0, fl:0, hit:-1, cap:'Closed, protecting the cells'}); render();
+  const tl = gsap.timeline({onUpdate: render});
+  tl.call(set('cap', 'Closed, protecting the cells'))
+    .to(st, {p:ZONES[0].at, duration:1.1, ease:'power1.inOut'})
+    .call(set('hit', 0)).call(set('cap', 'Wrong conditions: stays shut'))
+    .to(st, {fl:1, duration:.18, yoyo:true, repeat:1})
+    .to(st, {p:ZONES[1].at, duration:1, ease:'power1.inOut'}, '+=.25')
+    .call(set('hit', 1))
+    .to(st, {fl:1, duration:.18, yoyo:true, repeat:1})
+    .to(st, {p:ZONES[2].at, duration:1, ease:'power1.inOut'}, '+=.25')
+    .call(set('hit', -1)).call(set('cap', 'Right spot: now it opens'))
+    .to(st, {o:1, duration:.9, ease:'back.out(1.6)'});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: it's a shield`);
+  Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(() => { build(); roll(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'});
+  if (G) gsap.from(G.g, {opacity:0, scale:.6, transformOrigin:'center', duration:.6, ease:'back.out(2)'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 5600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-tethys-ocean-wedge",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.theories_and_laws",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which ocean once split Gondwana from Laurasia, 200 million years ago?",
+  "answer": "About 200 million years ago, an arm of ocean called the Tethys wedged between the blocks of Gondwana and Laurasia. When those two blocks collided, the Tethys closed.",
+  "move": "Gondwana and Laurasia were split by the Tethys, an ocean arm that closed when they collided.",
+  "keywords": [
+    "tethys ocean",
+    "gondwana",
+    "laurasia",
+    "continental collision",
+    "plate tectonics"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A map cross-section showing the continental blocks Gondwana and Laurasia with a blue strip between them. The reader is asked to draw with a finger where the ocean arm cut between the two blocks."
+  },
+  "source": "Geopop, “Vi mostro cosa è sepolto sotto lo Stretto di Messina - la geologia tra Calabria e Sicilia” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=zDIbAY7Br5k&t=142s",
+  "written": "2026-11-03"
+}

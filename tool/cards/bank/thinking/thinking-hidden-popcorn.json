@@ -1,0 +1,35 @@
+{
+  "id": "thinking-hidden-popcorn",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can a hidden message in a film make you buy popcorn?",
+  "answer": "Vicary's 1957 claim used a flash of 0.33 ms, 50 times shorter than one frame on this screen (17 ms). In a 2006 lab test with a 23 ms 'Lipton Ice' flash, 80% of thirsty people chose the flashed drink versus 20% without the flash. Not-thirsty people showed no significant effect.",
+  "move": "A hidden flash can’t create a want. At most it tips a choice you were already making.",
+  "keywords": [
+    "vicary",
+    "subliminal advertising",
+    "popcorn",
+    "lipton ice",
+    "karremans"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Flash test page. A word flashes between rows of X's, and the reader picks which word flashed (popcorn, pretzel, or cracker) and how long the flash lasted. Compares a 1957 claim of 0.33 ms with one 17 ms frame, and 2006 lab results: thirsty 20% without the flash, 80% with it."
+  },
+  "source": "Diventare Strong, “Persuasione Ipnotica. \"Comandi Nascosti\". Convincere Persuadere E Influenzare: Linguaggio Ipnotico” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=rgMUHXLPtuc",
+  "written": "2026-11-03"
+}

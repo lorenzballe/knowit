@@ -1,0 +1,38 @@
+{
+  "id": "science-uranium-critical-mass",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How much uranium‑235 does a bomb need to go supercritical?",
+  "answer": "About 52 kg of uranium-235, a ball about 17 cm wide, is the critical mass for a bomb. Each split nucleus throws out neutrons; in a smaller lump too many escape before hitting another nucleus, but at about 52 kg enough stay in for the chain to grow. Plutonium-239 needs only about 10 kg, a 10 cm ball.",
+  "move": "A bomb's core is small: 52 kg of U‑235 fits in a 17 cm ball.",
+  "keywords": [
+    "uranium-235",
+    "critical-mass",
+    "chain-reaction",
+    "plutonium-239",
+    "nuclear-bomb"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page asking how much uranium-235 a bomb needs to go supercritical. Three options: about 1 kg (golf-ball size), about 52 kg (17 cm ball), and about 1,000 kg (46 cm ball). Tapping a size shows its ball, and the reader then rates how sure they are.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=958s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,148 @@
+<!doctype html>
+<!-- slug: science-graphene-one-atom -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation;cursor:pointer}
+#ctl{display:flex;justify-content:center}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.peel{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
+.peel:disabled{opacity:.6}
+.atom{fill:var(--k)}
+.bond{stroke:var(--k);stroke-linecap:round}
+.plate{fill:var(--c);stroke:color-mix(in srgb,var(--k) 35%,transparent)}
+.ink{fill:var(--k)}
+.mut{fill:var(--k);opacity:.65}
+.rule{stroke:var(--k);fill:none;stroke-linecap:round}
+.why-b{font:400 max(1.9cqh,13px)/1.35 var(--body)}
+#why .big{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GRAPHENE</span></div>
+    <h2 class="q">What is the thickness of a graphene sheet?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Stacked sheets of carbon atoms"></svg>
+      <div id="ctl"><button class="peel" id="peel">Peel off a sheet</button></div>
+      <div id="why" class="gone">
+        <p class="big">One atom thick</p>
+        <p class="body why-b">Pencil graphite is carbon sheets piled up, so it is three-dimensional. Keep just one sheet and you have graphene: a two-dimensional layer of carbon only one atom thick. It was discovered in 2004.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to peel the carbon sheets off, one at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Graphene is a single sheet of carbon: one atom thick.</div>
+    <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const START = 6;
+let n = START, busy = false, G = null;
+const svg = Kit.$('pic');
+
+function lattice(R, s){
+  const pts = new Map(), bonds = new Map(), S3 = Math.sqrt(3), K = 12;
+  const key = (x,y) => Math.round(x*10)+','+Math.round(y*10);
+  for (let q=-K; q<=K; q++) for (let r=-K; r<=K; r++){
+    const cx = s*1.5*q, cy = s*S3*(r+q/2);
+    if (Math.hypot(cx,cy) > R - s) continue;
+    const vs = [];
+    for (let k=0;k<6;k++){ const a=Math.PI/3*k, x=cx+s*Math.cos(a), y=cy+s*Math.sin(a), kk=key(x,y); pts.set(kk,[x,y]); vs.push(kk); }
+    for (let k=0;k<6;k++){ const a=vs[k], b=vs[(k+1)%6], e=a<b?a+'|'+b:b+'|'+a; bonds.set(e,[a,b]); }
+  }
+  return {pts, bonds: [...bonds.values()]};
+}
+
+function draw(){
+  const {W,H,f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13);
+  G = {layers: [], rows: []};
+  // titles
+  const t1 = Kit.mk('text',{x:W*0.03,y:fs*1.1,class:'ink','font-size':fs*1.1,'font-weight':700,'font-family':'var(--display)'},svg);
+  t1.textContent = n>1 ? `Graphite: ${n} carbon sheets` : 'Graphene: one sheet';
+  const t2 = Kit.mk('text',{x:W*0.03,y:fs*2.6,class:'mut','font-size':fs,'font-family':'var(--body)'},svg);
+  t2.textContent = n>1 ? 'stacked, as in a pencil: 3D' : 'flat carbon honeycomb: 2D';
+
+  // tilted stack
+  const top0 = fs*3.4, regionH = H*0.58 - top0, sq = 0.42;
+  const gap = Math.min(H*0.045, regionH*0.09);
+  let Rp = Math.min(W*0.44, (regionH - (START-1)*gap)/(2*sq)*0.95);
+  const s = Rp/5.2, r = Math.max(s*0.2, 1.6);
+  const cx = W*0.5, baseY = top0 + regionH - Rp*sq;
+  const L = lattice(Rp, s);
+  for (let i=0;i<n;i++){
+    const g = Kit.mk('g',{},svg), oy = baseY - i*gap;
+    const P = (p) => [cx+p[0], oy+p[1]*sq];
+    Kit.mk('ellipse',{cx,cy:oy,rx:Rp+s*0.5,ry:(Rp+s*0.5)*sq,class:'plate','fill-opacity':0.88,'stroke-width':1},g);
+    const op = i===n-1 ? 1 : 0.55;
+    for (const [a,b] of L.bonds){ const A=P(L.pts.get(a)), B=P(L.pts.get(b)); Kit.mk('line',{x1:A[0],y1:A[1],x2:B[0],y2:B[1],class:'bond','stroke-width':Math.max(r*0.55,1),opacity:op},g); }
+    for (const p of L.pts.values()){ const A=P(p); Kit.mk('ellipse',{cx:A[0],cy:A[1],rx:r,ry:r*0.8,class:'atom',opacity:op},g); }
+    G.layers.push(g);
+  }
+
+  // edge-on view
+  const eTop = H*0.64, eBot = H*0.97;
+  const r2 = Math.min(H*0.017, (eBot-eTop-fs*1.6)/(START*2.6));
+  const step = r2*2.6, rowL = W*0.04, rowW = W*0.56;
+  const lab = Kit.mk('text',{x:rowL,y:eTop+fs*0.4,class:'mut','font-size':fs,'font-family':'var(--body)'},svg);
+  lab.textContent = 'Seen edge-on:';
+  const count = Math.floor(rowW/(r2*2.3));
+  const yb = eBot - r2;
+  for (let i=0;i<n;i++){
+    const g = Kit.mk('g',{},svg), y = yb - i*step;
+    for (let j=0;j<count;j++) Kit.mk('circle',{cx:rowL+r2+j*r2*2.3,cy:y,r:r2,class:'atom'},g);
+    G.rows.push(g);
+  }
+  // ruler
+  const bx = rowL + rowW + r2*2.5, y1 = yb + r2, y0 = yb - (n-1)*step - r2, tk = r2*1.6;
+  const rg = Kit.mk('g',{},svg);
+  Kit.mk('path',{d:`M${bx-tk} ${y0}H${bx}V${y1}H${bx-tk}`,class:'rule','stroke-width':Math.max(2,r2*0.35)},rg);
+  const ym = (y0+y1)/2;
+  const rt = Kit.mk('text',{x:bx+fs*0.6,y:ym-fs*0.15,class:'ink','font-size':fs*1.15,'font-weight':700,'font-family':'var(--display)'},rg);
+  rt.textContent = n>1 ? `${n} atoms` : '1 atom';
+  const rt2 = Kit.mk('text',{x:bx+fs*0.6,y:ym+fs*1.2,class:'mut','font-size':fs,'font-family':'var(--body)'},rg);
+  rt2.textContent = 'thick';
+  G.rule = rg;
+}
+
+function finish(){
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why > *, #keep',{opacity:0,y:8,stagger:.08,duration:.4,ease:'power3.out'});
+}
+
+function peel(){
+  if (busy || n<=1) return;
+  busy = true; Kit.haptic('light');
+  const after = () => {
+    n--; draw(); busy = false;
+    if (!Kit.calm && G.rule) gsap.from(G.rule,{opacity:0,duration:.35});
+    if (n===1){ if (!Kit.calm) gsap.from(G.layers[0],{scale:1.03,transformOrigin:'50% 50%',duration:.5,ease:'power2.out'}); finish(); }
+  };
+  if (Kit.calm){ after(); return; }
+  const tl = gsap.timeline({onComplete: after});
+  tl.to(G.layers[n-1],{y:-svg.getBoundingClientRect().height*0.12,opacity:0,duration:.45,ease:'power2.in'},0);
+  tl.to(G.rows[n-1],{y:-20,opacity:0,duration:.45,ease:'power2.in'},0);
+}
+
+Kit.$('peel').addEventListener('click', peel);
+svg.addEventListener('click', peel);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.layers,{opacity:0,y:-14,stagger:.08,duration:.45,ease:'power3.out'});
+  gsap.from(G.rows,{opacity:0,stagger:.08,duration:.4});
+};
+Kit.play.card = async () => {
+  for (let i=0;i<START-1;i++){ Kit.$('peel').click(); await new Promise(r => setTimeout(r, 650)); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

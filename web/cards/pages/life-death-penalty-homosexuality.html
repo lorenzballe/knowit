@@ -1,0 +1,120 @@
+<!doctype html>
+<!-- slug: life-death-penalty-homosexuality -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#map{flex:1;min-height:0;width:100%;display:block}
+#steps{display:flex;gap:2cqw}
+.step{flex:1;font:700 max(1.8cqh,12px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.step b{display:block;font:800 max(3cqh,18px)/1 var(--display)}
+.step.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Tap to uncover">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HUMAN RIGHTS</span></div>
+    <h2 class="q">How many countries have the death penalty for homosexuality?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map" role="img" aria-label="62 dots, one per country that criminalizes homosexuality"></svg>
+      <div id="steps">
+        <button class="step on" data-s="0"><b>62</b>make it a crime</button>
+        <button class="step" data-s="1"><b>7</b>death by law</button>
+        <button class="step" data-s="2"><b>4</b>carry it out</button>
+      </div>
+      <div id="why" class="gone"><p class="body">Of the 62 countries that make homosexuality a crime, 7 set death by law, and in 5 more the law is unclear. Many never carry it out: according to ILGA, 4 do so regularly, including Iran, Saudi Arabia and Sudan.</p></div>
+    </div>
+    <p class="say" id="say">Tap each step to narrow the 62 countries down.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>7 countries allow death for homosexuality; 4 actually apply it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#e0303f';
+const CAP = [
+  {n:'62', a:'countries make homosexuality a crime', b:'Each dot is one country'},
+  {n:'7', a:'set the death penalty by law', b:'+5 dashed: the law is unclear'},
+  {n:'4', a:'carry it out regularly', b:'Count by ILGA'}
+];
+let step = 0, seen = new Set([0]), dots = [], R = 6, txt = {}, done = false;
+
+function ink(){ return getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111'; }
+
+function draw(){
+  const svg = Kit.$('map');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = ''; dots = [];
+  const k = ink();
+  const head = f * 6.9;
+  txt.n = Kit.mk('text', {x: W/2, y: f*2.6, 'text-anchor':'middle', fill: k, style:`font:800 ${f*2.8}px var(--display)`}, svg);
+  txt.a = Kit.mk('text', {x: W/2, y: f*4.7, 'text-anchor':'middle', fill: k, style:`font:700 ${f*1.05}px var(--body)`}, svg);
+  txt.b = Kit.mk('text', {x: W/2, y: f*6.2, 'text-anchor':'middle', fill: k, opacity:.7, style:`font:500 ${f*.95}px var(--body)`}, svg);
+  const gw = W, gh = Math.max(20, H - head - f*.4);
+  let best = 0, bc = 8;
+  for (let c = 5; c <= 16; c++){ const r = Math.ceil(62/c); const cell = Math.min(gw/c, gh/r); if (cell > best){ best = cell; bc = c; } }
+  const rows = Math.ceil(62/bc), cell = best;
+  R = cell * .36;
+  const x0 = (W - bc*cell)/2 + cell/2, y0 = head + (gh - rows*cell)/2 + cell/2;
+  for (let i = 0; i < 62; i++){
+    const cx = x0 + (i % bc)*cell, cy = y0 + Math.floor(i/bc)*cell;
+    dots.push(Kit.mk('circle', {cx, cy, r: R}, svg));
+  }
+  apply(step, false);
+}
+
+function apply(s, anim){
+  const k = ink(), c = CAP[s];
+  txt.n.textContent = c.n; txt.a.textContent = c.a; txt.b.textContent = c.b;
+  if (anim && !Kit.calm) gsap.from([txt.n, txt.a, txt.b], {opacity: 0, y: 6, stagger: .06, duration: .35});
+  dots.forEach((d, i) => {
+    let fill = k, stroke = 'none', dash = '', op = .8, r = R;
+    if (s === 1){
+      if (i < 7){ fill = RED; op = 1; r = R*1.15; }
+      else if (i < 12){ fill = 'none'; stroke = RED; dash = `${R*.5} ${R*.35}`; op = 1; }
+      else op = .14;
+    } else if (s === 2){
+      if (i < 4){ fill = RED; op = 1; r = R*1.3; }
+      else if (i < 7){ fill = RED; op = .28; }
+      else if (i < 12){ fill = 'none'; stroke = RED; dash = `${R*.5} ${R*.35}`; op = .2; }
+      else op = .07;
+    }
+    d.setAttribute('fill', fill); d.setAttribute('stroke', stroke);
+    d.setAttribute('stroke-width', R*.28); d.setAttribute('stroke-dasharray', dash);
+    if (anim && !Kit.calm) gsap.to(d, {attr: {r}, opacity: op, duration: .5, delay: (i < 12 ? i*.03 : .1), ease: 'back.out(2)'});
+    else { d.setAttribute('r', r); d.setAttribute('opacity', op); }
+  });
+}
+
+Kit.$('steps').addEventListener('click', e => {
+  const b = e.target.closest('.step'); if (!b) return;
+  step = +b.dataset.s; seen.add(step);
+  [...Kit.$('steps').children].forEach(x => x.classList.toggle('on', x === b));
+  Kit.haptic('selection');
+  apply(step, true);
+  if (!done && seen.has(1) && seen.has(2)){
+    done = true;
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.haptic('success');
+    requestAnimationFrame(() => draw());
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(dots, {attr: {r: 0}, duration: .4, stagger: .012, ease: 'back.out(2)'});
+  gsap.from('.step', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const s = Kit.$('steps').children;
+  s[1].click(); await new Promise(r => setTimeout(r, 700));
+  s[2].click(); await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

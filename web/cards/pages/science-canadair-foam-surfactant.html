@@ -1,0 +1,148 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-canadair-foam-surfactant -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{position:relative;flex:1;min-height:12cqh}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.lab{font-family:var(--body);font-weight:800;letter-spacing:.04em}
+.valve{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIREFIGHTING</span></div>
+    <h2 class="q">What does a Canadair mix with its water to make foam?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Sea salt</button>
+        <button class="opt" data-i="1">A surfactant, like dish soap</button>
+        <button class="opt" data-i="2">Fine sand</button>
+      </div>
+      <div id="why" class="gone"><p class="big">A surfactant, like dish soap</p><p class="body">A second tank on board holds a foaming agent, the same kind found in household detergents, and it is mixed into the water. Against fires over 1000 °C, water alone can do little: that is where foam comes in.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick what fills the small tank. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Canadair foam is water plus a detergent-like surfactant from its own tank.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come funziona il Canadair e quando interviene nelle missioni antincendio?” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, revealed = false, mixed = false, busy = false;
+let G = {};
+const WATER = '#2f86d6', FOAM = '#eef6fc', SOAP = '#f2b630';
+
+function draw(){
+  const svg = Kit.$('svg'); const {W, H, f} = Kit.fitSvg(svg); svg.innerHTML = '';
+  const fs = Math.max(f * .72, 12), sw = Math.max(H * .012, 2);
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  // hull
+  const hx0 = W*.03, hx1 = W*.78, hy0 = H*.10, hy1 = H*.78;
+  mk('rect', {x: hx0, y: hy0, width: hx1-hx0, height: hy1-hy0, rx: (hy1-hy0)*.42, style: `fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:var(--k);stroke-width:${sw}`});
+  // big water tank
+  const bx0 = W*.09, bx1 = W*.46, by0 = H*.26, by1 = H*.68;
+  const defs = mk('defs', {});
+  const cp = mk('clipPath', {id: 'tk'}, defs);
+  mk('rect', {x: bx0, y: by0, width: bx1-bx0, height: by1-by0, rx: H*.04}, cp);
+  const inner = mk('g', {'clip-path': 'url(#tk)'});
+  G.water = mk('rect', {x: bx0, y: by0 + (by1-by0)*.15, width: bx1-bx0, height: (by1-by0)*.85, style: `fill:${mixed ? FOAM : WATER}`}, inner);
+  G.bub = mk('g', {}, inner);
+  G.tank = {bx0, bx1, by0, by1};
+  if (mixed) bubbles(false);
+  mk('rect', {x: bx0, y: by0, width: bx1-bx0, height: by1-by0, rx: H*.04, style: `fill:none;stroke:var(--k);stroke-width:${sw}`});
+  G.wlab = mk('text', {x: (bx0+bx1)/2, y: (by0+by1)/2 + fs*.35, 'text-anchor': 'middle', class: 'lab', 'font-size': fs, style: `fill:${mixed ? '#123' : '#fff'}`});
+  G.wlab.textContent = mixed ? 'FOAM' : 'WATER';
+  // pipe + valve
+  const sx0 = W*.54, sx1 = W*.70, sy0 = H*.32, sy1 = H*.60, py = H*.56;
+  mk('line', {x1: bx1, y1: py, x2: sx0, y2: py, style: `stroke:var(--k);stroke-width:${sw*2.4};stroke-linecap:round`});
+  mk('line', {x1: bx1, y1: py, x2: sx0, y2: py, style: `stroke:${mixed ? SOAP : 'color-mix(in srgb,var(--c) 70%,#fff)'};stroke-width:${sw*1.1}`});
+  G.pipe = {x0: sx0, x1: bx1, y: py};
+  const vx = (bx1+sx0)/2, vr = Math.max(H*.045, 10);
+  G.valve = mk('g', {class: 'valve'});
+  mk('circle', {cx: vx, cy: py, r: vr, style: `fill:${revealed && !mixed ? SOAP : 'var(--c)'};stroke:var(--k);stroke-width:${sw}`}, G.valve);
+  G.handle = mk('line', {x1: vx - vr*.6, y1: py, x2: vx + vr*.6, y2: py, style: `stroke:var(--k);stroke-width:${sw*1.4};stroke-linecap:round`, transform: mixed ? `rotate(90 ${vx} ${py})` : ''}, G.valve);
+  G.vc = {vx, py, vr};
+  // small tank
+  const level = mixed ? .55 : .25;
+  mk('rect', {x: sx0, y: sy0 + (sy1-sy0)*level, width: sx1-sx0, height: (sy1-sy0)*(1-level), rx: H*.02, style: `fill:${revealed ? SOAP : 'color-mix(in srgb,var(--k) 25%,transparent)'}`});
+  mk('rect', {x: sx0, y: sy0, width: sx1-sx0, height: sy1-sy0, rx: H*.025, style: `fill:none;stroke:var(--k);stroke-width:${sw}`});
+  const sl = mk('text', {x: (sx0+sx1)/2, y: H*.25, 'text-anchor': 'middle', class: 'lab', 'font-size': revealed ? Math.max(fs*.8, 12) : fs*1.3, style: 'fill:var(--k)'});
+  sl.textContent = revealed ? 'SURFACTANT' : '?';
+  // dish soap bottle
+  G.bottle = mk('g', {style: revealed ? '' : 'display:none'});
+  const cx = W*.885, bw = W*.11, b0 = H*.38, b1 = H*.74;
+  mk('rect', {x: cx - bw*.12, y: b0 - H*.10, width: bw*.24, height: H*.06, rx: 2, style: 'fill:var(--k)'}, G.bottle);
+  mk('rect', {x: cx - bw*.2, y: b0 - H*.05, width: bw*.4, height: H*.06, style: `fill:${SOAP};stroke:var(--k);stroke-width:${sw}`}, G.bottle);
+  mk('rect', {x: cx - bw/2, y: b0, width: bw, height: b1-b0, rx: bw*.3, style: `fill:${SOAP};stroke:var(--k);stroke-width:${sw}`}, G.bottle);
+  mk('circle', {cx: cx - bw*.12, cy: b0 + (b1-b0)*.45, r: bw*.1, style: 'fill:#fff;opacity:.85'}, G.bottle);
+  mk('circle', {cx: cx + bw*.12, cy: b0 + (b1-b0)*.62, r: bw*.07, style: 'fill:#fff;opacity:.85'}, G.bottle);
+  const bl = mk('text', {x: Math.min(cx, W - fs*2.6), y: H*.88, 'text-anchor': 'middle', class: 'lab', 'font-size': Math.max(fs*.8, 12), style: 'fill:var(--k)'}, G.bottle);
+  bl.textContent = 'dish soap';
+  G.drops = mk('g', {});
+}
+
+function bubbles(anim){
+  const {bx0, bx1, by0, by1} = G.tank, w = bx1-bx0, h = by1-by0;
+  let s = 7; const r = () => (s = (s*9301 + 49297) % 233280) / 233280;
+  const list = [];
+  for (let i = 0; i < 60; i++){
+    const c = Kit.mk('circle', {cx: bx0 + r()*w, cy: by0 + h*.1 + r()*h*.9, r: Math.max(h*.03, 3) + r()*h*.06, style: 'fill:#fff;stroke:#9cc6ea;stroke-width:1.2'}, G.bub);
+    list.push(c);
+  }
+  if (anim) gsap.from(list, {attr: {r: 0}, duration: .5, stagger: .02, ease: 'back.out(2)'});
+}
+
+function mix(){
+  if (!revealed || mixed || busy) return;
+  busy = true; mixed = true; Kit.haptic('light');
+  const {vx, py} = G.vc, done = () => {
+    busy = false; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, duration: .4, stagger: .1});
+  };
+  if (Kit.calm){ draw(); done(); return; }
+  gsap.to(G.handle, {rotation: 90, svgOrigin: `${vx} ${py}`, duration: .3});
+  const {x0, x1, y} = G.pipe, ds = [];
+  for (let i = 0; i < 6; i++) ds.push(Kit.mk('circle', {cx: x0, cy: y, r: Math.max(G.vc.vr*.35, 3), style: `fill:${SOAP};stroke:var(--k);stroke-width:1`}, G.drops));
+  gsap.to(ds, {attr: {cx: x1}, duration: .5, stagger: .1, ease: 'none', onComplete: function(){}});
+  gsap.to(ds, {opacity: 0, delay: .5, duration: .2, stagger: .1});
+  gsap.to(G.water, {fill: FOAM, delay: .6, duration: .8});
+  gsap.delayedCall(.6, () => { bubbles(true); G.wlab.textContent = 'FOAM'; G.wlab.style.fill = '#123'; G.svg && 0; });
+  gsap.delayedCall(1.9, () => { draw(); done(); });
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); revealed = true; draw();
+  if (!Kit.calm) gsap.from(G.bottle, {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.$('say').textContent = 'Now tap the yellow valve to mix it into the water.';
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('pic').addEventListener('click', mix);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[1].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(700);
+  Kit.$('pic').click(); await w(2600);
+};
+Kit.single();
+</script>
+</html>

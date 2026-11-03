@@ -1,0 +1,37 @@
+{
+  "id": "nature-etna-new-peak",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.balance_of_nature",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Which crater is now Etna's highest point?",
+  "answer": "The South-East crater is now Etna's highest point, at 3,357 m. Since 16 February 2021, about 50 explosive paroxysms have piled pyroclastic material and lava onto its cone. It overtook the North-East crater's 2018 record of 3,326 m, so Etna grew 31 m in a few months.",
+  "move": "A volcano's summit isn't fixed: each eruption can rebuild it.",
+  "keywords": [
+    "etna",
+    "south-east crater",
+    "north-east crater",
+    "volcano",
+    "pyroclastic material"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz page about Mount Etna's four active craters, asking the reader to tap the crater they think is the summit today. Each crater is a tap target on the volcano."
+  },
+  "source": "Geopop, “Davvero l’Etna è cresciuto di 31 metri in pochi mesi? #shorts” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=gcxGUCqPso0&t=20s",
+  "written": "2026-11-03"
+}

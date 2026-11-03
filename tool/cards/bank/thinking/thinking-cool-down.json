@@ -1,0 +1,36 @@
+{
+  "id": "thinking-cool-down",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Furious? What cools you down more: a hard run, or slow breathing?",
+  "answer": "Slow breathing or relaxing your muscles cools anger more than a hard run or a punching bag. Anger rides on a racing body, so slowing the body down works better than revving it up. The finding comes from Kjærvik & Bushman's 2024 paper in Clinical Psychology Review.",
+  "move": "Anger rides on a racing body. Slow the body down; don’t rev it up.",
+  "keywords": [
+    "anger",
+    "running",
+    "breathing",
+    "muscle relaxation",
+    "punching bag"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz: Furious? Pick what cools you down more: a hard run or a punching bag, slow breathing or relaxing your muscles, or about the same. Then say how sure you are.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Ti OFFEDONO? Rispondi così agli STRONZI” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=iHOo5DLuFTE",
+  "written": "2026-11-03"
+}

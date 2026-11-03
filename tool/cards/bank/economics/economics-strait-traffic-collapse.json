@@ -1,0 +1,38 @@
+{
+  "id": "economics-strait-traffic-collapse",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many large ships entered the strait from March 1? Early February: 561.",
+  "answer": "Early February saw 561 crossings in both directions. From March 1 just five large ships entered, and none over 10,000 tonnes crossed after March 3. The oil they carry simply stopped arriving.",
+  "move": "A blocked chokepoint doesn't slow trade, it switches it off.",
+  "keywords": [
+    "strait",
+    "oil_tankers",
+    "iran",
+    "large_ships",
+    "chokepoint"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A strait with a row of large ships. You drag across the ships to leave as many as you think entered from March 1. The reveal compares that guess with 561 ships in early February and 5 on March 1.",
+    "graded": false
+  },
+  "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Zfk7QT4zhZQ&t=240s",
+  "written": "2026-11-03"
+}

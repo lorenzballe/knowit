@@ -1,0 +1,133 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-louvre-blind-spots -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#mapbox{flex:1;min-height:0;position:relative}
+#map{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.room{fill:color-mix(in srgb,var(--k) 12%,transparent);stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:1}
+.room.off{fill:#e2283b;stroke:#7a0f1a}
+.wall{fill:none;stroke:var(--k);stroke-width:2.5}
+.cam{fill:var(--k)}
+.wing{fill:var(--k);font-family:var(--mono);font-weight:700;letter-spacing:.08em}
+.pct{fill:var(--k);font-family:var(--display);font-weight:800}
+.pct.red{fill:#e2283b}
+.leg{fill:var(--k);font-family:var(--body);font-weight:600}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BLIND SPOTS</span></div>
+    <h2 class="q">How many rooms in the Louvre's Richelieu wing have no camera?</h2>
+    <div class="stagebox" id="stage">
+      <div id="mapbox"><svg id="map"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">About 1 in 4</button>
+        <button class="opt" data-i="1">About half</button>
+        <button class="opt" data-i="2">About 3 in 4</button>
+      </div>
+      <div id="why" class="gone"><p class="big">About 3 in 4</p><p class="body">A French Court of Auditors report found about 75% of Richelieu rooms and 60% of Sully rooms are not covered by cameras. Every red room is a blind spot thieves can use.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick your guess, then watch the floor plan light up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Security is only as strong as its blind spots.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Furto di gioielli in pieno giorno al Louvre, com'è stato possibile? L’inedita ricostruzione 3D” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, revealed = false;
+// Schematic: 20 rooms per wing; 15 uncovered (75%) in Richelieu, 12 (60%) in Sully.
+function plan(n, off){
+  const idx = [...Array(n).keys()];
+  for (let i = n - 1; i > 0; i--){ const j = Math.floor(Kit.rnd() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  const isOff = Array(n).fill(false); idx.slice(0, off).forEach(i => isOff[i] = true);
+  return {isOff, order: idx, pct: Math.round(off / n * 100)};
+}
+const WINGS = [{name:'RICHELIEU', ...plan(20, 15)}, {name:'SULLY', ...plan(20, 12)}];
+let els = [];
+
+function draw(){
+  const svg = Kit.$('map'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12), pad = 4, gap = W * 0.07;
+  const colW = (W - gap - 2 * pad) / 2;
+  const topH = fs * 1.7, botH = fs * 2.6, legH = fs * 1.9;
+  const gridH = Math.max(40, H - topH - botH - legH);
+  const cols = 4, rows = 5;
+  const cell = Math.min(colW / cols, gridH / rows);
+  els = [];
+  WINGS.forEach((w, k) => {
+    const gw = cell * cols, gh = cell * rows;
+    const x0 = pad + k * (colW + gap) + (colW - gw) / 2, y0 = topH + (gridH - gh) / 2;
+    const lab = Kit.mk('text', {x: x0 + gw / 2, y: y0 - fs * 0.6, 'text-anchor': 'middle', 'font-size': fs, class: 'wing'}, svg);
+    lab.textContent = w.name;
+    const rects = [], cams = [];
+    for (let i = 0; i < cols * rows; i++){
+      const c = i % cols, r = Math.floor(i / cols), g = Math.max(2, cell * 0.08);
+      const rc = Kit.mk('rect', {x: x0 + c * cell + g / 2, y: y0 + r * cell + g / 2, width: cell - g, height: cell - g, rx: Math.min(4, cell * .1), class: 'room' + (revealed && w.isOff[i] ? ' off' : '')}, svg);
+      const cm = Kit.mk('circle', {cx: x0 + c * cell + cell / 2, cy: y0 + r * cell + cell / 2, r: Math.max(2.5, cell * 0.12), class: 'cam', opacity: revealed && !w.isOff[i] ? 1 : 0}, svg);
+      rects.push(rc); cams.push(cm);
+    }
+    Kit.mk('rect', {x: x0 - 3, y: y0 - 3, width: gw + 6, height: gh + 6, rx: 4, class: 'wall'}, svg);
+    const pt = Kit.mk('text', {x: x0 + gw / 2, y: y0 + gh + fs * 2.1, 'text-anchor': 'middle', 'font-size': fs * 1.5, class: 'pct' + (revealed ? ' red' : '')}, svg);
+    pt.textContent = revealed ? w.pct + '% unwatched' : '?';
+    if (revealed) pt.setAttribute('font-size', fs * 1.15);
+    els.push({rects, cams, pt, fs});
+  });
+  // Legend, left side
+  const ly = H - legH / 2, s = fs * 0.9;
+  Kit.mk('rect', {x: pad, y: ly - s / 2, width: s, height: s, rx: 2, class: 'room off'}, svg);
+  const t1 = Kit.mk('text', {x: pad + s * 1.5, y: ly + fs * 0.35, 'font-size': fs * 0.9, class: 'leg'}, svg); t1.textContent = 'no camera';
+  const lx2 = pad + s * 1.5 + fs * 6.2;
+  Kit.mk('circle', {cx: lx2 + s / 2, cy: ly, r: s * 0.3, class: 'cam'}, svg);
+  const t2 = Kit.mk('text', {x: lx2 + s * 1.4, y: ly + fs * 0.35, 'font-size': fs * 0.9, class: 'leg'}, svg); t2.textContent = 'camera';
+}
+
+function reveal(){
+  revealed = true;
+  draw();
+  if (Kit.calm) return;
+  WINGS.forEach((w, k) => {
+    const e = els[k];
+    e.rects.forEach((r, i) => { if (w.isOff[i]) r.classList.remove('off'); });
+    e.cams.forEach(c => c.setAttribute('opacity', 0));
+    const tl = gsap.timeline({delay: k * 0.35});
+    w.order.forEach((i, n) => {
+      tl.call(() => {
+        if (w.isOff[i]) { e.rects[i].classList.add('off'); gsap.fromTo(e.rects[i], {opacity: .3}, {opacity: 1, duration: .25}); }
+        else gsap.fromTo(e.cams[i], {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: .25});
+      }, null, n * 0.06);
+    });
+    const o = {v: 0};
+    gsap.to(o, {v: w.pct, duration: 20 * 0.06, delay: k * 0.35, ease: 'none', onUpdate: () => e.pt.textContent = Math.round(o.v) + '% unwatched'});
+  });
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { reveal(); Kit.haptic('success'); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); gsap.from('#map .room', {opacity: 0, stagger: .015, duration: .3}); } };
+Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2400)); };
+Kit.single();
+</script>
+</html>

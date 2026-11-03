@@ -1,0 +1,37 @@
+{
+  "id": "human_body-caffeine-steals-seat",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.brain_and_habits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does caffeine stop you from feeling tired?",
+  "answer": "Caffeine binds to the receptors that are meant for adenosine, the tiredness molecule. With those seats taken, adenosine cannot attach and signal fatigue. Scientists call this a competitive antagonist.",
+  "move": "Caffeine wakes you by stealing the tiredness molecule's seat.",
+  "keywords": [
+    "caffeine",
+    "adenosine",
+    "receptors",
+    "tiredness",
+    "coffee"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A slider labeled from No coffee to Lots. Sliding to pour in caffeine shows which molecules take the seats on a receptor, and the page asks how caffeine stops you feeling tired."
+  },
+  "source": "Geopop, “Ho bevuto 4 caffè tutti insieme: gli effetti della caffeina sul corpo umano e sul cervello” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=isJTROxgAtU&t=133s",
+  "written": "2026-11-03"
+}

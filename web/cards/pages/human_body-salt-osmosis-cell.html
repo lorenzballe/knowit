@@ -1,0 +1,167 @@
+<!doctype html>
+<!-- slug: human_body-salt-osmosis-cell -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#ctl .row{display:flex;justify-content:space-between;font:700 max(1.7cqh,12px)/1.2 var(--body);color:var(--k)}
+#ctl .row span:last-child{color:var(--muted)}
+#salt{width:100%;height:max(4.4cqh,30px);accent-color:var(--k);cursor:pointer;margin:0}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);color:var(--k);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
+.lbl{font-family:var(--body);font-weight:800;paint-order:stroke;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Slide · see it happen">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OSMOSIS</span></div>
+    <h2 class="q">Why does too much salt make your cells lose water?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A cell in water; as salt is added outside, water arrows point out and the cell shrinks"></svg>
+      <div id="ctl">
+        <div class="row"><span>Salt outside the cell</span><span id="lvl">none</span></div>
+        <input id="salt" type="range" min="0" max="100" value="0" aria-label="Salt outside the cell">
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Water follows the salt.</p>
+        <p class="body">Salt outside raises the osmotic pressure, so water crosses the membrane out of the cell. The cell dries and shrinks. That is why drinking seawater dehydrates you.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider to add salt around the cell.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>More salt outside pulls water out of your cells by osmosis.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic'), input = Kit.$('salt');
+const st = {s: 0, phase: 0, done: false};
+let G = null;
+const WATER = '#2f86e0';
+
+// fixed random layout, made once so it does not jump on resize
+Kit.rnd();
+const SALT = Array.from({length: 90}, () => ({a: Kit.rnd() * Math.PI * 2, u: Kit.rnd(), t: Kit.rnd() * .95, z: .7 + Kit.rnd() * .6}));
+const DROPS = Array.from({length: 30}, (_, i) => ({a: Kit.rnd() * Math.PI * 2, rho: .4 + Kit.rnd() * .42, t: (i + .5) / 30}));
+const ARROWS = 8;
+
+function membrane(cx, cy, r, s) {
+  let d = '';
+  for (let i = 0; i <= 72; i++) {
+    const th = i / 72 * Math.PI * 2;
+    const rr = r * (1 + s * (.06 * Math.sin(7 * th) + .035 * Math.sin(11 * th + 1)));
+    d += (i ? 'L' : 'M') + (cx + rr * Math.cos(th)).toFixed(1) + ',' + (cy + rr * Math.sin(th)).toFixed(1);
+  }
+  return d + 'Z';
+}
+
+function build() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const cx = W / 2, cy = H / 2 + f * .5, R = Math.min(W * .34, H * .36);
+  const g = {W, H, f, cx, cy, R};
+  // sea background
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: f * .9, style: 'fill:color-mix(in srgb,' + WATER + ' 14%,transparent)'}, svg);
+  // salt grains outside
+  const far = Math.hypot(W, H) / 2;
+  g.salt = SALT.map(p => {
+    const rad = R * 1.12 + p.u * (far - R * 1.12);
+    let x = cx + rad * Math.cos(p.a), y = cy + rad * Math.sin(p.a);
+    x = Math.max(f * .5, Math.min(W - f * .5, x)); y = Math.max(f * 2.2, Math.min(H - f * .5, y));
+    const k = f * .32 * p.z;
+    return Kit.mk('rect', {x: x - k / 2, y: y - k / 2, width: k, height: k, rx: k * .2, transform: `rotate(${p.a * 57} ${x} ${y})`,
+      style: 'fill:#fff;stroke:var(--k);stroke-width:' + (f * .07) + ';opacity:0'}, svg);
+  });
+  // cell
+  g.cell = Kit.mk('path', {style: `fill:color-mix(in srgb,${WATER} 22%,var(--c));stroke:var(--k);stroke-width:${f * .22}`}, svg);
+  g.drops = DROPS.map(() => Kit.mk('circle', {r: f * .22, style: 'fill:' + WATER}, svg));
+  g.nuc = Kit.mk('circle', {style: 'fill:color-mix(in srgb,var(--k) 55%,transparent)'}, svg);
+  // arrows of water leaving
+  g.arrows = [];
+  for (let i = 0; i < ARROWS; i++) {
+    const outer = Kit.mk('g', {transform: `translate(${cx} ${cy}) rotate(${i * 360 / ARROWS + 22.5})`}, svg);
+    const inner = Kit.mk('path', {style: `fill:none;stroke:${WATER};stroke-width:${f * .32};stroke-linecap:round;stroke-linejoin:round;opacity:0`}, outer);
+    g.arrows.push(inner);
+  }
+  // labels
+  g.top = Kit.mk('text', {x: f * .8, y: f * 1.5, 'font-size': f * .95, class: 'lbl', style: 'fill:var(--k);stroke:var(--c);stroke-width:' + f * .3}, svg);
+  g.top.textContent = 'Outside: water';
+  g.cl = Kit.mk('text', {'text-anchor': 'middle', 'font-size': f * .85, class: 'lbl', style: 'fill:var(--k);stroke:color-mix(in srgb,#2f86e0 22%,var(--c));stroke-width:' + f * .25}, svg);
+  g.cl.textContent = 'CELL';
+  g.out = Kit.mk('text', {x: W - f * .8, y: H - f * .8, 'text-anchor': 'end', 'font-size': f * .9, class: 'lbl', style: 'fill:' + WATER + ';stroke:var(--c);stroke-width:' + f * .3 + ';opacity:0'}, svg);
+  g.out.textContent = 'water leaves the cell';
+  G = g; update();
+}
+
+function update() {
+  if (!G) return;
+  const {f, cx, cy, R} = G, s = st.s;
+  const r = R * (1 - .45 * s);
+  G.r = r;
+  G.cell.setAttribute('d', membrane(cx, cy, r, s));
+  G.salt.forEach((el, i) => el.style.opacity = s > SALT[i].t ? 1 : 0);
+  G.drops.forEach((el, i) => {
+    const p = DROPS[i];
+    el.setAttribute('cx', cx + p.rho * r * Math.cos(p.a));
+    el.setAttribute('cy', cy + p.rho * r * Math.sin(p.a));
+    el.style.opacity = p.t > s * .85 ? 1 : 0;
+  });
+  G.nuc.setAttribute('cx', cx); G.nuc.setAttribute('cy', cy + r * .1); G.nuc.setAttribute('r', r * .24);
+  G.cl.setAttribute('x', cx); G.cl.setAttribute('y', cy - r * .38);
+  G.cl.setAttribute('font-size', Math.max(12, f * .85 * (1 - .3 * s)));
+  G.top.textContent = s < .05 ? 'Outside: plain water' : s < .6 ? 'Outside: salty water' : 'Outside: very salty water';
+  G.out.style.opacity = Math.min(1, s * 2);
+  drawArrows();
+  Kit.$('lvl').textContent = s < .05 ? 'none' : s < .35 ? 'a little' : s < .7 ? 'a lot' : 'like seawater';
+}
+
+function drawArrows() {
+  if (!G) return;
+  const {f, R} = G, s = st.s, r = G.r;
+  const len = f * (1 + 1.6 * s), d0 = r + f * .5 + (st.phase % 1) * f * 1.2;
+  const h = f * .45;
+  G.arrows.forEach(a => {
+    a.setAttribute('d', `M${d0},0L${d0 + len},0M${d0 + len - h},${-h}L${d0 + len},0L${d0 + len - h},${h}`);
+    const fade = 1 - (st.phase % 1) * .5;
+    a.style.opacity = s < .03 ? 0 : Math.min(1, s * 2.5) * fade;
+  });
+}
+
+gsap.ticker.add((t, dt) => {
+  if (Kit.calm || !G || st.s < .03) return;
+  st.phase += dt / 1000 * (.4 + st.s * .8);
+  drawArrows();
+});
+
+input.addEventListener('input', () => {
+  gsap.to(st, {s: input.value / 100, duration: Kit.calm ? 0 : .35, ease: 'power2.out', onUpdate: update});
+  if (+input.value % 20 === 0) Kit.haptic('selection');
+  if (+input.value >= 95 && !st.done) {
+    st.done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    setTimeout(build, 30);
+    if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+  }
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, scale: .96, transformOrigin: '50% 50%', duration: .5, ease: 'power3.out'});
+  gsap.from('#ctl', {opacity: 0, y: 10, duration: .4, delay: .2, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  for (let v = 10; v <= 100; v += 10) {
+    input.value = v; input.dispatchEvent(new Event('input', {bubbles: true}));
+    await new Promise(r => setTimeout(r, 60));
+  }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

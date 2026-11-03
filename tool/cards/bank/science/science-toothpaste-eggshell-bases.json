@@ -1,0 +1,37 @@
+{
+  "id": "science-toothpaste-eggshell-bases",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.kitchen_myths",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Why is toothpaste chemically unable to dissolve an eggshell?",
+  "answer": "The eggshell is calcium carbonate, which is a base, and toothpaste is also basic. Dissolving the shell would need an acid-base reaction, and two bases can't have one, so the viral video claiming toothpaste dissolves eggshells is fake.",
+  "move": "No acid, no acid-base reaction: a base can't eat a base.",
+  "keywords": [
+    "toothpaste",
+    "eggshell",
+    "calcium carbonate",
+    "acid-base reaction",
+    "viral video"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A page titled 'Why toothpaste can't dissolve an eggshell' asks why toothpaste is chemically unable to dissolve an eggshell. Four reasons are offered: toothpaste is an acid but too weak; both are bases so nothing can react; the shell's inner skin shields it; base meets base, so nothing happens. The reader picks one reason, then watches paste meet shell."
+  },
+  "source": "Geopop, “È vero o no che il dentifricio può corrodere il guscio d’uovo? #esperimenti #chemistry #science” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=wmat7bFOCTk&t=26s",
+  "written": "2026-11-03"
+}

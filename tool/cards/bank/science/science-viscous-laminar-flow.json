@@ -1,0 +1,37 @@
+{
+  "id": "science-viscous-laminar-flow",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does honey pour in smooth layers while water turns turbulent?",
+  "answer": "Honey stays smooth because the Reynolds number weighs speed, density and pipe size against viscosity. With those three held the same, raising viscosity lowers the number, so the flow stays laminar instead of turning turbulent. The page compares two fluids in the same pipe at the same speed.",
+  "move": "More viscous means a lower Reynolds number: smooth, parallel layers.",
+  "keywords": [
+    "honey",
+    "viscosity",
+    "reynolds number",
+    "laminar flow",
+    "turbulence"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: why does honey pour in smooth layers while water turns turbulent? A speed slider runs from slow to fast, with honey and water in the same pipe at the same speed."
+  },
+  "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=I3IpKEtWqvU&t=169s",
+  "written": "2026-11-03"
+}

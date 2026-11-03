@@ -1,0 +1,37 @@
+{
+  "id": "nature-milan-first-30",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "Before 2026, how many June 21sts in Milan averaged 30 °C?",
+  "answer": "Before 2026, no June 21st in Milan had an average temperature of 30 °C. Across the 54 June 21sts from 1973 to 2025, none reached that mark, and 2026 was the first. The card links the rise in average temperatures to the climate crisis.",
+  "move": "In 54 years of June 21sts, Milan hit a 30 °C average only once: in 2026.",
+  "keywords": [
+    "milan",
+    "june 21",
+    "average temperature",
+    "climate change",
+    "heatwave"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A grid of squares, one per June 21 from 1973 to 2026, showing Milan's average temperature. The question asks how many June 21sts before 2026 averaged 30 °C, with options: over 10 times, a few times, never before."
+  },
+  "source": "Geopop, “Perché fa così tanto caldo? C'è una relazione con la crisi climatica?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=PYf8dpcHm_E&t=47s",
+  "written": "2026-11-03"
+}

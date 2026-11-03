@@ -1,0 +1,191 @@
+<!doctype html>
+<!-- slug: technology-upside-down-blocks -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why hull blocks are built upside down</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#draw{flex:1;min-height:0;position:relative}
+#draw svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0}
+.opt{font:700 max(1.85cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 2.6cqw;cursor:pointer;display:flex;align-items:center;gap:2cqw;overflow-wrap:anywhere}
+.opt .n{flex:none;min-width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:99px;display:grid;place-items:center;font:800 max(1.6cqh,12px)/1 var(--mono);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);padding:0 .6cqw}
+.opt.on .n{background:var(--k);color:var(--c);box-shadow:none}
+.opt.now{background:var(--k);color:var(--c);box-shadow:none}
+.opt.now .n{background:var(--c);color:var(--k)}
+.opt.no .n{text-decoration:line-through}
+.foot .src{display:block;max-width:calc(100% - 112px);overflow-wrap:anywhere}
+svg .cap{font-family:var(--body);font-weight:800;fill:var(--k)}
+svg .lab{font-family:var(--mono);font-weight:700;fill:var(--k);opacity:.6;letter-spacing:.08em}
+svg .blk{fill:color-mix(in srgb,var(--k) 88%,var(--c));stroke:var(--k);stroke-width:2;stroke-linejoin:round}
+svg .rib{stroke:var(--c);stroke-width:2;opacity:.55}
+svg .top{font-family:var(--mono);font-weight:800;fill:var(--c)}
+svg .hull{fill:color-mix(in srgb,var(--k) 32%,var(--c));stroke:var(--k);stroke-width:2;stroke-linejoin:round}
+svg .ghost{fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:6 5;opacity:.55}
+svg .plate{fill:var(--k)}
+svg .ground{stroke:var(--k);stroke-width:2.5;stroke-linecap:round}
+svg .sup{fill:var(--k);opacity:.7}
+svg .cable{stroke:var(--k);stroke-width:2;stroke-dasharray:3 3}
+svg .spark{fill:#ffcf3a}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="In order · see the real one">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SHIPYARD</span></div>
+    <h2 class="q">Why are a ship's hull blocks built upside down?</h2>
+    <div class="stagebox" id="stage">
+      <div id="draw"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-s="2"><span class="n">·</span><span>Flip the block upright</span></button>
+        <button class="opt" data-s="0"><span class="n">·</span><span>Weld steel plates into panels</span></button>
+        <button class="opt" data-s="3"><span class="n">·</span><span>Join it to the hull</span></button>
+        <button class="opt" data-s="1"><span class="n">·</span><span>Build the block upside down</span></button>
+      </div>
+      <div id="why" class="gone"><p class="big" id="score">You placed 4 of 4</p><p class="body">Upside down is not the block's final position: it is chosen for the next phase. Built that way, then flipped, the block is easier to reach and to line up when it is joined to the others into the full hull.</p></div>
+    </div>
+    <p class="say" id="say">Tap the four steps in the order they happen.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A block is built in whatever position makes joining the hull easier.</div>
+    <div class="foot"><span class="src">Source · Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const CAPS = ['1 · Steel plates welded into a panel', '2 · The block is built upside down', '3 · A crane flips it upright', '4 · It is joined to the hull'];
+const svg = Kit.$('pic');
+let G = {}, E = {}, st = {}, phase = 0, picks = [], tl = null, running = false, fast = false, doneRes = null;
+const done = new Promise(r => doneRes = r);
+
+function blockPath(bw, bh){
+  return `M${-bw/2},${-bh/2} L${bw/2},${-bh/2} L${bw/2},0 Q${bw/2},${bh/2} 0,${bh/2} Q${-bw/2},${bh/2} ${-bw/2},0 Z`;
+}
+function build(){
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const bw = Math.min(W * .27, H * .36), bh = bw * .62;
+  const gy = H - fs * 1.8, sup = bh * .18, fy = gy - sup - bh / 2;
+  const gx = W * .7, bx = W * .2, sw = bw * .5, hh = bh * .7;
+  const yT = fy - bh / 2, liftY = yT - hh - bh * .6;
+  G = {W, H, fs, bw, bh, gy, sup, fy, gx, bx, sw, hh, yT, liftY};
+  const m = Kit.mk;
+  // hull side pieces already in place
+  const x0 = gx - bw/2 - sw, x1 = gx - bw/2;
+  m('path', {class: 'hull', d: `M${x1},${yT-hh} L${x0},${yT-hh} L${x0},${yT} Q${x0},${yT+bh*.5} ${x1},${yT+bh*.5} Z`}, svg);
+  const r0 = gx + bw/2 + sw, r1 = gx + bw/2;
+  m('path', {class: 'hull', d: `M${r1},${yT-hh} L${r0},${yT-hh} L${r0},${yT} Q${r0},${yT+bh*.5} ${r1},${yT+bh*.5} Z`}, svg);
+  // supports and ground
+  [-.25, .25].forEach(o => m('rect', {class: 'sup', x: gx + o*bw - bw*.05, y: fy + bh/2 - 1, width: bw*.1, height: sup + 1}, svg));
+  m('line', {class: 'ground', x1: fs*.4, x2: W - fs*.4, y1: gy, y2: gy}, svg);
+  E.ghost = m('path', {class: 'ghost', d: blockPath(bw, bh), transform: `translate(${gx},${fy})`}, svg);
+  // labels under the ground (only when there is room below the caption)
+  const lb = Math.max(fs * .78, 12);
+  if (H >= fs * 6) {
+    m('text', {class: 'lab', x: bx, y: gy + fs * 1.25, 'text-anchor': 'middle', 'font-size': lb}, svg).textContent = 'BUILD AREA';
+    m('text', {class: 'lab', x: gx, y: gy + fs * 1.25, 'text-anchor': 'middle', 'font-size': lb}, svg).textContent = 'HULL';
+  }
+  // plates
+  E.plates = [-1, 0, 1].map(() => m('rect', {class: 'plate', width: bw/3 - 1, height: bh * .12, y: gy - bh * .12, rx: 1.5}, svg));
+  E.sparks = [-1, 1].map(o => m('circle', {class: 'spark', cx: bx + o * bw / 6, cy: gy - bh * .12, r: 0}, svg));
+  // cable then block
+  E.cable = m('line', {class: 'cable', x1: 0, x2: 0, y1: fs * 2.2, y2: 0}, svg);
+  E.block = m('g', {}, svg);
+  m('path', {class: 'blk', d: blockPath(bw, bh)}, E.block);
+  [-.4, -.22, .22, .4].forEach(o => m('line', {class: 'rib', x1: o*bw, x2: o*bw, y1: -bh/2 + 3, y2: -2}, E.block));
+  m('line', {class: 'rib', x1: -bw/2 + 3, x2: bw/2 - 3, y1: -bh*.05, y2: -bh*.05}, E.block);
+  m('text', {class: 'top', x: 0, y: -bh * .25, 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': Math.max(fs * .75, 12)}, E.block).textContent = 'TOP';
+  E.cap = m('text', {class: 'cap', x: W / 2, y: fs * 1.1, 'text-anchor': 'middle', 'font-size': fs}, svg);
+}
+function phaseState(p){
+  const g = G, s = {sp: 1.4, po: 1, bo: 0, s: .15, x: g.bx, y: g.gy - g.bh * .075, r: 180, co: 0, go: 1};
+  if (p >= 1) s.sp = 1;
+  if (p >= 2) Object.assign(s, {po: 0, bo: 1, s: 1, y: g.gy - g.bh / 2});
+  if (p >= 3) Object.assign(s, {y: g.liftY, r: 0, co: 1});
+  if (p >= 4) Object.assign(s, {x: g.gx, y: g.fy, co: 0, go: 0});
+  return s;
+}
+function render(){
+  const g = G;
+  E.plates.forEach((pl, i) => { pl.setAttribute('x', g.bx + (i - 1) * g.bw / 3 * st.sp - g.bw / 6 + .5); pl.style.opacity = st.po; });
+  E.block.setAttribute('transform', `translate(${st.x},${st.y}) rotate(${st.r}) scale(1,${st.s})`);
+  E.block.style.opacity = st.bo;
+  E.cable.setAttribute('x1', st.x); E.cable.setAttribute('x2', st.x); E.cable.setAttribute('y2', st.y);
+  E.cable.style.opacity = st.co;
+  E.ghost.style.opacity = st.go * .55;
+}
+function toPhase(p){
+  st = phaseState(p); render();
+  E.cap.textContent = p === 0 ? 'Which step comes first?' : (p >= 4 && !running ? 'Built upside down, flipped, joined' : CAPS[Math.max(0, p - 1)]);
+}
+function mark(i){
+  Kit.$('opts').querySelectorAll('.opt').forEach(b => b.classList.remove('now'));
+  const b = Kit.$('opts').querySelector(`[data-s="${i}"]`);
+  const yours = picks.indexOf(i);
+  b.classList.add('now');
+  b.querySelector('.n').textContent = yours === i ? `✓${i + 1}` : `${yours + 1}→${i + 1}`;
+  if (yours !== i) b.classList.add('no');
+  E.cap.textContent = CAPS[i];
+  Kit.haptic('light');
+}
+function finish(){
+  running = false; phase = 4;
+  const n = picks.filter((s, i) => s === i).length;
+  Kit.$('score').textContent = `You placed ${n} of 4 in the real order`;
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(() => { Kit.onShow.card(); doneRes(); });
+}
+function playAll(){
+  running = true;
+  const g = G, R = {onUpdate: render};
+  tl = gsap.timeline({onComplete: () => { tl = null; finish(); }});
+  tl.timeScale(fast ? 10 : Kit.calm ? 4 : 1);
+  // 1 weld
+  tl.call(mark, [0]).to(st, {sp: 1, duration: .9, ease: 'power2.inOut', ...R})
+    .to(E.sparks, {attr: {r: g.bh * .14}, duration: .12, repeat: 3, yoyo: true}, '-=.1')
+    .set(E.sparks, {attr: {r: 0}}).to({}, {duration: .5});
+  // 2 build upside down
+  tl.call(mark, [1]).to(st, {po: 0, bo: 1, duration: .3, ...R})
+    .to(st, {s: 1, y: g.gy - g.bh / 2, duration: 1, ease: 'power2.out', ...R}).to({}, {duration: .7});
+  // 3 flip
+  tl.call(mark, [2]).to(st, {co: 1, duration: .3, ...R})
+    .to(st, {y: g.liftY, duration: .8, ease: 'power2.inOut', ...R})
+    .to(st, {r: 0, duration: 1.1, ease: 'power2.inOut', ...R}, '-=.3').to({}, {duration: .5});
+  // 4 join
+  tl.call(mark, [3]).to(st, {x: g.gx, duration: 1, ease: 'power2.inOut', ...R})
+    .to(st, {y: g.fy, go: 0, duration: .7, ease: 'power2.out', ...R})
+    .to(st, {co: 0, duration: .3, ...R}).to({}, {duration: .6});
+}
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || running || picks.length >= 4) return;
+  const s = +b.dataset.s, at = picks.indexOf(s);
+  if (at >= 0) {
+    if (at !== picks.length - 1) return;
+    picks.pop(); b.classList.remove('on'); b.querySelector('.n').textContent = '·';
+    Kit.haptic('selection'); return;
+  }
+  picks.push(s); b.classList.add('on'); b.querySelector('.n').textContent = picks.length;
+  Kit.haptic('selection');
+  if (picks.length === 4) { Kit.$('say').textContent = 'Now watch the real order.'; setTimeout(playAll, fast ? 50 : 500); }
+});
+Kit.onShow.card = () => {
+  build();
+  if (tl) { tl.kill(); tl = null; if (running) { [0,1,2,3].forEach(mark); finish(); toPhase(4); return; } }
+  toPhase(phase);
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (E.plates) gsap.from(E.plates, {y: '-=30', opacity: 0, stagger: .1, duration: .5, ease: 'bounce.out'});
+};
+Kit.play.card = async () => {
+  fast = true;
+  for (const s of [0, 1, 2, 3]) { Kit.$('opts').querySelector(`[data-s="${s}"]`).click(); await new Promise(r => setTimeout(r, 60)); }
+  await done; await new Promise(r => setTimeout(r, 400));
+};
+Kit.single();
+</script>
+</html>

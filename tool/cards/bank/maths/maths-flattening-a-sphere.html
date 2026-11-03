@@ -1,0 +1,135 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-flattening-a-sphere -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{display:block;width:100%;flex:1;min-height:0;cursor:pointer;touch-action:manipulation}
+#ctrl{display:flex;flex-direction:column;gap:.8cqh;transition:opacity .4s}
+#ctrl.dim{opacity:.3;pointer-events:none}
+.m{display:grid;grid-template-columns:30cqw 1fr 13cqw;align-items:center;gap:2cqw;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
+.bar{height:max(1.1cqh,7px);border-radius:99px;background:color-mix(in srgb,var(--k) 14%,transparent);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--k);border-radius:99px}
+.mv{font:700 max(1.8cqh,12px)/1.2 var(--mono);text-align:right}
+#t{-webkit-appearance:none;appearance:none;width:100%;height:max(4cqh,28px);background:transparent;margin:0}
+#t::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#t::-moz-range-track{height:max(.9cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#t::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.4cqh,24px);height:max(3.4cqh,24px);border-radius:50%;background:var(--k);margin-top:calc((max(.9cqh,6px) - max(3.4cqh,24px))/2);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--k) 18%,transparent)}
+#t::-moz-range-thumb{width:max(3.4cqh,24px);height:max(3.4cqh,24px);border:0;border-radius:50%;background:var(--k)}
+.ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Try it · tear or stretch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLAT MAPS</span></div>
+    <h2 class="q">Why can't you flatten a balloon without tearing or stretching it?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctrl" class="dim">
+        <div class="m"><span>Torn open</span><span class="bar"><i id="b1"></i></span><span class="mv" id="v1">0%</span></div>
+        <div class="m"><span>Area at 60°</span><span class="bar"><i id="b2"></i></span><span class="mv" id="v2">×1.0</span></div>
+        <input id="t" type="range" min="0" max="1000" value="0" aria-label="Close the gaps">
+        <div class="ends"><span>Keep true sizes</span><span>Close the gaps</span></div>
+      </div>
+    </div>
+    <div id="why" class="gone"><p class="body">A ball's skin curves two ways at once, so laid flat it must split or stretch. Close the gaps, as Mercator's map does, and shapes stay right but lands near the poles swell.</p></div>
+    <p class="say" id="say">Tap the balloon to cut it open.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No flat map of a round world is free of distortion.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'inganno delle mappe: le vere dimensioni dei Paesi come Russia e USA non sono come crediamo” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const D=Math.PI/180, LIM=80*D, HALF=15*D, NS='http://www.w3.org/2000/svg';
+const DISKS=[[2,60],[4,30],[6,0],[8,-30],[10,-60]], RHO=7*D;
+let W=0,H=0,s=0,cx=0,cy=0,gr=0,lam0=0,cut=false,done=false,t=0;
+let G={};
+const merc=p=>Math.log(Math.tan(Math.PI/4+p/2));
+const lamk=k=>(-165+30*k)*D;
+function P(k,d,phi,tt){
+  const x=cx+(k-5.5)*30*D*s+d*s*(Math.cos(phi)*(1-tt)+tt);
+  const y=cy-s*((1-tt)*phi+tt*merc(phi));return [x,y];
+}
+function diskPts(lc,pc){
+  const out=[];for(let i=0;i<=40;i++){const th=i/40*2*Math.PI;
+    const phi=Math.asin(Math.sin(pc)*Math.cos(RHO)+Math.cos(pc)*Math.sin(RHO)*Math.cos(th));
+    const dl=Math.atan2(Math.sin(th)*Math.sin(RHO)*Math.cos(pc),Math.cos(RHO)-Math.sin(pc)*Math.sin(phi));
+    out.push([lc+dl,phi]);}return out;
+}
+const pth=a=>a.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join('')+'Z';
+function drawGores(){
+  let gores='',grid='';
+  for(let k=0;k<12;k++){
+    const pts=[];
+    for(let p=-80;p<=80;p+=4)pts.push(P(k,HALF,p*D,t));
+    for(let p=80;p>=-80;p-=4)pts.push(P(k,-HALF,p*D,t));
+    gores+=pth(pts);
+    for(const la of [-60,-30,0,30,60]){const a=P(k,-HALF,la*D,t),b=P(k,HALF,la*D,t);grid+=`M${a[0]} ${a[1]}L${b[0]} ${b[1]}`;}
+    const a=P(k,0,-LIM,t),b=P(k,0,LIM,t);grid+=`M${a[0]} ${a[1]}L${b[0]} ${b[1]}`;
+  }
+  G.gore.setAttribute('d',gores);G.grid.setAttribute('d',grid);
+  G.disks.forEach((el,i)=>{const [k,la]=DISKS[i];
+    el.setAttribute('d',pth(diskPts(lamk(k),la*D).map(([l,p])=>P(k,l-lamk(k),Math.max(-LIM,Math.min(LIM,p)),t))));});
+  // meters
+  let gap=0,tot=0;
+  for(let p=-80;p<=80;p+=1){const ph=p*D,dy=(1-t)+t/Math.cos(ph),w=Math.cos(ph)*(1-t)+t;gap+=(1-w)*dy;tot+=dy;}
+  const g=gap/tot,c=Math.cos(60*D),f=((c*(1-t)+t)/c)*((1-t)+t/c);
+  Kit.$('v1').textContent=Math.round(g*100)+'%';Kit.$('b1').style.width=Math.min(100,g/0.3*100)+'%';
+  Kit.$('v2').textContent='×'+f.toFixed(1);Kit.$('b2').style.width=((f-1)/3*100)+'%';
+}
+function drawGlobe(){
+  const f0=20*D,gx=W/2,gy=H/2;
+  const pr=(l,p)=>{const dl=l-lam0;return {x:gx+gr*Math.cos(p)*Math.sin(dl),y:gy-gr*(Math.cos(f0)*Math.sin(p)-Math.sin(f0)*Math.cos(p)*Math.cos(dl)),v:Math.sin(f0)*Math.sin(p)+Math.cos(f0)*Math.cos(p)*Math.cos(dl)>0};};
+  let d='';const line=pts=>{let pen=false;for(const q of pts){if(q.v){d+=(pen?'L':'M')+q.x.toFixed(1)+' '+q.y.toFixed(1);pen=true;}else pen=false;}};
+  for(let m=0;m<12;m++){const a=[];for(let p=-90;p<=90;p+=3)a.push(pr((-180+30*m)*D,p*D));line(a);}
+  for(const la of [-60,-30,0,30,60]){const a=[];for(let l=-180;l<=180;l+=4)a.push(pr(l*D,la*D));line(a);}
+  G.ggrid.setAttribute('d',d);
+  G.gdisks.forEach((el,i)=>{const [k,la]=DISKS[i];const q=diskPts(lamk(k),la*D).map(([l,p])=>pr(l,p));
+    el.setAttribute('d',q.every(z=>z.v)?pth(q.map(z=>[z.x,z.y])):'');});
+}
+function build(){
+  const svg=Kit.$('pic');svg.innerHTML='';
+  ({W,H}=Kit.fitSvg(svg));
+  s=Math.min(W*0.95/(2*Math.PI),H*0.95/(2*merc(LIM)));cx=W/2;cy=H/2;gr=Math.min(W,H)*0.43;
+  const defs=Kit.mk('defs',{},svg);const rg=Kit.mk('radialGradient',{id:'hl',cx:'35%',cy:'30%',r:'70%'},defs);
+  Kit.mk('stop',{offset:'0','stop-color':'#fff','stop-opacity':.28},rg);Kit.mk('stop',{offset:'1','stop-color':'#fff','stop-opacity':0},rg);
+  G.globe=Kit.mk('g',{},svg);
+  Kit.mk('circle',{cx:W/2,cy:H/2,r:gr,fill:'var(--k)'},G.globe);
+  G.ggrid=Kit.mk('path',{fill:'none',stroke:'var(--c)','stroke-opacity':.35,'stroke-width':1},G.globe);
+  G.gdisks=DISKS.map(()=>Kit.mk('path',{fill:'var(--c)'},G.globe));
+  Kit.mk('circle',{cx:W/2,cy:H/2,r:gr,fill:'url(#hl)'},G.globe);
+  G.flat=Kit.mk('g',{},svg);
+  G.gore=Kit.mk('path',{fill:'var(--k)',stroke:'var(--k)','stroke-width':.6,'stroke-linejoin':'round'},G.flat);
+  G.grid=Kit.mk('path',{fill:'none',stroke:'var(--c)','stroke-opacity':.35,'stroke-width':1},G.flat);
+  G.disks=DISKS.map(()=>Kit.mk('path',{fill:'var(--c)'},G.flat));
+  G.globe.style.opacity=cut?0:1;G.flat.style.opacity=cut?1:0;
+  drawGlobe();drawGores();
+}
+function doCut(){
+  if(cut)return;cut=true;Kit.haptic('light');
+  Kit.$('say').textContent='Now slide to close the gaps. Watch the 60° circle.';
+  Kit.$('ctrl').classList.remove('dim');
+  if(Kit.calm){G.globe.style.opacity=0;G.flat.style.opacity=1;return;}
+  gsap.to(G.globe,{opacity:0,scale:1.15,svgOrigin:`${W/2} ${H/2}`,duration:.5,ease:'power2.in'});
+  gsap.fromTo(G.flat,{opacity:0,scaleY:.4,svgOrigin:`${W/2} ${H/2}`},{opacity:1,scaleY:1,duration:.8,delay:.35,ease:'back.out(1.6)'});
+}
+Kit.$('pic').addEventListener('click',doCut);
+Kit.$('t').addEventListener('input',e=>{
+  if(!cut)return;t=+e.target.value/1000;drawGores();
+  if(t>=.98&&!done){done=true;Kit.haptic('success');Kit.hide('say');Kit.show('why');Kit.show('keep');}
+});
+gsap.ticker.add(()=>{if(!cut&&!Kit.calm&&G.ggrid){lam0+=0.004;drawGlobe();}});
+Kit.onShow.card=()=>{build();};
+Kit.onEnter.card=()=>{if(!Kit.calm&&G.globe&&!cut)gsap.from(G.globe,{opacity:0,scale:.85,svgOrigin:`${W/2} ${H/2}`,duration:.7,ease:'power3.out'});};
+Kit.play.card=async()=>{
+  Kit.$('pic').dispatchEvent(new MouseEvent('click',{bubbles:true}));
+  await new Promise(r=>setTimeout(r,1400));
+  const r=Kit.$('t');r.value=1000;r.dispatchEvent(new Event('input',{bubbles:true}));
+  await new Promise(r=>setTimeout(r,600));
+};
+Kit.single();
+</script>
+</html>

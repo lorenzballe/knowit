@@ -1,0 +1,130 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-cigarette-filter-myth -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#lays{display:flex;flex-direction:column;gap:1cqh}
+.lay{display:flex;align-items:center;gap:3cqw;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);text-align:left;background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.lay .n{flex:0 1 auto}
+.lay .r{margin-left:auto;font:600 max(1.8cqh,12px)/1.2 var(--body);text-align:right;opacity:0}
+.lay.done{cursor:default;box-shadow:none;background:color-mix(in srgb,var(--k) 15%,transparent)}
+.lay.done .r{opacity:1}
+.sw{flex:none;width:max(2.2cqh,13px);height:max(2.2cqh,13px)}
+.sw.b{background:#7a4a22;border-radius:.4cqh}
+.sw.p{background:var(--k);border-radius:50%}
+.sw.g{border-radius:50%;background:color-mix(in srgb,#c2185b 30%,transparent);box-shadow:inset 0 0 0 .2cqh #c2185b}
+#why .body{margin:0}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Pull apart · smoke">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FILTER MYTH</span></div>
+    <h2 class="q">What does a cigarette filter actually stop?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="lays">
+        <button class="lay" data-i="0"><span class="sw b"></span><span class="n">Tobacco bits</span><span class="r">stopped</span></button>
+        <button class="lay" data-i="1"><span class="sw p"></span><span class="n">Big smoke particles</span><span class="r">mostly trapped</span></button>
+        <button class="lay" data-i="2"><span class="sw g"></span><span class="n">Toxic gases</span><span class="r">almost all get through</span></button>
+      </div>
+    </div>
+    <p class="say" id="say">Send each part of the smoke through the filter.</p>
+    <div id="why" class="gone"><p class="body">The filter holds back loose tobacco and the bigger smoke particles. But the toxic, cancer-causing gases pass almost all the way through. It exists mostly for marketing.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A filter stops what you can see, not the gases that harm you.</div>
+    <div class="foot"><span class="src">Source · Geopop, “5 curiosità sulle sigarette che forse non sapevi” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// Geometry as fractions of the drawing width
+const TIP = .05, FX = .5, FE = .7, M0 = .76, M1 = .95;
+const sent = [false, false, false];
+// Particles: layer, start fy, final fx, final fy, pass
+const parts = [];
+(function gen(){
+  for (let i = 0; i < 10; i++) parts.push({l:0, sy:Kit.rnd()*1.4-.7, fx:FX-.03+Kit.rnd()*.022, fy:Kit.rnd()*1.5-.75, pass:false});
+  for (let i = 0; i < 24; i++) { const pass = i < 3;
+    parts.push({l:1, sy:Kit.rnd()*1.4-.7, fx: pass ? M0+.02+Kit.rnd()*(M1-M0-.04) : FX+.01+Kit.rnd()*(FE-FX-.02), fy: pass ? Kit.rnd()*2-1 : Kit.rnd()*1.5-.75, pass}); }
+  for (let i = 0; i < 30; i++) { const pass = i >= 2;
+    parts.push({l:2, sy:Kit.rnd()*1.4-.7, fx: pass ? M0+.02+Kit.rnd()*(M1-M0-.04) : FX+.02+Kit.rnd()*(FE-FX-.04), fy: pass ? Kit.rnd()*2-1 : Kit.rnd()*1.4-.7, pass}); }
+})();
+let G = null, layer = null;
+function shape(p){
+  const r = G.r;
+  if (p.l === 0) { const s = r*.34; return Kit.mk('rect', {x:-s/2, y:-s/3, width:s, height:s*.66, rx:s*.12, style:'fill:#7a4a22'}, layer); }
+  if (p.l === 1) return Kit.mk('circle', {r:Math.max(r*.17,2.6), style:'fill:var(--k);opacity:.9'}, layer);
+  return Kit.mk('circle', {r:Math.max(r*.12,2), style:'fill:color-mix(in srgb,#c2185b 30%,transparent);stroke:#c2185b;stroke-width:1.2'}, layer);
+}
+function fin(p){
+  const inMouth = p.pass;
+  return {x:p.fx*G.W, y: G.cy + p.fy*(inMouth ? G.r*1.25 : G.r*.75)};
+}
+function draw(){
+  const svg = Kit.$('pic'); gsap.killTweensOf('#pic *'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const r = Math.min(H*.13, W*.065), cy = H*.56;
+  G = {W, H, f, r, cy};
+  const ink = 'stroke:var(--k);stroke-width:1.6';
+  // mouth
+  Kit.mk('rect', {x:M0*W, y:cy-1.6*r, width:(M1-M0)*W, height:3.2*r, rx:r*.9, style:'fill:color-mix(in srgb,var(--k) 6%,transparent);stroke:var(--k);stroke-width:1.4;stroke-dasharray:4 4'}, svg);
+  // tobacco body
+  Kit.mk('rect', {x:TIP*W, y:cy-r, width:(FX-TIP)*W, height:2*r, style:'fill:#f7f3ea;'+ink}, svg);
+  for (let i = 1; i < 6; i++) Kit.mk('line', {x1:(TIP+(FX-TIP)*i/6)*W, y1:cy-r+2, x2:(TIP+(FX-TIP)*i/6)*W, y2:cy+r-2, style:'stroke:#d8d0c0;stroke-width:1'}, svg);
+  // filter
+  Kit.mk('rect', {x:FX*W, y:cy-r, width:(FE-FX)*W, height:2*r, style:'fill:#d9944a;'+ink}, svg);
+  for (let i = 0; i < 14; i++) Kit.mk('circle', {cx:(FX+.01+((i*37)%17)/17*(FE-FX-.02))*W, cy:cy-r*.7+((i*53)%13)/13*r*1.4, r:1.2, style:'fill:#a8662a'}, svg);
+  // burning tip
+  const tip = Kit.mk('rect', {x:(TIP-.02)*W, y:cy-r, width:.02*W, height:2*r, rx:2, style:'fill:#e2552c;stroke:var(--k);stroke-width:1.6'}, svg);
+  tip.id = 'tip';
+  // labels
+  const fs = Math.max(f*.78, 12), ly = cy-1.6*r-fs*.7;
+  [['TOBACCO',(TIP+FX)/2],['FILTER',(FX+FE)/2],['MOUTH',(M0+M1)/2]].forEach(([t,x]) => {
+    const e = Kit.mk('text', {x:x*W, y:ly, 'text-anchor':'middle', style:`font:700 ${fs}px var(--mono);fill:var(--k);letter-spacing:.06em`}, svg); e.textContent = t; });
+  // flow arrow
+  const ay = cy+r+fs*1.4;
+  Kit.mk('line', {x1:TIP*W, y1:ay, x2:(M0-.02)*W, y2:ay, style:'stroke:var(--muted);stroke-width:1.2'}, svg);
+  Kit.mk('path', {d:`M${(M0-.02)*W-6},${ay-4} L${(M0-.02)*W},${ay} L${(M0-.02)*W-6},${ay+4}`, style:'fill:none;stroke:var(--muted);stroke-width:1.2'}, svg);
+  const st = Kit.mk('text', {x:TIP*W, y:ay+fs*1.35, style:`font:600 ${fs}px var(--body);fill:var(--muted)`}, svg); st.textContent = 'smoke drawn in';
+  layer = Kit.mk('g', {}, svg);
+  parts.forEach(p => { p.el = null; if (sent[p.l]) { p.el = shape(p); gsap.set(p.el, fin(p)); } });
+}
+function send(l){
+  const ps = parts.filter(p => p.l === l);
+  ps.forEach((p, i) => {
+    p.el = shape(p);
+    const s = {x:TIP*G.W, y:G.cy + p.sy*G.r*.6}, e = fin(p);
+    gsap.set(p.el, {x:s.x, y:s.y, opacity:0});
+    if (Kit.calm) { gsap.set(p.el, {...e, opacity:1}); return; }
+    const tl = gsap.timeline({delay:i*.045});
+    tl.to(p.el, {opacity:1, duration:.15});
+    if (p.pass) {
+      tl.to(p.el, {x:FE*G.W, y:G.cy+p.sy*G.r*.5, duration:1.1+Kit.rnd()*.3, ease:'none'})
+        .to(p.el, {x:e.x, y:e.y, duration:.6, ease:'power2.out'});
+    } else {
+      tl.to(p.el, {x:e.x, y:e.y, duration:1.1+Kit.rnd()*.5, ease:'power2.out'});
+    }
+  });
+  if (!Kit.calm) gsap.fromTo('#tip', {opacity:.5}, {opacity:1, duration:.3, repeat:3, yoyo:true});
+}
+Kit.$('lays').addEventListener('click', e => {
+  const b = e.target.closest('.lay'); if (!b) return;
+  const l = +b.dataset.i; if (sent[l]) return;
+  sent[l] = true; b.classList.add('done'); Kit.haptic('light'); send(l);
+  if (sent.every(Boolean)) setTimeout(() => {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:8, stagger:.12, duration:.45, ease:'power3.out'});
+  }, Kit.calm ? 0 : 1600);
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.lay', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const bs = Kit.$('lays').children;
+  for (let i = 0; i < 3; i++) { bs[i].click(); await new Promise(r => setTimeout(r, 200)); }
+  await new Promise(r => setTimeout(r, 3200));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-salt-sea-glass -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;justify-content:center;gap:3cqw;flex-wrap:wrap}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+.step{font:800 max(3cqh,18px)/1 var(--body);width:max(6.5cqh,42px);height:max(6.5cqh,42px);border-radius:50%;border:0;color:var(--k);background:color-mix(in srgb,var(--k) 10%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);cursor:pointer}
+#val{font:800 max(3.2cqh,18px)/1 var(--mono);color:var(--k);min-width:5ch;text-align:center}
+.go{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4.5cqw;cursor:pointer}
+.go[disabled]{opacity:.45}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SEA WATER</span></div>
+    <h2 class="q">How much salt is in a 200 ml glass of sea water?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A glass of sea water beside a stack of 1 gram salt blocks"></svg>
+      <div id="ctl">
+        <button class="step" id="minus" aria-label="one gram less">−</button>
+        <span id="val">1 g</span>
+        <button class="step" id="plus" aria-label="one gram more">+</button>
+        <button class="go" id="go">That's my guess</button>
+      </div>
+      <div id="why" class="gone"><p class="big">About 7 g of salt</p><p class="body">Sea water is about 3.5% salt: 3.5 g in every 100 ml. A 200 ml glass holds double, about 7 g. The WHO says never go over 5 g of salt a day.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Stack the grams of salt you think one glass holds.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One glass of sea water holds more salt than a whole day's limit.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TRUE_G = 7, MAXG = 10, WATER = '#2b7fd0', RED = '#d8342c';
+let guess = 1, locked = false, done = false;
+const svg = Kit.$('pic');
+let R = {};
+
+function txt(p, x, y, s, size, attrs = {}) {
+  const t = Kit.mk('text', Object.assign({x, y, fill: 'var(--k)', 'font-size': size, 'font-family': 'var(--body)', 'font-weight': 700}, attrs), p);
+  t.textContent = s; return t;
+}
+
+function draw() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const base = H - fs * 2.2;
+  const bh = Math.max(4, (base - fs * 3.2) / MAXG);
+  const bw = Math.min(W * 0.2, bh * 1.8);
+  const cx = W * 0.62;
+  const sw = Math.max(2, fs * 0.14);
+
+  // glass
+  const gx0 = W * 0.05, gx1 = W * 0.36;
+  const gt = base - Math.min(MAXG * bh, (gx1 - gx0) * 1.7);
+  const tap = (gx1 - gx0) * 0.09;
+  const pts = `${gx0},${gt} ${gx1},${gt} ${gx1 - tap},${base} ${gx0 + tap},${base}`;
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'gc'}, defs);
+  Kit.mk('polygon', {points: pts}, cp);
+  const wl = gt + (base - gt) * 0.12;
+  R.wl = wl; R.base = base; R.H = H;
+  R.water = Kit.mk('rect', done ? {x: gx0, y: base - sw, width: gx1 - gx0, height: sw, fill: WATER, 'clip-path': 'url(#gc)'}
+                               : {x: gx0, y: wl, width: gx1 - gx0, height: base - wl, fill: WATER, 'clip-path': 'url(#gc)'}, svg);
+  Kit.mk('polygon', {points: pts, fill: 'none', stroke: 'var(--k)', 'stroke-width': sw * 1.3, 'stroke-linejoin': 'round'}, svg);
+  const gmx = (gx0 + gx1) / 2, gmy = (wl + base) / 2;
+  if (!done) txt(svg, gmx, gmy, 'sea water', fs, {'text-anchor': 'middle', fill: '#fff'});
+  else {
+    txt(svg, gmx, gmy - fs * 0.7, '3.5 g in', fs, {'text-anchor': 'middle'});
+    txt(svg, gmx, gmy + fs * 0.7, 'each 100 ml', fs, {'text-anchor': 'middle'});
+  }
+  txt(svg, gmx, base + fs * 1.5, '200 ml', fs * 1.1, {'text-anchor': 'middle', 'font-weight': 800});
+
+  // shelf
+  Kit.mk('line', {x1: cx - bw * 0.9, x2: cx + bw * 0.9, y1: base, y2: base, stroke: 'var(--k)', 'stroke-width': sw * 1.3, 'stroke-linecap': 'round'}, svg);
+  txt(svg, cx, base + fs * 1.5, '1 block = 1 g', fs * 0.9, {'text-anchor': 'middle', 'font-weight': 600});
+
+  // WHO line
+  const y5 = base - 5 * bh;
+  Kit.mk('line', {x1: cx - bw * 0.8, x2: W * 0.97, y1: y5, y2: y5, stroke: RED, 'stroke-width': sw, 'stroke-dasharray': `${sw * 3} ${sw * 2}`}, svg);
+  txt(svg, W * 0.97, y5 - fs * 1.55, 'WHO limit', fs * 0.9, {'text-anchor': 'end', fill: RED});
+  txt(svg, W * 0.97, y5 - fs * 0.35, '5 g a day', fs * 0.9, {'text-anchor': 'end', fill: RED, 'font-weight': 800});
+
+  // guess blocks
+  R.guess = [];
+  for (let i = 0; i < guess; i++) {
+    const r = Kit.mk('rect', {x: cx - bw / 2, y: base - (i + 1) * bh + bh * 0.06, width: bw, height: bh * 0.88, rx: bh * 0.12,
+      fill: done ? 'none' : '#fff', stroke: 'var(--k)', 'stroke-width': sw, 'stroke-dasharray': done ? `${sw * 2} ${sw * 1.5}` : 'none', opacity: done ? .55 : 1}, svg);
+    R.guess.push(r);
+  }
+  // real blocks
+  R.real = [];
+  if (done) {
+    for (let i = 0; i < TRUE_G; i++) {
+      const over = i >= 5;
+      const r = Kit.mk('rect', {x: cx - bw / 2 + bw * 0.08, y: base - (i + 1) * bh + bh * 0.1, width: bw * 0.84, height: bh * 0.8, rx: bh * 0.12,
+        fill: over ? '#ffd9d6' : '#fff', stroke: over ? RED : 'var(--k)', 'stroke-width': sw}, svg);
+      R.real.push(r);
+    }
+    const y7 = base - TRUE_G * bh + bh * 0.5;
+    R.seven = txt(svg, cx - bw / 2 - fs * 0.5, y7 + fs * 0.35, '7 g', fs * 1.3, {'text-anchor': 'end', 'font-weight': 800});
+  }
+  // top label: kept above the WHO label and extending left, away from it
+  const whoTop = y5 - fs * 1.55 - fs * 0.9;
+  const topY = Math.min(base - MAXG * bh - fs * 0.9, whoTop - fs * 0.4);
+  txt(svg, cx + bw / 2, Math.max(fs * 1.1, topY), done ? `you guessed ${guess} g` : `your guess: ${guess} g`, fs, {'text-anchor': 'end', 'font-weight': 600});
+}
+
+function setGuess(n) {
+  if (locked) return;
+  const before = guess;
+  guess = Math.max(1, Math.min(MAXG, n));
+  Kit.$('val').textContent = guess + ' g';
+  draw();
+  if (guess > before && !Kit.calm) gsap.from(R.guess[guess - 1], {y: -R.H * 0.25, opacity: 0, duration: .35, ease: 'bounce.out'});
+  Kit.haptic('selection');
+}
+Kit.$('plus').addEventListener('click', () => setGuess(guess + 1));
+Kit.$('minus').addEventListener('click', () => setGuess(guess - 1));
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = Math.abs(guess - TRUE_G) <= 1;
+  Kit.answer({choice: guess + ' g', correct: ok, sure: pct});
+  done = true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why');
+  draw();
+  if (!Kit.calm) {
+    gsap.from(R.water, {attr: {y: R.wl, height: R.base - R.wl}, duration: 1.1, ease: 'power2.inOut'});
+    gsap.from(R.real, {y: -R.H, duration: .5, stagger: .12, delay: .5, ease: 'power3.in'});
+    if (R.seven) gsap.from(R.seven, {opacity: 0, duration: .4, delay: 1.5});
+  }
+  sure.grade(ok, pct, `${guess} g, ${ok ? 'right' : 'wrong'}`);
+  Kit.haptic('success');
+  Kit.show('keep');
+});
+Kit.$('go').addEventListener('click', () => {
+  if (locked) return;
+  locked = true;
+  ['plus', 'minus', 'go'].forEach(id => Kit.$(id).disabled = true);
+  Kit.haptic('light'); sure.on();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && !done) gsap.from(R.water, {attr: {y: R.base, height: 0}, duration: 1, ease: 'power2.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 3; i++) { Kit.$('plus').click(); await w(60); }
+  Kit.$('go').click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(2200);
+};
+Kit.single();
+</script>
+</html>

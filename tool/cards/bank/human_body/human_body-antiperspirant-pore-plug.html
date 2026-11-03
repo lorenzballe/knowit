@@ -1,0 +1,139 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-antiperspirant-pore-plug -->
+<title>Antiperspirants plug the pore</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.lb{font-family:var(--body);font-weight:800;letter-spacing:.04em}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SWEAT</span></div>
+    <h2 class="q">How do antiperspirants work?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="sv" aria-label="A sweat pore seen in cross-section"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">They kill the bacteria that make the smell</button>
+        <button class="opt" data-i="1">Their aluminium salts plug the pore</button>
+        <button class="opt" data-i="2">They soak up sweat like a sponge</button>
+      </div>
+      <div id="why" class="gone"><p class="big">A plug in the pore</p><p class="body">Antiperspirants carry aluminium salts, such as aluminium chlorohydrate. With sweat they form a gel plug that blocks the duct, so the sweat stays in. Deodorants without these salts act on bacteria instead: fewer bacteria, less smell.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Watch the sweat rise, then pick what an antiperspirant does.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Antiperspirant stops the sweat; deodorant fights the smell.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, plugged = false, G = null;
+const SKIN='#f6cdb4', DERM='#eaa58d', LINE='#7a3b28', LUMEN='#fff4ec', SWEAT='#2f8df0', DARK='#4a2418';
+
+function draw(){
+  const svg = Kit.$('sv');
+  if (G) { gsap.killTweensOf(G.drops); gsap.killTweensOf(G.bead); gsap.killTweensOf(G.all); }
+  svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg);
+  const fs = Math.max(Math.min(f, H*0.07), 12);
+  const s = H*0.28, ep = H*0.5, cx = W*0.5;
+  const dw = Math.max(Math.min(W*0.07, H*0.075), 12);
+  const R = Math.min(W*0.09, H*0.09), gy = H - R*1.6;
+  const g = Kit.mk('g', {}, svg);
+  const r = Math.min(W*0.03, H*0.03);
+  // skin
+  Kit.mk('rect', {x:0, y:s, width:W, height:H-s, rx:r, fill:DERM}, g);
+  Kit.mk('rect', {x:0, y:s, width:W, height:ep-s, rx:r, fill:SKIN}, g);
+  Kit.mk('line', {x1:0, y1:s, x2:W, y2:s, stroke:LINE, 'stroke-width':2}, g);
+  // duct + gland outline, then lumen
+  const coil = [[-0.7,0],[0.7,0],[0,-0.55],[0,0.6],[-0.2,0.05]];
+  const tube = (w, c) => {
+    Kit.mk('line', {x1:cx, y1:s-1, x2:cx, y2:gy-R*0.4, stroke:c, 'stroke-width':w, 'stroke-linecap':'butt'}, g);
+    coil.forEach(([a,b]) => Kit.mk('circle', {cx:cx+a*R, cy:gy+b*R, r:R*0.62, fill:'none', stroke:c, 'stroke-width':w}, g));
+  };
+  tube(dw+5, LINE); tube(dw, LUMEN);
+  Kit.mk('rect', {x:cx-dw/2, y:s-3, width:dw, height:6, fill:LUMEN}, g);
+  // bacteria on the surface
+  [[-0.32,0],[-0.22,0.4],[0.26,0.2],[0.36,-0.1]].forEach(([a,b],i) =>
+    Kit.mk('ellipse', {cx:cx+a*W, cy:s-dw*0.35-b*dw*0.3, rx:dw*0.45, ry:dw*0.26, fill:'#4caf50', stroke:'#1f6b24', 'stroke-width':1.5, transform:`rotate(${i*35-20} ${cx+a*W} ${s-dw*0.35})`}, g));
+  // labels
+  const lab = (t, x, y, anchor, col) => { const e = Kit.mk('text', {x, y, 'text-anchor':anchor, 'font-size':fs, fill:col, class:'lb'}, g); e.textContent = t; return e; };
+  lab('PORE', cx - dw*0.9, s - fs*1.6, 'end', 'currentColor');
+  lab('BACTERIA', cx + W*0.26, s - fs*1.6, 'middle', 'currentColor');
+  lab('SWEAT DUCT', cx + dw*1.1, (ep + gy - R)/2 + fs*0.4, 'start', DARK);
+  lab('SWEAT GLAND', cx - R*1.25, gy + fs*0.35, 'end', DARK);
+  svg.style.color = getComputedStyle(Kit.$('card')).getPropertyValue('--k') || '#111';
+  // sweat drops
+  const dr = dw*0.3, yb = gy - R*0.5, drops = [];
+  for (let i = 0; i < 5; i++) drops.push(Kit.mk('circle', {cx, cy:yb - i*(yb-s)/5, r:dr, fill:SWEAT}, g));
+  const bead = Kit.mk('ellipse', {cx, cy:s - dw*0.3, rx:dw*0.75, ry:dw*0.55, fill:SWEAT, opacity:.85}, g);
+  // plug pieces
+  const plugH = H*0.11;
+  const plug = Kit.mk('rect', {x:cx-dw/2, y:s-dw*0.25, width:dw, height:0, rx:dw*0.35, fill:'#ffffff', stroke:'#9aa3ad', 'stroke-width':2}, g);
+  const salts = [];
+  for (let i = 0; i < 9; i++) salts.push(Kit.mk('rect', {x:cx + (i-4)*dw*0.55, y:s*0.15 + (i%3)*s*0.12, width:dw*0.28, height:dw*0.28, fill:'#ffffff', stroke:'#9aa3ad', 'stroke-width':1, opacity:0}, g));
+  const plugLab = lab('ALUMINIUM-SALT PLUG', cx + dw*1.1, s + plugH*0.6 + fs*0.35, 'start', DARK);
+  plugLab.setAttribute('opacity', 0);
+  G = {drops, bead, plug, salts, plugLab, s, yb, dr, plugH, dw, all:[plug, plugLab, ...salts]};
+  if (plugged) { settle(false); return; }
+  if (!Kit.calm) {
+    drops.forEach((d,i) => gsap.fromTo(d, {attr:{cy:yb}}, {attr:{cy:s}, duration:2.5, ease:'none', repeat:-1, delay:-i*0.5}));
+    gsap.fromTo(bead, {attr:{rx:dw*0.4, ry:dw*0.3}}, {attr:{rx:dw*0.95, ry:dw*0.65}, duration:2.5, ease:'sine.inOut', repeat:-1, yoyo:true});
+  }
+}
+
+function settle(anim){
+  const {drops, bead, plug, salts, plugLab, s, dr, plugH, dw} = G;
+  const d = anim && !Kit.calm ? 1 : 0;
+  gsap.killTweensOf(drops); gsap.killTweensOf(bead);
+  const tl = gsap.timeline();
+  tl.to(salts, {opacity:1, duration:.25*d, stagger:.04*d}, 0)
+    .to(salts, {attr:{x:G.dw ? (i)=>+salts[0].getAttribute('x')*0 + (+salts[0].ownerSVGElement.viewBox.baseVal.width/2) - dw*0.14 : 0, y:s - dw*0.1}, duration:.7*d, ease:'power2.in', stagger:.05*d}, .2*d)
+    .to(salts, {opacity:0, duration:.2*d}, 1.1*d)
+    .to(bead, {attr:{rx:0, ry:0}, duration:.5*d}, .8*d)
+    .to(plug, {attr:{height:plugH + dw*0.25}, duration:.8*d, ease:'power2.out'}, .9*d)
+    .to(drops, {attr:{cy:i => s + plugH + dr*1.4 + i*dr*2.3}, duration:.9*d, ease:'power2.out'}, 1.1*d)
+    .to(plugLab, {opacity:1, duration:.4*d}, 1.5*d);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: the salts plug the pore`);
+  Kit.show('keep');
+  plugged = true; Kit.haptic('success');
+  requestAnimationFrame(() => { draw(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+let first = true;
+Kit.onShow.card = () => {
+  if (plugged && first === 'anim') { draw(); return; }
+  draw();
+};
+// after answering, the redraw animates the plug once
+const _draw = draw;
+draw = function(){
+  const wasPlugged = plugged, animate = plugged && first;
+  if (animate) { plugged = false; _draw(); plugged = true; first = false; settle(true); }
+  else _draw();
+};
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2800)); };
+Kit.single();
+</script>
+</html>

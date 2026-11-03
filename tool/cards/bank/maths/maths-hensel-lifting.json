@@ -1,0 +1,37 @@
+{
+  "id": "maths-hensel-lifting",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can you solve an equation one prime-power digit at a time?",
+  "answer": "Each new digit only has to work for one more power of 3, so there are just three choices (0, 1 or 2) to test, and exactly one fits. Repeating this step forever makes the digits build an exact 3-adic solution of x² = 7. The slider lets you add one digit at a time, up to 9 digits.",
+  "move": "Solve modulo 3, then 9, then 27… each step adds one digit of the answer.",
+  "keywords": [
+    "hensel lifting",
+    "3-adic numbers",
+    "kurt hensel",
+    "modular arithmetic",
+    "square roots"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page with a slider from 0 to 9 digits. Each step tries 0, 1 or 2 for the next power of 3, building the digits of a solution to x² = 7 one at a time."
+  },
+  "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=tRaq4aYPzCc&t=853s",
+  "written": "2026-11-03"
+}

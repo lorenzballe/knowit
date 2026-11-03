@@ -1,0 +1,37 @@
+{
+  "id": "history-titanic-open-bulkheads",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Titanic had 16 watertight compartments. Why didn't they keep it afloat?",
+  "answer": "Titanic's bulkheads were vertical walls with no lids, so each compartment was open at the top. As the bow tipped down, water rose over one wall and spilled into the next compartment, then the next. The walls only held water while the ship stayed level.",
+  "move": "A wall open on top only holds water while the ship stays level.",
+  "keywords": [
+    "titanic",
+    "bulkheads",
+    "watertight compartments",
+    "ship",
+    "sea"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Side view of a ship divided into 16 compartments by open-topped vertical walls. A red sea line rises as the bow tips lower, showing water spilling over one wall into the next. Caption asks why the ship did not stay afloat. Tap the ship to tip it further."
+  },
+  "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=hR2yfGGHniY&t=110s",
+  "written": "2026-11-03"
+}

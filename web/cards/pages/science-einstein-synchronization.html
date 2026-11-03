@@ -1,0 +1,126 @@
+<!doctype html>
+<!-- slug: science-einstein-synchronization -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#dia{width:100%;flex:1;min-height:0;display:block}
+#sw{display:flex;gap:2cqw;margin-top:1cqh}
+.opt{flex:1;font:700 max(2cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{font:500 max(1.8cqh,12px)/1.3 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
+#why b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Flip · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RELATIVITY</span></div>
+    <h2 class="q">What convention did Einstein adopt for clock synchronization?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="dia" aria-label="Light pulse from A to B and back, drawn with time going up"></svg>
+      <div id="sw">
+        <button class="opt on" data-m="0">Equal halves</button>
+        <button class="opt" data-m="1">Fast out, slow back</button>
+      </div>
+    </div>
+    <p class="say" id="say">Flip the switch. Watch what changes at B, and what A sees.</p>
+    <p id="why" class="gone"><b>Same 10 ticks at A either way.</b> Timing the trip to B alone needs B's clock already in sync, the very thing being set. So Einstein simply stipulated equal halves: a definition, not a measurement.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Light's speed is the same both ways by Einstein's choice; only the round trip is measured.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let mode = 0, done = false;
+const seen = [true, false];
+const svg = Kit.$('dia');
+let tl = null;
+
+function draw(anim){
+  if (tl) { tl.kill(); tl = null; }
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const f = Math.max(12, Math.min(f0, W / 22, H / 14));
+  const compact = H < 14 * f;
+  const tb = mode ? 2 : 5, back = 10 - tb;
+  const xA = W * .26, xB = W * .74;
+  const y0 = H - 2.2 * f, y1 = compact ? 2.6 * f : 4.4 * f;
+  const Y = t => y0 - (y0 - y1) * t / 10;
+  const K = 'var(--k)';
+  const T = (x, y, s, o = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: K, 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle', 'dominant-baseline': 'middle'}, o), svg); e.textContent = s; return e; };
+
+  // header
+  if (!compact) T(W / 2, 1.1 * f, "A's clock: there and back = 10 ticks", {'font-weight': 800});
+  const sub = T(W / 2, compact ? .9 * f : 2.6 * f, compact ? `A's clock: out ${tb} + back ${back} = 10` : `out ${tb} + back ${back}`, {'font-weight': 500, opacity: .75});
+
+  // worldlines
+  for (const x of [xA, xB]) Kit.mk('line', {x1: x, y1: y0 + .4 * f, x2: x, y2: y1 - .8 * f, stroke: K, 'stroke-width': Math.max(2, f * .14), opacity: .35, 'stroke-linecap': 'round'}, svg);
+  T(xA, y0 + 1.4 * f, 'A', {'font-weight': 800, 'font-size': f * 1.15});
+  T(xB, y0 + 1.4 * f, 'B', {'font-weight': 800, 'font-size': f * 1.15});
+  T(W * .5, y0 + 1.4 * f, 'time ↑', {'font-weight': 500, opacity: .6});
+
+  // simultaneity line
+  const dash = Kit.mk('line', {x1: xA, y1: Y(tb), x2: xB, y2: Y(tb), stroke: K, 'stroke-width': Math.max(1.5, f * .1), 'stroke-dasharray': `${f * .4} ${f * .35}`, opacity: .55}, svg);
+
+  // light legs
+  const lw = Math.max(3, f * .26);
+  const out = Kit.mk('line', {x1: xA, y1: Y(0), x2: xB, y2: Y(tb), stroke: K, 'stroke-width': lw, 'stroke-linecap': 'round'}, svg);
+  const ret = Kit.mk('line', {x1: xB, y1: Y(tb), x2: xA, y2: Y(10), stroke: K, 'stroke-width': lw, 'stroke-linecap': 'round'}, svg);
+
+  // clock marks
+  const dot = (x, y) => Kit.mk('circle', {cx: x, cy: y, r: f * .38, fill: K}, svg);
+  const d0 = dot(xA, Y(0)), dB = dot(xB, Y(tb)), d10 = dot(xA, Y(10));
+  let ly0 = Y(0), ly10 = Y(10);
+  if (ly0 - ly10 < 1.4 * f) { const m = (ly0 + ly10) / 2; ly0 = m + .7 * f; ly10 = m - .7 * f; }
+  const l0 = T(xA - .8 * f, ly0, 'sent 0', {'text-anchor': 'end'});
+  const l10 = T(xA - .8 * f, ly10, 'back 10', {'text-anchor': 'end'});
+  const midOk = Math.min(ly0 - Y(tb), Y(tb) - ly10) >= 1.3 * f;
+  const lmid = T(xA - .8 * f, Y(tb), `${tb}`, {'text-anchor': 'end', 'font-weight': 500, opacity: .7, visibility: midOk ? 'visible' : 'hidden'});
+  const lB1 = T(xB + .8 * f, Y(tb) - .7 * f, 'B set', {'text-anchor': 'start', 'font-weight': 500});
+  const lB2 = T(xB + .8 * f, Y(tb) + .7 * f, `to ${tb}`, {'text-anchor': 'start', 'font-weight': 800, 'font-size': f * 1.15});
+
+  if (!anim || Kit.calm) return;
+  const lenOut = Math.hypot(xB - xA, Y(0) - Y(tb)), lenRet = Math.hypot(xB - xA, Y(tb) - Y(10));
+  gsap.set(out, {attr: {'stroke-dasharray': lenOut, 'stroke-dashoffset': lenOut}});
+  gsap.set(ret, {attr: {'stroke-dasharray': lenRet, 'stroke-dashoffset': lenRet}});
+  gsap.set([dB, d10, lB1, lB2, l10, dash, lmid], {opacity: 0});
+  const sp = .22; // seconds per tick: the drawing's own speeds
+  tl = gsap.timeline();
+  tl.from([d0, l0], {opacity: 0, duration: .25})
+    .from(sub, {opacity: 0, duration: .3}, 0)
+    .to(out, {attr: {'stroke-dashoffset': 0}, duration: tb * sp, ease: 'none'})
+    .to([dB, lB1, lB2], {opacity: 1, duration: .25})
+    .to(dash, {opacity: .55, duration: .3}, '<')
+    .to(lmid, {opacity: .7, duration: .3}, '<')
+    .to(ret, {attr: {'stroke-dashoffset': 0}, duration: back * sp, ease: 'none'}, '<')
+    .to([d10, l10], {opacity: 1, duration: .25});
+}
+
+Kit.$('sw').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  const m = +b.dataset.m; if (m === mode) return;
+  mode = m;
+  [...Kit.$('sw').children].forEach(x => x.classList.toggle('on', +x.dataset.m === mode));
+  Kit.haptic('selection');
+  draw(true);
+  seen[mode] = true;
+  if (!done && seen[0] && seen[1]) {
+    done = true;
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.haptic('success');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+    requestAnimationFrame(() => draw(false));
+  }
+});
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) draw(true); };
+Kit.play.card = async () => {
+  Kit.$('sw').children[1].click();
+  await new Promise(r => setTimeout(r, 2800));
+};
+Kit.single();
+</script>
+</html>

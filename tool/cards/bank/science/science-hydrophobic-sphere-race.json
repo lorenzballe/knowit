@@ -1,0 +1,37 @@
+{
+  "id": "science-hydrophobic-sphere-race",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How much faster does a water-repelling sphere move through water?",
+  "answer": "The answer is about 33% faster. A water-repelling coat holds a thin layer of air around the sphere, so the water slides past air instead of gripping the surface. Measured with that air included, the drag coefficient is about 10 times lower.",
+  "move": "A trapped skin of air lets a sphere slip through water with far less drag.",
+  "keywords": [
+    "drag",
+    "hydrophobic",
+    "water",
+    "air-layer",
+    "sphere"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking how much faster a water-repelling sphere moves through water than an ordinary one. Three options: about the same, about 33% faster, or about 10 times faster. The reader picks one and rates confidence, then watches a side-by-side race of the two spheres."
+  },
+  "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=EQCzO4RfZAM&t=285s",
+  "written": "2026-11-03"
+}

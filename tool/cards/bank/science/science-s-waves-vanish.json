@@ -1,0 +1,37 @@
+{
+  "id": "science-s-waves-vanish",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do S-waves vanish 2,900 km below our feet?",
+  "answer": "S-waves vanish at 2,900 km because the material below that depth is liquid, and S-waves cannot travel through liquids. So a liquid layer must begin there: the outer core. That same liquid is also why P-waves suddenly slow down.",
+  "move": "Where S-waves stop, the layer below is liquid.",
+  "keywords": [
+    "s-waves",
+    "p-waves",
+    "outer core",
+    "earthquakes",
+    "earth's core"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Animated diagram of Earth's interior. The reader sends an S-wave or a P-wave down from a quake and watches what happens at 2,900 km depth, where the S-wave stops."
+  },
+  "source": "Geopop, “LA STRUTTURA INTERNA DELLA TERRA” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=ybWJKthgRcg&t=156s",
+  "written": "2026-11-03"
+}

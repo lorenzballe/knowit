@@ -1,0 +1,37 @@
+{
+  "id": "science-fusion-fuel-grams",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much fuel would fusion need to power one person for ten years?",
+  "answer": "Fusion fuel is counted in grams, not tonnes. Every 50 litres of ordinary water hides 1.6 grams of deuterium, and 5 grams of lithium-6 could give about 380,000 kWh, ten years of one person's energy. Fusion has no chain reaction, so if the fuel runs out, it simply stops, like a petrol engine.",
+  "move": "Fusion fuel is counted in grams: a few bottles of water could power a decade.",
+  "keywords": [
+    "fusion",
+    "deuterium",
+    "lithium-6",
+    "water",
+    "energy"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider running from a glass of water to energy. It asks how much fusion fuel would power one person for ten years, and the reveal gives the answer in grams."
+  },
+  "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=MFSwkFK7_ws&t=140s",
+  "written": "2026-11-03"
+}

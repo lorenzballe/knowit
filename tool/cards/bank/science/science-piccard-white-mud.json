@@ -1,0 +1,38 @@
+{
+  "id": "science-piccard-white-mud",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.cold_myths",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What did Piccard see through his porthole on the trench floor in 1960?",
+  "answer": "Piccard saw white mud on the floor of the Mariana Trench, in crystal-clear water. With the lights on, the water was so limpid he could see out through the plexiglass porthole. It was 3.5 °C outside.",
+  "move": "The deepest floor on Earth: white mud under crystal-clear water.",
+  "keywords": [
+    "jacques piccard",
+    "mariana trench",
+    "trieste",
+    "deep sea",
+    "white mud"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz: what Jacques Piccard saw through his porthole on the Mariana Trench floor in 1960. Options: pitch-black water and dark ooze; white mud in crystal-clear water; a thick brown cloud of silt; white mud in clear water. Lights come on after the pick.",
+    "ground": "#062436"
+  },
+  "source": "Geopop, “FOSSA DELLE MARIANNE, come si è formata e perché è cosi profonda” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=6rdDnFsCYSo&t=112s",
+  "written": "2026-11-03"
+}

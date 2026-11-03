@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-supersaturation-crystals -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.go{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:stretch}
+.go:disabled{opacity:.5}
+.lab{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · supersaturation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">What must underground water be like to grow crystals in rock cavities?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <button class="go" id="go">Let the water into the cavity ↓</button>
+      <div id="why" class="gone">
+        <p class="big">It must be supersaturated.</p>
+        <p class="body">Water underground is often full of salts. When it carries more than it can hold and reaches a cavity, the extra comes out as crystals.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag up or down to set the salt in the water, then let it in.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Crystals grow from the salt the water can't hold.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come creare i cristalli fatti in casa? Esperimento facile” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const LIM = .6;
+const st = {s: .35, phase: 'idle', pool: 0, cryst: []};
+let G = {}, R = {};
+const svg = Kit.$('pic');
+
+function col(){ return st.s > LIM + .001 ? '#ec7a2f' : '#3a8fd8'; }
+
+function setGauge(){
+  if (!R.fill) return;
+  const y = G.gb - (G.gb - G.gt) * st.s;
+  R.fill.setAttribute('y', y); R.fill.setAttribute('height', G.gb - y);
+  R.fill.setAttribute('fill', col());
+  R.handle.setAttribute('cy', y);
+}
+
+function crystalPts(c){
+  const {cx, cy, rx, ry} = G, m = Math.min(rx, ry);
+  const bx = cx + rx * .97 * Math.cos(c.a), by = cy + ry * .97 * Math.sin(c.a);
+  let dx = cx - bx, dy = cy - by; const d = Math.hypot(dx, dy); dx /= d; dy /= d;
+  const L = c.len * m, w = c.w * m, tx = -dy, ty = dx;
+  return {bx, by, pts: `${bx + tx*w},${by + ty*w} ${bx + dx*L*.8 + tx*w*.6},${by + dy*L*.8 + ty*w*.6} ${bx + dx*L},${by + dy*L} ${bx + dx*L*.8 - tx*w*.6},${by + dy*L*.8 - ty*w*.6} ${bx - tx*w},${by - ty*w}`};
+}
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .8, 12);
+  const rw = W * .6;
+  G = {W, H, f, fs, rw, cx: rw * .5, cy: H * .64, rx: rw * .36, ry: H * .2,
+       gx: W * .64, gw: W * .09, gt: H * .13, gb: H * .9};
+  const {cx, cy, rx, ry} = G;
+  // rock
+  Kit.mk('rect', {x: 0, y: H * .03, width: rw, height: H * .94, rx: 14, style: 'fill:color-mix(in srgb,var(--k) 22%,transparent)'}, svg);
+  for (let i = 1; i < 6; i++) {
+    const y = H * .03 + H * .94 * i / 6;
+    Kit.mk('path', {d: `M6 ${y} Q ${rw*.3} ${y - H*.025} ${rw*.6} ${y + H*.01} T ${rw - 6} ${y}`, fill: 'none', style: 'stroke:color-mix(in srgb,var(--k) 18%,transparent);stroke-width:2'}, svg);
+  }
+  Kit.mk('text', {x: 10, y: H * .03 + fs * 1.3, class: 'lab', 'font-size': fs, style: 'fill:color-mix(in srgb,var(--k) 70%,transparent)'}, svg).textContent = 'rock';
+  // crack
+  Kit.mk('path', {d: `M${cx} ${H*.03} L${cx - 6} ${H*.15} L${cx + 5} ${H*.27} L${cx} ${cy - ry + 4}`, fill: 'none', stroke: '#1d1d26', 'stroke-width': Math.max(6, W * .018), 'stroke-linejoin': 'round'}, svg);
+  // cavity
+  Kit.mk('ellipse', {cx, cy, rx, ry, fill: '#1d1d26'}, svg);
+  R.pool = Kit.mk('ellipse', {cx, cy, rx: rx * .96, ry: ry * .94, fill: '#3a8fd8', opacity: st.pool}, svg);
+  R.cg = Kit.mk('g', {}, svg);
+  st.cryst.forEach(c => {
+    const p = crystalPts(c);
+    c.el = Kit.mk('polygon', {points: p.pts, fill: '#f4f1ff', stroke: '#9b7be0', 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, R.cg);
+    c.bx = p.bx; c.by = p.by;
+  });
+  R.cav = Kit.mk('text', {x: cx, y: cy + fs * .35, 'text-anchor': 'middle', class: 'lab', 'font-size': fs, fill: '#ffffff', opacity: st.cryst.length ? 0 : .55}, svg);
+  R.cav.textContent = 'cavity';
+  R.dg = Kit.mk('g', {}, svg);
+  // gauge
+  const {gx, gw, gt, gb} = G, ly = gb - (gb - gt) * LIM;
+  Kit.mk('text', {x: gx + gw / 2, y: gt - fs * .6, 'text-anchor': 'middle', class: 'lab', 'font-size': fs, style: 'fill:var(--k)'}, svg).textContent = 'salt';
+  Kit.mk('rect', {x: gx, y: gt, width: gw, height: ly - gt, fill: '#ec7a2f', opacity: .14}, svg);
+  R.fill = Kit.mk('rect', {x: gx, y: gb, width: gw, height: 0}, svg);
+  Kit.mk('rect', {x: gx, y: gt, width: gw, height: gb - gt, rx: 4, fill: 'none', style: 'stroke:var(--k);stroke-width:2.5'}, svg);
+  Kit.mk('line', {x1: gx - 6, x2: gx + gw + 6, y1: ly, y2: ly, 'stroke-dasharray': '5 4', style: 'stroke:var(--k);stroke-width:2.5'}, svg);
+  const lx = gx + gw + 8;
+  const t = (y, s, c) => Kit.mk('text', {x: lx, y: y + fs * .35, class: 'lab', 'font-size': fs, style: `fill:${c}`}, svg).textContent = s;
+  t((gt + ly) / 2, 'too much', '#ec7a2f');
+  t(ly, 'limit', 'var(--k)');
+  t((ly + gb) / 2, 'fits', '#3a8fd8');
+  R.handle = Kit.mk('circle', {cx: gx + gw / 2, cy: gb, r: Math.max(9, gw * .32), style: 'fill:var(--c);stroke:var(--k);stroke-width:3'}, svg);
+  setGauge();
+}
+
+function setS(v){ if (st.phase !== 'idle') return; st.s = Math.max(.05, Math.min(.98, v)); setGauge(); }
+let drag = false;
+const fromY = e => { const r = svg.getBoundingClientRect(); setS((G.gb - (e.clientY - r.top)) / (G.gb - G.gt)); };
+svg.addEventListener('pointerdown', e => { drag = true; svg.setPointerCapture && svg.setPointerCapture(e.pointerId); fromY(e); });
+svg.addEventListener('pointermove', e => { if (drag) fromY(e); });
+svg.addEventListener('pointerup', () => { drag = false; Kit.haptic('light'); });
+
+function flow(){
+  if (st.phase !== 'idle') return;
+  st.phase = 'flowing'; Kit.$('go').disabled = true; Kit.haptic('selection');
+  const D = Kit.calm ? 0 : 1, tl = gsap.timeline();
+  const c = col();
+  for (let i = 0; i < 7; i++) {
+    const d = Kit.mk('circle', {cx: G.cx, cy: G.H * .03, r: Math.max(4, G.W * .012), fill: c}, R.dg);
+    tl.to(d, {attr: {cy: G.cy - G.ry + 6}, duration: .6 * D, ease: 'power1.in', onComplete: () => d.remove()}, i * .1 * D);
+  }
+  R.pool.setAttribute('fill', c);
+  tl.to(st, {pool: .55, duration: .5 * D, onUpdate: () => R.pool.setAttribute('opacity', st.pool)}, .5 * D);
+  const excess = st.s - LIM;
+  if (excess > .001) {
+    const n = Math.round(excess / (1 - LIM) * 16) + 6;
+    st.cryst = [];
+    for (let i = 0; i < n; i++) st.cryst.push({a: Kit.rnd() * Math.PI * 2, len: .35 + Kit.rnd() * .45 * (.5 + excess / (1 - LIM)), w: .07 + Kit.rnd() * .06});
+    tl.add(() => {
+      draw(); R.pool.setAttribute('fill', '#3a8fd8');
+      st.cryst.forEach((k, i) => gsap.from(k.el, {scale: 0, svgOrigin: `${k.bx} ${k.by}`, duration: .5 * D, delay: i * .04 * D, ease: 'back.out(1.6)'}));
+      gsap.to(st, {s: LIM, duration: 1 * D, ease: 'power2.inOut', onUpdate: setGauge});
+      gsap.to(R.pool, {attr: {fill: '#3a8fd8'}, duration: .5 * D});
+    });
+    tl.add(() => {
+      st.phase = 'done'; Kit.haptic('success');
+      Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, duration: .4, stagger: .1});
+      requestAnimationFrame(draw);
+    }, `+=${1.2 * D}`);
+  } else {
+    tl.add(() => { Kit.$('say').textContent = 'Nothing formed: all that salt fits in the water. Add more and try again.'; });
+    tl.to(st, {pool: 0, duration: .6 * D, onUpdate: () => R.pool.setAttribute('opacity', st.pool)}, `+=${.6 * D}`);
+    tl.add(() => { st.phase = 'idle'; Kit.$('go').disabled = false; });
+  }
+}
+Kit.$('go').addEventListener('click', flow);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { setS(.95); Kit.$('go').click(); await new Promise(r => setTimeout(r, Kit.calm ? 300 : 3600)); };
+Kit.single();
+</script>
+</html>

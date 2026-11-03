@@ -1,0 +1,37 @@
+{
+  "id": "nature-burning-plastic-waste",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.carbon_footprint",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is burning plastic for energy a mistake?",
+  "answer": "Burning plastic gives back some energy, but less than it costs to make new plastic, and its carbon is released as CO₂. Recycling keeps the plastic as plastic, so no new fossil fuel is needed to replace it. Plastic is worth more as plastic than as fuel.",
+  "move": "Plastic is worth more as plastic than as fuel.",
+  "keywords": [
+    "plastic",
+    "recycling",
+    "incineration",
+    "fossil fuel",
+    "co2"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two paths for a plastic bottle, one burning it for energy and one recycling it back into plastic. Tap to advance both paths and watch a pile of oil grow, to see which path spends more fossil fuel."
+  },
+  "source": "Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=WALo6GLp_to&t=468s",
+  "written": "2026-11-03"
+}

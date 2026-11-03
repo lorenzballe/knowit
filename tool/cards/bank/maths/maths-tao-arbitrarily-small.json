@@ -1,0 +1,37 @@
+{
+  "id": "maths-tao-arbitrarily-small",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "What did Terry Tao demonstrate about small numbers in Collatz sequences?",
+  "answer": "Terry Tao showed that almost every Collatz sequence dips as low as you like: any bar that grows to infinity works, even log log log log x. He did not prove this for every sequence, and Collatz remains unsolved.",
+  "move": "Almost every Collatz sequence dips as low as you like.",
+  "keywords": [
+    "collatz conjecture",
+    "terry tao",
+    "veritasium",
+    "unsolved problems"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question card asking what Terry Tao showed about small numbers in Collatz sequences. A draggable line asks the reader to set how low he proved sequences fall. Notes say any bar that grows to infinity works, and the result covers almost every sequence, not all, since Collatz is unsolved.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=094y1Z2wpJg",
+  "written": "2026-11-03"
+}

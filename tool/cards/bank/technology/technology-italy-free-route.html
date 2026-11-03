@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-italy-free-route -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#map{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:crosshair}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Draw it · then see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FREE ROUTE</span></div>
+    <h2 class="q">What does Italy's “free route” airspace save every year?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map"></svg>
+      <div id="why" class="gone">
+        <p class="big"><span id="num">0</span> million kg of fuel a year</p>
+        <p class="body">Planes used to hop from radio beacon to radio beacon. With free route, which Italy introduced first in Europe, airlines fly direct, burn less fuel and emit less CO2.</p>
+      </div>
+    </div>
+    <p class="say" id="say">With your finger, draw a flight from Milan to Bari.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Straighter routes: about 90 million kg of fuel saved each year.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dentro una Torre di controllo, come si gestisce il traffico aereo in Italia” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('map');
+const LON0 = 6.4, LON1 = 18.8, LAT0 = 36.5, LAT1 = 47.2, K = 0.74;
+const RED = '#e5484d', GREEN = '#22b36b';
+const ITALY = [[6.8,45.9],[7.9,46.3],[8.6,46.1],[9.3,46.5],[10.4,46.6],[11,46.8],[12.2,47],[13,46.6],[13.7,46.5],[13.6,45.8],[13.1,45.7],[12.4,45.4],[12.3,44.9],[12.4,44.2],[13.6,43.6],[14.2,42.4],[15,42],[16,41.9],[16,41.5],[16.9,41.1],[18,40.6],[18.5,40.1],[18.4,39.8],[17.9,40.3],[17.2,40.5],[16.6,40.1],[16.5,39.6],[17.1,39.1],[16.5,38.4],[16,37.9],[15.6,38.3],[15.8,38.9],[15.7,39.9],[15,40.2],[14.8,40.6],[14.2,40.8],[13.7,41.2],[12.6,41.4],[12.2,41.8],[11.1,42.4],[10.5,42.9],[10.3,43.6],[10,44],[9,44.4],[8.2,43.9],[7.5,43.8],[7,44.2],[6.9,45.1]];
+const SICILY = [[12.4,37.8],[13.3,38.2],[14.3,38],[15.6,38.3],[15.1,37.3],[15.2,36.7],[14.4,36.8],[12.6,37.6]];
+const SARDINIA = [[8.2,41],[9.2,41.2],[9.8,40.9],[9.7,39.2],[9.1,39.2],[8.4,38.9],[8.4,39.9],[8.5,40.6]];
+const MIL = [9.2,45.5], BARI = [16.9,41.1];
+const OLD = [MIL,[10.1,44.5],[11.5,43.6],[12.5,42.3],[14.1,41.8],[15.6,41.3],BARI];
+const EXTRA = [[8.6,44.9],[13,43.2],[10.8,45.4],[14.8,40.7],[12.4,44.9],[15.9,40.4],[9.4,40.2],[14,37.6]];
+let s = 1, ox = 0, oy = 0, F = 14, user = [], drawing = false, done = false;
+let gUser, uPath;
+const P = ([lon, lat]) => [ox + (lon - LON0) * K * s, oy + (LAT1 - lat) * s];
+const INV = (x, y) => [(x - ox) / (K * s) + LON0, LAT1 - (y - oy) / s];
+const dOf = pts => pts.map((p, i) => (i ? 'L' : 'M') + P(p).map(v => v.toFixed(1)).join(',')).join('');
+const ink = a => `color-mix(in srgb,var(--k) ${a}%,transparent)`;
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  F = Math.max(f, 12);
+  svg.innerHTML = '';
+  const pad = F * 0.6;
+  s = Math.min((W - 2 * pad) / ((LON1 - LON0) * K), (H - 2 * pad) / (LAT1 - LAT0));
+  ox = (W - (LON1 - LON0) * K * s) / 2; oy = (H - (LAT1 - LAT0) * s) / 2;
+  for (const shape of [ITALY, SICILY, SARDINIA])
+    Kit.mk('path', {d: dOf(shape) + 'Z', fill: ink(12), stroke: ink(35), 'stroke-width': Math.max(1, F * .08), 'stroke-linejoin': 'round'}, svg);
+  for (const b of [...OLD.slice(1, -1), ...EXTRA]) {
+    const [x, y] = P(b), r = F * .28;
+    Kit.mk('path', {d: `M${x},${y - r}L${x + r * .87},${y + r * .5}L${x - r * .87},${y + r * .5}Z`, fill: ink(45)}, svg);
+  }
+  gUser = Kit.mk('g', {}, svg);
+  uPath = Kit.mk('path', {d: user.length ? dOf(user) : '', fill: 'none', stroke: 'var(--k)', 'stroke-width': F * .2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': `${F * .1} ${F * .45}`}, gUser);
+  for (const [pt, name, end] of [[MIL, 'Milan', true], [BARI, 'Bari', false]]) {
+    const [x, y] = P(pt);
+    Kit.mk('circle', {cx: x, cy: y, r: F * .38, fill: 'var(--k)'}, svg);
+    const t = Kit.mk('text', {x: end ? x - F * .6 : x + F * .6, y: end ? y - F * .5 : y + F * .35, 'text-anchor': end ? 'end' : 'start', fill: 'var(--k)', style: `font:800 ${F}px var(--body)`}, svg);
+    t.textContent = name;
+  }
+  if (done) reveal(false);
+}
+
+function pathLine(pts, col, w) {
+  Kit.mk('path', {d: dOf(pts), fill: 'none', stroke: 'var(--c)', 'stroke-width': w + F * .2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  return Kit.mk('path', {d: dOf(pts), fill: 'none', stroke: col, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+}
+
+function reveal(anim) {
+  const W = svg.viewBox.baseVal.width, pad = F * .6;
+  const red = pathLine(OLD, RED, F * .26), green = pathLine([MIL, BARI], GREEN, F * .32);
+  const items = [['old route', RED, false], ['free route', GREEN, false], ['your line', 'var(--k)', true]];
+  items.forEach(([txt, col, dash], i) => {
+    const y = pad + F * .9 + i * F * 1.45;
+    Kit.mk('line', {x1: W - pad - F * 1.8, x2: W - pad, y1: y - F * .32, y2: y - F * .32, stroke: col, 'stroke-width': F * .25, 'stroke-linecap': 'round', 'stroke-dasharray': dash ? `${F * .1} ${F * .4}` : 'none'}, svg);
+    const t = Kit.mk('text', {x: W - pad - F * 2.3, y, 'text-anchor': 'end', fill: 'var(--k)', style: `font:700 ${F * .95}px var(--body)`}, svg);
+    t.textContent = txt;
+  });
+  const planes = [[red, RED], [green, GREEN]].map(([p, col]) => {
+    const L = p.getTotalLength(), c = Kit.mk('circle', {r: F * .42, fill: col, stroke: 'var(--c)', 'stroke-width': F * .12}, svg);
+    const at = t => { const q = p.getPointAtLength(L * t); c.setAttribute('cx', q.x); c.setAttribute('cy', q.y); };
+    return {p, L, at};
+  });
+  if (!anim) { planes.forEach(o => o.at(1)); return; }
+  for (const o of planes) { o.p.style.strokeDasharray = o.L; o.p.style.strokeDashoffset = o.L; o.at(0); }
+  const gL = planes[1].L, dur = 1.4;
+  planes.forEach(o => {
+    const d = dur * o.L / gL, st = {t: 0};
+    gsap.to(o.p.style, {strokeDashoffset: 0, duration: d, ease: 'none'});
+    gsap.to(st, {t: 1, duration: d, ease: 'none', onUpdate: () => o.at(st.t)});
+  });
+  gsap.delayedCall(dur, () => Kit.haptic('success'));
+}
+
+function finish() {
+  done = true; Kit.haptic('light');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  draw();
+  const n = Kit.$('num');
+  if (Kit.calm) { n.textContent = '90'; reveal(false); draw(); return; }
+  svg.innerHTML = ''; done = false; draw(); done = true; reveal(true);
+  const o = {v: 0};
+  gsap.to(o, {v: 90, duration: 1.8, delay: .4, ease: 'power2.out', onUpdate: () => n.textContent = Math.round(o.v)});
+}
+
+function local(e) { const r = svg.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+svg.addEventListener('pointerdown', e => {
+  if (done) return;
+  drawing = true; user = [INV(...local(e))];
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  uPath.setAttribute('d', dOf(user)); Kit.haptic('selection');
+});
+svg.addEventListener('pointermove', e => {
+  if (!drawing) return;
+  const q = INV(...local(e)), [a, b] = P(user[user.length - 1]), [x, y] = P(q);
+  if (Math.hypot(x - a, y - b) < 2) return;
+  user.push(q); uPath.setAttribute('d', dOf(user));
+});
+const up = () => {
+  if (!drawing) return; drawing = false;
+  let L = 0; for (let i = 1; i < user.length; i++) { const [a, b] = P(user[i - 1]), [x, y] = P(user[i]); L += Math.hypot(x - a, y - b); }
+  const [m1, m2] = P(MIL), [b1, b2] = P(BARI);
+  if (L < Math.hypot(b1 - m1, b2 - m2) * .35) { user = []; uPath.setAttribute('d', ''); return; }
+  finish();
+};
+svg.addEventListener('pointerup', up);
+svg.addEventListener('pointercancel', up);
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#map circle', {scale: 0, transformOrigin: 'center', transformBox: 'fill-box', stagger: .15, duration: .5, ease: 'back.out(2)'}); };
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), ev = (type, lon, lat) => {
+    const [x, y] = P([lon, lat]);
+    svg.dispatchEvent(new PointerEvent(type, {clientX: r.left + x, clientY: r.top + y, pointerId: 1, bubbles: true}));
+  };
+  ev('pointerdown', ...MIL);
+  for (let i = 1; i <= 20; i++) { const t = i / 20; ev('pointermove', MIL[0] + (BARI[0] - MIL[0]) * t, MIL[1] + (BARI[1] - MIL[1]) * t - Math.sin(Math.PI * t) * .9); }
+  ev('pointerup', ...BARI);
+  await new Promise(res => setTimeout(res, 3200));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-hyper-g-dizziness -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#fig{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw;margin-top:.8cqh}
+#ctl input{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer}
+#gval{font:700 max(2.6cqh,16px)/1 var(--mono);color:var(--k);min-width:4.2em;text-align:right}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.src{display:inline-block;max-width:68%;overflow-wrap:anywhere}
+.q,.body,.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HYPER-G</span></div>
+    <h2 class="q">Why does 1.8g make you dizzy and hard to stand?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="fig" aria-label="A standing person whose blood sinks toward the feet as g rises"></svg>
+      <div id="ctl">
+        <input id="g" type="range" min="100" max="180" step="1" value="100" aria-label="g force">
+        <span id="gval">1.0 g</span>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the plane up to 1.8g and watch the blood.</p>
+    <div id="why" class="gone"><p class="body">The plane accelerates upward, so the floor presses you with 1.8 times your weight. That same push drains blood from your head into your feet. Less blood reaches your brain, so you get dizzy.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>More g pulls blood down, away from your brain.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+let g = 1, done = false, R = null, phase = 0;
+const RED = [200,16,46], PALE = [246,214,214], DARK = [110,0,18];
+const mix = (a,b,t) => `rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(',')})`;
+
+function build(){
+  const svg = Kit.$('fig'); svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const y1 = H*0.82, y0 = H*0.05, hF = y1 - y0, cx = W*0.44;
+  const defs = Kit.mk('defs', {}, svg);
+  const gr = Kit.mk('linearGradient', {id:'blood', gradientUnits:'userSpaceOnUse', x1:0, y1:y0, x2:0, y2:y1}, defs);
+  const s0 = Kit.mk('stop', {offset:0}, gr), s1 = Kit.mk('stop', {offset:.45}, gr), s2 = Kit.mk('stop', {offset:.8}, gr), s3 = Kit.mk('stop', {offset:1}, gr);
+  // floor
+  Kit.mk('line', {x1:0, x2:W, y1:y1, y2:y1, stroke:'var(--k)', 'stroke-width':Math.max(2,H*.008), 'stroke-linecap':'round'}, svg);
+  // body
+  const body = Kit.mk('g', {}, svg);
+  const sw = Math.max(2, hF*.009), st = {fill:'url(#blood)', stroke:'var(--k)', 'stroke-width':sw};
+  const hr = hF*.075, yt = y0 + 2*hr + hF*.02;
+  const P = (tag,a) => Kit.mk(tag, Object.assign({}, st, a), body);
+  P('rect', {x:cx-hF*.205, y:yt+hF*.01, width:hF*.07, height:hF*.36, rx:hF*.035});
+  P('rect', {x:cx+hF*.135, y:yt+hF*.01, width:hF*.07, height:hF*.36, rx:hF*.035});
+  P('rect', {x:cx-hF*.11, y:yt+hF*.28, width:hF*.095, height:y1-yt-hF*.28, rx:hF*.04});
+  P('rect', {x:cx+hF*.015, y:yt+hF*.28, width:hF*.095, height:y1-yt-hF*.28, rx:hF*.04});
+  P('rect', {x:cx-hF*.13, y:yt, width:hF*.26, height:hF*.36, rx:hF*.06});
+  P('circle', {cx:cx, cy:y0+hr, r:hr});
+  const stars = [0,1,2].map(() => { const t = Kit.mk('text', {'font-size':fs*1.1, fill:'var(--k)', 'text-anchor':'middle', 'dominant-baseline':'middle', opacity:0}, svg); t.textContent = '✦'; return t; });
+  // up arrow (floor push)
+  const ax = Math.max(W*.13, 42);
+  const arrow = Kit.mk('path', {fill:'none', stroke:'var(--k)', 'stroke-width':Math.max(3,H*.012), 'stroke-linecap':'round', 'stroke-linejoin':'round'}, svg);
+  const al1 = Kit.mk('text', {x:ax, 'font-size':fs, 'font-family':'var(--body)', 'font-weight':700, fill:'var(--k)', 'text-anchor':'middle'}, svg); al1.textContent = 'floor';
+  const al2 = Kit.mk('text', {x:ax, 'font-size':fs, 'font-family':'var(--body)', 'font-weight':700, fill:'var(--k)', 'text-anchor':'middle'}, svg); al2.textContent = 'pushes up';
+  // brain-blood meter
+  const mx = Math.min(W*.82, W - 40), mw = Math.max(16, W*.06);
+  const ml1 = Kit.mk('text', {x:mx, y:y0+fs, 'font-size':fs, 'font-family':'var(--body)', 'font-weight':700, fill:'var(--k)', 'text-anchor':'middle'}, svg); ml1.textContent = 'blood';
+  const ml2 = Kit.mk('text', {x:mx, y:y0+fs*2.3, 'font-size':fs, 'font-family':'var(--body)', 'font-weight':700, fill:'var(--k)', 'text-anchor':'middle'}, svg); ml2.textContent = 'in head';
+  const mt = y0 + fs*3.2, mb = y1 - H*.12;
+  Kit.mk('rect', {x:mx-mw/2, y:mt, width:mw, height:mb-mt, rx:mw/2, fill:'none', stroke:'var(--k)', 'stroke-width':sw}, svg);
+  const mfill = Kit.mk('rect', {x:mx-mw/2+sw*1.5, width:mw-sw*3, rx:(mw-sw*3)/2}, svg);
+  // weight readout
+  const wt = Kit.mk('text', {x:W/2, y:Math.min(H - fs*.4, y1 + (H-y1)*.62), 'font-size':fs*1.15, 'font-family':'var(--body)', 'font-weight':800, fill:'var(--k)', 'text-anchor':'middle', 'dominant-baseline':'middle'}, svg);
+  R = {W,H,fs,y0,y1,hF,cx,hr,s:[s0,s1,s2,s3],body,stars,arrow,al1,al2,ax,mfill,mt,mb,sw,wt};
+  update();
+}
+
+function update(){
+  Kit.$('gval').textContent = g.toFixed(1) + ' g';
+  if (!R) return;
+  const t = (g-1)/0.8;
+  R.s[0].setAttribute('stop-color', mix(RED, PALE, t*.92));
+  R.s[1].setAttribute('stop-color', mix(RED, PALE, t*.45));
+  R.s[2].setAttribute('stop-color', mix(RED, DARK, t*.7));
+  R.s[3].setAttribute('stop-color', mix(RED, DARK, .3 + t*.7));
+  R.s[1].setAttribute('offset', .45 + t*.15);
+  R.s[2].setAttribute('offset', .8 - t*.15);
+  const L = R.H*(.12 + .12*t), base = R.y1 - R.sw*2, tip = base - L, hd = R.fs*.7;
+  R.arrow.setAttribute('d', `M${R.ax},${base} L${R.ax},${tip} M${R.ax-hd},${tip+hd} L${R.ax},${tip} L${R.ax+hd},${tip+hd}`);
+  R.al2.setAttribute('y', tip - R.fs*.6); R.al1.setAttribute('y', tip - R.fs*1.9);
+  const lvl = 1 - .62*t, top = R.mb - (R.mb - R.mt - R.sw*3)*lvl - R.sw*1.5;
+  R.mfill.setAttribute('y', top); R.mfill.setAttribute('height', Math.max(0, R.mb - R.sw*1.5 - top));
+  R.mfill.setAttribute('fill', mix(RED, PALE, t*.6));
+  R.wt.textContent = `Feels like ${g.toFixed(1)}× your weight`;
+  pose();
+}
+
+function pose(){
+  if (!R) return;
+  const t = (g-1)/0.8, wob = Kit.calm ? 0 : Math.max(0, t-.45)*5.5;
+  const a = wob*Math.sin(phase*2.2), s = 1 - .045*t;
+  R.body.setAttribute('transform', `rotate(${a} ${R.cx} ${R.y1}) translate(0 ${R.y1}) scale(1 ${s}) translate(0 ${-R.y1})`);
+  const op = Math.max(0, (t-.5)*2);
+  const hy = R.y1 - (R.y1 - (R.y0+R.hr))*s, hx = R.cx + Math.sin(a*Math.PI/180)*(R.y1-hy);
+  const orx = Math.max(R.hr*1.7, R.fs*2.2), ory = Math.max(R.hr*.45, R.fs*.9);
+  const ocy = Math.max(hy - R.hr*1.05, ory + R.fs*.7);
+  R.stars.forEach((st,i) => {
+    const ang = phase*1.6 + i*2.094;
+    st.setAttribute('x', hx + Math.cos(ang)*orx);
+    st.setAttribute('y', ocy + Math.sin(ang)*ory);
+    st.setAttribute('opacity', op);
+  });
+}
+
+Kit.$('g').addEventListener('input', e => {
+  const ng = +e.target.value/100;
+  if (Math.round(ng*10) !== Math.round(g*10)) Kit.haptic('selection');
+  g = ng; update();
+  if (!done && g >= 1.8) {
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why','#keep'], {opacity:0, y:8, stagger:.1, duration:.45, ease:'power3.out'});
+  }
+});
+
+gsap.ticker.add((time) => { phase = time; if (!Kit.calm && g > 1.35) pose(); });
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#fig', {opacity:0, y:12, duration:.5, ease:'power3.out'});
+  const o = {v:100};
+  gsap.to(o, {v:118, duration:.5, delay:.5, yoyo:true, repeat:1, ease:'sine.inOut', onUpdate(){ if (!done && +Kit.$('g').value < 120) { g = o.v/100; Kit.$('g').value = o.v; update(); } }});
+};
+Kit.play.card = async () => {
+  const s = Kit.$('g'); s.value = 180; s.dispatchEvent(new Event('input', {bubbles:true}));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

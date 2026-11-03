@@ -1,0 +1,177 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The E on your forehead</title>
+<!-- The reader traces a capital E on their own forehead, then says which way it pointed on a head
+     drawn from behind (so its right is their right). The head turns round: the E flips into what the
+     person facing them sees. Then the 2006 study (Galinsky, Magee, Inesi & Gruenfeld, Experiment 1):
+     57 students, 8 of 24 primed with power drew it for themselves against 4 of 33 primed without,
+     drawn as 57 tiny E's, which stay on screen for the catch: reruns of Experiment 1 in person and
+     online (Calin-Jageman & Kasprzyk, APS 2017: overall odds ratio .85, 95% CI .55-1.33, "mixed
+     evidence") found no clear effect, and the paper's sister test (Study 2a), rerun in Many Labs 3 with
+     2,969 people, lost its effect (d 0.77 to 0.03). Inspired by Diventare Strong (Alex Onofri),
+     "Diventa POTENTE in 8 Punti". Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/rough.js"></script>
+<style>
+#stage{display:flex;flex-direction:column}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#pick{display:flex;gap:3cqw}
+.pk{flex:1;display:flex;align-items:center;gap:2.6cqw;font:700 max(1.5cqh,11.5px)/1.25 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 12%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 40%,transparent);border-radius:1.8cqh;padding:1.2cqh 3cqw;cursor:pointer}
+.pk svg{width:4.6cqh;height:5.4cqh;min-width:26px;min-height:30px;flex:none}
+.pk.on{background:var(--k);color:var(--c);box-shadow:none}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+#keep{text-wrap:pretty}
+@container (max-height:520px){ .answered .keep{padding-top:9px;padding-bottom:9px} }
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Try it · then the study">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TRY IT NOW</span></div>
+    <h2 class="q">Draw a capital E on your forehead with a finger. Which way does it face?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A head drawn from behind, so its right is your right."></svg>
+    </div>
+    <p class="say" id="say">Done? This is your head <b>from behind</b>, so its right is your right. Which way did your E point?</p>
+    <div id="pick">
+      <button class="pk" data-i="0"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M7 4v20M7 4h11M7 14h8M7 24h11" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Lines point to my <b>right</b> ear</span></button>
+      <button class="pk" data-i="1"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M17 4v20M17 4H6M17 14H9M17 24H6" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Lines point to my <b>left</b> ear</span></button>
+    </div>
+    <button class="btn gone" id="go">Now add power</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The E shows whose eyes you see through. That power flips it is still unproven.</div>
+    <div class="foot"><span class="src">Source · Galinsky et al., Psychol. Science 2006 · Calin-Jageman &amp; Kasprzyk, APS 2017 · Ebersole et al., JESP 2016</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const INK = '#ffffff', C = '#9B5CFF', DEEP = '#5a2ea6';
+  const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go');
+  // step: 0 pick, 1 the head turned round, 2 the study, 3 the reruns. self: the reader drew it for themselves.
+  let step = 0, self = null, turned = 0;
+  const txt = (x, y, s, a, p) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-size': 11.5, 'font-weight': 700}, a), p || svg); e.textContent = s; return e; };
+  // An E as a path: its lines point right (dir 1) or left (dir -1) from a spine at x.
+  const ePath = (x, y, h, dir) => { const w = h * .72 * dir, m = h * .58 * dir; return `M${x},${y} V${y + h} M${x},${y} h${w} M${x},${y + h / 2} h${m} M${x},${y + h} h${w}`; };
+
+  // ---- the head, from behind and, once turned, from the front ----
+  let head = null;
+  function drawHead(W, H) {
+    const rc = rough.svg(svg);
+    const r = Math.min(H * .36, W * .3), cx = W / 2, cy = r * 1.06 + 4;
+    const o = (s, x) => Object.assign({stroke: INK, strokeWidth: Math.max(1.7, r * .03), roughness: 1, bowing: .8, seed: s}, x || {});
+    const g = Kit.mk('g', {}, svg);
+    // Neck and shoulders.
+    for (const s of [-1, 1]) g.appendChild(rc.path(`M${cx + s * r * .32},${cy + r * .9} L${cx + s * r * .34},${cy + r * 1.2} Q${cx + s * r * 1.05},${cy + r * 1.24} ${cx + s * r * 1.45},${Math.min(H, cy + r * 1.75)}`, o(1 + s)));
+    for (const s of [-1, 1]) g.appendChild(rc.ellipse(cx + s * r * .8, cy + r * .05, r * .26, r * .42, o(4 + s, {fill: C, fillStyle: 'solid'})));
+    g.appendChild(rc.ellipse(cx, cy, r * 1.6, r * 2, o(7, {fill: C, fillStyle: 'solid'})));
+    // From behind: hair over the whole head.
+    const back = Kit.mk('g', {}, g);
+    back.appendChild(rc.ellipse(cx, cy - r * .04, r * 1.48, r * 1.86, o(8, {stroke: 'none', fill: INK, fillStyle: 'hachure', hachureGap: Math.max(4, r * .085), hachureAngle: 70, fillWeight: Math.max(1, r * .02)})));
+    // From the front: a fringe, brows, eyes, nose, mouth.
+    const front = Kit.mk('g', {opacity: 0}, g);
+    front.appendChild(rc.path(`M${cx - r * .79},${cy - r * .2} C${cx - r * .9},${cy - r * 1.2} ${cx + r * .9},${cy - r * 1.2} ${cx + r * .79},${cy - r * .2} C${cx + r * .62},${cy - r * .72} ${cx - r * .62},${cy - r * .72} ${cx - r * .79},${cy - r * .2} Z`, o(9, {fill: INK, fillStyle: 'hachure', hachureGap: Math.max(4, r * .085), hachureAngle: -60, fillWeight: Math.max(1, r * .02)})));
+    for (const s of [-1, 1]) {
+      front.appendChild(rc.line(cx + s * r * .52, cy - r * .02, cx + s * r * .2, cy - r * .06, o(10 + s)));
+      front.appendChild(rc.ellipse(cx + s * r * .34, cy + r * .14, r * .2, r * .13, o(13 + s)));
+      Kit.mk('circle', {cx: cx + s * r * .34, cy: cy + r * .15, r: Math.max(2.4, r * .05), fill: INK}, front);
+    }
+    front.appendChild(rc.curve([[cx + r * .03, cy + r * .12], [cx - r * .07, cy + r * .4], [cx + r * .07, cy + r * .44]], o(16)));
+    front.appendChild(rc.path(`M${cx - r * .22},${cy + r * .64} Q${cx},${cy + r * .72} ${cx + r * .22},${cy + r * .64}`, o(17)));
+    // The E, where a finger draws it: between the hairline and the brows.
+    const eg = Kit.mk('g', {}, g);
+    head = {g, back, front, eg, cx, cy, r};
+    drawE();
+    setTurn(turned, true);
+  }
+  function drawE(animate) {
+    if (!head) return;
+    head.eg.innerHTML = '';
+    if (self === null) return;
+    const {cx, cy, r, eg} = head, h = r * .32, dir = self ? 1 : -1, x = cx - dir * h * .36, y = cy - r * .5;
+    const d = ePath(x, y, h, dir);
+    Kit.mk('path', {d, fill: 'none', stroke: DEEP, 'stroke-width': Math.max(7, r * .13), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, eg);
+    const p = Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': Math.max(3.4, r * .065), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, eg);
+    if (animate && !Kit.calm) { const L = p.getTotalLength(); gsap.fromTo(p, {attr: {'stroke-dasharray': L, 'stroke-dashoffset': L}}, {attr: {'stroke-dashoffset': 0}, duration: .7, ease: 'power1.inOut'}); gsap.from(eg.firstChild, {opacity: 0, duration: .5}); }
+  }
+  // turned 0: from behind; 1: from the front. The flip itself mirrors the E, as turning a head does.
+  function setTurn(t, now) {
+    turned = t;
+    if (!head) return;
+    const apply = sx => { head.g.setAttribute('transform', `translate(${head.cx} 0) scale(${sx} 1) translate(${-head.cx} 0)`); const f = sx < 0 ? 1 : 0; head.front.setAttribute('opacity', f); head.back.setAttribute('opacity', 1 - f); };
+    if (now || Kit.calm) { apply(t ? -1 : 1); return; }
+    const s = {sx: 1};
+    gsap.to(s, {sx: -1, duration: 1.1, ease: 'power2.inOut', onUpdate: () => apply(Math.abs(s.sx) < .02 ? (s.sx < 0 ? -.02 : .02) : s.sx)});
+  }
+
+  // ---- the study: 57 students as 57 tiny E's, as the person facing each of them saw it ----
+  function drawStudy(W, H) {
+    const groups = [{name: 'FELT POWERFUL', n: 24, self: 8, pct: '33%'}, {name: 'FELT POWERLESS', n: 33, self: 4, pct: '12%'}];
+    const gap = W * .08, bw = (W - gap) / 2, fp = Math.max(20, Math.min(28, H / 8)), head = 26 + fp;
+    // As many columns as the height needs, then the size of an E from the room each one gets.
+    let cols = 6, cell;
+    for (; cols < 12; cols++) { cell = bw / cols; if (Math.ceil(33 / cols) * cell * 1.25 <= H - head - 6) break; }
+    cell = Math.min(cell, (H - head - 6) / (Math.ceil(33 / cols) * 1.25));
+    // The block centred in the room it has: names, percentages, then the E's.
+    const oy = Math.max(0, (H - head - 6 - Math.ceil(33 / cols) * cell * 1.25) / 2), top = oy + head;
+    groups.forEach((gr, k) => {
+      const x0 = k * (bw + gap), g = Kit.mk('g', {class: 'grp'}, svg);
+      txt(x0, oy + 12, gr.name, {'letter-spacing': '.1em', 'font-weight': 800, opacity: .8}, g);
+      txt(x0, oy + 17 + fp, gr.pct, {'font-family': 'Fraunces', 'font-size': fp, 'font-weight': 800}, g);
+      txt(x0 + bw, oy + 17 + fp, `${gr.self} of ${gr.n}`, {'text-anchor': 'end', opacity: .85}, g);
+      for (let i = 0; i < gr.n; i++) {
+        const c = i % cols, row = Math.floor(i / cols), h = cell * .62, own = i < gr.self;
+        const x = x0 + c * cell + cell * .5 + (own ? h * .36 : -h * .36), y = top + row * cell * 1.25;
+        Kit.mk('path', {d: ePath(x, y, h, own ? -1 : 1), fill: 'none', stroke: INK, 'stroke-width': own ? Math.max(2.2, h * .2) : Math.max(1.4, h * .12), 'stroke-linecap': 'round', opacity: own ? 1 : .42, class: own ? 'own' : ''}, g);
+      }
+    });
+  }
+
+  function draw() {
+    svg.innerHTML = ''; head = null;
+    const {W, H} = Kit.fitSvg(svg);
+    if (step <= 1) drawHead(W, H); else drawStudy(W, H);
+  }
+
+  const SAY = {
+    self: 'To anyone facing you, it reads <b>backwards</b>: you drew it from your own point of view. In a 2006 study, 12 of 57 students did too.',
+    other: 'The person facing you can read it: you drew it from <b>their</b> point of view, like 45 of 57 students in a 2006 study.',
+    study: 'First, each student wrote about a time they had power over someone, or someone had power over them. Then the E. The ‘powerful’ drew it for themselves almost <b>three times</b> as often.',
+    rerun: 'That was 8 of 24 against 4 of 33. Reruns in person and online (2017): no clear effect. A sister test with 2,969 people (2016): none.'
+  };
+
+  function choose(i) {
+    if (step !== 0) return;
+    self = i === 0; step = 1;
+    document.querySelectorAll('.pk').forEach(b => b.classList.toggle('on', +b.dataset.i === i));
+    Kit.haptic('selection');
+    drawE(true);
+    const later = Kit.calm ? 0 : 900;
+    setTimeout(() => {
+      setTurn(1);
+      say.innerHTML = self ? SAY.self : SAY.other;
+      Kit.hide('pick'); Kit.show('go');
+    }, later);
+  }
+  function next() {
+    if (step === 1) {
+      step = 2; draw(); say.innerHTML = SAY.study; go.textContent = 'Did it hold up?';
+      if (!Kit.calm) { gsap.from('.grp', {opacity: 0, y: 8, stagger: .15, duration: .4}); gsap.from('.own', {opacity: 0, scale: .4, transformOrigin: 'center', stagger: .05, duration: .3, delay: .5}); }
+    } else if (step === 2) {
+      step = 3; draw(); say.innerHTML = SAY.rerun;
+      go.classList.add('gone'); Kit.$('card').classList.add('answered'); Kit.show('keep'); Kit.haptic('success');
+      requestAnimationFrame(draw);
+    }
+  }
+  Kit.$('pick').addEventListener('click', e => { const b = e.target.closest('.pk'); if (b) choose(+b.dataset.i); });
+  go.addEventListener('click', next);
+  Kit.onShow.card = draw;
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 40 : ms));
+    document.querySelector('.pk[data-i="0"]').click(); await wait(2300);
+    go.click(); await wait(1200);
+    go.click(); await wait(900);
+  };
+})();
+Kit.single();
+</script>
+</html>

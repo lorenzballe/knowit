@@ -1,0 +1,190 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-forgotten-dreams -->
+<title>Why we forget our dreams</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#cvwrap{flex:1;min-height:max(18cqh,120px);position:relative}
+#stage.end #cvwrap{min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hold{font:800 max(2.3cqh,15px)/1.15 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:max(2cqh,12px) 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:transform .12s ease,background .3s ease}
+#hold.down{transform:scale(.97);background:#2b2f5e;color:#e8eaff}
+#why{display:flex;flex-direction:column;gap:1cqh;flex-shrink:0}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DREAM MEMORY</span></div>
+    <h2 class="q">Why do we usually forget our dreams?</h2>
+    <div class="stagebox" id="stage">
+      <div id="cvwrap"><canvas id="cv"></canvas></div>
+      <button id="hold">Hold to fall asleep</button>
+      <div id="why" class="gone">
+        <p class="big">Low noradrenaline, no saving.</p>
+        <p class="body">Noradrenaline is a brain messenger that helps fix memories for the long term. During sleep its level drops a lot, so the brain struggles to save what you dream.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button to sleep. Watch what gets saved.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Dreams fade because noradrenaline, the brain's “save” signal, drops during sleep.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv'), btn = Kit.$('hold');
+let G = null;
+const TH = 0.45, N = 180;
+let sleeping = false, level = 0.86, sleepAmt = 0, time = 0, sampleT = 0, spawnT = 0.3;
+let hist = [], items = [], shelf = [], lost = 0, done = false, slept = false;
+for (let i = 0; i < N; i++) hist.push({v: 0.86 + Math.sin(i * 0.15) * 0.015, s: 0});
+
+function hex(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];}
+function mix(a,b,t,al){const A=hex(a),B=hex(b);const c=A.map((v,i)=>Math.round(v+(B[i]-v)*t));return al==null?`rgb(${c})`:`rgba(${c},${al})`;}
+function rr(x,X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,r);x.arcTo(X+w,Y+h,X,Y+h,r);x.arcTo(X,Y+h,X,Y,r);x.arcTo(X,Y,X+w,Y,r);x.closePath();}
+
+function step(dt){
+  time += dt;
+  const target = sleeping ? 0.08 : 0.86;
+  level += (target - level) * Math.min(1, dt * 1.8);
+  sleepAmt += ((sleeping ? 1 : 0) - sleepAmt) * Math.min(1, dt * 3);
+  sampleT += dt;
+  while (sampleT > 1/45){ sampleT -= 1/45; hist.push({v: level + Math.sin(time*7)*0.015, s: sleepAmt}); if (hist.length > N) hist.shift(); }
+  spawnT -= dt;
+  if (spawnT <= 0){ spawnT = 0.75; items.push({x: .1 + Kit.rnd()*.8, y: .3 + Kit.rnd()*.5, age: 0, kind: sleeping ? 'dream' : 'day', st: 'live', p: 0}); }
+  for (const it of items){
+    it.age += dt;
+    if (it.st === 'live' && it.age > 1.4){
+      if (level > TH){ it.st = 'save'; it.p = 0; }
+      else { it.st = 'lost'; it.p = 0; if (it.kind === 'dream') lost++; }
+    } else if (it.st === 'save'){ it.p += dt/0.6; if (it.p >= 1){ shelf.push(it.kind); if (shelf.length > 40) shelf.shift(); it.dead = true; } }
+    else if (it.st === 'lost'){ it.p += dt/0.7; if (it.p >= 1) it.dead = true; }
+  }
+  items = items.filter(i => !i.dead);
+  if (!done && !sleeping && lost >= 3) finish();
+}
+
+function draw(){
+  if (!G) return;
+  const {x, W, H} = G, t = sleepAmt;
+  const fs = Math.max(12, Math.min(W*0.04, H*0.05));
+  const pad = Math.max(10, W*0.045);
+  const ink = mix('#2a2238','#e8eaff',t), inkA = a => mix('#2a2238','#e8eaff',t,a);
+  x.clearRect(0,0,W,H);
+  rr(x,0,0,W,H,Math.min(W,H)*0.06); x.fillStyle = mix('#fff4dc','#131833',t); x.fill();
+
+  // graph
+  const gx0 = pad, gx1 = W - pad, gy0 = pad + fs*1.9, gy1 = H*0.40;
+  x.font = `800 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--mono')||'monospace'}`;
+  x.textBaseline = 'alphabetic'; x.textAlign = 'left'; x.fillStyle = ink;
+  x.fillText('NORADRENALINE', pad, pad + fs);
+  x.textAlign = 'right'; x.fillStyle = sleeping ? '#b9a3ff' : '#e08a00';
+  x.fillText(sleeping ? 'ASLEEP' : 'AWAKE', W - pad, pad + fs);
+  const yv = v => gy1 - v*(gy1 - gy0), xi = i => gx0 + i/(N-1)*(gx1 - gx0), cw = (gx1-gx0)/(N-1);
+  for (let i = 0; i < hist.length; i++) if (hist[i].s > 0.05){ x.fillStyle = `rgba(140,120,255,${hist[i].s*0.22})`; x.fillRect(xi(i)-cw/2, gy0, cw+1, gy1-gy0); }
+  // threshold
+  x.setLineDash([fs*0.4, fs*0.35]); x.strokeStyle = inkA(0.45); x.lineWidth = 1.5;
+  x.beginPath(); x.moveTo(gx0, yv(TH)); x.lineTo(gx1, yv(TH)); x.stroke(); x.setLineDash([]);
+  x.font = `600 ${Math.max(12, fs*0.8)}px sans-serif`; x.textAlign = 'left'; x.fillStyle = inkA(0.7);
+  x.fillText('enough to save', gx0 + 4, yv(TH) - 5);
+  // curve
+  x.beginPath(); hist.forEach((h,i) => i ? x.lineTo(xi(i), yv(h.v)) : x.moveTo(xi(i), yv(h.v)));
+  const path = new Path2D(); hist.forEach((h,i) => i ? path.lineTo(xi(i), yv(h.v)) : path.moveTo(xi(i), yv(h.v)));
+  const fill = new Path2D(path); fill.lineTo(gx1, gy1); fill.lineTo(gx0, gy1); fill.closePath();
+  const gr = x.createLinearGradient(0, gy0, 0, gy1); gr.addColorStop(0,'rgba(242,160,30,.45)'); gr.addColorStop(1,'rgba(242,160,30,0)');
+  x.fillStyle = gr; x.fill(fill);
+  x.strokeStyle = '#f2a01e'; x.lineWidth = Math.max(2.5, fs*0.22); x.lineJoin = 'round'; x.stroke(path);
+  const ly = yv(hist[hist.length-1].v);
+  x.fillStyle = 'rgba(242,160,30,.3)'; x.beginPath(); x.arc(gx1, ly, fs*0.7, 0, 7); x.fill();
+  x.fillStyle = '#f2a01e'; x.beginPath(); x.arc(gx1, ly, fs*0.35, 0, 7); x.fill();
+  x.strokeStyle = inkA(0.3); x.lineWidth = 1; x.beginPath(); x.moveTo(gx0, gy1); x.lineTo(gx1, gy1); x.stroke();
+
+  // shelf geometry
+  const ty = H*0.80, sy = H*0.90;
+  x.font = `800 ${Math.max(12, fs*0.85)}px sans-serif`; x.textAlign = 'left'; x.fillStyle = inkA(0.75);
+  x.fillText('LONG-TERM MEMORY', pad, ty);
+  const lw = x.measureText('LONG-TERM MEMORY').width;
+  const lt = `DREAMS LOST ${lost}`, ltw = x.measureText(lt).width;
+  if (pad + lw + fs < W - pad - ltw){ x.textAlign = 'right'; x.fillStyle = lost ? '#b9a3ff' : inkA(0.5); x.fillText(lt, W - pad, ty); }
+  const active = level > TH;
+  x.font = `900 ${fs}px sans-serif`;
+  const pw = x.measureText('SAVE').width + fs*1.6, ph = fs*1.8;
+  rr(x, pad, sy - ph/2, pw, ph, ph/2);
+  if (active){ x.fillStyle = '#34c77b'; x.fill(); x.fillStyle = '#10301f'; }
+  else { x.strokeStyle = inkA(0.35); x.lineWidth = 2; x.stroke(); x.fillStyle = inkA(0.35); }
+  x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('SAVE', pad + pw/2, sy + 1);
+  if (!active){ x.strokeStyle = inkA(0.45); x.lineWidth = 2; x.beginPath(); x.moveTo(pad + fs*0.5, sy + ph*0.3); x.lineTo(pad + pw - fs*0.5, sy - ph*0.3); x.stroke(); }
+  x.textBaseline = 'alphabetic';
+  const r = fs*0.5, gap = r*2.7, s0 = pad + pw + fs*0.9 + r;
+  const k = Math.max(1, Math.floor((W - pad - r - s0)/gap) + 1);
+  const vis = shelf.slice(-k);
+  vis.forEach((kd,i) => token(x, s0 + i*gap, sy, r, kd, 1));
+  const slot = Math.min(vis.length, k-1), sxT = s0 + slot*gap;
+
+  // thoughts
+  const my0 = H*0.45, my1 = H*0.73;
+  for (const it of items){
+    let px = pad + it.x*(W-2*pad), py = my0 + it.y*(my1-my0) - Math.min(it.age,1.4)*fs*0.6;
+    let a = Math.min(1, it.age*4), sc = 1;
+    if (it.st === 'save'){ const e = 1 - Math.pow(1-it.p, 3); px += (sxT - px)*e; py += (sy - py)*e; sc = 1 - e*0.1; }
+    if (it.st === 'lost'){ a = 1 - it.p; sc = 1 + it.p*0.7; py -= it.p*fs; }
+    token(x, px, py, r*1.35*sc, it.kind, a, it.st === 'lost');
+  }
+}
+function token(x, px, py, r, kind, a, ghost){
+  x.globalAlpha = Math.max(0, a);
+  if (kind === 'day'){
+    x.fillStyle = ghost ? '#9a8f80' : '#f2a01e'; x.beginPath(); x.arc(px, py, r, 0, 7); x.fill();
+    x.fillStyle = 'rgba(255,255,255,.55)'; x.beginPath(); x.arc(px - r*0.3, py - r*0.3, r*0.3, 0, 7); x.fill();
+  } else {
+    x.fillStyle = ghost ? '#6f6a99' : '#b9a3ff';
+    x.beginPath(); x.arc(px - r*0.55, py + r*0.15, r*0.6, 0, 7); x.arc(px + r*0.55, py + r*0.15, r*0.6, 0, 7); x.arc(px, py - r*0.25, r*0.75, 0, 7); x.fill();
+    x.fillRect(px - r*0.55, py + r*0.1, r*1.1, r*0.65);
+  }
+  x.globalAlpha = 1;
+}
+
+function finish(){
+  done = true; sleeping = false;
+  btn.classList.remove('down');
+  Kit.$('stage').classList.add('end');
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(() => { Kit.onShow.card(); });
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+function press(e){
+  if (done) return; if (e) e.preventDefault();
+  sleeping = true; slept = true; btn.classList.add('down'); btn.textContent = 'Sleeping… let go to wake';
+  Kit.$('say').textContent = 'Keep holding: watch the save signal and the dreams.'; Kit.haptic('light');
+}
+function release(){
+  if (!sleeping || done) return;
+  sleeping = false; btn.classList.remove('down'); btn.textContent = 'Hold to fall asleep';
+  if (lost < 3) Kit.$('say').textContent = 'Sleep longer, until a few dreams slip away.';
+}
+btn.addEventListener('pointerdown', e => { try { btn.setPointerCapture(e.pointerId); } catch(_){} press(e); });
+['pointerup','pointercancel','lostpointercapture'].forEach(ev => btn.addEventListener(ev, release));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+btn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) press(e); });
+btn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') release(); });
+
+gsap.ticker.add((tt, dms) => { step(Math.min((dms||16)/1000, 0.05)); draw(); });
+
+Kit.onShow.card = () => { G = Kit.fitCanvas(cv); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1}));
+  await w(4500);
+  btn.dispatchEvent(new PointerEvent('pointerup', {bubbles: true, pointerId: 1}));
+  await w(300);
+  if (!done){ lost = Math.max(lost, 3); finish(); }
+  await w(700);
+};
+Kit.single();
+</script>
+</html>

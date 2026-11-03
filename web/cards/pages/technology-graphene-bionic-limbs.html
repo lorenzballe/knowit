@@ -1,0 +1,206 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-graphene-bionic-limbs -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#box{position:relative;flex:1;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:2.6em;margin:0}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font-size:max(1.9cqh,13px);line-height:1.3;margin:0}
+#scrub{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
+#scrub::-webkit-slider-runnable-track{height:max(.8cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#scrub::-moz-range-track{height:max(.8cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#scrub::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);margin-top:calc((max(.8cqh,6px) - max(3.6cqh,26px))/2);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--k) 20%,transparent)}
+#scrub::-moz-range-thumb{width:max(3.6cqh,26px);height:max(3.6cqh,26px);border:0;border-radius:50%;background:var(--k)}
+.steps{display:flex;justify-content:space-between;font:700 max(1.5cqh,12px)/1 var(--mono);color:var(--muted);margin-top:-.4cqh}
+.steps span.on{color:var(--k)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Scrub · frame by frame">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BIONIC LIMBS</span></div>
+    <h2 class="q">How will graphene improve prosthetic limbs?</h2>
+    <div class="stagebox" id="stage">
+      <div id="box"><svg id="pic" aria-label="A brain sends a signal down a nerve to graphene sensors in an amputated arm, which move a bionic hand"></svg></div>
+      <p id="cap">1 · The brain decides: close the hand.</p>
+      <div id="why" class="gone">
+        <p class="big">Sensors that read the nerves</p>
+        <p class="body">Graphene sensors built into the amputated limb pick up the nerve's signals. So the person controls the direction and the strength of each movement, almost like a natural limb.</p>
+      </div>
+      <div>
+        <input id="scrub" type="range" min="0" max="100" value="0" aria-label="Timeline">
+        <div class="steps" id="steps"><span class="on">1 THINK</span><span>2 NERVE</span><span>3 SENSOR</span><span>4 MOVE</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the dot to follow one command from brain to hand.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Graphene nerve sensors let a prosthesis obey the body's own commands.</div>
+    <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {t: 0};
+let G = null, done = false, lastStep = -1;
+const CAPS = [
+  '1 · The brain decides: close the hand.',
+  '2 · The order runs down the nerve toward the missing hand.',
+  '3 · Graphene sensors built into the limb read the nerve signal.',
+  '4 · The hand moves, in the direction and with the strength intended.'
+];
+const cl = v => Math.max(0, Math.min(1, v));
+const lerp = (a, b, u) => a + (b - a) * u;
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  const fs = Math.max(12, Math.min(f, W * 0.045, H * 0.05));
+  const cx = W * 0.3;
+  const w = Math.min(W * 0.11, H * 0.065);
+  const r = Math.min(W * 0.09, H * 0.065);
+  const brainY = r * 1.1 + 2;
+  const armTop = H * 0.2, sTop = H * 0.44, sBot = H * 0.53, palmTop = H * 0.72, palmBot = H * 0.8;
+  const ink = 'var(--k)', card = 'var(--c)';
+  const defs = mk('defs', {});
+  const clip = mk('clipPath', {id: 'sockclip'}, defs);
+  mk('rect', {x: cx - w * 1.05, y: sTop, width: w * 2.1, height: sBot - sTop, rx: w * 0.2}, clip);
+
+  // brain
+  const halo = mk('circle', {cx, cy: brainY, r: r * 1.6, fill: ink, opacity: 0.1});
+  mk('ellipse', {cx, cy: brainY, rx: r * 1.15, ry: r * 0.9, fill: card, stroke: ink, 'stroke-width': Math.max(2, w * 0.08)});
+  mk('path', {d: `M${cx},${brainY - r * 0.85} C${cx - r * 0.3},${brainY - r * 0.3} ${cx + r * 0.3},${brainY + r * 0.2} ${cx},${brainY + r * 0.85}
+    M${cx - r * 0.8},${brainY - r * 0.2} q${r * 0.3},${r * 0.3} ${r * 0.55},0 M${cx + r * 0.25},${brainY + r * 0.25} q${r * 0.3},${-r * 0.35} ${r * 0.6},0`,
+    fill: 'none', stroke: ink, 'stroke-width': Math.max(1.5, w * 0.06), 'stroke-linecap': 'round'});
+
+  // upper arm (body)
+  mk('path', {d: `M${cx - w * 1.6},${armTop + w * 0.3} Q${cx},${armTop - w * 0.5} ${cx + w * 1.6},${armTop + w * 0.3}`, fill: 'none', stroke: ink, 'stroke-width': Math.max(2, w * 0.08), opacity: 0.5, 'stroke-linecap': 'round'});
+  mk('rect', {x: cx - w, y: armTop, width: w * 2, height: sTop - armTop + w * 0.3, rx: w * 0.7, fill: 'color-mix(in srgb,var(--k) 16%,transparent)', stroke: ink, 'stroke-width': Math.max(2, w * 0.08)});
+
+  // forearm prosthesis
+  mk('rect', {x: cx - w * 0.85, y: sBot - 4, width: w * 1.7, height: palmTop - sBot + 8, rx: w * 0.3, fill: ink});
+  mk('line', {x1: cx - w * 0.5, y1: sBot + w * 0.4, x2: cx - w * 0.5, y2: palmTop - w * 0.3, stroke: card, 'stroke-width': Math.max(1.5, w * 0.06), opacity: 0.35, 'stroke-linecap': 'round'});
+  const wireBase = mk('line', {x1: cx, y1: sBot, x2: cx, y2: palmTop + w * 0.2, stroke: card, 'stroke-width': Math.max(1.5, w * 0.07), opacity: 0.3, 'stroke-dasharray': '3 4'});
+  const wireLen = palmTop + w * 0.2 - sBot;
+  const wire = mk('line', {x1: cx, y1: sBot, x2: cx, y2: palmTop + w * 0.2, stroke: card, 'stroke-width': Math.max(2.5, w * 0.12), 'stroke-linecap': 'round', 'stroke-dasharray': `${wireLen} ${wireLen}`, 'stroke-dashoffset': wireLen});
+
+  // socket with graphene lattice
+  mk('rect', {x: cx - w * 1.05, y: sTop, width: w * 2.1, height: sBot - sTop, rx: w * 0.2, fill: card});
+  const hexG = mk('g', {'clip-path': 'url(#sockclip)'});
+  const s = w * 0.2, hw = Math.sqrt(3) * s;
+  let d = '';
+  for (let row = -1; row * 1.5 * s < (sBot - sTop) + s * 2; row++) {
+    for (let col = -1; col * hw < w * 2.4; col++) {
+      const x0 = cx - w * 1.05 + col * hw + (row % 2 ? hw / 2 : 0), y0 = sTop + row * 1.5 * s;
+      d += 'M' + [0, 1, 2, 3, 4, 5, 0].map(k => { const a = Math.PI / 3 * k + Math.PI / 6; return `${(x0 + s * Math.cos(a)).toFixed(1)},${(y0 + s * Math.sin(a)).toFixed(1)}`; }).join('L');
+    }
+  }
+  const hexFill = mk('rect', {x: cx - w * 1.05, y: sTop, width: w * 2.1, height: sBot - sTop, fill: ink, opacity: 0}, hexG);
+  const hex = mk('path', {d, fill: 'none', stroke: ink, 'stroke-width': Math.max(1.2, w * 0.05)}, hexG);
+  mk('rect', {x: cx - w * 1.05, y: sTop, width: w * 2.1, height: sBot - sTop, rx: w * 0.2, fill: 'none', stroke: ink, 'stroke-width': Math.max(2.5, w * 0.1)});
+
+  // nerve
+  const nY1 = brainY + r * 0.9, nY2 = (sTop + sBot) / 2;
+  const nLen = nY2 - nY1;
+  mk('line', {x1: cx, y1: nY1, x2: cx, y2: nY2, stroke: ink, 'stroke-width': Math.max(1.5, w * 0.06), opacity: 0.35, 'stroke-dasharray': '3 4'});
+  const nerve = mk('line', {x1: cx, y1: nY1, x2: cx, y2: nY2, stroke: ink, 'stroke-width': Math.max(3, w * 0.13), 'stroke-linecap': 'round', 'stroke-dasharray': `${nLen} ${nLen}`, 'stroke-dashoffset': nLen});
+  const pulse = mk('circle', {cx, cy: nY1, r: w * 0.28, fill: ink, opacity: 0});
+  const pulseHalo = mk('circle', {cx, cy: nY1, r: w * 0.55, fill: ink, opacity: 0});
+
+  // hand
+  mk('rect', {x: cx - w * 0.95, y: palmTop, width: w * 1.9, height: palmBot - palmTop, rx: w * 0.35, fill: ink});
+  const fw = w * 0.42;
+  const finger = mk('path', {fill: 'none', stroke: ink, 'stroke-width': fw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+  const finger2 = mk('path', {fill: 'none', stroke: ink, 'stroke-width': fw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0.55});
+  const thumb = mk('path', {fill: 'none', stroke: ink, 'stroke-width': fw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+
+  // grip meter (left)
+  const mx = Math.max(6, cx - w * 1.05 - Math.max(W * 0.12, 30)), mW = Math.max(10, W * 0.04);
+  const mTop = sBot + fs * 2.2, mBot = H * 0.94;
+  mk('text', {x: mx + mW / 2, y: mTop - fs * 0.6, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs * 0.85}).textContent = 'GRIP';
+  mk('rect', {x: mx, y: mTop, width: mW, height: mBot - mTop, rx: mW / 2, fill: 'none', stroke: ink, 'stroke-width': 2});
+  const meter = mk('rect', {x: mx + 3, y: mBot - 3, width: mW - 6, height: 0, rx: (mW - 6) / 2, fill: ink});
+
+  // labels on the right
+  const lx = cx + w * 1.5 + 10;
+  const labs = [['Brain', brainY], ['Nerve', (armTop + sTop) / 2], ['Graphene sensor', (sTop + sBot) / 2], ['Bionic hand', (palmTop + palmBot) / 2 + w * 0.6]];
+  const labEls = labs.map(([txt, y], i) => {
+    const g = mk('g', {opacity: 0.4});
+    const x0 = i === 0 ? cx + r * 1.25 : (i === 3 ? cx + w * 1.05 : cx + w * 1.15);
+    mk('line', {x1: x0, y1: y, x2: lx - 6, y2: y, stroke: ink, 'stroke-width': 1.5}, g);
+    mk('text', {x: lx, y: y + fs * 0.35, fill: ink, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, g).textContent = txt;
+    return g;
+  });
+
+  G = {W, H, w, cx, nY1, nY2, nLen, sBot, wireLen, palmTop, palmBot, halo, nerve, pulse, pulseHalo, hexFill, hex, wire, wireBase, finger, finger2, thumb, meter, mTop, mBot, labEls};
+  render();
+};
+
+function chain(x, y, angs, lens) {
+  let d = `M${x.toFixed(1)},${y.toFixed(1)}`;
+  angs.forEach((a, i) => { const r = a * Math.PI / 180; x += Math.cos(r) * lens[i]; y += Math.sin(r) * lens[i]; d += `L${x.toFixed(1)},${y.toFixed(1)}`; });
+  return d;
+}
+
+function render() {
+  if (!G) return;
+  const t = S.t, b = cl(t / 0.25), n = cl((t - 0.25) / 0.25), s = cl((t - 0.5) / 0.2), g = cl((t - 0.7) / 0.3);
+  const {w, cx} = G;
+  G.halo.setAttribute('opacity', 0.08 + 0.35 * b * (1 - n * 0.6));
+  G.nerve.setAttribute('stroke-dashoffset', G.nLen * (1 - n));
+  const py = lerp(G.nY1, G.nY2, n), on = n > 0 && n < 1 ? 1 : 0;
+  G.pulse.setAttribute('cy', py); G.pulseHalo.setAttribute('cy', py);
+  G.pulse.setAttribute('opacity', on); G.pulseHalo.setAttribute('opacity', on * 0.2);
+  G.hexFill.setAttribute('opacity', 0.75 * s);
+  G.hex.setAttribute('stroke', s > 0.5 ? 'var(--c)' : 'var(--k)');
+  G.wire.setAttribute('stroke-dashoffset', G.wireLen * (1 - cl(g * 2.5)));
+  const e = g * g * (3 - 2 * g);
+  const L = [w * 0.6, w * 0.48, w * 0.38];
+  const a1 = 90 + e * 45, a2 = a1 + e * 55, a3 = a2 + e * 50;
+  G.finger.setAttribute('d', chain(cx + w * 0.55, G.palmBot, [a1, a2, a3], L));
+  G.finger2.setAttribute('d', chain(cx + w * 0.05, G.palmBot, [a1 + 4, a2 + 6, a3 + 6], L.map(v => v * 0.9)));
+  G.thumb.setAttribute('d', chain(cx - w * 0.85, G.palmTop + (G.palmBot - G.palmTop) * 0.6, [115 - e * 70, 100 - e * 85], [w * 0.55, w * 0.42]));
+  const mh = (G.mBot - G.mTop - 6) * e;
+  G.meter.setAttribute('y', G.mBot - 3 - mh); G.meter.setAttribute('height', Math.max(0, mh));
+  const step = t < 0.25 ? 0 : t < 0.5 ? 1 : t < 0.7 ? 2 : 3;
+  G.labEls.forEach((el, i) => el.setAttribute('opacity', i === step ? 1 : 0.4));
+  if (step !== lastStep) {
+    lastStep = step;
+    Kit.$('cap').textContent = CAPS[step];
+    [...Kit.$('steps').children].forEach((sp, i) => sp.classList.toggle('on', i === step));
+  }
+}
+
+function finish() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+let lastQ = 0;
+Kit.$('scrub').addEventListener('input', e => {
+  const v = +e.target.value / 100;
+  const q = v < 0.25 ? 0 : v < 0.5 ? 1 : v < 0.7 ? 2 : 3;
+  if (q !== lastQ) { lastQ = q; Kit.haptic('selection'); }
+  if (Kit.calm) { S.t = v; render(); }
+  else gsap.to(S, {t: v, duration: .25, ease: 'power2.out', overwrite: true, onUpdate: render});
+  if (v >= 0.99) finish();
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
+  gsap.fromTo(S, {t: 0}, {t: 0.12, duration: .7, delay: .4, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: render});
+};
+
+Kit.play.card = async () => {
+  const sc = Kit.$('scrub');
+  for (const v of [20, 40, 60, 80, 100]) { sc.value = v; sc.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-bubbles-feed-bacteria",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a sewage treatment tank bubble like a hot tub?",
+  "answer": "The bubbles are air, blown in from the bottom of the tank. Some of the bacteria living there are aerobic, meaning they need oxygen to stay alive. With that oxygen they oxidize the organic and nitrogen-rich matter in the sewage.",
+  "move": "The bubbles are oxygen delivery for bacteria that clean the water.",
+  "keywords": [
+    "sewage",
+    "bacteria",
+    "wastewater",
+    "oxygen",
+    "aeration"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A sewage treatment tank in cross-section, with air bubbles rising from its base. The question asks why the tank bubbles. A tap pumps air in so the reader can watch the bacteria."
+  },
+  "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=vmwPachp1SE&t=157s",
+  "written": "2026-11-03"
+}

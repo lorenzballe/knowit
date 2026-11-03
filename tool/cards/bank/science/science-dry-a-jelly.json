@@ -1,0 +1,37 @@
+{
+  "id": "science-dry-a-jelly",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.why_ice_floats",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do you dry a jelly without crushing it?",
+  "answer": "Kistler's method takes the wet gel from liquid to gas by going round the end of the boiling line, not across it. Liquid turns to gas without boiling, so the gel can dry without being crushed. The card says that in 1931 Samuel Kistler bet Charles Learned he could do it.",
+  "move": "The boiling line ends. Go round its end and liquid turns to gas without boiling.",
+  "keywords": [
+    "gel",
+    "liquid_co2",
+    "samuel_kistler",
+    "charles_learned",
+    "boiling_line"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A page titled 'Drying a jelly' asks how to dry a jelly without crushing it. A phase diagram of liquid CO2 at 12 °C and 60 bar shows the wet gel. The reader drags it from liquid to gas, or tries another way."
+  },
+  "source": "Veritasium, “World's Lightest Solid!” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=AeJ9q45PfD0",
+  "written": "2026-11-03"
+}

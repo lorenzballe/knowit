@@ -1,0 +1,36 @@
+{
+  "id": "human_body-osmotic-pressure-cells",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When water rushes into your cells, what is that push called?",
+  "answer": "The push is called osmotic pressure. Water moves from the side with less dissolved sodium to the side with more. With too little sodium in the blood (hyponatremia), water pours into the cells and they swell, but this almost never happens.",
+  "move": "Water follows salt: it flows toward the saltier side.",
+  "keywords": [
+    "osmosis",
+    "sodium",
+    "hyponatremia",
+    "blood"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card with a slider that steps through water moving into cells. It asks what this push is called, with choices sodium water or osmotic pressure. Water flows toward the side with more sodium."
+  },
+  "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=-ow81G5Nydw&t=238s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "technology-no-continuous-wire",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Is there one unbroken wire from the power plant to your home?",
+  "answer": "The grid is not one continuous conductor. It is many separate pieces of wire, and at transformers there is a physical gap: the wire on one side never touches the wire on the other. From power plant to plug, the wire has gaps in it.",
+  "move": "From power plant to plug, the wire has gaps in it.",
+  "keywords": [
+    "electricity",
+    "power_grid",
+    "transformer",
+    "power_plant"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice card asking whether there is one unbroken wire from the power plant to your home. Options: one long wire, almost one wire with a few joints, or no, the line has real physical gaps. The reader picks one, then can watch the line up close."
+  },
+  "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=127s",
+  "written": "2026-11-03"
+}

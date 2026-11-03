@@ -1,0 +1,36 @@
+{
+  "id": "history-llull-before-condorcet",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.who_wrote_it",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who actually invented the Condorcet voting method first?",
+  "answer": "Ramon Llull, a monk, found the method 450 years before Condorcet while studying how church leaders were chosen. His book, Ars eleccionis, was lost, so his idea made no impact and the method took Condorcet's name. The book was only found again in 2001.",
+  "move": "The name on an idea is not always the first person who had it.",
+  "keywords": [
+    "ramon llull",
+    "condorcet",
+    "ars eleccionis",
+    "condorcet method"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Timeline from the 14th-century monk Ramon Llull to today, with a draggable dot, Condorcet's 18th-century mark, and a lost-book icon appearing in 2001. It asks who first invented the Condorcet voting method."
+  },
+  "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=589s",
+  "written": "2026-11-03"
+}

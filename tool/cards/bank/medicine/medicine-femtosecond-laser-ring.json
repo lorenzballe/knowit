@@ -1,0 +1,37 @@
+{
+  "id": "medicine-femtosecond-laser-ring",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "What does the femtosecond laser do in the first phase of cataract surgery?",
+  "answer": "The lens sits inside a thin bag called the capsule. In the first phase, the femtosecond laser cuts a neat circle in that capsule. It then cuts the cloudy lens into fragments so it can be taken out.",
+  "move": "Phase one: the laser opens the capsule in a circle and breaks up the lens.",
+  "keywords": [
+    "femtosecond laser",
+    "cataract",
+    "lens capsule",
+    "cornea",
+    "eye surgery"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking what the femtosecond laser does in the first phase of cataract surgery. Three choices: melting the lens away in one go, cutting a ring in the lens bag then breaking up the lens, or polishing the cornea. A close-up animation shows the laser cutting a ring around the lens."
+  },
+  "source": "Geopop, “Intervento alla cataratta: vi spieghiamo cosa succede con delle animazioni 3D” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Y3b8egQvI0A&t=300s",
+  "written": "2026-11-03"
+}

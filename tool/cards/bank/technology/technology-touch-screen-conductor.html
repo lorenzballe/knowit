@@ -1,0 +1,181 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-touch-screen-conductor -->
+<title>Why a touch screen feels your finger</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#read{font:700 max(1.9cqh,12px)/1.25 var(--mono);text-align:center;margin:.6cqh 0 0;color:var(--k);min-height:1.25em}
+#ctl{display:flex;gap:2.4cqw;margin-top:1cqh}
+.hold{flex:1;font:700 max(2cqh,14px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none}
+.hold.on{background:var(--k);color:var(--c);box-shadow:none}
+.hold small{display:block;font:600 max(1.5cqh,12px)/1.2 var(--body);opacity:.75}
+#why{display:flex;flex-direction:column;gap:.8cqh;margin-top:1cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.glass{fill:rgba(140,195,255,.38);stroke:var(--k);stroke-width:1.5}
+.ito{fill:#ff8a3d;stroke:var(--k);stroke-width:1.2}
+.base{fill:var(--k)}
+.fld{fill:none;stroke:var(--k);stroke-width:1.6;stroke-linecap:round;opacity:.55}
+.lab{fill:var(--k);font-family:var(--body);font-weight:700}
+.labinv{fill:var(--c);font-family:var(--body);font-weight:700}
+.skin{fill:#f1c29d;stroke:var(--k);stroke-width:2}
+.pen{fill:#c9d2da;stroke:var(--k);stroke-width:2}
+.wire0{fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round}
+.wire{fill:none;stroke:#ffd21f;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:9 9;animation:flow .6s linear infinite}
+.itoflow{fill:none;stroke:#fff3b0;stroke-dasharray:6 8;animation:flow 1s linear infinite}
+.calm .wire,.calm .itoflow{animation:none}
+@keyframes flow{to{stroke-dashoffset:-18}}
+.gnd{stroke:var(--k);stroke-width:2.4;stroke-linecap:round}
+.dot{fill:#ffd21f;stroke:var(--k);stroke-width:2}
+.arrow{fill:#ffd21f;stroke:var(--k);stroke-width:1.5;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Hold · simulate">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TOUCH SCREENS</span></div>
+    <h2 class="q">Why does a touch screen work when you touch it?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of a touch screen with a finger above it"></svg>
+      <p id="read">Sensor: field steady</p>
+      <div id="ctl">
+        <button class="hold" id="bF" data-t="finger">Hold · finger<small>your skin</small></button>
+        <button class="hold" id="bP" data-t="pen">Hold · plastic<small>a plastic stick</small></button>
+      </div>
+      <div id="why" class="gone"><p class="body">Under the glass, a layer of indium tin oxide carries current. Your skin conducts, so your finger gives that current a path to the ground and changes the electric field at that spot. The phone reads the change as a touch right there.</p></div>
+    </div>
+    <p class="say" id="say">Hold a button to press the screen. Try both.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A touch screen senses a conductor, so it's about conductivity.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Sai come funziona uno schermo touch screen? FIGO! NON LO SAPEVO” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {p: 0, on: 0, tool: 'finger'};
+let G = null, pT = null, oT = null, doneTimer = null, done = false, holding = null;
+const svg = Kit.$('pic');
+const lerp = (a, b, t) => a + (b - a) * t;
+
+function toolShape() {
+  if (!G) return;
+  const {fx, fw, tip, H} = G, top = -H * 0.4;
+  if (S.tool === 'finger') {
+    const L = fx - fw / 2, R = fx + fw / 2, r = fw / 2;
+    G.tool.setAttribute('class', 'skin');
+    G.tool.setAttribute('d', `M${L},${top} L${L},${tip - r} A${r},${r} 0 0 0 ${R},${tip - r} L${R},${top}Z`);
+    G.toolLab.textContent = 'Skin conducts';
+  } else {
+    const w = fw * 0.32, L = fx - w, R = fx + w, c = tip - fw * 0.7;
+    G.tool.setAttribute('class', 'pen');
+    G.tool.setAttribute('d', `M${L},${top} L${L},${c} L${fx - 2},${tip} L${fx + 2},${tip} L${R},${c} L${R},${top}Z`);
+    G.toolLab.textContent = 'Plastic does not';
+  }
+}
+
+function render() {
+  if (!G) return;
+  const {fx, lift, glassTop, itoY, ext, xs, W} = G;
+  G.toolG.setAttribute('transform', `translate(0,${-(1 - S.p) * lift})`);
+  xs.forEach((x, i) => {
+    const w = Math.exp(-Math.pow((x - fx) / (W * 0.16), 2)) * S.on;
+    const ex = lerp(x, fx, w), ey = lerp(glassTop - ext, glassTop, w);
+    const cy = lerp(glassTop - ext * 0.3, glassTop + (itoY - glassTop) * 0.2, w);
+    G.flds[i].setAttribute('d', `M${x},${itoY} Q${x},${cy} ${ex},${ey}`);
+    G.flds[i].style.opacity = 0.45 + 0.5 * w;
+  });
+  G.cur.forEach(e => e.style.opacity = S.on);
+  G.dot.setAttribute('r', G.fw * 0.18 * S.on + 0.01);
+  G.dot.style.opacity = S.on;
+}
+
+Kit.onShow.card = () => {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * 0.9);
+  const x0 = W * 0.22, x1 = W * 0.97;
+  const glassTop = H * 0.56, gh = H * 0.1, itoY = glassTop + gh, itoH = Math.max(5, H * 0.028);
+  const baseB = H * 0.8, gx = W * 0.08, topY = H * 0.07;
+  const fx = W * 0.6, fw = Math.min(W * 0.13, H * 0.14);
+  G = {W, H, fx, fw, tip: glassTop, lift: H * 0.16, glassTop, itoY, ext: H * 0.07, xs: []};
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  // layers
+  mk('rect', {class: 'base', x: x0, y: itoY + itoH, width: x1 - x0, height: baseB - itoY - itoH, rx: 4});
+  mk('rect', {class: 'glass', x: x0, y: glassTop, width: x1 - x0, height: gh});
+  mk('rect', {class: 'ito', x: x0, y: itoY, width: x1 - x0, height: itoH});
+  mk('line', {class: 'itoflow', x1: x0 + 4, x2: x1 - 4, y1: itoY + itoH / 2, y2: itoY + itoH / 2, 'stroke-width': Math.max(2, itoH * 0.4)});
+  // field lines
+  const n = Math.max(7, Math.round((x1 - x0) / (W * 0.065)));
+  G.flds = [];
+  for (let i = 0; i < n; i++) {
+    const x = x0 + (x1 - x0) * (i + 0.5) / n;
+    G.xs.push(x); G.flds.push(mk('path', {class: 'fld'}));
+  }
+  // labels
+  const gl = mk('text', {class: 'lab', x: x0 + 8, y: glassTop + gh / 2 + fs * 0.35, 'font-size': fs}); gl.textContent = 'Glass';
+  const il = mk('text', {class: 'labinv', x: x1 - 8, y: (itoY + itoH + baseB) / 2 + fs * 0.35, 'text-anchor': 'end', 'font-size': fs});
+  il.textContent = 'Indium tin oxide · carries current';
+  // current path to ground (under the tool? no: on top of it, drawn after)
+  G.toolG = mk('g', {});
+  G.tool = mk('path', {}, G.toolG);
+  G.toolLab = mk('text', {class: 'lab', x: fx + fw / 2 + 10, y: H * 0.36, 'font-size': fs});
+  toolShape();
+  const wd = `M${fx},${glassTop} L${fx},${topY} L${gx},${topY} L${gx},${H * 0.9}`;
+  const sw = Math.max(3, H * 0.014);
+  G.cur = [];
+  G.cur.push(mk('path', {class: 'wire0', d: wd, 'stroke-width': sw + 4}));
+  G.cur.push(mk('path', {class: 'wire', d: wd, 'stroke-width': sw}));
+  const ay = H * 0.45, a = Math.max(7, sw * 2.2);
+  G.cur.push(mk('path', {class: 'arrow', d: `M${gx - a},${ay - a} L${gx + a},${ay - a} L${gx},${ay + a * 0.6}Z`}));
+  const g = mk('g', {}); G.cur.push(g);
+  [[1, 0], [0.62, 1], [0.28, 2]].forEach(([k, j]) => mk('line', {class: 'gnd', x1: gx - 14 * k, x2: gx + 14 * k, y1: H * 0.9 + j * 6, y2: H * 0.9 + j * 6}, g));
+  const gt = mk('text', {class: 'lab', x: gx + 20, y: H * 0.9 + fs * 0.4, 'font-size': fs}, g); gt.textContent = 'to the ground';
+  const bt = mk('text', {class: 'lab', x: (gx + fx) / 2, y: topY + fs * 1.5, 'text-anchor': 'middle', 'font-size': fs}, g); bt.textContent = 'through your body';
+  G.dot = mk('circle', {class: 'dot', cx: fx, cy: glassTop, r: 0.01});
+  if (Kit.calm) svg.classList.add('calm');
+  render();
+};
+
+const read = t => Kit.$('read').textContent = t;
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+}
+function press(tool, btn) {
+  if (holding) return;
+  holding = btn; btn.classList.add('on'); Kit.haptic('selection');
+  if (S.tool !== tool) { S.tool = tool; toolShape(); }
+  if (pT) pT.kill(); if (oT) oT.kill();
+  pT = gsap.to(S, {p: 1, duration: Kit.calm ? 0 : .45, ease: 'power2.in', onUpdate: render, onComplete: () => {
+    if (S.tool === 'finger') {
+      read('Field changed here → touch registered'); Kit.haptic('light');
+      oT = gsap.to(S, {on: 1, duration: Kit.calm ? 0 : .5, onUpdate: render, onComplete: render});
+      doneTimer = setTimeout(finish, 800);
+    } else {
+      read('Field unchanged → nothing registered');
+    }
+  }});
+}
+function release() {
+  if (!holding) return;
+  holding.classList.remove('on'); holding = null;
+  clearTimeout(doneTimer);
+  if (pT) pT.kill(); if (oT) oT.kill();
+  gsap.to(S, {p: 0, on: 0, duration: Kit.calm ? 0 : .35, onUpdate: render, onComplete: render});
+  read('Sensor: field steady');
+}
+document.querySelectorAll('.hold').forEach(b => {
+  b.addEventListener('pointerdown', e => { e.preventDefault(); press(b.dataset.t, b); });
+  b.addEventListener('contextmenu', e => e.preventDefault());
+});
+['pointerup', 'pointercancel'].forEach(t => window.addEventListener(t, release));
+document.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && e.target.classList && e.target.classList.contains('hold') && !e.repeat) { e.preventDefault(); press(e.target.dataset.t, e.target); } });
+document.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') release(); });
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.hold', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('bF').dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 2000));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-one-shared-wavefunction",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does measuring one entangled electron instantly affect the other, light-years away?",
+  "answer": "After two electrons interact, they no longer have separate wave functions; one wave function describes both. Measuring either electron collapses that whole wave function, so the other is set at the same instant, however far away.",
+  "move": "Entangled means one wave function for two particles: collapse it anywhere, it collapses everywhere.",
+  "keywords": [
+    "entanglement",
+    "electron",
+    "wave function",
+    "collapse",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two electron pictures that merge into one shared, interconnected web when tapped. The question asks why measuring one entangled electron instantly affects the other, light-years away."
+  },
+  "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=413s",
+  "written": "2026-11-03"
+}

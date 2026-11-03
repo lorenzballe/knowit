@@ -1,0 +1,37 @@
+{
+  "id": "science-quasi-crystal-icosahedrons",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the 3D version of a Penrose tiling called?",
+  "answer": "A quasi-crystal is the 3D version of a Penrose tiling. Its atoms form icosahedrons, which carry the five-fold symmetry that ordinary crystals are forbidden to have. The structure stays ordered everywhere without ever repeating, and its X-ray pattern shows rings of 10 points.",
+  "move": "Quasi-crystal: ordered everywhere, repeating nowhere, a Penrose tiling in 3D.",
+  "keywords": [
+    "quasi-crystal",
+    "penrose-tiling",
+    "icosahedron",
+    "five-fold-symmetry",
+    "x-ray-diffraction"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A rotating 3D model of an icosahedron-based structure, labelled quasi-crystal, beside the question: what is the 3D version of a Penrose tiling called? A hold-to-grow control makes atoms gather into icosahedrons."
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=1018s",
+  "written": "2026-11-03"
+}

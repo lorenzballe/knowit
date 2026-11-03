@@ -1,0 +1,37 @@
+{
+  "id": "human_body-salt-osmosis-cell",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does too much salt make your cells lose water?",
+  "answer": "Water follows the salt. Salt outside raises the osmotic pressure, so water crosses the membrane out of the cell. The cell dries and shrinks. That is why drinking seawater dehydrates you.",
+  "move": "More salt outside pulls water out of your cells by osmosis.",
+  "keywords": [
+    "osmosis",
+    "seawater",
+    "salt",
+    "dehydration",
+    "cell membrane"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive diagram of a cell surrounded by water. A slider adds salt outside the cell, and arrows show water leaving the cell as it shrinks. The question asks why too much salt makes cells lose water."
+  },
+  "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=WtF2R7J9DUo&t=250s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "history-silent-death-penalty",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many countries keep the death penalty but executed no one in 2025?",
+  "answer": "54 countries still have the death penalty in law, but only 17 actually used it in 2025. The other 37 keep it on the books and carried out no executions, which is a passive death penalty. Around 2,700 executions were confirmed in 2025, all in those 17 countries.",
+  "move": "54 keep it in law, 17 use it, 37 executed no one in 2025.",
+  "keywords": [
+    "death_penalty",
+    "executions",
+    "countries",
+    "passive_death_penalty"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A ring-sort interactive for 54 countries that still have the death penalty in law. Tapping the ring sorts them one step at a time. Counters show 0 executed in 2025 and 0 executed no one. The question asks how many countries keep the death penalty but executed no one in 2025."
+  },
+  "source": "Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=gsZ-We120mw&t=45s",
+  "written": "2026-11-03"
+}

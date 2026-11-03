@@ -1,0 +1,37 @@
+{
+  "id": "nature-oyster-water-filter",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much water can a single oyster filter in one day?",
+  "answer": "A single oyster pulls sea water in to feed, keeping the particles and algae and letting cleaner water out. It can do this for 110 to 190 litres a day. Day after day that adds up, so oyster reefs work as natural biofilters for the whole ecosystem.",
+  "move": "One small oyster cleans 110–190 litres of water every day.",
+  "keywords": [
+    "oyster",
+    "oyster reef",
+    "filter feeding",
+    "algae",
+    "sea water"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Titled Oyster Reefs, the page asks how much water a single oyster can filter in one day. A hold-to-feed button fills a grid of squares, each one litre of murky sea water, to show the scale."
+  },
+  "source": "Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=3RiQ05xqWwY&t=520s",
+  "written": "2026-11-03"
+}

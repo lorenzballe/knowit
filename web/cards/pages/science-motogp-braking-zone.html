@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-motogp-braking-zone -->
+<title>Astute free card · Braking from 350 to 100</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#read{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;font:700 max(1.8cqh,12px)/1.1 var(--mono);color:var(--muted)}
+#read b{font:800 max(3.4cqh,20px)/1 var(--display);color:var(--k)}
+#svg{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#again{align-self:flex-start;font:700 max(1.8cqh,13px)/1 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 40%,transparent);border-radius:1.4cqh;padding:1cqh 3.5cqw;cursor:pointer}
+#brake{font:800 max(2.6cqh,16px)/1 var(--display);letter-spacing:.06em;width:100%;color:var(--c);background:var(--k);border:0;border-radius:2cqh;padding:2.2cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .08s,background .08s}
+#brake.on{transform:scale(.97);background:#d8322a;color:#fff}
+.ax{stroke:var(--k);stroke-width:1.5;opacity:.5}
+.grid{stroke:var(--k);stroke-width:1;opacity:.18}
+.ref{stroke:var(--k);stroke-width:1.2;stroke-dasharray:4 4;opacity:.45}
+.lab{fill:var(--k);font-family:var(--mono);font-weight:700}
+.trail{fill:none;stroke:var(--k);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.ideal{fill:none;stroke:#d8322a;stroke-width:2.5;stroke-dasharray:6 5}
+.road{fill:color-mix(in srgb,var(--k) 78%,transparent)}
+.board{fill:#fff}
+.bike{fill:#ffd23a;stroke:#111;stroke-width:2}
+.corner{stroke:var(--k);stroke-width:2.5}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · simulate">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRAKING</span></div>
+    <h2 class="q">How many metres does a MotoGP bike need from 350 to 100 km/h?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read"><span>SPEED <b id="spd">350</b> km/h</span><span>TO CORNER <b id="dst">420</b> m</span></div>
+      <svg id="svg" aria-label="Speed against distance to the corner"></svg>
+      <div id="why" class="gone">
+        <p class="big" id="res"></p>
+        <p class="body" id="verdict"></p>
+        <p class="body">Red dashes: Rossi's way. At 350 km/h he grabs the brakes about 200 m from the corner and falls to 100. Losing 250 km/h in that little road means the squeeze must be exact.</p>
+        <button id="again">Ride again</button>
+      </div>
+    </div>
+    <p class="say" id="say">Tap Start, then hold Brake to reach the corner at 100 km/h.</p>
+    <button id="brake">START THE RUN</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>From 350 to 100 km/h takes only about 200 m of road.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const D0 = 420, DEND = 40;
+const V0 = 350/3.6, V1 = 100/3.6;
+const A = (V0*V0 - V1*V1)/(2*200);   // brakes so 350 -> 100 takes 200 m
+let state = 'idle', braking = false, d = D0, v = V0, pts = [], brakeAt = null, ts = 0.5;
+let G = null, trail, bike;
+const svg = Kit.$('svg'), btn = Kit.$('brake');
+
+function draw(){
+  svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f*.85);
+  const padL = fs*2.6, padR = fs*1.4, top = fs*.6;
+  const trackH = Math.max(H*.15, fs*2.6);
+  const gb = H - trackH - fs*2;
+  const x = dd => padL + (D0 - dd)/(D0 + DEND)*(W - padL - padR);
+  const y = k => top + (1 - k/380)*(gb - top);
+  G = {W,H,fs,x,y,gb,trackH};
+  // grid
+  [300,200,100].forEach(m => {
+    Kit.mk('line',{x1:x(m),x2:x(m),y1:top,y2:gb,class:'grid'},svg);
+    Kit.mk('text',{x:x(m),y:gb+fs*1.3,'text-anchor':'middle',class:'lab','font-size':fs},svg).textContent = m===300?'300 m':m;
+  });
+  Kit.mk('line',{x1:x(0),x2:x(0),y1:top,y2:gb,class:'corner'},svg);
+  Kit.mk('text',{x:x(0),y:gb+fs*1.3,'text-anchor':'middle',class:'lab','font-size':fs},svg).textContent = 'corner';
+  [350,100].forEach(k => {
+    Kit.mk('line',{x1:padL,x2:W-padR,y1:y(k),y2:y(k),class:'ref'},svg);
+    Kit.mk('text',{x:padL-fs*.4,y:y(k)+fs*.35,'text-anchor':'end',class:'lab','font-size':fs},svg).textContent = k;
+  });
+  Kit.mk('line',{x1:padL,x2:W-padR,y1:gb,y2:gb,class:'ax'},svg);
+  Kit.mk('line',{x1:padL,x2:padL,y1:top,y2:gb,class:'ax'},svg);
+  // track
+  const ty = H - trackH;
+  Kit.mk('rect',{x:padL,y:ty,width:x(0)-padL,height:trackH,rx:fs*.3,class:'road'},svg);
+  Kit.mk('rect',{x:x(0),y:ty,width:W-padR-x(0),height:trackH,fill:'#c9a46a'},svg);
+  const n = 6, sh = trackH/n;
+  for (let i=0;i<n;i++) Kit.mk('rect',{x:x(0)-fs*.5,y:ty+i*sh,width:fs*.5,height:sh,fill:i%2?'#fff':'#d8322a'},svg);
+  [300,200,100].forEach(m => Kit.mk('rect',{x:x(m)-fs*.25,y:ty+trackH*.08,width:fs*.5,height:trackH*.3,class:'board'},svg));
+  // ideal (shown at the end)
+  if (state === 'done'){
+    let p = `M${x(D0)},${y(350)} L${x(200)},${y(350)}`;
+    for (let m=200;m>=0;m-=5){ const k = Math.sqrt(V1*V1 + 2*A*m)*3.6; p += ` L${x(m)},${y(k)}`; }
+    Kit.mk('path',{d:p,class:'ideal'},svg);
+  }
+  trail = Kit.mk('path',{class:'trail',d:''},svg);
+  bike = Kit.mk('circle',{r:Math.max(7,fs*.55),cy:ty+trackH*.68,class:'bike'},svg);
+  update();
+}
+function update(){
+  if (!G) return;
+  const {x,y} = G;
+  trail.setAttribute('d', pts.length ? 'M' + pts.map(p => `${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(' L') : '');
+  bike.setAttribute('cx', x(Math.max(d,0)));
+  Kit.$('spd').textContent = Math.round(v*3.6);
+  Kit.$('dst').textContent = Math.max(0, Math.round(d));
+}
+function tick(t, dtMs){
+  if (state !== 'run') return;
+  const dt = Math.min(dtMs/1000, .05)*ts;
+  if (braking){ if (brakeAt === null) brakeAt = d; v = Math.max(8, v - A*dt); }
+  d -= v*dt;
+  pts.push([Math.max(d,0), v*3.6]);
+  if (d <= 0){ d = 0; finish(); }
+  update();
+}
+gsap.ticker.add(tick);
+function start(){
+  state = 'run'; d = D0; v = V0; pts = [[D0,350]]; brakeAt = null; braking = false;
+  btn.textContent = 'HOLD TO BRAKE'; Kit.haptic('selection');
+}
+function finish(){
+  state = 'done'; braking = false; btn.classList.remove('on');
+  const k = Math.round(v*3.6);
+  Kit.$('res').textContent = `${k} km/h at the corner`;
+  const where = brakeAt === null ? 'You never touched the brakes.' : `You first braked ${Math.round(brakeAt)} m out.`;
+  Kit.$('verdict').textContent = where + ' ' + (k >= 125 ? 'Too fast: you run wide into the gravel.' : k <= 75 ? 'Too early: safe, but you crawl into the corner.' : 'Spot on: a MotoGP stop.');
+  Kit.haptic(k > 75 && k < 125 ? 'success' : 'light');
+  Kit.hide('say'); Kit.hide('brake'); Kit.show('why'); Kit.show('keep');
+  draw();
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity:0, y:8, stagger:.1, duration:.4, ease:'power3.out'});
+}
+function release(){ braking = false; btn.classList.remove('on'); }
+btn.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  try { btn.setPointerCapture(e.pointerId); } catch(_){}
+  if (state === 'idle'){ start(); return; }
+  if (state === 'run'){ braking = true; btn.classList.add('on'); Kit.haptic('light'); }
+});
+['pointerup','pointercancel','lostpointercapture'].forEach(ev => btn.addEventListener(ev, release));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+Kit.$('again').addEventListener('click', () => {
+  state = 'idle'; d = D0; v = V0; pts = []; ts = 0.5;
+  btn.textContent = 'START THE RUN';
+  Kit.hide('why'); Kit.hide('keep'); Kit.show('say'); Kit.show('brake');
+  draw();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#svg,#brake', {opacity:0, y:10, stagger:.1, duration:.45, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = c => new Promise(r => { const h = () => c() ? r() : setTimeout(h, 16); h(); });
+  const fire = t => btn.dispatchEvent(new PointerEvent(t, {bubbles:true, pointerId:1}));
+  ts = 3;
+  fire('pointerdown'); fire('pointerup');
+  await wait(() => d <= 203);
+  fire('pointerdown');
+  await wait(() => state === 'done');
+  fire('pointerup');
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

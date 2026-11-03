@@ -1,0 +1,37 @@
+{
+  "id": "technology-trucks-to-rail",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What changes when Alpine freight moves from trucks to the Turin–Lyon rail line?",
+  "answer": "Moving Alpine freight from road to the Turin–Lyon rail line would take about 1 million heavy trucks off Alpine roads. Fewer trucks burning diesel would mean roughly 3 million tonnes less CO₂ every year.",
+  "move": "Freight on rail: ~1 million fewer trucks on Alpine roads, ~3 million t less CO₂ a year.",
+  "keywords": [
+    "alps",
+    "freight",
+    "turin-lyon",
+    "trucks",
+    "co2"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A switch labelled ROAD and RAIL shows Alpine freight moving from trucks to the Turin–Lyon rail line. Dragging it to RAIL shows about 1 million trucks off Alpine roads and roughly 3 million tonnes less CO₂ a year."
+  },
+  "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Jo7Sd0wxNE0&t=515s",
+  "written": "2026-11-03"
+}

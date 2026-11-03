@@ -1,0 +1,162 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: life-assisted-evacuation-drill -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#opts{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
+#why .big{font:800 max(2.4cqh,15px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EVACUATION DRILL</span></div>
+    <h2 class="q">In the Campi Flegrei drill, what does “assisted mode” mean?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Town A with cars and people who need a ride, safe area B, a bus between them"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Everyone in the zone leaves, guided by staff</button>
+        <button class="opt" data-i="1">Only people who can't leave on their own are moved</button>
+        <button class="opt" data-i="2">Only people driving out in their own cars</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Only those who can't leave alone</p><p class="body">The drill moves just the people who won't move by themselves: picked up at point A, carried to point B. Everyone who would leave on their own is not part of the test at all.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick who the drill actually moves.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An assisted drill tests the rides, not the whole crowd leaving.</div>
+    <div class="foot"><span class="src">Source · Geopop, “RISCHIO VULCANICO CAMPI FLEGREI: LA SIMULAZIONE D'EVACUAZIONE FUNZIONERA? Considerazioni e dubbi” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, done = false, R = null, tl = null;
+const RED = '#d62839';
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  done = true;
+  Kit.onShow.card();
+  run();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function car(p, s) {
+  const g = Kit.mk('g', {}, p);
+  Kit.mk('rect', {x: -0.7*s, y: -0.25*s, width: 1.4*s, height: 0.42*s, rx: 0.12*s, fill: 'currentColor'}, g);
+  Kit.mk('rect', {x: -0.4*s, y: -0.52*s, width: 0.75*s, height: 0.34*s, rx: 0.1*s, fill: 'currentColor'}, g);
+  Kit.mk('rect', {x: -0.3*s, y: -0.45*s, width: 0.24*s, height: 0.2*s, rx: 0.04*s, style: 'fill:var(--c)'}, g);
+  Kit.mk('rect', {x: 0.02*s, y: -0.45*s, width: 0.24*s, height: 0.2*s, rx: 0.04*s, style: 'fill:var(--c)'}, g);
+  [-0.38, 0.38].forEach(d => Kit.mk('circle', {cx: d*s, cy: 0.18*s, r: 0.15*s, stroke: 'currentColor', 'stroke-width': 0.07*s, style: 'fill:var(--c)'}, g));
+  return g;
+}
+function chair(p, s) {
+  const g = Kit.mk('g', {}, p);
+  Kit.mk('circle', {cx: 0, cy: 0.18*s, r: 0.3*s, fill: 'none', stroke: 'currentColor', 'stroke-width': 0.09*s}, g);
+  Kit.mk('circle', {cx: -0.05*s, cy: -0.58*s, r: 0.15*s, fill: 'currentColor'}, g);
+  Kit.mk('polyline', {points: `${-0.08*s},${-0.38*s} ${-0.08*s},${0.04*s} ${0.3*s},${0.04*s} ${0.4*s},${0.45*s}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 0.13*s, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  Kit.mk('line', {x1: -0.08*s, y1: -0.18*s, x2: 0.28*s, y2: -0.18*s, stroke: 'currentColor', 'stroke-width': 0.1*s, 'stroke-linecap': 'round'}, g);
+  return g;
+}
+function bus(p, s) {
+  const g = Kit.mk('g', {}, p);
+  Kit.mk('rect', {x: -0.95*s, y: -0.5*s, width: 1.9*s, height: 0.8*s, rx: 0.14*s, fill: 'currentColor'}, g);
+  for (let i = 0; i < 4; i++) Kit.mk('rect', {x: (-0.82 + i*0.42)*s, y: -0.38*s, width: 0.32*s, height: 0.26*s, rx: 0.05*s, style: 'fill:var(--c)'}, g);
+  [-0.55, 0.55].forEach(d => Kit.mk('circle', {cx: d*s, cy: 0.32*s, r: 0.16*s, stroke: 'currentColor', 'stroke-width': 0.07*s, style: 'fill:var(--c)'}, g));
+  return g;
+}
+function txt(p, x, y, s, fs, attrs = {}) {
+  const t = Kit.mk('text', Object.assign({x, y, fill: 'currentColor', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, attrs), p);
+  t.textContent = s; return t;
+}
+
+Kit.onShow.card = () => {
+  if (tl) { tl.kill(); tl = null; }
+  const svg = Kit.$('pic'); const {W, H, f} = Kit.fitSvg(svg); svg.innerHTML = '';
+  const fs = Math.max(12, Math.min(f * 0.9, W * 0.042, H * 0.07));
+  const pad = W * 0.03, aX0 = pad, aX1 = W * 0.44, bX0 = W * 0.60, bX1 = W - pad;
+  const y0 = fs * 1.9, y1 = H - 2;
+  const hI = y1 - y0;
+  let s = Math.max(10, Math.min(W * 0.075, (hI - fs * 4.4) / 2.35));
+  const g = Math.max(0, (hI - fs * 4.4 - 2.35 * s) / 3);
+  const carLabY = y0 + fs * 1.3 + g * 0.5;
+  const cy = carLabY + fs * 0.6 + s * 0.55 + g * 0.5;
+  const chairLabY = cy + s * 0.5 + fs * 1.6 + g;
+  const cy2 = chairLabY + fs * 0.5 + s * 0.75 + g * 0.5;
+  // zones
+  const zone = (x0, x1) => Kit.mk('rect', {x: x0, y: y0, width: x1 - x0, height: y1 - y0, rx: fs * 0.7, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(1.5, fs * 0.12), 'stroke-dasharray': `${fs*0.5} ${fs*0.35}`, opacity: 0.55}, svg);
+  zone(aX0, aX1); zone(bX0, bX1);
+  txt(svg, aX0 + fs * 0.2, fs * 1.25, 'A · red zone', fs, {'font-weight': 800});
+  txt(svg, bX1 - fs * 0.2, fs * 1.25, 'B · safe area', fs, {'font-weight': 800, 'text-anchor': 'end'});
+  txt(svg, aX0 + fs * 0.5, carLabY, 'Drive off alone', fs, {opacity: 0.85});
+  txt(svg, aX0 + fs * 0.5, chairLabY, 'Need a ride', fs, {opacity: 0.85});
+  const bLab = txt(svg, (bX0 + bX1) / 2, carLabY, 'Moved A → B', fs, {'text-anchor': 'middle', opacity: 0});
+  // road
+  Kit.mk('line', {x1: aX1, y1: cy2 + s * 0.52, x2: bX1 - fs * 0.4, y2: cy2 + s * 0.52, stroke: 'currentColor', 'stroke-width': Math.max(1.5, s * 0.06), 'stroke-dasharray': `${s*0.25} ${s*0.2}`, opacity: 0.4}, svg);
+  // cars
+  const carW = 1.55 * s;
+  const cars = [0, 1, 2].map(i => { const c = car(svg, s); gsap.set(c, {x: aX0 + fs * 0.5 + 0.75 * s + i * carW, y: cy}); return c; });
+  // chairs
+  const sp = s * 1.05, chairX = i => aX0 + fs * 0.5 + 0.45 * s + i * sp;
+  const chairs = [0, 1, 2].map(i => { const c = chair(svg, s); gsap.set(c, {x: chairX(i), y: cy2}); return c; });
+  const busA = (aX1 + bX0) / 2, busB = (bX0 + bX1) / 2;
+  const b = bus(svg, s); gsap.set(b, {x: busA, y: cy2});
+  const bSp = Math.min(s * 1.05, (bX1 - bX0 - fs) / 3);
+  const bChairX = i => busB + (i - 1) * bSp;
+  // stamp
+  const st = Kit.mk('g', {opacity: 0}, svg);
+  const sfs = Math.max(12, fs * 0.85), sw = Math.min(aX1 - aX0 - fs * 0.4, sfs * 9.6);
+  Kit.mk('rect', {x: -sw / 2, y: -sfs * 0.85, width: sw, height: sfs * 1.7, rx: sfs * 0.3, stroke: RED, 'stroke-width': Math.max(2, sfs * 0.16), style: 'fill:var(--c)'}, st);
+  txt(st, 0, sfs * 0.36, 'NOT IN THE DRILL', sfs, {fill: RED, 'font-weight': 800, 'text-anchor': 'middle', 'letter-spacing': '0.04em'});
+  gsap.set(st, {x: (aX0 + aX1) / 2, y: cy, rotation: -6, transformOrigin: '50% 50%'});
+  R = {cars, chairs, b, st, bLab, busA, busB, bChairX, cy};
+  if (done) {
+    gsap.set(cars, {opacity: 0.3}); gsap.set(st, {opacity: 1});
+    gsap.set(b, {x: busB}); gsap.set(bLab, {opacity: 1});
+    chairs.forEach((c, i) => gsap.set(c, {x: bChairX(i), y: cy, opacity: 1}));
+  }
+};
+
+function run() {
+  if (!R) return;
+  const {cars, chairs, b, st, bLab, busA, busB, bChairX, cy} = R;
+  gsap.set(cars, {opacity: 1}); gsap.set(st, {opacity: 0}); gsap.set(bLab, {opacity: 0});
+  gsap.set(b, {x: busA});
+  const cy2 = gsap.getProperty(b, 'y');
+  chairs.forEach((c, i) => gsap.set(c, {x: gsap.getProperty(c, 'x'), y: cy2}));
+  // put chairs back at their A positions for the replay
+  const aX = chairs.map((c, i) => 0); 
+  tl = gsap.timeline();
+  tl.to(cars, {opacity: 0.3, duration: 0.45})
+    .fromTo(st, {opacity: 0, scale: 1.5}, {opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)'}, '<0.1')
+    .add(() => Kit.haptic('light'))
+    .to(chairs, {x: busA, scale: 0.4, opacity: 0, duration: 0.45, stagger: 0.15, ease: 'power2.in'}, '+=0.2')
+    .to(b, {x: busB, duration: 0.9, ease: 'power2.inOut'})
+    .add(() => chairs.forEach(c => gsap.set(c, {x: busB, y: cy2})))
+    .to(chairs, {x: i => bChairX(i), y: cy, scale: 1, opacity: 1, duration: 0.45, stagger: 0.12, ease: 'back.out(1.6)'})
+    .to(bLab, {opacity: 1, duration: 0.35}, '-=0.2')
+    .add(() => Kit.haptic('success'));
+  if (Kit.calm) tl.progress(1);
+}
+// make sure the replay starts from the drawn positions (chairs at A)
+const _run = run;
+run = function () { if (R && done) { done = false; Kit.onShow.card(); done = true; } _run(); };
+
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); if (R && !done) gsap.from([...R.cars, ...R.chairs, R.b], {opacity: 0, y: '+=8', stagger: .05, duration: .4, ease: 'power3.out'}); } };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3600)); };
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-concordia-salvage-crew -->
+<title>Astute card · Costa Concordia salvage</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#pic text{fill:var(--k);font-family:var(--body)}
+#pic .mono{font-family:var(--mono)}
+#ctrl{display:flex;justify-content:center}
+#hold{font:800 max(2.3cqh,15px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.8cqh 8cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;transition:transform .15s}
+#hold.down{transform:scale(.95)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Hold · watch it unfold">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SHIPWRECK SALVAGE</span></div>
+    <h2 class="q">How long did removing the Costa Concordia take, and how many worked on it?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctrl"><button id="hold">Hold to run the salvage</button></div>
+      <div id="why" class="gone">
+        <p class="big">≈ 2½ years · 500+ people</p>
+        <p class="body">Removing the wreck took almost two and a half years. More than 500 engineers and technicians worked on it full time, about 450,000 working days in all. A project on a massive scale.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button to run the clock. Each dot is one full-time worker.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Concordia's removal: almost 2.5 years, over 500 people full time.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Costa Concordia, la ricostruzione del naufragio dal momento dell’impatto alla rimozione del relitto” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 500, YEARS = 2.5, DAYS = 912;
+const st = {p: 0};
+let G = null, finished = false;
+const svg = Kit.$('pic');
+
+function draw() {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  if (W < 20 || H < 20) return;
+  const f = Math.max(f0, 12);
+  const g = {W, H, f};
+  // Zones
+  const topH = f * 2.6;
+  const tlH = f * 3.2;
+  const rest = H - topH - tlH;
+  const shipH = Math.max(rest * 0.3, f * 3);
+  const gridH = rest - shipH - f * 0.8;
+  // Counters
+  g.yrs = Kit.mk('text', {x: 0, y: f * 1.9, 'font-size': f * 1.8, 'font-weight': 800}, svg);
+  g.pd = Kit.mk('text', {x: W, y: f * 1.9, 'font-size': f, 'text-anchor': 'end', class: 'mono', opacity: .8}, svg);
+  // Ship zone with clip
+  const sy0 = topH, seaY = sy0 + shipH * 0.62;
+  const cp = Kit.mk('clipPath', {id: 'shipclip'}, svg);
+  Kit.mk('rect', {x: 0, y: sy0, width: W, height: shipH}, cp);
+  const sz = Kit.mk('g', {'clip-path': 'url(#shipclip)'}, svg);
+  // island hump
+  Kit.mk('path', {d: `M0 ${seaY} Q ${W * .08} ${seaY - shipH * .5} ${W * .2} ${seaY} Z`, style: 'fill:var(--k)', opacity: .25}, sz);
+  g.ship = Kit.mk('g', {}, sz);
+  const sw = Math.min(W * 0.46, shipH * 2.8), hh = sw * 0.12;
+  const sh = Kit.mk('g', {style: 'fill:var(--k)'}, g.ship);
+  Kit.mk('path', {d: `M${-sw / 2} ${-hh * .2} L${sw / 2} ${-hh * .2} L${sw * .44} ${hh} L${-sw * .46} ${hh} Z`}, sh);
+  Kit.mk('rect', {x: -sw * .36, y: -hh * 1.2, width: sw * .68, height: hh * .9, rx: 2, opacity: .85}, sh);
+  Kit.mk('rect', {x: -sw * .26, y: -hh * 2.0, width: sw * .44, height: hh * .7, rx: 2, opacity: .7}, sh);
+  Kit.mk('rect', {x: sw * .02, y: -hh * 2.9, width: sw * .07, height: hh * .9, rx: 2, opacity: .7}, sh);
+  // sea
+  Kit.mk('rect', {x: 0, y: seaY, width: W, height: sy0 + shipH - seaY, style: 'fill:var(--c)', opacity: .72}, sz);
+  Kit.mk('line', {x1: 0, x2: W, y1: seaY, y2: seaY, style: 'stroke:var(--k)', 'stroke-width': Math.max(1.5, f * .12), opacity: .6}, sz);
+  g.seaY = seaY; g.sw = sw;
+  // Grid of 500
+  const gy0 = sy0 + shipH + f * 0.8;
+  let best = {c: 25, s: 0};
+  for (let c = 10; c <= 50; c++) {
+    const r = Math.ceil(N / c), s = Math.min(W / c, gridH / r);
+    if (s > best.s) best = {c, s};
+  }
+  const cols = best.c, rows = Math.ceil(N / cols), s = best.s;
+  const gx0 = (W - cols * s) / 2, gyy = gy0 + (gridH - rows * s) / 2;
+  const rad = s * 0.36, sw2 = Math.max(1, s * 0.1);
+  g.dots = [];
+  for (let i = 0; i < N; i++) {
+    const c = i % cols, r = Math.floor(i / cols);
+    g.dots.push(Kit.mk('circle', {cx: gx0 + c * s + s / 2, cy: gyy + r * s + s / 2, r: rad, style: 'stroke:var(--k);fill:var(--k)', 'stroke-width': sw2, 'fill-opacity': 0, 'stroke-opacity': .45}, svg));
+  }
+  // Timeline
+  const ty = H - tlH + f * 0.6, bh = Math.max(f * 0.7, 8);
+  Kit.mk('rect', {x: 0, y: ty, width: W, height: bh, rx: bh / 2, style: 'fill:var(--k)', opacity: .15}, svg);
+  g.bar = Kit.mk('rect', {x: 0, y: ty, width: 0, height: bh, rx: bh / 2, style: 'fill:var(--k)'}, svg);
+  [0, .5, 1, 1.5, 2, 2.5].forEach(y => {
+    const x = W * y / YEARS;
+    Kit.mk('line', {x1: x, x2: x, y1: ty + bh + 2, y2: ty + bh + f * .45, style: 'stroke:var(--k)', 'stroke-width': 1.5, opacity: .6}, svg);
+    if (y % 1 === 0 || y === 2.5) {
+      const lab = y === 0 ? 'start' : y === 2.5 ? '≈2½ yr' : `${y} yr`;
+      Kit.mk('text', {x, y: ty + bh + f * 1.55, 'font-size': f, 'text-anchor': y === 0 ? 'start' : y === 2.5 ? 'end' : 'middle', opacity: .8}, svg).textContent = lab;
+    }
+  });
+  G = g;
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const p = st.p, g = G;
+  g.yrs.textContent = `${(p * YEARS).toFixed(1)} years`;
+  g.pd.textContent = `${Math.round(p * DAYS * N).toLocaleString('en')} work-days`;
+  g.bar.setAttribute('width', g.W * p);
+  const lit = Math.round(p * N);
+  for (let i = 0; i < N; i++) g.dots[i].setAttribute('fill-opacity', i < lit ? 1 : 0);
+  const t = Math.min(1, p / 0.55), e = t * t * (3 - 2 * t);
+  const ang = 62 * (1 - e);
+  const leave = p > 0.8 ? (p - 0.8) / 0.2 : 0;
+  const x0 = g.W * 0.36, x1 = Math.max(x0, g.W - g.sw / 2 - 2);
+  const cx = x0 + leave * leave * (x1 - x0);
+  g.ship.setAttribute('transform', `translate(${cx} ${g.seaY + g.sw * .03 * (1 - e)}) rotate(${ang})`);
+}
+
+const tw = gsap.to(st, {p: 1, duration: 6, ease: 'none', paused: true, onUpdate: render, onComplete: done});
+
+function done() {
+  if (finished) return; finished = true;
+  st.p = 1; render();
+  Kit.haptic('success');
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+}
+
+const btn = Kit.$('hold');
+const press = e => { if (finished) return; e && e.preventDefault(); btn.classList.add('down'); Kit.haptic('light'); tw.play(); };
+const release = () => { btn.classList.remove('down'); if (!finished) tw.pause(); };
+btn.addEventListener('pointerdown', press);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, release));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+
+let shown = false;
+Kit.onShow.card = () => { shown = true; draw(); };
+if (window.ResizeObserver) {
+  let last = '';
+  new ResizeObserver(() => {
+    const r = svg.getBoundingClientRect(), k = Math.round(r.width) + 'x' + Math.round(r.height);
+    if (shown && k !== last) { last = k; draw(); }
+  }).observe(svg);
+}
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.dots, {attr: {'stroke-opacity': 0}, duration: .5, stagger: .001, ease: 'power2.out'}); };
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 200));
+  tw.progress(1); done();
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

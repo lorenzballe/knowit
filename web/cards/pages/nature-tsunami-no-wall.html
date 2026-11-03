@@ -1,0 +1,183 @@
+<!doctype html>
+<!-- slug: nature-tsunami-no-wall -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#scene{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:crosshair;border-radius:1.6cqh;background:color-mix(in srgb,var(--k) 5%,transparent)}
+#why{display:flex;flex-direction:column;gap:.8cqh;margin-top:1.2cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Draw it · guess">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TSUNAMI</span></div>
+    <h2 class="q">Why do people often just stand and watch an approaching tsunami?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scene"></svg>
+      <div id="why" class="gone"><p class="body">A tsunami rarely comes as the wall of water seen in films. It looks like a tide rising, only very fast. From far away you can't sense its speed, so people stay and watch.</p></div>
+    </div>
+    <p class="say" id="say">With your finger, draw the sea's surface as the tsunami reaches this beach.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No wall doesn't mean no danger: a sea rising fast means run.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('scene');
+const S = {phase: 'draw', guess: null};
+let G = {}, E = {}, pts = null, drawing = false, tl = null;
+
+function geo(){
+  const r = Kit.fitSvg(svg), W = r.W, H = r.H, f = Math.max(r.f, 13);
+  const y0 = H * .58, shore = W * .6, rise = H * .14, deep = W * .45;
+  const ph = Math.min(H * .2, W * .2), px = W * .8;
+  const sandY = x => x < shore ? y0 + (shore - x) / (shore - deep) * (H - y0) : y0 - (x - shore) / (W - shore) * rise;
+  const feet = sandY(px);
+  G = {W, H, f, y0, shore, rise, deep, ph, px, sandY, feet, A: H * .06, flood: feet - ph * .24};
+}
+const xiAt = l => l >= G.y0 ? G.shore : Math.min(G.W, G.shore + (G.y0 - l) / G.rise * (G.W - G.shore));
+const waterD = l => { const xi = xiAt(l); return `M0,${l} L${xi},${l} L${G.shore},${G.y0} L${G.deep},${G.H} L0,${G.H}Z`; };
+const lineD = p => p.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ');
+
+function txt(s, a, p){ const t = Kit.mk('text', a, p); t.textContent = s; return t; }
+
+function render(){
+  const {W, H, f, y0, shore, deep, ph, px, feet, A} = G;
+  svg.innerHTML = '';
+  const k = 'var(--k)';
+  // sand
+  Kit.mk('path', {d: `M${deep},${H} L${shore},${y0} L${W},${y0 - G.rise} L${W},${H}Z`, style: 'fill:color-mix(in srgb,var(--k) 55%,transparent)'}, svg);
+  // water
+  E.water = Kit.mk('path', {d: waterD(y0), style: 'fill:color-mix(in srgb,var(--k) 22%,transparent)'}, svg);
+  E.surf = Kit.mk('line', {x1: 0, x2: shore, y1: y0, y2: y0, stroke: k, 'stroke-width': Math.max(2, f * .14), 'stroke-linecap': 'round'}, svg);
+  E.calm = txt('calm sea', {x: 8, y: y0 - f * .6, 'font-size': f * .85, fill: k, opacity: .7, style: 'font-family:var(--body);font-weight:600'}, svg);
+  // real swell (before the flood)
+  E.real = Kit.mk('path', {d: `M0,${y0 - A} L${W * .22},${y0 - A} C${W * .4},${y0 - A} ${W * .48},${y0} ${shore},${y0}`, fill: 'none', stroke: k, 'stroke-width': Math.max(3, f * .26), 'stroke-linecap': 'round', opacity: 0}, svg);
+  // guess
+  E.guess = Kit.mk('path', {d: '', fill: 'none', stroke: k, 'stroke-width': Math.max(3, f * .22), 'stroke-dasharray': `${f * .5} ${f * .4}`, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  // person
+  const g = Kit.mk('g', {stroke: k, 'stroke-width': Math.max(2.5, f * .2), 'stroke-linecap': 'round', fill: 'none'}, svg);
+  const hip = feet - ph * .45, sh = feet - ph * .78, hr = ph * .1;
+  Kit.mk('line', {x1: px, y1: hip, x2: px - ph * .12, y2: feet}, g);
+  Kit.mk('line', {x1: px, y1: hip, x2: px + ph * .12, y2: feet}, g);
+  Kit.mk('line', {x1: px, y1: hip, x2: px, y2: sh}, g);
+  Kit.mk('line', {x1: px, y1: sh + ph * .05, x2: px - ph * .2, y2: sh - ph * .12}, g); // hand shading eyes
+  Kit.mk('line', {x1: px, y1: sh + ph * .05, x2: px + ph * .14, y2: hip}, g);
+  Kit.mk('circle', {cx: px, cy: sh - hr * 1.2, r: hr, fill: k}, g);
+  G.headTop = sh - hr * 2.2;
+  // labels
+  const ly = G.headTop - f * .7;
+  E.what = txt("What's that?", {x: W - 8, y: ly, 'text-anchor': 'end', 'font-size': f * 1.05, fill: k, opacity: 0, style: 'font-family:var(--hand);font-weight:700'}, svg);
+  E.danger = Kit.mk('g', {opacity: 0}, svg);
+  const dw = f * 5.2, dh = f * 1.5;
+  Kit.mk('rect', {x: W - 8 - dw, y: ly - dh * .75, width: dw, height: dh, rx: dh * .3, fill: '#d62828'}, E.danger);
+  txt('Danger!', {x: W - 8 - dw / 2, y: ly + f * .02, 'text-anchor': 'middle', 'font-size': f, fill: '#fff', style: 'font-family:var(--body);font-weight:800'}, E.danger);
+  E.rl = Kit.mk('g', {opacity: 0, fill: k, 'font-size': f * .9, style: 'font-family:var(--body);font-weight:700'}, svg);
+  txt('real tsunami:', {x: 8, y: y0 + f * 1.9}, E.rl);
+  txt('a fast-rising tide', {x: 8, y: y0 + f * 3.2}, E.rl);
+  E.gl = txt('your guess', {x: 8, y: 0, 'font-size': f * .9, fill: k, opacity: 0, style: 'font-family:var(--hand);font-weight:700'}, svg);
+
+  if (S.guess){
+    const p = S.guess.map(q => [q[0] * W, q[1] * H]);
+    E.guess.setAttribute('d', lineD(p));
+    placeGuessLabel(p);
+  }
+  if (S.phase !== 'draw'){
+    E.calm.setAttribute('opacity', 0);
+    setLevel(G.flood);
+    E.rl.setAttribute('opacity', 1); E.gl.setAttribute('opacity', 1); E.danger.setAttribute('opacity', 1);
+    E.guess.setAttribute('opacity', .55);
+  }
+}
+function placeGuessLabel(p){
+  const {f, y0, A, shore} = G;
+  let top = p[0]; p.forEach(q => { if (q[1] < top[1]) top = q; });
+  const y = Math.max(f * 1.1, Math.min(top[1] - f * .7, y0 - A - f * 1.5));
+  const x = Math.max(8, Math.min(top[0] - f * 2.5, shore - f * 5.5));
+  E.gl.setAttribute('x', x); E.gl.setAttribute('y', y);
+}
+function setLevel(l){
+  E.water.setAttribute('d', waterD(l));
+  E.surf.setAttribute('y1', l); E.surf.setAttribute('y2', l); E.surf.setAttribute('x2', xiAt(l));
+}
+
+function pos(e){ const r = svg.getBoundingClientRect(); return [Math.max(0, Math.min(G.shore, e.clientX - r.left)), Math.max(G.f * .5, Math.min(G.H - 2, e.clientY - r.top))]; }
+svg.addEventListener('pointerdown', e => {
+  if (S.phase !== 'draw') return;
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  drawing = true; pts = [pos(e)]; E.guess.setAttribute('d', lineD(pts)); Kit.haptic('light');
+});
+svg.addEventListener('pointermove', e => {
+  if (!drawing) return;
+  const p = pos(e), last = pts[pts.length - 1];
+  if (p[0] > last[0] + 1 || Math.abs(p[1] - last[1]) > 2 && p[0] >= last[0]){ pts.push(p); E.guess.setAttribute('d', lineD(pts)); }
+});
+const end = () => {
+  if (!drawing) return; drawing = false;
+  const span = pts[pts.length - 1][0] - pts[0][0];
+  if (pts.length < 3 || span < G.shore * .4){ E.guess.setAttribute('d', ''); Kit.$('say').textContent = 'Draw across the sea, from left to right.'; return; }
+  S.guess = pts.map(q => [q[0] / G.W, q[1] / G.H]);
+  placeGuessLabel(pts);
+  reveal();
+};
+svg.addEventListener('pointerup', end);
+svg.addEventListener('pointercancel', end);
+
+function finish(){
+  S.phase = 'done';
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+}
+function reveal(){
+  S.phase = 'anim'; Kit.haptic('selection');
+  Kit.$('say').textContent = 'Now watch what really arrives…';
+  if (Kit.calm){ render(); finish(); return; }
+  const len = E.real.getTotalLength();
+  const lv = {l: G.y0};
+  tl = gsap.timeline({onComplete: finish});
+  tl.to(E.calm, {opacity: 0, duration: .3})
+    .to(E.gl, {opacity: 1, duration: .3}, '<')
+    .to(E.guess, {opacity: .55, duration: .4}, '<')
+    .fromTo(E.real, {opacity: 1, strokeDasharray: len, strokeDashoffset: len}, {strokeDashoffset: 0, duration: 1, ease: 'power2.out'})
+    .to(E.rl, {opacity: 1, duration: .4})
+    .to(E.what, {opacity: 1, duration: .4}, '-=.1')
+    .to(E.real, {opacity: 0, duration: .5}, '+=.3')
+    .to(lv, {l: G.flood, duration: 1.8, ease: 'power2.in', onUpdate: () => setLevel(lv.l)}, '<')
+    .to(E.what, {opacity: 0, duration: .2}, '-=.3')
+    .to(E.danger, {opacity: 1, duration: .25}, '-=.1')
+    .fromTo(E.danger, {scale: .6, transformOrigin: '90% 50%'}, {scale: 1, duration: .5, ease: 'back.out(3)'}, '<');
+}
+
+Kit.onShow.card = () => {
+  const w = svg.clientWidth, h = svg.clientHeight;
+  if (!w || !h) return;
+  if (G.W === w && G.H === h && svg.childNodes.length) return;
+  if (S.phase === 'anim'){ if (tl) tl.kill(); S.phase = 'done'; geo(); render(); finish(); return; }
+  geo(); render();
+};
+let roPending = false;
+if (window.ResizeObserver) new ResizeObserver(() => {
+  if (roPending) return;
+  roPending = true;
+  requestAnimationFrame(() => { roPending = false; Kit.onShow.card(); });
+}).observe(svg);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(svg, {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), ev = (t, x, y) => svg.dispatchEvent(new PointerEvent(t, {clientX: r.left + x, clientY: r.top + y, pointerId: 1, bubbles: true}));
+  const {shore, y0, H} = G;
+  ev('pointerdown', 4, y0);
+  for (let i = 1; i <= 20; i++){
+    const x = 4 + (shore * .85 - 4) * i / 20;
+    const y = i < 14 ? y0 - (i / 14) * H * .04 : y0 - H * .3;
+    ev('pointermove', x, y);
+  }
+  ev('pointermove', shore * .9, y0 - H * .35);
+  ev('pointerup', shore * .9, y0 - H * .35);
+  await new Promise(res => setTimeout(res, Kit.calm ? 300 : 5200));
+};
+Kit.single();
+</script>
+</html>

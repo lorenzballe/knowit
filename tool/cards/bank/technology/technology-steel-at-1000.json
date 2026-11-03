@@ -1,0 +1,38 @@
+{
+  "id": "technology-steel-at-1000",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the steel columns lose their support at 1,000°C?",
+  "answer": "The steel lost its strength at high heat, and air rushing in through broken windows fed the fire. NIST simulations found peaks of 1,000°C where the steel had been stripped of its insulation. At that temperature the steel could no longer carry the load.",
+  "move": "Bare steel at 1,000°C loses its load-bearing capacity, and the floors above lose their support.",
+  "keywords": [
+    "steel",
+    "fire",
+    "nist",
+    "twin towers",
+    "load-bearing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A picture of steel columns in a burning building. Drag across the picture to feed the fire with air, then watch the bare steel, which reaches 1,000°C and loses its load-bearing capacity.",
+    "ground": "#0b1026"
+  },
+  "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=TS8CgfiGFEE&t=442s",
+  "written": "2026-11-03"
+}

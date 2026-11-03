@@ -1,0 +1,37 @@
+{
+  "id": "science-slinky-twist-first",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "What signal reaches the slinky bottom first?",
+  "answer": "When the top of the slinky is let go, a twisting signal rushes down ahead of the collapse, so the bottom coil starts to rotate. A twist releases no tension, so the bottom keeps sitting there until the collapse arrives. The correct pick is a twist that arrives first but leaves the bottom in place.",
+  "move": "The first signal to arrive isn't always the one that lets go.",
+  "keywords": [
+    "slinky",
+    "torsional_wave",
+    "compression_wave",
+    "veritasium",
+    "gravity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Split-screen slinky: the top shows a twisting motion while the bottom coil stays still. The question asks what signal reaches the slinky bottom first, with three answer options. The reader picks one, then watches the slinky let go."
+  },
+  "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=uiyMuHuCFo4&t=285s",
+  "written": "2026-11-03"
+}

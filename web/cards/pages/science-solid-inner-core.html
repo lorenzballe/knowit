@@ -1,0 +1,147 @@
+<!doctype html>
+<!-- slug: science-solid-inner-core -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:1cqh}
+#cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);min-height:2.6em;margin:0;overflow-wrap:anywhere}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:flex-start}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{margin:0}
+.q,.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap through · see it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EARTH'S CORE</span></div>
+    <h2 class="q">How do we know Earth's inner core is solid?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <p id="cap">A P-wave from an earthquake waits at the surface.</p>
+        <button id="go">Send it deeper ↓</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">In the liquid outer core, P-waves slow down. At about 5,100 km deep they suddenly speed up again, which means they have entered something denser and solid: the inner core.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to send the P-wave one layer deeper.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A sudden jump in wave speed at ~5,100 km reveals the solid inner core.</div>
+    <div class="foot"><span class="src">Source · Geopop, “LA STRUTTURA INTERNA DELLA TERRA” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// Relative P-wave speed (0..1) against depth fraction (0 surface .. 1 centre). Shape only.
+const V = [[0,.30],[.455,.97],[.455,.56],[.79,.72],[.79,.86],[1,.88]];
+const WT = [1,.45,.8,.45,.5];
+const CUM = [0]; WT.forEach((w,i)=>CUM.push(CUM[i]+w));
+const STEPS = [CUM[1], CUM[3], CUM[5]];
+const CAPS = [
+  'Through the solid mantle, the wave keeps speeding up.',
+  'Into the liquid outer core: it slows right down.',
+  'At about 5,100 km it suddenly speeds up again!'
+];
+const st = {t:0, step:0};
+let G = null, busy = false;
+
+function at(t){
+  t = Math.max(0, Math.min(CUM[5], t));
+  let i = 0; while (i < 4 && t > CUM[i+1]) i++;
+  const u = (t - CUM[i]) / WT[i], a = V[i], b = V[i+1];
+  return {i, d: a[0]+(b[0]-a[0])*u, v: a[1]+(b[1]-a[1])*u};
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f*0.9), fsS = Math.max(12, f*0.8);
+  const y0 = fs*2.0, y1 = H - fs*1.7;
+  const sx0 = W*0.03, sx1 = W*0.42, gx0 = W*0.52, gx1 = W*0.96;
+  const Y = d => y0 + d*(y1-y0), X = v => gx0 + v*(gx1-gx0);
+  G = {Y, X, sx0, sx1, gx0, gx1, y0, y1, fs};
+  const ink = 'var(--k)';
+  // Layers
+  const lay = [[0,.012,'#5a3e2b'],[.012,.455,'#c4513a'],[.455,.79,'#f0a03c'],[.79,1,'#ffe28a']];
+  const clip = Kit.mk('clipPath',{id:'cl'},Kit.mk('defs',{},svg));
+  Kit.mk('rect',{x:sx0,y:y0,width:sx1-sx0,height:y1-y0,rx:fs*0.8},clip);
+  const gL = Kit.mk('g',{'clip-path':'url(#cl)'},svg);
+  lay.forEach(([a,b,c])=>Kit.mk('rect',{x:sx0,y:Y(a),width:sx1-sx0,height:Y(b)-Y(a)+0.5,fill:c},gL));
+  const cx = (sx0+sx1)/2;
+  const lab = (txt,y,w)=>{const e=Kit.mk('text',{x:cx,y,'text-anchor':'middle',fill:'#2a160b','font-size':fs,'font-weight':w||700,'font-family':'var(--body)'},svg);e.textContent=txt;return e;};
+  const mantleLab = lab('Mantle', Y(.2)); mantleLab.setAttribute('fill','#fff');
+  lab('solid', Y(.2)+fs*1.35, 500).setAttribute('fill','#fff');
+  lab('Outer core', Y(.6));
+  lab('liquid', Y(.6)+fs*1.35, 500);
+  lab('Inner core', Y(.87));
+  G.icLab = lab('?', Y(.87)+fs*1.35, 800);
+  // top/bottom labels
+  const t1 = Kit.mk('text',{x:sx0,y:y0-fs*0.6,fill:ink,'font-size':fsS,'font-family':'var(--body)','font-weight':600},svg); t1.textContent='surface ↓';
+  const t2 = Kit.mk('text',{x:sx0,y:y1+fs*1.25,fill:ink,'font-size':fsS,'font-family':'var(--body)','font-weight':600},svg); t2.textContent='centre';
+  const t3 = Kit.mk('text',{x:gx0,y:y0-fs*0.6,fill:ink,'font-size':fsS,'font-family':'var(--body)','font-weight':700},svg); t3.textContent='P-wave speed →';
+  const t4 = Kit.mk('text',{x:gx0,y:y1+fs*1.25,fill:ink,'font-size':fsS,'font-family':'var(--body)',opacity:.7},svg); t4.textContent='slow';
+  const t5 = Kit.mk('text',{x:gx1,y:y1+fs*1.25,'text-anchor':'end',fill:ink,'font-size':fsS,'font-family':'var(--body)',opacity:.7},svg); t5.textContent='fast';
+  // graph frame
+  Kit.mk('line',{x1:gx0,y1:y0,x2:gx0,y2:y1,stroke:ink,'stroke-width':1.5,opacity:.5},svg);
+  Kit.mk('line',{x1:gx0,y1:y1,x2:gx1,y2:y1,stroke:ink,'stroke-width':1.5,opacity:.5},svg);
+  // boundary guides
+  Kit.mk('line',{x1:sx1,y1:Y(.455),x2:gx1,y2:Y(.455),stroke:ink,'stroke-width':1,'stroke-dasharray':'3 4',opacity:.3},svg);
+  G.b2 = Kit.mk('line',{x1:sx0,y1:Y(.79),x2:gx1,y2:Y(.79),stroke:ink,'stroke-width':2,'stroke-dasharray':'5 4',opacity:0},svg);
+  G.b2t = Kit.mk('text',{x:gx0+fs*0.4,y:Y(.79)-fs*0.5,fill:ink,'font-size':fs,'font-weight':800,'font-family':'var(--body)',opacity:0},svg);
+  G.b2t.textContent='~5,100 km';
+  // curve and pulse
+  G.path = Kit.mk('path',{fill:'none',stroke:ink,'stroke-width':Math.max(3,fs*0.28),'stroke-linecap':'round','stroke-linejoin':'round'},svg);
+  G.head = Kit.mk('circle',{r:fs*0.42,fill:ink},svg);
+  G.ring = Kit.mk('circle',{r:fs*0.6,fill:'none',stroke:'#fff','stroke-width':2.5},svg);
+  G.dot = Kit.mk('circle',{r:fs*0.5,fill:'#fff',stroke:'#2a160b','stroke-width':2},svg);
+  render();
+  if (!Kit.calm) { gsap.killTweensOf(G.ring); gsap.fromTo(G.ring,{attr:{r:fs*0.5},opacity:1},{attr:{r:fs*1.6},opacity:0,duration:1.1,repeat:-1,ease:'power1.out'}); }
+};
+
+function render(){
+  if (!G) return;
+  const p = at(st.t);
+  let d = `M${G.X(V[0][1])},${G.Y(V[0][0])}`;
+  for (let k=1;k<=p.i;k++) d += `L${G.X(V[k][1])},${G.Y(V[k][0])}`;
+  d += `L${G.X(p.v)},${G.Y(p.d)}`;
+  G.path.setAttribute('d', d);
+  const hy = G.Y(p.d);
+  G.head.setAttribute('cx', G.X(p.v)); G.head.setAttribute('cy', hy);
+  const cx = (G.sx0+G.sx1)/2;
+  [G.dot,G.ring].forEach(c=>{c.setAttribute('cx',cx);c.setAttribute('cy',hy);});
+  const show = st.t > CUM[3]+0.05 ? 1 : 0;
+  G.b2.setAttribute('opacity', show*0.8); G.b2t.setAttribute('opacity', show);
+  G.icLab.textContent = st.t >= CUM[5]-0.01 ? 'solid' : '?';
+}
+
+function step(){
+  if (busy || st.step >= 3) return;
+  busy = true; Kit.haptic('light');
+  const target = STEPS[st.step], i = st.step; st.step++;
+  Kit.$('cap').textContent = CAPS[i];
+  const done = () => {
+    busy = false;
+    if (st.step >= 3) {
+      Kit.haptic('success');
+      Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      if (!Kit.calm) gsap.from('#why,#keep',{opacity:0,y:8,stagger:.1,duration:.4});
+    }
+  };
+  if (Kit.calm) { st.t = target; render(); done(); return; }
+  gsap.to(st,{t:target,duration:1.2,ease:'power1.inOut',onUpdate:render,onComplete:done});
+}
+Kit.$('go').addEventListener('click', step);
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#ctl',{opacity:0,y:10,duration:.4,ease:'power3.out'}); };
+Kit.play.card = async () => {
+  for (let k=0;k<3;k++){ Kit.$('go').click(); await new Promise(r=>setTimeout(r,1400)); }
+  await new Promise(r=>setTimeout(r,600));
+};
+Kit.single();
+</script>
+</html>

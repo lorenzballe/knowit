@@ -1,0 +1,37 @@
+{
+  "id": "science-doubled-gem-facets",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.optical_illusions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens when you look at a gemstone through a magnifying glass?",
+  "answer": "Looking at a gemstone through a magnifying glass makes every main edge appear doubled. Many gems split each ray of light into two rays that take slightly different paths. So under the lens, the stone's fundamental faces show up twice. This is called birefringence.",
+  "move": "Under a lens, birefringence makes a gem's facet edges look doubled.",
+  "keywords": [
+    "birefringence",
+    "gemstone",
+    "magnifying-glass",
+    "facets",
+    "light"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A magnifying glass dragged over a gemstone. Each main facet edge appears as two overlapping outlines of the same facet. Drag the glass over the gem to see the doubled edges."
+  },
+  "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5RAJM6Yi5wc",
+  "written": "2026-11-03"
+}

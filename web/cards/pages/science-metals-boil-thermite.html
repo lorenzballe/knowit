@@ -1,0 +1,233 @@
+<!doctype html>
+<!-- slug: science-metals-boil-thermite -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Can metals boil in thermite?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#pic{width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#pic text{font-family:var(--body);fill:var(--k)}
+#pic .read{font-family:var(--mono);font-weight:700}
+#pic .nm{font-weight:800}
+#pic .val{font-family:var(--mono);font-weight:600}
+#why{display:flex;flex-direction:column;gap:.8cqh;margin-top:.6cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{font:700 max(2cqh,13px)/1.25 var(--body)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · heat it up">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BOILING METAL</span></div>
+    <h2 class="q">Can metals boil during a thermite reaction?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" aria-label="A crucible of molten metal beside a thermometer"></svg></div>
+    <div id="why" class="gone">
+      <p class="big">Yes. The metal itself boils.</p>
+      <p class="body">Manganese boils at just 2,000°C, aluminum around 2,500°C, iron above 2,800°C. In a thermite melt, those bubbles can be metal turning into gas.</p>
+    </div>
+    <p class="say" id="say">Drag up on the drawing to heat the melt. Watch what bubbles.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Metals boil too, just at thousands of degrees, each at its own.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic'), stage = Kit.$('stage');
+const TMIN = 1600, TMAX = 3000;
+const M = [
+  {n:'Manganese', v:'boils 2,000°C', mark:2000, bp:2000, c:'#9b30ff'},
+  {n:'Aluminum', v:'boils ≈2,500°C', mark:2500, bp:2500, c:'#1d5fe0'},
+  {n:'Iron', v:'boils above 2,800°C', mark:2800, bp:2820, c:'#3b2414'}
+];
+let G = null, T = 1700, bubbles = [], puffs = [], acc = [0,0,0], crossed = [false,false,false];
+let done = false, dragged = false, drag = null, clock = 0;
+
+const hex = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16));
+const mix = (a,b,t) => { const A = hex(a), B = hex(b); return 'rgb(' + A.map((v,i) => Math.round(v + (B[i]-v)*t)).join(',') + ')'; };
+
+function draw(){
+  svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg);
+  if (W < 10 || H < 10) return;
+  const fs = Math.max(12, Math.min(f, H*0.05, W*0.045));
+  const mk = (t,a,p) => Kit.mk(t,a,p||svg);
+  const defs = mk('defs',{});
+  // crucible geometry
+  const cx = W*0.25, hwT = W*0.215, hwB = W*0.15, cT = H*0.36, cB = H*0.93, wall = Math.max(5, W*0.022);
+  const outer = y => hwT + (hwB-hwT)*(y-cT)/(cB-cT);
+  const inner = y => outer(y) - wall;
+  const sY = cT + (cB-cT)*0.14, bY = cB - wall;
+  // thermometer
+  const tx = W*0.56, r = Math.max(7, Math.min(W,H)*0.03), ty0 = H*0.07, ty1 = H*0.82;
+  const rb = r*1.5, by = ty1 + rb*0.9;
+  const yOf = t => ty1 - (t-TMIN)/(TMAX-TMIN)*(ty1-ty0);
+
+  // gradients
+  const glow = mk('radialGradient',{id:'gl'},defs);
+  const g1 = mk('stop',{offset:'0','stop-color':'#ffd24a','stop-opacity':'.9'},glow);
+  mk('stop',{offset:'1','stop-color':'#ff7a00','stop-opacity':'0'},glow);
+  const mg = mk('linearGradient',{id:'mg',x1:0,y1:0,x2:0,y2:1},defs);
+  const s1 = mk('stop',{offset:'0'},mg), s2 = mk('stop',{offset:'1'},mg);
+  const clip = mk('clipPath',{id:'mc'},defs);
+  const clipPath = mk('path',{},clip);
+
+  // glow
+  const glowEl = mk('ellipse',{cx, cy:sY, rx:Math.min(hwT*1.9, cx*0.98), ry:Math.min((cB-cT)*0.7, sY*0.98, (H-sY)*0.98), fill:'url(#gl)'});
+  // readout
+  const rfs = Math.min(fs*2.3, H*0.1);
+  const read = mk('text',{x:cx, y:H*0.15, 'text-anchor':'middle', class:'read', 'font-size':rfs});
+  mk('text',{x:cx, y:H*0.15 + rfs*0.35 + fs*1.1, 'text-anchor':'middle', 'font-size':fs, opacity:.75}).textContent = 'the melt';
+  // crucible body
+  mk('path',{d:`M${cx-hwT},${cT} L${cx+hwT},${cT} L${cx+hwB},${cB} Q${cx},${cB+wall*1.4} ${cx-hwB},${cB} Z`, fill:'#2a2a31', stroke:'#111', 'stroke-width':2});
+  mk('rect',{x:cx-hwT-wall*0.6, y:cT-wall*0.6, width:2*hwT+wall*1.2, height:wall*1.2, rx:wall*0.5, fill:'#3d3d46'});
+  const melt = mk('path',{fill:'url(#mg)'});
+  const gB = mk('g',{'clip-path':'url(#mc)'});
+  const gP = mk('g',{});
+
+  // thermometer
+  mk('rect',{x:tx-r, y:ty0-r, width:2*r, height:by-ty0+r, rx:r, fill:'#fff', stroke:'var(--k)', 'stroke-width':2});
+  mk('circle',{cx:tx, cy:by, r:rb, fill:'#e0301e', stroke:'var(--k)', 'stroke-width':2});
+  const merc = mk('rect',{x:tx-r*0.5, width:r, rx:r*0.5, fill:'#e0301e'});
+  const lh = fs*1.22, labs = [];
+  // label block centres, pushed apart so blocks never overlap
+  const gap = lh*2.7, ycs = M.map(m => yOf(m.mark));
+  const order = M.map((m,i) => i).sort((a,b) => ycs[a] - ycs[b]);
+  for (let k = 1; k < order.length; k++) ycs[order[k]] = Math.max(ycs[order[k]], ycs[order[k-1]] + gap);
+  const last = order[order.length-1], lim = H - lh*1.0;
+  if (ycs[last] > lim) {
+    ycs[last] = lim;
+    for (let k = order.length-2; k >= 0; k--) ycs[order[k]] = Math.min(ycs[order[k]], ycs[order[k+1]] - gap);
+  }
+  M.forEach((m,i) => {
+    const y = yOf(m.mark), yc = ycs[i];
+    mk('line',{x1:tx-r*1.6, x2:tx+r*1.6, y1:y, y2:y, stroke:m.c, 'stroke-width':3, 'stroke-linecap':'round'});
+    const g = mk('g',{opacity:.4});
+    const lx = tx + r*2.2;
+    mk('circle',{cx:lx+fs*0.42, cy:yc-lh*0.5-fs*0.32, r:fs*0.38, fill:'rgba(255,255,255,.6)', stroke:m.c, 'stroke-width':2.2}, g);
+    const a = mk('text',{x:lx+fs*1.1, y:yc-lh*0.5, class:'nm', 'font-size':fs}, g); a.textContent = m.n;
+    const b = mk('text',{x:lx, y:yc+lh*0.6, class:'val', 'font-size':Math.max(12,fs*0.88)}, g); b.textContent = m.v;
+    labs.push(g);
+  });
+  // hint arrow
+  let hint = null;
+  if (!dragged) {
+    hint = mk('g',{opacity:.85});
+    const hx = tx - r*3.2, hy = H*0.6, s = fs*0.8;
+    mk('path',{d:`M${hx-s},${hy} L${hx},${hy-s} L${hx+s},${hy} M${hx},${hy-s} L${hx},${hy+s*1.6}`, fill:'none', stroke:'var(--k)', 'stroke-width':2.6, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, hint);
+    if (!Kit.calm) gsap.to(hint,{y:-fs*0.9, duration:.7, yoyo:true, repeat:-1, ease:'sine.inOut'});
+  }
+  G = {W,H,fs,cx,sY,bY,inner,yOf,by,rb,ty0,ty1,read,merc,s1,s2,g1,glowEl,melt,clipPath,gB,gP,labs,hint,br:Math.max(3,W*0.016)};
+  bubbles.forEach(b => b.el = null); puffs.forEach(p => p.el = null);
+  setT(T, true); shape();
+}
+
+function setT(t, quiet){
+  T = Math.max(TMIN, Math.min(TMAX, t));
+  if (!G) return;
+  const k = (T-TMIN)/(TMAX-TMIN);
+  G.read.textContent = (Math.round(T/10)*10).toLocaleString('en-US') + '°C';
+  G.merc.setAttribute('y', G.yOf(T)); G.merc.setAttribute('height', G.by - G.yOf(T));
+  G.s1.setAttribute('stop-color', mix('#ff8a00','#fff6c8',k));
+  G.s2.setAttribute('stop-color', mix('#b52300','#ffb000',k));
+  G.glowEl.setAttribute('opacity', .25 + .75*k);
+  M.forEach((m,i) => {
+    const on = T >= m.bp;
+    G.labs[i].setAttribute('opacity', on ? 1 : .4);
+    if (on && !crossed[i]) { crossed[i] = true; if (!quiet) Kit.haptic('light'); }
+  });
+  if (T >= 2950 && !done) {
+    done = true;
+    setTimeout(() => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }, 600);
+  }
+}
+
+function intensity(){ return M.reduce((s,m) => s + (T > m.bp ? Math.min(1,(T-m.bp)/350) : 0), 0); }
+
+function shape(){
+  if (!G) return;
+  const {cx,sY,bY,inner} = G, I = intensity(), amp = G.H*0.007*I, n = 18;
+  const L = cx - inner(sY), R = cx + inner(sY);
+  let d = `M${L},${sY}`;
+  for (let i = 1; i <= n; i++) {
+    const x = L + (R-L)*i/n;
+    const y = sY + (i < n ? Math.sin(i*1.7 + clock*7) * amp + Math.sin(i*0.9 - clock*4.3)*amp*0.6 : 0);
+    d += ` L${x},${y}`;
+  }
+  d += ` L${cx+inner(bY)},${bY} L${cx-inner(bY)},${bY} Z`;
+  G.melt.setAttribute('d', d); G.clipPath.setAttribute('d', d);
+}
+
+gsap.ticker.add((time, dms) => {
+  if (!G) return;
+  const dt = Math.min(dms, 50)/1000; clock += dt;
+  M.forEach((m,i) => {
+    if (T <= m.bp) { acc[i] = 0; return; }
+    acc[i] += dt * (3 + (T-m.bp)/40);
+    while (acc[i] >= 1 && bubbles.length < 80) {
+      acc[i] -= 1;
+      bubbles.push({u:(Kit.rnd()*2-1)*0.82, v:Kit.rnd()*0.25, r0:0.45+Kit.rnd()*0.6, sp:0.3+Kit.rnd()*0.35, ph:Kit.rnd()*6, m:i, el:null});
+    }
+    if (acc[i] > 1) acc[i] = 1;
+  });
+  const {cx,sY,bY,inner,br} = G;
+  for (let j = bubbles.length-1; j >= 0; j--) {
+    const b = bubbles[j];
+    b.v += b.sp*dt*(1 + b.v*1.4);
+    const y = bY - (bY-sY)*Math.min(b.v,1);
+    const x = cx + (b.u + Math.sin(clock*3 + b.ph)*0.04) * inner(y);
+    const rr = br*b.r0*(0.5 + b.v*0.9);
+    if (b.v >= 1) {
+      if (b.el) b.el.remove(); bubbles.splice(j,1);
+      if (puffs.length < 40) puffs.push({x, y:sY, r:rr, life:0, m:b.m, dx:(Kit.rnd()-.5)*br*2, el:null});
+      continue;
+    }
+    if (!b.el) b.el = Kit.mk('circle',{fill:'rgba(255,255,255,.4)', stroke:M[b.m].c}, G.gB);
+    b.el.setAttribute('cx',x); b.el.setAttribute('cy',y); b.el.setAttribute('r',rr);
+    b.el.setAttribute('stroke-width', Math.max(1.4, rr*0.3));
+  }
+  for (let j = puffs.length-1; j >= 0; j--) {
+    const p = puffs[j]; p.life += dt;
+    const t = p.life/0.9;
+    if (t >= 1) { if (p.el) p.el.remove(); puffs.splice(j,1); continue; }
+    if (!p.el) p.el = Kit.mk('circle',{fill:M[p.m].c}, G.gP);
+    p.el.setAttribute('cx', p.x + p.dx*t); p.el.setAttribute('cy', p.y - G.H*0.12*t);
+    p.el.setAttribute('r', p.r*(1 + t*2.2)); p.el.setAttribute('opacity', 0.45*(1-t));
+  }
+  shape();
+});
+
+svg.addEventListener('pointerdown', e => {
+  drag = {y:e.clientY, t:T};
+  try { svg.setPointerCapture(e.pointerId); } catch(_) {}
+  if (!dragged) { dragged = true; Kit.haptic('selection'); if (G && G.hint) { gsap.killTweensOf(G.hint); gsap.to(G.hint,{opacity:0, duration:.3}); } }
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag || !G) return;
+  const span = (G.ty1 - G.ty0) * 0.9;
+  setT(drag.t + (drag.y - e.clientY) / span * (TMAX-TMIN));
+});
+const up = () => { drag = null; };
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+let rq = 0;
+new ResizeObserver(() => { cancelAnimationFrame(rq); rq = requestAnimationFrame(() => { if (G) draw(); }); }).observe(stage);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  const o = {t:TMIN};
+  gsap.to(o,{t:1700, duration:.9, ease:'power2.out', onUpdate:() => { if (!dragged) setT(o.t, true); }});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svg.getBoundingClientRect(), x = r.left + r.width*0.3, y0 = r.bottom - 5;
+  const ev = (type, y) => svg.dispatchEvent(new PointerEvent(type,{clientX:x, clientY:y, bubbles:true, pointerId:1, pointerType:'touch'}));
+  ev('pointerdown', y0);
+  for (let i = 1; i <= 12; i++) { await wait(60); ev('pointermove', y0 - (r.height - 10)*i/12); }
+  ev('pointerup', y0 - r.height + 10);
+  await wait(1400);
+};
+Kit.single();
+</script>
+</html>

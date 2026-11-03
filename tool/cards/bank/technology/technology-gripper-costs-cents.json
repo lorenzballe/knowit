@@ -1,0 +1,38 @@
+{
+  "id": "technology-gripper-costs-cents",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How much would this bending plastic gripper cost to make?",
+  "answer": "The gripper would cost just cents to make. It bends instead of using hinges, so it is a single piece of plastic. Injection molded, it would cost cents, and its flat shape could even be extruded and chopped off one gripper at a time.",
+  "move": "One bending piece instead of many parts makes a machine cost cents.",
+  "keywords": [
+    "gripper",
+    "injection_molding",
+    "compliant_mechanism",
+    "plastic",
+    "production_cost"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive card: a price-guessing game about a bending plastic gripper. A price tag can be dragged along a scale to the reader's guess, then the reader says how sure they are. The question asks how much the gripper would cost to make.",
+    "graded": false
+  },
+  "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=186s",
+  "written": "2026-11-03"
+}

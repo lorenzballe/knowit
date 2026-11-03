@@ -1,0 +1,170 @@
+<!doctype html>
+<!-- slug: weird_facts-covered-ferris-wheel -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;justify-content:space-between;gap:3cqw}
+#hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 5cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:transform .12s}
+#hold.on{transform:scale(.95);background:color-mix(in srgb,var(--k) 80%,transparent)}
+#read{font:700 max(2.4cqh,15px)/1.2 var(--mono);color:var(--k);text-align:right}
+#read small{display:block;font:600 max(1.5cqh,12px)/1.2 var(--body);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="weird_facts" data-kind="Hold · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RECORD WHEEL</span></div>
+    <h2 class="q">Ashgabat has a record-breaking Ferris wheel. What record does it hold?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A Ferris wheel inside a domed building, with a height ruler"></svg>
+      <div id="ctl">
+        <button id="hold">Hold to ride</button>
+        <div id="read"><small>dark cabin height</small><span id="hv">2.9 m</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">47.6 m tall, all under a roof</p>
+        <p class="body">This wheel doesn't turn in the open air: the whole thing sits inside a building, beneath a glass dome. At 47.6 m, it is the tallest covered Ferris wheel in the world.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button and ride the dark cabin to the top.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Ashgabat's record wheel is the tallest one built fully indoors: 47.6 m.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const PI = Math.PI, N = 12, SPEED = PI / 3.6;
+let theta = 0, holding = false, done = false;
+let G = null;
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, W / 20));
+  const gY = H - fs * 0.9, mt = fs * 0.5;
+  const left = Math.max(W * 0.24, fs * 5.6), right = W - W * 0.04, bw = right - left;
+  const R = Math.max(10, Math.min((gY - mt) / 2.3, bw / 2.3));
+  const cx = (left + right) / 2, T = 2 * R / 0.94, base = T * 0.06;
+  const cy = gY - base - R, rimTop = cy - R, scale = T / 47.6;
+  const pad = R * 0.13, rx = R + pad, ry = R * 1.15, xl = cx - rx, xr = cx + rx;
+  const ink = 'var(--k)';
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+
+  // ground
+  mk('line', {x1: 0, y1: gY, x2: W, y2: gY, style: `stroke:${ink};stroke-width:${Math.max(2, fs*0.14)}`});
+  // building with glass dome
+  const dome = mk('path', {d: `M${xl} ${gY} V${cy} A${rx} ${ry} 0 0 1 ${xr} ${cy} V${gY} Z`,
+    style: `fill:color-mix(in srgb,var(--k) ${done ? 18 : 8}%,transparent);stroke:${ink};stroke-width:${Math.max(2, fs*0.16)}`});
+  [0.35, 0.7].forEach(k => mk('path', {d: `M${cx - k*rx} ${cy} A${k*rx} ${ry} 0 0 1 ${cx + k*rx} ${cy}`,
+    style: `fill:none;stroke:${ink};stroke-opacity:.28;stroke-width:1.2`}));
+  [0.45, 0.8].forEach(k => {
+    const y = cy - ry * k, hx = rx * Math.sqrt(1 - k*k);
+    mk('line', {x1: cx - hx, y1: y, x2: cx + hx, y2: y, style: `stroke:${ink};stroke-opacity:.22;stroke-width:1.2`});
+  });
+  mk('line', {x1: xl, y1: cy, x2: xr, y2: cy, style: `stroke:${ink};stroke-opacity:.35;stroke-width:1.4`});
+  // glass glint
+  mk('path', {d: `M${cx - rx*0.62} ${cy - ry*0.5} A${rx*0.8} ${ry*0.85} 0 0 1 ${cx - rx*0.15} ${cy - ry*0.93}`,
+    style: `fill:none;stroke:var(--c);stroke-opacity:.9;stroke-width:${Math.max(2.5, fs*0.22)};stroke-linecap:round`});
+
+  // support legs
+  [-1, 1].forEach(s => mk('line', {x1: cx, y1: cy, x2: cx + s * R * 0.5, y2: gY,
+    style: `stroke:${ink};stroke-width:${Math.max(2.5, fs*0.2)};stroke-linecap:round`}));
+  // wheel
+  const wg = mk('g', {});
+  mk('circle', {cx, cy, r: R, style: `fill:none;stroke:${ink};stroke-width:${Math.max(2, fs*0.16)}`}, wg);
+  mk('circle', {cx, cy, r: R * 0.9, style: `fill:none;stroke:${ink};stroke-opacity:.5;stroke-width:1.2`}, wg);
+  for (let i = 0; i < N; i++){
+    const a = i * 2 * PI / N;
+    mk('line', {x1: cx, y1: cy, x2: cx + R*Math.cos(a), y2: cy + R*Math.sin(a), style: `stroke:${ink};stroke-opacity:.55;stroke-width:1.2`}, wg);
+  }
+  mk('circle', {cx, cy, r: Math.max(4, R*0.07), style: `fill:${ink}`});
+  // cabins
+  const c = Math.max(8, R * 0.17), cabins = [];
+  for (let i = 0; i < N; i++){
+    cabins.push(mk('rect', {width: c, height: c * 0.85, rx: c * 0.25,
+      style: i === 0 ? `fill:${ink};stroke:var(--c);stroke-width:1.5` : `fill:var(--c);stroke:${ink};stroke-width:1.5`}));
+  }
+  // a person for scale (1.8 m)
+  const ph = Math.max(6, 1.8 * scale), px = xr - pad * 0.55;
+  mk('circle', {cx: px, cy: gY - ph * 0.85, r: ph * 0.15, style: `fill:${ink}`});
+  mk('line', {x1: px, y1: gY - ph * 0.7, x2: px, y2: gY, style: `stroke:${ink};stroke-width:1.5`});
+
+  // ruler
+  const rx0 = left - fs * 1.4;
+  mk('line', {x1: rx0, y1: gY, x2: rx0, y2: rimTop, style: `stroke:${ink};stroke-width:${Math.max(2, fs*0.14)}`});
+  for (let m = 0; m <= 40; m += 10){
+    const y = gY - m * scale;
+    mk('line', {x1: rx0 - fs*0.35, y1: y, x2: rx0 + fs*0.35, y2: y, style: `stroke:${ink};stroke-width:1.4`});
+  }
+  mk('line', {x1: rx0 - fs*0.5, y1: rimTop, x2: rx0 + fs*0.5, y2: rimTop, style: `stroke:${ink};stroke-width:2.4`});
+  mk('line', {x1: rx0, y1: rimTop, x2: cx, y2: rimTop, style: `stroke:${ink};stroke-width:1.4;stroke-dasharray:4 4;stroke-opacity:.7`});
+  const lab = mk('text', {x: rx0 - fs*0.6, y: rimTop + fs*0.35, 'text-anchor': 'end',
+    style: `font:700 ${fs}px var(--mono);fill:${ink}`});
+  lab.textContent = '47.6 m';
+  const lab0 = mk('text', {x: rx0 - fs*0.6, y: gY - fs*0.1, 'text-anchor': 'end',
+    style: `font:600 ${fs*0.9}px var(--mono);fill:var(--muted)`});
+  lab0.textContent = '0 m';
+  const dot = mk('circle', {cx: rx0, r: Math.max(4, fs*0.32), style: `fill:${ink};stroke:var(--c);stroke-width:2`});
+
+  G = {cx, cy, R, c, gY, scale, cabins, wg, dot, dome};
+  update();
+}
+
+function update(){
+  if (!G) return;
+  const {cx, cy, R, c, gY, scale, cabins, wg, dot} = G;
+  wg.setAttribute('transform', `rotate(${theta * 180 / PI} ${cx} ${cy})`);
+  cabins.forEach((el, i) => {
+    const a = PI/2 + theta + i * 2 * PI / N;
+    const x = cx + R * Math.cos(a), y = cy + R * Math.sin(a);
+    el.setAttribute('x', x - c/2); el.setAttribute('y', y - c*0.42);
+  });
+  const y0 = cy + R * Math.sin(PI/2 + theta);
+  dot.setAttribute('cy', y0);
+  Kit.$('hv').textContent = ((gY - y0) / scale).toFixed(1) + ' m';
+}
+
+function finish(){
+  if (done) return;
+  done = true; holding = false; theta = PI; update();
+  Kit.$('hold').classList.remove('on');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  draw();
+  if (!Kit.calm && G) gsap.from(G.dome, {opacity: .4, duration: .8, ease: 'power2.out'});
+}
+
+gsap.ticker.add((t, dt) => {
+  if (!holding || done) return;
+  theta = Math.min(PI, theta + dt / 1000 * SPEED);
+  update();
+  if (theta >= PI) finish();
+});
+
+const hb = Kit.$('hold');
+const down = e => { if (done) return; if (e && e.preventDefault) e.preventDefault(); if (!holding) Kit.haptic('light'); holding = true; hb.classList.add('on'); };
+const up = () => { holding = false; hb.classList.remove('on'); };
+hb.addEventListener('pointerdown', down);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hb.addEventListener(ev, up));
+hb.addEventListener('contextmenu', e => e.preventDefault());
+hb.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') down(e); });
+hb.addEventListener('keyup', up);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.wg, {opacity: 0, duration: .6, ease: 'power2.out'}); };
+Kit.play.card = async () => {
+  theta = PI * 0.96; update();
+  hb.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 500));
+  hb.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  if (!done) finish();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,36 @@
+{
+  "id": "medicine-water-kidney-stones",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.clean_water",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does drinking water cause kidney stones?",
+  "answer": "No, drinking water does not cause kidney stones. It's the opposite: dehydration, which means drinking too little water, is one of the very first causes of kidney stones. So the advice is to drink water.",
+  "move": "Stones come from too little water, not from drinking it.",
+  "keywords": [
+    "kidney stones",
+    "dehydration",
+    "drinking water",
+    "kidney"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "The page asks whether drinking water causes kidney stones and shows a kidney. A glass of water can be dragged onto the kidney to reveal the answer."
+  },
+  "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=-ow81G5Nydw&t=502s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-moon-water-land -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#sw{display:flex;gap:2cqw;justify-content:center;margin:1cqh 0 .4cqh}
+.seg{font:700 max(2cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:99px;padding:1.3cqh 4.5cqw;cursor:pointer;transition:background .25s,color .25s}
+.seg.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Switch · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TIDES</span></div>
+    <h2 class="q">Why does the Moon affect water more than land?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Water and rock under the Moon"></svg>
+      <div id="sw">
+        <button class="seg on" data-v="0">Moon away</button>
+        <button class="seg" data-v="1">Moon overhead</button>
+      </div>
+    </div>
+    <p class="say" id="say">Bring the Moon overhead and watch both sides.</p>
+    <div id="why" class="gone"><p class="body">The Moon pulls on the whole Earth, but liquid particles can flow, so the sea piles up into a bulge. Solid ground is locked together and barely moves. That is why tides show up in the sea.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Water can flow, so it piles up under the Moon; rock can't.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {t: 0};
+let G = null, told = false, tw = null;
+const COLS = 8, ROWS = 4;
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  const floor = H - fs * 3.6;
+  const moonArea = H * .26;
+  const m = W * .05, pw = (W - 3 * m) / 2;
+  const d = Math.min(pw / COLS, (floor - moonArea - fs) / (ROWS * 1.75));
+  const r = d * .38;
+  const moonR = Math.min(moonArea * .4, W * .1);
+  const g = {W, H, fs, floor, moonArea, m, pw, d, r, moonR, water: [], rock: [], bonds: []};
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  const txtStyle = w => `font:${w} ${fs}px var(--body);fill:currentColor`;
+
+  // ground under both panels
+  [m, 2 * m + pw].forEach(x0 => {
+    mk('rect', {x: x0 - d * .3, y: floor, width: pw + d * .6, height: d * .35, rx: d * .1, fill: '#6b513b'});
+    mk('line', {x1: x0, x2: x0 + pw, y1: floor - ROWS * d, y2: floor - ROWS * d, stroke: 'currentColor', 'stroke-width': 1.2, 'stroke-dasharray': '4 4', opacity: .45});
+  });
+
+  // water
+  const wx0 = m + (pw - COLS * d) / 2 + d / 2;
+  g.wx = i => wx0 + i * d;
+  g.wc = m + pw / 2;
+  g.surf = mk('path', {fill: 'rgba(43,127,217,.28)', stroke: '#2b7fd9', 'stroke-width': 2});
+  const gs = [];
+  for (let i = 0; i < COLS; i++) { const z = (i - (COLS - 1) / 2) / (COLS * .28); gs.push(Math.exp(-z * z)); }
+  const gm = gs.reduce((a, b) => a + b) / COLS, gmax = Math.max(...gs);
+  const A = .6 / (gmax - gm);
+  g.h = gs.map(v => A * (v - gm));
+  for (let i = 0; i < COLS; i++) for (let j = 0; j < ROWS; j++)
+    g.water.push({i, j, el: mk('circle', {r, fill: '#2b7fd9', stroke: 'currentColor', 'stroke-width': .8})});
+
+  // rock lattice
+  const rx0 = 2 * m + pw + (pw - COLS * d) / 2 + d / 2;
+  g.rx = i => rx0 + i * d;
+  const bg = mk('g', {stroke: '#6b513b', 'stroke-width': Math.max(1.5, r * .45)});
+  for (let i = 0; i < COLS; i++) for (let j = 0; j < ROWS; j++) {
+    if (i < COLS - 1) g.bonds.push({a: [i, j], b: [i + 1, j], el: mk('line', {}, bg)});
+    if (j < ROWS - 1) g.bonds.push({a: [i, j], b: [i, j + 1], el: mk('line', {}, bg)});
+  }
+  for (let i = 0; i < COLS; i++) for (let j = 0; j < ROWS; j++)
+    g.rock.push({i, j, el: mk('circle', {r, fill: '#a57e5c', stroke: 'currentColor', 'stroke-width': .8})});
+
+  // pull arrows
+  g.arrows = [g.wc, 2 * m + pw * 1.5].map(() => mk('path', {fill: 'none', stroke: 'currentColor', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}));
+
+  // moon
+  g.moon = mk('g', {});
+  mk('circle', {r: 1, fill: '#ece7da', stroke: 'currentColor', 'stroke-width': .05}, g.moon);
+  [[-.35, -.25, .2], [.3, .1, .16], [-.05, .45, .12]].forEach(([x, y, rr]) => mk('circle', {cx: x, cy: y, r: rr, fill: '#cfc8b6'}, g.moon));
+
+  // labels
+  [[g.wc, 'WATER', 'can flow'], [2 * m + pw * 1.5, 'ROCK', 'locked together']].forEach(([x, a, b]) => {
+    const t1 = mk('text', {x, y: floor + d * .35 + fs * 1.3, 'text-anchor': 'middle', style: txtStyle(800)}); t1.textContent = a;
+    const t2 = mk('text', {x, y: floor + d * .35 + fs * 2.75, 'text-anchor': 'middle', style: txtStyle(500), opacity: .75}); t2.textContent = b;
+  });
+  G = g; draw();
+};
+
+function draw() {
+  if (!G) return;
+  const g = G, t = st.t;
+  // water heights
+  const hc = g.h.map(v => 1 + t * v);
+  g.water.forEach(p => {
+    const x = g.wx(p.i) + t * (g.wc - g.wx(p.i)) * .06;
+    const y = g.floor - (p.j + .5) * g.d * hc[p.i];
+    p.el.setAttribute('cx', x); p.el.setAttribute('cy', y);
+  });
+  let s = `M${g.wx(0) - g.d / 2},${g.floor}`;
+  for (let i = 0; i < COLS; i++) s += ` L${g.wx(i) + t * (g.wc - g.wx(i)) * .06},${g.floor - ROWS * g.d * hc[i]}`;
+  s += ` L${g.wx(COLS - 1) + g.d / 2},${g.floor} Z`;
+  // smooth ends to the walls
+  const first = g.floor - ROWS * g.d * hc[0], last = g.floor - ROWS * g.d * hc[COLS - 1];
+  s = s.replace(`M${g.wx(0) - g.d / 2},${g.floor}`, `M${g.wx(0) - g.d / 2},${g.floor} L${g.wx(0) - g.d / 2},${first}`).replace(` L${g.wx(COLS - 1) + g.d / 2},${g.floor} Z`, ` L${g.wx(COLS - 1) + g.d / 2},${last} L${g.wx(COLS - 1) + g.d / 2},${g.floor} Z`);
+  g.surf.setAttribute('d', s);
+  // rock: barely moves
+  const rp = (i, j) => {
+    const z = (i - (COLS - 1) / 2) / COLS;
+    return [g.rx(i), g.floor - (j + .5) * g.d - t * g.d * .04 * Math.exp(-z * z * 8)];
+  };
+  g.rock.forEach(p => { const [x, y] = rp(p.i, p.j); p.el.setAttribute('cx', x); p.el.setAttribute('cy', y); });
+  g.bonds.forEach(b => { const [x1, y1] = rp(...b.a), [x2, y2] = rp(...b.b); b.el.setAttribute('x1', x1); b.el.setAttribute('y1', y1); b.el.setAttribute('x2', x2); b.el.setAttribute('y2', y2); });
+  // moon
+  const R = g.moonR * (.5 + .5 * t);
+  const my = g.moonR * .62 + t * (g.moonArea * .5 - g.moonR * .62);
+  const mx = g.W / 2 + (1 - t) * g.W * .3;
+  g.moon.setAttribute('transform', `translate(${mx},${my}) scale(${R})`);
+  g.moon.setAttribute('opacity', .35 + .65 * t);
+  // arrows: from panel top toward the moon
+  [g.wc, 2 * g.m + g.pw * 1.5].forEach((x, k) => {
+    const top = g.floor - ROWS * g.d * 1.6 - g.fs * .4;
+    const y0 = top, y1 = Math.max(my + R + g.fs * .6, top - g.d * 2.2);
+    const ax = mx + (x - mx) * .55, ay = my + R + (y0 - my - R) * .05;
+    const dx = ax - x, dy = y1 - y0, L = Math.hypot(dx, dy) || 1;
+    const ex = x + dx / L * Math.abs(y1 - y0), ey = y1;
+    const ux = (ex - x) / L, uy = (ey - y0) / L, h = g.fs * .6;
+    const p = `M${x},${y0} L${ex},${ey} M${ex - h * (ux - uy * .6)},${ey - h * (uy + ux * .6)} L${ex},${ey} L${ex - h * (ux + uy * .6)},${ey - h * (uy - ux * .6)}`;
+    g.arrows[k].setAttribute('d', p); g.arrows[k].setAttribute('opacity', t * .85);
+  });
+}
+
+function setMoon(v) {
+  document.querySelectorAll('.seg').forEach(b => b.classList.toggle('on', +b.dataset.v === v));
+  Kit.haptic('selection');
+  if (tw) tw.kill();
+  tw = gsap.to(st, {t: v, duration: Kit.calm ? .2 : 1.6, ease: 'power2.inOut', onUpdate: draw, onComplete: () => {
+    if (v === 1 && !told) { told = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
+  }});
+}
+Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('.seg'); if (b) setMoon(+b.dataset.v); });
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#sw .seg', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { document.querySelector('.seg[data-v="1"]').click(); await new Promise(r => setTimeout(r, 1900)); };
+Kit.single();
+</script>
+</html>

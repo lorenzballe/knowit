@@ -1,0 +1,38 @@
+{
+  "id": "medicine-flesh-eating-vibrio",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.clean_water",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What can a flesh-eating bacterium from sea water do to you?",
+  "answer": "Vibrio vulnificus is a flesh-eating bacterium that can live in sea water. Its ulcers and lesions can get so deep that the limb must be amputated, or the person dies. It is extremely rare, but very dangerous.",
+  "move": "Rare, but it eats flesh: ulcers, necrosis, amputation, even death.",
+  "keywords": [
+    "vibrio vulnificus",
+    "sea water",
+    "bacteria",
+    "necrosis",
+    "amputation"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Four outcomes of Vibrio vulnificus infection are listed: ulcers, necrosis, amputation, death. A hold button lets the reader watch the bacterium feed. The reveal says it lives in sea water and is extremely rare but very dangerous.",
+    "ground": "#0b3d63"
+  },
+  "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=WtF2R7J9DUo&t=337s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,197 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: space-spice-stuffy-nose -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{width:100%;height:100%;display:block}
+#ctl{display:flex;gap:2.4cqw;align-items:stretch;margin-top:1cqh}
+.sw{display:flex;flex:1;background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:999px;padding:.45cqh}
+.seg{flex:1;font:700 max(2cqh,13px)/1.1 var(--body);border:0;background:transparent;color:var(--k);border-radius:999px;padding:1.3cqh 2cqw;cursor:pointer}
+.seg.on{background:var(--k);color:var(--c)}
+.spice{font:700 max(2cqh,13px)/1.1 var(--body);border:0;border-radius:999px;background:#e0452b;color:#fff;padding:1.3cqh 4.5cqw;cursor:pointer;transition:opacity .3s}
+.spice:disabled{opacity:.3;cursor:default}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0}
+.say{overflow-wrap:anywhere}
+.foot{padding-right:100px;min-height:46px}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Flip the switch · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPACE FOOD</span></div>
+    <h2 class="q">Why is the food on Artemis II often so spicy?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="ctl">
+      <div class="sw" role="group" aria-label="Where you eat">
+        <button class="seg on" data-m="earth">On Earth</button>
+        <button class="seg" data-m="space">In orbit</button>
+      </div>
+      <button id="spice" class="spice" disabled>Add spice</button>
+    </div>
+    <p class="say" id="say">Flip from Earth to orbit and watch the nose. Then add spice.</p>
+    <div id="why" class="gone"><p class="body">Without weight, body fluids drift up to the head and stuff the nose, a bit like a cold. With a stuffy nose food tastes flat, so space food is made spicy and hot to taste of something again.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In orbit a stuffy head dulls taste; spice gives the flavour back.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa si mangia su Artemis II, la navicella spaziale che sta facendo il giro attorno alla luna?” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const BLUE = '#2f7de1', RED = '#e0452b', FOOD = '#d9a441';
+let mode = 'earth', spiced = false, done = false, D = null, loop = null;
+
+function draw(){
+  if (loop) { loop.kill(); loop = null; }
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg); const fs = Math.max(12, f);
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const s = Math.min(W * .19, H * .15);
+  const cx = W * .4, hy = H * .06 + s, ty = hy + s * 1.3, bot = H * .97;
+  const wT = Math.min(W * .26, s * 2.1);
+  const torso = `M${cx-wT},${bot} L${cx-wT},${ty+s*.5} Q${cx-wT},${ty} ${cx-wT+s*.5},${ty} L${cx+wT-s*.5},${ty} Q${cx+wT},${ty} ${cx+wT},${ty+s*.5} L${cx+wT},${bot} Z`;
+  const lw = Math.max(2, s * .04);
+
+  const defs = mk('defs'); const cp = mk('clipPath', {id: 'bodyclip'}, defs);
+  mk('circle', {cx, cy: hy, r: s}, cp);
+  mk('rect', {x: cx - s * .35, y: hy + s * .7, width: s * .7, height: ty - hy}, cp);
+  mk('path', {d: torso}, cp);
+
+  // silhouette
+  const sil = mk('g', {fill: 'var(--k)', 'fill-opacity': .07});
+  mk('circle', {cx, cy: hy, r: s}, sil);
+  mk('rect', {x: cx - s * .35, y: hy + s * .7, width: s * .7, height: ty - hy}, sil);
+  mk('path', {d: torso}, sil);
+
+  // fluid
+  const fg = mk('g', {'clip-path': 'url(#bodyclip)'});
+  const eY = ty + (bot - ty) * .35, eH = bot - eY + 2;
+  const sY = hy - s - 2, sH = ty + s * 1.1 - sY;
+  const fluid = mk('rect', {x: 0, y: eY, width: W, height: eH, fill: BLUE, 'fill-opacity': .55}, fg);
+
+  // outlines
+  const ol = mk('g', {fill: 'none', stroke: 'var(--k)', 'stroke-width': lw, 'stroke-linejoin': 'round'});
+  mk('circle', {cx, cy: hy, r: s}, ol);
+  mk('path', {d: `M${cx-s*.35},${hy+s*.94} L${cx-s*.35},${ty} M${cx+s*.35},${hy+s*.94} L${cx+s*.35},${ty}`}, ol);
+  mk('path', {d: torso}, ol);
+
+  // face
+  mk('circle', {cx: cx - s * .35, cy: hy - s * .18, r: s * .07, fill: 'var(--k)'});
+  mk('circle', {cx: cx + s * .35, cy: hy - s * .18, r: s * .07, fill: 'var(--k)'});
+  const nose = mk('g', {});
+  const noseP = mk('path', {d: `M${cx},${hy-s*.12} L${cx-s*.18},${hy+s*.28} Q${cx},${hy+s*.38} ${cx+s*.18},${hy+s*.28} Z`, fill: '#fff', stroke: 'var(--k)', 'stroke-width': lw * .8, 'stroke-linejoin': 'round'}, nose);
+  const nl = mk('ellipse', {cx: cx - s * .08, cy: hy + s * .29, rx: s * .045, ry: s * .035, fill: 'var(--k)'}, nose);
+  const nr = mk('ellipse', {cx: cx + s * .08, cy: hy + s * .29, rx: s * .045, ry: s * .035, fill: 'var(--k)'}, nose);
+  mk('path', {d: `M${cx-s*.25},${hy+s*.56} Q${cx},${hy+s*.66} ${cx+s*.25},${hy+s*.56}`, fill: 'none', stroke: 'var(--k)', 'stroke-width': lw * .8, 'stroke-linecap': 'round'});
+
+  // arrows + label in torso
+  const ay = ty + (bot - ty) * .4, a = s * .2;
+  const arrows = mk('g', {fill: 'none', stroke: 'var(--k)', 'stroke-width': lw * 1.1, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+  for (let i = -1; i <= 1; i++) mk('path', {d: `M${cx-a},${ay+i*a*.9+a*.5} L${cx},${ay+i*a*.9-a*.5} L${cx+a},${ay+i*a*.9+a*.5}`}, arrows);
+  const tl = mk('text', {x: cx, y: ay + a * 2.6 + fs, 'text-anchor': 'middle', fill: 'var(--k)', 'font-weight': 700, 'font-size': fs, 'font-family': 'var(--body)'});
+
+  // gravity tag
+  const gt = mk('text', {x: fs * .5, y: H * .06 + fs * 1.7, fill: 'var(--k)', 'font-size': fs * 2, 'font-weight': 800, 'font-family': 'var(--display)'});
+
+  // bowl
+  const bx = W * .77, by = H * .62, bw = W * .075, bh = bw * .8;
+  const nx = cx + s * .17, ny = hy + s * .25;
+  const wisps = [];
+  const wg = mk('g', {fill: 'none', 'stroke-linecap': 'round'});
+  for (let i = 0; i < 3; i++) {
+    const o = (i - 1) * bw * .45;
+    wisps.push(mk('path', {d: `M${bx+o},${by-bw*.25} C${bx+o},${by-H*.18} ${nx+W*.14},${ny+(i-1)*s*.15} ${nx+s*.12},${ny+(i-1)*s*.08}`,
+      stroke: 'var(--k)', 'stroke-width': lw, 'stroke-dasharray': `${s*.14} ${s*.12}`}, wg));
+  }
+  const food = mk('ellipse', {cx: bx, cy: by, rx: bw, ry: bw * .22, fill: FOOD});
+  mk('path', {d: `M${bx-bw},${by} Q${bx-bw},${by+bh} ${bx},${by+bh} Q${bx+bw},${by+bh} ${bx+bw},${by}`, fill: '#fff', stroke: 'var(--k)', 'stroke-width': lw});
+  mk('text', {x: bx, y: by + bh + fs * 1.4, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}).textContent = 'food';
+
+  // block mark at the nose
+  const bk = nx + s * .42, block = mk('g', {stroke: RED, 'stroke-width': lw * 1.4, 'stroke-linecap': 'round', opacity: 0});
+  mk('path', {d: `M${bk-s*.13},${ny-s*.13} L${bk+s*.13},${ny+s*.13} M${bk+s*.13},${ny-s*.13} L${bk-s*.13},${ny+s*.13}`}, block);
+
+  // shaker (upside down above bowl)
+  const sx = bx + bw * .25, sy = by - H * .2, sw = bw * .6, sh = bw * .95;
+  const shaker = mk('g', {opacity: 0});
+  mk('rect', {x: sx - sw / 2, y: sy - sh / 2, width: sw, height: sh, rx: sw * .2, fill: '#fff', stroke: 'var(--k)', 'stroke-width': lw}, shaker);
+  mk('rect', {x: sx - sw / 2, y: sy + sh / 2, width: sw, height: sh * .3, rx: sw * .12, fill: RED, stroke: 'var(--k)', 'stroke-width': lw}, shaker);
+  const dots = [];
+  for (let i = 0; i < 10; i++) dots.push(mk('circle', {cx: sx, cy: sy + sh * .85, r: Math.max(1.6, s * .03), fill: RED, opacity: 0}));
+
+  // taste meter
+  const mx = W * .92, mw = W * .05, mt = H * .14, mb = H * .9;
+  mk('text', {x: mx, y: mt - fs * .7, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)'}).textContent = 'TASTE';
+  mk('rect', {x: mx - mw / 2, y: mt, width: mw, height: mb - mt, rx: mw / 2, fill: 'var(--k)', 'fill-opacity': .08, stroke: 'var(--k)', 'stroke-width': lw * .7});
+  const mfill = mk('rect', {x: mx - mw / 2 + lw, y: mb, width: mw - lw * 2, height: 0, rx: (mw - lw * 2) / 2, fill: 'var(--k)'});
+
+  D = {fluid, eY, eH, sY, sH, arrows, cx, ay, nose, noseP, nl, nr, nx, ny, s, wisps, block, food, shaker, sx, sy, sh, dots, bx, by, bw, mfill, mt, mb, lw, tl, gt};
+
+  if (!Kit.calm) loop = gsap.fromTo(wisps, {attr: {'stroke-dashoffset': 0}}, {attr: {'stroke-dashoffset': -s * .26 * 4}, duration: 2, repeat: -1, ease: 'none'});
+  apply(false);
+}
+
+function apply(anim){
+  if (!D) return;
+  const d = anim && !Kit.calm ? .9 : 0, sp = mode === 'space';
+  const lv = sp ? (spiced ? .86 : .28) : .9;
+  gsap.to(D.fluid, {attr: {y: sp ? D.sY : D.eY, height: sp ? D.sH : D.eH}, duration: d, ease: 'power2.inOut'});
+  gsap.to(D.arrows, {rotation: sp ? 0 : 180, svgOrigin: `${D.cx} ${D.ay}`, duration: d * .7, ease: 'power2.inOut'});
+  gsap.to(D.nose, {scale: sp ? 1.3 : 1, svgOrigin: `${D.cx} ${D.ny}`, duration: d, ease: 'back.out(2)'});
+  gsap.to(D.noseP, {attr: {fill: sp ? '#f4a7a0' : '#ffffff'}, duration: d});
+  gsap.to([D.nl, D.nr], {attr: {ry: sp ? D.s * .006 : D.s * .035}, duration: d});
+  gsap.to(D.wisps, {opacity: sp && !spiced ? .2 : 1, attr: {stroke: spiced ? RED : 'var(--k)', 'stroke-width': spiced ? D.lw * 1.8 : D.lw}, duration: d});
+  gsap.to(D.block, {opacity: sp ? (spiced ? .25 : 1) : 0, duration: d});
+  gsap.to(D.food, {attr: {fill: spiced ? RED : FOOD}, duration: d});
+  if (!spiced) gsap.to(D.shaker, {opacity: 0, duration: d * .5});
+  gsap.to(D.mfill, {attr: {y: D.mb - (D.mb - D.mt) * lv, height: (D.mb - D.mt) * lv, fill: spiced ? RED : 'var(--k)'}, duration: d, ease: 'power2.out'});
+  D.tl.textContent = sp ? 'fluids rise to the head' : 'fluids sink to the legs';
+  D.gt.textContent = sp ? '0 g' : '1 g';
+}
+
+function setMode(m){
+  if (m === mode) return;
+  mode = m; spiced = false;
+  document.querySelectorAll('.seg').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+  Kit.$('spice').disabled = m !== 'space';
+  Kit.haptic('selection');
+  if (!done) Kit.$('say').textContent = m === 'space'
+    ? 'No weight: fluids float up and stuff the nose. Taste drops. Now add spice.'
+    : 'Gravity keeps fluids low; the nose is clear. Flip to orbit.';
+  apply(true);
+}
+
+function addSpice(){
+  if (mode !== 'space' || spiced) return;
+  spiced = true; Kit.haptic('light');
+  const t = Kit.calm ? 0 : 1;
+  gsap.set(D.shaker, {opacity: 1, rotation: 0});
+  if (t) {
+    gsap.fromTo(D.shaker, {rotation: -14}, {rotation: 14, svgOrigin: `${D.sx} ${D.sy}`, duration: .12, yoyo: true, repeat: 5, ease: 'sine.inOut'});
+    D.dots.forEach((c, i) => gsap.fromTo(c, {opacity: 1, attr: {cx: D.sx, cy: D.sy + D.sh * .85}},
+      {attr: {cx: D.bx + (Kit.rnd() - .5) * D.bw * 1.4, cy: D.by}, duration: .45, delay: i * .06, ease: 'power2.in', onComplete: () => gsap.to(c, {opacity: 0, duration: .2})}));
+  }
+  setTimeout(() => {
+    apply(true);
+    if (!done) {
+      done = true;
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .4});
+    }
+  }, t ? 650 : 0);
+}
+
+document.querySelector('.sw').addEventListener('click', e => { const b = e.target.closest('.seg'); if (b) setMode(b.dataset.m); });
+Kit.$('spice').addEventListener('click', addSpice);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  document.querySelector('.seg[data-m="space"]').click();
+  await new Promise(r => setTimeout(r, 1000));
+  Kit.$('spice').click();
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,236 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: space-gps-relativity-clocks -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#sky{width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#sat{cursor:grab}
+#fixbtn{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;align-self:flex-start;margin-top:.6cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.lab{font-family:var(--body);font-weight:800;letter-spacing:.06em}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RELATIVITY</span></div>
+    <h2 class="q">Why must GPS satellite clocks be corrected for Einstein's relativity?</h2>
+    <div class="stagebox" id="stage"><svg id="sky"></svg></div>
+    <p class="say" id="say">Drag the right-hand clock up into orbit, then watch both clocks.</p>
+    <button id="fixbtn" class="gone">Apply Einstein's correction</button>
+    <div id="why" class="gone">
+      <p class="body">Einstein's special and general relativity say time passes at a different rate on the satellites than on Earth. Left alone, their atomic clocks slip out of step with ours and GPS loses accuracy, so they get slight corrections.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In orbit time runs at a different pace, so GPS clocks are corrected.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Sai come funziona il GPS? FIGO! NON LO SAPEVO!” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const RED = '#ff5a4e', GREEN = '#2fbf71';
+const S = {orbit: false, gap: 0, fixed: false, T: 0, offered: false, done: false};
+let G = null, drag = null;
+
+function mk(tag, attrs, parent) { return Kit.mk(tag, attrs, parent); }
+function pt(a, L) { const r = a * Math.PI / 180; return [L * Math.sin(r), -L * Math.cos(r)]; }
+
+function buildClock(parent, r, isSat) {
+  const g = mk('g', {}, parent);
+  const o = {g};
+  if (isSat) {
+    // solar panels
+    mk('line', {x1: -r * 1.9, y1: 0, x2: r * 1.9, y2: 0, stroke: 'var(--k)', 'stroke-width': Math.max(2, r * .07)}, g);
+    [-1, 1].forEach(s => {
+      mk('rect', {x: s > 0 ? r * 1.15 : -r * 1.95, y: -r * .42, width: r * .8, height: r * .84, rx: r * .06,
+        fill: 'color-mix(in srgb,var(--k) 75%,transparent)', stroke: 'var(--k)', 'stroke-width': 1.5}, g);
+      for (let i = 1; i < 3; i++) mk('line', {x1: (s > 0 ? r * 1.15 : -r * 1.95) + r * .8 * i / 3, y1: -r * .42, x2: (s > 0 ? r * 1.15 : -r * 1.95) + r * .8 * i / 3, y2: r * .42, stroke: 'var(--c)', 'stroke-width': 1, opacity: .6}, g);
+    });
+  }
+  o.ring = mk('circle', {r: r * 1.08, fill: 'none', stroke: GREEN, 'stroke-width': r * .1, opacity: 0}, g);
+  mk('circle', {r, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': Math.max(3, r * .1)}, g);
+  for (let i = 0; i < 12; i++) {
+    const [x1, y1] = pt(i * 30, r * .78), [x2, y2] = pt(i * 30, r * .9);
+    mk('line', {x1, y1, x2, y2, stroke: 'var(--k)', 'stroke-width': i % 3 ? 1.5 : 3, 'stroke-linecap': 'round'}, g);
+  }
+  if (isSat) {
+    o.wedge = mk('path', {fill: RED, opacity: .35}, g);
+    o.ghost = mk('line', {x1: 0, y1: 0, stroke: 'var(--k)', 'stroke-width': Math.max(2, r * .06), 'stroke-dasharray': '3 4', opacity: .55, 'stroke-linecap': 'round'}, g);
+  }
+  o.hand = mk('line', {x1: 0, y1: 0, stroke: isSat ? RED : 'var(--k)', 'stroke-width': Math.max(3, r * .1), 'stroke-linecap': 'round'}, g);
+  mk('circle', {r: Math.max(3, r * .09), fill: 'var(--k)'}, g);
+  o.r = r;
+  return o;
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('sky');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const top = H * .74, R = W * 1.2, cx = W / 2, cy = top + R;
+  const surf = x => cy - Math.sqrt(R * R - (x - cx) * (x - cx));
+  const r = Math.max(18, Math.min(W, H) * .1);
+  const orbitY = Math.max(H * .22, r + fs * 2.2);
+  const g0x = W * .2, sStartX = W * .78, trueX = W * .5;
+  const gy = surf(g0x) - r - 4, sy = surf(sStartX) - r - 4;
+  const orbitX = W * .7;
+
+  // stars
+  for (let i = 0; i < 26; i++) {
+    const x = ((i * 73) % 97) / 97 * W, y = ((i * 41) % 89) / 89 * top * .9;
+    mk('circle', {cx: x, cy: y, r: 1 + (i % 3) * .5, fill: 'var(--k)', opacity: .25}, svg);
+  }
+  // orbit (visible arc only)
+  const ro = cy - orbitY;
+  const oy = x => cy - Math.sqrt(ro * ro - (x - cx) * (x - cx));
+  mk('path', {d: `M0,${oy(0)} A${ro},${ro} 0 0 1 ${W},${oy(W)}`, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-dasharray': '6 8', opacity: .4}, svg);
+  // earth (visible cap only)
+  mk('path', {d: `M0,${surf(0)} A${R},${R} 0 0 1 ${W},${surf(W)} L${W},${H} L0,${H} Z`, fill: 'var(--k)'}, svg);
+
+  // signal
+  const sig = mk('line', {stroke: RED, 'stroke-width': 2, 'stroke-dasharray': '5 6', opacity: 0}, svg);
+  // true position
+  const ty = surf(trueX);
+  mk('path', {d: `M${trueX},${ty} l0,${-fs * 1.4} l${fs * .9},${fs * .35} l${-fs * .9},${fs * .35}`, fill: GREEN, stroke: GREEN, 'stroke-width': 2}, svg);
+  mk('text', {x: trueX, y: ty + fs * 1.45, 'text-anchor': 'middle', fill: 'var(--c)', 'font-size': fs, class: 'lab'}, svg).textContent = 'YOU';
+  const fixDot = mk('circle', {r: fs * .45, fill: RED, stroke: 'var(--c)', 'stroke-width': 2, opacity: 0}, svg);
+  const fixLab = mk('text', {'text-anchor': 'middle', fill: RED, 'font-size': fs, class: 'lab', opacity: 0}, svg);
+  fixLab.textContent = 'GPS FIX';
+
+  // ground clock
+  mk('rect', {x: g0x - r * .15, y: gy + r - 2, width: r * .3, height: 8, fill: 'var(--k)'}, svg);
+  const ground = buildClock(svg, r, false);
+  ground.g.setAttribute('transform', `translate(${g0x},${gy})`);
+  mk('text', {x: g0x, y: surf(g0x) + fs * 1.45, 'text-anchor': 'middle', fill: 'var(--c)', 'font-size': fs, class: 'lab'}, svg).textContent = 'ON EARTH';
+
+  // hint arrow
+  const hint = mk('g', {opacity: S.orbit ? 0 : .7}, svg);
+  const hx = (sStartX + orbitX) / 2 + r * 1.4;
+  mk('path', {d: `M${hx},${sy - r * 1.3} L${hx},${orbitY + r * .4}`, stroke: 'var(--k)', 'stroke-width': 2.5, 'stroke-dasharray': '4 6', fill: 'none'}, hint);
+  mk('path', {d: `M${hx - 7},${orbitY + r * .4 + 9} L${hx},${orbitY + r * .4} L${hx + 7},${orbitY + r * .4 + 9}`, stroke: 'var(--k)', 'stroke-width': 2.5, fill: 'none', 'stroke-linecap': 'round'}, hint);
+
+  // satellite clock
+  const satWrap = mk('g', {id: 'sat'}, svg);
+  mk('circle', {r: r * 2.1, fill: 'transparent'}, satWrap);
+  const sat = buildClock(satWrap, r, true);
+  const satLab = mk('text', {y: -r - fs * .7, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, class: 'lab'}, satWrap);
+  satLab.textContent = 'SATELLITE';
+  const stepLab = mk('text', {y: r + fs * 1.35, 'text-anchor': 'middle', fill: RED, 'font-size': fs, class: 'lab', opacity: 0}, satWrap);
+
+  G = {W, H, fs, r, surf, trueX, orbitX, orbitY, sStartX, sy, ground, sat, satWrap, sig, fixDot, fixLab, stepLab, hint, satLab,
+       satX: S.orbit ? orbitX : sStartX, satY: S.orbit ? orbitY : sy};
+
+  satWrap.addEventListener('pointerdown', e => {
+    if (S.orbit) return;
+    const b = svg.getBoundingClientRect();
+    drag = {dx: G.satX - (e.clientX - b.left), dy: G.satY - (e.clientY - b.top), b};
+    satWrap.style.cursor = 'grabbing';
+    gsap.to(hint, {opacity: 0, duration: .3});
+    Kit.haptic('light');
+    e.preventDefault();
+  });
+  render();
+};
+
+window.addEventListener('pointermove', e => {
+  if (!drag || !G) return;
+  G.satX = Math.min(G.W - G.r, Math.max(G.r, e.clientX - drag.b.left + drag.dx));
+  G.satY = Math.min(G.sy, Math.max(G.orbitY, e.clientY - drag.b.top + drag.dy));
+});
+window.addEventListener('pointerup', () => {
+  if (!drag || !G) return;
+  drag = null;
+  G.satWrap.style.cursor = '';
+  if (G.satY < (G.orbitY + G.sy) / 2) {
+    S.orbit = true;
+    gsap.to(G, {satX: G.orbitX, satY: G.orbitY, duration: .6, ease: 'back.out(1.6)'});
+    Kit.haptic('selection');
+    Kit.$('say').textContent = 'Two perfect atomic clocks, same start. Watch the red hand.';
+  } else {
+    gsap.to(G, {satX: G.sStartX, satY: G.sy, duration: .5, ease: 'power3.out'});
+    gsap.to(G.hint, {opacity: .7, duration: .3});
+  }
+});
+
+function render() {
+  if (!G) return;
+  const {sat, ground, r} = G;
+  const a = (S.T * 120) % 360;
+  const [ex, ey] = pt(a, r * .72);
+  ground.hand.setAttribute('x2', ex); ground.hand.setAttribute('y2', ey);
+  const sa = a + S.gap;
+  const [sx, sy] = pt(sa, r * .72);
+  sat.hand.setAttribute('x2', sx); sat.hand.setAttribute('y2', sy);
+  sat.ghost.setAttribute('x2', ex); sat.ghost.setAttribute('y2', ey);
+  sat.ghost.setAttribute('opacity', S.orbit ? .55 : 0);
+  if (S.gap > .5) {
+    const [x1, y1] = pt(a, r * .72), [x2, y2] = pt(sa, r * .72);
+    sat.wedge.setAttribute('d', `M0,0 L${x1},${y1} A${r * .72},${r * .72} 0 ${S.gap > 180 ? 1 : 0} 1 ${x2},${y2} Z`);
+  } else sat.wedge.setAttribute('d', '');
+  G.satWrap.setAttribute('transform', `translate(${G.satX},${G.satY})`);
+
+  const fx = G.trueX + (S.gap / 150) * G.W * .3, fy = G.surf(fx);
+  const vis = S.orbit && G.satY < G.orbitY + 4 ? 1 : 0;
+  G.fixDot.setAttribute('cx', fx); G.fixDot.setAttribute('cy', fy); G.fixDot.setAttribute('opacity', vis);
+  G.fixLab.setAttribute('x', Math.min(G.W - G.fs * 2.6, fx)); G.fixLab.setAttribute('y', fy + G.fs * 2.95);
+  G.fixLab.setAttribute('opacity', vis && S.gap > 4 ? 1 : 0);
+  G.sig.setAttribute('x1', G.satX); G.sig.setAttribute('y1', G.satY + r);
+  G.sig.setAttribute('x2', fx); G.sig.setAttribute('y2', fy);
+  G.sig.setAttribute('opacity', vis ? .8 : 0);
+
+  if (S.fixed) {
+    G.stepLab.textContent = 'IN STEP ✓'; G.stepLab.setAttribute('fill', GREEN); G.stepLab.setAttribute('opacity', 1);
+    sat.ring.setAttribute('opacity', 1); sat.hand.setAttribute('stroke', GREEN);
+    G.fixDot.setAttribute('fill', GREEN);
+  } else if (S.orbit && S.gap > 4) {
+    G.stepLab.textContent = 'OUT OF STEP'; G.stepLab.setAttribute('opacity', 1);
+  }
+}
+
+gsap.ticker.add((time, dt) => {
+  const s = Math.min(dt, 100) / 1000;
+  S.T += s;
+  if (S.orbit && !S.fixed && G && G.satY < G.orbitY + 4) {
+    S.gap = Math.min(150, S.gap + s * 28);
+    if (S.gap > 45 && !S.offered) {
+      S.offered = true;
+      Kit.$('say').textContent = 'Same clocks, different pace: the GPS fix slides away. Fix it.';
+      Kit.show('fixbtn');
+      if (!Kit.calm) gsap.from('#fixbtn', {opacity: 0, y: 8, duration: .4, ease: 'power3.out'});
+    }
+  }
+  render();
+});
+
+Kit.$('fixbtn').addEventListener('click', () => {
+  if (S.fixed) return;
+  S.fixed = true;
+  Kit.haptic('success');
+  gsap.to(S, {gap: 0, duration: 1.1, ease: 'power2.inOut', onComplete: () => {
+    Kit.hide('fixbtn'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => Kit.onShow.card());
+  }});
+});
+
+Kit.onEnter.card = () => {
+  if (!Kit.calm && G) gsap.fromTo(G.hint, {opacity: 0}, {opacity: .7, duration: .6, repeat: 2, yoyo: true});
+};
+
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const b = Kit.$('sky').getBoundingClientRect();
+  const x = b.left + G.satX, y = b.top + G.satY;
+  G.satWrap.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  window.dispatchEvent(new PointerEvent('pointermove', {clientX: x - 20, clientY: b.top + G.orbitY, bubbles: true, pointerId: 1}));
+  window.dispatchEvent(new PointerEvent('pointerup', {clientX: x - 20, clientY: b.top + G.orbitY, bubbles: true, pointerId: 1}));
+  await wait(2600);
+  Kit.$('fixbtn').click();
+  await wait(1700);
+};
+Kit.single();
+</script>
+</html>

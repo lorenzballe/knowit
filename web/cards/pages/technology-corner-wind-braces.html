@@ -1,0 +1,152 @@
+<!doctype html>
+<!-- slug: technology-corner-wind-braces -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:.6cqh}
+#read{display:flex;align-items:baseline;justify-content:center;gap:2.5cqw;flex-wrap:wrap}
+#read .lab{font:600 max(1.7cqh,12px)/1.2 var(--body);color:var(--muted)}
+#pct{font:800 max(4.2cqh,22px)/1 var(--mono);color:var(--k);min-width:5ch;text-align:center}
+#pct.hot{color:#e4322b}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STRUCTURES</span></div>
+    <h2 class="q">Why did corner wind strain Citicorp's braces more than head-on wind?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read"><span class="lab">Hardest-working brace</span><span id="pct">100%</span><span class="lab">of the head-on load</span></div>
+      <svg id="pic"></svg>
+    </div>
+    <p class="say" id="say">Drag the wind arrow around the tower. Watch the braces.</p>
+    <div id="why" class="gone">
+      <p class="big">√2 ≈ 1.41: 40% more</p>
+      <p class="body">Corner wind splits into two pushes of F/√2, one on each face. In half the diagonal braces they cancel; in the other half they add: 2 × F/√2 ≈ 1.41 F. That is 40% above the head-on load LeMessurier had calculated.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Wind on the corner, not on a face, loaded Citicorp's braces hardest: 40% more.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic'), HOT = '#e4322b';
+let G = null, th = 0, done = false, drag = false;
+const rad = d => d * Math.PI / 180;
+
+function arrow(x1, y1, x2, y2, w, col, g) {
+  const a = Math.atan2(y2 - y1, x2 - x1), hl = w * 3.2;
+  const bx = x2 - Math.cos(a) * hl, by = y2 - Math.sin(a) * hl;
+  Kit.mk('line', {x1, y1, x2: bx, y2: by, style: `stroke:${col};stroke-width:${w};stroke-linecap:round`}, g);
+  const p = [[x2, y2], [bx + Math.sin(a) * hl * .6, by - Math.cos(a) * hl * .6], [bx - Math.sin(a) * hl * .6, by + Math.cos(a) * hl * .6]];
+  Kit.mk('polygon', {points: p.map(q => q.join(',')).join(' '), style: `fill:${col}`}, g);
+}
+function text(x, y, s, size, col, anchor, g, weight) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'middle', 'dominant-baseline': 'middle',
+    style: `fill:${col};font:${weight || 700} ${size}px var(--body)`}, g);
+  t.textContent = s; return t;
+}
+
+function draw() {
+  if (!G) return;
+  const {W, H} = G, f = Math.max(G.f, 12);
+  svg.innerHTML = '';
+  const m = Math.min(W, H * .95), cx = W / 2, cy = H / 2, h = .17 * m;
+  const x0 = cx - h, x1 = cx + h, y0 = cy - h, y1 = cy + h;
+  const fy = Math.cos(rad(th)), fx = Math.sin(rad(th));      // from north (+), from west (+)
+  const A = Math.abs(fy + fx), B = Math.abs(fy - fx);        // brace groups
+  const g = Kit.mk('g', {}, svg);
+  // tower floor
+  Kit.mk('rect', {x: x0, y: y0, width: 2 * h, height: 2 * h, rx: m * .01,
+    style: 'fill:color-mix(in srgb,var(--k) 7%,transparent)'}, g);
+  // braces: each face in two halves
+  const seg = (ax, ay, bx, by, s) => {
+    const w = m * .008 + m * .024 * s / 1.414;
+    const col = s < .12 ? 'color-mix(in srgb,var(--k) 25%,transparent)' : s > 1.03 ? HOT : 'var(--k)';
+    Kit.mk('line', {x1: ax, y1: ay, x2: bx, y2: by,
+      style: `stroke:${col};stroke-width:${w};stroke-linecap:round${s < .12 ? `;stroke-dasharray:${m * .015} ${m * .015}` : ''}`}, g);
+  };
+  const d = m * .012;
+  seg(x0 + d, y0, cx - d, y0, A); seg(cx + d, y0, x1 - d, y0, B);
+  seg(x1, y0 + d, x1, cy - d, B); seg(x1, cy + d, x1, y1 - d, A);
+  seg(x1 - d, y1, cx + d, y1, A); seg(cx - d, y1, x0 + d, y1, B);
+  seg(x0, y1 - d, x0, cy + d, B); seg(x0, cy - d, x0, y0 + d, A);
+  // the famous mid-side columns
+  [[cx, y0], [x1, cy], [cx, y1], [x0, cy]].forEach(([x, y]) =>
+    Kit.mk('rect', {x: x - m * .022, y: y - m * .022, width: m * .044, height: m * .044, rx: m * .006, style: 'fill:var(--k)'}, g));
+  text(cx, cy - f * .8, 'TOWER', f * .8, 'var(--muted)', 'middle', g, 700);
+  text(cx, cy + f * .8, 'from above', f * .8, 'var(--muted)', 'middle', g, 500);
+  // component pushes on the faces
+  const L = .13 * m, gap = .03 * m, cw = m * .014;
+  if (Math.abs(fy) > .06) {
+    const s = Math.sign(fy), yf = s > 0 ? y0 - gap : y1 + gap, len = L * Math.abs(fy);
+    arrow(cx, yf - s * len, cx, yf, cw, 'var(--k)', g);
+    text(cx + m * .035, yf - s * len / 2, (Math.abs(fy)).toFixed(2) + ' F', f, 'var(--k)', 'start', g);
+  }
+  if (Math.abs(fx) > .06) {
+    const s = Math.sign(fx), xf = s > 0 ? x0 - gap : x1 + gap, len = L * Math.abs(fx);
+    arrow(xf - s * len, cy, xf, cy, cw, 'var(--k)', g);
+    text(xf, cy + Math.max(m * .045, f * 1.1), (Math.abs(fx)).toFixed(2) + ' F', f, 'var(--k)', s > 0 ? 'end' : 'start', g);
+  }
+  // the wind itself (draggable)
+  const phi = rad(-th - 90), r1 = .345 * m, r2 = .47 * m;
+  const hx = cx + Math.cos(phi) * r1, hy = cy + Math.sin(phi) * r1, tx = cx + Math.cos(phi) * r2, ty = cy + Math.sin(phi) * r2;
+  arrow(tx, ty, hx, hy, m * .02, 'color-mix(in srgb,var(--k) 55%,transparent)', g);
+  Kit.mk('circle', {cx: tx, cy: ty, r: m * .035, style: 'fill:var(--c);stroke:var(--k);stroke-width:' + m * .008}, g);
+  const nx = -Math.sin(phi), ny = Math.cos(phi);
+  const lx = (tx + hx) / 2 + nx * m * .05, ly = (ty + hy) / 2 + ny * m * .05;
+  text(lx, ly, 'wind F', f, 'var(--k)', 'middle', g, 800);
+  // readout
+  const s = Math.max(A, B), p = Kit.$('pct');
+  p.textContent = Math.round(s * 100) + '%';
+  p.classList.toggle('hot', s > 1.03);
+  return s;
+}
+
+function check() {
+  const s = draw();
+  if (s > 1.385 && !done) {
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  }
+}
+function fromPointer(e) {
+  const r = svg.getBoundingClientRect();
+  const x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
+  let t = -(Math.atan2(y, x) * 180 / Math.PI + 90);
+  t = ((t + 540) % 360) - 180;
+  th = t; check();
+}
+svg.addEventListener('pointerdown', e => { drag = true; gsap.killTweensOf(window); svg.setPointerCapture(e.pointerId); fromPointer(e); Kit.haptic('light'); });
+svg.addEventListener('pointermove', e => { if (drag) fromPointer(e); });
+const end = () => {
+  if (!drag) return; drag = false;
+  const snap = Math.round(th / 45) * 45;
+  if (Math.abs(snap - th) < 8) {
+    const o = {t: th};
+    gsap.to(o, {t: snap, duration: .25, ease: 'power2.out', onUpdate: () => { th = o.t; check(); }});
+    Kit.haptic('selection');
+  }
+};
+svg.addEventListener('pointerup', end);
+svg.addEventListener('pointercancel', end);
+
+Kit.onShow.card = () => { G = Kit.fitSvg(svg); draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {t: 0};
+  gsap.to(o, {t: 14, duration: .7, delay: .4, ease: 'sine.inOut', yoyo: true, repeat: 1, onUpdate: () => { if (!drag) { th = o.t; draw(); } }});
+};
+Kit.play.card = async () => {
+  th = 45; check();
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

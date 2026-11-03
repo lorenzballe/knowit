@@ -1,0 +1,37 @@
+{
+  "id": "science-spinning-proton-magnets",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the hydrogen protons in your body act like magnets in an MRI?",
+  "answer": "Each hydrogen nucleus holds one proton, and that proton spins on its own axis and behaves like a tiny magnet, with a north and a south end. Because it is a magnet, an outside magnetic field can grab it and turn it. That turning is what an MRI machine works with.",
+  "move": "Each hydrogen proton is a spinning mini‑magnet, so magnetic fields can steer it.",
+  "keywords": [
+    "proton",
+    "hydrogen",
+    "mri machine",
+    "magnetism",
+    "water"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An animated hydrogen atom with its proton drawn as a spinning top that gives off a magnetic field. A draggable magnet moves around the proton, and dragging it makes the proton turn. The page asks why hydrogen protons act like magnets in an MRI."
+  },
+  "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=WS2LAuwpFzM&t=77s",
+  "written": "2026-11-03"
+}
