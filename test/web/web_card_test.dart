@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:astuto/data/card_page_store_base.dart';
+import 'package:astuto/data/card_pages.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/measure/card_read.dart';
@@ -25,6 +27,24 @@ class _InstantKit extends CardKit {
     asked.add(env);
     return Future.value('<assembled>$html');
   }
+}
+
+/// A card that names its page, as the bank sends it, rather than carrying it.
+Pill _named(String id) {
+  final Pill p = _card(id);
+  return Pill(
+    id: p.id,
+    topic: p.topic,
+    color: p.color,
+    ink: p.ink,
+    tint: p.tint,
+    question: p.question,
+    answer: p.answer,
+    barMove: p.barMove,
+    source: p.source,
+    challenge: p.challenge,
+    web: WebFace(page: 'pages/$id.html', label: p.web!.label),
+  );
 }
 
 Pill _card(
@@ -267,6 +287,72 @@ void main() {
     await tester.tap(find.text('Tap to reveal'));
     await settle(tester);
     expect(_back(), findsOneWidget);
+  });
+
+  group('a card that names its page', () {
+    late List<String> asked;
+    String? Function(Uri url) answer = (url) => '<p>${url.path}</p>';
+
+    setUp(() {
+      asked = [];
+      answer = (url) => '<p>${url.path}</p>';
+      CardPages.instance = CardPages(
+        store: MemoryPageStore(),
+        fetch: (url) async {
+          asked.add(url.path);
+          return answer(url);
+        },
+      );
+    });
+    tearDown(() => CardPages.instance = CardPages());
+
+    testWidgets('is drawn from its page, fetched when it is near, and the '
+        'next few are fetched before the reader gets to them', (tester) async {
+      final List<Pill> deck = [
+        for (final id in 'abcdefgh'.split('')) _named('medicine-$id'),
+      ];
+      await tester.pumpWidget(_Deck(deck: deck, answers: [], stints: []));
+      await settle(tester);
+
+      expect(FakeWebSurface.made.map((f) => f.html), [
+        '<assembled><p>/cards/pages/medicine-a.html</p>',
+        '<assembled><p>/cards/pages/medicine-b.html</p>',
+      ]);
+      // Two live, four more on their way: a card arrives with its page.
+      expect(asked.toSet(), {
+        for (final id in 'abcdef'.split('')) '/cards/pages/medicine-$id.html',
+      });
+      expect(asked, hasLength(6), reason: 'each page fetched once');
+      expect(CardPages.instance.inHand(deck[5].web!), isTrue);
+      expect(CardPages.instance.inHand(deck[6].web!), isFalse);
+
+      FakeWebSurface.made[0].say(const PageDone());
+      await settle(tester);
+      await settle(tester);
+      // The card after the next was already in hand: nothing waited on.
+      expect(
+        FakeWebSurface.made.last.html,
+        '<assembled><p>/cards/pages/medicine-c.html</p>',
+      );
+      expect(asked, contains('/cards/pages/medicine-g.html'));
+      expect(asked.where((a) => a.endsWith('medicine-c.html')), hasLength(1));
+    });
+
+    testWidgets('is drawn natively when its page cannot be had', (
+      tester,
+    ) async {
+      answer = (_) => null;
+      await tester.pumpWidget(
+        _Deck(deck: [_named('medicine-a')], answers: [], stints: []),
+      );
+      await settle(tester);
+
+      expect(FakeWebSurface.made.single.loads, 0, reason: 'nothing to load');
+      expect(find.text('Tap to reveal'), findsOneWidget);
+      await tester.tap(find.text('Tap to reveal'));
+      await settle(tester);
+      expect(_back(), findsOneWidget);
+    });
   });
 
   testWidgets('taps go to the page, and on a card that takes drags, every '

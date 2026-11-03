@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -102,12 +103,24 @@ void main() {
               k == 'source_kind' ||
               k == 'quote',
         );
-        // A free card's page lives beside it and travels inside it, word for
-        // word too.
+        // A free card's page lives beside it and travels alone, published
+        // word for word and named by the hash of its bytes.
         final Object? web = raw['web'];
         if (web is Map<String, Object?>) {
-          web['html'] = File(f.path.replaceFirst(RegExp(r'\.json$'), '.html'))
-              .readAsStringSync();
+          final String page = File(
+            f.path.replaceFirst(RegExp(r'\.json$'), '.html'),
+          ).readAsStringSync();
+          final String hash = sha256
+              .convert(utf8.encode(page))
+              .toString()
+              .substring(0, 12);
+          web['page'] = 'pages/$id.html?v=$hash';
+          web['bytes'] = utf8.encode(page).length;
+          expect(
+            File('web/cards/pages/$id.html').readAsStringSync(),
+            page,
+            reason: 'the published page is the one beside the card',
+          );
         }
         expect(
           cardToJson(PillBank.byId(id)!),
@@ -250,7 +263,7 @@ void main() {
       () async {
         final newer = PillBank.embedded.version + 1;
         SharedPreferences.setMockInitialValues({
-          'knowit.bank': bundle(version: newer, cards: [read('space-9')]),
+          'knowit.bank.v2': bundle(version: newer, cards: [read('space-9')]),
         });
         PillBank.restore(await SharedPreferences.getInstance());
         expect(PillBank.version, newer);
@@ -258,19 +271,35 @@ void main() {
 
         PillBank.reset();
         SharedPreferences.setMockInitialValues({
-          'knowit.bank': bundle(version: 1, cards: [read('space-9')]),
+          'knowit.bank.v2': bundle(version: 1, cards: [read('space-9')]),
         });
         PillBank.restore(await SharedPreferences.getInstance());
         expect(PillBank.version, PillBank.embedded.version);
       },
     );
 
+    test(
+      'lets go of what a build from before kept, never adopting it',
+      () async {
+        SharedPreferences.setMockInitialValues({
+          'knowit.bank': bundle(
+            version: PillBank.embedded.version + 1,
+            cards: [read('space-9')],
+          ),
+        });
+        final prefs = await SharedPreferences.getInstance();
+        PillBank.restore(prefs);
+        expect(PillBank.version, PillBank.embedded.version);
+        expect(prefs.containsKey('knowit.bank'), isFalse);
+      },
+    );
+
     test('forgets a stored bundle it can no longer read', () async {
-      SharedPreferences.setMockInitialValues({'knowit.bank': '{"broken":'});
+      SharedPreferences.setMockInitialValues({'knowit.bank.v2': '{"broken":'});
       final prefs = await SharedPreferences.getInstance();
       PillBank.restore(prefs);
       expect(PillBank.version, PillBank.embedded.version);
-      expect(prefs.getString('knowit.bank'), isNull);
+      expect(prefs.getString('knowit.bank.v2'), isNull);
     });
 
     test('stores what it downloads only when it is newer', () async {
@@ -285,15 +314,15 @@ void main() {
       };
       expect(await PillBank.refresh(prefs), isTrue);
       expect(asked, [kBankVersionUrl, kBankUrl]);
-      expect(prefs.getString('knowit.bank'), isNotNull);
+      expect(prefs.getString('knowit.bank.v2'), isNotNull);
       // Not adopted mid-run: the table is not re-dealt under the reader.
       expect(PillBank.version, PillBank.embedded.version);
 
-      await prefs.remove('knowit.bank');
+      await prefs.remove('knowit.bank.v2');
       PillBank.fetch = (url) async =>
           bundle(version: 1, cards: [read('space-9')]);
       expect(await PillBank.refresh(prefs), isFalse);
-      expect(prefs.getString('knowit.bank'), isNull);
+      expect(prefs.getString('knowit.bank.v2'), isNull);
     });
 
     test('asks the version first, and a phone already holding it downloads '
@@ -308,7 +337,7 @@ void main() {
       };
       expect(await PillBank.refresh(prefs), isFalse);
       expect(asked, [kBankVersionUrl], reason: 'the bank was not fetched');
-      expect(prefs.getString('knowit.bank'), isNull);
+      expect(prefs.getString('knowit.bank.v2'), isNull);
 
       // No version to read, as on a site from before it existed: the bank
       // itself is asked for.
@@ -331,7 +360,7 @@ void main() {
       expect(await PillBank.refresh(prefs), isFalse);
       PillBank.fetch = (url) async => throw const SocketException('offline');
       expect(await PillBank.refresh(prefs), isFalse);
-      expect(prefs.getString('knowit.bank'), isNull);
+      expect(prefs.getString('knowit.bank.v2'), isNull);
     });
   });
 

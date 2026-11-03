@@ -1,7 +1,7 @@
 // The bank, as the server sees it.
 //
-// The same document the phones download — web/cards/cards.json, built by
-// tool/cards/bundle.py — read here from the copy bundled at deploy, and
+// The same document the phones download — web/cards/v2/cards.json, built by
+// tool/cards/bundle.py, every free card's page left out and named — read here from the copy bundled at deploy, and
 // refreshed from the site when it has something newer, so a card written
 // last night is in the server's hands by the time it deals the morning.
 // Nothing here knows the cards' meaning: it knows their tags, their kinds,
@@ -47,7 +47,7 @@ export interface Card {
    * card frame (docs/REMOTE.md, Free cards). The dealer deals the card like any other; what it
    * needs of the face is whether its page marks an answer.
    */
-  web?: { kit?: number; touch?: string; graded?: boolean; label?: string; html?: string };
+  web?: { kit?: number; touch?: string; graded?: boolean; label?: string; html?: string; page?: string; bytes?: number };
   [key: string]: unknown;
 }
 
@@ -181,8 +181,8 @@ export class Bank {
 }
 
 /** Where the phones download the bank from, and the note that names its version. */
-export const BANK_URL = 'https://astutetheapp.com/cards/cards.json';
-export const VERSION_URL = 'https://astutetheapp.com/cards/version.json';
+export const BANK_URL = 'https://astutetheapp.com/cards/v2/cards.json';
+export const VERSION_URL = 'https://astutetheapp.com/cards/v2/version.json';
 
 let current: Bank | null = null;
 let checkedAt = 0;

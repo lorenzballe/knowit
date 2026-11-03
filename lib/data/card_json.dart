@@ -124,18 +124,30 @@ Map<String, Object?> cardToJson(Pill p) {
   return out;
 }
 
-/// A free card's face as the bundle carries it: the page, inlined by
-/// tool/cards/bundle.py from the file kept beside the card, and what the
-/// app needs to show it. Whether a page that asks says right or wrong is
-/// the challenge's, and is written here because the bank keeps it here.
+/// A free card's face as the bundle carries it: where its page is published
+/// (tool/cards/bundle.py names it by the hash of what is in it), or the page
+/// itself in a bank from before pages travelled alone, and what the app
+/// needs to show it. Whether a page that asks says right or wrong is the
+/// challenge's, and is written here because the bank keeps it here.
 Map<String, Object?> webToJson(WebFace web, {required Challenge challenge}) => {
   'kit': web.kit,
   'touch': web.touch.name,
   if (challenge is PageJudged && !challenge.graded) 'graded': false,
   if (web.label.isNotEmpty) 'label': web.label,
   if (web.ground case final Color ground) 'ground': colourHex(ground),
-  'html': web.html,
+  if (web.html case final String html)
+    'html': html
+  else ...{
+    'page': web.page,
+    if (web.bytes > 0) 'bytes': web.bytes,
+  },
 };
+
+/// What a card may name as its page: a file under the bank's `pages/`, and
+/// the hash of what is in it. Nothing that could lead anywhere else.
+final RegExp _pageRef = RegExp(
+  r'^pages/[a-z0-9_-]+\.html(\?v=[0-9a-f]{6,64})?$',
+);
 
 /// A colour as the bank writes one: `#rrggbb`.
 String colourHex(Color c) =>
@@ -148,8 +160,14 @@ WebFace? webFromJson(Object? raw, {Object? id}) {
   if (raw == null) return null;
   if (raw is! Map) throw FormatException('web is not an object', id);
   final Object? html = raw['html'];
-  if (html is! String || html.trim().isEmpty) {
-    throw FormatException('a free card carries its page', id);
+  final Object? page = raw['page'];
+  final bool inline = html is String && html.trim().isNotEmpty;
+  if (!inline && !(page is String && _pageRef.hasMatch(page))) {
+    throw FormatException('a free card carries its page or names it', id);
+  }
+  final Object? bytes = raw['bytes'] ?? 0;
+  if (bytes is! int || bytes < 0) {
+    throw FormatException('web.bytes is a size', id);
   }
   final Object? kit = raw['kit'] ?? 1;
   if (kit is! int || kit < 1) throw FormatException('web.kit is a version', id);
@@ -174,7 +192,9 @@ WebFace? webFromJson(Object? raw, {Object? id}) {
     colour = Color(0xff000000 | int.parse(m.group(1)!, radix: 16));
   }
   return WebFace(
-    html: html,
+    html: inline ? html : null,
+    page: inline ? null : page as String,
+    bytes: bytes,
     kit: kit,
     touch: way ?? WebTouch.taps,
     label: label,

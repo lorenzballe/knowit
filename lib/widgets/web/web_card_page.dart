@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../analytics.dart';
+import '../../data/card_pages.dart';
 import '../../models/pill.dart';
 import 'card_kit.dart';
 import 'page_messages.dart';
@@ -86,6 +87,7 @@ class WebCardPage extends ChangeNotifier {
   List<Rect> _zones = const [];
   Timer? _waiting;
   final Stopwatch _took = Stopwatch()..start();
+  bool _fetched = false;
 
   /// Whether the page has drawn its first frame, and so is shown in place
   /// of the poster.
@@ -105,7 +107,13 @@ class WebCardPage extends ChangeNotifier {
     _waiting = Timer(patience, () => _fail('timeout'));
     try {
       final PageEnv env = _env.copyWith(shown: _shown);
-      final String html = await CardKit.instance.page(pill.web!.html, env);
+      // The page is fetched now when the deck did not have it in hand: the
+      // card's patience counts the wait, and a page that cannot be had (no
+      // signal, never met) draws the card natively, as a page that breaks.
+      _fetched = !CardPages.instance.inHand(pill.web!);
+      final String source = await CardPages.instance.html(pill.web!);
+      if (_gone) return;
+      final String html = await CardKit.instance.page(source, env);
       if (_gone) return;
       _built = env;
       await surface.load(html, background: groundOf(pill));
@@ -132,6 +140,7 @@ class WebCardPage extends ChangeNotifier {
         Analytics.capture('card page ready', {
           'pill_id': pill.id,
           'ms': _took.elapsedMilliseconds,
+          'fetched': _fetched,
         });
         notifyListeners();
       case PageZones(:final rects):

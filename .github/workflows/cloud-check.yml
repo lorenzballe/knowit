@@ -12,6 +12,7 @@ on:
       - 'firebase.json'
       - 'tool/rules/**'
       - 'web/cards/cards.json'
+      - 'web/cards/v2/cards.json'
       - 'lib/data/genres.dart'
       - '.github/workflows/cloud-check.yml'
   pull_request:
@@ -22,6 +23,7 @@ on:
       - 'firebase.json'
       - 'tool/rules/**'
       - 'web/cards/cards.json'
+      - 'web/cards/v2/cards.json'
       - 'lib/data/genres.dart'
       - '.github/workflows/cloud-check.yml'
   workflow_dispatch:

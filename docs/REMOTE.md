@@ -34,7 +34,9 @@ The phone (`lib/remote/remote.dart`):
   `Remote.revision`; the app's root listens and redraws everything.
 
 The cards travel the bank's road instead (`tool/cards/`, `web/cards/`), and are
-adopted at the next start: a deck on the table is never re-dealt.
+adopted at the next start: a deck on the table is never re-dealt. A free
+card's page travels alone and is fetched when its card is near (Free cards,
+below).
 
 ## The rules every part keeps
 
@@ -404,15 +406,35 @@ the reader's how-sure. A page card is never the question of the day.
   photograph. `BARE=1` photographs the page without the app's corners, for
   a camera that sets it in the native frame.
 
-**Publishing it.** `python3 tool/cards/bundle.py` puts the page inside the
-card as `web.html`, in the app's embedded bank and in `web/cards/cards.json`,
-the bundle the phones download and the server deals from (`--today` with the
+**Publishing it.** `python3 tool/cards/bundle.py` publishes the page as a
+file of its own, `web/cards/pages/<id>.html`, and the card names it with the
+hash of its bytes, `web.page` = `pages/<id>.html?v=<hash>` (and `web.bytes`,
+its size), in the app's embedded bank and in `web/cards/v2/cards.json`, the
+bundle the phones download and the server deals from (`--today` with the
 date of the last bundle keeps the calendar of questions as it was). Commit,
 merge: the deploy publishes it, and the server deals it by id like any card.
+The bank stays small however many pages there are: a page is fetched by the
+phone only when its card is near.
+
+Builds from before pages travelled alone read `web/cards/cards.json`,
+written beside it from the same bank (format 1): the pages they already knew
+(`tool/cards/legacy_pages.txt`) inside their cards, and no free card after
+them, nor a day of the calendar that names one. Their bank never grows by a
+page; they meet new free cards once they update.
 A build whose kit is older than the card's `kit` keeps the card but never
 deals it; `kCardKit` (`lib/models/pill.dart`) and `KIT_VERSION`
 (`tool/cards/pages.py`) move together when the kit changes in a way an
 older build cannot show.
+
+**How the page reaches the phone.** Like a picture in a feed
+(`lib/data/card_pages.dart`): a deck fetches the page of its top card and
+the next one, and the pages of the next four free cards after them, before
+the reader gets there; each is kept in the app's cache (the 400 most
+recently wanted) and in memory (16), so a card met once opens again without
+the network. A page kept is the one its name promises — its hash begins
+with the `v` — or it is shown once and fetched again. A page that cannot be
+had, on a phone with no signal that never met the card, is a page that
+breaks: the card is drawn natively.
 
 **How the app shows it.** `CardKit` (`lib/widgets/web/card_kit.dart`) puts
 the page together offline: the kit's files from the app's assets, inlined

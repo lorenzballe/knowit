@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data/card_pages.dart';
 import '../data/subject_icons.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
@@ -281,6 +282,17 @@ class _PillCardStackState extends State<PillCardStack>
       if (inSight && next < widget.deck.length) widget.deck[next],
     ], _envFor);
     _pages.update(_envFor);
+    // The pages of the next few free cards are fetched before the reader
+    // gets to them, so a card arrives with its page the way a post arrives
+    // with its picture.
+    if (inSight) {
+      CardPages.instance.warm(
+        widget.deck
+            .skip(next + 1)
+            .where((p) => p.hasPage)
+            .take(CardPages.ahead),
+      );
+    }
     // The card standing on top is in front of the reader: its page's clock
     // runs. One just made learns it here, being made after it stood.
     if (_read case final CardRead read) _pages[read.pill.id]?.show();

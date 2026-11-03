@@ -1,0 +1,215 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The nearest day</title>
+<!-- The Earth's orbit to scale on a night sky. The reader drags the Earth to where it passes nearest
+     the Sun and says how sure; the Earth runs on to early January and the two distances appear.
+     Touch: drags, on the sky only, until the answer is in. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.sky{position:relative;flex:1;min-height:0;touch-action:none;cursor:grab}
+.sky.held{cursor:grabbing}
+.sky.done{touch-action:auto;cursor:default}
+.sky svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.cap{position:absolute;left:0;top:0;font:800 max(1.3cqh,10px)/1 var(--body);letter-spacing:.14em;text-transform:uppercase;opacity:.75;pointer-events:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){.answered .in{gap:7px}}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Drag to answer · the orbit to scale" style="--c:#0b1026;--k:#f3f0e8;--edge:#2b5cff">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE NEAREST DAY</span></div>
+    <h2 class="q">When in the year does the Earth pass closest to the Sun?</h2>
+    <div class="stagebox sky" id="sky" data-drag>
+      <svg id="orbit" role="img" aria-label="The Earth's orbit drawn to scale: almost a perfect circle round the Sun, with the twelve months marked. Drag the Earth to where it passes nearest the Sun."></svg>
+      <div class="cap" id="cap">Drag the Earth</div>
+    </div>
+    <p class="say" id="how">Drag the Earth round its orbit to the spot.</p>
+    <div id="sure" class="gone"></div>
+    <p class="say gone" id="say"></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Test a cause by what else it would have to explain.</div>
+    <div class="foot"><span class="src">Source · NASA Earth fact sheet; U.S. Naval Observatory</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  // The orbit to scale: eccentricity 0.0167, nearest about 3 January at 147.1 million km,
+  // farthest about 4 July at 152.1 (NASA Earth fact sheet; U.S. Naval Observatory).
+  const E = .0167, AU = 149.598, PERI = 3, APH = 185, YEAR = 365.25, TAU = Math.PI * 2;
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const STARTS = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  const svg = Kit.$('orbit'), sky = Kit.$('sky'), card = Kit.$('card'), caption = Kit.$('cap');
+  const INK = '#f3f0e8', SEA = '#3f7fe6', SUN = '#ffd24a';
+  // 0: the reader is placing the Earth. 1: it runs on to its nearest day. 2: answered.
+  let stage = 0, day = 276, guess = null, geo = null, held = false;
+
+  // A day of the year (0 is 1 January) to the Earth's angle round the Sun: nearest on the left,
+  // counterclockwise as seen from above the north pole. And back.
+  const anomaly = d => { const M = TAU * (d - PERI) / YEAR; return M + 2 * E * Math.sin(M); };
+  const angleOf = d => Math.PI - anomaly(d);
+  const dayOf = a => { const nu = ((Math.PI - a) % TAU + TAU) % TAU, M = nu - 2 * E * Math.sin(nu); return ((PERI + M / TAU * YEAR) % YEAR + YEAR) % YEAR; };
+  const km = d => AU * (1 - E * E) / (1 + E * Math.cos(anomaly(d)));
+  const monthOf = d => { const k = Math.floor(d) % 365; let m = 11; while (STARTS[m] > k) m--; return m; };
+  const phrase = d => { const m = monthOf(d), k = Math.floor(d) % 365 - STARTS[m]; return k < 10 ? `early ${MONTHS[m]}` : k < 20 ? `mid-${MONTHS[m]}` : `late ${MONTHS[m]}`; };
+  const up = s => s[0].toUpperCase() + s.slice(1);
+  // Right within a month either side of the nearest day.
+  const near = d => { const x = Math.abs(d - PERI) % YEAR; return Math.min(x, YEAR - x) <= 31; };
+  // The Earth starts where it is today, unless today is too near the answer to start from.
+  const now = new Date(), today = (now - new Date(now.getFullYear(), 0, 1)) / 864e5;
+  const fromToday = Math.min(Math.abs(today - PERI) % YEAR, YEAR - Math.abs(today - PERI) % YEAR) >= 50;
+  if (fromToday) day = today;
+  const txt = (p, x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y}, a), p); e.textContent = s; return e; };
+  // The same faint stars on every phone.
+  caption.textContent = fromToday ? `Today, ${phrase(day)}` : up(phrase(day));
+  let seed = 7; const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const STARS = Array.from({length: 46}, () => [rand(), rand(), .5 + rand() * .7, .15 + rand() * .4]);
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = Math.max(10, Math.min(H / 17, 12)), top = fs * 1.8;
+    // The orbit as big as the sky allows, its months just outside it.
+    const R = Math.max(22, Math.min((H - top) / 2 - fs * .95 - 20, W * .41));
+    // A month's name clears the Earth by the same gap all round: its width at the sides, its height above and below.
+    const re = Math.max(6, R * .085), lab = b => re + 4 + fs * (.78 * Math.abs(Math.cos(b)) + .4 * Math.abs(Math.sin(b))), out = re + fs * 1.56 + 10;
+    const cx = W / 2, cy = top + (H - top) / 2, sx = cx - E * R, rs = Math.max(7, R * .13);
+    geo = {W, H, R, cx, cy, sx, re};
+    for (const [x, y, r, o] of STARS) Kit.mk('circle', {cx: x * W, cy: y * H, r, fill: INK, 'fill-opacity': o}, svg);
+    // The Sun, a whisker off the orbit's centre: that is all the orbit's oval amounts to.
+    const defs = Kit.mk('defs', {}, svg), glow = Kit.mk('radialGradient', {id: 'glow'}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#fff3c4', 'stop-opacity': .9}, glow);
+    Kit.mk('stop', {offset: .4, 'stop-color': SUN, 'stop-opacity': .45}, glow);
+    Kit.mk('stop', {offset: 1, 'stop-color': SUN, 'stop-opacity': 0}, glow);
+    Kit.mk('circle', {cx: sx, cy, r: rs * 2.8, fill: 'url(#glow)'}, svg);
+    Kit.mk('circle', {cx: sx, cy, r: rs, fill: '#ffe48a'}, svg);
+    Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-opacity': .3, 'stroke-width': 1.2}, svg);
+    // The months: a tick where each begins, its name halfway through.
+    geo.names = MONTHS.map((m, i) => {
+      const a = angleOf(STARTS[i]), b = angleOf(STARTS[i] + 15), r = R + lab(b);
+      Kit.mk('line', {x1: cx + (R - 3) * Math.cos(a), y1: cy + (R - 3) * Math.sin(a), x2: cx + (R + 3) * Math.cos(a), y2: cy + (R + 3) * Math.sin(a), stroke: INK, 'stroke-opacity': .35}, svg);
+      return txt(svg, cx + r * Math.cos(b), cy + r * Math.sin(b), m.slice(0, 3).toUpperCase(), {'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs * .95, 'letter-spacing': '.06em', fill: INK, 'fill-opacity': .45, 'text-anchor': 'middle', 'dominant-baseline': 'central'});
+    });
+    // Once answered: how far each end of the year is, the farthest day, and the reader's spot.
+    if (stage === 2) {
+      const f = geo.facts = Kit.mk('g', {}, svg), at = d => [cx + R * Math.cos(angleOf(d)), cy + R * Math.sin(angleOf(d))];
+      Kit.mk('line', {x1: sx - rs * 1.4, y1: cy, x2: cx - R + re + 2, y2: cy, stroke: SUN, 'stroke-opacity': .7, 'stroke-width': 1.3, 'stroke-dasharray': '3 3'}, f);
+      Kit.mk('line', {x1: sx + rs * 1.4, y1: cy, x2: cx + R - re - 2, y2: cy, stroke: INK, 'stroke-opacity': .45, 'stroke-width': 1.3, 'stroke-dasharray': '3 3'}, f);
+      // The distances: along their lines when the orbit has room inside, beside it when not.
+      const inside = R >= 76, nf = fs * 1.35, num = {'font-family': 'Fraunces', 'font-weight': 800, 'font-size': nf};
+      const nearX = inside ? (cx - R + re + 5 + sx - rs - 4) / 2 : cx - R - out, farX = inside ? (cx + R - re - 5 + sx + rs + 4) / 2 : cx + R + out;
+      const ny = inside ? cy - fs * .55 : cy + nf * .36;
+      txt(f, nearX, ny, km(PERI).toFixed(1), Object.assign({fill: SUN, 'text-anchor': inside ? 'middle' : 'end'}, num));
+      txt(f, farX, ny, km(APH).toFixed(1), Object.assign({fill: INK, 'text-anchor': inside ? 'middle' : 'start'}, num));
+      const apart = (a, b) => { const x = Math.abs(a - b) % YEAR; return Math.min(x, YEAR - x); };
+      if (apart(guess, APH) > 20) { const [ax, ay] = at(APH); Kit.mk('circle', {cx: ax, cy: ay, r: re - .8, fill: 'none', stroke: INK, 'stroke-opacity': .55, 'stroke-width': 1.6}, f); }
+      if (!near(guess)) {
+        const [gx, gy] = at(guess), a = angleOf(guess);
+        // Named inside the orbit, turned off the distance lines when it sits beside them.
+        const turn = Math.abs(Math.sin(a)) < .35 ? -.45 * Math.sign(Math.cos(a)) : 0;
+        const lx = cx + R * .68 * Math.cos(a + turn), ly = cy + R * .68 * Math.sin(a + turn);
+        Kit.mk('circle', {cx: gx, cy: gy, r: re - .8, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '2.5 2.5'}, f);
+        txt(f, lx, ly, 'you', {'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs * .95, fill: INK, 'text-anchor': 'middle', 'dominant-baseline': 'central'});
+      }
+    }
+    // The Earth: its day side to the Sun.
+    geo.earth = Kit.mk('g', {}, svg);
+    Kit.mk('circle', {r: re + 5, fill: SEA, 'fill-opacity': .14}, geo.earth);
+    Kit.mk('circle', {r: re, fill: SEA}, geo.earth);
+    geo.night = Kit.mk('path', {d: `M0 ${-re}A${re} ${re} 0 0 0 0 ${re}Z`, fill: '#060818', 'fill-opacity': .62}, geo.earth);
+    caption.style.left = `${Math.max(0, cx - R - out + fs)}px`;
+    place();
+  }
+
+  function place() {
+    if (!geo) return;
+    const a = angleOf(day), x = geo.cx + geo.R * Math.cos(a), y = geo.cy + geo.R * Math.sin(a);
+    geo.earth.setAttribute('transform', `translate(${x} ${y})`);
+    geo.night.setAttribute('transform', `rotate(${Math.atan2(geo.cy - y, geo.sx - x) * 180 / Math.PI})`);
+    const m = monthOf(day);
+    geo.names.forEach((t, i) => t.setAttribute('fill-opacity', i === m ? 1 : .45));
+  }
+  new ResizeObserver(() => { if (geo && (Math.abs(sky.clientWidth - geo.W) > .5 || Math.abs(sky.clientHeight - geo.H) > .5)) draw(); }).observe(sky);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => reveal(pct));
+  // Dragging the Earth round: on the orbit or near it, a tick under the finger at each new month.
+  const dayAt = e => { const b = svg.getBoundingClientRect(); return dayOf(Math.atan2(e.clientY - b.top - geo.cy, e.clientX - b.left - geo.cx)); };
+  function move(d) {
+    const before = monthOf(day);
+    day = d; place();
+    if (monthOf(d) !== before) Kit.haptic('selection');
+    caption.textContent = up(phrase(d));
+    if (guess !== null) sure.ask(`${up(phrase(d))}: how sure are you?`);
+  }
+  sky.addEventListener('pointerdown', e => {
+    if (stage || !geo) return;
+    const b = svg.getBoundingClientRect(), r = Math.hypot(e.clientX - b.left - geo.cx, e.clientY - b.top - geo.cy);
+    if (Math.abs(r - geo.R) > Math.max(30, geo.R * .45)) return;
+    held = true; sky.classList.add('held'); sky.setPointerCapture?.(e.pointerId); e.preventDefault();
+    move(dayAt(e));
+  });
+  sky.addEventListener('pointermove', e => { if (held) move(dayAt(e)); });
+  const let_go = () => {
+    if (!held) return;
+    held = false; sky.classList.remove('held');
+    if (guess === null) { Kit.hide('how'); Kit.show('sure'); sure.on(); }
+    guess = day;
+    sure.ask(`${up(phrase(day))}: how sure are you?`);
+  };
+  sky.addEventListener('pointerup', let_go);
+  sky.addEventListener('pointercancel', let_go);
+
+  function reveal(pct) {
+    const ok = near(guess);
+    stage = 1;
+    Kit.answer({choice: phrase(guess), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${up(phrase(guess))}, ${ok ? 'right' : 'wrong'}`);
+    // The sky is the card's again: a drag on it throws the card.
+    sky.classList.add('done'); sky.setAttribute('data-drag', 'off');
+    svg.setAttribute('aria-label', 'The Earth passes nearest the Sun in early January, 147.1 million km away, and farthest in early July, 152.1 million km away.');
+    const facts = () => { stage = 2; day = PERI; caption.textContent = 'Million km from the Sun'; draw(); };
+    if (Kit.calm) { explain(); facts(); return; }
+    // Onward through the year to the nearest day, or back if it has only just gone by.
+    const ahead = ((PERI - guess) % YEAR + YEAR) % YEAR, to = ahead <= YEAR - 60 ? guess + ahead : guess - (YEAR - ahead);
+    const run = {d: guess};
+    gsap.to(run, {d: to, duration: .45 + 1.2 * Math.abs(to - guess) / YEAR, ease: 'power2.inOut',
+      onUpdate: () => { day = (run.d % YEAR + YEAR) % YEAR; place(); caption.textContent = up(phrase(day)); },
+      // Then the words, the sky making room for them, and the two distances on the sky that is left.
+      onComplete: () => { explain(); gsap.delayedCall(.6, () => { facts(); gsap.from(geo.facts, {opacity: 0, duration: .5}); gsap.from(caption, {opacity: 0, duration: .4}); }); }});
+  }
+
+  // The words come in and the sky makes room for them, without a jump.
+  function explain() {
+    const q = card.querySelector('.q'), h0 = sky.offsetHeight, f0 = parseFloat(getComputedStyle(q).fontSize);
+    card.classList.add('answered');
+    Kit.$('say').innerHTML = 'January is winter in the north and summer in the south, so <b>nearness can\'t make summer</b>.';
+    Kit.show('say');
+    Kit.show('keep');
+    if (Kit.calm) return;
+    const h1 = sky.offsetHeight;
+    gsap.from(q, {fontSize: f0, duration: .5, ease: 'power3.inOut', clearProps: 'fontSize'});
+    if (h0 - h1 > 2) gsap.fromTo(sky, {height: h0, flex: 'none'}, {height: h1, duration: .5, ease: 'power3.inOut', clearProps: 'height,flex'});
+  }
+
+  Kit.onShow.card = () => draw();
+  Kit.onEnter.card = () => {
+    if (Kit.calm || stage || guess !== null) return;
+    gsap.from(geo.earth, {opacity: 0, duration: .4});
+    // A nudge along the orbit: this is the thing to move.
+    const nudge = {d: day};
+    gsap.timeline({delay: .45}).to(nudge, {d: day + 9, duration: .35, ease: 'power2.out', onUpdate: () => { if (!held && guess === null) { day = nudge.d; place(); } }})
+      .to(nudge, {d: day, duration: .45, ease: 'power2.inOut', onUpdate: () => { if (!held && guess === null) { day = nudge.d; place(); } }});
+  };
+  Kit.play.card = async () => {
+    // As a reader would: hold the Earth, carry it round to mid-July, let go.
+    const b = svg.getBoundingClientRect(), a = angleOf(196);
+    const opts = {bubbles: true, pointerId: 1, clientX: b.left + geo.cx + geo.R * Math.cos(a), clientY: b.top + geo.cy + geo.R * Math.sin(a)};
+    sky.dispatchEvent(new PointerEvent('pointerdown', opts));
+    sky.dispatchEvent(new PointerEvent('pointerup', opts));
+    await new Promise(r => setTimeout(r, 400));
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await new Promise(r => setTimeout(r, 2800));
+  };
+  Kit.single();
+})();
+</script>
+</html>

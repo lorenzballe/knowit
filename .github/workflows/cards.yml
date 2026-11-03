@@ -6,7 +6,7 @@ name: Write tonight's cards
 # is left arrives as a pull request: one file per card, which is what a
 # person reads in the morning. Every stage goes through the Batches API, at
 # half the token price, which is why the job may run for hours. Merging is the review — the deploy workflow then
-# publishes web/cards/cards.json and every phone picks it up.
+# publishes web/cards/v2/cards.json (and each free card's page beside it) and every phone picks it up.
 #
 # Needs two things set once in the repository:
 #   Settings → Secrets → Actions → ANTHROPIC_API_KEY
@@ -175,6 +175,8 @@ jobs:
             lib/data/embedded_bank.dart
             web/cards/cards.json
             web/cards/version.json
+            web/cards/v2/**
+            web/cards/pages/**
           labels: "${{ inputs.fake == true && 'cards, dry-run' || 'cards' }}"
 
       # With CARDS_AUTOMERGE set to true, the confident cards go out on

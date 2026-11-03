@@ -1,0 +1,5 @@
+# Free cards that builds from before pages travelled alone already carry, page inside
+# (web/cards/cards.json, format 1). No other free card is sent to them. Never add to this list.
+history-challenger-missing-flights
+psychology-stroop-other-way
+space-nearest-day

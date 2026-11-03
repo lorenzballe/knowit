@@ -1,0 +1,149 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The other way round</title>
+<!-- Stroop, 1935: colour words in clashing inks. The reader names the inks aloud, swaps to reading
+     the words, then says how much the ink gets in the way of reading. Stroop's timings answer. Taps only. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.paper{position:relative;flex:1;min-height:0;background:#fffdf6;color:#10100c;border-radius:2.2cqh;box-shadow:0 .55cqh 0 color-mix(in srgb,var(--edge) 70%,transparent),0 1.4cqh 2.6cqh #10100c26;overflow:hidden;container-type:size;display:flex;flex-direction:column}
+.paper[data-tap]{cursor:pointer}
+/* Inside the paper, sizes follow the paper: cq units are its own. */
+.cap{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:clamp(9px,4.4cqh,16px) clamp(12px,4.4cqw,18px) 0;font:800 clamp(10px,4cqh,12px)/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:#10100c8c;white-space:nowrap}
+.cap b{color:#10100c;font-weight:800}
+.cap span{font-weight:700;letter-spacing:.06em;text-transform:none;font-size:clamp(10px,4cqh,12px)}
+.grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;align-items:center;justify-items:center;padding:clamp(4px,2cqh,10px) clamp(6px,2.4cqw,12px) clamp(8px,3cqh,14px);font:800 min(7.2cqw,10cqh)/1 var(--body);letter-spacing:.01em}
+.grid span{display:block}
+.bars{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,8cqh,30px);padding:0 clamp(12px,4.4cqw,18px) clamp(9px,3.5cqh,16px)}
+.gh{display:flex;justify-content:space-between;align-items:baseline;font:800 clamp(10px,4cqh,12px)/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:#10100c8c}
+.gh .d{font:800 clamp(17px,10cqh,36px)/.9 var(--display);letter-spacing:-.01em;color:#10100c}
+.gh .d.big{color:var(--edge)}
+.row{display:grid;grid-template-columns:clamp(86px,29cqw,124px) 1fr 3.1em;align-items:center;gap:8px;font:600 clamp(11px,5cqh,15px)/1.15 var(--body);margin-top:clamp(4px,2.6cqh,10px)}
+.row .v{font-weight:800;text-align:right}
+.tr{height:clamp(7px,4cqh,16px);border-radius:99px;background:#10100c12;overflow:hidden}
+.fill{display:block;height:100%;width:calc(var(--v) / 110.3 * 100%);border-radius:99px;background:#10100c;transform-origin:0 50%}
+.fill.clash{background:var(--edge)}
+#pick{display:flex;gap:1.8cqw}
+.pb{flex:1;font:800 max(1.8cqh,13.5px)/1.15 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .25cqh var(--k);border-radius:99px;padding:max(1.4cqh,11px) 1cqw;cursor:pointer;white-space:nowrap;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
+.pb:active{transform:scale(.97)}
+.pb.on{background:var(--k);color:var(--c)}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){.answered .in{gap:7px}}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Feel it, then predict · Stroop's words">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STROOP, 1935</span></div>
+    <h2 class="q">A word slows you down naming its ink. Does the ink slow you down reading the word?</h2>
+    <div class="stagebox paper" id="paper" data-tap role="button" aria-label="Twelve colour words, each printed in an ink that is not the colour it names. Name each ink aloud; tap to swap to reading the words aloud.">
+      <div class="cap" id="cap"><b id="task">Name each ink aloud</b><span id="swap">tap to swap</span></div>
+      <div class="grid" id="grid" aria-hidden="true"></div>
+      <div class="bars gone" id="bars" role="img" aria-label="Stroop's timings for 100 items. Naming inks: colour patches 63 seconds, clashing words 110 seconds, 74% longer. Reading words: in black 41 seconds, in clashing inks 43 seconds, 6% longer.">
+        <div class="grp">
+          <div class="gh"><span>Naming the ink</span><span class="d big" id="d1">+74%</span></div>
+          <div class="row"><span>colour patches</span><span class="tr"><span class="fill" style="--v:63.3"></span></span><span class="v">63 s</span></div>
+          <div class="row"><span>clashing words</span><span class="tr"><span class="fill clash" style="--v:110.3"></span></span><span class="v">110 s</span></div>
+        </div>
+        <div class="grp">
+          <div class="gh"><span>Reading the word</span><span class="d" id="d2">+6%</span></div>
+          <div class="row"><span>black ink</span><span class="tr"><span class="fill" style="--v:41"></span></span><span class="v">41 s</span></div>
+          <div class="row"><span>clashing inks</span><span class="tr"><span class="fill clash" style="--v:43.3"></span></span><span class="v">43 s</span></div>
+        </div>
+      </div>
+    </div>
+    <div id="pick">
+      <button class="pb" data-i="0">As much</button>
+      <button class="pb" data-i="1">Much less</button>
+      <button class="pb" data-i="2">Even more</button>
+    </div>
+    <div id="sure" class="gone"></div>
+    <p class="say gone" id="say"></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The habit you've practised most is the one that barges in.</div>
+    <div class="foot"><span class="src">Source · J. R. Stroop, Journal of Experimental Psychology (1935)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  // Stroop's five colours, each word in an ink that is not its own, no ink twice side by side.
+  const INK = {red: '#d7312b', blue: '#2563d6', green: '#1e9348', brown: '#8a5426', purple: '#8b3fd0'};
+  const WORDS = [
+    ['blue', 'red'], ['green', 'purple'], ['red', 'green'],
+    ['purple', 'brown'], ['red', 'blue'], ['green', 'red'],
+    ['brown', 'green'], ['blue', 'purple'], ['purple', 'blue'],
+    ['green', 'blue'], ['red', 'brown'], ['brown', 'purple'],
+  ];
+  const RIGHT = 1;
+  const card = Kit.$('card'), paper = Kit.$('paper'), grid = Kit.$('grid');
+  const TASKS = ['Name each ink aloud', 'Now read the words aloud'];
+  let task = 0, pick = -1, answered = false;
+  grid.innerHTML = WORDS.map(([w, ink]) => `<span style="color:${INK[ink]}">${w.toUpperCase()}</span>`).join('');
+
+  // The same twelve words, the other task: the snag one way, none the other.
+  paper.addEventListener('click', () => {
+    if (answered) return;
+    task = 1 - task;
+    Kit.haptic('selection');
+    Kit.$('task').textContent = TASKS[task];
+    if (!Kit.calm) {
+      gsap.fromTo('#task', {opacity: 0, y: 4}, {opacity: 1, y: 0, duration: .3, ease: 'power2.out'});
+      gsap.fromTo(grid.children, {scale: .9, opacity: .4}, {scale: 1, opacity: 1, duration: .35, stagger: .015, ease: 'back.out(2)'});
+    }
+  });
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => reveal(pct));
+  Kit.$('pick').addEventListener('click', e => {
+    const b = e.target.closest('.pb'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    setTimeout(() => { Kit.hide('pick'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`); sure.on(); }, Kit.calm ? 0 : 260);
+  });
+
+  function reveal(pct) {
+    const ok = pick === RIGHT, calm = Kit.calm;
+    answered = true;
+    Kit.answer({choice: String(pick), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${Kit.$('pick').children[pick].textContent}, ${ok ? 'right' : 'wrong'}`);
+    // The words make way for Stroop's own timings.
+    paper.removeAttribute('data-tap'); paper.removeAttribute('role');
+    paper.setAttribute('aria-label', 'Stroop\'s timings');
+    Kit.$('task').textContent = 'Stroop\'s students';
+    Kit.$('swap').textContent = 'seconds for 100';
+    grid.classList.add('gone');
+    Kit.$('bars').classList.remove('gone');
+    if (calm) { explain(); return; }
+    const bars = [...Kit.$('bars').querySelectorAll('.fill')];
+    gsap.from(bars, {scaleX: 0, duration: .7, stagger: .32, ease: 'power3.out'});
+    gsap.from('#d1', {opacity: 0, scale: .6, duration: .45, delay: .75, ease: 'back.out(2.4)'});
+    gsap.from('#d2', {opacity: 0, scale: .6, duration: .45, delay: 1.4, ease: 'back.out(2.4)'});
+    gsap.from('.bars .row', {opacity: 0, x: -6, duration: .35, stagger: .32});
+    gsap.delayedCall(2, explain);
+  }
+
+  // The words come in and the paper makes room for them, without a jump.
+  function explain() {
+    const q = card.querySelector('.q'), h0 = paper.offsetHeight, f0 = parseFloat(getComputedStyle(q).fontSize);
+    card.classList.add('answered');
+    Kit.$('say').innerHTML = 'Reading runs by itself: the word pushes in on the ink, <b>hardly the other way round</b>.';
+    Kit.show('say');
+    Kit.show('keep');
+    if (Kit.calm) return;
+    const h1 = paper.offsetHeight;
+    gsap.from(q, {fontSize: f0, duration: .5, ease: 'power3.inOut', clearProps: 'fontSize'});
+    if (h0 - h1 > 2) gsap.fromTo(paper, {height: h0, flex: 'none'}, {height: h1, duration: .5, ease: 'power3.inOut', clearProps: 'height,flex'});
+  }
+
+  Kit.onEnter.card = () => {
+    if (Kit.calm || answered) return;
+    gsap.from(grid.children, {opacity: 0, y: 8, duration: .4, stagger: .035, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    paper.click();
+    await new Promise(r => setTimeout(r, 400));
+    Kit.$('pick').children[0].click();
+    await new Promise(r => setTimeout(r, 400));
+    Kit.$('sure').querySelector('[data-v="70"]').click();
+    await new Promise(r => setTimeout(r, 2800));
+  };
+  Kit.single();
+})();
+</script>
+</html>

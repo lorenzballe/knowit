@@ -6,9 +6,23 @@
 
 The bank is one file per card, which is what a person reviews. The app
 wants one document, twice: baked into the build as `lib/data/embedded_bank.dart`,
-so the first day works offline, and published as `web/cards/cards.json`,
+so the first day works offline, and published as `web/cards/v2/cards.json`,
 which the deploy copies to the site and every phone downloads. Both are
 written here, from the same bytes, so they cannot disagree.
+
+A free card's page does not travel in that document. Each page is a file of
+its own, `web/cards/pages/<id>.html`, and the card names it with the hash of
+its bytes (`"page": "pages/<id>.html?v=<hash>"`): the phone fetches a page
+when its card is about to be shown and keeps it, the way a feed fetches a
+picture, so the document every phone downloads stays small however many
+pages the bank holds. A changed page is a new hash, so no copy kept anywhere
+outlives it.
+
+Builds from before pages travelled alone read `web/cards/cards.json`, the
+same bank with each page inside its card (format 1). That copy carries only
+the pages those builds already knew (`legacy_pages.txt`); every free card
+after them is for the builds that fetch pages, and an older build simply
+never meets it.
 
 The calendar of questions of the day travels in the same document. It is
 frozen — an edition, once written, never changes, whatever the pool does
@@ -24,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import random
 import sys
@@ -34,11 +49,21 @@ import check
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 EMBEDDED = ROOT / "lib" / "data" / "embedded_bank.dart"
-PUBLISHED = ROOT / "web" / "cards" / "cards.json"
+# The bank as the app reads it, pages apart (format 2).
+PUBLISHED = ROOT / "web" / "cards" / "v2" / "cards.json"
 # What a phone asks first: the published bundle's version and nothing else,
 # a few dozen bytes, so an app already holding it never downloads the whole
 # bank again to find that out.
 VERSION = PUBLISHED.parent / "version.json"
+# One file per free card's page, fetched by the phone when it is wanted.
+PAGES = ROOT / "web" / "cards" / "pages"
+# The bank for builds that read every page inside its card (format 1), and
+# its version note: where those builds look, and always will.
+LEGACY = ROOT / "web" / "cards" / "cards.json"
+LEGACY_VERSION = LEGACY.parent / "version.json"
+# The free cards those builds already carry, page inside: no other is
+# sent to them, so their bank never grows by a page.
+LEGACY_PAGES = HERE / "legacy_pages.txt"
 
 # Edition 1. The same date as kEpoch in lib/data/daily.dart.
 EPOCH = dt.date(2026, 9, 1)
@@ -123,25 +148,92 @@ def extend_commons(commons: dict[str, list[str]], cards: list[dict], until: int)
     return out
 
 
-def bundled(card: dict) -> dict:
-    """A card as the app reads it: a free card with its page inside its face,
-    from the file kept beside it, so the phone gets the card and its page in
-    the one document."""
+def page_hash(html: str) -> str:
+    """The first twelve hex digits of the page's SHA-256: what changes when it does."""
+    return hashlib.sha256(html.encode("utf-8")).hexdigest()[:12]
+
+
+def page_file(card: dict) -> str:
+    """Where a free card's page is published, under web/cards/."""
+    return f"pages/{card['id']}.html"
+
+
+def page_ref(card: dict) -> str:
+    """How the card names its page: the file, and the hash of what is in it."""
+    return f"{page_file(card)}?v={page_hash(card['_html'])}"
+
+
+def bundled(card: dict, *, inline: bool = False) -> dict:
+    """A card as the app reads it. A free card's face names its page, which
+    travels as a file of its own; with [inline], for the builds that came
+    before, the page is inside the face instead."""
     out = check.public(card)
     if isinstance(out.get("web"), dict) and card.get("_html") is not None:
-        out["web"] = {**out["web"], "html": card["_html"]}
+        if inline:
+            out["web"] = {**out["web"], "html": card["_html"]}
+        else:
+            out["web"] = {**out["web"], "page": page_ref(card),
+                          "bytes": len(card["_html"].encode("utf-8"))}
     return out
 
 
-def build(cards: list[dict], editions: dict[str, str], commons: dict[str, list[str]], *, version: int, built: str) -> dict:
+def build(cards: list[dict], editions: dict[str, str], commons: dict[str, list[str]], *, version: int, built: str,
+          inline: bool = False) -> dict:
     return {
-        "format": 1,
+        "format": 1 if inline else 2,
         "version": version,
         "built": built,
-        "cards": [bundled(c) for c in cards],
+        "cards": [bundled(c, inline=inline) for c in cards],
         "editions": editions,
         "commons": commons,
     }
+
+
+def legacy_ids() -> set[str]:
+    if not LEGACY_PAGES.exists():
+        return set()
+    return {line.strip() for line in LEGACY_PAGES.read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.startswith("#")}
+
+
+def build_legacy(cards: list[dict], editions: dict[str, str], commons: dict[str, list[str]], *, version: int,
+                 built: str, keep: set[str]) -> dict:
+    """The bank for the builds that read pages inside their cards: every card
+    but the free cards they never knew, and a calendar that never names one."""
+    kept = [c for c in cards if c.get("_html") is None or c["id"] in keep]
+    ids = {c["id"] for c in kept}
+    return build(
+        kept,
+        {k: v for k, v in editions.items() if v in ids},
+        {k: [cid for cid in v if cid in ids] for k, v in commons.items()},
+        version=version, built=built, inline=True,
+    )
+
+
+def pages_of(cards: list[dict]) -> dict[str, str]:
+    """Every page to publish, by its file under web/cards/."""
+    return {page_file(c): c["_html"] for c in cards if c.get("_html") is not None}
+
+
+def pages_current(pages: dict[str, str]) -> bool:
+    """Whether web/cards/pages/ holds exactly these pages."""
+    root = PAGES.parent
+    on_disk = {f"pages/{f.name}" for f in PAGES.glob("*.html")} if PAGES.exists() else set()
+    if on_disk != set(pages):
+        return False
+    return all((root / name).read_text(encoding="utf-8") == html for name, html in pages.items())
+
+
+def write_pages(pages: dict[str, str]) -> None:
+    root = PAGES.parent
+    PAGES.mkdir(parents=True, exist_ok=True)
+    for name, html in pages.items():
+        path = root / name
+        if not path.exists() or path.read_text(encoding="utf-8") != html:
+            path.write_text(html, encoding="utf-8")
+    for f in PAGES.glob("*.html"):
+        if f"pages/{f.name}" not in pages:
+            f.unlink()
 
 
 def render_dart(text: str) -> str:
@@ -171,15 +263,24 @@ def version_note(bundle: dict) -> str:
     return json.dumps({"version": bundle["version"], "cards": len(bundle["cards"])}) + "\n"
 
 
-def version_current() -> bool:
-    """Whether version.json names the version cards.json holds."""
-    if not (PUBLISHED.exists() and VERSION.exists()):
+def version_current(published: Path = PUBLISHED, version: Path = VERSION) -> bool:
+    """Whether a version note names the version its cards.json holds."""
+    if not (published.exists() and version.exists()):
         return False
     try:
-        return json.loads(VERSION.read_text(encoding="utf-8")) == json.loads(
-            version_note(json.loads(PUBLISHED.read_text(encoding="utf-8"))))
+        return json.loads(version.read_text(encoding="utf-8")) == json.loads(
+            version_note(json.loads(published.read_text(encoding="utf-8"))))
     except (json.JSONDecodeError, KeyError):
         return False
+
+
+def read_json(path: Path) -> dict | None:
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
 
 
 def read_embedded() -> dict | None:
@@ -225,25 +326,35 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     now = dt.datetime.now(dt.timezone.utc)
-    bundle = build(cards, editions, commons, version=int(now.strftime("%Y%m%d%H%M")), built=now.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    stamp, built = int(now.strftime("%Y%m%d%H%M")), now.strftime("%Y-%m-%dT%H:%M:%SZ")
+    bundle = build(cards, editions, commons, version=stamp, built=built)
+    old = build_legacy(cards, editions, commons, version=stamp, built=built, keep=legacy_ids())
+    pages = pages_of(cards)
     text = json.dumps(bundle, ensure_ascii=False, indent=1) + "\n"
 
     current = same_content(read_embedded(), bundle)
-    published = PUBLISHED.exists() and same_content(json.loads(PUBLISHED.read_text(encoding="utf-8")), bundle)
+    published = same_content(read_json(PUBLISHED), bundle)
+    legacy = same_content(read_json(LEGACY), old)
+    paged = pages_current(pages)
+    noted = version_current() and version_current(LEGACY, LEGACY_VERSION)
     if args.check:
-        if current and published and version_current():
-            print(f"{len(cards)} cards, {len(editions)} editions: both copies current")
+        if current and published and legacy and paged and noted:
+            print(f"{len(cards)} cards, {len(pages)} pages, {len(editions)} editions: every copy current")
             return 0
-        print("stale:" + ("" if current else " lib/data/embedded_bank.dart") + ("" if published else " web/cards/cards.json")
-              + ("" if version_current() else " web/cards/version.json"))
+        print("stale:" + ("" if current else " lib/data/embedded_bank.dart")
+              + ("" if published else " web/cards/v2/cards.json")
+              + ("" if legacy else " web/cards/cards.json")
+              + ("" if paged else " web/cards/pages/")
+              + ("" if noted else " the version notes"))
         print("run python3 tool/cards/bundle.py")
         return 1
 
-    if current and published:
-        if not version_current():
-            VERSION.write_text(version_note(json.loads(PUBLISHED.read_text(encoding="utf-8"))), encoding="utf-8")
-            print(f"wrote {VERSION.relative_to(ROOT)}")
-        print(f"{len(cards)} cards, {len(editions)} editions: nothing to do")
+    if current and published and legacy and paged:
+        for pub, note in ((PUBLISHED, VERSION), (LEGACY, LEGACY_VERSION)):
+            if not version_current(pub, note):
+                note.write_text(version_note(json.loads(pub.read_text(encoding="utf-8"))), encoding="utf-8")
+                print(f"wrote {note.relative_to(ROOT)}")
+        print(f"{len(cards)} cards, {len(pages)} pages, {len(editions)} editions: nothing to do")
         return 0
     check.EDITIONS.write_text(json.dumps(editions, indent=2) + "\n", encoding="utf-8")
     check.COMMONS.write_text(json.dumps(commons, indent=1) + "\n", encoding="utf-8")
@@ -251,8 +362,12 @@ def main(argv: list[str] | None = None) -> int:
     PUBLISHED.parent.mkdir(parents=True, exist_ok=True)
     PUBLISHED.write_text(text, encoding="utf-8")
     VERSION.write_text(version_note(bundle), encoding="utf-8")
-    print(f"{len(cards)} cards, {len(editions)} editions, version {bundle['version']}")
-    print(f"wrote {EMBEDDED.relative_to(ROOT)}, {PUBLISHED.relative_to(ROOT)} and {VERSION.relative_to(ROOT)}")
+    LEGACY.write_text(json.dumps(old, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    LEGACY_VERSION.write_text(version_note(old), encoding="utf-8")
+    write_pages(pages)
+    print(f"{len(cards)} cards, {len(pages)} pages, {len(editions)} editions, version {bundle['version']}")
+    print(f"wrote {EMBEDDED.relative_to(ROOT)}, {PUBLISHED.relative_to(ROOT)}, {LEGACY.relative_to(ROOT)},"
+          f" the version notes and {PAGES.relative_to(ROOT)}/")
     return 0
 
 
