@@ -7,6 +7,7 @@ import '../../theme.dart';
 import 'card_kit.dart';
 import 'page_gestures.dart';
 import 'page_messages.dart';
+import 'web_card_face.dart';
 import 'web_card_page.dart';
 import 'web_surface.dart';
 
@@ -138,7 +139,8 @@ class _KitPageViewState extends State<KitPageView> {
         return IgnorePointer(
           ignoring: !_ready,
           child: AnimatedOpacity(
-            opacity: _ready ? 1 : 0,
+            // Not 0 while it loads: see kWaitingOpacity.
+            opacity: _ready ? 1 : kWaitingOpacity,
             duration: MediaQuery.disableAnimationsOf(context)
                 ? Duration.zero
                 : const Duration(milliseconds: 160),

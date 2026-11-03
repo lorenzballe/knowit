@@ -14,6 +14,7 @@ import 'package:astuto/widgets/web/card_kit.dart';
 import 'package:astuto/widgets/web/fake_web_surface.dart';
 import 'package:astuto/widgets/web/page_gestures.dart';
 import 'package:astuto/widgets/web/page_messages.dart';
+import 'package:astuto/widgets/web/web_card_face.dart';
 import 'package:astuto/widgets/web/web_card_page.dart';
 import 'package:astuto/widgets/web/web_surface.dart';
 
@@ -166,7 +167,7 @@ void main() {
     expect(find.text(_card('a').question), findsWidgets);
     final FakeWebSurface page = FakeWebSurface.made.single;
     expect(page.html, startsWith('<assembled>'));
-    expect(_pageOpacity(tester), 0);
+    expect(_pageOpacity(tester), kWaitingOpacity);
 
     page.say(const PageReady());
     await settle(tester);
