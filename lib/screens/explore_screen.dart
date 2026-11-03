@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 
+import '../data/card_pages.dart';
 import '../data/local_cards.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart' show inkOn;
@@ -231,6 +232,9 @@ class ExploreScreenState extends State<ExploreScreen>
   void _seen(String shelf, Pill pill, {String? on}) {
     if (_probing || !_sight.looking) return;
     _sight.tile(on ?? shelf, pill.id);
+    // A free card on a shelf has its page fetched while its tile is in
+    // sight, so the card opens whole, as a deck's next card does.
+    if (pill.hasPage) CardPages.instance.warm([pill]);
     if (!_shown.add('$shelf:${pill.id}')) return;
     Trace.instance.note('card shown', {'pill_id': pill.id, 'shelf': shelf});
   }

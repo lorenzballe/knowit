@@ -21,7 +21,9 @@ import 'flip_card.dart';
 import 'pill_card.dart';
 import 'place_line.dart';
 import 'web/page_messages.dart';
+import 'web/web_card_face.dart';
 import 'web/web_card_page.dart';
+import 'web/web_surface.dart';
 
 /// How much room the deck leaves at each side of the screen.
 ///
@@ -229,9 +231,25 @@ class _PillCardStackState extends State<PillCardStack>
     _queuePages();
   }
 
+  /// True when a new card is in front by a deal (a deck changed under the
+  /// reader, a day's cards come in) rather than by the one before it being
+  /// thrown: a free card dealt so waits out of sight for its page.
+  bool _dealt = false;
+
+  /// The card a throw is bringing to the front, from the moment the card
+  /// before it is gone to the moment it is there.
+  String? _rising;
+
   @override
   void didUpdateWidget(covariant PillCardStack old) {
     super.didUpdateWidget(old);
+    final String? was = old.index < old.deck.length
+        ? old.deck[old.index].id
+        : null;
+    if (was != _top?.id) {
+      _dealt = _top?.id != _rising;
+      _rising = null;
+    }
     if (old.index != widget.index) {
       _drag = Offset.zero;
       _flipped = false;
@@ -277,10 +295,14 @@ class _PillCardStackState extends State<PillCardStack>
       for (final Pill p in widget.deck)
         if (_pages[p.id] != null) p.id,
     ];
-    _pages.keep([
-      ?top,
-      if (inSight && next < widget.deck.length) widget.deck[next],
-    ], _envFor);
+    final bool dealt = _dealt;
+    _dealt = false;
+    _pages.keep(
+      [?top, if (inSight && next < widget.deck.length) widget.deck[next]],
+      _envFor,
+      front: top?.id,
+      dealt: dealt,
+    );
     _pages.update(_envFor);
     // The pages of the next few free cards are fetched before the reader
     // gets to them, so a card arrives with its page the way a post arrives
@@ -558,6 +580,9 @@ class _PillCardStackState extends State<PillCardStack>
     // Waiting means the new index and the cleared drag land in the same
     // frame: didUpdateWidget clears it the moment a new card is on top, so
     // nothing is ever drawn in between.
+    _rising = widget.index + 1 < widget.deck.length
+        ? widget.deck[widget.index + 1].id
+        : null;
     await widget.onAdvance();
     if (!mounted) return;
 
@@ -794,10 +819,23 @@ class _PillCardStackState extends State<PillCardStack>
                 _cardSize = card;
                 _queuePages();
               }
+              final Pill? top = _top;
               return SizedBox(
                 width: box.maxWidth,
                 height: height,
-                child: Stack(children: _layers(context, visible, height)),
+                // A free card in front comes in whole: the deck is out of
+                // sight until its page has drawn, then the card and its
+                // drawing come in together, and the cards behind it with
+                // them, never first in its place (PageHold). A card that
+                // rises to the front from under a thrown one drew its page
+                // there, and is whole already.
+                child: PageHold(
+                  page: top == null ? null : _pages[top.id],
+                  // The frame before its page is made, held already, so it
+                  // does not show for a frame and then go.
+                  waiting: top != null && top.hasPage && WebSurfaces.available,
+                  child: Stack(children: _layers(context, visible, height)),
+                ),
               );
             },
           ),
