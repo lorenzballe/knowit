@@ -159,7 +159,11 @@ export function dealOwn(bank: Bank, profile: Profile, weights: Record<string, nu
   const wanted = new Set(profile.topics);
   const onTopic = (c: Card) => wanted.size === 0 || wanted.has(c.topic);
   const strandOn = (s: string) => !profile.strandsOff.has(s) && !profile.genresOff.has(genreOf(s));
-  const onMix = (c: Card) => onTopic(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
+  // A subject the reader picked but gave no weight is drawn only once the weighted ones run
+  // out: the cards at random follow the mix as it was set.
+  const even0 = Object.keys(profile.mix).length === 0;
+  const weighted = (c: Card) => even0 || (profile.mix[c.topic] ?? 0) > 0;
+  const onMix = (c: Card) => onTopic(c) && weighted(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
   const ready = (c: Card) => (c.builds_on ?? []).every((id) => o.exclude.has(id));
   const tierOf = (c: Card): number => {
     const read = o.exclude.has(c.id) ? 4 : 0;
@@ -213,7 +217,10 @@ export function dealOwn(bank: Bank, profile: Profile, weights: Record<string, nu
     }
     return got;
   };
-  const asking = take(o.asking, asks);
+  // The first question the day asks is one the page marks, when there is one: a page
+  // that asks and marks nothing is a question, but a day of them only would grade nothing.
+  const marked = take(Math.min(1, o.asking), graded);
+  const asking = [...marked, ...take(o.asking - marked.length, asks)];
   let wantReads = o.count - asking.length;
   // The explorer: one read from a strand the reader has never met, on the
   // mix, taken by level alone — the taste, which would never have chosen
@@ -285,7 +292,11 @@ export function localCard(bank: Bank, profile: Profile, o: LocalOptions): Card |
   const wanted = profile.topics;
   const onTopic = (c: Card) => wanted.size === 0 || wanted.has(c.topic);
   const strandOn = (s: string) => !profile.strandsOff.has(s) && !profile.genresOff.has(genreOf(s));
-  const onMix = (c: Card) => onTopic(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
+  // A subject the reader picked but gave no weight is drawn only once the weighted ones run
+  // out: the cards at random follow the mix as it was set.
+  const even0 = Object.keys(profile.mix).length === 0;
+  const weighted = (c: Card) => even0 || (profile.mix[c.topic] ?? 0) > 0;
+  const onMix = (c: Card) => onTopic(c) && weighted(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
   const ready = (c: Card) => (c.builds_on ?? []).every((id) => o.exclude.has(id));
   const tierOf = (c: Card): number => (onMix(c) ? (ready(c) ? 0 : 1) : onTopic(c) ? 2 : 3);
   const ranked = fitting.map(({ card, fit }) => ({ card, near: fitRank(fit), tier: tierOf(card), u: next() }));
@@ -328,7 +339,11 @@ export function dealRandom(bank: Bank, profile: Profile, o: RandomOptions): Card
   const wanted = profile.topics;
   const onTopic = (c: Card) => wanted.size === 0 || wanted.has(c.topic);
   const strandOn = (s: string) => !profile.strandsOff.has(s) && !profile.genresOff.has(genreOf(s));
-  const onMix = (c: Card) => onTopic(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
+  // A subject the reader picked but gave no weight is drawn only once the weighted ones run
+  // out: the cards at random follow the mix as it was set.
+  const even0 = Object.keys(profile.mix).length === 0;
+  const weighted = (c: Card) => even0 || (profile.mix[c.topic] ?? 0) > 0;
+  const onMix = (c: Card) => onTopic(c) && weighted(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
   const ready = (c: Card) => (c.builds_on ?? []).every((id) => o.exclude.has(id));
   const tierOf = (c: Card): number => {
     const read = o.exclude.has(c.id) ? 4 : 0;

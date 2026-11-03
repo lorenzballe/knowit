@@ -213,7 +213,17 @@ List<Pill> pillsForDate(
     return picked;
   }
 
-  final asks = take(wantAsks, (p) => p.asksSomething);
+  // The first question the day asks is one its page marks, when there is
+  // one: a page that asks and marks nothing is a question, but a day of
+  // them only would grade nothing. As the server deals it (functions/src/deal.ts).
+  final marked = take(min(1, wantAsks), (p) => p.asksSomething && p.isGraded);
+  final asks = [
+    ...marked,
+    ...take(
+      wantAsks - marked.length,
+      (p) => p.asksSomething && !marked.contains(p),
+    ),
+  ];
   final reads = take(count - asks.length, (p) => !p.asksSomething);
 
   final deck = [...asks, ...reads];
@@ -282,8 +292,21 @@ List<Pill> pillsAtRandom(
   bool strandOn(String strand) =>
       !strandsOff.contains(strand) &&
       !genresOff.contains(strand.substring(0, strand.lastIndexOf('.')));
+  // A subject the reader picked but gave no weight is drawn only once the
+  // weighted ones run out: the cards at random follow the mix as it was set.
+  bool weighted(Pill p) {
+    if (weights.isEmpty) return true;
+    final String? key = kTopics.entries
+        .where((e) => e.value.name == p.topic)
+        .firstOrNull
+        ?.key;
+    return (weights[key] ?? 0) > 0;
+  }
+
   bool onMix(Pill p) =>
-      onTopic(p) && (p.strands.isEmpty || p.strands.any(strandOn));
+      onTopic(p) &&
+      weighted(p) &&
+      (p.strands.isEmpty || p.strands.any(strandOn));
   bool ready(Pill p) => p.buildsOn.every(exclude.contains);
 
   // The same tiers as the reader's own: unread before read, and inside
