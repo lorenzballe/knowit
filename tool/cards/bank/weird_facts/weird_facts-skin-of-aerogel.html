@@ -16,7 +16,7 @@
 #nums .n{display:block;font:800 max(4.6cqh,24px)/1 var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.015em;white-space:nowrap}
 #nums .r{text-align:right}
 #nums .r .n{font-size:max(3cqh,17px)}
-#field{flex:1;min-height:0;width:100%;display:block;border-radius:2.4cqh}
+#field{flex:1;min-height:0;width:100%;display:block;background:none}
 #slide{display:flex;flex-direction:column;gap:.6cqh}
 #cut{height:max(4cqh,28px);touch-action:none;cursor:pointer}
 #slide .ends{display:flex;justify-content:space-between;font:700 max(1.5cqh,11.5px)/1 var(--body);opacity:.8}
@@ -84,7 +84,7 @@
     const fs = Math.max(11.5, Math.min(13, H * .045));
     x.font = `800 ${fs}px Figtree`; x.textAlign = align || 'left'; x.textBaseline = 'alphabetic';
     if (dark) { x.fillStyle = '#10100c'; x.fillText(s, px, py); return; }
-    x.lineWidth = 3.5; x.strokeStyle = '#6a1f78'; x.lineJoin = 'round'; x.strokeText(s, px, py);
+    x.lineWidth = 3.5; x.strokeStyle = '#8a1fa0'; x.lineJoin = 'round'; x.strokeText(s, px, py);
     x.fillStyle = '#fff'; x.fillText(s, px, py);
   }
 
@@ -92,18 +92,19 @@
     if (!x) return;
     const A = area(t), a = Math.sqrt(A), fs = Math.max(11.5, Math.min(13, H * .045));
     x.clearRect(0, 0, W, H);
-    x.save(); rr(0, 0, W, H, Math.min(W, H) * .08); x.clip();
-    x.fillStyle = '#9b2bb3'; x.fillRect(0, 0, W, H);
+    x.save();
     // The skin as one sheet, the same size on screen while the world shrinks around it.
     const top = fs * 1.9, Q = Math.max(30, Math.min(W - 24, H - top - 12)), k = Q / a;     // px per metre
     const sx = (W - Q) / 2, sy = top + (H - top - 12 - Q) / 2 + 2;
     x.fillStyle = 'rgba(255,255,255,.95)'; x.fillRect(sx, sy, Q, Q);
     const stamp = Math.max(0, 1 - t / .06);
     if (stamp > 0) {
-      // While the skin is stamp-sized, it wears a stamp's perforated edge.
+      // While the skin is stamp-sized, it wears a stamp's perforated edge (holes cut through to the card).
       const n = 14, r = Q / n / 2.6;
-      x.globalAlpha = stamp; x.fillStyle = '#9b2bb3';
+      x.globalAlpha = stamp; x.fillStyle = '#000';
+      x.globalCompositeOperation = 'destination-out';
       for (let i = 0; i <= n; i++) { const p = i / n * Q; for (const [cx_, cy_] of [[sx + p, sy], [sx + p, sy + Q], [sx, sy + p], [sx + Q, sy + p]]) { x.beginPath(); x.arc(cx_, cy_, r, 0, 2 * Math.PI); x.fill(); } }
+      x.globalCompositeOperation = 'source-over';
       x.strokeStyle = 'rgba(155,43,179,.5)'; x.lineWidth = 1; x.setLineDash([3, 3]); x.strokeRect(sx + Q * .07, sy + Q * .07, Q * .86, Q * .86); x.setLineDash([]);
       x.globalAlpha = 1;
     }

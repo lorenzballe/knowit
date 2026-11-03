@@ -1,0 +1,38 @@
+{
+  "id": "history-leaded-iq-loss",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.bad_calls",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How many IQ points did leaded gasoline cost the world?",
+  "answer": "Leaded exhaust gave children high lead levels in early childhood, and those born 1951–1980 were hit hardest. Added up across everyone, the loss is over 800 million IQ points.",
+  "move": "Leaded gasoline made the whole world less intelligent: 800 million+ IQ points gone.",
+  "keywords": [
+    "leaded gasoline",
+    "lead exposure",
+    "iq",
+    "children",
+    "exhaust"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tank-style guessing scale where the reader drags up or down to estimate how many IQ points leaded gasoline cost the world, with each step worth ten times the last.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=1059s",
+  "written": "2026-11-03"
+}

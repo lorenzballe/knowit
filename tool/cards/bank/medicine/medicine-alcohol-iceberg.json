@@ -1,0 +1,38 @@
+{
+  "id": "medicine-alcohol-iceberg",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Alcohol killed 2.6 million people in 2019. What actually killed them?",
+  "answer": "Alcohol killed 2.6 million people in 2019, and cancer is only the tip. Most of the deaths come from accidents, violence, and gut and heart disease, which lie below the surface.",
+  "move": "Cancer is just the tip: alcohol kills mostly through accidents, violence, and gut and heart disease.",
+  "keywords": [
+    "alcohol",
+    "cancer",
+    "accidents",
+    "violence",
+    "heart-disease"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dark underwater scene with a lamp to drag down. Dragging it lights up what lies under the water, revealing the hidden causes of the 2.6 million alcohol deaths in 2019. A counter shows how many deaths are lit so far.",
+    "ground": "#06223a"
+  },
+  "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=224s",
+  "written": "2026-11-03"
+}

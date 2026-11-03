@@ -1,0 +1,38 @@
+{
+  "id": "science-telephoto-steep-bridge",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.optical_illusions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do zoomed photos make this bridge look so steep?",
+  "answer": "Zooming in narrows the view, so the camera backs far away. From there, the bridge's foot and top look equally distant and the same size, stacked on each other. The gentle ramp then reads as a wall.",
+  "move": "Zoom squeezes distance: near and far look alike, so slopes look steeper.",
+  "keywords": [
+    "eshima ohashi",
+    "telephoto lens",
+    "bridge",
+    "zoom",
+    "japan"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A bridge that climbs like a wall, shown at a zoom ring that can be dragged to 5 times magnification while the camera backs away to keep the bridge in frame. The page asks why zoomed photos make the bridge look so steep.",
+    "ground": "#0d3561"
+  },
+  "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=aU4aGIzz1W4&t=125s",
+  "written": "2026-11-03"
+}

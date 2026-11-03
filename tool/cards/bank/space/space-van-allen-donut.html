@@ -76,8 +76,7 @@ function draw(){
   const fl = Kit.mk('filter', {id:'gl', x:'-20%', y:'-20%', width:'140%', height:'140%'}, defs);
   Kit.mk('feGaussianBlur', {stdDeviation: Math.max(1.5, R*0.15)}, fl);
   const eg = Kit.mk('radialGradient', {id:'eg', cx:'35%', cy:'35%', r:'70%'}, defs);
-  Kit.mk('stop', {offset:'0', 'stop-color':'#6fd3ff'}, eg); Kit.mk('stop', {offset:'1', 'stop-color':'#1b5fb0'}, eg);
-  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx: Math.min(W,H)*0.05, fill:'#0b1026'}, svg);
+  Kit.mk('stop', {offset:'0', 'stop-color':'#8fe0ff'}, eg); Kit.mk('stop', {offset:'1', 'stop-color':'#0f3fae'}, eg);
   // stars
   for (let i = 0; i < 40; i++) Kit.mk('circle', {cx: Kit.rnd()*W, cy: Kit.rnd()*H, r: 0.6 + Kit.rnd()*0.8, fill:'#fff', opacity: .25 + Kit.rnd()*.4}, svg);
   // belts: cross-section of a donut, both sides of Earth
@@ -88,24 +87,24 @@ function draw(){
       const pts = [], n = 40;
       for (let i = 0; i <= n; i++){ const l = (-cut+2*cut*i/n)*D2R, r = L2*Math.cos(l)**2; pts.push(P(side*r*Math.cos(l), r*Math.sin(l))); }
       for (let i = n; i >= 0; i--){ const l = (-cut+2*cut*i/n)*D2R, r = L1*Math.cos(l)**2; pts.push(P(side*r*Math.cos(l), r*Math.sin(l))); }
-      Kit.mk('polygon', {points: pts.map(p => p.join(',')).join(' '), fill: k === 3 ? '#ffc04d' : '#ff5a3c', opacity: k === 3 ? .55 : .3}, gB);
+      Kit.mk('polygon', {points: pts.map(p => p.join(',')).join(' '), fill: k === 3 ? '#ffc04d' : '#ff6a3c', opacity: k === 3 ? .8 : .45}, gB);
     }
   }
   // Earth
   const [ex, ey] = P(0, 0);
-  Kit.mk('circle', {cx: ex, cy: ey, r: R, fill: 'url(#eg)', stroke: '#bfe9ff', 'stroke-width': 1}, svg);
+  Kit.mk('circle', {cx: ex, cy: ey, r: R, fill: 'url(#eg)', stroke: '#ffffff', 'stroke-width': 1.5}, svg);
   const fs = Math.max(12, f*0.85);
-  const txt = (x, y, s, a, c) => { const t = Kit.mk('text', {x, y, 'text-anchor': a || 'middle', 'dominant-baseline':'middle', fill: c || '#e8ecff', 'font-family':'var(--body)', 'font-weight':700, 'font-size': fs}, svg); t.textContent = s; return t; };
+  const txt = (x, y, s, a, c) => { const t = Kit.mk('text', {x, y, 'text-anchor': a || 'middle', 'dominant-baseline':'middle', fill: c || '#ffffff', 'font-family':'var(--body)', 'font-weight':700, 'font-size': fs}, svg); t.textContent = s; return t; };
   txt(...P(-1.9, 0), 'inner'); txt(...P(-4.75, 0), 'outer');
-  txt(...P(0, -1.0 - fs*0.9/R), 'Earth', 'middle', '#bfe9ff');
-  txt(Math.max(10, W*0.04), fs*1.4, 'Side view: a donut, cut in half', 'start', '#aab3d9');
+  txt(...P(0, -1.0 - fs*0.9/R), 'Earth', 'middle', '#ffffff');
+  txt(Math.max(10, W*0.04), fs*1.4, 'Side view: a donut, cut in half', 'start', '#dbe6ff');
   // Moon where Apollo's route leaves the frame
   const A = R_.apo, xMax = (W-cx)/R - 0.7, zMax = cy/R - 0.7;
   let s = 1; const dx = A.b[0]-A.a[0], dz = A.b[1]-A.a[1];
   s = Math.min(s, (xMax-A.a[0])/dx, (zMax-A.a[1])/dz);
   const [mx, my] = P(A.a[0]+dx*s, A.a[1]+dz*s);
-  Kit.mk('circle', {cx: mx, cy: my, r: Math.max(6, R*0.45), fill:'#d9d9e3'}, svg);
-  txt(mx - Math.max(6, R*0.45) - 6, my, 'to the Moon', 'end', '#d9d9e3');
+  Kit.mk('circle', {cx: mx, cy: my, r: Math.max(6, R*0.45), fill:'#eeeef5'}, svg);
+  txt(mx - Math.max(6, R*0.45) - 6, my, 'to the Moon', 'end', '#ffffff');
   // routes (clipped to the frame)
   els = {};
   const m = (Math.max(5, R*0.24) + 4)/R, xLim = (W-cx)/R - m, zLim = cy/R - m;
@@ -116,7 +115,7 @@ function draw(){
     if (rdz > 0) sc = Math.min(sc, (zLim-r.a[1])/rdz);
     sc = Math.max(0, sc);
     const [x1, y1] = P(...r.a), [x2, y2] = P(r.a[0]+rdx*sc, r.a[1]+rdz*sc);
-    Kit.mk('line', {x1, y1, x2, y2, stroke: col[k], 'stroke-opacity': .18, 'stroke-width': 1.5, 'stroke-dasharray': '4 5'}, svg);
+    Kit.mk('line', {x1, y1, x2, y2, stroke: col[k], 'stroke-opacity': .5, 'stroke-width': 1.5, 'stroke-dasharray': '4 5'}, svg);
     const ln = Kit.mk('line', {x1, y1, x2, y2, stroke: col[k], 'stroke-width': Math.max(2.5, R*0.12), 'stroke-linecap':'round', pathLength: 1, 'stroke-dasharray': '1 1', 'stroke-dashoffset': 1}, svg);
     const cr = Kit.mk('circle', {r: Math.max(5, R*0.24), fill: '#fff', stroke: col[k], 'stroke-width': 2, opacity: 0}, svg);
     els[k] = {ln, cr, P, sc};

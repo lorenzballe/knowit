@@ -36,7 +36,7 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const N = 14, RED = '#d0142c';
+const N = 14, RED = '#9b0019';
 const svg = Kit.$('svg'), rng = Kit.$('rng');
 let S = null, mode = 'sq', p = 0, th = [], x0f = .5, done = false, broken = 0;
 function seed(){ th = Array.from({length: N}, () => .35 + .6 * Kit.rnd()); x0f = .35 + .3 * Kit.rnd(); }
@@ -56,7 +56,6 @@ function render(){
   const ph = Math.max(40, Math.min(H - fs * 6, W * .45)), top = (H - ph) / 2 + fs * .2;
   let pw = W * .62 * (mode === 'pull' ? 1 + .04 * p : 1 - .05 * p);
   const left = W / 2 - pw / 2, gap = ph / N;
-  Kit.mk('rect', {x: left - 4, y: top - 4, width: pw + 8, height: ph + 8, rx: 6, fill: 'currentColor', 'fill-opacity': .08, stroke: 'currentColor', 'stroke-opacity': .25}, svg);
   let nb = 0;
   for (let i = 0; i < N; i++){
     const y0 = top + (i + .5) * gap;

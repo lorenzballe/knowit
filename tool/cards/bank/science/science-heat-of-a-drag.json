@@ -1,0 +1,38 @@
+{
+  "id": "science-heat-of-a-drag",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What really happens at the tip when you draw on a cigarette?",
+  "answer": "When you draw on a cigarette, the tip heats up to 600–900 °C. Burning gives water vapour and carbon dioxide, but the real problem is the many other chemical and physical changes this heat sets off. A drag is not just fire: at that temperature, the tip is a chemistry lab.",
+  "move": "A drag is not just fire: at 600–900 °C, the tip is a chemistry lab.",
+  "keywords": [
+    "cigarette",
+    "tobacco",
+    "pyrolysis",
+    "combustion",
+    "smoking"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A lit cigarette ember under a 'Hold to draw' prompt. The question asks what chemical and physical changes happen at the tip when you draw on it, with four processes listed as options.",
+    "ground": "#070b1d"
+  },
+  "source": "Geopop, “5 curiosità sulle sigarette che forse non sapevi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=lKBS9b924KA&t=56s",
+  "written": "2026-11-03"
+}

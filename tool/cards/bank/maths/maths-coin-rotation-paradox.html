@@ -1,0 +1,377 @@
+<!doctype html>
+<!-- slug: maths-coin-rotation-paradox -->
+<!-- Look: an old survey sheet, printed straight on the card. Real d3 contour lines, two coins drawn as identical little peaks (green fixed, ochre rolling) with milled edges. A cream survey disc on the green coin's summit counts turns. A compass rose sits fully inside the drawing.
+     Interaction: the ochre coin rocks idly at the summit road until you drag a map pin along the legend's TURNS scale. Then you say how sure you are and the coin rolls once around.
+     Wow: the route draws itself and arrow stamps show the coin upright again at the halfway point. Badges "1" and "2" pop at the contact points. A tiny twin coin rolls along the TURNS scale, leaving a trail, and lands on 2 beside your pin. Then you can roll it by hand. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The coin that turns twice</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#map{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#map .mono{font-family:var(--mono)}
+#map .disp{font-family:var(--display)}
+#why{display:flex;flex-direction:column;gap:.5cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:break-word}
+.ants{animation:ants 1.6s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-24}}
+.pulse{animation:pulse 2.2s cubic-bezier(.2,.7,.3,1) infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%{opacity:.75;transform:scale(1)}100%{opacity:0;transform:scale(1.35)}}
+.kit-calm .ants,.kit-calm .pulse{animation:none}
+.answered .q{font-size:max(2.4cqh,15px)}
+.answered #why .big{font-size:clamp(21px,3.6cqh,32px);line-height:1.05}
+.answered #why .body{font-size:clamp(13px,1.9cqh,16px);line-height:1.38}
+.answered .keep{font-size:clamp(13px,1.8cqh,15px);line-height:1.35;padding:10px 14px}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Guess a number · roll the coin">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COIN PARADOX</span></div>
+    <h2 class="q">Roll a coin around an identical coin. How many times does it turn?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map" role="img" aria-label="A contour map with two identical coins. A green coin stays put; an ochre coin with an arrow rolls around it along a route. Below, a scale of turns from 0 to 4 with a pin to drag."></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the pin along the scale to your guess. Then say how sure you are.</p>
+    <div id="why" class="gone"><p class="big">Two turns, not one.</p><p class="body">The rolling coin's centre travels a circle twice as wide as the coin, so it covers two of its own circumferences. Halfway round it is already upright. <b>Drag the coin to roll it yourself.</b></p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Rolling around a circle, not along a line, adds one extra turn.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('map'), say = Kit.$('say'), card = Kit.$('card');
+  const TAU = Math.PI * 2;
+  const INK = '#2b2416', TXT = '#ffffff', PAPER = '#f4edd9', ROUTE = '#ffd84a', LINE = '#ffffff';
+  const GREEN = ['#21443a', '#3b6a54', '#6b9470', '#a8c08c', '#e6e8c4'];
+  const OCHRE = ['#6e2a14', '#a24f28', '#cc8442', '#e9ba73', '#f8e6b9'];
+  let W = 0, H = 0, fs = 13, mh = 0, r = 0, C = {x: 0, y: 0}, sY = 0, sx0 = 0, sx1 = 0, L = 0;
+  let guess = null, touched = false, phase = 'guess', maxTh = 0, rollTween = null, entered = false, built = false, lastHalf = 0;
+  const st = {th: 0}, rock = {v: 0};
+  let E = {};
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: TXT}, a), p); e.textContent = s; return e; };
+
+  // The land under the coins: a few hills, seeded, kept as fractions so a resize redraws the same map.
+  const hills = Array.from({length: 7}, () => ({x: Kit.rnd(), y: Kit.rnd(), a: (Kit.rnd() * .7 + .25) * (Kit.rnd() < .3 ? -1 : 1), s: .1 + Kit.rnd() * .16}));
+
+  function wavy(rad, amp, seed, n = 80) {
+    let d = '';
+    for (let i = 0; i <= n; i++) {
+      const a = i / n * TAU, rr = rad + amp * (Math.sin(3 * a + seed) * .6 + Math.sin(5 * a + seed * 2.3) * .4);
+      d += (i ? 'L' : 'M') + (rr * Math.cos(a)).toFixed(2) + ',' + (rr * Math.sin(a)).toFixed(2);
+    }
+    return d + 'Z';
+  }
+  const arrowPath = s => `M0,${-s * .74}L${s * .24},${-s * .3}L${s * .085},${-s * .3}L${s * .085},${s * .42}L${-s * .085},${s * .42}L${-s * .085},${-s * .3}L${-s * .24},${-s * .3}Z`;
+
+  // One coin: a little mountain with elevation tints, a milled rim, ink edge.
+  function coin(p, pal, id, rad = r, detail = true) {
+    const g = mk('g', {}, p);
+    mk('circle', {r: rad, fill: `url(#face${id})`}, g);
+    if (detail) {
+      let d = '';
+      for (let i = 0; i < 96; i++) { const a = i / 96 * TAU, c = Math.cos(a), s = Math.sin(a); d += `M${(rad * .92 * c).toFixed(2)},${(rad * .92 * s).toFixed(2)}L${(rad * .985 * c).toFixed(2)},${(rad * .985 * s).toFixed(2)}`; }
+      mk('path', {d, stroke: pal[4], 'stroke-width': 1, opacity: .45}, g);
+      mk('circle', {r: rad * .9, fill: 'none', stroke: INK, 'stroke-width': 1, opacity: .55}, g);
+      [.82, .66, .5, .35].forEach((k, i) => mk('path', {d: wavy(rad * k, rad * .035, i * 1.7 + id * 3), fill: pal[i + 1], stroke: INK, 'stroke-opacity': .45, 'stroke-width': .9}, g));
+    } else {
+      [.7, .42].forEach((k, i) => mk('circle', {r: rad * k, fill: pal[i + 2], stroke: INK, 'stroke-opacity': .4, 'stroke-width': .7}, g));
+    }
+    mk('circle', {r: rad, fill: 'none', stroke: INK, 'stroke-width': Math.max(1.4, rad * .035)}, g);
+    return g;
+  }
+
+  function layout() {
+    svg.innerHTML = ''; E = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(16, f.f || 13));
+    mh = H - fs * 4.3;
+    r = Math.max(14, Math.min(W - fs * 1.2, mh - fs * 1.0) / 6);
+    C = {x: W / 2, y: mh / 2};
+    L = TAU * 2 * r;
+
+    // ---- defs: gradients, shadow ----
+    const defs = mk('defs', {}, svg);
+    [[GREEN, 0], [OCHRE, 1]].forEach(([pal, id]) => {
+      const g = mk('radialGradient', {id: `face${id}`, cx: '40%', cy: '35%', r: '70%'}, defs);
+      mk('stop', {offset: '0%', 'stop-color': pal[2]}, g); mk('stop', {offset: '100%', 'stop-color': pal[0]}, g);
+    });
+    const sh = mk('radialGradient', {id: 'shine', cx: '32%', cy: '26%', r: '75%'}, defs);
+    mk('stop', {offset: '0%', 'stop-color': '#fff', 'stop-opacity': .55}, sh);
+    mk('stop', {offset: '45%', 'stop-color': '#fff', 'stop-opacity': .05}, sh);
+    mk('stop', {offset: '100%', 'stop-color': '#000', 'stop-opacity': .22}, sh);
+    const blur = mk('filter', {id: 'soft', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: r * .09}, blur);
+
+    // ---- the drawing, straight on the card ----
+    const sheet = mk('g', {}, svg);
+
+    // Contours from a real height field (d3), lines only.
+    E.bg = mk('g', {}, sheet);
+    const n = 52, s = W / n, m = Math.ceil(mh / s) + 1, vals = new Float64Array(n * m);
+    let lo = Infinity, hi = -Infinity;
+    for (let j = 0; j < m; j++) for (let i = 0; i < n; i++) {
+      const px = (i + .5) * s, py = (j + .5) * s;
+      let v = 1.1 * Math.exp(-((px - C.x) ** 2 + (py - C.y) ** 2) / (2 * (2.3 * r) ** 2));
+      for (const h of hills) { const sg = h.s * W; v += h.a * .7 * Math.exp(-((px - h.x * W) ** 2 + (py - h.y * mh) ** 2) / (2 * sg * sg)); }
+      v += .07 * Math.sin(px / (r * .8)) * Math.cos(py / (r * 1.05));
+      vals[i + j * n] = v; lo = Math.min(lo, v); hi = Math.max(hi, v);
+    }
+    const K = 15, ths = d3.range(1, K).map(k => lo + (hi - lo) * k / K);
+    const geo = d3.geoPath(d3.geoIdentity().scale(s));
+    d3.contours().size([n, m]).thresholds(ths)(vals).forEach((c, k) => {
+      const idx = k % 4 === 3;
+      mk('path', {d: geo(c), fill: 'none', stroke: LINE, 'stroke-opacity': idx ? .5 : .24, 'stroke-width': idx ? 1.25 : .7, class: 'contour'}, E.bg);
+    });
+    // Graticule.
+    const gr = mk('g', {stroke: LINE, 'stroke-opacity': .22, 'stroke-width': .8, 'stroke-dasharray': '2 5'}, sheet);
+    for (let k = 1; k < 4; k++) { mk('line', {x1: W * k / 4, x2: W * k / 4, y1: 0, y2: mh}, gr); mk('line', {x1: 0, x2: W, y1: mh * k / 4, y2: mh * k / 4}, gr); }
+
+    // Compass rose, top right, its N fully inside the drawing.
+    const cr = fs * 1.05, nS = Math.max(12, fs * .85), cx = W - fs * 1.8, cy = nS + 6 + cr * 1.3, comp = mk('g', {transform: `translate(${cx},${cy})`, class: 'compass'}, sheet);
+    mk('circle', {r: cr, fill: 'none', stroke: TXT, 'stroke-opacity': .6, 'stroke-width': .9}, comp);
+    mk('circle', {r: cr * .62, fill: 'none', stroke: TXT, 'stroke-opacity': .4, 'stroke-width': .7, 'stroke-dasharray': '1.5 2'}, comp);
+    mk('path', {d: `M0,${-cr * 1.25}L${cr * .22},0L0,${cr * 1.25}L${-cr * .22},0Z`, fill: TXT, opacity: .8}, comp);
+    mk('path', {d: `M${-cr * 1.25},0L0,${cr * .22}L${cr * 1.25},0L0,${-cr * .22}Z`, fill: TXT, opacity: .4}, comp);
+    mk('path', {d: `M0,${-cr * 1.25}L${cr * .22},0L0,0Z`, fill: ROUTE, opacity: .95}, comp);
+    txt(sheet, cx, cy - cr * 1.3 - 3, 'N', {'text-anchor': 'middle', 'font-size': nS, 'font-weight': 700, class: 'mono'});
+
+    // The route: the ring the rolling coin's centre follows.
+    E.guide = mk('circle', {cx: C.x, cy: C.y, r: 2 * r, fill: 'none', stroke: ROUTE, 'stroke-opacity': .5, 'stroke-width': 1.4, 'stroke-dasharray': '7 5', class: 'ants'}, sheet);
+    E.route = mk('path', {d: `M${C.x},${C.y - 2 * r}A${2 * r} ${2 * r} 0 1 1 ${C.x},${C.y + 2 * r}A${2 * r} ${2 * r} 0 1 1 ${C.x},${C.y - 2 * r}`, fill: 'none', stroke: ROUTE, 'stroke-width': Math.max(2.5, fs * .26), 'stroke-linecap': 'round'}, sheet);
+    E.route.style.strokeDasharray = `${L} ${L}`;
+
+    // Arrow stamps along the route: how the coin points every eighth of the way.
+    E.stamps = [];
+    const stG = mk('g', {}, sheet);
+    const sr = Math.min(fs * .62, r * .42);
+    for (let k = 1; k < 8; k++) {
+      const th = k * Math.PI / 4, a = -Math.PI / 2 + th, x = C.x + 2 * r * Math.cos(a), y = C.y + 2 * r * Math.sin(a);
+      const o = mk('g', {transform: `translate(${x},${y}) rotate(${th * 360 / Math.PI})`}, stG), inn = mk('g', {}, o);
+      mk('circle', {r: sr, fill: PAPER, stroke: ROUTE, 'stroke-width': 1.2}, inn);
+      mk('path', {d: arrowPath(sr * 1.7), fill: INK}, inn);
+      const on = maxTh >= th - 1e-4;
+      gsap.set(inn, {opacity: on ? 1 : 0, scale: on ? 1 : 0, transformOrigin: '50% 50%'});
+      E.stamps.push({th, el: inn, on});
+    }
+
+    // The fixed coin: it never moves.
+    mk('circle', {cx: C.x + r * .07, cy: C.y + r * .12, r, fill: 'rgba(10,50,35,.45)', filter: 'url(#soft)'}, sheet);
+    E.fixed = mk('g', {transform: `translate(${C.x},${C.y})`}, sheet);
+    const fixIn = mk('g', {}, E.fixed);
+    coin(fixIn, GREEN, 0);
+    mk('circle', {r, fill: 'url(#shine)'}, fixIn);
+
+    // Turn counter: a cream survey disc on the fixed coin's summit (number only, so nothing crowds it).
+    const cs = Math.max(12, Math.min(fs * 1.35, r * .56)), dr = Math.max(r * .5, cs * 1.02);
+    E.countG = mk('g', {}, sheet);
+    mk('circle', {cx: C.x, cy: C.y, r: dr, fill: '#fbf5e4', stroke: INK, 'stroke-width': 1.2}, E.countG);
+    mk('circle', {cx: C.x, cy: C.y, r: dr * .8, fill: 'none', stroke: '#c43d22', 'stroke-width': .9, 'stroke-dasharray': '2 2.4', opacity: .8}, E.countG);
+    E.count = txt(E.countG, C.x, C.y, '0', {'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': cs, 'font-weight': 800, fill: INK, class: 'disp'});
+
+    // The rolling coin, its shadow, its arrow.
+    E.rShadow = mk('circle', {r, fill: 'rgba(10,50,35,.45)', filter: 'url(#soft)'}, sheet);
+    E.roll = mk('g', {}, sheet);
+    E.rollIn = mk('g', {}, E.roll);
+    E.pulse = mk('circle', {r: r * 1.04, fill: 'none', stroke: ROUTE, 'stroke-width': 2, class: 'pulse', display: phase === 'guess' ? null : 'none'}, E.rollIn);
+    E.spin = mk('g', {}, E.rollIn);
+    coin(E.spin, OCHRE, 1);
+    mk('path', {d: arrowPath(r), fill: OCHRE[4], stroke: INK, 'stroke-width': Math.max(1.4, r * .03), 'stroke-linejoin': 'round'}, E.spin);
+    mk('circle', {r: r * .06, fill: INK}, E.spin);
+    mk('circle', {r, fill: 'url(#shine)'}, E.rollIn);
+
+    // Badges where the coins touch: turn 1 at the bottom, turn 2 back at the top.
+    const br = Math.min(fs * .8, r * .48);
+    E.badges = [[Math.PI, 1], [TAU, -1]].map(([th, sg], i) => {
+      const o = mk('g', {transform: `translate(${C.x},${C.y + sg * r})`}, sheet), inn = mk('g', {}, o);
+      mk('circle', {r: br, fill: ROUTE, stroke: INK, 'stroke-width': 1.6}, inn);
+      txt(inn, 0, 0, String(i + 1), {'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 12, 'font-weight': 800, fill: INK, class: 'mono'});
+      const on = maxTh >= th - 1e-4;
+      gsap.set(inn, {opacity: on ? 1 : 0, scale: on ? 1 : 0, transformOrigin: '50% 50%'});
+      return {th, el: inn, on};
+    });
+    E.ring = mk('circle', {r, fill: 'none', stroke: ROUTE, 'stroke-width': 3, opacity: 0}, sheet);
+
+    // ---- the legend: a scale of turns ----
+    mk('line', {x1: 0, x2: W, y1: mh, y2: mh, stroke: TXT, 'stroke-width': 1.6}, sheet);
+    mk('line', {x1: 0, x2: W, y1: mh + 3.5, y2: mh + 3.5, stroke: TXT, 'stroke-width': .7}, sheet);
+    sY = mh + fs * 2.3;
+    const lab = txt(sheet, fs * .9, sY, 'TURNS', {'dominant-baseline': 'central', 'font-size': Math.max(12, fs * .8), 'font-weight': 700, 'letter-spacing': '.1em', class: 'mono'});
+    sx0 = fs * .9 + lab.getComputedTextLength() + fs * 1.6; sx1 = W - fs * 1.6;
+    mk('line', {x1: sx0, x2: sx1, y1: sY, y2: sY, stroke: TXT, 'stroke-width': 2, 'stroke-linecap': 'round'}, sheet);
+    for (let k = 0; k <= 8; k++) {
+      const x = X(k / 2), big = k % 2 === 0;
+      mk('line', {x1: x, x2: x, y1: sY - (big ? fs * .45 : fs * .25), y2: sY + (big ? fs * .45 : fs * .25), stroke: TXT, 'stroke-width': big ? 1.8 : 1}, sheet);
+      if (big) { const t = txt(sheet, x, sY + fs * 1.4, String(k / 2), {'text-anchor': 'middle', 'font-size': Math.max(12, fs * .95), 'font-weight': 700, class: 'mono'}); if (k === 4) E.two = t; }
+    }
+    E.truth = mk('g', {opacity: 0}, sheet);
+    mk('circle', {cx: X(2), cy: sY + fs * 1.08, r: fs * .75, fill: 'none', stroke: ROUTE, 'stroke-width': 2.2}, E.truth);
+
+    // The trail and the tiny twin coin that rolls along the scale.
+    E.trail = mk('line', {x1: X(0), x2: X(0), y1: sY, y2: sY, stroke: ROUTE, 'stroke-width': Math.max(3, fs * .3), 'stroke-linecap': 'round', opacity: phase === 'guess' ? 0 : 1}, sheet);
+    E.runner = mk('g', {opacity: phase === 'guess' ? 0 : 1}, sheet);
+    E.runSpin = mk('g', {}, E.runner);
+    const rr = fs * .5;
+    coin(E.runSpin, OCHRE, 1, rr, false);
+    mk('path', {d: arrowPath(rr * 1.5), fill: OCHRE[4], stroke: INK, 'stroke-width': .8}, E.runSpin);
+
+    // The pin.
+    E.pin = mk('g', {}, sheet);
+    E.pinIn = mk('g', {}, E.pin);
+    const R = fs;
+    E.pinBody = mk('path', {d: `M0,0C${-R * .35},${-R * .6} ${-R},${-R * .9} ${-R},${-R * 1.6}A${R} ${R} 0 1 1 ${R},${-R * 1.6}C${R},${-R * .9} ${R * .35},${-R * .6} 0,0Z`, fill: guess === 2 && phase !== 'guess' ? GREEN[1] : INK, stroke: PAPER, 'stroke-width': 1.5}, E.pinIn);
+    E.pinTxt = txt(E.pinIn, 0, -R * 1.6, guess === null ? '?' : String(guess), {'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 12, 'font-weight': 800, fill: PAPER, class: 'mono'});
+    gsap.set(E.pin, {x: X(guess === null ? 0 : guess), y: sY});
+
+    built = true;
+    if (phase !== 'guess') markTruth(false);
+    if (entered && !touched && !Kit.calm) hint();
+    render();
+  }
+  const X = v => sx0 + (sx1 - sx0) * v / 4;
+
+  function render() {
+    if (!built) return;
+    const th = st.th, a = -Math.PI / 2 + th, x = C.x + 2 * r * Math.cos(a), y = C.y + 2 * r * Math.sin(a);
+    E.roll.setAttribute('transform', `translate(${x},${y})`);
+    E.spin.setAttribute('transform', `rotate(${th * 360 / Math.PI + rock.v})`);
+    E.rShadow.setAttribute('cx', x + r * .07); E.rShadow.setAttribute('cy', y + r * .12);
+    E.ring.setAttribute('cx', x); E.ring.setAttribute('cy', y);
+    E.route.style.strokeDashoffset = L * (1 - maxTh / TAU);
+    const t = th / Math.PI;
+    E.count.textContent = t >= 1.995 ? '2' : t <= .005 ? '0' : t.toFixed(1);
+    E.runner.setAttribute('transform', `translate(${X(t)},${sY})`);
+    E.runSpin.setAttribute('transform', `rotate(${t * 360})`);
+    E.trail.setAttribute('x2', X(Math.max(t, maxTh / Math.PI)));
+    for (const s of [...E.stamps, ...E.badges]) if (!s.on && maxTh >= s.th - 1e-4) {
+      s.on = true;
+      if (Kit.calm) gsap.set(s.el, {opacity: 1, scale: 1}); else gsap.to(s.el, {opacity: 1, scale: 1, duration: .55, ease: 'back.out(2.6)'});
+    }
+  }
+
+  // ---- ambient: the coin rocks at the start, waiting ----
+  let rockTw = null, hintTw = null;
+  function ambient() {
+    if (Kit.calm || phase !== 'guess') return;
+    rock.v = -7;
+    rockTw = gsap.to(rock, {v: 7, duration: 1.5, ease: 'sine.inOut', yoyo: true, repeat: -1, onUpdate: render});
+  }
+  function hint() { if (hintTw) hintTw.kill(); hintTw = gsap.fromTo(E.pinIn, {x: 0}, {x: fs * .7, duration: .7, ease: 'power2.inOut', yoyo: true, repeat: -1, repeatDelay: .4}); }
+  function settle() { if (rockTw) rockTw.kill(); gsap.to(rock, {v: 0, duration: .6, ease: 'back.out(2)', onUpdate: render}); }
+
+  // ---- the guess ----
+  const fmt = v => v === 1 ? '1 turn' : `${v} turns`;
+  function setGuess(x) {
+    const v = Math.max(0, Math.min(4, Math.round((x - sx0) / (sx1 - sx0) * 8) / 2));
+    if (!touched) {
+      touched = true; if (hintTw) hintTw.kill(); gsap.to(E.pinIn, {x: 0, duration: .2}); settle(); sure.on();
+      gsap.to(E.guide, {attr: {'stroke-opacity': .8}, duration: .4});
+    }
+    if (v === guess) return;
+    guess = v; E.pinTxt.textContent = String(v); Kit.haptic('selection');
+    gsap.to(E.pin, {x: X(v), duration: .28, ease: 'power3.out'});
+    gsap.fromTo(E.pinIn, {scale: 1.18, transformOrigin: '50% 100%'}, {scale: 1, duration: .45, ease: 'elastic.out(1,.5)'});
+    // The waiting coin leans toward the guess, as if trying it.
+    if (!Kit.calm) gsap.fromTo(rock, {v: v * 6}, {v: 0, duration: .9, ease: 'elastic.out(1,.4)', onUpdate: render});
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (phase !== 'guess' || guess === null) return;
+    const ok = guess === 2;
+    Kit.answer({choice: fmt(guess), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${fmt(guess)}, ${ok ? 'right' : 'wrong'}`);
+    say.innerHTML = 'Watch the arrow on the rolling coin. <b>Count its turns.</b>';
+    roll();
+  });
+
+  function roll() {
+    phase = 'roll'; E.pulse.setAttribute('display', 'none');
+    if (rockTw) rockTw.kill(); rock.v = 0;
+    if (Kit.calm) { gsap.set([E.runner, E.trail], {opacity: 1}); st.th = TAU; maxTh = TAU; render(); finish(); return; }
+    gsap.to([E.runner, E.trail], {opacity: 1, duration: .4});
+    gsap.fromTo(E.runner, {scale: 0, transformOrigin: '50% 50%'}, {scale: 1, duration: .5, ease: 'back.out(2.5)'});
+    rollTween = gsap.to(st, {th: TAU, duration: 5.4, ease: 'sine.inOut', onUpdate: () => { maxTh = Math.max(maxTh, st.th); render(); turnTick(); }, onComplete: finish});
+  }
+  function turnTick() {
+    const h = Math.floor(st.th / Math.PI + 1e-6);
+    if (h !== lastHalf) { lastHalf = h; Kit.haptic(h >= 2 ? 'success' : 'light'); if (!Kit.calm) gsap.fromTo(E.countG, {scale: 1.25, transformOrigin: '50% 50%'}, {scale: 1, duration: .6, ease: 'elastic.out(1,.45)'}); }
+  }
+  function markTruth(anim) {
+    if (guess === 2) E.pinBody.setAttribute('fill', GREEN[1]);
+    E.two.setAttribute('fill', ROUTE);
+    if (anim && !Kit.calm) gsap.fromTo(E.truth, {opacity: 0, scale: 2.2, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .7, ease: 'back.out(2)'});
+    else gsap.set(E.truth, {opacity: 1});
+  }
+  function finish() {
+    phase = 'free'; maxTh = TAU; st.th = TAU; render();
+    markTruth(true);
+    card.classList.add('answered');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) {
+      gsap.fromTo(E.ring, {attr: {r}, opacity: 1}, {attr: {r: r * 2.2}, opacity: 0, duration: 1.1, ease: 'expo.out'});
+      gsap.fromTo(E.route, {attr: {'stroke-width': fs * .7}}, {attr: {'stroke-width': Math.max(2.5, fs * .26)}, duration: 1, ease: 'power3.out'});
+      gsap.fromTo(E.countG, {scale: 1.5, transformOrigin: '50% 50%'}, {scale: 1, duration: 1, ease: 'elastic.out(1,.35)'});
+      gsap.fromTo(E.runner, {scale: 1.6, transformOrigin: '50% 50%'}, {scale: 1, duration: .8, ease: 'elastic.out(1,.4)'});
+      gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .5, ease: 'power3.out'});
+    }
+  }
+
+  // ---- touch ----
+  const pt = e => { const b = svg.getBoundingClientRect(); return {x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height}; };
+  let mode = null, prevA = 0;
+  svg.addEventListener('pointerdown', e => {
+    const p = pt(e);
+    if (phase === 'guess' && p.y > mh - fs * .5) { mode = 'pin'; svg.setPointerCapture(e.pointerId); setGuess(p.x); }
+    else if (phase === 'free') {
+      mode = 'coin'; svg.setPointerCapture(e.pointerId);
+      if (st.th >= TAU - 1e-3) { st.th = 0; lastHalf = 0; }   // a new lap: same place, same look (two turns ≡ none)
+      prevA = Math.atan2(p.y - C.y, p.x - C.x); Kit.haptic('selection');
+      gsap.fromTo(E.rollIn, {scale: 1.06, transformOrigin: '50% 50%'}, {scale: 1, duration: .4, ease: 'back.out(3)'});
+      render();
+    }
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!mode) return;
+    const p = pt(e);
+    if (mode === 'pin') setGuess(p.x);
+    else {
+      const a = Math.atan2(p.y - C.y, p.x - C.x);
+      let d = a - prevA; if (d > Math.PI) d -= TAU; if (d < -Math.PI) d += TAU; prevA = a;
+      st.th = Math.max(0, Math.min(TAU, st.th + d)); render(); turnTick();
+    }
+  });
+  const up = () => { mode = null; };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (entered) return; entered = true;
+    if (Kit.calm || !built) return;
+    const tl = gsap.timeline();
+    tl.from(E.bg.children, {opacity: 0, duration: .5, stagger: .035, ease: 'power2.out'})
+      .from(E.fixed, {scale: 0, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(1.8)'}, .25)
+      .from(E.route, {strokeDashoffset: L, duration: 0}, 0)
+      .from(E.guide, {attr: {'stroke-opacity': 0}, duration: .6}, .4)
+      .from(E.rollIn, {scale: 0, rotation: -120, transformOrigin: '50% 50%', duration: .9, ease: 'back.out(1.6)'}, .45)
+      .from(E.countG, {opacity: 0, scale: .4, transformOrigin: '50% 50%', duration: .6, ease: 'back.out(2)'}, .7)
+      .from(E.pin, {opacity: 0, y: sY - fs * 2, duration: .6, ease: 'bounce.out'}, .8)
+      .add(() => { if (!touched) { hint(); ambient(); } });
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(res => setTimeout(res, ms));
+    entered = true;
+    setGuess(X(1)); await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(200);
+    if (rollTween) rollTween.progress(1);
+    await wait(Kit.calm ? 100 : 1200);
+  };
+})();
+Kit.single();
+</script>
+</html>

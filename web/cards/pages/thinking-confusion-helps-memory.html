@@ -45,7 +45,6 @@ function draw() {
   const L = f * 1.4, R = W - f * 1.4, T = f * 2.6, B = H - f * 3.8;
   const X = c => L + f + c * (R - L - 2 * f), Y = m => B - m * (B - T);
   g = {W, H, f, L, R, T, B, X, Y};
-  Kit.mk('rect', {x: L - f * .6, y: T - f * .6, width: R - L + f * 1.2, height: B - T + f * .6, rx: f * .8, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
   Kit.mk('line', {x1: L - f * .6, x2: R + f * .6, y1: B, y2: B, style: 'stroke:var(--k);stroke-width:2.5;stroke-linecap:round'}, svg);
   const t1 = Kit.mk('text', {x: L - f * .6, y: T - f * 1.2, style: `font:700 ${f}px var(--body);fill:var(--k)`}, svg); t1.textContent = '↑ Remembered later';
   const lc = Kit.mk('text', {x: L, y: B + f * 1.4, style: `font:600 ${f}px var(--body);fill:var(--k)`}, svg); lc.textContent = 'Clear';

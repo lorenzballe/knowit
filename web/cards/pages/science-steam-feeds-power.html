@@ -1,0 +1,396 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-steam-feeds-power -->
+<!-- Look: a reactor console, drawn in ink straight on the card. A scrolling power trace on a log scale with a filled glow sits above a graphite core of segmented fuel channels, water and hundreds of neutrons. Scanlines and a ticker log complete it.
+     Interaction: hold the core to boil it. A heat ripple blooms under your finger, water dots turn into rising steam rings, fewer neutrons are absorbed, the swarm thickens, the core warms to amber and the trace climbs. Let go early and it settles; push past the brink and the steam feeds itself.
+     Wow: the AZ-5 lamp blinks, the rods drop and jam a third of the way down with sparks, the screen flashes, and the trace pegs at 30 GW while a scrambled "30 GW · 10× NOMINAL" locks in. The layout adapts so nothing collides on short stages. -->
+<title>Steam feeds the fire</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;display:flex;flex:1;min-height:0}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer;background:none}
+#why{display:flex;flex-direction:column;gap:.7cqh;margin-top:1.2cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.3cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold the core · watch the power">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO BOIL</span></div>
+    <h2 class="q">Why did Chernobyl's core suddenly make 10 times its normal power?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A reactor console: a power trace above a core of fuel channels, cooling water and flying neutrons. Holding the core boils the water into steam."></canvas>
+    </div>
+    <div id="why" class="gone">
+      <p class="big">Steam set the neutrons free.</p>
+      <p class="body">Liquid water soaked up neutrons; steam barely does. More steam meant more fissions, more heat, more steam. The surge broke the control rods, jamming them a third of the way in, and power hit 30 GW: 10 times nominal.</p>
+    </div>
+    <p class="say" id="say"><b>Hold the core</b> to boil its water into steam. Watch the power.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Positive void coefficient: steam raises power, and power makes more steam.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), say = Kit.$('say'), card = Kit.$('card');
+  const G = '16,16,12';                   // ink, drawn on the card
+  const L = '0,229,160';                  // card colour, for text on small dark chips
+  const A = '176,64,0';                   // burnt amber, reads on the card
+  const S = {P: 1, v: .2, hold: false, phase: 'idle', rod: 0, intro: 1, fl: 0, wow: 0, ws: 1, touched: false, logY: 0, hv: 0, hx: -1, hy: -1, spark: 0};
+  let x = null, W = 0, H = 0, fs = 12, MONO = 'monospace', sprite = null, rodsFired = false, msgMid = false, loopOn = false;
+  const clamp = (a, lo, hi) => Math.max(lo, Math.min(hi, a));
+
+  // The core: fuel channels, water dots between them, control rods between those.
+  const FUEL = [.1, .3, .5, .7, .9], RODS = [.2, .4, .6, .8], COLS = 16, ROWS = 12;
+  const grid = [], dots = [];
+  for (let r = 0; r < ROWS; r++) { grid[r] = []; for (let c = 0; c < COLS; c++) {
+    const nx = (c + .5 + (Kit.rnd() - .5) * .5) / COLS, ny = (r + .5 + (Kit.rnd() - .5) * .5) / ROWS;
+    if (FUEL.some(f => Math.abs(f - nx) < .028)) { grid[r][c] = null; continue; }
+    const d = {nx, ny, th: Kit.rnd() * .92 + .04, ph: Kit.rnd()}; grid[r][c] = d; dots.push(d);
+  } }
+  const MAXN = 720, neut = [], flashes = [], logs = [], HN = 240, hist = [], sparks = [];
+  for (let i = 0; i < HN; i++) hist.push(1);
+
+  function addLog(s) {
+    const l = {s, a: Kit.calm ? 1 : 0}; logs.push(l); if (logs.length > 6) logs.shift();
+    if (!Kit.calm) { gsap.to(l, {a: 1, duration: .35, ease: 'power2.out'}); gsap.fromTo(S, {logY: 1}, {logY: 0, duration: .45, ease: 'power3.out'}); }
+  }
+
+  // ---------- the physics, in two numbers: power P (GW) and steam fraction v ----------
+  function step(dt) {
+    if (S.phase !== 'done') {
+      const heat = S.phase === 'run' ? .75 : (S.hold ? .32 : 0);
+      const dv = heat + .025 * (S.P - 1) - .1 * (S.v - .2);       // heat and power boil; cooling condenses
+      S.v = clamp(S.v + dv * dt, .05, .97);
+      S.P = clamp(S.P * Math.exp(2.6 * (S.v - .2) * dt), .5, 30);  // more voids, fewer absorbed neutrons, more power
+      if (S.phase === 'idle' && S.hold && S.P > 1.4 && !msgMid) {
+        msgMid = true; addLog('> VOIDS UP · ABSORPTION DOWN');
+        say.innerHTML = 'Steam soaks up fewer neutrons than water, so power climbs and boils more water. <b>Let go to cool it, or keep holding.</b>';
+      }
+      if (S.phase === 'idle' && S.P > 3.2) runaway();
+      if (S.phase === 'run' && S.P > 9 && !rodsFired) fireRods();
+      if (S.phase === 'run' && S.P >= 29.95) finish();
+    }
+    // neutrons: as many as the power, born in the fuel, eaten by water and rods
+    const target = Math.min(MAXN, 40 + S.P * 22.5);
+    let need = Math.min(30, Math.round(target - neut.length));
+    while (need-- > 0) {
+      const a = Math.random() * 6.283, sp = .22 + Math.random() * .25;
+      neut.push({x: FUEL[(Math.random() * 5) | 0] + (Math.random() - .5) * .02, y: Math.random(), vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1.2 + Math.random() * 2});
+    }
+    for (let i = neut.length - 1; i >= 0; i--) {
+      const n = neut[i]; n.x += n.vx * dt; n.y += n.vy * dt; n.life -= dt;
+      if (n.x < 0 || n.x > 1) { n.vx *= -1; n.x = clamp(n.x, 0, 1); }
+      if (n.y < 0 || n.y > 1) { n.vy *= -1; n.y = clamp(n.y, 0, 1); }
+      let gone = n.life <= 0;
+      if (!gone && S.rod > 0 && n.y < S.rod && RODS.some(r => Math.abs(r - n.x) < .022)) gone = true;
+      if (!gone) {
+        const d = grid[clamp((n.y * ROWS) | 0, 0, ROWS - 1)][clamp((n.x * COLS) | 0, 0, COLS - 1)];
+        if (d && d.th >= S.v && Math.random() < 3.6 * dt) gone = true;   // liquid water absorbs
+      }
+      if (gone) { if (n.life > 0 && flashes.length < 140) flashes.push({x: n.x, y: n.y, a: 1}); neut[i] = neut[neut.length - 1]; neut.pop(); }
+    }
+    for (let i = flashes.length - 1; i >= 0; i--) { flashes[i].a -= dt * 3; if (flashes[i].a <= 0) flashes.splice(i, 1); }
+    for (let i = sparks.length - 1; i >= 0; i--) { const s = sparks[i]; s.x += s.vx * dt; s.y += s.vy * dt; s.vy += 1.4 * dt; s.a -= dt * 1.6; if (s.a <= 0) sparks.splice(i, 1); }
+    hist.push(S.phase === 'done' ? 30 * (1 - Math.random() * .04) : S.P); hist.shift();
+  }
+
+  function runaway() {
+    S.phase = 'run'; S.hold = false; Kit.haptic('light');
+    addLog('> STEAM FEEDS POWER');
+    say.innerHTML = '<b>Too late.</b> Power now boils water faster than it can cool: power makes steam, steam makes power.';
+    if (Kit.calm) { S.P = 30; S.v = .97; finish(); }
+  }
+  function fireRods() {
+    if (rodsFired) return; rodsFired = true; addLog('> AZ-5 · RODS DROP');
+    if (Kit.calm) { S.rod = 1 / 3; addLog('> RODS JAMMED AT 1/3'); return; }
+    gsap.to(S, {rod: 1 / 3, duration: .42, ease: 'power3.in', onComplete: () => {
+      addLog('> RODS JAMMED AT 1/3'); Kit.haptic('light');
+      RODS.forEach(r => { for (let k = 0; k < 9; k++) { const a = -Math.PI * Math.random(); sparks.push({x: r, y: 1 / 3, vx: Math.cos(a) * .25, vy: Math.sin(a) * .5, a: 1}); } });
+      gsap.fromTo(cv, {y: -3}, {y: 0, duration: .4, ease: 'elastic.out(1,.3)'});
+    }});
+  }
+  function finish() {
+    if (S.phase === 'done') return;
+    S.phase = 'done'; S.P = 30; S.v = .97; fireRods();
+    addLog('> 30 GW · 10x NOMINAL'); Kit.haptic('success');
+    if (Kit.calm) { S.rod = 1 / 3; S.wow = 1; S.ws = 1; reveal(); return; }
+    gsap.timeline()
+      .to(S, {fl: 1, duration: .07, ease: 'power2.in'})
+      .to(S, {fl: 0, duration: 1, ease: 'expo.out'})
+      .fromTo(S, {wow: 0, ws: 1.9}, {wow: 1, ws: 1, duration: .9, ease: 'back.out(1.6)'}, .05);
+    gsap.fromTo(cv, {x: -8}, {x: 0, duration: .8, ease: 'elastic.out(1.2,.25)'});
+    gsap.delayedCall(.7, reveal);
+  }
+  function reveal() { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered'); }
+
+  // ---------- drawing ----------
+  function rr(c, a, b, w, h, r) { r = Math.min(r, w / 2, h / 2); c.beginPath(); c.moveTo(a + r, b); c.arcTo(a + w, b, a + w, b + h, r); c.arcTo(a + w, b + h, a, b + h, r); c.arcTo(a, b + h, a, b, r); c.arcTo(a, b, a + w, b, r); c.closePath(); }
+  function tag(c, txt, cx, cy, col, align) {      // text on a small ink chip
+    const w = c.measureText(txt).width, h = fs * 1.35;
+    const lx = align === 'left' ? cx : align === 'right' ? cx - w : cx - w / 2;
+    c.fillStyle = 'rgba(16,16,12,.88)'; c.fillRect(lx - 5, cy - h / 2, w + 10, h);
+    c.fillStyle = col; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(txt, lx, cy + 1);
+  }
+  function draw(t) {
+    if (!x) return;
+    const c = x, I = S.intro, compact = H < 300, tiny = H < 190;
+    c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1;
+    c.clearRect(0, 0, W, H);
+    const pad = Math.max(8, W * .03), hdr = fs * (compact ? 1.9 : 2.3);
+    const mono = (w, k) => `${w} ${Math.max(12, fs * k)}px ${MONO}`;
+    const glowP = clamp(Math.log(S.P / .5) / Math.log(60), 0, 1);
+    const hot = S.phase !== 'idle';
+
+    // header readouts
+    c.textBaseline = 'middle'; c.font = mono(700, compact ? 1 : 1.15); c.textAlign = 'left';
+    const blink = S.phase === 'done' ? (Math.sin(t * 9) > -.3 ? 1 : .45) : 1;
+    c.fillStyle = S.phase === 'done' ? `rgba(${A},${blink * I})` : `rgba(${G},${.95 * I})`;
+    c.shadowBlur = 0;
+    c.fillText(`PWR ${S.P.toFixed(S.P < 10 ? 2 : 1)} GW`, pad, hdr * .55);
+    c.fillStyle = `rgba(${G},${.95 * I})`;
+    c.textAlign = 'right'; c.fillText(`STEAM ${Math.round(S.v * 100)}%`, W - pad, hdr * .55);
+    // status lamp in the middle
+    if (W > 300) {
+      const lit = rodsFired ? (Math.sin(t * 12) > 0 ? 1 : .25) : 0, lx = W / 2, ly = hdr * .55;
+      const lbl = rodsFired ? 'AZ-5' : (S.hold || hot ? 'HEAT' : 'IDLE');
+      c.font = mono(700, .85); const lw = c.measureText(lbl).width;
+      const col = rodsFired ? `rgba(200,40,0,${.4 + .6 * lit})` : (S.hold || hot ? `rgba(${A},.95)` : `rgba(${G},.5)`);
+      c.fillStyle = col; c.shadowColor = col; c.shadowBlur = rodsFired ? 8 * lit : 0;
+      c.beginPath(); c.arc(lx - lw / 2 - fs * .55, ly, fs * .28, 0, 6.283); c.fill(); c.shadowBlur = 0;
+      c.textAlign = 'left'; c.fillText(lbl, lx - lw / 2, ly + 1);
+    }
+
+    // the scope
+    const py0 = hdr, py1 = compact ? py0 + Math.max(fs * 2.4, (H - hdr) * .3) : H * .35, ph = py1 - py0;
+    const sx0 = pad * .5, sw = W - pad;
+    c.save(); rr(c, sx0, py0, sw, ph, 8); c.clip();
+    const gs = sw / 10, off = (t * 40) % gs;
+    c.strokeStyle = `rgba(${G},${.1 * I})`; c.lineWidth = 1;
+    for (let gx = sx0 + gs - off; gx < W; gx += gs) { c.beginPath(); c.moveTo(gx, py0); c.lineTo(gx, py1); c.stroke(); }
+    for (let k = 1; k < 4; k++) { const gy = py0 + ph * k / 4; c.beginPath(); c.moveTo(0, gy); c.lineTo(W, gy); c.stroke(); }
+    const yOf = P => py1 - 6 - Math.log(P / .5) / Math.log(80) * (ph - 12);
+    const yN = yOf(3), y30 = yOf(30);
+    c.setLineDash([5, 5]); c.strokeStyle = `rgba(${G},${.5 * I})`;
+    c.beginPath(); c.moveTo(0, yN); c.lineTo(W, yN); c.stroke();
+    c.strokeStyle = `rgba(${A},${.75 * I})`; c.beginPath(); c.moveTo(0, y30); c.lineTo(W, y30); c.stroke(); c.setLineDash([]);
+    // the trace, with a soft fill under it
+    const n = Math.max(2, Math.floor(HN * I)), dx = sw / (HN - 1);
+    c.beginPath();
+    for (let i = HN - n; i < HN; i++) { const px = sx0 + i * dx, py = yOf(hist[i]); i === HN - n ? c.moveTo(px, py) : c.lineTo(px, py); }
+    c.save(); c.lineTo(sx0 + (HN - 1) * dx, py1); c.lineTo(sx0 + (HN - n) * dx, py1); c.closePath();
+    const fg0 = c.createLinearGradient(0, py0, 0, py1);
+    fg0.addColorStop(0, hot ? `rgba(${A},.32)` : `rgba(${G},.22)`); fg0.addColorStop(1, `rgba(${G},0)`);
+    c.fillStyle = fg0; c.fill(); c.restore();
+    c.beginPath();
+    for (let i = HN - n; i < HN; i++) { const px = sx0 + i * dx, py = yOf(hist[i]); i === HN - n ? c.moveTo(px, py) : c.lineTo(px, py); }
+    c.lineJoin = 'round'; c.strokeStyle = `rgba(${G},.12)`; c.lineWidth = 6; c.stroke();
+    c.strokeStyle = `rgba(${G},1)`; c.lineWidth = 1.8; c.stroke();
+    const hx = W - pad * .5, hy = yOf(hist[HN - 1]);
+    c.fillStyle = '#10100c'; c.beginPath(); c.arc(hx - 1, hy, 3, 0, 6.283); c.fill();
+    c.fillStyle = `rgba(${G},${.2 + .15 * Math.sin(t * 6)})`; c.beginPath(); c.arc(hx - 1, hy, 7, 0, 6.283); c.fill();
+    // scope labels, shown only when they have room
+    c.font = mono(600, .9);
+    if (ph > fs * 2.2) tag(c, '30 GW', W - pad - 8, y30 + fs * .85, `rgba(255,200,110,${.95 * I})`, 'right');
+    if (yN - y30 > fs * 2.8) tag(c, 'NOMINAL ×1', W - pad - 8, yN - fs * .85, `rgba(${L},${.95 * I})`, 'right');
+    if (ph > fs * 3.6 && py1 - yN > fs * .2) tag(c, `×${(S.P / 3).toFixed(1)} NOMINAL`, sx0 + 10, py1 - fs * .85, `rgba(${L},${.95 * I})`, 'left');
+    c.restore();
+
+    // the core
+    const cx0 = pad * .5, cy0 = py1 + Math.max(6, H * .025), cw = W - pad, ch = H - cy0 - pad * .5;
+    const X = nx => cx0 + nx * cw, Y = ny => cy0 + ny * ch;
+    c.save(); rr(c, cx0, cy0, cw, ch, 10); c.clip();
+    // heat from below, and the core warming as power climbs (a soft glow, fading before the edges)
+    const heatVis = S.phase === 'idle' ? (S.hold ? 1 : 0) : 1;
+    S.hv += (heatVis - S.hv) * .15;
+    const hr = Math.min(cw * .45, ch * .8), hgx = cx0 + cw / 2, hgy = cy0 + ch;
+    const hg = c.createRadialGradient(hgx, hgy, 0, hgx, hgy, hr);
+    hg.addColorStop(0, `rgba(230,90,0,${S.hv * .2 + glowP * .2})`); hg.addColorStop(1, 'rgba(230,90,0,0)');
+    c.fillStyle = hg; c.fillRect(hgx - hr, hgy - hr, hr * 2, hr * 2);
+    // fuel channels with pellets
+    FUEL.forEach(f => {
+      const fx = X(f), fw = Math.max(4, cw * .022);
+      const fg = c.createLinearGradient(fx - fw * 1.6, 0, fx + fw * 1.6, 0);
+      const fa = (.18 + .5 * glowP) * I;
+      fg.addColorStop(0, `rgba(${G},0)`); fg.addColorStop(.5, hot ? `rgba(${A},${fa})` : `rgba(${G},${fa})`); fg.addColorStop(1, `rgba(${G},0)`);
+      c.fillStyle = fg; c.fillRect(fx - fw * 1.6, Y(1 - I), fw * 3.2, ch * I);
+      c.fillStyle = `rgba(${G},${.6 * I})`; c.fillRect(fx - .75, Y(1 - I), 1.5, ch * I);
+      c.fillStyle = `rgba(${L},${.8 * I})`;
+      for (let py = Y(1 - I) + 6; py < cy0 + ch; py += Math.max(8, fs * .8)) c.fillRect(fx - 1.5, py, 3, 1);
+    });
+    // water and steam
+    const dr = Math.max(1.6, cw * .0055);
+    for (const d of dots) {
+      const a = clamp((I * 1.4 - (1 - d.ny)) * 3, 0, 1); if (!a) continue;
+      if (d.th >= S.v) { c.fillStyle = `rgba(0,85,120,${.75 * a})`; c.beginPath(); c.arc(X(d.nx), Y(d.ny), dr, 0, 6.283); c.fill(); }
+      else {
+        const k = (t * .55 + d.ph) % 1, by = Y(d.ny) - k * ch / ROWS * 1.6, br = dr * (1.4 + k * 1.6);
+        c.strokeStyle = `rgba(${G},${(.8 - k * .55) * a})`; c.lineWidth = 1.2;
+        c.beginPath(); c.arc(X(d.nx) + Math.sin(t * 3 + d.ph * 9) * 1.5, by, br, 0, 6.283); c.stroke();
+      }
+    }
+    // control rods, hatched, with a hot jammed tip
+    if (S.rod > .001) RODS.forEach(r => {
+      const rx = X(r), rw = Math.max(5, cw * .036), rh = S.rod * ch;
+      c.fillStyle = 'rgba(16,16,12,.85)'; c.fillRect(rx - rw / 2, cy0, rw, rh);
+      c.save(); c.beginPath(); c.rect(rx - rw / 2, cy0, rw, rh); c.clip();
+      c.strokeStyle = `rgba(${L},.35)`; c.lineWidth = 1;
+      for (let k = -rw; k < rh; k += 5) { c.beginPath(); c.moveTo(rx - rw / 2, cy0 + k); c.lineTo(rx + rw / 2, cy0 + k + rw); c.stroke(); }
+      c.restore();
+      c.strokeStyle = `rgba(${G},.9)`; c.lineWidth = 1.2; c.strokeRect(rx - rw / 2, cy0 - 2, rw, rh + 2);
+      const jam = S.rod > .32;
+      c.fillStyle = jam ? `rgba(255,120,30,${.8 + .2 * Math.sin(t * 10 + r * 20)})` : `rgba(${L},.95)`;
+      c.shadowColor = 'rgba(255,120,30,1)'; c.shadowBlur = jam ? 6 : 0;
+      c.fillRect(rx - rw / 2 - 1, cy0 + rh - 3, rw + 2, 3); c.shadowBlur = 0;
+    });
+    // neutrons
+    for (const nn of neut) {
+      const px = X(nn.x), py = Y(nn.y);
+      c.drawImage(sprite, px - 6, py - 6, 12, 12);
+      c.strokeStyle = `rgba(${G},.75)`; c.lineWidth = 1.2;
+      c.beginPath(); c.moveTo(px, py); c.lineTo(px - nn.vx * cw * .025, py - nn.vy * ch * .025); c.stroke();
+    }
+    for (const f of flashes) { c.strokeStyle = `rgba(0,85,120,${f.a * .8})`; c.lineWidth = 1; c.beginPath(); c.arc(X(f.x), Y(f.y), 2 + (1 - f.a) * 6, 0, 6.283); c.stroke(); }
+    for (const s of sparks) { c.fillStyle = `rgba(210,70,0,${s.a})`; c.fillRect(X(s.x) - 1, Y(s.y) - 1, 2.4, 2.4); }
+    // heat ripple under the finger
+    if (S.hold && S.hx >= 0) {
+      for (let k = 0; k < 3; k++) {
+        const p = (t * 1.2 + k / 3) % 1;
+        c.strokeStyle = `rgba(${A},${(1 - p) * .8})`; c.lineWidth = 2;
+        c.beginPath(); c.arc(S.hx, S.hy, 6 + p * Math.min(cw, ch) * .22, 0, 6.283); c.stroke();
+      }
+      const rg = c.createRadialGradient(S.hx, S.hy, 0, S.hx, S.hy, fs * 3);
+      rg.addColorStop(0, 'rgba(230,90,0,.3)'); rg.addColorStop(1, 'rgba(230,90,0,0)');
+      c.fillStyle = rg; c.fillRect(S.hx - fs * 3, S.hy - fs * 3, fs * 6, fs * 6);
+    }
+
+    // ticker log (fades out once the big number lands, hidden on short stages)
+    const tickA = clamp(1 - S.wow * 1.5, 0, 1) * I;
+    if (!compact && tickA > .01) {
+      c.font = mono(600, .9); c.textAlign = 'left'; c.textBaseline = 'top';
+      const shown = logs.slice(-2), lh = fs * 1.35;
+      if (shown.length) {
+        const tw = Math.max(...shown.map(l => c.measureText(l.s).width));
+        c.globalAlpha = tickA;
+        c.fillStyle = 'rgba(16,16,12,.88)'; c.fillRect(cx0 + 6, cy0 + 6, tw + 12, lh * shown.length + 6);
+        c.save(); c.beginPath(); c.rect(cx0 + 6, cy0 + 6, tw + 12, lh * shown.length + 6); c.clip();
+        shown.forEach((l, i) => { c.fillStyle = `rgba(${L},${l.a * (i === shown.length - 1 ? 1 : .6)})`; c.fillText(l.s, cx0 + 12, cy0 + 9 + i * lh + S.logY * lh); });
+        c.restore(); c.globalAlpha = 1;
+      }
+    }
+    // rods label, just under the jammed tips, between the middle rods
+    const rodLbl = rodsFired && S.rod > .3 && ch > fs * 8;
+    const rodY = Y(1 / 3) + fs * 1.05;
+    if (rodLbl) { c.font = mono(700, .95); tag(c, 'RODS JAMMED AT 1/3', X(.5), rodY, 'rgba(255,200,110,1)', 'center'); }
+    // hint
+    if (!S.touched && S.phase === 'idle' && I > .9) {
+      const k = (t * .8) % 1, hx2 = X(.5), hy2 = Y(.5);
+      c.strokeStyle = `rgba(${G},${1 - k})`; c.lineWidth = 2; c.beginPath(); c.arc(hx2, hy2, 8 + k * 26, 0, 6.283); c.stroke();
+      c.strokeStyle = `rgba(${G},.6)`; c.lineWidth = 1.5; c.beginPath(); c.arc(hx2, hy2, 22, 0, 6.283); c.stroke();
+      c.fillStyle = `rgba(${G},1)`; c.beginPath(); c.arc(hx2, hy2, 6, 0, 6.283); c.fill();
+      c.font = mono(700, 1);
+      const ly = Math.min(hy2 + 36 + fs * .7, cy0 + ch - fs);
+      tag(c, 'HOLD TO HEAT', hx2, ly, `rgba(${L},1)`, 'center');
+    }
+    // the wow, fitted into the space under the rods
+    if (S.wow > .01) {
+      let top = rodLbl ? rodY + fs * .9 : Y(1 / 3) + 4, bot = cy0 + ch - 4;
+      if (bot - top < fs * 1.6) { top = cy0 + 4; }
+      const rh = bot - top, cyW = top + rh / 2;
+      const num = S.wow < .9 ? String(10 + ((Math.random() * 89) | 0)) : '30';
+      const big = `${num} GW`, sub = '10 × NOMINAL';
+      c.save(); c.translate(X(.5), cyW); c.scale(S.ws, S.ws); c.globalAlpha = clamp(S.wow, 0, 1);
+      c.textBaseline = 'middle'; c.textAlign = 'left';
+      const subF = Math.max(12, fs * (tiny ? .9 : 1.05));
+      if (rh > fs * 4.6) {                                        // stacked
+        const bigF = Math.max(16, Math.min(fs * 3.3, rh * .42, cw * .11));
+        c.font = `800 ${bigF}px ${MONO}`; const bw = c.measureText(big).width;
+        c.font = `700 ${subF}px ${MONO}`; const sw2 = c.measureText(sub).width;
+        const bh = bigF * 1.1 + subF * 1.5 + 14, bwid = Math.max(bw, sw2) + 28;
+        c.fillStyle = 'rgba(16,16,12,.92)'; rr(c, -bwid / 2, -bh / 2, bwid, bh, 6); c.fill();
+        c.strokeStyle = 'rgba(255,190,90,.5)'; c.lineWidth = 1; c.stroke();
+        c.textAlign = 'center';
+        c.font = `800 ${bigF}px ${MONO}`; c.shadowColor = 'rgba(255,190,90,1)'; c.shadowBlur = 18; c.fillStyle = '#ffe2a8';
+        c.fillText(big, 0, -bh / 2 + 7 + bigF * .58);
+        c.shadowBlur = 0; c.font = `700 ${subF}px ${MONO}`; c.fillStyle = `rgba(${L},1)`;
+        c.fillText(sub, 0, bh / 2 - 7 - subF * .7);
+      } else {                                                    // one line
+        const bigF = Math.max(14, Math.min(fs * 2.4, rh * .75));
+        c.font = `800 ${bigF}px ${MONO}`; const bw = c.measureText(big).width;
+        c.font = `700 ${subF}px ${MONO}`; const sw2 = c.measureText(sub).width;
+        const gap = fs * .8, tot = bw + gap + sw2, bh = Math.max(bigF, subF) * 1.25;
+        c.fillStyle = 'rgba(16,16,12,.92)'; rr(c, -tot / 2 - 10, -bh / 2, tot + 20, bh, 5); c.fill();
+        c.strokeStyle = 'rgba(255,190,90,.5)'; c.lineWidth = 1; c.stroke();
+        c.font = `800 ${bigF}px ${MONO}`; c.shadowColor = 'rgba(255,190,90,1)'; c.shadowBlur = 14; c.fillStyle = '#ffe2a8';
+        c.fillText(big, -tot / 2, 1);
+        c.shadowBlur = 0; c.font = `700 ${subF}px ${MONO}`; c.fillStyle = `rgba(${L},1)`;
+        c.fillText(sub, -tot / 2 + bw + gap, 1);
+      }
+      c.restore();
+    }
+    c.restore();
+
+    // soft scan band, flash
+    const sy = (t * 60) % (H + 80) - 40, sg = c.createLinearGradient(0, sy - 40, 0, sy + 40);
+    sg.addColorStop(0, `rgba(${G},0)`); sg.addColorStop(.5, `rgba(${G},.04)`); sg.addColorStop(1, `rgba(${G},0)`);
+    c.fillStyle = sg; c.fillRect(0, sy - 40, W, 80);
+    if (S.fl > .01) { c.fillStyle = `rgba(230,255,235,${S.fl * .9})`; c.fillRect(0, 0, W, H); }
+  }
+
+  let last = 0;
+  function loop(ms) {
+    const dt = Math.min(.05, last ? (ms - last) / 1000 : .016); last = ms;
+    step(dt); draw(ms / 1000);
+    requestAnimationFrame(loop);
+  }
+
+  // ---------- touch ----------
+  function aim(e) {
+    const b = cv.getBoundingClientRect();
+    if (!e.clientX && !e.clientY) { S.hx = W / 2; S.hy = H * .7; return; }
+    S.hx = clamp(e.clientX - b.left, 0, W); S.hy = clamp(e.clientY - b.top, 0, H);
+  }
+  cv.addEventListener('pointerdown', e => {
+    if (S.phase !== 'idle') return;
+    if (!S.touched) addLog('> HEATING · WATER → STEAM');
+    S.hold = true; S.touched = true; aim(e); Kit.haptic('light');
+    try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  cv.addEventListener('pointermove', e => { if (S.hold) aim(e); });
+  const up = () => { S.hold = false; };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  Kit.onShow.card = () => {
+    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, W / 26));
+    MONO = getComputedStyle(cv).getPropertyValue('--mono').trim() || 'monospace';
+    if (!sprite) {
+      sprite = document.createElement('canvas'); sprite.width = sprite.height = 24;
+      const s = sprite.getContext('2d'), g = s.createRadialGradient(12, 12, 0, 12, 12, 12);
+      g.addColorStop(0, `rgba(${G},.85)`); g.addColorStop(.3, `rgba(${G},.3)`); g.addColorStop(1, `rgba(${G},0)`);
+      s.fillStyle = g; s.fillRect(0, 0, 24, 24);
+    }
+    if (!loopOn) { loopOn = true; requestAnimationFrame(loop); } else draw(performance.now() / 1000);
+  };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) { S.intro = 1; return; }
+    gsap.fromTo(S, {intro: 0}, {intro: 1, duration: 1.6, ease: 'expo.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    cv.dispatchEvent(new PointerEvent('pointerdown', {pointerId: 1, bubbles: true}));
+    for (let i = 0; i < 30 && S.phase === 'idle'; i++) await wait(100);
+    if (S.phase === 'idle') { S.P = 3.3; await wait(100); }
+    if (S.phase === 'idle') runaway();
+    for (let i = 0; i < 30 && S.phase !== 'done'; i++) await wait(100);
+    if (S.phase !== 'done') finish();
+    cv.dispatchEvent(new PointerEvent('pointerup', {pointerId: 1, bubbles: true}));
+    await wait(Kit.calm ? 100 : 1400);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "technology-micromouse-fan-grip",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was Micromouse's second “Fosbury flop”, the trick for faster turns?",
+  "answer": "Micromouse's second Fosbury flop was a fan under the robot that glues it to the floor. Pressed down, the tyres grip, so it takes corners flat out without slipping.",
+  "move": "To turn faster without slipping, press the tyres harder onto the floor.",
+  "keywords": [
+    "micromouse",
+    "robot mouse",
+    "fosbury flop",
+    "propeller",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A robot mouse on a floor, asking what Micromouse's second Fosbury flop was: the trick for faster turns. A Go button starts it, and you watch its tyres with the fan off and on."
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=1144s",
+  "written": "2026-11-03"
+}

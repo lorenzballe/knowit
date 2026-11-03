@@ -30,7 +30,7 @@
     "kit": 1,
     "touch": "drags",
     "label": "A screen lit by light from two narrow slits. Drag along the screen to see where the light lands. The question asks what pattern appears: one bright middle, or two separate lines.",
-    "ground": "#080a11"
+    "ground": "#000000"
   },
   "source": "Veritasium, “The Original Double Slit Experiment” (YouTube, 2013)",
   "reference": "https://www.youtube.com/watch?v=Iuv6hY6zsd0",

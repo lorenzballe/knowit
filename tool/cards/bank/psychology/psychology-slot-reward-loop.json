@@ -1,0 +1,39 @@
+{
+  "id": "psychology-slot-reward-loop",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.rewards",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why do flashing lights and frequent small wins keep players playing?",
+  "answer": "Flashing lights and frequent small wins train your brain to keep playing. The odds still always lose. Each spin costs one coin from your pocket.",
+  "move": "Frequent small wins train your brain; the odds still always lose.",
+  "keywords": [
+    "slot machine",
+    "player",
+    "coin",
+    "flashing lights",
+    "reward"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slot machine screen with a spin button. The heading asks why flashing lights and frequent small wins keep players playing. Tap the machine to spin; each spin costs one coin from your pocket.",
+    "graded": false,
+    "ground": "#1b1423"
+  },
+  "source": "Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=5x3OF3zIuAc",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,241 @@
+<!doctype html>
+<!-- slug: history-three-deadly-inventions -->
+<!-- Look: a risograph print on warm paper. Two inks, fluorescent pink and teal, overprint with multiply, halftone dots, and plates a hair out of register.
+     Interaction: tap each of one man's three inventions to sort it into HARMED MILLIONS or KILLED ONLY HIM. Every move is a Flip glide, and the ink plates jolt and resettle.
+     Wow: on the reveal, wrong tiles shudder. Everything Flips into the true grouping, the tray collapses, tiles turn into labelled prints, and a pink halftone flood blooms behind the millions while a small teal one settles under him. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Three inventions, millions of deaths</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#world{--pk:#ff3d9a;--tl:#0a8f96;--paper:#f4eee2;--ink:#1d2440;position:relative;flex:1;min-height:0;overflow:hidden;display:grid;grid-template-rows:1fr .9fr 1fr;grid-template-columns:minmax(0,1fr);padding:1.2cqh 3cqw 1.4cqh;gap:.9cqh}
+#world.done{grid-template-rows:1.35fr 1fr;gap:.7cqh;padding:1cqh 3cqw 1.1cqh}
+#world.done #tray{display:none}
+#bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.zone{position:relative;display:flex;flex-direction:column;min-height:0;min-width:0;z-index:1}
+.zh{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:2cqw;row-gap:0;font:800 max(2cqh,13px)/1.15 var(--display);letter-spacing:.07em;margin:0 2.6cqw .5cqh 2.6cqw}
+.zh .zt{white-space:nowrap}
+.zh small{font:600 max(1.4cqh,12px)/1.15 var(--mono);letter-spacing:0;opacity:.85;white-space:nowrap}
+.done .zh small{display:none}
+.done .zh{margin-bottom:.35cqh}
+#mil .zh{color:#a0004f;text-shadow:.18cqh .14cqh 0 rgba(10,143,150,.45)}
+#him .zh{color:#04464b;text-shadow:.18cqh .14cqh 0 rgba(255,61,154,.5)}
+#tray .zh{color:var(--k);opacity:.8}
+.zb{flex:1;min-height:0;display:flex;gap:2.4cqw;justify-content:center;align-items:stretch;padding:.6cqh 1.5cqw;border-radius:1.6cqh;border:.25cqh dashed rgba(16,16,12,.38)}
+#mil .zb{border-color:rgba(160,0,79,.65)}
+#him .zb{border-color:rgba(4,70,75,.7)}
+#tray .zb{border-style:dotted}
+.done .zb{padding:.4cqh 1.2cqw;gap:2cqw}
+.tile{flex:0 1 31%;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3cqh;border:0;background:#fffaf0;border-radius:1.4cqh;padding:.6cqh 1.2cqw;cursor:pointer;color:var(--ink);box-shadow:.5cqh .5cqh 0 rgba(255,61,154,.55),inset 0 0 0 .22cqh rgba(10,143,150,.55);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.tile svg{flex:1;min-height:0;width:100%;overflow:visible}
+.tile .tx{display:flex;flex-direction:column;align-items:center;gap:.2cqh;min-width:0;max-width:100%}
+.tile .nm{font:700 max(1.55cqh,12px)/1.15 var(--mono);text-align:center;overflow-wrap:break-word}
+.tile .hm{display:none;font:700 max(1.45cqh,12px)/1.18 var(--body);text-align:left;color:#c8106f}
+.done .tile{flex:1 1 0;flex-direction:row;justify-content:flex-start;gap:1.8cqw;padding:.35cqh 2cqw}
+.done #him .tile{flex:0 1 76%}
+.done .tile svg{flex:0 0 auto;width:max(26px,4.8cqh);height:auto;align-self:center}
+.done .tile .tx{align-items:flex-start;flex:1}
+.done .tile .nm{text-align:left}
+.done .tile .hm{display:block}
+.done #him .tile .hm{color:#07767c}
+.done #him .tile{box-shadow:.5cqh .5cqh 0 rgba(10,143,150,.5),inset 0 0 0 .22cqh rgba(255,61,154,.5)}
+.pP{mix-blend-mode:multiply}
+.locked .tile{cursor:default}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Sort into two groups · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SORT THEM</span></div>
+    <h2 class="q">One man's three inventions turned deadly. Which harmed millions, and which only him?</h2>
+    <div class="stagebox" id="stage">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+        <pattern id="htT" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#0a8f96" opacity=".55"/></pattern>
+        <pattern id="htP" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="3.5" cy="3.5" r="1.5" fill="#ff3d9a"/></pattern>
+        <pattern id="htT2" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)"><circle cx="4" cy="4" r="1.7" fill="#0a8f96"/></pattern>
+      </defs></svg>
+      <div id="world" role="group" aria-label="Three inventions to sort: leaded gas, Freon, a pulley bed lift">
+        <svg id="bg" aria-hidden="true"></svg>
+        <div class="zone" id="mil"><div class="zh"><span class="zt">HARMED MILLIONS</span><small>the whole world</small></div><div class="zb" id="milB"></div></div>
+        <div class="zone" id="tray"><div class="zh" id="trayH"><span class="zt">UNSORTED</span><small>tap one</small></div><div class="zb" id="trayB">
+          <button class="tile" data-k="lead"><svg viewBox="0 0 100 100" aria-hidden="true">
+            <g class="tP"><rect x="20" y="16" width="40" height="68" rx="5" fill="url(#htT)" stroke="#0a8f96" stroke-width="4"/><rect x="14" y="84" width="52" height="8" rx="2" fill="#0a8f96"/><rect x="27" y="23" width="26" height="18" rx="3" fill="#fffaf0" stroke="#0a8f96" stroke-width="3"/></g>
+            <g class="pP"><text x="40" y="37" text-anchor="middle" fill="#ff3d9a" style="font:800 13px var(--mono)">Pb</text><path d="M60 32h6c10 0 12 8 12 18v24c0 6-8 6-8 0" fill="none" stroke="#ff3d9a" stroke-width="4" stroke-linecap="round"/><rect x="65" y="20" width="15" height="10" rx="2" fill="#ff3d9a"/><path d="M40 52c-5 7-7 10-7 13a7 7 0 0 0 14 0c0-3-2-6-7-13z" fill="#ff3d9a"/></g>
+          </svg><span class="tx"><span class="nm">Leaded gas</span><span class="hm">Lead in the air: lower IQ, more crime</span></span></button>
+          <button class="tile" data-k="freon"><svg viewBox="0 0 100 100" aria-hidden="true">
+            <g class="tP"><rect x="26" y="8" width="48" height="82" rx="7" fill="url(#htT)" stroke="#0a8f96" stroke-width="4"/><line x1="26" y1="36" x2="74" y2="36" stroke="#0a8f96" stroke-width="4"/><rect x="30" y="90" width="8" height="5" fill="#0a8f96"/><rect x="62" y="90" width="8" height="5" fill="#0a8f96"/></g>
+            <g class="pP"><text x="46" y="27" text-anchor="middle" fill="#ff3d9a" style="font:800 12px var(--mono)">CFC</text><rect x="63" y="15" width="4.5" height="15" rx="2" fill="#ff3d9a"/><rect x="63" y="43" width="4.5" height="22" rx="2" fill="#ff3d9a"/><g stroke="#ff3d9a" stroke-width="3.5" stroke-linecap="round"><line x1="45" y1="50" x2="45" y2="76"/><line x1="34" y1="56" x2="56" y2="70"/><line x1="34" y1="70" x2="56" y2="56"/></g></g>
+          </svg><span class="tx"><span class="nm">Freon</span><span class="hm">Tore a hole in the ozone layer</span></span></button>
+          <button class="tile" data-k="lift"><svg viewBox="0 0 100 100" aria-hidden="true">
+            <g class="tP"><rect x="8" y="6" width="84" height="8" rx="2" fill="#0a8f96"/><line x1="62" y1="14" x2="62" y2="20" stroke="#0a8f96" stroke-width="4"/><circle cx="62" cy="28" r="9" fill="url(#htT)" stroke="#0a8f96" stroke-width="4"/><rect x="16" y="64" width="22" height="16" rx="3" fill="url(#htT)" stroke="#0a8f96" stroke-width="4"/><line x1="20" y1="80" x2="17" y2="94" stroke="#0a8f96" stroke-width="4"/><line x1="34" y1="80" x2="37" y2="94" stroke="#0a8f96" stroke-width="4"/><rect x="46" y="82" width="48" height="7" rx="2" fill="#0a8f96"/><line x1="50" y1="89" x2="50" y2="96" stroke="#0a8f96" stroke-width="4"/><line x1="90" y1="89" x2="90" y2="96" stroke="#0a8f96" stroke-width="4"/></g>
+            <g class="pP"><path d="M27 64 53 28a9 9 0 0 1 18 0v34" fill="none" stroke="#ff3d9a" stroke-width="3.5" stroke-linejoin="round"/><ellipse cx="71" cy="68" rx="8" ry="6" fill="none" stroke="#ff3d9a" stroke-width="3.5"/><line x1="27" y1="72" x2="11" y2="84" stroke="#ff3d9a" stroke-width="4" stroke-linecap="round"/><circle cx="11" cy="84" r="4" fill="#ff3d9a"/></g>
+          </svg><span class="tx"><span class="nm">Pulley bed lift</span><span class="hm">Tangled and strangled him</span></span></button>
+        </div></div>
+        <div class="zone" id="him"><div class="zh"><span class="zt">KILLED ONLY HIM</span><small>its inventor</small></div><div class="zb" id="himB"></div></div>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap an invention to sort it. <b>Tap again to switch sides.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A clever fix can work perfectly and still harm the whole world for decades.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(Flip);
+  const PK = '#ff3d9a', TL = '#0a8f96';
+  const world = Kit.$('world'), bg = Kit.$('bg'), say = Kit.$('say');
+  const tiles = [...world.querySelectorAll('.tile')];
+  const T = k => tiles.find(t => t.dataset.k === k);
+  const NAME = {lead: 'Leaded gas', freon: 'Freon', lift: 'Pulley bed lift'};
+  const TRUE = {lead: 'mil', freon: 'mil', lift: 'him'};
+  const place = {lead: 'tray', freon: 'tray', lift: 'tray'};
+  let locked = false, asked = false, flip = null, done = false, W = 0, H = 0, blooming = false;
+  const REST = {x: 2.2, y: -1.6};
+  tiles.forEach(t => gsap.set(t.querySelector('.pP'), REST));
+
+  // A radial gradient (user space) used as paint or as a mask, so no shape ever leaves the print.
+  function grad(defs, id, cx, cy, r, stops) {
+    const g = Kit.mk('radialGradient', {id, gradientUnits: 'userSpaceOnUse', cx, cy, r}, defs);
+    stops.forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, g));
+    return g;
+  }
+  function inkBlob(defs, id, cx, cy, r, fill, op, soft) {
+    grad(defs, 'g' + id, cx, cy, r, [[0, '#fff', 1], [soft ? .55 : .97, '#fff', 1], [1, '#fff', 0]]);
+    const m = Kit.mk('mask', {id: 'm' + id, maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+    Kit.mk('rect', {width: W, height: H, fill: `url(#g${id})`}, m);
+    Kit.mk('rect', {width: W, height: H, fill, opacity: op, mask: `url(#m${id})`, style: 'mix-blend-mode:multiply'}, bg);
+  }
+
+  // The print behind the tiles: ink discs, halftone, registration marks, the floods.
+  function drawBg() {
+    bg.innerHTML = '';
+    const f = Kit.fitSvg(bg); W = f.W; H = f.H;
+    const wr = world.getBoundingClientRect();
+    const rel = id => { const r = Kit.$(id + 'B').getBoundingClientRect(); return {x: r.left - wr.left, y: r.top - wr.top, w: r.width, h: r.height}; };
+    const m = rel('mil'), h = rel('him'), R = Math.min(W, H);
+    const defs = Kit.mk('defs', {}, bg);
+    inkBlob(defs, 'a', W * .9, m.y + m.h * .2, R * .34, 'url(#htP)', .5, true);
+    inkBlob(defs, 'b', W * .87, m.y + m.h * .18, R * .2, PK, .15, false);
+    inkBlob(defs, 'c', W * .08, h.y + h.h * .85, R * .36, 'url(#htT2)', .42, true);
+    inkBlob(defs, 'd', W * .12, h.y + h.h * .8, R * .21, TL, .13, false);
+
+    const fr = Math.hypot(m.w, m.h) * .56, hr = Math.hypot(h.w, h.h) * .5;
+    const fl = [
+      grad(defs, 'fP', m.x + m.w / 2, m.y + m.h / 2, done ? fr : 0, [[0, PK, .34], [.8, PK, .22], [1, PK, 0]]),
+      grad(defs, 'fPw', m.x + m.w / 2, m.y + m.h / 2, done ? fr : 0, [[0, '#fff', 1], [.75, '#fff', .6], [1, '#fff', 0]])
+    ];
+    const ht = [
+      grad(defs, 'fT', h.x + h.w / 2, h.y + h.h / 2, done ? hr : 0, [[0, TL, .22], [.8, TL, .14], [1, TL, 0]])
+    ];
+    const mk = Kit.mk('mask', {id: 'mF', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+    Kit.mk('rect', {width: W, height: H, fill: 'url(#fPw)'}, mk);
+    Kit.mk('rect', {x: m.x, y: m.y, width: m.w, height: m.h, rx: 10, fill: 'url(#fP)', style: 'mix-blend-mode:multiply'}, bg);
+    Kit.mk('rect', {x: m.x, y: m.y, width: m.w, height: m.h, rx: 10, fill: 'url(#htP)', opacity: .5, mask: 'url(#mF)', style: 'mix-blend-mode:multiply'}, bg);
+    Kit.mk('rect', {x: h.x, y: h.y, width: h.w, height: h.h, rx: 10, fill: 'url(#fT)', style: 'mix-blend-mode:multiply'}, bg);
+
+    const reg = (x, y, c) => { const g = Kit.mk('g', {transform: `translate(${x},${y})`, stroke: c, 'stroke-width': 1.2, fill: 'none', opacity: .75}, bg); Kit.mk('circle', {r: 3}, g); Kit.mk('path', {d: 'M-6 0H6M0-6V6'}, g); };
+    [[8, 8], [W - 10, 8]].forEach(([x, y]) => { reg(x, y, TL); reg(x + 1.4, y + 1, PK); });
+    return {fl, fr, ht, hr};
+  }
+
+  function bloom() {
+    const b = drawBg();
+    if (Kit.calm) return;
+    blooming = true;
+    gsap.fromTo(b.fl, {attr: {r: 0}}, {attr: {r: b.fr}, duration: 1.2, ease: 'expo.out'});
+    gsap.fromTo(b.ht, {attr: {r: 0}}, {attr: {r: b.hr}, duration: .9, delay: .35, ease: 'power3.out', onComplete: () => { blooming = false; }});
+  }
+
+  function move(tile, zone) {
+    if (flip) flip.progress(1);
+    gsap.killTweensOf(tile); gsap.set(tile, {scale: 1});
+    const state = Flip.getState(tiles);
+    Kit.$(zone + 'B').appendChild(tile);
+    if (Kit.calm) return;
+    flip = Flip.from(state, {duration: .6, ease: 'power3.inOut', absolute: true});
+    gsap.fromTo(tile.querySelector('.pP'), {x: 8, y: -6}, {x: REST.x, y: REST.y, duration: .9, ease: 'elastic.out(1,.45)', delay: .25});
+  }
+
+  tiles.forEach(t => {
+    t.addEventListener('pointerdown', () => { if (!locked && !Kit.calm) gsap.to(t, {scale: .93, duration: .08, ease: 'power2.out'}); });
+    const up = () => { if (!Kit.calm && !locked) gsap.to(t, {scale: 1, duration: .35, ease: 'back.out(3)'}); };
+    t.addEventListener('pointerleave', up); t.addEventListener('pointercancel', up);
+    t.addEventListener('click', () => {
+      if (locked) return;
+      const k = t.dataset.k, nxt = place[k] === 'mil' ? 'him' : 'mil';
+      place[k] = nxt; Kit.haptic('selection'); move(t, nxt);
+      if (!Object.values(place).includes('tray') && !asked) {
+        asked = true; sure.on();
+        Kit.$('trayH').innerHTML = '<span class="zt">ALL SORTED</span><small>switch any you like</small>';
+        say.innerHTML = 'Happy with your sort? <b>Say how sure you are.</b>';
+      }
+    });
+  });
+
+  function reveal() {
+    locked = true; world.classList.add('locked');
+    const wrong = tiles.filter(t => place[t.dataset.k] !== TRUE[t.dataset.k]);
+    const go = () => {
+      if (flip) flip.progress(1);
+      gsap.set(tiles, {scale: 1, x: 0});
+      const state = Flip.getState(['#mil', '#him', ...tiles]);
+      world.classList.add('done'); done = true;
+      ['lead', 'freon'].forEach(k => Kit.$('milB').appendChild(T(k)));
+      Kit.$('himB').appendChild(T('lift'));
+      if (Kit.calm) { drawBg(); return; }
+      Flip.from(state, {duration: .95, ease: 'back.inOut(1.3)', absolute: tiles, nested: true, stagger: .06,
+        onComplete: () => {
+          bloom();
+          gsap.from('#mil .zh', {scale: 1.3, transformOrigin: 'left center', duration: .7, ease: 'back.out(2.2)'});
+          gsap.from('.hm', {opacity: 0, y: 6, stagger: .12, duration: .5, ease: 'power3.out'});
+          tiles.forEach((t, i) => gsap.fromTo(t.querySelector('.pP'), {x: -9, y: 7}, {x: REST.x, y: REST.y, duration: 1.2, delay: i * .1, ease: 'elastic.out(1.1,.35)'}));
+          Kit.haptic('success');
+        }});
+    };
+    if (Kit.calm || !wrong.length) return go();
+    gsap.to(wrong, {x: '+=6', duration: .05, repeat: 7, yoyo: true, ease: 'sine.inOut', onComplete: () => { gsap.set(wrong, {x: 0}); go(); }});
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = Object.keys(TRUE).every(k => place[k] === TRUE[k]);
+    const list = z => Object.keys(place).filter(k => place[k] === z).map(k => NAME[k]).join(', ') || 'none';
+    const said = `Millions: ${list('mil')} · Only him: ${list('him')}`;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    // The tiles now carry the story; the stage gets the room the prose used to take.
+    say.innerHTML = ''; say.style.display = 'none';
+    sure.grade(ok, pct, ok ? 'All three sorted right' : 'Not quite: see the true sort');
+    Kit.show('keep');
+    reveal();
+  });
+
+  let lastW = 0, lastH = 0, raf = 0;
+  new ResizeObserver(() => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const r = world.getBoundingClientRect();
+      if (blooming || (Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 1)) return;
+      lastW = r.width; lastH = r.height; drawBg();
+    });
+  }).observe(world);
+
+  Kit.onShow.card = () => { drawBg(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('.zh', {x: -18, opacity: 0, stagger: .08, duration: .6, ease: 'power3.out'});
+    gsap.from(tiles, {y: -40, opacity: 0, rotation: i => [-7, 5, -4][i], stagger: .1, duration: .8, ease: 'back.out(1.7)', delay: .15});
+    tiles.forEach((t, i) => gsap.fromTo(t.querySelector('.pP'), {x: 12, y: -9}, {x: REST.x, y: REST.y, duration: 1.3, delay: .35 + i * .1, ease: 'elastic.out(1,.4)'}));
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (const k of ['lead', 'freon', 'lift', 'lift']) { T(k).click(); await wait(Kit.calm ? 40 : 120); }
+    await wait(Kit.calm ? 60 : 700);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 200 : 2600);
+  };
+})();
+Kit.single();
+</script>
+</html>

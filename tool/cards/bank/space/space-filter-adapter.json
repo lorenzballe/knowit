@@ -1,0 +1,38 @@
+{
+  "id": "space-filter-adapter",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Apollo 13 fit square CO2 filters into round LEM slots?",
+  "answer": "CO2 was building up in the LEM, and its own filters could not clean the air for three people over four days. The spare filters from the third stage did not fit the slots, so Mission Control improvised an adapter from materials the crew had on board.",
+  "move": "When the spare won't fit, build the joint in between, from what you have.",
+  "keywords": [
+    "apollo-13",
+    "lem",
+    "co2-filters",
+    "mission-control",
+    "adapter"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider that turns a square adapter end into a round one. The question asks how Apollo 13 fit square CO2 filters into round LEM slots, with the answer about an improvised adapter.",
+    "ground": "#16349e"
+  },
+  "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=TSsregL8H2o&t=438s",
+  "written": "2026-11-03"
+}

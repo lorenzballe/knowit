@@ -1,0 +1,39 @@
+{
+  "id": "science-teflon-vs-pfoa",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Teflon pans are safe. The chemicals used to make them aren't. Why?",
+  "answer": "Teflon chains are tens of thousands of atoms long, too big to absorb, so they're flushed out. PFOA is only 5 to 10 carbons long: it slips into the blood, and its acid end grabs proteins that carry it anywhere. Size decides which one gets in.",
+  "move": "Not the material but the size: giant chains pass through, small ones get in.",
+  "keywords": [
+    "teflon",
+    "pfoa",
+    "cookware",
+    "bloodstream",
+    "proteins"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Shows a Teflon pan coating as a very long chain of tens of thousands of atoms, and PFOA as a short molecule of 5 to 10 carbons. Asks which one can get into your blood, then how sure you are.",
+    "graded": false,
+    "ground": "#070a14"
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=2024s",
+  "written": "2026-11-03"
+}

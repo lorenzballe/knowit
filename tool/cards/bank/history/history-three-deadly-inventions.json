@@ -1,0 +1,37 @@
+{
+  "id": "history-three-deadly-inventions",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "One man's three inventions turned deadly. Which harmed millions, and which only him?",
+  "answer": "Leaded gas harmed the whole world by putting lead in the air, lowering IQ and raising crime. CFC Freon tore a hole in the ozone layer. The pulley bed lift tangled and strangled its inventor, killing only him.",
+  "move": "A clever fix can work perfectly and still harm the whole world for decades.",
+  "keywords": [
+    "leaded gas",
+    "cfc freon",
+    "pulley bed lift",
+    "ozone layer"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A sorting game titled 'Three inventions, millions of deaths'. Three inventions (leaded gas, CFC Freon, and a pulley bed lift) must be sorted into two sides: harmed millions (the whole world) or killed only him (its inventor). Tap a card to sort it.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA",
+  "written": "2026-11-03"
+}

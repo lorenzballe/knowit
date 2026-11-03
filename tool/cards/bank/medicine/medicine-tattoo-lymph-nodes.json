@@ -1,0 +1,38 @@
+{
+  "id": "medicine-tattoo-lymph-nodes",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.side_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a tattoo cause long-term inflammation in nearby lymph nodes?",
+  "answer": "A study by the Institute for Research in Biomedicine in Bellinzona found that tattooed people generally have long-term inflammation in the lymph nodes near the tattoo. The card notes that good data on tattoos is still scarce, so treat this as an early signal rather than the final answer.",
+  "move": "A tattoo isn't only skin-deep: nearby lymph nodes can stay inflamed long-term.",
+  "keywords": [
+    "tattoos",
+    "lymph_nodes",
+    "inflammation",
+    "armpit",
+    "bellinzona"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline with a draggable slider, from the day of getting a tattoo to long after. As the slider moves, it shows the lymph nodes near the tattoo, especially the armpit nodes, and asks whether they stay inflamed over time.",
+    "ground": "#123f73"
+  },
+  "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=1166s",
+  "written": "2026-11-03"
+}

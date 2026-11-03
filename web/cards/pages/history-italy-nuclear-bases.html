@@ -1,0 +1,452 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-italy-nuclear-bases -->
+<!-- Look: a mid-century textbook plate printed straight on the card, in ink, ochre, teal and red, with halftone dots and hatched land. Fig. 1 maps Italy and its two bases, with a U.S.A. crate across the ocean. Fig. 2 cuts through a hangar to show the vault in its floor. When the stage is short, the plate drops to the map alone.
+     Interaction: one heavy lever switches between keeping the bombs "in the U.S.A." and "forward, in Italy". The bombs fly on real gravity arcs (Physics2D) from the crate to Aviano and Ghedi, or back again. A route marches slowly from the U.S.A. to the Soviet bloc; from Italy, short red routes race there. Below, the vault lift lowers a bomb and the lid closes.
+     Wow: as the bombs land, red rings pulse from both bases, the vault lid slams shut, and an inked NUCLEAR SHARING stamp hits the plate with a shudder and a spray of ink. -->
+<title>The bombs under Italy</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+.lever{position:relative;display:flex;width:100%;flex:none;border:0;border-radius:999px;background:#1d2624;padding:.55cqh;cursor:pointer;box-shadow:inset 0 .3cqh .7cqh rgba(0,0,0,.55),0 .25cqh 0 rgba(0,0,0,.18);-webkit-tap-highlight-color:transparent}
+.lever i{position:absolute;top:.55cqh;bottom:.55cqh;left:.55cqh;width:calc(50% - .55cqh);border-radius:999px;background:radial-gradient(circle at 30% 25%,#f3d896,#c4902f 62%,#946617);box-shadow:0 .3cqh .7cqh rgba(0,0,0,.45),inset 0 -.35cqh 0 rgba(0,0,0,.2)}
+.lever .o{position:relative;flex:1;font:700 max(1.85cqh,12px)/1.15 var(--body);color:#f1e7cd;padding:1.15cqh 2cqw;text-align:center;transition:color .25s;overflow-wrap:anywhere}
+.lever .o.sel{color:#1d2624}
+.card.answered .lever .o{padding:.8cqh 2cqw}
+.say,.keep{overflow-wrap:anywhere}
+.lb{font-family:var(--body);font-weight:700}
+.mn{font-family:var(--mono);font-weight:700;letter-spacing:.06em}
+.w8{font-weight:800}
+.w6{font-weight:600}
+.halo{paint-order:stroke;stroke:#FFB000;stroke-width:3.5px;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Flip the switch · forward bases">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COLD WAR</span></div>
+    <h2 class="q">Which Italian bases hold nuclear bombs, and why keep them there?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Plate: a map of Italy with the bases of Aviano and Ghedi, a crate of bombs in the U.S.A., routes to the Soviet bloc, and a cut through a hangar with a vault in its floor."></svg>
+      <button class="lever" id="sw" role="switch" aria-checked="false"><i id="knob"></i><span class="o sel" id="o0">Kept in the U.S.A.</span><span class="o" id="o1">Forward, in Italy</span></button>
+    </div>
+    <p class="say" id="say">Flip the switch: keep NATO's bombs in America, or <b>forward, in Italy</b>.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Near the Soviet bloc, they let NATO react fast. They stay under nuclear sharing.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché ci sono così tante basi USA e NATO in Italia? Ecco dove si trovano i 12.000 soldati americani” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), sw = Kit.$('sw'), knob = Kit.$('knob'), card = Kit.$('card');
+  const hasP = typeof Physics2DPlugin !== 'undefined';
+  if (hasP) gsap.registerPlugin(Physics2DPlugin);
+  const C = {paper:'#f6e7bd', paper2:'#f6e7bd', ink:'#10100c', teal:'#2c6862', tealD:'#1d4a45', tealL:'#9dbdb3', ochre:'#c4902f', ochreL:'#f6e7bd', red:'#a52814', slab:'#d6c398'};
+  const WHY = '<b>Aviano and Ghedi</b> each hold a few dozen US nuclear bombs.';
+  const ST = ['far away: slow', 'on site: quick'], VT = ['empty', 'bomb in, lid shut'];
+
+  // Rough outlines (longitude, latitude).
+  const ITALY = [[13.5,45.8],[12.35,45.45],[12.5,44.95],[12.3,44.4],[12.6,44.05],[13.5,43.6],[14.2,42.45],[15.0,42.0],[15.6,41.95],[16.15,41.9],[15.9,41.6],[16.3,41.3],[16.85,41.12],[17.95,40.65],[18.5,40.15],[18.35,39.8],[18.0,40.05],[17.2,40.45],[16.8,40.35],[16.5,39.75],[17.15,39.08],[17.1,38.9],[16.55,38.7],[16.05,37.93],[15.65,38.1],[15.75,38.3],[15.9,38.68],[16.15,38.75],[16.0,39.4],[15.6,40.07],[14.8,40.6],[14.35,40.6],[14.25,40.85],[13.6,41.25],[12.6,41.45],[12.2,41.8],[11.8,42.1],[11.2,42.4],[10.5,42.95],[10.3,43.5],[10.25,43.85],[9.85,44.1],[8.9,44.4],[8.45,44.3],[8.0,43.9],[7.5,43.8],[7.6,44.1],[6.9,44.35],[7.0,44.8],[6.65,45.1],[7.1,45.9],[7.9,45.95],[8.4,46.45],[9.0,46.0],[9.3,46.5],[10.1,46.6],[10.45,46.9],[11.15,46.95],[12.2,47.08],[13.0,46.6],[13.7,46.5],[13.5,46.2],[13.65,45.95],[13.75,45.65]];
+  const SICILY = [[15.55,38.27],[15.3,37.85],[15.1,37.5],[15.3,37.05],[15.1,36.68],[14.25,37.06],[13.5,37.27],[12.6,37.65],[12.43,37.8],[12.5,38.0],[13.35,38.13],[14.0,38.04],[15.25,38.25]];
+  const SARD = [[9.2,41.25],[9.8,40.9],[9.65,40.2],[9.65,39.4],[9.5,39.15],[9.0,39.2],[8.6,38.9],[8.4,39.1],[8.4,39.7],[8.5,40.3],[8.2,40.6],[8.25,40.95],[8.6,40.9]];
+  const CORS = [[9.4,43.0],[9.55,42.6],[9.4,41.65],[9.1,41.4],[8.6,41.9],[8.65,42.4],[9.2,42.7]];
+  const AFR = [[6,37.0],[7.5,36.9],[9.8,37.3],[11.1,37.0],[10.5,36.3],[11.1,35.2],[10,33.5],[6,33.5]];
+  const EUROPE = [[-2,50],[34,50],[34,41.3],[29,41.1],[26.3,40.9],[24,40.8],[23.6,40.2],[22.9,40.5],[22.6,39.7],[23.2,39.1],[22.7,38.2],[23.2,37.9],[22.6,36.6],[21.7,36.9],[21.6,37.7],[21.1,38.3],[20.7,39.0],[20.1,39.6],[19.8,39.6],[19.3,40.4],[19.45,41.0],[19.4,41.9],[18.5,42.45],[17.5,43.0],[16.4,43.5],[15.9,43.7],[15.2,44.3],[14.9,44.9],[14.3,45.3],[13.6,45.1],[13.75,45.65],[13.65,45.95],[13.5,46.2],[13.7,46.5],[13.0,46.6],[12.2,47.08],[11.15,46.95],[10.45,46.9],[10.1,46.6],[9.3,46.5],[9.0,46.0],[8.4,46.45],[7.9,45.95],[7.1,45.9],[6.65,45.1],[7.0,44.8],[6.9,44.35],[7.6,44.1],[7.5,43.8],[7.0,43.55],[6.2,43.1],[5.0,43.35],[4.0,43.5],[3.1,43.1],[3.2,42.4],[3.2,41.9],[2.0,41.3],[0.8,41.0],[0.2,40.4],[-2,40.4]];
+
+  let W = 0, H = 0, fs = 12, lastW = 0, lastH = 0, built = false, drawn = false, fwd = false, revealed = false, wowCall = null, busyUntil = 0;
+  let G = {}, bombs = [], D = null, idle = [];
+  const lift = {p:0, lid:0, b:0};
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs, fill: C.ink, class: 'lb'}, a), p); e.textContent = s; return e; };
+  const tw = (s, cls) => { const e = txt(svg, 0, -99, s, {class: cls}); const w = e.getComputedTextLength(); e.remove(); return w; };
+  const pick = (opts, max, cls) => opts.find(o => tw(o, cls) <= max) || opts[opts.length - 1];
+
+  // Clip a polygon (pixel points) to a rectangle, so its geometry never leaves the plate.
+  function clipRect(pts, x0, y0, x1, y1) {
+    const edges = [
+      [p => p[0] >= x0, (a, b) => [x0, a[1] + (x0 - a[0]) / (b[0] - a[0]) * (b[1] - a[1])]],
+      [p => p[0] <= x1, (a, b) => [x1, a[1] + (x1 - a[0]) / (b[0] - a[0]) * (b[1] - a[1])]],
+      [p => p[1] >= y0, (a, b) => [a[0] + (y0 - a[1]) / (b[1] - a[1]) * (b[0] - a[0]), y0]],
+      [p => p[1] <= y1, (a, b) => [a[0] + (y1 - a[1]) / (b[1] - a[1]) * (b[0] - a[0]), y1]]
+    ];
+    let out = pts;
+    for (const [ins, X] of edges) {
+      const inp = out; out = [];
+      if (!inp.length) break;
+      for (let i = 0; i < inp.length; i++) {
+        const cur = inp[i], prev = inp[(i + inp.length - 1) % inp.length];
+        if (ins(cur)) { if (!ins(prev)) out.push(X(prev, cur)); out.push(cur); }
+        else if (ins(prev)) out.push(X(prev, cur));
+      }
+    }
+    return out;
+  }
+
+  function defsBuild() {
+    const d = mk('defs', {}, svg);
+    const dots = (id, col, s, r) => { const p = mk('pattern', {id, width: s, height: s, patternUnits: 'userSpaceOnUse'}, d); [[s/2,s/2],[0,0],[s,0],[0,s],[s,s]].forEach(([cx, cy]) => mk('circle', {cx, cy, r, fill: col}, p)); };
+    dots('hO', C.ochre, 4.2, 1.15); dots('hT', C.tealD, 3.6, .85); dots('hI', C.ink, 3.4, .8); dots('hR', C.red, 3.2, .9);
+    const hp = mk('pattern', {id: 'hatch', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, d);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 5, stroke: C.ink, 'stroke-width': .7, opacity: .28}, hp);
+    const lg = (id, x2, y2, stops) => { const g = mk('linearGradient', {id, x1: 0, y1: 0, x2, y2}, d); stops.forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, g)); };
+    lg('gH', 1, 0, [[0,'#fff',.05],[1,'#fff',.9]]);
+    lg('gV', 0, 1, [[0,'#fff',.9],[1,'#fff',.2]]);
+    lg('gX', 1, 0, [[0,'#fff',0],[.14,'#fff',1],[.86,'#fff',1],[1,'#fff',0]]);
+    lg('gY', 0, 1, [[0,'#fff',0],[.18,'#fff',1],[.82,'#fff',1],[1,'#fff',0]]);
+    lg('gIn', 0, 1, [[0,C.tealD,1],[1,'#121a19',1]]);
+    lg('gPit', 0, 1, [[0,'#0d1312',1],[1,'#2b3532',1]]);
+    lg('gSoil', 0, 1, [[0,'#8f6428',1],[1,'#5e3d14',1]]);
+    const ink = mk('filter', {id: 'ink', x: '-10%', y: '-15%', width: '120%', height: '130%'}, d);
+    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: 1.1, numOctaves: 2, seed: 9, result: 'n'}, ink);
+    mk('feColorMatrix', {in: 'n', type: 'matrix', values: '0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.05', result: 'm'}, ink);
+    mk('feComposite', {in: 'SourceGraphic', in2: 'm', operator: 'in'}, ink);
+    const mkr = (id, col) => { const m = mk('marker', {id, viewBox: '0 0 10 10', refX: 5, refY: 5, markerWidth: 4.5, markerHeight: 4.5, orient: 'auto', markerUnits: 'strokeWidth'}, d); mk('path', {d: 'M0,1 L10,5 L0,9 Z', fill: col}, m); };
+    mkr('arR', C.red); mkr('arK', C.ink);
+    return d;
+  }
+  const mask = (id, x, y, w, h, grad) => { w = Math.max(1, w); h = Math.max(1, h); const m = mk('mask', {id, maskUnits: 'userSpaceOnUse', x, y, width: w, height: h}, D); mk('rect', {x, y, width: w, height: h, fill: `url(#${grad})`}, m); };
+
+  function bomb(p, Lb) {
+    const g = mk('g', {}, p), h = Lb * .17;
+    mk('path', {d: `M${-Lb*.3},${-h*.3} L${-Lb*.5},${-h*1.55} L${-Lb*.41},${-h*1.55} L${-Lb*.16},${-h*.4}Z M${-Lb*.3},${h*.3} L${-Lb*.5},${h*1.55} L${-Lb*.41},${h*1.55} L${-Lb*.16},${h*.4}Z`, fill: C.tealD, stroke: C.ink, 'stroke-width': .6}, g);
+    mk('rect', {x: -Lb*.4, y: -h, width: Lb*.9, height: 2*h, rx: h, fill: C.teal, stroke: C.ink, 'stroke-width': .8}, g);
+    mk('rect', {x: Lb*.1, y: -h + .4, width: Lb*.08, height: Math.max(.5, 2*h - .8), fill: C.red}, g);
+    mk('line', {x1: -Lb*.3, y1: -h*.42, x2: Lb*.36, y2: -h*.42, stroke: C.tealL, 'stroke-width': Math.max(.8, h*.35), 'stroke-linecap': 'round', opacity: .85}, g);
+    return g;
+  }
+
+  // ---------- FIG. 1: the map ----------
+  function drawMap(world, ph, pad, lh, noHead) {
+    const g1 = mk('g', {}, world);
+    let seaTop;
+    if (noHead) seaTop = 6;
+    else { const hY = pad + fs * .95; txt(g1, pad, hY, pick(['FIG. 1 · NATO BOMBS IN ITALY', 'FIG. 1 · BOMBS IN ITALY', 'FIG. 1 · ITALY'], W - 2 * pad, 'mn'), {class: 'mn'}); seaTop = hY + fs * .5; }
+    const seaB = ph - (G.stack ? 2 : 6), sH = Math.max(2, seaB - seaTop);
+    const map = mk('g', {}, g1);
+
+    const aT = seaTop + fs * .3, aB = seaB - fs * .3, aH = Math.max(fs * 3, aB - aT), L = pad, R = W - pad;
+    const wAV = tw('AVIANO', 'lb w8'), wAB = tw('US air base', 'lb w6'), wSV = tw('Soviet bloc →', 'lb w8'), wST = Math.max(tw(ST[0], 'lb w6'), tw(ST[1], 'lb w6'));
+    const wGH = tw('GHEDI', 'lb w8'), wGB = Math.max(tw('Italian base,', 'lb w6'), tw('US-guarded', 'lb w6')), wUS = tw('U.S.A.', 'mn');
+    const nA = aH >= lh * 4 + fs * .7 ? 2 : 1;
+    const RW = Math.max(wAV, nA > 1 ? wAB : 0, wSV, wST);
+    const hd = fs * 1.3, crMin = hd + fs * 1.55 + fs * .3;
+    const nG = aH - 3 * lh - fs * .4 >= crMin ? 3 : 1;
+    const ch = Math.max(crMin, Math.min(fs * 5, aH - nG * lh - fs * .4));
+    const rowH = (ch - hd - fs * .3) / 3;
+    const bl = Math.max(10, Math.min(fs * 1.7, rowH / .52));
+    const CW = Math.max(wUS + fs * .9, 2 * bl * 1.22 + 8);
+    const LW = Math.max(CW, wGH, nG > 1 ? wGB : 0);
+    const mL = L + LW + fs * .5, mR = R - RW - fs * .5, midW = Math.max(fs * 2, mR - mL);
+    const UW = 8.8, UH = 10.45, s = Math.max(2, Math.min(aH / UH, midW / UW)), iw = UW * s, ih = UH * s, room = Math.max(0, midW - iw);
+    const ix = G.stack ? mL + room / 2 : mL + Math.min(room * .12, fs * .8), iy = aT + (aH - ih) / 2;
+    const P = (lo, la) => [ix + (lo - 6.6) * .74 * s, iy + (47.1 - la) * s];
+    const pathPx = pts => pts.length < 3 ? '' : 'M' + pts.map(p => p.map(v => v.toFixed(1)).join(',')).join('L') + 'Z';
+    const path = pts => pathPx(pts.map(([lo, la]) => P(lo, la)));
+    const cx0r = 6, cx1r = W - 6, cy0r = seaTop, cy1r = seaTop + sH;
+    const clipPath = pts => pathPx(clipRect(pts.map(([lo, la]) => P(lo, la)), cx0r, cy0r, cx1r, cy1r));
+    G.s = s;
+
+    const land = [EUROPE, CORS, AFR].map(clipPath).join('');
+    // Neighbouring land is hatched ink that fades out toward the plate edges: no box.
+    mask('mFx', 6, seaTop, W - 12, sH, 'gX'); mask('mFy', 6, seaTop, W - 12, sH, 'gY');
+    const lo1 = mk('g', {mask: 'url(#mFy)'}, map), lo2 = mk('g', {mask: 'url(#mFx)'}, lo1);
+    mk('path', {d: land, fill: 'url(#hatch)'}, lo2);
+    mk('path', {d: land, fill: 'none', stroke: C.ink, 'stroke-width': .8, opacity: .5}, lo2);
+    const it = mk('g', {id: 'italy'}, map), dIt = [ITALY, SICILY, SARD].map(path).join('');
+    mk('path', {d: dIt, fill: C.ink, opacity: .22, transform: 'translate(2.5,3)'}, it);
+    mk('path', {d: dIt, fill: C.ochreL}, it);
+    mask('mLand', ix, iy, iw, ih, 'gV');
+    mk('path', {d: dIt, fill: 'url(#hO)', mask: 'url(#mLand)'}, it);
+    mk('path', {d: dIt, fill: 'none', stroke: C.ink, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, it);
+
+    const A = P(12.6, 46.07), Gd = P(10.28, 45.40); G.A = A; G.Gd = Gd;
+    const by = aT + fs * .9;
+    let sy = Math.max(by + nA * lh + fs * .5, aT + aH * .42); sy = Math.min(sy, aB - fs * .25 - lh);
+    const T = [R - wSV - fs * .45, sy - fs * .33];
+    const cx0 = L, cy0 = aB - ch;
+
+    // Routes to the Soviet bloc: slow and long from the U.S.A., short and quick from Italy.
+    const rt = mk('g', {}, g1);
+    const cs = [cx0 + CW + 3, cy0 + ch * .55];
+    G.rUS = mk('path', {d: `M${cs[0]},${cs[1]} Q${(cs[0] + T[0]) / 2},${aB + fs * .2} ${T[0]},${T[1]}`, stroke: C.ink, 'stroke-width': 1.2, fill: 'none', 'stroke-dasharray': `${fs * .35} ${fs * .3}`, 'marker-end': 'url(#arK)', opacity: .8}, rt);
+    G.rF = [A, Gd].map(p => mk('path', {d: `M${p[0]},${p[1]} Q${(p[0] + T[0]) / 2},${Math.max(p[1], T[1]) + fs * .4} ${T[0]},${T[1]}`, stroke: C.red, 'stroke-width': 1.6, fill: 'none', 'stroke-dasharray': `${fs * .5} ${fs * .25}`, 'marker-end': 'url(#arR)', opacity: 0}, rt));
+
+    // Leaders and labels.
+    const lead = mk('g', {class: 'lbl'}, g1), cl = mk('g', {class: 'lbl'}, g1);
+    const end = {'text-anchor': 'end'};
+    const wGc = nG > 1 ? Math.max(wGH, wGB) : wGH, wAc = nA > 1 ? Math.max(wAV, wAB) : wAV;
+    const ld = {stroke: C.ink, 'stroke-width': 1, fill: 'none'};
+    mk('path', Object.assign({d: `M${L + wGH + fs * .3},${by - fs * .33} H${L + wGc + fs * .45} L${Gd[0]},${Gd[1]}`}, ld), lead);
+    mk('path', Object.assign({d: `M${R - wAV - fs * .3},${by - fs * .33} H${R - wAc - fs * .45} L${A[0]},${A[1]}`}, ld), lead);
+    mk('circle', {cx: L + wGH + fs * .3, cy: by - fs * .33, r: 1.6, fill: C.ink}, lead);
+    mk('circle', {cx: R - wAV - fs * .3, cy: by - fs * .33, r: 1.6, fill: C.ink}, lead);
+    txt(cl, R, by, 'AVIANO', Object.assign({class: 'lb halo w8'}, end));
+    if (nA > 1) txt(cl, R, by + lh, 'US air base', Object.assign({class: 'lb halo w6'}, end));
+    txt(cl, R, sy, 'Soviet bloc →', Object.assign({class: 'lb halo w8', fill: C.red}, end));
+    G.east = txt(cl, R, sy + lh, ST[+drawn], Object.assign({class: 'lb halo w6', fill: drawn ? C.red : C.ink}, end));
+    txt(cl, L, by, 'GHEDI', {class: 'lb halo w8'});
+    if (nG > 1) { txt(cl, L, by + lh, 'Italian base,', {class: 'lb halo w6'}); txt(cl, L, by + 2 * lh, 'US-guarded', {class: 'lb halo w6'}); }
+
+    // Bases.
+    G.rings = []; G.beac = [];
+    [A, Gd].forEach(p => {
+      for (let k = 0; k < 2; k++) G.rings.push(mk('circle', {cx: p[0], cy: p[1], r: fs * .4, fill: 'none', stroke: C.red, 'stroke-width': 1.6, opacity: 0}, g1));
+      G.beac.push(mk('circle', {cx: p[0], cy: p[1], r: fs * .32, fill: 'none', stroke: C.red, 'stroke-width': 1, opacity: 0}, g1));
+      mk('circle', {cx: p[0], cy: p[1], r: fs * .62, fill: 'url(#hR)', opacity: .7}, g1);
+      mk('circle', {cx: p[0], cy: p[1], r: fs * .32, fill: C.red, stroke: C.paper, 'stroke-width': 1.4}, g1);
+    });
+
+    // The crate across the ocean.
+    const usa = mk('g', {id: 'usa'}, g1);
+    mk('rect', {x: cx0 + 2, y: cy0 + 3, width: CW, height: ch, rx: 3, fill: C.ink, opacity: .22}, usa);
+    mk('rect', {x: cx0, y: cy0, width: CW, height: ch, rx: 3, fill: C.paper, stroke: C.ink, 'stroke-width': 1.2}, usa);
+    mk('rect', {x: cx0, y: cy0 + hd, width: CW, height: ch - hd, fill: 'url(#hO)', opacity: .35}, usa);
+    mk('path', {d: `M${cx0},${cy0 + 3} a3,3 0 0 1 3,-3 h${CW - 6} a3,3 0 0 1 3,3 v${hd - 3} h${-CW}Z`, fill: C.ink}, usa);
+    txt(usa, cx0 + fs * .45, cy0 + hd * .5 + fs * .36, 'U.S.A.', {class: 'mn', fill: '#FFB000'});
+    if (CW - wUS - fs * .9 > fs * 1.1) {
+      const sx = cx0 + CW - fs * .65, sy2 = cy0 + hd / 2, r = fs * .38;
+      mk('polygon', {points: Array.from({length: 10}, (_, k) => { const a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? r * .42 : r; return `${(sx + rr * Math.cos(a)).toFixed(1)},${(sy2 + rr * Math.sin(a)).toFixed(1)}`; }).join(' '), fill: '#FFB000'}, usa);
+    }
+    for (let r = 1; r < 3; r++) { const yy = cy0 + hd + fs * .15 + rowH * r; mk('line', {x1: cx0 + 4, x2: cx0 + CW - 4, y1: yy, y2: yy, stroke: C.ink, 'stroke-width': .6, opacity: .45}, usa); }
+
+    G.usPos = i => [cx0 + CW * (i % 2 ? .72 : .28), cy0 + hd + fs * .15 + rowH * (Math.floor(i / 2) + .5)];
+    G.sc = Math.min(.75, Math.max(.38, s * 1.2 / bl));
+    const sb = bl * G.sc;
+    G.itPos = i => { const k = i % 3; return i < 3 ? [A[0] + sb * .5, A[1] + fs * .7 + k * sb * .48] : [Gd[0] - sb * .5, Gd[1] + fs * .7 + k * sb * .48]; };
+    return {bl, zone: {x0: ix + iw + fs * .3, x1: mR + fs * .3, y0: aT, y1: aB}, fb: {x: ix + iw * .6, y: iy + ih * .72}};
+  }
+
+  // ---------- FIG. 2: the vault ----------
+  function drawVault(world, y1, pad, lh) {
+    const g2 = mk('g', {}, world);
+    mk('line', {x1: 7, x2: W - 7, y1: y1, y2: y1, stroke: C.ink, 'stroke-width': 1.2}, g2);
+    mk('line', {x1: 7, x2: W - 7, y1: y1 + 3, y2: y1 + 3, stroke: C.ink, 'stroke-width': .5}, g2);
+    const h2 = y1 + 3 + pad * .55 + fs * .95;
+    txt(g2, pad, h2, pick(['FIG. 2 · VAULT UNDER THE HANGAR', 'FIG. 2 · THE VAULT'], W - 2 * pad, 'mn'), {class: 'mn'});
+    const top2 = h2 + fs * .45, base = H - 6, span = Math.max(fs * 3, base - top2), gy = top2 + span * .62, gd = Math.max(fs, base - gy);
+
+    mk('rect', {x: 6, y: gy, width: W - 12, height: gd, fill: 'url(#gSoil)'}, g2);
+    mk('rect', {x: 6, y: gy, width: W - 12, height: gd, fill: 'url(#hI)', opacity: .2}, g2);
+    const q = (W - 12) / 4;
+    for (let k = 1; k < 3; k++) { const yy = gy + gd * k / 3; mk('path', {d: `M6,${yy} q${q * .48},-4 ${q},0 t${q},0 t${q},0 t${q},0`, stroke: '#3a2408', 'stroke-width': .8, fill: 'none', opacity: .5}, g2); }
+    for (let k = 0; k < 16; k++) mk('ellipse', {cx: 8 + ((k * 61) % 100) / 100 * (W - 16), cy: gy + gd * (.2 + ((k * 37) % 70) / 100), rx: 1.4 + (k % 3) * .7, ry: 1 + (k % 2) * .5, fill: '#2a1a08', opacity: .35}, g2);
+
+    const ah = Math.max(fs * 1.4, gy - top2 - 3), aw = Math.min(W * .3, ah * 2), sx = Math.max(W * .33, pad + aw), th = Math.max(3, Math.min(fs * .6, ah * .14));
+    const outer = `M${sx - aw},${gy} A${aw},${ah} 0 0 1 ${sx + aw},${gy} Z`;
+    const inner = `M${sx - aw + th},${gy} A${aw - th},${ah - th} 0 0 1 ${sx + aw - th},${gy} Z`;
+    const sh = mk('g', {id: 'shelter'}, g2);
+    mk('path', {d: outer, fill: C.ink, opacity: .2, transform: 'translate(3,0)'}, sh);
+    mk('path', {d: inner, fill: 'url(#gIn)'}, sh);
+    const jl = Math.max(fs * 2, Math.min(aw * 1.3, (ah - th) * 1.9)), pw = Math.max(fs * 1.3, jl * .28);
+    G.cone = mk('polygon', {points: `${sx - 2},${gy - ah + th} ${sx + 2},${gy - ah + th} ${sx + pw * 1.5},${gy} ${sx - pw * 1.5},${gy}`, fill: '#f6e7bd', opacity: .18}, sh);
+    mk('rect', {x: sx - fs * .35, y: gy - ah + th, width: fs * .7, height: 3, fill: C.ochreL}, sh);
+    mk('path', {d: outer + inner, 'fill-rule': 'evenodd', fill: C.ochreL, stroke: C.ink, 'stroke-width': 1.2}, sh);
+    mk('path', {d: outer + inner, 'fill-rule': 'evenodd', fill: 'url(#hO)', opacity: .8}, sh);
+    for (let k = 1; k < 8; k++) { const t = Math.PI * k / 8, c = Math.cos(t), si = Math.sin(t); mk('line', {x1: sx - aw * c, y1: gy - ah * si, x2: sx - (aw - th) * c, y2: gy - (ah - th) * si, stroke: C.ink, 'stroke-width': .7, opacity: .55}, sh); }
+
+    const J = (x, y) => `${(sx + x * jl).toFixed(1)},${(gy + y * jl).toFixed(1)}`;
+    const jet = mk('g', {}, sh);
+    mk('path', {d: `M${J(-.48,-.13)} L${J(-.42,-.3)} L${J(-.34,-.3)} L${J(-.22,-.13)}Z`, fill: C.tealD, stroke: C.ink, 'stroke-width': .9}, jet);
+    mk('path', {d: `M${J(-.5,-.08)} L${J(-.42,-.13)} L${J(.25,-.13)} Q${J(.42,-.12)} ${J(.5,-.085)} Q${J(.42,-.055)} ${J(.25,-.05)} L${J(-.45,-.05)}Z`, fill: C.teal, stroke: C.ink, 'stroke-width': 1}, jet);
+    mk('path', {d: `M${J(.1,-.13)} Q${J(.2,-.19)} ${J(.31,-.125)}Z`, fill: C.tealL, stroke: C.ink, 'stroke-width': .8}, jet);
+    mk('path', {d: `M${J(-.2,-.088)} L${J(.12,-.092)} L${J(-.12,-.068)}Z`, fill: C.tealD}, jet);
+    G.beam = mk('circle', {cx: sx - .38 * jl, cy: gy - .22 * jl, r: Math.max(1.5, jl * .02), fill: '#e2553f'}, jet);
+    [-.22, .22].forEach(x => { const r = Math.max(2, .02 * jl); mk('line', {x1: sx + x * jl, x2: sx + x * jl, y1: gy - .05 * jl, y2: gy - r, stroke: C.ink, 'stroke-width': 1.2}, jet); mk('circle', {cx: sx + x * jl, cy: gy - r, r, fill: C.ink}, jet); });
+
+    const pitL = sx - pw / 2, pitR = sx + pw / 2, pd = Math.max(fs * .8, gd * .74), slab = Math.max(3, Math.min(fs * .38, gd * .14));
+    mk('rect', {x: pitL - 3, y: gy, width: pw + 6, height: pd + 3, fill: C.slab, stroke: C.ink, 'stroke-width': .8}, g2);
+    mk('rect', {x: pitL, y: gy, width: pw, height: pd, fill: 'url(#gPit)', stroke: C.ink, 'stroke-width': 1}, g2);
+    const fl = sx - aw + th;
+    mk('rect', {x: fl, y: gy, width: Math.max(0, pitL - 3 - fl), height: slab, fill: C.slab, stroke: C.ink, 'stroke-width': .8}, g2);
+    mk('rect', {x: pitR + 3, y: gy, width: Math.max(0, sx + aw - th - pitR - 3), height: slab, fill: C.slab, stroke: C.ink, 'stroke-width': .8}, g2);
+    mk('line', {x1: 6, x2: W - 6, y1: gy, y2: gy, stroke: C.ink, 'stroke-width': 1.6}, g2);
+    G.pis = mk('rect', {x: sx - pw * .07, y: gy, width: pw * .14, height: 0, fill: '#8a9b95', stroke: C.ink, 'stroke-width': .6}, g2);
+    G.plat = mk('rect', {x: pitL + 1, y: gy, width: pw - 2, height: slab * .8, fill: C.ochre, stroke: C.ink, 'stroke-width': .8}, g2);
+    G.bl2 = pw * .82;
+    G.b2 = bomb(g2, G.bl2);
+    G.lid = mk('rect', {x: pitL - 1, y: gy, width: 0, height: slab, fill: C.slab, stroke: C.ink, 'stroke-width': .9}, g2);
+    Object.assign(G, {gy, pd, sx, slab, slide: Math.max(pw, Math.min(aw * .6, W - pad - sx - pw)), pitL, pw});
+
+    const vl = mk('g', {class: 'lbl'}, g2), two = gd >= fs * 2.75;
+    G.vtF = two ? (s => s) : (s => 'VAULT: ' + s);
+    let wv;
+    if (two) {
+      txt(vl, W - pad, gy + fs * 1.2, 'THE VAULT', {class: 'lb halo w8', 'text-anchor': 'end'});
+      G.vt = txt(vl, W - pad, gy + fs * 1.2 + lh, VT[+drawn], {class: 'lb halo w6', 'text-anchor': 'end'});
+      wv = tw('THE VAULT', 'lb w8');
+    } else {
+      G.vt = txt(vl, W - pad, gy + Math.min(fs * 1.15, gd - 3), G.vtF(VT[+drawn]), {class: 'lb halo w8', 'text-anchor': 'end'});
+      wv = Math.max(tw(G.vtF(VT[0]), 'lb w8'), tw(G.vtF(VT[1]), 'lb w8'));
+    }
+    const vx = W - pad - wv - fs * .3, vy = gy + fs * .8;
+    mk('path', {d: `M${vx},${vy} L${pitR + 4},${gy + pd * .5}`, stroke: C.ink, 'stroke-width': 1, fill: 'none'}, vl);
+    mk('circle', {cx: vx, cy: vy, r: 1.6, fill: C.ink}, vl);
+    return {x0: sx + aw * .1, x1: W - pad, y0: top2 + 2, y1: gy - 3};
+  }
+
+  function makeStamp(world, spot, M) {
+    const w1 = tw('NUCLEAR SHARING', 'mn w8'), w2 = tw('NUCLEAR', 'mn w8');
+    const forms = [{w: w1 + fs * 1.3, h: fs * 2.1, rot: -3, one: true}, {w: w2 + fs * 1.3, h: fs * 3.35, rot: -2, one: false}];
+    const ext = o => { const a = Math.abs(o.rot) * Math.PI / 180; return [o.w * Math.cos(a) + o.h * Math.sin(a) + 4, o.w * Math.sin(a) + o.h * Math.cos(a) + 4]; };
+    let pos = null;
+    for (const z of [spot, M.zone].filter(Boolean)) {
+      for (const o of forms) { const [ew, eh] = ext(o); if (z.x1 - z.x0 >= ew && z.y1 - z.y0 >= eh) { pos = {o, x: z === spot ? z.x1 - ew / 2 : (z.x0 + z.x1) / 2, y: (z.y0 + z.y1) / 2}; break; } }
+      if (pos) break;
+    }
+    if (!pos) pos = {o: forms[1], x: M.fb.x, y: M.fb.y};
+    const o = pos.o, st = mk('g', {id: 'stamp', filter: 'url(#ink)'}, world);
+    mk('rect', {x: -o.w / 2, y: -o.h / 2, width: o.w, height: o.h, rx: 3, fill: 'rgba(246,231,189,.88)', stroke: C.red, 'stroke-width': 2.2}, st);
+    mk('rect', {x: -o.w / 2 + 3, y: -o.h / 2 + 3, width: o.w - 6, height: o.h - 6, rx: 2, fill: 'none', stroke: C.red, 'stroke-width': .8}, st);
+    const ta = {class: 'mn w8', 'text-anchor': 'middle', fill: C.red};
+    if (o.one) txt(st, 0, fs * .36, 'NUCLEAR SHARING', ta);
+    else { txt(st, 0, -fs * .4, 'NUCLEAR', ta); txt(st, 0, fs * 1.2, 'SHARING', ta); }
+    gsap.set(st, {x: pos.x, y: pos.y, rotation: o.rot, scale: 1, transformOrigin: '50% 50%', opacity: drawn ? 1 : 0});
+    G.stamp = st; G.stRot = o.rot; G.stW = o.w; G.stH = o.h;
+  }
+
+  function layout() {
+    idle.forEach(t => t.kill()); idle = [];
+    gsap.killTweensOf(bombs); gsap.killTweensOf(lift); if (wowCall) wowCall.kill();
+    if (G.stamp) gsap.killTweensOf(G.stamp);
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; lastW = W; lastH = H;
+    G = {}; bombs = []; built = true;
+    if (W < 60 || H < 50) return;
+    fs = Math.max(12, Math.min(14, W / 27));
+    const pad = fs * .85, lh = fs * 1.22;
+    D = defsBuild();
+    const world = mk('g', {id: 'world'}, svg);
+    G.ok = true; G.stack = H >= 200;
+    const f2 = G.stack ? Math.round(Math.min(Math.max(H * .45, 96), W * .55)) : 0;
+    const M = drawMap(world, H - f2, pad, lh, !G.stack && H < 135);
+    const spot = G.stack ? drawVault(world, H - f2, pad, lh) : null;
+
+    const lay = mk('g', {}, world);
+    for (let i = 0; i < 6; i++) { const b = bomb(lay, M.bl); b.__i = i; bombs.push(b); const [x, y] = drawn ? G.itPos(i) : G.usPos(i); gsap.set(b, {x, y, rotation: 0, scale: drawn ? G.sc : 1, transformOrigin: '50% 50%'}); }
+    makeStamp(world, spot, M);
+    G.fx = mk('g', {}, world);
+
+    gsap.set(G.rUS, {opacity: drawn ? 0 : .8}); gsap.set(G.rF, {opacity: drawn ? 1 : 0});
+    lift.p = lift.lid = lift.b = drawn ? 1 : 0; setLift();
+    if (!Kit.calm) startIdle();
+  }
+
+  function startIdle() {
+    idle.push(gsap.to(G.rUS, {attr: {'stroke-dashoffset': -fs * .65}, duration: 1.2, repeat: -1, ease: 'none'}));
+    G.rF.forEach(r => idle.push(gsap.to(r, {attr: {'stroke-dashoffset': -fs * .75}, duration: .2, repeat: -1, ease: 'none'})));
+    G.beac.forEach((b, i) => idle.push(gsap.fromTo(b, {attr: {r: fs * .32}, opacity: .7}, {attr: {r: fs * 1.1}, opacity: 0, duration: 1.6, repeat: -1, repeatDelay: 1, delay: i * .5, ease: 'power2.out'})));
+    if (G.cone) idle.push(gsap.to(G.cone, {opacity: .07, duration: .1, repeat: -1, yoyo: true, repeatDelay: 2.8, ease: 'steps(2)'}));
+    if (G.beam) idle.push(gsap.to(G.beam, {opacity: .15, duration: .6, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+  }
+
+  function setLift() {
+    if (!G.plat) return;
+    const pt = G.slab * .8, topY = G.gy + lift.p * Math.max(0, G.pd - pt - 2);
+    G.plat.setAttribute('y', topY);
+    G.pis.setAttribute('y', topY + pt); G.pis.setAttribute('height', Math.max(0, G.gy + G.pd - topY - pt));
+    gsap.set(G.b2, {x: G.sx + (1 - lift.b) * G.slide, y: topY - G.bl2 * .17 - .5, opacity: lift.b});
+    G.lid.setAttribute('width', Math.max(0, (G.pw + 2) * lift.lid));
+  }
+
+  function launch(el, x1, y1, s1, delay) {
+    const x0 = gsap.getProperty(el, 'x'), y0 = gsap.getProperty(el, 'y');
+    const T = .9 + (el.__i % 3) * .08;
+    const r = Math.max(fs * .6, Math.min(H * .45, Math.min(y0, y1) - fs * .8));
+    const yap = Math.min(y0, y1) - r;
+    const a = Math.sqrt(Math.max(0, y0 - yap)), b = Math.sqrt(Math.max(0, y1 - yap));
+    const g = 2 * (a + b) * (a + b) / (T * T), vx = (x1 - x0) / T, vy = -Math.sqrt(2 * g) * a;
+    const rot = t => Math.atan2(vy + g * t, vx) * 180 / Math.PI;
+    const land = () => { gsap.set(el, {x: x1, y: y1}); const rr = gsap.getProperty(el, 'rotation'); gsap.to(el, {rotation: Math.abs(rr) > 90 ? 180 * Math.sign(rr) : 0, duration: .5, ease: 'back.out(3)'}); };
+    if (hasP) gsap.to(el, {duration: T, delay, ease: 'none', physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * 180 / Math.PI, gravity: g}, onUpdate() { gsap.set(el, {rotation: rot(this.time())}); }, onComplete: land});
+    else { const o = {t: 0}; gsap.to(o, {t: T, duration: T, delay, ease: 'none', onUpdate: () => gsap.set(el, {x: x0 + vx * o.t, y: y0 + vy * o.t + .5 * g * o.t * o.t, rotation: rot(o.t)}), onComplete: land}); }
+    gsap.to(el, {scale: s1, duration: T, delay, ease: 'power2.inOut'});
+  }
+
+  function puff() {
+    const cx = gsap.getProperty(G.stamp, 'x'), cy = gsap.getProperty(G.stamp, 'y');
+    for (let k = 0; k < 12; k++) {
+      const a = k / 12 * Math.PI * 2 + .2, d = mk('circle', {cx: 0, cy: 0, r: 1 + (k % 3) * .7, fill: C.red, opacity: .75}, G.fx);
+      gsap.set(d, {x: cx + Math.cos(a) * G.stW * .5, y: cy + Math.sin(a) * G.stH * .55});
+      gsap.to(d, {x: '+=' + Math.cos(a) * fs * 1.5, y: '+=' + Math.sin(a) * fs * 1.1, opacity: 0, duration: .65, ease: 'power2.out', onComplete: () => d.remove()});
+    }
+  }
+
+  function wow() {
+    if (!G.ok) return;
+    Kit.haptic('success');
+    G.rings.forEach((r, i) => gsap.fromTo(r, {attr: {r: fs * .4}, opacity: .9}, {attr: {r: Math.max(fs, G.s * 2.6)}, opacity: 0, duration: 1.5, delay: (i % 2) * .32 + (i > 1 ? .12 : 0), ease: 'expo.out'}));
+    gsap.fromTo(G.stamp, {scale: 2.4, opacity: 0, rotation: G.stRot - 16}, {scale: 1, opacity: 1, rotation: G.stRot, duration: .4, delay: .3, ease: 'back.out(1.5)',
+      onComplete: () => { puff(); gsap.fromTo('#world', {x: -3, y: 2}, {x: 0, y: 0, duration: .7, ease: 'elastic.out(1.2,.3)'}); }});
+  }
+
+  function goTo(f) {
+    drawn = f;
+    if (wowCall) wowCall.kill();
+    if (!G.ok) return;
+    gsap.killTweensOf(bombs); gsap.killTweensOf(lift); gsap.killTweensOf(G.stamp);
+    if (Kit.calm) { layout(); return; }
+    busyUntil = Date.now() + 2700;
+    G.east.textContent = ST[+f]; G.east.setAttribute('fill', f ? C.red : C.ink);
+    if (G.vt) G.vt.textContent = G.vtF(VT[+f]);
+    gsap.fromTo([G.east, G.vt].filter(Boolean), {opacity: 0}, {opacity: 1, duration: .45, ease: 'power2.out'});
+    gsap.to(G.rUS, {opacity: f ? 0 : .8, duration: .4, delay: f ? 0 : 1, overwrite: 'auto'});
+    gsap.to(G.rF, {opacity: f ? 1 : 0, duration: .4, delay: f ? 1.2 : 0, overwrite: 'auto'});
+    bombs.forEach((b, i) => { const [x, y] = f ? G.itPos(i) : G.usPos(i); launch(b, x, y, f ? G.sc : 1, (f ? i : 5 - i) * .07); });
+    if (G.plat) {
+      const tl = gsap.timeline();
+      if (f) tl.to(lift, {b: 1, duration: .55, ease: 'power3.out', onUpdate: setLift}).to(lift, {p: 1, duration: .9, ease: 'power2.inOut', onUpdate: setLift}).to(lift, {lid: 1, duration: .35, ease: 'power4.in', onUpdate: setLift});
+      else tl.to(lift, {lid: 0, duration: .35, ease: 'power2.in', onUpdate: setLift}).to(lift, {p: 0, duration: .8, ease: 'power2.inOut', onUpdate: setLift}).to(lift, {b: 0, duration: .45, ease: 'power2.in', onUpdate: setLift});
+    }
+    if (f) wowCall = gsap.delayedCall(1.25, wow);
+    else gsap.to(G.stamp, {opacity: 0, scale: .9, duration: .35, ease: 'power2.in'});
+  }
+
+  sw.addEventListener('click', () => {
+    if (!built) layout();
+    fwd = !fwd; Kit.haptic('selection');
+    sw.setAttribute('aria-checked', fwd);
+    Kit.$('o0').classList.toggle('sel', !fwd); Kit.$('o1').classList.toggle('sel', fwd);
+    if (Kit.calm) gsap.set(knob, {xPercent: fwd ? 100 : 0});
+    else gsap.to(knob, {xPercent: fwd ? 100 : 0, duration: .42, ease: 'back.out(1.6)'});
+    if (fwd && !revealed) {
+      revealed = true; say.innerHTML = WHY; Kit.show('keep'); card.classList.add('answered');
+      layout();
+      if (!Kit.calm) gsap.from('#say', {opacity: 0, y: 6, duration: .5, ease: 'power3.out'});
+    }
+    goTo(fwd);
+  });
+
+  let roT = null;
+  new ResizeObserver(() => {
+    if (!built) return;
+    clearTimeout(roT);
+    roT = setTimeout(() => {
+      const r = svg.getBoundingClientRect();
+      if (Math.abs(r.width - lastW) <= 1 && Math.abs(r.height - lastH) <= 1) return;
+      if (Date.now() < busyUntil && !Kit.calm) { const t = drawn; drawn = !t; layout(); goTo(t); }
+      else layout();
+    }, 90);
+  }).observe(svg);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (built && Date.now() >= busyUntil) layout(); });
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (!built) layout();
+    if (Kit.calm || !G.ok) return;
+    gsap.from('#italy', {opacity: 0, y: 10, duration: .9, ease: 'power3.out'});
+    if (document.getElementById('shelter')) gsap.from('#shelter', {scaleY: 0, transformOrigin: '50% 100%', duration: .9, delay: .15, ease: 'expo.out'});
+    gsap.from('#usa', {opacity: 0, x: -14, duration: .6, delay: .2, ease: 'power3.out'});
+    gsap.from('#pic .lbl', {opacity: 0, duration: .6, stagger: .1, delay: .35, ease: 'power2.out'});
+    gsap.from(bombs, {y: '-=14', opacity: 0, stagger: .06, duration: .5, delay: .5, ease: 'back.out(2)'});
+    gsap.fromTo(knob, {xPercent: 0}, {xPercent: 12, yoyo: true, repeat: 1, duration: .32, delay: 1.4, ease: 'power2.inOut'});
+  };
+  Kit.play.card = async () => {
+    if (!built) layout();
+    sw.click();
+    await new Promise(r => setTimeout(r, Kit.calm ? 100 : 3000));
+  };
+})();
+Kit.single();
+</script>
+</html>

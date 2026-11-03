@@ -1,0 +1,37 @@
+{
+  "id": "nature-plastic-patch-france",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.plastic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How big is the plastic island in the Pacific, compared to a country?",
+  "answer": "The Pacific plastic patch covers about as much ocean as France. Drag France onto the swirling haze, drawn at the same map scale, and it almost covers the patch edge to edge.",
+  "move": "The Pacific plastic patch spans an area roughly the size of France.",
+  "keywords": [
+    "pacific-garbage-patch",
+    "france",
+    "floating-plastic",
+    "pacific-ocean"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A map of the Pacific Ocean with a swirling haze marking floating plastic. The question asks how big this plastic island is compared to a country. A draggable outline of France can be dropped onto the haze at the same map scale.",
+    "ground": "#06324d"
+  },
+  "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=Lgr3FBt_QM8",
+  "written": "2026-11-03"
+}

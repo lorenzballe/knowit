@@ -29,7 +29,7 @@
 const S = {ready:false, placed:false, on:false, done:false, heat:0, t:0, ph:0, eph:0, fo:0, steps:0, px:0, py:0};
 let G = {}, drag = null, lastW = 0, lastH = 0;
 const NS = 'http://www.w3.org/2000/svg';
-const COPPER = '#c8743a', FIELD = '#58b4ff', EDDY = '#ffd447', HOT = '#ff5a1f';
+const COPPER = '#8f3f0a', FIELD = '#ffffff', EDDY = '#ffd447', HOT = '#ff5a1f';
 const STEPS = [
   [COPPER, 'Alternating current in the copper coil'],
   [FIELD,  '→ a magnetic field that keeps changing'],
@@ -68,10 +68,9 @@ function draw(){
   el('stop', {offset:'0', 'stop-color':'#ff7a2a', 'stop-opacity':'.9'}, rg);
   el('stop', {offset:'1', 'stop-color':'#ff7a2a', 'stop-opacity':'0'}, rg);
 
-  // The hob: dark glass panel with the coil underneath
-  el('rect', {x:1, y:glassY, width:W - 2, height:h - 1, rx:fs * .8, fill:'#15171c'}, svg);
-  el('line', {x1:fs * .5, x2:W - fs * .5, y1:glassY + 1, y2:glassY + 1, stroke:'#a9bccf', 'stroke-width':2, opacity:.8}, svg);
-  const gl = el('text', {x:fs * .5, y:glassY + fs * 1.25, 'font-size':fs * .9, fill:'#8f9aa8'}, svg);
+  // The hob: glass surface line with the coil underneath (no panel behind)
+  el('line', {x1:fs * .5, x2:W - fs * .5, y1:glassY + 1, y2:glassY + 1, stroke:'#10100c', 'stroke-width':2, opacity:.8}, svg);
+  const gl = el('text', {x:fs * .5, y:glassY + fs * 1.25, 'font-size':fs * .9, fill:'#10100c', opacity:.75}, svg);
   gl.textContent = 'glass'; gl.style.font = `600 ${fs * .9}px var(--body)`;
 
   // Spiral coil seen at an angle
@@ -82,16 +81,16 @@ function draw(){
     d += (k ? 'L' : 'M') + (cx + r * Math.cos(th)).toFixed(1) + ',' + (coilY + r * Math.sin(th) * (ry / rx)).toFixed(1);
   }
   G.coilP = el('path', {d, fill:'none', stroke:COPPER, 'stroke-width':Math.max(2.5, fs * .3), 'stroke-linecap':'round'}, svg);
-  G.glow = el('path', {d, fill:'none', stroke:'#ffc08f', 'stroke-width':Math.max(1, fs * .1), opacity:0}, svg);
+  G.glow = el('path', {d, fill:'none', stroke:'#fff1c2', 'stroke-width':Math.max(1, fs * .1), opacity:0}, svg);
   G.L = G.coilP.getTotalLength();
-  const cl = el('text', {x:cx, y:H - fs * .55, 'text-anchor':'middle', fill:'#f0a874'}, svg);
+  const cl = el('text', {x:cx, y:H - fs * .55, 'text-anchor':'middle', fill:'#10100c'}, svg);
   cl.textContent = 'copper coil'; cl.style.font = `700 ${fs}px var(--body)`;
   G.cdots = [];
   const cg = el('g', {}, svg);
   for (let i = 0; i < 14; i++) G.cdots.push(el('circle', {r:Math.max(2, fs * .2), fill:'#fff1c2', opacity:0}, cg));
 
   // Drop target
-  G.target = el('ellipse', {cx, cy:glassY, rx:pw / 2, ry, fill:'none', stroke:'#cfe2ff', 'stroke-width':2, 'stroke-dasharray':'6 6', opacity:S.placed ? 0 : .9}, svg);
+  G.target = el('ellipse', {cx, cy:glassY, rx:pw / 2, ry, fill:'none', stroke:'#10100c', 'stroke-width':2, 'stroke-dasharray':'6 6', opacity:S.placed ? 0 : .9}, svg);
   if (!S.placed && !Kit.calm) gsap.to(G.target, {opacity:.3, repeat:-1, yoyo:true, duration:.8, ease:'sine.inOut'});
 
   // Pot

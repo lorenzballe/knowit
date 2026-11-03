@@ -1,0 +1,450 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-reidemeister-upper-bound -->
+<!-- Design note. Look: a cyanotype engineering sheet, white hairlines on Prussian blue. A closed twisted knot sits over a dimension line with its crossings ticked in amber. Lackenby's bound (236·n)¹¹ is lettered large, its value is read out in words, and a curved log-scale ruler runs underneath. A small galaxy turns in the corner.
+     Layout: the sheet is measured, not guessed. Each row is stacked from its real text box. On short stages the knot and the formula sit side by side above a gentler ruler. The sheet re-lays itself whenever the stage changes size.
+     Interaction: slide n, the knot's crossings. The knot redraws with that many crossings, and an amber marker glides along the ruler, so you can watch a polynomial climb.
+     Wow: "Try every sequence" goes back to one crossing. The sheet clears, and a tree of move sequences bursts across it, with light running along its branches and doubling each move. It ends on 2^(236¹¹) sequences, more than the stars, and the galaxy swells. -->
+<title>The bound on Reidemeister moves</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;overflow:hidden;background:none}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic .m{font-family:var(--mono)}
+#pic .d{font-family:var(--display)}
+.tw{animation:tw 2.4s ease-in-out infinite}
+@keyframes tw{50%{opacity:.2}}
+.kit-calm .tw{animation:none}
+#ctl{display:flex;align-items:center;gap:3cqw;padding:0 1cqw}
+#ctl label{font:800 max(1.9cqh,12px)/1.1 var(--mono);color:var(--k);white-space:nowrap}
+#ctl output{font:800 max(2.6cqh,16px)/1 var(--mono);min-width:1.6em;text-align:right;color:var(--k)}
+#n{flex:1;min-width:0;-webkit-appearance:none;appearance:none;height:max(5cqh,34px);background:transparent;touch-action:none;margin:0;cursor:pointer}
+#n::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:color-mix(in srgb,var(--k) 28%,transparent)}
+#n::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-10px;border-radius:50%;background:#0d3d73;border:3px solid #ffd88a;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+#n::-moz-range-track{height:6px;border-radius:6px;background:color-mix(in srgb,var(--k) 28%,transparent)}
+#n::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#0d3d73;border:3px solid #ffd88a;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+#go{align-self:flex-start}
+.say{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.4cqh,15px)}
+.answered .say{font-size:max(1.95cqh,13px);line-height:1.35}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Slide the crossings · the bound" style="--c:#0d3c71;--k:#eef5ff;--edge:#082a52">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLIDE THE CROSSINGS</span></div>
+    <h2 class="q">What is the current upper bound on Reidemeister moves between two knots?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A blueprint: a knot with n crossings, the bound (236 times n) to the 11th power, and a curved log-scale ruler with a marker at the number of moves."></svg>
+    </div>
+    <div id="ctl"><label for="n">crossings n</label><input type="range" id="n" min="1" max="12" step="1" value="1"><output id="nv">1</output></div>
+    <p class="say" id="say"><b>Slide n</b>, the knot's crossings. The marker shows how many moves the bound allows.</p>
+    <button class="btn gone" id="go">Try every sequence, for 1 crossing</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A far smaller bound can still leave an astronomical search.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
+  const svg = Kit.$('pic'), stage = Kit.$('stage'), rng = Kit.$('n'), nv = Kit.$('nv'), say = Kit.$('say'), go = Kit.$('go'), card = Kit.$('card');
+  const INK = '#eef5ff', FAINT = 'rgba(238,245,255,.58)', HAIR = 'rgba(238,245,255,.12)', AMB = '#ffd88a', B0 = '#124b8c', B1 = '#0d3c71', MID = '#0d3c71';
+  let W = 0, H = 0, fs = 13, n = 1, phase = 'slide', touched = false, done = false, mode = 'tall';
+  let treeTL = null, galTw = null, lastW = 0, lastH = 0, rM = 1.25, rD = 1.3;
+  const st = {t: 0};
+  let E = {}, G = {}, Y = {};
+  const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹', sup = e => String(e).split('').map(c => SUP[+c]).join('');
+  // Lackenby's bound: (236·n)^11 moves. Work in log10.
+  const lg = k => 11 * Math.log10(236 * k);
+  const tOf = k => (lg(k) - 24) / 15;              // ruler: 10^24 … 10^39
+  const sci = k => { const L = lg(k), e = Math.floor(L); return (10 ** (L - e)).toFixed(1) + '×10' + sup(e); };
+  const NAMES = {24: 'septillion', 27: 'octillion', 30: 'nonillion', 33: 'decillion', 36: 'undecillion', 39: 'duodecillion'};
+  const words = k => { const L = lg(k), g = Math.floor(L / 3) * 3, m = 10 ** (L - g); return (m < 10 ? m.toFixed(1) : Math.round(m)) + ' ' + NAMES[g]; };
+  const T = (p, x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': Math.max(12, fs)}, a), p); e.textContent = s; return e; };
+  const fit = (e, maxW) => { let s = parseFloat(e.getAttribute('font-size')); while (e.getComputedTextLength() > maxW && s > 12) { s = Math.max(12, s - .5); e.setAttribute('font-size', s); } return e; };
+  const put = (e, top) => { e.setAttribute('y', 0); const b = e.getBBox(); e.setAttribute('y', top - b.y); return top + b.height; };
+  const seeded = seed => { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; };
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  function defs() {
+    const d = Kit.mk('defs', {}, svg);
+    const core = Kit.mk('radialGradient', {id: 'core'}, d);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#fff', 'stop-opacity': 1}, core); Kit.mk('stop', {offset: .4, 'stop-color': AMB, 'stop-opacity': .6}, core); Kit.mk('stop', {offset: 1, 'stop-color': AMB, 'stop-opacity': 0}, core);
+    const s = Math.max(10, Math.round(W / 26));
+    const p1 = Kit.mk('pattern', {id: 'grid', width: s, height: s, patternUnits: 'userSpaceOnUse'}, d);
+    Kit.mk('path', {d: `M${s} 0H0V${s}`, fill: 'none', stroke: HAIR, 'stroke-width': .6}, p1);
+    const p2 = Kit.mk('pattern', {id: 'grid5', width: s * 5, height: s * 5, patternUnits: 'userSpaceOnUse'}, d);
+    Kit.mk('path', {d: `M${s * 5} 0H0V${s * 5}`, fill: 'none', stroke: 'rgba(238,245,255,.2)', 'stroke-width': .8}, p2);
+    const gf = Kit.mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, d);
+    Kit.mk('feGaussianBlur', {stdDeviation: 2.2, result: 'b'}, gf);
+    const m = Kit.mk('feMerge', {}, gf); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
+  }
+  function measure() {
+    const a = T(svg, 0, 0, 'Ag(1)', {class: 'm', 'font-size': 100}), b = T(svg, 0, 0, 'Ag(1)', {class: 'd', 'font-size': 100, 'font-weight': 800});
+    rM = a.getBBox().height / 100 || 1.25; rD = b.getBBox().height / 100 || 1.3; a.remove(); b.remove();
+  }
+
+  // Decide the composition from the real stage height.
+  function plan() {
+    const fd = Math.max(12, fs * .95), fl = Math.max(12, fs * 1.05);
+    const need = (a, Fz, old, hump) => fs * 2.7 + 3.7 * a + fs * 1.05 + rM * fd + fs * .25 + rD * Fz + fs * .15 + rM * fl + (old ? fs * .15 + rM * 12 : 0) + fs * 2.3 + hump + fs * 2.6;
+    Y = {fd, fl};
+    if (need(8, 26, false, 4.2 * fs) <= H) {
+      mode = 'tall';
+      let a = 8, Fz = 26, hump = 4.2 * fs, s;
+      const old = need(8, 26, true, hump) <= H;
+      const aT = clamp(H * .045, 8, 15), FzT = clamp(Math.min(W * .15, H * .11), 26, 52);
+      s = H - need(a, Fz, old, hump); a += Math.max(0, Math.min(aT - a, s * .35 / 3.7));
+      s = H - need(a, Fz, old, hump); Fz += Math.max(0, Math.min(FzT - Fz, s * .5 / rD));
+      s = H - need(a, Fz, old, hump); hump += Math.max(0, Math.min(s * .6, 2.6 * fs));
+      s = Math.max(0, H - need(a, Fz, old, hump));
+      Object.assign(Y, {a, g: a * .85, Fz, old, pad: s / 3, xa: W * .2, xb: W * .72});
+    } else {
+      mode = 'compact';
+      const a = clamp(H * .05, 6, 10), k = a * 1.85;
+      Object.assign(Y, {a, g: a * .85, Fz: clamp(H * .16, 22, 40), old: false, pad: 0, xa: W * .05 + k + 3, xb: W * .48 - k});
+    }
+  }
+
+  function backdrop() {
+    const g = G.bg = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {width: W, height: H, fill: 'url(#grid)'}, g);
+    Kit.mk('rect', {width: W, height: H, fill: 'url(#grid5)'}, g);
+    const i = fs * .5;
+    E.frame = Kit.mk('g', {}, g);
+    for (const [x, y] of [[i, i], [W - i, i], [i, H - i], [W - i, H - i]]) Kit.mk('path', {d: `M${x - 5},${y}h10M${x},${y - 5}v10`, stroke: INK, 'stroke-width': 1}, E.frame);
+    if (mode === 'tall') { E.hdr = T(g, fs * 1.1, fs * 1.95, 'KNOT EQUIVALENCE · SHEET 1', {class: 'm', 'font-size': 12, fill: FAINT, 'letter-spacing': 1, 'font-weight': 700}); fit(E.hdr, W - fs * 5); }
+  }
+
+  function drawKnot() {
+    const g = G.knot; g.innerHTML = '';
+    const {a, g: gap, cy, xa, xb} = Y, L = xb - xa, k = a + gap;
+    const dimY = cy + a + gap + fs * (mode === 'tall' ? .75 : .6);
+    const sy = (s, x) => cy + s * a * Math.cos(Math.PI * n * (x - xa) / L);
+    const seg = (s, x0, x1, N) => { let d = ''; for (let i = 0; i <= N; i++) { const x = x0 + (x1 - x0) * i / N; d += (i ? 'L' : 'M') + x.toFixed(2) + ',' + sy(s, x).toFixed(2); } return d; };
+    const yt = cy - a - gap, ybot = cy + a + gap;
+    const paths = [seg(1, xa, xb, 40 * n + 20), seg(-1, xa, xb, 40 * n + 20),
+      `M${xb},${cy - a} C${xb + k},${cy - a} ${xb + k},${yt} ${xb},${yt} L${xa},${yt} C${xa - k},${yt} ${xa - k},${cy - a} ${xa},${cy - a}`,
+      `M${xb},${cy + a} C${xb + k},${cy + a} ${xb + k},${ybot} ${xb},${ybot} L${xa},${ybot} C${xa - k},${ybot} ${xa - k},${cy + a} ${xa},${cy + a}`];
+    const soft = Kit.mk('g', {opacity: .2}, g), hard = Kit.mk('g', {}, g);
+    E.knotPaths = paths.map(d => { Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 5, 'stroke-linecap': 'round'}, soft); return Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hard); });
+    // Over/under: the strand heading down at each crossing goes over.
+    E.halos = Kit.mk('g', {}, g);
+    const hd = Math.min(L / n * .3, a * .75);
+    for (let i = 0; i < n; i++) {
+      const xk = xa + L * (i + .5) / n, s = i % 2 ? 1 : -1, d = seg(s, xk - hd, xk + hd, 12);
+      Kit.mk('path', {d, fill: 'none', stroke: MID, 'stroke-width': 8, 'stroke-linecap': 'butt'}, E.halos);
+      Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, E.halos);
+    }
+    // Dimension line across the crossings.
+    E.dim = Kit.mk('g', {}, g);
+    Kit.mk('path', {d: `M${xa},${dimY}H${xb}M${xa},${dimY - 5}v10M${xb},${dimY - 5}v10M${xa + 7},${dimY - 3.5}L${xa},${dimY}L${xa + 7},${dimY + 3.5}M${xb - 7},${dimY - 3.5}L${xb},${dimY}L${xb - 7},${dimY + 3.5}`, fill: 'none', stroke: FAINT, 'stroke-width': 1}, E.dim);
+    for (let i = 0; i < n; i++) { const xk = xa + L * (i + .5) / n; Kit.mk('path', {d: `M${xk},${dimY - 3}v6`, stroke: AMB, 'stroke-width': 1.4}, E.dim); Kit.mk('path', {d: `M${xk},${cy + a + 3}V${dimY - 4}`, stroke: HAIR, 'stroke-width': .8, 'stroke-dasharray': '2 2'}, E.dim); }
+    const t = T(E.dim, (xa + xb) / 2, 0, `n = ${n} crossing${n > 1 ? 's' : ''}`, {class: 'm', 'text-anchor': 'middle', 'font-weight': 700, fill: AMB, 'font-size': Y.fd});
+    fit(t, L + 2 * k);
+    Y.dimBot = put(t, dimY + fs * .3);
+  }
+
+  // (236 · n)¹¹, measured so it never touches its neighbours.
+  function buildForm(cx, maxW) {
+    const g = G.form;
+    const m = T(g, 0, 0, '', {class: 'd', 'font-weight': 800});
+    [['(236', INK], [mode === 'tall' ? ' · ' : '·', FAINT], ['n', INK], [')', INK]].forEach(([s, c]) => { const t = Kit.mk('tspan', {fill: c}, m); t.textContent = s; });
+    const s = T(g, 0, 0, '11', {class: 'd', 'font-weight': 800, fill: AMB});
+    let Fz = Y.Fz, wm, ws, gp;
+    const size = () => { m.setAttribute('font-size', Fz); s.setAttribute('font-size', Math.max(12, Fz * .5)); wm = m.getComputedTextLength(); ws = s.getComputedTextLength(); gp = Fz * .05; };
+    size();
+    if (wm + gp + ws > maxW) { Fz = Math.max(20, Fz * maxW / (wm + gp + ws)); size(); }
+    const x0 = cx - (wm + gp + ws) / 2; m.setAttribute('x', x0); s.setAttribute('x', x0 + wm + gp);
+    const at = bl => { m.setAttribute('y', bl); s.setAttribute('y', bl - Fz * .42); };
+    at(0); const b1 = m.getBBox(), b2 = s.getBBox();
+    const tp = Math.min(b1.y, b2.y), bt = Math.max(b1.y + b1.height, b2.y + b2.height);
+    E.formM = m; E.formS = s;
+    return {h: bt - tp, place: top => { at(top - tp); return top + bt - tp; }};
+  }
+  function setLive() {
+    const e = E.live; e.setAttribute('font-size', Y.fl);
+    e.textContent = `≈ ${words(n)} moves`; fit(e, Y.liveMax);
+    if (e.getComputedTextLength() > Y.liveMax) { e.setAttribute('font-size', Y.fl); e.textContent = `≈ ${words(n)}`; fit(e, Y.liveMax); }
+  }
+  function buildOld() {
+    const o = T(G.form, W / 2, 0, '', {class: 'm', 'text-anchor': 'middle', 'font-size': 12, fill: FAINT});
+    [['old bound ', FAINT, 400], ['2^(100 billion·n)', INK, 700], [' · off this scale ↘', FAINT, 400]].forEach(([s, c, w]) => { const t = Kit.mk('tspan', {fill: c, 'font-weight': w}, o); t.textContent = s; });
+    if (o.getComputedTextLength() > W - fs * 2) o.lastChild.remove();
+    return o;
+  }
+
+  function drawRuler() {
+    const g = G.ruler; g.innerHTML = '';
+    const {y0, apex} = Y, yc = 2 * apex - y0, x0 = W * .07, x1 = W * .93;
+    const d = `M${x0},${y0} Q${W / 2},${yc} ${x1},${y0}`;
+    E.arc = Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.4}, g);
+    const len = E.len = E.arc.getTotalLength();
+    E.lit = Kit.mk('path', {d, fill: 'none', stroke: AMB, 'stroke-width': 3.2, 'stroke-linecap': 'round', 'stroke-dasharray': `${len} ${len}`, 'stroke-dashoffset': len, filter: 'url(#glow)'}, g);
+    E.P = t => E.arc.getPointAtLength(clamp(t, 0, 1) * len);
+    E.ticks = [];
+    for (let p = 0; p <= 15; p++) {
+      const t = p / 15, A = E.P(t - .004), B = E.P(t + .004), q = E.P(t);
+      let nx = -(B.y - A.y), ny = B.x - A.x; const m = Math.hypot(nx, ny) || 1; nx /= m; ny /= m; if (ny < 0) { nx = -nx; ny = -ny; }
+      const major = p % 3 === 0, l = major ? fs * .75 : fs * .38;
+      const tg = Kit.mk('g', {}, g); E.ticks.push(tg);
+      Kit.mk('line', {x1: q.x, y1: q.y, x2: q.x + nx * l, y2: q.y + ny * l, stroke: major ? INK : FAINT, 'stroke-width': major ? 1.3 : .9}, tg);
+      if (major) {
+        const lab = T(tg, q.x + nx * (l + fs * .95), q.y + ny * (l + fs * .95) + fs * .38, '10' + sup(24 + p), {class: 'm', 'text-anchor': 'middle', 'font-size': 12.5, fill: FAINT, 'font-weight': 700});
+        if (p === 0) E.L0 = lab; if (p === 15) E.L15 = lab;
+      }
+    }
+    // Caption between the two end labels, on their row.
+    const b0 = E.L0.getBBox(), b1 = E.L15.getBBox(), room = b1.x - (b0.x + b0.width) - fs * 1.2;
+    E.cap = T(g, (b0.x + b0.width + b1.x) / 2, +E.L0.getAttribute('y'), 'MOVES · LOG SCALE', {class: 'm', 'text-anchor': 'middle', 'font-size': 12, fill: FAINT, 'letter-spacing': 1, 'font-weight': 700});
+    if (E.cap.getComputedTextLength() > room) { E.cap.removeAttribute('letter-spacing'); if (E.cap.getComputedTextLength() > room) E.cap.textContent = 'LOG SCALE'; }
+    // The scale runs on, off the sheet, toward the old bound.
+    let dx = x1 - W / 2, dy = y0 - yc; const mm = Math.hypot(dx, dy) || 1; dx /= mm; dy /= mm;
+    const L = Math.max(0, Math.min(fs * 1.5, (W - fs * .8 - x1) / dx)), ex = x1 + dx * L, ey = y0 + dy * L, an = Math.atan2(dy, dx);
+    Kit.mk('path', {d: `M${x1},${y0}L${ex},${ey}`, fill: 'none', stroke: FAINT, 'stroke-width': 1.1, 'stroke-dasharray': '2.5 2'}, g);
+    Kit.mk('path', {d: `M${ex - 5 * Math.cos(an - .5)},${ey - 5 * Math.sin(an - .5)}L${ex},${ey}L${ex - 5 * Math.cos(an + .5)},${ey - 5 * Math.sin(an + .5)}`, fill: 'none', stroke: FAINT, 'stroke-width': 1.1}, g);
+  }
+
+  function drawMark() {
+    const g = E.mk = Kit.mk('g', {}, G.mark);
+    E.ring = Kit.mk('circle', {r: fs * .8, fill: 'none', stroke: AMB, 'stroke-width': 1, opacity: .55}, g);
+    Kit.mk('circle', {r: fs * .4, fill: AMB, stroke: B1, 'stroke-width': 2, filter: 'url(#glow)'}, g);
+    E.mlab = T(g, 0, -fs * 1.15, sci(n), {class: 'm', 'text-anchor': 'middle', 'font-size': 13, fill: AMB, 'font-weight': 800, stroke: B1, 'stroke-width': 4, 'paint-order': 'stroke'});
+  }
+  function place(t) {
+    if (!E.P) return;
+    const p = E.P(t);
+    E.mk.setAttribute('transform', `translate(${p.x},${p.y})`);
+    E.lit.setAttribute('stroke-dashoffset', E.len * (1 - clamp(t, 0, 1)));
+    E.mlab.setAttribute('x', 0);
+    const w = E.mlab.getComputedTextLength(), left = p.x - w / 2;
+    E.mlab.setAttribute('x', Math.max(fs - left, Math.min(0, W - fs - (left + w))));
+  }
+
+  function drawGal() {
+    const g = G.gal; g.innerHTML = '';
+    const tall = mode === 'tall', gx = W - fs * (tall ? 2 : 1.7), gy = fs * (tall ? 2 : 1.6), R = fs * (tall ? 1.15 : .85); Y.gx = gx; Y.gy = gy;
+    E.galS = Kit.mk('g', {}, g); E.galR = Kit.mk('g', {}, E.galS);
+    Kit.mk('circle', {cx: gx, cy: gy, r: R * 1.05, fill: 'none', stroke: HAIR, 'stroke-width': .8, 'stroke-dasharray': '2 3'}, E.galS);
+    for (const arm of [0, 1]) {
+      let d = '';
+      for (let i = 0; i <= 30; i++) { const th = i / 30 * Math.PI * 2.4, r = R * .12 + R * .85 * i / 30, an = th + arm * Math.PI; d += (i ? 'L' : 'M') + (gx + r * Math.cos(an)).toFixed(2) + ',' + (gy + r * Math.sin(an) * .62).toFixed(2); }
+      Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.1, opacity: .85, 'stroke-linecap': 'round'}, E.galR);
+    }
+    const r = seeded(11);
+    for (let i = 0; i < 16; i++) { const an = r() * 6.283, rr = R * (.2 + .8 * r()); Kit.mk('circle', {cx: gx + rr * Math.cos(an), cy: gy + rr * Math.sin(an) * .62, r: .6 + r() * .9, fill: INK, opacity: .5 + r() * .5}, E.galR); }
+    Kit.mk('circle', {cx: gx, cy: gy, r: R * .42, fill: 'url(#core)'}, E.galR);
+    if (!Kit.calm) galTw = gsap.to(E.galR, {rotation: 360, svgOrigin: `${gx} ${gy}`, duration: 50, ease: 'none', repeat: -1});
+  }
+
+  // ---------- the tree of move sequences ----------
+  function drawTree(anim) {
+    const g = G.tree; g.innerHTML = '';
+    const roomy = H >= 230, ctx = H >= 118;
+    const sheet = [G.knot, G.form, G.ruler, G.mark, E.hdr].filter(Boolean);
+    const veil = Kit.mk('rect', {width: W, height: H, fill: 'none', opacity: 0}, g);
+    const hdrW = W - fs * (roomy ? 5.4 : 4.2);
+    let y = fs * .75, small = null;
+    if (roomy) { small = T(g, fs, 0, '236¹¹ moves, only 2 choices each:', {class: 'm', 'font-size': 12.5, fill: FAINT, 'font-weight': 700}); fit(small, hdrW); y = put(small, y) + fs * .2; }
+    const B = roomy ? clamp(Math.min(fs * 1.9, W * .075), 18, 30) : clamp(Math.min(fs * 1.5, H * .13), 16, 22);
+    const big = T(g, fs, 0, '', {class: 'd', 'font-size': B, 'font-weight': 800, fill: INK});
+    const finalBig = () => {
+      big.textContent = ''; big.setAttribute('font-size', B);
+      const a = Kit.mk('tspan', {}, big); a.textContent = '2';
+      const s = Kit.mk('tspan', {dy: -B * .42, 'font-size': Math.max(12, B * .52), fill: AMB}, big); s.textContent = '236¹¹';
+      const c = Kit.mk('tspan', {dy: B * .42}, big); c.textContent = ' sequences';
+      fit(big, hdrW);
+    };
+    finalBig();
+    let top = put(big, y) + fs * .35;
+    const xr = W * .07, x7 = W * .74, dx = (x7 - xr) / 7, lv = [];
+    if (roomy) {
+      for (let L = 1; L <= 7; L++) lv.push(T(g, xr + L * dx, 0, String(L), {class: 'm', 'text-anchor': 'middle', 'font-size': 12, fill: FAINT, opacity: anim ? 0 : 1}));
+      lv.push(T(g, W - fs * .9, 0, '…236¹¹', {class: 'm', 'text-anchor': 'end', 'font-size': 12, fill: AMB, 'font-weight': 700, opacity: anim ? 0 : 1}));
+      let b = top; lv.forEach(e => { b = put(e, top); }); top = b + fs * .45;
+    }
+    const lines = roomy ? [['for 1 crossing, more than the stars in', AMB], ['the observable universe', AMB]]
+      : ctx ? [['236¹¹ moves, 2 choices each, 1 crossing:', FAINT], ['more than the observable universe’s stars', AMB]]
+      : [['more than the observable universe’s stars', AMB]];
+    const foot = lines.map(([s, c]) => { const e = T(g, W / 2, 0, s, {class: 'm', 'text-anchor': 'middle', 'font-size': 12.5, fill: c, 'font-weight': 800}); fit(e, W - fs * 2); return e; });
+    const fh = foot.map(e => { e.setAttribute('y', 0); return e.getBBox().height; });
+    let fy = H - fs * .55 - fh.reduce((a, b) => a + b, 0);
+    const bot = fy - fs * .45;
+    foot.forEach((e, i) => { fy = put(e, fy); });
+    const mid = (top + bot) / 2;
+    const NX = L => xr + L * dx, NY = (L, j) => L ? top + (j + .5) * (bot - top) / 2 ** L : mid;
+    const levels = [[]];
+    for (let L = 1; L <= 7; L++) {
+      const arr = [];
+      for (let j = 0; j < 2 ** L; j++) {
+        const px = NX(L - 1), py = NY(L - 1, j >> 1), cx = NX(L), cy = NY(L, j), mx = (px + cx) / 2;
+        arr.push(Kit.mk('path', {d: `M${px},${py} C${mx},${py} ${mx},${cy} ${cx},${cy}`, fill: 'none', stroke: INK, 'stroke-width': Math.max(.6, 1.7 - L * .16), opacity: .95 - L * .08}, g));
+      }
+      levels.push(arr);
+    }
+    let cont = '';
+    for (let j = 0; j < 128; j++) cont += `M${NX(7) + 3},${NY(7, j)}H${W - fs * .8}`;
+    const contP = Kit.mk('path', {d: cont, stroke: INK, 'stroke-width': .6, 'stroke-dasharray': '2 3', opacity: anim ? 0 : .3}, g);
+    const root = Kit.mk('circle', {cx: xr, cy: mid, r: fs * .42, fill: AMB, filter: 'url(#glow)'}, g);
+    const leaves = Kit.mk('g', {opacity: anim ? 0 : 1}, g), r = seeded(5);
+    for (let j = 0; j < 128; j++) Kit.mk('circle', {cx: NX(7), cy: NY(7, j), r: .9 + r() * .7, fill: INK, class: r() < .35 ? 'tw' : '', style: `animation-delay:${(r() * 2.4).toFixed(2)}s`}, leaves);
+    const endHdr = () => { if (small) { small.setAttribute('font-size', 12.5); small.textContent = '236¹¹ moves, only 2 choices each:'; fit(small, hdrW); } finalBig(); };
+    if (!anim) { gsap.set(sheet, {opacity: 0, visibility: 'hidden'}); endHdr(); gsap.set(E.galS, {scale: 1.3, svgOrigin: `${Y.gx} ${Y.gy}`}); return; }
+
+    // Animated: the sheet clears, then the tree bursts out move by move, light riding its curves.
+    if (small) { small.textContent = 'each move can go more than one way'; fit(small, hdrW); }
+    const setHdr = L => { big.setAttribute('font-size', B); big.textContent = `move ${L} · ${(2 ** L).toLocaleString('en-US')} sequences`; fit(big, hdrW); gsap.fromTo(big, {opacity: .5}, {opacity: 1, duration: .2}); Kit.haptic('selection'); };
+    setHdr(1);
+    gsap.set([...foot, big, root].concat(small ? [small] : []), {opacity: 0});
+    levels.slice(1).forEach(a => gsap.set(a, {drawSVG: '0%'}));
+    const tl = treeTL = gsap.timeline({onComplete: () => { treeTL = null; finish(); }});
+    tl.to(sheet, {autoAlpha: 0, duration: .45, ease: 'power2.in', stagger: .04}, 0)
+      .to(veil, {opacity: .4, duration: .5, ease: 'power2.out'}, 0)
+      .to([small, big].filter(Boolean), {opacity: 1, duration: .4, ease: 'power2.out', stagger: .08}, .25)
+      .fromTo(root, {opacity: 0, scale: 0, svgOrigin: `${xr} ${mid}`}, {opacity: 1, scale: 1, duration: .45, ease: 'back.out(3)'}, .3);
+    const step = .3;
+    for (let L = 1; L <= 7; L++) {
+      const t0 = .55 + (L - 1) * step;
+      tl.to(levels[L], {drawSVG: '100%', duration: .34, ease: 'power2.out', stagger: {amount: .1}}, t0);
+      if (lv[L - 1]) tl.to(lv[L - 1], {opacity: 1, duration: .25}, t0);
+      if (L > 1) tl.call(() => setHdr(L), null, t0 + .05);
+    }
+    // Sparks travel real paths from the knot to the leaves.
+    const rs = seeded(9);
+    for (let i = 0; i < 22; i++) {
+      const leaf = Math.floor(rs() * 128); let d = `M${xr},${mid}`;
+      for (let L = 1; L <= 7; L++) { const j = leaf >> (7 - L), pj = j >> 1, px = NX(L - 1), py = NY(L - 1, pj), cx = NX(L), cy = NY(L, j), mx = (px + cx) / 2; d += ` C${mx},${py} ${mx},${cy} ${cx},${cy}`; }
+      const dot = Kit.mk('circle', {cx: 0, cy: 0, r: Math.max(1.8, fs * .2), fill: AMB, filter: 'url(#glow)', opacity: 0}, g);
+      tl.set(dot, {opacity: 1}, .55 + i * .03)
+        .to(dot, {motionPath: {path: d}, duration: 7 * step + .2, ease: 'sine.inOut'}, .55 + i * .03)
+        .to(dot, {opacity: 0, duration: .4}, 3.05 + i * .02);
+    }
+    const tEnd = .55 + 7 * step + .2, bl = parseFloat(big.getAttribute('y'));
+    tl.to(leaves, {opacity: 1, duration: .5}, tEnd - .2)
+      .to(contP, {opacity: .3, duration: .3}, tEnd)
+      .fromTo(contP, {drawSVG: '0%'}, {drawSVG: '100%', duration: .6, ease: 'power3.out'}, tEnd);
+    if (lv[7]) tl.to(lv[7], {opacity: 1, duration: .3}, tEnd + .2);
+    tl.call(() => { endHdr(); Kit.haptic('success'); }, null, tEnd + .5)
+      .fromTo(big, {scale: .55, opacity: 0, svgOrigin: `${fs} ${bl}`}, {scale: 1, opacity: 1, duration: .8, ease: 'back.out(2.2)'}, tEnd + .5)
+      .to(E.galS, {scale: 1.3, svgOrigin: `${Y.gx} ${Y.gy}`, duration: 1.1, ease: 'elastic.out(1,.45)'}, tEnd + .55)
+      .fromTo(foot, {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .55, ease: 'power3.out', stagger: .12}, tEnd + .8)
+      .to({}, {duration: .7});
+  }
+
+  function finish() {
+    if (done) return; done = true;
+    say.innerHTML = '<b>(236·n)¹¹</b> dwarfs the old 2^(100 billion·n). But a check must try every sequence of moves, and they multiply with each move.';
+    Kit.hide('ctl'); Kit.show('keep'); card.classList.add('answered');
+  }
+
+  function wow() {
+    if (phase === 'wow') return;
+    phase = 'wow'; Kit.hide('go'); Kit.haptic('light');
+    rng.value = 1; rng.disabled = true; setN(1);
+    if (Kit.calm) { drawTree(false); finish(); return; }
+    gsap.delayedCall(.65, () => { if (!done && !treeTL) drawTree(true); });
+  }
+
+  function setN(k) {
+    n = k; nv.textContent = k;
+    drawKnot(); setLive();
+    E.mlab.textContent = sci(n);
+    gsap.to(st, {t: tOf(n), duration: Kit.calm ? 0 : .75, ease: 'power3.out', overwrite: true, onUpdate: () => place(st.t), onComplete: () => place(st.t)});
+    if (!Kit.calm) { gsap.fromTo(E.ring, {attr: {r: fs * .5}, opacity: .9}, {attr: {r: fs * 1.2}, opacity: 0, duration: .6, ease: 'power2.out'}); gsap.fromTo(E.live, {opacity: .35}, {opacity: 1, duration: .35, ease: 'power2.out'}); }
+    if (phase === 'slide') say.innerHTML = n === 1
+      ? 'One crossing: the bound allows 236¹¹, about <b>126 septillion</b> moves. <b>Slide n up.</b>'
+      : 'Polynomial: doubling n multiplies the bound by 2¹¹ = 2,048. The old bound, 2^(100 billion·n), would double its <b>digits</b>.';
+  }
+
+  rng.addEventListener('input', () => {
+    const k = +rng.value;
+    if (k !== n) { Kit.haptic('selection'); setN(k); }
+    if (!touched) { touched = true; Kit.show('go'); }
+  });
+  go.addEventListener('click', wow);
+
+  function layout() {
+    const wasAnim = !!treeTL;
+    if (treeTL) { treeTL.kill(); treeTL = null; }
+    if (galTw) { galTw.kill(); galTw = null; }
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const rc = stage.getBoundingClientRect(); lastW = rc.width; lastH = rc.height;
+    fs = clamp(W / 26, 12.5, 15);
+    E = {}; G = {};
+    defs(); measure(); plan(); backdrop();
+    for (const k of ['knot', 'form', 'ruler', 'mark', 'tree', 'gal']) G[k] = Kit.mk('g', {}, svg);
+    if (mode === 'tall') Y.cy = fs * 2.7 + Y.pad + Y.a + Y.g;
+    else Y.cy = fs * 1.0 + Y.a + Y.g;
+    drawKnot();
+    if (mode === 'tall') {
+      const F = buildForm(W / 2, W * .82);
+      let y = F.place(Y.dimBot + fs * .25 + Y.pad);
+      E.live = T(G.form, W / 2, 0, '', {class: 'm', 'text-anchor': 'middle', 'font-weight': 800, fill: AMB});
+      Y.liveMax = W * .9; setLive(); y = put(E.live, y + fs * .15);
+      if (Y.old) { E.old = buildOld(); y = put(E.old, y + fs * .15); }
+      Y.y0 = H - fs * 2.6; Y.apex = y + fs * 2.3 + Y.pad;
+    } else {
+      const c0 = W * .52, c1 = W - fs * 3.1, fcx = (c0 + c1) / 2;
+      const F = buildForm(fcx, c1 - c0);
+      E.live = T(G.form, fcx, 0, '', {class: 'm', 'text-anchor': 'middle', 'font-weight': 800, fill: AMB});
+      Y.liveMax = 2 * Math.min(fcx - W * .5, W - fs * .8 - fcx); setLive();
+      E.live.setAttribute('y', 0); const lh = E.live.getBBox().height, rh = F.h + fs * .1 + lh;
+      const leftTop = Y.cy - Y.a - Y.g, top = Math.max(fs * .7, (leftTop + Y.dimBot) / 2 - rh / 2);
+      let y = F.place(top); y = put(E.live, y + fs * .1);
+      const band = Math.max(y, Y.dimBot);
+      Y.y0 = H - fs * 2.9; Y.apex = Math.min(band + fs * 2.3, Y.y0 - fs * 1.8);
+    }
+    drawRuler(); drawMark(); drawGal();
+    if (phase === 'slide' && !touched && st.t === 0 && Kit.calm) st.t = tOf(n);
+    place(st.t);
+    if (phase === 'wow' && (done || wasAnim)) { drawTree(false); if (!done) finish(); }
+  }
+  Kit.onShow.card = layout;
+
+  // Re-lay the sheet whenever the stage changes size (button, answer text, rotation).
+  let raf = 0;
+  new ResizeObserver(() => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      if (!lastW) return;
+      const r = stage.getBoundingClientRect();
+      if (r.width < 2 || r.height < 2) return;
+      if (Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 1) return;
+      layout();
+    });
+  }).observe(stage);
+  if (document.fonts && document.fonts.status !== 'loaded') document.fonts.ready.then(() => { if (lastW && phase === 'slide') layout(); });
+
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !E.arc) { st.t = tOf(n); place(st.t); return; }
+    const tl = gsap.timeline();
+    tl.from(E.frame, {opacity: 0, duration: .6, ease: 'power2.out'});
+    if (E.hdr) tl.from(E.hdr, {opacity: 0, x: -8, duration: .6, ease: 'power3.out'}, .1);
+    tl.fromTo(E.knotPaths, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1, ease: 'power3.inOut', stagger: .12}, .1)
+      .from(E.halos, {opacity: 0, duration: .3}, .9)
+      .from(E.dim, {opacity: 0, y: -6, duration: .5, ease: 'power3.out'}, .8)
+      .from([E.formM, E.formS], {opacity: 0, y: 14, duration: .7, ease: 'expo.out', stagger: .12}, .4)
+      .from(E.live, {opacity: 0, duration: .5}, .8);
+    if (E.old) tl.from(E.old, {opacity: 0, y: 6, duration: .5, ease: 'power3.out'}, 1.1);
+    tl.fromTo(E.arc, {drawSVG: '0%'}, {drawSVG: '100%', duration: .9, ease: 'power3.inOut'}, .3)
+      .from(E.ticks, {opacity: 0, y: 5, duration: .35, ease: 'power2.out', stagger: .035}, .6)
+      .from(E.cap, {opacity: 0, duration: .5}, 1.1)
+      .from(G.gal, {opacity: 0, scale: .3, svgOrigin: `${Y.gx} ${Y.gy}`, duration: .9, ease: 'back.out(2)'}, .7);
+    st.t = 0; place(0);
+    tl.to(st, {t: tOf(n), duration: 1.3, ease: 'expo.out', onUpdate: () => place(st.t)}, 1);
+  };
+
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    rng.value = 7; rng.dispatchEvent(new Event('input', {bubbles: true}));
+    await w(Kit.calm ? 80 : 600);
+    go.click();
+    await w(Kit.calm ? 300 : 5200);
+  };
+})();
+Kit.single();
+</script>
+</html>

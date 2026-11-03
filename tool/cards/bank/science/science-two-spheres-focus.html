@@ -1,0 +1,390 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-two-spheres-focus -->
+<!-- Look: a vintage brass bench instrument. A dark graticuled viewing glass with a brass horn and a pilot lamp sits above an ivory gauge with engraved log ticks and a blued needle. On short phones the glass and gauge sit side by side.
+     Interaction: three taps build the experiment. Switch on the 12 cm microwave, drop in one sphere, then a second touching it. The gauge reads the width of the hot spot.
+     Wow: as the second sphere lands, every wavefront squeezes and bends around the contact point, the wide glow collapses into a tiny plasma star drawn to scale, and the needle swings with a damped wobble from 12 cm to about 1 mm. -->
+<title>Two spheres, one tiny spot</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation}
+#go{align-self:flex-start;font:800 max(2.1cqh,14px)/1.1 var(--body);color:#2a1c0c;border:0;border-radius:99px;padding:1.3cqh 5cqw;cursor:pointer;
+  background:linear-gradient(180deg,#fbe7a6 0%,#e0b45a 45%,#a8772a 100%);
+  box-shadow:inset 0 .2cqh 0 rgba(255,255,255,.6),inset 0 -.3cqh 0 rgba(80,50,10,.35),0 .5cqh 1.2cqh rgba(60,35,5,.35);transition:transform .08s ease-out}
+#go:active{transform:translateY(.25cqh) scale(.98)}
+.say{overflow-wrap:break-word}
+.answered .q{font-size:max(2.5cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to build · focus a wave">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FOCUS THE WAVE</span></div>
+    <h2 class="q">How small a spot can two spheres focus a 12 cm microwave into?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A brass instrument: a viewing glass with a 12 centimetre microwave and two spheres, and a gauge reading the width of the hot spot."></svg>
+    </div>
+    <button class="btn" id="go">Switch on</button>
+    <p class="say" id="say">Tap to switch on a microwave beam. <b>Each wave is 12 cm long.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The right two spheres squeeze a wave's energy into a spot far smaller than the wave.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go'), card = Kit.$('card');
+  const hasMorph = typeof MorphSVGPlugin !== 'undefined';
+  if (hasMorph) gsap.registerPlugin(MorphSVGPlugin);
+  const AMBER = '#ffc75a', ENGR = '#2a1c0c', PALE = '#f4dfa6', PINK = '#ffd2f6';
+  const LMAX = Math.log10(250), LMIN = Math.log10(0.5), REST = -100;
+  let step = 0, busy = false, G = {}, live = [], fs = 12;
+  const ang = mm => -90 + (LMAX - Math.log10(mm)) / (LMAX - LMIN) * 180;
+  const T = (p, x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, fill: ENGR, 'text-anchor': 'middle', style: 'font-family:var(--mono);font-weight:700'}, a), p); e.textContent = s; return e; };
+  const fmt = mm => mm >= 10 ? (mm / 10).toFixed(mm >= 100 ? 0 : 1) + ' cm' : (mm < 1.5 ? '≈ 1' : mm.toFixed(0)) + ' mm';
+  const keepT = t => { live.push(t); return t; };
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  function grad(defs, type, id, stops, a = {}) {
+    const g = Kit.mk(type, Object.assign({id}, a), defs);
+    stops.forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g));
+  }
+
+  function layout() {
+    live.forEach(t => t.kill()); live = [];
+    svg.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg);
+    fs = Math.max(12, Math.min(15, f));
+    const defs = Kit.mk('defs', {}, svg);
+    grad(defs, 'linearGradient', 'gBrass', [[0, '#fff1bf'], [.18, '#e9c46a'], [.5, '#b8862f'], [.78, '#d9ac55'], [1, '#6b4a17']], {x1: 0, y1: 0, x2: 0, y2: 1});
+    grad(defs, 'linearGradient', 'gBrassD', [[0, '#7a5520'], [1, '#e8c675']], {x1: 0, y1: 0, x2: 0, y2: 1});
+    grad(defs, 'linearGradient', 'gHorn', [[0, '#f7dc92'], [.45, '#c3923a'], [1, '#5e3f12']], {x1: 0, y1: 0, x2: 0, y2: 1});
+    grad(defs, 'radialGradient', 'gCap', [[0, '#fff4c8'], [.45, '#d9a94c'], [1, '#5e3f12']], {cx: .35, cy: .3, r: .8});
+    grad(defs, 'radialGradient', 'gFace', [[0, '#f8eed2'], [.7, '#eadbb2'], [1, '#c9b07a']], {cx: .5, cy: .9, r: 1});
+    grad(defs, 'radialGradient', 'gGlass', [[0, '#16302f'], [.7, '#0b1a1b'], [1, '#050c0d']], {cx: .5, cy: .45, r: .8});
+    grad(defs, 'radialGradient', 'gEnergy', [[0, '#fff6d6', .95], [.35, '#ffb347', .75], [1, '#ff5a1f', 0]]);
+    grad(defs, 'radialGradient', 'gGrape', [[0, '#eaffb8'], [.25, '#a9d860'], [.7, '#4f8a1f'], [1, '#203f0a']], {cx: .35, cy: .3, r: .85});
+    grad(defs, 'radialGradient', 'gPlasma', [[0, '#ffffff'], [.18, '#ffd2f6'], [.45, '#c06bff', .7], [1, '#6a2bd9', 0]]);
+    grad(defs, 'radialGradient', 'gLamp', [[0, '#fff3c4'], [.4, '#ff7a3a'], [1, '#ff3a10', 0]]);
+    const glow = Kit.mk('filter', {id: 'fGlow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: 2.2}, glow);
+    const soft = Kit.mk('filter', {id: 'fSoft', x: '-20%', y: '-20%', width: '140%', height: '140%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: 1.6}, soft);
+
+    // ---------- composition: stacked when tall, side by side when short ----------
+    const pad = Math.max(4, W * .02), gap = Math.max(8, fs * .7);
+    const gH = r => 1.1 * r + 5 * fs + 4;
+    const rMin = Math.max(58, fs * 4.8);
+    const vert = H - 2 * pad - gH(rMin) - gap >= Math.max(120, W * .36);
+    let sx0, sy0, sw, sh, px, py, r;
+    if (vert) {
+      sw = W - 2 * pad;
+      sh = Math.min(sw * .6, H - 2 * pad - gH(rMin) - gap);
+      const availG = H - 2 * pad - sh - gap;
+      r = Math.max(40, Math.min(W * .34, (availG - 5 * fs - 4) / 1.1));
+      const used = sh + gap + gH(r), top = pad + Math.max(0, (H - 2 * pad - used) / 2);
+      sx0 = pad; sy0 = top; px = W / 2; py = top + sh + gap + r;
+    } else {
+      sw = (W - 2 * pad - gap) * .58;
+      const cw = W - 2 * pad - gap - sw;
+      r = Math.max(40, Math.min(cw / 2 - 2, (H - 2 * pad - 5 * fs - 4) / 1.1));
+      sh = Math.min(H - 2 * pad, sw * .9);
+      sx0 = pad; sy0 = pad + (H - 2 * pad - sh) / 2;
+      px = pad + sw + gap + cw / 2; py = (H - gH(r)) / 2 + r;
+    }
+
+    // ---------- the viewing glass ----------
+    const b = clamp(Math.min(sw, sh) * .045, 7, 13), wx = sx0 + b, wy = sy0 + b, ww = sw - 2 * b, wh = sh - 2 * b;
+    const scene = G.scene = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: sx0 + 1, y: sy0 + 3, width: sw - 2, height: sh - 3, rx: b * 1.4, fill: 'rgba(40,25,5,.35)', filter: 'url(#fSoft)'}, scene);
+    Kit.mk('rect', {x: sx0, y: sy0, width: sw, height: sh, rx: b * 1.4, fill: 'url(#gBrass)'}, scene);
+    Kit.mk('rect', {x: sx0 + .8, y: sy0 + .8, width: sw - 1.6, height: sh - 1.6, rx: b * 1.3, fill: 'none', stroke: 'rgba(255,248,220,.55)', 'stroke-width': 1}, scene);
+    Kit.mk('rect', {x: wx - 2, y: wy - 2, width: ww + 4, height: wh + 4, rx: b * .7, fill: 'url(#gBrassD)'}, scene);
+    [[sx0 + b * .5, sy0 + b * .5], [sx0 + sw - b * .5, sy0 + b * .5], [sx0 + b * .5, sy0 + sh - b * .5], [sx0 + sw - b * .5, sy0 + sh - b * .5]].forEach(([sx, sy], i) => {
+      Kit.mk('circle', {cx: sx, cy: sy, r: b * .3, fill: 'url(#gCap)', stroke: '#5e3f12', 'stroke-width': .6}, scene);
+      const a = i * 50 + 20, d = b * .26;
+      Kit.mk('line', {x1: sx - Math.cos(a) * d, y1: sy - Math.sin(a) * d, x2: sx + Math.cos(a) * d, y2: sy + Math.sin(a) * d, stroke: '#4a300c', 'stroke-width': .9}, scene);
+    });
+    // pilot lamp on the left bezel
+    const lx = sx0 + b * .5, lyy = sy0 + sh / 2;
+    Kit.mk('circle', {cx: lx, cy: lyy, r: b * .38, fill: '#3a0f06', stroke: '#5e3f12', 'stroke-width': .8}, scene);
+    G.lamp = Kit.mk('g', {opacity: 0}, scene);
+    Kit.mk('circle', {cx: lx, cy: lyy, r: b * .7, fill: 'url(#gLamp)', filter: 'url(#fGlow)'}, G.lamp);
+    Kit.mk('circle', {cx: lx, cy: lyy, r: b * .3, fill: '#ffb070'}, G.lamp);
+
+    const clip = Kit.mk('clipPath', {id: 'cWin'}, defs);
+    Kit.mk('rect', {x: wx, y: wy, width: ww, height: wh, rx: b * .6}, clip);
+    const win = Kit.mk('g', {'clip-path': 'url(#cWin)'}, scene);
+    Kit.mk('rect', {x: wx, y: wy, width: ww, height: wh, fill: 'url(#gGlass)'}, win);
+
+    // geometry inside the glass: a band for the bracket on top, a band for the caption below
+    const hw = Math.min(ww * .09, fs * 1.8), fx = wx + hw, fw = ww - hw;
+    const topBand = fs * 2.3, botBand = fs * 1.8, mid = wh - topBand - botBand;
+    const cx = fx + fw * .5, cy = wy + topBand + mid / 2, ym = wy + wh / 2;
+    const wl = fw * .62, R = Math.max(8, Math.min(mid * .44, fw * .15)), cm = wl / 12;
+    Object.assign(G, {wx, wy, ww, wh, fx, cx, cy, ym, wl, R});
+
+    // a 1 cm graticule, faintly engraved
+    const grid = Kit.mk('g', {stroke: '#7fd6c8', 'stroke-opacity': .07}, win);
+    for (let gx = cx - Math.floor((cx - wx) / cm) * cm; gx <= wx + ww; gx += cm) Kit.mk('line', {x1: gx, x2: gx, y1: wy, y2: wy + wh}, grid);
+    for (let gy = cy - Math.floor((cy - wy) / cm) * cm; gy <= wy + wh; gy += cm) Kit.mk('line', {x1: wx, x2: wx + ww, y1: gy, y2: gy}, grid);
+    Kit.mk('line', {x1: wx, x2: wx + ww, y1: cy, y2: cy, stroke: '#7fd6c8', 'stroke-opacity': .14, 'stroke-dasharray': '2 4'}, win);
+
+    // the energy: a wide glow that becomes a spark
+    const ell = (rx, ry) => {
+      const h = .2652; let d = '';
+      for (let k = 0; k < 8; k++) {
+        const a0 = Math.PI + k * Math.PI / 4, a1 = a0 + Math.PI / 4;
+        const P0 = [cx + Math.cos(a0) * rx, cy + Math.sin(a0) * ry], P1 = [cx + Math.cos(a1) * rx, cy + Math.sin(a1) * ry];
+        const c1 = [P0[0] - h * rx * Math.sin(a0), P0[1] + h * ry * Math.cos(a0)], c2 = [P1[0] + h * rx * Math.sin(a1), P1[1] - h * ry * Math.cos(a1)];
+        if (!k) d += `M${P0[0].toFixed(2)},${P0[1].toFixed(2)} `;
+        d += `C${c1[0].toFixed(2)},${c1[1].toFixed(2)} ${c2[0].toFixed(2)},${c2[1].toFixed(2)} ${P1[0].toFixed(2)},${P1[1].toFixed(2)} `;
+      }
+      return d + 'Z';
+    };
+    const star = s => {
+      let d = ''; const pt = k => { const a = Math.PI + k * Math.PI / 4, rr = k % 2 ? s * .26 : s; return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr * 1.5]; };
+      for (let k = 0; k < 8; k++) {
+        const P0 = pt(k), P1 = pt(k + 1), c1 = [P0[0] + (P1[0] - P0[0]) / 3, P0[1] + (P1[1] - P0[1]) / 3], c2 = [P0[0] + 2 * (P1[0] - P0[0]) / 3, P0[1] + 2 * (P1[1] - P0[1]) / 3];
+        if (!k) d += `M${P0[0].toFixed(2)},${P0[1].toFixed(2)} `;
+        d += `C${c1[0].toFixed(2)},${c1[1].toFixed(2)} ${c2[0].toFixed(2)},${c2[1].toFixed(2)} ${P1[0].toFixed(2)},${P1[1].toFixed(2)} `;
+      }
+      return d + 'Z';
+    };
+    G.broad = ell(wl / 2, mid * .48); G.small = star(Math.max(6, Math.min(R * .45, fs * .6)));
+    G.energy = Kit.mk('path', {d: step >= 3 ? G.small : G.broad, fill: 'url(#gEnergy)', opacity: 0, style: 'mix-blend-mode:screen'}, win);
+
+    // the wave: crests and troughs, redrawn every frame inside the glass
+    G.waveWrap = Kit.mk('g', {opacity: 0}, win);
+    G.crests = [];
+    const nC = Math.ceil(fw / wl) + 1; G.span = nC * wl;
+    for (let i = 0; i < nC; i++) {
+      G.crests.push({o: i * wl, main: true, el: Kit.mk('path', {fill: 'none', stroke: '#ff9a3c', 'stroke-linecap': 'round'}, G.waveWrap)});
+      G.crests.push({o: i * wl + wl / 2, main: false, el: Kit.mk('path', {fill: 'none', stroke: '#ff9a3c', 'stroke-dasharray': '3 5'}, G.waveWrap)});
+    }
+
+    // rays converging on the gap
+    G.rays = [];
+    const rayG = Kit.mk('g', {}, win);
+    [-2, -1, 0, 1, 2].forEach(k => {
+      const ry = cy + k * mid * .21;
+      const p = Kit.mk('path', {d: `M${fx},${ry} C${cx - R * 1.9},${ry} ${cx - R * .7},${cy + k * R * .12} ${cx},${cy}`, fill: 'none', stroke: '#ffd38a', 'stroke-width': 1.2, 'stroke-linecap': 'round', opacity: 0}, rayG);
+      const L = p.getTotalLength(); p.setAttribute('stroke-dasharray', L); p.setAttribute('stroke-dashoffset', L); p._L = L; G.rays.push(p);
+    });
+
+    // the microwave horn
+    const horn = Kit.mk('g', {}, win);
+    Kit.mk('rect', {x: wx, y: ym - wh * .07, width: hw * .35, height: wh * .14, fill: 'url(#gHorn)'}, horn);
+    Kit.mk('path', {d: `M${wx + hw * .3},${ym - wh * .09} L${fx},${ym - wh * .3} L${fx},${ym + wh * .3} L${wx + hw * .3},${ym + wh * .09} Z`, fill: 'url(#gHorn)', stroke: '#4a300c', 'stroke-width': .8}, horn);
+    Kit.mk('line', {x1: fx, x2: fx, y1: ym - wh * .3, y2: ym + wh * .3, stroke: '#fff1bf', 'stroke-width': 1.2, 'stroke-opacity': .7}, horn);
+    G.mouth = Kit.mk('line', {x1: fx + 1, x2: fx + 1, y1: ym - wh * .28, y2: ym + wh * .28, stroke: '#ffb347', 'stroke-width': 2.5, opacity: 0, filter: 'url(#fGlow)'}, horn);
+
+    // the two spheres
+    const sphere = sx => {
+      const g = Kit.mk('g', {opacity: 0}, win);
+      Kit.mk('ellipse', {cx: sx + R * .1, cy: cy + R * .12, rx: R, ry: R, fill: 'rgba(0,0,0,.45)', filter: 'url(#fSoft)'}, g);
+      Kit.mk('circle', {cx: sx, cy, r: R, fill: 'url(#gGrape)'}, g);
+      Kit.mk('circle', {cx: sx, cy, r: R - .7, fill: 'none', stroke: 'rgba(230,255,190,.35)', 'stroke-width': 1.2}, g);
+      Kit.mk('ellipse', {cx: sx - R * .35, cy: cy - R * .42, rx: R * .28, ry: R * .16, fill: '#fff', opacity: .55, transform: `rotate(-30 ${sx - R * .35} ${cy - R * .42})`}, g);
+      Kit.mk('circle', {cx: sx + R * .45, cy: cy + R * .5, r: R * .06, fill: '#fff', opacity: .3}, g);
+      return g;
+    };
+    G.A = sphere(cx - R); G.B = sphere(cx + R); G.dropY = -(cy - wy + R + 4);
+
+    // the plasma spark, its core drawn to scale (1/120 of the wave)
+    const spark = G.spark = Kit.mk('g', {opacity: 0}, win);
+    G.halo = Kit.mk('circle', {cx, cy, r: R * .7, fill: 'url(#gPlasma)', style: 'mix-blend-mode:screen'}, spark);
+    Kit.mk('circle', {cx, cy, r: Math.max(1.3, wl / 240), fill: '#fff'}, spark);
+
+    // glass glare
+    Kit.mk('path', {d: `M${wx},${wy + wh * .35} Q${wx + ww * .3},${wy} ${wx + ww * .62},${wy} L${wx + ww * .5},${wy} Q${wx + ww * .2},${wy + wh * .02} ${wx},${wy + wh * .25}Z`, fill: '#fff', opacity: .06}, win);
+
+    // labels on the glass (kept apart from the clipped drawing)
+    const labs = Kit.mk('g', {}, scene);
+    const by = wy + fs * 1.75, bx0 = cx - wl / 2, bx1 = cx + wl / 2, lcx = wx + ww / 2;
+    G.brk = Kit.mk('g', {opacity: 1}, labs);
+    Kit.mk('path', {d: `M${bx0},${by - 4} v8 M${bx0},${by} H${bx1} M${bx1},${by - 4} v8`, stroke: PALE, 'stroke-width': 1.3, fill: 'none'}, G.brk);
+    const s1 = fs * .6 * 16 < ww * .96 ? 'one wave = 12 cm' : 'wave = 12 cm';
+    T(G.brk, clamp(cx, wx + fs * .3 * s1.length + 2, wx + ww - fs * .3 * s1.length - 2), wy + fs * 1.15, s1, {fill: PALE});
+    G.lab = Kit.mk('g', {opacity: 0}, labs);
+    const ly = wy + wh - fs * .5;
+    Kit.mk('line', {x1: cx, x2: cx, y1: cy + R * .3, y2: ly - fs * 1.05, stroke: PINK, 'stroke-width': 1.2}, G.lab);
+    const s2 = fs * .6 * 21 < ww * .94 ? '≈ 1 mm spot, to scale' : '1 mm spot, to scale';
+    T(G.lab, lcx, ly, s2, {fill: PINK});
+
+    // ---------- the gauge ----------
+    const r2 = r * .88, ry0 = py + fs * 1.05, rh = fs * 1.7, base = ry0 + rh + fs * 1.6;
+    const dial = G.dial = Kit.mk('g', {}, svg);
+    const arcPlate = (rr, bot) => `M${px - rr},${py} A${rr},${rr} 0 0 1 ${px + rr},${py} L${px + rr},${bot} L${px - rr},${bot} Z`;
+    Kit.mk('path', {d: arcPlate(r - 1, base + r * .1 - 1), fill: 'rgba(40,25,5,.4)', filter: 'url(#fSoft)', transform: 'translate(1.5,3)'}, dial);
+    Kit.mk('path', {d: arcPlate(r, base + r * .1), fill: 'url(#gBrass)'}, dial);
+    Kit.mk('path', {d: arcPlate(r * .95, base + r * .05), fill: 'url(#gBrassD)'}, dial);
+    Kit.mk('path', {d: arcPlate(r2, base), fill: 'url(#gFace)'}, dial);
+    Kit.mk('path', {d: `M${px - r2 * .96},${py} A${r2 * .96},${r2 * .96} 0 0 1 ${px + r2 * .96},${py}`, fill: 'none', stroke: ENGR, 'stroke-width': .8, 'stroke-opacity': .6}, dial);
+    const pol = (a, rad) => [px + Math.sin(a * Math.PI / 180) * rad, py - Math.cos(a * Math.PI / 180) * rad];
+    // the plasma zone, a rose arc near 1 mm
+    const za = ang(2.2), zb = ang(.5), [zx0, zy0] = pol(za, r2 * .9), [zx1, zy1] = pol(zb, r2 * .9);
+    Kit.mk('path', {d: `M${zx0},${zy0} A${r2 * .9},${r2 * .9} 0 0 1 ${zx1},${zy1}`, fill: 'none', stroke: '#b2398f', 'stroke-width': r2 * .06, 'stroke-opacity': .55}, dial);
+    G.ticks = Kit.mk('g', {}, dial);
+    for (let d = -1; d <= 2; d++) for (let m = 1; m <= 9; m++) {
+      const v = m * Math.pow(10, d); if (v < .5 || v > 250) continue;
+      const a = ang(v), maj = m === 1, [ax, ay] = pol(a, r2 * .97), [bx, bY] = pol(a, r2 * (maj ? .8 : m === 5 ? .86 : .89));
+      Kit.mk('line', {x1: ax, y1: ay, x2: bx, y2: bY, stroke: ENGR, 'stroke-width': maj ? 2 : 1, 'stroke-linecap': 'round'}, G.ticks);
+    }
+    const a12 = ang(120), [mx, my] = pol(a12, r2 * .97), [mx2, my2] = pol(a12, r2 * .78);
+    Kit.mk('line', {x1: mx, y1: my, x2: mx2, y2: my2, stroke: '#a3341c', 'stroke-width': 2.4, 'stroke-linecap': 'round'}, G.ticks);
+    // scale numbers sit beside their ticks so the needle never covers them
+    const lfs = Math.max(12, fs * .9);
+    [[120, '12 cm', '#a3341c', -16], [10, '1 cm', ENGR, 0], [1, '1 mm', '#7a1f63', 16]].forEach(([v, s, c, off]) => {
+      const [tx, ty] = pol(ang(v) + off, r2 * .6); T(G.ticks, tx, ty + lfs * .35, s, {fill: c, 'font-size': lfs});
+    });
+    // the readout window and its engraved caption
+    const rw = fs * 6.6;
+    Kit.mk('rect', {x: px - rw / 2, y: ry0, width: rw, height: rh, rx: fs * .35, fill: '#1a120a', stroke: '#8a6526', 'stroke-width': 1.5}, dial);
+    Kit.mk('rect', {x: px - rw / 2 + 2, y: ry0 + 2, width: rw - 4, height: rh * .4, rx: fs * .25, fill: '#fff', opacity: .05}, dial);
+    G.read = T(dial, px, ry0 + rh * .7, '— —', {fill: AMBER, 'font-size': Math.max(12, fs * 1.05)});
+    T(dial, px, ry0 + rh + fs * 1.1, 'SPOT WIDTH', {'font-size': 12, 'letter-spacing': '.15em', opacity: .65});
+    // the needle and its shadow
+    G.nS = Kit.mk('g', {transform: `translate(${px + 2},${py + 3}) rotate(${REST})`, opacity: .3, filter: 'url(#fSoft)'}, dial);
+    G.n = Kit.mk('g', {transform: `translate(${px},${py}) rotate(${REST})`}, dial);
+    const nw = Math.min(fs * .2, r2 * .05);
+    const nd = `M${-nw},${r2 * .16} L${-nw * .6},${-r2 * .7} L0,${-r2 * .93} L${nw * .6},${-r2 * .7} L${nw},${r2 * .16} Z`;
+    Kit.mk('path', {d: nd, fill: '#000'}, G.nS);
+    Kit.mk('path', {d: nd, fill: '#1c2433'}, G.n);
+    Kit.mk('path', {d: `M${-nw * .6},${-r2 * .7} L0,${-r2 * .93} L${nw * .6},${-r2 * .7} Z`, fill: '#b02a1a'}, G.n);
+    Kit.mk('line', {x1: 0, y1: r2 * .12, x2: 0, y2: -r2 * .68, stroke: '#7d8ba8', 'stroke-width': .8, 'stroke-opacity': .7}, G.n);
+    G.px = px; G.py = py;
+    const cap = Math.min(fs * .75, r2 * .14);
+    Kit.mk('circle', {cx: px, cy: py, r: cap, fill: 'url(#gCap)', stroke: '#5e3f12', 'stroke-width': .8}, dial);
+    Kit.mk('line', {x1: px - cap * .6, y1: py - cap * .27, x2: px + cap * .6, y2: py + cap * .27, stroke: '#4a300c', 'stroke-width': 1.2}, dial);
+    // glass over the gauge
+    Kit.mk('path', {d: `M${px - r2 * .85},${py - r2 * .2} A${r2 * .9},${r2 * .9} 0 0 1 ${px + r2 * .3},${py - r2 * .86} A${r2 * 1.2},${r2 * 1.2} 0 0 0 ${px - r2 * .85},${py - r2 * .2}Z`, fill: '#fff', opacity: .2}, dial);
+
+    applyState();
+  }
+
+  // every wavefront: plane on the way in, squeezed and bent around the contact point once focused
+  function drawWaves() {
+    const {wx, wy, ww, wh, fx, cx, cy, ym, wl, R} = G, F = G.F || 0, ph = G.phase || 0;
+    G.crests.forEach(c => {
+      const x = fx + ((ph + c.o) % G.span);
+      if (x > wx + ww) { c.el.setAttribute('opacity', 0); return; }
+      const e = clamp(Math.min((x - fx) / (wl * .25), (wx + ww - x) / (wl * .25)), 0, 1);
+      const d = (x - cx) / (R * 1.7), k = Math.exp(-d * d) * F;
+      const yc = ym + (cy - ym) * k, half = wh / 2 * (1 - .86 * k);
+      const bow = wl * .04 * (1 - k) + Math.sign(d) * wl * .2 * k;
+      c.el.setAttribute('d', `M${x.toFixed(1)},${(yc - half).toFixed(1)} Q${(x + 2 * bow).toFixed(1)},${yc.toFixed(1)} ${x.toFixed(1)},${(yc + half).toFixed(1)}`);
+      c.el.setAttribute('stroke-width', c.main ? 2.2 + 1.8 * k : 1);
+      c.el.setAttribute('opacity', (e * (c.main ? .85 + .15 * k : .3)).toFixed(3));
+      c.el.setAttribute('stroke', k > .35 ? '#ffc27a' : '#ff9a3c');
+    });
+  }
+  function flow() {
+    G.speed = G.wl / 1.5;
+    if (Kit.calm) { G.phase = G.wl * .3; drawWaves(); return; }
+    const tick = (t, dt) => { G.phase = ((G.phase || 0) + dt / 1000 * G.speed) % G.span; drawWaves(); };
+    gsap.ticker.add(tick); live.push({kill: () => gsap.ticker.remove(tick)});
+  }
+
+  const setNeedle = a => { G.na = a; G.n.setAttribute('transform', `translate(${G.px},${G.py}) rotate(${a})`); G.nS.setAttribute('transform', `translate(${G.px + 2},${G.py + 3}) rotate(${a})`); };
+
+  function applyState() {
+    G.F = step >= 3 ? 1 : 0; G.phase = G.wl * .3;
+    setNeedle(step === 0 ? REST : step < 3 ? ang(120) : ang(1));
+    G.read.textContent = step === 0 ? '— —' : step < 3 ? '12 cm' : '≈ 1 mm';
+    G.waveWrap.setAttribute('opacity', step ? 1 : 0);
+    G.lamp.setAttribute('opacity', step ? 1 : 0);
+    G.mouth.setAttribute('opacity', step ? .8 : 0);
+    G.energy.setAttribute('opacity', step ? (step >= 3 ? 1 : .55) : 0);
+    G.A.setAttribute('opacity', step >= 2 ? 1 : 0);
+    G.B.setAttribute('opacity', step >= 3 ? 1 : 0);
+    G.spark.setAttribute('opacity', step >= 3 ? 1 : 0);
+    G.lab.setAttribute('opacity', step >= 3 ? 1 : 0);
+    G.brk.setAttribute('opacity', step >= 3 ? .5 : 1);
+    G.rays.forEach(p => { p.setAttribute('opacity', step >= 3 ? .35 : 0); p.setAttribute('stroke-dashoffset', step >= 3 ? 0 : p._L); });
+    drawWaves();
+    if (step) flow();
+    if (step >= 3 && !Kit.calm) flicker();
+  }
+  function flicker() {
+    keepT(gsap.to(G.halo, {scale: () => .75 + Math.random() * .5, opacity: () => .55 + Math.random() * .45, duration: .09, repeat: -1, repeatRefresh: true, transformOrigin: '50% 50%', ease: 'sine.inOut'}));
+  }
+  function swing(toA, dur, ease) {
+    const o = {a: G.na};
+    return keepT(gsap.to(o, {a: toA, duration: dur, ease, onUpdate: () => setNeedle(o.a)}));
+  }
+  function count(from, to, dur, done) {
+    const o = {l: Math.log10(from)};
+    keepT(gsap.to(o, {l: Math.log10(to), duration: dur, ease: 'power3.out', onUpdate: () => { G.read.textContent = fmt(Math.pow(10, o.l)); }, onComplete: () => { G.read.textContent = done; }}));
+  }
+
+  function next() {
+    if (busy || step >= 3) return;
+    busy = true; step++; Kit.haptic(step === 3 ? 'selection' : 'light');
+    const calm = Kit.calm;
+    if (step === 1) {
+      go.textContent = 'Drop in a sphere';
+      say.innerHTML = 'The wave\'s energy is spread over its whole 12 cm. <b>Tap to drop in a sphere.</b>';
+      if (calm) { live.forEach(t => t.kill()); live = []; applyState(); busy = false; return; }
+      G.phase = 0; flow();
+      keepT(gsap.to(G.waveWrap, {attr: {opacity: 1}, duration: .5, ease: 'power2.out'}));
+      keepT(gsap.fromTo(G.lamp, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: .25, ease: 'steps(3)'}));
+      keepT(gsap.fromTo(G.mouth, {attr: {opacity: 0}}, {attr: {opacity: .8}, duration: .4}));
+      keepT(gsap.fromTo(G.energy, {attr: {opacity: 0}}, {attr: {opacity: .55}, duration: .9, ease: 'power2.out'}));
+      swing(ang(120), 1.8, 'elastic.out(1,0.32)');
+      count(250, 120, 1.2, '12 cm');
+      gsap.delayedCall(.45, () => { busy = false; });
+    } else if (step === 2) {
+      go.textContent = 'Add a second sphere';
+      say.innerHTML = 'One sphere sits in the beam. <b>Now give it a partner, touching it.</b> Watch the gauge.';
+      G.A.setAttribute('opacity', 1);
+      if (calm) { busy = false; return; }
+      keepT(gsap.from(G.A, {y: G.dropY, duration: .9, ease: 'bounce.out'}));
+      const a0 = G.na;
+      gsap.delayedCall(.35, () => { const o = {a: a0 + 4}; setNeedle(o.a); keepT(gsap.to(o, {a: a0, duration: 1.2, ease: 'elastic.out(1,0.3)', onUpdate: () => setNeedle(o.a)})); });
+      gsap.delayedCall(.45, () => { busy = false; });
+    } else {
+      Kit.hide('go');
+      card.classList.add('answered');
+      say.innerHTML = 'Each sphere bends the wave inward, and where the two touch the energy piles into a spot about <b>1 mm</b> wide, over 100 times narrower than the 12 cm wave. That is why grapes spark. The same focusing with light could help make far smaller microchip features.';
+      Kit.show('keep');
+      if (calm) { live.forEach(t => t.kill()); live = []; applyState(); Kit.haptic('success'); return; }
+      G.B.setAttribute('opacity', 1);
+      const tl = keepT(gsap.timeline());
+      tl.from(G.B, {y: G.dropY, duration: .8, ease: 'bounce.out'})
+        .to(G, {F: 1, duration: 1.4, ease: 'power2.inOut'}, .55)
+        .to(G.rays, {attr: {opacity: .35, 'stroke-dashoffset': 0}, duration: .9, stagger: .07, ease: 'power3.inOut'}, .55)
+        .to(G.energy, Object.assign({duration: 1.3, ease: 'expo.inOut'}, hasMorph ? {morphSVG: G.small} : {attr: {d: G.small}}), .6)
+        .to(G.energy, {attr: {opacity: 1}, duration: .6}, .6)
+        .to(G.brk, {attr: {opacity: .5}, duration: .6}, .6)
+        .add(() => { swing(ang(1), 2.6, 'elastic.out(1,0.28)'); count(120, 1, 1.6, '≈ 1 mm'); }, .75)
+        .add(() => { Kit.haptic('success'); G.spark.setAttribute('opacity', 1); flicker(); }, 1.85)
+        .from(G.spark, {scale: 0, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(3)'}, 1.85)
+        .to(G.lab, {attr: {opacity: 1}, duration: .6, ease: 'power2.out'}, 2.2);
+    }
+  }
+  go.addEventListener('click', next);
+  svg.addEventListener('click', next);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G.scene) return;
+    gsap.from(G.scene, {opacity: 0, y: 14, duration: .7, ease: 'power3.out'});
+    gsap.from(G.dial, {opacity: 0, y: 20, duration: .8, delay: .15, ease: 'power3.out'});
+    gsap.from(G.ticks.children, {opacity: 0, duration: .3, stagger: .015, delay: .4, ease: 'power2.out'});
+    if (step === 0) {
+      const o = {a: REST + 14}; setNeedle(o.a);
+      gsap.to(o, {a: REST, duration: 1.6, delay: .5, ease: 'elastic.out(1,0.3)', onUpdate: () => setNeedle(o.a)});
+    }
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 60 : ms));
+    go.click(); await wait(700); busy = false;
+    go.click(); await wait(900); busy = false;
+    go.click(); await wait(3200);
+  };
+})();
+Kit.single();
+</script>
+</html>

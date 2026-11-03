@@ -1,0 +1,461 @@
+<!doctype html>
+<!-- slug: history-nsa-gold-codes -->
+<!-- Look: a night museum diorama of cut-paper planes (far dunes with a tiny White House, a ledge with the NSA on it, a hanging code panel and a card printer, the president and his briefcase on the front plane), grained paper with soft drop shadows, gold as the only accent. The ground dissolves into the card's own night colour, so there is no box, and the planes drift apart in parallax under the finger.
+     Interaction: tap the glowing piece to build the chain link by link. The NSA lights up and generates the gold codes, the printer stamps them onto a plastic card, the card travels to the president's pocket, then into the nuclear football. Gold lines draw themselves as each link forms.
+     Wow: the football opens and a spark races down the whole chain from the NSA to the briefcase. Gold rays burst out, the code panel swings and reads AUTHENTICATED, and a gold seal with a check slams onto the briefcase.
+     Layout: two compositions (tall and wide) re-flow whenever the stage changes size, and a label solver keeps every caption apart. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Who makes the gold codes</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;overflow:visible}
+#pic .mono{font-family:var(--mono);font-weight:700}
+#pic .lbl{font-family:var(--mono);font-weight:700;letter-spacing:.04em;paint-order:stroke;stroke:#0a0f18;stroke-width:3.5px;stroke-linejoin:round}
+#pic .sign{font-family:var(--display);font-weight:800;letter-spacing:.1em}
+.say b{color:#f4c04e}
+.keep b{color:#f4c04e}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Build the chain · gold codes" style="--c:#1b2537;--k:#f4ead4;--edge:#0d131e">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GOLD CODES</span></div>
+    <h2 class="q">Who makes the nuclear launch codes, and how do they reach the president?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A paper diorama: the NSA building on a ledge, a hanging panel of gold codes, a card printer, the president and the nuclear football briefcase, linked by a chain you build by tapping."></svg>
+    </div>
+    <p class="say" id="say">Tap the glowing piece to build the chain, one link at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The NSA makes the gold codes; the president carries them on a plastic card to prove a launch order is his.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(DrawSVGPlugin, ScrambleTextPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
+  const GOLD = '#f4c04e', CREAM = '#f2e7cd', CREAMD = '#d3c29c', NIGHT = '#0d131e', BG = '#1b2537';
+  const CODE = 'K7Q3·X9M2';
+  const SAY = [
+    'Tap the glowing piece to build the chain, one link at a time.',
+    'The <b>NSA</b>, the National Security Agency, generates special codes: the <b>gold codes</b>. Tap the printer.',
+    'They are printed on a small <b>plastic card</b>. Tap the president to hand it over.',
+    'He always carries the card. Tap the <b>nuclear football</b>, the briefcase only he can use.',
+    'To launch, he must first prove it’s really him: <b>the codes are the proof.</b>'
+  ];
+  let W = 0, H = 0, fs = 12, step = 0, R = {}, G = {}, tls = [], pend = [];
+  let seen = {w: 0, h: 0}, waitFit = false, fitT = 0, keepT = 0;
+  const C = {x: 0, y: 0, s: 1, r: 0, o: 0};
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const $$ = s => [...svg.querySelectorAll(s)];
+  const A = o => Object.entries(o).map(([k, v]) => `${k}="${typeof v === 'number' ? +v.toFixed(2) : v}"`).join(' ');
+  const el = (t, o, inner = '') => `<${t} ${A(o)}>${inner}</${t}>`;
+  const lg = (id, stops) => `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">${stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('')}</linearGradient>`;
+  const rg = (id, stops) => `<radialGradient id="${id}" cx=".5" cy=".4" r=".7">${stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('')}</radialGradient>`;
+  const paper = (id, b, op) => `<filter id="${id}" x="-25%" y="-25%" width="150%" height="165%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.6 .4" result="g"/>
+    <feComposite in="g" in2="SourceAlpha" operator="in" result="gr"/>
+    <feGaussianBlur in="SourceAlpha" stdDeviation="${b}" result="b"/>
+    <feOffset in="b" dx="${b * .35}" dy="${b * .9}" result="o"/>
+    <feFlood flood-color="#03060c" flood-opacity="${op}"/>
+    <feComposite in2="o" operator="in" result="sh"/>
+    <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/><feMergeNode in="gr"/></feMerge></filter>`;
+
+  function placeCard() {
+    if (!R.card) return;
+    R.card.setAttribute('transform', `translate(${C.x.toFixed(1)},${C.y.toFixed(1)}) rotate(${C.r.toFixed(1)}) scale(${C.s.toFixed(3)})`);
+    R.card.setAttribute('opacity', Math.max(0, C.o).toFixed(3));
+  }
+
+  // Keeps the captions apart: clamps them inside the stage, then nudges any that collide.
+  function placeLabels(list, obst) {
+    const out = [];
+    const box = l => { const w = l.t.length * fs * .66, x0 = l.a === 'middle' ? l.x - w / 2 : l.a === 'end' ? l.x - w : l.x; return {x0, x1: x0 + w, y0: l.y - fs * .9, y1: l.y + fs * .3}; };
+    const hit = (a, b) => a.x0 < b.x1 + 3 && b.x0 < a.x1 + 3 && a.y0 < b.y1 + 2 && b.y0 < a.y1 + 2;
+    list.forEach(l => {
+      let b = box(l);
+      if (b.x0 < 3) { l.x += 3 - b.x0; b = box(l); }
+      if (b.x1 > W - 3) { l.x -= b.x1 - (W - 3); b = box(l); }
+      for (let k = 0; k < 8; k++) { const o = [...out, ...obst].find(o => hit(b, o)); if (!o) break; l.y += o.y1 - b.y0 + 3; b = box(l); }
+      out.push(b);
+    });
+  }
+
+  function build() {
+    tls.forEach(t => t.kill()); tls = []; pend = [];
+    gsap.killTweensOf($$('*'));
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    seen = {w: stage.clientWidth, h: stage.clientHeight};
+    const wide = H < W * .75;
+    fs = clamp(Math.min(W / 26, wide ? H / 11 : H / 24), 12, wide ? 13.5 : 14);
+
+    // ---------- layout: a tall diorama, or a wide one when the stage gets short
+    let ncx, bw, ny0, bh, cx0, chW, pw, pcx, py0, ph, cw, fd, bw2, prX, bodyH, hr, fxw, fcx, dp;
+    const chH = fs * 3.75, cy0 = wide ? fs * .35 : fs * .5;
+    if (!wide) {
+      cx0 = W * .5; chW = W - cx0 - fs * .5;
+      bw = Math.min(W * .36, fs * 10); ncx = Math.max(bw / 2 + fs * .5, W * .23);
+      bh = clamp(H * .15, fs * 3.4, fs * 5.5); ny0 = Math.max(fs * 2.6, H * .1);
+      pw = Math.min(W * .36, fs * 10); pcx = W - pw / 2 - fs * .6;
+      py0 = cy0 + chH + fs * 2.4; ph = clamp(H * .09, fs * 2.6, fs * 3.6);
+      cw = clamp(W * .25, fs * 5.6, fs * 7.4);
+      fd = fs * 1.1; bw2 = Math.min(W * .3, fs * 8); prX = Math.max(W * .24, bw2 / 2 + fs * .5);
+      bodyH = clamp(H * .17, fs * 3, fs * 5.5); hr = Math.min(bw2 * .19, fs * 1.25);
+      fxw = Math.min(W * .34, fs * 9); fcx = Math.min(W * .72, W - fxw / 2 - fs * .6);
+      dp = fs * 5;
+    } else {
+      const T = H * .48;
+      cx0 = W * .3; chW = Math.min(Math.max(fs * 9.8, W * .3), W * .4);
+      bw = Math.min(W * .24, cx0 - fs * 1.4); ncx = Math.max(bw / 2 + fs * .5, W * .14);
+      bh = clamp(T * .5, fs * 3.2, fs * 4.2); ny0 = fs * 2;
+      pw = Math.min(W * .26, fs * 7.5, W - (cx0 + chW) - fs * 1.4); pcx = W - pw / 2 - fs * .5;
+      py0 = fs * 1.9; ph = fs * 2.5;
+      cw = clamp(W * .2, fs * 5.2, fs * 6.4);
+      fd = fs * .7; bw2 = Math.min(W * .18, fs * 5); prX = Math.max(W * .2, bw2 / 2 + fs * .5);
+      bodyH = clamp((H - fd - T) * .42, fs * 2.2, fs * 4); hr = Math.min(bw2 * .2, fs * 1.05);
+      fxw = Math.min(W * .24, fs * 6.5); fcx = W - fxw / 2 - fs * .6;
+      dp = fs * 2.4;
+    }
+    const nx = ncx - bw / 2, nyb = ny0 + bh;
+    const ax = nx + bw * .8, ay = ny0 - fs * 1.45, tx = ax + fs * .2, ty = ay - fs * .3;
+    const rx = nx + bw + fs * .9;
+    const px0 = pcx - pw / 2, slotY = py0 + ph;
+    const ch = cw * .63, outY = slotY + ch / 2 + fs * .35, hidY = slotY - ch / 2 - 4;
+    const fly = H - fd, sy = fly - bodyH, hcy = sy - hr * 1.1, hh = bodyH;
+    const pkX = prX + bw2 * .22, pkY = sy + bodyH * .32, restY = pkY - ch * .08;
+    const fh2 = fxw * .5, fy0 = fly - fh2, fx0 = fcx - fxw / 2;
+    const chipO = `${(cx0 + chW / 2).toFixed(1)} 0`;
+    G = {pcx, outY, hidY, pkX, restY, chipO};
+
+    const LB = wide ? [
+      {t: '1 · NSA MAKES', x: ncx, y: nyb + fs * 1.35, a: 'middle'},
+      {t: '2 · PRINTS IT', x: pcx - cw / 2 - fs * .5, y: slotY + fs * 1.4, a: 'end'},
+      {t: '3 · CARRIES IT', x: prX + bw2 / 2 + fs * .4, y: hcy + fs * .3, a: 'start'},
+      {t: '4 · THE FOOTBALL', x: fx0 - fs * .5, y: fy0 + fh2 * .55 + fs * .35, a: 'end'}
+    ] : [
+      {t: '1 · NSA MAKES', x: ncx, y: nyb + fs * 1.45, a: 'middle'},
+      {t: '2 · PRINTS IT', x: pcx - cw / 2 - fs * .5, y: slotY + fs * 1.3, a: 'end'},
+      {t: '3 · CARRIES IT', x: prX, y: hcy - hr - fs * .6, a: 'middle'},
+      {t: '4 · THE FOOTBALL', x: fcx, y: fy0 - fh2 * .36 - fs * .6, a: 'middle'}
+    ];
+    placeLabels(LB, [{x0: cx0, x1: cx0 + chW, y0: cy0, y1: cy0 + chH}]);
+    const cap = i => el('text', {id: 'gc-cap' + i, class: `lbl gc-cap ${i < 2 ? 'e-m' : 'e-f'}`, x: LB[i].x, y: LB[i].y, 'text-anchor': LB[i].a, 'font-size': fs, fill: CREAM}, LB[i].t);
+
+    let sd = 11; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+    const mv = clamp((H - fs * 1.8) / H, .5, .98).toFixed(3);
+    let s = `<defs>${paper('gc-p1', 2.2, .55)}${paper('gc-p2', 5, .5)}
+      <filter id="gc-glow" filterUnits="userSpaceOnUse" x="-20" y="-20" width="${W + 40}" height="${H + 40}"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      ${lg('gc-hA', [[0, '#2b3b59'], [.55, '#223049'], [1, BG]])}${lg('gc-hB', [[0, '#34486b'], [.5, '#283853'], [1, BG]])}
+      ${lg('gc-cl', [[0, '#3a4e72'], [1, '#26365a']])}${lg('gc-fl', [[0, '#40567d'], [1, BG]])}
+      ${lg('gc-cr', [[0, CREAM], [1, CREAMD]])}${lg('gc-cr2', [[0, '#e4d6b4'], [1, '#c4b28b']])}
+      ${lg('gc-gd', [[0, '#ffe08a'], [.5, GOLD], [1, '#b07b22']])}${lg('gc-lea', [[0, '#2d3443'], [1, '#0f131a']])}
+      ${lg('gc-suit', [[0, '#1c2536'], [1, '#0a0e16']])}${lg('gc-cd', [[0, '#fffaf0'], [1, '#e2d4b4']])}
+      ${rg('gc-face', [[0, '#f7ecd6'], [1, '#d6c098']])}${rg('gc-in', [[0, '#fff3c0'], [.55, GOLD], [1, '#9a6a1c']])}
+      <radialGradient id="gc-halo"><stop offset="0" stop-color="${GOLD}" stop-opacity=".42"/><stop offset=".55" stop-color="${GOLD}" stop-opacity=".12"/><stop offset="1" stop-color="${GOLD}" stop-opacity="0"/></radialGradient>
+      <linearGradient id="gc-mh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".09" stop-color="#fff"/><stop offset=".91" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <linearGradient id="gc-mv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="${mv}" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <mask id="gc-fh" maskUnits="userSpaceOnUse" x="-40" y="-40" width="${W + 80}" height="${H + 80}"><rect x="0" y="-40" width="${W}" height="${H + 80}" fill="url(#gc-mh)"/></mask>
+      <mask id="gc-fv" maskUnits="userSpaceOnUse" x="-40" y="-40" width="${W + 80}" height="${H + 80}"><rect x="-40" y="-40" width="${W + 80}" height="40" fill="#fff"/><rect x="-40" y="0" width="${W + 80}" height="${H}" fill="url(#gc-mv)"/></mask>
+      <clipPath id="gc-clip" clipPathUnits="userSpaceOnUse"><rect x="0" y="${slotY - fs * .25}" width="${W}" height="${H}"/></clipPath></defs>`;
+
+    // ---- back plane: stars, far dunes that melt into the card, a tiny White House
+    let stars = '';
+    for (let i = 0; i < (wide ? 18 : 26); i++) stars += el('circle', {class: 'gc-star', cx: rnd() * W, cy: rnd() * H * (wide ? .5 : .4), r: .5 + rnd() * 1.1, fill: CREAM, opacity: .2 + rnd() * .5});
+    const hA0 = H * (wide ? .6 : .52), hAy = H * (wide ? .48 : .44), hA1 = H * (wide ? .52 : .48);
+    const hB0 = H * (wide ? .76 : .72), hb = H * (wide ? .7 : .66), hB1 = H * (wide ? .74 : .69);
+    let wh = '';
+    if (!wide) {
+      const w = clamp(W * .14, fs * 3.4, fs * 4.4), x = W * .5, y = hb + 1;
+      const wins = [-.4, -.3, -.22, .22, .3, .4].map(k => el('rect', {class: 'gc-whw', x: x + w * k - w * .025, y: y - w * .22, width: w * .05, height: w * .09, fill: '#2a3753'})).join('');
+      wh = `<g opacity=".82" filter="url(#gc-p1)">
+        ${el('rect', {x: x - w / 2, y: y - w * .3, width: w, height: w * .3, fill: CREAMD})}
+        ${el('rect', {x: x - w * .53, y: y - w * .33, width: w * 1.06, height: w * .04, fill: CREAM})}
+        ${el('rect', {x: x - w * .16, y: y - w * .4, width: w * .32, height: w * .4, fill: CREAM})}
+        ${el('path', {d: `M${x - w * .19},${y - w * .4} L${x},${y - w * .52} L${x + w * .19},${y - w * .4}Z`, fill: CREAM})}
+        ${[-.11, -.04, .04, .11].map(k => el('line', {x1: x + w * k, x2: x + w * k, y1: y - w * .37, y2: y, stroke: '#a8966f', 'stroke-width': 1})).join('')}
+        ${el('line', {x1: x, x2: x, y1: y - w * .52, y2: y - w * .52 - fs * .8, stroke: CREAMD, 'stroke-width': 1})}
+        ${el('rect', {x: x, y: y - w * .52 - fs * .8, width: fs * .55, height: fs * .32, fill: CREAM})}
+        ${wins}</g>`;
+    }
+    s += `<g id="gc-back"><g class="e-b">${stars}
+      <g mask="url(#gc-fh)"><g mask="url(#gc-fv)">
+      ${el('path', {d: `M-2,${hA0} Q${W * .28},${hAy} ${W * .5},${hAy + H * .02} T${W + 2},${hA1} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: 'url(#gc-hA)', filter: 'url(#gc-p2)'})}
+      ${wh}
+      ${el('path', {d: `M-2,${hB0} Q${W * .28},${hb} ${W * .38},${hb} L${W * .62},${hb} Q${W * .78},${hb} ${W + 2},${hB1} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: 'url(#gc-hB)', filter: 'url(#gc-p2)'})}
+      </g></g>
+    </g></g>`;
+
+    // ---- tap halos sit behind the pieces
+    const HL = [[ncx, ny0 + bh * .55, bw * .72], [pcx, py0 + ph * .5, pw * .66], [prX, (hcy - hr + fly) / 2, (fly - hcy + hr) * .62], [fcx, fy0 + fh2 * .4, fxw * .66]];
+    s += `<g id="gc-halos" class="e-g">${HL.map(([x, y, r]) => `<g class="gc-halo" opacity="0">${el('circle', {class: 'gc-hc', cx: x, cy: y, r, fill: 'url(#gc-halo)'})}</g>`).join('')}</g>`;
+
+    // ---- middle plane: the NSA ledge, the code panel, the printer, the chain
+    const sf = Math.max(12, Math.min(bh * .24, fs * 1.5)), sBase = ny0 + bh * .2 + sf * 1.02;
+    const wTop = sBase + fs * .35, wBot = nyb - bh * .1, rowsN = wBot - wTop > fs * 1.7 ? 2 : 1, rowH = (wBot - wTop) / rowsN, gap = bw / 15;
+    let wins = '';
+    for (let r = 0; r < rowsN; r++) for (let k = 0; k < 7; k++) wins += el('rect', {class: 'gc-win', x: nx + gap * (1 + 2 * k), y: wTop + r * rowH + rowH * .18, width: gap, height: rowH * .64, fill: '#2a3753'});
+    const waves = [.6, 1, 1.4].map(m => { const d = fs * m; return el('path', {class: 'gc-wave', d: `M${tx + d * .5},${ty - d * .87} A${d},${d} 0 0 1 ${tx + d * .5},${ty + d * .87}`, fill: 'none', stroke: GOLD, 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: 0}); }).join('');
+    const cliff = `M-2,${nyb} L${rx},${nyb} Q${rx + fs * 1.2},${nyb} ${rx + fs * .5},${nyb + dp * .35} Q${rx - fs * .3},${nyb + dp * .68} ${rx - W * .08},${nyb + dp * .84} Q${W * .1},${nyb + dp * 1.08} -2,${nyb + dp}Z`;
+    const L = [
+      `M${tx},${ty} C${tx + (cx0 - tx) * .45},${ty - fs * 1.1} ${cx0 - fs * 2},${cy0 + chH / 2} ${cx0},${cy0 + chH / 2}`,
+      wide ? `M${cx0 + chW},${cy0 + chH / 2} C${cx0 + chW + fs * 1.4},${cy0 + chH / 2} ${pcx},${py0 - fs * 2.4} ${pcx},${py0 - fs * .95}`
+           : `M${cx0 + chW * .5},${cy0 + chH} C${cx0 + chW * .5},${cy0 + chH + fs * 1.5} ${pcx},${py0 - fs * 2.5} ${pcx},${py0 - fs * .95}`,
+      `M${pcx},${outY} C${pcx - W * .05},${outY + H * .16} ${pkX + W * .22},${restY - H * .14} ${pkX},${restY}`,
+      `M${pkX},${restY} C${pkX + W * .1},${restY - H * .16} ${fcx - W * .05},${fy0 - H * .14} ${fcx},${fy0 + fh2 * .12}`
+    ];
+    const lineAttrs = {fill: 'none', 'stroke-linecap': 'round'};
+    const thTop = wide ? 0 : cy0 + chH;
+    s += `<g id="gc-mid">
+      <g class="e-m" mask="url(#gc-fh)"><g filter="url(#gc-p2)">${el('path', {d: cliff, fill: 'url(#gc-cl)'})}</g>${el('path', {d: `M0,${nyb + .8} L${rx},${nyb + .8}`, stroke: '#647aa3', 'stroke-width': 1.4, fill: 'none'})}</g>
+      <g class="e-m" filter="url(#gc-p1)">
+        ${el('rect', {x: nx + bw * .14, y: ny0, width: bw * .72, height: bh * .22, fill: 'url(#gc-cr2)'})}
+        ${el('rect', {x: nx, y: ny0 + bh * .2, width: bw, height: bh * .8, fill: 'url(#gc-cr)'})}
+        ${el('rect', {x: nx - bw * .03, y: ny0 + bh * .2, width: bw * 1.06, height: Math.max(2, bh * .05), fill: '#b9a77f'})}
+        ${el('rect', {x: nx - bw * .04, y: nyb - Math.max(2, bh * .05), width: bw * 1.08, height: Math.max(2, bh * .05), fill: '#b9a77f'})}
+        ${el('text', {class: 'sign', x: ncx, y: sBase, 'text-anchor': 'middle', 'font-size': sf, fill: NIGHT}, 'NSA')}
+        ${wins}
+        ${el('line', {x1: ax, y1: ny0, x2: ax, y2: ay + fs * .4, stroke: CREAMD, 'stroke-width': 2.2})}
+        ${el('path', {d: `M${ax - fs * .75},${ay} Q${ax - fs * .2},${ay + fs * 1.05} ${ax + fs * .75},${ay + fs * .25}Z`, fill: CREAM})}
+        ${el('line', {x1: ax, y1: ay + fs * .3, x2: tx, y2: ty, stroke: CREAMD, 'stroke-width': 1.4})}
+      </g>
+      ${el('circle', {id: 'gc-beacon', cx: tx, cy: ty, r: fs * .18, fill: GOLD})}
+      ${waves}
+      <g class="e-m"><g id="gc-swing"><g id="gc-idle">
+        ${el('line', {x1: cx0 + chW * .18, y1: 0, x2: cx0 + chW * .18, y2: cy0, stroke: CREAM, 'stroke-opacity': .35, 'stroke-width': 1})}
+        ${el('line', {x1: cx0 + chW * .82, y1: 0, x2: cx0 + chW * .82, y2: cy0, stroke: CREAM, 'stroke-opacity': .35, 'stroke-width': 1})}
+        <g filter="url(#gc-p1)">
+          ${el('rect', {x: cx0, y: cy0, width: chW, height: chH, rx: fs * .45, fill: '#111a29'})}
+          ${el('rect', {id: 'gc-edge', x: cx0 + 3, y: cy0 + 3, width: chW - 6, height: chH - 6, rx: fs * .3, fill: 'none', stroke: GOLD, 'stroke-opacity': .3, 'stroke-width': 1.2})}
+          ${[[.18, 0], [.82, 0]].map(([k]) => el('circle', {cx: cx0 + chW * k, cy: cy0 + fs * .32, r: 1.6, fill: '#46536d'})).join('')}
+          ${el('text', {id: 'gc-t1', class: 'mono', x: cx0 + fs * .75, y: cy0 + fs * 1.35, 'font-size': fs, fill: GOLD, opacity: .7}, 'GOLD CODES')}
+          ${el('text', {id: 'gc-code', class: 'mono', x: cx0 + fs * .75, y: cy0 + fs * 2.95, 'font-size': fs, fill: GOLD, 'letter-spacing': '.08em'}, '·········')}
+        </g>
+      </g></g></g>
+      <g class="e-m"><g id="gc-printer">
+        ${el('line', {x1: px0 + pw * .15, y1: thTop, x2: px0 + pw * .15, y2: py0, stroke: CREAM, 'stroke-opacity': .35, 'stroke-width': 1})}
+        ${el('line', {x1: px0 + pw * .85, y1: thTop, x2: px0 + pw * .85, y2: py0, stroke: CREAM, 'stroke-opacity': .35, 'stroke-width': 1})}
+        <g filter="url(#gc-p1)">
+          ${el('rect', {x: pcx - pw * .28, y: py0 - fs * .95, width: pw * .56, height: fs * 1.3, fill: '#fbf6ea'})}
+          ${[.3, .6].map(k => el('line', {x1: pcx - pw * .2, x2: pcx + pw * .12, y1: py0 - fs * .95 + fs * k, y2: py0 - fs * .95 + fs * k, stroke: '#cdbd98', 'stroke-width': 1})).join('')}
+          ${el('rect', {x: px0, y: py0, width: pw, height: ph, rx: fs * .5, fill: 'url(#gc-cr)'})}
+          ${el('rect', {x: px0, y: py0, width: pw, height: ph * .24, rx: fs * .5, fill: '#fff6e2', opacity: .55})}
+          ${[0, 1, 2].map(k => el('line', {x1: px0 + pw * .08, x2: px0 + pw * .3, y1: py0 + ph * (.36 + k * .13), y2: py0 + ph * (.36 + k * .13), stroke: '#a8966f', 'stroke-width': 1.4, 'stroke-linecap': 'round'})).join('')}
+          ${el('rect', {x: pcx - pw * .36, y: slotY - fs * .42, width: pw * .72, height: fs * .3, rx: fs * .15, fill: NIGHT})}
+          ${el('circle', {id: 'gc-led', cx: px0 + pw * .86, cy: py0 + ph * .4, r: fs * .28, fill: '#5b6a86'})}
+        </g>
+      </g></g>
+      <g class="e-g">${L.map(d => el('path', {d, ...lineAttrs, stroke: CREAM, 'stroke-opacity': .25, 'stroke-width': 1.6, 'stroke-dasharray': '2 6'})).join('')}</g>
+      <g>${L.map(d => el('path', {class: 'gc-line', d, ...lineAttrs, stroke: GOLD, 'stroke-width': 2.4})).join('')}</g>
+      ${cap(0)}${cap(1)}
+    </g>`;
+
+    // ---- front plane: floor, president, football, seal
+    const rays = Array.from({length: 11}, (_, k) => { const a = (-165 + k * 15) * Math.PI / 180, r1 = fxw * .42, r2 = r1 + fs * 2.2;
+      return el('line', {class: 'gc-ray', x1: fcx + Math.cos(a) * r1, y1: fy0 + Math.sin(a) * r1, x2: fcx + Math.cos(a) * r2, y2: fy0 + Math.sin(a) * r2, stroke: GOLD, 'stroke-width': 2.2, 'stroke-linecap': 'round'}); }).join('');
+    const sr = Math.min(fh2 * .44, fs * 1.6), sx = fcx, sy2 = fy0 + fh2 * .58;
+    const ruff = Array.from({length: 32}, (_, k) => { const a = k * Math.PI / 16, r = k % 2 ? sr * .96 : sr * 1.14; return `${(Math.cos(a) * r).toFixed(1)},${(Math.sin(a) * r).toFixed(1)}`; }).join(' ');
+    s += `<g id="gc-front">
+      <g class="e-f" mask="url(#gc-fh)"><g mask="url(#gc-fv)">
+        <g filter="url(#gc-p2)">${el('path', {d: `M-2,${fly} Q${W * .5},${fly - fs * .6} ${W + 2},${fly} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: 'url(#gc-fl)'})}</g>
+        ${el('path', {d: `M-2,${fly + .8} Q${W * .5},${fly - fs * .6 + .8} ${W + 2},${fly + .8}`, stroke: '#6a80a8', 'stroke-width': 1.4, fill: 'none'})}
+      </g></g>
+      <g class="e-f"><g id="gc-pres" filter="url(#gc-p1)">
+        ${el('rect', {x: prX - hr * .45, y: hcy + hr * .5, width: hr * .9, height: sy - hcy - hr * .5 + 3, fill: CREAMD})}
+        ${el('path', {d: `M${prX - bw2 / 2},${fly} L${prX - bw2 / 2},${sy + bw2 * .25} Q${prX - bw2 / 2},${sy} ${prX - bw2 * .2},${sy} L${prX + bw2 * .2},${sy} Q${prX + bw2 / 2},${sy} ${prX + bw2 / 2},${sy + bw2 * .25} L${prX + bw2 / 2},${fly}Z`, fill: 'url(#gc-suit)'})}
+        ${el('path', {d: `M${prX - bw2 * .34},${sy + hh * .3} L${prX - bw2 * .36},${fly} M${prX + bw2 * .34},${sy + hh * .3} L${prX + bw2 * .36},${fly}`, stroke: '#2b3750', 'stroke-width': 1.3, fill: 'none'})}
+        ${el('path', {d: `M${prX - bw2 * .15},${sy} L${prX + bw2 * .15},${sy} L${prX},${sy + hh * .42}Z`, fill: CREAM})}
+        ${el('path', {d: `M${prX - fs * .25},${sy + 1} L${prX + fs * .25},${sy + 1} L${prX + fs * .14},${sy + fs * .6} L${prX + fs * .3},${sy + hh * .36} L${prX},${sy + hh * .44} L${prX - fs * .3},${sy + hh * .36} L${prX - fs * .14},${sy + fs * .6}Z`, fill: '#a8343a'})}
+        ${el('path', {d: `M${prX - bw2 * .16},${sy} L${prX - bw2 * .03},${sy + hh * .5} M${prX + bw2 * .16},${sy} L${prX + bw2 * .03},${sy + hh * .5}`, stroke: '#34405a', 'stroke-width': 1.5, fill: 'none'})}
+        ${el('path', {d: `M${pkX - fs * .9},${pkY} L${pkX + fs * .9},${pkY}`, stroke: '#3a4762', 'stroke-width': 1.5, 'stroke-linecap': 'round'})}
+        ${el('circle', {cx: prX - bw2 * .3, cy: sy + hh * .2, r: Math.max(1.5, fs * .14), fill: GOLD, opacity: .8})}
+        ${el('circle', {cx: prX, cy: hcy, r: hr, fill: 'url(#gc-face)'})}
+        ${el('path', {d: `M${prX - hr},${hcy - hr * .05} Q${prX - hr * 1.05},${hcy - hr * 1.15} ${prX},${hcy - hr * 1.08} Q${prX + hr * 1.1},${hcy - hr * 1.1} ${prX + hr},${hcy - hr * .1} Q${prX + hr * .4},${hcy - hr * .75} ${prX - hr},${hcy - hr * .05}Z`, fill: '#c9c1b0'})}
+      </g></g>
+      <g class="e-f"><g id="gc-case" filter="url(#gc-p1)">
+        ${el('path', {d: `M${fcx - fxw * .18},${fy0} C${fcx - fxw * .18},${fy0 - fh2 * .35} ${fcx + fxw * .18},${fy0 - fh2 * .35} ${fcx + fxw * .18},${fy0}`, stroke: '#0c1016', 'stroke-width': fs * .42, fill: 'none', 'stroke-linecap': 'round'})}
+        ${el('rect', {x: fx0, y: fy0, width: fxw, height: fh2, rx: fh2 * .14, fill: 'url(#gc-lea)'})}
+        ${el('rect', {x: fx0 + fs * .35, y: fy0 + fs * .35, width: fxw - fs * .7, height: fh2 - fs * .7, rx: fh2 * .1, fill: 'none', stroke: '#465165', 'stroke-width': 1, 'stroke-dasharray': '3 3'})}
+        ${el('circle', {cx: fcx, cy: fy0 + fh2 * .62, r: fs * .32, fill: 'none', stroke: GOLD, 'stroke-opacity': .6, 'stroke-width': 1.2})}
+        ${el('rect', {id: 'gc-inner', x: fx0 + fs * .4, y: fy0, width: fxw - fs * .8, height: fh2 * .32, rx: fs * .2, fill: 'url(#gc-in)', opacity: 0})}
+        <g id="gc-lid">${el('rect', {x: fx0, y: fy0, width: fxw, height: fh2 * .32, rx: fh2 * .14, fill: '#2b3342'})}${el('line', {x1: fx0 + fh2 * .14, x2: fx0 + fxw - fh2 * .14, y1: fy0 + 1.2, y2: fy0 + 1.2, stroke: '#5a6578', 'stroke-width': 1.2})}</g>
+        ${[-1, 1].map(sg => el('rect', {x: fcx + sg * fxw * .28 - fs * .35, y: fy0 + fh2 * .32 - fs * .3, width: fs * .7, height: fs * .6, rx: 2, fill: 'url(#gc-gd)'})).join('')}
+      </g></g>
+      <g transform="translate(${sx.toFixed(1)},${sy2.toFixed(1)})"><g id="gc-seal" opacity="0">
+        ${el('polygon', {points: ruff, fill: '#c8922c'})}
+        ${el('circle', {r: sr, fill: 'url(#gc-gd)', stroke: '#8a5f18', 'stroke-width': 1})}
+        ${el('circle', {r: sr * .76, fill: 'none', stroke: '#8a5f18', 'stroke-width': 1, 'stroke-dasharray': '2 2.4', opacity: .75})}
+        ${el('path', {id: 'gc-check', d: `M${-sr * .38},${sr * .02} L${-sr * .1},${sr * .3} L${sr * .42},${-sr * .3}`, fill: 'none', stroke: NIGHT, 'stroke-width': Math.max(2, sr * .17), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'})}
+      </g></g>
+      <g>${rays}</g>
+      ${cap(2)}${cap(3)}
+    </g>`;
+
+    // ---- effects: the card, the spark, the pulse rings
+    const dash = [0, 1, 2, 3].map(k => el('rect', {class: 'gc-dash', x: -cw / 2 + cw * (.1 + k * .2), y: -ch / 2 + ch * .72, width: cw * .15, height: ch * .09, rx: 1, fill: NIGHT, opacity: 0})).join('');
+    s += `<g id="gc-fx">
+      <g id="gc-wrap" clip-path="url(#gc-clip)"><g id="gc-card" opacity="0" filter="url(#gc-p1)">
+        ${el('rect', {x: -cw / 2, y: -ch / 2, width: cw, height: ch, rx: ch * .12, fill: 'url(#gc-cd)', stroke: '#fff8e6', 'stroke-opacity': .6})}
+        ${el('rect', {x: -cw / 2, y: -ch / 2 + ch * .14, width: cw, height: ch * .14, fill: 'url(#gc-gd)'})}
+        ${el('rect', {x: -cw / 2 + cw * .1, y: -ch / 2 + ch * .38, width: cw * .19, height: ch * .24, rx: 2, fill: 'url(#gc-gd)', stroke: '#9a6a1c', 'stroke-width': .8})}
+        ${el('circle', {cx: cw / 2 - cw * .16, cy: -ch / 2 + ch * .5, r: ch * .12, fill: 'none', stroke: '#a7741f', 'stroke-width': 1.2})}
+        ${dash}
+      </g></g>
+      ${el('circle', {id: 'gc-spark', cx: tx, cy: ty, r: fs * .38, fill: '#fff3c4', filter: 'url(#gc-glow)', opacity: 0})}
+      <g id="gc-pulses">${HL.map(([x, y, r]) => `<g class="gc-pg" opacity="0">${el('circle', {class: 'gc-pulse', cx: x, cy: y, r: r * .7, fill: 'none', stroke: GOLD, 'stroke-width': 1.6, opacity: .6})}</g>`).join('')}</g>
+    </g>`;
+
+    svg.innerHTML = s;
+    const q = id => svg.querySelector('#' + id);
+    R = {back: q('gc-back'), front: q('gc-front'), card: q('gc-card'), wrap: q('gc-wrap'), spark: q('gc-spark'), seal: q('gc-seal'), check: q('gc-check'),
+      code: q('gc-code'), t1: q('gc-t1'), edge: q('gc-edge'), led: q('gc-led'), printer: q('gc-printer'), pres: q('gc-pres'), beacon: q('gc-beacon'),
+      swing: q('gc-swing'), idle: q('gc-idle'), case: q('gc-case'), lid: q('gc-lid'), inner: q('gc-inner'), pulsesG: q('gc-pulses'),
+      L: $$('.gc-line'), wins: $$('.gc-win'), whw: $$('.gc-whw'), waves: $$('.gc-wave'), rays: $$('.gc-ray'), dash: $$('.gc-dash'), stars: $$('.gc-star'),
+      caps: [0, 1, 2, 3].map(i => q('gc-cap' + i)), halos: $$('.gc-halo'), pgs: $$('.gc-pg')};
+    gsap.set(R.L, {drawSVG: '0%'});
+    gsap.set(R.rays, {drawSVG: '0% 0%'});
+    Object.assign(C, {x: pcx, y: hidY, s: 1, r: 0, o: 0}); placeCard();
+    if (!Kit.calm) {
+      $$('.gc-pulse').forEach((c, i) => { const r0 = +c.getAttribute('r'); gsap.fromTo(c, {attr: {r: r0 * .85}, opacity: .9}, {attr: {r: r0 * 1.2}, opacity: 0, duration: 1.5, repeat: -1, ease: 'power2.out', delay: i * .1}); });
+      $$('.gc-hc').forEach(c => { const r0 = +c.getAttribute('r'); gsap.fromTo(c, {attr: {r: r0 * .92}}, {attr: {r: r0 * 1.1}, duration: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'}); });
+      R.stars.forEach(st => gsap.to(st, {opacity: .08 + Math.random() * .2, duration: 1.2 + Math.random() * 2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Math.random() * 2}));
+      gsap.fromTo(R.idle, {rotation: -.7, svgOrigin: G.chipO}, {rotation: .7, svgOrigin: G.chipO, duration: 2.8, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+      gsap.to(R.beacon, {opacity: .25, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+    }
+    for (let i = 0; i < step; i++) run(i, true);
+    R.halos.forEach((g, j) => g.setAttribute('opacity', j === step ? 1 : 0));
+    R.pgs.forEach((g, j) => g.setAttribute('opacity', j === step ? 1 : 0));
+  }
+
+  function setHalo(k) { [...R.halos, ...R.pgs].forEach((g, j) => gsap.to(g, {opacity: j % 4 === k ? 1 : 0, duration: .3, ease: 'power2.out'})); }
+
+  const STEPS = [
+    () => { // the NSA generates the gold codes
+      const tl = gsap.timeline({paused: true});
+      tl.to(R.wins, {attr: {fill: GOLD}, duration: .25, stagger: {each: .03, from: 'random'}, ease: 'power2.out'}, 0)
+        .fromTo(R.waves, {drawSVG: '0%', opacity: 1}, {drawSVG: '100%', duration: .5, stagger: .12, ease: 'power2.out'}, .05)
+        .to(R.waves, {opacity: 0, duration: .45, stagger: .12, ease: 'power1.in'}, .55)
+        .to(R.L[0], {drawSVG: '100%', duration: .75, ease: 'power2.inOut'}, .2)
+        .to(R.edge, {attr: {'stroke-opacity': 1}, duration: .3}, .85)
+        .to(R.t1, {opacity: 1, duration: .3}, .85)
+        .to(R.code, {duration: 1.1, scrambleText: {text: CODE, chars: '0123456789ABCDEFGHJKMNPQRSTVWXYZ', speed: .5}}, .85)
+        .to(R.caps[0], {attr: {fill: GOLD}, duration: .3}, .85);
+      return {tl, end: () => {}};
+    },
+    () => { // printed on a plastic card
+      const tl = gsap.timeline({paused: true});
+      Object.assign(C, {x: G.pcx, y: G.hidY, s: 1, r: 0, o: 1}); placeCard();
+      tl.to(R.L[1], {drawSVG: '100%', duration: .6, ease: 'power2.inOut'}, 0)
+        .to(R.led, {attr: {fill: GOLD}, duration: .12, repeat: 6, yoyo: true, ease: 'sine.inOut'}, .35)
+        .to(R.printer, {y: 1.6, duration: .06, repeat: 9, yoyo: true, ease: 'sine.inOut'}, .45)
+        .to(C, {y: G.outY, duration: 1, ease: 'power3.out', onUpdate: placeCard}, .6)
+        .fromTo(R.dash, {opacity: 0}, {opacity: 1, duration: .12, stagger: .12}, .8)
+        .to(R.caps[1], {attr: {fill: GOLD}, duration: .3}, .6);
+      return {tl, end: () => { Object.assign(C, {x: G.pcx, y: G.outY, s: 1, r: 0, o: 1}); placeCard(); }};
+    },
+    () => { // the president carries it
+      const tl = gsap.timeline({paused: true}), P = {t: 0}, p = R.L[2], len = p.getTotalLength();
+      tl.to(p, {drawSVG: '100%', duration: .9, ease: 'power2.inOut'}, 0)
+        .to(P, {t: 1, duration: 1.25, ease: 'power2.inOut', onUpdate: () => { const pt = p.getPointAtLength(P.t * len); Object.assign(C, {x: pt.x, y: pt.y, s: 1 - .45 * P.t, r: -12 * P.t - 10 * Math.sin(P.t * Math.PI), o: 1}); placeCard(); }}, .2)
+        .to(R.pres, {y: -4, duration: .18, yoyo: true, repeat: 1, ease: 'power2.out'}, 1.42)
+        .to(R.caps[2], {attr: {fill: GOLD}, duration: .3}, 1.3);
+      return {tl, end: () => { const pt = p.getPointAtLength(len); Object.assign(C, {x: pt.x, y: pt.y, s: .55, r: -12, o: 1}); placeCard(); }};
+    },
+    () => { // the football: authentication
+      const tl = gsap.timeline({paused: true}), P = {t: 0}, p = R.L[3], len = p.getTotalLength();
+      const segs = R.L.map(l => l.getTotalLength()), tot = segs.reduce((a, b) => a + b, 0), S = {d: 0};
+      tl.to(p, {drawSVG: '100%', duration: .6, ease: 'power2.inOut'}, 0)
+        .to(R.lid, {scaleY: -.5, transformOrigin: '50% 0%', duration: .55, ease: 'back.out(1.7)'}, .05)
+        .to(R.inner, {opacity: 1, duration: .4, ease: 'power2.out'}, .15)
+        .to(P, {t: 1, duration: 1, ease: 'power2.inOut', onUpdate: () => { const pt = p.getPointAtLength(P.t * len); Object.assign(C, {x: pt.x, y: pt.y, s: .55 - .3 * P.t, r: -12 + 12 * P.t, o: P.t < .75 ? 1 : 1 - (P.t - .75) / .25}); placeCard(); }}, .2)
+        .set(R.spark, {opacity: 1}, 1.25)
+        .to(S, {d: tot, duration: 1.3, ease: 'power2.in', onUpdate: () => { let d = S.d, k = 0; while (k < 3 && d > segs[k]) { d -= segs[k]; k++; } const pt = R.L[k].getPointAtLength(Math.min(d, segs[k])); R.spark.setAttribute('cx', pt.x); R.spark.setAttribute('cy', pt.y); }}, 1.25)
+        .to(R.spark, {opacity: 0, duration: .15}, 2.55)
+        .to(R.case, {scale: 1.07, transformOrigin: '50% 100%', duration: .14, yoyo: true, repeat: 1, ease: 'power2.out'}, 2.55)
+        .fromTo(R.rays, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: .45, stagger: .025, ease: 'expo.out'}, 2.55)
+        .to(R.rays, {drawSVG: '100% 100%', duration: .6, stagger: .02, ease: 'power2.in'}, 3.1)
+        .to(R.L, {attr: {'stroke-width': 3.2}, duration: .4, ease: 'power2.out'}, 2.55)
+        .set(R.L, {attr: {filter: 'url(#gc-glow)'}}, 2.55)
+        .to(R.t1, {duration: .7, scrambleText: {text: 'AUTHENTICATED', chars: 'ABCDEFGHJKLMNPQRSTUVWXYZ', speed: .6}}, 2.6)
+        .to(R.edge, {attr: {'stroke-width': 2.2}, duration: .3}, 2.6)
+        .fromTo(R.swing, {rotation: 4, svgOrigin: G.chipO}, {rotation: 0, svgOrigin: G.chipO, duration: 1.6, ease: 'elastic.out(1,.25)'}, 2.6)
+        .fromTo(R.seal, {scale: 2.8, opacity: 0, rotation: -35, transformOrigin: '50% 50%'}, {scale: 1, opacity: 1, rotation: -10, duration: .6, ease: 'back.out(2.4)'}, 2.7)
+        .fromTo(R.check, {drawSVG: '0%'}, {drawSVG: '100%', duration: .35, ease: 'power2.out'}, 3.05)
+        .to(R.caps[3], {attr: {fill: GOLD}, duration: .3}, 2.6);
+      if (R.whw.length) tl.to(R.whw, {attr: {fill: GOLD}, duration: .2, stagger: .05}, 2.9);
+      return {tl, end: () => { C.o = 0; placeCard(); }};
+    }
+  ];
+
+  function run(i, instant) {
+    if (i >= 2) R.wrap.removeAttribute('clip-path');
+    const {tl, end} = STEPS[i]();
+    if (instant) { tl.progress(1); tl.kill(); end(); }
+    else {
+      tls.push(tl); pend.push(end);
+      tl.eventCallback('onComplete', () => { end(); if (waitFit && !tls.some(t => t !== tl && t.isActive())) refit(); });
+      tl.play();
+    }
+  }
+  function flush() { tls.forEach(t => t.progress(1).kill()); tls = []; pend.forEach(f => f()); pend = []; }
+
+  // Re-flow the diorama when the stage changes size (the takeaway appearing, line breaks), never mid-animation.
+  function refit() {
+    waitFit = false;
+    build();
+    if (!Kit.calm) gsap.fromTo(svg, {opacity: 0}, {opacity: 1, duration: .35, ease: 'power1.out'});
+  }
+  new ResizeObserver(() => {
+    if (!R.card) return;
+    if (Math.abs(stage.clientWidth - seen.w) < 2 && Math.abs(stage.clientHeight - seen.h) < 2) return;
+    clearTimeout(fitT);
+    fitT = setTimeout(() => { if (tls.some(t => t.isActive())) waitFit = true; else refit(); }, 140);
+  }).observe(stage);
+
+  function go(instant) {
+    if (step >= 4 || !R.card) return;
+    flush();
+    const i = step++;
+    run(i, instant || Kit.calm);
+    setHalo(step);
+    say.innerHTML = SAY[step];
+    Kit.haptic(i === 3 ? 'success' : 'light');
+    if (step === 4) {
+      clearTimeout(keepT);
+      if (instant || Kit.calm) Kit.show('keep');
+      else keepT = setTimeout(() => Kit.show('keep'), 3500);
+    }
+  }
+  svg.addEventListener('click', () => go(false));
+
+  // Depth: the paper planes slide apart under the finger.
+  svg.addEventListener('pointermove', e => {
+    if (Kit.calm || !R.back) return;
+    const b = svg.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5;
+    gsap.to(R.back, {x: -x * 12, y: -y * 6, duration: .9, ease: 'power3.out', overwrite: 'auto'});
+    gsap.to(R.front, {x: x * 5, y: y * 2, duration: .9, ease: 'power3.out', overwrite: 'auto'});
+  });
+
+  Kit.onShow.card = build;
+  // The diorama assembles itself: far plane, hanging pieces dropping in on their threads, front plane.
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !R.back) return;
+    gsap.timeline()
+      .from($$('.e-b'), {opacity: 0, y: H * .06, duration: 1.1, ease: 'power3.out'})
+      .from($$('.e-m'), {opacity: 0, y: -H * .12, duration: .9, stagger: .07, ease: 'back.out(1.3)'}, .2)
+      .from($$('.e-f'), {opacity: 0, y: H * .08, duration: .8, stagger: .06, ease: 'power3.out'}, .45)
+      .from($$('.e-g'), {opacity: 0, duration: .8, ease: 'power2.out'}, 1.1)
+      .from(R.pulsesG, {opacity: 0, duration: .6, ease: 'power2.out'}, 1.4);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (let i = 0; i < 4; i++) { go(true); await wait(120); }
+    await wait(900);
+  };
+})();
+Kit.single();
+</script>
+</html>

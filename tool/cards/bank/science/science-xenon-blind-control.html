@@ -44,12 +44,11 @@ function draw() {
   G = Kit.fitSvg(svg); fs = Math.max(12, Math.min(G.f * .9, 18));
   L = LAYERS.map((d, i) => {
     const g = Kit.mk('g', {}, svg);
-    const rect = Kit.mk('rect', {rx: 10, fill: 'var(--k)', 'fill-opacity': i === 2 ? .07 : .05, stroke: 'var(--k)', 'stroke-opacity': .3, 'stroke-width': 1.5}, g);
     const area = d.area ? Kit.mk('path', {fill: 'var(--k)', 'fill-opacity': .22, stroke: 'none'}, g) : null;
     const line = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': d.thick ? 4 : 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': d.dash ? '7 6' : null}, g);
     const ti = Kit.mk('text', {fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, g); ti.textContent = d.title;
     const va = Kit.mk('text', {fill: 'var(--k)', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * (i === 2 ? 1.35 : 1), 'text-anchor': 'end'}, g); va.textContent = d.val;
-    return {d, g, rect, area, line, ti, va};
+    return {d, g, area, line, ti, va};
   });
   render();
 }
@@ -62,7 +61,6 @@ function render() {
   L.forEach((o, i) => {
     const h = h0 + (ph - h0) * t, y = y0 + (i * (ph + gap) - y0) * t;
     const top = fs * 1.9, bot = fs * .6, ih = Math.max(4, h - top - bot);
-    o.rect.setAttribute('x', 2); o.rect.setAttribute('y', y); o.rect.setAttribute('width', W - 4); o.rect.setAttribute('height', h);
     let d = '';
     for (let k = 0; k <= 60; k++) {
       const x = k / 60, px = x0 + (x1 - x0) * x, py = y + top + (1 - o.d.f(x)) * ih;
@@ -75,7 +73,6 @@ function render() {
     if (i < 2) {
       const a = Math.max(0, (t - .2) / .8);
       [o.ti, o.va].forEach(e => { e.setAttribute('visibility', a > 0 ? 'visible' : 'hidden'); e.setAttribute('opacity', a); });
-      o.rect.setAttribute('opacity', t);
       o.line.setAttribute('opacity', i === 1 ? .12 + .88 * t : .45 + .55 * t);
       if (o.area) o.area.setAttribute('opacity', .1 + .9 * t);
     }

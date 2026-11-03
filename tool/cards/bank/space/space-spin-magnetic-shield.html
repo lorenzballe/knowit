@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0}
-#cv{display:block;width:100%;height:100%;flex:1;min-height:0;border-radius:2cqh;background:#070b1a}
+#cv{display:block;width:100%;height:100%;flex:1;min-height:0;background:none}
 #ctl{display:flex;align-items:center;gap:3cqw;margin-top:1.2cqh}
 #ctl label{font:700 max(1.9cqh,12px)/1.2 var(--body);color:var(--k);white-space:nowrap}
 #ctl output{font:700 max(1.9cqh,12px)/1.2 var(--mono);color:var(--k);min-width:4.5ch;text-align:right}
@@ -86,12 +86,12 @@ function draw() {
   const s = st.spin, x = ctx;
   x.clearRect(0, 0, W, H);
   // stars
-  x.fillStyle = 'rgba(255,255,255,.35)';
+  x.fillStyle = 'rgba(255,255,255,.5)';
   for (let i = 0; i < 40; i++) { const sx = (i * 97.3 % 1) * W, sy = ((i * 53.7 + 11) % 37) / 37 * H; x.fillRect((i * 0.6180339 % 1) * W, sy, 1.2, 1.2); }
   // field lines
   x.lineWidth = Math.max(1.2, R * .02);
   [1.5, 2.1, 2.8, 3.6].forEach((L, j) => {
-    x.strokeStyle = `rgba(110,190,255,${.75 * s - j * .08 * s})`;
+    x.strokeStyle = `rgba(210,235,255,${.85 * s - j * .08 * s})`;
     [-1, 1].forEach(side => {
       x.beginPath();
       for (let k = 0; k <= 60; k++) {
@@ -105,7 +105,7 @@ function draw() {
   // aurora glows
   glows.forEach(g => { x.fillStyle = `rgba(80,255,150,${g.a * .7})`; x.beginPath(); x.arc(g.x, g.y, R * .12, 0, 7); x.fill(); });
   // Earth layers
-  const lay = [[1, '#2f7fd0'], [.94, '#8a3b1f'], [.56, '#ff8a1e'], [.32, '#fff2a8']];
+  const lay = [[1, '#bfe0ff'], [.94, '#8a3b1f'], [.56, '#ff8a1e'], [.32, '#fff2a8']];
   lay.forEach(([f, c]) => { x.fillStyle = c; x.beginPath(); x.arc(cx, cy, R * f, 0, 7); x.fill(); });
   // charges in outer core
   charges.forEach(c => {
@@ -135,11 +135,11 @@ function draw() {
   x.textBaseline = 'middle';
   x.font = `700 ${fs}px sans-serif`;
   x.fillStyle = '#ffe14d'; x.textAlign = 'left'; x.fillText('COSMIC RAYS →', fs * .6, fs * 1.3);
-  x.textAlign = 'right'; x.fillStyle = hits ? '#ff6b6b' : '#ffffff';
+  x.textAlign = 'right'; x.fillStyle = hits ? '#ffc2c2' : '#ffffff';
   x.fillText(`DNA hits: ${hits}`, W - fs * .6, fs * 1.3);
   x.textAlign = 'center';
-  x.fillStyle = `rgba(110,190,255,${Math.max(.0, s)})`; x.fillText('MAGNETIC SHIELD', cx, fs * 3);
-  x.textAlign = 'left'; x.fillStyle = 'rgba(255,255,255,.85)';
+  x.fillStyle = `rgba(210,235,255,${Math.max(.0, s)})`; x.fillText('MAGNETIC SHIELD', cx, fs * 3);
+  x.textAlign = 'left'; x.fillStyle = 'rgba(255,255,255,.9)';
   x.font = `600 ${fs * .9 > 12 ? fs * .9 : 12}px sans-serif`;
   x.fillText(s > .04 ? 'Hot core: charges turn with Earth' : 'Charges still: no field', fs * .6, H - fs * .9);
 }

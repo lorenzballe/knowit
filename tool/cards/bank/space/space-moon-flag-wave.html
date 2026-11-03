@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#view{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#05070d}
+#view{position:relative;flex:1;min-height:0;background:none}
 #view canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #ctl{display:flex;flex-direction:column;gap:1cqh}
 #modes{display:flex;gap:2cqw}
@@ -55,10 +55,6 @@ function draw(){
   if (!G) return;
   const {x, W, H} = G, f = Math.max(12, H * .042);
   x.clearRect(0, 0, W, H);
-  const sky = x.createLinearGradient(0, 0, 0, H);
-  sky.addColorStop(0, mode === 'vac' ? '#02030a' : '#2a4f86');
-  sky.addColorStop(1, mode === 'vac' ? '#0b1020' : '#8fb6e0');
-  x.fillStyle = sky; x.fillRect(0, 0, W, H);
   if (mode === 'vac') { x.fillStyle = '#fff'; stars.forEach(s => { x.globalAlpha = s.a; x.fillRect(s.x * W, s.y * H, s.r, s.r); }); x.globalAlpha = 1; }
   const gy = H * .8;
   x.fillStyle = mode === 'vac' ? '#9a9890' : '#9c8a6a'; x.fillRect(0, gy, W, H - gy);

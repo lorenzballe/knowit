@@ -1,0 +1,368 @@
+<!doctype html>
+<!-- slug: science-bio-not-biodegradable -->
+<!-- Look: a mid-century textbook plate, "Fig. 1": halftone teal and ochre circles printed slightly off register, red hatching, dotted leader lines, an egg-crate tray of pellets, all printed straight on the card.
+     Interaction: the reader guesses, then the tray of bioplastic pellets sorts itself into the Venn diagram; a second tap launches the plastics made from oil.
+     Wow: twelve plant-made pellets arc out under gravity. Half land outside BIODEGRADABLE, that half flashes red as "50%", and then some oil pellets land inside it.
+     Layout: the plate re-measures itself whenever the text around it changes, stacks its labels from real text boxes, and drops ornaments (caption, header, sub-labels) before it ever lets them collide. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bio is not biodegradable</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#platebox{position:relative;flex:1;min-height:0;background:none}
+#plate{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;gap:2.4cqw}
+.opt{flex:1;min-width:0;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.5cqh 2cqw;cursor:pointer;transition:background .15s,color .15s}
+.opt:active{filter:brightness(.95)}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#more{align-self:flex-start;font-size:max(1.8cqh,13px)}
+#more.wait{visibility:hidden}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · watch the tray sort itself">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BIO ≠ BIODEGRADABLE</span></div>
+    <h2 class="q">Are bioplastics always biodegradable?</h2>
+    <div class="stagebox" id="stage">
+      <div id="platebox"><svg id="plate" role="img" aria-label="Figure 1: two overlapping circles, bio-based and biodegradable, with trays of plastic pellets below."></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Yes, always</button>
+        <button class="opt" data-i="1">No, not always</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">No. About half aren't.</p>
+        <p class="body" id="whyb">“Bio” is the origin: sugars from plants like wheat or sugarcane. “Biodegradable” is the fate: broken down in human time. Two separate questions.</p>
+        <button class="btn wait" id="more">Now launch the plastics from oil</button>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then say how sure you are. Then watch the tray sort itself.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>“Bio” is where a plastic comes from (plant sugars, like wheat or sugarcane). “Biodegradable” is how it ends. Check both.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const HAS_PHYS = typeof Physics2DPlugin !== 'undefined';
+  if (HAS_PHYS) gsap.registerPlugin(Physics2DPlugin);
+  const P = {paper: '#f2e7cd', paper2: '#e6d6b0', ink: '#10100c', teal: '#1d5f5a', tealD: '#0d3d3a', ochre: '#e9a21c', ochreD: '#5e3b00', red: '#9a2412'};
+  const svg = Kit.$('plate'), box = Kit.$('platebox'), more = Kit.$('more');
+  const RIGHT = 1;
+  let pick = -1, state = 0, moreTimer = 0;
+  let W = 0, H = 0, bw = 0, bh = 0, fs = 12, r = 60, pr = 5, cx1 = 0, cx2 = 0, cy = 0;
+  let pellets = [], L = {}, live = [];
+  const track = t => (live.push(t), t);
+  const CAPS = ['Twelve bioplastics wait in the tray.', 'Half the bioplastics won’t break down.', 'And some plastics from oil will.'];
+
+  const txt = (p, x, y, s, a = {}, fam = 'var(--body)') => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: P.ink, 'font-size': fs}, a), p);
+    e.style.fontFamily = fam; e.textContent = s; return e;
+  };
+  const lines = (e, arr) => {
+    e.textContent = '';
+    arr.forEach((s, i) => { const t = Kit.mk('tspan', {x: e.getAttribute('x'), dy: i ? '1.15em' : 0}, e); t.textContent = s; });
+  };
+  const meas = e => { const b = e.getBBox(); return {t: b.y, h: b.height, w: b.width}; };
+  const place = (e, mb, top) => e.setAttribute('y', top - mb.t);
+
+  function layout() {
+    live.forEach(t => t.kill()); live = [];
+    gsap.killTweensOf(svg.querySelectorAll('*'));
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const bb = box.getBoundingClientRect(); bw = bb.width; bh = bb.height;
+    fs = Math.max(12, Math.min(15, W / 26));
+    const m = fs * .9, mx = m * 1.35, small = Math.max(12, fs * .95);
+
+    const defs = Kit.mk('defs', {}, svg);
+    L.venn = Kit.mk('g', {}, svg);
+    const gLead = Kit.mk('g', {}, svg);
+    const gTx = Kit.mk('g', {}, svg);
+    const gTr = Kit.mk('g', {}, svg);
+    L.pel = Kit.mk('g', {}, svg);
+    L.fx = Kit.mk('g', {}, svg);
+
+    // ---------- texts, measured before anything is placed ----------
+    const head = txt(gTx, mx, 0, '', {'font-size': small, 'font-weight': 700}, 'var(--mono)');
+    const t1 = Kit.mk('tspan', {}, head); t1.textContent = 'FIG. 1 ';
+    const t2 = Kit.mk('tspan', {'font-weight': 500, opacity: .7}, head); t2.textContent = '· origin vs. fate';
+    const tl = txt(gTx, mx, 0, 'BIO-BASED', {'font-weight': 800, fill: P.tealD, 'font-size': fs * 1.1, class: 'ttl'}, 'var(--display)');
+    const tr = txt(gTx, W - mx, 0, 'BIODEGRADABLE', {'font-weight': 800, fill: P.ochreD, 'font-size': fs * 1.1, 'text-anchor': 'end', class: 'ttl'}, 'var(--display)');
+    const sl = txt(gTx, mx, 0, 'made from plant sugars', {'font-weight': 600, opacity: .85, 'font-size': small, class: 'ttl'});
+    const sr = txt(gTx, W - mx, 0, 'breaks down in human time', {'font-weight': 600, opacity: .85, 'font-size': small, 'text-anchor': 'end', class: 'ttl'});
+    const len = e => e.getComputedTextLength();
+    if (Math.max(len(tl), len(sl)) + Math.max(len(tr), len(sr)) + fs * 1.4 > W - 2 * mx) {
+      lines(sl, ['made from', 'plant sugars']); lines(sr, ['breaks down', 'in human time']);
+    }
+    const cap = txt(gTx, W / 2, 0, '', {'font-weight': 600, 'font-style': 'italic', 'text-anchor': 'middle', 'font-size': Math.max(12, fs)});
+    let capW = 0;
+    CAPS.forEach(c => { cap.textContent = c; capW = Math.max(capW, len(cap)); });
+    cap.textContent = CAPS[state];
+    const capFits = capW <= W - 2 * mx;
+    const labFs = Math.max(12, fs * .92);
+    const labL = txt(gTr, 0, 0, 'BIOPLASTICS', {'font-weight': 700, fill: P.tealD, 'text-anchor': 'middle', 'font-size': labFs}, 'var(--mono)');
+    const labR = txt(gTr, 0, 0, 'FROM OIL', {'font-weight': 700, fill: P.red, 'text-anchor': 'middle', 'font-size': labFs}, 'var(--mono)');
+
+    const mH = meas(head), mTl = meas(tl), mTr = meas(tr), mSl = meas(sl), mSr = meas(sr), mC = meas(cap), mLL = meas(labL), mLR = meas(labR);
+    const gs = fs * .18;
+    const hFull = Math.max(mTl.h + gs + mSl.h, mTr.h + gs + mSr.h), hShort = Math.max(mTl.h, mTr.h);
+
+    // ---------- choose how much ornament fits ----------
+    const kT = .5285; // tray height as a share of r
+    const g = fs * .5, gL = fs * .8, gV = fs * .6, gLab = fs * .3, pT = m * 1.15, pB = m * 1.05;
+    const LV = [[1, 1, 1, 50], [1, 0, 1, 46], [0, 0, 1, 38], [0, 0, 0, 0]];
+    let lv;
+    for (const l of LV) {
+      if (l[1] && !capFits) continue;
+      const fixed = pT + (l[0] ? mH.h + g : 0) + (l[2] ? hFull : hShort) + gL + gV + (l[1] ? mC.h + g : 0) + gLab + Math.max(mLL.h, mLR.h) + pB;
+      const rr = Math.min((H - fixed) / (2 + kT), (W - 2 * mx) / 3.15);
+      lv = {h: l[0], c: l[1], s: l[2], fixed, r: rr};
+      if (rr >= l[3]) break;
+    }
+    r = Math.max(18, lv.r);
+    pr = r * .095;
+    cx1 = W / 2 - r * .55; cx2 = W / 2 + r * .55;
+    const pad = r * .1, sp = pr * 2.3, trayH = pad * 1.2 + 2 * pr + sp;
+    const extra = Math.max(0, H - lv.fixed - (2 + kT) * r);
+    const e = extra / (3 + lv.h + lv.c);
+
+    let y = pT + e / 2;
+    if (lv.h) { place(head, mH, y); y += mH.h + g + e; } else head.remove();
+    place(tl, mTl, y); place(tr, mTr, y);
+    let lBot = y + mTl.h, rBot = y + mTr.h;
+    if (lv.s) { place(sl, mSl, lBot + gs); place(sr, mSr, rBot + gs); lBot += gs + mSl.h; rBot += gs + mSr.h; }
+    else { sl.remove(); sr.remove(); }
+    y += (lv.s ? hFull : hShort) + gL + e;
+    cy = y + r; y += 2 * r + gV + e;
+    if (lv.c) { place(cap, mC, y); L.cap = cap; y += mC.h + g + e; } else { cap.remove(); L.cap = null; }
+    const trayTop = y;
+    const labTop = trayTop + trayH + gLab;
+
+    // ---------- defs ----------
+    const s = Math.max(4, r * .075);
+    [['htT', P.tealD], ['htO', P.ochreD]].forEach(([id, col], i) => {
+      const pt = Kit.mk('pattern', {id, width: s, height: s, patternUnits: 'userSpaceOnUse', patternTransform: `rotate(${i ? 15 : 45})`}, defs);
+      Kit.mk('circle', {cx: s / 2, cy: s / 2, r: s * .3, fill: col}, pt);
+    });
+    const hat = Kit.mk('pattern', {id: 'hatR', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: P.red, 'stroke-width': 2.4}, hat);
+    [['gT', '#8cc5bb', '#2c706c', P.tealD], ['gF', '#ea9a7f', '#b2402b', '#6b2315']].forEach(([id, a, b, c]) => {
+      const gr = Kit.mk('radialGradient', {id, cx: .35, cy: .3, r: .75}, defs);
+      Kit.mk('stop', {offset: 0, 'stop-color': a}, gr);
+      Kit.mk('stop', {offset: .55, 'stop-color': b}, gr);
+      Kit.mk('stop', {offset: 1, 'stop-color': c}, gr);
+    });
+    const mask = Kit.mk('mask', {id: 'onlyBio', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+    Kit.mk('circle', {cx: cx1, cy, r, fill: '#fff'}, mask);
+    Kit.mk('circle', {cx: cx2, cy, r: r + 1, fill: '#000'}, mask);
+
+    // ---------- the two circles ----------
+    const blend = Kit.mk('g', {}, L.venn);
+    [[cx1, P.teal, 'htT', '#1f8a80'], [cx2, P.ochre, 'htO', '#ffc436']].forEach(([cx, col, pat, tint]) => {
+      const gg = Kit.mk('g', {class: 'vc'}, blend);
+      Kit.mk('circle', {cx, cy, r, fill: tint, opacity: .55}, gg);
+      Kit.mk('circle', {cx, cy, r, fill: `url(#${pat})`, opacity: .45}, gg);
+      Kit.mk('circle', {cx: cx + 1.6, cy: cy - 1.1, r, fill: 'none', stroke: col, 'stroke-width': 2.6}, gg);
+    });
+    L.hl = Kit.mk('rect', {x: cx1 - r, y: cy - r, width: 2 * r, height: 2 * r, fill: 'url(#hatR)', mask: 'url(#onlyBio)', opacity: state >= 1 ? .3 : 0}, L.venn);
+    [cx1, cx2].forEach(cx => Kit.mk('circle', {cx, cy, r, fill: 'none', stroke: P.ink, 'stroke-width': 1, opacity: .7, class: 'vo'}, L.venn));
+
+    // Dotted leader lines from each title to its circle.
+    [[mx + 3, lBot + 3, cx1 - .866 * r, cy - .5 * r, P.tealD], [W - mx - 3, rBot + 3, cx2 + .866 * r, cy - .5 * r, P.ochreD]].forEach(([sx, sy, ex, ey, col]) => {
+      if (ey - sy < 4) return;
+      const ld = Kit.mk('g', {class: 'lead'}, gLead);
+      Kit.mk('path', {d: `M${sx},${sy} Q${sx},${ey} ${ex},${ey}`, fill: 'none', stroke: col, 'stroke-width': 1.2, 'stroke-dasharray': '1.5 3', 'stroke-linecap': 'round', opacity: .85}, ld);
+      Kit.mk('circle', {cx: ex, cy: ey, r: 2.2, fill: col}, ld);
+    });
+
+    // Region numbers.
+    const nfs = Math.min(fs * 1.35, Math.max(12, r * .3));
+    L.n2 = txt(gTx, W / 2, cy - .44 * r, state >= 1 ? '50%' : '', {'font-weight': 800, 'font-size': nfs, fill: P.ink, 'text-anchor': 'middle'}, 'var(--display)');
+    L.n1 = txt(gTx, cx1 - .14 * r, cy + .78 * r, state >= 1 ? '50%' : '', {'font-weight': 800, 'font-size': nfs, fill: P.red, 'text-anchor': 'middle'}, 'var(--display)');
+
+    // ---------- trays (egg-crate dimples) ----------
+    const lwT = pad * 2 + 5 * sp + 2 * pr, rwT = pad * 2 + 3 * sp + 2 * pr;
+    const gap = Math.max(r * .3, (mLL.w + mLR.w) / 2 + fs - (lwT + rwT) / 2);
+    const x0 = W / 2 - (lwT + gap + rwT) / 2, x1 = x0 + lwT + gap;
+    const slot = (x, c, row) => [x + pad + pr + c * sp, trayTop + pad * .6 + pr + row * sp];
+    [[x0, lwT, 6, labL, mLL], [x1, rwT, 4, labR, mLR]].forEach(([x, w, cols, lab, mb]) => {
+      const gg = Kit.mk('g', {class: 'tray'}, gTr);
+      Kit.mk('rect', {x: x + 1.5, y: trayTop + 2, width: w, height: trayH, rx: pr * .9, fill: P.ink, opacity: .18}, gg);
+      Kit.mk('rect', {x, y: trayTop, width: w, height: trayH, rx: pr * .9, fill: P.paper2, stroke: P.ink, 'stroke-width': 1.1}, gg);
+      Kit.mk('line', {x1: x + 3, y1: trayTop + 2.5, x2: x + w - 3, y2: trayTop + 2.5, stroke: '#fff', 'stroke-width': 1, opacity: .6}, gg);
+      for (let i = 0; i < cols * 2; i++) {
+        const [sx, sy] = slot(x, i % cols, Math.floor(i / cols));
+        Kit.mk('circle', {cx: sx, cy: sy, r: pr * 1.08, fill: '#cdb88a', stroke: P.ink, 'stroke-width': .5, 'stroke-opacity': .35}, gg);
+        Kit.mk('path', {d: `M${sx - pr * .75},${sy + pr * .45} A${pr * .9},${pr * .9} 0 0 0 ${sx + pr * .75},${sy + pr * .45}`, fill: 'none', stroke: '#fff', 'stroke-width': .9, opacity: .55}, gg);
+      }
+      lab.setAttribute('x', x + w / 2); place(lab, mb, labTop);
+      gg.appendChild(lab);
+    });
+
+    // ---------- pellets ----------
+    const rows = [-.14, .1, .34].map(d => cy + d * r);
+    const Z = {
+      bio: rows.flatMap(yy => [[cx1 - .62 * r, yy], [cx1 - .38 * r, yy]]),
+      both: rows.flatMap(yy => [[W / 2 - .12 * r, yy], [W / 2 + .12 * r, yy]]),
+      deg: rows.map(yy => [cx2 + .5 * r, yy])
+    };
+    pellets = [];
+    for (let i = 0; i < 12; i++) {
+      const from = slot(x0, i % 6, Math.floor(i / 6));
+      const zone = [0, 3, 4, 7, 9, 10].includes(i) ? 'both' : 'bio';
+      const k = pellets.filter(p => p.zone === zone).length;
+      pellets.push(makePellet('bio', from, Z[zone][k], 1, zone));
+    }
+    const movers = [1, 4, 6];
+    for (let i = 0; i < 8; i++) {
+      const from = slot(x1, i % 4, Math.floor(i / 4));
+      const mi = movers.indexOf(i);
+      pellets.push(makePellet('oil', from, mi >= 0 ? Z.deg[mi] : from, mi >= 0 ? 2 : 99, mi >= 0 ? 'deg' : 'none'));
+    }
+    pellets.forEach(p => { const at = state >= p.step ? p.to : p.from; gsap.set(p.g, {x: at[0], y: at[1]}); });
+  }
+
+  function makePellet(kind, from, to, step, zone) {
+    const g = Kit.mk('g', {}, L.pel), inner = Kit.mk('g', {}, g);
+    Kit.mk('circle', {cx: pr * .18, cy: pr * .28, r: pr, fill: P.ink, opacity: .25}, inner);
+    Kit.mk('circle', {r: pr, fill: kind === 'bio' ? 'url(#gT)' : 'url(#gF)', stroke: P.ink, 'stroke-width': .9}, inner);
+    const icon = kind === 'bio'
+      ? 'M-.5,.38 Q-.48,-.5 .5,-.42 Q.44,.42 -.5,.38Z M-.5,.38 L.2,-.15'
+      : 'M0,-.58 C.3,-.18 .42,0 .42,.16 A.42,.42 0 0 1 -.42,.16 C-.42,0 -.3,-.18 0,-.58Z';
+    Kit.mk('path', {d: icon, transform: `scale(${pr * .9})`, fill: P.paper, stroke: kind === 'bio' ? P.tealD : 'none', 'stroke-width': .08, opacity: .92}, inner);
+    Kit.mk('ellipse', {cx: -pr * .35, cy: -pr * .45, rx: pr * .28, ry: pr * .16, fill: '#fff', opacity: .5}, inner);
+    return {g, inner, from, to, step, kind, zone};
+  }
+
+  // ---------- motion ----------
+  function burst(x, y, col) {
+    for (let i = 0; i < 6; i++) {
+      const d = Kit.mk('circle', {r: Math.max(1.2, pr * .22), fill: col}, L.fx);
+      gsap.set(d, {x, y});
+      const tw = {duration: .7, opacity: 0, ease: 'power1.in', onComplete: () => d.remove()};
+      if (HAS_PHYS) tw.physics2D = {velocity: 90 + Kit.rnd() * 110, angle: -60 - Kit.rnd() * 60, gravity: 520};
+      else { tw.x = x + (Kit.rnd() - .5) * 40; tw.y = y - 20 - Kit.rnd() * 20; }
+      track(gsap.to(d, tw));
+    }
+  }
+  function land(p) {
+    track(gsap.fromTo(p.inner, {scaleX: 1.35, scaleY: .7}, {scaleX: 1, scaleY: 1, duration: .6, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%'}));
+    const ring = Kit.mk('circle', {cx: p.to[0], cy: p.to[1], r: pr, fill: 'none', stroke: p.zone === 'bio' ? P.red : P.ink, 'stroke-width': 1.4}, L.fx);
+    track(gsap.to(ring, {attr: {r: pr * 2.6}, opacity: 0, duration: .55, ease: 'power2.out', onComplete: () => ring.remove()}));
+  }
+  function launch(p, delay) {
+    const [sx, sy] = p.from, [tx, ty] = p.to;
+    const T = .72 + Kit.rnd() * .16, g = H * 2.6;
+    const vx = (tx - sx) / T, vy = (ty - sy - .5 * g * T * T) / T;
+    const done = () => { gsap.set(p.g, {x: tx, y: ty}); land(p); };
+    const start = () => { burst(sx, sy, p.kind === 'bio' ? P.teal : P.red); Kit.haptic('light'); };
+    if (HAS_PHYS) {
+      track(gsap.to(p.g, {duration: T, delay, physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * 180 / Math.PI, gravity: g}, onStart: start, onComplete: done}));
+    } else {
+      const o = {t: 0};
+      track(gsap.to(o, {t: T, duration: T, delay, ease: 'none', onStart: start, onUpdate: () => gsap.set(p.g, {x: sx + vx * o.t, y: sy + vy * o.t + .5 * g * o.t * o.t}), onComplete: done}));
+    }
+    track(gsap.to(p.inner, {rotation: (Kit.rnd() > .5 ? 1 : -1) * 360, duration: T, delay, ease: 'power1.out', transformOrigin: '50% 50%'}));
+    return delay + T;
+  }
+  function caption(i) {
+    const c = L.cap; if (!c) return;
+    track(gsap.to(c, {opacity: 0, duration: .15, onComplete: () => { c.textContent = CAPS[i]; track(gsap.to(c, {opacity: 1, duration: .35, ease: 'power3.out'})); }}));
+  }
+  function count(el) {
+    const o = {v: 0};
+    el.textContent = '0%';
+    track(gsap.fromTo(el, {opacity: 0, scale: .3, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .7, ease: 'back.out(2.2)'}));
+    track(gsap.to(o, {v: 50, duration: .9, ease: 'power2.out', onUpdate: () => { el.textContent = Math.round(o.v) + '%'; }}));
+  }
+
+  // Call layout() first (for the current size), then step(s).
+  function step(s) {
+    state = s;
+    if (Kit.calm) { layout(); return 0; }
+    caption(s);
+    let end = 0;
+    pellets.filter(p => p.step === s).forEach((p, i) => { end = Math.max(end, launch(p, .1 + i * .09)); });
+    if (s === 1) {
+      track(gsap.delayedCall(end + .15, () => {
+        Kit.haptic('success');
+        track(gsap.timeline().to(L.hl, {opacity: .75, duration: .25, ease: 'power2.out'}).to(L.hl, {opacity: .3, duration: .8, ease: 'power3.out'}));
+        count(L.n1); count(L.n2);
+      }));
+    } else {
+      track(gsap.delayedCall(end + .1, () => {
+        Kit.haptic('success');
+        track(gsap.fromTo(svg.querySelectorAll('.vo'), {attr: {'stroke-width': 4}}, {attr: {'stroke-width': 1}, duration: .8, ease: 'power3.out'}));
+      }));
+    }
+    return end + 1;
+  }
+
+  // ---------- the answer ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    layout();
+    if (!Kit.calm) gsap.from('#why > p', {opacity: 0, stagger: .12, duration: .5, ease: 'power2.out'});
+    const t = step(1);
+    moreTimer = setTimeout(() => {
+      if (state !== 1) return;
+      more.classList.remove('wait');
+      if (!Kit.calm) gsap.from(more, {opacity: 0, scale: .92, transformOrigin: '0% 50%', duration: .4, ease: 'back.out(2)'});
+    }, Kit.calm ? 0 : t * 1000);
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  });
+  more.addEventListener('click', () => {
+    if (state !== 1) return;
+    clearTimeout(moreTimer);
+    Kit.haptic('selection');
+    Kit.hide('more'); Kit.show('keep');
+    if (box.getBoundingClientRect().height < 240) Kit.hide('whyb');
+    if (box.getBoundingClientRect().height < 200) Kit.hide('why');
+    layout();
+    if (!Kit.calm) gsap.from('#keep', {opacity: 0, duration: .6, delay: 1.1, ease: 'power2.out'});
+    step(2);
+  });
+
+  new ResizeObserver(() => {
+    if (!W) return;
+    const b = box.getBoundingClientRect();
+    if (Math.abs(b.width - bw) > 1 || Math.abs(b.height - bh) > 1) layout();
+  }).observe(box);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || state) return;
+    gsap.from(svg.querySelectorAll('.vc'), {scale: .55, opacity: 0, transformOrigin: '50% 50%', duration: .9, ease: 'back.out(1.5)', stagger: .15});
+    gsap.from(svg.querySelectorAll('.vo'), {opacity: 0, duration: .6, delay: .5});
+    gsap.from(svg.querySelectorAll('.ttl'), {opacity: 0, duration: .5, stagger: .07, delay: .3, ease: 'power2.out'});
+    gsap.from(svg.querySelectorAll('.lead'), {opacity: 0, duration: .6, stagger: .1, delay: .8});
+    gsap.from(svg.querySelectorAll('.tray'), {opacity: 0, y: 10, duration: .5, stagger: .1, delay: .2, ease: 'power3.out'});
+    pellets.forEach((p, i) => gsap.from(p.inner, {y: -H * .2, opacity: 0, duration: .7, delay: .5 + i * .035, ease: 'bounce.out'}));
+    gsap.from('.opt', {opacity: 0, stagger: .08, duration: .45, delay: .4, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(res => setTimeout(res, ms));
+    Kit.$('opts').children[1].click();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 100 : 2700);
+    more.click();
+    await wait(Kit.calm ? 100 : 1900);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A picture of lava with a prompt asking what happens to water the instant it touches lava. Tapping the picture drops water onto the lava, which then reveals the reaction.",
-    "ground": "#17110f"
+    "label": "A picture of lava with a prompt asking what happens to water the instant it touches lava. Tapping the picture drops water onto the lava, which then reveals the reaction."
   },
   "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
   "reference": "https://www.youtube.com/watch?v=DdSUTw-a4Ls&t=26s",

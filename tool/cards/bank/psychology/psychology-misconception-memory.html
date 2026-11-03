@@ -1,0 +1,372 @@
+<!doctype html>
+<!-- slug: psychology-misconception-memory -->
+<!-- Look: a data-journalism chart printed straight on the card. The "video" is a clean chart of a thrown ball with a subtitle strip. Over it lies an orange layer: what the student already believed, with its own imagined ball that slows, stops at the top and drops.
+     Interaction: one student's memory starts as a single fused picture. Drag (or tap) to pull its two layers apart: what was on screen, and what was already in their head.
+     Wow: as the layers part, the video frame retracts and the subtitle breaks into words. They fall under real Matter.js physics into the head, turn orange, then click back together into the sentence the student actually said. The video keeps an empty slot marked "never said in the video". -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Misconception memory</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/matter.min.js"></script>
+<style>
+#stage{display:flex}
+#pic{flex:1;min-width:0;min-height:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#pic.grab{cursor:grabbing}
+.answered #pic{cursor:default}
+.nudge{animation:nudge 1.5s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes nudge{50%{transform:translateY(4px)}}
+.kit-calm .nudge{animation:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Pull apart · a memory">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PULL APART</span></div>
+    <h2 class="q">What do students often remember from a standard explanation?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="One student's memory of a physics video about a ball thrown up: a chart with subtitles, fused with an orange layer of their own belief. Pull the layers apart."></svg>
+    </div>
+    <p class="say" id="say">This is one student's memory of a physics video, minutes after watching it. <b>Pull the layers apart.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>What you already believe can rewrite what you remember being told.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#ffffff', GRID = 'rgba(255,255,255,.28)', OR = '#ffc15e', TO = '#d8461a', MUTE = 'rgba(255,255,255,.82)', CAP = 'rgba(16,18,26,.9)';
+  const ONC = '#ffffff', ONM = 'rgba(255,255,255,.85)', ONO = '#ffe2b8';
+  const WORDS = 'the ball is slowly decreasing in force so therefore it stops at one point'.split(' ');
+  const WHY = 'Minutes later, students recalled not the video but the idea they walked in with, <b>as if the video had said it.</b>';
+  let W = 0, H = 0, fs = 12, pd = 0, tabH = 0, cH = 0, HM = 0, HA = 0, y0 = 0, plot = {}, ready = false, entered = false, showHead = true;
+  let phase = 'merged';
+  const st = {p: 0, s: 0};
+  let G = {}, tiles = [], eng = null, loopOn = false, loopId = 0, frame = 0, ballT = .3, clock = 0;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  function txt(p, x, y, s, a = {}, style = '') {
+    const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700}, a), p);
+    e.setAttribute('style', 'font-family:var(--body);' + style); if (s) e.textContent = s; return e;
+  }
+  const HALO = 'paint-order:stroke;stroke:#9B5CFF;stroke-width:4px;stroke-linejoin:round;';
+  const P = t => [plot.x0 + t * (plot.x1 - plot.x0), plot.yb - 4 * t * (1 - t) * (plot.yb - plot.yt)];
+  const arrowD = (x, a, b) => { const s = b < a ? 1 : -1, hw = fs * .32; return `M${x},${a}L${x},${b}M${x - hw},${b + s * hw * 1.3}L${x},${b}L${x + hw},${b + s * hw * 1.3}`; };
+
+  function layout() {
+    stopLoop();
+    tiles.forEach(t => gsap.killTweensOf(t));
+    svg.innerHTML = ''; G = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    if (W < 40 || H < 110) { ready = false; return; }
+    fs = Math.max(12, Math.min(14, W / 27)); pd = fs * .7; tabH = fs * 1.55;
+    const gap = fs * .3, ch = fs * 1.4, wg = fs * .26, lg = fs * .22;
+
+    // ---- measure the remembered subtitle and wrap it ----
+    const probe = txt(svg, 0, -50, '', {}, '');
+    tiles = WORDS.map(w => { probe.textContent = w; return {word: w, w: Math.ceil(probe.getComputedTextLength() + fs * .66), h: ch}; });
+    probe.remove();
+    const maxW = W - 2 * pd - fs * .3, lines = [[]]; let lw = 0;
+    tiles.forEach(t => { if (lw && lw + wg + t.w > maxW) { lines.push([]); lw = 0; } lines[lines.length - 1].push(t); lw += (lw ? wg : 0) + t.w; });
+    const nL = lines.length;
+    const bandH = nL * ch + (nL - 1) * lg + fs * .3 + 9;   // subtitle strip (merged video, and the head)
+    const gH = ch + fs * .25 + 9;                           // the empty slot left in the video
+    cH = Math.max(fs * 1.6, Math.floor((H - 2 * tabH - gap - gH - bandH) / 2));
+    HM = cH + bandH; HA = cH + gH; y0 = (H - HM) / 2;
+    showHead = y0 > fs * 2;
+
+    // ---- chart geometry (same in both layers) ----
+    const showTime = cH > fs * 5;
+    plot.top = pd * .75; plot.yb = cH - (showTime ? fs * 1.45 : fs * .45);
+    const probe2 = txt(svg, 0, -50, 'height', {}, 'font-family:var(--mono)');
+    const hlen = probe2.getComputedTextLength(); probe2.remove();
+    const showH = plot.yb - plot.top > hlen + 8, showArrowH = plot.yb - plot.top > hlen + fs * 2;
+    plot.x0 = showH ? pd + fs * 1.55 : pd + fs * .4; plot.x1 = W - pd - fs * .6;
+    plot.yt = plot.top + Math.min(fs * .6, (plot.yb - plot.top) * .3);
+    const R = plot.yb - plot.yt;
+
+    // ---- defs ----
+    const defs = mk('defs', {}, svg);
+    const bg = mk('radialGradient', {id: 'ballg', cx: '35%', cy: '30%', r: '70%'}, defs);
+    mk('stop', {offset: '0%', 'stop-color': '#ffffff'}, bg); mk('stop', {offset: '35%', 'stop-color': '#6f80b0'}, bg); mk('stop', {offset: '100%', 'stop-color': '#1c2233'}, bg);
+    const og = mk('radialGradient', {id: 'iballg', cx: '35%', cy: '30%', r: '70%'}, defs);
+    mk('stop', {offset: '0%', 'stop-color': '#fff1e6'}, og); mk('stop', {offset: '40%', 'stop-color': '#f07a45'}, og); mk('stop', {offset: '100%', 'stop-color': '#a8320f'}, og);
+    const sh2 = mk('filter', {id: 'sh2', x: '-20%', y: '-40%', width: '140%', height: '180%'}, defs);
+    mk('feDropShadow', {dx: 0, dy: 1.5, stdDeviation: 1.6, 'flood-color': '#1c2233', 'flood-opacity': .3}, sh2);
+
+    // ---- merged-state header and hint ----
+    G.head = txt(svg, W / 2, y0 / 2 + fs * .35, "ONE STUDENT'S MEMORY OF THE VIDEO", {'text-anchor': 'middle', fill: ONM}, 'font-family:var(--mono);letter-spacing:.06em');
+    G.hint = mk('g', {class: 'nudge'}, svg);
+    txt(G.hint, W / 2, y0 + HM + y0 / 2 + fs * .2, '⇕  pull the layers apart', {'text-anchor': 'middle', fill: ONC, 'font-weight': 800}, 'font-family:var(--mono)');
+
+    // ---- layer A: the video ----
+    G.A = mk('g', {}, svg); G.Ai = mk('g', {}, G.A);
+    const A = G.Ai;
+    G.Arect = mk('rect', {x: 1, y: 0, width: W - 2, height: HM, fill: 'none'}, A);
+    for (let i = 1; i <= 4; i++) {
+      const y = plot.yb - i * (plot.yb - plot.top) / 4;
+      mk('line', {x1: plot.x0, x2: plot.x1, y1: y, y2: y, stroke: GRID, 'stroke-width': 1}, A);
+      mk('line', {x1: plot.x0 - fs * .3, x2: plot.x0, y1: y, y2: y, stroke: INK, 'stroke-width': 1}, A);
+    }
+    mk('line', {x1: plot.x0, x2: plot.x0, y1: plot.top, y2: plot.yb, stroke: INK, 'stroke-width': 1.2}, A);
+    mk('line', {x1: plot.x0, x2: plot.x1, y1: plot.yb, y2: plot.yb, stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, A);
+    if (showH) txt(A, 0, 0, showArrowH ? 'height ↑' : 'height', {'text-anchor': 'middle', fill: MUTE, 'font-weight': 600, transform: `translate(${pd + fs * .5},${(plot.top + plot.yb) / 2}) rotate(-90)`}, 'font-family:var(--mono)');
+    if (showTime) txt(A, plot.x1, plot.yb + fs * 1.05, 'time →', {'text-anchor': 'end', fill: MUTE, 'font-weight': 600}, 'font-family:var(--mono)');
+    // video chrome: play glyph and progress bar on the bottom edge
+    G.ptri = mk('path', {d: `M0,-3.4L5,0L0,3.4Z`, fill: INK}, A);
+    G.pbg = mk('rect', {x: fs * 1.25, width: W - fs * 1.85, height: 2.5, rx: 1.2, fill: GRID}, A);
+    G.pfg = mk('rect', {x: fs * 1.25, width: (W - fs * 1.85) * .62, height: 2.5, rx: 1.2, fill: INK}, A);
+    G.pdot = mk('circle', {cx: fs * 1.25 + (W - fs * 1.85) * .62, r: 3.2, fill: INK}, A);
+    let d = ''; for (let i = 0; i <= 48; i++) { const [x, y] = P(i / 48); d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); }
+    mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '1.5 4.5', 'stroke-linecap': 'round', opacity: .6}, A);
+    G.shadow = mk('ellipse', {cx: 0, cy: plot.yb + 1, rx: fs * .5, ry: fs * .16, fill: '#1c2233', opacity: .25}, A);
+    G.gArrows = [.2, .5, .8].map(t => {
+      const [x, y] = P(t), a = y + fs * .5, b = Math.min(a + Math.max(R * .3, fs * .8), plot.yb - 3);
+      return b - a > fs * .45 ? mk('path', {d: arrowD(x, a, b), fill: 'none', stroke: INK, 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, A) : null;
+    }).filter(Boolean);
+    G.ball = mk('circle', {r: fs * .5, fill: 'url(#ballg)'}, A);
+    // the empty slot: where the subtitle was
+    G.ghost = mk('g', {opacity: 0}, A);
+    const gy = cH + fs * .25;
+    mk('rect', {x: pd, y: gy, width: W - 2 * pd, height: ch, rx: fs * .35, fill: 'rgba(255,255,255,.08)', stroke: MUTE, 'stroke-width': 1.2, 'stroke-dasharray': '4 4'}, G.ghost);
+    txt(G.ghost, W / 2, gy + ch / 2, 'never said in the video', {'text-anchor': 'middle', 'dominant-baseline': 'central', fill: MUTE}, 'font-family:var(--mono)');
+    G.tabA = txt(G.A, fs * .3 + 2, -fs * .5, '', {}, '');
+    tab(G.tabA, 'THE VIDEO', ONC, [' · gravity only, the same all the way', ' · gravity only, never fading', ' · gravity only', ''], W - fs * .8);
+
+    // ---- layer B: what was already in the head ----
+    G.B = mk('g', {}, svg);
+    G.Bbg = mk('g', {opacity: 0}, G.B);
+    G.Bi = mk('g', {}, G.B);
+    mk('path', {d, fill: 'none', stroke: OR, 'stroke-width': 1.3, 'stroke-dasharray': '1.5 4.5', 'stroke-linecap': 'round', opacity: .7}, G.Bi);
+    G.bArrows = [];
+    [[.12, .4], [.26, .25], [.39, .1]].forEach(([t, l]) => {
+      const [x, y] = P(t), a = y - fs * .45, b = Math.max(a - Math.max(R * l, fs * .55), 2);
+      if (a - b < fs * .4) return;
+      mk('path', {d: arrowD(x, a, b), fill: 'none', stroke: OR, 'stroke-width': 8, 'stroke-linecap': 'round', opacity: .22}, G.Bi);
+      G.bArrows.push(mk('path', {d: arrowD(x, a, b), fill: 'none', stroke: OR, 'stroke-width': 2.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.Bi));
+    });
+    const [ax, ay] = P(.5);
+    mk('circle', {cx: ax, cy: ay - fs * .42, r: fs * .66, fill: 'none', stroke: OR, 'stroke-width': 2, 'stroke-dasharray': '3 2.5'}, G.Bi);
+    G.iball = mk('circle', {r: fs * .42, fill: 'url(#iballg)'}, G.Bi);
+    const ann = txt(G.Bi, ax + fs * 1.05, ay - fs * .42 + fs * .38, '', {fill: OR, 'font-weight': 800}, HALO);
+    for (const s of ['push runs out: it stops', 'push gone: stops', 'it stops']) { ann.textContent = s; if (ax + fs * 1.05 + ann.getComputedTextLength() < W - pd) break; }
+    G.tabB = txt(G.B, fs * .3 + 2, -fs * .5, '', {}, '');
+    const tw = tab(G.tabB, 'IN THEIR HEAD', ONO, [' · a push that fades, then stops', ' · a fading push', ''], W - fs * 3.2);
+    G.bub = mk('g', {}, G.B);
+    if (tw + fs * 3.4 < W) {
+      mk('circle', {cx: W - pd - fs * 1.4, cy: -fs * .5, r: fs * .3, fill: 'none', stroke: ONO, 'stroke-width': 1.4}, G.bub);
+      mk('circle', {cx: W - pd - fs * .5, cy: -fs * .95, r: fs * .18, fill: 'none', stroke: ONO, 'stroke-width': 1.2}, G.bub);
+    }
+
+    // ---- the remembered subtitle: slots in the strip under the chart ----
+    G.cap = mk('g', {}, svg); G.free = false;
+    lines.forEach((ln, i) => {
+      const y = cH + fs * .15 + ch / 2 + i * (ch + lg);
+      const tot = ln.reduce((s, t) => s + t.w, 0) + wg * (ln.length - 1);
+      let x = W / 2 - tot / 2;
+      ln.forEach(t => { t.lx = x + t.w / 2; t.ly = y; x += t.w + wg; });
+    });
+    tiles.forEach(t => {
+      t.x = t.lx; t.y = t.ly; t.a = 0; t.body = null;
+      t.g = mk('g', {}, G.cap);
+      t.rect = mk('rect', {x: -t.w / 2, y: -t.h / 2, width: t.w, height: t.h, rx: t.h * .22}, t.g);
+      t.rect.style.fill = CAP;
+      txt(t.g, 0, 0, t.word, {'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff'}, '');
+    });
+    render();
+
+    ready = true;
+    draw();
+    placeBalls();
+    if (phase === 'dropped') {
+      G.free = true; G.cap.setAttribute('transform', '');
+      tiles.forEach(t => { t.rect.style.fill = TO; t.g.setAttribute('filter', 'url(#sh2)'); });
+      tidy(true); G.ghost.setAttribute('opacity', 1);
+    }
+  }
+
+  function tab(el, strong, col, rest, lim) {
+    const a = mk('tspan', {fill: col, 'font-weight': 800}, el); a.textContent = strong; a.setAttribute('style', 'letter-spacing:.06em');
+    const b = mk('tspan', {fill: ONM, 'font-weight': 600}, el);
+    for (const r of rest) { b.textContent = r; if (el.getComputedTextLength() < lim) break; }
+    return el.getComputedTextLength();
+  }
+
+  function vis(e, v) { e.setAttribute('opacity', v); e.style.visibility = v > .01 ? 'visible' : 'hidden'; }
+  function draw() {
+    if (!ready) return;
+    const p = st.p, q = clamp(p), s = clamp(st.s);
+    const yA = y0 + (tabH - y0) * p, yB = y0 + (H - HM - y0) * p; G.yA = yA;
+    G.A.setAttribute('transform', `translate(0,${yA})`);
+    G.B.setAttribute('transform', `translate(0,${yB})`);
+    if (!G.free) G.cap.setAttribute('transform', `translate(0,${yA})`);
+    const hA = HM + (HA - HM) * s, py = hA - 4.5;
+    G.Arect.setAttribute('height', hA);
+    G.pbg.setAttribute('y', py); G.pfg.setAttribute('y', py); G.pdot.setAttribute('cy', py + 1.25);
+    G.ptri.setAttribute('transform', `translate(${fs * .45},${py + 1.25})`);
+    G.Bbg.setAttribute('opacity', clamp((q - .1) / .5));
+    vis(G.tabA, clamp((q - .45) / .4));
+    const tb = Math.min(clamp((q - .45) / .4), clamp((s - .55) / .4));
+    vis(G.tabB, tb); vis(G.bub, tb);
+    const hv = showHead ? clamp(1 - q * 3.5) : 0; vis(G.head, hv); vis(G.hint, hv);
+  }
+
+  // ---- two balls: the true one (gravity all the way), the imagined one (rises, runs out, stops, drops) ----
+  function imagT(c) {
+    const u = c % 2.9;
+    if (u < 1.1) { const x = u / 1.1; return .5 * (1 - (1 - x) * (1 - x)); }
+    if (u < 1.8) return .5;
+    if (u < 2.5) { const x = (u - 1.8) / .7; return .5 + .5 * x * x; }
+    return 1;
+  }
+  function placeBalls() {
+    if (!ready || !G.ball) return;
+    const t = Kit.calm ? .3 : Math.min(1, ballT), [x, y] = P(t), r = fs * .5;
+    G.ball.setAttribute('cx', x); G.ball.setAttribute('cy', y - r);
+    const hgt = 4 * t * (1 - t);
+    G.shadow.setAttribute('cx', x); G.shadow.setAttribute('rx', r * (1.3 - .7 * hgt)); G.shadow.setAttribute('opacity', .3 - .2 * hgt);
+    const ti = Kit.calm ? .5 : imagT(clock), [ix, iy] = P(ti);
+    G.iball.setAttribute('cx', ix); G.iball.setAttribute('cy', iy - fs * .42);
+  }
+  gsap.ticker.add((time, dt) => { if (!Kit.calm) { ballT = (ballT + dt / 1000 / 1.9) % 1.3; clock += dt / 1000; } placeBalls(); });
+
+  // ---- pull apart ----
+  let drag = null;
+  svg.addEventListener('pointerdown', e => {
+    if (phase !== 'merged' || !ready) return;
+    gsap.killTweensOf(st);
+    drag = {y: e.clientY, p0: st.p, moved: false};
+    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    svg.classList.add('grab'); Kit.haptic('selection');
+    if (!Kit.calm) gsap.to(st, {p: Math.max(st.p, .06), duration: .14, ease: 'power2.out', onUpdate: draw});
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dy = e.clientY - drag.y;
+    if (Math.abs(dy) > 6) drag.moved = true;
+    if (drag.moved) { gsap.killTweensOf(st); st.p = clamp(drag.p0 + Math.abs(dy) / (H * .38)); draw(); }
+  });
+  const up = () => {
+    svg.classList.remove('grab');
+    const d = drag; drag = null; if (!d || phase !== 'merged') return;
+    if (!d.moved || st.p > .42) complete();
+    else gsap.to(st, {p: 0, duration: .8, ease: 'elastic.out(1,.45)', onUpdate: draw});
+  };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  function complete() {
+    if (phase !== 'merged') return;
+    phase = 'split'; gsap.killTweensOf(st);
+    card.classList.add('answered');
+    say.innerHTML = WHY; Kit.show('keep'); Kit.haptic('success');
+    if (Kit.calm) { st.p = 1; draw(); drop(); return; }
+    gsap.to(st, {p: 1, duration: .85, ease: 'expo.out', onUpdate: draw});
+    gsap.delayedCall(.55, drop);
+  }
+  function drop() {
+    if (phase !== 'split') return;
+    phase = 'dropped';
+    if (!ready) return;
+    if (Kit.calm) { st.p = 1; st.s = 1; draw(); G.ghost.setAttribute('opacity', 1); buildWorld(true); return; }
+    gsap.to(st, {s: 1, duration: .7, delay: .1, ease: 'power3.inOut', onUpdate: draw});
+    gsap.to(G.ghost, {attr: {opacity: 1}, duration: .8, delay: .75, ease: 'power2.out'});
+    buildWorld(false);
+  }
+
+  // ---- Matter.js: the words fall out of the video into the head, then re-form as the sentence ----
+  function buildWorld(instant) {
+    stopLoop();
+    G.free = true; G.cap.setAttribute('transform', '');
+    const yA = G.yA;
+    tiles.forEach((t, i) => { t.x = t.lx; t.y = t.ly + yA; t.a = 0; t.body = null; t.at = i * 3; });
+    if (instant) { tiles.forEach(t => { t.rect.style.fill = TO; }); tidy(true); return; }
+    const M = Matter;
+    eng = M.Engine.create(); eng.gravity.y = 1.15; eng.positionIterations = 10; eng.velocityIterations = 8;
+    M.Composite.add(eng.world, [
+      M.Bodies.rectangle(W / 2, H - 3 + 100, W * 3, 200, {isStatic: true, friction: .9}),
+      M.Bodies.rectangle(3 - 100, H / 2, 200, H * 6, {isStatic: true}),
+      M.Bodies.rectangle(W - 3 + 100, H / 2, 200, H * 6, {isStatic: true})
+    ]);
+    frame = 0; render();
+    loopOn = true; const id = ++loopId; requestAnimationFrame(() => step(id));
+  }
+  function release(t) {
+    const M = Matter;
+    const b = M.Bodies.rectangle(t.x, t.y, t.w, t.h, {chamfer: {radius: t.h * .28}, friction: .6, frictionStatic: 1, restitution: .25, density: .0016});
+    M.Body.setVelocity(b, {x: (Kit.rnd() - .5) * 2.8, y: -1 - Kit.rnd() * 1.6});
+    M.Body.setAngularVelocity(b, (Kit.rnd() - .5) * .12);
+    M.Composite.add(eng.world, b); t.body = b;
+    t.g.setAttribute('filter', 'url(#sh2)');
+    gsap.to(t.rect, {fill: TO, duration: .6, delay: .15, ease: 'power2.inOut'});
+  }
+  function render() {
+    tiles.forEach(t => t.g.setAttribute('transform', `translate(${t.x.toFixed(2)},${t.y.toFixed(2)}) rotate(${t.a.toFixed(2)})`));
+  }
+  function step(id) {
+    if (!loopOn || !eng || id !== loopId) return;
+    tiles.forEach(t => { if (!t.body && frame >= t.at) release(t); });
+    Matter.Engine.update(eng, 1000 / 60);
+    tiles.forEach(t => { if (t.body) { t.x = t.body.position.x; t.y = t.body.position.y; t.a = t.body.angle * 57.2958; } });
+    render();
+    if (frame === 34) Kit.haptic('light');
+    if (++frame >= 118) tidy(false); else requestAnimationFrame(() => step(id));
+  }
+  // the scattered words click back into the sentence the student said
+  function tidy(instant) {
+    stopLoop();
+    const off = H - HM;
+    tiles.forEach((t, i) => {
+      gsap.killTweensOf(t);
+      t.a = ((t.a % 360) + 540) % 360 - 180;
+      if (instant) { t.x = t.lx; t.y = t.ly + off; t.a = 0; }
+      else gsap.to(t, {x: t.lx, y: t.ly + off, a: 0, duration: .65, delay: i * .045, ease: 'back.out(1.3)', onUpdate: render});
+    });
+    render();
+    if (!instant) gsap.delayedCall(.9, () => Kit.haptic('light'));
+  }
+  function stopLoop() { loopOn = false; loopId++; }
+  function fastForward() {
+    if (!ready) return;
+    if (phase === 'merged') complete();
+    if (phase === 'split') drop();
+    stopLoop(); gsap.killTweensOf(st); st.p = 1; st.s = 1; draw();
+    if (!G.free) { G.free = true; G.cap.setAttribute('transform', ''); }
+    tiles.forEach(t => { gsap.killTweensOf(t.rect); t.rect.style.fill = TO; t.g.setAttribute('filter', 'url(#sh2)'); });
+    tidy(true);
+    gsap.killTweensOf(G.ghost); G.ghost.setAttribute('opacity', 1);
+  }
+
+  // ---- entrance: the memory builds itself ----
+  function enter() {
+    if (entered || !ready) return; entered = true;
+    if (Kit.calm || phase !== 'merged') return;
+    gsap.from(G.Ai, {opacity: 0, duration: .55, ease: 'power2.out'});
+    const drawIn = (els, delay) => els.forEach((e, i) => {
+      e.setAttribute('pathLength', 1); e.style.strokeDasharray = '1 1';
+      gsap.fromTo(e, {strokeDashoffset: 1}, {strokeDashoffset: 0, duration: .6, delay: delay + i * .12, ease: 'power3.out', onComplete: () => { e.style.strokeDasharray = ''; }});
+    });
+    drawIn(G.gArrows, .3);
+    gsap.from(G.Bi, {opacity: 0, duration: .6, delay: .9, ease: 'power2.out'});
+    drawIn(G.bArrows, 1);
+    gsap.from(tiles.map(t => t.g), {opacity: 0, y: '+=4', duration: .25, delay: 1.4, stagger: .06, ease: 'power1.out'});
+    gsap.from([G.head, G.hint], {opacity: 0, duration: .5, delay: .2, stagger: 1.8});
+  }
+
+  Kit.onShow.card = layout;
+  new ResizeObserver(() => {
+    const r = svg.getBoundingClientRect();
+    if (!ready || Math.abs(r.width - W) > 1 || Math.abs(r.height - H) > 1) layout();
+  }).observe(Kit.$('stage'));
+  Kit.onEnter.card = enter;
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    complete();
+    await w(Kit.calm ? 150 : 1500);
+    if (phase === 'split') drop();
+    await w(Kit.calm ? 100 : 2400);
+    fastForward();
+  };
+})();
+Kit.single();
+</script>
+</html>

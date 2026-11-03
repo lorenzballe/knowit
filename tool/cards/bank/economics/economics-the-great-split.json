@@ -1,0 +1,37 @@
+{
+  "id": "economics-the-great-split",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.institutions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened in 2007 that changed Venezuela's oil industry for good?",
+  "answer": "Before 2007, mostly American firms ran the rich Orinoco Belt. In 2007 Venezuela took its oil back. The move also cost the country the people and money it needed to pump that oil.",
+  "move": "In 2007 Venezuela took its oil back, and lost the people and money to pump it.",
+  "keywords": [
+    "venezuela",
+    "orinoco belt",
+    "oil",
+    "american firms",
+    "2007"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline-style page titled The great split. It asks what happened in 2007 that changed Venezuela's oil industry for good. The reader drags a pencil across the page to reveal the answer."
+  },
+  "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=pp21fmWKe48&t=574s",
+  "written": "2026-11-03"
+}

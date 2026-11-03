@@ -12,15 +12,14 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh}
-#screen{flex:1;min-height:0;position:relative;background:#0d0d10;border-radius:2.4cqh;color:#fff;overflow:hidden;box-shadow:0 .5cqh 1.4cqh rgba(0,0,0,.16)}
-#screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 45%,rgba(255,255,255,.07),transparent 75%);pointer-events:none}
+#screen{flex:1;min-height:0;position:relative;color:var(--k);overflow:hidden}
 .layer{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;padding:2cqh 5cqw}
 .mid{align-items:center;text-align:center}
 #mask{font:800 max(4.4cqh,22px)/1 var(--mono);letter-spacing:.06em;margin:0;white-space:nowrap}
 #meter{position:absolute;left:5cqw;bottom:1.6cqh;margin:0;font:600 max(1.5cqh,11.5px)/1 var(--body);opacity:.55}
 .sq{font:700 max(1.8cqh,12.5px)/1.2 var(--body);margin:0;opacity:.9}
 #opts{display:flex;gap:2cqw;flex-wrap:wrap;justify-content:center}
-.opt{font:800 max(1.75cqh,12.5px)/1 var(--mono);color:#fff;background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh rgba(255,255,255,.55);border-radius:99px;padding:1.3cqh 3.2cqw;cursor:pointer;letter-spacing:.04em}
+.opt{font:800 max(1.75cqh,12.5px)/1 var(--mono);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 55%,transparent);border-radius:99px;padding:1.3cqh 3.2cqw;cursor:pointer;letter-spacing:.04em}
 #fbw{font:800 max(3.4cqh,18px)/1.1 var(--mono);margin:0;letter-spacing:.04em}
 #fbs{font:600 max(1.6cqh,12px)/1.3 var(--body);margin:0;opacity:.75}
 #picker{display:flex;gap:1.6cqw}
@@ -32,13 +31,13 @@
 .sc{font:800 max(1.5cqh,11.5px)/1.25 var(--body);letter-spacing:.1em;text-transform:uppercase;margin:0;opacity:.7}
 .bl{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;font:600 max(1.65cqh,12px)/1.2 var(--body)}
 .bl b{font:800 max(1.75cqh,12.5px)/1 var(--mono);white-space:nowrap}
-.track{height:1.3cqh;min-height:7px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden;margin-bottom:.6cqh}
-.track i{display:block;height:100%;border-radius:99px;background:#fff;min-width:2px}
+.track{height:1.3cqh;min-height:7px;border-radius:99px;background:color-mix(in srgb,var(--k) 14%,transparent);overflow:hidden;margin-bottom:.6cqh}
+.track i{display:block;height:100%;border-radius:99px;background:var(--k);min-width:2px}
 #ratio{font:800 max(3.2cqh,17px)/1.05 var(--display);margin:.4cqh 0 0}
 .note{font:600 max(1.5cqh,11.5px)/1.3 var(--body);margin:0;opacity:.75}
 .ppl{display:grid;grid-template-columns:repeat(20,1fr);gap:.9cqw;margin-bottom:.4cqh}
-.ppl i{display:block;aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 max(.22cqh,1.3px) rgba(255,255,255,.42)}
-.ppl i.on{background:#fff;box-shadow:none}
+.ppl i{display:block;aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 max(.22cqh,1.3px) color-mix(in srgb,var(--k) 42%,transparent)}
+.ppl i.on{background:var(--k);box-shadow:none}
 #btns{display:flex;gap:2.4cqw;flex-wrap:wrap}
 .answered .q{font-size:max(2.5cqh,15px)}
 @container (min-height:560px){
@@ -59,7 +58,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FLASH TEST</span></div>
     <h2 class="q">Can a hidden message in a film make you buy popcorn?</h2>
     <div class="stagebox" id="stage">
-      <div id="screen" role="img" aria-label="A dark cinema screen showing a row of X's, where a word will flash.">
+      <div id="screen" role="img" aria-label="A row of X's, where a word will flash.">
         <div class="layer mid" id="Lmask"><p id="mask">XXXXXXXX</p></div>
         <div class="layer mid gone" id="Lask"><p class="sq">Which word flashed?</p><div id="opts"><button class="opt">POPCORN</button><button class="opt">PRETZEL</button><button class="opt">CRACKER</button></div></div>
         <div class="layer mid gone" id="Lfb"><p class="sq" id="fbh"></p><p id="fbw"></p><p id="fbs"></p></div>

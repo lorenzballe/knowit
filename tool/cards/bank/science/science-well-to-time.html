@@ -40,7 +40,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const S = {depth: false, time: false};
-const DF = [.45, .85], TF = [.32, .58], COL = ['#f5a524', '#2ec4b6'], NM = ['H1', 'H2'];
+const DF = [.45, .85], TF = [.32, .58], COL = ['#b34700', '#0b4f8a'], NM = ['H1', 'H2'];
 let G = null;
 
 function draw() {
@@ -63,8 +63,7 @@ function draw() {
   // seismic section
   const defs = m('defs');
   const cp = m('clipPath', {id: 'cl'}, defs);
-  m('rect', {x: sx, y: top, width: sw, height: h, rx: fs * .6}, cp);
-  m('rect', {x: sx, y: top, width: sw, height: h, rx: fs * .6, fill: '#12151c'});
+  m('rect', {x: sx, y: top, width: sw, height: h}, cp);
   const g = m('g', {'clip-path': 'url(#cl)'});
   const ry = (fr, x) => top + h * fr + h * .06 - h * .06 * Math.exp(-Math.pow((x - wx) / (sw * .38), 2));
   let fr = [];
@@ -72,15 +71,14 @@ function draw() {
   fr = fr.filter(v => TF.every(t => Math.abs(v - t) > .028));
   const rand = (() => { let s = 7; return () => (s = (s * 9301 + 49297) % 233280) / 233280; })();
   const path = (v, j) => { let d = ''; for (let i = 0; i <= 40; i++) { const x = sx + sw * i / 40; d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + (ry(v, x) + (j ? (rand() - .5) * h * .006 : 0)).toFixed(1); } return d; };
-  fr.forEach(v => m('path', {d: path(v, 1), fill: 'none', stroke: '#e6ebf5', 'stroke-opacity': .25 + rand() * .5, 'stroke-width': Math.max(1, h * (.004 + rand() * .008))}, g));
-  G.keys = TF.map((v, i) => m('path', {d: path(v, 1), fill: 'none', stroke: S.time ? COL[i] : '#e6ebf5', 'stroke-opacity': S.time ? 1 : .7, 'stroke-width': S.time ? Math.max(2.5, h * .014) : Math.max(1, h * .009), class: 'key'}, g));
+  fr.forEach(v => m('path', {d: path(v, 1), fill: 'none', stroke: 'currentColor', 'stroke-opacity': .25 + rand() * .5, 'stroke-width': Math.max(1, h * (.004 + rand() * .008))}, g));
+  G.keys = TF.map((v, i) => m('path', {d: path(v, 1), fill: 'none', stroke: S.time ? COL[i] : 'currentColor', 'stroke-opacity': S.time ? 1 : .7, 'stroke-width': S.time ? Math.max(2.5, h * .014) : Math.max(1, h * .009), class: 'key'}, g));
 
   // well
-  m('line', {x1: wx, y1: top, x2: wx, y2: bot, stroke: '#fff', 'stroke-width': Math.max(2, fs * .18)});
-  m('circle', {cx: wx, cy: top + fs * .5, r: fs * .3, fill: '#fff'});
+  m('line', {x1: wx, y1: top, x2: wx, y2: bot, stroke: 'currentColor', 'stroke-width': Math.max(2, fs * .18)});
+  m('circle', {cx: wx, cy: top + fs * .5, r: fs * .3, fill: 'currentColor'});
 
-  // log panel
-  m('rect', {x: lx, y: top, width: W - lx, height: h, rx: fs * .6, fill: 'color-mix(in srgb,var(--k) 7%,transparent)'});
+  // log columns
   [dx, tx].forEach(x => m('line', {x1: x, y1: top + fs * .4, x2: x, y2: bot - fs * .4, stroke: 'currentColor', 'stroke-opacity': .3, 'stroke-width': 1.5}));
   const bar = (x, y, i, cls, solid) => {
     const gg = m('g', {class: cls});
@@ -97,14 +95,14 @@ function draw() {
   // depth attempt: misses
   if (S.depth) DF.forEach((v, i) => {
     const y = top + h * v, gg = m('g', {class: 'miss', opacity: S.time ? .35 : 1});
-    m('line', {x1: wx - sw * .12, y1: y, x2: wx + sw * .12, y2: y, stroke: '#ff5a5a', 'stroke-width': Math.max(2.5, fs * .22), 'stroke-dasharray': '5 4'}, gg);
-    if (!S.time) gg.appendChild(txt(wx + sw * .14, y + fs * .35, NM[i] + ' ✕', {'text-anchor': 'start', fill: '#ff6b6b'}));
+    m('line', {x1: wx - sw * .12, y1: y, x2: wx + sw * .12, y2: y, stroke: '#b00020', 'stroke-width': Math.max(2.5, fs * .22), 'stroke-dasharray': '5 4'}, gg);
+    if (!S.time) gg.appendChild(txt(wx + sw * .14, y + fs * .35, NM[i] + ' ✕', {'text-anchor': 'start', fill: '#b00020'}));
   });
 
   // time attempt: hits
   if (S.time) TF.forEach((v, i) => {
     const y = top + h * v, gg = m('g', {class: 'hit'});
-    m('circle', {cx: wx, cy: y, r: fs * .45, fill: COL[i], stroke: '#12151c', 'stroke-width': 2}, gg);
+    m('circle', {cx: wx, cy: y, r: fs * .45, fill: COL[i], stroke: '#00E5A0', 'stroke-width': 2}, gg);
     gg.appendChild(txt(sx + fs * .5, y - fs * .55, NM[i] + ' ✓', {'text-anchor': 'start', fill: COL[i]}));
   });
 }

@@ -1,0 +1,37 @@
+{
+  "id": "history-guayaquil-prison-bars",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.repeated_mistakes",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "What happened in the first large-scale prison massacre in 2021?",
+  "answer": "The first large-scale prison massacre came on 23 February 2021 in the Guayaquil Penitentiary, where 79 prisoners were beheaded. It was the first of 11 large-scale prison massacres in Ecuador's prisons over those two years. Ten more followed by early 2023.",
+  "move": "Guayaquil, 23 Feb 2021: 79 prisoners beheaded, the first of 11 prison massacres.",
+  "keywords": [
+    "ecuador",
+    "guayaquil penitentiary",
+    "prison massacres",
+    "beheadings"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Eleven bars are shown. The reader drags across them to count how many large-scale prison massacres happened in the two years. The question asks what happened in the first large-scale prison massacre in 2021.",
+    "ground": "#0b3e75"
+  },
+  "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=8-KoJBcxLek&t=409s",
+  "written": "2026-11-03"
+}

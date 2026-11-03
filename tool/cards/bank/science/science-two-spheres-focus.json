@@ -1,0 +1,37 @@
+{
+  "id": "science-two-spheres-focus",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How small a spot can two spheres focus a 12 cm microwave into?",
+  "answer": "Two spheres of the right size can squeeze the energy of a 12 cm microwave into a spot about 1 millimetre across. The focused spot is far smaller than the wave itself.",
+  "move": "The right two spheres squeeze a wave's energy into a spot far smaller than the wave.",
+  "keywords": [
+    "microwave",
+    "spheres",
+    "wavelength",
+    "focusing",
+    "plasma"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two spheres sit beside a microwave beam, each wave 12 cm long. The question asks how small a spot the two spheres can focus the 12 cm microwave into. A tap switches the beam on."
+  },
+  "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=416s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,388 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-pacific-background-radiation -->
+<!-- Look: chalk-style drawing printed straight on the card (no board, no frame): grainy ink lines with amber, blue and pink accents.
+     Interaction: drag up (or tap) to zoom out. Square area stands for radioactivity, and each new square is 10× the last, drawing itself in with a puff of dust as you reach it, while the Fukushima release (a little drop) shrinks to a speck.
+     Wow: at ×30 million the Pacific's own square draws in, tinted blue, waves sweep across it and keep breathing, dust puffs off the circled speck, and "tens of millions ×" bounces in and gets underlined. On wide boards the words sit in a column beside the ocean, with a pink-circle legend for the speck. -->
+<title>A drop in a radioactive sea</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+#pic text{font-family:var(--hand)}
+.hint{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-5px)}}
+.kit-calm .hint{animation:none}
+.answered .q{font-size:max(2.4cqh,15px)}
+.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag to zoom out · scale">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ZOOM OUT</span></div>
+    <h2 class="q">How does Fukushima's released water compare to the Pacific's natural radioactivity?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A drawing in chalk. A yellow square is all the radioactivity of the Fukushima release. Zooming out, each new square is ten times bigger, until the Pacific Ocean's natural potassium-40 square dwarfs it tens of millions of times."></svg>
+    </div>
+    <p class="say" id="say">Here, area is radioactivity, and each new square is 10× the last. <b>Drag up, or tap, to zoom out.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Don't ask "is it radioactive?" Ask "how much, next to what is already there?"</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.DrawSVGPlugin) gsap.registerPlugin(DrawSVGPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), mk = Kit.mk;
+  const CH = '#10100c', YE = '#7a4a00', BL = '#0b3d91', PK = '#b0124a';
+  const ZMAX = 7.5;                        // the Pacific: 10^7.5 ≈ 30 million, "tens of millions"
+  const EX = [0, 1, 2, 3, 4, 5, 6, 7, ZMAX];
+  const NAMES = ['', '×10', '×100', '×1,000', '×10,000', '×100,000', '×1 million', '×10 million'];
+  const st = {z: 0};
+  const drawn = EX.map((_, k) => ({v: k === 0 ? 1 : 0, on: k === 0}));
+  let zT = 0, done = false, touched = false, entered = false, pacShown = false, outerShown = false, msg = 0;
+  let pendingReveal = false, revealTimer = 0;
+  let W, H, fs, fr, fb, bx0, by0, bx1, by1, ax, ay, Mn, sw, wide, colX, colW, G = {};
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const T = (p, s, size, col, a = {}) => { const e = mk('text', Object.assign({fill: col, 'font-size': size, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+  const fit = (e, size, avail) => { size = Math.max(12, size); e.setAttribute('font-size', size); const w = e.getComputedTextLength(); if (w > avail) { size = Math.max(12, size * avail / w); e.setAttribute('font-size', size); } return size; };
+  const seeded = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const show = (e, on) => e.setAttribute('display', on ? 'inline' : 'none');
+
+  function part(s, p) {
+    const P = [[ax, ay], [ax, ay - s], [ax + s, ay - s], [ax + s, ay], [ax, ay]];
+    let L = 4 * s * p, d = `M${ax},${ay}`;
+    for (let i = 1; i < 5; i++) {
+      if (L >= s - 1e-6) { d += `L${P[i][0]},${P[i][1]}`; L -= s; }
+      else { const t = L / s; d += `L${P[i - 1][0] + (P[i][0] - P[i - 1][0]) * t},${P[i - 1][1] + (P[i][1] - P[i - 1][1]) * t}`; break; }
+    }
+    return d;
+  }
+
+  // stack text lines downward from `top`, using their real boxes, shrinking until they fit maxH
+  function stack(L, base, xs, maxW, top, maxH, gaps) {
+    let k = 1, h = 0;
+    for (let it = 0; it < 18; it++) {
+      let y = top;
+      L.forEach((e, i) => {
+        e.setAttribute('x', xs[i]); e.setAttribute('y', 0);
+        fit(e, base[i] * k, maxW[i]);
+        const b = e.getBBox(); e.setAttribute('y', y - b.y);
+        y += b.height + (i < L.length - 1 ? gaps[i] : 0);
+      });
+      h = y - top;
+      if (h <= maxH || Math.max(...base) * k <= 12) break;
+      k *= .93;
+    }
+    return h;
+  }
+
+  function layout() {
+    if (G.waves) gsap.killTweensOf(G.waves.querySelectorAll('path'));
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(17, f.f || W / 24));
+    fr = Math.max(6, Math.min(W, H) * .022); fb = fr * 1.8;
+    bx0 = fr; by0 = fr; bx1 = W - fr; by1 = H - fb;
+    const BW = bx1 - bx0, BH = by1 - by0, gap = fs * .85;
+    sw = Math.max(1.8, fs * .14);
+
+    // composition: square board → the ocean fills it; wide board → ocean left, words in a column
+    wide = false;
+    if (BW > BH * 1.2) {
+      const m = Math.min(BH - 2 * gap, BW - 2 * gap - fs * 10.1);
+      if (m >= 40 && m >= .6 * (BH - 2 * gap)) { wide = true; Mn = m; }
+    }
+    if (wide) {
+      colW = Math.min(BW - gap - Mn - fs * 1.7, fs * 17);
+      const left = BW - gap - Mn - fs * 1.1 - colW - fs * .6;
+      ax = bx0 + gap + Math.max(0, left) / 2; colX = ax + Mn + fs * 1.1;
+    } else {
+      Mn = Math.max(40, Math.min(BW, BH) - 2 * gap);
+      ax = bx0 + (BW - Mn) / 2;
+    }
+    ay = by0 + (BH + Mn) / 2;
+
+    const defs = mk('defs', {}, svg);
+    defs.innerHTML = `
+      <radialGradient id="glow"><stop offset="0" stop-color="${YE}" stop-opacity=".45"/><stop offset="1" stop-color="${YE}" stop-opacity="0"/></radialGradient>
+      <filter id="chalk" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.7" xChannelSelector="R" yChannelSelector="G" result="d"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.3 1.45" result="m"/><feComposite in="d" in2="m" operator="in"/></filter>
+      <clipPath id="boardClip"><rect x="${bx0}" y="${by0}" width="${BW}" height="${BH}" rx="${fs * .5}"/></clipPath>
+      <clipPath id="pacClip"><rect x="${ax}" y="${ay - Mn}" width="${Mn}" height="${Mn}"/></clipPath>
+      <mask id="waveMask" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="#fff"/><g id="holes"></g></mask>`;
+
+    // no frame, no slate: the drawing sits straight on the card
+    G.smudges = null;
+
+    const main = mk('g', {'clip-path': 'url(#boardClip)'}, svg);
+    const inner = mk('g', {filter: 'url(#chalk)'}, main);
+
+    G.title = null;
+    const room = ay - Mn - by0;
+    if (!wide && room >= fs * 2.1) {
+      const ts = Math.max(12, Math.min(fs * .95, room * .45));
+      G.title = T(inner, 'RADIOACTIVITY, DRAWN AS AREA', ts, CH, {x: ax, y: by0 + room / 2 + ts * .35, opacity: .72, 'letter-spacing': '.06em'});
+      fit(G.title, ts, Mn);
+    }
+
+    G.pacFill = mk('rect', {x: ax, y: ay - Mn, width: Mn, height: Mn, fill: BL, opacity: 0}, inner);
+    G.waves = mk('g', {mask: 'url(#waveMask)', 'clip-path': 'url(#pacClip)'}, inner);
+    G.cx = ax + fs * .25; G.cy = ay - fs * .25;
+    const gr = Math.max(2, Math.min(G.cx - bx0, by1 - G.cy) - 1);
+    G.glow = mk('circle', {cx: G.cx, cy: G.cy, r: gr, fill: 'url(#glow)', opacity: 0}, inner);
+    G.fill0 = mk('rect', {fill: 'none', opacity: 0}, inner);
+    G.sq = []; G.gh = [];
+    EX.forEach((e, k) => {
+      const col = k === 0 ? YE : k === 8 ? BL : CH, w = k === 8 ? sw * 1.5 : sw;
+      G.gh[k] = mk('path', {fill: 'none', stroke: col, 'stroke-width': w * .7, opacity: .3, transform: 'translate(1.1,-.8)', 'stroke-linejoin': 'round'}, inner);
+      G.sq[k] = mk('path', {fill: 'none', stroke: col, 'stroke-width': w, opacity: .93, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, inner);
+    });
+    G.speck = mk('circle', {cx: ax + 1.8, cy: ay - 1.8, r: 1.8, fill: YE, opacity: 0}, inner);
+
+    // labels of the squares
+    G.lab = []; G.labW = [];
+    const lz = Math.max(12, fs * .95);
+    for (let k = 1; k <= 7; k++) { G.lab[k] = T(inner, NAMES[k], lz, CH, {opacity: 0, x: ax + fs * .5, y: ay - fs}); G.labW[k] = G.lab[k].getComputedTextLength(); show(G.lab[k], false); }
+
+    // the release at the start: a drop and its name, inside its own square
+    G.inner = mk('g', {opacity: 0}, inner);
+    G.innerPos = mk('g', {}, G.inner);
+    const iz = Math.max(12, Math.min(fs * 1.35, Mn / 7));
+    G.innerSize = iz;
+    G.innerLines = ['the whole', 'Fukushima', 'release'].map((s, i) => T(G.innerPos, s, iz, YE, {'text-anchor': 'middle', x: 0, y: (i - 1) * iz * 1.3 + iz * .35}));
+    const dh = iz * 1.7, dc = -1.3 * iz - iz * 1.05 - dh / 2;
+    G.drop = mk('g', {opacity: 0}, G.innerPos);
+    mk('path', {d: `M0,${dc - dh / 2} C${dh * .5},${dc - dh * .02} ${dh * .42},${dc + dh / 2} 0,${dc + dh / 2} C${-dh * .42},${dc + dh / 2} ${-dh * .5},${dc - dh * .02} 0,${dc - dh / 2}Z`, fill: 'rgba(122,74,0,.14)', stroke: YE, 'stroke-width': sw, 'stroke-linejoin': 'round'}, G.drop);
+    mk('path', {d: `M${-dh * .18},${dc + dh * .05} q${dh * .02},${dh * .2} ${dh * .2},${dh * .27}`, fill: 'none', stroke: CH, 'stroke-width': sw * .8, 'stroke-linecap': 'round', opacity: .8}, G.drop);
+    G.dropNeed = 2 * (-dc + dh / 2) + fs * 1.5;
+
+    // the release as a speck: a teacher's circle (+ arrow and words, or a legend in the column)
+    G.outer = mk('g', {opacity: 0}, inner);
+    const r = fs * .75, cx = G.cx, cy = G.cy;
+    G.circ = mk('path', {d: `M${cx + r},${cy + r * .1} A${r},${r} 0 1,1 ${cx + r * .8},${cy - r * .7}`, fill: 'none', stroke: PK, 'stroke-width': sw * 1.1, 'stroke-linecap': 'round'}, G.outer);
+    G.outerLines = []; G.arrow = G.head = null; G.leg = null;
+    let outerTop = ay;
+    if (!wide) {
+      const lx = ax + .5623 * Mn + fs * .9, avail = ax + Mn - fs * .6 - lx;
+      let oz = Math.max(12, Math.min(fs * 1.05, Mn / 12));
+      const oLines = ['the whole', 'Fukushima', 'release'].map(s => T(G.outer, s, oz, YE, {x: lx}));
+      oz = Math.min(...oLines.map(e => fit(e, oz, avail)));
+      oLines.forEach((e, i) => { e.setAttribute('font-size', oz); e.setAttribute('y', ay - fs * 1.1 - (2 - i) * oz * 1.3); });
+      outerTop = Math.min(...oLines.map(e => e.getBBox().y));
+      G.outerLines = oLines;
+      const sx = lx - fs * .35, sy = ay - fs * 1.1 - oz * 1.3 - oz * .35, ex = cx + r * 1.35, ey = cy - r * .9;
+      const qx = (sx + ex) / 2, qy = Math.min(sy, ey) - fs * 1.4;
+      G.arrow = mk('path', {d: `M${sx},${sy} Q${qx},${qy} ${ex},${ey}`, fill: 'none', stroke: PK, 'stroke-width': sw * 1.1, 'stroke-linecap': 'round'}, G.outer);
+      const an = Math.atan2(ey - qy, ex - qx), hl = fs * .7;
+      G.head = mk('path', {d: `M${ex - hl * Math.cos(an - .5)},${ey - hl * Math.sin(an - .5)} L${ex},${ey} L${ex - hl * Math.cos(an + .5)},${ey - hl * Math.sin(an + .5)}`, fill: 'none', stroke: PK, 'stroke-width': sw * 1.1, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.outer);
+    }
+
+    // the Pacific's words
+    G.pac = mk('g', {opacity: 0}, inner);
+    const L1 = T(G.pac, 'THE PACIFIC OCEAN', fs, BL, {'letter-spacing': '.05em'});
+    const L2 = T(G.pac, 'its potassium-40 alone:', fs, CH);
+    const L3 = T(G.pac, 'tens of millions ×', fs, YE, {'font-weight': 800});
+    if (wide) {
+      G.leg = mk('g', {}, G.outer);
+      const ir = fs * .5, tx = colX + 2 * ir + fs * .45, lw = colW - 2 * ir - fs * .45;
+      const LT = T(G.leg, 'the whole Fukushima release', 12, YE, {x: tx});
+      if (LT.getComputedTextLength() > lw) LT.textContent = 'the whole release';
+      const L = [L1, L2, L3, LT];
+      const top = Math.max(by0 + fs * .3, ay - Mn), maxH = Math.min(by1 - fs * .3, ay + fs * .2) - top;
+      stack(L, [1.05 * fs, .95 * fs, 2 * fs, .95 * fs], [colX, colX, colX, tx], [colW, colW, colW, lw], top, maxH, [fs * .12, fs * .08, sw * 2 + fs * .2]);
+      let b = LT.getBBox(); const shift = ay - (b.y + b.height);
+      if (shift > 0) LT.setAttribute('y', +LT.getAttribute('y') + shift);
+      b = LT.getBBox();
+      const icy = b.y + b.height / 2, icx = colX + ir;
+      G.legIcon = mk('path', {d: `M${icx + ir},${icy + ir * .1} A${ir},${ir} 0 1,1 ${icx + ir * .8},${icy - ir * .7}`, fill: 'none', stroke: PK, 'stroke-width': sw, 'stroke-linecap': 'round'}, G.leg);
+      mk('circle', {cx: icx, cy: icy, r: 1.6, fill: YE}, G.leg);
+      G.legText = LT;
+      G.pacLines = [L1, L2, L3];
+      G.hx = colX + colW / 2; G.hy = ay - Mn * .25;
+    } else {
+      const L4 = T(G.pac, 'the whole release', fs, CH);
+      const px = ax + fs * .6, pw = Mn - fs * 1.2, top = ay - Mn + fs * .5;
+      const bottom = Math.min(ay - .5623 * Mn - fs * .4, outerTop - fs * .3);
+      stack([L1, L2, L3, L4], [1.15 * fs, .95 * fs, 1.9 * fs, .95 * fs], [px, px, px, px], [pw, pw, pw, pw], top, bottom - top, [fs * .12, fs * .08, sw * 2 + fs * .15]);
+      G.pacLines = [L1, L2, L3, L4];
+      G.hx = ax + Mn - fs * 2.1; G.hy = ay - Mn * .2;
+    }
+    const s3 = +L3.getAttribute('font-size'), y3 = +L3.getAttribute('y'), w3 = L3.getComputedTextLength(), x3 = +L3.getAttribute('x'), uy = y3 + s3 * .2;
+    G.under = mk('path', {d: `M${x3},${uy} q${w3 * .25},${-fs * .22} ${w3 * .5},0 t${w3 * .5},${-fs * .1}`, fill: 'none', stroke: YE, 'stroke-width': sw * 1.2, 'stroke-linecap': 'round', opacity: 0}, G.pac);
+
+    // the hint
+    G.hint = mk('g', {class: 'hint', opacity: touched ? 0 : 1}, inner);
+    const hx = G.hx, hy = G.hy;
+    mk('path', {d: `M${hx},${hy} V${hy - fs * 2.2} M${hx - fs * .45},${hy - fs * 1.7} L${hx},${hy - fs * 2.25} L${hx + fs * .45},${hy - fs * 1.7}`, fill: 'none', stroke: PK, 'stroke-width': sw * 1.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.hint);
+    T(G.hint, 'drag up', Math.max(12, fs), PK, {x: hx, y: hy + fs * 1.2, 'text-anchor': 'middle'});
+    if (touched) show(G.hint, false);
+
+    G.dust = mk('g', {}, inner);
+    outerShown = false; show(G.outer, false);
+    render();
+    if (pendingReveal) scheduleReveal(220);
+    else if (pacShown) revealPac(false);
+  }
+
+  function showOuter(on) {
+    if (on === outerShown) return; outerShown = on;
+    const parts = [G.outer, G.circ, G.arrow, G.head, G.leg].filter(Boolean);
+    gsap.killTweensOf(parts);
+    if (!on) { gsap.to(G.outer, {opacity: 0, duration: Kit.calm ? 0 : .25, onComplete: () => { if (!outerShown) show(G.outer, false); }}); return; }
+    show(G.outer, true);
+    if (Kit.calm) { G.outer.setAttribute('opacity', 1); return; }
+    gsap.to(G.outer, {opacity: 1, duration: .2});
+    const tl = gsap.timeline();
+    tl.fromTo(G.circ, {drawSVG: '0%'}, {drawSVG: '100%', duration: .5, ease: 'power2.inOut'});
+    if (G.arrow) tl.fromTo(G.arrow, {drawSVG: '0%'}, {drawSVG: '100%', duration: .5, ease: 'power3.out'}, '-=.15')
+      .fromTo(G.head, {drawSVG: '0%'}, {drawSVG: '100%', duration: .25, ease: 'power2.out'}, '-=.05')
+      .from(G.outerLines, {opacity: 0, x: fs * .5, stagger: .08, duration: .35, ease: 'power3.out'}, .2);
+    if (G.leg) tl.from(G.leg, {opacity: 0, x: fs * .5, duration: .4, ease: 'power3.out'}, .25)
+      .fromTo(G.legIcon, {drawSVG: '0%'}, {drawSVG: '100%', duration: .4, ease: 'power2.inOut'}, .3);
+  }
+
+  function puff(x, y, n, a0, a1, d0, d1, cols) {
+    if (Kit.calm || !G.dust) return;
+    for (let i = 0; i < n; i++) {
+      const a = a0 + Math.random() * (a1 - a0), d = fs * (d0 + Math.random() * (d1 - d0));
+      const tx = clamp(x + Math.cos(a) * d, bx0 + 2, bx1 - 2), ty = clamp(y + Math.sin(a) * d, by0 + 2, by1 - 2);
+      const p = mk('circle', {cx: x, cy: y, r: Math.max(.8, fs * .07 * (1 + Math.random())), fill: cols[i % cols.length]}, G.dust);
+      gsap.to(p, {attr: {cx: tx, cy: ty}, opacity: 0, duration: .7 + Math.random() * .6, ease: 'power3.out', onComplete: () => p.remove()});
+    }
+  }
+
+  function render() {
+    if (!G.sq) return;
+    const z = st.z, sd = k => Mn * Math.pow(10, (EX[k] - z) / 2);
+    for (let k = 0; k < EX.length; k++) {
+      const v = drawn[k].v, s = Math.min(sd(k), Mn), d = v > .001 && s > .3 ? part(s, v) : '';
+      G.sq[k].setAttribute('d', d); G.gh[k].setAttribute('d', d);
+    }
+    const s0 = Math.min(sd(0), Mn);
+    Object.entries({x: ax, y: ay - s0, width: s0, height: s0, opacity: 0}).forEach(([a, b]) => G.fill0.setAttribute(a, b));
+    G.speck.setAttribute('opacity', s0 < 4 ? 1 : 0);
+    const io = clamp((s0 - 6 * fs) / (2 * fs)) * drawn[0].v, dop = clamp((s0 - G.dropNeed) / (2 * fs));
+    G.inner.setAttribute('opacity', io); show(G.inner, io > .01);
+    G.drop.setAttribute('opacity', dop);
+    G.innerPos.setAttribute('transform', `translate(${ax + s0 / 2},${ay - s0 / 2 + G.innerSize * 1.15 * dop})`);
+    for (let k = 1; k <= 7; k++) {
+      const s = sd(k), sv = Math.min(s, Mn);
+      const op = drawn[k].v > .6 && s <= Mn * 1.2 && G.labW[k] < sv - fs * .9 ? clamp((sv - 4.5 * fs) / (1.5 * fs)) : 0;
+      G.lab[k].setAttribute('opacity', op * .9); G.lab[k].setAttribute('y', ay - sv + fs * 1.35); show(G.lab[k], op > .01);
+    }
+    if (s0 < 2 * fs) showOuter(true); else if (s0 > 3 * fs) showOuter(false);
+    for (let k = 1; k < EX.length; k++) {
+      if (!drawn[k].on && EX[k] <= z + .15) {
+        drawn[k].on = true; Kit.haptic(k === 8 ? 'light' : 'selection');
+        if (Kit.calm) drawn[k].v = 1;
+        else gsap.to(drawn[k], {v: 1, duration: k === 8 ? 1.1 : .65, ease: 'power2.inOut', onUpdate: render, onComplete: () => {
+          const s = Math.min(Mn * Math.pow(10, (EX[k] - st.z) / 2), Mn);
+          puff(ax, ay - s, k === 8 ? 12 : 7, .15, Math.PI / 2 - .15, .5, k === 8 ? 2.4 : 1.6, k === 8 ? [BL, CH] : [CH]);
+        }});
+      }
+    }
+    if (!done && z >= 2.5 && msg < 1) { msg = 1; say.innerHTML = 'The yellow square is already tiny, and still no ocean. <b>Keep zooming out.</b>'; }
+    if (!done && z >= 5.5 && msg < 2) { msg = 2; say.innerHTML = 'A hundred thousand, a million… <b>Keep going.</b>'; }
+  }
+
+  function check() { if (!done && st.z >= ZMAX - .01) finish(); }
+  function setZ(v, dur = .6) {
+    zT = clamp(v, 0, ZMAX);
+    if (Kit.calm) { st.z = zT; render(); check(); return; }
+    gsap.to(st, {z: zT, duration: dur, ease: 'power3.out', overwrite: true, onUpdate: render, onComplete: check});
+  }
+  function hideHint() { if (G.hint) gsap.to(G.hint, {opacity: 0, duration: Kit.calm ? 0 : .3, onComplete: () => show(G.hint, false)}); }
+
+  function buildWaves() {
+    G.waves.innerHTML = '';
+    const holes = document.getElementById('holes'); holes.innerHTML = '';
+    const texts = [...G.lab.filter(e => e && e.getAttribute('display') !== 'none')];
+    if (!wide) texts.push(...G.pacLines);
+    if (outerShown) texts.push(...G.outerLines);
+    texts.forEach(e => { const b = e.getBBox(); mk('rect', {x: b.x - 5, y: b.y - 3, width: b.width + 10, height: b.height + 6, rx: 4, fill: '#000'}, holes); });
+    const wl = fs * 2.2, amp = fs * .28, out = [], x0 = ax + sw * 1.5, x1 = ax + Mn - sw * 1.5;
+    let row = 0;
+    for (let y = ay - Mn + fs * .9; y < ay - fs * .3; y += fs * 1.45, row++) {
+      let d = '';
+      for (let x = x0; x <= x1 + .01; x += wl / 10) d += (d ? 'L' : 'M') + x.toFixed(1) + ',' + (y + amp * Math.sin((x - ax) / wl * 2 * Math.PI + row * Math.PI)).toFixed(1);
+      out.push(mk('path', {d, fill: 'none', stroke: BL, 'stroke-width': Math.max(1.2, fs * .09), opacity: .3, 'stroke-linecap': 'round'}, G.waves));
+    }
+    return out;
+  }
+
+  function breathe(waves, delay) {
+    if (Kit.calm || !waves.length) return;
+    gsap.to(waves, {opacity: .14, duration: 1.8, ease: 'sine.inOut', delay, stagger: {each: .22, yoyo: true, repeat: -1}});
+  }
+
+  function revealPac(anim) {
+    pacShown = true;
+    const waves = buildWaves();
+    G.pac.setAttribute('opacity', 1); G.under.setAttribute('opacity', 1); G.pacFill.setAttribute('opacity', .1);
+    if (!anim || Kit.calm) { breathe(waves, 0); return; }
+    const tl = gsap.timeline();
+    tl.from(G.pacFill, {opacity: 0, duration: 1, ease: 'power2.out'}, 0)
+      .from(waves, {drawSVG: '0%', duration: 1, stagger: .045, ease: 'power2.out'}, 0)
+      .from(G.pacLines, {opacity: 0, y: fs * .6, stagger: .16, duration: .55, ease: 'back.out(2.2)'}, .25)
+      .from(G.pacLines[2], {scale: .55, transformOrigin: '0% 100%', duration: .8, ease: 'elastic.out(1,.55)'}, .55)
+      .fromTo(G.under, {drawSVG: '0%'}, {drawSVG: '100%', duration: .6, ease: 'power3.inOut'}, 1.1)
+      .fromTo(G.glow, {opacity: 0}, {opacity: 1, duration: .45, ease: 'expo.out', yoyo: true, repeat: 1}, .3)
+      .fromTo(G.circ, {scale: 1, transformOrigin: '50% 50%'}, {scale: 1.25, duration: .25, ease: 'power2.out', yoyo: true, repeat: 1}, .3);
+    if (G.legIcon) tl.fromTo(G.legIcon, {scale: 1, transformOrigin: '50% 50%'}, {scale: 1.3, duration: .25, ease: 'power2.out', yoyo: true, repeat: 1}, .45);
+    tl.call(() => puff(G.cx, G.cy, 16, -Math.PI / 2 + .1, -.1, 1, 3.2, [CH, CH, YE]), null, .32);
+    breathe(waves, 1.5);
+  }
+
+  function scheduleReveal(ms) {
+    clearTimeout(revealTimer);
+    revealTimer = setTimeout(() => { pendingReveal = false; revealPac(true); }, ms);
+  }
+
+  function finish() {
+    if (done) return; done = true; Kit.haptic('success');
+    say.innerHTML = 'Seawater is naturally radioactive. The Pacific\'s <b>potassium-40 alone</b>, not even counting its uranium, adds up to <b>tens of millions of times</b> all the radioactivity of the Fukushima release.';
+    card.classList.add('answered'); Kit.show('keep');
+    pendingReveal = true; scheduleReveal(350);   // wait for the board to settle into its new size
+  }
+
+  // ---------- touch ----------
+  let dragging = false, sx = 0, sy = 0, z0 = 0, moved = false;
+  svg.addEventListener('pointerdown', e => {
+    if (done) return; dragging = true; moved = false; sx = e.clientX; sy = e.clientY; z0 = zT;
+    svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; hideHint(); }
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const delta = (sy - e.clientY) + (e.clientX - sx) * .5;
+    if (Math.abs(delta) > 6) moved = true;
+    if (moved) setZ(z0 + delta / (Mn * .14), .45);
+  });
+  const end = () => {
+    if (!dragging) return; dragging = false;
+    if (!moved && !done) setZ(Math.min(ZMAX, Math.floor(zT + 1e-6) + 1), .7);
+  };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  new ResizeObserver(() => { if (G.sq) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (entered || Kit.calm || done || st.z > 0) return; entered = true;
+    drawn[0].v = 0; render();
+    gsap.to(drawn[0], {v: 1, duration: 1.2, ease: 'power2.inOut', onUpdate: render, delay: .15, onComplete: () => puff(ax, ay - Mn, 7, .15, Math.PI / 2 - .15, .5, 1.6, [YE, CH])});
+    if (G.smudges) gsap.from(G.smudges, {opacity: 0, duration: 1.2, ease: 'power2.out'});
+    if (G.hint && !touched) gsap.from(G.hint, {opacity: 0, duration: .5, delay: 1.3});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; hideHint();
+    setZ(ZMAX, 1.2);
+    await w(Kit.calm ? 100 : 1500);
+    if (!done) { gsap.killTweensOf(st); st.z = ZMAX; drawn.forEach(d => { d.on = true; d.v = 1; }); render(); finish(); }
+    await w(Kit.calm ? 500 : 2600);
+  };
+})();
+Kit.single();
+</script>
+</html>

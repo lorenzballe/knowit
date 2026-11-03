@@ -47,6 +47,7 @@ const CAPS = [
 ];
 const WHY = "Following a wall works because you can see it all the time. A diagonal is only a staircase of corners, so the left–right rule breaks. Racing mice switch to a separate algorithm that steers them as if wearing blinders.";
 const MAXR = 1.1;
+const RED = '#d6002b', INK = '#10100c';
 let st = {mode:0, u:0}, seen = new Set(), tw = null, fast = false, done = false;
 let L = {}, E = {};
 const svg = Kit.$('svg');
@@ -94,19 +95,18 @@ function build(){
   L = {W,H,s,ox:(W-5*s)/2,oy:(H-5*s)/2,fs:Math.max(12,Math.min(f,s*0.24))};
   L.segs = walls(sc());
   const m = (t,a,p=svg) => Kit.mk(t,a,p);
-  m('rect',{x:L.ox-.12*s,y:L.oy-.12*s,width:5.24*s,height:5.24*s,rx:.18*s,fill:'#14161c'});
-  for (let i=0;i<=5;i++) for (let j=0;j<=5;j++) m('rect',{x:X(i)-.035*s,y:Y(j)-.035*s,width:.07*s,height:.07*s,fill:'#3a3f4b'});
+  for (let i=0;i<=5;i++) for (let j=0;j<=5;j++) m('rect',{x:X(i)-.035*s,y:Y(j)-.035*s,width:.07*s,height:.07*s,fill:INK,opacity:.3});
   const wg = m('g',{});
   L.segs.forEach(([a,b,c,d]) => {
-    m('line',{x1:X(a),y1:Y(b),x2:X(c),y2:Y(d),stroke:'#eef0f3','stroke-width':.075*s,'stroke-linecap':'square'},wg);
-    m('line',{x1:X(a),y1:Y(b),x2:X(c),y2:Y(d),stroke:'#e63946','stroke-width':.028*s,'stroke-linecap':'square'},wg);
+    m('line',{x1:X(a),y1:Y(b),x2:X(c),y2:Y(d),stroke:'#ffffff','stroke-width':.075*s,'stroke-linecap':'square'},wg);
+    m('line',{x1:X(a),y1:Y(b),x2:X(c),y2:Y(d),stroke:RED,'stroke-width':.028*s,'stroke-linecap':'square'},wg);
   });
   const S = sc();
-  E.guide = m('line',{x1:X(S.P0[0]),y1:Y(S.P0[1]),x2:X(S.P1[0]),y2:Y(S.P1[1]),stroke:'#39d0ff','stroke-width':Math.max(2,.035*s),'stroke-dasharray':`${.12*s} ${.08*s}`,'stroke-linecap':'round',opacity:0});
-  E.trail = m('polyline',{fill:'none',stroke:'#ffd23f','stroke-width':Math.max(2,.03*s),'stroke-linecap':'round','stroke-linejoin':'round',opacity:.55});
+  E.guide = m('line',{x1:X(S.P0[0]),y1:Y(S.P0[1]),x2:X(S.P1[0]),y2:Y(S.P1[1]),stroke:INK,'stroke-width':Math.max(2,.035*s),'stroke-dasharray':`${.12*s} ${.08*s}`,'stroke-linecap':'round',opacity:0});
+  E.trail = m('polyline',{fill:'none',stroke:'#ffd23f','stroke-width':Math.max(2,.03*s),'stroke-linecap':'round','stroke-linejoin':'round',opacity:.9});
   E.beams = [0,1].map(() => ({
-    l: m('line',{stroke:'#ff4d6d','stroke-width':Math.max(2,.026*s),'stroke-linecap':'round'}),
-    d: m('circle',{r:Math.max(3,.045*s),fill:'#ff4d6d'})
+    l: m('line',{stroke:RED,'stroke-width':Math.max(2,.026*s),'stroke-linecap':'round'}),
+    d: m('circle',{r:Math.max(3,.045*s),fill:RED})
   }));
   const g = E.mouse = m('g',{});
   const bl = .36*s, bw = .26*s;
@@ -115,15 +115,15 @@ function build(){
   m('rect',{x:bl/2-.07*s,y:-bw/2+.03*s,width:.05*s,height:bw-.06*s,rx:.02*s,fill:'#14161c'},g);
   E.blind = m('g',{opacity:0},g);
   [-1,1].forEach(sg => m('line',{x1:bl/2-.02*s,y1:sg*bw/2,x2:bl/2+.2*s,y2:sg*(bw/2+.07*s),stroke:'#0b0b0b','stroke-width':.06*s,'stroke-linecap':'round'},E.blind));
-  E.burst = m('circle',{r:.22*s,fill:'none',stroke:'#ff4d6d','stroke-width':Math.max(2.5,.04*s),opacity:0});
+  E.burst = m('circle',{r:.22*s,fill:'none',stroke:RED,'stroke-width':Math.max(2.5,.04*s),opacity:0});
   const hx = L.ox+.12*s, hy = L.oy+.2*s, fs = L.fs, bwid = Math.max(30, 1.85*s - 3.6*fs);
   E.hud = m('g',{});
   E.bars = ['LEFT','RIGHT'].map((t,i) => {
     const y = hy + i*fs*1.7;
-    m('text',{x:hx,y:y+fs*.8,fill:'#eef0f3','font-family':'var(--mono)','font-size':fs,'font-weight':700},E.hud).textContent = t;
+    m('text',{x:hx,y:y+fs*.8,fill:INK,'font-family':'var(--mono)','font-size':fs,'font-weight':700},E.hud).textContent = t;
     const x0 = hx + 3.5*fs;
-    m('rect',{x:x0,y:y+fs*.1,width:bwid,height:fs*.8,rx:fs*.2,fill:'#2b2f3a'},E.hud);
-    return m('rect',{x:x0,y:y+fs*.1,width:0,height:fs*.8,rx:fs*.2,fill:'#ff4d6d'},E.hud);
+    m('rect',{x:x0,y:y+fs*.1,width:bwid,height:fs*.8,rx:fs*.2,fill:INK,opacity:.2},E.hud);
+    return m('rect',{x:x0,y:y+fs*.1,width:0,height:fs*.8,rx:fs*.2,fill:RED},E.hud);
   });
   L.bwid = bwid;
 }

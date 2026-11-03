@@ -1,0 +1,37 @@
+{
+  "id": "science-magnetic-stripes",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do the dark and light stripes on the ocean floor record?",
+  "answer": "The dark and light stripes on the ocean floor record Earth's magnetic field. Dark bands formed when the field was normal, as it is today, and light bands formed when it was reversed. Because the seafloor records every flip, the stripes show that the field has reversed many times.",
+  "move": "Dark band = normal field, light band = reversed: the seafloor records every flip.",
+  "keywords": [
+    "seafloor",
+    "magnetic field",
+    "polarity reversal",
+    "paleomagnetism",
+    "ocean floor"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive diagram of the ocean floor shown as dark and light stripes. Drag sideways to pull the seafloor apart, and tap a compass to flip Earth's magnetic field. The page asks what the dark and light stripes record."
+  },
+  "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=194s",
+  "written": "2026-11-03"
+}

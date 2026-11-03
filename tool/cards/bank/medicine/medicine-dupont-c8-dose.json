@@ -1,0 +1,38 @@
+{
+  "id": "medicine-dupont-c8-dose",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.clean_water",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did DuPont's own 1961 rat tests find about C8?",
+  "answer": "DuPont's own 1961 rat tests fed rats C8 and watched the liver as the dose rose. Internal tests confirmed C8 caused liver damage and organ failure in rats and dogs, yet the company kept producing it for decades.",
+  "move": "Not deadly isn't safe: harm can start far below the dose that kills.",
+  "keywords": [
+    "dupont",
+    "c8",
+    "rat",
+    "liver",
+    "pfas"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page asking what DuPont's own 1961 rat tests found about C8. A slider raises the dose fed to rats while a liver view shows the effect as the dose climbs.",
+    "ground": "#0d1117"
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=1097s",
+  "written": "2026-11-03"
+}

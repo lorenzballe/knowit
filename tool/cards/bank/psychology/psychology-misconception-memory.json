@@ -1,0 +1,36 @@
+{
+  "id": "psychology-misconception-memory",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.false_memories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do students often remember from a standard explanation?",
+  "answer": "Students often remember their own pre-existing misconceptions as if they were presented in the video. The page shows this with a split screen: the video on one side and a student's thought bubble with a wrong idea on the other.",
+  "move": "What you already believe can rewrite what you remember being told.",
+  "keywords": [
+    "students",
+    "misconceptions",
+    "physics video",
+    "memory"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Split-screen page asking what students often remember from a standard explanation. One side shows a video, the other a student's thought bubble holding a wrong idea. The reader is asked to pull the layers apart."
+  },
+  "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=eVtCO84MDj8&t=227s",
+  "written": "2026-11-03"
+}

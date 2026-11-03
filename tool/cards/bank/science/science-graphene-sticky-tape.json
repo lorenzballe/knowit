@@ -1,0 +1,36 @@
+{
+  "id": "science-graphene-sticky-tape",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was graphene first discovered?",
+  "answer": "Graphene was first peeled off graphite with the sticky tape you have at home. You pull the tape up to peel a graphite flake, then do it again.",
+  "move": "The \"material of the future\" was first peeled off with the tape you have at home.",
+  "keywords": [
+    "graphene",
+    "graphite",
+    "sticky_tape"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled 'Graphene was found with sticky tape'. It asks how graphene was first discovered and has a PEEL IT prompt: pull the tape up to peel the graphite flake, then do it again. The WHAT TO KEEP box says the material of the future was first peeled off with household tape.",
+    "ground": "#0b0718"
+  },
+  "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=75s",
+  "written": "2026-11-03"
+}

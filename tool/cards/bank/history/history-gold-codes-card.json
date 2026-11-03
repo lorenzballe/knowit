@@ -1,0 +1,37 @@
+{
+  "id": "history-gold-codes-card",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What device does the US president use to authenticate a nuclear launch?",
+  "answer": "The president carries a plastic card, the Gold Codes card, in his pocket. Its row must match the code shown on the football's screen. Only a matching row unlocks the football, so a mismatch means no launch.",
+  "move": "No match, no launch: the plastic card in his pocket unlocks the football.",
+  "keywords": [
+    "nuclear-football",
+    "gold-codes",
+    "us-president",
+    "nsa",
+    "plastic-card"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "The Gold Codes page shows a plastic card and a nuclear football briefcase with a screen. It asks the reader to drag the president's plastic card into the football and line up the row that matches the screen."
+  },
+  "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=107s",
+  "written": "2026-11-03"
+}

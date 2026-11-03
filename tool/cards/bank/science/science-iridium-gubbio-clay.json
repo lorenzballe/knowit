@@ -1,0 +1,37 @@
+{
+  "id": "science-iridium-gubbio-clay",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.correlation_or_cause",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "What chemical evidence linked the extinction to an impact?",
+  "answer": "Iridium, a metal rare in Earth's crust but common in asteroids, is packed into the clay where the sea's plankton died out. That means something from space fell at that exact moment. The clay marks the impact.",
+  "move": "The extinction left a fingerprint: a thin clay full of a metal from space.",
+  "keywords": [
+    "iridium",
+    "gubbio",
+    "asteroids",
+    "plankton",
+    "clay"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A red clay cliff near Gubbio, Italy, with a draggable magnifier over a thin clay layer. It asks what chemical evidence linked the extinction to an impact, with choices: Earth's own crust, An asteroid from space, or From an asteroid."
+  },
+  "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=_oHnlF70NaQ&t=360s",
+  "written": "2026-11-03"
+}

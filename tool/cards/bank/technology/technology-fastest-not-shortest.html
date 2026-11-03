@@ -1,0 +1,481 @@
+<!doctype html>
+<!-- slug: technology-fastest-not-shortest -->
+<!-- Look: Swiss poster. A strict 8×8 micromouse maze with black posts and walls, one hot red-orange, huge bold numerals counting each route's turns, all printed straight on the card.
+     Every corner of every route is marked with a small ring, so you can count the turns before you bet.
+     Interaction: tap the route you'd bet on. Its corners ripple one by one and particles stream along it. Then both mice race with real braking: speed ribbons thin out, red sparks fly and corner rings flash red at every turn, and speed bars dip.
+     Wow: the long route wins. A red shockwave and a particle burst fill the goal, the winner's panel floods red, and its route glows with a river of particles. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fastest path, not shortest</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;background:none;border:0;box-shadow:none;border-radius:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;background:none;border:0;box-shadow:none;border-radius:0;touch-action:none;cursor:pointer}
+.say b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick a route · race">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK A ROUTE</span></div>
+    <h2 class="q">A Micromouse races to the goal. Which route is it searching for?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="pic" role="img" aria-label="A micromouse maze with two routes from the start corner to a red goal: route A is short with nine turns, route B is long with three turns."></canvas>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Both mice start in the black corner and race to the red square. <b>Tap the route you'd bet on.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fastest isn't shortest: count the turns, not just the metres.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('pic'), say = Kit.$('say');
+  const INK = '#10100c', BOARD = '#fbfaf5', HOT = '#ff3a12';
+  const N = 8, VMAX = 6, ACC = 10, VT = 1, PAUSE = .12, DT = 1 / 240, RATE = 1.15;
+  // Route A: a short staircase, 10 cells, 9 turns. Route B: around the edge, 18 cells, 3 turns.
+  const R = [
+    [[0,7],[0,6],[1,6],[1,5],[2,5],[2,4],[3,4],[3,3],[4,3],[4,2],[5,2]],
+    [[0,7],[7,7],[7,0],[5,0],[5,2]]
+  ];
+  const NAME = ['A', 'B'], TURNS = [9, 3], CELLS = [10, 18], RIGHT = 1, GOAL = [5, 2];
+  const TAGS = [{s: 5, o: [-.62, -.62]}, {s: 10.5, o: [-.62, 0]}];
+  const CORN = R.map(C => C.slice(1, -1));
+  const hit = [[], []];
+
+  // ---- the race physics: speed up on straights, brake to a crawl before every turn ----
+  function sim(C) {
+    const segs = [];
+    for (let i = 1; i < C.length; i++) {
+      const dx = C[i][0] - C[i-1][0], dy = C[i][1] - C[i-1][1];
+      segs.push({L: Math.abs(dx) + Math.abs(dy), ang: Math.atan2(dy, dx)});
+    }
+    const out = []; let s0 = 0, v = 0;
+    segs.forEach((g, k) => {
+      const last = k === segs.length - 1, ve = last ? 0 : VT; let d = 0;
+      while (d < g.L - 1e-4) {
+        const allow = Math.max(.35, Math.min(VMAX, Math.sqrt(ve * ve + 2 * ACC * (g.L - d))));
+        const nv = v < allow ? Math.min(allow, v + ACC * DT) : allow;
+        const br = nv < v - 1e-6; v = nv; d = Math.min(g.L, d + v * DT);
+        out.push({s: s0 + d, v, br, k, f: 0, turn: false});
+      }
+      s0 += g.L;
+      if (!last) { const n = Math.round(PAUSE / DT); v = VT; for (let j = 1; j <= n; j++) out.push({s: s0, v: VT * .35, br: false, k, f: j / n, turn: true}); }
+    });
+    return {segs, out, len: s0};
+  }
+  const SIM = R.map(sim);
+
+  // ---- maze walls: seeded, never across either route ----
+  const key = (a, b, c, d) => (a < c || (a === c && b < d)) ? `${a},${b},${c},${d}` : `${c},${d},${a},${b}`;
+  const open = new Set();
+  R.forEach(C => { for (let i = 1; i < C.length; i++) { let [c, r] = C[i-1]; const [c2, r2] = C[i]; const dc = Math.sign(c2 - c), dr = Math.sign(r2 - r); while (c !== c2 || r !== r2) { const nc = c + dc, nr = r + dr; open.add(key(c, r, nc, nr)); c = nc; r = nr; } } });
+  const walls = [];
+  for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+    if (c < N - 1 && !open.has(key(c, r, c + 1, r)) && Kit.rnd() < .36) walls.push([c + 1, r, c + 1, r + 1]);
+    if (r < N - 1 && !open.has(key(c, r, c, r + 1)) && Kit.rnd() < .36) walls.push([c, r + 1, c + 1, r + 1]);
+  }
+  walls.sort((p, q) => (p[0] + N - p[1]) - (q[0] + N - q[1]));
+
+  // ---- state ----
+  let ctx = null, W = 0, H = 0, cs = 30, ox = 0, oy = 0, S = 240, fs = 12, BODY = 'sans-serif', MONO = 'monospace', boxes = [];
+  let pick = -1, phase = 'idle', raceT = 0, pct = null, armed = false, winner = -1, pickT = -9;
+  const done = [false, false], order = [], speed = [0, 0];
+  const intro = {g: 1, w: 1, r: 1, n: 1};
+  const rev = [{k: 0}, {k: 0}], glow = {k: 0}, ring = {k: 0, on: false}, amb = {f: 1};
+  const boost = [0, 0];
+  const P = [];
+  const TR = [[], []];
+  const AMB = [];
+  [110, 180].forEach((n, r) => { for (let i = 0; i < n; i++) AMB.push({r, s: Math.random() * SIM[r].len, sp: .35 + Math.random() * .5, off: (Math.random() - .5) * 2, ph: Math.random() * 6.28}); });
+
+  const X = x => ox + (x + .5) * cs, Y = y => oy + (y + .5) * cs;
+  function at(i, s) {
+    const C = R[i];
+    for (let k = 1; k < C.length; k++) {
+      const dx = C[k][0] - C[k-1][0], dy = C[k][1] - C[k-1][1], L = Math.abs(dx) + Math.abs(dy);
+      if (s <= L || k === C.length - 1) { const u = Math.max(0, Math.min(s, L)) / L; return {x: C[k-1][0] + dx * u, y: C[k-1][1] + dy * u, a: Math.atan2(dy, dx)}; }
+      s -= L;
+    }
+  }
+  const easeIO = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  function mousePose(i) {
+    const out = SIM[i].out, idx = phase === 'idle' ? 0 : Math.min(out.length - 1, Math.floor(raceT / DT));
+    const smp = phase === 'idle' ? {s: 0, v: 0, br: false, k: 0, f: 0, turn: false} : out[idx];
+    // stop just short of the goal centre so both mice stay visible side by side
+    const p = at(i, Math.min(smp.s, SIM[i].len - .22)); let a = SIM[i].segs[smp.k].ang;
+    if (smp.turn) { const a1 = SIM[i].segs[smp.k + 1].ang, d = Math.atan2(Math.sin(a1 - a), Math.cos(a1 - a)); a += d * easeIO(smp.f); }
+    const o = .28 * Math.max(0, 1 - smp.s / .6), a0 = SIM[i].segs[0].ang;
+    const gx = p.x + Math.cos(a0) * o, gy = p.y + Math.sin(a0) * o;
+    return {gx, gy, x: X(gx), y: Y(gy), a, smp};
+  }
+
+  // ---- layout ----
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    const st = getComputedStyle(document.documentElement);
+    BODY = st.getPropertyValue('--body').trim() || 'sans-serif';
+    MONO = st.getPropertyValue('--mono').trim() || 'monospace';
+    fs = Math.max(12, Math.min(14, W / 28));
+    const m = Math.max(8, W * .035), gap = Math.max(10, W * .028);
+    const pv = Math.max(fs * 6.4, H * .25);
+    const S1 = Math.min(W - 2 * m, H - 2 * m - pv - gap);
+    const pw = Math.max(150, W * .32);
+    const S2 = Math.min(H - 2 * m, W - 2 * m - pw - gap);
+    if (S2 > S1 * 1.08) {
+      S = S2; ox = m; oy = (H - S) / 2;
+      const bx = ox + S + gap, bw = W - m - bx, bh = (S - gap * .6) / 2;
+      boxes = [{x: bx, y: oy, w: bw, h: bh}, {x: bx, y: oy + bh + gap * .6, w: bw, h: bh}];
+    } else {
+      S = Math.max(80, S1); ox = (W - S) / 2; oy = m;
+      const py = oy + S + gap, ph = H - m - py, bw = (W - 2 * m - gap) / 2;
+      boxes = [{x: m, y: py, w: bw, h: ph}, {x: m + bw + gap, y: py, w: bw, h: ph}];
+    }
+    cs = S / N;
+    if (!loopOn) { loopOn = true; requestAnimationFrame(loop); }
+  }
+
+  // ---- particles ----
+  function spawn(o) { if (P.length > 1500) P.shift(); P.push(o); }
+  function aimBurst(i) {
+    for (let k = 0; k < 150; k++) spawn({r: i, s: -Math.random() * 3, sp: 7 + Math.random() * 9, off: (Math.random() - .5) * 2, life: 9, max: 9, sz: 1.4 + Math.random() * 1.8, col: HOT});
+  }
+  function goalBurst() {
+    const gx = X(GOAL[0]), gy = Y(GOAL[1]);
+    for (let k = 0; k < 340; k++) {
+      const a = Math.random() * 6.283, v = cs * (2 + Math.random() * 11), l = 1.1 + Math.random() * 1.1;
+      spawn({x: gx, y: gy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: l, max: l, sz: 1.4 + Math.random() * 2.6, col: Math.random() < .72 ? HOT : INK});
+    }
+  }
+  function emit(i, pose) {
+    const {x, y, a, smp} = pose, c = Math.cos(a), s = Math.sin(a);
+    if (smp.br) for (let k = 0; k < 3; k++) {
+      const side = Math.random() < .5 ? -1 : 1, aa = a + side * (.5 + Math.random() * .7), v = cs * (2.5 + Math.random() * 3.5), l = .25 + Math.random() * .2;
+      spawn({x: x + c * cs * .2, y: y + s * cs * .2, vx: Math.cos(aa) * v, vy: Math.sin(aa) * v, life: l, max: l, sz: 1.3 + Math.random() * 1.4, col: HOT});
+    }
+    if (smp.turn && Math.random() < .7) {
+      const aa = Math.random() * 6.283, v = cs * 1.8, l = .35;
+      spawn({x, y, vx: Math.cos(aa) * v, vy: Math.sin(aa) * v, life: l, max: l, sz: 1.6, col: HOT});
+    }
+  }
+  function markCorners(i, smp) {
+    for (let c = 0; c < CORN[i].length; c++) {
+      if (hit[i][c] !== undefined) continue;
+      if (smp.k > c || (smp.k === c && smp.turn)) hit[i][c] = clock;
+    }
+  }
+
+  // ---- loop ----
+  let loopOn = false, last = 0, clock = 0;
+  function loop(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t; clock += dt;
+    if (phase === 'race') {
+      raceT += dt * RATE;
+      [0, 1].sort((p, q) => SIM[p].out.length - SIM[q].out.length).forEach(i => { if (!done[i] && raceT / DT >= SIM[i].out.length) finish(i); });
+    }
+    for (let i = 0; i < 2; i++) boost[i] *= Math.exp(-2.5 * dt);
+    if (ctx) {
+      if (phase !== 'idle') for (let i = 0; i < 2; i++) {
+        const p = mousePose(i); speed[i] = done[i] ? 0 : p.smp.v;
+        if (!done[i]) {
+          markCorners(i, p.smp);
+          if (!Kit.calm) { emit(i, p); TR[i].push({x: p.gx, y: p.gy, v: p.smp.v, t: clock}); }
+        }
+      }
+      for (let i = 0; i < 2; i++) while (TR[i].length && TR[i][0].t < clock - .7) TR[i].shift();
+      for (const a of AMB) { const hot = a.r === winner ? 2.2 : 1; a.s = (a.s + a.sp * (1 + boost[a.r] * 2.5) * hot * dt) % SIM[a.r].len; }
+      const drag = Math.exp(-3 * dt);
+      for (let k = P.length - 1; k >= 0; k--) {
+        const p = P[k];
+        if (p.r !== undefined) { p.s += p.sp * dt; if (p.s > SIM[p.r].len) { P.splice(k, 1); continue; } }
+        else { p.vx *= drag; p.vy *= drag; p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt; if (p.life <= 0) P.splice(k, 1); }
+      }
+      draw();
+    }
+    requestAnimationFrame(loop);
+  }
+
+  // ---- drawing ----
+  function routePath(i, upto) {
+    const C = R[i]; let left = upto * SIM[i].len;
+    ctx.beginPath(); ctx.moveTo(X(C[0][0]), Y(C[0][1]));
+    for (let k = 1; k < C.length && left > 0; k++) {
+      const dx = C[k][0] - C[k-1][0], dy = C[k][1] - C[k-1][1], L = Math.abs(dx) + Math.abs(dy), u = Math.min(1, left / L);
+      ctx.lineTo(X(C[k-1][0] + dx * u), Y(C[k-1][1] + dy * u)); left -= L;
+    }
+  }
+  function routeColor(i) {
+    if (winner >= 0) return i === winner ? HOT : 'rgba(16,16,12,.3)';
+    return i === pick ? HOT : 'rgba(16,16,12,.82)';
+  }
+  const lit = i => winner >= 0 ? i === winner : i === pick;
+
+  function draw() {
+    const x = ctx;
+    x.clearRect(0, 0, W, H);
+
+    // Swiss grid: the maze's module carried across the whole sheet, as thin ink lines
+    x.globalAlpha = .1 * intro.g; x.strokeStyle = INK; x.lineWidth = 1; x.beginPath();
+    for (let gx = ox % cs; gx < W; gx += cs) { x.moveTo(gx, 0); x.lineTo(gx, H); }
+    for (let gy = oy % cs; gy < H; gy += cs) { x.moveTo(0, gy); x.lineTo(W, gy); }
+    x.stroke(); x.globalAlpha = 1;
+
+    // maze cell lines (no board fill, no shadow)
+    const lift = (1 - intro.g) * 12;
+    x.save(); x.globalAlpha = intro.g; x.translate(0, lift);
+    x.strokeStyle = 'rgba(16,16,12,.16)'; x.lineWidth = 1; x.beginPath();
+    for (let k = 1; k < N; k++) { x.moveTo(ox + k * cs, oy); x.lineTo(ox + k * cs, oy + S); x.moveTo(ox, oy + k * cs); x.lineTo(ox + S, oy + k * cs); }
+    x.stroke();
+    // goal: a red square with a breathing inner frame; start: solid black
+    const gx0 = ox + GOAL[0] * cs, gy0 = oy + GOAL[1] * cs;
+    x.fillStyle = HOT; x.fillRect(gx0 + 2, gy0 + 2, cs - 4, cs - 4);
+    const br = .5 + .5 * Math.sin(clock * 3), ins = cs * (.2 + .06 * br);
+    x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 1.5; x.strokeRect(gx0 + ins, gy0 + ins, cs - 2 * ins, cs - 2 * ins);
+    x.fillStyle = INK; x.fillRect(ox + 2, oy + 7 * cs + 2, cs - 4, cs - 4);
+    x.restore();
+
+    // walls, sweeping in from the start corner
+    const nw = Math.floor(walls.length * intro.w), ww = Math.max(2.5, cs * .1);
+    x.lineCap = 'square';
+    x.strokeStyle = INK; x.lineWidth = ww; x.beginPath();
+    for (let k = 0; k < nw; k++) { const w = walls[k]; x.moveTo(ox + w[0] * cs, oy + w[1] * cs); x.lineTo(ox + w[2] * cs, oy + w[3] * cs); }
+    x.stroke();
+    x.globalAlpha = intro.g; x.strokeStyle = INK; x.lineWidth = ww * 1.3; x.strokeRect(ox, oy, S, S);
+    x.fillStyle = INK; const ps = Math.max(3, cs * .13);
+    for (let i = 0; i <= N; i++) for (let j = 0; j <= N; j++) x.fillRect(ox + i * cs - ps / 2, oy + j * cs - ps / 2, ps, ps);
+    x.globalAlpha = 1;
+
+    // routes: a soft halo under the lit one, then a crisp core
+    x.lineJoin = 'round'; x.lineCap = 'round';
+    const lw = Math.max(3, cs * .13);
+    const ord = [0, 1].sort((p, q) => lit(p) - lit(q));
+    ord.forEach(i => {
+      x.save();
+      if (lit(i)) {
+        x.globalAlpha = .3 + .15 * glow.k; x.strokeStyle = '#fff'; x.lineWidth = lw * 3.4;
+        routePath(i, intro.r); x.stroke(); x.globalAlpha = 1;
+      }
+      if (i === winner) { x.shadowColor = HOT; x.shadowBlur = 18 * glow.k; }
+      x.strokeStyle = routeColor(i); x.lineWidth = lw * (i === winner ? 1 + .3 * glow.k : 1);
+      routePath(i, intro.r); x.stroke(); x.restore();
+    });
+
+    // ambient flow along the routes, tight to the line
+    for (const a of AMB) {
+      const p = at(a.r, a.s), px = -Math.sin(p.a), py = Math.cos(p.a), w = a.off * .09 + Math.sin(clock * 2 + a.ph) * .03;
+      const on = lit(a.r);
+      x.globalAlpha = Math.min(1, (on ? .8 : .22) * amb.f * intro.r + boost[a.r] * .1);
+      x.fillStyle = on ? '#fff' : INK;
+      const z = on ? 2.2 : 1.6;
+      x.fillRect(X(p.x + px * w) - z / 2, Y(p.y + py * w) - z / 2, z, z);
+    }
+    x.globalAlpha = 1;
+
+    // corner rings: one per turn, so you can count them
+    const cr = Math.max(2.6, cs * .1);
+    ord.forEach(i => {
+      for (let c = 0; c < CORN[i].length; c++) {
+        const s0 = c + 1, cum = SIM[i].segs.slice(0, s0).reduce((q, g2) => q + g2.L, 0);
+        if (cum / SIM[i].len > intro.r + 1e-3) continue;
+        const px = X(CORN[i][c][0]), py = Y(CORN[i][c][1]), h = hit[i][c], on = h !== undefined;
+        x.globalAlpha = (winner >= 0 && i !== winner) ? .6 : 1;
+        x.beginPath(); x.arc(px, py, cr, 0, 6.283);
+        x.fillStyle = on ? HOT : BOARD; x.fill();
+        x.lineWidth = 1.6; x.strokeStyle = on ? (i === winner || lit(i) ? '#fff' : HOT) : (lit(i) ? HOT : INK); x.stroke();
+        // ripple when picked: corners light up one by one
+        const u1 = (clock - pickT - c * .09) / .55;
+        if (i === pick && u1 > 0 && u1 < 1) { x.globalAlpha = (1 - u1) * .9; x.beginPath(); x.arc(px, py, cr + cs * .45 * u1, 0, 6.283); x.strokeStyle = '#fff'; x.lineWidth = 2; x.stroke(); }
+        // flash when a mouse brakes through it
+        if (on) { const u = (clock - h) / .6; if (u >= 0 && u < 1) { x.globalAlpha = 1 - u; x.beginPath(); x.arc(px, py, cr + cs * .55 * u, 0, 6.283); x.strokeStyle = HOT; x.lineWidth = 2.5; x.stroke(); } }
+      }
+    });
+    x.globalAlpha = 1;
+
+    // speed ribbons behind each mouse: wide when fast, thin when braking
+    x.lineCap = 'round';
+    for (let i = 0; i < 2; i++) {
+      const tr = TR[i];
+      for (let k = 1; k < tr.length; k++) {
+        const a = tr[k - 1], b = tr[k], age = (clock - b.t) / .7;
+        x.globalAlpha = Math.max(0, 1 - age) * .85;
+        x.strokeStyle = i === pick ? HOT : INK; x.lineWidth = 1 + cs * .22 * (b.v / VMAX);
+        x.beginPath(); x.moveTo(X(a.x), Y(a.y)); x.lineTo(X(b.x), Y(b.y)); x.stroke();
+      }
+    }
+    x.globalAlpha = 1;
+
+    // free particles
+    for (const p of P) {
+      let px, py, al;
+      if (p.r !== undefined) { if (p.s < 0) continue; const q = at(p.r, p.s), n = p.off * .14; px = X(q.x - Math.sin(q.a) * n); py = Y(q.y + Math.cos(q.a) * n); al = Math.min(1, (SIM[p.r].len - p.s) * .8); }
+      else { px = p.x; py = p.y; al = p.life / p.max; }
+      x.globalAlpha = al; x.fillStyle = p.col; x.fillRect(px - p.sz / 2, py - p.sz / 2, p.sz, p.sz);
+    }
+    x.globalAlpha = 1;
+
+    // shockwave at the goal
+    if (ring.on && ring.k < 1) {
+      x.strokeStyle = HOT; x.globalAlpha = 1 - ring.k; x.lineWidth = 3 + 6 * (1 - ring.k);
+      x.beginPath(); x.arc(X(GOAL[0]), Y(GOAL[1]), cs * (.5 + 4.5 * ring.k), 0, 6.283); x.stroke(); x.globalAlpha = 1;
+    }
+
+    // route tags, breathing while waiting for a tap
+    x.textAlign = 'center'; x.textBaseline = 'middle';
+    const tr = Math.max(fs * .85, cs * .28);
+    for (let i = 0; i < 2; i++) {
+      const p = at(i, TAGS[i].s), tx = X(p.x + TAGS[i].o[0]), ty = Y(p.y + TAGS[i].o[1]);
+      const on = lit(i);
+      if (pick < 0 && phase === 'idle' && !Kit.calm) {
+        const u = (clock * .7 + i * .5) % 1;
+        x.globalAlpha = (1 - u) * .55 * intro.r; x.lineWidth = 2; x.strokeStyle = INK;
+        x.beginPath(); x.arc(tx, ty, tr + tr * .9 * u, 0, 6.283); x.stroke();
+      }
+      x.globalAlpha = intro.r;
+      x.save(); x.shadowColor = 'rgba(0,0,0,.18)'; x.shadowBlur = 5; x.shadowOffsetY = 2;
+      x.beginPath(); x.arc(tx, ty, tr, 0, 6.283); x.fillStyle = on ? HOT : BOARD; x.fill(); x.restore();
+      x.lineWidth = 2; x.strokeStyle = on ? HOT : INK; x.stroke();
+      x.fillStyle = on ? '#fff' : INK; x.font = `800 ${Math.round(tr * 1.15)}px ${BODY}`; x.fillText(NAME[i], tx, ty + 1);
+    }
+    x.globalAlpha = 1;
+
+    // mice: a little white robot with wheels, sensor eyes and a coloured nose
+    [0, 1].sort((p, q) => (p === winner) - (q === winner)).forEach(i => {
+      const p = mousePose(i), L = cs * .46, w = cs * .34;
+      x.save(); x.translate(p.x, p.y); x.rotate(p.a);
+      x.fillStyle = INK; x.fillRect(-L * .22, -w / 2 - w * .16, L * .38, w * .18); x.fillRect(-L * .22, w / 2 - w * .02, L * .38, w * .18);
+      x.shadowColor = 'rgba(0,0,0,.3)'; x.shadowBlur = 6; x.shadowOffsetY = 2;
+      x.fillStyle = '#fff'; x.beginPath(); x.roundRect(-L / 2, -w / 2, L, w, w * .32); x.fill(); x.shadowColor = 'transparent';
+      x.lineWidth = 1.5; x.strokeStyle = INK; x.stroke();
+      x.fillStyle = i === pick ? HOT : INK;
+      x.beginPath(); x.moveTo(L * .5, 0); x.lineTo(L * .1, -w * .3); x.lineTo(L * .1, w * .3); x.closePath(); x.fill();
+      x.fillStyle = INK; x.fillRect(-L * .1, -w * .26, L * .1, w * .14); x.fillRect(-L * .1, w * .12, L * .1, w * .14);
+      if (p.smp.br && !done[i]) { x.fillStyle = HOT; x.fillRect(-L / 2 - 1.5, -w * .3, 3, w * .6); }
+      x.restore();
+    });
+
+    // panels: huge numerals of turns
+    boxes.forEach((b, i) => panel(b, i));
+  }
+
+  function panel(b, i) {
+    const x = ctx, k = rev[i].k, light = k > .5, ip = 6;
+    x.textBaseline = 'alphabetic'; x.textAlign = 'left';
+    x.fillStyle = INK; x.fillRect(b.x, b.y, b.w * intro.g, 3);
+    if (k > 0) { x.fillStyle = HOT; x.fillRect(b.x, b.y + 3, b.w, (b.h - 3) * Math.min(1, k)); }
+    const ink = light ? '#fff' : INK, L = b.x + ip, Rr = b.x + b.w - ip;
+    x.font = `700 ${fs}px ${MONO}`; x.fillStyle = (i === pick && winner < 0) ? HOT : ink;
+    if (i === pick && winner < 0) x.fillStyle = '#fff';
+    const hy = b.y + 3 + fs * 1.3;
+    x.fillText(`ROUTE ${NAME[i]}`, L, hy);
+    if (done[i]) { x.textAlign = 'right'; x.fillStyle = ink; x.fillText(order.indexOf(i) === 0 ? '1ST' : '2ND', Rr, hy); x.textAlign = 'left'; }
+
+    const bh = Math.max(3, fs * .3), barY = b.y + b.h - bh - 2;
+    const top = hy + fs * .6, bottom = barY - fs * .45, availH = Math.max(fs, bottom - top), cw = Rr - L;
+    const capW = x.measureText('18 CELLS').width, oneW = x.measureText(`TURNS · ${CELLS[i]} CELLS`).width;
+    let num = Math.min(availH / .72, (cw - capW - 12) / .62, 170), two = true;
+    if (num * .72 < fs * 2.2) {
+      const n1 = Math.min(availH / .72, (cw - oneW - 12) / .62, 170);
+      if (n1 >= fs * 1.4) { num = n1; two = false; } else num = fs * 2.2 / .72;
+    }
+    num = Math.max(fs * 1.4, num);
+    const capH = num * .72, yb = top + (availH + capH) / 2;
+    const sc = 1 + .12 * Math.sin(Math.min(1, k) * Math.PI);
+    x.save(); x.translate(L, yb); x.scale(sc, sc);
+    x.font = `800 ${Math.round(num)}px ${BODY}`; x.fillStyle = ink;
+    const t = String(Math.round(TURNS[i] * intro.n)); x.fillText(t, -num * .03, 0);
+    const nwid = x.measureText(t).width; x.restore();
+    const cx = L + nwid * sc + 10;
+    x.font = `700 ${fs}px ${MONO}`; x.fillStyle = ink;
+    if (two) {
+      x.fillText('TURNS', cx, yb - capH + fs * .8);
+      x.globalAlpha = light ? .9 : .75; x.fillText(`${CELLS[i]} CELLS`, cx, yb); x.globalAlpha = 1;
+    } else {
+      x.fillText('TURNS', cx, yb);
+      const tw = x.measureText('TURNS').width;
+      x.globalAlpha = light ? .9 : .75; x.fillText(` · ${CELLS[i]} CELLS`, cx + tw, yb); x.globalAlpha = 1;
+    }
+    // speed bar
+    x.fillStyle = light ? 'rgba(255,255,255,.35)' : 'rgba(16,16,12,.18)'; x.fillRect(L, barY, cw, bh);
+    x.fillStyle = light ? '#fff' : INK; x.fillRect(L, barY, cw * Math.min(1, speed[i] / VMAX), bh);
+  }
+
+  // ---- input ----
+  function nearest(px, py) {
+    for (let i = 0; i < 2; i++) { const b = boxes[i]; if (b && px >= b.x && px <= b.x + b.w && py >= b.y && py <= b.y + b.h) return {i, d: 0}; }
+    let best = {i: -1, d: 1e9};
+    for (let i = 0; i < 2; i++) for (let s = 0; s <= SIM[i].len; s += .1) { const p = at(i, s), d = Math.hypot(X(p.x) - px, Y(p.y) - py); if (d < best.d) best = {i, d}; }
+    return best;
+  }
+  const local = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.addEventListener('pointerdown', e => { if (phase !== 'idle' || !ctx) return; const [px, py] = local(e); choose(nearest(px, py).i); });
+  cv.addEventListener('pointermove', e => { if (!ctx) return; const [px, py] = local(e), n = nearest(px, py); if (n.i >= 0 && n.d < cs * 1.2) boost[n.i] = Math.min(4, boost[n.i] + .6); });
+
+  function choose(i) {
+    if (i < 0 || i === pick) return;
+    pick = i; pickT = clock; Kit.haptic('selection'); boost[i] = 4;
+    if (!Kit.calm) aimBurst(i);
+    say.innerHTML = `Route ${NAME[i]}: ${i ? 'longer, but only 3 turns' : 'shorter, but 9 turns'}. <b>How sure are you? Then they race.</b>`;
+    if (!armed) { armed = true; sure.on(); }
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', p => {
+    pct = p;
+    Kit.answer({choice: `Route ${NAME[pick]} (${pick ? 'longer, 3 turns' : 'shorter, 9 turns'})`, correct: pick === RIGHT, sure: p});
+    startRace();
+  });
+
+  function startRace() {
+    if (phase !== 'idle') return;
+    phase = 'race'; raceT = 0; P.length = 0;
+    say.innerHTML = 'Watch the red sparks: <b>at every turn a mouse has to brake.</b>';
+    if (Kit.calm) { amb.f = .2; finishNow(); return; }
+    gsap.to(amb, {f: .2, duration: .6, ease: 'power2.out'});
+  }
+  function finishNow() {
+    raceT = Math.max(SIM[0].out.length, SIM[1].out.length) * DT + .01;
+    [0, 1].sort((p, q) => SIM[p].out.length - SIM[q].out.length).forEach(i => { if (!done[i]) finish(i); });
+  }
+  function finish(i) {
+    done[i] = true; order.push(i);
+    for (let c = 0; c < CORN[i].length; c++) if (hit[i][c] === undefined) hit[i][c] = Kit.calm ? -9 : clock - 1;
+    if (order.length === 1) {
+      winner = i; Kit.haptic('success');
+      if (Kit.calm) { rev[i].k = 1; glow.k = 1; amb.f = 1; }
+      else {
+        goalBurst(); ring.on = true; ring.k = 0;
+        gsap.to(ring, {k: 1, duration: 1, ease: 'expo.out'});
+        gsap.to(rev[i], {k: 1, duration: .8, ease: 'back.out(1.6)'});
+        gsap.to(glow, {k: 1, duration: 1.2, ease: 'elastic.out(1,.5)'});
+        gsap.to(amb, {f: 1, duration: 1, ease: 'power2.out', delay: .3});
+      }
+    } else end();
+  }
+  function end() {
+    phase = 'end';
+    const ok = pick === RIGHT;
+    sure.grade(ok, pct, `Route ${NAME[pick]}, ${ok ? 'right' : 'wrong'}`);
+    say.innerHTML = 'Every turn forces a micromouse to brake, then speed up again. In the final, Red Comet took a path <b>5½ m longer</b> because it had fewer turns. Micromice search for the <b>fastest</b> path, not the shortest.';
+    Kit.show('keep');
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.timeline()
+      .from(intro, {g: 0, duration: .7, ease: 'power3.out'})
+      .from(intro, {w: 0, duration: 1, ease: 'power3.out'}, '-=.4')
+      .from(intro, {r: 0, duration: 1.3, ease: 'expo.inOut'}, '-=.6')
+      .from(intro, {n: 0, duration: 1.1, ease: 'power3.out'}, '-=.9');
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    choose(1); await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 80 : 400);
+    if (phase !== 'end') finishNow();
+    await wait(Kit.calm ? 80 : 900);
+  };
+})();
+Kit.single();
+</script>
+</html>

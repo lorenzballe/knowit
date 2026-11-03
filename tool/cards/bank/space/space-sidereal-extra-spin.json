@@ -1,0 +1,38 @@
+{
+  "id": "space-sidereal-extra-spin",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.astrology_or_astronomy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the stars see Earth spin 366.24 times a year, not 365.24?",
+  "answer": "Counted against the stars (a sidereal year), Earth spins once more than it has days. The stars see 366.24 spins a year, while we count 365.24 solar days. Earth makes one extra spin as it goes once round the Sun.",
+  "move": "Counted against the stars (a sidereal year), Earth spins once more than it has days.",
+  "keywords": [
+    "earth",
+    "sun",
+    "stars",
+    "sidereal year",
+    "solar day"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An Earth orbit diagram with distant stars behind it. Earth is dragged once round the Sun in a toy year of 4 days. The page asks why the stars see Earth spin 366.24 times a year, not 365.24, and has the reader count the spins two ways.",
+    "ground": "#14243a"
+  },
+  "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=691s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,369 @@
+<!doctype html>
+<!-- slug: science-vajont-wet-clay -->
+<!-- Look: the Vajont valley as a lab specimen: translucent rock strata, an amber clay band, a glowing sloshing lake, pines on the old slide, printed straight on the card.
+     Interaction: each tap on the glass tap pours the reservoir higher. The lake creeps up the slope until it touches the clay layer under the old landslide.
+     Wow: water soaks into the clay, the clay swells and glows, the scarp cracks, the whole slope slides into the lake, rocks and spray fly under real gravity and a wave runs up the far bank. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The lake that woke a landslide</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.ring{animation:ring 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes ring{0%{opacity:.9;transform:scale(.6)}100%{opacity:0;transform:scale(1.4)}}
+.kit-calm .ring{animation:none;opacity:.6}
+#why{display:flex;flex-direction:column;gap:.5cqh}
+#why .big{font:800 max(2.5cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.75cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to fill · watch the clay">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FILL THE LAKE</span></div>
+    <h2 class="q">What did filling the Vajont reservoir wake up inside the mountain?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A cross-section of the Vajont valley: rock layers, an orange clay layer, an ancient landslide resting on it, and a reservoir that fills when you tap the glass tap."></svg>
+    </div>
+    <p class="say" id="say">The dam is built. <b>Tap the glass tap</b> to fill the lake, and keep an eye on the orange clay layer.</p>
+    <div id="why" class="gone">
+      <p class="big">Wet clay woke an old landslide.</p>
+      <p class="body">The lake rose until it reached a layer of clay. Clay is impermeable: instead of letting water through, it swelled and deformed. The ancient landslide resting on it lost its balance and moved again.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The reservoir broke the slope's balance by soaking the clay beneath an ancient landslide.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(Physics2DPlugin);
+  const svg = Kit.$('pic'), card = Kit.$('card');
+  const S = {level: .9, amp: 0, seep: 0, swell: 0, crack: 0, slide: 0, pour: 0, shake: 0, quake: 0, wave: 0, wfade: 0};
+  const LEVELS = [.79, .735, .68, .625];   // the clay meets the slope at .645: the 4th fill touches it
+  let taps = 0, done = false, tl = null, clayS = 'DRY', lakeS = 'LOW';
+  let W = 0, H = 0, fs = 13, T = {}, E = {}, phase = 0;
+  const cl = v => Math.max(0, Math.min(1, v));
+  const P = (px, py) => [T.x0 + cl(px) * T.w, T.y0 + cl(py) * T.h];
+
+  // The valley, as fractions of the drawing area.
+  const SURF_TOP = [[.06,.15],[.12,.16],[.25,.24],[.36,.38],[.44,.55],[.47,.645]];
+  const CLAY = [[.06,.15],[.12,.35],[.22,.5],[.35,.59],[.47,.645]];
+  const LOWER = [[.47,.645],[.5,.72],[.55,.86]];
+  const RIGHT = [[.63,.86],[.7,.68],[.8,.5],[.9,.38],[1,.32]];
+  const LAYER = [[0,.12],[.06,.15],[.12,.35],[.22,.5],[.35,.59],[.47,.645],[.6,.68],[.75,.66],[.9,.6],[1,.565]];
+
+  const cr = (pts, dx = 0, dy = 0) => {
+    const q = pts.map(p => P(p[0] + dx, p[1] + dy)); let s = '';
+    for (let i = 0; i < q.length - 1; i++) {
+      const p0 = q[i - 1] || q[i], p1 = q[i], p2 = q[i + 1], p3 = q[i + 2] || p2;
+      const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6], c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      s += ` C${c1.map(v => v.toFixed(1))} ${c2.map(v => v.toFixed(1))} ${p2.map(v => v.toFixed(1))}`;
+    }
+    return s;
+  };
+  const M = (p, dx = 0, dy = 0) => { const q = P(p[0] + dx, p[1] + dy); return `M${q[0].toFixed(1)},${q[1].toFixed(1)}`; };
+  const grad = (defs, tag, id, stops, a) => { const g = Kit.mk(tag, Object.assign({id}, a), defs); stops.forEach(([o, c, op = 1]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g)); return g; };
+  const txt = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: '#10100c', 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.04em'}, a), parent); e.textContent = t; return e; };
+  const clampText = (e, cx) => { const w = e.getComputedTextLength(); const lo = T.x0 + 8 + w / 2, hi = T.x1 - 8 - w / 2; const x = Math.max(lo, Math.min(hi, cx)); e.setAttribute('x', x); return x; };
+  const tree = (parent, x, y, s, fill) => {
+    Kit.mk('rect', {x: x - s * .05, y: y - s * .25, width: s * .1, height: s * .3, fill: '#3a2a1e'}, parent);
+    Kit.mk('polygon', {points: `${x - s * .32},${y - s * .2} ${x},${y - s * 1.05} ${x + s * .32},${y - s * .2}`, fill}, parent);
+    Kit.mk('polygon', {points: `${x},${y - s * 1.05} ${x + s * .32},${y - s * .2} ${x + s * .1},${y - s * .2}`, fill: '#000', 'fill-opacity': .22}, parent);
+  };
+
+  function layout() {
+    svg.innerHTML = ''; E = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, Math.min(W, H) / 24));
+    const m = Math.max(6, Math.min(14, W * .03));
+    T = {x0: m, y0: m, x1: W - m, y1: H - m}; T.w = T.x1 - T.x0; T.h = T.y1 - T.y0; T.r = 0;
+
+    const defs = Kit.mk('defs', {}, svg);
+    grad(defs, 'linearGradient', 'gWater', [[0, '#35b9e6', .8], [.35, '#1f8fc2', .88], [1, '#0b3f63', .95]], {x1: 0, y1: 0, x2: 0, y2: 1});
+    grad(defs, 'linearGradient', 'gMtn', [[0, '#4d5d6a'], [.5, '#33404b'], [1, '#1b232b']], {x1: 0, y1: 0, x2: .3, y2: 1});
+    grad(defs, 'linearGradient', 'gBlock', [[0, '#e3c6a0'], [.55, '#c4a07a'], [1, '#9c7b59']], {x1: 0, y1: 0, x2: .4, y2: 1});
+    grad(defs, 'radialGradient', 'gKnob', [[0, '#ffffff'], [.6, '#bfe9f5'], [1, '#6fb7cc']], {cx: .35, cy: .3, r: .8});
+    const fl = Kit.mk('filter', {id: 'glow', x: '-30%', y: '-60%', width: '160%', height: '220%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: Math.max(2.5, fs * .4)}, fl);
+
+    const mtnD = `M${P(0, 1)} L${P(0, .12)} L${P(.06, .15)}` + cr(CLAY) + cr(LOWER) + ` L${P(.63, .86)}` + cr(RIGHT) + ` L${P(1, 1)} Z`;
+    const blockD = M(SURF_TOP[0]) + cr(SURF_TOP) + cr(CLAY.slice().reverse()) + ' Z';
+    const tank = Kit.mk('clipPath', {id: 'tank'}, defs); Kit.mk('rect', {x: T.x0, y: T.y0, width: T.w, height: T.h}, tank);
+    const mc = Kit.mk('clipPath', {id: 'mtnClip'}, defs); Kit.mk('path', {d: mtnD}, mc);
+    const bc = Kit.mk('clipPath', {id: 'blockClip'}, defs); Kit.mk('path', {d: blockD}, bc);
+
+    E.world = Kit.mk('g', {}, svg);
+    const inside = Kit.mk('g', {'clip-path': 'url(#tank)'}, E.world);
+
+    // The lake.
+    E.water = Kit.mk('path', {fill: 'url(#gWater)'}, inside);
+    E.caust = Kit.mk('g', {stroke: '#e8fbff', 'stroke-opacity': .35, 'stroke-width': 1, fill: 'none'}, inside);
+    for (let i = 0; i < 4; i++) Kit.mk('path', {}, E.caust);
+    E.surf = Kit.mk('path', {fill: 'none', stroke: '#0a5a85', 'stroke-width': 1.6, 'stroke-opacity': .9}, inside);
+
+    // The mountain, its strata, pines on the far bank.
+    const mtnG = Kit.mk('g', {class: 'enter'}, inside);
+    Kit.mk('path', {d: mtnD, fill: 'url(#gMtn)'}, mtnG);
+    const strata = Kit.mk('g', {'clip-path': 'url(#mtnClip)', fill: 'none'}, mtnG);
+    for (let k = 1; k <= 6; k++) {
+      const d = M(LAYER[0], -k * .02, k * .07) + cr(LAYER, -k * .02, k * .07);
+      Kit.mk('path', {d, stroke: '#ffffff', 'stroke-opacity': k % 2 ? .035 : .02, 'stroke-width': T.h * .035}, strata);
+      Kit.mk('path', {d, stroke: '#cfe6f2', 'stroke-opacity': .15, 'stroke-width': 1}, strata);
+    }
+    const rim = Kit.mk('path', {d: M(LOWER[0]) + cr(LOWER) + ` L${P(.63, .86)}` + cr(RIGHT), fill: 'none', stroke: '#9fc3d4', 'stroke-opacity': .5, 'stroke-width': 1.3}, mtnG);
+    const rp = M(RIGHT[2]) + cr(RIGHT.slice(2));
+    const rpath = Kit.mk('path', {d: rp, fill: 'none', stroke: 'none'}, mtnG), rl = rpath.getTotalLength();
+    [.12, .32, .5, .7].forEach((t, i) => { const p = rpath.getPointAtLength(rl * t); tree(mtnG, p.x, p.y + 1, fs * (.85 + (i % 2) * .25), '#2f4a3a'); });
+
+    // The clay layer: the slide surface.
+    const clayD = M(CLAY[4]) + cr(CLAY.slice().reverse());
+    E.clayGlow = Kit.mk('path', {d: clayD, fill: 'none', stroke: '#ffb35c', 'stroke-linecap': 'round', filter: 'url(#glow)', opacity: 0}, inside);
+    E.clay = Kit.mk('path', {d: clayD, fill: 'none', stroke: '#e0913f', 'stroke-linecap': 'round', class: 'enter'}, inside);
+    E.seep = Kit.mk('path', {d: clayD, fill: 'none', stroke: '#8eeeff', 'stroke-linecap': 'round', opacity: .95}, inside);
+    E.seepLen = E.seep.getTotalLength();
+
+    // The ancient landslide, resting on the clay.
+    E.blockOuter = Kit.mk('g', {class: 'enter'}, inside);
+    E.block = Kit.mk('g', {}, E.blockOuter);
+    Kit.mk('path', {d: blockD, fill: 'url(#gBlock)', stroke: '#2a1f17', 'stroke-opacity': .5, 'stroke-width': 1}, E.block);
+    const bs = Kit.mk('g', {'clip-path': 'url(#blockClip)', fill: 'none'}, E.block);
+    for (let k = 1; k <= 4; k++) {
+      const d = M(LAYER[0], k * .015, -k * .065) + cr(LAYER, k * .015, -k * .065);
+      Kit.mk('path', {d, stroke: '#3a2a1e', 'stroke-opacity': .35, 'stroke-width': 1.2}, bs);
+      Kit.mk('path', {d, stroke: '#ffe1bf', 'stroke-opacity': .12, 'stroke-width': T.h * .02}, bs);
+    }
+    // pebbles in the old debris
+    const peb = [[.14,.3],[.2,.27],[.3,.33],[.26,.43],[.38,.47],[.17,.38],[.33,.52],[.42,.58],[.23,.34],[.36,.41]];
+    peb.forEach(([x, y], i) => { const p = P(x, y); Kit.mk('ellipse', {cx: p[0], cy: p[1], rx: fs * (.18 + (i % 3) * .08), ry: fs * (.12 + (i % 2) * .05), fill: i % 2 ? '#4f3d2f' : '#8a6a48', 'fill-opacity': .45}, bs); });
+    const top = Kit.mk('path', {d: M(SURF_TOP[0]) + cr(SURF_TOP), fill: 'none', stroke: '#5a3f26', 'stroke-opacity': .65, 'stroke-width': 1.6}, E.block);
+    const tLen = top.getTotalLength();
+    [.14, .26, .38, .5, .62].forEach((t, i) => { const p = top.getPointAtLength(tLen * t); tree(E.block, p.x, p.y + 1, fs * (.8 + (i % 3) * .18), i % 2 ? '#2f5a40' : '#274a35'); });
+
+    // Bubbles in the swelling clay.
+    E.bub = Kit.mk('g', {fill: '#fff4dc'}, inside); E.bubs = [];
+    for (let i = 0; i < 9; i++) { const pt = E.seep.getPointAtLength(E.seepLen * (.08 + i * .1)); E.bubs.push(Kit.mk('circle', {cx: pt.x, cy: pt.y + T.h * .006, r: Math.max(1.4, fs * .16), opacity: 0}, E.bub)); }
+
+    // The crack at the back of the slide.
+    E.crack = Kit.mk('path', {d: M([.06, .15]) + ` L${P(.072, .19)} L${P(.064, .23)} L${P(.084, .27)} L${P(.079, .31)}`, fill: 'none', stroke: '#3a1f0a', 'stroke-width': 1.8, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, inside);
+    E.crackLen = E.crack.getTotalLength();
+
+    // The wave that runs up the far bank.
+    E.wave = Kit.mk('path', {d: M([.745, .575]) + cr([[.745, .575], [.8, .5], [.87, .41], [.94, .35]]), fill: 'none', stroke: '#1fa8dc', 'stroke-linecap': 'round', 'stroke-width': Math.max(4, fs * .55), opacity: 0}, inside);
+    E.waveLen = E.wave.getTotalLength();
+
+    E.fx = Kit.mk('g', {}, inside);
+    E.stream = Kit.mk('path', {fill: 'none', stroke: '#1a9acd', 'stroke-linecap': 'round', 'stroke-width': Math.max(3, fs * .32), opacity: 0}, inside);
+
+    // Block label: travels with the slide but never rotates, so its lines stay apart.
+    E.bLab = Kit.mk('g', {}, inside);
+    const bl = P(.27, .36);
+    txt(E.bLab, bl[0], bl[1], 'ANCIENT', {'text-anchor': 'middle', fill: '#10100c'});
+    txt(E.bLab, bl[0], bl[1] + fs * 1.4, 'LANDSLIDE', {'text-anchor': 'middle', fill: '#10100c'});
+
+    // Clay label (before), with a leader up to the layer.
+    E.clayLab = Kit.mk('g', {}, inside);
+    const cp = P(.21, .495), ly = cp[1] + Math.max(fs * 3.2, T.h * .1);
+    const c1 = txt(E.clayLab, cp[0], ly, 'CLAY LAYER', {'text-anchor': 'middle', fill: '#ffc27a'});
+    const c2 = txt(E.clayLab, cp[0], ly + fs * 1.4, "water can't pass", {'text-anchor': 'middle', fill: '#ffd9ac', 'font-weight': 500});
+    clampText(c1, cp[0]); clampText(c2, cp[0]);
+    Kit.mk('line', {x1: cp[0], x2: cp[0], y1: cp[1] + T.h * .025, y2: ly - fs * 1.05, stroke: '#ffc27a', 'stroke-width': 1, 'stroke-dasharray': '2 3'}, E.clayLab);
+
+    // Clay label (after), on the bared slip surface, clear of the moved block.
+    E.endLab = Kit.mk('g', {opacity: 0, visibility: 'hidden'}, inside);
+    const ep = P(.2, .525), ey = P(0, .74)[1];
+    const e1 = txt(E.endLab, ep[0], ey, 'SOAKED CLAY', {'text-anchor': 'middle', fill: '#ffc27a'});
+    const ex = clampText(e1, ep[0]);
+    const e2 = txt(E.endLab, ex, ey + fs * 1.4, 'the slip surface', {'text-anchor': 'middle', fill: '#ffd9ac', 'font-weight': 500});
+    clampText(e2, ex);
+    Kit.mk('line', {x1: ep[0], x2: ep[0], y1: ep[1], y2: ey - fs * 1.05, stroke: '#ffc27a', 'stroke-width': 1, 'stroke-dasharray': '2 3'}, E.endLab);
+    Kit.mk('circle', {cx: ep[0], cy: ep[1] - 1, r: 2.4, fill: '#ffc27a'}, E.endLab);
+
+    // The glass tap.
+    const tapX = P(.57, 0)[0], pw = Math.max(7, fs * .6);
+    E.kx = tapX; E.ky = Math.max(T.y0 + T.h * .035 + 2, T.y0 + fs * 1.4);
+    const nozY = Math.max(T.y0 + T.h * .085, E.ky + fs * 1.4);
+    const tap = Kit.mk('g', {class: 'enter'}, svg);
+    Kit.mk('rect', {x: tapX - pw / 2, y: T.y0 - 4, width: pw, height: nozY - T.y0 + 4, rx: pw / 2, fill: '#ffffff', 'fill-opacity': .35, stroke: '#10100c', 'stroke-opacity': .8, 'stroke-width': 1.2}, tap);
+    Kit.mk('line', {x1: tapX - pw * .18, x2: tapX - pw * .18, y1: T.y0, y2: nozY - 3, stroke: '#ffffff', 'stroke-opacity': .8, 'stroke-width': 1}, tap);
+    if (taps < 4 && !done) E.ring = Kit.mk('circle', {cx: E.kx, cy: E.ky, r: fs * .95, fill: 'none', stroke: '#10100c', 'stroke-width': 1.6, class: 'ring'}, tap);
+    E.handle = Kit.mk('g', {}, tap);
+    Kit.mk('rect', {x: E.kx - fs * 1.3, y: E.ky - fs * .22, width: fs * 2.6, height: fs * .44, rx: fs * .22, fill: '#dff6ff', 'fill-opacity': .9, stroke: '#10100c', 'stroke-width': 1}, E.handle);
+    Kit.mk('circle', {cx: E.kx, cy: E.ky, r: fs * .55, fill: 'url(#gKnob)', stroke: '#10100c', 'stroke-width': 1}, tap);
+    E.nozX = tapX; E.nozY = nozY;
+    if (taps === 0 && !done) E.hintT = txt(svg, E.kx - fs * 1.9, E.ky + fs * .35, 'tap to fill ▸', {'text-anchor': 'end', fill: '#10100c'});
+
+    // The lab log, top right.
+    const sx = T.x1 - fs * .9;
+    E.clayT = txt(svg, sx, T.y0 + fs * 1.7, '', {'text-anchor': 'end', fill: '#7a3300'});
+    E.lakeT = txt(svg, sx, T.y0 + fs * 3.1, '', {'text-anchor': 'end', fill: '#05476b'});
+
+    update();
+  }
+
+  function waterTop(y) {
+    const n = 40, a = Kit.calm ? 0 : S.amp * T.h; let d = '';
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, x = T.x0 + t * T.w;
+      const yy = Math.max(T.y0, y + a * (Math.sin(t * 10 + phase * 2.6) * .7 + Math.sin(t * 23 - phase * 3.7) * .3));
+      d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + yy.toFixed(1);
+    }
+    return d;
+  }
+
+  const vis = (e, o) => { e.setAttribute('opacity', o.toFixed(3)); e.setAttribute('visibility', o <= .001 ? 'hidden' : 'visible'); };
+
+  function update() {
+    if (!E.water) return;
+    const y = T.y0 + S.level * T.h, top = waterTop(y);
+    E.water.setAttribute('d', top + ` L${T.x1},${T.y1} L${T.x0},${T.y1} Z`);
+    E.surf.setAttribute('d', top);
+    [...E.caust.children].forEach((c, i) => {
+      const cy = y + (i + 1) * T.h * .035, w = T.w * (.08 + .04 * i), cx = T.x0 + T.w * (.5 + .1 * Math.sin(phase * .7 + i * 1.7));
+      c.setAttribute('d', `M${cx - w},${cy} Q${cx},${cy + 3 * Math.sin(phase * 2 + i)} ${cx + w},${cy}`);
+    });
+    const cw = T.h * (.024 + .032 * S.swell);
+    E.clay.setAttribute('stroke-width', cw);
+    E.clay.setAttribute('stroke', S.swell > .5 ? '#f0a24e' : '#e0913f');
+    E.clayGlow.setAttribute('stroke-width', cw * 1.7);
+    E.clayGlow.setAttribute('opacity', (S.swell * (.7 + .15 * Math.sin(phase * 5))).toFixed(3));
+    E.seep.setAttribute('stroke-width', Math.max(1.5, cw * .38));
+    E.seep.setAttribute('stroke-dasharray', `${(E.seepLen * S.seep).toFixed(1)} ${E.seepLen + 10}`);
+    E.crack.setAttribute('stroke-dasharray', `${(E.crackLen * S.crack).toFixed(1)} ${E.crackLen + 10}`);
+    E.crack.setAttribute('opacity', (1 - S.slide).toFixed(3));
+    E.bubs.forEach((b, i) => {
+      const o = S.swell * (1 - S.slide * .6) * (.45 + .55 * Math.sin(phase * 4 + i * 1.3));
+      b.setAttribute('opacity', Math.max(0, o).toFixed(3));
+      b.setAttribute('transform', `translate(0,${(-Math.abs(Math.sin(phase * 2 + i)) * fs * .3 * S.swell).toFixed(1)})`);
+    });
+    const c = P(.25, .4), jig = Math.sin(phase * 55) * S.shake * 1.6;
+    const tx = S.slide * .13 * T.w + jig, ty = S.slide * .15 * T.h - S.swell * .012 * T.h * (1 - S.slide);
+    E.block.setAttribute('transform', `translate(${tx.toFixed(1)},${ty.toFixed(1)}) rotate(${(S.slide * 7).toFixed(2)},${c[0].toFixed(1)},${c[1].toFixed(1)})`);
+    E.bLab.setAttribute('transform', `translate(${tx.toFixed(1)},${ty.toFixed(1)})`);
+    vis(E.clayLab, Math.max(0, 1 - S.slide * 2.5));
+    vis(E.endLab, Math.max(0, (S.slide - .6) / .4));
+    E.wave.setAttribute('stroke-dasharray', `${(E.waveLen * S.wave).toFixed(1)} ${E.waveLen + 10}`);
+    vis(E.wave, S.wave > 0 ? .85 * (1 - S.wfade) : 0);
+    E.world.setAttribute('transform', `translate(${(Math.sin(phase * 70) * S.quake * 3).toFixed(1)},${(Math.cos(phase * 63) * S.quake * 2).toFixed(1)})`);
+    E.stream.setAttribute('d', `M${E.nozX},${E.nozY} L${E.nozX + Math.sin(phase * 9) * .8},${y}`);
+    E.stream.setAttribute('opacity', (S.pour * .9).toFixed(3));
+    if (E.clayT.textContent !== 'CLAY: ' + clayS) E.clayT.textContent = 'CLAY: ' + clayS;
+    if (E.lakeT.textContent !== 'LAKE: ' + lakeS) E.lakeT.textContent = 'LAKE: ' + lakeS;
+  }
+
+  gsap.ticker.add((t, dt) => {
+    const r = Math.min(3, dt / 16.7);
+    phase += .016 * r; S.amp *= Math.pow(.975, r);
+    update();
+  });
+
+  // ---------- pieces with weight ----------
+  function drops() {
+    if (Kit.calm || !E.fx) return;
+    const k = T.h / 300;
+    for (let i = 0; i < 6; i++) {
+      const d = Kit.mk('circle', {r: Math.max(1.4, fs * .14), fill: '#1a9acd'}, E.fx);
+      gsap.set(d, {x: E.nozX + (Kit.rnd() - .5) * 3, y: E.nozY});
+      gsap.to(d, {duration: .6 + Kit.rnd() * .3, physics2D: {velocity: (60 + Kit.rnd() * 90) * k, angle: 70 + Kit.rnd() * 40, gravity: 900 * k}, onComplete: () => d.remove()});
+      gsap.to(d, {opacity: 0, duration: .25, delay: .45});
+    }
+  }
+
+  function impact() {
+    Kit.haptic('success');
+    S.amp = .04; S.quake = 1;
+    gsap.to(S, {quake: 0, duration: 1, ease: 'power3.out'});
+    if (Kit.calm || !E.fx) return;
+    const k = T.h / 300, lakeY = T.y0 + S.level * T.h;
+    for (let i = 0; i < 16; i++) {
+      const p = P(.5 + Kit.rnd() * .1, .6 + Kit.rnd() * .1), s = fs * (.25 + Kit.rnd() * .35), pts = [];
+      for (let j = 0; j < 6; j++) { const a = j / 6 * Math.PI * 2, rr = s * (.6 + Kit.rnd() * .5); pts.push(`${(Math.cos(a) * rr).toFixed(1)},${(Math.sin(a) * rr).toFixed(1)}`); }
+      const r = Kit.mk('polygon', {points: pts.join(' '), fill: i % 3 ? '#8a6f55' : '#b39373', stroke: '#2a1f17', 'stroke-width': .8}, E.fx);
+      gsap.set(r, {x: p[0], y: p[1]});
+      gsap.to(r, {duration: 1.5, rotation: (Kit.rnd() - .5) * 720, physics2D: {velocity: (170 + Kit.rnd() * 240) * k, angle: -150 + Kit.rnd() * 110, gravity: 1000 * k}, onComplete: () => r.remove()});
+      gsap.to(r, {opacity: 0, duration: .4, delay: 1.05});
+    }
+    for (let i = 0; i < 34; i++) {
+      const d = Kit.mk('circle', {r: Math.max(1.3, fs * (.1 + Kit.rnd() * .16)), fill: i % 4 ? '#1a9acd' : '#0b5f86'}, E.fx);
+      gsap.set(d, {x: P(.56 + Kit.rnd() * .14, 0)[0], y: lakeY});
+      gsap.to(d, {duration: 1.3, physics2D: {velocity: (220 + Kit.rnd() * 300) * k, angle: -135 + Kit.rnd() * 90, gravity: 1100 * k}, onComplete: () => d.remove()});
+      gsap.to(d, {opacity: 0, duration: .35, delay: .9});
+    }
+  }
+
+  // ---------- the taps ----------
+  function pour() {
+    if (taps >= 4 || done) return;
+    const lv = LEVELS[taps++];
+    Kit.haptic('selection');
+    lakeS = taps < 4 ? 'RISING' : 'HIGH';
+    if (E.hintT) gsap.to(E.hintT, {opacity: 0, duration: .3});
+    if (taps === 4 && E.ring) { E.ring.remove(); E.ring = null; }
+    if (Kit.calm) { S.level = lv; if (taps === 4) finish(); return; }
+    gsap.to(E.handle, {rotation: '+=90', svgOrigin: `${E.kx} ${E.ky}`, duration: .45, ease: 'back.out(2.5)'});
+    gsap.killTweensOf(S, 'level,pour');
+    S.amp = Math.min(.03, S.amp + .012);
+    drops();
+    gsap.timeline()
+      .to(S, {pour: 1, duration: .1, ease: 'power2.out'})
+      .to(S, {level: lv, duration: .85, ease: 'power3.out'}, '<.08')
+      .to(S, {pour: 0, duration: .25, ease: 'power2.in'}, '-=.35')
+      .call(() => { if (taps === 4) sequence(); });
+  }
+
+  function sequence() {
+    if (done || tl) return;
+    tl = gsap.timeline();
+    tl.call(() => { clayS = 'SOAKING'; })
+      .to(S, {seep: 1, duration: 1.4, ease: 'power2.inOut'})
+      .call(() => { clayS = 'SWELLING'; Kit.haptic('light'); })
+      .to(S, {swell: 1, duration: 1.3, ease: 'elastic.out(1,.45)'})
+      .to(S, {shake: 1, duration: .6, ease: 'power1.in'}, '-=.5')
+      .to(S, {crack: 1, duration: .55, ease: 'power2.out'}, '<')
+      .call(() => { clayS = 'FAILING'; })
+      .to(S, {slide: 1, shake: 0, duration: 1.1, ease: 'power3.in'})
+      .call(() => { lakeS = 'WAVE'; impact(); })
+      .to(S, {level: .57, duration: 1, ease: 'expo.out'}, '<')
+      .to(S, {wave: 1, duration: .7, ease: 'power2.out'}, '<')
+      .to(S, {wfade: 1, duration: .9, ease: 'power1.in'}, '>-.15')
+      .call(() => { clayS = 'SLID'; done = true; reveal(); }, null, '+=.1');
+  }
+
+  function finish() {
+    if (done) return;
+    done = true; if (tl) tl.kill();
+    gsap.killTweensOf(S);
+    Object.assign(S, {level: .57, seep: 1, swell: 1, crack: 1, slide: 1, pour: 0, shake: 0, quake: 0, wave: 1, wfade: 1, amp: Kit.calm ? 0 : .012});
+    clayS = 'SLID'; lakeS = 'WAVE'; taps = 4;
+    if (E.ring) { E.ring.remove(); E.ring = null; }
+    update(); reveal();
+  }
+
+  function reveal() {
+    if (E.hintT) { E.hintT.remove(); E.hintT = null; }
+    if (card.classList.contains('answered')) return;
+    card.classList.add('answered');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why .big', '#why .body', '#keep'], {opacity: 0, y: 12, stagger: .12, duration: .55, ease: 'power3.out'});
+  }
+
+  svg.addEventListener('pointerdown', pour);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) { if (!done && taps === 0) S.level = .845; return; }
+    gsap.from(svg.querySelectorAll('.enter'), {opacity: 0, y: 16, stagger: .1, duration: .8, ease: 'power3.out'});
+    if (taps === 0 && !done) gsap.to(S, {level: .845, duration: 1.4, ease: 'power2.out', delay: .3, onStart: () => { S.amp = .01; }});
+  };
+  if (Kit.calm) S.level = .845;
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    for (let i = 0; i < 4; i++) { pour(); await w(120); }
+    await w(150); finish(); await w(700);
+  };
+})();
+Kit.single();
+</script>
+</html>

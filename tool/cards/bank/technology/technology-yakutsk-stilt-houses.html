@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{flex:1;min-height:0;display:flex;flex-direction:column}
-#pic{flex:1;min-height:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;border-radius:2cqh;user-select:none;-webkit-user-select:none}
+#pic{flex:1;min-height:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{margin:0}
 #why .body{margin:0;overflow-wrap:anywhere}
@@ -30,6 +30,7 @@
 const st = {g: 0};
 let done = false, D = null, drag = null;
 const SVGNS = 'http://www.w3.org/2000/svg';
+const INK = '#10100c';
 
 function build(){
   const svg = Kit.$('pic');
@@ -43,30 +44,26 @@ function build(){
   const defs = mk('defs', {});
   const cp = mk('clipPath', {id: 'gclip'}, defs);
   mk('rect', {x: 0, y: gy, width: W, height: H - gy}, cp);
-  const cp2 = mk('clipPath', {id: 'all'}, defs);
-  mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .04}, cp2);
 
-  const root = mk('g', {'clip-path': 'url(#all)'});
-  // sky
-  mk('rect', {x: 0, y: 0, width: W, height: gy, fill: '#0f2340'}, root);
-  for (let i = 0; i < 26; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * gy * .9, r: Math.max(.8, Kit.rnd() * 1.6), fill: '#cfe3ff', opacity: .35 + Kit.rnd() * .4}, root);
-  const sky = mk('text', {x: W * .04, y: H * .02 + fs * 1.1, fill: '#ffffff', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  const root = mk('g', {});
+  // sky (no backdrop): stars drawn in white on the card
+  for (let i = 0; i < 26; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * gy * .9, r: Math.max(.8, Kit.rnd() * 1.6), fill: '#ffffff', opacity: .35 + Kit.rnd() * .4}, root);
+  const sky = mk('text', {x: W * .04, y: H * .02 + fs * 1.1, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
   sky.textContent = 'air: down to −63 °C';
-  // ground
-  mk('rect', {x: 0, y: gy, width: W, height: H - gy, fill: '#d6eaf5'}, root);
+  // ground (no panel): ice cracks only
   for (let i = 0; i < 18; i++) {
     const x = Kit.rnd() * W, y = gy + H * .03 + Kit.rnd() * (H - gy - H * .05), l = W * (.03 + Kit.rnd() * .05);
-    mk('path', {d: `M${x} ${y} l${l * .5} ${l * .25} l${l * .5} ${-l * .15}`, stroke: '#9cc6dc', 'stroke-width': 1.4, fill: 'none'}, root);
+    mk('path', {d: `M${x} ${y} l${l * .5} ${l * .25} l${l * .5} ${-l * .15}`, stroke: '#ffffff', 'stroke-opacity': .6, 'stroke-width': 1.4, fill: 'none'}, root);
   }
   // thaw bulb
   const thaw = mk('ellipse', {cx: W / 2, cy: gy, rx: hw * .78, ry: 0, fill: '#a8642f', 'clip-path': 'url(#gclip)'}, root);
   mk('rect', {x: 0, y: gy - 3, width: W, height: 6, fill: '#ffffff'}, root);
-  const pf = mk('text', {x: W * .04, y: gy + fs * 2.1, fill: '#12304a', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  const pf = mk('text', {x: W * .04, y: gy + fs * 2.1, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
   pf.textContent = 'permafrost';
   // pile depth label
-  const t1 = mk('text', {x: W * .96, y: (gy + pb) / 2 + fs * 1.4, fill: '#12304a', 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  const t1 = mk('text', {x: W * .96, y: (gy + pb) / 2 + fs * 1.4, fill: INK, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
   t1.textContent = 'piles';
-  const t2 = mk('text', {x: W * .96, y: (gy + pb) / 2 + fs * 3.2, fill: '#12304a', 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, root);
+  const t2 = mk('text', {x: W * .96, y: (gy + pb) / 2 + fs * 3.2, fill: INK, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, root);
   t2.textContent = '~10 m';
   // piles (static, anchored deep)
   const piles = [];
@@ -75,7 +72,7 @@ function build(){
   });
   // cold air arrows
   const cold = mk('g', {opacity: 0}, root);
-  const arrow = mk('path', {d: '', stroke: '#8fd3ff', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, cold);
+  const arrow = mk('path', {d: '', stroke: '#ffffff', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, cold);
   // house
   const house = mk('g', {}, root);
   const heat = mk('g', {opacity: 1}, house);
@@ -87,11 +84,11 @@ function build(){
   mk('path', {d: `M${hx - hw * .08} ${gy - hh} L${W / 2} ${gy - hh - rh} L${hx + hw * 1.08} ${gy - hh} Z`, fill: '#3b5b7a', stroke: '#1e3248', 'stroke-width': 2}, house);
   [.18, .62].forEach(p => mk('rect', {x: hx + hw * p, y: gy - hh * .72, width: hw * .2, height: hh * .38, fill: '#ffd65a', stroke: '#5a3a14', 'stroke-width': 1.5}, house));
   mk('rect', {x: hx + hw * .44, y: gy - hh * .55, width: hw * .13, height: hh * .55, fill: '#7a4a24'}, house);
-  const hint = mk('text', {x: W / 2, y: gy - hh - rh - fs * .5, fill: '#ffffff', 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, house);
+  const hint = mk('text', {x: W / 2, y: gy - hh - rh - fs * .5, fill: INK, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, house);
   hint.textContent = '↑ drag';
   // gap readout
-  const dim = mk('line', {x1: hx - W * .05, x2: hx - W * .05, y1: gy, y2: gy, stroke: '#ffffff', 'stroke-width': 2}, root);
-  const read = mk('text', {x: hx - W * .07, y: gy, fill: '#ffffff', 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, root);
+  const dim = mk('line', {x1: hx - W * .05, x2: hx - W * .05, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2}, root);
+  const read = mk('text', {x: hx - W * .07, y: gy, fill: INK, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, root);
 
   D = {W, H, gy, m, hw, hh, hx, pb, thaw, house, heat, cold, arrow, dim, read, hint, piles, fs};
   render();

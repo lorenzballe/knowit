@@ -1,0 +1,473 @@
+<!doctype html>
+<!-- slug: science-one-way-light -->
+<!-- Look: a Swiss poster printed straight on the card. A huge black numeral for the round trip, a strict grid, one hot red-orange accent. Earth is an engraved ink globe, Mars is a turning ball of fire.
+     Interaction: drag to split the 20-minute round trip unevenly, slower out and faster back. Send a pulse of hundreds of particles to Mark on Mars and watch it return. The clocks show a hidden offset.
+     Wow: after two different splits, the numeral flares and a red hand-drawn ring circles it. Every trip measured 20 min, and Mark stamped 12:10 every time. The difference was hiding in the clocks. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Light, one way</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;background:none;border:0;border-radius:0;box-shadow:none}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;background:none}
+#go{align-self:flex-start;background:#ff3b14;color:#fff;box-shadow:0 .5cqh 1.4cqh rgba(255,59,20,.35);font:800 max(2cqh,14px)/1.1 var(--body);border:0;border-radius:1.2cqh;padding:1.3cqh 4.5cqw;cursor:pointer}
+#go:disabled{opacity:.45}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag and send · one-way light">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ONE-WAY LIGHT</span></div>
+    <h2 class="q">What if light travelled faster one way than the other?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" data-drag role="img" aria-label="Earth and Mars. A slider splits a 20 minute light round trip between the outward and return legs, with an Earth clock and a Mars clock below."></canvas>
+    </div>
+    <p class="say" id="say"><b>Drag</b> to make light slower one way and faster back. Then <b>send</b> a signal to Mark on Mars.</p>
+    <button class="btn" id="go">Send the signal</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>We can only time light's round trip. Timing one leg needs synced clocks, and syncing them assumes light is equally fast both ways.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), say = Kit.$('say'), go = Kit.$('go');
+  const INK = '#10100c', HOT = '#c81e00', MUTE = 'rgba(16,16,12,.66)';
+  const st = {s: .5, T: 0, intro: 1, flash: 0, wow: 0, mb: 0, eb: 0, out: 10, flight: false, pill: 0, rot: 0, hint: 1};
+  let ctx = null, W = 0, H = 0, fs = 12, DISP = 'sans-serif', BODY = 'sans-serif', L = {};
+  let stamp = null, done = false, revealed = false, SEC = .16, sendS = .5, dragging = false;
+  const log = [], dust = [], pulse = [], sparks = [];
+  const flashL = {a: 0, col: INK};
+  const backOut = gsap.parseEase('back.out(1.8)'), expo = gsap.parseEase('expo.out');
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const R = () => (Kit.rnd ? Kit.rnd() : Math.random());
+  const G = () => (Kit.gauss ? Kit.gauss() : (R() + R() + R() - 1.5) * 1.4);
+
+  for (let i = 0; i < 260; i++) dust.push({u: R(), v: R(), w: G(), z: .6 + R() * 1.1});
+  // surface features: [longitude 0..1, latitude -1..1, size]
+  const LAND = [[.05, -.3, .34], [.12, -.1, .28], [.1, .25, .22], [.42, -.35, .3], [.5, -.15, .36], [.55, .2, .26], [.48, .45, .18], [.78, .1, .24], [.84, -.25, .2]];
+  const CRATER = [[.08, -.2, .2], [.25, .3, .14], [.4, -.05, .1], [.55, .4, .16], [.7, -.35, .12], [.85, .1, .19], [.95, .5, .09]];
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    const css = getComputedStyle(Kit.$('card'));
+    DISP = css.getPropertyValue('--display').trim() || 'sans-serif';
+    BODY = css.getPropertyValue('--body').trim() || 'sans-serif';
+    fs = clamp(W / 26, 12, 15);
+    const pad = Math.max(14, W * .05), gx = Math.max(6, pad * .42);
+    const colW = W / 2 - pad - fs * .6;
+    L = {pad, gx, colW, colR: W / 2 + fs * .6};
+    const spNeed = r => Math.max(fs * 2.1, r * 1.4 + 4) + Math.max(r * 1.15 + fs * 1.25, fs * 3.45) + fs * .5;
+    const clNeed = ns => fs * 3.6 + ns * .74;
+    const nsCap = Math.max(fs * 1.3, Math.min(W * .14, fs * 3.8));
+    const slFull = fs * 3.3;
+    const fullMin = fs * 3.4 + spNeed(fs) + clNeed(fs * 1.6) + slFull;
+    L.compact = H < fullMin;
+    let hH, ns, r, spH, clH, slH;
+    if (!L.compact) {
+      slH = slFull;
+      hH = Math.min(clamp(H * .27, fs * 3.4, fs * 8), H - slH - spNeed(fs) - clNeed(fs * 1.6));
+      const rest = H - hH - slH;
+      ns = clamp((rest * .46 - fs * 3.6) / .74, fs * 1.6, nsCap);
+      ns = Math.max(fs * 1.6, Math.min(ns, (rest - spNeed(fs) - fs * 3.6) / .74));
+      clH = clNeed(ns); spH = rest - clH;
+      r = Math.min(W * .075, fs * 2.6); while (r > fs && spNeed(r) > spH) r -= .5;
+      r = Math.max(r, fs);
+    } else {
+      hH = fs * 2.6; slH = fs * 2.75;
+      const avail = H - hH - slH;
+      ns = clamp((avail * .5 - fs * 3.15) / .74, fs * 1.3, nsCap);
+      clH = fs * 3.15 + ns * .74; spH = avail - clH;
+      r = clamp(Math.min(W * .06, spH / 2 - 2), fs * .55, fs * 1.6);
+    }
+    // the clock digits must fit their column
+    ctx.font = `900 ${ns}px ${DISP}`;
+    const dw = ctx.measureText('12:20').width;
+    if (dw > colW) ns *= colW / dw;
+    Object.assign(L, {hH, r, ns, sp0: hH, sp1: hH + spH});
+    L.ck0 = L.sp1; L.ck1 = L.ck0 + clH; L.sl0 = L.ck1;
+    if (!L.compact) {
+      const slack = Math.max(0, spH - spNeed(r));
+      L.ly = L.sp0 + Math.max(fs * 2.1, r * 1.4 + 4) + slack * .42;
+      L.nameY = L.ly + Math.max(r * 1.15 + fs * 1.25, fs * 3.45);
+      L.outY = L.ly - fs * .8; L.backY = L.ly + fs * 1.85;
+      const cs = Math.max(0, clH - clNeed(ns)) / 2;
+      L.labY = L.ck0 + fs * 1.35 + cs; L.digY = L.labY + fs * .35 + ns * .74; L.subY = L.digY + fs * 1.45;
+      L.slLabY = L.sl0 + fs * 1.3; L.ty = L.sl0 + fs * 2.3;
+    } else {
+      L.ly = L.sp0 + fs * 1.35 + Math.max(0, spH - fs * 2.95) / 2;
+      L.outY = L.ly - fs * .5; L.backY = L.ly + fs * 1.3;
+      const cs = Math.max(0, clH - (fs * 3.15 + ns * .74)) / 2;
+      L.labY = L.ck0 + fs * 1.2 + cs; L.digY = L.labY + fs * .3 + ns * .74; L.subY = L.digY + fs * 1.3;
+      L.slLabY = L.sl0 + fs * 1.15; L.ty = L.sl0 + fs * 2.0;
+    }
+    L.ex = pad + r; L.mx = W - pad - r;
+    L.tx0 = pad + fs * .6; L.tx1 = W - pad - fs * .6;
+    // the big numeral
+    if (!L.compact) { L.sz = Math.min((hH - fs) / .74, W * .38); L.by = hH - fs * .55; }
+    else { L.sz = fs * 2.2; L.by = fs * 2.15; }
+    ctx.font = `900 ${L.sz}px ${DISP}`;
+    let nw = ctx.measureText('20').width;
+    const maxNW = W / 2 - pad - fs * .5;
+    if (nw > maxNW) { L.sz *= maxNW / nw; nw = maxNW; }
+    L.nw = nw;
+    L.lx = L.compact ? Math.max(W / 2 + fs * .6, pad + nw + fs) : W / 2 + fs * .6;
+    L.nL = L.compact ? 1 : clamp(Math.floor((hH - fs * 1.8) / (fs * 1.42)), 1, 3);
+  }
+
+  const txt = (s, x, y, o = {}) => {
+    ctx.font = `${o.w || 800} ${o.size || fs}px ${o.font || BODY}`;
+    ctx.fillStyle = o.c || INK; ctx.textAlign = o.a || 'left'; ctx.textBaseline = 'alphabetic';
+    ctx.fillText(s, x, y); return ctx.measureText(s).width;
+  };
+  const fit = (arr, max, w = 800) => {
+    ctx.font = `${w} ${fs}px ${BODY}`;
+    for (const s of arr) if (ctx.measureText(s).width <= max) return s;
+    return null;
+  };
+  const line = (x0, y0, x1, y1) => { ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke(); };
+  const fmt = m => { m = Math.floor(m + 1e-6); const h = Math.floor(m / 60), mm = ((m % 60) + 60) % 60; return `${h}:${String(mm).padStart(2, '0')}`; };
+  const speed = min => min <= 0 ? 'instant' : `${Math.round(10 / min * 100) / 100}c`;
+
+  function mkPulse() {
+    pulse.length = 0;
+    for (let i = 0; i < 280; i++) pulse.push({d: -Math.abs(G()) * .05, j: G() * .38, z: .5 + R() * 1.3});
+  }
+  function burst(x, y, n, cols, power = 3) {
+    for (let i = 0; i < n; i++) {
+      const a = R() * Math.PI * 2, v = (.4 + R()) * power;
+      sparks.push({x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, k: .012 + R() * .02, c: cols[i % cols.length], z: .8 + R() * 1.6});
+    }
+  }
+
+  function legDraw(dir, p, col) {
+    const x0 = dir > 0 ? L.ex + L.r : L.mx - L.r, x1 = dir > 0 ? L.mx - L.r : L.ex + L.r, span = x1 - x0;
+    const hx = x0 + span * clamp(p);
+    // the travelled wake
+    ctx.globalAlpha = .5; ctx.strokeStyle = col; ctx.lineWidth = 1.6; line(x0, L.ly, hx, L.ly);
+    ctx.lineCap = 'round'; ctx.globalAlpha = .34; ctx.lineWidth = 1; ctx.beginPath();
+    for (const q of pulse) {
+      const pp = clamp(p + q.d); if (pp <= 0 || pp >= 1) continue;
+      const env = Math.sin(Math.PI * pp), x = x0 + span * pp, y = L.ly + q.j * L.r * .9 * env;
+      ctx.moveTo(x - span * .05 * q.z * dir, y); ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.globalAlpha = .9; ctx.fillStyle = col;
+    for (const q of pulse) {
+      const pp = clamp(p + q.d); if (pp <= 0 || pp >= 1) continue;
+      const env = Math.sin(Math.PI * pp), x = x0 + span * pp, y = L.ly + q.j * L.r * .9 * env, s = 1.1 * q.z;
+      ctx.fillRect(x - s / 2, y - s / 2, s, s);
+    }
+    const g = ctx.createRadialGradient(hx, L.ly, 0, hx, L.ly, L.r * .9);
+    g.addColorStop(0, col === HOT ? 'rgba(200,30,0,.45)' : 'rgba(16,16,12,.3)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.globalAlpha = 1; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(hx, L.ly, L.r * .9, 0, 7); ctx.fill();
+    ctx.fillStyle = col === HOT ? '#fff2ea' : '#fff'; ctx.beginPath(); ctx.arc(hx, L.ly, 1.8, 0, 7); ctx.fill();
+  }
+
+  function features(x, y, s, list, rot, paint) {
+    for (const [u, v, k] of list) {
+      const lon = (u + rot) * Math.PI * 2, c = Math.cos(lon);
+      if (c <= .02) continue;
+      const lat = Math.sqrt(1 - v * v);
+      paint(x + Math.sin(lon) * s * lat, y + v * s, k * s * c, k * s, c);
+    }
+  }
+
+  function planet(x, y, r, mars, bump) {
+    const s = r * (1 + bump * .18);
+    ctx.save(); ctx.globalAlpha = .16; ctx.fillStyle = INK;
+    ctx.beginPath(); ctx.ellipse(x + s * .12, y + s * 1.1, s * .78, s * .11, 0, 0, 7); ctx.fill(); ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.arc(x, y, s, 0, 7); ctx.clip();
+    const g = ctx.createRadialGradient(x - s * .4, y - s * .45, s * .1, x, y, s);
+    if (mars) { g.addColorStop(0, '#ffb08a'); g.addColorStop(.45, '#ff3b14'); g.addColorStop(1, '#a81d00'); }
+    else { g.addColorStop(0, '#5a5a5a'); g.addColorStop(.5, '#212121'); g.addColorStop(1, '#050505'); }
+    ctx.fillStyle = g; ctx.fillRect(x - s, y - s, s * 2, s * 2);
+    if (mars) {
+      ctx.fillStyle = 'rgba(150,30,0,.18)';
+      for (const k of [-.45, .15, .55]) { ctx.beginPath(); ctx.ellipse(x, y + k * s, s, s * .09, 0, 0, 7); ctx.fill(); }
+      features(x, y, s, CRATER, st.rot * 1.3, (cx, cy, rx, ry, c) => {
+        ctx.fillStyle = 'rgba(110,18,0,.42)'; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 7); ctx.fill();
+        ctx.strokeStyle = `rgba(255,200,170,${.35 * c})`; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.ellipse(cx + rx * .15, cy + ry * .15, rx, ry, 0, .2, 2.2); ctx.stroke();
+      });
+      ctx.fillStyle = 'rgba(255,246,236,.75)'; ctx.beginPath(); ctx.ellipse(x - s * .05, y - s * .93, s * .42, s * .16, 0, 0, 7); ctx.fill();
+    } else {
+      features(x, y, s, LAND, st.rot, (cx, cy, rx, ry) => {
+        ctx.fillStyle = 'rgba(255,255,255,.16)'; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 7); ctx.fill();
+      });
+      ctx.strokeStyle = 'rgba(255,255,255,.1)'; ctx.lineWidth = 1;
+      for (let k = -.85; k <= .86; k += .17) line(x - s, y + k * s, x + s, y + k * s);
+    }
+    const sh = ctx.createLinearGradient(x - s, y - s, x + s, y + s);
+    sh.addColorStop(.42, 'rgba(0,0,0,0)'); sh.addColorStop(1, mars ? 'rgba(60,0,0,.5)' : 'rgba(0,0,0,.55)');
+    ctx.fillStyle = sh; ctx.fillRect(x - s, y - s, s * 2, s * 2);
+    ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.beginPath(); ctx.ellipse(x - s * .42, y - s * .5, s * .16, s * .09, -.6, 0, 7); ctx.fill();
+    ctx.restore();
+    ctx.strokeStyle = mars ? 'rgba(160,20,0,.55)' : 'rgba(16,16,12,.4)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(x, y, s * 1.35, -2.4, -.7); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x, y, s * 1.06, 0, 7); ctx.stroke();
+  }
+
+  function pill(s, xRight, yBase, h, k) {
+    ctx.font = `800 ${fs}px ${BODY}`;
+    const tw = ctx.measureText(s).width + fs * 1.1, y = yBase - h * .72;
+    ctx.save(); ctx.translate(xRight - tw / 2, y + h / 2); ctx.scale(k, k); ctx.translate(-(xRight - tw / 2), -(y + h / 2));
+    ctx.globalAlpha = clamp(k * 1.5);
+    ctx.fillStyle = HOT; ctx.beginPath(); ctx.roundRect(xRight - tw, y, tw, h, h / 2); ctx.fill();
+    txt(s, xRight - tw / 2, yBase, {a: 'center', c: '#fff'});
+    ctx.restore(); ctx.globalAlpha = 1;
+  }
+
+  function dial(x, y, rr, min, col) {
+    ctx.strokeStyle = col; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(x, y, rr, 0, 7); ctx.stroke();
+    const a = (min / 60) * Math.PI * 2 - Math.PI / 2;
+    ctx.lineWidth = 1.6; line(x, y, x + Math.cos(a) * rr * .75, y + Math.sin(a) * rr * .75);
+    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 1.4, 0, 7); ctx.fill();
+  }
+
+  function draw() {
+    if (!ctx) return;
+    const I = st.intro, ip = backOut(clamp(I * 1.5 - .3)), gl = expo(clamp(I)), pad = L.pad, now = performance.now() / 1000;
+    ctx.globalAlpha = 1; ctx.clearRect(0, 0, W, H);
+
+    // strict grid
+    ctx.strokeStyle = 'rgba(16,16,12,.28)'; ctx.lineWidth = 1;
+    for (const y of [L.sp0, L.ck0, L.sl0]) line(L.gx, y, L.gx + (W - 2 * L.gx) * gl, y);
+    for (const x of [L.gx, W - L.gx]) line(x, 0, x, H * gl);
+    line(W / 2, 0, W / 2, L.sp0 * gl);
+    line(W / 2, L.ck0, W / 2, L.ck0 + (L.ck1 - L.ck0) * gl);
+    ctx.strokeStyle = INK; ctx.lineWidth = 1.4;
+    for (const [x, y] of [[L.gx, L.sp0], [W - L.gx, L.sp0], [L.gx, L.sl0], [W - L.gx, L.sl0]]) {
+      line(x - 5, y, x + 5, y); line(x, y - 5, x, y + 5);
+    }
+
+    // ---- the big numeral: minutes elapsed on Earth
+    const shown = (st.flight || done) ? Math.floor(st.T + 1e-6) : 0;
+    const num = String(shown).padStart(2, '0');
+    ctx.save(); ctx.globalAlpha = clamp(I * 1.4);
+    ctx.translate(pad, L.by + (1 - gl) * 16); const sc = 1 + st.flash * .05; ctx.scale(sc, sc);
+    txt(num, 0, 0, {size: L.sz, w: 900, font: DISP, c: INK});
+    if (st.flash > 0) { ctx.globalAlpha = clamp(st.flash) * clamp(I * 1.4); txt(num, 0, 0, {size: L.sz, w: 900, font: DISP, c: HOT}); }
+    ctx.restore(); ctx.globalAlpha = 1;
+    if (st.wow > 0) {
+      const cap = L.sz * .72, cx = pad + L.nw / 2, cy = L.by - cap / 2, rx = L.nw / 2 + fs * .45, ry = cap / 2 + fs * .3;
+      ctx.strokeStyle = HOT; ctx.lineWidth = Math.max(2, fs * .17); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      const a0 = -2.3, a1 = a0 + Math.PI * 2.12 * st.wow;
+      ctx.beginPath();
+      for (let a = a0; a <= a1; a += .04) {
+        const w = 1 + .025 * Math.sin(a * 3), x = cx + Math.cos(a) * rx * w, y = cy + Math.sin(a) * ry * w - (a - a0) * .35;
+        if (a === a0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+
+    // the round-trip log
+    const entry = (e, y) => {
+      const w1 = txt(`${e.o} + ${e.b} `, L.lx, y, {w: 600});
+      txt('= 20', L.lx + w1, y, {w: 900, c: revealed ? HOT : INK});
+    };
+    ctx.globalAlpha = clamp(I * 1.6);
+    if (!L.compact) {
+      txt('ROUND TRIP, MIN', L.lx, fs * 1.35);
+      if (!log.length) txt('send a signal', L.lx, fs * 2.77, {w: 600, c: MUTE});
+      log.slice(-L.nL).forEach((e, k) => entry(e, fs * 1.35 + (k + 1) * fs * 1.42));
+    } else {
+      txt('ROUND TRIP, MIN', L.lx, fs * 1.1);
+      const e = log[log.length - 1];
+      if (e) entry(e, fs * 2.25); else txt('send a signal', L.lx, fs * 2.25, {w: 600, c: MUTE});
+    }
+    ctx.globalAlpha = 1;
+
+    // ---- space: dust drifting along a hidden preferred direction
+    ctx.fillStyle = INK;
+    for (const d of dust) {
+      const x = d.u * W, y = L.sp0 + 6 + d.v * (L.sp1 - L.sp0 - 12);
+      ctx.globalAlpha = .2 * d.z * clamp(I * 2); ctx.fillRect(x, y, d.z * 1.2, d.z * 1.2);
+    }
+    ctx.globalAlpha = 1;
+    ctx.setLineDash([3, 5]); ctx.strokeStyle = 'rgba(16,16,12,.45)'; ctx.lineWidth = 1;
+    const p0 = L.ex + L.r * 1.4, p1 = L.mx - L.r * 1.4;
+    line(p0, L.ly, p0 + (p1 - p0) * gl, L.ly); ctx.setLineDash([]);
+
+    // the pulse
+    if (st.flight) {
+      const out = st.out;
+      if (!stamp && out > 0) legDraw(1, st.T / out, INK);
+      else if (stamp) {
+        ctx.globalAlpha = .3; ctx.strokeStyle = INK; ctx.lineWidth = 1.2; line(L.ex + L.r, L.ly, L.mx - L.r, L.ly);
+        if (out < 20) legDraw(-1, (st.T - out) / (20 - out), HOT);
+      }
+      ctx.globalAlpha = 1;
+    }
+    if (flashL.a > 0) {
+      ctx.globalAlpha = flashL.a; ctx.strokeStyle = flashL.col; ctx.lineWidth = 2 + 6 * flashL.a;
+      line(L.ex + L.r, L.ly, L.mx - L.r, L.ly); ctx.globalAlpha = 1;
+    }
+
+    ctx.save(); ctx.translate(L.ex, L.ly); ctx.scale(ip, ip); planet(0, 0, L.r, false, st.eb); ctx.restore();
+    ctx.save(); ctx.translate(L.mx, L.ly); ctx.scale(ip, ip); planet(0, 0, L.r, true, st.mb); ctx.restore();
+
+    for (const p of sparks) { ctx.globalAlpha = clamp(p.life); ctx.fillStyle = p.c; ctx.fillRect(p.x, p.y, p.z, p.z); }
+    ctx.globalAlpha = clamp(I * 1.6);
+
+    // leg labels
+    const lo = Math.round(st.s * 20), lb = 20 - lo;
+    txt(`→ OUT ${lo} min · ${speed(lo)}`, W / 2, L.outY, {a: 'center'});
+    txt(`← BACK ${lb} min · ${speed(lb)}`, W / 2, L.backY, {a: 'center', c: HOT});
+    if (!L.compact) {
+      txt('EARTH', pad, L.nameY);
+      if (stamp === null) txt('MARS · MARK', W - pad, L.nameY, {a: 'right', c: HOT});
+      else {
+        const s = fit([`MARK · GOT IT ${fmt(stamp)}`, `GOT IT ${fmt(stamp)}`], W - 2 * pad - fs * 6.5);
+        if (s) pill(s, W - pad, L.nameY, fs * 1.5, st.pill);
+      }
+    }
+
+    // ---- the two clocks
+    const offLive = lo - 10;
+    const offShow = st.flight ? st.out - 10 : offLive;
+    const T = st.T;
+    const lab1 = L.compact ? 'EARTH' : 'EARTH CLOCK', lab2 = L.compact ? 'MARS' : 'MARS CLOCK';
+    const w1 = txt(lab1, pad, L.labY), w2 = txt(lab2, L.colR, L.labY);
+    if (!L.compact) {
+      const dr = fs * .5;
+      if (pad + w1 + dr * 3 < W / 2 - fs * .4) dial(W / 2 - fs * .6 - dr, L.labY - fs * .36, dr, T, INK);
+      if (L.colR + w2 + dr * 3 < W - pad) dial(W - pad - dr, L.labY - fs * .36, dr, T - offShow, HOT);
+    } else if (stamp !== null) {
+      const x0 = L.colR + w2 + fs * .5;
+      const s = fit([`GOT IT ${fmt(stamp)}`, `GOT ${fmt(stamp)}`], W - pad - x0 - fs * 1.1);
+      if (s) pill(s, W - pad, L.labY, fs * 1.3, st.pill);
+    }
+    txt(fmt(720 + T), pad, L.digY, {size: L.ns, w: 900, font: DISP});
+    txt(fmt(720 + T - offShow), L.colR, L.digY, {size: L.ns, w: 900, font: DISP});
+    const es = done ? ['reply back at 12:20', 'back at 12:20'] : st.flight ? (stamp ? ['echo on its way', 'echo coming'] : ['sent at 12:00']) : ['you send at 12:00', 'send at 12:00'];
+    txt(fit(es, L.colW, 600) || es[es.length - 1], pad, L.subY, {w: 600, c: MUTE});
+    const sg = `${offShow > 0 ? '+' : '−'}${Math.abs(offShow)}`;
+    const ms = offShow === 0 ? ['in sync with Earth', 'in sync'] : [`secretly ${sg} min off`, `${sg} min off`];
+    txt(fit(ms, L.colW) || ms[ms.length - 1], L.colR, L.subY, {c: HOT});
+
+    // ---- the slider
+    const t0 = L.tx0, t1 = L.tx1, mid = (t0 + t1) / 2, tx = t0 + (t1 - t0) * st.s;
+    txt('INSTANT OUT', pad, L.slLabY, {c: lo === 0 ? HOT : MUTE});
+    txt('EQUAL', mid, L.slLabY, {a: 'center', c: lo === 10 ? INK : MUTE});
+    txt('INSTANT BACK', W - pad, L.slLabY, {a: 'right', c: lo === 20 ? HOT : MUTE});
+    ctx.strokeStyle = INK; ctx.lineWidth = 2; line(t0, L.ty, t0 + (t1 - t0) * gl, L.ty);
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 20; i++) { const x = t0 + (t1 - t0) * i / 20, h = i === 10 ? 7 : i % 5 ? 2.5 : 4.5; line(x, L.ty - h, x, L.ty + h); }
+    ctx.fillStyle = HOT; ctx.fillRect(Math.min(tx, mid), L.ty - 2, Math.abs(tx - mid), 4);
+    const hs = fs * (L.compact ? 1 : 1.15) * (dragging ? 1.18 : 1);
+    if (st.hint > .01 && !st.flight && !Kit.calm) {
+      const ph = (now * .8) % 1;
+      ctx.globalAlpha = (1 - ph) * .6 * st.hint; ctx.strokeStyle = HOT; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(tx, L.ty, hs * (.6 + ph * .7), 0, 7); ctx.stroke();
+      ctx.globalAlpha = clamp(I * 1.6);
+    }
+    ctx.save(); ctx.shadowColor = 'rgba(200,30,0,.5)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 3;
+    ctx.fillStyle = HOT; ctx.fillRect(tx - hs / 2, L.ty - hs / 2, hs, hs); ctx.restore();
+    ctx.fillStyle = '#fff'; ctx.fillRect(tx - 1, L.ty - hs * .28, 2, hs * .56);
+    ctx.globalAlpha = 1;
+  }
+
+  function frame() {
+    if (!ctx) return;
+    if (!Kit.calm) {
+      st.rot += .0016;
+      const drift = (.5 - st.s) * .0035;
+      for (const d of dust) { d.u += drift * d.z + d.w * .00012; if (d.u > 1) d.u -= 1; if (d.u < 0) d.u += 1; }
+    }
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const p = sparks[i]; p.x += p.vx; p.y += p.vy; p.vx *= .955; p.vy = p.vy * .955 + .025; p.life -= p.k;
+      if (p.life <= 0) sparks.splice(i, 1);
+    }
+    draw();
+  }
+
+  // ---- input: drag to set the split
+  function setS(v) {
+    const t = Math.round(clamp(v) * 20) / 20;
+    if (t !== sendS) Kit.haptic('selection');
+    sendS = t;
+    if (Kit.calm) st.s = t; else gsap.to(st, {s: t, duration: .28, ease: 'power3.out', overwrite: 'auto'});
+  }
+  const xToS = e => { const r = cv.getBoundingClientRect(); return (e.clientX - r.left - L.tx0) / (L.tx1 - L.tx0); };
+  cv.addEventListener('pointerdown', e => {
+    if (st.flight) return; dragging = true; cv.setPointerCapture(e.pointerId); setS(xToS(e));
+    if (st.hint > 0) gsap.to(st, {hint: 0, duration: .5});
+  });
+  cv.addEventListener('pointermove', e => { if (dragging && !st.flight) setS(xToS(e)); });
+  const end = () => { dragging = false; };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+  // ---- the launch
+  function flashIt(col) {
+    flashL.col = col; flashL.a = 1;
+    if (!Kit.calm) gsap.to(flashL, {a: 0, duration: .7, ease: 'expo.out'}); else flashL.a = 0;
+  }
+  function arriveMars() {
+    stamp = 730; Kit.haptic('light');
+    burst(L.mx - L.r, L.ly, 110, [HOT, INK, HOT], 2.6);
+    if (!Kit.calm) {
+      gsap.fromTo(st, {mb: 1}, {mb: 0, duration: .9, ease: 'elastic.out(1,.4)'});
+      gsap.fromTo(st, {pill: 0}, {pill: 1, duration: .5, ease: 'back.out(2.2)'});
+    } else st.pill = 1;
+  }
+  function arriveEarth() {
+    st.flight = false; done = true; st.T = 20;
+    log.push({o: st.out, b: 20 - st.out});
+    burst(L.ex + L.r, L.ly, 110, [INK, HOT, INK], 2.6);
+    if (!Kit.calm) { gsap.fromTo(st, {eb: 1}, {eb: 0, duration: .9, ease: 'elastic.out(1,.4)'}); gsap.fromTo(st, {flash: 1}, {flash: 0, duration: 1.4, ease: 'expo.out'}); }
+    go.disabled = false; go.textContent = 'Send again';
+    const splits = new Set(log.map(e => e.o));
+    if (splits.size >= 2) reveal();
+    else if (log.length === 1) { Kit.haptic('light'); say.innerHTML = `20 min round trip. Mark's clock read 12:10. <b>Now drag far away and send again.</b>`; }
+    else say.innerHTML = 'Same split as before. <b>Drag somewhere else first.</b>';
+  }
+  function launch() {
+    if (st.flight || revealed) return Promise.resolve();
+    const out = Math.round(sendS * 20);
+    st.out = out; st.flight = true; done = false; stamp = null; st.pill = 0; st.T = 0; mkPulse();
+    go.disabled = true; Kit.haptic('light');
+    return new Promise(res => {
+      const fin = () => { arriveEarth(); res(); };
+      if (Kit.calm) { st.T = out; arriveMars(); fin(); return; }
+      const tl = gsap.timeline({onComplete: fin});
+      if (out === 0) tl.call(() => flashIt(INK)).to({}, {duration: .25});
+      tl.to(st, {T: out, duration: out * SEC, ease: 'none'}).call(arriveMars);
+      if (out === 20) tl.call(() => flashIt(HOT)).to({}, {duration: .25});
+      tl.to(st, {T: 20, duration: (20 - out) * SEC, ease: 'none'});
+    });
+  }
+  go.addEventListener('click', () => launch());
+
+  function reveal() {
+    revealed = true; Kit.haptic('success');
+    say.innerHTML = 'Any split: 20 min round trip, 12:10 on Mars. <b>It all hides in the clocks.</b>';
+    Kit.hide('go'); Kit.show('keep');
+    if (Kit.calm) { st.wow = 1; return; }
+    burst(L.pad + L.nw / 2, L.by - L.sz * .36, 420, [HOT, HOT, INK], 4.2);
+    gsap.timeline()
+      .fromTo(st, {flash: 1}, {flash: .55, duration: 1.6, ease: 'power2.out'})
+      .fromTo(st, {wow: 0}, {wow: 1, duration: 1.1, ease: 'power2.inOut'}, .15)
+      .fromTo(st, {mb: 1.2}, {mb: 0, duration: 1.2, ease: 'elastic.out(1,.35)'}, .2)
+      .fromTo(st, {eb: 1.2}, {eb: 0, duration: 1.2, ease: 'elastic.out(1,.35)'}, .3);
+  }
+
+  new ResizeObserver(() => { if (ctx) { layout(); draw(); } }).observe(Kit.$('stage'));
+  Kit.onShow.card = () => { layout(); draw(); };
+  gsap.ticker.add(frame);
+  Kit.onEnter.card = () => {
+    if (Kit.calm) { st.intro = 1; return; }
+    gsap.fromTo(st, {intro: 0}, {intro: 1, duration: 1.6, ease: 'power3.out'});
+    gsap.from('#go', {y: 12, opacity: 0, duration: .5, delay: .6, ease: 'back.out(1.7)'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    SEC = .006; st.intro = 1;
+    setS(.5); await wait(60); await launch();
+    setS(1); await wait(60); await launch();
+    await wait(Kit.calm ? 80 : 900);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "weird_facts-not-a-flamethrower",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.why_odd_laws_exist",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "How did Musk’s flamethrower dodge being classed as a weapon?",
+  "answer": "Musk's flamethrower was called a \"Not-a-Flamethrower,\" so it was technically described as a novelty item rather than a weapon. That let it be sold without a weapons license. The name did it.",
+  "move": "What a law calls a thing can hang on how the thing is described.",
+  "keywords": [
+    "musk",
+    "flamethrower",
+    "not-a-flamethrower",
+    "novelty-item",
+    "weapons-license"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking which change moves a flamethrower box to the novelty counter. Three options: give it a smaller flame, name it Not-a-Flamethrower, or sell it only online. The reveal says the name classed it as a novelty item, not a weapon."
+  },
+  "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=CKMyBFiiED8",
+  "written": "2026-11-03"
+}

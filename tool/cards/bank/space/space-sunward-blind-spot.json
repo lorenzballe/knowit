@@ -30,8 +30,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A sky view with Earth at the centre and a rock you can drag around it. A circle marks what a ground telescope can see. A switch changes the view to infrared. The question asks why some asteroids hit before telescopes spot them.",
-    "ground": "#071140"
+    "label": "A sky view with Earth at the centre and a rock you can drag around it. A circle marks what a ground telescope can see. A switch changes the view to infrared. The question asks why some asteroids hit before telescopes spot them."
   },
   "source": "Veritasium, “These are the asteroids to worry about” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=4Wrc4fHSCpw",

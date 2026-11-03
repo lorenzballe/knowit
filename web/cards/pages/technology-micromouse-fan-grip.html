@@ -1,0 +1,444 @@
+<!doctype html>
+<!-- slug: technology-micromouse-fan-grip -->
+<!-- Look: a paper maze corner with red-capped posts and a cutaway card, printed straight on the card. Every plane casts its own shadow and drifts with the finger in parallax.
+     The diorama rebuilds itself whenever the stage changes size, so it always fills the stage at 1:1: stacked on tall stages, side by side on short wide ones.
+     Interaction: send the mouse round the corner flat out. Speed streaks trail it, its wheels spin, and it slips into the wall: dust puffs from the tyres, the grip bar dips. Spin up the fan: air is drawn out from under it, arrows press the tyres down and the grip bar fills. Same speed, again.
+     Wow: on the second run the mouse holds the turn. Its amber line draws itself hugging the corner beside the ghost of the red skid, and a shine and a burst of rings run along it. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The fan that glues a robot mouse to the floor</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;background:none;box-shadow:none;border-color:transparent}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;background:none}
+#act{align-self:flex-start;transition:opacity .2s}
+#act:disabled{opacity:.45}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ROBOT MICE</span></div>
+    <h2 class="q">What was Micromouse's second “Fosbury flop”, the trick for faster turns?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A diorama: a robot mouse in a maze corner seen from above, and a cutaway of the mouse with a propeller in its middle."></svg>
+    </div>
+    <p class="say" id="say">This robot mouse takes the corner flat out. <b>Tap Go and watch its tyres.</b></p>
+    <button class="btn" id="act">Go, fan off</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>To turn faster without slipping, press the tyres harder onto the floor.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), act = Kit.$('act'), card = Kit.$('card');
+  const hasDraw = typeof DrawSVGPlugin !== 'undefined';
+  if (hasDraw) gsap.registerPlugin(DrawSVGPlugin);
+  const C = {tyre:'#17151f', wall:'#fffaf0', edge:'#b9a679', post:'#c8362f', good:'#f5a300', bad:'#9d0016',
+             air:'#ffffff', push:'#1d1250', ink:'#10100c', muted:'#0b2a40'};
+  const depth = {box:0, floor:1.4, walls:3.4, mouse:4.8, inset:2.2};
+  let stage = 0, busy = false, wowDone = false, pending = false, W = 0, H = 0, fs = 12, R = null, loops = [], curTl = null;
+
+  const mk = (t, a, p) => Kit.mk(t, a || {}, p);
+  const txt = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y, fill: C.ink}, a), p); e.textContent = s; return e; };
+  const font = (fam, sz, w = 700) => `font-family:var(${fam});font-size:${Math.max(12, sz).toFixed(1)}px;font-weight:${w}`;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const nn = v => Math.max(0, v);
+
+  function draw(el, fr) {
+    if (hasDraw) gsap.set(el, {drawSVG: fr <= 0 ? '0% 0%' : `0% ${fr * 100}%`});
+    else { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L * (1 - fr); }
+  }
+  function drawTween(els, opts) {
+    if (hasDraw) return gsap.fromTo(els, {drawSVG: '0% 0%'}, Object.assign({drawSVG: '0% 100%'}, opts));
+    const o = {f: 0}, list = [].concat(els); list.forEach(e => draw(e, 0));
+    const o2 = Object.assign({}, opts); delete o2.stagger;
+    return gsap.to(o, Object.assign({f: 1, onUpdate: () => list.forEach(e => draw(e, o.f))}, o2));
+  }
+  const track = t => { curTl = t; return new Promise(r => t.eventCallback('onComplete', r)); };
+
+  function placeAt(r, path, fr) {
+    const L = path.getTotalLength(), s = fr * L;
+    const p = path.getPointAtLength(s), a = path.getPointAtLength(Math.max(0, s - 1.5)), b = path.getPointAtLength(Math.min(L, s + 1.5));
+    const ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+    r.mouse.setAttribute('transform', `translate(${p.x.toFixed(2)},${p.y.toFixed(2)}) rotate(${ang.toFixed(2)})`);
+  }
+
+  // ------------------------------------------------------------ the diorama
+  function layout() {
+    if (curTl) { curTl.progress(1); curTl = null; }
+    loops.forEach(t => t.kill()); loops = [];
+    if (R) gsap.killTweensOf(svg.querySelectorAll('*'));
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    if (!(W > 60 && H > 100)) { R = null; return; }
+    const wide = W / H > 1.85 && W >= 470;
+    fs = Math.max(12, Math.min(14.5, (wide ? Math.min(W * .5, H * 1.6) : W) / 25));
+    const r = R = {};
+
+    const defs = mk('defs', {}, svg);
+    const grad = (type, id, a, stops) => { const g = mk(type, Object.assign({id}, a), defs); stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g)); };
+    grad('linearGradient', 'gPcb', {x1: 0, y1: 0, x2: 1, y2: 1}, [[0, '#45b479'], [1, '#17603e']]);
+    grad('radialGradient', 'gDisc', {cx: '45%', cy: '40%', r: '60%'}, [[0, '#4a4366'], [1, '#0e0b18']]);
+    grad('linearGradient', 'gGrip', {x1: 0, y1: 0, x2: 1, y2: 0}, [[0, '#f59a00'], [1, '#ffd36b']]);
+    const shadow = (id, dy, sd, op) => { const fl = mk('filter', {id, x: '-30%', y: '-30%', width: '160%', height: '180%'}, defs); mk('feDropShadow', {dx: 0, dy, stdDeviation: sd, 'flood-color': '#10100c', 'flood-opacity': op}, fl); };
+    shadow('fWall', 2.6, 1.8, .38); shadow('fPost', 1.6, 1, .35);
+    const bl = mk('filter', {id: 'fBlur', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs); mk('feGaussianBlur', {stdDeviation: 2.4}, bl);
+    const gl = mk('filter', {id: 'fGlow', x: '-20%', y: '-20%', width: '140%', height: '140%'}, defs); mk('feGaussianBlur', {stdDeviation: 4}, gl);
+
+    r.L = {}; r.inn = {};
+    for (const k of ['box', 'floor', 'walls', 'mouse', 'inset']) { r.L[k] = mk('g', {}, svg); r.inn[k] = mk('g', {}, r.L[k]); }
+    r.qx = {}; r.qy = {};
+    for (const k in depth) { r.qx[k] = gsap.quickTo(r.L[k], 'x', {duration: .9, ease: 'power3.out'}); r.qy[k] = gsap.quickTo(r.L[k], 'y', {duration: .9, ease: 'power3.out'}); }
+
+    // planes: stacked on tall stages, side by side on short wide ones
+    const pad = Math.max(7, Math.min(W, H) * .028), gap = pad * .9;
+    let fx, fy, fw, fh, ix, iy, iw, ih;
+    if (wide) {
+      iw = Math.max(220, Math.min(W * .46, 300));
+      fx = pad; fy = pad; fh = H - 2 * pad; fw = W - 2 * pad - gap - iw;
+      ix = fx + fw + gap; iy = pad; ih = fh;
+    } else {
+      const insetH = Math.max(108, Math.min(172, H * .36));
+      fx = pad; fy = pad; fw = W - 2 * pad; fh = H - insetH - gap - 2 * pad;
+      ix = pad; iy = fy + fh + gap; iw = fw; ih = H - iy - pad;
+    }
+    fw = nn(fw); fh = nn(fh); iw = nn(iw); ih = nn(ih);
+
+    // (no backdrop box and no floor panel: the drawing sits directly on the card)
+
+    const F = r.inn.floor;
+
+    const cw = Math.min(fw * .34, fh * .4), wt = Math.max(5, cw * .12), cell = cw + wt, m = pad * .8;
+    const x0g = fx + Math.max(fs * .8, fw * .05), y0g = fy + Math.max(fs * .8, fh * .07);
+    const xEnd = fx + fw - m, yEnd = fy + fh - m;
+    const cx = x0g + wt + cw / 2, hy = y0g + wt + cw / 2;
+    const ml = cw * .56, mw = cw * .46; r.ml = ml;
+
+    for (let x = x0g + wt / 2; x < xEnd; x += cell) mk('line', {x1: x, x2: x, y1: fy + 4, y2: fy + fh - 4, stroke: C.ink, 'stroke-width': .7, 'stroke-dasharray': '2 4', opacity: .28}, F);
+    for (let y = y0g + wt / 2; y < yEnd; y += cell) mk('line', {x1: fx + 4, x2: fx + fw - 4, y1: y, y2: y, stroke: C.ink, 'stroke-width': .7, 'stroke-dasharray': '2 4', opacity: .28}, F);
+
+    const T = mk('g', {}, F);
+    const ys = yEnd - ml * .55, rr = cw / 2;
+    const dGood = `M${cx},${ys} L${cx},${hy + rr} A${rr},${rr} 0 0 1 ${cx + rr},${hy} L${xEnd - ml * .7},${hy}`;
+    const yw = hy - cw / 2, x4 = cx + cw * .42, y4 = yw + mw * .5 + cw * .03;
+    const dBad = `M${cx},${ys} L${cx},${hy + cw * .85} C${cx},${hy - cw * .1} ${x4 - cw * .4},${y4 + cw * .15} ${x4},${y4}`;
+    r.goodGlow = mk('path', {d: dGood, fill: 'none', stroke: C.good, 'stroke-width': mw * .55, 'stroke-linecap': 'round', filter: 'url(#fGlow)', opacity: 0}, T);
+    r.bad = mk('path', {d: dBad, fill: 'none', stroke: C.bad, 'stroke-width': Math.max(3, mw * .14), 'stroke-linecap': 'round'}, T);
+    r.good = mk('path', {d: dGood, fill: 'none', stroke: C.good, 'stroke-width': Math.max(3.5, mw * .17), 'stroke-linecap': 'round'}, T);
+    r.shine = mk('path', {d: dGood, fill: 'none', stroke: '#fff8dc', 'stroke-width': Math.max(1.5, mw * .07), 'stroke-linecap': 'round', opacity: 0}, T);
+
+    // legend, in the maze block below the corner
+    const lx = x0g + cell + wt + fs * .9;
+    let ly0 = y0g + cell + wt + fs * 1.6;
+    if (ly0 + fs * 1.6 > yEnd - 2) ly0 = Math.max(y0g + cell + wt + fs, yEnd - fs * 1.75);
+    const legend = (y, col, s) => { const g = mk('g', {opacity: 0}, F); mk('line', {x1: lx, x2: lx + fs * 1.4, y1: y - fs * .32, y2: y - fs * .32, stroke: col, 'stroke-width': 3.5, 'stroke-linecap': 'round'}, g); txt(g, lx + fs * 1.9, y, s, {style: font('--hand', fs * 1.12, 700)}); return g; };
+    r.leg1 = legend(ly0, C.bad, 'fan off: slid');
+    r.leg2 = legend(ly0 + fs * 1.6, C.good, 'fan on: gripped');
+
+    r.wallsIn = r.inn.walls; r.wallGs = []; r.outlines = []; r.posts = [];
+    [[x0g, y0g, wt, yEnd - y0g], [x0g, y0g, xEnd - x0g, wt], [x0g + cell, y0g + cell, wt, yEnd - y0g - cell], [x0g + cell, y0g + cell, xEnd - x0g - cell, wt]].forEach(([x, y, w, h]) => {
+      w = nn(w); h = nn(h);
+      const g = mk('g', {}, r.wallsIn); r.wallGs.push(g);
+      mk('rect', {x, y, width: w, height: h, rx: 1.5, fill: C.wall, filter: 'url(#fWall)'}, g);
+      const t = Math.min(w, h), s = t * .34;
+      mk('rect', w > h ? {x: x + s, y: y + s, width: nn(w - 2 * s), height: nn(t - 2 * s), rx: 1, fill: C.post, opacity: .7} : {x: x + s, y: y + s, width: nn(t - 2 * s), height: nn(h - 2 * s), rx: 1, fill: C.post, opacity: .7}, g);
+      r.outlines.push(mk('rect', {x, y, width: w, height: h, rx: 1.5, fill: 'none', stroke: C.edge, 'stroke-width': 1}, g));
+    });
+    const post = (px, py) => { const g = mk('g', {}, r.wallsIn), sz = wt * 1.3; mk('rect', {x: px - wt * .15, y: py - wt * .15, width: sz, height: sz, rx: 1.6, fill: '#fffdf6', stroke: C.edge, 'stroke-width': 1, filter: 'url(#fPost)'}, g); mk('rect', {x: px + wt * .2, y: py + wt * .2, width: wt * .6, height: wt * .6, rx: 1, fill: C.post}, g); r.posts.push(g); };
+    for (let k = 0; x0g + k * cell <= xEnd - wt; k++) post(x0g + k * cell, y0g);
+    for (let j = 1; y0g + j * cell <= yEnd - wt; j++) post(x0g, y0g + j * cell);
+    for (let k = 1; x0g + k * cell <= xEnd - wt; k++) post(x0g + k * cell, y0g + cell);
+    for (let j = 2; y0g + j * cell <= yEnd - wt; j++) post(x0g + cell, y0g + j * cell);
+
+    // the mouse, seen from above, nose along +x
+    const MZ = r.inn.mouse;
+    r.mouse = mk('g', {}, MZ);
+    r.streaks = mk('g', {opacity: 0}, r.mouse);
+    [[-.3, .42], [0, .75], [.3, .5]].forEach(([t, l]) => mk('line', {x1: -ml * .6, x2: -ml * (.6 + l), y1: mw * t, y2: mw * t, stroke: C.ink, 'stroke-width': Math.max(1.4, mw * .05), 'stroke-linecap': 'round'}, r.streaks));
+    const b = r.body = mk('g', {}, r.mouse);
+    mk('ellipse', {cx: ml * .05, cy: mw * .14, rx: ml * .58, ry: mw * .56, fill: '#120c22', opacity: .32, filter: 'url(#fBlur)'}, b);
+    for (const s of [-1, 1]) {
+      const wy = s < 0 ? -mw * .5 : mw * .34;
+      mk('rect', {x: -ml * .32, y: wy, width: ml * .36, height: mw * .16, rx: mw * .05, fill: C.tyre}, b);
+      for (let i = 1; i < 4; i++) mk('line', {x1: -ml * .32 + i * ml * .09, x2: -ml * .32 + i * ml * .09, y1: wy + 1, y2: wy + mw * .16 - 1, stroke: '#3d394a', 'stroke-width': 1}, b);
+    }
+    mk('rect', {x: -ml * .5, y: -mw * .36, width: ml, height: mw * .72, rx: mw * .2, fill: 'url(#gPcb)', stroke: '#0c3a25', 'stroke-width': 1}, b);
+    mk('path', {d: `M${-ml * .42},${-mw * .2} H${-ml * .22} L${-ml * .14},${-mw * .27} H${ml * .26} M${-ml * .42},${mw * .22} H${ml * .1} L${ml * .2},${mw * .12} H${ml * .3}`, stroke: '#e9c46a', 'stroke-width': .8, fill: 'none', opacity: .85}, b);
+    mk('rect', {x: ml * .34, y: -mw * .3, width: ml * .12, height: mw * .6, rx: 2, fill: '#222031'}, b);
+    [-.22, -.08, .08, .22].forEach(t => mk('circle', {cx: ml * .4, cy: mw * t, r: Math.max(1.2, ml * .022), fill: '#ff5d5d'}, b));
+    const fg = mk('g', {transform: `translate(${-ml * .08},0)`}, b);
+    r.rings = [0, 1].map(() => mk('circle', {cx: 0, cy: 0, r: mw * .44, fill: 'none', stroke: C.air, 'stroke-width': 1.6, opacity: 0}, fg));
+    mk('circle', {cx: 0, cy: 0, r: mw * .31, fill: 'url(#gDisc)', stroke: '#e9b949', 'stroke-width': 1.2}, fg);
+    r.topBlades = mk('g', {}, fg);
+    mk('circle', {cx: 0, cy: 0, r: mw * .27, fill: 'transparent'}, r.topBlades);
+    [0, 120, 240].forEach(a => mk('ellipse', {cx: mw * .13, cy: 0, rx: mw * .14, ry: mw * .055, fill: '#d7deee', transform: `rotate(${a})`}, r.topBlades));
+    mk('circle', {cx: 0, cy: 0, r: mw * .065, fill: '#e9b949'}, fg);
+
+    const bL = r.bad.getTotalLength(), pe = r.bad.getPointAtLength(bL), pb = r.bad.getPointAtLength(Math.max(0, bL - 2)), an = Math.atan2(pe.y - pb.y, pe.x - pb.x);
+    const nx = ml * .5, ny = -mw * .36, kx = pe.x + nx * Math.cos(an) - ny * Math.sin(an), ky = pe.y + nx * Math.sin(an) + ny * Math.cos(an);
+    r.spark = mk('g', {opacity: 0}, MZ);
+    r.sparkLines = [-165, -130, -95, -60, -25, 15].map(d => { const a = d * Math.PI / 180; return mk('path', {d: `M${kx + Math.cos(a) * fs * .3},${ky + Math.sin(a) * fs * .3} L${kx + Math.cos(a) * fs * .95},${ky + Math.sin(a) * fs * .95}`, stroke: C.bad, 'stroke-width': 2.2, 'stroke-linecap': 'round', fill: 'none'}, r.spark); });
+    r.slip = txt(r.spark, pe.x + ml * .62, hy + cw * .2 + fs * .45, 'slip!', {fill: C.bad, style: font('--hand', fs * 1.35, 800)});
+
+    const ge = r.good.getPointAtLength(r.good.getTotalLength());
+    r.burst = [0, 1, 2].map(() => mk('circle', {cx: ge.x, cy: ge.y, r: nn(mw * .6), fill: 'none', stroke: C.good, 'stroke-width': 2, opacity: 0}, MZ));
+
+    // ---------------- the cutaway (no card behind it)
+    const I = r.inn.inset;
+    const colX = ix + iw * .63, colW = Math.max(40, ix + iw - fs * .9 - colX);
+    const mx = ix + iw * .31, gy = iy + ih * .8;
+    const cl = Math.min(iw * .4, ih * 1.4), wr = Math.min(ih * .13, cl * .15);
+    const gapU = wr * .55, ch = wr * .55, cTop = gy - gapU - ch, sw = cl * .3, fanTop = cTop - wr * 1.05;
+    r.press = gapU * .32; r.colW = colW;
+    r.sideParts = [];
+    const ground = mk('g', {}, I); r.sideParts.push(ground);
+    const gx0 = ix + fs * .5, gx1 = colX - fs * .6;
+    mk('rect', {x: gx0, y: gy, width: nn(gx1 - gx0), height: nn(Math.min(ih * .12, iy + ih - gy - 4)), fill: '#e3d2ab'}, ground);
+    mk('line', {x1: gx0, x2: gx1, y1: gy, y2: gy, stroke: '#8f7c52', 'stroke-width': 1.4}, ground);
+    for (let x = gx0 + 6; x < gx1 - 4; x += 7) mk('line', {x1: x, x2: x - 5, y1: gy + 2, y2: gy + 7, stroke: '#b29c6c', 'stroke-width': .8}, ground);
+    r.patches = [-1, 1].map(s => mk('ellipse', {cx: mx + s * cl * .32, cy: gy, rx: wr * .75, ry: Math.max(2, wr * .2), fill: C.good, opacity: 0, filter: 'url(#fBlur)'}, I));
+    // dust kicked up by the slipping rear tyre
+    r.puffs = [0, 1, 2].map(i => mk('circle', {cx: mx - cl * .32 - wr * (.7 + i * .45), cy: gy - wr * (.25 + i * .12), r: wr * (.32 - i * .05), fill: '#e3d9bd', opacity: 0}, I));
+    r.chassis = mk('g', {}, I); r.sideParts.push(r.chassis);
+    const ci = r.chassisIn = mk('g', {}, r.chassis);
+    mk('path', {d: `M${mx - sw / 2},${cTop} L${mx - sw * .42},${fanTop} L${mx + sw * .42},${fanTop} L${mx + sw / 2},${cTop} Z`, fill: '#2b2547', stroke: '#14101f', 'stroke-width': 1}, ci);
+    const by = fanTop + (cTop - fanTop) * .3;
+    mk('rect', {x: mx - 1.5, y: by, width: 3, height: nn(cTop - by), fill: '#e9b949'}, ci);
+    r.sideBlade = mk('ellipse', {cx: mx, cy: by, rx: sw * .46, ry: Math.max(1.8, wr * .13), fill: '#d9dfee'}, ci);
+    mk('rect', {x: mx - cl / 2, y: cTop, width: cl, height: ch, rx: ch * .4, fill: 'url(#gPcb)', stroke: '#0d3a26', 'stroke-width': 1}, ci);
+    mk('rect', {x: mx - cl * .4, y: cTop - ch * .5, width: cl * .14, height: ch * .5, rx: 1, fill: '#1d1b26'}, ci);
+    mk('rect', {x: mx + cl * .2, y: cTop - ch * .45, width: cl * .1, height: ch * .45, rx: 1, fill: '#1d1b26'}, ci);
+    mk('rect', {x: mx + cl / 2 - ch * .6, y: cTop - ch * 1.1, width: ch * .7, height: ch * 1.4, rx: 1, fill: '#2a2a33', transform: `rotate(-20 ${mx + cl / 2} ${cTop})`}, ci);
+    const wheels = mk('g', {}, I); r.sideParts.push(wheels);
+    r.wheelGs = [];
+    for (const s of [-1, 1]) {
+      const wx = mx + s * cl * .32, wy = gy - wr, g = mk('g', {}, wheels);
+      r.wheelGs.push({g, o: `${wx} ${wy}`});
+      mk('circle', {cx: wx, cy: wy, r: wr, fill: C.tyre, stroke: '#000', 'stroke-width': 1}, g);
+      mk('circle', {cx: wx, cy: wy, r: wr * .8, fill: 'none', stroke: '#3a3646', 'stroke-width': 1, 'stroke-dasharray': '2 3'}, g);
+      mk('circle', {cx: wx, cy: wy, r: wr * .45, fill: '#a9b2c4'}, g);
+      [0, 120, 240].forEach(a => mk('rect', {x: wx - wr * .07, y: wy - wr * .42, width: wr * .14, height: wr * .28, rx: wr * .05, fill: '#5f6880', transform: `rotate(${a} ${wx} ${wy})`}, g));
+      mk('circle', {cx: wx, cy: wy, r: wr * .12, fill: '#3b3846'}, g);
+    }
+    // air drawn out from under the mouse, up through the propeller
+    const AG = mk('g', {}, I), hs = Math.max(4, fs * .36), my = gy - gapU * .45;
+    r.shafts = [
+      mk('path', {d: `M${mx - cl * .62},${my} L${mx - cl * .2},${my} Q${mx - sw * .15},${my} ${mx - sw * .15},${cTop + ch * .1}`}, AG),
+      mk('path', {d: `M${mx + cl * .62},${my} L${mx + cl * .2},${my} Q${mx + sw * .15},${my} ${mx + sw * .15},${cTop + ch * .1}`}, AG),
+      mk('path', {d: `M${mx},${fanTop - 3} L${mx},${fanTop - wr * 1.05}`}, AG)
+    ];
+    r.shafts.forEach(p => { p.setAttribute('fill', 'none'); p.setAttribute('stroke', C.air); p.setAttribute('stroke-width', 2.4); p.setAttribute('stroke-linecap', 'round'); });
+    r.heads = mk('path', {d: [[mx - sw * .15, cTop + ch * .1], [mx + sw * .15, cTop + ch * .1], [mx, fanTop - wr * 1.05]].map(([x, y]) => `M${x - hs},${y + hs} L${x},${y} L${x + hs},${y + hs}`).join(' '), fill: 'none', stroke: C.air, 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, I);
+    // the result: tyres pressed down onto the floor (arrows land on the tyre tops, clear of the drawing)
+    const PG = mk('g', {}, I), pBot = gy - 2 * wr - 3, pTop = pBot - wr * 1.25;
+    r.pushShafts = [-1, 1].map(s => mk('path', {d: `M${mx + s * cl * .32},${pTop} L${mx + s * cl * .32},${pBot}`, fill: 'none', stroke: C.push, 'stroke-width': 3.2, 'stroke-linecap': 'round'}, PG));
+    r.pushHeads = mk('path', {d: [-1, 1].map(s => { const x = mx + s * cl * .32; return `M${x - hs},${pBot - hs} L${x},${pBot} L${x + hs},${pBot - hs}`; }).join(' '), fill: 'none', stroke: C.push, 'stroke-width': 3.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, I);
+
+    // the column: what the fan is doing and how much grip there is
+    const cy0 = iy + fs * 1.55;
+    const col = mk('g', {}, I); r.sideParts.push(col);
+    txt(col, colX, cy0, 'CUTAWAY', {fill: C.muted, style: font('--mono', fs * .85, 700) + ';letter-spacing:.08em'});
+    r.fanTxt = txt(col, colX, cy0 + fs * 1.6, 'FAN OFF', {style: font('--mono', fs, 800)});
+    r.slipTxt = txt(col, colX, cy0 + fs * 3.1, 'tyres slip', {fill: C.bad, opacity: 0, style: font('--hand', fs * 1.15, 700)});
+    r.whirr = txt(col, colX, cy0 + fs * 3.1, 'whirrrr…', {fill: C.air, opacity: 0, style: font('--hand', fs * 1.15, 700)});
+    txt(col, colX, cy0 + fs * 4.65, 'tyre grip', {fill: C.muted, style: font('--mono', fs * .85, 700)});
+    mk('rect', {x: colX, y: cy0 + fs * 5.1, width: colW, height: fs * .62, rx: fs * .31, fill: '#e2d6bd'}, col);
+    r.gripFill = mk('rect', {x: colX, y: cy0 + fs * 5.1, width: colW * .28, height: fs * .62, rx: fs * .31, fill: 'url(#gGrip)'}, col);
+  }
+
+  // ------------------------------------------------------------ states and motion
+  function applyState() {
+    const r = R, s = stage, on = s >= 2;
+    draw(r.bad, s >= 1 ? 1 : 0); r.bad.style.opacity = on ? .42 : 1;
+    draw(r.good, s >= 3 ? 1 : 0); draw(r.goodGlow, s >= 3 ? 1 : 0); r.goodGlow.style.opacity = s >= 3 ? .45 : 0;
+    draw(r.shine, 0); r.shine.style.opacity = 0;
+    r.leg1.style.opacity = s >= 1 ? 1 : 0; r.leg2.style.opacity = s >= 3 ? 1 : 0;
+    r.spark.style.opacity = s === 1 ? 1 : 0; r.sparkLines.forEach(l => draw(l, 1));
+    r.streaks.style.opacity = 0;
+    placeAt(r, s === 1 ? r.bad : r.good, (s === 1 || s === 3) ? 1 : 0);
+    r.shafts.forEach(p => draw(p, on ? 1 : 0)); r.heads.style.opacity = on ? 1 : 0;
+    r.pushShafts.forEach(p => draw(p, on ? 1 : 0)); r.pushHeads.style.opacity = on ? 1 : 0;
+    gsap.set(r.chassis, {y: on ? r.press : 0});
+    r.patches.forEach(p => p.style.opacity = on ? .9 : 0);
+    r.gripFill.setAttribute('width', on ? r.colW : r.colW * .28);
+    r.fanTxt.textContent = on ? 'FAN ON' : 'FAN OFF';
+    r.whirr.style.opacity = on ? 1 : 0;
+    r.slipTxt.style.opacity = s === 1 ? 1 : 0;
+    if (on) { startLoops(r, true); startFlow(r); }
+  }
+
+  function startLoops(r, full) {
+    if (Kit.calm || R !== r) return;
+    const ls = [
+      gsap.to(r.topBlades, {rotation: 360, transformOrigin: '50% 50%', duration: .2, repeat: -1, ease: 'none'}),
+      gsap.to(r.sideBlade, {scaleX: .08, transformOrigin: '50% 50%', duration: .05, repeat: -1, yoyo: true, ease: 'sine.inOut'}),
+      gsap.to(r.chassisIn, {y: .7, duration: .035, repeat: -1, yoyo: true, ease: 'sine.inOut'})
+    ];
+    r.rings.forEach((c, i) => ls.push(gsap.timeline({repeat: -1, delay: i * .3})
+      .fromTo(c, {scale: 1.9, opacity: 0, transformOrigin: '50% 50%'}, {scale: 1.1, opacity: .85, duration: .3, ease: 'power1.out'})
+      .to(c, {scale: .4, opacity: 0, duration: .3, ease: 'power2.in'})));
+    loops.push(...ls);
+    if (!full) { ls.forEach(t => t.timeScale(.03)); loops.push(gsap.to(ls, {timeScale: 1, duration: 1.8, ease: 'power2.in'})); }
+  }
+  function startFlow(r) {
+    if (Kit.calm || R !== r) return;
+    r.shafts.forEach(s => { s.style.strokeDasharray = '5 7'; s.style.strokeDashoffset = 0; });
+    loops.push(gsap.to(r.shafts, {strokeDashoffset: -24, duration: .55, repeat: -1, ease: 'none'}));
+  }
+
+  // Both runs: same path start, same time, same ease. Only the grip differs.
+  function run(r, path, glow) {
+    if (Kit.calm) { placeAt(r, path, 1); draw(path, 1); if (glow) draw(glow, 1); return Promise.resolve(); }
+    r.wheelGs.forEach(w => gsap.to(w.g, {rotation: '+=900', svgOrigin: w.o, duration: 1.2, ease: 'power2.in'}));
+    const o = {t: 0};
+    return track(gsap.to(o, {t: 1, duration: 1.2, ease: 'power2.in', onUpdate() {
+      if (R !== r) return;
+      placeAt(r, path, o.t); draw(path, o.t); if (glow) draw(glow, o.t);
+      r.streaks.style.opacity = Math.min(.9, o.t * 1.5);
+    }}));
+  }
+
+  function crash(r) {
+    if (R !== r) return;
+    Kit.haptic('light');
+    r.spark.style.opacity = 1; r.streaks.style.opacity = 0;
+    if (Kit.calm) { r.leg1.style.opacity = 1; r.slipTxt.style.opacity = 1; return; }
+    const tl = gsap.timeline();
+    tl.fromTo(r.body, {x: -r.ml * .12, rotation: -7, transformOrigin: '50% 50%'}, {x: 0, rotation: 0, duration: .8, ease: 'elastic.out(1,.3)'})
+      .fromTo(r.wallsIn, {y: -2.5}, {y: 0, duration: .7, ease: 'elastic.out(1,.25)'}, 0)
+      .add(drawTween(r.sparkLines, {duration: .35, stagger: .03, ease: 'expo.out'}), 0)
+      .fromTo(r.slip, {scale: .2, opacity: 0, transformOrigin: '0% 100%'}, {scale: 1, opacity: 1, duration: .55, ease: 'back.out(3)'}, .05)
+      .fromTo(r.puffs, {opacity: .9, scale: .3, x: 0, y: 0, transformOrigin: '50% 50%'}, {opacity: 0, scale: 1.9, x: -r.ml * .25, y: -r.ml * .12, duration: 1, stagger: .08, ease: 'power2.out'}, 0)
+      .fromTo(r.gripFill, {attr: {width: r.colW * .08}}, {attr: {width: r.colW * .28}, duration: .9, ease: 'elastic.out(1,.4)'}, .05)
+      .fromTo(r.slipTxt, {opacity: 0, x: -6}, {opacity: 1, x: 0, duration: .4, ease: 'power3.out'}, .1)
+      .fromTo(r.leg1, {opacity: 0, x: -8}, {opacity: 1, x: 0, duration: .5, ease: 'power3.out'}, .3);
+    r.wheelGs.forEach(w => tl.to(w.g, {rotation: '+=420', svgOrigin: w.o, duration: .8, ease: 'power2.out'}, 0));
+    curTl = tl;
+  }
+
+  function fanOn(r) {
+    if (Kit.calm) { applyState(); return Promise.resolve(); }
+    const tl = gsap.timeline();
+    tl.to(r.spark, {opacity: 0, duration: .25, ease: 'power2.out'})
+      .to(r.slipTxt, {opacity: 0, duration: .25}, 0)
+      .to(r.bad, {opacity: .42, duration: .5}, 0)
+      .to(r.mouse, {opacity: 0, duration: .25, ease: 'power2.in'}, 0)
+      .add(() => { if (R === r) placeAt(r, r.good, 0); })
+      .to(r.mouse, {opacity: 1, duration: .4, ease: 'power2.out'})
+      .add(() => { if (R !== r) return; r.fanTxt.textContent = 'FAN ON'; startLoops(r, false); Kit.haptic('selection'); }, '<')
+      .fromTo(r.fanTxt, {scale: .5, transformOrigin: '0% 50%'}, {scale: 1, duration: .6, ease: 'back.out(3)'}, '<')
+      .to(r.whirr, {opacity: 1, duration: .5, ease: 'power2.out'}, '<+.2')
+      .add(drawTween(r.shafts, {duration: .9, stagger: .12, ease: 'power2.inOut'}), '<+.3')
+      .to(r.heads, {opacity: 1, duration: .25}, '>-.15')
+      .to(r.chassis, {y: r.press, duration: .6, ease: 'back.out(3)'}, '<')
+      .add(drawTween(r.pushShafts, {duration: .5, stagger: .08, ease: 'power3.out'}), '<')
+      .to(r.pushHeads, {opacity: 1, duration: .15}, '>-.1')
+      .to(r.patches, {opacity: .9, duration: .4, stagger: .06, ease: 'power2.out'}, '<')
+      .to(r.gripFill, {attr: {width: r.colW}, duration: 1.1, ease: 'elastic.out(1,.45)'}, '<')
+      .add(() => startFlow(r));
+    return track(tl);
+  }
+
+  function wow() {
+    if (wowDone || !R) return;
+    wowDone = true;
+    if (Kit.calm) return;
+    const r = R, tl = gsap.timeline();
+    tl.fromTo(r.goodGlow, {opacity: 0}, {opacity: .95, duration: .35, ease: 'power2.out'})
+      .to(r.goodGlow, {opacity: .45, duration: 1, ease: 'power3.out'})
+      .to(r.streaks, {opacity: 0, duration: .5, ease: 'power2.out'}, 0)
+      .fromTo(r.burst, {scale: .3, opacity: .9, transformOrigin: '50% 50%'}, {scale: 2.6, opacity: 0, duration: 1, stagger: .14, ease: 'expo.out'}, 0)
+      .fromTo(r.leg2, {opacity: 0, x: -8}, {opacity: 1, x: 0, duration: .5, ease: 'back.out(2)'}, .25)
+      .fromTo(r.pushShafts, {strokeWidth: 3.2}, {strokeWidth: 5, duration: .25, yoyo: true, repeat: 1, ease: 'power2.inOut'}, .1);
+    if (hasDraw) tl.fromTo(r.shine, {drawSVG: '0% 0%', opacity: 1}, {drawSVG: '86% 100%', duration: 1.1, ease: 'power3.inOut'}, 0).to(r.shine, {opacity: 0, duration: .3}, '-=.25');
+  }
+
+  function finish() {
+    say.innerHTML = '<b>A fan that vacuums the mouse to the floor.</b> Pressed down harder, the tyres stop slipping, so it can take turns much faster. Mokomo08 first raced it, and it was almost dismissed as a gimmick.';
+    Kit.hide('act'); Kit.show('keep'); Kit.haptic('success');
+    setTimeout(() => { if (!wowDone) wow(); }, 180);
+  }
+
+  function rebuild() {
+    pending = false;
+    layout();
+    if (!R) return;
+    applyState();
+    if (stage === 3 && !wowDone) wow();
+  }
+
+  async function next() {
+    if (busy || !R || stage >= 3) return;
+    busy = true; act.disabled = true; Kit.haptic('selection');
+    try {
+      if (stage === 0) {
+        stage = 1; const r = R;
+        await run(r, r.bad); crash(r); await wait(Kit.calm ? 0 : 650);
+        say.innerHTML = 'Too fast for its tyres: it slid into the wall. Flying over walls is against the rules. A fan is not. <b>Spin it up.</b>';
+        act.textContent = 'Spin up the fan';
+      } else if (stage === 1) {
+        stage = 2;
+        await fanOn(R);
+        say.innerHTML = 'You hear it more than see it: the propeller pulls air from under the mouse and it is pressed to the floor. <b>Same speed. Go again.</b>';
+        act.textContent = 'Go again, fan on';
+      } else if (stage === 2) {
+        stage = 3; const r = R;
+        r.goodGlow.style.opacity = .35;
+        await run(r, r.good, r.goodGlow);
+        finish();
+      }
+    } finally {
+      busy = false; act.disabled = false;
+      if (pending) rebuild();
+    }
+  }
+  act.addEventListener('click', next);
+  svg.addEventListener('click', next);
+
+  // The stage grows and shrinks as the text changes: redraw at 1:1 so nothing is scaled down.
+  if (typeof ResizeObserver !== 'undefined') {
+    let raf = 0;
+    new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        if (!R) return;
+        const b = svg.getBoundingClientRect();
+        if (Math.abs(b.width - W) < 2 && Math.abs(b.height - H) < 2) return;
+        if (busy) { pending = true; return; }
+        rebuild();
+      });
+    }).observe(Kit.$('stage'));
+  }
+
+  card.addEventListener('pointermove', e => {
+    if (Kit.calm || !R) return;
+    const b = svg.getBoundingClientRect(), nx = (e.clientX - b.left) / b.width - .5, ny = (e.clientY - b.top) / b.height - .5;
+    for (const k in depth) { R.qx[k](-nx * depth[k] * 3); R.qy[k](-ny * depth[k] * 2.2); }
+  });
+
+  Kit.onShow.card = rebuild;
+
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !R || stage > 0) return;
+    const r = R, tl = gsap.timeline(), o = {n: .5};
+    tl.from(r.inn.floor, {y: 22, opacity: 0, duration: .8, ease: 'power3.out'})
+      .from(r.inn.inset, {y: 26, opacity: 0, duration: .8, ease: 'power3.out'}, .12)
+      .from(r.wallGs, {y: -18, opacity: 0, duration: .6, stagger: .07, ease: 'back.out(2.2)'}, .3)
+      .add(drawTween(r.outlines, {duration: .8, stagger: .06, ease: 'power2.inOut'}), .35)
+      .from(r.posts, {scale: 0, transformOrigin: '50% 50%', duration: .4, stagger: .02, ease: 'back.out(3)'}, .5)
+      .from(r.inn.mouse, {y: 34, opacity: 0, duration: .8, ease: 'expo.out'}, .7)
+      .from(r.sideParts, {y: 10, opacity: 0, stagger: .06, duration: .5, ease: 'power3.out'}, .6)
+      .to(o, {n: 0, duration: 1.8, ease: 'power3.out', onUpdate() { if (R === r) for (const k in depth) r.qx[k](-o.n * depth[k] * 3); }}, 0);
+  };
+
+  Kit.play.card = async () => {
+    for (let i = 0; i < 3; i++) { await next(); await wait(60); }
+    await wait(Kit.calm ? 100 : 1500);
+  };
+})();
+Kit.single();
+</script>
+</html>

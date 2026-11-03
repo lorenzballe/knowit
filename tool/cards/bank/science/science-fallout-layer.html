@@ -1,0 +1,307 @@
+<!doctype html>
+<!-- slug: science-fallout-layer -->
+<!--
+Look: a dark lab scanner. Three mud cores, with layers, laminations and pebbles, look like plain mud until a cyan scan line turns them into a false-colour heat image.
+Interaction: drag the scan line down through a lake, a seabed and a far lake core. Each one shows a single hot radioactive layer, each at a different depth.
+Wow: "Line them up by time" stretches every core from depth into time. Fallout rains down over all three at once, the hot bands snap onto one glowing 1950s line, and a pulse runs across it.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The bomb layer</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+.bob{animation:bob 1.3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(5px)}}
+.breathe{animation:breathe 2.6s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.55}}
+.kit-calm .bob,.kit-calm .breathe{animation:none}
+#go{align-self:flex-start}
+.say{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.5cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag the scanner · a dated layer">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SCAN THE MUD</span></div>
+    <h2 class="q">How did 1950s bomb tests leave the same date in mud worldwide?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="Three sediment cores, from a lake, a seabed and a far lake, under a radiation scanner. Each has one thin radioactive layer."></svg>
+    </div>
+    <p class="say" id="say">In plain light it is just mud. <b>Drag the scanner down</b> to look for radiation.</p>
+    <button class="btn gone" id="go">Line them up by time</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fallout fell everywhere at once, so its thin layer marks the same moment in mud worldwide.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go'), card = Kit.$('card'), stage = Kit.$('stage');
+  const INF = [[0,0,0,4],[.13,27,12,65],[.25,74,12,107],[.38,120,28,109],[.5,165,44,96],[.63,207,68,70],[.75,237,105,37],[.88,251,155,6],[1,252,255,164]];
+  const heat = v => { v = Math.max(0, Math.min(1, v));
+    for (let i = 1; i < INF.length; i++) if (v <= INF[i][0]) { const a = INF[i-1], b = INF[i], k = (v - a[0]) / (b[0] - a[0]);
+      return `rgb(${[1,2,3].map(j => Math.round(a[j] + (b[j] - a[j]) * k)).join(',')})`; }
+    return 'rgb(252,255,164)'; };
+  const MUD = ['#6e5c46','#7f6b51','#5b4b3b','#8d785a','#4f4438','#9b876a','#675544','#74684f','#585044'];
+  const BT = .016, N = 64, CYAN = '#055e6e', TXT = '#10100c', HOT = '#fcffa4', INK = '#10100c', WARM = '#9a3412', DROP = '#c2410c';
+  const clamp = v => Math.max(0, Math.min(1, v));
+  const C = [{name: 'LAKE', band: .18}, {name: 'SEABED', band: .42}, {name: 'FAR LAKE', band: .29}];
+  C.forEach(c => {
+    c.noise = Array.from({length: 151}, () => Kit.rnd() - .5);
+    c.layers = []; let d = 0;
+    while (d < 1) { const th = .035 + Kit.rnd() * .09; c.layers.push({d0: d, d1: Math.min(1, d + th), col: MUD[Math.floor(Kit.rnd() * MUD.length)]}); d += th; }
+    c.pebbles = Array.from({length: 11}, () => ({d: .04 + Kit.rnd() * .92, u: .15 + Kit.rnd() * .7, r: .5 + Kit.rnd() * .9, a: Kit.rnd() * 40 - 20, light: Kit.rnd() > .5}));
+    c.found = false; c.g = 0; c.b = 1;
+  });
+  const DROPS = Array.from({length: 38}, () => ({u: Kit.rnd(), delay: Kit.rnd() * .4, r: .14 + Kit.rnd() * .16, y0: Kit.rnd() * .5}));
+  // Radioactivity down a core: nothing before the tests, one sharp peak, a faint tail above it.
+  const act = (c, d) => {
+    const peak = Math.exp(-Math.pow((d - c.band) / (BT * .6), 2));
+    const base = d < c.band ? .1 + .22 * Math.exp(-(c.band - d) / .07) : .02 + .05 * Math.exp(-(d - c.band) / .03);
+    const n = c.noise[Math.max(0, Math.min(150, Math.round(d * 150)))] * .06;
+    return clamp(base + peak + n);
+  };
+
+  const S = {scan: .03, t: 0, fall: 0, line: 0, pulse: 0, po: 0};
+  let step = 'scan', touched = false, fast = false, tl = null, shown = false, lastW = 0, lastH = 0;
+  let W, H, fs, top, bottom, Hc, alignY, gw, xr, tight = false; const R = {};
+  const mono = (extra = '') => `font-family:var(--mono);${extra}`;
+
+  function layout() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; lastW = W; lastH = H;
+    fs = Math.max(12, Math.min(14, W / 27));
+    gw = fs * 5.2; xr = W - fs * 2.3; top = fs * 2.9; bottom = H - fs * .6; Hc = bottom - top;
+    alignY = top + Math.max(Hc * .3, fs * 1.9);
+    if (alignY > bottom - fs * 2) alignY = top + Hc * .4;
+    const defs = Kit.mk('defs', {}, svg);
+    const sp = Kit.mk('pattern', {id: 'speck', width: 7, height: 5, patternUnits: 'userSpaceOnUse'}, defs);
+    [[1,1,.7,'rgba(0,0,0,.35)'],[4.5,3,.55,'rgba(255,255,255,.14)'],[6,.5,.45,'rgba(0,0,0,.28)'],[2.5,4,.4,'rgba(255,240,220,.12)']]
+      .forEach(([cx, cy, r, fl]) => Kit.mk('circle', {cx, cy, r, fill: fl}, sp));
+    const cyl = Kit.mk('linearGradient', {id: 'cyl', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+    [[0,'#000',.55],[.18,'#fff',.05],[.3,'#fff',.2],[.36,'#fff',.05],[.6,'#fff',.02],[1,'#000',.6]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, cyl));
+    const trail = Kit.mk('linearGradient', {id: 'trail', x1: 0, x2: 0, y1: 0, y2: 1}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': CYAN, 'stop-opacity': 0}, trail); Kit.mk('stop', {offset: 1, 'stop-color': CYAN, 'stop-opacity': .28}, trail);
+    const fu = {filterUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H};
+    const glow = Kit.mk('filter', Object.assign({id: 'glow'}, fu), defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: fs * .3, result: 'b'}, glow);
+    const mg = Kit.mk('feMerge', {}, glow); Kit.mk('feMergeNode', {in: 'b'}, mg); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, mg);
+    const blur = Kit.mk('filter', Object.assign({id: 'blur'}, fu), defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: fs * .45}, blur);
+    const tc = Kit.mk('clipPath', {id: 'tc'}, defs); Kit.mk('rect', {x: 0, y: top - fs * .4, width: W, height: H}, tc);
+
+    // depth ruler
+    R.ruler = Kit.mk('g', {}, svg);
+    for (let k = 0; k <= 20; k++) {
+      const y = top + k / 20 * Hc, big = k % 5 === 0;
+      Kit.mk('line', {x1: gw - fs * (big ? .55 : .35), x2: gw - fs * .15, y1: y, y2: y, stroke: 'rgba(16,16,12,' + (big ? .6 : .3) + ')', 'stroke-width': 1}, R.ruler);
+    }
+    Kit.mk('line', {x1: gw - fs * .15, x2: gw - fs * .15, y1: top, y2: bottom, stroke: 'rgba(16,16,12,.3)', 'stroke-width': 1}, R.ruler);
+
+    C.forEach((c, i) => {
+      const col = (xr - gw) / 3;
+      c.cx = gw + col * (i + .5); c.cw = Math.min(col * .64, fs * 5.5); c.x = c.cx - c.cw / 2;
+      const nm = Kit.mk('text', {x: c.cx, y: fs * 1.25, 'text-anchor': 'middle', fill: TXT, 'font-size': fs, 'font-weight': 700, style: mono('letter-spacing:.06em')}, svg); nm.textContent = c.name;
+      Kit.mk('rect', {x: c.x, y: fs * 1.75, width: c.cw, height: fs * .32, rx: fs * .16, fill: 'rgba(16,16,12,.18)'}, svg);
+      c.meter = Kit.mk('rect', {x: c.x, y: fs * 1.75, width: 0, height: fs * .32, rx: fs * .16, fill: heat(.3)}, svg);
+
+      const cg = Kit.mk('g', {class: 'coreg'}, svg);
+      Kit.mk('rect', {x: c.x + fs * .3, y: top + fs * .4, width: c.cw, height: Hc, rx: fs * .35, fill: '#000', opacity: .3, filter: 'url(#blur)'}, cg);
+      const cc = Kit.mk('clipPath', {id: 'cc' + i}, defs); Kit.mk('rect', {x: c.x, y: top, width: c.cw, height: Hc, rx: fs * .35}, cc);
+      const sc = Kit.mk('clipPath', {id: 'sc' + i}, defs); c.sclip = Kit.mk('rect', {x: c.x - 10, y: top - 4, width: c.cw + 20, height: 0}, sc);
+      const gv = Kit.mk('g', {'clip-path': `url(#cc${i})`}, cg);
+      c.layerEls = c.layers.map(L => Kit.mk('rect', {x: c.x, width: c.cw, fill: L.col}, gv));
+      c.edgeEls = c.layers.map(() => Kit.mk('rect', {x: c.x, width: c.cw, height: 1, fill: 'rgba(20,12,6,.35)'}, gv));
+      Kit.mk('rect', {x: c.x, y: top, width: c.cw, height: Hc, fill: 'url(#speck)'}, gv);
+      c.pebEls = c.pebbles.map(p => Kit.mk('ellipse', {rx: fs * .32 * p.r, ry: fs * .2 * p.r, fill: p.light ? '#b8a586' : '#3e342a', stroke: 'rgba(0,0,0,.35)', 'stroke-width': .6}, gv));
+      const th = Kit.mk('g', {'clip-path': `url(#sc${i})`}, gv);
+      c.sliceEls = Array.from({length: N}, (_, k) => Kit.mk('rect', {x: c.x, width: c.cw, fill: heat(.1 + .62 * act(c, (k + .5) / N))}, th));
+      Kit.mk('rect', {x: c.x, y: top, width: c.cw, height: Hc, fill: 'url(#speck)', opacity: .55}, th);
+      c.glowEl = Kit.mk('rect', {x: c.x - fs, width: c.cw + 2 * fs, fill: '#fff1a8', filter: 'url(#blur)', opacity: 0}, th);
+      c.bandEl = Kit.mk('rect', {x: c.x, width: c.cw, fill: HOT}, th);
+      c.trace = Kit.mk('polyline', {fill: 'none', stroke: '#fff', 'stroke-width': 1.3, opacity: .8, 'stroke-linejoin': 'round'}, th);
+      Kit.mk('rect', {x: c.x, y: top, width: c.cw, height: Hc, fill: 'url(#cyl)'}, gv);
+      Kit.mk('rect', {x: c.x, y: top, width: c.cw, height: Hc, rx: fs * .35, fill: 'none', stroke: 'rgba(255,255,255,.28)', 'stroke-width': 1.2}, cg);
+    });
+
+    const lab = (y, fill, w = 600) => Kit.mk('text', {x: gw - fs * .75, y, 'text-anchor': 'end', fill, 'font-size': fs, 'font-weight': w, style: mono()}, svg);
+    const botY = bottom - fs * .3, topY = top + fs * .9, gap = fs * 1.35;
+    R.lTop = lab(topY, TXT); R.lBot = lab(botY, TXT);
+    // Keep the 1950s label clear of the "today" and "earlier" labels.
+    const lo = topY + gap, hi = botY - gap;
+    let y50 = alignY + fs * .35;
+    tight = lo > hi;
+    if (!tight) y50 = Math.max(lo, Math.min(hi, y50));
+    R.l50 = lab(y50, INK, 800); R.l50.textContent = '1950s';
+    R.lCs = lab(y50 + fs * 1.6, WARM); R.lCs.textContent = 'Cs-137';
+    R.lPu = lab(y50 + fs * 3.2, WARM); R.lPu.textContent = 'Pu-239';
+    R.iso = [R.l50];
+    if (!tight && y50 + fs * 1.6 < botY - fs * 1.4) R.iso.push(R.lCs); else R.lCs.style.display = 'none';
+    if (!tight && y50 + fs * 3.2 < botY - fs * 1.4) R.iso.push(R.lPu); else R.lPu.style.display = 'none';
+
+    // fallout rain (the finale)
+    R.drops = Kit.mk('g', {filter: 'url(#glow)'}, svg);
+    R.dropEls = DROPS.map(p => Kit.mk('circle', {cx: gw + p.u * (xr - gw), r: fs * p.r, fill: DROP, opacity: 0}, R.drops));
+
+    R.x1 = gw - fs * .3; R.x2 = xr + fs * .3; R.lineLen = R.x2 - R.x1;
+    R.line = Kit.mk('line', {x1: R.x1, x2: R.x2, y1: alignY, y2: alignY, stroke: INK, 'stroke-width': 1.8, filter: 'url(#glow)', 'stroke-dasharray': R.lineLen, 'stroke-dashoffset': R.lineLen, opacity: 0}, svg);
+    R.pulse = Kit.mk('circle', {cx: R.x1, cy: alignY, r: fs * .45, fill: '#fff', filter: 'url(#glow)', opacity: 0}, svg);
+
+    R.scan = Kit.mk('g', {}, svg);
+    const tg = Kit.mk('g', {'clip-path': 'url(#tc)'}, svg); R.trail = Kit.mk('rect', {x: R.x1, width: R.lineLen, height: fs * 2.6, fill: 'url(#trail)'}, tg);
+    svg.insertBefore(tg, R.scan);
+    Kit.mk('line', {x1: R.x1, x2: R.x2, y1: 0, y2: 0, stroke: CYAN, 'stroke-width': 2, filter: 'url(#glow)'}, R.scan);
+    const hd = Kit.mk('g', {class: touched ? '' : 'bob'}, R.scan); R.handle = hd;
+    const hx0 = xr + fs * .25, hx1 = W - fs * .3, hh = fs * .75;
+    Kit.mk('path', {d: `M${R.x2},0 L${hx0 + fs * .35},${-hh} H${hx1 - fs * .3} Q${hx1},${-hh} ${hx1},${-hh + fs * .3} V${hh - fs * .3} Q${hx1},${hh} ${hx1 - fs * .3},${hh} H${hx0 + fs * .35} Z`, fill: CYAN, filter: 'url(#glow)'}, hd);
+    for (const dy of [-.25, 0, .25]) Kit.mk('line', {x1: hx0 + fs * .6, x2: hx1 - fs * .3, y1: dy * fs, y2: dy * fs, stroke: '#00E5A0', 'stroke-width': 1.3, 'stroke-linecap': 'round'}, hd);
+    if (!touched) Kit.mk('path', {d: `M${(hx0 + hx1) / 2 - fs * .35},${fs * 1.15} l${fs * .35},${fs * .35} l${fs * .35},${-fs * .35}`, fill: 'none', stroke: CYAN, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hd);
+    paint();
+  }
+
+  function paint() {
+    if (!R.scan) return;
+    const sy = top + S.scan * Hc;
+    C.forEach(c => {
+      const Y = d => {
+        const y0 = top + d * Hc;
+        const y1 = d <= c.band ? top + d / c.band * (alignY - top) : alignY + (d - c.band) / (1 - c.band) * (bottom - alignY);
+        return y0 + (y1 - y0) * S.t;
+      };
+      c.layerEls.forEach((e, k) => { const L = c.layers[k], a = Y(L.d0), b = Y(L.d1); e.setAttribute('y', a); e.setAttribute('height', Math.max(0, b - a) + .6); c.edgeEls[k].setAttribute('y', a); });
+      c.pebEls.forEach((e, k) => { const p = c.pebbles[k], cx = c.x + p.u * c.cw, cy = Y(p.d); e.setAttribute('cx', cx); e.setAttribute('cy', cy); e.setAttribute('transform', `rotate(${p.a} ${cx} ${cy})`); });
+      c.sliceEls.forEach((e, k) => { const a = Y(k / N), b = Y((k + 1) / N); e.setAttribute('y', a); e.setAttribute('height', Math.max(0, b - a) + .6); });
+      const b0 = Y(c.band - BT / 2), b1 = Y(c.band + BT / 2), bh = Math.max(2, b1 - b0);
+      c.bandEl.setAttribute('y', b0); c.bandEl.setAttribute('height', bh); c.bandEl.setAttribute('opacity', c.b);
+      c.glowEl.setAttribute('y', b0 - fs * .3); c.glowEl.setAttribute('height', bh + fs * .6); c.glowEl.setAttribute('opacity', c.g);
+      let pts = '';
+      for (let k = 0; k <= 150; k++) { const d = k / 150; pts += `${(c.x + c.cw * (.08 + .84 * act(c, d))).toFixed(1)},${Y(d).toFixed(1)} `; }
+      c.trace.setAttribute('points', pts);
+      c.sclip.setAttribute('height', Math.max(0, sy - (top - 4)));
+      let v = 0;
+      if (S.scan > 1.02 || step === 'done') v = 1;
+      else if (S.scan > 0) for (let d = S.scan - .012; d <= S.scan + .012; d += .004) if (d >= 0 && d <= 1) v = Math.max(v, act(c, d));
+      c.meter.setAttribute('width', c.cw * v); c.meter.setAttribute('fill', heat(.25 + .75 * v));
+      if (!c.found && S.scan >= c.band) { c.found = true; flash(c); }
+    });
+    R.scan.setAttribute('transform', `translate(0,${sy})`);
+    R.trail.setAttribute('y', sy - fs * 2.6);
+    const so = S.scan > 1.02 ? 0 : 1;
+    R.scan.style.opacity = so; R.trail.style.opacity = so;
+    R.ruler.style.opacity = 1 - .75 * S.t;
+    R.lTop.textContent = S.t > .5 ? 'today' : 'surface';
+    R.lBot.textContent = S.t > .5 ? 'earlier' : 'deeper';
+    const o = clamp((S.t - .55) / .45);
+    R.iso.forEach(e => e.style.opacity = o);
+    // In a very short stage there is no room for all three labels: the 1950s label wins.
+    const hideEnds = tight && S.t > .5;
+    R.lTop.style.display = hideEnds ? 'none' : '';
+    R.lBot.style.display = hideEnds ? 'none' : '';
+    // finale
+    R.dropEls.forEach((e, k) => {
+      const p = DROPS[k], q = clamp((S.fall - p.delay) / .6), ys = p.y0 * top;
+      e.setAttribute('cy', ys + (alignY - ys) * q * q);
+      e.setAttribute('opacity', q <= 0 || q >= 1 ? 0 : Math.min(1, q / .15) * .9);
+    });
+    R.line.setAttribute('stroke-dashoffset', R.lineLen * (1 - S.line));
+    R.line.setAttribute('opacity', S.line > 0 ? 1 : 0);
+    R.line.classList.toggle('breathe', step === 'done' && S.line >= 1);
+    R.pulse.setAttribute('cx', R.x1 + R.lineLen * S.pulse);
+    R.pulse.setAttribute('opacity', S.po);
+    if (step === 'scan' && C.every(c => c.found)) reveal();
+  }
+
+  function flash(c) {
+    Kit.haptic('light');
+    if (Kit.calm || fast) { c.g = .85; c.b = 1; }
+    else {
+      gsap.fromTo(c, {g: 0}, {g: .85, duration: 1, ease: 'elastic.out(1,.35)', onUpdate: paint});
+      gsap.fromTo(c, {b: .2}, {b: 1, duration: .5, ease: 'power3.out'});
+    }
+    if (step === 'scan' && !C.every(k => k.found)) say.innerHTML = `A hot layer in the <b>${c.name.toLowerCase()}</b> core. <b>Keep scanning down.</b>`;
+  }
+
+  function reveal() {
+    step = 'found'; Kit.haptic('success');
+    say.innerHTML = 'Each core has one thin, hot layer, at a different depth: mud piles up faster in some places than others.';
+    Kit.show('go');
+  }
+
+  function finish() {
+    step = 'done';
+    card.classList.add('answered');
+    say.innerHTML = 'In the 1950s, hydrogen-bomb tests spread radioactive fallout, like cesium-137 and plutonium-239, over the whole planet at once. So that hot layer marks the same moment in any mud, anywhere. That is why some geologists start the Anthropocene there.';
+    Kit.show('keep'); Kit.haptic('success');
+    if (Kit.calm || fast) { Object.assign(S, {fall: 1, line: 1, po: 0, pulse: 1}); paint(); return; }
+    gsap.timeline({onUpdate: paint, onComplete: paint})
+      .fromTo(S, {fall: 0}, {fall: 1, duration: 1.3, ease: 'none'})
+      .fromTo(S, {line: 0}, {line: 1, duration: .9, ease: 'power3.out'}, .75)
+      .fromTo(S, {pulse: 0, po: 1}, {pulse: 1, duration: 1, ease: 'power2.inOut'}, 1.15)
+      .to(S, {po: 0, duration: .35}, '>')
+      .add(() => { Kit.haptic('light'); gsap.fromTo(C, {g: 1.2}, {g: .85, duration: 1.2, stagger: .12, ease: 'power2.out', onUpdate: paint}); }, 1.0);
+  }
+
+  go.addEventListener('click', () => {
+    if (step !== 'found') return;
+    step = 'morph'; Kit.hide('go'); Kit.haptic('selection');
+    gsap.killTweensOf(S);
+    if (Kit.calm) { S.scan = 1.08; S.t = 1; paint(); finish(); return; }
+    tl = gsap.timeline({onUpdate: paint, onComplete: () => { paint(); finish(); }})
+      .to(S, {scan: 1.08, duration: .55, ease: 'power2.in'})
+      .to(S, {t: 1, duration: 1.5, ease: 'expo.inOut'}, '+=.05');
+  });
+
+  // ---------- the drag ----------
+  let quick = null, dragging = false;
+  const move = e => {
+    const r = svg.getBoundingClientRect();
+    const v = clamp((e.clientY - r.top - top) / Hc);
+    if (Kit.calm || !quick) { S.scan = v; paint(); } else quick(v);
+  };
+  svg.addEventListener('pointerdown', e => {
+    if (step !== 'scan' && step !== 'found') return;
+    dragging = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; if (R.handle) R.handle.removeAttribute('class'); Kit.haptic('selection'); }
+    move(e);
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) move(e); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // Redraw whenever the stage changes size (text growing, the keep box appearing), so the picture always fills it.
+  let raf = 0;
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
+    if (!shown) return;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const w = svg.clientWidth, h = svg.clientHeight;
+      if (w > 0 && h > 0 && (Math.abs(w - lastW) > 1 || Math.abs(h - lastH) > 1)) layout();
+    });
+  }).observe(stage);
+
+  Kit.onShow.card = () => {
+    shown = true; layout();
+    if (!quick && typeof gsap !== 'undefined') quick = gsap.quickTo(S, 'scan', {duration: .22, ease: 'power3.out', onUpdate: paint});
+  };
+  let entered = false;
+  Kit.onEnter.card = () => {
+    if (entered || Kit.calm) return; entered = true;
+    gsap.from('.coreg', {y: 40, opacity: 0, duration: .95, stagger: .13, ease: 'power3.out'});
+    gsap.from(R.scan, {opacity: 0, duration: .6, delay: .6, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    fast = true; touched = true; if (R.handle) R.handle.removeAttribute('class');
+    gsap.killTweensOf(S); S.scan = .55; paint();
+    await w(150);
+    go.click();
+    await w(100);
+    if (tl) tl.progress(1);
+    await w(400);
+  };
+})();
+Kit.single();
+</script>
+</html>

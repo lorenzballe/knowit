@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#yard{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh;touch-action:manipulation;cursor:pointer}
+#yard{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation;cursor:pointer}
 #why{display:flex;flex-direction:column;gap:.6cqh}
 #why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
 #why .big{margin:0}
@@ -59,44 +59,43 @@ function draw(){
   const cs = Math.min((W-8)/C, (H-8)/R), ox = (W-cs*C)/2, oy = (H-cs*R)/2;
   G = {W,H,f,cs,ox,oy};
   const fs = Math.max(12, Math.min(f, cs*.3));
-  Kit.mk('rect',{x:0,y:0,width:W,height:H,rx:Math.min(16,W*.04),fill:'#0b1220'},svg);
   const defs = Kit.mk('defs',{},svg);
   const rg = Kit.mk('radialGradient',{id:'beam'},defs);
-  Kit.mk('stop',{offset:'0','stop-color':'#ffd76a','stop-opacity':.55},rg);
-  Kit.mk('stop',{offset:'1','stop-color':'#ffd76a','stop-opacity':0},rg);
+  Kit.mk('stop',{offset:'0','stop-color':'#fff3c4','stop-opacity':.8},rg);
+  Kit.mk('stop',{offset:'1','stop-color':'#fff3c4','stop-opacity':0},rg);
   // floor grid
-  for (let i=0;i<=C;i++) Kit.mk('line',{x1:ox+i*cs,y1:oy,x2:ox+i*cs,y2:oy+R*cs,stroke:'#1f2b44','stroke-width':1},svg);
-  for (let j=0;j<=R;j++) Kit.mk('line',{x1:ox,y1:oy+j*cs,x2:ox+C*cs,y2:oy+j*cs,stroke:'#1f2b44','stroke-width':1},svg);
+  for (let i=0;i<=C;i++) Kit.mk('line',{x1:ox+i*cs,y1:oy,x2:ox+i*cs,y2:oy+R*cs,stroke:'#10100c','stroke-opacity':.22,'stroke-width':1},svg);
+  for (let j=0;j<=R;j++) Kit.mk('line',{x1:ox,y1:oy+j*cs,x2:ox+C*cs,y2:oy+j*cs,stroke:'#10100c','stroke-opacity':.22,'stroke-width':1},svg);
   // steel stacks
   for (const k of blocked){ const [x,y] = k.split(',').map(Number);
-    Kit.mk('rect',{x:ox+x*cs+cs*.08,y:oy+y*cs+cs*.08,width:cs*.84,height:cs*.84,rx:cs*.08,fill:'#3a4560',stroke:'#58658a','stroke-width':1.5},svg);
-    Kit.mk('line',{x1:ox+x*cs+cs*.2,y1:oy+y*cs+cs*.5,x2:ox+x*cs+cs*.8,y2:oy+y*cs+cs*.5,stroke:'#58658a','stroke-width':1.5},svg);
+    Kit.mk('rect',{x:ox+x*cs+cs*.08,y:oy+y*cs+cs*.08,width:cs*.84,height:cs*.84,rx:cs*.08,fill:'#1b2a4a',stroke:'#10100c','stroke-width':1.5},svg);
+    Kit.mk('line',{x1:ox+x*cs+cs*.2,y1:oy+y*cs+cs*.5,x2:ox+x*cs+cs*.8,y2:oy+y*cs+cs*.5,stroke:'#8fa0c8','stroke-width':1.5},svg);
   }
   // crates dropped by the reader
   for (const k of crates){ const [x,y] = k.split(',').map(Number);
     const g = Kit.mk('g',{class:'crate','data-k':k},svg);
-    Kit.mk('rect',{x:ox+x*cs+cs*.1,y:oy+y*cs+cs*.1,width:cs*.8,height:cs*.8,rx:cs*.06,fill:'#c8553d',stroke:'#ff8a6b','stroke-width':2},g);
-    Kit.mk('path',{d:`M${ox+x*cs+cs*.1} ${oy+y*cs+cs*.1}L${ox+x*cs+cs*.9} ${oy+y*cs+cs*.9}M${ox+x*cs+cs*.9} ${oy+y*cs+cs*.1}L${ox+x*cs+cs*.1} ${oy+y*cs+cs*.9}`,stroke:'#ff8a6b','stroke-width':2},g);
+    Kit.mk('rect',{x:ox+x*cs+cs*.1,y:oy+y*cs+cs*.1,width:cs*.8,height:cs*.8,rx:cs*.06,fill:'#c8553d',stroke:'#10100c','stroke-width':2},g);
+    Kit.mk('path',{d:`M${ox+x*cs+cs*.1} ${oy+y*cs+cs*.1}L${ox+x*cs+cs*.9} ${oy+y*cs+cs*.9}M${ox+x*cs+cs*.9} ${oy+y*cs+cs*.1}L${ox+x*cs+cs*.1} ${oy+y*cs+cs*.9}`,stroke:'#10100c','stroke-width':2},g);
   }
   // goal: the ship block waiting
   const gx = ox+GOAL.x*cs, gy = oy+GOAL.y*cs;
-  Kit.mk('rect',{x:gx+cs*.06,y:gy+cs*.06,width:cs*.88,height:cs*.88,rx:cs*.12,fill:'none',stroke:'#5ee6c8','stroke-width':2.5,'stroke-dasharray':'5 4'},svg);
-  Kit.mk('path',{d:`M${gx+cs*.22} ${gy+cs*.42}h${cs*.56}l-${cs*.1} ${cs*.3}h-${cs*.36}z`,fill:'#5ee6c8'},svg);
+  Kit.mk('rect',{x:gx+cs*.06,y:gy+cs*.06,width:cs*.88,height:cs*.88,rx:cs*.12,fill:'none',stroke:'#10100c','stroke-width':2.5,'stroke-dasharray':'5 4'},svg);
+  Kit.mk('path',{d:`M${gx+cs*.22} ${gy+cs*.42}h${cs*.56}l-${cs*.1} ${cs*.3}h-${cs*.36}z`,fill:'#10100c'},svg);
   // path
   if (path.length){
     const pts = path.map(([x,y]) => `${ox+(x+.5)*cs},${oy+(y+.5)*cs}`).join(' ');
-    Kit.mk('polyline',{points:pts,fill:'none',stroke:'#38bdf8','stroke-opacity':.25,'stroke-width':cs*.32,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
-    Kit.mk('polyline',{id:'route',points:pts,fill:'none',stroke:'#7dd3fc','stroke-width':2.5,'stroke-dasharray':'2 6','stroke-linecap':'round','stroke-linejoin':'round'},svg);
+    Kit.mk('polyline',{points:pts,fill:'none',stroke:'#ffffff','stroke-opacity':.3,'stroke-width':cs*.32,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+    Kit.mk('polyline',{id:'route',points:pts,fill:'none',stroke:'#ffffff','stroke-width':2.5,'stroke-dasharray':'2 6','stroke-linecap':'round','stroke-linejoin':'round'},svg);
   }
   // labels, far apart: top-left and bottom-right of the floor
-  const tx = Kit.mk('text',{x:ox+cs*.15,y:oy+cs*.5,'dominant-baseline':'middle',fill:'#9fb0d0','font-family':'var(--mono)','font-size':fs,'font-weight':700},svg);
+  const tx = Kit.mk('text',{x:ox+cs*.15,y:oy+cs*.5,'dominant-baseline':'middle',fill:'#10100c','font-family':'var(--mono)','font-size':fs,'font-weight':700},svg);
   tx.textContent = 'NIGHT · ' + (path.length ? (path.length-1)+' STEPS' : '');
   // rover
   const r = Kit.mk('g',{id:'rover'},svg);
   Kit.mk('circle',{cx:cs*.55,cy:0,r:cs*.9,fill:'url(#beam)'},r);
-  Kit.mk('rect',{x:-cs*.32,y:-cs*.26,width:cs*.64,height:cs*.52,rx:cs*.1,fill:'#ffc93c',stroke:'#fff3c4','stroke-width':1.5},r);
-  Kit.mk('rect',{x:-cs*.2,y:-cs*.14,width:cs*.28,height:cs*.28,rx:cs*.04,fill:'#0b1220'},r);
-  Kit.mk('circle',{cx:cs*.24,cy:0,r:cs*.06,fill:'#0b1220'},r);
+  Kit.mk('rect',{x:-cs*.32,y:-cs*.26,width:cs*.64,height:cs*.52,rx:cs*.1,fill:'#ffc93c',stroke:'#10100c','stroke-width':1.5},r);
+  Kit.mk('rect',{x:-cs*.2,y:-cs*.14,width:cs*.28,height:cs*.28,rx:cs*.04,fill:'#10100c'},r);
+  Kit.mk('circle',{cx:cs*.24,cy:0,r:cs*.06,fill:'#10100c'},r);
   placeRover();
 }
 function placeRover(){

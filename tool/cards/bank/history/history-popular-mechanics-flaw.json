@@ -1,0 +1,38 @@
+{
+  "id": "history-popular-mechanics-flaw",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.bad_calls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Alcatraz escapers get the plans for their raft?",
+  "answer": "Morris found the plans in Popular Mechanics, a DIY magazine. One issue showed a raft made from rubber raincoats, and another showed life jackets made the same way. The guards were meant to check magazines, but these got through.",
+  "move": "The escape manual was a DIY magazine the guards let in.",
+  "keywords": [
+    "alcatraz",
+    "morris",
+    "popular mechanics",
+    "escape raft",
+    "prison guards"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A dark window into Alcatraz with four numbered panes to tap. Tapping each pane lights it and reveals one part of how the escapers got the plans for their raft, from a DIY magazine the guards let in.",
+    "ground": "#100c14"
+  },
+  "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Q8GEU8YQSiE&t=437s",
+  "written": "2026-11-03"
+}

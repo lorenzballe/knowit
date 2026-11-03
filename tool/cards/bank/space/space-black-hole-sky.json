@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A view of the night sky in which the Milky Way is bent, stretched and warped into curves. The page asks what the outside world would look like from inside a black hole. Slide to fall toward the black hole and watch the sky bend.",
-    "ground": "#04050c"
+    "label": "A view of the night sky in which the Milky Way is bent, stretched and warped into curves. The page asks what the outside world would look like from inside a black hole. Slide to fall toward the black hole and watch the sky bend."
   },
   "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=DZJ1sHAvsu8&t=364s",

@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;border-radius:1.6cqh;overflow:hidden}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;overflow:visible}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
@@ -33,7 +33,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 let G = {}, done = false, busy = false, entered = false, dragging = false, off = {x:0, y:0};
-const BLUE = '#3aa0ff', FOAM = '#ffffff', ROCK = '#4a3f36', DARK = '#161c28', PIPE = '#7b8796';
+const BLUE = '#3aa0ff', FOAM = '#ffffff', INK = '#10100c', DARK = '#161c28', PIPE = '#10100c';
 
 function build(){
   const svg = Kit.$('pic'); svg.innerHTML = '';
@@ -45,9 +45,8 @@ function build(){
   const midX = (cx0 + cx1) / 2, riserX = cx1 - W * .07;
   G = {W, H, fs, roadY, cy0, cy1, cx0, cx1, midX};
 
-  m('rect', {x:0, y:0, width:W, height:H, fill:ROCK});
-  m('rect', {x:0, y:ceilY, width:W, height:roadY - ceilY, fill:DARK});
-  m('rect', {x:0, y:roadY, width:W, height:H * .025, fill:'#2b2b2b'});
+  m('line', {x1:0, y1:ceilY, x2:W, y2:ceilY, stroke:INK, 'stroke-width':3});
+  m('rect', {x:0, y:roadY, width:W, height:H * .025, fill:INK});
   m('line', {x1:0, y1:roadY + H * .012, x2:W, y2:roadY + H * .012, stroke:'#f2d24b', 'stroke-width':2, 'stroke-dasharray':'10 10'});
 
   // fire
@@ -69,7 +68,7 @@ function build(){
   m('path', {d:dpath, fill:'none', stroke:PIPE, 'stroke-width':dw + 6, 'stroke-linejoin':'round'});
   m('path', {d:dpath, fill:'none', stroke:'#1f4f7d', 'stroke-width':dw, 'stroke-linejoin':'round'});
   G.flow = m('path', {d:dpath, fill:'none', stroke:BLUE, 'stroke-width':dw * .45, 'stroke-dasharray':'14 12', 'stroke-linecap':'round'});
-  m('text', {x:12, y:ductY - dw / 2 - fs * .5, fill:'#cfe6ff', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs}).textContent = 'WATER IN →';
+  m('text', {x:12, y:ductY - dw / 2 - fs * .5, fill:INK, 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs}).textContent = 'WATER IN →';
 
   // riser to ceiling + nozzles
   const nozY = ceilY + H * .035;
@@ -81,11 +80,11 @@ function build(){
   G.riser.setAttribute('stroke-dasharray', len); G.riser.setAttribute('stroke-dashoffset', len); G.len = len;
   G.noz = [.28, .4, .52, .64].map(k => W * k);
   G.nozY = nozY;
-  G.noz.forEach(x => m('path', {d:`M${x - 6},${nozY} L${x + 6},${nozY} L${x + 3},${nozY + 10} L${x - 3},${nozY + 10} Z`, fill:'#c9d2dc'}));
+  G.noz.forEach(x => m('path', {d:`M${x - 6},${nozY} L${x + 6},${nozY} L${x + 3},${nozY + 10} L${x - 3},${nozY + 10} Z`, fill:'#ffffff', stroke:INK, 'stroke-width':1.5}));
   G.parts = m('g');
   G.drops = [];
   G.noz.forEach(x => { for (let i = 0; i < 7; i++) G.drops.push(m('circle', {cx:x + (i - 3) * 4, cy:nozY + 10, r:2, fill:FOAM, opacity:0}, G.parts)); });
-  m('text', {x:12, y:ceilY + H * .035 + fs * 2.2, fill:'#9fb0c6', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs}).textContent = 'TUNNEL';
+  m('text', {x:12, y:ceilY + H * .035 + fs * 2.2, fill:INK, 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs}).textContent = 'TUNNEL';
 
   // sector room
   G.room = m('rect', {x:cx0, y:cy0, width:cx1 - cx0, height:cy1 - cy0, rx:6, fill:'#2c3440', stroke:'#dfe6ee', 'stroke-width':3});
@@ -100,7 +99,7 @@ function build(){
   // foam token
   const r = Math.max(30, Math.min(W, H) * .09);
   G.home = {x:W * .2, y:(cy0 + cy1) / 2};
-  G.ring = m('circle', {cx:G.home.x, cy:G.home.y, r:r + 5, fill:'none', stroke:'#e8eef6', 'stroke-width':2, 'stroke-dasharray':'5 5', opacity:.6});
+  G.ring = m('circle', {cx:G.home.x, cy:G.home.y, r:r + 5, fill:'none', stroke:INK, 'stroke-width':2, 'stroke-dasharray':'5 5', opacity:.6});
   G.tok = m('g', {style:'cursor:grab'});
   m('circle', {r, fill:'#ffd23f', stroke:'#fff', 'stroke-width':3}, G.tok);
   m('text', {y:-r * .15, 'text-anchor':'middle', fill:DARK, 'font-family':'var(--display)', 'font-weight':900, 'font-size':Math.max(14, r * .62)}, G.tok).textContent = '3%';

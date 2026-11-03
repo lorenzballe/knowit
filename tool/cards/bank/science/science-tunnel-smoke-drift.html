@@ -103,33 +103,34 @@ Kit.onShow.card = () => {
   const fs = Math.max(f * .8, 12);
   const top = H * .14, road = H * .8, rx = Math.min(H * .1, W * .1);
   Kit.mk('text', {x: W * .03, y: top - fs * .5, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: 'var(--k)'}, svg).textContent = 'TRAFFIC →';
-  Kit.mk('rect', {x: 0, y: top, width: W, height: H * .76 - (top - H * .1), rx, fill: '#1b1f2b'}, svg);
-  Kit.mk('rect', {x: 0, y: road, width: W, height: H * .07, fill: '#2d3343'}, svg);
+  // tunnel ceiling slab (no backdrop panel: the scene sits on the card)
+  Kit.mk('rect', {x: 0, y: top, width: W, height: H * .05, fill: '#10100c'}, svg);
+  Kit.mk('rect', {x: 0, y: road, width: W, height: H * .07, fill: '#10100c'}, svg);
   Kit.mk('line', {x1: 0, x2: W, y1: road + H * .035, y2: road + H * .035, stroke: '#f2e6b8', 'stroke-width': Math.max(2, H * .006), 'stroke-dasharray': `${W * .05} ${W * .04}`}, svg);
-  for (let i = 1; i < 8; i++) Kit.mk('circle', {cx: W * i / 8, cy: top + H * .025, r: Math.max(2, H * .008), fill: '#ffd979', opacity: .8}, svg);
+  for (let i = 1; i < 8; i++) Kit.mk('circle', {cx: W * i / 8, cy: top + H * .025, r: Math.max(2, H * .008), fill: '#ffd979', opacity: .9}, svg);
   // exit
   const dh = (road - top) * .38, dw = W * .07, dx = W * .05;
-  Kit.mk('rect', {x: dx, y: road - dh, width: dw, height: dh, rx: 3, fill: '#0f3d24', stroke: '#3ee07a', 'stroke-width': Math.max(2, H * .006)}, svg);
+  Kit.mk('rect', {x: dx, y: road - dh, width: dw, height: dh, rx: 3, fill: '#0f3d24', stroke: '#10100c', 'stroke-width': Math.max(2, H * .006)}, svg);
   const sw = Math.max(fs * 2.9, dw * 1.4);
-  Kit.mk('rect', {x: dx + dw / 2 - sw / 2, y: road - dh - fs * 1.9, width: sw, height: fs * 1.5, rx: 4, fill: '#2bc764'}, svg);
-  Kit.mk('text', {x: dx + dw / 2, y: road - dh - fs * .8, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: '#fff'}, svg).textContent = 'EXIT';
+  Kit.mk('rect', {x: dx + dw / 2 - sw / 2, y: road - dh - fs * 1.9, width: sw, height: fs * 1.5, rx: 4, fill: '#10100c'}, svg);
+  Kit.mk('text', {x: dx + dw / 2, y: road - dh - fs * .8, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: '#00E5A0'}, svg).textContent = 'EXIT';
   const cw = W * .13, ch = cw * .55;
-  const cars = CARS.map(c => { const g = car(svg, cw, ch, c.c); g.setAttribute('opacity', .9); return g; });
+  const cars = CARS.map(c => { const g = car(svg, cw, ch, c.c); g.setAttribute('opacity', .95); return g; });
   // crashed car
-  const crash = car(svg, cw, ch, '#8a8f9c');
+  const crash = car(svg, cw, ch, '#6b7080');
   crash.setAttribute('transform', `translate(${W * .5 - cw / 2},${road + H * .03}) rotate(-12 ${cw / 2} 0)`);
   Kit.mk('circle', {cx: W * .5, cy: road - ch * .5, r: ch * .32, fill: '#ff7a2f', opacity: .9}, svg);
   Kit.mk('circle', {cx: W * .5, cy: road - ch * .55, r: ch * .16, fill: '#ffd25a'}, svg);
-  const puffs = P.map(() => Kit.mk('circle', {fill: '#a9adb6'}, svg));
+  const puffs = P.map(() => Kit.mk('circle', {fill: '#4a4f5a'}, svg));
   const al = W * .06;
   const arrows = ARROWS.map(() => {
     const g = Kit.mk('g', {opacity: 0}, svg);
-    Kit.mk('path', {d: `M${-al} 0H0M${-al * .35} ${-al * .3}L0 0L${-al * .35} ${al * .3}`, fill: 'none', stroke: '#9fe7ff', 'stroke-width': Math.max(2.5, H * .009), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    Kit.mk('path', {d: `M${-al} 0H0M${-al * .35} ${-al * .3}L0 0L${-al * .35} ${al * .3}`, fill: 'none', stroke: '#10100c', 'stroke-width': Math.max(2.5, H * .009), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
     return g;
   });
   const m = Kit.mk('g', {opacity: 0}, svg), ms = (road - top) * .22;
-  Kit.mk('circle', {cx: 0, cy: -ms, r: ms * .14, fill: '#fff'}, m);
-  Kit.mk('path', {d: `M0 ${-ms * .85}V${-ms * .4}M0 ${-ms * .4}L${-ms * .2} 0M0 ${-ms * .4}L${ms * .2} 0M0 ${-ms * .72}L${-ms * .25} ${-ms * .5}M0 ${-ms * .72}L${ms * .2} ${-ms * .55}`, stroke: '#fff', 'stroke-width': Math.max(2, ms * .09), 'stroke-linecap': 'round', fill: 'none'}, m);
+  Kit.mk('circle', {cx: 0, cy: -ms, r: ms * .14, fill: '#10100c'}, m);
+  Kit.mk('path', {d: `M0 ${-ms * .85}V${-ms * .4}M0 ${-ms * .4}L${-ms * .2} 0M0 ${-ms * .4}L${ms * .2} 0M0 ${-ms * .72}L${-ms * .25} ${-ms * .5}M0 ${-ms * .72}L${ms * .2} ${-ms * .55}`, stroke: '#10100c', 'stroke-width': Math.max(2, ms * .09), 'stroke-linecap': 'round', fill: 'none'}, m);
   const airLbl = Kit.mk('text', {x: W * .97, y: H * .97, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: 'var(--k)', opacity: 0}, svg);
   airLbl.textContent = 'air pushed along by cars →';
   G = {W, H, top, road, cars, puffs, arrows, man: m, cw, airLbl, al};

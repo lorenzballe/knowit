@@ -56,8 +56,6 @@ function draw(animIdx){
   const y1 = H * .30, y2 = H * .66;
   const ink = 'var(--k)';
   const tx = (x, y, s, a, opts = {}) => { const t = Kit.mk('text', Object.assign({x, y, 'text-anchor': a, fill: ink, style: `font:${opts.w || 800} ${opts.fs || fs}px var(--body)`}, opts.attr || {}), svg); t.textContent = s; return t; };
-  // pond band
-  Kit.mk('rect', {x: pad * .4, y: y1 - r * 1.8, width: W - pad * .8, height: (y2 - y1) + r * 3.6, rx: r, fill: 'color-mix(in srgb, var(--k) 7%, transparent)'}, svg);
   const tS = branch ? SEQ[branch].t.slice(0, shown) : 'D';
   const yS = branch ? SEQ[branch].y.slice(0, shown) : 'C';
   const cnt = s => [...s].filter(c => c === 'D').length;

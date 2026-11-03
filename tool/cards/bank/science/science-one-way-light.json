@@ -1,0 +1,36 @@
+{
+  "id": "science-one-way-light",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What if light travelled faster one way than the other?",
+  "answer": "Clocks synced by assuming light is equally fast both ways would be offset by a hidden amount. That offset cancels out in a round-trip measurement, so the measured speed still looks like c. The one-way speed stays masked.",
+  "move": "We can only time light's round trip. Timing one leg needs synced clocks, and syncing them assumes light is equally fast both ways.",
+  "keywords": [
+    "speed of light",
+    "synced clocks",
+    "mars",
+    "mark"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A light path with a drag control that makes light slower one way and faster back. Asks the reader to send a signal to Mark on Mars."
+  },
+  "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=pTn6Ewhb27k&t=286s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "science-hotter-than-sun",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How hot does the Tsar Bomba's core get, next to the Sun?",
+  "answer": "Each tap makes the dial ten times hotter. Huge pressure sets off fission in a small plutonium sphere, releasing up to 100 million °C. The Sun's surface is about 5,500 °C, so that is roughly 18,000 times hotter.",
+  "move": "For an instant, the bomb's core is far hotter than the surface of the Sun.",
+  "keywords": [
+    "tsar bomba",
+    "sun",
+    "plutonium",
+    "fission",
+    "temperature"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A tap-to-heat dial asking how hot the Tsar Bomba's core gets compared with the Sun. Each tap multiplies the temperature by ten, ending at 100 million °C against the Sun's surface near 5,500 °C.",
+    "ground": "#1e1912"
+  },
+  "source": "Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=tesv0xoNhCo&t=327s",
+  "written": "2026-11-03"
+}

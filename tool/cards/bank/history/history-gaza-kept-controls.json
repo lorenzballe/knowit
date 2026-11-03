@@ -1,0 +1,37 @@
+{
+  "id": "history-gaza-kept-controls",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.disputed_borders",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does Israel still control in Gaza after withdrawing?",
+  "answer": "Israel withdrew from Gaza but still controls its airspace, territorial waters, civil registry, the entry of goods and people, and the tax system. Leaving a territory is not the same as giving up control over it.",
+  "move": "Withdrawing from a land is not the same as giving up control of it.",
+  "keywords": [
+    "gaza",
+    "israel",
+    "settlers",
+    "airspace",
+    "territorial waters"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Map of the Gaza Strip. Tap the strip to watch Israeli settlers leave it. The question asks what Israel still controls in Gaza after withdrawing."
+  },
+  "source": "Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=hBImPpGnYKE&t=919s",
+  "written": "2026-11-03"
+}

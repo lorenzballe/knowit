@@ -1,0 +1,37 @@
+{
+  "id": "science-snow-flips-friction",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does rolling versus sliding friction change from asphalt to snow?",
+  "answer": "On asphalt, the tyres mostly roll and grip. On snow, the tyres mostly slide, so almost every stretch becomes a drift.",
+  "move": "Asphalt: mostly rolling grip. Snow: mostly sliding, so every stretch is a drift.",
+  "keywords": [
+    "friction",
+    "snow",
+    "asphalt",
+    "tyres",
+    "rally driving"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two tiles compare tyre friction. The asphalt tile shows gold rolling and gripping, the snow tile shows blue sliding. A drag arrow goes from asphalt to snow."
+  },
+  "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=2SCEUgazR_8&t=345s",
+  "written": "2026-11-03"
+}

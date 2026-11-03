@@ -1,0 +1,503 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-slot-reward-loop -->
+<!-- Look: a paper cut-out collage at night: a torn red slot machine, a denim pocket of gold coins, a pink paper brain on a teal nerve, all boiling with stop-motion jitter.
+     Interaction: tap the machine eight times. Each spin takes a coin from your pocket. The frequent small wins flash the bulbs and send dopamine sparks to the brain, which pulses with rings. Then drag a bar to guess how much of Italy's €33.5bn came back.
+     Wow: the bar fills to €25bn, and the top €8.5bn tears off in paper chunks that fly through the air (Matter.js) and get swallowed by the machine as it lights up. -->
+<title>The machine that trains you</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/matter.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer;background:none}
+#say{min-height:2.5em}
+.label .tag{font-size:max(1.4cqh,12px)}
+.answered .q{font-size:max(2.4cqh,14px)}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Spin, then guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPIN · GUESS</span></div>
+    <h2 class="q">Why do flashing lights and frequent small wins keep players playing?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="pic" role="img" aria-label="A paper slot machine, a pocket of coins and a brain linked by a nerve; later a bar of the €33.5 billion bet in Italy in 2022."></canvas>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the machine to spin. <b>Each spin costs one coin from your pocket.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Frequent small wins train your brain; the odds still always lose.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const {Engine, Bodies, Composite, Body} = Matter;
+  const cv = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const P = {night:'#211a3a', night2:'#33275a', red:'#d9352b', red2:'#a11e22', gold:'#f5b83f', gold2:'#b9790f', cream:'#f8efdc',
+    ink:'#1b1423', teal:'#1fb3a2', teal2:'#0f6f66', pink:'#f39cb5', pink2:'#c4537a', mag:'#ff3d8b', kraft:'#c8975a', kraft2:'#8f6131',
+    plum:'#3a1d3f', denim:'#2a4676', denim2:'#3d64a8'};
+  const WINS = [0, 1, 2, 0, 1, 0, 2, 0], SPINS = WINS.length;   // 8 coins in, 6 back
+  const LOSE = [[2, 1, 3], [1, 3, 2], [3, 2, 1], [2, 3, 1]];
+  const BET = 33.5, BACK = 25;                                  // Italy 2022, € billions (Geopop)
+  let x = null, W = 0, H = 0, fs = 13, G = {}, FONT = {}, grain = null;
+  let engine = null, coins = [], scraps = [];
+  let phase = 'play', spins = 0, paid = 0, won = 0, pocket = 10, busy = false, speed = 1;
+  let guess = null, dragging = false, sureOn = false, ripped = false, hint = 1;
+  let boil = 0, lastBoil = 0, lastT = 0, fly = null, sparks = [], rings = [];
+  const st = {lights: 0, glow: 0, lever: 0, sideA: 1, sideB: 0, colGrow: 0, real: 0, m: 1, b: 1, pathT: 1, gap: 0};
+  const reels = [{p: 2}, {p: 1}, {p: 3}];
+
+  const hr = (a, b) => { const s = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return s - Math.floor(s); };
+  const jit = s => Kit.calm ? 0 : (hr(s, boil + 5) - .5) * 1.3;
+  const R = (x0, y0, x1, y1) => [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+  const fmt = v => (v % 1 ? v.toFixed(1) : String(v));
+  const dur = s => Kit.calm ? 0 : s / speed;
+
+  // ---------- paper ----------
+  function raggedPath(pts, seed, amp = 1.6, step = 7) {
+    x.beginPath(); let k = 0; const b = Kit.calm ? 0 : boil;
+    for (let i = 0; i < pts.length; i++) {
+      const [ax, ay] = pts[i], [bx, by] = pts[(i + 1) % pts.length];
+      const L = Math.hypot(bx - ax, by - ay) || 1, n = Math.max(1, Math.round(L / step)), nx = -(by - ay) / L, ny = (bx - ax) / L;
+      for (let s = 0; s < n; s++) {
+        const t = s / n, d = (hr(seed, k++) - .5) * 2 * amp + (hr(seed + b * 13.7, k) - .5) * .8;
+        const px = ax + (bx - ax) * t + nx * d, py = ay + (by - ay) * t + ny * d;
+        (i || s) ? x.lineTo(px, py) : x.moveTo(px, py);
+      }
+    }
+    x.closePath();
+  }
+  function paper(pts, fill, seed, o = {}) {
+    x.save(); x.translate(jit(seed), jit(seed + 3));
+    raggedPath(pts, seed, o.amp ?? 1.6, o.step ?? 7);
+    if (o.shadow !== false) { x.shadowColor = 'rgba(0,0,0,.42)'; x.shadowBlur = o.blur ?? 7; x.shadowOffsetY = o.sh ?? 3; x.shadowOffsetX = 1; }
+    x.fillStyle = fill; x.fill(); x.shadowColor = 'transparent';
+    if (o.edge !== false) { x.strokeStyle = 'rgba(255,250,235,.55)'; x.lineWidth = 1.2; x.stroke(); }
+    x.restore();
+  }
+  function txt(t, px, py, size, o = {}) {
+    x.font = `${o.w || 700} ${Math.max(12, size)}px ${o.f || FONT.body}`;
+    x.textAlign = o.a || 'left'; x.textBaseline = 'alphabetic'; x.fillStyle = o.c || P.cream; x.fillText(t, px, py);
+  }
+  function makeGrain() {
+    const g = document.createElement('canvas'); g.width = g.height = 120;
+    const c = g.getContext('2d'), d = c.createImageData(120, 120);
+    for (let i = 0; i < d.data.length; i += 4) { const v = Kit.rnd() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 26; }
+    c.putImageData(d, 0, 0); return g;
+  }
+
+  // ---------- layout & world ----------
+  function layout() {
+    const f = Kit.fitCanvas(cv), changed = Math.abs(f.W - W) > 1 || Math.abs(f.H - H) > 1;
+    x = f.x; W = f.W; H = f.H;
+    if (!W || !H) return;
+    fs = Math.max(12, Math.min(15, W / 26));
+    const cs = getComputedStyle(card);
+    FONT = {body: cs.getPropertyValue('--body').trim() || 'sans-serif', mono: cs.getPropertyValue('--mono').trim() || 'monospace',
+      hand: cs.getPropertyValue('--hand').trim() || 'cursive', display: cs.getPropertyValue('--display').trim() || 'serif'};
+    if (!grain) grain = x.createPattern(makeGrain(), 'repeat');
+    const M = {x0: W * .04, x1: W * .50, y0: H * .05, y1: H * .66}; M.w = M.x1 - M.x0; M.h = M.y1 - M.y0;
+    const T = {x0: W * .03, x1: W * .53, y0: H * .71, y1: H * .975};
+    const C = {x0: W * .645, x1: W * .95, y0: H * .64, y1: H * .975};
+    const rb = Math.min(W * .13, H * .11);
+    const B = {x: W * .79, y: H * .05 + rb * 1.05, r: rb};
+    const cr = Math.max(7, Math.min(W * .034, H * .028));
+    const COL = {x0: W * .61, x1: W * .955, y0: fs * 3.7, y1: H * .975};
+    const p0 = [W * .555, H * .60], c1 = [W * .67, H * .63], c2 = [W * .66, B.y + rb * 1.9], p3 = [B.x - rb * .1, B.y + rb * .78];
+    const path = [];
+    for (let i = 0; i <= 40; i++) {
+      const t = i / 40, u = 1 - t;
+      path.push([u * u * u * p0[0] + 3 * u * u * t * c1[0] + 3 * u * t * t * c2[0] + t * t * t * p3[0],
+                 u * u * u * p0[1] + 3 * u * u * t * c1[1] + 3 * u * t * t * c2[1] + t * t * t * p3[1]]);
+    }
+    G = {M, T, C, B, cr, COL, path, slot: [M.x1 - M.w * .22, M.y0 + M.h * .835], chute: (M.x0 + M.x1) / 2};
+    if (changed || !engine) buildWorld();
+  }
+  const wall = (cx, cy, w, h) => Bodies.rectangle(cx, cy, w, h, {isStatic: true, friction: .7});
+  function coinBody(px, py, kind) {
+    const b = Bodies.circle(px, py, G.cr, {restitution: .28, friction: .5, frictionAir: .012, density: .003});
+    b.kind = kind; b.seed = Math.floor(Kit.rnd() * 999); coins.push(b); Composite.add(engine.world, b); return b;
+  }
+  function stack(box, n, kind) {
+    const d = G.cr * 2 + 1, per = Math.max(1, Math.floor((box.x1 - box.x0 - 6) / d));
+    for (let i = 0; i < n; i++) {
+      const r = Math.floor(i / per), c = i % per, off = r % 2 ? d / 2 : 0;
+      coinBody(box.x0 + 4 + G.cr + c * d + off * (c < per - 1 ? 1 : 0), box.y1 - G.cr - 2 - r * (d - 2), kind);
+    }
+  }
+  function buildWorld() {
+    engine = Engine.create(); engine.gravity.y = 1; coins = []; scraps = [];
+    const {T, C} = G, th = 80, w = engine.world;
+    Composite.add(w, [wall((T.x0 + T.x1) / 2, T.y1 + th / 2 - 2, T.x1 - T.x0 + th, th), wall(T.x0 - th / 2 + 4, T.y1 - H, th, H * 2), wall(T.x1 + th / 2 - 4, T.y1 - H, th, H * 2)]);
+    if (phase === 'play') {
+      Composite.add(w, [wall((C.x0 + C.x1) / 2, C.y1 + th / 2 - 2, C.x1 - C.x0 + th, th), wall(C.x0 - th / 2 + 4, C.y1 - H, th, H * 2), wall(C.x1 + th / 2 - 4, C.y1 - H, th, H * 2)]);
+      stack(C, pocket, 'pocket');
+    }
+    stack(T, won, 'tray');
+    if (ripped) st.gap = 1;
+  }
+
+  // ---------- drawing ----------
+  function drawBg(t) {
+    x.clearRect(0, 0, W, H);
+    for (let i = 0; i < 12; i++) {
+      const sx = W * (.55 + hr(7, i) * .43), sy = H * (.03 + hr(9, i) * .55), s = 2 + hr(11, i) * 3;
+      const tw = Kit.calm ? 1 : .6 + .4 * Math.sin(t / 400 + i * 1.7);
+      x.save(); x.translate(sx + jit(i + 40), sy); x.rotate(.4); x.scale(tw, tw); x.fillStyle = i % 3 ? 'rgba(255,255,255,.6)' : 'rgba(255,226,122,.9)';
+      x.beginPath(); x.moveTo(0, -s * 1.6); x.lineTo(s * .4, -s * .4); x.lineTo(s * 1.6, 0); x.lineTo(s * .4, s * .4); x.lineTo(0, s * 1.6); x.lineTo(-s * .4, s * .4); x.lineTo(-s * 1.6, 0); x.lineTo(-s * .4, -s * .4); x.closePath(); x.fill(); x.restore();
+    }
+  }
+  function pathPt(u) {
+    const p = G.path, n = p.length - 1, f = Math.max(0, Math.min(1, u)) * n, i = Math.min(n - 1, Math.floor(f)), t = f - i;
+    return [p[i][0] + (p[i + 1][0] - p[i][0]) * t, p[i][1] + (p[i + 1][1] - p[i][1]) * t];
+  }
+  function drawNerve() {
+    if (st.sideA <= .01) return;
+    const {path, cr} = G, m = Math.max(1, Math.round(st.pathT * (path.length - 1)));
+    x.save(); x.globalAlpha = st.sideA; x.lineCap = 'round'; x.lineJoin = 'round'; x.translate(jit(70), jit(71));
+    x.beginPath(); path.slice(0, m + 1).forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1]));
+    x.shadowColor = 'rgba(0,0,0,.4)'; x.shadowBlur = 6; x.shadowOffsetY = 3;
+    x.strokeStyle = P.cream; x.lineWidth = cr * 1.0; x.stroke(); x.shadowColor = 'transparent';
+    x.strokeStyle = P.teal; x.lineWidth = cr * .55; x.stroke();
+    if (st.glow > .02) { x.strokeStyle = `rgba(255,61,139,${st.glow * .7})`; x.lineWidth = cr * .3; x.stroke(); }
+    [.02, .36, .7].forEach(u => { if (u > st.pathT) return; const [px, py] = pathPt(u);
+      x.beginPath(); x.arc(px, py, cr * .75, 0, 7); x.fillStyle = P.cream; x.fill();
+      x.beginPath(); x.arc(px, py, cr * .4, 0, 7); x.fillStyle = st.glow > .1 ? P.mag : P.teal2; x.fill(); });
+    if (st.pathT > .6) {
+      const [mx, my] = pathPt(.5);
+      txt('dopamine', mx + fs * .9, my + fs * .4, fs * 1.25, {f: FONT.hand, c: st.glow > .15 ? '#ffffff' : '#ffe0ef', w: 700});
+    }
+    x.restore();
+  }
+  function drawBrain() {
+    const {B} = G, s = st.b * (1 + st.glow * .07);
+    if (st.sideA <= .01 || s <= .01) return;
+    x.save(); x.globalAlpha = st.sideA; x.translate(B.x, B.y);
+    rings.forEach(r => { x.save(); x.globalAlpha = st.sideA * (1 - r.t) * .8; x.strokeStyle = r.k % 2 ? '#ffe27a' : '#ffffff'; x.lineWidth = 3 * (1 - r.t) + 1;
+      x.beginPath(); x.ellipse(0, -B.r * .05, B.r * (1.15 + r.t * .9), B.r * (.9 + r.t * .7), 0, 0, 7); x.stroke(); x.restore(); });
+    x.scale(s, s);
+    if (st.glow > .01) { const g = x.createRadialGradient(0, 0, 0, 0, 0, B.r * 2.3); g.addColorStop(0, `rgba(255,61,139,${st.glow * .6})`); g.addColorStop(1, 'rgba(255,61,139,0)'); x.fillStyle = g; x.fillRect(-B.r * 2.4, -B.r * 2.4, B.r * 4.8, B.r * 4.8); }
+    paper(R(-B.r * .14, B.r * .5, B.r * .2, B.r * .95), P.pink2, 51, {amp: 1});
+    const pts = []; for (let k = 0; k < 30; k++) { const th = k / 30 * Math.PI * 2, rr = 1 + .07 * Math.cos(6 * th) + .04 * Math.sin(11 * th); pts.push([Math.cos(th) * B.r * 1.12 * rr, Math.sin(th) * B.r * .84 * rr - B.r * .05]); }
+    paper(pts, P.pink, 52, {amp: 1.3, step: 6});
+    if (st.glow > .01) { x.save(); raggedPath(pts, 52, 1.3, 6); x.fillStyle = `rgba(255,236,242,${st.glow * .45})`; x.fill(); x.restore(); }
+    x.strokeStyle = P.pink2; x.lineWidth = Math.max(1.6, B.r * .05); x.lineCap = 'round';
+    [[-.85, -.1, -.5, -.55, -.2, -.25], [-.12, -.75, .1, -.35, -.12, .05], [.3, -.62, .62, -.35, .42, -.02], [-.7, .3, -.35, .05, -.02, .38], [.18, .28, .5, .12, .85, .3], [0, -.82, -.08, -.1, .05, .45]]
+      .forEach(([a, b, c, d, e, f]) => { x.beginPath(); x.moveTo(a * B.r, b * B.r); x.quadraticCurveTo(c * B.r, d * B.r, e * B.r, f * B.r); x.stroke(); });
+    if (st.glow > .1) for (let i = 0; i < 6; i++) { x.beginPath(); x.arc((hr(3, i + boil) - .5) * B.r * 1.6, (hr(5, i + boil) - .5) * B.r * 1.1, 2.2, 0, 7); x.fillStyle = P.mag; x.fill(); }
+    x.restore();
+  }
+  function symbol(sym, cx, cy, s) {
+    x.save(); x.lineWidth = 1.6; x.strokeStyle = P.ink; x.lineJoin = 'round';
+    if (sym === 0) {
+      x.strokeStyle = '#2f7d3a'; x.lineWidth = 2; x.beginPath(); x.moveTo(cx - s * .35, cy + s * .1); x.quadraticCurveTo(cx - s * .1, cy - s * .5, cx + s * .15, cy - s * .7); x.moveTo(cx + s * .3, cy + s * .2); x.quadraticCurveTo(cx + s * .25, cy - s * .3, cx + s * .15, cy - s * .7); x.stroke();
+      x.fillStyle = '#4fae4a'; x.beginPath(); x.ellipse(cx + s * .4, cy - s * .65, s * .28, s * .12, -.4, 0, 7); x.fill();
+      [[-.35, .38], [.3, .45]].forEach(([dx, dy]) => { x.beginPath(); x.arc(cx + dx * s, cy + dy * s, s * .36, 0, 7); x.fillStyle = P.red; x.fill(); x.strokeStyle = P.ink; x.stroke(); x.beginPath(); x.arc(cx + dx * s - s * .12, cy + dy * s - s * .12, s * .08, 0, 7); x.fillStyle = '#ffd7cf'; x.fill(); });
+    } else if (sym === 1) {
+      x.beginPath(); x.moveTo(cx - s * .75, cy + s * .45); x.lineTo(cx + s * .75, cy + s * .45); x.quadraticCurveTo(cx + s * .5, cy + s * .2, cx + s * .45, cy - s * .1);
+      x.quadraticCurveTo(cx + s * .4, cy - s * .75, cx, cy - s * .75); x.quadraticCurveTo(cx - s * .4, cy - s * .75, cx - s * .45, cy - s * .1); x.quadraticCurveTo(cx - s * .5, cy + s * .2, cx - s * .75, cy + s * .45); x.closePath();
+      x.fillStyle = P.gold; x.fill(); x.stroke(); x.beginPath(); x.arc(cx, cy + s * .58, s * .15, 0, 7); x.fillStyle = P.gold2; x.fill(); x.stroke();
+    } else if (sym === 2) {
+      const p = [[-.6, -.7], [.65, -.7], [.65, -.45], [.05, .78], [-.35, .78], [.22, -.4], [-.6, -.4]];
+      x.beginPath(); p.forEach(([a, b], i) => i ? x.lineTo(cx + a * s, cy + b * s) : x.moveTo(cx + a * s, cy + b * s)); x.closePath(); x.fillStyle = P.red; x.fill(); x.stroke();
+    } else {
+      x.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = (i % 2 ? .38 : .82) * s; x.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r); } x.closePath(); x.fillStyle = P.teal; x.fill(); x.stroke();
+    }
+    x.restore();
+  }
+  function drawMachine(t) {
+    const {M, cr} = G, yo = (1 - st.m) * H;
+    x.save(); x.translate(0, yo);
+    const mq = M.h * .2;
+    paper(R(M.x0, M.y0 + mq * .5, M.x1, M.y1), P.red, 11, {blur: 14, sh: 6});
+    paper(R(M.x0 + M.w * .1, M.y0 + mq * 1.05, M.x1 - M.w * .1, M.y0 + mq * 1.25), P.red2, 14, {shadow: false, edge: false, amp: 1});
+    paper(R(M.x0 - M.w * .03, M.y0, M.x1 + M.w * .03, M.y0 + mq), P.gold, 13, {blur: 8});
+    const flick = st.lights > .1 && boil % 2;
+    const ts = Math.max(12, Math.min(mq * .5, M.w / 5.4));
+    txt('JACKPOT', (M.x0 + M.x1) / 2 + jit(15), M.y0 + mq * .5 + ts * .36, ts, {f: FONT.display, w: 900, a: 'center', c: flick ? P.red : P.ink});
+    const nb = 7, chase = Math.floor(t / 170) % nb;
+    for (let side = 0; side < 2; side++) for (let i = 0; i < nb; i++) {
+      const bx = side ? M.x1 - M.w * .05 : M.x0 + M.w * .05, by = M.y0 + mq * 1.2 + i * (M.h - mq * 1.45) / (nb - 1);
+      const on = st.lights > .1 ? (i + side + boil) % 2 === 0 : (i === chase || i === (chase + 3) % nb);
+      x.save(); if (on) { x.shadowColor = '#ffd36b'; x.shadowBlur = 10 + st.lights * 14; }
+      x.beginPath(); x.arc(bx, by, cr * .42, 0, 7); x.fillStyle = on ? '#fff4b8' : '#6e2a1c'; x.fill(); x.restore();
+    }
+    const wx0 = M.x0 + M.w * .14, wx1 = M.x1 - M.w * .14, wy0 = M.y0 + M.h * .28, wy1 = M.y0 + M.h * .55, wh = wy1 - wy0;
+    paper(R(wx0 - 5, wy0 - 5, wx1 + 5, wy1 + 5), P.ink, 16, {amp: 1.2});
+    x.save(); x.beginPath(); x.rect(wx0, wy0, wx1 - wx0, wh); x.clip();
+    x.fillStyle = P.cream; x.fillRect(wx0, wy0, wx1 - wx0, wh);
+    const cw = (wx1 - wx0) / 3, ch = wh * .82, sz = Math.min(cw, wh) * .34, cy = (wy0 + wy1) / 2;
+    reels.forEach((r, i) => {
+      const base = Math.floor(r.p), fr = r.p - base, cx = wx0 + cw * (i + .5);
+      for (let k = -1; k <= 1; k++) symbol(((base + k) % 4 + 4) % 4, cx, cy + (fr - k) * ch, sz);
+      if (i) { x.fillStyle = P.ink; x.fillRect(wx0 + cw * i - 1, wy0, 2, wh); }
+    });
+    const sh = x.createLinearGradient(0, wy0, 0, wy1);
+    sh.addColorStop(0, 'rgba(27,20,35,.55)'); sh.addColorStop(.3, 'rgba(27,20,35,0)'); sh.addColorStop(.7, 'rgba(27,20,35,0)'); sh.addColorStop(1, 'rgba(27,20,35,.55)');
+    x.fillStyle = sh; x.fillRect(wx0, wy0, wx1 - wx0, wh);
+    x.fillStyle = `rgba(255,61,139,${.35 + st.lights * .6})`; x.fillRect(wx0, cy - 1, wx1 - wx0, 2);
+    x.restore();
+    const px0 = M.x0 + M.w * .14, px1 = M.x1 - M.w * .14, py0 = M.y0 + M.h * .61, py1 = M.y0 + M.h * .74;
+    paper(R(px0, py0, px1, py1), P.plum, 17, {amp: 1.2});
+    txt(`IN ${paid} · OUT ${won}`, (px0 + px1) / 2, (py0 + py1) / 2 + fs * .38, Math.min(fs, (px1 - px0) / 7.4), {f: FONT.mono, a: 'center', c: P.gold, w: 700});
+    const [sx, sy] = G.slot;
+    paper(R(sx - cr * .9, sy - cr * .5, sx + cr * .9, sy + cr * .5), P.gold, 18, {amp: .8, blur: 3, sh: 1});
+    x.fillStyle = P.ink; x.fillRect(sx - cr * .6, sy - 1.5, cr * 1.2, 3);
+    paper(R(G.chute - M.w * .17, M.y1 - M.h * .09, G.chute + M.w * .17, M.y1 + 2), P.ink, 19, {amp: 1, blur: 4});
+    x.fillStyle = P.gold2; x.fillRect(G.chute - M.w * .15, M.y1 - M.h * .09 + 3, M.w * .3, 2);
+    const piv = [M.x1 + W * .006, M.y0 + M.h * .6], L = M.h * .36;
+    const a = -1.4 + Math.min(1, st.lever + (hint && !busy && !Kit.calm && phase === 'play' ? .05 * (1 + Math.sin(t / 260)) : 0)) * 1.75;
+    const ex = piv[0] + Math.cos(a) * L, ey = piv[1] + Math.sin(a) * L;
+    x.save(); x.lineCap = 'round'; x.shadowColor = 'rgba(0,0,0,.4)'; x.shadowBlur = 5; x.shadowOffsetY = 2;
+    x.strokeStyle = '#d9d4e8'; x.lineWidth = cr * .4; x.beginPath(); x.moveTo(piv[0], piv[1]); x.lineTo(ex, ey); x.stroke(); x.restore();
+    paper(R(M.x1 - 3, piv[1] - cr * .9, M.x1 + cr, piv[1] + cr * .9), '#b7b1c9', 20, {amp: .8, blur: 3});
+    x.save(); x.shadowColor = 'rgba(0,0,0,.45)'; x.shadowBlur = 6; x.shadowOffsetY = 3;
+    x.beginPath(); x.arc(ex, ey, cr * 1.05, 0, 7); x.fillStyle = P.red; x.fill(); x.restore();
+    x.beginPath(); x.arc(ex - cr * .35, ey - cr * .35, cr * .3, 0, 7); x.fillStyle = 'rgba(255,230,220,.8)'; x.fill();
+    x.restore();
+  }
+  function drawCoin(px, py, a, r, alpha, seed) {
+    x.save(); x.globalAlpha = alpha; x.translate(px, py); x.rotate(a);
+    x.shadowColor = 'rgba(0,0,0,.45)'; x.shadowBlur = 4; x.shadowOffsetY = 2;
+    x.beginPath(); for (let k = 0; k < 16; k++) { const th = k / 16 * Math.PI * 2, rr = r * (1 + (hr(seed, k + (Kit.calm ? 0 : boil) * 3) - .5) * .09); k ? x.lineTo(Math.cos(th) * rr, Math.sin(th) * rr) : x.moveTo(rr, 0); } x.closePath();
+    const g = x.createRadialGradient(-r * .4, -r * .4, 0, 0, 0, r * 1.1); g.addColorStop(0, '#ffe7a0'); g.addColorStop(.55, P.gold); g.addColorStop(1, P.gold2);
+    x.fillStyle = g; x.fill(); x.shadowColor = 'transparent';
+    x.strokeStyle = P.gold2; x.lineWidth = r * .12; x.beginPath(); x.arc(0, 0, r * .66, 0, 7); x.stroke();
+    x.fillStyle = P.gold2; x.beginPath(); for (let i = 0; i < 10; i++) { const aa = -Math.PI / 2 + i * Math.PI / 5, rr = (i % 2 ? .16 : .38) * r; x.lineTo(Math.cos(aa) * rr, Math.sin(aa) * rr); } x.closePath(); x.fill();
+    x.restore();
+  }
+  function drawTray(front) {
+    const {T} = G;
+    if (!front) { paper(R(T.x0, T.y0, T.x1, T.y1), P.kraft2, 21, {blur: 10}); return; }
+    const lip = (T.y1 - T.y0) * .2;
+    paper(R(T.x0 - 3, T.y1 - lip, T.x1 + 3, T.y1), P.kraft, 22, {amp: 1.8});
+  }
+  function drawPocket(front) {
+    if (st.sideA <= .01) return;
+    const {C} = G; x.save(); x.globalAlpha = st.sideA;
+    if (!front) { paper(R(C.x0, C.y0, C.x1, C.y1), P.denim, 61, {blur: 10}); x.restore(); return; }
+    const band = Math.max(fs * 2.3, (C.y1 - C.y0) * .34), by = C.y1 - band;
+    paper(R(C.x0 - 3, by, C.x1 + 3, C.y1), P.denim2, 62, {amp: 1.8});
+    x.save(); x.setLineDash([4, 3]); x.strokeStyle = P.gold; x.lineWidth = 1.4; x.strokeRect(C.x0 + 4, by + 5, C.x1 - C.x0 - 8, band - 10); x.restore();
+    const w = C.x1 - C.x0 - 14; let size = fs;
+    x.font = `800 ${size}px ${FONT.body}`; while (size > 12 && x.measureText(`POCKET · ${pocket}`).width > w) { size -= .5; x.font = `800 ${size}px ${FONT.body}`; }
+    txt(`POCKET · ${pocket}`, (C.x0 + C.x1) / 2, by + band / 2 + size * .38, size, {a: 'center', w: 800});
+    x.restore();
+  }
+  function drawColumn(t) {
+    if (st.sideB <= .01) return;
+    const c = G.COL, span = c.y1 - c.y0, yOf = v => c.y1 - (v / BET) * span;
+    x.save(); x.globalAlpha = st.sideB;
+    txt('ITALY, 2022', c.x0, fs * 1.3, fs * .95, {f: FONT.mono, c: P.cream});
+    txt('€33.5bn bet', c.x0, fs * 2.8, fs * 1.05, {w: 800, c: '#ffffff'});
+    const top = ripped ? yOf(BACK) : c.y1 - span * st.colGrow;
+    paper(R(c.x0, top, c.x1, c.y1), P.cream, 31, {amp: 1.4, blur: 10});
+    x.strokeStyle = 'rgba(27,20,35,.45)'; x.lineWidth = 1.2;
+    for (let v = 5; v <= 30; v += 5) { const y = yOf(v); if (y > top + 2) { x.beginPath(); x.moveTo(c.x1 - 9, y); x.lineTo(c.x1 - 2, y); x.stroke(); } }
+    if (phase === 'guess' && st.colGrow > .95) {
+      [10, 20, 30].forEach(v => txt(String(v), c.x0 + 5, yOf(v) + fs * .35, fs * .9, {f: FONT.mono, c: 'rgba(27,20,35,.6)'}));
+      if (guess == null) {
+        const cx = (c.x0 + c.x1) / 2 + fs * .6, cy = (c.y0 + c.y1) / 2 + (Kit.calm ? 0 : Math.sin(t / 280) * 7);
+        x.save(); x.strokeStyle = P.mag; x.lineWidth = 3; x.lineCap = 'round'; x.lineJoin = 'round';
+        x.beginPath(); x.moveTo(cx, cy - fs * 1.4); x.lineTo(cx, cy + fs * 1.4); x.moveTo(cx - 6, cy - fs * 1.4 + 6); x.lineTo(cx, cy - fs * 1.4); x.lineTo(cx + 6, cy - fs * 1.4 + 6);
+        x.moveTo(cx - 6, cy + fs * 1.4 - 6); x.lineTo(cx, cy + fs * 1.4); x.lineTo(cx + 6, cy + fs * 1.4 - 6); x.stroke(); x.restore();
+      } else {
+        const y = yOf(guess);
+        x.save(); x.beginPath(); x.rect(c.x0 + 2, y, c.x1 - c.x0 - 4, c.y1 - y - 2); x.clip();
+        x.fillStyle = 'rgba(255,61,139,.18)'; x.fillRect(c.x0, y, c.x1 - c.x0, c.y1 - y);
+        x.strokeStyle = 'rgba(255,61,139,.45)'; x.lineWidth = 2;
+        for (let k = -span; k < span; k += 9) { x.beginPath(); x.moveTo(c.x0 + k, c.y1); x.lineTo(c.x0 + k + span, c.y1 - span); x.stroke(); }
+        x.restore();
+        x.fillStyle = P.mag; x.fillRect(c.x0, y - 1.5, c.x1 - c.x0, 3);
+        x.beginPath(); x.arc(c.x1, y, G.cr * .8, 0, 7); x.fill();
+        const ty = y - fs * 1.4 < c.y0 ? y + fs * 1.35 : y - fs * .5;
+        txt(`€${fmt(guess)}bn?`, c.x1 - G.cr - 4, ty, fs * 1.05, {a: 'right', c: P.ink, w: 800});
+      }
+    }
+    if (phase === 'reveal') {
+      if (st.real > .05) paper(R(c.x0 + 3, yOf(st.real), c.x1 - 3, c.y1 - 3), P.teal, 41, {amp: 1.3, blur: 4});
+      if (!ripped && st.real >= BACK - .02) paper(R(c.x0, yOf(BET), c.x1, yOf(BACK)), P.red, 42, {amp: 1.6});
+      if (ripped) {
+        x.save(); x.setLineDash([5, 4]); x.strokeStyle = 'rgba(248,239,220,.7)'; x.lineWidth = 1.5; x.strokeRect(c.x0 + 1, yOf(BET), c.x1 - c.x0 - 2, yOf(BACK) - yOf(BET) - 2); x.restore();
+        if (st.gap > .01) {
+          x.globalAlpha = st.sideB * st.gap; const gy0 = yOf(BET), gy1 = yOf(BACK), mid = (gy0 + gy1) / 2;
+          if (gy1 - gy0 > fs * 3) { txt('€8.5bn kept', c.x0 + 6, mid - fs * .15, fs, {w: 800, c: '#ffffff'}); txt('by the house', c.x0 + 6, mid + fs * 1.25, fs, {w: 600}); }
+          else txt('€8.5bn kept', c.x0 + 6, mid + fs * .38, fs, {w: 800, c: '#ffffff'});
+          x.globalAlpha = st.sideB;
+        }
+      }
+      const la = Math.max(0, Math.min(1, (st.real - 18) / 7));
+      if (la > 0) { x.globalAlpha = st.sideB * la; const y = yOf(st.real);
+        txt(`€${Math.round(st.real)}bn`, c.x0 + 7, y + fs * 1.75, fs * 1.35, {f: FONT.display, w: 900});
+        txt('won back', c.x0 + 7, y + fs * 3.35, fs, {w: 600}); x.globalAlpha = st.sideB; }
+      if (guess != null) { const y = yOf(guess);
+        x.save(); x.setLineDash([6, 4]); x.strokeStyle = P.mag; x.lineWidth = 2; x.beginPath(); x.moveTo(c.x0, y); x.lineTo(c.x1, y); x.stroke(); x.restore();
+        x.fillStyle = P.mag; x.beginPath(); x.moveTo(c.x1 + 2, y - 7); x.lineTo(c.x1 - 9, y); x.lineTo(c.x1 + 2, y + 7); x.closePath(); x.fill(); }
+    }
+    x.restore();
+  }
+  function drawSparks() {
+    sparks.forEach(s => { if (s.u < 0 || s.u > 1) return; const [px, py] = pathPt(s.u), r = G.cr * .65;
+      x.save(); x.translate(px, py); x.rotate(s.u * 6); x.shadowColor = P.mag; x.shadowBlur = 14; x.fillStyle = s.k % 2 ? P.mag : '#ffe27a';
+      x.beginPath(); for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4, rr = i % 2 ? r * .35 : r; x.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } x.closePath(); x.fill(); x.restore(); });
+  }
+
+  // ---------- loop ----------
+  function frame(t) {
+    requestAnimationFrame(frame);
+    if (!x || !W || !G.M) return;
+    const dt = Math.min(.05, lastT ? (t - lastT) / 1000 : .016); lastT = t;
+    if (!Kit.calm && t - lastBoil > 125) { boil = (boil + 1) % 4; lastBoil = t; }
+    if (engine) Engine.update(engine, 1000 / 60);
+    sparks.forEach(s => { s.u += dt * 1.15 * speed; if (s.u >= 1 && !s.done) { s.done = true; st.glow = Math.min(1, st.glow + .3); rings.push({t: 0, k: s.k}); } });
+    sparks = sparks.filter(s => !s.done);
+    rings.forEach(r => { r.t += dt * 1.6; }); rings = rings.filter(r => r.t < 1);
+    st.glow = Math.max(0, st.glow - dt * .3);
+    const {M} = G;
+    scraps = scraps.filter(b => {
+      const p = b.position, inside = p.x < M.x1 - 8 && p.x > M.x0 && p.y > M.y0 + M.h * .15 && p.y < M.y1;
+      if (inside || p.y > H + 60 || p.x < -60) {
+        Composite.remove(engine.world, b);
+        if (inside) { gsap.fromTo(st, {lights: 1}, {lights: 0, duration: .9, ease: 'power2.out', overwrite: 'auto'}); Kit.haptic('light'); }
+        return false;
+      }
+      return true;
+    });
+    drawBg(t);
+    drawNerve(); drawBrain();
+    drawTray(false); drawPocket(false);
+    coins.forEach(b => drawCoin(b.position.x, b.position.y, b.angle, G.cr, b.kind === 'pocket' ? st.sideA : 1, b.seed));
+    drawMachine(t);
+    drawTray(true); drawPocket(true);
+    drawColumn(t);
+    scraps.forEach(b => paper(b.vertices.map(v => [v.x, v.y]), P.red, b.seed, {amp: 1.6, step: 5, blur: 8, sh: 5}));
+    if (fly) drawCoin(fly.x, fly.y, fly.a, G.cr * fly.s, 1, 7);
+    drawSparks();
+    x.save(); x.globalCompositeOperation = 'source-atop'; x.fillStyle = grain; x.fillRect(0, 0, W, H); x.restore();
+  }
+
+  // ---------- the spin ----------
+  function spin() {
+    if (phase !== 'play' || busy || spins >= SPINS || !engine) return;
+    busy = true; hint = 0; Kit.haptic('light');
+    gsap.timeline().to(st, {lever: 1, duration: dur(.16), ease: 'power2.in'}).to(st, {lever: 0, duration: dur(.7), ease: 'elastic.out(1,.45)'});
+    const pc = coins.filter(c => c.kind === 'pocket').sort((a, b) => a.position.y - b.position.y)[0];
+    if (pc) {
+      Composite.remove(engine.world, pc); coins.splice(coins.indexOf(pc), 1);
+      const [sx, sy] = G.slot; fly = {x: pc.position.x, y: pc.position.y, a: pc.angle, s: 1};
+      gsap.timeline({onComplete: () => { fly = null; }})
+        .to(fly, {x: (pc.position.x + sx) / 2, y: Math.min(pc.position.y, sy) - H * .12, a: fly.a - 3, duration: dur(.22), ease: 'power2.out'})
+        .to(fly, {x: sx, y: sy, s: .35, a: fly.a - 6, duration: dur(.2), ease: 'power2.in'});
+    }
+    pocket--; paid++;
+    const w = WINS[spins], combo = w === 2 ? [0, 0, 0] : w === 1 ? [0, 0, 3] : LOSE[spins % LOSE.length];
+    reels.forEach((r, i) => {
+      const base = Math.ceil(r.p) + 8 + i * 3, tgt = base + ((combo[i] - base % 4) + 4) % 4;
+      gsap.to(r, {p: tgt, duration: dur(.7 + i * .25), ease: 'back.out(1.15)', delay: dur(.12)});
+    });
+    gsap.delayedCall(dur(1.35), () => settle(w));
+  }
+  function settle(w) {
+    spins++;
+    if (w) {
+      won += w;
+      gsap.fromTo(st, {lights: 1}, {lights: 0, duration: dur(1.6) || .01, ease: 'power2.in', overwrite: 'auto'});
+      for (let k = 0; k < w; k++) gsap.delayedCall(dur(.18) * k, () => coinBody(G.chute + (Kit.rnd() - .5) * 8, G.M.y1 - 2, 'tray'));
+      for (let k = 0; k < 2 + w * 2; k++) sparks.push({u: -k * .14, k});
+      Kit.haptic('success');
+      say.innerHTML = `Spin ${spins} of ${SPINS}: <b>a win!</b> Lights flash, and your brain gets a burst of dopamine.`;
+    } else {
+      Kit.haptic('selection');
+      say.innerHTML = `Spin ${spins} of ${SPINS}: nothing. The next win feels close. <b>Tap again.</b>`;
+    }
+    busy = false;
+    if (spins >= SPINS) gsap.delayedCall(dur(1.3), toGuess);
+  }
+  function toGuess() {
+    if (phase !== 'play') return;
+    phase = 'guess';
+    say.innerHTML = `You paid ${paid} and won ${won} back. Italy bet €33.5bn in 2022: <b>drag up to guess how much came back.</b>`;
+    gsap.to(st, {sideA: 0, duration: dur(.5) || .01, ease: 'power2.in'});
+    gsap.to(st, {sideB: 1, duration: dur(.4) || .01, delay: dur(.35), ease: 'power2.out'});
+    gsap.to(st, {colGrow: 1, duration: dur(1) || .01, delay: dur(.35), ease: 'expo.out'});
+    gsap.delayedCall(dur(.6), () => { coins.filter(c => c.kind === 'pocket').forEach(c => Composite.remove(engine.world, c)); coins = coins.filter(c => c.kind !== 'pocket'); });
+  }
+
+  // ---------- the guess ----------
+  function setGuessY(e) {
+    const r = cv.getBoundingClientRect(), c = G.COL, y = e.clientY - r.top;
+    const v = Math.round(Math.max(0, Math.min(BET, (c.y1 - y) / (c.y1 - c.y0) * BET)) * 2) / 2;
+    if (v !== guess) { guess = v; Kit.haptic('selection'); }
+  }
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => reveal(pct));
+  cv.addEventListener('pointerdown', e => {
+    if (phase === 'play') { spin(); return; }
+    if (phase === 'guess') { dragging = true; cv.setPointerCapture(e.pointerId); setGuessY(e); }
+  });
+  cv.addEventListener('pointermove', e => { if (dragging && phase === 'guess') setGuessY(e); });
+  const up = () => { if (!dragging) return; dragging = false; if (guess != null && !sureOn) { sureOn = true; sure.on(); } };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  function reveal(pct) {
+    if (phase !== 'guess' || guess == null) return;
+    phase = 'reveal'; card.classList.add('answered');
+    const ok = Math.abs(guess - BACK) <= 3;
+    Kit.answer({choice: `€${fmt(guess)}bn`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `€${fmt(guess)}bn, ${ok ? 'close' : 'off'}: it was €25bn`);
+    say.innerHTML = 'Every flash and small win gives your brain a burst of dopamine, so it learns: this machine means reward. But the wins are smaller than the stakes: of €33.5bn bet, only <b>€25bn</b> came back.';
+    Kit.show('keep'); Kit.haptic('success');
+    if (Kit.calm) { st.real = BACK; ripped = true; st.gap = 1; return; }
+    gsap.to(st, {real: BACK, duration: 1.4, delay: .25, ease: 'power3.out', onComplete: () => gsap.delayedCall(.45, tear)});
+  }
+  function tear() {
+    if (ripped) return;
+    ripped = true;
+    const c = G.COL, span = c.y1 - c.y0, yOf = v => c.y1 - (v / BET) * span, y0 = yOf(BET), y1 = yOf(BACK);
+    const rows = 3, cols = 2, cw = (c.x1 - c.x0) / cols, rh = (y1 - y0) / rows, {M} = G, g = .278;
+    const tx = M.x0 + M.w * .52, ty = M.y0 + M.h * .42;
+    let i = 0;
+    for (let r = 0; r < rows; r++) for (let k = 0; k < cols; k++, i++) {
+      const b = Bodies.rectangle(c.x0 + cw * (k + .5), y0 + rh * (r + .5), cw - 2, rh - 2, {frictionAir: 0, collisionFilter: {group: -1, mask: 0}});
+      b.seed = 200 + i; Composite.add(engine.world, b); scraps.push(b);
+      const T = 30 + i * 4, px = b.position.x, py = b.position.y;
+      Body.setVelocity(b, {x: (tx - px) / T, y: (ty - py - .5 * g * T * T) / T});
+      Body.setAngularVelocity(b, (hr(i, 3) - .5) * .25);
+    }
+    Kit.haptic('success');
+    gsap.to(st, {gap: 1, duration: .6, delay: 1, ease: 'power2.out'});
+  }
+
+  // ---------- kit ----------
+  Kit.onShow.card = layout;
+  let entered = false;
+  Kit.onEnter.card = () => {
+    if (entered) return; entered = true;
+    if (!G.M) layout();
+    requestAnimationFrame(frame);
+    if (Kit.calm) return;
+    st.m = 0; st.b = 0; st.pathT = 0;
+    gsap.to(st, {m: 1, duration: 1, ease: 'back.out(1.3)'});
+    gsap.to(st, {pathT: 1, duration: .9, delay: .45, ease: 'power3.out'});
+    gsap.to(st, {b: 1, duration: 1.1, delay: .8, ease: 'elastic.out(1,.5)'});
+    coins.filter(c => c.kind === 'pocket').forEach((c, i) => { Body.setPosition(c, {x: c.position.x, y: c.position.y - H * .75 - i * G.cr * 2.6}); Body.setVelocity(c, {x: 0, y: 0}); });
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (!G.M) layout();
+    if (!entered) { entered = true; requestAnimationFrame(frame); }
+    st.m = 1; st.b = 1; st.pathT = 1;
+    speed = 4;
+    for (let i = 0; i < SPINS; i++) { spin(); await wait(Kit.calm ? 60 : 440); }
+    await wait(Kit.calm ? 60 : 500);
+    if (phase === 'play') toGuess();
+    guess = 22; st.colGrow = 1; st.sideB = 1; st.sideA = 0;
+    if (!sureOn) { sureOn = true; sure.on(); }
+    await wait(120);
+    const b = Kit.$('sure').querySelector('[data-v="80"]') || Kit.$('sure').querySelector('button');
+    if (b) b.click(); else reveal(80);
+    await wait(Kit.calm ? 120 : 3200);
+  };
+})();
+Kit.single();
+</script>
+</html>

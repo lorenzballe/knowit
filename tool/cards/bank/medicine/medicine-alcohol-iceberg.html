@@ -1,0 +1,372 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-alcohol-iceberg -->
+<!-- Look: a night ocean in deep blues, with god-rays, caustic light, marine snow, drifting fish and one warm diver's lamp. An iceberg whose bands are scaled to deaths.
+     Interaction: only the cancer tip shows above the water. Drag the lamp down. Bubbles trail it, and each band it passes lights up, its number scrambling in, while the counter climbs.
+     Wow: at the bottom a flash of light blooms from the lamp and a beam sweeps up the berg. The counter assembles 2.6 M, the tip is ringed in coral, and "cancer is only 1 in 6 of them" builds itself letter by letter. -->
+<title>What lies beneath the glass</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
+<style>
+#stage{position:relative;display:flex;flex:1;min-height:0;border-radius:0;overflow:hidden;background:none;border:0;box-shadow:none}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+#hud{position:absolute;left:0;right:0;top:0;padding:1.2cqh 3cqw 0;text-align:center;pointer-events:none;color:#eafcff}
+#hud .k{display:block;font:600 max(1.35cqh,12px)/1.35 var(--mono);letter-spacing:.12em;color:#8fd8f3;text-transform:uppercase;white-space:nowrap;perspective:300px}
+#hud .v{display:block;font:800 max(3.2cqh,20px)/1.15 var(--display);white-space:nowrap;text-shadow:0 0 1.6cqh rgba(120,210,255,.45)}
+#hud .v small{font:600 max(1.45cqh,12px) var(--mono);color:#8fd8f3;margin-left:.4em;text-shadow:none}
+#cnt{display:inline-block}
+#labs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lab{position:absolute;left:0;top:0;text-align:center;color:#04223a;opacity:0;box-sizing:border-box;max-width:100%}
+.lab .n{display:block;font:700 max(1.5cqh,12px)/1.14 var(--body);overflow-wrap:anywhere}
+.lab .v{display:block;font:800 max(2.1cqh,14px)/1.16 var(--mono);letter-spacing:-.02em;overflow-wrap:anywhere}
+.lab.one{white-space:nowrap;padding:.14em .65em;border-radius:99px;background:rgba(236,250,255,.93);box-shadow:0 0 0 1px rgba(4,34,58,.16),0 .25em .8em rgba(0,10,25,.4)}
+.lab.one .n,.lab.one .v{display:inline;font-size:max(1.35cqh,12px);line-height:1.25}
+.lab.one .v{margin-left:.45em}
+.lab.one.wrap{white-space:normal;border-radius:.8em}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Drag the lamp · what lies beneath" style="--c:#06223a;--k:#eafcff;--edge:#031221">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DIVE DOWN</span></div>
+    <h2 class="q">Alcohol killed 2.6 million people in 2019. What actually killed them?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="An iceberg in a night sea. Its bands are scaled to alcohol deaths in 2019: cancer is the tip above water; below lie heart and vessels, digestive diseases, infectious diseases, and crashes, self-harm and violence."></svg>
+      <div id="labs"></div>
+      <div id="hud"><span class="k">Lit so far</span><span class="v"><span id="cnt">0.41</span> M<small id="of">of 2.6 M deaths</small></span></div>
+    </div>
+    <p class="say" id="say">Cancer is the part everyone sees. <b>Drag the lamp down</b> to light what lies under the water.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Cancer is just the tip: alcohol kills mostly through accidents, violence, and gut and heart disease.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const HAS_SCR = typeof ScrambleTextPlugin !== 'undefined', HAS_SPLIT = typeof SplitText !== 'undefined';
+  if (HAS_SCR) gsap.registerPlugin(ScrambleTextPlugin);
+  if (HAS_SPLIT) gsap.registerPlugin(SplitText);
+  const stage = Kit.$('stage'), svg = Kit.$('pic'), labs = Kit.$('labs'), hud = Kit.$('hud'), say = Kit.$('say');
+  // Deaths in 2019 attributed to alcohol, in thousands (Geopop). The last band is what remains of the 2.6 M.
+  const BANDS = [
+    {n: 'Cancer', v: 410, c: '#f4fdff'},
+    {n: 'Heart & vessels', v: 474, c: '#d2f3ff'},
+    {n: 'Digestive diseases', v: 578, c: '#b2e7fb'},
+    {n: 'Infectious diseases', v: 284, c: '#96daf3'},
+    {n: 'Crashes, self-harm & violence', v: 724, c: '#80cfec'},
+    {n: 'Other', v: 130, c: '#5f9fbc', other: true}
+  ];
+  const DARK = '#0b2c47', CORAL = '#ff8a65', P = Math.PI;
+  const lit = BANDS.map((b, i) => i === 0);
+  let W = 0, H = 0, fs = 13, T = 0, B = 0, SY = 0, K = 1, cx = 0, LX = 0, MHW = 0, r = 8, glowR = 18, coneX = 0;
+  let count = 410, lampF = 0, touched = false, done = false, finaleQueued = false, tipCoral = false, amb = [];
+  let lampG = null, cable = null, cone = null, hint = null, iceG = null, wrap = null, raysG = null, sweep = null, flash = null, flashGrad = null, bubG = null;
+  let sizeW = 0, sizeH = 0, built = false, lastBub = 0;
+  const L = {y: 0};
+  const qy = gsap.quickTo(L, 'y', {duration: .28, ease: 'power3.out', onUpdate: applyLamp});
+
+  const prof = y => {
+    if (y < SY) return .74 + .08 * (y - T) / Math.max(1, SY - T);
+    const u = (y - SY) / Math.max(1, B - SY);
+    return .82 + .18 * Math.sin(u * P * .85) - .38 * u * u;
+  };
+  const jr = y => fs * .35 * (Math.sin(y * .19) + .6 * Math.sin(y * .071 + 1.3));
+  const jl = y => fs * .35 * (Math.sin(y * .17 + 2.1) + .6 * Math.sin(y * .083 + .4));
+  const Rx = y => cx + MHW * prof(y) + jr(y), Lx = y => cx - MHW * prof(y) - jl(y);
+  function bandPts(y0, y1, top) {
+    const ys = [y0]; for (let y = y0 + 5; y < y1; y += 5) ys.push(y); ys.push(y1);
+    const right = ys.map(y => [Rx(y), y]), left = ys.slice().reverse().map(y => [Lx(y), y]);
+    let pts;
+    if (top) {
+      const xl = Lx(y0), xr = Rx(y0), pk = [0, .8, .3, 1.25, .6, 1, .2, .45, 0];
+      const tp = pk.map((p, i) => [xl + (xr - xl) * i / (pk.length - 1), y0 - p * fs]);
+      pts = [...tp, ...right.slice(1), ...left.slice(0, -1)];
+    } else pts = [...right, ...left];
+    return pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  }
+  const lampMin = () => SY + r * 2;
+  const lampMax = () => Math.max(lampMin() + fs, Math.min(B - r * .3, H - glowR - 2));
+  const lampAt = f => lampMin() + f * (lampMax() - lampMin());
+  const trig = i => Math.min(lampMax() - 1, Math.max(BANDS[i].mid, lampMin() + 3 + i * 2));
+  const fmt = () => (count / 1000).toFixed(2);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  function scramble(el, text, d = 0) {
+    if (Kit.calm || !HAS_SCR) { el.textContent = text; return; }
+    gsap.to(el, {duration: .8, delay: d, overwrite: true, scrambleText: {text, chars: '0123456789', speed: .5}, ease: 'power1.out'});
+  }
+
+  function layout() {
+    amb.forEach(t => t.kill()); amb = [];
+    gsap.killTweensOf(L);
+    svg.innerHTML = ''; labs.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; fs = Math.max(12, Math.min(15, f.f || 13));
+    sizeW = stage.clientWidth; sizeH = stage.clientHeight; built = true;
+    const hh = hud.offsetHeight;
+    T = hh + fs * 1.4; B = H - fs * .55; K = Math.max(.001, (B - T) / 2600); SY = T + 410 * K;
+    cx = W * .44; LX = W * .885; MHW = Math.min(W * .36, LX - cx - fs * 2.4); r = Math.max(7, fs * .62); glowR = r * 2.4;
+    coneX = Math.max(fs * .6, cx - W * .1);
+    let s = 11; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+
+    // ---- defs
+    const defs = mk('defs', {});
+    const lg = (id, stops, a = {}) => { const g = Kit.mk('linearGradient', Object.assign({id, x1: 0, y1: 0, x2: 0, y2: 1}, a), defs); stops.forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op ?? 1}, g)); };
+    lg('ray', [[0, '#c8f4ff', .45], [1, '#c8f4ff', 0]]);
+    lg('hz', [[0, '#7fd3f5', 0], [1, '#7fd3f5', .22]]);
+    lg('sw', [[0, '#ffffff', 0], [.5, '#fff8dc', .75], [1, '#ffffff', 0]]);
+    lg('cone', [[0, '#ffe9a8', .55], [1, '#ffe9a8', 0]], {x1: LX - r, y1: 0, x2: coneX, y2: 0, gradientUnits: 'userSpaceOnUse'});
+    const rg = Kit.mk('radialGradient', {id: 'glow'}, defs);
+    [[0, '#fff6d2', .95], [.3, '#ffd36b', .4], [1, '#ffd36b', 0]].forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, rg));
+    flashGrad = Kit.mk('radialGradient', {id: 'flash', gradientUnits: 'userSpaceOnUse', cx: LX, cy: H * .8, r: fs}, defs);
+    [[0, '#fff6d2', .8], [.45, '#ffd36b', .25], [1, '#ffd36b', 0]].forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, flashGrad));
+    const cp = Kit.mk('clipPath', {id: 'ice'}, defs);
+    Kit.mk('polygon', {points: bandPts(T, B, true)}, cp);
+
+    // ---- stars, far floes, horizon (drawn straight on the card ground)
+    if (SY - fs > 4) for (let i = 0; i < 22; i++) {
+      const st = mk('circle', {cx: 3 + rnd() * (W - 6), cy: 3 + rnd() * (SY - fs - 3), r: .5 + rnd() * .8, fill: '#e2f7ff', opacity: .25 + rnd() * .5});
+      if (!Kit.calm) amb.push(gsap.to(st, {opacity: .1, duration: 1 + rnd() * 2, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: rnd() * 2}));
+    }
+    mk('rect', {x: 0, y: Math.max(0, SY - fs * 2), width: W, height: Math.min(SY, fs * 2), fill: 'url(#hz)'});
+    mk('polygon', {points: `${W * .015},${SY} ${W * .035},${SY - fs * .3} ${W * .06},${SY - fs * .55} ${W * .08},${SY - fs * .25} ${W * .1},${SY}`, fill: '#a9d6ea', opacity: .45});
+
+    // ---- god-rays (kept inside the stage)
+    raysG = mk('g', {style: 'mix-blend-mode:screen'});
+    for (let i = 0; i < 5; i++) {
+      const x = W * (.04 + i * .2) + rnd() * fs, w0 = fs * (1 + rnd()), w1 = fs * (4 + rnd() * 3), dx = W * .1;
+      const pts = [[x, SY], [x + w0, SY], [x + dx + w1, H], [x + dx, H]].map(([a, b]) => clamp(a, 0, W).toFixed(1) + ',' + b.toFixed(1)).join(' ');
+      const ray = mk('polygon', {points: pts, fill: 'url(#ray)', opacity: .35 + rnd() * .3}, raysG);
+      if (!Kit.calm) amb.push(gsap.to(ray, {opacity: .08, duration: 2 + rnd() * 2.5, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: rnd() * 2}));
+    }
+
+    // ---- fish, far behind the berg
+    const fishG = mk('g', {opacity: .45});
+    for (let j = 0; j < 2; j++) {
+      const sz = fs * (.75 - j * .2), fy = Math.min(H - fs * 1.2, SY + (H - SY) * (.5 + .28 * j));
+      if (fy < SY + fs) continue;
+      const xa = sz + fs * .5, xb = W - sz - fs * .5;
+      const fo = mk('g', {}, fishG), fi = mk('g', {}, fo);
+      mk('path', {d: `M${-sz},0 Q${-sz * .2},${-sz * .5} ${sz * .45},0 Q${-sz * .2},${sz * .5} ${-sz},0Z M${sz * .35},0 L${sz},${-sz * .4} L${sz * .85},0 L${sz},${sz * .4}Z`, fill: '#5aa6ca'}, fi);
+      const o = {x: xa + rnd() * (xb - xa)}; let px = o.x;
+      const upd = () => { fo.setAttribute('transform', `translate(${o.x.toFixed(1)},${fy.toFixed(1)})`); if (o.x !== px) fi.setAttribute('transform', `scale(${o.x > px ? -1 : 1},1)`); px = o.x; };
+      upd();
+      if (!Kit.calm) amb.push(gsap.fromTo(o, {x: xa}, {x: xb, duration: 16 + rnd() * 8, repeat: -1, yoyo: true, ease: 'sine.inOut', onUpdate: upd}).progress(rnd()));
+    }
+
+    // ---- the iceberg
+    iceG = mk('g', {});
+    mk('polygon', {points: bandPts(T, B, true), fill: 'none', stroke: 'rgba(120,205,255,.09)', 'stroke-width': fs * 1.1, 'stroke-linejoin': 'round'}, iceG);
+    let y = T;
+    BANDS.forEach((b, i) => {
+      const y0 = y, y1 = y + b.v * K; y = y1;
+      b.y0 = y0; b.y1 = y1; b.mid = (y0 + y1) / 2;
+      b.poly = mk('polygon', {points: bandPts(y0, y1, i === 0), fill: lit[i] ? b.c : DARK, stroke: lit[i] ? 'rgba(4,34,58,.28)' : 'rgba(140,210,255,.22)', 'stroke-width': 1, 'stroke-linejoin': 'round'}, iceG);
+      if (i === 0 && tipCoral) { b.poly.setAttribute('stroke', CORAL); b.poly.setAttribute('stroke-width', 2.5); }
+    });
+    const fx = mk('g', {'clip-path': 'url(#ice)'}, iceG);
+    const fTop = Math.max(0, T - fs * 2);
+    for (let i = 0; i < 9; i++) { const x0 = cx - MHW + i * MHW * .27 + rnd() * fs; mk('path', {d: `M${x0},${fTop} L${x0 + fs * (1 + rnd() * 2)},${SY} L${x0 - fs * rnd()},${B}`, fill: 'none', stroke: '#ffffff', 'stroke-opacity': .16, 'stroke-width': 1}, fx); }
+    const shX = cx + fs * .8;
+    mk('rect', {x: shX, y: fTop, width: Math.max(0, W - shX - 1), height: B - fTop, fill: '#3d7aa8', opacity: .16}, fx);
+    const hiX = Math.max(0, cx - MHW * 1.2);
+    mk('rect', {x: hiX, y: fTop, width: MHW * .35, height: SY - fTop, fill: '#ffffff', opacity: .35}, fx);
+    sweep = mk('rect', {x: hiX, y: B - fs * 3, width: Math.min(MHW * 2.4, W - hiX - 1), height: fs * 3, fill: 'url(#sw)', opacity: 0}, fx);
+
+    // ---- caustics near the surface
+    const caus = mk('g', {style: 'mix-blend-mode:screen'});
+    for (let i = 0; i < 14; i++) {
+      const a = fs * (1.5 + rnd() * 2), x = fs * 2.2 + rnd() * Math.max(1, W - 2 * a - fs * 4.4);
+      const yy = Math.min(H - fs, SY + fs * .8 + rnd() * Math.max(1, (H - SY) * .28));
+      const c = mk('path', {d: `M${x},${yy} c${a * .4},${-fs * .5} ${a * .7},${fs * .6} ${a},0 s${a * .6},${fs * .5} ${a},${-fs * .2}`, fill: 'none', stroke: '#c4f5ff', 'stroke-width': 1.2, 'stroke-linecap': 'round', opacity: .1 + rnd() * .18}, caus);
+      if (!Kit.calm) amb.push(gsap.to(c, {x: (rnd() - .5) * fs * 4, opacity: .04, duration: 2.5 + rnd() * 3, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+    }
+    // ---- the surface, a living sine
+    const wave = (ph, amp, y0) => { let d = `M0,${(y0 + amp * Math.sin(ph)).toFixed(1)}`; for (let x = 6; x <= W; x += 6) d += ` L${Math.min(x, W)},${(y0 + amp * Math.sin(x / 18 * P + ph)).toFixed(1)}`; return d; };
+    const surf = mk('path', {fill: 'none', stroke: '#d4f7ff', 'stroke-width': 1.6, opacity: .85});
+    const surf2 = mk('path', {fill: 'none', stroke: '#9fe3ff', 'stroke-width': 1, opacity: .3});
+    const sw = {p: 0};
+    const drawS = () => { surf.setAttribute('d', wave(sw.p, 2, SY)); surf2.setAttribute('d', wave(sw.p * 1.3 + 2, 1.3, SY + fs * .45)); };
+    drawS();
+    if (!Kit.calm) amb.push(gsap.to(sw, {p: -2 * P, duration: 2.4, repeat: -1, ease: 'none', onUpdate: drawS}));
+
+    // ---- marine snow
+    for (let i = 0; i < 38; i++) {
+      const cy0 = SY + 2 + rnd() * Math.max(0, H - SY - fs * 4.6 - 4), rr = .5 + rnd() * 1.6;
+      const p = mk('circle', {cx: fs * 1.2 + rnd() * (W - fs * 2.4), cy: cy0, r: rr, fill: '#c9eeff', opacity: .15 + rnd() * .45});
+      const dy = Math.max(0, Math.min(fs * (1.5 + rnd() * 3), H - cy0 - rr - 2));
+      if (!Kit.calm) amb.push(gsap.to(p, {y: dy, x: (rnd() - .5) * fs * 2, duration: 4 + rnd() * 5, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: -rnd() * 5}));
+    }
+
+    // ---- bubbles and the lamp rig
+    bubG = mk('g', {});
+    wrap = mk('g', {});
+    cable = mk('line', {x1: LX, x2: LX, y1: SY + fs * .3, y2: SY, stroke: 'rgba(220,240,255,.6)', 'stroke-width': 1.2}, wrap);
+    const buoy = mk('g', {transform: `translate(${LX},${SY})`}, wrap);
+    mk('ellipse', {cx: 0, cy: 0, rx: fs * .75, ry: fs * .38, fill: CORAL}, buoy);
+    mk('rect', {x: -fs * .75, y: -fs * .08, width: fs * 1.5, height: fs * .16, fill: '#fff', opacity: .8}, buoy);
+    cone = mk('polygon', {points: '0,0 0,0 0,0', fill: 'url(#cone)', style: 'mix-blend-mode:screen'}, wrap);
+    lampG = mk('g', {}, wrap);
+    mk('circle', {r: glowR, fill: 'url(#glow)'}, lampG);
+    mk('rect', {x: -r * .75, y: -r * 1.55, width: r * 1.5, height: r * .85, rx: 2, fill: '#24384c', stroke: '#8fb7cf', 'stroke-width': 1}, lampG);
+    mk('circle', {r, fill: '#fff3c4', stroke: '#ffd36b', 'stroke-width': 1.5}, lampG);
+    hint = mk('g', {opacity: touched ? 0 : 1}, lampG);
+    [2.4, 3.3].forEach((k, j) => mk('path', {d: `M${-r * .6},${r * k} l${r * .6},${r * .55} l${r * .6},${-r * .55}`, fill: 'none', stroke: '#ffe7a3', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 1 - j * .4}, hint));
+    if (!Kit.calm && !touched) amb.push(gsap.to(hint, {y: r * .7, duration: .7, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+    flash = mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#flash)', opacity: 0, style: 'mix-blend-mode:screen;pointer-events:none'});
+
+    // ---- labels: HTML so the numbers can scramble; sized to their band, then de-collided
+    const items = [], pad = fs * .45, gap = 3;
+    const asOne = (el, fitW) => {
+      el.className = 'lab one'; el.style.width = '';
+      if (el.offsetWidth > fitW || el.scrollWidth > el.clientWidth + .5) { el.classList.add('wrap'); el.style.width = fitW + 'px'; }
+    };
+    BANDS.forEach((b, i) => {
+      b.lab = null; b.vEl = null;
+      const h = b.y1 - b.y0; if (b.other && h < fs * 1.5) return;
+      const fitW = Math.max(fs * 5, Math.min(W - 2 * pad, 2 * MHW * prof(Math.max(b.mid, T + 1)) * .92));
+      const bw = Math.min(fitW, 2 * MHW * prof(Math.max(b.mid, T + 1)) * .84);
+      const el = document.createElement('div');
+      el.innerHTML = `<span class="n">${b.n}</span><span class="v">${b.v}k</span>`;
+      labs.appendChild(el);
+      let two = h >= fs * 2.9;
+      if (two) {
+        el.className = 'lab two'; el.style.width = bw + 'px';
+        const n = el.querySelector('.n'), v = el.querySelector('.v');
+        if (el.offsetHeight > h * .95 || el.scrollWidth > el.clientWidth + .5 || n.scrollWidth > n.clientWidth + .5 || v.scrollWidth > v.clientWidth + .5) two = false;
+      }
+      if (!two) asOne(el, fitW);
+      items.push({b, i, el, fitW, two, w: el.offsetWidth, h: el.offsetHeight});
+    });
+    const lo = hh + 2, hi = H - 3;
+    const total = () => items.reduce((a, it) => a + it.h + gap, 0);
+    if (total() > hi - lo) { const k = items.findIndex(it => it.b.other); if (k >= 0) { items[k].el.remove(); items.splice(k, 1); } }
+    // still too tall: fold two-line labels into compact pills
+    if (total() > hi - lo) items.forEach(it => { if (it.two) { it.two = false; asOne(it.el, it.fitW); it.w = it.el.offsetWidth; it.h = it.el.offsetHeight; } });
+    items.forEach(it => { const lh = it.h; it.y = it.i === 0 ? Math.min(it.b.mid + fs * .2, SY - lh / 2 - 2) : it.b.mid; });
+    const fwd = () => items.forEach((it, k) => { const pv = items[k - 1]; it.y = Math.max(it.y, lo + it.h / 2, pv ? pv.y + pv.h / 2 + gap + it.h / 2 : -1e9); });
+    fwd();
+    for (let k = items.length - 1; k >= 0; k--) { const it = items[k], nx = items[k + 1]; it.y = Math.min(it.y, hi - it.h / 2, nx ? nx.y - nx.h / 2 - gap - it.h / 2 : 1e9); }
+    fwd();
+    items.forEach(it => { it.y = clamp(it.y, Math.min(lo + it.h / 2, H / 2), Math.max(hi - it.h / 2, H / 2)); });
+    items.forEach(it => {
+      const {b, i, el, w} = it;
+      let x = Math.min(cx, Math.max(LX - r * 1.6 - w / 2, pad + w / 2));
+      x = clamp(x, pad + w / 2, Math.max(pad + w / 2, W - pad - w / 2));
+      b.lab = el; b.vEl = el.querySelector('.v'); b.ly = it.y;
+      b.vEl.textContent = lit[i] ? b.v + 'k' : '';
+      gsap.set(el, {x, y: it.y, xPercent: -50, yPercent: -50, opacity: lit[i] ? 1 : 0});
+    });
+
+    L.y = lampAt(lampF); applyLamp();
+  }
+
+  function applyLamp() {
+    if (!lampG) return;
+    lampG.setAttribute('transform', `translate(${LX},${L.y.toFixed(1)})`);
+    cable.setAttribute('y2', L.y - r * 1.55);
+    const sp = fs * 4.5, x0 = LX - r * .9;
+    cone.setAttribute('points', `${x0},${L.y - r * .5} ${coneX},${Math.max(SY + 1, L.y - sp)} ${coneX},${Math.min(H - 1, L.y + sp)} ${x0},${L.y + r * .5}`);
+    if (!touched) return;
+    BANDS.forEach((b, i) => { if (!lit[i] && L.y >= trig(i)) light(i); });
+  }
+
+  function light(i) {
+    lit[i] = true; const b = BANDS[i]; count += b.v;
+    if (Kit.calm) {
+      b.poly.setAttribute('fill', b.c); b.poly.setAttribute('stroke', 'rgba(4,34,58,.28)');
+      if (b.lab) { b.lab.style.opacity = 1; b.vEl.textContent = b.v + 'k'; }
+    } else {
+      gsap.fromTo(b.poly, {attr: {fill: '#fff8dc'}}, {attr: {fill: b.c, stroke: 'rgba(4,34,58,.28)'}, duration: .7, ease: 'power2.out'});
+      if (b.lab) { gsap.fromTo(b.lab, {opacity: 0, scale: .7}, {opacity: 1, scale: 1, duration: .5, ease: 'back.out(2)'}); scramble(b.vEl, b.v + 'k'); }
+    }
+    scramble(Kit.$('cnt'), fmt());
+    Kit.haptic('light');
+    if (lit.every(Boolean) && !finaleQueued) { finaleQueued = true; Kit.calm ? finale() : gsap.delayedCall(.85, finale); }
+  }
+
+  function bubble() {
+    if (Kit.calm || !bubG) return;
+    const now = performance.now(); if (now - lastBub < 90) return; lastBub = now;
+    const y0 = L.y - r * 1.7; if (y0 < SY + fs) return;
+    const rr = 1 + Math.random() * 1.8, x0 = LX + (Math.random() - .5) * r;
+    const c = Kit.mk('circle', {cx: x0, cy: y0, r: rr, fill: 'none', stroke: '#d8f6ff', 'stroke-width': 1, opacity: .8}, bubG);
+    gsap.to(c, {attr: {cy: SY + fs * .4 + rr, cx: clamp(x0 + (Math.random() - .5) * fs, rr + 1, W - rr - 1)}, opacity: 0, duration: .6 + (y0 - SY) / H * 1.6, ease: 'power1.in', onComplete: () => c.remove()});
+  }
+
+  function finale() {
+    if (done) return; done = true;
+    Kit.haptic('success');
+    const k = hud.querySelector('.k'); k.textContent = 'Cancer is only 1 in 6 of them';
+    Kit.$('of').textContent = 'alcohol deaths, 2019';
+    scramble(Kit.$('cnt'), '2.6');
+    say.innerHTML = 'Under the water: crashes, self-harm and violence, <b>724k</b>. Weaker immunity and unprotected sex: <b>284k</b> died of infections.';
+    Kit.show('keep');
+    if (Kit.calm) { tipCoral = true; relayoutNow(true); return; }
+    if (HAS_SPLIT) { const sp = new SplitText(k, {type: 'chars'}); gsap.from(sp.chars, {opacity: 0, y: -10, rotationX: -90, stagger: .025, duration: .55, ease: 'back.out(2.2)'}); }
+    gsap.fromTo(Kit.$('cnt'), {scale: 1.25}, {scale: 1, duration: .9, ease: 'elastic.out(1,.45)', transformOrigin: '50% 60%'});
+    // let the stage settle to its new size, then play the light show on the fresh drawing
+    gsap.delayedCall(.45, () => {
+      relayoutNow();
+      tipCoral = true;
+      const tip = BANDS[0].poly;
+      tip.setAttribute('stroke', 'rgba(4,34,58,.28)'); tip.setAttribute('stroke-width', 1);
+      flashGrad.setAttribute('cx', LX); flashGrad.setAttribute('cy', L.y);
+      gsap.set(flashGrad, {attr: {r: fs}});
+      gsap.to(flashGrad, {attr: {r: Math.max(W, H) * 1.2}, duration: 1.4, ease: 'expo.out'});
+      gsap.fromTo(flash, {opacity: 1}, {opacity: 0, duration: 1.5, ease: 'power2.in'});
+      gsap.to(raysG, {opacity: 1.6, duration: .4, yoyo: true, repeat: 1, ease: 'power2.out'});
+      gsap.timeline()
+        .set(sweep, {opacity: 1})
+        .fromTo(sweep, {attr: {y: B - fs * 3}}, {attr: {y: Math.max(0, T - fs * 2)}, duration: 1.1, ease: 'power2.inOut'})
+        .to(sweep, {opacity: 0, duration: .3});
+      BANDS.slice().reverse().forEach((b, j) => gsap.to(b.poly, {attr: {fill: '#ffffff'}, duration: .16, delay: .1 + j * .17, yoyo: true, repeat: 1, ease: 'power2.out'}));
+      gsap.to(tip, {attr: {stroke: CORAL, 'stroke-width': 2.5}, duration: .7, delay: 1.1, ease: 'power3.out'});
+      if (BANDS[0].lab) gsap.fromTo(BANDS[0].lab, {scale: 1}, {scale: 1.12, duration: .3, delay: 1.1, yoyo: true, repeat: 1, ease: 'power2.out'});
+    });
+  }
+
+  // ---- re-draw whenever the stage changes size (the closing text makes it shorter)
+  let roT = 0;
+  function relayoutNow(quiet) {
+    if (!built) return;
+    const w = stage.clientWidth, h = stage.clientHeight;
+    if (Math.abs(w - sizeW) < 1.5 && Math.abs(h - sizeH) < 1.5) return;
+    layout();
+    if (!Kit.calm && !quiet) gsap.from(svg, {opacity: .55, duration: .45, ease: 'power1.out'});
+  }
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { clearTimeout(roT); roT = setTimeout(() => relayoutNow(), 120); }).observe(stage);
+
+  // ---- the drag
+  function touch() { if (touched) return; touched = true; if (hint) gsap.to(hint, {opacity: 0, duration: .3}); }
+  function moveTo(y) {
+    const yy = clamp(y, lampMin(), lampMax());
+    lampF = Math.max(lampF, (yy - lampMin()) / Math.max(1, lampMax() - lampMin()));
+    if (Kit.calm) { L.y = yy; applyLamp(); } else { qy(yy); bubble(); }
+  }
+  let drag = false;
+  const yOf = e => e.clientY - svg.getBoundingClientRect().top;
+  svg.addEventListener('pointerdown', e => { drag = true; touch(); svg.setPointerCapture(e.pointerId); Kit.haptic('selection'); moveTo(yOf(e)); });
+  svg.addEventListener('pointermove', e => { if (drag) moveTo(yOf(e)); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !iceG) return;
+    gsap.from(iceG, {y: H * .12, opacity: 0, duration: 1.5, ease: 'expo.out'});
+    gsap.from(raysG, {opacity: 0, duration: 2, ease: 'power2.out'});
+    gsap.from(wrap, {y: -H * .35, duration: 1.2, delay: .5, ease: 'back.out(1.5)'});
+    if (BANDS[0].vEl) scramble(BANDS[0].vEl, '410k', .4);
+    scramble(Kit.$('cnt'), fmt(), .4);
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    touch();
+    for (let i = 1; i <= 12; i++) { moveTo(lampAt(i / 12)); await w(Kit.calm ? 20 : 110); }
+    await w(Kit.calm ? 300 : 3000);
+  };
+})();
+Kit.single();
+</script>
+</html>

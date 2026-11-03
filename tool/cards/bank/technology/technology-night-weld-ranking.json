@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Card reveals that over 200 structural joints were welded overnight by a night crew, ranked by importance, starting with the 30th floor. It asks how many joints were welded overnight and which came first.",
-    "ground": "#0d1430"
+    "label": "Card reveals that over 200 structural joints were welded overnight by a night crew, ranked by importance, starting with the 30th floor. It asks how many joints were welded overnight and which came first."
   },
   "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=1270s",

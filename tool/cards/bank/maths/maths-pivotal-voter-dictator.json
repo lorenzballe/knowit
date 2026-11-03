@@ -1,0 +1,38 @@
+{
+  "id": "maths-pivotal-voter-dictator",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does Arrow's proof find a hidden dictator?",
+  "answer": "Every voter ranks B last, so society must too. Drag the rail: one voter at a time lifts B to the top. Change one vote at a time, and some single voter ends up deciding for everyone.",
+  "move": "Change one vote at a time, and some single voter ends up deciding for everyone.",
+  "keywords": [
+    "arrow",
+    "dictator",
+    "voting",
+    "ranked ballots",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A draggable rail for moving candidate B to the top of a voter's ranking, one voter at a time, asking which single voter ends up deciding the society-wide result.",
+    "ground": "#0b1828"
+  },
+  "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=957s",
+  "written": "2026-11-03"
+}

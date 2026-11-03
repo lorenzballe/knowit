@@ -21,7 +21,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh}
-#cam{flex:1;min-height:0;width:100%;display:block;border-radius:2.2cqh;background:#06080b}
+#cam{flex:1;min-height:0;width:100%;display:block}
 #scrub{display:flex;align-items:center;gap:2.4cqw;flex:none}
 #play{flex:none;width:max(5.2cqh,34px);height:max(5.2cqh,34px);border-radius:50%;border:0;background:var(--k);color:var(--c);display:grid;place-items:center;cursor:pointer;padding:0}
 #play svg{width:44%;height:44%;display:block}
@@ -39,7 +39,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HIGH-SPEED CAMERA</span></div>
     <h2 class="q">To make the light that prints chips, a laser hits each tin drop twice, microseconds apart. Why not once?</h2>
     <div class="stagebox" id="stage">
-      <canvas id="cam" role="img" aria-label="A dark chamber. A drop of molten tin flies toward two infrared laser beams coming from the left: a thin pre-pulse beam and, lower down, a much wider main beam."></canvas>
+      <canvas id="cam" role="img" aria-label="A drop of molten tin flies toward two infrared laser beams coming from the left: a thin pre-pulse beam and, lower down, a much wider main beam."></canvas>
       <div id="scrub">
         <button id="play" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path id="ico" d="M7 4.5v15l12.5-7.5z" fill="currentColor"/></svg></button>
         <svg id="track" data-drag tabindex="0" role="slider" aria-label="Time, in microseconds" aria-valuemin="-1.5" aria-valuemax="3.05" aria-valuenow="-1.5" aria-valuetext="minus 1.5 microseconds"></svg>
@@ -55,6 +55,7 @@
 <script>
 (() => {
   const cv = Kit.$('cam'), trk = Kit.$('track'), playB = Kit.$('play'), ico = Kit.$('ico'), say = Kit.$('say'), card = Kit.$('card'), cmp = Kit.$('cmp');
+  const INK = '#10100c';
   // Time in microseconds, sizes in micrometres.
   const T0 = -1.5, T1 = 3.05, TP = 3;             // the clock's start and end; the main pulse
   const V = 70, VX = 15;                           // the fall (70 m/s = 70 µm per µs); the push the pre-pulse gives
@@ -79,8 +80,6 @@
     'The pancake fills the main beam and has become a glowing plasma of over 200,000 degrees Celsius, giving off 13.5 nanometre light.'
   ];
   let t = T0, g = null, x = null, tk = null, fillL = null, head = null, phase = 0, done = false, tw = null, once = false;
-  // The grain, the same on every phone.
-  const grain = (() => { const c = document.createElement('canvas'); c.width = c.height = 96; const q = c.getContext('2d'), im = q.createImageData(96, 96); for (let i = 0; i < im.data.length; i += 4) { const v = Kit.rnd() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } q.putImageData(im, 0, 0); return c; })();
 
   // ---------- the camera ----------
   function layout() {
@@ -96,19 +95,21 @@
     const {W} = g, xe = through ? W : xf + af * .3;
     const top = [[0, y - a0], [xf, y - af], [xe, y - af]], bot = [[0, y + a0], [xf, y + af], [xe, y + af]];
     x.beginPath(); top.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); [...bot].reverse().forEach(([a, b]) => x.lineTo(a, b)); x.closePath();
-    const gr = x.createLinearGradient(0, 0, xf, 0);
-    gr.addColorStop(0, `rgba(255,70,40,${.05 + .16 * fire})`); gr.addColorStop(1, `rgba(255,120,80,${.08 + .5 * fire})`);
-    x.fillStyle = gr; x.fill();
-    x.save(); x.setLineDash(fire > .02 ? [] : [5, 5]); x.strokeStyle = `rgba(255,${130 + 80 * fire},${100 + 80 * fire},${.5 + .45 * fire})`; x.lineWidth = 1.3;
+    if (fire > 0) {
+      const gr = x.createLinearGradient(0, 0, xf, 0);
+      gr.addColorStop(0, `rgba(255,236,200,${.16 * fire})`); gr.addColorStop(1, `rgba(255,244,225,${.62 * fire})`);
+      x.fillStyle = gr; x.fill();
+    }
+    x.save(); x.setLineDash(fire > .02 ? [] : [5, 5]); x.strokeStyle = `rgba(${Math.round(150 + 105 * fire)},${Math.round(245 * fire)},${Math.round(25 + 200 * fire)},${.85 + .1 * fire})`; x.lineWidth = 1.3;
     for (const edge of [top, bot]) { x.beginPath(); edge.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); x.stroke(); }
     x.restore();
   }
   // The readouts once the plasma is lit: the temperature, top right; the light it gives, bottom right.
   function hudLines() {
     const {W, H, fs} = g, big = Math.max(17, Math.min(26, H / 10, W / 13));
-    return [['200,000+ °C', W - 12, 10 + big * .82, big, '#ffffff', `800 ${big}px Fraunces`],
-      ['40× the Sun’s surface', W - 12, 14 + big * .82 + fs * 1.05, fs, 'rgba(255,255,255,.82)', `600 ${fs}px Figtree`],
-      ['13.5 nm light', W - 12, H - 11, fs, 'rgba(222,196,255,.95)', `700 ${fs}px Figtree`]];
+    return [['200,000+ °C', W - 12, 10 + big * .82, big, INK, `800 ${big}px Fraunces`],
+      ['40× the Sun’s surface', W - 12, 14 + big * .82 + fs * 1.05, fs, 'rgba(16,16,12,.88)', `600 ${fs}px Figtree`],
+      ['13.5 nm light', W - 12, H - 11, fs, '#3a0a8c', `700 ${fs}px Figtree`]];
   }
   // Their boxes, [left, top, right, bottom], for the rays to keep out of.
   function hud() {
@@ -118,21 +119,21 @@
   // tin, a small spark on its face; behind it, its shadow; the rest of the beam flies past.
   function sliver(cx, cy, k) {
     const {W} = g, r = Math.max(3.5, P(R0));
-    x.fillStyle = `rgba(255,238,220,${.92 * k})`; x.fillRect(0, cy - r, cx, 2 * r);
-    x.fillStyle = `rgba(5,7,10,${.62 * k})`; x.fillRect(cx, cy - r, W - cx, 2 * r);
+    x.fillStyle = `rgba(255,244,225,${.95 * k})`; x.fillRect(0, cy - r, cx, 2 * r);
+    x.fillStyle = `rgba(5,40,80,${.5 * k})`; x.fillRect(cx, cy - r, W - cx, 2 * r);
     const sx = cx - r * .55, sr = r * 2.6, gr = x.createRadialGradient(sx, cy, 0, sx, cy, sr);
-    gr.addColorStop(0, `rgba(255,255,255,${k})`); gr.addColorStop(.45, `rgba(214,170,255,${.8 * k})`); gr.addColorStop(1, 'rgba(160,100,255,0)');
+    gr.addColorStop(0, `rgba(255,255,255,${k})`); gr.addColorStop(.45, `rgba(120,50,230,${.7 * k})`); gr.addColorStop(1, 'rgba(100,40,220,0)');
     x.fillStyle = gr; x.beginPath(); x.arc(sx, cy, sr, 0, 7); x.fill();
   }
   function onceLabels(cx, cy) {
     const {W, fs} = g, r = Math.max(3.5, P(R0)), f = `700 ${fs}px Figtree`;
     x.font = f; let a = 'a sliver hits the drop'; if (x.measureText(a).width > cx - r - 30) a = 'a sliver hits';
-    pill(a, cx - r - 9, cy - r - 7, fs, f); label(a, cx - r - 9, cy - r - 7, 'right', fs, '#ffffff', f);
-    const b = 'the rest flies past →'; pill(b, W - 12, cy + r + fs + 5, fs, f); label(b, W - 12, cy + r + fs + 5, 'right', fs, '#ffffff', f);
-    const tg = 'HIT ONCE', tf = `800 ${fs}px Figtree`; pill(tg, W - 12, 12 + fs * .72, fs, tf); label(tg, W - 12, 12 + fs * .72, 'right', fs, '#ffd6c4', tf);
+    pill(a, cx - r - 9, cy - r - 7, fs, f); label(a, cx - r - 9, cy - r - 7, 'right', fs, INK, f);
+    const b = 'the rest flies past →'; pill(b, W - 12, cy + r + fs + 5, fs, f); label(b, W - 12, cy + r + fs + 5, 'right', fs, INK, f);
+    const tg = 'HIT ONCE', tf = `800 ${fs}px Figtree`; pill(tg, W - 12, 12 + fs * .72, fs, tf); label(tg, W - 12, 12 + fs * .72, 'right', fs, INK, tf);
   }
-  // A dark backing under a readout that sits on a beam.
-  function pill(s, a, b, size, font) { x.font = font; const w = x.measureText(s).width; x.fillStyle = 'rgba(5,7,10,.72)'; rr(a - w - 7, b - size * 1.02, w + 14, size * 1.42, size * .5); x.fill(); }
+  // A light backing under a readout that sits on a beam.
+  function pill(s, a, b, size, font) { x.font = font; const w = x.measureText(s).width; x.fillStyle = 'rgba(255,255,255,.78)'; rr(a - w - 7, b - size * 1.02, w + 14, size * 1.42, size * .5); x.fill(); }
   function label(s, a, b, align, size, color, font) {
     x.font = font || `600 ${size}px "JetBrains Mono"`; x.textAlign = align; x.textBaseline = 'alphabetic'; x.fillStyle = color; x.fillText(s, a, b);
   }
@@ -141,14 +142,6 @@
     if (!g) return;
     const {W, H, s, fs} = g;
     x.clearRect(0, 0, W, H);
-    const bg = x.createRadialGradient(W * .55, H * .58, 0, W * .55, H * .58, Math.max(W, H) * .8);
-    bg.addColorStop(0, '#141b25'); bg.addColorStop(1, '#05070a');
-    x.fillStyle = bg; x.fillRect(0, 0, W, H);
-    // a camera's grain
-    if (grain) { x.save(); x.globalAlpha = .045; x.fillStyle = x.createPattern(grain, 'repeat'); x.fillRect(0, 0, W, H); x.restore(); }
-    // the camera's corner marks
-    x.strokeStyle = 'rgba(255,255,255,.32)'; x.lineWidth = 1.4; const m = 7, L = Math.min(16, H * .09);
-    for (const [cx, cy, dx, dy] of [[m, m, 1, 1], [W - m, m, -1, 1], [m, H - m, 1, -1], [W - m, H - m, -1, -1]]) { x.beginPath(); x.moveTo(cx, cy + dy * L); x.lineTo(cx, cy); x.lineTo(cx + dx * L, cy); x.stroke(); }
 
     const xp = P(g.xpp), yp = P(YPP), xm = P(g.xpp + VX * TP), ym = P(YMP);
     const firePre = !once && t >= 0 ? Math.max(0, 1 - t / .3) : 0, fireMain = t >= TP ? Math.min(1, (t - TP) / .02) : 0;
@@ -156,19 +149,20 @@
     beam(yp, xp, P(48), P(R0 + 8), false, firePre);
     // which beam is which, inside each beam at the left edge
     const bl = Math.max(11.5, fs * .92);
-    if (!(once && fireMain)) label('main pulse', 12, ym + bl * .35, 'left', bl, `rgba(255,190,170,${.8 + .2 * fireMain})`);
+    if (!(once && fireMain)) label('main pulse', 12, ym + bl * .35, 'left', bl, 'rgba(16,16,12,.9)');
     // the pre-pulse's name, while it matters and where the clock leaves it room
-    if (!fireMain && P(48) * 2 > bl * 1.2 && yp - bl * .5 > 14 + fs) label('pre-pulse', 12, yp + bl * .35, 'left', bl, 'rgba(255,190,170,.8)');
+    if (!fireMain && P(48) * 2 > bl * 1.2 && yp - bl * .5 > 14 + fs) label('pre-pulse', 12, yp + bl * .35, 'left', bl, 'rgba(16,16,12,.9)');
 
     // the tin: a drop, then a pancake seen from the side
     if (once && fireMain > 0) sliver(xp, ym, fireMain);
     if (t < TP || once) {
       const tt = once ? 0 : Math.max(0, t), cx = P(g.xpp + VX * tt), cy = P(YPP + V * t);
-      x.save(); x.shadowColor = 'rgba(190,215,255,.55)'; x.shadowBlur = 8;
+      x.save(); x.shadowColor = 'rgba(16,16,12,.35)'; x.shadowBlur = 8;
+      x.strokeStyle = 'rgba(16,16,12,.75)'; x.lineWidth = 1;
       if (t <= 0 || once) {
         const r = Math.max(3.5, P(R0)), gr = x.createRadialGradient(cx - r * .35, cy - r * .35, r * .1, cx, cy, r);
         gr.addColorStop(0, '#ffffff'); gr.addColorStop(.45, '#c9d1da'); gr.addColorStop(1, '#5d6670');
-        x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
+        x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill(); x.stroke();
       } else {
         const u = Math.min(1, t / TP), e = 1 - (1 - u) * (1 - u);
         const R = Math.max(3.5, P(R0 + (RM - R0) * e)), h = Math.max(1.1, Math.max(3.5, P(R0)) * (1 - e) ** 1.6), bow = R * .18 * e;
@@ -176,13 +170,13 @@
         gr.addColorStop(0, '#76808c'); gr.addColorStop(.5, '#f4f7fa'); gr.addColorStop(1, '#76808c');
         x.fillStyle = gr; x.beginPath(); x.moveTo(cx - bow, cy - R);
         x.quadraticCurveTo(cx + 2 * h + bow, cy, cx - bow, cy + R);
-        x.quadraticCurveTo(cx - 2 * h + bow, cy, cx - bow, cy - R); x.fill();
+        x.quadraticCurveTo(cx - 2 * h + bow, cy, cx - bow, cy - R); x.fill(); x.stroke();
       }
       x.restore();
       // the spark where the pre-pulse struck
       if (firePre > 0) {
         const r = Math.max(6, P(R0) * 2.2) * (.6 + .4 * firePre), sx = cx - Math.max(2, P(R0) * .8), gr = x.createRadialGradient(sx, cy, 0, sx, cy, r);
-        gr.addColorStop(0, `rgba(255,255,255,${firePre})`); gr.addColorStop(.4, `rgba(255,170,110,${.7 * firePre})`); gr.addColorStop(1, 'rgba(255,90,40,0)');
+        gr.addColorStop(0, `rgba(255,255,255,${firePre})`); gr.addColorStop(.4, `rgba(255,190,90,${.8 * firePre})`); gr.addColorStop(1, 'rgba(255,90,40,0)');
         x.fillStyle = gr; x.beginPath(); x.arc(sx, cy, r, 0, 7); x.fill();
       }
       // what we are looking at
@@ -190,8 +184,8 @@
       const lx = t <= .35 || once ? cx + Math.max(3.5, P(R0)) + 8 : cx + Math.max(3, P(RM) * .1) + 10, ly = cy, lf = `700 ${fs}px Figtree`;
       x.font = lf; let name = t <= .35 || once ? 'tin drop' : 'pancake, side view';
       if (lx + 8 + x.measureText(name).width > W - 10) name = 'pancake';
-      x.strokeStyle = 'rgba(255,255,255,.55)'; x.lineWidth = 1; x.beginPath(); x.moveTo(lx - 5, ly); x.lineTo(lx + 4, ly); x.stroke();
-      label(name, lx + 8, ly + fs * .35, 'left', fs, 'rgba(255,255,255,.9)', lf);
+      x.strokeStyle = 'rgba(16,16,12,.6)'; x.lineWidth = 1; x.beginPath(); x.moveTo(lx - 5, ly); x.lineTo(lx + 4, ly); x.stroke();
+      label(name, lx + 8, ly + fs * .35, 'left', fs, INK, lf);
       }
     }
 
@@ -199,12 +193,12 @@
     if (fireMain > 0 && !once) {
       const k = fireMain, r = P(RM) * 1.12;
       let gr = x.createRadialGradient(xm, ym, 0, xm, ym, r * 2);
-      gr.addColorStop(0, `rgba(175,125,255,${.38 * k})`); gr.addColorStop(1, 'rgba(120,70,255,0)');
+      gr.addColorStop(0, `rgba(255,255,255,${.45 * k})`); gr.addColorStop(1, 'rgba(255,255,255,0)');
       x.fillStyle = gr; x.fillRect(0, 0, W, H);
       // the light going out, each ray stopping short of the readouts
       const keepOut = hud();
       const inside = (px, py) => keepOut.some(b => px > b[0] - 4 && px < b[2] + 4 && py > b[1] - 4 && py < b[3] + 4);
-      x.save(); x.setLineDash([3, 4]); x.strokeStyle = `rgba(214,184,255,${.85 * k})`; x.lineWidth = 1.5;
+      x.save(); x.setLineDash([3, 4]); x.strokeStyle = `rgba(70,20,140,${.9 * k})`; x.lineWidth = 1.5;
       for (let i = 0; i < 12; i++) {
         const a = (i + .5) * Math.PI / 6, c = Math.cos(a), sn = Math.sin(a);
         let o = 1.4; while (o > .95 && inside(xm + c * r * o, ym + sn * r * o)) o -= .05;
@@ -213,14 +207,14 @@
       }
       x.restore();
       gr = x.createRadialGradient(xm, ym, 0, xm, ym, r);
-      gr.addColorStop(0, `rgba(255,255,255,${k})`); gr.addColorStop(.3, `rgba(247,238,255,${.96 * k})`); gr.addColorStop(.62, `rgba(198,146,255,${.62 * k})`); gr.addColorStop(1, 'rgba(140,80,255,0)');
+      gr.addColorStop(0, `rgba(255,255,255,${k})`); gr.addColorStop(.3, `rgba(247,238,255,${.97 * k})`); gr.addColorStop(.62, `rgba(150,90,245,${.8 * k})`); gr.addColorStop(1, 'rgba(100,40,230,0)');
       x.fillStyle = gr; x.beginPath(); x.arc(xm, ym, r, 0, 7); x.fill();
     }
 
     // the camera's readouts
     const sign = t < -1e-9 ? '−' : '+';
-    x.fillStyle = '#ff3b30'; x.beginPath(); x.arc(14, 12 + fs * .3, 3.6, 0, 7); x.fill();
-    label(`t = ${sign}${Math.abs(t).toFixed(2)} µs`, 23, 12 + fs * .72, 'left', fs, 'rgba(255,255,255,.92)');
+    x.fillStyle = '#d70015'; x.beginPath(); x.arc(14, 12 + fs * .3, 3.6, 0, 7); x.fill();
+    label(`t = ${sign}${Math.abs(t).toFixed(2)} µs`, 23, 12 + fs * .72, 'left', fs, INK);
     if (fireMain > 0 && once) {
       onceLabels(xp, ym);
     } else if (fireMain > 0) {
@@ -229,14 +223,13 @@
       // and the next drop is already on its way: one every 20 µs
       const nf = `600 ${fs}px Figtree`, ns = `next drop in ${Math.round(20 - t)} µs`; x.font = nf;
       const nw = x.measureText(ns).width, lw = x.measureText('13.5 nm light').width;
-      if (!short && 12 + nw + 14 + 10 + lw + 14 < W - 12) { pill(ns, 12 + nw + 7, H - 11, fs, nf); label(ns, 12 + 7, H - 11, 'left', fs, 'rgba(255,255,255,.85)', nf); }
+      if (!short && 12 + nw + 14 + 10 + lw + 14 < W - 12) { pill(ns, 12 + nw + 7, H - 11, fs, nf); label(ns, 12 + 7, H - 11, 'left', fs, INK, nf); }
     } else {
       // a scale: how long 100 µm is in this picture, under the main beam
       const bw = P(100), bx = W - 14 - bw, by = H - 12;
-      x.font = `600 ${fs}px "JetBrains Mono"`; const lw = x.measureText('100 µm').width;
-      x.fillStyle = 'rgba(5,7,10,.72)'; rr(bx - 12 - lw, by - fs * 1.05, lw + bw + 20, fs * 1.5, fs * .5); x.fill();
-      x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 2; x.beginPath(); x.moveTo(bx, by - 4); x.lineTo(bx, by); x.lineTo(bx + bw, by); x.lineTo(bx + bw, by - 4); x.stroke();
-      label('100 µm', bx - 6, by, 'right', fs, 'rgba(255,255,255,.85)');
+      x.font = `600 ${fs}px "JetBrains Mono"`;
+      x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.moveTo(bx, by - 4); x.lineTo(bx, by); x.lineTo(bx + bw, by); x.lineTo(bx + bw, by - 4); x.stroke();
+      label('100 µm', bx - 6, by, 'right', fs, INK);
     }
   }
 

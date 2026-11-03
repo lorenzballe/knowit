@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611032104,
- "built": "2026-11-03T21:04:09Z",
+ "version": 202611032219,
+ "built": "2026-11-03T22:19:19Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -35489,6 +35489,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-10-03"
   },
   {
+   "id": "economics-the-great-split",
+   "topic": "economics",
+   "genre": "economics.how_countries_get_rich",
+   "strand": "economics.how_countries_get_rich.institutions",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What happened in 2007 that changed Venezuela's oil industry for good?",
+   "answer": "Before 2007, mostly American firms ran the rich Orinoco Belt. In 2007 Venezuela took its oil back. The move also cost the country the people and money it needed to pump that oil.",
+   "move": "In 2007 Venezuela took its oil back, and lost the people and money to pump it.",
+   "keywords": [
+    "venezuela",
+    "orinoco belt",
+    "oil",
+    "american firms",
+    "2007"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "puzzle",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline-style page titled The great split. It asks what happened in 2007 that changed Venezuela's oil industry for good. The reader drags a pencil across the page to reveal the answer.",
+    "page": "pages/economics-the-great-split.html?v=1a3e49b34384",
+    "bytes": 29664
+   },
+   "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
+   "reference": "https://www.youtube.com/watch?v=pp21fmWKe48&t=574s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "economics-too-good-to-be-true-1",
    "topic": "economics",
    "genre": "economics.spot_a_bad_deal",
@@ -52927,6 +52966,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "history-gaza-kept-controls",
+   "topic": "history",
+   "genre": "history.maps_and_borders",
+   "strand": "history.maps_and_borders.disputed_borders",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What does Israel still control in Gaza after withdrawing?",
+   "answer": "Israel withdrew from Gaza but still controls its airspace, territorial waters, civil registry, the entry of goods and people, and the tax system. Leaving a territory is not the same as giving up control over it.",
+   "move": "Withdrawing from a land is not the same as giving up control of it.",
+   "keywords": [
+    "gaza",
+    "israel",
+    "settlers",
+    "airspace",
+    "territorial waters"
+   ],
+   "era": "recent",
+   "region": "middle_east",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": true,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Map of the Gaza Strip. Tap the strip to watch Israeli settlers leave it. The question asks what Israel still controls in Gaza after withdrawing.",
+    "page": "pages/history-gaza-kept-controls.html?v=4ee822b4150d",
+    "bytes": 27040
+   },
+   "source": "Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=hBImPpGnYKE&t=919s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "history-glass-that-fell",
    "topic": "history",
    "genre": "history.learn_from_the_past",
@@ -52963,6 +53041,45 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “The Most Radioactive Places on Earth” (YouTube, 2014)",
    "reference": "https://www.youtube.com/watch?v=TRL7o2kPqw0",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "history-gold-codes-card",
+   "topic": "history",
+   "genre": "history.decisions_that_changed_history",
+   "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What device does the US president use to authenticate a nuclear launch?",
+   "answer": "The president carries a plastic card, the Gold Codes card, in his pocket. Its row must match the code shown on the football's screen. Only a matching row unlocks the football, so a mismatch means no launch.",
+   "move": "No match, no launch: the plastic card in his pocket unlocks the football.",
+   "keywords": [
+    "nuclear-football",
+    "gold-codes",
+    "us-president",
+    "nsa",
+    "plastic-card"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "The Gold Codes page shows a plastic card and a nuclear football briefcase with a screen. It asks the reader to drag the president's plastic card into the football and line up the row that matches the screen.",
+    "page": "pages/history-gold-codes-card.html?v=cc0e05239337",
+    "bytes": 34192
+   },
+   "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=107s",
    "written": "2026-11-03"
   },
   {
@@ -53040,6 +53157,45 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=P0PF8r7i6Zw&t=985s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "history-guayaquil-prison-bars",
+   "topic": "history",
+   "genre": "history.learn_from_the_past",
+   "strand": "history.learn_from_the_past.repeated_mistakes",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "computation",
+   "question": "What happened in the first large-scale prison massacre in 2021?",
+   "answer": "The first large-scale prison massacre came on 23 February 2021 in the Guayaquil Penitentiary, where 79 prisoners were beheaded. It was the first of 11 large-scale prison massacres in Ecuador's prisons over those two years. Ten more followed by early 2023.",
+   "move": "Guayaquil, 23 Feb 2021: 79 prisoners beheaded, the first of 11 prison massacres.",
+   "keywords": [
+    "ecuador",
+    "guayaquil penitentiary",
+    "prison massacres",
+    "beheadings"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "number",
+   "mood": "dark",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": true,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Eleven bars are shown. The reader drags across them to count how many large-scale prison massacres happened in the two years. The question asks what happened in the first large-scale prison massacre in 2021.",
+    "ground": "#0b3e75",
+    "page": "pages/history-guayaquil-prison-bars.html?v=6ba582989cc6",
+    "bytes": 22711
+   },
+   "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=8-KoJBcxLek&t=409s",
    "written": "2026-11-03"
   },
   {
@@ -54615,6 +54771,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "history-italy-nuclear-bases",
+   "topic": "history",
+   "genre": "history.decisions_that_changed_history",
+   "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Which Italian bases hold nuclear bombs, and why keep them there?",
+   "answer": "NATO's bombs are kept forward in Italy, near the Soviet bloc, so NATO can react fast. They stay under nuclear sharing. The other setting on the switch is keeping them in the U.S.A.",
+   "move": "Near the Soviet bloc, they let NATO react fast.",
+   "keywords": [
+    "nato",
+    "italy",
+    "soviet_bloc",
+    "nuclear_sharing",
+    "cold_war"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "puzzle",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A two-option switch page titled The bombs under Italy, asking which Italian bases hold NATO nuclear bombs and why. The switch sets the bombs either to Kept in the U.S.A. or Forward, in Italy. A What to keep box gives the reason.",
+    "page": "pages/history-italy-nuclear-bases.html?v=1376e0703de1",
+    "bytes": 34610
+   },
+   "source": "Geopop, “Perché ci sono così tante basi USA e NATO in Italia? Ecco dove si trovano i 12.000 soldati americani” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=LnPbJEl6dH0&t=169s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "history-jack-foley-maps",
    "topic": "history",
    "genre": "history.everyday_life",
@@ -54808,6 +55003,46 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=_pZ1C8ag1YM&t=252s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "history-leaded-iq-loss",
+   "topic": "history",
+   "genre": "history.decisions_that_changed_history",
+   "strand": "history.decisions_that_changed_history.bad_calls",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "none",
+   "question": "How many IQ points did leaded gasoline cost the world?",
+   "answer": "Leaded exhaust gave children high lead levels in early childhood, and those born 1951–1980 were hit hardest. Added up across everyone, the loss is over 800 million IQ points.",
+   "move": "Leaded gasoline made the whole world less intelligent: 800 million+ IQ points gone.",
+   "keywords": [
+    "leaded gasoline",
+    "lead exposure",
+    "iq",
+    "children",
+    "exhaust"
+   ],
+   "era": "twentieth",
+   "region": "world",
+   "hook": "number",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tank-style guessing scale where the reader drags up or down to estimate how many IQ points leaded gasoline cost the world, with each step worth ten times the last.",
+    "graded": false,
+    "page": "pages/history-leaded-iq-loss.html?v=e10d4967bfa0",
+    "bytes": 23581
+   },
+   "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=1059s",
    "written": "2026-11-03"
   },
   {
@@ -56013,6 +56248,85 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=uLqfa27S4TQ&t=621s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "history-norwegian-rocket-alarm",
+   "topic": "history",
+   "genre": "history.decisions_that_changed_history",
+   "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "coincidence",
+   "question": "January 1995: a research rocket leaves Norway. What happened next?",
+   "answer": "A research rocket lifted off from Norway. Radar read it as a nuclear missile, an alarm sounded, and the nuclear briefcase went into operational mode. No attack codes were sent.",
+   "move": "One misread science rocket was enough to wake a nuclear briefcase.",
+   "keywords": [
+    "norway",
+    "russia",
+    "research rocket",
+    "nuclear briefcase",
+    "false alarm"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "story",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four cards to put in order: a research rocket lifts off from Norway; radar reads it as a nuclear missile; an alarm sounds; the nuclear briefcase goes into operational mode. Tap them in the order they happened.",
+    "page": "pages/history-norwegian-rocket-alarm.html?v=ae7b63621bae",
+    "bytes": 32794
+   },
+   "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=448s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "history-nsa-gold-codes",
+   "topic": "history",
+   "genre": "history.decisions_that_changed_history",
+   "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Who makes the nuclear launch codes, and how do they reach the president?",
+   "answer": "The National Security Agency makes the gold codes. The president carries them on a plastic card, which proves that a launch order really comes from him.",
+   "move": "The NSA makes the gold codes; the president carries them on a plastic card to prove a launch order is his.",
+   "keywords": [
+    "gold codes",
+    "nuclear launch codes",
+    "nsa",
+    "president",
+    "launch order"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive flowchart with a glowing piece to tap, one link at a time. Question: who makes the nuclear launch codes, and how do they reach the president?",
+    "ground": "#1b2537",
+    "page": "pages/history-nsa-gold-codes.html?v=fcbe465c62e2",
+    "bytes": 37527
+   },
+   "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=107s",
    "written": "2026-11-03"
   },
   {
@@ -57407,6 +57721,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "history-popular-mechanics-flaw",
+   "topic": "history",
+   "genre": "history.decisions_that_changed_history",
+   "strand": "history.decisions_that_changed_history.bad_calls",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How did the Alcatraz escapers get the plans for their raft?",
+   "answer": "Morris found the plans in Popular Mechanics, a DIY magazine. One issue showed a raft made from rubber raincoats, and another showed life jackets made the same way. The guards were meant to check magazines, but these got through.",
+   "move": "The escape manual was a DIY magazine the guards let in.",
+   "keywords": [
+    "alcatraz",
+    "morris",
+    "popular mechanics",
+    "escape raft",
+    "prison guards"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "story",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A dark window into Alcatraz with four numbered panes to tap. Tapping each pane lights it and reveals one part of how the escapers got the plans for their raft, from a DIY magazine the guards let in.",
+    "ground": "#100c14",
+    "page": "pages/history-popular-mechanics-flaw.html?v=d54c4c5d4fbd",
+    "bytes": 25045
+   },
+   "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=Q8GEU8YQSiE&t=437s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "history-prison-forced-labour",
    "topic": "history",
    "genre": "history.ordinary_people",
@@ -57444,6 +57798,45 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=_pZ1C8ag1YM&t=362s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "history-putins-domestic-mirror",
+   "topic": "history",
+   "genre": "history.decisions_that_changed_history",
+   "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why does a Western-leaning Ukraine threaten Putin's power at home?",
+   "answer": "A Western-leaning Ukraine that thrives could make Russians want the same. That desire could bring unrest that threatens Putin's power at home. The slider shows how rising Western support in Ukraine feeds into that chain.",
+   "move": "Putin fears a Western Ukraine that works: Russians might want the same.",
+   "keywords": [
+    "putin",
+    "ukraine",
+    "russia",
+    "regime_stability",
+    "western_support"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider labeled Western support in Ukraine, set at 0%, with a flow: Ukraine thrives, Russians want the same, unrest threatens Putin. Asks why a Western-leaning Ukraine threatens Putin's power at home.",
+    "page": "pages/history-putins-domestic-mirror.html?v=05bca34db958",
+    "bytes": 28398
+   },
+   "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=BkJY93_hauY&t=454s",
    "written": "2026-11-03"
   },
   {
@@ -59477,6 +59870,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-09-27"
   },
   {
+   "id": "history-three-deadly-inventions",
+   "topic": "history",
+   "genre": "history.decisions_that_changed_history",
+   "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "none",
+   "question": "One man's three inventions turned deadly. Which harmed millions, and which only him?",
+   "answer": "Leaded gas harmed the whole world by putting lead in the air, lowering IQ and raising crime. CFC Freon tore a hole in the ozone layer. The pulley bed lift tangled and strangled its inventor, killing only him.",
+   "move": "A clever fix can work perfectly and still harm the whole world for decades.",
+   "keywords": [
+    "leaded gas",
+    "cfc freon",
+    "pulley bed lift",
+    "ozone layer"
+   ],
+   "era": "twentieth",
+   "region": "world",
+   "hook": "story",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A sorting game titled 'Three inventions, millions of deaths'. Three inventions (leaded gas, CFC Freon, and a pulley bed lift) must be sorted into two sides: harmed millions (the whole world) or killed only him (its inventor). Tap a card to sort it.",
+    "graded": false,
+    "page": "pages/history-three-deadly-inventions.html?v=7ca72ef5d3cd",
+    "bytes": 17620
+   },
+   "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA",
+   "written": "2026-11-03"
+  },
+  {
    "id": "history-titanic-lifeboat-shortfall",
    "topic": "history",
    "genre": "history.decisions_that_changed_history",
@@ -59713,6 +60145,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "history-un-partition-scale",
+   "topic": "history",
+   "genre": "history.maps_and_borders",
+   "strand": "history.maps_and_borders.disputed_borders",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why did the 1947 UN partition plan seem unfair to Arabs?",
+   "answer": "Western interest and a united, influential Jewish community added weight to the scale. Arab division, and leaders who had backed Germany in WWII, took weight away. Arabs were 60% of the people, yet the scale tipped the other way.",
+   "move": "The 1947 plan was weighed by allies and unity, not by who was the majority.",
+   "keywords": [
+    "palestine",
+    "un-resolution-181",
+    "arab-leaders",
+    "jewish-community",
+    "wwii"
+   ],
+   "era": "twentieth",
+   "region": "middle_east",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A scale with four stars to tap. Left side: Western interest and Jewish influence and unity. Right side: Arab division and WWII alignment with Germany. Arabs are 60% of the population. Tap each star to see which way the scale tips.",
+    "page": "pages/history-un-partition-scale.html?v=65c21cef98d8",
+    "bytes": 21657
+   },
+   "source": "Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=hBImPpGnYKE&t=558s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "history-us-iran-axis",
    "topic": "history",
    "genre": "history.decisions_that_changed_history",
@@ -59789,6 +60260,47 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=59s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "history-vajont-four-minutes",
+   "topic": "history",
+   "genre": "history.learn_from_the_past",
+   "strand": "history.learn_from_the_past.repeated_mistakes",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "none",
+   "question": "How long did the Vajont wave take to wipe out over ten villages?",
+   "answer": "A landslide wave erased more than ten villages in about four minutes. The destruction in the Vajont valley happened within minutes, not hours.",
+   "move": "A landslide wave erased more than ten villages in about four minutes.",
+   "keywords": [
+    "vajont",
+    "landslide",
+    "reservoir",
+    "villages",
+    "wave"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "number",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A page asking how long the Vajont wave took to wipe out more than ten villages. A pink draggable marker sets a time guess on a scale, followed by a choice of how sure the reader is.",
+    "graded": false,
+    "ground": "#1a0b10",
+    "page": "pages/history-vajont-four-minutes.html?v=e38562f9979b",
+    "bytes": 26894
+   },
+   "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=xUtCwhN8-pQ&t=20s",
    "written": "2026-11-03"
   },
   {
@@ -60139,6 +60651,45 @@ const String kEmbeddedBank = r'''
    "disabled": true
   },
   {
+   "id": "human_body-acetaldehyde-liver",
+   "topic": "human_body",
+   "genre": "human_body.gut",
+   "strand": "human_body.gut.digestion",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What does your liver turn alcohol into, and why is it worse?",
+   "answer": "Your liver's enzyme ADH turns ethanol into acetaldehyde, which is more poisonous. Acetaldehyde is a Group 1 carcinogen: it breaks DNA and blocks its repair.",
+   "move": "Alcohol hurts twice: as ethanol, then as the worse acetaldehyde your liver makes from it.",
+   "keywords": [
+    "liver",
+    "ethanol",
+    "acetaldehyde",
+    "alcohol",
+    "dna"
+   ],
+   "era": "timeless",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question: what does your liver turn alcohol into, and why is it worse? Hold the button to drink and follow one molecule as the liver's ADH enzyme converts ethanol into acetaldehyde, shown with a warning sign.",
+    "page": "pages/human_body-acetaldehyde-liver.html?v=a2a647bb27e1",
+    "bytes": 30005
+   },
+   "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=866s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "human_body-ageing-well-1",
    "topic": "human_body",
    "genre": "human_body.ageing",
@@ -60326,6 +60877,47 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=r3KrMPQSUFs&t=444s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "human_body-alcohol-synapse",
+   "topic": "human_body",
+   "genre": "human_body.the_brain",
+   "strand": "human_body.the_brain.neurons",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What does alcohol actually do to the messengers between your neurons?",
+   "answer": "Moving the slider toward DRUNK raises GABA and dopamine, which lowers tension and produces euphoria. It lowers glutamate and acetylcholine, so thoughts slow and memories don't stick.",
+   "move": "Alcohol boosts the brake and the reward, and mutes the messengers of thought.",
+   "keywords": [
+    "alcohol",
+    "synapse",
+    "gaba",
+    "dopamine",
+    "glutamate",
+    "acetylcholine"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": true,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A synapse diagram with a SOBER to DRUNK slider. Sliding toward DRUNK shows which neurotransmitters grow or fade, asking what alcohol does to the messengers between neurons.",
+    "ground": "#0e3566",
+    "page": "pages/human_body-alcohol-synapse.html?v=9efdd9875781",
+    "bytes": 24219
+   },
+   "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=r3KrMPQSUFs&t=326s",
    "written": "2026-11-03"
   },
   {
@@ -67263,6 +67855,46 @@ const String kEmbeddedBank = r'''
    "disabled": true
   },
   {
+   "id": "human_body-highway-hypnosis",
+   "topic": "human_body",
+   "genre": "human_body.the_brain",
+   "strand": "human_body.the_brain.brain_and_habits",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What physiological phenomenon discourages building a road tunnel under the Channel?",
+   "answer": "Highway hypnosis: after many hours at the wheel, especially at night, concentration and reflexes drop and the driver just stares at the lane lines. In a long road tunnel that means accidents. On rails, nobody has to keep the car in its lane.",
+   "move": "A long, monotonous drive dulls the driver; on a train, the track does the steering.",
+   "keywords": [
+    "highway hypnosis",
+    "road tunnel",
+    "rail tunnel",
+    "english channel",
+    "driver fatigue"
+   ],
+   "era": "timeless",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Page titled Road or Rail. A road tunnel is drawn across the page; the reader drags it from left to right to drive on into the night, then is told to put it on rails. The question asks what physiological phenomenon discourages building a road tunnel under the Channel.",
+    "ground": "#05040c",
+    "page": "pages/human_body-highway-hypnosis.html?v=9750f3a39170",
+    "bytes": 23789
+   },
+   "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=1i1Z63xL3MQ&t=333s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "human_body-humidity-traps-sweat",
    "topic": "human_body",
    "genre": "human_body.senses",
@@ -67456,6 +68088,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "human_body-inherited-gene-switches",
+   "topic": "human_body",
+   "genre": "human_body.your_body_your_choices",
+   "strand": "human_body.your_body_your_choices.small_daily_habits",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Can grandparents' lives affect your DNA activity?",
+   "answer": "Yes, a little. Marks on DNA turn genes up or down without changing the code. Some of your ancestors' marks get passed down, so their behaviour subtly tunes how your genes work.",
+   "move": "You inherit your DNA, plus a few of the switches your ancestors set on it.",
+   "keywords": [
+    "epigenetics",
+    "dna",
+    "grandparents",
+    "gene expression",
+    "inheritance"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks whether grandparents' lives can affect your DNA activity, with two choices: No, your DNA starts fresh, or Yes, a little, some marks pass down. A strand to rub shows a grandparent's life leaving marks on her DNA.",
+    "graded": false,
+    "page": "pages/human_body-inherited-gene-switches.html?v=a3fdf9632c9f",
+    "bytes": 26364
+   },
+   "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
+   "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=285s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "human_body-ink-meets-macrophages",
    "topic": "human_body",
    "genre": "human_body.skin_and_bone",
@@ -67491,6 +68163,45 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=305s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "human_body-lead-hardened-arteries",
+   "topic": "human_body",
+   "genre": "human_body.blood_and_heart",
+   "strand": "human_body.blood_and_heart.circulation",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How did leaded gasoline cause heart disease?",
+   "answer": "Lead hardens the arteries. This hardening is a quiet heart killer, linked to heart disease that has claimed millions of lives. Drag the Pb token into the artery's blood to see the wall move with each heartbeat.",
+   "move": "Leaded gasoline hardened arteries: a quiet heart killer of millions.",
+   "keywords": [
+    "lead",
+    "leaded gasoline",
+    "arteries",
+    "heart disease"
+   ],
+   "era": "twentieth",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A diagram of an artery with a Pb token to drag into the blood, asking how leaded gasoline causes heart disease. The artery wall moves with each heartbeat.",
+    "ground": "#f1e2cb",
+    "page": "pages/human_body-lead-hardened-arteries.html?v=2d363b5f438d",
+    "bytes": 27032
+   },
+   "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=1139s",
    "written": "2026-11-03"
   },
   {
@@ -93879,6 +94590,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "maths-coin-rotation-paradox",
+   "topic": "maths",
+   "genre": "maths.puzzles",
+   "strand": "maths.puzzles.paradoxes",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "none",
+   "question": "Roll a coin around an identical coin. How many times does it turn?",
+   "answer": "The rolling coin turns twice, not once. Its centre travels a circle twice as wide as the coin, so it covers two of the coin's own circumferences. Halfway round, it is already upright.",
+   "move": "Rolling around a circle, not along a line, adds one extra turn.",
+   "keywords": [
+    "coin",
+    "circle",
+    "rotation",
+    "paradox",
+    "veritasium"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "paradox",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A coin rolls around an identical fixed coin. A scale with a draggable pin asks the reader to guess how many turns the rolling coin makes, then how sure they are. The reader can also drag the coin to roll it around.",
+    "graded": false,
+    "page": "pages/maths-coin-rotation-paradox.html?v=d441531540af",
+    "bytes": 23627
+   },
+   "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=216s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "maths-collatz-loop-length",
    "topic": "maths",
    "genre": "maths.estimation",
@@ -94431,6 +95182,45 @@ const String kEmbeddedBank = r'''
    "source_kind": "statistics",
    "reference": "S&P Dow Jones Indices, S&P 500 closing values: 1,565.15 on 9 October 2007 and 676.53 on 9 March 2009",
    "written": "2026-10-17"
+  },
+  {
+   "id": "maths-feigenbaum-ratio-ladder",
+   "topic": "maths",
+   "genre": "maths.shapes",
+   "strand": "maths.shapes.scaling",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What is the significance of the number 4.669… in bifurcations?",
+   "answer": "The number 4.669… is the ratio by which each gap between forks shrinks compared with the last one. Each wash is one section between forks, and tapping the drawing measures it against the next. The shrinking ratio holds whatever the equation is.",
+   "move": "Each gap between forks is about 4.669 times shorter than the last, whatever the equation.",
+   "keywords": [
+    "feigenbaum",
+    "logistic map",
+    "bifurcation",
+    "veritasium",
+    "forks"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "number",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A ladder of forks drawn as shrinking washes, each section between forks. Tap the drawing to measure a section against the next. The question asks what the number 4.669 means in bifurcations.",
+    "page": "pages/maths-feigenbaum-ratio-ladder.html?v=a8bc8a154577",
+    "bytes": 24028
+   },
+   "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
+   "reference": "https://www.youtube.com/watch?v=ovJcsL7vyrk&t=862s",
+   "written": "2026-11-03"
   },
   {
    "id": "maths-feigenbaum-universality",
@@ -95068,6 +95858,45 @@ const String kEmbeddedBank = r'''
    "source_kind": "paper",
    "reference": "doi:10.1177/002200277101500111",
    "written": "2026-10-17"
+  },
+  {
+   "id": "maths-hakens-knot-scanner",
+   "topic": "maths",
+   "genre": "maths.everyday_maths",
+   "strand": "maths.everyday_maths.algorithms",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What was the first algorithm to tell any knot from the unknot?",
+   "answer": "Wolfgang Haken's 1961 algorithm always gives a sure answer: unknot or not. But his paper ran over 130 pages, and for large knots the run would take longer than the age of the universe.",
+   "move": "Solved for sure is not the same as solved in time.",
+   "keywords": [
+    "haken",
+    "knot",
+    "unknot",
+    "algorithm"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "abstract",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dial labelled HAKEN 1961 that the reader drags to feed bigger knots to Haken's scanner, while a clock shows how long the run takes. Asks how long the knot check takes as knots grow.",
+    "ground": "#0c0716",
+    "page": "pages/maths-hakens-knot-scanner.html?v=30faea4d9321",
+    "bytes": 22321
+   },
+   "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=644s",
+   "written": "2026-11-03"
   },
   {
    "id": "maths-halting-problem",
@@ -97092,6 +97921,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "maths-pivotal-voter-dictator",
+   "topic": "maths",
+   "genre": "maths.puzzles",
+   "strand": "maths.puzzles.paradoxes",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How does Arrow's proof find a hidden dictator?",
+   "answer": "Every voter ranks B last, so society must too. Drag the rail: one voter at a time lifts B to the top. Change one vote at a time, and some single voter ends up deciding for everyone.",
+   "move": "Change one vote at a time, and some single voter ends up deciding for everyone.",
+   "keywords": [
+    "arrow",
+    "dictator",
+    "voting",
+    "ranked ballots",
+    "veritasium"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A draggable rail for moving candidate B to the top of a voter's ranking, one voter at a time, asking which single voter ends up deciding the society-wide result.",
+    "ground": "#0b1828",
+    "page": "pages/maths-pivotal-voter-dictator.html?v=5118b635a29e",
+    "bytes": 23791
+   },
+   "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=957s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "maths-polls-3",
    "topic": "maths",
    "genre": "maths.statistics",
@@ -97679,6 +98548,46 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=412s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "maths-reidemeister-upper-bound",
+   "topic": "maths",
+   "genre": "maths.estimation",
+   "strand": "maths.estimation.big_numbers",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What is the current upper bound on Reidemeister moves between two knots?",
+   "answer": "The current upper bound on moves needed to connect any two knots is 236n^11, where n is the number of crossings. For a knot with a single crossing, that bound is larger than the number of stars in the observable universe.",
+   "move": "A far smaller bound can still leave an astronomical search.",
+   "keywords": [
+    "knots",
+    "reidemeister moves",
+    "knot theory",
+    "observable universe",
+    "veritasium"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "number",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "abstract",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider labelled crossings, from 1 upward, sets the number n of crossings in a knot. A marker shows how many Reidemeister moves the bound allows, which grows steeply as n increases.",
+    "ground": "#0d3c71",
+    "page": "pages/maths-reidemeister-upper-bound.html?v=70ed191cc8a8",
+    "bytes": 31479
+   },
+   "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=696s",
    "written": "2026-11-03"
   },
   {
@@ -98859,6 +99768,46 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=cKRRHQStYH0&t=55s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "medicine-alcohol-iceberg",
+   "topic": "medicine",
+   "genre": "medicine.public_health",
+   "strand": "medicine.public_health.prevention",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Alcohol killed 2.6 million people in 2019. What actually killed them?",
+   "answer": "Alcohol killed 2.6 million people in 2019, and cancer is only the tip. Most of the deaths come from accidents, violence, and gut and heart disease, which lie below the surface.",
+   "move": "Cancer is just the tip: alcohol kills mostly through accidents, violence, and gut and heart disease.",
+   "keywords": [
+    "alcohol",
+    "cancer",
+    "accidents",
+    "violence",
+    "heart-disease"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dark underwater scene with a lamp to drag down. Dragging it lights up what lies under the water, revealing the hidden causes of the 2.6 million alcohol deaths in 2019. A counter shows how many deaths are lit so far.",
+    "ground": "#06223a",
+    "page": "pages/medicine-alcohol-iceberg.html?v=7d2b765eb198",
+    "bytes": 25314
+   },
+   "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=224s",
    "written": "2026-11-03"
   },
   {
@@ -102579,6 +103528,46 @@ const String kEmbeddedBank = r'''
    "source_kind": "paper",
    "reference": "Edwards & Hackell, Countering Vaccine Hesitancy, Pediatrics, 2016",
    "written": "2026-09-27"
+  },
+  {
+   "id": "medicine-dupont-c8-dose",
+   "topic": "medicine",
+   "genre": "medicine.public_health",
+   "strand": "medicine.public_health.clean_water",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What did DuPont's own 1961 rat tests find about C8?",
+   "answer": "DuPont's own 1961 rat tests fed rats C8 and watched the liver as the dose rose. Internal tests confirmed C8 caused liver damage and organ failure in rats and dogs, yet the company kept producing it for decades.",
+   "move": "Not deadly isn't safe: harm can start far below the dose that kills.",
+   "keywords": [
+    "dupont",
+    "c8",
+    "rat",
+    "liver",
+    "pfas"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "story",
+   "mood": "dark",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page asking what DuPont's own 1961 rat tests found about C8. A slider raises the dose fed to rats while a liver view shows the effect as the dose climbs.",
+    "ground": "#0d1117",
+    "page": "pages/medicine-dupont-c8-dose.html?v=bb799b6baf42",
+    "bytes": 18878
+   },
+   "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=1097s",
+   "written": "2026-11-03"
   },
   {
    "id": "medicine-dupont-safe-dose",
@@ -107106,6 +108095,45 @@ const String kEmbeddedBank = r'''
    "reference": "Sheehan, The Enchanted Ring: The Untold Story of Penicillin, MIT Press, 1982",
    "written": "2026-09-27",
    "disabled": true
+  },
+  {
+   "id": "medicine-pink-cocaine-name",
+   "topic": "medicine",
+   "genre": "medicine.public_health",
+   "strand": "medicine.public_health.prevention",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why is “pink cocaine” a misleading name for what's actually in it?",
+   "answer": "Pink cocaine is a colour and a brand name. Lab analyses almost never find cocaine or 2C-B in it, and when they do the amount is tiny. It is mostly ketamine and MDMA, often with caffeine or opioids added, and the mix varies between labs.",
+   "move": "“Pink cocaine” names a colour and a brand, not what's inside.",
+   "keywords": [
+    "pink cocaine",
+    "ketamine",
+    "mdma",
+    "2c-b",
+    "caffeine"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": true,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A lab test card asking why 'pink cocaine' is a misleading name. Tests check the two substances the name promises, cocaine and 2C-B, against ketamine, MDMA, caffeine and opioids, which the name does not mention.",
+    "page": "pages/medicine-pink-cocaine-name.html?v=4f6c00b79d52",
+    "bytes": 20585
+   },
+   "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=meoJvw-9tM4&t=208s",
+   "written": "2026-11-03"
   },
   {
    "id": "medicine-placebo-1",
@@ -111757,6 +112785,84 @@ const String kEmbeddedBank = r'''
    "source_kind": "paper",
    "reference": "doi:10.1136/bmj.e6144",
    "written": "2026-09-27"
+  },
+  {
+   "id": "medicine-tattoo-flu-boost",
+   "topic": "medicine",
+   "genre": "medicine.vaccines",
+   "strand": "medicine.vaccines.how_they_work",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How does a tattoo change your response to the flu vaccine?",
+   "answer": "A tattoo changed how the immune system responded to the flu vaccine: the response got a boost, so it reacted better. With the COVID-19 vaccine, tattoos did the exact opposite. The same tattoo can help one vaccine and not the other.",
+   "move": "Same tattoo, opposite results: it can boost the flu vaccine, not the COVID-19 one.",
+   "keywords": [
+    "tattoo",
+    "flu vaccine",
+    "covid-19 vaccine",
+    "immune system"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "paradox",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive page: drag a knob to tattoo an arm, then compare two cylinders showing whether the flu vaccine response is stronger. It asks how a tattoo changes the response to the flu vaccine.",
+    "page": "pages/medicine-tattoo-flu-boost.html?v=b00070a224ae",
+    "bytes": 28897
+   },
+   "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=1220s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "medicine-tattoo-lymph-nodes",
+   "topic": "medicine",
+   "genre": "medicine.judge_a_treatment",
+   "strand": "medicine.judge_a_treatment.side_effects",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Does a tattoo cause long-term inflammation in nearby lymph nodes?",
+   "answer": "A study by the Institute for Research in Biomedicine in Bellinzona found that tattooed people generally have long-term inflammation in the lymph nodes near the tattoo. The card notes that good data on tattoos is still scarce, so treat this as an early signal rather than the final answer.",
+   "move": "A tattoo isn't only skin-deep: nearby lymph nodes can stay inflamed long-term.",
+   "keywords": [
+    "tattoos",
+    "lymph_nodes",
+    "inflammation",
+    "armpit",
+    "bellinzona"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline with a draggable slider, from the day of getting a tattoo to long after. As the slider moves, it shows the lymph nodes near the tattoo, especially the armpit nodes, and asks whether they stay inflamed over time.",
+    "ground": "#123f73",
+    "page": "pages/medicine-tattoo-lymph-nodes.html?v=ddbc103d548f",
+    "bytes": 21439
+   },
+   "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=1166s",
+   "written": "2026-11-03"
   },
   {
    "id": "medicine-too-much-testing-1",
@@ -127275,6 +128381,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-10-07"
   },
   {
+   "id": "nature-clay-slide-plane",
+   "topic": "nature",
+   "genre": "nature.systems_thinking",
+   "strand": "nature.systems_thinking.chain_reactions",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How can a thin layer of clay make a whole hillside slide?",
+   "answer": "Rain that sinks down stops on a layer of clay, which lets no water through, and makes a slippery film there. The rock above soaks up water and gets heavier. On tilted layers, it breaks off and slides downhill on the wet clay.",
+   "move": "Wet clay is a lubricant: the rock above it rides down the slope.",
+   "keywords": [
+    "clay",
+    "landslide",
+    "rain",
+    "hillside",
+    "niscemi"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A layered hillside with a sky to tap for rain. Tapping it shows water sinking through rock and stopping on a thin clay layer. Asks: how can a thin layer of clay make a whole hillside slide?",
+    "ground": "#f1e9d6",
+    "page": "pages/nature-clay-slide-plane.html?v=e900c45e266c",
+    "bytes": 22542
+   },
+   "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
+   "reference": "https://www.youtube.com/watch?v=v98N4kQ52io&t=277s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "nature-climate-myths-1",
    "topic": "nature",
    "genre": "nature.climate",
@@ -132697,6 +133843,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "nature-lituya-bay-wave",
+   "topic": "nature",
+   "genre": "nature.systems_thinking",
+   "strand": "nature.systems_thinking.chain_reactions",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "How tall was the 1958 tsunami in Lituya Bay, Alaska?",
+   "answer": "The 1958 tsunami in Lituya Bay, Alaska reached 525 m. An earthquake sent landslides into the bay, and they pushed up that wave. It is the tallest tsunami on record.",
+   "move": "The tallest tsunami on record, 525 m, came from landslides falling into a bay.",
+   "keywords": [
+    "tsunami",
+    "lituya bay",
+    "alaska",
+    "landslide",
+    "earthquake"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "number",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A wave-height guessing game. The page shows a tsunami wave, and the reader drags its crest upward to the height they think the 1958 Lituya Bay, Alaska wave reached.",
+    "graded": false,
+    "page": "pages/nature-lituya-bay-wave.html?v=95cbda534b2d",
+    "bytes": 19674
+   },
+   "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=bEL4wbv_nOo&t=17s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "nature-longest-straw",
    "topic": "nature",
    "genre": "nature.trees_and_forests",
@@ -135248,6 +136434,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "nature-permafrost-thaw-line",
+   "topic": "nature",
+   "genre": "nature.climate",
+   "strand": "nature.climate.adaptation",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What can a hotter summer do to Yakutsk's buildings?",
+   "answer": "Yakutsk's buildings rest on frozen ground. Dragging the summer heat from 20 °C to recent peaks of 35–38 °C thaws that ground deeper. Thawed foundations can make buildings tilt, crack, or collapse.",
+   "move": "Under Yakutsk, frozen ground is the foundation: thaw it deep and buildings tilt, crack, can collapse.",
+   "keywords": [
+    "yakutsk",
+    "permafrost",
+    "foundations",
+    "summer heat",
+    "building collapse"
+   ],
+   "era": "recent",
+   "region": "asia",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider for summer temperature in Yakutsk, running from 20 °C up to 35–38 °C. Dragging it shows how the frozen ground under the city's buildings would thaw.",
+    "page": "pages/nature-permafrost-thaw-line.html?v=5add6d3ed152",
+    "bytes": 25396
+   },
+   "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=311s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "nature-pests-1",
    "topic": "nature",
    "genre": "nature.insects",
@@ -135710,6 +136935,45 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=Lgr3FBt_QM8&t=178s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "nature-plastic-patch-france",
+   "topic": "nature",
+   "genre": "nature.oceans",
+   "strand": "nature.oceans.plastic",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How big is the plastic island in the Pacific, compared to a country?",
+   "answer": "The Pacific plastic patch covers about as much ocean as France. Drag France onto the swirling haze, drawn at the same map scale, and it almost covers the patch edge to edge.",
+   "move": "The Pacific plastic patch spans an area roughly the size of France.",
+   "keywords": [
+    "pacific-garbage-patch",
+    "france",
+    "floating-plastic",
+    "pacific-ocean"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "number",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A map of the Pacific Ocean with a swirling haze marking floating plastic. The question asks how big this plastic island is compared to a country. A draggable outline of France can be dropped onto the haze at the same map scale.",
+    "ground": "#06324d",
+    "page": "pages/nature-plastic-patch-france.html?v=924e11d91c8e",
+    "bytes": 23593
+   },
+   "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=Lgr3FBt_QM8",
    "written": "2026-11-03"
   },
   {
@@ -138933,6 +140197,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "nature-tsunami-slows-down",
+   "topic": "nature",
+   "genre": "nature.oceans",
+   "strand": "nature.oceans.currents",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "conditional",
+   "question": "What happens to a tsunami's speed as it approaches the coast?",
+   "answer": "Slower, and taller. The rising sea floor drags on the wave and slows it. Its energy can't vanish, so the water piles up taller.",
+   "move": "As the sea gets shallow, a tsunami trades speed for height.",
+   "keywords": [
+    "tsunami",
+    "shallow water",
+    "sea floor",
+    "wave height",
+    "coastline"
+   ],
+   "era": "timeless",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A question asks what happens to a tsunami's speed as it approaches the coast, with three choices: it speeds up, stays the same, or slows down. A wave replay control lets the reader watch the wave move into shallow water.",
+    "ground": "#060a14",
+    "page": "pages/nature-tsunami-slows-down.html?v=10eb1f20459e",
+    "bytes": 21361
+   },
+   "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
+   "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=893s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "nature-twin-landslide-tsunami",
    "topic": "nature",
    "genre": "nature.systems_thinking",
@@ -139924,6 +141228,46 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=BickMFHAZR0&t=228s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "nature-yakutsk-heat-spikes",
+   "topic": "nature",
+   "genre": "nature.weather",
+   "strand": "nature.weather.weather_or_climate",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What unusual summer temperatures have been recorded in Yakutsk?",
+   "answer": "Yakutsk's typical summer high is about +20 °C, but recent anomalies have reached +35 °C to +38 °C, unprecedented for the region. The page asks you to drag the mercury up and watch the frozen ground under the city.",
+   "move": "The world's coldest city now sees +38 °C summer spikes, and its frozen ground feels it.",
+   "keywords": [
+    "yakutsk",
+    "permafrost",
+    "siberia",
+    "summer heat",
+    "frozen ground"
+   ],
+   "era": "recent",
+   "region": "asia",
+   "hook": "number",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A thermometer you drag upward from +20 °C toward +38 °C, set against a snow-covered city, asking what unusual summer temperatures Yakutsk has recorded.",
+    "ground": "#0a2234",
+    "page": "pages/nature-yakutsk-heat-spikes.html?v=fb4647b443d4",
+    "bytes": 27433
+   },
+   "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=332s",
    "written": "2026-11-03"
   },
   {
@@ -170470,6 +171814,44 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "psychology-misconception-memory",
+   "topic": "psychology",
+   "genre": "psychology.memory",
+   "strand": "psychology.memory.false_memories",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What do students often remember from a standard explanation?",
+   "answer": "Students often remember their own pre-existing misconceptions as if they were presented in the video. The page shows this with a split screen: the video on one side and a student's thought bubble with a wrong idea on the other.",
+   "move": "What you already believe can rewrite what you remember being told.",
+   "keywords": [
+    "students",
+    "misconceptions",
+    "physics video",
+    "memory"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Split-screen page asking what students often remember from a standard explanation. One side shows a video, the other a student's thought bubble holding a wrong idea. The reader is asked to pull the layers apart.",
+    "page": "pages/psychology-misconception-memory.html?v=faf6fda0619f",
+    "bytes": 21936
+   },
+   "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
+   "reference": "https://www.youtube.com/watch?v=eVtCO84MDj8&t=227s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "psychology-mnemonics-1",
    "topic": "psychology",
    "genre": "psychology.memory",
@@ -173698,6 +175080,47 @@ const String kEmbeddedBank = r'''
    "source_kind": "paper",
    "reference": "Rechtschaffen, Hauri & Zeitlin, Auditory awakening thresholds in REM and NREM sleep stages, Perceptual and Motor Skills, 1966",
    "written": "2026-09-27"
+  },
+  {
+   "id": "psychology-slot-reward-loop",
+   "topic": "psychology",
+   "genre": "psychology.motivation",
+   "strand": "psychology.motivation.rewards",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Why do flashing lights and frequent small wins keep players playing?",
+   "answer": "Flashing lights and frequent small wins train your brain to keep playing. The odds still always lose. Each spin costs one coin from your pocket.",
+   "move": "Frequent small wins train your brain; the odds still always lose.",
+   "keywords": [
+    "slot machine",
+    "player",
+    "coin",
+    "flashing lights",
+    "reward"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slot machine screen with a spin button. The heading asks why flashing lights and frequent small wins keep players playing. Tap the machine to spin; each spin costs one coin from your pocket.",
+    "graded": false,
+    "ground": "#1b1423",
+    "page": "pages/psychology-slot-reward-loop.html?v=c87a39b7ed63",
+    "bytes": 33893
+   },
+   "source": "Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=5x3OF3zIuAc",
+   "written": "2026-11-03"
   },
   {
    "id": "psychology-social-proof-1",
@@ -178231,6 +179654,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-09-26"
   },
   {
+   "id": "science-bio-not-biodegradable",
+   "topic": "science",
+   "genre": "science.materials",
+   "strand": "science.materials.plastics",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "independence",
+   "question": "Are bioplastics always biodegradable?",
+   "answer": "No, not always. About half of bioplastics aren't biodegradable. \"Bio\" describes origin: plant sugars like wheat or sugarcane. \"Biodegradable\" describes fate: broken down in human time. They are separate questions.",
+   "move": "“Bio” is where a plastic comes from (plant sugars, like wheat or sugarcane). “Biodegradable” is how it ends. Check both.",
+   "keywords": [
+    "bioplastic",
+    "biodegradable",
+    "sugarcane",
+    "wheat",
+    "plastic"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question asks whether bioplastics are always biodegradable, with the choices Yes, always and No, not always. Readers pick one, rate how sure they are, then watch plastics sort themselves into a tray.",
+    "page": "pages/science-bio-not-biodegradable.html?v=be57bb8aaea7",
+    "bytes": 21961
+   },
+   "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=MRju0pJp3mk&t=430s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-blue-aerogel",
    "topic": "science",
    "genre": "science.light_and_colour",
@@ -178358,6 +179820,46 @@ const String kEmbeddedBank = r'''
     "lon": 11.343,
     "km": 25
    }
+  },
+  {
+   "id": "science-bouncing-egg-bubbles",
+   "topic": "science",
+   "genre": "science.chemistry_at_home",
+   "strand": "science.chemistry_at_home.cooking_reactions",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What causes the tiny bubbles that let the egg bounce?",
+   "answer": "The shell is calcium carbonate, and it reacts with the vinegar to release carbon dioxide gas. Those bubbles get trapped in the bare membrane, which makes the egg rubbery and lets it bounce.",
+   "move": "Shell + acid make CO₂. Its bubbles, trapped in the bare membrane, make the egg rubbery.",
+   "keywords": [
+    "eggshell",
+    "vinegar",
+    "carbon dioxide",
+    "calcium carbonate",
+    "egg"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A bouncing egg with a TAP TO FIZZ heading. It asks what causes the tiny bubbles that let the egg bounce, and says tapping React lets the shell and vinegar meet one step at a time.",
+    "ground": "#070b1c",
+    "page": "pages/science-bouncing-egg-bubbles.html?v=50278cbef567",
+    "bytes": 22874
+   },
+   "source": "Geopop, “L'uovo che rimbalza!” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=CKE7qFWpADI&t=28s",
+   "written": "2026-11-03"
   },
   {
    "id": "science-bradyseism-breathing-ground",
@@ -182020,6 +183522,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-10-07"
   },
   {
+   "id": "science-energy-glass",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.energy",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "As CO₂ rises, how much energy can the atmosphere absorb?",
+   "answer": "As CO₂ rises, the atmosphere absorbs more energy, possibly beyond our comprehension. Burning fossil fuels released CO₂, which rose from 320 ppm in 1960 to 430 ppm in 2025. More CO₂ means more energy absorbed, and it may grow beyond our comprehension.",
+   "move": "More CO₂ in the air means more energy absorbed, and CO₂ keeps rising.",
+   "keywords": [
+    "co2",
+    "atmosphere",
+    "fossil fuels",
+    "climate",
+    "energy absorption"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A glass of water filling toward the brim, titled Fill the Glass. A brass knob slides along a timeline from 1960 to 2025 to raise CO₂ in the air, and the glass fills as more energy is absorbed.",
+    "page": "pages/science-energy-glass.html?v=dfb5538348a7",
+    "bytes": 28613
+   },
+   "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
+   "reference": "https://www.youtube.com/watch?v=TU196LhDGT4&t=89s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-eruption-cloud-heat",
    "topic": "science",
    "genre": "science.cold_and_heat",
@@ -182809,6 +184350,45 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=uiyMuHuCFo4&t=242s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-fallout-layer",
+   "topic": "science",
+   "genre": "science.how_science_knows",
+   "strand": "science.how_science_knows.experiments",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How did 1950s bomb tests leave the same date in mud worldwide?",
+   "answer": "Bomb tests in the 1950s scattered radioactive fallout across the whole world at once. Because it fell everywhere together, its thin layer in the mud marks the same moment in time everywhere. Drag the scanner down to find it.",
+   "move": "Fallout fell everywhere at once, so its thin layer marks the same moment in mud worldwide.",
+   "keywords": [
+    "fallout",
+    "sediment",
+    "radionuclides",
+    "1950s",
+    "anthropocene"
+   ],
+   "era": "twentieth",
+   "region": "world",
+   "hook": "puzzle",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Mud with a scanner that you drag downward to look for radiation. The question asks how 1950s bomb-test fallout leaves the same date in mud worldwide, and you line up layers by time.",
+    "page": "pages/science-fallout-layer.html?v=919f0f8b5dd9",
+    "bytes": 19768
+   },
+   "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
+   "reference": "https://www.youtube.com/watch?v=CpGW8eA6Qik&t=49s",
    "written": "2026-11-03"
   },
   {
@@ -183801,6 +185381,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "science-fourth-power-glow",
+   "topic": "science",
+   "genre": "science.materials",
+   "strand": "science.materials.steel",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Heat steel a little hotter. How much more heat does it radiate?",
+   "answer": "Radiated power grows with the fourth power of absolute temperature. Doubling the temperature multiplies the radiated power by 16. So a slight rise in temperature means a huge rise in the heat steel loses.",
+   "move": "Radiated power ∝ T⁴: a little hotter means a lot more heat lost.",
+   "keywords": [
+    "steel",
+    "radiated heat",
+    "absolute temperature",
+    "veritasium"
+   ],
+   "era": "nineteenth",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "practical",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive drag control heats a steel bar while a graph shows its radiated power climbing steeply with temperature. It asks how much more heat steel radiates when it gets a little hotter.",
+    "ground": "#0c1022",
+    "page": "pages/science-fourth-power-glow.html?v=0c2b6ae0fee1",
+    "bytes": 20894
+   },
+   "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=879s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-fractures-reach-aquifer",
    "topic": "science",
    "genre": "science.materials",
@@ -184758,6 +186377,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "science-granite-near-diamond",
+   "topic": "science",
+   "genre": "science.materials",
+   "strand": "science.materials.glass",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How does granite's hardness compare to diamond's?",
+   "answer": "Granite is nearly as hard as diamond. Its quartz rates 7 on the hardness scale, just below diamond's 10. Flipping the switch sends each stone up the scale to compare them.",
+   "move": "Granite's quartz is a 7, just below diamond's 10: nearly diamond-hard.",
+   "keywords": [
+    "granite",
+    "diamond",
+    "quartz",
+    "hardness",
+    "mohs scale"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two stones, granite and diamond, are shown on a hardness scale. A flip switch sends each stone up the scale. The question asks how granite's hardness compares to diamond's.",
+    "ground": "#1f382e",
+    "page": "pages/science-granite-near-diamond.html?v=e1bff21a6377",
+    "bytes": 23969
+   },
+   "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
+   "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=231s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-grape-contact-point",
    "topic": "science",
    "genre": "science.physics",
@@ -184793,6 +186452,46 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=260s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-grape-microwave-trap",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.energy",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "What do microwaves do once they get inside a grape?",
+   "answer": "Microwaves that enter a grape get trapped. At the grape's edge the waves reflect back inside, much like total internal reflection, so they can't escape. They pile up into standing waves, which peak where two touching grapes meet.",
+   "move": "A grape traps microwaves: they bounce inside and peak where grapes touch.",
+   "keywords": [
+    "grape",
+    "microwave",
+    "standing wave",
+    "resonant mode",
+    "veritasium"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two touching grapes sit in a microwave beam. The question asks what microwaves do once they get inside a grape. Options: A) pass straight through and out, B) get trapped, bouncing around inside, C) bounce off the skin and never get in.",
+    "ground": "#151a30",
+    "page": "pages/science-grape-microwave-trap.html?v=dcb5711cca83",
+    "bytes": 19748
+   },
+   "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
+   "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=194s",
    "written": "2026-11-03"
   },
   {
@@ -184951,6 +186650,44 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “How To Make Graphene” (YouTube, 2011)",
    "reference": "https://www.youtube.com/watch?v=PifL8bAybyc&t=137s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-graphene-sticky-tape",
+   "topic": "science",
+   "genre": "science.how_science_knows",
+   "strand": "science.how_science_knows.experiments",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How was graphene first discovered?",
+   "answer": "Graphene was first peeled off graphite with the sticky tape you have at home. You pull the tape up to peel a graphite flake, then do it again.",
+   "move": "The \"material of the future\" was first peeled off with the tape you have at home.",
+   "keywords": [
+    "graphene",
+    "graphite",
+    "sticky_tape"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "origin",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled 'Graphene was found with sticky tape'. It asks how graphene was first discovered and has a PEEL IT prompt: pull the tape up to peel the graphite flake, then do it again. The WHAT TO KEEP box says the material of the future was first peeled off with household tape.",
+    "ground": "#0b0718",
+    "page": "pages/science-graphene-sticky-tape.html?v=388debc0a716",
+    "bytes": 23177
+   },
+   "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+   "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=75s",
    "written": "2026-11-03"
   },
   {
@@ -185754,6 +187491,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "science-heat-of-a-drag",
+   "topic": "science",
+   "genre": "science.cold_and_heat",
+   "strand": "science.cold_and_heat.fire",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What really happens at the tip when you draw on a cigarette?",
+   "answer": "When you draw on a cigarette, the tip heats up to 600–900 °C. Burning gives water vapour and carbon dioxide, but the real problem is the many other chemical and physical changes this heat sets off. A drag is not just fire: at that temperature, the tip is a chemistry lab.",
+   "move": "A drag is not just fire: at 600–900 °C, the tip is a chemistry lab.",
+   "keywords": [
+    "cigarette",
+    "tobacco",
+    "pyrolysis",
+    "combustion",
+    "smoking"
+   ],
+   "era": "timeless",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A lit cigarette ember under a 'Hold to draw' prompt. The question asks what chemical and physical changes happen at the tip when you draw on it, with four processes listed as options.",
+    "ground": "#070b1d",
+    "page": "pages/science-heat-of-a-drag.html?v=19b9ba8203b3",
+    "bytes": 24623
+   },
+   "source": "Geopop, “5 curiosità sulle sigarette che forse non sapevi” (YouTube, 2026)",
+   "reference": "https://www.youtube.com/watch?v=lKBS9b924KA&t=56s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-heat-runaway-loop",
    "topic": "science",
    "genre": "science.cold_and_heat",
@@ -185790,6 +187567,86 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=ErPrRuFkc6s&t=325s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-heatwave-without-emissions",
+   "topic": "science",
+   "genre": "science.numbers_and_chance",
+   "strand": "science.numbers_and_chance.estimating",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "none",
+   "question": "How much cooler would this heatwave have been without fossil fuel emissions?",
+   "answer": "Without the energy from fossil fuel emissions, this heatwave would have been 3.5°C cooler. Climate models show that our emissions made it 3.5°C hotter.",
+   "move": "Our emissions made this heatwave 3.5°C hotter.",
+   "keywords": [
+    "heatwave",
+    "fossil fuels",
+    "emissions",
+    "climate models",
+    "europe"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "number",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "The 3.5°C heatwave, a drag-to-guess game. Two thermometers are shown. The reader drags the right one down to guess how much cooler this heatwave would have been without fossil fuel emissions. A 'Keep' box then gives the climate-model answer.",
+    "graded": false,
+    "page": "pages/science-heatwave-without-emissions.html?v=e423d66e502a",
+    "bytes": 21706
+   },
+   "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
+   "reference": "https://www.youtube.com/watch?v=TU196LhDGT4&t=137s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-hotter-than-sun",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.energy",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How hot does the Tsar Bomba's core get, next to the Sun?",
+   "answer": "Each tap makes the dial ten times hotter. Huge pressure sets off fission in a small plutonium sphere, releasing up to 100 million °C. The Sun's surface is about 5,500 °C, so that is roughly 18,000 times hotter.",
+   "move": "For an instant, the bomb's core is far hotter than the surface of the Sun.",
+   "keywords": [
+    "tsar bomba",
+    "sun",
+    "plutonium",
+    "fission",
+    "temperature"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "number",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A tap-to-heat dial asking how hot the Tsar Bomba's core gets compared with the Sun. Each tap multiplies the temperature by ten, ending at 100 million °C against the Sun's surface near 5,500 °C.",
+    "ground": "#1e1912",
+    "page": "pages/science-hotter-than-sun.html?v=de9eb9be4f95",
+    "bytes": 21942
+   },
+   "source": "Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=tesv0xoNhCo&t=327s",
    "written": "2026-11-03"
   },
   {
@@ -187430,6 +189287,45 @@ const String kEmbeddedBank = r'''
    "disabled": true
   },
   {
+   "id": "science-iridium-gubbio-clay",
+   "topic": "science",
+   "genre": "science.how_science_knows",
+   "strand": "science.how_science_knows.correlation_or_cause",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "coincidence",
+   "question": "What chemical evidence linked the extinction to an impact?",
+   "answer": "Iridium, a metal rare in Earth's crust but common in asteroids, is packed into the clay where the sea's plankton died out. That means something from space fell at that exact moment. The clay marks the impact.",
+   "move": "The extinction left a fingerprint: a thin clay full of a metal from space.",
+   "keywords": [
+    "iridium",
+    "gubbio",
+    "asteroids",
+    "plankton",
+    "clay"
+   ],
+   "era": "ancient",
+   "region": "europe",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A red clay cliff near Gubbio, Italy, with a draggable magnifier over a thin clay layer. It asks what chemical evidence linked the extinction to an impact, with choices: Earth's own crust, An asteroid from space, or From an asteroid.",
+    "page": "pages/science-iridium-gubbio-clay.html?v=cb12fd016b8f",
+    "bytes": 32367
+   },
+   "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=_oHnlF70NaQ&t=360s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-iron-sand-concentration",
    "topic": "science",
    "genre": "science.materials",
@@ -187584,6 +189480,46 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=321s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-kepler-water-units",
+   "topic": "science",
+   "genre": "science.cold_and_heat",
+   "strand": "science.cold_and_heat.why_ice_floats",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "computation",
+   "question": "Before atoms, what did Kepler guess makes snowflakes six-sided?",
+   "answer": "Kepler guessed water is built from tiny units. Stacked tight, each sits among six others, so the stack grows as a hexagon: a six-sided crystal.",
+   "move": "Kepler's guess: tiny water units stacking six around one build a six-sided snowflake.",
+   "keywords": [
+    "kepler",
+    "snowflake",
+    "water",
+    "hexagon",
+    "crystal"
+   ],
+   "era": "early_modern",
+   "region": "europe",
+   "hook": "origin",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Quiz page asking which number Kepler guessed made snowflakes six-sided, with options 4, 5, 6 and 8. The reveal shows tiny water units stacked so each sits among six others, forming a hexagon.",
+    "ground": "#22476f",
+    "page": "pages/science-kepler-water-units.html?v=e43a9bc990a5",
+    "bytes": 24905
+   },
+   "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+   "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=189s",
    "written": "2026-11-03"
   },
   {
@@ -188640,6 +190576,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "science-magnetic-stripes",
+   "topic": "science",
+   "genre": "science.how_science_knows",
+   "strand": "science.how_science_knows.experiments",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What do the dark and light stripes on the ocean floor record?",
+   "answer": "The dark and light stripes on the ocean floor record Earth's magnetic field. Dark bands formed when the field was normal, as it is today, and light bands formed when it was reversed. Because the seafloor records every flip, the stripes show that the field has reversed many times.",
+   "move": "Dark band = normal field, light band = reversed: the seafloor records every flip.",
+   "keywords": [
+    "seafloor",
+    "magnetic field",
+    "polarity reversal",
+    "paleomagnetism",
+    "ocean floor"
+   ],
+   "era": "timeless",
+   "region": "world",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive diagram of the ocean floor shown as dark and light stripes. Drag sideways to pull the seafloor apart, and tap a compass to flip Earth's magnetic field. The page asks what the dark and light stripes record.",
+    "page": "pages/science-magnetic-stripes.html?v=2a40bbbab3b5",
+    "bytes": 29213
+   },
+   "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
+   "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=194s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-many-worlds-flow",
    "topic": "science",
    "genre": "science.physics",
@@ -189316,6 +191291,44 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "science-one-way-light",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.relativity",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What if light travelled faster one way than the other?",
+   "answer": "Clocks synced by assuming light is equally fast both ways would be offset by a hidden amount. That offset cancels out in a round-trip measurement, so the measured speed still looks like c. The one-way speed stays masked.",
+   "move": "We can only time light's round trip. Timing one leg needs synced clocks, and syncing them assumes light is equally fast both ways.",
+   "keywords": [
+    "speed of light",
+    "synced clocks",
+    "mars",
+    "mark"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "abstract",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A light path with a drag control that makes light slower one way and faster back. Asks the reader to send a signal to Mark on Mars.",
+    "page": "pages/science-one-way-light.html?v=02b388635071",
+    "bytes": 25634
+   },
+   "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
+   "reference": "https://www.youtube.com/watch?v=pTn6Ewhb27k&t=286s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-opposite-lens-errors",
    "topic": "science",
    "genre": "science.light_and_colour",
@@ -189495,6 +191508,45 @@ const String kEmbeddedBank = r'''
    "source_kind": "book",
    "reference": "Ross & Plug, The Mystery of the Moon Illusion, Oxford University Press, 2002",
    "written": "2026-09-26"
+  },
+  {
+   "id": "science-pacific-background-radiation",
+   "topic": "science",
+   "genre": "science.numbers_and_chance",
+   "strand": "science.numbers_and_chance.big_numbers",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How does Fukushima's released water compare to the Pacific's natural radioactivity?",
+   "answer": "The natural radioactivity from Potassium-40 in the Pacific Ocean is tens of millions of times higher than the total radioactivity of the entire Fukushima release. The page shows a drop of released water against the vast, naturally radioactive Pacific Ocean. Zooming out, each new square is 10× the last.",
+   "move": "Don't ask \"is it radioactive?\" Ask \"how much, next to what is already there?\"",
+   "keywords": [
+    "fukushima",
+    "pacific-ocean",
+    "potassium-40",
+    "tritium",
+    "radioactivity"
+   ],
+   "era": "recent",
+   "region": "asia",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A zoomable scale view: a single drop of released Fukushima water sits in a vast sea, and each new square zooms out 10 times further. Drag up or tap to zoom out and compare the release with the Pacific's natural radioactivity.",
+    "page": "pages/science-pacific-background-radiation.html?v=7d7afc68ae30",
+    "bytes": 24237
+   },
+   "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=IPH3uqi0a-w&t=384s",
+   "written": "2026-11-03"
   },
   {
    "id": "science-paper-plastic-cycles",
@@ -194239,6 +196291,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "science-rock-restoration",
+   "topic": "science",
+   "genre": "science.materials",
+   "strand": "science.materials.why_things_break",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why do geologists undo the faults in a broken rock section?",
+   "answer": "Two faults broke this rock and dropped it, shifting its layers out of their original shape. Undoing each fault's throw, like a puzzle, restores the undeformed state. Once restored, the clinoforms building out to the left become plain to see.",
+   "move": "Undo the deformation first, and the original layers become easy to read.",
+   "keywords": [
+    "geology",
+    "faults",
+    "rock layers",
+    "clinoforms",
+    "geologists"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A broken rock section with two faults and two sunken blocks showing glowing layers. Drag each sunken block up until its layers meet the ones beside it. The question asks why geologists undo the faults in the rock.",
+    "ground": "#140b09",
+    "page": "pages/science-rock-restoration.html?v=453ba4a5609e",
+    "bytes": 20960
+   },
+   "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
+   "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=6125s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-room-temperature-boiling",
    "topic": "science",
    "genre": "science.cold_and_heat",
@@ -195692,6 +197784,84 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "science-sludge-cannibalism",
+   "topic": "science",
+   "genre": "science.chemistry_at_home",
+   "strand": "science.chemistry_at_home.cleaning",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What is the 'cannibalism' that happens when sewage sludge is treated?",
+   "answer": "The 'cannibalism' is autodigestion: bacteria in the sludge tank eat other bacteria. Sludge must lose its water and many of its bacteria, so it digests itself, and then the water is spun out.",
+   "move": "Sludge digests itself: bacteria eat bacteria, then the water is spun out.",
+   "keywords": [
+    "sewage",
+    "sludge",
+    "bacteria",
+    "autodigestion",
+    "wastewater"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Tap-to-digest page asking what 'cannibalism' happens when sewage sludge is treated. A tank holds 41 bacteria with an 'Eaten' counter at 0; tapping the tank shows them digesting each other.",
+    "page": "pages/science-sludge-cannibalism.html?v=18db26d9dbcd",
+    "bytes": 19348
+   },
+   "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=vmwPachp1SE&t=266s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-snow-flips-friction",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.why_things_fall",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How does rolling versus sliding friction change from asphalt to snow?",
+   "answer": "On asphalt, the tyres mostly roll and grip. On snow, the tyres mostly slide, so almost every stretch becomes a drift.",
+   "move": "Asphalt: mostly rolling grip. Snow: mostly sliding, so every stretch is a drift.",
+   "keywords": [
+    "friction",
+    "snow",
+    "asphalt",
+    "tyres",
+    "rally driving"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two tiles compare tyre friction. The asphalt tile shows gold rolling and gripping, the snow tile shows blue sliding. A drag arrow goes from asphalt to snow.",
+    "page": "pages/science-snow-flips-friction.html?v=5bce6019aeec",
+    "bytes": 19503
+   },
+   "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=2SCEUgazR_8&t=345s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-solid-inner-core",
    "topic": "science",
    "genre": "science.how_science_knows",
@@ -195961,6 +198131,45 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=1105s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-steam-feeds-power",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.energy",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why did Chernobyl's core suddenly make 10 times its normal power?",
+   "answer": "Steam set the neutrons free: liquid water soaks up neutrons, but steam barely does. More steam meant more fissions, more heat, and more steam. The surge jammed the control rods a third of the way in, and power hit 30 GW, 10 times nominal.",
+   "move": "Positive void coefficient: steam raises power, and power makes more steam.",
+   "keywords": [
+    "chernobyl",
+    "neutrons",
+    "steam",
+    "control_rods",
+    "reactor"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive reactor core: hold the button to boil the core's water into steam and watch the power climb. Asks why the core's power rises as steam forms.",
+    "page": "pages/science-steam-feeds-power.html?v=dc04912a98ec",
+    "bytes": 24816
+   },
+   "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=4G-cqJy_6_o&t=551s",
    "written": "2026-11-03"
   },
   {
@@ -196664,6 +198873,87 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "science-teflon-vs-pfoa",
+   "topic": "science",
+   "genre": "science.materials",
+   "strand": "science.materials.plastics",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Teflon pans are safe. The chemicals used to make them aren't. Why?",
+   "answer": "Teflon chains are tens of thousands of atoms long, too big to absorb, so they're flushed out. PFOA is only 5 to 10 carbons long: it slips into the blood, and its acid end grabs proteins that carry it anywhere. Size decides which one gets in.",
+   "move": "Not the material but the size: giant chains pass through, small ones get in.",
+   "keywords": [
+    "teflon",
+    "pfoa",
+    "cookware",
+    "bloodstream",
+    "proteins"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Shows a Teflon pan coating as a very long chain of tens of thousands of atoms, and PFOA as a short molecule of 5 to 10 carbons. Asks which one can get into your blood, then how sure you are.",
+    "graded": false,
+    "ground": "#070a14",
+    "page": "pages/science-teflon-vs-pfoa.html?v=3342b01d85ec",
+    "bytes": 24727
+   },
+   "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=2024s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-telephoto-steep-bridge",
+   "topic": "science",
+   "genre": "science.light_and_colour",
+   "strand": "science.light_and_colour.optical_illusions",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why do zoomed photos make this bridge look so steep?",
+   "answer": "Zooming in narrows the view, so the camera backs far away. From there, the bridge's foot and top look equally distant and the same size, stacked on each other. The gentle ramp then reads as a wall.",
+   "move": "Zoom squeezes distance: near and far look alike, so slopes look steeper.",
+   "keywords": [
+    "eshima ohashi",
+    "telephoto lens",
+    "bridge",
+    "zoom",
+    "japan"
+   ],
+   "era": "recent",
+   "region": "asia",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A bridge that climbs like a wall, shown at a zoom ring that can be dragged to 5 times magnification while the camera backs away to keep the bridge in frame. The page asks why zoomed photos make the bridge look so steep.",
+    "ground": "#0d3561",
+    "page": "pages/science-telephoto-steep-bridge.html?v=baf2cc3df6cd",
+    "bytes": 28830
+   },
+   "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=aU4aGIzz1W4&t=125s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-template-horizon",
    "topic": "science",
    "genre": "science.how_science_knows",
@@ -196915,6 +199205,46 @@ const String kEmbeddedBank = r'''
    "source_kind": "book",
    "reference": "Horowitz & Hill, The Art of Electronics, 3rd ed., Cambridge University Press, 2015",
    "written": "2026-09-26"
+  },
+  {
+   "id": "science-thermite-control",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.energy",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why is thermite controllable when explosives are not?",
+   "answer": "Explosives start as solids and turn into gases that expand and build pressure. Thermite starts as a solid powder, but its products stay solid or liquid, so energy releases in a controlled way. Its products don't expand, so there is no blast.",
+   "move": "No gas, no blast: thermite's products don't expand.",
+   "keywords": [
+    "thermite",
+    "explosives",
+    "powder",
+    "gas-pressure",
+    "controlled-release"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A scrubbable picture comparing thermite and explosives over time, with both starting as a solid powder. It asks why thermite is controllable when explosives are not.",
+    "ground": "#0c1426",
+    "page": "pages/science-thermite-control.html?v=c168cfcbe5f0",
+    "bytes": 27598
+   },
+   "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1308s",
+   "written": "2026-11-03"
   },
   {
    "id": "science-thermite-density-separation",
@@ -197732,8 +200062,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A tunnel fire question asks which way smoke drifts: with the traffic, against the traffic, or nowhere, rising and spreading. Arrows show the traffic direction, and the reader bets on the smoke's direction.",
-    "page": "pages/science-tunnel-smoke-drift.html?v=c7d4ad731bdf",
-    "bytes": 9779
+    "page": "pages/science-tunnel-smoke-drift.html?v=64a4c4da94dc",
+    "bytes": 9841
    },
    "source": "Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=ZH5nAfBRtjQ&t=146s",
@@ -197771,12 +200101,51 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A screen lit by light from two narrow slits. Drag along the screen to see where the light lands. The question asks what pattern appears: one bright middle, or two separate lines.",
-    "ground": "#080a11",
-    "page": "pages/science-two-slit-fringes.html?v=d21916a02245",
-    "bytes": 23172
+    "ground": "#000000",
+    "page": "pages/science-two-slit-fringes.html?v=f66b526650e7",
+    "bytes": 20422
    },
    "source": "Veritasium, “The Original Double Slit Experiment” (YouTube, 2013)",
    "reference": "https://www.youtube.com/watch?v=Iuv6hY6zsd0",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "science-two-spheres-focus",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.energy",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How small a spot can two spheres focus a 12 cm microwave into?",
+   "answer": "Two spheres of the right size can squeeze the energy of a 12 cm microwave into a spot about 1 millimetre across. The focused spot is far smaller than the wave itself.",
+   "move": "The right two spheres squeeze a wave's energy into a spot far smaller than the wave.",
+   "keywords": [
+    "microwave",
+    "spheres",
+    "wavelength",
+    "focusing",
+    "plasma"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two spheres sit beside a microwave beam, each wave 12 cm long. The question asks how small a spot the two spheres can focus the 12 cm microwave into. A tap switches the beam on.",
+    "page": "pages/science-two-spheres-focus.html?v=ad8955e75c1c",
+    "bytes": 26844
+   },
+   "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
+   "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=416s",
    "written": "2026-11-03"
   },
   {
@@ -197888,8 +200257,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card titled Underground Crystals asking what natural process fills cavities in rocks with crystals. A drag control loads underground water with salt, going from none to too much.",
-    "page": "pages/science-underground-crystal-cavities.html?v=b0efea39793c",
-    "bytes": 9359
+    "page": "pages/science-underground-crystal-cavities.html?v=9d71a94c2dc7",
+    "bytes": 8921
    },
    "source": "Geopop, “Come creare i cristalli fatti in casa? Esperimento facile” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=6d8wdEsQBEo&t=148s",
@@ -197975,6 +200344,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "science-vajont-wet-clay",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.gravity",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What did filling the Vajont reservoir wake up inside the mountain?",
+   "answer": "The rising lake reached a layer of clay beneath an ancient landslide. Clay does not let water through, so it swelled and deformed. The old landslide lost its balance and moved again.",
+   "move": "The reservoir broke the slope's balance by soaking the clay beneath an ancient landslide.",
+   "keywords": [
+    "vajont-dam",
+    "landslide",
+    "clay",
+    "reservoir",
+    "italy"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section of a valley with a dam and a lake. A glass tap fills the lake as water rises toward an orange clay layer. The reader is asked to watch that layer as the lake reaches it.",
+    "page": "pages/science-vajont-wet-clay.html?v=9730c4b8c494",
+    "bytes": 23829
+   },
+   "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=xUtCwhN8-pQ&t=149s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "science-vapor-lava-bubbles",
    "topic": "science",
    "genre": "science.physics",
@@ -198006,9 +200414,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A glowing lava surface with a question above it: what happens to the vapor water makes inside lava? Tapping the lava drops water onto it, up to three drops in all.",
-    "ground": "#140c0a",
-    "page": "pages/science-vapor-lava-bubbles.html?v=cac5606c8c8c",
-    "bytes": 8751
+    "page": "pages/science-vapor-lava-bubbles.html?v=e20477dde9c7",
+    "bytes": 8765
    },
    "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=DdSUTw-a4Ls&t=38s",
@@ -198241,9 +200648,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A picture of lava with a prompt asking what happens to water the instant it touches lava. Tapping the picture drops water onto the lava, which then reveals the reaction.",
-    "ground": "#17110f",
-    "page": "pages/science-water-meets-lava.html?v=61f085880751",
-    "bytes": 8987
+    "page": "pages/science-water-meets-lava.html?v=111b50967a26",
+    "bytes": 9100
    },
    "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=DdSUTw-a4Ls&t=26s",
@@ -198397,8 +200803,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Two options for putting a well's depth markers onto a seismic time section, asking which way to convert the data first: drop the well in by depth, or convert the well to time first.",
-    "page": "pages/science-well-to-time.html?v=b2c8c3172fb3",
-    "bytes": 8334
+    "page": "pages/science-well-to-time.html?v=7623c5a5918c",
+    "bytes": 8146
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=5687s",
@@ -199161,8 +201567,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "An interactive drawing of a reactor core that can be pulled apart into layers by dragging down or tapping. The card asks why automatic control failed during Chernobyl's low-power test.",
-    "page": "pages/science-xenon-blind-control.html?v=49ce3d0eadab",
-    "bytes": 6783
+    "page": "pages/science-xenon-blind-control.html?v=bae86ea89084",
+    "bytes": 6439
    },
    "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=4G-cqJy_6_o&t=408s",
@@ -199521,6 +201927,44 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “World's Lightest Solid!” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=AeJ9q45PfD0&t=603s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "space-apollo13-tank-fire",
+   "topic": "space",
+   "genre": "space.rockets",
+   "strand": "space.rockets.fuel_chemistry",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What actually made Apollo 13's oxygen tank explode?",
+   "answer": "Shorted fan cables inside the oxygen tank caught fire after a misreading sensor switched the stirrer fan on. The fire's gas drove pressure up until the tank burst and damaged the second tank.",
+   "move": "Apollo 13's blast began as a tiny electrical fault: a short in a fan's cables.",
+   "keywords": [
+    "apollo_13",
+    "oxygen_tank",
+    "stirrer_fan",
+    "short_circuit"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section of Apollo 13's oxygen tank showing a glowing stirrer fan. Tap the fan to start the chain of events that led to the tank's explosion, in order.",
+    "page": "pages/space-apollo13-tank-fire.html?v=fb8fe63173a7",
+    "bytes": 38774
+   },
+   "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=TSsregL8H2o&t=657s",
    "written": "2026-11-03"
   },
   {
@@ -200188,9 +202632,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A view of the night sky in which the Milky Way is bent, stretched and warped into curves. The page asks what the outside world would look like from inside a black hole. Slide to fall toward the black hole and watch the sky bend.",
-    "ground": "#04050c",
-    "page": "pages/space-black-hole-sky.html?v=cc99e9885759",
-    "bytes": 7610
+    "page": "pages/space-black-hole-sky.html?v=d9da04c22be6",
+    "bytes": 7806
    },
    "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=DZJ1sHAvsu8&t=364s",
@@ -200248,6 +202691,46 @@ const String kEmbeddedBank = r'''
     "lon": 11.343,
     "km": 25
    }
+  },
+  {
+   "id": "space-bones-in-orbit",
+   "topic": "space",
+   "genre": "space.mars_and_rovers",
+   "strand": "space.mars_and_rovers.living_on_mars",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How much faster do bones thin in space than on Earth?",
+   "answer": "In space, bone density can decrease by one to two percent per month. That is over 10 times faster than the rate of osteoporosis on Earth. Without weight on them, bones thin far faster than they do with age on Earth.",
+   "move": "Without weight on them, bones thin over 10× faster than with age on Earth.",
+   "keywords": [
+    "bones",
+    "orbit",
+    "astronauts",
+    "osteoporosis",
+    "weightlessness"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "number",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dial-driven page. Drag the dial to keep a right leg in orbit for up to a year while watching the bone inside it. The page asks how much faster bones thin in space than on Earth.",
+    "ground": "#efe3c4",
+    "page": "pages/space-bones-in-orbit.html?v=7ee018fa7e97",
+    "bytes": 17024
+   },
+   "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
+   "reference": "https://www.youtube.com/watch?v=SAQ-iIJkLzA&t=144s",
+   "written": "2026-11-03"
   },
   {
    "id": "space-colours-of-stars-1",
@@ -200666,9 +203149,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive diagram: a Sun disc with a draggable Moon. Drag the Moon over the Sun to reveal the faint corona and pink solar prominences around its edge once the disc is covered.",
-    "ground": "#04050b",
-    "page": "pages/space-corona-outshone.html?v=bcad23523a4f",
-    "bytes": 20207
+    "page": "pages/space-corona-outshone.html?v=53e31c39e662",
+    "bytes": 19276
    },
    "source": "Veritasium, “What it’s like to watch a Total Solar Eclipse” (YouTube, 2017)",
    "reference": "https://www.youtube.com/watch?v=G10m2ZZRH4U",
@@ -203630,6 +206112,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-10-03"
   },
   {
+   "id": "space-filter-adapter",
+   "topic": "space",
+   "genre": "space.the_moon",
+   "strand": "space.the_moon.landing_sites",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How did Apollo 13 fit square CO2 filters into round LEM slots?",
+   "answer": "CO2 was building up in the LEM, and its own filters could not clean the air for three people over four days. The spare filters from the third stage did not fit the slots, so Mission Control improvised an adapter from materials the crew had on board.",
+   "move": "When the spare won't fit, build the joint in between, from what you have.",
+   "keywords": [
+    "apollo-13",
+    "lem",
+    "co2-filters",
+    "mission-control",
+    "adapter"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "puzzle",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider that turns a square adapter end into a round one. The question asks how Apollo 13 fit square CO2 filters into round LEM slots, with the answer about an improvised adapter.",
+    "ground": "#16349e",
+    "page": "pages/space-filter-adapter.html?v=b9ebf4a42bfe",
+    "bytes": 23018
+   },
+   "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=TSsregL8H2o&t=438s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "space-flash-then-silence",
    "topic": "space",
    "genre": "space.space_and_life_on_earth",
@@ -203662,9 +206184,8 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "Card titled 'Flash, then silence' with a guess-the-wait prompt: a meteor bursts 30 km up, brighter than the Sun. Pick how long until its blast hits a window in Chelyabinsk: under a second, about 10 seconds, about a minute, or 2 to 3 minutes, then rate your confidence.",
     "graded": false,
-    "ground": "#0d1f66",
-    "page": "pages/space-flash-then-silence.html?v=ed145bc5225f",
-    "bytes": 19546
+    "page": "pages/space-flash-then-silence.html?v=b1e2657f46ed",
+    "bytes": 19447
    },
    "source": "Veritasium, “These are the asteroids to worry about” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=4Wrc4fHSCpw",
@@ -203703,9 +206224,8 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "A cartoon spaceship with Wi-Fi and hot chocolate flies past a flat Earth and a flat Mars. The question asks how to prove Earth is round to a flat-Earth believer. Four plan steps are shown to tap in the order you would do them.",
     "graded": false,
-    "ground": "#0a0f2c",
-    "page": "pages/space-flat-earth-challenge.html?v=0bc6361d8fc5",
-    "bytes": 11158
+    "page": "pages/space-flat-earth-challenge.html?v=f87090d83b97",
+    "bytes": 11050
    },
    "source": "Geopop, “▶️TERRA PIATTA, IENE, TERRAPIATTISTI: MESSAGGIO A ELON MUSK |GeologiaPOP🌍” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=Y9H-52XGLhg&t=60s",
@@ -203743,9 +206263,8 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "Four copies of three orbiting stars, released at rest with starting errors of 1,000,000 km, 1,000 km and 1 km. The page asks how much longer each copy can be predicted, with options a million times, a thousand times, ten times, or less than twice.",
     "graded": false,
-    "ground": "#0c1e66",
-    "page": "pages/space-four-copies.html?v=7ca505576c42",
-    "bytes": 17830
+    "page": "pages/space-four-copies.html?v=232e6b5c3606",
+    "bytes": 17406
    },
    "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=XKSjCOKDtpk",
@@ -203822,9 +206341,8 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A dark page titled Black Holes asks what a black hole's edge would show to someone with perfect eyes. Three options are offered: seen from afar, nothing; the last one in; all that ever fell in. The reader picks one and then states how sure they are.",
     "graded": false,
-    "ground": "#11142b",
-    "page": "pages/space-frozen-horizon-light-2.html?v=af75c0066b60",
-    "bytes": 22203
+    "page": "pages/space-frozen-horizon-light-2.html?v=9ceb7de398b3",
+    "bytes": 19242
    },
    "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M",
@@ -204514,9 +207032,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A space elevator scene asks what a potential application of graphene in space is. Hold the lift button to send a platform up a graphene cable while watching the fuel gauge.",
-    "ground": "#05070f",
-    "page": "pages/space-graphene-space-elevator.html?v=a6f45f4a8899",
-    "bytes": 10271
+    "page": "pages/space-graphene-space-elevator.html?v=92977d42f340",
+    "bytes": 10048
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=225s",
@@ -204593,9 +207110,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A clock counting down, with the Earth circling an empty spot in space. Asks when Earth would stop feeling the Sun's pull if the Sun vanished. A button makes the Sun vanish 8 min 20 s later.",
-    "ground": "#0b0f22",
-    "page": "pages/space-gravity-delay.html?v=caf2de378c66",
-    "bytes": 9222
+    "page": "pages/space-gravity-delay.html?v=173e1b34ddc6",
+    "bytes": 9128
    },
    "source": "Geopop, “Come potremmo sopravvivere se il Sole scomparisse: gli scenari di una Terra senza luce” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=WEyRS1_p2PA&t=126s",
@@ -205075,9 +207591,9 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Asks how many galaxies exist in the observable universe. You drag to zoom out across a space view until you think you see every galaxy.",
     "graded": false,
-    "ground": "#010203",
-    "page": "pages/space-hundred-billion-galaxies.html?v=a304ceadd80c",
-    "bytes": 28039
+    "ground": "#070a1c",
+    "page": "pages/space-hundred-billion-galaxies.html?v=a5cd440f6750",
+    "bytes": 27753
    },
    "source": "Veritasium, “How Far Away is the Moon? (The Scale of the Universe)” (YouTube, 2011)",
    "reference": "https://www.youtube.com/watch?v=Bz9D6xba9Og",
@@ -205115,8 +207631,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A hilltop-shaped landscape, not to scale, with five flat spots and saddles, labelled with the Lagrange points, and Earth shown turning nearby. The question asks where a spacecraft can park for free. The reader taps one spot to pick it.",
-    "page": "pages/space-lagrange-hilltops.html?v=bfea524401e6",
-    "bytes": 14681
+    "page": "pages/space-lagrange-hilltops.html?v=ded74ff3fb7c",
+    "bytes": 15174
    },
    "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=XKSjCOKDtpk",
@@ -207834,9 +210350,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Shows a flag on a pole with two timers, Moon (no air) and Earth (air), each reading seconds. Asks the reader to plant the pole on the Moon and time how long the flag keeps moving.",
-    "ground": "#05070d",
-    "page": "pages/space-moon-flag-wave.html?v=c3b067a51320",
-    "bytes": 9277
+    "page": "pages/space-moon-flag-wave.html?v=996f92afae77",
+    "bytes": 9018
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=FeVJxB41oNY&t=77s",
@@ -208930,9 +211445,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Diagram of Earth between the Sun and the Moon during a lunar eclipse. Tap the Sun, the atmosphere or the Moon to see how Earth's air bends and filters sunlight so that only red light reaches the Moon.",
-    "ground": "#0b1026",
-    "page": "pages/space-red-moon-eclipse.html?v=7b4229af8113",
-    "bytes": 9408
+    "page": "pages/space-red-moon-eclipse.html?v=6a73f2d9757a",
+    "bytes": 9322
    },
    "source": "Geopop, “Eclissi lunare: la spiegazione semplice per capire come avviene” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=Uba7HtQ3MiM&t=105s",
@@ -209468,6 +211982,46 @@ const String kEmbeddedBank = r'''
    "source_kind": "book",
    "reference": "Pratt, Bostian & Allnutt, Satellite Communications, 2nd edition, Wiley, 2003",
    "written": "2026-10-03"
+  },
+  {
+   "id": "space-sidereal-extra-spin",
+   "topic": "space",
+   "genre": "space.stars_and_light",
+   "strand": "space.stars_and_light.astrology_or_astronomy",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why do the stars see Earth spin 366.24 times a year, not 365.24?",
+   "answer": "Counted against the stars (a sidereal year), Earth spins once more than it has days. The stars see 366.24 spins a year, while we count 365.24 solar days. Earth makes one extra spin as it goes once round the Sun.",
+   "move": "Counted against the stars (a sidereal year), Earth spins once more than it has days.",
+   "keywords": [
+    "earth",
+    "sun",
+    "stars",
+    "sidereal year",
+    "solar day"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An Earth orbit diagram with distant stars behind it. Earth is dragged once round the Sun in a toy year of 4 days. The page asks why the stars see Earth spin 366.24 times a year, not 365.24, and has the reader count the spins two ways.",
+    "ground": "#14243a",
+    "page": "pages/space-sidereal-extra-spin.html?v=334804ce460f",
+    "bytes": 25854
+   },
+   "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=691s",
+   "written": "2026-11-03"
   },
   {
    "id": "space-signals-1",
@@ -210013,9 +212567,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "An interactive page asking why a stopped Earth would wipe out all life. A slider labelled Earth's spin, at 100%, shows a magnetic shield around the planet. Dragging the spin to zero makes the shield disappear.",
-    "ground": "#070b1a",
-    "page": "pages/space-spin-magnetic-shield.html?v=a3667d181b5a",
-    "bytes": 8818
+    "page": "pages/space-spin-magnetic-shield.html?v=999838647313",
+    "bytes": 8794
    },
    "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=OSECBud3lD4&t=479s",
@@ -210672,9 +213225,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A sky view with Earth at the centre and a rock you can drag around it. A circle marks what a ground telescope can see. A switch changes the view to infrared. The question asks why some asteroids hit before telescopes spot them.",
-    "ground": "#071140",
-    "page": "pages/space-sunward-blind-spot.html?v=5e9e04f00faa",
-    "bytes": 17485
+    "page": "pages/space-sunward-blind-spot.html?v=266f821f3494",
+    "bytes": 17351
    },
    "source": "Veritasium, “These are the asteroids to worry about” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=4Wrc4fHSCpw",
@@ -211973,9 +214525,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A 3D diagram of Earth with two donut-shaped radiation belts around its middle and a spacecraft path skimming the thin outer edge. Tap a route to fly it and watch its radiation bar fill.",
-    "ground": "#0b1026",
-    "page": "pages/space-van-allen-donut.html?v=c4a5ecd90336",
-    "bytes": 9464
+    "page": "pages/space-van-allen-donut.html?v=6db6d309c558",
+    "bytes": 9371
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=FeVJxB41oNY&t=338s",
@@ -225012,8 +227563,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A diagram of a bridge tunnel under a draggable sea level. The reader drags the sea up until the tunnel is fully underwater, then reads how the displaced water pushes back on the structure.",
-    "page": "pages/technology-archimedes-bridge-buoyancy.html?v=ae5273b1d74e",
-    "bytes": 9160
+    "page": "pages/technology-archimedes-bridge-buoyancy.html?v=6a1b5c25cd86",
+    "bytes": 9578
    },
    "source": "Geopop, “Ponte sullo Stretto di Messina: il progetto costruttivo ufficiale e le altre alternative” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=bwPQHnbeYpo&t=86s",
@@ -225831,8 +228382,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Question: why is carbon fibre risky deep underwater? A panel of thin fibres is shown. Pull and Squeeze controls and a pressure slider up to 300 times atmospheric let the reader watch the fibres buckle sideways under squeeze.",
-    "page": "pages/technology-carbon-fibre-buckling.html?v=3a4220437694",
-    "bytes": 6559
+    "page": "pages/technology-carbon-fibre-buckling.html?v=7327fc34e87d",
+    "bytes": 6381
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=607s",
@@ -227505,8 +230056,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A pipe loop under the ground next to a counter reading 'Water swapped with the aquifer: 0 L' and a hold-to-run button. Asks why closed-loop geothermal systems do not exchange fluids with groundwater.",
-    "page": "pages/technology-closed-loop-geothermal.html?v=04f4ebc086db",
-    "bytes": 8299
+    "page": "pages/technology-closed-loop-geothermal.html?v=3053b7d41d60",
+    "bytes": 8287
    },
    "source": "Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=1HiwKPHVc-8&t=233s",
@@ -227544,9 +230095,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A card titled Steel & Fire asks how hot the fire got around the Twin Towers' core columns. Two choices are shown, insulated steel or bare steel, with fresh air. Holding the button lets air in, and the card reveals a peak of up to 1,000 degrees.",
-    "ground": "#07071a",
-    "page": "pages/technology-core-fire-temperature.html?v=06899401f306",
-    "bytes": 11911
+    "page": "pages/technology-core-fire-temperature.html?v=2814e45bd128",
+    "bytes": 11816
    },
    "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=TS8CgfiGFEE&t=442s",
@@ -229611,6 +232161,46 @@ const String kEmbeddedBank = r'''
    }
   },
   {
+   "id": "technology-fastest-not-shortest",
+   "topic": "technology",
+   "genre": "technology.ai",
+   "strand": "technology.ai.limits",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "A Micromouse races to the goal. Which route is it searching for?",
+   "answer": "Micromice search for the fastest path, not the shortest, and the fastest may be the longer one. Count the turns, not just the metres, because the robot's speed depends on them.",
+   "move": "Fastest isn't shortest: count the turns, not just the metres.",
+   "keywords": [
+    "micromouse",
+    "maze",
+    "robots",
+    "shortest-path",
+    "veritasium"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two paths in a maze from a black corner to a red square: one shorter, one with fewer turns. Asks which route a Micromouse robot would bet on racing.",
+    "graded": false,
+    "page": "pages/technology-fastest-not-shortest.html?v=97d00b42e960",
+    "bytes": 25769
+   },
+   "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=651s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "technology-flip-pivoting-fixtures",
    "topic": "technology",
    "genre": "technology.old_machines",
@@ -229836,8 +232426,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card titled CLEAN WATER asks how graphene can purify water, with small labels for water and salt ions. Four answer choices describe a graphene oxide membrane's effect on seawater; the reader picks one.",
-    "page": "pages/technology-graphene-desalination.html?v=34150e0260a2",
-    "bytes": 8518
+    "page": "pages/technology-graphene-desalination.html?v=fa0835373ca6",
+    "bytes": 8529
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=133s",
@@ -229914,8 +232504,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Split-screen slide with a slider to move forward a century on both sides, from today to +100 years. It asks how to think about the future of graphene. One side shows a person from 1919 holding a piece of plastic, the other a person from 2019 holding a graphene sheet.",
-    "page": "pages/technology-graphene-plastic-century.html?v=a87c54b8d90c",
-    "bytes": 8858
+    "page": "pages/technology-graphene-plastic-century.html?v=fc2a60c19dd1",
+    "bytes": 8647
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=298s",
@@ -230225,8 +232815,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Diagram-style page showing a copper coil carrying alternating current beneath a pot, with a changing magnetic field between them. Asks how an induction hob heats a pot with no flame; the reader drags the pot down onto the hob.",
-    "page": "pages/technology-induction-magnetic-field.html?v=4a2a59bbc412",
-    "bytes": 12651
+    "page": "pages/technology-induction-magnetic-field.html?v=3c1d25c9873a",
+    "bytes": 12593
    },
    "source": "Geopop, “Consuma più un piano a induzione o un piano a gas? Abbiamo fatto un test per scoprirlo” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=fj1g14cwH0I&t=50s",
@@ -231810,6 +234400,46 @@ const String kEmbeddedBank = r'''
    "disabled": true
   },
   {
+   "id": "technology-material-fatigue",
+   "topic": "technology",
+   "genre": "technology.old_machines",
+   "strand": "technology.old_machines.lessons_from_failures",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What is the effect of repeated high-pressure cycles on the hull?",
+   "answer": "Repeated high-pressure cycles weaken a hull's material over time, even if it held the first time. The page's dive takes a submersible down to crushing pressure and back up, and the gold line shows what to watch.",
+   "move": "Load a material again and again and it weakens, even if it held the first time.",
+   "keywords": [
+    "titan_submersible",
+    "hull",
+    "material_fatigue",
+    "pressure_cycles",
+    "deep_sea"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page titled Material fatigue, asking what repeated high-pressure cycles do to a hull. A Dive button sends a submersible down to crushing pressure and back up while a gold line is watched.",
+    "ground": "#06192f",
+    "page": "pages/technology-material-fatigue.html?v=fb4ad84be3d1",
+    "bytes": 25893
+   },
+   "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=628s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "technology-micromouse-diagonal-blinders",
    "topic": "technology",
    "genre": "technology.ai",
@@ -231841,11 +234471,51 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A question asks how a robot mouse drives down a diagonal. Three runs, labelled 1 Straight, 2 Diagonal and 3 Blinders, are tapped in order, each showing red infrared sensor beams on the mouse's nose.",
-    "page": "pages/technology-micromouse-diagonal-blinders.html?v=3a332129a6ec",
-    "bytes": 10700
+    "page": "pages/technology-micromouse-diagonal-blinders.html?v=ef80da4b34e5",
+    "bytes": 10615
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=893s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "technology-micromouse-diagonal-cut-15",
+   "topic": "technology",
+   "genre": "technology.old_machines",
+   "strand": "technology.old_machines.why_some_tech_wins",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What is the Micromouse equivalent of the Fosbury flop?",
+   "answer": "Mitee Mouse 3 was the first to drive diagonals, cutting straight through the zigzag between the posts. Old mice turned square at every corner. The leap was not new technology but a new way of seeing the maze.",
+   "move": "The leap wasn't a better machine, it was a better line through the box.",
+   "keywords": [
+    "micromouse",
+    "mitee mouse 3",
+    "maze",
+    "diagonal",
+    "fosbury flop"
+   ],
+   "era": "twentieth",
+   "region": "world",
+   "hook": "puzzle",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page titled 'Aim and launch': the reader drags from a mouse to aim one straight diagonal line through a zigzag maze of posts, then releases it. It asks what the Micromouse equivalent of the Fosbury flop is.",
+    "ground": "#f1ede4",
+    "page": "pages/technology-micromouse-diagonal-cut-15.html?v=5eaafb9dc6fe",
+    "bytes": 29422
+   },
+   "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=826s",
    "written": "2026-11-03"
   },
   {
@@ -231886,6 +234556,45 @@ const String kEmbeddedBank = r'''
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=844s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "technology-micromouse-fan-grip",
+   "topic": "technology",
+   "genre": "technology.old_machines",
+   "strand": "technology.old_machines.why_some_tech_wins",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What was Micromouse's second “Fosbury flop”, the trick for faster turns?",
+   "answer": "Micromouse's second Fosbury flop was a fan under the robot that glues it to the floor. Pressed down, the tyres grip, so it takes corners flat out without slipping.",
+   "move": "To turn faster without slipping, press the tyres harder onto the floor.",
+   "keywords": [
+    "micromouse",
+    "robot mouse",
+    "fosbury flop",
+    "propeller",
+    "veritasium"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A robot mouse on a floor, asking what Micromouse's second Fosbury flop was: the trick for faster turns. A Go button starts it, and you watch its tyres with the fan off and on.",
+    "page": "pages/technology-micromouse-fan-grip.html?v=e2ada282ae8d",
+    "bytes": 30916
+   },
+   "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=1144s",
    "written": "2026-11-03"
   },
   {
@@ -232037,8 +234746,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card asking why crews weld rail at its neutral temperature. Two choices: wait an hour for a summer rail to cool, or weld now. Choosing to weld at neutral shows a relaxed rail with zero stress.",
-    "page": "pages/technology-neutral-temperature-welding.html?v=2d6bdee9e07b",
-    "bytes": 9341
+    "page": "pages/technology-neutral-temperature-welding.html?v=8875dc199353",
+    "bytes": 9234
    },
    "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=243s",
@@ -232076,9 +234785,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card reveals that over 200 structural joints were welded overnight by a night crew, ranked by importance, starting with the 30th floor. It asks how many joints were welded overnight and which came first.",
-    "ground": "#0d1430",
-    "page": "pages/technology-night-weld-ranking.html?v=151c16418f30",
-    "bytes": 9638
+    "page": "pages/technology-night-weld-ranking.html?v=3ca27a842a97",
+    "bytes": 9499
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=1270s",
@@ -232115,9 +234823,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card titled Robot logistics, asking how heavy components are moved around the shipyard at night. A rover icon and a prompt to tap the floor to drop crates in its path, with a counter reading 0 of 3.",
-    "ground": "#0b1220",
-    "page": "pages/technology-night-yard-rovers.html?v=c69d0382fd35",
-    "bytes": 8574
+    "page": "pages/technology-night-yard-rovers.html?v=38b4033e100c",
+    "bytes": 8509
    },
    "source": "Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=Q0FlhJ7-P-g&t=224s",
@@ -232993,8 +235700,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Astute free card on micro machines. It asks how bending machines are made at microscopic size. It shows a tiny, complex mechanism that looks like a circuit board, on silicon with a film that reacts to light.",
-    "page": "pages/technology-printed-micro-machines.html?v=6a32841d4321",
-    "bytes": 9176
+    "page": "pages/technology-printed-micro-machines.html?v=7c3dc10b5a9d",
+    "bytes": 8713
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=418s",
@@ -234595,8 +237302,8 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "A quiz card titled Relay Maze asks how the first intelligent mouse's brain was built, offering three choices: a tiny circuit inside the mouse, switches hidden in the maze, or a person steering it by remote.",
     "graded": false,
-    "page": "pages/technology-relay-maze-brain.html?v=1cd291304d2e",
-    "bytes": 9871
+    "page": "pages/technology-relay-maze-brain.html?v=d8597aa72088",
+    "bytes": 9787
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=55s",
@@ -234873,8 +237580,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Photo from above of a switched-on white LED with its yellow coat intact. A finger rubs the yellow coat away to show the light underneath. The question asks what colour that light is.",
-    "page": "pages/technology-secretly-blue.html?v=c89636b19fad",
-    "bytes": 19534
+    "page": "pages/technology-secretly-blue.html?v=4eb1a65b3dbe",
+    "bytes": 19526
    },
    "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=AF8d72mA41M",
@@ -234912,8 +237619,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card asking how bank robbers in Naples hid the dirt they dug. A slider moves from 0% to 100% of the spoil sent into a sewer, showing how much stays in the tunnel versus how much the sewer water carries away.",
-    "page": "pages/technology-sewer-spoil-removal.html?v=f3bd4ad4e7fd",
-    "bytes": 8592
+    "page": "pages/technology-sewer-spoil-removal.html?v=2b2b521d8b17",
+    "bytes": 8651
    },
    "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=aRTxjOeJRbY&t=518s",
@@ -235075,6 +237782,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "technology-stacked-solar-cell",
+   "topic": "technology",
+   "genre": "technology.think_about_tech",
+   "strand": "technology.think_about_tech.hype_cycles",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How much sunlight can the best solar cells turn into electricity?",
+   "answer": "Stacked junctions have set records above 40 %. One layer catches only part of sunlight, so stacking another layer catches more. Real use on a roof always gives less than the lab record.",
+   "move": "Stacked junctions set records above 40 %, but real use always gives less.",
+   "keywords": [
+    "solar-cells",
+    "multi-junction",
+    "efficiency",
+    "rooftop-solar",
+    "sunlight"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "number",
+   "mood": "practical",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "months",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A solar cell diagram where the reader taps to stack layers, showing a 40% efficiency stamp labeled LAB RECORD, then switching to REAL ROOF. Asks how much sunlight the best solar cells can turn into electricity.",
+    "page": "pages/technology-stacked-solar-cell.html?v=71c6ff652b81",
+    "bytes": 18424
+   },
+   "source": "Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019)",
+   "reference": "https://www.youtube.com/watch?v=VTtMdKzQn48&t=200s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "technology-static-load-floors",
    "topic": "technology",
    "genre": "technology.old_machines",
@@ -235146,8 +237892,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Card titled Heavy Oil asking why Venezuela's extra-heavy oil needs steam to come out of the ground. A pump is shown running with nothing coming up, and a slider lets the reader move the steam from OFF to on.",
-    "page": "pages/technology-steam-heavy-oil.html?v=22c0b985495e",
-    "bytes": 11319
+    "page": "pages/technology-steam-heavy-oil.html?v=434194687d2d",
+    "bytes": 11090
    },
    "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=pp21fmWKe48&t=398s",
@@ -235303,9 +238049,8 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "Two steel furnaces race side by side: a modern mill makes fast, even steel, while the ancient tatara makes slow, uneven steel. The page asks why the best Japanese swords still need tatara steel.",
     "graded": false,
-    "ground": "#1b1714",
-    "page": "pages/technology-tatara-steel-race.html?v=29c5d209d24a",
-    "bytes": 7179
+    "page": "pages/technology-tatara-steel-race.html?v=8577d5d0c031",
+    "bytes": 7110
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=52s",
@@ -235792,6 +238537,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "technology-thermite-curie-wipe",
+   "topic": "technology",
+   "genre": "technology.the_internet",
+   "strand": "technology.the_internet.privacy",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How can thermite be used to destroy data?",
+   "answer": "Heating a hard drive past the Curie temperature erases its magnetic data, and cooling does not bring it back. The data was only a pattern of magnets, so the thermite's heat makes it unrecoverable.",
+   "move": "Heat a magnet past its Curie temperature and the data it held is gone for good.",
+   "keywords": [
+    "thermite",
+    "curie-temperature",
+    "hard-drive",
+    "magnets",
+    "data-destruction"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question card asking how thermite can destroy data. Press and hold to heat a drive's magnets past their Curie temperature, then let go so it cools.",
+    "ground": "#efe6d0",
+    "page": "pages/technology-thermite-curie-wipe.html?v=4406c9057a23",
+    "bytes": 23486
+   },
+   "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1013s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "technology-thermite-rail-welds",
    "topic": "technology",
    "genre": "technology.where_things_come_from",
@@ -235900,8 +238685,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Animated timeline of a molten tin drop, 25 micrometres across, flying at 70 metres per second. Two infrared laser pulses, microseconds apart, are shown hitting it. A draggable clock lets the reader move through the timing. The page asks why the laser hits the drop twice and not once.",
-    "page": "pages/technology-tin-pancake.html?v=291d5beb725d",
-    "bytes": 23869
+    "page": "pages/technology-tin-pancake.html?v=02613ec8616a",
+    "bytes": 22550
    },
    "source": "Veritasium, “The Closest Thing We Have to Alien Technology” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=MiUHjLxm3V0",
@@ -237166,8 +239951,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A drag-and-drop task on a cross-section of a motorway tunnel with side rooms and pipes. The reader drags the 3% foam into the room under the fire, then sees water mixed there and sprayed into the tunnel.",
-    "page": "pages/technology-tunnel-foam-mix.html?v=d8c8c35b8caf",
-    "bytes": 10974
+    "page": "pages/technology-tunnel-foam-mix.html?v=87c2b716da70",
+    "bytes": 10912
    },
    "source": "Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=ZH5nAfBRtjQ&t=285s",
@@ -237284,8 +240069,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "A cross-section diagram of a tunnel dug through volcanic rock, with the water level marked. A switch toggles between 'Rock as it is' and 'Just dig'. The question asks how high the water would rise if the tunnel were dug.",
-    "page": "pages/technology-tunnel-water-table.html?v=c30ca671c3d7",
-    "bytes": 7392
+    "page": "pages/technology-tunnel-water-table.html?v=bf3a31c3ca93",
+    "bytes": 7042
    },
    "source": "Geopop, “Alta Velocità Napoli-Bari: siamo andati a vedere come la stanno scavando attraverso gli Appennini” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=mJXC1Sn-xDM&t=181s",
@@ -237699,6 +240484,46 @@ const String kEmbeddedBank = r'''
    "disabled": true
   },
   {
+   "id": "technology-undersea-cable-blur",
+   "topic": "technology",
+   "genre": "technology.the_internet",
+   "strand": "technology.the_internet.cables",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why did early undersea telegraph cables blur dots and dashes together?",
+   "answer": "Undersea cable soaks up electric charge, and that capacity grows with its length. Each pulse has to fill the cable before the far end rises, then drain it before it falls. Stretched pulses blur into each other, so dots and dashes merge.",
+   "move": "Longer cable, more capacitance: pulses stretch until dots and dashes merge.",
+   "keywords": [
+    "telegraph",
+    "undersea cable",
+    "capacitance",
+    "dots and dashes",
+    "veritasium"
+   ],
+   "era": "nineteenth",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question asks why early undersea telegraph cables blurred dots and dashes together. A dot-dash-dot sequence is shown beside a Lay more cable button, with a counter reading 1 of 5.",
+    "ground": "#0f2a30",
+    "page": "pages/technology-undersea-cable-blur.html?v=b708a0bc0d17",
+    "bytes": 24895
+   },
+   "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=632s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "technology-upside-down-blocks",
    "topic": "technology",
    "genre": "technology.where_things_come_from",
@@ -237735,6 +240560,45 @@ const String kEmbeddedBank = r'''
    },
    "source": "Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=Q0FlhJ7-P-g&t=149s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "technology-v1-decision-speed-1",
+   "topic": "technology",
+   "genre": "technology.old_machines",
+   "strand": "technology.old_machines.lessons_from_failures",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What is V1, and why can't a takeoff stop after it?",
+   "answer": "V1 is the speed on the takeoff roll beyond which the takeoff can no longer be aborted. Below it, the brakes still stop the plane on the runway. Above it, there is no runway left to stop on, so the plane must fly.",
+   "move": "Before V1 you may stop; after V1 you go, because the runway is spent.",
+   "keywords": [
+    "v1",
+    "takeoff",
+    "aircraft",
+    "runway",
+    "pilot"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled V1: the point of no return asks what V1 is and why a takeoff cannot stop after it. Buttons read Full power and Abort, with a question about where the plane will stop.",
+    "page": "pages/technology-v1-decision-speed-1.html?v=a60e1ff37a77",
+    "bytes": 27785
+   },
+   "source": "Geopop, “Dentro la cabina dal decollo all’atterraggio - tutto quello che non si vede di un volo di linea” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=kIkfQs_8ny0&t=251s",
    "written": "2026-11-03"
   },
   {
@@ -237965,11 +240829,51 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "A house sits on frozen ground. The reader drags it upward to lift it about 1.5 m off the ground, showing piles beneath. The question asks how Yakutsk's buildings keep from melting the frozen ground.",
-    "page": "pages/technology-yakutsk-stilt-houses.html?v=e85d52df00fa",
-    "bytes": 9186
+    "page": "pages/technology-yakutsk-stilt-houses.html?v=bbdfda11b08d",
+    "bytes": 8942
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=252s",
+   "written": "2026-11-03"
+  },
+  {
+   "id": "technology-yellow-button-anomaly",
+   "topic": "technology",
+   "genre": "technology.old_machines",
+   "strand": "technology.old_machines.lessons_from_failures",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How did the camera car video reveal the steering failure?",
+   "answer": "Frame by frame, the yellow button on the steering wheel moves abnormally, dropping to the right. That movement signals a broken steering column.",
+   "move": "A part that leaves the only path it can take means what holds it has broken.",
+   "keywords": [
+    "ayrton_senna",
+    "imola",
+    "tamburello",
+    "steering_column",
+    "camera_car"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": true,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page showing camera car footage of a race car at the Tamburello corner. Drag left to steer frame by frame and watch the yellow button on the steering wheel, which has a 30 mm callout.",
+    "ground": "#0a3466",
+    "page": "pages/technology-yellow-button-anomaly.html?v=f5a5780564d2",
+    "bytes": 25447
+   },
+   "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=gh5UkpxPTFA&t=609s",
    "written": "2026-11-03"
   },
   {
@@ -239088,8 +241992,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Question: What good comes from feeling confused while learning? A slider picks how confusing a lesson is, and a Launch button runs it, with a counter showing 0 of 3 launches used. The reveal says confusion makes learning stick.",
-    "page": "pages/thinking-confusion-helps-memory.html?v=2febf3dd59a4",
-    "bytes": 8016
+    "page": "pages/thinking-confusion-helps-memory.html?v=3b0cf418bca2",
+    "bytes": 7843
    },
    "source": "Veritasium, “The Science of Thinking” (YouTube, 2017)",
    "reference": "https://www.youtube.com/watch?v=UBVV8pch1dM&t=550s",
@@ -240868,8 +243772,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Flash test page. A word flashes between rows of X's, and the reader picks which word flashed (popcorn, pretzel, or cracker) and how long the flash lasted. Compares a 1957 claim of 0.33 ms with one 17 ms frame, and 2006 lab results: thirsty 20% without the flash, 80% with it.",
-    "page": "pages/thinking-hidden-popcorn.html?v=24e920570db0",
-    "bytes": 13967
+    "page": "pages/thinking-hidden-popcorn.html?v=52cbac6ec1be",
+    "bytes": 13770
    },
    "source": "Diventare Strong, “Persuasione Ipnotica. \"Comandi Nascosti\". Convincere Persuadere E Influenzare: Linguaggio Ipnotico” (YouTube, 2017)",
    "reference": "https://www.youtube.com/watch?v=rgMUHXLPtuc",
@@ -241577,8 +244481,8 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Titled 'One word: Be the witness', asking whether one word can change what you remember. A crash clip can be tapped to rewatch. Below are witness questionnaire items Q4 and Q7, the second asking 'Did you see any broken glass?' with Yes and No buttons, and an 'Answer from memory' button.",
     "graded": false,
-    "page": "pages/thinking-one-word.html?v=ca1ba3136e56",
-    "bytes": 20705
+    "page": "pages/thinking-one-word.html?v=6fa4e7ada0f8",
+    "bytes": 20645
    },
    "source": "Diventare Strong, “Frasi dei Manipolatori: Non Farti Fregare” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=56T0yfszBkk",
@@ -241725,8 +244629,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card titled 'Why does not knowing when a game ends keep players cooperating?' with a tap-to-reason prompt. Tapping reasons backward from a known last round. A counter shows 0 of 10.",
-    "page": "pages/thinking-random-end-cooperation.html?v=d6bde1c8a9af",
-    "bytes": 8499
+    "page": "pages/thinking-random-end-cooperation.html?v=30c9fa8e98d2",
+    "bytes": 8338
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=781s",
@@ -241835,8 +244739,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Quiz card: Tester throws a stone on move 1 in a two-player game. Choose to strike back by defecting on move 2, or let it go and keep cooperating, then try the other option.",
-    "page": "pages/thinking-tester-probes-forgiveness.html?v=3dd2040917cc",
-    "bytes": 6673
+    "page": "pages/thinking-tester-probes-forgiveness.html?v=b4846ace6858",
+    "bytes": 6492
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=836s",
@@ -244218,6 +247122,45 @@ const String kEmbeddedBank = r'''
    "reference": "Seifert, Monaghan, Voss & Maden, Skin regeneration in adult axolotls: a blueprint for scar-free healing in vertebrates, PLoS ONE, 2012",
    "written": "2026-09-27",
    "disabled": true
+  },
+  {
+   "id": "weird_facts-bermuda-not-top-ten",
+   "topic": "weird_facts",
+   "genre": "weird_facts.too_strange_to_be_true",
+   "strand": "weird_facts.too_strange_to_be_true.myths_that_spread",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "availability",
+   "question": "Where did the WWF's 2013 study rank the Bermuda Triangle among dangerous seas?",
+   "answer": "The WWF's 2013 study of the world's most dangerous sea areas left the Bermuda Triangle out of its top 10. The eastern Mediterranean, and even the Black Sea, rank as more dangerous. So the Bermuda Triangle is not even a top-10 danger zone.",
+   "move": "By the data, the Bermuda Triangle is not even a top-10 danger zone.",
+   "keywords": [
+    "bermuda-triangle",
+    "wwf",
+    "black-sea",
+    "eastern-mediterranean"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "misconception",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Ranking list of dangerous sea areas from the WWF's 2013 study. The reader drags a red triangle to the rank where the Bermuda Triangle belongs, or below the line if it is not in the top 10.",
+    "ground": "#f2efe6",
+    "page": "pages/weird_facts-bermuda-not-top-ten.html?v=5fed8e76f571",
+    "bytes": 18175
+   },
+   "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
+   "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=462s",
+   "written": "2026-11-03"
   },
   {
    "id": "weird_facts-chainsaw-frozen-meat",
@@ -247785,6 +250728,45 @@ const String kEmbeddedBank = r'''
    "written": "2026-09-27"
   },
   {
+   "id": "weird_facts-not-a-flamethrower",
+   "topic": "weird_facts",
+   "genre": "weird_facts.strange_laws",
+   "strand": "weird_facts.strange_laws.why_odd_laws_exist",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "conditional",
+   "question": "How did Musk’s flamethrower dodge being classed as a weapon?",
+   "answer": "Musk's flamethrower was called a \"Not-a-Flamethrower,\" so it was technically described as a novelty item rather than a weapon. That let it be sold without a weapons license. The name did it.",
+   "move": "What a law calls a thing can hang on how the thing is described.",
+   "keywords": [
+    "musk",
+    "flamethrower",
+    "not-a-flamethrower",
+    "novelty-item",
+    "weapons-license"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking which change moves a flamethrower box to the novelty counter. Three options: give it a smaller flame, name it Not-a-Flamethrower, or sell it only online. The reveal says the name classed it as a novelty item, not a weapon.",
+    "page": "pages/weird_facts-not-a-flamethrower.html?v=7497959192bc",
+    "bytes": 26750
+   },
+   "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
+   "reference": "https://www.youtube.com/watch?v=CKMyBFiiED8",
+   "written": "2026-11-03"
+  },
+  {
    "id": "weird_facts-octopuses-1",
    "topic": "weird_facts",
    "genre": "weird_facts.animal_oddities",
@@ -249169,8 +252151,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Shows an ice-cube-sized block of aerogel weighing 1.6 g, with its skin laid flat at 5 cm², and a slider that splits it into beads. Asks how much surface is inside the block.",
-    "page": "pages/weird_facts-skin-of-aerogel.html?v=53f677a65339",
-    "bytes": 13314
+    "page": "pages/weird_facts-skin-of-aerogel.html?v=2cf3da393d67",
+    "bytes": 13340
    },
    "source": "Veritasium, “I Waterproofed Myself With Aerogel!” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=GcdB5bFwio4",

@@ -68,34 +68,33 @@ function render(){
   txt('neutral',lx,ny+F*0.35,F,'var(--k)');
   if(welded && Math.abs(yOf(Tw)-ny)>F*1.5){
     const wy=yOf(Tw);
-    M('polygon',{points:`${cx+tbw/2+2},${wy} ${cx+tbw/2+9},${wy-5} ${cx+tbw/2+9},${wy+5}`,fill:'#e8452f'});
-    txt('welded',lx+4,wy+F*0.35,F,'#e8452f');
+    M('polygon',{points:`${cx+tbw/2+2},${wy} ${cx+tbw/2+9},${wy-5} ${cx+tbw/2+9},${wy+5}`,fill:'#8f1d0f'});
+    txt('welded',lx+4,wy+F*0.35,F,'#8f1d0f');
   }
   // scene
   const sx=lx+F*4.4, ex=W-pad, sw=ex-sx, top=pad, bot=H-pad, hy=top+(bot-top)*0.56, mx=sx+sw/2;
   const defs=M('defs',{}); const cp=M('clipPath',{id:'clip'},defs);
-  M('rect',{x:sx,y:top,width:sw,height:bot-top,rx:F*0.9},cp);
+  M('rect',{x:sx,y:top,width:sw,height:bot-top},cp);
+  const cs=M('clipPath',{id:'clipsky'},defs);
+  M('rect',{x:sx,y:top,width:sw,height:hy-top+2},cs);
   const g=M('g',{'clip-path':'url(#clip)'});
+  const gs=M('g',{'clip-path':'url(#clipsky)'});
   const d=st.d;
-  const sky=d<.55?mix('#ffd88a','#f08a5d',d/.55):mix('#f08a5d','#18203f',(d-.55)/.45);
-  M('rect',{x:sx,y:top,width:sw,height:hy-top+2,fill:sky},g);
-  if(d>0.7) stars.forEach(s=>M('circle',{cx:sx+s[0]*sw,cy:top+s[1]*(hy-top),r:s[2],fill:'#fff',opacity:(d-0.7)/0.3},g));
+  if(d>0.7) stars.forEach(s=>M('circle',{cx:sx+s[0]*sw,cy:top+s[1]*(hy-top),r:s[2],fill:'#fff',opacity:(d-0.7)/0.3},gs));
   const sr=Math.min(sw,hy-top)*0.11;
-  M('circle',{cx:sx+sw*(0.55+0.35*d),cy:top+(hy-top)*(0.28+0.95*Math.pow(d,1.3)),r:sr,fill:mix('#fff2a8','#ff5a30',d)},g);
+  M('circle',{cx:sx+sw*(0.55+0.35*d),cy:top+(hy-top)*(0.28+0.95*Math.pow(d,1.3)),r:sr,fill:mix('#ffe97a','#ff5a30',d)},gs);
   if(d>0.85){
     const o=(d-0.85)/0.15, mcx=sx+sw*0.82, mcy=top+(hy-top)*0.32;
-    M('circle',{cx:mcx,cy:mcy,r:sr*0.8,fill:'#f4f1dc',opacity:o},g);
-    M('circle',{cx:mcx+sr*0.35,cy:mcy-sr*0.2,r:sr*0.7,fill:sky,opacity:o},g);
+    M('circle',{cx:mcx,cy:mcy,r:sr*0.8,fill:'#f4f1dc',opacity:o},gs);
   }
-  txt(NAMES[Math.round(d*5)],sx+F*0.7,top+F*1.5,F,d<.55?'#2a1d10':'#fff');
-  // ground
-  M('rect',{x:sx,y:hy,width:sw,height:bot-hy,fill:mix('#5b4f43','#25211d',d)},g);
+  txt(NAMES[Math.round(d*5)],sx+F*0.7,top+F*1.5,F,'var(--k)');
+  // ground (ties only, drawn on the card)
   const gh=bot-hy, railH=Math.max(F*1.1,gh*0.13), railY=hy+gh*0.2;
   const n=9; for(let i=0;i<n;i++){const x=sx+sw*(i+0.5)/n; M('rect',{x:x-sw*0.025,y:railY+railH,width:sw*0.05,height:F*0.7,fill:'#2b1c12'},g);}
   // rail
   const s=welded?st.T-Tw:0, mag=Math.min(Math.abs(s)/0.6,1);
   const steel=mix('#a7b0ba','#e8452f',mag*0.9);
-  M('rect',{x:sx-5,y:railY,width:sw+10,height:railH,fill:steel},g);
+  M('rect',{x:sx-5,y:railY,width:sw+10,height:railH,fill:steel,stroke:'#10100c','stroke-width':1.5},g);
   M('rect',{x:sx-5,y:railY,width:sw+10,height:railH*0.38,fill:mix('#dfe5ea','#ff8a70',mag*0.9)},g);
   M('rect',{x:sx-5,y:railY+railH*0.82,width:sw+10,height:railH*0.18,fill:'rgba(0,0,0,.25)'},g);
   if(st.bead<0.01) M('line',{x1:mx,x2:mx,y1:railY,y2:railY+railH,stroke:'#1a1a1a','stroke-width':2.5},g);
@@ -114,12 +113,12 @@ function render(){
       const L=F*0.8+mag*sw*0.3;
       [-1,1].forEach(dir=>{
         const a0=mx+dir*F*0.5, a1=a0+dir*L, tip=s<0?a1:a0, back=s<0?-dir:dir;
-        M('line',{x1:a0,x2:a1,y1:ay,y2:ay,stroke:'#ff6b5a','stroke-width':Math.max(3,F*0.25)},g);
-        M('polygon',{points:`${tip+(s<0?dir:-dir)*F*0.5},${ay} ${tip},${ay-F*0.45} ${tip},${ay+F*0.45}`,fill:'#ff6b5a'},g);
+        M('line',{x1:a0,x2:a1,y1:ay,y2:ay,stroke:'#b3200f','stroke-width':Math.max(3,F*0.25)},g);
+        M('polygon',{points:`${tip+(s<0?dir:-dir)*F*0.5},${ay} ${tip},${ay-F*0.45} ${tip},${ay+F*0.45}`,fill:'#b3200f'},g);
       });
     }
   }
-  txt(label,mx,ay+F*1.7,F,'#fff','middle');
+  txt(label,mx,ay+F*1.7,F,'var(--k)','middle');
 }
 
 function setButtons(){Kit.$('wait').disabled=step>=5;}

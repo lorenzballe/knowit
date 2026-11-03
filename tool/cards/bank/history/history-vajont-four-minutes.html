@@ -1,0 +1,433 @@
+<!doctype html>
+<!-- slug: history-vajont-four-minutes -->
+<!-- Look: a neon sign on dark brick. The Vajont valley is drawn in glowing tubes: pink ridges, a cyan reservoir, a white dam and amber village lights. A neon time scale runs underneath.
+     Interaction: you drag a pink marker along a log scale from 1 minute to 1 week to guess how long the wave took. You say how sure you are, and then the valley replays it.
+     Wow: the landslide drops into the lake and the scene flashes. A clock races to 4:00 while the wave runs down the gorge, spraying light, and the villages flicker out one by one. The dark valley then lights up with "10+ villages". -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Four minutes in the Vajont valley</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
+<style>
+#card{
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 42%, rgba(255,61,127,.13), transparent 70%),
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 45%, rgba(0,0,0,.62)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='32'%3E%3Crect width='64' height='32' fill='%23110709'/%3E%3Crect x='1' y='1' width='30' height='14' rx='1.5' fill='%23231014'/%3E%3Crect x='33' y='1' width='30' height='14' rx='1.5' fill='%231f0e12'/%3E%3Crect x='-15' y='17' width='30' height='14' rx='1.5' fill='%23210f13'/%3E%3Crect x='17' y='17' width='30' height='14' rx='1.5' fill='%23261216'/%3E%3Crect x='49' y='17' width='30' height='14' rx='1.5' fill='%231d0d11'/%3E%3C/svg%3E"),
+    var(--c);
+}
+.q{text-shadow:0 0 max(1cqh,8px) rgba(255,61,127,.55),0 0 2px rgba(255,61,127,.4)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
+.pulse{animation:pulse 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{50%{transform:scale(1.4);opacity:.55}}
+.kit-calm .pulse{animation:none}
+.say b{color:#ff7aa6}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag your guess · how fast" style="--c:#1a0b10;--k:#ffeef4;--edge:#0a0406">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE TIME</span></div>
+    <h2 class="q">How long did the Vajont wave take to wipe out over ten villages?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A neon map of the Vajont valley: a reservoir behind a dam, a gorge below it with village lights, and a time scale from one minute to one week."></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say"><b>Drag the pink marker</b> to your guess, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A landslide wave erased more than ten villages in about four minutes.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
+  const PINK = '#ff3d7f', CYAN = '#3ff0ff', AMBER = '#ffc34d', WHITE = '#fff6f9', LAVA = '#ff8a3d', BRICK = '#140a0d';
+  const MAX = 10080, REAL = 4;
+  const G0 = typeof gsap !== 'undefined';
+  const CE = G0 && typeof CustomEase !== 'undefined';
+  if (CE) {
+    gsap.registerPlugin(CustomEase);
+    CustomEase.create('neon', 'M0,0 C0.12,0.62 0.2,1.08 0.42,1.02 0.62,0.97 0.8,1 1,1');
+    CustomEase.create('surge', 'M0,0 C0.28,0 0.34,0.52 0.5,0.7 0.66,0.88 0.8,1 1,1');
+  }
+  const EZ = n => CE ? n : 'power3.out';
+  const MAP = ['ridge', 'lake', 'river', 'wave', 'slide', 'dam', 'vill'];
+
+  let W, H, fs, sx0, sx1, sy, mapTop, mapH, lastW = 0, lastH = 0, pend = false;
+  let guess = null, dragging = false, dragged = false, locked = false, revealed = false, done = false, fast = false;
+  let G = {}, river, riverL, tDam, wave = [], waveL = 1, head, spray = [], villages = [], clock, counter, lakeFlash, ring, slideShift = 0, tl = null, kills = 0;
+  const draws = [];
+
+  const xOf = m => sx0 + (sx1 - sx0) * Math.log(m) / Math.log(MAX);
+  const mOf = x => Math.exp(Math.max(0, Math.min(1, (x - sx0) / (sx1 - sx0))) * Math.log(MAX));
+  const fmt = m => {
+    if (m < 1.5) return '1 min';
+    if (m < 59.5) return `${Math.round(m)} min`;
+    if (m < 1440) { const h = m / 60; return (h < 10 ? (Math.round(h * 2) / 2).toString() : Math.round(h)) + ' h'; }
+    const d = m / 1440; return d < 1.5 ? '1 day' : `${Math.round(d)} days`;
+  };
+  const txt = (p, x, y, s, a = {}, style = '') => {
+    const e = Kit.mk('text', Object.assign({x, y, 'paint-order': 'stroke', stroke: BRICK, 'stroke-width': 3.5, 'stroke-linejoin': 'round'}, a), p);
+    e.setAttribute('style', style); e.textContent = s; return e;
+  };
+  const tube = (p, d, color, w, fill = 'none', fo = 0) => {
+    const g = Kit.mk('g', {filter: 'url(#neon)'}, p);
+    const a = Kit.mk('path', {d, fill, 'fill-opacity': fo, stroke: color, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    const b = Kit.mk('path', {d, fill: 'none', stroke: WHITE, 'stroke-width': w * .33, opacity: .78, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    g._paths = [a, b]; return g;
+  };
+  const mono = s => `font-family:var(--mono);font-size:${s}px;font-weight:700`;
+
+  function layout() {
+    if (tl) { pend = true; return; }
+    pend = false;
+    if (G.rip && G0) gsap.killTweensOf(G.rip);
+    svg.innerHTML = ''; draws.length = 0; villages = []; wave = []; spray = [];
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const br = svg.getBoundingClientRect(); lastW = br.width; lastH = br.height;
+    fs = Math.max(13, Math.min(17, f.f || W / 26));
+    sy = H - fs * 2.4; sx0 = fs * 1.4; sx1 = W - fs * 1.4;
+    mapTop = fs * .3; mapH = Math.max(fs * 3, sy - fs * 4.4 - mapTop);
+    const showMap = sy - fs * 4.4 - mapTop > fs * 5;
+    const K = Math.min(mapH, W);
+    const P = (u, v) => [W * u, mapTop + mapH * v], pt = (u, v) => P(u, v).map(n => n.toFixed(1)).join(',');
+
+    // ---- defs: the neon glow, the village halo
+    const defs = Kit.mk('defs', {}, svg);
+    const flt = Kit.mk('filter', {id: 'neon', filterUnits: 'userSpaceOnUse', x: -20, y: -20, width: W + 40, height: H + 40}, defs);
+    Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: fs * .14, result: 'b1'}, flt);
+    Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: fs * .5, result: 'b2'}, flt);
+    const mg = Kit.mk('feMerge', {}, flt);
+    ['b2', 'b1', 'SourceGraphic'].forEach(n => Kit.mk('feMergeNode', {in: n}, mg));
+    const rg = Kit.mk('radialGradient', {id: 'halo'}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': AMBER, 'stop-opacity': .55}, rg);
+    Kit.mk('stop', {offset: 1, 'stop-color': AMBER, 'stop-opacity': 0}, rg);
+
+    for (const k of [...MAP, 'lbl', 'hud', 'sign', 'scale', 'real', 'guess']) G[k] = Kit.mk('g', {}, svg);
+    if (!showMap) for (const k of [...MAP, 'lbl', 'hud']) G[k].setAttribute('display', 'none');
+
+    // ---- the valley's axis (measured, not drawn)
+    const seg1 = `M${pt(.06, .25)} C${pt(.16, .2)} ${pt(.28, .31)} ${pt(.38, .36)}`;
+    const rest = `C${pt(.48, .41)} ${pt(.5, .52)} ${pt(.6, .57)} C${pt(.72, .62)} ${pt(.78, .76)} ${pt(.95, .88)}`;
+    river = Kit.mk('path', {d: `${seg1} ${rest}`, fill: 'none', stroke: 'none'}, G.river);
+    riverL = river.getTotalLength();
+    const tmp = Kit.mk('path', {d: seg1}, G.river); tDam = tmp.getTotalLength() / riverL; tmp.remove();
+    const sample = t => {
+      t = Math.max(0, Math.min(1, t));
+      const a = river.getPointAtLength(t * riverL), b = river.getPointAtLength(Math.min(1, t + .006) * riverL), c = river.getPointAtLength(Math.max(0, t - .006) * riverL);
+      const tx = b.x - c.x, ty = b.y - c.y, m = Math.hypot(tx, ty) || 1;
+      return {x: a.x, y: a.y, nx: -ty / m, ny: tx / m};
+    };
+    const tab = [[0, .2], [tDam * .78, .21], [tDam, .085], [tDam + .24, .085], [1, .2]];
+    const width = t => { for (let i = 1; i < tab.length; i++) if (t <= tab[i][0]) { const [a, wa] = tab[i - 1], [b, wb] = tab[i], q = (t - a) / (b - a); const s = q * q * (3 - 2 * q); return K * (wa + (wb - wa) * s); } return K * .2; };
+
+    // ---- mountain ridges: neon zigzags on both sides, a dim far range behind
+    const ridge = (sg, mul, amp, n) => {
+      let d = '';
+      for (let i = 0; i <= n; i++) {
+        const t = i / n, s = sample(t), w = width(t) * mul * (i % 2 ? 1 + amp : 1);
+        const x = Math.max(2, Math.min(W - 2, s.x + sg * s.nx * w)), y = Math.max(mapTop + 2, Math.min(mapTop + mapH, s.y + sg * s.ny * w));
+        d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+      }
+      return d;
+    };
+    for (const sg of [1, -1]) {
+      const back = tube(G.ridge, ridge(sg, 1.75, .28, 22), PINK, fs * .09); back.setAttribute('opacity', .38); draws.push(back);
+      draws.push(tube(G.ridge, ridge(sg, 1, .42, 34), PINK, fs * .15));
+    }
+
+    // ---- the reservoir
+    const lakeD = `M${pt(.05, .26)} C${pt(.08, .13)} ${pt(.3, .19)} ${pt(.37, .31)} C${pt(.395, .36)} ${pt(.36, .42)} ${pt(.3, .405)} C${pt(.2, .385)} ${pt(.03, .41)} ${pt(.05, .26)} Z`;
+    tube(G.lake, lakeD, CYAN, fs * .14, CYAN, .08);
+    lakeFlash = Kit.mk('path', {d: lakeD, fill: WHITE, opacity: 0, filter: 'url(#neon)'}, G.lake);
+    G.rip = Kit.mk('g', {}, G.lake);
+    for (let i = 0; i < 3; i++) { const [x, y] = P(.11 + i * .075, .25 + (i % 2) * .06); const r = tube(G.rip, `M${x - fs * .6},${y} q${fs * .3},-${fs * .2} ${fs * .6},0 t${fs * .6},0`, CYAN, fs * .06); r.setAttribute('opacity', .5); }
+    if (G0 && !Kit.calm) gsap.to(G.rip, {x: fs * .45, duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+
+    // ---- the river below the dam, and the wave that will run down it
+    const waveD = `M${pt(.38, .36)} ${rest}`;
+    draws.push(tube(G.river, waveD, CYAN, fs * .1));
+    G.river.lastChild.setAttribute('opacity', .6);
+    const wg = tube(G.wave, waveD, WHITE, fs * .38);
+    wave = wg._paths; waveL = wave[0].getTotalLength();
+    wave.forEach(p => { p.setAttribute('stroke-dasharray', `${waveL} ${waveL}`); p.setAttribute('stroke-dashoffset', waveL); });
+    wave[0].setAttribute('stroke', CYAN);
+    for (let i = 0; i < 6; i++) spray.push(Kit.mk('circle', {r: fs * (.22 - i * .025), fill: i % 2 ? CYAN : WHITE, opacity: 0, filter: 'url(#neon)'}, G.wave));
+    head = Kit.mk('circle', {r: fs * .45, fill: WHITE, opacity: 0, filter: 'url(#neon)'}, G.wave);
+
+    // ---- the landslide, on the lake's south flank
+    const sl = Kit.mk('g', {}, G.slide);
+    tube(sl, `M${pt(.13, .47)} Q${pt(.23, .56)} ${pt(.34, .46)} Q${pt(.25, .425)} ${pt(.13, .47)} Z`, LAVA, fs * .14, LAVA, .25);
+    for (let i = 0; i < 3; i++) { const [x, y] = P(.19 + i * .05, .465); tube(sl, `M${x - fs * .25},${y + fs * .2} l${fs * .5},-${fs * .35}`, LAVA, fs * .07); }
+    slideShift = -mapH * .085;
+    ring = Kit.mk('ellipse', {cx: P(.23, .37)[0], cy: P(.23, .37)[1], rx: 1, ry: 1, fill: 'none', stroke: WHITE, 'stroke-width': fs * .14, opacity: 0, filter: 'url(#neon)'}, G.slide);
+
+    // ---- the dam
+    const ds = sample(tDam), dw = width(tDam) * 1.05;
+    tube(G.dam, `M${ds.x - ds.nx * dw},${ds.y - ds.ny * dw} Q${ds.x - fs * .3},${ds.y} ${ds.x + ds.nx * dw},${ds.y + ds.ny * dw}`, WHITE, fs * .3);
+
+    // ---- villages: three on the lake shore, eight down the gorge and the valley beyond
+    const spots = [[tDam * .2, 1, .95], [tDam * .52, -1, .9], [tDam * .82, 1, .85]];
+    [.1, .22, .34, .46, .57, .67, .78, .9].forEach((q, i) => spots.push([tDam + (1 - tDam) * q, i % 2 ? 1 : -1, .58]));
+    const hs = fs * .42;
+    spots.forEach(([t, sg, k]) => {
+      const s = sample(t), w = width(t) * k;
+      const x = s.x + sg * s.nx * w, y = s.y + sg * s.ny * w;
+      const g = Kit.mk('g', {transform: `translate(${x.toFixed(1)},${y.toFixed(1)})`}, G.vill);
+      Kit.mk('circle', {r: hs * 2.6, fill: 'url(#halo)'}, g);
+      tube(g, `M${-hs},${hs * .7} V${-hs * .15} L0,${-hs} L${hs},${-hs * .15} V${hs * .7} Z`, AMBER, fs * .11, AMBER, .35);
+      Kit.mk('rect', {x: -hs * .22, y: hs * .05, width: hs * .44, height: hs * .5, fill: WHITE, opacity: .85}, g);
+      const time = t < tDam ? .02 + .09 * (t / tDam) : .12 + .88 * ((t - tDam) / (1 - tDam));
+      villages.push({g, time, dead: false});
+    });
+
+    // ---- labels in the drawing (hand lettering, a dark halo so they read on the tubes)
+    const hand = `font-family:var(--hand);font-size:${Math.max(13, fs * 1.02)}px;font-weight:700`;
+    const [rx, ry] = P(.2, .31);
+    txt(G.lbl, rx, ry + fs * .35, 'reservoir', {fill: CYAN, 'text-anchor': 'middle'}, hand);
+    const [lx, ly] = P(.235, .56);
+    txt(G.lbl, Math.max(fs * 2.5, lx), ly + fs * 1.25, 'landslide', {fill: LAVA, 'text-anchor': 'middle'}, hand);
+    txt(G.lbl, ds.x + fs * .7, ds.y + fs * .35, 'dam', {fill: WHITE}, hand);
+
+    // ---- HUD: date, clock, count — stacked with real room between lines
+    const hx = W - fs * .4, sD = Math.max(12, fs * .82), sC = fs * 2.1;
+    const yD = mapTop + sD * .95;
+    const yC = yD + sD * .3 + sC * 1.02 + fs * .35;
+    const yN = yC + sC * .28 + sD * 1.0 + fs * .3;
+    txt(G.hud, hx, yD, '9 OCT 1963', {fill: PINK, 'text-anchor': 'end', opacity: .9}, mono(sD));
+    clock = txt(G.hud, hx, yC, '0:00', {fill: WHITE, 'text-anchor': 'end', filter: 'url(#neon)', stroke: 'none'}, mono(sC));
+    counter = txt(G.hud, hx, yN, 'VILLAGES GONE · 0', {fill: AMBER, 'text-anchor': 'end'}, mono(sD));
+
+    // ---- the closing sign: sized to the room above the scale
+    buildSign();
+
+    // ---- the time scale
+    tube(G.scale, `M${sx0},${sy} H${sx1}`, WHITE, fs * .09).setAttribute('opacity', .7);
+    const ticks = [[1, '1 min', 'start'], [10, '10 min', 'middle'], [60, '1 hour', 'middle'], [1440, '1 day', 'middle'], [MAX, '1 wk', 'end']];
+    for (const [m, s, a] of ticks) {
+      const x = xOf(m);
+      Kit.mk('line', {x1: x, x2: x, y1: sy - fs * .35, y2: sy + fs * .35, stroke: WHITE, 'stroke-width': 1.6, opacity: .85}, G.scale);
+      txt(G.scale, a === 'start' ? x - fs * .2 : a === 'end' ? x + fs * .2 : x, sy + fs * 1.7, s, {fill: '#ffd9e6', 'text-anchor': a, stroke: 'none'}, mono(Math.max(12, fs * .82)));
+    }
+    for (let d = 0; d < 4; d++) for (let k = 2; k < 10; k++) { const m = k * Math.pow(10, d); if (m >= MAX) break; const x = xOf(m); Kit.mk('line', {x1: x, x2: x, y1: sy - fs * .15, y2: sy + fs * .15, stroke: WHITE, 'stroke-width': 1, opacity: .35}, G.scale); }
+
+    // ---- the real marker (hidden until the reveal)
+    const rxm = xOf(REAL);
+    Kit.mk('line', {x1: rxm, x2: rxm, y1: sy, y2: sy, stroke: AMBER, 'stroke-width': fs * .22, 'stroke-linecap': 'round', filter: 'url(#neon)', id: 'span', opacity: .75}, G.real);
+    tube(G.real, `M${rxm},${sy - fs * 2.6} V${sy + fs * .5}`, CYAN, fs * .14);
+    Kit.mk('circle', {cx: rxm, cy: sy, r: fs * .42, fill: CYAN, filter: 'url(#neon)'}, G.real);
+    const rt = txt(G.real, rxm, sy - fs * 2.95, 'real: just over 4 min', {fill: CYAN, 'text-anchor': 'middle'}, mono(Math.max(12, fs * .9)));
+    clampText(rt, rxm);
+    G.real.setAttribute('opacity', 0);
+
+    // ---- your marker
+    G.gline = tube(G.guess, `M0,${sy - fs * 1.15} V${sy + fs * .5}`, PINK, fs * .14);
+    G.knob = Kit.mk('circle', {cx: 0, cy: sy, r: fs * .55, fill: PINK, filter: 'url(#neon)', class: dragged ? '' : 'pulse'}, G.guess);
+    G.gtxt = txt(G.guess, 0, sy - fs * 1.5, '', {fill: '#ff86ad', 'text-anchor': 'middle'}, mono(Math.max(12, fs * .95)));
+    drawGuess();
+
+    if (revealed) finalState();
+  }
+
+  function buildSign() {
+    const top = mapTop, bot = sy - fs * 4.1, avail = bot - top, cx = W / 2, maxW = W * .92;
+    let s1 = Math.min(fs * 2.3, W / 6.4), s2 = Math.max(12, Math.min(fs * 1.1, W / 17)), s3 = Math.max(12, fs * .8);
+    const gap = fs * .4;
+    const disp = s => `font-family:var(--display);font-size:${s}px;font-weight:800`;
+    // each line: [text, size, colour, style, line-box factor]; boxes are stacked with a real gap between them
+    const need = ls => ls.reduce((a, l) => a + l[1] * l[4], 0) + gap * Math.max(0, ls.length - 1);
+    let lines;
+    const three = [['9 OCT 1963', s3, PINK, mono, 1.3], ['10+ villages', s1, PINK, disp, 1.25], ['gone in about 4 minutes', s2, CYAN, mono, 1.3]];
+    if (avail >= need(three)) lines = three;
+    else if (avail >= 18 * 1.25 + s2 * 1.3 + gap) { s1 = Math.min(s1, (avail - s2 * 1.3 - gap) / 1.25); lines = [['10+ villages', s1, PINK, disp, 1.25], ['gone in about 4 minutes', s2, CYAN, mono, 1.3]]; }
+    else if (avail >= 15) lines = [['10+ villages · about 4 min', Math.min(avail / 1.3, fs * 1.3), PINK, disp, 1.3]];
+    else lines = [];
+    // measure first, so a shrunk line is also placed at its shrunk size
+    const els = lines.map(l => {
+      const [s, size, col, sty] = l;
+      const e = txt(G.sign, cx, 0, s, {fill: col, 'text-anchor': 'middle', filter: 'url(#neon)', stroke: 'none'}, sty(size));
+      const w = e.getComputedTextLength();
+      if (w > maxW) { l[1] = Math.max(12, size * maxW / w); e.setAttribute('style', sty(l[1])); }
+      return e;
+    });
+    const total = need(lines);
+    let y = top + Math.max(0, (avail - total) / 2);
+    lines.forEach(([, size, , , lh], i) => {
+      els[i].setAttribute('y', (y + size * (lh * .5 + .33)).toFixed(1));
+      y += size * lh + gap;
+    });
+    G.sign.setAttribute('opacity', 0); G.sign._c = `${cx} ${top + avail / 2}`;
+  }
+
+  function clampText(el, x) {
+    const w = el.getComputedTextLength(), left = x - w / 2;
+    const sh = Math.max(3 - left, Math.min(0, W - 3 - (left + w)));
+    el.setAttribute('x', x + sh);
+  }
+  function drawGuess() {
+    const m = guess ?? 60, x = xOf(m);
+    G.guess.setAttribute('transform', `translate(${x.toFixed(1)},0)`);
+    G.guess.setAttribute('opacity', guess == null ? .7 : 1);
+    G.gtxt.setAttribute('x', 0);
+    G.gtxt.textContent = guess == null ? '◂ drag me ▸' : `your guess: ${fmt(m)}`;
+    const w = G.gtxt.getComputedTextLength(), left = x - w / 2;
+    G.gtxt.setAttribute('x', Math.max(3 - left, Math.min(0, W - 3 - (left + w))));
+    if (revealed) { const sp = svg.querySelector('#span'); if (sp) sp.setAttribute('x2', x); }
+  }
+
+  // ---------- the drag ----------
+  const fromX = e => { const r = svg.getBoundingClientRect(); return Math.max(1, Math.min(MAX, mOf((e.clientX - r.left) * W / (r.width || W)))); };
+  svg.addEventListener('pointerdown', e => {
+    if (locked) return;
+    dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    if (guess == null) { Kit.haptic('selection'); G.knob.classList.remove('pulse'); }
+    guess = fromX(e); drawGuess();
+    if (G0 && !Kit.calm) gsap.fromTo(G.knob, {attr: {r: fs * .85}}, {attr: {r: fs * .55}, duration: .35, ease: 'back.out(3)'});
+  });
+  svg.addEventListener('pointermove', e => { if (dragging && !locked) { guess = fromX(e); drawGuess(); } });
+  const end = () => {
+    if (!dragging) return; dragging = false;
+    if (!dragged && guess != null) { dragged = true; sure.on(); }
+    if (guess != null) say.innerHTML = `You say <b>${fmt(guess)}</b>. Move it again, or say how sure you are.`;
+  };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    locked = true;
+    const ok = guess <= 10;
+    Kit.answer({choice: fmt(guess), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${fmt(guess)}, ${ok ? 'close' : 'far too slow'}`);
+    reveal();
+  });
+
+  // ---------- the reveal ----------
+  function setClock(p) {
+    const s = Math.round(p * REAL * 60);
+    clock.textContent = p >= 1 ? '4:00+' : `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  }
+  function kill(v, animate) {
+    v.dead = true; kills++;
+    counter.textContent = `VILLAGES GONE · ${kills > 10 ? '10+' : kills}`;
+    if (animate && G0) gsap.timeline().to(v.g, {opacity: .2, duration: .04}).to(v.g, {opacity: 1, duration: .04}).to(v.g, {opacity: .25, duration: .05}).to(v.g, {opacity: .07, duration: .4, ease: 'power2.in'});
+    else v.g.setAttribute('opacity', .07);
+  }
+  function step(p) {
+    setClock(p);
+    const wp = Math.max(0, Math.min(1, (p - .12) / .88));
+    wave.forEach(e => e.setAttribute('stroke-dashoffset', waveL * (1 - wp)));
+    const live = wp > 0 && wp < 1;
+    if (live) { const q = wave[0].getPointAtLength(wp * waveL); head.setAttribute('cx', q.x); head.setAttribute('cy', q.y); head.setAttribute('opacity', 1); }
+    else head.setAttribute('opacity', 0);
+    spray.forEach((c, i) => {
+      const t = wp - .018 * (i + 1);
+      if (!live || t <= 0) { c.setAttribute('opacity', 0); return; }
+      const q = wave[0].getPointAtLength(t * waveL), j = fs * (.4 + i * .18);
+      c.setAttribute('cx', q.x + (Math.random() - .5) * j * 2);
+      c.setAttribute('cy', q.y + (Math.random() - .5) * j * 2);
+      c.setAttribute('opacity', (.9 - i * .13) * (.6 + Math.random() * .4));
+    });
+    for (const v of villages) if (!v.dead && p >= v.time) kill(v, true);
+  }
+  function finalState() {
+    G.slide.setAttribute('transform', `translate(0,${slideShift})`);
+    ring.setAttribute('opacity', 0);
+    kills = 0; villages.forEach(v => kill(v, false));
+    step(1); setClock(1);
+    for (const k of MAP) G[k].setAttribute('opacity', .2);
+    for (const k of ['lbl', 'hud']) { G[k].setAttribute('opacity', 0); G[k].style.visibility = 'hidden'; }
+    G.sign.setAttribute('opacity', 1); G.real.setAttribute('opacity', 1);
+    const sp = svg.querySelector('#span'); if (sp) sp.setAttribute('x2', xOf(guess ?? 60));
+    if (!done) finish();
+  }
+  function finish() {
+    done = true;
+    const r = guess / REAL;
+    const lead = r > 1.6 ? `${r < 20 ? r.toFixed(0) : Math.round(r).toLocaleString('en')}× too slow. ` : r < .7 ? 'Even faster than it was. ' : 'Right on it. ';
+    say.innerHTML = `${lead}The landslide threw a wave over the dam that swept away <b>more than ten villages in just over four minutes</b>.`;
+    Kit.show('keep');
+  }
+  function reveal() {
+    revealed = true; kills = 0;
+    if (!G0 || Kit.calm) { finalState(); Kit.haptic('success'); return; }
+    const sp = svg.querySelector('#span');
+    const neonOn = el => gsap.timeline().set(el, {opacity: 0}).to(el, {opacity: .9, duration: .05}).to(el, {opacity: .15, duration: .06}).to(el, {opacity: 1, duration: .04}).to(el, {opacity: .35, duration: .05, delay: .07}).to(el, {opacity: 1, duration: .35, ease: EZ('neon')});
+    const prog = {p: 0};
+    tl = gsap.timeline({onComplete: () => {
+      tl = null;
+      for (const k of ['lbl', 'hud']) G[k].style.visibility = 'hidden';
+      finish();
+      if (pend) requestAnimationFrame(layout);
+    }});
+    tl.add(neonOn(G.real), 0)
+      .fromTo(sp, {attr: {x2: xOf(REAL)}}, {attr: {x2: xOf(guess)}, duration: .7, ease: 'expo.out'}, .1)
+      .to(G.slide, {y: slideShift, duration: .7, ease: 'expo.in'}, .35)
+      .add(() => Kit.haptic('light'), 1.05)
+      .fromTo(svg, {filter: 'brightness(2.4)'}, {filter: 'brightness(1)', duration: .9, ease: 'power2.out'}, 1.05)
+      .fromTo(lakeFlash, {opacity: .95}, {opacity: 0, duration: 1.1, ease: 'power2.out'}, 1.05)
+      .fromTo(ring, {attr: {rx: 2, ry: 2}, opacity: 1}, {attr: {rx: mapH * .45, ry: mapH * .3}, opacity: 0, duration: 1.2, ease: 'expo.out'}, 1.05)
+      .to(prog, {p: 1, duration: 3.4, ease: EZ('surge'), onUpdate: () => step(prog.p)}, 1.05)
+      .to(MAP.map(k => G[k]), {opacity: .2, duration: .7, ease: 'power2.inOut'}, '+=.15')
+      .to([G.lbl, G.hud], {opacity: 0, duration: .45}, '<')
+      .add(neonOn(G.sign), '<.2')
+      .fromTo(G.sign, {scale: .86, svgOrigin: G.sign._c}, {scale: 1, svgOrigin: G.sign._c, duration: .8, ease: 'back.out(2.2)'}, '<')
+      .add(() => Kit.haptic('success'), '<');
+    if (fast) tl.timeScale(4);
+  }
+
+  // ---------- the entrance: tubes draw on, then everything flickers alive ----------
+  function enter() {
+    if (!G0 || Kit.calm || revealed) return;
+    const on = el => gsap.timeline().set(el, {opacity: 0}).to(el, {opacity: .85, duration: .05}).to(el, {opacity: .1, duration: .07}).to(el, {opacity: .9, duration: .04}).to(el, {opacity: .25, duration: .05, delay: .05}).to(el, {opacity: +(el.getAttribute('opacity') || 1), duration: .4, ease: EZ('neon')});
+    const t = gsap.timeline();
+    draws.forEach((g, i) => g._paths.forEach(p => {
+      const L = p.getTotalLength(); p.style.strokeDasharray = `${L} ${L}`;
+      t.fromTo(p, {strokeDashoffset: L}, {strokeDashoffset: 0, duration: 1.1, ease: EZ('neon')}, .05 + i * .1);
+    }));
+    t.add(on(G.lake), .5).add(on(G.dam), .8).add(on(G.slide), .95);
+    villages.forEach((v, i) => t.add(on(v.g), 1 + i * .06));
+    t.add(on(G.lbl), 1.5).add(on(G.hud), 1.2).add(on(G.scale), .3).add(on(G.guess), 1.7);
+    gsap.delayedCall(3.2, buzz);
+  }
+
+  // ---------- idle life: a tube buzzes now and then, like an old sign ----------
+  let buzzing = false;
+  function buzz() {
+    if (!G0 || Kit.calm) return;
+    buzzing = true;
+    if (!tl) {
+      const pool = done ? [G.sign, G.sign, G.real] : revealed ? [] : draws.concat([G.lake, G.dam, ...villages.map(v => v.g)]);
+      const el = pool[Math.random() * pool.length | 0];
+      if (el && el.isConnected) {
+        const o = +gsap.getProperty(el, 'opacity') || 1;
+        gsap.timeline().to(el, {opacity: o * .25, duration: .04}).to(el, {opacity: o, duration: .05}).to(el, {opacity: o * .5, duration: .04, delay: .07}).to(el, {opacity: o, duration: .25});
+      }
+    }
+    gsap.delayedCall(2.2 + Math.random() * 3, buzz);
+  }
+
+  // re-fit the drawing whenever the stage changes size (e.g. when the answer text appears)
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
+    const r = svg.getBoundingClientRect();
+    if (!r.width || (Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 1)) return;
+    if (tl) { pend = true; return; }
+    requestAnimationFrame(layout);
+  }).observe(stage);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = enter;
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    fast = true;
+    const r = svg.getBoundingClientRect(), x = r.left + xOf(180) * r.width / W, y = r.top + sy * r.height / H;
+    svg.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, pointerId: 7, bubbles: true}));
+    svg.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y, pointerId: 7, bubbles: true}));
+    await wait(150);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 120 : 2000);
+    if (!buzzing && !Kit.calm) buzz();
+  };
+})();
+Kit.single();
+</script>
+</html>

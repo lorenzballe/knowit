@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#sky{flex:1;min-height:0;width:100%;display:block;border-radius:1.8cqh}
+#sky{flex:1;min-height:0;width:100%;display:block;background:none}
 #go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;align-self:center;min-width:60%}
 #go:active{transform:scale(.97)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
@@ -46,15 +46,14 @@ function build() {
   const defs = Kit.mk('defs', {}, svg);
   const gr = Kit.mk('radialGradient', {id: 'glow'}, defs);
   Kit.mk('stop', {offset: '0%', 'stop-color': '#ffd25a', 'stop-opacity': 0.9}, gr);
-  Kit.mk('stop', {offset: '100%', 'stop-color': '#ff8a00', 'stop-opacity': 0}, gr);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: f * 0.9, fill: '#0b0f22'}, svg);
+  Kit.mk('stop', {offset: '100%', 'stop-color': '#ffd25a', 'stop-opacity': 0}, gr);
   // a few fixed stars
   for (let i = 0; i < 40; i++) {
     const s = Math.sin(i * 12.9898) * 43758.5453, t = Math.sin(i * 78.233) * 12345.678;
-    Kit.mk('circle', {cx: (s - Math.floor(s)) * W, cy: (t - Math.floor(t)) * H, r: 0.8 + (i % 3) * 0.4, fill: '#fff', opacity: 0.25 + (i % 4) * 0.12}, svg);
+    Kit.mk('circle', {cx: (s - Math.floor(s)) * W, cy: (t - Math.floor(t)) * H, r: 0.8 + (i % 3) * 0.4, fill: '#fff', opacity: 0.2 + (i % 4) * 0.1}, svg);
   }
-  Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#ffffff', 'stroke-opacity': 0.28, 'stroke-width': 1.2, 'stroke-dasharray': '3 6'}, svg);
-  const dist = Kit.mk('line', {stroke: '#ffffff', 'stroke-opacity': 0.55, 'stroke-width': 1.2, 'stroke-dasharray': '5 4'}, svg);
+  Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#ffffff', 'stroke-opacity': 0.45, 'stroke-width': 1.2, 'stroke-dasharray': '3 6'}, svg);
+  const dist = Kit.mk('line', {stroke: '#ffffff', 'stroke-opacity': 0.75, 'stroke-width': 1.2, 'stroke-dasharray': '5 4'}, svg);
   const distT = Kit.mk('text', {fill: '#fff', 'font-size': f * 0.95, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
   distT.textContent = '150 million km';
   const sunG = Kit.mk('g', {}, svg);
@@ -62,16 +61,16 @@ function build() {
   Kit.mk('circle', {cx, cy, r: sunR, fill: '#ffc233'}, sunG);
   const sunT = Kit.mk('text', {x: cx - sunR * 2.4 - 0.2 * f, y: cy + 0.35 * f, fill: '#ffd25a', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': 'end'}, svg);
   sunT.textContent = 'Sun';
-  const empty = Kit.mk('circle', {cx, cy, r: sunR, fill: 'none', stroke: '#ffffff', 'stroke-opacity': 0.4, 'stroke-dasharray': '2 3'}, svg);
-  const rings = [0, 1, 2].map(i => Kit.mk('circle', {cx, cy, r: 0, fill: 'none', stroke: '#7fd6ff', 'stroke-width': i ? 1.4 : 2.6}, svg));
-  const ringT = Kit.mk('text', {x: cx, fill: '#7fd6ff', 'font-size': f * 0.95, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': 'middle'}, svg);
+  const empty = Kit.mk('circle', {cx, cy, r: sunR, fill: 'none', stroke: '#ffffff', 'stroke-opacity': 0.6, 'stroke-dasharray': '2 3'}, svg);
+  const rings = [0, 1, 2].map(i => Kit.mk('circle', {cx, cy, r: 0, fill: 'none', stroke: '#c4f0ff', 'stroke-width': i ? 1.4 : 2.6}, svg));
+  const ringT = Kit.mk('text', {x: cx, fill: '#c4f0ff', 'font-size': f * 0.95, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': 'middle'}, svg);
   ringT.textContent = 'gravity · 300,000 km/s';
-  const trail = Kit.mk('path', {fill: 'none', stroke: '#5fb0ff', 'stroke-width': 2, 'stroke-opacity': 0.7}, svg);
-  const earth = Kit.mk('circle', {r: eR, fill: '#3b8fe8', stroke: '#bfe1ff', 'stroke-width': 1.5}, svg);
-  const earthT = Kit.mk('text', {fill: '#bfe1ff', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': 'middle'}, svg);
+  const trail = Kit.mk('path', {fill: 'none', stroke: '#e3f4ff', 'stroke-width': 2, 'stroke-opacity': 0.85}, svg);
+  const earth = Kit.mk('circle', {r: eR, fill: '#7fd0ff', stroke: '#ffffff', 'stroke-width': 1.5}, svg);
+  const earthT = Kit.mk('text', {fill: '#ffffff', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': 'middle'}, svg);
   earthT.textContent = 'Earth';
   const clock = Kit.mk('text', {x: W / 2, y: 2.5 * f, fill: '#fff', 'font-size': f * 2.4, 'font-weight': 800, 'font-family': 'var(--mono)', 'text-anchor': 'middle'}, svg);
-  const cap = Kit.mk('text', {x: W / 2, y: 4.6 * f, fill: '#fff', 'fill-opacity': 0.75, 'font-size': f * 0.9, 'font-family': 'var(--body)', 'text-anchor': 'middle'}, svg);
+  const cap = Kit.mk('text', {x: W / 2, y: 4.6 * f, fill: '#fff', 'fill-opacity': 0.85, 'font-size': f * 0.9, 'font-family': 'var(--body)', 'text-anchor': 'middle'}, svg);
   g = {svg, W, H, f, cx, cy, R, sunR, eR, dist, distT, sunG, sunT, empty, rings, ringT, trail, earth, earthT, clock, cap};
   render();
 }
@@ -88,7 +87,7 @@ function render() {
   const {cx, cy, R, f, sunR, eR} = g, p = S.p;
   const sec = Math.round(Math.min(p, 1) * 500);
   g.clock.textContent = `${Math.floor(sec / 60)} min ${String(sec % 60).padStart(2, '0')} s`;
-  g.clock.setAttribute('fill', S.arrived ? '#7fd6ff' : '#fff');
+  g.clock.setAttribute('fill', S.arrived ? '#c4f0ff' : '#fff');
   g.cap.textContent = !S.started ? 'the Sun is shining' : S.arrived ? 'the pull is gone: Earth flies straight' : 'since the Sun vanished';
   g.sunG.setAttribute('opacity', S.sun);
   g.sunT.setAttribute('opacity', S.sun);

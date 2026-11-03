@@ -1,0 +1,38 @@
+{
+  "id": "science-granite-near-diamond",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does granite's hardness compare to diamond's?",
+  "answer": "Granite is nearly as hard as diamond. Its quartz rates 7 on the hardness scale, just below diamond's 10. Flipping the switch sends each stone up the scale to compare them.",
+  "move": "Granite's quartz is a 7, just below diamond's 10: nearly diamond-hard.",
+  "keywords": [
+    "granite",
+    "diamond",
+    "quartz",
+    "hardness",
+    "mohs scale"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two stones, granite and diamond, are shown on a hardness scale. A flip switch sends each stone up the scale. The question asks how granite's hardness compares to diamond's.",
+    "ground": "#1f382e"
+  },
+  "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=231s",
+  "written": "2026-11-03"
+}

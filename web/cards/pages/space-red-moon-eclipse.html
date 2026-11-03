@@ -58,7 +58,6 @@ function draw(fresh) {
   const flt = m('filter', {id: 'glow', x: '-100%', y: '-100%', width: '300%', height: '300%'}, defs);
   m('feGaussianBlur', {stdDeviation: Math.max(2, Math.min(W, H) * .012)}, flt);
 
-  m('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: '#0b1026'});
   STARS.forEach(s => m('circle', {cx: s.x * W, cy: s.y * H, r: s.s, fill: '#fff', opacity: s.o * .7}));
 
   const ey = H / 2, r = Math.min(H * .22, W * .13), ra = r * 1.15;
@@ -66,7 +65,7 @@ function draw(fresh) {
   const mx = W * .84, my = ey, mr = r * .4;
 
   // shadow cone
-  m('polygon', {points: `${ex},${ey - r} ${ex},${ey + r} ${W},${ey + r * .62} ${W},${ey - r * .62}`, fill: '#000', opacity: .5});
+  m('polygon', {points: `${ex},${ey - r} ${ex},${ey + r} ${W},${ey + r * .62} ${W},${ey - r * .62}`, fill: '#0b1026', opacity: .5});
 
   const rays = m('g', {});
   const path = (d, a) => m('path', Object.assign({d, fill: 'none', 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0}, a), rays);
@@ -86,42 +85,42 @@ function draw(fresh) {
         const dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy), u = [dx / L, dy / L];
         const len = r * .55;
         const d0 = (anim && (fresh === 'atm' || fresh === 'sun')) ? (fresh === 'sun' ? .8 : 0) : 0;
-        [['#5aa0ff', 0], ['#5fd38a', .5]].forEach(([c, k]) => {
+        [['#bfe0ff', 0], ['#8cf0b0', .5]].forEach(([c, k]) => {
           const e = [B[0] + u[0] * len, B[1] + u[1] * len + s * k * r * .12];
-          const st2 = path(`M${B[0]},${B[1]} L${e[0]},${e[1]}`, {stroke: c, 'stroke-width': sw * .8, opacity: .5});
+          const st2 = path(`M${B[0]},${B[1]} L${e[0]},${e[1]}`, {stroke: c, 'stroke-width': sw * .8, opacity: .7});
           if (anim) grow(st2, d0);
         });
         const M = [mx, my + s * mr * .25];
         const cx1 = ex + (mx - ex) * .35, cy1 = B[1];
-        const red = path(`M${B[0]},${B[1]} Q${cx1},${cy1} ${M[0]},${M[1]}`, {stroke: '#ff4a2e', 'stroke-width': sw * 1.2});
+        const red = path(`M${B[0]},${B[1]} Q${cx1},${cy1} ${M[0]},${M[1]}`, {stroke: '#ff5a3c', 'stroke-width': sw * 1.2});
         if (anim) grow(red, d0 + .15);
       }
     });
   }
 
   // Earth + atmosphere
-  const atmRing = m('circle', {cx: ex, cy: ey, r: (r + ra) / 2, fill: 'none', stroke: st.atm ? '#ff8a5c' : '#7fb3ff', 'stroke-width': ra - r + 2, opacity: st.atm ? .55 : .35});
-  if (anim && fresh === 'atm') gsap.from(atmRing, {attr: {stroke: '#7fb3ff'}, opacity: .35, duration: .6});
-  m('circle', {cx: ex, cy: ey, r, fill: '#2563b8'});
+  const atmRing = m('circle', {cx: ex, cy: ey, r: (r + ra) / 2, fill: 'none', stroke: st.atm ? '#ff9a6c' : '#9cc4ff', 'stroke-width': ra - r + 2, opacity: st.atm ? .65 : .45});
+  if (anim && fresh === 'atm') gsap.from(atmRing, {attr: {stroke: '#9cc4ff'}, opacity: .45, duration: .6});
+  m('circle', {cx: ex, cy: ey, r, fill: '#1546b8'});
   m('path', {d: `M${ex - r * .5},${ey - r * .5} q${r * .3},${-r * .2} ${r * .5},${r * .1} q${r * .1},${r * .4} ${-r * .3},${r * .5} q${-r * .4},${-r * .1} ${-r * .2},${-r * .6}z`, fill: '#3fa66b', opacity: .9});
   m('path', {d: `M${ex + r * .1},${ey + r * .2} q${r * .4},${-r * .1} ${r * .55},${r * .25} q${-r * .15},${r * .35} ${-r * .45},${r * .3}z`, fill: '#3fa66b', opacity: .9});
-  m('path', {d: `M${ex},${ey - r} A${r},${r} 0 0 1 ${ex},${ey + r}z`, fill: '#000', opacity: .45});
+  m('path', {d: `M${ex},${ey - r} A${r},${r} 0 0 1 ${ex},${ey + r}z`, fill: '#0b1026', opacity: .5});
 
   // Sun
   m('circle', {cx: sx, cy: ey, r: sunR * 1.6, fill: 'url(#sg)', opacity: .7});
   m('circle', {cx: sx, cy: ey, r: sunR, fill: '#ffd24a'});
 
   // Moon
-  const halo = m('circle', {cx: mx, cy: my, r: mr * 1.35, fill: '#ff4a2e', filter: 'url(#glow)', opacity: lit ? .55 : 0});
-  const moon = m('circle', {cx: mx, cy: my, r: mr, fill: lit ? '#c2412b' : '#4a4f5e'});
+  const halo = m('circle', {cx: mx, cy: my, r: mr * 1.35, fill: '#ff5a3c', filter: 'url(#glow)', opacity: lit ? .55 : 0});
+  const moon = m('circle', {cx: mx, cy: my, r: mr, fill: lit ? '#d4452c' : '#aeb4c6'});
   if (anim && lit && (fresh === 'atm' || fresh === 'sun')) {
-    gsap.from(moon, {attr: {fill: '#4a4f5e'}, duration: .7, delay: .9});
+    gsap.from(moon, {attr: {fill: '#aeb4c6'}, duration: .7, delay: .9});
     gsap.from(halo, {opacity: 0, duration: .7, delay: .9});
   }
   if (anim && fresh === 'moon') gsap.from(moon, {attr: {r: mr * 1.25}, duration: .5, ease: 'back.out(3)'});
 
   // labels
-  const lab = (x, y, t, on) => m('text', {x, y, 'text-anchor': 'middle', fill: on ? '#ffffff' : '#c9cfe0', style: `font:700 ${fs}px var(--body)`}).textContent = t;
+  const lab = (x, y, t, on) => m('text', {x, y, 'text-anchor': 'middle', fill: on ? '#ffffff' : '#dbe3ff', style: `font:700 ${fs}px var(--body)`}).textContent = t;
   lab(Math.max(sx, fs * 2.2), ey + sunR + fs * 1.5, 'Sun', st.sun);
   lab(ex, ey - ra - fs * .7, 'Atmosphere', st.atm);
   lab(Math.min(mx, W - fs * 2.2), my + mr + fs * 1.6, 'Moon', st.moon);

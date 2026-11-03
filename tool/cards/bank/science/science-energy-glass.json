@@ -1,0 +1,37 @@
+{
+  "id": "science-energy-glass",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "As CO₂ rises, how much energy can the atmosphere absorb?",
+  "answer": "As CO₂ rises, the atmosphere absorbs more energy, possibly beyond our comprehension. Burning fossil fuels released CO₂, which rose from 320 ppm in 1960 to 430 ppm in 2025. More CO₂ means more energy absorbed, and it may grow beyond our comprehension.",
+  "move": "More CO₂ in the air means more energy absorbed, and CO₂ keeps rising.",
+  "keywords": [
+    "co2",
+    "atmosphere",
+    "fossil fuels",
+    "climate",
+    "energy absorption"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A glass of water filling toward the brim, titled Fill the Glass. A brass knob slides along a timeline from 1960 to 2025 to raise CO₂ in the air, and the glass fills as more energy is absorbed."
+  },
+  "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=TU196LhDGT4&t=89s",
+  "written": "2026-11-03"
+}

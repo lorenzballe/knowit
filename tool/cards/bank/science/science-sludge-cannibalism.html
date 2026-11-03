@@ -1,0 +1,304 @@
+<!doctype html>
+<!-- slug: science-sludge-cannibalism -->
+<!-- Look: a Swiss poster printed straight on the card: a huge black numeral counting the bacteria, a strict hairline grid, a black centrifuge drum seen from above, one hot red-orange for every act of eating.
+     Interaction: each tap is one round of autodigestion. Bacteria turn, lunge and swallow their nearest neighbour, the count scrambles down and the sludge closes in, darker and thicker, with swirls.
+     Wow moment: the last tap spins the drum. The water flies out past the rim, the sludge packs into a dense cake around the axle with its red survivors, and AUTODIGESTION assembles letter by letter on its own line below the drum. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bacteria eat bacteria</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;position:relative;background:none;color:#10100c;overflow:hidden;padding:1.4cqh 3.5cqw 0}
+#head{display:flex;align-items:flex-end;gap:3.5cqw;padding-bottom:1cqh;border-bottom:max(.3cqh,2px) solid #10100c;flex:none}
+#num{font:800 max(10cqh,52px)/.8 var(--display);letter-spacing:-.05em;font-variant-numeric:tabular-nums;min-width:1.25em;color:#10100c;transform-origin:0% 100%}
+#caps{display:flex;flex-direction:column;gap:.6cqh;padding-bottom:.4cqh;min-width:0}
+#caps::before{content:"";display:block;width:7cqw;height:max(.7cqh,4px);background:#10100c;margin-bottom:.4cqh}
+.cap{font:700 max(1.6cqh,12px)/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;overflow-wrap:anywhere}
+.cap.dim{opacity:.7}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation;cursor:pointer}
+.lab{font-family:var(--mono);font-weight:700;letter-spacing:.06em}
+#word{flex:none;text-align:center;padding:.4cqh 0 1.2cqh;font:900 min(max(4cqh,20px),8.4cqw)/1 var(--display);color:#10100c;letter-spacing:.03em;pointer-events:none;border-top:1px solid rgba(16,16,12,.25)}
+#word.gone{display:none}
+.say b{color:inherit}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · bacteria eat bacteria">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO DIGEST</span></div>
+    <h2 class="q">What is the 'cannibalism' that happens when sewage sludge is treated?</h2>
+    <div class="stagebox" id="stage">
+      <div id="head">
+        <div id="num">41</div>
+        <div id="caps"><span class="cap" id="cap1">Bacteria in the sludge</span><span class="cap dim" id="cap2">Eaten · 0</span></div>
+      </div>
+      <svg id="pic" role="img" aria-label="A sludge tank seen from above, full of water and bacteria. Each tap, the bacteria eat each other; the last tap spins the water out."></svg>
+      <div id="word" class="gone">AUTODIGESTION</div>
+    </div>
+    <p class="say" id="say">Sludge must lose its water and many of its bacteria. <b>Tap the tank</b> and watch what the bacteria do.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Sludge digests itself: bacteria eat bacteria, then the water is spun out.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.SplitText) gsap.registerPlugin(SplitText);
+  if (window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  const INK = '#10100c', PAPER = '#f3efe6', HOT = '#ff3d17';
+  const COUNTS = [41, 26, 15, 9, 5], ROUNDS = COUNTS.length - 1;
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const D = s => Kit.calm ? 0.001 : s;
+  let round = 0, phase = 'eat', busy = false, built = false, lastW = 0, lastH = 0;
+  let W = 0, H = 0, fs = 12, R = 50, CX = 0, CY = 0;
+  let drum, enterG, water, sludge, speck, swirl, hub, bugsG, fx, fxOut, labTL, labTR, labB;
+  const S = {rot: 0, sr: .95, so: .06, wo: 1, hot: 0};
+
+  // 41 bacteria, scattered evenly through the tank.
+  const bugs = [];
+  for (let i = 0; i < 41; i++) {
+    let x = 0, y = 0;
+    for (let t = 0; t < 80; t++) {
+      const r = Math.sqrt(Kit.rnd()) * .8, a = Kit.rnd() * Math.PI * 2;
+      x = Math.cos(a) * r; y = Math.sin(a) * r;
+      if (bugs.every(b => Math.hypot(b.x - x, b.y - y) > .15)) break;
+    }
+    bugs.push({x, y, a: Kit.rnd() * 360, s: 1, ph: Kit.rnd() * 6.28, heat: 0, alive: true, el: null, col: ''});
+  }
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+
+  function makeBug(b) {
+    const L = R * .12, w = R * .055, g = mk('g', {}, bugsG);
+    const tail = mk('path', {d: `M${-L / 2},0 q${-w * .6},${-w * .6} ${-w * 1.2},0 t${-w * 1.2},0`, fill: 'none', stroke: INK, 'stroke-width': Math.max(1, w * .22), 'stroke-linecap': 'round'}, g);
+    const body = mk('rect', {x: -L / 2, y: -w / 2, width: L, height: w, rx: w / 2, fill: INK}, g);
+    mk('line', {x1: -L * .22, x2: L * .22, y1: -w * .17, y2: -w * .17, stroke: '#fff', 'stroke-opacity': .45, 'stroke-width': Math.max(.8, w * .16), 'stroke-linecap': 'round'}, g);
+    mk('circle', {cx: L * .2, cy: w * .08, r: w * .14, fill: '#fff', 'fill-opacity': .35}, g);
+    b.el = g; b.body = body; b.tail = tail; b.col = '';
+  }
+
+  function build() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    lastW = svg.clientWidth; lastH = svg.clientHeight;
+    const done = phase === 'done';
+    fs = Math.max(12, Math.min(14, W / 28));
+    const top = fs * 2.4, bot = done ? fs * 1.1 : fs * 3.6;
+    R = Math.max(22, Math.min(W * .38, (H - top - bot) / 2 * .88));
+    CX = W / 2; CY = top + (H - top - bot) / 2;
+    const defs = mk('defs', {}, svg);
+    const pw = mk('pattern', {id: 'wl', width: 11, height: 7, patternUnits: 'userSpaceOnUse'}, defs);
+    mk('path', {d: 'M1 3.5 q2 -1.6 4 0 t4 0', stroke: '#2f5d74', 'stroke-width': 1, fill: 'none', 'stroke-opacity': .55}, pw);
+    const pd = mk('pattern', {id: 'sp', width: 6, height: 6, patternUnits: 'userSpaceOnUse'}, defs);
+    mk('circle', {cx: 1.5, cy: 1.5, r: .9, fill: '#fff', 'fill-opacity': .18}, pd);
+    mk('circle', {cx: 4.5, cy: 4.2, r: .6, fill: '#fff', 'fill-opacity': .12}, pd);
+    const rg = mk('radialGradient', {id: 'tg', cx: '45%', cy: '40%', r: '65%'}, defs);
+    mk('stop', {offset: 0, 'stop-color': '#fdfbf6'}, rg); mk('stop', {offset: 1, 'stop-color': '#d6cfc0'}, rg);
+    const sg = mk('radialGradient', {id: 'sg', cx: '45%', cy: '40%', r: '60%'}, defs);
+    mk('stop', {offset: 0, 'stop-color': '#5a4632'}, sg); mk('stop', {offset: 1, 'stop-color': INK}, sg);
+    const fl = mk('filter', {id: 'sh', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: R * .045}, fl);
+    const cp = mk('clipPath', {id: 'cp'}, defs); mk('circle', {cx: CX, cy: CY, r: R}, cp);
+
+    // The Swiss grid.
+    const grid = mk('g', {stroke: INK, 'stroke-opacity': .16, 'stroke-width': 1}, svg);
+    for (let i = 1; i < 6; i++) mk('line', {x1: W * i / 6, x2: W * i / 6, y1: 0, y2: H}, grid);
+    [top - fs * .6, CY].concat(done ? [] : [H - bot + fs * .4]).forEach(y => mk('line', {x1: 0, x2: W, y1: y, y2: y}, grid));
+
+    labTL = mk('text', {x: 0, y: fs * 1.2, 'font-size': fs, fill: INK, class: 'lab'}, svg);
+    labTR = mk('text', {x: W, y: fs * 1.2, 'font-size': fs, fill: INK, class: 'lab', 'text-anchor': 'end'}, svg);
+    labB = mk('text', {x: CX, y: H - fs * 1.3, 'font-size': fs, fill: INK, 'fill-opacity': .85, class: 'lab', 'text-anchor': 'middle'}, svg);
+    labels();
+
+    enterG = mk('g', {}, svg);
+    mk('circle', {cx: CX + R * .05, cy: CY + R * .09, r: R * 1.07, fill: INK, 'fill-opacity': .35, filter: 'url(#sh)'}, enterG);
+    fxOut = mk('g', {}, svg);
+    drum = mk('g', {}, enterG);
+    mk('circle', {cx: CX, cy: CY, r: R * 1.08, fill: INK}, drum);
+    for (let i = 0; i < 60; i++) {
+      const a = i / 60 * Math.PI * 2, l = i % 5 ? .03 : .055;
+      mk('line', {x1: CX + Math.cos(a) * R * 1.015, y1: CY + Math.sin(a) * R * 1.015, x2: CX + Math.cos(a) * R * (1.015 + l), y2: CY + Math.sin(a) * R * (1.015 + l), stroke: PAPER, 'stroke-opacity': i % 5 ? .45 : .9, 'stroke-width': i % 5 ? 1 : 1.6}, drum);
+    }
+    mk('rect', {x: CX - R * .035, y: CY - R * 1.08, width: R * .07, height: R * .075, fill: HOT}, drum);
+    mk('circle', {cx: CX, cy: CY, r: R, fill: 'url(#tg)'}, drum);
+    const inner = mk('g', {'clip-path': 'url(#cp)'}, drum);
+    water = mk('rect', {x: CX - R, y: CY - R, width: 2 * R, height: 2 * R, fill: 'url(#wl)'}, inner);
+    mk('line', {x1: CX - R, x2: CX + R, y1: CY, y2: CY, stroke: INK, 'stroke-opacity': .1}, inner);
+    mk('line', {y1: CY - R, y2: CY + R, x1: CX, x2: CX, stroke: INK, 'stroke-opacity': .1}, inner);
+    sludge = mk('circle', {cx: CX, cy: CY, r: R, fill: 'url(#sg)'}, inner);
+    speck = mk('circle', {cx: CX, cy: CY, r: R, fill: 'url(#sp)'}, inner);
+    // Swirl streaks in the thickening sludge.
+    swirl = mk('g', {opacity: 0}, inner);
+    for (let i = 0; i < 9; i++) {
+      const a = i / 9 * Math.PI * 2, p = (r, d) => `${(Math.cos(a + d) * r).toFixed(3)},${(Math.sin(a + d) * r).toFixed(3)}`;
+      mk('path', {d: `M${p(.18, 0)} Q${p(.62, .8)} ${p(.94, 1.7)}`, fill: 'none', stroke: i % 3 ? '#8a6a48' : '#c9a57a', 'stroke-width': i % 3 ? 1.2 : 1.6, 'stroke-linecap': 'round', 'vector-effect': 'non-scaling-stroke', 'stroke-opacity': .8}, swirl);
+    }
+    // The centrifuge axle, revealed as the cake packs.
+    hub = mk('g', {opacity: 0}, inner);
+    mk('circle', {cx: CX, cy: CY, r: R * .09, fill: '#2a2a2a', stroke: PAPER, 'stroke-opacity': .5, 'stroke-width': 1}, hub);
+    mk('circle', {cx: CX, cy: CY, r: R * .035, fill: HOT}, hub);
+    mk('circle', {cx: CX, cy: CY, r: R, fill: 'none', stroke: INK, 'stroke-width': 1.5}, drum);
+    bugsG = mk('g', {}, drum);
+    fx = mk('g', {}, drum);
+    // Fixed glass sheen (does not spin).
+    mk('ellipse', {cx: CX - R * .38, cy: CY - R * .5, rx: R * .5, ry: R * .16, fill: '#fff', 'fill-opacity': .22, transform: `rotate(-32 ${CX - R * .38} ${CY - R * .5})`, 'clip-path': 'url(#cp)', 'pointer-events': 'none'}, enterG);
+    bugs.forEach(b => { b.el = null; if (b.alive) makeBug(b); });
+    built = true; render();
+  }
+
+  function labels() {
+    if (!labTL) return;
+    labTL.textContent = phase === 'done' ? 'CENTRIFUGE · WATER OUT' : 'SLUDGE TANK · FROM ABOVE';
+    labTR.textContent = phase === 'done' ? 'SPUN' : round ? `ROUND ${round}/${ROUNDS}` : 'TAP';
+    labB.textContent = phase === 'done' ? '' : round === 0 ? 'WATER + BACTERIA' : round < ROUNDS ? 'THICKER EVERY ROUND' : 'THICK · READY TO SPIN';
+  }
+
+  function render() {
+    if (!built) return;
+    const t = gsap.ticker.time, sw = Kit.calm ? 0 : 1;
+    drum.setAttribute('transform', `rotate(${S.rot} ${CX} ${CY})`);
+    water.setAttribute('opacity', S.wo);
+    sludge.setAttribute('r', S.sr * R); sludge.setAttribute('fill-opacity', S.so);
+    speck.setAttribute('r', S.sr * R); speck.setAttribute('opacity', Math.min(1, S.so * 1.4));
+    swirl.setAttribute('transform', `translate(${CX},${CY}) rotate(${sw * t * 6}) scale(${S.sr * R})`);
+    swirl.setAttribute('opacity', Math.max(0, Math.min(1, (S.so - .12) * 1.6)) * .55);
+    hub.setAttribute('opacity', S.hot);
+    for (const b of bugs) {
+      if (!b.el) continue;
+      const x = CX + (b.x + sw * Math.sin(t * .9 + b.ph) * .012) * R, y = CY + (b.y + sw * Math.cos(t * .8 + b.ph) * .012) * R;
+      b.el.setAttribute('transform', `translate(${x},${y}) rotate(${b.a + sw * Math.sin(t * 2.2 + b.ph) * 9}) scale(${Math.max(0.001, b.s)})`);
+      const col = gsap.utils.interpolate(INK, HOT, Math.min(1, Math.max(b.heat, S.hot)));
+      if (col !== b.col) { b.col = col; b.body.setAttribute('fill', col); b.tail.setAttribute('stroke', col); }
+    }
+  }
+  gsap.ticker.add(render);
+
+  // Redraw at true pixel size whenever the stage changes height (keeps text ≥12px, no overlap).
+  if (window.ResizeObserver) new ResizeObserver(() => {
+    if (!built) return;
+    if (Math.abs(svg.clientWidth - lastW) > 1 || Math.abs(svg.clientHeight - lastH) > 1) build();
+  }).observe(svg);
+
+  function setNum(n) {
+    const el = Kit.$('num');
+    if (Kit.calm || !window.ScrambleTextPlugin) { el.textContent = n; return; }
+    gsap.to(el, {duration: .8, scrambleText: {text: String(n), chars: '0123456789', speed: .7}});
+  }
+
+  function burst(b) {
+    if (!fx || Kit.calm) return;
+    const x = CX + b.x * R, y = CY + b.y * R;
+    const ring = mk('circle', {cx: x, cy: y, r: R * .03, fill: 'none', stroke: HOT, 'stroke-width': 2}, fx);
+    gsap.to(ring, {attr: {r: R * .16}, opacity: 0, duration: .6, ease: 'expo.out', onComplete: () => ring.remove()});
+    for (let i = 0; i < 5; i++) {
+      const a = Kit.rnd() * 6.28, c = mk('circle', {cx: x, cy: y, r: R * .012, fill: i % 2 ? HOT : INK}, fx);
+      gsap.to(c, {attr: {cx: x + Math.cos(a) * R * .1, cy: y + Math.sin(a) * R * .1}, opacity: 0, duration: .55, ease: 'power3.out', onComplete: () => c.remove()});
+    }
+  }
+
+  function eatRound() {
+    busy = true; round++;
+    const alive = bugs.filter(b => b.alive), next = COUNTS[round];
+    let k = alive.length - next;
+    const used = new Set(), pairs = [];
+    const order = gsap.utils.shuffle(alive.slice());
+    for (const e of order) {
+      if (k <= 0) break; if (used.has(e)) continue;
+      let best = null, bd = 9;
+      for (const p of alive) { if (p === e || used.has(p)) continue; const d = Math.hypot(p.x - e.x, p.y - e.y); if (d < bd) { bd = d; best = p; } }
+      if (best) { used.add(e); used.add(best); pairs.push([e, best]); k--; }
+    }
+    setNum(next);
+    Kit.$('cap2').textContent = `Eaten · ${41 - next}`;
+    labels();
+    const tl = gsap.timeline({onComplete: afterRound});
+    pairs.forEach(([e, p], i) => {
+      const at = Kit.calm ? 0 : i * .045;
+      let ang = Math.atan2(p.y - e.y, p.x - e.x) * 180 / Math.PI;
+      while (ang - e.a > 180) ang -= 360; while (ang - e.a < -180) ang += 360;
+      tl.to(e, {a: ang, duration: D(.25), ease: 'power2.out'}, at)
+        .to(e, {heat: 1, duration: D(.2), ease: 'power2.out'}, at)
+        .to(e, {x: p.x, y: p.y, duration: D(.42), ease: 'power3.in'}, at + D(.12))
+        .to(p, {s: 0, duration: D(.22), ease: 'back.in(2.4)', onComplete: () => { p.alive = false; if (p.el) p.el.remove(); p.el = null; burst(p); Kit.haptic('selection'); }}, at + D(.38))
+        .to(e, {s: 1.25, duration: D(.14), ease: 'power2.out'}, at + D(.54))
+        .to(e, {s: 1, heat: 0, duration: D(.8), ease: 'elastic.out(1,.35)'}, at + D(.68));
+    });
+    const survivors = alive.filter(b => !used.has(b) || pairs.some(q => q[0] === b));
+    tl.to(survivors, {x: (i, b) => b.x * .84, y: (i, b) => b.y * .84, duration: D(.9), ease: 'power3.inOut'}, '-=' + D(.5))
+      .to(S, {sr: S.sr * .84, so: Math.min(.9, S.so + .14), duration: D(.9), ease: 'power3.inOut'}, '<');
+  }
+
+  function afterRound() {
+    busy = false; labels();
+    if (round === 1) say.innerHTML = 'They eat each other: fewer bacteria, and the sludge closes in. <b>Tap again.</b>';
+    else if (round < ROUNDS) say.innerHTML = `${COUNTS[round]} left, and the sludge is thicker. <b>Keep tapping.</b>`;
+    else say.innerHTML = 'Now the sludge is thick enough. <b>Tap to spin the water out.</b>';
+  }
+
+  function spin() {
+    busy = true; phase = 'done'; labels(); Kit.haptic('light');
+    say.innerHTML = 'Spinning…';
+    const tl = gsap.timeline({onComplete: reveal});
+    tl.to(S, {rot: 1080, duration: D(2.4), ease: 'power3.inOut'}, 0)
+      .to(S, {wo: 0, duration: D(1.2), ease: 'power2.in'}, D(.5))
+      .to(S, {sr: .5, so: 1, duration: D(1.6), ease: 'expo.inOut'}, D(.4))
+      .to(S, {hot: 1, duration: D(.6), ease: 'power2.out'}, D(1.4))
+      .to(bugs.filter(b => b.alive), {x: (i, b) => b.x * .6, y: (i, b) => b.y * .6, duration: D(1.6), ease: 'expo.inOut'}, D(.4));
+    if (!Kit.calm) for (let i = 0; i < 46; i++) {
+      const a = Kit.rnd() * 6.28, r0 = .55 + Kit.rnd() * .4, r1 = 1.25 + Kit.rnd() * .5, sk = .5;
+      const c = mk('circle', {cx: CX + Math.cos(a) * R * r0, cy: CY + Math.sin(a) * R * r0, r: R * (.018 + Kit.rnd() * .02), fill: '#cfe1ea', stroke: '#0b4a5e', 'stroke-width': 1.2, opacity: 0}, fxOut);
+      tl.to(c, {opacity: 1, duration: .1}, .6 + i * .025)
+        .to(c, {attr: {cx: CX + Math.cos(a + sk) * R * r1, cy: CY + Math.sin(a + sk) * R * r1}, duration: .9, ease: 'expo.out'}, .6 + i * .025)
+        .to(c, {opacity: 0, duration: .5, ease: 'power2.in', onComplete: () => c.remove()}, 1.05 + i * .025);
+    }
+  }
+
+  function reveal() {
+    busy = false; Kit.haptic('success');
+    Kit.$('cap1').textContent = 'Left in a thick cake';
+    say.innerHTML = '<b>Bacteria eat bacteria.</b> In the sludge machines they eat each other: a cannibalism called autodigestion. Then the water is spun out, on the way to fertilizer.';
+    Kit.show('keep');
+    const w = Kit.$('word'); Kit.show('word'); w.classList.remove('gone');
+    if (Math.abs(svg.clientWidth - lastW) > 1 || Math.abs(svg.clientHeight - lastH) > 1) build();
+    if (!Kit.calm && window.SplitText) {
+      const st = new SplitText(w, {type: 'chars'});
+      gsap.from(st.chars, {yPercent: 110, opacity: 0, rotate: () => gsap.utils.random(-25, 25), duration: .9, stagger: .045, ease: 'expo.out'});
+      if (window.ScrambleTextPlugin) st.chars.forEach((c, i) => gsap.to(c, {duration: .5, delay: i * .045, scrambleText: {text: c.textContent, chars: 'ABCDEGINOSTU', speed: .6}}));
+    }
+    if (!Kit.calm) gsap.fromTo('#num', {scale: 1.12}, {scale: 1, duration: .9, ease: 'elastic.out(1,.4)'});
+  }
+
+  function advance() {
+    if (busy || phase === 'done') return;
+    if (round < ROUNDS) eatRound(); else spin();
+  }
+
+  svg.addEventListener('pointerdown', e => {
+    if (built && !Kit.calm) {
+      const r = svg.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      const ring = mk('circle', {cx: x, cy: y, r: 4, fill: 'none', stroke: HOT, 'stroke-width': 2.5}, svg);
+      gsap.to(ring, {attr: {r: R * .22}, opacity: 0, duration: .5, ease: 'power3.out', onComplete: () => ring.remove()});
+      gsap.fromTo(enterG, {scale: .985}, {scale: 1, svgOrigin: `${CX} ${CY}`, duration: .5, ease: 'elastic.out(1,.4)'});
+    }
+    if (!busy && phase !== 'done') Kit.haptic('selection');
+    advance();
+  });
+
+  Kit.onShow.card = build;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !built) return;
+    gsap.from(enterG, {scale: .6, opacity: 0, rotate: -40, svgOrigin: `${CX} ${CY}`, duration: 1.2, ease: 'expo.out'});
+    gsap.from(bugs.filter(b => b.alive), {s: 0, duration: .6, stagger: .018, delay: .35, ease: 'back.out(2.2)'});
+    gsap.from('#caps', {x: 20, opacity: 0, duration: .8, ease: 'power3.out', delay: .2});
+    if (window.ScrambleTextPlugin) gsap.fromTo('#num', {text: '00'}, {duration: 1.1, scrambleText: {text: '41', chars: '0123456789', speed: .5}});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    for (let i = 0; i <= ROUNDS; i++) { while (busy) await w(50); advance(); await w(60); }
+    while (busy) await w(50);
+    await w(Kit.calm ? 100 : 1200);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "history-norwegian-rocket-alarm",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "January 1995: a research rocket leaves Norway. What happened next?",
+  "answer": "A research rocket lifted off from Norway. Radar read it as a nuclear missile, an alarm sounded, and the nuclear briefcase went into operational mode. No attack codes were sent.",
+  "move": "One misread science rocket was enough to wake a nuclear briefcase.",
+  "keywords": [
+    "norway",
+    "russia",
+    "research rocket",
+    "nuclear briefcase",
+    "false alarm"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four cards to put in order: a research rocket lifts off from Norway; radar reads it as a nuclear missile; an alarm sounds; the nuclear briefcase goes into operational mode. Tap them in the order they happened."
+  },
+  "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=448s",
+  "written": "2026-11-03"
+}

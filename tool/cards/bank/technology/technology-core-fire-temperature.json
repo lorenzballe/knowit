@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A card titled Steel & Fire asks how hot the fire got around the Twin Towers' core columns. Two choices are shown, insulated steel or bare steel, with fresh air. Holding the button lets air in, and the card reveals a peak of up to 1,000 degrees.",
-    "ground": "#07071a"
+    "label": "A card titled Steel & Fire asks how hot the fire got around the Twin Towers' core columns. Two choices are shown, insulated steel or bare steel, with fresh air. Holding the button lets air in, and the card reveals a peak of up to 1,000 degrees."
   },
   "source": "Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=TS8CgfiGFEE&t=442s",

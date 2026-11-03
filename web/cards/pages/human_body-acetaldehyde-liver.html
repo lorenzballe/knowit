@@ -1,0 +1,424 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-acetaldehyde-liver -->
+<!-- Look: a newsprint data-journalism chart. The y axis is toxicity. Ethanol runs as a grey line along the low level, with small dots flowing along it. Then one red series climbs where the liver's enzyme works, and runs on into a slowly turning DNA helix.
+     Interaction: hold the button to drink. Each molecule rides the curves of the chart. The ADH enzyme, a pac-man inside the liver, chomps it into red acetaldehyde. The molecule climbs the toxicity axis, breaks a DNA rung, and blocks the green repair enzyme. A legend under the red line counts the damage.
+     Wow: after five breaks, a red hatch sweeps the gap between the two levels, the series swells, and the DNA shudders. A red stamp with a warning sign, "Group 1 carcinogen", pops in above the climb, and a hand-drawn arrow points it at the red line.
+     Layout: the chart lays itself out in rows measured in font units, and it compacts on short stages. A final collision pass drops low-priority labels, so no label ever sits on another. -->
+<title>The liver's worse half-step</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block}
+#hold{flex:none;position:relative;overflow:hidden;align-self:stretch;margin:.4cqh 0 0;font:800 max(2.1cqh,14px)/1 var(--body);color:#f8f3e9;background:#1b1a17;border:0;border-radius:99px;padding:max(1.5cqh,11px) 5cqw;display:flex;align-items:center;justify-content:center;gap:2.6cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;box-shadow:0 .6cqh 1.6cqh rgba(0,0,0,.28);transition:transform .12s cubic-bezier(.3,1.6,.5,1)}
+#hold .fill{position:absolute;inset:0;background:linear-gradient(90deg,#b8261a,#e2412a 60%,#ff7a4a);transform-origin:left;transform:scaleX(var(--p,0));transition:transform .5s cubic-bezier(.2,.9,.3,1)}
+#hold span{position:relative}
+#hold .dot{flex:none;width:max(1.4cqh,10px);height:max(1.4cqh,10px);border-radius:50%;background:#ff5a3c;box-shadow:0 0 0 .5cqh rgba(255,90,60,.28);animation:beat 1.3s ease-in-out infinite}
+@keyframes beat{50%{box-shadow:0 0 0 1.1cqh rgba(255,90,60,0)}}
+.kit-calm #hold .dot{animation:none}
+#hold.on{transform:scale(.965)}
+#why{margin:0;font-size:max(2cqh,14px);line-height:1.38}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Hold to drink · the liver's first step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO DRINK</span></div>
+    <h2 class="q">What does your liver turn alcohol into, and why is it worse?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A chart of toxicity. Ethanol moves from a glass along a low grey line to the liver, where the enzyme ADH turns it into acetaldehyde, a red line higher up the toxicity axis, which reaches a DNA helix and breaks it."></svg>
+    </div>
+    <button id="hold"><i class="fill"></i><span class="dot"></span><span id="holdT">Hold to drink</span></button>
+    <p class="say" id="say">Hold the button to drink, and follow one molecule.</p>
+    <p class="body gone" id="why">Your liver's ADH turns ethanol into acetaldehyde: more poisonous, and a Group 1 carcinogen. It breaks DNA and blocks its repair.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Alcohol hurts twice: as ethanol, then as the worse acetaldehyde your liver makes from it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
+  const svg = Kit.$('pic'), hold = Kit.$('hold'), say = Kit.$('say');
+  const C = {ink: '#ffffff', mut: 'rgba(255,255,255,.88)', grid: 'rgba(255,255,255,.3)', eth: 'rgba(255,255,255,.8)', ace: '#4a0b1f', dna: '#14233a', dna2: '#cfe6ff', fix: '#064d36', gold: '#f5c542', dk: '#3a0618'};
+  const NEED = 5;
+  const st = {conv: 0, breaks: 0, claim: 0, done: false, red: false, hitOnce: false, wowT: -1e9};
+  let W = 0, H = 0, fs = 12, G = {}, L = {}, rungs = [], order = [], live = [], idle = [], ready = false, timer = null, lastSize = '';
+
+  function T(p, x, y, t, o = {}) {
+    const e = Kit.mk('text', {x, y, 'font-size': o.size || fs, 'font-weight': o.w || 700, fill: o.fill || C.ink, 'text-anchor': o.a || 'start', class: o.cls || 'lab'}, p);
+    e.style.fontFamily = o.font || 'var(--mono)';
+    if (o.ls) e.style.letterSpacing = o.ls;
+    e.textContent = t;
+    if (!o.free) {
+      const w = e.getComputedTextLength(), a = o.a || 'start';
+      const left = a === 'end' ? x - w : a === 'middle' ? x - w / 2 : x;
+      const s = Math.max(3 - left, Math.min(0, W - 3 - (left + w)));
+      if (s) e.setAttribute('x', x + s);
+    }
+    return e;
+  }
+  const stop = (p, off, col, op = 1) => Kit.mk('stop', {offset: off, 'stop-color': col, 'stop-opacity': op}, p);
+  const pac = a => { const r = G.pr, p = t => `${(r * Math.cos(t)).toFixed(2)},${(r * Math.sin(t)).toFixed(2)}`; return `M0,0 L${p(Math.PI + a)} A${r},${r} 0 1 1 ${p(Math.PI - a)} Z`; };
+  const setMouth = () => G.pac && G.pac.setAttribute('d', pac(Math.max(.03, G.mouth.a * G.blink.k)));
+
+  // hide lower-priority labels that collide or fall outside the chart
+  function resolve(list) {
+    const sr = svg.getBoundingClientRect(), kept = [];
+    for (const e of list) {
+      if (!e) continue;
+      const b = e.getBoundingClientRect();
+      const out = b.left < sr.left - 1 || b.right > sr.right + 1 || b.top < sr.top - 1 || b.bottom > sr.bottom + 1;
+      const hit = kept.some(k => !(b.right <= k.left + 1 || b.left >= k.right - 1 || b.bottom <= k.top + 1 || b.top >= k.bottom - 1));
+      if (out || hit) { e.setAttribute('display', 'none'); continue; }
+      kept.push(b);
+    }
+  }
+
+  function layout() {
+    if (!ready) return;
+    live.forEach(t => t.kill()); live = [];
+    idle.forEach(t => t.kill()); idle = [];
+    if (G.fix) gsap.killTweensOf(G.fix);
+    if (G.mouth) gsap.killTweensOf(G.mouth);
+    st.claim = st.breaks;
+    svg.innerHTML = '';
+    G = {stuck: [], mouth: {a: .5}, blink: {k: 1}}; L = {};
+    const fz = Kit.fitSvg(svg); W = fz.W; H = fz.H; lastSize = svg.clientWidth + 'x' + svg.clientHeight;
+    fs = Math.max(12, Math.min(15, W / 26));
+    const f = fs;
+
+    // ---------- defs ----------
+    const defs = Kit.mk('defs', {}, svg);
+    const gl = Kit.mk('filter', {id: 'glow', x: '-80%', y: '-80%', width: '260%', height: '260%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: f * .22, result: 'b'}, gl);
+    const mg = Kit.mk('feMerge', {}, gl); Kit.mk('feMergeNode', {in: 'b'}, mg); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, mg);
+    const sh = Kit.mk('filter', {id: 'sh', x: '-40%', y: '-40%', width: '180%', height: '180%'}, defs);
+    Kit.mk('feDropShadow', {dx: 0, dy: f * .16, stdDeviation: f * .2, 'flood-color': '#3a0618', 'flood-opacity': .32}, sh);
+    const lv = Kit.mk('linearGradient', {id: 'lv', x1: 0, y1: 0, x2: .35, y2: 1}, defs); stop(lv, 0, '#a7644b'); stop(lv, .55, '#7b3f2f'); stop(lv, 1, '#4f241b');
+    const lq = Kit.mk('linearGradient', {id: 'lq', x1: 0, y1: 0, x2: 0, y2: 1}, defs); stop(lq, 0, '#f6d987'); stop(lq, 1, '#c8902c');
+    const rg = Kit.mk('linearGradient', {id: 'rg', x1: 0, y1: 1, x2: 1, y2: 0}, defs); stop(rg, 0, '#3a0618'); stop(rg, 1, '#7a0f2c');
+    const hp = Kit.mk('pattern', {id: 'hatch', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 5, stroke: C.ace, 'stroke-width': 1.5}, hp);
+    const cp = Kit.mk('clipPath', {id: 'sweep'}, defs);
+
+    // ---------- geometry: rows in font units, compact when short ----------
+    const px0 = f * 2, px1 = W - f * .6, py0 = f * .9;
+    const showX = H >= f * 13.4;
+    const py1 = showX ? H - f * 1.95 : H - f * .7;
+    const yDNA = py0 + f * 1.05, yHigh0 = py0 + f * 3.5;
+    const R0 = f * 1.9, B1 = f * 2.3, B2 = f * 3.8, avail = py1 - yHigh0;
+    let rows = 2, R = R0;
+    if (avail < R0 + f * 1.05 + B2) rows = 1;
+    if (rows === 1) R = Math.max(f * 1.25, Math.min(R0, avail - B1 - f * 1.05));
+    const Mmin = R + f * 1.05, extra = Math.max(0, avail - Mmin - (rows === 2 ? B2 : B1));
+    const yHigh = yHigh0 + extra * .12, yLow = yHigh + Mmin + extra * .5;
+    const r2 = yHigh - f * .95, r1 = r2 - f * 1.5, L1 = yLow + f * 1.55, L2 = L1 + f * 1.5;
+    const xG = px0 + f * 1.3, xS = xG + f * .9;
+    const xL = px0 + (px1 - px0) * .42, hw = f * 1.05, xD = px1 - f * 1.3;
+    const xBe = xD - hw - f * .4, xA = xL + R * .95, xM = xA + (xBe - xA) * .48;
+    const curve = `C${xA + (xM - xA) * .55},${yLow} ${xM - (xM - xA) * .45},${yHigh} ${xM},${yHigh}`;
+    const redD = `M${xA},${yLow} ${curve} L${xBe},${yHigh}`;
+    Object.assign(G, {px0, px1, py0, py1, yLow, yHigh, xG, xS, R, xL, hw, xD, xBe, xA, xM,
+      dA: `M${xS},${yLow} L${xL},${yLow}`, dB: `M${xL},${yLow} L${xA},${yLow} ${curve} L${xBe},${yHigh}`});
+    G.sweepRect = Kit.mk('rect', {x: xA, y: 0, width: xBe - xA, height: H}, cp); G.sweepW = xBe - xA;
+    for (const k of ['grid', 'axes', 'area', 'series', 'dnaOut', 'stuck', 'liver', 'glass', 'labs', 'done', 'fixl', 'mol', 'fx']) L[k] = Kit.mk('g', {}, svg);
+    L.dna = Kit.mk('g', {}, L.dnaOut);
+
+    // ---------- grid and axes ----------
+    for (let i = 0; i <= 4; i++) { const y = py0 + (py1 - py0) * i / 4; Kit.mk('line', {x1: px0, x2: px1, y1: y, y2: y, stroke: C.grid, 'stroke-width': 1, 'stroke-dasharray': '1 4', 'stroke-linecap': 'round'}, L.grid); }
+    if (py1 - (yLow + R * .8) > f * .8) Kit.mk('line', {x1: xL, x2: xL, y1: yLow + R * .8, y2: py1, stroke: C.grid, 'stroke-width': 1.2, 'stroke-dasharray': '2 3'}, L.grid);
+    Kit.mk('path', {d: `M${px0},${py1} V${py0 - f * .2} M${px0 - f * .35},${py0 + f * .35} L${px0},${py0 - f * .2} L${px0 + f * .35},${py0 + f * .35}`, class: 'ax', stroke: C.ink, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L.axes);
+    Kit.mk('line', {x1: px0, x2: px1, y1: py1, y2: py1, class: 'ax', stroke: C.ink, 'stroke-width': 1.6}, L.axes);
+    G.toxL = T(L.axes, 0, 0, 'TOXICITY', {a: 'middle', free: true, ls: '.12em', w: 800});
+    G.toxL.setAttribute('transform', `translate(${px0 - f * .7},${(py0 + py1) / 2}) rotate(-90)`);
+    [[yLow, C.eth], [yHigh, C.ace]].forEach(([y, c]) => Kit.mk('line', {x1: px0 - f * .3, x2: px0, y1: y, y2: y, stroke: c, 'stroke-width': 2.4}, L.axes));
+    G.xl = [];
+    [[xG, 'drink'], [xL, 'liver'], [xD, 'cells']].forEach(([x, t]) => {
+      Kit.mk('line', {x1: x, x2: x, y1: py1, y2: py1 + f * .35, stroke: C.ink, 'stroke-width': 1.4}, L.axes);
+      if (showX) G.xl.push(T(L.axes, x, py1 + f * 1.45, t, {a: 'middle', fill: C.mut, w: 600}));
+    });
+
+    // ---------- the series ----------
+    Kit.mk('path', {d: `M${xA},${yLow} L${xBe},${yLow}`, stroke: C.eth, 'stroke-width': 1.4, 'stroke-dasharray': '3 4', fill: 'none', opacity: .7}, L.series);
+    Kit.mk('path', {d: redD, stroke: C.ace, 'stroke-width': 1.2, 'stroke-dasharray': '2 5', fill: 'none', opacity: .5, 'stroke-linecap': 'round'}, L.series);
+    G.ethLine = Kit.mk('path', {d: `M${xS},${yLow} L${xL - R * .9},${yLow}`, class: 'ax', stroke: C.eth, 'stroke-width': f * .26, fill: 'none', 'stroke-linecap': 'round'}, L.series);
+    G.flowA = Kit.mk('path', {d: `M${xS},${yLow} L${xL - R * .9},${yLow}`, stroke: '#fff', 'stroke-width': f * .12, 'stroke-dasharray': `0 ${f * .8}`, 'stroke-linecap': 'round', fill: 'none', opacity: .8}, L.series);
+    G.red = Kit.mk('path', {d: redD, stroke: 'url(#rg)', 'stroke-width': st.done ? f * .32 : f * .26, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#glow)'}, L.series);
+    if (!st.red) gsap.set(G.red, {drawSVG: '0%'});
+    G.flowB = Kit.mk('path', {d: redD, stroke: '#ffe2d6', 'stroke-width': f * .12, 'stroke-dasharray': `0 ${f * .8}`, 'stroke-linecap': 'round', fill: 'none', opacity: st.red ? .8 : 0}, L.series);
+    if (st.done) Kit.mk('path', {d: `${redD} L${xBe},${yLow} Z`, fill: 'url(#hatch)', opacity: .5, 'clip-path': 'url(#sweep)'}, L.area);
+
+    // ---------- DNA ----------
+    const yT = yDNA + f * .75, yB = py1 - f * .5, per = f * 4.2;
+    const sx = (y, s) => xD + s * hw * Math.sin((y - yT) / per * 2 * Math.PI);
+    rungs = [];
+    for (let y = yT + f * .5; y < yB - f * .3; y += f * .82) {
+      const a = Math.abs(Math.sin((y - yT) / per * 2 * Math.PI)); if (a < .35) continue;
+      const l = Kit.mk('line', {x1: xD - hw * a, x2: xD, y1: y, y2: y, stroke: '#cfe6ff', 'stroke-width': f * .22, 'stroke-linecap': 'round', class: 'rung'}, L.dna);
+      const r = Kit.mk('line', {x1: xD, x2: xD + hw * a, y1: y, y2: y, stroke: '#ffd25a', 'stroke-width': f * .22, 'stroke-linecap': 'round', class: 'rung'}, L.dna);
+      rungs.push({y, l, r, broken: false});
+    }
+    let s1 = '', s2 = '';
+    for (let i = 0, y = yT; y <= yB; i++, y = yT + i * 2) { s1 += (i ? 'L' : 'M') + sx(y, 1).toFixed(1) + ',' + y.toFixed(1); s2 += (i ? 'L' : 'M') + sx(y, -1).toFixed(1) + ',' + y.toFixed(1); }
+    G.strands = [
+      Kit.mk('path', {d: s2, stroke: C.dna2, 'stroke-width': f * .3, fill: 'none', 'stroke-linecap': 'round'}, L.dna),
+      Kit.mk('path', {d: s1, stroke: C.dna, 'stroke-width': f * .32, fill: 'none', 'stroke-linecap': 'round'}, L.dna)];
+    G.dnaL = T(L.labs, xD, yDNA, 'DNA', {a: 'middle', fill: C.dna, w: 800});
+    order = rungs.map((r, i) => [i, Math.abs(r.y - yHigh) + Kit.rnd() * f * 5]).sort((a, b) => a[1] - b[1]).map(a => a[0]);
+    for (let i = 0; i < st.breaks; i++) breakRung(order[i % order.length], false);
+
+    // ---------- the liver and its enzyme ----------
+    const lg = Kit.mk('g', {transform: `translate(${xL},${yLow})`}, L.liver); G.liverG = lg;
+    Kit.mk('ellipse', {cx: .42 * R, cy: .42 * R, rx: .16 * R, ry: .24 * R, fill: '#8aa04f', stroke: '#4f241b', 'stroke-width': 1, transform: `rotate(-25 ${.42 * R} ${.42 * R})`}, lg);
+    Kit.mk('path', {d: `M${-R},${-.15 * R} C${-R},${-.85 * R} ${.1 * R},${-.95 * R} ${.9 * R},${-.6 * R} C${1.15 * R},${-.45 * R} ${.85 * R},${.1 * R} ${.2 * R},${.5 * R} C${-.35 * R},${.8 * R} ${-.95 * R},${.55 * R} ${-R},${-.15 * R} Z`, fill: 'url(#lv)', filter: 'url(#sh)'}, lg);
+    Kit.mk('path', {d: `M${.08 * R},${-.78 * R} Q${.22 * R},${-.1 * R} ${-.08 * R},${.6 * R}`, stroke: 'rgba(0,0,0,.25)', 'stroke-width': 1.4, fill: 'none'}, lg);
+    Kit.mk('ellipse', {cx: -.45 * R, cy: -.5 * R, rx: .32 * R, ry: .13 * R, fill: '#fff', opacity: .22, transform: 'rotate(-18)'}, lg);
+    G.pr = R * .42;
+    G.pac = Kit.mk('path', {d: pac(.5), fill: '#fbeed6', stroke: '#3a1a10', 'stroke-width': 1.1}, lg);
+    Kit.mk('circle', {cx: G.pr * .05, cy: -G.pr * .5, r: Math.max(1.4, f * .1), fill: '#3a1a10'}, lg);
+    G.adhL = T(L.labs, xL, yLow - R - f * .45, 'enzyme ADH', {a: 'middle', fill: '#ffffff', w: 800});
+
+    // ---------- the glass ----------
+    const gg = Kit.mk('g', {}, L.glass), b = f * .75, top = yLow - f * 1.0;
+    Kit.mk('path', {d: `M${xG},${yLow + f * .55} V${yLow + f * 1.45} M${xG - f * .55},${yLow + f * 1.5} H${xG + f * .55}`, stroke: C.ink, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, gg);
+    G.liq = Kit.mk('path', {d: `M${xG - b * .9},${yLow - f * .35} L${xG + b * .9},${yLow - f * .35} Q${xG + b * .9},${yLow + f * .48} ${xG},${yLow + f * .5} Q${xG - b * .9},${yLow + f * .48} ${xG - b * .9},${yLow - f * .35} Z`, fill: 'url(#lq)'}, gg);
+    Kit.mk('path', {d: `M${xG - b},${top} L${xG + b},${top} Q${xG + b},${yLow + f * .55} ${xG},${yLow + f * .58} Q${xG - b},${yLow + f * .55} ${xG - b},${top} Z`, fill: 'rgba(255,255,255,.25)', stroke: C.ink, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, gg);
+    Kit.mk('path', {d: `M${xG - b * .55},${top + f * .25} Q${xG - b * .62},${yLow} ${xG - b * .25},${yLow + f * .3}`, stroke: '#fff', 'stroke-width': 1.4, fill: 'none', opacity: .8, 'stroke-linecap': 'round'}, gg);
+
+    // ---------- labels on the series ----------
+    G.ethL = T(L.labs, xS + f * .2, yLow - f * .75, 'ETHANOL', {fill: C.mut, w: 800, ls: '.06em'});
+    G.aceL = [T(L.labs, xBe, r1, 'ACETALDEHYDE', {a: 'end', fill: C.ace, w: 800, ls: '.04em'}),
+              T(L.labs, xBe, r2, 'more toxic', {a: 'end', fill: C.ace, w: 600})];
+    if (!st.red) gsap.set(G.aceL, {opacity: 0});
+
+    // ---------- the damage legend, under the red line ----------
+    const xI = xBe - f * .35, xT = xBe - f * 1.15;
+    G.cB = T(L.labs, xT, L1, 'DNA breaks · 0', {a: 'end', fill: C.ace, w: 800, free: true});
+    if (rows === 2) {
+      Kit.mk('circle', {cx: xI, cy: L1 - f * .35, r: f * .28, fill: C.ace, stroke: '#fff', 'stroke-width': 1}, L.labs);
+      G.cR = T(L.labs, xT, L2, 'repairs · 0', {a: 'end', fill: C.fix, w: 800, free: true});
+    }
+    G.fixX = xI; G.fixY = (rows === 2 ? L2 : L1) - f * .35;
+    G.fix = Kit.mk('g', {}, L.fixl);
+    Kit.mk('circle', {r: f * .5, fill: C.fix, stroke: '#fff', 'stroke-width': 1, filter: 'url(#sh)'}, G.fix);
+    Kit.mk('path', {d: `M${-f * .25},0 H${f * .25} M0,${-f * .25} V${f * .25}`, stroke: '#fff', 'stroke-width': 2, 'stroke-linecap': 'round'}, G.fix);
+    gsap.set(G.fix, {x: G.fixX, y: G.fixY});
+
+    // ---------- the reveal: a carcinogen stamp above the climb ----------
+    if (st.done) {
+      const x0 = px0 + f * .7, ph = f * 1.5, pyc = r2 - f * .35;
+      G.pill = Kit.mk('g', {}, L.done);
+      G.pillBox = Kit.mk('rect', {x: x0, y: pyc - ph / 2, width: ph, height: ph, rx: ph / 2, fill: C.ace, filter: 'url(#sh)'}, G.pill);
+      const tri = Kit.mk('g', {transform: `translate(${x0 + ph * .55},${pyc})`}, G.pill);
+      G.triIn = Kit.mk('g', {}, tri);
+      const s = f * .5;
+      Kit.mk('path', {d: `M0,${-s * 1.05} L${s * 1.05},${s * .8} L${-s * 1.05},${s * .8} Z`, fill: C.gold, stroke: C.dk, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, G.triIn);
+      Kit.mk('path', {d: `M0,${-s * .45} V${s * .18}`, stroke: C.dk, 'stroke-width': Math.max(1.6, f * .14), 'stroke-linecap': 'round'}, G.triIn);
+      Kit.mk('circle', {cx: 0, cy: s * .5, r: Math.max(1, f * .08), fill: C.dk}, G.triIn);
+      G.pillT = T(G.pill, x0 + ph * 1.1, r2, 'Group 1 carcinogen', {fill: '#fff', w: 800, font: 'var(--body)', free: true});
+      const pw = ph * 1.1 + G.pillT.getComputedTextLength() + f * .6;
+      G.pillBox.setAttribute('width', pw); G.pillW = pw; G.ph = ph;
+      // a hand-drawn arrow from the stamp to the red climb
+      const tl = G.red.getTotalLength(), tx0 = xA + (xM - xA) * .72; let best = null;
+      for (let i = 0; i <= 80; i++) { const p = G.red.getPointAtLength(tl * i / 80); if (!best || Math.abs(p.x - tx0) < Math.abs(best.x - tx0)) best = p; }
+      const sx0 = Math.min(x0 + pw - f * .7, best.x - f * .9), sy0 = pyc + ph / 2 + f * .15;
+      const ex = best.x - f * .45, ey = best.y - f * .15;
+      if (ey - sy0 > f * .5) {
+        const q = ex - sx0 < f * .6 ? {x: (sx0 + ex) / 2, y: (sy0 + ey) / 2} : {x: sx0, y: ey};
+        const an = Math.atan2(ey - q.y, ex - q.x), ah = f * .38;
+        G.arrow = Kit.mk('path', {d: `M${sx0},${sy0} Q${q.x},${q.y} ${ex},${ey} M${ex + ah * Math.cos(an + 2.6)},${ey + ah * Math.sin(an + 2.6)} L${ex},${ey} L${ex + ah * Math.cos(an - 2.6)},${ey + ah * Math.sin(an - 2.6)}`, stroke: C.ace, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L.done);
+      }
+    }
+
+    // ---------- no label on top of another: measure at the longest text ----------
+    G.cB.textContent = 'DNA breaks · 88'; if (G.cR) G.cR.textContent = 'repairs · blocked';
+    resolve([G.ethL, G.aceL[0], G.dnaL, G.pillT, G.adhL, G.cB, G.aceL[1], G.cR, ...G.xl, G.toxL]);
+    G.cB.textContent = `DNA breaks · ${st.breaks}`;
+    if (G.cR) G.cR.textContent = st.hitOnce ? 'repairs · blocked' : 'repairs · 0';
+    if (G.pillT && G.pillT.getAttribute('display') === 'none') { G.pill.setAttribute('display', 'none'); if (G.arrow) G.arrow.setAttribute('display', 'none'); G.pill = null; }
+
+    // ---------- idle life ----------
+    if (!Kit.calm) {
+      idle.push(gsap.fromTo([G.flowA, G.flowB], {attr: {'stroke-dashoffset': 0}}, {attr: {'stroke-dashoffset': -f * .8}, duration: .7, ease: 'none', repeat: -1}));
+      idle.push(gsap.to(L.dna, {scaleX: .78, svgOrigin: `${xD} 0`, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1}));
+      idle.push(gsap.timeline({repeat: -1, repeatDelay: 2.6, delay: 1.6})
+        .to(G.blink, {k: .1, duration: .14, ease: 'power2.in', onUpdate: setMouth})
+        .to(G.blink, {k: 1, duration: .35, ease: 'back.out(3)', onUpdate: setMouth}));
+    }
+  }
+
+  // ---------- events on the picture ----------
+  function breakRung(i, anim) {
+    const r = rungs[i]; if (!r) return;
+    const gap = fs * .3, y = r.y, xD = G.xD;
+    if (!r.broken) {
+      r.broken = true;
+      if (anim) {
+        gsap.to(r.l, {attr: {x2: xD - gap, stroke: C.ace}, duration: .35, ease: 'power3.out'});
+        gsap.to(r.r, {attr: {x1: xD + gap, stroke: C.ace}, duration: .35, ease: 'power3.out'});
+      } else { r.l.setAttribute('x2', xD - gap); r.r.setAttribute('x1', xD + gap); r.l.setAttribute('stroke', C.ace); r.r.setAttribute('stroke', C.ace); }
+    }
+    const dot = Kit.mk('circle', {cx: xD, cy: y, r: fs * .28, fill: C.ace, stroke: '#fff', 'stroke-width': 1, filter: 'url(#glow)'}, L.stuck);
+    G.stuck.push(dot);
+    if (!anim) return;
+    gsap.from(dot, {scale: 0, transformOrigin: '50% 50%', duration: .5, ease: 'back.out(3)'});
+    gsap.fromTo(L.dnaOut, {x: fs * .18}, {x: 0, duration: .5, ease: 'elastic.out(1,.3)'});
+    for (let k = 0; k < 8; k++) {
+      const a = k / 8 * Math.PI * 2 + .2, c = Math.cos(a), s = Math.sin(a);
+      const ln = Kit.mk('line', {x1: xD, y1: y, x2: xD, y2: y, stroke: k % 2 ? C.ace : C.gold, 'stroke-width': 2, 'stroke-linecap': 'round'}, L.fx);
+      gsap.to(ln, {attr: {x1: xD + c * fs * .5, y1: y + s * fs * .5, x2: xD + c * fs * 1.35, y2: y + s * fs * 1.35}, duration: .45, ease: 'power3.out'});
+      gsap.to(ln, {opacity: 0, duration: .3, delay: .25, onComplete: () => ln.remove()});
+    }
+  }
+
+  function repair(i) {
+    const r = rungs[i], t = G.fix; if (!r || !t) return;
+    gsap.killTweensOf(t);
+    const xr = G.xD - G.hw - fs * 1.1;
+    gsap.timeline()
+      .to(t, {x: xr, y: r.y, duration: .45, ease: 'power3.out'})
+      .to(t, {x: '+=4', duration: .06, repeat: 5, yoyo: true, ease: 'sine.inOut'})
+      .add(() => {
+        st.hitOnce = true; if (G.cR) G.cR.textContent = 'repairs · blocked';
+        const y = r.y - fs * .9, k = fs * .3;
+        const xg = Kit.mk('path', {d: `M${xr - k},${y - k} L${xr + k},${y + k} M${xr + k},${y - k} L${xr - k},${y + k}`, stroke: C.ace, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, L.fx);
+        gsap.fromTo(xg, {scale: 0, transformOrigin: '50% 50%'}, {scale: 1, duration: .3, ease: 'back.out(3)'});
+        gsap.to(xg, {opacity: 0, duration: .4, delay: .6, onComplete: () => xg.remove()});
+      })
+      .to(t, {x: G.fixX, y: G.fixY, duration: .7, ease: 'power2.inOut'}, '+=.2');
+  }
+
+  function chomp() {
+    gsap.killTweensOf(G.mouth);
+    gsap.timeline({onUpdate: setMouth})
+      .to(G.mouth, {a: .04, duration: .1, ease: 'power3.in'})
+      .to(G.mouth, {a: .5, duration: .4, ease: 'back.out(3)'});
+  }
+
+  function convert() {
+    st.conv++;
+    if (st.red) return;
+    st.red = true;
+    gsap.fromTo(G.red, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1.4, ease: 'power2.inOut'});
+    gsap.to(G.flowB, {attr: {opacity: .8}, duration: .5, delay: 1.3});
+    gsap.fromTo(G.aceL, {opacity: 0, y: 6}, {opacity: 1, y: 0, stagger: .12, duration: .6, ease: 'power3.out', delay: .5});
+    say.innerHTML = 'ADH turns ethanol into <b>acetaldehyde</b>: higher up the toxicity scale. <b>Keep holding.</b>';
+  }
+
+  function spawn() {
+    if (!G.dA || st.done) return;
+    const g = Kit.mk('g', {}, L.mol), inner = Kit.mk('g', {}, g), r = fs * .42;
+    const halo = Kit.mk('circle', {r: r * 2, fill: C.ace, opacity: 0}, inner);
+    Kit.mk('circle', {cx: -r * .95, cy: -r * .45, r: r * .62, fill: '#a9a296', stroke: '#fff', 'stroke-width': 1.1}, inner);
+    const a = Kit.mk('circle', {r, fill: C.eth, stroke: '#fff', 'stroke-width': 1.3}, inner);
+    const o = Kit.mk('circle', {cx: r * .95, cy: -r * .5, r: r * .55, fill: '#c9c2b5', stroke: '#fff', 'stroke-width': 1.1}, inner);
+    gsap.fromTo(G.liq, {y: fs * .12}, {y: 0, duration: .5, ease: 'elastic.out(1,.4)'});
+    const tl = gsap.timeline({onComplete: () => { live = live.filter(x => x !== tl); }});
+    live.push(tl);
+    tl.set(g, {x: G.xS, y: G.yLow}).set(inner, {scale: 0, transformOrigin: '50% 50%'})
+      .to(inner, {scale: 1, duration: .3, ease: 'back.out(3)'}, 0)
+      .to(g, {motionPath: {path: G.dA}, duration: 1.1, ease: 'power1.in'}, 0)
+      .add(chomp, .98)
+      .to(inner, {scale: .5, duration: .12, ease: 'power2.in'}, 1.0)
+      .add(convert, 1.12)
+      .to(a, {attr: {fill: C.ace}, duration: .15}, 1.12)
+      .to(o, {attr: {fill: '#ff9a7a'}, duration: .15}, 1.12)
+      .to(halo, {opacity: .22, duration: .3}, 1.12)
+      .to(inner, {scale: 1.25, duration: .6, ease: 'elastic.out(1,.45)'}, 1.12)
+      .to(g, {motionPath: {path: G.dB}, duration: 1.5, ease: 'power2.inOut'}, 1.15)
+      .add(() => {
+        const idx = order[st.claim % order.length]; st.claim++;
+        const ry = rungs[idx] ? rungs[idx].y : G.yHigh;
+        tl.to(g, {motionPath: {path: `M${G.xBe},${G.yHigh} Q${G.xD - G.hw * .3},${G.yHigh} ${G.xD},${ry}`}, duration: .5, ease: 'power2.in'})
+          .add(() => hit(idx))
+          .to(inner, {scale: 0, duration: .25, ease: 'power2.in', onComplete: () => g.remove()});
+      });
+  }
+
+  function hit(idx) {
+    if (st.done) return;
+    st.breaks++;
+    breakRung(idx, true);
+    G.cB.textContent = `DNA breaks · ${st.breaks}`;
+    gsap.fromTo(G.cB, {scale: 1.25, transformOrigin: '100% 50%'}, {scale: 1, duration: .4, ease: 'back.out(3)'});
+    hold.style.setProperty('--p', Math.min(1, st.breaks / NEED));
+    Kit.haptic('light');
+    repair(idx);
+    if (st.breaks === 1) say.innerHTML = 'It reaches your cells, <b>breaks the DNA</b>, and jams the repair. <b>Keep holding.</b>';
+    if (st.breaks >= NEED) reveal();
+  }
+
+  function reveal() {
+    if (st.done) return;
+    st.done = true; stopHold();
+    Kit.hide('say'); Kit.hide('hold'); Kit.show('why'); Kit.show('keep');
+    hold.style.setProperty('--p', 1);
+    Kit.haptic('success');
+    layout();
+    if (!Kit.calm) { st.wowT = performance.now(); requestAnimationFrame(wow); }
+  }
+
+  function wow() {
+    st.wowT = performance.now();
+    gsap.fromTo(G.sweepRect, {attr: {width: 0}}, {attr: {width: G.sweepW}, duration: 1.2, ease: 'expo.out'});
+    gsap.fromTo(G.red, {attr: {'stroke-width': fs * .75}}, {attr: {'stroke-width': fs * .32}, duration: 1.3, ease: 'power3.out'});
+    gsap.from(G.stuck, {scale: 2.4, transformOrigin: '50% 50%', stagger: .07, duration: .6, ease: 'back.out(3)', delay: .2});
+    gsap.fromTo(L.dnaOut, {x: fs * .35}, {x: 0, duration: .9, ease: 'elastic.out(1,.25)', delay: .3});
+    if (!G.pill) return;
+    gsap.from(G.pill, {opacity: 0, duration: .25, delay: .2});
+    gsap.from(G.pillBox, {attr: {width: G.ph}, duration: .8, ease: 'expo.out', delay: .3});
+    gsap.from(G.triIn, {scale: 0, rotation: -40, transformOrigin: '50% 70%', duration: 1, ease: 'elastic.out(1,.45)', delay: .3});
+    gsap.from(G.pillT, {opacity: 0, x: -8, duration: .5, ease: 'power3.out', delay: .6});
+    if (G.arrow) gsap.from(G.arrow, {drawSVG: '0%', duration: .6, ease: 'power2.out', delay: 1});
+  }
+
+  function finish() {
+    stopHold();
+    st.red = true; st.conv = Math.max(1, st.conv); st.breaks = Math.max(st.breaks, NEED); st.hitOnce = true;
+    reveal();
+  }
+
+  // ---------- the hold ----------
+  function stopHold() { clearInterval(timer); timer = null; hold.classList.remove('on'); }
+  hold.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    if (st.done) return;
+    try { hold.setPointerCapture(e.pointerId); } catch (_) {}
+    if (Kit.calm) { finish(); return; }
+    hold.classList.add('on'); Kit.haptic('selection');
+    spawn(); clearInterval(timer); timer = setInterval(spawn, 480);
+  });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => hold.addEventListener(ev, stopHold));
+  hold.addEventListener('contextmenu', e => e.preventDefault());
+  hold.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); if (Kit.calm) finish(); else spawn(); } });
+
+  new ResizeObserver(() => {
+    if (!ready) return;
+    const s = svg.clientWidth + 'x' + svg.clientHeight;
+    if (s === lastSize) return;
+    layout();
+    if (st.done && !Kit.calm && performance.now() - st.wowT < 1500) wow();
+  }).observe(Kit.$('stage'));
+
+  Kit.onShow.card = () => { ready = true; layout(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G.liverG) return;
+    gsap.from('#pic .ax', {drawSVG: '0%', duration: .9, stagger: .12, ease: 'power3.out'});
+    gsap.from(G.liverG, {scale: 0, transformOrigin: '50% 50%', duration: .8, ease: 'back.out(2)', delay: .25});
+    gsap.from(G.strands, {drawSVG: '0%', duration: 1.3, ease: 'power2.inOut', delay: .3});
+    gsap.from('#pic .rung', {opacity: 0, duration: .3, stagger: .03, delay: .7});
+    gsap.from('#pic .lab', {opacity: 0, y: 5, stagger: .04, duration: .5, ease: 'power3.out', delay: .45});
+    gsap.from(hold, {y: 12, opacity: 0, duration: .6, ease: 'power3.out', delay: .5});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    if (!Kit.calm) { spawn(); await w(300); }
+    finish();
+    await w(Kit.calm ? 100 : 1900);
+  };
+})();
+Kit.single();
+</script>
+</html>

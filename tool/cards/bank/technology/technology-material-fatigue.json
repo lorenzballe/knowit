@@ -1,0 +1,38 @@
+{
+  "id": "technology-material-fatigue",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the effect of repeated high-pressure cycles on the hull?",
+  "answer": "Repeated high-pressure cycles weaken a hull's material over time, even if it held the first time. The page's dive takes a submersible down to crushing pressure and back up, and the gold line shows what to watch.",
+  "move": "Load a material again and again and it weakens, even if it held the first time.",
+  "keywords": [
+    "titan_submersible",
+    "hull",
+    "material_fatigue",
+    "pressure_cycles",
+    "deep_sea"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page titled Material fatigue, asking what repeated high-pressure cycles do to a hull. A Dive button sends a submersible down to crushing pressure and back up while a gold line is watched.",
+    "ground": "#06192f"
+  },
+  "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=628s",
+  "written": "2026-11-03"
+}

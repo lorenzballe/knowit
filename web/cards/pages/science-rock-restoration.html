@@ -1,0 +1,353 @@
+<!doctype html>
+<!-- slug: science-rock-restoration -->
+<!-- Look: a neon sign in the dark. A block of rock drawn in glowing tubes: cyan layers on top, pink clinoforms, amber layers below, red fault cracks.
+     Interaction: the block flickers on flat, cracks along two faults and slides down. The reader drags each sunken block back up the fault and undoes its throw, piece by piece like a puzzle.
+     Wow moment: when the last block snaps home, sparks run down the joins, the cracks go dark, the clinoforms blaze brighter, and an "UNDEFORMED STATE" sign flickers on letter by letter. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Undo the faults</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;background:none}
+#why{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0}
+#flip{align-self:flex-start}
+.bob{animation:bob 1.3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.kit-calm .bob{animation:none}
+.answered .q{font-size:max(2.4cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag the blocks · undo the faults" style="--c:#140b09;--k:#f6efe4;--edge:#050202">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RESTORE THE ROCK</span></div>
+    <h2 class="q">Why do geologists undo the faults in a broken rock section?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A neon block of layered rock cut by two faults. The blocks to the right have slid down. Drag them back up until the layers line up."></svg>
+    </div>
+    <p class="say" id="say">Two faults broke this rock and dropped it. <b>Drag each sunken block up</b> until its glowing layers meet the ones beside it.</p>
+    <p class="body gone" id="why">Faults break the layers and shift them, so their first shape is lost. Undoing each fault's throw, like a puzzle, brings back the undeformed state, and the clinoforms building out to the left become plain to see.</p>
+    <button class="btn gone" id="flip">See it as it is today</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Undo the deformation first, and the original layers become easy to read.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(CustomEase, DrawSVGPlugin);
+  CustomEase.create('flick', 'M0,0 C0.03,0.9 0.05,0.9 0.07,0.9 C0.09,0.08 0.11,0.08 0.13,0.08 C0.17,0.85 0.19,0.85 0.23,0.85 C0.26,0.25 0.28,0.25 0.3,0.25 C0.38,1 0.44,1 0.5,1 C0.53,0.55 0.55,0.55 0.57,0.55 C0.66,1 0.8,1 1,1');
+  CustomEase.create('settle', 'M0,0 C0.22,0 0.32,1.14 0.58,1.05 0.78,0.98 0.9,1 1,1');
+
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
+  const CY = '#5ef3ff', PK = '#ff4fd8', AM = '#ffb347', RD = '#ff3b3b', WH = '#eef4ff', GO = '#ffd76a';
+  const F = [[.30, .38], [.64, .72]];   // faults: x at the top and at the bottom of the block (normal faults dipping right)
+  const SL = .08;                        // horizontal slip per unit of throw: the blocks slide along the fault plane
+  const PRESENT = [.13, .10];            // today's throw on each fault, in block heights
+  const RK = .27;                        // room under the block (for the throw, then for the sign)
+  const MINO = -.03, MAXX = .03;         // how far past "home" a block may be dragged
+  const DX = .17, DY = .12, SLACK = .06; // top-face depth (in block units) and headroom for over-dragging
+  let off = PRESENT.slice(), done = false, today = false, busy = false, tlEnter = null, tlAct = null, G = null, drag = null;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const DISP = 'font-family:var(--display);font-weight:800';
+
+  // ---------- the rock, in its undeformed coordinates (u across, v down) ----------
+  const CYV = [.07, .14, .21], PKV = .29, AMV = [.62, .70, .78, .86, .94];
+  const wave = (u, i) => .006 * Math.sin(u * 7 + i * 1.7);
+  const CLINO = Array.from({length: 8}, (_, i) => ({xi: .86 - i * .09, top: .29 - i * .004, bot: .615}));
+  const clinoV = (c, u) => c.top + (c.bot - c.top) / (1 + Math.exp((u - c.xi) / .05));
+
+  // Lay the sign's letters out one by one, each measured on its own, with a gap that covers stroke and glow,
+  // so neighbouring letters never touch whatever the font's kerning does.
+  function layoutSign() {
+    if (!G || !G.letters.length) return;
+    const {word, W, m, cx} = G.signInfo;
+    const meas = Kit.mk('text', {x: 0, y: -99, style: DISP}, svg);
+    const measure = fs => {
+      meas.setAttribute('font-size', fs);
+      const ws = [];
+      for (const ch of word) {
+        if (ch === ' ') { ws.push(fs * .32); continue; }
+        meas.textContent = ch; ws.push(meas.getComputedTextLength());
+      }
+      const gap = Math.max(1.1, fs * .05) + fs * .06;
+      const tw = ws.reduce((a, b) => a + b, 0) + gap * (ws.length - 1);
+      return {ws, gap, tw};
+    };
+    let fs = G.sfs, r = measure(fs);
+    if (r.tw > W - 2 * m) { fs = Math.max(10, fs * (W - 2 * m) / r.tw); r = measure(fs); }
+    meas.remove();
+    const sx = Math.max(m, Math.min(W - m - r.tw, cx - r.tw / 2));
+    let x = sx, li = 0;
+    for (let i = 0; i < word.length; i++) {
+      if (word[i] !== ' ') {
+        const t = G.letters[li++];
+        t.setAttribute('x', x.toFixed(1));
+        t.setAttribute('font-size', fs);
+        t.setAttribute('stroke-width', Math.max(1.1, fs * .05));
+      }
+      x += r.ws[i] + r.gap;
+    }
+    G.sub.setAttribute('x', (sx + r.tw / 2).toFixed(1));
+  }
+
+  function build() {
+    if (tlEnter) { tlEnter.kill(); tlEnter = null; busy = false; if (!done) off = PRESENT.slice(); }
+    if (tlAct) { tlAct.kill(); tlAct = null; busy = false; if (done) off = today ? PRESENT.slice() : [0, 0]; }
+    drag = null;
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const m = Math.max(10, W * .04);
+
+    // --- sizes: sign first, then the block that fits around it ---
+    const fs2 = Math.max(12, Math.min(14, H * .04));
+    let sfs = Math.max(13, Math.min(W * .068, 26, H * .08));
+    const extraW = (PRESENT[0] + PRESENT[1] + 2 * MAXX) * SL + .02;
+    let bw = (W - 2 * m) / (1 + DX + extraW);
+    const availH = H - 2 * m;
+    let signH = sfs * 1.05 + fs2 * 1.7 + 6;
+    let bh = availH / (1 + DY + SLACK + RK);
+    if (RK * bh < signH) bh = (availH - signH) / (1 + DY + SLACK);
+    if (bw > bh * 1.5) bw = bh * 1.5;
+    if (bh > bw * 1.3) bh = bw * 1.3;
+    const room = Math.max(RK * bh, signH);
+    const totW = bw * (1 + DX + extraW), totH = bh * (1 + DY + SLACK) + room;
+    const x0 = (W - totW) / 2, top = (H - totH) / 2, y0 = top + bh * (DY + SLACK);
+    const lw = Math.max(1.4, Math.min(bw, W) * .0048);
+    const X = u => x0 + u * bw, Y = v => y0 + v * bh;
+    const path = pts => 'M' + pts.map(([u, v]) => X(u).toFixed(1) + ',' + Y(v).toFixed(1)).join('L');
+    const poly = pts => pts.map(([u, v]) => X(u).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ');
+    const s1 = Math.max(1.6, lw * 1.2), s2 = Math.max(4, lw * 3.6);
+
+    svg.innerHTML = `<defs>
+      <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c0e1c" stop-opacity=".88"/><stop offset="1" stop-color="#140a1c" stop-opacity=".93"/></linearGradient>
+      <linearGradient id="topf" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#2a2340"/><stop offset="1" stop-color="#16122a"/></linearGradient>
+      <filter id="neon" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceGraphic" stdDeviation="${s1}" result="a"/><feGaussianBlur in="SourceGraphic" stdDeviation="${s2}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>`;
+
+    // No wall, no panel: the card itself is the dark ground. An empty group stays for the entrance timeline.
+    const bg = Kit.mk('g', {}, svg);
+
+    // The sign under the block, lit only once the rock is restored.
+    const sign = Kit.mk('g', {opacity: done && !today ? 1 : 0}, svg);
+    const cx = x0 + bw * (1 + DX) / 2;
+    const word = 'UNDEFORMED STATE';
+    signH = sfs * 1.05 + fs2 * 1.7 + 6;
+    const sy = y0 + bh + Math.max(4, (room - signH) / 2) + sfs * .95, letters = [];
+    const sg = Kit.mk('g', {filter: 'url(#neon)'}, sign);
+    for (let i = 0; i < word.length; i++) {
+      if (word[i] === ' ') continue;
+      const t = Kit.mk('text', {x: 0, y: sy, fill: 'rgba(255,215,106,.16)', stroke: GO, 'stroke-width': Math.max(1.1, sfs * .05), 'font-size': sfs, style: DISP}, sg);
+      t.textContent = word[i]; letters.push(t);
+    }
+    const sub = Kit.mk('text', {x: cx, y: sy + fs2 * 1.55, fill: PK, 'text-anchor': 'middle', 'font-size': fs2, filter: 'url(#neon)', style: 'font-family:var(--mono);font-weight:700'}, sign);
+    sub.textContent = '← clinoforms build out to the left';
+
+    // The three blocks: top face, front face, layers clipped inside, outline, fault crack, hint.
+    const tops = [0, F[0][0], F[1][0], 1], bots = [0, F[0][1], F[1][1], 1];
+    const blocks = [], faults = [], hints = [], clino = [], lines = [];
+    for (let k = 0; k < 3; k++) {
+      const g = Kit.mk('g', {}, svg); blocks.push(g);
+      const front = [[tops[k], 0], [tops[k + 1], 0], [bots[k + 1], 1], [bots[k], 1]];
+      if (k === 2) {
+        Kit.mk('polygon', {points: poly([[1, 0], [1, 1], [1 + DX, 1 - DY], [1 + DX, -DY]]), fill: '#0a0814', stroke: WH, 'stroke-opacity': .35, 'stroke-width': 1}, g);
+        const rf = Kit.mk('g', {filter: 'url(#neon)', opacity: .7, 'stroke-linecap': 'round'}, g);
+        [[CYV, CY], [AMV, AM], [[PKV], PK]].forEach(([vs, col]) => vs.forEach(v => lines.push(Kit.mk('path', {d: path([[1, v], [1 + DX, v - DY]]), stroke: col, 'stroke-width': lw * .8, fill: 'none'}, rf))));
+      }
+      Kit.mk('polygon', {points: poly([[tops[k], 0], [tops[k + 1], 0], [tops[k + 1] + DX, -DY], [tops[k] + DX, -DY]]), fill: 'url(#topf)', stroke: WH, 'stroke-opacity': .4, 'stroke-width': 1}, g);
+      Kit.mk('polygon', {points: poly(front), fill: 'url(#glass)'}, g);
+      const cid = 'clip' + k, cp = Kit.mk('clipPath', {id: cid}, svg.querySelector('defs'));
+      Kit.mk('polygon', {points: poly(front)}, cp);
+      const inner = Kit.mk('g', {'clip-path': `url(#${cid})`}, g);
+      const mkSet = (col, w) => Kit.mk('g', {filter: 'url(#neon)', stroke: col, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, inner);
+      const gc = mkSet(CY, lw), gp = mkSet(PK, lw), ga = mkSet(AM, lw);
+      // only draw tubes across this block's own width, so nothing hides outside the frame
+      const lo = Math.min(tops[k], bots[k]) - .01, hi = Math.max(tops[k + 1], bots[k + 1]) + .01;
+      const U = []; for (let u = lo; u <= hi + 1e-6; u += .01) U.push(u);
+      CYV.forEach((v, i) => lines.push(Kit.mk('path', {d: path(U.map(u => [u, v + wave(u, i)]))}, gc)));
+      AMV.forEach((v, i) => lines.push(Kit.mk('path', {d: path(U.map(u => [u, v + wave(u, i + 3) * .6]))}, ga)));
+      lines.push(Kit.mk('path', {d: path(U.map(u => [u, PKV]))}, gp));
+      CLINO.forEach(c => {
+        const pts = U.filter(u => u > c.xi - .24 && u < c.xi + .2).map(u => [u, clinoV(c, u)]);
+        if (pts.length < 2) return;
+        const p = Kit.mk('path', {d: path(pts)}, gp); clino.push(p); lines.push(p);
+      });
+      Kit.mk('polygon', {points: poly(front), fill: 'none', stroke: WH, 'stroke-opacity': .55, 'stroke-width': 1.1, filter: 'url(#neon)'}, g);
+      if (k > 0) {
+        const [a, b] = F[k - 1];
+        faults.push(Kit.mk('path', {d: path([[a, 0], [b, 1]]), stroke: RD, 'stroke-width': lw * 1.4, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#neon)', opacity: done && !today ? .15 : 1}, g));
+        // drag handle: a dark puck with glowing chevrons
+        const hx = X((tops[k] + tops[k + 1] + bots[k] + bots[k + 1]) / 4 + .015), hy = Y(.47), c = Math.max(6, Math.min(bw, bh) * .028);
+        const hg = Kit.mk('g', {opacity: off[k - 1] === 0 || done ? 0 : 1}, g), hb = Kit.mk('g', {class: 'bob'}, hg);
+        Kit.mk('circle', {cx: hx, cy: hy - c * .2, r: c * 2, fill: 'rgba(8,6,18,.82)', stroke: WH, 'stroke-opacity': .35, 'stroke-width': 1}, hb);
+        Kit.mk('path', {d: `M${hx - c},${hy - c * .1} l${c},${-c} l${c},${c} M${hx - c},${hy + c} l${c},${-c} l${c},${c}`, stroke: WH, 'stroke-width': lw * 1.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#neon)'}, hb);
+        hints.push(hg);
+      }
+    }
+    G = {W, H, bw, bh, x0, y0, X, Y, blocks, faults, hints, clino, lines, sign, letters, sub, bg, lw, sfs, signInfo: {word, W, m, cx}};
+    layoutSign();
+    apply();
+  }
+
+  // Fonts may arrive after the first build: lay the sign out again with the real glyph widths.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => layoutSign());
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', () => layoutSign());
+
+  const shifts = () => [0, off[0], off[0] + off[1]];
+  function apply() {
+    if (!G) return;
+    const s = shifts();
+    G.blocks.forEach((g, k) => g.setAttribute('transform', `translate(${(s[k] * SL * G.bw).toFixed(2)},${(s[k] * G.bh).toFixed(2)})`));
+  }
+
+  // Sparks run down the fault where the layers meet again.
+  function sparks(j) {
+    if (Kit.calm || !G) return;
+    const [a, b] = F[j], g = G.blocks[j + 1];
+    const vs = [...CYV, PKV, ...AMV];
+    vs.forEach((v, i) => {
+      const col = v < .25 ? CY : v < .5 ? PK : AM;
+      const c = Kit.mk('circle', {cx: G.X(a + (b - a) * v), cy: G.Y(v), r: 0, fill: WH, stroke: col, 'stroke-width': G.lw, filter: 'url(#neon)'}, g);
+      gsap.timeline({delay: i * .035, onComplete: () => c.remove()})
+        .to(c, {attr: {r: G.lw * 2.6}, duration: .14, ease: 'power3.out'})
+        .to(c, {attr: {r: G.lw * 4}, opacity: 0, duration: .4, ease: 'power2.out'});
+    });
+  }
+
+  function flash(j) {
+    Kit.haptic('light');
+    const f = G.faults[j], h = G.hints[j];
+    gsap.timeline().to(f, {attr: {stroke: '#ffffff'}, duration: .08}).to(f, {attr: {stroke: RD}, duration: .6, ease: 'power2.out'});
+    gsap.to(h, {opacity: 0, duration: .3});
+    sparks(j);
+    if (!done && !(off[0] === 0 && off[1] === 0)) say.innerHTML = 'Click: one fault undone, its layers meet again. <b>Now the other block.</b>';
+  }
+
+  function check() { if (!done && off[0] === 0 && off[1] === 0) reveal(); }
+
+  function reveal() {
+    done = true; busy = true; Kit.haptic('success');
+    card.classList.add('answered');
+    Kit.hide('say'); Kit.show('why'); Kit.show('flip'); Kit.show('keep');
+    const g = G;
+    if (Kit.calm) { gsap.set(g.faults, {opacity: .15}); gsap.set(g.sign, {opacity: 1}); gsap.set(g.hints, {opacity: 0}); busy = false; return; }
+    tlAct = gsap.timeline({onComplete: () => { busy = false; tlAct = null; }})
+      .to(g.hints, {opacity: 0, duration: .2})
+      .to(g.faults, {opacity: .15, duration: .5, ease: 'power2.out'}, .1)
+      .fromTo(g.clino, {attr: {'stroke-width': g.lw}}, {attr: {'stroke-width': g.lw * 2.4}, duration: .18, ease: 'power3.out', yoyo: true, repeat: 1, stagger: .02}, .1)
+      .fromTo(g.clino, {opacity: .15}, {opacity: 1, duration: 1, ease: 'flick', stagger: {each: .025, from: 'end'}}, .15)
+      .set(g.sign, {opacity: 1}, .5)
+      .fromTo(g.letters, {opacity: 0}, {opacity: 1, duration: .7, ease: 'flick', stagger: .055}, .5)
+      .fromTo(g.sub, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .6, ease: 'back.out(2)'}, 1.3);
+  }
+
+  // ---------- the drag ----------
+  const pt = e => { const r = svg.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
+  svg.addEventListener('pointerdown', e => {
+    if (busy || done || !G) return;
+    const p = pt(e), s = shifts();
+    let k = 0;
+    F.forEach(([a, b], j) => {
+      const sk = s[j + 1], v = Math.max(0, Math.min(1, (p.y - G.y0 - sk * G.bh) / G.bh));
+      if (p.x > G.X(a + (b - a) * v) + sk * SL * G.bw) k++;
+    });
+    if (k === 0) {
+      say.innerHTML = 'That block never moved. <b>Pull the sunken ones on the right back up.</b>';
+      Kit.haptic('light');
+      return;
+    }
+    drag = {j: k - 1, y: p.y, start: off[k - 1]};
+    svg.setPointerCapture(e.pointerId); Kit.haptic('selection');
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag || !G) return;
+    let v = Math.max(MINO, Math.min(PRESENT[drag.j] + MAXX, drag.start + (pt(e).y - drag.y) / G.bh));
+    if (Math.abs(v) < .012) v = 0;
+    const was = off[drag.j]; off[drag.j] = v; apply();
+    if (v === 0 && was !== 0) flash(drag.j);
+    else if (v !== 0 && was === 0) gsap.to(G.hints[drag.j], {opacity: 1, duration: .3});
+  });
+  const end = () => {
+    if (!drag) return;
+    const j = drag.j; drag = null;
+    if (off[j] !== 0 && Math.abs(off[j]) < .04) {
+      const o = {v: off[j]};
+      gsap.to(o, {v: 0, duration: .35, ease: 'back.out(3)', onUpdate: () => { off[j] = o.v; apply(); }, onComplete: () => { off[j] = 0; apply(); flash(j); check(); }});
+    } else check();
+  };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // ---------- today / restored ----------
+  Kit.$('flip').addEventListener('click', () => {
+    if (busy || !G) return;
+    busy = true; today = !today; Kit.haptic('light');
+    Kit.$('flip').textContent = today ? 'Restore it again' : 'See it as it is today';
+    const o = {a: off[0], b: off[1]}, to = today ? PRESENT : [0, 0];
+    tlAct = gsap.timeline({onComplete: () => { busy = false; tlAct = null; }});
+    if (today) tlAct.to(G.sign, {opacity: 0, duration: .3, ease: 'power2.in'}).to(G.faults, {opacity: 1, duration: .3, ease: 'flick'}, 0);
+    tlAct.to(o, {a: to[0], b: to[1], duration: Kit.calm ? 0 : .9, ease: 'settle', onUpdate: () => { off = [o.a, o.b]; apply(); }}, today ? .15 : 0);
+    if (!today) tlAct.add(() => { sparks(0); sparks(1); }).to(G.faults, {opacity: .15, duration: .4}).to(G.sign, {opacity: 1, duration: .6, ease: 'flick'}, '-=.2');
+  });
+
+  // ---------- an idle neon hum: now and then one tube stutters ----------
+  (function hum() {
+    gsap.delayedCall(1.6 + Math.random() * 2.8, () => {
+      if (G && !Kit.calm && !busy && !drag) {
+        const l = G.lines[Math.floor(Math.random() * G.lines.length)];
+        gsap.fromTo(l, {opacity: .25}, {opacity: 1, duration: .55, ease: 'flick'});
+      }
+      hum();
+    });
+  })();
+
+  // ---------- keep the drawing matched to the stage when the layout changes ----------
+  let rz = 0;
+  new ResizeObserver(() => {
+    cancelAnimationFrame(rz);
+    rz = requestAnimationFrame(() => {
+      if (!G) return;
+      const r = svg.getBoundingClientRect();
+      if (Math.abs(r.width - G.W) > 1 || Math.abs(r.height - G.H) > 1) build();
+    });
+  }).observe(stage);
+
+  // ---------- the entrance: a flat block lights up, cracks, and drops ----------
+  Kit.onShow.card = build;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || done || !G) return;
+    busy = true; off = [0, 0]; apply();
+    const g = G, o = {a: 0, b: 0}, upd = () => { off = [o.a, o.b]; apply(); };
+    gsap.set(g.faults, {opacity: 0});
+    gsap.set(g.hints, {opacity: 0});
+    tlEnter = gsap.timeline({onComplete: () => { busy = false; tlEnter = null; }})
+      .from(g.bg, {opacity: 0, duration: .6, ease: 'power2.out'})
+      .from(g.blocks, {opacity: 0, duration: .8, ease: 'flick', stagger: .12}, .1)
+      .from(g.lines, {drawSVG: '0%', duration: .9, ease: 'expo.out', stagger: .006}, .3)
+      .set(g.faults, {opacity: 1}, 1.25)
+      .from(g.faults, {drawSVG: '0%', duration: .35, ease: 'power3.in', stagger: .12}, 1.25)
+      .to(o, {a: PRESENT[0], duration: 1, ease: 'settle', onUpdate: upd}, 1.6)
+      .to(o, {b: PRESENT[1], duration: 1, ease: 'settle', onUpdate: upd}, 1.85)
+      .to(g.hints, {opacity: 1, duration: .5, stagger: .15}, 2.7);
+  };
+  const lift = (j, dur) => new Promise(res => {
+    const o = {v: off[j]};
+    gsap.to(o, {v: 0, duration: dur, ease: 'back.out(1.6)', onUpdate: () => { off[j] = o.v; apply(); }, onComplete: () => { off[j] = 0; apply(); res(); }});
+  });
+  Kit.play.card = async () => {
+    await wait(Kit.calm ? 50 : 300);
+    if (tlEnter) tlEnter.progress(1);
+    if (done || !G) return;
+    busy = true;
+    for (const j of [0, 1]) {
+      if (off[j] !== 0) { await lift(j, Kit.calm ? 0 : .7); flash(j); }
+      await wait(Kit.calm ? 0 : 250);
+    }
+    busy = false; check();
+    await wait(Kit.calm ? 100 : 2400);
+  };
+})();
+Kit.single();
+</script>
+</html>

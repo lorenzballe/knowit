@@ -1,0 +1,37 @@
+{
+  "id": "weird_facts-bermuda-not-top-ten",
+  "topic": "weird_facts",
+  "genre": "weird_facts.too_strange_to_be_true",
+  "strand": "weird_facts.too_strange_to_be_true.myths_that_spread",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Where did the WWF's 2013 study rank the Bermuda Triangle among dangerous seas?",
+  "answer": "The WWF's 2013 study of the world's most dangerous sea areas left the Bermuda Triangle out of its top 10. The eastern Mediterranean, and even the Black Sea, rank as more dangerous. So the Bermuda Triangle is not even a top-10 danger zone.",
+  "move": "By the data, the Bermuda Triangle is not even a top-10 danger zone.",
+  "keywords": [
+    "bermuda-triangle",
+    "wwf",
+    "black-sea",
+    "eastern-mediterranean"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Ranking list of dangerous sea areas from the WWF's 2013 study. The reader drags a red triangle to the rank where the Bermuda Triangle belongs, or below the line if it is not in the top 10.",
+    "ground": "#f2efe6"
+  },
+  "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=462s",
+  "written": "2026-11-03"
+}

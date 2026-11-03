@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{border-radius:2.6cqh;overflow:hidden;background:#071140;box-shadow:inset 0 0 0 .2cqh #ffffff14}
+#stage{background:none;border:0;box-shadow:none}
 #sky{touch-action:none;cursor:grab;display:block}
 #sky.drag{cursor:grabbing}
 #ir{align-self:flex-start}
@@ -75,7 +75,6 @@
     // The Sun's glow, far to the left.
     const sg = Kit.mk('radialGradient', {id: 'sg', cx: -.08, cy: E.y / H, r: .95, gradientUnits: 'objectBoundingBox'}, defs);
     [[0, '#fff6d8', .95], [.18, '#ffd76a', .7], [.45, '#ff9d3c', .22], [1, '#ff9d3c', 0]].forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, sg));
-    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#071140'}, svg);
     // Stars, only where the sky is dark.
     const stars = Kit.mk('g', {}, svg); let s = 11; const r1 = () => (s = (s * 16807) % 2147483647) / 2147483647;
     for (let i = 0; i < 46; i++) { const x = r1() * W, y = r1() * H; if (x < W * .3) continue; Kit.mk('circle', {cx: x, cy: y, r: .5 + r1() * 1, fill: '#fff', opacity: .25 + r1() * .5}, stars); }
@@ -88,23 +87,23 @@
     const dg = Kit.mk('linearGradient', {id: 'dg', x1: E.x - Rz, x2: E.x, y1: 0, y2: 0, gradientUnits: 'userSpaceOnUse'}, defs);
     [[0, .3], [.7, .12], [1, .03]].forEach(([o, op]) => Kit.mk('stop', {offset: o, 'stop-color': '#ffd76a', 'stop-opacity': op}, dg));
     Kit.mk('path', {d: `M${E.x},${E.y - Rz} A${Rz},${Rz} 0 0 0 ${E.x},${E.y + Rz} Z`, fill: 'url(#dg)'}, zones);
-    Kit.mk('line', {x1: E.x, y1: E.y - Rz, x2: E.x, y2: E.y + Rz, stroke: '#fff', 'stroke-opacity': .28, 'stroke-width': 1.2, 'stroke-dasharray': '6 5'}, zones);
+    Kit.mk('line', {x1: E.x, y1: E.y - Rz, x2: E.x, y2: E.y + Rz, stroke: '#fff', 'stroke-opacity': .4, 'stroke-width': 1.2, 'stroke-dasharray': '6 5'}, zones);
     txt(E.x - R * .58, E.y + R * .62, 'day sky', {'font-size': fs, 'text-anchor': 'middle', fill: '#ffe7a6'}, zones);
-    txt(E.x + R * .58, E.y + R * .62, 'night sky', {'font-size': fs, 'text-anchor': 'middle', opacity: .85}, zones);
+    txt(E.x + R * .58, E.y + R * .62, 'night sky', {'font-size': fs, 'text-anchor': 'middle', opacity: .9}, zones);
     // NEO Surveyor's two wedges, 45 to 120 degrees from the Sun, shown in infrared.
     const neo = Kit.mk('g', {opacity: ir ? 1 : 0}, svg); G.neo = neo;
-    for (const sg2 of [1, -1]) Kit.mk('path', {d: wedge(E.x, E.y, R + a * 2.2, SUN + sg2 * 45 * D, SUN + sg2 * 120 * D).replace(/A([^ ]+) 0 0 1/, sg2 > 0 ? 'A$1 0 0 1' : 'A$1 0 0 0'), fill: '#ff7a3d', opacity: .16, stroke: '#ffb27a', 'stroke-width': 1.4, 'stroke-dasharray': '4 4'}, neo);
+    for (const sg2 of [1, -1]) Kit.mk('path', {d: wedge(E.x, E.y, R + a * 2.2, SUN + sg2 * 45 * D, SUN + sg2 * 120 * D).replace(/A([^ ]+) 0 0 1/, sg2 > 0 ? 'A$1 0 0 1' : 'A$1 0 0 0'), fill: '#ff9a5c', opacity: .28, stroke: '#ffd2a8', 'stroke-width': 1.4, 'stroke-dasharray': '4 4'}, neo);
     const ra = R * .42;
-    Kit.mk('path', {d: `M${E.x - ra},${E.y} A${ra},${ra} 0 0 1 ${E.x + ra * Math.cos(SUN + 45 * D)},${E.y + ra * Math.sin(SUN + 45 * D)}`, fill: 'none', stroke: '#ffb27a', 'stroke-width': 1.6}, neo);
-    txt(E.x - ra - fs * .35, E.y - ra * .42, '45°', {'font-size': fs, 'text-anchor': 'end', fill: '#ffcfa8'}, neo);
-    txt(10, 12 + fs * .95, 'NEO Surveyor', {'font-size': fs, fill: '#ffcfa8'}, neo);
-    txt(10, 12 + fs * 2.15, 'launch due 2027', {'font-size': Math.max(11, fs * .9), fill: '#ffcfa8', 'font-weight': 600, opacity: .9}, neo);
+    Kit.mk('path', {d: `M${E.x - ra},${E.y} A${ra},${ra} 0 0 1 ${E.x + ra * Math.cos(SUN + 45 * D)},${E.y + ra * Math.sin(SUN + 45 * D)}`, fill: 'none', stroke: '#ffd2a8', 'stroke-width': 1.6}, neo);
+    txt(E.x - ra - fs * .35, E.y - ra * .42, '45°', {'font-size': fs, 'text-anchor': 'end', fill: '#ffe3c8'}, neo);
+    txt(10, 12 + fs * .95, 'NEO Surveyor', {'font-size': fs, fill: '#ffe3c8'}, neo);
+    txt(10, 12 + fs * 2.15, 'launch due 2027', {'font-size': Math.max(11, fs * .9), fill: '#ffe3c8', 'font-weight': 600, opacity: .95}, neo);
     // The ring the rock is dragged along, and Earth.
-    Kit.mk('circle', {cx: E.x, cy: E.y, r: R, fill: 'none', stroke: '#fff', 'stroke-opacity': .35, 'stroke-width': 1.3, 'stroke-dasharray': '3 5'}, svg);
-    G.sight = Kit.mk('line', {stroke: '#fff', 'stroke-opacity': .55, 'stroke-width': 1.2, 'stroke-dasharray': '2 3'}, svg);
+    Kit.mk('circle', {cx: E.x, cy: E.y, r: R, fill: 'none', stroke: '#fff', 'stroke-opacity': .5, 'stroke-width': 1.3, 'stroke-dasharray': '3 5'}, svg);
+    G.sight = Kit.mk('line', {stroke: '#fff', 'stroke-opacity': .7, 'stroke-width': 1.2, 'stroke-dasharray': '2 3'}, svg);
     Kit.mk('circle', {cx: E.x, cy: E.y, r: rE, fill: '#14285e'}, svg);
     Kit.mk('path', {d: `M${E.x},${E.y - rE} A${rE},${rE} 0 0 0 ${E.x},${E.y + rE} Z`, fill: '#7cc8ff'}, svg);
-    txt(E.x, E.y - rE - fs * .5, 'Earth', {'font-size': fs * .92, 'text-anchor': 'middle', opacity: .9}, svg);
+    txt(E.x, E.y - rE - fs * .5, 'Earth', {'font-size': fs * .92, 'text-anchor': 'middle', opacity: .95}, svg);
     // The rock: lumpy, dark, lit from the left.
     const rock = Kit.mk('g', {}, svg); G.rock = rock;
     G.hint = Kit.mk('circle', {r: a * 1.25, fill: 'none', stroke: '#fff', 'stroke-width': 1.5, class: moved || Kit.calm ? '' : 'hint', opacity: moved ? 0 : .8}, rock);
@@ -112,13 +111,13 @@
     for (let i = 0; i < 9; i++) { const t = i / 9 * 2 * Math.PI, rr = a * (.8 + r2() * .35); pts.push([rr * Math.cos(t), rr * .86 * Math.sin(t)]); }
     const poly = pts.map(p => p.map(v => v.toFixed(1)).join(',')).join(' ');
     const cp = Kit.mk('clipPath', {id: 'rk'}, defs); Kit.mk('polygon', {points: poly}, cp);
-    Kit.mk('polygon', {points: poly, fill: '#2b2d38', stroke: '#ffffff55', 'stroke-width': .8}, rock);
+    Kit.mk('polygon', {points: poly, fill: '#2b2d38', stroke: '#ffffff99', 'stroke-width': .8}, rock);
     Kit.mk('rect', {x: -a * 2, y: -a * 2, width: a * 2, height: a * 4, fill: '#8d8a86', 'clip-path': 'url(#rk)'}, rock);
     Kit.mk('circle', {r: Math.max(22, a * 2.6), fill: 'transparent'}, rock);
     // The telescope's view.
     const tv = Kit.mk('g', {}, svg);
-    if (ir) txt(W - 6, 12 + fs * .95, 'NEO Surveyor’s view', {'font-size': Math.max(11, fs * .9), 'text-anchor': 'end', fill: '#ffcfa8'}, tv);
-    else txt(I.x, 12 + fs * .95, 'telescope’s view', {'font-size': Math.max(11, fs * .9), 'text-anchor': 'middle', opacity: .85}, tv);
+    if (ir) txt(W - 6, 12 + fs * .95, 'NEO Surveyor’s view', {'font-size': Math.max(11, fs * .9), 'text-anchor': 'end', fill: '#ffe3c8'}, tv);
+    else txt(I.x, 12 + fs * .95, 'telescope’s view', {'font-size': Math.max(11, fs * .9), 'text-anchor': 'middle', opacity: .95}, tv);
     const cc = Kit.mk('clipPath', {id: 'tvc'}, defs); Kit.mk('circle', {cx: I.x, cy: I.y, r: ri}, cc);
     const inner = Kit.mk('g', {'clip-path': 'url(#tvc)'}, tv);
     G.bg = Kit.mk('circle', {cx: I.x, cy: I.y, r: ri, fill: '#060814'}, inner);
