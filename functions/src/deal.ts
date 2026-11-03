@@ -343,7 +343,11 @@ export function dealRandom(bank: Bank, profile: Profile, o: RandomOptions): Card
   // out: the cards at random follow the mix as it was set.
   const even0 = Object.keys(profile.mix).length === 0;
   const weighted = (c: Card) => even0 || (profile.mix[c.topic] ?? 0) > 0;
-  const onMix = (c: Card) => onTopic(c) && weighted(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
+  // Thinking is on every deck for its cards that ask: they are the training. One of its cards that
+  // only tells is drawn at random only once the mix runs out, as a subject given no weight is.
+  const training = (c: Card) => c.topic !== 'thinking' || asks(c);
+  const onMix = (c: Card) =>
+    onTopic(c) && weighted(c) && training(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
   const ready = (c: Card) => (c.builds_on ?? []).every((id) => o.exclude.has(id));
   const tierOf = (c: Card): number => {
     const read = o.exclude.has(c.id) ? 4 : 0;

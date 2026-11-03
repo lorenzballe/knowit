@@ -303,9 +303,15 @@ List<Pill> pillsAtRandom(
     return (weights[key] ?? 0) > 0;
   }
 
+  // Thinking is on every deck for its cards that ask: they are the
+  // training. One of its cards that only tells is drawn at random only
+  // once the mix runs out, as a subject given no weight is.
+  final String thinking = kTopics['thinking']!.name;
+  bool training(Pill p) => p.topic != thinking || p.asksSomething;
   bool onMix(Pill p) =>
       onTopic(p) &&
       weighted(p) &&
+      training(p) &&
       (p.strands.isEmpty || p.strands.any(strandOn));
   bool ready(Pill p) => p.buildsOn.every(exclude.contains);
 
