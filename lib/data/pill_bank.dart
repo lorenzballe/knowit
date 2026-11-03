@@ -31,13 +31,18 @@ import '../analytics.dart';
 /// Where the newest bundle is published. The deploy workflow copies
 /// `web/cards/` into the site, so this is a static file behind a CDN: no
 /// server, no key, and a reader who is offline simply keeps what they have.
-const String kBankUrl = 'https://astutetheapp.com/cards/cards.json';
+///
+/// It is the bank with the free cards' pages left out, each named instead
+/// and fetched when its card is near (lib/data/card_pages.dart), so it stays
+/// small however many pages there are. Builds from before read
+/// `cards/cards.json`, the same bank with the pages they knew inside.
+const String kBankUrl = 'https://astutetheapp.com/cards/v2/cards.json';
 
 /// The published bank's version and nothing else — a few dozen bytes. A
 /// phone asks this first and downloads [kBankUrl] only when it names a
 /// newer bank than the one in use, so an app that is up to date spends a
 /// request, not the whole bank, finding that out.
-const String kBankVersionUrl = 'https://astutetheapp.com/cards/version.json';
+const String kBankVersionUrl = 'https://astutetheapp.com/cards/v2/version.json';
 
 /// What a fetch of [kBankUrl] returns: the body on 200, null on anything
 /// else. Replaceable, so tests never touch the network.
@@ -157,7 +162,11 @@ class BankBundle {
 class PillBank {
   const PillBank._();
 
-  static const _kStored = 'knowit.bank';
+  /// Where the downloaded bundle is kept. Its own key, not the one builds
+  /// from before kept theirs under: their bundle, pages inside, has the
+  /// same version as this one's and would be taken for it.
+  static const _kStored = 'knowit.bank.v2';
+  static const _kStoredBefore = 'knowit.bank';
 
   static BankBundle? _current;
   static Map<String, Pill>? _index;
@@ -247,6 +256,9 @@ class PillBank {
   /// one built in. Called once at start, before anything is dealt, and
   /// cheap when there is nothing stored.
   static void restore(SharedPreferences prefs) {
+    // What a build from before downloaded is of no use to this one, and
+    // can weigh megabytes.
+    if (prefs.containsKey(_kStoredBefore)) prefs.remove(_kStoredBefore);
     final stored = prefs.getString(_kStored);
     if (stored == null) return;
     try {

@@ -91,6 +91,55 @@ void main() {
       );
     });
 
+    test('a card may name its page instead of carrying it', () {
+      final Pill named = cardFromJson(
+        _page(
+          web: {
+            'html': null,
+            'page': 'pages/medicine-page.html?v=0123456789ab',
+            'bytes': 12000,
+          },
+        ),
+      );
+      expect(named.web!.html, isNull);
+      expect(named.web!.page, 'pages/medicine-page.html?v=0123456789ab');
+      expect(named.web!.bytes, 12000);
+      expect(named.hasPage, isTrue);
+      final Map<String, Object?> back = webToJson(
+        named.web!,
+        challenge: named.challenge,
+      );
+      expect(back['page'], 'pages/medicine-page.html?v=0123456789ab');
+      expect(back.containsKey('html'), isFalse);
+      expect(
+        cardFromJson(_page(web: {'html': null, ...back})).web!.page,
+        named.web!.page,
+      );
+    });
+
+    test('a page named anywhere but the bank\'s pages is refused', () {
+      for (final String page in [
+        'https://example.com/x.html',
+        '../secrets.html',
+        'pages/../x.html',
+        'pages/x.js',
+        'pages/X Y.html',
+        '',
+      ]) {
+        expect(
+          () => cardFromJson(_page(web: {'html': null, 'page': page})),
+          throwsFormatException,
+          reason: page,
+        );
+      }
+      expect(
+        () => cardFromJson(
+          _page(web: {'html': null, 'page': 'pages/a.html', 'bytes': -1}),
+        ),
+        throwsFormatException,
+      );
+    });
+
     test('a page made with a later kit is read, kept, and never dealt', () {
       final Pill later = cardFromJson(
         _page(web: {'kit': kCardKit + 1, 'touch': 'something new'}),

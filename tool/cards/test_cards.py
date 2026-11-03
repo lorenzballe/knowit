@@ -4,7 +4,9 @@
 """
 from __future__ import annotations
 
+import contextlib
 import datetime as dt
+import io
 import json
 import tempfile
 import unittest
@@ -49,6 +51,22 @@ def read_card(**over) -> dict:
     }
     card.update(over)
     return card
+
+
+def lead(**over) -> dict:
+    """A lead as the chain that watched the video hands it over."""
+    item = {
+        "id": "yt-tides-1",
+        "video": "https://www.youtube.com/watch?v=tides000001",
+        "title": "Why the sea comes in twice a day",
+        "channel": "Sea Science",
+        "idea": "The Moon raises two bulges of water, one facing it and one on the far side, so most coasts see two high tides a day.",
+        "figures": ["12 hours 25 minutes between high tides"],
+        "links": ["https://tidesandcurrents.noaa.gov/restles1.html", "https://www.instagram.com/seascience"],
+        "language": "en",
+    }
+    item.update(over)
+    return item
 
 
 def thinking_card(**over) -> dict:
@@ -556,11 +574,55 @@ class TheModel(unittest.TestCase):
         self.assertAlmostEqual(self._model("claude-sonnet-5").cost(u), 2.0 + 0.10)
         # The batch halves the tokens and never the searches.
         self.assertAlmostEqual(self._model("claude-sonnet-5", batch=True).cost(u), 1.0 + 0.10)
+        # On Haiku the ten searches cost as much as the million tokens.
+        self.assertAlmostEqual(self._model("claude-haiku-5-5").cost(u), 0.10 + 0.10)
 
     def test_the_stages_ask_the_model_they_were_given(self):
         model = self._model("claude-sonnet-5")
         spec = generate.Spec("s", [{"role": "user", "content": "x"}], generate.Draft)
         self.assertEqual(model._params(spec)["model"], "claude-sonnet-5")
+
+    def _client(self):
+        """A client that answers every call at once with a reading, and keeps what it was sent."""
+        from types import SimpleNamespace as NS
+        sent = []
+        reply = generate.canned_reading().model_dump_json()
+
+        def create(**kw):
+            sent.append(kw)
+            return NS(stop_reason="end_turn", content=[NS(type="text", text=reply)],
+                      usage=NS(input_tokens=10, output_tokens=5, cache_read_input_tokens=0, cache_creation_input_tokens=0, server_tool_use=None))
+
+        return NS(beta=NS(messages=NS(create=create))), sent
+
+    def test_haiku_takes_the_older_tools_and_no_fallback(self):
+        spec = generate.Spec("s", [{"role": "user", "content": "x"}], generate.Reading,
+                             tools=[generate._web_search(generate.LEAD_SEARCHES), generate._web_fetch(generate.LEAD_FETCHES)])
+        haiku = self._model("claude-haiku-5-5")
+        params = haiku._params(spec)
+        self.assertEqual([(t["type"], t["name"]) for t in params["tools"]], [("web_search_20250305", "web_search"), ("web_fetch_20250910", "web_fetch")])
+        self.assertEqual([t["max_uses"] for t in params["tools"]], [generate.LEAD_SEARCHES, generate.LEAD_FETCHES])
+        self.assertEqual(params["tools"][0]["blocked_domains"], sources.blocked(), "the same settings, under the older version")
+        self.assertEqual(params["tools"][1]["max_content_tokens"], generate.HAIKU_PAGE_TOKENS,
+                         "a page is cut short on Haiku, so a request stays under the price step at 100,000 tokens")
+        self.assertGreater(spec.tools[1]["max_content_tokens"], generate.HAIKU_PAGE_TOKENS)
+        self.assertNotIn("fallbacks", params)
+        self.assertEqual(params["output_config"]["effort"], "high")
+        self.assertEqual(spec.tools[0]["type"], "web_search_20260209", "the spec is left as it was")
+        opus = self._model("claude-opus-5")
+        self.assertEqual(opus._params(spec)["fallbacks"], "default")
+        self.assertEqual([t["type"] for t in opus._params(spec)["tools"]], ["web_search_20260209", "web_fetch_20260209"])
+        # The call: no beta for a fallback Haiku does not have, and never a sampling setting.
+        haiku.client, sent = self._client()
+        self.assertIsNone(haiku.call(spec, "read").error)
+        self.assertNotIn("betas", sent[0])
+        self.assertEqual(sent[0]["tools"][0]["type"], "web_search_20250305")
+        opus.client, sent = self._client()
+        self.assertIsNone(opus.call(spec, "read").error)
+        self.assertEqual(sent[0]["betas"], [generate.FALLBACK_BETA])
+        for key in ("temperature", "top_p", "top_k"):
+            self.assertNotIn(key, sent[0])
+        self.assertEqual(haiku.usage["read"]["input"], 10)
 
     def test_a_model_the_generator_does_not_run_on_is_refused(self):
         # Before any client is built, so no key is needed to be told.
@@ -707,6 +769,183 @@ class ThePlumbing(unittest.TestCase):
         self.assertIn("nasa.gov (quote not machine-checked)", text)
         self.assertIn("*unsourced at the read*", text)
         self.assertIn("Not written (1)", text)
+
+
+class TheLeads(unittest.TestCase):
+    """Cards from videos: the placer, the scout that starts from a claim, the whole run."""
+
+    def placement(self, **over) -> generate.Placement:
+        p = dict(keep=True, why="Two bulges, and the far one is the surprise.", topic="space",
+                 strand="space.the_moon.tides", kind="read", principle="none", difficulty="easy")
+        return generate.Placement(**{**p, **over})
+
+    def test_a_placement_is_held_to_the_tree_and_the_rules(self):
+        problems = generate.placement_problems
+        self.assertEqual(problems(self.placement()), [])
+        self.assertEqual(problems(self.placement(kind="pickOne", principle="baseRate", difficulty="hard")), [])
+        self.assertTrue(any("no strand is called" in p for p in problems(self.placement(strand="space.the_moon.cheese"))))
+        self.assertTrue(any("not under" in p for p in problems(self.placement(strand="nature.oceans.coral"))))
+        self.assertTrue(any("no strand is called" in p for p in problems(self.placement(topic="thinking", strand=""))), "a lead never goes to Thinking")
+        self.assertTrue(any("not a subject" in p for p in problems(self.placement(topic="astrology"))))
+        self.assertTrue(any("carries no principle" in p for p in problems(self.placement(principle="baseRate"))))
+        self.assertTrue(any("carries no principle" in p for p in problems(self.placement(kind="debate", difficulty="medium", principle="anchoring"))))
+        self.assertTrue(any("one of the principles" in p for p in problems(self.placement(kind="pickOne", difficulty="medium"))))
+        self.assertTrue(any("one of the principles" in p for p in problems(self.placement(kind="number", difficulty="medium", principle="luck"))))
+        self.assertTrue(any("is easy" in p for p in problems(self.placement(difficulty="medium"))))
+        self.assertTrue(any("at least medium" in p for p in problems(self.placement(kind="number", principle="computation"))))
+
+    def test_a_lead_turned_down_or_misplaced_is_an_outcome_and_never_asked_for(self):
+        bank = check.load_bank()
+        leads = [generate.Lead.model_validate(lead(id=f"yt-{i}")) for i in range(5)]
+        model = generate.Fake(placements=[
+            self.placement(),
+            self.placement(kind="pickOne", principle="baseRate", difficulty="medium"),
+            self.placement(keep=False, why="Advice about mornings, not a claim."),
+            self.placement(strand="space.the_moon.cheese"),
+            self.placement(kind="pickOne", difficulty="medium", principle="none"),
+        ])
+        placed = generate.place(leads, model, bank, log=lambda *_: None)
+        self.assertEqual(model.calls, ["place"] * 5, "one stage, every lead in it")
+        read, ask, turned_down, nowhere, mismatched = placed
+        self.assertIsInstance(read, generate.Request)
+        self.assertEqual((read.topic, read.genre, read.strand, read.kind, read.principle, read.principles),
+                         ("space", "space.the_moon", "space.the_moon.tides", "read", "none", []))
+        self.assertEqual((ask.kind, ask.principle, ask.principles), ("pickOne", "baseRate", ["baseRate"]))
+        self.assertIn(read.source_kind, sources.kinds_for("space"))
+        self.assertEqual(read.video, leads[0].video)
+        self.assertIn("12 hours 25 minutes", read.lead)
+        self.assertEqual(read.links, ["https://tidesandcurrents.noaa.gov/restles1.html"], "a link on a blocked site is no use to the tools")
+        self.assertIn("from https://www.youtube.com", str(read))
+        self.assertEqual((turned_down.status, turned_down.stage, turned_down.note, turned_down.lead),
+                         ("rejected", "place", "Advice about mornings, not a claim.", "yt-2"))
+        self.assertEqual((nowhere.status, mismatched.status), ("refused", "refused"))
+        self.assertIn("space.the_moon.cheese", nowhere.note)
+        self.assertIn("one of the principles", mismatched.note)
+        self.assertEqual(str(turned_down.request), f"a lead from {leads[2].video}")
+        text = generate.report([turned_down], "0 tokens", TODAY)
+        self.assertIn("*rejected at the place*: Advice about mornings", text)
+
+    def test_a_lead_s_scout_starts_from_the_claim_and_the_links(self):
+        req = generate.for_strand(genres.strands_by_id()["space.the_moon.tides"], "space", kind="read", difficulty="easy",
+                                  principle="none", **generate.lead_fields(generate.Lead.model_validate(lead())))
+        text = generate.scout_brief(req, [])
+        self.assertIn("a pointer, never a source", text)
+        self.assertIn("claim, as the video states it: The Moon raises two bulges", text)
+        self.assertIn("figures, as the video gives them: 12 hours 25 minutes", text)
+        self.assertIn("- https://tidesandcurrents.noaa.gov/restles1.html", text)
+        self.assertNotIn("instagram", text)
+        self.assertEqual([(t["type"], t["max_uses"]) for t in generate.scout_tools(req)], [("web_search_20260209", 3), ("web_fetch_20260209", 4)])
+        self.assertEqual([t["max_uses"] for t in generate.critic_tools(req)], [1, 2])
+        plain = req.model_copy(update={"lead": "", "links": [], "video": ""})
+        self.assertNotIn("pointer", generate.scout_brief(plain, []))
+        self.assertEqual([t["max_uses"] for t in generate.scout_tools(plain)], [generate.SCOUT_SEARCHES])
+        self.assertEqual([t["max_uses"] for t in generate.critic_tools(plain)], [generate.CRITIC_SEARCHES, 2])
+
+    def test_a_lead_file_is_held_to_its_shape(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "leads.json"
+            path.write_text(json.dumps([lead(), lead(id="yt-2", figures=None, links=[])]), encoding="utf-8")
+            first, second = generate.load_leads(path)
+            self.assertEqual(first.figures, "12 hours 25 minutes between high tides", "a list of figures is read as one line")
+            self.assertEqual(second.figures, "")
+            path.write_text(json.dumps([lead(), {k: v for k, v in lead().items() if k != "idea"}]), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "lead 1: idea"):
+                generate.load_leads(path)
+            path.write_text(json.dumps(lead()), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "a JSON list"):
+                generate.load_leads(path)
+
+    def test_leads_flow_into_the_bank_with_their_scenes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            path = tmp / "leads.json"
+            path.write_text(json.dumps([lead(id="yt-a"), lead(id="yt-b", video="https://youtu.be/b"), lead(id="yt-c", links=[])]), encoding="utf-8")
+            with contextlib.redirect_stdout(io.StringIO()) as printed:
+                self.assertEqual(generate.main(["--leads", str(path), "--dry-run"]), 0)
+            self.assertIn("placer system prompt", printed.getvalue())
+            self.assertIn("Start from this lead", printed.getvalue())
+            with contextlib.redirect_stdout(io.StringIO()):
+                code = generate.main(["--leads", str(path), "--fake", "--out", str(tmp / "bank"), "--today", "2026-10-24",
+                                      "--outcomes", str(tmp / "outcomes.json"), "--report", str(tmp / "report.md")])
+            self.assertEqual(code, 0)
+            outcomes = json.loads((tmp / "outcomes.json").read_text())
+            self.assertEqual([(o["lead"], o["status"], o["scene"]) for o in outcomes],
+                             [("yt-a", "written", "count"), ("yt-b", "written", "count"), ("yt-c", "written", "count")])
+            files = sorted((tmp / "bank").glob("*/*.json"))
+            self.assertEqual(len(files), 3)
+            schema, banned = check.load_schema(), check.load_banned()
+            for f in files:
+                card = json.loads(f.read_text())
+                self.assertEqual(card["written"], "2026-10-24")
+                self.assertEqual(check.check_card(card, strict=True, schema=schema, banned=banned), [])
+                self.assertEqual(card["scene"]["type"], "count", "the canned scene, checked and filed")
+                self.assertTrue(card["quote"])
+                self.assertNotIn("youtu", card["reference"], "the video is never the source")
+            report = (tmp / "report.md").read_text()
+            self.assertIn("3 of 3 got a scene", report)
+            self.assertIn("from [a video](https://youtu.be/b)", report)
+            self.assertIn("never the video", report)
+
+    def test_a_lead_goes_through_every_stage_once(self):
+        bank = check.load_bank()
+        model = generate.Fake(placements=[self.placement()])
+        with tempfile.TemporaryDirectory() as tmp:
+            outcomes = generate.run_leads([generate.Lead.model_validate(lead())], model, bank, out=Path(tmp), today=TODAY, log=lambda *_: None)
+            self.assertEqual(model.calls, ["place", "scout", "read", "write", "critic", "scene"])
+            self.assertEqual((outcomes[0].status, outcomes[0].lead, outcomes[0].request.strand), ("written", "yt-tides-1", "space.the_moon.tides"))
+            model = generate.Fake(placements=[self.placement()], finds=[generate.Finds(finds=[])])
+            outcomes = generate.run_leads([generate.Lead.model_validate(lead())], model, bank, out=Path(tmp), today=TODAY, scenes=False, log=lambda *_: None)
+            self.assertEqual(model.calls, ["place", "scout"])
+            self.assertEqual((outcomes[0].status, outcomes[0].note), ("unsourced", "the scout found nothing that holds"))
+
+
+class TheScenes(unittest.TestCase):
+    """The scene a card is offered once it is written: filed only when it passes."""
+
+    def written(self, out: Path, n: int) -> tuple[list[dict], list]:
+        bank = check.load_bank()
+        strands = ["space.the_moon.tides", "space.the_moon.moon_dust", "space.black_holes.event_horizons"][:n]
+        requests = [generate.for_strand(genres.strands_by_id()[s], "space", kind="read", difficulty="easy", principle="none") for s in strands]
+        outcomes = generate.run(requests, generate.Fake(), bank, out=out, today=TODAY, critic=False, log=lambda *_: None)
+        self.assertEqual([o.status for o in outcomes], ["written"] * n)
+        return bank, outcomes
+
+    def test_a_scene_that_passes_is_filed_and_one_that_does_not_is_dropped(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            bank, outcomes = self.written(out, 2)
+            path = lambda o: out / o.request.topic / f"{o.id}.json"
+            before = path(outcomes[1]).read_text()
+            broken = generate.SceneChoice(type="rank", scene_json=json.dumps({"type": "rank", "quantity": "Dust", "items": []}))
+            model = generate.Fake(scenes=[generate.canned_scene(""), broken, broken])
+            self.assertEqual(generate.add_scenes(outcomes, model, bank, out=out, log=lambda *_: None), 1)
+            self.assertEqual(model.calls, ["scene", "scene", "scene-repair"], "one round of repair, for the one that failed")
+            kept = json.loads(path(outcomes[0]).read_text())
+            self.assertEqual(kept["scene"]["type"], "count")
+            self.assertLess(list(kept).index("scene"), list(kept).index("source"), "the house order of keys")
+            self.assertEqual(check.check_card(kept, strict=True, schema=check.load_schema(), banned=check.load_banned()), [])
+            self.assertEqual((outcomes[0].scene, outcomes[1].scene), ("count", ""))
+            self.assertIn("did not pass its check", outcomes[1].scene_note)
+            self.assertEqual(path(outcomes[1]).read_text(), before, "the card stays as it was written")
+            self.assertIn("1 of 2 got a scene", generate.report(outcomes, "0 tokens", TODAY))
+
+    def test_a_scene_is_repaired_once_and_none_is_an_answer(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            bank, outcomes = self.written(out, 3)
+            fenced = generate.canned_scene("")
+            fenced = fenced.model_copy(update={"scene_json": "```json\n" + fenced.scene_json + "\n```"})
+            not_json = generate.SceneChoice(type="count", scene_json="{the scene")
+            none = generate.SceneChoice(type="none", scene_json="")
+            model = generate.Fake(scenes=[not_json, none, fenced, fenced])
+            self.assertEqual(generate.add_scenes(outcomes, model, bank, out=out, log=lambda *_: None), 2)
+            self.assertEqual([o.scene for o in outcomes], ["count", "", "count"])
+            self.assertEqual(outcomes[1].scene_note, "no scene fits")
+            self.assertNotIn("scene", json.loads((out / "space" / f"{outcomes[1].id}.json").read_text()))
+            problems = generate.parse_scene(not_json, "2026-09-18")[1]
+            self.assertTrue(problems and "not JSON" in problems[0])
+            other = generate.SceneChoice(type="rank", scene_json=generate.canned_scene("").scene_json)
+            self.assertIn("the scene says 'count'", generate.parse_scene(other, "2026-09-18")[1][0])
 
 
 if __name__ == "__main__":

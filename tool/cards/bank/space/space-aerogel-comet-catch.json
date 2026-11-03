@@ -1,0 +1,36 @@
+{
+  "id": "space-aerogel-comet-catch",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.spinoffs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Stardust's aerogel catch comet dust flying at 6 km/s?",
+  "answer": "Aerogel is a low-density, porous material. It slows a particle moving at 6 km/s by breaking its network, which dissipates the particle's kinetic energy and stops it. Because it stops the particle gradually over a long path, the sample is not vaporized.",
+  "move": "Stop something fast slowly, over a long path, and it survives.",
+  "keywords": [
+    "stardust",
+    "aerogel",
+    "comet dust",
+    "hypervelocity capture"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tappable diagram: a comet grain is fired at 6 km/s into either a metal block or a block of aerogel, chosen by tapping one of two heights. It asks how the Stardust mission's aerogel catches dust moving that fast."
+  },
+  "source": "Veritasium, “World's Lightest Solid!” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=AeJ9q45PfD0&t=603s",
+  "written": "2026-11-03"
+}

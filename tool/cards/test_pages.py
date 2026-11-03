@@ -161,12 +161,57 @@ class TheCard(unittest.TestCase):
 
 
 class TheBundle(unittest.TestCase):
-    def test_the_page_goes_inside_the_card_and_only_in_the_bundle(self):
+    def test_the_card_names_its_page_and_the_page_travels_alone(self):
         card = page_card()
         out = bundle.bundled(card)
-        self.assertEqual(out["web"]["html"], TEMPLATE)
+        self.assertNotIn("html", out["web"])
+        self.assertEqual(out["web"]["page"], f"pages/thinking-free-bat.html?v={bundle.page_hash(TEMPLATE)}")
+        self.assertEqual(out["web"]["bytes"], len(TEMPLATE.encode("utf-8")))
         self.assertNotIn("_html", out)
+        self.assertNotIn("page", card["web"], "the bank's own file is left as it was")
+        self.assertEqual(bundle.pages_of([card]), {"pages/thinking-free-bat.html": TEMPLATE})
+
+    def test_a_changed_page_is_a_new_name(self):
+        a, b = page_card(), page_card(_html=TEMPLATE + "<!-- again -->")
+        self.assertNotEqual(bundle.bundled(a)["web"]["page"], bundle.bundled(b)["web"]["page"])
+        self.assertEqual(len(bundle.page_hash(TEMPLATE)), 12)
+
+    def test_the_builds_from_before_get_the_page_inside_the_card(self):
+        card = page_card()
+        out = bundle.bundled(card, inline=True)
+        self.assertEqual(out["web"]["html"], TEMPLATE)
+        self.assertNotIn("page", out["web"])
         self.assertNotIn("html", card["web"], "the bank's own file is left as it was")
+
+    def test_the_builds_from_before_never_meet_a_page_they_did_not_know(self):
+        old, new = page_card(), page_card(id="thinking-free-new")
+        plain = {k: v for k, v in page_card(id="thinking-plain").items() if k not in ("_html", "web")}
+        out = bundle.build_legacy([old, new, plain], {"1": "thinking-free-new", "2": "thinking-plain"},
+                                  {"1": ["thinking-free-new", "thinking-plain"]},
+                                  version=7, built="2026-11-03T00:00:00Z", keep={"thinking-free-bat"})
+        self.assertEqual(out["format"], 1)
+        self.assertEqual([c["id"] for c in out["cards"]], ["thinking-free-bat", "thinking-plain"])
+        self.assertEqual(out["editions"], {"2": "thinking-plain"})
+        self.assertEqual(out["commons"], {"1": ["thinking-plain"]})
+        everything = bundle.build([old, new, plain], {}, {}, version=7, built="2026-11-03T00:00:00Z")
+        self.assertEqual(everything["format"], 2)
+        self.assertEqual(len(everything["cards"]), 3)
+
+    def test_the_published_pages_are_exactly_the_banks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            saved = bundle.PAGES
+            try:
+                bundle.PAGES = Path(tmp) / "pages"
+                pages = bundle.pages_of([page_card()])
+                self.assertFalse(bundle.pages_current(pages))
+                bundle.write_pages(pages)
+                self.assertTrue(bundle.pages_current(pages))
+                (bundle.PAGES / "thinking-gone.html").write_text("old", encoding="utf-8")
+                self.assertFalse(bundle.pages_current(pages), "a page no card names is stale")
+                bundle.write_pages(pages)
+                self.assertEqual([f.name for f in bundle.PAGES.iterdir()], ["thinking-free-bat.html"])
+            finally:
+                bundle.PAGES = saved
 
     def test_the_bank_reads_the_page_beside_a_card_and_finds_one_alone(self):
         with tempfile.TemporaryDirectory() as tmp:

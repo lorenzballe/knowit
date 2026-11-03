@@ -1,0 +1,375 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-collatz-rival-loop -->
+<!-- Look: a cyanotype engineering sheet: white hairlines on Prussian blue, a grid, centre marks and dimension arrows. The 4-2-1 loop is drawn in pale pencil gold.
+     Interaction: a log slider grows a hypothetical rival loop from 3 numbers to 186 billion. The rival loop stays the size of the sheet. The 4-2-1 loop shrinks to a speck, shown enlarged as DETAIL A, with a live drawing scale. Every length is stamped RULED OUT.
+     Wow: at 186 billion the stamp scrambles to NOT RULED OUT, the loop flashes and pulses outwards, and a comet keeps travelling its path. -->
+<title>The rival loop</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#0a2a5e;box-shadow:inset 0 0 0 1px rgba(234,243,255,.18),0 1cqh 3cqh rgba(5,20,50,.35)}
+#pic{flex:1;min-height:0;width:100%;height:100%;display:block}
+#ctl{position:relative;padding:.4cqh 4cqw 1.2cqh;background:linear-gradient(180deg,rgba(6,26,64,0),rgba(6,26,64,.55))}
+#len{-webkit-appearance:none;appearance:none;display:block;width:100%;height:max(4.4cqh,32px);background:transparent;margin:0;touch-action:none;cursor:ew-resize;--p:0%}
+#len::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:99px;background:linear-gradient(90deg,rgba(234,243,255,.7) var(--p),rgba(234,243,255,.12) var(--p));box-shadow:inset 0 0 0 1px rgba(234,243,255,.4)}
+#len::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#0a2a5e 0 18%,#eaf3ff 19%);border:2px solid #0a2a5e;box-shadow:0 0 0 1.5px #eaf3ff,0 0 16px rgba(160,210,255,.8);margin-top:calc((max(.9cqh,6px) - max(3.4cqh,26px))/2)}
+#len::-moz-range-track{height:max(.9cqh,6px);border-radius:99px;background:rgba(234,243,255,.12);box-shadow:inset 0 0 0 1px rgba(234,243,255,.4)}
+#len::-moz-range-progress{height:max(.9cqh,6px);border-radius:99px;background:rgba(234,243,255,.7)}
+#len::-moz-range-thumb{width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#0a2a5e 0 18%,#eaf3ff 19%);border:2px solid #0a2a5e;box-shadow:0 0 0 1.5px #eaf3ff,0 0 16px rgba(160,210,255,.8)}
+#marks{position:relative;height:max(1.9cqh,14px);margin:0 calc(max(3.4cqh,26px)/2)}
+#marks span{position:absolute;top:0;transform:translateX(-50%);font:600 max(1.5cqh,12px)/1 var(--mono);color:rgba(234,243,255,.42);letter-spacing:.04em;white-space:nowrap;transition:color .3s,text-shadow .3s}
+#marks span.on{color:rgba(234,243,255,.95);text-shadow:0 0 8px rgba(160,210,255,.6)}
+#marks span.end{color:rgba(255,217,138,.6)}
+#marks span.end.on{color:#ffd98a;text-shadow:0 0 10px rgba(255,217,138,.7)}
+#why{display:flex;flex-direction:column;gap:.5cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.1 var(--display)}
+#why .body{font:500 max(1.75cqh,13px)/1.3 var(--body)}
+.say{font:600 max(1.9cqh,13px)/1.3 var(--body)}
+#pic .mono{font-family:var(--mono)}
+#pic .hand{font-family:var(--hand)}
+#pic .disp{font-family:var(--display)}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag the length · a proved bound">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COLLATZ LOOPS</span></div>
+    <h2 class="q">If Collatz had a second loop, how long would it have to be?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A blueprint of a large hypothetical loop of numbers drawn around the tiny 4, 2, 1 loop, with its length dimensioned below."></svg>
+      <div id="ctl">
+        <input id="len" type="range" min="0" max="1000" step="1" value="0" aria-label="Length of the rival loop">
+        <div id="marks"></div>
+      </div>
+    </div>
+    <p class="say" id="say">Every number tested ends in the loop 4 → 2 → 1. <b>Drag to grow a rival loop</b> until nobody has ruled it out.</p>
+    <div id="why" class="gone"><p class="big">At least 186 billion numbers.</p><p class="body">Every number tested ends in 4, 2, 1. From that, mathematicians calculate that any other loop must hold at least 186 billion numbers. Likely, but not proved.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A second loop isn't ruled out, but it would need 186 billion numbers or more.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin, ScrambleTextPlugin);
+  const svg = Kit.$('pic'), len = Kit.$('len');
+  const MAX = 186e9, L0 = Math.log10(3), L1 = Math.log10(MAX);
+  const INK = '#eaf3ff', GOLD = '#ffd98a', DEEP = '#0b2c62';
+  const CIRC = 'M100,0 A100,100 0 1,1 -100,0 A100,100 0 1,1 100,0';
+  const st = {t: 0};
+  let n = 3, r = 0, state = '', revealed = false, built = false, started = false, lastDec = 0;
+  let W = 0, H = 0, f = 13, cx = 0, cy = 0, R = 0, bR = 0, bx = 0, by = 0, bigTw = null, lastW = 0, lastH = 0;
+  const G = {}, trail = [];
+  const pBig = {x: 0, y: -100}, p421 = {x: 0, y: -100};
+
+  const nOf = t => t >= .999 ? MAX : Math.max(3, Math.round(Math.pow(10, L0 + t * (L1 - L0))));
+  const posOf = v => (Math.log10(v) - L0) / (L1 - L0);
+  const fmt = v => {
+    if (v < 1e6) return Math.round(v).toLocaleString('en-US');
+    const [d, w] = v < 1e9 ? [1e6, 'million'] : [1e9, 'billion'], x = v / d;
+    return (x < 10 ? x.toFixed(2) : x < 100 ? x.toFixed(1) : x.toFixed(0)) + ' ' + w;
+  };
+  const fmtS = v => {
+    if (v < 1e3) return String(Math.round(v));
+    const [d, u] = v < 1e6 ? [1e3, 'K'] : v < 1e9 ? [1e6, 'M'] : [1e9, 'B'], x = v / d;
+    return (x < 10 ? x.toFixed(1) : x.toFixed(0)) + u;
+  };
+  const T = (p, x, y, txt, cls, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, class: cls, fill: INK}, a), p); e.textContent = txt; return e; };
+
+  // The ruler under the slider.
+  const marks = Kit.$('marks'), markEls = [];
+  [[3, '3'], [1e3, '1K'], [1e6, '1M'], [1e9, '1B'], [MAX, '186B']].forEach(([v, s]) => {
+    const e = document.createElement('span'); e.textContent = s; e.style.left = (posOf(v) * 100) + '%';
+    if (v === MAX) e.className = 'end';
+    marks.appendChild(e); markEls.push([posOf(v), e]);
+  });
+  const lightMarks = t => markEls.forEach(([p, e]) => e.classList.toggle('on', t >= p - .002));
+  lightMarks(0);
+
+  function layout() {
+    svg.innerHTML = '';
+    const fit = Kit.fitSvg(svg); W = fit.W; H = fit.H;
+    const bb = svg.getBoundingClientRect(); lastW = bb.width; lastH = bb.height;
+    f = Math.max(12, Math.min(16, fit.f || 13));
+    R = Math.max(36, Math.min(W * .29, (H - 7.8 * f) / 2));
+    cx = W / 2; cy = 4.2 * f + R;
+    const free = H - (cy + R + 3.3 * f); if (free > 0) cy += free * .45;
+    // DETAIL A sits on the left, always below the readout block.
+    bR = Math.max(24, Math.min(3 * f, (cx - R - 24) / 2));
+    bx = 17 + bR;
+    const topY = 5.8 * f;
+    by = Math.max(topY + 12 + .5 * f + bR, cy - R * .38);
+
+    // ---- defs: paper, grid, glow ----
+    const d = Kit.mk('defs', {}, svg);
+    const rg = Kit.mk('radialGradient', {id: 'bgG', cx: '50%', cy: '45%', r: '75%'}, d);
+    Kit.mk('stop', {offset: '0', 'stop-color': '#164a92'}, rg);
+    Kit.mk('stop', {offset: '.6', 'stop-color': '#0c2f66'}, rg);
+    Kit.mk('stop', {offset: '1', 'stop-color': '#061a40'}, rg);
+    const p1 = Kit.mk('pattern', {id: 'g1', width: 12, height: 12, patternUnits: 'userSpaceOnUse'}, d);
+    Kit.mk('path', {d: 'M12 0H0V12', fill: 'none', stroke: 'rgba(234,243,255,.07)', 'stroke-width': .6}, p1);
+    const p2 = Kit.mk('pattern', {id: 'g2', width: 60, height: 60, patternUnits: 'userSpaceOnUse', x: cx % 60, y: cy % 60}, d);
+    Kit.mk('rect', {width: 60, height: 60, fill: 'url(#g1)'}, p2);
+    Kit.mk('path', {d: 'M60 0H0V60', fill: 'none', stroke: 'rgba(234,243,255,.13)', 'stroke-width': .8}, p2);
+    const nz = Kit.mk('filter', {id: 'nz', x: 0, y: 0, width: '100%', height: '100%'}, d);
+    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .85, numOctaves: 2, seed: 4}, nz);
+    Kit.mk('feColorMatrix', {values: '0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .07 0'}, nz);
+    const bl = Kit.mk('filter', {id: 'blot', x: 0, y: 0, width: '100%', height: '100%'}, d);
+    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .012, numOctaves: 3, seed: 9}, bl);
+    Kit.mk('feColorMatrix', {values: '0 0 0 0 .02  0 0 0 0 .08  0 0 0 0 .2  0 0 0 .55 -.12'}, bl);
+    const gl = Kit.mk('filter', {id: 'glow', x: '-100%', y: '-100%', width: '300%', height: '300%'}, d);
+    Kit.mk('feGaussianBlur', {stdDeviation: 2.6, result: 'b'}, gl);
+    const mg = Kit.mk('feMerge', {}, gl); Kit.mk('feMergeNode', {in: 'b'}, mg); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, mg);
+
+    // ---- the sheet ----
+    Kit.mk('rect', {width: W, height: H, fill: 'url(#bgG)'}, svg);
+    Kit.mk('rect', {width: W, height: H, filter: 'url(#blot)'}, svg);
+    Kit.mk('rect', {width: W, height: H, fill: 'url(#g2)'}, svg);
+    Kit.mk('rect', {width: W, height: H, filter: 'url(#nz)'}, svg);
+    const fr = Kit.mk('g', {stroke: INK, fill: 'none'}, svg);
+    Kit.mk('rect', {x: 6, y: 6, width: W - 12, height: H - 12, 'stroke-width': .8, opacity: .45, rx: 3}, fr);
+    for (let x = 14, i = 0; x < W - 12; x += 14, i++) {
+      const l = i % 5 === 0 ? 6 : 3;
+      Kit.mk('line', {x1: x, x2: x, y1: 6, y2: 6 + l, 'stroke-width': .7, opacity: .4}, fr);
+      Kit.mk('line', {x1: x, x2: x, y1: H - 6, y2: H - 6 - l, 'stroke-width': .7, opacity: .4}, fr);
+    }
+
+    // centre marks
+    const cl = Kit.mk('g', {stroke: INK, 'stroke-width': .7, opacity: .4, 'stroke-dasharray': '12 3 2 3'}, svg);
+    Kit.mk('line', {x1: cx - R - 1.1 * f, x2: cx + R + 1.1 * f, y1: cy, y2: cy}, cl);
+    Kit.mk('line', {x1: cx, x2: cx, y1: cy - R - .6 * f, y2: cy + R + .6 * f}, cl);
+
+    // the rival loop
+    G.outer = Kit.mk('circle', {cx, cy, r: R + .5 * f, fill: 'none', stroke: INK, 'stroke-width': .6, opacity: .3, 'stroke-dasharray': '3 4'}, svg);
+    if (!Kit.calm) gsap.to(G.outer, {attr: {'stroke-dashoffset': -70}, duration: 8, repeat: -1, ease: 'none'});
+    G.halo = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-width': 7, opacity: .08}, svg);
+    G.bigC = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-width': 1.6, transform: `rotate(-90 ${cx} ${cy})`}, svg);
+    G.pulse = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-width': 2, opacity: 0}, svg);
+
+    // dimension
+    const yd = cy + R + 1.2 * f;
+    G.dimG = Kit.mk('g', {}, svg);
+    const dg = Kit.mk('g', {stroke: INK, 'stroke-width': .8, opacity: .75}, G.dimG);
+    Kit.mk('line', {x1: cx - R, x2: cx - R, y1: cy + .4 * f, y2: yd + .45 * f}, dg);
+    Kit.mk('line', {x1: cx + R, x2: cx + R, y1: cy + .4 * f, y2: yd + .45 * f}, dg);
+    Kit.mk('line', {x1: cx - R, x2: cx + R, y1: yd, y2: yd, 'stroke-width': 1}, dg);
+    Kit.mk('path', {d: `M${cx - R + 9},${yd - 3.5} L${cx - R},${yd} L${cx - R + 9},${yd + 3.5}Z M${cx + R - 9},${yd - 3.5} L${cx + R},${yd} L${cx + R - 9},${yd + 3.5}Z`, fill: INK, stroke: 'none'}, G.dimG);
+    G.dimT = T(G.dimG, cx, yd + 1.5 * f, '', 'mono', {'text-anchor': 'middle', 'font-size': Math.max(12, f * .92), 'font-weight': 700, 'letter-spacing': '.06em'});
+
+    G.dyn = Kit.mk('g', {}, svg);
+
+    // DETAIL A: the 4-2-1 loop, enlarged, once it is too small to see.
+    G.bub = Kit.mk('g', {}, svg);
+    const th = Math.atan2(cy - by, cx - bx);
+    Kit.mk('line', {x1: bx + (bR + 3) * Math.cos(th), y1: by + (bR + 3) * Math.sin(th), x2: cx - .6 * f * Math.cos(th), y2: cy - .6 * f * Math.sin(th), stroke: GOLD, 'stroke-width': .8, 'stroke-dasharray': '4 3', opacity: .8}, G.bub);
+    Kit.mk('circle', {cx: bx, cy: by, r: bR, fill: DEEP, stroke: INK, 'stroke-width': 1.2}, G.bub);
+    Kit.mk('circle', {cx: bx, cy: by, r: bR + 3, fill: 'none', stroke: INK, 'stroke-width': .5, opacity: .5}, G.bub);
+    const br = bR * .58, nr = Math.max(9, bR * .27);
+    Kit.mk('circle', {cx: bx, cy: by, r: br, fill: 'none', stroke: GOLD, 'stroke-width': 1.3}, G.bub);
+    [[4, -90], [2, 30], [1, 150]].forEach(([v, a]) => {
+      const x = bx + br * Math.cos(a * Math.PI / 180), y = by + br * Math.sin(a * Math.PI / 180);
+      Kit.mk('circle', {cx: x, cy: y, r: nr, fill: DEEP, stroke: GOLD, 'stroke-width': 1.2}, G.bub);
+      T(G.bub, x, y + 4.3, String(v), 'mono', {'text-anchor': 'middle', 'font-size': 12, 'font-weight': 700, fill: GOLD});
+    });
+    T(G.bub, 14, by - bR - .5 * f, 'DETAIL A', 'mono', {'font-size': 12, 'font-weight': 700, 'letter-spacing': '.08em', fill: GOLD});
+    G.bubOn = undefined;
+
+    // tokens: a comet on the rival loop, a pencil dot on 4-2-1
+    G.trail = Kit.mk('g', {}, svg);
+    for (let i = 0; i < 12; i++) Kit.mk('circle', {r: f * .3 * (1 - i / 13), fill: INK, opacity: .5 * (1 - i / 12)}, G.trail);
+    trail.length = 0;
+    G.tokBig = Kit.mk('circle', {r: f * .34, fill: '#ffffff', filter: 'url(#glow)'}, svg);
+    G.tok421 = Kit.mk('circle', {r: f * .3, fill: '#fff6dc', filter: 'url(#glow)'}, svg);
+    G.tokDet = Kit.mk('circle', {r: 3.4, fill: '#fff6dc', filter: 'url(#glow)'}, G.bub);
+
+    // readout, top left: label, count, drawing scale of the gold loop
+    G.readG = Kit.mk('g', {}, svg);
+    T(G.readG, 14, 1.5 * f, 'RIVAL LOOP', 'mono', {'font-size': 12, 'font-weight': 600, 'letter-spacing': '.08em', opacity: .8});
+    G.readBig = T(G.readG, 14, 3.25 * f, '3', 'disp', {'font-size': f * 1.55, 'font-weight': 800});
+    G.scaleT = T(G.readG, 14, 4.65 * f, '', 'mono', {'font-size': 12, 'font-weight': 600, 'letter-spacing': '.04em', fill: GOLD});
+
+    // the stamp, top right
+    G.stamp = Kit.mk('g', {}, svg);
+    G.stampIn = Kit.mk('g', {}, G.stamp);
+    G.stR = Kit.mk('rect', {fill: 'none', stroke: INK, 'stroke-width': 1.6, rx: 4}, G.stampIn);
+    G.st1 = T(G.stampIn, W - 18, 2 * f, '', 'hand', {'text-anchor': 'end', 'font-size': f * 1.25, 'font-weight': 700, 'letter-spacing': '.04em'});
+    G.st2 = T(G.stampIn, W - 18, 3.4 * f, '', 'mono', {'text-anchor': 'end', 'font-size': 12, 'font-weight': 600});
+
+    built = true; state = '';
+    render(); place();
+  }
+
+  const STAMP = {
+    self: ['IT\u2019S 4·2·1', 'the known loop', GOLD],
+    out: ['RULED OUT', 'proved impossible', INK],
+    open: ['NOT RULED OUT', 'could still exist', '#ffffff']
+  };
+  const SB = {x0: 0, x1: 0, y0: 0, y1: 0};
+  function sizeStamp() {
+    // second line always sits clear below the handwritten line, even once the stamp is tilted
+    const a = G.st1.getBBox();
+    G.st2.setAttribute('y', 0);
+    const b0 = G.st2.getBBox(), asc = -b0.y;
+    const tilt = Math.max(a.width, b0.width) * Math.sin(4 * Math.PI / 180);
+    G.st2.setAttribute('y', a.y + a.height + asc + 5 + tilt);
+    const b = G.st2.getBBox(), p = .4 * f;
+    SB.x0 = Math.min(a.x, b.x) - p; SB.x1 = Math.max(a.x + a.width, b.x + b.width) + p;
+    SB.y0 = a.y - p * .5; SB.y1 = b.y + b.height + p * .6;
+    G.stR.setAttribute('x', SB.x0); G.stR.setAttribute('y', SB.y0);
+    G.stR.setAttribute('width', SB.x1 - SB.x0); G.stR.setAttribute('height', SB.y1 - SB.y0);
+    fitStamp();
+  }
+  function fitStamp() {
+    // never let the stamp touch the readout
+    const rb = G.readG.getBBox(), room = SB.x1 - (rb.x + rb.width + 14), w = SB.x1 - SB.x0;
+    const s = w > room ? Math.max(.55, room / w) : 1;
+    const mx = (SB.x0 + SB.x1) / 2, my = (SB.y0 + SB.y1) / 2;
+    G.stamp.setAttribute('transform', `translate(${SB.x1} ${SB.y0}) scale(${s}) translate(${-SB.x1} ${-SB.y0}) rotate(-4 ${mx} ${my})`);
+  }
+  function setStamp(s, anim) {
+    const [a, b, col] = STAMP[s], old = G.st1.textContent;
+    G.st1.textContent = a; G.st2.textContent = b;
+    [G.st1, G.st2].forEach(e => e.setAttribute('fill', col));
+    G.stR.setAttribute('stroke', col);
+    G.stR.setAttribute('fill', s === 'open' ? 'rgba(255,255,255,.14)' : 'none');
+    G.stamp.setAttribute('filter', s === 'open' ? 'url(#glow)' : '');
+    sizeStamp();
+    if (!anim || Kit.calm) return;
+    thump(1.22);
+    if (s === 'open') { G.st1.textContent = old; gsap.to(G.st1, {duration: .9, scrambleText: {text: a, chars: '0123456789+×', speed: .7}, ease: 'none'}); }
+  }
+  const thump = k => gsap.fromTo(G.stampIn, {scale: k, transformOrigin: '50% 50%'}, {scale: 1, duration: .45, ease: 'back.out(3)', overwrite: true});
+
+  function render() {
+    if (!built) return;
+    n = nOf(st.t); r = R * 3 / n;
+    const D = G.dyn; D.innerHTML = '';
+    // the rival loop's numbers: dots while few, then a dense ruling of ticks
+    if (n > 3) {
+      if (n <= 36) {
+        const rr = Math.max(2.2, Math.min(5.5, Math.PI * R / n * .32));
+        for (let i = 0; i < n; i++) { const a = -Math.PI / 2 + i * 2 * Math.PI / n; Kit.mk('circle', {cx: cx + R * Math.cos(a), cy: cy + R * Math.sin(a), r: rr, fill: DEEP, stroke: INK, 'stroke-width': 1.2}, D); }
+      } else {
+        const k = Math.min(n, 120);
+        for (let i = 0; i < k; i++) {
+          const a = -Math.PI / 2 + i * 2 * Math.PI / k, l = (i % 10 === 0 ? .8 : i % 5 === 0 ? .52 : .3) * f, c = Math.cos(a), s = Math.sin(a);
+          Kit.mk('line', {x1: cx + (R - l) * c, y1: cy + (R - l) * s, x2: cx + R * c, y2: cy + R * s, stroke: INK, 'stroke-width': i % 5 ? .7 : 1.1, opacity: i % 5 ? .6 : .95}, D);
+        }
+      }
+    }
+    // the 4-2-1 loop at the same scale
+    const big = r >= 1.4 * f;
+    if (big) {
+      Kit.mk('circle', {cx, cy, r, fill: 'none', stroke: GOLD, 'stroke-width': 1.6}, D);
+      if (r > 3 * f) [-30, 90, 210].forEach(dg => {
+        const a = dg * Math.PI / 180, px = cx + r * Math.cos(a), py = cy + r * Math.sin(a), tx = -Math.sin(a), ty = Math.cos(a), nx = Math.cos(a), ny = Math.sin(a), q = 4.5;
+        Kit.mk('path', {d: `M${px - tx * q + nx * q},${py - ty * q + ny * q} L${px + tx * q},${py + ty * q} L${px - tx * q - nx * q},${py - ty * q - ny * q}`, fill: 'none', stroke: GOLD, 'stroke-width': 1.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, D);
+      });
+      [[4, -90], [2, 30], [1, 150]].forEach(([v, dg]) => {
+        const a = dg * Math.PI / 180, x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+        Kit.mk('circle', {cx: x, cy: y, r: f * .95, fill: DEEP, stroke: GOLD, 'stroke-width': 1.4}, D);
+        T(D, x, y + f * .33, String(v), 'mono', {'text-anchor': 'middle', 'font-size': Math.max(12, f * .95), 'font-weight': 700, fill: GOLD});
+      });
+    } else {
+      Kit.mk('circle', {cx, cy, r: Math.max(r, 1.6), fill: r < 3 ? GOLD : 'none', stroke: GOLD, 'stroke-width': 1.2}, D);
+      Kit.mk('circle', {cx, cy, r: .6 * f, fill: 'none', stroke: GOLD, 'stroke-width': .9, 'stroke-dasharray': '2 2'}, D);
+    }
+    if (G.bubOn !== !big) {
+      const first = G.bubOn === undefined; G.bubOn = !big;
+      if (first || Kit.calm) gsap.set(G.bub, {autoAlpha: G.bubOn ? 1 : 0});
+      else gsap.to(G.bub, {autoAlpha: G.bubOn ? 1 : 0, duration: .35, ease: 'power2.out'});
+    }
+    // words
+    G.readBig.textContent = fmt(n);
+    G.scaleT.textContent = 'GOLD SCALE 1 : ' + fmtS(n / 3);
+    G.dimT.textContent = n === 3 ? '3 NUMBERS: 4, 2, 1' : n >= MAX ? 'AT LEAST 186 BILLION NUMBERS' : fmt(n).toUpperCase() + ' NUMBERS';
+    const s = n === 3 ? 'self' : n >= MAX ? 'open' : 'out';
+    if (s !== state) { const had = state !== ''; state = s; setStamp(s, had); if (s === 'open' && !revealed) reveal(); }
+    else fitStamp();
+    if (bigTw) bigTw.timeScale(Math.max(.22, 1.5 / (1 + Math.log10(n) / 2.2)));
+  }
+
+  function place() {
+    if (!built) return;
+    const on = n > 3, x = cx + pBig.x / 100 * R, y = cy + pBig.y / 100 * R;
+    G.tokBig.setAttribute('cx', x); G.tokBig.setAttribute('cy', y); G.tokBig.style.opacity = on ? 1 : 0;
+    trail.unshift([x, y]); if (trail.length > 12) trail.length = 12;
+    G.trail.style.opacity = on && !Kit.calm ? 1 : 0;
+    [...G.trail.children].forEach((c, i) => { const p = trail[Math.min(i, trail.length - 1)]; c.setAttribute('cx', p[0]); c.setAttribute('cy', p[1]); });
+    G.tok421.setAttribute('cx', cx + p421.x / 100 * r); G.tok421.setAttribute('cy', cy + p421.y / 100 * r);
+    G.tok421.style.opacity = r >= 1.4 * f ? 1 : 0;
+    G.tokDet.setAttribute('cx', bx + p421.x / 100 * bR * .58); G.tokDet.setAttribute('cy', by + p421.y / 100 * bR * .58);
+  }
+
+  function reveal() {
+    revealed = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (Kit.calm) return;
+    gsap.from('#why > *, #keep', {opacity: 0, y: 10, stagger: .1, duration: .55, ease: 'power3.out'});
+    // the stage may re-lay itself out when the text changes: flash the fresh drawing
+    gsap.delayedCall(.15, () => {
+      gsap.fromTo(G.pulse, {attr: {r: R}, opacity: .9}, {attr: {r: R * 1.7}, opacity: 0, duration: 1.4, ease: 'expo.out'});
+      gsap.fromTo(G.bigC, {attr: {'stroke-width': 6}}, {attr: {'stroke-width': 1.6}, duration: 1.3, ease: 'power3.out'});
+      gsap.fromTo(G.halo, {opacity: .45}, {opacity: .08, duration: 1.6, ease: 'power2.out'});
+      gsap.from(G.dimT, {duration: .8, scrambleText: {text: '', chars: '0123456789', speed: .6}});
+      thump(1.25);
+    });
+  }
+
+  function start() {
+    if (started) return; started = true;
+    gsap.ticker.add(place);
+    if (Kit.calm) return;
+    const hop = (a, b) => ({motionPath: {path: CIRC, start: a, end: b}, duration: .75, ease: 'power2.inOut'});
+    gsap.timeline({repeat: -1})
+      .to(p421, hop(.75, 1 + 1 / 12)).to(p421, hop(1 / 12, 5 / 12), '+=.2').to(p421, hop(5 / 12, .75), '+=.2').to({}, {duration: .2});
+    bigTw = gsap.to(pBig, {motionPath: {path: CIRC, start: .75, end: 1.75}, duration: 6, repeat: -1, ease: 'none'});
+    render();
+  }
+
+  len.addEventListener('input', () => {
+    let t = len.value / 1000;
+    if (t >= .995 && t < 1) { t = 1; len.value = 1000; }
+    len.style.setProperty('--p', (t * 100) + '%');
+    lightMarks(t);
+    const dec = Math.floor(Math.log10(nOf(t)));
+    if (dec !== lastDec) { lastDec = dec; Kit.haptic('selection'); if (built && state === 'out' && !Kit.calm) thump(1.1); }
+    start();
+    if (Kit.calm) { st.t = t; render(); }
+    else gsap.to(st, {t, duration: .35, ease: 'power3.out', overwrite: true, onUpdate: render});
+  });
+
+  // keep the drawing filling the sheet whenever the stage changes size
+  let rq = 0;
+  new ResizeObserver(() => {
+    if (!built) return;
+    cancelAnimationFrame(rq);
+    rq = requestAnimationFrame(() => {
+      const b = svg.getBoundingClientRect();
+      if (b.width < 2 || b.height < 2) return;
+      if (Math.abs(b.width - lastW) < 1 && Math.abs(b.height - lastH) < 1) return;
+      layout();
+    });
+  }).observe(svg);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    start();
+    if (Kit.calm || !built) return;
+    gsap.from(G.bigC, {drawSVG: '0%', duration: 1.5, ease: 'power3.inOut'});
+    gsap.from(G.halo, {opacity: 0, duration: 1.2, delay: .6});
+    gsap.from([G.readG, G.stamp, G.dimG], {opacity: 0, y: 8, duration: .6, stagger: .12, delay: .5, ease: 'power3.out'});
+    gsap.from('#marks span', {opacity: 0, y: 4, stagger: .06, duration: .4, delay: .8, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(res => setTimeout(res, ms));
+    start();
+    len.value = 1000; len.dispatchEvent(new Event('input', {bubbles: true}));
+    await wait(Kit.calm ? 100 : 1600);
+  };
+})();
+Kit.single();
+</script>
+</html>

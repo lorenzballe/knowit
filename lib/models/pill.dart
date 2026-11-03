@@ -473,10 +473,21 @@ enum WebTouch {
 /// sharing, the journey and screen readers read those, and because a phone
 /// that cannot show the page shows them instead.
 class WebFace {
-  /// The page, whole. It links the kit as `kit/…` and nothing else; the app
-  /// puts the kit, its libraries and its fonts inside it before it is shown
-  /// (lib/widgets/web/card_kit.dart).
-  final String html;
+  /// The page, whole, when the card carries it: a bank from before pages
+  /// travelled alone, or a test. It links the kit as `kit/…` and nothing
+  /// else; the app puts the kit, its libraries and its fonts inside it
+  /// before it is shown (lib/widgets/web/card_kit.dart). Null on a card
+  /// that names its page instead ([page]).
+  final String? html;
+
+  /// Where the page is published, beside the bank: its file and the hash of
+  /// what is in it, `pages/<id>.html?v=<hash>`. The phone fetches it when
+  /// the card is about to be shown and keeps it (lib/data/card_pages.dart).
+  final String? page;
+
+  /// How big the page is, in bytes, as the bundle measured it; 0 when it
+  /// did not say.
+  final int bytes;
 
   /// The version of the kit the page was made with (see [kCardKit]).
   final int kit;
@@ -494,12 +505,14 @@ class WebFace {
   final Color? ground;
 
   const WebFace({
-    required this.html,
+    this.html,
+    this.page,
+    this.bytes = 0,
     this.kit = 1,
     this.touch = WebTouch.taps,
     this.label = '',
     this.ground,
-  });
+  }) : assert(html != null || page != null, 'a free card has a page');
 
   /// Whether this build carries the kit the page needs.
   bool get showable => kit <= kCardKit;

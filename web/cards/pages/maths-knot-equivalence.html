@@ -1,0 +1,343 @@
+<!doctype html>
+<!-- slug: maths-knot-equivalence -->
+<!-- Look: a night observatory. Two glowing instrument rings on an ink-black, star-filled sky each hold a luminous knot, Knot A and Knot B, with a "?" between them.
+     Interaction: bet "same knot" or "different", say how sure, then watch Knot B get moved through space, with no cutting, until it settles into Knot A's exact shape.
+     Wow: a faint amber ghost of Knot A shows the target, the "?" flickers between = and ≠ while B moves, then the rings lock with a shockwave, a light beam bridges them and the sign settles on "=". Turing's verdict on the problem appears. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Knot A, Knot B</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh;padding:0 0 1.6cqh;border-radius:2.4cqh;overflow:hidden;position:relative;
+  background:linear-gradient(180deg,#050816 0%,#020309 100%);
+  box-shadow:inset 0 0 0 1px rgba(140,205,255,.2),0 1.2cqh 3.2cqh rgba(0,0,0,.35)}
+#sky{flex:1;min-height:0;position:relative}
+#sky canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#verdict{position:absolute;left:50%;top:50%;font:800 24px/1 var(--display);color:#f4f8ff;white-space:nowrap;pointer-events:none;
+  text-shadow:0 0 14px rgba(120,200,255,.85),0 0 3px rgba(120,200,255,.9),0 1px 2px #000}
+#verdict.pulse{animation:qpulse 2.2s ease-in-out infinite}
+#verdict.lock{color:#fff4dd;text-shadow:0 0 18px rgba(255,190,110,.9),0 0 4px rgba(255,220,170,1),0 1px 2px #000}
+@keyframes qpulse{50%{text-shadow:0 0 26px rgba(160,140,255,.95),0 0 4px rgba(160,200,255,1),0 1px 2px #000}}
+.kit-calm #verdict.pulse{animation:none}
+#opts{display:flex;gap:2.6cqw;margin:0 3.4cqw}
+.bet{flex:1;min-width:0;font:700 max(2.1cqh,14px)/1.15 var(--body);color:#e9f1ff;text-align:center;cursor:pointer;border:0;border-radius:1.7cqh;padding:1.5cqh 2cqw;
+  background:linear-gradient(180deg,rgba(46,66,122,.6),rgba(12,18,40,.9));
+  box-shadow:inset 0 0 0 1.5px rgba(126,214,255,.38),0 .6cqh 1.6cqh rgba(0,0,0,.4);
+  transition:opacity .3s,box-shadow .25s,background .25s;overflow-wrap:anywhere}
+.bet .gl{display:block;font:700 max(2.6cqh,16px)/1 var(--mono);color:#8fe9ff;margin-bottom:.5cqh;text-shadow:0 0 10px rgba(120,220,255,.8)}
+.bet.on{background:linear-gradient(180deg,#a4efff,#5a9cff);color:#04101f;box-shadow:0 0 2.6cqh rgba(110,210,255,.7),inset 0 0 0 1.5px rgba(255,255,255,.6)}
+.bet.on .gl{color:#04101f;text-shadow:none}
+.bet.off{opacity:.38}
+#why{display:flex;flex-direction:column;gap:.8cqh;margin:0 4cqw}
+#why .big{color:#fff;font:800 max(3cqh,18px)/1.1 var(--display);margin:0;text-shadow:0 0 16px rgba(130,190,255,.55)}
+#why .body{color:#c9d6f2;font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+#why .body b{color:#ffd59a}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SAME KNOT?</span></div>
+    <h2 class="q">What is the central, unsolved problem in knot theory?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sky"><canvas id="skyc" role="img" aria-label="Two knots, Knot A and Knot B, each inside a glowing observatory ring, with a question mark between them."></canvas><div id="verdict" class="pulse">?</div></div>
+      <div id="opts">
+        <button class="bet" data-i="0"><span class="gl">A = B</span>Same knot</button>
+        <button class="bet" data-i="1"><span class="gl">A ≠ B</span>Different knots</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Same knot.</p><p class="body">Knot B was Knot A, only moved around. But no systematic method was known to tell two knots apart, and Alan Turing wrote that it <b>might well be unsolvable</b>.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Is Knot B the same knot as Knot A? Bet, then say how sure.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Telling if two knots are the same has driven knot theory for over 150 years.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (typeof ScrambleTextPlugin !== 'undefined') gsap.registerPlugin(ScrambleTextPlugin);
+  if (typeof SplitText !== 'undefined') gsap.registerPlugin(SplitText);
+  const cv = Kit.$('skyc'), sky = Kit.$('sky'), vd = Kit.$('verdict');
+  const OPTS = ['Same knot', 'Different knots'], RIGHT = 0;
+  let pick = -1, ctx = null, W = 0, H = 0, dpr = 1, fs = 12, mode = 'stack', R = 50, A = {x: 0, y: 0}, B = {x: 0, y: 0}, bg = null, MONO = 'monospace', ticking = false, VS = 24;
+  let done; const donePromise = new Promise(r => done = r);
+  const S = {ring: 1, ka: 1, kb: 1, m: 0, glow: .25, kick: 0, pulse: 0, ghost: 0, beam: 0};
+  gsap.set(vd, {xPercent: -50, yPercent: -50});
+
+  // ---------- the knot: one trefoil in 3D ----------
+  const N = 360, BASE = [];
+  for (let i = 0; i <= N; i++) { const t = i / N * Math.PI * 2; BASE.push([Math.sin(t) + 2 * Math.sin(2 * t), Math.cos(t) - 2 * Math.cos(2 * t), -Math.sin(3 * t)]); }
+  const PAL = [[94, 242, 255], [143, 155, 255], [228, 123, 255], [255, 184, 107]], COL = [], HI = [];
+  for (let i = 0; i < N; i++) {
+    const u = i / N * PAL.length, a = Math.floor(u) % 4, b = (a + 1) % 4, f = u - Math.floor(u), s = f * f * (3 - 2 * f);
+    const c = PAL[a].map((v, j) => Math.round(v + (PAL[b][j] - v) * s));
+    COL.push(`rgb(${c})`); HI.push(`rgb(${c.map(v => Math.round(v + (255 - v) * .6))})`);
+  }
+  // Knot B is the same rope, moved through space: stretched, swirled, bulged and tilted.
+  // Every step is a smooth motion of space, so the rope never passes through itself.
+  // k = 1 is Knot B as first shown; k = 0 is Knot A.
+  function shape(k, spin) {
+    const out = new Array(N + 1); let mx = 0;
+    const cz = 1 + 1.3 * k, sw = 1.5 * k, tx = 1.05 * k, ty = .6 * k, tz = .9 * k + spin;
+    const cX = Math.cos(tx), sX = Math.sin(tx), cY = Math.cos(ty), sY = Math.sin(ty), cZ = Math.cos(tz), sZ = Math.sin(tz);
+    for (let i = 0; i <= N; i++) {
+      let [x, y, z] = BASE[i]; z *= cz;
+      const th = sw * z, c = Math.cos(th), s = Math.sin(th); let x2 = x * c - y * s, y2 = x * s + y * c; x = x2; y = y2;
+      if (k > 0) { const a = Math.atan2(y, x), f = 1 + .32 * k * Math.sin(2 * a + .7); x *= f; y *= f; }
+      y2 = y * cX - z * sX; let z2 = y * sX + z * cX; y = y2; z = z2;
+      x2 = x * cY + z * sY; z2 = -x * sY + z * cY; x = x2; z = z2;
+      x2 = x * cZ - y * sZ; y2 = x * sZ + y * cZ; x = x2; y = y2;
+      out[i] = [x, y, z]; const r = Math.hypot(x, y); if (r > mx) mx = r;
+    }
+    return {p: out, mx};
+  }
+
+  function drawKnot(cx, cy, rad, k, spin, prog) {
+    const n = Math.max(0, Math.min(N, Math.round(prog * N))); if (n < 2) return;
+    const {p, mx} = shape(k, spin), sc = rad / mx, lw = Math.max(2.4, R * .066), gap = lw * .95;
+    const X = i => cx + p[i][0] * sc, Y = i => cy + p[i][1] * sc;
+    ctx.save(); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(X(0), Y(0)); for (let i = 1; i <= n; i++) ctx.lineTo(X(i), Y(i));
+    ctx.strokeStyle = 'rgba(130,160,255,.2)'; ctx.lineWidth = lw * 3.4; ctx.shadowColor = 'rgba(120,180,255,.9)'; ctx.shadowBlur = lw * 4; ctx.stroke(); ctx.shadowBlur = 0;
+    const segs = []; for (let i = 0; i < n; i++) segs.push(i);
+    segs.sort((a, b) => (p[a][2] + p[a + 1][2]) - (p[b][2] + p[b + 1][2]));
+    for (const i of segs) {
+      const x0 = X(i), y0 = Y(i), x1 = X(i + 1), y1 = Y(i + 1);
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1);
+      ctx.lineCap = 'butt'; ctx.strokeStyle = '#050816'; ctx.lineWidth = lw + gap * 2; ctx.stroke();
+      ctx.lineCap = 'round'; ctx.strokeStyle = COL[i]; ctx.lineWidth = lw; ctx.stroke();
+      ctx.strokeStyle = HI[i]; ctx.lineWidth = lw * .3; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // the target: a faint amber outline of Knot A, shown inside B's ring while B is moved
+  function ghost(cx, cy, rad, spin, a, t) {
+    if (a <= .01) return;
+    const {p, mx} = shape(0, spin), sc = rad / mx;
+    ctx.save(); ctx.globalAlpha = a; ctx.lineJoin = 'round';
+    ctx.setLineDash([R * .05, R * .06]); ctx.lineDashOffset = -t * 18;
+    ctx.strokeStyle = 'rgba(255,205,140,.9)'; ctx.lineWidth = Math.max(1.2, R * .022);
+    ctx.shadowColor = 'rgba(255,170,90,.9)'; ctx.shadowBlur = 6;
+    ctx.beginPath(); ctx.moveTo(cx + p[0][0] * sc, cy + p[0][1] * sc);
+    for (let i = 1; i <= N; i++) ctx.lineTo(cx + p[i][0] * sc, cy + p[i][1] * sc);
+    ctx.stroke(); ctx.restore();
+  }
+
+  function ring(cx, cy, r, spin, prog, glow, t) {
+    if (prog <= 0) return;
+    ctx.save(); ctx.translate(cx, cy);
+    const a0 = -Math.PI / 2, a1 = a0 + prog * Math.PI * 2;
+    const g = ctx.createRadialGradient(0, 0, r * .2, 0, 0, r);
+    g.addColorStop(0, 'rgba(60,90,180,.10)'); g.addColorStop(1, 'rgba(60,90,180,0)');
+    ctx.fillStyle = g; ctx.globalAlpha = prog; ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+    ctx.strokeStyle = 'rgba(140,215,255,.12)'; ctx.lineWidth = 1; ctx.beginPath();
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { ctx.moveTo(dx * r * .2, dy * r * .2); ctx.lineTo(dx * r * .86 * prog, dy * r * .86 * prog); }
+    ctx.stroke();
+    ctx.shadowColor = 'rgba(110,200,255,.95)'; ctx.shadowBlur = 6 + glow * 22;
+    ctx.strokeStyle = `rgba(150,220,255,${.5 + .5 * glow})`; ctx.lineWidth = 1.5 + glow * 1.2;
+    ctx.beginPath(); ctx.arc(0, 0, r, a0, a1); ctx.stroke();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = 'rgba(140,215,255,.3)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(0, 0, r * .9, a0, a1); ctx.stroke();
+    ctx.save(); ctx.rotate(spin);
+    ctx.strokeStyle = `rgba(160,225,255,${.4 + .4 * glow})`; ctx.lineWidth = 1; ctx.beginPath();
+    const nt = Math.floor(72 * prog);
+    for (let i = 0; i < nt; i++) { const a = i / 72 * Math.PI * 2 - Math.PI / 2, L = i % 6 ? r * .035 : r * .075, c = Math.cos(a), s = Math.sin(a); ctx.moveTo(c * r * .975, s * r * .975); ctx.lineTo(c * (r * .975 - L), s * (r * .975 - L)); }
+    ctx.stroke(); ctx.restore();
+    if (prog > .99) {
+      const sa = t * .55 + spin * 2;
+      ctx.strokeStyle = 'rgba(255,196,120,.85)'; ctx.lineWidth = 2; ctx.shadowColor = 'rgba(255,170,90,.9)'; ctx.shadowBlur = 8; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.arc(0, 0, r * 1.045, sa, sa + .42); ctx.stroke(); ctx.shadowBlur = 0;
+      ctx.fillStyle = 'rgba(150,220,255,.7)';
+      for (let i = 0; i < 4; i++) { ctx.save(); ctx.rotate(i * Math.PI / 2); ctx.beginPath(); ctx.moveTo(0, -r * 1.1); ctx.lineTo(-r * .025, -r * 1.15); ctx.lineTo(r * .025, -r * 1.15); ctx.closePath(); ctx.fill(); ctx.restore(); }
+    }
+    if (S.pulse > 0 && S.pulse < 1) {
+      ctx.strokeStyle = `rgba(190,235,255,${(1 - S.pulse) * .9})`; ctx.lineWidth = 2.5 * (1 - S.pulse) + .5;
+      ctx.beginPath(); ctx.arc(0, 0, r * (1 + S.pulse * .55), 0, Math.PI * 2); ctx.stroke();
+      ctx.strokeStyle = `rgba(255,200,130,${(1 - S.pulse) * .6})`;
+      ctx.beginPath(); ctx.arc(0, 0, r * (1 + S.pulse * .3), 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // the bridge: a beam of light joining the two rings once they lock
+  function beam(t) {
+    if (S.beam <= 0) return;
+    const dx = B.x - A.x, dy = B.y - A.y, d = Math.hypot(dx, dy) || 1, ux = dx / d, uy = dy / d;
+    const r0 = R * 1.12, len = d - 2 * r0, hole = VS * .62; if (len <= hole * 2 + 4) return;
+    const half = (len / 2 - hole) * S.beam, mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2;
+    ctx.save(); ctx.lineCap = 'round';
+    for (const sg of [-1, 1]) {
+      const sx = mx + sg * ux * (len / 2), sy = my + sg * uy * (len / 2), ex = sx - sg * ux * half, ey = sy - sg * uy * half;
+      const gr = ctx.createLinearGradient(sx, sy, ex, ey); gr.addColorStop(0, 'rgba(150,220,255,.9)'); gr.addColorStop(1, 'rgba(255,205,140,.9)');
+      ctx.strokeStyle = gr; ctx.lineWidth = 1.6; ctx.shadowColor = 'rgba(140,200,255,.9)'; ctx.shadowBlur = 10;
+      ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(ex, ey); ctx.stroke(); ctx.shadowBlur = 0;
+      // pulses running toward the sign
+      for (let k = 0; k < 3; k++) {
+        const f = ((t * .45 + k / 3) % 1) * S.beam, px = sx - sg * ux * half * f, py = sy - sg * uy * half * f;
+        ctx.fillStyle = `rgba(255,230,190,${.9 * Math.sin(f * Math.PI)})`; ctx.beginPath(); ctx.arc(px, py, 1.8, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.fillStyle = '#ffd08a'; ctx.beginPath(); ctx.arc(sx, sy, 2.4, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function label(text, x, y, align, toward) {
+    ctx.save(); ctx.globalAlpha = S.ring;
+    ctx.font = `700 ${fs}px ${MONO}`; if ('letterSpacing' in ctx) ctx.letterSpacing = '0.16em';
+    ctx.textBaseline = 'middle';
+    const w = ctx.measureText(text).width;
+    if (align === 'center') { x = Math.max(w / 2 + 8, Math.min(W - w / 2 - 8, x)); y = Math.max(fs * .9, y); }
+    ctx.textAlign = align;
+    ctx.fillStyle = '#c6ecff'; ctx.shadowColor = 'rgba(110,200,255,.8)'; ctx.shadowBlur = 8;
+    ctx.fillText(text, x, y); ctx.shadowBlur = 0;
+    if (toward) {
+      const sx = x + w + 7, sy = y;
+      const dx = sx - toward.x, dy = sy - toward.y, d = Math.hypot(dx, dy) || 1, ex = toward.x + dx / d * R * 1.12, ey = toward.y + dy / d * R * 1.12;
+      ctx.strokeStyle = 'rgba(150,220,255,.45)'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(ex, ey); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = '#ffd08a'; ctx.beginPath(); ctx.arc(ex, ey, 2.2, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // ---------- the sky ----------
+  const STARS = [], TWINK = [];
+  for (let i = 0; i < 180; i++) STARS.push({x: Kit.rnd(), y: Kit.rnd(), r: .3 + Kit.rnd() ** 3 * 1.3, a: .25 + Kit.rnd() * .6});
+  for (let i = 0; i < 16; i++) TWINK.push({x: Kit.rnd(), y: Kit.rnd(), r: .7 + Kit.rnd() * .9, ph: Kit.rnd() * 6.3, sp: .8 + Kit.rnd() * 1.6});
+  function paintSky() {
+    bg = document.createElement('canvas'); bg.width = Math.max(1, Math.round(W * dpr)); bg.height = Math.max(1, Math.round(H * dpr));
+    const b = bg.getContext('2d'); b.scale(dpr, dpr);
+    const g = b.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0b1233'); g.addColorStop(.55, '#050816'); g.addColorStop(1, '#020309');
+    b.fillStyle = g; b.fillRect(0, 0, W, H);
+    for (const [x, y, c] of [[.15, .12, 'rgba(110,80,220,.24)'], [.88, .68, 'rgba(40,150,210,.17)'], [.6, .38, 'rgba(220,90,170,.09)']]) {
+      const rg = b.createRadialGradient(x * W, y * H, 0, x * W, y * H, Math.max(W, H) * .55); rg.addColorStop(0, c); rg.addColorStop(1, 'rgba(0,0,0,0)');
+      b.fillStyle = rg; b.fillRect(0, 0, W, H);
+    }
+    for (const s of STARS) { b.fillStyle = `rgba(222,232,255,${s.a})`; b.beginPath(); b.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2); b.fill(); }
+    b.strokeStyle = 'rgba(220,235,255,.5)'; b.lineWidth = .7;
+    for (const s of STARS.slice(0, 5)) { const x = s.x * W, y = s.y * H; b.beginPath(); b.moveTo(x - 5, y); b.lineTo(x + 5, y); b.moveTo(x, y - 5); b.lineTo(x, y + 5); b.stroke(); }
+    const v = b.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .3, W / 2, H / 2, Math.max(W, H) * .75);
+    v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.5)'); b.fillStyle = v; b.fillRect(0, 0, W, H);
+  }
+
+  function draw(t) {
+    if (!ctx) return;
+    t = t || 0;
+    ctx.clearRect(0, 0, W, H);
+    if (bg) ctx.drawImage(bg, 0, 0, W, H);
+    for (const s of TWINK) { const a = .2 + .8 * (.5 + .5 * Math.sin(t * s.sp + s.ph)); ctx.fillStyle = `rgba(235,242,255,${a})`; ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2); ctx.fill(); }
+    const rs = t * .05 + S.kick, ks = t * .12;
+    beam(t);
+    ring(A.x, A.y, R, rs, S.ring, S.glow, t);
+    ring(B.x, B.y, R, -rs, S.ring, S.glow, t + 2);
+    drawKnot(A.x, A.y, R * .74, 0, ks, S.ka);
+    ghost(B.x, B.y, R * .74, ks, S.ghost, t);
+    drawKnot(B.x, B.y, R * .74, 1 - S.m, ks, S.kb);
+    if (mode === 'stack') { label('KNOT A', fs * .9, fs * 1.5, 'left', A); label('KNOT B', fs * .9, H - fs * 1.1, 'left', B); }
+    else { label('KNOT A', A.x, A.y - R * 1.18 - fs * .7, 'center'); label('KNOT B', B.x, B.y - R * 1.18 - fs * .7, 'center'); }
+  }
+
+  // the sign always sits in the gap between the two rings
+  function placeVerdict() {
+    let s;
+    if (mode === 'stack') s = Math.max(16, Math.min(44, (B.y - A.y - 2 * R) * .7, W * .1));
+    else s = Math.max(16, Math.min(52, (B.x - A.x - 2 * R) * .6, R * 1.1));
+    VS = s;
+    gsap.set(vd, {left: (A.x + B.x) / 2, top: (A.y + B.y) / 2, fontSize: s});
+  }
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H; if (!W || !H) return;
+    dpr = cv.width / W || 1;
+    MONO = getComputedStyle(document.body).getPropertyValue('--mono').trim() || 'monospace';
+    fs = Math.max(12, Math.min(14, W / 28));
+    mode = W / H >= .85 ? 'side' : 'stack';
+    if (mode === 'stack') {
+      R = Math.min(W * .33, H * .2); const gap = H * .94 - 4 * R;
+      A = {x: W / 2, y: H / 2 - gap / 2 - R}; B = {x: W / 2, y: H / 2 + gap / 2 + R};
+    } else {
+      R = Math.min(W * .2, H * .3, (H * .86 - fs * 2.6) / 2.36); const g = W * .92 - 4 * R, cy = Math.max(H * .44, fs * 2.4 + R * 1.18);
+      A = {x: W / 2 - g / 2 - R, y: cy}; B = {x: W / 2 + g / 2 + R, y: cy};
+    }
+    paintSky(); placeVerdict(); draw(gsap.ticker.time);
+    if (!Kit.calm && !ticking) { ticking = true; gsap.ticker.add(() => draw(gsap.ticker.time)); }
+  }
+
+  // ---------- the bet ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = OPTS[pick];
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('opts'); Kit.hide('say');
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    reveal();
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.bet'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    [...Kit.$('opts').children].forEach(o => { if (o !== b) o.classList.add('off'); });
+    sure.on();
+    if (Kit.calm) return;
+    gsap.fromTo(b, {scale: .93}, {scale: 1, duration: .6, ease: 'elastic.out(1,.5)'});
+    gsap.to(S, {kick: S.kick + Math.PI / 6, duration: 1, ease: 'expo.out'});
+    gsap.fromTo(S, {glow: 1}, {glow: .25, duration: 1.1, ease: 'power2.out'});
+  });
+
+  // ---------- the answer plays out: Knot B is moved, never cut, until it is Knot A ----------
+  function reveal() {
+    vd.classList.remove('pulse');
+    cv.setAttribute('aria-label', 'Knot B, moved through space without cutting, settles into exactly the shape of Knot A. An equals sign joins the two rings.');
+    const why = Kit.$('why'), keep = Kit.$('keep');
+    if (Kit.calm) {
+      S.m = 1; S.pulse = 1; S.glow = .35; S.beam = 1; vd.textContent = '='; vd.classList.add('lock');
+      Kit.show('why'); Kit.show('keep'); draw(0); done(); return;
+    }
+    gsap.set([why, keep], {opacity: 0}); Kit.show('why'); Kit.show('keep');
+    const tl = gsap.timeline({onComplete: finish});
+    tl.to(S, {ghost: .55, duration: .6, ease: 'power2.out'}, 0)
+      .to(vd, {duration: 3.2, scrambleText: {text: '?', chars: '=≠?', revealDelay: 3, speed: .35}}, .1)
+      .to(S, {m: 1, duration: 3.4, ease: 'power2.inOut'}, .2)
+      .to(S, {glow: 1, duration: .4, ease: 'power2.in'}, '-=.4')
+      .to(S, {ghost: 0, duration: .4}, '<')
+      .call(() => { Kit.haptic('success'); vd.classList.add('lock'); })
+      .fromTo(S, {pulse: 0}, {pulse: 1, duration: 1.5, ease: 'expo.out'})
+      .to(S, {beam: 1, duration: 1, ease: 'power3.out'}, '<')
+      .to(S, {glow: .35, duration: 1.3, ease: 'power2.out'}, '<')
+      .to(vd, {duration: .5, scrambleText: {text: '=', chars: '=≠', speed: .6}}, '<')
+      .fromTo(vd, {scale: 1.6}, {scale: 1, duration: .9, ease: 'back.out(2)'}, '<');
+  }
+  function finish() {
+    const why = Kit.$('why'), keep = Kit.$('keep'), big = why.querySelector('.big'), body = why.querySelector('.body');
+    gsap.set(why, {opacity: 1});
+    if (typeof SplitText !== 'undefined') {
+      const st = new SplitText(big, {type: 'words,chars'});
+      gsap.from(st.chars, {opacity: 0, yPercent: 70, rotateX: -70, stagger: .035, duration: .6, ease: 'back.out(2)'});
+    }
+    gsap.from(body, {opacity: 0, y: 8, duration: .7, delay: .25, ease: 'power3.out'});
+    gsap.to(keep, {opacity: 1, duration: .6, delay: .55, ease: 'power2.out'});
+    setTimeout(done, 900);
+  }
+
+  new ResizeObserver(() => { if (ctx) layout(); }).observe(sky);
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.timeline()
+      .fromTo(S, {ring: 0}, {ring: 1, duration: 1.4, ease: 'power3.out'}, 0)
+      .fromTo(S, {ka: 0}, {ka: 1, duration: 1.6, ease: 'power2.inOut'}, .25)
+      .fromTo(S, {kb: 0}, {kb: 1, duration: 1.6, ease: 'power2.inOut'}, .45)
+      .fromTo(vd, {opacity: 0, scale: .4}, {opacity: 1, scale: 1, duration: .8, ease: 'back.out(2.4)'}, 1.2)
+      .fromTo('.bet', {opacity: 0, y: 12}, {opacity: 1, y: 0, stagger: .08, duration: .5, ease: 'power3.out', immediateRender: false}, .4);
+  };
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.play.card = async () => {
+    Kit.$('opts').children[0].click(); await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await Promise.race([donePromise, wait(7000)]); await wait(400);
+  };
+})();
+Kit.single();
+</script>
+</html>

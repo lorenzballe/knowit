@@ -1,0 +1,38 @@
+{
+  "id": "space-frozen-horizon-light",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If we could see light from a black hole's edge, what would we see?",
+  "answer": "Near the horizon, time stretches without limit, so light leaving the edge is redshifted until it fades from view. But it is still there. Make it visible and you see everything that ever fell in, all at once.",
+  "move": "A black hole's edge holds a frozen picture of everything that fell in.",
+  "keywords": [
+    "black holes",
+    "event horizon",
+    "redshift",
+    "photons",
+    "time dilation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks what light from a black hole's edge would look like. Tap around the black hole to drop objects in. A control makes the faint edge light visible, revealing layered images of everything that fell in.",
+    "ground": "#0a0d22"
+  },
+  "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M&t=54s",
+  "written": "2026-11-03"
+}

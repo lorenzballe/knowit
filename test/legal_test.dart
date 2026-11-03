@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:astuto/data/card_pages.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/legal.dart';
@@ -107,8 +108,11 @@ void main() {
     }
     // The pages the app and its widget read stay where a phone already
     // out there looks for them.
-    expect(kBankUrl, 'https://astutetheapp.com/cards/cards.json');
+    expect(kBankUrl, 'https://astutetheapp.com/cards/v2/cards.json');
+    expect(File('web/cards/v2/cards.json').existsSync(), isTrue);
+    // And where every build from before looks for theirs.
     expect(File('web/cards/cards.json').existsSync(), isTrue);
+    expect(kCardsBase, 'https://astutetheapp.com/cards/');
     final String deploy = File('.github/workflows/deploy.yml')
         .readAsStringSync();
     expect(deploy, contains('cp -r web/cards _site/cards'));

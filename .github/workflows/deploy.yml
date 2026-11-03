@@ -81,7 +81,9 @@ jobs:
 
       # astutetheapp.com, put together: the site's pages at the root (site/),
       # the app under /app/, and at the paths the app itself reads — the
-      # card bank at /cards/cards.json, the widget's days at
+      # card bank at /cards/v2/cards.json with each free card's page at
+      # /cards/pages/<id>.html (and at /cards/cards.json, pages inside, the
+      # bank builds from before read), the widget's days at
       # /widget/days.json, the privacy policy at /privacy.html — so a phone
       # already out there finds everything where it always has, through
       # lorenzballe.github.io/knowit/ as much as through the domain.

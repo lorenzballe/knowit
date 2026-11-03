@@ -1,0 +1,585 @@
+<!doctype html>
+<!-- slug: space-aerogel-comet-catch -->
+<!-- Look: a Swiss poster. Off-white paper, black type, one hot red, a strict grid with metal over aerogel, and a huge live speed numeral with a gauge.
+     Interaction: tap a height to fire a comet grain at 6 km/s. Metal stops it dead. In the aerogel, two depths of network break and scatter along its path.
+     Wow: in the aerogel the numeral drains from 6.0 to 0.0 and its gauge empties as a carrot-shaped track opens and the grain glows, caught whole. In metal it flashes into vapour.
+     The text slot is sized for the longest explanation from the start, so the stage never jumps or squashes. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Catching comet dust</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
+.say{overflow-wrap:anywhere}
+#keep{visibility:hidden;opacity:0}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Aim and fire · two targets">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">AIM AND FIRE</span></div>
+    <h2 class="q">How did Stardust's aerogel catch comet dust flying at 6 km/s?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A slab of solid metal above a block of aerogel. Tap a height to fire a comet grain at 6 kilometres per second into one of them."></canvas>
+    </div>
+    <p class="say" id="say">Tap a height to fire a comet grain at 6 km/s into the <b>metal</b> or into the <b>aerogel</b>.</p>
+    <div class="keep" id="keep"><b>WHAT TO KEEP</b>Stop something fast slowly, over a long path, and it survives.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “World's Lightest Solid!” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv');
+  const PAPER = '#f1eee6', INK = '#111113', HOT = '#ff3416';
+  const WHY_CORE = 'Aerogel is mostly air, so the grain goes <b>in</b>. It snaps the network strand by strand, losing speed until it stops, whole. ';
+  const WHY_A = WHY_CORE + 'A solid would stop it at once and vaporize it: <b>tap the metal.</b>';
+  const WHY_B = WHY_CORE + 'A solid stops it at once, and it vaporizes.';
+  const MSG_METAL = 'Metal stopped it dead, and the grain turned to vapour. <b>Now fire into the aerogel.</b>';
+
+  let x = null, W = 0, H = 0, fs = 12, G = {}, DISPLAY = 'sans-serif', MONO = 'monospace';
+  let nodes = [], links = [], brushed = [], sparks = [], puffs = [], trails = [], grains = [], craters = [], labels = [], rings = [];
+  let proj = null, busy = false, aimY = null, hover = false, revealed = false, metalDone = false, last = 0, running = false;
+  const S = {build: 1, v: 6, punch: 1, hot: 0, shake: 0, flash: 0, fx: 0, fy: 0};
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  function fonts() {
+    const cs = getComputedStyle(Kit.$('card'));
+    DISPLAY = cs.getPropertyValue('--display').trim() || 'sans-serif';
+    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+  }
+
+  // Reserve the text slot for the longest message, so the stage keeps one size from start to end.
+  function fitText() {
+    const s = Kit.$('say'), cur = s.innerHTML;
+    s.style.minHeight = '0px';
+    let h = 0;
+    for (const t of [WHY_A, WHY_B, MSG_METAL]) { s.innerHTML = t; h = Math.max(h, s.getBoundingClientRect().height); }
+    s.innerHTML = cur;
+    s.style.minHeight = Math.ceil(h) + 'px';
+  }
+
+  // ---------- layout: the grid ----------
+  function layout() {
+    fitText();
+    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H; fonts();
+    fs = Math.max(12, Math.min(14, W / 28));
+    const m = Math.round(Math.max(10, Math.min(W, H) * .045));
+    const bx = Math.round(W * .45), br = W - m, top = m, bot = H - m, span = bot - top;
+    const mt = top, mb = top + Math.round(span * .27), gt = mb + Math.round(fs * .7), gb = bot;
+    G = {m, bx, br, top, bot, mt, mb, gt, gb, x0: m + fs * .95, tagH: fs * 1.5};
+    G.Rmax = Math.max(fs * .5, Math.min(fs * 1.55, (gb - gt) * .2));
+
+    // The readout, bottom-left: numeral, gauge, caption.
+    G.capY = bot - fs * .45; G.gaugeY = G.capY - fs * 1.25; G.numY = G.gaugeY - fs * .6;
+    x.font = `800 100px ${DISPLAY}`;
+    const w100 = x.measureText('6.0').width || 150;
+    let lo = Math.max(gt + G.Rmax + 2, top + fs * 3.4 + 2);
+    let hi = Math.min(gb - G.tagH - fs * .5, gb - G.Rmax - 2);
+    const desired = Math.min(100 * (bx - m - fs * .9) / w100, span * .42);
+    const fitNum = (G.numY - (lo + fs * .9)) / .74;
+    G.num = Math.max(Math.min(desired, fitNum), Math.min(desired, fs * 3.6));
+    G.numW = w100 * G.num / 100;
+    G.numTop = G.numY - G.num * .74;
+    const hiN = G.numTop - fs * .9;
+    if (hiN >= lo) hi = Math.min(hi, hiN);
+    if (lo > hi) lo = hi = clamp((lo + hi) / 2, gt + 2, gb - 2);
+    G.gLo = lo; G.gHi = hi;
+
+    // The aerogel: two depths of jittered lattice, joined into a network.
+    nodes = []; links = [];
+    const A = (br - bx) * (gb - gt);
+    const s1 = Math.max(8, Math.sqrt(A / 520));
+    lattice(s1 * .62, 1);
+    lattice(s1, 0);
+    // Brushed metal.
+    brushed = [];
+    for (let i = 0; i < 110; i++) {
+      const x1 = bx + Kit.rnd() * (br - bx);
+      brushed.push({y: mt + Kit.rnd() * (mb - mt), x1, x2: Math.min(br, x1 + 10 + Kit.rnd() * (br - bx) * .5), a: .03 + Kit.rnd() * .09});
+    }
+    trails = []; grains = []; craters = []; labels = []; sparks = []; puffs = []; rings = [];
+    proj = null; busy = false;
+    aimY = aimY == null || aimY > H ? (G.gLo + G.gHi) / 2 : clampAim(aimY).y;
+    if (!running) { running = true; requestAnimationFrame(frame); }
+    draw();
+  }
+
+  function lattice(s, L) {
+    const x0 = G.bx, x1 = G.br, y0 = G.gt, y1 = G.gb;
+    const cols = Math.max(2, Math.floor((x1 - x0) / s)), rows = Math.max(2, Math.floor((y1 - y0) / s));
+    const sx = (x1 - x0) / cols, sy = (y1 - y0) / rows, base = nodes.length;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      nodes.push({
+        x: clamp(x0 + (c + .5) * sx + (Kit.rnd() - .5) * sx * .75, x0 + 1, x1 - 1),
+        y: clamp(y0 + (r + .5) * sy + (Kit.rnd() - .5) * sy * .75, y0 + 1, y1 - 1),
+        vx: 0, vy: 0, b: 0, h: 0, L
+      });
+    }
+    const id = (r, c) => base + r * cols + c;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      if (c + 1 < cols && Kit.rnd() < .85) links.push([id(r, c), id(r, c + 1), L]);
+      if (r + 1 < rows && Kit.rnd() < .85) links.push([id(r, c), id(r + 1, c), L]);
+      if (r + 1 < rows && c + 1 < cols && Kit.rnd() < .45) links.push([id(r, c), id(r + 1, c + 1), L]);
+      if (r + 1 < rows && c > 0 && Kit.rnd() < .3) links.push([id(r, c), id(r + 1, c - 1), L]);
+    }
+  }
+
+  function clampAim(y) {
+    if (y < (G.mb + G.gt) / 2) {
+      const lo = G.mt + fs * .9, hi = G.mb - fs * .9;
+      return {band: 'metal', y: lo > hi ? (G.mt + G.mb) / 2 : clamp(y, lo, hi)};
+    }
+    return {band: 'gel', y: clamp(y, G.gLo, G.gHi)};
+  }
+
+  // ---------- firing ----------
+  function fire(y) {
+    if (busy || !x) return;
+    const a = clampAim(y); aimY = a.y;
+    busy = true; labels = []; S.hot = 0; Kit.haptic('light');
+    const D = (G.br - G.bx) * (.58 + Kit.rnd() * .1), dur = 1.4;
+    proj = {x: G.x0, lx: G.bx, y: a.y, v: 6, r: Math.max(2.4, fs * .22), band: a.band, D, dur, alive: true};
+    gsap.killTweensOf(S, 'v,punch'); S.v = 6; S.punch = 1;
+    if (Kit.calm) {
+      proj.x = G.bx;
+      if (a.band === 'metal') hitMetal();
+      else { enterGel(); for (let i = 1; i <= 140; i++) stepGel(i / 140); for (let k = 0; k < 90; k++) settle(1); stopGel(); }
+      return;
+    }
+    const vpx = 3 * D / dur;
+    gsap.fromTo(S, {punch: 1.06}, {punch: 1, duration: .5, ease: 'power3.out'});
+    gsap.to(proj, {x: G.bx, duration: (G.bx - G.x0) / vpx, ease: 'none', onComplete: () => {
+      if (a.band === 'metal') hitMetal();
+      else {
+        enterGel(); Kit.haptic('selection');
+        const o = {t: 0};
+        gsap.to(o, {t: 1, duration: dur, ease: 'none', onUpdate: () => stepGel(o.t), onComplete: stopGel});
+      }
+    }});
+  }
+
+  // Annotations live in the flight lane, right-aligned to the target: below the line for metal, above it for aerogel.
+  function laneLabels(y, rows, below) {
+    const out = [];
+    rows.forEach((r, i) => {
+      const by = below ? y + fs * 1.75 + i * fs * 1.4 : y - fs * 1.05 - i * fs * 1.4;
+      if (i > 0) {
+        if (below && by + fs * .35 > G.numTop - 2) return;
+        if (!below && by - fs * .95 < G.top + 1) return;
+      }
+      out.push({t: r.t, alt: r.alt, c: r.c, y: by, a: 0});
+    });
+    return out;
+  }
+
+  function hitMetal() {
+    const p = proj; p.alive = false; S.v = 0;
+    const spl = [];
+    for (let i = 0; i < 9; i++) spl.push({a: (Kit.rnd() - .5) * 2.4, l: fs * (.5 + Kit.rnd() * 1.1)});
+    craters.push({x: G.bx, y: p.y, h: 1, spl});
+    labels = laneLabels(p.y, [
+      {t: 'VAPORIZED', alt: 'VAPOUR', c: HOT},
+      {t: 'STOPPED AT ONCE', alt: 'STOPPED DEAD', c: INK}
+    ], true);
+    metalDone = true;
+    if (!revealed) sayTo(MSG_METAL); else setWhy();
+    if (Kit.calm) { labels.forEach(l => l.a = 1); craters.forEach(c => c.h = .25); busy = false; return; }
+    Kit.haptic('success');
+    S.fx = G.bx; S.fy = p.y;
+    gsap.fromTo(S, {flash: 1, shake: 1}, {flash: 0, shake: 0, duration: .7, ease: 'expo.out'});
+    for (let i = 0; i < 280; i++) {
+      const ang = Math.PI + (Kit.rnd() - .5) * 2.6, sp = 60 + Math.pow(Kit.rnd(), .6) * 420;
+      sparks.push({x: G.bx - 1, y: p.y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, life: .4 + Kit.rnd() * .9, age: 0, s: .8 + Kit.rnd() * 1.8});
+    }
+    for (let i = 0; i < 18; i++) {
+      const ang = Math.PI + (Kit.rnd() - .5) * 1.8, sp = 20 + Kit.rnd() * 60;
+      puffs.push({x: G.bx - 2, y: p.y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, life: 1 + Kit.rnd() * .8, age: 0, r: fs * (.4 + Kit.rnd() * .6)});
+    }
+    labels.forEach((l, i) => gsap.to(l, {a: 1, duration: .45, delay: .15 + i * .12, ease: 'power3.out'}));
+    gsap.to(craters[craters.length - 1], {h: .25, duration: 2.4, ease: 'power2.out'});
+    setTimeout(() => { busy = false; }, 650);
+  }
+
+  function enterGel() {
+    const t = {pts: [], frags: [], heat: 1};
+    trails.push(t); proj.trail = t; proj.lx = G.bx;
+  }
+
+  function stepGel(t) {
+    const p = proj;
+    const nx = G.bx + p.D * (1 - Math.pow(1 - t, 3)), v = 6 * Math.pow(1 - t, 2);
+    S.v = v; p.v = v;
+    const r0 = fs * .25, R = r0 + (G.Rmax - r0) * Math.pow(v / 6, .8);
+    let sx = p.lx;
+    while (sx < nx - .01) {
+      sx = Math.min(nx, sx + 2);
+      p.trail.pts.push({x: sx, y: p.y, r: R});
+      if (Kit.rnd() < .45) p.trail.frags.push({x: sx + (Kit.rnd() - .5) * 2, y: p.y + (Kit.rnd() < .5 ? -1 : 1) * R * (.35 + .5 * Kit.rnd()), s: .9 + Kit.rnd() * 1.1});
+      breakAt(sx, p.y, R, v);
+    }
+    p.lx = nx; p.x = nx;
+  }
+
+  // The grain breaks every strand in its way and shoves the pieces aside: each break costs it energy.
+  function breakAt(sx, sy, R, v) {
+    for (const n of nodes) {
+      if (n.b) continue;
+      const dx = n.x - sx; if (dx > R || dx < -R) continue;
+      let dy = n.y - sy; if (dy > R || dy < -R) continue;
+      const d = Math.hypot(dx, dy); if (d > R) continue;
+      if (Math.abs(dy) < .4) dy = Kit.rnd() < .5 ? -.6 : .6;
+      const dd = Math.hypot(dx, dy), push = ((R * 1.22 - d) * .14 + .1) * (n.L ? .8 : 1);
+      n.b = 1; n.h = 1;
+      n.vx = dx / dd * push * .5 + (v / 6) * 1.3 * Kit.rnd();
+      n.vy = dy / dd * push + (Kit.rnd() - .5) * .25;
+    }
+  }
+
+  function stopGel() {
+    const p = proj; p.alive = false; S.v = 0;
+    const g = {x: p.x, y: p.y, h: 1, r: p.r};
+    grains.push(g);
+    labels = laneLabels(p.y, [
+      {t: 'STOPPED · INTACT', alt: 'CAUGHT WHOLE', c: HOT},
+      {t: 'BROKEN STRANDS', alt: 'NET BROKEN', c: INK}
+    ], false);
+    if (Kit.calm) {
+      S.hot = 1; labels.forEach(l => l.a = 1); p.trail.heat = .2; g.h = .4;
+      reveal(); busy = false; return;
+    }
+    Kit.haptic('success');
+    gsap.to(S, {hot: 1, duration: .25, ease: 'power2.out'});
+    gsap.fromTo(S, {punch: 1.16}, {punch: 1, duration: 1.1, ease: 'elastic.out(1,.45)'});
+    for (let i = 0; i < 3; i++) {
+      const r = {x: p.x, y: p.y, r: 0, a: .9};
+      rings.push(r);
+      gsap.to(r, {r: fs * (2.4 + i * 1.5), a: 0, duration: 1.2, delay: i * .14, ease: 'expo.out', onComplete: () => { const k = rings.indexOf(r); if (k >= 0) rings.splice(k, 1); }});
+    }
+    labels.forEach((l, i) => gsap.to(l, {a: 1, duration: .5, delay: .25 + i * .15, ease: 'power3.out'}));
+    gsap.to(p.trail, {heat: .2, duration: 2.6, ease: 'power2.out'});
+    gsap.to(g, {h: .4, duration: 2.6, ease: 'power2.out'});
+    reveal();
+    setTimeout(() => { busy = false; }, 500);
+  }
+
+  function sayTo(html) {
+    const s = Kit.$('say');
+    s.innerHTML = html;
+    if (!Kit.calm) gsap.fromTo(s, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .45, ease: 'power3.out'});
+  }
+  function setWhy() { sayTo(metalDone ? WHY_B : WHY_A); }
+  function reveal() {
+    setWhy();
+    if (revealed) return;
+    revealed = true;
+    const k = Kit.$('keep');
+    k.style.visibility = 'visible';
+    if (Kit.calm) { k.style.opacity = 1; return; }
+    gsap.fromTo(k, {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .5, delay: .15, ease: 'power3.out'});
+  }
+
+  // ---------- the loop ----------
+  function settle(k) {
+    for (const n of nodes) if (n.b && (Math.abs(n.vx) + Math.abs(n.vy) > .01)) {
+      n.x += n.vx * k; n.y = clamp(n.y + n.vy * k, G.gt + 1, G.gb - 1);
+      n.vx *= .86; n.vy *= .86;
+    }
+  }
+  function frame(t) {
+    const now = t / 1000, dt = Math.min(.05, last ? now - last : .016); last = now;
+    settle(1);
+    for (const n of nodes) if (n.h > 0) n.h = Math.max(0, n.h - dt * .45);
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const s = sparks[i]; s.age += dt;
+      if (s.age >= s.life) { sparks.splice(i, 1); continue; }
+      s.vx *= .94; s.vy = s.vy * .94 + 140 * dt; s.x += s.vx * dt; s.y += s.vy * dt;
+    }
+    for (let i = puffs.length - 1; i >= 0; i--) {
+      const s = puffs[i]; s.age += dt;
+      if (s.age >= s.life) { puffs.splice(i, 1); continue; }
+      s.vx *= .97; s.vy = s.vy * .97 - 8 * dt; s.x += s.vx * dt; s.y += s.vy * dt; s.r += dt * fs * .9;
+    }
+    draw(now);
+    requestAnimationFrame(frame);
+  }
+
+  // ---------- drawing ----------
+  function txt(t, px, py, font, color, align = 'left') {
+    x.font = font; x.fillStyle = color; x.textAlign = align; x.textBaseline = 'alphabetic'; x.fillText(t, px, py);
+  }
+  // A block tag: hot index + name, right-aligned, optionally on a paper chip.
+  function tag(idx, name, short, rx, by, nameColor, chip) {
+    const c = x, f = `700 ${fs}px ${MONO}`;
+    c.font = f;
+    let full = idx + ' ' + name, w = c.measureText(full).width;
+    if (w > G.br - G.bx - fs) { name = short; full = idx + ' ' + name; w = c.measureText(full).width; }
+    const lx = rx - w;
+    if (chip) { c.fillStyle = 'rgba(241,238,230,.88)'; c.fillRect(lx - 4, by - fs * .95, w + 8, fs * 1.32); }
+    txt(idx, lx, by, f, HOT);
+    txt(name, lx + c.measureText(idx + ' ').width, by, f, nameColor);
+  }
+
+  function draw(now = 0) {
+    if (!x) return;
+    const c = x, b = S.build;
+    c.save();
+    c.clearRect(0, 0, W, H);
+    c.fillStyle = PAPER; c.fillRect(0, 0, W, H);
+
+    // The grid: a hairline frame, and quarter ticks down the lane's left edge.
+    c.strokeStyle = 'rgba(17,17,19,.14)'; c.lineWidth = 1;
+    c.strokeRect(G.m + .5, G.top + .5, G.br - G.m - 1, G.bot - G.top - 1);
+    c.beginPath();
+    for (let i = 1; i < 8; i++) { const ty = Math.round(G.top + (G.bot - G.top) * i / 8) + .5; c.moveTo(G.m, ty); c.lineTo(G.m + (i % 2 ? 3 : 6), ty); }
+    c.stroke();
+
+    // The readout: speed numeral, gauge, caption.
+    const nx = G.m + fs * .45, hot = S.hot > .5;
+    c.save();
+    c.translate(nx, G.numY); c.scale(S.punch, S.punch);
+    c.font = `800 ${G.num}px ${DISPLAY}`; c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+    c.fillStyle = hot ? HOT : INK;
+    c.globalAlpha = .25 + .75 * b;
+    c.fillText(S.v.toFixed(1), -G.num * .04, 0);
+    c.restore();
+    c.fillStyle = 'rgba(17,17,19,.14)'; c.fillRect(nx, G.gaugeY - 1, G.numW, 2);
+    c.fillStyle = hot ? HOT : INK; c.fillRect(nx, G.gaugeY - 1.5, G.numW * clamp(S.v / 6, 0, 1), 3);
+    c.fillStyle = 'rgba(17,17,19,.4)';
+    for (let i = 0; i <= 6; i++) c.fillRect(Math.round(nx + (G.numW - 1) * i / 6), G.gaugeY - 6, 1, 3);
+    const cf = `700 ${fs}px ${MONO}`;
+    c.font = cf;
+    const capT = c.measureText('00 GRAIN · KM/S').width <= G.bx - nx - 4 ? ' GRAIN · KM/S' : ' KM/S';
+    txt('00', nx, G.capY, cf, HOT); txt(capT, nx + c.measureText('00').width, G.capY, cf, INK);
+
+    // The targets shake together when the metal is hit.
+    c.save();
+    if (S.shake > 0) c.translate((Kit.rnd() - .5) * S.shake * 6, (Kit.rnd() - .5) * S.shake * 4);
+    const bw = (G.br - G.bx) * b;
+
+    // Metal slab.
+    if (bw > 1) {
+      const mg = c.createLinearGradient(0, G.mt, 0, G.mb);
+      mg.addColorStop(0, '#45464d'); mg.addColorStop(.4, '#1e1f23'); mg.addColorStop(1, '#0b0b0d');
+      c.fillStyle = mg; c.fillRect(G.bx, G.mt, bw, G.mb - G.mt);
+      c.save(); c.beginPath(); c.rect(G.bx, G.mt, bw, G.mb - G.mt); c.clip();
+      c.lineWidth = 1;
+      for (const l of brushed) { c.strokeStyle = `rgba(255,255,255,${l.a})`; c.beginPath(); c.moveTo(l.x1, l.y + .5); c.lineTo(l.x2, l.y + .5); c.stroke(); }
+      const sh = c.createLinearGradient(G.bx, 0, G.bx + fs * 2.4, 0);
+      sh.addColorStop(0, 'rgba(255,255,255,.24)'); sh.addColorStop(1, 'rgba(255,255,255,0)');
+      c.fillStyle = sh; c.fillRect(G.bx, G.mt, fs * 2.4, G.mb - G.mt);
+      // A slow specular glint travels along the slab.
+      const gp = Kit.calm ? .7 : ((now * .09) % 1.4) - .2, gx = G.bx + (G.br - G.bx) * gp;
+      const gl = c.createLinearGradient(gx - fs * 3, 0, gx + fs * 3, 0);
+      gl.addColorStop(0, 'rgba(255,255,255,0)'); gl.addColorStop(.5, 'rgba(255,255,255,.08)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
+      c.fillStyle = gl; c.fillRect(gx - fs * 3, G.mt, fs * 6, G.mb - G.mt);
+      for (const cr of craters) {
+        const rg = c.createRadialGradient(cr.x, cr.y, 0, cr.x, cr.y, fs * 2.4);
+        rg.addColorStop(0, `rgba(255,140,70,${.9 * cr.h})`); rg.addColorStop(.4, `rgba(255,52,22,${.38 * cr.h})`); rg.addColorStop(1, 'rgba(255,52,22,0)');
+        c.fillStyle = rg; c.fillRect(cr.x, cr.y - fs * 2.4, fs * 2.4, fs * 4.8);
+        c.strokeStyle = `rgba(20,8,6,.85)`; c.lineWidth = 1;
+        c.beginPath();
+        for (const s of cr.spl) { c.moveTo(cr.x + fs * .3, cr.y); c.lineTo(cr.x + Math.cos(s.a) * s.l, cr.y + Math.sin(s.a) * s.l); }
+        c.stroke();
+        c.fillStyle = '#050506'; c.beginPath(); c.ellipse(cr.x, cr.y, fs * .34, fs * .5, 0, -Math.PI / 2, Math.PI / 2); c.fill();
+        c.strokeStyle = `rgba(255,150,80,${.25 + .7 * cr.h})`; c.lineWidth = 1.2;
+        c.beginPath(); c.ellipse(cr.x, cr.y, fs * .42, fs * .6, 0, -Math.PI / 2, Math.PI / 2); c.stroke();
+      }
+      c.restore();
+      c.fillStyle = 'rgba(255,255,255,.5)'; c.fillRect(G.bx, G.mt, bw, 1);
+      if (b > .9) tag('01', 'SOLID METAL', 'METAL', G.br - fs * .5, G.mb - fs * .5, 'rgba(255,255,255,.72)', false);
+    }
+
+    // Aerogel block: frozen blue smoke, two depths of network.
+    if (bw > 1) {
+      c.save(); c.beginPath(); c.rect(G.bx, G.gt, bw, G.gb - G.gt); c.clip();
+      const gg = c.createLinearGradient(0, G.gt, 0, G.gb);
+      gg.addColorStop(0, '#eaeff3'); gg.addColorStop(1, '#c6d2dc');
+      c.fillStyle = gg; c.fillRect(G.bx, G.gt, bw, G.gb - G.gt);
+      const hz = c.createRadialGradient(G.bx, G.gt + (G.gb - G.gt) * .4, 0, G.bx, G.gt + (G.gb - G.gt) * .4, (G.br - G.bx) * 1.1);
+      hz.addColorStop(0, 'rgba(110,145,190,.2)'); hz.addColorStop(1, 'rgba(110,145,190,0)');
+      c.fillStyle = hz; c.fillRect(G.bx, G.gt, bw, G.gb - G.gt);
+      // A slow diagonal sheen: light scattering in the foam.
+      const ph = Kit.calm ? .55 : ((now * .07) % 1.5) - .25;
+      const cx = G.bx + (G.br - G.bx + (G.gb - G.gt)) * ph - (G.gb - G.gt) * .5, sw = fs * 4;
+      const sg = c.createLinearGradient(cx - sw, G.gt, cx + sw, G.gb);
+      sg.addColorStop(0, 'rgba(255,255,255,0)'); sg.addColorStop(.5, 'rgba(255,255,255,.28)'); sg.addColorStop(1, 'rgba(255,255,255,0)');
+      c.fillStyle = sg; c.fillRect(G.bx, G.gt, bw, G.gb - G.gt);
+
+      // Tracks: carrot-shaped, hot while fresh, walls packed with crushed foam and grain fragments.
+      for (const tr of trails) {
+        const P = tr.pts; if (P.length < 2) continue;
+        const lg = c.createLinearGradient(P[0].x, 0, P[P.length - 1].x, 0);
+        lg.addColorStop(0, `rgba(255,52,22,${.12 + .22 * tr.heat})`); lg.addColorStop(1, `rgba(255,52,22,${.05 + .14 * tr.heat})`);
+        c.fillStyle = lg; c.beginPath();
+        c.moveTo(P[0].x, P[0].y - P[0].r);
+        for (const p of P) c.lineTo(p.x, p.y - p.r * .9);
+        for (let i = P.length - 1; i >= 0; i--) c.lineTo(P[i].x, P[i].y + P[i].r * .9);
+        c.closePath(); c.fill();
+        c.strokeStyle = `rgba(110,40,28,${.2 + .25 * tr.heat})`; c.lineWidth = 1;
+        c.beginPath(); c.moveTo(P[0].x, P[0].y - P[0].r * .9); for (const p of P) c.lineTo(p.x, p.y - p.r * .9); c.stroke();
+        c.beginPath(); c.moveTo(P[0].x, P[0].y + P[0].r * .9); for (const p of P) c.lineTo(p.x, p.y + p.r * .9); c.stroke();
+        c.strokeStyle = `rgba(255,52,22,${.3 + .5 * tr.heat})`; c.lineWidth = 1.2;
+        c.beginPath(); c.moveTo(P[0].x, P[0].y); c.lineTo(P[P.length - 1].x, P[P.length - 1].y); c.stroke();
+        c.fillStyle = 'rgba(58,32,26,.75)';
+        for (const f of tr.frags) c.fillRect(f.x - f.s / 2, f.y - f.s / 2, f.s, f.s);
+      }
+
+      // The network, back layer then front.
+      const edge = G.bx + bw;
+      for (const L of [1, 0]) {
+        c.strokeStyle = L ? 'rgba(90,112,130,.2)' : 'rgba(66,84,100,.42)'; c.lineWidth = L ? .5 : .75; c.beginPath();
+        for (const l of links) {
+          if (l[2] !== L) continue;
+          const A = nodes[l[0]], B = nodes[l[1]];
+          if (A.b || B.b || A.x > edge || B.x > edge) continue;
+          c.moveTo(A.x, A.y); c.lineTo(B.x, B.y);
+        }
+        c.stroke();
+        c.fillStyle = L ? 'rgba(86,104,121,.45)' : '#4f6274';
+        const d = L ? 1 : 1.7;
+        for (const n of nodes) if (n.L === L && !n.b && n.x <= edge) c.fillRect(n.x - d / 2, n.y - d / 2, d, d);
+      }
+      for (const n of nodes) if (n.b) {
+        const d = n.L ? 1.3 : 2.1;
+        c.fillStyle = n.h > .05 ? `rgba(255,${Math.round(52 + 110 * n.h)},22,${(n.L ? .35 : .55) + .45 * n.h})` : (n.L ? 'rgba(42,47,55,.4)' : '#2a2f37');
+        c.fillRect(n.x - d / 2, n.y - d / 2, d, d);
+      }
+
+      // Grains caught whole.
+      for (const g of grains) {
+        const R = fs * (1 + 1.4 * g.h);
+        const rg = c.createRadialGradient(g.x, g.y, 0, g.x, g.y, R);
+        rg.addColorStop(0, `rgba(255,110,50,${.6 * g.h + .12})`); rg.addColorStop(1, 'rgba(255,52,22,0)');
+        c.fillStyle = rg; c.beginPath(); c.arc(g.x, g.y, R, 0, 7); c.fill();
+        c.fillStyle = '#7a1a0c'; c.beginPath(); c.arc(g.x, g.y, g.r, 0, 7); c.fill();
+        c.fillStyle = `rgba(255,236,190,${clamp((g.h - .35) * 1.5, 0, 1)})`; c.beginPath(); c.arc(g.x, g.y, g.r * .55, 0, 7); c.fill();
+        c.strokeStyle = HOT; c.lineWidth = 1.2; c.beginPath(); c.arc(g.x, g.y, g.r + 2, 0, 7); c.stroke();
+      }
+      c.restore();
+
+      // Edge rule and depth ticks.
+      c.fillStyle = 'rgba(255,255,255,.85)'; c.fillRect(G.bx, G.gt, bw, 1);
+      c.fillStyle = 'rgba(17,17,19,.3)';
+      for (let i = 1; i < 12; i++) {
+        const tx = Math.round(G.bx + (G.br - G.bx) * i / 12);
+        if (tx > edge) break;
+        c.fillRect(tx, G.gt, 1, i % 3 ? 3 : 6);
+      }
+      if (b > .9) tag('02', 'AEROGEL', 'GEL', G.br - fs * .5, G.gb - fs * .5, INK, true);
+    }
+
+    // Rings at the catch.
+    for (const r of rings) { c.strokeStyle = `rgba(255,52,22,${r.a})`; c.lineWidth = 1.5; c.beginPath(); c.arc(r.x, r.y, r.r, 0, 7); c.stroke(); }
+    c.restore();
+
+    // The aim: a dashed line that cuts cleanly through the readout.
+    if (!busy && aimY != null && b > .6) {
+      const pulse = Kit.calm ? 0 : (Math.sin(now * 4) + 1) / 2;
+      c.save();
+      c.strokeStyle = PAPER; c.lineWidth = 6; c.lineCap = 'butt';
+      c.beginPath(); c.moveTo(G.x0, aimY); c.lineTo(G.bx - 1, aimY); c.stroke();
+      c.fillStyle = PAPER; c.beginPath(); c.arc(G.x0, aimY, fs * .5 + 5, 0, 7); c.fill();
+      c.setLineDash([4, 5]); c.lineDashOffset = Kit.calm ? 0 : -now * 30;
+      c.strokeStyle = HOT; c.lineWidth = 1.5; c.globalAlpha = hover ? .95 : .75;
+      c.beginPath(); c.moveTo(G.x0 + fs * .6, aimY); c.lineTo(G.bx - 2, aimY); c.stroke();
+      c.setLineDash([]);
+      c.beginPath(); c.moveTo(G.bx - 8, aimY - 4); c.lineTo(G.bx - 2, aimY); c.lineTo(G.bx - 8, aimY + 4); c.stroke();
+      c.globalAlpha = 1;
+      c.beginPath(); c.arc(G.x0, aimY, fs * .5 + pulse * 2, 0, 7); c.stroke();
+      c.fillStyle = HOT; c.beginPath(); c.arc(G.x0, aimY, fs * .22, 0, 7); c.fill();
+      c.restore();
+    }
+
+    // The grain in flight.
+    if (proj && proj.alive) {
+      const p = proj, len = fs * .6 + fs * 3.6 * (p.v / 6), k = .35 + .65 * (p.v / 6);
+      c.save(); c.lineCap = 'round';
+      if (p.x <= G.bx + 1) {
+        c.strokeStyle = PAPER; c.lineWidth = p.r * 1.6 + 5;
+        c.beginPath(); c.moveTo(Math.max(G.x0, p.x - len), p.y); c.lineTo(p.x, p.y); c.stroke();
+      }
+      const tg = c.createLinearGradient(p.x - len, 0, p.x, 0);
+      tg.addColorStop(0, 'rgba(255,52,22,0)'); tg.addColorStop(1, `rgba(255,52,22,${.85 * k})`);
+      c.strokeStyle = tg; c.lineWidth = p.r * 1.6;
+      c.beginPath(); c.moveTo(p.x - len, p.y); c.lineTo(p.x, p.y); c.stroke();
+      const rg = c.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
+      rg.addColorStop(0, `rgba(255,140,80,${.7 * k})`); rg.addColorStop(1, 'rgba(255,52,22,0)');
+      c.fillStyle = rg; c.beginPath(); c.arc(p.x, p.y, p.r * 5, 0, 7); c.fill();
+      c.fillStyle = HOT; c.beginPath(); c.arc(p.x, p.y, p.r, 0, 7); c.fill();
+      c.fillStyle = '#fff3d6'; c.beginPath(); c.arc(p.x, p.y, p.r * .45, 0, 7); c.fill();
+      c.restore();
+    }
+
+    // Vapour, sparks and the flash.
+    for (const s of puffs) { const t = s.age / s.life; c.fillStyle = `rgba(70,66,64,${.16 * (1 - t)})`; c.beginPath(); c.arc(s.x, s.y, s.r, 0, 7); c.fill(); }
+    for (const s of sparks) {
+      const t = s.age / s.life;
+      c.fillStyle = t < .18 ? `rgba(255,236,170,${1 - t})` : `rgba(255,52,22,${1 - t})`;
+      c.fillRect(s.x - s.s / 2, s.y - s.s / 2, s.s, s.s);
+    }
+    if (S.flash > .01) {
+      const R = fs * 7, rg = c.createRadialGradient(S.fx, S.fy, 0, S.fx, S.fy, R);
+      rg.addColorStop(0, `rgba(255,255,240,${S.flash})`); rg.addColorStop(.25, `rgba(255,170,90,${.8 * S.flash})`); rg.addColorStop(1, 'rgba(255,52,22,0)');
+      c.fillStyle = rg; c.beginPath(); c.arc(S.fx, S.fy, R, 0, 7); c.fill();
+    }
+
+    // Lane annotations, right-aligned to the target, on a paper backing.
+    for (const l of labels) {
+      if (l.a <= 0) continue;
+      c.save(); c.globalAlpha = l.a;
+      const f = `800 ${fs}px ${MONO}`;
+      c.font = f;
+      let t = l.t, w = c.measureText(t).width;
+      const right = G.bx - 8, avail = right - (G.m + 4);
+      if (w > avail && l.alt) { t = l.alt; w = c.measureText(t).width; }
+      const left = Math.max(G.m + 4, right - w);
+      c.fillStyle = 'rgba(241,238,230,.94)'; c.fillRect(left - 3, l.y - fs * .95, w + 6, fs * 1.3);
+      c.fillStyle = l.c; c.fillRect(right + 3, l.y - fs * .95, 2, fs * 1.3);
+      txt(t, left, l.y, f, l.c);
+      c.restore();
+    }
+    c.restore();
+  }
+
+  // ---------- touch ----------
+  const yOf = e => e.clientY - cv.getBoundingClientRect().top;
+  let down = false;
+  cv.addEventListener('pointermove', e => { if (busy || !x) return; hover = true; aimY = clampAim(yOf(e)).y; });
+  cv.addEventListener('pointerdown', e => { if (busy || !x) return; down = true; hover = true; try { cv.setPointerCapture(e.pointerId); } catch (_) {} aimY = clampAim(yOf(e)).y; Kit.haptic('selection'); });
+  cv.addEventListener('pointerup', e => { if (!down) return; down = false; fire(clampAim(yOf(e)).y); });
+  cv.addEventListener('pointercancel', () => { down = false; });
+  cv.addEventListener('pointerleave', () => { hover = false; });
+
+  // Re-lay out (never stretch) if the stage really changes size.
+  if (window.ResizeObserver) {
+    let pend = 0;
+    const check = () => {
+      if (!x) return;
+      const r = cv.getBoundingClientRect();
+      if (Math.abs(r.width - W) < 2 && Math.abs(r.height - H) < 2) return;
+      if (busy) { clearTimeout(pend); pend = setTimeout(check, 300); return; }
+      layout();
+    };
+    new ResizeObserver(() => requestAnimationFrame(check)).observe(Kit.$('stage'));
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.fromTo(S, {build: 0}, {build: 1, duration: 1.2, ease: 'power3.out'});
+    gsap.fromTo(S, {v: 0}, {v: 6, duration: 1.4, delay: .2, ease: 'expo.out'});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    S.build = 1; S.v = 6;
+    fire((G.mt + G.mb) / 2);
+    await w(Kit.calm ? 80 : 1100);
+    busy = false;
+    fire((G.gLo + G.gHi) / 2);
+    await w(Kit.calm ? 80 : 2600);
+  };
+})();
+Kit.single();
+</script>
+</html>

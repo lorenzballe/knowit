@@ -145,7 +145,9 @@ void main() {
 
   group('which sections', () {
     test('no explore in the document is the build\'s own list', () {
-      expect(exploreSections(Remote.embedded), same(kOwnExplore));
+      // Tests start from the build's own document (test/flutter_test_config
+      // .dart), not from the one embedded, which says what the server said.
+      expect(exploreSections(Remote.config), same(kOwnExplore));
       for (final Object? part in [
         null,
         'sections',
@@ -154,6 +156,22 @@ void main() {
       ]) {
         _adopt(part);
         expect(exploreSections(Remote.config), same(kOwnExplore));
+      }
+    });
+
+    test('the Explore the build embeds reads whole, and every block of it '
+        'is one this build draws', () {
+      final Object? raw = jsonDecode(
+        File('remote/explore.json').readAsStringSync(),
+      );
+      final List<ExploreSection> sections = exploreSections(Remote.embedded);
+      if (raw is Map && raw['sections'] is List) {
+        expect(sections, hasLength((raw['sections'] as List).length));
+      } else {
+        expect(sections, same(kOwnExplore));
+      }
+      for (final ExploreSection s in sections) {
+        expect(kExploreBlocks, contains(s.block), reason: s.id);
       }
     });
 

@@ -1,0 +1,36 @@
+{
+  "id": "maths-knot-equivalence",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "What is the central, unsolved problem in knot theory?",
+  "answer": "Knot B is the same knot as Knot A: it is Knot A, only moved around. Telling whether two knots are the same is the central, unsolved problem in knot theory. No systematic method was known for telling knots apart, and Alan Turing wrote that it might well be unsolvable.",
+  "move": "Telling if two knots are the same has driven knot theory for over 150 years.",
+  "keywords": [
+    "knots",
+    "knot theory",
+    "alan turing",
+    "equivalence problem"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two knot diagrams, labeled Knot A and Knot B, with a question mark between them. The page asks whether they are the same knot, offering the choices 'Same knot' or 'Different knots', then asks the reader to bet and say how sure they are."
+  },
+  "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=220s",
+  "written": "2026-11-03"
+}

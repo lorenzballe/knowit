@@ -1,0 +1,37 @@
+{
+  "id": "maths-collatz-rival-loop",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If Collatz had a second loop, how long would it have to be?",
+  "answer": "Every number tested so far ends in the loop 4 → 2 → 1. From that, mathematicians calculate that any other loop must hold at least 186 billion numbers. This is likely, but it is not proved.",
+  "move": "A second loop isn't ruled out, but it would need 186 billion numbers or more.",
+  "keywords": [
+    "collatz",
+    "veritasium",
+    "4-2-1 loop",
+    "rival loop",
+    "186 billion"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A loop diagram that grows as the reader drags it, asking how long a rival Collatz loop would have to be before nobody has ruled it out. It is compared with the short 4, 2, 1 loop and reaches 186 billion numbers."
+  },
+  "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=094y1Z2wpJg&t=658s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,167 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The missing sixteen</title>
+<!-- Challenger, the night before: the chart of seal damage with only the damaged flights on it.
+     The sixteen flights without damage wait in a tray beside it; the reader says where they
+     belong, then they fall into place. Taps only. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.paper{position:relative;flex:1;min-height:0;background:#fffdf6;color:#10100c;border-radius:2.2cqh;box-shadow:0 .55cqh 0 color-mix(in srgb,var(--edge) 70%,transparent),0 1.4cqh 2.6cqh #10100c26;overflow:hidden}
+.paper svg{position:absolute;inset:0;width:100%;height:100%}
+#pick{display:flex;gap:1.8cqw}
+.pb{flex:1;font:800 max(1.8cqh,13.5px)/1.15 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .25cqh var(--k);border-radius:99px;padding:max(1.4cqh,11px) 1cqw;cursor:pointer;white-space:nowrap;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
+.pb:active{transform:scale(.97)}
+.pb.on{background:var(--k);color:var(--c)}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* On the smallest phone the answer's words close up a little, so the whole chart stays readable. */
+@container (max-height:520px){.answered .in{gap:7px}}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Spot what is missing · a chart">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE MISSING 16</span></div>
+    <h2 class="q">Before Challenger, a chart showed only the damaged flights. Where did the 16 undamaged ones fall?</h2>
+    <div class="stagebox paper" id="paper"><svg id="chart" role="img" aria-label="Seal damage on seven shuttle flights, by temperature at launch, from 53 to 75 degrees. Sixteen flights without damage are left off, in a tray beside the chart. A dashed line marks the 31 degree forecast, far colder."></svg></div>
+    <div id="pick">
+      <button class="pb" data-i="0">Spread out</button>
+      <button class="pb" data-i="1">Warm days</button>
+      <button class="pb" data-i="2">Cold days</button>
+    </div>
+    <div id="sure" class="gone"></div>
+    <p class="say gone" id="say"></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Before you decide something doesn't matter, look at the times nothing went wrong.</div>
+    <div class="foot"><span class="src">Source · Rogers Commission (1986); Dalal et al., JASA (1989)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  // Field-joint O-ring damage (erosion or blow-by) on the 23 flights whose boosters came back,
+  // by joint temperature at launch: Dalal, Fowlkes & Hoadley (1989), table 1.
+  const DAMAGED = [53, 57, 58, 63, 70, 70, 75];
+  const CLEAN = [66, 67, 67, 67, 68, 69, 70, 70, 72, 73, 75, 76, 76, 78, 79, 81];
+  const FORECAST = 31, RIGHT = 1, LO = 25, HI = 85;
+  const svg = Kit.$('chart'), card = Kit.$('card'), box = Kit.$('paper');
+  const INK = '#10100c', COLD = '#2f6fd6', PAPER = '#fffdf6';
+  // 0: the sixteen wait in the tray, off the chart. 1: they are falling in. 2: all on the chart.
+  let pick = -1, stage = 0, geo = null;
+  const txt = (p, x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y}, a), p); e.textContent = s; return e; };
+  const caps = (fs, extra) => Object.assign({'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, 'letter-spacing': '.1em', fill: INK, 'fill-opacity': .55}, extra);
+
+  // Where each dot sits on its row: flights at the same temperature stack upwards.
+  function places(list, X, base, r) {
+    const seen = {};
+    return list.map(t => { const k = seen[t] = (seen[t] || 0) + 1; return {x: X(t), y: base - (k - 1) * r * 2.25}; });
+  }
+
+  // The chart as it stands now, drawn for the box it has: once the answer is in, everything
+  // stands where it ends (a box resized mid-fall skips to the end).
+  function draw() {
+    if (stage === 1) stage = 2;
+    const done = stage === 2;
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    // Sizes from the chart's own box, never under what a phone can read.
+    const fs = Math.max(10, Math.min(H / 13, W / 27, 13)), r = Math.max(4, Math.min(W / 56, H / 26, 7.5));
+    const L = fs * 1.1, R = fs * 1.2, axis = H - fs * 1.9;
+    const X = t => L + (t - LO) / (HI - LO) * (W - L - R);
+    const rowD = fs * 1.15 + r * 4.6, rowC = axis - r * 2.1;
+    geo = {W, H, r};
+    // The cold no flight came back from undamaged: tinted once all the flights are in.
+    geo.band = Kit.mk('rect', {x: 0, y: 0, width: X(65.5), height: axis, fill: COLD, 'fill-opacity': done ? .1 : 0}, svg);
+    // The temperature axis, in °F as the flight data has it.
+    Kit.mk('line', {x1: X(LO), x2: X(HI), y1: axis, y2: axis, stroke: INK, 'stroke-opacity': .3}, svg);
+    for (let t = 30; t <= 80; t += 10) {
+      Kit.mk('line', {x1: X(t), x2: X(t), y1: axis, y2: axis + fs * .3, stroke: INK, 'stroke-opacity': .3}, svg);
+      txt(svg, X(t), axis + fs * 1.3, t === 80 ? '80°F' : String(t), {'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs * .95, fill: INK, 'fill-opacity': .55, 'text-anchor': 'middle'});
+    }
+    Kit.mk('line', {x1: X(LO), x2: X(HI), y1: rowD, y2: rowD, stroke: INK, 'stroke-opacity': .08}, svg);
+    txt(svg, W - R * .4, fs * 1.15, 'DAMAGED', caps(fs * .95, {'text-anchor': 'end'}));
+    // The row the chart left out, named once its flights are in.
+    geo.rowC = txt(svg, W - R * .4, Math.max(rowC - r * 6.2, rowD + r + fs * 1.1), 'NO DAMAGE', caps(fs * .95, {'text-anchor': 'end', opacity: done ? 1 : 0}));
+    // The forecast, far out in the cold.
+    geo.fore = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: X(FORECAST), x2: X(FORECAST), y1: fs * .4, y2: axis, stroke: COLD, 'stroke-width': 1.6, 'stroke-dasharray': '4 4'}, geo.fore);
+    txt(geo.fore, X(FORECAST) + fs * .55, rowD - fs * .35, `${FORECAST}°F`, {'font-family': 'Fraunces', 'font-weight': 800, 'font-size': fs * 1.5, fill: COLD});
+    txt(geo.fore, X(FORECAST) + fs * .55, rowD + fs * 1.05, 'forecast', {'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs * .95, fill: COLD});
+    geo.dots = places(DAMAGED, X, rowD, r).map(p => Kit.mk('circle', {cx: p.x, cy: p.y, r, fill: INK}, svg));
+    // The tray the sixteen wait in, between the forecast's name and the edge, between the rows.
+    const per = 8, p = r * 2.7, pad = r * 1.1, tw = per * p + pad * 2, th = 2 * p + pad * 2;
+    const left = X(FORECAST) + fs * 3.6, right = W - R * .4;
+    const tx = (left + right) / 2 - tw / 2, ty = (rowD + r * 2 + fs * 1.6 + axis - fs * .4) / 2 - th / 2;
+    geo.tray = Kit.mk('g', {opacity: done ? 0 : 1}, svg);
+    Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, rx: r * 1.4, fill: 'none', stroke: INK, 'stroke-opacity': .35, 'stroke-dasharray': '3 4'}, geo.tray);
+    txt(geo.tray, tx + tw / 2, ty - fs * .55, 'NO DAMAGE · LEFT OFF', caps(fs * .95, {'text-anchor': 'middle'}));
+    geo.clean = places(CLEAN, X, rowC, r).map((end, i) => {
+      const at = {x: tx + pad + p / 2 + (i % per) * p, y: ty + pad + p / 2 + Math.floor(i / per) * p};
+      const c = Kit.mk('circle', {cx: done ? end.x : at.x, cy: done ? end.y : at.y, r: r - .9, fill: PAPER, stroke: INK, 'stroke-width': 1.8}, svg);
+      c._end = end;
+      return c;
+    });
+    // Where the undamaged flights are not: the whole of the cold.
+    geo.none = txt(svg, (X(LO) + X(65.5)) / 2, rowC + fs * .35, 'none below 65°F', {'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs * 1.05, fill: COLD, 'text-anchor': 'middle', opacity: done ? 1 : 0});
+  }
+  // Redrawn whenever its box changes: a new phone size, or the card making room for the answer.
+  new ResizeObserver(() => { if (geo && (Math.abs(box.clientWidth - geo.W) > .5 || Math.abs(box.clientHeight - geo.H) > .5)) draw(); }).observe(box);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => reveal(pct));
+  Kit.$('pick').addEventListener('click', e => {
+    const b = e.target.closest('.pb'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    // The answer is in: how sure takes the options' place.
+    setTimeout(() => { Kit.hide('pick'); Kit.show('sure'); sure.ask(`${b.textContent}: how sure are you?`); sure.on(); }, Kit.calm ? 0 : 260);
+  });
+
+  function reveal(pct) {
+    const ok = pick === RIGHT;
+    Kit.answer({choice: String(pick), correct: ok, sure: pct});
+    sure.grade(ok, pct, `${Kit.$('pick').children[pick].textContent}, ${ok ? 'right' : 'wrong'}`);
+    svg.setAttribute('aria-label', 'All 23 flights. The sixteen without damage launched between 66 and 81 degrees; every flight below 65 degrees came back damaged. The forecast, 31 degrees, is colder than any of them.');
+    if (Kit.calm) { stage = 2; draw(); explain(); return; }
+    stage = 1;
+    const g = geo;
+    gsap.to(g.tray, {opacity: 0, duration: .3});
+    gsap.to(g.rowC, {opacity: 1, duration: .4, delay: .3});
+    // Coldest first: every one lands at 66°F or warmer.
+    g.clean.forEach((c, i) => {
+      const at = .2 + i * .06;
+      gsap.to(c, {attr: {cx: c._end.x}, duration: .75, delay: at, ease: 'power2.inOut'});
+      gsap.to(c, {attr: {cy: c._end.y}, duration: .75, delay: at, ease: 'bounce.out'});
+    });
+    const fell = .2 + (CLEAN.length - 1) * .06 + .75;
+    gsap.to(g.band, {attr: {'fill-opacity': .1}, duration: .5, delay: fell - .2});
+    gsap.to(g.none, {opacity: 1, duration: .4, delay: fell});
+    gsap.delayedCall(fell + .5, () => { stage = 2; explain(); });
+  }
+
+  // The words come in and the chart makes room for them, without a jump.
+  function explain() {
+    const q = card.querySelector('.q'), h0 = box.offsetHeight, f0 = parseFloat(getComputedStyle(q).fontSize);
+    card.classList.add('answered');
+    Kit.$('say').innerHTML = 'Without them, the cold looked harmless. Challenger flew the next morning, <b>colder than any launch before</b>.';
+    Kit.show('say');
+    Kit.show('keep');
+    if (Kit.calm) return;
+    const h1 = box.offsetHeight;
+    gsap.from(q, {fontSize: f0, duration: .5, ease: 'power3.inOut', clearProps: 'fontSize'});
+    if (h0 - h1 > 2) gsap.fromTo(box, {height: h0, flex: 'none'}, {height: h1, duration: .5, ease: 'power3.inOut', clearProps: 'height,flex'});
+  }
+
+  Kit.onShow.card = () => draw();
+  Kit.onEnter.card = () => {
+    if (Kit.calm || stage) return;
+    gsap.from(geo.dots, {attr: {r: 0}, duration: .35, stagger: .05, ease: 'back.out(2)'});
+    gsap.from(geo.fore, {opacity: 0, duration: .5, delay: .25});
+    gsap.from(geo.tray, {opacity: 0, y: 6, duration: .5, delay: .4});
+    gsap.from(geo.clean, {opacity: 0, duration: .4, delay: .45, stagger: .02});
+  };
+  Kit.play.card = async () => {
+    Kit.$('pick').children[0].click();
+    await new Promise(r => setTimeout(r, 400));
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await new Promise(r => setTimeout(r, 2800));
+  };
+  Kit.single();
+})();
+</script>
+</html>

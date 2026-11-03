@@ -155,8 +155,15 @@ class Remote {
 
   static RemoteConfig? _current;
 
+  /// The document a test starts from in place of [embedded]: the build's
+  /// own, with nothing the server has said in it. The document changes
+  /// without a release, and the deploy runs the tests before it publishes
+  /// one, so no test may rest on what it says today. Null in the app.
+  @visibleForTesting
+  static RemoteConfig? baseline;
+
   /// The document in use.
-  static RemoteConfig get config => _current ??= embedded;
+  static RemoteConfig get config => _current ??= baseline ?? embedded;
 
   /// Moves on whenever a different document is taken up. Whatever draws
   /// from a part listens here and redraws.
@@ -196,7 +203,7 @@ class Remote {
   /// Back to the document the app shipped with. Tests, and nothing else.
   @visibleForTesting
   static void reset() {
-    _current = embedded;
+    _current = baseline ?? embedded;
     _lastAsked = null;
     // A test that wants an answer says what it is; nothing asks the network.
     fetch = (url) async => null;
