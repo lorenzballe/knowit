@@ -121,16 +121,38 @@ class _DeckState extends State<_Deck> {
 
 Finder _back() => find.byWidgetPredicate((w) => w is PillCard && w.flipped);
 
-double _pageOpacity(WidgetTester tester) => tester
+/// How visible the deck is: out of sight while its card in front waits
+/// for its page, or not.
+double _cardOpacity(WidgetTester tester) => tester
     .widget<AnimatedOpacity>(
       find
-          .ancestor(
-            of: find.byKey(const ValueKey('fake-page')).first,
+          .descendant(
+            of: find.byType(PageHold),
             matching: find.byType(AnimatedOpacity),
           )
           .first,
     )
     .opacity;
+
+/// How visible a card's page is inside its card: the card in front by
+/// default, the one under it at [depth] 1. The deck lays the card furthest
+/// back first.
+double _pageOpacity(WidgetTester tester, {int depth = 0}) {
+  final List<Element> pages = find
+      .byKey(const ValueKey('fake-page'))
+      .evaluate()
+      .toList();
+  return tester
+      .widget<AnimatedOpacity>(
+        find
+            .ancestor(
+              of: find.byWidget(pages[pages.length - 1 - depth].widget),
+              matching: find.byType(AnimatedOpacity),
+            )
+            .first,
+      )
+      .opacity;
+}
 
 void main() {
   late _InstantKit kit;
@@ -156,21 +178,93 @@ void main() {
     }
   }
 
-  testWidgets('the poster stands until the page has drawn, then the page', (
-    tester,
-  ) async {
+  testWidgets('a card is held out of sight until its page has drawn, then '
+      'comes in whole', (tester) async {
     readyOnLoad = false;
     await tester.pumpWidget(_Deck(deck: [_card('a')], answers: [], stints: []));
     await settle(tester);
 
-    // The question, drawn natively, under a page not yet shown.
-    expect(find.text(_card('a').question), findsWidgets);
+    // Out of sight, but drawn: the page inside it comes up at full strength.
     final FakeWebSurface page = FakeWebSurface.made.single;
     expect(page.html, startsWith('<assembled>'));
-    expect(_pageOpacity(tester), kWaitingOpacity);
+    expect(_cardOpacity(tester), kWaitingOpacity);
+    expect(_pageOpacity(tester), 1);
 
     page.say(const PageReady());
     await settle(tester);
+    expect(_cardOpacity(tester), 1);
+    expect(_pageOpacity(tester), 1);
+  });
+
+  testWidgets('a page slow to draw: past the hold the card stands on its '
+      'poster, and the page comes over it when it draws', (tester) async {
+    readyOnLoad = false;
+    await tester.pumpWidget(_Deck(deck: [_card('a')], answers: [], stints: []));
+    await settle(tester);
+    await tester.pump(WebCardPage.hold);
+    await settle(tester);
+
+    // The question, drawn natively, under a page not yet shown.
+    expect(_cardOpacity(tester), 1);
+    expect(find.text(_card('a').question), findsWidgets);
+    expect(_pageOpacity(tester), kWaitingOpacity);
+
+    FakeWebSurface.made.single.say(const PageReady());
+    await settle(tester);
+    expect(_pageOpacity(tester), 1);
+  });
+
+  testWidgets('the cards behind wait with the card in front; one that rises '
+      'to the front before its page drew stays in sight, on its poster', (
+    tester,
+  ) async {
+    readyOnLoad = false;
+    await tester.pumpWidget(
+      _Deck(deck: [_card('a'), _card('b')], answers: [], stints: []),
+    );
+    await settle(tester);
+
+    // Nothing stands in the place of the card in front while it waits.
+    expect(_cardOpacity(tester), kWaitingOpacity);
+    FakeWebSurface.made.first.say(const PageReady());
+    await settle(tester);
+    expect(_cardOpacity(tester), 1);
+    expect(_pageOpacity(tester, depth: 1), kWaitingOpacity);
+
+    // Up in front before its page drew, it stays in sight.
+    FakeWebSurface.made.first.say(const PageDone());
+    await settle(tester);
+    await settle(tester);
+    expect(_cardOpacity(tester), 1);
+    expect(_pageOpacity(tester), kWaitingOpacity);
+    FakeWebSurface.made[1].say(const PageReady());
+    await settle(tester);
+    expect(_pageOpacity(tester), 1);
+  });
+
+  testWidgets('a card dealt to the front before its page drew waits for it '
+      'out of sight, as a card met cold does', (tester) async {
+    readyOnLoad = false;
+    final Pill a = _card('a'), b = _card('b');
+    await tester.pumpWidget(_Deck(deck: [a, b], answers: [], stints: []));
+    await settle(tester);
+    FakeWebSurface.made.first.say(const PageReady());
+    await settle(tester);
+    expect(_cardOpacity(tester), 1);
+
+    // A new deal puts b in front, its page not drawn yet.
+    await tester.pumpWidget(_Deck(deck: [b, a], answers: [], stints: []));
+    await settle(tester);
+    expect(_cardOpacity(tester), kWaitingOpacity);
+    FakeWebSurface.made[1].say(const PageReady());
+    await settle(tester);
+    expect(_cardOpacity(tester), 1);
+  });
+
+  testWidgets('a card met with its page drawn is never held', (tester) async {
+    await tester.pumpWidget(_Deck(deck: [_card('a')], answers: [], stints: []));
+    await settle(tester);
+    expect(_cardOpacity(tester), 1);
     expect(_pageOpacity(tester), 1);
   });
 
