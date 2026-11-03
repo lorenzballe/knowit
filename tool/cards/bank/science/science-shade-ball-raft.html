@@ -11,8 +11,7 @@
 #pic .num{font-family:var(--display);font-weight:800}
 #pic .ink{fill:var(--k)}
 #pic .soft{fill:var(--k);opacity:.72}
-#pic .sky{fill:color-mix(in srgb,var(--k) 6%,transparent)}
-#pic .chev{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round}
+#pic .chev{fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Build it · drag">
@@ -66,14 +65,22 @@ Kit.onShow.card = () => {
     B *= .93;
   }
   const defs = mk('defs', {}, svg);
-  const cp = mk('clipPath', {id: 'scene'}, defs); mk('rect', {width: W, height: H, rx: f * .9}, cp);
+  // Water fades into the card at the bottom and sides: no hard box edges.
   const wg = mk('linearGradient', {id: 'wat', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#43cbd9'}, wg); mk('stop', {offset: 1, 'stop-color': '#0a5a73'}, wg);
+  mk('stop', {offset: 0, 'stop-color': '#43cbd9', 'stop-opacity': 1}, wg);
+  mk('stop', {offset: .5, 'stop-color': '#1f9fb8', 'stop-opacity': .75}, wg);
+  mk('stop', {offset: 1, 'stop-color': '#0a5a73', 'stop-opacity': 0}, wg);
+  const tg = mk('linearGradient', {id: 'tint', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#0b8aa0', 'stop-opacity': .4}, tg);
+  mk('stop', {offset: 1, 'stop-color': '#0b8aa0', 'stop-opacity': 0}, tg);
+  const hf = mk('linearGradient', {id: 'hf', x1: 0, y1: 0, x2: 1, y2: 0}, defs);
+  [[0, '#000'], [.08, '#fff'], [.92, '#fff'], [1, '#000']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, hf));
+  const fm = mk('mask', {id: 'fade', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#hf)'}, fm);
   const bg = mk('radialGradient', {id: 'ball', cx: .36, cy: .32, r: .7}, defs);
   [[0, '#7c8792'], [.4, '#2b3139'], [1, '#07090b']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, bg));
-  const root = mk('g', {'clip-path': 'url(#scene)'}, svg);
-  mk('rect', {width: W, height: H, class: 'sky'}, root);
-  mk('rect', {y: wy, width: W, height: H - wy, fill: 'url(#wat)'}, root);
+  const root = mk('g', {}, svg);
+  mk('rect', {y: wy, width: W, height: H - wy, fill: 'url(#wat)', mask: 'url(#fade)'}, root);
   const rig = mk('g', {}, root), pile = mk('g', {}, rig), man = mk('g', {transform: `translate(${cx} 0)`}, rig);
   const rr = r * .97, balls = pts.slice(0, MAXN).map(p => mk('circle', {cx: cx + p.x, cy: p.y, r: 0, fill: 'url(#ball)'}, pile));
   for (let i = 0; i < shown; i++) balls[i].setAttribute('r', rr);
@@ -95,10 +102,10 @@ Kit.onShow.card = () => {
   const raise = a => arms.forEach(o => o.g.setAttribute('transform', `rotate(${-o.k * a} ${o.sx} ${o.sy})`));
   raise(done ? 140 : 0);
   // Water in front: whatever is under the surface is tinted.
-  mk('rect', {y: wy, width: W, height: H - wy, fill: '#0b8aa0', opacity: .4}, root);
+  mk('rect', {y: wy, width: W, height: H - wy, fill: 'url(#tint)', mask: 'url(#fade)'}, root);
   let d = `M0 ${wy}`;
   for (let x = 0, i = 0; x <= W + 13; x += 13, i++) d += `Q${x + 6.5} ${wy + (i % 2 ? 1.8 : -1.8)} ${x + 13} ${wy}`;
-  mk('path', {d, fill: 'none', stroke: '#fff', 'stroke-width': 2, opacity: .9}, root);
+  mk('path', {d, fill: 'none', stroke: '#fff', 'stroke-width': 2, opacity: .9, mask: 'url(#fade)'}, root);
   let hint = null, hg = null;
   if (!hinted && !done) {
     hint = mk('g', {transform: `translate(${W - pad - f} ${H * .8})`}, root); hg = mk('g', {}, hint);

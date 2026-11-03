@@ -49,6 +49,7 @@ const SAYS = [
   'Storms build and change fast. Ships and planes get thrown around.'
 ];
 const BTN = ['Add the warm current', 'Add cooler air', 'Add the storms', ''];
+const INK = '#10100c';
 
 function draw() {
   const svg = Kit.$('map');
@@ -60,11 +61,7 @@ function draw() {
   const gr = mk('linearGradient', {id: 'gs', x1: 0, y1: 1, x2: 1, y2: 0}, defs);
   mk('stop', {offset: 0, 'stop-color': '#ffb02e'}, gr);
   mk('stop', {offset: 1, 'stop-color': '#ff4d2e'}, gr);
-  const r = Math.min(W, H) * .05;
-  const clip = mk('clipPath', {id: 'cl'}, defs);
-  mk('rect', {x: 0, y: 0, width: W, height: H, rx: r}, clip);
-  const root = mk('g', {'clip-path': 'url(#cl)'}, svg);
-  mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#0f3352'}, root);
+  const root = mk('g', {}, svg);
   // Florida + coast
   mk('path', {d: `M0 0 L${X(.16)} 0 L${X(.17)} ${Y(.2)} L${X(.2)} ${Y(.44)} L${X(.19)} ${Y(.58)} L${X(.15)} ${Y(.66)} L${X(.1)} ${Y(.6)} L${X(.06)} ${Y(.5)} L0 ${Y(.48)} Z`, fill: '#e2cf9c'}, root);
   // islands
@@ -78,40 +75,40 @@ function draw() {
   mk('path', {d: sp, fill: 'none', stroke: 'url(#gs)', 'stroke-width': W * .04, 'stroke-linecap': 'round'}, g1);
   const flow = mk('path', {d: sp, fill: 'none', stroke: '#fff3c4', 'stroke-width': Math.max(2, W * .008), 'stroke-dasharray': `${W * .03} ${W * .05}`, 'stroke-linecap': 'round'}, g1);
   if (!Kit.calm) tweens.push(gsap.to(flow, {attr: {'stroke-dashoffset': -W * .8}, duration: 6, repeat: -1, ease: 'none'}));
-  const t1 = mk('text', {x: X(.36), y: Y(.13), fill: '#ffd27a', 'font-size': fs * 1.3, 'font-weight': 800}, g1); t1.textContent = '26 °C';
-  const t1b = mk('text', {x: X(.36), y: Y(.13) + fs * 1.4, fill: '#ffd27a', 'font-size': fs}, g1); t1b.textContent = 'warm current';
+  const t1 = mk('text', {x: X(.36), y: Y(.13), fill: INK, 'font-size': fs * 1.3, 'font-weight': 800}, g1); t1.textContent = '26 °C';
+  const t1b = mk('text', {x: X(.36), y: Y(.13) + fs * 1.4, fill: INK, 'font-size': fs}, g1); t1b.textContent = 'warm current';
 
   // Layer 2: cool air
   const g2 = L.g2 = mk('g', {opacity: 0}, root);
   const arrows = [];
   [[.02, .2], [.06, .32], [.0, .42]].forEach(([a, b], i) => {
     const ar = mk('g', {}, g2);
-    mk('path', {d: `M${X(a)} ${Y(b)} Q${X(a + .14)} ${Y(b - .05)} ${X(a + .26)} ${Y(b + .02)}`, fill: 'none', stroke: '#9fd8ff', 'stroke-width': Math.max(3, W * .012), 'stroke-linecap': 'round'}, ar);
+    mk('path', {d: `M${X(a)} ${Y(b)} Q${X(a + .14)} ${Y(b - .05)} ${X(a + .26)} ${Y(b + .02)}`, fill: 'none', stroke: '#0a4a8a', 'stroke-width': Math.max(3, W * .012), 'stroke-linecap': 'round'}, ar);
     const ex = X(a + .26), ey = Y(b + .02), s = W * .025;
-    mk('path', {d: `M${ex - s} ${ey - s * .9} L${ex + s * .3} ${ey + s * .1} L${ex - s * .9} ${ey + s * .8}`, fill: 'none', stroke: '#9fd8ff', 'stroke-width': Math.max(3, W * .012), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, ar);
+    mk('path', {d: `M${ex - s} ${ey - s * .9} L${ex + s * .3} ${ey + s * .1} L${ex - s * .9} ${ey + s * .8}`, fill: 'none', stroke: '#0a4a8a', 'stroke-width': Math.max(3, W * .012), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, ar);
     arrows.push(ar);
   });
   if (!Kit.calm) tweens.push(gsap.to(arrows, {x: W * .03, duration: 1.4, repeat: -1, yoyo: true, ease: 'sine.inOut', stagger: .3}));
-  const t2 = mk('text', {x: X(.03), y: Y(.07), fill: '#0f3352', 'font-size': fs}, g2); t2.textContent = 'cooler air';
+  const t2 = mk('text', {x: X(.03), y: Y(.07), fill: INK, 'font-size': fs}, g2); t2.textContent = 'cooler air';
 
   // Triangle
-  mk('path', {d: `M${X(.2)} ${Y(.56)} L${X(.82)} ${Y(.2)} L${X(.74)} ${Y(.86)} Z`, fill: 'rgba(255,255,255,.05)', stroke: '#fff', 'stroke-width': Math.max(1.5, W * .005), 'stroke-dasharray': `${W * .02} ${W * .015}`}, root);
-  const lb = (x, y, t, a) => { const e = mk('text', {x, y, fill: '#fff', 'font-size': fs, 'text-anchor': a}, root); e.textContent = t; };
+  mk('path', {d: `M${X(.2)} ${Y(.56)} L${X(.82)} ${Y(.2)} L${X(.74)} ${Y(.86)} Z`, fill: 'rgba(16,16,12,.07)', stroke: INK, 'stroke-width': Math.max(1.5, W * .005), 'stroke-dasharray': `${W * .02} ${W * .015}`}, root);
+  const lb = (x, y, t, a) => { const e = mk('text', {x, y, fill: INK, 'font-size': fs, 'text-anchor': a}, root); e.textContent = t; };
   lb(X(.82), Y(.2) - fs * .9, 'Bermuda', 'middle');
   lb(X(.74), Y(.86) + fs * 1.5, 'Puerto Rico', 'middle');
-  const mt = mk('text', {x: X(.17), y: Y(.56) - fs * .5, fill: '#0f3352', 'font-size': fs, 'text-anchor': 'end'}, root); mt.textContent = 'Miami';
-  mk('circle', {cx: X(.2), cy: Y(.56), r: Math.max(3, W * .01), fill: '#fff'}, root);
+  const mt = mk('text', {x: X(.17), y: Y(.56) - fs * .5, fill: INK, 'font-size': fs, 'text-anchor': 'end'}, root); mt.textContent = 'Miami';
+  mk('circle', {cx: X(.2), cy: Y(.56), r: Math.max(3, W * .01), fill: INK}, root);
 
   // ship and plane
   const sw = W * .07;
   const ship = L.ship = mk('g', {transform: `translate(${X(.6)},${Y(.66)})`}, root);
   const shipIn = mk('g', {}, ship);
-  mk('path', {d: `M${-sw} 0 L${sw} 0 L${sw * .7} ${sw * .4} L${-sw * .7} ${sw * .4} Z`, fill: '#fff'}, shipIn);
-  mk('rect', {x: -sw * .3, y: -sw * .4, width: sw * .5, height: sw * .4, fill: '#fff'}, shipIn);
+  mk('path', {d: `M${-sw} 0 L${sw} 0 L${sw * .7} ${sw * .4} L${-sw * .7} ${sw * .4} Z`, fill: INK}, shipIn);
+  mk('rect', {x: -sw * .3, y: -sw * .4, width: sw * .5, height: sw * .4, fill: INK}, shipIn);
   const pw = W * .06;
   const plane = mk('g', {transform: `translate(${X(.55)},${Y(.38)})`}, root);
   const planeIn = mk('g', {}, plane);
-  mk('path', {d: `M${-pw} 0 L${pw} 0 M${pw * .1} 0 L${-pw * .3} ${-pw * .7} M${pw * .1} 0 L${-pw * .3} ${pw * .7} M${-pw * .9} 0 L${-pw} ${-pw * .35}`, stroke: '#fff', 'stroke-width': Math.max(3, W * .014), 'stroke-linecap': 'round', fill: 'none'}, planeIn);
+  mk('path', {d: `M${-pw} 0 L${pw} 0 M${pw * .1} 0 L${-pw * .3} ${-pw * .7} M${pw * .1} 0 L${-pw * .3} ${pw * .7} M${-pw * .9} 0 L${-pw} ${-pw * .35}`, stroke: INK, 'stroke-width': Math.max(3, W * .014), 'stroke-linecap': 'round', fill: 'none'}, planeIn);
   L.shake = [shipIn, planeIn];
 
   // Layer 3: storms
@@ -121,10 +118,10 @@ function draw() {
     const c = mk('g', {transform: `translate(${X(cx)},${Y(cy)})`}, g3);
     const R = W * .055 * s;
     mk('path', {d: `M${-R * .4} ${R * .6} L${-R * .7} ${R * 1.4} L${-R * .3} ${R * 1.3} L${-R * .55} ${R * 2.1}`, stroke: '#ffe14d', 'stroke-width': Math.max(2.5, W * .01), fill: 'none', 'stroke-linejoin': 'round', class: 'bolt'}, c);
-    [[-R, 0, R * .8], [0, -R * .5, R], [R, 0, R * .8], [0, R * .2, R * .9]].forEach(([a, b, rr]) => mk('circle', {cx: a, cy: b, r: rr, fill: '#c9d3dd'}, c));
+    [[-R, 0, R * .8], [0, -R * .5, R], [R, 0, R * .8], [0, R * .2, R * .9]].forEach(([a, b, rr]) => mk('circle', {cx: a, cy: b, r: rr, fill: '#5b6773'}, c));
     clouds.push(c);
   });
-  const st = mk('text', {x: X(.3), y: Y(.86) - fs * .3, fill: '#fff', 'font-size': fs}, g3); st.textContent = 'sudden storms';
+  const st = mk('text', {x: X(.3), y: Y(.86) - fs * .3, fill: INK, 'font-size': fs}, g3); st.textContent = 'sudden storms';
   L.clouds = clouds;
   apply(false);
 }

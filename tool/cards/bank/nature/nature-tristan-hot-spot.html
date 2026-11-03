@@ -61,9 +61,8 @@ function build() {
   for (let i = 0; i < 2; i++) {
     const x0 = i * (pw + gap), cx = x0 + pw / 2;
     const cp = Kit.mk('clipPath', {id: 'cp' + i}, defs);
-    Kit.mk('rect', {x: x0, y: 0, width: pw, height: H, rx: fs * 0.9}, cp);
+    Kit.mk('rect', {x: x0, y: -H, width: pw, height: H * 2}, cp);
     const g = Kit.mk('g', {'clip-path': `url(#cp${i})`}, svg);
-    Kit.mk('rect', {x: x0, y: 0, width: pw, height: seaY, fill: '#d6ebf7'}, g);
     Kit.mk('rect', {x: x0, y: seaY, width: pw, height: floorY - seaY, fill: '#2f6fb3'}, g);
     Kit.mk('rect', {x: x0, y: floorY, width: pw, height: crustB - floorY, fill: '#3b2f29'}, g);
     Kit.mk('rect', {x: x0, y: crustB, width: pw, height: H - crustB, fill: 'url(#mg)'}, g);
@@ -72,12 +71,12 @@ function build() {
       P.plumeGlow = Kit.mk('path', {fill: '#ffb02e', opacity: .6, filter: 'url(#glow)'}, g);
       P.plume = Kit.mk('path', {fill: 'url(#pg)'}, g);
       P.conduit = Kit.mk('line', {stroke: '#ff9a2a', 'stroke-width': Math.max(3, pw * 0.02), 'stroke-linecap': 'round'}, g);
-      P.island = Kit.mk('path', {fill: '#2a221e', stroke: '#14100e', 'stroke-width': 1}, g);
+      P.island = Kit.mk('path', {fill: '#2a221e', stroke: '#10100c', 'stroke-width': 1}, g);
       P.lava = Kit.mk('circle', {fill: '#ffb02e', filter: 'url(#glow)'}, g);
       P.sea = Kit.mk('line', {x1: x0, x2: x0 + pw, y1: seaY, y2: seaY, stroke: '#9fd0f0', 'stroke-width': 2, opacity: .8}, g);
       P.plumeLab = Kit.mk('text', {x: cx + pw * 0.09, y: H * 0.86, 'font-size': fs, fill: '#fff3d6', class: 'lab'}, g);
       P.plumeLab.textContent = 'plume';
-      P.hLab = Kit.mk('text', {'font-size': fs, fill: '#14324f', class: 'lab'}, g);
+      P.hLab = Kit.mk('text', {'font-size': fs, fill: '#10100c', class: 'lab'}, g);
     } else {
       [['sea', (seaY + floorY) / 2, '#e3f1fb'], ['crust', (crustB + floorY) / 2, '#e8ddd6'], ['mantle', H * 0.70, '#ffe6d6']].forEach(([t, y, c]) => {
         const e = Kit.mk('text', {x: cx, y: y + fs * 0.35, 'font-size': fs, fill: c, 'text-anchor': 'middle', class: 'lab'}, g);
@@ -86,7 +85,7 @@ function build() {
       P.none = Kit.mk('text', {x: cx, y: H * 0.86, 'font-size': fs, fill: '#fff', 'text-anchor': 'middle', class: 'lab', opacity: 0}, g);
       P.none.textContent = 'nothing rises';
     }
-    const t = Kit.mk('text', {x: cx, y: H * 0.075 + fs * 0.35, 'font-size': fs, fill: '#14324f', 'text-anchor': 'middle', class: 'lab'}, g);
+    const t = Kit.mk('text', {x: cx, y: H * 0.075 + fs * 0.35, 'font-size': fs, fill: '#10100c', 'text-anchor': 'middle', class: 'lab'}, g);
     t.textContent = i === 0 ? 'Over a hot spot' : 'No hot spot';
     panels.push(P);
   }
@@ -128,7 +127,7 @@ function sparks() {
   if (!R || Kit.calm) return;
   const L = R.panels[0];
   for (let i = 0; i < 10; i++) {
-    const c = Kit.mk('circle', {cx: L.cx, cy: R.peakTop, r: R.pw * 0.012, fill: i % 2 ? '#ffd166' : '#ff7a1a'}, L.g);
+    const c = Kit.mk('circle', {cx: L.cx, cy: R.peakTop, r: R.pw * 0.012, fill: i % 2 ? '#10100c' : '#c2471a'}, L.g);
     gsap.to(c, {attr: {cx: L.cx + (Kit.rnd() - .5) * R.pw * 0.35, cy: R.peakTop - R.H * (0.03 + Kit.rnd() * 0.07)}, opacity: 0, duration: .9 + Kit.rnd() * .5, ease: 'power2.out', onComplete: () => c.remove()});
   }
 }

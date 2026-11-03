@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;border-radius:2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
 .say{overflow-wrap:anywhere}
@@ -28,6 +28,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const REC = -63, TMAX = 20, TMIN = -80;
+const INK = '#10100c';
 const st = {g: -20, cur: -20, picked: false, revealed: false};
 const fmt = n => (n < 0 ? '−' : '') + Math.abs(Math.round(n));
 let G = null; // geometry and live elements
@@ -57,42 +58,38 @@ function draw(){
   const {W, H, f: f0} = Kit.fitSvg(svg);
   const f = Math.max(13, f0);
   const mk = (t, a, p = svg) => Kit.mk(t, a, p);
-  const defs = mk('defs', {});
-  const gr = mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#06102a'}, gr);
-  mk('stop', {offset: 1, 'stop-color': '#21477e'}, gr);
-  mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: 'url(#sky)'});
   // stars
-  for (let i = 0; i < 30; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * H * .5, r: .6 + Kit.rnd() * 1.1, fill: '#fff', opacity: .3 + Kit.rnd() * .5});
+  for (let i = 0; i < 30; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * H * .5, r: .6 + Kit.rnd() * 1.1, fill: '#fff', opacity: .45 + Kit.rnd() * .5});
   // skyline
   const base = H * .8;
   let x = -4;
   while (x < W){
     const bw = W * (.06 + Kit.rnd() * .08), bh = H * (.08 + Kit.rnd() * .16);
-    mk('rect', {x, y: base - bh, width: bw, height: H - base + bh, fill: '#091530'});
+    mk('rect', {x, y: base - bh, width: bw, height: H - base + bh, fill: '#0a8f3c'});
     mk('rect', {x: x - 1, y: base - bh - 3, width: bw + 2, height: 4, rx: 2, fill: '#eef6ff'});
     for (let wy = base - bh + 8; wy < H - 6; wy += 10) for (let wx = x + 4; wx < x + bw - 5; wx += 8)
-      if (Kit.rnd() < .3) mk('rect', {x: wx, y: wy, width: 3, height: 4, fill: '#ffd27a', opacity: .8});
+      if (Kit.rnd() < .3) mk('rect', {x: wx, y: wy, width: 3, height: 4, fill: '#fff3c4', opacity: .9});
     x += bw + 2;
   }
   mk('rect', {x: 0, y: H * .93, width: W, height: H * .07, fill: '#eef6ff'});
-  const frost = mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: '#cfe8ff', opacity: st.revealed ? .35 : 0, 'pointer-events': 'none'});
+  // frost tint (no panel behind the drawing: kept as an invisible element)
+  const frost = mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'none', opacity: st.revealed ? .35 : 0, 'pointer-events': 'none'});
   // thermometer
   const cx = W * .38, br = Math.min(W * .07, H * .055), tw = br * 1.05;
   const by = H * .86 - br, top = H * .07, bot = by - br * 1.1;
   const y = T => top + (TMAX - T) / (TMAX - TMIN) * (bot - top);
-  mk('rect', {x: cx - tw / 2 - 3, y: top - tw / 2 - 3, width: tw + 6, height: by - top + tw / 2, rx: tw / 2 + 3, fill: '#0b1a33', opacity: .5});
+  mk('rect', {x: cx - tw / 2 - 3, y: top - tw / 2 - 3, width: tw + 6, height: by - top + tw / 2, rx: tw / 2 + 3, fill: INK, opacity: .35});
   mk('rect', {x: cx - tw / 2, y: top - tw / 2, width: tw, height: by - top + tw / 2, rx: tw / 2, fill: '#f4f8ff'});
-  mk('circle', {cx, cy: by, r: br + 3, fill: '#0b1a33', opacity: .5});
+  mk('circle', {cx, cy: by, r: br + 3, fill: INK, opacity: .35});
   mk('circle', {cx, cy: by, r: br, fill: '#f4f8ff'});
   // ticks
   const pitch = (bot - top) / 10;
   const step = pitch >= f * 1.35 * 1.05 ? 10 : 20;
   for (let T = TMAX; T >= TMIN; T -= 10){
     const yy = y(T);
-    mk('line', {x1: cx - tw / 2 + 2, x2: cx - tw / 2 + tw * .3, y1: yy, y2: yy, stroke: '#7b8db0', 'stroke-width': 1.5});
+    mk('line', {x1: cx - tw / 2 + 2, x2: cx - tw / 2 + tw * .3, y1: yy, y2: yy, stroke: '#5b6b8c', 'stroke-width': 1.5});
     if (T % step === 0){
-      const t = mk('text', {x: cx - tw / 2 - 8, y: yy, 'text-anchor': 'end', 'dominant-baseline': 'central', fill: '#dfeaff', 'font-size': f, style: 'font-family:var(--mono);font-weight:600'});
+      const t = mk('text', {x: cx - tw / 2 - 8, y: yy, 'text-anchor': 'end', 'dominant-baseline': 'central', fill: INK, 'font-size': f, style: 'font-family:var(--mono);font-weight:600'});
       t.textContent = fmt(T) + '°';
     }
   }
@@ -100,12 +97,12 @@ function draw(){
   mk('circle', {cx, cy: by, r: br * .78, fill: '#e2402f'});
   const merc = mk('rect', {x: cx - mw / 2, width: mw, rx: mw / 2, fill: '#e2402f'});
   // guess marker (shown after reveal)
-  const gline = mk('line', {x1: cx - tw * .9, x2: cx + tw * 1.2, stroke: '#ffd27a', 'stroke-width': 2.5, 'stroke-dasharray': '5 4', opacity: 0});
-  const glab = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: '#ffd27a', 'font-size': f, opacity: 0, style: 'font-family:var(--body);font-weight:700'});
+  const gline = mk('line', {x1: cx - tw * .9, x2: cx + tw * 1.2, stroke: '#8a1d10', 'stroke-width': 2.5, 'stroke-dasharray': '5 4', opacity: 0});
+  const glab = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: '#8a1d10', 'font-size': f, opacity: 0, style: 'font-family:var(--body);font-weight:700'});
   // readout
-  const big = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: '#ffffff', 'font-size': f * 2.1, style: 'font-family:var(--display);font-weight:800'});
-  const small = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: '#b8cdf0', 'font-size': f, style: 'font-family:var(--body);font-weight:600'});
-  const arrow = mk('path', {fill: '#ffffff'});
+  const big = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: INK, 'font-size': f * 2.1, style: 'font-family:var(--display);font-weight:800'});
+  const small = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: INK, 'font-size': f, style: 'font-family:var(--body);font-weight:600'});
+  const arrow = mk('path', {fill: INK});
   // snow
   const sg = mk('g', {'pointer-events': 'none'});
   const flakes = [];

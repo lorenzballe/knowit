@@ -75,10 +75,9 @@ Kit.onShow.card = () => {
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(12, Math.min(f * 1.05, W / 21));
   const epi = H * .16;
-  // skin
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, style: 'fill:color-mix(in srgb,#e8a089 22%,transparent)'}, svg);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: epi, rx: Math.min(W, H) * .05, style: 'fill:color-mix(in srgb,#c9705a 30%,transparent)'}, svg);
-  const lab = (t, y) => { const e = Kit.mk('text', {x: W * .04, y, style: `font:700 ${Math.max(12, fs * .8)}px var(--mono);fill:var(--k);opacity:.6`}, svg); e.textContent = t; };
+  // skin: only a thin dashed divider between epidermis and dermis, drawn on the card itself
+  Kit.mk('line', {x1: 0, y1: epi, x2: W, y2: epi, style: `stroke:var(--k);stroke-opacity:.4;stroke-width:${Math.max(1.5, fs * .12)};stroke-dasharray:${fs * .5} ${fs * .4};stroke-linecap:round`}, svg);
+  const lab = (t, y) => { const e = Kit.mk('text', {x: W * .04, y, style: `font:700 ${Math.max(12, fs * .8)}px var(--mono);fill:var(--k);opacity:.75`}, svg); e.textContent = t; };
   const capY = H - fs * .7;
   lab('EPIDERMIS', epi * .62);
   const dermY = epi + fs * 1.4;

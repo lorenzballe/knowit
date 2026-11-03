@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#sky{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#060a18;cursor:pointer;touch-action:none}
+#sky{position:relative;flex:1;min-height:0;cursor:pointer;touch-action:none}
 #sky canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #legend{display:flex;flex-direction:column;gap:.5cqh}
 #legend .row{display:flex;flex-wrap:wrap;gap:.4cqh 4cqw;font:700 max(1.7cqh,12px)/1.3 var(--body);color:var(--k)}
@@ -80,10 +80,8 @@ function draw(){
   if (!G) return;
   const {x, W, H} = G, g = geom(), t = st.t, now = performance.now()/1000;
   x.clearRect(0, 0, W, H);
-  const bg = x.createRadialGradient(g.cx, g.cy, g.R*.5, g.cx, g.cy, Math.max(W, H)*.75);
-  bg.addColorStop(0, '#0d1630'); bg.addColorStop(1, '#03050c');
-  x.fillStyle = bg; x.fillRect(0, 0, W, H);
-  stars.forEach(s => { x.globalAlpha = s.a; x.fillStyle = '#fff'; x.fillRect(s.x*W, s.y*H, s.s, s.s); });
+  // faint ink specks instead of stars, printed on the card
+  stars.forEach(s => { x.globalAlpha = s.a*.3; x.fillStyle = '#10100c'; x.fillRect(s.x*W, s.y*H, s.s, s.s); });
   x.globalAlpha = 1;
 
   const ring = (alpha, col, a1, a2) => {
@@ -92,17 +90,17 @@ function draw(){
     else { x.arc(g.cx, g.cy, g.R + g.A, a1, a2); x.arc(g.cx, g.cy, g.R, a2, a1, true); x.closePath(); }
     x.fillStyle = col; x.globalAlpha = alpha; x.fill(); x.globalAlpha = 1;
   };
-  // the thin shell of air
-  ring(1, 'rgba(110,170,255,.13)');
+  // the thin shell of air (a dark ink band so the particles read)
+  ring(1, 'rgba(16,16,12,.82)');
 
   // the burning sector, spreading both ways from the bomb
   if (a0 !== null) {
     const front = Math.min(Math.PI, Math.max(0, (t - .5)/5*Math.PI));
     if (front > 0) {
-      ring(.42, '#ff7a1f', a0 - front, a0 + front);
-      ring(.22, '#ffd27a', a0 - front*.7, a0 + front*.7);
+      ring(.6, '#ff7a1f', a0 - front, a0 + front);
+      ring(.3, '#ffd27a', a0 - front*.7, a0 + front*.7);
     }
-    if (t >= 5.8) { const k = Math.min(1, (t - 5.8)/1.2); ring(.55*k, '#ffe2a8'); }
+    if (t >= 5.8) { const k = Math.min(1, (t - 5.8)/1.2); ring(.7*k, '#ffe2a8'); }
   }
 
   // Earth
@@ -131,7 +129,7 @@ function draw(){
   parts.forEach(p => {
     const [px, py] = pos(p, g);
     if (p.type === 'N') {
-      x.fillStyle = (a0 !== null && t > 5.8) ? 'rgba(255,220,170,.55)' : 'rgba(150,162,190,.5)';
+      x.fillStyle = (a0 !== null && t > 5.8) ? 'rgba(255,220,170,.7)' : 'rgba(170,182,210,.6)';
       x.beginPath(); x.arc(px, py, 1.1*g.s, 0, Math.PI*2); x.fill(); return;
     }
     const lit = t >= p.ti;
@@ -158,7 +156,7 @@ function draw(){
     if (t < 1.4) {
       const k = t/1.4, rr = g.A*(.3 + 1.4*k);
       const fl = x.createRadialGradient(bx, by, 0, bx, by, rr);
-      fl.addColorStop(0, `rgba(255,255,255,${1-k})`); fl.addColorStop(.5, `rgba(255,190,90,${.8*(1-k)})`); fl.addColorStop(1, 'rgba(255,120,40,0)');
+      fl.addColorStop(0, `rgba(255,255,255,${1-k})`); fl.addColorStop(.5, `rgba(255,120,30,${.8*(1-k)})`); fl.addColorStop(1, 'rgba(255,90,20,0)');
       x.fillStyle = fl; x.beginPath(); x.arc(bx, by, rr, 0, Math.PI*2); x.fill();
     }
     x.fillStyle = '#fff'; x.beginPath(); x.arc(bx, by, 2.4*g.s, 0, Math.PI*2); x.fill();
@@ -166,7 +164,7 @@ function draw(){
     // a pulsing hint on Earth's rim
     const ha = -Math.PI/2, hx = g.cx + Math.cos(ha)*g.R, hy = g.cy + Math.sin(ha)*g.R;
     const k = (now*.8) % 1;
-    x.strokeStyle = `rgba(255,210,120,${1-k})`; x.lineWidth = Math.max(1.5, 2*g.s);
+    x.strokeStyle = `rgba(255,255,255,${1-k})`; x.lineWidth = Math.max(1.5, 2*g.s);
     x.beginPath(); x.arc(hx, hy, (4 + 14*k)*g.s, 0, Math.PI*2); x.stroke();
     x.fillStyle = '#ffd27a'; x.beginPath(); x.arc(hx, hy, 3*g.s, 0, Math.PI*2); x.fill();
   }

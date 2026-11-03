@@ -7,17 +7,17 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
-#pic{flex:1;min-height:0;width:100%;display:block}
-#cap{font:700 max(2cqh,13px)/1.25 var(--body);color:var(--k);text-align:center;margin:0;min-height:2.6em;overflow-wrap:anywhere}
-#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block}
+#cap{flex:none;font:700 max(2cqh,13px)/1.25 var(--body);color:var(--k);text-align:center;margin:0;min-height:2.6em;overflow-wrap:anywhere}
+#ctl{flex:none;display:flex;flex-direction:column;gap:.6cqh}
 #heat{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
 #heat::-webkit-slider-runnable-track{height:max(1.2cqh,8px);border-radius:99px;background:linear-gradient(90deg,#7c8794,#f59e0b,#ff3b1f)}
 #heat::-moz-range-track{height:max(1.2cqh,8px);border-radius:99px;background:linear-gradient(90deg,#7c8794,#f59e0b,#ff3b1f)}
 #heat::-webkit-slider-thumb{-webkit-appearance:none;width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);border:.4cqh solid var(--c);margin-top:calc((max(1.2cqh,8px) - max(4cqh,28px))/2)}
 #heat::-moz-range-thumb{width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);border:.4cqh solid var(--c)}
 .ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted);letter-spacing:.04em}
-#why{display:flex;flex-direction:column;gap:.6cqh}
-#why .body{margin:0;font-size:max(1.9cqh,13px)}
+#why{flex:none;display:flex;flex-direction:column;gap:.6cqh;min-height:0}
+#why .body{margin:0;font-size:max(1.7cqh,12px);line-height:1.3;overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Scrub · see it happen">
   <div class="in">
@@ -71,24 +71,20 @@ Kit.onShow.card = () => {
   const cx = W / 2, cy = top + avail / 2 + f * .4;
   const maxGap = R * .2;
   const defs = Kit.mk('defs', {}, svg);
-  const lg = Kit.mk('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  Kit.mk('stop', {offset: 0, 'stop-color': '#3b9bd9'}, lg);
-  Kit.mk('stop', {offset: 1, 'stop-color': '#0f4c81'}, lg);
   const rg = Kit.mk('radialGradient', {id: 'glow'}, defs);
   Kit.mk('stop', {offset: .5, 'stop-color': '#ff7a1a', 'stop-opacity': .55}, rg);
   Kit.mk('stop', {offset: 1, 'stop-color': '#ff7a1a', 'stop-opacity': 0}, rg);
-  Kit.mk('rect', {x: 0, y: top, width: W, height: H - top, rx: f * .6, fill: 'url(#wg)'}, svg);
-  Kit.mk('line', {x1: 0, x2: W, y1: top, y2: top, stroke: '#bfe3ff', 'stroke-width': 2}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: top, y2: top, stroke: '#10100c', 'stroke-width': 2}, svg);
   const wl = Kit.mk('text', {x: 4, y: top - f * .6, fill: 'currentColor', 'font-size': f * .9, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
   wl.textContent = 'WATER, NEAR BOILING ↓'; wl.style.color = 'var(--k)';
   const glow = Kit.mk('circle', {cx, cy, r: R * 1.7, fill: 'url(#glow)', opacity: 0}, svg);
-  const film = Kit.mk('path', {fill: '#eaf6ff', 'fill-opacity': .85, stroke: '#ffffff', 'stroke-width': 1.5}, svg);
+  const film = Kit.mk('path', {fill: '#ffffff', 'fill-opacity': .85, stroke: '#10100c', 'stroke-width': 1.5}, svg);
   const bub = [];
   const bg = Kit.mk('g', {}, svg);
-  for (let i = 0; i < 46; i++) bub.push({el: Kit.mk('circle', {r: 0, fill: '#eaf6ff', 'fill-opacity': .8, stroke: '#fff', 'stroke-width': 1}, bg), on: false});
+  for (let i = 0; i < 46; i++) bub.push({el: Kit.mk('circle', {r: 0, fill: '#ffffff', 'fill-opacity': .8, stroke: '#10100c', 'stroke-width': 1}, bg), on: false});
   const ball = Kit.mk('circle', {cx, cy, r: R, stroke: '#1b1b1b', 'stroke-width': 2}, svg);
   Kit.mk('circle', {cx: cx - R * .35, cy: cy - R * .38, r: R * .18, fill: '#fff', opacity: .35}, svg);
-  const vl = Kit.mk('text', {x: cx, y: cy + R + maxGap + f * 1.5, 'text-anchor': 'middle', fill: '#ffffff', 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 800, opacity: 0}, svg);
+  const vl = Kit.mk('text', {x: cx, y: cy + R + maxGap + f * 1.5, 'text-anchor': 'middle', fill: '#10100c', 'font-size': f, 'font-family': 'var(--body)', 'font-weight': 800, opacity: 0}, svg);
   vl.textContent = 'vapor layer';
   S.g = {W, H, f, R, cx, cy, top, maxGap, glow, film, bub, ball, vl};
 };

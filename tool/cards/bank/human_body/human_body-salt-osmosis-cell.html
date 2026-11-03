@@ -43,6 +43,7 @@ const svg = Kit.$('pic'), input = Kit.$('salt');
 const st = {s: 0, phase: 0, done: false};
 let G = null;
 const WATER = '#2f86e0';
+const WATER_LIGHT = '#c4e6ff';
 
 // fixed random layout, made once so it does not jump on resize
 Kit.rnd();
@@ -65,8 +66,6 @@ function build() {
   const {W, H, f} = Kit.fitSvg(svg);
   const cx = W / 2, cy = H / 2 + f * .5, R = Math.min(W * .34, H * .36);
   const g = {W, H, f, cx, cy, R};
-  // sea background
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: f * .9, style: 'fill:color-mix(in srgb,' + WATER + ' 14%,transparent)'}, svg);
   // salt grains outside
   const far = Math.hypot(W, H) / 2;
   g.salt = SALT.map(p => {
@@ -85,7 +84,7 @@ function build() {
   g.arrows = [];
   for (let i = 0; i < ARROWS; i++) {
     const outer = Kit.mk('g', {transform: `translate(${cx} ${cy}) rotate(${i * 360 / ARROWS + 22.5})`}, svg);
-    const inner = Kit.mk('path', {style: `fill:none;stroke:${WATER};stroke-width:${f * .32};stroke-linecap:round;stroke-linejoin:round;opacity:0`}, outer);
+    const inner = Kit.mk('path', {style: `fill:none;stroke:${WATER_LIGHT};stroke-width:${f * .32};stroke-linecap:round;stroke-linejoin:round;opacity:0`}, outer);
     g.arrows.push(inner);
   }
   // labels
@@ -93,7 +92,7 @@ function build() {
   g.top.textContent = 'Outside: water';
   g.cl = Kit.mk('text', {'text-anchor': 'middle', 'font-size': f * .85, class: 'lbl', style: 'fill:var(--k);stroke:color-mix(in srgb,#2f86e0 22%,var(--c));stroke-width:' + f * .25}, svg);
   g.cl.textContent = 'CELL';
-  g.out = Kit.mk('text', {x: W - f * .8, y: H - f * .8, 'text-anchor': 'end', 'font-size': f * .9, class: 'lbl', style: 'fill:' + WATER + ';stroke:var(--c);stroke-width:' + f * .3 + ';opacity:0'}, svg);
+  g.out = Kit.mk('text', {x: W - f * .8, y: H - f * .8, 'text-anchor': 'end', 'font-size': f * .9, class: 'lbl', style: 'fill:' + WATER_LIGHT + ';stroke:var(--c);stroke-width:' + f * .3 + ';opacity:0'}, svg);
   g.out.textContent = 'water leaves the cell';
   G = g; update();
 }

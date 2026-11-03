@@ -62,18 +62,11 @@ function draw() {
   const P = (x, y) => [pad + x * iw, pad + y * ih];
   const pts = (fn, x0, x1, n = 24) => { const a = []; for (let k = 0; k <= n; k++) { const x = lerp(x0, x1, k / n); a.push(P(x, fn(x, t))); } return a; };
   const d = a => 'M' + a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L');
-  const r = Math.min(W, H) * 0.04;
-  const defs = Kit.mk('defs', {}, svg);
-  const cp = Kit.mk('clipPath', {id: 'clp'}, defs);
-  Kit.mk('rect', {x: pad, y: pad, width: iw, height: ih, rx: r}, cp);
-  const g = Kit.mk('g', {'clip-path': 'url(#clp)'}, svg);
-  // plates
-  const U = pts(uY, 0, 1, 60), L = pts(lY, 0, 1, 60);
-  Kit.mk('path', {d: d([P(0, 0), P(1, 0), ...U.slice().reverse()]) + 'Z', style: 'fill:color-mix(in srgb,var(--k) 14%,var(--c))'}, g);
-  Kit.mk('path', {d: d([...L, P(1, 1), P(0, 1)]) + 'Z', style: 'fill:color-mix(in srgb,var(--k) 22%,var(--c))'}, g);
+  const g = Kit.mk('g', {}, svg);
+  // microplates only (no backdrop panels for the big plates)
   for (let i = 0; i < 4; i++) {
     const a = pts(uY, XT[i], XT[i + 1]), b = pts(lY, xb(i, t), xb(i + 1, t)).reverse();
-    Kit.mk('path', {d: d([...a, ...b]) + 'Z', style: `fill:color-mix(in srgb,var(--k) ${i % 2 ? 4 : 9}%,var(--c))`}, g);
+    Kit.mk('path', {d: d([...a, ...b]) + 'Z', style: `fill:color-mix(in srgb,var(--k) ${i % 2 ? 10 : 18}%,transparent)`}, g);
   }
   // boundaries
   const bw = Math.max(3, Math.min(W, H) * 0.014);
@@ -109,7 +102,6 @@ function draw() {
   const lab = (x, y, s) => Kit.mk('text', {x: P(x, y)[0], y: P(x, y)[1], 'text-anchor': 'middle', 'dominant-baseline': 'middle', style: `fill:var(--k);font:700 ${fs}px var(--body);letter-spacing:.04em`}, svg).textContent = s;
   lab(.3, lerp(.25, .12, t), 'EUROPE');
   lab(.3, lerp(.76, .88, t), 'AFRICA');
-  Kit.mk('rect', {x: pad, y: pad, width: iw, height: ih, rx: r, fill: 'none', style: 'stroke:color-mix(in srgb,var(--k) 35%,transparent)', 'stroke-width': 1.5}, svg);
 }
 
 function readout() {

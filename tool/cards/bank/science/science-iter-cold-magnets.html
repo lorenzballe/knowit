@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{flex:1;min-height:0;display:flex;flex-direction:column}
-#pic{flex:1;min-height:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;border-radius:2cqh}
+#pic{flex:1;min-height:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.85cqh,12.5px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
@@ -34,7 +34,7 @@ const S = {g: 20, moved: false, shown: false, locked: false, p: 0, w: 0, ready: 
 let G = {}, E = {};
 const fmt = t => t > 0 ? '+' + t : t < 0 ? '−' + (-t) : '0';
 const lerp = (a, b, k) => a + (b - a) * k;
-const coilCol = t => gsap.utils.interpolate('#d9733f', '#8fe6ff', Math.pow((T0 - t) / (T0 - T1), 1.4));
+const coilCol = t => gsap.utils.interpolate('#c4501a', '#0b4a8f', Math.pow((T0 - t) / (T0 - T1), 1.4));
 
 function draw() {
   const svg = Kit.$('pic'); svg.innerHTML = ''; E = {};
@@ -50,9 +50,8 @@ function draw() {
   const rg = Kit.mk('radialGradient', {id: 'pg'}, defs);
   [['0', '#ffffff'], ['.3', '#ffe08a'], ['.65', '#ff8a3d'], ['1', '#ff3d6e']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, rg));
   const lg = Kit.mk('linearGradient', {id: 'tg'}, defs);
-  Kit.mk('stop', {offset: '0', 'stop-color': '#8fe6ff'}, lg); Kit.mk('stop', {offset: '1', 'stop-color': '#d9733f'}, lg);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: fs * 1.2, fill: '#0a1128'}, svg);
-  if (!noRead) E.read = Kit.mk('text', {x: fs, y: fs * 1.6, fill: '#fff', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700}, svg);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#0b4a8f'}, lg); Kit.mk('stop', {offset: '1', 'stop-color': '#c4501a'}, lg);
+  if (!noRead) E.read = Kit.mk('text', {x: fs, y: fs * 1.6, fill: '#10100c', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700}, svg);
   E.coils = [];
   if (!compact) {
     E.vessel = Kit.mk('ellipse', {cx, cy, rx, ry, fill: '#050818', 'stroke-width': fs * 0.25}, svg);
@@ -70,17 +69,17 @@ function draw() {
   }
   Kit.mk('line', {x1: xa, y1: sy, x2: xb, y2: sy, stroke: 'url(#tg)', 'stroke-width': fs * 0.5, 'stroke-linecap': 'round'}, svg);
   [-273, -200, -100, 0].forEach(t => {
-    Kit.mk('line', {x1: pos(t), y1: sy + fs * 0.4, x2: pos(t), y2: sy + fs * 0.75, stroke: '#9fb0d8', 'stroke-width': 1.5}, svg);
-    const tx = Kit.mk('text', {x: pos(t), y: sy + fs * 1.8, 'text-anchor': 'middle', fill: '#9fb0d8', 'font-family': 'var(--mono)', 'font-size': fs}, svg);
+    Kit.mk('line', {x1: pos(t), y1: sy + fs * 0.4, x2: pos(t), y2: sy + fs * 0.75, stroke: '#10100c', 'stroke-width': 1.5}, svg);
+    const tx = Kit.mk('text', {x: pos(t), y: sy + fs * 1.8, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--mono)', 'font-size': fs}, svg);
     tx.textContent = t === 0 ? '0 °C' : fmt(t);
   });
   E.real = Kit.mk('g', {}, svg);
   const rxp = pos(REAL);
-  Kit.mk('path', {d: `M${rxp} ${sy - fs * 0.45}l${-fs * 0.45} ${-fs * 0.7}h${fs * 0.9}z`, fill: '#8fe6ff'}, E.real);
-  const rl = Kit.mk('text', {x: Math.max(fs * 0.6, rxp - fs * 0.6), y: sy - fs * 3.0, fill: '#8fe6ff', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 800}, E.real);
+  Kit.mk('path', {d: `M${rxp} ${sy - fs * 0.45}l${-fs * 0.45} ${-fs * 0.7}h${fs * 0.9}z`, fill: '#0b4a8f'}, E.real);
+  const rl = Kit.mk('text', {x: Math.max(fs * 0.6, rxp - fs * 0.6), y: sy - fs * 3.0, fill: '#0b4a8f', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 800}, E.real);
   rl.textContent = 'real: −269 °C';
   E.hand = Kit.mk('circle', {cy: sy, r: fs * 0.8, fill: '#fff', 'stroke-width': 3}, svg);
-  E.glab = Kit.mk('text', {y: sy - fs * 1.4, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, svg);
+  E.glab = Kit.mk('text', {y: sy - fs * 1.4, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, svg);
   update();
 }
 

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{flex:1;min-height:0;position:relative;background:#0f1320;border-radius:2cqh;overflow:hidden}
+#stage{flex:1;min-height:0;position:relative;background:none;border:0;box-shadow:none;overflow:hidden}
 #wave{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #why{display:flex;flex-direction:column;gap:.8cqh;margin-top:1.2cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
@@ -30,7 +30,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const NS = 'http://www.w3.org/2000/svg';
-const RED = '#ff5a5f', BLUE = '#4f9dff', GOLD = '#ffc233', INK = '#eef1f8', DIM = 'rgba(238,241,248,.35)';
+const RED = '#c4122f', BLUE = '#0b3fb8', GOLD = '#8a4b00', INK = '#10100c', DIM = 'rgba(16,16,12,.4)';
 const DIRS = [
   {n: 'along E', v: [0, 1, 0]}, {n: 'against E', v: [0, -1, 0]},
   {n: 'along B', v: [0, 0, 1]}, {n: 'against B', v: [0, 0, -1]},
@@ -66,10 +66,10 @@ function build() {
   G = {W, H, fs, A, cx, cy, X, P, L: A * 1.2, lam: X};
   const a0 = P(-X, 0, 0), a1 = P(X, 0, 0);
   Kit.mk('line', {x1: a0[0], y1: a0[1], x2: a1[0], y2: a1[1], stroke: DIM, 'stroke-width': 1.5, 'stroke-dasharray': '4 5'}, svg);
-  G.bStem = Kit.mk('path', {stroke: BLUE, 'stroke-opacity': .35, 'stroke-width': 1.4, fill: 'none'}, svg);
-  G.bCurve = Kit.mk('path', {stroke: BLUE, 'stroke-width': 2.4, fill: 'none', 'stroke-opacity': .85}, svg);
-  G.eStem = Kit.mk('path', {stroke: RED, 'stroke-opacity': .35, 'stroke-width': 1.4, fill: 'none'}, svg);
-  G.eCurve = Kit.mk('path', {stroke: RED, 'stroke-width': 2.4, fill: 'none', 'stroke-opacity': .9}, svg);
+  G.bStem = Kit.mk('path', {stroke: BLUE, 'stroke-opacity': .4, 'stroke-width': 1.4, fill: 'none'}, svg);
+  G.bCurve = Kit.mk('path', {stroke: BLUE, 'stroke-width': 2.4, fill: 'none', 'stroke-opacity': .9}, svg);
+  G.eStem = Kit.mk('path', {stroke: RED, 'stroke-opacity': .4, 'stroke-width': 1.4, fill: 'none'}, svg);
+  G.eCurve = Kit.mk('path', {stroke: RED, 'stroke-width': 2.4, fill: 'none', 'stroke-opacity': .95}, svg);
   G.dots = Kit.mk('g', {}, svg);
   G.dotEls = [];
   for (let i = 0; i < 14; i++) G.dotEls.push(Kit.mk('circle', {fill: GOLD, r: 0, opacity: 0}, G.dots));

@@ -52,8 +52,7 @@ function draw(){
   mk('stop', {offset:0, 'stop-color':'#4aa3e8'}, g); mk('stop', {offset:1, 'stop-color':'#0d4f9c'}, g);
   const gg = mk('linearGradient', {id:'gg', x1:0, x2:0, y1:1, y2:0}, defs);
   mk('stop', {offset:0, 'stop-color':'#0d4f9c'}, gg); mk('stop', {offset:1, 'stop-color':'#4aa3e8'}, gg);
-  // land and sand
-  mk('rect', {x:0, y:0, width:x1+6, height:H, rx:8, fill:'color-mix(in srgb,var(--k) 12%,transparent)'}, svg);
+  // sand
   mk('path', {d:funnel, fill:'#e4cf99'}, svg);
   const water = mk('rect', {x:x0, y:0, width:0, height:H, fill:'url(#wg)', 'clip-path':'url(#fc)'}, svg);
   const edge = mk('rect', {x:x0, y:0, width:Math.max(3, W*.008), height:H, fill:'#fff', opacity:0, 'clip-path':'url(#fc)'}, svg);

@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
-#cv{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#0b1626}
+#cv{position:relative;flex:1;min-height:0}
 #cv canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #read{font:700 max(1.8cqh,12px)/1.25 var(--mono);color:var(--k);text-align:center}
 #sl{width:100%;accent-color:var(--k);height:max(3.4cqh,26px);margin:0;cursor:pointer}
@@ -54,7 +54,7 @@ function draw(){
   if (!G) return;
   const x = G.x, {W,H,ppm,zoom} = geom(), cx = W/2, cy = H/2;
   const fs = Math.max(12, H*0.045);
-  x.clearRect(0,0,W,H); x.fillStyle = '#0b1626'; x.fillRect(0,0,W,H);
+  x.clearRect(0,0,W,H);
   // tank
   const h = S0/2*ppm;
   const l = Math.max(-4, cx-h), r = Math.min(W+4, cx+h), tp = Math.max(-4, cy-h), bt = Math.min(H+4, cy+h);
@@ -68,7 +68,7 @@ function draw(){
   const j0 = Math.ceil((tp-cy)/ppm/g), j1 = Math.floor((bt-cy)/ppm/g);
   for (let j=j0;j<=j1 && j-j0<60;j++){ const Y = cy+j*g*ppm; x.moveTo(l,Y); x.lineTo(r,Y); }
   x.stroke();
-  if (h < W) { x.strokeStyle = '#d6ecff'; x.lineWidth = 3; x.strokeRect(cx-h,cy-h,2*h,2*h); }
+  if (h < W) { x.strokeStyle = '#10100c'; x.lineWidth = 3; x.strokeRect(cx-h,cy-h,2*h,2*h); }
   // the tritiated water
   const ds = Math.max(D*ppm, 1.5);
   x.save(); x.shadowColor = '#8dff6a'; x.shadowBlur = Math.min(30, 8+ds*.2);
@@ -90,7 +90,9 @@ function draw(){
   const raw = W*0.25/ppm, n = Math.pow(10, Math.floor(Math.log10(raw)));
   const len = [5,2,1].map(k=>k*n).find(v=>v<=raw) || n, bp = len*ppm;
   const bx = fs, by = H - fs*1.6;
-  x.fillStyle = '#ffffff'; x.fillRect(bx, by, bp, 3); x.fillRect(bx, by-6, 2, 9); x.fillRect(bx+bp-2, by-6, 2, 9);
+  const onWater = bx > l && bx+bp < r && by-fs*1.6 > tp && by < bt;
+  x.fillStyle = onWater ? '#ffffff' : '#10100c';
+  x.fillRect(bx, by, bp, 3); x.fillRect(bx, by-6, 2, 9); x.fillRect(bx+bp-2, by-6, 2, 9);
   x.textAlign = 'left'; x.textBaseline = 'bottom'; x.font = `700 ${fs}px sans-serif`;
   x.fillText(fmtLen(len), bx, by - 8);
   // readout

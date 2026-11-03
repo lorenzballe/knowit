@@ -28,7 +28,8 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Page asks why flames change height at different points along a tube, and which points will have the tallest flames. Three choices are offered: little vibration, lots of vibration, or same everywhere."
+    "label": "Page asks why flames change height at different points along a tube, and which points will have the tallest flames. Three choices are offered: little vibration, lots of vibration, or same everywhere.",
+    "ground": "#14100d"
   },
   "source": "Veritasium, “Musical Fire Table!” (YouTube, 2014)",
   "reference": "https://www.youtube.com/watch?v=2awbKQ2DLRE",

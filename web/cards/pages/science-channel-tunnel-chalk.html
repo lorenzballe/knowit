@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#box{flex:1;min-height:0;position:relative;border-radius:1.6cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#box{flex:1;min-height:0;position:relative}
 #pic{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation}
 #ctl{display:flex;flex-direction:column;gap:1cqh}
 #chips{display:flex;gap:1.6cqw}
@@ -77,12 +77,12 @@ function drawStatic() {
   svg.innerHTML = '';
   dims = Kit.fitSvg(svg);
   const {W, H, f} = dims, fs = Math.max(12, f * .82);
-  // sea and land
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: .2 * H, fill: '#2f6fa3'}, svg);
+  // sea (a body of water with its own shape) and land; the sky is the card itself
+  Kit.mk('path', {d: `M${.12 * W} ${.08 * H} L${.88 * W} ${.08 * H} Q${.84 * W} ${.15 * H} ${.8 * W} ${.2 * H} L${.2 * W} ${.2 * H} Q${.16 * W} ${.15 * H} ${.12 * W} ${.08 * H}Z`, fill: '#2f6fa3'}, svg);
   Kit.mk('path', {d: `M0 ${.07 * H} L${.12 * W} ${.08 * H} Q${.16 * W} ${.15 * H} ${.2 * W} ${.2 * H} L0 ${.2 * H}Z`, fill: '#5f8a4c'}, svg);
   Kit.mk('path', {d: `M${W} ${.07 * H} L${.88 * W} ${.08 * H} Q${.84 * W} ${.15 * H} ${.8 * W} ${.2 * H} L${W} ${.2 * H}Z`, fill: '#5f8a4c'}, svg);
-  txt(.02 * W, .055 * H + fs * .4, 'ENGLAND', fs, 'start', '#fff', svg);
-  txt(.98 * W, .055 * H + fs * .4, 'FRANCE', fs, 'end', '#fff', svg);
+  [txt(.02 * W, .055 * H + fs * .4, 'ENGLAND', fs, 'start', '#10100c', svg),
+   txt(.98 * W, .055 * H + fs * .4, 'FRANCE', fs, 'end', '#10100c', svg)].forEach(t => t.setAttribute('stroke', 'none'));
   txt(.5 * W, .13 * H + fs * .35, 'THE CHANNEL', fs * .9, 'middle', 'rgba(255,255,255,.85)', svg, 600);
   // upper: cracked porous rock
   Kit.mk('rect', {x: 0, y: L[0].a * H, width: W, height: (L[0].b - L[0].a) * H, fill: '#8f8a7c'}, svg);

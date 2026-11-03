@@ -40,7 +40,7 @@ const TEXT = {
   gift: '<b>The gift.</b> Look inside: no prey at all. Finding nothing edible, he balled silk around a small bit of rock.',
   female: '<b>The female.</b> The gift is how he attracts her and wins her over to mate.'
 };
-const INK = '#2b1c10', PANEL = '#f6efdf', SOIL = '#d9c7a1';
+const INK = '#10100c';
 let parts = {};
 
 function spider(g, cx, cy, s, d, body, G, hold){
@@ -55,7 +55,7 @@ function spider(g, cx, cy, s, d, body, G, hold){
       Kit.mk('polyline', {points:`${ax},${hy} ${kx},${ky} ${ex},${fy}`, fill:'none', stroke:col, 'stroke-width':w, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, g);
     });
   };
-  legs(-s*0.25, '#a07c55', s*0.11);
+  legs(-s*0.25, '#6b4a2a', s*0.11);
   // abdomen
   Kit.mk('ellipse', {cx:cx - d*s*0.75, cy:cy - s*0.05, rx:s*1.0, ry:s*0.5, fill:body, stroke:INK, 'stroke-width':s*0.08}, g);
   Kit.mk('path', {d:`M${cx - d*s*1.6},${cy - s*0.05} Q${cx - d*s*0.75},${cy - s*0.28} ${cx + d*s*0.05},${cy - s*0.08}`, fill:'none', stroke:'#ecdcb6', 'stroke-width':s*0.1, 'stroke-linecap':'round'}, g);
@@ -83,11 +83,11 @@ function draw(){
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(13, f*0.95);
   const G = H*0.78;
-  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:Math.min(W,H)*0.05, fill:PANEL}, svg);
-  Kit.mk('path', {d:`M0,${G} H${W} V${H - Math.min(W,H)*0.05} Q${W},${H} ${W - Math.min(W,H)*0.05},${H} H${Math.min(W,H)*0.05} Q0,${H} 0,${H - Math.min(W,H)*0.05} Z`, fill:SOIL}, svg);
+  // ground line drawn right on the card
+  Kit.mk('line', {x1:0, y1:G, x2:W, y2:G, stroke:INK, 'stroke-width':2, 'stroke-linecap':'round', opacity:.55}, svg);
   for (let i = 0; i < 26; i++){
     const x = (i + 0.5)*W/26 + (Kit.rnd() - .5)*8, h = H*0.04 + Kit.rnd()*H*0.05;
-    Kit.mk('path', {d:`M${x},${G} q${(Kit.rnd()-.5)*10},${-h*0.6} ${(Kit.rnd()-.5)*14},${-h}`, fill:'none', stroke:'#7d9a4e', 'stroke-width':2, 'stroke-linecap':'round'}, svg);
+    Kit.mk('path', {d:`M${x},${G} q${(Kit.rnd()-.5)*10},${-h*0.6} ${(Kit.rnd()-.5)*14},${-h}`, fill:'none', stroke:'#0a6b2c', 'stroke-width':2, 'stroke-linecap':'round'}, svg);
   }
   const u = Math.min(W/8.5, H/3.6);
   const ms = u*0.5, fsz = u*0.62;
@@ -112,7 +112,7 @@ function draw(){
   }
   Kit.mk('circle', {cx:bx, cy:by, r:br*1.5, fill:'transparent'}, gg);
 
-  // labels: male and female at top, gift in the soil below the bundle
+  // labels: male and female at top, gift below the bundle
   const lm = pill(svg, mx, H*0.11, 'Male', fs);
   const lf = pill(svg, fx, H*0.11, 'Female', fs);
   const lg = pill(svg, bx, G + (H - G)*0.5, 'Gift?', fs);

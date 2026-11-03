@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;border-radius:1.8cqh;touch-action:none}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
@@ -50,13 +50,13 @@ function build(){
   m('stop',{offset:'0%','stop-color':'#ffd27a','stop-opacity':.9},rg);
   m('stop',{offset:'100%','stop-color':'#ffd27a','stop-opacity':0},rg);
   S = {W,H,f:fs,gy};
-  S.sky = m('rect',{x:0,y:0,width:W,height:gy,fill:'#f6c77a'});
   // snow
   S.snow = []; const sg = m('g',{});
   for(let i=0;i<45;i++){ S.snow.push({el:m('circle',{r:Math.max(1.5,H*.005*(.6+Kit.rnd())),fill:'#fff'},sg),x:Kit.rnd()*hx0*1.05,y0:Kit.rnd()*gy,v:H*(.06+Kit.rnd()*.06),ph:Kit.rnd()*6}); }
-  // soil and ground
-  m('rect',{x:0,y:gy,width:W,height:H-gy,fill:'#3b2a1e'});
-  S.grass = m('rect',{x:0,y:gy-H*.012,width:hx0,height:H*.02,fill:'#6f9a3d'});
+  // ground line and earth around the basement
+  m('line',{x1:0,y1:gy,x2:W,y2:gy,stroke:'#10100c','stroke-width':Math.max(2,W*.005),'stroke-linecap':'round'});
+  m('rect',{x:hx0-W*.03,y:gy,width:hx1-hx0+W*.06,height:Math.min(H-gy,by1-gy+H*.03),fill:'#3b2a1e',rx:6});
+  S.grass = m('rect',{x:0,y:gy-H*.012,width:hx0,height:H*.02,fill:'#0a7a32'});
   S.cover = m('rect',{x:0,y:gy-H*.012,width:hx0,height:H*.02,fill:'#ffffff',opacity:0});
   // house above ground
   m('rect',{x:hx0,y:wallTop,width:hx1-hx0,height:gy-wallTop,fill:'#efe4d2',stroke:'#2b2118','stroke-width':Math.max(2,W*.006)});
@@ -84,10 +84,10 @@ function build(){
     const tx = m('text',{x:lx,y:ly,'text-anchor':anchor,fill:label.c,'font-family':'var(--body)','font-weight':700,'font-size':fs},g); tx.textContent = label.t;
     return {fill,bulb,top,bot:bot-w*.2};
   }
-  S.tOut = thermo(W*.08,gy-H*.3,gy-H*.08,{t:'Outside',c:'#ffffff'},W*.03,gy+fs*1.5,'start','#e4572e');
+  S.tOut = thermo(W*.08,gy-H*.3,gy-H*.08,{t:'Outside',c:'#10100c'},W*.03,gy+fs*1.5,'start','#e4572e');
   S.tIn = thermo(hx1-W*.05,by0+fs*1.9,by1-H*.06,{t:'Basement',c:'#2b2118'},hx1-W*.02,by0+fs*1.25,'end','#e9a23b');
   // month
-  S.month = m('text',{x:W*.03,y:fs*1.4,fill:'#2b2118','font-family':'var(--display)','font-weight':800,'font-size':fs*1.15});
+  S.month = m('text',{x:W*.03,y:fs*1.4,fill:'#10100c','font-family':'var(--display)','font-weight':800,'font-size':fs*1.15});
   // alive label
   S.alive = m('text',{x:N.x,y:nk.y-fs*.5,'text-anchor':'middle',fill:'#2b2118','font-family':'var(--body)','font-weight':800,'font-size':fs,opacity:0});
   S.alive.textContent = 'still alive';
@@ -96,11 +96,11 @@ function build(){
   S.mq = m('g',{});
   const legs = m('g',{stroke:'#3a2716','stroke-width':Math.max(1,s*.05),fill:'none','stroke-linecap':'round'},S.mq);
   [[-.1,.35,-.5,.75],[.25,.4,.15,.85],[.5,.35,.85,.75]].forEach(([kx,ky,ex,ey])=>m('path',{d:`M${s*.3},${s*.08} L${s*kx},${s*ky} L${s*ex},${s*ey}`},legs));
-  m('ellipse',{cx:-s*.3,cy:0,rx:s*.55,ry:s*.14,fill:'#7a5432',transform:`rotate(8 ${-s*.3} 0)`},S.mq);
-  m('circle',{cx:s*.3,cy:-s*.02,r:s*.2,fill:'#5e3f22'},S.mq);
-  m('circle',{cx:s*.55,cy:-s*.04,r:s*.12,fill:'#4a3320'},S.mq);
+  m('ellipse',{cx:-s*.3,cy:0,rx:s*.55,ry:s*.14,fill:'#4a3320',transform:`rotate(8 ${-s*.3} 0)`},S.mq);
+  m('circle',{cx:s*.3,cy:-s*.02,r:s*.2,fill:'#3a2716'},S.mq);
+  m('circle',{cx:s*.55,cy:-s*.04,r:s*.12,fill:'#2b2118'},S.mq);
   m('line',{x1:s*.65,y1:0,x2:s*1.1,y2:s*.14,stroke:'#3a2716','stroke-width':Math.max(1,s*.05),'stroke-linecap':'round'},S.mq);
-  S.wing = m('ellipse',{cx:-s*.2,cy:-s*.22,rx:s*.6,ry:s*.15,fill:'#d9ecf7','fill-opacity':.75,stroke:'#3a2716','stroke-width':1},S.mq);
+  S.wing = m('ellipse',{cx:-s*.2,cy:-s*.22,rx:s*.6,ry:s*.15,fill:'#d9ecf7','fill-opacity':.85,stroke:'#3a2716','stroke-width':1},S.mq);
   S.pts = {A:{x:W*.28,y:gy-H*.15}, V, St:{x:hx0+W*.1,y:by0+H*.03}, N};
   render();
 }
@@ -115,9 +115,8 @@ function mqPos(){
 }
 
 function render(){
-  if(!S.sky) return;
+  if(!S.mq) return;
   const I = gsap.utils.interpolate;
-  S.sky.setAttribute('fill', I('#f6c77a','#9fb3c8',clamp(p*1.3)));
   const sn = clamp((p-.3)/.3);
   S.snow.forEach(o=>{ const y=(o.y0+t*o.v)%S.gy; o.el.setAttribute('cx',o.x+Math.sin(t+o.ph)*S.W*.01); o.el.setAttribute('cy',y); o.el.setAttribute('opacity',sn*.9); });
   S.cover.setAttribute('opacity',clamp((p-.45)/.3));

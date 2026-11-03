@@ -28,7 +28,7 @@ const VIS = 0.7;           // fraction of the bar that is visible light; the res
 let F = 0.12, seenVis = false, seenUV = false, done = false, dash = 0;
 let G = null;              // current geometry and elements
 
-function col(f){ return f <= VIS ? `hsl(${Math.round(f/VIS*275)},100%,62%)` : '#c9a6ff'; }
+function col(f){ return f <= VIS ? `hsl(${Math.round(f/VIS*275)},100%,38%)` : '#5b2fb0'; }
 function nameOf(f){
   if (f > VIS) return 'Ultraviolet';
   const h = f/VIS;
@@ -51,7 +51,7 @@ function draw(){
   spot.setAttribute('fill', c);
   spot.style.opacity = uv ? 0 : 1;
   read.textContent = `${nameOf(F)} · ${uv ? 'blocked by the glass' : 'goes through'}`;
-  read.setAttribute('fill', uv ? '#ffb4c8' : '#e8fff0');
+  read.setAttribute('fill', uv ? '#a3002f' : '#10100c');
   handle.setAttribute('cx', x0 + F*(x1-x0));
   handle.setAttribute('fill', c);
 }
@@ -86,46 +86,43 @@ Kit.onShow.card = () => {
   const regY = axisY - 1.6*f;
   const trY = regY - 1.75*f;
   const winY = trY - 1.7*f;
-  const pB = winY - 1.4*f;        // panel bottom
+  const pB = winY - 1.4*f;        // scene bottom
   const ink = 'var(--k)';
   const t = (x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle'}, a), svg); e.textContent = s; e.style.font = `700 ${a.fs || f}px var(--body)`; return e; };
 
-  // dark lab panel so beams glow on any card colour
   const defs = Kit.mk('defs', {}, svg);
   const gr = Kit.mk('linearGradient', {id: 'spec', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
   for (let i = 0; i <= 10; i++) Kit.mk('stop', {offset: i/10*VIS, 'stop-color': `hsl(${i*27.5},100%,58%)`}, gr);
   Kit.mk('stop', {offset: VIS + .001, 'stop-color': '#4b2d86'}, gr);
   Kit.mk('stop', {offset: 1, 'stop-color': '#24163f'}, gr);
   const gl = Kit.mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
-  Kit.mk('feGaussianBlur', {stdDeviation: f*.35, result: 'b'}, gl);
+  Kit.mk('feGaussianBlur', {stdDeviation: f*.2, result: 'b'}, gl);
   const m = Kit.mk('feMerge', {}, gl); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
-
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: pB, rx: f*.9, fill: '#0f1220'}, svg);
 
   const by = (pB + 1.6*f) / 2 + .2*f;
   const sx = W*.1, gL = W*.42, gR = W*.6, scrX = W*.9;
   const gH = Math.min(pB*.5, W*.4);
 
   // lamp
-  Kit.mk('circle', {cx: sx, cy: by, r: f*.9, fill: '#2a2f45', stroke: '#e9ecff', 'stroke-width': 2}, svg);
+  Kit.mk('circle', {cx: sx, cy: by, r: f*.9, fill: 'rgba(16,16,12,.18)', stroke: '#10100c', 'stroke-width': 2}, svg);
   // screen
-  Kit.mk('rect', {x: scrX - f*.25, y: by - gH*.6, width: f*.5, height: gH*1.2, rx: f*.2, fill: '#2a2f45'}, svg);
+  Kit.mk('rect', {x: scrX - f*.25, y: by - gH*.6, width: f*.5, height: gH*1.2, rx: f*.2, fill: 'rgba(16,16,12,.22)'}, svg);
 
   const beam = Kit.mk('line', {x1: sx + f*.9, y1: by, x2: gL, y2: by, 'stroke-width': f*.45, 'stroke-linecap': 'round', filter: 'url(#glow)'}, svg);
   const rest = Kit.mk('line', {x1: gL, y1: by, x2: scrX - f*.3, y2: by, 'stroke-width': f*.45, 'stroke-linecap': 'round', filter: 'url(#glow)', 'stroke-dasharray': `${f*1.2} ${f*.35}`}, svg);
   const refl = Kit.mk('line', {x1: gL, y1: by, x2: gL - W*.1, y2: by - gH*.38, 'stroke-width': f*.3, 'stroke-linecap': 'round', 'stroke-dasharray': `${f*.5} ${f*.7}`, filter: 'url(#glow)'}, svg);
 
   // glass block, drawn over the beam
-  Kit.mk('rect', {x: gL, y: by - gH/2, width: gR - gL, height: gH, rx: f*.35, fill: 'rgba(170,215,255,.2)', stroke: 'rgba(205,235,255,.85)', 'stroke-width': 2}, svg);
-  Kit.mk('line', {x1: gL + (gR-gL)*.22, y1: by - gH*.38, x2: gL + (gR-gL)*.42, y2: by - gH*.12, stroke: 'rgba(255,255,255,.55)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+  Kit.mk('rect', {x: gL, y: by - gH/2, width: gR - gL, height: gH, rx: f*.35, fill: 'rgba(255,255,255,.3)', stroke: 'rgba(16,16,12,.8)', 'stroke-width': 2}, svg);
+  Kit.mk('line', {x1: gL + (gR-gL)*.22, y1: by - gH*.38, x2: gL + (gR-gL)*.42, y2: by - gH*.12, stroke: 'rgba(255,255,255,.85)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
   const face = Kit.mk('rect', {x: gL - f*.2, y: by - gH/2, width: f*.4, height: gH, rx: f*.2, filter: 'url(#glow)'}, svg);
   const spot = Kit.mk('circle', {cx: scrX, cy: by, r: f*.7, filter: 'url(#glow)'}, svg);
 
   const read = t(W/2, 1.45*f, '', {fs: f*1.05});
   const ly = pB - .6*f;
-  t(sx, ly, 'lamp', {fill: '#aeb4d6'});
-  t((gL+gR)/2, ly, 'glass', {fill: '#aeb4d6'});
-  t(scrX, ly, 'screen', {fill: '#aeb4d6'});
+  t(sx, ly, 'lamp', {}).style.fill = ink;
+  t((gL+gR)/2, ly, 'glass', {}).style.fill = ink;
+  t(scrX, ly, 'screen', {}).style.fill = ink;
 
   // spectrum bar = the control
   const x0 = W*.06, x1 = W*.94, th = f*1.1;

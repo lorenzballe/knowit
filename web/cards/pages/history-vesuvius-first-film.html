@@ -42,7 +42,7 @@
 <script>
 let step = 0;
 const svg = Kit.$('pic');
-const SEPIA = '#6b4a2b', PAPER = '#f1e6cc';
+const SEPIA = '#10100c';
 const M = [[0,.95],[.16,.8],[.3,.6],[.38,.48],[.43,.5],[.5,.45],[.57,.49],[.64,.58],[.78,.74],[1,.93]];
 let E = {};
 
@@ -61,12 +61,11 @@ function build() {
   const lg = Kit.mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
   Kit.mk('stop', {offset: 0, 'stop-color': '#bdbdbd'}, lg); Kit.mk('stop', {offset: 1, 'stop-color': '#6f6f6f'}, lg);
 
-  /* PANEL 1 — paper sketch */
+  /* PANEL 1 — pen sketch, drawn straight on the card */
   const p1 = Kit.mk('g', {}, svg);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: ph, rx: r, fill: PAPER}, p1);
   text(p1, r, fs * 1.5, 'BEFORE 1944 · DRAWN BY HAND', fs, {fill: SEPIA, 'font-family': 'var(--mono)', 'font-weight': 700});
   const a1 = {x: W * .08, y: fs * 2.2, w: W * .84, h: ph - fs * 2.2 - r * .4};
-  E.wait1 = text(p1, W / 2, ph * .62, 'only pens and brushes…', fs, {fill: SEPIA, 'text-anchor': 'middle', 'font-family': 'var(--hand)', opacity: .6});
+  E.wait1 = text(p1, W / 2, ph * .62, 'only pens and brushes…', fs, {fill: SEPIA, 'text-anchor': 'middle', 'font-family': 'var(--hand)', opacity: .75});
   E.ink = Kit.mk('g', {fill: 'none', stroke: SEPIA, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p1);
   for (let k = 0; k < 3; k++) Kit.mk('path', {d: mpath(a1, a1.w * .012), 'stroke-width': k ? 1.2 : 2.2, opacity: k ? .55 : 1}, E.ink);
   // hatching on the slope
@@ -129,7 +128,7 @@ function build() {
 function apply(anim) {
   const calm = !anim || Kit.calm;
   const set = (el, o) => calm ? gsap.set(el, {opacity: o}) : gsap.to(el, {opacity: o, duration: .5});
-  set(E.wait1, step >= 1 ? 0 : .6);
+  set(E.wait1, step >= 1 ? 0 : .75);
   set(E.wait2, step >= 2 ? 0 : 1);
   set(E.cam, step === 2 ? 1 : 0);
   E.ink.querySelectorAll('path').forEach(p => {

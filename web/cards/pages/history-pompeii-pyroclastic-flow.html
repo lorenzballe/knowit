@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
-#scene{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#scene{flex:1;min-height:0;position:relative;overflow:hidden}
 #scene canvas{display:block;width:100%;height:100%}
 #opts{display:flex;flex-direction:column;gap:1cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
@@ -53,20 +53,17 @@ function pt(u, g) {
 }
 function puff(x, y, r, a, hot) {
   const k = C.x, gr = k.createRadialGradient(x, y, 0, x, y, r);
-  gr.addColorStop(0, hot ? `rgba(255,150,70,${a})` : `rgba(170,160,150,${a})`);
-  gr.addColorStop(.55, `rgba(110,98,92,${a * .8})`);
-  gr.addColorStop(1, 'rgba(80,70,68,0)');
+  gr.addColorStop(0, hot ? `rgba(190,50,15,${a})` : `rgba(78,66,60,${a})`);
+  gr.addColorStop(.55, `rgba(52,44,42,${a * .8})`);
+  gr.addColorStop(1, 'rgba(40,34,32,0)');
   k.fillStyle = gr; k.beginPath(); k.arc(x, y, r, 0, 7); k.fill();
 }
 function draw() {
   if (!C) return;
   const k = C.x, g = geo(), {W, H, gy, px, py, bx} = g, font = getComputedStyle(document.documentElement).getPropertyValue('--body') || 'sans-serif';
-  // sky
-  const sk = k.createLinearGradient(0, 0, 0, gy);
-  sk.addColorStop(0, '#16112a'); sk.addColorStop(1, S.flow > 0 ? `rgb(${90 + 60 * S.cloud},${45 + 20 * S.cloud},50)` : '#4a2b3d');
-  k.fillStyle = sk; k.fillRect(0, 0, W, H);
-  // ground
-  k.fillStyle = '#2a211e'; k.fillRect(0, gy, W, H - gy);
+  k.clearRect(0, 0, W, H);
+  // ground line
+  k.fillStyle = '#10100c'; k.fillRect(0, gy, W, 2);
   // volcano
   k.fillStyle = '#3d2f2a'; k.beginPath(); k.moveTo(-W * .05, gy);
   k.quadraticCurveTo(px - W * .1, gy - 2, px - W * .05, py);
@@ -76,16 +73,16 @@ function draw() {
   // houses
   for (const h of houses) {
     const x = h.x * W, w = h.w * W, hh = h.h * H;
-    k.fillStyle = '#ecdfc6'; k.fillRect(x, gy - hh, w, hh);
-    if (h.t) { k.fillStyle = '#ecdfc6'; k.beginPath(); k.moveTo(x - 2, gy - hh); k.lineTo(x + w / 2, gy - hh - H * .03); k.lineTo(x + w + 2, gy - hh); k.fill();
-      k.fillStyle = '#b9a98c'; for (let c = 1; c < 4; c++) k.fillRect(x + c * w / 4 - 1, gy - hh * .85, 2, hh * .85); }
-    else { k.fillStyle = '#c4704a'; k.fillRect(x - 1, gy - hh - H * .01, w + 2, H * .01); k.fillStyle = '#5a4a40'; k.fillRect(x + w * .35, gy - hh * .5, w * .3, hh * .5); }
+    k.fillStyle = '#10100c'; k.fillRect(x, gy - hh, w, hh);
+    if (h.t) { k.fillStyle = '#10100c'; k.beginPath(); k.moveTo(x - 2, gy - hh); k.lineTo(x + w / 2, gy - hh - H * .03); k.lineTo(x + w + 2, gy - hh); k.fill();
+      k.fillStyle = '#FFB000'; for (let c = 1; c < 4; c++) k.fillRect(x + c * w / 4 - 1, gy - hh * .85, 2, hh * .85); }
+    else { k.fillStyle = '#9a3a1a'; k.fillRect(x - 1, gy - hh - H * .01, w + 2, H * .01); k.fillStyle = '#FFB000'; k.fillRect(x + w * .35, gy - hh * .5, w * .3, hh * .5); }
   }
   // deposit, layer on layer
   if (S.dep > 0) {
     const dh = S.dep * H * .16, x0 = bx - W * .12;
     for (let b = 4; b >= 1; b--) {
-      k.fillStyle = b % 2 ? '#9a918a' : '#857c76';
+      k.fillStyle = b % 2 ? '#6b625c' : '#4d4540';
       k.beginPath(); k.moveTo(x0, gy);
       for (let x = x0; x <= W + 4; x += 6) { const ramp = Math.min(1, (x - x0) / (W * .14)); k.lineTo(x, gy - dh * b / 4 * ramp * (.94 + .06 * Math.sin(x * .07 + b))); }
       k.lineTo(W + 4, gy); k.closePath(); k.fill();
@@ -105,16 +102,16 @@ function draw() {
     }
     const [fx, fy] = pt(Math.min(1, S.flow * 1.05), g);
     k.globalAlpha = S.cloud * Math.min(1, S.flow * 4) * (S.flow < .97 ? 1 : 0);
-    k.font = `700 ${f}px ${font}`; k.fillStyle = '#ffd8b0'; k.textAlign = 'center';
+    k.font = `700 ${f}px ${font}`; k.fillStyle = '#10100c'; k.textAlign = 'center';
     k.fillText('ash · pumice · gas', Math.min(W - k.measureText('ash · pumice · gas').width / 2 - 6, fx), fy - H * .25);
     k.globalAlpha = 1;
   }
   // labels
-  k.textAlign = 'center'; k.font = `700 ${f}px ${font}`; k.fillStyle = '#e8d9c4';
+  k.textAlign = 'center'; k.font = `700 ${f}px ${font}`; k.fillStyle = '#ffe9b8';
   k.fillText('Vesuvius', px, gy - (gy - py) * .3);
-  k.fillStyle = '#ecdfc6';
+  k.fillStyle = '#10100c';
   k.fillText(S.dep > .6 ? 'Pompeii, buried' : 'Pompeii', W * .78, gy + f * 1.5);
-  k.textAlign = 'right'; k.font = `700 ${f}px ${font}`; k.fillStyle = '#ffb27a';
+  k.textAlign = 'right'; k.font = `700 ${f}px ${font}`; k.fillStyle = '#10100c';
   k.fillText('79 AD', W - f * .6, f * 1.4);
 }
 

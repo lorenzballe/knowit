@@ -50,7 +50,7 @@ let pick = -1, ctx = null, tl = null, prog = 0, started = false, bob = null, buz
 const svg = Kit.$('pic'), cap = Kit.$('cap');
 const CAP0 = 'Autumn. The cold is coming. Who makes it to spring?';
 const CAPS = [[0,'Autumn: before the cold, she lays her eggs.'],[2.4,'Winter: the cold kills the adult.'],[4.4,'The egg stays intact: it resists freezing and drying.'],[6.4,'Spring: the warmth comes back…'],[7.6,'…and the egg hatches. A new mosquito.']];
-const AUT = '#f2c27b', WIN = '#b9cde0', SPR = '#a8dba0';
+const INK = '#10100c';
 const pos = v => Math.max(0, v);
 
 function mosq(p, s){
@@ -73,27 +73,23 @@ function mosq(p, s){
 
 function build(W, H, f){
   W = Math.max(W, 1); H = Math.max(H, 1);
+  const root = Kit.mk('g', {}, svg);
   const mk = (t, a, p) => Kit.mk(t, a, p || root), fs = Math.max(f*.8, 12);
-  const defs = Kit.mk('defs', {}, svg), clp = Kit.mk('clipPath', {id:'clp'}, defs);
-  Kit.mk('rect', {width:W, height:H, rx:f*.8}, clp);
-  const root = Kit.mk('g', {'clip-path':'url(#clp)'}, svg);
   const gy = H - 3.6*f;
-  const sky = mk('rect', {width:W, height:H, fill:AUT});
   const sun = mk('circle', {cx:W*.64, cy:H*.15, r:f*1.3, fill:'#ffd54a', opacity:.6});
-  mk('rect', {y:gy, width:W, height:pos(H-gy), fill:'#4a3a2e'});
   const snow = mk('rect', {x:-5, y:gy-.55*f, width:W+10, height:.8*f, rx:.4*f, fill:'#fff', opacity:0});
   // timeline
   const ly = gy + 1.2*f;
-  mk('line', {x1:W*.14, y1:ly, x2:W*.86, y2:ly, stroke:'#fff6e8', 'stroke-opacity':.5, 'stroke-width':Math.max(2,.12*f), 'stroke-linecap':'round'});
-  const lab = ['AUTUMN','WINTER','SPRING'].map((t, i) => { const e = mk('text', {x:W*(.2+.3*i), y:gy+2.9*f, 'text-anchor':'middle', fill:'#fff6e8', style:`font:700 ${fs}px var(--body);letter-spacing:.06em`, opacity:i ? .5 : 1}); e.textContent = t; return e; });
-  [0,1,2].forEach(i => mk('circle', {cx:W*(.2+.3*i), cy:ly, r:.18*f, fill:'#fff6e8', opacity:.6}));
-  const mark = mk('circle', {cx:W*.2, cy:ly, r:.42*f, fill:'#ffd54a', stroke:'#4a3a2e', 'stroke-width':.12*f});
+  mk('line', {x1:W*.14, y1:ly, x2:W*.86, y2:ly, stroke:INK, 'stroke-opacity':.45, 'stroke-width':Math.max(2,.12*f), 'stroke-linecap':'round'});
+  const lab = ['AUTUMN','WINTER','SPRING'].map((t, i) => { const e = mk('text', {x:W*(.2+.3*i), y:gy+2.9*f, 'text-anchor':'middle', fill:INK, style:`font:700 ${fs}px var(--body);letter-spacing:.06em`, opacity:i ? .5 : 1}); e.textContent = t; return e; });
+  [0,1,2].forEach(i => mk('circle', {cx:W*(.2+.3*i), cy:ly, r:.18*f, fill:INK, opacity:.5}));
+  const mark = mk('circle', {cx:W*.2, cy:ly, r:.42*f, fill:'#ffd54a', stroke:INK, 'stroke-width':.12*f});
   // thermometer
   const tx = W*.89, tt = H*.1, tb = Math.max(gy - 1.4*f, tt), tw = .8*f;
-  mk('rect', {x:tx-tw/2, y:tt, width:tw, height:pos(tb-tt+tw/2), rx:tw/2, fill:'#fff', stroke:'#4a3a2e', 'stroke-width':.1*f});
+  mk('rect', {x:tx-tw/2, y:tt, width:tw, height:pos(tb-tt+tw/2), rx:tw/2, fill:'#fff', stroke:INK, 'stroke-width':.1*f});
   const tfill = mk('rect', {x:tx-tw*.25, y:tt+tw*.3, width:tw*.5, height:pos(tb-tt), rx:tw*.25, fill:'#e2483c'});
   gsap.set(tfill, {scaleY:.7, transformOrigin:'50% 100%'});
-  const bulb = mk('circle', {cx:tx, cy:tb+tw*.4, r:tw*.85, fill:'#e2483c', stroke:'#4a3a2e', 'stroke-width':.1*f});
+  const bulb = mk('circle', {cx:tx, cy:tb+tw*.4, r:tw*.85, fill:'#e2483c', stroke:INK, 'stroke-width':.1*f});
   // egg
   const b = Math.max(2, Math.min(H*.17, W*.14, (gy - H*.1)*.4)), a = b*.62, cx = W*.5, cy = gy - b - 1;
   const egg = mk('g', {});
@@ -107,11 +103,11 @@ function build(W, H, f){
   const crack = mk('path', {d:'M' + pts.map(q => q.join(' ')).join('L'), fill:'none', stroke:'#ffe9b0', 'stroke-width':Math.max(2,b*.04), 'stroke-linejoin':'round', opacity:0}, egg);
   const frost = mk('ellipse', {cx, cy, rx:a+.15*f, ry:b+.15*f, fill:'none', stroke:'#fff', 'stroke-width':.22*f, 'stroke-dasharray':`${.5*f} ${.3*f}`, opacity:0}, egg);
   gsap.set(egg, {scale:0, transformOrigin:'50% 100%'});
-  const elab = mk('text', {x:cx+a+.6*f, y:cy+fs*.35, fill:'#2a211c', style:`font:700 ${fs}px var(--body);letter-spacing:.06em`, opacity:0}); elab.textContent = 'EGG';
+  const elab = mk('text', {x:cx+a+.6*f, y:cy+fs*.35, fill:INK, style:`font:700 ${fs}px var(--body);letter-spacing:.06em`, opacity:0}); elab.textContent = 'EGG';
   // adult
   const s = Math.max(b*.32, f*.9), ax = W*.24, ay = H*.3;
   const A = mosq(root, s);
-  const alab = Kit.mk('text', {x:-.5*s, y:1.7*s + fs, 'text-anchor':'middle', fill:'#2a211c', style:`font:700 ${fs}px var(--body);letter-spacing:.06em`}, A.g); alab.textContent = 'ADULT';
+  const alab = Kit.mk('text', {x:-.5*s, y:1.7*s + fs, 'text-anchor':'middle', fill:INK, style:`font:700 ${fs}px var(--body);letter-spacing:.06em`}, A.g); alab.textContent = 'ADULT';
   gsap.set(A.g, {x:ax, y:ay, transformOrigin:'50% 50%'});
   bob = gsap.to(A.b, {y:-.35*s, duration:.7, repeat:-1, yoyo:true, ease:'sine.inOut'});
   buzz = gsap.to(A.w, {scaleY:.35, duration:.05, repeat:-1, yoyo:true, transformOrigin:'50% 100%'});
@@ -128,7 +124,6 @@ function build(W, H, f){
     .to(egg, {scale:1, duration:.5, ease:'back.out(2)'}, .8)
     .to(elab, {opacity:1, duration:.4}, 1)
     .to(A.g, {x:ax, y:ay, duration:.8, ease:'power2.inOut'}, 1.4)
-    .to(sky, {attr:{fill:WIN}, duration:1}, 2.4)
     .to(sun, {opacity:0, duration:.8}, 2.4)
     .to([tfill, bulb], {attr:{fill:'#3d7fd1'}, duration:1}, 2.4)
     .to(tfill, {scaleY:.15, duration:1}, 2.4)
@@ -141,7 +136,6 @@ function build(W, H, f){
     .to(A.g, {y:gy-s*.45, rotation:170, duration:1, ease:'power2.in'}, 2.8)
     .to(A.g, {opacity:0, duration:.8}, 4.2)
     .to(egg, {x:'+=3', duration:.06, repeat:5, yoyo:true}, 5.2)
-    .to(sky, {attr:{fill:SPR}, duration:1}, 6.4)
     .to(sun, {opacity:1, duration:.8}, 6.4)
     .to([tfill, bulb], {attr:{fill:'#e2483c'}, duration:1}, 6.4)
     .to(tfill, {scaleY:.8, duration:1}, 6.4)

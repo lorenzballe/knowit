@@ -89,7 +89,13 @@ function draw() {
   if (!G) return;
   const {x, W, H, s, cols, rows, ox, oy, k, c} = G;
   x.clearRect(0, 0, W, H);
-  x.globalAlpha = .1; x.fillStyle = k; x.fillRect(ox, oy, cols * s, rows * s);
+  // no backdrop: just two faint rules marking the extent of the 100,000 cells
+  x.globalAlpha = .3; x.strokeStyle = k; x.lineWidth = 1; x.setLineDash([2, 4]);
+  x.beginPath();
+  x.moveTo(ox, oy + .5); x.lineTo(ox + cols * s, oy + .5);
+  x.moveTo(ox, oy + rows * s - .5); x.lineTo(ox + cols * s, oy + rows * s - .5);
+  x.stroke(); x.setLineDash([]);
+  x.fillStyle = k;
   if (!revealed) { x.globalAlpha = .5; fillN(guess); }
   else {
     x.globalAlpha = 1; fillN(shown);

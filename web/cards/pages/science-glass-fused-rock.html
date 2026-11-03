@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
-#cv{display:block;width:100%;flex:1;min-height:0;border-radius:2cqh}
+#cv{display:block;width:100%;flex:1;min-height:0;background:none}
 #btns{display:flex;gap:2.4cqw}
 .opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
@@ -77,20 +77,13 @@ function step() {
 function draw() {
   if (!ctx) return;
   const T = S.T;
-  const end = S.mode === 'fast' ? [150, 130, 190] : S.mode === 'slow' ? [200, 225, 235] : [200, 200, 200];
-  const col = mixc(end, [255, 140, 40], T);
-  const bg = mixc([16, 14, 22], [70, 18, 8], T);
+  const end = S.mode === 'fast' ? [90, 50, 150] : S.mode === 'slow' ? [16, 70, 90] : [40, 40, 40];
+  const col = mixc(end, [225, 70, 10], T);
   ctx.clearRect(0, 0, W, H);
-  ctx.fillStyle = `rgb(${bg})`; ctx.fillRect(0, 0, W, H);
-  if (T > 0.05) {
-    const g = ctx.createRadialGradient(W / 2, H * .6, 0, W / 2, H * .6, Math.max(W, H) * .7);
-    g.addColorStop(0, `rgba(255,110,20,${0.45 * T})`); g.addColorStop(1, 'rgba(255,60,0,0)');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-  }
   // bonds
   const lim = sp * 1.25, lim2 = lim * lim;
   ctx.lineWidth = Math.max(1.2, sp * 0.08);
-  ctx.strokeStyle = `rgba(${col},${0.25 + 0.45 * (1 - T)})`;
+  ctx.strokeStyle = `rgba(${col},${0.45 + 0.35 * (1 - T)})`;
   ctx.beginPath();
   for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) {
     const dx = P[i].x - P[j].x, dy = P[i].y - P[j].y;
@@ -105,12 +98,17 @@ function draw() {
     ctx.beginPath(); ctx.arc(p.x - r * .35, p.y - r * .35, r * .35, 0, 7);
     ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.fill();
   }
-  if (S.splash > 0) { ctx.fillStyle = `rgba(80,160,255,${S.splash})`; ctx.fillRect(0, 0, W, H); }
+  if (S.splash > 0) {
+    const g = ctx.createRadialGradient(W / 2, H * .55, 0, W / 2, H * .55, Math.max(W, H) * .6);
+    g.addColorStop(0, `rgba(20,90,220,${S.splash * 0.5})`); g.addColorStop(1, 'rgba(20,90,220,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  }
   // label
   const lab = {melt: 'MOLTEN ROCK · atoms roam free', cool: S.mode === 'fast' ? 'SPLASH! frozen in an instant' : 'COOLING SLOWLY…',
     slow: 'CRYSTALS · atoms in neat rows', fast: 'GLASS · atoms frozen in disorder'}[S.phase];
   ctx.font = `700 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
-  ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = getComputedStyle(document.getElementById('card')).getPropertyValue('--k').trim() || '#10100c';
+  ctx.textBaseline = 'middle';
   ctx.fillText(lab, Math.max(10, W * 0.05), f * 1.3, W * 0.9);
 }
 

@@ -56,12 +56,7 @@ function build(){
   svg.innerHTML = '';
   D = Kit.fitSvg(svg);
   const {W,H,f} = D, mk = (t,a,p) => Kit.mk(t, a, p || svg);
-  const defs = mk('defs', {});
-  const cp = mk('clipPath', {id: 'clip'}, defs); mk('rect', {x:0, y:0, width:W, height:H, rx:Math.min(W,H)*.05}, cp);
-  const sk = mk('linearGradient', {id:'sky', x1:0, y1:0, x2:0, y2:1}, defs);
-  mk('stop', {offset:0, 'stop-color':'#bfe3f5'}, sk); mk('stop', {offset:1, 'stop-color':'#f4f1df'}, sk);
-  const root = mk('g', {'clip-path':'url(#clip)'});
-  mk('rect', {x:0, y:0, width:W, height:H, fill:'url(#sky)'}, root);
+  const root = mk('g', {});
   mk('circle', {cx:W*.86, cy:H*.33, r:Math.min(W,H)*.06, fill:'#ffd35a'}, root);
   // ground
   let gp = `M0 ${H}`; for (let i = 0; i <= N; i++){ const x = W*i/N; gp += ` L${x} ${g(x)}`; } gp += ` L${W} ${H} Z`;
@@ -72,33 +67,33 @@ function build(){
   mk('path', {d: sp, fill:'#a9814f'}, root);
   // rocks, weed, a fish
   [.4,.5,.57,.69,.8,.9].forEach((u,i) => { const x = W*u, y = g(x); mk('ellipse', {cx:x, cy:y - H*.008, rx:W*(.018 + (i%3)*.006), ry:H*.016, fill:'#6d5a48'}, root); });
-  [.45,.63,.75,.86].forEach(u => { const x = W*u, y = g(x); mk('path', {d:`M${x} ${y} q${-W*.012} ${-H*.03} ${W*.004} ${-H*.06} M${x+W*.01} ${y} q${W*.012} ${-H*.025} 0 ${-H*.045}`, stroke:'#3d7a3a', 'stroke-width':Math.max(2, W*.006), fill:'none', 'stroke-linecap':'round'}, root); });
+  [.45,.63,.75,.86].forEach(u => { const x = W*u, y = g(x); mk('path', {d:`M${x} ${y} q${-W*.012} ${-H*.03} ${W*.004} ${-H*.06} M${x+W*.01} ${y} q${W*.012} ${-H*.025} 0 ${-H*.045}`, stroke:'#2f6a2d', 'stroke-width':Math.max(2, W*.006), fill:'none', 'stroke-linecap':'round'}, root); });
   { const x = W*.66, y = g(x) - H*.012; const fg = mk('g', {transform:`translate(${x} ${y}) rotate(12)`}, root);
     mk('ellipse', {cx:0, cy:0, rx:W*.02, ry:H*.011, fill:'#f08a3c'}, fg); mk('path', {d:`M${W*.018} 0 l${W*.016} ${-H*.012} l0 ${H*.024} Z`, fill:'#f08a3c'}, fg); }
   // beach: towel, umbrella, person
   { const x = W*.07, y = g(x); mk('rect', {x:x - W*.035, y:y - H*.008, width:W*.07, height:H*.01, fill:'#e5484d', rx:2}, root);
     const ux = W*.17, uy = g(ux), uh = H*.13, ur = W*.065;
-    mk('line', {x1:ux, y1:uy, x2:ux, y2:uy - uh, stroke:'#333', 'stroke-width':Math.max(2,W*.005)}, root);
+    mk('line', {x1:ux, y1:uy, x2:ux, y2:uy - uh, stroke:'#10100c', 'stroke-width':Math.max(2,W*.005)}, root);
     mk('path', {d:`M${ux-ur} ${uy-uh} A${ur} ${ur*.7} 0 0 1 ${ux+ur} ${uy-uh} Z`, fill:'#ff6b4a'}, root);
     mk('path', {d:`M${ux-ur*.33} ${uy-uh} A${ur*.33} ${ur*.66} 0 0 1 ${ux+ur*.33} ${uy-uh} Z`, fill:'#fff'}, root);
     const px = W*.25, py = g(px), ph = H*.1, sw = Math.max(3, W*.009);
-    const pg = mk('g', {stroke:'#1d2b3a', 'stroke-width':sw, 'stroke-linecap':'round', fill:'none'}, root);
+    const pg = mk('g', {stroke:'#10100c', 'stroke-width':sw, 'stroke-linecap':'round', fill:'none'}, root);
     mk('path', {d:`M${px-W*.012} ${py} L${px} ${py-ph*.45} L${px+W*.012} ${py} M${px} ${py-ph*.45} L${px} ${py-ph*.85} M${px-W*.018} ${py-ph*.62} L${px} ${py-ph*.75} L${px+W*.02} ${py-ph*.86}`}, pg);
-    mk('circle', {cx:px, cy:py - ph, r:H*.016, fill:'#1d2b3a', stroke:'none'}, root); }
+    mk('circle', {cx:px, cy:py - ph, r:H*.016, fill:'#10100c', stroke:'none'}, root); }
   // boat
   E.boat = mk('g', {}, root);
   const bw = W*.13, bh = H*.045;
-  mk('path', {d:`M${-bw/2} ${-bh} L${bw/2} ${-bh} L${bw*.36} 0 L${-bw*.38} 0 Z`, fill:'#f5f5f0', stroke:'#1d2b3a', 'stroke-width':Math.max(1.5,W*.004)}, E.boat);
+  mk('path', {d:`M${-bw/2} ${-bh} L${bw/2} ${-bh} L${bw*.36} 0 L${-bw*.38} 0 Z`, fill:'#f5f5f0', stroke:'#10100c', 'stroke-width':Math.max(1.5,W*.004)}, E.boat);
   mk('rect', {x:-bw*.5, y:-bh*1.05, width:bw, height:bh*.25, fill:'#2a6fdb'}, E.boat);
-  mk('line', {x1:-bw*.05, y1:-bh, x2:-bw*.05, y2:-bh*4.2, stroke:'#1d2b3a', 'stroke-width':Math.max(1.5,W*.004)}, E.boat);
+  mk('line', {x1:-bw*.05, y1:-bh, x2:-bw*.05, y2:-bh*4.2, stroke:'#10100c', 'stroke-width':Math.max(1.5,W*.004)}, E.boat);
   mk('path', {d:`M${-bw*.02} ${-bh*4} L${bw*.32} ${-bh*1.3} L${-bw*.02} ${-bh*1.3} Z`, fill:'#ffd35a'}, E.boat);
   // water
   E.water = mk('path', {fill:'#1f6fb2', opacity:.92}, root);
   E.foam = mk('path', {fill:'none', stroke:'#e8f6ff', 'stroke-width':Math.max(2, H*.007), 'stroke-linecap':'round', 'stroke-linejoin':'round'}, root);
   // labels
   const fs = Math.max(13, f*1.05);
-  E.phase = mk('text', {x:W/2, y:H*.04 + fs, 'text-anchor':'middle', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs, fill:'#0f1c2b'}, root);
-  E.clock = mk('text', {x:W/2, y:H*.04 + fs*2.6, 'text-anchor':'middle', 'font-family':'var(--mono)', 'font-weight':700, 'font-size':Math.max(12, fs*.9), fill:'#c2362b'}, root);
+  E.phase = mk('text', {x:W/2, y:H*.04 + fs, 'text-anchor':'middle', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs, fill:'#10100c'}, root);
+  E.clock = mk('text', {x:W/2, y:H*.04 + fs*2.6, 'text-anchor':'middle', 'font-family':'var(--mono)', 'font-weight':700, 'font-size':Math.max(12, fs*.9), fill:'#10100c'}, root);
   draw();
 }
 

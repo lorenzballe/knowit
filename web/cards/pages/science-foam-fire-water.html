@@ -30,6 +30,7 @@
 const S = {0: 0, 1: 0};     // 0 untouched, 1 playing, 2 done
 let P = [], dims = null, ended = false;
 const svg = Kit.$('pic');
+const INK = '#10100c';
 
 function flamePath(cx, base, w, h) {
   return `M${cx - w / 2} ${base} Q${cx - w / 2} ${base - h * .45} ${cx - w * .1} ${base - h * .7} Q${cx} ${base - h * .85} ${cx} ${base - h} Q${cx + w * .15} ${base - h * .7} ${cx + w / 2} ${base - h * .4} Q${cx + w / 2} ${base - h * .1} ${cx + w / 2} ${base} Z`;
@@ -51,16 +52,12 @@ Kit.onShow.card = () => {
   [0, 1].forEach(side => {
     const x0 = side * (pw + gap), cx = x0 + pw / 2;
     const g = Kit.mk('g', {}, svg);
-    const cp = Kit.mk('clipPath', {id: 'cp' + side}, defs);
-    Kit.mk('rect', {x: x0, y: 0, width: pw, height: H, rx: fs * .9}, cp);
-    g.setAttribute('clip-path', `url(#cp${side})`);
-    Kit.mk('rect', {x: x0, y: 0, width: pw, height: H, fill: '#17110d'}, g);
-    Kit.mk('rect', {x: x0, y: base, width: pw, height: H - base, fill: 'url(#hot)'}, g);
+    Kit.mk('rect', {x: x0, y: base, width: pw, height: H - base, rx: fs * .5, fill: 'url(#hot)'}, g);
     for (let i = 0; i < 7; i++) Kit.mk('ellipse', {cx: x0 + pw * (.08 + i * .14), cy: base + (H - base) * .22, rx: pw * .07, ry: (H - base) * .07, fill: '#ffd36b', opacity: .55}, g);
-    const t = Kit.mk('text', {x: cx, y: fs * 1.7, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, g);
+    const t = Kit.mk('text', {x: cx, y: fs * 1.7, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, g);
     t.textContent = side ? 'WATER + SURFACTANT' : 'WATER ONLY';
     if (pw < fs * 11) t.setAttribute('font-size', Math.max(fs * .8, 12));
-    const hint = Kit.mk('text', {x: cx, y: fs * 3.3, 'text-anchor': 'middle', fill: '#ffb02e', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': Math.max(fs * .85, 12)}, g);
+    const hint = Kit.mk('text', {x: cx, y: fs * 3.3, 'text-anchor': 'middle', fill: '#8a2a00', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': Math.max(fs * .85, 12)}, g);
     hint.textContent = S[side] ? '' : 'tap to drop';
     const tt = Kit.mk('text', {x: cx, y: base + (H - base) * .72, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, g);
     tt.textContent = '1000°C+';
@@ -69,14 +66,14 @@ Kit.onShow.card = () => {
     const fh = H * .3;
     [[-.27, .7], [0, 1], [.27, .8]].forEach(([dx, k]) => {
       const fx = cx + dx * pw, w = pw * .28, h = fh * k;
-      const o = Kit.mk('path', {d: flamePath(fx, base, w, h), fill: '#ff5a1a'}, fg);
+      const o = Kit.mk('path', {d: flamePath(fx, base, w, h), fill: '#ff5a1a', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, fg);
       const i2 = Kit.mk('path', {d: flamePath(fx, base, w * .55, h * .6), fill: '#ffd34a'}, fg);
       fl.push(o, i2);
     });
     if (!Kit.calm) fl.forEach((p, i) => gsap.to(p, {scaleY: .82, scaleX: 1.06, transformOrigin: '50% 100%', duration: .25 + (i % 3) * .07, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: i * .05}));
     const foam = Kit.mk('g', {}, g);
-    const r1 = Kit.mk('text', {x: cx, y: H * .36, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, opacity: 0}, g);
-    const r2 = Kit.mk('text', {x: cx, y: H * .36 + fs * 1.45, 'text-anchor': 'middle', fill: side ? '#9fe3ff' : '#ff9a6b', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': Math.max(fs * .85, 12), opacity: 0}, g);
+    const r1 = Kit.mk('text', {x: cx, y: H * .36, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, opacity: 0}, g);
+    const r2 = Kit.mk('text', {x: cx, y: H * .36 + fs * 1.45, 'text-anchor': 'middle', fill: side ? '#05506e' : '#8a2a00', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': Math.max(fs * .85, 12), opacity: 0}, g);
     r1.textContent = side ? 'Foam clings' : 'Gone to steam';
     r2.textContent = side ? 'fire drops' : 'fire keeps going';
     P[side] = {x0, pw, cx, base, g, fg, foam, hint, r1, r2};
@@ -93,7 +90,7 @@ function drawFoam(side, anim) {
     const r = p.pw * (.07 + Kit.rnd() * .05);
     const x = p.x0 + p.pw * (i % 11 + .5) / 11;
     const y = p.base - r * (i < 11 ? .3 : 1.0);
-    const c = Kit.mk('circle', {cx: x, cy: anim ? fs * 4 : y, r, fill: i % 3 ? '#f4fbff' : '#d6eefa'}, p.foam);
+    const c = Kit.mk('circle', {cx: x, cy: anim ? fs * 4 : y, r, fill: i % 3 ? '#f4fbff' : '#d6eefa', stroke: INK, 'stroke-opacity': .45, 'stroke-width': 1.5}, p.foam);
     out.push([c, y]);
   }
   if (anim) out.forEach(([c, y], i) => gsap.to(c, {attr: {cy: y}, duration: Kit.calm ? .01 : .7, delay: Kit.calm ? 0 : i * .03, ease: 'bounce.out'}));
@@ -108,10 +105,10 @@ function drop(side) {
   if (!side) {
     for (let i = 0; i < 14; i++) {
       const x = p.x0 + p.pw * (.12 + Kit.rnd() * .76), stop = p.base - H * (.2 + Kit.rnd() * .1);
-      const d = Kit.mk('ellipse', {cx: x, cy: fs * 4, rx: fs * .3, ry: fs * .5, fill: '#5fb8ff'}, p.g);
+      const d = Kit.mk('ellipse', {cx: x, cy: fs * 4, rx: fs * .3, ry: fs * .5, fill: '#5fb8ff', stroke: INK, 'stroke-width': 1.5}, p.g);
       gsap.to(d, {attr: {cy: stop}, duration: calm ? .01 : .45, delay: calm ? 0 : i * .06, ease: 'power2.in', onComplete() {
         d.remove();
-        const s = Kit.mk('circle', {cx: x, cy: stop, r: fs * .4, fill: '#e8e8e8', opacity: .8}, p.g);
+        const s = Kit.mk('circle', {cx: x, cy: stop, r: fs * .4, fill: '#fff', stroke: INK, 'stroke-opacity': .5, 'stroke-width': 1.5, opacity: .8}, p.g);
         gsap.to(s, {attr: {cy: stop - H * .25, r: fs * 1.4}, opacity: 0, duration: calm ? .01 : 1.1, ease: 'power1.out', onComplete: () => s.remove()});
       }});
     }

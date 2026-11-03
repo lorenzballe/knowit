@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
 #sw{display:flex;gap:2cqw;margin-top:1.2cqh}
 .opt{flex:1;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
@@ -34,6 +34,7 @@
 const N = 46, R1 = [], R2 = [];
 for (let i = 0; i < N; i++) { R1.push(Kit.rnd()); R2.push(Kit.rnd()); }
 let mode = 0, done = false, puffs = [], P = null, labA, labB, tl = null;
+const INK = '#10100c';
 
 function geom(W, H) {
   const gy = H * 0.8, vx = W * 0.48, vy = gy - H * 0.085, topY = H * 0.2;
@@ -47,12 +48,12 @@ function geom(W, H) {
       cy = vy - s * (vy - topY - H * 0.04);
       cx = vx + (R1[i] - 0.5) * W * (0.03 + s * 0.09);
       r = W * (0.028 + s * 0.03);
-      fill = s < 0.22 ? '#f07a2a' : s < 0.45 ? '#b07a5c' : '#9a918b';
+      fill = s < 0.22 ? '#d94a12' : s < 0.45 ? '#8a4a2c' : '#5f5752';
     } else {
       const side = i % 2 ? 1 : -1;
       cx = vx + side * R1[i] * W * 0.3;
       cy = topY + (R2[i] - 0.5) * H * 0.06;
-      r = W * 0.05; fill = '#aaa29b';
+      r = W * 0.05; fill = '#6a615b';
     }
     A.push({cx, cy, r, fill});
     const side = i % 2 ? 1 : -1;
@@ -60,7 +61,7 @@ function geom(W, H) {
     const rb = W * (0.028 + R2[i] * 0.022);
     let bx = Math.min(W - rb * 0.6, Math.max(rb * 0.6, vx + side * d * W));
     const by = hill(bx) - rb * 0.45 - R2[i] * H * 0.035;
-    B.push({cx: bx, cy: by, r: rb, fill: R1[i] < 0.35 ? '#e0602a' : R1[i] < 0.6 ? '#9c4a2c' : '#5e4c44'});
+    B.push({cx: bx, cy: by, r: rb, fill: R1[i] < 0.35 ? '#d94a12' : R1[i] < 0.6 ? '#8a3a20' : '#4a3a34'});
   }
   return {gy, vx, vy, topY, A, B};
 }
@@ -80,7 +81,6 @@ Kit.onShow.card = () => {
   const defs = Kit.mk('defs', {}, svg);
   const flt = Kit.mk('filter', {id: 'soft', x: '-20%', y: '-20%', width: '140%', height: '140%'}, defs);
   Kit.mk('feGaussianBlur', {stdDeviation: Math.max(1.5, W * 0.006)}, flt);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: H * 0.03, fill: '#17151b'}, svg);
   Kit.mk('rect', {x: 0, y: g.gy, width: W, height: H - g.gy, fill: '#3a2d27'}, svg);
   Kit.mk('path', {d: `M${g.vx - W * 0.24},${g.gy} L${g.vx - W * 0.04},${g.vy} L${g.vx + W * 0.04},${g.vy} L${g.vx + W * 0.24},${g.gy} Z`, fill: '#4c3b33'}, svg);
   Kit.mk('ellipse', {cx: g.vx, cy: g.vy, rx: W * 0.045, ry: H * 0.012, fill: '#ff8a3a'}, svg);
@@ -89,10 +89,10 @@ Kit.onShow.card = () => {
   [[0.03, 0.16], [0.8, 0.95]].forEach(([a, b]) => {
     for (let x = W * a; x <= W * b; x += hw * 1.25) {
       const hh = hw * (0.8 + ((x * 7) % 5) / 10);
-      Kit.mk('rect', {x, y: g.gy - hh, width: hw, height: hh, fill: '#efe3d2'}, svg);
-      Kit.mk('path', {d: `M${x - 1},${g.gy - hh} L${x + hw / 2},${g.gy - hh - hw * 0.5} L${x + hw + 1},${g.gy - hh}Z`, fill: '#c9b8a2'}, svg);
+      Kit.mk('rect', {x, y: g.gy - hh, width: hw, height: hh, fill: '#4c3b33'}, svg);
+      Kit.mk('path', {d: `M${x - 1},${g.gy - hh} L${x + hw / 2},${g.gy - hh - hw * 0.5} L${x + hw + 1},${g.gy - hh}Z`, fill: INK}, svg);
     }
-    const t = Kit.mk('text', {x: W * (a + b) / 2 + hw / 2, y: g.gy + fs * 1.6, 'text-anchor': 'middle', fill: '#cdbfae', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 600}, svg);
+    const t = Kit.mk('text', {x: W * (a + b) / 2 + hw / 2, y: g.gy + fs * 1.6, 'text-anchor': 'middle', fill: '#e6d9c8', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 600}, svg);
     t.textContent = 'town';
   });
   // puffs
@@ -102,16 +102,16 @@ Kit.onShow.card = () => {
   // labels
   const txt = (parent, x, y, s, col, w = 700) => { const t = Kit.mk('text', {x, y, 'text-anchor': 'middle', fill: col, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': w}, parent); t.textContent = s; return t; };
   labA = Kit.mk('g', {opacity: mode ? 0 : 1}, svg);
-  txt(labA, W / 2, H * 0.06 + fs * 0.4, 'Hot and light:', '#ffd9b0');
-  txt(labA, W / 2, H * 0.06 + fs * 1.75, 'it rises', '#ffffff');
+  txt(labA, W / 2, H * 0.06 + fs * 0.4, 'Hot and light:', INK);
+  txt(labA, W / 2, H * 0.06 + fs * 1.75, 'it rises', INK);
   labB = Kit.mk('g', {opacity: mode ? 1 : 0}, svg);
-  txt(labB, W / 2, H * 0.06 + fs * 0.4, 'Cooler and heavier:', '#ffd9b0');
-  txt(labB, W / 2, H * 0.06 + fs * 1.75, 'it falls back down', '#ffffff');
+  txt(labB, W / 2, H * 0.06 + fs * 0.4, 'Cooler and heavier:', INK);
+  txt(labB, W / 2, H * 0.06 + fs * 1.75, 'it falls back down', INK);
   const ay = g.gy - H * 0.27;
-  Kit.mk('path', {d: `M${g.vx},${H * 0.06 + fs * 2.6} L${g.vx},${ay - fs * 2.2}`, stroke: '#ffd9b0', 'stroke-width': Math.max(2, fs * 0.15), fill: 'none'}, labB);
-  Kit.mk('path', {d: `M${g.vx - fs * 0.5},${ay - fs * 2.8} L${g.vx},${ay - fs * 2} L${g.vx + fs * 0.5},${ay - fs * 2.8}`, stroke: '#ffd9b0', 'stroke-width': Math.max(2, fs * 0.15), fill: 'none'}, labB);
-  txt(labB, W * 0.73, ay - fs * 0.2, 'hundreds of km/h →', '#ffffff', 800);
-  txt(labB, W * 0.73, ay + fs * 1.15, 'and searing hot', '#ff9a52', 700);
+  Kit.mk('path', {d: `M${g.vx},${H * 0.06 + fs * 2.6} L${g.vx},${ay - fs * 2.2}`, stroke: INK, 'stroke-width': Math.max(2, fs * 0.15), fill: 'none'}, labB);
+  Kit.mk('path', {d: `M${g.vx - fs * 0.5},${ay - fs * 2.8} L${g.vx},${ay - fs * 2} L${g.vx + fs * 0.5},${ay - fs * 2.8}`, stroke: INK, 'stroke-width': Math.max(2, fs * 0.15), fill: 'none'}, labB);
+  txt(labB, W * 0.73, ay - fs * 0.2, 'hundreds of km/h →', INK, 800);
+  txt(labB, W * 0.73, ay + fs * 1.15, 'and searing hot', '#8a1c00', 800);
 };
 
 function go(m) {

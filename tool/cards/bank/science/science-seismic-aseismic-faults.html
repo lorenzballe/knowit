@@ -28,7 +28,7 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RED = '#e0352b', BLUE = '#2a6de0', STEP = 1/3;
+const RED = '#c4231a', BLUE = '#1d4fc0', STEP = 1/3;
 const svg = Kit.$('pic');
 let t = 0, tT = 0, slipTarget = 0, quakes = 0, done = false, G = null, amp = 0, ph = 0, dragging = false;
 const S = {slipRed: 0};
@@ -54,7 +54,6 @@ function draw(){
   const blueY = a => 0.52 + (a - 0.70) * tb;
 
   // seismograph
-  mk('rect', {x: 0, y: 0, width: W, height: sh, rx: fs * .6, fill: 'color-mix(in srgb,var(--k) 7%,transparent)'});
   const sl = Math.max(12, fs * .85);
   txt(svg, fs * .7, fs * 1.25, 'SEISMOGRAPH', {size: sl, w: 800, fill: 'var(--muted)'});
   const count = txt(svg, W - fs * .7, fs * 1.25, '', {size: sl, w: 800, anchor: 'end', fill: RED});
@@ -64,7 +63,6 @@ function draw(){
 
   // crust
   const cg = mk('g', {});
-  mk('rect', {x: 0, y: ys, width: W, height: crustB - ys, fill: 'color-mix(in srgb,var(--k) 10%,transparent)'}, cg);
   mk('line', {x1: 0, x2: W, y1: ys, y2: ys, stroke: 'var(--k)', 'stroke-width': fs * .18}, cg);
 
   const R0 = P(0.18, 0), I = P(0.70, 0.52);

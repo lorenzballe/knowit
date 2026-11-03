@@ -58,10 +58,8 @@ function build() {
   const gy = H * .40, lx0 = W * .5, lx1 = W * .97, wb = gy + H * .06, sb = H * .97;
   const bh = (sb - wb) / 5;
   const g = {W, H, f, fs, gy, lx0, lx1, wb, sb, bh, dots: [], bands: [], blabels: []};
-  // earth below the ground
-  Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, style: st({fill: 'color-mix(in srgb,var(--k) 7%,transparent)'})}, svg);
-  // sediment column under the lake
-  Kit.mk('rect', {x: lx0, y: wb, width: lx1 - lx0, height: sb - wb, rx: 4, style: st({fill: 'color-mix(in srgb,var(--k) 10%,transparent)'})}, svg);
+  // sediment column edges under the lake (no filled panel)
+  Kit.mk('path', {d: `M${lx0},${wb} L${lx0},${sb} M${lx1},${wb} L${lx1},${sb}`, style: st({fill: 'none', stroke: ink, 'stroke-width': Math.max(1.5, f * .08), 'stroke-dasharray': `${f * .3} ${f * .3}`, opacity: .35})}, svg);
   for (let k = 0; k < 5; k++) {
     g.bands.push(Kit.mk('rect', {x: lx0, y: wb + k * bh, width: lx1 - lx0, height: bh, style: st({fill: `color-mix(in srgb,var(--k) ${k % 2 ? 14 : 28}%,transparent)`, opacity: 0})}, svg));
   }

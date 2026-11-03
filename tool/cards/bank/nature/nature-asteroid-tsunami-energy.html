@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
-#scene{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#0f1d33}
+#scene{position:relative;flex:1;min-height:0;overflow:hidden;background:none}
 #scene svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .sw{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:.5cqh;border-radius:999px;background:color-mix(in srgb,var(--k) 10%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
 .sw button{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:transparent;border:0;border-radius:999px;padding:1.3cqh 2cqw;cursor:pointer;transition:background .25s,color .25s}
@@ -52,29 +52,26 @@ function draw(){
   svg.innerHTML = '';
   const seaY = H*.5, bedY = H*.88;
   const defs = Kit.mk('defs', {}, svg);
-  const sky = Kit.mk('linearGradient', {id:'sky', x1:0, y1:0, x2:0, y2:1}, defs);
-  Kit.mk('stop', {offset:0, 'stop-color':'#0b1626'}, sky); Kit.mk('stop', {offset:1, 'stop-color':'#2b4f78'}, sky);
   const sea = Kit.mk('linearGradient', {id:'sea', x1:0, y1:0, x2:0, y2:1}, defs);
   Kit.mk('stop', {offset:0, 'stop-color':'#2a92cf'}, sea); Kit.mk('stop', {offset:1, 'stop-color':'#08294a'}, sea);
   const tr = Kit.mk('linearGradient', {id:'trail', x1:0, y1:0, x2:1, y2:1}, defs);
-  Kit.mk('stop', {offset:0, 'stop-color':'#ffd27a', 'stop-opacity':0}, tr); Kit.mk('stop', {offset:1, 'stop-color':'#ffb347', 'stop-opacity':1}, tr);
-  Kit.mk('rect', {x:0, y:0, width:W, height:H, fill:'url(#sky)'}, svg);
+  Kit.mk('stop', {offset:0, 'stop-color':'#e8590c', 'stop-opacity':0}, tr); Kit.mk('stop', {offset:1, 'stop-color':'#e8590c', 'stop-opacity':1}, tr);
   const ghost = Kit.mk('g', {}, svg);
-  const gLine = Kit.mk('line', {x1:0, x2:W, stroke:'#fff', 'stroke-opacity':.55, 'stroke-width':1.5, 'stroke-dasharray':'6 6'}, ghost);
-  const gText = Kit.mk('text', {x:W-10, 'text-anchor':'end', fill:'#fff', 'fill-opacity':.8, style:`font:600 ${Math.max(f*.8,12)}px var(--body)`}, ghost);
+  const gLine = Kit.mk('line', {x1:0, x2:W, stroke:'#10100c', 'stroke-opacity':.6, 'stroke-width':1.5, 'stroke-dasharray':'6 6'}, ghost);
+  const gText = Kit.mk('text', {x:W-10, 'text-anchor':'end', fill:'#10100c', 'fill-opacity':.85, style:`font:600 ${Math.max(f*.8,12)}px var(--body)`}, ghost);
   const water = Kit.mk('path', {fill:'url(#sea)'}, svg);
-  const surf = Kit.mk('path', {fill:'none', stroke:'#e6f6ff', 'stroke-width':2, 'stroke-linejoin':'round'}, svg);
+  const surf = Kit.mk('path', {fill:'none', stroke:'#10100c', 'stroke-width':2, 'stroke-linejoin':'round'}, svg);
   Kit.mk('path', {d:`M0 ${bedY} Q ${W*.5} ${bedY-H*.03} ${W} ${bedY+H*.01} L ${W} ${H} L 0 ${H} Z`, fill:'#3d3024'}, svg);
   Kit.mk('polygon', {points:`0,${H*.22} ${W*.06},${H*.22} ${W*.26},${bedY} 0,${bedY+H*.02}`, fill:'#6b5440', stroke:'#8a7058', 'stroke-width':1.5}, svg);
   const r = Math.max(W*.04, 9);
   const rock = Kit.mk('polygon', {points:`${-r},${-r*.6} ${-r*.2},${-r} ${r*.8},${-r*.7} ${r},${r*.3} ${r*.3},${r} ${-r*.9},${r*.7}`, fill:'#a88a6a', stroke:'#3a2c1f', 'stroke-width':1.5}, svg);
-  const drops = seeds.map(() => Kit.mk('circle', {r:Math.max(W*.008,2), fill:'#dff3ff'}, svg));
+  const drops = seeds.map(() => Kit.mk('circle', {r:Math.max(W*.008,2), fill:'#0b3a63'}, svg));
   const trail = Kit.mk('line', {stroke:'url(#trail)', 'stroke-width':Math.max(W*.03,8), 'stroke-linecap':'round'}, svg);
   const ar = Math.max(W*.03, 8);
-  const ast = Kit.mk('circle', {r:ar, fill:'#ffe0a0', stroke:'#ff8a3d', 'stroke-width':3}, svg);
+  const ast = Kit.mk('circle', {r:ar, fill:'#ffe0a0', stroke:'#b8420a', 'stroke-width':3}, svg);
   const flash = Kit.mk('circle', {fill:'#fff6d8'}, svg);
-  const title = Kit.mk('text', {x:12, y:12+f*1.3, fill:'#fff', style:`font:800 ${Math.max(f*1.3,16)}px var(--display)`}, svg);
-  const sub = Kit.mk('text', {x:12, y:12+f*1.3+Math.max(f*1.3,16)*1.1, fill:'#cfe3f5', style:`font:500 ${Math.max(f*.85,12)}px var(--body)`}, svg);
+  const title = Kit.mk('text', {x:12, y:12+f*1.3, fill:'#10100c', style:`font:800 ${Math.max(f*1.3,16)}px var(--display)`}, svg);
+  const sub = Kit.mk('text', {x:12, y:12+f*1.3+Math.max(f*1.3,16)*1.1, fill:'#10100c', style:`font:500 ${Math.max(f*.85,12)}px var(--body)`}, svg);
   G = {W, H, f, seaY, bedY, ghost, gLine, gText, water, surf, rock, drops, trail, ast, flash, title, sub};
   render();
 }

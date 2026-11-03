@@ -34,7 +34,7 @@
 <script>
 let mode = 0, t = 0, G = null, done = false, seenOn = false;
 const hist = [], N = 140, EMAX = 1.6, THR = 0.45;
-const RED = '#ff4d3d', GREEN = '#2fc46f';
+const RED = '#ffe066', GREEN = '#b6ffd0', DARK = '#7d0c06';
 let L = null; // laser point offset from eye centre (in units of drift amplitude)
 
 function draw() {
@@ -44,10 +44,7 @@ function draw() {
   const fs = Math.max(12, f * 0.78), pad = Math.max(8, W * 0.035);
   const h1 = H * 0.6, y2 = H * 0.63;
   const s = (tag, a, p) => Kit.mk(tag, a, p || svg);
-  // panels
-  s('rect', {x: 0, y: 0, width: W, height: h1, rx: fs * 0.9, style: 'fill:var(--k)'});
-  s('rect', {x: 0, y: y2, width: W, height: H - y2, rx: fs * 0.9, style: 'fill:var(--k)'});
-  const lab = (x, y, txt, anchor, col) => { const e = s('text', {x, y, 'text-anchor': anchor || 'start', style: `font:700 ${fs}px var(--mono);fill:${col || 'var(--c)'};letter-spacing:.04em`}); e.textContent = txt; return e; };
+  const lab = (x, y, txt, anchor, col) => { const e = s('text', {x, y, 'text-anchor': anchor || 'start', style: `font:700 ${fs}px var(--mono);fill:${col || 'var(--k)'};letter-spacing:.04em`}); e.textContent = txt; return e; };
   lab(pad, pad + fs, 'THE EYE');
   const status = lab(W - pad, pad + fs, '', 'end');
   // eye
@@ -67,8 +64,10 @@ function draw() {
   s('circle', {cx: 0, cy: 0, r: ir * 0.45, style: 'fill:#d9dcdc;opacity:.92'}, iris); // cloudy lens
   s('path', {d: almond, style: 'fill:none;stroke:var(--k);stroke-width:' + Math.max(2, fs * 0.15)});
   // laser
-  const beam = s('line', {style: `stroke:${RED};stroke-width:${Math.max(2, fs * .2)};opacity:.85`});
+  const beam0 = s('line', {style: `stroke:${DARK};stroke-width:${Math.max(2, fs * .2) + 3.5};opacity:.9;stroke-linecap:round`});
+  const beam = s('line', {style: `stroke:${RED};stroke-width:${Math.max(2, fs * .2)};opacity:.95`});
   const glow = s('circle', {r: ir * 0.32, style: `fill:${RED};opacity:.25`});
+  const ring0 = s('circle', {r: ir * 0.22, style: `fill:none;stroke:${DARK};stroke-width:${Math.max(2, fs * .16) + 3.5};opacity:.9`});
   const ring = s('circle', {r: ir * 0.22, style: `fill:none;stroke:${RED};stroke-width:${Math.max(2, fs * .16)}`});
   const head = s('rect', {width: fs * 2.6, height: fs * 0.9, rx: fs * 0.25, style: 'fill:#9aa3a8'});
   // chart
@@ -76,12 +75,12 @@ function draw() {
   const px0 = pad, px1 = W - pad, py1 = H - pad;
   const py0 = Math.min(y2 + pad + fs * 2, py1 - Math.max(4, fs * 0.5));
   const Y = e => py1 - Math.min(e, EMAX) / EMAX * (py1 - py0);
-  s('rect', {x: px0, y: Y(THR), width: Math.max(0, px1 - px0), height: Math.max(0, py1 - Y(THR)), style: `fill:${GREEN};opacity:.22`});
+  s('rect', {x: px0, y: Y(THR), width: Math.max(0, px1 - px0), height: Math.max(0, py1 - Y(THR)), style: `fill:${GREEN};opacity:.28`});
   s('line', {x1: px0, x2: px1, y1: Y(THR), y2: Y(THR), style: `stroke:${GREEN};stroke-width:2;stroke-dasharray:6 5`});
   lab(px1 - fs * .3, py1 - fs * .35, 'SAFE ZONE', 'end', GREEN);
   const line = s('polyline', {style: `fill:none;stroke-width:${Math.max(2.5, fs * .2)};stroke-linejoin:round;stroke-linecap:round`});
   const dot = s('circle', {r: Math.max(4, fs * .3)});
-  G = {W, H, fs, cx, cy, b, A: b * 0.38, ir, iris, beam, glow, ring, head, line, dot, status, px0, px1, Y, top};
+  G = {W, H, fs, cx, cy, b, A: b * 0.38, ir, iris, beam, beam0, glow, ring, ring0, head, line, dot, status, px0, px1, Y, top};
   if (!L) L = {x: 0, y: 0};
 }
 
@@ -98,11 +97,13 @@ function tick(time, dt) {
   const {cx, cy, A, fs} = G;
   G.iris.setAttribute('transform', `translate(${cx + dx * A * 1.6},${cy + dy * A * 1.6})`);
   const lx = cx + L.x * A * 1.6, ly = cy + L.y * A * 1.6;
-  G.ring.setAttribute('cx', lx); G.ring.setAttribute('cy', ly);
+  for (const r of [G.ring, G.ring0]) { r.setAttribute('cx', lx); r.setAttribute('cy', ly); }
   G.glow.setAttribute('cx', lx); G.glow.setAttribute('cy', ly);
   G.head.setAttribute('x', lx - fs * 1.3); G.head.setAttribute('y', G.top - fs * 0.4);
-  G.beam.setAttribute('x1', lx); G.beam.setAttribute('y1', G.top + fs * 0.5);
-  G.beam.setAttribute('x2', lx); G.beam.setAttribute('y2', ly);
+  for (const bm of [G.beam, G.beam0]) {
+    bm.setAttribute('x1', lx); bm.setAttribute('y1', G.top + fs * 0.5);
+    bm.setAttribute('x2', lx); bm.setAttribute('y2', ly);
+  }
   const ok = err < THR, col = ok ? GREEN : RED;
   G.status.textContent = ok ? '● IN SAFE LIMITS' : '● OFF TARGET';
   G.status.style.fill = col;

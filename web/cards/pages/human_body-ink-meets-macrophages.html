@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{flex:1;min-height:0;position:relative;display:block}
-#sk{display:block;width:100%;height:100%;touch-action:manipulation;cursor:crosshair;border-radius:2cqh}
+#sk{display:block;width:100%;height:100%;touch-action:manipulation;cursor:crosshair}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
 .say{overflow-wrap:anywhere}
@@ -24,7 +24,7 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const INK = ['#14151b', '#1f3a8f', '#9b1230'];
+const INK = ['#14151b', '#0f1b5c', '#4a0a1e'];
 const S = {
   mac: [0, 1, 2].map(i => ({x: (i + .5) / 3, y: null, st: 'idle', ph: i * 2, p: 0})),
   inks: [], done: 0,
@@ -72,24 +72,22 @@ Kit.onShow.card = () => {
   while (svg.firstChild) svg.removeChild(svg.firstChild);
   const fs = Math.max(12, f * .85), r = Math.max(18, Math.min(W / 9, H * .1));
   Object.assign(G, {W, H, fs, r, ep: H * .16});
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#f7d6c4'}, svg);
   S.fib.forEach(b => {
     let d = '';
     for (let k = 0; k <= 20; k++) { const x = W * k / 20; d += (k ? 'L' : 'M') + x.toFixed(1) + ' ' + (b.y * H + Math.sin(k / b.k + b.a) * H * .02).toFixed(1); }
-    Kit.mk('path', {d, fill: 'none', stroke: '#ebb59d', 'stroke-width': Math.max(1.5, H * .006), 'stroke-linecap': 'round'}, svg);
+    Kit.mk('path', {d, fill: 'none', stroke: 'rgba(255,255,255,.4)', 'stroke-width': Math.max(1.5, H * .006), 'stroke-linecap': 'round'}, svg);
   });
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: G.ep, fill: '#d99a74'}, svg);
-  Kit.mk('line', {x1: 0, y1: G.ep, x2: W, y2: G.ep, stroke: '#a8643f', 'stroke-width': 2}, svg);
+  Kit.mk('line', {x1: 0, y1: G.ep, x2: W, y2: G.ep, stroke: '#ffffff', 'stroke-width': 2}, svg);
   const tl = (x, y, s, w, fill) => { const t = Kit.mk('text', {x, y, fill, 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': w, 'letter-spacing': '.06em'}, svg); t.textContent = s; return t; };
-  tl(W * .03, G.ep / 2 + fs * .35, 'EPIDERMIS', 700, '#4a2412');
-  tl(W * .03, G.ep + fs * 1.5, 'DERMIS', 700, '#7a3d22');
+  tl(W * .03, G.ep / 2 + fs * .35, 'EPIDERMIS', 700, '#ffffff');
+  tl(W * .03, G.ep + fs * 1.5, 'DERMIS', 700, '#ffffff');
   G.inkLayer = Kit.mk('g', {}, svg);
   G.m = S.mac.map((m, i) => {
     if (m.y === null || m.st === 'idle') m.y = (H - r * 1.2 - fs * 3) / H;
     const g = Kit.mk('g', {}, svg);
-    const body = Kit.mk('path', {fill: 'rgba(120,196,168,.78)', stroke: '#2c7a5f', 'stroke-width': Math.max(2, r * .07)}, g);
-    const nuc = Kit.mk('ellipse', {rx: r * .32, ry: r * .24, fill: '#6b4fa0', opacity: .85}, g);
-    const mk2 = (w) => { const t = Kit.mk('text', {'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': w, fill: '#3b1d14'}, svg); return t; };
+    const body = Kit.mk('path', {fill: 'rgba(143,214,180,.92)', stroke: '#1d6b50', 'stroke-width': Math.max(2, r * .07)}, g);
+    const nuc = Kit.mk('ellipse', {rx: r * .32, ry: r * .24, fill: '#6b4fa0', opacity: .9}, g);
+    const mk2 = (w) => { const t = Kit.mk('text', {'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': w, fill: '#ffffff'}, svg); return t; };
     return {g, body, nuc, l1: mk2(500), l2: mk2(700)};
   });
   G.dotLayer = Kit.mk('g', {}, svg);
@@ -111,8 +109,8 @@ function tattoo(px, py) {
   const svg = Kit.$('sk');
   const nd = Kit.mk('g', {}, svg);
   Kit.mk('rect', {x: x - r * .14, y: -H - 10, width: r * .28, height: H * .6, rx: r * .1, fill: '#5b6470'}, nd);
-  Kit.mk('line', {x1: x, y1: -H * .4, x2: x, y2: y, stroke: '#c7ced6', 'stroke-width': Math.max(2, r * .08)}, nd);
-  Kit.mk('path', {d: `M${x - r * .05} ${y - r * .2}L${x} ${y}L${x + r * .05} ${y - r * .2}Z`, fill: '#c7ced6'}, nd);
+  Kit.mk('line', {x1: x, y1: -H * .4, x2: x, y2: y, stroke: '#e6eaef', 'stroke-width': Math.max(2, r * .08)}, nd);
+  Kit.mk('path', {d: `M${x - r * .05} ${y - r * .2}L${x} ${y}L${x + r * .05} ${y - r * .2}Z`, fill: '#e6eaef'}, nd);
   const st = {v: -y - 10};
   const setN = () => nd.setAttribute('transform', `translate(0 ${st.v})`); setN();
   const off = Array.from({length: 8}, (_, k) => { const a = k / 8 * 6.283 + Kit.rnd(), d = .2 + Kit.rnd() * .4; return [Math.cos(a) * d, Math.sin(a) * d]; });

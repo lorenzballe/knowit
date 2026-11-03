@@ -38,6 +38,7 @@
 <script>
 let T = 0.08, g = null, poured = false;
 const SLAG = '#5d4f45';
+const INK = '#10100c';
 const hex = c => [1,3,5].map(i => parseInt(c.slice(i, i+2), 16));
 const mix = (a, b, k) => { const A = hex(a), B = hex(b); return 'rgb(' + A.map((v, i) => Math.round(v + (B[i]-v)*k)).join(',') + ')'; };
 const S = t => 1 - Math.exp(-5*t);
@@ -47,12 +48,11 @@ Kit.onShow.card = () => {
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(f, 12), mk = Kit.mk;
   const pad = fs*0.8;
-  mk('rect', {x:0, y:0, width:W, height:H, rx:fs*0.9, fill:'#16120f'}, svg);
   const defs = mk('defs', {}, svg);
   const blur = mk('filter', {id:'bl', x:'-50%', y:'-50%', width:'200%', height:'200%'}, defs);
   mk('feGaussianBlur', {stdDeviation: fs*1.4}, blur);
 
-  const verdict = mk('text', {x:W/2, y:pad+fs, 'text-anchor':'middle', 'font-size':fs*1.05, 'font-weight':800, 'font-family':'var(--body)', fill:'#fff'}, svg);
+  const verdict = mk('text', {x:W/2, y:pad+fs, 'text-anchor':'middle', 'font-size':fs*1.05, 'font-weight':800, 'font-family':'var(--body)', fill:INK}, svg);
 
   const barH = fs*0.7, meterTop = H - pad - barH - fs*1.5;
   const top = pad + fs*2.2, bottom = meterTop - fs*0.6, RH = bottom - top;
@@ -60,7 +60,7 @@ Kit.onShow.card = () => {
   const cx = W/2, wt = Math.min(W*0.52, ch*1.15), wb = wt*0.6, w = wt*0.07;
 
   const halo = mk('ellipse', {cx, cy:top+ch*0.65, rx:wt*0.55, ry:ch*0.45, filter:'url(#bl)', opacity:.35}, svg);
-  mk('polygon', {points:`${cx-wt/2},${top} ${cx+wt/2},${top} ${cx+wb/2},${top+ch} ${cx-wb/2},${top+ch}`, fill:'#3a3532', stroke:'#8a817a', 'stroke-width':fs*0.12}, svg);
+  mk('polygon', {points:`${cx-wt/2},${top} ${cx+wt/2},${top} ${cx+wb/2},${top+ch} ${cx-wb/2},${top+ch}`, fill:'#3a3532', stroke:INK, 'stroke-width':fs*0.14}, svg);
   const inner = `${cx-wt/2+w},${top} ${cx+wt/2-w},${top} ${cx+wb/2-w*0.8},${top+ch-w} ${cx-wb/2+w*0.8},${top+ch-w}`;
   const cp = mk('clipPath', {id:'in'}, defs); mk('polygon', {points:inner}, cp);
   const grp = mk('g', {'clip-path':'url(#in)'}, svg);
@@ -79,26 +79,26 @@ Kit.onShow.card = () => {
     const y = ib - Kit.rnd()*poolMax*0.9;
     specks.push({el: mk('circle', {r:fs*0.13, cy:y, fill:'#e7eef2'}, grp), k:0.12 + 0.85*i/24, side: i%2 ? 1 : -1, y, j:Kit.rnd()});
   }
-  mk('rect', {x:cx-wb*0.08, y:top+ch-fs*0.15, width:wb*0.16, height:fs*0.3, fill:'#0c0a09'}, svg);
+  mk('rect', {x:cx-wb*0.08, y:top+ch-fs*0.15, width:wb*0.16, height:fs*0.3, fill:INK}, svg);
   const stream = mk('rect', {x:cx-fs*0.25, y:top+ch, width:fs*0.5, height:0, rx:fs*0.2}, svg);
-  mk('rect', {x:cx-wt*0.35, y:moldTop, width:wt*0.7, height:mh, rx:fs*0.2, fill:'#2a2522', stroke:'#8a817a', 'stroke-width':fs*0.1}, svg);
+  mk('rect', {x:cx-wt*0.35, y:moldTop, width:wt*0.7, height:mh, rx:fs*0.2, fill:'#2a2522', stroke:INK, 'stroke-width':fs*0.12}, svg);
   const moldFill = mk('rect', {x:cx-wt*0.35+fs*0.15, width:wt*0.7-fs*0.3, y:moldTop+mh-fs*0.15, height:0}, svg);
 
   // timer ring
   const side = cx - wt/2, r = Math.min(side*0.32, ch*0.2), rx = side/2, ry = top + ch*0.4;
   let ring = null;
   if (r > fs*0.9) {
-    mk('circle', {cx:rx, cy:ry, r, fill:'none', stroke:'#3d3734', 'stroke-width':fs*0.35}, svg);
-    ring = {arc: mk('path', {fill:'none', stroke:'#ffb347', 'stroke-width':fs*0.35, 'stroke-linecap':'round'}, svg),
-            hand: mk('line', {x1:rx, y1:ry, stroke:'#fff', 'stroke-width':fs*0.12, 'stroke-linecap':'round'}, svg), rx, ry, r};
-    mk('text', {x:rx, y:ry + r + fs*1.4, 'text-anchor':'middle', 'font-size':fs*0.85, 'font-weight':700, 'font-family':'var(--body)', fill:'#cfc6bf'}, svg).textContent = 'tap time';
+    mk('circle', {cx:rx, cy:ry, r, fill:'none', stroke:'rgba(16,16,12,.2)', 'stroke-width':fs*0.35}, svg);
+    ring = {arc: mk('path', {fill:'none', stroke:'#d9480f', 'stroke-width':fs*0.35, 'stroke-linecap':'round'}, svg),
+            hand: mk('line', {x1:rx, y1:ry, stroke:INK, 'stroke-width':fs*0.12, 'stroke-linecap':'round'}, svg), rx, ry, r};
+    mk('text', {x:rx, y:ry + r + fs*1.4, 'text-anchor':'middle', 'font-size':fs*0.85, 'font-weight':700, 'font-family':'var(--body)', fill:INK}, svg).textContent = 'tap time';
   }
 
   const bw = (W - 3*pad)/2, meters = [];
   ['Free of slag', 'Hot & silica-free'].forEach((lab, i) => {
     const x = pad + i*(bw + pad);
-    mk('text', {x, y:meterTop+fs, 'font-size':fs*0.9, 'font-weight':700, 'font-family':'var(--body)', fill:'#e8e1db'}, svg).textContent = lab;
-    mk('rect', {x, y:meterTop+fs*1.5, width:bw, height:barH, rx:barH/2, fill:'#332d29'}, svg);
+    mk('text', {x, y:meterTop+fs, 'font-size':fs*0.9, 'font-weight':700, 'font-family':'var(--body)', fill:INK}, svg).textContent = lab;
+    mk('rect', {x, y:meterTop+fs*1.5, width:bw, height:barH, rx:barH/2, fill:'rgba(16,16,12,.2)'}, svg);
     meters.push({el: mk('rect', {x, y:meterTop+fs*1.5, height:barH, rx:barH/2}, svg), bw});
   });
 
@@ -136,16 +136,13 @@ function render() {
   }
   [s, p].forEach((v, i) => {
     const m = g.meters[i]; m.el.setAttribute('width', Math.max(m.bw*0.04, m.bw*v));
-    m.el.setAttribute('fill', v >= (i ? 0.6 : 0.7) ? '#7ee081' : '#ff7a59');
+    m.el.setAttribute('fill', v >= (i ? 0.6 : 0.7) ? '#0b6b3a' : '#d9480f');
   });
   let txt, col;
-  if (s < 0.7) { txt = poured ? 'Too early: slag in the metal' : 'Metal still mixed with slag'; col = '#ff9a7a'; }
-  else if (p < 0.6) { txt = poured ? 'Too late: colder, more silica' : 'Cooling, eating the walls'; col = '#ffc46b'; }
-  else { txt = poured ? 'Good tap: clean and hot' : 'Separated, still hot'; col = '#9ef0a0'; }
+  if (s < 0.7) { txt = poured ? 'Too early: slag in the metal' : 'Metal still mixed with slag'; col = '#a3200f'; }
+  else if (p < 0.6) { txt = poured ? 'Too late: colder, more silica' : 'Cooling, eating the walls'; col = '#7a3d00'; }
+  else { txt = poured ? 'Good tap: clean and hot' : 'Separated, still hot'; col = '#064d28'; }
   g.verdict.textContent = txt; g.verdict.setAttribute('fill', col);
-  const sc = mix('#5d4f45', '#fff6c2', 0) ; // slag tone
-  const streamCol = s < 0.7 ? `url(#none)` : null;
-  const sm = mix(SLAG, '#000000', 0);
   const blend = (() => { const k = Math.max(0, (p-0.15)/0.85); const hot = hex('#fff6c2'), cold = hex('#d9480f'), sl = hex(SLAG);
     const mc = cold.map((v, i) => v + (hot[i]-v)*k); return 'rgb(' + mc.map((v, i) => Math.round(v + (sl[i]-v)*(1-s)*0.8)).join(',') + ')'; })();
   g.stream.setAttribute('fill', blend); g.moldFill.setAttribute('fill', blend);

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A fire-safety card asks how long a flashover takes to make a whole room ignite. Three options are about 10 seconds, 2 minutes and 10 minutes, plus a fourth, as little as ten seconds. The reader guesses, then watches a clock.",
-    "ground": "#1d2230"
+    "label": "A fire-safety card asks how long a flashover takes to make a whole room ignite. Three options are about 10 seconds, 2 minutes and 10 minutes, plus a fourth, as little as ten seconds. The reader guesses, then watches a clock."
   },
   "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=ErPrRuFkc6s&t=275s",

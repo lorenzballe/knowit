@@ -111,19 +111,15 @@ Kit.onShow.card = () => {
   const d = smooth(pts);
   const fs = Math.max(f*.85, 12);
   const defs = Kit.mk('defs', {}, svg);
-  const lg = Kit.mk('linearGradient', {id:'land', x1:0, y1:0, x2:1, y2:1}, defs);
-  Kit.mk('stop', {offset:0, 'stop-color':'#d9b57c'}, lg); Kit.mk('stop', {offset:1, 'stop-color':'#9c6f3e'}, lg);
   const sg = Kit.mk('linearGradient', {id:'sea', x1:0, y1:0, x2:1, y2:1}, defs);
   Kit.mk('stop', {offset:0, 'stop-color':'#1f6aa5'}, sg); Kit.mk('stop', {offset:1, 'stop-color':'#0c3561'}, sg);
   const cp = Kit.mk('clipPath', {id:'seaClip'}, defs); Kit.mk('path', {d}, cp);
-  const fr = Kit.mk('clipPath', {id:'frame'}, defs); Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:f*.8}, fr);
   const fl = Kit.mk('filter', {id:'soft', x:'-50%', y:'-50%', width:'200%', height:'200%'}, defs);
   Kit.mk('feGaussianBlur', {stdDeviation:s*.006}, fl);
 
-  const root = Kit.mk('g', {'clip-path':'url(#frame)'}, svg);
-  Kit.mk('rect', {x:0, y:0, width:W, height:H, fill:'url(#land)'}, root);
-  for (let i = 0; i < 26; i++) Kit.mk('ellipse', {cx:Kit.rnd()*W, cy:Kit.rnd()*H, rx:s*(.03+Kit.rnd()*.08), ry:s*(.015+Kit.rnd()*.04), fill:'#7a5430', opacity:.12+Kit.rnd()*.12}, root);
-  const sea = Kit.mk('path', {d, fill:'url(#sea)', stroke:'rgba(255,255,255,.35)', 'stroke-width':Math.max(1, s*.004)}, root);
+  const root = Kit.mk('g', {}, svg);
+  for (let i = 0; i < 26; i++) Kit.mk('ellipse', {cx:Kit.rnd()*W, cy:Kit.rnd()*H, rx:s*(.03+Kit.rnd()*.08), ry:s*(.015+Kit.rnd()*.04), fill:'#10100c', opacity:.05+Kit.rnd()*.07}, root);
+  const sea = Kit.mk('path', {d, fill:'url(#sea)', stroke:'rgba(16,16,12,.55)', 'stroke-width':Math.max(1, s*.004)}, root);
   const clipG = Kit.mk('g', {'clip-path':'url(#seaClip)'}, root);
   const tintEl = Kit.mk('path', {d, fill:'#ff5c8a', 'fill-opacity':tint}, clipG);
   const layer = Kit.mk('g', {filter:'url(#soft)'}, clipG);
@@ -132,9 +128,9 @@ Kit.onShow.card = () => {
   G = {svg, sea, tintEl, layer, bw, bh, ox, oy, s, ang};
 
   const txt = (x, y, t, a, extra={}) => { const e = Kit.mk('text', Object.assign({x, y, 'text-anchor':a, fill:'#fff', 'font-family':'var(--mono)', 'font-size':fs, 'font-weight':700, 'letter-spacing':'.06em'}, extra), root); e.textContent = t; return e; };
-  txt(ox+.12*bw, oy+.66*bh, 'AFRICA', 'middle', {fill:'rgba(60,35,10,.7)'});
-  txt(ox+.80*bw, oy+.40*bh, 'ARABIA', 'middle', {fill:'rgba(60,35,10,.7)'});
-  txt(f*.7, H-f*.8, 'SATELLITE VIEW', 'start', {fill:'rgba(255,255,255,.85)', 'font-size':Math.max(fs*.85,12)});
+  txt(ox+.12*bw, oy+.66*bh, 'AFRICA', 'middle', {fill:'rgba(16,16,12,.8)'});
+  txt(ox+.80*bw, oy+.40*bh, 'ARABIA', 'middle', {fill:'rgba(16,16,12,.8)'});
+  txt(f*.7, H-f*.8, 'SATELLITE VIEW', 'start', {fill:'#10100c', 'font-size':Math.max(fs*.85,12)});
   const cbg = Kit.mk('rect', {x:W-fs*8.2-f*.6, y:f*.6, width:fs*8.2, height:fs*1.8, rx:fs*.9, fill:'rgba(10,30,55,.75)'}, root);
   G.count = txt(W-f*.6-fs*4.1, f*.6+fs*1.25, '', 'middle');
 

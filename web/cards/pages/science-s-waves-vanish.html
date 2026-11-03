@@ -24,8 +24,8 @@
     <div class="stagebox" id="stage">
       <div id="box"><svg id="pic"></svg></div>
       <div id="ctl">
-        <button class="opt" data-c="0"><i style="background:#3fd6c6"></i>Send S-wave</button>
-        <button class="opt" data-c="1"><i style="background:#ffd166"></i>Send P-wave</button>
+        <button class="opt" data-c="0"><i style="background:#0b57d0"></i>Send S-wave</button>
+        <button class="opt" data-c="1"><i style="background:#6a1bd1"></i>Send P-wave</button>
       </div>
       <div id="why" class="gone"><p class="big">Below 2,900 km, it's liquid.</p><p class="body">S-waves can't travel through liquids. Since they vanish at 2,900 km, a liquid layer must begin there: the outer core. That liquid is also why P-waves suddenly slow down.</p></div>
     </div>
@@ -37,7 +37,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const svg = Kit.$('pic');
-const COL = ['#3fd6c6', '#ffd166'];
+const COL = ['#0b57d0', '#6a1bd1'];
 const st = [{front:-1, amp:1, run:false, done:false, tw:null}, {front:-1, amp:1, run:false, done:false, tw:null}];
 let G = null, revealed = false;
 
@@ -61,24 +61,13 @@ function build(){
   const cx = [ax + (W - ax) * .27, ax + (W - ax) * .76];
   G = {W, H, f, y0, bot, yB, cx, L: (yB - y0) * .22, dots: [[], []]};
   G.lam = G.L / 1.5;
-  const defs = Kit.mk('defs', {}, svg);
-  const lg = Kit.mk('linearGradient', {id:'liq', x1:0, y1:0, x2:0, y2:1}, defs);
-  Kit.mk('stop', {offset:0, 'stop-color':'#f08a3c'}, lg);
-  Kit.mk('stop', {offset:1, 'stop-color':'#ffb347'}, lg);
-  const mg = Kit.mk('linearGradient', {id:'man', x1:0, y1:0, x2:0, y2:1}, defs);
-  Kit.mk('stop', {offset:0, 'stop-color':'#4a2e22'}, mg);
-  Kit.mk('stop', {offset:1, 'stop-color':'#6b3b22'}, mg);
-  const cp = Kit.mk('clipPath', {id:'clip'}, defs);
-  Kit.mk('rect', {x:0, y:y0, width:W, height:bot - y0, rx:f*.8}, cp);
-  const body = Kit.mk('g', {'clip-path':'url(#clip)'}, svg);
-  Kit.mk('rect', {x:0, y:y0, width:W, height:yB - y0, fill:'url(#man)'}, body);
-  G.core = Kit.mk('rect', {x:0, y:yB, width:W, height:bot - yB, fill:'url(#liq)'}, body);
-  Kit.mk('line', {x1:ax*.15, x2:W, y1:yB, y2:yB, stroke:'#fff7ec', 'stroke-width':Math.max(1.5, f*.12), 'stroke-dasharray':`${f*.5} ${f*.35}`}, svg);
+  const body = Kit.mk('g', {}, svg);
+  Kit.mk('line', {x1:ax*.15, x2:W, y1:yB, y2:yB, stroke:'#10100c', 'stroke-width':Math.max(1.5, f*.12), 'stroke-dasharray':`${f*.5} ${f*.35}`}, svg);
   // axis labels
-  txt('0 km', {x:f*.6, y:y0 + f*1.4, fill:'#fbe9d7', style:`font:700 ${f*.9}px var(--mono)`}, svg);
-  txt('MANTLE', {x:f*.6, y:(y0 + yB)/2 + f*.35, fill:'#fbe9d7', opacity:.75, style:`font:800 ${Math.max(12, f*.8)}px var(--body);letter-spacing:.08em`}, svg);
-  txt('2,900 km', {x:f*.6, y:yB - f*.5, fill:'#fff', style:`font:800 ${f*.9}px var(--mono)`}, svg);
-  G.coreLab = txt(revealed ? 'LIQUID' : '?', {x:f*.6, y:(yB + bot)/2 + f*.35, fill:'#3a1405', style:`font:900 ${revealed ? Math.max(12, f*.85) : f*1.6}px var(--body);letter-spacing:.06em`}, svg);
+  txt('0 km', {x:f*.6, y:y0 + f*1.4, fill:'#10100c', style:`font:700 ${f*.9}px var(--mono)`}, svg);
+  txt('MANTLE', {x:f*.6, y:(y0 + yB)/2 + f*.35, fill:'#10100c', opacity:.75, style:`font:800 ${Math.max(12, f*.8)}px var(--body);letter-spacing:.08em`}, svg);
+  txt('2,900 km', {x:f*.6, y:yB - f*.5, fill:'#10100c', style:`font:800 ${f*.9}px var(--mono)`}, svg);
+  G.coreLab = txt(revealed ? 'LIQUID' : '?', {x:f*.6, y:(yB + bot)/2 + f*.35, fill:'#7a2a08', style:`font:900 ${revealed ? Math.max(12, f*.85) : f*1.6}px var(--body);letter-spacing:.06em`}, svg);
   // titles + quake mark
   ['S-waves', 'P-waves'].forEach((s, c) => {
     txt(s, {x:cx[c], y:f*1.3, 'text-anchor':'middle', style:`font:800 ${f*1.05}px var(--display);fill:var(--k)`}, svg);
@@ -90,8 +79,8 @@ function build(){
   G.r = r;
   for (let c = 0; c < 2; c++) for (let y = y0 + sp*.7; y < bot - sp*.3; y += sp) for (let i = 0; i < across; i++) {
     const bx = cx[c] + (i - (across - 1)/2) * gap, liquid = y > yB;
-    const base = liquid ? '#5a2208' : '#f3dcc4';
-    const el = Kit.mk('circle', {cx:bx, cy:y, r, fill:base, opacity:liquid ? .55 : .6}, body);
+    const base = liquid ? '#a8400d' : '#10100c';
+    const el = Kit.mk('circle', {cx:bx, cy:y, r, fill:base, opacity:liquid ? .8 : .6}, body);
     G.dots[c].push({el, bx, by:y, base, liquid});
   }
   G.ring = [0, 1].map(c => Kit.mk('circle', {cx:cx[c], cy:y0, r:0, fill:'none', stroke:COL[c], 'stroke-width':2, opacity:0}, svg));
@@ -115,7 +104,7 @@ function render(c){
     if (c === 0) d.el.setAttribute('cx', d.bx + off); else d.el.setAttribute('cy', d.by + off);
     const hot = Math.abs(off) > A * .12;
     d.el.setAttribute('fill', hot ? COL[c] : d.base);
-    d.el.setAttribute('opacity', hot ? 1 : (d.liquid ? .55 : .6));
+    d.el.setAttribute('opacity', hot ? 1 : (d.liquid ? .8 : .6));
   }
 }
 

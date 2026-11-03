@@ -56,17 +56,17 @@ function scene(x,k,side,r,s,al){
   if(k===0){
     const base=r.y+r.h*.8, hw=r.w*.42, hh=r.h*.5, wood=side==='wood';
     const top=u=>base-hh*Math.pow(Math.max(0,1-u*u),wood?1.6:1.1)*(wood?1:(1+.07*Math.sin(u*9)));
-    x.fillStyle='rgba(0,0,0,.4)'; x.beginPath(); x.ellipse(cx,base,hw*1.05,r.h*.04,0,0,6.283); x.fill();
+    x.fillStyle='rgba(90,0,20,.35)'; x.beginPath(); x.ellipse(cx,base,hw*1.05,r.h*.04,0,0,6.283); x.fill();
     x.beginPath(); x.moveTo(cx-hw,base); for(let i=0;i<=48;i++){const u=-1+2*i/48; x.lineTo(cx+u*hw,top(u));} x.closePath();
     x.fillStyle=wood?'#efece6':'#8e887f'; x.fill(); x.save(); x.clip();
     for(const p of d.s0){x.fillStyle=p.c; x.beginPath(); x.arc(cx+p.u*hw,base-p.v*hh,p.r*m,0,6.283); x.fill();}
     x.restore();
   } else if(k===1){
     if(side==='wood'){ for(const p of d.s1){x.fillStyle=`rgba(242,238,230,${p.a})`; x.beginPath(); x.arc(r.x+p.u*r.w,r.y+p.v*r.h,p.r*m,0,6.283); x.fill();} }
-    else { x.fillStyle='#5d5852'; x.fillRect(r.x,r.y,r.w,r.h); for(const p of d.s1){x.fillStyle=p.c; blob(x,r.x+p.u*r.w,r.y+p.v*r.h,p.r*m,p.p,0); x.fill();} }
+    else { for(const p of d.s1){x.fillStyle=p.c; blob(x,r.x+p.u*r.w,r.y+p.v*r.h,p.r*m,p.p,0); x.fill();} }
   } else {
     if(side==='wood'){ for(const p of d.s2){const dx=Math.sin(T*.6+p.ph)*.012*m, dy=Math.cos(T*.5+p.ph)*.012*m; x.fillStyle=`rgba(246,243,236,${p.a})`; blob(x,r.x+p.u*r.w+dx,r.y+p.v*r.h+dy,p.r*m,p.p,p.rot+T*.2); x.fill();} }
-    else { x.fillStyle='#655f58'; x.fillRect(r.x,r.y,r.w,r.h); x.strokeStyle='rgba(0,0,0,.3)'; x.lineWidth=Math.max(1,m*.006);
+    else { x.strokeStyle='rgba(60,0,15,.35)'; x.lineWidth=Math.max(1,m*.006);
       for(const p of d.s2){const X=r.x+p.u*r.w, Y=r.y+p.v*r.h; x.fillStyle=p.c; blob(x,X,Y,p.r*m,p.p,p.rot); x.fill(); x.stroke();
         x.fillStyle='rgba(255,255,255,.12)'; x.beginPath(); x.arc(X-p.r*m*.3,Y-p.r*m*.3,p.r*m*.3,0,6.283); x.fill();} }
   }
@@ -81,7 +81,7 @@ function draw(){
     const r={x:i*(pw+pad),y:top,w:pw,h:ph};
     x.fillStyle=ink; x.textAlign='center'; x.textBaseline='middle';
     x.font=`800 ${fs}px ${font}`; x.fillText(side==='wood'?'WOOD ASH':'BONE POWDER',r.x+pw/2,lh*.6);
-    x.save(); x.beginPath(); x.roundRect(r.x,r.y,r.w,r.h,Math.min(18,pw*.06)); x.fillStyle='#1f1c19'; x.fill(); x.clip();
+    x.save(); x.beginPath(); x.rect(r.x,r.y,r.w,r.h); x.clip();
     const z=st.z, k=Math.min(1,Math.floor(z)), f=z-k;
     if(z>=2) scene(x,2,side,r,1,1);
     else { scene(x,k,side,r,1+3*f,1-f); if(f>0) scene(x,k+1,side,r,.4+.6*f,f); }

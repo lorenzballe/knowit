@@ -47,8 +47,9 @@ function draw(){
   sub = Kit.mk('text', {x: W/2, y: bf * 1.05 + sf * 1.6, 'text-anchor': 'middle', style: `font:600 ${sf}px var(--body);fill:var(--k);opacity:.75`}, svg);
   const top = bf * 1.05 + sf * 2.6, legH = sf * 2.2, bottom = H - legH;
   const gx = 2, gw = W - 4, gh = Math.max(bottom - top, 40);
-  water = Kit.mk('rect', {x: gx, y: top, width: gw, height: gh, rx: Math.min(18, gh/8), style: 'fill:color-mix(in srgb,var(--k) 8%,transparent);stroke:color-mix(in srgb,var(--k) 25%,transparent);stroke-width:1.5'}, svg);
-  // Grid that fits 1000 slots inside the water.
+  // Invisible area holder (no box): the ships sit directly on the card.
+  water = Kit.mk('rect', {x: gx, y: top, width: gw, height: gh, style: 'fill:none;stroke:none'}, svg);
+  // Grid that fits 1000 slots inside the area.
   const pad = 6, w = gw - pad*2, h = gh - pad*2;
   let cell = Math.sqrt(w * h / N);
   while (cell > 1 && Math.floor(w / cell) * Math.floor(h / cell) < N) cell *= 0.98;

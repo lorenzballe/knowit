@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#wrap{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#wrap{flex:1;min-height:0;position:relative}
 #cv{width:100%;height:100%;display:block;touch-action:none}
 .meters{display:grid;grid-template-columns:1fr 1fr;gap:4cqw}
 .m{display:flex;flex-direction:column;gap:.6cqh;min-width:0}
@@ -82,14 +82,16 @@ rng.addEventListener('input', () => { Kit.haptic('selection'); setAlt(+rng.value
 
 function drawPlane(x, y, s) {
   ctx.save(); ctx.translate(x, y);
-  if (flash > 0) { ctx.shadowColor = '#ffb020'; ctx.shadowBlur = 18 * flash; }
+  if (flash > 0) { ctx.shadowColor = '#c2410c'; ctx.shadowBlur = 18 * flash; }
   ctx.fillStyle = flash > 0.3 ? '#fff3c4' : '#ffffff';
+  ctx.strokeStyle = '#10100c'; ctx.lineWidth = Math.max(1.2, s * 0.04); ctx.lineJoin = 'round';
   ctx.beginPath(); // fuselage
-  ctx.ellipse(0, 0, s, s * 0.16, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.ellipse(0, 0, s, s * 0.16, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
   ctx.beginPath(); // wing
-  ctx.moveTo(-s * 0.15, 0); ctx.lineTo(s * 0.2, 0); ctx.lineTo(-s * 0.35, s * 0.7); ctx.lineTo(-s * 0.55, s * 0.7); ctx.closePath(); ctx.fill();
+  ctx.moveTo(-s * 0.15, 0); ctx.lineTo(s * 0.2, 0); ctx.lineTo(-s * 0.35, s * 0.7); ctx.lineTo(-s * 0.55, s * 0.7); ctx.closePath(); ctx.fill(); ctx.stroke();
   ctx.beginPath(); // tail
-  ctx.moveTo(-s * 0.75, 0); ctx.lineTo(-s * 0.95, -s * 0.45); ctx.lineTo(-s * 1.0, -s * 0.45); ctx.lineTo(-s * 0.95, 0); ctx.closePath(); ctx.fill();
+  ctx.moveTo(-s * 0.75, 0); ctx.lineTo(-s * 0.95, -s * 0.45); ctx.lineTo(-s * 1.0, -s * 0.45); ctx.lineTo(-s * 0.95, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.shadowBlur = 0;
   ctx.fillStyle = '#2b4a8a';
   for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.arc(s * 0.5 - i * s * 0.22, -s * 0.03, s * 0.04, 0, 7); ctx.fill(); }
   ctx.restore();
@@ -98,16 +100,13 @@ function drawPlane(x, y, s) {
 function draw(dt) {
   if (!ctx) return;
   const gy = groundY();
-  const g = ctx.createLinearGradient(0, 0, 0, gy);
-  g.addColorStop(0, '#04051a'); g.addColorStop(0.22, '#141f5a');
-  g.addColorStop(0.55, '#3a73c4'); g.addColorStop(1, '#bfe3ff');
-  ctx.fillStyle = g; ctx.fillRect(0, 0, W, gy);
-  ctx.fillStyle = '#fff';
-  for (const s of stars) { ctx.globalAlpha = .7; ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, 7); ctx.fill(); }
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#10100c';
+  for (const s of stars) { ctx.globalAlpha = .45; ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, 7); ctx.fill(); }
   ctx.globalAlpha = 1;
   // ground
-  ctx.fillStyle = '#3f6e3a'; ctx.fillRect(0, gy, W, H - gy);
-  ctx.fillStyle = '#2f5a2c'; ctx.fillRect(0, gy, W, Math.max(2, H * 0.008));
+  ctx.fillStyle = '#2f5a2c'; ctx.fillRect(0, gy, W, H - gy);
+  ctx.fillStyle = '#10100c'; ctx.fillRect(0, gy, W, Math.max(2, H * 0.008));
 
   // particles
   const n = Math.min(6, Math.random() < (Kit.calm ? 0.5 : 1) ? Math.round(dt * 70 + Math.random() * 0.5) : 0);
@@ -124,14 +123,14 @@ function draw(dt) {
     if (p.h <= p.stopH || p.h <= 0) { pops.push({x, y: Math.min(y, gy), a: 1}); parts.splice(i, 1); continue; }
     const tail = ps * 0.35;
     const grd = ctx.createLinearGradient(x, y - tail, x, y);
-    grd.addColorStop(0, 'rgba(255,216,74,0)'); grd.addColorStop(1, 'rgba(255,216,74,1)');
+    grd.addColorStop(0, 'rgba(194,65,12,0)'); grd.addColorStop(1, 'rgba(194,65,12,1)');
     ctx.strokeStyle = grd;
     ctx.beginPath(); ctx.moveTo(x - p.vx * W * 0.4, y - tail); ctx.lineTo(x, y); ctx.stroke();
   }
   for (let i = pops.length - 1; i >= 0; i--) {
     const q = pops[i]; q.a -= dt * 2.2;
     if (q.a <= 0) { pops.splice(i, 1); continue; }
-    ctx.globalAlpha = q.a; ctx.fillStyle = q.hit ? '#ff8a3d' : 'rgba(255,255,255,.8)';
+    ctx.globalAlpha = q.a; ctx.fillStyle = q.hit ? '#c2410c' : 'rgba(16,16,12,.7)';
     ctx.beginPath(); ctx.arc(q.x, q.y, (1 - q.a) * ps * 0.18 + 1.5, 0, 7); ctx.fill();
   }
   ctx.globalAlpha = 1;
@@ -141,10 +140,10 @@ function draw(dt) {
   // labels (left side, far apart)
   ctx.textBaseline = 'top';
   ctx.font = `800 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
-  ctx.fillStyle = '#ffffff'; ctx.fillText('OUTER SPACE', W * 0.04, H * 0.03);
+  ctx.fillStyle = '#10100c'; ctx.fillText('OUTER SPACE', W * 0.04, H * 0.03);
   ctx.font = `600 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
-  ctx.fillStyle = '#ffd84a'; ctx.fillText('cosmic radiation', W * 0.04, H * 0.03 + f * 1.45);
-  ctx.fillStyle = '#0d2347'; ctx.font = `800 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  ctx.fillStyle = '#a83a00'; ctx.fillText('cosmic radiation', W * 0.04, H * 0.03 + f * 1.45);
+  ctx.fillStyle = '#10100c'; ctx.font = `800 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
   ctx.textBaseline = 'bottom';
   ctx.fillText('THICK AIR', W * 0.04, gy - f * 1.6);
   ctx.font = `600 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;

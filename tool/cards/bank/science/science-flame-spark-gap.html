@@ -70,12 +70,12 @@ function zigzag(pts, jit){
 
 function zap(g, pts, jit, w){
   const d = zigzag(pts, jit);
-  Kit.mk('path', {d, fill:'none', stroke:'#7fb8ff', 'stroke-width': w*3.2, 'stroke-linejoin':'round', opacity:.45, filter:'url(#glow)'}, g);
-  Kit.mk('path', {d, fill:'none', stroke:'#f4f9ff', 'stroke-width': w, 'stroke-linejoin':'round'}, g);
+  Kit.mk('path', {d, fill:'none', stroke:'#ffffff', 'stroke-width': w*3.2, 'stroke-linejoin':'round', opacity:.7, filter:'url(#glow)'}, g);
+  Kit.mk('path', {d, fill:'none', stroke:'#10100c', 'stroke-width': w, 'stroke-linejoin':'round'}, g);
   // a little branch
   const [xa,ya] = pts[0], yb = ya + (pts[pts.length-1][1]-ya)*(.2+Kit.rnd()*.3);
   const bd = zigzag([[xa,ya],[xa+(Kit.rnd()-.5)*jit*6, yb]], jit*.7);
-  Kit.mk('path', {d: bd, fill:'none', stroke:'#cfe4ff', 'stroke-width': w*.55, opacity:.8}, g);
+  Kit.mk('path', {d: bd, fill:'none', stroke:'#10100c', 'stroke-width': w*.55, opacity:.8}, g);
 }
 
 function flash(){
@@ -112,14 +112,12 @@ Kit.onShow.card = () => {
   const flt = Kit.mk('filter', {id:'glow', x:'-50%', y:'-50%', width:'200%', height:'200%'}, defs);
   Kit.mk('feGaussianBlur', {stdDeviation: Math.max(W*.006, 2)}, flt);
   const gr = Kit.mk('linearGradient', {id:'fl', x1:0, y1:1, x2:0, y2:0}, defs);
-  Kit.mk('stop', {offset:'0', 'stop-color':'#3d7bff'}, gr);
-  Kit.mk('stop', {offset:'.22', 'stop-color':'#ffb238'}, gr);
-  Kit.mk('stop', {offset:'.7', 'stop-color':'#ffe08a'}, gr);
-  Kit.mk('stop', {offset:'1', 'stop-color':'#fff4d0'}, gr);
+  Kit.mk('stop', {offset:'0', 'stop-color':'#2f63ff'}, gr);
+  Kit.mk('stop', {offset:'.22', 'stop-color':'#ff9a1f'}, gr);
+  Kit.mk('stop', {offset:'.7', 'stop-color':'#ffd23a'}, gr);
+  Kit.mk('stop', {offset:'1', 'stop-color':'#fff1a8'}, gr);
 
-  const r = Math.min(W,H)*.05;
-  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:r, fill:'#0d1222'}, svg);
-  Kit.mk('line', {x1:W/2, y1:H*.08, x2:W/2, y2:H*.92, stroke:'#ffffff', 'stroke-opacity':.12, 'stroke-dasharray':'4 6'}, svg);
+  Kit.mk('line', {x1:W/2, y1:H*.08, x2:W/2, y2:H*.92, stroke:'#10100c', 'stroke-opacity':.3, 'stroke-dasharray':'4 6'}, svg);
 
   const L = {x:W*.25}, R = {x:W*.75};
   const plateY = H*.07, plateH = Math.max(fs*1.7, H*.07), plateW = W*.38;
@@ -136,26 +134,26 @@ Kit.onShow.card = () => {
 
   [L, R].forEach((P, i) => {
     // plate
-    Kit.mk('rect', {x:P.x-plateW/2, y:plateY, width:plateW, height:plateH, rx:plateH*.25, fill:'#c9d3e6'}, svg);
-    const t = Kit.mk('text', {x:P.x, y:plateY+plateH/2, 'text-anchor':'middle', 'dominant-baseline':'central', fill:'#0d1222', 'font-family':'var(--mono)', 'font-weight':700, 'font-size':fs}, svg);
+    Kit.mk('rect', {x:P.x-plateW/2, y:plateY, width:plateW, height:plateH, rx:plateH*.25, fill:'#10100c'}, svg);
+    const t = Kit.mk('text', {x:P.x, y:plateY+plateH/2, 'text-anchor':'middle', 'dominant-baseline':'central', fill:'#00E5A0', 'font-family':'var(--mono)', 'font-weight':700, 'font-size':fs}, svg);
     t.textContent = '20,000 V';
     // ground
-    Kit.mk('line', {x1:P.x, y1:gY, x2:P.x, y2:gY+fs*.35, stroke:'#8a95ad', 'stroke-width':2}, svg);
-    [1,.65,.3].forEach((k,j) => Kit.mk('line', {x1:P.x-candW*.6*k, y1:gY+fs*.35+j*fs*.22, x2:P.x+candW*.6*k, y2:gY+fs*.35+j*fs*.22, stroke:'#8a95ad', 'stroke-width':2}, svg));
+    Kit.mk('line', {x1:P.x, y1:gY, x2:P.x, y2:gY+fs*.35, stroke:'#10100c', 'stroke-width':2}, svg);
+    [1,.65,.3].forEach((k,j) => Kit.mk('line', {x1:P.x-candW*.6*k, y1:gY+fs*.35+j*fs*.22, x2:P.x+candW*.6*k, y2:gY+fs*.35+j*fs*.22, stroke:'#10100c', 'stroke-width':2}, svg));
     // candle
-    Kit.mk('rect', {x:P.x-candW/2, y:candTop, width:candW, height:candH, rx:candW*.15, fill:'#efe6d2'}, svg);
-    Kit.mk('line', {x1:P.x, y1:candTop, x2:P.x, y2:wickY, stroke:'#2a2a2a', 'stroke-width':Math.max(W*.006,2), 'stroke-linecap':'round'}, svg);
+    Kit.mk('rect', {x:P.x-candW/2, y:candTop, width:candW, height:candH, rx:candW*.15, fill:'#efe6d2', stroke:'#10100c', 'stroke-width':1.5}, svg);
+    Kit.mk('line', {x1:P.x, y1:candTop, x2:P.x, y2:wickY, stroke:'#10100c', 'stroke-width':Math.max(W*.006,2), 'stroke-linecap':'round'}, svg);
     // label
-    const lb = Kit.mk('text', {x:P.x, y:labY, 'text-anchor':'middle', 'dominant-baseline':'central', fill: i ? '#ffd27a' : '#c9d3e6', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs, 'letter-spacing':'.05em'}, svg);
+    const lb = Kit.mk('text', {x:P.x, y:labY, 'text-anchor':'middle', 'dominant-baseline':'central', fill:'#10100c', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs, 'letter-spacing':'.05em'}, svg);
     lb.textContent = i ? 'WITH FLAME' : 'AIR ONLY';
     if (i) R.lab = lb;
   });
 
   // flame (right only)
   const fg = Kit.mk('g', {}, svg);
-  Kit.mk('ellipse', {cx:R.x, cy:wickY-flameH*.45, rx:flameW*1.4, ry:Math.max(flameH*.7, 0), fill:'#ffb238', opacity:.16, filter:'url(#glow)'}, fg);
+  Kit.mk('ellipse', {cx:R.x, cy:wickY-flameH*.45, rx:flameW*1.4, ry:Math.max(flameH*.7, 0), fill:'#fff3b0', opacity:.5, filter:'url(#glow)'}, fg);
   const x = R.x, b = wickY + flameH*.04;
-  Kit.mk('path', {d:`M${x},${flameTop} C${x+flameW*.5},${flameTop+flameH*.35} ${x+flameW*.62},${b-flameH*.22} ${x},${b} C${x-flameW*.62},${b-flameH*.22} ${x-flameW*.5},${flameTop+flameH*.35} ${x},${flameTop}Z`, fill:'url(#fl)'}, fg);
+  Kit.mk('path', {d:`M${x},${flameTop} C${x+flameW*.5},${flameTop+flameH*.35} ${x+flameW*.62},${b-flameH*.22} ${x},${b} C${x-flameW*.62},${b-flameH*.22} ${x-flameW*.5},${flameTop+flameH*.35} ${x},${flameTop}Z`, fill:'url(#fl)', stroke:'#10100c', 'stroke-width':1.5, 'stroke-linejoin':'round'}, fg);
   if (!Kit.calm) gsap.to(fg, {scaleY:1.06, scaleX:.95, svgOrigin:`${x} ${b}`, duration:.35, yoyo:true, repeat:-1, ease:'sine.inOut'});
 
   // ions
@@ -164,7 +162,7 @@ Kit.onShow.card = () => {
   for (let k = 0; k < 9; k++){
     const yy = flameTop + flameH*(.25 + .65*Kit.rnd());
     const xx = x + (Kit.rnd()-.5)*flameW*.6;
-    const c = Kit.mk('circle', {cx:xx, cy:yy, r:ir, fill: k%2 ? '#ff4d6d' : '#4dd2ff', stroke:'#fff', 'stroke-width':1}, ions);
+    const c = Kit.mk('circle', {cx:xx, cy:yy, r:ir, fill: k%2 ? '#e0143c' : '#1f5cff', stroke:'#10100c', 'stroke-width':1}, ions);
     if (!Kit.calm) gsap.to(c, {attr:{cy: yy - flameH*.15}, duration:.6+Kit.rnd()*.6, yoyo:true, repeat:-1, ease:'sine.inOut'});
   }
 
@@ -172,7 +170,7 @@ Kit.onShow.card = () => {
   const qs = Math.min(fs*2.2, qSpace*.8);
   let qmark;
   if (qs >= 10){
-    qmark = Kit.mk('text', {x:R.x, y:(plateB+flameTop)/2, 'text-anchor':'middle', 'dominant-baseline':'central', fill:'#ffffff', opacity: revealed ? 0 : .7, 'font-family':'var(--display)', 'font-weight':800, 'font-size':qs}, svg);
+    qmark = Kit.mk('text', {x:R.x, y:(plateB+flameTop)/2, 'text-anchor':'middle', 'dominant-baseline':'central', fill:'#10100c', opacity: revealed ? 0 : .7, 'font-family':'var(--display)', 'font-weight':800, 'font-size':qs}, svg);
     qmark.textContent = '?';
   } else {
     qmark = Kit.mk('g', {}, svg);

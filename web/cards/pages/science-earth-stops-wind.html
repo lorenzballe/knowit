@@ -11,7 +11,7 @@
 #read .n #kmh{display:block;line-height:1.15}
 #read .n small{display:block;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);min-width:0;overflow-wrap:anywhere}
 #read .sub{font:600 max(1.7cqh,12px)/1.3 var(--body);color:var(--muted);overflow-wrap:anywhere}
-#wrap{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#wrap{position:relative;flex:1;min-height:0}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 #ctl{display:flex;flex-direction:column;gap:.6cqh}
 #ctl label{display:flex;justify-content:space-between;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
@@ -83,34 +83,34 @@ function draw(dt) {
   Kit.$('sub').textContent = `Ground: ${Math.round(V * spin)} km/h east · Air: ${V} km/h east`;
   const f = Math.max(12, Math.min(W * .042, H * .06));
   const sh = H * .66, gy = sh * .8;
-  // sky
-  const sk = ctx.createLinearGradient(0, 0, 0, gy);
-  sk.addColorStop(0, '#2c6fb3'); sk.addColorStop(1, '#a9d6f2');
-  ctx.fillStyle = sk; ctx.fillRect(0, 0, W, gy);
+  ctx.clearRect(0, 0, W, H);
+  // sun
   ctx.fillStyle = '#ffd34d'; ctx.beginPath(); ctx.arc(W * .82, sh * .2, Math.min(W, sh) * .07, 0, 7); ctx.fill();
+  ctx.strokeStyle = ink; ctx.lineWidth = 1.5; ctx.stroke();
   const sp = fr * W * 1.8;
   // clouds
   clouds.forEach(c => {
     c.x += sp * .6 * dt / W; if (c.x > 1.2) c.x -= 1.4;
     const cx = c.x * W, cy = c.y * gy, r = Math.min(W, sh) * .05 * c.s, st = 1 + fr * 1.5;
     ctx.fillStyle = 'rgba(255,255,255,.9)';
+    ctx.strokeStyle = ink; ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.ellipse(cx, cy, r * 1.6 * st, r * .7, 0, 0, 7);
     ctx.ellipse(cx - r * .5, cy - r * .4, r * .8, r * .6, 0, 0, 7);
-    ctx.fill();
+    ctx.fill(); ctx.stroke();
   });
   // wind streaks
   if (fr > .01) {
     streaks.forEach(s => {
       s.x += sp * dt / W * (.8 + s.l * .4); if (s.x > 1.3) s.x -= 1.5;
       const len = (10 + fr * W * .28) * s.l, x = s.x * W, y = 6 + s.y * (gy - 12);
-      ctx.strokeStyle = `rgba(255,255,255,${.25 + .6 * fr})`;
+      ctx.strokeStyle = `rgba(16,16,12,${.2 + .6 * fr})`;
       ctx.lineWidth = 1.5 + fr * 2.5; ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(x - len, y); ctx.lineTo(x, y); ctx.stroke();
     });
   }
   // east label
-  ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.font = `800 ${f}px sans-serif`; ctx.textBaseline = 'top';
+  ctx.fillStyle = ink; ctx.font = `800 ${f}px sans-serif`; ctx.textBaseline = 'top';
   ctx.fillText('EAST →', W * .04, sh * .05);
   // ground
   ctx.fillStyle = '#3f8a3a'; ctx.fillRect(0, gy, W, sh - gy);
@@ -138,7 +138,6 @@ function draw(dt) {
     }
   }
   // comparison bar
-  ctx.fillStyle = paper; ctx.fillRect(0, sh, W, H - sh);
   const pad = W * .05, tw = W - pad * 2, unit = tw / 4.2;
   const ty0 = sh + (H - sh) * .12;
   ctx.fillStyle = ink; ctx.font = `700 ${f}px sans-serif`; ctx.textBaseline = 'top';

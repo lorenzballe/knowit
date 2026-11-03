@@ -50,18 +50,11 @@ function draw(){
   Object.assign(G, {W, H, f, cx: W*.5, cy: H*.56, cw: W*.065, gy: H*.86, fs: Math.max(12, Math.min(f*.85, W*.046))});
   const {cx, cy, cw, gy, fs} = G;
   const defs = Kit.mk('defs', {}, svg);
-  const lg = Kit.mk('linearGradient', {id:'sky', x1:0, y1:0, x2:0, y2:1}, defs);
-  Kit.mk('stop', {offset:0, 'stop-color':'#fcf5ea'}, lg);
-  Kit.mk('stop', {offset:1, 'stop-color':'#ecd8c1'}, lg);
   const fl = Kit.mk('filter', {id:'glow', x:'-50%', y:'-50%', width:'200%', height:'200%'}, defs);
   Kit.mk('feGaussianBlur', {stdDeviation: Math.max(2, W*.008), result:'b'}, fl);
   const fm = Kit.mk('feMerge', {}, fl);
   Kit.mk('feMergeNode', {in:'b'}, fm); Kit.mk('feMergeNode', {in:'SourceGraphic'}, fm);
-  const cp = Kit.mk('clipPath', {id:'clip'}, defs);
-  const rr = Math.min(W, H) * .045;
-  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:rr}, cp);
-  const root = Kit.mk('g', {'clip-path':'url(#clip)'}, svg);
-  Kit.mk('rect', {x:0, y:0, width:W, height:H, fill:'url(#sky)'}, root);
+  const root = Kit.mk('g', {}, svg);
   // volcano
   Kit.mk('path', {d:`M${W*.18},${gy} L${cx-cw},${cy} Q${cx},${cy+H*.03} ${cx+cw},${cy} L${W*.82},${gy} Z`, fill:'#7d604d'}, root);
   Kit.mk('path', {d:`M${cx+cw*.2},${cy+H*.02} L${cx+cw},${cy} L${W*.82},${gy} L${W*.56},${gy} Z`, fill:'#5f4738', opacity:.7}, root);
@@ -73,8 +66,8 @@ function draw(){
     const k = 4, step = (x1-x0)/k, w = step*.72;
     for (let i = 0; i < k; i++){
       const x = x0 + i*step + (step-w)/2, h = H*(.03 + .015*hh(i*3+x0));
-      G.houses.push(Kit.mk('rect', {x, y:gy-h, width:w, height:h, fill:'#f4e7d4', stroke:'#2a201a', 'stroke-width':1}, root));
-      G.houses.push(Kit.mk('path', {d:`M${x-1},${gy-h} L${x+w/2},${gy-h-w*.45} L${x+w+1},${gy-h} Z`, fill:'#b8553a', stroke:'#2a201a', 'stroke-width':1}, root));
+      G.houses.push(Kit.mk('rect', {x, y:gy-h, width:w, height:h, fill:'#f4e7d4', stroke:'#10100c', 'stroke-width':1}, root));
+      G.houses.push(Kit.mk('path', {d:`M${x-1},${gy-h} L${x+w/2},${gy-h-w*.45} L${x+w+1},${gy-h} Z`, fill:'#b8553a', stroke:'#10100c', 'stroke-width':1}, root));
     }
   };
   town(W*.03, W*.17); town(W*.83, W*.97);
@@ -86,10 +79,10 @@ function draw(){
   }
   G.col = Kit.mk('g', {}, root);
   G.st = Kit.mk('g', {}, root);
-  const t1 = Kit.mk('text', {x:W*.045, y:H*.24, fill:'#6b5a4c', 'font-size':fs, 'font-weight':600, 'font-family':'var(--body)'}, G.st);
+  const t1 = Kit.mk('text', {x:W*.045, y:H*.24, fill:'#10100c', 'fill-opacity':.75, 'font-size':fs, 'font-weight':600, 'font-family':'var(--body)'}, G.st);
   t1.textContent = 'Column';
-  G.st2 = Kit.mk('text', {x:W*.045, y:H*.24 + fs*1.45, fill:'#2a201a', 'font-size':fs*1.05, 'font-weight':800, 'font-family':'var(--body)'}, G.st);
-  G.st3 = Kit.mk('text', {x:W*.045, y:H*.24 + fs*2.9, fill:'#8a6f5c', 'font-size':fs, 'font-weight':600, 'font-family':'var(--mono)'}, G.st);
+  G.st2 = Kit.mk('text', {x:W*.045, y:H*.24 + fs*1.45, fill:'#10100c', 'font-size':fs*1.05, 'font-weight':800, 'font-family':'var(--body)'}, G.st);
+  G.st3 = Kit.mk('text', {x:W*.045, y:H*.24 + fs*2.9, fill:'#10100c', 'fill-opacity':.75, 'font-size':fs, 'font-weight':600, 'font-family':'var(--mono)'}, G.st);
   if (done) final(); else { buildCol(-1); status(); }
 }
 
@@ -109,7 +102,7 @@ function buildCol(prevK){
       const c = Kit.mk('circle', {
         cx: cx + s*r0*.38*hh(i*2+s+5), cy: y, r,
         fill: lerpC('#ece6dd', '#2e2622', d*(.75 + .35*hh(i*11+s))),
-        stroke: lerpC('#cfc6b8', '#18120f', d), 'stroke-width': 1
+        stroke: lerpC('#3f7a52', '#18120f', d), 'stroke-width': 1
       }, G.col);
       c._i = i*2 + (s > 0 ? 1 : 0);
       if (i >= prevK && prevK >= 0) made.push(c);
@@ -130,7 +123,7 @@ function buildFlows(){
   const sides = [];
   for (const s of [-1, 1]){
     const d = `M${cx + s*cw*.9},${cy+H*.005} L${cx + s*W*.32},${gy-2} L${cx + s*W*.49},${gy-2}`;
-    const path = Kit.mk('path', {d, fill:'none', stroke:'#ff6a1a', 'stroke-width':Math.max(4, H*.028), 'stroke-linecap':'round', 'stroke-linejoin':'round', filter:'url(#glow)'}, G.flows);
+    const path = Kit.mk('path', {d, fill:'none', stroke:'#ff5a0a', 'stroke-width':Math.max(4, H*.028), 'stroke-linecap':'round', 'stroke-linejoin':'round', filter:'url(#glow)'}, G.flows);
     const core = Kit.mk('path', {d, fill:'none', stroke:'#ffd36b', 'stroke-width':Math.max(1.5, H*.008), 'stroke-linecap':'round'}, G.flows);
     const len = path.getTotalLength();
     const clouds = [];

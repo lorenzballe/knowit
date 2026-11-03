@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh}
-#well{flex:1;min-height:0;width:100%;display:block;border-radius:2.2cqh;background:#07100d}
+#well{flex:1;min-height:0;width:100%;display:block}
 #ctl{display:flex;align-items:center;gap:3.2cqw;flex:none}
 #sw{flex:none;display:flex;align-items:center;gap:2cqw;border:0;background:none;padding:0;cursor:pointer;color:var(--k);font:800 max(2cqh,13px)/1 var(--body)}
 #sw i{position:relative;width:max(6.6cqh,42px);height:max(3.9cqh,25px);border-radius:99px;box-shadow:inset 0 0 0 .28cqh var(--k);transition:background .25s}
@@ -62,7 +62,7 @@
 <script>
 (() => {
   const cv = Kit.$('well'), sw = Kit.$('sw'), swl = Kit.$('swl'), say = Kit.$('say'), card = Kit.$('card');
-  const BLUE = '#4a6cff', UV = '#b27cff', HEAT = '#ff5a1f';
+  const BLUE = '#1430d9', UV = '#6a2cd9', HEAT = '#c93000', INK = '#10100c';
   // The layer, in nanometres: 400 wide, drawn as deep as the box allows.
   const WN = 400, DEEP = 560, DEF = 100 / 1e6;        // defects per nm² (10 billion per cm²)
   const CATCH = 7, DIP = 4.5;                          // how near a defect kills a pair; a spot's reach
@@ -166,26 +166,22 @@
     if (!g) return;
     const {W, H, s, fs} = g, P = v => v * s;
     x.clearRect(0, 0, W, H);
-    // the layer, dark, so that light shows as light
-    const bg = x.createRadialGradient(W / 2, H * .5, 0, W / 2, H * .5, Math.max(W, H) * .75);
-    bg.addColorStop(0, '#10201b'); bg.addColorStop(1, '#050b09');
-    x.fillStyle = bg; x.fillRect(0, 0, W, H);
     const lit = tally.length ? tally.filter(k => k === 'light').length / tally.length : 0;
-    if (lit > 0 && on) { const gr = x.createRadialGradient(W / 2, H * .45, 0, W / 2, H * .45, Math.max(W, H) * .75); gr.addColorStop(0, `rgba(70,100,255,${.24 * lit})`); gr.addColorStop(1, 'rgba(70,100,255,0)'); x.fillStyle = gr; x.fillRect(0, 0, W, H); }
+    if (lit > 0 && on) { const gr = x.createRadialGradient(W / 2, H * .45, 0, W / 2, H * .45, Math.max(W, H) * .75); gr.addColorStop(0, `rgba(20,48,217,${.16 * lit})`); gr.addColorStop(1, 'rgba(20,48,217,0)'); x.fillStyle = gr; x.fillRect(0, 0, W, H); }
     // the crystal's hexagonal grain, faint
-    x.strokeStyle = 'rgba(0,229,160,.075)'; x.lineWidth = 1;
+    x.strokeStyle = 'rgba(16,16,12,.12)'; x.lineWidth = 1;
     const hr = 9, hw = hr * Math.sqrt(3);
     for (let row = 0, yy = 0; yy < H + hr; row++, yy += hr * 1.5) for (let xx = row % 2 ? hw / 2 : 0; xx < W + hw; xx += hw) { hexPath(xx, yy, hr); x.stroke(); }
     // the indium-rich spots
     if (on) for (const d of dips) {
       if (d.y > g.hn + 6) continue;
       const cx = P(d.x), cy = P(d.y), r = Math.max(4, P(d.r) * 1.3), gr = x.createRadialGradient(cx, cy, 0, cx, cy, r);
-      gr.addColorStop(0, `rgba(90,125,255,${.62 * d.k})`); gr.addColorStop(.5, `rgba(70,100,255,${.3 * d.k})`); gr.addColorStop(1, 'rgba(70,100,255,0)');
+      gr.addColorStop(0, `rgba(20,48,217,${.8 * d.k})`); gr.addColorStop(.5, `rgba(20,48,217,${.4 * d.k})`); gr.addColorStop(1, 'rgba(20,48,217,0)');
       x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
     }
     // the long exposure, when nothing moves: every path, and where it ended
     if (Array.isArray(paths)) for (const q of paths) {
-      x.strokeStyle = 'rgba(255,255,255,.6)'; x.lineWidth = 1.1; x.beginPath(); q.pts.forEach(([a, b], i) => i ? x.lineTo(P(a), P(b)) : x.moveTo(P(a), P(b))); x.stroke();
+      x.strokeStyle = 'rgba(16,16,12,.55)'; x.lineWidth = 1.1; x.beginPath(); q.pts.forEach(([a, b], i) => i ? x.lineTo(P(a), P(b)) : x.moveTo(P(a), P(b))); x.stroke();
       const [ex, ey] = q.pts[q.pts.length - 1];
       if (q.kind === 'light') star(P(ex), P(ey), Math.max(5, fs * .5), on ? BLUE : UV); else { x.strokeStyle = HEAT; x.lineWidth = 2.2; const c = Math.max(4, fs * .38); x.beginPath(); x.moveTo(P(ex) - c, P(ey) - c); x.lineTo(P(ex) + c, P(ey) + c); x.moveTo(P(ex) + c, P(ey) - c); x.lineTo(P(ex) - c, P(ey) + c); x.stroke(); }
     }
@@ -193,13 +189,13 @@
     for (const d of defects) {
       if (d.y > g.hn + 8) continue;
       const cx = P(d.x), cy = P(d.y);
-      x.fillStyle = 'rgba(255,90,30,.17)'; x.beginPath(); x.arc(cx, cy, P(CATCH) + 2, 0, 7); x.fill();
-      x.fillStyle = '#1a2320'; hexPath(cx, cy, Math.max(4.4, P(4))); x.fill();
-      x.strokeStyle = 'rgba(255,255,255,.78)'; x.lineWidth = 1.3; x.stroke();
+      x.fillStyle = 'rgba(201,48,0,.2)'; x.beginPath(); x.arc(cx, cy, P(CATCH) + 2, 0, 7); x.fill();
+      x.fillStyle = '#00E5A0'; hexPath(cx, cy, Math.max(4.4, P(4))); x.fill();
+      x.strokeStyle = INK; x.lineWidth = 1.5; x.stroke();
     }
     // the flashes: light where a pair gave its photon, heat where a defect took it
     for (const f of flashes) {
-      const u = f.t / .7, cx = P(f.x), cy = P(f.y), a = 1 - u, c = f.uv ? '178,124,255' : '80,115,255';
+      const u = f.t / .7, cx = P(f.x), cy = P(f.y), a = 1 - u, c = f.uv ? '106,44,217' : '20,48,217';
       if (f.kind === 'light') {
         const gr = x.createRadialGradient(cx, cy, 0, cx, cy, 7 + 17 * u);
         gr.addColorStop(0, `rgba(255,255,255,${a})`); gr.addColorStop(.32, `rgba(${c},${.95 * a})`); gr.addColorStop(1, `rgba(${c},0)`);
@@ -207,55 +203,52 @@
         x.strokeStyle = `rgba(${c},${a})`; x.lineWidth = 1.6; x.beginPath(); x.arc(cx, cy, 4 + 15 * u, 0, 7); x.stroke();
       } else {
         const gr = x.createRadialGradient(cx, cy, 0, cx, cy, 8 + 8 * u);
-        gr.addColorStop(0, `rgba(255,150,80,${.7 * a})`); gr.addColorStop(1, 'rgba(255,90,30,0)');
+        gr.addColorStop(0, `rgba(201,48,0,${.5 * a})`); gr.addColorStop(1, 'rgba(201,48,0,0)');
         x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, 8 + 8 * u, 0, 7); x.fill();
-        x.strokeStyle = `rgba(255,90,31,${a})`; x.lineWidth = 2;
+        x.strokeStyle = `rgba(201,48,0,${a})`; x.lineWidth = 2;
         x.beginPath(); x.arc(cx, cy, 6 + 9 * u, 0, 7); x.stroke();
         for (let i = 0; i < 6; i++) { const an = i * Math.PI / 3 + .3, r1 = 9 + 6 * u, r2 = 13 + 9 * u; x.beginPath(); x.moveTo(cx + Math.cos(an) * r1, cy + Math.sin(an) * r1); x.lineTo(cx + Math.cos(an) * r2, cy + Math.sin(an) * r2); x.stroke(); }
       }
     }
     // the pairs, with their short trails
     if (!Array.isArray(paths)) for (const p of pairs) {
-      if (p.trail.length > 1) { x.strokeStyle = 'rgba(255,255,255,.42)'; x.lineWidth = 1.2; x.beginPath(); p.trail.forEach(([a, b], i) => i ? x.lineTo(P(a), P(b)) : x.moveTo(P(a), P(b))); x.stroke(); }
-      if (p.held) { const gr = x.createRadialGradient(P(p.x), P(p.y), 0, P(p.x), P(p.y), 10); gr.addColorStop(0, 'rgba(100,135,255,.7)'); gr.addColorStop(1, 'rgba(100,135,255,0)'); x.fillStyle = gr; x.beginPath(); x.arc(P(p.x), P(p.y), 10, 0, 7); x.fill(); }
-      x.fillStyle = '#fff'; x.beginPath(); x.arc(P(p.x), P(p.y), 2.8, 0, 7); x.fill();
+      if (p.trail.length > 1) { x.strokeStyle = 'rgba(16,16,12,.45)'; x.lineWidth = 1.2; x.beginPath(); p.trail.forEach(([a, b], i) => i ? x.lineTo(P(a), P(b)) : x.moveTo(P(a), P(b))); x.stroke(); }
+      if (p.held) { const gr = x.createRadialGradient(P(p.x), P(p.y), 0, P(p.x), P(p.y), 10); gr.addColorStop(0, 'rgba(20,48,217,.6)'); gr.addColorStop(1, 'rgba(20,48,217,0)'); x.fillStyle = gr; x.beginPath(); x.arc(P(p.x), P(p.y), 10, 0, 7); x.fill(); }
+      x.fillStyle = INK; x.beginPath(); x.arc(P(p.x), P(p.y), 2.8, 0, 7); x.fill();
     }
     legend();
   }
   function star(cx, cy, r, color) {
     x.fillStyle = color; x.beginPath();
     for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, q = i % 2 ? r * .42 : r; i ? x.lineTo(cx + q * Math.cos(a), cy + q * Math.sin(a)) : x.moveTo(cx + q * Math.cos(a), cy + q * Math.sin(a)); }
-    x.closePath(); x.fill(); x.strokeStyle = '#fff'; x.lineWidth = 1; x.stroke();
+    x.closePath(); x.fill(); x.strokeStyle = INK; x.lineWidth = 1; x.stroke();
   }
   // What the marks are, how long 100 nm is, and that this is a model.
   function legend() {
-    const {H, s, fs} = g, k = g.key, back = 'rgba(4,9,7,.86)';
-    // the tag, always
+    const {H, s, fs} = g, k = g.key;
+    // the tag, always (a small chip keeps its fill)
     const [t0, t1, t2, t3] = k.tag;
-    x.fillStyle = back; rr(t0, t1, t2 - t0, t3 - t1, fs * .55); x.fill();
+    x.fillStyle = INK; rr(t0, t1, t2 - t0, t3 - t1, fs * .55); x.fill();
     x.font = `800 ${fs}px Figtree`; x.textBaseline = 'middle'; x.textAlign = 'center'; x.fillStyle = '#00E5A0';
     x.fillText('TOY MODEL', (t0 + t2) / 2, (t1 + t3) / 2 + .5);
     // A layer too short for a key keeps its picture: the reader met the key when it was taller.
     if (!k.key) return;
-    const [k0, k1, k2, k3] = k.key;
-    x.fillStyle = back; rr(k0, k1, k2 - k0, k3 - k1, fs * .55); x.fill();
     x.font = `700 ${fs}px Figtree`; x.textAlign = 'left';
     k.rows.forEach((row, ri) => {
       let lx = 9; const ly = 6 + k.rh * (ri + .5);
       for (const [t, kind] of row) {
         const cx = lx + fs * .5;
-        if (kind === 'def') { x.fillStyle = '#1a2320'; hexPath(cx, ly, fs * .42); x.fill(); x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 1.3; x.stroke(); }
-        else if (kind === 'pair') { x.fillStyle = '#fff'; x.beginPath(); x.arc(cx, ly, 3.2, 0, 7); x.fill(); }
-        else { const gr = x.createRadialGradient(cx, ly, 0, cx, ly, fs * .62); gr.addColorStop(0, 'rgba(90,125,255,.95)'); gr.addColorStop(.6, 'rgba(70,100,255,.45)'); gr.addColorStop(1, 'rgba(70,100,255,0)'); x.fillStyle = gr; x.beginPath(); x.arc(cx, ly, fs * .62, 0, 7); x.fill(); }
-        x.fillStyle = '#ffffff'; x.fillText(t, lx + fs * 1.25, ly + .5);
+        if (kind === 'def') { x.fillStyle = '#00E5A0'; hexPath(cx, ly, fs * .42); x.fill(); x.strokeStyle = INK; x.lineWidth = 1.4; x.stroke(); }
+        else if (kind === 'pair') { x.fillStyle = INK; x.beginPath(); x.arc(cx, ly, 3.2, 0, 7); x.fill(); }
+        else { const gr = x.createRadialGradient(cx, ly, 0, cx, ly, fs * .62); gr.addColorStop(0, 'rgba(20,48,217,.95)'); gr.addColorStop(.6, 'rgba(20,48,217,.5)'); gr.addColorStop(1, 'rgba(20,48,217,0)'); x.fillStyle = gr; x.beginPath(); x.arc(cx, ly, fs * .62, 0, 7); x.fill(); }
+        x.fillStyle = INK; x.fillText(t, lx + fs * 1.25, ly + .5);
         lx += k.wOf(t);
       }
     });
     // the scale: how long 100 nm is
-    const [s0, s1, s2, s3] = k.scale, sw = 100 * s, bx = 12, by = H - 9;
-    x.fillStyle = back; rr(s0, s1, s2 - s0, s3 - s1, fs * .55); x.fill();
-    x.strokeStyle = '#ffffff'; x.lineWidth = 2; x.beginPath(); x.moveTo(bx, by - 4); x.lineTo(bx, by); x.lineTo(bx + sw, by); x.lineTo(bx + sw, by - 4); x.stroke();
-    x.fillStyle = '#ffffff'; x.textBaseline = 'alphabetic'; x.fillText('100 nm', bx + sw + 7, by + 1);
+    const sw = 100 * s, bx = 12, by = H - 9;
+    x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.moveTo(bx, by - 4); x.lineTo(bx, by); x.lineTo(bx + sw, by); x.lineTo(bx + sw, by - 4); x.stroke();
+    x.fillStyle = INK; x.textBaseline = 'alphabetic'; x.fillText('100 nm', bx + sw + 7, by + 1);
   }
 
   // ---------- the meter and the switch ----------

@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#wrap{position:relative;flex:1;min-height:0;border-radius:1.8cqh;overflow:hidden;background:#0f1b29}
+#wrap{position:relative;flex:1;min-height:0;overflow:hidden;background:none}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 #ctl{display:flex;flex-direction:column;gap:.6cqh}
 #t{width:100%;margin:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
@@ -83,53 +83,50 @@ function draw() {
   const fs = Math.max(12, Math.min(W * .045, H * .06));
   const ly = LID * H, gy = GROUND * H;
   x.clearRect(0, 0, W, H);
-  // air above
-  x.fillStyle = '#1b2c40'; x.fillRect(0, 0, W, ly);
+  // air above: only a faint warm tint, no backdrop
   const warmTop = t > .5 ? cl((t - .5) * 2, 0, 1) : 0;
-  x.fillStyle = `rgba(255,176,90,${.08 + .22 * warmTop})`; x.fillRect(0, 0, W, ly);
-  // air near the ground: warm orange -> cold blue
-  const c = mix([232, 116, 59], [70, 145, 255], t);
-  x.fillStyle = '#16263a'; x.fillRect(0, ly, W, H - ly);
-  x.fillStyle = `rgba(${c},${.38})`; x.fillRect(0, ly, W, H - ly);
+  x.fillStyle = `rgba(255,236,150,${.05 + .2 * warmTop})`; x.fillRect(0, 0, W, ly);
+  // air near the ground: warm orange -> cold blue (translucent tint)
+  const c = mix([232, 116, 59], [40, 90, 220], t);
+  x.fillStyle = `rgba(${c},${.28})`; x.fillRect(0, ly, W, H - ly);
   // haze of trapped smog
   const below = ps.filter(p => p.y > LID).length, frac = below / MAX;
-  x.fillStyle = `rgba(170,170,160,${.45 * frac})`; x.fillRect(0, ly, W, gy - ly);
+  x.fillStyle = `rgba(70,70,62,${.4 * frac})`; x.fillRect(0, ly, W, gy - ly);
   // particles
   const r = Math.max(2, H * .011);
   for (const p of ps) {
-    x.globalAlpha = cl(p.a, 0, 1) * .75; x.fillStyle = '#c9c6bd';
+    x.globalAlpha = cl(p.a, 0, 1) * .8; x.fillStyle = '#4a4943';
     x.beginPath(); x.arc(p.x * W, p.y * H, r, 0, 7); x.fill();
   }
   x.globalAlpha = 1;
   // lid
   const lidA = cl((t - .42) / .25, 0, 1);
   if (lidA > 0) {
-    x.save(); x.strokeStyle = `rgba(255,214,120,${lidA})`; x.lineWidth = Math.max(2, H * .008);
-    x.setLineDash([H * .03, H * .018]); x.shadowColor = '#ffd678'; x.shadowBlur = 8 + 14 * lidGlow.v;
+    x.save(); x.strokeStyle = `rgba(16,16,12,${lidA})`; x.lineWidth = Math.max(2, H * .008);
+    x.setLineDash([H * .03, H * .018]); x.shadowColor = '#fff3b0'; x.shadowBlur = 8 + 14 * lidGlow.v;
     x.beginPath(); x.moveTo(0, ly); x.lineTo(W, ly); x.stroke(); x.restore();
   }
   // valley: Alps left, Apennines right
-  x.fillStyle = '#e9ecef';
   x.beginPath(); x.moveTo(0, H);
   for (let i = 0; i <= 60; i++) { const px = i / 60; x.lineTo(px * W, groundY(px) * H); }
-  x.lineTo(W, H); x.closePath(); x.fillStyle = '#2f3b2a'; x.fill();
-  x.fillStyle = '#5b6b4c'; x.fillRect(.2 * W, gy, .6 * W, H - gy);
+  x.lineTo(W, H); x.closePath(); x.fillStyle = '#1f3a22'; x.fill();
+  x.fillStyle = '#0a7a32'; x.fillRect(.2 * W, gy, .6 * W, H - gy);
   // cities / chimneys
-  x.fillStyle = '#1a1a1a';
+  x.fillStyle = '#10100c';
   for (const cx of CITIES) { x.fillRect(cx * W - H * .012, gy - H * .045, H * .024, H * .045); }
   // labels
   x.textBaseline = 'middle'; x.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
-  x.fillStyle = '#fff';
+  x.fillStyle = '#10100c';
   x.textAlign = 'left'; x.fillText('Smog near the ground', fs * .8, fs * 1.3);
   const bw = Math.max(40, W - fs * .8 - x.measureText('Smog near the ground').width - fs * 2.2);
   const bx = W - fs * .8 - bw;
-  x.fillStyle = 'rgba(255,255,255,.18)'; x.fillRect(bx, fs * .95, bw, fs * .7);
-  x.fillStyle = frac > .55 ? '#ff7a5c' : '#c9c6bd'; x.fillRect(bx, fs * .95, bw * frac, fs * .7);
-  x.fillStyle = '#ffe2b0';
+  x.fillStyle = 'rgba(16,16,12,.18)'; x.fillRect(bx, fs * .95, bw, fs * .7);
+  x.fillStyle = frac > .55 ? '#b3200a' : '#4a4943'; x.fillRect(bx, fs * .95, bw * frac, fs * .7);
+  x.fillStyle = '#5a2a00';
   x.fillText(t > .55 ? 'Air above: warmer, lighter' : t < .45 ? 'Air above: cooler' : 'Air above: about the same', fs * .8, ly - fs * .8);
-  x.fillStyle = '#fff';
+  x.fillStyle = '#10100c';
   x.fillText(t > .55 ? 'Ground air: colder, heavier → stays' : t < .45 ? 'Ground air: warmer, lighter → rises' : 'Ground air: barely moves', fs * .8, ly + fs * 1.1);
-  x.font = `600 ${fs * .9}px sans-serif`; x.fillStyle = 'rgba(255,255,255,.85)';
+  x.font = `600 ${fs * .9}px sans-serif`; x.fillStyle = 'rgba(255,255,255,.92)';
   x.fillText('Alps', fs * .5, H - fs * .7);
   x.textAlign = 'right'; x.fillText('Apennines', W - fs * .5, H - fs * .7);
 }

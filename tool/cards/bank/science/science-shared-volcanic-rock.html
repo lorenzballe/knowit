@@ -81,14 +81,13 @@ function build() {
   mk('circle',{cx:2,cy:2,r:1.1,fill:'#ef7a3c'},pat);
   mk('circle',{cx:6.5,cy:6,r:.9,fill:'#f2b04a'},pat);
 
-  mk('rect',{x:0,y:0,width:W,height:H,rx:Math.min(W,H)*.05,fill:'#1d5a75'});
   // faint waves
   for (let i = 0; i < 6; i++) {
     const [x,y] = P(8 + (i%3)*32, 10 + Math.floor(i/3)*78);
-    mk('path',{d:`M${x} ${y} q${s*2} ${-s*1.4} ${s*4} 0 t${s*4} 0`,fill:'none',stroke:'#ffffff',
-      'stroke-opacity':.18,'stroke-width':Math.max(1.2,s*.35),'stroke-linecap':'round'});
+    mk('path',{d:`M${x} ${y} q${s*2} ${-s*1.4} ${s*4} 0 t${s*4} 0`,fill:'none',stroke:'#10100c',
+      'stroke-opacity':.28,'stroke-width':Math.max(1.2,s*.35),'stroke-linecap':'round'});
   }
-  const land = {fill:'#ecdcb0',stroke:'#8a774a','stroke-width':Math.max(1.5,s*.45),'stroke-linejoin':'round'};
+  const land = {fill:'#f7efd2',stroke:'#4a3c1e','stroke-width':Math.max(1.5,s*.45),'stroke-linejoin':'round'};
   mk('polygon',Object.assign({points:pts(IB)},land));
   const ibBand = mk('polygon',{fill:'url(#vr)',stroke:'#3a2b34','stroke-width':1});
 
@@ -96,16 +95,16 @@ function build() {
   mk('polygon',Object.assign({points:pts(BK)},land),blk);
   const bkBand = mk('polygon',{fill:'url(#vr)',stroke:'#3a2b34','stroke-width':1},blk);
 
-  const rift = mk('polyline',{points:pts(SEAM),fill:'none',stroke:'#ff7a2f','stroke-linecap':'round','stroke-linejoin':'round',opacity:0});
+  const rift = mk('polyline',{points:pts(SEAM),fill:'none',stroke:'#d9480f','stroke-linecap':'round','stroke-linejoin':'round',opacity:0});
 
   const volc = mk('g',{opacity:0});
   const plume = [];
-  for (let i = 0; i < 3; i++) plume.push(mk('circle',{fill:'#d9d2c8',opacity:.75},volc));
+  for (let i = 0; i < 3; i++) plume.push(mk('circle',{fill:'#ffffff',stroke:'#10100c','stroke-opacity':.25,'stroke-width':1,opacity:.9},volc));
   mk('polygon',{points:pts([[40,56],[APEX[0]-1.1,APEX[1]],[APEX[0]+1.1,APEX[1]],[49.2,56]]),fill:'#5a3f33',stroke:'#2e201b','stroke-width':1},volc);
   const [cx0,cy0] = P(APEX[0],APEX[1]);
-  mk('ellipse',{cx:cx0,cy:cy0,rx:s*1.3,ry:s*.55,fill:'#ff8a2f'},volc);
+  mk('ellipse',{cx:cx0,cy:cy0,rx:s*1.3,ry:s*.55,fill:'#e8590c'},volc);
 
-  const parts = PARTS.map(() => mk('circle',{r:Math.max(1.6,s*.7),fill:'#ff9a3c',opacity:0}));
+  const parts = PARTS.map(() => mk('circle',{r:Math.max(1.6,s*.7),fill:'#e8590c',opacity:0}));
 
   const label = (txt,x,y,a) => { const [px,py] = P(x,y); const t = mk('text',{x:px,y:py,'text-anchor':a||'middle',
     fill:'#3b3020','font-family':'var(--display)','font-weight':800,'font-size':fs,'letter-spacing':'.06em'}); t.textContent = txt; return t; };
@@ -114,17 +113,17 @@ function build() {
   const bfs = Math.max(12, fs*.9);
   const [b1x,b1y] = P(82,79);
   [['SARDINIA–',0],['CORSICA',1]].forEach(([w,i]) => { const t = mk('text',{x:b1x,y:b1y+i*bfs*1.6,'text-anchor':'middle',
-    fill:'#ffffff','font-family':'var(--display)','font-weight':800,'font-size':bfs,'letter-spacing':'.05em'},bl); t.textContent = w; });
+    fill:'#10100c','font-family':'var(--display)','font-weight':800,'font-size':bfs,'letter-spacing':'.05em'},bl); t.textContent = w; });
 
   const call = mk('g',{opacity:0});
   const [tx,ty] = P(60,6);
-  const ct = mk('text',{x:tx,y:ty+fs*.35,'text-anchor':'middle',fill:'#ffffff','font-family':'var(--body)','font-weight':800,'font-size':fs},call);
+  const ct = mk('text',{x:tx,y:ty+fs*.35,'text-anchor':'middle',fill:'#10100c','font-family':'var(--body)','font-weight':800,'font-size':fs},call);
   ct.textContent = 'same volcanic rock';
   const ln = (a,b) => { const [x1,y1] = P(a[0],a[1]), [x2,y2] = P(b[0],b[1]);
-    mk('line',{x1,y1,x2,y2,stroke:'#ffffff','stroke-width':Math.max(1.5,s*.4),'stroke-dasharray':`${s*1.2} ${s*1}`},call);
-    mk('circle',{cx:x2,cy:y2,r:Math.max(3,s*.9),fill:'#ffffff'},call); };
+    mk('line',{x1,y1,x2,y2,stroke:'#10100c','stroke-width':Math.max(1.5,s*.4),'stroke-dasharray':`${s*1.2} ${s*1}`},call);
+    mk('circle',{cx:x2,cy:y2,r:Math.max(3,s*.9),fill:'#10100c'},call); };
   ln([50,10.5],[44,32]); ln([70,10.5],[78,45]);
-  const sea = mk('text',{x:P(60,62)[0],y:P(60,62)[1],'text-anchor':'middle',fill:'#ffffff','fill-opacity':.75,
+  const sea = mk('text',{x:P(60,62)[0],y:P(60,62)[1],'text-anchor':'middle',fill:'#10100c','fill-opacity':.75,
     'font-family':'var(--body)','font-style':'italic','font-weight':600,'font-size':fs},call);
   sea.textContent = 'sea';
 

@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A glowing radioactive atom sits outside a body outline. The reader drags it down, past the skin and into a cell, to see how close range changes where its radiation lands.",
-    "ground": "#0b1026"
+    "label": "A glowing radioactive atom sits outside a body outline. The reader drags it down, past the skin and into a cell, to see how close range changes where its radiation lands."
   },
   "source": "Veritasium, “Radiation vs Radioactive Atoms” (YouTube, 2011)",
   "reference": "https://www.youtube.com/watch?v=sehKAccM8p0&t=139s",

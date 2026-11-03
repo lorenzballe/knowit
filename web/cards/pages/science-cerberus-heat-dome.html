@@ -49,16 +49,11 @@ function draw() {
   if (Kit.calm) svg.classList.add('calm');
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 12), gy = H * 0.82, m = Math.min(W, H);
-  const defs = Kit.mk('defs', {}, svg);
-  const lg = Kit.mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  Kit.mk('stop', {offset: 0, 'stop-color': '#cfe8ff'}, lg);
-  Kit.mk('stop', {offset: 1, 'stop-color': '#fff4dc'}, lg);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: m * 0.05, fill: 'url(#sky)'}, svg);
   // sun and rays
   const sx = W * 0.5, sy = H * 0.13, sr = m * 0.06;
-  const rays = Kit.mk('g', {stroke: '#ffb703', 'stroke-width': Math.max(2, m * 0.012), 'stroke-linecap': 'round'}, svg);
+  const rays = Kit.mk('g', {stroke: '#c46a00', 'stroke-width': Math.max(2, m * 0.012), 'stroke-linecap': 'round'}, svg);
   [0.56, 0.66, 0.76, 0.86].forEach(t => Kit.mk('line', {x1: sx + sr * 0.8, y1: sy + sr * 0.6, x2: W * t, y2: gy - 4}, rays));
-  Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: '#ffb703', stroke: '#f48c06', 'stroke-width': 2}, svg);
+  Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: '#ffb703', stroke: '#c46a00', 'stroke-width': 2}, svg);
   // ground
   const gh = H - gy;
   Kit.mk('path', {d: `M0 ${gy} H${W * 0.38} V${H} H0 Z`, fill: '#e9b872'}, svg);
@@ -69,23 +64,23 @@ function draw() {
   // clouds
   const clouds = Kit.mk('g', {}, svg), cs = m * 0.05;
   [[0.64, 0.36], [0.84, 0.3], [0.76, 0.52]].forEach(([x, y]) => {
-    const g = Kit.mk('g', {fill: '#fff', stroke: '#8fa3b3', 'stroke-width': 1.5}, clouds);
+    const g = Kit.mk('g', {fill: '#fff', stroke: '#10100c', 'stroke-width': 1.5}, clouds);
     [[-1, 0.3, 1], [0, -0.2, 1.3], [1.1, 0.3, 0.95]].forEach(([dx, dy, r]) => Kit.mk('circle', {cx: W * x + dx * cs, cy: H * y + dy * cs, r: r * cs}, g));
   });
   // thermometer
   const tx = W * 0.955, tw = Math.max(8, W * 0.024), tt = H * 0.3, tb = gy - H * 0.06;
-  Kit.mk('rect', {x: tx - tw / 2, y: tt, width: tw, height: tb - tt, rx: tw / 2, fill: '#fff', stroke: '#333', 'stroke-width': 1.5}, svg);
+  Kit.mk('rect', {x: tx - tw / 2, y: tt, width: tw, height: tb - tt, rx: tw / 2, fill: '#fff', stroke: '#10100c', 'stroke-width': 1.5}, svg);
   const tf = Kit.mk('rect', {x: tx - tw / 2 + 2, width: tw - 4, rx: (tw - 4) / 2, fill: '#d62828'}, svg);
-  Kit.mk('circle', {cx: tx, cy: tb, r: tw * 0.9, fill: '#d62828', stroke: '#333', 'stroke-width': 1.5}, svg);
-  const ht = Kit.mk('text', {x: W - 4, y: tt - fs * 0.5, 'text-anchor': 'end', fill: '#d62828', style: `font:800 ${Math.max(12, fs * 0.85)}px var(--body)`}, svg); ht.textContent = 'heat';
+  Kit.mk('circle', {cx: tx, cy: tb, r: tw * 0.9, fill: '#d62828', stroke: '#10100c', 'stroke-width': 1.5}, svg);
+  const ht = Kit.mk('text', {x: W - 4, y: tt - fs * 0.5, 'text-anchor': 'end', fill: '#a30f0f', style: `font:800 ${Math.max(12, fs * 0.85)}px var(--body)`}, svg); ht.textContent = 'heat';
   // the dome
   const rx = W * 0.25, ry = H * 0.55;
   const dome = Kit.mk('g', {}, svg);
-  Kit.mk('path', {d: `M${-rx} 0 A${rx} ${ry} 0 0 1 ${rx} 0 Z`, fill: 'rgba(214,40,40,.16)', stroke: '#d62828', 'stroke-width': Math.max(2, m * 0.01), 'stroke-dasharray': '10 6'}, dome);
+  Kit.mk('path', {d: `M${-rx} 0 A${rx} ${ry} 0 0 1 ${rx} 0 Z`, fill: 'rgba(214,40,40,.16)', stroke: '#a30f0f', 'stroke-width': Math.max(2, m * 0.01), 'stroke-dasharray': '10 6'}, dome);
   const cY = -ry * 0.47, hS = fs * 2.2, hY = cY - fs * 1.8;
-  const hT = Kit.mk('text', {x: 0, y: hY, 'text-anchor': 'middle', fill: '#b51d1d', style: `font:900 ${hS}px var(--display)`}, dome); hT.textContent = 'H';
-  const cT = Kit.mk('text', {x: 0, y: cY, 'text-anchor': 'middle', fill: '#b51d1d', style: `font:800 ${fs}px var(--body);letter-spacing:.08em`}, dome); cT.textContent = 'CERBERUS';
-  const arr = Kit.mk('g', {stroke: '#b51d1d', 'stroke-width': Math.max(3, m * 0.014), 'stroke-linecap': 'round', fill: 'none'}, dome);
+  const hT = Kit.mk('text', {x: 0, y: hY, 'text-anchor': 'middle', fill: '#8a0c0c', style: `font:900 ${hS}px var(--display)`}, dome); hT.textContent = 'H';
+  const cT = Kit.mk('text', {x: 0, y: cY, 'text-anchor': 'middle', fill: '#8a0c0c', style: `font:800 ${fs}px var(--body);letter-spacing:.08em`}, dome); cT.textContent = 'CERBERUS';
+  const arr = Kit.mk('g', {stroke: '#8a0c0c', 'stroke-width': Math.max(3, m * 0.014), 'stroke-linecap': 'round', fill: 'none'}, dome);
   const a = m * 0.03;
   [-0.55, 0, 0.55].forEach(k => {
     const x = rx * k, y0 = k ? -ry * 0.55 : -ry * 0.36, y1 = -ry * 0.07;

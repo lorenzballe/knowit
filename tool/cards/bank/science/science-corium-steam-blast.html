@@ -54,18 +54,21 @@ function build(){
   Kit.mk('stop',{offset:'0%','stop-color':'#fff3a0'},gr);
   Kit.mk('stop',{offset:'45%','stop-color':'#ff9a1f'},gr);
   Kit.mk('stop',{offset:'100%','stop-color':'#d8340f'},gr);
-  Kit.mk('rect',{x:0,y:0,width:W,height:H,rx:Math.min(W,H)*0.05,fill:'#15171d'},svg);
+  const fg = Kit.mk('radialGradient',{id:'fl',cx:'50%',cy:'50%',r:'50%'},defs);
+  Kit.mk('stop',{offset:'0%','stop-color':'#ffffff','stop-opacity':1},fg);
+  Kit.mk('stop',{offset:'55%','stop-color':'#fff6d0','stop-opacity':.7},fg);
+  Kit.mk('stop',{offset:'100%','stop-color':'#fff6d0','stop-opacity':0},fg);
   // concrete pit
   const wall = W*0.045;
-  Kit.mk('rect',{x:vx-wall*1.6,y:vy,width:wall,height:vh+H*0.03,fill:'#4a4e58'},svg);
-  Kit.mk('rect',{x:vx+vw+wall*0.6,y:vy,width:wall,height:vh+H*0.03,fill:'#4a4e58'},svg);
-  Kit.mk('rect',{x:W*0.04,y:bot+H*0.03,width:W*0.92,height:H*0.012,fill:'#4a4e58'},svg);
+  Kit.mk('rect',{x:vx-wall*1.6,y:vy,width:wall,height:vh+H*0.03,fill:'#2f343d'},svg);
+  Kit.mk('rect',{x:vx+vw+wall*0.6,y:vy,width:wall,height:vh+H*0.03,fill:'#2f343d'},svg);
+  Kit.mk('rect',{x:W*0.04,y:bot+H*0.03,width:W*0.92,height:H*0.012,fill:'#10100c'},svg);
   // cooling pipe
   const py = bot - vh*0.2, ph = Math.max(vh*0.09, 8), px0 = W*0.05;
-  Kit.mk('rect',{x:px0,y:py-ph/2,width:vx-px0+2,height:ph,fill:'#262a33',stroke:'#6b7280','stroke-width':1.5},svg);
+  Kit.mk('rect',{x:px0,y:py-ph/2,width:vx-px0+2,height:ph,fill:'#262a33',stroke:'#10100c','stroke-width':1.5},svg);
   const water = Kit.mk('rect',{x:px0,y:py-ph/2+2,width:0,height:ph-4,fill:'#38a8ff'},svg);
   // vessel
-  Kit.mk('rect',{x:vx,y:vy,width:vw,height:vh,fill:'#1f232b',stroke:'#9aa1ad','stroke-width':2.5},svg);
+  Kit.mk('rect',{x:vx,y:vy,width:vw,height:vh,fill:'#1f232b',stroke:'#10100c','stroke-width':2.5},svg);
   const cor = Kit.mk('rect',{x:vx+2,y:bot-2,width:vw-4,height:0,fill:'url(#cg)'},svg);
   const chans = [];
   for(let i=0;i<6;i++){
@@ -75,14 +78,17 @@ function build(){
   const puffs = Kit.mk('g',{opacity:0},svg);
   for(let i=0;i<5;i++) Kit.mk('circle',{cx:vx+vw*(0.15+i*0.17),cy:vy+vh*0.07,r:vh*0.05,fill:'#e8eef6'},puffs);
   const steam = Kit.mk('g',{opacity:0},svg);
-  [[0,0,.22],[-.28,.05,.17],[.28,.04,.18],[-.15,-.22,.18],[.16,-.24,.19],[0,-.42,.2],[-.32,-.3,.13],[.34,-.32,.14]].forEach(([dx,dy,r])=>
-    Kit.mk('circle',{cx:W/2+dx*vw*1.3,cy:vy+dy*vh*0.9,r:r*vw,fill:'#f4f7fb',opacity:.92},steam));
+  const sp = [[0,0,.22],[-.28,.05,.17],[.28,.04,.18],[-.15,-.22,.18],[.16,-.24,.19],[0,-.42,.2],[-.32,-.3,.13],[.34,-.32,.14]];
+  sp.forEach(([dx,dy,r])=>
+    Kit.mk('circle',{cx:W/2+dx*vw*1.3,cy:vy+dy*vh*0.9,r:r*vw+2.5,fill:'#10100c'},steam));
+  sp.forEach(([dx,dy,r])=>
+    Kit.mk('circle',{cx:W/2+dx*vw*1.3,cy:vy+dy*vh*0.9,r:r*vw,fill:'#f4f7fb'},steam));
   const lid = Kit.mk('g',{},svg);
-  Kit.mk('rect',{x:(W-lidW)/2,y:vy-lidH,width:lidW,height:lidH,rx:lidH*0.2,fill:'#c9ced6',stroke:'#fff','stroke-width':1.5},lid);
+  Kit.mk('rect',{x:(W-lidW)/2,y:vy-lidH,width:lidW,height:lidH,rx:lidH*0.2,fill:'#c9ced6',stroke:'#10100c','stroke-width':1.5},lid);
   const lt = Kit.mk('text',{x:W/2,y:vy-lidH/2,'text-anchor':'middle','dominant-baseline':'central',fill:'#15171d','font-family':'var(--mono)','font-weight':800,'font-size':Math.max(Math.min(fs*0.9,lidH*0.62),12)},lid);
   lt.textContent = 'LID · 2,000 t';
-  const flash = Kit.mk('rect',{x:0,y:0,width:W,height:H,rx:Math.min(W,H)*0.05,fill:'#fff6d0',opacity:0,'pointer-events':'none'},svg);
-  const cap = Kit.mk('text',{x:W/2,y:bot+H*0.03+(H-bot-H*0.03)/2+fs*0.1,'text-anchor':'middle','dominant-baseline':'central',fill:'#ffd36b','font-family':'var(--body)','font-weight':700,'font-size':fs},svg);
+  const flash = Kit.mk('circle',{cx:W/2,cy:vy,r:Math.min(W,H)*0.55,fill:'url(#fl)',opacity:0,'pointer-events':'none'},svg);
+  const cap = Kit.mk('text',{x:W/2,y:bot+H*0.03+(H-bot-H*0.03)/2+fs*0.1,'text-anchor':'middle','dominant-baseline':'central',fill:'#10100c','font-family':'var(--body)','font-weight':700,'font-size':fs},svg);
   E = {water,cor,chans,puffs,steam,lid,flash,cap,pw:vx-px0};
   setTo(step);
 }

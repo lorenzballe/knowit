@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A dark ocean-depths page asks: What is the deepest point on Earth? A vertical probe can be dragged down toward the trench floor, which is marked 10,994 m for Challenger Deep in the Mariana Trench, almost 11 km below sea level.",
-    "ground": "#0f4a85"
+    "label": "A dark ocean-depths page asks: What is the deepest point on Earth? A vertical probe can be dragged down toward the trench floor, which is marked 10,994 m for Challenger Deep in the Mariana Trench, almost 11 km below sea level."
   },
   "source": "Geopop, “Quanto è profonda la fossa delle marianne?#shorts” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=t_gYMAbeT9c",

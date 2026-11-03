@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;border-radius:1.6cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
 #read{font:700 max(2cqh,13px)/1.25 var(--body);color:var(--k);text-align:center;min-height:2.6em}
 #sw{display:flex;gap:2cqw;background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:99px;padding:.6cqh}
 .sw{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:transparent;border:0;border-radius:99px;padding:1.3cqh 2cqw;cursor:pointer}
@@ -47,10 +47,6 @@ function build() {
   G = {W, H, f, sea, floor};
   const mk = (t, a, p = svg) => Kit.mk(t, a, p);
   const P = a => a.map(p => p.join(',')).join(' ');
-  const defs = mk('defs', {});
-  const lg = mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#1d2b4a'}, lg); mk('stop', {offset: 1, 'stop-color': '#41557e'}, lg);
-  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#sky)'});
   // distant coast
   mk('polygon', {points: P([[.78*W, H], [.78*W, sea+.07*H], [.86*W, sea-.035*H], [W, sea-.045*H], [W, H]]), fill: '#c9a46a'});
   E.houses = [.875, .915, .955].map((hx, i) => {
@@ -73,10 +69,10 @@ function build() {
   // floor
   mk('rect', {x: 0, y: floor, width: W, height: H - floor, fill: '#2a2320'});
   E.water = mk('path', {fill: '#1f86c7', opacity: .82});
-  E.surf = mk('path', {fill: 'none', stroke: '#bfe9ff', 'stroke-width': Math.max(2, f * .15)});
-  E.drops = drops.map(() => mk('circle', {r: 0, fill: '#d6f2ff'}));
+  E.surf = mk('path', {fill: 'none', stroke: '#eafaff', 'stroke-width': Math.max(2, f * .15)});
+  E.drops = drops.map(() => mk('circle', {r: 0, fill: '#0f5f99'}));
   const fs = Math.max(f * .95, 12);
-  const lab = (x, y, t, a) => { const e = mk('text', {x, y, 'text-anchor': a, fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}); e.textContent = t; };
+  const lab = (x, y, t, a) => { const e = mk('text', {x, y, 'text-anchor': a, fill: '#10100c', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}); e.textContent = t; };
   lab(.2*W, .17*H - fs * .9, 'Etna', 'middle');
   lab(.97*W, sea - .17*H, 'Distant coast', 'end');
   render();

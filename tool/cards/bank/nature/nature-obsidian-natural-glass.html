@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
-#scene{display:block;width:100%;flex:1;min-height:0;border-radius:1.8cqh;cursor:pointer}
+#scene{display:block;width:100%;flex:1;min-height:0;cursor:pointer;background:none}
 #opts{display:flex;flex-direction:column;gap:1cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
 .opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
@@ -60,20 +60,16 @@ function draw(){
   const fs = Math.max(f * .9, 12);
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
   const defs = mk('defs', {});
-  const sky = mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#0d1026'}, sky);
-  mk('stop', {offset: 1, 'stop-color': '#3a1d2a'}, sky);
   const cone = mk('linearGradient', {id: 'cone', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#4a3a36'}, cone);
-  mk('stop', {offset: 1, 'stop-color': '#231a19'}, cone);
+  mk('stop', {offset: 0, 'stop-color': '#3a2c28'}, cone);
+  mk('stop', {offset: 1, 'stop-color': '#14100f'}, cone);
   const glowG = mk('radialGradient', {id: 'glowG'}, defs);
   mk('stop', {offset: 0, 'stop-color': '#ffd23a', 'stop-opacity': 1}, glowG);
   mk('stop', {offset: .5, 'stop-color': '#ff5a1a', 'stop-opacity': .55}, glowG);
   mk('stop', {offset: 1, 'stop-color': '#ff5a1a', 'stop-opacity': 0}, glowG);
 
-  mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: 'url(#sky)'});
   const r = lcg(7);
-  for (let i = 0; i < 26; i++) mk('circle', {cx: r() * W, cy: r() * H * .5, r: .6 + r() * 1.2, fill: '#fff', opacity: .25 + r() * .5});
+  for (let i = 0; i < 26; i++) mk('circle', {cx: r() * W, cy: r() * H * .5, r: .6 + r() * 1.2, fill: '#10100c', opacity: .2 + r() * .4});
 
   const gy = H * .86, cx = W * .5, cy = H * .44, cw = W * .07;
   const L = W * .06, R = W * .94;
@@ -86,9 +82,9 @@ function draw(){
   const glow = mk('ellipse', {cx, cy: cy - 2, rx: cw * 2.4, ry: cw * 1.6, fill: 'url(#glowG)'});
   mk('polygon', {points: `${L},${gy} ${cx - cw},${cy} ${cx - cw * .4},${cy + cw * .25} ${cx + cw * .4},${cy + cw * .25} ${cx + cw},${cy} ${R},${gy}`, fill: 'url(#cone)'});
   mk('ellipse', {cx, cy: cy + cw * .1, rx: cw * .85, ry: cw * .2, fill: '#ff7a1a'});
-  mk('rect', {x: 0, y: gy, width: W, height: H - gy, fill: '#1a1414'});
+  mk('rect', {x: 0, y: gy, width: W, height: H - gy, fill: '#10100c'});
 
-  const labA = mk('text', {x: W / 2, y: H * .09 + fs * .4, 'text-anchor': 'middle', fill: '#ffd9a8', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, opacity: 0});
+  const labA = mk('text', {x: W / 2, y: H * .09 + fs * .4, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, opacity: 0});
   labA.textContent = 'hot magma meets cold air';
 
   const g = mk('g', {});
@@ -114,7 +110,7 @@ function draw(){
     sg.setAttribute('transform', `translate(${lx},${ly})`);
   }
 
-  const labB = mk('text', {x: W / 2, y: gy + (H - gy) / 2 + fs * .36, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, opacity: 0});
+  const labB = mk('text', {x: W / 2, y: gy + (H - gy) / 2 + fs * .36, 'text-anchor': 'middle', fill: '#00D451', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, opacity: 0});
   labB.textContent = 'cooled very fast → obsidian, a glass';
 
   S = {W, H, cx, cy, shards, labA, labB, glow, g};

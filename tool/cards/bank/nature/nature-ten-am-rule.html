@@ -16,9 +16,9 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column}
-#panel{flex:1;min-height:0;display:flex;flex-direction:column;background:#0c150e;border-radius:2.4cqh;overflow:hidden;position:relative;color:#f2f1ec}
+#panel{flex:1;min-height:0;display:flex;flex-direction:column;position:relative;color:var(--k)}
 #map{flex:none;width:100%;display:block}
-#log{flex:1;min-height:0;width:100%;display:block;border-top:1px solid rgba(242,241,236,.16)}
+#log{flex:1;min-height:0;width:100%;display:block}
 #cover{position:absolute;left:2.4cqw;top:1.1cqh;font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.06em;padding:.7cqh 2.2cqw;border-radius:99px;background:rgba(12,21,14,.78);color:#f2f1ec;font-variant-numeric:tabular-nums;transition:background .3s,color .3s}
 #cover.full{background:#ffd23f;color:#10100c}
 #go{align-self:flex-start;transition:opacity .2s}
@@ -89,9 +89,11 @@
   }
 
   // ---------- drawing ----------
-  // The ground and the fire, one pixel a cell, scaled up; then every tree as a round crown on top,
-  // fresh regrowth light and old stands dark: fuel that has built up looks it.
-  const YOUNG = [156, 236, 132], OLD = [12, 92, 48], SOIL = [20, 25, 19], CHAR = [54, 29, 23], AGES = 10, OLD_AT = 700;
+  // The ground is the card itself (transparent); scars and fire are drawn one pixel a cell, scaled up;
+  // then every tree as a round crown on top, fresh regrowth lighter and old stands darker.
+  // Crowns are smaller than a cell so the card shows between them: trees printed on the card.
+  const CROWN = .6;
+  const YOUNG = [18, 124, 52], OLD = [5, 42, 22], CHAR = [16, 16, 12], AGES = 10, OLD_AT = 700;
   let off = null, img = null, mx = null, mapW = 0, mapH = 0, crowns = [], flame = null;
   function sprite(r, rgb, soft) {
     const c = document.createElement('canvas'), px = Math.max(2, Math.ceil(r * 2 * devicePixelRatio));
@@ -106,23 +108,24 @@
     // Once the forest holds still, its last embers have cooled and the giant's footprint is all charcoal.
     const d = img.data, now = ended ? t + 12 : t, gid = ended && giant ? giant.id : -2; let n = 0;
     for (let i = 0; i < N; i++) {
-      const c = cell[i], o = i * 4; let rgb = SOIL;
+      const c = cell[i], o = i * 4; let rgb = CHAR, a = 0;
       if (c === 1) n++;
-      else if (c === 2) rgb = [255, 200, 70];
+      else if (c === 2) { rgb = [255, 90, 20]; a = 255; }
       else {
         const since = now - burnt[i], wet = now - doused[i];
-        if (wet < 50) { const k = wet / 50; rgb = [130 + (SOIL[0] - 130) * k, 210 + (SOIL[1] - 210) * k, 255 + (SOIL[2] - 255) * k]; }
-        else if (since < 6) rgb = [255, 118, 34];
-        else if (by[i] === gid) rgb = CHAR;
-        else if (since < 170) { const k = (since - 6) / 164; rgb = [CHAR[0] + (SOIL[0] - CHAR[0]) * k, CHAR[1] + (SOIL[1] - CHAR[1]) * k, CHAR[2] + (SOIL[2] - CHAR[2]) * k]; }
+        if (wet < 50) { const k = wet / 50; rgb = [11, 80, 190]; a = 255 * (1 - k) * .85; }
+        else if (since < 6) { rgb = [214, 48, 10]; a = 255; }
+        else if (by[i] === gid) { rgb = CHAR; a = 150; }
+        else if (since < 170) { const k = (since - 6) / 164; rgb = CHAR; a = 130 * (1 - k); }
       }
-      d[o] = rgb[0]; d[o + 1] = rgb[1]; d[o + 2] = rgb[2]; d[o + 3] = 255;
+      d[o] = rgb[0]; d[o + 1] = rgb[1]; d[o + 2] = rgb[2]; d[o + 3] = a;
     }
     trees = n;
     off.getContext('2d').putImageData(img, 0, 0);
+    mx.clearRect(0, 0, mapW, mapH);
     mx.imageSmoothingEnabled = false;
     mx.drawImage(off, 0, 0, mapW, mapH);
-    const cw = mapW / COLS, ch = mapH / ROWS, r = cw * .9;
+    const cw = mapW / COLS, ch = mapH / ROWS, r = cw * CROWN;
     for (let i = 0; i < N; i++) {
       const c = cell[i]; if (c === 0) continue;
       const x = (i % COLS + .5) * cw, y = (((i / COLS) | 0) + .5) * ch;
@@ -135,7 +138,7 @@
     if (rule >= 0 && pct >= 59) crossed = true;
   }
 
-  const INK = '#f2f1ec', AMBER = '#ffb547', BLUE = '#8fdcff', RED = '#ff6a2a', PANEL = '#0c150e';
+  const INK = '#10100c', AMBER = '#10100c', BLUE = '#0b3a8f', RED = '#d6260a', PANEL = '#00D451';
   // The fire log, a seismograph of fires: one bar per fire, as tall as the share of the forest it burned.
   function paintLog() {
     log.innerHTML = '';
@@ -145,8 +148,8 @@
     const X = t0 => left + (t0 - from) / span * (right - left), Y = s => bot - Math.min(1, s / (N * .8)) * (bot - top);
     const halo = {stroke: PANEL, 'stroke-width': 4, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
     const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-size': fs, 'font-weight': 700}, halo, a), log); e.textContent = s; return e; };
-    Kit.mk('line', {x1: left, x2: right, y1: Y(N / 2), y2: Y(N / 2), stroke: 'rgba(242,241,236,.14)', 'stroke-width': 1, 'stroke-dasharray': '2 4'}, log);
-    Kit.mk('line', {x1: left, x2: right, y1: bot, y2: bot, stroke: 'rgba(242,241,236,.3)', 'stroke-width': 1}, log);
+    Kit.mk('line', {x1: left, x2: right, y1: Y(N / 2), y2: Y(N / 2), stroke: 'rgba(16,16,12,.4)', 'stroke-width': 1, 'stroke-dasharray': '2 4'}, log);
+    Kit.mk('line', {x1: left, x2: right, y1: bot, y2: bot, stroke: 'rgba(16,16,12,.6)', 'stroke-width': 1}, log);
     let ruleX = null;
     if (rule >= 0 && rule > from) { ruleX = X(rule); Kit.mk('line', {x1: ruleX, x2: ruleX, y1: 3, y2: bot, stroke: BLUE, 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, log); }
     const bw = Math.max(2.5, W / 260 * WINDOW / span);
@@ -157,7 +160,7 @@
     }
     // The legend, top left: a swatch shaped like the bars, then what they are.
     const key = (y, col, said) => { Kit.mk('rect', Object.assign({x: left + 3, y: y - fs * .74, width: Math.max(3, fs * .3), height: fs * .8, rx: 1.5, fill: col}, halo), log); return txt(left + 3 + fs * .62, y, said, {fill: col}); };
-    const faint = txt(left + 2, Y(N / 2) - 5, 'half the map', {opacity: .62, 'font-weight': 600}), labels = [];
+    const faint = txt(left + 2, Y(N / 2) - 5, 'half the map', {opacity: .7, 'font-weight': 600}), labels = [];
     labels.push(key(top - fs * .5, AMBER, 'fires left to burn'));
     if (rule >= 0) labels.push(key(top + fs * .78, BLUE, 'put out by 10 a.m.'));
     const hit = (a, b) => a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
@@ -184,9 +187,9 @@
     }
     map.style.height = (box.width * ROWS / COLS) + 'px';
     const fit = Kit.fitCanvas(map); mx = fit.x; mapW = fit.W; mapH = fit.H;
-    const r = mapW / COLS * .9;
+    const r = mapW / COLS * CROWN;
     crowns = Array.from({length: AGES}, (_, k) => sprite(r, YOUNG.map((v, j) => v + (OLD[j] - v) * k / (AGES - 1))));
-    flame = sprite(mapW / COLS * 1.1, [255, 170, 50], true);
+    flame = sprite(mapW / COLS * 1.1, [214, 48, 10], true);
   }
   function draw() { layout(); paintMap(); paintLog(); }
 

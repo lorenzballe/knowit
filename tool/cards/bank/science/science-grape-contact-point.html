@@ -51,24 +51,23 @@ function draw() {
   Kit.mk('stop', {offset: '55%', 'stop-color': '#7fbf3a'}, gg);
   Kit.mk('stop', {offset: '100%', 'stop-color': '#3f7a1e'}, gg);
   const gl = Kit.mk('radialGradient', {id: 'glowG'}, defs);
-  [['0%', '#ffffff', 1], ['18%', '#fff6b0', .95], ['45%', '#ff9a3c', .6], ['75%', '#d23cff', .22], ['100%', '#d23cff', 0]]
+  [['0%', '#ffffff', 1], ['18%', '#ffe14a', .95], ['45%', '#ff6a1a', .7], ['75%', '#b0149e', .28], ['100%', '#b0149e', 0]]
     .forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gl));
   const bl = Kit.mk('radialGradient', {id: 'warmG'}, defs);
-  Kit.mk('stop', {offset: '0%', 'stop-color': '#ff9a3c', 'stop-opacity': .35}, bl);
-  Kit.mk('stop', {offset: '100%', 'stop-color': '#ff9a3c', 'stop-opacity': 0}, bl);
+  Kit.mk('stop', {offset: '0%', 'stop-color': '#ff6a1a', 'stop-opacity': .4}, bl);
+  Kit.mk('stop', {offset: '100%', 'stop-color': '#ff6a1a', 'stop-opacity': 0}, bl);
 
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * 0.06, fill: '#15121d'}, svg);
   // meter
-  const mLab = Kit.mk('text', {x: mx, y: fs * 1.4, fill: '#f3eefc', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
+  const mLab = Kit.mk('text', {x: mx, y: fs * 1.4, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
   mLab.textContent = 'Field between the grapes';
-  Kit.mk('rect', {x: mx, y: my, width: mw, height: mh, rx: mh / 2, fill: '#2e2840'}, svg);
-  const mBar = Kit.mk('rect', {x: mx, y: my, width: 0, height: mh, rx: mh / 2, fill: '#ffcf5a'}, svg);
+  Kit.mk('rect', {x: mx, y: my, width: mw, height: mh, rx: mh / 2, fill: '#10100c', 'fill-opacity': .2}, svg);
+  const mBar = Kit.mk('rect', {x: mx, y: my, width: 0, height: mh, rx: mh / 2, fill: '#10100c'}, svg);
 
   const warmA = Kit.mk('circle', {cx: ax, cy, r: r * 1.25, fill: 'url(#warmG)'}, svg);
   const warmB = Kit.mk('circle', {cy, r: r * 1.25, fill: 'url(#warmG)'}, svg);
   const mkGrape = (x) => {
     const g = Kit.mk('g', {}, svg);
-    Kit.mk('circle', {cx: 0, cy: 0, r, fill: 'url(#grapeG)', stroke: '#2c5a14', 'stroke-width': Math.max(r * 0.03, 1.5)}, g);
+    Kit.mk('circle', {cx: 0, cy: 0, r, fill: 'url(#grapeG)', stroke: '#1f4a0c', 'stroke-width': Math.max(r * 0.04, 2)}, g);
     Kit.mk('ellipse', {cx: -r * 0.35, cy: -r * 0.4, rx: r * 0.22, ry: r * 0.13, fill: '#fff', opacity: .55, transform: 'rotate(-30)'}, g);
     g.setAttribute('transform', `translate(${x},${cy})`);
     return g;
@@ -79,10 +78,10 @@ function draw() {
   const glow = Kit.mk('circle', {cy, r: 1, fill: 'url(#glowG)', 'pointer-events': 'none'}, svg);
   const lab = Kit.mk('g', {opacity: 0, 'pointer-events': 'none'}, svg);
   const ly = cy - r - fs * 1.6;
-  const line = Kit.mk('line', {y1: ly + fs * 0.4, y2: cy - r * 0.18, stroke: '#fff6b0', 'stroke-width': 2}, lab);
-  const lt = Kit.mk('text', {y: ly, fill: '#fff6b0', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle'}, lab);
+  const line = Kit.mk('line', {y1: ly + fs * 0.4, y2: cy - r * 0.18, stroke: '#10100c', 'stroke-width': 2}, lab);
+  const lt = Kit.mk('text', {y: ly, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, 'text-anchor': 'middle'}, lab);
   lt.textContent = 'contact point: hottest';
-  const hint = Kit.mk('text', {y: cy + r + fs * 1.6, fill: '#bdb3d6', 'font-size': fs, 'font-family': 'var(--body)', 'text-anchor': 'middle', 'pointer-events': 'none'}, svg);
+  const hint = Kit.mk('text', {y: cy + r + fs * 1.6, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'text-anchor': 'middle', 'pointer-events': 'none'}, svg);
   hint.textContent = '← drag';
   G = {W, H, r, cy, ax, bMin, bMax, gB, glow, warmB, warmA, mBar, mw, lab, line, lt, hint};
   gB.addEventListener('pointerdown', down);

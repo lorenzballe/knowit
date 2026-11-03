@@ -10,7 +10,7 @@
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
 #stage{display:flex;flex:1;min-height:0;overflow:hidden}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;border-radius:2cqh;background:#0a0d22}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;background:none}
 #see{align-self:flex-start}
 #why{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
 .say,.q{overflow-wrap:break-word}
@@ -102,7 +102,6 @@
     seed = 11;
     const dy = S * .012, sd = S * .014;
     svg.innerHTML = `<defs>
-      <radialGradient id="bgG" cx="50%" cy="50%" r="70%"><stop offset="0" stop-color="#27316c"/><stop offset=".6" stop-color="#151a40"/><stop offset="1" stop-color="#0a0d22"/></radialGradient>
       <radialGradient id="hg"><stop offset="0" stop-color="#000"/><stop offset=".78" stop-color="#050307"/><stop offset=".96" stop-color="#1a0a10"/><stop offset="1" stop-color="#2a0f12"/></radialGradient>
       <radialGradient id="scrG"><stop offset="0" stop-color="#ffdcaa" stop-opacity="0"/><stop offset=".62" stop-color="#ffd2a0" stop-opacity=".05"/><stop offset=".9" stop-color="#ffd9a8" stop-opacity=".22"/><stop offset="1" stop-color="#ffe7c4" stop-opacity=".5"/></radialGradient>
       <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="${dy}" stdDeviation="${sd}" flood-color="#000" flood-opacity=".6"/></filter>
@@ -114,19 +113,18 @@
     G = {};
     for (const k of ['bg', 'rings', 'hole', 'obj', 'light', 'ui']) G[k] = Kit.mk('g', {}, svg);
 
-    // The back wall: night paper with cut-out stars, kept clear of the placard.
-    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#bgG)'}, G.bg);
+    // Paper stars scattered straight on the card, kept clear of the placard.
     const clearOf = (x, y) => !(x < pad + pw + 8 && y < pad + ph + 8);
     const stars = [];
     for (let i = 0; i < 90; i++) {
       const x = 3 + rnd() * (W - 6), y = 3 + rnd() * (H - 6), r = .5 + rnd() * 1.3, o = .25 + rnd() * .6;
       if (!clearOf(x, y)) continue;
-      stars.push(Kit.mk('circle', {cx: x, cy: y, r, fill: CREAM, opacity: o, class: 'star'}, G.bg));
+      stars.push(Kit.mk('circle', {cx: x, cy: y, r, fill: '#fff', opacity: Math.max(.45, o), class: 'star'}, G.bg));
     }
     for (let i = 0; i < 7; i++) {
       const s = S * (.01 + rnd() * .012), x = s + rnd() * (W - 2 * s), y = s + rnd() * (H - 2 * s);
       if (!clearOf(x, y)) continue;
-      stars.push(Kit.mk('path', {d: `M${x},${y - s}Q${x},${y} ${x + s},${y}Q${x},${y} ${x},${y + s}Q${x},${y} ${x - s},${y}Q${x},${y} ${x},${y - s}Z`, fill: CREAM, opacity: .85, class: 'star'}, G.bg));
+      stars.push(Kit.mk('path', {d: `M${x},${y - s}Q${x},${y} ${x + s},${y}Q${x},${y} ${x},${y + s}Q${x},${y} ${x - s},${y}Q${x},${y} ${x},${y - s}Z`, fill: '#fff', opacity: .85, class: 'star'}, G.bg));
     }
 
     // Paper rings, hand-cut and stacked in depth: night blue to the hot amber edge.
@@ -185,7 +183,7 @@
     // Alive: the paper rings drift, the stars twinkle, the last light breathes.
     if (!Kit.calm) {
       rings.forEach((g, i) => loops.push(gsap.to(g, {rotation: (i % 2 ? -360 : 360), svgOrigin: `${cx} ${cy}`, duration: 70 + i * 22, repeat: -1, ease: 'none'})));
-      stars.forEach((s, i) => { if (i % 5 === 0) loops.push(gsap.to(s, {opacity: .08, duration: .9 + Math.random() * 1.8, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 1.4 + Math.random() * 2})); });
+      stars.forEach((s, i) => { if (i % 5 === 0) loops.push(gsap.to(s, {opacity: .2, duration: .9 + Math.random() * 1.8, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 1.4 + Math.random() * 2})); });
       loops.push(gsap.to(photon, {opacity: .25, duration: 2.2, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
     }
   }

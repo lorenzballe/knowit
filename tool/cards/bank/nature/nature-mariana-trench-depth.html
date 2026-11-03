@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0}
-#sea{width:100%;flex:1;min-height:0;display:block;touch-action:none;cursor:ns-resize;border-radius:1.8cqh;overflow:hidden}
+#sea{width:100%;flex:1;min-height:0;display:block;touch-action:none;cursor:ns-resize;overflow:visible}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
@@ -51,27 +51,37 @@ function draw(){
   Kit.mk('stop', {offset: 0, 'stop-color': '#3a95d4'}, lg);
   Kit.mk('stop', {offset: .35, 'stop-color': '#0f4a85'}, lg);
   Kit.mk('stop', {offset: 1, 'stop-color': '#030c1c'}, lg);
-  // sky
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: top, fill: '#cfe8f7'}, svg);
-  // water
-  Kit.mk('rect', {x: 0, y: top, width: W, height: H - top, fill: 'url(#wat)'}, svg);
-  // seabed
-  let p = `M0 ${H} L0 ${y(floor(0))}`;
-  for (let x = 0; x <= W; x += W / 120) p += ` L${x.toFixed(1)} ${y(floor(x)).toFixed(1)}`;
-  p += ` L${W} ${H} Z`;
-  Kit.mk('path', {d: p, fill: '#4a3a30', stroke: '#8a6a52', 'stroke-width': 2}, svg);
+  const sc = svg;
+  const step = W / 120;
+  const xs = [];
+  for (let x = 0; x <= W + 0.01; x += step) xs.push(x);
+  // water: only the body between the surface and the seabed
+  let w = `M0 ${top} L${W} ${top}`;
+  for (let i = xs.length - 1; i >= 0; i--) w += ` L${xs[i].toFixed(1)} ${y(floor(xs[i])).toFixed(1)}`;
+  w += ' Z';
+  Kit.mk('path', {d: w, fill: 'url(#wat)'}, sc);
+  // seabed: a band following the floor
+  const th = H * 0.04;
+  let p = '';
+  xs.forEach((x, i) => { p += (i ? ' L' : 'M') + x.toFixed(1) + ' ' + y(floor(x)).toFixed(1); });
+  for (let i = xs.length - 1; i >= 0; i--) p += ` L${xs[i].toFixed(1)} ${(y(floor(xs[i])) + th).toFixed(1)}`;
+  p += ' Z';
+  Kit.mk('path', {d: p, fill: '#4a3a30', stroke: '#8a6a52', 'stroke-width': 2, 'stroke-linejoin': 'round'}, sc);
   // surface line
-  Kit.mk('line', {x1: 0, x2: W, y1: top, y2: top, stroke: '#ffffff', 'stroke-width': 2}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: top, y2: top, stroke: '#10100c', 'stroke-width': 2}, sc);
   // depth scale
   const ax = W * 0.05;
   for (let d = 0; d <= 10000; d += 2000) {
     const yy = y(d);
-    Kit.mk('line', {x1: ax, x2: ax + fs * .7, y1: yy, y2: yy, stroke: '#ffffff', 'stroke-opacity': .7, 'stroke-width': 1.5}, svg);
-    const t = Kit.mk('text', {x: ax + fs * .9, y: yy + fs * .35, fill: '#ffffff', 'fill-opacity': .85, 'font-size': fs, class: 'num'}, svg);
-    t.textContent = d === 0 ? 'Sea level' : (d / 1000) + ' km';
+    const surf = d === 0;
+    const wet = d > 0 && d < 4200;
+    const ink = !wet;
+    Kit.mk('line', {x1: ax, x2: ax + fs * .7, y1: yy, y2: yy, stroke: ink ? '#10100c' : '#ffffff', 'stroke-opacity': ink ? 1 : .7, 'stroke-width': 1.5}, svg);
+    const t = Kit.mk('text', {x: ax + fs * .9, y: surf ? yy - fs * .35 : yy + fs * .35, fill: ink ? '#10100c' : '#ffffff', 'fill-opacity': ink ? 1 : .85, 'font-size': fs, class: 'num'}, svg);
+    t.textContent = surf ? 'Sea level' : (d / 1000) + ' km';
   }
   // target line (revealed at the end)
-  G.mark = Kit.mk('line', {x1: 0, x2: W, y1: y(MAX), y2: y(MAX), stroke: '#ff5a4e', 'stroke-width': 2, 'stroke-dasharray': '6 5', opacity: done ? 1 : 0}, svg);
+  G.mark = Kit.mk('line', {x1: W * 0.035, x2: W * 0.965, y1: y(MAX), y2: y(MAX), stroke: '#b3261e', 'stroke-width': 2, 'stroke-dasharray': '6 5', opacity: done ? 1 : 0}, svg);
   // boat
   const bw = fs * 2.4;
   Kit.mk('path', {d: `M${cx - bw / 2} ${top - fs * .9} L${cx + bw / 2} ${top - fs * .9} L${cx + bw * .35} ${top} L${cx - bw * .35} ${top} Z`, fill: '#ff8a2a', stroke: '#1b1b1b', 'stroke-width': 1.5}, svg);
@@ -81,9 +91,9 @@ function draw(){
   G.probe = Kit.mk('g', {}, svg);
   G.glow = Kit.mk('circle', {cx: 0, cy: 0, r: fs * 1.3, fill: '#ffe066', opacity: .25}, G.probe);
   Kit.mk('circle', {cx: 0, cy: 0, r: fs * .7, fill: '#ffe066', stroke: '#1b1b1b', 'stroke-width': 2}, G.probe);
-  G.name = Kit.mk('text', {x: fs * 1.6, y: -fs * 1.7, fill: '#ff8a7f', 'font-size': fs, class: 'lab', opacity: done ? 1 : 0}, G.probe);
+  G.name = Kit.mk('text', {x: fs * 1.6, y: -fs * 1.7, fill: '#ff8a7f', stroke: '#10100c', 'stroke-width': 3, 'stroke-linejoin': 'round', 'paint-order': 'stroke', 'font-size': fs, class: 'lab', opacity: done ? 1 : 0}, G.probe);
   G.name.textContent = 'Challenger Deep';
-  G.read = Kit.mk('text', {x: fs * 1.6, y: fs * .45, fill: '#ffffff', 'font-size': fs * 1.25, class: 'num'}, G.probe);
+  G.read = Kit.mk('text', {x: fs * 1.6, y: fs * .45, fill: '#ffffff', stroke: '#10100c', 'stroke-width': 3, 'stroke-linejoin': 'round', 'paint-order': 'stroke', 'font-size': fs * 1.25, class: 'num'}, G.probe);
   place();
 }
 

@@ -33,7 +33,8 @@ const NS = 'http://www.w3.org/2000/svg';
 const s = {v: 0};
 let on = false, done = false, G = null, T = 0, ticking = false;
 const found = {L: false, R: false};
-const POS = '#ff6b6b', NEG = '#6bc1ff';
+const POS = '#d92b3a', NEG = '#1f56d6';
+const INK = '#10100c';
 let parts = [];
 
 function txt(parent, x, y, str, size, fill, weight, anchor) {
@@ -49,30 +50,29 @@ function build() {
   G = {W, H, fs, cx: W / 2, by: H * 0.72, fh: Math.min(H * 0.42, W * 0.5), pw: Math.max(W * 0.028, 7), px: [W * 0.08, W * 0.92], top, bot: H * 0.66};
   const defs = Kit.mk('defs', {}, svg);
   const lg = Kit.mk('linearGradient', {id: 'fg', x1: 0, y1: 1, x2: 0, y2: 0}, defs);
-  [['0%', '#4a74ff'], ['14%', '#ff8a1e'], ['55%', '#ffcf3d'], ['100%', '#fff7cf']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, lg));
+  [['0%', '#2f4fd6'], ['14%', '#ff6a00'], ['55%', '#ff9d00'], ['100%', '#ffc21a']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, lg));
   const fl = Kit.mk('filter', {id: 'blur', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
   Kit.mk('feGaussianBlur', {stdDeviation: fs * 0.9}, fl);
 
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: fs, fill: '#141220'}, svg);
   // plates
   G.px.forEach((x, i) => {
     const col = i ? POS : NEG;
-    Kit.mk('rect', {x: x - G.pw / 2, y: top, width: G.pw, height: G.bot - top, rx: G.pw / 2, fill: '#c9cbd6'}, svg);
+    Kit.mk('rect', {x: x - G.pw / 2, y: top, width: G.pw, height: G.bot - top, rx: G.pw / 2, fill: INK, opacity: .35}, svg);
     Kit.mk('rect', {x: x - G.pw / 2, y: top, width: G.pw, height: G.bot - top, rx: G.pw / 2, fill: col, opacity: 0, class: 'plateglow'}, svg);
     Kit.mk('circle', {cx: x, cy: top - fs * 1.25, r: fs * 0.95, fill: col}, svg);
-    txt(svg, x, top - fs * 1.2, i ? '+' : '−', fs * 1.4, '#141220', 800);
+    txt(svg, x, top - fs * 1.2, i ? '+' : '−', fs * 1.4, '#ffffff', 800);
   });
   // candle
   const ct = G.by + G.fh * 0.09, cw = Math.max(W * 0.11, 26);
-  Kit.mk('rect', {x: G.cx - cw / 2, y: ct, width: cw, height: H - ct + fs, rx: cw * 0.15, fill: '#efe6d6'}, svg);
-  Kit.mk('ellipse', {cx: G.cx, cy: ct, rx: cw / 2, ry: cw * 0.12, fill: '#fbf5ea'}, svg);
+  Kit.mk('rect', {x: G.cx - cw / 2, y: ct, width: cw, height: H - ct + fs, rx: cw * 0.15, fill: '#efe6d6', stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1.5}, svg);
+  Kit.mk('ellipse', {cx: G.cx, cy: ct, rx: cw / 2, ry: cw * 0.12, fill: '#fbf5ea', stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1.5}, svg);
   Kit.mk('line', {x1: G.cx, y1: ct, x2: G.cx, y2: G.by - G.fh * 0.03, stroke: '#2a2420', 'stroke-width': Math.max(fs * 0.18, 2.5), 'stroke-linecap': 'round'}, svg);
   // flame
-  G.glowL = Kit.mk('path', {fill: '#ff9a2e', opacity: .55, filter: 'url(#blur)'}, svg);
-  G.glowR = Kit.mk('path', {fill: '#ff9a2e', opacity: .55, filter: 'url(#blur)'}, svg);
-  G.L = Kit.mk('path', {fill: 'url(#fg)', opacity: .9, 'data-side': 'L', 'stroke-width': Math.max(fs * 0.16, 2), stroke: 'none'}, svg);
-  G.R = Kit.mk('path', {fill: 'url(#fg)', opacity: .9, 'data-side': 'R', 'stroke-width': Math.max(fs * 0.16, 2), stroke: 'none'}, svg);
-  G.blue = Kit.mk('ellipse', {fill: '#4a74ff', opacity: .7}, svg);
+  G.glowL = Kit.mk('path', {fill: '#ff7a1e', opacity: .45, filter: 'url(#blur)'}, svg);
+  G.glowR = Kit.mk('path', {fill: '#ff7a1e', opacity: .45, filter: 'url(#blur)'}, svg);
+  G.L = Kit.mk('path', {fill: 'url(#fg)', opacity: .95, 'data-side': 'L', 'stroke-width': Math.max(fs * 0.16, 2), stroke: 'none'}, svg);
+  G.R = Kit.mk('path', {fill: 'url(#fg)', opacity: .95, 'data-side': 'R', 'stroke-width': Math.max(fs * 0.16, 2), stroke: 'none'}, svg);
+  G.blue = Kit.mk('ellipse', {fill: '#2f4fd6', opacity: .7}, svg);
   // ions
   G.pg = Kit.mk('g', {}, svg);
   parts = [];
@@ -84,10 +84,10 @@ function build() {
   const ly = top + fs * 1.1;
   G.labL = Kit.mk('g', {opacity: found.L ? 1 : 0}, svg);
   txt(G.labL, W * 0.31, ly, 'Positive ions', fs, POS, 800);
-  txt(G.labL, W * 0.31, ly + fs * 1.4, '← to − plate', fs * 0.92, '#f3eee6', 600);
+  txt(G.labL, W * 0.31, ly + fs * 1.4, '← to − plate', fs * 0.92, INK, 600);
   G.labR = Kit.mk('g', {opacity: found.R ? 1 : 0}, svg);
   txt(G.labR, W * 0.69, ly, 'Negative ions', fs, NEG, 800);
-  txt(G.labR, W * 0.69, ly + fs * 1.4, 'to + plate →', fs * 0.92, '#f3eee6', 600);
+  txt(G.labR, W * 0.69, ly + fs * 1.4, 'to + plate →', fs * 0.92, INK, 600);
   render(0);
 }
 

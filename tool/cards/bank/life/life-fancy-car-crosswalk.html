@@ -15,6 +15,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh}
+#stage,#watch,#road{background:none;border:0;box-shadow:none;border-radius:0}
 #watch{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.1cqh}
 .legend{display:flex;gap:4cqw;font:700 max(1.5cqh,11.5px)/1 var(--body)}
 .legend span{display:flex;align-items:center;gap:1.6cqw}
@@ -130,7 +131,7 @@
   // The street: two lanes, a zebra, the kerbs, the pedestrian waiting on the far side.
   function draw() {
     legend();
-    let svg = $('road');
+    const svg = $('road');
     // Drawn again while the cars are still coming: the cars finish at once, and the end is drawn.
     if (running) { const r = running; running = null; r.progress(1); return; }
     svg.innerHTML = '';
@@ -138,10 +139,6 @@
     const rh = Math.min(H * .62, W * .5), top = (H - rh) / 2 + H * .06, bot = top + rh, lane = rh / 2;
     const zx = W * .66, zw = Math.max(W * .12, 30), stopX = zx - zw / 2 - Math.max(6, W * .02);
     const len = Math.min(W * .19, lane * 1.75), wid = lane * .58, cy = top + lane * 1.5;
-    const clip = Kit.mk('clipPath', {id: 'roadClip'}, Kit.mk('defs', {}, svg));
-    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(14, H * .06)}, clip);
-    svg = Kit.mk('g', {'clip-path': 'url(#roadClip)'}, svg);
-    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#f3b98f'}, svg);
     Kit.mk('rect', {x: 0, y: top, width: W, height: rh, fill: '#2b2622'}, svg);
     for (const y of [top, bot]) Kit.mk('line', {x1: 0, y1: y, x2: W, y2: y, stroke: '#fff', 'stroke-width': 2, opacity: .5}, svg);
     Kit.mk('line', {x1: 0, y1: top + lane, x2: W, y2: top + lane, stroke: PEACH, 'stroke-width': 2, 'stroke-dasharray': '10 9', opacity: .7}, svg);

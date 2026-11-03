@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive card titled Underground asking what the bank's floor rests on, which lets thieves dig silently. Holding the button tunnels under the vault and reveals the answer.",
-    "ground": "#1c1712"
+    "label": "Interactive card titled Underground asking what the bank's floor rests on, which lets thieves dig silently. Holding the button tunnels under the vault and reveals the answer."
   },
   "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=aRTxjOeJRbY&t=391s",

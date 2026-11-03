@@ -34,6 +34,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 let G = null, t = 0, flash = 1, done = false, pulseTl = null;
+const COOL_F = '#ff7a70', COOL_S = '#ffd6d1', HOT_F = '#7d120b', HOT_S = '#3a0603';
 const lerp = (a, b, u) => a + (b - a) * u;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const smooth = (a, b, x) => { const u = clamp((x - a) / (b - a), 0, 1); return u * u * (3 - 2 * u); };
@@ -48,22 +49,20 @@ function build() {
   const m = Math.min(W, H), fs = Math.max(f, 12);
   const top = fs * 2.6, bot = H - fs * 2.6;
   const cx = W / 2, cy = lerp(top, bot, .62), pr = m * .075;
-  Kit.mk('rect', {x: 0, y: top, width: W, height: bot - top, rx: fs * .8, fill: '#f6d9c6'}, svg);
-  Kit.mk('rect', {x: 0, y: top, width: W, height: (bot - top) * .2, rx: fs * .8, fill: '#fbe8dc'}, svg);
   const cr = m * .045, cells = [];
   for (let y = top + cr * 1.4; y < bot - cr; y += cr * 2.3) {
     const row = Math.round((y - top) / (cr * 2.3));
     for (let x = cr * 1.4 + (row % 2) * cr * 1.15; x < W - cr; x += cr * 2.3) {
       const d = Math.hypot(x - cx, y - cy);
       if (d < pr * 1.7) continue;
-      const c = Kit.mk('circle', {cx: x, cy: y, r: cr, fill: '#f1c2a6', stroke: '#d9a084', 'stroke-width': 1.2}, svg);
+      const c = Kit.mk('circle', {cx: x, cy: y, r: cr, fill: COOL_F, stroke: COOL_S, 'stroke-width': 1.2}, svg);
       cells.push({c, d});
     }
   }
   const bw = m * .09;
-  const beam = Kit.mk('rect', {x: cx - bw / 2, y: 0, width: bw, height: cy, fill: '#19c3e6', opacity: .55}, svg);
-  const core = Kit.mk('rect', {x: cx - bw / 8, y: 0, width: bw / 4, height: cy, fill: '#e9fbff', opacity: .9}, svg);
-  const glow = Kit.mk('circle', {cx, cy, r: pr * 1.6, fill: '#ff8a1f', opacity: .5}, svg);
+  const beam = Kit.mk('rect', {x: cx - bw / 2, y: 0, width: bw, height: cy, fill: '#8fecff', opacity: .55}, svg);
+  const core = Kit.mk('rect', {x: cx - bw / 8, y: 0, width: bw / 4, height: cy, fill: '#ffffff', opacity: .9}, svg);
+  const glow = Kit.mk('circle', {cx, cy, r: pr * 1.6, fill: '#ffd23f', opacity: .5}, svg);
   const shards = [], n = 8;
   for (let i = 0; i < n; i++) {
     const a0 = i / n * Math.PI * 2, a1 = (i + 1) / n * Math.PI * 2;
@@ -72,11 +71,11 @@ function build() {
     shards.push({p, a: (a0 + a1) / 2});
   }
   const lab = (x, y, txt, anchor, col) => {
-    const e = Kit.mk('text', {x, y, 'text-anchor': anchor, fill: col || '#1b1530', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg);
+    const e = Kit.mk('text', {x, y, 'text-anchor': anchor, fill: col || '#ffffff', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg);
     e.textContent = txt; return e;
   };
   lab(cx + bw * .8, fs * 1.6, 'laser pulse', 'start', 'currentColor').setAttribute('style', 'fill:var(--k)');
-  lab(fs * .6, top + (bot - top) * .1 + fs * .35, 'skin: light passes', 'start', '#7a4a36');
+  lab(fs * .6, top + (bot - top) * .1 + fs * .35, 'skin: light passes', 'start', '#ffffff');
   const inkX = cx + pr * 3.6 < W - fs * 3 ? cx + pr * 3.6 : cx;
   const inkY = inkX === cx ? cy + pr * 4.2 : cy + fs * .35;
   lab(inkX, inkY, 'ink', inkX === cx ? 'middle' : 'start');
@@ -91,8 +90,8 @@ function render() {
   const R = pr * 1.2 + m * .5 * Math.pow(1 - t, 1.3);
   cells.forEach(({c, d}) => {
     const h = clamp((R - d) / (m * .14), 0, 1);
-    c.setAttribute('fill', mix('#f1c2a6', '#d4301f', h));
-    c.setAttribute('stroke', mix('#d9a084', '#8f1a0f', h));
+    c.setAttribute('fill', mix(COOL_F, HOT_F, h));
+    c.setAttribute('stroke', mix(COOL_S, HOT_S, h));
   });
   const burst = smooth(.7, 1, t), off = pr * 2.3 * burst;
   shards.forEach(({p, a}, i) => {

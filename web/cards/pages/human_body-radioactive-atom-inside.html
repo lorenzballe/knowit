@@ -10,16 +10,14 @@
 #pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
 #pic .lab{letter-spacing:.08em}
 #pic .num{font-family:var(--mono)}
-.zout{fill:color-mix(in srgb,var(--k) 4%,transparent)}
 .skin{fill:color-mix(in srgb,var(--k) 26%,transparent)}
-.tis{fill:color-mix(in srgb,var(--k) 9%,transparent)}
 .cell{fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:2.2}
 .nuc{fill:color-mix(in srgb,var(--k) 14%,transparent);stroke:var(--k);stroke-width:1.6;stroke-dasharray:5 4}
 .dna{fill:none;stroke:var(--k);stroke-width:2.6;stroke-linecap:round}
 .rung{stroke:var(--k);stroke-width:1.3;opacity:.55}
 .dust{fill:var(--k);opacity:.35}
 .ray{stroke:var(--k);stroke-width:2.2;stroke-linecap:round}
-.hit{fill:#e8202a;stroke:var(--c);stroke-width:1.2}
+.hit{fill:#ffd400;stroke:var(--k);stroke-width:1.2}
 .stop{fill:var(--k)}
 #why{display:flex;flex-direction:column;gap:.8cqh;margin-top:1cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
@@ -54,9 +52,7 @@ Kit.onShow.card = () => {
   G = {W, H, fs, skinT, skinB, cx, cy, R, nr, xs, xe, a, k, y0, y1, Rr};
   const mk = (tg, at, p) => Kit.mk(tg, at, p || svg);
   // layers
-  mk('rect', {x: 0, y: 0, width: W, height: skinT, class: 'zout'});
   mk('rect', {x: 0, y: skinT, width: W, height: skinB - skinT, class: 'skin'});
-  mk('rect', {x: 0, y: skinB, width: W, height: H - skinB, class: 'tis'});
   for (let i = 0; i < 26; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * skinT * .92 + 4, r: 1 + Kit.rnd() * 1.6, class: 'dust'});
   mk('circle', {cx, cy, r: R, class: 'cell'});
   mk('circle', {cx, cy, r: nr, class: 'nuc'});

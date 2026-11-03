@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611031347,
- "built": "2026-11-03T13:47:23Z",
+ "version": 202611032104,
+ "built": "2026-11-03T21:04:09Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -27681,8 +27681,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Closed Door card asking why North Korea refused to open its economy after the Soviet collapse. Three reasons are offered, including that it could feed itself and that foreign influence would get in. Pick a reason, then watch an illustrated window with flies outside it.",
-    "page": "pages/economics-flies-window.html?v=51517b86a000",
-    "bytes": 11298
+    "page": "pages/economics-flies-window.html?v=d848573bae1e",
+    "bytes": 11013
    },
    "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=uLqfa27S4TQ&t=643s",
@@ -29215,8 +29215,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive page with a slider that traps ships in the Gulf one by one. It asks what the roughly 1,000 stuck ships are worth, and shows the idle fleet's value of over $25 billion and the share carrying oil or gas.",
-    "page": "pages/economics-gulf-idle-fleet.html?v=225d633e94d0",
-    "bytes": 6039
+    "page": "pages/economics-gulf-idle-fleet.html?v=c60a29d9d145",
+    "bytes": 5993
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=Zfk7QT4zhZQ&t=129s",
@@ -29583,8 +29583,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A map-style card asks whether Saudi and Emirati pipelines can replace oil flow through the Strait of Hormuz. Tapping the strait closes it, and a bar chart compares 2–3 million barrels a day in pipeline capacity with 20 million through Hormuz.",
-    "page": "pages/economics-hormuz-pipeline-shortfall.html?v=a47c59a16add",
-    "bytes": 10287
+    "page": "pages/economics-hormuz-pipeline-shortfall.html?v=d447ec7f264d",
+    "bytes": 10009
    },
    "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=Zfk7QT4zhZQ&t=357s",
@@ -36617,8 +36617,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Two apples on a time slider running from Harvest to Later, with a slider to drag. Dragging it lets time pass for both apples, one kept in a cool, dark store. Asks how cool, dark storage slows an apple's ripening.",
-    "page": "pages/food-apple-slow-breath.html?v=9ba373c0847e",
-    "bytes": 9458
+    "page": "pages/food-apple-slow-breath.html?v=188be1126815",
+    "bytes": 9346
    },
    "source": "Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=YEMGl9gG9Zk&t=129s",
@@ -42956,8 +42956,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A before-and-after picture of a mine tunnel inside a mountain turned into an apple store. A slider runs between them. The prompt asks the reader to drag the slider to turn the mine's empty void into a store.",
-    "page": "pages/food-mine-apple-cells.html?v=a2192ffce84b",
-    "bytes": 7486
+    "page": "pages/food-mine-apple-cells.html?v=290386cdba7f",
+    "bytes": 7665
    },
    "source": "Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=YEMGl9gG9Zk&t=157s",
@@ -49022,9 +49022,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A dark bed with a sleeping shape under the sheets. Hold to shine a flashlight on the bed; release to move on. Asks: can a quick night check tell the sleeper from a fake head?",
-    "ground": "#161d30",
-    "page": "pages/history-alcatraz-dummy-heads-4.html?v=4562914c8df7",
-    "bytes": 10713
+    "page": "pages/history-alcatraz-dummy-heads-4.html?v=1af0b44fd49b",
+    "bytes": 10524
    },
    "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=Q8GEU8YQSiE&t=381s",
@@ -49220,8 +49219,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A picture of air containing hydrogen, water vapor and nitrogen, marked as not to scale. The question asks what scientists feared one bomb could do to Earth's atmosphere. Tap the picture to set off one bomb.",
-    "page": "pages/history-atmosphere-fusion-fire.html?v=7af2a082b5cd",
-    "bytes": 10881
+    "page": "pages/history-atmosphere-fusion-fire.html?v=66aa7bafd0ee",
+    "bytes": 10728
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=1314s",
@@ -49298,8 +49297,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A drone view of underwater Roman ruins at Baia, with columns and mosaics visible below the sea. Asks: what is the 'Atlantis of Italy'? Drag the coast down to see how the sinking volcanic ground submerged the city.",
-    "page": "pages/history-baia-sunken-city.html?v=f7029d575802",
-    "bytes": 12286
+    "page": "pages/history-baia-sunken-city.html?v=88d54358e489",
+    "bytes": 11997
    },
    "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=z_mawLbnXNQ&t=633s",
@@ -49337,8 +49336,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A split view of plastic's source: on one side a plant, labeled cellulose, the material used before Bakelite; on the other an oil rig and gas, the switch Bakelite made in 1907. The page asks how Bakelite changed what plastic is made from.",
-    "page": "pages/history-bakelite-fossil-plastic.html?v=3c9a02e192e1",
-    "bytes": 11117
+    "page": "pages/history-bakelite-fossil-plastic.html?v=91652f3b7eb7",
+    "bytes": 10857
    },
    "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=MRju0pJp3mk&t=73s",
@@ -51191,8 +51190,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A timeline of Crimea's administrative status with a draggable marker. The question asks why Russia called Crimea 'theirs' after giving it away in 1954. The view of Crimea changes as the marker moves along the years.",
-    "page": "pages/history-crimea-1954-gift.html?v=e9f654d6c5f0",
-    "bytes": 9640
+    "page": "pages/history-crimea-1954-gift.html?v=f286d26b3a95",
+    "bytes": 10094
    },
    "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=BkJY93_hauY&t=328s",
@@ -52914,8 +52913,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A grid of squares representing sea. The page asks how the Allies tricked the Germans into revealing their Enigma settings. Tap a square to lay a mine there and learn how a known location gave the Allies a crib.",
-    "page": "pages/history-gardening-mines-crib.html?v=b64b26f79bb3",
-    "bytes": 8407
+    "page": "pages/history-gardening-mines-crib.html?v=a44e4ecba028",
+    "bytes": 8264
    },
    "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=JsBZOcqZerk&t=2550s",
@@ -57394,8 +57393,8 @@
     "touch": "taps",
     "label": "Multiple-choice card asking what volcanic event actually buried Pompeii. Three options: a slow river of lava, a racing scorching cloud of ash, pumice and gas, or the ground cracking open and swallowing the city. A prompt below says to pick one, then watch Vesuvius in 79 AD.",
     "graded": false,
-    "page": "pages/history-pompeii-pyroclastic-flow.html?v=d85d04259383",
-    "bytes": 8897
+    "page": "pages/history-pompeii-pyroclastic-flow.html?v=d2e25c7f5de6",
+    "bytes": 8592
    },
    "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=z_mawLbnXNQ&t=454s",
@@ -57472,8 +57471,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A pyramid drawn without its smooth white sides or shiny top, shown as it looks today. The question asks what shape the pyramids were meant to stand for: add the smooth white sides, the sun's rays, or the sloping sides.",
-    "page": "pages/history-pyramid-sun-rays.html?v=4d76e42a9412",
-    "bytes": 8748
+    "page": "pages/history-pyramid-sun-rays.html?v=790f0beffe3b",
+    "bytes": 8699
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
    "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=305s",
@@ -58324,8 +58323,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Question: what specific part of the car killed Ayrton Senna at Imola? Shows Senna's car hitting a wall, with a Zoom in control to follow the crash step by step.",
-    "page": "pages/history-senna-suspension-fragment.html?v=a5e788f4fef1",
-    "bytes": 10093
+    "page": "pages/history-senna-suspension-fragment.html?v=77102a55b35d",
+    "bytes": 9809
    },
    "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=gh5UkpxPTFA&t=134s",
@@ -59580,8 +59579,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Illustration of the Titanic with its stern raised as the bow sinks, and three propellers hanging out of the water. The page asks the reader to drag the ship's bow down into the sea and see how the propellers' weight snaps the hull.",
-    "page": "pages/history-titanic-propeller-lever.html?v=0f6cc6f37c61",
-    "bytes": 12297
+    "page": "pages/history-titanic-propeller-lever.html?v=8e73e00ea3be",
+    "bytes": 12010
    },
    "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=hR2yfGGHniY&t=485s",
@@ -59857,8 +59856,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Three tappable steps in order: sketch an eruption, troops reach Naples, film 18 March 1944. The question asks what made the 1944 Vesuvius eruption unique in its historical record.",
-    "page": "pages/history-vesuvius-first-film.html?v=16976e1f7f3e",
-    "bytes": 10183
+    "page": "pages/history-vesuvius-first-film.html?v=3f589d38d8c2",
+    "bytes": 10114
    },
    "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=IxqDIGusjko",
@@ -61975,8 +61974,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Close-up comparison of a pile of fine white wood ash and a pile of coarse grey bone powder. The question asks how cremated bone powder differs from wood ash. A Zoom in button reveals the answer step by step.",
-    "page": "pages/human_body-bone-powder-texture.html?v=aeeec56637f9",
-    "bytes": 7466
+    "page": "pages/human_body-bone-powder-texture.html?v=98c158b6d4c3",
+    "bytes": 7310
    },
    "source": "Geopop, “Come avviene la cremazione dal punto di vista tecnico” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=53_ck1r6kJs&t=230s",
@@ -65321,8 +65320,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Page titled 'Why we forget our dreams' with a 'Hold to fall asleep' button. Holding it lowers the noradrenaline level, and the reader watches which dream memories get saved.",
-    "page": "pages/human_body-forgotten-dreams.html?v=162ad59d30f7",
-    "bytes": 11029
+    "page": "pages/human_body-forgotten-dreams.html?v=ac66007d332f",
+    "bytes": 10914
    },
    "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=ddHHHndH-6c&t=506s",
@@ -67289,8 +67288,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card titled 'Astute free card SWEAT' asks how high humidity stops sweat from cooling us. A humidity dial runs from Dry (40%) to Muggy, showing sweat evaporating in dry air and sweat staying liquid on skin in muggy air, with heat trapped in the body.",
-    "page": "pages/human_body-humidity-traps-sweat.html?v=13094f69230f",
-    "bytes": 8881
+    "page": "pages/human_body-humidity-traps-sweat.html?v=c32f6f67ef8b",
+    "bytes": 8386
    },
    "source": "Geopop, “Perché quando c'è più umidità sentiamo più caldo e cos'è la temperatura percepita?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=AIVEax2_yEA&t=43s",
@@ -67481,8 +67480,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A tap-to-tattoo page. The reader taps the dermis in three places to tattoo it and watches which cells arrive. The page asks how the body reacts to tattoo ink, and shows a macrophage engulfing an ink particle it cannot digest.",
-    "page": "pages/human_body-ink-meets-macrophages.html?v=698627a112ce",
-    "bytes": 9058
+    "page": "pages/human_body-ink-meets-macrophages.html?v=1302dae1231c",
+    "bytes": 8898
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=305s",
@@ -71100,9 +71099,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A glowing radioactive atom sits outside a body outline. The reader drags it down, past the skin and into a cell, to see how close range changes where its radiation lands.",
-    "ground": "#0b1026",
-    "page": "pages/human_body-radioactive-atom-inside.html?v=e6e425f6ab11",
-    "bytes": 8616
+    "page": "pages/human_body-radioactive-atom-inside.html?v=26c7d89867e4",
+    "bytes": 8364
    },
    "source": "Veritasium, “Radiation vs Radioactive Atoms” (YouTube, 2011)",
    "reference": "https://www.youtube.com/watch?v=sehKAccM8p0&t=139s",
@@ -71291,8 +71289,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive diagram of a cell surrounded by water. A slider adds salt outside the cell, and arrows show water leaving the cell as it shrinks. The question asks why too much salt makes cells lose water.",
-    "page": "pages/human_body-salt-osmosis-cell.html?v=ff7e8656a5f8",
-    "bytes": 8314
+    "page": "pages/human_body-salt-osmosis-cell.html?v=83fcb9461da1",
+    "bytes": 8203
    },
    "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=WtF2R7J9DUo&t=250s",
@@ -73344,8 +73342,8 @@
     "touch": "taps",
     "label": "Page titled 'Why do tattoos last forever?' with four step cards to tap in the order they happen: a macrophage swallows the ink; the macrophage dies and releases the ink; a new macrophage swallows the same ink; the ink is kept because it cannot be broken down.",
     "graded": false,
-    "page": "pages/human_body-tattoo-ink-relay.html?v=c8e498267c32",
-    "bytes": 8572
+    "page": "pages/human_body-tattoo-ink-relay.html?v=edfca1ff8c7a",
+    "bytes": 8571
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=332s",
@@ -84627,8 +84625,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Text asks why children work the narrow tunnels of Potosí's silver mine, with a button to hold to send them in. Holding it shows two miners walking toward the silver, and only the small one fits the tunnel.",
-    "page": "pages/life-child-miners-potosi.html?v=69895ede75ac",
-    "bytes": 8362
+    "page": "pages/life-child-miners-potosi.html?v=fd030a2809f7",
+    "bytes": 8397
    },
    "source": "Geopop, “Viaggio a Potosi, nella miniera d'argento boliviana: una realtá sconcertante” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=88cWsU7e7js&t=396s",
@@ -86350,8 +86348,8 @@
     "touch": "taps",
     "label": "A page titled The crosswalk test asks whether drivers of fancier cars stop less for pedestrians waiting at a crosswalk. It offers three choices: a big gap, a smaller gap, or no clear link. Below, three studies from 2012, 2020 and 2023 are summarized with their results.",
     "graded": false,
-    "page": "pages/life-fancy-car-crosswalk.html?v=03b062a4f35b",
-    "bytes": 16339
+    "page": "pages/life-fancy-car-crosswalk.html?v=1d104739fd98",
+    "bytes": 16112
    },
    "source": "Diventare Strong, “Diventa POTENTE in 8 Punti” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=n_cabfHr3L0",
@@ -87283,8 +87281,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Interactive card asking whether each inch of height adds to pay. It compares a 6′0″ person with a 5′5″ colleague, showing about $5,523 a year more on average and $166,000 over 30 years. A draggable pencil marks height on a door frame.",
-    "page": "pages/life-inch-of-pay.html?v=329b726a8822",
-    "bytes": 15768
+    "page": "pages/life-inch-of-pay.html?v=969e867d6a4d",
+    "bytes": 15693
    },
    "source": "Diventare Strong, “Come apparire Dominanti, Sicuri di sé stessi, Determinati, Alpha, Tosti e Produttivi” (YouTube, 2015)",
    "reference": "https://www.youtube.com/watch?v=ztJI8JOLJmY",
@@ -93985,8 +93983,9 @@
     "kit": 1,
     "touch": "drags",
     "label": "A loop diagram that grows as the reader drags it, asking how long a rival Collatz loop would have to be before nobody has ruled it out. It is compared with the short 4, 2, 1 loop and reaches 186 billion numbers.",
-    "page": "pages/maths-collatz-rival-loop.html?v=b52f42aef901",
-    "bytes": 23811
+    "ground": "#0a2a5e",
+    "page": "pages/maths-collatz-rival-loop.html?v=31352ed75385",
+    "bytes": 22750
    },
    "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=094y1Z2wpJg&t=658s",
@@ -95251,8 +95250,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Two knot diagrams, labeled Knot A and Knot B, with a question mark between them. The page asks whether they are the same knot, offering the choices 'Same knot' or 'Different knots', then asks the reader to bet and say how sure they are.",
-    "page": "pages/maths-knot-equivalence.html?v=ddf6e1cc6ee5",
-    "bytes": 21890
+    "page": "pages/maths-knot-equivalence.html?v=27e51eee077f",
+    "bytes": 20693
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=220s",
@@ -96674,8 +96673,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Two different Penrose tilings, labelled A and B, with six small patches cut from them to sort. Tap a patch to file it under A, tap again for B. Asks how many Penrose tilings there are and whether they can be told apart.",
-    "page": "pages/maths-penrose-lookalikes.html?v=b766d5c6dad2",
-    "bytes": 21413
+    "page": "pages/maths-penrose-lookalikes.html?v=c9e5a0015fda",
+    "bytes": 20991
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=688s",
@@ -97962,8 +97961,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A grid of squares holding grains of sand. Tap any square to drop a grain; a square with 4 grains topples, sending one to each neighbour. Gold squares hold 3. Asks why one grain can set off an avalanche of any size.",
-    "page": "pages/maths-sandpile-any-size.html?v=f600bb122991",
-    "bytes": 13296
+    "page": "pages/maths-sandpile-any-size.html?v=16a389a24639",
+    "bytes": 13456
    },
    "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=HBluLfX2F_k",
@@ -98849,8 +98848,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A Mercator world map with a draggable outline of Wyoming, drawn at latitude 43°N. The reader drags Wyoming up the map toward the North Pole and watches its drawn size grow. The page asks what happens to Wyoming's size there and why.",
-    "page": "pages/maths-wyoming-mercator-pole.html?v=2ab04e72c4a6",
-    "bytes": 7499
+    "page": "pages/maths-wyoming-mercator-pole.html?v=fc4226bc62e2",
+    "bytes": 7440
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=cKRRHQStYH0&t=55s",
@@ -104371,8 +104370,8 @@
     "touch": "taps",
     "label": "Three identical pinches of pink powder are shown. The reader is asked to tap the one they think hides the least opioid. The reveal says no one can tell, because the contents and amounts of an unknown mix are unknown.",
     "graded": false,
-    "page": "pages/medicine-hidden-opioid-dose.html?v=b244ac172010",
-    "bytes": 7208
+    "page": "pages/medicine-hidden-opioid-dose.html?v=d28e7cbda031",
+    "bytes": 7106
    },
    "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=meoJvw-9tM4&t=312s",
@@ -105283,8 +105282,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A switch labelled Computer off and Computer on. Flipping it shows a laser and a chart that respond to the eye's readings. The question asked: how does the laser stay safe while it works inside the eye?",
-    "page": "pages/medicine-laser-eye-monitor.html?v=0c27b3dc3a24",
-    "bytes": 7943
+    "page": "pages/medicine-laser-eye-monitor.html?v=88888f819384",
+    "bytes": 8109
    },
    "source": "Geopop, “Intervento alla cataratta: vi spieghiamo cosa succede con delle animazioni 3D” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=Y3b8egQvI0A&t=353s",
@@ -105322,8 +105321,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A question asks how a laser hits only tattoo ink and spares the skin. A slider runs from long pulse to picosecond pulse; the reader drags it to make the pulse shorter.",
-    "page": "pages/medicine-laser-tattoo-removal.html?v=72db5d058b07",
-    "bytes": 7102
+    "page": "pages/medicine-laser-tattoo-removal.html?v=d183589c381f",
+    "bytes": 6963
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=643s",
@@ -105361,8 +105360,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A slider labelled 'Time since last use' starts at 'just taken'. Drag it forward to see two views of one scene. The drug leaves both, but in one view a trippy visual distortion stays for months.",
-    "page": "pages/medicine-lingering-flashbacks.html?v=9d8b16643084",
-    "bytes": 9141
+    "page": "pages/medicine-lingering-flashbacks.html?v=618b59541d4f",
+    "bytes": 8727
    },
    "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=tfQTsycN6KQ&t=638s",
@@ -105492,8 +105491,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A grid of squares, each one equal to Earth's magnetic field, asks how much stronger an MRI's magnetic field is than Earth's. A ×10 button multiplies the field, and the squares grow to show the increase.",
-    "page": "pages/medicine-mri-field-strength.html?v=4399f3000577",
-    "bytes": 5981
+    "page": "pages/medicine-mri-field-strength.html?v=3cb5f071089e",
+    "bytes": 5870
    },
    "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=WS2LAuwpFzM&t=33s",
@@ -107689,8 +107688,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Interactive: drag a dot to fire a laser at tattoo ink clumps in the skin, stepping through Ink, Pulse, Pop, Still there, and Clean-up. It asks what the white popcorn flash during laser tattoo removal is.",
-    "page": "pages/medicine-popcorn-laser-effect.html?v=ead4c35a5cf2",
-    "bytes": 10013
+    "page": "pages/medicine-popcorn-laser-effect.html?v=d29c0f29c7ff",
+    "bytes": 10128
    },
    "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=708s",
@@ -125856,8 +125855,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Two side-by-side comparisons of water waves: a slow stone dropped into a pond versus a large asteroid hitting the ocean. The question asks how an asteroid tsunami's energy compares to a landslide's.",
-    "page": "pages/nature-asteroid-tsunami-energy.html?v=79807b0aa9f8",
-    "bytes": 10102
+    "page": "pages/nature-asteroid-tsunami-energy.html?v=d7cd93133d68",
+    "bytes": 9819
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=666s",
@@ -126045,8 +126044,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Top-down view of a bay at low tide, shown as open sand. Tap the bay to bring the tide in one step at a time, watching the water rise as the shores close in toward the Mont.",
-    "page": "pages/nature-bay-funnel-tide.html?v=7fa94fc0169c",
-    "bytes": 7328
+    "page": "pages/nature-bay-funnel-tide.html?v=dbdd26d5ef07",
+    "bytes": 7208
    },
    "source": "Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=jlAFmfMFSDE&t=121s",
@@ -127104,8 +127103,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A cave cross-section with numbered glowing spots marking the steps of a rescue, with an injured caver at the bottom. The question asks the shortest possible rescue time. Tapping spot 1 starts a clock that runs through the steps.",
-    "page": "pages/nature-cave-rescue-time.html?v=d35a4a8eca3e",
-    "bytes": 8660
+    "page": "pages/nature-cave-rescue-time.html?v=35e3000a4d63",
+    "bytes": 8588
    },
    "source": "Geopop, “SPELEOLOGIA: ME LA SONO FATTA UN PO' SOTTO, MA CHE AVVENTURA! 🎬” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=alSGiLnBsnQ&t=290s",
@@ -128116,8 +128115,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Question: why is the collapse of the eruptive column the most dangerous moment? A side view shows a tall volcanic column rising from a volcano. Tapping the column loads it with heavy ash and rock until it falls.",
-    "page": "pages/nature-column-collapse-flows.html?v=4ea7863d9173",
-    "bytes": 10334
+    "page": "pages/nature-column-collapse-flows.html?v=00464bb399c3",
+    "bytes": 9932
    },
    "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=JxXQOLGsJuM&t=320s",
@@ -128155,8 +128154,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Diagram of a vertical volcanic eruption column with a switch. Flipping it cools the column's top so it turns heavy and falls into a fast, ground-hugging glowing cloud. Asks why pyroclastic flows are deadlier than the eruption column.",
-    "page": "pages/nature-column-collapse-flows-2.html?v=13fb311e5350",
-    "bytes": 8015
+    "page": "pages/nature-column-collapse-flows-2.html?v=adc19381b06f",
+    "bytes": 7882
    },
    "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=D3ftPHDNXPg&t=200s",
@@ -129664,8 +129663,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Card asking how the Hoover Dam changed the water in the Colorado River delta, with a slider from little to most water held back upstream. Dragging the slider holds back more of the river at the dam.",
-    "page": "pages/nature-delta-salinity-dam.html?v=ccfa3d62e98c",
-    "bytes": 9305
+    "page": "pages/nature-delta-salinity-dam.html?v=d54bc48ece8b",
+    "bytes": 9011
    },
    "source": "Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=aye7SUnEHDc&t=415s",
@@ -131567,8 +131566,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card: a wave simulation that flips between a rockslide alone and a rockslide hitting a glacier, Lituya Bay 1958. It asks what effect a glacier impact has on tsunami size.",
-    "page": "pages/nature-glacier-wave-amplifier.html?v=eb04f70ac546",
-    "bytes": 10956
+    "page": "pages/nature-glacier-wave-amplifier.html?v=fbf096ba4db9",
+    "bytes": 10906
    },
    "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=bEL4wbv_nOo&t=320s",
@@ -131876,8 +131875,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A side view of a dome of ice, red where it is thickest and blue where it thins out. The question asks how Greenland's ice mass influences global weather patterns. Three buttons, ICE, SEA and AIR, reveal what each one does.",
-    "page": "pages/nature-greenland-ice-air.html?v=bb53e8b5711b",
-    "bytes": 9117
+    "page": "pages/nature-greenland-ice-air.html?v=63a717948b3a",
+    "bytes": 9051
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=P0PF8r7i6Zw&t=59s",
@@ -131954,8 +131953,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Question: What really causes the Bermuda Triangle's extreme storms? Hold the button to let the current flow and watch warm Gulf Stream water move past Florida and through the triangle.",
-    "page": "pages/nature-gulf-stream-storms.html?v=9d94ee8e8a9d",
-    "bytes": 10622
+    "page": "pages/nature-gulf-stream-storms.html?v=beee6265a6cf",
+    "bytes": 10110
    },
    "source": "Geopop, “Cosa c'è di vero nel \"mistero\" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=r74bY24e5Mg&t=322s",
@@ -131993,8 +131992,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A diagram of warm Gulf Stream water meeting cooler air above the Bermuda Triangle, generating storms. It asks why the Gulf Stream contributes to accidents there. The reader adds warm-current layers one by one to watch the weather change from a calm sea to a storm.",
-    "page": "pages/nature-gulf-stream-storms-2.html?v=05483dfd0534",
-    "bytes": 9947
+    "page": "pages/nature-gulf-stream-storms-2.html?v=b0ee2ab56a48",
+    "bytes": 9682
    },
    "source": "Geopop, “Esiste davvero il triangolo delle Bermuda? In realtà il \"mistero\" ha una spiegazione scientifica” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=xZiI-xXYZiA&t=19s",
@@ -132032,8 +132031,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Illustration of a rock slab plunging into water, with rings of tsunami waves spreading outward. The page asks which falls from Etna's flank, a boulder or half a mountain, and lets the reader flip between the two to watch the far coast.",
-    "page": "pages/nature-half-mountain-tsunami.html?v=80217e0f730d",
-    "bytes": 8779
+    "page": "pages/nature-half-mountain-tsunami.html?v=f440111c92ec",
+    "bytes": 8470
    },
    "source": "Geopop, “▶️ETNA: \"POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI\". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=cwdZkSbbYhw&t=207s",
@@ -132645,8 +132644,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive side view of a storage tank beside layers of ground. A switch toggles the tank between built with care and badly built, and the reader watches whether fluid leaks and seeps down into the aquifer below.",
-    "page": "pages/nature-leaking-fracking-tank.html?v=e9eb972941cc",
-    "bytes": 9211
+    "page": "pages/nature-leaking-fracking-tank.html?v=d6ff0f1af32e",
+    "bytes": 9141
    },
    "source": "Geopop, “IL FRACKING - La spiegazione geologica con parole semplici” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=fRT6ACeEh0o&t=109s",
@@ -133184,9 +133183,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A dark ocean-depths page asks: What is the deepest point on Earth? A vertical probe can be dragged down toward the trench floor, which is marked 10,994 m for Challenger Deep in the Mariana Trench, almost 11 km below sea level.",
-    "ground": "#0f4a85",
-    "page": "pages/nature-mariana-trench-depth.html?v=8191665bf3c5",
-    "bytes": 7314
+    "page": "pages/nature-mariana-trench-depth.html?v=a043b1214e87",
+    "bytes": 8003
    },
    "source": "Geopop, “Quanto è profonda la fossa delle marianne?#shorts” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=t_gYMAbeT9c",
@@ -133224,9 +133222,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Card titled Undersea Volcano asks how an explosive eruption of Marsili would lose its energy. A timeline sits below the text. Dragging it sets off an eruption 500 m down in the sea, with energy arrows spreading through the water column.",
-    "ground": "#061629",
-    "page": "pages/nature-marsili-water-shield.html?v=0b2b0a016067",
-    "bytes": 11357
+    "page": "pages/nature-marsili-water-shield.html?v=983fd26da972",
+    "bytes": 11132
    },
    "source": "Geopop, “Marsili: cosa accadrebbe in caso di eruzione del vulcano più grande d'Europa?” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=Zc1cuRnqFIg&t=152s",
@@ -133265,8 +133262,8 @@
     "touch": "drags",
     "label": "A card asking how high the waves could be in the worst Marsili tsunami scenario. A vertical line can be dragged up or down to set a wave height guess, followed by a choice of how sure the reader is.",
     "graded": false,
-    "page": "pages/nature-marsili-wave-height.html?v=b30ce6e0ecbd",
-    "bytes": 9845
+    "page": "pages/nature-marsili-wave-height.html?v=0075987c856a",
+    "bytes": 9501
    },
    "source": "Geopop, “La futura eruzione sottomarina del Marsili e le cause del rischio tsunami - l'animazione realistica” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=lF4UA-9ksVI&t=359s",
@@ -133304,8 +133301,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A map of the Mediterranean with a toggle between two views, 'Two plates' and 'Plates + microplates'. The second view shows many plate borders, with squeezed (compression) and pulled-apart (extension) zones crossing each other. The question asks why the Mediterranean is so geologically complex.",
-    "page": "pages/nature-mediterranean-plates.html?v=f8f599fc7861",
-    "bytes": 8546
+    "page": "pages/nature-mediterranean-plates.html?v=1f1ccfcd3fdf",
+    "bytes": 7907
    },
    "source": "Geopop, “Ponte sullo stretto di Messina: sarebbe un'assurdità dal punto di vista geologico ?” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=-Jcz-q5tih4&t=59s",
@@ -133957,8 +133954,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A page asking where the common mosquito goes in winter, with a hold-to-reveal button. Holding it shows a mosquito moving into a sheltered spot as it gets cold. The reveal says adults survive winter hidden in places like basements, where the temperature stays steady.",
-    "page": "pages/nature-mosquito-winter-basement.html?v=bf4fe0fc97d9",
-    "bytes": 10532
+    "page": "pages/nature-mosquito-winter-basement.html?v=8c2447975823",
+    "bytes": 10566
    },
    "source": "Geopop, “Dove vanno le #zanzare d’inverno? Saperlo, può aiutarci a ridurne la proliferazione” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=W4at5XxD9y0&t=1s",
@@ -133996,8 +133993,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Card titled Winter Eggs asks how tiger mosquitoes come back each spring when they cannot tolerate cold. Three options are offered: adults hide and sleep, eggs wait out winter, or they fly to warmer places. The reader picks one, rates confidence, then watches a winter timeline.",
-    "page": "pages/nature-mosquito-winter-eggs.html?v=01bd064d444b",
-    "bytes": 12521
+    "page": "pages/nature-mosquito-winter-eggs.html?v=23a9a2f1d2d7",
+    "bytes": 12060
    },
    "source": "Geopop, “Dove vanno le #zanzare d’inverno? Saperlo, può aiutarci a ridurne la proliferazione” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=W4at5XxD9y0&t=48s",
@@ -134927,8 +134924,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Page asks where natural glass, like obsidian, comes from. Four choices: magma that cools very fast in the air; magma that cools slowly deep underground; crystals pressed together under the sea; magma cooled in a hurry. The reader picks one, then a volcano animation shows the answer.",
-    "page": "pages/nature-obsidian-natural-glass.html?v=a3abf84ab576",
-    "bytes": 9179
+    "page": "pages/nature-obsidian-natural-glass.html?v=c91d786e175c",
+    "bytes": 8888
    },
    "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=QB4WuTk_ja8&t=258s",
@@ -136721,8 +136718,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Multiple-choice card asking why the area near the Chernobyl reactor is called the Red Forest. Three options: a fire after the accident scorched it; radioactive fallout killed the pines; rusty metal and soil from the plant. The reader picks one, then rates how sure they are.",
-    "page": "pages/nature-red-forest-chernobyl.html?v=657d2edc437c",
-    "bytes": 7278
+    "page": "pages/nature-red-forest-chernobyl.html?v=a64779e282eb",
+    "bytes": 6868
    },
    "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
    "reference": "https://www.youtube.com/watch?v=9DWnjcSo9J0&t=237s",
@@ -136759,8 +136756,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Titled Why the Red Sea is red. Asks why the sea is called red when it looks blue. Shows the sea with a prompt to tap it six times to let the algae bloom, and the water turns pink.",
-    "page": "pages/nature-red-sea-algae.html?v=3c5a86759215",
-    "bytes": 8447
+    "page": "pages/nature-red-sea-algae.html?v=144d58bbf2f0",
+    "bytes": 8022
    },
    "source": "Geopop, “IL Mar Rosso é un OCEANO!” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=6_AkkpTNgLY&t=2s",
@@ -137629,8 +137626,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A frozen land you tap five times to chill, with a counter at 0 of 5. It asks what atmospheric feature traps cold air over Yakutsk.",
-    "page": "pages/nature-siberian-anticyclone-trap.html?v=873c2a6561a9",
-    "bytes": 8916
+    "page": "pages/nature-siberian-anticyclone-trap.html?v=c47523bba6bc",
+    "bytes": 8856
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=127s",
@@ -137786,8 +137783,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Card titled The rock gift, asking what a male Pisaura mirabilis spider does if it has no prey. Shows a male spider holding a silk-wrapped rock to offer a female. Tap the male, his gift and the female.",
-    "page": "pages/nature-spider-rock-gift.html?v=c17198eb4218",
-    "bytes": 9494
+    "page": "pages/nature-spider-rock-gift.html?v=2633cedb6bc4",
+    "bytes": 9330
    },
    "source": "Geopop, “Ragnatele in 3D: ecco come fanno i ragni a crearle così geometriche, letali e resistenti” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=_Uch42IMwbM&t=172s",
@@ -138497,8 +138494,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "The 10 a.m. rule. Asks why putting out every small fire makes the big ones worse. Shows a bar chart where each bar is one fire: most bars are small, a few run far. Text covers trees growing, lightning strikes, fire jumping to touching trees, a 45% figure, and the rule to put every fire out by 10 a.m.",
-    "page": "pages/nature-ten-am-rule.html?v=cb32506be9cc",
-    "bytes": 16265
+    "page": "pages/nature-ten-am-rule.html?v=9fd687cb42b5",
+    "bytes": 16223
    },
    "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=HBluLfX2F_k",
@@ -138536,8 +138533,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Diagram of a valley with smog trapped near the ground. A slider cools the air at ground level; the reader watches whether the smog can rise under the warmer air above.",
-    "page": "pages/nature-thermal-inversion-lid.html?v=91e3c7f5e9e8",
-    "bytes": 8701
+    "page": "pages/nature-thermal-inversion-lid.html?v=455dad650afe",
+    "bytes": 8591
    },
    "source": "Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=x75-xpsPT9c&t=227s",
@@ -138804,9 +138801,9 @@
     "kit": 1,
     "touch": "taps",
     "label": "Diagram of a deep ocean trench with an undersea volcano releasing minerals that feed nearby fish and invertebrates. Tap the volcano three times to add each layer.",
-    "ground": "#06121f",
-    "page": "pages/nature-trench-volcano-food.html?v=265bdd328d27",
-    "bytes": 8177
+    "ground": "#0a2a45",
+    "page": "pages/nature-trench-volcano-food.html?v=c79feb8c3fc1",
+    "bytes": 7917
    },
    "source": "Geopop, “FOSSA DELLE MARIANNE, come si è formata e perché è cosi profonda” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=6rdDnFsCYSo&t=275s",
@@ -138844,8 +138841,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Cross-section of Earth showing a plume of hot rock rising from deep in the mantle beneath Tristan da Cunha. A button asks the reader to hold it to heat both seafloors and see which one grows an island.",
-    "page": "pages/nature-tristan-hot-spot.html?v=adf684a3c91b",
-    "bytes": 9505
+    "page": "pages/nature-tristan-hot-spot.html?v=cc1791a6d938",
+    "bytes": 9416
    },
    "source": "Geopop, “L'insediamento umano più isolato del mondo è su un'isola sperduta nell'Atlantico: Tristan da Cunha” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=c-OafbhvBZM&t=18s",
@@ -138922,8 +138919,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A calm beach scene with a slider for watching the sea in the minutes before a tsunami wave. The question asks what the main early warning sign of a tsunami is, with choices: Calm, Sea retreats, or Wave.",
-    "page": "pages/nature-tsunami-sea-retreat.html?v=ce2bbb006530",
-    "bytes": 10493
+    "page": "pages/nature-tsunami-sea-retreat.html?v=7ebeabeddf8f",
+    "bytes": 10071
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=937s",
@@ -138961,8 +138958,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Animated diagram of two landslides entering a bay. The first slide raises a wave; the second hits a glacier and adds its force to that wave. Press and hold to play the slides.",
-    "page": "pages/nature-twin-landslide-tsunami.html?v=a1694d281961",
-    "bytes": 10989
+    "page": "pages/nature-twin-landslide-tsunami.html?v=3bc8c4a8d898",
+    "bytes": 10856
    },
    "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=bEL4wbv_nOo&t=359s",
@@ -139368,8 +139365,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Asks how plain water carves caves out of solid rock. Shows rain sinking through cracks in limestone, widening them into passages, and redepositing rock to form stalactites and stalagmites.",
-    "page": "pages/nature-water-carves-caves.html?v=8418d521c225",
-    "bytes": 9982
+    "page": "pages/nature-water-carves-caves.html?v=79b329504eba",
+    "bytes": 10038
    },
    "source": "Geopop, “SPELEOLOGIA: ME LA SONO FATTA UN PO' SOTTO, MA CHE AVVENTURA! 🎬” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=alSGiLnBsnQ&t=16s",
@@ -139956,8 +139953,8 @@
     "touch": "drags",
     "label": "A thermometer you drag up or down to guess the lowest temperature ever recorded in Yakutsk. Its needle is stuck at -63 °C against a snowy skyline. The question asks for the record low.",
     "graded": false,
-    "page": "pages/nature-yakutsk-record-cold.html?v=afe3007f78c8",
-    "bytes": 9693
+    "page": "pages/nature-yakutsk-record-cold.html?v=aa5e67877c75",
+    "bytes": 9392
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=1s",
@@ -171556,8 +171553,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A page asking why giving in just once in a while makes begging harder to stop. Three choices: always yes, 1 day in 4, or never. A pretend child asks for sweets, and the reader picks a rule for weeks 1 to 3, then the answer is no from day 22. Which child keeps asking longest?",
-    "page": "pages/psychology-once-in-a-while.html?v=1b7f276ce907",
-    "bytes": 11860
+    "page": "pages/psychology-once-in-a-while.html?v=660e9f83511f",
+    "bytes": 11842
    },
    "source": "Diventare Strong, “Come Smettere di Essere Troppo Buoni” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=Gz7sy88tSQw",
@@ -177456,8 +177453,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive map of Antarctica with projected warming overlaid. Asks what CO₂ levels are projected for 2100, with low (730 ppm) and high (1,020 ppm) scenario buttons to tap and watch the ice.",
-    "page": "pages/science-antarctica-co2-2100.html?v=c840b5c02dc2",
-    "bytes": 7482
+    "page": "pages/science-antarctica-co2-2100.html?v=930ef808a645",
+    "bytes": 7339
    },
    "source": "Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=nCRYmQqs-yc&t=614s",
@@ -177572,8 +177569,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Cutaway of layered rock with a well being drilled step by step, controlled by a slider. The question asks why water gushes out of an artesian well with no pump.",
-    "page": "pages/science-artesian-well-pressure.html?v=202304f1b318",
-    "bytes": 11903
+    "page": "pages/science-artesian-well-pressure.html?v=b49155bbbdc0",
+    "bytes": 11840
    },
    "source": "Geopop, “Ricostruzione 3D inedita dell'incidente di Vermicino: come hanno estratto il corpo di Alfredino” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=sbaPzuSkEuQ&t=210s",
@@ -177837,9 +177834,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Interactive card titled Underground asking what the bank's floor rests on, which lets thieves dig silently. Holding the button tunnels under the vault and reveals the answer.",
-    "ground": "#1c1712",
-    "page": "pages/science-bank-floor-rubbish.html?v=6a1b6328438c",
-    "bytes": 10020
+    "page": "pages/science-bank-floor-rubbish.html?v=9b25452a5e2f",
+    "bytes": 9970
    },
    "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=aRTxjOeJRbY&t=391s",
@@ -178389,8 +178385,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Drag across a coastal picture to run the centuries from then to today and watch the ground rise and sink. The page asks what bradyseism is and why some ancient towns lie underwater.",
-    "page": "pages/science-bradyseism-breathing-ground.html?v=d8e38dc3ed59",
-    "bytes": 9045
+    "page": "pages/science-bradyseism-breathing-ground.html?v=4f4e197ac7f7",
+    "bytes": 9013
    },
    "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=z_mawLbnXNQ&t=673s",
@@ -178859,8 +178855,8 @@
     "touch": "taps",
     "label": "Diagram of Cerberus, a high-pressure dome over Africa, with arrows showing air sinking and rising around it. The question asks which way the air goes under the dome.",
     "graded": false,
-    "page": "pages/science-cerberus-heat-dome.html?v=c259cab76a14",
-    "bytes": 8489
+    "page": "pages/science-cerberus-heat-dome.html?v=7c131fc2d5f2",
+    "bytes": 8158
    },
    "source": "Geopop, “Perché fa così tanto caldo? C'è una relazione con la crisi climatica?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=PYf8dpcHm_E&t=27s",
@@ -178937,8 +178933,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A cross-section of rock layers, with a marly chalk band between upper and lower rock highlighted. The page asks what the chalk is and why to tunnel through it, and invites the reader to pick a layer and hold a button to bore.",
-    "page": "pages/science-channel-tunnel-chalk.html?v=466487bf781d",
-    "bytes": 13097
+    "page": "pages/science-channel-tunnel-chalk.html?v=e67a928b0f95",
+    "bytes": 13231
    },
    "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=1i1Z63xL3MQ&t=106s",
@@ -180907,8 +180903,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Asks what caused the first massive explosion at Chernobyl, with four events to tap into time order: cooling water reaches the fuel, pressure bursts the fuel channels, the fuel melts into glowing corium, and the 2,000-tonne lid is blown off.",
-    "page": "pages/science-corium-steam-blast.html?v=94bba5c6193a",
-    "bytes": 9746
+    "page": "pages/science-corium-steam-blast.html?v=915f660f9b0e",
+    "bytes": 10084
    },
    "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=ksyOBogBKvc&t=816s",
@@ -181252,8 +181248,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A diagram of an airplane at an adjustable altitude above the ground, with a band of air overhead acting as a shield and falling particles from space. Drag the slider to fly higher and watch how many cosmic particles reach the plane.",
-    "page": "pages/science-cosmic-rays-planes.html?v=e7b841630bb2",
-    "bytes": 9013
+    "page": "pages/science-cosmic-rays-planes.html?v=c023a662a7c3",
+    "bytes": 8863
    },
    "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
    "reference": "https://www.youtube.com/watch?v=wQmnztyXwVA&t=177s",
@@ -181331,8 +181327,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A desert near Darvaza, Turkmenistan, with a drill rig on the sand. The question asks how a pressure blowout during gas drilling formed the Darvaza crater. Tap the drill rig to start drilling.",
-    "page": "pages/science-darvaza-gas-blowout.html?v=e3d6e200a244",
-    "bytes": 10797
+    "page": "pages/science-darvaza-gas-blowout.html?v=a8cf24158e36",
+    "bytes": 10586
    },
    "source": "Geopop, “La \"Porta dell'Inferno\", come si è formata e perché dopo 50 anni brucia nel deserto in Turkmenistan?” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=5hk3wTF3Ti0",
@@ -181370,8 +181366,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A quantum wave drawn as one ripple, with a slider that lets air molecules and photons hit an atom. A counter reads Hits 0 of 30 and Interference 100%. The question asks how the air turns one quantum wave into separate worlds.",
-    "page": "pages/science-decoherence-branching.html?v=953d2302c03f",
-    "bytes": 7750
+    "page": "pages/science-decoherence-branching.html?v=ad6695564576",
+    "bytes": 8041
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=578s",
@@ -181642,8 +181638,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Close-up of dry-ice crystals forming on a frosty water surface. The question asks why CO₂ solidifies on the water surface. A thermometer can be dragged down to chill the surface with solid nitrogen.",
-    "page": "pages/science-dry-ice-frost.html?v=4252483cb1a2",
-    "bytes": 8983
+    "page": "pages/science-dry-ice-frost.html?v=74a1ada03f5c",
+    "bytes": 8868
    },
    "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=rM04U5BO3Ug&t=156s",
@@ -181681,8 +181677,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Map of wind arrows across the equator, all pointing east at 1700 km/h, with a slider for Earth's spin from 100% down to 0 to stop the planet and watch the air.",
-    "page": "pages/science-earth-stops-wind.html?v=5419f18adf94",
-    "bytes": 9225
+    "page": "pages/science-earth-stops-wind.html?v=48e3772c8229",
+    "bytes": 9021
    },
    "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=OSECBud3lD4&t=2s",
@@ -182048,8 +182044,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Question: How hot is the inside of a volcano's eruption cloud? Three ranges to choose from: about 100 to 300 °C, about 500 to 1,200 °C, and about 2,000 to 3,000 °C. Then a probe crosses a cross-section of the cloud.",
-    "page": "pages/science-eruption-cloud-heat.html?v=abccf23421d9",
-    "bytes": 6545
+    "page": "pages/science-eruption-cloud-heat.html?v=d39298c39f7e",
+    "bytes": 6464
    },
    "source": "Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=7GaeRnYefws",
@@ -183479,7 +183475,7 @@
     "kit": 1,
     "touch": "taps",
     "label": "A gauge showing a candle flame beside a slider for gravity, running from 0 g (float) through 1 g (Earth) to 2 g. The reader slides gravity until the flame matches a mystery flame, then checks their guess.",
-    "page": "pages/science-flame-gravity-meter.html?v=66399ca9d155",
+    "page": "pages/science-flame-gravity-meter.html?v=e834c723c7af",
     "bytes": 8084
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
@@ -183557,8 +183553,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A flame shown under three gravity settings: zero-g, 1 g and hyper-g. The page asks why flames on Earth have a teardrop shape. Switch gravity to watch the flame change from a ball to a teardrop.",
-    "page": "pages/science-flame-shape-gravity.html?v=f4b6b18e4aa4",
-    "bytes": 8592
+    "page": "pages/science-flame-shape-gravity.html?v=9c4121f4a690",
+    "bytes": 8499
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
    "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=224s",
@@ -183596,8 +183592,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive card on flame and spark. Two sides compare a spark in plain air with a longer spark through a flame. The reader bets why a flame lets a spark jump a wider gap, choosing among three options.",
-    "page": "pages/science-flame-spark-gap.html?v=7c85826dfc41",
-    "bytes": 10022
+    "page": "pages/science-flame-spark-gap.html?v=37d5a8ec1185",
+    "bytes": 10001
    },
    "source": "Veritasium, “What's In A Candle Flame?” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=a7_8Gc_Llr8&t=62s",
@@ -183634,8 +183630,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A candle flame sits between two charged plates. Switch on the field and the flame splits into two wings, like a butterfly. Tap each half of the flame to explore it.",
-    "page": "pages/science-flame-splits-field.html?v=4dd4dc708dd6",
-    "bytes": 10240
+    "page": "pages/science-flame-splits-field.html?v=1e5bfe2daf5d",
+    "bytes": 10292
    },
    "source": "Veritasium, “What's In A Candle Flame?” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=a7_8Gc_Llr8&t=17s",
@@ -183672,8 +183668,9 @@
     "kit": 1,
     "touch": "taps",
     "label": "Page asks why flames change height at different points along a tube, and which points will have the tallest flames. Three choices are offered: little vibration, lots of vibration, or same everywhere.",
-    "page": "pages/science-flames-standing-wave.html?v=874a9a9fe40b",
-    "bytes": 17433
+    "ground": "#14100d",
+    "page": "pages/science-flames-standing-wave.html?v=c1acef785d05",
+    "bytes": 14847
    },
    "source": "Veritasium, “Musical Fire Table!” (YouTube, 2014)",
    "reference": "https://www.youtube.com/watch?v=2awbKQ2DLRE",
@@ -183751,9 +183748,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A fire-safety card asks how long a flashover takes to make a whole room ignite. Three options are about 10 seconds, 2 minutes and 10 minutes, plus a fourth, as little as ten seconds. The reader guesses, then watches a clock.",
-    "ground": "#1d2230",
-    "page": "pages/science-flashover-ten-seconds.html?v=edf73588be3d",
-    "bytes": 9496
+    "page": "pages/science-flashover-ten-seconds.html?v=4d94daf288d6",
+    "bytes": 10406
    },
    "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=ErPrRuFkc6s&t=275s",
@@ -183791,8 +183787,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Asks why firefighting planes use foam on fires above 1000°C. Two tappable sides each drop a load, plain water or foaming agent, onto a fire so the reader can compare them.",
-    "page": "pages/science-foam-fire-water.html?v=b61576f9c1f1",
-    "bytes": 8266
+    "page": "pages/science-foam-fire-water.html?v=847381264091",
+    "bytes": 8237
    },
    "source": "Geopop, “Come funziona il Canadair e quando interviene nelle missioni antincendio?” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=ABswZpkL2SY&t=268s",
@@ -183869,8 +183865,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Page asking what actually blew up the Fukushima reactor buildings, with a Hold button that keeps heating the fuel with no cooling. The text explains a chain: no cooling, hot fuel makes hydrogen, venting lets it meet air, then explosion.",
-    "page": "pages/science-fukushima-hydrogen-blast.html?v=a25875dc2f66",
-    "bytes": 12754
+    "page": "pages/science-fukushima-hydrogen-blast.html?v=b1fa7b484bc2",
+    "bytes": 12783
    },
    "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=yoTTJ9BJYIM&t=293s",
@@ -183908,8 +183904,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Page titled 'Why only tritium is left in Fukushima's water'. It asks why tritium is the only radioactive thing left in treated water. Text explains that filters remove cesium-137 and other radionuclides, but tritium is part of the water molecule. A tap-to-zoom drop illustration follows.",
-    "page": "pages/science-fukushima-tritium-filter.html?v=d2a6df59aa45",
-    "bytes": 12372
+    "page": "pages/science-fukushima-tritium-filter.html?v=918f64fe9bae",
+    "bytes": 12567
    },
    "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=IPH3uqi0a-w&t=177s",
@@ -183947,8 +183943,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Shows a 106 m cube for the 1.2 million m³ tank, with a slider that zooms in toward the tritium. Asks how much tritium the water holds, and reveals about 23 g.",
-    "page": "pages/science-fukushima-tritium-grams.html?v=2f9e271410c9",
-    "bytes": 6657
+    "page": "pages/science-fukushima-tritium-grams.html?v=62518dc66017",
+    "bytes": 6649
    },
    "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=IPH3uqi0a-w&t=221s",
@@ -184101,8 +184097,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Interactive card asking how big the Atlantic's flow was when it refilled the dried Mediterranean. Drag the Gibraltar rock down to open the strait and watch the water pour in.",
-    "page": "pages/science-gibraltar-mega-cascade.html?v=1ca92bf4407e",
-    "bytes": 9351
+    "page": "pages/science-gibraltar-mega-cascade.html?v=5cb55cbce202",
+    "bytes": 9287
    },
    "source": "Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=K3pwfIsKCjY&t=302s",
@@ -184512,8 +184508,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A close-up of a piece of obsidian showing its smooth, glassy surface. The page asks: what is glass, scientifically? It explains that molten rock cooled slowly forms crystal minerals, while rock plunged into water freezes into a disordered amorphous structure.",
-    "page": "pages/science-glass-fused-rock.html?v=13edf9e1f715",
-    "bytes": 7217
+    "page": "pages/science-glass-fused-rock.html?v=60ea1b1242f6",
+    "bytes": 7101
    },
    "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=DdSUTw-a4Ls&t=64s",
@@ -184551,8 +184547,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Question: why is glass clear to visible light but not to UV rays? A colour bar of light frequencies: drag along it to see visible light pass through glass, then go past violet to see ultraviolet get stopped.",
-    "page": "pages/science-glass-pass-window.html?v=8bc297ba1c89",
-    "bytes": 8876
+    "page": "pages/science-glass-pass-window.html?v=b928978ff9a7",
+    "bytes": 8759
    },
    "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=QB4WuTk_ja8&t=275s",
@@ -184786,8 +184782,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A close-up of two touching grapes, with a bright, intense spot at their contact point. The reader is asked to drag the right grape until it touches the other one.",
-    "page": "pages/science-grape-contact-point.html?v=9544c3910e6f",
-    "bytes": 8250
+    "page": "pages/science-grape-contact-point.html?v=235daebbd319",
+    "bytes": 8165
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=260s",
@@ -184825,9 +184821,9 @@
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page titled PULL APART asking why a grape in a microwave produces plasma. A glow covers the grape, and the reader drags up to pull the glow apart layer by layer to reveal the explanation.",
-    "ground": "#0e0705",
-    "page": "pages/science-grape-plasma.html?v=b8b2c0192962",
-    "bytes": 19106
+    "ground": "#1b0d07",
+    "page": "pages/science-grape-plasma.html?v=4349fe212b8b",
+    "bytes": 18501
    },
    "source": "Veritasium, “Make Plasma With Grapes In The Microwave!” (YouTube, 2011)",
    "reference": "https://www.youtube.com/watch?v=RwTjsRt0Fzo",
@@ -184866,8 +184862,8 @@
     "touch": "taps",
     "label": "Card asking how a strong electric field turns air into glowing plasma. Two gaps are offered, a weak field and a strong field, and the reader must pick which gap makes plasma first.",
     "graded": false,
-    "page": "pages/science-grape-plasma-ions.html?v=9d361a8f9543",
-    "bytes": 9437
+    "page": "pages/science-grape-plasma-ions.html?v=83dc2f6405a1",
+    "bytes": 9236
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=301s",
@@ -184944,8 +184940,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Question card titled Graphene asking why Einstein's relativity applies to electrons in graphene. A hold-to-push button sends electrons through copper and graphene lattices to compare how fast they move.",
-    "page": "pages/science-graphene-relativistic-electrons.html?v=e52bfd003919",
-    "bytes": 10876
+    "page": "pages/science-graphene-relativistic-electrons.html?v=b8477cf1d07e",
+    "bytes": 10783
    },
    "source": "Veritasium, “How To Make Graphene” (YouTube, 2011)",
    "reference": "https://www.youtube.com/watch?v=PifL8bAybyc&t=137s",
@@ -185482,8 +185478,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A card asking why Greenland's rocks matter for mining. A button is held to animate magma rising through ancient crust, showing rare elements gathering into mineable pockets.",
-    "page": "pages/science-greenland-craton-ores.html?v=a6d43999f979",
-    "bytes": 8977
+    "page": "pages/science-greenland-craton-ores.html?v=c8f5e0397a21",
+    "bytes": 8844
    },
    "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=P0PF8r7i6Zw&t=231s",
@@ -185939,8 +185935,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Quiz card asking how much faster a water-repelling sphere moves through water than an ordinary one. Three options: about the same, about 33% faster, or about 10 times faster. The reader picks one and rates confidence, then watches a side-by-side race of the two spheres.",
-    "page": "pages/science-hydrophobic-sphere-race.html?v=a43a275ada0c",
-    "bytes": 7829
+    "page": "pages/science-hydrophobic-sphere-race.html?v=185cdcd76164",
+    "bytes": 7664
    },
    "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=EQCzO4RfZAM&t=285s",
@@ -185978,8 +185974,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive: drag a gravity slider from 0 g up to 1.8 g and watch a candle flame stretch taller as gravity increases. Asks why the flame grows longer at 1.8 g.",
-    "page": "pages/science-hypergravity-flame.html?v=583b6332675a",
-    "bytes": 8103
+    "page": "pages/science-hypergravity-flame.html?v=de32aa31c238",
+    "bytes": 8003
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
    "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=256s",
@@ -186134,8 +186130,8 @@
     "touch": "drags",
     "label": "A dot grid and a slider asking how many Sumatra earthquakes, a magnitude 9.1 quake from 2004, the dinosaur-killing asteroid impact released in energy. Each dot is one Sumatra quake.",
     "graded": false,
-    "page": "pages/science-impact-vs-sumatra.html?v=17589a957167",
-    "bytes": 8293
+    "page": "pages/science-impact-vs-sumatra.html?v=32d2ed198f85",
+    "bytes": 8583
    },
    "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=_oHnlF70NaQ&t=171s",
@@ -186212,8 +186208,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Blue LED with two sliders, indium and heat, both at 0%. The page asks why it still shines despite billions of light-killing defects per square centimetre.",
-    "page": "pages/science-indium-traps.html?v=9745111cb878",
-    "bytes": 21376
+    "page": "pages/science-indium-traps.html?v=96f42275ebff",
+    "bytes": 20788
    },
    "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=AF8d72mA41M",
@@ -187459,8 +187455,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A river channel with a gate you drag upward to let water run. The question asks how rich in iron oxide Japanese iron sand can get. The revealed answer is about 80 % iron oxides by weight.",
-    "page": "pages/science-iron-sand-concentration.html?v=7d8e09d84c70",
-    "bytes": 9508
+    "page": "pages/science-iron-sand-concentration.html?v=abd03f56feda",
+    "bytes": 9342
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=341s",
@@ -187499,8 +187495,8 @@
     "touch": "drags",
     "label": "Asks how cold ITER's superconducting magnets must be while its plasma reaches 150 million degrees. The reader drags a marker to guess the magnets' temperature, and the reveal shows -269 °C.",
     "graded": false,
-    "page": "pages/science-iter-cold-magnets.html?v=ca043adaea16",
-    "bytes": 9222
+    "page": "pages/science-iter-cold-magnets.html?v=830f799f02ba",
+    "bytes": 9120
    },
    "source": "Geopop, “Fusione nucleare, a che punto è la ricerca? L'eccellenza del progetto ITER” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=W3C02y8A8LY&t=57s",
@@ -187538,8 +187534,8 @@
     "touch": "drags",
     "label": "Shows a ring-shaped reactor beside a thermometer running from deep blue (cold) to bright white (hot). Asks the reader to drag a marker to set how cold the superconducting magnets must be; the answer is −269 °C.",
     "graded": false,
-    "page": "pages/science-iter-hot-cold.html?v=f2273d573dbb",
-    "bytes": 10175
+    "page": "pages/science-iter-hot-cold.html?v=8d4d9b4b982a",
+    "bytes": 10046
    },
    "source": "Geopop, “Fusione nucleare, a che punto è la ricerca? L'eccellenza del progetto ITER” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=W3C02y8A8LY&t=57s",
@@ -188357,8 +188353,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A slider heats a ball sitting above water. Drag the slider to heat the ball, then watch where the water is, as the page asks.",
-    "page": "pages/science-leidenfrost-vapor-cushion.html?v=7e3aa7cdfe9d",
-    "bytes": 7944
+    "page": "pages/science-leidenfrost-vapor-cushion.html?v=91d82938c07c",
+    "bytes": 7732
    },
    "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=EQCzO4RfZAM&t=174s",
@@ -188435,8 +188431,8 @@
     "touch": "drags",
     "label": "Diagram prompt: a light beam with electric and magnetic fields drawn at right angles to each other. Drag the gold arrow to show the direction light's energy flows, which is along the beam, at right angles to both fields.",
     "graded": false,
-    "page": "pages/science-light-energy-flow.html?v=5eeb07b43104",
-    "bytes": 10415
+    "page": "pages/science-light-energy-flow.html?v=1c0ae15a5541",
+    "bytes": 10412
    },
    "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=315s",
@@ -189345,8 +189341,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Optics diagram of two lenses with light rays. Lens 2 has the opposite error to Lens 1. Drag the lenses until every ray meets at one point and the spherical aberration nearly cancels.",
-    "page": "pages/science-opposite-lens-errors.html?v=79c1bcb7cef4",
-    "bytes": 13081
+    "page": "pages/science-opposite-lens-errors.html?v=d7e25fdf0bc9",
+    "bytes": 13062
    },
    "source": "Veritasium, “Can You Keep Zooming In Infinitely?” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=88bMVbx1dzM",
@@ -190770,8 +190766,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A timeline you drag to follow a grain of pollen through deep time, under the question: why is pollen a reliable indicator of past environments? Dragging moves the grain along the timeline.",
-    "page": "pages/science-pollen-climate-diary.html?v=96c1c2867df7",
-    "bytes": 11511
+    "page": "pages/science-pollen-climate-diary.html?v=1983b18a5f01",
+    "bytes": 11454
    },
    "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=JM-n3IqZRCo&t=218s",
@@ -190847,8 +190843,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A depth dial runs from 0 to 3,500 metres beside readouts for depth, pressure in atmospheres, and load in tons per square metre. Dragging it down shows cars piling onto one square metre, reaching about 2,000 cars at 3,500 metres.",
-    "page": "pages/science-pressure-in-tons.html?v=6ea8adeb0c23",
-    "bytes": 7542
+    "page": "pages/science-pressure-in-tons.html?v=5a6094752904",
+    "bytes": 7293
    },
    "source": "Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=2wC4fyRA6cM&t=204s",
@@ -194808,8 +194804,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Animated diagram of Earth's interior. The reader sends an S-wave or a P-wave down from a quake and watches what happens at 2,900 km depth, where the S-wave stops.",
-    "page": "pages/science-s-waves-vanish.html?v=0e5903343836",
-    "bytes": 9304
+    "page": "pages/science-s-waves-vanish.html?v=e2f99df5581f",
+    "bytes": 8555
    },
    "source": "Geopop, “LA STRUTTURA INTERNA DELLA TERRA” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=ybWJKthgRcg&t=156s",
@@ -195136,8 +195132,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A diagram of Sardinia and Corsica as a block beside France. Drag Sardinia's tip east to swing the block off France, then the page asks what that push built.",
-    "page": "pages/science-sardinia-corsica-door.html?v=05a2eb000ab6",
-    "bytes": 9228
+    "page": "pages/science-sardinia-corsica-door.html?v=35369166ba4a",
+    "bytes": 9171
    },
    "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=DTOssDc8keo&t=1398s",
@@ -195291,8 +195287,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Cross-section diagram of two faults: a shallow West Fault and a deeper fault beneath it. A time slider animates both faults moving. The question asks how the West Fault differs from the deeper one.",
-    "page": "pages/science-seismic-aseismic-faults.html?v=03025823ec39",
-    "bytes": 11539
+    "page": "pages/science-seismic-aseismic-faults.html?v=b6823c590cd8",
+    "bytes": 11307
    },
    "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=4cJ9IdeTZ2A&t=428s",
@@ -195330,8 +195326,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Sound pulses sent down from the surface bounce off rock layers under the English Channel. Draw with your finger where you think the chalk formation runs, then send sound down to check.",
-    "page": "pages/science-seismic-chalk-map.html?v=7b46b7033416",
-    "bytes": 10086
+    "page": "pages/science-seismic-chalk-map.html?v=562f07fa2ea6",
+    "bytes": 10147
    },
    "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=1i1Z63xL3MQ&t=106s",
@@ -195409,8 +195405,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page asking how many floating shade balls must be trapped under a swimmer to keep them above water, with a drag control to trap balls under the swimmer.",
-    "page": "pages/science-shade-ball-raft.html?v=92fe1e73560c",
-    "bytes": 11343
+    "page": "pages/science-shade-ball-raft.html?v=cfefe30b02ee",
+    "bytes": 11965
    },
    "source": "Veritasium, “Can You Swim in Shade Balls?” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=BZbChKzedEk",
@@ -195487,8 +195483,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A time slider over a map of Iberia and the Sardinia–Corsica block. Long ago they are shown joined as one landmass, and today they are separate. The page asks how matching volcanic rock on both coasts proves they were once connected.",
-    "page": "pages/science-shared-volcanic-rock.html?v=1f2a2f0565f5",
-    "bytes": 10723
+    "page": "pages/science-shared-volcanic-rock.html?v=b09a6c9791ca",
+    "bytes": 10700
    },
    "source": "Geopop, “PERCHÉ CI SONO POCHISSIMI TERREMOTI IN SARDEGNA? Geologia POP” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=mu0U-eYaGxM&t=299s",
@@ -196654,8 +196650,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Two close-up views of frying pan surfaces, one smooth and one sandblasted. The question asks which pan keeps its Teflon coating when scraped. Three choices are offered: smooth, sandblasted, or same.",
-    "page": "pages/science-teflon-mechanical-grip.html?v=887c2336597d",
-    "bytes": 9232
+    "page": "pages/science-teflon-mechanical-grip.html?v=083da93a596b",
+    "bytes": 9251
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=662s",
@@ -196792,8 +196788,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A map cross-section showing the continental blocks Gondwana and Laurasia with a blue strip between them. The reader is asked to draw with a finger where the ocean arm cut between the two blocks.",
-    "page": "pages/science-tethys-ocean-wedge.html?v=a5be8f3bdab0",
-    "bytes": 8378
+    "page": "pages/science-tethys-ocean-wedge.html?v=c0407becfc7f",
+    "bytes": 8072
    },
    "source": "Geopop, “Vi mostro cosa è sepolto sotto lo Stretto di Messina - la geologia tra Calabria e Sicilia” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=zDIbAY7Br5k&t=142s",
@@ -196985,8 +196981,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Three heat sources to pick from, a lighter, a propane torch, and a sparkler igniter, to hold against a pile of thermite powder. The question asked: why won't a lighter or propane torch set off thermite?",
-    "page": "pages/science-thermite-oxide-seal.html?v=906a4d2483d2",
-    "bytes": 11593
+    "page": "pages/science-thermite-oxide-seal.html?v=d030da4742e1",
+    "bytes": 11664
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1947s",
@@ -197064,9 +197060,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A thermite crucible with a dial to choose the tap time and a countdown timer. Slide the dial to pick when to open the bottom and pour the molten metal.",
-    "ground": "#16120f",
-    "page": "pages/science-thermite-tap-time.html?v=26ba08e7ae12",
-    "bytes": 10437
+    "page": "pages/science-thermite-tap-time.html?v=41222d7bccdc",
+    "bytes": 10222
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1424s",
@@ -197534,8 +197529,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A heavy truck rolls over a cracked, wet road. The question asks what the water does, with four options: gets squeezed smaller like the soil, drains away, pushes the cracks wider open, or forces the cracks wider. Then the reader rates their confidence.",
-    "page": "pages/science-truck-squeezes-water.html?v=f6eed10ec264",
-    "bytes": 10540
+    "page": "pages/science-truck-squeezes-water.html?v=52f33aadaa9f",
+    "bytes": 10240
    },
    "source": "Geopop, “La \"scienza\" delle buche stradali” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=QgjgV4v8HKY&t=231s",
@@ -199515,8 +199510,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A tappable diagram: a comet grain is fired at 6 km/s into either a metal block or a block of aerogel, chosen by tapping one of two heights. It asks how the Stardust mission's aerogel catches dust moving that fast.",
-    "page": "pages/space-aerogel-comet-catch.html?v=a9dbf2351875",
-    "bytes": 29602
+    "page": "pages/space-aerogel-comet-catch.html?v=73f4372ce823",
+    "bytes": 29776
    },
    "source": "Veritasium, “World's Lightest Solid!” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=AeJ9q45PfD0&t=603s",
@@ -203782,9 +203777,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Asks what light from a black hole's edge would look like. Tap around the black hole to drop objects in. A control makes the faint edge light visible, revealing layered images of everything that fell in.",
-    "ground": "#0a0d22",
-    "page": "pages/space-frozen-horizon-light.html?v=af33c6952ea3",
-    "bytes": 22183
+    "page": "pages/space-frozen-horizon-light.html?v=c3e973644edf",
+    "bytes": 21901
    },
    "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M&t=54s",
@@ -230109,8 +230103,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A crystal-growing scene: tap an ammonia flask to feed nitrogen into the crystal. The page asks why hydrogen in ammonia prevented p-type gallium nitride doping, with a reveal about hydrogen plugging holes.",
-    "page": "pages/technology-hydrogen-plugs-holes.html?v=a7fde72df488",
-    "bytes": 27738
+    "page": "pages/technology-hydrogen-plugs-holes.html?v=50826b7e247b",
+    "bytes": 26559
    },
    "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=AF8d72mA41M&t=1234s",
