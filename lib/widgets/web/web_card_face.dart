@@ -14,6 +14,11 @@ import 'web_card_poster.dart';
 /// is the deck's, as on any card. The frame around it — the corners, the
 /// edge, the shadow, the save and share — is the card's (PillCard), so a
 /// free card sits in the deck as every other card does.
+/// How visible a page is while it is loading underneath its poster: as near
+/// nothing as the screen allows, but above the 1/255 at which a layer is
+/// skipped and the WebView or iframe in it never comes up.
+const double kWaitingOpacity = 0.01;
+
 class WebCardFace extends StatefulWidget {
   const WebCardFace({
     super.key,
@@ -105,7 +110,10 @@ class _WebCardFaceState extends State<WebCardFace> {
             IgnorePointer(
               ignoring: !drawn || widget.onMessage == null,
               child: AnimatedOpacity(
-                opacity: drawn ? 1 : 0,
+                // Never quite 0 while it waits: a layer at opacity 0 is not painted, so
+                // the platform view under it is never put on screen, the page never
+                // loads, and it never says it is ready. Nearly 0 hides it all the same.
+                opacity: drawn ? 1 : kWaitingOpacity,
                 duration: MediaQuery.disableAnimationsOf(context)
                     ? Duration.zero
                     : const Duration(milliseconds: 160),
