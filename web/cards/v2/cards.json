@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611031131,
- "built": "2026-11-03T11:31:27Z",
+ "version": 202611031202,
+ "built": "2026-11-03T12:02:36Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -87715,6 +87715,45 @@
    "written": "2026-10-17"
   },
   {
+   "id": "maths-collatz-rival-loop",
+   "topic": "maths",
+   "genre": "maths.estimation",
+   "strand": "maths.estimation.big_numbers",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "If Collatz had a second loop, how long would it have to be?",
+   "answer": "Every number tested so far ends in the loop 4 → 2 → 1. From that, mathematicians calculate that any other loop must hold at least 186 billion numbers. This is likely, but it is not proved.",
+   "move": "A second loop isn't ruled out, but it would need 186 billion numbers or more.",
+   "keywords": [
+    "collatz",
+    "veritasium",
+    "4-2-1 loop",
+    "rival loop",
+    "186 billion"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "number",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "abstract",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A loop diagram that grows as the reader drags it, asking how long a rival Collatz loop would have to be before nobody has ruled it out. It is compared with the short 4, 2, 1 loop and reaches 186 billion numbers.",
+    "page": "pages/maths-collatz-rival-loop.html?v=b52f42aef901",
+    "bytes": 23811
+   },
+   "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=094y1Z2wpJg&t=658s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "maths-compounding-3",
    "topic": "maths",
    "genre": "maths.growth",
@@ -88669,6 +88708,44 @@
    "source_kind": "paper",
    "reference": "doi:10.1177/002200277101500111",
    "written": "2026-10-17"
+  },
+  {
+   "id": "maths-knot-equivalence",
+   "topic": "maths",
+   "genre": "maths.puzzles",
+   "strand": "maths.puzzles.logic",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "computation",
+   "question": "What is the central, unsolved problem in knot theory?",
+   "answer": "Knot B is the same knot as Knot A: it is Knot A, only moved around. Telling whether two knots are the same is the central, unsolved problem in knot theory. No systematic method was known for telling knots apart, and Alan Turing wrote that it might well be unsolvable.",
+   "move": "Telling if two knots are the same has driven knot theory for over 150 years.",
+   "keywords": [
+    "knots",
+    "knot theory",
+    "alan turing",
+    "equivalence problem"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two knot diagrams, labeled Knot A and Knot B, with a question mark between them. The page asks whether they are the same knot, offering the choices 'Same knot' or 'Different knots', then asks the reader to bet and say how sure they are.",
+    "page": "pages/maths-knot-equivalence.html?v=ddf6e1cc6ee5",
+    "bytes": 21890
+   },
+   "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+   "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=220s",
+   "written": "2026-11-03"
   },
   {
    "id": "maths-logarithms-3",
@@ -89702,6 +89779,45 @@
    "source_kind": "paper",
    "reference": "Daniel Bernoulli, Exposition of a New Theory on the Measurement of Risk, translated by Louise Sommer, Econometrica 22(1):23–36, 1954",
    "written": "2026-10-17"
+  },
+  {
+   "id": "maths-penrose-lookalikes",
+   "topic": "maths",
+   "genre": "maths.puzzles",
+   "strand": "maths.puzzles.paradoxes",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How many different Penrose tilings are there, and could you tell them apart?",
+   "answer": "Uncountably many Penrose tilings exist, and no finite view can tell them apart. The page shows two different tilings and six small patches cut from them, and asks you to sort each patch under A or B.",
+   "move": "Uncountably many Penrose tilings exist, and no finite view can tell them apart.",
+   "keywords": [
+    "penrose-tilings",
+    "aperiodic-tiling",
+    "infinity",
+    "tiling",
+    "patches"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two different Penrose tilings, labelled A and B, with six small patches cut from them to sort. Tap a patch to file it under A, tap again for B. Asks how many Penrose tilings there are and whether they can be told apart.",
+    "page": "pages/maths-penrose-lookalikes.html?v=b766d5c6dad2",
+    "bytes": 21413
+   },
+   "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+   "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=688s",
+   "written": "2026-11-03"
   },
   {
    "id": "maths-percentages-3",
@@ -177373,6 +177489,44 @@
    "disabled": true
   },
   {
+   "id": "space-aerogel-comet-catch",
+   "topic": "space",
+   "genre": "space.space_and_life_on_earth",
+   "strand": "space.space_and_life_on_earth.spinoffs",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "How did Stardust's aerogel catch comet dust flying at 6 km/s?",
+   "answer": "Aerogel is a low-density, porous material. It slows a particle moving at 6 km/s by breaking its network, which dissipates the particle's kinetic energy and stops it. Because it stops the particle gradually over a long path, the sample is not vaporized.",
+   "move": "Stop something fast slowly, over a long path, and it survives.",
+   "keywords": [
+    "stardust",
+    "aerogel",
+    "comet dust",
+    "hypervelocity capture"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tappable diagram: a comet grain is fired at 6 km/s into either a metal block or a block of aerogel, chosen by tapping one of two heights. It asks how the Stardust mission's aerogel catches dust moving that fast.",
+    "page": "pages/space-aerogel-comet-catch.html?v=a9dbf2351875",
+    "bytes": 29602
+   },
+   "source": "Veritasium, “World's Lightest Solid!” (YouTube, 2019)",
+   "reference": "https://www.youtube.com/watch?v=AeJ9q45PfD0&t=603s",
+   "written": "2026-11-03"
+  },
+  {
    "id": "space-asteroid-risk-1",
    "topic": "space",
    "genre": "space.space_and_life_on_earth",
@@ -181238,6 +181392,46 @@
    "source_kind": "news_archive",
    "reference": "Bostrom, Where Are They? Why I Hope the Search for Extraterrestrial Life Finds Nothing, MIT Technology Review, 2008",
    "written": "2026-10-03"
+  },
+  {
+   "id": "space-frozen-horizon-light",
+   "topic": "space",
+   "genre": "space.black_holes",
+   "strand": "space.black_holes.event_horizons",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "If we could see light from a black hole's edge, what would we see?",
+   "answer": "Near the horizon, time stretches without limit, so light leaving the edge is redshifted until it fades from view. But it is still there. Make it visible and you see everything that ever fell in, all at once.",
+   "move": "A black hole's edge holds a frozen picture of everything that fell in.",
+   "keywords": [
+    "black holes",
+    "event horizon",
+    "redshift",
+    "photons",
+    "time dilation"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks what light from a black hole's edge would look like. Tap around the black hole to drop objects in. A control makes the faint edge light visible, revealing layered images of everything that fell in.",
+    "ground": "#0a0d22",
+    "page": "pages/space-frozen-horizon-light.html?v=af33c6952ea3",
+    "bytes": 22183
+   },
+   "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M&t=54s",
+   "written": "2026-11-03"
   },
   {
    "id": "space-fuel-chemistry-1",
@@ -205366,6 +205560,45 @@
      }
     ]
    }
+  },
+  {
+   "id": "technology-hydrogen-plugs-holes",
+   "topic": "technology",
+   "genre": "technology.where_things_come_from",
+   "strand": "technology.where_things_come_from.chips",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why did hydrogen in ammonia prevent p‑type gallium nitride doping?",
+   "answer": "Hydrogen atoms bond to the magnesium dopants and neutralize their acceptor behavior. The hydrogen plugs the holes that p-type conductivity needs. The ammonia that supplies the nitrogen for the crystal also supplies this hydrogen.",
+   "move": "The ammonia that builds the crystal also brings the hydrogen that plugs its holes.",
+   "keywords": [
+    "hydrogen",
+    "magnesium",
+    "ammonia",
+    "gallium nitride",
+    "blue led"
+   ],
+   "era": "twentieth",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A crystal-growing scene: tap an ammonia flask to feed nitrogen into the crystal. The page asks why hydrogen in ammonia prevented p-type gallium nitride doping, with a reveal about hydrogen plugging holes.",
+    "page": "pages/technology-hydrogen-plugs-holes.html?v=a7fde72df488",
+    "bytes": 27738
+   },
+   "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=AF8d72mA41M&t=1234s",
+   "written": "2026-11-03"
   },
   {
    "id": "technology-kids-and-screens-1",

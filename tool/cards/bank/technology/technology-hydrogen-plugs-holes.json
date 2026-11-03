@@ -1,0 +1,37 @@
+{
+  "id": "technology-hydrogen-plugs-holes",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did hydrogen in ammonia prevent p‑type gallium nitride doping?",
+  "answer": "Hydrogen atoms bond to the magnesium dopants and neutralize their acceptor behavior. The hydrogen plugs the holes that p-type conductivity needs. The ammonia that supplies the nitrogen for the crystal also supplies this hydrogen.",
+  "move": "The ammonia that builds the crystal also brings the hydrogen that plugs its holes.",
+  "keywords": [
+    "hydrogen",
+    "magnesium",
+    "ammonia",
+    "gallium nitride",
+    "blue led"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A crystal-growing scene: tap an ammonia flask to feed nitrogen into the crystal. The page asks why hydrogen in ammonia prevented p-type gallium nitride doping, with a reveal about hydrogen plugging holes."
+  },
+  "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=AF8d72mA41M&t=1234s",
+  "written": "2026-11-03"
+}

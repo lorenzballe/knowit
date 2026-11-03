@@ -1,0 +1,417 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-hydrogen-plugs-holes -->
+<!-- Look: a field-notebook page, cream paper with faint grid, pencil-hatched gallium, watercolour nitrogen and magnesium, rose holes that breathe, a little ammonia flask, handwritten labels.
+     Interaction: each tap on the flask launches an NH3 molecule on a real ballistic arc; it splits, the nitrogen sinks into a nitrogen site of the crystal, and one hydrogen flies into a magnesium's hole and caps it while the others tumble away.
+     Wow: once every hole is plugged, "Add energy" heats the page, heat shimmers rise, the lattice shudders, the hydrogen caps are flung off under gravity, and the freed holes start hopping across the crystal as a current, leaving fading trails.
+     Layout: on tall stages the flask and legend sit above the crystal; on short stages they fold into a side column so the crystal always stays big and legible. -->
+<title>The hydrogen that plugged the holes</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#heat{align-self:flex-start}
+.breath{animation:breath 2.4s ease-in-out infinite}
+@keyframes breath{50%{opacity:.3}}
+.nudge{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(-5px)}}
+.wisp{animation:wisp 2.8s ease-out infinite;opacity:0}
+@keyframes wisp{0%{opacity:0;transform:translateY(0)}35%{opacity:.7}100%{opacity:0;transform:translateY(-10px)}}
+.kit-calm .breath,.kit-calm .nudge{animation:none}
+.kit-calm .wisp{animation:none;opacity:.5}
+.say b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap the flask · watch the holes">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HYDROGEN PLUGS</span></div>
+    <h2 class="q">Why did hydrogen in ammonia prevent p‑type gallium nitride doping?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A notebook sketch of a gallium nitride crystal with four magnesium atoms, each beside a hole, and a flask of ammonia beside it."></svg>
+    </div>
+    <p class="say" id="say">Grow the crystal: <b>tap the ammonia flask</b> to feed it nitrogen.</p>
+    <button class="btn gone" id="heat">Add energy</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The ammonia that builds the crystal also brings the hydrogen that plugs its holes.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(Physics2DPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), mk = Kit.mk;
+  const C = {paper:'#f5edd8', ink:'#2a2722', lead:'#5c574e', blue:'#5f93c4', amber:'#e39a2a', rose:'#d4425e', heat:'#f07f33', lav:'#a993d1'};
+  const MG = [[0,2],[1,5],[2,0],[3,3]];
+  const ROWS = 4, COLS = 6;
+  let phase = 'feed', assigned = 0, plugged = 0, side = false;
+  let W = 0, H = 0, fs = 13, s = 40, gx = 0, gy = 0, T = 100, af = 12;
+  let L = {}, holes = [], caps = [], counterEl = null, noteEl = null, flask = {}, live = [], hopTl = [];
+  const HAND = 'font-family:var(--hand)';
+
+  // ---------- small drawing tools ----------
+  const srand = seed => { let a = seed >>> 0; return () => { a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
+  function blob(cx, cy, r, seed, j = .07) {
+    const R = srand(seed), n = 13, p = [];
+    for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2, rr = r * (1 + (R() - .5) * 2 * j); p.push([cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]); }
+    const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+    let m0 = mid(p[n - 1], p[0]), d = `M${m0[0].toFixed(1)},${m0[1].toFixed(1)}`;
+    for (let i = 0; i < n; i++) { const q = p[i], m = mid(q, p[(i + 1) % n]); d += ` Q${q[0].toFixed(1)},${q[1].toFixed(1)} ${m[0].toFixed(1)},${m[1].toFixed(1)}`; }
+    return d + 'Z';
+  }
+  function pencil(x1, y1, x2, y2, parent, seed, w = 1.4, col = C.lead) {
+    const R = srand(seed), g = mk('g', {}, parent);
+    for (let k = 0; k < 2; k++) {
+      const o = () => (R() - .5) * 1.6, mx = (x1 + x2) / 2 + o() * 1.5, my = (y1 + y2) / 2 + o() * 1.5;
+      mk('path', {d: `M${x1 + o()},${y1 + o()} Q${mx},${my} ${x2 + o()},${y2 + o()}`, stroke: col, 'stroke-width': k ? w * .6 : w, opacity: k ? .45 : .85, fill: 'none', 'stroke-linecap': 'round'}, g);
+    }
+    return g;
+  }
+  function txt(parent, x, y, t, size, a = {}) {
+    const e = mk('text', Object.assign({x, y, fill: C.ink, 'font-size': size, 'font-weight': 700, style: HAND}, a), parent);
+    e.textContent = t; return e;
+  }
+
+  function defs() {
+    const d = mk('defs', {}, svg);
+    const wc = mk('filter', {id: 'wc', x: '-25%', y: '-25%', width: '150%', height: '150%'}, d);
+    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.07', numOctaves: 3, seed: 4, result: 'n'}, wc);
+    mk('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: Math.max(3, s * .1), xChannelSelector: 'R', yChannelSelector: 'G'}, wc);
+    const gr = mk('filter', {id: 'grain', x: 0, y: 0, width: '100%', height: '100%'}, d);
+    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.85', numOctaves: 2, seed: 9}, gr);
+    mk('feColorMatrix', {type: 'saturate', values: 0}, gr);
+    const soft = mk('filter', {id: 'soft', x: '-60%', y: '-60%', width: '220%', height: '220%'}, d);
+    mk('feGaussianBlur', {stdDeviation: Math.max(2, s * .07)}, soft);
+    const sh = mk('filter', {id: 'shadow', x: '-30%', y: '-30%', width: '160%', height: '160%'}, d);
+    mk('feGaussianBlur', {stdDeviation: 1.6}, sh);
+    const hp = mk('pattern', {id: 'hatch', width: 4, height: 4, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(38)'}, d);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 4, stroke: C.lead, 'stroke-width': .75}, hp);
+    const wash = (id, col, a0 = .22, a1 = .55, a2 = .92) => {
+      const g = mk('radialGradient', {id, cx: '40%', cy: '36%', r: '66%'}, d);
+      mk('stop', {offset: '0%', 'stop-color': col, 'stop-opacity': a0}, g);
+      mk('stop', {offset: '68%', 'stop-color': col, 'stop-opacity': a1}, g);
+      mk('stop', {offset: '100%', 'stop-color': col, 'stop-opacity': a2}, g);
+    };
+    wash('wGa', '#a49d8e', .12, .3, .55); wash('wN', C.blue); wash('wMg', C.amber, .3, .65, .95); wash('wLav', C.lav, .25, .45, .7);
+    const hg = mk('radialGradient', {id: 'heatg', cx: '50%', cy: '85%', r: '80%'}, d);
+    mk('stop', {offset: '0%', 'stop-color': C.heat, 'stop-opacity': .85}, hg);
+    mk('stop', {offset: '100%', 'stop-color': C.heat, 'stop-opacity': 0}, hg);
+    const cp = mk('clipPath', {id: 'flaskclip'}, d);
+    flask.clip = mk('path', {}, cp);
+  }
+
+  function paper() {
+    const g = L.bg, r = Math.max(10, fs * .9);
+    mk('rect', {x: 0, y: 0, width: W, height: H, rx: r, fill: C.paper}, g);
+    const gap = fs * 1.7;
+    for (let y = gap; y < H; y += gap) mk('line', {x1: 0, x2: W, y1: y, y2: y, stroke: '#7aa3c4', 'stroke-width': .6, opacity: .22}, g);
+    for (let x = gap; x < W; x += gap) mk('line', {x1: x, x2: x, y1: 0, y2: H, stroke: '#7aa3c4', 'stroke-width': .5, opacity: .1}, g);
+    // a red margin rule, like a real notebook page
+    const mx = side ? Math.max(150, Math.min(200, W * .3)) - 4 : gap * .9;
+    if (side) mk('line', {x1: mx, x2: mx, y1: 0, y2: H, stroke: C.rose, 'stroke-width': .9, opacity: .22}, g);
+    mk('rect', {x: 0, y: 0, width: W, height: H, rx: r, filter: 'url(#grain)', opacity: .09, style: 'mix-blend-mode:multiply'}, g);
+    mk('rect', {x: -12, y: -4, width: fs * 4, height: fs * 1.3, fill: '#efe1b6', opacity: .75, transform: `rotate(-28 ${fs * 2} ${fs * .6})`}, g);
+    L.heatRect = mk('rect', {x: 0, y: 0, width: W, height: H, rx: r, fill: 'url(#heatg)', opacity: phase === 'freed' ? .16 : 0, style: 'mix-blend-mode:multiply'}, L.heat);
+  }
+
+  // ---------- the scene ----------
+  const atomXY = (r, c) => [gx + c * s, gy + r * s];
+
+  function crystal() {
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+      const [x, y] = atomXY(r, c);
+      if (c < COLS - 1) pencil(x, y, x + s, y, L.bonds, r * 31 + c * 7 + 1, Math.max(1.3, s * .05));
+      if (r < ROWS - 1) pencil(x, y, x, y + s, L.bonds, r * 17 + c * 11 + 5, Math.max(1.3, s * .05));
+    }
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+      const [x, y] = atomXY(r, c), mg = MG.some(m => m[0] === r && m[1] === c), ga = (r + c) % 2 === 0;
+      const kind = mg ? 'Mg' : ga ? 'Ga' : 'N', rad = s * (mg ? .3 : ga ? .29 : .24), seed = r * 13 + c * 5 + 3;
+      const g = mk('g', {class: 'atom'}, L.atoms);
+      mk('path', {d: blob(x + 2, y + 3, rad, seed), fill: C.ink, opacity: .14, filter: 'url(#shadow)'}, g);
+      mk('path', {d: blob(x, y, rad, seed), fill: C.paper}, g);
+      mk('path', {d: blob(x, y, rad * 1.02, seed + 1, .1), fill: `url(#w${kind})`, filter: 'url(#wc)'}, g);
+      if (kind === 'Ga') mk('path', {d: blob(x, y, rad * .96, seed), fill: 'url(#hatch)', opacity: .5}, g);
+      mk('path', {d: blob(x, y, rad, seed + 2, .05), fill: 'none', stroke: C.ink, 'stroke-width': mg ? 1.8 : 1.2, opacity: .85}, g);
+      // a little paper halo keeps every handwritten letter crisp over the hatching
+      txt(g, x, y + af * .36, kind, af, {'text-anchor': 'middle', fill: mg ? '#4a2c05' : C.ink,
+        stroke: mg ? '#f6dcae' : C.paper, 'stroke-width': Math.max(2.4, af * .2), 'stroke-opacity': .85, 'paint-order': 'stroke', 'stroke-linejoin': 'round'});
+    }
+    holes = MG.map(([r, c], i) => {
+      const [mx, my] = atomXY(r, c), x = mx + s * .36, y = my - s * .36;
+      const g = mk('g', {class: 'hole'}, L.holes);
+      const glow = mk('circle', {cx: x, cy: y, r: s * .2, fill: C.rose, opacity: .5, filter: 'url(#soft)', class: 'breath'}, g);
+      const ring = mk('path', {d: blob(x, y, s * .145, 70 + i, .08), fill: C.rose, 'fill-opacity': .12, stroke: C.rose, 'stroke-width': 2, 'stroke-dasharray': '3 2.6'}, g);
+      return {g, glow, ring, x, y, mx, my, row: r, col: c};
+    });
+  }
+
+  function drawFlask(x0, y0, fw, withLabel) {
+    const fh = fw * 1.2, cx = x0 + fw / 2, nw = fw * .16;
+    const d = `M${cx - nw},${y0} L${cx - nw},${y0 + fh * .32} L${x0},${y0 + fh * .92} Q${x0},${y0 + fh} ${x0 + fw * .1},${y0 + fh} L${x0 + fw * .9},${y0 + fh} Q${x0 + fw},${y0 + fh} ${x0 + fw},${y0 + fh * .92} L${cx + nw},${y0 + fh * .32} L${cx + nw},${y0} Z`;
+    flask.clip.setAttribute('d', d);
+    const g = mk('g', {class: 'flask'}, L.flask);
+    flask.g = g; flask.mouth = [cx, y0 - 2]; flask.base = [cx, y0 + fh];
+    mk('path', {d, fill: C.ink, opacity: .12, transform: 'translate(2,3)', filter: 'url(#shadow)'}, g);
+    mk('path', {d, fill: '#fbf7ec', opacity: .9}, g);
+    mk('rect', {x: x0 - 4, y: y0 + fh * .56, width: fw + 8, height: fh * .5, fill: 'url(#wLav)', 'clip-path': 'url(#flaskclip)', filter: 'url(#wc)'}, g);
+    mk('path', {d: `M${x0 + fw * .2},${y0 + fh * .57} Q${cx},${y0 + fh * .53} ${x0 + fw * .8},${y0 + fh * .57}`, stroke: '#6d58a0', 'stroke-width': 1, fill: 'none', opacity: .6}, g);
+    const R = srand(5);
+    for (let i = 0; i < 4; i++) {
+      const b = mk('circle', {cx: x0 + fw * (.3 + R() * .4), cy: y0 + fh * (.66 + R() * .12), r: 1.2 + R() * 1.6, fill: 'none', stroke: '#6d58a0', 'stroke-width': .8, opacity: .7}, g);
+      if (!Kit.calm) live.push(gsap.to(b, {y: -fh * .1, opacity: 0, duration: 1.6 + R(), repeat: -1, delay: R() * 1.5, ease: 'sine.in'}));
+    }
+    mk('path', {d, fill: 'none', stroke: C.ink, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    mk('path', {d: `M${x0 + fw * .2},${y0 + fh * .9} L${cx - nw * .4},${y0 + fh * .4}`, stroke: '#fff', 'stroke-width': 2, opacity: .8, 'stroke-linecap': 'round'}, g);
+    mk('rect', {x: cx - nw * 1.35, y: y0 - 3, width: nw * 2.7, height: 4, rx: 2, fill: C.ink}, g);
+    txt(g, cx, y0 + fh * .84, 'NH₃', Math.max(13, fw * .2), {'text-anchor': 'middle', fill: '#3b2d5e'});
+    if (withLabel) txt(L.flask, cx, y0 + fh + fs * 1.15, 'ammonia', fs, {'text-anchor': 'middle', fill: C.lead});
+    [[-.5, 0], [.4, .9], [0, 1.8]].forEach(([dx, dl]) => mk('path', {d: `M${cx + dx * nw},${y0 - 6} q3,-4 0,-7 q-3,-4 0,-7`, stroke: C.lead, 'stroke-width': 1.1, fill: 'none', class: 'wisp', style: `animation-delay:${dl}s`}, L.flask));
+    if (phase === 'feed' && assigned === 0) {
+      const hx = x0 + fw + fs * .5, hy = y0 + fh * .5, hint = mk('g', {class: 'nudge'}, L.flask);
+      mk('path', {d: `M${hx + fs * 1.6},${hy - fs * .9} Q${hx + fs * .4},${hy - fs * .9} ${hx},${hy}`, stroke: C.rose, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round'}, hint);
+      mk('path', {d: `M${hx - 1},${hy - 7} L${hx},${hy} L${hx + 6},${hy - 3}`, stroke: C.rose, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
+      txt(hint, hx + fs * 1.8, hy - fs * .6, 'tap!', fs * 1.05, {fill: C.rose});
+    }
+  }
+
+  function legend(parent, lx, y0, step, size, rows) {
+    const ic = size * .45, tx = lx + ic * 2 + 6;
+    rows.forEach((k, j) => {
+      const y = y0 + step * j, cy = y - size * .32;
+      if (k === 'mg') { mk('path', {d: blob(lx + ic, cy, ic, 3), fill: 'url(#wMg)', stroke: C.ink, 'stroke-width': 1.1}, parent); txt(parent, tx, y, side ? 'Mg dopant' : 'magnesium dopant', size); }
+      if (k === 'hole') { mk('path', {d: blob(lx + ic, cy, ic * .85, 4), fill: C.rose, 'fill-opacity': .15, stroke: C.rose, 'stroke-width': 1.6, 'stroke-dasharray': '3 2'}, parent); txt(parent, tx, y, 'hole', size); }
+      if (k === 'h') { mk('circle', {cx: lx + ic, cy, r: ic * .75, fill: '#fffdf6', stroke: C.ink, 'stroke-width': 1.2}, parent); txt(parent, tx, y, 'hydrogen', size); }
+    });
+  }
+
+  function setCounter() { if (counterEl) counterEl.textContent = `free holes: ${phase === 'freed' ? 4 : 4 - plugged}`; }
+  function setNote() {
+    if (!noteEl) return;
+    const t = phase === 'freed' ? 'holes free to move → current flows'
+      : plugged === 4 ? 'every hole plugged: no p-type'
+      : plugged > 0 ? 'hydrogen is sneaking in…' : 'magnesium leaves holes → p-type';
+    noteEl.textContent = t;
+    noteEl.setAttribute('fill', phase === 'freed' ? '#1f6a3a' : plugged === 4 ? C.rose : C.ink);
+  }
+
+  function plugStyle(i) {
+    const h = holes[i]; if (!h) return;
+    h.glow.classList.remove('breath'); gsap.to(h.glow, {opacity: 0, duration: Kit.calm ? 0 : .3});
+    h.ring.setAttribute('stroke', C.lead); h.ring.setAttribute('opacity', '.55');
+  }
+  function drawCap(i, anim) {
+    const h = holes[i], hr = Math.max(9, s * .17);
+    const bond = pencil(h.mx + s * .2, h.my - s * .2, h.x, h.y, L.caps, 90 + i, 1.8, C.ink);
+    const g = mk('g', {class: 'cap'}, L.caps);
+    mk('circle', {cx: h.x + 1.5, cy: h.y + 2, r: hr, fill: C.ink, opacity: .18, filter: 'url(#shadow)'}, g);
+    mk('circle', {cx: h.x, cy: h.y, r: hr, fill: '#fffdf6', stroke: C.ink, 'stroke-width': 1.5}, g);
+    mk('path', {d: `M${h.x - hr * .55},${h.y - hr * .2} q${hr * .2},${-hr * .4} ${hr * .55},${-hr * .45}`, stroke: '#fff', 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round', opacity: .9}, g);
+    txt(g, h.x, h.y + Math.max(12, hr * 1.2) * .36, 'H', Math.max(12, hr * 1.2), {'text-anchor': 'middle'});
+    caps[i] = {g, bond, x: h.x, y: h.y};
+    if (anim && !Kit.calm) {
+      gsap.from(g, {scale: .2, transformOrigin: '50% 50%', duration: .55, ease: 'back.out(3)'});
+      gsap.from(bond, {opacity: 0, duration: .3, ease: 'power2.out'});
+      // a tiny snap where the bond forms
+      const ring = mk('circle', {cx: h.x, cy: h.y, r: hr, fill: 'none', stroke: C.ink, 'stroke-width': 1.2, opacity: .6}, L.fly);
+      gsap.to(ring, {attr: {r: hr * 2.2}, opacity: 0, duration: .5, ease: 'power2.out', onComplete: () => ring.remove()});
+    }
+  }
+
+  function layout() {
+    live.forEach(t => t.kill()); live = []; hopTl.forEach(t => t.kill()); hopTl = [];
+    if (phase === 'feed') plugged = assigned;
+    svg.innerHTML = ''; caps = [];
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(13, Math.min(16, H * .04, W * .042));
+    const noteH = fs * 2.1;
+    // two compositions: notes above the crystal, or folded into a side column
+    const Tst = Math.max(fs * 7.6, Math.min(H * .33, fs * 10.5));
+    const sSt = Math.min(W * .9 / 6.1, (H - Tst - noteH - 6) / 3.95);
+    const Lw = Math.max(150, Math.min(200, W * .3));
+    const sSd = Math.min((W - Lw - 6) / 6.1, (H - noteH - 10) / 3.95);
+    side = sSd > sSt * 1.08 && H >= fs * 9.5;
+    s = Math.max(20, Math.min(84, side ? sSd : sSt));
+    af = Math.max(12, s * .26);
+    const latH = 3.95 * s + noteH;
+    if (side) {
+      T = 0;
+      gx = Lw + (W - Lw - 5.86 * s) / 2 + .3 * s;
+      gy = Math.max(0, (H - latH) / 2) + .62 * s;
+    } else {
+      T = Tst;
+      gx = (W - 5.86 * s) / 2 + .3 * s;
+      gy = T + .62 * s + Math.max(0, H - T - latH) / 2;
+    }
+    defs();
+    for (const k of ['bg', 'heat', 'bonds', 'atoms', 'trail', 'holes', 'caps', 'notes', 'flask', 'fly']) L[k] = mk('g', {}, svg);
+    paper(); crystal();
+
+    if (side) {
+      const pad = Math.max(8, fs * .6), step = fs * 1.45, cS = fs * 1.2;
+      const rows = H < fs * 14 ? ['hole', 'h'] : ['mg', 'hole', 'h'];
+      const below = fs * .6 + cS + step * 1.1 + step * (rows.length - 1) + fs * .3;
+      const fh = Math.max(fs * 3, Math.min(Lw * .42 * 1.2, H - 2 * pad - 20 - below));
+      const fw = fh / 1.2, total = 20 + fh + below, top = Math.max(pad, (H - total) / 2);
+      const y0 = top + 20, x0 = Math.max(12, Lw * .1);
+      drawFlask(x0, y0, fw, false);
+      const lx = Math.max(10, x0 - 2), cb = y0 + fh + fs * .6 + cS;
+      counterEl = txt(L.notes, lx, cb, '', cS, {fill: C.rose});
+      legend(L.notes, lx, cb + step * 1.1, step, fs, rows);
+    } else {
+      const fw = Math.min(W * .22, T * .55);
+      drawFlask(Math.max(10, W * .06), T * .1, fw, true);
+      const lg = mk('g', {}, L.notes), lx = W * .5, y0 = T * .17, step = fs * 1.75;
+      legend(lg, lx, y0, step, fs, ['mg', 'hole', 'h']);
+      counterEl = txt(lg, lx, y0 + step * 3.15, '', fs * 1.3, {fill: C.rose});
+      setCounter();
+      try { const bb = lg.getBBox(); if (bb.x + bb.width > W - 8) lg.setAttribute('transform', `translate(${W - 8 - bb.x - bb.width},0)`); } catch (e) {}
+    }
+    setCounter();
+    noteEl = txt(L.notes, gx + 2.5 * s, gy + 3.34 * s + fs * 1.2, '', fs * 1.05, {'text-anchor': 'middle'});
+    if (phase !== 'freed') for (let i = 0; i < plugged; i++) { plugStyle(i); drawCap(i, false); }
+    setNote();
+    if (phase === 'freed' && !Kit.calm) startHops();
+    if (phase === 'feed' && plugged === 4) allPlugged();
+  }
+
+  // ---------- physics ----------
+  function arc(el, x0, y0, x1, y1, t, g, onDone) {
+    const vx = (x1 - x0) / t, vy = (y1 - y0 - .5 * g * t * t) / t;
+    gsap.set(el, {x: x0, y: y0});
+    const tw = gsap.to(el, {duration: t, ease: 'none', physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * 180 / Math.PI, gravity: g},
+      onComplete: () => { gsap.set(el, {x: x1, y: y1}); onDone && onDone(); }});
+    live.push(tw); return tw;
+  }
+  function hDot(parent, r) { const g = mk('g', {}, parent); mk('circle', {cx: 0, cy: 0, r, fill: '#fffdf6', stroke: C.ink, 'stroke-width': 1.3}, g); return g; }
+
+  function release() {
+    if (phase !== 'feed' || assigned >= 4) return;
+    const i = assigned++; Kit.haptic('selection');
+    if (assigned === 1) { say.innerHTML = 'Ammonia brings the nitrogen, and its hydrogen comes along too. <b>Keep tapping.</b>'; }
+    if (Kit.calm) { land(i); return; }
+    if (flask.g) live.push(gsap.fromTo(flask.g, {rotation: -7, transformOrigin: '50% 100%'}, {rotation: 0, duration: .7, ease: 'elastic.out(1.2,.35)'}));
+    const h = holes[i], [mx, my] = flask.mouth, px = mx + (h.x - mx) * .7;
+    const py = side ? Math.max(fs * .8, gy - s * .95) : Math.max(fs, T * .28);
+    const rN = s * .2, rH = Math.max(3.5, s * .09);
+    const mol = mk('g', {}, L.fly);
+    [[-1.05, .55], [1.05, .55], [0, -1.15]].forEach(([dx, dy]) => { const d = hDot(mol, rH); gsap.set(d, {x: dx * rN, y: dy * rN}); });
+    mk('circle', {cx: 0, cy: 0, r: rN, fill: 'url(#wN)', stroke: C.ink, 'stroke-width': 1.3}, mol);
+    live.push(gsap.to(mol, {rotation: 220, duration: .55, ease: 'power1.out'}));
+    arc(mol, mx, my, px, py, .55, 700, () => {
+      mol.remove();
+      const puff = mk('circle', {cx: px, cy: py, r: rN, fill: 'none', stroke: C.lead, 'stroke-width': 1.2}, L.fly);
+      live.push(gsap.to(puff, {attr: {r: rN * 2.6}, opacity: 0, duration: .5, ease: 'power2.out', onComplete: () => puff.remove()}));
+      // the nitrogen sinks into a nitrogen site of the growing crystal
+      const nc = [1, 3, 5].reduce((b, c) => Math.abs(gx + c * s - px) < Math.abs(gx + b * s - px) ? c : b, 1);
+      const [nx, ny] = atomXY(0, nc);
+      const n = mk('g', {}, L.fly); mk('circle', {cx: 0, cy: 0, r: rN, fill: 'url(#wN)', stroke: C.ink, 'stroke-width': 1.3}, n);
+      gsap.set(n, {x: px, y: py});
+      live.push(gsap.to(n, {x: nx, y: ny, scale: .6, opacity: 0, duration: .55, ease: 'power2.in', onComplete: () => {
+        n.remove();
+        const sp = mk('circle', {cx: nx, cy: ny, r: s * .24, fill: 'none', stroke: C.blue, 'stroke-width': 2}, L.fly);
+        gsap.to(sp, {attr: {r: s * .5}, opacity: 0, duration: .5, ease: 'power2.out', onComplete: () => sp.remove()});
+      }}));
+      // one hydrogen finds the magnesium; the others tumble away
+      const h1 = hDot(L.fly, rH);
+      arc(h1, px, py, h.x, h.y, .45, 1300, () => { h1.remove(); land(i); });
+      [-140, -40].forEach((ang, k) => {
+        const d = hDot(L.fly, rH); gsap.set(d, {x: px, y: py});
+        live.push(gsap.to(d, {duration: 1.2, ease: 'none', physics2D: {velocity: 260 + k * 80, angle: ang + (Math.random() - .5) * 30, gravity: 900}}));
+        live.push(gsap.to(d, {opacity: 0, delay: .55, duration: .6, ease: 'power1.in', onComplete: () => d.remove()}));
+      });
+    });
+  }
+
+  function land(i) {
+    plugged++; plugStyle(i); drawCap(i, true); setCounter(); setNote(); Kit.haptic('light');
+    if (!Kit.calm && counterEl) gsap.fromTo(counterEl, {scale: 1.25, transformOrigin: '0% 50%'}, {scale: 1, duration: .5, ease: 'back.out(3)'});
+    if (plugged === 4) allPlugged();
+  }
+  function allPlugged() {
+    if (phase !== 'feed') return;
+    phase = 'plugged'; Kit.haptic('success'); setNote();
+    say.innerHTML = 'Each hydrogen bonded to a magnesium and <b>plugged its hole</b>. No holes, no p-type. Now:';
+    Kit.show('heat');
+    if (!Kit.calm) gsap.from('#heat', {y: 8, opacity: 0, duration: .45, ease: 'power3.out'});
+  }
+
+  function startHops() {
+    const q = j => gx + j * s + .36 * s;
+    const ghost = h => {
+      if (!L.trail || !L.trail.isConnected) return;
+      const x = h.x + (+gsap.getProperty(h.g, 'x') || 0);
+      const c = mk('circle', {cx: x, cy: h.y, r: s * .13, fill: C.rose, opacity: .28}, L.trail);
+      gsap.to(c, {opacity: 0, attr: {r: s * .04}, duration: .9, ease: 'power1.out', onComplete: () => c.remove()});
+    };
+    holes.forEach((h, i) => {
+      const tl = gsap.timeline({repeat: -1, delay: .3 + i * .4});
+      const hop = j => tl.to(h.g, {x: q(j) - h.x, duration: .42, ease: 'power2.inOut', onStart: () => ghost(h)}, '+=.2');
+      for (let j = h.col + 1; j <= COLS - 1; j++) hop(j);
+      tl.to(h.g, {opacity: 0, duration: .25, ease: 'power1.in'}, '+=.1').set(h.g, {x: q(-.5) - h.x})
+        .to(h.g, {opacity: 1, x: q(0) - h.x, duration: .45, ease: 'power2.out'});
+      for (let j = 1; j <= h.col; j++) hop(j);
+      hopTl.push(tl);
+    });
+  }
+
+  function finish() {
+    phase = 'freed';
+    say.innerHTML = 'Ammonia supplies the nitrogen, but it also carries hydrogen. The hydrogen bonds to the magnesium and plugs the holes p-type gallium nitride needs. Adding energy breaks those bonds and frees the holes.';
+    Kit.show('keep');
+  }
+
+  function heatUp() {
+    if (phase !== 'plugged') return;
+    Kit.hide('heat'); Kit.haptic('success');
+    if (Kit.calm) { finish(); layout(); return; }
+    phase = 'heating';
+    const atoms = svg.querySelectorAll('.atom');
+    const tl = gsap.timeline(); live.push(tl);
+    tl.to(L.heatRect, {opacity: .6, duration: .5, ease: 'power2.out'})
+      .to(atoms, {x: () => (Math.random() - .5) * s * .1, y: () => (Math.random() - .5) * s * .1, duration: .06, repeat: 11, yoyo: true, ease: 'sine.inOut', onComplete: () => gsap.set(atoms, {x: 0, y: 0})}, .15);
+    // heat shimmer rising through the crystal
+    const base = gy + 3.3 * s, len = s * 1.6, a = s * .12;
+    for (let k = 0; k < 6; k++) {
+      const x = gx - s * .2 + k * (5.4 * s / 5);
+      const p = mk('path', {d: `M${x},${base} q${a},${-len / 4} 0,${-len / 2} q${-a},${-len / 4} 0,${-len / 2}`, stroke: C.heat, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', opacity: 0}, L.heat);
+      tl.fromTo(p, {opacity: 0, y: 0}, {opacity: .75, y: -s * .8, duration: .6, ease: 'power1.out'}, .05 + k * .07)
+        .to(p, {opacity: 0, y: -s * 1.8, duration: .7, ease: 'power1.in'}, .65 + k * .07);
+    }
+    caps.forEach((c, i) => {
+      tl.to(c.bond, {opacity: 0, duration: .15, ease: 'power2.in'}, .5 + i * .07);
+      tl.to(c.g, {duration: 1.5, ease: 'none', physics2D: {velocity: 520 + Math.random() * 220, angle: -90 + (Math.random() - .5) * 60, gravity: 1100}, rotation: (Math.random() - .5) * 540}, .5 + i * .07);
+      tl.to(c.g, {opacity: 0, duration: .5, ease: 'power1.in'}, 1.3 + i * .07);
+      const h = holes[i];
+      tl.add(() => { h.ring.setAttribute('stroke', C.rose); h.ring.setAttribute('opacity', 1); h.glow.classList.add('breath'); }, .55 + i * .07)
+        .fromTo(h.glow, {opacity: 0}, {opacity: .7, duration: .4, ease: 'power2.out'}, .55 + i * .07)
+        .fromTo(h.ring, {scale: .3, transformOrigin: '50% 50%'}, {scale: 1, duration: .9, ease: 'elastic.out(1,.4)'}, .55 + i * .07);
+    });
+    tl.add(() => { plugged = 0; phase = 'freed'; setCounter(); if (counterEl) gsap.fromTo(counterEl, {scale: 1.4, transformOrigin: '0% 50%'}, {scale: 1, duration: .6, ease: 'back.out(3)'}); phase = 'heating'; }, .8)
+      .add(finish, .9)
+      .to(L.heatRect, {opacity: .16, duration: .6, ease: 'power2.inOut'}, 1.2)
+      .add(() => { layout(); }, 1.9);
+  }
+
+  svg.addEventListener('pointerdown', () => { if (phase === 'feed') release(); });
+  Kit.$('heat').addEventListener('click', heatUp);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from(svg.querySelectorAll('.atom'), {scale: 0, transformOrigin: '50% 50%', duration: .55, ease: 'back.out(2.2)', stagger: {each: .022, from: 'random'}});
+    gsap.from(L.bonds, {opacity: 0, duration: .8, delay: .2, ease: 'power2.out'});
+    gsap.from(L.flask, {y: -16, opacity: 0, duration: .7, ease: 'power3.out', delay: .1});
+    gsap.from(L.notes, {x: 10, opacity: 0, duration: .6, ease: 'power3.out', delay: .25});
+    gsap.from(holes.map(h => h.ring), {scale: .2, transformOrigin: '50% 50%', duration: 1, ease: 'elastic.out(1,.4)', stagger: .12, delay: .75});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    for (let i = 0; i < 4; i++) { release(); await w(Kit.calm ? 40 : 350); }
+    await w(Kit.calm ? 80 : 1300);
+    Kit.$('heat').click();
+    await w(Kit.calm ? 100 : 2300);
+  };
+})();
+Kit.single();
+</script>
+</html>

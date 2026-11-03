@@ -1,0 +1,37 @@
+{
+  "id": "maths-penrose-lookalikes",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many different Penrose tilings are there, and could you tell them apart?",
+  "answer": "Uncountably many Penrose tilings exist, and no finite view can tell them apart. The page shows two different tilings and six small patches cut from them, and asks you to sort each patch under A or B.",
+  "move": "Uncountably many Penrose tilings exist, and no finite view can tell them apart.",
+  "keywords": [
+    "penrose-tilings",
+    "aperiodic-tiling",
+    "infinity",
+    "tiling",
+    "patches"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two different Penrose tilings, labelled A and B, with six small patches cut from them to sort. Tap a patch to file it under A, tap again for B. Asks how many Penrose tilings there are and whether they can be told apart."
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=688s",
+  "written": "2026-11-03"
+}
