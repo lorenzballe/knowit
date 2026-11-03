@@ -362,8 +362,11 @@ def main(argv: list[str] | None = None) -> int:
     PUBLISHED.parent.mkdir(parents=True, exist_ok=True)
     PUBLISHED.write_text(text, encoding="utf-8")
     VERSION.write_text(version_note(bundle), encoding="utf-8")
-    LEGACY.write_text(json.dumps(old, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    LEGACY_VERSION.write_text(version_note(old), encoding="utf-8")
+    # The older builds' copy is rewritten only when what they get changes:
+    # a new stamp alone would send every one of them the whole bank again.
+    if not legacy:
+        LEGACY.write_text(json.dumps(old, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        LEGACY_VERSION.write_text(version_note(old), encoding="utf-8")
     write_pages(pages)
     print(f"{len(cards)} cards, {len(pages)} pages, {len(editions)} editions, version {bundle['version']}")
     print(f"wrote {EMBEDDED.relative_to(ROOT)}, {PUBLISHED.relative_to(ROOT)}, {LEGACY.relative_to(ROOT)},"

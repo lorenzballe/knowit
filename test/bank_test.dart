@@ -132,13 +132,36 @@ void main() {
 
     test('is the same document the site serves', () {
       final served = BankBundle.parse(
-        File('web/cards/cards.json').readAsStringSync(),
+        File('web/cards/v2/cards.json').readAsStringSync(),
       );
       expect(
         served.cards.map((p) => p.id),
         PillBank.embedded.cards.map((p) => p.id),
       );
       expect(served.editions, PillBank.embedded.editions);
+    });
+
+    test('is served to builds from before without a free card they never '
+        'knew, pages inside the ones they did', () {
+      final BankBundle before = BankBundle.parse(
+        File('web/cards/cards.json').readAsStringSync(),
+      );
+      final Set<String> knew = {
+        for (final String line in File(
+          'tool/cards/legacy_pages.txt',
+        ).readAsLinesSync())
+          if (line.trim().isNotEmpty && !line.startsWith('#')) line.trim(),
+      };
+      for (final Pill p in before.cards) {
+        if (p.web == null) continue;
+        expect(knew, contains(p.id), reason: 'a free card they never knew');
+        expect(p.web!.html, isNotNull, reason: 'its page inside it');
+      }
+      final Set<String> ids = {for (final Pill p in before.cards) p.id};
+      for (final Pill p in PillBank.embedded.cards) {
+        if (p.web == null) expect(ids, contains(p.id));
+      }
+      expect(before.editions.values.where((id) => !ids.contains(id)), isEmpty);
     });
 
     test('names the graded question of the day for every edition it holds', () {
