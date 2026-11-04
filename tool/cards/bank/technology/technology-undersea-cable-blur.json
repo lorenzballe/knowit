@@ -1,0 +1,38 @@
+{
+  "id": "technology-undersea-cable-blur",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did early undersea telegraph cables blur dots and dashes together?",
+  "answer": "Undersea cable soaks up electric charge, and that capacity grows with its length. Each pulse has to fill the cable before the far end rises, then drain it before it falls. Stretched pulses blur into each other, so dots and dashes merge.",
+  "move": "Longer cable, more capacitance: pulses stretch until dots and dashes merge.",
+  "keywords": [
+    "telegraph",
+    "undersea cable",
+    "capacitance",
+    "dots and dashes",
+    "veritasium"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question asks why early undersea telegraph cables blurred dots and dashes together. A dot-dash-dot sequence is shown beside a Lay more cable button, with a counter reading 1 of 5.",
+    "ground": "#0f2a30"
+  },
+  "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=632s",
+  "written": "2026-11-03"
+}

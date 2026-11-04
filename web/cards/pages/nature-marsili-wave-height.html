@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
-#sea{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#sea{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
@@ -33,6 +33,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const TRUE_M = 5, MAXM = 8;
+const INK = '#10100c';
 const S = {guess: 2, picked: false, done: false, animating: false};
 let G = {}, R = {}, drag = false;
 const svg = Kit.$('sea');
@@ -60,19 +61,15 @@ function draw() {
   const y0 = H * .86, m = (H * .76) / MAXM;
   G = {W, H, f: fs, y0, m};
   const defs = Kit.mk('defs', {}, svg);
-  const sk = Kit.mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  Kit.mk('stop', {offset: 0, 'stop-color': '#0a1c33'}, sk);
-  Kit.mk('stop', {offset: 1, 'stop-color': '#21507d'}, sk);
   const wg = Kit.mk('linearGradient', {id: 'wv', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
   Kit.mk('stop', {offset: 0, 'stop-color': '#8fd3ff'}, wg);
   Kit.mk('stop', {offset: 1, 'stop-color': '#1667a8'}, wg);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#sky)'}, svg);
   // metre scale
   for (let i = 1; i <= MAXM; i++) {
     const y = y0 - i * m;
-    Kit.mk('line', {x1: 0, x2: i % 2 ? 6 : 12, y1: y, y2: y, stroke: '#ffffff', 'stroke-opacity': .5, 'stroke-width': 1.5}, svg);
+    Kit.mk('line', {x1: 0, x2: i % 2 ? 6 : 12, y1: y, y2: y, stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1.5}, svg);
     if (i % 2 === 0 && m * 2 > fs * 1.4) {
-      const t = Kit.mk('text', {x: 16, y: y + fs * .35, fill: '#ffffff', 'fill-opacity': .6, 'font-size': fs * .9, 'font-family': 'var(--mono)'}, svg);
+      const t = Kit.mk('text', {x: 16, y: y + fs * .35, fill: INK, 'fill-opacity': .75, 'font-size': fs * .9, 'font-family': 'var(--mono)'}, svg);
       t.textContent = `${i} m`;
     }
   }
@@ -82,28 +79,28 @@ function draw() {
   const gY = y0 - .6 * m;
   Kit.mk('path', {d: `M${W * .6},${y0 + 2} Q${W * .66},${y0} ${W * .72},${gY} L${W},${gY} L${W},${H} L${W * .6},${H} Z`, fill: '#e2c084'}, svg);
   // person, 1.8 m for scale
-  const px = W * .82, ph = 1.8 * m, ink = '#0a1c33';
+  const px = W * .82, ph = 1.8 * m, ink = INK;
   const hr = ph * .11;
   Kit.mk('circle', {cx: px, cy: gY - ph + hr, r: hr, fill: ink}, svg);
   Kit.mk('rect', {x: px - hr * .9, y: gY - ph + hr * 2.2, width: hr * 1.8, height: ph * .42, rx: hr * .6, fill: ink}, svg);
   Kit.mk('rect', {x: px - hr * .75, y: gY - ph * .4, width: hr * .6, height: ph * .4, fill: ink}, svg);
   Kit.mk('rect', {x: px + hr * .15, y: gY - ph * .4, width: hr * .6, height: ph * .4, fill: ink}, svg);
-  const pl = Kit.mk('text', {x: px + hr * 1.8, y: gY - ph * .5, fill: '#ffffff', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg);
+  const pl = Kit.mk('text', {x: px + hr * 1.8, y: gY - ph * .5, fill: INK, 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg);
   pl.textContent = '1.8 m';
   // flood, spray, waves
   R.flood = Kit.mk('rect', {x: W * .62, y: gY, width: W * .4, height: 0, fill: '#4aa3e0', 'fill-opacity': .7}, svg);
-  R.ghost = Kit.mk('path', {fill: '#ffffff', 'fill-opacity': .18, stroke: '#ffffff', 'stroke-opacity': .5, 'stroke-dasharray': '5 5', 'stroke-width': 1.5}, svg);
-  R.wave = Kit.mk('path', {fill: 'url(#wv)', stroke: '#e8f7ff', 'stroke-width': 2, opacity: 0}, svg);
+  R.ghost = Kit.mk('path', {fill: INK, 'fill-opacity': .18, stroke: INK, 'stroke-opacity': .6, 'stroke-dasharray': '5 5', 'stroke-width': 1.5}, svg);
+  R.wave = Kit.mk('path', {fill: 'url(#wv)', stroke: INK, 'stroke-width': 2, opacity: 0}, svg);
   R.spray = Kit.mk('g', {}, svg);
   // guess line
-  R.gLine = Kit.mk('line', {x1: 0, x2: W * .62, stroke: '#ffd166', 'stroke-width': 2.5, 'stroke-dasharray': '7 6'}, svg);
+  R.gLine = Kit.mk('line', {x1: 0, x2: W * .62, stroke: INK, 'stroke-width': 2.5, 'stroke-dasharray': '7 6'}, svg);
   R.knob = Kit.mk('circle', {cx: W * .5, r: Math.max(fs * .75, 11), fill: '#ffd166', stroke: ink, 'stroke-width': 2}, svg);
-  R.gLab = Kit.mk('text', {x: Math.max(W * .1, 16 + fs * 2.8), fill: '#ffd166', 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)'}, svg);
+  R.gLab = Kit.mk('text', {x: Math.max(W * .1, 16 + fs * 2.8), fill: INK, 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)'}, svg);
   // truth line
   const ty = y0 - TRUE_M * m;
   R.truth = Kit.mk('g', {opacity: 0}, svg);
-  Kit.mk('line', {x1: 0, x2: W, y1: ty, y2: ty, stroke: '#ffffff', 'stroke-width': 2.5}, R.truth);
-  const tl = Kit.mk('text', {x: W * .97, y: ty - fs * .5, 'text-anchor': 'end', fill: '#ffffff', 'font-size': fs * 1.1, 'font-weight': 800, 'font-family': 'var(--body)'}, R.truth);
+  Kit.mk('line', {x1: 0, x2: W, y1: ty, y2: ty, stroke: INK, 'stroke-width': 2.5}, R.truth);
+  const tl = Kit.mk('text', {x: W * .97, y: ty - fs * .5, 'text-anchor': 'end', fill: INK, 'font-size': fs * 1.1, 'font-weight': 800, 'font-family': 'var(--body)'}, R.truth);
   tl.textContent = 'At least 5 m';
   setGuess();
   if (S.done && !S.animating) finalState();
@@ -133,7 +130,7 @@ function launch(fast) {
     .add(() => {
       Kit.haptic('light');
       for (let i = 0; i < 16; i++) {
-        const c = Kit.mk('circle', {cx: W * .66, cy: y0 - TRUE_M * m * .9, r: 2 + Kit.rnd() * 4, fill: '#e8f7ff'}, R.spray);
+        const c = Kit.mk('circle', {cx: W * .66, cy: y0 - TRUE_M * m * .9, r: 2 + Kit.rnd() * 4, fill: '#1667a8'}, R.spray);
         gsap.to(c, {attr: {cx: W * (.6 + Kit.rnd() * .3), cy: y0 - TRUE_M * m * (1 + Kit.rnd() * .5)}, opacity: 0, duration: .9, ease: 'power2.out', onComplete: () => c.remove()});
       }
     })

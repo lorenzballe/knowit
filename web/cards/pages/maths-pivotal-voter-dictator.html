@@ -1,0 +1,351 @@
+<!doctype html>
+<!-- slug: maths-pivotal-voter-dictator -->
+<!-- Look: a night-time glass lab. Nine test tubes in a rack and one tall cylinder for society, each holding three translucent layers (A amber, B mint, C rose) that slosh and bubble.
+     Interaction: scrub a glass rail through Profiles 0–9. Each step, one more voter's B layer rises through their tube from last to first, while society's B stays stuck at the bottom.
+     Wow: at voter 6 a single tube tips it. Sparks fly up a glowing arrow, society's B springs to the top with an elastic surge, and the tube is crowned "THE DICTATOR". -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The hidden dictator</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;overflow:hidden;background:none;box-shadow:none;border:0;border-radius:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Scrub the profiles · pivotal voter" style="--c:#0b1828;--k:#eaf4ff;--edge:#050b14">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SCRUB THE VOTERS</span></div>
+    <h2 class="q">How does Arrow's proof find a hidden dictator?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="Nine voters' test tubes, each with three liquid layers A, B and C, a tall cylinder showing society's ranking, and a rail of profiles from 0 to 9."></svg>
+    </div>
+    <p class="say" id="say">Every voter ranks B last, so society must too. <b>Drag the rail:</b> one voter at a time lifts B to the top.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Change one vote at a time, and some single voter ends up deciding for everyone.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
+  const N = 9, PIVOT = 6;
+  const COL = {A: '#ffb547', B: '#38f2c6', C: '#ff5f93'};
+  const DEEP = {A: '#b8600f', B: '#078a74', C: '#a8164f'};
+  const LITE = {A: '#ffe1a8', B: '#c6fff0', C: '#ffc2d6'};
+  const INK = '#eaf4ff', MUTE = 'rgba(234,244,255,.62)', DARK = '#08131f';
+  const pairs = ['AC', 'CA', 'AC', 'AC', 'CA', 'CA', 'AC', 'CA', 'AC'];
+
+  const mkV = (order, base) => ({slots: {[order[0]]: 0, [order[1]]: 1, B: 2}, order, up: false, amp: base, base, ph: Kit.rnd() * 6.28, bub: Kit.rnd(), fill: 1, el: null});
+  const tubes = pairs.map(o => mkV(o, 1.4));
+  const soc = mkV('AC', .9);
+  const all = [...tubes, soc];
+  const st = {p: 0};
+  let k = 0, found = false, touched = false;
+  let W = 0, H = 0, fs = 12, x0 = 0, step = 0, railY = 0, hr = 14, R = {}, uid = 0;
+
+  const T = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, a), parent); e.textContent = t; return e; };
+
+  // ---------- the glass ----------
+  function defs() {
+    const d = Kit.mk('defs', {}, svg);
+    const lin = (id, stops, v) => { const g = Kit.mk('linearGradient', Object.assign({id}, v ? {x1: 0, y1: 0, x2: 0, y2: 1} : {x1: 0, y1: 0, x2: 1, y2: 0}), d); stops.forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op ?? 1}, g)); };
+    lin('glass', [[0, '#cfe6ff', .18], [.3, '#cfe6ff', .03], [.75, '#cfe6ff', .02], [1, '#cfe6ff', .15]]);
+    lin('shine', [[0, '#ffffff', .75], [.6, '#ffffff', .12], [1, '#ffffff', 0]], true);
+    lin('rack', [[0, '#bcd8ff', .26], [1, '#bcd8ff', .07]], true);
+    lin('railfill', [[0, DEEP.B], [1, COL.B]]);
+    lin('floor', [[0, '#9fd8ff', 0], [.5, '#9fd8ff', .38], [1, '#9fd8ff', 0]]);
+    for (const L of 'ABC') lin('liq' + L, [[0, DEEP[L]], [.3, COL[L]], [.48, LITE[L]], [.7, COL[L]], [1, DEEP[L]]]);
+    const rg = Kit.mk('radialGradient', {id: 'ped'}, d);
+    Kit.mk('stop', {offset: 0, 'stop-color': COL.B, 'stop-opacity': .55}, rg);
+    Kit.mk('stop', {offset: 1, 'stop-color': COL.B, 'stop-opacity': 0}, rg);
+    const f = Kit.mk('filter', {id: 'glow', x: '-60%', y: '-60%', width: '220%', height: '220%'}, d);
+    Kit.mk('feGaussianBlur', {stdDeviation: 4, result: 'b'}, f);
+    const m = Kit.mk('feMerge', {}, f); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
+    const mk = Kit.mk('marker', {id: 'head', viewBox: '0 0 10 10', refX: 7, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse'}, d);
+    Kit.mk('path', {d: 'M0,0 L10,5 L0,10 Z', fill: COL.B}, mk);
+  }
+
+  function vessel(v, cx, top, bot, w, isSoc, letters, lsz) {
+    const id = 'cl' + (uid++), g = Kit.mk('g', {}, svg);
+    const r = isSoc ? w * .14 : w / 2;
+    const shape = isSoc
+      ? `M${cx - w / 2},${top} V${bot - r} Q${cx - w / 2},${bot} ${cx - w / 2 + r},${bot} H${cx + w / 2 - r} Q${cx + w / 2},${bot} ${cx + w / 2},${bot - r} V${top} Z`
+      : `M${cx - w / 2},${top} V${bot - r} A${r},${r} 0 0 0 ${cx + w / 2},${bot - r} V${top} Z`;
+    const cp = Kit.mk('clipPath', {id}, g); Kit.mk('path', {d: shape}, cp);
+    Kit.mk('ellipse', {cx, cy: bot + w * .1, rx: w * .7, ry: w * .13, fill: '#000', opacity: .4}, g);
+    Kit.mk('path', {d: shape, fill: 'url(#glass)'}, g);
+    const clip = Kit.mk('g', {'clip-path': `url(#${id})`}, g);
+    const rot = Kit.mk('g', {}, clip);
+    const ly0 = top + (bot - top) * (isSoc ? .1 : .14), sh = (bot - ly0) / 3, lw = w + 6, lx = cx - lw / 2;
+    const back = Kit.mk('rect', {x: lx, width: lw, fill: '#5d7fa6', opacity: .28}, rot);
+    const rr = {};
+    for (const L of ['A', 'C', 'B']) rr[L] = {rect: Kit.mk('rect', {fill: `url(#liq${L})`}, rot)};
+    const men = Kit.mk('rect', {x: lx, width: lw, height: 2, fill: '#fff', opacity: .55}, rot);
+    const lg = Kit.mk('g', {}, clip);
+    if (letters) for (const L of ['A', 'C', 'B']) rr[L].txt = T(lg, cx, 0, L, {'text-anchor': 'middle', fill: DARK, 'font-family': 'var(--mono)', 'font-weight': 800, 'font-size': lsz});
+    const bub = Kit.mk('circle', {r: Math.max(1.6, w * .08), fill: '#fff', opacity: 0}, clip);
+    const bub2 = Kit.mk('circle', {r: Math.max(1.2, w * .055), fill: '#fff', opacity: 0}, clip);
+    Kit.mk('path', {d: shape, fill: 'none', stroke: '#d6ecff', 'stroke-opacity': .55, 'stroke-width': isSoc ? 1.8 : 1.4}, g);
+    Kit.mk('rect', {x: cx - w * .36, y: top + w * .3, width: w * .13, height: (bot - top) * .78, rx: w * .06, fill: 'url(#shine)', opacity: .8}, g);
+    Kit.mk('rect', {x: cx + w * .26, y: top + w * .5, width: w * .05, height: (bot - top) * .5, rx: w * .03, fill: '#fff', opacity: .18}, g);
+    Kit.mk('ellipse', {cx, cy: top, rx: w / 2 + 2.5, ry: Math.max(2.5, w * .14), fill: 'rgba(220,240,255,.06)', stroke: '#e6f4ff', 'stroke-opacity': .7, 'stroke-width': 1.4}, g);
+    v.el = {g, rot, rr, men, back, bub, bub2, cx, top, bot, w, ly0, sh, isSoc, lsz};
+  }
+
+  // ---------- two compositions: tall lab, or compact bench ----------
+  function planTall() {
+    const h = fs * 1.05, pad = Math.max(12, W * .045, h * 1.35 + 3);
+    const rY = H - fs * 1.45, top0 = fs * 1.7;
+    const socH = Math.max(fs * 5.6, H * .34), socBot = top0 + socH;
+    const tubeTop = socBot + fs * 2.8, tubeBot = rY - fs * 3, th = tubeBot - tubeTop;
+    const stp = (W - 2 * pad) / N, tw = Math.min(stp * .6, th * .3);
+    const tsh = (tubeBot - (tubeTop + th * .14)) / 3, ssh = socH * .9 / 3;
+    if (tsh < fs * 1.2 || ssh < fs * 1.5) return null;
+    const chipY = tubeTop - fs * 1.15, maxY = chipY - fs * .8 - 4;
+    const sx = W * .22, sw = Math.min(W * .17, socH * .42);
+    const rx = Math.max(W * .45, sx + sw / 2 + fs * 2.2);
+    const ys = [1.1, 3.3, 4.9, 6.4].map(d => top0 + fs * d);
+    if (ys[3] + fs * .3 > maxY) return null;
+    const dotsY = top0 + fs * 7.6;
+    return {tall: true, hr: h, x0: pad, step: stp, railY: rY, socTop: top0, socBot, sx, sw, socL: Math.min(fs * 1.35, ssh * .8),
+      tubeTop, tubeBot, tw, letters: true, numY: tubeBot + fs * 1.3, chipY, rx, ys, dotsY, dots: dotsY + fs * .4 < maxY};
+  }
+  function planCompact() {
+    const h = fs * .85, lab = fs * 1.9, m = Math.max(8, W * .025);
+    const socTop = fs * 2.4, socBot = H - Math.max(8, fs * .6);
+    const sw = Math.max(fs * 1.6, Math.min(fs * 2.6, (socBot - socTop) * .45));
+    const sx = m + lab + 6 + sw / 2;
+    const xR0 = sx + sw / 2 + fs * 1.5, xR1 = W - h - 4;
+    const stp = (xR1 - xR0) / N;
+    const chipY = fs * 1.15, tubeTop = chipY + fs * 1.35, rY = H - fs * 1.0, numY = rY - fs * 1.15, tubeBot = numY - fs * 1.2;
+    const th = tubeBot - tubeTop, tw = Math.max(6, Math.min(stp * .62, th * .34));
+    const tsh = (tubeBot - (tubeTop + th * .14)) / 3, ssh = (socBot - socTop) * .9 / 3;
+    return {tall: false, hr: h, x0: xR0, step: stp, railY: rY, socTop, socBot, sx, sw, socL: Math.max(fs, Math.min(fs * 1.2, ssh * .8)),
+      tubeTop, tubeBot, tw, letters: tsh >= fs * 1.15, numY, chipY};
+  }
+
+  // ---------- the scene ----------
+  function layout() {
+    svg.innerHTML = ''; uid = 0; R = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, W / 26));
+    defs();
+    const P = planTall() || planCompact();
+    x0 = P.x0; step = P.step; railY = P.railY; hr = P.hr;
+    const {sx, sw, tw, tubeTop, tubeBot} = P, th = tubeBot - tubeTop;
+
+    // backdrop: faint lab grid and drifting motes
+    const grid = Kit.mk('g', {opacity: .06}, svg);
+    for (let i = 0; i < N; i++) { const x = x0 + (i + .5) * step; Kit.mk('line', {x1: x, x2: x, y1: 0, y2: H, stroke: '#bcd8ff', 'stroke-width': 1}, grid); }
+    R.motes = Array.from({length: 14}, () => ({c: Kit.mk('circle', {r: .6 + Kit.rnd() * 1.3, fill: '#bfe9ff', opacity: 0}, svg), x: 6 + Kit.rnd() * (W - 12), sp: .02 + Kit.rnd() * .04, o: Kit.rnd(), ph: Kit.rnd() * 6}));
+
+    // society's cylinder
+    if (P.tall) R.ped = Kit.mk('ellipse', {cx: sx, cy: P.socBot + fs * .25, rx: sw * .95, ry: fs * .45, fill: 'url(#ped)', opacity: .35}, svg);
+    vessel(soc, sx, P.socTop, P.socBot, sw, true, true, P.socL);
+    const se = soc.el;
+    for (let i = 0; i < 9; i++) { const y = se.ly0 + (i + .5) * se.sh / 3; Kit.mk('line', {x1: sx + sw / 2 - (i % 3 === 1 ? sw * .22 : sw * .12), x2: sx + sw / 2 - 1, y1: y, y2: y, stroke: '#e6f4ff', 'stroke-opacity': .45, 'stroke-width': 1}, se.g); }
+    ['1st', '2nd', '3rd'].forEach((t, i) => T(svg, sx - sw / 2 - 6, se.ly0 + (i + .5) * se.sh + fs * .35, t, {'text-anchor': 'end', fill: MUTE, 'font-family': 'var(--mono)', 'font-weight': 600}));
+    R.flash = Kit.mk('rect', {x: sx - sw / 2 - 4, y: P.socTop - 4, width: sw + 8, height: P.socBot - P.socTop + 8, rx: sw * .2, fill: 'none', stroke: COL.B, 'stroke-width': 3, opacity: 0, filter: 'url(#glow)'}, svg);
+
+    // the readout
+    let chipMin = 4;
+    if (P.tall) {
+      const rx = P.rx;
+      R.title = T(svg, rx, P.ys[0], "SOCIETY'S RANKING", {fill: MUTE, 'font-family': 'var(--mono)', 'font-weight': 600, 'letter-spacing': '.06em'});
+      R.prof = T(svg, rx, P.ys[1], '', {'font-family': 'var(--display)', 'font-size': fs * 1.7, 'font-weight': 800});
+      R.line = T(svg, rx, P.ys[2], '', {fill: MUTE, 'font-weight': 600});
+      R.soc = T(svg, rx, P.ys[3], '', {'font-weight': 800});
+      if (P.dots) R.dots = Array.from({length: N}, (_, i) => Kit.mk('circle', {cx: rx + fs * .32 + i * fs * .95, cy: P.dotsY, r: fs * .28, fill: 'none', stroke: COL.B, 'stroke-opacity': .6, 'stroke-width': 1.2}, svg));
+    } else {
+      R.socLab = T(svg, sx, fs * 1.25, 'SOCIETY', {'text-anchor': 'middle', fill: MUTE, 'font-family': 'var(--mono)', 'font-weight': 700, 'letter-spacing': '.06em'});
+      chipMin = sx + R.socLab.getComputedTextLength() / 2 + 8;
+    }
+
+    // the bench and the nine voters
+    Kit.mk('rect', {x: x0, y: tubeBot + tw * .1, width: N * step, height: 1.5, fill: 'url(#floor)'}, svg);
+    tubes.forEach((v, i) => vessel(v, x0 + (i + .5) * step, tubeTop, tubeBot, tw, false, P.letters, fs));
+    const neck = tubes[0].el.ly0 - tubeTop, rh0 = Math.max(5, Math.min(fs * .6, neck * .6));
+    Kit.mk('rect', {x: x0 + step * .08, y: tubeTop + neck * .5 - rh0 / 2, width: N * step - step * .16, height: rh0, rx: rh0 / 2, fill: 'url(#rack)', stroke: '#cfe6ff', 'stroke-opacity': .3}, svg);
+    R.nums = tubes.map((v, i) => T(svg, x0 + (i + .5) * step, P.numY, String(i + 1), {'text-anchor': 'middle', fill: MUTE, 'font-family': 'var(--mono)'}));
+
+    // the pivot: a ring, a chip, an arrow up to society, sparks
+    const pcx = x0 + (PIVOT - .5) * step, chipY = P.chipY;
+    R.ring = Kit.mk('rect', {x: pcx - tw / 2 - 5, y: tubeTop - 5, width: tw + 10, height: th + 10, rx: tw / 2 + 5, fill: 'none', stroke: COL.B, 'stroke-width': 2, opacity: found ? .8 : 0, filter: 'url(#glow)'}, svg);
+    R.chip = Kit.mk('g', {opacity: found ? 1 : 0}, svg);
+    const ct = T(R.chip, pcx, chipY + fs * .36, 'THE DICTATOR', {'text-anchor': 'middle', fill: DARK, 'font-family': 'var(--mono)', 'font-weight': 800, 'letter-spacing': '.05em'});
+    const cw = ct.getComputedTextLength() + fs * 1.2;
+    const cxl = Math.max(chipMin, Math.min(W - 4 - cw, pcx - cw / 2));
+    ct.setAttribute('x', cxl + cw / 2);
+    R.chip.insertBefore(Kit.mk('rect', {x: cxl, y: chipY - fs * .8, width: cw, height: fs * 1.6, rx: fs * .8, fill: COL.B, filter: 'url(#glow)'}), ct);
+    const ax = cxl - 3, ay = chipY, ex = sx + sw / 2 + 7, ey = se.ly0 + se.sh * .5;
+    const mx = P.tall ? ex + (P.rx - ex) * .55 : ex + (ax - ex) * .4;
+    R.arrow = Kit.mk('path', {d: `M${ax},${ay} C${mx},${ay} ${mx},${ey} ${ex},${ey}`, fill: 'none', stroke: COL.B, 'stroke-width': 2, 'stroke-linecap': 'round', 'marker-end': 'url(#head)', opacity: found ? 1 : 0}, svg);
+    R.alen = R.arrow.getTotalLength();
+    R.sparks = Kit.mk('g', {}, svg);
+
+    // the rail of profiles
+    const rx0 = x0, rx1 = x0 + N * step, rh = Math.max(6, fs * .5);
+    Kit.mk('rect', {x: rx0 - rh / 2, y: railY - rh / 2, width: rx1 - rx0 + rh, height: rh, rx: rh / 2, fill: 'rgba(200,225,255,.08)', stroke: '#cfe6ff', 'stroke-opacity': .35}, svg);
+    R.fill = Kit.mk('rect', {x: rx0 - rh / 2, y: railY - rh / 2 + 1, height: rh - 2, rx: rh / 2 - 1, fill: 'url(#railfill)'}, svg);
+    R.rh = rh;
+    for (let i = 0; i <= N; i++) Kit.mk('circle', {cx: rx0 + i * step, cy: railY, r: 1.8, fill: '#e6f4ff', opacity: .5}, svg);
+    R.handle = Kit.mk('g', {}, svg);
+    R.halo = Kit.mk('circle', {r: hr, fill: 'none', stroke: COL.B, 'stroke-width': 2, opacity: 0}, R.handle);
+    Kit.mk('circle', {r: hr, fill: 'rgba(16,40,60,.88)', stroke: '#e6f4ff', 'stroke-opacity': .8, 'stroke-width': 1.5}, R.handle);
+    Kit.mk('ellipse', {cx: -hr * .3, cy: -hr * .42, rx: hr * .42, ry: hr * .2, fill: '#fff', opacity: .3}, R.handle);
+    R.hnum = T(R.handle, 0, fs * .36, '0', {'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 800});
+    texts();
+  }
+
+  function texts() {
+    if (!R.nums) return;
+    if (R.prof) {
+      R.prof.textContent = `Profile ${k}`;
+      R.line.textContent = `B first: ${k} of ${N} voters`;
+      R.soc.textContent = soc.up ? 'Society: B first!' : 'Society: B last';
+      R.soc.setAttribute('fill', soc.up ? COL.B : INK);
+    }
+    if (R.dots) R.dots.forEach((d, i) => d.setAttribute('fill', i < k ? COL.B : 'none'));
+    if (R.socLab) R.socLab.setAttribute('fill', soc.up ? COL.B : MUTE);
+    if (R.ped) R.ped.setAttribute('opacity', soc.up ? 1 : .35);
+    R.nums.forEach((n, i) => { n.setAttribute('fill', i < k ? COL.B : MUTE); n.setAttribute('font-weight', i === PIVOT - 1 && found ? 800 : 600); });
+    if (k >= PIVOT && found) say.innerHTML = `<b>Voter ${PIVOT} alone flipped society's B from last to first.</b> Someone always must, and Arrow's proof shows that pivotal voter is a dictator.`;
+    else if (k === 0) say.innerHTML = 'Every voter ranks B last, so society must too. <b>Drag the rail:</b> one voter at a time lifts B to the top.';
+    else say.innerHTML = `<b>${k} of ${N}</b> voters now put B first, yet society still ranks B last. <b>Keep dragging.</b>`;
+  }
+
+  // ---------- moving the liquids ----------
+  function setB(v, up, dur, ease, delay = 0) {
+    if (v.up === up) return;
+    v.up = up;
+    const [X, Y] = v.order, to = up ? {B: 0, [X]: 1, [Y]: 2} : {B: 2, [X]: 0, [Y]: 1};
+    gsap.killTweensOf(v.slots);
+    if (Kit.calm) { Object.assign(v.slots, to); return; }
+    gsap.to(v.slots, {B: to.B, duration: dur, ease, delay});
+    gsap.to(v.slots, {[X]: to[X], [Y]: to[Y], duration: dur * .8, ease: 'power2.inOut', delay: delay + dur * .12});
+    gsap.delayedCall(delay, () => { v.amp = v.el && v.el.isSoc ? 7 : 11; });
+  }
+
+  function applyK(nk) {
+    nk = Math.max(0, Math.min(N, nk));
+    if (nk === k) return;
+    k = nk; Kit.haptic('selection');
+    tubes.forEach((v, i) => setB(v, i < k, .85, 'power3.inOut'));
+    const sUp = k >= PIVOT;
+    if (sUp && !found) wow();
+    else setB(soc, sUp, 1, sUp ? 'elastic.out(1,.5)' : 'power3.inOut', .35);
+    texts();
+  }
+
+  function wow() {
+    found = true;
+    Kit.show('keep');
+    if (Kit.calm) { setB(soc, true); Kit.haptic('success'); layout(); return; }
+    requestAnimationFrame(() => { refit(); runWow(); });
+  }
+  function runWow() {
+    const tl = gsap.timeline();
+    tl.fromTo(R.ring, {opacity: 0}, {opacity: .85, duration: .5, ease: 'power2.out'}, .1)
+      .fromTo(R.chip, {opacity: 0, scale: .3, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .7, ease: 'back.out(2.4)'}, .35)
+      .fromTo(R.arrow, {opacity: 1, strokeDasharray: R.alen, strokeDashoffset: R.alen}, {strokeDashoffset: 0, duration: .65, ease: 'power3.inOut'}, .45);
+    const path = R.arrow, alen = R.alen, sp = R.sparks;
+    for (let i = 0; i < 11; i++) {
+      const c = Kit.mk('circle', {r: 1.5 + Kit.rnd() * 2.2, fill: i % 3 ? COL.B : '#fff', filter: 'url(#glow)', opacity: 0}, sp), o = {d: 0};
+      tl.to(o, {d: 1, duration: .7, ease: 'power2.in', onStart: () => c.setAttribute('opacity', 1),
+        onUpdate: () => { const pt = path.getPointAtLength(o.d * alen); c.setAttribute('cx', pt.x + Math.sin(o.d * 9 + i) * 3); c.setAttribute('cy', pt.y + Math.cos(o.d * 7 + i) * 3); },
+        onComplete: () => c.remove()}, .6 + i * .045);
+    }
+    tl.add(() => {
+      setB(soc, true, 1.5, 'elastic.out(1,.42)'); soc.amp = 9; Kit.haptic('success'); texts();
+      gsap.fromTo(R.flash, {opacity: 1, scale: 1, transformOrigin: '50% 50%'}, {opacity: 0, scale: 1.2, duration: 1.1, ease: 'expo.out'});
+      tubes.forEach((v, i) => { v.amp += Math.max(0, 6 - Math.abs(i - PIVOT + 1) * 1.5); });
+    }, 1.15);
+  }
+
+  // ---------- the ambient loop ----------
+  function render(t) {
+    for (const v of all) {
+      const e = v.el; if (!e) continue;
+      v.amp += (v.base - v.amp) * .035;
+      const a = Kit.calm ? 0 : v.amp * Math.sin(t * 2.5 + v.ph) + .4 * Math.sin(t * .7 + v.ph * 2);
+      const cy = (e.ly0 + e.bot) / 2;
+      e.rot.setAttribute('transform', `translate(${e.cx},${cy}) skewY(${a.toFixed(3)}) translate(${-e.cx},${-cy})`);
+      const lvl = e.bot - v.fill * (e.bot - e.ly0), surf = Math.max(e.ly0, lvl), lw = e.w + 6;
+      e.back.setAttribute('y', surf); e.back.setAttribute('height', Math.max(0, e.bot + 2 - surf));
+      e.men.setAttribute('y', surf - 1); e.men.setAttribute('opacity', v.fill > .02 ? .55 : 0);
+      for (const L of 'ACB') {
+        const s = v.slots[L], r = e.rr[L], yT = e.ly0 + s * e.sh, hh = e.sh + 1 + Math.max(0, s - 1) * e.w * .3;
+        let wd = lw, rx = 0;
+        if (L === 'B') { const m = s - Math.floor(s), b = Math.sin(Math.PI * m); wd = lw * (1 - b) + e.w * .72 * b; rx = b * e.w * .36; }
+        const y0 = Math.max(yT, lvl), h = Math.max(0, yT + hh - y0);
+        r.rect.setAttribute('x', e.cx - wd / 2); r.rect.setAttribute('y', y0); r.rect.setAttribute('width', wd);
+        r.rect.setAttribute('height', h); r.rect.setAttribute('rx', Math.min(rx, h / 2));
+        if (r.txt) {
+          r.txt.setAttribute('y', yT + e.sh / 2 + e.lsz * .35);
+          r.txt.setAttribute('opacity', Math.max(0, Math.min(1, (yT + e.sh * .6 - lvl) / (e.sh * .3))).toFixed(3));
+        }
+        if (L === 'B' && e.isSoc) r.rect.setAttribute('filter', s < .5 ? 'url(#glow)' : 'none');
+      }
+      [[e.bub, .17, 0], [e.bub2, .23, .5]].forEach(([c, sp, off]) => {
+        const pr = Kit.calm ? .5 : ((t * sp + v.bub + off) % 1);
+        c.setAttribute('cy', e.bot - e.w * .3 - pr * Math.max(0, e.bot - surf - e.w * .3));
+        c.setAttribute('cx', e.cx + Math.sin(t * 3 + v.ph + off * 4) * e.w * .14);
+        c.setAttribute('opacity', (Math.sin(pr * Math.PI) * .55 * v.fill).toFixed(3));
+      });
+    }
+    if (R.motes) R.motes.forEach(m => {
+      const pr = Kit.calm ? m.o : (t * m.sp + m.o) % 1;
+      m.c.setAttribute('cx', m.x + Math.sin(t * .5 + m.ph) * 6);
+      m.c.setAttribute('cy', 4 + (H - 8) * (1 - pr));
+      m.c.setAttribute('opacity', (Kit.calm ? .15 : Math.sin(pr * Math.PI) * .4).toFixed(3));
+    });
+    if (R.handle) {
+      const hx = x0 + st.p * step;
+      R.handle.setAttribute('transform', `translate(${hx},${railY})`);
+      R.fill.setAttribute('width', Math.max(0, hx - x0 + R.rh * .5));
+      R.hnum.textContent = String(Math.round(st.p));
+      const br = touched || Kit.calm ? 0 : (t * .8) % 1;
+      R.halo.setAttribute('r', hr * (1 + br * .6)); R.halo.setAttribute('opacity', touched ? 0 : (1 - br) * .7);
+      if (found && !Kit.calm) R.ring.setAttribute('stroke-opacity', .55 + .45 * Math.sin(t * 3));
+    }
+  }
+  const loop = ms => { render(ms / 1000); requestAnimationFrame(loop); };
+
+  // re-compose whenever the stage changes size (e.g. when the takeaway appears)
+  function refit() {
+    if (!W) return;
+    const r = svg.getBoundingClientRect();
+    if (r.width > 0 && (Math.abs(r.width - W) > 1 || Math.abs(r.height - H) > 1)) { layout(); render(performance.now() / 1000); }
+  }
+  if (window.ResizeObserver) new ResizeObserver(() => requestAnimationFrame(refit)).observe(stage);
+
+  // ---------- the scrub ----------
+  let drag = false;
+  const pFrom = e => { const r = svg.getBoundingClientRect(); return Math.max(0, Math.min(N, (e.clientX - r.left - x0) / step)); };
+  svg.addEventListener('pointerdown', e => { drag = true; touched = true; svg.setPointerCapture(e.pointerId); gsap.killTweensOf(st); gsap.to(st, {p: pFrom(e), duration: Kit.calm ? 0 : .25, ease: 'power3.out'}); applyK(Math.round(pFrom(e))); });
+  svg.addEventListener('pointermove', e => { if (!drag) return; st.p = pFrom(e); applyK(Math.round(st.p)); });
+  const end = () => { if (!drag) return; drag = false; gsap.to(st, {p: k, duration: Kit.calm ? 0 : .45, ease: 'back.out(2)'}); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = () => { layout(); render(performance.now() / 1000); };
+  let started = false;
+  const start = () => { if (!started) { started = true; requestAnimationFrame(loop); } };
+  Kit.onEnter.card = () => {
+    start();
+    if (Kit.calm) return;
+    all.forEach(v => { v.fill = 0; });
+    gsap.to(tubes, {fill: 1, duration: 1.1, ease: 'power2.out', stagger: .07, delay: .35});
+    gsap.to(soc, {fill: 1, duration: 1.3, ease: 'power3.out', delay: .1});
+    if (R.handle) gsap.from(R.handle, {scale: 0, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(2.5)', delay: 1});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start(); touched = true;
+    for (let i = 1; i <= N; i++) { st.p = i; applyK(i); await wait(Kit.calm ? 30 : i === PIVOT ? 1900 : 160); }
+    await wait(Kit.calm ? 60 : 1200);
+  };
+})();
+Kit.single();
+</script>
+</html>

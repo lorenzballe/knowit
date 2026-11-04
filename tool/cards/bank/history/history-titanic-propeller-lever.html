@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#wrap{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden}
+#wrap{flex:1;min-height:0;position:relative;overflow:hidden}
 #sea{display:block;width:100%;height:100%;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
 #sea:active{cursor:grabbing}
 #why{display:flex;flex-direction:column;gap:.8cqh}
@@ -52,74 +52,71 @@ function build() {
   const m = (t, a, p) => Kit.mk(t, a, p);
 
   const defs = m('defs', {}, svg);
-  const sky = m('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  m('stop', {offset: 0, 'stop-color': '#070d22'}, sky); m('stop', {offset: 1, 'stop-color': '#1b3159'}, sky);
   const glow = m('radialGradient', {id: 'glow'}, defs);
-  m('stop', {offset: 0, 'stop-color': '#ffb347', 'stop-opacity': 1}, glow);
-  m('stop', {offset: .5, 'stop-color': '#ff5a2e', 'stop-opacity': .6}, glow);
-  m('stop', {offset: 1, 'stop-color': '#ff3b1f', 'stop-opacity': 0}, glow);
+  m('stop', {offset: 0, 'stop-color': '#fff3c4', 'stop-opacity': 1}, glow);
+  m('stop', {offset: .5, 'stop-color': '#d92b14', 'stop-opacity': .6}, glow);
+  m('stop', {offset: 1, 'stop-color': '#d92b14', 'stop-opacity': 0}, glow);
 
-  m('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#sky)'}, svg);
-  for (let i = 0; i < 40; i++) m('circle', {cx: Kit.rnd()*W, cy: Kit.rnd()*waterY*0.9, r: .5 + Kit.rnd()*1.1, fill: '#fff', opacity: .25 + Kit.rnd()*.5}, svg);
+  for (let i = 0; i < 40; i++) m('circle', {cx: Kit.rnd()*W, cy: Kit.rnd()*waterY*0.9, r: .5 + Kit.rnd()*1.1, fill: '#10100c', opacity: .12 + Kit.rnd()*.25}, svg);
 
   const ship = m('g', {}, svg);
   // Bow half
   const bow = m('g', {}, ship);
-  m('path', {d: `M${-L/2},${-0.8*h} L0,${-0.7*h} L0,${0.3*h} L${-L/2+0.07*L},${0.3*h} Q${-L/2+0.02*L},${0.1*h} ${-L/2},${-0.8*h}Z`, fill: '#0c0c10', stroke: '#e8e2d0', 'stroke-width': 1}, bow);
+  m('path', {d: `M${-L/2},${-0.8*h} L0,${-0.7*h} L0,${0.3*h} L${-L/2+0.07*L},${0.3*h} Q${-L/2+0.02*L},${0.1*h} ${-L/2},${-0.8*h}Z`, fill: '#0c0c10', stroke: '#10100c', 'stroke-width': 1}, bow);
   m('rect', {x: -L/2+0.08*L, y: 0.14*h, width: L/2-0.08*L, height: 0.16*h, fill: '#a3242a'}, bow);
   m('rect', {x: -0.38*L, y: -1.05*h, width: 0.38*L, height: 0.35*h, fill: '#f2eee2'}, bow);
   for (const x of [-0.32, -0.19, -0.06]) {
-    m('rect', {x: x*L, y: -1.95*h, width: 0.045*L, height: 0.9*h, fill: '#e0a64a'}, bow);
+    m('rect', {x: x*L, y: -1.95*h, width: 0.045*L, height: 0.9*h, fill: '#b8431b'}, bow);
     m('rect', {x: x*L, y: -1.95*h, width: 0.045*L, height: 0.22*h, fill: '#111'}, bow);
   }
   // Stern half
   const stern = m('g', {}, ship);
   const px = L/2 - 0.1*L, py = 0.45*h, pr = 0.34*h;
-  m('line', {x1: L/2-0.22*L, y1: 0.28*h, x2: px, y2: py, stroke: '#888', 'stroke-width': 2}, stern);
-  m('path', {d: `M0,${-0.7*h} L${L/2-0.03*L},${-0.7*h} Q${L/2},${-0.4*h} ${L/2-0.05*L},${0.1*h} L${L/2-0.1*L},${0.3*h} L0,${0.3*h}Z`, fill: '#0c0c10', stroke: '#e8e2d0', 'stroke-width': 1}, stern);
+  m('line', {x1: L/2-0.22*L, y1: 0.28*h, x2: px, y2: py, stroke: '#555', 'stroke-width': 2}, stern);
+  m('path', {d: `M0,${-0.7*h} L${L/2-0.03*L},${-0.7*h} Q${L/2},${-0.4*h} ${L/2-0.05*L},${0.1*h} L${L/2-0.1*L},${0.3*h} L0,${0.3*h}Z`, fill: '#0c0c10', stroke: '#10100c', 'stroke-width': 1}, stern);
   m('rect', {x: 0, y: 0.14*h, width: L/2-0.11*L, height: 0.16*h, fill: '#a3242a'}, stern);
   m('rect', {x: 0, y: -1.05*h, width: 0.26*L, height: 0.35*h, fill: '#f2eee2'}, stern);
-  m('rect', {x: 0.09*L, y: -1.95*h, width: 0.045*L, height: 0.9*h, fill: '#e0a64a'}, stern);
+  m('rect', {x: 0.09*L, y: -1.95*h, width: 0.045*L, height: 0.9*h, fill: '#b8431b'}, stern);
   m('rect', {x: 0.09*L, y: -1.95*h, width: 0.045*L, height: 0.22*h, fill: '#111'}, stern);
   m('rect', {x: L/2-0.075*L, y: 0.05*h, width: 0.03*L, height: 0.55*h, fill: '#2a2a30'}, stern);
   const props = m('g', {}, stern);
   for (const [dx, dy] of [[-0.035*L, -0.05*h], [0, 0.08*h], [0.035*L, -0.05*h]]) {
     const g = m('g', {transform: `translate(${px+dx},${py+dy})`}, props);
-    m('ellipse', {cx: 0, cy: 0, rx: pr*0.35, ry: pr, fill: '#d9a441', stroke: '#6b4a12', 'stroke-width': .8}, g);
-    m('ellipse', {cx: 0, cy: 0, rx: pr, ry: pr*0.35, fill: '#d9a441', stroke: '#6b4a12', 'stroke-width': .8}, g);
+    m('ellipse', {cx: 0, cy: 0, rx: pr*0.35, ry: pr, fill: '#f2eee2', stroke: '#6b4a12', 'stroke-width': .8}, g);
+    m('ellipse', {cx: 0, cy: 0, rx: pr, ry: pr*0.35, fill: '#f2eee2', stroke: '#6b4a12', 'stroke-width': .8}, g);
     m('circle', {cx: 0, cy: 0, r: pr*0.2, fill: '#6b4a12'}, g);
   }
-  const ring = m('circle', {cx: px, cy: py, r: pr*2.1, fill: 'none', stroke: '#ffd166', 'stroke-width': 2, 'stroke-dasharray': '4 3', opacity: 0}, stern);
+  const ring = m('circle', {cx: px, cy: py, r: pr*2.1, fill: 'none', stroke: '#10100c', 'stroke-width': 2, 'stroke-dasharray': '4 3', opacity: 0}, stern);
   // Crack at the joint
-  const crack = m('path', {d: `M0,${-0.7*h} l${h*0.12},${h*0.2} l${-h*0.18},${h*0.2} l${h*0.15},${h*0.22} l${-h*0.1},${h*0.2}`, fill: 'none', stroke: '#ffb347', 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: 0}, ship);
+  const crack = m('path', {d: `M0,${-0.7*h} l${h*0.12},${h*0.2} l${-h*0.18},${h*0.2} l${h*0.15},${h*0.22} l${-h*0.1},${h*0.2}`, fill: 'none', stroke: '#d92b14', 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: 0}, ship);
 
   const sGlow = m('circle', {r: h*1.6, fill: 'url(#glow)', opacity: 0}, svg);
 
   // Water over the hull
-  m('rect', {x: 0, y: waterY, width: W, height: H-waterY, fill: '#0a4a74', opacity: .78}, svg);
+  m('rect', {x: 0, y: waterY, width: W, height: H-waterY, fill: '#0a4a74'}, svg);
   let wd = `M0,${waterY}`;
   for (let x = 0; x <= W; x += 12) wd += ` L${x},${waterY + Math.sin(x/9)*1.6}`;
   m('path', {d: wd, fill: 'none', stroke: '#7fd3ff', 'stroke-width': 1.6, opacity: .9}, svg);
 
   // Weight arrow and label
   const arr = m('g', {opacity: 0}, svg);
-  const arrLine = m('line', {stroke: '#ffd166', 'stroke-width': 3, 'stroke-linecap': 'round'}, arr);
-  const arrHead = m('path', {fill: '#ffd166'}, arr);
-  const wl = m('text', {fill: '#ffd166', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, arr);
+  const arrLine = m('line', {stroke: '#10100c', 'stroke-width': 3, 'stroke-linecap': 'round'}, arr);
+  const arrHead = m('path', {fill: '#10100c'}, arr);
+  const wl = m('text', {fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, arr);
   const wl1 = m('tspan', {}, wl); wl1.textContent = '3 propellers';
   const wl2 = m('tspan', {dy: fs*1.35}, wl); wl2.textContent = '≈100 t each';
 
-  const bendT = m('text', {fill: '#ffcf9e', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, opacity: 0}, svg);
+  const bendT = m('text', {fill: '#ffe3b0', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, opacity: 0}, svg);
   bendT.textContent = 'hull strains here';
 
-  const t1 = m('text', {x: fs*0.8, y: fs*1.5, fill: '#fff', 'font-size': fs*1.15, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
-  const t2 = m('text', {x: fs*0.8, y: fs*3.1, fill: '#bcd3ee', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 600}, svg);
+  const t1 = m('text', {x: fs*0.8, y: fs*1.5, fill: '#10100c', 'font-size': fs*1.15, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+  const t2 = m('text', {x: fs*0.8, y: fs*3.1, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 600}, svg);
 
   // Drag handle on the bow tip
   const hand = m('g', {}, svg);
-  m('circle', {r: fs*1.5, fill: '#ffd166', opacity: .25}, hand);
-  m('circle', {r: fs*0.9, fill: '#ffd166', stroke: '#fff', 'stroke-width': 2}, hand);
-  m('path', {d: `M${-fs*0.4},${-fs*0.15} L0,${fs*0.35} L${fs*0.4},${-fs*0.15}`, fill: 'none', stroke: '#111', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hand);
+  m('circle', {r: fs*1.5, fill: '#10100c', opacity: .25}, hand);
+  m('circle', {r: fs*0.9, fill: '#10100c', stroke: '#fff', 'stroke-width': 2}, hand);
+  m('path', {d: `M${-fs*0.4},${-fs*0.15} L0,${fs*0.35} L${fs*0.4},${-fs*0.15}`, fill: 'none', stroke: '#FFB000', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hand);
   const handIn = hand.children[0];
 
   G = {svg, W, H, fs, L, h, Bx, By, waterY, ship, bow, stern, crack, sGlow, ring, arr, arrLine, arrHead, wl, wl1, wl2, bendT, t1, t2, hand, handIn, px, py};

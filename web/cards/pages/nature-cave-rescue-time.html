@@ -72,13 +72,12 @@ function draw(){
   const fs=Math.max(f*.8,12), u=Math.min(W,H)/100; G.u=u;
   const pts=P.map(([a,b])=>[a*W,b*H]); G.pts=pts;
   const sy=.2*H;
-  // rock
-  Kit.mk('rect',{x:0,y:sy,width:W,height:H-sy,rx:u*2,style:'fill:var(--k)'},svg);
+  // ground line
   Kit.mk('line',{x1:0,y1:sy,x2:W,y2:sy,style:'stroke:var(--k);stroke-width:3'},svg);
   // passage
   const pw=Math.max(.055*W,16);
-  Kit.mk('polyline',{points:pts.map(p=>p.join(',')).join(' '),style:`fill:none;stroke:var(--c);stroke-width:${pw};stroke-linejoin:round;stroke-linecap:round`},svg);
-  Kit.mk('circle',{cx:pts[6][0],cy:pts[6][1],r:pw*.9,style:'fill:var(--c)'},svg);
+  Kit.mk('polyline',{points:pts.map(p=>p.join(',')).join(' '),style:`fill:none;stroke:var(--k);stroke-width:${pw};stroke-linejoin:round;stroke-linecap:round`},svg);
+  Kit.mk('circle',{cx:pts[6][0],cy:pts[6][1],r:pw*.9,style:'fill:var(--k)'},svg);
   // ropes
   G.ropes=PITCH.map(([a,b])=>{
     const L=Math.hypot(pts[b][0]-pts[a][0],pts[b][1]-pts[a][1]);
@@ -87,15 +86,15 @@ function draw(){
     return {l,L};
   });
   // injured caver label
-  Kit.mk('text',{x:pts[6][0]+pw*1.1,y:pts[6][1]+fs*.35,style:`font:700 ${fs}px var(--body);fill:var(--c)`},svg).textContent='injured caver';
+  Kit.mk('text',{x:pts[6][0]+pw*1.1,y:pts[6][1]+fs*.35,style:`font:700 ${fs}px var(--body);fill:var(--k)`},svg).textContent='injured caver';
   Kit.mk('text',{x:pts[0][0]-pw*1.2,y:sy-fs*.6,'text-anchor':'end',style:`font:700 ${fs}px var(--body);fill:var(--k)`},svg).textContent='entrance';
   // two people
-  G.ppl=[0,1].map(()=>Kit.mk('circle',{r:Math.max(4,u*1.3),style:`fill:${OR};stroke:var(--k);stroke-width:1.5`},svg));
+  G.ppl=[0,1].map(()=>Kit.mk('circle',{r:Math.max(4,u*1.3),style:`fill:${OR};stroke:var(--c);stroke-width:1.5`},svg));
   setPeople();
   // stretcher
   const sw=Math.max(.09*W,30), sh=Math.max(sw*.32,10);
   G.st=Kit.mk('g',{},svg);
-  Kit.mk('rect',{x:-sw/2,y:-sh/2,width:sw,height:sh,rx:sh/2,style:`fill:${OR};stroke:var(--k);stroke-width:2`},G.st);
+  Kit.mk('rect',{x:-sw/2,y:-sh/2,width:sw,height:sh,rx:sh/2,style:`fill:${OR};stroke:var(--c);stroke-width:2`},G.st);
   Kit.mk('circle',{cx:sw/2-sh*.55,cy:0,r:sh*.32,style:'fill:var(--c);stroke:var(--k);stroke-width:1.5'},G.st);
   setCar();
   // clock
@@ -112,7 +111,7 @@ function draw(){
     const spots=[pts[0],[(pts[2][0]+pts[3][0])/2,(pts[2][1]+pts[3][1])/2],pts[6]];
     const [hx,hy]=spots[step], hr=Math.max(15,u*4.2);
     const g=Kit.mk('g',{class:'hot'},svg); G.hot=g;
-    const ring=Kit.mk('circle',{cx:hx,cy:hy,r:hr,style:`fill:none;stroke:${YE};stroke-width:3`},g);
+    const ring=Kit.mk('circle',{cx:hx,cy:hy,r:hr,style:`fill:none;stroke:var(--k);stroke-width:3`},g);
     Kit.mk('circle',{cx:hx,cy:hy,r:hr,style:`fill:${YE};stroke:var(--k);stroke-width:2`},g);
     Kit.mk('text',{x:hx,y:hy+fs*.4,'text-anchor':'middle',style:`font:800 ${fs*1.1}px var(--body);fill:#111`},g).textContent=step+1;
     g.style.opacity=busy?0:1;

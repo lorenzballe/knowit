@@ -29,7 +29,8 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A loop diagram that grows as the reader drags it, asking how long a rival Collatz loop would have to be before nobody has ruled it out. It is compared with the short 4, 2, 1 loop and reaches 186 billion numbers."
+    "label": "A loop diagram that grows as the reader drags it, asking how long a rival Collatz loop would have to be before nobody has ruled it out. It is compared with the short 4, 2, 1 loop and reaches 186 billion numbers.",
+    "ground": "#0a2a5e"
   },
   "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=094y1Z2wpJg&t=658s",

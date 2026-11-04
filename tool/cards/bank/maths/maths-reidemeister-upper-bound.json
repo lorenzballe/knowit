@@ -1,0 +1,38 @@
+{
+  "id": "maths-reidemeister-upper-bound",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the current upper bound on Reidemeister moves between two knots?",
+  "answer": "The current upper bound on moves needed to connect any two knots is 236n^11, where n is the number of crossings. For a knot with a single crossing, that bound is larger than the number of stars in the observable universe.",
+  "move": "A far smaller bound can still leave an astronomical search.",
+  "keywords": [
+    "knots",
+    "reidemeister moves",
+    "knot theory",
+    "observable universe",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider labelled crossings, from 1 upward, sets the number n of crossings in a knot. A marker shows how many Reidemeister moves the bound allows, which grows steeply as n increases.",
+    "ground": "#0d3c71"
+  },
+  "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=696s",
+  "written": "2026-11-03"
+}

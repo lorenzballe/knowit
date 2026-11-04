@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh;background:#061629}
+#pic{flex:1;min-height:0;width:100%;display:block;background:none}
 #step{font:700 max(1.9cqh,12px)/1.25 var(--body);color:var(--k);min-height:2.6em;margin:0;overflow-wrap:anywhere}
 #scrub{width:100%;margin:0;accent-color:#ff5a1f;height:max(4cqh,28px);cursor:pointer}
 #why{display:flex;flex-direction:column;gap:.6cqh}
@@ -70,28 +70,23 @@ Kit.onShow.card = () => {
   const surf = H * .2, vent = H * .84, D = vent - surf, cx = W * .58;
   const m = Kit.mk;
   const defs = m('defs', {}, svg);
-  const wg = m('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  m('stop', {offset: 0, 'stop-color': '#1d5c8f'}, wg);
-  m('stop', {offset: 1, 'stop-color': '#04101f'}, wg);
   const hg = m('radialGradient', {id: 'hg', gradientUnits: 'userSpaceOnUse', cx, cy: vent, r: .001}, defs);
-  m('stop', {offset: 0, 'stop-color': '#ff7a2f', 'stop-opacity': .85}, hg);
-  m('stop', {offset: .6, 'stop-color': '#ff4d2f', 'stop-opacity': .3}, hg);
-  m('stop', {offset: 1, 'stop-color': '#ff4d2f', 'stop-opacity': 0}, hg);
+  m('stop', {offset: 0, 'stop-color': '#ff5a1f', 'stop-opacity': .9}, hg);
+  m('stop', {offset: .6, 'stop-color': '#e8341c', 'stop-opacity': .35}, hg);
+  m('stop', {offset: 1, 'stop-color': '#e8341c', 'stop-opacity': 0}, hg);
   const cp = m('clipPath', {id: 'wc'}, defs);
   m('rect', {x: 0, y: surf, width: W, height: H - surf}, cp);
-  // sky and sea
-  m('rect', {x: 0, y: 0, width: W, height: surf, fill: '#cfe6f5'}, svg);
-  m('rect', {x: 0, y: surf, width: W, height: H - surf, fill: 'url(#wg)'}, svg);
-  const plume = m('ellipse', {cx, cy: surf, rx: 0, ry: 0, fill: '#ffffff', opacity: .9}, svg);
-  const surface = m('path', {fill: 'none', stroke: '#e8f6ff', 'stroke-width': Math.max(f*.18, 2)}, svg);
+  // no sea backdrop: the water is the card itself, marked by its surface line
+  const plume = m('ellipse', {cx, cy: surf, rx: 0, ry: 0, fill: '#10100c', opacity: .6}, svg);
+  const surface = m('path', {fill: 'none', stroke: '#10100c', 'stroke-width': Math.max(f*.18, 2)}, svg);
   const wat = m('g', {'clip-path': 'url(#wc)'}, svg);
   const heat = m('rect', {x: 0, y: surf, width: W, height: H - surf, fill: 'url(#hg)', opacity: 0}, wat);
-  const rings = [0,1,2,3].map(() => m('path', {fill: 'none', stroke: '#ffd27a'}, wat));
+  const rings = [0,1,2,3].map(() => m('path', {fill: 'none', stroke: '#0b3a5c'}, wat));
   const angs = [-160, -130, -110, -90, -70, -50, -20];
   const arrows = angs.map(() => m('path', {fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, wat));
   const bubbles = [];
   for (let i = 0; i < 6; i++) {
-    const b = m('circle', {cx: cx + (Kit.rnd() - .5) * f * 1.5, cy: vent, r: f * (.12 + Kit.rnd() * .15), fill: '#bfe3ff', opacity: 0}, wat);
+    const b = m('circle', {cx: cx + (Kit.rnd() - .5) * f * 1.5, cy: vent, r: f * (.12 + Kit.rnd() * .15), fill: '#0b3a5c', opacity: 0}, wat);
     bubbles.push(b);
     if (!Kit.calm) gsap.fromTo(b, {attr: {cy: vent - f*.3}, opacity: .7}, {attr: {cy: vent - D*.45}, opacity: 0, duration: 3 + Kit.rnd()*2, delay: Kit.rnd()*3, repeat: -1, ease: 'none'});
   }
@@ -104,20 +99,20 @@ Kit.onShow.card = () => {
   else left = `M${lx0},${H} L${lx1},${ly1}`;
   if (rx0 > W) { const yR = ly1 + (H - ly1) * ((W - rx1) / (rx0 - rx1)); right = `L${W},${yR} L${W},${H} Z`; }
   else right = `L${rx0},${H} Z`;
-  m('path', {d: `${left} Q${cx-f*.9},${vent} ${cx-f*.6},${vent} L${cx+f*.6},${vent} Q${cx+f*.9},${vent} ${rx1},${ly1} ${right}`, fill: '#2b1f1a', stroke: '#5a3a2c', 'stroke-width': 1.5}, svg);
-  const flash = m('circle', {cx, cy: vent, r: 0, fill: '#fff3c4', opacity: 0}, svg);
+  m('path', {d: `${left} Q${cx-f*.9},${vent} ${cx-f*.6},${vent} L${cx+f*.6},${vent} Q${cx+f*.9},${vent} ${rx1},${ly1} ${right}`, fill: '#2b1f1a', stroke: '#10100c', 'stroke-width': 1.5}, svg);
+  const flash = m('circle', {cx, cy: vent, r: 0, fill: '#ffe066', stroke: '#10100c', 'stroke-width': 1.5, opacity: 0}, svg);
   m('ellipse', {cx, cy: vent, rx: f*.6, ry: f*.18, fill: '#ff5a1f'}, svg);
   // depth ruler
   const rx = Math.max(W * .09, fs * 1.2);
-  m('line', {x1: rx, y1: surf, x2: rx, y2: vent, stroke: '#ffffff', 'stroke-width': 2, 'stroke-dasharray': '4 4', opacity: .8}, svg);
-  [surf, vent].forEach(y => m('line', {x1: rx - f*.4, y1: y, x2: rx + f*.4, y2: y, stroke: '#ffffff', 'stroke-width': 2}, svg));
-  const t0 = m('text', {x: rx + f*.6, y: surf + fs*1.3, fill: '#ffffff', 'font-size': fs, 'font-family': 'var(--mono)'}, svg); t0.textContent = '0 m';
-  const t5 = m('text', {x: rx + f*.6, y: vent - fs*.4, fill: '#ffffff', 'font-size': fs*1.35, 'font-weight': 800, 'font-family': 'var(--display)'}, svg); t5.textContent = '500 m';
+  m('line', {x1: rx, y1: surf, x2: rx, y2: vent, stroke: '#10100c', 'stroke-width': 2, 'stroke-dasharray': '4 4', opacity: .8}, svg);
+  [surf, vent].forEach(y => m('line', {x1: rx - f*.4, y1: y, x2: rx + f*.4, y2: y, stroke: '#10100c', 'stroke-width': 2}, svg));
+  const t0 = m('text', {x: rx + f*.6, y: surf + fs*1.3, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--mono)'}, svg); t0.textContent = '0 m';
+  const t5 = m('text', {x: rx + f*.6, y: vent - fs*.4, fill: '#10100c', 'font-size': fs*1.35, 'font-weight': 800, 'font-family': 'var(--display)'}, svg); t5.textContent = '500 m';
   // energy bar in the sky
   const bx = W * .05, by = surf * .32, bwid = W * .4, bh = Math.max(f*.45, 6);
-  const lb = m('text', {x: bx, y: by - bh*.6, fill: '#0b2a4a', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); lb.textContent = 'Blast energy left';
-  m('rect', {x: bx, y: by, width: bwid, height: bh, rx: bh/2, fill: '#0b2a4a', opacity: .18}, svg);
-  const bar = m('rect', {x: bx, y: by, width: bwid, height: bh, rx: bh/2, fill: '#ff5a1f'}, svg);
+  const lb = m('text', {x: bx, y: by - bh*.6, fill: '#10100c', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); lb.textContent = 'Blast energy left';
+  m('rect', {x: bx, y: by, width: bwid, height: bh, rx: bh/2, fill: '#10100c', opacity: .2}, svg);
+  const bar = m('rect', {x: bx, y: by, width: bwid, height: bh, rx: bh/2, fill: '#ff5a1f', stroke: '#10100c', 'stroke-width': 1.5}, svg);
   G = {W, H, f, surf, vent, D, cx, plume, surface, heat, hg, rings, arrows, angs, flash, bar, bwid, bubbles};
   render();
 };
@@ -149,7 +144,7 @@ function render(){
     const ex = cx + cs*l, ey = vent + sn*l, h = Math.min(f*.7, l*.4);
     const l1 = th + 2.6, l2 = th - 2.6;
     a.setAttribute('d', `M${cx+cs*f},${vent+sn*f} L${ex},${ey} M${ex+Math.cos(l1)*h},${ey+Math.sin(l1)*h} L${ex},${ey} L${ex+Math.cos(l2)*h},${ey+Math.sin(l2)*h}`);
-    a.setAttribute('stroke', mix('#ffe066', '#ff6a3d', warm));
+    a.setAttribute('stroke', mix('#c2410c', '#9b0f1e', warm));
     a.setAttribute('stroke-width', Math.max(f*.3*(1 - warm*.6), 1.5));
     a.setAttribute('opacity', ao);
   });

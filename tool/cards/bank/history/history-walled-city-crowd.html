@@ -1,0 +1,302 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-walled-city-crowd -->
+<!-- Look: a Swiss poster on bone paper, with a huge bold numeral, a strict hairline grid, one black monolith of towers and one hot red.
+     Interaction: drag along the scale to aim a guess. Every 100 people is a red dot launched from your finger into the windows (and onto the roofs if you guess too many).
+     Wow: the real 50,000 counts up while the block zooms in, a white light sweeps across it, extra dots tumble off, missing ones shoot up from the street, and every window fills red. A Kai Tak jet skims the rooftops. -->
+<title>The Walled City</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.33 var(--body);margin:0;overflow-wrap:break-word}
+.answered .q{font-size:max(2.3cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag to aim · launch the crowd" style="--c:#efebe2;--k:#111111;--edge:#cfc8b8">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">AIM A GUESS</span></div>
+    <h2 class="q">Before Hong Kong's cage homes, how many crammed into Kowloon Walled City?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A black block of towers with lit windows, a huge number above it and a scale from 0 to 80,000 people below."></canvas>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say"><b>Drag along the scale</b> to guess how many people lived inside. Each dot is 100 people.</p>
+    <div id="why" class="gone"><p class="body">Until its demolition in 1994, Kowloon Walled City crammed in 50,000 people, one of the most densely populated places on the planet. Today's cage homes, where 220,000 people live, carry on that crowding.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Cage homes have a precedent: 50,000 people in one walled block, until 1994.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say');
+  const ACC = [255, 45, 20], LIT = [255, 248, 236], INK = '#111111', RED = 'rgb(255,45,20)';
+  const C = 30, PER = 100, MAXG = 80000, REAL = 50000, NREAL = REAL / PER, NOVER = (MAXG - REAL) / PER, OLV = 10, OEND = 3;
+  const rnd = Kit.rnd;
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+  // The block: 30 towers whose windows add up to exactly 500 (500 × 100 = 50,000).
+  const hts = [], shade = [], ant = [];
+  for (let c = 0; c < C; c++) { hts.push(11 + Math.floor(rnd() * 12)); shade.push(12 + Math.floor(rnd() * 18)); ant.push(rnd()); }
+  let sum = hts.reduce((a, b) => a + b, 0);
+  while (sum !== NREAL) { const c = Math.floor(rnd() * C); if (sum < NREAL && hts[c] < 23) { hts[c]++; sum++; } else if (sum > NREAL && hts[c] > 10) { hts[c]--; sum--; } }
+  const MAXH = Math.max(...hts);
+  const real = []; for (let c = 0; c < C; c++) for (let r = 0; r < hts[c]; r++) real.push([c, r]);
+  shuffle(real);
+  const over = []; for (let k = 0; k < OLV; k++) { const row = []; for (let c = 0; c < C; c++) row.push([c, hts[c] + k]); over.push(...shuffle(row)); }
+  const P = real.concat(over.slice(0, NOVER)).map(s => ({c: s[0], r: s[1], x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0, a: 0, on: false, fall: false, ox: 0, oy: 0, wait: 0, fl: rnd()}));
+  const CC = []; for (let k = 0; k <= 10; k++) { const t = k / 10; CC.push(`rgb(${ACC.map((v, i) => Math.round(v + (LIT[i] - v) * t)).join(',')})`); }
+
+  let x, W = 0, H = 0, fs = 12, pad = 10, nf = 60, labY = 0, numY = 0, ruleY = 0, sy = 0, yBot = 0, yTop = 0, cell = 8, bx = 0, sx0 = 0, sx1 = 0;
+  let BODY = 'sans-serif', MONO = 'monospace', ready = false, running = false, compact = false, fontsAsked = false;
+  let guess = 5000, disp = 5000, cur = 0, touched = false, locked = false, revealed = false, dragging = false;
+  let build = 1, wave = -1, pop = 1, realT = 0, ov = OLV, t0 = performance.now();
+  const fmt = v => Math.round(v).toLocaleString('en-US');
+  const xOf = v => sx0 + v / MAXG * (sx1 - sx0);
+  const valOf = px => Math.max(1000, Math.min(MAXG, Math.round((px - sx0) / (sx1 - sx0) * MAXG / 1000) * 1000));
+  const colBuild = c => { const e = Math.max(0, Math.min(1, build * 1.6 - (c / C) * .6)); return 1 - Math.pow(1 - e, 3); };
+
+  // Cell size follows the head-room: the roofs keep room for overflow, which shrinks away at the reveal (the block zooms in).
+  function geo() {
+    cell = Math.min((W - 2 * pad) / C, (yBot - yTop) / (MAXH + ov));
+    bx = (W - cell * C) / 2;
+    for (const p of P) { p.tx = bx + (p.c + .5) * cell; p.ty = yBot - (p.r + .5) * cell; }
+  }
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
+    const cs = getComputedStyle(card);
+    BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
+    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    if (!fontsAsked && document.fonts && document.fonts.load) {
+      fontsAsked = true;
+      Promise.all([document.fonts.load(`800 40px ${BODY}`), document.fonts.load(`700 12px ${MONO}`), document.fonts.load(`600 12px ${MONO}`)]).then(() => layout()).catch(() => {});
+    }
+    fs = Math.max(12, Math.min(14, W / 28)); pad = Math.max(10, W * .04);
+    compact = H < 250;
+    if (!compact) {
+      nf = Math.min(H * .19, W * .27);
+      x.font = `800 ${nf}px ${BODY}`;
+      const w = x.measureText('80,000').width; if (w > W - 2 * pad) nf *= (W - 2 * pad) / w;
+      labY = fs * 1.1; numY = labY + fs * .5 + nf * .78; ruleY = numY + fs * .7;
+      sy = H - fs * 2.3; yBot = sy - fs * 2.1; yTop = ruleY + fs * 1.1;
+    } else {
+      fs = 12;
+      x.font = `700 ${fs}px ${MONO}`;
+      const rw = Math.max(x.measureText('1 DOT = 100 PEOPLE').width, x.measureText('YOU: 80,000').width, x.measureText('WALLED CITY').width + fs * 1.1);
+      nf = Math.max(fs * 2.2, Math.min(H * .2, fs * 3.6));
+      x.font = `800 ${nf}px ${BODY}`;
+      const room = W - 2 * pad - rw - fs, w = x.measureText('80,000').width;
+      if (w > room) nf *= room / w;
+      numY = Math.max(nf * .76, fs * 2.35) + 1; labY = fs;
+      ruleY = numY + fs * .45;
+      sy = H - fs * 1.75; yBot = sy - fs * 1.3; yTop = ruleY + 3;
+    }
+    sx0 = pad; sx1 = W - pad;
+    geo();
+    for (const p of P) if (p.on) { p.x = p.tx; p.y = p.ty; p.vx = p.vy = 0; }
+    if (!ready) { ready = true; setN(guess / PER, 0, 0); for (const p of P) if (p.on) { p.x = p.tx; p.y = p.ty; p.a = 1; p.vx = p.vy = 0; } }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+    draw();
+  }
+
+  // More dots launch from the finger into the windows; fewer fly back to it and fade.
+  function setN(n, ox, oy, fountain) {
+    for (let i = 0; i < P.length; i++) {
+      const p = P[i];
+      if (i < n && !p.on) {
+        p.on = true; p.fall = false;
+        if (fountain) { p.x = p.tx + Kit.gauss() * cell * 2; p.y = H + cell * 2 + rnd() * H * .25; p.vx = 0; p.vy = -(8 + rnd() * 8); p.wait = Math.round((p.c / C) * 22 + rnd() * 26); p.a = 1; }
+        else { p.x = ox + Kit.gauss() * 6; p.y = oy + Kit.gauss() * 6; p.vx = Kit.gauss() * 3; p.vy = -4 - rnd() * 7; p.wait = 0; p.a = Math.max(p.a, .3); }
+        if (Kit.calm) { p.x = p.tx; p.y = p.ty; p.vx = p.vy = 0; p.wait = 0; p.a = 1; }
+      } else if (i >= n && p.on) { p.on = false; p.ox = ox; p.oy = oy; if (Kit.calm) p.a = 0; }
+    }
+    cur = n;
+  }
+
+  function tick() {
+    if (ready) geo();
+    for (const p of P) {
+      if (p.wait > 0) { p.wait--; continue; }
+      if (p.on) {
+        p.vx = (p.vx + (p.tx - p.x) * .07) * .8; p.vy = (p.vy + (p.ty - p.y) * .07) * .8;
+        p.x += p.vx; p.y += p.vy; p.a = Math.min(1, p.a + .08);
+      } else if (p.a > 0) {
+        if (p.fall) { p.vy += .45; p.x += p.vx; p.y += p.vy; p.a -= .012; }
+        else { p.vx = (p.vx + (p.ox - p.x) * .12) * .75; p.vy = (p.vy + (p.oy - p.y) * .12) * .75; p.x += p.vx; p.y += p.vy; p.a -= .07; }
+      }
+    }
+    draw(); requestAnimationFrame(tick);
+  }
+
+  // A jet on its low approach to Kai Tak, skimming the roofs.
+  function plane(T, skyTop, skyBot) {
+    const gap = skyBot - skyTop, L = Math.min(cell * 5, W * .14);
+    if (gap < L * .5 || Kit.calm) return;
+    const per = 13, ph = ((T + 3) % per) / per;
+    if (ph > .55) return;
+    const u = ph / .55, px = W + L - u * (W + 2 * L), py = skyTop + gap * (.3 + u * .3);
+    x.save(); x.translate(px, py); x.rotate(-.06); x.fillStyle = INK;
+    x.beginPath(); x.ellipse(0, 0, L * .5, L * .07, 0, 0, 6.283); x.fill();
+    x.beginPath(); x.moveTo(-L * .05, 0); x.lineTo(L * .12, -L * .03); x.lineTo(L * .2, L * .26); x.lineTo(L * .1, L * .26); x.closePath(); x.fill();
+    x.beginPath(); x.moveTo(L * .34, -L * .02); x.lineTo(L * .5, -L * .2); x.lineTo(L * .5, 0); x.closePath(); x.fill();
+    x.fillStyle = RED; x.fillRect(-L * .5, -L * .015, L * .04, L * .03);
+    x.restore();
+    // its shadow ghosting across the towers
+    x.fillStyle = 'rgba(17,17,17,.06)';
+    x.beginPath(); x.ellipse(px + L * .3, skyBot + (yBot - skyBot) * .2, L * .6, L * .08, 0, 0, 6.283); x.fill();
+  }
+
+  function draw() {
+    if (!ready) return;
+    const T = (performance.now() - t0) / 1000;
+    x.clearRect(0, 0, W, H);
+    // The grid: hairlines on the scale's major ticks.
+    x.strokeStyle = 'rgba(17,17,17,.09)'; x.lineWidth = 1;
+    for (let k = 0; k <= 4; k++) { const X = Math.round(xOf(k * 20000)) + .5; x.beginPath(); x.moveTo(X, ruleY + 4); x.lineTo(X, sy); x.stroke(); }
+
+    // Labels and the huge numeral.
+    x.font = `700 ${fs}px ${MONO}`; x.textBaseline = 'alphabetic';
+    let L = revealed ? 'WALLED CITY, UNTIL 1994' : 'YOUR GUESS · PEOPLE';
+    const R = revealed ? `YOU: ${fmt(guess)}` : '1 DOT = 100 PEOPLE';
+    if (!compact) {
+      const room = W - 2 * pad - fs * 1.3;
+      if (x.measureText(L).width + x.measureText(R).width + fs * 1.5 > room) L = revealed ? 'WALLED CITY' : 'YOUR GUESS';
+      x.fillStyle = RED; x.fillRect(pad, labY - fs * .78, fs * .8, fs * .8);
+      x.fillStyle = INK; x.textAlign = 'left'; x.fillText(L, pad + fs * 1.3, labY);
+      x.textAlign = 'right'; x.fillStyle = revealed ? 'rgba(17,17,17,.6)' : INK; x.fillText(R, W - pad, labY);
+    } else {
+      x.font = `800 ${nf}px ${BODY}`;
+      const nw = x.measureText('80,000').width; x.font = `700 ${fs}px ${MONO}`;
+      const room = W - 2 * pad - nw - fs - fs * 1.1;
+      if (x.measureText(L).width > room) L = revealed ? 'WALLED CITY' : 'YOUR GUESS';
+      const lw = x.measureText(L).width;
+      x.fillStyle = RED; x.fillRect(W - pad - lw - fs * 1.1, labY - fs * .78, fs * .8, fs * .8);
+      x.fillStyle = INK; x.textAlign = 'right'; x.fillText(L, W - pad, labY);
+      x.fillStyle = revealed ? 'rgba(17,17,17,.6)' : INK; x.fillText(R, W - pad, labY + fs * 1.3);
+    }
+    x.save(); x.translate(pad, numY); x.scale(pop, pop);
+    x.font = `800 ${nf}px ${BODY}`; x.textAlign = 'left'; x.fillStyle = revealed ? RED : INK;
+    x.fillText(fmt(Math.round(disp / 100) * 100), 0, 0); x.restore();
+    x.fillStyle = INK; x.fillRect(pad, ruleY, W - 2 * pad, 3);
+
+    // The sky, with its jet.
+    plane(T, yTop, yBot - MAXH * cell - cell * 2.4);
+
+    // The block: one monolith of towers, with a light sweeping across at the reveal.
+    for (let c = 0; c < C; c++) {
+      const e = colBuild(c); if (e <= 0) continue;
+      const h = hts[c] * cell * e, X = bx + c * cell, top = yBot - h;
+      const sb = revealed ? Math.max(0, 1 - Math.abs(wave - c / C) * 10) : 0;
+      const s0 = shade[c] + sb * 70, s1 = Math.max(4, shade[c] - 10) + sb * 40;
+      const g = x.createLinearGradient(0, top, 0, yBot);
+      g.addColorStop(0, `rgb(${s0 + 14},${s0 + 12},${s0 + 10})`); g.addColorStop(1, `rgb(${s1},${s1},${s1})`);
+      x.fillStyle = g; x.fillRect(X, top, cell + .6, h);
+      x.fillStyle = 'rgba(255,255,255,.07)'; x.fillRect(X, top, 1, h);
+      if (e > .97) {
+        x.strokeStyle = INK; x.lineWidth = 1.2;
+        if (ant[c] > .62) { x.beginPath(); x.moveTo(X + cell * .5, top); x.lineTo(X + cell * .5, top - cell * (1 + ant[c] * 1.2)); x.stroke(); x.beginPath(); x.moveTo(X + cell * .2, top - cell * .8); x.lineTo(X + cell * .8, top - cell * .8); x.stroke(); }
+        else if (ant[c] < .22) { x.fillStyle = INK; x.fillRect(X + cell * .18, top - cell * .7, cell * .64, cell * .7); }
+        else if (ant[c] < .3) { x.fillStyle = INK; x.fillRect(X + cell * .1, top - cell * .35, cell * .8, cell * .35); }
+      }
+    }
+    // Empty windows, a few flickering with a warm bulb.
+    const q = cell * .26;
+    for (let i = 0; i < NREAL; i++) {
+      const p = P[i]; if (p.ty <= yBot - hts[p.c] * cell * colBuild(p.c)) continue;
+      const fl = p.fl > .9 ? .5 + .5 * Math.sin(T * (1 + p.fl * 3) + p.fl * 40) : 0;
+      x.fillStyle = fl > 0 ? `rgba(255,196,120,${.12 + fl * .3})` : 'rgba(255,255,255,.1)';
+      x.fillRect(p.tx - q / 2, p.ty - q / 2, q, q);
+    }
+
+    // The people: red, flashing white as the light passes, settling back red in every window.
+    const rr = Math.max(1.2, cell * .32);
+    for (let i = 0; i < P.length; i++) {
+      const p = P[i]; if (p.a <= 0 || p.wait > 0) continue;
+      const m = (revealed && i < NREAL) ? Math.max(0, Math.min(1, (wave - p.c / C) * 5)) : 0, pl = Math.sin(Math.PI * m);
+      x.globalAlpha = Math.max(0, p.a); x.fillStyle = CC[Math.round(pl * 10)];
+      x.beginPath(); x.arc(p.x, p.y, rr * (1 + .6 * pl), 0, 6.283); x.fill();
+    }
+    x.globalAlpha = 1;
+
+    // The street.
+    x.fillStyle = INK; x.fillRect(pad * .5, yBot, W - pad, 3);
+
+    // The scale.
+    x.fillRect(sx0, sy, sx1 - sx0, 2);
+    for (let v = 0; v <= MAXG; v += 10000) { const X = xOf(v), big = v % 20000 === 0; x.fillRect(X - .75, sy - (big ? fs * .55 : fs * .3), 1.5, big ? fs * .55 : fs * .3); }
+    x.font = `600 ${fs}px ${MONO}`;
+    const ly = compact ? sy + fs * 1.25 : sy + fs * 1.45;
+    for (let k = 0; k <= 4; k++) { const X = xOf(k * 20000); x.textAlign = k === 0 ? 'left' : k === 4 ? 'right' : 'center'; x.fillStyle = INK; x.fillText(k ? `${k * 20}k` : '0', X, ly); }
+    // Your marker.
+    const gx = xOf(guess), bob = touched ? 0 : Math.sin(T * 4) * 3, th = fs * .85;
+    x.fillStyle = revealed ? INK : RED;
+    x.beginPath(); x.moveTo(gx, sy - 2 + bob); x.lineTo(gx - th * .55, sy - 2 - th + bob); x.lineTo(gx + th * .55, sy - 2 - th + bob); x.closePath(); x.fill();
+    if (!touched) { x.strokeStyle = RED; x.lineWidth = 2; for (const d of [-1, 1]) { const ax = gx + d * th * 1.3; x.beginPath(); x.moveTo(ax, sy - th * .9 + bob); x.lineTo(ax + d * th * .45, sy - th * .55 + bob); x.lineTo(ax, sy - th * .2 + bob); x.stroke(); } }
+    // The real one.
+    if (realT > 0) { const X = xOf(REAL), bh = Math.min(fs * 1.6, sy - yBot - 4) * realT; x.fillStyle = RED; x.fillRect(X - 2.5, sy + 2 - bh, 5, bh); }
+  }
+
+  // ---------- the drag ----------
+  const at = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  function move(e) {
+    const [px, py] = at(e), v = valOf(px);
+    if (v === guess) return;
+    if (Math.floor(v / 10000) !== Math.floor(guess / 10000)) Kit.haptic('selection');
+    guess = v; disp = v; setN(v / PER, px, Math.min(py, yBot));
+  }
+  cv.addEventListener('pointerdown', e => { if (locked || !ready) return; dragging = true; touched = true; cv.setPointerCapture(e.pointerId); move(e); });
+  cv.addEventListener('pointermove', e => { if (dragging) move(e); });
+  let asked = false;
+  const end = () => {
+    if (!dragging) return; dragging = false;
+    if (!asked) { asked = true; sure.on(); say.innerHTML = 'Keep dragging if you like. <b>Then say how sure you are.</b>'; }
+  };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+  // ---------- the reveal ----------
+  function reveal() {
+    revealed = true; locked = true; touched = true;
+    for (let i = NREAL; i < P.length; i++) { const p = P[i]; if (p.on) { p.on = false; p.fall = true; p.vx = Kit.gauss() * 2.5; p.vy = -2 - rnd() * 4; if (Kit.calm) p.a = 0; } }
+    if (Kit.calm || typeof gsap === 'undefined') { ov = OEND; geo(); }
+    setN(NREAL, 0, 0, true);
+    if (Kit.calm || typeof gsap === 'undefined') { disp = REAL; wave = 2; realT = 1; pop = 1; return; }
+    const st = {d: disp, w: -.15, s: .82, r: 0, o: ov};
+    gsap.timeline({onUpdate: () => { disp = st.d; wave = st.w; pop = st.s; realT = st.r; ov = st.o; }})
+      .to(st, {s: 1, duration: .8, ease: 'back.out(2.4)'}, 0)
+      .to(st, {d: REAL, duration: 1.9, ease: 'expo.out'}, 0)
+      .to(st, {o: OEND, duration: 1.4, ease: 'power3.inOut'}, .1)
+      .to(st, {r: 1, duration: .6, ease: 'power3.out'}, .2)
+      .to(st, {w: 1.35, duration: 1.5, ease: 'power2.inOut'}, .55)
+      .call(() => Kit.haptic('success'), null, .9);
+  }
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = Math.abs(guess - REAL) <= 10000;
+    Kit.answer({choice: `${fmt(guess)} people`, correct: ok, sure: pct});
+    Kit.hide('say'); Kit.show('why'); card.classList.add('answered');
+    sure.grade(ok, pct, `${fmt(guess)}: ${ok ? 'close' : 'off'}`);
+    Kit.show('keep'); reveal();
+  });
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined' || revealed || touched) return;
+    const b = {t: 0}; build = 0;
+    for (const p of P) { p.on = false; p.a = 0; } cur = 0;
+    gsap.to(b, {t: 1, duration: 1.3, ease: 'power3.out', onUpdate: () => { build = b.t; }});
+    gsap.delayedCall(1, () => { if (!touched) setN(guess / PER, xOf(guess), sy - fs); });
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    build = 1; touched = true; guess = 20000; disp = guess; setN(guess / PER, xOf(guess), sy);
+    if (!asked) { asked = true; sure.on(); }
+    await w(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(Kit.calm ? 150 : 2700);
+  };
+})();
+Kit.single();
+</script>
+</html>

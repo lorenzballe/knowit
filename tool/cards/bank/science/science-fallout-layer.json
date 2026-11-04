@@ -1,0 +1,37 @@
+{
+  "id": "science-fallout-layer",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did 1950s bomb tests leave the same date in mud worldwide?",
+  "answer": "Bomb tests in the 1950s scattered radioactive fallout across the whole world at once. Because it fell everywhere together, its thin layer in the mud marks the same moment in time everywhere. Drag the scanner down to find it.",
+  "move": "Fallout fell everywhere at once, so its thin layer marks the same moment in mud worldwide.",
+  "keywords": [
+    "fallout",
+    "sediment",
+    "radionuclides",
+    "1950s",
+    "anthropocene"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Mud with a scanner that you drag downward to look for radiation. The question asks how 1950s bomb-test fallout leaves the same date in mud worldwide, and you line up layers by time."
+  },
+  "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=CpGW8eA6Qik&t=49s",
+  "written": "2026-11-03"
+}

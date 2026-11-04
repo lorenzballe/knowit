@@ -1,0 +1,38 @@
+{
+  "id": "science-kepler-water-units",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.why_ice_floats",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Before atoms, what did Kepler guess makes snowflakes six-sided?",
+  "answer": "Kepler guessed water is built from tiny units. Stacked tight, each sits among six others, so the stack grows as a hexagon: a six-sided crystal.",
+  "move": "Kepler's guess: tiny water units stacking six around one build a six-sided snowflake.",
+  "keywords": [
+    "kepler",
+    "snowflake",
+    "water",
+    "hexagon",
+    "crystal"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Quiz page asking which number Kepler guessed made snowflakes six-sided, with options 4, 5, 6 and 8. The reveal shows tiny water units stacked so each sits among six others, forming a hexagon.",
+    "ground": "#22476f"
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=189s",
+  "written": "2026-11-03"
+}

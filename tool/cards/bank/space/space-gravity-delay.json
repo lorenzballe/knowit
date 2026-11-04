@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A clock counting down, with the Earth circling an empty spot in space. Asks when Earth would stop feeling the Sun's pull if the Sun vanished. A button makes the Sun vanish 8 min 20 s later.",
-    "ground": "#0b0f22"
+    "label": "A clock counting down, with the Earth circling an empty spot in space. Asks when Earth would stop feeling the Sun's pull if the Sun vanished. A button makes the Sun vanish 8 min 20 s later."
   },
   "source": "Geopop, “Come potremmo sopravvivere se il Sole scomparisse: gli scenari di una Terra senza luce” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=WEyRS1_p2PA&t=126s",

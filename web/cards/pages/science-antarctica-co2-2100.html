@@ -56,8 +56,7 @@ function blob(cx, cy, R, k, ice) {
 function apply() {
   if (!G) return;
   const t = st.t, lerp = gsap.utils.interpolate;
-  G.sea.setAttribute('fill', lerp('#0d2742', '#1b6f80', t));
-  G.land.setAttribute('fill', lerp('#7b8794', '#3e9a4e', t));
+  G.land.setAttribute('fill', lerp('#5d6874', '#1f7a3a', t));
   G.ice.setAttribute('d', blob(G.cx, G.cy, G.R, 1.05 - .68 * t, true));
   G.landLab.setAttribute('opacity', Math.min(1, t * 2.2));
   const show = st.ppm > 0;
@@ -74,16 +73,15 @@ Kit.onShow.card = () => {
   const fs = Math.max(f * .85, 12);
   const mw = W * .74, cx = mw / 2, cy = H / 2 + fs * .3;
   const R = Math.min(mw * .4, H * .36);
-  const sea = Kit.mk('rect', {x: 0, y: 0, width: mw, height: H, rx: 14}, svg);
   const defs = Kit.mk('defs', {}, svg);
   const cp = Kit.mk('clipPath', {id: 'landclip'}, defs);
   Kit.mk('path', {d: blob(cx, cy, R, 1, false)}, cp);
   const land = Kit.mk('path', {d: blob(cx, cy, R, 1, false), stroke: '#0a1a2b', 'stroke-width': 1.5}, svg);
-  const ice = Kit.mk('path', {fill: '#f4f9ff', stroke: '#a9d4f5', 'stroke-width': 2, 'clip-path': 'url(#landclip)'}, svg);
+  const ice = Kit.mk('path', {fill: '#f4f9ff', stroke: '#2a78b5', 'stroke-width': 2, 'clip-path': 'url(#landclip)'}, svg);
   const tx = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, a || {}), svg); e.textContent = s; return e; };
   tx(cx, cy + fs * .35, 'ICE SHEET', {fill: '#1d3c5c'});
   const landLab = tx(cx, cy + R * .74, 'BARE LAND', {fill: '#fff', opacity: 0});
-  tx(fs * .6, fs * 1.4, 'Antarctica · sketch', {fill: '#cfe3f5', 'text-anchor': 'start', 'font-weight': 500});
+  tx(fs * .6, fs * 1.4, 'Antarctica · sketch', {fill: 'var(--k)', 'text-anchor': 'start', 'font-weight': 500});
   // CO2 gauge
   const gx = mw + (W - mw) * .32, bw = Math.max((W - mw) * .22, 10);
   const y1 = fs * 3.8, y0 = H - fs * 1.2;
@@ -99,12 +97,12 @@ Kit.onShow.card = () => {
   });
   const val = tx(gx + bw / 2, (yOf(730) + yOf(1020)) / 2 + fs * .35, '', {fill: 'var(--k)', 'font-size': Math.max(fs * .8, 12), opacity: 0, transform: `rotate(-90 ${gx + bw / 2} ${(yOf(730) + yOf(1020)) / 2})`});
   val.setAttribute('opacity', 0);
-  G = {sea, land, ice, landLab, fill, val, cx, cy, R, y0, y1};
+  G = {land, ice, landLab, fill, val, cx, cy, R, y0, y1};
   // value label sits beside the band, not on the ticks
   val.removeAttribute('transform');
   val.setAttribute('x', gx - 6); val.setAttribute('text-anchor', 'end');
   val.setAttribute('y', (yOf(730) + yOf(1020)) / 2 + fs * .35);
-  val.setAttribute('fill', '#ffffff'); val.setAttribute('font-size', Math.max(fs * .8, 12));
+  val.setAttribute('fill', 'var(--k)'); val.setAttribute('font-size', Math.max(fs * .8, 12));
   apply();
 };
 

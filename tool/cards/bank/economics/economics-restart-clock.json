@@ -1,0 +1,39 @@
+{
+  "id": "economics-restart-clock",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.warning_signs",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How long until a shut-down Qatar LNG plant is back at full output?",
+  "answer": "Restarting liquefaction takes two to three weeks, then about two more weeks to reach full capacity. That makes roughly four weeks even in the best case. The reader taps the timeline where they think the plant is back to full output.",
+  "move": "A gas plant stops in a moment and needs about a month to come back.",
+  "keywords": [
+    "qatar",
+    "lng",
+    "liquefaction",
+    "drones",
+    "gas-plant"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A timeline of a Qatar LNG plant shut down by drones: two to three weeks to restart liquefaction, then two more weeks to reach full capacity. The reader taps where the plant is back at full output.",
+    "graded": false,
+    "ground": "#123d6a"
+  },
+  "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Zfk7QT4zhZQ&t=922s",
+  "written": "2026-11-04"
+}

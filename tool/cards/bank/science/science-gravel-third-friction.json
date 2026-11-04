@@ -1,0 +1,38 @@
+{
+  "id": "science-gravel-third-friction",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the “third dimension of friction” when rallying on gravel?",
+  "answer": "On gravel, a car's tyres balance rolling friction and sliding friction at the same time. Rolling pushes the car forward, while sliding carries it sideways. Both act together, so gravel grip is a hybrid rather than pure roll or pure slide.",
+  "move": "Gravel grip is a hybrid: roll to go forward, slide to go sideways, at once.",
+  "keywords": [
+    "rally driving",
+    "gravel",
+    "friction",
+    "tyres",
+    "sliding"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A horizontal slider with a draggable jewel, labelled ROLL at one end and SLIDE at the other. The question asks how a rally car's tyres should meet gravel: drag the jewel between roll and slide.",
+    "ground": "#19140f"
+  },
+  "source": "Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=2SCEUgazR_8&t=241s",
+  "written": "2026-11-04"
+}

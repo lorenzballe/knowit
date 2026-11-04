@@ -60,11 +60,7 @@ function draw(anim) {
   const P = (x, y) => [x * W, y * Hm];
   const pts = a => a.map(([x, y]) => P(x, y).join(',')).join(' ');
 
-  const defs = Kit.mk('defs', {}, svg);
-  const cp = Kit.mk('clipPath', {id: 'mapclip'}, defs);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: Hm, rx: f * .8}, cp);
-  const map = Kit.mk('g', {'clip-path': 'url(#mapclip)'}, svg);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: Hm, style: `fill:${mix(8)}`}, map);
+  const map = Kit.mk('g', {}, svg);
   const water = `fill:${mix(24)}`;
   Kit.mk('polygon', {points: pts([[0, .15], [.09, .15], [.24, 1], [.10, 1]]), style: water}, map);
   Kit.mk('polygon', {points: pts([[.28, .02], [.42, .02], [.74, .22], [.86, .30], [.86, .40], [.70, .40], [.56, .36], [.40, .30], [.30, .16]]), style: water}, map);

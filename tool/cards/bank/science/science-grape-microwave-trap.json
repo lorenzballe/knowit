@@ -1,0 +1,38 @@
+{
+  "id": "science-grape-microwave-trap",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What do microwaves do once they get inside a grape?",
+  "answer": "Microwaves that enter a grape get trapped. At the grape's edge the waves reflect back inside, much like total internal reflection, so they can't escape. They pile up into standing waves, which peak where two touching grapes meet.",
+  "move": "A grape traps microwaves: they bounce inside and peak where grapes touch.",
+  "keywords": [
+    "grape",
+    "microwave",
+    "standing wave",
+    "resonant mode",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two touching grapes sit in a microwave beam. The question asks what microwaves do once they get inside a grape. Options: A) pass straight through and out, B) get trapped, bouncing around inside, C) bounce off the skin and never get in.",
+    "ground": "#151a30"
+  },
+  "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=194s",
+  "written": "2026-11-03"
+}

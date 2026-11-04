@@ -1,5 +1,4 @@
 <!doctype html>
-<!-- slug: nature-delta-salinity-dam -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -39,7 +38,7 @@
 <script>
 const S = {v: 0};
 let G = null, done = false;
-const BLUE = '#2a78cf', SALT = '#efe6cc', GREEN = '#3c9a4b', DRY = '#b8a47a';
+const BLUE = '#2a78cf', SALT = '#efe6cc', GREEN = '#17692f', DRY = '#b8a47a';
 const lerpC = (a, b, t) => gsap.utils.interpolate(a, b, t);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
@@ -49,11 +48,7 @@ function draw(){
   const f = Math.max(12, f0);
   const mapW = W * 0.64;
   const g = {W, H, f, mapW};
-  const defs = Kit.mk('defs', {}, svg);
-  const cp = Kit.mk('clipPath', {id: 'mclip'}, defs);
-  Kit.mk('rect', {x: 0, y: 0, width: mapW, height: H, rx: f * .8}, cp);
-  const m = Kit.mk('g', {'clip-path': 'url(#mclip)'}, svg);
-  Kit.mk('rect', {x: 0, y: 0, width: mapW, height: H, fill: '#e8d6ad'}, m);
+  const m = Kit.mk('g', {}, svg);
 
   const dx = mapW * .3, damY = H * .17, damH = Math.max(6, H * .028);
   const ax = mapW * .52, apexY = H * .64, seaY = H * .84;
@@ -82,13 +77,13 @@ function draw(){
     g.cr.push({y, el: Kit.mk('rect', {x: x - s / 2, y: y - s / 2, width: s, height: s, fill: '#fff', stroke: '#8a7a55', 'stroke-width': .8, transform: `rotate(45 ${x} ${y})`, opacity: 0}, m)});
   }
   // sea
-  Kit.mk('rect', {x: 0, y: seaY, width: mapW, height: H - seaY, fill: '#1d5c9e'}, m);
+  Kit.mk('rect', {x: 0, y: seaY, width: mapW, height: H - seaY, fill: '#1d5c9e', rx: f * .5}, m);
   Kit.mk('text', {x: mapW / 2, y: seaY + (H - seaY) / 2 + f * .35, 'text-anchor': 'middle', fill: '#fff', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)'}, m).textContent = 'Sea';
   // river
   g.river = Kit.mk('path', {d: `M${dx},${damY + damH} C${dx - mapW * .12},${H * .32} ${ax + mapW * .14},${H * .44} ${ax},${apexY}`, fill: 'none', stroke: BLUE, 'stroke-linecap': 'round'}, m);
   // dam
-  Kit.mk('rect', {x: dx - mapW * .12, y: damY, width: mapW * .24, height: damH, fill: '#555', rx: 2}, m);
-  const lab = (x, y, t, a) => { const e = Kit.mk('text', {x, y, 'text-anchor': a, fill: '#2a2418', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)'}, m); e.textContent = t; return e; };
+  Kit.mk('rect', {x: dx - mapW * .12, y: damY, width: mapW * .24, height: damH, fill: '#3a3a36', rx: 2}, m);
+  const lab = (x, y, t, a) => { const e = Kit.mk('text', {x, y, 'text-anchor': a, fill: '#10100c', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)'}, m); e.textContent = t; return e; };
   lab(dx + mapW * .14, damY + damH, 'Hoover Dam', 'start');
   lab(ax + f * .5, apexY - f * .1, 'Delta', 'start');
 

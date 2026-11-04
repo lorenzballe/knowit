@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Diagram of Earth between the Sun and the Moon during a lunar eclipse. Tap the Sun, the atmosphere or the Moon to see how Earth's air bends and filters sunlight so that only red light reaches the Moon.",
-    "ground": "#0b1026"
+    "label": "Diagram of Earth between the Sun and the Moon during a lunar eclipse. Tap the Sun, the atmosphere or the Moon to see how Earth's air bends and filters sunlight so that only red light reaches the Moon."
   },
   "source": "Geopop, “Eclissi lunare: la spiegazione semplice per capire come avviene” (YouTube, 2018)",
   "reference": "https://www.youtube.com/watch?v=Uba7HtQ3MiM&t=105s",

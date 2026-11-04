@@ -1,0 +1,37 @@
+{
+  "id": "science-sludge-cannibalism",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the 'cannibalism' that happens when sewage sludge is treated?",
+  "answer": "The 'cannibalism' is autodigestion: bacteria in the sludge tank eat other bacteria. Sludge must lose its water and many of its bacteria, so it digests itself, and then the water is spun out.",
+  "move": "Sludge digests itself: bacteria eat bacteria, then the water is spun out.",
+  "keywords": [
+    "sewage",
+    "sludge",
+    "bacteria",
+    "autodigestion",
+    "wastewater"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Tap-to-digest page asking what 'cannibalism' happens when sewage sludge is treated. A tank holds 41 bacteria with an 'Eaten' counter at 0; tapping the tank shows them digesting each other."
+  },
+  "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=vmwPachp1SE&t=266s",
+  "written": "2026-11-03"
+}

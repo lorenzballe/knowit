@@ -1,0 +1,420 @@
+<!doctype html>
+<!-- slug: human_body-lead-hardened-arteries -->
+<!-- Look: a museum diorama in cut paper on cream. Tissue planes sit behind a sliced artery specimen (cut at both ends) that shows its layers, with soft drop shadows and gentle pointer parallax between the planes.
+     Interaction: drag the Pb token to put lead into the blood. Grey specks flow in, settle in the wall and narrow it. The wall greys, its wavy elastic fibres straighten, it stops stretching, and the stretch trace above it flattens beat by beat.
+     Wow: at full lead the trace goes flat. Three paper museum tags drop on strings that draw themselves: 250,000 a year, 25M over a century, ~100M worldwide. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The heart killer</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
+.say b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Drag the lead · watch the artery" style="--c:#f1e2cb;--k:#2b1714;--edge:#c9ab86">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HARDENED ARTERIES</span></div>
+    <h2 class="q">How did leaded gasoline cause heart disease?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A paper diorama of an artery specimen cut open lengthwise: its wall layers, blood cells flowing, and a trace of how much the wall stretches with each heartbeat. A Pb token on a track adds lead to the blood."></svg>
+    </div>
+    <p class="say" id="say"><b>Drag the Pb token</b> to put lead in this artery's blood. Watch the wall move with each heartbeat.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Leaded gasoline hardened arteries: a quiet heart killer of millions.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const HAS_DRAW = typeof DrawSVGPlugin !== 'undefined';
+  if (HAS_DRAW) gsap.registerPlugin(DrawSVGPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const INK = '#2b1714';
+  const S = {lead: 0, target: 0, t: 0, revealed: false, tagsShown: false, animTags: false, touched: false, step: 0, q: 0};
+  const K = {v: 0};
+  let W = 0, H = 0, fs = 12, ready = false, G = {}, E = {}, cells = [], specks = [], deps = [], trace = [], traceAcc = 0, xs = [], nudgeTw = null, entered = false;
+  const N = 56, TN = 110;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y}, a), p); e.textContent = s; return e; };
+  const mix = (a, b, t) => gsap.utils.interpolate(a, b, Math.max(0, Math.min(1, t)));
+  const beat = t => { const ph = (t % .95) / .95; return ph < .12 ? Math.sin(ph / .12 * Math.PI / 2) : Math.exp(-(ph - .12) * 6.5); };
+  const f1 = v => v.toFixed(1);
+  const clamp01 = v => Math.max(0, Math.min(1, v));
+
+  function closed(p) {
+    const n = p.length; let d = `M${f1(p[0][0])},${f1(p[0][1])}`;
+    for (let i = 0; i < n; i++) {
+      const p0 = p[(i - 1 + n) % n], a = p[i], b = p[(i + 1) % n], p3 = p[(i + 2) % n];
+      d += `C${f1(a[0] + (b[0] - p0[0]) / 6)},${f1(a[1] + (b[1] - p0[1]) / 6)} ${f1(b[0] - (p3[0] - a[0]) / 6)},${f1(b[1] - (p3[1] - a[1]) / 6)} ${f1(b[0])},${f1(b[1])}`;
+    }
+    return d + 'Z';
+  }
+
+  function build() {
+    svg.innerHTML = '';
+    E = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    if (W < 40 || H < 40) { ready = false; return; }
+    fs = Math.max(12, Math.min(15, W / 26));
+    const ls = Math.max(12, fs * .85);
+    let seed = 11; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+
+    // ---------- defs: paper shadows, grain, gradients ----------
+    const defs = mk('defs', {}, svg);
+    const shadow = (id, dy, b, o) => { const fl = mk('filter', {id, x: '-20%', y: '-30%', width: '140%', height: '170%'}, defs); mk('feDropShadow', {dx: 0, dy, stdDeviation: b, 'flood-color': '#4a2414', 'flood-opacity': o}, fl); };
+    shadow('s1', 2, 1.8, .28); shadow('s2', 4, 4, .26); shadow('s3', 6, 5, .3);
+    const gr = mk('filter', {id: 'grain', x: 0, y: 0, width: '100%', height: '100%'}, defs);
+    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .85, numOctaves: 2, seed: 4, result: 'n'}, gr);
+    mk('feColorMatrix', {in: 'n', type: 'matrix', values: '0 0 0 0 .35  0 0 0 0 .2  0 0 0 0 .1  0 0 0 .12 0', result: 'a'}, gr);
+    mk('feComposite', {in: 'a', in2: 'SourceGraphic', operator: 'in', result: 'g'}, gr);
+    const mg = mk('feMerge', {}, gr); mk('feMergeNode', {in: 'SourceGraphic'}, mg); mk('feMergeNode', {in: 'g'}, mg);
+    const lin = (id, stops) => { const g = mk('linearGradient', {id, x1: 0, y1: 0, x2: 0, y2: 1}, defs); stops.forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, g)); };
+    const rad = (id, stops, cx = .5, cy = .5) => { const g = mk('radialGradient', {id, cx, cy, r: .65}, defs); stops.forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, g)); };
+    lin('lum', [[0, '#470710'], [.5, '#7e131c'], [1, '#470710']]);
+    rad('rbc', [[0, '#a51b26'], [.55, '#d23a43'], [1, '#e9646a']]);
+    rad('pb', [[0, '#c4beb8'], [.55, '#77706a'], [1, '#433e3a']], .35, .3);
+    rad('deep', [[0, '#1c0204'], [1, '#5a0a12']], .6, .5);
+    rad('capShade', [[0, 'rgba(255,255,255,0)'], [.7, 'rgba(90,40,30,.05)'], [1, 'rgba(90,40,30,.28)']], .2, .45);
+
+    // ---------- layout: everything stays inside the stage ----------
+    const m = Math.max(14, W * .05);
+    const kr = Math.max(14, fs * 1.1);
+    const tagMode = S.revealed;
+    const colW = (W - 2 * m) / 3, tw = colW - Math.max(6, fs * .45);
+    const cs = Math.max(12, Math.min(13.5, fs * .86));
+    const ns = Math.max(14, Math.min(fs * 1.6, tw * .86 / 4.3));
+    const ty = Math.max(10, fs * .75);
+    const th = fs * 1.4 + ns * 1.15 + cs * 3.05;
+    const trackY = H - kr - 3, tlY = trackY - kr - fs * .45;
+    let showLabels = true;
+    const minR = Math.max(18, fs * 1.35), need = minR * 2.35;
+    const titleY = fs * 1.15, traceTop = fs * 2.1;
+    let traceBase = traceTop + Math.max(fs * 1.6, Math.min(H * .16, fs * 4.2));
+    let aBot = tlY - ls * .95 - fs * .35, aTop;
+    if (tagMode) {
+      aTop = ty + th + fs * .35;
+      if (aBot - aTop < need) { showLabels = false; aBot = trackY - kr - fs * .45; }
+    } else {
+      const room = aBot - need - fs * .45 - traceTop;
+      if (traceBase - traceTop > room) traceBase = traceTop + Math.max(fs * 1.4, room);
+      aTop = traceBase + fs * .45;
+    }
+    if (aBot - aTop < need) aTop = aBot - need;   // in a tight stage the specimen slides up behind the tags (no text there)
+    aTop = Math.max(4, aTop);
+    const R = Math.max(12, Math.min((aBot - aTop) / 2 / 1.17, W * .16));
+    const cy = (aTop + aBot) / 2;
+    const T = R * .38, r = R - T, kk = .3, x0 = m + R * kk, x1 = W - m - R * kk;
+    xs = []; for (let i = 0; i <= N; i++) xs.push(x0 + (x1 - x0) * i / N);
+    G = {m, kr, trackY, tlY, cy, R, T, r, x0, x1, kk, tx0: m + kr, tx1: W - m - kr, dMax: R * .085,
+      c: xs.map(x => cy + R * .07 * Math.sin(x / W * Math.PI * 1.6 + .4)),
+      bT: xs.map(x => .4 + .6 * Math.pow(.5 + .5 * Math.sin(x / W * 8.5 + 1.3), 1.6)),
+      bB: xs.map(x => .4 + .6 * Math.pow(.5 + .5 * Math.sin(x / W * 7.2 + 3.9), 1.6)),
+      traceBase, traceTop, tag: {colW, tw, ns, cs, ty, th}, tagMode};
+
+    const root = mk('g', {}, svg);
+    G.pBack = mk('g', {}, root); G.back = mk('g', {}, G.pBack);
+    G.pTop = mk('g', {}, root); G.top = mk('g', {}, G.pTop);
+    G.pArt = mk('g', {}, root); G.art = mk('g', {}, G.pArt);
+    G.track = mk('g', {}, root);
+    G.pTags = mk('g', {}, root); G.tags = mk('g', {}, G.pTags);
+
+    // ---------- back plane: tissue cut from paper, with capillaries ----------
+    const blob = (cx, cyy, rx, ry, n) => { const p = []; for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2, k = 1 + (rnd() - .5) * .22; p.push([cx + Math.cos(a) * rx * k, cyy + Math.sin(a) * ry * k]); } return closed(p); };
+    const bl = [[W * .31, cy - R * .15, W * .22, R * 2.1, '#e8d3b6'], [W * .72, cy + R * .35, W * .21, R * 1.9, '#e1c6a2']].map(([a, b, c, d, col]) => {
+      const ry = Math.max(R * 1.2, Math.min(d, Math.min(b - 4, H - 4 - b) / 1.2));
+      const g = mk('g', {filter: 'url(#s2)'}, G.back);
+      mk('path', {d: blob(a, b, c, ry, 9), fill: col, filter: 'url(#grain)'}, g);
+      return {y: b, ry};
+    });
+    G.caps = [];
+    const a1 = bl[0].y - bl[0].ry * .85, b1 = bl[0].y + bl[0].ry * .85, a2 = bl[1].y - bl[1].ry * .85, b2 = bl[1].y + bl[1].ry * .85;
+    const capD = [
+      `M${f1(W * .2)},${f1(a1)} C${f1(W * .12)},${f1(cy - R * .6)} ${f1(W * .28)},${f1(cy + R * .4)} ${f1(W * .21)},${f1(b1)}`,
+      `M${f1(W * .185)},${f1(Math.max(a1, cy - R * .7))} Q${f1(W * .12)},${f1(cy - R * .3)} ${f1(W * .1)},${f1(cy + R * .3)}`,
+      `M${f1(W * .64)},${f1(a2)} C${f1(W * .72)},${f1(cy - R * .8)} ${f1(W * .58)},${f1(cy + R * .5)} ${f1(W * .68)},${f1(b2)}`,
+      `M${f1(W * .67)},${f1(Math.max(a2, cy - R * .9))} Q${f1(W * .78)},${f1(Math.max(a2, cy - R))} ${f1(W * .86)},${f1(Math.max(a2 + R * .3, cy - R * 1.25))}`
+    ];
+    capD.forEach((d, i) => G.caps.push(mk('path', {d, fill: 'none', stroke: '#c47f72', 'stroke-width': i % 2 ? 1.2 : 1.8, 'stroke-linecap': 'round', opacity: .75}, G.back)));
+
+    // ---------- top plane: how much the wall stretches with each beat ----------
+    if (!tagMode) {
+      txt(G.top, m, titleY, 'WALL STRETCH PER BEAT', {'font-family': 'var(--mono)', 'font-size': ls, 'font-weight': 700, fill: INK, opacity: .72, 'letter-spacing': '.04em'});
+      E.status = txt(G.top, W - m, titleY, 'SOFT', {'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': ls, 'font-weight': 800, fill: '#b8322f'});
+      mk('line', {x1: m, x2: W - m, y1: traceBase, y2: traceBase, stroke: INK, 'stroke-opacity': .25, 'stroke-width': 1, 'stroke-dasharray': '3 4'}, G.top);
+      E.trace = mk('polyline', {fill: 'none', stroke: '#b8322f', 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, G.top);
+      E.head = mk('circle', {r: 3.2, fill: '#b8322f'}, G.top);
+    }
+
+    // ---------- the artery specimen, cut open lengthwise ----------
+    E.cap = mk('ellipse', {stroke: 'rgba(70,25,20,.45)', 'stroke-width': 1.1, filter: 'url(#s1)'}, G.art);
+    E.capSh = mk('ellipse', {fill: 'url(#capShade)'}, G.art);
+    E.lumen = mk('path', {fill: 'url(#lum)'}, G.art);
+    const gc = mk('g', {}, G.art);
+    const crx = Math.max(3.5, Math.min(fs * .62, r * .24)), cry = crx * .62;
+    cells = [];
+    const nc = Math.round(W / 20);
+    for (let i = 0; i < nc; i++) {
+      const g = mk('g', {}, gc);
+      mk('ellipse', {rx: crx, ry: cry, fill: 'url(#rbc)', stroke: '#7a1019', 'stroke-width': .5}, g);
+      mk('ellipse', {rx: crx * .45, ry: cry * .4, fill: 'rgba(110,8,18,.35)'}, g);
+      mk('ellipse', {cx: -crx * .3, cy: -cry * .45, rx: crx * .3, ry: cry * .15, fill: 'rgba(255,255,255,.35)'}, g);
+      cells.push({el: g, x: x0 + rnd() * (x1 - x0), lane: (rnd() * 2 - 1) * .9, ph: rnd() * 6, sp: .85 + rnd() * .3, ry: cry, rx: crx});
+    }
+    const gs = mk('g', {}, G.art);
+    specks = [];
+    for (let i = 0; i < 24; i++) specks.push({el: mk('circle', {r: Math.max(1.8, fs * .17), fill: '#5c5753', stroke: '#2d2a28', 'stroke-width': .5}, gs), x: x0 + rnd() * (x1 - x0), lane: (rnd() * 2 - 1) * .85, sp: 1 + rnd() * .3});
+
+    const wall = mk('g', {filter: 'url(#s1)'}, G.art);
+    E.adv = mk('path', {}, wall);
+    E.med = mk('path', {}, wall);
+    E.fib = mk('path', {fill: 'none', stroke: 'rgba(255,255,255,.34)', 'stroke-width': 1, 'stroke-dasharray': '4 4', 'stroke-linecap': 'round'}, wall);
+    E.int = mk('path', {}, wall);
+    E.plaque = mk('path', {fill: '#c9c0b5', stroke: '#8f857b', 'stroke-width': .8, filter: 'url(#s1)'}, G.art);
+    const gd = mk('g', {}, G.art);
+    deps = [];
+    const nd = Math.round(W / 7);
+    for (let i = 0; i < nd; i++) deps.push({el: mk('circle', {r: Math.max(1.6, fs * .16 * (.8 + rnd() * .6)), fill: '#615b56'}, gd), i: 1 + Math.floor(rnd() * (N - 1)), s: rnd() < .5 ? -1 : 1, fr: .15 + rnd() * .75});
+    E.outline = mk('path', {fill: 'none', stroke: 'rgba(70,25,20,.45)', 'stroke-width': 1.1}, G.art);
+
+    // the cut face at the near end
+    const face = mk('g', {filter: 'url(#s3)'}, G.art);
+    E.f = {};
+    ['adv', 'med', 'int', 'pl', 'lum', 'deep'].forEach(k => E.f[k] = mk('ellipse', {cx: x0, stroke: 'rgba(70,25,20,.35)', 'stroke-width': .8}, face));
+    E.f.lum.setAttribute('fill', 'url(#lum)'); E.f.deep.setAttribute('fill', 'url(#deep)'); E.f.deep.setAttribute('stroke', 'none');
+
+    // ---------- the track and the lead token ----------
+    E.trackLine = mk('line', {x1: G.tx0, x2: G.tx1, y1: trackY, y2: trackY, stroke: INK, 'stroke-opacity': .22, 'stroke-width': 4, 'stroke-linecap': 'round'}, G.track);
+    for (let i = 0; i <= 4; i++) mk('circle', {cx: G.tx0 + (G.tx1 - G.tx0) * i / 4, cy: trackY, r: 2, fill: INK, opacity: .35}, G.track);
+    E.trackFill = mk('line', {x1: G.tx0, y1: trackY, y2: trackY, stroke: '#625b55', 'stroke-width': 5, 'stroke-linecap': 'round'}, G.track);
+    if (showLabels) {
+      txt(G.track, m, tlY, 'no lead', {'font-family': 'var(--mono)', 'font-size': ls, 'font-weight': 700, fill: INK, opacity: .72});
+      txt(G.track, W - m, tlY, 'lots of lead', {'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': ls, 'font-weight': 700, fill: INK, opacity: .72});
+    }
+    E.knobPos = mk('g', {}, G.track);
+    E.knob = mk('g', {filter: 'url(#s2)'}, E.knobPos);
+    mk('circle', {r: kr, fill: 'url(#pb)', stroke: '#2e2a27', 'stroke-width': 1}, E.knob);
+    mk('circle', {r: kr * .78, fill: 'none', stroke: 'rgba(255,255,255,.25)', 'stroke-width': 1}, E.knob);
+    txt(E.knob, 0, kr * .32, 'Pb', {'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-size': Math.max(12, kr * .9), 'font-weight': 800, fill: '#fff'});
+
+    // gentle parallax, small enough to stay inside the margins
+    const mkq = g => ({x: gsap.quickTo(g, 'x', {duration: .8, ease: 'power3.out'}), y: gsap.quickTo(g, 'y', {duration: .8, ease: 'power3.out'})});
+    G.par = [[mkq(G.pBack), 2], [mkq(G.pTop), 3], [mkq(G.pArt), 4.5], [mkq(G.pTags), 6]];
+
+    ready = true;
+    if (S.tagsShown) { makeTags(S.animTags && !Kit.calm); S.animTags = false; }
+    frame(0);
+  }
+
+  // ---------- one frame of the living artery ----------
+  const band = (fi, fo, s) => {
+    const cs = G.c; let a = '', b = '';
+    for (let i = 0; i <= N; i++) a += (i ? 'L' : 'M') + f1(xs[i]) + ',' + f1(cs[i] + s * fo(i));
+    for (let i = N; i >= 0; i--) b += 'L' + f1(xs[i]) + ',' + f1(cs[i] + s * fi(i));
+    return a + b + 'Z';
+  };
+  const line = (fr, s) => { let a = ''; for (let i = 0; i <= N; i++) a += (i ? 'L' : 'M') + f1(xs[i]) + ',' + f1(G.c[i] + s * fr(i)); return a; };
+
+  function frame(dt) {
+    if (!ready) return;
+    const L = S.lead, {R, T, r, dMax, x0, x1, kk} = G, cs = G.c;
+    const bt = beat(S.t);
+    const d = bt * dMax * (.04 + .96 * Math.pow(1 - L, 1.4));
+    const lt = G.bT.map(b => r * (1 - .45 * L * b) + d * .9), lb = G.bB.map(b => r * (1 - .45 * L * b) + d * .9);
+    const ri = () => r + d, r1 = () => r + .12 * T + d, r2 = () => r + .7 * T + d, ro = () => R + d;
+    const wav = T * .11 * (1 - L);
+    const rf = i => r + .41 * T + d + Math.sin(i * 1.15 + S.t * .6) * wav;
+
+    let lp = ''; for (let i = 0; i <= N; i++) lp += (i ? 'L' : 'M') + f1(xs[i]) + ',' + f1(cs[i] - lt[i]);
+    for (let i = N; i >= 0; i--) lp += 'L' + f1(xs[i]) + ',' + f1(cs[i] + lb[i]);
+    E.lumen.setAttribute('d', lp + 'Z');
+    E.plaque.setAttribute('d', band(i => lt[i], ri, -1) + band(i => lb[i], ri, 1));
+    E.plaque.setAttribute('opacity', Math.min(1, L * 6));
+    E.int.setAttribute('d', band(ri, r1, -1) + band(ri, r1, 1));
+    E.med.setAttribute('d', band(r1, r2, -1) + band(r1, r2, 1));
+    E.adv.setAttribute('d', band(r2, ro, -1) + band(r2, ro, 1));
+    E.fib.setAttribute('d', line(rf, -1) + line(rf, 1));
+    E.outline.setAttribute('d', line(ro, -1) + line(ro, 1));
+    const cMed = mix('#d4473f', '#8b7f77', L), cAdv = mix('#f3cdb4', '#cbbcae', L), cInt = mix('#fbe3da', '#d6cdc4', L);
+    E.med.setAttribute('fill', cMed); E.adv.setAttribute('fill', cAdv); E.int.setAttribute('fill', cInt);
+
+    // the rounded far end of the specimen
+    [E.cap, E.capSh].forEach(el => { el.setAttribute('cx', f1(x1)); el.setAttribute('cy', f1(cs[N])); el.setAttribute('rx', f1((R + d) * kk)); el.setAttribute('ry', f1(R + d)); });
+    E.cap.setAttribute('fill', cAdv);
+
+    // the cut face
+    const c0 = cs[0], ell = (el, cyy, ry, fill) => { el.setAttribute('cy', f1(cyy)); el.setAttribute('ry', f1(ry)); el.setAttribute('rx', f1(ry * kk)); if (fill) el.setAttribute('fill', fill); };
+    ell(E.f.adv, c0, R + d, cAdv); ell(E.f.med, c0, r + .7 * T + d, cMed); ell(E.f.int, c0, r + .12 * T + d, cInt);
+    ell(E.f.pl, c0, r + d, L > .02 ? '#c9c0b5' : cInt);
+    const lc = c0 + (lb[0] - lt[0]) / 2, lr = (lt[0] + lb[0]) / 2;
+    ell(E.f.lum, lc, lr); ell(E.f.deep, lc, lr * .72);
+    E.f.deep.setAttribute('cx', f1(x0 + lr * kk * .25));
+
+    // blood, and lead in it
+    const span = x1 - x0, idx = x => Math.max(0, Math.min(N, Math.round((x - x0) / span * N)));
+    const v = W * .14 * (.55 + 1.1 * bt) * (1 - .4 * L);
+    const fin = R * .3, fout = R * .6;
+    for (const c of cells) {
+      c.x += v * c.sp * dt;
+      if (c.x > x1 - c.rx * .3) { c.x = x0 + Math.random() * R * .1; c.lane = (Math.random() * 2 - 1) * .9; }
+      const i = idx(c.x), room = (c.lane < 0 ? lt[i] : lb[i]) - c.ry * 1.4;
+      const y = cs[i] + c.lane * Math.max(0, room);
+      c.el.setAttribute('transform', `translate(${f1(c.x)},${f1(y)}) rotate(${f1(c.lane * 14 + Math.sin(S.t * 2 + c.ph) * 15)})`);
+      c.el.setAttribute('opacity', f1(clamp01(Math.min((c.x - x0) / fin, (x1 - c.x) / fout))));
+    }
+    specks.forEach((s, n) => {
+      s.x += v * s.sp * dt;
+      if (s.x > x1 - 3) s.x = x0 + Math.random() * R * .1;
+      const i = idx(s.x), room = (s.lane < 0 ? lt[i] : lb[i]) - 4;
+      s.el.setAttribute('cx', f1(s.x)); s.el.setAttribute('cy', f1(cs[i] + s.lane * Math.max(0, room)));
+      const edge = clamp01(Math.min((s.x - x0) / fin, (x1 - s.x) / fout));
+      s.el.setAttribute('opacity', f1(edge * clamp01(L * specks.length * 1.2 - n)));
+    });
+    deps.forEach((p, n) => {
+      const rl = (p.s < 0 ? lt[p.i] : lb[p.i]), rr = rl + (r + d - rl) * p.fr + (r + .12 * T + d - rl) * .1 * p.fr;
+      p.el.setAttribute('cx', f1(xs[p.i])); p.el.setAttribute('cy', f1(cs[p.i] + p.s * rr));
+      p.el.setAttribute('opacity', clamp01(L * deps.length - n));
+    });
+
+    // the stretch trace
+    traceAcc += dt;
+    while (traceAcc > 1 / 45) { traceAcc -= 1 / 45; trace.push(d / dMax); if (trace.length > TN) trace.shift(); }
+    if (!trace.length) trace.push(d / dMax);
+    if (E.trace) {
+      const tw = W - 2 * G.m, amp = G.traceBase - G.traceTop;
+      let pts = '';
+      const n0 = TN - trace.length;
+      trace.forEach((val, i) => { pts += f1(G.m + tw * (n0 + i) / (TN - 1)) + ',' + f1(G.traceBase - val * amp) + ' '; });
+      E.trace.setAttribute('points', pts);
+      const tc = mix('#b8322f', '#5d5650', L);
+      E.trace.setAttribute('stroke', tc); E.head.setAttribute('fill', tc);
+      E.head.setAttribute('cx', f1(W - G.m)); E.head.setAttribute('cy', f1(G.traceBase - trace[trace.length - 1] * amp));
+      const st = L < .3 ? 'SOFT' : L < .75 ? 'STIFFENING' : 'HARD';
+      if (E.status.textContent !== st) { E.status.textContent = st; E.status.setAttribute('fill', L < .3 ? '#b8322f' : L < .75 ? '#7c4a3e' : '#4f4843'); }
+    }
+
+    // the token
+    const kx = G.tx0 + (G.tx1 - G.tx0) * K.v;
+    E.knobPos.setAttribute('transform', `translate(${f1(kx)},${f1(G.trackY)})`);
+    E.trackFill.setAttribute('x2', f1(kx));
+  }
+
+  // ---------- the reveal: three museum tags ----------
+  function makeTags(anim) {
+    G.tags.innerHTML = '';
+    const m = G.m, {colW, tw, ns, cs, ty, th} = G.tag;
+    const data = [
+      {n: 250000, fmt: v => Math.round(v).toLocaleString('en-US'), cap: ['heart deaths', 'a year, US'], col: '#c23a3f'},
+      {n: 25, fmt: v => Math.round(v) + 'M', cap: ['over a', 'century, US'], col: '#9e2228'},
+      {n: 100, fmt: v => '~' + Math.round(v) + 'M', cap: ['worldwide,', 'maybe'], col: '#6e1418'}
+    ];
+    const rots = [-2.2, 1.6, -1.1];
+    const tl = anim ? gsap.timeline() : null;
+    data.forEach((t, i) => {
+      const cx = m + colW * (i + .5);
+      const pend = mk('g', {}, G.tags);
+      const str = mk('line', {x1: cx, x2: cx, y1: 3, y2: ty + fs * .5, stroke: '#5a3a2e', 'stroke-width': 1.2}, pend);
+      const body = mk('g', {}, pend);
+      mk('rect', {x: cx - tw / 2, y: ty, width: tw, height: th, rx: 3, fill: '#fbf4e8', stroke: 'rgba(80,40,30,.18)', filter: 'url(#s3)'}, body);
+      mk('rect', {x: cx - tw / 2, y: ty + th - fs * .3, width: tw, height: fs * .3, fill: t.col}, body);
+      mk('circle', {cx, cy: ty + fs * .5, r: fs * .18, fill: '#e2cdb0', stroke: '#8a6a55', 'stroke-width': .8}, body);
+      const ny = ty + fs * .95 + ns * .8;
+      const num = txt(body, cx, ny, t.fmt(t.n), {'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-size': f1(ns), 'font-weight': 800, fill: t.col});
+      try { const w = num.getComputedTextLength(); if (w > tw * .88) num.setAttribute('font-size', f1(Math.max(12, ns * tw * .88 / w))); } catch (e) {}
+      if (anim) num.textContent = t.fmt(0);
+      const c1 = ny + ns * .35 + cs * 1.2;
+      t.cap.forEach((c, j) => txt(body, cx, c1 + j * cs * 1.4, c, {'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-size': cs, 'font-weight': 700, fill: INK}));
+      if (!anim) { gsap.set(pend, {rotation: rots[i], svgOrigin: `${cx} 3`}); return; }
+      const at = i * .28;
+      gsap.set(body, {y: -(ty + th + 12), opacity: 0});
+      if (HAS_DRAW) tl.from(str, {drawSVG: '0%', duration: .45, ease: 'power2.out'}, at);
+      tl.to(body, {y: 0, opacity: 1, duration: .85, ease: 'back.out(1.6)'}, at + .1)
+        .fromTo(pend, {rotation: rots[i] * 5, svgOrigin: `${cx} 3`}, {rotation: rots[i], svgOrigin: `${cx} 3`, duration: 2.2, ease: 'elastic.out(1,.28)'}, at + .55)
+        .to({v: 0}, {v: t.n, duration: 1.3, ease: 'power3.out', onUpdate() { num.textContent = t.fmt(this.targets()[0].v); }}, at + .5);
+    });
+    if (anim) tl.fromTo(G.art, {y: -4}, {y: 0, duration: 1, ease: 'elastic.out(1,.3)'}, .3);
+  }
+
+  function reveal() {
+    if (S.revealed) return;
+    S.revealed = true; Kit.haptic('success');
+    say.innerHTML = '<b>Lead hardens the arteries</b>, and stiff arteries mean more heart disease. A 2018 study blamed lead for about 250,000 US heart deaths a year. Most of that lead came from leaded gasoline.';
+    Kit.show('keep');
+    // Let the card settle at its new height first, then rebuild for the tags and drop them.
+    setTimeout(() => {
+      S.tagsShown = true; S.animTags = !Kit.calm;
+      build();
+      const rc = Kit.$('stage').getBoundingClientRect(); lastSize = Math.round(rc.width) + 'x' + Math.round(rc.height);
+    }, 200);
+  }
+
+  // ---------- touch ----------
+  function setTarget(v) {
+    v = clamp01(v);
+    const q = Math.floor(v * 4.999);
+    if (q !== S.q) { S.q = q; Kit.haptic('selection'); }
+    S.target = v;
+    gsap.to(K, {v, duration: .16, ease: 'power3.out', overwrite: true});
+  }
+  function touch() { if (!S.touched) { S.touched = true; if (nudgeTw) nudgeTw.kill(); } }
+  let drag = false;
+  const fromE = e => { const rc = svg.getBoundingClientRect(); return {x: (e.clientX - rc.left) * W / rc.width, nx: (e.clientX - rc.left) / rc.width - .5, ny: (e.clientY - rc.top) / rc.height - .5}; };
+  svg.addEventListener('pointerdown', e => { if (!ready) return; drag = true; touch(); svg.setPointerCapture(e.pointerId); const p = fromE(e); setTarget((p.x - G.tx0) / (G.tx1 - G.tx0)); });
+  svg.addEventListener('pointermove', e => {
+    if (!ready) return; const p = fromE(e);
+    if (!Kit.calm) G.par.forEach(([q, dpt]) => { q.x(-p.nx * dpt); q.y(-p.ny * dpt * .3); });
+    if (drag) setTarget((p.x - G.tx0) / (G.tx1 - G.tx0));
+  });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // ---------- the clock ----------
+  let last = 0, running = false;
+  function tick(now) {
+    const dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+    S.t += dt;
+    S.lead += (S.target - S.lead) * Math.min(1, dt * 2.6);
+    frame(dt);
+    if (!S.revealed) {
+      if (S.lead > .3 && S.step < 1) { S.step = 1; say.innerHTML = 'Lead settles <b>into the artery wall</b>. Look at the trace: with each beat, the wall stretches less.'; }
+      if (S.lead > .7 && S.step < 2) { S.step = 2; say.innerHTML = 'The wall is turning hard and stiff, more pipe than artery. <b>Keep going.</b>'; }
+      if (S.lead > .95) reveal();
+    }
+    requestAnimationFrame(tick);
+  }
+  const start = () => { if (!running) { running = true; requestAnimationFrame(tick); } };
+  function nudge() { if (S.touched || Kit.calm) return; nudgeTw = gsap.to(K, {v: .07, duration: .75, yoyo: true, repeat: -1, ease: 'sine.inOut'}); }
+
+  let lastSize = '';
+  new ResizeObserver(() => { const r = Kit.$('stage').getBoundingClientRect(), s = Math.round(r.width) + 'x' + Math.round(r.height); if (ready && s !== lastSize) { lastSize = s; build(); } }).observe(Kit.$('stage'));
+  Kit.onShow.card = () => { build(); const r = Kit.$('stage').getBoundingClientRect(); lastSize = Math.round(r.width) + 'x' + Math.round(r.height); start(); };
+  Kit.onEnter.card = () => {
+    if (!ready) build();
+    start();
+    if (Kit.calm || entered || !ready) return;
+    entered = true;
+    const tl = gsap.timeline();
+    tl.from(G.back.children, {y: 18, opacity: 0, duration: .9, stagger: .12, ease: 'power3.out'});
+    if (HAS_DRAW) tl.from(G.caps, {drawSVG: '0%', duration: 1, stagger: .12, ease: 'power2.inOut'}, .25);
+    tl.from(G.art, {y: 12, opacity: 0, duration: 1.1, ease: 'expo.out'}, .35);
+    if (HAS_DRAW) tl.from(E.outline, {drawSVG: '0%', duration: 1.2, ease: 'power2.inOut'}, .4);
+    tl.from(G.top, {opacity: 0, duration: .6, ease: 'power3.out'}, .7);
+    if (HAS_DRAW) tl.from(E.trackLine, {drawSVG: '0%', duration: .7, ease: 'power3.inOut'}, .8);
+    tl.from(E.knob, {scale: 0, transformOrigin: '50% 50%', duration: .6, ease: 'back.out(2.2)'}, 1.1)
+      .add(nudge, 1.8);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (!ready) build();
+    start(); touch();
+    setTarget(1); S.lead = .99;
+    await wait(Kit.calm ? 150 : 300);
+    reveal();
+    await wait(Kit.calm ? 400 : 2800);
+  };
+})();
+Kit.single();
+</script>
+</html>

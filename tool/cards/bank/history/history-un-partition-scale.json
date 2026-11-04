@@ -1,0 +1,37 @@
+{
+  "id": "history-un-partition-scale",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.disputed_borders",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the 1947 UN partition plan seem unfair to Arabs?",
+  "answer": "Western interest and a united, influential Jewish community added weight to the scale. Arab division, and leaders who had backed Germany in WWII, took weight away. Arabs were 60% of the people, yet the scale tipped the other way.",
+  "move": "The 1947 plan was weighed by allies and unity, not by who was the majority.",
+  "keywords": [
+    "palestine",
+    "un-resolution-181",
+    "arab-leaders",
+    "jewish-community",
+    "wwii"
+  ],
+  "era": "twentieth",
+  "region": "middle_east",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A scale with four stars to tap. Left side: Western interest and Jewish influence and unity. Right side: Arab division and WWII alignment with Germany. Arabs are 60% of the population. Tap each star to see which way the scale tips."
+  },
+  "source": "Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=hBImPpGnYKE&t=558s",
+  "written": "2026-11-03"
+}

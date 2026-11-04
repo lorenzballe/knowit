@@ -1,0 +1,341 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-heatwave-without-emissions -->
+<!-- Look: a museum diorama of a scorched summer valley, cut from layered paper (sky, sun, far hills, a hill town with cypresses, ploughed near hills) with soft drop shadows. Two glass thermometers stand on a cream plinth beside a printed placard scale.
+     Interaction: drag the right-hand thermometer ("without emissions") down to where you think the heatwave would have been. The paper cut-outs shift in parallax as you move. Then ask the climate models.
+     Wow: an arc draws itself from one thermometer to the other, the mercury drops with an elastic settle to −3.5 °C, the paper sky cools, the sun shrinks, the shimmer fades and a bracket draws the 3.5 °C gap. -->
+<title>The 3.5°C heatwave</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag to guess · the gap">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO GUESS</span></div>
+    <h2 class="q">How much cooler would this heatwave have been without fossil fuel emissions?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A paper diorama of a hot valley with two thermometers: one for the heatwave as it was, one for the same heatwave without fossil fuel emissions."></svg>
+    </div>
+    <p class="say" id="say"><b>Drag the right thermometer down</b> to your guess.</p>
+    <button class="btn gone" id="go">Ask the climate models</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Our emissions made this heatwave 3.5°C hotter.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(DrawSVGPlugin);
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go'), card = Kit.$('card'), stage = Kit.$('stage');
+  const INK = '#10100c', PAPER = '#fbf3e4', MERC = '#d8362a', MERC2 = '#ee7f2e';
+  const SKY_HOT = ['#fde3bd', '#f39a62'], SKY_COOL = ['#f7f0e1', '#ecc9a2'];
+  const TRUE = 3.5, MAX = 6;
+  let W = 0, H = 0, fs = 12, G = {}, g = 0, touched = false, revealed = false, vis = false, lastStep = 0, hintTw = null, tl = null, bw = 0, bh = 0;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs}, a), p); e.textContent = s; return e; };
+  const lvl = v => G.y0 + (G.y1 - G.y0) * v / MAX;
+  const MONO = 'font-family:var(--mono);font-weight:700', HAND = 'font-family:var(--hand)', DISP = 'font-family:var(--display);font-weight:800';
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+  const ridgeY = (x, base, amp, k, ph) => base - amp * (.6 * Math.sin(x / W * k * 6.283 + ph) + .4 * Math.sin(x / W * k * 2.3 * 6.283 + ph * 1.7));
+  // ridges stay strictly inside the frame
+  const ridge = (base, amp, k, ph) => {
+    let d = `M0,${H} L0,${ridgeY(0, base, amp, k, ph).toFixed(1)}`;
+    for (let i = 1; i <= 48; i++) { const x = W * i / 48; d += ` L${x.toFixed(1)},${ridgeY(x, base, amp, k, ph).toFixed(1)}`; }
+    return d + ` L${W},${H}Z`;
+  };
+
+  function build() {
+    if (tl) { tl.kill(); tl = null; }
+    gsap.killTweensOf(svg.querySelectorAll('*'));
+    svg.innerHTML = ''; seed = 7;
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    bw = stage.clientWidth; bh = stage.clientHeight;
+    fs = Math.max(12, Math.min(15, W / 26, H / 22));
+    G = {layers: [], outers: []};
+
+    // geometry
+    const r = Math.max(fs * 1.1, Math.min(W * .065, H * .065)), tw = r * .9;
+    const yB = H - r - fs * 3.3, y1 = yB - r - fs * .4, y0 = fs * 4.2, yT = y0 - fs * 1.2;
+    const xL = W * .2, xR = W * .56, xs = (xL + xR) / 2, xb = xR + tw / 2 + fs * .9;
+    Object.assign(G, {r, tw, yB, y1, y0, yT, xL, xR, xs, xb});
+
+    // defs
+    const defs = mk('defs', {}, svg);
+    const lg = mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    const c = vis ? SKY_COOL : SKY_HOT;
+    G.s0 = mk('stop', {offset: 0, 'stop-color': c[0]}, lg);
+    G.s1 = mk('stop', {offset: 1, 'stop-color': c[1]}, lg);
+    const sg = mk('radialGradient', {id: 'sunG', cx: '40%', cy: '35%', r: '70%'}, defs);
+    mk('stop', {offset: 0, 'stop-color': '#fff2c8'}, sg); mk('stop', {offset: .55, 'stop-color': '#f7a34a'}, sg); mk('stop', {offset: 1, 'stop-color': '#e2552e'}, sg);
+    const gl = mk('linearGradient', {id: 'glass', x1: 0, y1: 0, x2: 1, y2: 0}, defs);
+    mk('stop', {offset: 0, 'stop-color': '#ffffff'}, gl); mk('stop', {offset: .6, 'stop-color': '#fbf4ea'}, gl); mk('stop', {offset: 1, 'stop-color': '#e9dccb'}, gl);
+    const sh = mk('filter', {id: 'sh', x: '-20%', y: '-20%', width: '140%', height: '160%'}, defs);
+    mk('feDropShadow', {dx: 0, dy: fs * .28, stdDeviation: fs * .35, 'flood-color': '#10100c', 'flood-opacity': .3}, sh);
+
+    // d = 0: stays put; d > 0: cut-outs that drift in parallax
+    const lay = d => { const o = mk('g', {}, svg), i = mk('g', {}, o); if (d) { i.dataset.d = d; G.layers.push(i); } G.outers.push(o); return i; };
+
+    // sky: none, the card itself is the sky
+    const S0 = lay(0);
+
+    // sun + clouds
+    const L1 = lay(.3);
+    const sr = Math.min(W * .075, H * .065), sx = W - sr * 1.8 - fs * 1.2, sy = sr * 1.8 + fs * .5;
+    G.sunAll = mk('g', {}, L1);
+    G.rays = mk('g', {}, G.sunAll);
+    for (let i = 0; i < 14; i++) {
+      const a = i / 14 * Math.PI * 2, a1 = a - .07, a2 = a + .07, r1 = sr * 1.22, r2 = sr * (i % 2 ? 1.5 : 1.75);
+      mk('path', {d: `M${sx + Math.cos(a1) * r1},${sy + Math.sin(a1) * r1} L${sx + Math.cos(a) * r2},${sy + Math.sin(a) * r2} L${sx + Math.cos(a2) * r1},${sy + Math.sin(a2) * r1}Z`, fill: '#fff2c8', opacity: .9}, G.rays);
+    }
+    const sun = mk('g', {filter: 'url(#sh)'}, G.sunAll);
+    mk('circle', {cx: sx, cy: sy, r: sr, fill: 'url(#sunG)'}, sun);
+    mk('circle', {cx: sx, cy: sy, r: sr * .72, fill: '#ffd98a', opacity: .55}, sun);
+    mk('circle', {cx: sx - sr * .15, cy: sy - sr * .15, r: sr * .4, fill: '#fff4d2', opacity: .6}, sun);
+    G.sx = sx; G.sy = sy;
+    const cloud = (cx, cy, s) => { const gg = mk('g', {filter: 'url(#sh)'}, L1); [[0, 0, 1], [-.9, .25, .7], [.9, .3, .65], [.35, -.35, .7]].forEach(([dx, dy, rr]) => mk('circle', {cx: cx + dx * s, cy: cy + dy * s, r: rr * s, fill: '#fff6e8'}, gg)); mk('rect', {x: cx - 1.5 * s, y: cy + .2 * s, width: 3 * s, height: .6 * s, rx: .3 * s, fill: '#fff6e8'}, gg); };
+    cloud(Math.max(W * .1, fs * 2.4), fs * 2.2, fs * .85);
+    cloud(W * .64, fs * 1.7, fs * .6);
+
+    // far + mid hills
+    const S1 = lay(0);
+    mk('path', {d: ridge(H * .44, H * .045, 1.1, .6), fill: '#f2b884', filter: 'url(#sh)'}, S1);
+    const mb = H * .56, ma = H * .04;
+    mk('path', {d: ridge(mb, ma, .9, 2.2), fill: '#e48d58', filter: 'url(#sh)'}, S1);
+
+    // hill town
+    const L2 = lay(.55);
+    const town = mk('g', {filter: 'url(#sh)'}, L2);
+    const cypress = (x) => {
+      const by = ridgeY(x, mb, ma, .9, 2.2) + fs * .55, h = fs * (1.7 + rnd() * .8), w = fs * .42;
+      mk('path', {d: `M${x},${by} C${x - w},${by - h * .35} ${x - w * .55},${by - h * .8} ${x},${by - h} C${x + w * .55},${by - h * .8} ${x + w},${by - h * .35} ${x},${by}Z`, fill: '#8a4a26'}, town);
+    };
+    const tx = W * .78;
+    for (let x = fs * .9; ; ) {
+      const w = fs * (1.1 + rnd() * .9), h = fs * (1 + rnd() * 1.3);
+      if (x + w > W - fs * 1.1) break;
+      if (Math.abs(x + w / 2 - tx) > fs * 1.4) {
+        const by = ridgeY(x + w / 2, mb, ma, .9, 2.2) + fs * .5, i = Math.round(x);
+        mk('rect', {x, y: by - h, width: w, height: h, fill: i % 3 ? '#f8e4c6' : '#fbefd9'}, town);
+        mk('path', {d: `M${x - fs * .15},${by - h} L${x + w / 2},${by - h - fs * .7} L${x + w + fs * .15},${by - h}Z`, fill: i % 2 ? '#b8482b' : '#a63d24'}, town);
+        if (h > fs * 1.3) mk('rect', {x: x + w * .32, y: by - h * .7, width: w * .3, height: h * .25, fill: INK, opacity: .7}, town);
+      }
+      x += W * .085 + rnd() * W * .02;
+    }
+    const tby = ridgeY(tx, mb, ma, .9, 2.2) + fs * .5;
+    mk('rect', {x: tx, y: tby - fs * 3.6, width: fs * .9, height: fs * 3.6, fill: '#f6dfbd'}, town);
+    mk('rect', {x: tx + fs * .28, y: tby - fs * 3.1, width: fs * .34, height: fs * .55, rx: fs * .17, fill: INK, opacity: .7}, town);
+    mk('path', {d: `M${tx - fs * .1},${tby - fs * 3.6} L${tx + fs * .45},${tby - fs * 4.5} L${tx + fs},${tby - fs * 3.6}Z`, fill: '#a63d24'}, town);
+    [W * .12, W * .41, W * .69, W * .92].forEach(cypress);
+
+    // near hills with dry furrows
+    const S2 = lay(0);
+    mk('path', {d: ridge(H * .7, H * .03, .7, 4.1), fill: '#c45a33', filter: 'url(#sh)'}, S2);
+    for (let k = 1; k <= 3; k++) {
+      let d = '', off = k * fs * .9;
+      for (let i = 0; i <= 32; i++) { const x = W * i / 32, y = ridgeY(x, H * .7, H * .03, .7, 4.1) + off; d += (i ? ' L' : 'M') + x.toFixed(1) + ',' + Math.min(H, y).toFixed(1); }
+      mk('path', {d, stroke: '#a9472a', 'stroke-width': 1.2, fill: 'none', opacity: .55 - k * .1, 'stroke-dasharray': `${fs * 1.6} ${fs * .5}`}, S2);
+    }
+
+    // heat shimmer
+    const L3 = lay(.9);
+    G.shim = mk('g', {opacity: vis ? .2 : .75}, L3);
+    G.shimPaths = [];
+    [[W * .06, H * .6], [W * .87, H * .6], [W * .94, H * .67], [W * .39, H * .64]].forEach(([x, y]) => {
+      let d = `M${x},${y}`; for (let k = 0; k < 4; k++) d += ` q${fs * .35},${-fs * .4} 0,${-fs * .8} q${-fs * .35},${-fs * .4} 0,${-fs * .8}`;
+      G.shimPaths.push(mk('path', {d, stroke: INK, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round'}, G.shim));
+    });
+
+    // plinth
+    const S3 = lay(0);
+    const yP = yB + r * .3;
+    const pl = mk('g', {filter: 'url(#sh)'}, S3);
+    mk('rect', {x: 0, y: yP, width: W, height: fs * .6, fill: '#fff8ec'}, pl);
+    mk('rect', {x: 0, y: yP + fs * .6, width: W, height: H - yP - fs * .6, fill: '#f1e1c6'}, pl);
+    mk('line', {x1: 0, x2: W, y1: yP + fs * .6, y2: yP + fs * .6, stroke: INK, 'stroke-width': .8, opacity: .25}, S3);
+
+    // front: placard, thermometers
+    const L4 = lay(1.1);
+    const pc = mk('g', {}, L4); G.placard = pc;
+    const ph = fs * 2.15;
+    mk('rect', {x: xs - ph, y: y0 - fs * 1.1, width: ph * 2, height: y1 - y0 + fs * 2.2, rx: 3, fill: PAPER, filter: 'url(#sh)'}, pc);
+    mk('rect', {x: xs - ph + fs * .25, y: y0 - fs * .85, width: ph * 2 - fs * .5, height: y1 - y0 + fs * 1.7, rx: 2, fill: 'none', stroke: INK, 'stroke-width': .7, opacity: .35}, pc);
+    // label every 1, 2, 3 or 6 degrees: whichever first leaves clear room between labels
+    const stepPx = (y1 - y0) / MAX, gap = fs * 1.35;
+    const every = [1, 2, 3, 6].find(n => stepPx * n >= gap) || 6, roomy = stepPx * every >= gap;
+    G.ticks = [];
+    for (let v = 0; v <= MAX; v++) {
+      const y = lvl(v), lab = v % every === 0 && (v === 0 || roomy);
+      G.ticks.push(mk('line', {x1: xs + fs * (lab ? 1.25 : .6), x2: xs + fs * 1.7, y1: y, y2: y, stroke: INK, 'stroke-width': 1.3}, pc));
+      G.ticks.push(mk('line', {x1: xs - fs * 1.7, x2: xs - fs * (lab ? 1.25 : .6), y1: y, y2: y, stroke: INK, 'stroke-width': 1.3}, pc));
+      if (lab) G.ticks.push(txt(pc, xs, y + fs * .36, v ? `−${v}°` : '0°', {'text-anchor': 'middle', style: MONO}));
+    }
+
+    const thermo = (cx, top) => {
+      const s = Math.sqrt(r * r - (tw / 2) ** 2);
+      const d = `M${cx - tw / 2},${yB - s} V${yT + tw / 2} A${tw / 2},${tw / 2} 0 0 1 ${cx + tw / 2},${yT + tw / 2} V${yB - s} A${r},${r} 0 1 1 ${cx - tw / 2},${yB - s}Z`;
+      const gg = mk('g', {}, L4);
+      mk('path', {d, fill: 'url(#glass)', filter: 'url(#sh)'}, gg);
+      for (let v = 0; v <= MAX; v++) mk('line', {x1: cx + tw * .28, x2: cx + tw * .44, y1: lvl(v), y2: lvl(v), stroke: INK, 'stroke-width': 1, opacity: .5}, gg);
+      const col = mk('rect', {x: cx - tw * .24, y: top, width: tw * .48, height: yB - top, rx: tw * .24, fill: MERC}, gg);
+      const bulb = mk('circle', {cx, cy: yB, r: r * .7, fill: MERC}, gg);
+      mk('circle', {cx: cx - r * .25, cy: yB - r * .25, r: r * .2, fill: '#fff', opacity: .55}, gg);
+      mk('line', {x1: cx - tw * .3, x2: cx - tw * .3, y1: yT + tw * .7, y2: yB - r * 1.05, stroke: '#fff', 'stroke-width': Math.max(1.5, tw * .12), 'stroke-linecap': 'round', opacity: .85}, gg);
+      const out = mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.7}, gg);
+      return {col, bulb, out};
+    };
+    const TL = thermo(xL, y0), TR = thermo(xR, lvl(vis ? TRUE : g));
+    G.rm = TR.col; G.rb = TR.bulb; G.outs = [TL.out, TR.out];
+    if (vis) { TR.col.setAttribute('fill', MERC2); TR.bulb.setAttribute('fill', MERC2); }
+
+    // captions on the plinth, with clear line spacing
+    const cy1 = yB + r + fs * 1.25, cy2 = cy1 + fs * 1.5;
+    txt(L4, xL, cy1, 'WITH OUR', {'text-anchor': 'middle', style: MONO});
+    txt(L4, xL, cy2, 'EMISSIONS', {'text-anchor': 'middle', style: MONO});
+    txt(L4, xR, cy1, 'WITHOUT', {'text-anchor': 'middle', style: MONO});
+    txt(L4, xR, cy2, 'EMISSIONS', {'text-anchor': 'middle', style: MONO});
+
+    // drag knob + guess tag
+    G.knob = mk('g', {}, L4);
+    G.knobIn = mk('path', {d: `M${xR - tw / 2 - 3},0 L${xR - tw / 2 - 3 - fs * .95},${-fs * .6} L${xR - tw / 2 - 3 - fs * .95},${fs * .6}Z`, fill: INK, 'stroke-linejoin': 'round'}, G.knob);
+    G.tag = mk('g', {}, L4);
+    const tgx = xR + tw / 2 + fs * .6;
+    G.tagR = mk('rect', {x: tgx, y: -fs * .95, width: fs * 5, height: fs * 1.9, rx: 3, fill: PAPER, filter: 'url(#sh)'}, G.tag);
+    G.tagT = txt(G.tag, tgx + fs * .5, fs * .42, '', {style: HAND, 'font-size': fs * 1.2});
+    gsap.set([G.knob, G.tag], {y: lvl(g), opacity: vis ? 0 : 1, visibility: vis ? 'hidden' : 'visible'});
+    writeTag();
+
+    // the models' arc
+    G.arc = mk('path', {d: `M${xL},${yT - 3} C${xL},${yT - fs * 3} ${xR},${yT - fs * 3} ${xR},${yT - 7}`, fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', opacity: vis ? 1 : 0}, L4);
+    G.arrow = mk('path', {d: `M${xR - 5},${yT - 13} L${xR},${yT - 6} L${xR + 5},${yT - 13}`, fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: vis ? 1 : 0}, L4);
+
+    // the truth
+    const yt = lvl(TRUE), mid = (y0 + yt) / 2;
+    G.truth = mk('g', {opacity: vis ? 1 : 0}, L4);
+    G.br = mk('path', {d: `M${xR + tw / 2 + 2},${y0} H${xb} V${yt} H${xR + tw / 2 + 2}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, G.truth);
+    G.lab = mk('g', {}, G.truth);
+    const lr = mk('rect', {x: xb + fs * .45, y: mid - fs * 1.7, width: fs * 6, height: fs * 4.6, rx: 3, fill: PAPER, filter: 'url(#sh)'}, G.lab);
+    const big = txt(G.lab, xb + fs * .9, mid + fs * .45, '−3.5°C', {style: DISP, 'font-size': fs * 1.8, fill: '#b7321f'});
+    const small = txt(G.lab, xb + fs * .9, mid + fs * 2.25, 'cooler', {style: HAND, 'font-size': fs * 1.2});
+    const lw = Math.max(big.getComputedTextLength(), small.getComputedTextLength());
+    lr.setAttribute('width', lw + fs * .9);
+    const over = xb + fs * .45 + lw + fs * .9 - (W - fs);
+    G.labX = over > 0 ? -over : 0;
+    gsap.set(G.lab, {x: G.labX});
+    // the reader's guess, marked on the glass
+    G.gt = mk('line', {x1: xR - tw / 2 - fs * .5, x2: xR + tw / 2 + 2, y1: lvl(g), y2: lvl(g), stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '3 2', opacity: vis ? .8 : 0}, L4);
+
+    if (!Kit.calm) {
+      gsap.to(G.rays, {rotation: 360, svgOrigin: `${sx} ${sy}`, duration: 60, ease: 'none', repeat: -1});
+      G.shimPaths.forEach((p, i) => gsap.timeline({repeat: -1, delay: i * .5})
+        .fromTo(p, {drawSVG: '0% 0%'}, {drawSVG: '0% 70%', duration: 1.1, ease: 'power2.out'})
+        .to(p, {drawSVG: '100% 100%', duration: 1.1, ease: 'power2.in'}));
+      if (!touched) hintTw = gsap.to(G.knobIn, {x: -5, duration: .6, ease: 'sine.inOut', yoyo: true, repeat: -1});
+    }
+    if (vis) gsap.set(G.sunAll, {scale: .82, svgOrigin: `${sx} ${sy}`});
+  }
+
+  function writeTag() {
+    if (!G.tagT) return;
+    G.tagT.textContent = (g ? `−${g.toFixed(1)}` : '0.0') + '°C ?';
+    G.tagR.setAttribute('width', G.tagT.getComputedTextLength() + fs);
+  }
+
+  function setGuess(v) {
+    g = Math.round(Math.max(0, Math.min(MAX, v)) * 10) / 10;
+    const y = lvl(g), d = Kit.calm ? 0 : .16;
+    gsap.to(G.rm, {attr: {y, height: G.yB - y}, duration: d, ease: 'power3.out', overwrite: true});
+    gsap.to([G.knob, G.tag], {y, duration: d, ease: 'power3.out', overwrite: 'auto'});
+    G.gt.setAttribute('y1', y); G.gt.setAttribute('y2', y);
+    writeTag();
+    const st = Math.floor(g * 2); if (st !== lastStep) { lastStep = st; Kit.haptic('selection'); }
+  }
+
+  // parallax: the paper cut-outs slide by depth
+  function parallax(e) {
+    if (Kit.calm) return;
+    const b = svg.getBoundingClientRect(), px = (e.clientX - b.left) / b.width - .5, py = (e.clientY - b.top) / b.height - .5;
+    G.layers.forEach(l => gsap.to(l, {x: -px * l.dataset.d * fs * .6, y: -py * l.dataset.d * fs * .2, duration: .9, ease: 'power3.out', overwrite: 'auto'}));
+  }
+
+  let dragging = false;
+  const fromY = e => { const b = svg.getBoundingClientRect(), y = (e.clientY - b.top) * H / b.height; return (y - G.y0) / (G.y1 - G.y0) * MAX; };
+  svg.addEventListener('pointerdown', e => {
+    parallax(e);
+    if (revealed) return;
+    dragging = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) {
+      touched = true; if (hintTw) { hintTw.kill(); gsap.to(G.knobIn, {x: 0, duration: .2}); }
+      Kit.show('go'); say.innerHTML = 'Set your guess, then <b>ask the climate models</b>.';
+    }
+    setGuess(fromY(e));
+  });
+  svg.addEventListener('pointermove', e => { parallax(e); if (dragging) setGuess(fromY(e)); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true; Kit.hide('go'); card.classList.add('answered');
+    Kit.answer({choice: `−${g.toFixed(1)}°C`, correct: Math.abs(g - TRUE) <= .5});
+    say.innerHTML = `You guessed <b>−${g.toFixed(1)}°C</b>. The World Weather Attribution team ran this heatwave in climate models with and without the energy from our fossil fuel emissions. Without it: <b>3.5°C cooler</b>.`;
+    Kit.show('keep');
+    // the stage has just resized: redraw it to the new frame before animating
+    if (Kit.calm) { vis = true; build(); Kit.haptic('success'); return; }
+    build(); vis = true;
+    const yt = lvl(TRUE);
+    tl = gsap.timeline()
+      .to([G.tag, G.knob], {opacity: 0, duration: .3, ease: 'power2.out'})
+      .set([G.tag, G.knob], {visibility: 'hidden'})
+      .set(G.arc, {opacity: 1}, '<')
+      .fromTo(G.arc, {drawSVG: '0%'}, {drawSVG: '100%', duration: .9, ease: 'power2.inOut'}, '<')
+      .fromTo(G.arrow, {opacity: 0, scale: .3, transformOrigin: '50% 100%'}, {opacity: 1, scale: 1, duration: .35, ease: 'back.out(3)'}, '-=.15')
+      .to(G.rm, {attr: {y: yt, height: G.yB - yt}, duration: 1.4, ease: 'elastic.out(1,.42)'}, '-=.1')
+      .to([G.rm, G.rb], {attr: {fill: MERC2}, duration: 1, ease: 'power2.out'}, '<')
+      .to(G.s0, {attr: {'stop-color': SKY_COOL[0]}, duration: 1.8, ease: 'power2.inOut'}, '<')
+      .to(G.s1, {attr: {'stop-color': SKY_COOL[1]}, duration: 1.8, ease: 'power2.inOut'}, '<')
+      .to(G.sunAll, {scale: .82, svgOrigin: `${G.sx} ${G.sy}`, duration: 1.5, ease: 'power3.out'}, '<')
+      .to(G.shim, {opacity: .2, duration: 1.2}, '<')
+      .set(G.gt, {opacity: .8}, '<')
+      .fromTo(G.gt, {drawSVG: '50% 50%'}, {drawSVG: '0% 100%', duration: .4, ease: 'power2.out'}, '<')
+      .set(G.truth, {opacity: 1}, '-=.9')
+      .fromTo(G.br, {drawSVG: '0%'}, {drawSVG: '100%', duration: .7, ease: 'power3.inOut'}, '<')
+      .fromTo(G.lab, {opacity: 0, scale: .4, x: G.labX, transformOrigin: '0% 50%'}, {opacity: 1, scale: 1, x: G.labX, duration: .65, ease: 'back.out(2.2)', onStart: () => Kit.haptic('success')}, '-=.3');
+  }
+  go.addEventListener('click', reveal);
+
+  // redraw whenever the stage changes size, so the diorama always fills its frame
+  new ResizeObserver(() => {
+    if (!G.outers) return;
+    const w = stage.clientWidth, h = stage.clientHeight;
+    if (Math.abs(w - bw) < 2 && Math.abs(h - bh) < 2) return;
+    if (revealed) vis = true;
+    build();
+  }).observe(stage);
+
+  Kit.onShow.card = build;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G.outers) return;
+    gsap.timeline()
+      .from(G.outers, {y: H * .22, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: .09, clearProps: 'transform'})
+      .fromTo(G.outs, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1, ease: 'power2.inOut', stagger: .15}, '-=.7')
+      .from(G.ticks, {opacity: 0, x: -4, duration: .3, ease: 'power2.out', stagger: .02}, '-=.8')
+      .from(G.knob, {opacity: 0, x: -10, duration: .5, ease: 'back.out(2)'}, '-=.3');
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; if (hintTw) hintTw.kill(); Kit.show('go');
+    setGuess(2.5);
+    await wait(200);
+    go.click();
+    await wait(Kit.calm ? 120 : 3400);
+  };
+})();
+Kit.single();
+</script>
+</html>

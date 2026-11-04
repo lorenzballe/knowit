@@ -72,51 +72,50 @@ function draw(){
   const {x, W, H} = G, t = sleepAmt;
   const fs = Math.max(12, Math.min(W*0.04, H*0.05));
   const pad = Math.max(10, W*0.045);
-  const ink = mix('#2a2238','#e8eaff',t), inkA = a => mix('#2a2238','#e8eaff',t,a);
+  const ink = '#ffffff', inkA = a => `rgba(255,255,255,${a})`;
   x.clearRect(0,0,W,H);
-  rr(x,0,0,W,H,Math.min(W,H)*0.06); x.fillStyle = mix('#fff4dc','#131833',t); x.fill();
 
   // graph
   const gx0 = pad, gx1 = W - pad, gy0 = pad + fs*1.9, gy1 = H*0.40;
   x.font = `800 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--mono')||'monospace'}`;
   x.textBaseline = 'alphabetic'; x.textAlign = 'left'; x.fillStyle = ink;
   x.fillText('NORADRENALINE', pad, pad + fs);
-  x.textAlign = 'right'; x.fillStyle = sleeping ? '#b9a3ff' : '#e08a00';
+  x.textAlign = 'right'; x.fillStyle = sleeping ? '#2b2f5e' : '#ffe08a';
   x.fillText(sleeping ? 'ASLEEP' : 'AWAKE', W - pad, pad + fs);
   const yv = v => gy1 - v*(gy1 - gy0), xi = i => gx0 + i/(N-1)*(gx1 - gx0), cw = (gx1-gx0)/(N-1);
-  for (let i = 0; i < hist.length; i++) if (hist[i].s > 0.05){ x.fillStyle = `rgba(140,120,255,${hist[i].s*0.22})`; x.fillRect(xi(i)-cw/2, gy0, cw+1, gy1-gy0); }
+  for (let i = 0; i < hist.length; i++) if (hist[i].s > 0.05){ x.fillStyle = `rgba(43,47,94,${hist[i].s*0.22})`; x.fillRect(xi(i)-cw/2, gy0, cw+1, gy1-gy0); }
   // threshold
-  x.setLineDash([fs*0.4, fs*0.35]); x.strokeStyle = inkA(0.45); x.lineWidth = 1.5;
+  x.setLineDash([fs*0.4, fs*0.35]); x.strokeStyle = inkA(0.6); x.lineWidth = 1.5;
   x.beginPath(); x.moveTo(gx0, yv(TH)); x.lineTo(gx1, yv(TH)); x.stroke(); x.setLineDash([]);
-  x.font = `600 ${Math.max(12, fs*0.8)}px sans-serif`; x.textAlign = 'left'; x.fillStyle = inkA(0.7);
+  x.font = `600 ${Math.max(12, fs*0.8)}px sans-serif`; x.textAlign = 'left'; x.fillStyle = inkA(0.9);
   x.fillText('enough to save', gx0 + 4, yv(TH) - 5);
   // curve
   x.beginPath(); hist.forEach((h,i) => i ? x.lineTo(xi(i), yv(h.v)) : x.moveTo(xi(i), yv(h.v)));
   const path = new Path2D(); hist.forEach((h,i) => i ? path.lineTo(xi(i), yv(h.v)) : path.moveTo(xi(i), yv(h.v)));
   const fill = new Path2D(path); fill.lineTo(gx1, gy1); fill.lineTo(gx0, gy1); fill.closePath();
-  const gr = x.createLinearGradient(0, gy0, 0, gy1); gr.addColorStop(0,'rgba(242,160,30,.45)'); gr.addColorStop(1,'rgba(242,160,30,0)');
+  const gr = x.createLinearGradient(0, gy0, 0, gy1); gr.addColorStop(0,'rgba(255,214,90,.5)'); gr.addColorStop(1,'rgba(255,214,90,0)');
   x.fillStyle = gr; x.fill(fill);
-  x.strokeStyle = '#f2a01e'; x.lineWidth = Math.max(2.5, fs*0.22); x.lineJoin = 'round'; x.stroke(path);
+  x.strokeStyle = '#ffd23f'; x.lineWidth = Math.max(2.5, fs*0.22); x.lineJoin = 'round'; x.stroke(path);
   const ly = yv(hist[hist.length-1].v);
-  x.fillStyle = 'rgba(242,160,30,.3)'; x.beginPath(); x.arc(gx1, ly, fs*0.7, 0, 7); x.fill();
-  x.fillStyle = '#f2a01e'; x.beginPath(); x.arc(gx1, ly, fs*0.35, 0, 7); x.fill();
-  x.strokeStyle = inkA(0.3); x.lineWidth = 1; x.beginPath(); x.moveTo(gx0, gy1); x.lineTo(gx1, gy1); x.stroke();
+  x.fillStyle = 'rgba(255,210,63,.35)'; x.beginPath(); x.arc(gx1, ly, fs*0.7, 0, 7); x.fill();
+  x.fillStyle = '#ffd23f'; x.beginPath(); x.arc(gx1, ly, fs*0.35, 0, 7); x.fill();
+  x.strokeStyle = inkA(0.45); x.lineWidth = 1; x.beginPath(); x.moveTo(gx0, gy1); x.lineTo(gx1, gy1); x.stroke();
 
   // shelf geometry
   const ty = H*0.80, sy = H*0.90;
-  x.font = `800 ${Math.max(12, fs*0.85)}px sans-serif`; x.textAlign = 'left'; x.fillStyle = inkA(0.75);
+  x.font = `800 ${Math.max(12, fs*0.85)}px sans-serif`; x.textAlign = 'left'; x.fillStyle = inkA(0.95);
   x.fillText('LONG-TERM MEMORY', pad, ty);
   const lw = x.measureText('LONG-TERM MEMORY').width;
   const lt = `DREAMS LOST ${lost}`, ltw = x.measureText(lt).width;
-  if (pad + lw + fs < W - pad - ltw){ x.textAlign = 'right'; x.fillStyle = lost ? '#b9a3ff' : inkA(0.5); x.fillText(lt, W - pad, ty); }
+  if (pad + lw + fs < W - pad - ltw){ x.textAlign = 'right'; x.fillStyle = lost ? '#ffffff' : inkA(0.7); x.fillText(lt, W - pad, ty); }
   const active = level > TH;
   x.font = `900 ${fs}px sans-serif`;
   const pw = x.measureText('SAVE').width + fs*1.6, ph = fs*1.8;
   rr(x, pad, sy - ph/2, pw, ph, ph/2);
   if (active){ x.fillStyle = '#34c77b'; x.fill(); x.fillStyle = '#10301f'; }
-  else { x.strokeStyle = inkA(0.35); x.lineWidth = 2; x.stroke(); x.fillStyle = inkA(0.35); }
+  else { x.strokeStyle = inkA(0.6); x.lineWidth = 2; x.stroke(); x.fillStyle = inkA(0.7); }
   x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('SAVE', pad + pw/2, sy + 1);
-  if (!active){ x.strokeStyle = inkA(0.45); x.lineWidth = 2; x.beginPath(); x.moveTo(pad + fs*0.5, sy + ph*0.3); x.lineTo(pad + pw - fs*0.5, sy - ph*0.3); x.stroke(); }
+  if (!active){ x.strokeStyle = inkA(0.7); x.lineWidth = 2; x.beginPath(); x.moveTo(pad + fs*0.5, sy + ph*0.3); x.lineTo(pad + pw - fs*0.5, sy - ph*0.3); x.stroke(); }
   x.textBaseline = 'alphabetic';
   const r = fs*0.5, gap = r*2.7, s0 = pad + pw + fs*0.9 + r;
   const k = Math.max(1, Math.floor((W - pad - r - s0)/gap) + 1);
@@ -137,10 +136,10 @@ function draw(){
 function token(x, px, py, r, kind, a, ghost){
   x.globalAlpha = Math.max(0, a);
   if (kind === 'day'){
-    x.fillStyle = ghost ? '#9a8f80' : '#f2a01e'; x.beginPath(); x.arc(px, py, r, 0, 7); x.fill();
+    x.fillStyle = ghost ? '#ffc9d8' : '#ffb21e'; x.beginPath(); x.arc(px, py, r, 0, 7); x.fill();
     x.fillStyle = 'rgba(255,255,255,.55)'; x.beginPath(); x.arc(px - r*0.3, py - r*0.3, r*0.3, 0, 7); x.fill();
   } else {
-    x.fillStyle = ghost ? '#6f6a99' : '#b9a3ff';
+    x.fillStyle = ghost ? '#ffc2d3' : '#e4d8ff';
     x.beginPath(); x.arc(px - r*0.55, py + r*0.15, r*0.6, 0, 7); x.arc(px + r*0.55, py + r*0.15, r*0.6, 0, 7); x.arc(px, py - r*0.25, r*0.75, 0, 7); x.fill();
     x.fillRect(px - r*0.55, py + r*0.1, r*1.1, r*0.65);
   }

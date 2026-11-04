@@ -1,0 +1,37 @@
+{
+  "id": "maths-feigenbaum-ratio-ladder",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the significance of the number 4.669… in bifurcations?",
+  "answer": "The number 4.669… is the ratio by which each gap between forks shrinks compared with the last one. Each wash is one section between forks, and tapping the drawing measures it against the next. The shrinking ratio holds whatever the equation is.",
+  "move": "Each gap between forks is about 4.669 times shorter than the last, whatever the equation.",
+  "keywords": [
+    "feigenbaum",
+    "logistic map",
+    "bifurcation",
+    "veritasium",
+    "forks"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A ladder of forks drawn as shrinking washes, each section between forks. Tap the drawing to measure a section against the next. The question asks what the number 4.669 means in bifurcations."
+  },
+  "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=ovJcsL7vyrk&t=862s",
+  "written": "2026-11-03"
+}

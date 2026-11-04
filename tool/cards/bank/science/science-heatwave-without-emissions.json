@@ -1,0 +1,38 @@
+{
+  "id": "science-heatwave-without-emissions",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.estimating",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How much cooler would this heatwave have been without fossil fuel emissions?",
+  "answer": "Without the energy from fossil fuel emissions, this heatwave would have been 3.5°C cooler. Climate models show that our emissions made it 3.5°C hotter.",
+  "move": "Our emissions made this heatwave 3.5°C hotter.",
+  "keywords": [
+    "heatwave",
+    "fossil fuels",
+    "emissions",
+    "climate models",
+    "europe"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "The 3.5°C heatwave, a drag-to-guess game. Two thermometers are shown. The reader drags the right one down to guess how much cooler this heatwave would have been without fossil fuel emissions. A 'Keep' box then gives the climate-model answer.",
+    "graded": false
+  },
+  "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=TU196LhDGT4&t=137s",
+  "written": "2026-11-03"
+}

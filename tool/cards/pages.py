@@ -48,6 +48,9 @@ IMPORT_MAP = re.compile(r"<script\b[^>]*\btype\s*=\s*[\"']importmap[\"'][^>]*>([
 IMPORT_FROM = re.compile(r"""\b(?:import|from)\s*\(?\s*["']([^"']+)["']""")
 KIT_URL = re.compile(r"""Kit\.url\(\s*['"]([^'"]+)['"]\s*\)""")
 CSS_URL = re.compile(r"""url\(\s*(['"]?)([^'")]+)\1\s*\)""")
+# A picture carried as data names its own parts (a grain filter at url(%23n)), and a picture shown
+# as an image loads nothing from outside: what is inside it is its own.
+CSS_DATA = re.compile(r"""url\(\s*(?:"data:[^"]*"|'data:[^']*')\s*\)""")
 QUESTION = re.compile(r"<(h[1-6]|p|div)\b[^>]*\bclass\s*=\s*[\"'][^\"']*\bq\b[^\"']*[\"'][^>]*>([\s\S]*?)</\1>", re.I)
 CARD = re.compile(r"<article\b[^>]*\bclass\s*=\s*[\"'][^\"']*\bcard\b[^\"']*[\"'][^>]*>", re.I)
 
@@ -174,7 +177,7 @@ def check_page(card: dict, page: str | None, *, files: set[str] | None = None) -
     for ref in KIT_URL.findall(page):
         if resolve(ref, files) is None:
             p.append(f"Kit.url names {ref!r}, which is not in the kit")
-    for _, ref in CSS_URL.findall(page):
+    for _, ref in CSS_URL.findall(CSS_DATA.sub("", page)):
         if ref.startswith(("data:", "#")):
             continue
         if resolve(ref, files) is None:

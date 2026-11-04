@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#cv{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh}
+#cv{flex:1;min-height:0;width:100%;display:block}
 #go{--p:0;font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;
   background:linear-gradient(90deg,#e8462a calc(var(--p)*100%),var(--k) calc(var(--p)*100%))}
 #go.hot{background:#e8462a;color:#fff}
@@ -39,6 +39,7 @@ const go = Kit.$('go'), say = Kit.$('say');
 const R = () => Kit.rnd();
 for (let i = 0; i < 16; i++) S.air.push({t:'a', r:'h', x:R(), y:R(), vx:(R()-.5)*.3, vy:(R()-.5)*.3});
 
+const INK = '#10100c';
 const hex = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16));
 const mixC = (a,b,t) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')})`; };
 const lerp = (a,b,t) => a + (b-a)*t;
@@ -91,18 +92,18 @@ function draw(now){
   if (!C) return;
   const {x} = C, {W,H,f} = G;
   x.clearRect(0,0,W,H);
-  x.fillStyle = '#10131a'; x.beginPath(); x.roundRect(0,0,W,H,Math.min(W,H)*.04); x.fill();
   x.font = `600 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
   x.textBaseline = 'middle';
   // legend
-  [['steam','#eef3f8',.08],['hydrogen','#ffc23a',.37],['air','#5aa9ff',.7]].forEach(([t,c,p]) => {
+  [['steam','#ffffff',.08],['hydrogen','#d97a00',.37],['air','#1747d6',.7]].forEach(([t,c,p]) => {
     x.fillStyle = c; x.beginPath(); x.arc(W*p + f*.4, H*.065, f*.38, 0, 7); x.fill();
-    x.fillStyle = '#dfe5ee'; x.textAlign = 'left'; x.fillText(t, W*p + f*1.1, H*.065);
+    if (t === 'steam'){ x.strokeStyle = INK; x.lineWidth = 1.2; x.stroke(); }
+    x.fillStyle = INK; x.textAlign = 'left'; x.fillText(t, W*p + f*1.1, H*.065);
   });
   const b = S.boom;
   // hall
-  x.fillStyle = b > .2 ? '#20180f' : '#192031'; x.fillRect(G.bx, G.by, G.bw, G.hallB-G.by);
-  x.strokeStyle = '#9aa3b2'; x.lineWidth = 2.5; x.lineCap = 'round';
+  x.fillStyle = b > .2 ? 'rgba(255,130,30,.28)' : 'rgba(16,16,12,.08)'; x.fillRect(G.bx, G.by, G.bw, G.hallB-G.by);
+  x.strokeStyle = INK; x.lineWidth = 2.5; x.lineCap = 'round';
   const line = (a,c,d,e) => { x.beginPath(); x.moveTo(a,c); x.lineTo(d,e); x.stroke(); };
   // lower walls and base
   line(G.bx, G.hallB, G.bx, G.bB); line(G.bx+G.bw, G.hallB, G.bx+G.bw, G.bB); line(G.bx, G.bB, G.bx+G.bw, G.bB);
@@ -118,13 +119,13 @@ function draw(now){
   }
   // floor with pipe gap
   x.lineWidth = 2.5; line(G.bx, G.hallB, G.cx-G.pw, G.hallB); line(G.cx+G.pw, G.hallB, G.bx+G.bw, G.hallB);
-  x.fillStyle = '#9fb3cc'; x.textAlign = 'left'; x.fillText('upper building', G.hL+2, G.hT+f*.7);
+  x.fillStyle = INK; x.textAlign = 'left'; x.fillText('upper building', G.hL+2, G.hT+f*.7);
   // pipe and valve
-  x.strokeStyle = '#c8d0dc'; line(G.cx-G.pw, G.vT+2, G.cx-G.pw, G.hallB); line(G.cx+G.pw, G.vT+2, G.cx+G.pw, G.hallB);
+  x.strokeStyle = INK; line(G.cx-G.pw, G.vT+2, G.cx-G.pw, G.hallB); line(G.cx+G.pw, G.vT+2, G.cx+G.pw, G.hallB);
   const vy = (G.vT+G.hallB)/2, vs = G.pw*1.4;
-  x.fillStyle = S.valve ? '#6ee07a' : '#7d8794';
+  x.fillStyle = S.valve ? '#0a7a2a' : '#4a5260';
   x.beginPath(); x.moveTo(G.cx-vs, vy-vs*.7); x.lineTo(G.cx+vs, vy+vs*.7); x.lineTo(G.cx+vs, vy-vs*.7); x.lineTo(G.cx-vs, vy+vs*.7); x.closePath(); x.fill();
-  x.fillStyle = '#dfe5ee'; x.textAlign = 'left'; x.fillText(S.valve ? 'vent open' : 'vent', G.cx+vs+6, vy);
+  x.fillStyle = INK; x.textAlign = 'left'; x.fillText(S.valve ? 'vent open' : 'vent', G.cx+vs+6, vy);
   // vessel
   const rr = G.vw*.38;
   x.beginPath(); x.roundRect(G.vL, G.vT, G.vw, G.vh, [rr,rr,10,10]);
@@ -145,9 +146,9 @@ function draw(now){
     x.fillStyle = fc; x.beginPath(); x.roundRect(rx, G.vT+G.vh*.56, rw, G.vh*.38, rw*.4); x.fill();
   }
   x.restore();
-  x.strokeStyle = '#c8d0dc'; x.lineWidth = 3;
+  x.strokeStyle = INK; x.lineWidth = 3;
   x.beginPath(); x.roundRect(G.vL, G.vT, G.vw, G.vh, [rr,rr,10,10]); x.stroke();
-  x.fillStyle = '#dfe5ee'; x.textAlign = 'right';
+  x.fillStyle = INK; x.textAlign = 'right';
   x.fillText('water', G.vL-8, wy + f*.2);
   x.fillText('fuel', G.vL-8, G.vT+G.vh*.76);
   // particles
@@ -156,16 +157,18 @@ function draw(now){
     const [px,py] = pos(q); dot(q, px, py);
   }
   function dot(q, px, py){
-    let a = 1, r = f*.3, c = '#5aa9ff';
-    if (q.t === 's'){ c = '#eef3f8'; r = f*.42; a = .8*(q.r==='h' ? Math.max(0,1-q.age/2.6) : 1); }
-    if (q.t === 'h'){ c = '#ffc23a'; r = f*.34; }
-    x.globalAlpha = a; x.fillStyle = c; x.beginPath(); x.arc(px, py, r, 0, 7); x.fill(); x.globalAlpha = 1;
+    let a = 1, r = f*.3, c = '#1747d6';
+    if (q.t === 's'){ c = '#ffffff'; r = f*.42; a = .9*(q.r==='h' ? Math.max(0,1-q.age/2.6) : 1); }
+    if (q.t === 'h'){ c = '#d97a00'; r = f*.34; }
+    x.globalAlpha = a; x.fillStyle = c; x.beginPath(); x.arc(px, py, r, 0, 7); x.fill();
+    if (q.t === 's'){ x.strokeStyle = INK; x.lineWidth = 1; x.stroke(); }
+    x.globalAlpha = 1;
   }
   // gauge
-  x.fillStyle = '#dfe5ee'; x.textAlign = 'center'; x.fillText('pressure', G.gx, G.vT + f*.3);
+  x.fillStyle = INK; x.textAlign = 'center'; x.fillText('pressure', G.gx, G.vT + f*.3);
   const gh = G.gBot - G.gT;
-  x.strokeStyle = '#c8d0dc'; x.lineWidth = 2; x.beginPath(); x.roundRect(G.gx-G.gw/2, G.gT, G.gw, gh, G.gw/2); x.stroke();
-  x.fillStyle = mixC('#4cc777', '#ff3b2a', S.pr);
+  x.strokeStyle = INK; x.lineWidth = 2; x.beginPath(); x.roundRect(G.gx-G.gw/2, G.gT, G.gw, gh, G.gw/2); x.stroke();
+  x.fillStyle = mixC('#0b7a3b', '#d4200f', S.pr);
   if (S.pr > .01){ x.beginPath(); x.roundRect(G.gx-G.gw/2+2, G.gT+2+(gh-4)*(1-S.pr), G.gw-4, (gh-4)*S.pr, (G.gw-4)/2); x.fill(); }
   // explosion
   if (b > 0){
@@ -176,13 +179,13 @@ function draw(now){
       g.addColorStop(0, `rgba(255,245,190,${a})`); g.addColorStop(.45, `rgba(255,130,30,${a*.75})`); g.addColorStop(1, 'rgba(255,80,20,0)');
       x.fillStyle = g; x.fillRect(0, 0, W, H);
     }
-    x.fillStyle = 'rgba(120,120,128,.55)';
+    x.fillStyle = 'rgba(16,16,12,.35)';
     for (let i = 0; i < 9; i++){
       const sx = G.bx + G.bw*(.1 + i*.1), sy = G.by - b*H*(.03 + (i%3)*.025);
       x.globalAlpha = Math.min(1, b*1.5)*.6; x.beginPath(); x.arc(sx, sy, f*(.8 + (i%2)*.5)*b, 0, 7); x.fill();
     }
     x.globalAlpha = 1;
-    if (b >= 1){ x.fillStyle = '#ffc23a'; x.textAlign = 'center'; x.font = `800 ${f*1.1}px sans-serif`; x.fillText('hydrogen + air exploded', cxh, cyh + f*.6); }
+    if (b >= 1){ x.fillStyle = INK; x.textAlign = 'center'; x.font = `800 ${f*1.1}px sans-serif`; x.fillText('hydrogen + air exploded', cxh, cyh + f*.6); }
   }
 }
 

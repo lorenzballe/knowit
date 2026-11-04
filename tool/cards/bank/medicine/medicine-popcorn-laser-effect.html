@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
-#box{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden}
+#box{flex:1;min-height:0;position:relative;overflow:hidden;background:none;border:0;box-shadow:none}
 #box svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 #cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:calc(3 * 1.3 * max(2cqh,13px));overflow-wrap:break-word}
 #cap.why{font-weight:500}
@@ -78,11 +78,11 @@ Kit.onShow.card = () => {
   mk('stop',{offset:0,'stop-color':'#7dffb0','stop-opacity':.95},lg);
   mk('stop',{offset:1,'stop-color':'#2bd97a','stop-opacity':.35},lg);
   const wave = y => { let d = `M0 ${y}`; for(let x=0;x<=W;x+=W/12) d += ` L${x} ${y + Math.sin(x/W*12)*H*.006}`; return d; };
-  mk('rect',{x:0,y:0,width:W,height:H,fill:'#20263f'},svg);
-  mk('path',{d:wave(y1)+` L${W} ${H} L0 ${H}Z`,fill:'#e4a184'},svg);
+  // dermis: no backdrop fill, only a boundary line drawn on the card
+  mk('path',{d:wave(y1),fill:'none',stroke:'#fff','stroke-opacity':.55,'stroke-width':Math.max(2,H*.006),'stroke-dasharray':`${H*.02} ${H*.015}`},svg);
   mk('path',{d:wave(y0)+` L${W} ${y1} L0 ${y1}Z`,fill:'#f4cdae'},svg);
   const t1 = mk('text',{x:W*.03,y:y0+(y1-y0)*.62,'font-size':fs,'font-family':'var(--mono)','font-weight':700,fill:'#7a4a33'},svg); t1.textContent='EPIDERMIS';
-  const t2 = mk('text',{x:W*.03,y:H-fs*.7,'font-size':fs,'font-family':'var(--mono)','font-weight':700,fill:'#8a4a32'},svg); t2.textContent='DERMIS';
+  const t2 = mk('text',{x:W*.03,y:H-fs*.7,'font-size':fs,'font-family':'var(--mono)','font-weight':700,fill:'#ffffff'},svg); t2.textContent='DERMIS';
   const beam = mk('rect',{x:W*.1,y:0,width:W*.8,height:H*.85,fill:'url(#beam)',opacity:0,rx:W*.05},svg);
   const fg = mk('g',{},svg), frags = [];
   CL.forEach((c,i) => FR[i].forEach(f => frags.push({f, c:i, el: mk('circle',{fill:'#14172b'},fg)})));

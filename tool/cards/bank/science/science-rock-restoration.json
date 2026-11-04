@@ -1,0 +1,38 @@
+{
+  "id": "science-rock-restoration",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do geologists undo the faults in a broken rock section?",
+  "answer": "Two faults broke this rock and dropped it, shifting its layers out of their original shape. Undoing each fault's throw, like a puzzle, restores the undeformed state. Once restored, the clinoforms building out to the left become plain to see.",
+  "move": "Undo the deformation first, and the original layers become easy to read.",
+  "keywords": [
+    "geology",
+    "faults",
+    "rock layers",
+    "clinoforms",
+    "geologists"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A broken rock section with two faults and two sunken blocks showing glowing layers. Drag each sunken block up until its layers meet the ones beside it. The question asks why geologists undo the faults in the rock.",
+    "ground": "#140b09"
+  },
+  "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=6125s",
+  "written": "2026-11-03"
+}

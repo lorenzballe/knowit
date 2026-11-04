@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive diagram: a Sun disc with a draggable Moon. Drag the Moon over the Sun to reveal the faint corona and pink solar prominences around its edge once the disc is covered.",
-    "ground": "#04050b"
+    "label": "Interactive diagram: a Sun disc with a draggable Moon. Drag the Moon over the Sun to reveal the faint corona and pink solar prominences around its edge once the disc is covered."
   },
   "source": "Veritasium, “What it’s like to watch a Total Solar Eclipse” (YouTube, 2017)",
   "reference": "https://www.youtube.com/watch?v=G10m2ZZRH4U",

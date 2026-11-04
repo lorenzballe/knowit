@@ -1,0 +1,313 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-tsunami-slows-down -->
+<!-- Look: a night observatory over the sea: ink-black sky, fine twinkling stars, a pale moon laying a shimmering path on the water, two glowing instrument rings (speed, height) above a cross-section of ocean and rising shelf.
+     Interaction: bet on what the wave's speed does near the coast and say how sure you are. The wave then crosses from deep to shallow water, dropping a dot at every equal tick of time. After that, drag it anywhere to replay.
+     Wow moment: the dots bunch up as the wave brakes, the speed ring drains while the height ring fills, the crest towers over the town throwing spray, and "Slower, and taller" scrambles into place. -->
+<title>Why a tsunami grows at the coast</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;overflow:visible}
+.done #pic{cursor:ew-resize}
+#opts{display:flex;gap:2cqw}
+.opt{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:rgba(98,230,255,.07);border:0;box-shadow:inset 0 0 0 max(.2cqh,1px) rgba(98,230,255,.38);border-radius:1.6cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere;transition:background .15s,box-shadow .15s}
+.opt.on{background:#62e6ff;color:#041322;box-shadow:0 0 2.4cqh rgba(98,230,255,.55)}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{color:#a6f2ff;text-shadow:0 0 1.6cqh rgba(98,230,255,.55);min-height:1.1em}
+#why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);color:var(--k)}
+#why .body b,.say b{color:#8eeeff}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Bet · how sure · watch" style="--c:#060a14;--k:#eaf0ff;--edge:#01030a">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TSUNAMI</span></div>
+    <h2 class="q">What happens to a tsunami's speed as it approaches the coast?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A night sea in cross-section: a tsunami travels from deep ocean over a rising sea floor towards a coastal town, with gauges for its speed and height."></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">It speeds up</button>
+        <button class="opt" data-i="1">It stays the same</button>
+        <button class="opt" data-i="2">It slows down</button>
+      </div>
+      <div id="why" class="gone"><p class="big" id="word">Slower, and taller</p><p class="body">The rising sea floor drags on the wave and slows it. Its energy can't vanish, so the water piles up taller. <b>Drag the wave</b> to replay.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Make your bet, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>As the sea gets shallow, a tsunami trades speed for height.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  if (window.SplitText) gsap.registerPlugin(SplitText);
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), opts = Kit.$('opts');
+  const CY = '#62e6ff', AM = '#ffb54d', INK = '#eaf0ff', MUTE = 'rgba(234,240,255,.62)';
+  const RIGHT = 2;
+  let pick = -1, phase = 'bet', tween = null, twinkles = [];
+  const st = {t: 0, bob: 0};
+
+  // ---------- the physics, in u: the fraction of the way from open ocean to the shore ----------
+  const smooth = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  const D = u => 1 - .965 * smooth(.36, 1, u);          // depth, 1 = deep ocean
+  const U0 = .03, UEND = .94, V0 = .3, DT = 1 / 120;
+  const TU = [U0];
+  { let u = U0; while (u < UEND) { u += V0 * Math.sqrt(D(u)) * DT; TU.push(Math.min(u, UEND)); } }
+  const TEND = (TU.length - 1) * DT, NT = 14, TK = TEND / NT;
+  const uAt = t => { const i = Math.max(0, Math.min(TU.length - 1, t / DT)), i0 = Math.floor(i), i1 = Math.min(TU.length - 1, i0 + 1); return TU[i0] + (TU[i1] - TU[i0]) * (i - i0); };
+  const tAt = u => { let lo = 0, hi = TU.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (TU[m] < u) lo = m; else hi = m; } return hi * DT; };
+  const AMP = u => Math.pow(D(u), -.5);                  // energy kept: shallower means taller
+  const AMAX = AMP(UEND);
+
+  // ---------- geometry ----------
+  let W = 0, H = 0, fs = 12, seaY = 0, X0 = 0, XS = 0, depthPx = 0, A0 = 0, xLand = 0, G = {}, lastW = 0, lastH = 0;
+  const xOf = u => X0 + u * (XS - X0), uOf = x => (x - X0) / (XS - X0);
+  const beachY = x => { const f0 = seaY + 3 + D(1) * depthPx; return f0 + (seaY - H * .06 - f0) * smooth(XS, W * .97, x); };
+  const floorY = x => x <= XS ? seaY + 3 + D(Math.max(0, uOf(x))) * depthPx : beachY(x);
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--mono);letter-spacing:.06em'}, a), p); e.textContent = s; return e; };
+  const P = (cx, cy, r, a) => [(cx + r * Math.cos(a)).toFixed(1), (cy + r * Math.sin(a)).toFixed(1)];
+  const arc = (cx, cy, r, f) => { const a0 = .75 * Math.PI, a1 = a0 + 1.5 * Math.PI * Math.max(.015, Math.min(1, f)); return `M${P(cx, cy, r, a0)}A${r},${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${P(cx, cy, r, a1)}`; };
+
+  function gauge(cx, cy, r, col, name, parent) {
+    const g = mk('g', {class: 'gauge'}, parent);
+    mk('circle', {cx, cy, r: r * 1.13, fill: 'none', stroke: col, 'stroke-opacity': .18, 'stroke-width': 1}, g);
+    const spin = mk('circle', {cx, cy, r: r * 1.13, fill: 'none', stroke: col, 'stroke-opacity': .55, 'stroke-width': 1.4, 'stroke-dasharray': `2 ${(r * .19).toFixed(1)}`}, g);
+    for (let i = 0; i <= 28; i++) {
+      const a = .75 * Math.PI + 1.5 * Math.PI * i / 28, big = i % 7 === 0;
+      const p0 = P(cx, cy, r * (big ? .7 : .76), a), p1 = P(cx, cy, r * .82, a);
+      mk('line', {x1: p0[0], y1: p0[1], x2: p1[0], y2: p1[1], stroke: INK, 'stroke-opacity': big ? .6 : .25, 'stroke-width': big ? 1.4 : 1}, g);
+    }
+    mk('path', {d: arc(cx, cy, r * .95, 1), fill: 'none', stroke: col, 'stroke-opacity': .14, 'stroke-width': Math.max(3, r * .09), 'stroke-linecap': 'round'}, g);
+    const val = mk('path', {d: arc(cx, cy, r * .95, .5), fill: 'none', stroke: col, 'stroke-width': Math.max(3, r * .09), 'stroke-linecap': 'round', filter: 'url(#glow)'}, g);
+    const knob = mk('circle', {r: Math.max(2.5, r * .07), fill: '#fff', filter: 'url(#glow)'}, g);
+    const word = txt(g, cx, cy + fs * .4, '', {'text-anchor': 'middle', 'font-size': fs * 1.15, 'font-weight': 700, fill: col});
+    txt(g, cx, cy + r * .8 + fs * .35, name, {'text-anchor': 'middle', fill: MUTE, 'font-size': Math.max(12, fs * .92)});
+    if (!Kit.calm) twinkles.push(gsap.to(spin, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 40, repeat: -1, ease: 'none'}));
+    return {g, val, knob, word, cx, cy, r};
+  }
+
+  function layout() {
+    twinkles.forEach(t => t.kill()); twinkles = [];
+    svg.innerHTML = ''; G = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; if (!W || !H) return;
+    lastW = W; lastH = H;
+    fs = Math.max(12, Math.min(14, f.f || 12));
+    seaY = H * .52; X0 = W * .03; XS = W * .86; depthPx = H - 4 - seaY - 3; A0 = H * .025;
+    xLand = XS; while (xLand < W && beachY(xLand) > seaY) xLand += 1;
+
+    const defs = mk('defs', {}, svg);
+    const fl = mk('filter', {id: 'glow', x: '-60%', y: '-60%', width: '220%', height: '220%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: 2.6, result: 'b'}, fl);
+    const fm = mk('feMerge', {}, fl); mk('feMergeNode', {in: 'b'}, fm); mk('feMergeNode', {in: 'SourceGraphic'}, fm);
+    const sea = mk('linearGradient', {id: 'sea', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    [[0, '#0f4673', .95], [.35, '#08264a', .95], [1, '#030b18', 1]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, sea));
+    const bed = mk('linearGradient', {id: 'bed', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    [[0, '#232a44'], [1, '#0a0d19']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, bed));
+    const halo = mk('radialGradient', {id: 'halo'}, defs);
+    [[0, '#fff6d8', .5], [.4, '#9fb8ff', .12], [1, '#9fb8ff', 0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, halo));
+    const crestG = mk('radialGradient', {id: 'crest'}, defs);
+    [[0, CY, .45], [1, CY, 0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, crestG));
+
+    // the sky: a fine star field
+    const stars = mk('g', {class: 'stars'}, svg);
+    const n = Math.min(140, Math.round(W * seaY / 1300));
+    for (let i = 0; i < n; i++) {
+      const s = mk('circle', {cx: (Kit.rnd() * W).toFixed(1), cy: (2 + Kit.rnd() * (seaY - fs * 1.2)).toFixed(1), r: (.35 + Kit.rnd() ** 3 * 1.2).toFixed(2), fill: Kit.rnd() < .15 ? '#cfe0ff' : '#fff', opacity: (.25 + Kit.rnd() * .7).toFixed(2)}, stars);
+      if (!Kit.calm && i % 7 === 0) twinkles.push(gsap.to(s, {opacity: .1, duration: 1 + Kit.rnd() * 2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Kit.rnd() * 2}));
+    }
+    // the instrument rings on the left, the moon over the coast
+    const r = Math.max(20, Math.min(W * .115, (seaY - fs * 1.4) / 2.4, 70)), cy = r * 1.13 + 3;
+    const mr = Math.max(5, Math.min(fs * .85, r * .32)), mx = W * .7, my = Math.max(mr * 2.2, cy - r * .35);
+    mk('circle', {cx: mx, cy: my, r: mr * 5, fill: 'url(#halo)'}, svg);
+    mk('circle', {cx: mx, cy: my, r: mr, fill: '#f4efdc'}, svg);
+    mk('circle', {cx: mx + mr * .35, cy: my - mr * .2, r: mr * .9, fill: '#060a14', opacity: .9}, svg);
+    G.speed = gauge(W * .17, cy, r, CY, 'SPEED', svg);
+    G.height = gauge(W * .45, cy, r, AM, 'HEIGHT', svg);
+
+    // the sea, then the sea floor and the coast on top of it
+    G.sea = mk('path', {fill: 'url(#sea)'}, svg);
+    // the moon's path on the water
+    G.glint = mk('g', {}, svg);
+    for (let i = 0; i < 7; i++) {
+      const w = mr * (2.4 - i * .25) * (.7 + Kit.rnd() * .6), y = seaY + 3 + i * Math.max(3, fs * .3), x = mx + (Kit.rnd() - .5) * mr;
+      const l = mk('line', {x1: (x - w / 2).toFixed(1), x2: (x + w / 2).toFixed(1), y1: y.toFixed(1), y2: y.toFixed(1), stroke: '#fff3cf', 'stroke-opacity': (.38 - i * .045).toFixed(2), 'stroke-width': 1.1, 'stroke-linecap': 'round'}, G.glint);
+      if (!Kit.calm) twinkles.push(gsap.to(l, {attr: {'stroke-opacity': .05}, duration: .8 + Kit.rnd() * 1.4, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Kit.rnd()}));
+    }
+    // faint currents in the deep
+    for (let i = 0; i < 5; i++) {
+      const y = seaY + depthPx * (.3 + i * .13), x = W * (.05 + Kit.rnd() * .3), w = W * (.08 + Kit.rnd() * .12);
+      const c = mk('path', {d: `M${x.toFixed(1)},${y.toFixed(1)}q${(w / 4).toFixed(1)},-3 ${(w / 2).toFixed(1)},0t${(w / 2).toFixed(1)},0`, fill: 'none', stroke: '#6fb6ff', 'stroke-opacity': .12, 'stroke-width': 1}, svg);
+      if (!Kit.calm) twinkles.push(gsap.to(c, {x: W * .05, duration: 5 + Kit.rnd() * 4, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+    }
+    let bd = `M0,${floorY(0).toFixed(1)}`;
+    for (let x = 0; x <= W + .1; x += 4) bd += `L${x.toFixed(1)},${floorY(x).toFixed(1)}`;
+    mk('path', {d: bd + `L${W},${H}L0,${H}Z`, fill: 'url(#bed)'}, svg);
+    mk('path', {d: bd, fill: 'none', stroke: '#8aa6ff', 'stroke-opacity': .45, 'stroke-width': 1.2}, svg);
+    for (let i = 0; i < Math.round(W / 3); i++) {
+      const x = Kit.rnd() * W, y0 = floorY(x) + 4; if (y0 > H - 3) continue;
+      mk('circle', {cx: x.toFixed(1), cy: (y0 + Kit.rnd() * (H - y0)).toFixed(1), r: (.5 + Kit.rnd() * .7).toFixed(2), fill: '#9fb0e6', opacity: (.1 + Kit.rnd() * .25).toFixed(2)}, svg);
+    }
+    // a little town with its lights on
+    [.905, .935, .963].forEach((p, i) => {
+      const x = W * p, b = beachY(x) + 1, w = fs * (i === 1 ? 1 : .8), h = fs * (i === 1 ? .9 : .7);
+      mk('path', {d: `M${x - w / 2},${b}V${b - h}L${x},${b - h - w * .45}L${x + w / 2},${b - h}V${b}Z`, fill: '#1b2138', stroke: '#8aa6ff', 'stroke-opacity': .5, 'stroke-width': 1}, svg);
+      const win = mk('rect', {x: x - w * .14, y: b - h * .62, width: w * .28, height: h * .3, fill: AM, filter: 'url(#glow)'}, svg);
+      if (!Kit.calm && i === 2) twinkles.push(gsap.to(win, {opacity: .55, duration: .18, repeat: -1, yoyo: true, repeatDelay: 3.4, ease: 'steps(1)'}));
+    });
+    txt(svg, W - 3, beachY(W * .93) - fs * 2.1, 'coast', {'text-anchor': 'end', fill: MUTE});
+    txt(svg, X0 + 3, seaY + fs * 2.4, 'deep ocean', {fill: MUTE});
+    txt(svg, xOf(.78), seaY + fs * 2.4, 'shallow', {'text-anchor': 'end', fill: MUTE});
+    G.legend = txt(svg, X0 + 3, seaY + fs * 3.8, '• = equal time steps', {fill: CY, opacity: phase === 'bet' ? 0 : 1});
+
+    G.surf = mk('path', {fill: 'none', stroke: '#8ff0ff', 'stroke-width': 1.7, filter: 'url(#glow)', 'stroke-linejoin': 'round'}, svg);
+    G.glowC = mk('ellipse', {fill: 'url(#crest)'}, svg);
+    G.spray = mk('g', {}, svg);
+    G.dots = mk('g', {}, svg);
+    G.ret = mk('g', {}, svg);
+    const rr = fs * .62;
+    mk('circle', {r: rr, fill: 'none', stroke: '#fff', 'stroke-width': 1.3, 'stroke-dasharray': '3 2.2'}, G.ret);
+    [[0, -1], [0, 1], [-1, 0], [1, 0]].forEach(([a, b]) => mk('line', {x1: a * rr * .45, y1: b * rr * .45, x2: a * rr * 1.45, y2: b * rr * 1.45, stroke: '#fff', 'stroke-width': 1.3}, G.ret));
+    G.stem = mk('line', {stroke: '#fff', 'stroke-opacity': .55, 'stroke-width': 1, 'stroke-dasharray': '2 2'}, svg);
+    draw();
+  }
+
+  function draw() {
+    if (!G.sea || !W) return;
+    const u = uAt(st.t), d = D(u), A = A0 * AMP(u), s = Math.max(W * .02, W * .075 * Math.sqrt(d)), xc = xOf(u);
+    const sF = s * (1 - .5 * (1 - d)), sB = s * 1.2;
+    let path = '', surf = '';
+    for (let x = 0; x <= W + .1; x += 2.5) {
+      const dx = x - xc, ss = dx > 0 ? sF : sB, y = seaY - A * Math.exp(-((dx / ss) ** 2)) + Math.sin(x * .045 + st.bob) * .7;
+      const seg = `${x ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`;
+      path += seg; if (x <= xLand) surf += seg;
+    }
+    G.sea.setAttribute('d', path + `L${W},${H}L0,${H}Z`);
+    G.surf.setAttribute('d', surf);
+    const top = seaY - A;
+    Object.entries({cx: xc, cy: top + A * .5, rx: s * 1.4, ry: A * .9 + fs}).forEach(([k, v]) => G.glowC.setAttribute(k, v.toFixed(1)));
+    G.ret.setAttribute('transform', `translate(${xc.toFixed(1)},${(top - fs * 1.7).toFixed(1)})`);
+    Object.entries({x1: xc, x2: xc, y1: top - fs * 1.05, y2: top - 3}).forEach(([k, v]) => G.stem.setAttribute(k, v.toFixed(1)));
+    // spray flung off the crest once it rears up
+    const ht = AMP(u) / AMAX;
+    G.spray.innerHTML = '';
+    if (ht > .4) for (let i = 0; i < 9; i++) {
+      const ph = (st.bob * .35 + i * .37) % 1, k = (ht - .4) / .6;
+      const x = xc + sF * (.15 + (i % 3) * .2) + ph * sF * .5, y = top + 2 - Math.sin(ph * Math.PI) * fs * .9 * k;
+      mk('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: (.7 + (i % 3) * .35).toFixed(2), fill: '#dffaff', opacity: ((1 - ph) * .85 * k).toFixed(2)}, G.spray);
+    }
+    // one dot for every equal tick of time: they bunch up as the wave brakes
+    G.dots.innerHTML = '';
+    if (phase !== 'bet') for (let k = 0; k * TK <= st.t + 1e-6; k++) {
+      const x = xOf(uAt(k * TK));
+      mk('line', {x1: x, x2: x, y1: seaY + 2, y2: seaY + fs * .7, stroke: CY, 'stroke-opacity': .6, 'stroke-width': 1}, G.dots);
+      mk('circle', {cx: x, cy: seaY + fs * .95, r: 2.4, fill: CY, filter: 'url(#glow)'}, G.dots);
+    }
+    // the rings
+    const sp = Math.sqrt(d);
+    [[G.speed, sp, sp > .75 ? 'fast' : sp > .45 ? 'slower' : 'slow'], [G.height, ht, ht < .35 ? 'low' : ht < .7 ? 'taller' : 'tall']].forEach(([g, v, w]) => {
+      g.val.setAttribute('d', arc(g.cx, g.cy, g.r * .95, v));
+      const p = P(g.cx, g.cy, g.r * .95, .75 * Math.PI + 1.5 * Math.PI * Math.max(.015, v));
+      g.knob.setAttribute('cx', p[0]); g.knob.setAttribute('cy', p[1]);
+      const ww = g.r >= 30 ? w : '';
+      if (g.word.textContent !== ww) g.word.textContent = ww;
+    });
+  }
+
+  // re-draw crisply whenever the stage changes size (e.g. when the answer appears)
+  let rq = 0;
+  new ResizeObserver(() => {
+    if (rq) return;
+    rq = requestAnimationFrame(() => {
+      rq = 0;
+      const b = svg.getBoundingClientRect();
+      if (b.width && b.height && (Math.abs(b.width - lastW) > 1 || Math.abs(b.height - lastH) > 1)) layout();
+    });
+  }).observe(svg);
+
+  // ---------- the bet ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = opts.children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    Kit.hide('opts'); run();
+  });
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+    if (!Kit.calm) gsap.fromTo(b, {scale: .94}, {scale: 1, duration: .45, ease: 'back.out(3)'});
+  });
+
+  function run() {
+    phase = 'run';
+    say.innerHTML = 'Watch the dots: one drops at <b>every equal tick of time</b>.';
+    if (G.legend) gsap.to(G.legend, {opacity: 1, duration: Kit.calm ? 0 : .5});
+    st.t = 0;
+    if (Kit.calm) { st.t = TEND; draw(); reveal(); return; }
+    tween = gsap.to(st, {t: TEND, duration: TEND * 1.05, ease: 'none', onUpdate: draw, onComplete: reveal});
+  }
+
+  function reveal() {
+    if (phase === 'done') return;
+    phase = 'done'; card.classList.add('done');
+    Kit.hide('say');
+    Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    layout();
+    const word = Kit.$('word'), target = 'Slower, and taller';
+    if (Kit.calm) { word.textContent = target; return; }
+    if (window.ScrambleTextPlugin) { word.textContent = ''; gsap.to(word, {duration: 1.1, scrambleText: {text: target, chars: 'SLOWERTALLHIGH', speed: .5, revealDelay: .25}, ease: 'power2.out'}); }
+    else gsap.from(word, {opacity: 0, y: 8, duration: .6, ease: 'power3.out'});
+    gsap.from('#why .body', {opacity: 0, y: 8, duration: .6, delay: .35, ease: 'power3.out'});
+    // the wow: a ring bursts off the towering crest, the gauges flare (after the stage settles)
+    gsap.delayedCall(.08, () => {
+      if (!G.speed) return;
+      const u = uAt(st.t), x = xOf(u), y = seaY - A0 * AMP(u);
+      const ring = mk('circle', {cx: x, cy: y, r: 4, fill: 'none', stroke: AM, 'stroke-width': 2.5, filter: 'url(#glow)'}, svg);
+      gsap.to(ring, {attr: {r: fs * 5}, opacity: 0, duration: 1.2, ease: 'expo.out', onComplete: () => ring.remove()});
+      [G.speed, G.height].forEach((g, i) => gsap.fromTo(g.val, {attr: {'stroke-width': g.r * .22}}, {attr: {'stroke-width': Math.max(3, g.r * .09)}, duration: 1, delay: i * .12, ease: 'elastic.out(1,.4)'}));
+    });
+  }
+
+  // ---------- replay by dragging ----------
+  let drag = false;
+  const scrub = e => {
+    const b = svg.getBoundingClientRect(), u = Math.max(U0, Math.min(UEND, uOf((e.clientX - b.left) * (W / b.width))));
+    gsap.to(st, {t: tAt(u), duration: Kit.calm ? 0 : .25, ease: 'power3.out', overwrite: true, onUpdate: draw});
+  };
+  svg.addEventListener('pointerdown', e => { if (phase !== 'done') return; if (tween) tween.kill(); drag = true; svg.setPointerCapture(e.pointerId); Kit.haptic('light'); scrub(e); });
+  svg.addEventListener('pointermove', e => { if (drag) scrub(e); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // ---------- show, enter, play ----------
+  Kit.onShow.card = layout;
+  let entered = false;
+  Kit.onEnter.card = () => {
+    if (entered) return; entered = true;
+    if (Kit.calm) return;
+    gsap.ticker.add(() => { st.bob += .05; if (phase !== 'run') draw(); });
+    const tl = gsap.timeline({defaults: {ease: 'power3.out'}});
+    if (window.SplitText) {
+      const sp = new SplitText('.q', {type: 'words,chars'});
+      tl.from(sp.chars, {opacity: 0, y: 6, duration: .4, stagger: .012, onComplete: () => sp.revert()}, 0);
+    }
+    tl.from('#pic .stars circle', {opacity: 0, duration: .8, stagger: {each: .006, from: 'random'}}, 0)
+      .from('#pic .gauge', {opacity: 0, scale: .6, transformOrigin: '50% 50%', duration: .9, stagger: .12, ease: 'back.out(1.6)'}, .15)
+      .from(G.sea, {opacity: 0, y: 20, duration: .9}, .2)
+      .from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .45}, .45);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    opts.children[RIGHT].click(); await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(300);
+    if (tween) tween.progress(1);
+    await wait(Kit.calm ? 100 : 1400);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,347 @@
+<!doctype html>
+<!-- slug: history-guayaquil-prison-bars -->
+<!-- Look: a cyanotype engineer's sheet. White hairlines on deep Prussian blue, a drafting grid, and mono lettering: a timeline, a zoomed figure and a title block. The whole card is the blueprint ground.
+     Interaction: drag across the empty cell. Each slot you cross raises a dashed bar, and the bars are your guess at how many large-scale prison massacres Ecuador saw from early 2021 to early 2023. Then say how sure you are.
+     Wow: the real bars fall in on springs, 11 of them, and rails weld them into a cell. The first bar glows amber, an amber leader runs down to the title block, and the block scrambles into "Guayaquil Penitentiary, 23.02.2021" while 79 marks stamp in, one for each prisoner beheaded.
+     Layout: the sheet re-drafts itself to the space it has. Full sheet, then without the timeline, then a single strip, so nothing ever overlaps. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Eleven bars</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#pic text{font-family:var(--mono);fill:#eaf4ff;letter-spacing:.03em;font-weight:600}
+#pic text.hand{font-family:var(--hand);font-weight:700;letter-spacing:0}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{font:800 max(2.5cqh,16px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,13px)/1.3 var(--body);margin:0}
+.answered .q{font-size:max(2.3cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag a count · how sure" style="--c:#0b3e75;--k:#eaf4ff;--edge:#05264b">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COUNT THE BARS</span></div>
+    <h2 class="q">What happened in the first large-scale prison massacre in 2021?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A blueprint: Ecuador's inmates grew from 11,000 in 2009 to over 31,000. Below, a zoomed figure of early 2021 to early 2023 where you drag bars to guess how many large-scale prison massacres happened, and a title block for the first one."></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">It was the first of a series. <b>Drag across the cell:</b> how many large-scale prison massacres in those two years?</p>
+    <div id="why" class="gone"><p class="big">11 massacres in two years</p><p class="body">The first came on 23 February 2021 in the Guayaquil Penitentiary, where 79 prisoners were beheaded. Ten more large-scale massacres followed inside Ecuador's prisons by early 2023.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Guayaquil, 23 Feb 2021: 79 prisoners beheaded, the first of 11 prison massacres.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const hasDraw = typeof DrawSVGPlugin !== 'undefined';
+  if (hasDraw) gsap.registerPlugin(DrawSVGPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const LINE = '#eaf4ff', CYAN = '#8fd6ff', AMBER = '#ffcf6e', GROUND = '#0b3e75';
+  const REAL = 11, SLOTS = 20;
+  let guess = 0, touched = false, asked = false, revealed = false, lastW = 0, lastH = 0;
+  let W = 0, H = 0, fs = 12, L = {};
+
+  const P = v => Math.max(0, v);
+  const T = (...a) => a.flat().filter(Boolean);
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs}, a), p); e.textContent = s; return e; };
+  const fit = (e, max) => { e.removeAttribute('textLength'); e.removeAttribute('lengthAdjust'); const w = e.getComputedTextLength(); if (w > max && max > 0) { e.setAttribute('textLength', max); e.setAttribute('lengthAdjust', 'spacingAndGlyphs'); } };
+  const guessLabel = () => revealed ? `GUESS ${guess} / REAL ${REAL}` : guess ? `YOUR GUESS: ${guess}` : 'YOUR GUESS: ?';
+  const TB_BEFORE = ['No.? OF ?', 'SITE ············', 'DATE ··.··.····'];
+  const TB_AFTER = ['No.1 OF 11 · 23.02.2021', 'GUAYAQUIL PENITENTIARY', '79 PRISONERS BEHEADED'];
+  const MINI_BEFORE = 'FIG.2 · PRISON MASSACRES ’21–’23';
+  const MINI_AFTER = 'No.1 · GUAYAQUIL PENITENTIARY · 79 BEHEADED';
+
+  // A dimension line with arrowheads, engineer style.
+  function dim(p, x1, x2, y, a = .8) {
+    const s = fs * .35;
+    mk('line', {x1, x2, y1: y, y2: y, stroke: LINE, 'stroke-opacity': a, 'stroke-width': 1}, p);
+    mk('path', {d: `M${x1 + s},${y - s * .6} L${x1},${y} L${x1 + s},${y + s * .6} M${x2 - s},${y - s * .6} L${x2},${y} L${x2 - s},${y + s * .6} M${x1},${y - s * 1.2} V${y + s * 1.2} M${x2},${y - s * 1.2} V${y + s * 1.2}`, stroke: LINE, 'stroke-opacity': a, 'stroke-width': 1, fill: 'none'}, p);
+  }
+
+  function layout() {
+    const r = svg.getBoundingClientRect();
+    if (r.width < 20 || r.height < 20) return;
+    if (lastW && Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 1) return;
+    lastW = r.width; lastH = r.height;
+    gsap.killTweensOf(svg.querySelectorAll('*'));
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, H / 25, W / 26));
+    const m = Math.max(12, fs * 1.05);
+    L = {};
+
+    // ---------- drafting grid straight on the card's blueprint ground ----------
+    const defs = mk('defs', {}, svg);
+    const p1 = mk('pattern', {id: 'gmin', width: 12, height: 12, patternUnits: 'userSpaceOnUse'}, defs);
+    mk('path', {d: 'M12 0H0V12', fill: 'none', stroke: '#cfe6ff', 'stroke-opacity': .07}, p1);
+    const p2 = mk('pattern', {id: 'gmaj', width: 60, height: 60, patternUnits: 'userSpaceOnUse'}, defs);
+    mk('path', {d: 'M60 0H0V60', fill: 'none', stroke: '#cfe6ff', 'stroke-opacity': .14}, p2);
+    const hp = mk('pattern', {id: 'hatch', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 5, stroke: LINE, 'stroke-opacity': .55, 'stroke-width': 1.2}, hp);
+    const gl = mk('filter', {id: 'glow', x: '-80%', y: '-20%', width: '260%', height: '140%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: 2.4, result: 'b'}, gl);
+    const mg = mk('feMerge', {}, gl); mk('feMergeNode', {in: 'b'}, mg); mk('feMergeNode', {in: 'SourceGraphic'}, mg);
+
+    mk('rect', {width: W, height: H, fill: 'url(#gmin)'}, svg);
+    mk('rect', {width: W, height: H, fill: 'url(#gmaj)'}, svg);
+
+    // ---------- choose how much of the sheet fits ----------
+    const top = m * .7, bot = H - m * .7, avail = bot - top;
+    const needA = fs * 7.7, needB = fs * 10.6, needC = fs * 7.3;
+    const mode = avail >= needA + needB + needC ? 'full' : avail >= needB + needC ? 'mid' : 'mini';
+    L.mode = mode;
+
+    let B0, B1, C0, C1;
+    if (mode !== 'mini') { C1 = bot; C0 = C1 - fs * 6.1; B1 = C0 - fs * 1.2; }
+    else B1 = bot;
+
+    // ---------- FIG.1: the timeline of inmates (only when there is room) ----------
+    if (mode === 'full') {
+      const xL = m + fs * .5, xR = W - m - fs * .5;
+      const yr = y => xL + (y - 2009) / (2024 - 2009) * (xR - xL);
+      const yHead = top + fs * 1.05, yLab = yHead + fs * 1.75, yAx = yLab + fs * .95, yYr = yAx + fs * 1.55;
+      const gA = mk('g', {}, svg);
+      fit(txt(gA, xL, yHead, 'FIG.1 · INMATES IN ECUADOR', {'fill-opacity': .7}), xR - xL);
+      mk('line', {x1: xL, x2: xR, y1: yAx, y2: yAx, stroke: LINE, 'stroke-width': 1.4, class: 'dr'}, gA);
+      for (let y = 2009; y <= 2024; y++) {
+        const big = y === 2009 || y === 2021 || y === 2023;
+        mk('line', {x1: yr(y), x2: yr(y), y1: yAx - (big ? fs * .5 : fs * .28), y2: yAx + fs * .28, stroke: LINE, 'stroke-opacity': big ? 1 : .55}, gA);
+      }
+      mk('rect', {x: yr(2021), y: yAx - fs * .45, width: P(yr(2023) - yr(2021)), height: fs * .9, fill: 'url(#hatch)', stroke: LINE, 'stroke-width': 1}, gA);
+      txt(gA, xL, yYr, '2009', {'text-anchor': 'start'});
+      txt(gA, yr(2021), yYr, '2021', {'text-anchor': 'middle'});
+      txt(gA, yr(2023), yYr, '2023', {'text-anchor': 'middle'});
+      mk('circle', {cx: xL, cy: yAx, r: 3.2, fill: LINE}, gA);
+      mk('circle', {cx: xR, cy: yAx, r: 3.2, fill: LINE}, gA);
+      const a1 = txt(gA, xL, yLab, '11,000', {'font-weight': 800});
+      const a2 = txt(gA, xR, yLab, '31,000+ NOW', {'text-anchor': 'end', 'font-weight': 800});
+      const w1 = a1.getComputedTextLength(), w2 = a2.getComputedTextLength();
+      const d1 = xL + w1 + 8, d2 = xR - w2 - 8, dy = yLab - fs * .35;
+      if (d2 - d1 > fs * 2) {
+        dim(gA, d1, d2, dy, .7);
+        const tx = mk('text', {x: (d1 + d2) / 2, y: yLab, 'font-size': fs, 'text-anchor': 'middle', 'font-weight': 800}, gA); tx.textContent = '×2.8';
+        const tw = tx.getComputedTextLength();
+        if (tw + fs * 1.6 < d2 - d1) gA.insertBefore(mk('rect', {x: (d1 + d2) / 2 - tw / 2 - 4, y: dy - fs * .6, width: tw + 8, height: fs * 1.2, fill: GROUND}), tx);
+        else tx.remove();
+      }
+      B0 = yYr + fs * 1.9;
+      // projection lines: FIG.2 is the hatched window, blown up
+      [[yr(2021), m], [yr(2023), W - m]].forEach(([x0, x1]) => mk('line', {x1: x0, y1: yYr + fs * .45, x2: x1, y2: B0, stroke: LINE, 'stroke-opacity': .45, 'stroke-dasharray': '3 4', class: 'pj'}, svg));
+    } else B0 = top;
+
+    // ---------- FIG.2: the cell where the reader counts ----------
+    const gB = mk('g', {}, svg);
+    mk('rect', {x: m, y: B0, width: P(W - 2 * m), height: P(B1 - B0), fill: 'none', stroke: LINE, 'stroke-width': 1.2, class: 'dr'}, gB);
+    const bx0 = m + fs * .9, bx1 = W - m - fs * .9, slotW = (bx1 - bx0) / SLOTS, bw = slotW * .38;
+    const mini = mode === 'mini';
+    const yHeadB = B0 + fs * 1.45;
+    const yDim = B0 + fs * 2.6;
+    const yTop = B0 + fs * (mini ? 2.2 : 3.3);
+    const yb = Math.max(yTop + 6, B1 - fs * 2.3), yRow = yb + fs * 1.6;
+    const barH = yb - yTop;
+    const sx = i => bx0 + slotW * (i + .5);
+    Object.assign(L, {bx0, slotW, yTop, yb});
+
+    if (mini) {
+      const h = txt(gB, bx0, yHeadB, revealed ? MINI_AFTER : MINI_BEFORE, {'fill-opacity': revealed ? 1 : .7, 'font-weight': revealed ? 800 : 600});
+      if (revealed) h.style.fill = AMBER;
+      fit(h, bx1 - bx0); h._max = bx1 - bx0; h._after = MINI_AFTER;
+      L.tb = [h];
+    } else {
+      fit(txt(gB, bx0, yHeadB, 'FIG.2 · PRISON MASSACRES ’21–’23', {'fill-opacity': .7}), bx1 - bx0);
+    }
+    mk('line', {x1: bx0, x2: bx1, y1: yb, y2: yb, stroke: LINE, 'stroke-opacity': .6, class: 'dr'}, gB);
+    for (let i = 0; i <= SLOTS; i++) mk('line', {x1: bx0 + slotW * i, x2: bx0 + slotW * i, y1: yb, y2: yb + (i % 5 ? fs * .25 : fs * .5), stroke: LINE, 'stroke-opacity': i % 5 ? .4 : .8}, gB);
+
+    // the guess: dashed cyan bars
+    L.gBars = [];
+    for (let i = 0; i < SLOTS; i++) {
+      const b = mk('rect', {x: sx(i) - bw / 2, y: yTop, width: bw, height: P(barH), rx: 1, fill: 'rgba(143,214,255,.16)', stroke: CYAN, 'stroke-width': 1.2, 'stroke-dasharray': '4 3'}, gB);
+      b._on = i < guess;
+      gsap.set(b, {scaleY: b._on ? 1 : 0, transformOrigin: '50% 100%', opacity: revealed ? .28 : 1});
+      L.gBars.push(b);
+    }
+    // the real thing: white bars, welded by rails
+    const rx0 = sx(0) - slotW * .45, rx1 = sx(REAL - 1) + slotW * .45;
+    L.rails = mk('g', {}, gB);
+    mk('rect', {x: rx0, y: yTop - 3, width: P(rx1 - rx0), height: 3.5, fill: LINE, filter: 'url(#glow)'}, L.rails);
+    if (barH > fs * 3) mk('rect', {x: rx0, y: yTop + barH * .5 - 1.5, width: P(rx1 - rx0), height: 2.5, fill: LINE, 'fill-opacity': .8}, L.rails);
+    mk('rect', {x: rx0, y: yb - 1.5, width: P(rx1 - rx0), height: 3.5, fill: LINE, filter: 'url(#glow)'}, L.rails);
+    L.rBars = [];
+    for (let i = 0; i < REAL; i++) {
+      const b = mk('rect', {x: sx(i) - bw * .6, y: yTop, width: bw * 1.2, height: P(barH), rx: 1.5, fill: i ? LINE : AMBER, filter: 'url(#glow)'}, gB);
+      L.rBars.push(b);
+    }
+    // the dimension "11" across the welded cell
+    L.dim = null;
+    if (!mini) {
+      L.dim = mk('g', {}, gB);
+      dim(L.dim, rx0, rx1, yDim, .9);
+      const dl = mk('text', {x: (rx0 + rx1) / 2, y: yDim + fs * .35, 'font-size': fs, 'text-anchor': 'middle', 'font-weight': 800}, L.dim); dl.textContent = '11';
+      const dlw = dl.getComputedTextLength();
+      L.dim.insertBefore(mk('rect', {x: (rx0 + rx1) / 2 - dlw / 2 - 5, y: yDim - fs * .6, width: dlw + 10, height: fs * 1.2, fill: GROUND}), dl);
+    }
+    const rowW = bx1 - bx0;
+    L.no1 = txt(gB, sx(0) - bw / 2, yRow, '▲ 23.02.2021', {fill: AMBER, 'font-weight': 800});
+    L.no1.style.fill = AMBER; fit(L.no1, rowW * .42);
+    L.guessT = txt(gB, bx1, yRow, guessLabel(), {'text-anchor': 'end', 'font-weight': 800});
+    L.guessT.style.fill = revealed ? LINE : CYAN; L.guessT._max = rowW * .52; fit(L.guessT, L.guessT._max);
+
+    // the knob the finger drags
+    const kr = Math.min(fs * .62, barH * .5 + fs * .3);
+    L.knob = mk('g', {}, gB);
+    mk('circle', {cx: 0, cy: yb, r: kr, fill: GROUND, stroke: CYAN, 'stroke-width': 1.6}, L.knob);
+    mk('path', {d: `M${-fs * .22},${yb - fs * .2} L${fs * .02},${yb} L${-fs * .22},${yb + fs * .2} M${fs * .05},${yb - fs * .2} L${fs * .29},${yb} L${fs * .05},${yb + fs * .2}`, stroke: CYAN, 'stroke-width': 1.5, fill: 'none', 'stroke-linecap': 'round'}, L.knob);
+    gsap.set(L.knob, {x: bx0 + slotW * guess});
+    const hfs = Math.max(12, Math.min(fs * 1.25, barH * .85));
+    L.hint = mk('g', {}, gB);
+    txt(L.hint, bx0 + fs * 1.6, (yTop + yb) / 2 + hfs * .35, 'drag →  how many?', {class: 'hand', 'font-size': hfs}).style.fill = CYAN;
+    gsap.set(L.hint, {autoAlpha: touched || revealed ? 0 : 1});
+    if (!touched && !revealed && !Kit.calm) gsap.to(L.hint, {x: fs * .9, repeat: -1, yoyo: true, duration: .8, ease: 'sine.inOut'});
+
+    // ---------- the title block ----------
+    L.sq = []; L.dots = null; L.leader = null;
+    if (!mini) {
+      const gC = mk('g', {}, svg);
+      const xd = m + (W - 2 * m) * .62;
+      mk('rect', {x: m, y: C0, width: P(W - 2 * m), height: P(C1 - C0), fill: 'none', stroke: LINE, 'stroke-width': 1.2, class: 'dr'}, gC);
+      mk('line', {x1: xd, x2: xd, y1: C0, y2: C1, stroke: LINE, 'stroke-opacity': .7, class: 'dr'}, gC);
+      [2.2, 3.9].forEach(k => mk('line', {x1: m, x2: xd, y1: C0 + fs * k, y2: C0 + fs * k, stroke: LINE, 'stroke-opacity': .25}, gC));
+      const tx0 = m + fs * .6, tav = xd - tx0 - fs * .5;
+      L.tb = [1.6, 3.3, 5.0].map((k, i) => {
+        const e = txt(gC, tx0, C0 + fs * k, revealed ? TB_AFTER[i] : TB_BEFORE[i], {'font-weight': i === 2 ? 800 : 600, 'fill-opacity': revealed ? 1 : .5});
+        if (revealed && i === 0) e.style.fill = AMBER;
+        fit(e, tav); e._max = tav; e._after = TB_AFTER[i]; return e;
+      });
+      // 79 marks, one per prisoner
+      const pad = fs * .45, cw = P(W - m - xd - pad * 2), ch = P(C1 - C0 - pad * 2);
+      const cell = Math.min(cw / 10, ch / 8), gx = xd + pad + (cw - cell * 10) / 2, gy = C0 + pad + (ch - cell * 8) / 2, sq = Math.max(1, cell * .66);
+      L.dots = mk('g', {}, gC);
+      for (let k = 0; k < 80; k++) {
+        const cx = gx + (k % 10 + .5) * cell, cy = gy + (Math.floor(k / 10) + .5) * cell;
+        mk('circle', {cx, cy, r: .9, fill: LINE, 'fill-opacity': .4}, L.dots);
+        if (k < 79) L.sq.push(mk('rect', {x: cx - sq / 2, y: cy - sq / 2, width: sq, height: sq, fill: LINE, rx: .6}, gC));
+      }
+      // amber leader: bar No.1 is the case in the title block
+      const lx = sx(0);
+      L.leader = mk('path', {d: `M${lx},${yRow + fs * .45} V${C0 - 2}`, stroke: AMBER, 'stroke-width': 1.4, 'stroke-dasharray': '2 3', fill: 'none'}, svg);
+      L.leaderDot = mk('circle', {cx: lx, cy: C0, r: 2.6, fill: AMBER}, svg);
+    }
+    final(revealed);
+  }
+
+  // Shows or hides the answer in one go (resize, calm).
+  function final(on) {
+    gsap.set(L.rBars, {autoAlpha: on ? 1 : 0, y: 0, scaleX: 1});
+    gsap.set(T(L.rails, L.dim, L.no1, L.leader, L.leaderDot), {autoAlpha: on ? 1 : 0, scaleX: 1});
+    if (L.sq.length) gsap.set(L.sq, {autoAlpha: on ? 1 : 0, scale: 1, transformOrigin: '50% 50%'});
+    if (L.dots) gsap.set(L.dots, {autoAlpha: on ? 0 : 1});
+    gsap.set(L.knob, {autoAlpha: on ? 0 : 1});
+  }
+
+  function setGuess(n) {
+    if (!touched) { touched = true; gsap.killTweensOf(L.hint); gsap.to(L.hint, {autoAlpha: 0, duration: .25}); }
+    if (n === guess) return;
+    guess = n; Kit.haptic('selection');
+    L.gBars.forEach((b, i) => {
+      const on = i < n; if (b._on === on) return; b._on = on;
+      if (Kit.calm) gsap.set(b, {scaleY: on ? 1 : 0});
+      else gsap.to(b, {scaleY: on ? 1 : 0, duration: on ? .75 : .3, ease: on ? 'elastic.out(1.1,.4)' : 'back.in(1.7)', overwrite: true, transformOrigin: '50% 100%'});
+    });
+    if (Kit.calm) gsap.set(L.knob, {x: L.bx0 + L.slotW * n});
+    else gsap.to(L.knob, {x: L.bx0 + L.slotW * n, duration: .65, ease: 'elastic.out(1,.5)', overwrite: 'auto'});
+    L.guessT.textContent = guessLabel(); fit(L.guessT, L.guessT._max);
+  }
+
+  function scramble(el, fin, delay, dur) {
+    const chars = 'ABCDEFGHJKLMNPRSTUVWXYZ0123456789', o = {p: 0};
+    el.textContent = fin; fit(el, el._max);
+    gsap.to(o, {p: 1, delay, duration: dur, ease: 'power2.out', onUpdate() {
+      const k = Math.floor(o.p * fin.length);
+      el.textContent = fin.slice(0, k) + fin.slice(k).replace(/[^ ·.]/g, () => chars[Math.floor(Math.random() * chars.length)]);
+    }, onComplete() { el.textContent = fin; }});
+  }
+
+  // The wow: the real bars fall in, the cell is welded shut, the first one is named.
+  function reveal() {
+    revealed = true;
+    L.guessT.textContent = guessLabel(); L.guessT.style.fill = LINE; fit(L.guessT, L.guessT._max);
+    L.tb.forEach((e, i) => { e.setAttribute('fill-opacity', 1); if (!i) { e.style.fill = AMBER; e.setAttribute('font-weight', 800); } });
+    if (Kit.calm) { L.tb.forEach(e => { e.textContent = e._after; fit(e, e._max); }); gsap.set(L.gBars, {opacity: .28}); final(true); return; }
+    const tl = gsap.timeline();
+    tl.to(L.knob, {autoAlpha: 0, scale: .3, transformOrigin: '50% 50%', duration: .3, ease: 'back.in(2)'}, 0)
+      .to(L.gBars, {opacity: .28, duration: .4}, 0)
+      .fromTo(L.rBars, {autoAlpha: 0, y: -(L.yb + 20)}, {autoAlpha: 1, y: 0, duration: 1.15, ease: 'elastic.out(1,.55)', stagger: .08}, .1)
+      .call(() => Kit.haptic('success'), null, .55)
+      .fromTo(L.rails, {autoAlpha: 1, scaleX: 0, transformOrigin: '0% 50%'}, {scaleX: 1, duration: .7, ease: 'expo.out'}, 1.05)
+      .to(L.rBars, {attr: {fill: '#ffffff'}, duration: .12, yoyo: true, repeat: 1, stagger: .03}, 1.2)
+      .to(L.rBars[0], {scaleX: 1.9, transformOrigin: '50% 100%', duration: .22, yoyo: true, repeat: 3, ease: 'power2.inOut'}, 1.45)
+      .fromTo(L.no1, {autoAlpha: 0, y: fs * .8}, {autoAlpha: 1, y: 0, duration: .6, ease: 'back.out(2.5)'}, 1.5)
+      .call(() => L.tb.forEach((e, i) => scramble(e, e._after, i * .15, .8)), null, 1.6);
+    tl.set(L.rBars[0], {attr: {fill: AMBER}}, 1.6);
+    if (L.dim) tl.fromTo(L.dim, {autoAlpha: 0, scaleX: .2, transformOrigin: '50% 50%'}, {autoAlpha: 1, scaleX: 1, duration: .7, ease: 'back.out(2.2)'}, 1.15);
+    if (L.leader) {
+      if (hasDraw) tl.fromTo(L.leader, {autoAlpha: 1, drawSVG: '0%'}, {drawSVG: '100%', duration: .45, ease: 'power2.inOut'}, 1.55);
+      else tl.fromTo(L.leader, {autoAlpha: 0}, {autoAlpha: 1, duration: .4}, 1.55);
+      tl.fromTo(L.leaderDot, {autoAlpha: 0, scale: 0, transformOrigin: '50% 50%'}, {autoAlpha: 1, scale: 1, duration: .5, ease: 'back.out(4)'}, 1.95);
+    }
+    if (L.dots) tl.to(L.dots, {autoAlpha: 0, duration: .3}, 1.7);
+    if (L.sq.length) tl.fromTo(L.sq, {autoAlpha: 0, scale: 0, transformOrigin: '50% 50%'}, {autoAlpha: 1, scale: 1, duration: .35, ease: 'back.out(3)', stagger: .013}, 1.75);
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = Math.abs(guess - REAL) <= 2;
+    Kit.answer({choice: String(guess), correct: ok, sure: pct});
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.$('card').classList.add('answered');
+    sure.grade(ok, pct, `You said ${guess}: ${ok ? 'close' : 'off'}. It was 11`);
+    setTimeout(() => { layout(); reveal(); }, 260);
+  });
+
+  const slotOf = e => {
+    const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * W / r.width;
+    return Math.max(1, Math.min(SLOTS, Math.ceil((x - L.bx0) / L.slotW)));
+  };
+  let drag = false;
+  const ask = () => {
+    if (guess && !asked) { asked = true; sure.on(); say.innerHTML = 'Happy with your count? <b>Say how sure you are</b>, or keep dragging.'; }
+  };
+  svg.addEventListener('pointerdown', e => { if (revealed || !L.gBars) return; drag = true; svg.setPointerCapture(e.pointerId); setGuess(slotOf(e)); });
+  svg.addEventListener('pointermove', e => { if (drag && !revealed) setGuess(slotOf(e)); });
+  const up = () => { if (!drag) return; drag = false; ask(); };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  // re-draft the sheet whenever its space changes (e.g. when the answer text appears)
+  let raf = 0;
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
+    if (!L.gBars) return;
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(layout);
+  }).observe(Kit.$('stage'));
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !L.gBars) return;
+    const tl = gsap.timeline(), dr = svg.querySelectorAll('.dr');
+    if (hasDraw) tl.from(dr, {drawSVG: '0%', duration: 1.1, ease: 'power3.inOut', stagger: .06}, 0);
+    else tl.from(dr, {opacity: 0, duration: .6, stagger: .05}, 0);
+    const vis = [...svg.querySelectorAll('text')].filter(t => !t.closest('[style*="hidden"]') && getComputedStyle(t).visibility !== 'hidden');
+    tl.from(svg.querySelectorAll('.pj'), {opacity: 0, duration: .6, ease: 'power2.out'}, .5)
+      .from(vis, {opacity: 0, y: 6, duration: .55, ease: 'power3.out', stagger: .03}, .35)
+      .from(L.knob, {scale: 0, transformOrigin: '50% 50%', duration: 1, ease: 'elastic.out(1,.4)'}, .9);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setGuess(7); ask();
+    await wait(Kit.calm ? 80 : 700);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 400 : 3400);
+  };
+})();
+Kit.single();
+</script>
+</html>

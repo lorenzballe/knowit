@@ -1,0 +1,38 @@
+{
+  "id": "technology-fastest-not-shortest",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A Micromouse races to the goal. Which route is it searching for?",
+  "answer": "Micromice search for the fastest path, not the shortest, and the fastest may be the longer one. Count the turns, not just the metres, because the robot's speed depends on them.",
+  "move": "Fastest isn't shortest: count the turns, not just the metres.",
+  "keywords": [
+    "micromouse",
+    "maze",
+    "robots",
+    "shortest-path",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two paths in a maze from a black corner to a red square: one shorter, one with fewer turns. Asks which route a Micromouse robot would bet on racing.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=651s",
+  "written": "2026-11-03"
+}

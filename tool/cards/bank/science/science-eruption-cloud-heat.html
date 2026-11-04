@@ -50,22 +50,21 @@ function draw(){
   const heads = [[0,.30,.15],[-.15,.32,.11],[.15,.32,.11],[-.08,.19,.11],[.09,.18,.10],[-.21,.37,.08],[.21,.37,.08],[0,.40,.12]];
   const hw = .29*s, py = H*.31;
   const lg = Kit.mk('linearGradient', {id:'heat', gradientUnits:'userSpaceOnUse', x1:cx-hw, x2:cx+hw, y1:0, y2:0}, defs);
-  [[0,'#9e1f14'],[.22,'#ff5a14'],[.5,'#fff7cf'],[.78,'#ff5a14'],[1,'#9e1f14']].forEach(([o,c]) => Kit.mk('stop', {offset:o, 'stop-color':c}, lg));
-  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:Math.max(10,H*.04), fill:'#15110e'}, svg);
+  [[0,'#8c1710'],[.22,'#e5400f'],[.5,'#ffd23a'],[.78,'#e5400f'],[1,'#8c1710']].forEach(([o,c]) => Kit.mk('stop', {offset:o, 'stop-color':c}, lg));
   const y0 = H*.76;
   const shape = (g, fill) => {
     Kit.mk('polygon', {points:`${cx-.045*s},${y0} ${cx-.15*s},${H*.36} ${cx+.15*s},${H*.36} ${cx+.045*s},${y0}`, fill}, g);
     return heads.map(([x,y,r]) => Kit.mk('circle', {cx:cx+x*s, cy:H*y, r:r*s, fill}, g));
   };
-  const ash = Kit.mk('g', {}, svg); const ashC = shape(ash, '#5d5650');
+  const ash = Kit.mk('g', {}, svg); const ashC = shape(ash, '#4a433d');
   const heat = Kit.mk('g', {opacity:0}, svg); shape(heat, 'url(#heat)');
   Kit.mk('polygon', {points:`${cx-.48*W},${H} ${cx-.06*s},${y0} ${cx+.06*s},${y0} ${cx+.48*W},${H}`, fill:'#2e2520'}, svg);
-  const halo = {fill:'#fff', stroke:'#000', 'stroke-width':Math.max(3,fs*.25), 'paint-order':'stroke', 'stroke-linejoin':'round', 'font-family':'var(--body)'};
+  const halo = {fill:'#10100c', stroke:'#00E5A0', 'stroke-width':Math.max(3,fs*.25), 'paint-order':'stroke', 'stroke-linejoin':'round', 'font-family':'var(--body)'};
   const probe = Kit.mk('g', {opacity:0}, svg);
-  Kit.mk('line', {x1:cx-hw, x2:cx, y1:py, y2:py, stroke:'#fff', 'stroke-width':2, 'stroke-dasharray':'5 5'}, probe);
+  Kit.mk('line', {x1:cx-hw, x2:cx, y1:py, y2:py, stroke:'#10100c', 'stroke-width':2, 'stroke-dasharray':'5 5'}, probe);
   const edgeT = Kit.mk('text', Object.assign({x:cx-hw, y:py+fs*1.6, 'font-size':fs*.95, 'font-weight':700}, halo), probe);
   edgeT.textContent = 'edge ≈ 500 °C';
-  const dot = Kit.mk('circle', {cx:cx-hw, cy:py, r:Math.max(5,fs*.45), fill:'#fff', stroke:'#000', 'stroke-width':2}, probe);
+  const dot = Kit.mk('circle', {cx:cx-hw, cy:py, r:Math.max(5,fs*.45), fill:'#fff', stroke:'#10100c', 'stroke-width':2}, probe);
   const rd = Kit.mk('text', Object.assign({x:cx-hw, y:py-fs*.9, 'font-size':fs*1.35, 'font-weight':800, 'text-anchor':'start'}, halo), probe);
   rd.textContent = '500 °C';
   G = {heat, probe, dot, rd, cx, hw, ashC};

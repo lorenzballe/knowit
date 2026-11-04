@@ -29,8 +29,7 @@
     "kit": 1,
     "touch": "drags",
     "label": "A dark page titled Black Holes asks what a black hole's edge would show to someone with perfect eyes. Three options are offered: seen from afar, nothing; the last one in; all that ever fell in. The reader picks one and then states how sure they are.",
-    "graded": false,
-    "ground": "#11142b"
+    "graded": false
   },
   "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M",

@@ -1,0 +1,342 @@
+<!doctype html>
+<!-- slug: science-grape-microwave-trap -->
+<!-- Look: a dark miniature oven floor of isometric blocks, a tiny magnetron block raining microwaves on two glossy red grapes, each shown with a glowing cross-section slice.
+     Interaction: pick what the microwaves do inside the grape, say how sure you are, and the options rearrange (Flip) into the true answer while the grapes act it out.
+     Wow moment: a wave slips in and bounces round and round inside the skin, the bounces settle into a pulsing standing-wave pattern, and its peak lights a plasma spark where the grapes touch. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Trapped in a grape</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0;min-width:0}
+#art{flex:1 1 0;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* bottom padding gives the entry slide (y:10) room so the last option never leaves the block */
+#opts{display:flex;flex-direction:column;gap:.9cqh;flex:none;min-width:0;padding-bottom:12px;box-sizing:border-box}
+#why{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why .big{font-size:max(2.6cqh,16px);line-height:1.15}
+#why .body{font-size:max(1.85cqh,13px);line-height:1.3}
+.opt{flex:none;box-sizing:border-box;width:100%;max-width:100%;min-width:0;white-space:normal;font:700 max(1.95cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 7%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 26%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer;transition:background .15s,color .15s,transform .12s;overflow-wrap:anywhere}
+.opt:active{transform:scale(.98)}
+.opt .n{font:600 max(1.5cqh,12px)/1 var(--mono);opacity:.6;margin-right:2.4cqw}
+.opt.on{background:#ffb347;color:#1b1020;box-shadow:none}
+.opt.right{background:#ffb347;color:#1b1020;box-shadow:0 0 2.4cqh rgba(255,179,71,.45)}
+.opt.wrong{opacity:.38;font-size:max(1.6cqh,12px);padding:.8cqh 4cqw}
+.opt.wrong.on{text-decoration:line-through;background:color-mix(in srgb,var(--k) 7%,transparent);color:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · trapped waves" style="--c:#151a30;--k:#f4ede0;--edge:#0a0d1a">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <h2 class="q">What do microwaves do once they get inside a grape?</h2>
+    <div class="stagebox" id="stage">
+      <div id="art"><canvas id="cv" role="img" aria-label="Two red grapes touching on an isometric oven floor, a magnetron block sending microwaves at them, and a slice through each grape showing the field inside."></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0"><span class="n">A</span>Pass straight through and out</button>
+        <button class="opt" data-i="1"><span class="n">B</span>Get trapped, bouncing around inside</button>
+        <button class="opt" data-i="2"><span class="n">C</span>Bounce off the skin, never get in</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Trapped, bouncing inside</p><p class="body">At the grape's edge the waves reflect back in, much like total internal reflection, so they can't get out. They pile up into standing waves, resonant modes, whose field peaks where the two grapes touch.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Microwaves rain on two touching grapes. <b>Pick what happens inside.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A grape traps microwaves: they bounce inside and peak where grapes touch.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(Flip);
+const RIGHT = 1;
+let pick = -1, revealed = false;
+const cv = Kit.$('cv'), art = Kit.$('art');
+let X = null, W = 0, H = 0, fs = 12, G = null, MONO = 'monospace';
+const S = {floor: 0, grape: 0, mag: 0, ray: 0, mode: 0, plasma: 0};
+const sparks = [];
+
+// ---------- geometry ----------
+function layout() {
+  if (art.clientHeight < 20 || art.clientWidth < 20) return;
+  cv.style.width = ''; cv.style.height = '';
+  const f = Kit.fitCanvas(cv); X = f.x; W = f.W; H = f.H;
+  MONO = (getComputedStyle(document.body).getPropertyValue('--mono') || '').trim() || 'monospace';
+  fs = Math.max(12, Math.min(14, W / 28));
+  const tw = Math.min(W * .14, H * .19), th = tw / 2, dep = tw * .24;
+  const floorY = H - 3 * th - dep - 4;
+  // leave room above the grapes for the stems and one label
+  let R = Math.min(W * .19, (floorY - fs - 8) / 2.14);
+  R = Math.max(16, R);
+  const cx = W / 2, cy = floorY - .9 * R, s = .5;
+  const tiles = [];
+  for (let i = 0; i < 6; i++) for (let j = 0; j < 6; j++) {
+    tiles.push({x: cx + (i - j) * tw / 2, y: floorY - 2.5 * th + (i + j) * th, k: i + j, shade: .9 + Kit.rnd() * .2, ph: Kit.rnd() * 6.28});
+  }
+  tiles.sort((a, b) => a.k - b.k);
+  const b = Math.max(9, Math.min(tw * .45, R * .42));
+  const mag = {b, x: Math.max(b * 1.2 + 4, cx - 2.35 * R), y: Math.max(fs + b * .5 + 10, cy - R * 1.15)};
+  // bloom speckles on the skins
+  const bloom = [];
+  for (const sd of [-1, 1]) for (let k = 0; k < 22; k++) {
+    const a = Kit.rnd() * 6.28, r = Math.sqrt(Kit.rnd()) * .92;
+    bloom.push({sd, x: Math.cos(a) * r, y: Math.sin(a) * r, z: .5 + Kit.rnd()});
+  }
+  // the slice pattern: a standing wave peaking at the contact point
+  const sc = .5, gw = Math.ceil(4 * R * sc), gh = Math.ceil(2 * R * s * sc) + 2;
+  const off = document.createElement('canvas'); off.width = gw; off.height = gh;
+  const ox = off.getContext('2d'), img = ox.createImageData(gw, gh), fld = new Float32Array(gw * gh);
+  for (let py = 0; py < gh; py++) for (let px = 0; px < gw; px++) {
+    const sx = px / sc - 2 * R, sy = (py - gh / 2) / sc;
+    const left = sx < 0, gx = sx - (left ? -R : R);
+    const u = gx / R, v = sy / (R * s);
+    if (u * u + v * v > 1) { fld[py * gw + px] = NaN; continue; }
+    const du = u - (left ? 1 : -1), d = Math.hypot(du, v);
+    const rim = Math.cos(Math.hypot(u, v) * Math.PI * 2.2) * .25;
+    fld[py * gw + px] = Math.cos(d * Math.PI * 2 / .55) * (.3 + .7 * Math.exp(-d * 1.7)) + rim * (1 - Math.exp(-d * 2));
+  }
+  // the trapped ray: reflections inside the unit circle
+  const rays = [];
+  for (const side of [-1, 1]) {
+    let a = side < 0 ? -2.45 : -.69, p = [Math.cos(a), Math.sin(a)];
+    const inc = .62, n = [-p[0], -p[1]], rot = side < 0 ? inc : -inc;
+    let d = [n[0] * Math.cos(rot) - n[1] * Math.sin(rot), n[0] * Math.sin(rot) + n[1] * Math.cos(rot)];
+    const pts = [[p[0] - d[0] * 1.6, p[1] - d[1] * 1.6], p.slice()];
+    for (let k = 0; k < 16; k++) {
+      const t = -2 * (p[0] * d[0] + p[1] * d[1]);
+      p = [p[0] + t * d[0], p[1] + t * d[1]];
+      const dn = d[0] * p[0] + d[1] * p[1];
+      d = [d[0] - 2 * dn * p[0], d[1] - 2 * dn * p[1]];
+      pts.push(p.slice());
+    }
+    let L = 0; const seg = [0];
+    for (let k = 1; k < pts.length; k++) { L += Math.hypot(pts[k][0] - pts[k - 1][0], pts[k][1] - pts[k - 1][1]); seg.push(L); }
+    rays.push({side, pts, seg, L});
+  }
+  G = {tw, th, dep, floorY, R, cx, cy, s, tiles, mag, bloom, off, ox, img, fld, gw, gh, sc, rays};
+}
+
+// ---------- drawing ----------
+const clamp = v => Math.max(0, Math.min(1, v));
+function block(x, y, tw, th, dep, top, l, r) {
+  X.beginPath(); X.moveTo(x, y - th / 2); X.lineTo(x + tw / 2, y); X.lineTo(x, y + th / 2); X.lineTo(x - tw / 2, y); X.closePath(); X.fillStyle = top; X.fill();
+  X.beginPath(); X.moveTo(x - tw / 2, y); X.lineTo(x, y + th / 2); X.lineTo(x, y + th / 2 + dep); X.lineTo(x - tw / 2, y + dep); X.closePath(); X.fillStyle = l; X.fill();
+  X.beginPath(); X.moveTo(x + tw / 2, y); X.lineTo(x, y + th / 2); X.lineTo(x, y + th / 2 + dep); X.lineTo(x + tw / 2, y + dep); X.closePath(); X.fillStyle = r; X.fill();
+}
+function label(t, x, y, al, a) {
+  X.save(); X.globalAlpha = a; X.font = `600 ${fs}px ${MONO}`;
+  X.textAlign = al; X.fillStyle = '#f4ede0'; X.shadowColor = '#151a30'; X.shadowBlur = 6; X.fillText(t, x, y); X.restore();
+}
+
+function draw(t) {
+  if (!X || !G) return;
+  const {tw, th, dep, R, cx, cy, s, mag} = G;
+  X.clearRect(0, 0, W, H);
+
+  // soft warm oven-light pool under the grapes
+  if (S.floor > 0) {
+    const pool = X.createRadialGradient(cx, G.floorY, 0, cx, G.floorY, R * 3);
+    pool.addColorStop(0, `rgba(255,180,90,${.10 * S.floor + .18 * S.plasma})`); pool.addColorStop(1, 'rgba(255,180,90,0)');
+    X.fillStyle = pool; X.fillRect(0, 0, W, H);
+  }
+
+  // the oven floor: little blocks dropping into place, shimmering faintly with the field
+  for (const b of G.tiles) {
+    const p = clamp(S.floor * 1.8 - b.k * .08);
+    if (p <= 0) continue;
+    const e = 1 - Math.pow(1 - p, 3), y = b.y - (1 - e) * H * .25, sh = b.shade * (Kit.calm ? 1 : 1 + .05 * Math.sin(t * .002 + b.ph));
+    const glow = (S.mode * .5 + S.plasma * .3) * Math.exp(-Math.hypot(b.x - cx, b.y - G.floorY) / (R * 1.4));
+    X.globalAlpha = e;
+    block(b.x, y, tw * .94, th * .94, dep,
+      `rgb(${Math.min(255, (46 + glow * 140) * sh) | 0},${Math.min(255, (54 + glow * 70) * sh) | 0},${Math.min(255, (92 + glow * 40) * sh) | 0})`,
+      `rgb(${28 * sh | 0},${33 * sh | 0},${60 * sh | 0})`, `rgb(${20 * sh | 0},${24 * sh | 0},${46 * sh | 0})`);
+  }
+  X.globalAlpha = 1;
+
+  // the magnetron and its waves
+  if (S.mag > 0) {
+    const m = S.mag, b = mag.b;
+    X.save(); X.globalAlpha = m; X.translate(0, (1 - m) * -20);
+    block(mag.x, mag.y, b * 2, b, b * .9, '#c9cfdc', '#7d8496', '#5c6274');
+    const lamp = .7 + .3 * Math.sin(t * .008);
+    X.shadowColor = '#ffb347'; X.shadowBlur = 10 * lamp;
+    X.fillStyle = '#ffb347'; X.beginPath(); X.ellipse(mag.x + b * .55, mag.y + b * .62, b * .2, b * .14, 0, 0, Math.PI * 2); X.fill();
+    X.restore();
+    label('magnetron', mag.x, mag.y - b * .5 - 7, 'center', m * .8);
+    const Mx = mag.x + b * .55, My = mag.y + b * .62;
+    const ang = Math.atan2(cy - My, (cx - R) - Mx), maxR = Math.hypot((cx - R) - Mx, cy - My) - R * .85, lw = Math.max(8, R * .28);
+    X.save(); X.lineCap = 'round';
+    if (maxR > 6) for (let k = 0; k < 6; k++) {
+      const r = ((t * .00006 * W + k * lw) % (lw * 6));
+      if (r > maxR || r < 4) continue;
+      X.strokeStyle = `rgba(255,224,150,${(1 - r / maxR) * .8 * m})`; X.lineWidth = 2;
+      X.beginPath(); X.arc(Mx, My, r, ang - .55, ang + .55); X.stroke();
+    }
+    X.restore();
+  }
+
+  // shadows
+  if (S.grape > 0) {
+    X.save(); X.globalAlpha = .55 * S.grape; X.fillStyle = '#05060d';
+    for (const sd of [-1, 1]) { X.beginPath(); X.ellipse(cx + sd * R + R * .15, G.floorY + th * .2, R * .95 * S.grape, R * .3 * S.grape, 0, 0, Math.PI * 2); X.fill(); }
+    X.restore();
+  }
+
+  // the grapes
+  for (const sd of [-1, 1]) {
+    const gx = cx + sd * R, gs = S.grape; if (gs <= 0) continue;
+    X.save(); X.translate(gx, cy); X.scale(gs, gs);
+    const gr = X.createRadialGradient(-R * .35, -R * .4, R * .1, 0, 0, R);
+    gr.addColorStop(0, 'rgba(206,78,136,.96)'); gr.addColorStop(.55, 'rgba(118,28,78,.93)'); gr.addColorStop(1, 'rgba(40,6,30,.97)');
+    X.fillStyle = gr; X.beginPath(); X.arc(0, 0, R, 0, Math.PI * 2); X.fill();
+    // waxy bloom
+    X.fillStyle = 'rgba(230,200,240,.10)';
+    for (const p of G.bloom) if (p.sd === sd) { X.beginPath(); X.arc(p.x * R, p.y * R, Math.max(.8, R * .018 * p.z), 0, Math.PI * 2); X.fill(); }
+    // pulsing hot spot where the waves strike
+    if (sd < 0 && !Kit.calm) {
+      const hp = (.5 + .5 * Math.sin(t * .006)) * .35 * S.mag * (1 - S.mode);
+      const hs = X.createRadialGradient(-R * .8, -R * .35, 0, -R * .8, -R * .35, R * .55);
+      hs.addColorStop(0, `rgba(255,214,140,${hp})`); hs.addColorStop(1, 'rgba(255,214,140,0)');
+      X.fillStyle = hs; X.beginPath(); X.arc(0, 0, R, 0, Math.PI * 2); X.fill();
+    }
+    // stem
+    X.strokeStyle = '#7a5530'; X.lineWidth = Math.max(2, R * .05); X.lineCap = 'round';
+    X.beginPath(); X.moveTo(-sd * R * .1, -R * .97); X.quadraticCurveTo(-sd * R * .05, -R * 1.15, sd * R * .12, -R * 1.2); X.stroke();
+    // slice plane, the flesh warming as the ray arrives
+    if (S.ray > 0) {
+      X.fillStyle = `rgba(255,190,210,${.08 * S.ray})`; X.beginPath(); X.ellipse(0, 0, R, R * s, 0, 0, Math.PI * 2); X.fill();
+    }
+    X.strokeStyle = 'rgba(255,230,240,.38)'; X.setLineDash([4, 4]); X.lineWidth = 1.2;
+    X.beginPath(); X.ellipse(0, 0, R, R * s, 0, 0, Math.PI * 2); X.stroke(); X.setLineDash([]);
+    X.restore();
+  }
+
+  // the field in the slice: a standing wave, nodes fixed, swelling and fading
+  if (S.mode > 0) {
+    const {img, fld, gw, gh, ox, off, sc} = G, osc = Kit.calm ? .85 : Math.sin(t * .006), D = img.data;
+    for (let i = 0; i < fld.length; i++) {
+      const v = fld[i], o = i * 4;
+      if (v !== v) { D[o + 3] = 0; continue; }
+      const e = v * osc * S.mode, a = Math.min(1, Math.abs(e) * 1.3);
+      if (e > 0) { D[o] = 255; D[o + 1] = 170; D[o + 2] = 60; } else { D[o] = 100; D[o + 1] = 205; D[o + 2] = 255; }
+      D[o + 3] = a * 255;
+    }
+    ox.putImageData(img, 0, 0);
+    X.save(); X.globalCompositeOperation = 'lighter'; X.imageSmoothingEnabled = true;
+    X.drawImage(off, cx - 2 * R, cy - gh / 2 / sc, gw / sc, gh / sc); X.restore();
+  }
+
+  // the trapped ray: in, then round and round inside the skin
+  if (S.ray > 0) {
+    X.save(); X.lineCap = 'round'; X.lineJoin = 'round';
+    for (const ry of G.rays) {
+      const gx = cx + ry.side * R, upto = S.ray * ry.L, P = q => [gx + q[0] * R, cy + q[1] * R * s];
+      X.strokeStyle = `rgba(255,230,160,${.85 * (1 - S.mode * .75)})`; X.lineWidth = 1.8;
+      X.shadowColor = '#ffd27a'; X.shadowBlur = 8;
+      X.beginPath(); let head = P(ry.pts[0]); X.moveTo(head[0], head[1]);
+      for (let k = 1; k < ry.pts.length; k++) {
+        if (ry.seg[k] <= upto) { head = P(ry.pts[k]); X.lineTo(head[0], head[1]); }
+        else {
+          const f = (upto - ry.seg[k - 1]) / (ry.seg[k] - ry.seg[k - 1]), a = ry.pts[k - 1], b = ry.pts[k];
+          head = P([a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]); X.lineTo(head[0], head[1]); break;
+        }
+      }
+      X.stroke();
+      if (S.ray < 1) { X.fillStyle = '#fff6d8'; X.beginPath(); X.arc(head[0], head[1], 3.2, 0, Math.PI * 2); X.fill(); }
+    }
+    X.restore();
+  }
+
+  // gloss and rim light on top
+  for (const sd of [-1, 1]) {
+    if (S.grape <= 0) continue;
+    X.save(); X.translate(cx + sd * R, cy); X.scale(S.grape, S.grape);
+    const hl = X.createRadialGradient(-R * .4, -R * .5, 0, -R * .4, -R * .5, R * .4);
+    hl.addColorStop(0, 'rgba(255,255,255,.75)'); hl.addColorStop(1, 'rgba(255,255,255,0)');
+    X.fillStyle = hl; X.beginPath(); X.arc(-R * .4, -R * .5, R * .4, 0, Math.PI * 2); X.fill();
+    X.fillStyle = 'rgba(255,255,255,.9)'; X.beginPath(); X.ellipse(-R * .48, -R * .56, R * .07, R * .045, -.6, 0, Math.PI * 2); X.fill();
+    X.strokeStyle = 'rgba(255,200,230,.28)'; X.lineWidth = 1.2; X.beginPath(); X.arc(0, 0, R, 0, Math.PI * 2); X.stroke();
+    X.strokeStyle = 'rgba(255,170,210,.35)'; X.lineWidth = Math.max(1.5, R * .03);
+    X.beginPath(); X.arc(0, 0, R * .95, .2, 1.3); X.stroke();
+    X.restore();
+  }
+
+  // plasma at the contact point
+  if (S.plasma > 0) {
+    const fl = Kit.calm ? 1 : .82 + .18 * Math.sin(t * .045) * Math.sin(t * .017), pr = R * .55 * S.plasma * fl;
+    X.save(); X.globalCompositeOperation = 'lighter';
+    const pg = X.createRadialGradient(cx, cy, 0, cx, cy, pr);
+    pg.addColorStop(0, 'rgba(255,255,255,1)'); pg.addColorStop(.25, 'rgba(255,160,230,.9)'); pg.addColorStop(.6, 'rgba(170,90,255,.45)'); pg.addColorStop(1, 'rgba(120,60,255,0)');
+    X.fillStyle = pg; X.beginPath(); X.arc(cx, cy, pr, 0, Math.PI * 2); X.fill();
+    if (!Kit.calm && Math.random() < .5 * S.plasma) sparks.push({x: cx + (Math.random() - .5) * R * .2, y: cy, vx: (Math.random() - .5) * .6, vy: -.6 - Math.random() * 1.2, l: 1});
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const p = sparks[i]; p.x += p.vx; p.y += p.vy; p.l -= .025;
+      if (p.l <= 0 || p.y < cy - R * 1.05) { sparks.splice(i, 1); continue; }
+      X.fillStyle = `rgba(255,${180 + 70 * p.l | 0},255,${p.l})`; X.beginPath(); X.arc(p.x, p.y, 1.8 * p.l + .6, 0, Math.PI * 2); X.fill();
+    }
+    X.restore();
+    const la = clamp(S.plasma * 2 - .6);
+    if (la > 0) {
+      const ly = cy - R * 1.22 - 4;
+      X.save(); X.globalAlpha = la * .7; X.strokeStyle = '#f4ede0'; X.lineWidth = 1.2;
+      X.beginPath(); X.moveTo(cx, ly + 5); X.lineTo(cx, cy - pr * .7); X.stroke(); X.restore();
+      label('field peaks here', cx, ly, 'center', la);
+    }
+  }
+}
+
+// ---------- the answer ----------
+function reveal() {
+  if (revealed) return; revealed = true;
+  const opts = Kit.$('opts'), btns = [...opts.children];
+  const st = Flip.getState(btns);
+  const right = btns.find(b => +b.dataset.i === RIGHT);
+  opts.prepend(right);
+  btns.forEach(b => b.classList.add(+b.dataset.i === RIGHT ? 'right' : 'wrong'));
+  const after = () => { Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .08, duration: .45, ease: 'power3.out'}); };
+  if (Kit.calm) { S.ray = 1; S.mode = 1; S.plasma = 1; after(); return; }
+  Flip.from(st, {duration: .7, ease: 'power3.inOut', stagger: .04});
+  gsap.timeline()
+    .to(S, {ray: 1, duration: 1.7, ease: 'power2.inOut'})
+    .add(after, .9)
+    .to(S, {mode: 1, duration: 1, ease: 'power2.out'}, 1.1)
+    .to(S, {plasma: 1, duration: .9, ease: 'back.out(2.2)', onStart: () => Kit.haptic('success')}, 1.6);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, b = Kit.$('opts').querySelector(`[data-i="${pick}"]`), said = b.textContent.slice(1);
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  if (!Kit.calm) gsap.fromTo(b, {scale: .97}, {scale: 1, duration: .4, ease: 'back.out(3)'});
+});
+
+// re-fit the drawing whenever its space changes (options leave, text arrives)
+new ResizeObserver(() => { layout(); draw(performance.now()); }).observe(art);
+
+let loop = false;
+const tick = t => { draw(t); requestAnimationFrame(tick); };
+Kit.onShow.card = () => { layout(); if (Kit.calm) { S.floor = S.grape = S.mag = 1; } draw(performance.now()); };
+Kit.onEnter.card = () => {
+  if (!loop) { loop = true; requestAnimationFrame(tick); }
+  if (Kit.calm) { S.floor = S.grape = S.mag = 1; return; }
+  gsap.timeline()
+    .to(S, {floor: 1, duration: 1.1, ease: 'power2.out'})
+    .to(S, {grape: 1, duration: 1, ease: 'elastic.out(1,.55)'}, .55)
+    .to(S, {mag: 1, duration: .6, ease: 'back.out(1.8)'}, .8);
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .45, ease: 'power3.out', delay: .9, clearProps: 'transform'});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  S.floor = S.grape = S.mag = 1;
+  if (!loop) { loop = true; requestAnimationFrame(tick); }
+  Kit.$('opts').querySelector('[data-i="1"]').click(); await wait(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(Kit.calm ? 300 : 2800);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "science-thermite-control",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is thermite controllable when explosives are not?",
+  "answer": "Explosives start as solids and turn into gases that expand and build pressure. Thermite starts as a solid powder, but its products stay solid or liquid, so energy releases in a controlled way. Its products don't expand, so there is no blast.",
+  "move": "No gas, no blast: thermite's products don't expand.",
+  "keywords": [
+    "thermite",
+    "explosives",
+    "powder",
+    "gas-pressure",
+    "controlled-release"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A scrubbable picture comparing thermite and explosives over time, with both starting as a solid powder. It asks why thermite is controllable when explosives are not.",
+    "ground": "#0c1426"
+  },
+  "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1308s",
+  "written": "2026-11-03"
+}

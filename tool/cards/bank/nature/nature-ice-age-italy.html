@@ -1,0 +1,384 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-ice-age-italy -->
+<!-- Look: a neon sign of Italy bolted to a dark brick wall. Cyan tubes trace today's coasts, amber rings sit on five sea gaps, faint neon ripples mark the sea, and a glowing gauge shows the sea level.
+     Interaction: tap the gaps you think were dry land, then drag the sea down. The ripples sink and fade, and the tubes really move outward to the ice-age coast. Wherever two coasts meet, the shared tube switches off, so the shapes fuse.
+     Wow: the sign "rewires" with a flicker into hot pink. Sardinia and Corsica become one island, Sicily touches Calabria and the Adriatic shore jumps south. Today's coast is traced in thin cyan over it, and your guesses light up or fade out. The labels place themselves so they never collide. -->
+<title>Italy in the last ice age</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+.card#card{
+  background-color:#120a0c !important;
+  background-image:
+    radial-gradient(110% 65% at 50% 46%, rgba(255,70,190,.16), rgba(255,70,190,0) 62%),
+    radial-gradient(150% 110% at 50% 50%, rgba(0,0,0,0) 52%, rgba(0,0,0,.62)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='36'%3E%3Cg fill='%23241417'%3E%3Crect x='1' y='1' width='34' height='16' rx='1.5'/%3E%3Crect x='37' y='1' width='34' height='16' rx='1.5' fill='%231f1114'/%3E%3Crect x='-17' y='19' width='34' height='16' rx='1.5' fill='%23221316'/%3E%3Crect x='19' y='19' width='34' height='16' rx='1.5' fill='%23271619'/%3E%3Crect x='55' y='19' width='34' height='16' rx='1.5' fill='%23221316'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+#stage{display:flex;flex:1;min-height:0}
+#map{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:hidden}
+.q{text-shadow:0 0 1.4cqh rgba(255,79,200,.45)}
+.say{overflow-wrap:break-word}
+.say b{color:#ffc84a}
+.hint{animation:nudge 1.2s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(5px)}}
+.kit-calm .hint{animation:none}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap the gaps · drain the sea" style="--c:#1d1013;--k:#ffeef4;--edge:#090506">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ICE AGE MAP</span></div>
+    <h2 class="q">During the last ice age, which of Italy's sea gaps were land?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map" role="img" aria-label="A neon map of Italy, Sicily, Sardinia and Corsica, with five rings on sea gaps and a sea-level gauge."></svg>
+    </div>
+    <p class="say" id="say">Tap the gaps you think were dry land. Then <b>drag down</b> to drain the sea.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Coasts aren't fixed: lower the sea and islands join up.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const hasG = typeof gsap !== 'undefined';
+  let FLICK = 'power1.inOut', NEON = 'back.out(2.2)';
+  if (hasG) {
+    try { gsap.registerPlugin(CustomEase, DrawSVGPlugin, ScrambleTextPlugin); } catch (e) {}
+    try {
+      CustomEase.create('flick', 'M0,0 C0.02,0.9 0.05,0.9 0.07,0.08 0.09,0.04 0.11,0.92 0.15,0.85 0.18,0.2 0.21,0.12 0.24,0.96 0.32,1 0.36,0.42 0.39,0.38 0.43,1 0.6,1 1,1'); FLICK = 'flick';
+      CustomEase.create('neon', 'M0,0 C0.14,0 0.18,1.18 0.44,1.05 0.62,0.97 0.8,1 1,1'); NEON = 'neon';
+    } catch (e) {}
+  }
+
+  const svg = Kit.$('map'), say = Kit.$('say'), card = Kit.$('card');
+  const CYAN = '#5cf4ff', PINK = '#ff4fc8', AMBER = '#ffc84a', INK = '#ffeef4', DARK = '#160b0e';
+  const mix = hasG ? gsap.utils.interpolate(CYAN, PINK) : (t => t < .5 ? CYAN : PINK);
+
+  // ---- coastlines, [lon, lat]: today, and the same points at the ice age's low sea ----
+  const M = {
+    it: [[7.5,43.8],[8.2,43.95],[8.9,44.4],[9.8,44.08],[10.3,43.5],[10.5,42.95],[11.1,42.42],[11.8,42.05],[12.3,41.7],[13.05,41.22],[13.6,41.22],[14.25,40.83],[14.35,40.6],[14.8,40.62],[15.3,40.02],[15.8,39.8],[16.0,39.35],[16.2,38.95],[15.85,38.62],[15.7,38.25],[15.65,38.05],[16.05,37.92],[16.55,38.7],[17.15,38.95],[17.1,39.25],[16.6,39.65],[16.9,40.35],[17.25,40.45],[17.95,40.05],[18.35,39.8],[18.5,40.15],[17.95,40.65],[16.85,41.13],[15.9,41.6],[16.2,41.9],[15.9,41.95],[15.0,42.0],[14.2,42.47],[13.5,43.62],[12.6,44.07],[12.5,44.95],[12.35,45.45],[13.0,45.75],[13.75,45.65],[14.5,49],[6.5,49],[6.9,44.0]],
+    si: [[15.65,38.27],[15.25,38.25],[14.75,38.15],[14.0,38.04],[13.35,38.13],[12.75,38.18],[12.5,38.0],[12.43,37.8],[12.6,37.65],[13.08,37.5],[13.55,37.27],[14.25,37.06],[15.1,36.68],[15.3,37.07],[15.1,37.5],[15.3,37.85],[15.55,38.18]],
+    sa: [[9.2,41.24],[9.4,41.18],[9.6,40.92],[9.83,40.53],[9.7,39.93],[9.62,39.3],[9.5,39.13],[9.1,39.2],[8.95,38.95],[8.65,38.87],[8.4,39.05],[8.4,39.4],[8.5,39.9],[8.4,40.05],[8.5,40.3],[8.3,40.55],[8.15,40.57],[8.2,41.05],[8.4,40.84],[8.7,40.92],[8.9,41.0]],
+    co: [[9.15,41.38],[9.3,41.6],[9.4,41.85],[9.55,42.1],[9.45,42.7],[9.48,43.0],[9.35,42.95],[9.3,42.68],[8.75,42.57],[8.6,42.27],[8.7,41.92],[8.88,41.67],[8.95,41.48]]
+  };
+  const G = {
+    it: [[7.5,43.75],[8.2,43.9],[8.9,44.25],[9.7,43.95],[10.1,43.4],[10.3,42.9],[11.0,42.3],[11.7,41.95],[12.2,41.55],[12.95,41.1],[13.6,41.1],[14.1,40.75],[14.25,40.5],[14.8,40.45],[15.25,39.95],[15.75,39.7],[15.95,39.3],[16.1,38.95],[15.75,38.6],[15.62,38.22],[15.58,38.0],[16.05,37.82],[16.65,38.6],[17.25,38.9],[17.2,39.25],[16.6,39.62],[16.85,40.3],[17.25,40.35],[18.0,39.95],[18.45,39.75],[18.6,40.15],[18.1,40.75],[17.0,41.25],[16.05,41.72],[16.4,42.0],[16.1,42.25],[15.3,42.6],[14.8,43.0],[15.3,43.45],[16.2,43.62],[15.6,44.3],[14.8,45.0],[14.4,45.5],[14.2,45.7],[14.5,49],[6.5,49],[6.9,44.0]],
+    si: [[15.85,38.3],[15.25,38.35],[14.75,38.25],[14.0,38.15],[13.35,38.25],[12.7,38.3],[12.2,38.1],[12.15,37.8],[12.45,37.5],[13.0,37.3],[13.55,37.05],[14.25,36.85],[15.05,36.45],[15.4,37.0],[15.25,37.5],[15.45,37.85],[15.75,38.08]],
+    sa: [[9.25,41.5],[9.55,41.3],[9.75,40.95],[9.95,40.5],[9.85,39.9],[9.75,39.25],[9.55,39.0],[9.1,39.05],[8.9,38.8],[8.55,38.75],[8.25,38.95],[8.25,39.4],[8.35,39.9],[8.25,40.05],[8.35,40.3],[8.15,40.55],[8.05,40.6],[8.1,41.15],[8.4,41.0],[8.7,41.1],[8.95,41.35]],
+    co: [[9.2,41.15],[9.5,41.5],[9.6,41.85],[9.75,42.1],[9.65,42.7],[9.55,43.1],[9.3,43.05],[9.2,42.75],[8.6,42.6],[8.45,42.3],[8.55,41.9],[8.75,41.6],[8.8,41.25]]
+  };
+  const FIX = {
+    fr: [[7.6,43.85],[7.0,43.55],[6.4,43.1],[5.0,43.2],[3.5,45],[5.0,49],[7.2,49],[7.2,44.2]],
+    ba: [[13.75,45.6],[13.55,45.35],[13.9,44.85],[14.3,45.25],[14.9,44.6],[15.2,44.1],[15.9,43.7],[16.4,43.5],[17.4,43.05],[18.1,42.65],[18.6,42.4],[19.1,42.0],[19.5,41.4],[21,40.8],[22,45],[20.5,49],[14.5,49]]
+  };
+  const MORPH = ['it', 'si', 'sa', 'co'], ALL = ['fr', 'ba', 'it', 'si', 'sa', 'co'];
+
+  // The five gaps the reader can bet on: three closed in the ice age, two stayed sea.
+  const GAPS = [
+    {ll: [9.25, 41.32], land: true,  n: 'Corsica–Sardinia'},
+    {ll: [15.66, 38.2], land: true,  n: 'Sicily–Calabria'},
+    {ll: [10.9, 38.4],  land: false, n: 'Sardinia–Sicily'},
+    {ll: [10.3, 42.55], land: false, n: 'Corsica–Tuscany'},
+    {ll: [13.15, 44.65], land: true, n: 'northern Adriatic'}
+  ];
+
+  const st = {p: 0};
+  const picks = new Set();
+  let step = 'guess', W = 0, H = 0, fs = 12, S = 30, OX = 0, OY = 0, sw = 2.4;
+  let E = {}, idles = [], buzzing = null, drag = null;
+
+  const X = lon => OX + (lon - 6.2) * .755 * S, Y = lat => OY + (46.6 - lat) * S;
+  const pr = a => [X(a[0]), Y(a[1])];
+  const f1 = v => v.toFixed(1);
+  // keep every point and control point inside the drawing, so off-screen land never spills out
+  const cX = v => Math.max(0, Math.min(W, v)), cY = v => Math.max(0, Math.min(H, v));
+  const fx = v => f1(cX(v)), fy = v => f1(cY(v));
+  function sm(p) {
+    const n = p.length; let d = `M${fx(p[0][0])},${fy(p[0][1])}`;
+    for (let i = 0; i < n; i++) {
+      const a = p[(i - 1 + n) % n], b = p[i], c = p[(i + 1) % n], e = p[(i + 2) % n];
+      d += `C${fx(b[0] + (c[0] - a[0]) / 6)},${fy(b[1] + (c[1] - a[1]) / 6)} ${fx(c[0] - (e[0] - b[0]) / 6)},${fy(c[1] - (e[1] - b[1]) / 6)} ${fx(c[0])},${fy(c[1])}`;
+    }
+    return d + 'Z';
+  }
+  const shape = (k, t) => FIX[k] ? FIX[k].map(pr) : M[k].map((a, i) => pr([a[0] + (G[k][i][0] - a[0]) * t, a[1] + (G[k][i][1] - a[1]) * t]));
+
+  function layout() {
+    idles.forEach(t => t.kill()); idles = [];
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, W / 28));
+    S = Math.min((W - 6) / 9.8, (H - 6) / 10.3);
+    OX = (W - 9.8 * S) / 2; OY = (H - 10.3 * S) / 2;
+    sw = Math.max(2, Math.min(3.4, S * .075));
+    E = {tubes: [], colors: [], ghosts: [], rings: [], waves: []};
+
+    const defs = Kit.mk('defs', {}, svg);
+    const glow = Kit.mk('filter', {id: 'glow', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
+    Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: fs * .22, result: 'a'}, glow);
+    Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: fs * .75, result: 'b'}, glow);
+    const mg = Kit.mk('feMerge', {}, glow);
+    ['b', 'a', 'SourceGraphic'].forEach(i => Kit.mk('feMergeNode', {in: i}, mg));
+    ALL.forEach(k => Kit.mk('path', {id: 's_' + k}, defs));
+    // Union trick: strokes masked by the land itself, so where two coasts meet, the tube goes out.
+    const mL = Kit.mk('mask', {id: 'mLand', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#fff'}, mL);
+    const mLg = Kit.mk('g', {fill: '#000'}, mL);
+    ALL.forEach(k => Kit.mk('use', {href: '#s_' + k}, mLg));
+    const vg = Kit.mk('radialGradient', {id: 'gV', cx: '50%', cy: '50%', r: '50%'}, defs);
+    Kit.mk('stop', {offset: '0', 'stop-color': '#fff'}, vg);
+    Kit.mk('stop', {offset: '.8', 'stop-color': '#fff'}, vg);
+    Kit.mk('stop', {offset: '1', 'stop-color': '#000'}, vg);
+    const mV = Kit.mk('mask', {id: 'mVig', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#gV)'}, mV);
+    const hg = Kit.mk('radialGradient', {id: 'gH', gradientUnits: 'userSpaceOnUse', cx: f1(X(12.6)), cy: f1(Y(41.5)), r: f1(5.6 * S)}, defs);
+    Kit.mk('stop', {offset: '0', 'stop-color': PINK, 'stop-opacity': .16}, hg);
+    Kit.mk('stop', {offset: '1', 'stop-color': PINK, 'stop-opacity': 0}, hg);
+
+    // the wall glow behind the sign, kept inside the drawing
+    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#gH)'}, svg);
+
+    const mapG = Kit.mk('g', {mask: 'url(#mVig)'}, svg);
+
+    // neon ripples on the sea: they sink and fade as the sea drains
+    const seaClip = Kit.mk('g', {mask: 'url(#mLand)'}, mapG);
+    E.sea = Kit.mk('g', {fill: 'none', stroke: CYAN, 'stroke-width': 1.1, 'stroke-linecap': 'round'}, seaClip);
+    const rows = 9, step2 = Math.max(10, fs);
+    for (let k = 0; k < rows; k++) {
+      const y = H * (k + .6) / rows;
+      let d = `M0,${f1(y)}`;
+      for (let x = 0; x < W; x += step2) {
+        const x2 = Math.min(W, x + step2);
+        d += ` Q${f1((x + x2) / 2)},${f1(y + ((x / step2) % 2 ? 2.2 : -2.2))} ${f1(x2)},${f1(y)}`;
+      }
+      E.waves.push(Kit.mk('path', {d, 'stroke-dasharray': `${f1(step2 * 1.6)} ${f1(step2 * 2.4)}`, 'stroke-dashoffset': f1(k * step2 * 1.3), opacity: .16 + (k % 3) * .05}, E.sea));
+    }
+
+    E.fill = Kit.mk('g', {opacity: .13, fill: CYAN}, mapG);
+    ALL.forEach(k => Kit.mk('use', {href: '#s_' + k}, E.fill));
+    const ghostG = Kit.mk('g', {fill: 'none', stroke: CYAN, 'stroke-width': 1.3, 'stroke-linejoin': 'round'}, mapG);
+    MORPH.forEach(k => E.ghosts.push(Kit.mk('path', {d: sm(shape(k, 0)), opacity: 0}, ghostG)));
+    E.tubeG = Kit.mk('g', {mask: 'url(#mLand)', filter: 'url(#glow)', fill: 'none', 'stroke-linejoin': 'round'}, mapG);
+    ALL.forEach(k => {
+      const g = Kit.mk('g', {}, E.tubeG);
+      E.colors.push(Kit.mk('use', {href: '#s_' + k, stroke: CYAN, 'stroke-width': sw * 2}, g));
+      Kit.mk('use', {href: '#s_' + k, stroke: '#ffffff', 'stroke-width': sw * .8, opacity: .85}, g);
+      E.tubes.push(g);
+    });
+
+    // the gauge: a tube of sea that drains as you drag
+    const gw = Math.max(12, fs), gx = Math.min(X(18.85), W - gw), gy0 = Y(38.9), gy1 = Y(36.55);
+    E.gauge = {gx, gw, gy0, gy1};
+    const gG = Kit.mk('g', {}, svg);
+    E.water = Kit.mk('rect', {x: gx - gw / 2 + 3, width: gw - 6, rx: (gw - 6) / 2, fill: CYAN, opacity: .55, filter: 'url(#glow)'}, gG);
+    E.gRect = Kit.mk('rect', {x: gx - gw / 2, y: gy0 - gw / 2, width: gw, height: gy1 - gy0 + gw, rx: gw / 2, fill: 'none', stroke: AMBER, 'stroke-width': 2, filter: 'url(#glow)'}, gG);
+    const gfs = Math.max(12, fs * .92);
+    const lab = (x, y, t, a) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': gfs, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.06em', stroke: DARK, 'stroke-width': 3, 'paint-order': 'stroke'}, a || {}), gG); e.textContent = t; return e; };
+    const glx = gx - gw * .9;
+    E.gLabs = [lab(glx, gy0 + gfs * .35, 'NOW', {'text-anchor': 'end'}), lab(glx, gy1 + gfs * .35, 'ICE AGE', {'text-anchor': 'end'})];
+    E.knob = Kit.mk('circle', {cx: gx, r: gw * .62, fill: AMBER, filter: 'url(#glow)'}, gG);
+    E.hint = Kit.mk('g', {opacity: 0}, gG);
+    const hi = Kit.mk('g', {class: 'hint'}, E.hint);
+    [0, 1].forEach(j => Kit.mk('path', {d: `M${gx - 5},${j * 6} L${gx},${j * 6 + 5} L${gx + 5},${j * 6}`, fill: 'none', stroke: AMBER, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 1 - j * .45}, hi));
+
+    // the rings on the gaps
+    const R = Math.max(9, fs * .78);
+    GAPS.forEach((g, i) => {
+      const [x, y] = pr(g.ll);
+      const at = Kit.mk('g', {transform: `translate(${f1(x)},${f1(y)})`}, svg);
+      const pop = Kit.mk('g', {}, at);
+      const halo = Kit.mk('circle', {r: R * 1.5, fill: 'none', stroke: AMBER, 'stroke-width': 1.2, opacity: .35}, pop);
+      const o = Kit.mk('circle', {r: R, fill: 'rgba(255,200,74,.10)', stroke: AMBER, 'stroke-width': 2.2, filter: 'url(#glow)'}, pop);
+      const dot = Kit.mk('circle', {r: R * .55, fill: AMBER, filter: 'url(#glow)'}, pop);
+      const chk = Kit.mk('path', {d: `M${f1(-R * .45)},${f1(R * .02)} L${f1(-R * .1)},${f1(R * .38)} L${f1(R * .5)},${f1(-R * .4)}`, fill: 'none', 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', stroke: INK, opacity: 0}, pop);
+      E.rings.push({x, y, at, pop, halo, o, dot, chk});
+      if (hasG) gsap.set(dot, {scale: picks.has(i) ? 1 : 0, transformOrigin: '50% 50%'});
+    });
+
+    // labels for the reveal, placed so they never collide with each other, the gauge or the rings
+    E.labG = Kit.mk('g', {fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.04em', stroke: DARK, 'stroke-width': 3.5, 'paint-order': 'stroke'}, svg);
+    const lh = fs * 1.55, cw = fs * .66, gcw = gfs * .68;
+    const obst = [
+      {l: glx - 3 * gcw - 3, r: glx + 2, t: gy0 - gfs, b: gy0 + gfs * .6},
+      {l: glx - 7 * gcw - 3, r: glx + 2, t: gy1 - gfs, b: gy1 + gfs * .6},
+      {l: gx - gw / 2 - 4, r: gx + gw / 2 + 4, t: gy0 - gw, b: gy1 + gw}
+    ];
+    E.rings.forEach((r, i) => { if (GAPS[i].land) obst.push({l: r.x - R - 2, r: r.x + R + 2, t: r.y - R - 2, b: r.y + R + 2}); });
+    const hits = (b) => obst.some(o => b.l < o.r && b.r > o.l && b.t < o.b && b.b > o.t);
+    const blocks = [
+      {x: X(13.6), y: Y(43.85), a: 'middle', ls: ['ADRIATIC COAST', '200 KM SOUTH']},
+      {x: X(10.15), y: Y(40.0), a: 'start', ls: ['SARDINIA+CORSICA', 'ONE ISLAND']},
+      {x: X(15.15), y: Y(38.95), a: 'end', ls: ['SICILY TOUCHES', 'CALABRIA']}
+    ];
+    E.labels = [];
+    blocks.forEach(bk => {
+      const w = Math.max(...bk.ls.map(s => s.length)) * cw;
+      let l = bk.a === 'start' ? bk.x : bk.a === 'end' ? bk.x - w : bk.x - w / 2;
+      l = Math.max(3, Math.min(W - 3 - w, l));
+      const up = fs * .95, dn = lh + fs * .35;
+      const box = y => ({l: l - 2, r: l + w + 2, t: y - up, b: y + dn});
+      const cands = [bk.y];
+      obst.forEach(o => { cands.push(o.b + up + 2, o.t - dn - 2); });
+      const ok = cands.filter(y => y - up >= 2 && y + dn <= H - 2 && !hits(box(y))).sort((a, b) => Math.abs(a - bk.y) - Math.abs(b - bk.y));
+      const y = ok.length ? ok[0] : Math.max(up + 2, Math.min(H - dn - 2, bk.y));
+      obst.push(box(y));
+      const x = bk.a === 'start' ? l : bk.a === 'end' ? l + w : l + w / 2;
+      bk.ls.forEach((t, j) => {
+        const e = Kit.mk('text', {x: f1(x), y: f1(y + j * lh), 'text-anchor': bk.a, fill: j ? PINK : INK}, E.labG);
+        e.dataset.t = t; e.textContent = step === 'done' ? t : ''; E.labels.push(e);
+      });
+    });
+
+    draw();
+    if (step === 'done') verdict(true);
+    else if (step === 'guess' && hasG && !Kit.calm && entered) startIdle();
+  }
+
+  function draw() {
+    const t = st.p, col = mix(t);
+    ALL.forEach(k => { const el = svg.querySelector('#s_' + k); if (el) el.setAttribute('d', sm(shape(k, t))); });
+    E.colors.forEach(u => u.setAttribute('stroke', col));
+    E.fill.setAttribute('fill', col);
+    E.sea.setAttribute('opacity', f1(Math.max(0, 1 - t * 1.15) * 10) / 10);
+    E.sea.setAttribute('transform', `translate(0,${f1(t * S * .5)})`);
+    const {gy0, gy1} = E.gauge, ly = gy0 + t * (gy1 - gy0);
+    E.water.setAttribute('y', f1(ly)); E.water.setAttribute('height', f1(Math.max(0, gy1 - ly + E.gauge.gw / 2 - 3)));
+    E.knob.setAttribute('cy', f1(ly));
+    E.hint.setAttribute('transform', `translate(0,${f1(ly + E.gauge.gw * .9)})`);
+    E.hint.setAttribute('opacity', step === 'guess' && picks.size && t < .05 ? 1 : 0);
+  }
+
+  // ---------- touch ----------
+  function toggle(i) {
+    const on = !picks.has(i); on ? picks.add(i) : picks.delete(i);
+    Kit.haptic('selection');
+    const r = E.rings[i];
+    if (hasG && !Kit.calm) {
+      gsap.to(r.dot, {scale: on ? 1 : 0, duration: on ? .45 : .25, ease: on ? 'back.out(3)' : 'power3.in', transformOrigin: '50% 50%'});
+      gsap.fromTo(r.o, {scale: .82}, {scale: 1, duration: .5, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%'});
+    } else if (hasG) gsap.set(r.dot, {scale: on ? 1 : 0});
+    if (picks.size) say.innerHTML = `${picks.size} picked. Now <b>drag down</b> anywhere to lower the sea.`;
+    else say.innerHTML = 'Tap the gaps you think were dry land. Then <b>drag down</b> to drain the sea.';
+    draw();
+  }
+  const loc = e => { const b = svg.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; };
+  const hit = (x, y) => { const R = Math.max(22, fs * 1.8); let best = -1, bd = R; E.rings.forEach((r, i) => { const d = Math.hypot(r.x - x, r.y - y); if (d < bd) { bd = d; best = i; } }); return best; };
+  function nudge() {
+    Kit.haptic('light');
+    say.innerHTML = 'First <b>tap a ring</b>: which gaps do you bet turned to land?';
+    if (hasG && !Kit.calm) {
+      gsap.fromTo(say, {x: -7}, {x: 0, duration: .6, ease: 'elastic.out(1,.3)'});
+      E.rings.forEach((r, i) => gsap.fromTo(r.o, {scale: 1.3}, {scale: 1, duration: .6, delay: i * .05, ease: 'elastic.out(1,.35)', transformOrigin: '50% 50%'}));
+    }
+  }
+  svg.addEventListener('pointerdown', e => {
+    if (step !== 'guess') return;
+    const [x, y] = loc(e), i = hit(x, y);
+    if (i >= 0) { toggle(i); return; }
+    if (!picks.size) { nudge(); return; }
+    if (hasG) gsap.killTweensOf(st);
+    drag = {y0: y, p0: st.p}; svg.setPointerCapture(e.pointerId);
+    Kit.haptic('light');
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const len = Math.max(60, (E.gauge.gy1 - E.gauge.gy0) * 1.15);
+    st.p = Math.max(0, Math.min(1, drag.p0 + (loc(e)[1] - drag.y0) / len));
+    draw();
+    if (st.p > .2 && st.p < .97) say.innerHTML = 'The sea is dropping. <b>Keep going.</b>';
+    if (st.p >= .995) { drag = null; finish(); }
+  });
+  const up = () => {
+    if (!drag) return; drag = null;
+    if (st.p > .45) finish();
+    else if (hasG) gsap.to(st, {p: 0, duration: .7, ease: 'elastic.out(1,.5)', onUpdate: draw});
+    else { st.p = 0; draw(); }
+  };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  // ---------- the reveal ----------
+  function finish() {
+    if (step !== 'guess') return;
+    step = 'done'; idles.forEach(t => t.kill()); idles = [];
+    if (!hasG || Kit.calm) { st.p = 1; draw(); reveal(true); return; }
+    gsap.to(st, {p: 1, duration: .4 + (1 - st.p) * 1.1, ease: 'power3.out', onUpdate: draw, onComplete: () => reveal(false)});
+  }
+  function verdict(instant) {
+    E.rings.forEach((r, i) => {
+      const g = GAPS[i], mine = picks.has(i);
+      r.chk.setAttribute('stroke', mine ? DARK : INK);
+      if (g.land) {
+        r.o.setAttribute('stroke', PINK); r.halo.setAttribute('stroke', PINK);
+        if (instant || !hasG) { r.chk.setAttribute('opacity', 1); if (hasG) gsap.set(r.chk, {drawSVG: '100%'}); }
+      } else if (instant || !hasG) r.at.setAttribute('opacity', .28);
+    });
+    E.ghosts.forEach(p => p.setAttribute('opacity', instant ? .7 : 0));
+    E.labels.forEach(l => { if (instant) l.textContent = l.dataset.t; });
+  }
+  function reveal(instant) {
+    Kit.haptic('success');
+    const hitN = [...picks].filter(i => GAPS[i].land).length, miss = [...picks].filter(i => !GAPS[i].land).length;
+    const score = hitN === 3 && !miss ? 'All three, spot on.' : `You found ${hitN} of 3${miss ? `, and ${miss} of yours stayed sea` : ''}.`;
+    say.innerHTML = `<b>${score}</b> With the sea far lower, Sardinia and Corsica were one island, Sicily touched Calabria and the Adriatic coast lay about 200 km further south.`;
+    card.classList.add('answered');
+    Kit.show('keep');
+    verdict(instant || !hasG);
+    if (instant || !hasG) return;
+    const tl = gsap.timeline();
+    tl.fromTo(E.tubeG, {opacity: .1}, {opacity: 1, duration: .9, ease: FLICK})
+      .fromTo(E.fill, {opacity: .5}, {opacity: .13, duration: 1.2, ease: 'power2.out'}, 0)
+      .fromTo(E.ghosts, {drawSVG: '0%', opacity: .75}, {drawSVG: '100%', duration: 1.3, ease: 'power2.inOut', stagger: .12}, .5);
+    E.rings.forEach((r, i) => {
+      if (GAPS[i].land) {
+        tl.fromTo(r.pop, {scale: 1.7}, {scale: 1, duration: .9, ease: 'elastic.out(1,.38)', transformOrigin: '50% 50%'}, .45 + i * .08)
+          .fromTo(r.chk, {drawSVG: '0%', opacity: 1}, {drawSVG: '100%', duration: .35, ease: 'power2.out'}, .7 + i * .08);
+      } else tl.to(r.at, {opacity: .28, duration: .6, ease: 'power2.out'}, .5);
+    });
+    E.labels.forEach((l, j) => tl.to(l, {duration: .7, scrambleText: {text: l.dataset.t, chars: 'ABCDEFGHIKLMNOPRSTUVZ+', speed: .6}, ease: 'none'}, .9 + j * .12));
+    tl.fromTo('#keep', {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .5, ease: NEON}, 1.1);
+  }
+
+  // ---------- life ----------
+  let entered = false;
+  function startIdle() {
+    idles.forEach(t => t.kill()); idles = [];
+    E.rings.forEach((r, i) => idles.push(gsap.fromTo(r.halo, {scale: 1, opacity: .45}, {scale: 1.35, opacity: 0, duration: 1.6, repeat: -1, delay: i * .25, ease: 'power2.out', transformOrigin: '50% 50%'})));
+    const per = Math.max(10, fs) * 4;
+    E.waves.forEach((w, k) => idles.push(gsap.to(w, {attr: {'stroke-dashoffset': `-=${f1(per)}`}, duration: 3.4 + (k % 3) * .9, repeat: -1, ease: 'none'})));
+  }
+  function buzz() {
+    if (E.tubes && E.tubes.length && !Kit.calm) {
+      const g = E.tubes[2 + Math.floor(Kit.rnd() * 4)];
+      gsap.fromTo(g, {opacity: .3}, {opacity: 1, duration: .45, ease: FLICK});
+    }
+    buzzing = gsap.delayedCall(3 + Kit.rnd() * 3.5, buzz);
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (entered) return; entered = true;
+    if (Kit.calm || !hasG) return;
+    const tl = gsap.timeline();
+    tl.from('.q', {opacity: 0, y: 10, duration: .6, ease: 'power3.out'})
+      .from(E.tubes, {opacity: 0, duration: 1.1, ease: FLICK, stagger: {each: .15, from: 'random'}}, .15)
+      .from(E.fill, {opacity: 0, duration: .9, ease: 'power2.out'}, .7)
+      .from(E.waves, {opacity: 0, duration: .8, stagger: .06, ease: 'power2.out'}, .8)
+      .from(E.gRect, {drawSVG: '0%', duration: .9, ease: 'power2.inOut'}, .6)
+      .from([E.water, E.knob, ...E.gLabs], {opacity: 0, duration: .4, stagger: .08, ease: 'power2.out'}, 1.1)
+      .from(E.rings.map(r => r.pop), {scale: 0, duration: .7, ease: NEON, stagger: .08, transformOrigin: '50% 50%'}, 1.0)
+      .from('#say', {opacity: 0, y: 6, duration: .5, ease: 'power3.out'}, 1.3)
+      .add(() => { if (step === 'guess') startIdle(); buzzing = gsap.delayedCall(2.5, buzz); });
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    [0, 1, 4].forEach(i => { if (!picks.has(i)) toggle(i); });
+    await wait(150);
+    finish();
+    await wait(Kit.calm ? 100 : 3200);
+  };
+})();
+Kit.single();
+</script>
+</html>

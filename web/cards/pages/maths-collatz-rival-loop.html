@@ -11,9 +11,9 @@
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#0a2a5e;box-shadow:inset 0 0 0 1px rgba(234,243,255,.18),0 1cqh 3cqh rgba(5,20,50,.35)}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;background:none;border:0;box-shadow:none}
 #pic{flex:1;min-height:0;width:100%;height:100%;display:block}
-#ctl{position:relative;padding:.4cqh 4cqw 1.2cqh;background:linear-gradient(180deg,rgba(6,26,64,0),rgba(6,26,64,.55))}
+#ctl{position:relative;padding:.4cqh 4cqw 1.2cqh;background:none}
 #len{-webkit-appearance:none;appearance:none;display:block;width:100%;height:max(4.4cqh,32px);background:transparent;margin:0;touch-action:none;cursor:ew-resize;--p:0%}
 #len::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:99px;background:linear-gradient(90deg,rgba(234,243,255,.7) var(--p),rgba(234,243,255,.12) var(--p));box-shadow:inset 0 0 0 1px rgba(234,243,255,.4)}
 #len::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#0a2a5e 0 18%,#eaf3ff 19%);border:2px solid #0a2a5e;box-shadow:0 0 0 1.5px #eaf3ff,0 0 16px rgba(160,210,255,.8);margin-top:calc((max(.9cqh,6px) - max(3.4cqh,26px))/2)}
@@ -21,7 +21,7 @@
 #len::-moz-range-progress{height:max(.9cqh,6px);border-radius:99px;background:rgba(234,243,255,.7)}
 #len::-moz-range-thumb{width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:radial-gradient(circle,#0a2a5e 0 18%,#eaf3ff 19%);border:2px solid #0a2a5e;box-shadow:0 0 0 1.5px #eaf3ff,0 0 16px rgba(160,210,255,.8)}
 #marks{position:relative;height:max(1.9cqh,14px);margin:0 calc(max(3.4cqh,26px)/2)}
-#marks span{position:absolute;top:0;transform:translateX(-50%);font:600 max(1.5cqh,12px)/1 var(--mono);color:rgba(234,243,255,.42);letter-spacing:.04em;white-space:nowrap;transition:color .3s,text-shadow .3s}
+#marks span{position:absolute;top:0;transform:translateX(-50%);font:600 max(1.5cqh,12px)/1 var(--mono);color:rgba(234,243,255,.55);letter-spacing:.04em;white-space:nowrap;transition:color .3s,text-shadow .3s}
 #marks span.on{color:rgba(234,243,255,.95);text-shadow:0 0 8px rgba(160,210,255,.6)}
 #marks span.end{color:rgba(255,217,138,.6)}
 #marks span.end.on{color:#ffd98a;text-shadow:0 0 10px rgba(255,217,138,.7)}
@@ -33,7 +33,7 @@
 #pic .hand{font-family:var(--hand)}
 #pic .disp{font-family:var(--display)}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Drag the length · a proved bound">
+<article class="card" id="card" data-topic="maths" data-kind="Drag the length · a proved bound" style="--c:#0a2a5e;--k:#eaf3ff;--edge:#061a40">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">COLLATZ LOOPS</span></div>
     <h2 class="q">If Collatz had a second loop, how long would it have to be?</h2>
@@ -102,39 +102,26 @@
     const topY = 5.8 * f;
     by = Math.max(topY + 12 + .5 * f + bR, cy - R * .38);
 
-    // ---- defs: paper, grid, glow ----
+    // ---- defs: grid, glow ----
     const d = Kit.mk('defs', {}, svg);
-    const rg = Kit.mk('radialGradient', {id: 'bgG', cx: '50%', cy: '45%', r: '75%'}, d);
-    Kit.mk('stop', {offset: '0', 'stop-color': '#164a92'}, rg);
-    Kit.mk('stop', {offset: '.6', 'stop-color': '#0c2f66'}, rg);
-    Kit.mk('stop', {offset: '1', 'stop-color': '#061a40'}, rg);
     const p1 = Kit.mk('pattern', {id: 'g1', width: 12, height: 12, patternUnits: 'userSpaceOnUse'}, d);
     Kit.mk('path', {d: 'M12 0H0V12', fill: 'none', stroke: 'rgba(234,243,255,.07)', 'stroke-width': .6}, p1);
     const p2 = Kit.mk('pattern', {id: 'g2', width: 60, height: 60, patternUnits: 'userSpaceOnUse', x: cx % 60, y: cy % 60}, d);
     Kit.mk('rect', {width: 60, height: 60, fill: 'url(#g1)'}, p2);
     Kit.mk('path', {d: 'M60 0H0V60', fill: 'none', stroke: 'rgba(234,243,255,.13)', 'stroke-width': .8}, p2);
-    const nz = Kit.mk('filter', {id: 'nz', x: 0, y: 0, width: '100%', height: '100%'}, d);
-    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .85, numOctaves: 2, seed: 4}, nz);
-    Kit.mk('feColorMatrix', {values: '0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .07 0'}, nz);
-    const bl = Kit.mk('filter', {id: 'blot', x: 0, y: 0, width: '100%', height: '100%'}, d);
-    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .012, numOctaves: 3, seed: 9}, bl);
-    Kit.mk('feColorMatrix', {values: '0 0 0 0 .02  0 0 0 0 .08  0 0 0 0 .2  0 0 0 .55 -.12'}, bl);
+    // the grid fades out toward the edges so it has no hard border
+    const fg = Kit.mk('radialGradient', {id: 'fade', cx: '50%', cy: '50%', r: '70%'}, d);
+    Kit.mk('stop', {offset: '0', 'stop-color': '#fff'}, fg);
+    Kit.mk('stop', {offset: '.55', 'stop-color': '#fff'}, fg);
+    Kit.mk('stop', {offset: '1', 'stop-color': '#000'}, fg);
+    const mk = Kit.mk('mask', {id: 'gm', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, d);
+    Kit.mk('rect', {width: W, height: H, fill: 'url(#fade)'}, mk);
     const gl = Kit.mk('filter', {id: 'glow', x: '-100%', y: '-100%', width: '300%', height: '300%'}, d);
     Kit.mk('feGaussianBlur', {stdDeviation: 2.6, result: 'b'}, gl);
     const mg = Kit.mk('feMerge', {}, gl); Kit.mk('feMergeNode', {in: 'b'}, mg); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, mg);
 
-    // ---- the sheet ----
-    Kit.mk('rect', {width: W, height: H, fill: 'url(#bgG)'}, svg);
-    Kit.mk('rect', {width: W, height: H, filter: 'url(#blot)'}, svg);
-    Kit.mk('rect', {width: W, height: H, fill: 'url(#g2)'}, svg);
-    Kit.mk('rect', {width: W, height: H, filter: 'url(#nz)'}, svg);
-    const fr = Kit.mk('g', {stroke: INK, fill: 'none'}, svg);
-    Kit.mk('rect', {x: 6, y: 6, width: W - 12, height: H - 12, 'stroke-width': .8, opacity: .45, rx: 3}, fr);
-    for (let x = 14, i = 0; x < W - 12; x += 14, i++) {
-      const l = i % 5 === 0 ? 6 : 3;
-      Kit.mk('line', {x1: x, x2: x, y1: 6, y2: 6 + l, 'stroke-width': .7, opacity: .4}, fr);
-      Kit.mk('line', {x1: x, x2: x, y1: H - 6, y2: H - 6 - l, 'stroke-width': .7, opacity: .4}, fr);
-    }
+    // ---- the sheet: grid printed straight on the card ----
+    Kit.mk('rect', {width: W, height: H, fill: 'url(#g2)', mask: 'url(#gm)'}, svg);
 
     // centre marks
     const cl = Kit.mk('g', {stroke: INK, 'stroke-width': .7, opacity: .4, 'stroke-dasharray': '12 3 2 3'}, svg);

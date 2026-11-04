@@ -61,21 +61,19 @@ function draw() {
   const prodY = prodBot - ph / 2, prodTop = prodBot - ph;
   const srcTop = 2.75 * L, srcBot = srcTop + (prodTop - srcTop) * .6;
   const sh = srcBot - srcTop;
-  // panels
+  // groups (no panels behind them)
   const left = mk('g'), right = mk('g');
-  mk('rect', {x: 0, y: 0, width: W / 2, height: srcBot + 4, rx: fs * .6, style: 'fill:color-mix(in srgb,#2f9e44 13%,transparent)'}, left);
-  mk('rect', {x: W / 2, y: 0, width: W / 2, height: srcBot + 4, rx: fs * .6, style: 'fill:color-mix(in srgb,var(--k) 11%,transparent)'}, right);
   txt(W * .25, L * .95, fs, 800, 'CELLULOSE', null, left);
   txt(W * .25, L * 1.95, sub, 500, 'from plants', 'var(--muted)', left);
   txt(W * .75, L * .95, fs, 800, 'OIL · METHANE', null, right);
   txt(W * .75, L * 1.95, sub, 500, 'fossil fuels', 'var(--muted)', right);
   // plant
   const cx = W * .25, sw = Math.max(2, sh * .04);
-  mk('line', {x1: cx - sh * .35, y1: srcBot - 2, x2: cx + sh * .35, y2: srcBot - 2, style: `stroke:#6b4f2a;stroke-width:${sw};stroke-linecap:round`}, left);
-  mk('path', {d: `M${cx},${srcBot - 2} C${cx - sh * .05},${srcTop + sh * .6} ${cx + sh * .05},${srcTop + sh * .3} ${cx},${srcTop + sh * .05}`, style: `fill:none;stroke:#2f9e44;stroke-width:${sw * 1.3};stroke-linecap:round`}, left);
+  mk('line', {x1: cx - sh * .35, y1: srcBot - 2, x2: cx + sh * .35, y2: srcBot - 2, style: `stroke:#5a3f1c;stroke-width:${sw};stroke-linecap:round`}, left);
+  mk('path', {d: `M${cx},${srcBot - 2} C${cx - sh * .05},${srcTop + sh * .6} ${cx + sh * .05},${srcTop + sh * .3} ${cx},${srcTop + sh * .05}`, style: `fill:none;stroke:#1b6b2e;stroke-width:${sw * 1.3};stroke-linecap:round`}, left);
   [[.25, -1], [.45, 1], [.65, -1], [.08, 1]].forEach(([k, d]) => {
     const y = srcTop + sh * k, lx = cx + d * sh * .16;
-    mk('ellipse', {cx: lx, cy: y, rx: sh * .16, ry: sh * .065, transform: `rotate(${d * -28} ${lx} ${y})`, style: 'fill:#2f9e44'}, left);
+    mk('ellipse', {cx: lx, cy: y, rx: sh * .16, ry: sh * .065, transform: `rotate(${d * -28} ${lx} ${y})`, style: 'fill:#1b6b2e'}, left);
   });
   // rig
   const rx = W * .75, rb = srcBot - 2, rw = sh * .26, st = `stroke:var(--k);stroke-width:${sw};stroke-linecap:round;fill:none`;
@@ -84,13 +82,13 @@ function draw() {
   mk('line', {x1: rx - rw * 1.4, y1: rb, x2: rx + rw * 1.6, y2: rb, style: st}, right);
   const fx = rx + rw * 1.35, fy = rb - sh * .35;
   mk('line', {x1: fx, y1: rb, x2: fx, y2: fy, style: st}, right);
-  mk('path', {d: `M${fx},${fy} c${-sh * .07},${-sh * .08} ${-sh * .02},${-sh * .16} 0,${-sh * .22} c${sh * .02},${sh * .06} ${sh * .07},${sh * .14} 0,${sh * .22}z`, style: 'fill:#3b82f6'}, right);
+  mk('path', {d: `M${fx},${fy} c${-sh * .07},${-sh * .08} ${-sh * .02},${-sh * .16} 0,${-sh * .22} c${sh * .02},${sh * .06} ${sh * .07},${sh * .14} 0,${sh * .22}z`, style: 'fill:#1d4ed8'}, right);
   const dx0 = rx - rw * 1.15, dy0 = rb - sh * .05;
   mk('path', {d: `M${dx0},${dy0} c${-sh * .07},0 ${-sh * .08},${-sh * .1} 0,${-sh * .2} c${sh * .08},${sh * .1} ${sh * .07},${sh * .2} 0,${sh * .2}z`, style: 'fill:#111'}, right);
   mk('line', {x1: W / 2, y1: 0, x2: W / 2, y2: srcBot + 4, style: 'stroke:var(--edge);stroke-width:2'});
   // pipes
   const pst = `fill:none;stroke-width:${Math.max(3, fs * .32)};stroke-linecap:round;stroke-dasharray:${fs * .5} ${fs * .55}`;
-  const pipeL = mk('path', {d: `M${W * .25},${srcBot + 4} C${W * .25},${prodTop} ${W / 2 - pw * .2},${srcBot} ${W / 2 - pw * .2},${prodTop - 2}`, style: pst + ';stroke:#2f9e44'});
+  const pipeL = mk('path', {d: `M${W * .25},${srcBot + 4} C${W * .25},${prodTop} ${W / 2 - pw * .2},${srcBot} ${W / 2 - pw * .2},${prodTop - 2}`, style: pst + ';stroke:#1b6b2e'});
   const pipeR = mk('path', {d: `M${W * .75},${srcBot + 4} C${W * .75},${prodTop} ${W / 2 + pw * .2},${srcBot} ${W / 2 + pw * .2},${prodTop - 2}`, style: pst + ';stroke:var(--k)'});
   // product
   const prod = mk('rect', {x: W / 2 - pw / 2, y: prodTop, width: pw, height: ph, rx: ph * .22, style: 'stroke:var(--k);stroke-width:2', fill: '#efe3c4'});
@@ -100,9 +98,9 @@ function draw() {
   // flame
   const fh = ph * 1.15, flx = W / 2 + pw / 2 + fh * .5;
   const flame = mk('g');
-  mk('path', {d: `M${flx},${prodBot} c${-fh * .42},0 ${-fh * .45},${-fh * .55} 0,${-fh} c${fh * .45},${fh * .45} ${fh * .42},${fh} 0,${fh}z`, style: 'fill:#f76707'}, flame);
+  mk('path', {d: `M${flx},${prodBot} c${-fh * .42},0 ${-fh * .45},${-fh * .55} 0,${-fh} c${fh * .45},${fh * .45} ${fh * .42},${fh} 0,${fh}z`, style: 'fill:#c2410c'}, flame);
   mk('path', {d: `M${flx},${prodBot} c${-fh * .2},0 ${-fh * .22},${-fh * .3} 0,${-fh * .55} c${fh * .22},${fh * .25} ${fh * .2},${fh * .55} 0,${fh * .55}z`, style: 'fill:#ffd43b'}, flame);
-  const fl = txt(flx + fh * .5 + 4, prodBot - fh * .5 + sub * .35, sub, 700, 'burns far less', '#d9480f');
+  const fl = txt(flx + fh * .5 + 4, prodBot - fh * .5 + sub * .35, sub, 700, 'burns far less', '#9a2f00');
   fl.setAttribute('text-anchor', 'start');
   let flw = 0; try { flw = fl.getComputedTextLength(); } catch (e) {}
   if (flw && +fl.getAttribute('x') + flw > W - 2) fl.setAttribute('x', W - 2 - flw);

@@ -1,0 +1,38 @@
+{
+  "id": "technology-yellow-button-anomaly",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the camera car video reveal the steering failure?",
+  "answer": "Frame by frame, the yellow button on the steering wheel moves abnormally, dropping to the right. That movement signals a broken steering column.",
+  "move": "A part that leaves the only path it can take means what holds it has broken.",
+  "keywords": [
+    "ayrton_senna",
+    "imola",
+    "tamburello",
+    "steering_column",
+    "camera_car"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page showing camera car footage of a race car at the Tamburello corner. Drag left to steer frame by frame and watch the yellow button on the steering wheel, which has a 30 mm callout.",
+    "ground": "#0a3466"
+  },
+  "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=gh5UkpxPTFA&t=609s",
+  "written": "2026-11-03"
+}

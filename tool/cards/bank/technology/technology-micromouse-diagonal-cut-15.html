@@ -1,0 +1,491 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-micromouse-diagonal-cut -->
+<!-- Look: Swiss poster on cream paper. A hairline grid that fades into the paper, a black zigzag maze corridor, huge bold numerals (90° / 10 corners) and one hot red accent. A red goal bracket waits in the top cell.
+     Interaction: the old way drives the staircase cell by cell, stopping at all 10 corners, then keeps looping as a faint ghost. You drag from the mouse to aim one straight line and let go to launch. A wrong angle slams into a wall post. The exact diagonal slips through every gap.
+     Wow: the mouse fires down the diagonal in one expo glide. Each post it squeezes past lights up red, the line burns in with light running along it, and the giant 90° flips to 45° as the corner count drops to 0.
+     Layout: on roomy stages the type sits in the maze's empty corners. On short stages the maze moves right and the type stacks in a column on the left, so nothing ever collides. -->
+<title>The diagonal cut</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#cv{flex:1;min-width:0;min-height:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:600 max(1.9cqh,13px)/1.38 var(--body);color:var(--k);overflow-wrap:break-word}
+.won .q{font-size:max(2.5cqh,15px)}
+.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Aim and launch · a new line" style="--c:#f1ede4;--k:#121212;--edge:#d6cfbf">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">AIM AND LAUNCH</span></div>
+    <h2 class="q">What is the Micromouse equivalent of the Fosbury flop?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A zigzag maze corridor seen from above. A robot mouse sits at the bottom. The old route turns square at ten corners. One straight diagonal line can cut through the whole zigzag between the wall posts."></canvas>
+    </div>
+    <p class="say" id="say">Old mice turned every corner square. <b>Drag from the mouse to aim one straight line, then let go.</b></p>
+    <div id="why" class="gone"><p class="body">Mice used to drive cell by cell, turning square at every corner. <b>Mitee Mouse 3</b> was the first to drive diagonals, cutting straight through the zigzag between the posts. Not new technology: a new way of seeing the maze.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The leap wasn't a better machine, it was a better line through the box.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say');
+  const INK = '#121212', HOT = '#ff3d14', PAPER = '#f1ede4';
+  let ctx = null, W = 0, H = 0, s = 40, ox = 0, oy = 0, fs = 12, DISP = 'sans-serif', MONO = 'monospace', running = false;
+  let mode = 'corner', TY = null, bigR = 1.6, twoR = 1.1;
+  const CAPS = ['THE OLD CORNER', 'STOP AND TURN', 'THE NEW LINE', 'CUT THROUGH'];
+  const LBLS = ['CORNERS', 'OLD WAY', 'ONE LINE', 'MITEE 3'];
+
+  // ---------- the maze: a staircase corridor, as it sits in a real maze ----------
+  const cells = new Set(), key = (c, r) => c + ',' + r, has = (c, r) => cells.has(key(c, r));
+  cells.add(key(0, -1));
+  for (let i = 0; i < 5; i++) { cells.add(key(i, i)); cells.add(key(i + 1, i)); }
+  cells.add(key(5, 5));
+  const walls = [];
+  cells.forEach(k => {
+    const [c, r] = k.split(',').map(Number);
+    if (!has(c, r - 1)) walls.push([c, r, c + 1, r]);
+    if (!has(c, r + 1)) walls.push([c, r + 1, c + 1, r + 1]);
+    if (!has(c - 1, r)) walls.push([c, r, c, r + 1]);
+    if (!has(c + 1, r)) walls.push([c + 1, r, c + 1, r + 1]);
+  });
+  walls.sort((a, b) => (a[0] + a[1] + a[2] + a[3]) - (b[0] + b[1] + b[2] + b[3]));
+  const posts = new Map();
+  walls.forEach(w => { posts.set(key(w[0], w[1]), [w[0], w[1]]); posts.set(key(w[2], w[3]), [w[2], w[3]]); });
+  // The old route: through the centre of every cell, a square turn at each corner.
+  const pts = [[.5, 0], [.5, .5]];
+  for (let i = 0; i < 5; i++) pts.push([i + 1.5, i + .5], [i + 1.5, i + 1.5]);
+
+  const R = .24, DIAG = Math.PI / 4, SNAP = 7 * Math.PI / 180;
+  // The posts the diagonal squeezes past, and how far along the line each one sits.
+  const gaps = [];
+  posts.forEach(([c, r]) => { const d = ((c - .5) - r) / Math.SQRT2, t = ((c - .5) + r) / Math.SQRT2; if (Math.abs(d) < .4 && t > .1 && t < 7.4) gaps.push({c, r, d, t}); });
+
+  const m = {x: .5, y: 0, a: Math.PI / 2, al: 1, sc: 1};
+  const gh = {x: .5, y: 0, a: Math.PI / 2, al: 0, sc: 1};
+  const st = {grid: 1, wall: 1, type: 1, seg: pts.length - 1, full: 1, corners: 10, trailA: 1, diag: 0,
+    big: '90°', hot: 0, ns: 1, cap: [CAPS[0], CAPS[1]], bA: 0, ring: 0, ringA: 0, shake: 0, goal: 0};
+  let aim = Math.PI / 2, aiming = false, busy = false, done = false, moving = false, tries = 0, oldTl = null, ghTl = null, flowOn = false, hit = null, wasSnap = false, dir = [0, 1], ghV = 0;
+
+  const P = (X, Y) => [ox + X * s, oy - Y * s];
+  const segD = (px, py, w) => {
+    const [x1, y1, x2, y2] = w, dx = x2 - x1, dy = y2 - y1, L = dx * dx + dy * dy;
+    let t = ((px - x1) * dx + (py - y1) * dy) / L; t = Math.max(0, Math.min(1, t));
+    return Math.hypot(px - x1 - t * dx, py - y1 - t * dy);
+  };
+  // Where a straight run at angle a ends: on the first wall the mouse's body would touch.
+  function cast(a) {
+    const c = Math.cos(a), sn = Math.sin(a);
+    for (let t = 0; t < 14; t += .02) {
+      const px = .5 + c * t, py = sn * t;
+      for (const w of walls) if (segD(px, py, w) < R) return {t, x: px, y: py, win: px > 5 && py > 5};
+    }
+    return {t: 14, x: .5 + c * 14, y: sn * 14, win: false};
+  }
+
+  // ---------- particles ----------
+  const parts = [];
+  const emit = (x, y, vx, vy, life, size, col, drag = 1) => { if (parts.length > 1400) parts.shift(); parts.push({x, y, vx, vy, life, max: life, size, col, drag}); };
+
+  // ---------- layout: type in the maze's corners, or a type column beside it ----------
+  function layout() {
+    const pS = s, pX = ox, pY = oy;
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    const cs = getComputedStyle(card);
+    DISP = cs.getPropertyValue('--display').trim() || 'sans-serif';
+    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    const mono = (t, z) => { ctx.font = `700 ${z}px ${MONO}`; return ctx.measureText(t).width; };
+    const capW = z => Math.max(...CAPS.map(t => mono(t, z))) + z * 1.15;
+    const lblW = z => Math.max(...LBLS.map(t => mono(t, z)));
+    ctx.font = `800 100px ${DISP}`;
+    bigR = Math.max(ctx.measureText('90°').width, ctx.measureText('45°').width) / 100;
+    twoR = ctx.measureText('10').width / 100;
+
+    const s1 = Math.min(W / 6.3, H / 7.25), f1 = Math.max(12, Math.min(14, s1 * .27));
+    if (s1 >= 34 && capW(f1) <= 2.75 * s1 && lblW(f1) <= 1.55 * s1 && twoR * 1.15 <= 1.75) {
+      mode = 'corner'; s = s1; fs = f1; ox = (W - 6 * s) / 2; oy = (H - 7 * s) / 2 + 6 * s; TY = null;
+    } else {
+      mode = 'side'; fs = 12;
+      const g = 14, aw = capW(fs), lw = lblW(fs), Hav = H - 10, fixA = 2.95 * fs, fixB = 3.15 * fs;
+      const sz = col => Math.max(8, Math.min(H / 7.25, (W - col - g) / 6.3));
+      // Full stack: numeral, caption, then the two counts side by side.
+      let ss = sz(Math.max(aw, 2 * lw + g)), cw = W - 6.15 * ss - g, F = Math.min(cw / bigR, 150), F2 = 0, tot = 0;
+      for (let i = 0; i < 40; i++) { F2 = Math.min(F * .6, ((cw - g) / 2) / twoR); tot = .74 * F + fixA + g + .74 * F2 + fixB; if (tot <= Hav) break; F *= .95; }
+      if (F >= 54) {
+        const top = (H - tot) / 2, by = top + .74 * F, ay = by + fixA + g + .74 * F2;
+        TY = {compact: 0, F, F2, lx: 1, by, ax: 1, ay, bx: 1 + Math.max(lw, twoR * F2) + g * 1.4};
+      } else {
+        // Compact: numeral, caption, and the count as one mono line.
+        const cl = mono('10 → ? CORNERS', fs);
+        ss = sz(Math.max(aw, cl)); cw = W - 6.15 * ss - g;
+        F = Math.max(24, Math.min(cw / bigR, 150, (Hav - fixA - .7 * g - fs * .8) / .74));
+        tot = .74 * F + fixA + .7 * g + fs * .8;
+        const top = (H - tot) / 2, by = top + .74 * F;
+        TY = {compact: 1, F, F2: 0, lx: 1, by, ax: 1, ay: by + fixA + .7 * g + fs * .8, bx: 0};
+      }
+      s = ss; ox = W - 6 * s - .15 * s; oy = (H - 7 * s) / 2 + 6 * s;
+    }
+    // Keep live particles in place across a resize.
+    if (pS && parts.length) { const k = s / pS; for (const p of parts) { p.x = ox + (p.x - pX) * k; p.y = oy + (p.y - pY) * k; p.vx *= k; p.vy *= k; } }
+    if (hit) hit = cast(aim);
+    if (!running) { running = true; requestAnimationFrame(frame); }
+  }
+
+  const rr = (x, y, w, h, r) => { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); };
+
+  function drawMouse(o, al) {
+    if (al <= .01) return;
+    const [px, py] = P(o.x, o.y), L = s * .54, B = s * .36;
+    ctx.save(); ctx.globalAlpha = al; ctx.translate(px, py); ctx.rotate(-o.a); ctx.scale(o.sc, o.sc);
+    ctx.fillStyle = 'rgba(18,18,18,.22)'; rr(-L / 2 + s * .04, -B / 2 + s * .06, L, B, s * .09); ctx.fill();
+    ctx.fillStyle = '#2b2b2b';
+    rr(-L * .2, -B / 2 - s * .045, L * .4, s * .075, s * .02); ctx.fill();
+    rr(-L * .2, B / 2 - s * .03, L * .4, s * .075, s * .02); ctx.fill();
+    const g = ctx.createLinearGradient(-L / 2, -B / 2, L / 2, B / 2); g.addColorStop(0, '#4a4a4a'); g.addColorStop(1, INK);
+    ctx.fillStyle = g; rr(-L / 2, -B / 2, L, B, s * .09); ctx.fill();
+    ctx.strokeStyle = 'rgba(241,237,228,.28)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(-L * .32, -B * .22); ctx.lineTo(L * .15, -B * .22); ctx.moveTo(-L * .32, B * .22); ctx.lineTo(L * .15, B * .22); ctx.stroke();
+    ctx.fillStyle = 'rgba(241,237,228,.18)'; rr(-L * .3, -B * .12, L * .3, B * .24, 2); ctx.fill();
+    ctx.fillStyle = HOT; rr(L / 2 - s * .1, -B * .38, s * .07, B * .76, s * .02); ctx.fill();
+    ctx.fillStyle = PAPER;
+    for (const k of [-.3, -.1, .1, .3]) { ctx.beginPath(); ctx.arc(L / 2 - s * .02, B * k, Math.max(1, s * .022), 0, 7); ctx.fill(); }
+    ctx.restore();
+  }
+
+  function draw(time) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    if (st.shake) ctx.translate((Math.random() - .5) * st.shake, (Math.random() - .5) * st.shake);
+
+    // Hairline grid across the whole stage, fading into the paper at the edges.
+    ctx.globalAlpha = st.grid; ctx.lineWidth = 1; ctx.setLineDash([]);
+    const gV = ctx.createLinearGradient(0, 0, 0, H), gH = ctx.createLinearGradient(0, 0, W, 0);
+    for (const gr of [gV, gH]) { gr.addColorStop(0, 'rgba(18,18,18,0)'); gr.addColorStop(.14, 'rgba(18,18,18,.075)'); gr.addColorStop(.86, 'rgba(18,18,18,.075)'); gr.addColorStop(1, 'rgba(18,18,18,0)'); }
+    const c0 = Math.floor(-ox / s), c1 = Math.ceil((W - ox) / s), r0 = Math.floor((oy - H) / s), r1 = Math.ceil(oy / s);
+    ctx.strokeStyle = gV; ctx.beginPath();
+    for (let c = c0; c <= c1; c++) { const x = Math.round(ox + c * s) + .5; ctx.moveTo(x, 0); ctx.lineTo(x, H); }
+    ctx.stroke();
+    ctx.strokeStyle = gH; ctx.beginPath();
+    for (let r = r0; r <= r1; r++) { const y = Math.round(oy - r * s) + .5; ctx.moveTo(0, y); ctx.lineTo(W, y); }
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(18,18,18,.35)';
+    for (let c = 0; c <= 6; c++) for (let r = -1; r <= 6; r++) if (!posts.has(key(c, r))) { const [a, b] = P(c, r); ctx.fillRect(a - 1.5, b - 1.5, 3, 3); }
+    ctx.fillStyle = 'rgba(18,18,18,.055)';
+    cells.forEach(k => { const [c, r] = k.split(',').map(Number), [a, b] = P(c, r + 1); ctx.fillRect(a, b, s, s); });
+
+    // The goal: corner brackets in the top cell, breathing until the mouse arrives.
+    {
+      const [gx, gy] = P(5, 6), pulse = done ? 0 : .5 + .5 * Math.sin(time * 3.2), ins = s * (.16 + .04 * pulse), ln = s * .2;
+      if (st.goal > 0) { ctx.globalAlpha = .12 * st.goal; ctx.fillStyle = HOT; ctx.fillRect(gx, gy, s, s); }
+      ctx.globalAlpha = st.wall * (done ? 1 : .55 + .45 * pulse); ctx.strokeStyle = HOT; ctx.lineWidth = Math.max(1.5, s * .045); ctx.lineCap = 'butt';
+      ctx.beginPath();
+      for (const [sx, sy] of [[0, 0], [1, 0], [0, 1], [1, 1]]) {
+        const x = gx + (sx ? s - ins : ins), y = gy + (sy ? s - ins : ins), hx = sx ? -ln : ln, hy = sy ? -ln : ln;
+        ctx.moveTo(x + hx, y); ctx.lineTo(x, y); ctx.lineTo(x, y + hy);
+      }
+      ctx.stroke();
+    }
+
+    // Walls draw in from the start, with a cast shadow.
+    const n = walls.length, lw = Math.max(3, s * .09);
+    ctx.globalAlpha = 1; ctx.lineCap = 'square';
+    for (const pass of [0, 1]) {
+      ctx.strokeStyle = pass ? INK : 'rgba(18,18,18,.16)'; ctx.lineWidth = lw;
+      const dx = pass ? 0 : s * .05, dy = pass ? 0 : s * .07;
+      ctx.beginPath();
+      walls.forEach((w, i) => {
+        const p = Math.max(0, Math.min(1, st.wall * (n * .5 + 1) - i * .5)); if (!p) return;
+        const [a, b] = P(w[0], w[1]), [c, d] = P(w[0] + (w[2] - w[0]) * p, w[1] + (w[3] - w[1]) * p);
+        ctx.moveTo(a + dx, b + dy); ctx.lineTo(c + dx, d + dy);
+      });
+      ctx.stroke();
+    }
+    ctx.fillStyle = INK; ctx.globalAlpha = st.wall;
+    posts.forEach(([c, r]) => { const [a, b] = P(c, r), q = lw * 1.6; ctx.fillRect(a - q / 2, b - q / 2, q, q); });
+
+    // The old route: dashed, with a square at every corner it had to stop for.
+    ctx.globalAlpha = st.trailA * st.grid; ctx.strokeStyle = INK; ctx.lineWidth = Math.max(2, s * .045); ctx.lineCap = 'butt';
+    ctx.setLineDash([s * .1, s * .09]); ctx.beginPath();
+    for (let k = 0; k <= st.seg; k++) { const [a, b] = P(pts[k][0], pts[k][1]); k ? ctx.lineTo(a, b) : ctx.moveTo(a, b); }
+    if (!st.full) { const [a, b] = P(m.x, m.y); ctx.lineTo(a, b); }
+    ctx.stroke(); ctx.setLineDash([]);
+    for (let k = 1; k <= st.corners; k++) { const [a, b] = P(pts[k][0], pts[k][1]), q = Math.max(6, s * .13); ctx.fillStyle = INK; ctx.fillRect(a - q / 2, b - q / 2, q, q); }
+
+    // The ghost of the old way keeps looping, faintly, until the new line exists.
+    drawMouse(gh, .2 * gh.al * ghV);
+
+    // The diagonal, burning in behind the mouse, with light running along it.
+    if (st.diag > 0) {
+      const c = Math.cos(DIAG), sn = Math.sin(DIAG), [a, b] = P(.5, 0), [e, f] = P(.5 + c * st.diag, sn * st.diag);
+      ctx.globalAlpha = 1; ctx.lineCap = 'round';
+      ctx.shadowColor = HOT; ctx.shadowBlur = s * (.35 + (done ? .12 * Math.sin(time * 2.4) : 0)); ctx.strokeStyle = HOT; ctx.lineWidth = s * .12;
+      ctx.beginPath(); ctx.moveTo(a, b); ctx.lineTo(e, f); ctx.stroke(); ctx.shadowBlur = 0;
+      ctx.strokeStyle = 'rgba(255,235,220,.7)'; ctx.lineWidth = Math.max(1.5, s * .03);
+      ctx.beginPath(); ctx.moveTo(a, b); ctx.lineTo(e, f); ctx.stroke();
+      if (done && !Kit.calm) {
+        ctx.strokeStyle = 'rgba(255,250,244,.95)'; ctx.lineWidth = Math.max(2, s * .05); ctx.lineCap = 'round';
+        ctx.setLineDash([s * .22, s * .75]); ctx.lineDashOffset = -time * s * 2.2;
+        ctx.beginPath(); ctx.moveTo(a, b); ctx.lineTo(e, f); ctx.stroke(); ctx.setLineDash([]); ctx.lineDashOffset = 0;
+      }
+      // Each post the mouse threads past lights up, with its clearance marked.
+      for (const g of gaps) {
+        const p = Math.max(0, Math.min(1, (st.diag - g.t) * 3)); if (!p) continue;
+        const k = 1 + 1.7 * Math.pow(1 - p, 2) * (p > 0 ? 1 : 0), [px, py] = P(g.c, g.r), q = lw * 1.6 * (1 + .55 * p) * (2 - k * .5);
+        ctx.globalAlpha = p; ctx.strokeStyle = HOT; ctx.lineWidth = Math.max(1.5, s * .035);
+        ctx.strokeRect(px - q / 2 - 2, py - q / 2 - 2, q + 4, q + 4);
+        const fx = g.c - g.d * .707, fy = g.r + g.d * .707, [lx, ly] = P(g.c + (fx - g.c) * .42 * p, g.r + (fy - g.r) * .42 * p);
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(lx, ly); ctx.stroke();
+      }
+    }
+
+    // The aim: where this straight run would end.
+    if (aiming && hit) {
+      const [a, b] = P(m.x, m.y), [e, f] = P(hit.x, hit.y), col = hit.win ? HOT : INK;
+      ctx.globalAlpha = .9; ctx.strokeStyle = col; ctx.lineWidth = hit.win ? 2.5 : 1.5; ctx.setLineDash([4, 5]);
+      ctx.beginPath(); ctx.moveTo(a, b); ctx.lineTo(e, f); ctx.stroke(); ctx.setLineDash([]);
+      ctx.lineWidth = 2.5; ctx.beginPath();
+      if (hit.win) { ctx.arc(e, f, s * .16, 0, 7); }
+      else { const q = s * .13; ctx.moveTo(e - q, f - q); ctx.lineTo(e + q, f + q); ctx.moveTo(e + q, f - q); ctx.lineTo(e - q, f + q); }
+      ctx.stroke();
+    }
+
+    // Particles.
+    for (const p of parts) { ctx.globalAlpha = Math.max(0, p.life / p.max); ctx.fillStyle = p.col; ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size); }
+
+    // Ring at the finish.
+    if (st.ringA > 0) { const [a, b] = P(m.x, m.y); ctx.globalAlpha = st.ringA; ctx.strokeStyle = HOT; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(a, b, st.ring * s, 0, 7); ctx.stroke(); }
+
+    drawMouse(m, m.al);
+
+    // A slow dashed ring: the mouse is ready to be aimed.
+    if (!busy && !done && !aiming && !(oldTl && oldTl.isActive()) && m.al > .9) {
+      const [a, b] = P(m.x, m.y);
+      ctx.globalAlpha = .55 + .25 * Math.sin(time * 3); ctx.strokeStyle = INK; ctx.lineWidth = 1.5; ctx.setLineDash([3, 5]);
+      ctx.lineDashOffset = -time * 12; ctx.beginPath(); ctx.arc(a, b, s * .48, 0, 7); ctx.stroke(); ctx.setLineDash([]); ctx.lineDashOffset = 0;
+    }
+    ctx.restore();
+    drawType();
+    ctx.globalAlpha = 1;
+  }
+
+  // ---------- typography ----------
+  function drawType() {
+    ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+    const lk = 1 - st.type;
+    let lx, by, F, ax, ay, bx, F2, compact = 0;
+    if (mode === 'corner') {
+      F = Math.min(s * 2.3, s * 3.75 / bigR); F2 = s * 1.15;
+      [lx, by] = P(.1, 4.15); [ax, ay] = P(2.5, .02); [bx] = P(4.4, 0);
+      by += lk * s * .4; ay += lk * s * .4;
+    } else {
+      ({F, F2, lx, by, ax, ay, bx, compact} = TY); by += lk * 14; ay += lk * 14;
+    }
+    ctx.globalAlpha = st.type;
+    ctx.font = `800 ${F}px ${DISP}`;
+    ctx.save(); ctx.translate(lx, by); ctx.scale(1, st.ns); ctx.fillStyle = st.hot ? HOT : INK; ctx.fillText(st.big, 0, 0); ctx.restore();
+    ctx.fillStyle = HOT; ctx.fillRect(lx + 1, by + fs * .62, fs * .72, fs * .72);
+    ctx.fillStyle = INK; ctx.font = `700 ${fs}px ${MONO}`;
+    ctx.fillText(st.cap[0], lx + fs * 1.15, by + fs * 1.3);
+    ctx.fillText(st.cap[1], lx + fs * 1.15, by + fs * 2.65);
+
+    if (compact) {
+      let x = ax;
+      const seg = (t, c, a = 1) => { ctx.globalAlpha = st.type * a; ctx.fillStyle = c; ctx.fillText(t, x, ay); x += ctx.measureText(t).width; };
+      seg(String(st.corners), INK); seg(' → ', INK, .45);
+      st.bA > .5 ? seg('0', HOT) : seg('?', INK, .4);
+      seg(' CORNERS', INK);
+      ctx.globalAlpha = 1; return;
+    }
+    ctx.globalAlpha = st.type;
+    ctx.font = `800 ${F2}px ${DISP}`; ctx.fillStyle = INK; ctx.fillText(String(st.corners), ax, ay);
+    ctx.font = `700 ${fs}px ${MONO}`; ctx.fillText('CORNERS', ax, ay + fs * 1.5); ctx.fillText('OLD WAY', ax, ay + fs * 2.85);
+    if (st.bA < 1) {
+      ctx.globalAlpha = st.type * .3 * (1 - st.bA); ctx.font = `800 ${F2}px ${DISP}`; ctx.strokeStyle = INK; ctx.lineWidth = 1.5; ctx.strokeText('?', bx, ay);
+      ctx.font = `700 ${fs}px ${MONO}`; ctx.fillStyle = INK; ctx.fillText('CORNERS', bx, ay + fs * 1.5); ctx.fillText('ONE LINE', bx, ay + fs * 2.85);
+    }
+    if (st.bA > 0) {
+      ctx.globalAlpha = Math.min(1, st.bA);
+      ctx.save(); ctx.translate(bx, ay); ctx.scale(st.bA, st.bA); ctx.font = `800 ${F2}px ${DISP}`; ctx.fillStyle = HOT; ctx.fillText('0', 0, 0); ctx.restore();
+      ctx.font = `700 ${fs}px ${MONO}`; ctx.fillStyle = INK; ctx.fillText('CORNERS', bx, ay + fs * 1.5); ctx.fillText('MITEE 3', bx, ay + fs * 2.85);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  let last = 0;
+  function frame(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    const ghostOn = !aiming && !busy && !done && !(oldTl && oldTl.isActive());
+    ghV += ((ghostOn ? 1 : 0) - ghV) * Math.min(1, dt * 6);
+    if (ctx && !Kit.calm) {
+      // The aim streams particles along the run it would make.
+      if (aiming && hit) {
+        const [a, b] = P(m.x, m.y), [e, f] = P(hit.x, hit.y), len = Math.hypot(e - a, f - b), ux = (e - a) / (len || 1), uy = (f - b) / (len || 1), sp = s * 6;
+        for (let k = 0; k < 4; k++) {
+          const d0 = Math.random() * len * .9, j = (Math.random() - .5) * s * .08;
+          emit(a + ux * d0 - uy * j, b + uy * d0 + ux * j, ux * sp, uy * sp, Math.max(.05, (len - d0) / sp), 1.5 + Math.random() * 2, hit.win ? HOT : INK);
+        }
+      }
+      if (moving) {
+        const [a, b] = P(m.x - dir[0] * .26, m.y - dir[1] * .26);
+        for (let k = 0; k < 9; k++) {
+          const sp = s * (.6 + Math.random() * 2.2), sx = -dir[0] * sp + (Math.random() - .5) * s * 1.2, sy = dir[1] * sp + (Math.random() - .5) * s * 1.2;
+          emit(a, b, sx, sy, .35 + Math.random() * .45, 1.5 + Math.random() * 2.5, Math.random() < .55 ? HOT : INK, .92);
+        }
+      }
+      // A few sparks lift off the finished line.
+      if (flowOn && Math.random() < .45) {
+        const T = st.diag, c = Math.cos(DIAG), sn = Math.sin(DIAG), u = Math.random() * T, [a, b] = P(.5 + c * u, sn * u), side = Math.random() < .5 ? 1 : -1, sp = s * (.3 + Math.random() * .6);
+        emit(a, b, side * sn * sp + c * sp * .6, side * c * sp - sn * sp * .6, .5 + Math.random() * .5, 1.5 + Math.random() * 1.5, HOT, .97);
+      }
+    }
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i], k = Math.pow(p.drag, dt * 60);
+      p.vx *= k; p.vy *= k; p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt;
+      if (p.life <= 0) parts.splice(i, 1);
+    }
+    if (ctx) draw(t / 1000);
+    requestAnimationFrame(frame);
+  }
+
+  // ---------- the old way, played once on entry, then kept as a ghost ----------
+  function routeInto(tl, o, onCorner) {
+    for (let k = 1; k < pts.length; k++) {
+      tl.to(o, {x: pts[k][0], y: pts[k][1], duration: k === 1 ? .22 : .3, ease: 'power2.inOut'});
+      if (onCorner) tl.set(st, {seg: k});
+      if (k < pts.length - 1) {
+        const na = Math.atan2(pts[k + 1][1] - pts[k][1], pts[k + 1][0] - pts[k][0]);
+        if (onCorner) tl.set(st, {corners: k});
+        tl.to(o, {a: na, duration: .16, ease: 'power2.inOut'}, '+=.05');
+      }
+    }
+  }
+  function ghostLoop() {
+    if (done || Kit.calm) return;
+    if (ghTl) ghTl.kill();
+    ghTl = gsap.timeline({repeat: -1, repeatDelay: 1.6, delay: 1.2});
+    ghTl.set(gh, {x: .5, y: 0, a: Math.PI / 2, al: 0}).to(gh, {al: 1, duration: .35});
+    routeInto(ghTl, gh, false);
+    ghTl.to(gh, {al: 0, duration: .5, ease: 'power2.in'}, '+=.25');
+  }
+  function runOld() {
+    if (oldTl) oldTl.kill();
+    Object.assign(m, {x: .5, y: 0, a: Math.PI / 2, al: 1});
+    Object.assign(st, {seg: 0, full: 0, corners: 0});
+    const tl = gsap.timeline({delay: 1});
+    routeInto(tl, m, true);
+    tl.set(st, {full: 1})
+      .to(m, {al: 0, duration: .3, ease: 'power2.in'}, '+=.4')
+      .set(m, {x: .5, y: 0, a: Math.PI / 2})
+      .to(m, {al: 1, duration: .4, ease: 'power2.out'})
+      .call(ghostLoop);
+    oldTl = tl;
+  }
+
+  // ---------- aim and launch ----------
+  function setAim(e) {
+    const r = cv.getBoundingClientRect(), X = (e.clientX - r.left - ox) / s, Y = (oy - (e.clientY - r.top)) / s;
+    const dx = X - .5, dy = Y; if (Math.hypot(dx, dy) < .25) return;
+    let a = Math.atan2(dy, dx); if (a < -Math.PI / 2) a += 2 * Math.PI;
+    const snap = Math.abs(a - DIAG) < SNAP; if (snap) a = DIAG;
+    if (snap && !wasSnap) Kit.haptic('selection'); wasSnap = snap;
+    aim = a; hit = cast(a);
+    gsap.to(m, {a, duration: .18, ease: 'power3.out', overwrite: 'auto'});
+  }
+
+  function launch() {
+    if (busy || done || !hit) return;
+    busy = true; tries++;
+    const h = hit, a = aim, c = Math.cos(a), sn = Math.sin(a), o = {d: 0};
+    gsap.killTweensOf(m); m.a = a; m.al = 1; dir = [c, sn];
+    if (h.win) {
+      const T = h.t - .08;
+      if (Kit.calm) { m.x = .5 + c * T; m.y = sn * T; st.diag = T; st.trailA = .15; win(); return; }
+      moving = true; Kit.haptic('light');
+      gsap.to(st, {trailA: .15, duration: .8, ease: 'power2.out'});
+      gsap.to(o, {d: T, duration: 1.05, ease: 'expo.inOut', onUpdate: () => { m.x = .5 + c * o.d; m.y = sn * o.d; st.diag = o.d; }, onComplete: () => { moving = false; win(); }});
+    } else {
+      const T = Math.max(0, h.t);
+      const crash = () => {
+        moving = false;
+        const [px, py] = P(m.x + c * .26, m.y + sn * .26);
+        if (!Kit.calm) {
+          for (let k = 0; k < 150; k++) {
+            const an = a + Math.PI + (Math.random() - .5) * 2.6, sp = s * (1 + Math.random() * 7);
+            emit(px, py, Math.cos(an) * sp, -Math.sin(an) * sp, .45 + Math.random() * .55, 1.5 + Math.random() * 3, Math.random() < .6 ? HOT : INK, .9);
+          }
+          st.shake = s * .18; gsap.to(st, {shake: 0, duration: .45, ease: 'power2.out'});
+        }
+        Kit.haptic('light');
+        const straight = Math.abs(a - Math.PI / 2) < .06 || Math.abs(a) < .06;
+        say.innerHTML = straight
+          ? 'Straight ahead hits a wall within a cell: that is why every mouse stopped and turned. <b>Find one line that never stops.</b>'
+          : tries >= 2 ? 'Clipped a post. <b>Aim halfway between right and up, through the gaps.</b>'
+          : 'Clipped a post. <b>Is there one straight line all the way through? Aim again.</b>';
+        gsap.to(m, {x: .5, y: 0, duration: Kit.calm ? 0 : .55, delay: Kit.calm ? 0 : .35, ease: 'back.out(1.4)', onComplete: () => { busy = false; }});
+      };
+      if (Kit.calm) { m.x = .5 + c * T; m.y = sn * T; crash(); return; }
+      moving = true;
+      gsap.to(o, {d: T, duration: .18 + T * .07, ease: 'power2.in', onUpdate: () => { m.x = .5 + c * o.d; m.y = sn * o.d; }, onComplete: crash});
+    }
+  }
+
+  function win() {
+    done = true; busy = false; flowOn = true; hit = null;
+    if (ghTl) ghTl.kill(); gh.al = 0;
+    Kit.haptic('success'); card.classList.add('won');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (Kit.calm) { Object.assign(st, {big: '45°', hot: 1, ns: 1, bA: 1, goal: 1, cap: [CAPS[2], CAPS[3]]}); return; }
+    const T = st.diag, c = Math.cos(DIAG), sn = Math.sin(DIAG);
+    for (let k = 0; k < 260; k++) {
+      const u = Math.random() * T, [a, b] = P(.5 + c * u, sn * u), side = Math.random() < .5 ? 1 : -1, sp = s * (.6 + Math.random() * 4);
+      emit(a, b, side * sn * sp + (Math.random() - .5) * s * .6, side * c * sp + (Math.random() - .5) * s * .6, .5 + Math.random() * .7, 1.5 + Math.random() * 2.5, Math.random() < .7 ? HOT : INK, .91);
+    }
+    const [ex, ey] = P(m.x, m.y);
+    for (let k = 0; k < 120; k++) { const an = Math.random() * 7, sp = s * (1 + Math.random() * 4); emit(ex, ey, Math.cos(an) * sp, Math.sin(an) * sp, .5 + Math.random() * .6, 1.5 + Math.random() * 2.5, HOT, .9); }
+    gsap.fromTo(st, {ring: .3, ringA: 1}, {ring: 2.2, ringA: 0, duration: 1, ease: 'expo.out'});
+    gsap.to(st, {goal: 1, duration: .6, ease: 'power2.out'});
+    gsap.fromTo(m, {sc: 1.35}, {sc: 1, duration: .8, ease: 'elastic.out(1,.45)'});
+    gsap.timeline()
+      .to(st, {ns: 0, duration: .18, ease: 'power2.in'})
+      .call(() => { st.big = '45°'; st.hot = 1; st.cap = [CAPS[2], CAPS[3]]; })
+      .to(st, {ns: 1, duration: .9, ease: 'elastic.out(1,.5)'})
+      .to(st, {bA: 1, duration: .7, ease: 'back.out(2.2)'}, '-=.7');
+  }
+
+  cv.addEventListener('pointerdown', e => {
+    if (busy || done) return;
+    if (oldTl && oldTl.isActive()) oldTl.progress(1);
+    aiming = true; wasSnap = false; cv.setPointerCapture(e.pointerId); setAim(e); Kit.haptic('selection');
+  });
+  cv.addEventListener('pointermove', e => { if (aiming) setAim(e); });
+  const up = () => { if (!aiming) return; aiming = false; launch(); };
+  cv.addEventListener('pointerup', up);
+  cv.addEventListener('pointercancel', () => { aiming = false; });
+
+  // Re-lay out whenever the stage changes size (it shrinks when the explanation appears).
+  let roQ = false;
+  if (window.ResizeObserver) new ResizeObserver(() => { if (!ctx || roQ) return; roQ = true; requestAnimationFrame(() => { roQ = false; layout(); }); }).observe(Kit.$('stage'));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (ctx) layout(); });
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.fromTo(st, {grid: 0}, {grid: 1, duration: .6, ease: 'power2.out'});
+    gsap.fromTo(st, {wall: 0}, {wall: 1, duration: 1.3, ease: 'power3.out', delay: .1});
+    gsap.fromTo(st, {type: 0}, {type: 1, duration: .9, ease: 'power3.out', delay: .35});
+    gsap.fromTo(m, {sc: 0}, {sc: 1, duration: .7, ease: 'back.out(2)', delay: .6});
+    runOld();
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (oldTl) oldTl.progress(1);
+    aim = DIAG; hit = cast(DIAG); launch();
+    await wait(Kit.calm ? 80 : 2000);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,36 @@
+{
+  "id": "medicine-tattoo-flu-boost",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a tattoo change your response to the flu vaccine?",
+  "answer": "A tattoo changed how the immune system responded to the flu vaccine: the response got a boost, so it reacted better. With the COVID-19 vaccine, tattoos did the exact opposite. The same tattoo can help one vaccine and not the other.",
+  "move": "Same tattoo, opposite results: it can boost the flu vaccine, not the COVID-19 one.",
+  "keywords": [
+    "tattoo",
+    "flu vaccine",
+    "covid-19 vaccine",
+    "immune system"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive page: drag a knob to tattoo an arm, then compare two cylinders showing whether the flu vaccine response is stronger. It asks how a tattoo changes the response to the flu vaccine."
+  },
+  "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=1220s",
+  "written": "2026-11-03"
+}

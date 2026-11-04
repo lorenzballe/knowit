@@ -24,7 +24,7 @@
     <h2 class="q">How can graphene be used for water purification?</h2>
     <div class="stagebox" id="stage">
       <div id="viz"><canvas id="cv"></canvas></div>
-      <div id="legend"><span><i style="background:#7fd3ff"></i>water</span><span><i style="background:#ffb547"></i><i style="background:#ff6b8b"></i>salt ions</span><span id="cnt" class="gone"></span></div>
+      <div id="legend"><span><i style="background:#0b2a4a"></i>water</span><span><i style="background:#ffb547"></i><i style="background:#ff6b8b"></i>salt ions</span><span id="cnt" class="gone"></span></div>
       <div id="opts">
         <button class="opt" data-i="0">A graphene oxide membrane lets nothing through</button>
         <button class="opt" data-i="1">A graphene oxide membrane lets water through and holds salt back</button>
@@ -78,13 +78,11 @@ function step() {
 }
 function draw() {
   const {x, W, H, top, bot, r, fs, font} = G, mL = (.5 - MT) * W, mR = (.5 + MT) * W;
+  const ink = getComputedStyle(document.getElementById('card')).getPropertyValue('--k').trim() || '#10100c';
   x.clearRect(0, 0, W, H);
   x.save();
-  x.beginPath(); x.roundRect ? x.roundRect(0, 0, W, H, Math.min(W, H) * .05) : x.rect(0, 0, W, H); x.clip();
-  x.fillStyle = '#0b2a4a'; x.fillRect(0, 0, W / 2, H);
-  x.fillStyle = '#0f5578'; x.fillRect(W / 2, 0, W / 2, H);
   // membrane: stacked graphene oxide flakes
-  x.fillStyle = '#141a20'; x.fillRect(mL, 0, mR - mL, H);
+  x.fillStyle = '#141a20'; x.fillRect(mL, 0, mR - mL, bot * H);
   x.strokeStyle = `rgba(${Math.round(200 + 55 * st.open)},${Math.round(210 + 30 * st.open)},220,.9)`;
   x.lineWidth = Math.max(1.5, r * .22);
   const gap = r * .9;
@@ -98,18 +96,20 @@ function draw() {
     if (p.t === 'w') {
       x.fillStyle = '#ffffff';
       for (const d of [-.9, .9]) { x.beginPath(); x.arc(px + Math.cos(p.a + d) * r * .95, py + Math.sin(p.a + d) * r * .95, r * .5, 0, 6.29); x.fill(); }
-      x.fillStyle = '#7fd3ff'; x.beginPath(); x.arc(px, py, r, 0, 6.29); x.fill();
+      x.fillStyle = '#0b2a4a'; x.beginPath(); x.arc(px, py, r, 0, 6.29); x.fill();
     } else {
       const rr = r * p.m;
       x.fillStyle = p.t === 'na' ? '#ffb547' : '#ff6b8b';
       x.beginPath(); x.arc(px, py, rr, 0, 6.29); x.fill();
+      x.strokeStyle = ink; x.lineWidth = Math.max(1, rr * .12);
+      x.beginPath(); x.arc(px, py, rr, 0, 6.29); x.stroke();
       x.strokeStyle = '#1a1a1a'; x.lineWidth = Math.max(1.5, rr * .22);
       x.beginPath(); x.moveTo(px - rr * .45, py); x.lineTo(px + rr * .45, py);
       if (p.t === 'na') { x.moveTo(px, py - rr * .45); x.lineTo(px, py + rr * .45); }
       x.stroke();
     }
   }
-  x.fillStyle = '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillStyle = ink; x.textAlign = 'center'; x.textBaseline = 'middle';
   x.font = `800 ${fs}px ${font}`;
   x.fillText('SEAWATER', W * .25, top * H / 2);
   x.fillText('FRESH WATER', W * .75, top * H / 2);

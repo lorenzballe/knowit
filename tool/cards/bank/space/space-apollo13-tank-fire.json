@@ -1,0 +1,36 @@
+{
+  "id": "space-apollo13-tank-fire",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What actually made Apollo 13's oxygen tank explode?",
+  "answer": "Shorted fan cables inside the oxygen tank caught fire after a misreading sensor switched the stirrer fan on. The fire's gas drove pressure up until the tank burst and damaged the second tank.",
+  "move": "Apollo 13's blast began as a tiny electrical fault: a short in a fan's cables.",
+  "keywords": [
+    "apollo_13",
+    "oxygen_tank",
+    "stirrer_fan",
+    "short_circuit"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section of Apollo 13's oxygen tank showing a glowing stirrer fan. Tap the fan to start the chain of events that led to the tank's explosion, in order."
+  },
+  "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=TSsregL8H2o&t=657s",
+  "written": "2026-11-03"
+}

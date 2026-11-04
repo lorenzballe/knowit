@@ -1,0 +1,37 @@
+{
+  "id": "maths-hakens-knot-scanner",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.algorithms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the first algorithm to tell any knot from the unknot?",
+  "answer": "Wolfgang Haken's 1961 algorithm always gives a sure answer: unknot or not. But his paper ran over 130 pages, and for large knots the run would take longer than the age of the universe.",
+  "move": "Solved for sure is not the same as solved in time.",
+  "keywords": [
+    "haken",
+    "knot",
+    "unknot",
+    "algorithm"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dial labelled HAKEN 1961 that the reader drags to feed bigger knots to Haken's scanner, while a clock shows how long the run takes. Asks how long the knot check takes as knots grow.",
+    "ground": "#0c0716"
+  },
+  "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=644s",
+  "written": "2026-11-03"
+}

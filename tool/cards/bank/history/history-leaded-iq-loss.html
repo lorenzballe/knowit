@@ -1,0 +1,350 @@
+<!doctype html>
+<!-- slug: history-leaded-iq-loss -->
+<!-- Look: a cyanotype engineering sheet. White hairlines on Prussian blue, a drafted car with a smoking tailpipe, a graduated tank on a log ruler, section hatching, dimension arrows, mono lettering.
+     Interaction: drag the amber marker up the log scale to guess how many IQ points leaded gasoline cost the world, then say how sure you are.
+     Wow: the car revs, wheels spinning, and lead motes leave the tailpipe on curved paths and pour into the tank. Bubbles rise as it fills with hatched lead to 800 million+, a dimension arrow measures it, and the tank flares. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The IQ that leaded gasoline took</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;overflow:hidden;background:none;border:0;border-radius:0;box-shadow:none}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+#pic text{font-family:var(--mono);letter-spacing:.03em}
+#why{margin:0}
+.answered .q{font-size:max(2.2cqh,14px)}
+.answered #why{font-size:max(2cqh,13px);line-height:1.4}
+.answered #keep{font-size:max(1.85cqh,13px)}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag to guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LEAD &amp; IQ</span></div>
+    <h2 class="q">How many IQ points did leaded gasoline cost the world?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A blueprint of a car with a smoking tailpipe and a graduated tank on a log scale from one thousand to ten billion IQ points, with a marker for your guess."></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag up or down to set your guess on the tank. <b>Each step is ×10.</b></p>
+    <p class="body gone" id="why">Leaded exhaust gave children high lead levels in early childhood; those born 1951–1980 were hit hardest. Added up across everyone, the loss is over 800 million IQ points.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Leaded gasoline made the whole world less intelligent: 800 million+ IQ points gone.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.gsap) gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin, ScrambleTextPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#10100c', AMBER = '#8a2200', CYAN = '#0b4f9c', GROUND = '#FFB000';
+  const L0 = 3, L1 = 10, ANS = 8e8, AE = Math.log10(ANS);
+  const S = {g: 6, lv: L0};
+  let armed = false, revealed = false, done = false, dragging = false, lastDec = 6, hinted = true;
+  let W = 0, H = 0, fs = 12, top = 0, bot = 0, rx = 0, tx0 = 0, tx1 = 0, dimX = 0, mkX = 0, mY = 0, sx = 0, sy = 0, yG = 0, compact = false;
+  let E = {}, idle = null, wheels = [], built = false;
+  const yOf = e => bot - (e - L0) / (L1 - L0) * (bot - top);
+  const eOf = y => Math.max(L0, Math.min(L1, L0 + (bot - y) / (bot - top) * (L1 - L0)));
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const LBL = ['1K', '10K', '100K', '1M', '10M', '100M', '1B', '10B'];
+
+  function fmt(e) {
+    const v = Math.pow(10, e);
+    const units = [[1e3, 'THOUSAND'], [1e6, 'MILLION'], [1e9, 'BILLION']];
+    let i = v < 1e6 ? 0 : v < 1e9 ? 1 : 2;
+    let n = Number((v / units[i][0]).toPrecision(2));
+    if (n >= 1000 && i < 2) { i++; n = Number((v / units[i][0]).toPrecision(2)); }
+    return `${n} ${units[i][1]}`;
+  }
+  function fmtS(e) {
+    const v = Math.pow(10, e);
+    const u = v < 1e6 ? [1e3, 'K'] : v < 1e9 ? [1e6, 'M'] : [1e9, 'B'];
+    return Number((v / u[0]).toPrecision(2)) + u[1];
+  }
+  function verdict() {
+    const d = S.g - AE;
+    if (Math.abs(d) <= Math.log10(3)) return 'SPOT ON';
+    const r = Math.pow(10, Math.abs(d));
+    const s = r < 10 ? r.toFixed(1) : r < 1000 ? String(Math.round(r)) : r < 1e6 ? Math.round(r / 1e3) + 'K' : Math.round(r / 1e6) + 'M';
+    return `×${s} ${d < 0 ? 'TOO LOW' : 'TOO HIGH'}`;
+  }
+
+  function layout() {
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = clamp(W / 26, 12, 14);
+    compact = H < fs * 21;
+    rx = W * .17; tx0 = W * .23; tx1 = W * .49; dimX = W * .55; mkX = W * .6;
+    const ty = compact ? fs * 1.65 : fs * 1.9;
+    const u = Math.max(4, Math.min(fs * (compact ? .55 : .95), (W * .4 - fs * .8) / 10.2));
+    yG = (compact ? fs * .4 : fs * .9) + 3.55 * u;
+    const cx0 = W - fs * .8 - 9 * u;
+    sx = cx0 - u; sy = yG - .7 * u;
+    mY = compact ? yG + fs * .5 : yG + fs * 2.3;
+    top = mY + fs * (compact ? .6 : .7);
+    bot = compact ? H - fs * .4 - 14 : H - fs * 2.8;
+    if (bot < top + fs * 2) bot = top + fs * 2;
+    const cx = (tx0 + tx1) / 2, dec = (bot - top) / (L1 - L0);
+    let every = 7;
+    for (const c of [1, 2, 3, 7]) if (dec * c >= fs * 1.3) { every = c; break; }
+    const minors = dec >= fs * 1.1;
+
+    // ruler and tank graduations
+    let ruler = '', tticks = '';
+    for (let e = L0; e <= L1; e++) {
+      const y = yOf(e);
+      ruler += `<line class="dr" x1="${rx}" x2="${rx + fs * .6}" y1="${y}" y2="${y}" stroke="${INK}" stroke-width="1.3"/>`;
+      if ((L1 - e) % every === 0) ruler += `<text class="lb" x="${rx - fs * .4}" y="${y + fs * .35}" fill="${INK}" font-size="${fs}" font-weight="700" text-anchor="end">${LBL[e - L0]}</text>`;
+      tticks += `<line x1="${tx0 + 3}" x2="${tx0 + 3 + fs * .7}" y1="${y}" y2="${y}" stroke="${INK}" stroke-opacity=".55" stroke-width="1.1"/>`;
+      if (e < L1 && minors) for (let m = 2; m <= 9; m++) {
+        const ym = yOf(e + Math.log10(m));
+        ruler += `<line x1="${rx}" x2="${rx + fs * .3}" y1="${ym}" y2="${ym}" stroke="${INK}" stroke-opacity=".5" stroke-width="1"/>`;
+        tticks += `<line x1="${tx0 + 3}" x2="${tx0 + 3 + fs * .3}" y1="${ym}" y2="${ym}" stroke="${INK}" stroke-opacity=".3" stroke-width="1"/>`;
+      }
+    }
+    const wall = `M${tx0 - fs * .6},${mY} H${tx0} V${bot} H${tx1} V${mY} H${tx1 + fs * .6}`;
+    const ah = fs * .55;
+
+    // the car, drafted in side elevation, facing right; tailpipe at the rear
+    const X = x => (cx0 + x * u).toFixed(1), Y = y => (yG + y * u).toFixed(1), p = (x, y) => X(x) + ',' + Y(y);
+    const body = `M${p(0, -1.1)} L${p(0, -2)} Q${p(0, -2.3)} ${p(.4, -2.35)} L${p(2.2, -2.45)} L${p(3.4, -3.4)} Q${p(3.6, -3.55)} ${p(4, -3.55)} L${p(6.2, -3.55)} Q${p(6.6, -3.55)} ${p(6.9, -3.3)} L${p(7.9, -2.4)} L${p(8.7, -2.25)} Q${p(9, -2.2)} ${p(9, -1.9)} L${p(9, -1.1)} Q${p(9, -.95)} ${p(8.8, -.95)} L${p(7.8, -.95)} A${.95 * u},${.95 * u} 0 0 0 ${p(5.9, -.95)} L${p(3.1, -.95)} A${.95 * u},${.95 * u} 0 0 0 ${p(1.2, -.95)} L${p(.2, -.95)} Q${p(0, -.95)} ${p(0, -1.1)}Z`;
+    const wheel = (wx, id) => {
+      const cxw = +X(wx), cyw = +Y(-.75), r = .72 * u;
+      let sp = '';
+      for (let a = 0; a < 180; a += 45) { const c = Math.cos(a * Math.PI / 180) * r * .82, s = Math.sin(a * Math.PI / 180) * r * .82; sp += `<line x1="${cxw - c}" y1="${cyw - s}" x2="${cxw + c}" y2="${cyw + s}" stroke="${INK}" stroke-opacity=".7" stroke-width="1"/>`; }
+      return `<circle cx="${cxw}" cy="${cyw}" r="${r}" fill="${GROUND}" stroke="${INK}" stroke-width="1.4"/><g id="${id}" data-c="${cxw} ${cyw}">${sp}</g><circle cx="${cxw}" cy="${cyw}" r="${r * .32}" fill="${GROUND}" stroke="${INK}" stroke-width="1.1"/>`;
+    };
+    const carSvg = `
+<g id="car">
+  <line class="dr" x1="${sx - u * .6}" x2="${W - fs * .8}" y1="${yG}" y2="${yG}" stroke="${INK}" stroke-opacity=".45" stroke-dasharray="6 3"/>
+  <g id="carb">
+    <path class="dr" d="${body}" fill="#ffc94d" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M${p(.35, -1.95)} H${p(8.8, -1.95).split(',')[0]}" stroke="${INK}" stroke-opacity=".45" fill="none"/>
+    <path d="M${p(2.6, -2.45)} L${p(3.55, -3.25)} L${p(4.9, -3.25)} L${p(4.9, -2.45)}Z M${p(5.2, -2.45)} L${p(5.2, -3.25)} L${p(6.3, -3.25)} L${p(7.2, -2.45)}Z" fill="${CYAN}" fill-opacity=".22" stroke="${INK}" stroke-width="1.1"/>
+    <path d="M${p(5.05, -2.45)} V${Y(-1.05)} M${p(3.8, -1.7)} h${u * .5}" stroke="${INK}" stroke-opacity=".6" fill="none"/>
+    <rect x="${X(8.75)}" y="${Y(-2.05)}" width="${u * .25}" height="${u * .4}" fill="${INK}" opacity=".85"/>
+    <rect x="${X(0)}" y="${Y(-2.1)}" width="${u * .2}" height="${u * .45}" fill="${CYAN}"/>
+    <rect x="${sx}" y="${sy - u * .17}" width="${u * 1.25}" height="${u * .34}" fill="url(#hatch2)" stroke="${INK}" stroke-width="1.2"/>
+    <ellipse cx="${sx}" cy="${sy}" rx="${u * .12}" ry="${u * .26}" fill="${GROUND}" stroke="${INK}" stroke-width="1.2"/>
+  </g>
+  ${wheel(2.15, 'w1')}${wheel(6.85, 'w2')}
+  ${compact ? '' : `<line x1="${sx + fs * .25}" x2="${sx + fs * .25}" y1="${sy + u * .35}" y2="${yG + fs * .35}" stroke="${INK}" stroke-opacity=".6"/>
+  <text class="lb" x="${sx}" y="${yG + fs * 1.3}" fill="${INK}" font-size="${fs}" font-weight="700" opacity=".85">LEADED EXHAUST</text>`}
+</g>`;
+
+    svg.innerHTML = `
+<defs>
+  <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="${INK}" stroke-width="1.2" stroke-opacity=".75"/></pattern>
+  <pattern id="hatch2" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="5" stroke="${INK}" stroke-width="1" stroke-opacity=".5"/></pattern>
+  <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${CYAN}" stop-opacity=".42"/><stop offset="1" stop-color="${CYAN}" stop-opacity=".1"/></linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".25" stop-color="#fff" stop-opacity=".05"/><stop offset=".8" stop-color="#000" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <clipPath id="inside"><rect x="${tx0 + 1}" y="${mY}" width="${Math.max(0, tx1 - tx0 - 2)}" height="${Math.max(0, bot - mY)}"/></clipPath>
+</defs>
+<text class="lb" x="${fs * .9}" y="${ty}" fill="${INK}" font-size="${fs}" font-weight="800">FIG.1 · IQ POINTS LOST</text>
+${carSvg}
+
+<g id="ruler"><line class="dr" x1="${rx}" x2="${rx}" y1="${top}" y2="${bot}" stroke="${INK}" stroke-width="1.5"/>${ruler}</g>
+
+<line x1="${cx}" x2="${cx}" y1="${mY - fs * .5}" y2="${bot + fs * .9}" stroke="${INK}" stroke-opacity=".3" stroke-dasharray="10 3 2 3"/>
+<rect x="${tx0}" y="${mY}" width="${tx1 - tx0}" height="${Math.max(0, bot - mY)}" fill="url(#glass)"/>
+<g clip-path="url(#inside)">
+  <rect id="fillW" x="${tx0}" y="${bot}" width="${tx1 - tx0}" height="0" fill="url(#wash)"/>
+  <rect id="fillH" x="${tx0}" y="${bot}" width="${tx1 - tx0}" height="0" fill="url(#hatch)"/>
+  <g id="bub"></g>
+  <path id="surf" d="" fill="none" stroke="${INK}" stroke-width="1.8"/>
+  <rect id="flash" x="${tx0}" y="${mY}" width="${tx1 - tx0}" height="${Math.max(0, bot - mY)}" fill="#fff" opacity="0"/>
+</g>
+${tticks}
+<path class="dr" d="${wall}" fill="none" stroke="${INK}" stroke-width="1.7" stroke-linejoin="round"/>
+<path id="wallGlow" d="${wall}" fill="none" stroke="${CYAN}" stroke-width="2.2" filter="url(#glow)" opacity="0"/>
+<path d="M${tx0 + 3},${mY + 4} V${bot - 3} H${tx1 - 3} V${mY + 4}" fill="none" stroke="${INK}" stroke-opacity=".28"/>
+<rect class="dr" x="${tx0 - fs}" y="${bot + 3}" width="${tx1 - tx0 + fs * 2}" height="${fs * (compact ? .4 : .5)}" fill="url(#hatch2)" stroke="${INK}" stroke-width="1.3"/>
+<ellipse id="ring" cx="${cx}" cy="${bot}" rx="0" ry="0" fill="none" stroke="${CYAN}" stroke-width="1.6" opacity="0"/>
+
+<g id="dim" opacity="0">
+  <line x1="${tx1 + 3}" x2="${dimX + fs * .4}" y1="${bot}" y2="${bot}" stroke="${INK}" stroke-opacity=".7"/>
+  <line id="ex2" x1="${tx1 + 3}" x2="${dimX + fs * .4}" y1="${bot}" y2="${bot}" stroke="${INK}" stroke-opacity=".7"/>
+  <line id="dl" x1="${dimX}" x2="${dimX}" y1="${bot}" y2="${bot}" stroke="${INK}" stroke-width="1.3"/>
+  <path d="M${dimX - ah * .45},${bot - ah} L${dimX},${bot} L${dimX + ah * .45},${bot - ah}Z" fill="${INK}"/>
+  <path id="da2" d="M${-ah * .45},${ah} L0,0 L${ah * .45},${ah}Z" fill="${INK}"/>
+  <g id="dtg"><rect id="dtb" fill="${GROUND}"/><text id="dt" x="0" y="${fs * .36}" fill="${INK}" font-size="${fs}" font-weight="800" text-anchor="middle"></text></g>
+</g>
+
+<g id="fx"></g>
+
+<g id="gs">
+  <line id="gl" x1="${rx}" x2="${mkX}" y1="0" y2="0" stroke="${AMBER}" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <g id="gh"><circle id="gring" r="${fs * .7}" fill="none" stroke="${AMBER}" stroke-width="1.5" opacity="0"/><path d="M0,0 L${fs * .8},${-fs * .5} V${fs * .5}Z" fill="${AMBER}"/></g>
+  ${compact ? '' : `<text id="g1" x="${mkX + fs * .95}" fill="${AMBER}" font-size="${fs}" font-weight="600" opacity=".85">YOUR GUESS</text>`}
+  <text id="g2" x="${mkX + fs * .95}" fill="${AMBER}" font-size="${fs}" font-weight="800"></text>
+  <text id="g3" x="${mkX + fs * .95}" fill="${INK}" font-size="${fs}" font-weight="800" opacity="0"></text>
+</g>
+${compact ? '' : `<text class="lb" x="${fs * .9}" y="${H - fs * .7}" fill="${INK}" font-size="${fs}" font-weight="600" opacity=".7">SCALE: LOG · ×10 PER STEP</text>`}`;
+    E = {};
+    ['fillW', 'fillH', 'bub', 'surf', 'flash', 'wallGlow', 'ring', 'dim', 'ex2', 'dl', 'da2', 'dtg', 'dtb', 'dt', 'fx', 'gs', 'gl', 'gh', 'gring', 'g1', 'g2', 'g3', 'car', 'carb', 'w1', 'w2'].forEach(k => E[k] = svg.querySelector('#' + k));
+    if (revealed) E.dim.setAttribute('opacity', 1);
+    if (done) { E.g3.textContent = verdict(); E.g3.setAttribute('opacity', 1); E.wallGlow.setAttribute('opacity', .3); }
+    update();
+    startIdle();
+    if (hinted && !Kit.calm && window.gsap) gsap.fromTo(E.gring, {attr: {r: fs * .6}, opacity: .9}, {attr: {r: fs * 1.7}, opacity: 0, duration: 1.4, ease: 'power2.out', repeat: -1});
+    built = true;
+  }
+
+  function update() {
+    if (!E.gl) return;
+    const yg = yOf(S.g);
+    E.gl.setAttribute('y1', yg); E.gl.setAttribute('y2', yg);
+    E.gh.setAttribute('transform', `translate(${mkX},${yg})`);
+    if (compact) {
+      const ly = Math.min(H - fs * (done ? 2 : .6) - 8, Math.max(top, yg));
+      E.g2.setAttribute('y', ly + fs * .35); E.g3.setAttribute('y', ly + fs * 1.75);
+    } else {
+      const ly = Math.min(H - fs * (done ? 4.6 : 3.2), Math.max(top, yg));
+      E.g1.setAttribute('y', ly - fs * .3); E.g2.setAttribute('y', ly + fs * 1.1); E.g3.setAttribute('y', ly + fs * 2.5);
+    }
+    E.g2.textContent = fmt(S.g);
+
+    const ys = yOf(S.lv), hgt = Math.max(0, bot - ys);
+    for (const r of [E.fillW, E.fillH]) { r.setAttribute('y', ys); r.setAttribute('height', hgt); }
+    if (hgt > 1) {
+      const ph = done || Kit.calm ? 0 : performance.now() / 260, amp = done || Kit.calm ? 0 : 1.6;
+      let d = `M${tx0},${ys}`;
+      for (let i = 1; i <= 16; i++) { const x = tx0 + (tx1 - tx0) * i / 16; d += ` L${x},${ys + Math.sin(i * .9 + ph) * amp}`; }
+      E.surf.setAttribute('d', d);
+    } else E.surf.setAttribute('d', '');
+    E.dl.setAttribute('y2', ys);
+    E.ex2.setAttribute('y1', ys); E.ex2.setAttribute('y2', ys);
+    E.da2.setAttribute('transform', `translate(${dimX},${ys})`);
+    // the measured value, lettered along the dimension line when it has room
+    const opts = done ? ['800,000,000+ IQ POINTS', '800 MILLION+ POINTS', '800 MILLION+', '800M+'] : [fmt(S.lv), fmtS(S.lv)];
+    const span = bot - ys;
+    let fit = false;
+    for (const t of opts) {
+      if (!E.dt.dataset.scr) E.dt.textContent = t;
+      const len = E.dt.getComputedTextLength();
+      if (len + fs * 2 < span) { fit = true; E.dtb.setAttribute('x', -len / 2 - 5); E.dtb.setAttribute('y', -fs * .7); E.dtb.setAttribute('width', len + 10); E.dtb.setAttribute('height', fs * 1.4); break; }
+    }
+    E.dtg.setAttribute('transform', `translate(${dimX},${(bot + ys) / 2}) rotate(-90)`);
+    E.dtg.setAttribute('opacity', fit ? 1 : 0);
+  }
+
+  // lazy puffs out of the tailpipe, wheels idling
+  function startIdle() {
+    if (idle) idle.kill();
+    wheels.forEach(t => t.kill()); wheels = [];
+    if (Kit.calm || !window.gsap) return;
+    for (const w of [E.w1, E.w2]) wheels.push(gsap.to(w, {rotation: 360, svgOrigin: w.dataset.c, duration: 2.6, ease: 'none', repeat: -1}));
+    const puff = () => {
+      if (!E.fx) return;
+      const c = Kit.mk('circle', {r: 1.5 + Kit.rnd() * 2, fill: 'none', stroke: INK, 'stroke-width': 1, opacity: .7}, E.fx);
+      const j = (Kit.rnd() - .5) * fs;
+      gsap.to(c, {motionPath: {path: `M${sx - 2},${sy} C${sx - W * .04},${sy + j * .3} ${sx - W * .07},${sy - fs * .9 + j} ${sx - W * .12},${sy - fs * .5 + j}`}, scale: 2.2, opacity: 0, transformOrigin: '50% 50%', duration: 2.2, ease: 'sine.out', onComplete: () => c.remove()});
+      idle = gsap.delayedCall(.55 + Kit.rnd() * .4, puff);
+    };
+    puff();
+  }
+
+  function setGuess(e, smooth) {
+    if (revealed) return;
+    const d = Math.floor(e + 1e-6);
+    if (d !== lastDec) { lastDec = d; Kit.haptic('selection'); }
+    if (smooth && window.gsap && !Kit.calm) gsap.to(S, {g: e, duration: .18, ease: 'power3.out', overwrite: 'auto', onUpdate: update});
+    else { S.g = e; update(); }
+  }
+  function killHint() { if (hinted) { hinted = false; if (window.gsap) gsap.killTweensOf(E.gring); E.gring && E.gring.setAttribute('opacity', 0); } }
+  function arm() {
+    if (armed) return; armed = true;
+    sure.on(); Kit.haptic('light');
+    say.innerHTML = 'Happy with your guess? <b>Say how sure you are.</b> You can still drag.';
+  }
+  const yAt = e => e.clientY - svg.getBoundingClientRect().top;
+  svg.addEventListener('pointerdown', e => { if (revealed) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} killHint(); setGuess(eOf(yAt(e)), true); });
+  svg.addEventListener('pointermove', e => { if (dragging) setGuess(eOf(yAt(e)), true); });
+  const end = () => { if (dragging) { dragging = false; arm(); } };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => reveal(pct));
+
+  function reveal(pct) {
+    if (revealed) return;
+    revealed = true; dragging = false; killHint();
+    if (window.gsap) gsap.killTweensOf(S);
+    const ok = Math.abs(S.g - AE) <= Math.log10(3), said = fmt(S.g);
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said.toLowerCase()}, ${ok ? 'right' : 'wrong'}`);
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered');
+    svg.style.cursor = 'default';
+    if (Kit.calm || !window.gsap) { S.lv = AE; finish(); return; }
+    // wait for the stage to settle into its new size before pouring
+    requestAnimationFrame(() => requestAnimationFrame(pour));
+  }
+
+  function pour() {
+    gsap.to(E.dim, {opacity: 1, duration: .4});
+    const D0 = .35, DUR = 2.7, ez = gsap.parseEase('power3.inOut');
+    gsap.to(S, {lv: AE, duration: DUR, ease: 'power3.inOut', onUpdate: update, onComplete: finish, delay: D0});
+    // the engine revs: wheels spin up, body shudders
+    wheels.forEach(t => gsap.to(t, {timeScale: 7, duration: .4, yoyo: true, repeat: 1, repeatDelay: 1.8, ease: 'power2.inOut'}));
+    gsap.fromTo(E.carb, {y: 0}, {y: -1.2, duration: .06, yoyo: true, repeat: 31, ease: 'sine.inOut'});
+    // lead motes stream from the tailpipe along curves into the tank
+    const cx = (tx0 + tx1) / 2;
+    for (let i = 0; i < 54; i++) {
+      const c = Kit.mk('circle', {r: 1.3 + Kit.rnd() * 1.9, fill: Kit.rnd() < .25 ? CYAN : INK, opacity: 0}, E.fx);
+      const j = (Kit.rnd() - .5) * (tx1 - tx0) * .7, k = (Kit.rnd() - .5) * fs * 2;
+      const d = `M${sx - 2},${sy} C${sx - W * .12},${sy - fs * 1.2 + k} ${cx + W * .18 + j * .4},${mY - fs * 2.6 + k} ${cx + j * .4},${mY - fs * .4} L${cx + j},${mY + fs * 2.2}`;
+      const dl = i * .045;
+      gsap.to(c, {motionPath: {path: d}, duration: 1.25, delay: dl, ease: 'power2.in', onComplete: () => c.remove()});
+      gsap.fromTo(c, {opacity: 0}, {keyframes: [{opacity: 1, duration: .2}, {opacity: 1, duration: .85}, {opacity: 0, duration: .2}], delay: dl});
+    }
+    // bubbles climb through the rising lead
+    for (let i = 0; i < 18; i++) {
+      const dl = .6 + i * .11, dur = .9 + Kit.rnd() * .5;
+      const fr = ez(clamp((dl + dur - D0) / DUR, 0, 1));
+      const yEnd = yOf(L0 + (AE - L0) * fr) + fs * .4;
+      const b = Kit.mk('circle', {cx: tx0 + fs * .9 + Kit.rnd() * (tx1 - tx0 - fs * 1.8), cy: bot - 3, r: 1 + Kit.rnd() * 1.6, fill: 'none', stroke: INK, 'stroke-width': 1, opacity: 0}, E.bub);
+      gsap.to(b, {attr: {cy: Math.min(bot - 3, yEnd)}, duration: dur, delay: dl, ease: 'sine.in', onComplete: () => b.remove()});
+      gsap.fromTo(b, {opacity: 0}, {keyframes: [{opacity: .9, duration: .15}, {opacity: .9, duration: dur - .35}, {opacity: 0, duration: .2}], delay: dl});
+    }
+  }
+
+  function finish() {
+    done = true;
+    E.g3.textContent = verdict();
+    update();
+    Kit.haptic('success');
+    if (Kit.calm || !window.gsap) { E.g3.setAttribute('opacity', 1); E.wallGlow.setAttribute('opacity', .3); return; }
+    const ys = yOf(AE);
+    gsap.fromTo(E.flash, {opacity: .55}, {opacity: 0, duration: 1.3, ease: 'expo.out'});
+    gsap.fromTo(E.wallGlow, {opacity: 1}, {opacity: .3, duration: 1.6, ease: 'power2.out'});
+    gsap.fromTo(E.ring, {attr: {cy: ys, rx: 4, ry: 1.5}, opacity: 1}, {attr: {rx: (tx1 - tx0) * .9, ry: fs * .55}, opacity: 0, duration: 1.2, ease: 'expo.out'});
+    E.dt.dataset.scr = '1';
+    const final = E.dt.textContent;
+    gsap.to(E.dt, {duration: .9, scrambleText: {text: final, chars: '0123456789,+', speed: .6}, onComplete: () => { delete E.dt.dataset.scr; update(); }});
+    gsap.fromTo(E.g3, {opacity: 0, x: 10}, {opacity: 1, x: 0, duration: .6, ease: 'back.out(2.2)', delay: .25});
+    gsap.fromTo(E.gh, {scale: 1}, {scale: 1.35, duration: .25, yoyo: true, repeat: 1, ease: 'power2.out', transformOrigin: '0% 50%', delay: .2});
+  }
+
+  new ResizeObserver(() => { if (built) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !window.gsap) return;
+    gsap.from('#pic .dr', {drawSVG: 0, duration: 1.1, stagger: .02, ease: 'power2.inOut'});
+    gsap.from('#pic .lb', {opacity: 0, y: 4, duration: .5, stagger: .03, delay: .35, ease: 'power3.out'});
+    gsap.from('#car', {opacity: 0, x: 22, duration: .9, ease: 'power3.out', delay: .2});
+    const g0 = S.g; S.g = L0;
+    gsap.to(S, {g: g0, duration: 1.2, ease: 'elastic.out(1,.55)', delay: .7, onUpdate: update});
+    gsap.from('#gs', {opacity: 0, duration: .4, delay: .7});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    killHint(); setGuess(7.2); arm();
+    await w(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(Kit.calm ? 200 : 4400);
+  };
+})();
+Kit.single();
+</script>
+</html>

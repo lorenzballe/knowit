@@ -21,7 +21,7 @@
 </style>
 <!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
      (in the app, in the reader's language). The id stays "card". -->
-<article class="card" id="card" data-topic="space" data-kind="Zoom out · how sure">
+<article class="card" id="card" data-topic="space" data-kind="Zoom out · how sure" style="--c:#070a1c;--k:#ffffff;--edge:#03040a">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ZOOM OUT</span></div>
     <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
@@ -170,11 +170,9 @@ function layout() {
   if (!MW || MW.key !== mk) MW = {key: mk, list: [mwSprite(Math.min(R0, 22), dpr), mwSprite(R0 / 3, dpr), mwSprite(R0, dpr)].sort((a, b) => a.r - b.r)};
   const T = Math.round(Math.max(W, Hw)), dk = T + '|' + dpr;
   if (!DUST || DUST.key !== dk) DUST = {key: dk, c: dustTile(T, dpr)};
-  const bg = x.createRadialGradient(cx, cy, 0, cx, cy, Math.hypot(W, Hw) * .62);
-  bg.addColorStop(0, '#0f1534'); bg.addColorStop(.5, '#080b1f'); bg.addColorStop(1, '#030409');
   G = {x, W, H, dpr, fs, font, th, Hw, pad, padT, U, cx, cy, R0, yL, yTick: yL + th + 3 + fs.tick, xr0, xr1,
-       ink: rgb('var(--k)', [24, 24, 28]), paper: rgb('var(--c)', null), rad: Math.max(1.8 * cq, 12),
-       pat: x.createPattern(DUST.c, 'repeat'), bg};
+       ink: rgb('var(--k)', [255, 255, 255]), paper: rgb('var(--c)', null), rad: Math.max(1.8 * cq, 12),
+       pat: x.createPattern(DUST.c, 'repeat')};
   draw();
 }
 
@@ -330,8 +328,7 @@ function draw() {
   x.save();
   x.clearRect(0, 0, g.W, g.H);
   x.save();
-  rrect(x, 0, 0, g.W, g.Hw, g.rad); x.clip();
-  x.fillStyle = g.bg; x.fillRect(0, 0, g.W, g.Hw);
+  x.beginPath(); x.rect(0, 0, g.W, g.Hw); x.clip();
   if (ring > .01) {
     const gr = x.createRadialGradient(g.cx, g.cy, RUs * .5, g.cx, g.cy, RUs);
     gr.addColorStop(0, 'rgba(255,206,140,0)'); gr.addColorStop(1, `rgba(255,206,140,${(.14 * ring).toFixed(3)})`);
@@ -356,7 +353,6 @@ function draw() {
   }
   counter(x, g, z);
   x.restore();
-  x.strokeStyle = rgba(g.ink, .18); x.lineWidth = 1; rrect(x, .5, .5, g.W - 1, g.Hw - 1, g.rad); x.stroke();
   ruler(x, g);
   x.restore();
 }

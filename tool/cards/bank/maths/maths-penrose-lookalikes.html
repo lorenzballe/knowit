@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: maths-penrose-lookalikes -->
-<!-- Look: a risograph print, two inks (fluorescent pink and teal) on warm paper, with grain and plates slightly out of register. Two real Penrose tilings, stacked on roomy phones and side by side on short ones, and six patches cut from them are small printed discs with a dashed cut line.
+<!-- Look: a risograph print, two inks (fluorescent pink and a light mint ink) printed straight on the card, with plates slightly out of register. Two real Penrose tilings, stacked on roomy phones and side by side on short ones, and six patches cut from them are small printed discs with a dashed cut line.
      Interaction: tap a patch to file it under A (it lifts toward A and takes A's pink ring), tap again for B (teal). The tiling you file into thumps on the press. Then check.
      Wow: the press thumps, the discs drop back into one shared tray "in both", and the chosen patch stamps itself in dark overprint at every place it occurs in both tilings, rippling out from the disc. Tap any patch to see it everywhere. -->
 <title>Penrose look-alikes</title>
@@ -14,7 +14,7 @@
 #stage.side{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"a b" "m m"}
 #wA{grid-area:a}#wB{grid-area:b}#mid{grid-area:m}
 .world{position:relative;min-height:0;min-width:0}
-.world canvas.tile{position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:2.2cqh;background:var(--paper);box-shadow:0 .7cqh 1.8cqh rgba(24,20,70,.28),0 0 0 1px rgba(24,20,70,.12)}
+.world canvas.tile{position:absolute;inset:0;width:100%;height:100%;display:block;background:none;border:0;box-shadow:none}
 .name{position:absolute;left:1.1cqh;top:1.1cqh;z-index:2;display:flex;align-items:center;gap:.55em;font:700 max(1.45cqh,12px)/1 var(--mono);letter-spacing:.08em;color:var(--ink);background:rgba(246,240,228,.93);padding:.3em .75em .3em .3em;border-radius:99px;box-shadow:.2cqh .3cqh 0 rgba(36,32,107,.35);pointer-events:none;white-space:nowrap}
 .name i{font-style:normal;display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--pink);color:#fff}
 #wB .name i{background:var(--teal)}
@@ -47,9 +47,9 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SORT THE PATCHES</span></div>
     <h2 class="q">How many different Penrose tilings are there, and could you tell them apart?</h2>
     <div class="stagebox" id="stage">
-      <div class="world" id="wA"><canvas class="tile" id="cA" role="img" aria-label="Penrose tiling A, printed in pink and teal"></canvas><span class="name"><i>A</i><em id="nA">TILING A</em></span></div>
+      <div class="world" id="wA"><canvas class="tile" id="cA" role="img" aria-label="Penrose tiling A, printed in pink and mint"></canvas><span class="name"><i>A</i><em id="nA">TILING A</em></span></div>
       <div id="mid"><div id="tray"></div><span id="lab">CUT FROM A OR FROM B?</span></div>
-      <div class="world" id="wB"><canvas class="tile" id="cB" role="img" aria-label="Penrose tiling B, a different tiling, printed in pink and teal"></canvas><span class="name"><i>B</i><em id="nB">TILING B</em></span></div>
+      <div class="world" id="wB"><canvas class="tile" id="cB" role="img" aria-label="Penrose tiling B, a different tiling, printed in pink and mint"></canvas><span class="name"><i>B</i><em id="nB">TILING B</em></span></div>
     </div>
     <p class="say" id="say">Two different Penrose tilings. Six small patches were cut from them. <b>Tap a patch to file it under A, tap again for B.</b></p>
     <button class="btn wait" id="check">Check my sorting</button>
@@ -61,7 +61,7 @@
 <script>
 (() => {
   gsap.registerPlugin(Flip);
-  const PHI = (1 + Math.sqrt(5)) / 2, PAPER = '#f6f0e4', PINK = '#ff48b0', TEAL = '#0a9fae', INK = '#24206b';
+  const PHI = (1 + Math.sqrt(5)) / 2, PAPER = '#f6f0e4', PINK = '#ff48b0', TEAL = '#0a9fae', INK = '#24206b', LIGHT = '#e9fff4';
   const dpr = Math.min(3, window.devicePixelRatio || 1);
   const clamp = v => v < 0 ? 0 : v > 1 ? 1 : v;
   const BACK = gsap.parseEase('back.out(2.2)');
@@ -142,10 +142,10 @@
     return p;
   }
   const trace = (g, r, f) => { const p = r.P.map(f); g.moveTo(p[0][0], p[0][1]); for (let k = 1; k < 4; k++) g.lineTo(p[k][0], p[k][1]); g.closePath(); };
-  function inkLayer(g, rs, f, ink, lw) {
-    const thinInk = ink === TEAL;
+  function inkLayer(g, rs, f, ink, lw, fa = 1) {
+    const thinInk = ink === TEAL || ink === LIGHT;
     g.fillStyle = ink;
-    for (const r of rs) { if (r.thin !== thinInk) continue; g.globalAlpha = r.a; g.beginPath(); trace(g, r, f); g.fill(); }
+    for (const r of rs) { if (r.thin !== thinInk) continue; g.globalAlpha = r.a * fa; g.beginPath(); trace(g, r, f); g.fill(); }
     g.globalAlpha = .95; g.strokeStyle = ink; g.lineWidth = lw; g.lineJoin = 'round';
     g.beginPath(); for (const r of rs) trace(g, r, f); g.stroke(); g.globalAlpha = 1;
   }
@@ -155,7 +155,7 @@
     const g = c.getContext('2d'); g.scale(dpr, dpr);
     const f = p => [w.W / 2 + p[0] * w.e, w.H / 2 + p[1] * w.e], m = w.e * 2;
     const rs = w.data.rh.filter(r => { const x = w.W / 2 + r.cx * w.e, y = w.H / 2 + r.cy * w.e; return x > -m && x < w.W + m && y > -m && y < w.H + m; });
-    inkLayer(g, rs, f, ink, Math.max(1, w.e * .075));
+    inkLayer(g, rs, f, ink, Math.max(1, w.e * .085), .28);
     return c;
   }
 
@@ -164,7 +164,7 @@
     if (!w.W || !w.H) return false;
     w.e = Math.max(10, Math.min(w.W / 17, w.H / 8.5), w.W / 30);
     for (const v of w.data.verts) { v.sx = w.W / 2 + v.x * w.e; v.sy = w.H / 2 + v.y * w.e; }
-    w.teal = plate(w, TEAL); w.pink = plate(w, PINK); w.grain = pattern(w.x);
+    w.teal = plate(w, LIGHT); w.pink = plate(w, PINK); w.grain = pattern(w.x);
     return true;
   }
   const inView = (w, v, m) => v.sx > m && v.sx < w.W - m && v.sy > m && v.sy < w.H - m;
@@ -174,32 +174,26 @@
     const {W, H, e} = w, o = anim.o + w.o;
     x.save();
     x.globalCompositeOperation = 'source-over'; x.globalAlpha = 1;
-    x.clearRect(0, 0, W, H); x.fillStyle = PAPER; x.fillRect(0, 0, W, H);
+    x.clearRect(0, 0, W, H);
     if (anim.rv < 1) { x.beginPath(); x.arc(W / 2, H / 2, Math.max(.1, anim.rv * Math.hypot(W, H) / 2), 0, 7); x.clip(); }
-    x.globalCompositeOperation = 'multiply';
+    x.globalCompositeOperation = 'source-over';
     x.drawImage(w.teal, 1.1 + 10 * o, -.7 - 6 * o, W, H);
     x.drawImage(w.pink, -.9 - 8 * o, .8 + 7 * o, W, H);
-    // The chosen patch, everywhere it occurs: both inks at full strength, the dark overprint.
+    // The chosen patch, everywhere it occurs: dark overprint.
     for (const q of w.occ) {
       const p = clamp((w.t - q.d) / .35); if (p <= 0) continue;
       const s = BACK(p), v = q.v;
       const f = pt => [v.sx + (W / 2 + pt[0] * e - v.sx) * s, v.sy + (H / 2 + pt[1] * e - v.sy) * s];
-      x.globalCompositeOperation = 'multiply'; x.globalAlpha = Math.min(1, p * 2);
+      x.globalCompositeOperation = 'source-over'; x.globalAlpha = Math.min(1, p * 2);
       x.beginPath(); for (const i of v.rh) trace(x, w.data.rh[i], f);
-      x.fillStyle = TEAL; x.fill(); x.fillStyle = PINK; x.fill();
-      x.globalCompositeOperation = 'source-over'; x.strokeStyle = PAPER; x.lineWidth = Math.max(1, e * .07); x.globalAlpha = .85 * Math.min(1, p * 2); x.stroke();
+      x.fillStyle = INK; x.fill();
+      x.strokeStyle = PAPER; x.lineWidth = Math.max(1, e * .07); x.globalAlpha = .85 * Math.min(1, p * 2); x.stroke();
       if (p < 1) {
         x.globalAlpha = Math.sin(p * Math.PI) * .9; x.lineWidth = 2;
         x.strokeStyle = PINK; x.beginPath(); x.arc(v.sx, v.sy, e * (1 + 2.6 * p), 0, 7); x.stroke();
-        x.strokeStyle = TEAL; x.beginPath(); x.arc(v.sx + 1.5, v.sy - 1, e * (1 + 2.6 * p), 0, 7); x.stroke();
+        x.strokeStyle = LIGHT; x.beginPath(); x.arc(v.sx + 1.5, v.sy - 1, e * (1 + 2.6 * p), 0, 7); x.stroke();
       }
     }
-    x.restore();
-    x.save();
-    const lg = x.createLinearGradient(0, 0, W, H);
-    lg.addColorStop(0, 'rgba(255,255,255,.16)'); lg.addColorStop(1, 'rgba(36,32,107,.08)');
-    x.fillStyle = lg; x.fillRect(0, 0, W, H);
-    x.fillStyle = w.grain; x.fillRect(0, 0, W, H);
     x.restore();
   }
   const composeAll = () => { compose(A); compose(B); };

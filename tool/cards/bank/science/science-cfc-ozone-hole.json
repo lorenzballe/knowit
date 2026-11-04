@@ -1,0 +1,38 @@
+{
+  "id": "science-cfc-ozone-hole",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "How do CFCs destroy the ozone layer?",
+  "answer": "CFCs are light and stable, so they drift up into the stratosphere and last 50 to 100 years. There, a UV photon of just the right energy snaps one apart. The chlorine atom it frees then breaks ozone molecules.",
+  "move": "The harm isn't the CFC itself but the chlorine that UV light sets free.",
+  "keywords": [
+    "cfcs",
+    "ozone",
+    "chlorine",
+    "stratosphere",
+    "uv light"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four step cards describing how CFCs destroy ozone, to be tapped in the order they happen: a chlorine atom breaks free, the CFC drifts up to the stratosphere, the chlorine breaks an ozone molecule, a UV photon hits the CFC.",
+    "ground": "#f5ecdc"
+  },
+  "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=1261s",
+  "written": "2026-11-04"
+}

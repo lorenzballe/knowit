@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{flex:1;min-height:0;display:flex;flex-direction:column}
-#sky{width:100%;height:100%;display:block;border-radius:2cqh;overflow:hidden}
+#sky{width:100%;height:100%;display:block;overflow:hidden}
 #ctl{display:flex;justify-content:flex-start}
 #act{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer;max-width:70cqw}
 #act:active{transform:scale(.97)}
@@ -54,8 +54,7 @@ function draw(){
     return floorY - (floorY - peakY) * m + Math.sin(s * 37) * .012 * H * m;
   };
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
-  mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#13233b'});
-  const pool = mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: '#7fd6ff', opacity: 0});
+  const pool = mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: '#1d6fd1', opacity: 0});
   const dots = mk('g', {});
   // mountains
   let d = `M0 ${H} `;
@@ -70,8 +69,8 @@ function draw(){
     const h = H * (.03 + ((i * 7) % 5) * .008);
     mk('rect', {x: W / 2 + k * cw * 1.3, y: floorY - h + 1, width: cw, height: h, fill: '#f3e6c8', rx: 1.5});
   });
-  const tStyle = (sz, w) => ({'font-family': 'var(--body)', 'font-size': sz, 'font-weight': w, 'text-anchor': 'middle', fill: '#ffffff'});
-  const city = mk('text', Object.assign(tStyle(Math.max(12, f * .85), 700), {x: W / 2, y: floorY + H * .08}));
+  const tStyle = (sz, w, fill) => ({'font-family': 'var(--body)', 'font-size': sz, 'font-weight': w, 'text-anchor': 'middle', fill: fill || '#10100c'});
+  const city = mk('text', Object.assign(tStyle(Math.max(12, f * .85), 700, '#ffffff'), {x: W / 2, y: floorY + H * .08}));
   city.textContent = 'Yakutsk';
   // high pressure
   const hi = mk('g', {opacity: 0});
@@ -81,17 +80,17 @@ function draw(){
   hS.textContent = 'HIGH PRESSURE · HEAVY AIR';
   [.2, .8].forEach(s => {
     const x = W * s, y0 = H * .08, y1 = H * .28, a = H * .025;
-    mk('path', {d: `M${x} ${y0} L${x} ${y1} M${x - a * .7} ${y1 - a} L${x} ${y1} L${x + a * .7} ${y1 - a}`, stroke: '#9fe3ff', 'stroke-width': Math.max(2, H * .007), fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hi);
+    mk('path', {d: `M${x} ${y0} L${x} ${y1} M${x - a * .7} ${y1 - a} L${x} ${y1} L${x + a * .7} ${y1 - a}`, stroke: '#0a4fa8', 'stroke-width': Math.max(2, H * .007), fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hi);
   });
-  const poolLbl = mk('text', Object.assign(tStyle(Math.max(12, f * .85), 800), {x: W / 2, y: lerp(poolTop, floorY, .38), opacity: 0, stroke: '#13233b', 'stroke-width': 4, 'paint-order': 'stroke'}));
+  const poolLbl = mk('text', Object.assign(tStyle(Math.max(12, f * .85), 800), {x: W / 2, y: lerp(poolTop, floorY, .38), opacity: 0, stroke: '#00D451', 'stroke-width': 4, 'paint-order': 'stroke'}));
   poolLbl.textContent = 'cold, dense, dry air';
   const windG = mk('g', {opacity: windDone ? 1 : 0});
   const winds = [];
   for (let i = 0; i < 6; i++){
     const y = H * (.27 + .022 * i * (i % 2 ? 1 : .6)), len = W * (.18 + .06 * (i % 3));
-    winds.push(mk('path', {d: `M0 ${y} q${len / 2} ${-H * .015} ${len} 0`, stroke: '#ffffff', 'stroke-width': Math.max(2, H * .005), fill: 'none', 'stroke-linecap': 'round', opacity: .8}, windG));
+    winds.push(mk('path', {d: `M0 ${y} q${len / 2} ${-H * .015} ${len} 0`, stroke: '#10100c', 'stroke-width': Math.max(2, H * .005), fill: 'none', 'stroke-linecap': 'round', opacity: .8}, windG));
   }
-  const windLbl = mk('text', Object.assign(tStyle(Math.max(12, f * .8), 700), {x: W / 2, y: H * .37, stroke: '#13233b', 'stroke-width': 4, 'paint-order': 'stroke'}), windG);
+  const windLbl = mk('text', Object.assign(tStyle(Math.max(12, f * .8), 700), {x: W / 2, y: H * .37, stroke: '#00D451', 'stroke-width': 4, 'paint-order': 'stroke'}), windG);
   windLbl.textContent = 'wind skims the peaks';
   const r = Math.max(2.5, Math.min(W, H) * .011);
   const circles = P.map(() => mk('circle', {r, cx: 0, cy: 0}, dots));
@@ -110,7 +109,7 @@ function pos(p, t){
 function setLevel(L, dur){
   if (!R) return;
   const t = L / STEPS, dd = Kit.calm ? 0 : dur;
-  const col = mixHex('#ffb27a', '#9fe3ff', t);
+  const col = mixHex('#d9480f', '#0a4fa8', t);
   R.circles.forEach((c, i) => {
     const q = pos(P[i], t);
     gsap.to(c, {attr: {cx: q.x, cy: q.y, fill: col}, duration: dd, delay: dd ? (i % 10) * .02 : 0, ease: 'power2.inOut'});

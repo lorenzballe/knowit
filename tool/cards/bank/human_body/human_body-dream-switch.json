@@ -1,0 +1,38 @@
+{
+  "id": "human_body-dream-switch",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.sleep_and_thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which part of the brain switches on every time you dream?",
+  "answer": "A region at the back of the brain switches on whenever a dream starts. The same region activates in light sleep, deep sleep and REM, which is why researchers call it a real dream switch.",
+  "move": "Dreams switch on at the back of the brain, in any phase of sleep.",
+  "keywords": [
+    "dreams",
+    "sleep",
+    "brain",
+    "rem",
+    "dream switch"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Dark night-sky page with a moon you drag through one night and a brain that lights up each time a dream starts. It asks which part of the brain switches on every time you dream.",
+    "ground": "#f3ead5"
+  },
+  "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=ddHHHndH-6c&t=428s",
+  "written": "2026-11-04"
+}

@@ -34,7 +34,7 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const SI='#d3dae6', RES='#d98f3e', UV='#b9a0ff', PIT='#06070b', PANEL='#151923', CHROME='#262b36';
+const SI='#10100c', RES='#ffd9a0', UV='#b9a0ff', RAY='#5a2fe0', PIT='#06070b', PANEL='#ffffff', CHROME='#262b36';
 const st={step:0, dx:0, busy:false, done:false, dragged:false};
 let G={};
 const SAY=[
@@ -74,17 +74,13 @@ function draw(){
   const {W,H}=Kit.fitSvg(svg);
   const s=Math.min(W*.88,H*.88), X=(W-s)/2, Y=(H-s)/2;
   G={s,X,Y,W,H,svg};
-  Kit.mk('rect',{x:X-s*.045,y:Y-s*.045,width:s*1.09,height:s*1.09,rx:s*.05,fill:PANEL},svg);
   const defs=Kit.mk('defs',{},svg);
-  const m=Kit.mk('mask',{id:'mk',maskUnits:'userSpaceOnUse',x:X,y:Y,width:s,height:s},defs);
-  Kit.mk('rect',{x:X,y:Y,width:s,height:s,fill:'#fff'},m);
-  feats(m,'#000');
   const lg=Kit.mk('linearGradient',{id:'ray',x1:0,y1:0,x2:0,y2:1},defs);
-  Kit.mk('stop',{offset:0,'stop-color':UV,'stop-opacity':0},lg);
-  Kit.mk('stop',{offset:1,'stop-color':UV,'stop-opacity':.9},lg);
+  Kit.mk('stop',{offset:0,'stop-color':RAY,'stop-opacity':0},lg);
+  Kit.mk('stop',{offset:1,'stop-color':RAY,'stop-opacity':.9},lg);
 
-  G.die=Kit.mk('rect',{x:X,y:Y,width:s,height:s,rx:s*.012,fill:st.step>=3?PIT:RES},svg);
-  G.over=Kit.mk('rect',{x:X,y:Y,width:s,height:s,fill:st.step>=3?PIT:UV,mask:'url(#mk)',opacity:st.step>=2?1:0},svg);
+  G.over=feats(svg,UV,false);
+  G.over.g.setAttribute('opacity',st.step===2?1:0);
   G.main=feats(svg, st.step>=3?SI:RES);
   // hint arrow on the moving part
   const ay=Y+.5*s, ax0=X+.44*s, ax1=X+.56*s, h=.02*s;
@@ -92,12 +88,13 @@ function draw(){
     fill:'none',stroke:PANEL,'stroke-width':.012*s,'stroke-linecap':'round','stroke-linejoin':'round',opacity:(st.step>=3&&!st.dragged)?1:0},G.main.mv);
   // mask plate
   G.plate=Kit.mk('g',{opacity:st.step===1?1:0},svg);
-  Kit.mk('rect',{x:X-s*.03,y:Y-s*.03,width:s*1.06,height:s*1.06,rx:s*.02,fill:'rgba(190,210,255,.16)',stroke:'rgba(225,235,255,.7)','stroke-width':Math.max(1,s*.004)},G.plate);
+  Kit.mk('rect',{x:X-s*.03,y:Y-s*.03,width:s*1.06,height:s*1.06,rx:s*.02,fill:'rgba(16,16,12,.12)',stroke:'rgba(16,16,12,.7)','stroke-width':Math.max(1,s*.004)},G.plate);
   paint(feats(G.plate,CHROME),CHROME);
   // light rays
   G.rays=Kit.mk('g',{opacity:0},svg);
   for(let i=0;i<9;i++){const x=X+s*(.06+i*.11);Kit.mk('rect',{x:x-s*.012,y:0,width:s*.024,height:Y+s,fill:'url(#ray)'},G.rays);}
-  G.flash=Kit.mk('rect',{x:X,y:Y,width:s,height:s,fill:UV,opacity:0},svg);
+  G.flash=feats(svg,UV,false);
+  G.flash.g.setAttribute('opacity',0);
   upd();
 }
 
@@ -118,17 +115,18 @@ function go(){
     setStep(2);
     const tl=gsap.timeline();
     tl.to(G.rays,{opacity:1,duration:.2*k})
-      .to(G.flash,{opacity:.55,duration:.15*k},'<')
-      .to(G.flash,{opacity:0,duration:.4*k})
-      .to(G.over,{opacity:1,duration:.5*k},'<')
+      .to(G.flash.g,{opacity:.55,duration:.15*k},'<')
+      .to(G.flash.g,{opacity:0,duration:.4*k})
+      .to(G.over.g,{opacity:1,duration:.5*k},'<')
       .to(G.rays,{opacity:0,duration:.4*k},'<')
       .to(G.plate,{y:-s*.6,opacity:0,duration:.6*k,ease:'power2.in'},'+=.15');
     end(1.9);
   } else if(st.step===2){
     setStep(3);
-    const pr={t:0}, toPit=gsap.utils.interpolate(UV,PIT), toSi=gsap.utils.interpolate(RES,SI), dieC=gsap.utils.interpolate(RES,PIT);
+    const pr={t:0}, toSi=gsap.utils.interpolate(RES,SI);
+    gsap.to(G.over.g,{opacity:0,duration:1.1*k,ease:'power2.inOut'});
     gsap.to(pr,{t:1,duration:1.1*k,ease:'power2.inOut',onUpdate(){
-      G.over.setAttribute('fill',toPit(pr.t)); G.die.setAttribute('fill',dieC(pr.t)); paint(G.main,toSi(pr.t));
+      paint(G.main,toSi(pr.t));
     },onComplete(){
       G.arrow.setAttribute('opacity',1);
       if(!Kit.calm&&!st.dragged) gsap.to(st,{dx:.03,duration:.22,yoyo:true,repeat:3,ease:'sine.inOut',onUpdate:upd,onComplete(){st.dx=0;upd();}});

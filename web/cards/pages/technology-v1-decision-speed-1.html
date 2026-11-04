@@ -1,0 +1,437 @@
+<!doctype html>
+<!-- slug: technology-v1-decision-speed -->
+<!-- Look: a Swiss poster. Off-white paper, a black runway seen from above running left to right across the card, one hot red, huge display numerals on a strict grid.
+     Interaction: you give full power and press Abort whenever you like. Spoilers pop, the brakes smoke and spark, skid marks stay on the asphalt, and the plane either stops on the runway or runs off the end into the grass.
+     Wow: after your first run the red V1 rule drops through the runway, the huge V1 wipes in beside it, the too-late zone hatches in and confetti bursts off the rule. Every abort is pinned as a dot with its skid marks, so you can see which side of the line it fell on. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>V1: the point of no return</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;position:relative;padding:0;overflow:hidden;background:none;border:0;box-shadow:none;border-radius:0}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
+#act{align-self:flex-start;font:800 max(2.1cqh,14px)/1 var(--body);letter-spacing:.09em;text-transform:uppercase;color:#fff;background:#ff3b1f;border:0;border-radius:0;padding:1.4cqh 6cqw;cursor:pointer;box-shadow:0 .5cqh 0 #111;transition:transform .08s ease-out,box-shadow .08s ease-out,background .15s}
+#act:active{transform:translateY(.4cqh);box-shadow:0 .1cqh 0 #111}
+#act.abort{background:#111;box-shadow:0 .5cqh 0 #ff3b1f}
+#act:disabled{opacity:.45;cursor:default}
+#why{font:600 max(1.6cqh,12.5px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Aim and launch · when to brake">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GO OR STOP</span></div>
+    <h2 class="q">What is V1, and why can't a takeoff stop after it?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A runway seen from above, running left to right, with an airliner at its start. Above it, the runway left ahead and the V1 decision speed; below it, the speed and the outcome of each try."></canvas>
+    </div>
+    <p class="say" id="say">Hit <b>Full power</b>, then <b>Abort</b> whenever you like. Where will the plane stop?</p>
+    <p class="body gone" id="why">The captain calls out V1 on the takeoff roll: the speed beyond which the takeoff can no longer be aborted. Below V1 the brakes still stop the plane on the runway. Above it there is no runway left to stop on, so the plane must fly.</p>
+    <button class="btn" id="act">Full power</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Before V1 you may stop; after V1 you go, because the runway is spent.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dentro la cabina dal decollo all’atterraggio - tutto quello che non si vede di un volo di linea” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), act = Kit.$('act'), card = Kit.$('card');
+  const INK = '#10100c', HOT = '#ff3b1f', ACC = '#ffffff';
+  // Normalised physics: runway length 1, takeoff push A, braking B (brakes are stronger than engines), grass drags harder.
+  const A = 1, B = 1.7, BG = B * 1.8, TS = 0.3;
+  const X1 = 1 / (1 + A / B);          // where stopping distance = runway left: V1
+  const XR = 0.82;                     // where the wheels leave the ground
+  const VMAX = Math.sqrt(2 * XR) * 1.06, V1v = Math.sqrt(2 * X1);
+
+  let ctx = null, W = 0, H = 0, fs = 12, pad = 10, topPad = 8, rwL = 0, rwR = 0, lenP = 40, bandH = 50, x0 = 0, x1 = 1;
+  let yR = 0, yRb = 0, yC = 0, botH = 40, xV1 = 0, xLO = 0;
+  let DISP = 'sans-serif', MONO = 'monospace', noise = null, running = false, last = 0;
+  let st = 'idle', x = 0, v = 0, alt = 0, abortX = null, result = null, revealed = false, crossed = false;
+  const tries = [];
+  const T = {build: 1, rv: 0, res: 0, slide: 0, thr: 0, sx: 0, sy: 0, wob: 0, spoil: 0};
+  const P = [];
+
+  const cl = t => Math.max(0, Math.min(1, t));
+  const e3 = t => 1 - Math.pow(1 - cl(t), 3);
+  const xOf = p => x0 + p * (x1 - x0);
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const scale = () => 1 + alt * 0.35;
+  const noseX = () => xOf(x) - T.slide * lenP * 1.6 - (1 - e3((T.build - .45) * 2)) * lenP * .9;
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    const cs = getComputedStyle(card);
+    DISP = cs.getPropertyValue('--display').trim() || 'sans-serif';
+    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    fs = Math.max(12, Math.min(14, W / 34));
+    pad = Math.max(10, Math.min(28, Math.min(W, H) * .045));
+    topPad = Math.max(6, Math.min(16, H * .03));
+    rwL = pad; rwR = W * .80;
+    lenP = Math.max(26, Math.min(84, H * .22, (rwR - rwL) * .16));
+    bandH = lenP * 1.32;
+    x0 = rwL + lenP + 8; x1 = rwR;
+    const rem = H - bandH;
+    botH = Math.max(fs * 3.6, Math.min(rem * .32, fs * 11));
+    if (rem - botH < fs * 3.6) botH = Math.max(fs * 2.8, rem - fs * 3.6);
+    yR = rem - botH; yRb = yR + bandH; yC = yR + bandH / 2;
+    xV1 = xOf(X1); xLO = xOf(XR);
+    noise = document.createElement('canvas'); noise.width = Math.max(1, W | 0); noise.height = Math.max(1, H | 0);
+    const n = noise.getContext('2d'), N = (W * H) / 12;
+    for (let i = 0; i < N; i++) { n.fillStyle = Math.random() < .5 ? 'rgba(0,0,0,.06)' : 'rgba(255,255,255,.07)'; n.fillRect(Math.random() * W, Math.random() * H, 1, 1); }
+    for (let i = P.length - 1; i >= 0; i--) if (P[i].t !== 'conf') P.splice(i, 1);
+    if (!running) { running = true; requestAnimationFrame(frame); }
+  }
+
+  // ---------- particles ----------
+  function emit(o) { if (P.length < 1000) P.push(o); }
+  function emitFrame(dt) {
+    if (!ctx || (st === 'done' && result === 'fly')) return;
+    const L = lenP * scale(), nx = noseX();
+    const eng = [[nx - .6 * L, yC - .22 * L], [nx - .6 * L, yC + .22 * L]];
+    const k = Kit.calm ? .35 : 1;
+    if (st !== 'brake') {
+      const rate = st === 'idle' || st === 'done' ? 22 : 120 + 220 * T.thr;
+      let n = rate * dt * k;
+      while (n > 0) { if (Math.random() < n) { const e = eng[Math.random() < .5 ? 0 : 1], idle = st === 'idle' || st === 'done';
+        emit({t: 'haze', x: e[0], y: e[1] + rand(-2, 2), vx: rand(-170, -60) * (idle ? .4 : 1), vy: rand(-14, 14), life: rand(.4, .9), max: .9, r: rand(2, 4), gr: 18}); } n -= 1; }
+    }
+    if (st === 'brake' && v > 0.02) {
+      const sp = v / VMAX;
+      // reverse thrust: puffs thrown forward and out from the engines
+      for (let i = 0; i < 70 * dt * k * sp; i++) { const e = eng[i % 2], s = i % 2 ? 1 : -1;
+        emit({t: 'haze', x: e[0] + L * .15, y: e[1], vx: rand(20, 90), vy: s * rand(30, 90), life: rand(.3, .7), max: .7, r: rand(2, 3.5), gr: 20}); }
+      const gear = [-.12, .12].map(q => [nx - .56 * L, yC + q * L]);
+      for (let i = 0; i < 160 * dt * k * (.4 + sp); i++) { const g = gear[i % 2];
+        emit({t: 'smoke', x: g[0] + rand(-3, 3), y: g[1], vx: rand(-90, -20), vy: rand(-30, 30), life: rand(.7, 1.6), max: 1.6, r: rand(3, 6), gr: 26}); }
+      for (let i = 0; i < 200 * dt * k * sp; i++) { const g = gear[i % 2];
+        emit({t: 'spark', x: g[0], y: g[1], vx: rand(-320, -80), vy: rand(-160, 160), life: rand(.15, .45), max: .45, r: 1, gr: 0}); }
+      if (x > 1) for (let i = 0; i < 240 * dt * k; i++) { const g = gear[i % 2];
+        emit({t: 'dust', x: g[0] + rand(-6, 6), y: g[1] + rand(-6, 6), vx: rand(-110, 20), vy: rand(-90, 90), life: rand(.6, 1.4), max: 1.4, r: rand(2, 5), gr: 14}); }
+    }
+  }
+  function updP(dt) {
+    for (let i = P.length - 1; i >= 0; i--) {
+      const p = P[i]; p.life -= dt;
+      if (p.life <= 0) { P.splice(i, 1); continue; }
+      p.x += p.vx * dt; p.y += p.vy * dt; p.r += p.gr * dt;
+      if (p.t === 'conf') { p.vy += 420 * dt; p.vx *= .985; p.rot += p.vr * dt; }
+      else if (p.t === 'spark') { p.vy *= .94; p.vx *= .96; }
+      else { p.vx *= .97; p.vy *= .97; }
+    }
+  }
+  function drawP(c, layer) {
+    for (const p of P) {
+      const a = cl(p.life / p.max);
+      if (layer === 0 && (p.t === 'haze' || p.t === 'smoke' || p.t === 'dust')) {
+        c.fillStyle = p.t === 'haze' ? `rgba(255,255,255,${a * .22})` : p.t === 'smoke' ? `rgba(240,240,236,${a * .5})` : `rgba(60,48,30,${a * .35})`;
+        c.beginPath(); c.arc(p.x, p.y, p.r, 0, 6.283); c.fill();
+      } else if (layer === 1 && p.t === 'spark') {
+        c.strokeStyle = a > .5 ? '#ffd23a' : HOT; c.lineWidth = 1.4; c.globalAlpha = a;
+        c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(p.x - p.vx * .03, p.y - p.vy * .03); c.stroke(); c.globalAlpha = 1;
+      } else if (layer === 1 && p.t === 'conf') {
+        c.save(); c.globalAlpha = Math.min(1, a * 2); c.translate(p.x, p.y); c.rotate(p.rot); c.fillStyle = p.col;
+        c.fillRect(-p.r, -p.r * .45, p.r * 2, p.r * .9); c.restore();
+      }
+    }
+  }
+
+  // ---------- the plane (local: nose at 0, tail at +L; drawn rotated to fly right) ----------
+  function fusePath(c, L) {
+    const fw = L * .065;
+    c.moveTo(0, 0); c.quadraticCurveTo(fw, L * .02, fw, L * .14); c.lineTo(fw, L * .88); c.quadraticCurveTo(fw * .6, L, 0, L);
+    c.quadraticCurveTo(-fw * .6, L, -fw, L * .88); c.lineTo(-fw, L * .14); c.quadraticCurveTo(-fw, L * .02, 0, 0); c.closePath();
+  }
+  function planePath(c, L) {
+    const fw = L * .065;
+    c.beginPath(); fusePath(c, L);
+    for (const s of [1, -1]) {
+      c.moveTo(s * fw, L * .36); c.lineTo(s * L * .5, L * .6); c.lineTo(s * L * .5, L * .655); c.lineTo(s * fw, L * .55); c.closePath();
+      c.moveTo(s * fw, L * .83); c.lineTo(s * L * .2, L * .95); c.lineTo(s * L * .2, L * .99); c.lineTo(s * fw, L * .95); c.closePath();
+    }
+  }
+  function drawPlane(c, nx, ny, s, rot) {
+    const L = lenP * s, fw = L * .065, so = lenP * (.05 + alt * .7);
+    c.save(); c.translate(nx - so * .3, ny + so); c.rotate(Math.PI / 2 + rot); c.fillStyle = `rgba(0,0,0,${.32 - alt * .12})`; planePath(c, lenP); c.fill('nonzero'); c.restore();
+    c.save(); c.translate(nx, ny); c.rotate(Math.PI / 2 + rot);
+    const wg = c.createLinearGradient(-L * .5, 0, L * .5, 0);
+    wg.addColorStop(0, '#d4d4d0'); wg.addColorStop(.5, '#ffffff'); wg.addColorStop(1, '#d4d4d0');
+    c.fillStyle = wg; c.strokeStyle = 'rgba(0,0,0,.4)'; c.lineWidth = 1;
+    planePath(c, L); c.fill('nonzero'); c.stroke();
+    // wing flap lines
+    c.strokeStyle = 'rgba(0,0,0,.18)'; c.beginPath();
+    for (const q of [1, -1]) { c.moveTo(q * (fw + L * .02), L * .53); c.lineTo(q * L * .44, L * .62); } c.stroke();
+    // spoilers up while braking
+    if (T.spoil > 0) { c.fillStyle = `rgba(30,32,36,${.75 * T.spoil})`;
+      for (const q of [1, -1]) { c.beginPath(); c.moveTo(q * (fw + L * .03), L * .43); c.lineTo(q * L * .33, L * .545); c.lineTo(q * L * .33, L * .578); c.lineTo(q * (fw + L * .03), L * .478); c.closePath(); c.fill(); } }
+    // engines
+    for (const sx of [-.22, .22]) {
+      const ex = sx * L, ey = L * .42, ew = L * .075, eh = L * .15;
+      const g = c.createLinearGradient(ex - ew / 2, 0, ex + ew / 2, 0); g.addColorStop(0, '#9a9a96'); g.addColorStop(.5, '#e6e6e2'); g.addColorStop(1, '#8a8a86');
+      c.fillStyle = g; c.strokeStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.roundRect ? c.roundRect(ex - ew / 2, ey, ew, eh, ew * .4) : c.rect(ex - ew / 2, ey, ew, eh); c.fill(); c.stroke();
+      c.fillStyle = '#222'; c.fillRect(ex - ew * .32, ey + 1, ew * .64, L * .015);
+    }
+    const fg = c.createLinearGradient(-fw, 0, fw, 0); fg.addColorStop(0, '#cfcfcb'); fg.addColorStop(.45, '#ffffff'); fg.addColorStop(1, '#bdbdb8');
+    c.fillStyle = fg; c.beginPath(); fusePath(c, L); c.fill(); c.stroke();
+    // windows, cockpit, red fin
+    c.fillStyle = 'rgba(26,29,34,.55)';
+    for (let w = L * .16; w < L * .8; w += L * .045) { c.fillRect(-fw * .78, w, Math.max(1, L * .012), L * .018); c.fillRect(fw * .78 - Math.max(1, L * .012), w, Math.max(1, L * .012), L * .018); }
+    c.fillStyle = '#1a1d22'; c.beginPath(); c.moveTo(-fw * .7, L * .06); c.quadraticCurveTo(0, L * .035, fw * .7, L * .06); c.lineTo(fw * .6, L * .08); c.quadraticCurveTo(0, L * .065, -fw * .6, L * .08); c.fill();
+    c.strokeStyle = HOT; c.lineWidth = Math.max(2, L * .028); c.lineCap = 'round'; c.beginPath(); c.moveTo(0, L * .8); c.lineTo(0, L * .985); c.stroke();
+    // navigation lights: red on the left wing, green on the right, white strobes
+    const blink = (performance.now() % 1200) < 70;
+    for (const [q, col] of [[-1, '#ff2a1a'], [1, '#22d46a']]) {
+      c.fillStyle = col; c.beginPath(); c.arc(q * L * .5, L * .63, Math.max(1.4, L * .014), 0, 6.283); c.fill();
+      if (blink) { c.fillStyle = 'rgba(255,255,255,.55)'; c.beginPath(); c.arc(q * L * .5, L * .63, L * .05, 0, 6.283); c.fill(); }
+    }
+    c.restore();
+  }
+
+  // ---------- helpers ----------
+  function txt(c, s, x2, y2, font, col, align = 'left', a = 1) {
+    if (a <= 0) return; c.globalAlpha = a; c.font = font; c.fillStyle = col; c.textAlign = align; c.textBaseline = 'alphabetic'; c.fillText(s, x2, y2); c.globalAlpha = 1;
+  }
+  function hatch(c, x2, y2, w, h, gap, col, lw) {
+    c.save(); c.beginPath(); c.rect(x2, y2, w, h); c.clip(); c.strokeStyle = col; c.lineWidth = lw; c.beginPath();
+    for (let k = -h; k < w + h; k += gap) { c.moveTo(x2 + k, y2 + h); c.lineTo(x2 + k + h, y2); } c.stroke(); c.restore();
+  }
+  const tw0 = (c, s, font) => { c.font = font; return c.measureText(s).width; };
+
+  // ---------- draw ----------
+  function draw() {
+    const c = ctx; if (!c) return;
+    c.save(); c.clearRect(0, 0, W, H);
+    c.translate(T.sx, T.sy);
+    const bR = e3(T.build * 1.7), bC = e3((T.build - .3) * 1.6), bP = e3((T.build - .45) * 2);
+    const ml = `700 ${fs}px ${MONO}`, rv = T.rv, gap = Math.max(6, fs * .5), nb = yR - gap;
+    const rightX = xV1 + 10, rightW = W - pad - rightX, leftW = xV1 - 14 - pad;
+    const dim = 'rgba(16,16,12,.78)';
+
+    // type sizes, fitted to the grid
+    const r100 = tw0(c, '100', `800 100px ${DISP}`) / 100 || 1.6;
+    const rV = tw0(c, 'V1', `900 100px ${DISP}`) / 100 || 1.1;
+    const lblW = tw0(c, 'DECISION', ml);
+    const availNum = nb - (topPad + fs * 1.7);
+    const F2 = Math.max(18, Math.min(availNum / .76, leftW / (r100 + .3)));
+    const F1 = Math.max(18, Math.min(availNum / .74, (rightW - lblW - 12) / rV));
+    const yL = Math.min(nb - F2 * .76, nb - F1 * .74) - fs * .8;
+
+    // Swiss grid
+    c.strokeStyle = 'rgba(16,16,12,.18)'; c.lineWidth = 1; c.beginPath();
+    for (const gx of [pad, W - pad, rwR, xV1]) { c.moveTo(gx + .5, 0); c.lineTo(gx + .5, H); }
+    for (const gy of [yR, yRb]) { c.moveTo(0, gy + .5); c.lineTo(W, gy + .5); } c.stroke();
+
+    // caption row, when the stage is tall enough
+    if (yL - fs - topPad > fs * 2.4) {
+      const cy = topPad + fs;
+      txt(c, 'FIG. 1 · TAKEOFF ROLL, FROM ABOVE', pad, cy, ml, dim, 'left', bC);
+      const cw = tw0(c, 'FIG. 1 · TAKEOFF ROLL, FROM ABOVE', ml), dw = tw0(c, 'DIRECTION', ml);
+      if (pad + cw + dw + 60 < W - pad) {
+        txt(c, 'DIRECTION', W - pad - 30, cy, ml, dim, 'right', bC);
+        c.globalAlpha = bC * .75; c.strokeStyle = INK; c.lineWidth = 1.4; c.beginPath();
+        c.moveTo(W - pad - 24, cy - fs * .35); c.lineTo(W - pad, cy - fs * .35); c.moveTo(W - pad - 6, cy - fs * .7); c.lineTo(W - pad, cy - fs * .35); c.lineTo(W - pad - 6, cy); c.stroke(); c.globalAlpha = 1;
+      }
+      c.fillStyle = `rgba(16,16,12,${.7 * bC})`; c.fillRect(pad, cy + fs * .6, W - 2 * pad, 1.5);
+    }
+
+    // beyond the runway end: grass, no runway left
+    c.globalAlpha = bC;
+    c.fillStyle = 'rgba(40,90,40,.14)'; c.fillRect(rwR, yR, W - rwR, bandH);
+    hatch(c, rwR, yR, W - rwR, bandH, 7, 'rgba(16,16,12,.3)', 1);
+    const nrW = tw0(c, 'NO RUNWAY', ml), nrTxt = nrW < W - rwR - 12 ? 'NO RUNWAY' : (tw0(c, 'END', ml) < W - rwR - 8 ? 'END' : '');
+    if (nrTxt) txt(c, nrTxt, (rwR + W) / 2, yC + fs * .35, ml, 'rgba(16,16,12,.8)', 'center', bC);
+    c.globalAlpha = 1;
+
+    // the runway, unrolling from the left
+    const rr = rwL + (rwR - rwL) * bR;
+    const rg = c.createLinearGradient(0, yR, 0, yRb);
+    rg.addColorStop(0, '#0d0e10'); rg.addColorStop(.5, '#25272b'); rg.addColorStop(1, '#0d0e10');
+    c.fillStyle = rg; c.fillRect(rwL, yR, rr - rwL, bandH);
+    c.save(); c.beginPath(); c.rect(rwL, yR, rr - rwL, bandH); c.clip();
+    if (noise) { c.drawImage(noise, 0, 0, W, H); c.drawImage(noise, 0, 0, W, H); }
+    // old tyre marks near the far threshold
+    c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = 2;
+    for (let i = 0; i < 5; i++) { const sx = xOf(.12 + i * .03), yy = yC + (i % 2 ? 1 : -1) * bandH * .12 + rand(-.3, .3); c.beginPath(); c.moveTo(sx, yy); c.lineTo(sx + (x1 - x0) * .06, yy); c.stroke(); }
+    c.fillStyle = 'rgba(255,255,255,.9)';
+    c.fillRect(rwL, yR + bandH * .07, rwR - rwL, 2); c.fillRect(rwL, yRb - bandH * .07 - 2, rwR - rwL, 2);
+    c.fillRect(rwR - 3, yR, 3, bandH); c.fillRect(rwL, yR, 2, bandH);
+    const kh = lenP * .42, kw = bandH * .05;
+    for (let i = 0; i < 4; i++) for (const kx of [rwL + 6, rwR - 8 - kh]) {
+      c.fillRect(kx, yR + bandH * .14 + i * kw * 1.6, kh, kw); c.fillRect(kx, yRb - bandH * .14 - kw - i * kw * 1.6, kh, kw);
+    }
+    const fh = bandH * .3;
+    c.fillStyle = 'rgba(255,255,255,.85)'; c.font = `700 ${fh}px ${MONO}`; c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    c.save(); c.translate(rwL + 6 + kh + 6, yC); c.rotate(Math.PI / 2); c.fillText('09', 0, 0); c.restore();
+    c.save(); c.translate(rwR - 8 - kh - 6, yC); c.rotate(-Math.PI / 2); c.fillText('27', 0, 0); c.restore();
+    const dl = Math.max(10, (rwR - rwL) * .035), ds = rwL + 6 + kh + fh * .9 + 10, de = rwR - 8 - kh - fh * .9 - 10;
+    c.fillStyle = 'rgba(255,255,255,.9)';
+    for (let xx = ds; xx + dl < de; xx += dl * 1.8) c.fillRect(xx, yC - 1.25, dl, 2.5);
+    const step = Math.max(14, (rwR - rwL) / 30);
+    for (let xx = rwL + 5; xx < rwR; xx += step) for (const ey of [yR + 3, yRb - 3]) {
+      c.fillStyle = 'rgba(255,240,200,.25)'; c.beginPath(); c.arc(xx, ey, 4, 0, 6.283); c.fill();
+      c.fillStyle = '#fff6dc'; c.beginPath(); c.arc(xx, ey, 1.4, 0, 6.283); c.fill();
+    }
+    c.restore();
+
+    // skid marks of every abort
+    const gOff = .56 * lenP;
+    const skids = tries.filter(t => t.x != null).map(t => [t.x, t.e, .35]);
+    if (st === 'brake' && abortX != null) skids.push([abortX, x, .6]);
+    for (const [a, b, al] of skids) {
+      c.strokeStyle = `rgba(0,0,0,${al})`; c.lineWidth = 2; c.beginPath();
+      for (const q of [-.12, .12]) { c.moveTo(xOf(a) - gOff, yC + q * lenP); c.lineTo(xOf(b) - gOff, yC + q * lenP); } c.stroke();
+    }
+
+    // after the reveal: the too-late zone and the V1 rule
+    const ruleTop = yL - fs * .9, ruleBot = yRb + 6;
+    if (rv > 0) {
+      c.save(); c.beginPath(); c.rect(xV1, yR, (xLO - xV1) * e3(rv * 1.3), bandH); c.clip();
+      c.fillStyle = 'rgba(255,59,31,.24)'; c.fillRect(xV1, yR, xLO - xV1, bandH);
+      hatch(c, xV1, yR, xLO - xV1, bandH, 9, 'rgba(255,59,31,.75)', 2); c.restore();
+      c.strokeStyle = 'rgba(255,255,255,.7)'; c.setLineDash([4, 4]); c.lineWidth = 1.2; c.beginPath(); c.moveTo(xLO, yR); c.lineTo(xLO, yR + bandH * e3(rv)); c.stroke(); c.setLineDash([]);
+      c.fillStyle = ACC; c.fillRect(xV1 - 1.5, ruleTop, 3, (ruleBot - ruleTop) * e3(rv));
+      c.beginPath(); c.arc(xV1, ruleTop, 4 * e3(rv * 2), 0, 6.283); c.fill();
+    }
+
+    // the tries, pinned under the runway edge
+    for (const t of tries) { if (t.x == null) continue; const tx = xOf(t.x);
+      c.fillStyle = t.r === 'stop' ? INK : ACC; c.fillRect(tx - .75, yRb, 1.5, 4); c.beginPath(); c.arc(tx, yRb + 6, 3.5, 0, 6.283); c.fill(); }
+
+    // particles, plane, sparks
+    drawP(c, 0);
+    if (!(st === 'done' && result === 'fly')) {
+      c.globalAlpha = bP; drawPlane(c, noseX(), yC, scale(), T.wob); c.globalAlpha = 1;
+    }
+    drawP(c, 1);
+
+    // ---------- top band: runway ahead | V1 ----------
+    txt(c, 'RUNWAY AHEAD', pad, yL, ml, dim, 'left', bC);
+    const left = Math.max(0, Math.round((1 - Math.min(x, 1)) * 100));
+    const nw = tw0(c, String(left), `800 ${F2}px ${DISP}`);
+    txt(c, String(left), pad - F2 * .03, nb, `800 ${F2}px ${DISP}`, left < 40 && st !== 'idle' ? ACC : INK, 'left', bC);
+    txt(c, '%', pad + nw + 3, nb, `800 ${Math.max(12, F2 * .3)}px ${DISP}`, INK, 'left', bC);
+
+    c.save(); c.globalAlpha = bC * .4; c.strokeStyle = INK; c.lineWidth = 1.2; c.setLineDash([3, 3]); c.font = `900 ${F1}px ${DISP}`; c.textAlign = 'left'; c.textBaseline = 'alphabetic'; c.strokeText('V1', rightX, nb); c.restore();
+    if (rv > 0) { c.save(); c.beginPath(); c.rect(rightX - 4, nb - F1, (F1 * rV + 10) * e3(rv * 1.2 - .1), F1 * 1.1); c.clip();
+      txt(c, 'V1', rightX, nb, `900 ${F1}px ${DISP}`, ACC); c.restore(); }
+    const lx = rightX + F1 * rV + 10;
+    txt(c, 'DECISION', lx, nb - fs * 1.25, ml, dim, 'left', bC);
+    txt(c, rv > 0 ? 'SPEED' : 'SPEED ?', lx, nb, ml, dim, 'left', bC);
+    let tl = 'TOO LATE TO STOP →';
+    if (tw0(c, tl, ml) > rightW) tl = tw0(c, 'TOO LATE TO STOP', ml) <= rightW ? 'TOO LATE TO STOP' : 'TOO LATE →';
+    txt(c, tl, rightX, yL, ml, ACC, 'left', e3(rv * 1.5 - .4));
+
+    // ---------- bottom band: speed | outcome ----------
+    const yA = yRb + 10 + fs, bh = Math.max(8, fs * .7), by = yA + 5, tapeW = Math.max(40, leftW);
+    txt(c, 'SPEED', pad, yA, ml, INK, 'left', bC);
+    c.globalAlpha = bC; c.fillStyle = 'rgba(16,16,12,.2)'; c.fillRect(pad, by, tapeW, bh);
+    c.fillStyle = INK; c.fillRect(pad, by, tapeW * cl(v / VMAX), bh);
+    for (let i = 1; i < 10; i++) { c.fillStyle = 'rgba(0,166,255,.6)'; c.fillRect(pad + tapeW * i / 10, by, 1, bh); }
+    if (rv > 0) { const tx = pad + tapeW * V1v / VMAX; c.fillStyle = ACC; c.fillRect(tx - 1.5, by - 4, 3, bh + 8);
+      txt(c, 'V1', tx, yA, `800 ${fs}px ${MONO}`, ACC, 'center', rv); }
+    c.globalAlpha = 1;
+    const bottom = yRb + botH - 4;
+    if (tries.some(t => t.x != null)) {
+      const ly = by + bh + fs * 1.5;
+      const w1 = tw0(c, 'stopped', `600 ${fs}px ${MONO}`), w2 = tw0(c, 'overran', `600 ${fs}px ${MONO}`);
+      if (ly <= bottom && 16 + w1 + 22 + w2 <= tapeW) {
+        c.fillStyle = INK; c.beginPath(); c.arc(pad + 4, ly - fs * .35, 3.5, 0, 6.283); c.fill();
+        txt(c, 'stopped', pad + 12, ly, `600 ${fs}px ${MONO}`, INK);
+        const o = pad + 12 + w1 + 16;
+        c.fillStyle = ACC; c.beginPath(); c.arc(o + 4, ly - fs * .35, 3.5, 0, 6.283); c.fill();
+        txt(c, 'overran', o + 12, ly, `600 ${fs}px ${MONO}`, INK);
+      }
+    }
+    if (T.res > 0 && result) {
+      const word = {stop: 'STOPPED', over: 'OVERRUN', fly: 'AIRBORNE'}[result];
+      const sub = {stop: 'braked before V1', over: 'braked after V1', fly: 'kept going past V1'}[result];
+      const rW = Math.max(...['STOPPED', 'OVERRUN', 'AIRBORNE'].map(s => tw0(c, s, `900 100px ${DISP}`))) / 100 || 5.5;
+      const topW = yA - fs * .75, subRoom = bottom - topW - fs * 1.35;
+      const F3 = Math.max(14, Math.min(subRoom / .76, 48, rightW / rW));
+      const wb = topW + F3 * .76, a = e3(T.res);
+      txt(c, word, rightX + (1 - a) * 16, wb, `900 ${F3}px ${DISP}`, result === 'over' ? ACC : INK, 'left', a);
+      if (wb + fs * 1.35 <= bottom + 2) txt(c, sub, rightX, wb + fs * 1.35, `600 ${fs}px ${MONO}`, INK, 'left', a);
+    }
+    c.restore();
+  }
+
+  // ---------- simulation ----------
+  function sim(dt) {
+    const d = dt * TS;
+    if (st === 'roll') { v += A * d; x += v * d; if (x >= XR) { st = 'air'; act.disabled = true; act.textContent = 'Airborne'; act.classList.remove('abort'); } }
+    else if (st === 'brake') {
+      v = Math.max(0, v - (x > 1 ? BG : B) * d); x += v * d;
+      if (x > 1) {
+        if (!crossed) { crossed = true; Kit.haptic('light');
+          if (!Kit.calm && typeof gsap !== 'undefined') gsap.fromTo(T, {sy: 3}, {sy: 0, duration: .45, ease: 'elastic.out(1.4,.25)'}); }
+        if (!Kit.calm) T.wob = Math.sin(performance.now() / 70) * .03 * (v / VMAX + .2);
+      }
+      if (v <= 0) { T.wob = x > 1 ? .06 : 0; finish(x > 1 ? 'over' : 'stop'); }
+    }
+    else if (st === 'air') { v += A * d * .6; x += v * d; alt = Math.min(1.6, alt + d * 1.5); if (xOf(x) - lenP * scale() > W + 10) finish('fly'); }
+  }
+  function frame(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    sim(dt); emitFrame(dt); updP(dt); draw();
+    requestAnimationFrame(frame);
+  }
+  function tw(o, vars) { if (Kit.calm || typeof gsap === 'undefined') { Object.assign(o, Object.fromEntries(Object.entries(vars).filter(([k]) => k in o))); return; } gsap.to(o, vars); }
+
+  function finish(r) {
+    st = 'done'; result = r; tries.push({x: abortX, e: x, r}); if (tries.length > 8) tries.shift();
+    T.res = 0; tw(T, {res: 1, duration: .7, ease: 'expo.out'});
+    Kit.haptic(r === 'over' ? 'light' : 'success');
+    act.disabled = false; act.classList.remove('abort'); act.textContent = 'Try again';
+    if (!revealed) reveal();
+  }
+  function reveal() {
+    revealed = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => { if (ctx) layout(); });
+    if (Kit.calm || typeof gsap === 'undefined') { T.rv = 1; return; }
+    gsap.to(T, {rv: 1, duration: 1.3, ease: 'power3.inOut', delay: .25, onStart: () => {
+      Kit.haptic('success');
+      setTimeout(() => { const top = Math.max(4, yR - lenP * 1.2);
+        for (let i = 0; i < 180; i++) emit({t: 'conf', x: xV1 + rand(-2, 2), y: rand(top, yRb), vx: rand(-260, 260), vy: rand(-300, -40), life: rand(.9, 1.7), max: 1.7, r: rand(2.5, 5), gr: 0, rot: rand(0, 6), vr: rand(-12, 12), col: Math.random() < .7 ? ACC : INK}); }, 380);
+    }});
+  }
+  function go() {
+    if (st === 'idle') {
+      st = 'roll'; abortX = null; result = null; T.res = 0; crossed = false;
+      T.thr = 0; tw(T, {thr: 1, duration: .8, ease: 'power2.out'});
+      act.textContent = 'Abort!'; act.classList.add('abort'); Kit.haptic('light');
+    } else if (st === 'roll') {
+      st = 'brake'; abortX = x; T.thr = 0;
+      tw(T, {spoil: 1, duration: .25, ease: 'power2.out'});
+      act.disabled = true; act.textContent = 'Braking…'; act.classList.remove('abort'); Kit.haptic('selection');
+      if (!Kit.calm && typeof gsap !== 'undefined') gsap.fromTo(T, {sx: 5}, {sx: 0, duration: .5, ease: 'elastic.out(1.2,.3)'});
+    } else if (st === 'done') {
+      st = 'idle'; x = 0; v = 0; alt = 0; T.wob = 0; T.res = 0; result = null; abortX = null; crossed = false;
+      act.textContent = 'Full power'; Kit.haptic('selection');
+      tw(T, {spoil: 0, duration: .3});
+      T.slide = 1; tw(T, {slide: 0, duration: .7, ease: 'power3.out'}); if (Kit.calm) T.slide = 0;
+    }
+  }
+  act.addEventListener('click', go);
+  cv.addEventListener('pointerdown', () => { if (!act.disabled) go(); });
+
+  let rq = 0;
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { if (!ctx) return; cancelAnimationFrame(rq); rq = requestAnimationFrame(layout); }).observe(Kit.$('stage'));
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined') { T.build = 1; return; }
+    T.build = 0; gsap.to(T, {build: 1, duration: 1.6, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    T.build = 1;
+    if (st === 'done') go();
+    if (st === 'idle') go();
+    x = .72; v = Math.sqrt(2 * .72);
+    go();
+    let n = 0; while (st === 'brake' && n++ < 5000) sim(1 / 60);
+    await wait(Kit.calm ? 120 : 1700);
+  };
+})();
+Kit.single();
+</script>
+</html>

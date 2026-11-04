@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#wrap{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#wrap{position:relative;flex:1;min-height:0}
 #cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;display:block}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
@@ -32,6 +32,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const NL = 600, ND = 120, WD = 2, STUCK = 60;
+const INK = '#10100c', RED = '#9a2415';
 const S = {g: 0};
 let ctx, W = 0, H = 0, grains = [], done = false, touched = false, t = 0, drag = null, L = {};
 const cv = Kit.$('cv');
@@ -111,29 +112,28 @@ function draw() {
   const {fs, titleY, barY, barH, tickY, chanTop, bedY, chanH, r, gx, bx0, bx1} = L;
   const fl = S.g;
   ctx.clearRect(0, 0, W, H);
-  ctx.fillStyle = '#f4efe5'; ctx.fillRect(0, 0, W, H);
 
   // meter
   const {f} = frac();
-  ctx.fillStyle = '#1b1b20'; ctx.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  ctx.fillStyle = INK; ctx.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
   ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
   ctx.fillText('Iron oxides, by weight', bx0, titleY);
-  rr(bx0, barY, bx1 - bx0, barH, barH / 2); ctx.fillStyle = '#ddd4c3'; ctx.fill();
-  rr(bx0, barY, (bx1 - bx0) * f, barH, barH / 2); ctx.fillStyle = done ? '#b8321f' : '#1b1b20'; ctx.fill();
+  rr(bx0, barY, bx1 - bx0, barH, barH / 2); ctx.fillStyle = 'rgba(16,16,12,.18)'; ctx.fill();
+  rr(bx0, barY, (bx1 - bx0) * f, barH, barH / 2); ctx.fillStyle = done ? RED : INK; ctx.fill();
   const tx = bx0 + (bx1 - bx0) * 0.8;
-  ctx.strokeStyle = '#b8321f'; ctx.lineWidth = 2;
+  ctx.strokeStyle = RED; ctx.lineWidth = 2;
   ctx.beginPath(); ctx.moveTo(tx, barY - 4); ctx.lineTo(tx, barY + barH + 4); ctx.stroke();
-  ctx.fillStyle = '#b8321f'; ctx.textAlign = 'center'; ctx.fillText('80 %', tx, tickY);
+  ctx.fillStyle = RED; ctx.textAlign = 'center'; ctx.fillText('80 %', tx, tickY);
 
   // reservoir
-  ctx.fillStyle = 'rgba(60,135,210,.38)';
+  ctx.fillStyle = 'rgba(25,90,190,.4)';
   ctx.fillRect(0, chanTop, gx, chanH);
   // channel water
   const depth = chanH * (0.08 + 0.72 * fl);
-  ctx.fillStyle = 'rgba(60,135,210,.26)';
+  ctx.fillStyle = 'rgba(25,90,190,.3)';
   ctx.fillRect(gx, bedY - depth, W - gx, depth);
   if (fl > 0.04) {
-    ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.lineWidth = Math.max(1.5, r * 0.6); ctx.lineCap = 'round';
+    ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = Math.max(1.5, r * 0.6); ctx.lineCap = 'round';
     for (let i = 0; i < 14; i++) {
       const lane = (i * 0.37) % 1, y = bedY - depth * (0.15 + 0.75 * lane);
       const sx = ((i * 0.19 + t * fl * 0.5 * (0.7 + lane)) % 1) * (W - gx) + gx;
@@ -142,14 +142,14 @@ function draw() {
   }
 
   // bed
-  ctx.fillStyle = '#6d5d4b'; ctx.fillRect(0, bedY, W, H - fs * 1.9 - bedY);
+  ctx.fillStyle = '#5a4a3a'; ctx.fillRect(0, bedY, W, H - fs * 1.9 - bedY);
 
   // grains
   for (const p of grains) {
     if (p.out) continue;
     const x = p.x * W, y = bedY - r - p.h * chanH;
     ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283);
-    ctx.fillStyle = p.dark ? (p.sh < .5 ? '#1a1a1f' : '#2b2b33') : (p.sh < .5 ? '#e2c27e' : '#d4ad62');
+    ctx.fillStyle = p.dark ? (p.sh < .5 ? '#10100c' : '#34342e') : (p.sh < .5 ? '#b97d22' : '#cf9638');
     ctx.fill();
   }
 
@@ -161,7 +161,7 @@ function draw() {
   for (let y = gTop + gw; y < gBot - 2; y += gw * 1.4) ctx.fillRect(gx - gw / 2, y, gw, 2);
   const kr = Math.max(10, fs * 0.75);
   ctx.beginPath(); ctx.arc(gx, gTop, kr, 0, 6.283);
-  ctx.fillStyle = '#b8321f'; ctx.fill();
+  ctx.fillStyle = RED; ctx.fill();
   ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
   // hint arrow
   if (!touched) {
@@ -171,12 +171,12 @@ function draw() {
   }
 
   // bottom labels
-  ctx.fillStyle = '#1b1b20'; ctx.font = `600 ${Math.max(12, fs * 0.8)}px sans-serif`;
+  ctx.fillStyle = INK; ctx.font = `600 ${Math.max(12, fs * 0.8)}px sans-serif`;
   ctx.textAlign = 'left'; ctx.fillText('upstream', W * 0.03, H - fs * 0.6);
   ctx.textAlign = 'right'; ctx.fillText('downstream →', W * 0.97, H - fs * 0.6);
 
   if (done) {
-    ctx.textAlign = 'center'; ctx.fillStyle = '#b8321f';
+    ctx.textAlign = 'center'; ctx.fillStyle = RED;
     ctx.font = `800 ${fs * 1.2}px sans-serif`;
     ctx.fillText('80 % Fe₂O₃', W * 0.41, bedY - chanH * 0.3);
   }

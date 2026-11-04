@@ -1,0 +1,39 @@
+{
+  "id": "technology-motogp-power-weight",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.electric_cars",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How much power would a car need to accelerate like a MotoGP bike?",
+  "answer": "A bike weighing 168 kg with about 280 hp accelerates about as hard as a 1,300 kg car would need roughly 2,000 hp to match. Power per kilo is what sets acceleration, so the car needs far more horsepower to pull like the bike.",
+  "move": "Acceleration is set by power per kilo, not by power alone.",
+  "keywords": [
+    "motogp",
+    "horsepower",
+    "motorcycle",
+    "acceleration",
+    "power-to-weight"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive dial: drag a red arrow to set the horsepower of a 1,300 kg car so it accelerates like a 168 kg MotoGP bike. Shows the question, a takeaway box and a source credit.",
+    "graded": false,
+    "ground": "#efe3cc"
+  },
+  "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=9AvpiROfyUM&t=96s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "nature-permafrost-thaw-line",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.adaptation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What can a hotter summer do to Yakutsk's buildings?",
+  "answer": "Yakutsk's buildings rest on frozen ground. Dragging the summer heat from 20 °C to recent peaks of 35–38 °C thaws that ground deeper. Thawed foundations can make buildings tilt, crack, or collapse.",
+  "move": "Under Yakutsk, frozen ground is the foundation: thaw it deep and buildings tilt, crack, can collapse.",
+  "keywords": [
+    "yakutsk",
+    "permafrost",
+    "foundations",
+    "summer heat",
+    "building collapse"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider for summer temperature in Yakutsk, running from 20 °C up to 35–38 °C. Dragging it shows how the frozen ground under the city's buildings would thaw."
+  },
+  "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=311s",
+  "written": "2026-11-03"
+}

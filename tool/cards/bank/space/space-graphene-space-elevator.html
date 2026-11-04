@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden}
-#sky{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden}
+#stage{flex:1;min-height:0;position:relative;background:none;border:0;box-shadow:none;overflow:hidden}
+#sky{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden;background:none}
 #ctl{display:flex;flex-direction:column;gap:1cqh}
 .hold{font:800 max(2.3cqh,15px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.8cqh 4cqw;cursor:pointer;width:100%;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-tap-highlight-color:transparent;transition:transform .12s}
 .hold.down{transform:scale(.97);opacity:.88}
@@ -41,15 +41,13 @@ const NS = 'http://www.w3.org/2000/svg';
 function draw() {
   const svg = Kit.$('sky');
   svg.innerHTML = `<defs>
-    <linearGradient id="gsp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070f"/><stop offset=".7" stop-color="#0d1838"/><stop offset="1" stop-color="#1b3a6e"/></linearGradient>
-    <radialGradient id="gea" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4fa8ff"/><stop offset=".5" stop-color="#1f5fbf"/><stop offset="1" stop-color="#0b2a66"/></radialGradient>
+    <radialGradient id="gea" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3f86ff"/><stop offset=".5" stop-color="#1b45c4"/><stop offset="1" stop-color="#0b2a8a"/></radialGradient>
     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>`;
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * 0.85, 12);
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
-  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#gsp)'});
-  STARS.forEach(([x, y, r], i) => { const rr = r * Math.max(1, W / 360); mk('circle', {class: 'star', cx: rr + x * (W - 2 * rr), cy: rr + y * H, r: rr, fill: '#fff', opacity: .35 + (i % 4) * .15}); });
+  STARS.forEach(([x, y, r], i) => { const rr = r * Math.max(1, W / 360); mk('circle', {class: 'star', cx: rr + x * (W - 2 * rr), cy: rr + y * H, r: rr, fill: '#fff', opacity: .4 + (i % 4) * .15}); });
 
   const cx = W / 2;
   const topY = H * 0.84;
@@ -62,9 +60,9 @@ function draw() {
   const cap = (r) => { const y0 = ecy - Math.sqrt(r * r - cx * cx); return `M0 ${y0.toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 1 ${W} ${y0.toFixed(1)} L${W} ${H} L0 ${H}Z`; };
   // orbit
   const ro = ecy - satY, oy = ecy - Math.sqrt(ro * ro - cx * cx);
-  mk('path', {d: `M0 ${oy.toFixed(1)} A${ro.toFixed(1)} ${ro.toFixed(1)} 0 0 1 ${W} ${oy.toFixed(1)}`, fill: 'none', stroke: '#8fb8ff', 'stroke-opacity': .45, 'stroke-width': 1.5, 'stroke-dasharray': '4 7'});
+  mk('path', {d: `M0 ${oy.toFixed(1)} A${ro.toFixed(1)} ${ro.toFixed(1)} 0 0 1 ${W} ${oy.toFixed(1)}`, fill: 'none', stroke: '#ffffff', 'stroke-opacity': .55, 'stroke-width': 1.5, 'stroke-dasharray': '4 7'});
   // Earth
-  mk('path', {d: cap(R + 6), fill: '#4fa8ff', opacity: .25, filter: 'url(#glow)'});
+  mk('path', {d: cap(R + 6), fill: '#bfe0ff', opacity: .45, filter: 'url(#glow)'});
   mk('path', {d: cap(R), fill: 'url(#gea)'});
   mk('ellipse', {cx: cx - W * .25, cy: topY + H * .07, rx: W * .16, ry: H * .025, fill: '#3fae6a', opacity: .8});
   mk('ellipse', {cx: cx + W * .3, cy: topY + H * .1, rx: W * .12, ry: H * .02, fill: '#3fae6a', opacity: .7});
@@ -73,7 +71,7 @@ function draw() {
   // cable: a chain of graphene hexagons
   const cg = mk('g', {id: 'cable'});
   const cw = Math.max(3, W * 0.011);
-  mk('line', {x1: cx, y1: topY, x2: cx, y2: satY, stroke: '#7fe9ff', 'stroke-width': cw, filter: 'url(#glow)', 'stroke-linecap': 'round'}, cg);
+  mk('line', {x1: cx, y1: topY, x2: cx, y2: satY, stroke: '#a8f1ff', 'stroke-width': cw, filter: 'url(#glow)', 'stroke-linecap': 'round'}, cg);
   const hs = Math.max(W * 0.014, 5); let d = '';
   for (let y = topY - hs; y > satY + satH * 0.6; y -= hs * 1.75) {
     for (let k = 0; k < 6; k++) {
@@ -82,21 +80,21 @@ function draw() {
     }
     d += 'Z';
   }
-  mk('path', {d, fill: 'none', stroke: '#d9fbff', 'stroke-width': 1.2, opacity: .9}, cg);
+  mk('path', {d, fill: 'none', stroke: '#ffffff', 'stroke-width': 1.2, opacity: .95}, cg);
 
   // satellite
   const sg = mk('g', {id: 'sat'});
   const pw = satH * 1.6;
   mk('circle', {id: 'satglow', cx, cy: satY, r: satH * 1.4, fill: '#ffe27a', opacity: S.done ? .45 : 0, filter: 'url(#glow)'}, sg);
-  mk('rect', {x: cx - satH * .6 - pw, y: satY - satH * .35, width: pw, height: satH * .7, fill: '#3b6fd8', stroke: '#bcd3ff', 'stroke-width': 1}, sg);
-  mk('rect', {x: cx + satH * .6, y: satY - satH * .35, width: pw, height: satH * .7, fill: '#3b6fd8', stroke: '#bcd3ff', 'stroke-width': 1}, sg);
+  mk('rect', {x: cx - satH * .6 - pw, y: satY - satH * .35, width: pw, height: satH * .7, fill: '#0b2a8a', stroke: '#ffffff', 'stroke-width': 1}, sg);
+  mk('rect', {x: cx + satH * .6, y: satY - satH * .35, width: pw, height: satH * .7, fill: '#0b2a8a', stroke: '#ffffff', 'stroke-width': 1}, sg);
   mk('rect', {x: cx - satH * .6, y: satY - satH * .6, width: satH * 1.2, height: satH * 1.2, rx: 3, fill: '#e8edf5'}, sg);
   const st = mk('text', {x: cx, y: satY - satH * .6 - fs * 0.7, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}); st.textContent = 'Satellite in orbit';
 
   // fuel readout (left)
   const fx = Math.max(f * 0.7, 10), fy = H * 0.46;
-  const f1 = mk('text', {x: fx, y: fy, fill: '#bcd3ff', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': Math.max(fs * .8, 12)}); f1.textContent = 'FUEL BURNED';
-  const f2 = mk('text', {id: 'fuel', x: fx, y: fy + fs * 3, fill: '#7dffb0', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.1}); f2.textContent = '0 g';
+  const f1 = mk('text', {x: fx, y: fy, fill: '#ffffff', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': Math.max(fs * .8, 12)}); f1.textContent = 'FUEL BURNED';
+  const f2 = mk('text', {id: 'fuel', x: fx, y: fy + fs * 3, fill: '#8dffbc', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.1}); f2.textContent = '0 g';
 
   // platform
   const plw = Math.max(W * 0.13, 40), plh = Math.max(W * 0.05, 16);

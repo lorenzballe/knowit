@@ -1,0 +1,38 @@
+{
+  "id": "technology-micromouse-diagonal-cut-15",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the Micromouse equivalent of the Fosbury flop?",
+  "answer": "Mitee Mouse 3 was the first to drive diagonals, cutting straight through the zigzag between the posts. Old mice turned square at every corner. The leap was not new technology but a new way of seeing the maze.",
+  "move": "The leap wasn't a better machine, it was a better line through the box.",
+  "keywords": [
+    "micromouse",
+    "mitee mouse 3",
+    "maze",
+    "diagonal",
+    "fosbury flop"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page titled 'Aim and launch': the reader drags from a mouse to aim one straight diagonal line through a zigzag maze of posts, then releases it. It asks what the Micromouse equivalent of the Fosbury flop is.",
+    "ground": "#f1ede4"
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=826s",
+  "written": "2026-11-03"
+}

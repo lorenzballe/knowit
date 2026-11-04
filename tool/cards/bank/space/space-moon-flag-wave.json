@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Shows a flag on a pole with two timers, Moon (no air) and Earth (air), each reading seconds. Asks the reader to plant the pole on the Moon and time how long the flag keeps moving.",
-    "ground": "#05070d"
+    "label": "Shows a flag on a pole with two timers, Moon (no air) and Earth (air), each reading seconds. Asks the reader to plant the pole on the Moon and time how long the flag keeps moving."
   },
   "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=FeVJxB41oNY&t=77s",

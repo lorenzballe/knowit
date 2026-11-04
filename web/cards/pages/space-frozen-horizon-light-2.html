@@ -1,24 +1,15 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Astute free card</title>
-<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
-     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
-     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
-       python3 tool/cards/check.py                                  the gate
-       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
-     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
-     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
-<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
 #stage{display:flex;flex-direction:column;gap:1.4cqh}
-/* The sky: a dark window with the black hole and the things that fall in. It takes the free height. */
-#view{position:relative;flex:1 1 0;min-height:0;border-radius:2.4cqh;overflow:hidden;background:radial-gradient(130% 100% at 50% 50%,#11142b 0%,#07080f 55%,#020206 100%);box-shadow:0 0 0 .2cqh color-mix(in srgb,var(--k) 22%,transparent)}
+/* The sky: no box, the black hole and the things that fall in sit right on the card. It takes the free height. */
+#view{position:relative;flex:1 1 0;min-height:0;overflow:hidden;background:none}
 #sky{position:absolute;inset:0;width:100%;height:100%;display:block}
 #sky text{font-family:var(--body);font-weight:700}
-#cap{position:absolute;left:3.4cqw;top:1.2cqh;margin:0;font:700 max(1.7cqh,12px)/1.2 var(--body);letter-spacing:.03em;color:#e9eefc;text-shadow:0 0 .8cqh #000,0 0 .3cqh #000;pointer-events:none}
+#cap{position:absolute;left:3.4cqw;top:1.2cqh;margin:0;font:700 max(1.7cqh,12px)/1.2 var(--body);letter-spacing:.03em;color:var(--k);pointer-events:none}
 #dock{flex:none}
 #opts{display:flex;gap:1.6cqw}
 .opt{flex:1 1 auto;min-height:max(6.4cqh,40px);font:700 max(2.1cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:.9cqh 2cqw;cursor:pointer}
@@ -41,12 +32,9 @@
 .calm #sky .tw,.calm #sky .pulse,.calm #sky .spin{animation:none}
 @media (prefers-reduced-motion:reduce){#sky .tw,#sky .pulse,#sky .spin{animation:none}}
 </style>
-<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
-     (in the app, in the reader's language). The id stays "card". -->
 <article class="card" id="card" data-topic="space" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">BLACK HOLES</span></div>
-    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
     <h2 class="q">With perfect eyes, what would a black hole's edge show you?</h2>
     <div class="stagebox" id="stage">
       <div id="view"><svg id="sky" aria-hidden="true"></svg><p id="cap">Seen from afar</p></div>
@@ -56,11 +44,9 @@
           <button class="opt" data-i="1">The last one in</button>
           <button class="opt" data-i="2">All that ever fell in</button>
         </div>
-        <!-- After the answer: the reader turns up the light that still leaves the edge. -->
         <div id="boost" class="gone wait">
           <div id="track" role="slider" tabindex="0" aria-label="Boost the light from the edge" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="fill"></div><span id="chev">›››</span><div id="knob"><i id="dot"></i></div></div>
         </div>
-        <!-- The why takes the slider's place once the light is all the way up. -->
         <p id="why" class="gone">Seen from afar, time at the edge stands still, so their light keeps coming.</p>
       </div>
     </div>
@@ -73,16 +59,14 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const RIGHT = 2;
-// Seconds: the first fall (when the card comes up), then the ages that follow the answer.
 const SETUP = 3.6, AGES = 4.6;
 const clock = {setup: 0, ages: 0}, fx = {flash: 0};
 let pick = -1, phase = 'bet', bv = 0, fast = false, scene = null, setupTw = null, dragging = false;
-let geo = null, geoTw = null, dims = null, rCap = 0;   // the hole's place and size, eased when the window changes
+let geo = null, geoTw = null, dims = null, rCap = 0;
 let boostOK; const boostReady = new Promise(r => { boostOK = r; });
 const track = Kit.$('track');
 
 const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
-// What a faraway eye sees as a thing nears the edge, and the same light boosted back.
 const FALL = ['#fff4e2', '#ffc47e', '#ff6a2b', '#cf200e', '#4a0603'].map(hex);
 const BOOST = ['#4a0603', '#c4230f', '#ff8a3a', '#ffd7a0', '#fff6ea'].map(hex);
 const clamp = v => v < 0 ? 0 : v > 1 ? 1 : v;
@@ -92,11 +76,9 @@ function mix(stops, u) {
   const i = Math.min(stops.length - 2, Math.floor(u)), f = u - i, a = stops[i], b = stops[i + 1];
   return 'rgb(' + a.map((v, j) => Math.round(v + (b[j] - v) * f)).join(',') + ')';
 }
-// Seen from far away the fall never quite ends: the way left shrinks like 2^(-9t), ever slower.
 const Z = Math.pow(2, -9), remain = t => (Math.pow(2, -9 * t) - Z) / (1 - Z);
 const fallLook = t => ({c: mix(FALL, smooth((t - .08) / .78)), o: 1 - smooth((t - .4) / .58)});
 
-// Drawn once, so a resize never reshuffles the sky.
 const STARS = Array.from({length: 170}, () => [Kit.rnd(), Kit.rnd(), Kit.rnd(), Kit.rnd()]);
 const THINGS = [
   {kind: 'astro', ang: 152, rot0: 16, spin: -70, k: 1},
@@ -141,14 +123,11 @@ function glyph(kind, parent) {
   return g;
 }
 
-// Draw at the card's real size: called once the fonts are in, again on every resize. When the
-// window changes size (after the answer, at the why), the hole eases to its new place.
 function layout() {
   Kit.$('card').classList.toggle('calm', !!Kit.calm);
   const {W, H, f} = Kit.fitSvg(Kit.$('sky'));
   if (!(W > 40 && H > 40)) return;
   dims = {W, H, f};
-  // The hole keeps the size it has when the card comes up; it only shrinks if the window must.
   const fit = Math.max(14, Math.min(W * .21, (H - 12) / 2.9));
   if (phase === 'bet' || !rCap) rCap = fit;
   const tgt = {cy: H / 2, R: Math.min(fit, rCap)};
@@ -165,30 +144,27 @@ function render() {
   const cx = W / 2, cy = geo.cy, R = geo.R, s = R * .52;
   const defs = mk('defs');
   const grad = (id, stops, at) => { const gr = mk('radialGradient', Object.assign({id}, at || {}), defs); stops.forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gr)); };
-  grad('halo', [[.5, '#cfe0ff', 0], [.56, '#cfe0ff', .5], [.64, '#8fb0ff', .16], [.8, '#5f7fff', .05], [1, '#5f7fff', 0]], {gradientUnits: 'userSpaceOnUse', cx: cx.toFixed(1), cy: cy.toFixed(1), r: (R * 1.8).toFixed(1)});
-  grad('glint', [[0, '#ff4a1f', .95], [.5, '#c81a0a', .35], [1, '#c81a0a', 0]]);
+  grad('halo', [[.5, '#ffffff', 0], [.56, '#ffffff', .55], [.64, '#dbe6ff', .22], [.8, '#bcd0ff', .08], [1, '#bcd0ff', 0]], {gradientUnits: 'userSpaceOnUse', cx: cx.toFixed(1), cy: cy.toFixed(1), r: (R * 1.8).toFixed(1)});
+  grad('glint', [[0, '#ff6a2b', .95], [.5, '#ff4a1f', .4], [1, '#ff4a1f', 0]]);
   const sky = mk('g');
   const n = Math.min(STARS.length, Math.round(W * H / 620));
   for (let i = 0; i < n; i++) {
     const [x, y, r, a] = STARS[i];
-    const at = {cx: (2 + x * (W - 4)).toFixed(1), cy: (2 + y * (H - 4)).toFixed(1), r: (.3 + r * r * 1.3).toFixed(2), fill: a > .88 ? '#ffe3bd' : a < .1 ? '#c4d6ff' : '#fff', opacity: (.18 + a * .62).toFixed(2)};
+    const at = {cx: (2 + x * (W - 4)).toFixed(1), cy: (2 + y * (H - 4)).toFixed(1), r: (.3 + r * r * 1.3).toFixed(2), fill: a > .88 ? '#ffe3bd' : a < .1 ? '#e4ecff' : '#fff', opacity: (.18 + a * .62).toFixed(2)};
     if (i % 6 === 0) { at.class = 'tw'; at.style = `animation-delay:${(-a * 2.8).toFixed(2)}s`; }
     mk('circle', at, sky);
   }
-  // The glow of bent starlight around the hole, painted on the whole sky so nothing leaves the window.
   mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#halo)'});
-  // The boosted edge: a glowing screen in layers, where the frozen pictures sit.
   const screen = mk('g', {opacity: 0});
   const band = mk('circle', {cx, cy, r: R + s * .44, fill: 'none', stroke: '#ffc477', 'stroke-width': (s * 1.02).toFixed(1), opacity: .16}, screen);
   mk('circle', {cx, cy, r: R + s * .1, fill: 'none', stroke: '#ffd9a6', 'stroke-width': 1, opacity: .6, 'stroke-dasharray': '2 5', class: 'spin'}, screen);
   mk('circle', {cx, cy, r: R + s * .84, fill: 'none', stroke: '#ffd9a6', 'stroke-width': 1, opacity: .4, 'stroke-dasharray': '1 6', class: 'spin'}, screen);
   const glints = mk('g');
   mk('circle', {cx, cy, r: R, fill: '#000'});
-  mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#d8e6ff', 'stroke-width': Math.max(1, R * .018).toFixed(2), opacity: .55});
-  // The edge, named along the bottom of its rim.
+  mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#e8f0ff', 'stroke-width': Math.max(1, R * .018).toFixed(2), opacity: .6});
   const fs = Math.max(12, f * .78), lab = mk('g', {opacity: phase === 'bet' ? 1 : 0}), ar = R + fs * .95 + 2;
   mk('path', {id: 'edgeArc', d: `M${(cx - ar).toFixed(1)} ${cy.toFixed(1)} A${ar.toFixed(1)} ${ar.toFixed(1)} 0 0 0 ${(cx + ar).toFixed(1)} ${cy.toFixed(1)}`, fill: 'none'}, lab);
-  const tx = mk('text', {'font-size': fs.toFixed(1), fill: '#e6eeff', 'text-anchor': 'middle', 'letter-spacing': '.16em', stroke: '#05060c', 'stroke-width': 3, 'paint-order': 'stroke'}, lab);
+  const tx = mk('text', {'font-size': fs.toFixed(1), fill: '#ffffff', 'text-anchor': 'middle', 'letter-spacing': '.16em', stroke: '#2B5CFF', 'stroke-width': 3, 'paint-order': 'stroke'}, lab);
   mk('textPath', {href: '#edgeArc', startOffset: '50%'}, tx).textContent = 'THE EDGE';
   const specks = mk('g'), things = mk('g', {id: 'things'});
   const edge = (dx, dy) => Math.min(dx > 1e-6 ? (W - cx) / dx : dx < -1e-6 ? -cx / dx : 1e9, dy > 1e-6 ? (H - cy) / dy : dy < -1e-6 ? -cy / dy : 1e9);
@@ -207,7 +183,6 @@ function render() {
   draw();
 }
 
-// Everything on the sky follows from the two clocks and the boost.
 function draw() {
   if (!scene) return;
   const lit = phase === 'boost' || phase === 'end', bc = mix(BOOST, bv), bo = Math.pow(bv, .8), {cx, cy} = scene;
@@ -216,7 +191,7 @@ function draw() {
     const rot = o.kind === 'rocket' ? o.ang - 90 : o.rot0 + o.spin * g;
     o.el.setAttribute('transform', `translate(${(cx + o.dx * r).toFixed(1)} ${(cy + o.dy * r).toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${o.sc.toFixed(4)})`);
     const L = lit ? {c: bc, o: bo} : fallLook(t);
-    o.el.style.display = i && t <= 0 ? 'none' : '';   // not yet on its way: kept out of the window
+    o.el.style.display = i && t <= 0 ? 'none' : '';
     o.el.style.color = L.c; o.el.setAttribute('opacity', L.o.toFixed(3));
     o.gl.setAttribute('opacity', (smooth((t - .8) / .18) * (1 - bo) * .7).toFixed(3));
   });
@@ -233,7 +208,7 @@ function draw() {
 
 function paintSlider() {
   const w = track.offsetWidth, h = track.offsetHeight, run = Math.max(0, w - h);
-  if (!w) return;   // hidden for now: painted when it shows
+  if (!w) return;
   Kit.$('knob').style.transform = `translateX(${(bv * run).toFixed(1)}px)`;
   Kit.$('fill').style.clipPath = `inset(0 ${((1 - bv) * run).toFixed(1)}px 0 0 round ${(h / 2).toFixed(1)}px)`;
   Kit.$('dot').style.background = mix(BOOST, bv);
@@ -252,7 +227,6 @@ function swap(outId, inId) {
   if (!Kit.calm) gsap.fromTo(b, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: .5, ease: 'power3.out', clearProps: 'transform'});
 }
 
-// After the answer: ages pass, and everything that falls in fades the same way.
 function startAges() {
   phase = 'ages';
   if (scene) { if (Kit.calm) gsap.set(scene.lab, {opacity: 0}); else gsap.to(scene.lab, {opacity: 0, duration: .5}); }
@@ -289,7 +263,6 @@ function finish() {
   swap('boost', 'why'); swap('say', 'keep');
 }
 
-// The slider: drag it (or use the arrow keys) to turn the faint light back up.
 const vAt = x => { const r = track.getBoundingClientRect(); return clamp((x - r.left - r.height / 2) / Math.max(1, r.width - r.height)); };
 function setBoost(v) { if (phase !== 'boost') return; bv = v; paintSlider(); draw(); if (bv >= .97) finish(); }
 track.addEventListener('pointerdown', e => {
@@ -304,7 +277,6 @@ track.addEventListener('keydown', e => {
   if (d && phase === 'boost') { setBoost(clamp(bv + d)); e.preventDefault(); }
 });
 
-// How sure, after the answer. When both are in, Kit.answer tells the app.
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   if (phase !== 'bet' || pick < 0) return;
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
@@ -320,13 +292,11 @@ Kit.$('opts').addEventListener('click', e => {
 
 Kit.onShow.card = layout;
 if (window.ResizeObserver) new ResizeObserver(() => { if (dims) layout(); }).observe(Kit.$('view'));
-// Motion the reader should see starts here: the first astronaut falls in.
 Kit.onEnter.card = () => {
   if (Kit.calm) { if (phase === 'bet' && clock.setup < .62) { clock.setup = .62; draw(); } return; }
   gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
   if (phase === 'bet' && clock.setup === 0 && !setupTw) setupTw = gsap.to(clock, {setup: 1, duration: SETUP, delay: .6, ease: 'none', onUpdate: draw});
 };
-// Plays the card through for the checker: answer, how sure, then drag the light all the way up.
 Kit.play.card = async () => {
   const wait = ms => new Promise(r => setTimeout(r, ms));
   fast = true;

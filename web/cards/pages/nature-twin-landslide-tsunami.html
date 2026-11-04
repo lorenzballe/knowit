@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.3cqh;flex:1;min-height:0}
-#wrap{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden;background:#0b1626}
+#wrap{flex:1;min-height:0;position:relative}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 #hold{position:relative;overflow:hidden;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.8cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 #hold .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:color-mix(in srgb,var(--c) 28%,transparent);pointer-events:none}
@@ -38,6 +38,7 @@
 <script>
 let x = null, W = 0, H = 0, f = 14;
 let p = 0, holding = false, done = false, last = 0, buzz1 = false, buzz2 = false;
+const INK = '#10100c', GROUND = '#00D451';
 
 // fixed random shapes
 const R1 = [], R2 = [], ICE = [], DROPS = [];
@@ -58,31 +59,29 @@ function waveAt(xx, A, c, w) {
 function label(t, tx, ty, align, col) {
   x.font = `700 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
   x.textAlign = align; x.textBaseline = 'middle';
-  x.lineJoin = 'round'; x.lineWidth = f * .35; x.strokeStyle = 'rgba(8,16,30,.85)';
-  x.strokeText(t, tx, ty); x.fillStyle = col; x.fillText(t, tx, ty);
+  x.lineJoin = 'round'; x.lineWidth = f * .3; x.strokeStyle = 'rgba(0,212,81,.85)';
+  x.strokeText(t, tx, ty); x.fillStyle = INK; x.fillText(t, tx, ty);
 }
 
 function draw() {
   if (!x) return;
   const y0 = .62*H, w = .085*W;
-  // sky
-  const sky = x.createLinearGradient(0, 0, 0, y0);
-  sky.addColorStop(0, '#0b1626'); sky.addColorStop(1, '#1d3350');
-  x.fillStyle = sky; x.fillRect(0, 0, W, H);
+  // transparent: the drawing sits on the card itself
+  x.clearRect(0, 0, W, H);
 
   // far ridge
-  x.fillStyle = '#2c3c52';
+  x.fillStyle = 'rgba(16,16,12,.3)';
   x.beginPath(); x.moveTo(0, y0); x.lineTo(.1*W, .1*H); x.lineTo(.3*W, .15*H); x.lineTo(.45*W, .36*H);
   x.lineTo(.62*W, .44*H); x.lineTo(W, .5*H); x.lineTo(W, y0); x.closePath(); x.fill();
 
   // glacier
   const gb = sm(p, .38, .46), front = .4*W - .035*W*(gb > 0 ? 1 : 0);
-  x.fillStyle = '#dcefff';
+  x.fillStyle = '#f2fbff';
   x.beginPath(); x.moveTo(.2*W, .27*H); x.lineTo(.3*W, .4*H); x.lineTo(front, y0 - .07*H);
   x.lineTo(front, y0 + .03*H); x.lineTo(.26*W, y0 + .03*H); x.lineTo(.2*W, .36*H); x.closePath(); x.fill();
-  x.fillStyle = '#9fd0f2';
+  x.fillStyle = '#7cc0ea';
   x.beginPath(); x.moveTo(front, y0 - .07*H); x.lineTo(front, y0 + .03*H); x.lineTo(front - .012*W, y0 + .03*H); x.lineTo(front - .012*W, y0 - .055*H); x.closePath(); x.fill();
-  if (p < .5) { x.globalAlpha = 1 - sm(p, .44, .5); label('glacier', .3*W, .47*H, 'center', '#cfe9ff'); x.globalAlpha = 1; }
+  if (p < .5) { x.globalAlpha = 1 - sm(p, .44, .5); label('glacier', .3*W, .47*H, 'center', INK); x.globalAlpha = 1; }
 
   // ice chunks falling
   if (gb > 0) {
@@ -90,7 +89,7 @@ function draw() {
       const t = sm(p, .38 + i*.006, .5 + i*.006);
       const cx = .385*W + k.dx*.03*W + t*.02*W, cy = lerp(y0 - .05*H + k.dy*.04*H, y0 + .06*H, t);
       x.save(); x.translate(cx, cy); x.rotate(k.rot * t * 2); x.globalAlpha = 1 - sm(p, .5, .6);
-      x.fillStyle = '#e8f6ff'; const s = k.s * .022 * W; x.fillRect(-s/2, -s/2, s, s*.8); x.restore();
+      x.fillStyle = '#ffffff'; const s = k.s * .022 * W; x.fillRect(-s/2, -s/2, s, s*.8); x.restore();
     });
   }
 
@@ -100,7 +99,7 @@ function draw() {
     let cx = lerp(.25*W, .35*W, a*a), cy = lerp(.16*H, y0 - .09*H, a*a);
     cx = lerp(cx, .41*W, b); cy = lerp(cy, y0 + .05*H, b);
     x.globalAlpha = 1 - sm(p, .48, .58);
-    R2.forEach(k => { x.fillStyle = '#c0895a'; x.beginPath(); x.arc(cx + k.dx*.03*W, cy + k.dy*.022*H, k.r*.011*W, 0, 7); x.fill(); });
+    R2.forEach(k => { x.fillStyle = '#8f5429'; x.beginPath(); x.arc(cx + k.dx*.03*W, cy + k.dy*.022*H, k.r*.011*W, 0, 7); x.fill(); });
     x.globalAlpha = 1;
   }
 
@@ -130,7 +129,7 @@ function draw() {
   for (let xx = .2*W; xx <= W + 2; xx += 3) x.lineTo(xx, y0 - waveAt(xx, A, c, w));
   x.lineTo(W, H); x.closePath(); x.fill();
   // foam line
-  x.strokeStyle = '#d9f0ff'; x.lineWidth = Math.max(1.5, .006*W);
+  x.strokeStyle = '#eaf7ff'; x.lineWidth = Math.max(1.5, .006*W);
   x.beginPath();
   for (let xx = .2*W; xx <= W + 2; xx += 3) { const yy = y0 - waveAt(xx, A, c, w); xx === .2*W ? x.moveTo(xx, yy) : x.lineTo(xx, yy); }
   x.stroke();
@@ -143,7 +142,7 @@ function draw() {
   [[.15, .225*W], [.43, .4*W]].forEach(([pe, ex]) => {
     const dt = (p - pe) * 6;
     if (dt <= 0 || dt > .6) return;
-    x.fillStyle = 'rgba(220,240,255,' + (1 - dt/.6) + ')';
+    x.fillStyle = 'rgba(255,255,255,' + (1 - dt/.6) + ')';
     DROPS.forEach(d => {
       const yy = y0 - (d.vy*dt - 2*dt*dt) * H * .5, xx = ex + d.vx*dt*W;
       if (yy < y0) { x.beginPath(); x.arc(xx, yy, d.r*.006*W, 0, 7); x.fill(); }
@@ -153,25 +152,25 @@ function draw() {
   // ghost: first slide alone
   if (p > .5) {
     const ga = sm(p, .5, .6);
-    x.globalAlpha = ga; x.setLineDash([f*.4, f*.35]); x.strokeStyle = '#ffd36b'; x.lineWidth = Math.max(2, .006*W);
+    x.globalAlpha = ga; x.setLineDash([f*.4, f*.35]); x.strokeStyle = INK; x.lineWidth = Math.max(2, .006*W);
     x.beginPath();
     for (let xx = c - 2.6*w; xx <= c + 2.4*w; xx += 3) { const yy = y0 - waveAt(xx, A1, c, w); xx <= c - 2.6*w + 1 ? x.moveTo(xx, yy) : x.lineTo(xx, yy); }
     x.stroke(); x.setLineDash([]);
-    label('1st slide alone', c - 1.25*w, y0 - A1 + .01*H, 'right', '#ffd36b');
+    label('1st slide alone', c - 1.25*w, y0 - A1 + .01*H, 'right', INK);
     x.globalAlpha = 1;
   }
 
   // labels
-  if (p > .005) label('1st slide', .03*W + f*.2, .2*H, 'left', '#ffcf9e');
-  if (p > .27) label('2nd slide', .26*W, .075*H, 'left', '#ffcf9e');
+  if (p > .005) label('1st slide', .03*W + f*.2, .2*H, 'left', INK);
+  if (p > .27) label('2nd slide', .26*W, .075*H, 'left', INK);
   if (p > .5) {
     x.globalAlpha = sm(p, .5, .6);
     x.font = `700 ${f}px sans-serif`;
     const tw = f * 8.5, lx = Math.min(W - tw/2 - 6, Math.max(tw/2 + 6, c));
-    label('one bigger wave', lx, y0 - A - .06*H, 'center', '#ffffff');
+    label('one bigger wave', lx, y0 - A - .06*H, 'center', INK);
     x.globalAlpha = 1;
   } else if (p > .2) {
-    label('wave', c, y0 - A - .06*H, 'center', '#ffffff');
+    label('wave', c, y0 - A - .06*H, 'center', INK);
   }
 }
 

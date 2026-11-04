@@ -1,0 +1,38 @@
+{
+  "id": "history-nsa-gold-codes",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who makes the nuclear launch codes, and how do they reach the president?",
+  "answer": "The National Security Agency makes the gold codes. The president carries them on a plastic card, which proves that a launch order really comes from him.",
+  "move": "The NSA makes the gold codes; the president carries them on a plastic card to prove a launch order is his.",
+  "keywords": [
+    "gold codes",
+    "nuclear launch codes",
+    "nsa",
+    "president",
+    "launch order"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive flowchart with a glowing piece to tap, one link at a time. Question: who makes the nuclear launch codes, and how do they reach the president?",
+    "ground": "#1b2537"
+  },
+  "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=107s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "human_body-highway-hypnosis",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.brain_and_habits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What physiological phenomenon discourages building a road tunnel under the Channel?",
+  "answer": "Highway hypnosis: after many hours at the wheel, especially at night, concentration and reflexes drop and the driver just stares at the lane lines. In a long road tunnel that means accidents. On rails, nobody has to keep the car in its lane.",
+  "move": "A long, monotonous drive dulls the driver; on a train, the track does the steering.",
+  "keywords": [
+    "highway hypnosis",
+    "road tunnel",
+    "rail tunnel",
+    "english channel",
+    "driver fatigue"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Page titled Road or Rail. A road tunnel is drawn across the page; the reader drags it from left to right to drive on into the night, then is told to put it on rails. The question asks what physiological phenomenon discourages building a road tunnel under the Channel.",
+    "ground": "#05040c"
+  },
+  "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=1i1Z63xL3MQ&t=333s",
+  "written": "2026-11-03"
+}

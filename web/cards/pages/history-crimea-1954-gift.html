@@ -51,29 +51,32 @@ function draw(){
   const defs=Kit.mk('defs',{},svg);
   const pat=Kit.mk('pattern',{id:'hatch',patternUnits:'userSpaceOnUse',width:9,height:9,patternTransform:'rotate(45)'},defs);
   Kit.mk('line',{x1:0,y1:0,x2:0,y2:9,stroke:INK,'stroke-width':3.2,'stroke-opacity':.55},pat);
-  const cp=Kit.mk('clipPath',{id:'mclip'},defs);
-  Kit.mk('rect',{x:0,y:0,width:W,height:mh,rx:fs*.9},cp);
-  const g=Kit.mk('g',{'clip-path':'url(#mclip)'},svg);
-  Kit.mk('rect',{x:0,y:0,width:W,height:mh,fill:SEA},g);
+  const g=Kit.mk('g',{},svg);
+  // the Black Sea as a body of water with its own irregular shape, no box
+  const X=v=>(v*W).toFixed(1), Y=v=>(v*mh).toFixed(1);
+  const seaPts=[[.03,.5],[.08,.52],[.18,.47],[.3,.42],[.42,.46],[.5,.44],[.6,.42],[.66,.43],[.72,.47],[.8,.52],[.9,.6],[.98,.55],
+    [.99,.72],[.9,.9],[.78,.97],[.62,.93],[.5,.98],[.36,.93],[.22,.98],[.1,.93],[.03,.8]];
+  const seaD='M'+seaPts.map(p=>X(p[0])+','+Y(p[1])).join('L')+'Z';
+  Kit.mk('path',{d:seaD,fill:SEA,stroke:INK,'stroke-width':1.5,'stroke-linejoin':'round'},g);
   const s=Math.min(W,mh);
   G.ring=Kit.mk('circle',{cx:.5*W,cy:.6*mh,r:.36*s,fill:'none',stroke:'#fff','stroke-width':3,'stroke-dasharray':'8 7',opacity:0},g);
   G.ring2=Kit.mk('circle',{cx:.5*W,cy:.6*mh,r:.36*s,fill:RU,'fill-opacity':.18,stroke:'none',opacity:0},g);
-  Kit.mk('path',{d:P([[0,0],[.57,0],[.6,.15],[.57,.3],[.6,.42],[.5,.44],[.42,.46],[.3,.42],[.18,.47],[.08,.52],[0,.5]]),fill:UA,stroke:INK,'stroke-width':1.5},g);
-  Kit.mk('path',{d:P([[.57,0],[1,0],[1,.55],[.9,.6],[.8,.52],[.72,.47],[.66,.43],[.6,.42],[.57,.3],[.6,.15]]),fill:RU,stroke:INK,'stroke-width':1.5},g);
+  Kit.mk('path',{d:P([[.03,.1],[.12,.04],[.26,.07],[.4,.02],[.57,.03],[.6,.15],[.57,.3],[.6,.42],[.5,.44],[.42,.46],[.3,.42],[.18,.47],[.08,.52],[.03,.5]]),fill:UA,stroke:INK,'stroke-width':1.5,'stroke-linejoin':'round'},g);
+  Kit.mk('path',{d:P([[.57,.03],[.72,.0],[.86,.05],[.97,.02],[.99,.2],[.97,.38],[.98,.55],[.9,.6],[.8,.52],[.72,.47],[.66,.43],[.6,.42],[.57,.3],[.6,.15]]),fill:RU,stroke:INK,'stroke-width':1.5,'stroke-linejoin':'round'},g);
   const crD=P([[.40,.455],[.44,.45],[.47,.52],[.58,.53],[.66,.5],[.68,.54],[.6,.6],[.55,.68],[.47,.72],[.4,.66],[.34,.6],[.37,.53],[.41,.5]]);
   G.cr=Kit.mk('path',{d:crD,fill:RU,stroke:INK,'stroke-width':2.2},g);
   G.hatch=Kit.mk('path',{d:crD,fill:'url(#hatch)',opacity:0},g);
-  G.border=Kit.mk('path',{d:'M'+[[.57,-.02],[.6,.15],[.57,.3],[.6,.42]].map(p=>(p[0]*W)+','+(p[1]*mh)).join('L'),fill:'none',stroke:INK,'stroke-width':2,'stroke-dasharray':'5 5'},g);
-  G.ussr=Kit.mk('rect',{x:.02*W,y:.02*mh,width:.96*W,height:.74*mh,rx:fs,fill:'none',stroke:'#fff','stroke-width':2.5,'stroke-dasharray':'10 6'},g);
-  G.ussrL=label('ONE UNION · USSR',.05*W,.09*mh,fs*.85,g,'start');
+  G.border=Kit.mk('path',{d:'M'+[[.57,.03],[.6,.15],[.57,.3],[.6,.42]].map(p=>(p[0]*W)+','+(p[1]*mh)).join('L'),fill:'none',stroke:INK,'stroke-width':2,'stroke-dasharray':'5 5'},g);
+  G.ussr=Kit.mk('rect',{x:.05*W,y:.1*mh,width:.9*W,height:.66*mh,rx:fs,fill:'none',stroke:'#fff','stroke-width':2.5,'stroke-dasharray':'10 6'},g);
+  G.ussrL=label('ONE UNION · USSR',.08*W,.17*mh,fs*.85,g,'start');
   // arrow from Russia to Crimea
   G.arrow=Kit.mk('path',{d:`M${.82*W},${.34*mh} Q${.8*W},${.58*mh} ${.62*W},${.58*mh}`,fill:'none',stroke:'#fff','stroke-width':3.5,'stroke-linecap':'round',opacity:0},g);
   G.head=Kit.mk('path',{d:`M${.62*W},${.58*mh} l${fs*.7},${-fs*.45} M${.62*W},${.58*mh} l${fs*.7},${fs*.45}`,stroke:'#fff','stroke-width':3.5,'stroke-linecap':'round',opacity:0},g);
   G.arrowL=label('1954 gift',.7*W,.7*mh,fs,g,'start'); G.arrowL.setAttribute('opacity',0);
-  label('UKRAINE',.27*W,.24*mh,fs,g);
+  label('UKRAINE',.27*W,.34*mh,fs,g);
   label('RUSSIA',.8*W,.22*mh,fs,g);
   label('CRIMEA',.5*W,.61*mh,fs*.9,g);
-  const sl=label('BLACK SEA',.05*W,.9*mh,fs*.85,g,'start'); sl.setAttribute('fill','#fff'); sl.setAttribute('stroke',SEA);
+  const sl=label('BLACK SEA',.1*W,.84*mh,fs*.85,g,'start'); sl.setAttribute('fill','#fff'); sl.setAttribute('stroke',SEA);
   // timeline
   const ly=mh+th*.38, pad=W*.11;
   nodes=[0,1,2,3].map(i=>pad+i*(W-2*pad)/3);

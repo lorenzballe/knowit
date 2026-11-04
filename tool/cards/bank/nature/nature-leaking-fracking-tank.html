@@ -9,8 +9,8 @@
 #sw{display:flex;gap:2cqw}
 .seg{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 3cqw;cursor:pointer}
 .seg.on{background:var(--k);color:var(--c);box-shadow:none}
-#wrap{flex:1;min-height:0;position:relative;border-radius:1.6cqh;overflow:hidden}
-#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+#wrap{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
 #why p{margin:0}
 #why .body{font:500 max(1.9cqh,12px)/1.3 var(--body)}
 </style>
@@ -58,15 +58,14 @@ function draw(){
   mk('stop', {offset: 0, 'stop-color': BAD, 'stop-opacity': .95}, g);
   mk('stop', {offset: 1, 'stop-color': BAD, 'stop-opacity': .55}, g);
 
-  // sky + layers
-  mk('rect', {x: 0, y: 0, width: W, height: y0, fill: '#d9ecf7'});
+  // ground layers (sky is the card itself)
   mk('rect', {x: 0, y: y0, width: W, height: sandY - y0, fill: '#9a6b45'});
   mk('rect', {x: 0, y: sandY, width: W, height: aqY - sandY, fill: '#cfa96c'});
   mk('rect', {x: 0, y: aqY, width: W, height: rockY - aqY, fill: '#2f7fd0'});
   mk('rect', {x: 0, y: rockY, width: W, height: H - rockY, fill: '#5a4d47'});
   for (let i = 0; i < 60; i++) mk('circle', {cx: Kit.rnd() * W, cy: sandY + 4 + Kit.rnd() * (aqY - sandY - 8), r: 1 + Kit.rnd() * 2, fill: '#a9844c'});
   for (let i = 0; i < 50; i++) mk('circle', {cx: Kit.rnd() * W, cy: aqY + 4 + Kit.rnd() * (rockY - aqY - 8), r: 1 + Kit.rnd() * 2, fill: '#8fc6ff', opacity: .6});
-  mk('line', {x1: 0, y1: y0, x2: W, y2: y0, stroke: '#5b8a3c', 'stroke-width': Math.max(3, H * .012)});
+  mk('line', {x1: 0, y1: y0, x2: W, y2: y0, stroke: '#1f5a2a', 'stroke-width': Math.max(3, H * .012)});
 
   // plume and stain
   const pg = mk('g', {'clip-path': 'url(#plc)'});
@@ -97,7 +96,7 @@ function draw(){
   // labels
   const T = (x, y, s, a, col, st) => { const t = mk('text', {x, y, 'text-anchor': a || 'start', 'dominant-baseline': 'middle', fill: col || '#fff', stroke: st || 'rgba(0,0,0,.45)', 'stroke-width': 3, 'paint-order': 'stroke', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}); t.textContent = s; return t; };
   T((tx0 + tx1) / 2, (rim + tb) / 2 + H * .015, 'Corrosive fluid', 'middle', '#1d2a0a', 'rgba(255,255,255,.6)');
-  R.glassT = T(W * .96, H * .06, 'Tap water: clean', 'end', '#13324f', 'rgba(255,255,255,.8)');
+  R.glassT = T(W * .96, H * .06, 'Tap water: clean', 'end', '#10100c', 'transparent');
   T(tx1 + W * .04, (tb + sandY) / 2 + 2, 'Soil');
   T(W * .04, (sandY + aqY) / 2, 'Sand & rock', 'start', '#3a2a12', 'rgba(255,255,255,.55)');
   T(W * .04, (aqY + rockY) / 2, 'Aquifer: drinking water');

@@ -30,8 +30,7 @@
     "kit": 1,
     "touch": "taps",
     "label": "Two steel furnaces race side by side: a modern mill makes fast, even steel, while the ancient tatara makes slow, uneven steel. The page asks why the best Japanese swords still need tatara steel.",
-    "graded": false,
-    "ground": "#1b1714"
+    "graded": false
   },
   "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=52s",

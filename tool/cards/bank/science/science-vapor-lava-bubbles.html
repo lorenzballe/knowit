@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#pic{display:block;width:100%;flex:1;min-height:0;border-radius:2cqh;cursor:pointer;touch-action:manipulation;background:#140c0a}
+#pic{display:block;width:100%;flex:1;min-height:0;cursor:pointer;touch-action:manipulation;background:none}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
 #why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
@@ -44,14 +44,20 @@ function surfY(x){
   }
   return y;
 }
+function drawY(x, x0, x1){
+  const t = Math.max(0, Math.min(1, Math.min(x - x0, x1 - x) / (W*0.09)));
+  return surfY(x) + H*0.06*(1-t)*(1-t);
+}
 function render(){
   if (!lavaP) return;
-  let d = `M0,${H} L0,${surfY(0).toFixed(1)}`, c = `M0,${surfY(0).toFixed(1)}`;
+  const x0 = W*0.03, x1 = W*0.97, R = H*0.08;
+  const y0 = drawY(x0, x0, x1).toFixed(1);
+  let d = `M${x0.toFixed(1)},${y0}`, c = d;
   for (let i = 1; i <= 40; i++){
-    const x = W*i/40, y = surfY(x).toFixed(1);
+    const x = x0 + (x1-x0)*i/40, y = drawY(x, x0, x1).toFixed(1);
     d += ` L${x.toFixed(1)},${y}`; c += ` L${x.toFixed(1)},${y}`;
   }
-  d += ` L${W},${H} Z`;
+  d += ` L${x1},${H-R} Q${x1},${H} ${x1-R},${H} L${x0+R},${H} Q${x0},${H} ${x0},${H-R} Z`;
   lavaP.setAttribute('d', d); crustP.setAttribute('d', c);
   for (const b of bubbles){
     if (!b.el) continue;
@@ -75,25 +81,22 @@ Kit.onShow.card = () => {
   [['0','#ffd23a'],['.35','#ff7a00'],['1','#a01800']].forEach(([o,c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, lg));
   const bg = Kit.mk('radialGradient', {id: 'bubG', cx: '.38', cy: '.35', r: '.7'}, defs);
   [['0','#fffdf5','.95'],['.6','#ffe9c8','.55'],['1','#fff0d8','.25']].forEach(([o,c,a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, bg));
-  const sky = Kit.mk('linearGradient', {id: 'skyG', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  [['0','#120a10'],['1','#3a1a10']].forEach(([o,c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, sky));
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#skyG)'}, svg);
   lavaP = Kit.mk('path', {fill: 'url(#lavaG)'}, svg);
-  crustP = Kit.mk('path', {fill: 'none', stroke: '#2b1a14', 'stroke-width': Math.max(6, H*0.035), 'stroke-linejoin': 'round'}, svg);
+  crustP = Kit.mk('path', {fill: 'none', stroke: '#2b1a14', 'stroke-width': Math.max(6, H*0.035), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
   bubG = Kit.mk('g', {}, svg);
   fxG = Kit.mk('g', {}, svg);
-  Kit.mk('text', {x: W*0.03, y: H - f*0.9, fill: '#3a0c00', 'font-size': f*0.85, 'font-family': 'var(--mono)', 'font-weight': 700, opacity: .7}, svg).textContent = 'MOLTEN ROCK';
-  cap = Kit.mk('text', {x: W/2, y: f*1.8, fill: '#fff3e0', 'font-size': f*1.1, 'font-family': 'var(--body)', 'font-weight': 800, 'text-anchor': 'middle'}, svg);
+  Kit.mk('text', {x: W*0.08, y: H - f*1.2, fill: '#3a0c00', 'font-size': f*0.85, 'font-family': 'var(--mono)', 'font-weight': 700, opacity: .7}, svg).textContent = 'MOLTEN ROCK';
+  cap = Kit.mk('text', {x: W/2, y: f*1.8, fill: '#10100c', 'font-size': f*1.1, 'font-family': 'var(--body)', 'font-weight': 800, 'text-anchor': 'middle'}, svg);
   cap.textContent = finished ? 'Too much vapor: it bursts' : (taps ? cap.textContent || 'Rock pushed up: lava breathes' : 'Tap the lava ↓');
   for (const b of bubbles){
-    b.el = Kit.mk('circle', {fill: 'url(#bubG)', stroke: '#fff8e8', 'stroke-width': Math.max(1.5, H*0.006)}, bubG);
+    b.el = Kit.mk('circle', {fill: 'url(#bubG)', stroke: '#7a2a00', 'stroke-width': Math.max(1.5, H*0.006)}, bubG);
   }
   render();
 };
 
 function steam(x, y){
   for (let i = 0; i < 4; i++){
-    const p = Kit.mk('circle', {cx: x + (Kit.rnd()-.5)*W*0.06, cy: y, r: H*0.018, fill: '#ffffff', opacity: .85}, fxG);
+    const p = Kit.mk('circle', {cx: x + (Kit.rnd()-.5)*W*0.06, cy: y, r: H*0.018, fill: '#10100c', opacity: .5}, fxG);
     gsap.to(p, {attr: {cy: y - H*(0.12 + Kit.rnd()*0.08), r: H*0.04}, opacity: 0, duration: Kit.calm ? .01 : 1 + Kit.rnd()*.5, ease: 'power1.out', onComplete: () => p.remove()});
   }
 }
@@ -104,12 +107,12 @@ function drop(x){
   const left = 3 - taps;
   Kit.$('say').textContent = left ? `Watch the bubble. ${left} drop${left > 1 ? 's' : ''} left: tap again.` : 'Watch the last one…';
   const u = Math.min(.82, Math.max(.18, x / W));
-  const d = Kit.mk('circle', {cx: u*W, cy: H*0.1, r: H*0.022, fill: '#4fc3ff', stroke: '#d8f3ff', 'stroke-width': 1.5}, fxG);
+  const d = Kit.mk('circle', {cx: u*W, cy: H*0.1, r: H*0.022, fill: '#0a74d6', stroke: '#10100c', 'stroke-width': 1.5}, fxG);
   const tl = gsap.timeline();
   tl.to(d, {attr: {cy: surfY(u*W)}, duration: .55, ease: 'power2.in', onComplete: () => {
     d.remove(); steam(u*W, surfY(u*W)); setCap('Water flashes to vapor');
     const b = {u, v: .6, r: 0};
-    b.el = Kit.mk('circle', {fill: 'url(#bubG)', stroke: '#fff8e8', 'stroke-width': Math.max(1.5, H*0.006)}, bubG);
+    b.el = Kit.mk('circle', {fill: 'url(#bubG)', stroke: '#7a2a00', 'stroke-width': Math.max(1.5, H*0.006)}, bubG);
     bubbles.push(b);
     const g = gsap.timeline();
     g.to(b, {r: .07, duration: 1.3, ease: 'back.out(2.2)', onStart: () => setTimeout(() => setCap('Vapor swells: a bubble'), Kit.calm ? 0 : 450)});
@@ -136,7 +139,7 @@ function burst(){
     const cx = mu*W, cy = surfY(cx);
     bubbles.forEach(b => { b.r = 0; });
     for (let i = 0; i < 28; i++){
-      const p = Kit.mk('circle', {cx, cy, r: H*(0.008 + Kit.rnd()*0.014), fill: Kit.rnd() < .5 ? '#ffb020' : '#ff5a00'}, fxG);
+      const p = Kit.mk('circle', {cx, cy, r: H*(0.008 + Kit.rnd()*0.014), fill: Kit.rnd() < .5 ? '#ff7a00' : '#d93a00'}, fxG);
       const dx = (Kit.rnd()-.5)*W*0.8, up = H*(0.12 + Kit.rnd()*0.22), t = .5 + Kit.rnd()*.4;
       gsap.to(p, {attr: {cx: cx + dx}, duration: t*2, ease: 'none'});
       gsap.to(p, {attr: {cy: cy - up}, duration: t, ease: 'power2.out', onComplete: () =>

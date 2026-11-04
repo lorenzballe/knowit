@@ -1,0 +1,374 @@
+<!doctype html>
+<!-- slug: science-pressure-at-depth -->
+<!-- Look: a chalkboard lecture. Live chalk strokes, blue chalk shading that thickens with depth, a teacher's pink arrow, an Eiffel Tower drawn in chalk standing on a 1 m² tile of hull, and the Titanic lying in two pieces on the seabed.
+     Interaction: drag the little sub down the plumb line. The chalk sum "1 + depth ÷ 10" rewrites itself, the yellow squeeze arrows round the hull grow, bubbles rise, and the tower fills (by area) with the tonnes pressing on one square metre.
+     Wow: at the Titanic the teacher's chalk rings "381 atm", dust bursts off the board, the sub creaks and the whole tower is traced in yellow chalk: almost half of it now sits on 1 m². -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pressure at 3800 m</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:visible}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:600 max(1.85cqh,12.5px)/1.32 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
+#why .body b{color:#f5d76e}
+.say b{color:#f5d76e}
+.hint{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(5px)}}
+.kit-calm .hint{animation:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag the sub down · the weight of water" style="--c:#1e2b27;--k:#f1eee4;--edge:#111a16">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO THE DEEP</span></div>
+    <h2 class="q">How hard does the sea press, on the way down to the Titanic?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A chalkboard: a small submarine on a depth line from the surface to the Titanic at 3800 m, a live sum of the pressure, and an Eiffel Tower standing on one square metre of hull, filling with the weight that presses on it."></svg>
+    </div>
+    <p class="say" id="say"><b>Drag the sub down</b> toward the Titanic, 3,800 m below.</p>
+    <div id="why" class="gone"><p class="body">Every 10 m of water adds <b>one atmosphere</b>, plus one for the air: 301 at 3,000 m, <b>381</b> at the Titanic. Each square metre of hull bears some <b>3,800 tonnes</b>, almost half the 8,000-tonne Eiffel Tower.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Every 10 m down adds one atmosphere, and the sea never stops adding.</div>
+    <div class="foot"><span class="src">Source · Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (typeof DrawSVGPlugin !== 'undefined') gsap.registerPlugin(DrawSVGPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const CH = '#f4f1e8', YE = '#f5d76e', BL = '#8ec9e0', PK = '#f2a5aa', HULL = '#2b3a35';
+  const MAX = 3800, TOWER = 8000;
+  const st = {d: 0};
+  let revealed = false, touched = false, said = 0, built = false, compact = false;
+  let W, H, fs, pad, y0, y1, sb, colX, seaR, rx0, rx1, cx, yT, yB, th, B, subRx, subRy;
+  let cum = [];
+  const E = {};
+
+  const yOf = m => y0 + (m / MAX) * (y1 - y0);
+  const atmOf = m => 1 + m / 10;
+  const hw = t => B * Math.pow(1 - t, 2.3) * .94 + B * .04 * (1 - t) + fs * .14;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const T = (p, x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: CH, 'font-size': fs}, a), p); e.textContent = s; return e; };
+  const fitT = (p, x, y, s, a = {}) => {
+    const e = T(p, x, y, s, a), w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
+    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const sh = Math.max(3 - left, Math.min(0, W - 3 - (left + w)));
+    if (sh) e.setAttribute('x', x + sh);
+    return e;
+  };
+  // Put a text so the top of its box sits at `top`; returns the bottom of the box.
+  const stack = (e, top) => { e.setAttribute('y', 0); const b = e.getBBox(); e.setAttribute('y', top - b.y); return top + b.height; };
+  // Stack two lines of different fonts with a safe gap that does not rely on font metrics alone.
+  const stackPair = (a, b, top, sz) => {
+    const aB = stack(a, top), ay = +a.getAttribute('y');
+    b.setAttribute('y', 0); const bb = b.getBBox();
+    const by = Math.max(ay + sz * 1.5, aB + fs * .3 - bb.y, ay + sz * .45 + fs * .3 + Math.max(sz * .8, -bb.y));
+    b.setAttribute('y', by);
+    return by + Math.max(bb.y + bb.height, sz * .3);
+  };
+  const P = (p, d, a = {}) => Kit.mk('path', Object.assign({d, fill: 'none', stroke: CH, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, a), p);
+  const wobble = (xa, xb, y, amp, n) => { let s = `M${xa.toFixed(1)},${y.toFixed(1)}`; for (let i = 1; i <= n; i++) { const x = xa + (xb - xa) * i / n; s += ` L${x.toFixed(1)},${(y + Math.sin(i * 1.7) * amp + (Kit.rnd() - .5) * amp).toFixed(1)}`; } return s; };
+  const ringD = (x, y, rx, ry) => { let s = ''; for (let i = 0; i <= 46; i++) { const a = -2.5 + i / 40 * Math.PI * 2, k = 1 + .05 * Math.sin(i * .8) + i * .0025; s += (i ? ' L' : 'M') + (x + Math.cos(a) * rx * k).toFixed(1) + ',' + (y + Math.sin(a) * ry * k).toFixed(1); } return s; };
+  const tAt = ff => { if (ff <= 0) return 0; for (let i = 1; i < cum.length; i++) if (cum[i] >= ff) { const k = (ff - cum[i - 1]) / ((cum[i] - cum[i - 1]) || 1); return (i - 1 + k) / (cum.length - 1); } return 1; };
+
+  function layout() {
+    if (E.bob) gsap.killTweensOf(E.bob);
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(16, f.f || W / 26));
+    pad = fs * .5;
+    compact = H < fs * 21;
+    seaR = W * .4; rx0 = W * .44; rx1 = W - pad;
+    subRx = fs * 1.35; subRy = fs * .62;
+
+    const defs = Kit.mk('defs', {}, svg);
+    defs.innerHTML = `
+      <filter id="chalk" filterUnits="userSpaceOnUse" x="-20" y="-20" width="${W + 40}" height="${H + 40}">
+        <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="3" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="d"/>
+        <feTurbulence type="fractalNoise" baseFrequency="2.2" numOctaves="1" seed="9" result="g"/>
+        <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.3 0 0 0 1.3" result="ga"/>
+        <feComposite in="d" in2="ga" operator="in"/>
+      </filter>
+      <filter id="smudge" filterUnits="userSpaceOnUse" x="-40" y="-40" width="${W + 80}" height="${H + 80}"><feGaussianBlur stdDeviation="${fs * 1.6}"/></filter>
+      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><line x1="0" y1="0" x2="0" y2="6" stroke="${YE}" stroke-width="2.4"/></pattern>
+      <pattern id="lattice" width="${fs * .9}" height="${fs * .9}" patternUnits="userSpaceOnUse"><path d="M0,0 L${fs * .9},${fs * .9} M${fs * .9},0 L0,${fs * .9}" stroke="${CH}" stroke-width=".9" opacity=".32"/></pattern>
+      <clipPath id="towerClip"><path id="towerShape"/></clipPath>`;
+
+    // Dusty smudges of old lessons, rubbed off the board.
+    const sm = Kit.mk('g', {filter: 'url(#smudge)', opacity: .9}, svg);
+    [[W * .7, H * .3, W * .28, fs * 2.2, .06], [W * .2, H * .62, W * .2, fs * 3, .05], [W * .55, H * .88, W * .3, fs * 1.4, .05]].forEach(([x, y, rx, ry, o]) =>
+      Kit.mk('ellipse', {cx: x, cy: y, rx, ry, fill: CH, opacity: o}, sm));
+
+    const g = Kit.mk('g', {filter: 'url(#chalk)'}, svg);
+    const tx = Kit.mk('g', {id: 'words'}, svg);
+    E.dust = Kit.mk('g', {}, svg);
+    const small = Math.max(12, fs * .88), mono = 'font-family:var(--mono)', hand = 'font-family:var(--hand)', disp = 'font-family:var(--display)';
+
+    // ---------- the depth column: labels, plumb line, sea ----------
+    const probe = T(tx, 0, 0, '3000 m', {'font-size': small, style: mono});
+    const labW = probe.getComputedTextLength(); probe.remove();
+    const labR = pad + labW;
+    colX = labR + fs * 2.1;
+    if (colX + fs * 3.2 > seaR) { seaR = colX + fs * 3.2; rx0 = Math.max(rx0, seaR + fs * .5); }
+
+    y0 = compact ? fs * 1.3 : fs * 1.8;
+    sb = H - fs * 2.1;
+    y1 = sb - fs * 3.4;
+    const step = (y1 - y0) / 3.8 >= small * 1.45 ? 1000 : 2000;
+
+    const shade = Kit.mk('g', {}, g);
+    for (let y = y0 + fs * .7; y < sb - fs * .3; y += fs * .62) {
+      const fr = clamp((y - y0) / (sb - y0), 0, 1), n = 2 + Math.round(fr * 5);
+      for (let i = 0; i < n; i++) {
+        const len = fs * (.5 + Kit.rnd() * 1.3), x = pad + Kit.rnd() * (seaR - pad - len);
+        Kit.mk('line', {x1: x, y1: y, x2: x + len, y2: y + (Kit.rnd() - .5) * 2, stroke: BL, 'stroke-width': 1.6 + fr * 1.4, 'stroke-linecap': 'round', opacity: (.1 + fr * .42).toFixed(2), class: 'dash'}, shade);
+      }
+    }
+    P(g, wobble(pad, seaR, y0, fs * .18, 14), {stroke: BL, 'stroke-width': 2.4, class: 'draw'});
+    P(g, `M${colX},${y0} V${y1}`, {'stroke-width': 1.3, opacity: .55, class: 'draw'});
+    E.ticks = [];
+    for (let m = 0; m <= 3000; m += step) {
+      const y = yOf(m);
+      P(g, `M${colX - fs * .45},${y} L${colX + fs * .45},${y}`, {'stroke-width': 1.8, class: 'draw'});
+      E.ticks.push({y, e: T(tx, labR, y + small * .35, `${m} m`, {'text-anchor': 'end', 'font-size': small, style: mono, opacity: .82})});
+    }
+
+    // The seabed, and the Titanic lying in two pieces.
+    P(g, wobble(pad, seaR, sb, fs * .2, 12), {'stroke-width': 2.2, class: 'draw'});
+    const b0 = colX - fs * .2, b1 = Math.min(seaR - fs * .2, colX + fs * 3);
+    P(g, `M${b0},${sb - fs * .1} L${b1 - fs * .7},${sb - fs * .2} L${b1},${sb - fs * 1.2} L${b0 + fs * .35},${sb - fs * .95} l${-fs * .2},${fs * .25} l${fs * .15},${fs * .22} l${-fs * .22},${fs * .18} Z`, {'stroke-width': 1.8, fill: 'rgba(244,241,232,.12)', class: 'draw'});
+    P(g, `M${b0 + fs * .4},${sb - fs * .62} L${b1 - fs * .5},${sb - fs * .78}`, {'stroke-width': 1, opacity: .6, class: 'draw'});
+    P(g, `M${b0 + fs * 1.5},${sb - fs * 1.02} l${fs * .3},${-fs * .95}`, {'stroke-width': 1.4, class: 'draw'});
+    for (let i = 0; i < 3; i++) Kit.mk('circle', {cx: b0 + fs * (.9 + i * .55), cy: sb - fs * .45, r: fs * .09, fill: CH, opacity: .7}, g);
+    const s0 = pad + fs * .2, s1 = colX - fs * 1.1;
+    if (s1 - s0 > fs * 1.6) {
+      P(g, `M${s0},${sb - fs * .1} L${s1},${sb - fs * .12} l${fs * .2},${-fs * .25} l${-fs * .18},${-fs * .2} l${fs * .1},${-fs * .3} L${s0 + fs * .35},${sb - fs * .82} Z`, {'stroke-width': 1.7, fill: 'rgba(244,241,232,.1)', class: 'draw'});
+      P(g, `M${(s0 + s1) / 2 - fs * .3},${sb - fs * .8} l${fs * .12},${-fs * .55} l${fs * .45},0 l${-fs * .02},${fs * .55}`, {'stroke-width': 1.4, class: 'draw'});
+    }
+    for (let i = 0; i < 5; i++) Kit.mk('circle', {cx: s1 + fs * .2 + Kit.rnd() * (b0 - s1), cy: sb - fs * (.1 + Kit.rnd() * .25), r: .8 + Kit.rnd() * 1.4, fill: CH, opacity: .55}, g);
+    fitT(tx, pad, sb + fs * 1.55, 'Titanic · 3,800 m', {'font-size': Math.max(12, fs * 1.05), style: hand});
+
+    // ---------- the chalk sum ----------
+    const s1z = Math.max(12, fs), eSz = Math.max(12, fs * .95);
+    let f2z = compact ? fs * 1.6 : fs * 1.95;
+    const fa = compact ? 'start' : 'middle', fx = compact ? rx0 + fs * .5 : (rx0 + rx1) / 2;
+    E.f1 = T(tx, fx, 0, '1 + 3800 ÷ 10', {'text-anchor': fa, 'font-size': s1z, style: mono, opacity: .9});
+    E.f2 = T(tx, fx, 0, '= 381 atm', {'text-anchor': fa, 'font-size': f2z, 'font-weight': 800, style: disp});
+    E.f3 = T(tx, fx, 0, compact ? '≈ 3,800 t / m²' : '≈ 3,800 t on 1 m²', {'text-anchor': fa, 'font-size': s1z, style: mono, fill: YE});
+    const room = compact ? (rx1 - fx) - fs * 5.5 : (rx1 - rx0) - fs * 1.8;
+    let w2 = E.f2.getComputedTextLength();
+    if (w2 + fs * .8 > room) { f2z = Math.max(fs * 1.3, f2z * room / (w2 + fs * .8)); E.f2.setAttribute('font-size', f2z); w2 = E.f2.getComputedTextLength(); }
+    let yy = stack(E.f1, fs * .1);
+    yy = stack(E.f2, yy + fs * .45);
+    const formB = stack(E.f3, yy + fs * .45);
+
+    const e1 = T(tx, 0, 0, 'Eiffel Tower', {'font-size': eSz, style: hand});
+    const e2 = T(tx, 0, 0, '≈ 8,000 t', {'font-size': eSz, style: mono, opacity: .85});
+    const eW = Math.max(e1.getComputedTextLength(), e2.getComputedTextLength());
+
+    // ---------- the 1 m² tile and the Eiffel Tower standing on it ----------
+    if (compact) {
+      const eTop = formB + fs * .5;
+      [e1, e2].forEach(e => e.setAttribute('x', fx));
+      stackPair(e1, e2, eTop, eSz);
+      const formW = Math.max(E.f1.getComputedTextLength(), w2 + fs * .8, E.f3.getComputedTextLength(), eW);
+      const towerL = Math.min(fx + formW + fs * .6, rx1 - fs * 4.4);
+      cx = (towerL + rx1) / 2;
+      yT = fs * 1.6; yB = H - fs * 3; th = Math.max(fs * 4, yB - yT);
+      B = Math.min((rx1 - towerL) / 2 * .8, th * .3);
+    } else {
+      cx = fx;
+      yT = formB + fs * 1.7; yB = H - fs * 3; th = Math.max(fs * 4, yB - yT);
+      B = Math.min((rx1 - rx0) / 2 * .78, th * .3);
+      const eTop = yT + fs * .1, eBot = stackPair(e1, e2, eTop, eSz);
+      const tB = clamp((yB - eBot) / th, 0, 1);
+      let lx = cx + hw(tB) + fs * .9;
+      if (lx + eW > W - 3) { const ll = cx - hw(tB) - fs * .9 - eW; lx = ll >= rx0 - fs * .5 ? ll : W - 3 - eW; }
+      [e1, e2].forEach(e => e.setAttribute('x', lx));
+    }
+
+    cum = [0]; const NA = 80;
+    for (let i = 1; i <= NA; i++) cum.push(cum[i - 1] + hw((i - .5) / NA));
+    cum = cum.map(v => v / cum[NA]);
+
+    const h0 = hw(0);
+    P(g, `M${cx - B - fs * .5},${yB + fs * .05} L${cx + B + fs * .5},${yB + fs * .05} L${cx + B + fs * .05},${yB + fs * 1.05} L${cx - B - fs * .95},${yB + fs * 1.05} Z`, {'stroke-width': 2, fill: 'rgba(244,241,232,.1)', class: 'draw'});
+    P(g, `M${cx - B * .35},${yB + fs * .05} l${-fs * .45},${fs}  M${cx + B * .35},${yB + fs * .05} l${-fs * .45},${fs}`, {'stroke-width': 1, opacity: .45, class: 'draw'});
+
+    let s = '';
+    const N = 26;
+    for (let i = 0; i <= N; i++) { const t = i / N; s += (i ? ' L' : 'M') + (cx - hw(t)).toFixed(1) + ',' + (yB - t * th).toFixed(1); }
+    s += ` L${cx},${yT - fs * .4}`;
+    for (let i = N; i >= 0; i--) { const t = i / N; s += ' L' + (cx + hw(t)).toFixed(1) + ',' + (yB - t * th).toFixed(1); }
+    s += ` L${cx + h0 * .6},${yB} Q${cx},${yB - th * .17} ${cx - h0 * .6},${yB} Z`;
+    svg.querySelector('#towerShape').setAttribute('d', s);
+
+    const inT = Kit.mk('g', {'clip-path': 'url(#towerClip)'}, g);
+    Kit.mk('rect', {x: cx - B - 4, y: yT - fs, width: 2 * B + 8, height: th + fs * 2, fill: 'url(#lattice)'}, inT);
+    E.fillBase = Kit.mk('rect', {x: cx - B - 4, y: yB, width: 2 * B + 8, height: 0, fill: YE, opacity: .2}, inT);
+    E.fill = Kit.mk('rect', {x: cx - B - 4, y: yB, width: 2 * B + 8, height: 0, fill: 'url(#hatch)'}, inT);
+    E.outline = P(g, s, {'stroke-width': 2.3, class: 'draw'});
+    [.2, .47, .8].forEach(t => {
+      const y = yB - t * th, w = hw(t) + fs * .4;
+      P(g, `M${cx - w},${y} L${cx + w},${y} M${cx - w + fs * .15},${y + fs * .32} L${cx + w - fs * .15},${y + fs * .32}`, {'stroke-width': 1.7, class: 'draw'});
+    });
+    P(g, `M${cx},${yT - fs * .4} V${yT - fs * 1.2}`, {'stroke-width': 1.4, class: 'draw'});
+    E.level = P(g, '', {stroke: YE, 'stroke-width': 2.6});
+    E.glow = P(g, s, {stroke: YE, 'stroke-width': 3, opacity: 0});
+    fitT(tx, cx - fs * .2, yB + fs * 2.45, '1 m² of hull', {'text-anchor': 'middle', 'font-size': Math.max(12, fs * 1.05), style: hand, fill: PK});
+
+    // ---------- the teacher's arrow: from the sub to one square metre of its hull ----------
+    E.tArrow = P(g, '', {stroke: PK, 'stroke-width': 2, opacity: .85});
+    E.tHead = P(g, '', {stroke: PK, 'stroke-width': 2, opacity: .85});
+
+    // ---------- bubbles and the sub, squeezed from every side ----------
+    E.bub = Kit.mk('g', {}, g);
+    E.sub = Kit.mk('g', {}, g);
+    E.subIn = Kit.mk('g', {}, E.sub);
+    E.bob = Kit.mk('g', {}, E.subIn);
+    E.arrows = [];
+    for (let i = 0; i < 8; i++) E.arrows.push(P(E.bob, '', {stroke: YE, 'stroke-width': 2}));
+    Kit.mk('ellipse', {cx: 0, cy: 0, rx: subRx, ry: subRy, fill: HULL, stroke: CH, 'stroke-width': 2.2}, E.bob);
+    P(E.bob, `M${-subRx},0 l${-fs * .45},${-fs * .45} l0,${fs * .9} Z`, {'stroke-width': 1.8, fill: HULL});
+    Kit.mk('circle', {cx: subRx * .55, cy: -fs * .05, r: fs * .28, fill: 'rgba(142,201,224,.35)', stroke: CH, 'stroke-width': 1.6}, E.bob);
+    P(E.bob, `M${-subRx * .55},${-subRy * .55} Q0,${-subRy * 1.05} ${subRx * .3},${-subRy * .7}`, {'stroke-width': 1, opacity: .6});
+    E.hint = Kit.mk('g', {class: 'hint', opacity: touched ? 0 : 1}, E.sub);
+    P(E.hint, `M0,${fs * 1.35} v${fs * 1.3} m${-fs * .38},${-fs * .45} l${fs * .38},${fs * .45} l${fs * .38},${-fs * .45}`, {stroke: YE, 'stroke-width': 2.4});
+    if (!Kit.calm) gsap.to(E.bob, {y: fs * .16, duration: 1.6, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+
+    E.ring = P(g, '', {stroke: PK, 'stroke-width': 2.6, opacity: 0});
+
+    built = true;
+    update();
+    if (revealed) { fitRing(); E.ring.setAttribute('opacity', 1); }
+  }
+
+  function fitRing() {
+    const b = E.f2.getBBox();
+    E.ring.setAttribute('d', ringD(b.x + b.width / 2, b.y + b.height * .55, b.width / 2 + fs * .8, b.height * .5 + fs * .22));
+  }
+
+  function update() {
+    if (!built) return;
+    const d = st.d, a = atmOf(d), sy = yOf(d), fr = a / atmOf(MAX);
+    E.sub.setAttribute('transform', `translate(${colX},${sy})`);
+    const L = fs * (.25 + 1.15 * fr), hl = fs * .32;
+    E.arrows.forEach((p, i) => {
+      const an = i / 8 * Math.PI * 2 + .2, ux = Math.cos(an), uy = Math.sin(an);
+      const ex = ux * (subRx + 3), ey = uy * (subRy + 3), sx = ex + ux * L, sy2 = ey + uy * L;
+      const r1 = [ux * Math.cos(.55) - uy * Math.sin(.55), ux * Math.sin(.55) + uy * Math.cos(.55)];
+      const r2 = [ux * Math.cos(-.55) - uy * Math.sin(-.55), ux * Math.sin(-.55) + uy * Math.cos(-.55)];
+      p.setAttribute('d', `M${sx.toFixed(1)},${sy2.toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)} M${(ex + r1[0] * hl).toFixed(1)},${(ey + r1[1] * hl).toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)} L${(ex + r2[0] * hl).toFixed(1)},${(ey + r2[1] * hl).toFixed(1)}`);
+      p.setAttribute('stroke-width', (1.4 + fr * 1.8).toFixed(2));
+      p.setAttribute('opacity', (.45 + fr * .55).toFixed(2));
+    });
+    // Depth labels step aside when the squeezed sub swells past them.
+    E.ticks.forEach(({y, e}) => {
+      const prox = clamp((Math.abs(y - sy) - fs * .4) / (fs * 1.2), 0, 1);
+      e.setAttribute('opacity', (.82 * (1 - (1 - prox) * Math.min(.85, fr * 1.6))).toFixed(2));
+    });
+    // The chalk sum.
+    const tonnes = a * 10, tt = tonnes >= 1000 ? Math.round(tonnes / 100) * 100 : Math.round(tonnes), ts = tt.toLocaleString('en-US');
+    E.f1.textContent = `1 + ${Math.round(d)} ÷ 10`;
+    E.f2.textContent = `= ${Math.round(a)} atm`;
+    E.f3.textContent = compact ? `≈ ${ts} t / m²` : `≈ ${ts} t on 1 m²`;
+    // The tower fills, by area, with the tonnes on one square metre.
+    const ff = Math.min(1, tonnes / TOWER), t = tAt(ff), ly = yB - t * th;
+    [E.fill, E.fillBase].forEach(r => { r.setAttribute('y', ly); r.setAttribute('height', yB - ly + 2); });
+    const lw = hw(t) + fs * .55;
+    E.level.setAttribute('d', `M${cx - lw},${ly} L${cx + lw},${ly}`);
+    E.level.setAttribute('opacity', ff > .01 ? 1 : 0);
+    // The teacher's arrow follows the sub down, then runs along the board to the tile.
+    const sx = colX + subRx + fs * .6, ex = cx - B - fs * 1.0, ey = yB + fs * .55;
+    const c1x = Math.min(sx + fs, ex - fs), c1y = sy + (ey - sy) * .9, c2x = sx + (ex - sx) * .6, c2y = ey;
+    E.tArrow.setAttribute('d', `M${sx},${sy} C${c1x},${c1y} ${c2x},${c2y} ${ex},${ey}`);
+    const dx = ex - c2x, dy = ey - c2y, dl = Math.hypot(dx, dy) || 1, ux = dx / dl, uy = dy / dl, h = fs * .55;
+    E.tHead.setAttribute('d', `M${ex - ux * h - uy * h * .6},${ey - uy * h + ux * h * .6} L${ex},${ey} L${ex - ux * h + uy * h * .6},${ey - uy * h - ux * h * .6}`);
+
+    if (!revealed) {
+      if (said < 1 && d >= 100) { said = 1; say.innerHTML = 'At 100 m it is already <b>11 atmospheres</b>: 10 from the water, 1 from the air. <b>Keep going down.</b>'; }
+      if (said < 2 && d >= 2000) { said = 2; say.innerHTML = '2,000 m: <b>201 atmospheres</b>. The Titanic is still <b>1,800 m deeper.</b>'; }
+      if (d >= MAX - .5) reveal();
+    }
+  }
+
+  function reveal() {
+    revealed = true; Kit.haptic('success');
+    card.classList.add('answered');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => requestAnimationFrame(wow));
+  }
+  function wow() {
+    if (!built) return;
+    fitRing();
+    E.ring.setAttribute('opacity', 1);
+    if (Kit.calm || typeof DrawSVGPlugin === 'undefined') return;
+    gsap.fromTo(E.ring, {drawSVG: '0%'}, {drawSVG: '100%', duration: .9, ease: 'power3.inOut'});
+    gsap.fromTo(E.glow, {drawSVG: '0%', opacity: 1}, {drawSVG: '100%', duration: 1.6, ease: 'power2.inOut', delay: .3, onComplete: () => gsap.to(E.glow, {opacity: 0, duration: .9})});
+    gsap.fromTo(E.f2, {scale: 1.25, transformOrigin: '50% 60%'}, {scale: 1, duration: .9, ease: 'elastic.out(1,.45)'});
+    gsap.fromTo([E.fill, E.fillBase], {opacity: .3}, {opacity: i => i ? .2 : 1, duration: .5, ease: 'power2.out', delay: 1.8, repeat: 1, yoyo: true});
+    // The hull creaks.
+    gsap.fromTo(E.bob, {x: -1.8}, {x: 1.8, duration: .05, repeat: 11, yoyo: true, ease: 'none', delay: .2, onComplete: () => gsap.set(E.bob, {x: 0})});
+    // Chalk dust knocked off the board.
+    const b = E.f2.getBBox(), dcx = b.x + b.width / 2, dcy = b.y + b.height / 2;
+    E.dust.innerHTML = '';
+    for (let i = 0; i < 24; i++) {
+      const c = Kit.mk('circle', {cx: dcx + (Kit.rnd() - .5) * b.width * 1.1, cy: dcy + (Kit.rnd() - .5) * fs * 2, r: .8 + Kit.rnd() * 2.2, fill: i % 3 ? CH : PK, opacity: .9}, E.dust);
+      gsap.to(c, {attr: {cx: '+=' + (Kit.rnd() - .5) * fs * 5, cy: '+=' + (fs * 1.5 + Kit.rnd() * fs * 4)}, opacity: 0, duration: 1.2 + Kit.rnd(), ease: 'power2.out', delay: .5 + Kit.rnd() * .4});
+    }
+  }
+
+  // ---------- bubbles rising from the sub ----------
+  setInterval(() => {
+    if (!built || Kit.calm || document.hidden || !E.bub) return;
+    const sy = yOf(st.d);
+    if (sy - y0 < fs * 1.6) return;
+    const c = Kit.mk('circle', {cx: colX + (Kit.rnd() - .3) * fs * .8, cy: sy - subRy - fs * .3, r: 1 + Kit.rnd() * 1.7, fill: 'none', stroke: CH, 'stroke-width': 1, opacity: .7}, E.bub);
+    const rise = Math.min(fs * (2 + Kit.rnd() * 2.5), sy - y0 - fs * .8);
+    gsap.to(c, {attr: {cy: '-=' + rise, cx: '+=' + (Kit.rnd() - .5) * fs}, opacity: 0, duration: 1.6 + Kit.rnd(), ease: 'sine.out', onComplete: () => c.remove()});
+  }, 700);
+
+  // ---------- the drag ----------
+  let dragging = false;
+  const fromY = e => { const r = svg.getBoundingClientRect(); let v = (e.clientY - r.top - y0) / (y1 - y0) * MAX; v = clamp(v, 0, MAX); if (v > MAX - 150) v = MAX; return v; };
+  function goTo(v) {
+    if (Kit.calm) { st.d = v; update(); return; }
+    gsap.to(st, {d: v, duration: .35, ease: 'power3.out', overwrite: true, onUpdate: update});
+  }
+  svg.addEventListener('pointerdown', e => {
+    dragging = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; Kit.haptic('light'); if (E.hint) gsap.to(E.hint, {opacity: 0, duration: .25}); }
+    goTo(fromY(e));
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) goTo(fromY(e)); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  new ResizeObserver(() => { if (built) layout(); }).observe(Kit.$('stage'));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (built) layout(); });
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', () => { if (built) layout(); });
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !built || typeof DrawSVGPlugin === 'undefined') return;
+    const tl = gsap.timeline();
+    tl.from(svg.querySelectorAll('.draw'), {drawSVG: '0%', duration: .9, stagger: .03, ease: 'power2.inOut'})
+      .from(svg.querySelectorAll('.dash'), {opacity: 0, duration: .5, stagger: .004, ease: 'power1.out', clearProps: 'opacity'}, .2)
+      .from(svg.querySelectorAll('#words text'), {opacity: 0, y: 4, duration: .4, stagger: .05, ease: 'power3.out', clearProps: 'opacity,transform'}, .5)
+      .from(E.subIn, {y: -fs * 2.2, opacity: 0, duration: .8, ease: 'back.out(2.2)'}, .7)
+      .from([E.tArrow, E.tHead], {drawSVG: '0%', duration: .7, ease: 'power3.out'}, 1.1);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; if (E.hint) E.hint.setAttribute('opacity', 0);
+    if (Kit.calm) { st.d = MAX; update(); await wait(120); return; }
+    gsap.to(st, {d: MAX, duration: 1.1, ease: 'power2.inOut', overwrite: true, onUpdate: update});
+    await wait(3600);
+  };
+})();
+Kit.single();
+</script>
+</html>

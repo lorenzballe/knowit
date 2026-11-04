@@ -1,0 +1,37 @@
+{
+  "id": "science-steam-feeds-power",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Chernobyl's core suddenly make 10 times its normal power?",
+  "answer": "Steam set the neutrons free: liquid water soaks up neutrons, but steam barely does. More steam meant more fissions, more heat, and more steam. The surge jammed the control rods a third of the way in, and power hit 30 GW, 10 times nominal.",
+  "move": "Positive void coefficient: steam raises power, and power makes more steam.",
+  "keywords": [
+    "chernobyl",
+    "neutrons",
+    "steam",
+    "control_rods",
+    "reactor"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive reactor core: hold the button to boil the core's water into steam and watch the power climb. Asks why the core's power rises as steam forms."
+  },
+  "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=4G-cqJy_6_o&t=551s",
+  "written": "2026-11-03"
+}

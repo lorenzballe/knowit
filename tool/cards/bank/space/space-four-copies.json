@@ -29,8 +29,7 @@
     "kit": 1,
     "touch": "taps",
     "label": "Four copies of three orbiting stars, released at rest with starting errors of 1,000,000 km, 1,000 km and 1 km. The page asks how much longer each copy can be predicted, with options a million times, a thousand times, ten times, or less than twice.",
-    "graded": false,
-    "ground": "#0c1e66"
+    "graded": false
   },
   "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=XKSjCOKDtpk",

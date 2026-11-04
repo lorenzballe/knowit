@@ -1,0 +1,37 @@
+{
+  "id": "history-italy-nuclear-bases",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which Italian bases hold nuclear bombs, and why keep them there?",
+  "answer": "NATO's bombs are kept forward in Italy, near the Soviet bloc, so NATO can react fast. They stay under nuclear sharing. The other setting on the switch is keeping them in the U.S.A.",
+  "move": "Near the Soviet bloc, they let NATO react fast.",
+  "keywords": [
+    "nato",
+    "italy",
+    "soviet_bloc",
+    "nuclear_sharing",
+    "cold_war"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A two-option switch page titled The bombs under Italy, asking which Italian bases hold NATO nuclear bombs and why. The switch sets the bombs either to Kept in the U.S.A. or Forward, in Italy. A What to keep box gives the reason."
+  },
+  "source": "Geopop, “Perché ci sono così tante basi USA e NATO in Italia? Ecco dove si trovano i 12.000 soldati americani” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=LnPbJEl6dH0&t=169s",
+  "written": "2026-11-03"
+}

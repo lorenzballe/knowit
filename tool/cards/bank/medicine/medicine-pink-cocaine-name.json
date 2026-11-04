@@ -1,0 +1,37 @@
+{
+  "id": "medicine-pink-cocaine-name",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is “pink cocaine” a misleading name for what's actually in it?",
+  "answer": "Pink cocaine is a colour and a brand name. Lab analyses almost never find cocaine or 2C-B in it, and when they do the amount is tiny. It is mostly ketamine and MDMA, often with caffeine or opioids added, and the mix varies between labs.",
+  "move": "“Pink cocaine” names a colour and a brand, not what's inside.",
+  "keywords": [
+    "pink cocaine",
+    "ketamine",
+    "mdma",
+    "2c-b",
+    "caffeine"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A lab test card asking why 'pink cocaine' is a misleading name. Tests check the two substances the name promises, cocaine and 2C-B, against ketamine, MDMA, caffeine and opioids, which the name does not mention."
+  },
+  "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=meoJvw-9tM4&t=208s",
+  "written": "2026-11-03"
+}

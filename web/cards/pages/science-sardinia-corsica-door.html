@@ -10,9 +10,8 @@
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
 #why .body{font:500 max(1.85cqh,13px)/1.35 var(--body)}
-.sea{fill:color-mix(in srgb,var(--k) 7%,transparent)}
 .fr{fill:color-mix(in srgb,var(--k) 22%,transparent)}
-.it{fill:color-mix(in srgb,var(--k) 30%,transparent)}
+.it{fill:none;stroke:color-mix(in srgb,var(--k) 55%,transparent);stroke-width:2;stroke-linecap:round;stroke-dasharray:2 6}
 .blk{fill:var(--k)}
 .ghost{fill:none;stroke:var(--k);stroke-width:1.5;stroke-dasharray:5 5;opacity:.45}
 .ridge{fill:none;stroke:var(--k);stroke-linejoin:round;stroke-linecap:round}
@@ -59,7 +58,6 @@ Kit.onShow.card = () => {
   const fs = Math.max(f * .9, 12);
   const hx = .46 * W, hy = .13 * H, L = Math.min(.62 * H, .85 * W);
   G = {W, H, hx, hy, L, fs};
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, class: 'sea', rx: 14}, svg);
   Kit.mk('path', {class: 'fr', d: `M0,0 L${.64*W},0 L${hx+.03*W},${hy-.03*H} L${hx-.05*W},${hy+.01*H} L${.12*W},${hy+.1*H} L0,${hy+.16*H}Z`}, svg);
   G.it = Kit.mk('path', {class: 'it'}, svg);
   G.ridges = [0, 1, 2].map(() => Kit.mk('path', {class: 'ridge'}, svg));
@@ -93,9 +91,9 @@ function draw() {
   G.ls.setAttribute('x', s[0]); G.ls.setAttribute('y', s[1] + fs * .35);
   for (const el of [G.hand, G.ring]) { el.setAttribute('cx', t[0]); el.setAttribute('cy', t[1]); }
   G.arc.style.opacity = .7 * (1 - p);
-  // Italy's crust: pushed east and squeezed
+  // Italy's crust: pushed east and squeezed (front edge only, no panel)
   const e = .68 * W + .05 * W * p, sl = .08 * W;
-  G.it.setAttribute('d', `M${e},0 L${W},0 L${W},${H} L${e+sl},${H}Z`);
+  G.it.setAttribute('d', `M${e},0 L${e+sl},${H}`);
   const mid0 = (e + W) / 2, mid1 = (e + sl + W) / 2, sp = .07 * W * (1 - .45 * p), amp = 1.5 + .045 * W * p, n = 10;
   G.ridges.forEach((r, k) => {
     const off = (k - 1) * sp; let d = '';

@@ -1,0 +1,406 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-highway-hypnosis -->
+<!-- Look: a night road tunnel made of thousands of light particles: segmented teal walls lit in amber pools by sodium lamps, green walkway beacons, white lane lines streaking past, the dark hood of the car, and a violet swarm that stands for the driver's attention.
+     Interaction: drag across the tunnel to drive on into the night. The attention swarm collapses onto the lane lines, the eyelids close in, reflexes drop, and the car wanders toward the line.
+     Wow: "Put it on rails". The lane-line particles take off and land as steel rails, sleepers and an overhead wire, the car locks to the track, the gaze is free again, and the risk drains away while HIGHWAY HYPNOSIS scrambles into THE RAILS STEER. -->
+<title>Highway hypnosis</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{position:relative;display:flex;flex:1;min-height:0;overflow:hidden;background:none;border:0;border-radius:0;box-shadow:none}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#word{position:absolute;left:50%;top:33%;transform:translate(-50%,-50%);font:800 max(2.5cqh,15px)/1.1 var(--mono);letter-spacing:.14em;color:#f3eaff;text-shadow:0 0 1.2cqh rgba(190,160,255,.9),0 0 3cqh rgba(140,100,255,.6);white-space:nowrap;pointer-events:none;opacity:0;max-width:none}
+#word.rail{color:#e6f6ff;text-shadow:0 0 1.2cqh rgba(140,210,255,.95),0 0 3cqh rgba(80,170,255,.6)}
+#why{margin:0}
+#why .body{margin:0;font-size:max(2.15cqh,14px);line-height:1.42}
+#rail{align-self:flex-start}
+.answered .q{font-size:max(2.4cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Drag the night · road or rail" style="--c:#05040c;--k:#f3eaff;--edge:#020106">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ROAD OR RAIL</span></div>
+    <h2 class="q">What physiological phenomenon discourages building a road tunnel under the Channel?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" data-drag role="img" aria-label="A night road tunnel seen from the driver's seat, drawn in particles of light, with the driver's attention as a swarm of dots and three gauges: attention, reflexes, accident risk."></canvas>
+      <div id="word" aria-hidden="true"></div>
+    </div>
+    <p class="say" id="say">Drag across the tunnel, left to right, to <b>drive on into the night</b>.</p>
+    <button class="btn gone" id="rail">Now put it on rails</button>
+    <div id="why" class="gone"><p class="body" id="whyt">That's <b>highway hypnosis</b>: after many hours at the wheel, above all at night, concentration and reflexes drop and the driver just stares at the lane lines. In a long road tunnel that means accidents. On rails, nobody has to keep the car in its lane.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A long, monotonous drive dulls the driver; on a train, the track does the steering.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  try { gsap.registerPlugin(SplitText, ScrambleTextPlugin); } catch (e) {}
+  const cv = Kit.$('cv'), say = Kit.$('say'), word = Kit.$('word'), card = Kit.$('card'), stage = Kit.$('stage');
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const sstep = (a, b, v) => { const k = clamp((v - a) / (b - a)); return k * k * (3 - 2 * k); };
+  const RANGE = 42, FLOOR = .6;
+
+  let x = null, W = 0, H = 0, f = 1, cx = 0, cy = 0, fs = 12, MONO = 'monospace';
+  let showMeters = true, showHours = true, showHood = true;
+  let t = 0, tv = 0, mode = 'road', touched = false, wordOn = false, btnOn = false, stage1 = false;
+  let time = 2, worldZ = 0, camX = 0, last = 0, running = false, wasDanger = false, spd = 9;
+  const M = {m: 0}, intro = {v: 1};
+
+  // soft glow sprites
+  const sprite = (r, g, b) => {
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const k = c.getContext('2d'), gr = k.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, `rgba(${r},${g},${b},1)`); gr.addColorStop(.25, `rgba(${r},${g},${b},.45)`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    k.fillStyle = gr; k.fillRect(0, 0, 64, 64); return c;
+  };
+  const gAmber = sprite(255, 170, 70), gGreen = sprite(90, 255, 170);
+
+  // ---------- particles (seeded, built once) ----------
+  const rnd = Kit.rnd;
+  const walls = [], lamps = [], beacons = [], lines = [], grain = [], gaze = [];
+  const prof = s => {
+    const L = 1 + Math.PI * 1.8 + 1, d = s * L;
+    if (d < 1) return [-1.8, FLOOR - d];
+    if (d < 1 + Math.PI * 1.8) { const a = Math.PI + (d - 1) / 1.8; return [1.8 * Math.cos(a), -0.4 + 1.8 * Math.sin(a)]; }
+    return [1.8, -0.4 + (d - 1 - Math.PI * 1.8)];
+  };
+  for (let i = 0; i < 2200; i++) {
+    const [wx, wy] = prof(rnd());
+    const z0 = rnd() < .45 ? Math.floor(rnd() * RANGE / 2) * 2 + Kit.gauss() * .04 : rnd() * RANGE;
+    const d = ((z0 % 3) + 3) % 3, lit = Math.exp(-((d - .45) ** 2) / .3) * (wy < -1 ? 1 : .55);
+    walls.push({wx, wy, z0, b: .4 + rnd() * .6, lit});
+  }
+  for (let b = 0; b < 14; b++) for (let j = 0; j < 12; j++) lamps.push({wx: (rnd() - .5) * .3, wy: -2.12 + rnd() * .04, z0: b * 3 + rnd() * .9});
+  for (let b = 0; b < 28; b++) for (const s of [-1, 1]) beacons.push({wx: s * 1.76, wy: .12, z0: b * 1.5 + .7});
+  for (let i = 0; i < 1200; i++) {
+    const side = rnd() < .5 ? -1 : 1;
+    const rr = rnd(); let rx, rz = rnd() * RANGE, sleeper = false;
+    if (rr < .34) rx = -.5 + (rnd() - .5) * .02;
+    else if (rr < .68) rx = .5 + (rnd() - .5) * .02;
+    else { sleeper = true; rx = (rnd() - .5) * 1.5; rz = Math.round(rz) + (rnd() - .5) * .08; }
+    lines.push({x0: side + (rnd() - .5) * .05, rx, z0: rnd() * RANGE, rz, dashed: side < 0, sleeper, d: rnd(), lift: .3 + rnd() * .9});
+  }
+  for (let i = 0; i < 420; i++) grain.push({wx: (rnd() - .5) * 3.5, z0: rnd() * RANGE, b: rnd()});
+  for (let i = 0; i < 440; i++) gaze.push({gx: Kit.gauss() * .36, gy: Kit.gauss() * .26 - .02, side: rnd() < .5 ? -1 : 1, lz: 2.2 + rnd() * 5, ph: rnd() * 6.28, sp: .6 + rnd() * 1.6, px: 0, py: 0, init: false});
+
+  // keep the headline word inside the stage, at any size
+  let wordY = 0;
+  function placeWord() {
+    if (!W || !H) return;
+    word.style.fontSize = '';
+    const base = parseFloat(getComputedStyle(word).fontSize) || 15;
+    // 16 glyphs (longest phrase) at ~0.62em + .14em spacing, with room for the elastic overshoot
+    const maxW = Math.max(40, W - fs * 2), est = 16 * .76 * base * 1.12;
+    const size = est > maxW ? base * maxW / est : base;
+    word.style.fontSize = size + 'px';
+    const half = size * .6 * 1.12 + 4;
+    const top = half * 2 > H ? H / 2 : clamp(wordY, half, H - half);
+    word.style.top = top + 'px';
+  }
+
+  // ---------- layout ----------
+  function layout() {
+    const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
+    f = Math.min(W * .55, H * .62); cx = W / 2; cy = H * .42;
+    fs = Math.max(12, Math.min(14, W / 28));
+    const cs = getComputedStyle(card);
+    MONO = (cs.getPropertyValue('--mono') || '').trim() || 'monospace';
+    showMeters = H >= fs * 13; showHours = H >= fs * 8; showHood = H >= 220;
+    const rowH = fs * 1.55, pad = fs * .6, metB = fs * .7 + pad * 1.4 + rowH * 3 - (rowH - fs);
+    let wy;
+    if (showMeters) wy = Math.max(H * .33, metB + fs * 1.7);
+    else if (showHours) wy = (H - fs * 3.2) / 2;
+    else wy = H / 2;
+    wordY = wy;
+    placeWord();
+    gaze.forEach(g => g.init = false);
+    draw(0);
+  }
+  let lw0 = 0, lh0 = 0, roQ = false;
+  try {
+    new ResizeObserver(() => {
+      const b = stage.getBoundingClientRect();
+      if (Math.abs(b.width - lw0) < .5 && Math.abs(b.height - lh0) < .5) return;
+      lw0 = b.width; lh0 = b.height;
+      if (!x || roQ) return; roQ = true;
+      requestAnimationFrame(() => { roQ = false; layout(); });
+    }).observe(stage);
+  } catch (e) {}
+
+  const proj = (wx, wy, z) => { const k = f / z; return [cx + (wx - camX) * k, cy + wy * k, k]; };
+  const zOf = z0 => ((z0 - worldZ) % RANGE + RANGE) % RANGE + .3;
+
+  function quad(a, b, c, d) { x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.lineTo(c[0], c[1]); x.lineTo(d[0], d[1]); x.closePath(); x.fill(); }
+
+  function railGeo(a) {
+    for (let i = 0; i < RANGE; i++) {
+      const z = zOf(i); if (z < .5) continue;
+      const fog = Math.pow(1 - z / RANGE, 1.3);
+      x.fillStyle = `rgba(120,150,195,${fog * .42 * a})`;
+      quad(proj(-.78, FLOOR, z), proj(.78, FLOOR, z), proj(.78, FLOOR, z + .16), proj(-.78, FLOOR, z + .16));
+    }
+    for (const s of [-.5, .5]) {
+      const n = proj(s, FLOOR, .6), fa = proj(s, FLOOR, RANGE);
+      const gr = x.createLinearGradient(n[0], n[1], fa[0], fa[1]);
+      gr.addColorStop(0, `rgba(215,240,255,${.95 * a})`); gr.addColorStop(.7, `rgba(140,195,255,${.35 * a})`); gr.addColorStop(1, 'rgba(120,180,255,0)');
+      x.fillStyle = gr;
+      quad(proj(s - .035, FLOOR, .6), proj(s + .035, FLOOR, .6), proj(s + .035, FLOOR, RANGE), proj(s - .035, FLOOR, RANGE));
+    }
+    const w0 = proj(0, -1.72, .6), w1 = proj(0, -1.72, RANGE);
+    const gw = x.createLinearGradient(w0[0], w0[1], w1[0], w1[1]);
+    gw.addColorStop(0, `rgba(200,230,255,${.6 * a})`); gw.addColorStop(1, 'rgba(200,230,255,0)');
+    x.strokeStyle = gw; x.lineWidth = 1.2; x.beginPath(); x.moveTo(w0[0], w0[1]); x.lineTo(w1[0], w1[1]); x.stroke();
+    for (let i = 0; i < RANGE; i += 4) {
+      const z = zOf(i + 1); if (z < .8) continue;
+      const fog = Math.pow(1 - z / RANGE, 1.3), p1 = proj(0, -1.72, z), p2 = proj(0, -1.98, z);
+      x.strokeStyle = `rgba(200,230,255,${fog * .5 * a})`; x.lineWidth = 1;
+      x.beginPath(); x.moveTo(p1[0], p1[1]); x.lineTo(p2[0], p2[1]); x.stroke();
+    }
+  }
+
+  // ---------- one frame ----------
+  function draw(dt) {
+    if (!x) return;
+    const m = M.m, iv = intro.v;
+    tv = Kit.calm ? t : lerp(tv, t, clamp(dt * 6));
+    const h = tv;
+    const amp = .85 * Math.pow(h, 2.2) * (1 - m);
+    camX = amp * (Math.sin(time * .55) + .35 * Math.sin(time * 1.37 + 1)) / 1.35;
+    const danger = clamp((Math.abs(camX) - .48) / .25);
+    if (danger > .3 && !wasDanger) { wasDanger = true; Kit.haptic('light'); } else if (danger < .05) wasDanger = false;
+
+    x.globalCompositeOperation = 'source-over'; x.globalAlpha = 1;
+    x.clearRect(0, 0, W, H);
+    const vg = x.createRadialGradient(cx - camX * f / 40, cy, 0, cx, cy, W * .22);
+    vg.addColorStop(0, `rgba(255,190,110,${.35 * iv})`); vg.addColorStop(1, 'rgba(255,190,110,0)');
+    x.fillStyle = vg; x.fillRect(0, 0, W, H);
+
+    x.globalCompositeOperation = 'lighter';
+    for (const p of walls) {
+      const z = zOf(p.z0); const [sx, sy, k] = proj(p.wx, p.wy, z);
+      if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
+      const fog = Math.pow(1 - z / RANGE, 1.4), s = Math.min(2.6, Math.max(.7, .045 * k)), L = p.lit * .75;
+      x.fillStyle = `rgba(${lerp(90, 255, L) | 0},${lerp(200, 175, L) | 0},${lerp(255, 105, L) | 0},${fog * .5 * p.b * (1 + p.lit * .7) * iv})`;
+      x.fillRect(sx, sy, s, s);
+    }
+    for (const p of beacons) {
+      const z = zOf(p.z0); const [sx, sy, k] = proj(p.wx, p.wy, z);
+      if (sx < -20 || sx > W + 20 || sy > H + 20) continue;
+      const fog = Math.pow(1 - z / RANGE, 1.3), s = clamp(.18 * k, 3, 14);
+      x.globalAlpha = fog * .7 * iv * sstep(.4, 1.5, z); x.drawImage(gGreen, sx - s / 2, sy - s / 2, s, s);
+    }
+    x.globalAlpha = 1;
+    if (m > .45) railGeo(sstep(.45, 1, m) * iv);
+    for (const p of grain) {
+      const z = zOf(p.z0); const [sx, sy, k] = proj(p.wx, FLOOR, z);
+      if (sy > H || sx < 0 || sx > W) continue;
+      const fog = Math.pow(1 - z / RANGE, 1.5), s = Math.min(2, Math.max(.6, .03 * k));
+      x.fillStyle = `rgba(${lerp(150, 120, m) | 0},${lerp(130, 140, m) | 0},${lerp(170, 160, m) | 0},${fog * .35 * p.b * iv})`; x.fillRect(sx, sy, s, s);
+    }
+    x.lineCap = 'round';
+    const baseDz = Math.min(1.4, .05 + spd * .035);
+    for (const p of lines) {
+      let mi = clamp(m * 1.5 - p.d * .5); mi = mi * mi * (3 - 2 * mi);
+      const z0 = lerp(p.z0, p.rz, mi), z = zOf(z0);
+      const wx = lerp(p.x0, p.rx, mi), wy = FLOOR - Math.sin(Math.PI * mi) * p.lift;
+      let vis = 1;
+      if (p.dashed && mi < 1) { const on = ((p.z0 % 3) + 3) % 3 < 1.5 ? 1 : 0; vis = lerp(on, 1, mi); }
+      if (vis < .02) continue;
+      const [sx, sy, k] = proj(wx, wy, z);
+      if (sy > H + 4 || sx < -4 || sx > W + 4) continue;
+      const dz = baseDz * (p.sleeper ? lerp(1, .15, mi) : 1), [sx2, sy2] = proj(wx, wy, z + dz);
+      const fog = Math.pow(1 - z / RANGE, 1.3), s = Math.min(3.4, Math.max(.8, .06 * k));
+      const red = (1 - mi) * danger * ((p.x0 > 0) === (camX > 0) ? 1 : 0);
+      const rC = lerp(lerp(250, 150, mi), 255, red) | 0, gC = lerp(lerp(244, 215, mi), 70, red) | 0, bC = lerp(lerp(225, 255, mi), 90, red) | 0;
+      const a = fog * vis * (p.sleeper ? lerp(.9, .55, mi) : .95) * iv;
+      x.strokeStyle = `rgba(${rC},${gC},${bC},${a})`; x.lineWidth = s;
+      x.beginPath(); x.moveTo(sx, sy); x.lineTo(sx2, sy2); x.stroke();
+    }
+    for (const p of lamps) {
+      const z = zOf(p.z0); const [sx, sy, k] = proj(p.wx, p.wy, z);
+      if (sy < -24 || sx < -24 || sx > W + 24) continue;
+      const fog = Math.pow(1 - z / RANGE, 1.2), near = sstep(.35, 2.2, z), s = clamp(.35 * k, 2.5, 22), a = fog * near * iv;
+      x.globalAlpha = a * .5; x.drawImage(gAmber, sx - s / 2, sy - s / 2, s, s);
+      x.globalAlpha = 1; x.fillStyle = `rgba(255,232,190,${a * .9})`; const c = Math.max(1, s * .16); x.fillRect(sx - c / 2, sy - c / 2, c, c);
+    }
+    x.globalAlpha = 1;
+
+    const kLock = sstep(.15, .85, h) * (1 - m);
+    for (const g of gaze) {
+      const dart = (1 - kLock) * (1 + m * .3);
+      const wxT = cx + (g.gx + Math.sin(time * g.sp * .5 + g.ph) * .05 * dart) * W;
+      const wyT = cy + (g.gy + Math.cos(time * g.sp * .4 + g.ph) * .04 * dart) * H;
+      const [lx, ly] = proj(g.side, FLOOR, g.lz);
+      const tx = lerp(wxT, lx + Math.sin(g.ph) * 2, kLock), ty = lerp(wyT, ly + Math.cos(g.ph) * 2, kLock);
+      if (!g.init || Kit.calm) { g.px = tx; g.py = ty; g.init = true; }
+      else { const e = clamp(dt * lerp(2.4, 5, kLock)); g.px += (tx - g.px) * e; g.py += (ty - g.py) * e; }
+      const a = (.75 - .35 * kLock) * iv;
+      x.fillStyle = m > .5 ? `rgba(255,214,150,${a * .8})` : `rgba(${lerp(200, 230, kLock) | 0},${lerp(180, 140, kLock) | 0},255,${a})`;
+      x.fillRect(g.px - .85, g.py - .85, 1.7, 1.7);
+    }
+    x.globalCompositeOperation = 'source-over';
+
+    if (showHood) {
+      const hh = Math.min(H * .14, 72), top = H - hh;
+      x.beginPath(); x.moveTo(0, H); x.lineTo(0, top + hh * .55); x.quadraticCurveTo(cx, top - hh * .25, W, top + hh * .55); x.lineTo(W, H); x.closePath();
+      const hg = x.createLinearGradient(0, top, 0, H); hg.addColorStop(0, '#0e0b1a'); hg.addColorStop(1, '#020105');
+      x.fillStyle = hg; x.fill();
+      const pulse = Math.pow((Math.cos(worldZ / 3 * 6.283 - 1) + 1) / 2, 3), al = (.12 + .5 * pulse) * iv;
+      const col = m > .5 ? '170,215,255' : '255,190,120';
+      const sg = x.createLinearGradient(0, 0, W, 0);
+      sg.addColorStop(0, `rgba(${col},0)`); sg.addColorStop(.5, `rgba(${col},${al})`); sg.addColorStop(1, `rgba(${col},0)`);
+      x.strokeStyle = sg; x.lineWidth = 1.6;
+      x.beginPath(); x.moveTo(0, top + hh * .55); x.quadraticCurveTo(cx, top - hh * .25, W, top + hh * .55); x.stroke();
+    }
+    if (danger > .01) {
+      const right = camX > 0, gr = x.createLinearGradient(right ? W : 0, 0, right ? W * .7 : W * .3, 0);
+      gr.addColorStop(0, `rgba(255,50,70,${.45 * danger})`); gr.addColorStop(1, 'rgba(255,50,70,0)');
+      x.fillStyle = gr; x.fillRect(0, 0, W, H);
+    }
+    const lid = H * .17 * h * h * (.75 + .25 * Math.sin(time * .9)) * (1 - m * .7);
+    if (lid > .5) {
+      let g1 = x.createLinearGradient(0, 0, 0, lid * 1.6); g1.addColorStop(0, 'rgba(2,1,6,1)'); g1.addColorStop(.6, 'rgba(2,1,6,.9)'); g1.addColorStop(1, 'rgba(2,1,6,0)');
+      x.fillStyle = g1; x.fillRect(0, 0, W, lid * 1.6);
+      g1 = x.createLinearGradient(0, H, 0, H - lid * 1.6); g1.addColorStop(0, 'rgba(2,1,6,1)'); g1.addColorStop(.6, 'rgba(2,1,6,.9)'); g1.addColorStop(1, 'rgba(2,1,6,0)');
+      x.fillStyle = g1; x.fillRect(0, H - lid * 1.6, W, lid * 1.6);
+    }
+
+    if (showMeters) meters(h, m, danger);
+    if (showHours) hours(h, m);
+  }
+
+  function meters(h, m, danger) {
+    const rows = [
+      ['ATTENTION', 1 - .75 * h * (1 - m * .8), '190,170,255'],
+      ['REFLEXES', 1 - .7 * h * (1 - m * .8), '120,215,255'],
+      ['ACCIDENT RISK', clamp(lerp(.08 + .8 * Math.pow(h, 1.5) + .2 * danger, .04, m)), '255,80,95']
+    ];
+    x.font = `700 ${fs}px ${MONO}`; x.textBaseline = 'middle'; x.textAlign = 'left';
+    const lw = Math.max(...rows.map(r => x.measureText(r[0]).width));
+    const N = 10, dot = fs * .42, gap = fs * .62, pad = fs * .6, rowH = fs * 1.55;
+    const bw = pad * 2 + lw + fs * .7 + N * gap, bh = pad * 1.4 + rowH * rows.length - (rowH - fs);
+    const x0 = fs * .7, y0 = fs * .7;
+    x.fillStyle = 'rgba(4,3,12,.8)'; rr(x0, y0, bw, bh, fs * .6); x.fill();
+    x.strokeStyle = 'rgba(255,255,255,.1)'; x.lineWidth = 1; x.stroke();
+    rows.forEach(([name, v, c], i) => {
+      const y = y0 + pad * .7 + fs / 2 + i * rowH;
+      x.fillStyle = 'rgba(235,230,250,.92)'; x.fillText(name, x0 + pad, y);
+      const on = v * N;
+      for (let j = 0; j < N; j++) {
+        const px = x0 + pad + lw + fs * .7 + j * gap + dot / 2, k = clamp(on - j);
+        x.beginPath(); x.arc(px, y, dot / 2, 0, 6.283);
+        x.fillStyle = `rgba(${c},${.16 + .84 * k})`; x.fill();
+      }
+    });
+  }
+  function rr(a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
+
+  function hours(h, m) {
+    const y = H - fs * 1.25, a = fs * 1.2, b = W - fs * 1.2;
+    x.font = `700 ${fs}px ${MONO}`; x.textBaseline = 'alphabetic';
+    x.fillStyle = 'rgba(235,230,250,.78)'; x.textAlign = 'left'; x.fillText('dusk', a, y - fs * .75);
+    x.textAlign = 'right'; x.fillText('deep night', b, y - fs * .75); x.textAlign = 'left';
+    const n = Math.max(12, Math.floor((b - a) / (fs * .55)));
+    for (let i = 0; i <= n; i++) {
+      const px = a + (b - a) * i / n, on = i / n <= h;
+      x.beginPath(); x.arc(px, y, on ? 1.6 : 1.1, 0, 6.283);
+      x.fillStyle = on ? (m > .5 ? 'rgba(150,215,255,.95)' : 'rgba(200,180,255,.95)') : 'rgba(255,255,255,.22)'; x.fill();
+    }
+    const hx = a + (b - a) * h;
+    const glow = x.createRadialGradient(hx, y, 0, hx, y, fs * 1.3);
+    glow.addColorStop(0, 'rgba(255,240,210,.9)'); glow.addColorStop(.3, 'rgba(255,220,170,.35)'); glow.addColorStop(1, 'rgba(255,220,170,0)');
+    x.fillStyle = glow; x.fillRect(hx - fs * 1.3, y - fs * 1.3, fs * 2.6, fs * 2.6);
+    x.beginPath(); x.arc(hx, y, fs * .42, 0, 6.283); x.fillStyle = '#fff4dc'; x.fill();
+    x.beginPath(); x.arc(hx + fs * .16, y - fs * .08, fs * .34, 0, 6.283); x.fillStyle = '#1a1230'; x.fill();
+    if (!touched) {
+      const p = (Math.sin(time * 4) + 1) / 2;
+      x.strokeStyle = `rgba(255,240,210,${.4 + .5 * p})`; x.lineWidth = 2; x.lineCap = 'round';
+      for (let i = 0; i < 3; i++) { const ax = hx + fs * (1.1 + i * .6 + p * .3); x.beginPath(); x.moveTo(ax, y - fs * .3); x.lineTo(ax + fs * .25, y); x.lineTo(ax, y + fs * .3); x.stroke(); }
+    }
+  }
+
+  // ---------- story ----------
+  function scramble(text) {
+    if (Kit.calm || typeof ScrambleTextPlugin === 'undefined') { word.textContent = text; return; }
+    gsap.to(word, {duration: 1.3, scrambleText: {text, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#%/*', revealDelay: .35, speed: .6}, ease: 'none'});
+  }
+  function onT() {
+    if (mode !== 'road') return;
+    if (t > .55 && !wordOn) { wordOn = true; scramble('HIGHWAY HYPNOSIS'); }
+    if (t > .45 && !stage1) { stage1 = true; say.innerHTML = 'Hours in, your eyes <b>lock onto the lane lines</b>, your reflexes slow, and the car starts to wander. <b>Keep driving.</b>'; }
+    if (t > .92 && !btnOn) {
+      btnOn = true; Kit.show('rail'); Kit.haptic('selection');
+      say.innerHTML = 'Deep in the night, the driver stares at the lines and the car drifts toward the wall. <b>Try it another way.</b>';
+      if (!Kit.calm) gsap.from('#rail', {opacity: 0, y: 8, duration: .5, ease: 'back.out(2)'});
+    }
+  }
+  function toRail() {
+    if (mode === 'rail') return;
+    mode = 'rail'; t = 1; Kit.hide('rail'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    card.classList.add('answered'); Kit.haptic('success');
+    word.classList.add('rail'); word.style.opacity = 1; scramble('THE RAILS STEER');
+    // the stage shrinks once the answer appears: re-fit everything to it
+    requestAnimationFrame(() => layout());
+    if (Kit.calm) { M.m = 1; return; }
+    gsap.to(M, {m: 1, duration: 2.4, ease: 'power3.inOut'});
+    gsap.fromTo(word, {scale: .8}, {scale: 1, duration: 1.2, ease: 'elastic.out(1,.5)'});
+    try { const sp = new SplitText('#whyt', {type: 'words'}); gsap.from(sp.words, {opacity: 0, y: 6, stagger: .02, duration: .45, ease: 'power3.out'}); } catch (e) {}
+    gsap.from('#keep', {opacity: 0, y: 10, duration: .6, delay: .5, ease: 'power3.out'});
+  }
+  Kit.$('rail').addEventListener('click', toRail);
+
+  // ---------- the drag ----------
+  let drag = false, lx = 0;
+  cv.addEventListener('pointerdown', e => {
+    if (mode !== 'road') return;
+    drag = true; lx = e.clientX; touched = true; try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+    Kit.haptic('selection');
+  });
+  cv.addEventListener('pointermove', e => {
+    if (!drag) return;
+    t = clamp(t + (e.clientX - lx) / (W * .8)); lx = e.clientX; onT();
+    if (!running) draw(0);
+  });
+  const end = () => { drag = false; };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+  // ---------- loop ----------
+  function tick(now) {
+    const dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+    if (!Kit.calm) {
+      time += dt;
+      spd = (9 + (1 - intro.v) * 60) * (1 - .25 * M.m);
+      worldZ += dt * spd;
+    } else spd = 0;
+    if (mode === 'road') word.style.opacity = sstep(.5, .66, tv);
+    draw(dt);
+    requestAnimationFrame(tick);
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (!running) { running = true; requestAnimationFrame(tick); }
+    if (!Kit.calm) { intro.v = 0; gsap.to(intro, {v: 1, duration: 1.8, ease: 'expo.out'}); }
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (!running) { running = true; requestAnimationFrame(tick); }
+    const r = cv.getBoundingClientRect(), y = r.top + r.height / 2;
+    const ev = (type, cx) => cv.dispatchEvent(new PointerEvent(type, {clientX: cx, clientY: y, pointerId: 1, bubbles: true, isPrimary: true}));
+    ev('pointerdown', r.left + 4);
+    for (let i = 1; i <= 12; i++) { ev('pointermove', r.left + 4 + r.width * .08 * i); await wait(20); }
+    ev('pointerup', r.right);
+    t = 1; onT();
+    await wait(Kit.calm ? 60 : 400);
+    Kit.$('rail').click();
+    await wait(Kit.calm ? 100 : 2600);
+    layout();
+  };
+})();
+Kit.single();
+</script>
+</html>

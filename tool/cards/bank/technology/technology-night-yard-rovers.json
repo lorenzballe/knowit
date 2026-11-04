@@ -28,8 +28,7 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Card titled Robot logistics, asking how heavy components are moved around the shipyard at night. A rover icon and a prompt to tap the floor to drop crates in its path, with a counter reading 0 of 3.",
-    "ground": "#0b1220"
+    "label": "Card titled Robot logistics, asking how heavy components are moved around the shipyard at night. A rover icon and a prompt to tap the floor to drop crates in its path, with a counter reading 0 of 3."
   },
   "source": "Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=Q0FlhJ7-P-g&t=224s",

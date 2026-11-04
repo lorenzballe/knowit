@@ -102,13 +102,12 @@
     const {W, H} = Kit.fitSvg(door);
     const fs = Math.max(11, Math.min(W / 9.5, H / 17));
     const pt = fs * .8, pb = fs * .8, yOf = v => pt + (H - pt - pb) * (WIN[1] - v) / (WIN[1] - WIN[0]);
-    const sx = fs * 2.5, cx0 = sx + fs * .35, cx1 = Math.max(cx0 + fs * 2.6, W * .57);     // scale on the left, then the painted casing
+    const sx = fs * 2.5, cx0 = sx + fs * .35, cx1 = Math.max(cx0 + fs * 2.6, W * .57);     // scale on the left, then the casing
     geo = {H, W, fs, yOf, cx0, cx1, vOf: y => WIN[1] - (y - pt) * (WIN[1] - WIN[0]) / (H - pt - pb)};
-    // The casing: painted wood, a moulding groove, the shadow of the doorway on its right.
-    Kit.mk('rect', {x: cx1, y: -4, width: W - cx1 + 4, height: H + 8, fill: INK, 'fill-opacity': .07}, door);
-    Kit.mk('rect', {x: cx0, y: -4, width: cx1 - cx0, height: H + 8, fill: PAINT}, door);
-    Kit.mk('line', {x1: cx0 + (cx1 - cx0) * .2, x2: cx0 + (cx1 - cx0) * .2, y1: -4, y2: H + 4, stroke: INK, 'stroke-opacity': .1, 'stroke-width': 1.4}, door);
-    Kit.mk('line', {x1: cx1 - 1, x2: cx1 - 1, y1: -4, y2: H + 4, stroke: INK, 'stroke-opacity': .22, 'stroke-width': 2}, door);
+    // The casing, drawn only as pencil-thin edges and a moulding groove on the card itself: no panel.
+    Kit.mk('line', {x1: cx0, x2: cx0, y1: -4, y2: H + 4, stroke: INK, 'stroke-opacity': .22, 'stroke-width': 1.6}, door);
+    Kit.mk('line', {x1: cx0 + (cx1 - cx0) * .2, x2: cx0 + (cx1 - cx0) * .2, y1: -4, y2: H + 4, stroke: INK, 'stroke-opacity': .12, 'stroke-width': 1.4}, door);
+    Kit.mk('line', {x1: cx1 - 1, x2: cx1 - 1, y1: -4, y2: H + 4, stroke: INK, 'stroke-opacity': .3, 'stroke-width': 2}, door);
     // Someone once measured the feet on the edge of the frame.
     for (let v = WIN[0]; v <= WIN[1]; v++) {
       const y = yOf(v), big = v % 6 === 0;
@@ -127,7 +126,7 @@
     const p = Kit.mk('g', {}, geo.you);   // pointing left, its point on the mark at the casing's edge
     const x0 = cx1 - fs * .1;
     Kit.mk('path', {d: `M${x0} 0 L${x0 + tip * .38} ${-bh * .2} L${x0 + tip * .38} ${bh * .2} Z`, fill: LEAD}, p);
-    Kit.mk('path', {d: `M${x0 + tip * .36} ${-bh * .22} L${x0 + tip} ${-bh / 2} L${x0 + tip} ${bh / 2} L${x0 + tip * .36} ${bh * .22} Z`, fill: '#e9c99b'}, p);
+    Kit.mk('path', {d: `M${x0 + tip * .36} ${-bh * .22} L${x0 + tip} ${-bh / 2} L${x0 + tip} ${bh / 2} L${x0 + tip * .36} ${bh * .22} Z`, fill: '#b9803f'}, p);
     Kit.mk('rect', {x: x0 + tip, y: -bh / 2, width: len - tip - bh * 1.5, height: bh, fill: INK}, p);
     Kit.mk('line', {x1: x0 + tip, x2: x0 + len - bh * 1.5, y1: -bh * .12, y2: -bh * .12, stroke: '#fff', 'stroke-opacity': .22, 'stroke-width': 1}, p);
     Kit.mk('rect', {x: x0 + len - bh * 1.5, y: -bh / 2 - .5, width: bh * .6, height: bh + 1, fill: '#9a9a9a'}, p);

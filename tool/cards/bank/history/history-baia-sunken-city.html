@@ -7,7 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;border-radius:1.8cqh;cursor:grab}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
@@ -45,23 +45,20 @@ function draw() {
   G = {W, H, m, y0, f: fs, floorY};
   const mk = (t, a, p) => Kit.mk(t, a, p);
   const defs = mk('defs', {}, svg);
-  const sky = mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-  mk('stop', {offset: 0, 'stop-color': '#f7d9a8'}, sky); mk('stop', {offset: 1, 'stop-color': '#fdf0d8'}, sky);
   const sea = mk('linearGradient', {id: 'sea', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
   mk('stop', {offset: 0, 'stop-color': '#1fa3b8', 'stop-opacity': .55}, sea);
   mk('stop', {offset: 1, 'stop-color': '#08355a', 'stop-opacity': .82}, sea);
   const rock = mk('linearGradient', {id: 'rock', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
   mk('stop', {offset: 0, 'stop-color': '#c9a26a'}, rock); mk('stop', {offset: .15, 'stop-color': '#8a6438'}, rock); mk('stop', {offset: 1, 'stop-color': '#3a2414'}, rock);
 
-  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#sky)'}, svg);
-  mk('circle', {cx: W * .86, cy: y0 * .32, r: m * .7, fill: '#f6a64b', opacity: .85}, svg);
+  mk('circle', {cx: W * .86, cy: y0 * .32, r: m * .7, fill: '#fff3c4', opacity: .95}, svg);
 
   // The land and the city on it: drawn at its final place, moved up by (MAX - s)
   const g = mk('g', {}, svg); G.g = g;
   G.rock = mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: 'url(#rock)'}, g);
   // magma glow deep below: the volcanic ground
   mk('ellipse', {cx: W * .55, cy: floorY + .85 * m, rx: W * .35, ry: m * .55, fill: '#ff6a2a', opacity: .45}, g);
-  const marble = '#f3ead8', marbleEdge = '#b8a888';
+  const marble = '#f3ead8', marbleEdge = '#7a5a34';
   // house walls
   const walls = mk('g', {}, g); G.walls = walls;
   [.17, .27, .37].forEach((x, i) => mk('rect', {x: W * x, y: floorY - (i === 1 ? .9 : 1.4) * m, width: W * .022, height: (i === 1 ? .9 : 1.4) * m, fill: '#d9b98c', stroke: '#7a5a34', 'stroke-width': 1}, walls));
@@ -94,19 +91,19 @@ function draw() {
   mk('line', {x1: rx, y1: y0, x2: rx, y2: y0 + 8 * m, stroke: ink, 'stroke-width': 1.5}, svg);
   [0, 2, 4, 6, 8].forEach(d => {
     mk('line', {x1: rx - 6, y1: y0 + d * m, x2: rx, y2: y0 + d * m, stroke: ink, 'stroke-width': 1.5}, svg);
-    const t = mk('text', {x: rx - 9, y: y0 + d * m + fs * .35, 'text-anchor': 'end', fill: d === 0 ? '#08355a' : ink, 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+    const t = mk('text', {x: rx - 9, y: y0 + d * m + fs * .35, 'text-anchor': 'end', fill: d === 0 ? '#10100c' : ink, 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
     t.textContent = d === 0 ? '0 m' : d === 8 ? '8 m' : String(d);
   });
   G.bandT = mk('text', {x: rx + 8, y: y0 + 6.5 * m + fs * .35, fill: '#ffd2c4', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, opacity: finished ? 1 : 0}, svg);
   G.bandT.textContent = '5–8 m';
 
   // live readout
-  G.read = mk('text', {x: W * .15, y: y0 - 2 * m, fill: '#5a3a1a', 'font-size': fs * 1.15, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+  G.read = mk('text', {x: W * .15, y: y0 - 2 * m, fill: '#10100c', 'font-size': fs * 1.15, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
 
   // drag hint
   G.hint = mk('g', {opacity: done ? 0 : 1, 'pointer-events': 'none'}, svg);
   const hx = W * .51, hy = y0 - 2.2 * m;
-  mk('path', {d: `M${hx} ${hy - m * .8} v${m * 1.2} m${-m * .4} ${-m * .4} l${m * .4} ${m * .4} l${m * .4} ${-m * .4}`, fill: 'none', stroke: '#5a3a1a', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.hint);
+  mk('path', {d: `M${hx} ${hy - m * .8} v${m * 1.2} m${-m * .4} ${-m * .4} l${m * .4} ${m * .4} l${m * .4} ${-m * .4}`, fill: 'none', stroke: '#10100c', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.hint);
 
   // hotspots (placed on the sunken ruins, shown once the land has sunk)
   const hs = mk('g', {opacity: done ? 1 : 0, 'pointer-events': done ? 'auto' : 'none'}, svg); G.hs = hs;

@@ -1,0 +1,364 @@
+<!doctype html>
+<!-- slug: history-popular-mechanics-flaw -->
+<!-- Look: an Alcatraz stained-glass window in leaded cobalt, violet, teal and plum, with a guard, a prisoner and a red magazine passed through the bars.
+     Interaction: light flickers through the glass in a slow loop. Tap the four dark panes (guard, magazine, raft, life jacket) to light each one and read its part of the story. Any tap sends a ripple through the leading.
+     Wow moment: when all four panes are lit, a red wave crosses every tile from the magazine outward, and a SECURITY BREACH ribbon of glass snaps across the window. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Popular Mechanics flaw</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;background:none;box-shadow:none;border:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation;cursor:pointer;overflow:hidden}
+#note,#why{padding:1.1cqh 4.5cqw 1.5cqh;color:var(--k);display:flex;flex-direction:column;gap:.55cqh}
+#chips{display:flex;align-items:center;gap:1.6cqw}
+#chips i{width:max(1.5cqh,10px);height:max(1.5cqh,10px);transform:rotate(45deg);background:rgba(16,16,12,.18);box-shadow:inset 0 0 0 2px var(--k);transition:background .4s}
+#count{font:700 max(1.5cqh,12px)/1.2 var(--mono);letter-spacing:.08em;color:var(--k);margin-left:1.4cqw;text-transform:uppercase}
+.nt{margin:0;font:800 max(2.4cqh,16px)/1.15 var(--display);color:var(--k);overflow-wrap:anywhere}
+.nb{margin:0;font:500 max(1.75cqh,13px)/1.3 var(--body);color:var(--k);overflow-wrap:anywhere}
+#why .nt{color:#8a1712}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap the glass · the security flaw">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP THE GLASS</span></div>
+    <h2 class="q">How did the Alcatraz escapers get the plans for their raft?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A stained-glass window: a prison guard passes a red magazine through the bars to a prisoner; below, a raft made of raincoats and a life jacket."></svg>
+      <div id="note">
+        <div id="chips"><i></i><i></i><i></i><i></i><span id="count">0 of 4 panes lit</span></div>
+        <p class="nt" id="nt">A window into Alcatraz, still dark.</p>
+        <p class="nb" id="nb">Each pane you light tells one part of the story.</p>
+      </div>
+      <div id="why" class="gone">
+        <p class="nt">The plans came in the mail</p>
+        <p class="nb">Morris found them in Popular Mechanics: one issue showed a raft made from rubber raincoats, another showed life jackets made the same way. The guards were meant to check magazines, and these got through.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the four numbered panes to light them.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The escape manual was a DIY magazine the guards let in.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic');
+  const DW = 300, DH = 410, LEAD = '#100c14', BREACH = '#ff3b2f';
+  const HOT = {
+    1: {c: '#4a7fd6', x: 60, y: 200, t: "The guard’s check", b: 'Magazines were, in theory, checked by the guards before they reached the cells.'},
+    2: {c: '#e0453a', x: 150, y: 218, t: 'Popular Mechanics', b: 'A do-it-yourself magazine. Morris had his big idea while he was reading it.'},
+    3: {c: '#f2c230', x: 80, y: 356, t: 'A raft from raincoats', b: 'One article explained how to build a raft out of rubber raincoats.'},
+    4: {c: '#f08a24', x: 220, y: 356, t: 'Life jackets too', b: 'Another issue of the same magazine had a tutorial for making life jackets the same way.'}
+  };
+  const lit = new Set();
+  let breached = false, entered = false, S = 1, ox = 0, oy = 0, tiles = [], ambient = [], beam, rosette, banner, halo, shine, roundels = {};
+
+  const dim = c => d3.interpolateRgb(c, '#07060b')(.62);
+  const fz = n => Math.max(n, 12.5 / S);
+  const mk = (tag, a, p) => Kit.mk(tag, a, p);
+  function gl(p, tag, a, col, hot) {
+    const e = mk(tag, Object.assign({stroke: LEAD, 'stroke-width': 2, 'stroke-linejoin': 'round'}, a), p);
+    if (hot) { e.classList.add('h' + hot); e.dataset.b = col; e.setAttribute('fill', lit.has(hot) ? col : dim(col)); }
+    else e.setAttribute('fill', col);
+    return e;
+  }
+  let seed = 11;
+  const R = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  const textW = (t, est) => { let w = 0; try { w = t.getComputedTextLength(); } catch (e) {} return w || est; };
+
+  function draw() {
+    ambient.forEach(t => t.kill()); ambient = [];
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg);
+    S = Math.min(f.W / DW, f.H / DH); ox = (f.W - DW * S) / 2; oy = (f.H - DH * S) / 2;
+    const WIN = 'M10,400 L10,150 A140,140 0 0 1 290,150 L290,400 Z';
+    const defs = mk('defs', {}, svg);
+    defs.innerHTML = `
+      <clipPath id="win"><path d="${WIN}"/></clipPath>
+      <radialGradient id="beamG"><stop offset="0" stop-color="#fff6d8" stop-opacity=".9"/><stop offset=".5" stop-color="#ffe6a8" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      <radialGradient id="haloG"><stop offset="0" stop-color="#ffd76a" stop-opacity=".95"/><stop offset="1" stop-color="#ffb02e" stop-opacity="0"/></radialGradient>
+      <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".42" stop-color="#fff" stop-opacity=".16"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset=".62" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <linearGradient id="shineG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".9"/></feComponentTransfer></filter>`;
+    const root = mk('g', {transform: `translate(${ox},${oy}) scale(${S})`}, svg);
+    const glass = mk('g', {'clip-path': 'url(#win)'}, root);
+
+    // ---- the mosaic ----
+    seed = 11; tiles = [];
+    const pts = [];
+    for (let y = 8; y <= DH; y += 21) for (let x = 8; x <= DW; x += 21) pts.push([x + (R() - .5) * 15, y + (R() - .5) * 15]);
+    const vor = d3.Delaunay.from(pts).voronoi([6, 6, 294, 404]);
+    const pal = {
+      cor: ['#1c3f8a', '#2452a8', '#173470', '#2e64b8', '#1a2f66'],
+      cell: ['#3a2470', '#4a2d8a', '#2e1d5c', '#5a3a9a', '#341f66'],
+      amb: ['#a8641a', '#c07a22', '#8e5216', '#d08f2c'],
+      sea: ['#13707e', '#1a8a96', '#0f5763', '#23a0a8'],
+      plum: ['#6a1f3a', '#82264a', '#561a30', '#922e52']
+    };
+    pts.forEach(([x, y], i) => {
+      const poly = vor.cellPolygon(i); if (!poly) return;
+      const p = y > 306 ? (x < 150 ? pal.sea : pal.plum) : Math.hypot(x - 150, y - 52) < 50 ? pal.amb : x < 150 ? pal.cor : pal.cell;
+      const base = p[Math.floor(R() * p.length)];
+      const e = mk('path', {d: 'M' + poly.join('L') + 'Z', fill: base, stroke: LEAD, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, glass);
+      tiles.push({e, x, y, base});
+    });
+
+    // ---- rosette with rays ----
+    rosette = mk('g', {}, glass);
+    for (let k = 0; k < 8; k++) gl(rosette, 'ellipse', {cx: 150, cy: 36, rx: 6, ry: 12, transform: `rotate(${k * 45} 150 50)`}, k % 2 ? '#e2452f' : '#f4c040');
+    for (let k = 0; k < 8; k++) gl(rosette, 'path', {d: 'M150,24 L153,16 L150,10 L147,16 Z', transform: `rotate(${k * 45 + 22.5} 150 50)`, 'stroke-width': 1.2}, '#ffe8a0');
+    gl(rosette, 'circle', {cx: 150, cy: 50, r: 8}, '#ffe8a0');
+
+    // ---- bars ----
+    const bars = mk('g', {}, glass);
+    [118, 150, 182].forEach(x => { gl(bars, 'rect', {x: x - 4.5, y: 96, width: 9, height: 206, rx: 2}, '#8fa1b8'); mk('rect', {x: x - 2.5, y: 100, width: 2, height: 198, fill: '#dfe8f3', opacity: .55}, bars); });
+    [146, 286].forEach(y => gl(bars, 'rect', {x: 104, y, width: 92, height: 8, rx: 2}, '#7d8ea6'));
+
+    // ---- 1 · the guard ----
+    const g1 = mk('g', {}, glass);
+    gl(g1, 'path', {d: 'M18,302 L20,206 Q24,176 60,172 Q96,176 100,200 L104,302 Z'}, '#23407a', 1);
+    gl(g1, 'path', {d: 'M48,172 L60,196 L72,172 Z'}, '#9cb8e4', 1);
+    gl(g1, 'path', {d: 'M55,178 L60,196 L65,178 L60,183 Z', 'stroke-width': 1.2}, '#1b2c5a', 1);
+    mk('path', {d: 'M60,196 L60,280', stroke: LEAD, 'stroke-width': 2, fill: 'none'}, g1);
+    gl(g1, 'path', {d: 'M38,206 l4,-9 l4,9 l-8,-5 h8 z', 'stroke-width': 1.2}, '#f3c13a', 1);
+    [210, 228].forEach(y => gl(g1, 'circle', {cx: 66, cy: y, r: 2.6, 'stroke-width': 1.2}, '#f3c13a', 1));
+    gl(g1, 'rect', {x: 20, y: 278, width: 84, height: 8, 'stroke-width': 1.6}, '#121a33', 1);
+    gl(g1, 'rect', {x: 55, y: 277, width: 10, height: 10, 'stroke-width': 1.4}, '#c9a24a', 1);
+    gl(g1, 'circle', {cx: 88, cy: 293, r: 5.5, 'stroke-width': 1.4}, '#c9a24a', 1);
+    gl(g1, 'path', {d: 'M84,296 L80,302 M90,298 L92,302', 'stroke-width': 1.6}, '#c9a24a', 1);
+    gl(g1, 'circle', {cx: 60, cy: 148, r: 19}, '#e8b48a', 1);
+    gl(g1, 'path', {d: 'M38,140 Q40,112 62,112 Q84,112 84,136 L94,140 Q62,148 34,141 Z'}, '#1b2c5a', 1);
+    gl(g1, 'circle', {cx: 62, cy: 124, r: 4.5}, '#f3c13a', 1);
+    gl(g1, 'path', {d: 'M86,186 Q96,198 102,212 L96,226 Q88,214 80,204 Z'}, '#2a4a8a', 1);
+    gl(g1, 'circle', {cx: 52, cy: 150, r: 2, stroke: 'none'}, '#1b1420', 1);
+    gl(g1, 'circle', {cx: 68, cy: 150, r: 2, stroke: 'none'}, '#1b1420', 1);
+    gl(g1, 'path', {d: 'M54,159 Q60,162 66,159', fill: 'none', 'stroke-width': 1.5}, '#1b1420', 1).setAttribute('fill', 'none');
+
+    // ---- 2 · the prisoner ----
+    const g2 = mk('g', {}, glass);
+    gl(g2, 'path', {d: 'M196,302 L198,206 Q204,176 240,172 Q276,176 280,204 L282,302 Z'}, '#8fb6d8', 2);
+    gl(g2, 'path', {d: 'M228,172 L240,190 L252,172 Z'}, '#cfe2f2', 2);
+    mk('path', {d: 'M240,190 L240,300', stroke: LEAD, 'stroke-width': 2, fill: 'none'}, g2);
+    [212, 234, 256].forEach(y => gl(g2, 'circle', {cx: 246, cy: y, r: 2.4, 'stroke-width': 1.2}, '#f4f8fc', 2));
+    gl(g2, 'rect', {x: 254, y: 206, width: 16, height: 14, rx: 1.5, 'stroke-width': 1.6}, '#a9cbe6', 2);
+    gl(g2, 'circle', {cx: 240, cy: 148, r: 19}, '#e2a87c', 2);
+    gl(g2, 'path', {d: 'M221,144 Q222,124 240,124 Q258,124 259,144 Q250,134 240,134 Q230,134 221,144 Z'}, '#3a2418', 2);
+    gl(g2, 'path', {d: 'M218,186 Q206,200 198,218 L206,230 Q214,216 224,202 Z'}, '#7aa4cc', 2);
+    gl(g2, 'circle', {cx: 233, cy: 152, r: 2, stroke: 'none'}, '#1b1420', 2);
+    gl(g2, 'circle', {cx: 247, cy: 152, r: 2, stroke: 'none'}, '#1b1420', 2);
+    gl(g2, 'path', {d: 'M234,161 Q240,165 246,161', 'stroke-width': 1.5}, '#1b1420', 2).setAttribute('fill', 'none');
+
+    // ---- the magazine, upright and large: the hero pane ----
+    halo = mk('circle', {cx: 150, cy: 218, r: 80, fill: 'url(#haloG)', opacity: breached ? .75 : 0}, glass);
+    const mag = mk('g', {}, glass);
+    const MX = 100, MY = 158, MW = 100, MH = 120;
+    gl(mag, 'rect', {x: MX + 3, y: MY + 3, width: MW, height: MH, rx: 2, 'stroke-width': 2}, '#7a1d18', 2);
+    gl(mag, 'rect', {x: MX, y: MY, width: MW, height: MH, rx: 2, 'stroke-width': 2.4}, '#c8342b', 2);
+    const tf = fz(10.5), useText = tf <= 17;
+    const bandH = useText ? tf * 2.9 + 8 : 32;
+    gl(mag, 'rect', {x: MX, y: MY, width: MW, height: bandH, rx: 2, 'stroke-width': 2}, '#f6d24a', 2);
+    const stripes = () => {
+      gl(mag, 'rect', {x: MX + 10, y: MY + 7, width: 80, height: 7, rx: 2, 'stroke-width': 1}, '#8a1712', 2);
+      gl(mag, 'rect', {x: MX + 16, y: MY + 19, width: 68, height: 6, rx: 2, 'stroke-width': 1}, '#8a1712', 2);
+    };
+    if (useText) {
+      const y1 = MY + 4 + tf * .95, y2 = y1 + tf * 1.6;
+      const mkT = (txt, y) => { const t = gl(mag, 'text', {x: 150, y, 'text-anchor': 'middle', 'font-size': tf, 'font-weight': 800, stroke: 'none', style: 'font-family:var(--mono)'}, '#8a1712', 2); t.textContent = txt; return t; };
+      const a = mkT('POPULAR', y1), b = mkT('MECHANICS', y2);
+      if (textW(b, 9 * .6 * tf) > MW - 6) { a.remove(); b.remove(); stripes(); }
+    } else stripes();
+    const iy = MY + bandH + 6, ih = MH - bandH - 12;
+    if (ih > 18) {
+      gl(mag, 'rect', {x: MX + 8, y: iy, width: MW - 16, height: ih, 'stroke-width': 1.6}, '#2a8fb0', 2);
+      gl(mag, 'path', {d: `M${MX + 8},${iy + ih * .78} q8,-4 16,0 t16,0 t16,0 t16,0 t16,0 L${MX + MW - 8},${iy + ih} L${MX + 8},${iy + ih} Z`, 'stroke-width': 1.3}, '#1b6f8c', 2);
+      gl(mag, 'path', {d: `M124,${iy + ih * .6} Q150,${iy + ih * .76} 176,${iy + ih * .6} L171,${iy + ih * .74} Q150,${iy + ih * .88} 129,${iy + ih * .74} Z`, 'stroke-width': 1.4}, '#f2c230', 2);
+      gl(mag, 'path', {d: `M150,${iy + ih * .6} L150,${iy + ih * .12} L170,${iy + ih * .54} Z`, 'stroke-width': 1.4}, '#fff2d0', 2);
+      gl(mag, 'circle', {cx: 126, cy: iy + ih * .26, r: Math.min(6, ih * .12), 'stroke-width': 1.2}, '#ffd76a', 2);
+    }
+    shine = mk('rect', {x: MX - 40, y: MY, width: 26, height: MH, fill: 'url(#shineG)', opacity: 0, transform: `skewX(-18)`, style: 'pointer-events:none'}, mag);
+    gl(glass, 'circle', {cx: 100, cy: 220, r: 8}, '#e8b48a', 1);
+    gl(glass, 'circle', {cx: 200, cy: 226, r: 8}, '#e2a87c', 2);
+
+    // ---- lead band and lower register ----
+    mk('rect', {x: 0, y: 300, width: 300, height: 12, fill: LEAD}, glass);
+    [40, 80, 120, 180, 220, 260].forEach(x => mk('circle', {cx: x, cy: 306, r: 2.2, fill: '#c9a24a'}, glass));
+    mk('rect', {x: 146, y: 306, width: 8, height: 100, fill: LEAD}, glass);
+    [[20, 392], [160, 392]].forEach(([x, y]) => mk('path', {d: `M${x},${y} q7,-5 14,0 t14,0 t14,0 t14,0 t14,0 t14,0 t14,0 t14,0 t14,0`, fill: 'none', stroke: '#bfe6ea', 'stroke-width': 1.6, opacity: .45}, glass));
+
+    // 3 · raincoats → raft
+    const g3 = mk('g', {}, glass);
+    const coat = (x, y) => {
+      gl(g3, 'path', {d: `M${x},${y + 9} L${x + 7},${y} L${x + 11},${y + 4} L${x + 15},${y} L${x + 22},${y + 9} L${x + 19},${y + 13} L${x + 18},${y + 38} L${x + 4},${y + 38} L${x + 3},${y + 13} Z`}, '#f2c230', 3);
+      gl(g3, 'path', {d: `M${x + 11},${y + 4} L${x + 11},${y + 38}`, 'stroke-width': 1.2}, '#b98a14', 3).setAttribute('fill', 'none');
+    };
+    coat(22, 324); coat(46, 336);
+    gl(g3, 'path', {d: 'M74,360 L88,360 L88,354 L98,363 L88,372 L88,366 L74,366 Z', 'stroke-width': 1.6}, '#fff2d0', 3);
+    gl(g3, 'ellipse', {cx: 120, cy: 372, rx: 21, ry: 10}, '#f2c230', 3);
+    gl(g3, 'ellipse', {cx: 120, cy: 370, rx: 13, ry: 5, 'stroke-width': 1.5}, '#b98a14', 3);
+    gl(g3, 'path', {d: 'M108,352 L134,386', 'stroke-width': 3}, 'none', 3).setAttribute('stroke', '#7a4a20');
+
+    // 4 · another issue → a life jacket
+    const g4 = mk('g', {}, glass);
+    gl(g4, 'rect', {x: 166, y: 340, width: 26, height: 34, rx: 1.5, transform: 'rotate(-8 179 357)'}, '#c8342b', 4);
+    gl(g4, 'rect', {x: 166, y: 340, width: 26, height: 9, transform: 'rotate(-8 179 357)', 'stroke-width': 1.4}, '#f6d24a', 4);
+    gl(g4, 'path', {d: 'M198,360 L210,360 L210,354 L220,363 L210,372 L210,366 L198,366 Z', 'stroke-width': 1.6}, '#fff2d0', 4);
+    gl(g4, 'path', {d: 'M236,330 L246,330 Q250,346 258,348 L262,330 L272,330 Q282,340 280,388 L254,388 L254,356 L250,356 L250,388 L228,388 Q224,340 236,330 Z'}, '#f08a24', 4);
+    gl(g4, 'rect', {x: 228, y: 366, width: 52, height: 5, 'stroke-width': 1.3}, '#3a2a20', 4);
+    gl(g4, 'rect', {x: 250, y: 364, width: 8, height: 9, 'stroke-width': 1.2}, '#c9a24a', 4);
+
+    // ---- light over the glass ----
+    beam = mk('ellipse', {cx: 80, cy: 150, rx: 120, ry: 180, fill: 'url(#beamG)', opacity: .3, style: 'mix-blend-mode:screen;pointer-events:none'}, glass);
+    mk('rect', {x: 0, y: 0, width: 300, height: 410, fill: 'url(#sheen)', style: 'pointer-events:none'}, glass);
+
+    // ---- the breach ribbon: sized to its text, text only if it fits ----
+    banner = mk('g', {opacity: breached ? 1 : 0, style: 'pointer-events:none'}, glass);
+    const bf = fz(12), bh = Math.max(28, bf * 1.5), by = 98, t0 = by - bh / 2, t1 = by + bh / 2;
+    gl(banner, 'path', {d: `M44,${t0} L256,${t0} L270,${by} L256,${t1} L44,${t1} L30,${by} Z`, 'stroke-width': 2.6}, BREACH);
+    mk('path', {d: `M48,${t0 + 4} L252,${t0 + 4}`, stroke: '#ffb0a6', 'stroke-width': 2, opacity: .7}, banner);
+    mk('path', {d: `M48,${t1 - 4} L252,${t1 - 4}`, stroke: '#9e1a12', 'stroke-width': 2, opacity: .7}, banner);
+    const bt = mk('text', {x: 150, y: by + bf * .36, 'text-anchor': 'middle', 'font-size': bf, 'font-weight': 800, fill: '#fff6ec', style: 'font-family:var(--mono);letter-spacing:.08em'}, banner);
+    bt.textContent = 'SECURITY BREACH';
+    if (textW(bt, 15 * .68 * bf) > 200) { bt.textContent = 'BREACH'; if (textW(bt, 6 * .68 * bf) > 200) bt.remove(); }
+
+    // ---- leaded outline only (no stone frame) ----
+    mk('path', {d: WIN, fill: 'none', stroke: LEAD, 'stroke-width': 4}, root);
+
+    // ---- roundels and hit areas ----
+    const hits = {1: [12, 96, 88, 206], 2: [100, 96, 100, 206], 3: [10, 312, 136, 90], 4: [154, 312, 136, 90]};
+    const rpos = {1: [40, 252], 2: [150, 292], 3: [30, 392], 4: [270, 392]};
+    for (const n of [1, 2, 3, 4]) { const [x, y, w, h] = hits[n]; mk('rect', {x, y, width: w, height: h, fill: 'transparent', 'data-h': n}, root); }
+    const rf = fz(13), rr = Math.max(11, rf * .85), m = rr + 12;
+    const clampX = v => Math.min(Math.max(v, m), DW - m), clampY = v => Math.min(Math.max(v, m), DH - m);
+    // place roundels, then push apart any that collide (they grow on small stages)
+    const P = {};
+    for (const n of [1, 2, 3, 4]) P[n] = [clampX(rpos[n][0]), clampY(rpos[n][1])];
+    const gap = 2 * rr + 8, ids = [1, 2, 3, 4];
+    for (let it = 0; it < 40; it++) {
+      let moved = false;
+      for (let i = 0; i < 4; i++) for (let j = i + 1; j < 4; j++) {
+        const a = P[ids[i]], b = P[ids[j]];
+        let dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy);
+        if (d >= gap) continue;
+        if (d < .01) { dx = 1; dy = 0; d = 1; }
+        const push = (gap - d) / 2 + .5, ux = dx / d, uy = dy / d;
+        a[0] = clampX(a[0] - ux * push); a[1] = clampY(a[1] - uy * push);
+        b[0] = clampX(b[0] + ux * push); b[1] = clampY(b[1] + uy * push);
+        moved = true;
+      }
+      if (!moved) break;
+    }
+    // if the stage is too small to separate them, keep the coloured discs and drop the glyphs
+    let crowded = false;
+    for (let i = 0; i < 4; i++) for (let j = i + 1; j < 4; j++) {
+      const a = P[ids[i]], b = P[ids[j]];
+      if (Math.hypot(b[0] - a[0], b[1] - a[1]) < 2 * rr + 2) crowded = true;
+    }
+    for (const n of [1, 2, 3, 4]) {
+      const [x, y] = P[n];
+      const g = mk('g', {style: 'pointer-events:none'}, root);
+      const ring = mk('circle', {cx: x, cy: y, r: rr + 2, fill: 'none', stroke: LEAD, 'stroke-width': 2, opacity: lit.has(n) ? 0 : .9}, g);
+      const disc = mk('circle', {cx: x, cy: y, r: rr, fill: lit.has(n) ? HOT[n].c : '#f6e7b0', stroke: LEAD, 'stroke-width': 2.4}, g);
+      let t = null;
+      if (!crowded) {
+        t = mk('text', {x, y: y + rf * .36, 'text-anchor': 'middle', 'font-size': rf, 'font-weight': 800, fill: LEAD, style: 'font-family:var(--mono)'}, g);
+        t.textContent = lit.has(n) ? '✓' : n;
+      }
+      roundels[n] = {g, ring, disc, t, x, y, rr};
+    }
+    if (entered) startAmbient();
+  }
+
+  function startAmbient() {
+    entered = true;
+    if (Kit.calm || !beam) return;
+    ambient.push(gsap.fromTo(beam, {attr: {cx: 40, cy: 120}}, {attr: {cx: 260, cy: 220}, duration: 7, ease: 'sine.inOut', yoyo: true, repeat: -1}));
+    ambient.push(gsap.to(beam, {opacity: .42, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1}));
+    ambient.push(gsap.to(rosette, {rotation: 360, svgOrigin: '150 50', duration: 60, ease: 'none', repeat: -1}));
+    tiles.forEach(t => ambient.push(gsap.fromTo(t.e, {opacity: 1}, {opacity: .74 + Math.random() * .1, duration: 1.8 + Math.random() * 2.4, delay: Math.random() * 3, ease: 'sine.inOut', yoyo: true, repeat: -1})));
+    for (const n of [1, 2, 3, 4]) if (!lit.has(n)) { const r = roundels[n]; ambient.push(gsap.fromTo(r.ring, {attr: {r: r.rr + 2}, opacity: .9}, {attr: {r: r.rr + 10}, opacity: 0, duration: 1.4, ease: 'power2.out', repeat: -1, delay: n * .25})); }
+    if (breached) ambient.push(gsap.to(halo, {opacity: .5, duration: 1.6, ease: 'sine.inOut', yoyo: true, repeat: -1}));
+  }
+
+  function ripple(cx, cy, toward, mix, speed) {
+    if (Kit.calm) return;
+    tiles.forEach(t => {
+      const d = Math.hypot(t.x - cx, t.y - cy), hi = d3.interpolateRgb(t.base, toward)(mix * Math.max(.35, 1 - d / 420));
+      gsap.killTweensOf(t.e, 'fill');
+      gsap.timeline({delay: d / speed})
+        .to(t.e, {attr: {fill: hi}, duration: .14, ease: 'power2.out'})
+        .to(t.e, {attr: {fill: t.base}, duration: .7, ease: 'power2.inOut'});
+    });
+  }
+
+  function chips() {
+    const cs = Kit.$('chips').querySelectorAll('i');
+    [1, 2, 3, 4].forEach((n, i) => cs[i].style.background = lit.has(n) ? HOT[n].c : 'rgba(16,16,12,.18)');
+    Kit.$('count').textContent = `${lit.size} of 4 panes lit`;
+  }
+
+  function lightUp(n) {
+    const h = HOT[n];
+    if (lit.has(n) || breached) { ripple(h.x, h.y, '#ffffff', .35, 600); return; }
+    lit.add(n); Kit.haptic('selection');
+    svg.querySelectorAll('.h' + n).forEach(e => Kit.calm ? e.setAttribute('fill', e.dataset.b) : gsap.to(e, {attr: {fill: e.dataset.b}, duration: .55, ease: 'power3.out'}));
+    const r = roundels[n];
+    if (r.t) r.t.textContent = '✓';
+    r.disc.setAttribute('fill', h.c);
+    gsap.killTweensOf(r.ring); r.ring.setAttribute('opacity', 0);
+    if (!Kit.calm) {
+      gsap.fromTo(r.g, {scale: .5}, {scale: 1, svgOrigin: `${r.x} ${r.y}`, duration: .6, ease: 'back.out(3)'});
+      if (n === 2) gsap.fromTo(shine, {opacity: .9, attr: {x: 40}}, {attr: {x: 260}, opacity: .9, duration: .9, ease: 'power2.inOut', onComplete: () => shine.setAttribute('opacity', 0)});
+    }
+    ripple(h.x, h.y, '#fff4d0', .55, 520);
+    Kit.$('nt').textContent = h.t; Kit.$('nb').textContent = h.b; chips();
+    if (!Kit.calm) gsap.fromTo(['#nt', '#nb'], {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .45, stagger: .06, ease: 'power3.out'});
+    if (lit.size === 4) {
+      Kit.$('say').textContent = 'All four lit. Now look at who let it in.';
+      setTimeout(breach, Kit.calm ? 0 : 1100);
+    }
+  }
+
+  function breach() {
+    if (breached) return;
+    breached = true; Kit.haptic('success');
+    Kit.hide('note'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    draw();
+    if (Kit.calm) return;
+    banner.setAttribute('opacity', 0); halo.setAttribute('opacity', 0);
+    ripple(150, 218, BREACH, .9, 380);
+    gsap.timeline()
+      .fromTo(banner, {opacity: 1, scaleX: 0}, {scaleX: 1, svgOrigin: '150 98', duration: .7, ease: 'expo.out'}, .25)
+      .to(banner, {opacity: .3, duration: .12, yoyo: true, repeat: 5, ease: 'power1.inOut'}, .95)
+      .set(banner, {opacity: 1})
+      .to(halo, {opacity: .75, duration: 1, ease: 'power2.out'}, .4)
+      .fromTo(shine, {opacity: .9, attr: {x: 40}}, {attr: {x: 260}, duration: 1, ease: 'power2.inOut', onComplete: () => shine.setAttribute('opacity', 0)}, .6);
+    gsap.fromTo('#why > *', {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: .55, stagger: .12, ease: 'power3.out', delay: .5});
+  }
+
+  const toDesign = e => { const b = svg.getBoundingClientRect(); return [(e.clientX - b.left - ox) / S, (e.clientY - b.top - oy) / S]; };
+  svg.addEventListener('click', e => {
+    const h = e.target.closest('[data-h]');
+    if (h) return lightUp(+h.dataset.h);
+    const [x, y] = toDesign(e); ripple(x, y, '#ffffff', .4, 600); Kit.haptic('light');
+  });
+
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => {
+    startAmbient();
+    if (Kit.calm) return;
+    const order = tiles.slice().sort((a, b) => (b.y - a.y) - (a.x - b.x) * .2);
+    gsap.from(order.map(t => t.e), {opacity: 0, duration: .5, stagger: {each: .004}, ease: 'power2.out'});
+    gsap.from(Object.values(roundels).map(r => r.g), {opacity: 0, duration: .5, delay: .9, stagger: .1, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (const n of [1, 2, 3, 4]) { lightUp(n); await wait(Kit.calm ? 40 : 150); }
+    await wait(Kit.calm ? 80 : 2200);
+    breach();
+  };
+})();
+Kit.single();
+</script>
+</html>

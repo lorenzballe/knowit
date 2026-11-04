@@ -8,7 +8,7 @@
 <style>
 /* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
 #stage{display:flex;flex-direction:column;gap:1.3cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;align-self:stretch;position:relative;overflow:hidden;border-radius:2cqh;background:#0b1528}
+#pic{flex:1;min-height:0;align-self:stretch;position:relative;overflow:hidden}
 #sv{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
 #tune{flex:none;align-self:stretch;display:flex;align-items:center;gap:3cqw;padding:0 1cqw}
 #tune .lab{font:700 max(1.7cqh,12px)/1 var(--mono);letter-spacing:.08em;color:var(--k);white-space:nowrap}
@@ -38,7 +38,7 @@
 <script>
 const svg = Kit.$('sv'), pic = Kit.$('pic'), slider = Kit.$('k');
 const TOL = .07, RHO = [1, .8, .6, .4, .2];
-const C = {ray: '#e6f6ff', glow: '#7fd3ff', l1: '#ffb35c', l2: '#5cd6ff', sum: '#ffffff', txt: '#e9f1ff', mute: '#9fb2cc'};
+const C = {ray: '#10100c', glow: '#ffffff', l1: '#b84a00', l2: '#0a5fa8', sum: '#10100c', txt: '#10100c', mute: '#14382b'};
 const S = {k: 0, zone: false, done: false};
 let G = null, hold = 0, ro = null;
 const mk = (t, a, p) => Kit.mk(t, a, p);
@@ -79,19 +79,19 @@ function build() {
 
   const defs = mk('defs', {}, svg), rg = mk('radialGradient', {id: 'glw'}, defs);
   mk('stop', {offset: '0', 'stop-color': '#fff'}, rg);
-  mk('stop', {offset: '.35', 'stop-color': C.glow, 'stop-opacity': '.5'}, rg);
+  mk('stop', {offset: '.35', 'stop-color': C.glow, 'stop-opacity': '.6'}, rg);
   mk('stop', {offset: '1', 'stop-color': C.glow, 'stop-opacity': '0'}, rg);
   g.clip = mk('rect', {x: 0, y: 0, width: W, height: H}, mk('clipPath', {id: 'clp'}, defs));
   const cl = {'clip-path': 'url(#clp)'};
 
   // the axis and the plane where the image forms
-  mk('line', {x1: f1(g.xL), y1: f1(g.yc), x2: f1(g.xE), y2: f1(g.yc), stroke: C.mute, 'stroke-opacity': .45, 'stroke-dasharray': '3 5'}, svg);
-  mk('line', {x1: f1(g.xS), y1: f1(g.yc - g.hh), x2: f1(g.xS), y2: f1(g.yc + g.hh), stroke: C.sum, 'stroke-opacity': .5, 'stroke-width': 1.5}, svg);
+  mk('line', {x1: f1(g.xL), y1: f1(g.yc), x2: f1(g.xE), y2: f1(g.yc), stroke: C.mute, 'stroke-opacity': .55, 'stroke-dasharray': '3 5'}, svg);
+  mk('line', {x1: f1(g.xS), y1: f1(g.yc - g.hh), x2: f1(g.xS), y2: f1(g.yc + g.hh), stroke: C.sum, 'stroke-opacity': .55, 'stroke-width': 1.5}, svg);
 
   // light rays: a soft glow under a bright core, faint after the image plane
-  const gG = mk('g', {fill: 'none', stroke: C.glow, 'stroke-opacity': .2, 'stroke-width': 4.5, 'stroke-linejoin': 'round', ...cl}, svg);
+  const gG = mk('g', {fill: 'none', stroke: C.glow, 'stroke-opacity': .55, 'stroke-width': 4.5, 'stroke-linejoin': 'round', ...cl}, svg);
   const rG = mk('g', {fill: 'none', stroke: C.ray, 'stroke-width': 1.5, 'stroke-linejoin': 'round', ...cl}, svg);
-  const tG = mk('g', {stroke: C.ray, 'stroke-opacity': .3, 'stroke-width': 1.2, ...cl}, svg);
+  const tG = mk('g', {stroke: C.ray, 'stroke-opacity': .4, 'stroke-width': 1.2, ...cl}, svg);
   g.rays = [];
   for (const rho of RHO) for (const sg of [1, -1]) g.rays.push({rho, sg, a: mk('polyline', {}, gG), b: mk('polyline', {}, rG), t: mk('line', {}, tG)});
 
@@ -102,10 +102,10 @@ function build() {
 
   // the spot of light on the image plane
   g.halo = mk('ellipse', {cx: f1(g.xS), cy: f1(yc), fill: 'url(#glw)', ...cl}, svg);
-  g.core = mk('rect', {x: f1(g.xS - 1.6), width: 3.2, rx: 1.6, fill: '#fff', ...cl}, svg);
-  const dG = mk('g', {fill: '#fff', ...cl}, svg);
+  g.core = mk('rect', {x: f1(g.xS - 1.6), width: 3.2, rx: 1.6, fill: '#10100c', ...cl}, svg);
+  const dG = mk('g', {fill: '#10100c', ...cl}, svg);
   for (const ray of g.rays) ray.d = mk('circle', {cx: f1(g.xS), r: 2.2}, dG);
-  g.ring = mk('circle', {cx: f1(g.xS), cy: f1(yc), r: 0, fill: 'none', stroke: '#fff', 'stroke-width': 2, opacity: 0}, svg);
+  g.ring = mk('circle', {cx: f1(g.xS), cy: f1(yc), r: 0, fill: 'none', stroke: '#10100c', 'stroke-width': 2, opacity: 0}, svg);
 
   const yl = oy + pad * .7 + fs;
   label(g.x1, yl, 'LENS 1', C.l1, fs, '--mono', '.06em');
@@ -116,11 +116,11 @@ function build() {
   const col = [C.l1, C.l2, C.sum];
   g.box = [g.x1, g.x2, g.xS].map((cx, i) => {
     const o = {bx: cx - g.gw / 2};
-    mk('rect', {x: f1(o.bx), y: f1(g.gTop), width: f1(g.gw), height: f1(GH), rx: f1(fs * .5), fill: '#fff', 'fill-opacity': .05, stroke: '#fff', 'stroke-opacity': .14}, svg);
-    mk('line', {x1: f1(o.bx + 5), y1: f1(g.base), x2: f1(o.bx + g.gw - 5), y2: f1(g.base), stroke: '#fff', 'stroke-opacity': .3, 'stroke-dasharray': '2 4'}, svg);
-    if (i === 1) mk('path', {d: curve(o, -1), fill: 'none', stroke: C.l2, 'stroke-opacity': .45, 'stroke-width': 1.5, 'stroke-dasharray': '3 3'}, svg);
+    mk('rect', {x: f1(o.bx), y: f1(g.gTop), width: f1(g.gw), height: f1(GH), rx: f1(fs * .5), fill: '#10100c', 'fill-opacity': .08, stroke: '#10100c', 'stroke-opacity': .28}, svg);
+    mk('line', {x1: f1(o.bx + 5), y1: f1(g.base), x2: f1(o.bx + g.gw - 5), y2: f1(g.base), stroke: '#10100c', 'stroke-opacity': .4, 'stroke-dasharray': '2 4'}, svg);
+    if (i === 1) mk('path', {d: curve(o, -1), fill: 'none', stroke: C.l2, 'stroke-opacity': .55, 'stroke-width': 1.5, 'stroke-dasharray': '3 3'}, svg);
     if (i === 2) o.glow = mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-opacity': 0}, svg);
-    o.area = mk('path', {fill: col[i], 'fill-opacity': .16}, svg);
+    o.area = mk('path', {fill: col[i], 'fill-opacity': .18}, svg);
     o.line = mk('path', {fill: 'none', stroke: col[i], 'stroke-width': i === 2 ? 3 : 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
     return o;
   });
@@ -166,7 +166,7 @@ function render() {
   });
   const o2 = g.box[2];
   o2.glow.setAttribute('d', curve(o2, sm));
-  o2.glow.setAttribute('stroke-opacity', sharp ? .25 : 0);
+  o2.glow.setAttribute('stroke-opacity', sharp ? .45 : 0);
   const b = Math.max(blur, 1.6), hr = g.fs * (sharp ? 1.5 : .85);
   at(g.halo, {rx: f1(hr), ry: f1(blur + hr)});
   at(g.core, {y: f1(g.yc - b), height: f1(2 * b)});

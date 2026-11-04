@@ -1,0 +1,38 @@
+{
+  "id": "nature-clay-slide-plane",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a thin layer of clay make a whole hillside slide?",
+  "answer": "Rain that sinks down stops on a layer of clay, which lets no water through, and makes a slippery film there. The rock above soaks up water and gets heavier. On tilted layers, it breaks off and slides downhill on the wet clay.",
+  "move": "Wet clay is a lubricant: the rock above it rides down the slope.",
+  "keywords": [
+    "clay",
+    "landslide",
+    "rain",
+    "hillside",
+    "niscemi"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A layered hillside with a sky to tap for rain. Tapping it shows water sinking through rock and stopping on a thin clay layer. Asks: how can a thin layer of clay make a whole hillside slide?",
+    "ground": "#f1e9d6"
+  },
+  "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=v98N4kQ52io&t=277s",
+  "written": "2026-11-03"
+}

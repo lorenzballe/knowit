@@ -1,0 +1,37 @@
+{
+  "id": "technology-v1-decision-speed-1",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is V1, and why can't a takeoff stop after it?",
+  "answer": "V1 is the speed on the takeoff roll beyond which the takeoff can no longer be aborted. Below it, the brakes still stop the plane on the runway. Above it, there is no runway left to stop on, so the plane must fly.",
+  "move": "Before V1 you may stop; after V1 you go, because the runway is spent.",
+  "keywords": [
+    "v1",
+    "takeoff",
+    "aircraft",
+    "runway",
+    "pilot"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled V1: the point of no return asks what V1 is and why a takeoff cannot stop after it. Buttons read Full power and Abort, with a question about where the plane will stop."
+  },
+  "source": "Geopop, “Dentro la cabina dal decollo all’atterraggio - tutto quello che non si vede di un volo di linea” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=kIkfQs_8ny0&t=251s",
+  "written": "2026-11-03"
+}

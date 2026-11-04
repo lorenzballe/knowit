@@ -1,0 +1,39 @@
+{
+  "id": "economics-oil-countdown",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.experts_forecasts",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "At today's pace, how many years of oil are left?",
+  "answer": "Known reserves are about 1,650 billion barrels, and the world uses about 36.5 billion barrels a year. Dividing one by the other gives about 45 years, if both stay as they are.",
+  "move": "Years of oil left = reserves ÷ yearly use: about 45 at today's pace.",
+  "keywords": [
+    "oil",
+    "reserves",
+    "barrels",
+    "depletion",
+    "world"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Oil clock: a timeline of dots, each a billion barrels still underground. The reader drags along the timeline to guess when oil runs out. The reveal says about 45 years at today's pace.",
+    "graded": false,
+    "ground": "#15110c"
+  },
+  "source": "Geopop, “INTORNO AL 2065. ECCO PERCHE'” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=UqszIsyl8-E&t=162s",
+  "written": "2026-11-04"
+}

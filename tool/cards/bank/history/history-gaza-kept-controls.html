@@ -1,0 +1,400 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-gaza-kept-controls -->
+<!-- Look: a field-notebook map drawn straight on the card, with watercolour sea, a pencil-hatched Gaza Strip, a bobbing fishing boat, handwritten labels, and Israel's controls marked in red ink.
+     Interaction: tap the Strip and the settlers' houses fly off it. Then try to hand Gaza each tab in the tray (air, sea, registry, crossings, taxes). Each one arcs onto the map and lands stamped in red.
+     Wow: when the fifth stamp lands, a red dashed loop draws itself around the whole Strip and its sea, and every stamp thumps at once. -->
+<title>Left, but not let go</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#map{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden;touch-action:manipulation;cursor:pointer;background:none}
+#map .tok{cursor:pointer}
+.pulse{animation:pl 1.7s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.pulse.b{animation-delay:.85s}
+@keyframes pl{0%{opacity:.85;transform:scale(.55)}100%{opacity:0;transform:scale(1.5)}}
+.kit-calm .pulse{animation:none;opacity:.6}
+.answered .q{font-size:max(2.4cqh,15px)}
+.say b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap to hand over · what stays">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WHO HOLDS IT</span></div>
+    <h2 class="q">What does Israel still control in Gaza after withdrawing?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map" role="img" aria-label="A hand-drawn map of the Gaza Strip between the Mediterranean Sea, Israel and Egypt, with a tray of five tabs: airspace, sea, registry, crossings, taxes."></svg>
+    </div>
+    <p class="say" id="say"><b>Tap the Gaza Strip:</b> watch the Israeli settlers leave it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Withdrawing from a land is not the same as giving up control of it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const PHY = typeof Physics2DPlugin !== 'undefined';
+  if (PHY) gsap.registerPlugin(Physics2DPlugin);
+  const svg = Kit.$('map'), say = Kit.$('say'), card = Kit.$('card');
+  const P = {paper:'#f5edd9', paper2:'#ece0c2', ink:'#10100c', sea1:'#b4d2dd', sea2:'#5e8fab', seaInk:'#f4fbfd', land:'#dcbf86', strip:'#a3b87b', red:'#9c2a14'};
+  const KEYS = [
+    {k:'air',   name:'Airspace',  wash:'#a9cbe0', msg:'The sky over Gaza: <b>still Israel’s.</b>'},
+    {k:'sea',   name:'Sea',       wash:'#7fadc4', msg:'Gaza’s territorial waters: <b>still Israel’s.</b>'},
+    {k:'reg',   name:'Registry',  wash:'#e0c07a', msg:'The civil registry, the record of who lives there: <b>still Israel’s.</b>'},
+    {k:'cross', name:'Crossings', wash:'#d3a68a', msg:'What goods and which people get in: <b>still Israel’s.</b>'},
+    {k:'tax',   name:'Taxes',     wash:'#d8c062', msg:'The tax system: <b>still Israel’s.</b>'}
+  ];
+  const KM = Object.fromEntries(KEYS.map(o => [o.k, o]));
+  const WHY = 'The settlers left the Strip, but Israel kept the levers a place needs to run itself: its sky, its sea, its register of residents, who and what gets in, and its taxes. <b>Gaza was left, not let go.</b>';
+
+  let withdrawn = false, finished = false, loopOn = false, drawn = false;
+  const launched = new Set(), landed = new Set();
+  let W = 0, H = 0, fs = 12, TH = 0, Hm = 0, A, d, u, n, wb, SD, RL, SR, lastW = 0, lastH = 0, bobs = [];
+  const L = {};
+
+  // seeded randomness, so the hand-drawn wobble is the same on every redraw
+  let seed = 1;
+  const rnd = () => { seed = (seed + 0x6D2B79F5) >>> 0; let t = seed; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const R_ = (a, b) => a + (b - a) * rnd();
+  const fx1 = v => v.toFixed(1);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  function pathOf(pts, closed) {
+    const m = pts.length, get = i => closed ? pts[(i + m) % m] : pts[Math.max(0, Math.min(m - 1, i))];
+    let s = `M${fx1(pts[0].x)},${fx1(pts[0].y)}`;
+    for (let i = 0; i < (closed ? m : m - 1); i++) {
+      const p0 = get(i - 1), p1 = get(i), p2 = get(i + 1), p3 = get(i + 2);
+      s += ` C${fx1(p1.x + (p2.x - p0.x) / 6)},${fx1(p1.y + (p2.y - p0.y) / 6)} ${fx1(p2.x - (p3.x - p1.x) / 6)},${fx1(p2.y - (p3.y - p1.y) / 6)} ${fx1(p2.x)},${fx1(p2.y)}`;
+    }
+    return s + (closed ? 'Z' : '');
+  }
+  // everything stays inside the frame: jitter is clamped, zones are clamped to the map
+  const jit = (pts, a) => pts.map(p => ({x: clamp(p.x + R_(-a, a), .5, W - .5), y: clamp(p.y + R_(-a, a), .5, H - .5)}));
+  const inMap = (pts, m = 2.5) => pts.map(p => ({x: clamp(p.x, m, W - m), y: clamp(p.y, m, Hm - m)}));
+  const inside = (p, m = 1) => p.x > m && p.x < W - m && p.y > m && p.y < Hm - m;
+  const pencil = (parent, pts, closed, a = {}) => { for (let k = 0; k < 2; k++) Kit.mk('path', Object.assign({d: pathOf(jit(pts, k ? 1.3 : .5), closed), fill: 'none', stroke: P.ink, 'stroke-width': k ? .7 : 1.5, opacity: k ? .45 : .9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, a), parent); };
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: P.ink, 'font-size': Math.max(12, fs), style: 'font-family:var(--hand)'}, a), p); e.textContent = t; return e; };
+
+  // geometry: a coast running south-west to north-east, the Strip a narrow band on its land side
+  const S0 = .18, S1 = .88;
+  const cp = (s, off = 0) => ({x: A.x + d.x * s + n.x * off, y: A.y + d.y * s + n.y * off});
+  const wd = s => wb * (1.12 - .3 * (Math.min(S1, Math.max(S0, s)) - S0) / (S1 - S0));
+  function stripPts(e = 0, a = S0, b = S1) {
+    const p = [], m = 14;
+    for (let i = 0; i <= m; i++) p.push(cp(a + (b - a) * i / m, -e));
+    for (let i = m; i >= 0; i--) { const s = a + (b - a) * i / m; p.push(cp(s, wd(s) + e)); }
+    return p;
+  }
+  const TGT = {
+    air:   () => cp(.8, wd(.8) / 2),
+    sea:   () => cp(.6, -SD * .5),
+    reg:   () => cp(.57, wd(.57) / 2),
+    cross: () => cp(.45, wd(.45) + RL + 3),
+    tax:   () => cp(.33, wd(.33) / 2)
+  };
+  const slot = i => ({x: W * (i + .5) / 5, y: Hm + TH * .4});
+
+  function icon(k, g) {
+    const st = {fill: 'none', stroke: P.ink, 'stroke-width': .075, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'};
+    if (k === 'air') {
+      const p = Kit.mk('g', {transform: 'rotate(-28)'}, g);
+      Kit.mk('path', {d: 'M-.62,.02C-.62,-.05 -.5,-.07 -.4,-.06L.48,-.05C.6,-.04 .66,0 .62,.03C.58,.06 .5,.06 .48,.06L-.4,.07C-.5,.08 -.62,.08 -.62,.02Z M.02,-.05L-.22,-.52L-.1,-.52L.24,-.05Z M.02,.06L-.22,.52L-.1,.52L.24,.06Z M-.45,-.06L-.6,-.28L-.52,-.28L-.36,-.06Z M-.45,.07L-.6,.28L-.52,.28L-.36,.07Z', fill: P.ink}, p);
+    } else if (k === 'sea') {
+      [-.24, .03, .3].forEach(y => Kit.mk('path', Object.assign({d: `M-.56,${y}q.14,-.15 .28,0t.28,0t.28,0t.28,0`}, st, {'stroke-width': .09}), g));
+    } else if (k === 'reg') {
+      Kit.mk('rect', Object.assign({x: -.56, y: -.38, width: 1.12, height: .76, rx: .08}, st, {fill: '#fbf5e6'}), g);
+      Kit.mk('circle', {cx: -.26, cy: -.1, r: .13, fill: P.ink}, g);
+      Kit.mk('path', {d: 'M-.46,.25q.2,-.24 .4,0Z', fill: P.ink}, g);
+      Kit.mk('path', Object.assign({d: 'M.04,-.16h.38M.04,.02h.38M.04,.2h.24'}, st), g);
+    } else if (k === 'cross') {
+      Kit.mk('rect', {x: -.62, y: -.4, width: .14, height: .8, fill: P.ink}, g);
+      Kit.mk('rect', Object.assign({x: -.48, y: -.32, width: 1.08, height: .15}, st, {fill: '#fbf5e6'}), g);
+      [-.36, -.08, .2, .46].forEach(x => Kit.mk('rect', {x, y: -.32, width: .12, height: .15, fill: P.red}, g));
+      Kit.mk('rect', Object.assign({x: .02, y: .02, width: .42, height: .34}, st, {fill: P.land}), g);
+      Kit.mk('path', Object.assign({d: 'M.23,.02v.34M.02,.14h.42'}, st, {'stroke-width': .05}), g);
+    } else {
+      Kit.mk('circle', Object.assign({r: .52}, st, {fill: '#e8cd72'}), g);
+      Kit.mk('circle', Object.assign({r: .39}, st, {'stroke-width': .04}), g);
+      Kit.mk('circle', {cx: -.15, cy: -.15, r: .07, fill: 'none', stroke: P.ink, 'stroke-width': .05}, g);
+      Kit.mk('circle', {cx: .15, cy: .15, r: .07, fill: 'none', stroke: P.ink, 'stroke-width': .05}, g);
+      Kit.mk('path', Object.assign({d: 'M.2,-.22L-.2,.22'}, st), g);
+    }
+  }
+  function makeToken(parent, k, r) {
+    const g = Kit.mk('g', {}, parent);
+    Kit.mk('circle', {cx: 1.5, cy: 2.5, r: r * 1.02, fill: P.ink, opacity: .16}, g);
+    Kit.mk('circle', {r: r * 1.06, fill: KM[k].wash, opacity: .95, filter: 'url(#wc)'}, g);
+    Kit.mk('circle', {r: r * .6, cx: -r * .25, cy: -r * .3, fill: '#fff', opacity: .25}, g);
+    Kit.mk('circle', {r, fill: 'none', stroke: P.ink, 'stroke-width': 1.6}, g);
+    Kit.mk('circle', {r: r * .84, fill: 'none', stroke: P.ink, 'stroke-width': .7, 'stroke-dasharray': '2 2.5', opacity: .55}, g);
+    icon(k, Kit.mk('g', {transform: `scale(${r * .95})`}, g));
+    return g;
+  }
+
+  function boat(parent, p, s) {
+    const g = Kit.mk('g', {}, parent);
+    Kit.mk('path', {d: `M${-s},0 Q${-s * .2},${s * .1} ${s},0`, fill: 'none', stroke: '#eaf4f6', 'stroke-width': 1.2, opacity: .8}, g);
+    Kit.mk('path', {d: `M${-s * .85},${-s * .32} L${s * .85},${-s * .32} L${s * .55},${s * .08} L${-s * .6},${s * .08}Z`, fill: '#8b5a3c', stroke: P.ink, 'stroke-width': 1, 'stroke-linejoin': 'round'}, g);
+    Kit.mk('line', {x1: 0, y1: -s * .32, x2: 0, y2: -s * 1.5, stroke: P.ink, 'stroke-width': 1.1}, g);
+    Kit.mk('path', {d: `M${s * .08},${-s * 1.45} L${s * .8},${-s * .45} L${s * .08},${-s * .45}Z`, fill: '#fbf6ea', stroke: P.ink, 'stroke-width': .9, 'stroke-linejoin': 'round'}, g);
+    Kit.mk('path', {d: `M${-s * .08},${-s * 1.2} L${-s * .6},${-s * .45} L${-s * .08},${-s * .45}Z`, fill: '#e9d9b6', stroke: P.ink, 'stroke-width': .8, 'stroke-linejoin': 'round'}, g);
+    gsap.set(g, {x: p.x, y: p.y, transformOrigin: '50% 100%'});
+    return g;
+  }
+
+  function draw() {
+    bobs.forEach(t => t.kill()); bobs = [];
+    gsap.killTweensOf(svg.querySelectorAll('*'));
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; seed = 7; drawn = true;
+    const r0 = svg.getBoundingClientRect(); lastW = r0.width; lastH = r0.height;
+    fs = Math.max(12, Math.min(17, Math.min(W, H) / 22));
+    TH = Math.max(fs * 5.4, H * .21); Hm = H - TH;
+    A = {x: W * .16, y: Hm * 1.02}; const B = {x: W * .9, y: -Hm * .02};
+    d = {x: B.x - A.x, y: B.y - A.y}; const len = Math.hypot(d.x, d.y);
+    u = {x: d.x / len, y: d.y / len}; n = {x: -u.y, y: u.x};
+    wb = Math.min(W * .11, Hm * .115); SD = Math.min(W * .2, wb * 2.3);
+    SR = Math.min(W / 5 * .3, TH * .27); RL = Math.min(fs * 1.3, wb * .62, SR);
+    const sTop = A.y / -d.y, sBot = (A.y - Hm) / -d.y;
+
+    const defs = Kit.mk('defs', {}, svg);
+    defs.innerHTML = `
+      <filter id="wc" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="4" result="nz"/><feDisplacementMap in="SourceGraphic" in2="nz" scale="7" xChannelSelector="R" yChannelSelector="G"/></filter>
+      <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><line x1="0" y1="0" x2="0" y2="5" stroke="${P.ink}" stroke-width=".7" opacity=".4"/></pattern>
+      <pattern id="hatchR" width="4.5" height="4.5" patternUnits="userSpaceOnUse" patternTransform="rotate(-40)"><line x1="0" y1="0" x2="0" y2="4.5" stroke="${P.red}" stroke-width="1" opacity=".8"/></pattern>
+      <pattern id="hatchX" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><path d="M0,0V5M0,0H5" stroke="${P.red}" stroke-width=".8" opacity=".7"/></pattern>
+      <radialGradient id="seaG" cx=".75" cy=".6" r=".9"><stop offset="0" stop-color="${P.sea1}"/><stop offset="1" stop-color="${P.sea2}"/></radialGradient>
+      <radialGradient id="fadeG" cx=".3" cy=".5" r=".85"><stop offset=".6" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      <mask id="seaM" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${Hm}"><rect x="0" y="0" width="${W}" height="${Hm}" fill="url(#fadeG)"/></mask>
+      <clipPath id="mclip"><rect x="0" y="0" width="${W}" height="${Hm}"/></clipPath>`;
+    for (const k of ['map', 'deco', 'fx', 'houses', 'loop', 'lab', 'tok', 'tray', 'hint', 'fly', 'top']) L[k] = Kit.mk('g', (k === 'map' || k === 'deco') ? {'clip-path': 'url(#mclip)'} : {}, svg);
+
+    // the map: washes, coast, strip (drawn straight on the card)
+    const M = L.map;
+    const coast = []; for (let i = 0; i <= 24; i++) coast.push(cp(sTop - (sTop - sBot) * i / 24, 0));
+    const jc = jit(coast, 1.5); jc[0] = {x: coast[0].x, y: .5}; jc[24] = {x: coast[24].x, y: Hm};
+    Kit.mk('path', {d: `M0,0 ${pathOf(jc, false).replace(/^M/, 'L')} L0,${fx1(Hm)} Z`, fill: 'url(#seaG)', opacity: .95, mask: 'url(#seaM)'}, M);
+    [7, 14, 23].forEach((o, i) => {
+      const pts = []; for (let j = 0; j <= 48; j++) { const p = cp(1.1 - 1.2 * j / 48, -o); if (inside(p, 2)) pts.push(p); }
+      if (pts.length > 2) Kit.mk('path', {d: pathOf(jit(pts, 1.2), false), fill: 'none', stroke: '#eaf4f6', 'stroke-width': 1.1, opacity: .7 - i * .18, 'stroke-dasharray': i ? '10 7' : 'none'}, M);
+    });
+    pencil(M, coast, false);
+    const sp = stripPts();
+    Kit.mk('path', {d: pathOf(sp, true), fill: P.strip, opacity: .95, filter: 'url(#wc)'}, M);
+    Kit.mk('path', {d: pathOf(sp, true), fill: 'none', stroke: '#4f6a30', 'stroke-width': 4, opacity: .35, filter: 'url(#wc)'}, M);
+    Kit.mk('path', {d: pathOf(sp, true), fill: 'url(#hatch)', opacity: .55}, M);
+    pencil(M, sp, true);
+    // the border with Egypt, from the Strip's southern end down
+    const sl = cp(S0, wd(S0));
+    Kit.mk('path', {d: `M${sl.x},${sl.y} Q${sl.x + fs * .2},${(sl.y + Hm) / 2} ${sl.x + fs * .6},${Hm}`, fill: 'none', stroke: P.ink, 'stroke-width': 1.2, 'stroke-dasharray': '5 3 1 3', opacity: .75}, M);
+
+    // sea life: little wave ticks, gulls and a fishing boat that bobs
+    const D = L.deco, ws = fs * .45;
+    [[.3, .9], [.44, 1.9], [.58, 1.15], [.72, 2.1], [.5, 2.7], [.26, 2], [.83, 1.4], [.38, 3.2]].forEach(([s, k]) => {
+      const p = cp(s, -SD * k * .55 - 12);
+      if (!inside(p, ws * 2) || p.y < fs * 3.4) return;
+      Kit.mk('path', {d: `M${fx1(p.x - ws)},${fx1(p.y)} q${ws / 2},${-ws * .6} ${ws},0 t${ws},0`, fill: 'none', stroke: '#eaf4f6', 'stroke-width': 1.1, opacity: .75, 'stroke-linecap': 'round'}, D);
+    });
+    const bp = cp(.36, -SD * 1.25);
+    if (inside(bp, fs * 1.6) && bp.y > fs * 4) {
+      const b = boat(D, bp, fs * .8);
+      if (!Kit.calm) bobs.push(gsap.to(b, {y: '+=2.5', rotation: 5, duration: 1.7, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+    }
+    [[.62, 2.6, 1], [.68, 3.1, .75]].forEach(([s, k, sc]) => {
+      const p = cp(s, -SD * k * .55 - 10); if (!inside(p, fs) || p.y < fs * 3.4) return;
+      const g = Kit.mk('path', {d: `M${-fs * .45 * sc},0 q${fs * .22 * sc},${-fs * .3 * sc} ${fs * .45 * sc},0 q${fs * .22 * sc},${-fs * .3 * sc} ${fs * .45 * sc},0`, fill: 'none', stroke: P.ink, 'stroke-width': 1, opacity: .6, 'stroke-linecap': 'round'}, D);
+      gsap.set(g, {x: p.x, y: p.y});
+      if (!Kit.calm) bobs.push(gsap.to(g, {y: '-=3', duration: 1.3 + sc, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+    });
+
+    // labels
+    const S = L.lab, ls = Math.max(12, fs * .95);
+    txt(S, fs * .7, fs * 1.5, 'Mediterranean', {fill: P.seaInk, 'font-size': ls, 'font-style': 'italic'});
+    txt(S, fs * .7, fs * 1.5 + ls * 1.35, 'Sea', {fill: P.seaInk, 'font-size': ls, 'font-style': 'italic'});
+    txt(S, W * .84, Hm * .78, 'Israel', {fill: P.red, 'font-size': Math.max(13, fs * 1.2), 'font-weight': 700, 'text-anchor': 'middle'});
+    txt(S, sl.x - fs * .3, Hm - fs * .55, 'Egypt', {'font-size': ls, 'text-anchor': 'end', opacity: .8});
+    const gl = cp(.66, wd(.66) + fs * 1.25), ang = Math.atan2(d.y, d.x) * 180 / Math.PI;
+    txt(S, gl.x, gl.y, 'Gaza Strip', {'font-size': Math.max(13, fs * 1.1), 'font-weight': 700, 'text-anchor': 'middle', transform: `rotate(${ang} ${gl.x} ${gl.y})`});
+    const nx = W - fs * 1.2;
+    Kit.mk('path', {d: `M${nx},${Hm - fs * .6} V${Hm - fs * 2.1} m-4,5 l4,-5 l4,5`, fill: 'none', stroke: P.ink, 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, S);
+    txt(S, nx, Hm - fs * 2.45, 'N', {'font-size': 12, 'text-anchor': 'middle', 'font-weight': 700});
+
+    // the settlers' houses, until the withdrawal
+    if (!withdrawn) {
+      const hs = wb * .34;
+      [.26, .34, .42, .5, .62, .7, .78, .85].forEach((s, i) => {
+        const p = cp(s, wd(s) * (i % 2 ? .7 : .32)), g = Kit.mk('g', {}, L.houses);
+        Kit.mk('ellipse', {cx: 1, cy: hs * .52, rx: hs * .6, ry: hs * .14, fill: P.ink, opacity: .2}, g);
+        Kit.mk('rect', {x: -hs / 2, y: -hs * .15, width: hs, height: hs * .65, fill: '#fbf6ea', stroke: P.ink, 'stroke-width': 1}, g);
+        Kit.mk('path', {d: `M${-hs * .64},${-hs * .1} L0,${-hs * .68} L${hs * .64},${-hs * .1}Z`, fill: '#8b5a3c', stroke: P.ink, 'stroke-width': 1, 'stroke-linejoin': 'round'}, g);
+        Kit.mk('rect', {x: -hs * .1, y: hs * .15, width: hs * .2, height: hs * .35, fill: P.ink}, g);
+        gsap.set(g, {x: p.x, y: p.y, transformOrigin: '50% 50%'});
+      });
+      const c = cp(.52, wd(.52) / 2), rr = Math.min(wb * .9, c.y - 4, Hm - c.y - 4);
+      Kit.mk('circle', {cx: c.x, cy: c.y, r: rr, fill: 'none', stroke: P.ink, 'stroke-width': 1.8, class: 'pulse'}, L.hint);
+      Kit.mk('circle', {cx: c.x, cy: c.y, r: rr, fill: 'none', stroke: P.ink, 'stroke-width': 1.8, class: 'pulse b'}, L.hint);
+    }
+    for (const k of KEYS.map(o => o.k)) if (landed.has(k)) { drawFx(k, false); drawLanded(k, false); }
+    if (loopOn) drawLoop(false);
+    drawTray();
+  }
+
+  function drawTray() {
+    const T = L.tray; T.innerHTML = '';
+    const ls = Math.max(12, fs * .9);
+    KEYS.forEach((o, i) => {
+      const p = slot(i);
+      if (launched.has(o.k)) {
+        Kit.mk('circle', {cx: p.x, cy: p.y, r: SR, fill: P.red, opacity: .07}, T);
+        Kit.mk('circle', {cx: p.x, cy: p.y, r: SR, fill: 'none', stroke: P.red, 'stroke-width': 1.4, 'stroke-dasharray': '3 4'}, T);
+        txt(T, p.x, p.y + 4, 'Israel', {fill: P.red, 'font-size': 12, 'font-weight': 700, 'text-anchor': 'middle', transform: `rotate(-8 ${p.x} ${p.y})`});
+      } else {
+        const g = makeToken(T, o.k, SR); g.setAttribute('data-k', o.k); g.classList.add('tok');
+        gsap.set(g, {x: p.x, y: p.y, opacity: withdrawn ? 1 : .4, transformOrigin: '50% 50%'});
+      }
+      const t = txt(T, p.x, p.y + SR + ls * 1.15, o.name, {'font-size': ls, 'font-weight': 700, 'text-anchor': 'middle', opacity: launched.has(o.k) ? .6 : 1});
+      let sz = ls; while (t.getComputedTextLength() > W / 5 - 4 && sz > 12) { sz -= .5; t.setAttribute('font-size', sz); }
+    });
+  }
+
+  function drawFx(k, anim) {
+    const g = Kit.mk('g', {}, L.fx); let dash = null;
+    if (k === 'air') {
+      const dd = pathOf(inMap(stripPts(fs * .55, S0 - .03, S1 + .03)), true);
+      Kit.mk('path', {d: dd, fill: P.red, opacity: .14}, g);
+      Kit.mk('path', {d: dd, fill: 'url(#hatchR)', opacity: .55}, g);
+      dash = Kit.mk('path', {d: dd, fill: 'none', stroke: P.red, 'stroke-width': 1.6, 'stroke-dasharray': '6 4'}, g);
+    } else if (k === 'sea') {
+      const pts = []; for (let i = 0; i <= 12; i++) pts.push(cp(.08 + .86 * i / 12, 0));
+      const out = inMap(pts.map((p, i) => cp(.08 + .86 * i / 12, -SD)).reverse());
+      const dd = pathOf([...inMap(pts), ...out], true);
+      Kit.mk('path', {d: dd, fill: P.red, opacity: .12}, g);
+      Kit.mk('path', {d: dd, fill: 'url(#hatchX)', opacity: .45}, g);
+      dash = Kit.mk('path', {d: pathOf(out, false), fill: 'none', stroke: P.red, 'stroke-width': 1.8, 'stroke-dasharray': '6 4'}, g);
+    } else if (k === 'cross') {
+      [.27, .52, .77].forEach(s => {
+        const E = cp(s, wd(s)), a = fs * .75, gg = Kit.mk('g', {}, g);
+        Kit.mk('line', {x1: E.x - u.x * a, y1: E.y - u.y * a, x2: E.x + u.x * a, y2: E.y + u.y * a, stroke: P.red, 'stroke-width': 4, 'stroke-linecap': 'round'}, gg);
+        Kit.mk('line', {x1: E.x - u.x * a, y1: E.y - u.y * a, x2: E.x + u.x * a, y2: E.y + u.y * a, stroke: '#fbf6ea', 'stroke-width': 2.4, 'stroke-dasharray': '3 4'}, gg);
+        Kit.mk('circle', {cx: E.x - u.x * a, cy: E.y - u.y * a, r: 3, fill: P.ink}, gg);
+      });
+    } else {
+      const p = TGT[k]();
+      Kit.mk('circle', {cx: p.x, cy: p.y, r: RL * 1.8, fill: P.red, opacity: .2}, g);
+    }
+    if (!anim || Kit.calm) return;
+    gsap.from(g, {opacity: 0, duration: .7, ease: 'power2.out'});
+    if (dash) gsap.fromTo(dash, {strokeDashoffset: 80}, {strokeDashoffset: 0, duration: 1.4, ease: 'power3.out'});
+    if (k === 'cross') gsap.from(g.children, {scale: 0, transformOrigin: '50% 50%', duration: .55, stagger: .1, ease: 'back.out(2.6)'});
+  }
+
+  function drawLanded(k, anim) {
+    const p = TGT[k](), g = Kit.mk('g', {}, L.tok), st = Kit.mk('g', {}, g);
+    Kit.mk('circle', {r: RL * 1.3, fill: 'none', stroke: P.red, 'stroke-width': 2.4, opacity: .85, filter: 'url(#wc)'}, st);
+    Kit.mk('circle', {r: RL * 1.13, fill: 'none', stroke: P.red, 'stroke-width': .9, opacity: .75}, st);
+    const t = makeToken(g, k, RL);
+    gsap.set(g, {x: p.x, y: p.y, transformOrigin: '50% 50%'});
+    if (!anim || Kit.calm) return;
+    gsap.from(t, {scale: 1.3, duration: .6, ease: 'elastic.out(1,.45)', transformOrigin: '50% 50%'});
+    gsap.from(st, {scale: 2.3, opacity: 0, rotation: -30, duration: .5, ease: 'back.out(1.8)', transformOrigin: '50% 50%'});
+    if (PHY) for (let i = 0; i < 9; i++) {
+      const c = Kit.mk('circle', {r: R_(1, 2.4), fill: i % 3 ? P.ink : P.red, opacity: .7}, L.fly);
+      gsap.set(c, {x: p.x, y: p.y});
+      gsap.to(c, {duration: .7, physics2D: {velocity: R_(70, 170), angle: R_(-170, -10), gravity: 420}, opacity: 0, ease: 'power1.in', onComplete: () => c.remove()});
+    }
+  }
+
+  function drawLoop(anim) {
+    const pts = [];
+    for (let i = 0; i <= 12; i++) pts.push(cp(.05 + .92 * i / 12, -SD - 7));
+    for (let i = 12; i >= 0; i--) { const s = .05 + .92 * i / 12; pts.push(cp(s, wd(s) + RL * 2 + 8)); }
+    const p = Kit.mk('path', {d: pathOf(inMap(pts, 4), true), fill: 'none', stroke: P.red, 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-dasharray': '8 5', opacity: .9}, L.loop);
+    if (!anim || Kit.calm) return;
+    const ln = p.getTotalLength();
+    gsap.fromTo(p, {attr: {'stroke-dasharray': `${ln} ${ln}`}, strokeDashoffset: ln}, {strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut', onComplete: () => p.setAttribute('stroke-dasharray', '8 5')});
+    gsap.to(L.tok.children, {scale: 1.18, duration: .22, yoyo: true, repeat: 1, stagger: .1, delay: 1.2, ease: 'power2.out', transformOrigin: '50% 50%'});
+  }
+
+  function withdraw() {
+    if (withdrawn) return;
+    withdrawn = true; Kit.haptic('light');
+    L.hint.innerHTML = '';
+    const hs = [...L.houses.children];
+    if (Kit.calm || !PHY) L.houses.innerHTML = '';
+    else hs.forEach((h, i) => {
+      gsap.to(h, {duration: 1.5, delay: i * .045, physics2D: {velocity: R_(260, 430), angle: R_(-82, -30), gravity: 900}, rotation: R_(-220, 220)});
+      gsap.to(h, {opacity: 0, duration: .5, delay: .6 + i * .045, onComplete: () => h.remove()});
+    });
+    const toks = L.tray.querySelectorAll('.tok');
+    if (Kit.calm) gsap.set(toks, {opacity: 1});
+    else { gsap.to(toks, {opacity: 1, duration: .4, stagger: .08, delay: .55}); gsap.fromTo(toks, {scale: .7}, {scale: 1, duration: .8, ease: 'elastic.out(1,.5)', stagger: .08, delay: .55, transformOrigin: '50% 50%'}); }
+    say.innerHTML = 'The Strip is left to the Palestinians… or is it? <b>Try handing Gaza each tab in the tray.</b>';
+  }
+
+  function launch(k) {
+    if (!withdrawn || launched.has(k)) return;
+    launched.add(k); Kit.haptic('selection');
+    const i = KEYS.findIndex(o => o.k === k), from = slot(i), to = TGT[k]();
+    const g = makeToken(L.fly, k, SR);
+    gsap.set(g, {x: from.x, y: from.y, transformOrigin: '50% 50%'});
+    drawTray();
+    let done = false;
+    const end = () => { if (done) return; done = true; g.remove(); land(k); };
+    if (Kit.calm || !PHY) { end(); return; }
+    const T = .85, grav = Math.max(900, H * 2.4), dx = to.x - from.x, dy = to.y - from.y;
+    const vx = dx / T, vy = (dy - .5 * grav * T * T) / T;
+    gsap.to(g, {duration: T, physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * 180 / Math.PI, gravity: grav}, onComplete: end});
+    gsap.to(g, {duration: T, scale: RL / SR, rotation: (dx >= 0 ? 1 : -1) * 360, ease: 'power2.in'});
+    setTimeout(end, T * 1000 + 120);
+  }
+
+  function land(k) {
+    landed.add(k);
+    drawFx(k, true); drawLanded(k, true); Kit.haptic('light');
+    say.innerHTML = `${KM[k].msg} <span style="opacity:.6">(${landed.size} of 5)</span>`;
+    if (landed.size === KEYS.length) setTimeout(finish, Kit.calm ? 0 : 500);
+  }
+
+  function finish() {
+    if (finished) return;
+    finished = true; Kit.haptic('success');
+    card.classList.add('answered'); say.innerHTML = WHY; Kit.show('keep');
+    // wait for the card to settle (the map resizes), then draw the loop
+    setTimeout(() => { loopOn = true; drawLoop(true); }, Kit.calm ? 0 : 750);
+  }
+
+  svg.addEventListener('pointerdown', e => {
+    if (!withdrawn) { withdraw(); return; }
+    const t = e.target.closest('[data-k]');
+    if (t) launch(t.dataset.k);
+  });
+
+  // redraw whenever the stage changes size, so the map always fills it
+  let raf = 0;
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      if (!drawn) return;
+      const r = svg.getBoundingClientRect();
+      if (r.width < 2 || r.height < 2 || (Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 1)) return;
+      draw();
+    });
+  }).observe(svg);
+
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || withdrawn) return;
+    gsap.from([L.map, L.deco], {opacity: 0, duration: .8, ease: 'power2.out'});
+    gsap.from(L.lab.children, {opacity: 0, y: 6, duration: .5, stagger: .06, delay: .35, ease: 'power3.out'});
+    gsap.from(L.houses.children, {y: '-=26', opacity: 0, duration: .7, stagger: .06, delay: .45, ease: 'bounce.out'});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    withdraw(); await w(Kit.calm ? 60 : 500);
+    for (const o of KEYS) { launch(o.k); await w(Kit.calm ? 40 : 260); }
+    await w(Kit.calm ? 300 : 3600);
+  };
+})();
+Kit.single();
+</script>
+</html>

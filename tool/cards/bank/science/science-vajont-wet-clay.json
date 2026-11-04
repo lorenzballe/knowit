@@ -1,0 +1,37 @@
+{
+  "id": "science-vajont-wet-clay",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did filling the Vajont reservoir wake up inside the mountain?",
+  "answer": "The rising lake reached a layer of clay beneath an ancient landslide. Clay does not let water through, so it swelled and deformed. The old landslide lost its balance and moved again.",
+  "move": "The reservoir broke the slope's balance by soaking the clay beneath an ancient landslide.",
+  "keywords": [
+    "vajont-dam",
+    "landslide",
+    "clay",
+    "reservoir",
+    "italy"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section of a valley with a dam and a lake. A glass tap fills the lake as water rises toward an orange clay layer. The reader is asked to watch that layer as the lake reaches it."
+  },
+  "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=xUtCwhN8-pQ&t=149s",
+  "written": "2026-11-03"
+}

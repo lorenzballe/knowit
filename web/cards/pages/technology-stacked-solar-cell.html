@@ -1,0 +1,275 @@
+<!doctype html>
+<!-- slug: technology-stacked-solar-cell -->
+<!--
+Look: an oscilloscope bench. The sun's spectrum is a phosphor-green trace on black. Below it sits the cell's cross-section, with photons streaming into the layer that eats them, and an efficiency meter with a live readout.
+Interaction: tap to stack junctions. Each new layer drops in, catches its own colours, and the caught area under the trace morphs bigger (MorphSVG).
+Wow: at three junctions the screen flashes, the readout scrambles to "> 40%" and a LAB RECORD stamp lands. Then "run it on a roof" morphs the catch back down and the stamp turns to REAL ROOF.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Stacking sunlight</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation}
+#roof{align-self:flex-start}
+.say b{white-space:nowrap}
+.scan{animation:scan 3.2s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes scan{0%{transform:translateX(0);opacity:0}10%{opacity:.5}90%{opacity:.5}100%{transform:translateX(var(--sw));opacity:0}}
+.flow{animation:flow .7s linear infinite}
+@keyframes flow{to{stroke-dashoffset:var(--d)}}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.3s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.9);opacity:.25}}
+.kit-calm .scan{animation:none;opacity:0}
+.kit-calm .flow,.kit-calm .pulse{animation:none}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap to stack · record cell">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOLAR CELLS</span></div>
+    <h2 class="q">How much sunlight can the best solar cells turn into electricity?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="The sun's spectrum as a dark trace, the part a solar cell catches filled in, the cell's layers below with light going into them, and an efficiency meter."></svg>
+    </div>
+    <p class="say" id="say">One layer catches only part of sunlight. <b>Tap the cell to stack another layer.</b></p>
+    <button class="btn gone" id="roof">Now run it on a real roof</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Stacked junctions set records above 40 %, but real use always gives less.</div>
+    <div class="foot"><span class="src">Source · Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MorphSVGPlugin, ScrambleTextPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), roof = Kit.$('roof');
+  const PH = '#10100c', PH2 = '#10100c', DIM = '#0b3550', DEEP = 'rgba(16,16,12,.3)', AMB = '#fff4c2', STAMP = '#ffb43a', WHITE = '#ffffff';
+  const GAPS = {1: [1100], 2: [600, 1100], 3: [650, 900, 1800]};
+  const RAYS = [{l: 450, c: '#ffffff', n: 'blue'}, {l: 700, c: '#d62d20', n: 'red'}, {l: 1300, c: '#5b1fa8', n: 'infrared'}];
+  const N = 90, L0 = 300, L1 = 1800;
+  let n = 1, real = false;          // what the reader has asked for
+  let vn = 1, vreal = false;        // what is drawn right now
+  let W = 0, H = 0, fs = 12, G = {}, mode = 'full';
+  let caughtEl = null, meterEl = null, readL = null, readout = null, stamp = null, stampT = null, flash = null;
+
+  // A sun-like spectrum (a 5800 K glow), normalised to its peak.
+  const planck = l => 1 / (Math.pow(l / 1000, 5) * (Math.exp(2481 / l) - 1));
+  const lam = i => L0 + (L1 - L0) * i / N;
+  const PEAK = Math.max(...Array.from({length: N + 1}, (_, i) => planck(lam(i))));
+  const s = l => planck(l) / PEAK;
+  // What a stack catches: light bluer than a layer's gap is caught there, but only the gap's share
+  // of its energy; the rest becomes heat. Light redder than every gap passes straight through.
+  const caught = (l, k, r) => { const g = GAPS[k].find(g => g >= l); return g ? s(l) * l / g * (r ? .8 : 1) : 0; };
+  const frac = (k, r) => { let a = 0, b = 0; for (let i = 0; i <= N; i++) { a += caught(lam(i), k, r); b += s(lam(i)); } return a / b; };
+  const F3 = frac(3, false);
+  const effOf = (k, r) => frac(k, r) / F3 * 41.5; // the stack of three drawn at its record, just past 40 %
+
+  let sx0, sx1, sy0, sy1, cy0, cy1, entry, my, mx0, mx1, bh;
+  const X = l => sx0 + (l - L0) / (L1 - L0) * (sx1 - sx0);
+  const Y = v => sy1 - v * (sy1 - sy0) * .82;
+  const mono = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: PH, 'font-family': 'var(--mono), monospace', 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
+  const caughtD = (k, r) => { let d = `M${X(L0)},${sy1}`; for (let i = 0; i <= N; i++) d += ` L${X(lam(i)).toFixed(1)},${Y(caught(lam(i), k, r)).toFixed(1)}`; return d + ` L${X(L1)},${sy1} Z`; };
+  const mX = v => mx0 + (mx1 - mx0) * v / 50;
+  const meterW = () => Math.max(0, mX(effOf(vn, vreal)) - mx0);
+  const after = fn => requestAnimationFrame(() => requestAnimationFrame(fn)); // let the card reflow first
+
+  function layout() {
+    svg.innerHTML = '';
+    ({W, H} = Kit.fitSvg(svg));
+    fs = Math.max(12, Math.min(15, W / 27));
+    const defs = Kit.mk('defs', {}, svg);
+    const glow = Kit.mk('filter', {id: 'glow', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: 2.2, result: 'b'}, glow);
+    const mg = Kit.mk('feMerge', {}, glow); Kit.mk('feMergeNode', {in: 'b'}, mg); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, mg);
+    const lg = Kit.mk('linearGradient', {id: 'cg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': WHITE, 'stop-opacity': .9}, lg); Kit.mk('stop', {offset: 1, 'stop-color': WHITE, 'stop-opacity': .25}, lg);
+    const hp = Kit.mk('pattern', {id: 'hatch', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 5, stroke: DIM, 'stroke-width': 1.2, 'stroke-opacity': .7}, hp);
+    const scanG = Kit.mk('linearGradient', {id: 'sg', x1: 0, x2: 1}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': WHITE, 'stop-opacity': 0}, scanG); Kit.mk('stop', {offset: 1, 'stop-color': WHITE, 'stop-opacity': .5}, scanG);
+    const mgr = Kit.mk('linearGradient', {id: 'mg', x1: 0, x2: 1}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#d8f2ff'}, mgr); Kit.mk('stop', {offset: 1, 'stop-color': WHITE}, mgr);
+
+    // ---- vertical budget, from the bottom up, so nothing can ever collide ----
+    const pad = fs * .8;
+    sx0 = pad; sx1 = W - pad; sy0 = fs * 2.1;
+    mx0 = pad; mx1 = W - pad; bh = fs * .7;
+    my = H - fs * .8;                                   // meter bar centre
+    const meterTop = my - bh / 2 - fs * 1.6;
+    const axisH = fs * 1.6;
+    const avail = Math.max(0, meterTop - fs * .3 - sy0 - axisH);
+    let C;
+    if (avail >= fs * 12) { mode = 'full'; C = Math.min(fs * 10, Math.max(fs * 6.6, avail * .44)); }
+    else if (avail >= fs * 7) { mode = 'slim'; C = fs * 3.4; }
+    else { mode = 'none'; C = 0; }
+    sy1 = sy0 + Math.max(fs * 1.5, avail - C);
+    entry = mode === 'full' ? fs * .9 : fs * .7;
+    cy0 = sy1 + axisH + entry;
+    cy1 = mode === 'full' ? sy1 + axisH + C - fs * 1.55 : cy0 + fs * 1.5;
+    if (cy1 < cy0) cy1 = cy0;
+
+    G.scope = Kit.mk('g', {}, svg);
+    // the readouts above the screen
+    readL = mono(svg, pad, fs * 1.35, '', {});
+    Kit.mk('rect', {x: W - pad - fs * 5.3, y: fs * .5, width: fs * .9, height: fs * .9, fill: 'url(#hatch)', stroke: DIM}, svg);
+    mono(svg, W - pad, fs * 1.35, 'WASTED', {'text-anchor': 'end', fill: DIM});
+    if (W > fs * 26) {
+      Kit.mk('rect', {x: W - pad - fs * 10.7, y: fs * .5, width: fs * .9, height: fs * .9, fill: 'url(#cg)', stroke: PH2, 'stroke-opacity': .6}, svg);
+      mono(svg, W - pad - fs * 5.9, fs * 1.35, 'CAUGHT', {'text-anchor': 'end', fill: DIM});
+    }
+    // the screen: graticule
+    const sh = Math.max(0, sy1 - sy0);
+    Kit.mk('rect', {x: sx0, y: sy0, width: sx1 - sx0, height: sh, rx: fs * .5, fill: 'none', stroke: DEEP, 'stroke-width': 1.5}, G.scope);
+    for (let i = 1; i < 10; i++) Kit.mk('line', {x1: sx0 + (sx1 - sx0) * i / 10, x2: sx0 + (sx1 - sx0) * i / 10, y1: sy0, y2: sy1, stroke: DEEP, 'stroke-width': i === 5 ? 1.2 : .7, 'stroke-dasharray': i === 5 ? '' : '2 3'}, G.scope);
+    for (let i = 1; i < 5; i++) Kit.mk('line', {x1: sx0, x2: sx1, y1: sy0 + sh * i / 5, y2: sy0 + sh * i / 5, stroke: DEEP, 'stroke-width': .7, 'stroke-dasharray': '2 3'}, G.scope);
+    // visible band, faintly lit behind the trace
+    Kit.mk('rect', {x: X(400), y: sy0 + 1, width: X(700) - X(400), height: Math.max(0, sh - 2), fill: WHITE, opacity: .18}, G.scope);
+    // the whole spectrum, hatched: what is not caught is wasted
+    let full = `M${X(L0)},${sy1}`, line = '';
+    for (let i = 0; i <= N; i++) { const p = `${X(lam(i)).toFixed(1)},${Y(s(lam(i))).toFixed(1)}`; full += ` L${p}`; line += (i ? ' L' : 'M') + p; }
+    Kit.mk('path', {d: full + ` L${X(L1)},${sy1} Z`, fill: 'url(#hatch)', opacity: .9}, G.scope);
+    caughtEl = Kit.mk('path', {d: caughtD(vn, vreal), fill: 'url(#cg)', stroke: PH2, 'stroke-width': 1, 'stroke-opacity': .6}, G.scope);
+    G.gaps = Kit.mk('g', {}, G.scope);
+    Kit.mk('path', {d: line, fill: 'none', stroke: PH, 'stroke-width': 2, 'stroke-linejoin': 'round', id: 'trace'}, G.scope);
+    Kit.mk('rect', {x: sx0, y: sy0 + 1, width: fs * 3, height: Math.max(0, sh - 2), fill: 'url(#sg)', class: 'scan', style: `--sw:${sx1 - sx0 - fs * 3}px`}, G.scope);
+    flash = Kit.mk('rect', {x: sx0, y: sy0, width: sx1 - sx0, height: sh, rx: fs * .5, fill: WHITE, opacity: 0, 'pointer-events': 'none'}, G.scope);
+    // the record stamp, top-right of the screen where the trace is low
+    stamp = null;
+    if (sh >= fs * 3.6) {
+      const sw = fs * 7.4, sht = fs * 1.55;
+      stamp = Kit.mk('g', {transform: `translate(${sx1 - fs * .5 - sw},${sy0 + fs * .5})`}, G.scope);
+      Kit.mk('rect', {width: sw, height: sht, rx: fs * .3, fill: 'rgba(20,10,0,.85)', stroke: STAMP, 'stroke-width': 1.3}, stamp);
+      stampT = mono(stamp, sw / 2, sht / 2 + fs * .36, '', {'text-anchor': 'middle', fill: STAMP});
+    }
+    // the axis below the screen
+    const ay = sy1 + fs * 1.2;
+    mono(svg, sx0, ay, 'UV', {fill: DIM});
+    mono(svg, X(560), ay, 'VISIBLE', {'text-anchor': 'middle', fill: DIM});
+    mono(svg, sx1, ay, 'INFRARED →', {'text-anchor': 'end', fill: DIM});
+
+    G.cell = Kit.mk('g', {}, svg);
+    // the meter
+    G.meter = Kit.mk('g', {}, svg);
+    const ly = my - bh / 2 - fs * .5;
+    mono(G.meter, mx0, ly, 'EFFICIENCY', {fill: DIM});
+    readout = mono(G.meter, mx0 + fs * 6.7, ly, '', {'font-size': fs * 1.3});
+    mono(G.meter, mX(40), ly, '40%', {'text-anchor': 'middle', fill: AMB});
+    Kit.mk('rect', {x: mx0, y: my - bh / 2, width: mx1 - mx0, height: bh, rx: bh / 2, fill: 'rgba(16,16,12,.35)', stroke: DEEP, 'stroke-width': 1.2}, G.meter);
+    meterEl = Kit.mk('rect', {x: mx0, y: my - bh / 2, width: meterW(), height: bh, rx: bh / 2, fill: 'url(#mg)'}, G.meter);
+    for (let v = 10; v < 50; v += 10) Kit.mk('line', {x1: mX(v), x2: mX(v), y1: my - bh / 2 - (v === 40 ? fs * .2 : 0), y2: my + bh / 2 + (v === 40 ? fs * .2 : 0), stroke: v === 40 ? AMB : '#10100c', 'stroke-width': v === 40 ? 2 : 1, opacity: v === 40 ? 1 : .5}, G.meter);
+    drawState(false);
+  }
+
+  // The gap lines on the screen, the readout, and the cell's layers with the light going into them.
+  function drawState(anim) {
+    G.gaps.innerHTML = ''; G.cell.innerHTML = '';
+    readL.textContent = `CELL · ${vn} JUNCTION${vn > 1 ? 'S' : ''}`;
+    GAPS[vn].forEach(g => { if (g < L1) Kit.mk('line', {x1: X(g), x2: X(g), y1: sy0 + 2, y2: sy1, stroke: PH2, 'stroke-width': 1, 'stroke-dasharray': '3 3', opacity: .55}, G.gaps); });
+    readout.textContent = vn === 3 && !vreal ? '> 40%' : '< 40%';
+    readout.setAttribute('fill', vn === 3 ? AMB : PH);
+    if (stamp) { stamp.style.display = vn === 3 ? '' : 'none'; stampT.textContent = vreal ? 'REAL ROOF' : 'LAB RECORD'; }
+    if (mode === 'none') return;
+
+    const cx0 = sx0, cx1 = sx1, lh = (cy1 - cy0) / vn;
+    const labels = mode === 'full' && lh >= fs * 1.35;
+    const fills = ['rgba(255,255,255,.3)', 'rgba(255,255,255,.22)', 'rgba(255,255,255,.15)'];
+    const slabs = [];
+    for (let i = 0; i < vn; i++) {
+      const y = cy0 + i * lh, g = Kit.mk('g', {}, G.cell);
+      const eats = RAYS.filter(r => GAPS[vn].findIndex(gp => gp >= r.l) === i);
+      Kit.mk('rect', {x: cx0, y: y + 1, width: cx1 - cx0, height: Math.max(0, lh - 2), rx: Math.min(fs * .3, lh / 3), fill: fills[i], stroke: PH, 'stroke-width': 1.2, 'stroke-opacity': .7}, g);
+      if (eats.length) Kit.mk('rect', {x: cx0, y: y + 1, width: cx1 - cx0, height: Math.max(0, lh - 2), rx: Math.min(fs * .3, lh / 3), fill: eats[0].c, opacity: .12}, g);
+      if (labels) mono(g, cx1 - fs * .6, y + lh / 2 + fs * .35, eats.length ? 'catches ' + eats.map(r => r.n).join(' + ') : '', {'text-anchor': 'end', fill: PH2});
+      slabs.push(g);
+    }
+    // metal contact fingers on top of the cell
+    if (mode === 'full') for (let x = cx0 + fs * 6; x < cx1 - fs * .8; x += fs * 1.3) Kit.mk('rect', {x, y: cy0 - fs * .18, width: 1.6, height: fs * .3, fill: PH2, opacity: .55}, G.cell);
+    // three beams of light, photons streaming down, each stopping in the layer that eats it
+    RAYS.forEach((r, j) => {
+      const x = cx0 + fs * 1.2 + j * fs * 1.6, li = GAPS[vn].findIndex(g => g >= r.l);
+      const yEnd = li < 0 ? cy1 + fs * (mode === 'full' ? 1.25 : .95) : cy0 + li * lh + lh * .55;
+      const y0 = cy0 - entry;
+      const b = Kit.mk('line', {x1: x, x2: x, y1: y0, y2: yEnd, stroke: r.c, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .7}, G.cell);
+      const p = fs * .75;
+      const f = Kit.mk('line', {x1: x, x2: x, y1: y0, y2: yEnd, stroke: r.c, 'stroke-width': 3.4, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${p}`, class: 'flow', style: `--d:${-p}px`}, G.cell);
+      if (li >= 0) {
+        const rr = Math.min(fs * .32, lh * .42);
+        Kit.mk('circle', {cx: x, cy: yEnd, r: rr * 1.4, fill: r.c, opacity: .5, class: 'pulse'}, G.cell);
+        Kit.mk('circle', {cx: x, cy: yEnd, r: rr, fill: r.c, stroke: PH, 'stroke-width': 1}, G.cell);
+      }
+      if (anim && !Kit.calm) {
+        const len = yEnd - y0;
+        gsap.fromTo(b, {attr: {'stroke-dasharray': len, 'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: .6, delay: .15 + j * .08, ease: 'power3.out', onComplete: () => b.removeAttribute('stroke-dasharray')});
+        gsap.from(f, {opacity: 0, duration: .5, delay: .5 + j * .08});
+      }
+    });
+    mono(G.cell, cx0 + fs * 5.6, cy1 + fs * (mode === 'full' ? 1.15 : 1.0), vn < 3 ? '↓ infrared passes through' : '↓ almost nothing passes', {fill: DIM});
+    if (anim && !Kit.calm) gsap.from(slabs[vn - 1], {y: -fs * 1.5, opacity: 0, duration: .55, ease: 'back.out(2)'});
+  }
+
+  function morphTo(dur) {
+    const d = caughtD(vn, vreal), w = meterW();
+    if (Kit.calm) { caughtEl.setAttribute('d', d); meterEl.setAttribute('width', w); return; }
+    gsap.to(caughtEl, {morphSVG: d, duration: dur, ease: 'expo.out'});
+    gsap.to(meterEl, {attr: {width: w}, duration: dur * 1.2, ease: 'power3.out'});
+  }
+
+  function scramble(el, from, to, delay, dur) {
+    if (!el || Kit.calm) return;
+    el.textContent = from;
+    gsap.to(el, {duration: dur, delay, scrambleText: {text: to, chars: '01%<>#', speed: .6}});
+  }
+
+  function step() {
+    if (n >= 3) return;
+    n++; Kit.haptic('selection');
+    if (n === 2) say.innerHTML = 'Each layer eats its own colours and lets the rest through. <b>Tap once more.</b>';
+    if (n === 3) { say.innerHTML = 'Three junctions: almost no colour goes to waste. Lab cells pass <b>40 %</b>.'; Kit.show('roof'); }
+    after(() => {
+      vn = n; drawState(true); morphTo(.9);
+      if (vn === 3) {
+        Kit.haptic('success');
+        scramble(readout, '< 40%', '> 40%', .35, 1.1);
+        scramble(stampT, '', 'LAB RECORD', .7, .9);
+        if (!Kit.calm) {
+          if (stamp) gsap.from(stamp, {scale: 1.6, opacity: 0, transformOrigin: '50% 50%', duration: .5, delay: .6, ease: 'back.out(2.5)'});
+          gsap.fromTo(flash, {opacity: .22}, {opacity: 0, duration: .9, delay: .3, ease: 'power2.out'});
+          gsap.fromTo('#trace', {attr: {'stroke-width': 6}}, {attr: {'stroke-width': 2}, duration: 1.2, delay: .3, ease: 'expo.out'});
+        }
+      }
+    });
+  }
+  svg.addEventListener('click', step);
+
+  roof.addEventListener('click', () => {
+    if (real || n < 3) return; real = true; Kit.haptic('light');
+    Kit.hide('roof'); Kit.show('keep');
+    say.innerHTML = 'One layer turns strong colours to heat and misses weak ones. Stacks fix that in the lab; on a roof, it drops.';
+    after(() => {
+      vreal = true; drawState(false); morphTo(1.4);
+      scramble(readout, '> 40%', '< 40%', .1, 1);
+      scramble(stampT, 'LAB RECORD', 'REAL ROOF', .2, .9);
+    });
+  });
+
+  new ResizeObserver(() => { if (W) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    const tr = document.getElementById('trace'); if (!tr) return;
+    const len = tr.getTotalLength();
+    gsap.fromTo(tr, {attr: {'stroke-dasharray': len, 'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: 1.4, ease: 'power2.inOut', onComplete: () => tr.removeAttribute('stroke-dasharray')});
+    gsap.from(caughtEl, {opacity: 0, duration: .8, delay: .9, ease: 'power2.out'});
+    gsap.from(meterEl, {attr: {width: 0}, duration: 1, delay: 1, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    svg.dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(Kit.calm ? 60 : 400);
+    svg.dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(Kit.calm ? 60 : 1300);
+    roof.click(); await wait(Kit.calm ? 60 : 1600);
+  };
+})();
+Kit.single();
+</script>
+</html>

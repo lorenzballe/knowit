@@ -1,0 +1,38 @@
+{
+  "id": "nature-lituya-bay-wave",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How tall was the 1958 tsunami in Lituya Bay, Alaska?",
+  "answer": "The 1958 tsunami in Lituya Bay, Alaska reached 525 m. An earthquake sent landslides into the bay, and they pushed up that wave. It is the tallest tsunami on record.",
+  "move": "The tallest tsunami on record, 525 m, came from landslides falling into a bay.",
+  "keywords": [
+    "tsunami",
+    "lituya bay",
+    "alaska",
+    "landslide",
+    "earthquake"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A wave-height guessing game. The page shows a tsunami wave, and the reader drags its crest upward to the height they think the 1958 Lituya Bay, Alaska wave reached.",
+    "graded": false
+  },
+  "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bEL4wbv_nOo&t=17s",
+  "written": "2026-11-03"
+}

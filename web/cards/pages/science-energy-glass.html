@@ -1,0 +1,457 @@
+<!doctype html>
+<!-- slug: science-energy-glass -->
+<!-- Look: an old botanical plate, with sepia line engraving, a specimen glass "Vas atmosphaerae", CO₂ molecules drawn like seeds, a sun and Latin labels, printed straight on the card.
+     Interaction: drag a brass knob along the engraved scale from 320 ppm (1960) to 430 ppm (2025). Molecules multiply and the glass of absorbed energy rises on a spring, with bubbles stirring inside.
+     Wow: past 2025 the glass brims and spills, the puddle spreads across the plate, and the label turns to "Ultra intellectum". -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The energy glass</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;background:none}
+#pic text.lat{font-family:var(--display);font-style:italic}
+#pic text.disp{font-family:var(--display)}
+#pic text.mono{font-family:var(--mono)}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{font:800 max(2.5cqh,16px)/1.1 var(--display)}
+#why .body{font:500 max(1.7cqh,12px)/1.3 var(--body)}
+.say{overflow-wrap:anywhere}
+.flow{animation:flow 1.3s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-14}}
+.spin{animation:spin 70s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nudge{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(5px)}}
+.kit-calm .flow,.kit-calm .spin,.kit-calm .nudge{animation:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag the CO₂ · the energy glass">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FILL THE GLASS</span></div>
+    <h2 class="q">As CO₂ rises, how much energy can the atmosphere absorb?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="An engraved plate: a glass of absorbed energy under a sun, CO₂ molecules in the air, and a scale of CO₂ from 320 ppm in 1960 to 430 ppm in 2025 and beyond."></svg>
+    </div>
+    <p class="say" id="say">Drag the brass knob: CO₂ in the air from <b>1960</b> to <b>2025</b>.</p>
+    <div id="why" class="gone"><p class="big">Beyond comprehension</p><p class="body">Burning fossil fuels releases CO₂: 320 ppm in 1960, 430 in 2025. More CO₂, more energy absorbed, and it may grow beyond our comprehension.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>More CO₂ in the air means more energy absorbed, and CO₂ keeps rising.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const INK = '#10100c', RED = '#9b2a16', MAXN = 46;
+  let W = 0, H = 0, fs = 13, sm = 12, lfs = 13, lgap = 16, G = {}, mols = [];
+  let cx, gt, gb, gw, bw, bt, wt, sy, x0, x1, x2, elx, ely, rx, ry1, ry2, wide = false, colRight = 0, labEnd = 0, leftLim = 0, rightLim = 0;
+  let u = 0, lv = .3, lvT = .3, lvV = 0, ov = 0, ovS = 0, ovV = 0, last = 0;
+  let touched = false, stage = 0, wowT = 0, lastStep = 32, looping = false;
+  const cands = Array.from({length: 700}, () => [Kit.rnd(), Kit.rnd(), Kit.rnd()]);
+  const bubs = Array.from({length: 9}, () => [Kit.rnd(), Kit.rnd()]);
+
+  const targetOf = v => v <= 1 ? .3 + .62 * v : .92 + .08 * Math.min(1, (v - 1) / .1);
+  const ovOf = v => Math.max(0, Math.min(1, (v - 1.06) / .17));
+  const nOf = v => Math.min(mols.length, Math.round(5 + 13 * Math.min(v, 1) + Math.max(0, v - 1) / .25 * (MAXN - 18)));
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs}, a), p); e.textContent = s; return e; };
+  const hw = y => { const t = Math.max(0, Math.min(1, (y - gt) / (gb - gt))); return Math.max(1, gw / 2 + (bw / 2 - gw / 2) * t - wt); };
+  const gpath = (ins, top, bot, r) => {
+    const l0 = cx - gw / 2 + ins, r0 = cx + gw / 2 - ins, l1 = cx - bw / 2 + ins, r1 = cx + bw / 2 - ins;
+    return `M${l0},${top} L${l1},${bot - r} Q${l1},${bot} ${l1 + r},${bot} L${r1 - r},${bot} Q${r1},${bot} ${r1},${bot - r} L${r0},${top} Z`;
+  };
+  // an organic puddle, bounded exactly by eL (left) and eR (right)
+  const blob = (y, eL, eR, ry, tt, wob) => {
+    const p = [];
+    for (let i = 0; i < 28; i++) {
+      const a = i / 28 * Math.PI * 2, c = Math.cos(a), s = Math.sin(a);
+      const x = cx + c * (c < 0 ? eL : eR), yy = y + s * ry * (1 + wob * Math.sin(3 * a + tt * 2));
+      p.push(`${x.toFixed(1)},${yy.toFixed(1)}`);
+    }
+    return `M${p.join(' L')} Z`;
+  };
+
+  function molecule(p, s) {
+    const g = mk('g', {}, p);
+    for (const d of [-.17, .17]) mk('line', {x1: -s * 1.2, x2: s * 1.2, y1: s * d, y2: s * d, stroke: INK, 'stroke-width': .9}, g);
+    for (const d of [-1.25, 1.25]) {
+      mk('circle', {cx: s * d, cy: 0, r: s * .62, fill: 'url(#oxy)', stroke: INK, 'stroke-width': .8}, g);
+      mk('path', {d: `M${s * d - s * .35},${s * .1} a${s * .4},${s * .4} 0 0 0 ${s * .55},${s * .38}`, stroke: INK, 'stroke-width': .5, fill: 'none', opacity: .6}, g);
+    }
+    mk('circle', {cx: 0, cy: 0, r: s * .72, fill: 'url(#carb)', stroke: INK, 'stroke-width': .8}, g);
+    mk('circle', {cx: -s * .22, cy: -s * .25, r: s * .16, fill: '#fff', opacity: .55}, g);
+    return g;
+  }
+
+  function measureLab() {
+    if (!G.el1) return;
+    labEnd = elx + Math.max(G.el1.getComputedTextLength(), G.el2.getComputedTextLength());
+  }
+
+  function layout() {
+    const prevOn = mols.map(m => m.on);
+    svg.innerHTML = ''; G = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    if (W < 80 || H < 80) return;
+    fs = Math.max(12, Math.min(15, W / 24, H / 20));
+    sm = Math.max(12, fs * .85);
+    wide = H < W * .95;
+    lfs = wide ? sm : fs;
+    const defs = mk('defs', {}, svg);
+    const grad = (tag, id, stops, a = {}) => { const g = mk(tag, Object.assign({id}, a), defs); stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g)); };
+    grad('linearGradient', 'liq', [[0, '#e8913f'], [.45, '#c4471e'], [1, '#6a150a']], {x1: 0, y1: 0, x2: 0, y2: 1});
+    grad('linearGradient', 'surf', [[0, '#f9cf86'], [.6, '#efa457'], [1, '#d96f2f']], {x1: 0, y1: 0, x2: 1, y2: 0});
+    grad('linearGradient', 'glass', [[0, '#ffffff', .6], [.16, '#ffffff', .28], [.72, '#ffffff', .1], [1, '#10100c', .14]], {x1: 0, y1: 0, x2: 1, y2: 0});
+    grad('radialGradient', 'brass', [[0, '#fff3c8'], [.5, '#d8a548'], [1, '#6f4b14']], {cx: '35%', cy: '30%', r: '75%'});
+    grad('linearGradient', 'pud', [[0, '#d4642a'], [.55, '#a8361a'], [1, '#6a150a']], {x1: 0, y1: 0, x2: 0, y2: 1});
+    grad('radialGradient', 'sun', [[0, '#fff6cf'], [.6, '#f1c464'], [1, '#c4842a']], {cx: '40%', cy: '38%'});
+    grad('radialGradient', 'oxy', [[0, '#fde9dc'], [.6, '#d9805a'], [1, '#8a2c14']], {cx: '35%', cy: '30%'});
+    grad('radialGradient', 'carb', [[0, '#e0d7c6'], [.6, '#5e4e3c'], [1, '#1c140d']], {cx: '35%', cy: '30%'});
+    grad('radialGradient', 'halo', [[0, '#fff6cf', .75], [1, '#fff6cf', 0]]);
+    const pat = mk('pattern', {id: 'hatch', width: 3.2, height: 3.2, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 3.2, stroke: INK, 'stroke-width': .6}, pat);
+    const pl = mk('pattern', {id: 'lines', width: 6, height: 2.8, patternUnits: 'userSpaceOnUse'}, defs);
+    mk('line', {x1: 0, y1: 1.4, x2: 6, y2: 1.4, stroke: INK, 'stroke-width': .45, opacity: .35}, pl);
+
+    // ---- frame geometry (kept as layout margins only; nothing is drawn there)
+    const m = 4, m2 = 10, cart = H > fs * 14;
+    const cy = m2 + fs * 1.35;
+    const top0 = cart ? cy + fs * .7 : m2 + fs * .3;
+    const fn = fs * (H > fs * 16 ? 2.2 : 1.7);
+    rx = m2 + fs * .9;
+    ry1 = top0 + fn * .82;
+    ry2 = ry1 + fn * .4 + sm * 1.25;
+    const rb = ry2 + sm * .45;
+    sy = H - m2 - fs * 2;
+    const cap = H > fs * 13;
+    gb = sy - fs * (cap ? 3.3 : 1.85);
+    const sr = fs * (wide ? .8 : 1), sx = W - m2 - sr * 2.3, syy = top0 + sr * 1.9;
+    x0 = m2 + fs * 1.2; x2 = W - m2 - fs * 2.9; x1 = x0 + (x2 - x0) / 1.25;
+
+    const plate = mk('g', {class: 'plate'}, svg);
+    // cartouche
+    if (cart) {
+      const ct = txt(plate, W / 2, cy, 'TAB. II · VAS ATMOSPHAERAE', {class: 'mono', 'font-size': sm, 'text-anchor': 'middle', 'letter-spacing': '.1em', opacity: .85});
+      let cw = ct.getComputedTextLength();
+      const maxw = W - 2 * m2 - fs * 2;
+      if (cw > maxw) { ct.setAttribute('textLength', maxw); ct.setAttribute('lengthAdjust', 'spacingAndGlyphs'); cw = maxw; }
+      const ca = W / 2 - cw / 2 - fs * .6, cb = W / 2 + cw / 2 + fs * .6, ly = cy - sm * .32;
+      if (ca - m2 > fs * 2.2) {
+        for (const [p, q, s] of [[m2 + fs * .6, ca, 1], [cb, W - m2 - fs * .6, -1]]) {
+          mk('line', {x1: p, x2: q, y1: ly, y2: ly, stroke: INK, 'stroke-width': .6}, plate);
+          const lx = s > 0 ? q - fs * .2 : p + fs * .2;
+          mk('path', {d: `M${lx},${ly} q${-s * fs * .5},${-fs * .55} ${-s * fs * 1.1},${-fs * .1} q${s * fs * .5},${fs * .15} ${s * fs * 1.1},${fs * .1}Z`, fill: '#0b6b49', stroke: INK, 'stroke-width': .6}, plate);
+        }
+      }
+    }
+    // readout (measured before the glass is placed)
+    G.num = txt(plate, rx, ry1, '> 430', {class: 'disp', 'font-size': fn, 'font-weight': 800});
+    G.unit = txt(plate, rx, ry1, 'ppm', {class: 'mono', 'font-size': sm, opacity: .8});
+    const nw = G.num.getComputedTextLength() + fs * .35 + G.unit.getComputedTextLength();
+    const icon = molecule(plate, fs * .32); icon.setAttribute('transform', `translate(${rx + fs * .6},${ry2 - sm * .33})`);
+    G.year = txt(plate, rx + fs * 1.45, ry2, 'CO₂ · 1960 → 2025', {class: 'lat', 'font-size': sm});
+    const readW = Math.max(nw, fs * 1.45 + G.year.getComputedTextLength());
+    const probe = txt(svg, 0, -40, 'intellectum', {class: 'lat', 'font-weight': 600, 'font-size': lfs});
+    let labW = probe.getComputedTextLength(), labH = 0;
+    try { labH = probe.getBBox().height; } catch (err) { labH = 0; }
+    probe.textContent = 'absorpta'; labW = Math.max(labW, probe.getComputedTextLength());
+    try { labH = Math.max(labH, probe.getBBox().height); } catch (err) {}
+    probe.textContent = 'Energia';
+    try { labH = Math.max(labH, probe.getBBox().height); } catch (err) {}
+    probe.remove();
+    lgap = Math.max(lfs * 1.25, labH + 2);
+
+    // ---- the glass
+    let gh;
+    if (!wide) {
+      gh = Math.max(fs * 3, Math.min(gb - (rb + fs * 1.5), W * .62));
+      gt = gb - gh;
+      gw = Math.max(fs * 2, Math.min(W * .4, gh * .78));
+      cx = Math.max(m2 + fs * 1.4 + gw / 2, Math.min(W * .44, W - m2 - fs * .6 - labW - fs * 1.4 - gw / 2));
+      elx = cx + gw / 2 + fs * 1.4; ely = Math.max(gt + gh * .45, syy + sr * 1.9 + fs);
+      colRight = rx + readW;
+    } else {
+      colRight = rx + Math.max(readW, labW);
+      gt = top0 + fs * (cart ? .9 : 1.1);
+      gh = Math.max(fs * 3, gb - gt);
+      const A = colRight + fs * 1.4, B = sx - sr * 1.85 - fs * .8;
+      gw = Math.max(fs * 2, Math.min(gh * .78, W * .32, B - A));
+      cx = gw <= B - A ? (A + B) / 2 : A + gw / 2;
+      elx = rx;
+      ely = Math.max(rb + lfs * 1.2, gt + gh * .4);
+      ely = Math.max(rb + lfs * 1.05, Math.min(ely, sy - fs * 1.35 - lgap - lfs * .3));
+    }
+    bw = gw * .78;
+    bt = Math.max(3, gh * .08); wt = Math.max(2, gw * .035);
+    leftLim = (wide && ely + lgap + lfs * .3 > gb - fs * .8) ? Math.min(cx - gw * .5, colRight + fs * .5) : m2 + 3;
+    rightLim = W - m2 - 3;
+
+    mk('clipPath', {id: 'gin'}, defs).appendChild(mk('path', {d: gpath(wt, gt - fs * 1.6, gb - bt, gw * .06)}, svg));
+    mk('clipPath', {id: 'gout'}, defs).appendChild(mk('path', {d: gpath(0, gt, gb, gw * .08)}, svg));
+
+    // sun, halo and its light
+    mk('circle', {cx: sx, cy: syy, r: sr * 2.6, fill: 'url(#halo)'}, plate);
+    const sun = mk('g', {transform: `translate(${sx},${syy})`}, plate);
+    const rays = mk('g', {class: 'spin'}, sun);
+    for (let i = 0; i < 20; i++) {
+      const a = i / 20 * Math.PI * 2, r2 = sr * (i % 2 ? 1.45 : 1.75);
+      mk('line', {x1: Math.cos(a) * sr * 1.15, y1: Math.sin(a) * sr * 1.15, x2: Math.cos(a) * r2, y2: Math.sin(a) * r2, stroke: INK, 'stroke-width': i % 2 ? .6 : 1}, rays);
+    }
+    mk('circle', {r: sr, fill: 'url(#sun)', stroke: INK, 'stroke-width': 1}, sun);
+    mk('circle', {r: sr * .68, fill: 'none', stroke: INK, 'stroke-width': .45, 'stroke-dasharray': '1.5 2'}, sun);
+    for (const [ex, ey] of [[cx + gw * .18, gt - fs * .3], [cx - gw * .12, gt - fs * .1]]) {
+      const ax = sx - sr * 1.3, ay = syy + sr * .7;
+      mk('line', {x1: ax, y1: ay, x2: ex, y2: ey, stroke: '#6b3d00', 'stroke-width': 1.1, 'stroke-dasharray': '5 2', class: 'flow', opacity: .85}, plate);
+    }
+
+    // shadow, puddle, ripples
+    mk('ellipse', {cx, cy: gb, rx: gw * .62, ry: fs * .3, fill: 'url(#hatch)', opacity: .45}, plate);
+    G.rip = [0, 1, 2].map(() => mk('path', {fill: 'none', stroke: RED, 'stroke-width': 1, opacity: 0}, svg));
+    G.pud = mk('path', {fill: 'url(#pud)', stroke: INK, 'stroke-width': .7, opacity: 0}, svg);
+    G.pudL = mk('path', {fill: 'url(#lines)', opacity: 0}, svg);
+
+    // glass back
+    mk('path', {d: `M${cx - gw / 2},${gt} A${gw / 2},${gw * .07} 0 0 1 ${cx + gw / 2},${gt}`, fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .7}, svg);
+    // liquid with bubbles
+    const lq = mk('g', {'clip-path': 'url(#gin)'}, svg);
+    G.body = mk('path', {fill: 'url(#liq)'}, lq);
+    G.bodyL = mk('path', {fill: 'url(#lines)'}, lq);
+    G.bub = bubs.map((b, i) => mk('circle', {r: fs * (.07 + .05 * (i % 3)), fill: '#fbd79a', 'fill-opacity': .55, stroke: '#5e1208', 'stroke-width': .4, opacity: 0}, lq));
+    G.surf = mk('path', {fill: 'url(#surf)', stroke: INK, 'stroke-width': .7}, lq);
+    // glass front
+    mk('path', {d: gpath(0, gt, gb, gw * .08), fill: 'url(#glass)'}, svg);
+    const gclip = mk('g', {'clip-path': 'url(#gout)'}, svg);
+    mk('rect', {x: cx + gw * .26, y: gt, width: gw * .3, height: gh, fill: 'url(#hatch)', opacity: .38}, gclip);
+    mk('rect', {x: cx - gw / 2 + wt * 1.6, y: gt + fs * .4, width: gw * .06, height: gh * .8, fill: '#fff', opacity: .55, rx: gw * .03}, gclip);
+    mk('rect', {x: cx - gw / 2, y: gb - bt, width: gw, height: bt, fill: 'url(#hatch)', opacity: .5}, gclip);
+    mk('ellipse', {cx, cy: gb - bt, rx: hw(gb - bt) + wt, ry: Math.max(1, fs * .22), fill: 'none', stroke: INK, 'stroke-width': .6}, svg);
+    mk('path', {d: gpath(0, gt, gb, gw * .08), fill: 'none', stroke: INK, 'stroke-width': 1.4, class: 'draw', pathLength: 1, 'stroke-dasharray': 1}, svg);
+    mk('path', {d: `M${cx - gw / 2},${gt} A${gw / 2},${gw * .07} 0 0 0 ${cx + gw / 2},${gt}`, fill: 'none', stroke: INK, 'stroke-width': 1.3}, svg);
+    for (let k = 1; k <= 4; k++) { const yy = gb - bt - (gb - bt - gt) * k / 5; mk('line', {x1: cx - hw(yy) - wt, x2: cx - hw(yy) + fs * .4, y1: yy, y2: yy, stroke: INK, 'stroke-width': .6, opacity: .7}, svg); }
+    // spill
+    G.sp = [-1, 1].map(() => mk('path', {fill: 'none', stroke: '#a8361a', 'stroke-linecap': 'round', opacity: 0}, svg));
+    G.dr = Array.from({length: 6}, () => mk('circle', {r: 1, fill: '#8e2410', opacity: 0}, svg));
+
+    // molecules, kept off every label
+    const pts = [], dmin = fs * 2.2;
+    const lb = wide ? [0, ely - lfs * 1.3, labEnd0(), ely + lgap + lfs * .55] : [elx - fs, ely - fs * 1.6, W, ely + lgap + fs * 1.05];
+    function labEnd0() { return rx + labW + fs * .8; }
+    const boxes = [[0, 0, colRight + fs * .8, rb + fs * .7], [sx - sr * 2.6, 0, W, syy + sr * 2.4], [cx - gw / 2 - fs * 1.3, gt - fs * 1.6, cx + gw / 2 + fs * 1.3, H], lb];
+    const xmin = m2 + fs * 1.1, xmax = W - m2 - fs * 1.1, ymin = top0 + fs * .7, ymax = gb - fs * .5;
+    if (ymax > ymin) for (const [a, b, c] of cands) {
+      if (pts.length >= MAXN) break;
+      const x = xmin + a * (xmax - xmin), y = ymin + b * (ymax - ymin);
+      if (boxes.some(q => x > q[0] && x < q[2] && y > q[1] && y < q[3])) continue;
+      if (pts.some(p => Math.hypot(p.x - x, p.y - y) < dmin)) continue;
+      pts.push({x, y, ph: c * 6.283, rot: (c - .5) * 90});
+    }
+    const ml = mk('g', {}, svg);
+    mols = pts.map((p, i) => {
+      const g = mk('g', {}, ml), k = molecule(g, fs * .4);
+      const on = prevOn.length ? !!prevOn[i] : i < nOf(u);
+      gsap.set(k, {scale: on ? 1 : 0, svgOrigin: '0 0'});
+      return Object.assign(p, {g, k, on});
+    });
+    updateMols();
+
+    // energy label
+    G.lead = mk('line', {stroke: INK, 'stroke-width': .7}, svg);
+    G.dot = mk('circle', {r: 1.8, fill: INK}, svg);
+    G.elab = mk('g', {}, svg);
+    G.el1 = txt(G.elab, elx, ely, stage >= 2 ? 'Ultra' : 'Energia', {class: 'lat', 'font-weight': 600, 'font-size': lfs});
+    G.el2 = txt(G.elab, elx, ely + lgap, stage >= 2 ? 'intellectum' : 'absorpta', {class: 'lat', 'font-weight': 600, 'font-size': lfs});
+    measureLab();
+    if (cap) txt(svg, cx, gb + fs * 1.6, 'Vas atmosphaerae', {class: 'lat', 'text-anchor': 'middle', 'font-size': sm});
+
+    // scale
+    mk('line', {x1: x0, x2: x1, y1: sy, y2: sy, stroke: INK, 'stroke-width': fs * .32, 'stroke-linecap': 'round'}, svg);
+    mk('line', {x1: x0, x2: x1, y1: sy, y2: sy, stroke: '#00E5A0', 'stroke-width': fs * .13, 'stroke-linecap': 'round'}, svg);
+    mk('line', {x1: x1 + fs * .3, x2: x2, y1: sy, y2: sy, stroke: INK, 'stroke-width': 1.1, 'stroke-dasharray': '2 3'}, svg);
+    for (let k = 0; k <= 10; k++) { const xx = x0 + (x1 - x0) * k / 10, big = k % 5 === 0; mk('line', {x1: xx, x2: xx, y1: sy - fs * .25, y2: sy - fs * (big ? .75 : .5), stroke: INK, 'stroke-width': big ? 1 : .6}, svg); }
+    G.fill = mk('line', {x1: x0, x2: x0, y1: sy, y2: sy, stroke: RED, 'stroke-width': fs * .14, 'stroke-linecap': 'round'}, svg);
+    const ty = sy + fs * 1.6;
+    const la = txt(svg, x0 - fs * .3, ty, '320 ppm · 1960', {class: 'mono', 'font-size': sm});
+    const lbt = txt(svg, x1, ty, '430 ppm · 2025', {class: 'mono', 'font-size': sm, 'text-anchor': 'middle'});
+    if (x0 - fs * .3 + la.getComputedTextLength() + fs > x1 - lbt.getComputedTextLength() / 2) { la.textContent = '1960'; lbt.textContent = '2025'; }
+    txt(svg, x2 + fs * 1.6, sy + fs * .48, '?', {class: 'disp', 'font-size': fs * 1.4, 'font-weight': 800, 'text-anchor': 'middle'});
+    G.knob = mk('g', {}, svg);
+    G.hint = mk('g', {class: 'nudge'}, G.knob);
+    mk('path', {d: `M${fs * 1.1},${-fs * .45} l${fs * .5},${fs * .45} l${-fs * .5},${fs * .45}`, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.hint);
+    if (touched) G.hint.style.display = 'none';
+    G.kin = mk('g', {}, G.knob);
+    mk('circle', {cy: fs * .12, r: fs * .82, fill: INK, opacity: .25}, G.kin);
+    mk('circle', {r: fs * .8, fill: 'url(#brass)', stroke: INK, 'stroke-width': 1.1}, G.kin);
+    mk('circle', {r: fs * .38, fill: 'none', stroke: INK, 'stroke-width': .6}, G.kin);
+    for (const d of [-.15, 0, .15]) mk('line', {x1: fs * d, x2: fs * d, y1: -fs * .2, y2: fs * .2, stroke: INK, 'stroke-width': .7}, G.kin);
+    gsap.set(G.kin, {svgOrigin: '0 0'});
+    G.liq = true;
+    readout();
+    if (!looping) { looping = true; requestAnimationFrame(loop); }
+  }
+
+  const xu = v => x0 + (x2 - x0) * v / 1.25;
+
+  function readout() {
+    if (!G.num) return;
+    const ppm = Math.round(320 + 110 * Math.min(u, 1));
+    G.num.textContent = u > 1.01 ? '> 430' : String(ppm);
+    G.unit.setAttribute('x', rx + G.num.getComputedTextLength() + fs * .35);
+    G.year.textContent = u < .02 ? 'CO₂ · anno 1960' : u < .99 ? 'CO₂ · 1960 → 2025' : u <= 1.01 ? 'CO₂ · anno 2025' : 'CO₂ · post 2025';
+  }
+
+  function updateMols() {
+    const n = nOf(u);
+    mols.forEach((m, i) => {
+      const want = i < n; if (want === m.on) return; m.on = want;
+      if (Kit.calm) gsap.set(m.k, {scale: want ? 1 : 0, svgOrigin: '0 0'});
+      else gsap.to(m.k, {scale: want ? 1 : 0, duration: want ? .6 : .3, ease: want ? 'back.out(3.2)' : 'power2.in', svgOrigin: '0 0', overwrite: true, delay: want ? (i % 4) * .03 : 0});
+    });
+  }
+
+  function setU(v) {
+    v = Math.max(0, Math.min(1.25, v));
+    if (Math.abs(v - 1) < .03) v = 1;
+    u = v; lvT = targetOf(u); ov = ovOf(u);
+    const step = Math.floor((320 + 110 * Math.min(u, 1)) / 10);
+    if (step !== lastStep) { lastStep = step; Kit.haptic('selection'); }
+    readout(); updateMols();
+    if (stage === 0 && u >= 1) {
+      stage = 1; Kit.haptic('success'); lvV += 1.1;
+      say.innerHTML = '<b>2025: 430 ppm.</b> More CO₂, more energy held in the air. Now drag past 2025.';
+    }
+    if (stage === 1 && u >= 1.2) reveal();
+  }
+
+  function reveal() {
+    stage = 2; wowT = performance.now(); Kit.haptic('success'); ovV += 2;
+    const swap = () => { if (G.el1) { G.el1.textContent = 'Ultra'; G.el2.textContent = 'intellectum'; measureLab(); } };
+    if (Kit.calm || !G.elab) swap();
+    else gsap.to(G.elab, {opacity: 0, y: -6, duration: .2, ease: 'power2.in', onComplete: () => { swap(); if (G.elab) gsap.fromTo(G.elab, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: .7, ease: 'back.out(3)'}); }});
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }
+
+  function loop(now) {
+    requestAnimationFrame(loop);
+    if (!G.liq || !G.body.isConnected) return;
+    const dt = Math.min(.033, last ? (now - last) / 1000 : .016); last = now;
+    if (Kit.calm) { lv = lvT; lvV = 0; ovS = ov; ovV = 0; }
+    else {
+      const a = 150 * (lvT - lv) - 8.5 * lvV; lvV += a * dt; lv += lvV * dt;
+      const b = 60 * (ov - ovS) - 7.5 * ovV; ovV += b * dt; ovS += ovV * dt;
+    }
+    const tt = now / 1000, o = Math.max(0, Math.min(1.2, ovS)), oc = Math.min(1, o), ib = gb - bt, L = Math.max(0, Math.min(1, lv));
+    const y = ib - L * (ib - gt) - oc * fs * .5;
+    const half = hw(y), r2 = Math.max(1.5, half * .17);
+    const amp = Kit.calm ? 0 : Math.max(-fs, Math.min(fs, lvV * (ib - gt) * .05)) + oc * fs * .14 * Math.sin(tt * 3.2);
+    const N = 18, fr = [], bk = [];
+    for (let i = 0; i <= N; i++) {
+      const q = i / N, x = cx - half + 2 * half * q, s = Math.sin(Math.PI * q);
+      const wv = amp * Math.sin(q * Math.PI * 2 + tt * 4) + (Kit.calm ? 0 : fs * .06 * Math.sin(q * 7 + tt * 2.3));
+      fr.push(`${x.toFixed(1)},${(y + r2 * s + wv).toFixed(1)}`);
+      bk.unshift(`${x.toFixed(1)},${(y - r2 * s + wv).toFixed(1)}`);
+    }
+    const bd = `M${fr.join(' L')} L${cx + half + wt},${gb + 4} L${cx - half - wt},${gb + 4} Z`;
+    G.body.setAttribute('d', bd); G.bodyL.setAttribute('d', bd);
+    G.surf.setAttribute('d', `M${fr.join(' L')} L${bk.join(' L')} Z`);
+    // bubbles: more energy, livelier stirring
+    G.bub.forEach((c, i) => {
+      const [bx, bp] = bubs[i];
+      const p = Kit.calm ? (bp * .8 + .1) : (tt * (.18 + .5 * L) + bp) % 1;
+      const yb = ib - fs * .3 - p * (ib - fs * .3 - (y + r2));
+      const xb = cx + (bx - .5) * 1.5 * hw(yb) + (Kit.calm ? 0 : Math.sin(tt * 3 + i) * fs * .12);
+      c.setAttribute('cx', xb.toFixed(1)); c.setAttribute('cy', yb.toFixed(1));
+      c.setAttribute('opacity', (i < 3 + L * 6 ? .85 * (1 - p * .6) : 0).toFixed(2));
+    });
+    // label leader
+    if (wide) {
+      const lx = cx - half * .55, lyy = y + r2 * .4;
+      G.lead.setAttribute('x1', labEnd + fs * .35); G.lead.setAttribute('y1', ely + lfs * .3);
+      G.lead.setAttribute('x2', lx); G.lead.setAttribute('y2', lyy);
+      G.dot.setAttribute('cx', lx); G.dot.setAttribute('cy', lyy);
+    } else {
+      const lx = cx + half * .55, lyy = y + r2 * .4;
+      G.lead.setAttribute('x1', elx - fs * .35); G.lead.setAttribute('y1', ely - fs * .35);
+      G.lead.setAttribute('x2', lx); G.lead.setAttribute('y2', lyy);
+      G.dot.setAttribute('cx', lx); G.dot.setAttribute('cy', lyy);
+    }
+    // spill over the brim
+    [-1, 1].forEach((s, j) => {
+      const p = G.sp[j], a0 = cx + s * gw / 2, xs = cx + s * (gw / 2 + fs * .45);
+      const wob = Kit.calm ? 0 : Math.sin(tt * 5 + j) * fs * .05;
+      p.setAttribute('d', `M${a0},${gt} C${a0 + s * fs * .7},${gt - fs * .1} ${xs + wob},${gt + fs * .6} ${xs},${gt + fs * 1.4} L${xs},${gb}`);
+      p.setAttribute('stroke-width', Math.max(.5, oc * fs * .3)); p.setAttribute('opacity', Math.min(1, oc * 4));
+      for (let k = 0; k < 3; k++) {
+        const c = G.dr[j * 3 + k], ph = ((Kit.calm ? .3 : tt * .9) + k / 3) % 1;
+        c.setAttribute('cx', xs); c.setAttribute('cy', gt + fs * 1.4 + ph * (gb - gt - fs * 1.4));
+        c.setAttribute('r', fs * .1 + oc * fs * .1); c.setAttribute('opacity', Math.min(1, oc * 3));
+      }
+    });
+    // the puddle spreads across the plate
+    const base = gw * .42, gy = gb + fs * .1;
+    const eL = base + o * Math.max(0, cx - leftLim - base), eR = base + o * Math.max(0, rightLim - cx - base);
+    const pd = blob(gy, Math.min(eL, cx - leftLim), Math.min(eR, rightLim - cx), fs * .16 + oc * fs * .3, tt, Kit.calm ? 0 : .2 * oc);
+    G.pud.setAttribute('d', pd); G.pudL.setAttribute('d', pd);
+    const po = Math.min(1, oc * 4);
+    G.pud.setAttribute('opacity', po); G.pudL.setAttribute('opacity', po);
+    const e = wowT && !Kit.calm ? (now - wowT) / 1000 : -1;
+    G.rip.forEach((r, k) => {
+      const ek = e - k * .28;
+      if (ek > 0 && ek < 1.8) {
+        const q = Math.min(1, ek / 1.4);
+        r.setAttribute('d', blob(gy, base + q * Math.max(0, cx - leftLim - base), base + q * Math.max(0, rightLim - cx - base), fs * .4 + q * fs * .8, tt, 0));
+        r.setAttribute('opacity', ((1 - ek / 1.8) * .8).toFixed(2));
+      } else r.setAttribute('opacity', 0);
+    });
+    const jit = Kit.calm ? 0 : fs * .05 * lv;
+    mols.forEach((m, i) => {
+      const j = jit * Math.sin(tt * (11 + i % 5) + m.ph);
+      const x = m.x + (Kit.calm ? 0 : Math.sin(tt * .6 + m.ph) * fs * .3) + j;
+      const yy = m.y + (Kit.calm ? 0 : Math.cos(tt * .8 + m.ph) * fs * .25);
+      const rot = m.rot + (Kit.calm ? 0 : Math.sin(tt * .5 + m.ph) * 14) + j * 6;
+      const ek = e - i * .035;
+      const sc = ek > 0 && ek < 1.4 ? 1 + .5 * Math.exp(-ek * 4) * Math.sin(ek * 18) : 1;
+      m.g.setAttribute('transform', `translate(${x.toFixed(1)},${yy.toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${sc.toFixed(3)})`);
+    });
+    const hx = xu(u);
+    G.knob.setAttribute('transform', `translate(${hx},${sy})`);
+    G.fill.setAttribute('x2', Math.min(hx, x1));
+  }
+
+  // the drag
+  let drag = false;
+  const at = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - x0) / (x2 - x0) * 1.25; };
+  svg.addEventListener('pointerdown', e => {
+    if (!G.kin) return;
+    drag = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; if (G.hint) G.hint.style.display = 'none'; }
+    if (!Kit.calm) gsap.to(G.kin, {scale: 1.3, duration: .6, ease: 'elastic.out(1,.35)', svgOrigin: '0 0', overwrite: true});
+    setU(at(e));
+  });
+  svg.addEventListener('pointermove', e => { if (drag) setU(at(e)); });
+  const end = () => { if (!drag) return; drag = false; if (!Kit.calm && G.kin) gsap.to(G.kin, {scale: 1, duration: .7, ease: 'elastic.out(1,.3)', svgOrigin: '0 0', overwrite: true}); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  let rq = 0;
+  new ResizeObserver(() => { if (!W) return; cancelAnimationFrame(rq); rq = requestAnimationFrame(layout); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G.kin) return;
+    lv = 0; lvV = 0;
+    gsap.fromTo('#pic .draw', {attr: {'stroke-dashoffset': 1}}, {attr: {'stroke-dashoffset': 0}, duration: 1.3, stagger: .12, ease: 'power2.inOut'});
+    gsap.from('#pic .plate', {opacity: 0, duration: .5, ease: 'power2.out'});
+    const ks = mols.filter(m => m.on).map(m => m.k);
+    gsap.fromTo(ks, {scale: 0}, {scale: 1, duration: .7, stagger: .09, delay: .5, ease: 'back.out(3)', svgOrigin: '0 0'});
+    gsap.fromTo(G.kin, {scale: 0}, {scale: 1, duration: 1, delay: .8, ease: 'elastic.out(1,.4)', svgOrigin: '0 0'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 60 : ms));
+    touched = true; if (G.hint) G.hint.style.display = 'none';
+    setU(.5); await wait(300);
+    setU(1); await wait(500);
+    setU(1.25); await wait(1200);
+  };
+})();
+Kit.single();
+</script>
+</html>

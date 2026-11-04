@@ -1,0 +1,38 @@
+{
+  "id": "maths-coin-rotation-paradox",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "Roll a coin around an identical coin. How many times does it turn?",
+  "answer": "The rolling coin turns twice, not once. Its centre travels a circle twice as wide as the coin, so it covers two of the coin's own circumferences. Halfway round, it is already upright.",
+  "move": "Rolling around a circle, not along a line, adds one extra turn.",
+  "keywords": [
+    "coin",
+    "circle",
+    "rotation",
+    "paradox",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A coin rolls around an identical fixed coin. A scale with a draggable pin asks the reader to guess how many turns the rolling coin makes, then how sure they are. The reader can also drag the coin to roll it around.",
+    "graded": false
+  },
+  "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=216s",
+  "written": "2026-11-03"
+}

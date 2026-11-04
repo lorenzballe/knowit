@@ -1,0 +1,489 @@
+<!doctype html>
+<!-- slug: technology-solar-depot-grid -->
+<!-- Look: a night-to-day navy card. A depot with a 30 kW solar roof, a two-car train, a pylon and a small town, with energy drawn as hundreds of glowing amber sparks.
+     Interaction: drag the sun across the sky. The sparks run from the panels into the storage bank, then fill the convoy's battery. Once the convoy is full, they run out along the wire to the grid, and the town's windows light up.
+     Wow: when the convoy is full and the surplus is selling, every spark leaves the roof and settles into a glowing "30 kW", and the depot pulses like a small power plant. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The depot that sells sunshine</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{margin:0}
+.say b,#why b{color:#ffc54d}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag the sun · where the energy goes" style="--c:#0c1a2b;--k:#f3ead6;--edge:#060e18">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOLAR DEPOT</span></div>
+    <h2 class="q">What two jobs does the depot's 30 kW solar roof do?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="pic" role="img" aria-label="A train depot with solar panels on its roof, a storage battery, a two-car train, a power pylon and a small town. Glowing sparks of energy flow from the roof to the train and then to the grid."></canvas>
+    </div>
+    <p class="say" id="say"><b>Drag the sun</b> across the sky and watch where the energy goes.</p>
+    <p class="body gone" id="why">The 30 kW roof and its storage batteries recharge the <b>whole convoy</b> quickly. Once the train is full, the <b>surplus is sold</b> to the local grid, so the depot works as a small power plant.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The train fills first. Whatever sunshine is left over goes to the grid.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il primo treno solare” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('pic'), card = Kit.$('card'), sayEl = Kit.$('say');
+  const CREAM = '#f3ead6', AMBER = '#ffc54d';
+  const TRAIN_N = 300, SOLD_T = 260, SUN_END = .93;
+  const st = {s: .12, train: 0, sold: 0, store: 0, phase: 'run', touched: false, rev: 0, wave: 0, acc: 0, glow: 0};
+  const E = {ground: 0, depot: 0, panels: 0, train: 0, pylon: 0};
+  const flags = {};
+  let x, W = 0, H = 0, fs = 12, L = {}, ready = false, MONO = 'monospace', DISP = 'sans-serif', HAND = 'cursive';
+  let P = [], stars = [], flashes = [], textPts = [], sub = {}, houses = [];
+
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const bright = () => Math.max(0, Math.sin(Math.PI * st.s));
+
+  // A glowing spark, drawn once and stamped hundreds of times.
+  const sprite = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 32; const g = c.getContext('2d');
+    const gr = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+    gr.addColorStop(0, 'rgba(255,250,225,1)'); gr.addColorStop(.22, 'rgba(255,208,100,.95)');
+    gr.addColorStop(.55, 'rgba(255,150,40,.28)'); gr.addColorStop(1, 'rgba(255,140,30,0)');
+    g.fillStyle = gr; g.beginPath(); g.arc(16, 16, 16, 0, 7); g.fill(); return c;
+  })();
+
+  function layout() {
+    const oW = W, oH = H;
+    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
+    if (!W || !H) return;
+    const cs = getComputedStyle(card);
+    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    DISP = cs.getPropertyValue('--display').trim() || 'sans-serif';
+    HAND = cs.getPropertyValue('--hand').trim() || 'cursive';
+    if (oW && oH && P.length) P.forEach(p => { p.x *= W / oW; p.y *= H / oH; p.tx *= W / oW; p.ty *= H / oH; });
+    fs = Math.max(12, Math.min(14, W / 28));
+    const G = H - fs * 3.2;
+    const wallTop = G - H * .3, roofHigh = G - H * .4;
+    const carH = H * .11, trTop = G - H * .022 - carH;
+    const pyX = W * .9, pyTop = G - H * .44, armY = pyTop + H * .035;
+    const sunR = Math.max(10, Math.min(W, H) * .05);
+    L = {
+      G, x0: W * .04, x1: W * .64, wallTop, roofHigh, dx: W * .05,
+      open: {a: W * .23, b: W * .6, top: G - H * .19},
+      sto: {x: W * .07, y: G - H * .24, w: W * .11, h: H * .16},
+      tr: {x0: W * .22, x1: W * .79, top: trTop, h: carH, nose: W * .06},
+      py: {x: pyX, top: pyTop, w: W * .04, armY},
+      armL: [pyX - W * .06, armY], armR: [pyX + W * .06, armY], wireEnd: armY + H * .05,
+      mast: [W * .64 + W * .03, roofHigh + (wallTop - roofHigh) * .45],
+      sunR, skyT: H * .05 + sunR, skyB: roofHigh - sunR - fs * 1.4
+    };
+    const t = L.tr; L.gauge = {x: t.x0 + W * .02, y: t.top + carH * .6, w: t.x1 - t.x0 - t.nose - W * .03, h: Math.max(4, carH * .14)};
+    if (!stars.length) for (let i = 0; i < 80; i++) stars.push({u: Kit.rnd(), v: Kit.rnd(), r: .4 + Kit.rnd() * 1.1, ph: Kit.rnd() * 6});
+    // a little town beyond the pylon: the "local grid"
+    houses = [];
+    const hx = [[.815, .05, .055], [.865, .045, .085], [.915, .05, .06], [.96, .045, .075]];
+    hx.forEach(([u, w, h], i) => houses.push({x: W * u, w: W * w, h: H * h, roof: i % 2 ? 'flat' : 'gable', lit: [Kit.rnd(), Kit.rnd()]}));
+    if (st.phase === 'reveal') { buildText(); assign(false); }
+    ready = true;
+  }
+
+  const roofPt = (u, v) => [L.x0 + (L.x1 - L.x0) * u + L.dx * v, L.wallTop + (L.roofHigh - L.wallTop) * v];
+  const sunXY = s => [W * (.07 + .86 * s), L.skyB - Math.sin(Math.PI * s) * (L.skyB - L.skyT)];
+
+  // ---------- particles ----------
+  function spawn() {
+    const [px, py] = roofPt(Math.random(), Math.random());
+    const p = {x: px, y: py, vx: (Math.random() - .5) * 1.2, vy: -Math.random() * 2, st: 0, a: 0, r: .55 + Math.random() * .6, sp: .8 + Math.random() * .4, d: 0, ph: Math.random() * 6};
+    storeTarget(p); P.push(p); return p;
+  }
+  function storeTarget(p) { const s = L.sto; p.tx = s.x + s.w * (.2 + Math.random() * .6); p.ty = s.y + s.h * (.25 + Math.random() * .6); }
+  function trainTarget(p) { const g = L.gauge; p.tx = g.x + g.w * st.train + (Math.random() - .5) * fs; p.ty = g.y + g.h / 2; }
+  function arrive(p, i) {
+    if (p.st === 0) {
+      st.store = Math.min(1, st.store + .04);
+      if (st.train < 1) { p.st = 1; trainTarget(p); } else { p.st = 2; p.tx = L.armL[0]; p.ty = L.armL[1]; }
+    } else if (p.st === 1) {
+      st.train = Math.min(1, st.train + 1 / TRAIN_N);
+      if (Math.random() < .25) flashes.push({x: p.x, y: p.y, t: 0});
+      P.splice(i, 1);
+    } else if (p.st === 2) { p.st = 3; p.tx = W + fs * 2; p.ty = L.wireEnd; }
+  }
+
+  function update(dt, k, t) {
+    const b = bright();
+    if (st.phase === 'run' && E.panels > .9) {
+      st.acc += b * b * 4.2 * k;
+      while (st.acc >= 1) { st.acc--; if (P.length < 1400) spawn(); }
+    }
+    if (st.phase === 'reveal') st.store = .55 + .35 * Math.sin(t * .003);
+    else st.store *= Math.pow(.985, k);
+    st.glow *= Math.pow(.95, k);
+    if (st.phase === 'reveal') st.glow = Math.max(st.glow, .35 + .25 * Math.sin(t * .003));
+    const V = W * .011, arr = fs * .7;
+    for (let i = P.length - 1; i >= 0; i--) {
+      const p = P[i];
+      if (p.d > 0) { p.d -= k; p.x += p.vx * k; p.y += p.vy * k; p.vx *= .96; p.vy *= .96; continue; }
+      const dx = p.tx - p.x, dy = p.ty - p.y, d = Math.hypot(dx, dy) || 1;
+      if (p.st === 'X') { p.a -= .03 * k; p.y -= .4 * k; if (p.a <= 0) P.splice(i, 1); continue; }
+      const T = p.st === 'T';
+      const sp = T ? Math.min(V * 2.4, d * .1) : V * p.sp, steer = T ? .14 : .07, jit = T ? (d > fs ? .25 : 0) : .45;
+      p.vx += ((dx / d) * sp - p.vx) * steer * k + (Math.random() - .5) * jit * k;
+      p.vy += ((dy / d) * sp - p.vy) * steer * k + (Math.random() - .5) * jit * k;
+      p.x += p.vx * k; p.y += p.vy * k;
+      p.a = Math.min(1, p.a + .08 * k);
+      if (T) continue;
+      if (p.st === 3 && p.x > W - 2) { st.sold++; st.glow = 1; P.splice(i, 1); continue; }
+      if (p.st !== 3 && d < arr) arrive(p, i);
+    }
+    flashes.forEach(f => f.t += dt * 2.5); flashes = flashes.filter(f => f.t < 1);
+    progress();
+  }
+
+  // ---------- the reveal ----------
+  function buildText() {
+    const top = H * .05, bottom = L.roofHigh - fs * .6;
+    const cx = W * .37;
+    let fz = Math.max(26, Math.min(W * .22, (bottom - top - fs * 2) * .95));
+    const c = document.createElement('canvas'); c.width = Math.ceil(W); c.height = Math.ceil(H);
+    const g = c.getContext('2d');
+    g.font = `800 ${fz}px ${DISP}`;
+    const mw = g.measureText('30 kW').width, maxW = W * .64;
+    if (mw > maxW) fz *= maxW / mw;
+    const cy = top + fz / 2;
+    g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.font = `800 ${fz}px ${DISP}`; g.fillText('30 kW', cx, cy);
+    const data = g.getImageData(0, 0, c.width, c.height).data, gap = Math.max(3, Math.round(fz / 15));
+    let pts = [];
+    for (let yy = 0; yy < c.height; yy += gap) for (let xx = 0; xx < c.width; xx += gap) if (data[(yy * c.width + xx) * 4 + 3] > 128) pts.push([xx, yy]);
+    if (pts.length > 900) { const s = pts.length / 900; pts = Array.from({length: 900}, (_, i) => pts[Math.floor(i * s)]); }
+    textPts = pts.sort((a, b) => a[0] - b[0]);
+    sub = {x: cx, y: cy + fz * .52 + fs * 1.1, fz, cx, cy};
+  }
+  function assign(fresh) {
+    const live = P.filter(p => p.st !== 'X');
+    while (live.length < textPts.length) { const p = spawn(); p.vy = -Math.random() * 6 - 2; p.vx = (Math.random() - .5) * 4; live.push(p); }
+    live.sort((a, b) => a.x - b.x);
+    live.forEach((p, i) => {
+      if (i < textPts.length) {
+        p.st = 'T'; p.tx = textPts[i][0]; p.ty = textPts[i][1];
+        if (fresh) p.d = (i / textPts.length) * 28 + Math.random() * 10;
+        if (Kit.calm) { p.x = p.tx; p.y = p.ty; p.a = 1; p.d = 0; }
+      } else p.st = 'X';
+    });
+  }
+  function reveal() {
+    st.phase = 'reveal'; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    // the stage shrinks once the text appears: measure again before building the "30 kW"
+    layout(); buildText(); assign(true);
+    if (Kit.calm) { st.s = SUN_END; st.rev = 1; }
+    else {
+      gsap.to(st, {s: SUN_END, duration: 1.4, ease: 'power3.inOut'});
+      gsap.fromTo(st, {wave: 0}, {wave: 1, duration: 1.6, ease: 'expo.out'});
+      gsap.to(st, {rev: 1, duration: 1, delay: 1.3, ease: 'power2.out'});
+      gsap.fromTo(['#why', '#keep'], {opacity: 0, y: 8}, {opacity: 1, y: 0, stagger: .12, duration: .6, ease: 'power3.out', clearProps: 'opacity,transform'});
+    }
+  }
+  function say(h) { sayEl.innerHTML = h; if (!Kit.calm) gsap.fromTo(sayEl, {opacity: .2, y: 4}, {opacity: 1, y: 0, duration: .45, ease: 'power3.out', clearProps: 'opacity,transform'}); }
+  function progress() {
+    if (st.phase !== 'run') return;
+    if (!flags.half && st.train > .3) { flags.half = 1; say('First stop: the <b>convoy\'s batteries</b>. Keep the sun up.'); }
+    if (!flags.full && st.train >= 1) { flags.full = 1; Kit.haptic('light'); say('The whole convoy is <b>full</b>. So where does the extra sunshine go?'); }
+    if (!flags.sell && st.sold > 30) { flags.sell = 1; say('Out along the wire: the <b>surplus is sold</b> to the local grid.'); }
+    if (st.train >= 1 && st.sold >= SOLD_T) reveal();
+  }
+
+  // ---------- drawing ----------
+  function poly(pts) { x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.closePath(); }
+  function rr(a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
+  function lab(t, xx, y, align, a, weight = 700) { x.font = `${weight} ${fs}px ${MONO}`; x.textAlign = align; x.textBaseline = 'alphabetic'; x.globalAlpha = a; x.fillStyle = CREAM; x.fillText(t, xx, y); x.globalAlpha = 1; }
+
+  function drawSky(t, b) {
+    // a warm haze along the horizon as the day rises (no box: it fades into the card)
+    if (b > .02) {
+      const hz = x.createRadialGradient(W * .5, L.G, 0, W * .5, L.G, W * .75);
+      hz.addColorStop(0, `rgba(255,170,70,${.12 * b})`); hz.addColorStop(1, 'rgba(255,170,70,0)');
+      x.fillStyle = hz; x.fillRect(0, 0, W, L.G);
+    }
+    stars.forEach(s => {
+      const a = (1 - b * .85) * .7 * (.6 + .4 * Math.sin(t * .0015 + s.ph));
+      if (a < .03) return;
+      x.globalAlpha = a; x.fillStyle = CREAM; x.beginPath(); x.arc(s.u * W, s.v * L.roofHigh * .9, s.r, 0, 7); x.fill();
+    });
+    x.globalAlpha = 1;
+    const [sx, sy] = sunXY(st.s), R = L.sunR;
+    x.save(); x.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < 5; i++) {
+      const [rx, ry] = roofPt(.1 + i * .2, .5);
+      const g = x.createLinearGradient(sx, sy, rx, ry); g.addColorStop(0, `rgba(255,200,90,${.16 * b})`); g.addColorStop(1, 'rgba(255,200,90,0)');
+      x.strokeStyle = g; x.lineWidth = R * .5; x.beginPath(); x.moveTo(sx, sy); x.lineTo(rx, ry); x.stroke();
+    }
+    const gl = x.createRadialGradient(sx, sy, R * .5, sx, sy, R * 6);
+    gl.addColorStop(0, `rgba(255,190,80,${.1 + .38 * b})`); gl.addColorStop(1, 'rgba(255,170,60,0)');
+    x.fillStyle = gl; x.beginPath(); x.arc(sx, sy, R * 6, 0, 7); x.fill();
+    x.restore();
+    x.save(); x.translate(sx, sy); x.rotate(t * .0003);
+    x.strokeStyle = `rgba(255,214,120,${.35 + .5 * b})`; x.lineWidth = 2; x.lineCap = 'round';
+    for (let i = 0; i < 12; i++) { x.rotate(Math.PI / 6); x.beginPath(); x.moveTo(R * 1.3, 0); x.lineTo(R * (1.45 + .55 * b), 0); x.stroke(); }
+    x.restore();
+    const sg = x.createRadialGradient(sx - R * .3, sy - R * .3, 1, sx, sy, R);
+    sg.addColorStop(0, '#fffbe6'); sg.addColorStop(.5, '#ffd56a'); sg.addColorStop(1, '#ff9f2e');
+    x.fillStyle = sg; x.beginPath(); x.arc(sx, sy, R, 0, 7); x.fill();
+    if (!st.touched && st.phase === 'run') {
+      const pu = (t * .001) % 1;
+      x.strokeStyle = `rgba(243,234,214,${.7 * (1 - pu)})`; x.lineWidth = 2;
+      x.beginPath(); x.arc(sx, sy, R * (1.2 + pu * 1.4), 0, 7); x.stroke();
+      x.font = `700 ${Math.max(14, fs * 1.25)}px ${HAND}`; x.fillStyle = CREAM; x.textAlign = 'left'; x.textBaseline = 'middle';
+      x.fillText('drag me →', sx + R * 2 + Math.sin(t * .004) * 3, sy);
+    }
+  }
+
+  function drawTown(t) {
+    const e = E.pylon; if (e <= 0) return;
+    const G = L.G, on = clamp(st.sold / SOLD_T * 1.3);
+    x.save(); x.globalAlpha = e;
+    houses.forEach((h, i) => {
+      const top = G - h.h * e;
+      x.fillStyle = '#16263d'; x.strokeStyle = 'rgba(159,179,201,.45)'; x.lineWidth = 1;
+      if (h.roof === 'gable') poly([[h.x, G], [h.x, top], [h.x + h.w / 2, top - h.w * .35], [h.x + h.w, top], [h.x + h.w, G]]);
+      else poly([[h.x, G], [h.x, top], [h.x + h.w, top], [h.x + h.w, G]]);
+      x.fill(); x.stroke();
+      const ww = h.w * .22, wh = Math.max(3, h.h * .2);
+      [[.2, .3], [.58, .3]].forEach(([u, v], j) => {
+        const lit = clamp((on - h.lit[j] * .7) * 3);
+        const wx = h.x + h.w * u, wy = top + h.h * v;
+        x.fillStyle = lit > .05 ? `rgba(255,${190 + 30 * lit | 0},90,${.25 + .7 * lit})` : 'rgba(10,20,34,.9)';
+        x.fillRect(wx, wy, ww, wh);
+        if (lit > .3) {
+          x.save(); x.globalCompositeOperation = 'lighter'; x.globalAlpha = e * lit * (.35 + .1 * Math.sin(t * .004 + i + j));
+          x.drawImage(sprite, wx + ww / 2 - ww * 2, wy + wh / 2 - ww * 2, ww * 4, ww * 4); x.restore();
+        }
+      });
+    });
+    x.restore();
+  }
+
+  function drawPylon() {
+    const p = L.py, e = E.pylon; if (e <= 0) return;
+    const G = L.G, top = G - (G - p.top) * e;
+    x.save(); x.strokeStyle = '#9fb3c9'; x.lineWidth = 1.6; x.lineJoin = 'round';
+    const lx = y => p.x - p.w * (1 - (G - y) / (G - top) * .8), rx = y => p.x + p.w * (1 - (G - y) / (G - top) * .8);
+    x.beginPath(); x.moveTo(p.x - p.w, G); x.lineTo(p.x - p.w * .2, top); x.lineTo(p.x + p.w * .2, top); x.lineTo(p.x + p.w, G); x.stroke();
+    x.lineWidth = 1; x.globalAlpha = .7; x.beginPath();
+    const n = 6;
+    for (let i = 0; i < n; i++) { const y0 = G - (G - top) * i / n, y1 = G - (G - top) * (i + 1) / n; x.moveTo(lx(y0), y0); x.lineTo(rx(y1), y1); x.moveTo(rx(y0), y0); x.lineTo(lx(y1), y1); }
+    x.stroke(); x.globalAlpha = 1;
+    if (e > .95) {
+      const ay = p.armY, al = L.armL[0], ar = L.armR[0];
+      x.lineWidth = 2; x.beginPath(); x.moveTo(al, ay); x.lineTo(ar, ay); x.moveTo(p.x - W * .035, ay + H * .045); x.lineTo(p.x + W * .035, ay + H * .045); x.stroke();
+      x.fillStyle = '#cfe0f2'; [al, ar].forEach(a => { x.beginPath(); x.arc(a, ay + 3, 2.5, 0, 7); x.fill(); });
+      const wire = (a, b, c, d, sag) => { x.beginPath(); x.moveTo(a, b); x.quadraticCurveTo((a + c) / 2, (b + d) / 2 + sag, c, d); x.stroke(); };
+      const m = L.mast;
+      for (const pass of [0, 1]) {
+        if (pass && st.glow < .05) continue;
+        x.strokeStyle = pass ? `rgba(255,197,77,${.75 * st.glow})` : 'rgba(159,179,201,.75)';
+        x.lineWidth = pass ? 3 : 1.3;
+        wire(m[0], m[1], al, ay + 3, H * .05); wire(ar, ay + 3, W + 2, L.wireEnd, H * .025);
+      }
+    }
+    x.restore();
+  }
+
+  function drawDepot(t, b) {
+    const e = E.depot; if (e <= 0) return;
+    x.save(); x.globalAlpha = e; x.translate(0, (1 - e) * H * .06);
+    const {x0, x1, wallTop, roofHigh, G} = L;
+    poly([roofPt(0, 0), roofPt(1, 0), roofPt(1, 1), roofPt(0, 1)]);
+    x.fillStyle = '#0a1422'; x.fill(); x.strokeStyle = 'rgba(159,179,201,.5)'; x.lineWidth = 1; x.stroke();
+    const rows = 3, cols = 9, gu = .006, gv = .05;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const pi = clamp((E.panels * 1.6 - (c / cols) * .5 - r * .1) / .5); if (pi <= 0) continue;
+      const u0 = c / cols + gu, u1 = (c + 1) / cols - gu, v0 = r / rows + gv, v1 = v0 + ((r + 1) / rows - gv - v0) * pi;
+      const A = roofPt(u0, v0), B = roofPt(u1, v0), C = roofPt(u1, v1), D = roofPt(u0, v1);
+      const g = x.createLinearGradient(A[0], A[1], D[0], D[1]); g.addColorStop(0, '#2c66b0'); g.addColorStop(1, '#173a6c');
+      poly([A, B, C, D]); x.fillStyle = g; x.fill();
+      const uc = (u0 + u1) / 2;
+      let gl = b * .55 * Math.exp(-((uc - st.s) ** 2) / .02);
+      if (st.phase === 'reveal') gl += .25 * (1 - st.wave) + .08 * (1 + Math.sin(t * .003 - c * .5));
+      if (gl > .02) { x.fillStyle = `rgba(255,236,190,${Math.min(.8, gl)})`; x.fill(); }
+      x.strokeStyle = 'rgba(150,200,255,.35)'; x.lineWidth = .7; x.beginPath();
+      const M1 = roofPt(uc, v0), M2 = roofPt(uc, v1), N1 = roofPt(u0, (v0 + v1) / 2), N2 = roofPt(u1, (v0 + v1) / 2);
+      x.moveTo(M1[0], M1[1]); x.lineTo(M2[0], M2[1]); x.moveTo(N1[0], N1[1]); x.lineTo(N2[0], N2[1]); x.stroke();
+    }
+    x.strokeStyle = '#9fb3c9'; x.lineWidth = 1.6; x.beginPath(); x.moveTo(L.mast[0], L.mast[1]); x.lineTo(L.mast[0], wallTop); x.stroke();
+    const fg = x.createLinearGradient(0, wallTop, 0, G); fg.addColorStop(0, '#24406a'); fg.addColorStop(1, '#14243b');
+    x.fillStyle = fg; x.fillRect(x0, wallTop, x1 - x0, G - wallTop);
+    x.fillStyle = 'rgba(243,234,214,.75)'; x.fillRect(x0 - 2, wallTop - 1, x1 - x0 + 4, 3);
+    x.strokeStyle = 'rgba(243,234,214,.06)'; x.lineWidth = 1; x.beginPath();
+    for (let y = wallTop + H * .025; y < G; y += H * .025) { x.moveTo(x0, y); x.lineTo(x1, y); }
+    x.stroke();
+    const o = L.open, og = x.createLinearGradient(0, o.top, 0, G);
+    og.addColorStop(0, '#050b14'); og.addColorStop(1, `rgba(255,170,60,${.12 + st.store * .35})`);
+    x.fillStyle = '#050b14'; x.fillRect(o.a, o.top, o.b - o.a, G - o.top);
+    x.fillStyle = og; x.fillRect(o.a, o.top, o.b - o.a, G - o.top);
+    x.strokeStyle = 'rgba(243,234,214,.35)'; x.strokeRect(o.a, o.top, o.b - o.a, G - o.top);
+    const s = L.sto;
+    rr(s.x, s.y, s.w, s.h, 4); x.fillStyle = '#0a1422'; x.fill(); x.strokeStyle = CREAM; x.lineWidth = 1.5; x.stroke();
+    x.fillStyle = CREAM; x.fillRect(s.x + s.w * .38, s.y - 4, s.w * .24, 4);
+    for (let i = 0; i < 4; i++) {
+      const cy = s.y + s.h * (.1 + i * .21), lv = clamp(st.store * 1.4 - (3 - i) * .2 + .15);
+      x.fillStyle = `rgba(255,197,77,${.12 + lv * .85})`; x.fillRect(s.x + s.w * .14, cy, s.w * .72, s.h * .16);
+    }
+    x.restore();
+  }
+
+  function drawTrain() {
+    const e = E.train; if (e <= 0) return;
+    const ox = (1 - e) * W * .9, t = L.tr, bot = t.top + t.h;
+    x.save(); x.translate(ox, 0);
+    const mid = (t.x0 + t.x1) / 2, gap = W * .008;
+    const cars = [[t.x0, mid - gap, false], [mid + gap, t.x1, true]];
+    x.fillStyle = '#556b84'; x.fillRect(mid - gap - 1, bot - t.h * .35, gap * 2 + 2, t.h * .12);
+    cars.forEach(([a, b, nose]) => {
+      const pts = nose ? [[a, t.top], [b - t.nose, t.top], [b, t.top + t.h * .62], [b, bot], [a, bot]] : [[a, t.top], [b, t.top], [b, bot], [a, bot]];
+      const g = x.createLinearGradient(0, t.top, 0, bot); g.addColorStop(0, '#f4f6f7'); g.addColorStop(.7, '#c9d3da'); g.addColorStop(1, '#97a6b2');
+      poly(pts); x.fillStyle = g; x.fill();
+      x.fillStyle = '#2c66b0';
+      for (let k = 0; k < 4; k++) { const w = (b - a - (nose ? t.nose : 0)) / 4; x.fillRect(a + k * w + 2, t.top - t.h * .07, w - 4, t.h * .07); }
+      const wy = t.top + t.h * .17, wh = t.h * .3, we = b - (nose ? t.nose * .95 : 0) - 4;
+      x.fillStyle = '#10223a'; x.fillRect(a + 4, wy, we - a - 4, wh);
+      x.strokeStyle = 'rgba(200,220,240,.35)'; x.lineWidth = 1; x.beginPath();
+      for (let wx = a + 4 + (we - a) / 5; wx < we - 3; wx += (we - a) / 5) { x.moveTo(wx, wy); x.lineTo(wx, wy + wh); }
+      x.stroke();
+      if (nose) {
+        poly([[b - t.nose * .95, wy], [b - t.nose * .3, wy], [b - t.nose * .02, wy + wh * 1.05], [b - t.nose * .95, wy + wh]]); x.fillStyle = '#10223a'; x.fill();
+        // headlight
+        x.save(); x.globalCompositeOperation = 'lighter'; x.globalAlpha = .4 + .5 * st.train;
+        const hs = t.h * .35; x.drawImage(sprite, b - hs * .9, bot - t.h * .28 - hs / 2, hs, hs); x.restore();
+      }
+      x.fillStyle = '#20262d';
+      [a + (b - a) * .14, a + (b - a) * .24, b - (b - a) * .24, b - (b - a) * .14].forEach(wx => { x.beginPath(); x.arc(wx, bot + t.h * .02, t.h * .1, 0, 7); x.fill(); });
+    });
+    const g = L.gauge;
+    rr(g.x, g.y, g.w, g.h, g.h / 2); x.fillStyle = 'rgba(10,20,34,.85)'; x.fill();
+    if (st.train > 0) {
+      x.save(); rr(g.x, g.y, g.w, g.h, g.h / 2); x.clip();
+      const fg = x.createLinearGradient(g.x, 0, g.x + g.w, 0); fg.addColorStop(0, '#ff9f2e'); fg.addColorStop(1, '#ffe08a');
+      x.fillStyle = fg; x.fillRect(g.x, g.y, g.w * st.train, g.h); x.restore();
+      x.save(); x.globalCompositeOperation = 'lighter'; x.globalAlpha = .5;
+      x.drawImage(sprite, g.x + g.w * st.train - g.h * 2, g.y + g.h / 2 - g.h * 2, g.h * 4, g.h * 4); x.restore();
+    }
+    x.restore();
+  }
+
+  function drawGround() {
+    const e = E.ground, G = L.G; if (e <= 0) return;
+    x.strokeStyle = 'rgba(243,234,214,.6)'; x.lineWidth = 2;
+    x.beginPath(); x.moveTo(0, G); x.lineTo(W * e, G); x.stroke();
+    x.strokeStyle = 'rgba(243,234,214,.2)'; x.lineWidth = 2; x.beginPath();
+    for (let xx = 4; xx < W * e; xx += fs * .9) { x.moveTo(xx, G + 2); x.lineTo(xx - 3, G + 6); }
+    x.stroke();
+  }
+
+  function drawLabels() {
+    const a = Math.min(E.ground, E.train), r1 = L.G + fs * 1.45, r2 = L.G + fs * 2.65;
+    if (a <= 0) return;
+    const sc = L.sto.x + L.sto.w / 2, tc = (L.tr.x0 + L.tr.x1 - L.tr.nose) / 2;
+    lab('STORAGE', sc, r1, 'center', a * .9);
+    lab('batteries', sc, r2, 'center', a * .6, 500);
+    lab('CONVOY', tc, r1, 'center', a);
+    lab(`${Math.round(st.train * 100)}% charged`, tc, r2, 'center', st.train >= 1 ? a : a * .75, st.train >= 1 ? 800 : 500);
+    lab('LOCAL GRID', W - 4, r1, 'right', a);
+    lab(st.train < 1 ? 'waiting…' : 'surplus sold', W - 4, r2, 'right', st.train < 1 ? a * .5 : a, st.train < 1 ? 500 : 800);
+    const ra = E.panels * (1 - st.rev);
+    if (ra > .02) { const [cx, cy] = roofPt(.5, 1); lab('30 kW SOLAR ROOF', cx, cy - fs * .55, 'center', ra * .9); }
+  }
+
+  function drawParticles(t) {
+    // the crisp "30 kW" under the sparks, so the number reads cleanly
+    if (st.rev > 0 && sub.fz) {
+      x.save(); x.font = `800 ${sub.fz}px ${DISP}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+      const g = x.createLinearGradient(0, sub.cy - sub.fz / 2, 0, sub.cy + sub.fz / 2);
+      g.addColorStop(0, '#fff4cf'); g.addColorStop(.6, '#ffc54d'); g.addColorStop(1, '#ff9f2e');
+      x.shadowColor = 'rgba(255,160,40,.85)'; x.shadowBlur = fs * (1.1 + .4 * Math.sin(t * .003));
+      x.globalAlpha = st.rev * .95; x.fillStyle = g; x.fillText('30 kW', sub.cx, sub.cy);
+      x.restore();
+    }
+    x.save(); x.globalCompositeOperation = 'lighter';
+    for (const p of P) {
+      if (p.a <= 0) continue;
+      let px = p.x, py = p.y, s = p.r * fs * .7, al = Math.min(1, p.a);
+      if (p.st === 'T') {
+        px += Math.sin(t * .002 + p.ph) * .6; py += Math.cos(t * .0023 + p.ph) * .6;
+        s *= 1 - st.rev * .55; al *= 1 - st.rev * (.55 - .3 * Math.sin(t * .004 + p.ph * 3));
+      }
+      x.globalAlpha = al;
+      x.drawImage(sprite, px - s, py - s, s * 2, s * 2);
+    }
+    x.globalAlpha = 1;
+    flashes.forEach(f => { x.strokeStyle = `rgba(255,220,140,${1 - f.t})`; x.lineWidth = 1.2; x.beginPath(); x.arc(f.x, f.y, 2 + f.t * fs, 0, 7); x.stroke(); });
+    if (st.phase === 'reveal' && st.wave > 0 && st.wave < 1) {
+      const [cx, cy] = roofPt(.5, .5);
+      x.strokeStyle = `rgba(255,197,77,${.6 * (1 - st.wave)})`; x.lineWidth = 3;
+      x.beginPath(); x.arc(cx, cy, st.wave * W * .9, 0, 7); x.stroke();
+    }
+    x.restore();
+    if (st.rev > 0) {
+      let f = fs * 1.05; x.font = `700 ${f}px ${MONO}`;
+      const txt = 'charges the train · sells the rest', maxW = W * .7;
+      const w = x.measureText(txt).width; if (w > maxW) { f = Math.max(12, f * maxW / w); x.font = `700 ${f}px ${MONO}`; }
+      const tw = x.measureText(txt).width, cx = clamp(sub.x, tw / 2 + 4, W - tw / 2 - 4);
+      x.globalAlpha = st.rev; x.fillStyle = CREAM; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.fillText(txt, cx, sub.y + (1 - st.rev) * 6); x.globalAlpha = 1;
+    }
+  }
+
+  function draw(t) {
+    x.clearRect(0, 0, W, H);
+    const b = bright();
+    drawSky(t, b); drawTown(t); drawPylon(); drawDepot(t, b); drawGround(); drawTrain(); drawLabels(); drawParticles(t);
+  }
+
+  // ---------- touch ----------
+  let drag = false;
+  const sunTo = e => {
+    const r = cv.getBoundingClientRect(), s = clamp(((e.clientX - r.left) / r.width - .07) / .86);
+    if (Kit.calm) st.s = s; else gsap.to(st, {s, duration: .3, ease: 'power3.out', overwrite: true});
+  };
+  cv.addEventListener('pointerdown', e => {
+    if (st.phase !== 'run') return;
+    drag = true; cv.setPointerCapture(e.pointerId);
+    if (!st.touched) { st.touched = true; Kit.haptic('selection'); }
+    sunTo(e);
+  });
+  cv.addEventListener('pointermove', e => { if (drag && st.phase === 'run') sunTo(e); });
+  const up = () => { drag = false; };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  // the stage changes size when the explanation appears: keep the drawing sharp and unsquashed
+  if (window.ResizeObserver) new ResizeObserver(() => { if (ready) layout(); }).observe(Kit.$('stage'));
+
+  // ---------- life cycle ----------
+  let last = 0, looping = false;
+  function frame(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    if (ready && W && H) { update(dt, dt * 60, t); draw(t); }
+    requestAnimationFrame(frame);
+  }
+  Kit.onShow.card = () => { layout(); if (!looping) { looping = true; requestAnimationFrame(frame); } };
+  let entered = false;
+  Kit.onEnter.card = () => {
+    if (entered) return; entered = true;
+    if (Kit.calm) { Object.keys(E).forEach(k => E[k] = 1); return; }
+    gsap.timeline()
+      .to(E, {ground: 1, duration: .7, ease: 'power3.out'})
+      .to(E, {depot: 1, duration: .7, ease: 'back.out(1.6)'}, '-=.4')
+      .to(E, {pylon: 1, duration: .8, ease: 'power3.out'}, '-=.5')
+      .to(E, {panels: 1, duration: 1, ease: 'power2.out'}, '-=.4')
+      .to(E, {train: 1, duration: 1.1, ease: 'expo.out'}, '-=.7');
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    gsap.killTweensOf(E); Object.keys(E).forEach(k => E[k] = 1); entered = true;
+    st.touched = true; st.s = .5; st.train = 1; st.sold = SOLD_T; flags.half = flags.full = flags.sell = 1;
+    progress();
+    await wait(Kit.calm ? 150 : 3000);
+  };
+})();
+Kit.single();
+</script>
+</html>

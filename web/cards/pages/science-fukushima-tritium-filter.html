@@ -34,7 +34,9 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const COL = {w:'#7cc0ff', h:'#ffffff', t:'#3cf08f', c:'#ff8a3d', o:'#d77bff', panel:'#0e1a2c', line:'#ffffff'};
+const INK = '#10100c';
+const COL = {w:'#1b5fb0', h:'#ffffff', t:'#0b6b3a', c:'#d9500c', o:'#7a2bd1', panel:'#0e1a2c', line:INK};
+const LENS = {w:'#7cc0ff', h:'#ffffff', t:'#3cf08f'};
 const BTN = ['Zoom into a drop', 'Pour it through the filters', 'Zoom into what got through'];
 const SAY = ['Tap to zoom in, step by step.', 'Inside a drop: water plus dissolved radioactive atoms. Pour it.', 'Only water came out. Zoom into the green ones.'];
 let step = 0, busy = false, G = null, els = null;
@@ -57,18 +59,20 @@ const parts = [];
   });
 })();
 
-function mol(g, type, r) {
+function mol(g, type, r, lens) {
+  const P = lens ? LENS : COL;
   if (type === 'c' || type === 'o') {
-    Kit.mk('circle', {r: r * .85, fill: COL[type], stroke: '#ffffff', 'stroke-width': Math.max(1, r * .12)}, g);
+    Kit.mk('circle', {r: r * .85, fill: COL[type], stroke: INK, 'stroke-width': Math.max(1, r * .12)}, g);
     return;
   }
   const hr = r * .56;
-  Kit.mk('circle', {cx: r * .88, cy: r * .7, r: type === 't' ? hr * 1.12 : hr, fill: type === 't' ? COL.t : COL.h}, g);
-  Kit.mk('circle', {cx: -r * .88, cy: r * .7, r: hr, fill: COL.h}, g);
-  Kit.mk('circle', {r: r, fill: COL.w}, g);
+  const st = lens ? {} : {stroke: INK, 'stroke-width': Math.max(1, r * .08)};
+  Kit.mk('circle', Object.assign({cx: r * .88, cy: r * .7, r: type === 't' ? hr * 1.12 : hr, fill: type === 't' ? P.t : P.h}, st), g);
+  Kit.mk('circle', Object.assign({cx: -r * .88, cy: r * .7, r: hr, fill: P.h}, st), g);
+  Kit.mk('circle', {r: r, fill: P.w}, g);
 }
 function txt(parent, x, y, s, size, attrs) {
-  const t = Kit.mk('text', Object.assign({x, y, fill: '#ffffff', 'font-size': size, 'font-family': 'var(--body)', 'font-weight': 700}, attrs || {}), parent);
+  const t = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': size, 'font-family': 'var(--body)', 'font-weight': 700}, attrs || {}), parent);
   t.textContent = s; return t;
 }
 
@@ -102,7 +106,6 @@ function build() {
        yB0: f2y + f * .9, yB1: H - f * 2.1,
        r: Math.max(5, Math.min(W / 30, free / 42))};
   els = {};
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: f, fill: COL.panel}, svg);
 
   // Step 0: the everyday scale, a tank.
   const tank = Kit.mk('g', {}, svg);
@@ -147,16 +150,17 @@ function build() {
 
   // Step 3: the magnifier on one tritiated molecule.
   const mag = Kit.mk('g', {}, svg);
-  Kit.mk('rect', {x: 0, y: legH, width: W, height: H - legH, fill: COL.panel, opacity: .85}, mag);
+  // veil in the card's own colour: it only calms the scene behind the lens
+  Kit.mk('rect', {x: 0, y: legH, width: W, height: H - legH, fill: '#00E5A0', opacity: .85}, mag);
   const R = Math.min(W * .34, (H - legH) * .28), cx = W / 2, cy = legH + (H - legH) * .42;
-  Kit.mk('circle', {cx, cy, r: R, fill: '#13263f', stroke: '#ffffff', 'stroke-width': Math.max(3, f * .25)}, mag);
+  Kit.mk('circle', {cx, cy, r: R, fill: '#13263f', stroke: INK, 'stroke-width': Math.max(3, f * .25)}, mag);
   const mr = R * .32, lf = Math.max(13, mr * .75);
   const hx = mr * 1.05, hy = mr * .85;
   Kit.mk('line', {x1: cx, y1: cy, x2: cx + hx, y2: cy + hy, stroke: '#ffffff', 'stroke-width': mr * .22}, mag);
   Kit.mk('line', {x1: cx, y1: cy, x2: cx - hx, y2: cy + hy, stroke: '#ffffff', 'stroke-width': mr * .22}, mag);
-  Kit.mk('circle', {cx: cx + hx, cy: cy + hy, r: mr * .68, fill: COL.t}, mag);
-  Kit.mk('circle', {cx: cx - hx, cy: cy + hy, r: mr * .58, fill: COL.h}, mag);
-  Kit.mk('circle', {cx, cy: cy - mr * .1, r: mr, fill: COL.w}, mag);
+  Kit.mk('circle', {cx: cx + hx, cy: cy + hy, r: mr * .68, fill: LENS.t}, mag);
+  Kit.mk('circle', {cx: cx - hx, cy: cy + hy, r: mr * .58, fill: LENS.h}, mag);
+  Kit.mk('circle', {cx, cy: cy - mr * .1, r: mr, fill: LENS.w}, mag);
   txt(mag, cx, cy - mr * .1 + lf * .35, 'O', lf, {'text-anchor': 'middle', fill: COL.panel});
   txt(mag, cx + hx, cy + hy + lf * .35, 'T', lf, {'text-anchor': 'middle', fill: COL.panel});
   txt(mag, cx - hx, cy + hy + lf * .35, 'H', lf, {'text-anchor': 'middle', fill: COL.panel});

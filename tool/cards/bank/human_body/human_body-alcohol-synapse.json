@@ -1,0 +1,39 @@
+{
+  "id": "human_body-alcohol-synapse",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does alcohol actually do to the messengers between your neurons?",
+  "answer": "Moving the slider toward DRUNK raises GABA and dopamine, which lowers tension and produces euphoria. It lowers glutamate and acetylcholine, so thoughts slow and memories don't stick.",
+  "move": "Alcohol boosts the brake and the reward, and mutes the messengers of thought.",
+  "keywords": [
+    "alcohol",
+    "synapse",
+    "gaba",
+    "dopamine",
+    "glutamate",
+    "acetylcholine"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A synapse diagram with a SOBER to DRUNK slider. Sliding toward DRUNK shows which neurotransmitters grow or fade, asking what alcohol does to the messengers between neurons.",
+    "ground": "#0e3566"
+  },
+  "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=r3KrMPQSUFs&t=326s",
+  "written": "2026-11-03"
+}

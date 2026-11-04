@@ -1,0 +1,437 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-norwegian-rocket-alarm -->
+<!-- Look: a museum diorama of a polar winter night. Layered paper planes with soft drop shadows: aurora curtains, snow-capped fjord peaks, the Norwegian launch cliff, a radar hill, the sea, and a desk with a leather nuclear briefcase in front.
+     Interaction: tap the four moments of January 1995 into an order. Each chip gets its number, then you say how sure you are.
+     Wow: the lights go down, the chips fly into a numbered timeline under the picture, and the night plays it out. The rocket climbs through the aurora, the radar locks on in red, the briefcase lid springs open with a red warning, and the rocket falls into the sea as the screen turns to a green check: no codes sent. -->
+<title>The rocket from Norway</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#stage.nopic{justify-content:center}
+#stage.nopic #pic{display:none}
+#pic{flex:1;min-height:0;width:100%;display:block;background:none;touch-action:manipulation;overflow:visible}
+#chips{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw}
+.chip{display:flex;align-items:center;gap:2.2cqw;font:700 max(1.7cqh,12px)/1.2 var(--body);text-align:left;color:#1b1f33;background:linear-gradient(#fffaf0,#f1e8d6);border:0;border-radius:1.4cqh;padding:1.1cqh 2.6cqw;cursor:pointer;box-shadow:0 .35cqh 0 rgba(27,31,51,.22),0 .9cqh 1.6cqh rgba(27,31,51,.14);overflow-wrap:anywhere;transition:box-shadow .2s;min-width:0}
+.chip .n{flex:none;width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:50%;display:grid;place-items:center;font:700 max(1.6cqh,12px)/1 var(--mono);color:#1b1f33;box-shadow:inset 0 0 0 .2cqh rgba(27,31,51,.35);border:0}
+.chip .short{display:none}
+.chip.on .n{background:#1b1f33;color:#fffaf0;box-shadow:none}
+.chip.ok .n{background:#2f8f5b;color:#fff;box-shadow:none}
+.chip.bad .n{background:#c8473a;color:#fff;box-shadow:none}
+.chip.lit{box-shadow:0 0 0 .32cqh #1b1f33,0 .9cqh 1.8cqh rgba(27,31,51,.35)}
+#chips.row{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6cqw}
+#chips.row .chip{flex-direction:column;justify-content:center;gap:.5cqh;padding:.9cqh .6cqw;text-align:center;border-radius:1.2cqh}
+#chips.row .chip .n{width:max(2.8cqh,20px);height:max(2.8cqh,20px)}
+#chips.row .long{display:none}
+#chips.row .short{display:block;font-size:max(1.5cqh,12px);line-height:1.15;white-space:nowrap}
+.done .chip{cursor:default}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Put in order · the 1995 alarm">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PUT IN ORDER</span></div>
+    <h2 class="q">January 1995: a research rocket leaves Norway. What happened next?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A paper diorama of a polar night: aurora over snowy peaks, a rocket on a Norwegian cliff, a radar on a far hill, the sea, and a nuclear briefcase on a desk in front."></svg>
+      <div id="chips">
+        <button class="chip" data-i="2"><span class="n"></span><span class="long">The nuclear briefcase goes into operational mode</span><span class="short">Briefcase</span></button>
+        <button class="chip" data-i="0"><span class="n"></span><span class="long">A research rocket lifts off from Norway</span><span class="short">Lift-off</span></button>
+        <button class="chip" data-i="3"><span class="n"></span><span class="long">No attack codes are sent</span><span class="short">No codes</span></button>
+        <button class="chip" data-i="1"><span class="n"></span><span class="long">Radar reads it as a nuclear missile</span><span class="short">Alarm</span></button>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the four moments <b>in the order they happened</b>.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One misread science rocket was enough to wake a nuclear briefcase.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MotionPathPlugin, Flip);
+  const svg = Kit.$('pic'), say = Kit.$('say'), chipsBox = Kit.$('chips'), card = Kit.$('card'), stage = Kit.$('stage');
+  const P = {paper:'#f4ecdc', red:'#d6301f', green:'#18924f', amber:'#ffc06a', ink:'#1b1f33'};
+  const SHORT = ['lift-off', 'radar alarm', 'briefcase live', 'no codes'];
+  const CAP = ['1 · LIFT-OFF FROM NORWAY', '2 · RADAR: A NUCLEAR MISSILE?', '3 · THE BRIEFCASE GOES LIVE', '4 · NO ATTACK CODES SENT'];
+  let W = 0, H = 0, lastW = 0, lastH = 0, fs = 12, R = {}, idle = [], tl = null, flipTw = null, pend = null;
+  let phase = 'pick', order = [], entered = false, finished = false;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const rnd = (i, a) => { const x = Math.sin(i * 127.1 + a * 311.7) * 43758.5453; return x - Math.floor(x); };
+  const MONO = 'font-family:var(--mono)', HAND = 'font-family:var(--hand)';
+
+  function layout(full) {
+    idle.forEach(t => t.kill()); idle = [];
+    let cut = false;
+    if (tl) { tl.kill(); tl = null; if (phase === 'playing') { phase = 'done'; cut = true; } }
+    svg.innerHTML = ''; R = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; lastW = svg.clientWidth; lastH = svg.clientHeight;
+    if (phase === 'done' && finished && lastH > 0 && lastH < 96) stage.classList.add('nopic');
+    if (!W || !H || H < 40) { if (cut) finish(); return; }
+    fs = Math.max(12, Math.min(14, f.f || W / 26));
+    const k = Math.max(.55, Math.min(1.5, Math.min(W / 340, H / 180)));
+    const cl = x => Math.max(0, Math.min(W, x));
+
+    const defs = mk('defs', {}, svg);
+    const lin = (id, stops, x1 = 0, y1 = 0, x2 = 0, y2 = 1) => { const g = mk('linearGradient', {id, x1, y1, x2, y2}, defs); stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g)); };
+    const rad = (id, stops, cx = .5, cy = .5, r = .5) => { const g = mk('radialGradient', {id, cx, cy, r}, defs); stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g)); };
+    lin('aurA', [[0, '#6a2cc9', 0], [.4, '#5a2fc0', .3], [.85, '#0f8f55', .85], [1, '#0f8f55', 0]]);
+    lin('aurB', [[0, '#1a6fd0', 0], [.5, '#0f8a86', .35], [.9, '#12a060', .75], [1, '#12a060', 0]]);
+    lin('sea', [[0, '#2b4079'], [1, '#0a1430']]);
+    lin('desk', [[0, '#6c4731'], [1, '#2b1b12']]);
+    lin('leather', [[0, '#3a3a44'], [.5, '#22222a'], [1, '#121216']]);
+    lin('lidg', [[0, '#30313c'], [1, '#1a1b22']]);
+    lin('beam', [[0, '#fffbe8', .7], [1, '#fffbe8', 0]], 1, 0, 0, 0);
+    lin('beamR', [[0, P.red, .85], [1, P.red, 0]], 1, 0, 0, 0);
+    rad('glowR', [[0, P.red, .75], [1, P.red, 0]]);
+    rad('glowG', [[0, P.green, .6], [1, P.green, 0]]);
+    const ps = mk('filter', {id: 'ps', x: '-10%', y: '-20%', width: '120%', height: '150%'}, defs);
+    mk('feDropShadow', {dx: 0, dy: fs * .3, stdDeviation: fs * .35, 'flood-color': '#10100c', 'flood-opacity': .4}, ps);
+    const soft = mk('filter', {id: 'soft', x: '-5%', y: '-5%', width: '110%', height: '110%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: Math.max(1, W / 200)}, soft);
+
+    const root = R.root = mk('g', {}, svg);
+    const plane = () => { const o = mk('g', {}, root); return [o, mk('g', {class: 'pl'}, o)]; };
+
+    // Stars, aurora (drawn straight on the card)
+    const stars = mk('g', {}, root);
+    for (let i = 0; i < 46; i++) {
+      const c = mk('circle', {cx: 3 + rnd(i, 1) * (W - 6), cy: 3 + rnd(i, 2) * (H * .5 - 3), r: i % 6 ? .8 : 1.4, fill: '#10100c', opacity: .25 + rnd(i, 3) * .5}, stars);
+      if (!Kit.calm) idle.push(gsap.to(c, {opacity: .08, duration: .8 + rnd(i, 4) * 1.6, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: rnd(i, 5) * 2}));
+    }
+    R.aur = mk('g', {filter: 'url(#soft)', class: 'aur'}, root);
+    [[.06, .2, 'aurA'], [.16, .13, 'aurB']].forEach(([y0, hh, id], j) => {
+      const N = Math.max(18, Math.round(W / 10));
+      for (let i = 0; i < N; i++) {
+        const x = W * (.02 + .96 * i / N), top = Math.max(1, H * (y0 + .05 * Math.sin(i * .33 + j * 1.9))), h = H * (hh + .05 * Math.sin(i * .8 + j));
+        const r = mk('rect', {x, y: top, width: W * .96 / N + .6, height: Math.min(h, H * .55 - top), fill: `url(#${id})`, opacity: .45 + .45 * rnd(i, j + 7)}, R.aur);
+        if (!Kit.calm) idle.push(gsap.to(r, {opacity: .12 + .3 * rnd(i, j + 9), duration: 1.2 + rnd(i, j + 11) * 1.8, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: rnd(i, j + 13) * 2}));
+      }
+    });
+
+    const SY = H * .6;
+
+    // Far plane: snow-capped peaks
+    const [, far] = plane();
+    const fr = mk('g', {filter: 'url(#ps)'}, far);
+    [[.03, .12, .12], [.16, .19, .14], [.3, .14, .12], [.45, .23, .16], [.6, .15, .12], [.75, .2, .14], [.9, .16, .13], [1, .11, .1]].forEach(([x, h, w]) => {
+      const px = W * x, py = SY - H * h, hw = W * w, hh = H * h;
+      mk('path', {d: `M${cl(px - hw)},${SY + 1} L${px},${py} L${cl(px + hw)},${SY + 1} Z`, fill: '#4b518f'}, fr);
+      mk('path', {d: `M${px},${py} L${cl(px + hw)},${SY + 1} L${cl(px + hw * .15)},${SY + 1} Z`, fill: '#3b4080'}, fr);
+      mk('path', {d: `M${cl(px - hw * .3)},${py + hh * .3} L${px},${py} L${cl(px + hw * .3)},${py + hh * .3} L${cl(px + hw * .13)},${py + hh * .22} L${cl(px + hw * .02)},${py + hh * .33} L${cl(px - hw * .13)},${py + hh * .21} Z`, fill: '#fff6e0', opacity: .95}, fr);
+    });
+    const fr2 = mk('g', {filter: 'url(#ps)'}, far);
+    [[.1, .07, .14], [.3, .09, .13], [.52, .06, .15], [.7, .1, .13], [.93, .08, .14]].forEach(([x, h, w]) => {
+      const px = W * x, py = SY - H * h, hw = W * w, hh = H * h;
+      mk('path', {d: `M${cl(px - hw)},${SY + 2} L${px},${py} L${cl(px + hw)},${SY + 2} Z`, fill: '#30356a'}, fr2);
+      mk('path', {d: `M${cl(px - hw * .2)},${py + hh * .2} L${px},${py} L${cl(px + hw * .2)},${py + hh * .2} L${px},${py + hh * .28} Z`, fill: '#fff0d0', opacity: .7}, fr2);
+    });
+
+    // Sea plane with aurora reflections
+    const [, sea] = plane();
+    mk('rect', {x: 0, y: SY, width: W, height: H - SY, fill: 'url(#sea)'}, sea);
+    mk('rect', {x: 0, y: SY, width: W, height: 1.2, fill: '#8dffc4', opacity: .3}, sea);
+    [[.18, .05, .34], [.42, .1, .26], [.3, .16, .2]].forEach(([x, y, w], i) => {
+      const r = mk('rect', {x: W * x, y: SY + (H - SY) * y, width: W * w, height: 2, rx: 1, fill: '#7dffb8', opacity: .14}, sea);
+      if (!Kit.calm) idle.push(gsap.to(r, {opacity: .04, duration: 1.4 + i * .5, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+    });
+    for (let i = 0; i < 7; i++) { const y = SY + (H - SY) * (.12 + (i % 4) * .13), x = W * (.06 + i * .13); mk('path', {d: `M${x},${y} q${W * .02},-2.5 ${W * .04},0 t${W * .04},0`, stroke: P.paper, 'stroke-opacity': .2, 'stroke-width': 1.2, fill: 'none'}, sea); }
+
+    // Mid plane: Norway's cliff with the launch pad, the radar hill
+    const [, mid] = plane();
+    const PX = W * .15, PY = H * .5, s = Math.max(5, 7 * k);
+    mk('path', {d: `M0,${H * .455} L${W * .07},${H * .465} L${W * .105},${PY} L${W * .245},${PY} L${W * .29},${H * .58} L${W * .33},${H * .66} L${W * .37},${H * .76} L0,${H * .76} Z`, fill: '#262b57', filter: 'url(#ps)', stroke: 'rgba(255,255,255,.14)', 'stroke-width': 1}, mid);
+    mk('path', {d: `M0,${H * .455} L${W * .07},${H * .465} L${W * .105},${PY} L${W * .245},${PY} L${W * .29},${H * .58} L${W * .275},${H * .58} L${W * .238},${PY + 2.5 * k} L${W * .1},${PY + 2.5 * k} L${W * .066},${H * .465 + 2.5 * k} L0,${H * .455 + 2.5 * k} Z`, fill: '#dcd8f0', opacity: .7}, mid);
+    [[.6, .27], [.67, .31]].forEach(([y, x]) => mk('path', {d: `M0,${H * y} Q${W * x * .5},${H * y - 4 * k} ${W * x},${H * y + 3 * k}`, stroke: 'rgba(255,255,255,.07)', 'stroke-width': 1.2, fill: 'none'}, mid));
+    for (let i = 0; i < 3; i++) {
+      const tw = 5.5 * k, th = 12 * k, tx = W * .008 + i * tw * 1.15, ty = H * .457 + (tx / (W * .07)) * H * .01;
+      mk('path', {d: `M${tx},${ty} L${tx + tw / 2},${ty - th} L${tx + tw},${ty} Z`, fill: '#181c40'}, mid);
+      mk('path', {d: `M${tx + tw * .3},${ty - th * .6} L${tx + tw / 2},${ty - th} L${tx + tw * .7},${ty - th * .6} Z`, fill: '#dcd8f0', opacity: .8}, mid);
+    }
+    const tx0 = PX + s * 1.3, tH = s * 3.6;
+    let lat = `M${tx0},${PY} v${-tH} M${tx0 + s * .8},${PY} v${-tH}`;
+    for (let j = 0; j < 4; j++) { const y = PY - j * tH / 4; lat += ` M${tx0},${y} L${tx0 + s * .8},${y - tH / 4} M${tx0 + s * .8},${y} L${tx0},${y - tH / 4}`; }
+    mk('path', {d: lat, stroke: '#3b4080', 'stroke-width': 1.2, fill: 'none', opacity: .95}, mid);
+    mk('rect', {x: W * .19, y: PY - 7 * k, width: W * .045, height: 7 * k, fill: '#1a1e46'}, mid);
+    [0, 1].forEach(j => { const w = mk('rect', {x: W * .195 + j * W * .018, y: PY - 5 * k, width: 2.6 * k, height: 2.6 * k, fill: P.amber}, mid); if (!Kit.calm) idle.push(gsap.to(w, {opacity: .35, duration: 1.7 + j, repeat: -1, yoyo: true, ease: 'steps(1)', delay: j * .6})); });
+    mk('text', {x: W * .13, y: H * .69, fill: P.paper, 'font-size': fs, 'font-weight': 700, 'letter-spacing': 1.5, opacity: .85, 'text-anchor': 'middle', style: MONO}, mid).textContent = 'NORWAY';
+
+    const DX = W * .86, DY = H * .53 - 14 * k, BL = Math.min(W * .55, DY / .7);
+    R.DX = DX; R.DY = DY; R.a0 = Math.atan2(-.4, -1);
+    R.beamG = mk('g', {}, mid);
+    const wedge = `M${DX},${DY} L${DX - BL},${DY - BL * .65} L${DX - BL},${DY - BL * .15} Z`;
+    mk('path', {d: wedge, fill: 'url(#beam)'}, R.beamG);
+    R.beamR = mk('path', {d: wedge, fill: 'url(#beamR)', opacity: 0}, R.beamG);
+    mk('path', {d: `M${W * .7},${H * .76} L${W * .74},${H * .62} L${W * .81},${H * .55} L${W * .9},${H * .53} L${W},${H * .55} L${W},${H * .76} Z`, fill: '#2f3566', filter: 'url(#ps)', stroke: 'rgba(255,255,255,.14)', 'stroke-width': 1}, mid);
+    mk('path', {d: `M${W * .74},${H * .62} L${W * .81},${H * .55} L${W * .9},${H * .53} L${W},${H * .55} L${W},${H * .555 + 2.5 * k} L${W * .9},${H * .53 + 2.5 * k} L${W * .81},${H * .55 + 2.5 * k} L${W * .745},${H * .625} Z`, fill: '#dcd8f0', opacity: .65}, mid);
+    mk('rect', {x: W * .92, y: H * .535 - 7 * k, width: W * .05, height: 7 * k, fill: '#1d2250'}, mid);
+    mk('rect', {x: W * .93, y: H * .535 - 5 * k, width: 2.6 * k, height: 2.6 * k, fill: P.amber}, mid);
+    const d = 11 * k;
+    mk('path', {d: `M${DX - d * .25},${H * .545} L${DX},${DY + d * .3} L${DX + d * .25},${H * .545} M${DX - d * .15},${H * .52} h${d * .3}`, stroke: '#2f3566', 'stroke-width': 1.4, fill: 'none'}, mid);
+    mk('path', {d: `M${DX - d},${DY - d * .8} Q${DX - d * .15},${DY + d * .85} ${DX + d * .75},${DY - d * .2} Z`, stroke: '#1d2250', 'stroke-width': 1.6, fill: '#9aa0c8', 'stroke-linejoin': 'round'}, mid);
+    mk('path', {d: `M${DX - d * .1},${DY + d * .05} L${DX - d * .3},${DY - d * .55}`, stroke: '#1d2250', 'stroke-width': 1.2}, mid);
+    R.dot = mk('circle', {cx: DX - d * .3, cy: DY - d * .6, r: Math.max(2, 2.4 * k), fill: P.green}, mid);
+    if (!Kit.calm) idle.push(R.dotTw = gsap.to(R.dot, {opacity: .3, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+    mk('text', {x: DX, y: H * .69, fill: P.paper, 'font-size': fs, 'font-weight': 700, 'letter-spacing': 1.5, opacity: .85, 'text-anchor': 'middle', style: MONO}, mid).textContent = 'RADAR';
+    if (!Kit.calm) idle.push(R.beamTw = gsap.fromTo(R.beamG, {rotation: -10, svgOrigin: `${DX} ${DY}`}, {rotation: 12, svgOrigin: `${DX} ${DY}`, duration: 2.6, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+
+    // Desk geometry (needed for the flight end)
+    const DKY = H - Math.max(H * .13, fs * 1.5);
+
+    // Flight plane: the arc from the pad into the sea
+    const [, fly] = plane();
+    const EX = W * .68, EY = SY + (DKY - SY) * .45;
+    R.path = mk('path', {d: `M${PX},${PY - s * 1.6} Q${W * .42},${-H * .08} ${EX},${EY}`, fill: 'none', stroke: '#10100c', 'stroke-width': 1.2, 'stroke-dasharray': '2 5', opacity: 0}, fly);
+    R.len = R.path.getTotalLength();
+    R.trail = mk('path', {d: R.path.getAttribute('d'), fill: 'none', stroke: '#10100c', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-dasharray': R.len, 'stroke-dashoffset': R.len, opacity: .9}, fly);
+    R.ap = R.path.getPointAtLength(R.len * .56);
+    R.rr = Math.max(fs * .8, Math.min(fs * 2.6, R.ap.y - 2, R.ap.x - 2, W - R.ap.x - 2));
+    R.rings = [0, 1, 2].map(() => mk('circle', {cx: R.ap.x, cy: R.ap.y, r: fs * .4, fill: 'none', stroke: P.red, 'stroke-width': 2, opacity: 0}, fly));
+    R.sr = Math.min(fs * 2, W - EX - 2, EX - 2);
+    R.splash = [0, 1].map(() => mk('ellipse', {cx: EX, cy: EY, rx: fs * .3, ry: fs * .12, fill: 'none', stroke: P.paper, 'stroke-width': 1.5, opacity: 0}, fly));
+    R.smoke = [0, 1, 2, 3, 4].map(i => mk('circle', {cx: PX + (i - 2) * s * .5, cy: PY - s * .5, r: s * .9, fill: '#fff6e0', opacity: 0}, fly));
+    R.s = s;
+    R.rocket = mk('g', {}, fly);
+    R.flame = mk('path', {d: `M${-s * 1.6},${-s * .28} L${-s * 3.2},0 L${-s * 1.6},${s * .28} Z`, fill: '#e8501c', opacity: 0}, R.rocket);
+    mk('path', {d: `M${-s * 1.6},${-s * .35} L${-s * 2.2},${-s * .95} L${-s * 1.05},${-s * .35} Z M${-s * 1.6},${s * .35} L${-s * 2.2},${s * .95} L${-s * 1.05},${s * .35} Z`, fill: P.red}, R.rocket);
+    mk('path', {d: `M${-s * 1.6},${-s * .35} L${s * .55},${-s * .35} Q${s * 1.5},0 ${s * .55},${s * .35} L${-s * 1.6},${s * .35} Z`, fill: P.paper, stroke: P.ink, 'stroke-width': .8}, R.rocket);
+    mk('path', {d: `M${-s * .2},${-s * .35} v${s * .7}`, stroke: P.red, 'stroke-width': Math.max(1, s * .2)}, R.rocket);
+    gsap.set(R.rocket, {x: PX, y: PY - s * 1.6, rotation: -90});
+
+    // Foreground: the desk and the briefcase
+    const [fgO, fg] = plane(); R.fgO = fgO;
+    mk('path', {d: `M0,${DKY + 2} Q${W * .5},${DKY - fs * .4} ${W},${DKY + 2} L${W},${H} L0,${H} Z`, fill: 'url(#desk)', filter: 'url(#ps)'}, fg);
+    mk('path', {d: `M0,${DKY + 3} Q${W * .5},${DKY - fs * .4 + 3} ${W},${DKY + 3}`, stroke: 'rgba(255,220,180,.3)', 'stroke-width': 1.2, fill: 'none'}, fg);
+    [.45, .7, .88].forEach((p, i) => { const y = DKY + (H - DKY) * p; mk('path', {d: `M0,${y} Q${W * (.3 + i * .15)},${y - 3} ${W},${y + 1}`, stroke: 'rgba(0,0,0,.2)', 'stroke-width': 1, fill: 'none'}, fg); });
+
+    const room = DKY - Math.max(H * .34, fs * 2.6);
+    const bw = Math.max(40, Math.min(W * .32, room / 2.05 / .42)), bh = bw * .42, BX = W * .5, bx = BX - bw / 2, by = DKY - bh;
+    if (H - DKY > 16) {
+      const pw = Math.min(W * .15, bw * .6), ph = (H - DKY) * .5, px = W * .1, py = DKY + (H - DKY) * .25;
+      const pg = mk('g', {transform: `rotate(-5 ${px + pw / 2} ${py + ph / 2})`}, fg);
+      mk('rect', {x: px, y: py, width: pw, height: ph, rx: 1.5, fill: P.paper, opacity: .92}, pg);
+      mk('rect', {x: px + pw * .55, y: py + ph * .2, width: pw * .35, height: ph * .4, rx: 1, fill: 'none', stroke: '#c8473a', 'stroke-width': 1.2}, pg);
+      [.25, .5, .75].forEach(q => mk('rect', {x: px + pw * .1, y: py + ph * q, width: pw * .38, height: 1.2, fill: '#8a8070'}, pg));
+    }
+    const gy = Math.max(0, by - bh * 1.6), gh = Math.min(H, DKY + bh * .3) - gy;
+    R.glowR = mk('rect', {x: BX - bw * 1.1, y: gy, width: bw * 2.2, height: gh, fill: 'url(#glowR)', opacity: 0}, fg);
+    R.glowG = mk('rect', {x: BX - bw * 1.1, y: gy, width: bw * 2.2, height: gh, fill: 'url(#glowG)', opacity: 0}, fg);
+
+    R.lid = mk('g', {}, fg);
+    const lw = bw * .96, lh = bh * 1.06, lx = bx + bw * .02, ly = by - lh + bh * .02;
+    mk('rect', {x: lx, y: ly, width: lw, height: lh, rx: bh * .12, fill: 'url(#lidg)', stroke: '#4a4c5e', 'stroke-width': 1}, R.lid);
+    mk('rect', {x: lx + bw * .05, y: ly + bh * .08, width: lw - bw * .1, height: lh - bh * .14, rx: bh * .08, fill: '#111218'}, R.lid);
+    const sx = bx + bw * .17, sy = ly + bh * .16, sw = bw * .66, sh = bh * .5, scx = sx + sw / 2, scy = sy + sh / 2, t = sh * .32;
+    R.sc = {x: scx, y: scy};
+    mk('rect', {x: sx, y: sy, width: sw, height: sh, rx: 3, fill: '#061014', stroke: '#2a2d3a'}, R.lid);
+    R.scrR = mk('g', {opacity: 0}, R.lid);
+    mk('rect', {x: sx, y: sy, width: sw, height: sh, rx: 3, fill: P.red, opacity: .22}, R.scrR);
+    mk('path', {d: `M${scx},${scy - t} L${scx + t * 1.15},${scy + t * .85} L${scx - t * 1.15},${scy + t * .85} Z`, fill: 'none', stroke: '#ff5a4a', 'stroke-width': Math.max(1.4, t * .2), 'stroke-linejoin': 'round'}, R.scrR);
+    mk('path', {d: `M${scx},${scy - t * .4} v${t * .65} M${scx},${scy + t * .5} v${t * .12}`, stroke: '#ff5a4a', 'stroke-width': Math.max(1.4, t * .2), 'stroke-linecap': 'round'}, R.scrR);
+    R.scrG = mk('g', {opacity: 0}, R.lid);
+    mk('rect', {x: sx, y: sy, width: sw, height: sh, rx: 3, fill: P.green, opacity: .16}, R.scrG);
+    mk('path', {d: `M${scx - t},${scy} L${scx - t * .25},${scy + t * .7} L${scx + t * 1.1},${scy - t * .65}`, fill: 'none', stroke: '#5fe39a', 'stroke-width': Math.max(1.6, t * .25), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, R.scrG);
+    const ky = sy + sh + bh * .1, kh = bh * .13, kw = bw * .075;
+    for (let i = 0; i < 5; i++) mk('rect', {x: sx + i * kw * 1.35, y: ky, width: kw, height: kh, rx: 1.2, fill: '#3a3d4c'}, R.lid);
+    R.btn = mk('circle', {cx: sx + sw - kh * .7, cy: ky + kh / 2, r: kh * .65, fill: P.red}, R.lid);
+    gsap.set(R.lid, {scaleY: 0, opacity: 0, svgOrigin: `${BX} ${by}`});
+
+    const hr = bh * .1;
+    mk('path', {d: `M${BX - bw * .13},${by + 1} v${-bh * .2} q0,${-hr} ${hr},${-hr} h${bw * .26 - hr * 2} q${hr},0 ${hr},${hr} v${bh * .2}`, stroke: '#0c0c0f', 'stroke-width': Math.max(3, bh * .09), fill: 'none', 'stroke-linejoin': 'round'}, fg);
+    mk('rect', {x: bx, y: by, width: bw, height: bh, rx: bh * .14, fill: 'url(#leather)', filter: 'url(#ps)'}, fg);
+    mk('rect', {x: bx + 2, y: by + 2, width: bw - 4, height: bh * .22, rx: bh * .1, fill: 'rgba(255,255,255,.07)'}, fg);
+    mk('rect', {x: bx + bh * .1, y: by + bh * .1, width: bw - bh * .2, height: bh * .8, rx: bh * .08, fill: 'none', stroke: 'rgba(255,255,255,.16)', 'stroke-width': .8, 'stroke-dasharray': '2 2'}, fg);
+    const cc = bh * .2;
+    [[bx, by, 1, 1], [bx + bw, by, -1, 1], [bx, by + bh, 1, -1], [bx + bw, by + bh, -1, -1]].forEach(([x, y, a, b]) => mk('path', {d: `M${x},${y + b * cc} L${x},${y} L${x + a * cc},${y}`, stroke: '#b9b29c', 'stroke-width': Math.max(1.5, bh * .06), fill: 'none'}, fg));
+    [.2, .8].forEach(p => {
+      mk('rect', {x: bx + bw * p - bw * .05, y: by + bh * .1, width: bw * .1, height: bh * .26, rx: 1.5, fill: '#c9a45a'}, fg);
+      mk('rect', {x: bx + bw * p - bw * .025, y: by + bh * .17, width: bw * .05, height: bh * .08, fill: '#6e5527'}, fg);
+    });
+    if (H - DKY >= fs * .9) {
+      const lx2 = bx + bw + fs * .5, ly2 = Math.min(H - fs * .35, DKY + fs * 1.15);
+      const bl = mk('text', {x: lx2, y: ly2, fill: P.paper, 'font-size': fs * 1.1, opacity: .9, style: HAND}, fg);
+      bl.textContent = '← the nuclear briefcase';
+      if (bl.getComputedTextLength() + lx2 > W - 4) bl.textContent = '← the briefcase';
+      if (bl.getComputedTextLength() + lx2 > W - 4) bl.remove();
+    }
+
+    R.flash = mk('rect', {width: W, height: H, fill: P.red, opacity: 0, 'pointer-events': 'none'}, root);
+    R.cap = mk('g', {opacity: 0}, root);
+    R.capBg = mk('rect', {rx: fs * .6, fill: P.paper}, R.cap);
+    R.capT = mk('text', {x: W / 2, fill: P.ink, 'font-size': fs, 'font-weight': 700, 'text-anchor': 'middle', style: MONO}, R.cap);
+
+    if (phase === 'done') { endState(); if (cut) finish(); }
+    else if (phase === 'pick' && full && entered && !Kit.calm) build();
+  }
+
+  function caption(i) {
+    R.capT.textContent = CAP[i]; R.capT.setAttribute('font-size', fs);
+    let w = R.capT.getComputedTextLength();
+    if (w > W - fs * 2) { R.capT.setAttribute('font-size', 12); w = R.capT.getComputedTextLength(); }
+    const pw = w + fs * 1.4, ph = fs * 1.75, py = fs * .55;
+    R.capBg.setAttribute('x', W / 2 - pw / 2); R.capBg.setAttribute('y', py);
+    R.capBg.setAttribute('width', pw); R.capBg.setAttribute('height', ph);
+    R.capT.setAttribute('y', py + ph / 2 + fs * .36);
+  }
+  function lit(i) { chipsBox.querySelectorAll('.chip').forEach(c => c.classList.toggle('lit', +c.dataset.i === i)); }
+
+  function endState() {
+    caption(3); gsap.set(R.cap, {opacity: 1});
+    gsap.set(R.rocket, {opacity: 0});
+    gsap.set(R.trail, {attr: {'stroke-dashoffset': 0}});
+    gsap.set(R.path, {opacity: .35});
+    gsap.set(R.lid, {scaleY: 1, opacity: 1});
+    gsap.set(R.scrG, {opacity: 1}); gsap.set(R.glowG, {opacity: 1});
+    gsap.set(R.splash[0], {attr: {rx: R.sr, ry: R.sr * .3}, opacity: .4});
+    R.btn.setAttribute('fill', P.green); R.dot.setAttribute('fill', P.green);
+    if (!Kit.calm) idle.push(gsap.to(R.glowG, {opacity: .55, duration: 1.6, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+    lit(-1);
+  }
+
+  function build() {
+    if (!R.root) return;
+    gsap.from(R.root.querySelectorAll('.pl'), {y: H * .12, opacity: 0, duration: .9, stagger: .1, ease: 'back.out(1.4)'});
+    gsap.from(R.aur, {opacity: 0, duration: 1.6, ease: 'sine.out'});
+  }
+
+  function play() {
+    phase = 'playing';
+    const len = R.len, s = R.s;
+    const aim = (Math.atan2(R.ap.y - R.DY, R.ap.x - R.DX) - R.a0) * 180 / Math.PI;
+    tl = gsap.timeline({delay: 1, onComplete: () => { phase = 'done'; tl = null; lit(-1); finish(); }});
+    tl.call(() => { caption(0); lit(0); Kit.haptic('light'); })
+      .to(R.cap, {opacity: 1, duration: .3})
+      .to(R.path, {opacity: .35, duration: .5}, '<')
+      .to(R.flame, {opacity: 1, duration: .15}, '<')
+      .fromTo(R.smoke, {scale: .2, opacity: .85, transformOrigin: '50% 50%'}, {scale: 1.6, opacity: 0, x: i => (i - 2) * s * 1.2, duration: 1.4, stagger: .06, ease: 'expo.out'}, '<')
+      .to(R.flame, {scaleX: 1.5, transformOrigin: '100% 50%', duration: .07, repeat: 31, yoyo: true, ease: 'none'}, '<')
+      .to(R.rocket, {duration: 1.8, ease: 'power1.in', motionPath: {path: R.path, autoRotate: true, start: 0, end: .5}}, '<.1')
+      .to(R.trail, {attr: {'stroke-dashoffset': len * .5}, duration: 1.8, ease: 'power1.in'}, '<')
+      .call(() => { caption(1); lit(1); Kit.haptic('selection'); if (R.beamTw) R.beamTw.kill(); if (R.dotTw) R.dotTw.kill(); })
+      .to(R.beamG, {rotation: aim, svgOrigin: `${R.DX} ${R.DY}`, duration: .5, ease: 'power3.out'})
+      .to(R.beamR, {opacity: 1, duration: .3}, '<')
+      .to(R.dot, {attr: {fill: P.red}, opacity: 1, duration: .1}, '<')
+      .to(R.dot, {opacity: .2, duration: .15, repeat: 7, yoyo: true}, '<.1')
+      .to(R.rocket, {duration: 1.6, ease: 'sine.inOut', motionPath: {path: R.path, autoRotate: true, start: .5, end: .62}}, '<')
+      .to(R.trail, {attr: {'stroke-dashoffset': len * .38}, duration: 1.6, ease: 'sine.inOut'}, '<')
+      .fromTo(R.rings, {attr: {r: fs * .4}, opacity: 1}, {attr: {r: R.rr}, opacity: 0, duration: 1, stagger: .3, ease: 'expo.out'}, '<.2')
+      .call(() => { caption(2); lit(2); Kit.haptic('success'); })
+      .set(R.lid, {opacity: 1})
+      .to(R.lid, {scaleY: 1, duration: .8, ease: 'back.out(2)'})
+      .to(R.scrR, {opacity: 1, duration: .15}, '<.3')
+      .to(R.glowR, {opacity: 1, duration: .4}, '<')
+      .to(R.btn, {attr: {fill: P.red}, duration: .1}, '<')
+      .to(R.flash, {opacity: .2, duration: .22, repeat: 5, yoyo: true, ease: 'sine.inOut'}, '<')
+      .to(R.scrR, {opacity: .3, duration: .2, repeat: 5, yoyo: true, ease: 'steps(1)'}, '<.2')
+      .fromTo(R.fgO, {x: -2.5}, {x: 2.5, duration: .05, repeat: 9, yoyo: true, ease: 'none', clearProps: 'x'}, '<')
+      .to({}, {duration: .5})
+      .call(() => { caption(3); lit(3); })
+      .to(R.rocket, {duration: 1.3, ease: 'power2.in', motionPath: {path: R.path, autoRotate: true, start: .62, end: 1}})
+      .to(R.trail, {attr: {'stroke-dashoffset': 0}, duration: 1.3, ease: 'power2.in'}, '<')
+      .to(R.flame, {opacity: 0, duration: .4}, '<')
+      .to(R.beamR, {opacity: 0, duration: .8}, '<.4')
+      .to(R.flash, {opacity: 0, duration: .3}, '<')
+      .set(R.rocket, {opacity: 0})
+      .fromTo(R.splash, {attr: {rx: fs * .3, ry: fs * .12}, opacity: .95}, {attr: {rx: R.sr, ry: R.sr * .3}, opacity: .4, duration: 1, stagger: .2, ease: 'expo.out'}, '<')
+      .to(R.scrR, {opacity: 0, duration: .25}, '<')
+      .to(R.glowR, {opacity: 0, duration: .6}, '<')
+      .to(R.glowG, {opacity: 1, duration: .6}, '<')
+      .fromTo(R.scrG, {opacity: 0, scale: .4, svgOrigin: `${R.sc.x} ${R.sc.y}`}, {opacity: 1, scale: 1, duration: .55, ease: 'back.out(3)'}, '<')
+      .to(R.dot, {attr: {fill: P.green}, opacity: 1, duration: .2}, '<')
+      .to(R.btn, {attr: {fill: P.green}, duration: .2}, '<')
+      .call(() => Kit.haptic('light'), null, '<');
+  }
+
+  function reveal() {
+    phase = 'reveal';
+    const st = Flip.getState('.chip');
+    [...chipsBox.children].sort((a, b) => a.dataset.i - b.dataset.i).forEach(c => {
+      const i = +c.dataset.i; chipsBox.appendChild(c);
+      c.classList.remove('on'); c.classList.add(order.indexOf(i) === i ? 'ok' : 'bad');
+      c.querySelector('.n').textContent = i + 1;
+    });
+    chipsBox.classList.add('row');
+    card.classList.add('done');
+    if (Kit.calm) { phase = 'done'; layout(); finish(); return; }
+    flipTw = Flip.from(st, {duration: .8, ease: 'power3.inOut', stagger: .05});
+    gsap.from('#chips .short', {opacity: 0, duration: .4, delay: .45});
+    if (R.root) gsap.to(R.root, {opacity: 0, duration: .35});
+    pend = gsap.delayedCall(.9, () => {
+      pend = null; flipTw = null;
+      layout();
+      if (!R.root) { phase = 'done'; finish(); return; }
+      gsap.from(R.root, {opacity: 0, duration: .5});
+      build(); play();
+    });
+  }
+
+  function skip() {
+    if (flipTw) { flipTw.progress(1); flipTw = null; }
+    if (pend) { pend.kill(); pend = null; }
+    if (tl) { tl.kill(); tl = null; }
+    phase = 'done'; layout(); finish();
+  }
+
+  function finish() {
+    if (finished) return; finished = true;
+    say.innerHTML = 'A harmless science rocket was read as an attack. The briefcase was put in operational mode, <b>the one case known for certain</b>, but no attack codes were sent.';
+    Kit.show('keep');
+  }
+
+  // Redraw the night whenever the picture's room changes (not mid-show).
+  // The redraw is deferred to the next frame so it never mutates layout inside the observer callback.
+  let roRaf = 0;
+  new ResizeObserver(() => {
+    if (roRaf) return;
+    roRaf = requestAnimationFrame(() => {
+      roRaf = 0;
+      if (phase === 'reveal' || phase === 'playing') return;
+      const w = svg.clientWidth, h = svg.clientHeight;
+      if (!w || !h) return;
+      if (Math.abs(w - lastW) < 2 && Math.abs(h - lastH) < 2) return;
+      layout();
+    });
+  }).observe(svg);
+
+  // Chips: tap to number them in order; tap a numbered one to undo from there.
+  function paintChips() {
+    chipsBox.querySelectorAll('.chip').forEach(c => { const k = order.indexOf(+c.dataset.i); c.classList.toggle('on', k >= 0); c.querySelector('.n').textContent = k >= 0 ? k + 1 : ''; });
+  }
+  chipsBox.addEventListener('click', e => {
+    const c = e.target.closest('.chip'); if (!c || order.length === 4 || phase !== 'pick') return;
+    const i = +c.dataset.i, k = order.indexOf(i);
+    order = k >= 0 ? order.slice(0, k) : [...order, i];
+    paintChips(); Kit.haptic('selection');
+    if (!Kit.calm) gsap.fromTo(c, {scale: .93}, {scale: 1, duration: .45, ease: 'back.out(3)'});
+    if (order.length === 4) { say.innerHTML = 'Now: <b>how sure are you</b> of your order?'; sure.on(); }
+  });
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = order.join() === '0,1,2,3';
+    Kit.answer({choice: order.map(i => SHORT[i]).join(' → '), correct: ok, sure: pct});
+    sure.grade(ok, pct, ok ? 'Your order, right' : 'Your order, not quite');
+    say.innerHTML = 'Watch the night of January 1995.';
+    reveal();
+  });
+
+  Kit.onShow.card = () => layout(true);
+  Kit.onEnter.card = () => {
+    if (entered) return; entered = true;
+    if (Kit.calm) return;
+    build();
+    gsap.from('.chip', {opacity: 0, y: 14, duration: .5, stagger: .07, ease: 'power3.out', delay: .4});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (const i of [0, 1, 2, 3]) { chipsBox.querySelector(`[data-i="${i}"]`).click(); await wait(40); }
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(300);
+    skip();
+    await wait(500);
+  };
+})();
+Kit.single();
+</script>
+</html>

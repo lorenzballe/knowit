@@ -97,8 +97,6 @@ function draw() {
   const gTop = yB + fs * 1.6, gBot = H - fs * 3.2;
   const c = Math.max(2, Math.min((W - 2 * pad) / COLS, (gBot - gTop) / ROWS));
   const gx = (W - c * COLS) / 2;
-  Kit.mk('rect', {x: gx - 2, y: gTop - 2, width: c * COLS + 4, height: c * ROWS + 4, rx: 4,
-    style: 'fill:color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
   cells = [];
   for (let i = 0; i < MAXC; i++) {
     const r = Math.floor(i / COLS), cc = i % COLS;

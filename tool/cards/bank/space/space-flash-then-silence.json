@@ -30,8 +30,7 @@
     "kit": 1,
     "touch": "taps",
     "label": "Card titled 'Flash, then silence' with a guess-the-wait prompt: a meteor bursts 30 km up, brighter than the Sun. Pick how long until its blast hits a window in Chelyabinsk: under a second, about 10 seconds, about a minute, or 2 to 3 minutes, then rate your confidence.",
-    "graded": false,
-    "ground": "#0d1f66"
+    "graded": false
   },
   "source": "Veritasium, “These are the asteroids to worry about” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=4Wrc4fHSCpw",

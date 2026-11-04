@@ -41,9 +41,6 @@ const PROMS = [
   {loop: 0, a: deg(150), w: deg(3), h: .14, lean: -.35},
   {loop: 1, a: deg(96), w: deg(3), h: .11},
 ];
-// Sky colour by how dark it has gone: day, deep partial, totality. [darkness, top, bottom]
-const SKY = [[0, [46, 112, 190], [134, 190, 236]], [.72, [24, 38, 90], [94, 84, 134]], [1, [4, 7, 22], [16, 20, 50]]];
-const sky = (t, j) => { const i = t > SKY[1][0] ? 1 : 0, A = SKY[i], B = SKY[i + 1], u = clamp((t - A[0]) / (B[0] - A[0]), 0, 1); return `rgb(${A[j].map((v, k) => Math.round(lerp(v, B[j][k], u))).join(',')})`; };
 
 const st = {s: 0, lab: 0, res: 0, rip: 0, ph: 0};   // Moon along its path (1 = centred), names, room for the why, hint ripple, shimmer
 let G = null, dirty = false, total = false, ended = false, whyIn = false, snapping = false, dragging = false, touched = false, p0 = null, hint = [];
@@ -114,10 +111,6 @@ function renderProms(R) {
   });
   return {c, S};
 }
-function rrect(x, X, Y, w, h, r) {
-  r = Math.min(r, w / 2, h / 2);
-  x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath();
-}
 function leader(x, x1, y1, x2, y2, col) {
   const dx = x2 - x1, dy = y2 - y1, l = Math.hypot(dx, dy) || 1, e = Math.min(5, l * .2);
   x.strokeStyle = col; x.lineWidth = 1.2;
@@ -157,10 +150,6 @@ function draw() {
   const fs = clamp(Math.min(W, h) * .047, 12, 17), pad = Math.max(8, fs * .75);
   x.save();
   x.clearRect(0, 0, W, H);
-  rrect(x, 0, 0, W, h, Math.min(W, h) * .055); x.clip();
-  const sk = x.createLinearGradient(0, 0, 0, h);
-  sk.addColorStop(0, sky(dark, 1)); sk.addColorStop(1, sky(dark, 2));
-  x.fillStyle = sk; x.fillRect(0, 0, W, h);
 
   x.globalCompositeOperation = 'lighter';
   const vx = W - pad - fs * .5, vy = pad + fs * .55;
@@ -217,7 +206,7 @@ function draw() {
   const ra = .9 * (1 - st.lab);
   if (ra > .01) {                               // how much of the bright disc is covered
     x.font = `600 ${fs * .8}px ${G.mono}`; x.textAlign = 'right'; x.textBaseline = 'alphabetic';
-    x.fillStyle = dark < .6 ? `rgba(8,24,54,${ra})` : `rgba(232,236,255,${ra})`;
+    x.fillStyle = `rgba(255,255,255,${ra})`;
     x.fillText(`${f <= 0 ? 100 : Math.floor((1 - f) * 100)}% covered`, W - pad, h - pad);
   }
   const la = st.lab * vis;

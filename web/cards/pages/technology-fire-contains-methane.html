@@ -1,0 +1,343 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-fire-contains-methane -->
+<!-- Look: a hand-tinted 19th-century specimen plate of the "Door to Hell" crater in cross-section, with engraved strata, stippled gas, Latin-looking labels and fire in an orange wash.
+     Interaction: drag the match from "leave it" to "light it". It springs after the finger. The more you light, the more rim fires catch along the crater walls, the more of the rising methane burns where it leaks, and the less drifts loose into the air.
+     Wow: at full fire the flames flare elastically, engraved rays draw out around them and the sky above clears of loose gas. -->
+<title>Why light the Door to Hell</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#pic .lat{font-family:var(--display);font-style:italic;font-weight:700}
+#pic .sm{font-family:var(--body);font-weight:600}
+#pic .mono{font-family:var(--mono);font-weight:600;letter-spacing:.14em}
+#pic .ping{transform-box:fill-box;transform-origin:center;animation:ping 1.6s ease-out infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+.kit-calm #pic .ping{animation:none;opacity:.4}
+.say{font-size:max(1.9cqh,13px)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag the match · leak or burn" style="--c:#efe5cf;--k:#2b2117;--edge:#c8b78e">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO IGNITE</span></div>
+    <h2 class="q">Why did engineers decide to ignite the gas after the blowout?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A cross-section of a desert crater with methane rising from below. A match slider sets the gas alight."></svg>
+    </div>
+    <p class="say" id="say">Methane keeps rising out of the crater. <b>Drag the match to the right</b> to set it alight.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fire turned a loose, spreading leak into a burn kept in one place.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La "Porta dell'Inferno", come si è formata e perché dopo 50 anni brucia nel deserto in Turkmenistan?” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), stageEl = Kit.$('stage');
+  const INK = '#2b2117', PAPER = '#efe5cf', OCHRE = '#b8894a', F1 = '#f4c552', F2 = '#d8552a';
+  const mk = Kit.mk;
+  let W = 0, H = 0, fs = 12, gy = 0, cx = 0, rw = 0, cd = 0, fy = 0, yb = 0, rT = 0, sx0 = 0, sx1 = 0, sy = 0, maxH = 0, topY = 0;
+  const st = {v: 0, flare: 1}; let target = 0, done = false, touched = false, stage = -1, lastStep = -1;
+  let pool = [], parts = [], tongues = [], rims = [], E = {}, spawnAcc = 0, time = 0, lastW = 0, lastH = 0;
+  const vTo = gsap.quickTo(st, 'v', {duration: .9, ease: 'elastic.out(1,0.45)'});
+
+  const text = (p, x, y, t, a = {}, cls = 'sm') => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, class: cls}, a), p); e.textContent = t; return e; };
+  const wob = (x, k) => Math.sin(x * .021 + k * 1.9) * 3 + Math.sin(x * .053 + k) * 1.6;
+  const bez = (t, a, b, c, d) => { const u = 1 - t; return u * u * u * a + 3 * u * u * t * b + 3 * u * t * t * c + t * t * t * d; };
+
+  function layout() {
+    svg.innerHTML = ''; parts = []; pool = []; tongues = []; rims = [];
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const r = stageEl.getBoundingClientRect(); lastW = r.width; lastH = r.height;
+    fs = Math.max(12, Math.min(14, W / 28));
+    sy = H - fs * 1.3; sx0 = W * .1; sx1 = W * .9;
+    yb = sy - fs * 3.1;
+    // pick the roomiest header that still leaves space for the crater and the strata
+    const modes = [
+      {title: true, sub: true, l1: fs * 3, l2: fs * 4.4, top: fs * 5.2},
+      {title: false, sub: true, l1: fs * 1.15, l2: fs * 2.4, top: fs * 3.1},
+      {title: false, sub: false, l1: fs * 1.15, l2: 0, top: fs * 1.8}
+    ];
+    let M = modes[modes.length - 1];
+    for (const m of modes) if (yb - m.top >= fs * 4) { M = m; break; }
+    topY = M.top;
+    yb = Math.max(yb, topY + fs * 2);
+    gy = topY + (yb - topY) * .5;
+    rw = Math.max(fs * 3, Math.min(W * .5, (yb - gy) * 2.1)); cd = Math.max(fs * .3, (yb - gy) * .36); fy = gy + cd;
+    rT = gy + (yb - gy) * .66; cx = W / 2;
+    maxH = Math.max(30, fy - topY - fs * .4);
+
+    // ---- defs: engraver's hatches, stipple, hand-tint washes
+    const defs = mk('defs', {}, svg);
+    const hatch = (id, ang, gap, op, sw = .6) => { const p = mk('pattern', {id, width: gap, height: gap, patternUnits: 'userSpaceOnUse', patternTransform: `rotate(${ang})`}, defs); mk('line', {x1: 0, y1: 0, x2: 0, y2: gap, stroke: INK, 'stroke-width': sw, opacity: op}, p); };
+    hatch('h1', 35, 4, .55); hatch('h2', -40, 5, .45); hatch('h3', 80, 3.5, .5); hatch('h4', 10, 6, .35); hatch('hw', 62, 3, .7, .7);
+    const dp = mk('pattern', {id: 'dots', width: 6, height: 6, patternUnits: 'userSpaceOnUse'}, defs);
+    mk('circle', {cx: 1.5, cy: 1.5, r: .85, fill: INK, opacity: .8}, dp); mk('circle', {cx: 4.5, cy: 4.4, r: .6, fill: INK, opacity: .6}, dp);
+    const lg = (id, stops, a = {x1: 0, y1: 1, x2: 0, y2: 0}) => { const g = mk('linearGradient', Object.assign({id}, a), defs); stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g)); };
+    lg('fl', [[0, '#fff2bd'], [.3, F1], [.75, F2], [1, '#9c2f1a']]);
+    lg('fl2', [[0, '#fffbe6'], [.6, '#ffe38a'], [1, F1]]);
+    lg('pit', [[0, '#2e1f12'], [1, '#8a6538']]);
+    lg('sky', [[0, OCHRE, .28], [1, OCHRE, 0]]);
+    const rg = mk('radialGradient', {id: 'glow'}, defs);
+    mk('stop', {offset: 0, 'stop-color': F1, 'stop-opacity': .6}, rg); mk('stop', {offset: .55, 'stop-color': F2, 'stop-opacity': .18}, rg); mk('stop', {offset: 1, 'stop-color': F2, 'stop-opacity': 0}, rg);
+
+    // ---- specimen corners and plate title (no frame: just the engraver's marks)
+    const orn = mk('g', {class: 'orn', stroke: INK, 'stroke-width': 1, fill: 'none'}, svg), c = fs * 1.1;
+    [[2, 2, 1, 1], [W - 2, 2, -1, 1], [2, H - 2, 1, -1], [W - 2, H - 2, -1, -1]].forEach(([x, y, a, b]) => {
+      mk('path', {d: `M${x} ${y + b * c} V${y} H${x + a * c}`}, orn);
+      mk('circle', {cx: x + a * 4.5, cy: y + b * 4.5, r: 1.2, fill: INK}, orn);
+    });
+    if (M.title) text(svg, cx, fs * 1.25, 'PL. I · THE DOOR TO HELL', {'text-anchor': 'middle', 'font-size': 12, class: 'mono'}, 'mono');
+
+    // ---- the sky: a warm wash and an engraved horizon
+    const skyG = mk('g', {class: 'band'}, svg);
+    mk('path', {d: `M0 ${gy - maxH * .5} H${W} V${gy} H0Z`, fill: 'url(#sky)'}, skyG);
+    for (let y = gy - 4, k = 0; y > gy - maxH * .42; y -= 4.2, k++) {
+      const op = .32 * (1 - (gy - y) / (maxH * .42)), seg = W / 5;
+      for (let s = 0; s < 5; s++) { const a = s * seg + ((k * 37 + s * 13) % 17), b = a + seg * (.55 + ((k + s) % 3) * .12); mk('line', {x1: a, x2: Math.min(W, b), y1: y, y2: y, stroke: INK, 'stroke-width': .5, opacity: op}, skyG); }
+    }
+    // dunes
+    const dh = maxH * .16;
+    const dune = (x0, x1, pk, h) => `M${x0} ${gy} Q${pk} ${gy - h * 1.6} ${x1} ${gy} Z`;
+    [[-W * .05, W * .36, W * .12, dh], [W * .64, W * 1.05, W * .88, dh * .8]].forEach(([a, b, p, h]) => {
+      mk('path', {d: dune(a, b, p, h), fill: PAPER, stroke: INK, 'stroke-width': .9}, skyG);
+      mk('path', {d: dune(p, b, p, h * .9), fill: 'url(#h1)', opacity: .7}, skyG);
+    });
+
+    // ---- the strata in cross-section
+    const N = 3, bnds = [];
+    for (let i = 0; i <= N; i++) bnds.push(gy + (rT - gy) * i / N);
+    const curve = (y0, k, rev) => { const pts = []; for (let x = 0; x <= W + 1; x += W / 24) pts.push([x, y0 + (k ? wob(x, k) : 0)]); if (rev) pts.reverse(); return pts.map(p => p.join(' ')).join(' L'); };
+    const fills = ['url(#h1)', 'url(#h3)', 'url(#h2)', 'url(#h4)'], tints = [.18, .3, .14, .26];
+    for (let i = 0; i < N + 1; i++) {
+      const top = i === 0 ? gy : bnds[i], bot = i === N ? yb + 2 : bnds[i + 1];
+      const g = mk('g', {class: 'band'}, svg);
+      const d = `M${curve(top, i, false)} L${curve(bot, i + 1, true)} Z`;
+      mk('path', {d, fill: OCHRE, opacity: tints[i]}, g);
+      mk('path', {d, fill: fills[i]}, g);
+      if (i) mk('path', {d: `M${curve(top, i, false)}`, fill: 'none', stroke: INK, 'stroke-width': .9}, g);
+    }
+    // the reservoir: gas from below
+    const resG = mk('g', {class: 'band'}, svg), r0 = rT + (yb - rT) * .2, r1 = yb - 2;
+    const rd = `M${W * .08} ${(r0 + r1) / 2} C${W * .2} ${r0 - 4} ${W * .8} ${r0 - 4} ${W * .92} ${(r0 + r1) / 2} C${W * .8} ${r1 + 3} ${W * .2} ${r1 + 3} ${W * .08} ${(r0 + r1) / 2}Z`;
+    mk('path', {d: rd, fill: PAPER}, resG);
+    mk('path', {d: rd, fill: 'url(#dots)', stroke: INK, 'stroke-width': 1}, resG);
+    const lab = 'Methanum subterraneum';
+    const tw = lab.length * fs * .5 + fs, lyR = (r0 + r1) / 2;
+    mk('rect', {x: cx - tw / 2, y: lyR - fs * .8, width: tw, height: fs * 1.25, rx: fs * .3, fill: PAPER, stroke: INK, 'stroke-width': .6}, resG);
+    text(resG, cx, lyR + fs * .3, lab, {'text-anchor': 'middle'}, 'lat');
+
+    // cracks from the gas up to the crater floor
+    const crG = mk('g', {class: 'band', stroke: INK, fill: 'none', 'stroke-width': 1.1, 'stroke-linecap': 'round'}, svg);
+    [-.12, .02, .14].forEach((o, j) => {
+      let d = `M${cx + o * rw} ${fy - 1}`, x = cx + o * rw;
+      const steps = 6;
+      for (let s = 1; s <= steps; s++) { x += (s % 2 ? 1 : -1) * (4 + j * 2) + o * 6; d += ` L${x} ${fy + (r0 + 2 - fy) * s / steps}`; }
+      mk('path', {d}, crG);
+    });
+
+    // ---- the crater
+    const cg = mk('g', {class: 'band crater'}, svg);
+    const crater = `M${cx - rw / 2} ${gy} C${cx - rw * .42} ${gy + cd * .6} ${cx - rw * .32} ${fy} ${cx - rw * .19} ${fy} L${cx + rw * .19} ${fy} C${cx + rw * .32} ${fy} ${cx + rw * .42} ${gy + cd * .6} ${cx + rw / 2} ${gy}Z`;
+    mk('path', {d: crater, fill: 'url(#pit)'}, cg);
+    mk('path', {d: crater, fill: 'url(#hw)', opacity: .5}, cg);
+    E.pitGlow = mk('path', {d: crater, fill: F2, opacity: 0}, cg);
+    mk('path', {d: crater, fill: 'none', stroke: INK, 'stroke-width': 1.4}, cg);
+    // rocks on the lips
+    for (const s of [-1, 1]) for (let k = 0; k < 4; k++) {
+      const x = cx + s * (rw / 2 + k * fs * .55 + 2), r = fs * (.32 - k * .05);
+      mk('path', {d: `M${x - r} ${gy} Q${x - r * .6} ${gy - r * 1.2} ${x} ${gy - r * 1.1} Q${x + r * .8} ${gy - r} ${x + r} ${gy}`, fill: PAPER, stroke: INK, 'stroke-width': .8}, cg);
+    }
+    // ground line, with a few tufts
+    E.gline = mk('path', {d: `M0 ${gy} H${cx - rw / 2} M${cx + rw / 2} ${gy} H${W}`, stroke: INK, 'stroke-width': 1.6, fill: 'none', class: 'gline'}, svg);
+    [.06, .3, .7, .95].forEach(p => { const x = W * p; mk('path', {d: `M${x - 3} ${gy} l1 -5 M${x} ${gy} l0 -7 M${x + 3} ${gy} l-1 -5`, stroke: INK, 'stroke-width': .8, fill: 'none'}, svg); });
+
+    // ---- dynamic layers
+    E.glow = mk('ellipse', {cx, cy: fy - maxH * .35, rx: rw * .85, ry: maxH * .75, fill: 'url(#glow)', opacity: 0}, svg);
+    E.rays = mk('g', {stroke: INK, 'stroke-width': .8, 'stroke-linecap': 'round', fill: 'none'}, svg);
+    E.gas = mk('g', {}, svg);
+    for (let i = 0; i < 150; i++) pool.push(mk('circle', {r: 1, cx: -20, cy: -20, fill: 'none', stroke: INK, 'stroke-width': .7, opacity: 0}, E.gas));
+    E.flame = mk('g', {}, svg);
+    // small fires that catch one by one along the crater walls, floor first
+    const ts = [.82, .6, .4, .2];
+    ts.forEach((t, k) => [-1, 1].forEach(s => {
+      const xx = cx + s * Math.abs(bez(t, -rw / 2, -rw * .42, -rw * .32, -rw * .19));
+      const y = bez(t, gy, gy + cd * .6, fy, fy);
+      rims.push({o: mk('path', {fill: 'url(#fl)', stroke: INK, 'stroke-width': .6, 'stroke-linejoin': 'round'}, E.flame), x: xx, y: y + 1, th: .06 + k * .2, ph: k * 2.1 + s});
+    }));
+    for (let i = 0; i < 7; i++) tongues.push([
+      mk('path', {fill: 'url(#fl)', stroke: INK, 'stroke-width': .7, 'stroke-linejoin': 'round'}, E.flame),
+      mk('path', {fill: 'url(#fl2)'}, E.flame)
+    ]);
+
+    // ---- labels in the sky (one at a time: the loose gas, or the fire)
+    const l1 = M.l1, l2 = M.l2;
+    E.lfree = mk('g', {}, svg);
+    text(E.lfree, W * .05, l1, 'Methanum dispersum', {}, 'lat');
+    if (M.sub) text(E.lfree, W * .05, l2, 'loose in the air', {opacity: .8});
+    E.lfire = mk('g', {opacity: 0, display: 'none'}, svg);
+    text(E.lfire, W * .95, l1, 'Flamma custos', {'text-anchor': 'end'}, 'lat');
+    if (M.sub) text(E.lfire, W * .95, l2, 'burned where it leaks', {'text-anchor': 'end', opacity: .8});
+
+    // ---- the match slider
+    const sl = mk('g', {class: 'slider'}, svg);
+    mk('line', {x1: sx0, x2: sx1, y1: sy, y2: sy, stroke: INK, 'stroke-width': 1.2, opacity: .5}, sl);
+    for (let i = 0; i <= 10; i++) { const x = sx0 + (sx1 - sx0) * i / 10; mk('line', {x1: x, x2: x, y1: sy - (i % 5 ? 3 : 6), y2: sy + (i % 5 ? 3 : 6), stroke: INK, 'stroke-width': .8}, sl); }
+    E.track = mk('line', {x1: sx0, x2: sx0, y1: sy, y2: sy, stroke: F2, 'stroke-width': 3, 'stroke-linecap': 'round'}, sl);
+    text(sl, sx0, sy - fs * 1.3, 'leave it', {}, 'lat');
+    text(sl, sx1, sy - fs * 1.3, 'light it', {'text-anchor': 'end'}, 'lat');
+    E.knob = mk('g', {}, sl);
+    const kr = fs * .85;
+    E.ping = mk('circle', {r: kr, fill: 'none', stroke: INK, 'stroke-width': 1, class: 'ping', opacity: .7}, E.knob);
+    if (touched) E.ping.style.display = 'none';
+    mk('circle', {r: kr, fill: PAPER, stroke: INK, 'stroke-width': 1.3}, E.knob);
+    mk('line', {x1: -kr * .45, y1: kr * .45, x2: kr * .1, y2: -kr * .1, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, E.knob);
+    mk('circle', {cx: kr * .18, cy: -kr * .18, r: kr * .22, fill: '#8f2b18'}, E.knob);
+    E.kflame = mk('path', {d: `M${kr * .18} ${-kr * .05} C${-kr * .2} ${-kr * .3} ${kr * .1} ${-kr * .7} ${kr * .35} ${-kr * .85} C${kr * .3} ${-kr * .55} ${kr * .6} ${-kr * .35} ${kr * .18} ${-kr * .05}Z`, fill: F1, stroke: F2, 'stroke-width': .6, opacity: 0}, E.knob);
+
+    if (done) drawRays(false);
+    frame(0, true);
+  }
+
+  function tongue(x, b, w, h, s) {
+    return `M${x - w} ${b} C${x - w} ${b - h * .45} ${x + s - w * .35} ${b - h * .72} ${x + s} ${b - h} C${x + s + w * .35} ${b - h * .72} ${x + w} ${b - h * .45} ${x + w} ${b}Z`;
+  }
+
+  // engraved rays, kept inside the sky (below the labels)
+  function drawRays(animate) {
+    E.rays.innerHTML = '';
+    const oy = fy - maxH * .42, n = 11;
+    for (let i = 0; i < n; i++) {
+      const a = -Math.PI * (.1 + .8 * i / (n - 1)), r0 = maxH * .44, r1 = maxH * (.53 + (i % 2) * .06);
+      const l = mk('line', {x1: cx + Math.cos(a) * r0 * 1.15, y1: oy + Math.sin(a) * r0 * .9, x2: cx + Math.cos(a) * r1 * 1.15, y2: oy + Math.sin(a) * r1 * .9, opacity: .55}, E.rays);
+      const len = Math.hypot((r1 - r0) * 1.15, (r1 - r0) * .9);
+      if (animate) { l.setAttribute('stroke-dasharray', len); l.setAttribute('stroke-dashoffset', len); gsap.to(l, {attr: {'stroke-dashoffset': 0}, duration: .7, delay: .15 + Math.abs(i - (n - 1) / 2) * .05, ease: 'expo.out'}); }
+    }
+  }
+
+  // ---- the living part: gas rises, and the fire takes as much as you have lit
+  function frame(dt, still) {
+    if (!W) return;
+    time += dt;
+    const vv = Math.max(0, Math.min(1.1, st.v)), v = Math.min(1, vv), calm = Kit.calm;
+    const n = tongues.length;
+    tongues.forEach(([o, i2], i) => {
+      const t = (i / (n - 1)) * 2 - 1;
+      const fl = calm ? 1 : .82 + .18 * Math.sin(time * 7.3 + i * 1.7) + .06 * Math.sin(time * 13 + i);
+      const hh = Math.min(maxH * 1.08, maxH * vv * st.flare * (1 - .5 * t * t) * fl * Math.min(1, .25 + v * 1.2));
+      const w = rw * .075 * (1 - .3 * t * t) * (.35 + .65 * Math.min(1, v * 1.6));
+      const x = cx + t * rw * .2, b = fy + 1;
+      const s = calm ? 0 : Math.sin(time * 3.1 + i * 1.3) * w * .7;
+      if (hh < 1.5) { o.setAttribute('d', ''); i2.setAttribute('d', ''); return; }
+      o.setAttribute('d', tongue(x, b, w, hh, s));
+      i2.setAttribute('d', tongue(x, b, w * .45, hh * .55, s * .6));
+    });
+    rims.forEach(r => {
+      const on = Math.max(0, Math.min(1, (v - r.th) / .14));
+      const fl = calm ? 1 : .75 + .25 * Math.sin(time * 9 + r.ph * 3) + .1 * Math.sin(time * 17 + r.ph);
+      const h = fs * 1.15 * on * fl * Math.sqrt(st.flare);
+      if (h < 1) { r.o.setAttribute('d', ''); return; }
+      const w = fs * .28 * (.5 + .5 * on), s = calm ? 0 : Math.sin(time * 4 + r.ph) * w * .6;
+      r.o.setAttribute('d', tongue(r.x, r.y, w, h, s));
+    });
+    E.glow.setAttribute('opacity', v.toFixed(3));
+    E.pitGlow.setAttribute('opacity', (v * .45).toFixed(3));
+    const fo = 1 - v, fi = Math.max(0, Math.min(1, (v - .35) * 1.6));
+    E.lfree.setAttribute('opacity', fo.toFixed(3)); E.lfree.setAttribute('display', fo < .03 ? 'none' : 'inline');
+    E.lfire.setAttribute('opacity', fi.toFixed(3)); E.lfire.setAttribute('display', fi < .03 ? 'none' : 'inline');
+    const kx = sx0 + Math.min(1.04, vv) * (sx1 - sx0);
+    E.knob.setAttribute('transform', `translate(${kx},${sy})`);
+    E.track.setAttribute('x2', Math.max(sx0, Math.min(sx1, kx)));
+    E.kflame.setAttribute('opacity', Math.min(1, v * 3).toFixed(2));
+
+    if (still) return;
+    spawnAcc += dt * 26;
+    while (spawnAcc >= 1 && parts.length < pool.length) {
+      spawnAcc -= 1;
+      const el = pool.find(e => !e._used); if (!el) break; el._used = true;
+      parts.push({el, x: cx + (Kit.rnd() * 2 - 1) * rw * .18, y: fy - 1, vx: 0, vy: -(30 + Kit.rnd() * 35), age: 0, life: 4.5 + Kit.rnd() * 2, mode: 'rise'});
+    }
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i]; p.age += dt;
+      if (p.mode === 'rise' && p.y < fy - 6 - Kit.rnd() * 10) {
+        if (Kit.rnd() < v) { p.mode = 'ember'; p.age = 0; p.life = .45 + Kit.rnd() * .3; p.vy = -110 - Kit.rnd() * 60; p.vx = (Kit.rnd() - .5) * 30; p.el.setAttribute('fill', Kit.rnd() < .5 ? F1 : F2); p.el.setAttribute('stroke', 'none'); }
+        else { p.mode = 'free'; p.vx = (p.x - cx) * .6 + (Kit.rnd() - .5) * 26; }
+      }
+      if (p.mode === 'free') { p.vx += Math.sign(p.vx || 1) * 14 * dt + (Kit.rnd() - .5) * 18 * dt; p.vy *= (1 - .25 * dt); if (done && v > .9) p.life = Math.min(p.life, p.age + .5); }
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      const k = p.age / p.life;
+      if (k >= 1 || p.y < topY - fs || p.x < -20 || p.x > W + 20) { p.el._used = false; p.el.setAttribute('opacity', 0); p.el.setAttribute('fill', 'none'); p.el.setAttribute('stroke', INK); parts.splice(i, 1); continue; }
+      let r, op;
+      if (p.mode === 'ember') { r = 1.8 * (1 - k); op = 1 - k; }
+      else { r = 1.1 + p.age * 1.5; op = Math.min(1, p.age * 3) * (1 - k) * .85; }
+      p.el.setAttribute('cx', p.x.toFixed(1)); p.el.setAttribute('cy', p.y.toFixed(1)); p.el.setAttribute('r', Math.max(0, r).toFixed(2)); p.el.setAttribute('opacity', op.toFixed(2));
+    }
+
+    const step = done ? 3 : v < .04 ? 0 : v < .5 ? 1 : 2;
+    if (step !== stage && !done) {
+      stage = step;
+      if (step === 1) say.innerHTML = 'A little lit: some gas burns at the rim, <b>most still drifts away.</b>';
+      if (step === 2) say.innerHTML = 'More of it burns where it comes out, less floats off. <b>All the way.</b>';
+    }
+    const q = Math.floor(v * 4); if (touched && q !== lastStep) { lastStep = q; Kit.haptic('selection'); }
+    if (!done && target >= .97 && v >= .96) reveal();
+  }
+  gsap.ticker.add((t, dms) => frame(Math.min(.05, dms / 1000), false));
+
+  function reveal() {
+    done = true; stage = 3; Kit.haptic('success');
+    say.innerHTML = 'Methane kept rising from below the crater. Left alone, it would spread into the air unseen. Lit, it burns right where it leaks: <b>one fire in one place instead of a drifting leak.</b>';
+    card.classList.add('answered'); Kit.show('keep');
+    if (Kit.calm) { st.flare = 1; drawRays(false); return; }
+    gsap.fromTo(st, {flare: 1.6}, {flare: 1, duration: 1.8, ease: 'elastic.out(1,0.28)'});
+    const glowEl = E.glow;
+    gsap.fromTo(glowEl, {attr: {rx: rw * 1.3}}, {attr: {rx: rw * .85}, duration: 1.6, ease: 'elastic.out(1,0.35)', onUpdate() { const x = parseFloat(glowEl.getAttribute('rx')); if (!(x > 0)) glowEl.setAttribute('rx', 1); }});
+    drawRays(true);
+  }
+
+  // ---- the drag: anywhere on the plate, the match springs after the finger
+  let dragging = false;
+  const setFrom = e => {
+    const r = svg.getBoundingClientRect();
+    target = Math.max(0, Math.min(1, ((e.clientX - r.left) * (W / r.width) - sx0) / (sx1 - sx0)));
+    if (Kit.calm) gsap.set(st, {v: target}); else vTo(target);
+  };
+  svg.addEventListener('pointerdown', e => {
+    dragging = true; svg.setPointerCapture(e.pointerId); setFrom(e);
+    if (!touched) { touched = true; if (E.ping) E.ping.style.display = 'none'; }
+    if (!Kit.calm) gsap.fromTo(E.knob.children[1], {attr: {r: fs * 1.15}}, {attr: {r: fs * .85}, duration: .6, ease: 'elastic.out(1.2,0.4)'});
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // redraw the plate at its real size whenever the stage changes (e.g. when the answer text grows)
+  let rq = 0;
+  new ResizeObserver(() => {
+    if (!W) return;
+    cancelAnimationFrame(rq);
+    rq = requestAnimationFrame(() => {
+      const r = stageEl.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0 && (Math.abs(r.width - lastW) > 1 || Math.abs(r.height - lastH) > 1)) { if (E.glow) gsap.killTweensOf(E.glow); layout(); }
+    });
+  }).observe(stageEl);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#pic .band', {opacity: 0, y: 14, stagger: .09, duration: .8, ease: 'power3.out'});
+    gsap.from('#pic .orn path', {opacity: 0, scale: .4, transformOrigin: 'center', stagger: .06, duration: .6, ease: 'back.out(2.5)'});
+    if (E.knob) gsap.from(E.knob.children[1], {attr: {r: 0}, duration: 1, delay: .6, ease: 'elastic.out(1,0.4)'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; target = 1; if (E.ping) E.ping.style.display = 'none';
+    if (Kit.calm) gsap.set(st, {v: 1}); else vTo(1);
+    await wait(Kit.calm ? 120 : 1300);
+    if (!done) { gsap.set(st, {v: 1}); reveal(); }
+    await wait(Kit.calm ? 60 : 900);
+  };
+})();
+Kit.single();
+</script>
+</html>

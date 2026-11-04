@@ -1,0 +1,37 @@
+{
+  "id": "science-pacific-background-radiation",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does Fukushima's released water compare to the Pacific's natural radioactivity?",
+  "answer": "The natural radioactivity from Potassium-40 in the Pacific Ocean is tens of millions of times higher than the total radioactivity of the entire Fukushima release. The page shows a drop of released water against the vast, naturally radioactive Pacific Ocean. Zooming out, each new square is 10× the last.",
+  "move": "Don't ask \"is it radioactive?\" Ask \"how much, next to what is already there?\"",
+  "keywords": [
+    "fukushima",
+    "pacific-ocean",
+    "potassium-40",
+    "tritium",
+    "radioactivity"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A zoomable scale view: a single drop of released Fukushima water sits in a vast sea, and each new square zooms out 10 times further. Drag up or tap to zoom out and compare the release with the Pacific's natural radioactivity."
+  },
+  "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=IPH3uqi0a-w&t=384s",
+  "written": "2026-11-03"
+}

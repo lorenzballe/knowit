@@ -1,0 +1,38 @@
+{
+  "id": "technology-thermite-curie-wipe",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.privacy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can thermite be used to destroy data?",
+  "answer": "Heating a hard drive past the Curie temperature erases its magnetic data, and cooling does not bring it back. The data was only a pattern of magnets, so the thermite's heat makes it unrecoverable.",
+  "move": "Heat a magnet past its Curie temperature and the data it held is gone for good.",
+  "keywords": [
+    "thermite",
+    "curie-temperature",
+    "hard-drive",
+    "magnets",
+    "data-destruction"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question card asking how thermite can destroy data. Press and hold to heat a drive's magnets past their Curie temperature, then let go so it cools.",
+    "ground": "#efe6d0"
+  },
+  "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1013s",
+  "written": "2026-11-03"
+}

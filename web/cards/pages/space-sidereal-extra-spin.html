@@ -1,0 +1,387 @@
+<!doctype html>
+<!-- slug: space-sidereal-extra-spin -->
+<!-- Look: a field-notebook page. Cream paper with grain, faint ruled lines and a few pencilled background stars, a watercolour Sun whose rays slowly turn, a hatched night side on Earth, blue-ink star lines and handwritten tallies.
+     Interaction: drag Earth once round the Sun through a toy year of 4 days. Each time the red "you" pin faces the Sun, an ochre tally flies down. Each time it points at the distant star, a blue one does.
+     Wow: closing the orbit launches the 5th star tally, a red strike through the gate. Graphite flecks burst out, the pin whirls one extra turn, every parallel star-arm flashes in turn, and a "+1" springs up: 365.24 days, 366.24 spins. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The year's extra spin</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#pic:active{cursor:grabbing}
+.hint{animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{opacity:.4}}
+.kit-calm .hint{animation:none}
+.answered .q{font-size:max(2.4cqh,15px)}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Drag Earth round · count the spins">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SIDEREAL YEAR</span></div>
+    <h2 class="q">Why do the stars see Earth spin 366.24 times a year, not 365.24?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A notebook sketch: the Sun in the middle, Earth on its orbit with a red pin for you, a distant star at the top, and two tally rows counting days by the Sun and spins by the stars."></svg>
+    </div>
+    <p class="say" id="say">A toy year of 4 days. <b>Drag Earth once round the Sun</b> and count its spins two ways.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Counted against the stars (a sidereal year), Earth spins once more than it has days.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const HAS = typeof gsap !== 'undefined';
+  if (HAS) {
+    const pl = [];
+    if (typeof Physics2DPlugin !== 'undefined') pl.push(Physics2DPlugin);
+    if (typeof DrawSVGPlugin !== 'undefined') pl.push(DrawSVGPlugin);
+    gsap.registerPlugin(...pl);
+  }
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const D = 4, TAU = Math.PI * 2, DEG = 180 / Math.PI;
+  const P = {paper: '#2B5CFF', ink: '#ffffff', lead: '#e8efff', grid: '#8fb0c4', blue: '#d3e4ff', blueW: '#a9c8ff',
+    ochre: '#ffd36b', sunA: '#ffd36b', sunB: '#ffb040', red: '#ff9484', sea: '#4d8fbf', land: '#7fb45f'};
+  const WHY = 'Going round the Sun is itself one turn. So each day Earth spins a little more than once to face the Sun again, and over a year those bits add up to one whole spin: <b>365.24 days</b> for us, <b>366.24 rotations</b> against the stars.';
+  let W = 0, H = 0, fs = 13, cx = 0, cy = 0, R = 0, re = 10, ROWN = 0, ROWS = 0, xm = 0, gp = 8, trailLen = 0;
+  const st = {t: 0};
+  let target = 0, nN = 0, nS = 0, done = false, revealed = false, touched = false, built = false, midSaid = false, follow = null;
+  let E = {}, amb = [];
+
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const hand = (size, w = 700) => `font-family:var(--hand);font-size:${Math.max(12, size)}px;font-weight:${w}`;
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: P.ink}, a), p); e.textContent = s; return e; };
+  const pos = (t, r = R) => [cx + r * Math.sin(t), cy + r * Math.cos(t)];
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const star4 = (s, k = .22) => `M0,${-s} L${s * k},${-s * k} L${s},0 L${s * k},${s * k} L0,${s} L${-s * k},${s * k} L${-s},0 L${-s * k},${-s * k}Z`;
+
+  function layout() {
+    amb.forEach(a => a.kill()); amb = [];
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(16, f.f || W / 26));
+    re = Math.max(10, Math.min(20, Math.min(W, H - fs * 6.3) * .055));
+    // the pin needs room above Earth, the hint arrow below it; the tallies sit under all of it
+    const topB = fs * 2.4 + re * 2.3, botB = H - fs * 3.9 - re * 1.85 - 4;
+    R = Math.max(36, Math.min(W / 2 - re * 2.6, (botB - topB) / 2));
+    cx = W / 2; cy = (topB + botB) / 2;
+    ROWN = H - fs * 2.75; ROWS = H - fs * .95;
+    E = {marks: {N: [], S: []}, gS: []};
+
+    const defs = mk('defs', {}, svg);
+    defs.innerHTML = `
+<filter id="wc" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="${(fs * .5).toFixed(1)}" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation=".6"/></filter>
+<filter id="pen" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/></filter>
+<radialGradient id="sunGrad" cx="42%" cy="38%" r="62%"><stop offset="0" stop-color="#fff4c2"/><stop offset=".45" stop-color="${P.sunA}"/><stop offset="1" stop-color="${P.sunB}"/></radialGradient>
+<radialGradient id="seaGrad" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#a6cfea"/><stop offset=".6" stop-color="${P.sea}"/><stop offset="1" stop-color="#2b5c82"/></radialGradient>
+<radialGradient id="glowY"><stop offset="0" stop-color="#fff1b0" stop-opacity=".95"/><stop offset="1" stop-color="#fff1b0" stop-opacity="0"/></radialGradient>
+<radialGradient id="glowB"><stop offset="0" stop-color="#b9dcff" stop-opacity=".95"/><stop offset="1" stop-color="#b9dcff" stop-opacity="0"/></radialGradient>
+<pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><line x1="0" y1="0" x2="0" y2="4" stroke="${P.ink}" stroke-width="1.1" opacity=".75"/></pattern>
+<pattern id="hatch2" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><line x1="0" y1="0" x2="0" y2="5" stroke="#8a4a10" stroke-width=".9" opacity=".55"/></pattern>
+<clipPath id="ec"><circle r="${re}"/></clipPath>`;
+
+    // ---- pencilled background stars in the empty corners ----
+    const sy = fs * 1.3;
+    E.specks = [];
+    let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    for (let i = 0; i < 60 && E.specks.length < 10; i++) {
+      const x = fs + rnd() * (W - fs * 2), y = fs * .8 + rnd() * (H - fs * 1.6);
+      if (Math.hypot(x - cx, y - cy) < R + re * 2.8) continue;
+      if (y > cy + R * .55) continue;
+      if (y < sy + fs * 1.4 && x > cx - fs * 2.2 && x < cx + fs * 10.5) continue;
+      if (E.specks.some(p => Math.hypot(p._x - x, p._y - y) < fs * 2.4)) continue;
+      const s = fs * (.18 + rnd() * .22);
+      const g = mk('path', {d: star4(s, .28), transform: `translate(${x.toFixed(1)},${y.toFixed(1)})`, fill: P.blue, opacity: .32}, svg);
+      g._x = x; g._y = y; E.specks.push(g);
+    }
+
+    // ---- the distant star ----
+    const so = mk('g', {transform: `translate(${cx},${sy})`}, svg);
+    E.star = mk('g', {id: 'starG'}, so);
+    E.starGlow = mk('circle', {r: fs * 1.7, fill: 'url(#glowB)', opacity: .25}, E.star);
+    E.starRays = mk('g', {opacity: 0}, E.star);
+    for (let i = 0; i < 8; i++) { const a = i / 8 * TAU; mk('line', {x1: Math.cos(a) * fs * .9, y1: Math.sin(a) * fs * .9, x2: Math.cos(a) * fs * 1.6, y2: Math.sin(a) * fs * 1.6, stroke: P.blue, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, E.starRays); }
+    E.starShape = mk('g', {}, E.star);
+    mk('path', {d: star4(fs * .72), fill: P.blue, filter: 'url(#pen)'}, E.starShape);
+    txt(svg, cx + fs * 1.2, sy + fs * .4, 'a distant star', {style: hand(fs * 1.1), fill: P.blue});
+
+    // the line to the star: the same direction from everywhere on the orbit
+    E.sline = mk('line', {stroke: P.blueW, 'stroke-width': 1.5, 'stroke-dasharray': '2 5', 'stroke-linecap': 'round', opacity: .8}, svg);
+
+    // ---- the orbit, pencilled twice, and the watercolour of the way travelled ----
+    let d = '', d2 = '';
+    for (let i = 0; i <= 120; i++) {
+      const t = i / 120 * TAU, r = R + Math.sin(t * 3 + 1) * .8 + Math.sin(t * 7) * .5, r2 = R + 1.3 + Math.sin(t * 5) * .9;
+      d += (i ? 'L' : 'M') + (cx + r * Math.sin(t)).toFixed(1) + ',' + (cy + r * Math.cos(t)).toFixed(1);
+      d2 += (i ? 'L' : 'M') + (cx + r2 * Math.sin(t)).toFixed(1) + ',' + (cy + r2 * Math.cos(t)).toFixed(1);
+    }
+    E.trail = mk('path', {d, fill: 'none', stroke: P.blueW, 'stroke-width': re * .6, 'stroke-linecap': 'round', opacity: .42, filter: 'url(#wc)'}, svg);
+    mk('path', {d: d2, fill: 'none', stroke: P.lead, 'stroke-width': .8, opacity: .3}, svg);
+    E.orbit = mk('path', {id: 'orbitLine', d, fill: 'none', stroke: P.lead, 'stroke-width': 1.3, opacity: .85, filter: 'url(#pen)'}, svg);
+    trailLen = E.trail.getTotalLength();
+    E.trail.setAttribute('stroke-dasharray', `${trailLen} ${trailLen}`);
+    // direction arrows placed in the gaps between the noon and star marks
+    for (const t of [TAU * .1, TAU * .325, TAU * .675]) {
+      const [x, y] = pos(t), a = Math.atan2(-Math.sin(t), Math.cos(t)) * DEG;
+      mk('path', {d: 'M-4,-4 L2,0 L-4,4', transform: `translate(${x},${y}) rotate(${a})`, fill: 'none', stroke: P.lead, 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    }
+
+    // ---- the Sun: a watercolour wash with turning pencil rays and hatched shade ----
+    const rs = R * .27, sOut = mk('g', {transform: `translate(${cx},${cy})`}, svg);
+    E.sun = mk('g', {id: 'sunG'}, sOut);
+    E.sunHalo = mk('circle', {r: rs * 2.6, fill: 'url(#glowY)', opacity: .22}, E.sun);
+    E.sunGlow = mk('circle', {r: rs * 2.3, fill: 'url(#glowY)', opacity: .35}, E.sun);
+    E.rays = mk('g', {}, E.sun);
+    const rays = mk('g', {filter: 'url(#pen)'}, E.rays);
+    for (let i = 0; i < 18; i++) { const a = i / 18 * TAU, l = i % 2 ? 1.32 : 1.48; mk('line', {x1: Math.cos(a) * rs * 1.13, y1: Math.sin(a) * rs * 1.13, x2: Math.cos(a) * rs * l, y2: Math.sin(a) * rs * l, stroke: P.sunB, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, rays); }
+    mk('circle', {r: rs, fill: 'url(#sunGrad)', filter: 'url(#wc)'}, E.sun);
+    defs.insertAdjacentHTML('beforeend', `<clipPath id="sc"><circle r="${rs}"/></clipPath>`);
+    mk('circle', {cx: rs * .55, cy: rs * .55, r: rs * .95, fill: 'url(#hatch2)', 'clip-path': 'url(#sc)'}, E.sun);
+    mk('circle', {r: rs, fill: 'none', stroke: P.ink, 'stroke-width': 1.1, opacity: .6, filter: 'url(#pen)'}, E.sun);
+    const sfs = Math.max(12, Math.min(fs * 1.15, rs * .8));
+    txt(E.sun, 0, sfs * .35, 'Sun', {style: hand(sfs), fill: '#5a3407', 'text-anchor': 'middle'});
+
+    E.ghosts = mk('g', {}, svg);
+
+    // ---- Earth with you on it ----
+    E.earth = mk('g', {}, svg);
+    mk('circle', {r: re * 1.35, fill: P.blueW, opacity: .2, filter: 'url(#wc)'}, E.earth);
+    E.body = mk('g', {id: 'earthIn'}, E.earth);
+    const cl = mk('g', {'clip-path': 'url(#ec)'}, E.body);
+    mk('circle', {r: re, fill: 'url(#seaGrad)'}, cl);
+    E.spin = mk('g', {}, cl);
+    const lg = mk('g', {fill: P.land, filter: 'url(#wc)', opacity: .92}, E.spin);
+    mk('ellipse', {cx: -re * .32, cy: -re * .3, rx: re * .46, ry: re * .27, transform: 'rotate(-25)'}, lg);
+    mk('ellipse', {cx: re * .42, cy: re * .28, rx: re * .3, ry: re * .42, transform: 'rotate(20)'}, lg);
+    mk('ellipse', {cx: -re * .45, cy: re * .5, rx: re * .18, ry: re * .13}, lg);
+    E.night = mk('g', {}, cl);
+    mk('rect', {x: -re, y: 0, width: re * 2, height: re, fill: '#14243a', opacity: .3}, E.night);
+    mk('rect', {x: -re, y: 0, width: re * 2, height: re, fill: 'url(#hatch)', opacity: .8}, E.night);
+    mk('circle', {r: re, fill: 'none', stroke: P.ink, 'stroke-width': 1.4, filter: 'url(#pen)'}, E.body);
+    E.arm = mk('g', {}, E.earth);
+    mk('line', {x1: 0, y1: -re * .9, x2: 0, y2: -re * 1.72, stroke: P.red, 'stroke-width': Math.max(2.2, re * .17), 'stroke-linecap': 'round'}, E.arm);
+    mk('circle', {cy: -re * 1.98, r: re * .26, fill: P.red}, E.arm);
+    mk('circle', {cy: -re * 1.98, r: re * .26, fill: 'none', stroke: P.ink, 'stroke-width': .8, opacity: .6}, E.arm);
+
+    // ---- the hint ----
+    E.hint = mk('g', {class: 'hint', opacity: touched ? 0 : 1}, svg);
+    txt(E.hint, cx - re * 2.4, cy + R + fs * .4, 'drag me round', {style: hand(fs * 1.1) + ';paint-order:stroke', 'text-anchor': 'end', fill: P.red, stroke: P.paper, 'stroke-width': 4, 'stroke-linejoin': 'round'});
+    let hd = '';
+    for (let i = 0; i <= 12; i++) { const [x, y] = pos(.18 + i / 12 * .5, R + re * 1.8); hd += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); }
+    const te = .68, [hx, hy] = pos(te, R + re * 1.8), ta = Math.atan2(-Math.sin(te), Math.cos(te));
+    hd += `M${hx + Math.cos(ta + 2.6) * 7},${hy + Math.sin(ta + 2.6) * 7}L${hx},${hy}L${hx + Math.cos(ta - 2.6) * 7},${hy + Math.sin(ta - 2.6) * 7}`;
+    mk('path', {d: hd, fill: 'none', stroke: P.red, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.hint);
+
+    // ---- the two tally rows ----
+    E.rows = mk('g', {id: 'rows'}, svg);
+    const pad = fs * .7;
+    const ic = mk('g', {}, E.rows);
+    mk('circle', {cx: pad + fs * .45, cy: ROWN - fs * .36, r: fs * .4, fill: P.sunA, stroke: P.sunB, 'stroke-width': 1.2}, ic);
+    mk('path', {d: star4(fs * .45, .25), transform: `translate(${pad + fs * .45},${ROWS - fs * .36})`, fill: P.blue}, ic);
+    const l1 = txt(E.rows, pad + fs * 1.2, ROWN, 'by the Sun:', {style: hand(fs * 1.1), fill: P.ochre});
+    const l2 = txt(E.rows, pad + fs * 1.2, ROWS, 'by the stars:', {style: hand(fs * 1.1), fill: P.blue});
+    xm = pad + fs * 1.2 + Math.max(l1.getComputedTextLength(), l2.getComputedTextLength()) + fs * .9;
+    gp = fs * .62;
+    const mark = (kind, k) => {
+      const diag = kind === 'S' && k === D;
+      const y = (kind === 'N' ? ROWN : ROWS) - fs * .38;
+      const slot = diag
+        ? {x: xm + 1.5 * gp, y, len: Math.hypot(3 * gp + fs * .9, fs * 1.0), a: -Math.atan2(fs * 1.0, 3 * gp + fs * .9) * DEG}
+        : {x: xm + k * gp, y, len: fs * 1.05, a: 90 + (k % 2 ? 3 : -2)};
+      const col = diag ? P.red : kind === 'N' ? P.ochre : P.blue;
+      const g = mk('g', {transform: `translate(${slot.x},${slot.y}) rotate(${slot.a})`, opacity: 0}, E.rows);
+      mk('path', {d: `M${-slot.len / 2},0 Q0,${diag ? 1.5 : .8} ${slot.len / 2},0`, fill: 'none', stroke: col, 'stroke-width': Math.max(2, fs * .17), 'stroke-linecap': 'round', filter: 'url(#pen)'}, g);
+      g._slot = slot; g._col = col;
+      return g;
+    };
+    for (let k = 0; k < D; k++) E.marks.N.push(mark('N', k));
+    for (let k = 0; k <= D; k++) E.marks.S.push(mark('S', k));
+    const cxT = xm + 3 * gp + fs * 1.3;
+    E.cN = txt(E.rows, cxT, ROWN, '0', {style: hand(fs * 1.35), fill: P.ochre});
+    E.cS = txt(E.rows, cxT, ROWS, '0', {style: hand(fs * 1.35), fill: P.blue});
+    E.plus = txt(E.rows, cxT, ROWS, '+1', {style: hand(fs * 1.45), fill: P.red, opacity: 0});
+    E.fly = mk('g', {}, svg);
+
+    built = true;
+    for (let k = 1; k <= nS; k++) event('S', k, false);
+    for (let k = 1; k <= nN; k++) event('N', k, false);
+    if (revealed) finalLabels(true);
+    render();
+    if (done && !revealed) reveal();
+    ambient();
+  }
+
+  // the page breathes: rays turn, the star twinkles, pencil stars flicker
+  function ambient() {
+    if (Kit.calm || !HAS) return;
+    amb.push(gsap.to(E.rays, {rotation: 360, svgOrigin: '0 0', duration: 80, repeat: -1, ease: 'none'}));
+    amb.push(gsap.to(E.sunHalo, {opacity: .5, duration: 2.4, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+    amb.push(gsap.to(E.starShape, {scale: 1.14, rotation: 8, svgOrigin: '0 0', duration: 1.8, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+    if (E.specks.length) amb.push(gsap.to(E.specks, {opacity: .1, duration: 1.7, ease: 'sine.inOut', stagger: {each: .55, repeat: -1, yoyo: true}}));
+  }
+
+  function render() {
+    if (!built) return;
+    // GSAP rounds tweened values, so snap the last whisker to the full lap
+    let t = st.t; if (t > TAU - 1e-4) t = TAU;
+    const [x, y] = pos(t), phi = (D + 1) * t;
+    E.earth.setAttribute('transform', `translate(${x},${y})`);
+    E.spin.setAttribute('transform', `rotate(${-phi * DEG})`);
+    E.arm.setAttribute('transform', `rotate(${-phi * DEG})`);
+    E.night.setAttribute('transform', `rotate(${-t * DEG})`);
+    E.trail.setAttribute('stroke-dashoffset', trailLen * (1 - t / TAU));
+    E.sline.setAttribute('x1', x); E.sline.setAttribute('x2', x);
+    E.sline.setAttribute('y1', y - re * 2.4); E.sline.setAttribute('y2', fs * 2.3);
+    const cN = Math.floor(D * t / TAU + 1e-6), cS = Math.floor((D + 1) * t / TAU + 1e-6);
+    const anim = !Kit.calm && HAS;
+    while (nS < cS) { nS++; event('S', nS, anim); }
+    while (nN < cN) { nN++; event('N', nN, anim); }
+    if (!done && t >= TAU) { done = true; if (!anim) reveal(); }
+  }
+
+  function setCount(kind, k) {
+    const el = kind === 'N' ? E.cN : E.cS;
+    el.textContent = revealed ? `${k} ${kind === 'N' ? 'days' : 'spins'}` : `${k}`;
+  }
+
+  function event(kind, k, anim) {
+    const te = kind === 'S' ? k * TAU / (D + 1) : k * TAU / D;
+    ghost(kind, te, anim);
+    if (!anim) { E.marks[kind][k - 1].setAttribute('opacity', 1); setCount(kind, k); return; }
+    const glow = kind === 'S' ? E.starGlow : E.sunGlow;
+    gsap.fromTo(glow, {opacity: 1}, {opacity: kind === 'S' ? .25 : .35, duration: .9, ease: 'power2.out'});
+    if (kind === 'S') gsap.fromTo(E.starRays, {opacity: 1, scale: .6, transformOrigin: '50% 50%'}, {opacity: 0, scale: 1.3, duration: .8, ease: 'expo.out'});
+    Kit.haptic('light');
+    if (kind === 'S' && k === 1 && nN === 0 && !midSaid) { midSaid = true; say.innerHTML = 'One full spin against the star, yet no noon: the Sun has moved on in Earth’s sky. <b>Keep going.</b>'; }
+    // a tally launched from Earth, falling into its row
+    const slot = E.marks[kind][k - 1]._slot, col = E.marks[kind][k - 1]._col;
+    const [ex, ey] = pos(Math.min(TAU, st.t));
+    const o = mk('g', {}, E.fly), inner = mk('g', {}, o);
+    mk('path', {d: `M${-slot.len / 2},0 L${slot.len / 2},0`, stroke: col, 'stroke-width': Math.max(2, fs * .17), 'stroke-linecap': 'round'}, inner);
+    gsap.set(o, {x: ex, y: ey});
+    const T = .75, G = H * 1.5, dx = slot.x - ex, dy = slot.y - ey, vx = dx / T, vy = (dy - .5 * G * T * T) / T;
+    const spin = {a: slot.a + (Kit.rnd() > .5 ? 1 : -1) * (360 + Kit.rnd() * 180)};
+    gsap.to(spin, {a: slot.a, duration: T, ease: 'power2.out', onUpdate: () => inner.setAttribute('transform', `rotate(${spin.a})`)});
+    const land = () => {
+      o.remove();
+      const m = E.marks[kind][k - 1]; if (!m) return;
+      m.setAttribute('opacity', 1); setCount(kind, k);
+      gsap.fromTo(kind === 'N' ? E.cN : E.cS, {scale: 1.5, transformOrigin: '0% 80%'}, {scale: 1, duration: .5, ease: 'back.out(3)'});
+      puff(slot.x, slot.y, col, 5, 90, .55);
+      if (kind === 'S' && k === D + 1) reveal();
+    };
+    if (typeof Physics2DPlugin !== 'undefined') gsap.to(o, {duration: T, ease: 'none', physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * DEG, gravity: G}, onComplete: land});
+    else gsap.to(o, {x: slot.x, y: slot.y, duration: T, ease: 'power2.in', onComplete: land});
+  }
+
+  // graphite flecks thrown up, falling under gravity
+  function puff(x, y, col, n, v, dur) {
+    if (typeof Physics2DPlugin === 'undefined') return;
+    for (let i = 0; i < n; i++) {
+      const c = mk('circle', {r: .8 + Kit.rnd() * 1.6, fill: col}, E.fly);
+      gsap.set(c, {x, y});
+      gsap.to(c, {duration: dur, ease: 'none', physics2D: {velocity: v * (.6 + Kit.rnd() * .8), angle: -170 + Kit.rnd() * 160, gravity: v * 6}, onComplete: () => c.remove()});
+      gsap.to(c, {opacity: 0, duration: dur, ease: 'power2.in'});
+    }
+  }
+
+  function ghost(kind, te, anim) {
+    const [x, y] = pos(te), r = re * .5;
+    const o = mk('g', {transform: `translate(${x},${y})`}, E.ghosts), g = mk('g', {}, o);
+    const col = kind === 'S' ? P.blue : P.ochre;
+    mk('circle', {r, fill: P.paper, stroke: P.lead, 'stroke-width': 1, 'stroke-dasharray': '2 2', opacity: .85}, g);
+    let ux = 0, uy = -1;
+    if (kind === 'N') { const l = Math.hypot(cx - x, cy - y); ux = (cx - x) / l; uy = (cy - y) / l; }
+    mk('line', {x1: ux * r, y1: uy * r, x2: ux * r * 2.25, y2: uy * r * 2.25, stroke: col, 'stroke-width': 2, 'stroke-linecap': 'round'}, g);
+    mk('circle', {cx: ux * r * 2.5, cy: uy * r * 2.5, r: r * .32, fill: col}, g);
+    if (kind === 'S') E.gS.push(g);
+    if (anim) gsap.from(g, {opacity: 0, scale: 2, transformOrigin: '50% 50%', duration: .55, ease: 'back.out(2)'});
+  }
+
+  function finalLabels(showPlus) {
+    E.cN.textContent = `${nN} days`; E.cS.textContent = `${nS} spins`;
+    E.plus.setAttribute('x', +E.cS.getAttribute('x') + E.cS.getComputedTextLength() + fs * .5);
+    if (showPlus) E.plus.setAttribute('opacity', 1);
+  }
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true; done = true;
+    say.innerHTML = WHY; Kit.show('keep'); card.classList.add('answered');
+    Kit.haptic('success');
+    finalLabels(Kit.calm || !HAS);
+    if (!Kit.calm && HAS) setTimeout(wow, 180);
+  }
+
+  // the extra spin, celebrated after the card has settled into its new size
+  function wow() {
+    finalLabels(false);
+    const [x, y] = pos(TAU);
+    const bloom = mk('circle', {cx: x, cy: y, r: re, fill: P.blueW, filter: 'url(#wc)', opacity: .55}, E.ghosts);
+    gsap.to(bloom, {attr: {r: re * 4.5}, opacity: 0, duration: 1.4, ease: 'expo.out', onComplete: () => bloom.remove()});
+    puff(x, y - re, P.lead, 18, 260, 1.3);
+    // the pin whirls round once more: the spin the stars counted and the Sun did not
+    const arm = E.arm, sp = E.spin, w = {a: 0};
+    gsap.to(w, {a: -360, duration: 1.2, delay: .1, ease: 'power2.inOut', onUpdate: () => { const r = `rotate(${w.a})`; arm.setAttribute('transform', r); sp.setAttribute('transform', r); }});
+    gsap.fromTo(E.starRays, {opacity: 1, scale: .5, transformOrigin: '50% 50%'}, {opacity: 0, scale: 1.8, duration: 1.2, ease: 'expo.out'});
+    gsap.fromTo(E.starGlow, {opacity: 1}, {opacity: .45, duration: 1.4, ease: 'power2.out'});
+    gsap.fromTo(E.gS, {scale: 1}, {scale: 1.45, transformOrigin: '50% 50%', duration: .25, ease: 'power2.out', yoyo: true, repeat: 1, stagger: .12});
+    gsap.fromTo(E.plus, {opacity: 0, scale: 0, transformOrigin: '0% 80%'}, {opacity: 1, scale: 1, duration: 1.1, ease: 'elastic.out(1,.4)', delay: .3});
+    gsap.fromTo(E.marks.S[D], {opacity: 0}, {opacity: 1, duration: .15, repeat: 3, yoyo: true, ease: 'power1.inOut'});
+  }
+
+  // ---------- the drag: round and round, forwards only ----------
+  function setTarget(v) {
+    target = Math.min(TAU, v);
+    if (Kit.calm || !HAS) { st.t = target; render(); return; }
+    if (!follow) follow = gsap.quickTo(st, 't', {duration: .35, ease: 'power3.out', onUpdate: render});
+    follow(target);
+  }
+  function hideHint() { if (E.hint) { if (HAS) gsap.to(E.hint, {opacity: 0, duration: .3}); else E.hint.setAttribute('opacity', 0); } }
+  let dragging = false, prevA = 0;
+  const ang = e => { const r = svg.getBoundingClientRect(); return Math.atan2(e.clientY - r.top - cy, e.clientX - r.left - cx); };
+  svg.addEventListener('pointerdown', e => {
+    if (done) return;
+    dragging = true; prevA = ang(e); svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; hideHint(); }
+    Kit.haptic('selection');
+    if (HAS) gsap.to(E.body, {scale: 1.14, transformOrigin: '50% 50%', duration: .15, ease: 'power3.out'});
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!dragging || done) return;
+    const a = ang(e); let da = a - prevA;
+    while (da > Math.PI) da -= TAU; while (da < -Math.PI) da += TAU;
+    prevA = a;
+    const dt = Math.min(.6, -da);
+    if (dt > 0) setTarget(target + dt);
+  });
+  const end = () => { if (!dragging) return; dragging = false; if (HAS) gsap.to(E.body, {scale: 1, duration: .5, ease: 'elastic.out(1,.5)'}); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !HAS || !built) return;
+    const tl = gsap.timeline();
+    if (typeof DrawSVGPlugin !== 'undefined') tl.from('#orbitLine', {drawSVG: '0%', duration: 1.2, ease: 'power2.inOut'}, 0);
+    tl.from('#sunG', {scale: 0, transformOrigin: '50% 50%', duration: .9, ease: 'back.out(1.7)'}, .1)
+      .from('#starG', {scale: 0, rotation: -120, transformOrigin: '50% 50%', duration: .8, ease: 'back.out(2.2)'}, .35)
+      .from('#earthIn', {scale: 0, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(2.5)'}, .6)
+      .from(E.arm, {opacity: 0, duration: .4, ease: 'power2.out'}, .9)
+      .from('#rows text', {opacity: 0, x: -10, stagger: .06, duration: .45, ease: 'power3.out'}, .7)
+      .from(E.hint, {opacity: 0, duration: .5, ease: 'power2.out'}, 1.1);
+  };
+  Kit.play.card = async () => {
+    touched = true; hideHint();
+    if (Kit.calm || !HAS) { setTarget(TAU); await wait(120); return; }
+    await new Promise(r => gsap.to(st, {t: TAU, duration: 1.6, ease: 'power1.inOut', onUpdate: render, onComplete: r}));
+    st.t = TAU; target = TAU; render();
+    await wait(2600);
+  };
+})();
+Kit.single();
+</script>
+</html>

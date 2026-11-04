@@ -1,0 +1,332 @@
+<!doctype html>
+<!-- slug: technology-thermite-curie-wipe -->
+<!-- Look: a hard-drive platter drawn as a topographic map. Its magnetised bits are hills (north up) and basins (south up), tinted and contoured on cream survey paper, with a red read-head trail that reads the word stored on track 2.
+     Interaction: press and hold to light the thermite tile at the centre. The heat shimmers the terrain, the hills sink, and the read head's bits turn to "?". Let go below the Curie mark and the map springs back on elastic easing.
+     Wow: hold past the Curie temperature and a white flash runs across the platter. The map shakes and goes flat and scorched with ash, and the trail redraws itself over blank land, reading nothing. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Thermite and the Curie temperature</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;background:none!important;border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;padding:0!important}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer;-webkit-user-select:none;user-select:none;overflow:visible}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.4cqh,15px)/1.2 var(--display);overflow-wrap:anywhere}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.5cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Hold to heat · Curie temperature" style="--c:#efe6d0;--k:#2a1f14;--edge:#cdbd98">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO HEAT</span></div>
+    <h2 class="q">How can thermite be used to destroy data?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A hard drive platter drawn as a topographic map of magnetic hills and basins, a thermite tile at its centre, a read head trail on the middle track and a heat gauge with the Curie temperature marked."></svg>
+    </div>
+    <p class="say" id="say">This drive stores data as a map of tiny magnets. <b>Press and hold to light the thermite.</b> Let go to let it cool.</p>
+    <div id="why" class="gone"><p class="big">Past the Curie temperature, magnets lose their magnetism.</p><p class="body">The data was only a pattern of magnets. Once the heat erases it, cooling does not bring it back, so the data is unrecoverable. That is why thermite's heat is used to destroy information.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Heat a magnet past its Curie temperature and the data it held is gone for good.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(Physics2DPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#2a1f14', MUTE = '#7a6a52', PAPER = '#efe6d0', TRAIL = '#c2361f';
+  const WORD = 'KEY';
+  const BITS = [...WORD].map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join('').split('').map(Number);
+  const HILL = ['#e6d3a3', '#d9bc80', '#c99f5e', '#b27e42', '#8f5c2a'];
+  const BASIN = ['#c6dccb', '#9fc5ad', '#76ab91', '#4d8f77', '#2f705e'];
+  const TH = [.15, .36, .6, .88, 1.2];
+  const SG = .066, N = 84;
+  const S = {T: 0, intro: 1, p: 1};
+  let destroyed = false, holding = false, released = 0, dirty = true;
+  let W = 0, H = 0, fs = 13, cx = 0, cy = 0, R = 50, pathGen = null, L = {}, tween = null;
+  let finishResolve; const finished = new Promise(r => finishResolve = r);
+
+  // The platter's magnets: three tracks of bits, the middle one spells the word.
+  const sites = [];
+  (() => {
+    const rnd = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+    [[.34, 14, null], [.58, 24, BITS], [.82, 32, null]].forEach(([r, n, b]) => {
+      const bits = []; for (let k = 0; k < n; k++) bits.push(b ? b[k] : (rnd() < .5 ? 1 : 0));
+      for (let k = 0; k < n; k++) {
+        const a = -Math.PI / 2 + (k + .5) / n * 2 * Math.PI, s = bits[k] ? 1 : -1;
+        sites.push({x: r * Math.cos(a), y: r * Math.sin(a), s, a: 1});
+        if (bits[(k + 1) % n] === bits[k]) { const a2 = a + Math.PI / n; sites.push({x: r * Math.cos(a2), y: r * Math.sin(a2), s, a: .35}); }
+      }
+    });
+  })();
+  const grid = [];
+  for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+    const u = (i + .5) / N * 2 - 1, v = (j + .5) / N * 2 - 1, ws = [];
+    if (u * u + v * v < .99) sites.forEach((s, si) => { const dx = u - s.x, dy = v - s.y, d2 = dx * dx + dy * dy; if (d2 < .05) ws.push(si, Math.exp(-d2 / (2 * SG * SG)) * s.a * s.s); });
+    grid.push(ws);
+  }
+  const readPts = BITS.map((_, k) => { const a = -Math.PI / 2 + (k + .5) / 24 * 2 * Math.PI; return {x: .58 * Math.cos(a), y: .58 * Math.sin(a)}; });
+  const vals = new Float64Array(N * N), neg = new Float64Array(N * N);
+  const contour = d3.contours().size([N, N]).thresholds(TH);
+  const Mof = T => T < 0 ? Math.min(1.25, 1 - T * .8) : T >= 1 ? 0 : Math.pow(1 - T, .35);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const grad = (defs, type, id, stops, extra = {}) => { const g = mk(type, Object.assign({id}, extra), defs); stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g)); return g; };
+  const text = (p, x, y, t, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700, 'paint-order': 'stroke', stroke: PAPER, 'stroke-width': 3, 'stroke-linejoin': 'round'}, a), p); e.textContent = t; return e; };
+  const fit = e => { try { const b = e.getBBox(); const sh = Math.max(3 - b.x, Math.min(0, W - 3 - (b.x + b.width))); if (sh) e.setAttribute('x', +e.getAttribute('x') + sh); } catch (_) {} return e; };
+
+  function gauge(x0, x1, gl, gy) {
+    const bh = fs * .45;
+    L.gx0 = x0; L.gx1 = x1;
+    mk('rect', {x: x0, y: gy - bh / 2, width: x1 - x0, height: bh, rx: bh / 2, fill: INK, opacity: .13}, svg);
+    for (let k = 1; k < 10; k++) { const tx = x0 + (x1 - x0) * k / 10; mk('line', {x1: tx, x2: tx, y1: gy + bh * .9, y2: gy + bh * (k % 5 ? 1.5 : 2.1), stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1}, svg); }
+    L.gfill = mk('rect', {x: x0, y: gy - bh / 2, width: 0, height: bh, rx: bh / 2, fill: 'url(#tGauge)'}, svg);
+    const mx = x0 + (x1 - x0) / 1.25;
+    L.mark = mk('line', {x1: mx, x2: mx, y1: gy - fs * .7, y2: gy + fs * .7, stroke: TRAIL, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, svg);
+    fit(text(svg, mx, gl, 'Curie temperature', {'text-anchor': 'middle', fill: TRAIL, 'font-weight': 800}));
+    text(svg, x0, gl, 'heat', {fill: MUTE, 'font-weight': 700});
+    L.knob = mk('circle', {cx: x0, cy: gy, r: fs * .5, fill: '#fffaf0', stroke: INK, 'stroke-width': 1.8}, svg);
+  }
+
+  function layout() {
+    svg.innerHTML = ''; L = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, W / 26));
+    const mfs = Math.max(12, fs * .92), bitsW = 26 * mfs * .62;
+
+    // Two compositions: stacked (readout above, gauge below) or side-by-side when the stage is short.
+    const vBitsY = mfs * 1.05, vWordY = vBitsY + fs * 2.35, vTop = vWordY + fs * .8, vBot = fs * 4.2;
+    const Rv = Math.min(W * .42, (H - vTop - vBot) / 2 - 4);
+    const Rh = Math.min(H / 2 - 5, (W - 8 - bitsW - fs * 1.3) / 2.08);
+    const vert = Rv >= 40 && Rv >= Rh * .95;
+    let hasGauge = true, gx0, gx1, gl, gy, bitsX, bitsY, wordX, wordY, anchor;
+    if (vert) {
+      R = Rv; cx = W / 2; cy = vTop + (H - vTop - vBot) / 2;
+      bitsX = wordX = cx; bitsY = vBitsY; wordY = vWordY; anchor = 'middle';
+      gx0 = W * .08; gx1 = W * .92; gl = cy + R * 1.04 + fs * 1.5; gy = gl + fs * 1.15;
+    } else {
+      R = Math.max(20, Rh); cx = R * 1.04 + 4; cy = H / 2;
+      const colX = cx + R * 1.04 + fs * 1.3, colW = W - colX - 6;
+      hasGauge = H >= fs * 6.6;
+      const blockH = fs * 1.3 + fs * 1.9 + (hasGauge ? fs * 3.3 : 0) + fs * .35;
+      wordX = bitsX = colX; anchor = 'start';
+      wordY = cy - blockH / 2 + fs * 1.2; bitsY = wordY + fs * 1.9;
+      gx0 = colX; gx1 = colX + colW; gl = bitsY + fs * 1.95; gy = gl + fs * 1.1;
+    }
+
+    const defs = mk('defs', {}, svg);
+    grad(defs, 'radialGradient', 'tBase', [[0, '#faf4e6'], [.7, '#f1e7cf'], [1, '#e2d4b2']]);
+    grad(defs, 'linearGradient', 'tRim', [[0, '#f4ede0'], [.45, '#a59a85'], [.55, '#d8cfbd'], [1, '#6f6656']], {x1: 0, y1: 0, x2: 1, y2: 1});
+    grad(defs, 'radialGradient', 'tHeat', [[0, '#ffe08a', .95], [.25, '#ff9a2e', .8], [.65, '#e2541b', .4], [1, '#9e1f12', 0]]);
+    grad(defs, 'radialGradient', 'tGlow', [[0, '#fff6c8', 1], [.35, '#ffc24a', .8], [1, '#ff6a1a', 0]]);
+    grad(defs, 'radialGradient', 'tHot', [[0, '#fffbe0'], [.45, '#ffb23a'], [1, '#d9481a']]);
+    grad(defs, 'radialGradient', 'tBurn', [[0, '#2a160a', .9], [.5, '#5b3519', .5], [1, '#5b3519', 0]]);
+    grad(defs, 'linearGradient', 'tGauge', [[0, '#f5c04a'], [.6, '#e2541b'], [1, '#9e1f12']]);
+    grad(defs, 'radialGradient', 'tFade', [[0, '#fff'], [.55, '#fff'], [1, '#000']]);
+    const mask = mk('mask', {id: 'tMask', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+    mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#tFade)'}, mask);
+    const blur = mk('filter', {id: 'tBlur', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: R * .04}, blur);
+    const clip = mk('clipPath', {id: 'tClip'}, defs); mk('circle', {cx, cy, r: R}, clip);
+
+    // Faint survey contours that dissolve into the card: the platter sits on a map, not in a box.
+    const nx = 40, ny = Math.max(10, Math.round(nx * H / W)), bg = new Float64Array(nx * ny);
+    for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) { const x = i / nx * 6, y = j / ny * 6 * H / W; bg[j * nx + i] = Math.sin(x * 1.1 + 1.3) + Math.sin(y * 1.4 + .4) + .6 * Math.sin((x + y) * 1.9 + 2.2); }
+    const bgPath = d3.geoPath(d3.geoIdentity().scale(W / nx));
+    const gBg = mk('g', {opacity: .13, mask: 'url(#tMask)'}, svg);
+    d3.contours().size([nx, ny]).thresholds([-1.6, -1, -.4, .2, .8, 1.4])(bg).forEach((g, i) => mk('path', {d: bgPath(g), fill: 'none', stroke: INK, 'stroke-width': i % 3 === 1 ? 1.3 : .7}, gBg));
+
+    mk('ellipse', {cx, cy: cy + R * .08, rx: R * 1.02, ry: R * .98, fill: '#3a2a14', opacity: .28, filter: 'url(#tBlur)'}, svg);
+    L.map = mk('g', {}, svg);
+    mk('circle', {cx, cy, r: R * 1.035, fill: 'url(#tRim)', stroke: '#5c5446', 'stroke-width': 1}, L.map);
+    // Bezel ticks, like the degree ring on a survey map.
+    for (let k = 0; k < 72; k++) {
+      const a = k / 72 * 2 * Math.PI, big = k % 6 === 0, r0 = R * 1.004, r1 = R * (big ? 1.03 : 1.018);
+      mk('line', {x1: cx + r0 * Math.cos(a), y1: cy + r0 * Math.sin(a), x2: cx + r1 * Math.cos(a), y2: cy + r1 * Math.sin(a), stroke: '#4a4236', 'stroke-opacity': big ? .7 : .4, 'stroke-width': big ? 1.1 : .7}, L.map);
+    }
+    mk('circle', {cx, cy, r: R, fill: 'url(#tBase)'}, L.map);
+    const inner = mk('g', {'clip-path': 'url(#tClip)'}, L.map);
+    L.topo = mk('g', {}, inner);
+    L.hills = TH.map((_, i) => mk('path', {fill: HILL[i], stroke: '#6b4a2b', 'stroke-width': i === 2 ? 1.5 : .7, 'stroke-linejoin': 'round'}, L.topo));
+    L.basins = TH.map((_, i) => mk('path', {fill: BASIN[i], stroke: '#2d5a4e', 'stroke-width': i === 2 ? 1.5 : .7, 'stroke-linejoin': 'round'}, L.topo));
+    for (const d of [-.5, 0, .5]) {
+      mk('line', {x1: cx + d * R, x2: cx + d * R, y1: cy - R, y2: cy + R, stroke: INK, 'stroke-opacity': .14, 'stroke-dasharray': '2 5'}, inner);
+      mk('line', {y1: cy + d * R, y2: cy + d * R, x1: cx - R, x2: cx + R, stroke: INK, 'stroke-opacity': .14, 'stroke-dasharray': '2 5'}, inner);
+    }
+    [.34, .58, .82].forEach(r => mk('circle', {cx, cy, r: r * R, fill: 'none', stroke: INK, 'stroke-opacity': .16, 'stroke-dasharray': '1 4'}, inner));
+    mk('circle', {cx, cy, r: R * .2, fill: 'none', stroke: INK, 'stroke-opacity': .28, 'stroke-dasharray': '1 3'}, inner);
+    L.burn = mk('circle', {cx, cy, r: R * .7, fill: 'url(#tBurn)', opacity: destroyed ? .5 : 0}, inner);
+    // Ash and scorch flecks left on the bare platter.
+    L.ash = mk('g', {opacity: destroyed ? .6 : 0}, inner);
+    let qa = 11; const ra = () => (qa = (qa * 9301 + 49297) % 233280) / 233280;
+    for (let i = 0; i < 80; i++) { const rr = Math.sqrt(ra()) * R * .92, a = ra() * 6.283; mk('circle', {cx: cx + rr * Math.cos(a), cy: cy + rr * Math.sin(a), r: (.4 + ra() * 1.4) * Math.max(1, R / 90), fill: ra() < .6 ? '#3b2a1c' : '#8a6a48', opacity: .35 + ra() * .5}, L.ash); }
+    L.heat = mk('circle', {cx, cy, r: R, fill: 'url(#tHeat)', opacity: 0}, inner);
+    L.flash = mk('circle', {cx, cy, r: R, fill: '#fffbea', opacity: 0}, inner);
+    L.routeU = mk('path', {fill: 'none', stroke: '#fffaf0', 'stroke-width': 5, 'stroke-linecap': 'round', opacity: .85}, inner);
+    L.route = mk('path', {fill: 'none', stroke: TRAIL, 'stroke-width': 2.3, 'stroke-dasharray': '6 4', 'stroke-linecap': 'round'}, inner);
+    L.head = mk('circle', {r: Math.max(4, R * .035), fill: TRAIL, stroke: '#fff', 'stroke-width': 2}, inner);
+    mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#5c5446', 'stroke-width': 1, 'stroke-opacity': .6}, L.map);
+
+    // The thermite tile at the hub.
+    const s = R * .26;
+    L.glow = mk('circle', {cx, cy, r: R * .2, fill: 'url(#tGlow)', opacity: 0}, L.map);
+    const tg = mk('g', {transform: `translate(${cx},${cy}) rotate(8)`}, L.map);
+    L.tile = mk('g', {}, tg);
+    mk('rect', {x: -s / 2 + 2, y: -s / 2 + 3, width: s, height: s, rx: s * .14, fill: '#000', opacity: .3}, L.tile);
+    mk('rect', {x: -s / 2, y: -s / 2, width: s, height: s, rx: s * .14, fill: '#433c37', stroke: '#1e1a17', 'stroke-width': 1.2}, L.tile);
+    let q = 3; const r2 = () => (q = (q * 9301 + 49297) % 233280) / 233280;
+    for (let i = 0; i < 22; i++) mk('circle', {cx: (r2() - .5) * s * .8, cy: (r2() - .5) * s * .8, r: .6 + r2() * 1.4, fill: r2() < .5 ? '#9a8f84' : '#6e2a17', opacity: .8}, L.tile);
+    L.hot = mk('rect', {x: -s / 2, y: -s / 2, width: s, height: s, rx: s * .14, fill: 'url(#tHot)', opacity: 0}, L.tile);
+    L.ring = mk('circle', {cx, cy, r: 0, fill: 'none', stroke: '#fff1b8', opacity: 0}, L.map);
+    L.sparks = mk('g', {}, svg);
+
+    // What the read head reads off track 2.
+    L.bits = text(svg, bitsX, bitsY, '', {'text-anchor': anchor, 'font-family': 'var(--mono)', 'font-size': mfs, 'font-weight': 600, fill: MUTE});
+    L.word = text(svg, wordX, wordY, '', {'text-anchor': anchor, 'font-family': 'var(--display)', 'font-size': fs * (vert ? 1.35 : 1.25), 'font-weight': 800});
+
+    if (vert) {
+      // North arrow beside the platter, clear of the readout.
+      const side = cx - R * 1.04;
+      if (side >= fs * 1.4) {
+        const ax = Math.max(fs * .7, side / 2), ay = Math.max(cy - R * .35, vTop + fs * 3);
+        if (ay < cy + R * .6) {
+          mk('path', {d: `M${ax},${ay} v${-fs * 1.5} M${ax - fs * .35},${ay - fs * 1.05} L${ax},${ay - fs * 1.55} L${ax + fs * .35},${ay - fs * 1.05}`, stroke: INK, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+          text(svg, ax, ay - fs * 1.9, 'N', {'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 800});
+        }
+      }
+      // The tile callout, always below the readout.
+      const lx = cx + R * .5, ly = Math.max(cy - R * .97, vWordY + fs * 2.1);
+      mk('path', {d: `M${cx + s * .45},${cy - s * .45} L${lx},${ly + fs * .35}`, stroke: INK, 'stroke-width': 1.2, fill: 'none', 'stroke-dasharray': '2 2'}, svg);
+      mk('circle', {cx: cx + s * .45, cy: cy - s * .45, r: 2.2, fill: INK}, svg);
+      fit(text(svg, lx + 4, ly, 'thermite tile', {'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': Math.max(12, fs * .9)}));
+    }
+
+    if (hasGauge) gauge(gx0, gx1, gl, gy);
+    else { L.gx0 = L.gx1 = 0; L.gfill = mk('rect', {opacity: 0}, svg); L.mark = mk('line', {opacity: 0}, svg); L.knob = mk('circle', {opacity: 0}, svg); }
+
+    pathGen = d3.geoPath(d3.geoIdentity().scale(2 * R / N).translate([cx - R, cy - R]));
+    dirty = true; render(gsap.ticker.time);
+  }
+
+  function render(t) {
+    if (!pathGen) return;
+    const T = S.T, amp = destroyed ? 0 : S.intro * Mof(T), jit = clamp(T, 0, 1) * .4;
+    const am = sites.map((_, i) => amp * (1 + jit * Math.sin(t * 9 + i * 1.7)));
+    for (let g = 0; g < grid.length; g++) { const ws = grid[g]; let v = 0; for (let k = 0; k < ws.length; k += 2) v += ws[k + 1] * am[ws[k]]; vals[g] = v; neg[g] = -v; }
+    contour(vals).forEach((g, i) => L.hills[i].setAttribute('d', g.coordinates.length ? pathGen(g) : ''));
+    contour(neg).forEach((g, i) => L.basins[i].setAttribute('d', g.coordinates.length ? pathGen(g) : ''));
+
+    // The read head's trail and what it finds.
+    const p = clamp(S.p, 0, 1), steps = Math.max(2, Math.round(p * 120)), rr = .58 * R;
+    let d = '', hx = cx, hy = cy - rr;
+    for (let k = 0; k <= steps; k++) { const a = -Math.PI / 2 + (k / steps) * p * 2 * Math.PI; hx = cx + rr * Math.cos(a); hy = cy + rr * Math.sin(a); d += (k ? 'L' : 'M') + hx.toFixed(1) + ',' + hy.toFixed(1); }
+    L.route.setAttribute('d', d); L.routeU.setAttribute('d', d);
+    L.head.setAttribute('cx', hx); L.head.setAttribute('cy', hy);
+    const shown = Math.floor(p * 24 + 1e-6);
+    const bits = readPts.map((pt, k) => {
+      if (k >= shown) return '·';
+      let v = 0; sites.forEach((s, i) => { const dx = pt.x - s.x, dy = pt.y - s.y, d2 = dx * dx + dy * dy; if (d2 < .05) v += Math.exp(-d2 / (2 * SG * SG)) * s.a * s.s * am[i]; });
+      return v > .3 ? '1' : v < -.3 ? '0' : '?';
+    });
+    let word = '', lost = false;
+    for (let c = 0; c < 3; c++) {
+      const g = bits.slice(c * 8, c * 8 + 8);
+      if (g.includes('?')) { word += '?'; lost = true; } else if (g.includes('·')) word += '·';
+      else word += String.fromCharCode(parseInt(g.join(''), 2));
+    }
+    L.bits.textContent = [0, 8, 16].map(i => bits.slice(i, i + 8).join('')).join(' ');
+    L.word.textContent = `read head: “${word}”`;
+    L.word.setAttribute('fill', lost ? TRAIL : INK);
+
+    // Heat on the platter and the tile.
+    const h = clamp(T, 0, 1.2), fl = 1 + .1 * Math.sin(t * 23) * (h > 0 ? 1 : 0);
+    L.heat.setAttribute('opacity', (h * .62 * fl).toFixed(3));
+    L.glow.setAttribute('r', R * (.2 + h * .45)); L.glow.setAttribute('opacity', clamp(h * 1.3 * fl, 0, 1).toFixed(3));
+    L.hot.setAttribute('opacity', clamp(h * 1.4, 0, 1).toFixed(3));
+    if (L.gx1 > L.gx0) {
+      const fx = L.gx0 + (L.gx1 - L.gx0) * h / 1.25;
+      L.gfill.setAttribute('width', Math.max(0, fx - L.gx0)); L.knob.setAttribute('cx', fx);
+    }
+    dirty = false;
+  }
+
+  function spark() {
+    const c = mk('circle', {cx, cy, r: .8 + Math.random() * 2, fill: Math.random() < .5 ? '#ffd35a' : '#fff3c4'}, L.sparks);
+    gsap.to(c, {physics2D: {velocity: R * (.6 + Math.random() * 1.4) * (.5 + clamp(S.T, 0, 1.2)), angle: -90 + (Math.random() - .5) * 170, gravity: R * 3}, opacity: 0, duration: .6 + Math.random() * .5, ease: 'power1.in', onComplete: () => c.remove()});
+  }
+
+  let last = 0;
+  gsap.ticker.add(time => {
+    const dt = Math.min(.05, time - last); last = time;
+    if (holding && !destroyed) { S.T += dt * .33; if (S.T >= 1) { S.T = 1; destroy(); } }
+    if (L.sparks && !Kit.calm && (holding || (destroyed && S.T > .5)) && Math.random() < .25 + S.T * .5) spark();
+    if (dirty || holding || gsap.isTweening(S) || Math.abs(S.T) > .002) render(time);
+  });
+
+  function destroy() {
+    destroyed = true; holding = false; Kit.haptic('success');
+    if (tween) tween.kill();
+    if (Kit.calm) { S.T = 0; S.p = 1; L.burn.setAttribute('opacity', .5); L.ash.setAttribute('opacity', .6); dirty = true; finish(); return; }
+    gsap.to(L.tile, {scale: 1, duration: .8, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%'});
+    gsap.timeline({onComplete: finish})
+      .to(S, {T: 1.2, duration: .5, ease: 'power2.out'})
+      .fromTo(L.ring, {attr: {r: R * .15, 'stroke-width': fs * .9}, opacity: 1}, {attr: {r: R * 1.6, 'stroke-width': 1}, opacity: 0, duration: 1.2, ease: 'expo.out'}, 0)
+      .fromTo(L.flash, {opacity: .9}, {opacity: 0, duration: 1, ease: 'power2.out'}, .05)
+      .fromTo(L.map, {x: -R * .06}, {x: 0, duration: 1.2, ease: 'elastic.out(1.3,.18)'}, .05)
+      .fromTo(L.mark, {attr: {'stroke-width': 6}}, {attr: {'stroke-width': 2.4}, duration: .9, ease: 'back.out(3)'}, 0)
+      .to(L.burn, {opacity: .5, duration: 1.4, ease: 'power2.out'}, .2)
+      .to(L.ash, {opacity: .6, duration: 1.6, ease: 'power2.out'}, .4)
+      .set(S, {p: 0}, .7)
+      .to(S, {p: 1, duration: 1.8, ease: 'power2.inOut'}, .75)
+      .to(S, {T: 0, duration: 2.2, ease: 'power3.inOut'}, .8);
+  }
+  function finish() {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered');
+    dirty = true; finishResolve();
+  }
+
+  svg.addEventListener('pointerdown', e => {
+    if (destroyed) return;
+    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    holding = true; if (tween) tween.kill(); S.intro = Math.max(S.intro, .001);
+    Kit.haptic('light');
+    gsap.to(L.tile, {scale: .86, duration: .14, ease: 'power3.out', transformOrigin: '50% 50%'});
+    gsap.fromTo(L.knob, {attr: {r: fs * .5}}, {attr: {r: fs * .72}, duration: .35, ease: 'back.out(3)'});
+  });
+  const up = () => {
+    if (!holding || destroyed) return;
+    holding = false; released++;
+    gsap.to(L.tile, {scale: 1, duration: .9, ease: 'elastic.out(1.1,.35)', transformOrigin: '50% 50%'});
+    gsap.to(L.knob, {attr: {r: fs * .5}, duration: .6, ease: 'elastic.out(1,.4)'});
+    tween = gsap.to(S, {T: 0, duration: Kit.calm ? .01 : 1.8, ease: 'elastic.out(1,.32)'});
+    Kit.haptic('selection');
+    say.innerHTML = 'It sprang back. Below the Curie temperature the magnets keep their pattern, so the data survives. <b>Hold longer.</b>';
+  };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  new ResizeObserver(() => { if (pathGen) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) { S.intro = 1; S.p = 1; dirty = true; return; }
+    gsap.fromTo(S, {intro: 0}, {intro: 1, duration: 1.6, ease: 'elastic.out(1,.45)'});
+    gsap.fromTo(S, {p: 0}, {p: 1, duration: 1.8, delay: .6, ease: 'power2.inOut'});
+    if (L.map) gsap.from(L.map, {scale: .9, transformOrigin: '50% 50%', opacity: 0, duration: .9, ease: 'back.out(1.6)'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const b = svg.getBoundingClientRect();
+    svg.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1, clientX: b.left + b.width / 2, clientY: b.top + b.height / 2}));
+    S.T = .97;
+    await wait(Kit.calm ? 150 : 300);
+    if (!destroyed) { S.T = 1; destroy(); }
+    await finished;
+    await wait(300);
+  };
+})();
+Kit.single();
+</script>
+</html>

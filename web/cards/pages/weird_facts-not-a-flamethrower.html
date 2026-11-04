@@ -1,0 +1,399 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: weird_facts-not-a-flamethrower -->
+<!-- Look: a night-lit isometric diorama shop. A grey WEAPONS counter (license needed) and a candy NOVELTIES counter (no license) sit under two neon boards hung from the ceiling. Tiny clerks, a racked gun wall, toy shelves, a rug, a plant, and dust motes drifting through the light.
+     Interaction: pick which change moves the boxed flamethrower from the weapons counter to the novelty one, then say how sure you are.
+     Wow: the box's tag scrambles into "NOT-A-FLAMETHROWER", a NOVELTY ITEM stamp slams on, the WEAPONS neon sputters out, the box hops across the shop (Flip), the NOVELTIES neon blazes and a tiny buyer walks over. -->
+<title>The Not-a-Flamethrower</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#world{flex:1 1 0;min-height:0;position:relative;overflow:visible;background:none;box-shadow:none;border-radius:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.slot{position:absolute;width:0;height:0;z-index:2}
+#crate{position:absolute;width:calc(var(--u,16px)*2.6);height:calc(var(--u,16px)*2.6);left:calc(var(--u,16px)*-1.3);top:calc(var(--u,16px)*-1.92)}
+.hop{position:absolute;inset:0;transform-origin:50% 74%}
+.box{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 .4cqh .5cqh rgba(0,0,0,.45))}
+.ctag{position:absolute;left:50%;top:46%;background:#fbf4e2;color:#17130f;font:700 max(var(--fs,12px),12px)/1.15 var(--mono);letter-spacing:.02em;
+  padding:.4cqh 1.3cqw;border-radius:.5cqh;white-space:nowrap;text-align:center;box-shadow:0 .3cqh .6cqh rgba(0,0,0,.45),inset 0 -.2cqh 0 rgba(0,0,0,.08)}
+.ctag::before{content:"";position:absolute;left:50%;top:-.9cqh;width:.35cqh;height:1cqh;margin-left:-.17cqh;background:#c9b48a;border-radius:.2cqh}
+.ctag span{display:block}
+.stamp{position:absolute;left:50%;top:calc(100% + 1.3cqh);margin-left:-50%;width:100%;text-align:center;font:800 max(1.4cqh,12px)/1 var(--body);letter-spacing:.06em;font-style:normal;
+  color:#ff3b55;background:rgba(15,18,38,.86);border:.22cqh solid #ff3b55;border-radius:.6cqh;padding:.45cqh .4cqw;opacity:0;white-space:nowrap;box-shadow:0 0 1.2cqh rgba(255,59,85,.45)}
+#opts{display:flex;flex-direction:column;gap:.9cqh;flex-shrink:0;padding-bottom:12px}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0}
+#why .big{font:800 max(2.4cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body)}
+.opt{flex-shrink:0;font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;
+  box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.25cqh 4cqw;cursor:pointer;transition:transform .12s cubic-bezier(.3,1.6,.5,1)}
+.opt:active{transform:scale(.97)}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt b{font-family:var(--mono);font-weight:700;overflow-wrap:anywhere}
+@media (max-height:720px){#why .big{display:none}#why .body{line-height:1.3}}
+</style>
+<article class="card" id="card" data-topic="weird_facts" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <h2 class="q">How did Musk’s flamethrower dodge being classed as a weapon?</h2>
+    <div class="stagebox" id="stage">
+      <div id="world">
+        <svg id="pic" role="img" aria-label="A tiny shop with a weapons counter where a license is needed and a novelty counter where none is. A crate labelled FLAMETHROWER sits on the weapons counter."></svg>
+        <div class="slot" id="slotA">
+          <div id="crate"><div class="hop" id="hop">
+            <svg class="box" viewBox="0 0 100 100" aria-hidden="true">
+              <defs>
+                <linearGradient id="wt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2c27a"/><stop offset="1" stop-color="#d79a4e"/></linearGradient>
+                <linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c7833d"/><stop offset="1" stop-color="#9a5f27"/></linearGradient>
+                <linearGradient id="wr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a86a2f"/><stop offset="1" stop-color="#7a4818"/></linearGradient>
+              </defs>
+              <polygon points="8,30 50,52 50,96 8,74" fill="url(#wl)"/>
+              <polygon points="50,52 92,30 92,74 50,96" fill="url(#wr)"/>
+              <polygon points="50,8 92,30 50,52 8,30" fill="url(#wt)"/>
+              <g stroke="rgba(60,30,8,.45)" stroke-width="1.4" fill="none">
+                <path d="M8,44.7 L50,66.7 M8,59.3 L50,81.3 M50,66.7 L92,44.7 M50,81.3 L92,59.3"/>
+                <path d="M29,19 L71,41 M29,41 L71,19" stroke="rgba(120,70,20,.35)"/>
+              </g>
+              <path d="M62,58 l6,-3 l0,8 l-6,3z M76,51 l6,-3 l0,8 l-6,3z" fill="rgba(40,20,5,.35)"/>
+              <path d="M8,30 L50,52 L92,30 M50,52 V96" stroke="rgba(255,235,200,.55)" stroke-width="1.2" fill="none"/>
+              <path d="M50,8 L92,30 L92,74 L50,96 L8,74 L8,30 Z" stroke="#4a2a0c" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+            </svg>
+            <div class="ctag" id="tagEl"><span id="n1"></span><span id="n2">FLAMETHROWER</span><i class="stamp" id="stamp">NOVELTY ITEM</i></div>
+          </div></div>
+        </div>
+        <div class="slot" id="slotB"></div>
+      </div>
+      <div id="opts">
+        <button class="opt" data-i="0" data-short="A smaller flame">Give it a smaller flame</button>
+        <button class="opt" data-i="1" data-short="The new name">Name it <b>“Not-a-Flamethrower”</b></button>
+        <button class="opt" data-i="2" data-short="Selling online">Sell it only online</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The name did it.</p><p class="body">Called a “Not-a-Flamethrower”, it was technically described as a novelty item, not a weapon. So it could be sold without a weapons license.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Which change moves the box to the <b>novelty</b> counter?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>What a law calls a thing can hang on how the thing is described.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(Flip, ScrambleTextPlugin);
+const RIGHT = 1;
+let pick = -1;
+const svg = Kit.$('pic'), world = Kit.$('world'), crate = Kit.$('crate'), hop = Kit.$('hop'), tagEl = Kit.$('tagEl');
+const slotA = Kit.$('slotA'), slotB = Kit.$('slotB');
+gsap.set(tagEl, {xPercent: -50, yPercent: -50, rotation: -3});
+
+let W = 0, H = 0, s = 16, ox = 0, oy = 0, fs = 12, WH = 5, compact = false;
+const st = {walk: 0, glow: 0, dim: 0, check: 0};
+const L = {};
+let loops = [];
+const P = (x, y, z = 0) => [ox + (x - y) * .866 * s, oy + (x + y) * .5 * s - z * s];
+const pts = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+const poly = (par, ps, fill, extra = {}) => Kit.mk('polygon', Object.assign({points: pts(ps), fill}, extra), par);
+function box(par, x0, x1, y0, y1, z0, z1, c) {
+  poly(par, [P(x0, y1, z1), P(x1, y1, z1), P(x1, y1, z0), P(x0, y1, z0)], c.l);
+  poly(par, [P(x1, y0, z1), P(x1, y1, z1), P(x1, y1, z0), P(x1, y0, z0)], c.r);
+  poly(par, [P(x0, y0, z1), P(x1, y0, z1), P(x1, y1, z1), P(x0, y1, z1)], c.top);
+}
+function grad(defs, id, x2, y2, stops, radial) {
+  const g = Kit.mk(radial ? 'radialGradient' : 'linearGradient', radial ? {id} : {id, x1: 0, y1: 0, x2, y2}, defs);
+  stops.forEach(([o, c, a = 1]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, g));
+}
+
+// A tiny person: shadow, legs, body, head, hair.
+function fig(par, x, y, col, o = {}) {
+  const [px, py0] = P(x, y, 0), g = Kit.mk('g', {class: o.cls || ''}, par);
+  const py = py0 + (o.bob || 0) * s, sw = o.swing || 0;
+  Kit.mk('ellipse', {cx: px, cy: py0, rx: .32 * s, ry: .15 * s, fill: 'rgba(0,0,0,.4)'}, g);
+  Kit.mk('rect', {x: px - .17 * s, y: py - .64 * s - sw * s, width: .14 * s, height: .64 * s, rx: .06 * s, fill: '#191a30'}, g);
+  Kit.mk('rect', {x: px + .03 * s, y: py - .64 * s + sw * s, width: .14 * s, height: .64 * s, rx: .06 * s, fill: '#22233d'}, g);
+  Kit.mk('rect', {x: px - .26 * s, y: py - 1.38 * s, width: .52 * s, height: .84 * s, rx: .22 * s, fill: col}, g);
+  Kit.mk('rect', {x: px - .26 * s, y: py - 1.38 * s, width: .2 * s, height: .84 * s, rx: .1 * s, fill: 'rgba(255,255,255,.18)'}, g);
+  Kit.mk('circle', {cx: px, cy: py - 1.64 * s, r: .26 * s, fill: o.skin || '#f2c6a0'}, g);
+  Kit.mk('path', {d: `M${px - .27 * s},${py - 1.62 * s} a${.27 * s},${.27 * s} 0 0 1 ${.54 * s},0 q${-.27 * s},${-.1 * s} ${-.54 * s},0z`, fill: o.hair || '#2b1d14'}, g);
+  return g;
+}
+
+function killLoops() { loops.forEach(t => t.kill()); loops = []; }
+
+function layout() {
+  killLoops();
+  svg.innerHTML = '';
+  const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+  fs = Math.max(12, Math.min(14, W / 27));
+  world.style.setProperty('--fs', fs + 'px');
+  compact = H < fs * 12;
+  const Bh = compact ? fs * 2.2 : fs * 4.1;
+  // d: gap between the board bottom and oy, so boards never touch the crate tag.
+  let d = 0;
+  s = Math.min(W / 14.6, H / 12);
+  for (let k = 0; k < 4; k++) {
+    d = Math.max(.25 * s, 1.6 * fs + 8 - 1.78 * s);
+    s = Math.min(W / 14.6, (H - Bh - d - 12) / 8.4);
+  }
+  s = Math.max(s, 4);
+  d = Math.max(.25 * s, 1.6 * fs + 8 - 1.78 * s);
+  const span = Bh + d + 8.4 * s, top = Math.max(5, (H - span) / 2);
+  ox = W / 2; oy = top + Bh + d;
+  WH = Math.max(3.4, Math.min(7.5, (oy + 2) / s));
+  world.style.setProperty('--u', s + 'px');
+
+  const defs = Kit.mk('defs', {}, svg);
+  grad(defs, 'gLw', 0, 1, [[0, '#262b66'], [1, '#1a1d45']]);
+  grad(defs, 'gRw', 0, 1, [[0, '#343b88'], [1, '#232858']]);
+  grad(defs, 'gRed', 0, 0, [[0, '#ff3c55', .45], [1, '#ff3c55', 0]], true);
+  grad(defs, 'gTeal', 0, 0, [[0, '#5ef2c8', .55], [1, '#5ef2c8', 0]], true);
+  grad(defs, 'gWarm', 0, 0, [[0, '#ffd27a', .2], [1, '#ffd27a', 0]], true);
+  grad(defs, 'hRed', 0, 0, [[0, '#ff4a62', .38], [1, '#ff4a62', 0]], true);
+  grad(defs, 'hTeal', 0, 0, [[0, '#5ef2c8', .5], [1, '#5ef2c8', 0]], true);
+  const fl = Kit.mk('filter', {id: 'neon', x: '-30%', y: '-80%', width: '160%', height: '260%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: Math.max(1.5, fs * .16), result: 'b'}, fl);
+  const m = Kit.mk('feMerge', {}, fl); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
+
+  for (const k of ['floor', 'glow', 'walls', 'decor', 'clerks', 'ctr', 'props', 'motes', 'dust', 'cust', 'signs']) L[k] = Kit.mk('g', {}, svg);
+
+  // Floor slab with visible thickness, then a checker of tiles under a warm pool of light.
+  poly(L.floor, [P(0, 8, 0), P(8, 8, 0), P(8, 8, -.4), P(0, 8, -.4)], '#151837');
+  poly(L.floor, [P(8, 0, 0), P(8, 8, 0), P(8, 8, -.4), P(8, 0, -.4)], '#0f1129');
+  Kit.mk('polyline', {points: pts([P(0, 8), P(8, 8), P(8, 0)]), fill: 'none', stroke: 'rgba(255,255,255,.18)', 'stroke-width': 1}, L.floor);
+  for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++)
+    poly(L.floor, [P(i, j), P(i + 1, j), P(i + 1, j + 1), P(i, j + 1)], (i + j) % 2 ? '#232856' : '#1c2047', {class: 'tile', stroke: 'rgba(255,255,255,.05)', 'stroke-width': .6});
+  // A candy rug in front of the novelties.
+  poly(L.floor, [P(3.6, 3.3), P(7.3, 3.3), P(7.3, 5.2), P(3.6, 5.2)], '#5a2a6e', {class: 'tile'});
+  poly(L.floor, [P(3.85, 3.5), P(7.05, 3.5), P(7.05, 5), P(3.85, 5)], 'none', {class: 'tile', stroke: '#ffd166', 'stroke-width': Math.max(1, s * .06), 'stroke-dasharray': `${s * .2} ${s * .16}`});
+  const c0 = P(4, 4);
+  Kit.mk('ellipse', {cx: c0[0], cy: c0[1], rx: 6 * s, ry: 3.4 * s, fill: 'url(#gWarm)'}, L.floor);
+  const pa = P(1.8, 5.6), pb = P(5.6, 1.8);
+  L.gW = Kit.mk('ellipse', {cx: pa[0], cy: pa[1], rx: 3.2 * s, ry: 1.8 * s, fill: 'url(#gRed)'}, L.glow);
+  L.gN = Kit.mk('ellipse', {cx: pb[0], cy: pb[1], rx: 3.4 * s, ry: 1.9 * s, fill: 'url(#gTeal)'}, L.glow);
+
+  // Walls, with a lit top edge, a skirting line and a dark corner seam.
+  const wl = Kit.mk('g', {class: 'wall'}, L.walls);
+  poly(wl, [P(0, 0, 0), P(0, 8, 0), P(0, 8, WH), P(0, 0, WH)], 'url(#gLw)');
+  poly(wl, [P(0, 0, 0), P(8, 0, 0), P(8, 0, WH), P(0, 0, WH)], 'url(#gRw)');
+  for (let k = 1; k < 8; k++) {
+    const a = P(0, k, 0), b = P(0, k, WH), c = P(k, 0, 0), e = P(k, 0, WH);
+    Kit.mk('line', {x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: 'rgba(255,255,255,.03)', 'stroke-width': 1}, wl);
+    Kit.mk('line', {x1: c[0], y1: c[1], x2: e[0], y2: e[1], stroke: 'rgba(255,255,255,.03)', 'stroke-width': 1}, wl);
+  }
+  poly(wl, [P(0, 0, WH), P(0, 8, WH), P(-.18, 8, WH), P(-.18, -.18, WH), P(8, -.18, WH), P(8, 0, WH)], '#4a53a8');
+  Kit.mk('polyline', {points: pts([P(0, 8, .25), P(0, 0, .25), P(8, 0, .25)]), fill: 'none', stroke: 'rgba(255,255,255,.12)', 'stroke-width': 1.2}, wl);
+  Kit.mk('line', {x1: P(0, 0)[0], y1: P(0, 0, 0)[1], x2: P(0, 0)[0], y2: P(0, 0, WH)[1], stroke: 'rgba(0,0,0,.35)', 'stroke-width': 1.5}, wl);
+
+  // Weapons wall: a dark pegboard with racked long guns.
+  const dl = Kit.mk('g', {class: 'wall'}, L.decor);
+  poly(dl, [P(0, 4.2, 1.4), P(0, 7.0, 1.4), P(0, 7.0, 2.85), P(0, 4.2, 2.85)], '#12142e', {stroke: '#3a3f6e', 'stroke-width': 1});
+  for (let i = 0; i < 6; i++) for (let j = 0; j < 3; j++) { const q = P(0, 4.45 + i * .46, 1.6 + j * .5); Kit.mk('circle', {cx: q[0], cy: q[1], r: Math.max(.6, s * .03), fill: 'rgba(255,255,255,.12)'}, dl); }
+  [1.8, 2.2, 2.6].forEach(z => {
+    const a = P(0, 4.5, z), b = P(0, 6.7, z), c = P(0, 6.15, z - .1), e = P(0, 6.75, z - .12);
+    Kit.mk('line', {x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: '#9aa3c0', 'stroke-width': Math.max(1.5, s * .1), 'stroke-linecap': 'round'}, dl);
+    Kit.mk('line', {x1: c[0], y1: c[1], x2: e[0], y2: e[1], stroke: '#6b5a48', 'stroke-width': Math.max(2.5, s * .2), 'stroke-linecap': 'round'}, dl);
+  });
+  // Novelty wall: shelves of bright toys.
+  const toys = ['#ff6f91', '#ffd166', '#5ef2c8', '#b388ff', '#4cc9f0'];
+  [1.4, 2.2].forEach((z, r) => {
+    box(dl, 4.2, 7.0, 0, .45, z - .08, z, {top: '#c98a4b', l: '#8a5a2b', r: '#6e4520'});
+    for (let k = 0; k < 5; k++) {
+      const x = 4.45 + k * .55, cz = toys[(k + r * 2) % 5];
+      if ((k + r) % 2) box(dl, x, x + .32, .06, .38, z, z + .32, {top: cz, l: cz, r: 'rgba(0,0,0,.35)'});
+      else { const q = P(x + .16, .22, z + .2); Kit.mk('circle', {cx: q[0], cy: q[1], r: .2 * s, fill: cz}, dl); Kit.mk('circle', {cx: q[0] - .06 * s, cy: q[1] - .07 * s, r: .06 * s, fill: 'rgba(255,255,255,.7)'}, dl); }
+    }
+  });
+
+  // Clerks peeking over their counters.
+  fig(L.clerks, .35, 5.6, '#8f97b3', {cls: 'ppl', skin: '#d9a77f', hair: '#c9c9d6'});
+  fig(L.clerks, 5.6, .35, '#b388ff', {cls: 'ppl', skin: '#c98b62', hair: '#ff6f91'});
+
+  // The two counters.
+  const cw = Kit.mk('g', {class: 'ctr'}, L.ctr);
+  box(cw, .8, 2.8, 4.2, 7.0, 0, 1.2, {top: '#66708c', l: '#3d4357', r: '#2c3040'});
+  poly(cw, [P(.8, 7, .78), P(2.8, 7, .78), P(2.8, 7, .62), P(.8, 7, .62)], '#ff3c55');
+  poly(cw, [P(2.8, 4.2, .78), P(2.8, 7, .78), P(2.8, 7, .62), P(2.8, 4.2, .62)], '#c42a40');
+  // A padlock on the weapons counter front.
+  { const q = P(1.8, 7, .3), r = .15 * s;
+    Kit.mk('path', {d: `M${q[0] - r * .7},${q[1] - r * .2} v${-r * .6} a${r * .7},${r * .7} 0 0 1 ${r * 1.4},0 v${r * .6}`, fill: 'none', stroke: '#c9cede', 'stroke-width': Math.max(1, r * .35)}, cw);
+    Kit.mk('rect', {x: q[0] - r, y: q[1] - r * .25, width: r * 2, height: r * 1.5, rx: r * .3, fill: '#ffd166'}, cw); }
+  Kit.mk('polyline', {points: pts([P(.8, 7, 1.2), P(2.8, 7, 1.2), P(2.8, 4.2, 1.2)]), fill: 'none', stroke: 'rgba(255,255,255,.35)', 'stroke-width': 1}, cw);
+  const cn = Kit.mk('g', {class: 'ctr'}, L.ctr);
+  box(cn, 4.2, 7.0, .8, 2.8, 0, 1.2, {top: '#ffd877', l: '#ff6f91', r: '#d94f76'});
+  for (let k = 0; k < 5; k++) { const q = P(4.5 + k * .55, 2.8, .55 + (k % 2) * .25); Kit.mk('circle', {cx: q[0], cy: q[1], r: .11 * s, fill: '#fff3c4', class: 'bulb'}, cn); }
+  for (let k = 0; k < 4; k++) { const q = P(7, 1.1 + k * .5, .55 + (k % 2) * .25); Kit.mk('circle', {cx: q[0], cy: q[1], r: .1 * s, fill: '#ffd166', class: 'bulb'}, cn); }
+  Kit.mk('polyline', {points: pts([P(4.2, 2.8, 1.2), P(7, 2.8, 1.2), P(7, .8, 1.2)]), fill: 'none', stroke: 'rgba(255,255,255,.55)', 'stroke-width': 1}, cn);
+
+  // A potted plant in the front corner.
+  const pl = Kit.mk('g', {class: 'ctr'}, L.props);
+  box(pl, 7.0, 7.6, 6.6, 7.2, 0, .5, {top: '#3b2a20', l: '#c56a4a', r: '#9b4d33'});
+  [[0, 1.05, .32, '#2fbf8a'], [-.22, .85, .26, '#24a676'], [.24, .82, .25, '#3ed69b'], [0, .7, .22, '#1f8f66']].forEach(([dx, z, r, c]) => {
+    const q = P(7.3, 6.9, z); Kit.mk('circle', {cx: q[0] + dx * s, cy: q[1], r: r * s, fill: c}, pl);
+  });
+
+  // Hanging neon boards, face-on, over each counter.
+  L.sW = sign('WEAPONS', 'license needed', '#ff5a6b', '#ffc2c9', 'hRed');
+  L.sN = sign('NOVELTIES', 'no license', '#5ef2c8', '#d4fff3', 'hTeal');
+  const bw = Math.max(L.sW.w, L.sN.w);
+  const off = Math.max(bw / 2 + 6, Math.min(3.3 * s, W / 2 - bw / 2 - 6));
+  const yb = oy - d, yt = yb - Bh;
+  placeSign(L.sW, ox - off, yt, bw, Bh);
+  placeSign(L.sN, ox + off, yt, bw, Bh);
+
+  // Where the box sits: the middle of each counter top.
+  const sa = P(1.8, 5.6, 1.2), sb = P(5.6, 1.8, 1.2);
+  Object.assign(slotA.style, {left: sa[0] + 'px', top: sa[1] + 'px'});
+  Object.assign(slotB.style, {left: sb[0] + 'px', top: sb[1] + 'px'});
+  drawCust(); applyGlow();
+  if (!Kit.calm) startLoops();
+}
+
+function sign(title, sub, col, sub2, halo) {
+  const g = Kit.mk('g', {class: 'sign'}, L.signs);
+  const wires = Kit.mk('g', {}, g), back = Kit.mk('g', {}, g);
+  const neon = Kit.mk('g', {filter: 'url(#neon)'}, g);
+  const t1 = Kit.mk('text', {'text-anchor': 'middle', fill: col, style: `font:800 ${fs * 1.1}px var(--display),Georgia,serif;letter-spacing:.08em`}, neon);
+  t1.textContent = title;
+  let t2 = null;
+  if (!compact) { t2 = Kit.mk('text', {'text-anchor': 'middle', fill: sub2, style: `font:700 ${fs}px var(--body),Figtree,sans-serif`}, g); t2.textContent = sub; }
+  let w1 = 0, w2 = 0;
+  try { w1 = t1.getBBox().width; if (t2) w2 = t2.getBBox().width; } catch (e) {}
+  if (!w1) w1 = title.length * fs * .82;
+  if (t2 && !w2) w2 = sub.length * fs * .56;
+  return {g, wires, back, neon, t1, t2, col, halo, w: Math.max(w1, w2) + fs * 1.8};
+}
+function placeSign(o, cx, yt, bw, Bh) {
+  const x0 = cx - bw / 2;
+  if (yt > 3) [-.32, .32].forEach(k => {
+    Kit.mk('line', {x1: cx + k * bw, y1: 0, x2: cx + k * bw, y2: yt, stroke: 'rgba(255,255,255,.7)', 'stroke-width': 1}, o.wires);
+    Kit.mk('circle', {cx: cx + k * bw, cy: yt + 2.5, r: 1.6, fill: '#ffffff'}, o.wires);
+  });
+  o.haloEl = Kit.mk('ellipse', {cx, cy: yt + Bh / 2, rx: bw * .85, ry: Bh * 1.2, fill: `url(#${o.halo})`}, o.back);
+  Kit.mk('rect', {x: x0, y: yt, width: bw, height: Bh, rx: fs * .45, fill: '#0c0a1b', stroke: o.col, 'stroke-opacity': .7, 'stroke-width': 1.4}, o.back);
+  Kit.mk('rect', {x: x0 + 3, y: yt + 3, width: bw - 6, height: Bh - 6, rx: fs * .3, fill: 'none', stroke: o.col, 'stroke-opacity': .18, 'stroke-width': 1}, o.back);
+  if (compact) { o.t1.setAttribute('x', cx); o.t1.setAttribute('y', yt + fs * 1.42); }
+  else {
+    o.t1.setAttribute('x', cx); o.t1.setAttribute('y', yt + fs * 1.5);
+    o.t2.setAttribute('x', cx); o.t2.setAttribute('y', yt + fs * 3.2);
+  }
+}
+
+// Ambient life: drifting motes, a buzzing weapons neon, twinkling counter bulbs.
+function startLoops() {
+  for (let k = 0; k < 12; k++) {
+    const [x, y] = P(1 + Math.random() * 6.4, 1 + Math.random() * 6.4, .2);
+    const c = Kit.mk('circle', {cx: x, cy: y, r: Math.max(.9, s * .05), fill: k % 2 ? '#ffd27a' : '#ffffff', opacity: 0}, L.motes);
+    loops.push(gsap.timeline({repeat: -1, delay: Math.random() * 4, repeatDelay: Math.random() * 2})
+      .to(c, {attr: {cy: y - 3.2 * s, cx: x + (Math.random() - .5) * s}, duration: 4.5, ease: 'none'}, 0)
+      .to(c, {opacity: .75, duration: 1.2}, 0)
+      .to(c, {opacity: 0, duration: 1.4}, 3.1));
+  }
+  loops.push(gsap.timeline({repeat: -1, repeatDelay: 2.6, delay: 2})
+    .to(L.sW.neon, {opacity: .25, duration: .05}).to(L.sW.neon, {opacity: 1, duration: .05})
+    .to(L.sW.neon, {opacity: .4, duration: .06}, '+=.1').to(L.sW.neon, {opacity: 1, duration: .08}));
+  loops.push(gsap.to('#pic .bulb', {opacity: .35, duration: .5, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: {each: .15, repeat: -1, yoyo: true}}));
+  loops.push(gsap.to(L.clerks, {y: -s * .07, duration: 1.3, ease: 'sine.inOut', yoyo: true, repeat: -1}));
+}
+
+// The buyer: in front of the weapons counter, then walking over to the novelties.
+function drawCust() {
+  if (!L.cust) return;
+  L.cust.innerHTML = '';
+  const t = st.walk, x = 3.5 + (4.5 - 3.5) * t, y = 6.2 + (4.5 - 6.2) * t;
+  const moving = t > 0 && t < 1, ph = t * Math.PI * 7;
+  const g = fig(L.cust, x, y, '#4cc9f0', {cls: 'ppl', bob: moving ? -Math.abs(Math.sin(ph)) * .12 : 0, swing: moving ? Math.sin(ph) * .08 : 0, skin: '#f0c19a', hair: '#3b2416'});
+  if (st.check > 0) {
+    const [hx, hy] = P(x, y, 1.75), cx = hx - .85 * s, cy = hy - .15 * s, r = .34 * s * st.check;
+    Kit.mk('circle', {cx, cy, r, fill: '#5ef2c8', filter: 'url(#neon)'}, g);
+    Kit.mk('path', {d: `M${cx - r * .45},${cy} l${r * .3},${r * .32} l${r * .6},${-r * .62}`, stroke: '#0f1226', 'stroke-width': Math.max(1.6, r * .28), fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  }
+}
+function applyGlow() {
+  if (!L.sN || !L.gN) return;
+  L.gN.setAttribute('opacity', .45 + .55 * st.glow);
+  L.gN.setAttribute('rx', (3.4 + st.glow * .8) * s);
+  L.gW.setAttribute('opacity', 1 - .7 * st.dim);
+  L.sN.g.setAttribute('opacity', .78 + .22 * st.glow);
+  L.sN.haloEl.setAttribute('opacity', .55 + .9 * st.glow);
+  L.sW.g.setAttribute('opacity', 1 - .5 * st.dim);
+  L.sW.haloEl.setAttribute('opacity', 1 - st.dim);
+}
+
+function dust() {
+  const [cx, cy] = P(5.6, 1.8, 1.2);
+  for (let k = 0; k < 12; k++) {
+    const a = (k / 12) * Math.PI * 2, c = Kit.mk('circle', {cx, cy, r: .16 * s, fill: ['#5ef2c8', '#fff3c4', '#ff6f91'][k % 3]}, L.dust);
+    gsap.to(c, {attr: {cx: cx + Math.cos(a) * 1.8 * s, cy: cy + Math.sin(a) * .9 * s, r: .02 * s}, opacity: 0, duration: .75, ease: 'power3.out', onComplete: () => c.remove()});
+  }
+}
+
+function moveCrate() {
+  const state = Flip.getState(crate);
+  slotB.appendChild(crate);
+  Flip.from(state, {duration: 1.0, ease: 'power3.inOut', absolute: true});
+  gsap.to(hop, {y: -s * 2.4, rotation: -9, duration: .5, ease: 'power2.out', yoyo: true, repeat: 1});
+}
+
+function reveal() {
+  const n1 = Kit.$('n1'), stamp = Kit.$('stamp');
+  if (Kit.calm) {
+    n1.textContent = 'NOT-A-'; gsap.set(stamp, {opacity: 1, rotation: -5});
+    slotB.appendChild(crate); Object.assign(st, {walk: 1, glow: 1, dim: 1, check: 1}); drawCust(); applyGlow(); return;
+  }
+  gsap.timeline({delay: .15})
+    .to(tagEl, {scale: 1.15, duration: .2, ease: 'power2.out'})
+    .to(n1, {duration: .7, scrambleText: {text: 'NOT-A-', chars: 'XO#!?%&*', speed: .5}}, '<')
+    .to(tagEl, {scale: 1, duration: .45, ease: 'elastic.out(1,.45)'})
+    .fromTo(stamp, {opacity: 0, scale: 2.6, rotation: -28}, {opacity: 1, scale: 1, rotation: -5, duration: .3, ease: 'power4.in'}, '-=.3')
+    .add(() => Kit.haptic('light'))
+    .fromTo(hop, {x: -4}, {x: 0, duration: .4, ease: 'elastic.out(1,.3)'})
+    .addLabel('mv', '+=.1')
+    .add(() => { killLoops(); gsap.set(L.sW.neon, {opacity: 1}); }, 'mv')
+    .to(L.sW.neon, {opacity: .15, duration: .45, ease: 'steps(4)'}, 'mv')
+    .add(moveCrate, 'mv')
+    .to(st, {dim: 1, duration: .5, ease: 'power2.out', onUpdate: applyGlow}, 'mv')
+    .add(() => { dust(); Kit.haptic('success'); }, 'mv+=1')
+    .to(st, {glow: 1, duration: .7, ease: 'expo.out', onUpdate: applyGlow}, 'mv+=1')
+    .fromTo(L.sN.neon, {opacity: .3}, {opacity: 1, duration: .35, ease: 'steps(3)'}, 'mv+=1')
+    .to(st, {walk: 1, duration: 1.3, ease: 'power1.inOut', onUpdate: drawCust}, 'mv+=.75')
+    .to(st, {check: 1, duration: .45, ease: 'back.out(3)', onUpdate: drawCust});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, b = Kit.$('opts').children[pick], said = b.textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${b.dataset.short}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  if (!Kit.calm) gsap.timeline().to(hop, {y: -s * .5, rotation: 5, duration: .12, ease: 'power2.out'}).to(hop, {y: 0, rotation: 0, duration: .5, ease: 'bounce.out'});
+});
+
+let raf = 0;
+new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (L.floor) layout(); }); }).observe(world);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (L.floor) layout(); });
+Kit.onShow.card = layout;
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.timeline()
+    .from('.opt', {opacity: 0, y: 10, stagger: .06, duration: .35, ease: 'power3.out'}, 0)
+    .from('#pic .tile', {opacity: 0, y: -8, duration: .4, ease: 'power3.out', stagger: {each: .004, from: 'center'}}, 0)
+    .from('#pic .wall', {opacity: 0, duration: .4, ease: 'power2.out'}, .1)
+    .from('#pic .ctr', {y: -s * 2, opacity: 0, duration: .55, ease: 'back.out(1.7)', stagger: .1}, .25)
+    .fromTo('#pic .sign', {opacity: 0}, {opacity: 1, duration: .45, ease: 'steps(5)', stagger: .12}, .35)
+    .from('#pic .ppl', {y: s * .6, opacity: 0, duration: .35, ease: 'power3.out', stagger: .07}, .55)
+    .from(hop, {y: -s * 4, opacity: 0, duration: .7, ease: 'bounce.out'}, .6);
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[RIGHT].click(); await wait(150);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(Kit.calm ? 200 : 4800);
+};
+Kit.single();
+</script>
+</html>

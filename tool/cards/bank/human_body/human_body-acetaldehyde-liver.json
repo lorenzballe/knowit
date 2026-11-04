@@ -1,0 +1,37 @@
+{
+  "id": "human_body-acetaldehyde-liver",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does your liver turn alcohol into, and why is it worse?",
+  "answer": "Your liver's enzyme ADH turns ethanol into acetaldehyde, which is more poisonous. Acetaldehyde is a Group 1 carcinogen: it breaks DNA and blocks its repair.",
+  "move": "Alcohol hurts twice: as ethanol, then as the worse acetaldehyde your liver makes from it.",
+  "keywords": [
+    "liver",
+    "ethanol",
+    "acetaldehyde",
+    "alcohol",
+    "dna"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question: what does your liver turn alcohol into, and why is it worse? Hold the button to drink and follow one molecule as the liver's ADH enzyme converts ethanol into acetaldehyde, shown with a warning sign."
+  },
+  "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=866s",
+  "written": "2026-11-03"
+}

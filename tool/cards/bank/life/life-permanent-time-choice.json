@@ -1,0 +1,38 @@
+{
+  "id": "life-permanent-time-choice",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.routines",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "In 2019 an EU vote targeted summer time. What did it abolish?",
+  "answer": "The EU vote of 4 March 2019 did not abolish summer time. It abolished the twice-yearly switch between summer and winter time. Each country may keep one of them all year.",
+  "move": "The EU ended the twice-yearly switch, not summer time: each country picks one hour for good.",
+  "keywords": [
+    "eu",
+    "daylight-saving-time",
+    "clock-changes",
+    "summer-time",
+    "winter-time"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice quiz titled 'Abolished: the switch'. It says that in 2019 an EU vote targeted summer time and asks what the vote abolished. Options: summer time itself, the switch between the two, or winter time.",
+    "ground": "#0c1a21"
+  },
+  "source": "Geopop, “Dall'ora legale all'ora solare: i pro e contro del cambio orario e perché si parla di abolizione” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Fu6AT5WLgJg&t=263s",
+  "written": "2026-11-04"
+}

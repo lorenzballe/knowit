@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
-#scene{display:block;width:100%;flex:1;min-height:0;border-radius:2cqh;touch-action:none;-webkit-user-select:none;user-select:none}
+#scene{display:block;width:100%;flex:1;min-height:0;touch-action:none;-webkit-user-select:none;user-select:none}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .big{font:700 max(2.6cqh,15px)/1.15 var(--display)}
 #why .body{font:500 max(1.9cqh,12px)/1.3 var(--body)}
@@ -41,19 +41,17 @@ const ease = t => 1 - Math.pow(1 - t, 3);
 
 function drawLayer(parent, lit, D) {
   const {W, H, r, hx, hy, mt} = D;
-  const sheet = lit ? '#ece6d8' : '#161d30', edge = lit ? 'none' : '#2c3754';
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: lit ? '#4d453b' : '#0a0f1c'}, parent);
-  if (lit) Kit.mk('rect', {x: 0, y: H * .9, width: W, height: H * .1, fill: '#3a332b'}, parent);
-  [W * .08, W * .9].forEach(x => Kit.mk('rect', {x, y: mt + H * .1, width: W * .025, height: H * .82 - mt - H * .1 + H * .08, fill: lit ? '#5d4c38' : '#141a2a'}, parent));
+  const sheet = lit ? '#ece6d8' : '#e69a00', edge = lit ? 'none' : '#10100c';
+  [W * .08, W * .9].forEach(x => Kit.mk('rect', {x, y: mt + H * .1, width: W * .025, height: H * .82 - mt - H * .1 + H * .08, fill: lit ? '#5d4c38' : '#10100c', opacity: lit ? 1 : .55}, parent));
   Kit.mk('rect', {x: W * .06, y: mt, width: W * .88, height: H * .13, rx: 5, fill: sheet, stroke: edge, 'stroke-width': 1.5}, parent);
-  Kit.mk('ellipse', {cx: hx - r * .1, cy: mt - r * .05, rx: r * 1.9, ry: r * .62, fill: lit ? '#f6f2ea' : '#1a2236', stroke: edge, 'stroke-width': 1.5}, parent);
+  Kit.mk('ellipse', {cx: hx - r * .1, cy: mt - r * .05, rx: r * 1.9, ry: r * .62, fill: lit ? '#f6f2ea' : '#ffc640', stroke: edge, 'stroke-width': 1.5}, parent);
   if (lit) {
     // the clothes under the blanket
     const c = Kit.mk('g', {}, parent);
     Kit.mk('path', {d: `M${hx + r * .7},${mt + H * .1} L${hx + r * .7},${mt - r * .45} Q${W * .4},${mt - r * 1.1} ${W * .52},${mt - r * .5} L${W * .68},${mt - r * .35} Q${W * .82},${mt - r * .6} ${W * .88},${mt - r * .1} L${W * .88},${mt + H * .1} Z`, fill: '#47679a'}, c);
     Kit.mk('path', {d: `M${W * .5},${mt - r * .45} L${W * .5},${mt + H * .08} M${W * .66},${mt - r * .3} L${W * .66},${mt + H * .08}`, stroke: '#2f4a73', 'stroke-width': 2, fill: 'none'}, c);
   }
-  Kit.mk('ellipse', {cx: hx, cy: hy, rx: r * 1.05, ry: r, fill: lit ? '#e9a797' : '#232a3e', stroke: edge, 'stroke-width': 1.5}, parent);
+  Kit.mk('ellipse', {cx: hx, cy: hy, rx: r * 1.05, ry: r, fill: lit ? '#e9a797' : '#c47d00', stroke: edge, 'stroke-width': 1.5}, parent);
   if (lit) {
     Kit.mk('path', {d: `M${hx - r * .55},${hy - r * .05} q${r * .2},${r * .16} ${r * .4},0`, stroke: '#7a4a40', 'stroke-width': Math.max(1.5, r * .06), fill: 'none', 'stroke-linecap': 'round'}, parent);
     Kit.mk('path', {d: `M${hx - r * .6},${hy - r * .3} q${r * .22},${-r * .1} ${r * .45},0`, stroke: '#8a5a48', 'stroke-width': Math.max(1.5, r * .07), fill: 'none', 'stroke-linecap': 'round'}, parent);
@@ -67,7 +65,7 @@ function drawLayer(parent, lit, D) {
     }
     G.cracks = cr;
   }
-  const b = Kit.mk('path', {d: `M${hx + r * .55},${mt + H * .12} L${hx + r * .55},${mt - r * .55} Q${W * .4},${mt - r * 1.5} ${W * .52},${mt - r * .75} Q${W * .62},${mt - r * 1.1} ${W * .72},${mt - r * .7} Q${W * .85},${mt - r * 1.05} ${W * .93},${mt - r * .2} L${W * .93},${mt + H * .12} Z`, fill: lit ? '#7c8b9b' : '#1d2740', stroke: edge, 'stroke-width': 1.5}, parent);
+  const b = Kit.mk('path', {d: `M${hx + r * .55},${mt + H * .12} L${hx + r * .55},${mt - r * .55} Q${W * .4},${mt - r * 1.5} ${W * .52},${mt - r * .75} Q${W * .62},${mt - r * 1.1} ${W * .72},${mt - r * .7} Q${W * .85},${mt - r * 1.05} ${W * .93},${mt - r * .2} L${W * .93},${mt + H * .12} Z`, fill: lit ? '#7c8b9b' : '#6b4700', stroke: edge, 'stroke-width': 1.5}, parent);
   if (lit) {
     G.blanket = b;
     b.style.opacity = 1;
@@ -104,10 +102,10 @@ Kit.onShow.card = () => {
   const cp = Kit.mk('clipPath', {id: 'spotclip'}, defs);
   G.spot = Kit.mk('circle', {cx: -999, cy: 0, r: 1}, cp);
   const gr = Kit.mk('radialGradient', {id: 'beamg', cx: '100%', cy: '0%', r: '120%'}, defs);
-  Kit.mk('stop', {offset: '0', 'stop-color': '#fff3c4', 'stop-opacity': .35}, gr);
-  Kit.mk('stop', {offset: '1', 'stop-color': '#fff3c4', 'stop-opacity': .06}, gr);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#fffbe6', 'stop-opacity': .6}, gr);
+  Kit.mk('stop', {offset: '1', 'stop-color': '#fffbe6', 'stop-opacity': .15}, gr);
   drawLayer(Kit.mk('g', {}, svg), false, D);
-  Kit.mk('rect', {x: W * .92, y: 0, width: W * .08, height: H * .08, fill: '#1c2539'}, svg);
+  Kit.mk('rect', {x: W * .92, y: 0, width: W * .08, height: H * .08, fill: '#10100c'}, svg);
   G.lit = Kit.mk('g', {'clip-path': 'url(#spotclip)', opacity: 0}, svg);
   drawLayer(G.lit, true, D);
   G.beam = Kit.mk('polygon', {points: '', fill: 'url(#beamg)', opacity: 0}, svg);
@@ -117,9 +115,9 @@ Kit.onShow.card = () => {
   const lx = W * .5;
   G.labels = names.map((n, i) => {
     const g = Kit.mk('g', {opacity: 0}, svg), y = top + i * gap;
-    Kit.mk('line', {x1: lx - 6, y1: y - fs * .32, x2: tg[i][0], y2: tg[i][1], stroke: '#ffe28a', 'stroke-width': 1.5, 'stroke-dasharray': '3 3'}, g);
-    Kit.mk('circle', {cx: tg[i][0], cy: tg[i][1], r: 3, fill: '#ffe28a'}, g);
-    const t = Kit.mk('text', {x: lx, y, fill: '#fff6d6', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, g);
+    Kit.mk('line', {x1: lx - 6, y1: y - fs * .32, x2: tg[i][0], y2: tg[i][1], stroke: '#10100c', 'stroke-width': 1.5, 'stroke-dasharray': '3 3'}, g);
+    Kit.mk('circle', {cx: tg[i][0], cy: tg[i][1], r: 3, fill: '#10100c'}, g);
+    const t = Kit.mk('text', {x: lx, y, fill: '#10100c', 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, g);
     t.textContent = n;
     return g;
   });

@@ -1,0 +1,381 @@
+<!doctype html>
+<!-- slug: science-heat-of-a-drag -->
+<!-- Look: a night observatory. An ink-black sky with a fine star field and a glowing brass-and-ice dial. A cigarette lies along the dial's base, its tip at the centre. Four sealed reaction slots wait under the dial.
+     Interaction: press and hold the ember to take a drag. The tip heats up, the needle climbs and air streams through the cigarette. Past 600 °C, a fuse of fire runs from the tip to each slot and unseals one reaction.
+     Wow: at 900 °C the 600–900 band ignites and shock rings pulse out. The instrument then settles into a compact gauge above the four reactions, and a peak marker records the heat. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The heat of a drag</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0;overflow:hidden;background:none;touch-action:none;cursor:pointer;user-select:none;-webkit-user-select:none}
+#sky{position:absolute;inset:0;width:100%;height:100%;display:block}
+#grid{position:absolute;left:3%;right:3%;bottom:max(1.3cqh,8px);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto repeat(2,max(4.6cqh,36px));gap:max(.6cqh,5px) max(1.1cqh,7px);pointer-events:none}
+.bh{grid-column:1/-1;font:700 max(1.5cqh,12px)/1.25 var(--mono);color:#7f93c4;letter-spacing:.1em;text-align:center;white-space:nowrap;overflow:hidden;transition:color .6s,text-shadow .6s}
+.bh.on{color:#ffb547;text-shadow:0 0 10px rgba(255,120,40,.6)}
+.chip{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;font:700 max(1.9cqh,13px)/1.1 var(--body);color:#cfd8f5;border-radius:max(1.1cqh,8px);padding:2px 6px;background:rgba(16,22,50,.62);border:1px dashed rgba(150,180,240,.34);transition:background .5s,border-color .5s,box-shadow .5s,color .5s}
+.chip span{filter:blur(4px);opacity:.42;transition:filter .7s,opacity .7s}
+.chip.lit{color:#fff1db;background:linear-gradient(180deg,rgba(70,32,16,.96),rgba(16,14,34,.96));border:1px solid rgba(255,170,80,.82);box-shadow:0 0 14px rgba(255,110,30,.45),inset 0 1px 0 rgba(255,220,170,.28)}
+.chip.lit span{filter:none;opacity:1}
+.tw{animation:tw 3.2s ease-in-out infinite}
+@keyframes tw{50%{opacity:.15}}
+.flow{animation:flow .5s linear infinite;transition:opacity .25s}
+@keyframes flow{to{stroke-dashoffset:17}}
+.smoke{animation:smoke 3.4s linear infinite}
+@keyframes smoke{to{stroke-dashoffset:-60}}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.7);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+.kit-calm .tw,.kit-calm .flow,.kit-calm .smoke,.kit-calm .pulse{animation:none}
+.kit-calm .chip,.kit-calm .chip span,.kit-calm .bh{transition:none}
+#why{margin:0;font-size:max(2.1cqh,14px);line-height:1.36}
+#keep{padding:max(1.1cqh,8px) max(1.8cqh,12px);font-size:max(1.95cqh,13px);line-height:1.3}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold to draw · the heat at the tip" style="--c:#070b1d;--k:#dfe8ff;--edge:#02030a">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO DRAW</span></div>
+    <h2 class="q">What really happens at the tip when you draw on a cigarette?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sky" role="img" aria-label="A temperature dial over a cigarette whose glowing tip sits at the dial's centre, above four sealed reactions."></svg>
+      <div id="grid">
+        <div class="bh" id="bh">LOCKED BELOW 600 °C</div>
+        <div class="chip"><span>Pyrosynthesis</span></div>
+        <div class="chip"><span>Pyrolysis</span></div>
+        <div class="chip"><span>Thermal decomposition</span></div>
+        <div class="chip"><span>Incomplete combustion</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Press and hold the ember to take a drag.</p>
+    <p class="body gone" id="why">When you draw, the tip heats up to <b>600–900 °C</b>. Burning gives water vapour and carbon dioxide, but the real problem is the many other chemical and physical changes that this heat sets off.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A drag is not just fire: at 600–900 °C, the tip is a chemistry lab.</div>
+    <div class="foot"><span class="src">Source · Geopop, “5 curiosità sulle sigarette che forse non sapevi” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(ScrambleTextPlugin);
+  const svg = Kit.$('sky'), stage = Kit.$('stage'), grid = Kit.$('grid'), bh = Kit.$('bh'), say = Kit.$('say');
+  const NAMES = ['Pyrosynthesis', 'Pyrolysis', 'Thermal decomposition', 'Incomplete combustion'];
+  const chips = [...grid.querySelectorAll('.chip')];
+  const A0 = 190, A1 = 350, TMAX = 1000;
+  let W = 0, H = 0, cx = 0, cy = 0, R = 0, w = 10, fs = 12, mode = 'dial', bx0 = 0, bx1 = 0, by = 0, tipX = 0;
+  let T = 20, peak = 20, held = false, boost = 1, out = 0, done = false, touched = false, emitClock = .24;
+  let el = {}, shown = false, sizeKey = '', raf = 0;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const lerp = gsap.utils.interpolate;
+  const deg = t => A0 + (A1 - A0) * t / TMAX;
+  function P(t, off) {
+    if (mode === 'dial') { const a = deg(t) * Math.PI / 180, r = R + off; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
+    return [bx0 + (bx1 - bx0) * t / TMAX, by - off];
+  }
+  function track(t0, t1, off = 0) {
+    const [x0, y0] = P(t0, off), [x1, y1] = P(t1, off);
+    if (mode === 'dial') { const r = R + off; return `M${x0},${y0} A${r},${r} 0 0 1 ${x1},${y1}`; }
+    return `M${x0},${y0} L${x1},${y1}`;
+  }
+  function grad(defs, id, type, attrs, stops) {
+    const g = mk(type, Object.assign({id}, attrs), defs);
+    stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g));
+    return g;
+  }
+
+  function layout() {
+    svg.innerHTML = ''; el = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    sizeKey = stage.clientWidth + 'x' + stage.clientHeight;
+    if (!W || !H) return;
+    const prevMode = mode;
+    fs = Math.max(12, Math.min(14, W / 28));
+    const avail = Math.max(30, grid.offsetTop - 4);
+
+    // fit the dial; if it cannot breathe, fold it into a strip gauge
+    const Rw = (W / 2 - fs * 1.4 - 10) / 1.16;
+    let rr = Rw, ww = 12, bel = 0, topNeed = 0;
+    for (let k = 0; k < 4; k++) {
+      ww = Math.max(10, Math.min(18, rr * .13));
+      bel = ww * .7 + (done ? 8 : ww * 1.1 + fs * 1.9);
+      topNeed = ww * 1.2 + fs * 1.5 + 4;
+      rr = Math.min(Rw, avail - 6 - topNeed - bel);
+    }
+    mode = rr >= 72 ? 'dial' : 'strip';
+    let showLab = true;
+    if (mode === 'dial') {
+      R = rr; w = ww;
+      const top0 = Math.max(4, (avail - (R + topNeed + bel)) / 2);
+      cy = top0 + R + topNeed; cx = W / 2;
+    } else {
+      w = Math.max(9, Math.min(12, avail * .2));
+      showLab = avail >= 52;
+      bx0 = 14; bx1 = W - 14;
+      const head = showLab ? fs * .8 + 12 : 10, tot = head + 16 + w + 3;
+      const top = Math.max(2, (avail - tot) / 2);
+      by = top + head; cy = by + 16 + w / 2; R = 0;
+    }
+
+    const defs = mk('defs', {}, svg);
+    grad(defs, 'neb1', 'radialGradient', {cx: '20%', cy: '18%', r: '55%'}, [[0, '#4b3a9a', .38], [1, '#4b3a9a', 0]]);
+    grad(defs, 'neb2', 'radialGradient', {cx: '85%', cy: '78%', r: '55%'}, [[0, '#1f6b8a', .3], [1, '#1f6b8a', 0]]);
+    const span = mode === 'dial' ? {gradientUnits: 'userSpaceOnUse', x1: cx - R, y1: cy, x2: cx + R, y2: cy} : {gradientUnits: 'userSpaceOnUse', x1: bx0, y1: by, x2: bx1, y2: by};
+    grad(defs, 'prog', 'linearGradient', span, mode === 'dial'
+      ? [[0, '#5fd3ff'], [.45, '#a59bff'], [.64, '#ffb547'], [.82, '#ff5a1f'], [.96, '#fff1c9']]
+      : [[0, '#5fd3ff'], [.3, '#a59bff'], [.6, '#ffb547'], [.8, '#ff5a1f'], [.92, '#fff1c9']]);
+    grad(defs, 'hot', 'linearGradient', span, mode === 'dial' ? [[.6, '#ff8a2a'], [.8, '#ff4a12'], [.96, '#fff3d6']] : [[.6, '#ff8a2a'], [.76, '#ff4a12'], [.9, '#fff3d6']]);
+    grad(defs, 'paper', 'linearGradient', {x1: 0, y1: 0, x2: 0, y2: 1}, [[0, '#ffffff'], [.45, '#ecebe6'], [1, '#a9a7a2']]);
+    grad(defs, 'cork', 'linearGradient', {x1: 0, y1: 0, x2: 0, y2: 1}, [[0, '#f0b77a'], [.5, '#c27a3c'], [1, '#7a421c']]);
+    const eg = grad(defs, 'emberG', 'linearGradient', {x1: 0, y1: 0, x2: 1, y2: 0}, [[0, '#2a2223'], [.3, '#3a1c14'], [1, '#4a2216']]);
+    el.s1 = eg.children[1]; el.s2 = eg.children[2];
+    grad(defs, 'bloomG', 'radialGradient', {}, [[0, '#fff0c8', .95], [.3, '#ff7a24', .65], [1, '#ff4a10', 0]]);
+    grad(defs, 'dawn', 'radialGradient', {cx: (mode === 'dial' ? cx / W * 100 : 50) + '%', cy: (cy / H * 100) + '%', r: '70%'}, [[0, '#ff6a1f', .55], [1, '#ff6a1f', 0]]);
+    if (mode === 'dial') grad(defs, 'bez', 'radialGradient', {gradientUnits: 'userSpaceOnUse', cx, cy, r: R * 1.08}, [[0, '#2b3478', .42], [.7, '#141a44', .25], [1, '#0b1030', 0]]);
+    const gl = mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: Math.max(2, w * .25), result: 'b'}, gl);
+    const mg = mk('feMerge', {}, gl); mk('feMergeNode', {in: 'b'}, mg); mk('feMergeNode', {in: 'SourceGraphic'}, mg);
+
+    // sky (no backdrop: the card itself is the night ground)
+    mk('rect', {width: W, height: H, fill: 'url(#neb1)'}, svg);
+    mk('rect', {width: W, height: H, fill: 'url(#neb2)'}, svg);
+    el.stars = mk('g', {}, svg);
+    for (let i = 0; i < 140; i++) {
+      const r = .3 + Math.pow(Kit.rnd(), 3) * 1.4;
+      const s = mk('circle', {cx: 2 + Kit.rnd() * (W - 4), cy: 2 + Kit.rnd() * (H - 4), r, fill: i % 9 ? '#dfe8ff' : '#ffd9a8', opacity: (.25 + Kit.rnd() * .7).toFixed(2)}, el.stars);
+      if (i % 6 === 0) { s.setAttribute('class', 'tw'); s.style.animationDelay = (Kit.rnd() * 3).toFixed(2) + 's'; }
+    }
+    el.dawn = mk('rect', {width: W, height: H, fill: 'url(#dawn)', opacity: done ? .14 : 0}, svg);
+
+    // instrument
+    const inst = mk('g', {}, svg); el.inst = inst;
+    const dial = mode === 'dial', tw = dial ? w * .6 : 5;
+    if (dial) {
+      const rb = R * 1.05;
+      mk('path', {d: `M${cx - rb},${cy} A${rb},${rb} 0 0 1 ${cx + rb},${cy} Z`, fill: 'url(#bez)'}, inst);
+      mk('path', {d: track(0, 1000, -w * .9), fill: 'none', stroke: 'rgba(150,180,240,.22)', 'stroke-width': 1, 'stroke-dasharray': '1 4'}, inst);
+      const ri = R * .55;
+      mk('path', {d: `M${cx - ri},${cy} A${ri},${ri} 0 0 1 ${cx + ri},${cy}`, fill: 'none', stroke: 'rgba(150,180,240,.1)', 'stroke-width': 1}, inst);
+    }
+    el.track = mk('path', {d: track(0, 1000), fill: 'none', stroke: '#18213f', 'stroke-width': tw, 'stroke-linecap': 'round', pathLength: 1000}, inst);
+    el.band = mk('path', {d: track(600, 900), fill: 'none', stroke: 'url(#hot)', 'stroke-width': tw, opacity: done ? .6 : .28}, inst);
+    el.bandHot = mk('path', {d: track(600, 900), fill: 'none', stroke: 'url(#hot)', 'stroke-width': tw, filter: 'url(#glow)', pathLength: 100, 'stroke-dasharray': '100 100', 'stroke-dashoffset': done ? 0 : 100, opacity: done ? 1 : 0}, inst);
+    el.prog = mk('path', {d: track(0, 1000), fill: 'none', stroke: 'url(#prog)', 'stroke-width': dial ? w * .28 : 2.5, 'stroke-linecap': 'round', pathLength: 1000, filter: 'url(#glow)'}, inst);
+    el.ticks = mk('g', {}, inst);
+    const r0 = dial ? w * .45 : 4;
+    for (let t = 0; t <= 1000; t += 50) {
+      const major = t % 100 === 0, len = dial ? (major ? w * .75 : w * .35) : (major ? 5 : 2.5);
+      const [x0, y0] = P(t, r0), [x1, y1] = P(t, r0 + len);
+      mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, stroke: t >= 600 && t <= 900 ? '#ffb547' : '#8fa6d8', 'stroke-width': major ? 1.6 : 1, opacity: major ? .95 : .55, 'stroke-linecap': 'round'}, el.ticks);
+    }
+    if (showLab) [0, 300, 600, 900].forEach(t => {
+      const [x, y] = dial ? P(t, r0 + w * .75 + fs * .95) : [P(t, 0)[0], by - 12 - fs * .35];
+      const tx = mk('text', {x, y: y + fs * .35, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700, fill: t >= 600 ? '#ffb547' : '#9fb2e0'}, el.ticks);
+      tx.textContent = t;
+    });
+    el.peakTick = mk('line', {stroke: '#fff3d6', 'stroke-width': 2, 'stroke-linecap': 'round', filter: 'url(#glow)', opacity: 0}, inst);
+    el.mark = mk('g', {}, inst);
+    if (dial) {
+      const mx = cx + R - w * .5;
+      mk('path', {d: `M${mx},${cy} l${-fs * 1.05},${-fs * .5} l0,${fs} z`, fill: '#fff4dc', filter: 'url(#glow)'}, el.mark);
+    } else {
+      mk('path', {d: `M0,${by + 4} l${-fs * .45},${fs * .8} l${fs * .9},0 z`, fill: '#fff4dc', filter: 'url(#glow)'}, el.mark);
+    }
+    if (dial && R >= 92) {
+      el.lab = mk('text', {x: cx, y: cy - R * .62, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700, fill: '#8fa6d8', 'letter-spacing': '.12em'}, inst);
+      el.lab.textContent = 'TIP TEMPERATURE';
+    }
+
+    // smoke (dial only, there is room to rise)
+    el.smoke = mk('g', {opacity: 0}, svg);
+    if (dial) [[0, 1], [.35, -1], [.7, 1]].forEach(([d, s]) => {
+      const x = cx + w * .1, y = cy - w * .5;
+      const p = mk('path', {d: `M${x},${y} c${s * w},${-w * 1.2} ${-s * w * .8},${-w * 2.4} ${s * w * .3},${-w * 3.6} s${-s * w * 1.2},${-w * 2.2} ${s * w * .2},${-w * 3.8}`, fill: 'none', stroke: 'rgba(205,215,245,.4)', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-dasharray': '22 38', class: 'smoke'}, el.smoke);
+      p.style.animationDelay = (-d * 3.4) + 's';
+    });
+
+    // readout
+    let ns;
+    if (dial) {
+      ns = Math.max(22, R * .25);
+      el.num = mk('text', {x: cx, y: cy - R * (el.lab ? .26 : .32), 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-size': ns, 'font-weight': 700, fill: '#eaf2ff'}, svg);
+    } else {
+      ns = Math.max(18, Math.min(26, w * 2.2));
+      el.num = mk('text', {x: W - 14, y: cy + ns * .35, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': ns, 'font-weight': 700, fill: '#eaf2ff'}, svg);
+      el.pre = mk('tspan', {'font-size': 12, fill: '#8fa6d8', 'letter-spacing': '.1em'}, el.num); el.pre.textContent = 'TIP ';
+    }
+    el.numv = mk('tspan', {}, el.num); el.numv.textContent = Math.round(T);
+    const u = mk('tspan', {'font-size': Math.max(12, ns * .5), dx: 3, fill: '#8fa6d8'}, el.num); u.textContent = '°C';
+
+    // cigarette
+    const cig = mk('g', {}, svg); el.cig = cig;
+    const xL = dial ? Math.max(8, W * .04) : 14, xT = dial ? cx : Math.min(W * .6, W - 126), Lc = xT - xL, fl = Lc * .3, y0 = cy - w / 2;
+    tipX = xT - w * .3;
+    mk('ellipse', {cx: (xL + xT) / 2, cy: cy + w * (dial ? 1.1 : .75), rx: Lc * .5, ry: w * (dial ? .35 : .22), fill: 'rgba(255,110,40,.08)'}, cig);
+    mk('rect', {x: xL, y: y0, width: fl, height: w, rx: w * .18, fill: 'url(#cork)'}, cig);
+    for (let i = 0; i < 34; i++) mk('circle', {cx: xL + 2 + Kit.rnd() * (fl - 4), cy: y0 + 1.5 + Kit.rnd() * (w - 3), r: .5 + Kit.rnd() * .7, fill: '#6b3512', opacity: .55}, cig);
+    mk('rect', {x: xL + fl, y: y0, width: xT - w * .9 - xL - fl, height: w, fill: 'url(#paper)'}, cig);
+    mk('rect', {x: xL + fl - w * .06, y: y0, width: w * .14, height: w, fill: '#d6b56b'}, cig);
+    mk('rect', {x: xL + fl + w * .3, y: y0 + w * .14, width: Math.max(0, xT - w * 1.5 - xL - fl), height: w * .12, fill: '#fff', opacity: .7, rx: w * .06}, cig);
+    el.tip = mk('rect', {x: xT - w * .95, y: y0, width: w * .95, height: w, rx: w * .3, fill: 'url(#emberG)'}, cig);
+    for (let i = 0; i < 10; i++) mk('circle', {cx: xT - w * .2 - Kit.rnd() * w * .6, cy: y0 + 2 + Kit.rnd() * (w - 4), r: .6 + Kit.rnd() * .6, fill: '#9a9590', opacity: .6}, cig);
+    el.flow = mk('line', {x1: xT - w, y1: cy, x2: xL + 3, y2: cy, stroke: 'rgba(255,190,120,.8)', 'stroke-width': w * .16, 'stroke-linecap': 'round', 'stroke-dasharray': '1.5 15.5', class: 'flow', opacity: 0}, cig);
+    el.bloom = mk('circle', {cx: tipX, cy, r: w, fill: 'url(#bloomG)', opacity: .1, style: 'mix-blend-mode:screen'}, svg);
+    el.rings = mk('g', {}, svg);
+    el.fx = mk('g', {}, svg);
+    el.sparks = mk('g', {}, svg);
+
+    // hint
+    el.hint = mk('g', {opacity: touched || done ? 0 : 1}, svg);
+    mk('circle', {cx: tipX, cy, r: w * 1.3, fill: 'none', stroke: '#ffcf8a', 'stroke-width': 1.5, class: 'pulse'}, el.hint);
+    if (dial) {
+      const ht = mk('text', {x: cx, y: cy + w * 1.4 + fs * 1.3, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700, fill: '#ffcf8a', 'letter-spacing': '.12em'}, el.hint);
+      ht.textContent = 'HOLD THE EMBER';
+    }
+    paintLive(0);
+    if (prevMode !== mode && shown && !Kit.calm) gsap.fromTo(svg, {opacity: 0}, {opacity: 1, duration: .6, ease: 'power2.out'});
+  }
+
+  function paintLive(time) {
+    if (!el.prog) return;
+    const showPeak = done && !held, v = showPeak ? peak : T;
+    el.prog.setAttribute('stroke-dasharray', `${Math.max(T, 2)} 1000`);
+    if (mode === 'dial') el.mark.setAttribute('transform', `rotate(${deg(T)} ${cx} ${cy})`);
+    else el.mark.setAttribute('transform', `translate(${P(T, 0)[0]},0)`);
+    el.numv.textContent = Math.round(v);
+    el.num.setAttribute('fill', v >= 600 ? '#ffc56b' : '#eaf2ff');
+    if (el.lab) el.lab.textContent = showPeak ? 'PEAK AT THE TIP' : 'TIP TEMPERATURE';
+    if (el.pre) el.pre.textContent = showPeak ? 'PEAK ' : 'TIP ';
+    if (done) {
+      const s = mode === 'dial' ? w * .6 : 6, [a, b] = P(peak, -s), [c, d] = P(peak, s);
+      el.peakTick.setAttribute('x1', a); el.peakTick.setAttribute('y1', b); el.peakTick.setAttribute('x2', c); el.peakTick.setAttribute('y2', d);
+      el.peakTick.setAttribute('opacity', .95);
+    }
+    const h = Math.max(0, Math.min(1, (T - 20) / 880)), fl = held ? .92 + .08 * Math.sin(time * 31) : 1;
+    el.s1.setAttribute('stop-color', lerp('#3a1c14', '#ff4a10', Math.min(1, h * 1.6)));
+    el.s2.setAttribute('stop-color', lerp('#4a2216', '#fff1c9', Math.pow(h, 1.2)));
+    el.bloom.setAttribute('r', w * (.6 + 1.9 * h) * fl);
+    el.bloom.setAttribute('opacity', (.08 + .92 * h) * fl);
+    el.flow.setAttribute('opacity', held ? 1 : 0);
+    el.smoke.setAttribute('opacity', Math.min(.9, h * 1.2));
+    if (!done) el.band.setAttribute('opacity', T >= 600 ? .6 : .28);
+  }
+
+  function burst(n, spread) {
+    if (Kit.calm || !el.sparks) return;
+    for (let i = 0; i < n; i++) {
+      const s = mk('circle', {cx: tipX, cy, r: .8 + Math.random() * 1.6, fill: Math.random() < .5 ? '#fff1c9' : '#ffa040'}, el.sparks);
+      const a = -Math.PI * (.15 + Math.random() * .7) + (Math.random() < .2 ? Math.PI : 0), d = spread * (.4 + Math.random());
+      gsap.to(s, {attr: {cx: tipX + Math.cos(a) * d, cy: cy + Math.sin(a) * d}, opacity: 0, duration: .5 + Math.random() * .5, ease: 'power3.out', onComplete: () => s.remove()});
+    }
+  }
+
+  function light(i) {
+    const c = chips[i];
+    c.classList.add('lit'); Kit.haptic('light');
+    if (Kit.calm) return;
+    gsap.to(c.firstChild, {duration: .9, scrambleText: {text: NAMES[i], chars: '°#*+01', revealDelay: .25, speed: .5}});
+    gsap.fromTo(c, {scale: .9}, {scale: 1, duration: .6, ease: 'back.out(3)'});
+  }
+
+  function fuse(c) {
+    const x1 = grid.offsetLeft + c.offsetLeft + c.offsetWidth / 2, y1 = grid.offsetTop + c.offsetTop;
+    const d = `M${tipX},${cy} Q${x1},${cy} ${x1},${y1}`;
+    const p = mk('path', {d, fill: 'none', stroke: '#ffb547', 'stroke-width': 1.4, filter: 'url(#glow)', pathLength: 100, 'stroke-dasharray': '100 100', 'stroke-dashoffset': 100}, el.fx);
+    const s = mk('path', {d, fill: 'none', stroke: '#fff3d6', 'stroke-width': 3, 'stroke-linecap': 'round', pathLength: 100, 'stroke-dasharray': '5 200', 'stroke-dashoffset': 5}, el.fx);
+    gsap.timeline({onComplete: () => { p.remove(); s.remove(); }})
+      .to(p, {attr: {'stroke-dashoffset': 0}, duration: .42, ease: 'power2.in'}, 0)
+      .to(s, {attr: {'stroke-dashoffset': -95}, duration: .42, ease: 'power2.in'}, 0)
+      .to(s, {opacity: 0, duration: .15}, .42)
+      .to(p, {opacity: 0, duration: .6}, .42);
+  }
+
+  function emit() {
+    const i = out++;
+    if (Kit.calm) { light(i); return; }
+    fuse(chips[i]);
+    burst(8, w * 3);
+    gsap.delayedCall(.42, () => light(i));
+  }
+
+  function finish() {
+    done = true; held = false; Kit.haptic('success');
+    chips.forEach(c => c.classList.add('lit'));
+    bh.classList.add('on');
+    const settle = () => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); };
+    el.band.setAttribute('opacity', .6);
+    if (Kit.calm) {
+      bh.textContent = 'WHAT 600–900 °C SETS OFF';
+      gsap.set(el.bandHot, {attr: {'stroke-dashoffset': 0}, opacity: 1}); gsap.set(el.dawn, {opacity: .14});
+      settle(); return;
+    }
+    gsap.to(bh, {duration: .8, scrambleText: {text: 'WHAT 600–900 °C SETS OFF', chars: '°#*+01', speed: .6}});
+    gsap.timeline()
+      .to(el.bandHot, {opacity: 1, duration: .1})
+      .to(el.bandHot, {attr: {'stroke-dashoffset': 0}, duration: .9, ease: 'power3.out'}, 0)
+      .fromTo(el.dawn, {opacity: 0}, {opacity: .5, duration: .25, ease: 'power2.out'}, 0)
+      .to(el.dawn, {opacity: .14, duration: 1.2, ease: 'power2.inOut'}, .25)
+      .fromTo(el.stars, {opacity: 1}, {opacity: .55, duration: .2, yoyo: true, repeat: 1}, 0)
+      .to(chips, {scale: 1.06, duration: .16, yoyo: true, repeat: 1, stagger: .08, ease: 'power2.out'}, .3);
+    for (let k = 0; k < 3; k++) {
+      const r = mk('circle', {cx: tipX, cy, r: w, fill: 'none', stroke: k % 2 ? '#fff1c9' : '#ff8a2a', 'stroke-width': 2}, el.rings);
+      gsap.to(r, {attr: {r: Math.max(R, W * .3) * (1.15 + k * .25)}, opacity: 0, 'stroke-width': .5, duration: 1.3, delay: k * .14, ease: 'expo.out', onComplete: () => r.remove()});
+    }
+    burst(26, Math.max(R, W * .3) * .9);
+    gsap.delayedCall(1.1, settle);
+  }
+
+  function press() {
+    held = true; Kit.haptic('selection');
+    if (!touched) { touched = true; if (el.hint) gsap.to(el.hint, {opacity: 0, duration: .3}); }
+    if (!done) say.innerHTML = 'Drawing… <b>keep holding</b> and watch the tip.';
+  }
+  function release() {
+    if (!held) return; held = false;
+    if (done) return;
+    say.innerHTML = T < 600 ? 'Not hot yet. <b>Hold the drag longer.</b>' : 'Almost at its peak. <b>Hold again, longer.</b>';
+  }
+  stage.addEventListener('pointerdown', e => { press(); try { stage.setPointerCapture(e.pointerId); } catch (_) {} });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => stage.addEventListener(t, release));
+
+  gsap.ticker.add((time, dms) => {
+    const dt = Math.min(.05, dms / 1000);
+    if (held) {
+      const top = 893 + 5 * Math.sin(time * 9) + 2 * Math.sin(time * 23);
+      T = T < top - 1 ? Math.min(top, T + 300 * boost * dt) : top;
+      peak = Math.max(peak, T);
+      if (T >= 600 && !done) { emitClock += dt * boost; if (out < 4 && emitClock >= .24) { emitClock = 0; emit(); } }
+      if (!done && out === 4 && T >= 880) finish();
+      if (!done && Math.random() < dt * 6 * boost && T > 300) burst(2, w * 2);
+    } else {
+      T = 20 + (T - 20) * Math.exp(-dt * 1.1);
+      if (T < 600) emitClock = .24;
+    }
+    paintLive(time);
+  });
+
+  new ResizeObserver(() => {
+    if (!shown) return;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => { if (stage.clientWidth + 'x' + stage.clientHeight !== sizeKey) layout(); });
+  }).observe(stage);
+
+  Kit.onShow.card = () => { layout(); shown = true; };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !el.prog) return;
+    gsap.from(el.stars.children, {opacity: 0, duration: .6, stagger: {amount: 1, from: 'random'}});
+    gsap.fromTo(el.track, {attr: {'stroke-dasharray': '1000 1000', 'stroke-dashoffset': 1000}}, {attr: {'stroke-dashoffset': 0}, duration: 1.2, ease: 'power3.out'});
+    gsap.from(el.ticks.children, {opacity: 0, duration: .4, stagger: .02, delay: .2});
+    gsap.from(el.cig, {x: -W * .7, duration: 1.1, ease: 'expo.out', delay: .15});
+    gsap.from(el.num, {opacity: 0, duration: .7, delay: .6});
+    gsap.from(el.mark, {opacity: 0, duration: .5, delay: .9});
+    gsap.from(grid.children, {opacity: 0, y: 10, duration: .5, stagger: .07, delay: .5, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    boost = 6; press();
+    for (let i = 0; i < 80 && !done; i++) await wait(40);
+    release(); boost = 1;
+    await wait(Kit.calm ? 400 : 2600);
+  };
+})();
+Kit.single();
+</script>
+</html>

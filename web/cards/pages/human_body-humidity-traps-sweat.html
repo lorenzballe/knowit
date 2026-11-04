@@ -7,7 +7,7 @@
 <style>
 #stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
 .art{position:relative;flex:1;min-height:0}
-#cv{position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:2cqh}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 .dial{display:flex;flex-direction:column;gap:.5cqh}
 .dial .row{display:flex;justify-content:space-between;align-items:baseline;font:700 max(1.7cqh,12px)/1.2 var(--body);color:var(--k)}
 .dial .row b{font:800 max(2.3cqh,15px)/1.1 var(--display)}
@@ -95,18 +95,9 @@ function frame(_, dtMs) {
 
 function draw(y0, maxR) {
   x.clearRect(0, 0, W, H);
-  x.save();
-  const rr = Math.min(W, H) * 0.05;
-  x.beginPath(); x.roundRect(0, 0, W, H, rr); x.clip();
-  // air: clear blue when dry, grey haze when muggy
-  const g = x.createLinearGradient(0, 0, 0, y0);
-  const mix = (a, b) => a.map((v, i) => Math.round(v + (b[i] - v) * h));
-  const top = mix([120, 190, 245], [168, 176, 186]), bot = mix([205, 232, 252], [205, 208, 212]);
-  g.addColorStop(0, `rgb(${top})`); g.addColorStop(1, `rgb(${bot})`);
-  x.fillStyle = g; x.fillRect(0, 0, W, y0);
-  // vapor already in the air
+  // air: no backdrop, vapor is drawn straight on the card
   const n = Math.round(15 + 205 * h), dr = Math.max(1.6, W * 0.006);
-  x.fillStyle = 'rgba(255,255,255,0.85)';
+  x.fillStyle = 'rgba(255,255,255,0.9)';
   for (let i = 0; i < n; i++) {
     const a = air[i];
     const px = ((a.fx + Math.sin(t * .3 + a.p) * .01) % 1) * W;
@@ -115,7 +106,7 @@ function draw(y0, maxR) {
   }
   // escaping vapor puffs, carrying heat away
   puffs.forEach(p => {
-    x.fillStyle = `rgba(255,150,80,${p.a * 0.9})`;
+    x.fillStyle = `rgba(255,214,90,${p.a * 0.95})`;
     x.beginPath(); x.arc(p.x, p.y, dr * 1.4, 0, 6.29); x.fill();
   });
   // skin
@@ -142,12 +133,11 @@ function draw(y0, maxR) {
     x.fillStyle = 'rgba(80,40,30,.5)';
     x.beginPath(); x.arc(cx, y0 + 3, 2, 0, 6.29); x.fill();
     if (r < 1.2) return;
-    x.fillStyle = 'rgba(70,150,230,.85)';
+    x.fillStyle = 'rgba(70,150,230,.95)';
     x.beginPath(); x.ellipse(cx, y0, r * 1.15, r, 0, Math.PI, 0); x.closePath(); x.fill();
     x.fillStyle = 'rgba(255,255,255,.8)';
     x.beginPath(); x.ellipse(cx - r * .4, y0 - r * .55, r * .22, r * .14, -.5, 0, 6.29); x.fill();
   });
-  x.restore();
   // labels
   const fs = Math.max(12, Math.min(W, H) * 0.045);
   x.font = `800 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;

@@ -1,0 +1,312 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-pink-cocaine-name -->
+<!-- Look: a Victorian brass assay meter, printed straight on the card. Cream engraved dial, coloured zones, blued-steel needle that trembles faintly, a glass window holding a pink sample.
+     Interaction: tap six reagent plaques. The needle swings and settles with damped weight. Each ingredient it finds sprinkles its own grains into the window and adds its own layer to the powder. The two named in "pink cocaine" barely lift it.
+     Wow: once all six are run, a glint sweeps the glass, the powder pile morphs into a price tag, and the sample plate turns from "PINK COCAINE" to "A BRAND NAME". -->
+<title>Pink cocaine: just a name</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#dial{flex:1;min-width:0;width:100%;height:100%;display:block}
+#tests{flex:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1cqh 2cqw;padding-bottom:.5cqh}
+.vial{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:.35cqh;text-align:left;cursor:pointer;border:0;border-radius:1.3cqh;padding:.95cqh 2.2cqw;
+  background:linear-gradient(#f3dc98,#c9a04f 52%,#a87c31);color:#2a1c08;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -.3cqh 0 rgba(60,35,5,.35),0 .3cqh .7cqh rgba(40,20,0,.28);
+  transition:transform .08s ease-out,background .3s,color .3s}
+.vial:active{transform:scale(.97)}
+.vial .nm{font:800 max(1.8cqh,12px)/1.1 var(--mono);letter-spacing:.02em;display:flex;align-items:center;gap:1.2cqw;min-width:0;overflow-wrap:anywhere}
+.vial small{font:600 max(1.45cqh,12px)/1.15 var(--body);opacity:.85;overflow-wrap:anywhere}
+.vial .sw{flex:none;width:max(1.3cqh,9px);height:max(1.3cqh,9px);border-radius:50%;box-shadow:inset 0 0 0 1.5px rgba(42,28,8,.55)}
+.vial.done{background:linear-gradient(#4d3b22,#2a2013);color:#f5e4b4;box-shadow:inset 0 0 0 1px rgba(240,210,140,.35),0 .2cqh .5cqh rgba(0,0,0,.25)}
+.vial.done small{opacity:1}
+.vial.named small{color:#8f2335}
+.vial.done.named small{color:#ffa9bd}
+.vial.done.found small{color:#aeeac2}
+#say{flex:none;margin-top:.4cqh}
+#why{flex:none}
+#why .body{font:500 max(1.85cqh,13px)/1.36 var(--body)}
+#why .body b{font:800 max(2.3cqh,15px)/1.2 var(--display);margin-right:.25em}
+.say b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Tap each test · what's really inside">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LAB TEST</span></div>
+    <h2 class="q">Why is “pink cocaine” a misleading name for what's actually in it?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="dial" role="img" aria-label="A brass assay meter with a needle and a window holding a pink powder sample."></svg>
+    </div>
+    <div id="tests">
+      <button class="vial named" data-i="0"><span class="nm"><i class="sw"></i>Cocaine</span><small>in the name</small></button>
+      <button class="vial named" data-i="1"><span class="nm"><i class="sw"></i>2C-B</span><small>in the name</small></button>
+      <button class="vial" data-i="2"><span class="nm"><i class="sw"></i>Ketamine</span><small>not in name</small></button>
+      <button class="vial" data-i="3"><span class="nm"><i class="sw"></i>MDMA</span><small>not in name</small></button>
+      <button class="vial" data-i="4"><span class="nm"><i class="sw"></i>Caffeine</span><small>not in name</small></button>
+      <button class="vial" data-i="5"><span class="nm"><i class="sw"></i>Opioids</span><small>not in name</small></button>
+    </div>
+    <div id="why" class="gone"><p class="body"><b>Just a brand name.</b> Lab analyses almost never find cocaine or 2C-B in it, and when they do it's a tiny amount. It's mostly ketamine and MDMA, often with caffeine, opioids or other drugs added, and the mix changes from one clandestine lab to the next.</p></div>
+    <p class="say" id="say">Run each test on the sample. <b>Start with the two its name promises.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>“Pink cocaine” names a colour and a brand, not what's inside.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.MorphSVGPlugin) gsap.registerPlugin(MorphSVGPlugin);
+  const svg = Kit.$('dial'), say = Kit.$('say');
+  const REST = -125;
+  const T = [
+    {id:'coc', name:'Cocaine', named:true, res:'almost never', say:'<b>Cocaine:</b> the needle barely lifts. Almost never in it, only in rare cases and in tiny amounts.'},
+    {id:'2cb', name:'2C-B', named:true, res:'almost never', say:'<b>2C-B</b>, the “tusibi” of its other name: almost never there either.'},
+    {id:'ket', name:'Ketamine', col:'#79b2d4', h:.3, a:86, res:'main ingredient', say:'<b>Ketamine:</b> full swing. One of the main ingredients, almost every time.'},
+    {id:'mda', name:'MDMA', col:'#e8b84e', h:.3, a:80, res:'main ingredient', say:'<b>MDMA:</b> full swing again. The other main ingredient.'},
+    {id:'caf', name:'Caffeine', col:'#a2714f', h:.13, a:10, res:'often added', say:'<b>Caffeine:</b> often added on top.'},
+    {id:'opi', name:'Opioids', col:'#8fa860', h:.13, a:4, res:'often added', say:'<b>Opioids:</b> often added too, with other psychoactive drugs.'}
+  ];
+  const state = {a: REST, h: {ket:0, mda:0, caf:0, opi:0}, specks: 0, lamp: '#5a3a20', revealed: false};
+  const order = [], done = [];
+  let G = {}, nt = null, jit = 0, live = false;
+
+  const NS = Kit.mk;
+  const txt = (p, x, y, t, a) => { const e = NS('text', Object.assign({x, y, 'text-anchor':'middle', 'dominant-baseline':'middle'}, a), p); e.textContent = t; return e; };
+
+  function pileD(b){ const {x0,x1,y0,y1} = b, w = x1-x0;
+    return `M${x0} ${y1} C${x0+w*.22} ${y1} ${x0+w*.3} ${y0} ${x0+w*.5} ${y0} C${x0+w*.7} ${y0} ${x0+w*.78} ${y1} ${x1} ${y1} Z`; }
+  function tagD(b){ const {x0,x1,y0,y1} = b, w = x1-x0, ym = (y0+y1)/2, r = Math.min(6,(y1-y0)*.15);
+    return `M${x0} ${ym} L${x0+w*.2} ${y0} L${x1-r} ${y0} Q${x1} ${y0} ${x1} ${y0+r} L${x1} ${y1-r} Q${x1} ${y1} ${x1-r} ${y1} L${x0+w*.2} ${y1} Z`; }
+
+  const hit = (a, b, p) => !(a.x+a.width+p < b.x || b.x+b.width+p < a.x || a.y+a.height+p < b.y || b.y+b.height+p < a.y);
+
+  function layout() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const R = Math.min(W, H)*.455, cx = W/2, cy = H/2;
+    const fs = Math.max(12, Math.min(15, R*.08));
+    const P = (a, r) => [cx + r*R*Math.sin(a*Math.PI/180), cy - r*R*Math.cos(a*Math.PI/180)];
+    const arc = (a0, a1, r) => { const [x0,y0] = P(a0,r), [x1,y1] = P(a1,r); return `M${x0} ${y0} A${r*R} ${r*R} 0 ${a1-a0>180?1:0} 1 ${x1} ${y1}`; };
+    G = {R, cx, cy, fs};
+
+    const defs = NS('defs', {}, svg);
+    const grad = (tag, id, at, stops) => { const g = NS(tag, Object.assign({id}, at), defs); stops.forEach(([o,c,op]) => NS('stop', {offset:o, 'stop-color':c, 'stop-opacity': op==null?1:op}, g)); return g; };
+    grad('radialGradient','brass',{cx:.35,cy:.28,r:.85},[[0,'#fff3c8'],[.22,'#e6bf63'],[.6,'#a97b2b'],[1,'#553810']]);
+    grad('linearGradient','ring',{x1:0,y1:0,x2:0,y2:1},[[0,'#6e4c16'],[.45,'#f2d384'],[1,'#5b3d10']]);
+    grad('radialGradient','face',{cx:.45,cy:.4,r:.7},[[0,'#fdf6e4'],[.7,'#f0e2c0'],[1,'#d6bf92']]);
+    grad('linearGradient','glass',{x1:0,y1:0,x2:1,y2:1},[[0,'#ffffff',.42],[.38,'#ffffff',.06],[.5,'#ffffff',0]]);
+    grad('linearGradient','win',{x1:0,y1:0,x2:0,y2:1},[[0,'#2c2128'],[1,'#100b0e']]);
+    grad('linearGradient','steel',{x1:0,y1:0,x2:1,y2:0},[[0,'#3b4a63'],[.5,'#18202d'],[1,'#0b0f16']]);
+    grad('linearGradient','glint',{x1:0,y1:0,x2:1,y2:0},[[0,'#fff',0],[.5,'#fff',.55],[1,'#fff',0]]);
+    const bl = NS('filter', {id:'blur', x:'-100%', y:'-100%', width:'300%', height:'300%'}, defs);
+    NS('feGaussianBlur', {stdDeviation:R*.022}, bl);
+    const fc = NS('clipPath', {id:'faceClip'}, defs); NS('circle', {cx, cy, r:R*.93}, fc);
+
+    const bez = NS('g', {id:'bez'}, svg); G.bez = bez;
+    NS('circle', {cx, cy, r:R, fill:'url(#brass)'}, bez);
+    const knurl = NS('g', {stroke:'#3e2908', 'stroke-width':1, opacity:.35}, bez);
+    for (let a = 0; a < 360; a += 3) { const [x1,y1] = P(a,.975), [x2,y2] = P(a,1); NS('line', {x1,y1,x2,y2}, knurl); }
+    NS('circle', {cx, cy, r:R*.95, fill:'none', stroke:'url(#ring)', 'stroke-width':R*.04}, bez);
+    NS('circle', {cx, cy, r:R*.93, fill:'url(#face)'}, bez);
+    const guil = NS('g', {fill:'none', stroke:'#7a5a26', opacity:.07}, bez);
+    for (let r = .28; r < .6; r += .022) NS('circle', {cx, cy, r:R*r}, guil);
+    [45,135,225,315].forEach(a => { const [x,y] = P(a,.965), s = R*.022;
+      NS('circle', {cx:x, cy:y, r:s, fill:'url(#brass)', stroke:'#4a300c', 'stroke-width':.8}, bez);
+      NS('line', {x1:x-s*.7, y1:y-s*.3, x2:x+s*.7, y2:y+s*.3, stroke:'#3a2508', 'stroke-width':1.2}, bez); });
+
+    // zones and engraved scale
+    const Z = [{t:'ABSENT',a0:-125,a1:-75,c:'#8e2b2b'},{t:'TRACE',a0:-75,a1:-25,c:'#b86a2c'},{t:'OFTEN',a0:-25,a1:40,c:'#4f7149'},{t:'MAIN',a0:40,a1:125,c:'#2f5d4f'}];
+    Z.forEach(z => NS('path', {d:arc(z.a0+.6, z.a1-.6, .885), stroke:z.c, 'stroke-width':R*.04, fill:'none', class:'tk'}, bez));
+    const ticks = NS('g', {stroke:'#33240e', 'stroke-linecap':'round'}, bez);
+    for (let a = -125; a <= 125.01; a += 2.5) { const maj = Math.abs((a+125) % 25) < .01;
+      const [x1,y1] = P(a, maj ? .74 : .79), [x2,y2] = P(a, .855);
+      NS('line', {x1,y1,x2,y2, 'stroke-width': maj ? 2 : .9, class:'tk'}, ticks); }
+
+    // sample window (fits inside the face)
+    const ww = R*.84, wh = R*.44, wx = cx-ww/2, wy = cy+R*.31; G.wy = wy;
+    const winG = NS('g', {}, bez); G.win = winG;
+    NS('rect', {x:wx-2, y:wy-2, width:ww+4, height:wh+4, rx:R*.06, fill:'url(#ring)'}, winG);
+    NS('rect', {x:wx, y:wy, width:ww, height:wh, rx:R*.05, fill:'url(#win)'}, winG);
+    const wc = NS('clipPath', {id:'winClip'}, defs); NS('rect', {x:wx, y:wy, width:ww, height:wh, rx:R*.05}, wc);
+
+    // engraved labels: only when the dial is big enough to carry them, each fitted inside the scale, never touching
+    const labels = [];
+    const winBox = {x:wx-2, y:wy-2, width:ww+4, height:wh+4}, hubBox = {x:cx-R*.09, y:cy-R*.09, width:R*.18, height:R*.18};
+    if (R >= 100) {
+      const place = (el, ang, rMax) => {
+        const bb = el.getBBox(), w = bb.width, h = bb.height;
+        for (let r = rMax; r >= .36; r -= .01) {
+          const [x,y] = P(ang, r);
+          const ok = [[-1,-1],[1,-1],[-1,1],[1,1]].every(([sx,sy]) => Math.hypot(x+sx*w/2-cx, y+sy*h/2-cy) <= R*.71);
+          if (ok) { el.setAttribute('x', x); el.setAttribute('y', y); return true; }
+        }
+        return false;
+      };
+      Z.forEach(z => { const e = txt(bez, cx, cy, z.t, {fill:z.c, style:`font:800 ${fs}px var(--mono);letter-spacing:.06em`, class:'tk'});
+        if (place(e, (z.a0+z.a1)/2, .64)) labels.push(e); else e.remove(); });
+      ['REAGENT ASSAY','ASSAY'].some(t => {
+        const e = txt(bez, cx, cy-R*.34, t, {fill:'#6b5226', style:`font:700 ${fs*.9}px var(--mono);letter-spacing:.14em`});
+        const bb = e.getBBox();
+        if (labels.some(l => hit(bb, l.getBBox(), 4)) || hit(bb, hubBox, 2)) { e.remove(); return false; }
+        labels.push(e); return true;
+      });
+      labels.slice().forEach(l => { const bb = l.getBBox(); if (hit(bb, winBox, 2) || hit(bb, hubBox, 1)) { l.remove(); labels.splice(labels.indexOf(l),1); } });
+    }
+
+    // plate on the window, only if it truly fits
+    G.plate = null;
+    const plate = txt(winG, cx, wy+fs*1.05, state.revealed ? 'A BRAND NAME' : '“PINK COCAINE”', {fill:'#ffc2da', style:`font:800 ${fs}px var(--mono)`});
+    const pmax = Math.max(plate.getBBox().width, (plate.getBBox().width/(state.revealed?12:14))*14);
+    if (R >= 100 && pmax <= ww-10 && wh > fs*3.4) G.plate = plate; else plate.remove();
+
+    const pw = R*.58, top = G.plate ? wy+fs*1.95 : wy+R*.07;
+    const b = {x0:cx-pw/2, x1:cx+pw/2, y0:top, y1:wy+wh-R*.045}; G.b = b; G.ph = b.y1-b.y0;
+    const clip = NS('clipPath', {id:'pileClip'}, defs);
+    G.clip = NS('path', {d: state.revealed ? tagD(b) : pileD(b)}, clip);
+    const pile = NS('g', {'clip-path':'url(#pileClip)'}, winG); G.pile = pile;
+    NS('rect', {x:b.x0, y:b.y0-2, width:pw, height:G.ph+4, fill:'#f28fba'}, pile);
+    G.strata = {};
+    T.filter(t => !t.named).forEach(t => G.strata[t.id] = NS('rect', {x:b.x0, width:pw, y:b.y1, height:0, fill:t.col}, pile));
+    G.specks = NS('g', {fill:'#fff'}, pile);
+    for (let i = 0; i < state.specks; i++) speck(false, i);
+    const gr = NS('g', {}, pile);
+    for (let i = 0; i < 60; i++) NS('circle', {cx:b.x0+Kit.rnd()*pw, cy:b.y0+Kit.rnd()*G.ph, r:.6+Kit.rnd()*.9, fill: i%2 ? '#fff' : '#3a0f22', opacity:.28}, gr);
+    G.outline = NS('path', {d: state.revealed ? tagD(b) : pileD(b), fill:'none', stroke:'rgba(255,230,240,.7)', 'stroke-width':1.3}, winG);
+    G.hole = NS('circle', {cx:b.x0+pw*.13, cy:(b.y0+b.y1)/2, r:Math.max(2.5,G.ph*.1), fill:'#160f13', stroke:'rgba(255,230,240,.7)', 'stroke-width':1, opacity: state.revealed ? 1 : 0}, winG);
+    G.fx = NS('g', {'clip-path':'url(#winClip)'}, winG);
+    NS('rect', {x:wx, y:wy, width:ww, height:wh*.35, rx:R*.05, fill:'#fff', opacity:.05}, winG);
+    placeStrata();
+
+    // needle
+    const L = R*.74, w = R*.026, tail = R*.17;
+    const nd = `M${cx-w} ${cy} L${cx-.8} ${cy-L} L${cx+.8} ${cy-L} L${cx+w} ${cy} L${cx+w*1.7} ${cy+tail} L${cx-w*1.7} ${cy+tail} Z`;
+    G.shadow = NS('path', {d:nd, fill:'#000', opacity:.28, filter:'url(#blur)'}, bez);
+    G.needle = NS('path', {d:nd, fill:'url(#steel)', stroke:'#05070b', 'stroke-width':.6}, bez);
+    NS('circle', {cx, cy, r:R*.07, fill:'url(#brass)', stroke:'#4a300c', 'stroke-width':1}, bez);
+    NS('circle', {cx, cy, r:R*.02, fill:'#3a2508'}, bez);
+    setNeedle();
+
+    // signal lamp on the bezel
+    const [lx, ly] = P(0, .965);
+    G.glow = NS('circle', {cx:lx, cy:ly, r:R*.05, fill:state.lamp, opacity:.6, filter:'url(#blur)'}, bez);
+    G.lamp = NS('circle', {cx:lx, cy:ly, r:R*.026, fill:state.lamp, stroke:'#3a2508', 'stroke-width':1}, bez);
+
+    // glass
+    const gl = NS('g', {'clip-path':'url(#faceClip)'}, bez);
+    NS('circle', {cx, cy, r:R*.93, fill:'url(#glass)'}, gl);
+    G.glint = NS('rect', {x:cx-R*.16, y:cy-R*.9, width:R*.32, height:R*1.8, fill:'url(#glint)', opacity:0, display:'none'}, gl);
+    NS('circle', {cx, cy, r:R*.93, fill:'none', stroke:'#3a2508', 'stroke-width':1.2, opacity:.5}, bez);
+  }
+
+  function setNeedle() {
+    if (!G.needle) return;
+    const a = state.a + jit;
+    G.needle.setAttribute('transform', `rotate(${a} ${G.cx} ${G.cy})`);
+    G.shadow.setAttribute('transform', `translate(${G.R*.025} ${G.R*.04}) rotate(${a} ${G.cx} ${G.cy})`);
+  }
+  // a living instrument: faint mechanical tremor
+  gsap.ticker.add(t => {
+    if (!live || Kit.calm || !G.needle) return;
+    jit = Math.sin(t*9.3)*.22 + Math.sin(t*23.1)*.12; setNeedle();
+  });
+  function placeStrata() {
+    if (!G.strata) return; let acc = 0;
+    order.forEach(id => { const r = G.strata[id], hh = state.h[id]*G.ph; r.setAttribute('y', G.b.y1 - acc - hh); r.setAttribute('height', hh); acc += hh; });
+  }
+  function speck(anim, i) {
+    const b = G.b, x = b.x0 + (b.x1-b.x0)*(i ? .58 : .45), y = b.y1 - G.ph*(i ? .78 : .88);
+    const c = NS('circle', {cx:x, cy:y, r:Math.max(1.3, G.R*.012)}, G.specks);
+    if (anim && !Kit.calm) gsap.from(c, {attr:{r:G.R*.07}, opacity:0, duration:.7, ease:'expo.out'});
+  }
+  function sprinkle(col) {
+    if (Kit.calm || !G.fx) return; const b = G.b;
+    for (let k = 0; k < 10; k++) {
+      const x = b.x0 + (b.x1-b.x0)*(.3 + Kit.rnd()*.4);
+      const c = NS('circle', {cx:x, cy:G.wy+2, r:Math.max(1.2, G.R*.013), fill:col}, G.fx);
+      gsap.to(c, {attr:{cy:b.y0 + G.ph*(.35 + Kit.rnd()*.45), cx:x + (Kit.rnd()-.5)*G.R*.05}, opacity:0, duration:.55 + Kit.rnd()*.35, delay:k*.035, ease:'power2.in', onComplete:() => c.remove()});
+    }
+  }
+  function setLamp(c) {
+    state.lamp = c; if (!G.lamp) return;
+    G.lamp.setAttribute('fill', c); G.glow.setAttribute('fill', c);
+    if (!Kit.calm) gsap.fromTo(G.glow, {attr:{r:G.R*.075}, opacity:1}, {attr:{r:G.R*.05}, opacity:.6, duration:.6, ease:'power3.out'});
+  }
+
+  function test(i) {
+    if (done[i] || state.revealed) return;
+    const t = T[i], btn = Kit.$('tests').children[i]; done[i] = true;
+    btn.classList.add('done'); if (!t.named) btn.classList.add('found');
+    btn.querySelector('small').textContent = t.res;
+    btn.querySelector('.sw').style.background = t.named ? 'transparent' : t.col;
+    if (t.named) btn.querySelector('.sw').style.boxShadow = 'inset 0 0 0 1.5px #ff9fb4';
+    Kit.haptic('light'); say.innerHTML = t.say;
+    if (nt) nt.kill();
+    if (t.named) {
+      setLamp('#e04a44');
+      speck(true, state.specks); state.specks++;
+      if (Kit.calm) { state.a = -97; setNeedle(); }
+      else nt = gsap.timeline()
+        .to(state, {a:-62, duration:.28, ease:'power2.out', onUpdate:setNeedle})
+        .to(state, {a:-98, duration:1.6, ease:'elastic.out(1,.32)', onUpdate:setNeedle});
+    } else {
+      setLamp('#7fe3a2');
+      order.push(t.id);
+      const target = t.a + (Kit.rnd()-.5)*6;
+      if (Kit.calm) { state.a = target; state.h[t.id] = t.h; setNeedle(); placeStrata(); }
+      else {
+        sprinkle(t.col);
+        nt = gsap.to(state, {a:target, duration:1.9, ease:'elastic.out(1.05,.27)', onUpdate:setNeedle});
+        gsap.to(state.h, {[t.id]:t.h, duration:1, delay:.3, ease:'power3.out', onUpdate:placeStrata});
+      }
+    }
+    if (done.filter(Boolean).length === T.length) setTimeout(reveal, Kit.calm ? 60 : 1700);
+  }
+
+  function setPlate(t) { if (G.plate) G.plate.textContent = t; }
+
+  function reveal() {
+    if (state.revealed) return; state.revealed = true;
+    Kit.haptic('success');
+    Kit.hide('tests'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    setLamp('#ff7fb0');
+    const d = tagD(G.b);
+    if (Kit.calm) {
+      G.clip.setAttribute('d', d); G.outline.setAttribute('d', d); G.hole.setAttribute('opacity', 1); setPlate('A BRAND NAME');
+      return;
+    }
+    const R = G.R, tl = gsap.timeline();
+    G.glint.setAttribute('display', 'inline');
+    tl.fromTo(G.glint, {opacity:.9, x:-R*1.1}, {x:R*1.1, duration:1.1, ease:'power2.inOut'}, 0)
+      .to(G.glint, {opacity:0, duration:.2, onComplete:() => G.glint && G.glint.setAttribute('display','none')}, 1)
+      .to(state, {a:REST, duration:1.2, ease:'power3.inOut', onUpdate:setNeedle}, 0);
+    if (G.plate) tl.to(G.plate, {opacity:0, duration:.25, ease:'power2.in', onComplete:() => setPlate('A BRAND NAME')}, .3)
+      .to(G.plate, {opacity:1, duration:.5, ease:'power3.out'}, .6);
+    else tl.add(() => setPlate('A BRAND NAME'), .5);
+    if (window.MorphSVGPlugin) tl.to([G.clip, G.outline], {morphSVG:d, duration:1.2, ease:'expo.inOut'}, .2);
+    else tl.add(() => { G.clip.setAttribute('d', d); G.outline.setAttribute('d', d); }, .8);
+    tl.to(G.hole, {opacity:1, duration:.5, ease:'power2.out'}, 1.1)
+      .fromTo(G.pile, {scale:1}, {scale:1.06, duration:.22, yoyo:true, repeat:1, ease:'power2.out', svgOrigin:`${G.cx} ${(G.b.y0+G.b.y1)/2}`}, 1.25);
+  }
+
+  Kit.$('tests').addEventListener('click', e => { const b = e.target.closest('.vial'); if (b) test(+b.dataset.i); });
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    live = true;
+    gsap.from('#bez', {scale:.9, opacity:0, duration:.9, ease:'power3.out', transformOrigin:'50% 50%'});
+    gsap.from('#dial .tk', {opacity:0, duration:.3, stagger:.005, delay:.2, ease:'power2.out'});
+    gsap.from('.vial', {opacity:0, scale:.94, duration:.45, stagger:.06, delay:.35, ease:'back.out(1.6)', clearProps:'transform,opacity'});
+    if (!done.length) nt = gsap.timeline({delay:.5})
+      .to(state, {a:120, duration:.9, ease:'power2.inOut', onUpdate:setNeedle})
+      .to(state, {a:REST, duration:1.8, ease:'elastic.out(1,.4)', onUpdate:setNeedle});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (let i = 0; i < T.length; i++) { Kit.$('tests').children[i].click(); await wait(90); }
+    await wait(Kit.calm ? 300 : 3400);
+  };
+})();
+Kit.single();
+</script>
+</html>

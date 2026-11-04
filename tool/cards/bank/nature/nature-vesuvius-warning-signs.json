@@ -1,0 +1,39 @@
+{
+  "id": "nature-vesuvius-warning-signs",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How long before Vesuvius erupts do the earthquakes begin?",
+  "answer": "Fumaroles grow stronger several months before Vesuvius erupts. Earthquakes and swelling ground come only 1–2 weeks before, because the magma is rising. About 700,000 people live in the red zone around the volcano.",
+  "move": "Fumaroles warn months ahead; quakes and swelling, 1–2 weeks: magma on the move.",
+  "keywords": [
+    "vesuvius",
+    "magma",
+    "earthquakes",
+    "fumaroles",
+    "eruption"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline asking when earthquakes begin before a Vesuvius eruption. The reader drags a blue flag along the timeline to the point where they think the quakes start.",
+    "graded": false,
+    "ground": "#efe3c8"
+  },
+  "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=JxXQOLGsJuM&t=216s",
+  "written": "2026-11-04"
+}

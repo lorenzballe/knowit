@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Asks what light from a black hole's edge would look like. Tap around the black hole to drop objects in. A control makes the faint edge light visible, revealing layered images of everything that fell in.",
-    "ground": "#0a0d22"
+    "label": "Asks what light from a black hole's edge would look like. Tap around the black hole to drop objects in. A control makes the faint edge light visible, revealing layered images of everything that fell in."
   },
   "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M&t=54s",

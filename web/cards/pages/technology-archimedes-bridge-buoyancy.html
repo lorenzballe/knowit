@@ -6,8 +6,9 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;background:#0f2133;border-radius:2cqh;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;background:none !important;border:0 !important;box-shadow:none !important;border-radius:0 !important;outline:0 !important;padding:0}
+#stage::before,#stage::after{content:none !important;background:none !important;box-shadow:none !important;border:0 !important}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none;background:none !important;border:0 !important;box-shadow:none !important;border-radius:0 !important;filter:none !important}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
 #why .big{margin:0}
@@ -28,7 +29,7 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const NS = 'http://www.w3.org/2000/svg';
-const RED = '#ff6b4a', BLUE = '#5cc8ff', INK = '#ffffff', CALM = '#8fa3b8';
+const RED = '#d62f10', BLUE = '#ffffff', INK = '#10100c', CALM = '#3d4f63';
 const K = 0.8;              // share of the tunnel's weight the fully submerged tunnel gets back as push
 let lev = 0, done = false, G = null, hint = null;
 
@@ -50,6 +51,7 @@ function setArrow(a, x, y1, y2) {
 
 function draw() {
   const svg = Kit.$('pic'); const {W, H, f} = Kit.fitSvg(svg); svg.innerHTML = '';
+  svg.style.background = 'none';
   const fs = Math.max(f * .95, 12), pad = fs * .9;
   const rowY = i => pad + fs * .9 + i * fs * 1.7;
   let sceneTop = rowY(2) + fs * 1.4, seabed = H - fs * 1.3;
@@ -69,22 +71,22 @@ function draw() {
     const y = rowY(i);
     const tx = Kit.mk('text', {x: W * .05, y: y + fs * .35, fill: INK, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
     tx.textContent = t;
-    Kit.mk('rect', {x: bx, y: y - bh / 2, width: bw, height: bh, rx: bh / 2, fill: '#ffffff', opacity: .1}, svg);
+    Kit.mk('rect', {x: bx, y: y - bh / 2, width: bw, height: bh, rx: bh / 2, fill: '#10100c', opacity: .14}, svg);
     return Kit.mk('rect', {x: bx, y: y - bh / 2, width: bw, height: bh, rx: bh / 2, fill: c}, svg);
   });
 
   // seabed, pillars, tunnel
   Kit.mk('rect', {x: 0, y: seabed, width: W, height: Math.max(0, H - seabed), fill: '#c9a46a'}, svg);
   g.pillars = [.27, .73].map(p => Kit.mk('rect', {x: W * p - W * .03, y: tBot - 2, width: W * .06, height: Math.max(0, seabed - tBot + 2), fill: RED}, svg));
-  Kit.mk('rect', {x: x0, y: tTop, width: x1 - x0, height: th, rx: th / 2, fill: '#e9edf2', stroke: '#ffffff', 'stroke-width': 2}, svg);
-  if (th > 8) for (let i = 1; i < 9; i++) { const x = x0 + (x1 - x0) * i / 9; Kit.mk('line', {x1: x, x2: x, y1: tTop + 3, y2: tBot - 3, stroke: '#9fb0c2', 'stroke-width': 1.5}, svg); }
+  Kit.mk('rect', {x: x0, y: tTop, width: x1 - x0, height: th, rx: th / 2, fill: '#e9edf2', stroke: '#10100c', 'stroke-width': 2}, svg);
+  if (th > 8) for (let i = 1; i < 9; i++) { const x = x0 + (x1 - x0) * i / 9; Kit.mk('line', {x1: x, x2: x, y1: tTop + 3, y2: tBot - 3, stroke: '#7d8fa3', 'stroke-width': 1.5}, svg); }
 
   // water in front, translucent
-  g.water = Kit.mk('rect', {x: 0, width: W, fill: '#2b7fd4', opacity: .55}, svg);
-  g.surf = Kit.mk('path', {fill: 'none', stroke: '#bfe6ff', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+  g.water = Kit.mk('rect', {x: 0, width: W, fill: '#0a4fa8', opacity: .55}, svg);
+  g.surf = Kit.mk('path', {fill: 'none', stroke: '#ffffff', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
   g.handle = Kit.mk('g', {}, svg);
-  Kit.mk('circle', {r: fs * 1.05, fill: '#bfe6ff'}, g.handle);
-  Kit.mk('path', {d: `M${-fs * .45},${-fs * .2} L0,${-fs * .65} L${fs * .45},${-fs * .2} M${-fs * .45},${fs * .2} L0,${fs * .65} L${fs * .45},${fs * .2}`, fill: 'none', stroke: '#0f2133', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g.handle);
+  Kit.mk('circle', {r: fs * 1.05, fill: '#ffffff', stroke: '#10100c', 'stroke-width': 2}, g.handle);
+  Kit.mk('path', {d: `M${-fs * .45},${-fs * .2} L0,${-fs * .65} L${fs * .45},${-fs * .2} M${-fs * .45},${fs * .2} L0,${fs * .65} L${fs * .45},${fs * .2}`, fill: 'none', stroke: '#10100c', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g.handle);
 
   // forces
   const aw = Math.max(fs * .35, 4);

@@ -1,0 +1,38 @@
+{
+  "id": "technology-fire-contains-methane",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did engineers decide to ignite the gas after the blowout?",
+  "answer": "Engineers lit the gas because methane kept rising out of the crater. Fire turned a loose, spreading leak into a burn kept in one place.",
+  "move": "Fire turned a loose, spreading leak into a burn kept in one place.",
+  "keywords": [
+    "methane",
+    "darvaza",
+    "turkmenistan",
+    "gas crater",
+    "fire"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drag-to-ignite control: a match sits at the left, and the reader drags it right toward a gas crater where methane keeps rising. The question asks why engineers chose to set the gas alight.",
+    "ground": "#efe5cf"
+  },
+  "source": "Geopop, “La \"Porta dell'Inferno\", come si è formata e perché dopo 50 anni brucia nel deserto in Turkmenistan?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=5hk3wTF3Ti0&t=17s",
+  "written": "2026-11-04"
+}

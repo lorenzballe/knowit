@@ -30,7 +30,7 @@
     "touch": "drags",
     "label": "Asks how many galaxies exist in the observable universe. You drag to zoom out across a space view until you think you see every galaxy.",
     "graded": false,
-    "ground": "#010203"
+    "ground": "#070a1c"
   },
   "source": "Veritasium, “How Far Away is the Moon? (The Scale of the Universe)” (YouTube, 2011)",
   "reference": "https://www.youtube.com/watch?v=Bz9D6xba9Og",

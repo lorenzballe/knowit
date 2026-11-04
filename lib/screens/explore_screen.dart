@@ -232,10 +232,10 @@ class ExploreScreenState extends State<ExploreScreen>
   void _seen(String shelf, Pill pill, {String? on}) {
     if (_probing || !_sight.looking) return;
     _sight.tile(on ?? shelf, pill.id);
-    // A free card on a shelf has its page fetched while its tile is in
-    // sight, so the card opens whole, as a deck's next card does.
-    if (pill.hasPage) CardPages.instance.warm([pill]);
     if (!_shown.add('$shelf:${pill.id}')) return;
+    // A free card on a shelf has its page fetched the first time its tile
+    // is in sight, so the card opens whole, as a deck's next card does.
+    if (pill.hasPage) CardPages.instance.warm([pill]);
     Trace.instance.note('card shown', {'pill_id': pill.id, 'shelf': shelf});
   }
 

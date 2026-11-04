@@ -1,0 +1,37 @@
+{
+  "id": "science-bio-not-biodegradable",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "Are bioplastics always biodegradable?",
+  "answer": "No, not always. About half of bioplastics aren't biodegradable. \"Bio\" describes origin: plant sugars like wheat or sugarcane. \"Biodegradable\" describes fate: broken down in human time. They are separate questions.",
+  "move": "“Bio” is where a plastic comes from (plant sugars, like wheat or sugarcane). “Biodegradable” is how it ends. Check both.",
+  "keywords": [
+    "bioplastic",
+    "biodegradable",
+    "sugarcane",
+    "wheat",
+    "plastic"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question asks whether bioplastics are always biodegradable, with the choices Yes, always and No, not always. Readers pick one, rate how sure they are, then watch plastics sort themselves into a tray."
+  },
+  "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=MRju0pJp3mk&t=430s",
+  "written": "2026-11-03"
+}

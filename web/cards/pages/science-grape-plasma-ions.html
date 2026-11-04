@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#view{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#0d0b1a}
+#view{position:relative;flex:1;min-height:0}
 #view canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #opts{display:flex;flex-direction:row;gap:3cqw}
 #why{display:flex;flex-direction:column;gap:.8cqh}
@@ -38,6 +38,7 @@
 const RIGHT = 1, D = 3.4;
 let pick = -1, ctx = null, W = 0, H = 0;
 let running = false, t = 0, last = 0, clock = 0, done = false;
+const WEAK = '#3d4a44', STRONG = '#8a3a00';
 
 function mkSide(strong){
   const m = [];
@@ -70,15 +71,15 @@ function draw(){
   clock += dt; step(dt);
   const x = ctx, pw = W / 2, fs = Math.max(12, H * .042), ph = clock * 2 * Math.PI * 1.3;
   const on = running || done, sgn = Math.sin(ph);
-  x.clearRect(0, 0, W, H); x.fillStyle = '#0d0b1a'; x.fillRect(0, 0, W, H);
-  x.strokeStyle = 'rgba(255,255,255,.12)'; x.lineWidth = 1; x.beginPath(); x.moveTo(pw, H * .05); x.lineTo(pw, H * .95); x.stroke();
+  x.clearRect(0, 0, W, H);
+  x.strokeStyle = 'rgba(16,16,12,.18)'; x.lineWidth = 1; x.beginPath(); x.moveTo(pw, H * .05); x.lineTo(pw, H * .95); x.stroke();
   S.forEach((s, i) => {
     const cx = pw * (i + .5), cy = H * .47, R = Math.min(pw * .19, H * .15);
     let glow = 0, ions = 0; s.m.forEach(p => { glow += p.e; if (p.ion) ions++; }); glow /= s.m.length;
     // label
     x.textAlign = 'center'; x.textBaseline = 'middle';
     x.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
-    x.fillStyle = s.strong ? '#ffd23f' : '#9aa0bd';
+    x.fillStyle = s.strong ? STRONG : WEAK;
     x.fillText(s.strong ? 'STRONG FIELD' : 'WEAK FIELD', cx, H * .07);
     // grapes
     [-1, 1].forEach(d => {
@@ -91,15 +92,13 @@ function draw(){
     if (glow > .01){
       const pulse = Kit.calm ? 1 : 1 + .12 * Math.sin(clock * 9) + .06 * Math.sin(clock * 23);
       const r = R * (.4 + 1.5 * glow) * pulse;
-      x.globalCompositeOperation = 'lighter';
       const g = x.createRadialGradient(cx, cy, 0, cx, cy, r);
-      g.addColorStop(0, `rgba(255,245,255,${.9 * glow})`); g.addColorStop(.35, `rgba(255,110,210,${.7 * glow})`); g.addColorStop(1, 'rgba(120,60,255,0)');
+      g.addColorStop(0, `rgba(255,255,255,${.95 * glow})`); g.addColorStop(.35, `rgba(255,40,170,${.8 * glow})`); g.addColorStop(1, 'rgba(120,40,255,0)');
       x.fillStyle = g; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
-      x.globalCompositeOperation = 'source-over';
     }
     // field arrows in the gap, flipping with the microwaves
-    const dir = on ? (sgn >= 0 ? 1 : -1) : 1, al = s.strong ? .95 : .4;
-    x.strokeStyle = s.strong ? `rgba(255,210,63,${on ? al : .35})` : `rgba(154,160,189,${on ? al : .25})`;
+    const dir = on ? (sgn >= 0 ? 1 : -1) : 1, al = s.strong ? .95 : .5;
+    x.strokeStyle = s.strong ? `rgba(160,70,0,${on ? al : .45})` : `rgba(61,74,68,${on ? al : .35})`;
     x.fillStyle = x.strokeStyle; x.lineWidth = s.strong ? Math.max(2, R * .07) : 1.2;
     for (let k = -1; k <= 1; k++){
       const ay = cy + k * R * .5, L = R * .55, a0 = cx - dir * L / 2, a1 = cx + dir * L / 2;
@@ -113,29 +112,29 @@ function draw(){
       const bx = cx + p.x * R + Math.sin(clock * 7 + p.j) * jit, by = cy + p.y * R + Math.cos(clock * 6 + p.j * 2) * jit;
       const sw = Kit.calm ? 0 : Math.sin(ph);
       if (!p.ion){
-        x.fillStyle = '#7d839e'; x.beginPath(); x.arc(bx, by, Math.max(2, R * .07), 0, 7); x.fill();
+        x.fillStyle = WEAK; x.beginPath(); x.arc(bx, by, Math.max(2, R * .07), 0, 7); x.fill();
       } else {
         const ix = bx + p.e * R * .1 * sw;
-        x.fillStyle = `rgba(255,170,60,${.25 + .4 * p.e})`; x.beginPath(); x.arc(ix, by, R * (.1 + .12 * p.e), 0, 7); x.fill();
-        x.fillStyle = '#ffb340'; x.beginPath(); x.arc(ix, by, Math.max(2.4, R * .08), 0, 7); x.fill();
+        x.fillStyle = `rgba(214,90,0,${.25 + .4 * p.e})`; x.beginPath(); x.arc(ix, by, R * (.1 + .12 * p.e), 0, 7); x.fill();
+        x.fillStyle = '#c24e00'; x.beginPath(); x.arc(ix, by, Math.max(2.4, R * .08), 0, 7); x.fill();
         const exx = bx + p.ex * R - p.e * R * .3 * sw, eyy = by + p.ey * R;
-        x.fillStyle = '#6ee7ff'; x.beginPath(); x.arc(exx, eyy, Math.max(1.6, R * .045), 0, 7); x.fill();
+        x.fillStyle = '#0050c8'; x.beginPath(); x.arc(exx, eyy, Math.max(1.6, R * .045), 0, 7); x.fill();
         if (p.fl > 0){
-          x.strokeStyle = `rgba(255,255,255,${p.fl})`; x.lineWidth = 2; x.beginPath();
+          x.strokeStyle = `rgba(16,16,12,${p.fl})`; x.lineWidth = 2; x.beginPath();
           x.moveTo(bx - R * .2, by - R * .1); x.lineTo(bx - R * .03, by + R * .06); x.lineTo(bx + R * .05, by - R * .06); x.lineTo(bx + R * .22, by + R * .1); x.stroke();
         }
       }
     });
     // readout
-    x.fillStyle = s.strong ? '#ffd23f' : '#9aa0bd';
+    x.fillStyle = s.strong ? STRONG : WEAK;
     x.font = `700 ${fs}px sans-serif`;
     x.fillText(`IONS ${ions}`, cx, H * .79);
     const bw = pw * .66, bh = Math.max(6, H * .028), by0 = H * .87;
-    x.fillStyle = 'rgba(255,255,255,.12)'; x.fillRect(cx - bw / 2, by0, bw, bh);
-    x.fillStyle = s.strong ? '#ff6ed2' : '#9aa0bd'; x.fillRect(cx - bw / 2, by0, bw * glow, bh);
-    if (s.strong && glow > .55){ x.fillStyle = '#ffffff'; x.font = `800 ${fs * 1.05}px sans-serif`; x.fillText('PLASMA!', cx, H * .145); }
+    x.fillStyle = 'rgba(16,16,12,.15)'; x.fillRect(cx - bw / 2, by0, bw, bh);
+    x.fillStyle = s.strong ? '#d6007f' : WEAK; x.fillRect(cx - bw / 2, by0, bw * glow, bh);
+    if (s.strong && glow > .55){ x.fillStyle = '#10100c'; x.font = `800 ${fs * 1.05}px sans-serif`; x.fillText('PLASMA!', cx, H * .145); }
   });
-  x.fillStyle = 'rgba(255,255,255,.55)'; x.font = `600 ${Math.max(12, H * .034)}px sans-serif`; x.textAlign = 'center';
+  x.fillStyle = 'rgba(16,16,12,.7)'; x.font = `600 ${Math.max(12, H * .034)}px sans-serif`; x.textAlign = 'center';
   x.fillText(on ? 'microwaves ON · energy taken in ↓' : 'microwaves off', W / 2, H * .965);
 }
 

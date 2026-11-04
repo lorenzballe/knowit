@@ -1,0 +1,37 @@
+{
+  "id": "life-48-hour-shelter",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.risk_taking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After a nuclear blast, why wait 48 hours before leaving shelter?",
+  "answer": "The first 48 hours are when fallout is at its most intense. Staying sheltered through that window spares you the most lethal dose. Even after, wait for the authorities' all-clear if you can.",
+  "move": "After a blast, stay sheltered at least 48 hours: that is when fallout peaks.",
+  "keywords": [
+    "nuclear-blast",
+    "fallout",
+    "shelter",
+    "radiation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A shelter scene with a clock and a gold bead to drag through 48 hours, and a door to tap to try leaving. The page asks why you should wait 48 hours before going out after a nuclear blast.",
+    "ground": "#15102a"
+  },
+  "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=VNWX06NkitE&t=418s",
+  "written": "2026-11-04"
+}

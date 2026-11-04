@@ -1,0 +1,37 @@
+{
+  "id": "space-earth-spaghettified",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What would happen to Earth if it fell into a black hole?",
+  "answer": "Far from the black hole, Earth looks round because every part feels nearly the same pull. As you drag it closer, the pull on the near side grows much stronger than on the far side. Near the black hole, Earth is stretched into a thin stream.",
+  "move": "Near a black hole, the near side is pulled so much harder that a planet becomes a thin stream.",
+  "keywords": [
+    "earth",
+    "black hole",
+    "tidal forces",
+    "spaghettification"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Shows a round Earth far from a black hole, with a draggable Earth to move toward it. Asks: what would happen to Earth if it fell into a black hole? Page 1 of 5.",
+    "ground": "#f3ead5"
+  },
+  "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=DZJ1sHAvsu8&t=197s",
+  "written": "2026-11-04"
+}

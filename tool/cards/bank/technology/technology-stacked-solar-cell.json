@@ -1,0 +1,37 @@
+{
+  "id": "technology-stacked-solar-cell",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.hype_cycles",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much sunlight can the best solar cells turn into electricity?",
+  "answer": "Stacked junctions have set records above 40 %. One layer catches only part of sunlight, so stacking another layer catches more. Real use on a roof always gives less than the lab record.",
+  "move": "Stacked junctions set records above 40 %, but real use always gives less.",
+  "keywords": [
+    "solar-cells",
+    "multi-junction",
+    "efficiency",
+    "rooftop-solar",
+    "sunlight"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A solar cell diagram where the reader taps to stack layers, showing a 40% efficiency stamp labeled LAB RECORD, then switching to REAL ROOF. Asks how much sunlight the best solar cells can turn into electricity."
+  },
+  "source": "Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=VTtMdKzQn48&t=200s",
+  "written": "2026-11-03"
+}

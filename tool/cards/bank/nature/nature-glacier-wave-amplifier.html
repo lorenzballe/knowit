@@ -35,7 +35,7 @@
 <script>
 let mode = -1, S = null, tl = null;
 const seen = new Set();
-const C = {sky:'#e8f3f8', rock:'#7a5236', rockE:'#4a3020', mtn:'#5b6370', mtnE:'#3c424c', ice:'#f2fbff', iceE:'#8fc3da', sea:'#1d5c8f', seaTop:'#3d86c0', drop:'#5fb0e6', ink:'#16202b', brown:'#a8683c', blue:'#2f8fd6'};
+const C = {sky:'#e8f3f8', rock:'#7a5236', rockE:'#4a3020', mtn:'#5b6370', mtnE:'#3c424c', ice:'#f2fbff', iceE:'#8fc3da', sea:'#1d5c8f', seaTop:'#3d86c0', drop:'#5fb0e6', ink:'#10100c', brown:'#a8683c', blue:'#2f8fd6', brownL:'#5a3418', blueL:'#0b3d6e'};
 
 function build(){
   if (tl) tl.kill();
@@ -50,7 +50,6 @@ function build(){
   const ang = Math.atan2(dy, dx) * 180 / Math.PI;
   S = {W, H, fs, sea, sx, p, n, d: {x: dx / L, y: dy / L}, ang};
   const m = (t, a, par) => Kit.mk(t, a, par || svg);
-  m('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .04, fill: C.sky});
   // water
   S.water = m('path', {fill: C.sea});
   S.surf = m('path', {fill: 'none', stroke: C.seaTop, 'stroke-width': Math.max(2, H * .008), 'stroke-linejoin': 'round'});
@@ -112,7 +111,7 @@ function drawLines(){
   S.lines.innerHTML = '';
   for (const m of seen) {
     const y = S.sea - S.H * (m ? .3 : .1);
-    Kit.mk('line', {x1: S.sx + S.W * .05, x2: S.W * .97, y1: y, y2: y, stroke: m ? C.blue : C.brown, 'stroke-width': Math.max(2, S.H * .007), 'stroke-dasharray': '6 5'}, S.lines);
+    Kit.mk('line', {x1: S.sx + S.W * .05, x2: S.W * .97, y1: y, y2: y, stroke: m ? C.blueL : C.brownL, 'stroke-width': Math.max(2, S.H * .007), 'stroke-dasharray': '6 5'}, S.lines);
   }
 }
 const rk = {t: .08};

@@ -1,0 +1,38 @@
+{
+  "id": "human_body-inherited-gene-switches",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.small_daily_habits",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Can grandparents' lives affect your DNA activity?",
+  "answer": "Yes, a little. Marks on DNA turn genes up or down without changing the code. Some of your ancestors' marks get passed down, so their behaviour subtly tunes how your genes work.",
+  "move": "You inherit your DNA, plus a few of the switches your ancestors set on it.",
+  "keywords": [
+    "epigenetics",
+    "dna",
+    "grandparents",
+    "gene expression",
+    "inheritance"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks whether grandparents' lives can affect your DNA activity, with two choices: No, your DNA starts fresh, or Yes, a little, some marks pass down. A strand to rub shows a grandparent's life leaving marks on her DNA.",
+    "graded": false
+  },
+  "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=285s",
+  "written": "2026-11-03"
+}

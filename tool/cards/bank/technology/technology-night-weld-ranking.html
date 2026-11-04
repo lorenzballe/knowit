@@ -47,16 +47,15 @@ rowsOrder.forEach(r => { for (let c = 0; c < COLS; c++) order.push(r * COLS + c)
 let done = 0, nights = 0, finished = false;
 let J = [], G = {}, geo = null;
 
-const PLATE = '#d6e6ff', HOT = '#ffb03b', COLD = '#5a6688', NIGHT = '#0d1430';
+const PLATE = '#d6e6ff', HOT = '#ffb03b', COLD = '#5a6688', INK = '#10100c';
 
 function draw() {
   const svg = Kit.$('svg');
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 12);
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: NIGHT}, svg);
   // stars + moon
-  for (let i = 0; i < 26; i++) Kit.mk('circle', {cx: ((i * 97) % 100) / 100 * W, cy: ((i * 53) % 100) / 100 * H * .9, r: 1 + (i % 3) * .4, fill: '#fff', opacity: .25 + (i % 4) * .1}, svg);
+  for (let i = 0; i < 26; i++) Kit.mk('circle', {cx: ((i * 97) % 100) / 100 * W, cy: ((i * 53) % 100) / 100 * H * .9, r: 1 + (i % 3) * .4, fill: '#fff', opacity: .5 + (i % 4) * .1}, svg);
   Kit.mk('circle', {cx: W * .9, cy: H * .08, r: Math.min(W, H) * .035, fill: '#f4ecc8'}, svg);
 
   const th = H * .88, tw = Math.min(W * .44, th * .42);
@@ -80,25 +79,25 @@ function draw() {
   const ly = Math.max(y30 - fs * .15, barBottom + fs * 1.6);
   const lm = ly - fs * .35;
   Kit.mk('rect', {x: tx - 3, y: ty + R30 * rg, width: tw + 6, height: rg, fill: 'none', stroke: HOT, 'stroke-width': 1.5, rx: 2}, svg);
-  Kit.mk('path', {d: `M${tx - 22} ${lm} L${tx - 14} ${lm} L${tx - 7} ${y30}`, stroke: HOT, 'stroke-width': 2, fill: 'none'}, svg);
+  Kit.mk('path', {d: `M${tx - 22} ${lm} L${tx - 14} ${lm} L${tx - 7} ${y30}`, stroke: INK, 'stroke-width': 2, fill: 'none'}, svg);
   const lx = tx - 26;
-  Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'end', fill: HOT, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg).textContent = 'Floor 30';
-  Kit.mk('text', {x: lx, y: ly + fs * 1.3, 'text-anchor': 'end', fill: '#ffd59a', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .9}, svg).textContent = 'rank #1';
+  Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'end', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg).textContent = 'Floor 30';
+  Kit.mk('text', {x: lx, y: ly + fs * 1.3, 'text-anchor': 'end', fill: INK, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .9}, svg).textContent = 'rank #1';
 
   // counter
   const left = W * .06;
-  Kit.mk('text', {x: left, y: H * .1, fill: '#9fb0dd', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .85, 'letter-spacing': '.06em'}, svg).textContent = 'JOINTS';
-  Kit.mk('text', {x: left, y: H * .1 + fs * 1.15, fill: '#9fb0dd', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .85, 'letter-spacing': '.06em'}, svg).textContent = 'WELDED';
-  G.count = Kit.mk('text', {x: left, y: H * .1 + fs * 4, fill: '#fff', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.6}, svg);
-  G.night = Kit.mk('text', {x: left, y: H * .1 + fs * 5.6, fill: '#c9d4f2', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .9}, svg);
+  Kit.mk('text', {x: left, y: H * .1, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .85, 'letter-spacing': '.06em'}, svg).textContent = 'JOINTS';
+  Kit.mk('text', {x: left, y: H * .1 + fs * 1.15, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .85, 'letter-spacing': '.06em'}, svg).textContent = 'WELDED';
+  G.count = Kit.mk('text', {x: left, y: H * .1 + fs * 4, fill: INK, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.6}, svg);
+  G.night = Kit.mk('text', {x: left, y: H * .1 + fs * 5.6, fill: INK, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .9}, svg);
   // bar
   const by = H * .1 + fs * 6.6, bw = Math.max(20, tx - 30 - left);
   Kit.mk('rect', {x: left, y: by, width: bw, height: fs * .5, rx: fs * .25, fill: '#26315a'}, svg);
   G.bar = Kit.mk('rect', {x: left, y: by, width: bw * done / N, height: fs * .5, rx: fs * .25, fill: HOT}, svg);
   geo.bw = bw;
   // bottom-left note
-  G.note = Kit.mk('text', {x: left, y: H * .93, fill: '#8d9cc8', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .85}, svg);
-  G.note2 = Kit.mk('text', {x: left, y: H * .93 - fs * 1.3, fill: '#8d9cc8', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .85}, svg);
+  G.note = Kit.mk('text', {x: left, y: H * .93, fill: INK, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .85}, svg);
+  G.note2 = Kit.mk('text', {x: left, y: H * .93 - fs * 1.3, fill: INK, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .85}, svg);
 
   // joints
   const jr = Math.max(1.6, Math.min(cg, rg) * .2);

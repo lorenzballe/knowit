@@ -1,0 +1,38 @@
+{
+  "id": "history-paradox-of-escalation",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.bad_calls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to Iran the more it widens the conflict?",
+  "answer": "The more Iran widens the war, the more it risks hastening its own end. It opens a front on each neutral, and widening a war to set everyone against you can isolate you.",
+  "move": "Widening a war to set everyone against you can isolate you and hasten your end.",
+  "keywords": [
+    "iran",
+    "israel",
+    "usa",
+    "escalation",
+    "neutral_countries"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page titled The paradox of escalation, asking what happens to Iran the more it widens the conflict. A draggable stem widens the war, and each step opens a front on a neutral country.",
+    "ground": "#efe5cb"
+  },
+  "source": "Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=WZuXvvDRTgg&t=1972s",
+  "written": "2026-11-04"
+}

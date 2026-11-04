@@ -1,0 +1,314 @@
+<!doctype html>
+<!-- slug: science-snow-flips-friction -->
+<!-- Look: a stained-glass rally stage at night. A winding road of leaded glass tiles over a dark mosaic. Gold tiles mean the tyres roll and grip; ice-blue tiles mean they slide.
+     Interaction: drag the surface from asphalt to snow. Tiles flip from gold to blue, bends first. The glass car yaws into a drift, its forward arrow shrinks, its sideways arrow grows, it slows, and snow starts falling.
+     Wow: at full snow the whole road flashes tile by tile, and shards of ice-glass burst from the car under real gravity (Physics2D).
+     The picture re-lays itself out whenever the stage changes size: a tall serpentine on roomy stages, a wide snaking road on short ones. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Snow flips the friction</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;overflow:hidden;background:none;box-shadow:none;border:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.4cqh;padding:0 1cqw}
+.ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);letter-spacing:.08em}
+.ends span:first-child{color:#b5651d}.ends span:last-child{color:#2b56c9}
+#rng{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;touch-action:none;cursor:pointer}
+#rng::-webkit-slider-runnable-track{height:max(1.3cqh,9px);border-radius:99px;background:linear-gradient(90deg,#f29a2e,#ffd27a 30%,#e9f2ff 62%,#7fcbff 82%,#2b56c9);box-shadow:inset 0 0 0 2px #140e1c}
+#rng::-moz-range-track{height:max(1.3cqh,9px);border-radius:99px;background:linear-gradient(90deg,#f29a2e,#ffd27a 30%,#e9f2ff 62%,#7fcbff 82%,#2b56c9);box-shadow:inset 0 0 0 2px #140e1c}
+#rng::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.8cqh,26px);height:max(3.8cqh,26px);margin-top:calc((max(1.3cqh,9px) - max(3.8cqh,26px)) / 2);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cfeaff 38%,#5a8fe6 75%,#2b3f9a);border:3px solid #140e1c;box-shadow:0 3px 8px rgba(0,0,0,.4)}
+#rng::-moz-range-thumb{width:max(3.8cqh,26px);height:max(3.8cqh,26px);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cfeaff 38%,#5a8fe6 75%,#2b3f9a);border:3px solid #140e1c}
+.say{overflow-wrap:break-word}
+.answered .q{font-size:max(2.4cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag the surface · rolling vs sliding">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLIDE TO SNOW</span></div>
+    <h2 class="q">How does rolling versus sliding friction change from asphalt to snow?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A winding rally road made of stained-glass tiles. Gold tiles: the tyres roll and grip. Blue tiles: they slide. A glass car drives along it."></svg>
+    </div>
+    <div id="ctl"><div class="ends"><span>ASPHALT</span><span>SNOW</span></div>
+      <input id="rng" type="range" min="0" max="100" value="0" step="1" aria-label="Surface, from asphalt to snow"></div>
+    <p class="say" id="say">Gold tiles: the tyres roll and grip. Blue: they slide. <b>Drag from asphalt to snow.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Asphalt: mostly rolling grip. Snow: mostly sliding, so every stretch is a drift.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(Physics2DPlugin);
+  const svg = Kit.$('pic'), rng = Kit.$('rng'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
+  const LEAD = '#140e1c', INK = '#10100c', N = 28, NB = 20;
+  const LABELS = [
+    {t: 'ASPHALT', c: 'tyres mostly roll and grip', fill: INK},
+    {t: 'SNOW', c: 'you slide almost all the way', fill: INK}
+  ];
+  let W = 0, H = 0, fs = 12, rw = 30, s = 0, done = false, geo = null, compact = false;
+  let tiles = [], bars = [], snowT = [], flakes = [], els = {}, p = .18, drift = 0, carX = 0, carY = 0, lastNb = -1, lw = 0, lh = 0;
+  const mk = (t, a, par) => Kit.mk(t, a, par);
+  const sf = () => .1 + .85 * s;                     // share of the route spent sliding
+
+  function grad(defs, id, stops, a = {x1: 0, y1: 0, x2: 1, y2: 1}) {
+    const g = mk('linearGradient', Object.assign({id}, a), defs);
+    stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g));
+  }
+  const tlen = (el, chars, size, ls) => { let w = 0; try { w = el.getComputedTextLength(); } catch (e) {} return w || chars * (.6 + ls) * size; };
+
+  function setLabel(k) {
+    const L = LABELS[k]; els.which = k;
+    els.t.textContent = L.t; els.t.setAttribute('fill', L.fill);
+    els.c.textContent = L.c;
+    if (els.inline) els.c.setAttribute('x', (els.m + tlen(els.t, L.t.length, els.tsz, .06) + fs * .8).toFixed(1));
+  }
+
+  function layout() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const r0 = stage.getBoundingClientRect(); lw = r0.width; lh = r0.height;
+    compact = H < 300;
+    fs = Math.max(12, Math.min(15, W / 26));
+    rw = Math.max(compact ? 22 : 26, Math.min(W, H) * .12);
+    tiles = []; bars = []; snowT = []; flakes = []; lastNb = -1; els = {};
+    const m = els.m = fs * .9;
+    const defs = mk('defs', {}, svg);
+    grad(defs, 'gGold', [[0, '#ffe3a1'], [.45, '#f4a338'], [1, '#a8401a']]);
+    grad(defs, 'gIce', [[0, '#f2fbff'], [.45, '#86d0ff'], [1, '#2a4fc0']]);
+    grad(defs, 'gHi', [[0, '#fff', .9], [.55, '#fff', 0]], {x1: 0, y1: 0, x2: .6, y2: 1});
+    grad(defs, 'gCar', [[0, '#ffffff'], [1, '#c9c3d6']]);
+    grad(defs, 'gBeam', [[0, '#fff3a8', .55], [1, '#fff3a8', 0]], {x1: 0, y1: 0, x2: 1, y2: 0});
+
+    // No backdrop and no glow band: the drawing sits straight on the card.
+
+    // Header geometry: one title and one caption, swapped as you cross the middle.
+    const tsz = els.tsz = compact ? fs * 1.35 : fs * 1.7, csz = compact ? 12 : fs;
+    let ty, cy, headBottom;
+    els.inline = false;
+    if (compact) {
+      const est = 7 * .66 * tsz + fs * .8 + 28 * .62 * csz + 2 * m;
+      ty = fs * 1.6;
+      if (est < W) { els.inline = true; cy = ty; headBottom = fs * 2.1; }
+      else { cy = ty + fs * 1.45; headBottom = cy + fs * .4; }
+    } else { ty = fs * 1.95; cy = fs * 3.95; headBottom = fs * 4.4; }
+
+    // Ratio bar geometry.
+    const bh = compact ? fs * 1.25 : fs * 1.6;
+    const barY = compact ? H - fs * .75 - bh : H - fs * 2.2;
+    const barTop = compact ? barY : barY - fs * 1.55;
+
+    // The road's path, sampled densely, then cut into tiles of equal length.
+    const yt = headBottom + rw * .75, yb = barTop - rw * .75 - fs * .25;
+    const vertical = (yb - yt) > W * .62;
+    const M = 320, P = [], L = [0];
+    if (vertical) {
+      const A = W * .5 - rw * .9 - W * .04;
+      for (let i = 0; i < M; i++) { const t = i / (M - 1); P.push([W / 2 + A * Math.sin(t * Math.PI * 3 + .5), yb - (yb - yt) * t]); }
+    } else {
+      const xL = m + rw * .7, xR = W - m - rw * .7, per = W > 300 ? 2 : 1.5, k = 2 * Math.PI * per / (xR - xL);
+      const A = Math.max(3, Math.min((yb - yt) / 2, 1 / (rw * .75 * k * k))), mid = (yt + yb) / 2;
+      for (let i = 0; i < M; i++) { const t = i / (M - 1); P.push([xL + (xR - xL) * t, mid - A * Math.sin(t * 2 * Math.PI * per)]); }
+    }
+    for (let i = 1; i < M; i++) L.push(L[i - 1] + Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]));
+    const total = L[M - 1];
+    const at = l => {
+      l = Math.max(0, Math.min(total - 1e-6, l)); let i = 0, lo = 0, hi = M - 1;
+      while (hi - lo > 1) { const mm = (lo + hi) >> 1; if (L[mm] <= l) lo = mm; else hi = mm; } i = lo;
+      const u = (l - L[i]) / (L[i + 1] - L[i] || 1), dx = P[i + 1][0] - P[i][0], dy = P[i + 1][1] - P[i][1], d = Math.hypot(dx, dy) || 1;
+      return {x: P[i][0] + dx * u, y: P[i][1] + dy * u, tx: dx / d, ty: dy / d};
+    };
+    geo = {at, total};
+
+    const dP = 'M' + P.map(q => q.map(n => n.toFixed(1)).join(',')).join(' L');
+    const road = mk('g', {}, svg);
+    mk('path', {d: dP, fill: 'none', stroke: LEAD, 'stroke-width': rw + 6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, road);
+    const curvs = [];
+    for (let k = 0; k < N; k++) {
+      const l0 = k * total / N, l1 = (k + 1) * total / N, le = [], ri = [];
+      for (let j = 0; j <= 4; j++) { const q = at(l0 + (l1 - l0) * j / 4); le.push([q.x - q.ty * rw / 2, q.y + q.tx * rw / 2]); ri.unshift([q.x + q.ty * rw / 2, q.y - q.tx * rw / 2]); }
+      const a0 = at(l0), a1 = at(l1);
+      let d = Math.atan2(a1.ty, a1.tx) - Math.atan2(a0.ty, a0.tx); d = Math.atan2(Math.sin(d), Math.cos(d));
+      curvs.push(d);
+      const pts = le.concat(ri).map(q => q.map(n => n.toFixed(1)).join(',')).join(' ');
+      const g = mk('g', {}, road);
+      mk('polygon', {points: pts, fill: 'url(#gGold)'}, g);
+      const blue = mk('polygon', {points: pts, fill: 'url(#gIce)', opacity: 0}, g);
+      const hi = mk('polygon', {points: pts, fill: 'url(#gHi)', opacity: .22}, g);
+      mk('polygon', {points: pts, fill: 'none', stroke: LEAD, 'stroke-width': 3, 'stroke-linejoin': 'round'}, g);
+      tiles.push({g, blue, hi, on: undefined, sign: Math.sign(d) || 1});
+    }
+    const kmax = Math.max(...curvs.map(Math.abs)) || 1;
+    tiles.forEach((t, i) => { t.thr = .62 * (1 - Math.abs(curvs[i]) / kmax) + .38 * Kit.rnd(); });
+    mk('path', {d: dP, fill: 'none', stroke: LEAD, 'stroke-width': 1.6, opacity: .8}, road);
+
+    // Friction arrows and the glass car with headlight beams.
+    const ar = mk('g', {}, svg);
+    const ap = (st, w) => mk('path', {fill: 'none', stroke: st, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, ar);
+    els.rollU = ap(LEAD, fs * .62); els.slideU = ap(LEAD, fs * .62);
+    els.roll = ap('#ffc75a', fs * .32); els.slide = ap('#9fe0ff', fs * .32);
+    const car = els.car = mk('g', {}, svg), cl = rw * .9, cwd = rw * .52;
+    const body = mk('g', {}, car); els.body = body;
+    mk('path', {d: `M${cl * .42},${-cwd * .32} L${cl * 1.7},${-cwd * 1.05} L${cl * 1.7},${cwd * 1.05} L${cl * .42},${cwd * .32}Z`, fill: 'url(#gBeam)'}, body);
+    mk('ellipse', {cx: 2, cy: 3, rx: cl * .55, ry: cwd * .6, fill: '#000', opacity: .35}, body);
+    mk('rect', {x: -cl / 2, y: -cwd / 2, width: cl, height: cwd, rx: cwd * .32, fill: 'url(#gCar)', stroke: LEAD, 'stroke-width': 2.5}, body);
+    mk('rect', {x: cl * .02, y: -cwd * .34, width: cl * .2, height: cwd * .68, rx: 2, fill: '#3a5bb8', stroke: LEAD, 'stroke-width': 1.5}, body);
+    mk('rect', {x: -cl * .36, y: -cwd * .3, width: cl * .14, height: cwd * .6, rx: 2, fill: '#3a5bb8', stroke: LEAD, 'stroke-width': 1.5}, body);
+    mk('rect', {x: -cl / 2, y: -cwd * .08, width: cl, height: cwd * .16, fill: '#e2462e', opacity: .9}, body);
+    [-1, 1].forEach(sg => mk('circle', {cx: cl * .44, cy: sg * cwd * .3, r: Math.max(2, cwd * .1), fill: '#fff3a8', stroke: LEAD, 'stroke-width': 1}, body));
+    [-1, 1].forEach(sg => mk('circle', {cx: -cl * .47, cy: sg * cwd * .3, r: Math.max(1.6, cwd * .08), fill: '#ff5a3c', stroke: LEAD, 'stroke-width': 1}, body));
+
+    // Falling snow, thickening with the slider.
+    els.flk = mk('g', {opacity: 0, 'pointer-events': 'none'}, svg);
+    const nf = Math.round(W * H / 3200);
+    for (let i = 0; i < nf; i++) {
+      const r = .8 + Kit.rnd() * 1.9;
+      flakes.push({el: mk('circle', {r, fill: '#ffffff', stroke: '#2a4fc0', 'stroke-width': .7, opacity: .6 + Kit.rnd() * .4}, els.flk), x: Kit.rnd() * W, y: Kit.rnd() * H, v: .35 + r * .35, ph: Kit.rnd() * 6.28});
+    }
+    els.fx = mk('g', {}, svg);
+
+    // Header text (one title + one caption, never stacked on each other).
+    els.t = mk('text', {x: m, y: ty, style: `font:800 ${tsz}px var(--mono);letter-spacing:.06em`}, svg);
+    els.c = mk('text', {x: m, y: cy, fill: INK, style: `font:600 ${csz}px var(--mono);letter-spacing:.02em`}, svg);
+    setLabel(s < .5 ? 0 : 1);
+
+    // The ratio bar: twenty glass tiles.
+    const lab = (t, x, y, anchor, fill) => { const e = mk('text', {x, y, fill, 'text-anchor': anchor, style: `font:800 ${fs}px var(--mono);letter-spacing:.08em`}, svg); e.textContent = t; return e; };
+    let bx0 = m, bx1 = W - m;
+    if (compact) {
+      const ly = barY + bh / 2 + fs * .36;
+      const a = lab('ROLLING', m, ly, 'start', INK), b = lab('SLIDING', W - m, ly, 'end', INK);
+      bx0 = m + tlen(a, 7, fs, .08) + fs * .55; bx1 = W - m - tlen(b, 7, fs, .08) - fs * .55;
+    } else {
+      lab('ROLLING', m, barY - fs * .55, 'start', INK); lab('SLIDING', W - m, barY - fs * .55, 'end', INK);
+    }
+    const bw = (bx1 - bx0) / NB, bg2 = mk('g', {}, svg);
+    for (let j = 0; j < NB; j++) {
+      const x = bx0 + j * bw, g = mk('g', {}, bg2);
+      mk('rect', {x, y: barY, width: bw, height: bh, fill: 'url(#gGold)'}, g);
+      const blue = mk('rect', {x, y: barY, width: bw, height: bh, fill: 'url(#gIce)', opacity: 0}, g);
+      mk('rect', {x, y: barY, width: bw, height: bh * .45, fill: '#fff', opacity: .18}, g);
+      mk('rect', {x, y: barY, width: bw, height: bh, fill: 'none', stroke: LEAD, 'stroke-width': 2.5}, g);
+      bars.push({g, blue, on: undefined});
+    }
+    apply(false); tick(true);
+  }
+
+  function apply(anim) {
+    if (!geo) return;
+    const f = sf(), d = anim && !Kit.calm ? .45 : 0;
+    tiles.forEach(t => {
+      const on = t.thr < f; if (on === t.on) return; t.on = on;
+      gsap.to(t.blue, {opacity: on ? 1 : 0, duration: d, ease: 'power2.out', overwrite: true});
+      if (d) gsap.fromTo(t.hi, {opacity: .95}, {opacity: .22, duration: .7, ease: 'power3.out', overwrite: true});
+    });
+    const nb = Math.round(f * NB);
+    bars.forEach((b, j) => {
+      const on = j >= NB - nb; if (on === b.on) return; b.on = on;
+      gsap.to(b.blue, {opacity: on ? 1 : 0, duration: d, ease: 'power2.out', delay: d ? Math.abs(j - (NB - nb)) * .03 : 0, overwrite: true});
+    });
+    if (anim && lastNb >= 0 && nb !== lastNb) Kit.haptic('selection');
+    lastNb = nb;
+    snowT.forEach(t => t.el.setAttribute('opacity', (s * t.a).toFixed(3)));
+    const k = s < .5 ? 0 : 1; if (k !== els.which) setLabel(k);
+    const op = Math.min(1, Math.abs(s - .5) * 5).toFixed(2);
+    els.t.setAttribute('opacity', op); els.c.setAttribute('opacity', op);
+    els.flk.setAttribute('opacity', Math.max(0, (s - .15) / .85).toFixed(2));
+  }
+
+  const arrow = (x, y, dx, dy, len) => {
+    const ex = x + dx * len, ey = y + dy * len, h = Math.min(len * .45, fs * .8), nx = -dy, ny = dx;
+    if (len < 2) return '';
+    return `M${x},${y} L${ex},${ey} M${ex - dx * h + nx * h * .6},${ey - dy * h + ny * h * .6} L${ex},${ey} L${ex - dx * h - nx * h * .6},${ey - dy * h - ny * h * .6}`;
+  };
+
+  // The car drives on: slower on snow, and yawed into a drift on every sliding tile.
+  let tt = 0;
+  function tick(still) {
+    if (!geo) return;
+    const dr = gsap.ticker.deltaRatio();
+    if (!still && !Kit.calm) p = (p + dr * .0017 * (1 - .45 * s) * (compact ? 1.3 : 1)) % 1;
+    const q = geo.at(p * geo.total), t = tiles[Math.min(N - 1, Math.floor(p * N))];
+    const target = t && t.on ? 38 * t.sign * (.55 + .45 * s) : 0;
+    drift = still ? target : drift + (target - drift) * .08;
+    carX = q.x; carY = q.y;
+    const ang = Math.atan2(q.ty, q.tx) * 180 / Math.PI + drift;
+    els.car.setAttribute('transform', `translate(${q.x.toFixed(1)},${q.y.toFixed(1)}) rotate(${ang.toFixed(1)})`);
+    const f = sf(), Lm = rw * (compact ? 1.25 : 1.7), sg = t ? -t.sign : 1;
+    const r = arrow(q.x, q.y, q.tx, q.ty, rw * .55 + Lm * (1 - f));
+    const sl = arrow(q.x, q.y, -q.ty * sg, q.tx * sg, rw * .2 + Lm * f);
+    els.roll.setAttribute('d', r); els.rollU.setAttribute('d', r);
+    els.slide.setAttribute('d', sl); els.slideU.setAttribute('d', sl);
+    // snowfall
+    if (s > .15) {
+      if (!Kit.calm && !still) tt += dr * .016;
+      flakes.forEach(fk => {
+        if (!Kit.calm && !still) { fk.y += fk.v * dr * (.5 + s); if (fk.y > H + 4) { fk.y = -4; fk.x = Kit.rnd() * W; } }
+        fk.el.setAttribute('cx', (fk.x + Math.sin(tt * 1.4 + fk.ph) * 4).toFixed(1));
+        fk.el.setAttribute('cy', fk.y.toFixed(1));
+      });
+    }
+  }
+  gsap.ticker.add(() => tick(false));
+
+  function burst() {
+    const cols = ['#e9f8ff', '#86d0ff', '#2a4fc0', '#ffffff', '#bfe6ff'];
+    for (let i = 0; i < 30; i++) {
+      const r = rw * (.12 + Kit.rnd() * .2), a = Kit.rnd() * 6.28;
+      const pts = [0, 1, 2].map(k => { const b = a + k * 2.1 + (Kit.rnd() - .5); return `${(Math.cos(b) * r).toFixed(1)},${(Math.sin(b) * r).toFixed(1)}`; }).join(' ');
+      const g = mk('g', {transform: `translate(${carX.toFixed(1)},${carY.toFixed(1)})`}, els.fx);
+      const el = mk('polygon', {points: pts, fill: cols[i % 5], stroke: LEAD, 'stroke-width': 1.2}, g);
+      gsap.to(el, {physics2D: {velocity: 140 + Kit.rnd() * 260, angle: -170 + Kit.rnd() * 160, gravity: 620}, rotation: (Kit.rnd() - .5) * 900, transformOrigin: '50% 50%', duration: 1.9, onComplete: () => g.remove()});
+      gsap.to(el, {opacity: 0, duration: .8, delay: 1.1, ease: 'power2.in'});
+    }
+  }
+
+  function reveal() {
+    done = true; Kit.haptic('success');
+    say.innerHTML = 'On snow the ratio flips: tyres stop <b>rolling</b> and you <b>slide</b> almost all the way, so every stretch is a slow, studied controlled drift.';
+    card.classList.add('answered'); Kit.show('keep');
+    if (Kit.calm) return;
+    // Let the stage settle into its new size (and re-lay itself out) before the flourish.
+    setTimeout(() => {
+      gsap.fromTo(tiles.map(t => t.hi), {opacity: .95}, {opacity: .22, duration: .6, stagger: .04, ease: 'power3.out', overwrite: true});
+      gsap.fromTo(tiles.map(t => t.g), {opacity: .5}, {opacity: 1, duration: .5, stagger: .04, ease: 'power2.out'});
+      gsap.fromTo(els.body, {scale: 1.25}, {scale: 1, duration: .9, ease: 'elastic.out(1,.45)', transformOrigin: '50% 50%'});
+      burst();
+    }, 520);
+  }
+
+  rng.addEventListener('input', () => {
+    s = rng.value / 100; apply(true);
+    if (s >= .97 && !done) reveal();
+  });
+
+  // Re-draw whenever the stage changes size, so the picture never letterboxes.
+  let raf = 0;
+  new ResizeObserver(() => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      if (!geo) return;
+      const r = stage.getBoundingClientRect();
+      if (r.width < 10 || r.height < 10) return;
+      if (Math.abs(r.width - lw) < 2 && Math.abs(r.height - lh) < 2) return;
+      layout();
+    });
+  }).observe(stage);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !tiles.length) return;
+    gsap.from(tiles.map(t => t.g), {opacity: 0, scale: .6, transformOrigin: '50% 50%', duration: .5, stagger: .03, ease: 'back.out(2)'});
+    gsap.from(bars.map(b => b.g), {opacity: 0, y: 8, duration: .4, stagger: .025, delay: .5, ease: 'power3.out'});
+    gsap.from(els.car, {opacity: 0, duration: .6, delay: .8, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    rng.value = 100; rng.dispatchEvent(new Event('input', {bubbles: true}));
+    await new Promise(r => setTimeout(r, Kit.calm ? 100 : 1600));
+  };
+})();
+Kit.single();
+</script>
+</html>

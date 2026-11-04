@@ -1,0 +1,37 @@
+{
+  "id": "history-putins-domestic-mirror",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a Western-leaning Ukraine threaten Putin's power at home?",
+  "answer": "A Western-leaning Ukraine that thrives could make Russians want the same. That desire could bring unrest that threatens Putin's power at home. The slider shows how rising Western support in Ukraine feeds into that chain.",
+  "move": "Putin fears a Western Ukraine that works: Russians might want the same.",
+  "keywords": [
+    "putin",
+    "ukraine",
+    "russia",
+    "regime_stability",
+    "western_support"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider labeled Western support in Ukraine, set at 0%, with a flow: Ukraine thrives, Russians want the same, unrest threatens Putin. Asks why a Western-leaning Ukraine threatens Putin's power at home."
+  },
+  "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=BkJY93_hauY&t=454s",
+  "written": "2026-11-03"
+}

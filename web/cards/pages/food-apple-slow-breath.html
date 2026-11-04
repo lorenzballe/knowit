@@ -40,8 +40,8 @@
 const svg = Kit.$('pic');
 let t = 0, entered = false, finished = false, loops = [];
 const sides = [
-  {name:'Warm & bright', bg:'#f7dcae', ink:'#3a210c', soft:'#7a5534', bar:'#d9572b', puff:'#a8682f', speed:1.15, breath:.9, met:.85, bw:'fast', mw:'high', period:.45},
-  {name:'Cool & dark',   bg:'#172235', ink:'#eef3ff', soft:'#a9b8d6', bar:'#7fb2ff', puff:'#cfe0ff', speed:.3,  breath:.22, met:.22, bw:'slow', mw:'low', period:1.9}
+  {name:'Warm & bright', ink:'#10100c', soft:'#4a2208', bar:'#8f2a0a', puff:'#7a2f00', speed:1.15, breath:.9, met:.85, bw:'fast', mw:'high', period:.45},
+  {name:'Cool & dark',   ink:'#10100c', soft:'#1a2a4d', bar:'#1c3f9e', puff:'#1c3f9e', speed:.3,  breath:.22, met:.22, bw:'slow', mw:'low', period:1.9}
 ];
 const stops = [[0,'#9cc441'],[.3,'#e3b23c'],[.55,'#d8332f'],[.8,'#9e1f2a'],[1,'#6b4226']];
 function hex(h){return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16));}
@@ -63,7 +63,6 @@ function build(){
   const gap=W*.03, pw=(W-gap)/2, pad=Math.max(8,pw*.08);
   sides.forEach((s,i)=>{
     const x0=i*(pw+gap), g=Kit.mk('g',{},svg);
-    Kit.mk('rect',{x:x0,y:0,width:pw,height:H,rx:Math.min(18,pw*.08),fill:s.bg},g);
     txt(g,x0+pw/2,fs*1.5,s.name,fs*1.05,s.ink,800,'middle');
     const statusY=H*.55, my=statusY+fs*.9;
     const top=fs*2.4, bot=statusY-fs*1.3;
@@ -71,8 +70,8 @@ function build(){
     s.cx=cx; s.cy=cy; s.r=r;
     s.puffs=Kit.mk('g',{},g);
     const ag=Kit.mk('g',{},g); s.ag=ag;
-    Kit.mk('path',{d:`M${cx},${cy-.68*r} Q${cx+.05*r},${cy-.95*r} ${cx+.12*r},${cy-1.15*r}`,stroke:'#5a3a1c','stroke-width':Math.max(2,r*.07),fill:'none','stroke-linecap':'round'},ag);
-    Kit.mk('ellipse',{cx:cx+.32*r,cy:cy-.98*r,rx:.24*r,ry:.1*r,fill:'#4f9a3a',transform:`rotate(-25 ${cx+.32*r} ${cy-.98*r})`},ag);
+    Kit.mk('path',{d:`M${cx},${cy-.68*r} Q${cx+.05*r},${cy-.95*r} ${cx+.12*r},${cy-1.15*r}`,stroke:'#3b2414','stroke-width':Math.max(2,r*.07),fill:'none','stroke-linecap':'round'},ag);
+    Kit.mk('ellipse',{cx:cx+.32*r,cy:cy-.98*r,rx:.24*r,ry:.1*r,fill:'#3f7f2d',transform:`rotate(-25 ${cx+.32*r} ${cy-.98*r})`},ag);
     s.body=Kit.mk('path',{d:applePath(cx,cy,r),fill:col(0)},ag);
     Kit.mk('ellipse',{cx:cx-.45*r,cy:cy-.25*r,rx:.15*r,ry:.3*r,fill:'#fff',opacity:.35,transform:`rotate(20 ${cx-.45*r} ${cy-.25*r})`},ag);
     s.wr=Kit.mk('g',{opacity:0,stroke:'#3b2414','stroke-width':Math.max(1.5,r*.035),fill:'none','stroke-linecap':'round'},ag);
@@ -85,7 +84,7 @@ function build(){
       const ry=my+j*rowH;
       txt(g,x0+pad,ry+fs,lab,fs*.92,s.soft,700);
       const wt=txt(g,x0+pw-pad,ry+fs,word,fs*.92,s.ink,800,'end');
-      Kit.mk('rect',{x:x0+pad,y:ry+fs*1.45,width:bwid,height:bh,rx:bh/2,fill:s.ink,opacity:.15},g);
+      Kit.mk('rect',{x:x0+pad,y:ry+fs*1.45,width:bwid,height:bh,rx:bh/2,fill:s.ink,opacity:.18},g);
       const fl=Kit.mk('rect',{x:x0+pad,y:ry+fs*1.45,width:Math.max(bh,bwid*v),height:bh,rx:bh/2,fill:s.bar},g);
       if(j===0) s.breathBar=fl;
       if(j===2){ s.rip=fl; s.ripW=bwid; s.ripWord=wt; s.bh=bh; }

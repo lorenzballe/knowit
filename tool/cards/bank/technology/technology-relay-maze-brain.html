@@ -7,6 +7,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+.stagebox,#stage,#maze{background:none !important;border:0 !important;box-shadow:none !important;border-radius:0 !important;outline:0 !important;backdrop-filter:none !important}
 #maze{flex:1;min-height:0;width:100%;display:block}
 #opts{display:flex;flex-direction:column;gap:1cqh}
 #why{display:flex;flex-direction:column;gap:1cqh}
@@ -114,11 +115,9 @@ Kit.onShow.card = () => {
   G.mag = Kit.mk('g', {}, under);
   Kit.mk('circle', {r: cell*.36, style: 'fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:4 4;opacity:.7'}, G.mag);
   Kit.mk('circle', {r: cell*.2, style: 'fill:color-mix(in srgb,var(--k) 30%,transparent);stroke:var(--k);stroke-width:2'}, G.mag);
-  // the floor that hides it all
+  // the floor that hides it all (same colour as the card, so no visible panel)
   G.cover = Kit.mk('rect', {x: ox, y: oy, width: size, height: size, rx: cell*.12, style: 'fill:var(--c);stroke:none'}, svg);
   G.cover.style.opacity = revealed ? .2 : 1;
-  const floorLine = Kit.mk('rect', {x: ox, y: oy, width: size, height: size, rx: cell*.12, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent);stroke:none'}, svg);
-  G.floor = floorLine; floorLine.style.opacity = revealed ? 0 : 1;
   // walls
   const ws = `stroke:var(--k);stroke-width:${Math.max(3, cell*.07)};stroke-linecap:round`;
   Kit.mk('rect', {x: ox, y: oy, width: size, height: size, style: ws + ';fill:none'}, svg);
@@ -146,8 +145,8 @@ Kit.onShow.card = () => {
 };
 function reveal() {
   revealed = true; if (!G) return;
-  if (Kit.calm) { G.cover.style.opacity = .2; G.floor.style.opacity = 0; }
-  else { gsap.to(G.cover, {opacity: .2, duration: 1.2, ease: 'power2.inOut'}); gsap.to(G.floor, {opacity: 0, duration: 1.2}); }
+  if (Kit.calm) { G.cover.style.opacity = .2; }
+  else { gsap.to(G.cover, {opacity: .2, duration: 1.2, ease: 'power2.inOut'}); }
 }
 const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;

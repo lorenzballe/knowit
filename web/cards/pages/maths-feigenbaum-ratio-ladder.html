@@ -1,0 +1,374 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-feigenbaum-ratio-ladder -->
+<!-- Look: a field-notebook page. A live ink drawing of the logistic map's forks, watercolour washes over each fork section, pencil callipers, paper tags, all printed straight on the card.
+     Interaction: each tap measures one section against the next. A tag with their ratio is tossed (Physics2D) onto a ladder, and the drawing zooms into the next pair, which looks just like the last.
+     Wow: after five pairs the view pulls back to the whole cascade, a line runs through the tags at 4.669, paint splashes off it, and the number scrambles in as the ladder's title. -->
+<title>The number behind the forks</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#world{position:absolute;inset:0;overflow:hidden;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#dia{position:absolute;left:0;top:0;width:100%;height:57%;display:block}
+#lad{position:absolute;left:0;top:57%;width:100%;height:43%;display:block}
+#slips{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.slip{position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;
+  font:700 max(1.6cqh,12px)/1 var(--mono);color:#24203f;letter-spacing:-.02em;
+  background:linear-gradient(170deg,#fffcf3,#f2e5c6);border-left:3px solid #b23a2a;border-radius:2px;
+  box-shadow:0 1px 0 rgba(70,45,10,.3),0 .7cqh 1.4cqh rgba(70,45,10,.25)}
+.dot{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none}
+.ring{position:absolute;left:0;top:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid rgba(255,255,255,.7);pointer-events:none}
+.answered .q{font-size:max(2.4cqh,15px)}
+#say b{color:inherit}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Tap to measure · ratio ladder">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO MEASURE</span></div>
+    <h2 class="q">What is the significance of the number 4.669… in bifurcations?</h2>
+    <div class="stagebox" id="stage">
+      <div id="world" role="img" aria-label="The logistic map drawn in ink: as the growth rate rises, the line forks in two, then four, then eight. Below, a ladder where the ratio of each fork section to the next is pinned.">
+        <canvas id="dia"></canvas>
+        <svg id="lad"></svg>
+        <div id="slips"></div>
+      </div>
+    </div>
+    <p class="say" id="say">Each wash is one section between forks. <b>Tap the drawing</b> to measure it against the next.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Each gap between forks is about 4.669 times shorter than the last, whatever the equation.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const P = [window.Physics2DPlugin, window.DrawSVGPlugin, window.ScrambleTextPlugin].filter(Boolean);
+  if (P.length) gsap.registerPlugin(...P);
+  const HAS_PHYS = !!window.Physics2DPlugin, HAS_DRAW = !!window.DrawSVGPlugin, HAS_SCR = !!window.ScrambleTextPlugin;
+
+  const card = Kit.$('card'), world = Kit.$('world'), cv = Kit.$('dia'), lad = Kit.$('lad'), box = Kit.$('slips'), say = Kit.$('say');
+  const INK = '#ffffff', RED = '#ffc2ae';
+  const OCH = [255, 200, 90], IND = [150, 178, 255], SEP = [235, 210, 160];
+  const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+
+  // Where the logistic map x -> r·x·(1-x) forks: 1 to 2 at r = 3, then 2 to 4, 4 to 8 ...
+  const R = [3, 3.449489743, 3.544090360, 3.564407266, 3.568759420, 3.569691610, 3.569891259, 3.569934019];
+  const WID = R.slice(1).map((r, i) => r - R[i]);            // the width of each section between forks
+  const RAT = [0, 1, 2, 3, 4].map(i => WID[i] / WID[i + 1]);  // each section ÷ the next one
+  const N = 5;
+
+  const nearHalf = r => { let x = .5; for (let i = 0; i < 4000; i++) x = r * x * (1 - x); let b = x, d = 9; for (let i = 0; i < 128; i++) { x = r * x * (1 - x); if (Math.abs(x - .5) < d) { d = Math.abs(x - .5); b = x; } } return b; };
+  const span0 = 1.85 * WID[0];
+  const WIN = [0, 1, 2, 3, 4].map(k => ({
+    L: R[k] - .35 * WID[k], R: R[k] + 1.5 * WID[k],
+    c: k ? nearHalf(R[k] + .5 * WID[k]) : .6,
+    h: k ? .8 * Math.pow(1.85 * WID[k] / span0, .5954) : .72
+  }));
+  const FULL = {L: 2.84, R: 3.6, c: .6, h: .72};
+
+  const st = {w: Object.assign({}, WIN[0]), hl: 0, meas: 0, mk: 0, reveal: 1, bloom: 1, fin: 0};
+  let ctx = null, W = 0, H = 0, fs = 13, PX0 = 0, PX1 = 0, PY0 = 0, PY1 = 0, HAND = 'cursive', MONO = 'monospace';
+  const off = document.createElement('canvas'), octx = off.getContext('2d');
+  let dkey = '';
+  let step = 0, busy = false, done = false, shown = false, landed = 0;
+  const slips = [];
+  const G = {};
+
+  // ---------- the ink drawing: the real logistic map, computed column by column ----------
+  function dots(w) {
+    const ow = off.width, oh = off.height, key = [w.L, w.R, w.c, w.h, ow, oh].join();
+    if (key === dkey) return; dkey = key;
+    const img = octx.createImageData(ow, oh), d = img.data, dens = new Float32Array(oh);
+    const span = w.R - w.L, warm = Math.round(500 + 260 * Math.max(0, Math.log10(span0 / span))), M = 160, top = w.c + w.h / 2;
+    for (let i = 0; i < ow; i++) {
+      const r = w.L + (i + .5) / ow * span; let x = .5;
+      for (let j = 0; j < warm; j++) x = r * x * (1 - x);
+      dens.fill(0);
+      for (let j = 0; j < M; j++) { x = r * x * (1 - x); const y = ((top - x) / w.h * oh) | 0; if (y >= 0 && y < oh) { dens[y] += 1; if (y + 1 < oh) dens[y + 1] += .55; } }
+      for (let y = 0; y < oh; y++) if (dens[y] > 0) { const a = 1 - Math.exp(-dens[y] * .32), k = (y * ow + i) * 4; d[k] = 255; d[k + 1] = 255; d[k + 2] = 255; d[k + 3] = a * 255; }
+    }
+    octx.putImageData(img, 0, 0);
+  }
+
+  const wob = (y, s) => Math.sin(y * .11 + s) * 1.1 + Math.sin(y * .037 + s * 1.7) * 1.6;
+  function wash(x0, x1, col, a, s) {
+    if (a < .01 || x1 - x0 < .3) return;
+    const path = inset => { ctx.beginPath(); for (let y = PY0; y <= PY1; y += 7) ctx.lineTo(x0 + inset + wob(y, s), y); for (let y = PY1; y >= PY0; y -= 7) ctx.lineTo(x1 - inset + wob(y, s + 3), y); ctx.closePath(); };
+    path(0); ctx.fillStyle = rgba(col, a); ctx.fill();
+    if (x1 - x0 > 6) { path(2.2); ctx.fillStyle = rgba(col, a * .5); ctx.fill(); }
+    path(0); ctx.strokeStyle = rgba(col, Math.min(1, a * 1.2)); ctx.lineWidth = 1.2; ctx.stroke();
+  }
+  const clamp = v => Math.max(0, Math.min(1, v));
+
+  function render() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+    const w = st.w, PW = PX1 - PX0, PH = PY1 - PY0, mapR = r => PX0 + (r - w.L) / (w.R - w.L) * PW;
+
+    ctx.save(); ctx.beginPath(); ctx.rect(PX0, PY0, PW, PH); ctx.clip();
+    for (let i = 0; i < 7; i++) {
+      const x0 = mapR(R[i]), x1 = mapR(R[i + 1]);
+      if (x1 < PX0 || x0 > PX1) continue;
+      const a = clamp(1 - Math.abs(i - st.hl)), b = clamp(1 - Math.abs(i - st.hl - 1)), bl = st.bloom;
+      wash(x0, x1, i % 2 ? IND : OCH, (.07 + st.fin * .3) * bl, i * 2.3);
+      wash(x0, x1, OCH, a * .46 * (1 - st.fin) * bl, i * 1.7 + 1);
+      wash(x0, x1, IND, b * .4 * (1 - st.fin) * bl, i * 1.3 + 2);
+      if (b > .05 && st.fin < 1) {
+        ctx.save(); ctx.beginPath(); ctx.rect(x0, PY0, x1 - x0, PH); ctx.clip();
+        ctx.strokeStyle = rgba(IND, b * .5 * (1 - st.fin) * bl); ctx.lineWidth = .8; ctx.beginPath();
+        for (let t = x0 - PH; t < x1; t += 6) { ctx.moveTo(t, PY1); ctx.lineTo(t + PH * .6, PY0); }
+        ctx.stroke(); ctx.restore();
+      }
+    }
+    ctx.restore();
+
+    dots(w);
+    ctx.save(); ctx.beginPath(); ctx.rect(PX0, PY0 - 2, PW * st.reveal, PH + 4); ctx.clip();
+    ctx.drawImage(off, PX0, PY0, PW, PH); ctx.restore();
+
+    ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1;
+    for (const o of [0, .8]) { ctx.beginPath(); ctx.moveTo(PX0 - o, PY0 - 2); ctx.lineTo(PX0 + o * .5, PY1 + o); ctx.lineTo(PX1, PY1 - o * .4); ctx.stroke(); }
+    ctx.strokeStyle = 'rgba(255,255,255,.85)';
+    for (let i = 0; i < 8; i++) { const x = mapR(R[i]); if (x < PX0 || x > PX1) continue; ctx.beginPath(); ctx.moveTo(x, PY1 - 3); ctx.lineTo(x, PY1 + 3); ctx.stroke(); }
+
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = INK; ctx.globalAlpha = .9; ctx.textAlign = 'left'; ctx.font = `${fs * 1.08}px ${HAND}`;
+    ctx.fillText('population ↑', PX0, PY0 - fs * .55);
+    ctx.fillText('growth rate →', PX0, PY1 + fs * 3.05);
+    ctx.textAlign = 'right';
+    if (st.fin < 1) { ctx.globalAlpha = .9 * (1 - st.fin); ctx.font = `700 ${fs}px ${MONO}`; ctx.fillText(`zoom ×${Math.round(span0 / (w.R - w.L))}`, PX1, PY0 - fs * .55); }
+    if (st.fin > 0) { ctx.globalAlpha = .95 * st.fin; ctx.font = `${fs * 1.08}px ${HAND}`; ctx.fillStyle = RED; ctx.fillText('forks come faster and faster', PX1, PY0 - fs * .55); }
+    ctx.globalAlpha = 1;
+
+    if (st.meas > .01) {
+      const k = st.mk, by = PY1 + fs * .6;
+      const seg = (i, p, row) => {
+        const xa = Math.max(PX0, mapR(R[i])), xb = Math.min(PX1, mapR(R[i + 1])), xe = xa + (xb - xa) * p;
+        ctx.strokeStyle = RED; ctx.lineWidth = 1.7; ctx.lineCap = 'round'; ctx.beginPath();
+        ctx.moveTo(xa, by - 5); ctx.lineTo(xa, by); ctx.lineTo(xe, by); if (p > .97) ctx.lineTo(xb, by - 5); ctx.stroke();
+        if (p > .3) {
+          const t = 'w = ' + WID[i].toPrecision(3); ctx.font = `700 ${fs}px ${MONO}`; const tw = ctx.measureText(t).width;
+          const cx = Math.max(PX0 + tw / 2, Math.min(PX1 - tw / 2, (xa + xb) / 2));
+          ctx.globalAlpha = clamp((p - .3) / .5); ctx.fillStyle = RED; ctx.textAlign = 'center';
+          ctx.fillText(t, cx, by + fs * (row ? 2.45 : 1.15)); ctx.globalAlpha = 1;
+          if (row) { ctx.strokeStyle = 'rgba(255,194,174,.6)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo((xa + xb) / 2, by + 2); ctx.lineTo(cx, by + fs * 1.45); ctx.stroke(); }
+        }
+      };
+      seg(k, clamp(st.meas * 2), 0);
+      if (st.meas > .5) seg(k + 1, clamp(st.meas * 2 - 1), 1);
+    }
+  }
+
+  // ---------- the ladder ----------
+  const vOf = v => G.CB - (v - 4.6) / .2 * (G.CB - G.CT);
+  const cx = k => G.AX + (k + .5) * G.colW;
+  const tgt = k => ({x: cx(k), y: G.LT + vOf(RAT[k])});
+  const pencil = (x1, y1, x2, y2, s) => { let d = `M${x1},${y1}`; for (let i = 1; i <= 4; i++) { const t = i / 4; d += ` L${x1 + (x2 - x1) * t + Math.sin(s + i * 2.1) * .7},${y1 + (y2 - y1) * t + Math.cos(s + i * 1.7) * .7}`; } return d; };
+  const txt = (p, x, y, t, a, fam, size) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK}, a), p); e.setAttribute('style', `font-family:var(${fam});font-size:${size}px`); e.textContent = t; return e; };
+
+  function layoutLadder() {
+    lad.innerHTML = '';
+    const f = Kit.fitSvg(lad), LW = f.W, LH = f.H;
+    G.LT = H; G.LW = LW; G.LH = LH;
+    const small = Math.max(12, fs * .92), bigS = Math.max(18, fs * 1.7);
+    G.CT = Math.min(Math.max(fs * 2.7, bigS * 1.55), LH * .45);
+    G.CB = Math.max(G.CT + 4, LH - fs * 2);
+    G.AX = Math.max(38, fs * 3.1); G.colW = (LW - G.AX - 8) / N;
+    const defs = Kit.mk('defs', {}, lad), pat = Kit.mk('pattern', {id: 'hx', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)'}, defs);
+    Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 5, stroke: RED, 'stroke-width': 1.1, opacity: .55}, pat);
+    const g = Kit.mk('g', {}, lad);
+    G.divider = Kit.mk('path', {d: pencil(8, 2, LW - 8, 2, 1), stroke: 'rgba(255,255,255,.55)', 'stroke-width': 1.2, fill: 'none'}, g);
+    const titleY = G.CT - bigS * .5, titleX = G.AX + 4;
+    G.title = txt(lad, titleX, titleY, 'each section ÷ the next one', {'font-weight': 700, opacity: shown ? 0 : 1}, '--hand', Math.max(12, fs * 1.08));
+    // Tick labels: thin them out when the ladder is short, so they never touch.
+    const gap = (G.CB - G.CT) / 4, need = small * 1.25;
+    const every = gap >= need ? 1 : gap * 2 >= need ? 2 : gap * 4 >= need ? 4 : 8;
+    for (let i = 0; i <= 4; i++) {
+      const v = 4.6 + i * .05, y = vOf(v);
+      Kit.mk('line', {x1: G.AX, x2: LW - 6, y1: y, y2: y, stroke: 'rgba(255,255,255,.28)', 'stroke-width': 1, 'stroke-dasharray': '2 3', class: 'tk'}, g);
+      if (i % every === 0) txt(g, G.AX - 5, y + small * .35, v.toFixed(2), {'text-anchor': 'end', opacity: .85, class: 'tk'}, '--mono', small);
+    }
+    Kit.mk('path', {d: pencil(G.AX, G.CT - 6, G.AX, G.CB + 3, 4), stroke: 'rgba(255,255,255,.8)', 'stroke-width': 1.3, fill: 'none', class: 'tk'}, g);
+    for (let k = 0; k < N; k++) txt(g, cx(k), LH - fs * .6, `${k + 1}÷${k + 2}`, {'text-anchor': 'middle', opacity: .75, class: 'tk'}, '--mono', small);
+    G.hint = txt(lad, (G.AX + LW) / 2, (G.CT + G.CB) / 2 + small * .35, 'each tap pins a ratio here', {'text-anchor': 'middle', fill: '#e6fff6', opacity: landed ? 0 : .7}, '--hand', Math.max(12, fs * 1.02));
+    const yT = vOf(4.6692);
+    G.band = Kit.mk('rect', {x: G.AX, y: vOf(4.6742), width: Math.max(0, LW - 6 - G.AX), height: Math.max(0, vOf(4.6642) - vOf(4.6742)), fill: 'url(#hx)', opacity: shown ? 1 : 0}, g);
+    G.conn = Kit.mk('g', {}, lad);
+    G.line = Kit.mk('path', {d: pencil(G.AX, yT, LW - 6, yT, 7), stroke: RED, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', opacity: shown ? .9 : 0}, lad);
+    // The constant takes over the ladder's title row: big number left, its name right, same baseline.
+    G.big = txt(lad, titleX, titleY, '4.669…', {fill: RED, 'font-weight': 700, opacity: shown ? 1 : 0}, '--hand', bigS);
+    G.sub = txt(lad, LW - 8, titleY, 'the Feigenbaum constant', {'text-anchor': 'end', fill: RED, opacity: shown ? 1 : 0}, '--hand', Math.max(12, fs * 1.05));
+    try { if (titleX + G.big.getComputedTextLength() + 14 > LW - 8 - G.sub.getComputedTextLength()) G.sub.textContent = 'Feigenbaum'; } catch (e) {}
+    for (let k = 1; k < landed; k++) connector(k, true);
+    G.sw = Math.min(G.colW - 6, fs * 4.4); G.sh = Math.max(20, fs * 1.7);
+    slips.forEach((el, k) => { size(el); if (k < landed) { const t = tgt(k); gsap.set(el, {x: t.x - G.sw / 2, y: t.y - G.sh / 2}); } });
+  }
+  function connector(k, instant) {
+    const a = tgt(k - 1), b = tgt(k), x1 = a.x + G.sw / 2 + 2, x2 = b.x - G.sw / 2 - 2;
+    const p = Kit.mk('path', {d: pencil(x1, a.y - G.LT, x2, b.y - G.LT, k), stroke: 'rgba(255,255,255,.6)', 'stroke-width': 1.3, fill: 'none', 'stroke-linecap': 'round'}, G.conn);
+    if (!instant && HAS_DRAW && !Kit.calm) gsap.from(p, {drawSVG: 0, duration: .45, ease: 'power2.out'});
+  }
+  const size = el => { el.style.width = G.sw + 'px'; el.style.height = G.sh + 'px'; el.style.fontSize = Math.max(12, fs * .95) + 'px'; };
+
+  // ---------- layout ----------
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    const cs = getComputedStyle(card);
+    HAND = cs.getPropertyValue('--hand').trim() || 'cursive'; MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    const wh = world.getBoundingClientRect().height || H / .57;
+    fs = Math.max(12, Math.min(15, W / 27, wh / 32));
+    PX0 = 12; PX1 = W - 12; PY0 = fs * 1.9; PY1 = H - fs * 3.5;
+    const dpr = Math.min(2, (cv.width / W) || 1);
+    off.width = Math.max(10, Math.round((PX1 - PX0) * dpr)); off.height = Math.max(10, Math.round((PY1 - PY0) * dpr)); dkey = '';
+    layoutLadder(); render();
+  }
+  // The stage shrinks when the answer appears: redraw at the new size instead of stretching.
+  let lw = 0, lh = 0, rq = 0;
+  if (window.ResizeObserver) new ResizeObserver(() => {
+    const r = world.getBoundingClientRect();
+    if (!ctx || !r.width || (Math.abs(r.width - lw) < 1 && Math.abs(r.height - lh) < 1)) return;
+    lw = r.width; lh = r.height;
+    cancelAnimationFrame(rq); rq = requestAnimationFrame(layout);
+  }).observe(world);
+
+  function zoomTo(B, dur, ease) {
+    const A = Object.assign({}, st.w), sc = (B.R - B.L) / (A.R - A.L);
+    if (Math.abs(1 - sc) < 1e-9) { st.w = Object.assign({}, B); render(); return; }
+    const Pp = (B.L - A.L * sc) / (1 - sc), o = {f: 0};
+    return gsap.to(o, {f: 1, duration: dur, ease, onUpdate: () => {
+      const s = Math.pow(sc, o.f);
+      st.w = {L: Pp + (A.L - Pp) * s, R: Pp + (A.R - Pp) * s, c: A.c + (B.c - A.c) * o.f, h: A.h * Math.pow(B.h / A.h, o.f)};
+      render();
+    }});
+  }
+
+  function makeSlip(k) {
+    const el = document.createElement('div'); el.className = 'slip'; el.textContent = RAT[k].toFixed(3);
+    box.appendChild(el); size(el); slips[k] = el; return el;
+  }
+  function land(k, el, instant) {
+    const t = tgt(k);
+    gsap.set(el, {x: t.x - G.sw / 2, y: t.y - G.sh / 2, rotation: [-3, 2, -2, 3, -1][k], opacity: 1, scale: 1});
+    landed = Math.max(landed, k + 1);
+    if (k === 0) { if (instant) G.hint.setAttribute('opacity', 0); else gsap.to(G.hint, {attr: {opacity: 0}, duration: .35}); }
+    if (k) connector(k, instant);
+    if (!instant) { gsap.fromTo(el, {scaleY: .72, scaleX: 1.15}, {scaleY: 1, scaleX: 1, duration: .6, ease: 'elastic.out(1,.4)'}); Kit.haptic('light'); }
+  }
+  function launch(k) {
+    const el = makeSlip(k), w = st.w, mid = (R[k] + R[k + 1]) / 2;
+    const sx = Math.max(PX0 + 30, Math.min(PX1 - 30, PX0 + (mid - w.L) / (w.R - w.L) * (PX1 - PX0))), sy = PY1 + fs * .8;
+    const t = tgt(k), T = .8, g = 1500;
+    gsap.set(el, {x: sx - G.sw / 2, y: sy - G.sh / 2, rotation: 0, scale: .5, opacity: 0});
+    gsap.to(el, {scale: 1, opacity: 1, duration: .18, ease: 'power2.out'});
+    gsap.fromTo(el, {rotation: -28}, {rotation: [-3, 2, -2, 3, -1][k], duration: T, ease: 'power1.out'});
+    const done_ = () => { land(k, el, false); afterLand(k); };
+    if (HAS_PHYS) {
+      const vx = (t.x - sx) / T, vy = ((t.y - sy) - .5 * g * T * T) / T;
+      gsap.to(el, {duration: T, ease: 'none', physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * 180 / Math.PI, gravity: g}, onComplete: done_});
+    } else gsap.to(el, {x: t.x - G.sw / 2, y: t.y - G.sh / 2, duration: T, ease: 'power2.inOut', onComplete: done_});
+  }
+
+  function sayStep(k) {
+    const z = Math.round(span0 / (WIN[Math.min(4, k + 1)].R - WIN[Math.min(4, k + 1)].L));
+    const r = RAT[k].toFixed(3);
+    say.innerHTML = [
+      `Section 1 is <b>${r}</b> times as wide as section 2. <b>Tap again</b>: we zoom to the next pair.`,
+      `<b>${r}</b>. The forks come faster, but the ratio hardly moves. <b>Tap.</b>`,
+      `<b>${r}</b>, now magnified ×${z}, and the picture looks the same. <b>Tap.</b>`,
+      `<b>${r}</b>. One last pair, magnified ×${z}. <b>Tap.</b>`,
+      `<b>${r}</b>. Now step back.`
+    ][k];
+  }
+
+  function measure(k, quick) {
+    busy = true; st.mk = k;
+    if (quick) {
+      const el = makeSlip(k); land(k, el, true);
+      st.meas = 0; st.hl = k + 1;
+      if (k < N - 1) { st.w = Object.assign({}, WIN[k + 1]); render(); sayStep(k); busy = false; } else finale(true);
+      return;
+    }
+    Kit.haptic('selection');
+    const tl = gsap.timeline();
+    tl.to(st, {meas: 1, duration: .55, ease: 'power3.out', onUpdate: render});
+    tl.add(() => launch(k), .38);
+    if (k < N - 1) {
+      tl.add(() => {
+        gsap.to(st, {meas: 0, duration: .35, ease: 'power2.in', onUpdate: render});
+        zoomTo(WIN[k + 1], 1.3, 'power3.inOut');
+        gsap.to(st, {hl: k + 1, duration: 1.3, ease: 'power2.inOut'});
+      }, 1.05);
+      tl.add(() => { busy = false; }, 2.2);
+    }
+  }
+  function afterLand(k) { sayStep(k); if (k === N - 1) { gsap.to(st, {meas: 0, duration: .35, onUpdate: render}); finale(false); } }
+
+  // ---------- the reveal ----------
+  const WHY = 'Each section is about <b>4.669</b> times as wide as the next: the forks come faster, at a fixed ratio. Feigenbaum found this same number in every period-doubling cascade, whatever the equation.';
+  function endText() { shown = true; say.innerHTML = WHY; card.classList.add('answered'); Kit.show('keep'); Kit.haptic('success'); }
+  function finale(quick) {
+    done = true; busy = true;
+    if (quick || Kit.calm) {
+      st.w = Object.assign({}, FULL); st.fin = 1; st.meas = 0; render();
+      shown = true; for (const e of [G.band, G.big, G.sub]) e.setAttribute('opacity', 1); G.line.setAttribute('opacity', .9); G.title.setAttribute('opacity', 0);
+      endText(); return;
+    }
+    zoomTo(FULL, 1.9, 'expo.inOut');
+    gsap.to(st, {fin: 1, duration: 1.5, ease: 'power2.inOut', delay: .2});
+    const yT = G.LT + vOf(4.6692), tl = gsap.timeline({delay: .9});
+    tl.set(G.line, {attr: {opacity: .9}});
+    if (HAS_DRAW) tl.fromTo(G.line, {drawSVG: '0%'}, {drawSVG: '100%', duration: .9, ease: 'power2.inOut'}, 0);
+    tl.to(G.band, {attr: {opacity: 1}, duration: .8, ease: 'power2.out'}, .3);
+    tl.add(() => splash(G.AX + 4, yT), 0);
+    for (let k = 0; k < N; k++) if (Math.abs(RAT[k] - 4.6692) < .004) tl.to(slips[k], {y: '-=7', duration: .16, yoyo: true, repeat: 1, ease: 'power2.out'}, .9 * (cx(k) - G.AX) / (G.LW - G.AX));
+    tl.to(G.title, {attr: {opacity: 0}, duration: .3, ease: 'power2.in'}, .35);
+    tl.set([G.big, G.sub], {attr: {opacity: 1}}, .6);
+    if (HAS_SCR) tl.fromTo(G.big, {scrambleText: {text: '0.000…', chars: '0123456789'}}, {scrambleText: {text: '4.669…', chars: '0123456789', speed: .6}, duration: 1.1, ease: 'power2.out'}, .6);
+    tl.from(G.sub, {opacity: 0, x: 8, duration: .6, ease: 'power3.out'}, 1);
+    tl.add(() => { splash(G.AX + 44, G.LT + G.CT - fs * 1.2); Kit.haptic('light'); }, 1.5);
+    tl.add(endText, 2.3);
+  }
+  function splash(x, y) {
+    const cols = [rgba(OCH, .85), rgba(IND, .85), 'rgba(255,194,174,.85)', rgba(SEP, .8)];
+    for (let i = 0; i < 18; i++) {
+      const d = document.createElement('div'), s = 3 + Kit.rnd() * 7; d.className = 'dot';
+      Object.assign(d.style, {width: s + 'px', height: s + 'px', background: cols[i % 4]});
+      box.appendChild(d); gsap.set(d, {x: x - s / 2, y: y - s / 2});
+      const dur = 1 + Kit.rnd() * .5;
+      if (HAS_PHYS) gsap.to(d, {duration: dur, ease: 'none', physics2D: {velocity: 160 + Kit.rnd() * 280, angle: -150 + Kit.rnd() * 120, gravity: 800}});
+      gsap.to(d, {opacity: 0, scale: .4, duration: .5, delay: dur - .5, ease: 'power1.in', onComplete: () => d.remove()});
+    }
+  }
+
+  world.addEventListener('pointerdown', e => {
+    const r = world.getBoundingClientRect(), ring = document.createElement('div'); ring.className = 'ring';
+    box.appendChild(ring); gsap.set(ring, {x: e.clientX - r.left, y: e.clientY - r.top});
+    gsap.fromTo(ring, {scale: .4, opacity: .9}, {scale: 3.6, opacity: 0, duration: .55, ease: 'power2.out', onComplete: () => ring.remove()});
+  });
+  world.addEventListener('click', () => {
+    if (busy || done || step >= N) return;
+    measure(step++, Kit.calm);
+  });
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || step > 0) return;
+    st.reveal = 0; st.bloom = 0; render();
+    gsap.to(st, {reveal: 1, duration: 1.5, ease: 'power2.inOut', onUpdate: render});
+    gsap.to(st, {bloom: 1, duration: 1.2, delay: .7, ease: 'power2.out', onUpdate: render});
+    gsap.from('#lad .tk', {opacity: 0, x: -6, duration: .5, stagger: .04, delay: .4, ease: 'power3.out'});
+    if (G.hint) gsap.from(G.hint, {opacity: 0, y: 4, duration: .8, delay: 1.1, ease: 'power2.out'});
+    if (HAS_DRAW) gsap.from(G.divider, {drawSVG: 0, duration: .9, delay: .2, ease: 'power2.inOut'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    gsap.killTweensOf(st); st.reveal = 1; st.bloom = 1;
+    while (step < N) measure(step++, true);
+    await wait(400);
+  };
+})();
+Kit.single();
+</script>
+</html>

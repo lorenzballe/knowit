@@ -211,6 +211,18 @@ test('a free reader\'s first day is like every free day: two of their own and th
   assert.notDeepEqual(dealDay(bank, p, DAY, 'reader-2').own, d.own);
 });
 
+test('a Thinking card that only tells is not dealt at random while the mix has cards to read', () => {
+  // Thinking is on every deck for its cards that ask; with no mix set, every subject is even.
+  const p = profileOf({ topicWeights: {}, pickedTopics: ['space', 'thinking'] });
+  for (let i = 0; i < 20; i++) {
+    const day = shiftDate(DAY, i);
+    const d = dealDay(bank, p, day, 'reader-1');
+    for (const c of d.cards.filter((x) => !d.own.includes(x.id))) {
+      assert.ok(c.topic !== 'thinking' || asks(c), `${c.id} on ${day}: a Thinking card that only tells, at random`);
+    }
+  }
+});
+
 test('weeks in, still two of their own, and three at random from the mix as it was set', () => {
   // Twenty days read, the last of them yesterday.
   const done = Array.from({ length: 20 }, (_, i) => shiftDate(DAY, i - 20));

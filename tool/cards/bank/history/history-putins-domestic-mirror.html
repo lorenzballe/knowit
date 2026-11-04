@@ -1,0 +1,433 @@
+<!doctype html>
+<!-- slug: history-putins-domestic-mirror -->
+<!-- Look: a museum diorama in layered paper: far hills, a Kremlin skyline and wall, and the front plane each cast soft shadows and drift apart with parallax. Ukraine sits on a blue-and-wheat plateau with a small flag, and Russia's regime is a red paper tower under a gold onion dome.
+     Interaction: slide "Western support works in Ukraine". A sun rises over Ukraine and its windows light up. A warm beam of light crosses the border, and Matter.js paper slips reading RIGHTS and FREEDOM fly over. They pile up against the tower while the crowd raises signs and the flowchart lights up step by step.
+     Wow: at 100% the pile shoves the tower. It cracks, topples and crashes across the ground in real physics. The diorama shakes, paper dust flies, and the why takes the slider's place. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The mirror next door</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/matter.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
+#flow{display:flex;align-items:stretch;gap:1.2cqw;padding:.7cqh .6cqw;flex:none}
+.node{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;font:700 max(1.5cqh,12px)/1.15 var(--body);color:#2b1d16;background:#f7ecd6;padding:.7cqh 1.4cqw;border-radius:1cqh;text-align:center;overflow-wrap:anywhere;hyphens:none;
+  box-shadow:0 .3cqh 0 rgba(60,30,10,.2),0 .6cqh 1.2cqh rgba(60,30,10,.16);opacity:.42;transform:scale(.97) rotate(var(--r,0deg));
+  transition:opacity .35s ease,background .35s ease,color .35s ease,transform .45s cubic-bezier(.3,1.6,.5,1)}
+.node.on{opacity:1;transform:scale(1) rotate(var(--r,0deg))}
+.node.warn{opacity:1;background:#f1cfae}
+#n3.on{background:#a3352c;color:#fff4e2}
+#n3.pop{animation:pop .5s cubic-bezier(.3,1.8,.5,1)}
+@keyframes pop{40%{transform:scale(1.05) rotate(-1.5deg)}}
+.arr{flex:none;align-self:center;font:800 max(1.8cqh,12px)/1 var(--body);color:var(--k);opacity:.55}
+#box{flex:1;min-height:0;position:relative;overflow:hidden;background:none}
+#dio{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;background:transparent}
+#scrub{display:flex;align-items:center;gap:2.6cqw;flex:none}
+.sl{font:700 max(1.5cqh,12px)/1.15 var(--body);color:var(--k);max-width:30cqw}
+#pct{font:700 max(1.7cqh,12px)/1 var(--mono);color:var(--k);min-width:4.2em;text-align:right}
+#rng{flex:1;min-width:0;-webkit-appearance:none;appearance:none;height:max(4cqh,28px);background:transparent;margin:0;cursor:pointer;touch-action:none}
+#rng::-webkit-slider-runnable-track{height:max(1.1cqh,8px);border-radius:99px;background:linear-gradient(90deg,#e8c547 var(--p,0%),color-mix(in srgb,var(--k) 16%,transparent) var(--p,0%));box-shadow:inset 0 1px 2px rgba(0,0,0,.3)}
+#rng::-moz-range-track{height:max(1.1cqh,8px);border-radius:99px;background:linear-gradient(90deg,#e8c547 var(--p,0%),color-mix(in srgb,var(--k) 16%,transparent) var(--p,0%))}
+#rng::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;margin-top:calc((max(1.1cqh,8px) - max(3.6cqh,26px))/2);
+  background:radial-gradient(circle at 35% 30%,#fff8db,#efc842 58%,#b88f22);box-shadow:0 .3cqh .9cqh rgba(0,0,0,.38),0 0 0 .35cqh rgba(255,248,220,.6)}
+#rng::-moz-range-thumb{width:max(3.6cqh,26px);height:max(3.6cqh,26px);border:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff8db,#efc842 58%,#b88f22);box-shadow:0 .3cqh .9cqh rgba(0,0,0,.38)}
+#rng:disabled{opacity:.5}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Slide · watch next door">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLIDE IT</span></div>
+    <h2 class="q">Why does a Western-leaning Ukraine threaten Putin's power at home?</h2>
+    <div class="stagebox" id="stage">
+      <div id="flow" aria-live="polite">
+        <div class="node" id="n1" style="--r:-.8deg">Ukraine thrives</div><span class="arr">→</span>
+        <div class="node" id="n2" style="--r:.6deg">Russians want the same</div><span class="arr">→</span>
+        <div class="node" id="n3" style="--r:-.4deg">Unrest threatens Putin</div>
+      </div>
+      <div id="box"><canvas id="dio" role="img" aria-label="A paper diorama: Ukraine on a plateau on the left, a border, a Russian crowd and a red tower for the regime on the right. Paper slips reading rights and freedom fly from Ukraine into Russia and pile against the tower."></canvas></div>
+      <div id="scrub"><span class="sl">Western support works in Ukraine</span><input id="rng" type="range" min="0" max="100" step="1" value="0" aria-label="How well Western support works in Ukraine"><span id="pct">0%</span></div>
+    </div>
+    <p class="say" id="say">Slide up <b>Western support</b> in Ukraine. Watch next door.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Putin fears a Western Ukraine that works: Russians might want the same.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const {Engine, Bodies, Body, Composite} = Matter;
+  const card = Kit.$('card'), cv = Kit.$('dio'), box = Kit.$('box'), range = Kit.$('rng'), pct = Kit.$('pct'), say = Kit.$('say'), flow = Kit.$('flow');
+  const N = [Kit.$('n1'), Kit.$('n2'), Kit.$('n3')];
+  const cs = getComputedStyle(card);
+  const fam = (v, d) => (cs.getPropertyValue(v) || '').trim() || d;
+  const MONO = fam('--mono', 'monospace'), HAND = fam('--hand', 'cursive');
+  const MAXC = 8;
+  const wantN = v => v < 10 ? 0 : Math.min(MAXC, Math.floor((v - 10) / 11) + 1);
+  const WHY = 'If Western support works in Ukraine, Russians next door may start asking for the same <b>rights and freedoms</b>. That means unrest at home. So Putin wants a guarantee that Ukraine and Georgia never join NATO.';
+
+  let c = null, W = 0, H = 0, fs = 12, GY, PT, PX1, BX, TX, bw, bh, eng = null;
+  let tower = [], chips = [], parts = [], val = 0, pending = false, collapsed = false, finished = false, lastSpawn = 0, sayKey = '';
+  const sm = {v: 0, px: 0, tx: 0}, shake = {v: 0}, intro = {a: 1, b: 1, c: 1, d: 1}, raise = [0, 0, 0, 0, 0, 0];
+
+  const mix = (a, b, t) => { const p = s => [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16)); const A = p(a), B = p(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`; };
+  const rr = (x, y, w, h, r) => { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); };
+  const shadowed = (fn, blur = 8, oy = 3, a = .33) => { c.save(); c.shadowColor = `rgba(55,28,10,${a})`; c.shadowBlur = blur; c.shadowOffsetX = blur * .3; c.shadowOffsetY = oy; fn(); c.restore(); };
+  const chipFont = () => `700 ${Math.max(12, fs * 1.2)}px ${HAND}`;
+
+  // ---------- the world ----------
+  function build() {
+    const f = Kit.fitCanvas(cv); c = f.x; W = f.W; H = f.H;
+    if (!W || !H) return;
+    fs = Math.max(12, Math.min(15, H * .034));
+    GY = H * .82; PT = GY - H * .09; PX1 = W * .3; BX = W * .34;
+    c.font = `700 ${fs}px ${MONO}`;
+    bw = Math.max(W * .19, c.measureText('REGIME').width + fs * 1.8);
+    bh = Math.max(fs * 1.7, Math.min(H * .072, (GY - H * .14) / 6.6));
+    TX = Math.min(W * .74, W - bw * .95);
+    eng = Engine.create(); eng.gravity.y = 1; eng.positionIterations = 10; eng.velocityIterations = 8;
+    const st = {isStatic: true, friction: .9};
+    Composite.add(eng.world, [
+      Bodies.rectangle(W / 2, GY + 100, W * 4, 200, st),
+      Bodies.rectangle(PX1 / 2 - 10, (PT + GY) / 2, PX1 + 20, GY - PT, st),
+      Bodies.rectangle(-40, H / 2, 80, H * 4, st),
+      Bodies.rectangle(W + 40 + bw * .9, H / 2, 80, H * 4, st),
+      Bodies.rectangle(BX, GY - H * .03, 4, H * .06, st)
+    ]);
+    tower = [];
+    for (let i = 0; i < 5; i++) {
+      const w = bw * (1 - i * .07), b = Bodies.rectangle(TX, GY - bh * (i + .5), w, bh, {friction: .6, restitution: .12, density: .001});
+      b.w = w; b.h = bh; b.i = i; Body.setStatic(b, true); tower.push(b);
+    }
+    Composite.add(eng.world, tower);
+    chips = []; parts = [];
+    const n = collapsed ? MAXC : wantN(val);
+    for (let i = 0; i < n; i++) spawn(i, true);
+    settle(n ? 140 : 1);
+    if (collapsed) { topple(); settle(320); }
+  }
+  const settle = n => { for (let i = 0; i < n; i++) Engine.update(eng, 1000 / 60); };
+
+  function spawn(i, instant) {
+    const word = i % 2 ? 'FREEDOM' : 'RIGHTS';
+    c.font = chipFont();
+    const w = c.measureText(word).width + fs * 1.3, h = fs * 2;
+    const L = BX + w * .6, R = Math.max(L + 1, TX - bw / 2 - w * .55);
+    const x0 = W * .06 + Kit.rnd() * W * .18;
+    const b = Bodies.rectangle(x0, PT - h * .6 - 6, w, h, {friction: .7, frictionAir: .005, restitution: .2, density: .002, chamfer: {radius: Math.min(4, h * .2)}});
+    b.w = w; b.h = h; b.word = word; b.born = instant ? 0 : performance.now(); b.tilt = (Kit.rnd() - .5) * .5;
+    if (instant) { Body.setPosition(b, {x: L + Kit.rnd() * (R - L), y: GY - h * (1 + i * 1.1)}); Body.setAngle(b, (Kit.rnd() - .5) * .4); }
+    else {
+      const land = L + (.15 + Kit.rnd() * .7) * (R - L);
+      Body.setVelocity(b, {x: (land - x0) / 50, y: -6 - Kit.rnd() * 1.5});
+      Body.setAngularVelocity(b, (Kit.rnd() - .5) * .25);
+    }
+    Composite.add(eng.world, b); chips.push(b);
+  }
+
+  function topple() {
+    const k = Math.max(.8, W / 360);
+    tower.forEach((b, i) => { Body.setStatic(b, false); Body.setDensity(b, .001); Body.setVelocity(b, {x: (.8 + i * 1.5) * k, y: -.6 - .5 * i}); Body.setAngularVelocity(b, .02 + i * .022); });
+    chips.forEach(ch => Body.setVelocity(ch, {x: (2.5 + Kit.rnd() * 3) * k, y: -2.5 - Kit.rnd() * 3}));
+  }
+
+  function collapse() {
+    if (collapsed) return;
+    collapsed = true; pending = false; range.disabled = true;
+    topple(); Kit.haptic('success');
+    N[2].classList.add('pop');
+    if (Kit.calm) { settle(320); finish(); return; }
+    for (let i = 0; i < 36; i++) parts.push({x: TX + (Kit.rnd() - .5) * bw, y: GY - Kit.rnd() * bh * 5, vx: (Kit.rnd() - .3) * 5, vy: -Kit.rnd() * 5 - 1, r: Kit.rnd() * 6, vr: (Kit.rnd() - .5) * .3, s: 3 + Kit.rnd() * 5, col: Kit.rnd() < .5 ? '#a3352c' : (Kit.rnd() < .5 ? '#f4e9d2' : '#ffe9a8'), life: 1});
+    setTimeout(() => {
+      if (!eng) return;
+      for (let i = 0; i < 22; i++) parts.push({x: TX + bw * .4 + (Kit.rnd() - .5) * bw * 1.6, y: GY - 2, vx: (Kit.rnd() - .5) * 4, vy: -Kit.rnd() * 3.5 - .5, r: 0, vr: (Kit.rnd() - .5) * .2, s: 2 + Kit.rnd() * 4, col: Kit.rnd() < .6 ? '#c9b7a0' : '#a3352c', life: .8});
+      gsap.fromTo(shake, {v: .7}, {v: 0, duration: .8, ease: 'power3.out'});
+    }, 520);
+    gsap.fromTo(shake, {v: 1}, {v: 0, duration: 1.2, ease: 'power3.out'});
+    setTimeout(finish, 1600);
+  }
+
+  function finish() {
+    if (finished) return; finished = true;
+    Kit.hide('scrub'); say.innerHTML = WHY; Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#say', '#keep'], {opacity: 0, y: 10, stagger: .14, duration: .6, ease: 'power3.out', clearProps: 'opacity,transform'});
+    // on short phones, the flowchart has done its job: give its room back to the diorama
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (box.clientHeight < Math.max(150, card.clientHeight * .24)) flow.style.display = 'none';
+    }));
+  }
+
+  // ---------- the reader ----------
+  range.addEventListener('input', () => {
+    if (collapsed) return;
+    const before = wantN(val);
+    val = +range.value;
+    range.style.setProperty('--p', val + '%'); pct.textContent = val + '%';
+    pending = val >= 99;
+    if (wantN(val) !== before) Kit.haptic('selection');
+  });
+  box.addEventListener('pointermove', e => { const r = box.getBoundingClientRect(); sm.tx = (e.clientX - r.left) / r.width - .5; });
+  box.addEventListener('pointerleave', () => { sm.tx = 0; });
+
+  // rebuild the world whenever the diorama's frame changes size
+  let lastSz = '', rq = 0;
+  new ResizeObserver(() => {
+    cancelAnimationFrame(rq);
+    rq = requestAnimationFrame(() => {
+      const sz = Math.round(box.clientWidth) + 'x' + Math.round(box.clientHeight);
+      if (sz !== lastSz && box.clientWidth > 0 && box.clientHeight > 0) { lastSz = sz; build(); }
+    });
+  }).observe(box);
+
+  function ui() {
+    N[0].classList.toggle('on', val > 4 || collapsed);
+    N[1].classList.toggle('on', chips.length >= 2 || collapsed);
+    N[2].classList.toggle('on', collapsed);
+    N[2].classList.toggle('warn', !collapsed && chips.length >= 5);
+    if (finished) return;
+    const key = collapsed ? 'c' : val < 10 ? 'a' : chips.length < 5 ? 'b' : 'p';
+    if (key === sayKey) return; sayKey = key;
+    say.innerHTML = {
+      a: 'Slide up <b>Western support</b> in Ukraine. Watch next door.',
+      b: 'Russians see it across the border, and start asking for the same <b>rights and freedoms</b>.',
+      p: 'The demands pile up against the regime. <b>Push it all the way.</b>',
+      c: 'Internal instability: the thing Putin fears most at home.'
+    }[key];
+  }
+
+  function loop() {
+    requestAnimationFrame(loop);
+    if (!eng || !W) return;
+    const now = performance.now(), want = wantN(val);
+    if (!collapsed) {
+      if (chips.length < want && now - lastSpawn > (Kit.calm ? 0 : 170)) { spawn(chips.length, Kit.calm); lastSpawn = now; if (Kit.calm) settle(90); }
+      while (chips.length > want) Composite.remove(eng.world, chips.pop());
+      if (pending && chips.length >= MAXC && now - lastSpawn > (Kit.calm ? 0 : 700)) collapse();
+    }
+    Engine.update(eng, 1000 / 60);
+    sm.v += (val - sm.v) * (Kit.calm ? 1 : .07);
+    sm.px += (sm.tx - sm.px) * .06;
+    for (const p of parts) { p.vy += .22; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life -= .011; }
+    parts = parts.filter(p => p.life > 0);
+    const n = chips.length;
+    raise.forEach((r, k) => { raise[k] += ((collapsed || n > k * 1.3) ? 1 - r : -r) * .12; });
+    ui();
+    draw(now / 1000);
+  }
+
+  // ---------- the paper ----------
+  function hill(y0, amp, ph, col, off) {
+    shadowed(() => {
+      c.beginPath(); c.moveTo(-60 + off, H + 10);
+      for (let x = -60; x <= W + 60; x += 8) c.lineTo(x + off, y0 - amp * (.55 + .25 * Math.sin(x / W * 6.3 + ph) + .2 * Math.sin(x / W * 15 + ph * 2)));
+      c.lineTo(W + 60 + off, H + 10); c.closePath(); c.fillStyle = col; c.fill();
+    }, 10, 4, .3);
+  }
+  function cloud(x, y, s, col) {
+    shadowed(() => { c.fillStyle = col; c.beginPath(); c.ellipse(x, y, s * 1.3, s * .55, 0, 0, 7); c.ellipse(x - s * .6, y + s * .1, s * .7, s * .45, 0, 0, 7); c.ellipse(x + s * .4, y - s * .25, s * .7, s * .55, 0, 0, 7); c.fill(); }, 6, 3, .2);
+  }
+  function onion(x, y, dw, dh, col) {
+    c.beginPath(); c.moveTo(x - dw * .35, y);
+    c.bezierCurveTo(x - dw * .8, y - dh * .35, x - dw * .2, y - dh * .62, x, y - dh);
+    c.bezierCurveTo(x + dw * .2, y - dh * .62, x + dw * .8, y - dh * .35, x + dw * .35, y);
+    c.closePath(); c.fillStyle = col; c.fill();
+  }
+
+  function draw(t) {
+    const p = sm.v / 100, ep = 1 - Math.pow(1 - p, 2), press = collapsed ? 1 : chips.length / MAXC;
+    const par = d => -(sm.px * 18 + p * 10 + Math.sin(t * .35) * 2) * d;
+    const lift = k => (1 - intro[k]) * H * .45;
+    c.save(); c.clearRect(0, 0, W, H);
+    c.translate(Math.sin(t * 61) * shake.v * 6, Math.cos(t * 47) * shake.v * 3.5);
+
+    // sky: no backdrop, the card shows through
+    c.save(); c.globalAlpha = intro.a;
+    // the sun of Western support
+    const sx = W * .15 + par(1.2), sy = PT + H * .07 - (PT + H * .07 - H * .18) * ep, sr = H * .062;
+    const glow = c.createRadialGradient(sx, sy, 0, sx, sy, W * .6); glow.addColorStop(0, `rgba(255,246,205,${.7 * p})`); glow.addColorStop(1, 'rgba(255,246,205,0)');
+    c.fillStyle = glow; c.fillRect(0, 0, W, H);
+    shadowed(() => {
+      c.fillStyle = '#fff4cf';
+      for (let i = 0; i < 12; i++) { const a = t * .25 + i * Math.PI / 6; c.beginPath(); c.moveTo(sx + Math.cos(a - .12) * sr * 1.1, sy + Math.sin(a - .12) * sr * 1.1); c.lineTo(sx + Math.cos(a) * sr * (1.55 + .1 * Math.sin(t * 2 + i)), sy + Math.sin(a) * sr * (1.55 + .1 * Math.sin(t * 2 + i))); c.lineTo(sx + Math.cos(a + .12) * sr * 1.1, sy + Math.sin(a + .12) * sr * 1.1); c.fill(); }
+      c.beginPath(); c.arc(sx, sy, sr, 0, 7); c.fillStyle = '#fff6d8'; c.fill();
+    }, 8, 3, .25);
+    c.beginPath(); c.arc(sx, sy, sr * .7, 0, 7); c.fillStyle = '#ffe9a0'; c.fill();
+    cloud(W * .7 + par(1) + Math.sin(t * .2) * 6, H * .14, H * .05, '#fff6e4');
+    cloud(W * .92 + par(1), H * .26, H * .038, '#fbe9cf');
+    // two paper birds
+    c.strokeStyle = 'rgba(70,45,35,.7)'; c.lineWidth = 1.4; c.lineCap = 'round';
+    [[.42, .2, 0], [.48, .25, 1.7]].forEach(([bx0, by0, ph]) => {
+      const bx = W * bx0 + par(.8) + Math.sin(t * .3 + ph) * 8, by = H * by0 + Math.sin(t * .7 + ph) * 3, fl = Math.sin(t * 6 + ph) * fs * .22, s = fs * .45;
+      c.beginPath(); c.moveTo(bx - s, by - fl); c.quadraticCurveTo(bx - s * .4, by - s * .5, bx, by); c.quadraticCurveTo(bx + s * .4, by - s * .5, bx + s, by - fl); c.stroke();
+    });
+    c.restore();
+
+    // far hills
+    c.save(); c.translate(0, lift('b')); hill(GY - H * .2, H * .12, 1.3, '#e0891f', par(1)); c.restore();
+    // mid plane: hills, a distant skyline, the Kremlin wall
+    c.save(); c.translate(0, lift('c'));
+    hill(GY - H * .1, H * .08, 4.1, '#c06a22', par(.55));
+    const o = par(.55);
+    [[.5, .1, .5], [.58, .16, .7], [.64, .11, .45], [.9, .15, .65], [.97, .1, .5]].forEach(([x, hh, w]) => {
+      const bx = W * x + o, bwid = fs * 1.6 * w + 6, top = GY - H * hh;
+      shadowed(() => { c.fillStyle = '#9a4d24'; c.fillRect(bx - bwid / 2, top, bwid, GY - top); onion(bx, top, bwid * 1.05, bwid * 1.3, '#9a4d24'); }, 6, 3, .22);
+    });
+    const wt = GY - H * .05, mw = fs * .8;
+    shadowed(() => {
+      c.fillStyle = '#8a3b26';
+      c.beginPath(); c.moveTo(BX + fs + o, GY);
+      for (let x = BX + fs; x < W + 30; x += mw * 1.6) {
+        c.lineTo(x + o, wt); c.lineTo(x + o, wt - mw * .9); c.lineTo(x + mw * .5 + o, wt - mw * .55); c.lineTo(x + mw + o, wt - mw * .9); c.lineTo(x + mw + o, wt); c.lineTo(x + mw * 1.6 + o, wt);
+      }
+      c.lineTo(W + 40, GY); c.closePath(); c.fill();
+    }, 6, 2, .25);
+    c.restore();
+
+    // front plane: the ground, Ukraine, the border, the crowd, the tower
+    c.save(); c.translate(0, lift('d'));
+    shadowed(() => { c.fillStyle = mix('#8a7869', '#7d6a5c', press); c.fillRect(PX1 - 10, GY, W + 40, H); }, 10, -2, .25);
+    c.fillStyle = '#ad9783'; c.fillRect(PX1, GY, W, 2.5);
+    shadowed(() => { c.fillStyle = mix('#66758a', '#2f66ad', p); rr(-30, PT, PX1 + 30, H - PT + 10, 6); c.fill(); }, 12, 3, .35);
+    const band = H * .028;
+    c.fillStyle = mix('#b9a983', '#efc93f', p); rr(-30, PT, PX1 + 30, band, 5); c.fill();
+    c.strokeStyle = mix('#9c8d6a', '#c99a1d', p); c.lineWidth = 1;
+    for (let x = 4; x < PX1 - 4; x += 5) { c.beginPath(); c.moveTo(x, PT + band - 1); c.lineTo(x + 1.5, PT + 2); c.stroke(); }
+    c.strokeStyle = 'rgba(255,255,255,.25)'; c.beginPath(); c.moveTo(0, PT + band + .5); c.lineTo(PX1 - 3, PT + band + .5); c.stroke();
+
+    // the view across the border: a warm beam from Ukraine into Russia
+    if (p > .02) {
+      c.save(); c.globalAlpha = p * .5 * (collapsed ? .6 : 1);
+      const bg = c.createLinearGradient(PX1 * .5, 0, TX, 0); bg.addColorStop(0, 'rgba(255,246,210,1)'); bg.addColorStop(1, 'rgba(255,246,210,0)');
+      c.fillStyle = bg; c.beginPath(); c.moveTo(PX1 * .45, PT - fs * 1.6); c.lineTo(TX, GY - fs * 4.2); c.lineTo(TX, GY); c.lineTo(PX1 * .45, PT); c.closePath(); c.fill(); c.restore();
+    }
+
+    // little houses whose windows light up
+    [[.05, 1.0, 1.7], [.135, 1.3, 2.2], [.225, 1.0, 1.6]].forEach(([x, w, h], k) => {
+      const hx = W * x, hw = fs * 1.5 * w, hh = fs * h, top = PT - hh;
+      shadowed(() => {
+        c.fillStyle = '#f4e8d0'; c.fillRect(hx - hw / 2, top, hw, hh + 1);
+        c.beginPath(); c.moveTo(hx - hw * .62, top); c.lineTo(hx, top - hw * .45); c.lineTo(hx + hw * .62, top); c.closePath(); c.fillStyle = '#9b5a3a'; c.fill();
+      }, 6, 2, .3);
+      const on = Math.max(0, Math.min(1, p * 3 - k * .5));
+      c.fillStyle = mix('#4a3b33', '#ffd04d', on);
+      c.fillRect(hx - hw * .28, top + hh * .3, hw * .2, hh * .25); c.fillRect(hx + hw * .08, top + hh * .3, hw * .2, hh * .25);
+      if (on > .1) { c.save(); c.globalAlpha = on * .35; c.fillStyle = '#fff0b0'; c.beginPath(); c.arc(hx, top + hh * .42, hw * .6, 0, 7); c.fill(); c.restore(); }
+      // a small flag on the middle roof, waving harder as support grows
+      if (k === 1) {
+        const px = hx, py = top - hw * .45, ph = fs * 1.5, fw = fs * 1.15, fh = fs * .72;
+        c.strokeStyle = '#5a3a2a'; c.lineWidth = 1.4; c.beginPath(); c.moveTo(px, py + 1); c.lineTo(px, py - ph); c.stroke();
+        const wv = (x2, row) => Math.sin(t * (2.2 + p * 3) - x2 * 4) * fh * (.08 + p * .12) * (x2) + row;
+        [[mix('#7b8597', '#2f66ad', p), 0], [mix('#c8bc94', '#f2c933', p), fh / 2]].forEach(([col, oy]) => {
+          c.fillStyle = col; c.beginPath();
+          for (let s = 0; s <= 6; s++) { const u = s / 6; c.lineTo(px + fw * u, py - ph + wv(u, oy)); }
+          for (let s = 6; s >= 0; s--) { const u = s / 6; c.lineTo(px + fw * u, py - ph + wv(u, oy + fh / 2)); }
+          c.closePath(); c.fill();
+        });
+      }
+    });
+    // border post
+    shadowed(() => { c.fillStyle = '#efe2c8'; c.fillRect(BX - 2, GY - H * .06, 4, H * .06); for (let i = 0; i < 4; i++) { c.fillStyle = i % 2 ? '#efe2c8' : '#a3352c'; c.fillRect(BX - 2, GY - H * .06 + i * H * .015, 4, H * .015); } }, 4, 2, .3);
+    c.strokeStyle = 'rgba(58,42,34,.55)'; c.setLineDash([3, 3]); c.lineWidth = 1.2; c.beginPath(); c.moveTo(PX1 + 4, GY - H * .045); c.lineTo(BX + fs * 1.2, GY - H * .045); c.stroke(); c.setLineDash([]);
+
+    // the crowd
+    const x0 = BX + fs * 1.6, x1 = TX - bw / 2 - fs * 1.1;
+    for (let k = 0; k < 6; k++) {
+      const hx = x0 + (x1 - x0) * k / 5, sc = .9 + (k % 3) * .09, col = k % 2 ? '#463832' : '#352a26';
+      const bh2 = fs * 1.7 * sc, hr = fs * .42 * sc, r = raise[k], bob = Math.sin(t * 5 + k) * r * 1.5;
+      shadowed(() => {
+        c.fillStyle = col; rr(hx - fs * .55 * sc, GY - bh2 + bob, fs * 1.1 * sc, bh2 + 2, fs * .4); c.fill();
+        c.beginPath(); c.arc(hx, GY - bh2 - hr * .9 + bob, hr, 0, 7); c.fill();
+        if (r > .03) {
+          const ax = hx + fs * .5, ay = GY - bh2 - fs * 1.1 * r + bob;
+          c.strokeStyle = col; c.lineWidth = fs * .22; c.lineCap = 'round';
+          c.beginPath(); c.moveTo(hx + fs * .3, GY - bh2 * .72 + bob); c.lineTo(ax, ay); c.stroke();
+          c.strokeStyle = '#7a5a40'; c.lineWidth = 1.6; c.beginPath(); c.moveTo(ax, ay + fs * .2); c.lineTo(ax, ay - fs * .5); c.stroke();
+          c.save(); c.globalAlpha = Math.min(1, r * 1.5); c.fillStyle = '#fbf3df'; rr(ax - fs * .7, ay - fs * 1.3, fs * 1.4, fs * .85, 2); c.fill();
+          c.strokeStyle = '#a3352c'; c.lineWidth = 1.4; c.beginPath(); c.moveTo(ax - fs * .45, ay - fs * .95); c.lineTo(ax + fs * .45, ay - fs * .95); c.moveTo(ax - fs * .45, ay - fs * .7); c.lineTo(ax + fs * .2, ay - fs * .7); c.stroke(); c.restore();
+        }
+      }, 5, 2, .3);
+    }
+
+    // the regime tower
+    tower.forEach((b, i) => {
+      const jx = !collapsed && press > .4 ? Math.sin(t * 38 + i * 1.7) * (press - .3) * 2.2 : 0;
+      const w = b.w, h = b.h;
+      c.save(); c.translate(b.position.x + jx, b.position.y); c.rotate(b.angle);
+      if (i === 4) shadowed(() => {
+        onion(0, -h / 2, h * .95, h * 1.3, '#ffe9a8');
+        c.strokeStyle = '#8f6a1e'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(0, -h / 2 - h * 1.3); c.lineTo(0, -h / 2 - h * 1.65); c.stroke();
+        c.fillStyle = '#ffe9a8'; c.beginPath(); c.arc(0, -h / 2 - h * 1.68, 2.4, 0, 7); c.fill();
+      }, 6, 2, .3);
+      if (i === 4) { c.strokeStyle = 'rgba(120,80,20,.45)'; c.lineWidth = 1; c.beginPath(); c.moveTo(-h * .2, -h / 2 - 2); c.quadraticCurveTo(-h * .15, -h / 2 - h * .8, 0, -h / 2 - h * 1.25); c.moveTo(h * .2, -h / 2 - 2); c.quadraticCurveTo(h * .15, -h / 2 - h * .8, 0, -h / 2 - h * 1.25); c.stroke(); }
+      shadowed(() => { c.fillStyle = i % 2 ? '#962e27' : '#a83a30'; rr(-w / 2, -h / 2, w, h, 2); c.fill(); }, 9, 4, .38);
+      c.fillStyle = 'rgba(255,215,195,.28)'; c.fillRect(-w / 2 + 2, -h / 2 + 1, w - 4, 2);
+      c.strokeStyle = 'rgba(55,10,8,.3)'; c.lineWidth = 1;
+      for (let s = 0; s < 4; s++) { const sx2 = -w / 2 + w * (s + (i % 2 ? .5 : .25)) / 4; c.beginPath(); c.moveTo(sx2, -h / 2 + 3); c.lineTo(sx2, h / 2 - 3); c.stroke(); }
+      if (press > .35 && i < Math.ceil((press - .3) * 7)) {
+        c.strokeStyle = 'rgba(30,5,5,.7)'; c.lineWidth = 1.3; c.beginPath();
+        const cx = -w / 2 + w * (.2 + ((i * 37) % 60) / 100); c.moveTo(cx, -h / 2);
+        for (let z = 1; z <= 4; z++) c.lineTo(cx + (z % 2 ? 5 : -3), -h / 2 + h * z / 4);
+        c.stroke();
+      }
+      if (i === 0) { c.font = `700 ${fs}px ${MONO}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = '#fff1dc'; c.fillText('REGIME', 0, 1); }
+      c.restore();
+    });
+
+    // the demands
+    const now = performance.now();
+    c.font = chipFont(); c.textAlign = 'center'; c.textBaseline = 'middle';
+    chips.forEach(b => {
+      const age = b.born ? Math.min(1, (now - b.born) / 260) : 1, s = .6 + .4 * (1 - Math.pow(1 - age, 3));
+      c.save(); c.globalAlpha = age; c.translate(b.position.x, b.position.y); c.rotate(b.angle); c.scale(s, s);
+      shadowed(() => { c.fillStyle = '#fbf3df'; rr(-b.w / 2, -b.h / 2, b.w, b.h, 3); c.fill(); }, 7, 3, .35);
+      c.fillStyle = 'rgba(200,220,240,.55)'; c.save(); c.rotate(b.tilt); c.fillRect(-b.w * .5, -b.h * .62, b.w * .28, b.h * .3); c.restore();
+      c.fillStyle = '#2b1b14'; c.fillText(b.word, 0, 1);
+      c.restore();
+    });
+    // paper dust
+    parts.forEach(q => { c.save(); c.globalAlpha = Math.max(0, q.life); c.translate(q.x, q.y); c.rotate(q.r); c.fillStyle = q.col; c.fillRect(-q.s / 2, -q.s / 3, q.s, q.s * .66); c.restore(); });
+
+    // ground labels
+    c.font = `700 ${fs}px ${MONO}`; c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    if ('letterSpacing' in c) c.letterSpacing = '2px';
+    const ly = GY + (H - GY) / 2 + fs * .35;
+    c.fillStyle = '#fff3dc'; c.fillText('UKRAINE', PX1 / 2, ly); c.fillText('RUSSIA', (BX + W) / 2, ly);
+    if ('letterSpacing' in c) c.letterSpacing = '0px';
+    c.restore();
+
+    // a label for the sun, once it is up
+    if (p > .02) {
+      c.save(); c.globalAlpha = Math.min(1, p * 4) * intro.a; c.font = `700 ${fs}px ${MONO}`; c.textAlign = 'left'; c.fillStyle = '#3a2210';
+      c.fillText('WESTERN SUPPORT', Math.min(sx + sr * 1.7, W - c.measureText('WESTERN SUPPORT').width - fs), sy + fs * .35); c.restore();
+    }
+    c.restore();
+  }
+
+  Kit.onShow.card = build;
+  let started = false;
+  const start = () => { if (!started) { started = true; requestAnimationFrame(loop); } };
+  start();
+  Kit.onEnter.card = () => {
+    start();
+    if (Kit.calm) return;
+    Object.assign(intro, {a: 0, b: 0, c: 0, d: 0});
+    gsap.timeline()
+      .to(intro, {a: 1, duration: .6, ease: 'power2.out'})
+      .to(intro, {b: 1, duration: .9, ease: 'back.out(1.5)'}, '-=.4')
+      .to(intro, {c: 1, duration: .9, ease: 'back.out(1.5)'}, '-=.7')
+      .to(intro, {d: 1, duration: 1, ease: 'back.out(1.3)'}, '-=.7');
+    gsap.from('.node,.arr', {opacity: 0, y: -10, stagger: .08, duration: .5, ease: 'power3.out', delay: .7, clearProps: 'opacity,transform'});
+    gsap.from('#scrub', {opacity: 0, y: 10, duration: .6, ease: 'power3.out', delay: 1.1, clearProps: 'opacity,transform'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start();
+    for (const v of [25, 50, 75, 100]) { range.value = v; range.dispatchEvent(new Event('input', {bubbles: true})); await wait(Kit.calm ? 60 : 650); }
+    await wait(Kit.calm ? 400 : 3200);
+    if (!collapsed) collapse();
+    if (!finished) finish();
+    await wait(Kit.calm ? 60 : 700);
+  };
+})();
+Kit.single();
+</script>
+</html>

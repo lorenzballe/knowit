@@ -1,0 +1,414 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-tattoo-flu-boost -->
+<!-- Look: a cyanotype engineering sheet. White hairlines on Prussian blue show a vaccinated arm, a tattoo pen, two graduated antibody cylinders, a dashed datum line and dimension arrows.
+     Interaction: drag the slider knob from NO TATTOO to TATTOO. A blueprint tattoo pen buzzes down the arm and inks an anchor, spraying specks. Antibodies stream along curved paths, bubbles rise in both cylinders, the FLU cylinder fills up and the COVID-19 one drains.
+     Wow: at full ink, a burst of antibodies flies into the flu cylinder, which flashes and ripples while the labels scramble into STRONGER / WEAKER. -->
+<title>Tattoos and the flu vaccine</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0;background:none;border:0;border-radius:0;box-shadow:none}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;user-select:none;-webkit-user-select:none;background:none}
+#pic text{font-family:var(--mono);fill:#ffffff;letter-spacing:.04em}
+#pic text.pale{fill:#ffe1dc}
+#why{display:flex;flex-direction:column;gap:.5cqh}
+#why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.answered .q{font-size:max(2.5cqh,15px)}
+@media (max-height:720px){.answered #why .body{display:none}}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Drag the slider · ink and immunity">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO INK</span></div>
+    <h2 class="q">How does a tattoo change your response to the flu vaccine?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A blueprint of a vaccinated arm being tattooed, and two cylinders of antibodies, one for the flu vaccine and one for the COVID-19 vaccine, with a slider from no tattoo to tattoo."></svg>
+    </div>
+    <p class="say" id="say">Drag the knob to tattoo the arm, then watch both cylinders.</p>
+    <div id="why" class="gone"><p class="big">Stronger, for the flu.</p><p class="body">With a tattoo, the immune system reacted better to the flu vaccine: its response got a boost. With the COVID-19 vaccine, tattoos did the exact opposite.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Same tattoo, opposite results: it can boost the flu vaccine, not the COVID-19 one.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin, ScrambleTextPlugin);
+  const svg = Kit.$('pic'), card = Kit.$('card');
+  const INK = '#ffffff', PALE = '#ffe1dc', DEEP = '#a3120a';
+  const BASE = .42, UP = .32, DOWN = .2;      // schematic levels: the source gives only the direction, no numbers
+  const S = {t: 0}, L = {v: 0};
+  let W = 0, H = 0, f = 12, G = null, shown = false, touched = false, dragging = false, entered = false, half = false, ready = false;
+  let penA = 0, prevT = 0;
+  const mk = (tag, a, p) => Kit.mk(tag, a, p);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const pos = v => Math.max(0.01, v);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': f, 'font-weight': 600}, a), p); e.textContent = s; return e; };
+  const fit = (e, x0 = 6, x1 = W - 6) => { const b = e.getBBox(); let d = 0; if (b.x < x0) d = x0 - b.x; else if (b.x + b.width > x1) d = x1 - (b.x + b.width); if (d) e.setAttribute('x', +e.getAttribute('x') + d); return e; };
+  const shiftX = (e, d) => e.setAttribute('x', +e.getAttribute('x') + d);
+  // keep two side-by-side labels apart: nudge outward first, shrink only if still needed
+  const part = (a, b) => {
+    const gap = f * .6;
+    for (let k = 0; k < 4; k++) {
+      let A = a.getBBox(), B = b.getBBox(), ov = A.x + A.width + gap - B.x;
+      if (ov <= 0) return;
+      const d1 = Math.min(ov / 2, Math.max(0, A.x - 6)); if (d1) shiftX(a, -d1); ov -= d1;
+      const d2 = Math.min(ov, Math.max(0, W - 6 - (B.x + B.width))); if (d2) shiftX(b, d2); ov -= d2;
+      A = a.getBBox();
+      const d3 = Math.min(ov, Math.max(0, A.x - 6)); if (d3) shiftX(a, -d3); ov -= d3;
+      if (ov <= .5) return;
+      A = a.getBBox(); B = b.getBBox();
+      const tot = A.width + B.width, kf = Math.max(.5, (tot - ov - 1) / tot);
+      [a, b].forEach(e => e.setAttribute('font-size', +e.getAttribute('font-size') * kf));
+    }
+  };
+  const yglyph = (p, s, a = {}) => mk('path', Object.assign({d: `M0,${s * .1}V${s * .95}M0,${s * .1}L${-s * .58},${-s * .55}M0,${s * .1}L${s * .58},${-s * .55}`, fill: 'none', stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, a), p);
+
+  function layout() {
+    ready = true;
+    svg.innerHTML = '';
+    const r = Kit.fitSvg(svg); W = r.W; H = r.H;
+    if (!(W > 80 && H > 80)) { G = null; return; }
+    f = clamp(Math.min(W / 26, H / 22), 12, 15);
+    G = {paths: {}};
+    const defs = mk('defs', {}, svg);
+    const lq = mk('linearGradient', {id: 'liq', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    mk('stop', {offset: 0, 'stop-color': '#ffffff', 'stop-opacity': .5}, lq); mk('stop', {offset: 1, 'stop-color': '#ffd0ca', 'stop-opacity': .18}, lq);
+    const ht = mk('pattern', {id: 'hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#fff', 'stroke-opacity': .3, 'stroke-width': 1}, ht);
+    const gl = mk('filter', {id: 'glow', x: '-40%', y: '-20%', width: '180%', height: '140%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: 5}, gl);
+
+    // no sheet: the drawing sits straight on the card (empty group kept for the entrance)
+    const bgl = mk('g', {}, svg); G.bgl = bgl;
+
+    // ---------- geometry (always positive, from tall to very short stages) ----------
+    const meas = (s, a) => { const e = txt(svg, 0, -99, s, a); const w = e.getBBox().width; e.remove(); return w; };
+    const fluW = meas('FLU VACCINE', {'font-weight': 700}), covW = meas('COVID-19 VACCINE', {'font-weight': 700});
+    const noW = meas('NO TATTOO', {'font-weight': 700});
+    const tight = H < 240;
+    const at = clamp(Math.min(H * .12, W * .15), 16, 52);
+    const ay = Math.max(f * 1.95 + at * .66, H * .15);
+    const slY = H - f * 1.35;
+    const resY = slY - f * (tight ? 1.8 : 2.1);
+    const nameY = resY - f * (tight ? 1.35 : 1.5);
+    const plateH = Math.max(4, f * .35);
+    const plateY = nameY - f * 1.2 - plateH;
+    const cw = clamp(Math.min(W * .19, H * .3), 30, 92);
+    let ry = cw * .15;
+    const c2 = W - 8 - Math.max(covW / 2, cw * .64);
+    const gNeed = 8 + noW + f * .6;
+    const c1 = Math.max(gNeed + cw / 2 + 2, Math.min(W * .47, c2 - covW / 2 - fluW / 2 - f * .8));
+    const cylBot = plateY - ry * 1.15;
+    let cylTop = ay + at * .62 + Math.max(f * 1.3, H * .07);
+    if (cylBot - cylTop < ry * 2 + 26) cylTop = Math.max(ay + at * .62 + 4, cylBot - ry * 2 - 26);
+    if (cylBot - cylTop < ry * 3) ry = Math.max(2, (cylBot - cylTop) / 3);
+    const span = Math.max(6, cylBot - cylTop - ry * 1.2);
+    const yL = v => cylBot - v * span;
+    Object.assign(G, {at, ay, slY, cylTop, cylBot, cw, ry, c1, c2, yL});
+
+    // ---------- the arm ----------
+    const arm = mk('g', {}, svg), xe = W * .84;
+    mk('path', {class: 'draw', d: `M-6,${ay - at * .56} C${W * .3},${ay - at * .64} ${W * .55},${ay - at * .42} ${xe - at * .4},${ay - at * .38} C${xe + at * .32},${ay - at * .55} ${xe + at * .5},${ay + at * .48} ${xe - at * .35},${ay + at * .42} C${W * .55},${ay + at * .42} ${W * .3},${ay + at * .62} -6,${ay + at * .56}Z`, fill: 'rgba(255,255,255,.08)', stroke: INK, 'stroke-width': 1.7, 'stroke-linejoin': 'round'}, arm);
+    mk('path', {d: `M0,${ay}H${xe + at * .1}`, stroke: INK, 'stroke-opacity': .45, 'stroke-width': .8, 'stroke-dasharray': '12 3 2 3'}, arm);
+    // faint veins
+    mk('path', {d: `M${W * .05},${ay + at * .3}C${W * .2},${ay + at * .18} ${W * .32},${ay + at * .34} ${W * .45},${ay + at * .2}S${W * .66},${ay + at * .14} ${W * .74},${ay + at * .24}`, fill: 'none', stroke: PALE, 'stroke-opacity': .4, 'stroke-width': .9}, arm);
+    mk('path', {d: `M${W * .12},${ay - at * .28}C${W * .24},${ay - at * .16} ${W * .36},${ay - at * .3} ${W * .48},${ay - at * .2}`, fill: 'none', stroke: PALE, 'stroke-opacity': .32, 'stroke-width': .9}, arm);
+    mk('path', {d: `M${xe - at * .42},${ay - at * .34}q${-at * .1},${at * .38} 0,${at * .74}`, fill: 'none', stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1}, arm);
+    for (let i = 0; i < 3; i++) mk('path', {d: `M${xe + at * .08},${ay - at * .25 + i * at * .22}q${at * .1},${at * .06} ${at * .2},0`, fill: 'none', stroke: INK, 'stroke-opacity': .55, 'stroke-width': 1}, arm);
+    mk('path', {d: `M${xe - at * .3},${ay - at * .38}q${at * .25},${-at * .22} ${at * .5},${-at * .05}`, fill: 'none', stroke: INK, 'stroke-width': 1.3}, arm);
+
+    // ---------- the syringe, needle in the upper arm ----------
+    const sx = W * .2, tipY = ay - at * .57, Lsy = Math.min(W * .26, 130, at * 3.2);
+    const th = Math.acos(clamp((tipY - 4) / Lsy, 0, 1)) * 180 / Math.PI;
+    const sy = mk('g', {transform: `translate(${sx},${tipY}) rotate(${-Math.max(th, 20)})`}, svg);
+    const n = Lsy * .22, b = Lsy * .55, bw = Math.max(8, f * .75);
+    mk('path', {class: 'draw', d: `M0,0V${-n}`, stroke: INK, 'stroke-width': 1.2}, sy);
+    mk('rect', {x: -bw * .3, y: -n - 4, width: bw * .6, height: 4, fill: DEEP, stroke: INK, 'stroke-width': 1}, sy);
+    mk('rect', {x: -bw / 2, y: -n - 4 - b * .55, width: bw, height: b * .55, fill: PALE, 'fill-opacity': .35}, sy);
+    mk('rect', {class: 'draw', x: -bw / 2, y: -n - 4 - b, width: bw, height: b, fill: 'none', stroke: INK, 'stroke-width': 1.4}, sy);
+    for (let i = 1; i < 6; i++) mk('line', {x1: -bw / 2, x2: -bw / 2 + (i % 2 ? 3 : 5), y1: -n - 4 - b * i / 6, y2: -n - 4 - b * i / 6, stroke: INK, 'stroke-width': .8}, sy);
+    mk('path', {d: `M0,${-n - 4 - b * .55}V${-n - 4 - b - Lsy * .2}M${-bw * .7},${-n - 4 - b - Lsy * .2}H${bw * .7}M${-bw * .75},${-n - 4 - b}H${bw * .75}`, stroke: INK, 'stroke-width': 1.4, fill: 'none'}, sy);
+
+    // ---------- the tattoo: an anchor that inks itself in ----------
+    const tx = W * .6, s = at * .36;
+    G.halo = mk('ellipse', {cx: tx, cy: ay, rx: s * 1.55, ry: s * 1.25, fill: 'url(#hatch)', stroke: INK, 'stroke-opacity': .5, 'stroke-dasharray': '2 3'}, svg);
+    const tat = mk('g', {stroke: '#fff', 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    G.tat = [
+      mk('circle', {cx: tx, cy: ay - s * .85, r: s * .22, pathLength: 1}, tat),
+      mk('path', {d: `M${tx},${ay - s * .63}V${ay + s * .92}`, pathLength: 1}, tat),
+      mk('path', {d: `M${tx - s * .45},${ay - s * .38}H${tx + s * .45}`, pathLength: 1}, tat),
+      mk('path', {d: `M${tx - s * .85},${ay + s * .25}Q${tx - s * .75},${ay + s * .95} ${tx},${ay + s * .95}Q${tx + s * .75},${ay + s * .95} ${tx + s * .85},${ay + s * .25}`, pathLength: 1}, tat),
+      mk('path', {d: `M${tx - s * 1.05},${ay + s * .42}L${tx - s * .85},${ay + s * .18}L${tx - s * .6},${ay + s * .36}M${tx + s * 1.05},${ay + s * .42}L${tx + s * .85},${ay + s * .18}L${tx + s * .6},${ay + s * .36}`, pathLength: 1}, tat)
+    ];
+    G.tat.forEach(p => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1; });
+    G.stemA = {x: tx, y: ay - s * .95}; G.stemB = {x: tx, y: ay + s * .92};
+    G.leader = mk('g', {}, svg);
+    const lt = txt(G.leader, W - 8, f * 1.2, 'TATTOO INK', {'text-anchor': 'end', 'font-weight': 700});
+    const lb = lt.getBBox();
+    mk('path', {d: `M${tx + s * .5},${ay - s * .8}L${Math.min(tx + s * 1.4, lb.x - 4)},${f * 1.65}H${lb.x + lb.width}`, fill: 'none', stroke: INK, 'stroke-width': 1}, G.leader);
+    mk('circle', {cx: tx + s * .5, cy: ay - s * .8, r: 2, fill: INK}, G.leader);
+
+    // ---------- the tattoo pen (appears while inking) ----------
+    const pl = clamp(at * .95, 18, 46);
+    G.pen = mk('g', {opacity: 0, fill: 'none', stroke: INK, 'stroke-width': 1.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    mk('path', {d: `M0,0V${-pl * .2}`, 'stroke-width': 1}, G.pen);
+    mk('path', {d: `M${-pl * .04},${-pl * .2}L${-pl * .08},${-pl * .28}H${pl * .08}L${pl * .04},${-pl * .2}Z`, fill: DEEP}, G.pen);
+    mk('rect', {x: -pl * .08, y: -pl * .52, width: pl * .16, height: pl * .24, fill: DEEP}, G.pen);
+    for (let i = 1; i < 4; i++) mk('line', {x1: -pl * .08, x2: pl * .08, y1: -pl * .28 - pl * .06 * i, y2: -pl * .28 - pl * .06 * i, 'stroke-width': .7, 'stroke-opacity': .7}, G.pen);
+    mk('rect', {x: -pl * .11, y: -pl * .9, width: pl * .22, height: pl * .38, rx: pl * .04, fill: 'rgba(255,255,255,.28)'}, G.pen);
+    mk('line', {x1: -pl * .11, x2: pl * .11, y1: -pl * .72, y2: -pl * .72, 'stroke-width': .8}, G.pen);
+    mk('path', {d: `M0,${-pl * .9}C0,${-pl * 1.15} ${pl * .3},${-pl * 1.1} ${pl * .35},${-pl * 1.35}`, 'stroke-dasharray': '3 2', 'stroke-opacity': .7}, G.pen);
+    G.buzz = [];
+    for (let i = 0; i < 2; i++) G.buzz.push(mk('path', {d: `M${-pl * (.2 + i * .1)},${-pl * .1}q${-pl * .06},${pl * .06} 0,${pl * .14}M${pl * (.2 + i * .1)},${-pl * .1}q${pl * .06},${pl * .06} 0,${pl * .14}`, 'stroke-width': 1, 'stroke-opacity': .7}, G.pen));
+
+    // ---------- the flow lines the antibodies travel ----------
+    const ox = W * .3, oy = ay + at * .5, dy = Math.max(4, cylTop - oy);
+    G.paths.flu = mk('path', {d: `M${ox},${oy}C${ox - W * .04},${oy + dy * .75} ${c1},${cylTop - dy * .7} ${c1},${cylTop - ry * .3}`, fill: 'none', stroke: INK, 'stroke-opacity': .5, 'stroke-width': 1, 'stroke-dasharray': '2 5'}, svg);
+    G.paths.cov = mk('path', {d: `M${ox},${oy}C${ox + W * .22},${oy + dy * .15} ${c2},${oy + dy * .1} ${c2},${cylTop - ry * .3}`, fill: 'none', stroke: INK, 'stroke-opacity': .5, 'stroke-width': 1, 'stroke-dasharray': '2 5'}, svg);
+    mk('circle', {cx: ox, cy: oy, r: 3, fill: DEEP, stroke: INK, 'stroke-width': 1.2}, svg);
+
+    // ---------- the datum: the level without a tattoo ----------
+    const yB = yL(BASE), gx = c1 - cw * .64 - 4;
+    mk('line', {x1: 6, x2: W - 6, y1: yB, y2: yB, stroke: PALE, 'stroke-width': 1, 'stroke-dasharray': '8 4 2 4'}, svg);
+    txt(svg, 8, yB - f * .45, 'NO TATTOO', {class: 'st pale', 'font-weight': 700});
+    if (span > f * 3.3) txt(svg, 8, yB + f * 1.15, 'LEVEL', {class: 'st pale', 'font-weight': 700});
+    const dTop = yB - f * 1.5;
+
+    // ---------- legend, only where it has room ----------
+    const legY1 = cylTop + f * .95, legY2 = legY1 + f * 1.8;
+    if (legY1 + 4 < dTop - 4) {
+      const lt1 = txt(svg, 8 + f * 1.15, legY1, 'ANTIBODIES', {class: 'st', 'font-weight': 700, 'font-size': 12});
+      const b1 = lt1.getBBox();
+      if (b1.x + b1.width > gx) lt1.remove();
+      else {
+        const lg = mk('g', {transform: `translate(${8 + f * .45},${legY1 - f * .45})`}, svg);
+        yglyph(lg, f * .62);
+        if (legY2 + 4 < dTop - 6) {
+          const lt2 = txt(svg, 8, legY2, 'NOT TO SCALE', {class: 'st pale', 'font-size': 12, 'font-weight': 500});
+          const b2 = lt2.getBBox();
+          if (b2.x + b2.width > gx) lt2.remove();
+        }
+      }
+    }
+
+    // ---------- the two cylinders ----------
+    const cyl = (cx, key, name) => {
+      const x0 = cx - cw / 2, x1 = cx + cw / 2, body = `M${x0},${cylTop}V${cylBot}A${cw / 2},${ry} 0 0 0 ${x1},${cylBot}V${cylTop}Z`;
+      const o = {x0, x1};
+      mk('rect', {class: 'draw', x: x0 - cw * .14, y: plateY, width: cw * 1.28, height: plateH, fill: 'rgba(255,255,255,.12)', stroke: INK, 'stroke-width': 1.2}, svg);
+      if (key === 'flu') G.glow = mk('path', {d: body, fill: PALE, 'fill-opacity': .35, stroke: '#fff', 'stroke-width': 5, filter: 'url(#glow)', opacity: 0}, svg);
+      const cpB = mk('clipPath', {id: 'cb' + key}, defs); mk('path', {d: body}, cpB);
+      const cpL = mk('clipPath', {id: 'cl' + key}, defs); o.clip = mk('rect', {x: x0 - 2, y: yB, width: cw + 4, height: H}, cpL);
+      const gB = mk('g', {'clip-path': `url(#cb${key})`}, svg);
+      mk('rect', {x: x0, y: cylTop, width: cw, height: pos(cylBot - cylTop + ry), fill: 'rgba(255,255,255,.04)'}, gB);
+      const gL = mk('g', {'clip-path': `url(#cl${key})`, class: 'liq'}, gB);
+      o.gL = gL;
+      mk('rect', {x: x0, y: cylTop, width: cw, height: pos(cylBot - cylTop + ry), fill: 'url(#liq)'}, gL);
+      mk('rect', {x: x0, y: cylTop, width: cw, height: pos(cylBot - cylTop + ry), fill: 'url(#hatch)'}, gL);
+      const sp = Math.max(f * 1.1, cw / 4);
+      let row = 0;
+      for (let y = cylBot + ry * .2; y > cylTop + sp * .8; y -= sp, row++) for (let x = x0 + sp * (row % 2 ? .9 : .5); x < x1 - sp * .3; x += sp) {
+        const g = mk('g', {transform: `translate(${x + (Kit.rnd() - .5) * 4},${y + (Kit.rnd() - .5) * 4}) rotate(${(Kit.rnd() - .5) * 60})`, opacity: .55 + Kit.rnd() * .35}, gL);
+        yglyph(g, f * .42, {'stroke-width': 1.2});
+      }
+      o.men = mk('ellipse', {cx, cy: yB, rx: cw / 2, ry, fill: 'rgba(255,255,255,.28)', stroke: '#fff', 'stroke-width': 1.3}, svg);
+      for (let i = 1; i < 10; i++) { const y = yL(i / 10); mk('line', {x1: x0 + 2, x2: x0 + (i % 5 ? 6 : 11), y1: y, y2: y, stroke: INK, 'stroke-opacity': .75, 'stroke-width': 1}, svg); }
+      if (cylBot - ry > cylTop + ry * 1.5) mk('line', {x1: x1 - cw * .16, x2: x1 - cw * .16, y1: cylTop + ry * 1.5, y2: cylBot - ry, stroke: '#fff', 'stroke-opacity': .4, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+      mk('path', {class: 'draw', d: `M${x0},${cylTop}V${cylBot}A${cw / 2},${ry} 0 0 0 ${x1},${cylBot}V${cylTop}`, fill: 'none', stroke: INK, 'stroke-width': 1.8}, svg);
+      mk('ellipse', {class: 'draw', cx, cy: cylTop, rx: cw / 2, ry, fill: 'none', stroke: INK, 'stroke-width': 1.5}, svg);
+      o.name = fit(txt(svg, cx, nameY, name, {class: 'st', 'text-anchor': 'middle', 'font-weight': 700}));
+      o.res = fit(txt(svg, cx, resY, key === 'flu' ? '+ STRONGER' : '− WEAKER', {class: 'pale', 'text-anchor': 'middle', 'font-weight': 800}));
+      o.res.style.opacity = 0;
+      return o;
+    };
+    G.flu = cyl(c1, 'flu', 'FLU VACCINE');
+    G.cov = cyl(c2, 'cov', 'COVID-19 VACCINE');
+    part(G.flu.name, G.cov.name);
+    part(G.flu.res, G.cov.res);
+    G.dimF = mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    G.dimC = mk('path', {fill: 'none', stroke: PALE, 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    G.dxF = c1 + cw / 2 + f * .7; G.dxC = c2 - cw / 2 - f * .7;
+    G.parts = mk('g', {}, svg);
+    svg.appendChild(G.pen);
+
+    // ---------- the slider ----------
+    const l0 = txt(svg, 8, slY + f * .35, 'NO TATTOO', {class: 'st', 'font-weight': 700});
+    const l1 = txt(svg, W - 8, slY + f * .35, 'TATTOO', {class: 'st', 'text-anchor': 'end', 'font-weight': 700});
+    G.tx0 = 8 + l0.getBBox().width + f * 1.5; G.tx1 = W - 8 - l1.getBBox().width - f * 1.5;
+    if (G.tx1 < G.tx0 + 20) G.tx1 = G.tx0 + 20;
+    mk('line', {class: 'draw', x1: G.tx0, x2: G.tx1, y1: slY - 2, y2: slY - 2, stroke: INK, 'stroke-width': 1}, svg);
+    mk('line', {class: 'draw', x1: G.tx0, x2: G.tx1, y1: slY + 2, y2: slY + 2, stroke: INK, 'stroke-width': 1}, svg);
+    for (let i = 0; i <= 10; i++) { const x = G.tx0 + (G.tx1 - G.tx0) * i / 10; mk('line', {x1: x, x2: x, y1: slY + 4, y2: slY + (i % 5 ? 7 : 10), stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1}, svg); }
+    G.fill = mk('rect', {x: G.tx0, y: slY - 2, width: 0, height: 4, fill: PALE}, svg);
+    G.hint = mk('g', {opacity: touched ? 0 : 1}, svg);
+    G.hintIn = mk('path', {d: `M${f * 1.4},${-4}l4,4l-4,4M${f * 1.4 + 6},${-4}l4,4l-4,4`, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.hint);
+    G.knob = mk('g', {}, svg);
+    G.ring = mk('circle', {r: f * .85, fill: DEEP, stroke: '#fff', 'stroke-width': 1.8}, G.knob);
+    mk('path', {d: `M${-f * .5},0H${f * .5}M0,${-f * .5}V${f * .5}`, stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1}, G.knob);
+    G.dot = mk('circle', {r: 0, fill: '#fff'}, G.knob);
+    if (!touched && !Kit.calm) gsap.to(G.hintIn, {x: 5, repeat: -1, yoyo: true, duration: .6, ease: 'sine.inOut'});
+    render(0);
+  }
+
+  function dimPath(x, ya, yb) {
+    if (Math.abs(yb - ya) < 7) return '';
+    const dir = yb < ya ? 1 : -1, h = 4;
+    return `M${x - 5},${ya}H${x + 5}M${x},${ya}V${yb}M${x - h},${yb + dir * h * 1.4}L${x},${yb}L${x + h},${yb + dir * h * 1.4}M${x - 5},${yb}H${x + 5}`;
+  }
+
+  function penTip(t) {
+    return {x: G.stemA.x, y: G.stemA.y + (G.stemB.y - G.stemA.y) * t};
+  }
+
+  function render(time) {
+    if (!G) return;
+    const t = clamp(S.t, 0, 1), v = clamp(L.v, 0, 1.04), sm = t * t * (3 - 2 * t);
+    const kx = G.tx0 + t * (G.tx1 - G.tx0);
+    G.knob.setAttribute('transform', `translate(${kx},${G.slY})`);
+    G.hint.setAttribute('transform', `translate(${kx},${G.slY})`);
+    G.fill.setAttribute('width', Math.max(0, kx - G.tx0));
+    G.dot.setAttribute('r', Math.max(0, f * .42 * t));
+    G.tat.forEach(p => p.style.strokeDashoffset = 1 - t);
+    G.halo.style.opacity = .7 * sm;
+    G.leader.style.opacity = sm;
+    // the pen buzzes down the anchor's shank while ink goes in
+    const p = penTip(t), j = Kit.calm ? 0 : Math.sin((time || 0) * 95) * .9;
+    G.pen.setAttribute('transform', `translate(${p.x + j},${p.y - (1 - penA) * 14}) rotate(26)`);
+    G.pen.style.opacity = penA;
+    G.buzz.forEach((b, i) => b.style.opacity = dragging ? (Math.sin((time || 0) * 40 + i * 2) > 0 ? .8 : .2) : 0);
+    const yB = G.yL(BASE), yf = G.yL(BASE + UP * v), yc = G.yL(BASE - DOWN * v);
+    G.flu.clip.setAttribute('y', yf); G.flu.men.setAttribute('cy', yf);
+    G.cov.clip.setAttribute('y', yc); G.cov.men.setAttribute('cy', yc);
+    G.dimF.setAttribute('d', dimPath(G.dxF, yB, yf));
+    G.dimC.setAttribute('d', dimPath(G.dxC, yB, yc));
+    const ro = clamp((v - .35) * 2.2, 0, 1);
+    G.flu.res.style.opacity = ro; G.cov.res.style.opacity = ro;
+  }
+
+  function spawn(k, d = 0) {
+    if (!G) return;
+    const p = G.paths[k], g = mk('g', {}, G.parts);
+    yglyph(g, f * .55, {stroke: k === 'flu' ? '#fff' : PALE});
+    gsap.set(g, {opacity: 0});
+    gsap.timeline({delay: d, onComplete: () => g.remove()})
+      .to(g, {opacity: .95, duration: .3, ease: 'power2.out'}, 0)
+      .to(g, {duration: 1.6 + Kit.rnd() * .6, ease: 'power1.inOut', motionPath: {path: p, align: p, alignOrigin: [.5, .5]}}, 0)
+      .to(g, {opacity: 0, duration: .35, ease: 'power2.in'}, '>-0.35');
+  }
+
+  function bubble(k) {
+    if (!G) return;
+    const o = G[k], x = o.x0 + 5 + Kit.rnd() * Math.max(1, G.cw - 10);
+    const top = +o.men.getAttribute('cy');
+    if (G.cylBot - top < 8) return;
+    const c = mk('circle', {cx: x, cy: G.cylBot + G.ry * .3, r: .9 + Kit.rnd() * 1.4, fill: 'none', stroke: '#fff', 'stroke-opacity': .75, 'stroke-width': .8}, o.gL);
+    gsap.to(c, {attr: {cy: top + 2, cx: x + (Kit.rnd() - .5) * 6}, duration: 1 + Kit.rnd() * .9, ease: 'power1.in', onComplete: () => c.remove()});
+  }
+
+  function speck(t) {
+    if (!G) return;
+    const p = penTip(t), c = mk('circle', {cx: p.x, cy: p.y, r: .8 + Kit.rnd(), fill: '#fff'}, G.parts);
+    const a = Kit.rnd() * Math.PI * 2, d = 4 + Kit.rnd() * 7;
+    gsap.to(c, {attr: {cx: p.x + Math.cos(a) * d, cy: p.y + Math.sin(a) * d}, opacity: 0, duration: .45, ease: 'power2.out', onComplete: () => c.remove()});
+  }
+
+  function wow() {
+    if (!G || Kit.calm) return;
+    for (let i = 0; i < 12; i++) spawn('flu', i * .07);
+    gsap.fromTo(G.glow, {opacity: 0}, {opacity: 1, duration: .35, ease: 'power2.out', yoyo: true, repeat: 3, delay: 1.2});
+    const yf = +G.flu.men.getAttribute('cy');
+    for (let i = 0; i < 2; i++) {
+      const rp = mk('ellipse', {cx: G.c1, cy: yf, rx: G.cw / 2, ry: G.ry, fill: 'none', stroke: '#fff', 'stroke-width': 2}, svg);
+      gsap.to(rp, {attr: {rx: G.cw * (1 + i * .3), ry: G.ry * (2.2 + i * .6)}, opacity: 0, duration: 1.2, delay: 1.3 + i * .25, ease: 'expo.out', onComplete: () => rp.remove()});
+    }
+    for (let i = 0; i < 8; i++) gsap.delayedCall(1.3 + i * .05, () => bubble('flu'));
+    gsap.to(G.flu.res, {duration: .9, scrambleText: {text: '+ STRONGER', chars: 'XY+-#01', speed: .5}});
+    gsap.to(G.cov.res, {duration: .9, delay: .15, scrambleText: {text: '− WEAKER', chars: 'XY+-#01', speed: .5}});
+    gsap.fromTo([G.dimF, G.dimC], {attr: {'stroke-width': 4}}, {attr: {'stroke-width': 1.4}, duration: .9, ease: 'elastic.out(1,.4)'});
+  }
+
+  function reveal() {
+    shown = true; Kit.haptic('success'); card.classList.add('answered');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.fromTo(['#why .big', '#why .body'], {opacity: 0, y: 8}, {opacity: 1, y: 0, stagger: .1, duration: .5, ease: 'power3.out'});
+    setTimeout(wow, 420);   // after the stage has settled into its new size
+  }
+
+  const acc = {flu: 0, cov: 0, bf: 0, bc: 0};
+  gsap.ticker.add((time, dms) => {
+    if (!G) return;
+    const dt = Math.min(.05, dms / 1000);
+    if (Kit.calm) L.v = S.t; else L.v += (S.t - L.v) * (1 - Math.exp(-dt * 5));
+    const t = clamp(S.t, 0, 1);
+    const want = (t > .01 && t < .985) ? 1 : 0;
+    penA = Kit.calm ? 0 : penA + (want - penA) * (1 - Math.exp(-dt * 12));
+    render(time);
+    if (!Kit.calm && penA > .4 && Math.abs(t - prevT) > .001) { speck(t); speck(t); }
+    prevT = t;
+    if (entered && !Kit.calm) {
+      acc.flu += dt * 3 * (BASE + UP * L.v); acc.cov += dt * 3 * (BASE - DOWN * L.v);
+      acc.bf += dt * (1.2 + 4 * L.v); acc.bc += dt * Math.max(.3, 1.2 - .9 * L.v);
+      for (const k of ['flu', 'cov']) while (acc[k] >= 1) { acc[k] -= 1; spawn(k); }
+      while (acc.bf >= 1) { acc.bf -= 1; bubble('flu'); }
+      while (acc.bc >= 1) { acc.bc -= 1; bubble('cov'); }
+    }
+    if (!shown && S.t > .97 && L.v > .85) reveal();
+  });
+
+  // ---------- the drag ----------
+  const xOf = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left) * W / r.width; };
+  const setX = x => {
+    S.t = clamp((x - G.tx0) / (G.tx1 - G.tx0), 0, 1);
+    if ((S.t > .5) !== half) { half = S.t > .5; Kit.haptic('light'); }
+  };
+  svg.addEventListener('pointerdown', e => {
+    if (!G) return;
+    dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    gsap.killTweensOf(S);
+    if (!touched) { touched = true; gsap.to(G.hint, {opacity: 0, duration: .25}); }
+    Kit.haptic('selection');
+    gsap.to(G.ring, {attr: {r: f * 1.1}, duration: .15, ease: 'power3.out'});
+    setX(xOf(e));
+  });
+  svg.addEventListener('pointermove', e => { if (dragging && G) setX(xOf(e)); });
+  const end = () => {
+    if (!dragging) return; dragging = false;
+    if (!G) return;
+    gsap.to(G.ring, {attr: {r: f * .85}, duration: .6, ease: 'elastic.out(1,.45)'});
+    gsap.to(S, {t: S.t > .5 ? 1 : 0, duration: Kit.calm ? 0 : .45, ease: 'power3.out'});
+  };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  let raf = 0;
+  new ResizeObserver(() => { if (ready) { cancelAnimationFrame(raf); raf = requestAnimationFrame(layout); } }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    entered = true;
+    if (Kit.calm || !G) return;
+    gsap.timeline()
+      .from(svg.querySelectorAll('.draw'), {drawSVG: 0, duration: 1, stagger: .06, ease: 'power3.inOut'}, .1)
+      .from(svg.querySelectorAll('.liq'), {opacity: 0, duration: .7, ease: 'power2.out'}, .7)
+      .from(svg.querySelectorAll('text.st'), {opacity: 0, stagger: .04, duration: .45, ease: 'power3.out'}, .5)
+      .from(G.knob, {opacity: 0, duration: .5, ease: 'back.out(2)'}, .9);
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    entered = true;
+    if (!G) layout();
+    if (!G) return;
+    const r = svg.getBoundingClientRect(), kx = r.width / W, ky = r.height / H;
+    const ev = (type, x) => svg.dispatchEvent(new PointerEvent(type, {clientX: r.left + x * kx, clientY: r.top + G.slY * ky, pointerId: 1, bubbles: true}));
+    ev('pointerdown', G.tx0);
+    for (let i = 1; i <= 8; i++) { await w(30); ev('pointermove', G.tx0 + (G.tx1 - G.tx0) * i / 8); }
+    ev('pointerup', G.tx1);
+    await w(Kit.calm ? 150 : 1600);
+  };
+})();
+Kit.single();
+</script>
+</html>

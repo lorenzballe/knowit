@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: technology-hydrogen-plugs-holes -->
-<!-- Look: a field-notebook page, cream paper with faint grid, pencil-hatched gallium, watercolour nitrogen and magnesium, rose holes that breathe, a little ammonia flask, handwritten labels.
+<!-- Look: a field-notebook sketch drawn straight on the card, pencil-hatched gallium, watercolour nitrogen and magnesium, pale holes that breathe, a little ammonia flask, handwritten labels.
      Interaction: each tap on the flask launches an NH3 molecule on a real ballistic arc; it splits, the nitrogen sinks into a nitrogen site of the crystal, and one hydrogen flies into a magnesium's hole and caps it while the others tumble away.
      Wow: once every hole is plugged, "Add energy" heats the page, heat shimmers rise, the lattice shudders, the hydrogen caps are flung off under gravity, and the freed holes start hopping across the crystal as a current, leaving fading trails.
      Layout: on tall stages the flask and legend sit above the crystal; on short stages they fold into a side column so the crystal always stays big and legible. -->
@@ -41,7 +41,7 @@
 (() => {
   gsap.registerPlugin(Physics2DPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), mk = Kit.mk;
-  const C = {paper:'#f5edd8', ink:'#2a2722', lead:'#5c574e', blue:'#5f93c4', amber:'#e39a2a', rose:'#d4425e', heat:'#f07f33', lav:'#a993d1'};
+  const C = {paper:'#f5edd8', ink:'#10100c', lead:'#10100c', blue:'#5f93c4', amber:'#e39a2a', rose:'#fff0f3', heat:'#ffe066', lav:'#a993d1'};
   const MG = [[0,2],[1,5],[2,0],[3,3]];
   const ROWS = 4, COLS = 6;
   let phase = 'feed', assigned = 0, plugged = 0, side = false;
@@ -77,9 +77,6 @@
     const wc = mk('filter', {id: 'wc', x: '-25%', y: '-25%', width: '150%', height: '150%'}, d);
     mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.07', numOctaves: 3, seed: 4, result: 'n'}, wc);
     mk('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: Math.max(3, s * .1), xChannelSelector: 'R', yChannelSelector: 'G'}, wc);
-    const gr = mk('filter', {id: 'grain', x: 0, y: 0, width: '100%', height: '100%'}, d);
-    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.85', numOctaves: 2, seed: 9}, gr);
-    mk('feColorMatrix', {type: 'saturate', values: 0}, gr);
     const soft = mk('filter', {id: 'soft', x: '-60%', y: '-60%', width: '220%', height: '220%'}, d);
     mk('feGaussianBlur', {stdDeviation: Math.max(2, s * .07)}, soft);
     const sh = mk('filter', {id: 'shadow', x: '-30%', y: '-30%', width: '160%', height: '160%'}, d);
@@ -93,7 +90,7 @@
       mk('stop', {offset: '100%', 'stop-color': col, 'stop-opacity': a2}, g);
     };
     wash('wGa', '#a49d8e', .12, .3, .55); wash('wN', C.blue); wash('wMg', C.amber, .3, .65, .95); wash('wLav', C.lav, .25, .45, .7);
-    const hg = mk('radialGradient', {id: 'heatg', cx: '50%', cy: '85%', r: '80%'}, d);
+    const hg = mk('radialGradient', {id: 'heatg', cx: '50%', cy: '50%', r: '50%'}, d);
     mk('stop', {offset: '0%', 'stop-color': C.heat, 'stop-opacity': .85}, hg);
     mk('stop', {offset: '100%', 'stop-color': C.heat, 'stop-opacity': 0}, hg);
     const cp = mk('clipPath', {id: 'flaskclip'}, d);
@@ -101,17 +98,8 @@
   }
 
   function paper() {
-    const g = L.bg, r = Math.max(10, fs * .9);
-    mk('rect', {x: 0, y: 0, width: W, height: H, rx: r, fill: C.paper}, g);
-    const gap = fs * 1.7;
-    for (let y = gap; y < H; y += gap) mk('line', {x1: 0, x2: W, y1: y, y2: y, stroke: '#7aa3c4', 'stroke-width': .6, opacity: .22}, g);
-    for (let x = gap; x < W; x += gap) mk('line', {x1: x, x2: x, y1: 0, y2: H, stroke: '#7aa3c4', 'stroke-width': .5, opacity: .1}, g);
-    // a red margin rule, like a real notebook page
-    const mx = side ? Math.max(150, Math.min(200, W * .3)) - 4 : gap * .9;
-    if (side) mk('line', {x1: mx, x2: mx, y1: 0, y2: H, stroke: C.rose, 'stroke-width': .9, opacity: .22}, g);
-    mk('rect', {x: 0, y: 0, width: W, height: H, rx: r, filter: 'url(#grain)', opacity: .09, style: 'mix-blend-mode:multiply'}, g);
-    mk('rect', {x: -12, y: -4, width: fs * 4, height: fs * 1.3, fill: '#efe1b6', opacity: .75, transform: `rotate(-28 ${fs * 2} ${fs * .6})`}, g);
-    L.heatRect = mk('rect', {x: 0, y: 0, width: W, height: H, rx: r, fill: 'url(#heatg)', opacity: phase === 'freed' ? .16 : 0, style: 'mix-blend-mode:multiply'}, L.heat);
+    // no backdrop: the drawing sits directly on the card. Only a soft heat glow around the crystal.
+    L.heatRect = mk('ellipse', {cx: gx + 2.5 * s, cy: gy + 1.5 * s, rx: 3.7 * s, ry: 2.7 * s, fill: 'url(#heatg)', opacity: phase === 'freed' ? .16 : 0}, L.heat);
   }
 
   // ---------- the scene ----------
@@ -132,7 +120,6 @@
       mk('path', {d: blob(x, y, rad * 1.02, seed + 1, .1), fill: `url(#w${kind})`, filter: 'url(#wc)'}, g);
       if (kind === 'Ga') mk('path', {d: blob(x, y, rad * .96, seed), fill: 'url(#hatch)', opacity: .5}, g);
       mk('path', {d: blob(x, y, rad, seed + 2, .05), fill: 'none', stroke: C.ink, 'stroke-width': mg ? 1.8 : 1.2, opacity: .85}, g);
-      // a little paper halo keeps every handwritten letter crisp over the hatching
       txt(g, x, y + af * .36, kind, af, {'text-anchor': 'middle', fill: mg ? '#4a2c05' : C.ink,
         stroke: mg ? '#f6dcae' : C.paper, 'stroke-width': Math.max(2.4, af * .2), 'stroke-opacity': .85, 'paint-order': 'stroke', 'stroke-linejoin': 'round'});
     }
@@ -191,7 +178,7 @@
       : plugged === 4 ? 'every hole plugged: no p-type'
       : plugged > 0 ? 'hydrogen is sneaking in…' : 'magnesium leaves holes → p-type';
     noteEl.textContent = t;
-    noteEl.setAttribute('fill', phase === 'freed' ? '#1f6a3a' : plugged === 4 ? C.rose : C.ink);
+    noteEl.setAttribute('fill', phase === 'freed' ? '#ffffff' : plugged === 4 ? C.rose : C.ink);
   }
 
   function plugStyle(i) {
@@ -308,7 +295,7 @@
       gsap.set(n, {x: px, y: py});
       live.push(gsap.to(n, {x: nx, y: ny, scale: .6, opacity: 0, duration: .55, ease: 'power2.in', onComplete: () => {
         n.remove();
-        const sp = mk('circle', {cx: nx, cy: ny, r: s * .24, fill: 'none', stroke: C.blue, 'stroke-width': 2}, L.fly);
+        const sp = mk('circle', {cx: nx, cy: ny, r: s * .24, fill: 'none', stroke: '#fff', 'stroke-width': 2}, L.fly);
         gsap.to(sp, {attr: {r: s * .5}, opacity: 0, duration: .5, ease: 'power2.out', onComplete: () => sp.remove()});
       }}));
       // one hydrogen finds the magnesium; the others tumble away

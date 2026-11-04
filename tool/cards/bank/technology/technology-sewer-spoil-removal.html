@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
-#pic{flex:1 1 0;min-height:0;width:100%;display:block}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh;background:none;border:0;box-shadow:none;border-radius:0}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block;background:none;border:0;box-shadow:none}
 #ctl{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0}
 #ctl .lab{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
 #dial{width:100%;accent-color:var(--k);height:max(3.6cqh,26px);margin:0;cursor:pointer}
@@ -33,8 +33,8 @@
         <input id="dial" type="range" min="0" max="100" value="0" aria-label="Share of buckets tipped into the sewer">
       </div>
       <div id="stats">
-        <div class="st"><div class="n" id="nIn">100%</div><div class="t">of the spoil left in the tunnel</div><div class="bar"><i id="bIn" style="background:#8a5a2b"></i></div></div>
-        <div class="st"><div class="n" id="nOut">0%</div><div class="t">carried off by sewer water</div><div class="bar"><i id="bOut" style="background:#2f7fd8"></i></div></div>
+        <div class="st"><div class="n" id="nIn">100%</div><div class="t">of the spoil left in the tunnel</div><div class="bar"><i id="bIn" style="background:#6b3f14"></i></div></div>
+        <div class="st"><div class="n" id="nOut">0%</div><div class="t">carried off by sewer water</div><div class="bar"><i id="bOut" style="background:#0a4fa8"></i></div></div>
       </div>
       <div id="why" class="gone">
         <p class="big">The sewer took it away.</p>
@@ -50,7 +50,7 @@
 <script>
 let s = 0, done = false, G = null, bits = [], spawnAcc = 0;
 const svg = Kit.$('pic'), dial = Kit.$('dial');
-const BROWN = '#8a5a2b', BLUE = '#2f7fd8';
+const BROWN = '#b87333', BROWN_TXT = '#5a3410', BLUE = '#0a4fa8';
 
 function draw(){
   const {W, H, f} = Kit.fitSvg(svg);
@@ -58,11 +58,10 @@ function draw(){
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
   const g = {W, H, f};
   const ink = p => `color-mix(in srgb,var(--k) ${p}%,transparent)`;
-  // ground
+  // ground line (no backdrop panel)
   const gy = H*.14;
-  mk('rect', {x:0, y:gy, width:W, height:H-gy, rx:f*.6, style:`fill:${ink(10)}`});
   mk('line', {x1:0, y1:gy, x2:W, y2:gy, style:'stroke:var(--k);stroke-width:2'});
-  const t1 = mk('text', {x:f*.4, y:gy-f*.45, style:`fill:var(--muted);font:600 ${f*.9}px var(--body)`}); t1.textContent = 'street';
+  const t1 = mk('text', {x:f*.4, y:gy-f*.45, style:`fill:var(--k);font:600 ${f*.9}px var(--body)`}); t1.textContent = 'street';
   // bank vault
   const bx = W*.74, by = H*.2, bh = H*.34;
   mk('rect', {x:bx, y:by, width:W-bx-f*.3, height:bh, rx:f*.3, style:'fill:var(--k)'});
@@ -110,7 +109,7 @@ function update(){
   const yb = G.ty+G.th, a = G.sx+G.sw*.4, b = G.tx1-G.W*.01, h = (1-s)*G.th*.9 + 2;
   G.pile.setAttribute('d', `M${a},${yb} Q${(a+b)/2},${yb-2*h} ${b},${yb} Z`);
   G.status.textContent = s < .35 ? 'tunnel choking up' : s > .85 ? 'tunnel stays clear' : 'less to hide';
-  G.status.style.fill = s < .35 ? BROWN : s > .85 ? BLUE : 'var(--muted)';
+  G.status.style.fill = s < .35 ? BROWN_TXT : s > .85 ? BLUE : 'var(--k)';
   if (Kit.calm) seedStatic();
 }
 

@@ -8,7 +8,7 @@
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #picbox{flex:1;min-height:0;position:relative}
-#pic{position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:1.8cqh;overflow:hidden}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden;background:none}
 #sw{display:flex;gap:2cqw;background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:2cqh;padding:.6cqh}
 .sw{flex:1;font:700 max(2cqh,13px)/1.15 var(--body);color:var(--k);background:transparent;border:0;border-radius:1.5cqh;padding:1.3cqh 2cqw;cursor:pointer}
 .sw.on{background:var(--k);color:var(--c)}
@@ -35,7 +35,7 @@
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const BLUE = '#1f78d1';
+const BLUE = '#062a66';
 let dug = false, G = {};
 function lcg(s){return()=>(s=(s*16807)%2147483647)/2147483647;}
 
@@ -48,10 +48,6 @@ function draw(){
   const tp = `M${cx-r},${bot} L${cx-r},${cy} A${r} ${r} 0 0 1 ${cx+r},${cy} L${cx+r},${bot} Z`;
   const defs = Kit.mk('defs', {}, svg);
   const cp = Kit.mk('clipPath', {id:'tclip'}, defs); Kit.mk('path', {d:tp}, cp);
-  // sky and ground
-  Kit.mk('rect', {x:0,y:0,width:W,height:H,style:'fill:color-mix(in srgb,var(--k) 4%,var(--c))'}, svg);
-  Kit.mk('rect', {x:0,y:s,width:W,height:H-s,style:'fill:color-mix(in srgb,var(--k) 16%,var(--c))'}, svg);
-  Kit.mk('rect', {x:0,y:yw,width:W,height:H-yw,fill:BLUE,opacity:.16}, svg);
   Kit.mk('line', {x1:0,y1:s,x2:W,y2:s,'stroke-width':3,style:'stroke:var(--k)'}, svg);
   // pores
   const R = lcg(7), n = Math.round(W*H/520);
@@ -59,13 +55,13 @@ function draw(){
     const x = R()*W, y = s + 6 + R()*(H-s-10), rr = 1.2 + R()*2.2;
     const inT = Math.abs(x-cx) < r+4 && y > top-4 && y < bot+4;
     if (inT) continue;
-    Kit.mk('circle', {cx:x,cy:y,r:rr, fill: y>yw ? BLUE : 'none', opacity: y>yw ? .75 : .45,
+    Kit.mk('circle', {cx:x,cy:y,r:rr, fill: y>yw ? BLUE : 'none', opacity: y>yw ? .6 : .45,
       style: y>yw ? '' : 'stroke:var(--k)', 'stroke-width':1}, svg);
   }
   // water table line
   Kit.mk('line', {x1:0,y1:yw,x2:W,y2:yw,stroke:BLUE,'stroke-width':3,'stroke-dasharray':'9 6'}, svg);
   // tunnel
-  const plug = Kit.mk('path', {d:tp, style:'fill:color-mix(in srgb,var(--k) 16%,var(--c))'}, svg);
+  const plug = Kit.mk('path', {d:tp, style:'fill:none'}, svg);
   const air = Kit.mk('path', {d:tp, style:'fill:var(--c)', opacity: dug?1:0}, svg);
   const wg = Kit.mk('g', {'clip-path':'url(#tclip)'}, svg);
   const full = bot - top;

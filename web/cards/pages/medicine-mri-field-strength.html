@@ -8,11 +8,11 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #row{display:flex;align-items:flex-end;justify-content:space-between;gap:3cqw}
 #legend{display:flex;align-items:center;gap:2cqw;font:600 max(1.8cqh,12px)/1.25 var(--body);color:var(--k);overflow-wrap:anywhere}
-#legend i{flex:none;width:max(1.6cqh,11px);height:max(1.6cqh,11px);border-radius:50%;background:#ff5a36;box-shadow:0 0 0 .3cqh color-mix(in srgb,#ff5a36 35%,transparent)}
+#legend i{flex:none;width:max(1.6cqh,11px);height:max(1.6cqh,11px);border-radius:50%;background:#2b0a08;box-shadow:0 0 0 .3cqh color-mix(in srgb,#2b0a08 35%,transparent)}
 #count{text-align:right;flex:none}
 #num{display:block;font:800 max(4.4cqh,24px)/1 var(--display);color:var(--k);font-variant-numeric:tabular-nums}
 #what{display:block;font:600 max(1.6cqh,12px)/1.25 var(--body);color:var(--muted)}
-#cvwrap{flex:1;min-height:0;position:relative;border-radius:1.8cqh;background:color-mix(in srgb,var(--k) 5%,transparent);overflow:hidden}
+#cvwrap{flex:1;min-height:0;position:relative;overflow:hidden}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
 #go{font:800 max(2.6cqh,16px)/1 var(--display);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 6cqw;cursor:pointer;align-self:center;min-width:40cqw}
 #go:active{transform:scale(.97)}
@@ -67,14 +67,13 @@ function render() {
   const {x, W, H, s, ox, oy} = G, k = ink(), n = Math.round(shown.v);
   x.clearRect(0, 0, W, H);
   x.fillStyle = k;
-  x.globalAlpha = .1; fillN(TOTAL);
   x.globalAlpha = 1; fillN(n);
   // Earth's single square, with a ring so the eye can find it
   const cx = ox + s / 2, cy = oy + s / 2;
-  x.fillStyle = '#ff5a36';
+  x.fillStyle = '#2b0a08';
   x.fillRect(ox, oy, Math.max(s, 2), Math.max(s, 2));
   x.globalAlpha = ring.a;
-  x.strokeStyle = '#ff5a36'; x.lineWidth = 2.5;
+  x.strokeStyle = '#2b0a08'; x.lineWidth = 2.5;
   x.beginPath(); x.arc(cx, cy, 6 + 6 * ring.r, 0, Math.PI * 2); x.stroke();
   x.globalAlpha = 1;
   Kit.$('num').textContent = n.toLocaleString('en') + '×';

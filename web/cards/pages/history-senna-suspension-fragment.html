@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#pic{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:color-mix(in srgb,var(--k) 7%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 18%,transparent)}
+#pic{position:relative;flex:1;min-height:0;overflow:hidden}
 #svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 #cap{font:700 max(2.2cqh,14px)/1.25 var(--body);color:var(--k);min-height:2.5em;margin:0;overflow-wrap:anywhere}
 #ctrl{display:flex;align-items:center;gap:4cqw}
@@ -16,7 +16,6 @@
 #dots i.on{background:var(--k)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0}
-.ground{fill:color-mix(in srgb,var(--k) 4%,transparent)}
 .wall{fill:color-mix(in srgb,var(--k) 55%,transparent)}
 .hatch{stroke:var(--c);stroke-width:1.5;opacity:.5}
 .body1{fill:var(--k)}
@@ -24,14 +23,14 @@
 .tread{stroke:var(--c);stroke-width:1;opacity:.35}
 .cock{fill:var(--c)}
 .arm{stroke:var(--k);stroke-width:2.2;stroke-linecap:round;fill:none}
-.arm.hot{stroke:#e0312b}
-.frag{fill:#e0312b;stroke:#7a0e0a;stroke-width:.4}
+.arm.hot{stroke:#c41e17}
+.frag{fill:#c41e17;stroke:#5a0804;stroke-width:.4}
 .helmet{fill:#f5c400;stroke:var(--k);stroke-width:1.2}
 .visor{fill:#1d2b44}
-.burst{fill:#ff9d1c;stroke:#e0312b;stroke-width:1}
-.trail{fill:none;stroke:#e0312b;stroke-width:1.5;stroke-linecap:round}
-.hit{fill:none;stroke:#e0312b;stroke-width:2}
-.spark{fill:#ffcf3a;stroke:#e0312b;stroke-width:.5}
+.burst{fill:#fff3c4;stroke:#c41e17;stroke-width:1}
+.trail{fill:none;stroke:#c41e17;stroke-width:1.5;stroke-linecap:round}
+.hit{fill:none;stroke:#c41e17;stroke-width:2}
+.spark{fill:#fff3c4;stroke:#c41e17;stroke-width:.5}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Zoom in · step by step">
   <div class="in">
@@ -84,7 +83,6 @@ function build(){
   pat = mk('pattern', {id:'senna-world', patternUnits:'userSpaceOnUse', x:-400, y:-400, width:1200, height:1200, viewBox:'-400 -400 1200 1200'}, defs);
   world = mk('g', {}, pat);
   mk('rect', {x:0, y:0, width:W, height:H, fill:'url(#senna-world)'}, svg);
-  mk('rect', {x:-400, y:-400, width:1200, height:1200, class:'ground'}, world);
   // wall
   mk('rect', {x:236, y:-400, width:60, height:1200, class:'wall'}, world);
   for (let y = -400; y < 800; y += 14) mk('line', {x1:236, y1:y, x2:250, y2:y+14, class:'hatch', 'vector-effect':'non-scaling-stroke'}, world);

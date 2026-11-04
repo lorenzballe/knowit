@@ -1,0 +1,38 @@
+{
+  "id": "science-bouncing-egg-bubbles",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What causes the tiny bubbles that let the egg bounce?",
+  "answer": "The shell is calcium carbonate, and it reacts with the vinegar to release carbon dioxide gas. Those bubbles get trapped in the bare membrane, which makes the egg rubbery and lets it bounce.",
+  "move": "Shell + acid make CO₂. Its bubbles, trapped in the bare membrane, make the egg rubbery.",
+  "keywords": [
+    "eggshell",
+    "vinegar",
+    "carbon dioxide",
+    "calcium carbonate",
+    "egg"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A bouncing egg with a TAP TO FIZZ heading. It asks what causes the tiny bubbles that let the egg bounce, and says tapping React lets the shell and vinegar meet one step at a time.",
+    "ground": "#070b1c"
+  },
+  "source": "Geopop, “L'uovo che rimbalza!” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=CKE7qFWpADI&t=28s",
+  "written": "2026-11-03"
+}

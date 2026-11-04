@@ -1,0 +1,38 @@
+{
+  "id": "nature-yakutsk-heat-spikes",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What unusual summer temperatures have been recorded in Yakutsk?",
+  "answer": "Yakutsk's typical summer high is about +20 °C, but recent anomalies have reached +35 °C to +38 °C, unprecedented for the region. The page asks you to drag the mercury up and watch the frozen ground under the city.",
+  "move": "The world's coldest city now sees +38 °C summer spikes, and its frozen ground feels it.",
+  "keywords": [
+    "yakutsk",
+    "permafrost",
+    "siberia",
+    "summer heat",
+    "frozen ground"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A thermometer you drag upward from +20 °C toward +38 °C, set against a snow-covered city, asking what unusual summer temperatures Yakutsk has recorded.",
+    "ground": "#0a2234"
+  },
+  "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=332s",
+  "written": "2026-11-03"
+}

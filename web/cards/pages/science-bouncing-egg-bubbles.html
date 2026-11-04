@@ -1,0 +1,368 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-bouncing-egg-bubbles -->
+<!-- Look: a night observatory. An egg floats in a glowing vinegar bath at the centre of instrument rings under a star field, and a d3 gauge ring tracks the calcium carbonate shell against the CO₂ gas.
+     Interaction: each tap of React eats pits into the shell. CO₂ bubbles fizz up through the vinegar, others cling inside the membrane, the egg turns translucent amber, and the gauge morphs from shell to gas.
+     Wow moment: the vinegar drains away and you drop the bubble-filled membrane. It squashes on the glowing floor, flashes the rings and bounces like rubber. -->
+<title>The bouncing egg</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;border-radius:0;overflow:hidden;position:relative;
+  background:none;border:0;box-shadow:none}
+#pic{flex:1;min-height:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation}
+#row{display:flex;align-items:center;gap:3cqw;margin-top:1.4cqh;flex-shrink:0;min-height:max(5.4cqh,40px)}
+#go{flex-shrink:0;font:800 max(2.1cqh,14px)/1 var(--body);letter-spacing:.02em;color:#c9f6ff;background:linear-gradient(180deg,#14214a,#070c1f);
+  border:0;border-radius:999px;padding:0 5.5cqw;height:max(5.4cqh,40px);margin:0;cursor:pointer;
+  box-shadow:inset 0 0 0 .25cqh rgba(127,232,255,.6);transition:transform .08s}
+#go:active{transform:scale(.95)}
+#go.drop{color:#2a1300;background:linear-gradient(180deg,#ffd27a,#ff9f3a);box-shadow:inset 0 0 0 .25cqh rgba(255,240,200,.6)}
+#pips{display:flex;align-items:center;gap:1.6cqw}
+.pip{width:max(1.1cqh,8px);height:max(1.1cqh,8px);border-radius:50%;background:color-mix(in srgb,var(--k) 18%,transparent);transition:background .3s,box-shadow .3s}
+.pip.on{background:#0e7f9c;box-shadow:0 0 0 2px rgba(127,232,255,.55)}
+.say{font:600 max(1.95cqh,13px)/1.3 var(--body)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to react · drop it" style="--c:#070b1c;--k:#dff8ff;--edge:#02030a">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO FIZZ</span></div>
+    <h2 class="q">What causes the tiny bubbles that let the egg bounce?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="An egg in vinegar inside glowing instrument rings. As the shell reacts, carbon dioxide bubbles form and the egg turns translucent, then it bounces on the floor."></svg>
+    </div>
+    <div id="row"><button id="go">React +</button><div id="pips"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div></div>
+    <p class="say" id="say">The shell is calcium carbonate. The egg sits in vinegar. <b>Tap React</b> to let them meet, one step at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Shell + acid make CO₂. Its bubbles, trapped in the bare membrane, make the egg rubbery.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'uovo che rimbalza!” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go'), row = Kit.$('row'), stage = Kit.$('stage'), pips = Kit.$('pips').children;
+  const ICE = '#7fe8ff', AMBER = '#ffb347', CREAM = '#f6ead6', INK = '#03050c', ACID = '#b8ffde';
+  const TAU = Math.PI * 2;
+  let W = 0, H = 0, fs = 12, cx = 0, cy = 0, R = 0, th = 0, ery = 0, erx = 0, floorY = 0, D = 0;
+  let step = 0, dropped = false, dropping = false, drained = false, built = false, freshNotes = false;
+  let lastW = 0, lastH = 0;
+  const st = {p: 0};
+  const stuck = [], pits = [];
+  let ambient = [];
+  const L = {};
+  const MSG = [
+    '',
+    'Acid meets calcium carbonate: together they make <b>carbon dioxide</b>, a gas that fizzes off as bubbles.',
+    'The acid eats pits into the shell. Less shell, more gas: the egg turns <b>translucent</b>.',
+    'Some bubbles stay caught <b>inside the membrane</b> under the shell.',
+    'Only the membrane is left, full of microscopic gas bubbles. <b>Now drop it.</b>'
+  ];
+
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const grad = (defs, id, type, attrs, stops) => {
+    const g = mk(type, Object.assign({id}, attrs), defs);
+    stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g));
+    return g;
+  };
+  const text = (p, x, y, t, a = {}, font = 'var(--mono)') => {
+    const e = mk('text', Object.assign({x, y, 'font-size': fs, fill: '#dff8ff', 'font-weight': 700,
+      style: `font-family:${font};paint-order:stroke;stroke:${INK};stroke-width:4px;stroke-linejoin:round`}, a), p);
+    e.textContent = t; return e;
+  };
+  // An egg: an ellipse, a little wider at the bottom.
+  const eggPath = (x0, y0) => {
+    let d = '';
+    for (let i = 0; i <= 72; i++) {
+      const a = i / 72 * TAU, s = Math.sin(a);
+      d += (i ? 'L' : 'M') + (x0 + erx * Math.cos(a) * (1 + .13 * s)).toFixed(1) + ',' + (y0 + ery * s).toFixed(1);
+    }
+    return d + 'Z';
+  };
+  const onEgg = (a, rf) => [cx + erx * rf * Math.cos(a) * (1 + .13 * Math.sin(a)), cy + ery * rf * Math.sin(a)];
+
+  function build() {
+    ambient.forEach(t => t.kill()); ambient = [];
+    svg.innerHTML = '';
+    const r0 = stage.getBoundingClientRect(); lastW = r0.width; lastH = r0.height;
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, W / 26));
+    cx = W / 2; floorY = H - fs * 1.7;
+    // Keep the outermost ring marks (R + th*3.4) inside the stage width.
+    R = Math.max(40, Math.min(W * .4, (W / 2 - 4) / 1.255, (floorY - fs * 3.2) / 2.3));
+    th = Math.max(6, R * .075);
+    cy = fs * 3 + R + th;
+    ery = R * .55; erx = ery * .78;
+    D = Math.max(0, floorY - (cy + ery));
+
+    const defs = mk('defs', {}, svg);
+    grad(defs, 'neb', 'radialGradient', {cx: '80%', cy: '18%', r: '45%'}, [[0, '#6b3cff', .24], [1, '#6b3cff', 0]]);
+    grad(defs, 'neb2', 'radialGradient', {cx: '12%', cy: '85%', r: '40%'}, [[0, '#1fbf8f', .12], [1, '#1fbf8f', 0]]);
+    grad(defs, 'halo', 'radialGradient', {cx: '50%', cy: '50%', r: '50%'}, [[0, AMBER, .55], [.55, '#ff7a2a', .15], [1, '#ff7a2a', 0]]);
+    grad(defs, 'mem', 'radialGradient', {cx: '42%', cy: '38%', r: '65%'}, [[0, '#ffe3b0', .85], [.5, '#ffb35c', .55], [1, '#c2541c', .5]]);
+    grad(defs, 'yolk', 'radialGradient', {cx: '40%', cy: '35%', r: '60%'}, [[0, '#ffe066'], [.6, '#ff9d1f'], [1, '#d4620c']]);
+    grad(defs, 'shell', 'radialGradient', {cx: '38%', cy: '30%', r: '75%'}, [[0, '#fffaf1'], [.55, CREAM], [1, '#a88e6c']]);
+    grad(defs, 'bub', 'radialGradient', {cx: '35%', cy: '30%', r: '65%'}, [[0, '#ffffff', .95], [.35, ICE, .35], [1, ICE, .9]]);
+    grad(defs, 'floorGlow', 'linearGradient', {x1: 0, y1: 0, x2: 0, y2: 1}, [[0, ICE, .22], [1, ICE, 0]]);
+    grad(defs, 'vin', 'linearGradient', {x1: 0, y1: 0, x2: 0, y2: 1}, [[0, ACID, .3], [1, '#1fbf8f', .12]]);
+    const glow = mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: Math.max(2, th * .45), result: 'b'}, glow);
+    const mg = mk('feMerge', {}, glow); mk('feMergeNode', {in: 'b'}, mg); mk('feMergeNode', {in: 'SourceGraphic'}, mg);
+    const clip = mk('clipPath', {id: 'eggclip'}, defs);
+    mk('path', {d: eggPath(cx, cy)}, clip);
+    const Rb = R - th * .7;
+    const bowl = mk('clipPath', {id: 'bowl'}, defs);
+    mk('circle', {cx, cy, r: Rb}, bowl);
+    const mask = mk('mask', {id: 'shellmask', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+    mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#fff'}, mask);
+    L.pits = mk('g', {}, mask);
+
+    // The sky: the card's own night ground shows through; only soft glows and stars here.
+    mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#neb)'}, svg);
+    mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#neb2)'}, svg);
+    L.stars = mk('g', {}, svg);
+    for (let i = 0; i < 150; i++) {
+      const r = Kit.rnd(), s = mk('circle', {cx: 2 + Kit.rnd() * (W - 4), cy: 2 + Kit.rnd() * (floorY - 6), r: .35 + r * r * 1.3, fill: r > .9 ? '#ffe9c4' : '#dfefff', opacity: .25 + Kit.rnd() * .6}, L.stars);
+      if (i < 18 && !Kit.calm) ambient.push(gsap.to(s, {opacity: .05, duration: 1.2 + Kit.rnd() * 2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Kit.rnd() * 2}));
+    }
+
+    // The floor: a glowing horizon.
+    L.floor = mk('g', {}, svg);
+    mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: 'url(#floorGlow)'}, L.floor);
+    mk('line', {x1: fs, x2: W - fs, y1: floorY, y2: floorY, stroke: ICE, 'stroke-width': 1.4, opacity: .7}, L.floor);
+    for (let x = fs; x <= W - fs; x += fs * 1.6) mk('line', {x1: x, x2: x, y1: floorY + 2, y2: floorY + 5, stroke: ICE, 'stroke-width': 1, opacity: .45}, L.floor);
+    text(L.floor, fs, floorY + fs * 1.2, 'FLOOR', {'font-size': 12, fill: ICE, opacity: .8});
+
+    // The instrument rings.
+    L.rings = mk('g', {}, svg);
+    const outer = mk('g', {}, L.rings);
+    mk('circle', {cx, cy, r: R + th * 2.6, fill: 'none', stroke: ICE, 'stroke-width': 1, opacity: .35, 'stroke-dasharray': '2 7'}, outer);
+    const ticks = mk('g', {}, L.rings);
+    for (let i = 0; i < 96; i++) {
+      const a = i / 96 * TAU, long = i % 8 === 0, r0 = R + th * .95, r1 = r0 + (long ? th * 1.1 : th * .5);
+      mk('line', {x1: cx + Math.cos(a) * r0, y1: cy + Math.sin(a) * r0, x2: cx + Math.cos(a) * r1, y2: cy + Math.sin(a) * r1, stroke: long ? ICE : '#9fb8e8', 'stroke-width': long ? 1.4 : .8, opacity: long ? .8 : .4}, ticks);
+    }
+    mk('circle', {cx, cy, r: R, fill: 'none', stroke: ICE, 'stroke-width': th, opacity: .09}, L.rings);
+    const inner = mk('g', {}, L.rings);
+    mk('circle', {cx, cy, r: R - th * 1.5, fill: 'none', stroke: '#a9c7ff', 'stroke-width': 1, opacity: .4, 'stroke-dasharray': '14 6 2 6'}, inner);
+    for (const [x1, y1, x2, y2] of [[cx - R - th * 3.4, cy, cx - R - th * 1.9, cy], [cx + R + th * 1.9, cy, cx + R + th * 3.4, cy], [cx, cy - R - th * 3.4, cx, cy - R - th * 1.9]])
+      mk('line', {x1, y1, x2, y2, stroke: ICE, 'stroke-width': 1.4, opacity: .7}, L.rings);
+    if (!Kit.calm) {
+      ambient.push(gsap.to(outer, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 90, repeat: -1, ease: 'none'}));
+      ambient.push(gsap.to(inner, {rotation: -360, svgOrigin: `${cx} ${cy}`, duration: 50, repeat: -1, ease: 'none'}));
+    }
+    // The gauge: shell against gas, drawn by d3 from st.p.
+    L.gauge = mk('g', {transform: `translate(${cx},${cy})`, filter: 'url(#glow)'}, L.rings);
+    L.shellA = mk('path', {fill: CREAM}, L.gauge);
+    L.gasA = mk('path', {fill: ICE}, L.gauge);
+
+    // The legend.
+    L.legend = mk('g', {}, svg);
+    mk('circle', {cx: fs * 1.3, cy: fs * 1.55, r: fs * .32, fill: CREAM, filter: 'url(#glow)'}, L.legend);
+    text(L.legend, fs * 2, fs * 1.9, 'SHELL · CaCO₃', {fill: CREAM});
+    mk('circle', {cx: W - fs * 1.3, cy: fs * 1.55, r: fs * .32, fill: ICE, filter: 'url(#glow)'}, L.legend);
+    text(L.legend, W - fs * 2, fs * 1.9, 'CO₂ GAS', {fill: ICE, 'text-anchor': 'end'});
+
+    // The egg.
+    L.shadow = mk('ellipse', {cx, cy: floorY + 2, rx: erx * .9, ry: fs * .3, fill: '#000', opacity: .12}, svg);
+    L.mv = mk('g', {}, svg);
+    L.sq = mk('g', {}, L.mv);
+    L.halo = mk('ellipse', {cx, cy, rx: erx * 1.9, ry: ery * 1.6, fill: 'url(#halo)'}, L.sq);
+    mk('path', {d: eggPath(cx, cy), fill: 'url(#mem)', stroke: '#ffd9a6', 'stroke-width': 1.6, opacity: .95}, L.sq);
+    // Fine veins of the membrane.
+    const veins = mk('g', {'clip-path': 'url(#eggclip)', fill: 'none', stroke: '#ffe8c4', 'stroke-width': .8, opacity: .35}, L.sq);
+    for (let i = 0; i < 5; i++) {
+      const a = Kit.rnd() * TAU, [x1, y1] = onEgg(a, 1), [x2, y2] = onEgg(a + 1.2 + Kit.rnd(), .4), [x3, y3] = onEgg(a + 2.4, 1);
+      mk('path', {d: `M${x1},${y1}Q${x2},${y2} ${x3},${y3}`}, veins);
+    }
+    L.yolk = mk('circle', {cx, cy: cy + ery * .12, r: erx * .5, fill: 'url(#yolk)'}, L.sq);
+    L.bubs = mk('g', {'clip-path': 'url(#eggclip)'}, L.sq);
+    stuck.forEach(b => drawBubble(b, false));
+    L.shell = mk('g', {mask: 'url(#shellmask)'}, L.sq);
+    mk('path', {d: eggPath(cx, cy), fill: 'url(#shell)', stroke: '#fff3df', 'stroke-width': 1.2}, L.shell);
+    const spk = mk('g', {'clip-path': 'url(#eggclip)'}, L.shell);
+    for (let i = 0; i < 46; i++) { const [x, y] = onEgg(Kit.rnd() * TAU, Math.sqrt(Kit.rnd()) * .95); mk('circle', {cx: x, cy: y, r: .5 + Kit.rnd() * 1.1, fill: '#8a6f4f', opacity: .25 + Kit.rnd() * .3}, spk); }
+    L.rims = mk('g', {'clip-path': 'url(#eggclip)'}, L.shell);
+    pits.forEach(p => drawPit(p, false));
+    mk('ellipse', {cx: cx - erx * .36, cy: cy - ery * .42, rx: erx * .16, ry: ery * .26, fill: '#fff', opacity: .5, transform: `rotate(24 ${cx - erx * .36} ${cy - ery * .42})`}, L.sq);
+
+    // The vinegar bath, in front of the egg like glass.
+    // The wave is redrawn in place (phase shift) so its geometry stays within the bowl.
+    L.bath = mk('g', {'clip-path': 'url(#bowl)'}, svg);
+    L.liq = mk('g', {}, L.bath);
+    const lvl = cy - ery * 1.28, wl = fs * 3, amp = fs * .2, x0 = cx - R - wl * 2;
+    const xl = cx - Rb - 1, xr = cx + Rb + 1, yb = cy + Rb + 2;
+    const wv = {ph: 0};
+    const wave = mk('g', {}, L.liq);
+    const body = mk('path', {fill: 'url(#vin)'}, wave);
+    const crest = mk('path', {fill: 'none', stroke: ACID, 'stroke-width': 1.6, opacity: .8}, wave);
+    const drawWave = () => {
+      let d = '';
+      for (let x = xl; ; x += 2) {
+        const xx = Math.min(x, xr);
+        d += (d ? 'L' : 'M') + xx.toFixed(1) + ',' + (lvl - amp / 2 * Math.sin(TAU * (xx - x0 - wv.ph) / wl)).toFixed(1);
+        if (xx >= xr) break;
+      }
+      crest.setAttribute('d', d);
+      body.setAttribute('d', d + `L${xr},${yb}L${xl},${yb}Z`);
+    };
+    drawWave();
+    const vt = 'VINEGAR · acid', vy = cy + R * .8;
+    if (fs * .62 * vt.length < 2 * Math.sqrt(Math.max(0, (R - th) ** 2 - (vy - cy) ** 2)) - fs)
+      text(L.liq, cx, vy, vt, {'text-anchor': 'middle', fill: ACID, 'font-size': 12});
+    if (!Kit.calm) ambient.push(gsap.to(wv, {ph: wl, duration: 2.4, repeat: -1, ease: 'none', onUpdate: drawWave}));
+    if (drained) L.bath.setAttribute('opacity', 0);
+
+    L.fx = mk('g', {}, svg);
+    L.notes = mk('g', {opacity: dropped ? 1 : 0}, svg);
+    const ly = floorY - ery * 1.3, lx = cx - erx * 1.15 - fs * .5;
+    mk('path', {d: `M${lx + fs * .3},${ly + fs * .55}L${cx - erx * .7},${floorY - ery * 1.05}`, stroke: '#ffd9a6', 'stroke-width': 1.2, fill: 'none', opacity: .8}, L.notes);
+    text(L.notes, lx, ly, 'membrane', {'text-anchor': 'end', fill: '#ffd9a6'});
+    text(L.notes, lx, ly + fs * 1.35, '+ CO₂ bubbles', {'text-anchor': 'end', fill: ICE});
+    text(L.notes, cx + erx * 1.15 + fs * .5, floorY - ery * .9, 'boing!', {'font-size': fs * 1.5, fill: AMBER}, 'var(--hand)');
+
+    if (dropped) {
+      gsap.set(L.mv, {y: D});
+      if (freshNotes && !Kit.calm) {
+        freshNotes = false;
+        gsap.fromTo(L.notes.children, {opacity: 0, y: 8}, {opacity: 1, y: 0, stagger: .12, duration: .5, ease: 'back.out(2)'});
+      }
+    }
+    built = true;
+    update();
+  }
+
+  function drawBubble(b, pop) {
+    const [x, y] = onEgg(b.a, b.rf);
+    const c = mk('circle', {cx: x, cy: y, r: b.r * fs, fill: 'url(#bub)', stroke: ICE, 'stroke-width': .6, 'stroke-opacity': .8}, L.bubs);
+    if (pop && !Kit.calm) gsap.from(c, {attr: {r: 0}, duration: .5, delay: Kit.rnd() * .5, ease: 'back.out(3)'});
+  }
+  // A pit the acid eats into the shell, with a soft eroded rim.
+  function drawPit(p, pop) {
+    const [x, y] = onEgg(p.a, p.rf), r = p.r * erx;
+    const hole = mk('circle', {cx: x, cy: y, r, fill: '#000'}, L.pits);
+    const rim = mk('circle', {cx: x, cy: y, r, fill: 'none', stroke: '#b4946a', 'stroke-width': 2.4, opacity: .7}, L.rims);
+    if (pop && !Kit.calm) gsap.from([hole, rim], {attr: {r: 0}, duration: .8, delay: Kit.rnd() * .3, ease: 'power3.out'});
+  }
+
+  const angle = d3.scaleLinear().domain([0, 1]).range([0, TAU]);
+  function update() {
+    if (!built) return;
+    const p = st.p, arc = d3.arc().innerRadius(R - th / 2).outerRadius(R + th / 2).cornerRadius(th / 2);
+    const e = angle(1 - p), gap = p > .01 && p < .99 ? .08 : 0;
+    L.shellA.setAttribute('d', 1 - p > .004 ? arc({startAngle: 0, endAngle: Math.max(.001, e - gap / 2)}) : '');
+    L.gasA.setAttribute('d', p > .004 ? arc({startAngle: Math.min(TAU - .001, e + gap / 2), endAngle: TAU}) : '');
+    L.shell.setAttribute('opacity', p > .76 ? Math.max(0, (1 - p) * 4 * .55) : 1 - p * .6);
+    L.halo.setAttribute('opacity', p * .95);
+    L.shadow.setAttribute('opacity', dropped ? .5 : .12);
+  }
+
+  // Bubbles of CO₂ fizzing off the shell and rising through the vinegar.
+  function fizz(n) {
+    if (Kit.calm) return;
+    for (let i = 0; i < n; i++) {
+      const [x, y] = onEgg(-Math.PI / 2 + (Kit.rnd() - .5) * 2.8, 1.02);
+      const c = mk('circle', {cx: x, cy: y, r: fs * (.15 + Kit.rnd() * .3), fill: 'url(#bub)', stroke: ICE, 'stroke-width': .7}, L.fx);
+      gsap.to(c, {attr: {cy: y - ery * (.6 + Kit.rnd() * 1.1), cx: x + (Kit.rnd() - .5) * fs * 3}, opacity: 0, duration: 1.3 + Kit.rnd() * 1.1, delay: Kit.rnd() * .35, ease: 'power2.out', onComplete: () => c.remove()});
+    }
+    const t = text(L.fx, cx + erx * .9, cy - ery * .9, 'CO₂', {fill: ICE});
+    gsap.fromTo(t, {opacity: 0, y: 6}, {opacity: 1, y: -fs * 1.2, duration: .5, ease: 'power3.out'});
+    gsap.to(t, {opacity: 0, y: -fs * 3, duration: .8, delay: .9, ease: 'power2.in', onComplete: () => t.remove()});
+  }
+
+  function react() {
+    step++;
+    for (let i = 0; i < step; i++) pips[i].classList.add('on');
+    for (let i = 0; i < 16; i++) { const b = {a: Kit.rnd() * TAU, rf: .55 + Kit.rnd() * .42, r: .1 + Kit.rnd() * .22}; stuck.push(b); drawBubble(b, true); }
+    for (let i = 0; i < 4 + step * 2; i++) { const p = {a: Kit.rnd() * TAU, rf: Math.sqrt(Kit.rnd()) * .9, r: .08 + Kit.rnd() * (.1 + step * .05)}; pits.push(p); drawPit(p, true); }
+    Kit.haptic('light');
+    say.innerHTML = MSG[step];
+    if (!Kit.calm) gsap.fromTo(L.sq, {scale: 1}, {scale: 1.04, svgOrigin: `${cx} ${cy}`, duration: .09, yoyo: true, repeat: 1, ease: 'power2.out'});
+    fizz(14);
+    if (Kit.calm) { st.p = step / 4; update(); }
+    else gsap.to(st, {p: step / 4, duration: .9, ease: 'power3.out', onUpdate: update});
+    if (step === 4) { go.textContent = 'Drop it ↓'; go.classList.add('drop'); }
+  }
+
+  function impact(big) {
+    Kit.haptic(big ? 'success' : 'light');
+    if (Kit.calm) return;
+    const rx = Math.min(erx * (big ? 3.4 : 2), W / 2 - 4);
+    const ring = mk('ellipse', {cx, cy: floorY, rx: erx * .6, ry: fs * .3, fill: 'none', stroke: big ? AMBER : ICE, 'stroke-width': 2}, L.fx);
+    gsap.to(ring, {attr: {rx, ry: fs * (big ? 1 : .6)}, opacity: 0, duration: big ? .9 : .6, ease: 'expo.out', onComplete: () => ring.remove()});
+    if (big) {
+      gsap.fromTo(L.rings, {opacity: 1}, {opacity: .45, duration: .12, yoyo: true, repeat: 3, ease: 'power1.inOut'});
+      gsap.fromTo(L.gauge, {scale: 1}, {scale: 1.06, svgOrigin: '0 0', duration: .25, yoyo: true, repeat: 1, ease: 'power3.out'});
+    }
+  }
+
+  function finish() {
+    dropped = true; dropping = false; freshNotes = true; update();
+    row.classList.add('gone');
+    say.innerHTML = 'Vinegar’s acid turns the shell’s calcium carbonate into <b>carbon dioxide</b>. Its microscopic bubbles stay trapped in the bare membrane, a rubbery cushion: it bounces, until a hard fall bursts it.';
+    Kit.show('keep');
+    requestAnimationFrame(() => requestAnimationFrame(build));
+  }
+
+  function drop() {
+    if (dropping || dropped) return;
+    dropping = true; go.disabled = true; drained = true;
+    if (Kit.calm) { L.bath.setAttribute('opacity', 0); gsap.set(L.mv, {y: D}); finish(); return; }
+    const o = `${cx} ${cy + ery}`, sh = L.shadow;
+    const squash = (a, d) => [{scaleY: 1 - a, scaleX: 1 + a * .8, svgOrigin: o, duration: .07, ease: 'power2.out'}, {scaleY: 1, scaleX: 1, svgOrigin: o, duration: d, ease: 'elastic.out(1.1,.35)'}];
+    const [s1, s1b] = squash(.24, .55), [s2, s2b] = squash(.12, .4), [s3, s3b] = squash(.06, .3);
+    gsap.timeline({onComplete: finish})
+      .to(L.liq, {y: R * 1.2, duration: .6, ease: 'power2.in'})
+      .set(L.bath, {opacity: 0})
+      .to(L.mv, {y: -fs * 1.8, duration: .35, ease: 'power2.out'})
+      .to(L.mv, {y: D, duration: .48, ease: 'power3.in'})
+      .to(sh, {attr: {rx: erx * 1.1}, opacity: .55, duration: .48, ease: 'power3.in'}, '<')
+      .add(() => impact(true))
+      .to(L.sq, s1).to(L.sq, s1b)
+      .to(L.mv, {y: D - ery * 1.15, duration: .34, ease: 'power2.out'}, '<')
+      .to(L.mv, {y: D, duration: .34, ease: 'power2.in'}, '>')
+      .add(() => impact(false))
+      .to(L.sq, s2).to(L.sq, s2b)
+      .to(L.mv, {y: D - ery * .45, duration: .22, ease: 'power2.out'}, '<')
+      .to(L.mv, {y: D, duration: .22, ease: 'power2.in'}, '>')
+      .to(L.sq, s3).to(L.sq, s3b);
+  }
+
+  function advance() {
+    if (dropped || dropping) return;
+    if (step < 4) react(); else drop();
+  }
+  go.addEventListener('click', advance);
+  svg.addEventListener('click', advance);
+
+  // Redraw when the stage changes size (e.g. when the takeaway appears).
+  let raf = 0;
+  new ResizeObserver(() => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      if (!built || dropping) return;
+      const r = stage.getBoundingClientRect();
+      if (Math.abs(r.width - lastW) < 2 && Math.abs(r.height - lastH) < 2) return;
+      build();
+    });
+  }).observe(stage);
+
+  Kit.onShow.card = build;
+  let entered = false;
+  Kit.onEnter.card = () => {
+    if (entered || Kit.calm || !built) return; entered = true;
+    gsap.from(L.stars.children, {opacity: 0, duration: 1.2, stagger: {each: .006, from: 'random'}, ease: 'power2.out'});
+    gsap.from(L.rings.children, {opacity: 0, scale: .82, svgOrigin: `${cx} ${cy}`, duration: 1, stagger: .08, ease: 'expo.out'});
+    gsap.from(L.legend.children, {opacity: 0, y: -6, duration: .5, stagger: .06, delay: .3, ease: 'power3.out'});
+    gsap.from(L.mv, {y: -fs * 3, opacity: 0, duration: .9, delay: .2, ease: 'back.out(1.7)'});
+    gsap.from(L.liq, {y: R * .9, duration: 1.1, delay: .5, ease: 'power3.out'});
+    gsap.from('#go', {opacity: 0, duration: .5, delay: .5, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    for (let i = 0; i < 4; i++) { go.click(); await w(Kit.calm ? 60 : 650); }
+    go.click();
+    await w(Kit.calm ? 200 : 4300);
+  };
+})();
+Kit.single();
+</script>
+</html>

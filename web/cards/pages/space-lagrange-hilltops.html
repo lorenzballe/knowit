@@ -11,7 +11,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/d3.min.js"></script>
 <style>
-#stage{position:relative;cursor:pointer;border-radius:2.4cqh;overflow:hidden;background:#0c1a6e}
+#stage{position:relative;cursor:pointer}
 #map,#marks{position:absolute;inset:0;width:100%;height:100%;display:block}
 #marks{overflow:visible;pointer-events:none}
 #note{position:absolute;right:1.4cqh;bottom:1cqh;font:600 max(1.45cqh,11px)/1 var(--body);opacity:.7;letter-spacing:.04em}
@@ -88,6 +88,16 @@
     cs.forEach(g => { c.strokeStyle = `rgba(255,255,255,${g.value >= -1.511 ? .5 : .26})`; c.beginPath(); path(g); c.stroke(); });
     c.restore();
   }
+  function fadeEdge(c) {
+    // the landscape melts into the card: an elliptical fade, no rectangle edge
+    c.save();
+    c.translate(ox, oy); c.scale(1, .82);
+    const g = c.createRadialGradient(0, 0, 1.05 * k, 0, 0, 1.25 * k);
+    g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    c.globalCompositeOperation = 'destination-in';
+    c.fillStyle = g; c.fillRect(-3 * W, -3 * H, 6 * W, 6 * H);
+    c.restore();
+  }
   function bodies(c) {
     const [sx, sy] = toS(-MU, 0), [ex, ey] = toS(1 - MU, 0), rs = Math.max(7, k * .075);
     const glow = c.createRadialGradient(sx, sy, 0, sx, sy, rs * 3.2);
@@ -132,7 +142,7 @@
   function marks(upto) {
     svg.innerHTML = '';
     const fs = Math.max(11.5, Math.min(14, k * .105));
-    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: '#fff'}, a), svg); e.textContent = s; return e; };
+    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: '#fff', stroke: '#1a3fc0', 'stroke-width': 3, 'stroke-linejoin': 'round', 'paint-order': 'stroke'}, a), svg); e.textContent = s; return e; };
     const [sx, sy] = toS(-MU, 0), [ex, ey] = toS(1 - MU, 0);
     txt(sx, sy + Math.max(7, k * .075) * 1.9 + fs * .9, 'Sun', {'text-anchor': 'middle', 'font-weight': 700, opacity: .9});
     txt(ex, ey + fs * 1.55, 'Earth', {'text-anchor': 'middle', 'font-weight': 700, opacity: .9});
@@ -163,6 +173,7 @@
     c.clearRect(0, 0, W, H);
     c.drawImage(relief, 0, 0, Math.ceil(W), Math.ceil(H));
     contours(c);
+    fadeEdge(c);
     bodies(c);
     if (ran && probes) drawProbes(c, runT);
     marks(runT);

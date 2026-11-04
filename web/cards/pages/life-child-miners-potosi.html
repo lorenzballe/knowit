@@ -6,7 +6,7 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
-#mine{flex:1;min-height:0;width:100%;display:block;border-radius:1.8cqh;overflow:hidden}
+#mine{flex:1;min-height:0;width:100%;display:block;overflow:visible}
 #go{--p:0;position:relative;overflow:hidden;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.8cqh 5cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
 #go::before{content:"";position:absolute;inset:0;width:calc(var(--p)*100%);background:color-mix(in srgb,var(--c) 28%,transparent)}
 #go span{position:relative}
@@ -53,15 +53,14 @@ Kit.onShow.card = () => {
   const ground = H*.8, ceilG = H*.07, neckX = W*.5, endX = W*.96;
   let aH = Math.min((ground - ceilG)*.74, W*.42), cH = aH*.56;
   const passTop = ground - cH*1.2;
-  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#3b2a20'}, svg);
-  // tunnel interior with a rough ceiling
+  // tunnel interior with a rough ceiling (drawn straight on the card, outlined in ink)
   let d = `M0,${ground} L0,${ceilG}`;
   for (let x = W*.06; x < neckX; x += W*.06) d += ` L${x},${ceilG + (Kit.rnd()-.5)*H*.03}`;
   d += ` L${neckX},${ceilG} L${neckX},${passTop}`;
   for (let x = neckX + W*.05; x < endX; x += W*.05) d += ` L${x},${passTop - Kit.rnd()*H*.012}`;
   d += ` L${endX},${passTop} L${endX},${ground} Z`;
-  Kit.mk('path', {d, fill: '#e9caa0'}, svg);
-  Kit.mk('line', {x1: 0, y1: ground, x2: endX, y2: ground, stroke: '#1b1410', 'stroke-width': Math.max(2, H*.006)}, svg);
+  Kit.mk('path', {d, fill: '#ffe6cc', stroke: '#10100c', 'stroke-width': Math.max(2, H*.006), 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('line', {x1: 0, y1: ground, x2: endX, y2: ground, stroke: '#10100c', 'stroke-width': Math.max(2, H*.006)}, svg);
   // silver ore at the end of the narrow tunnel
   const ores = [];
   const oreX = endX - cH*.35;
@@ -70,9 +69,9 @@ Kit.onShow.card = () => {
   const hit = Kit.mk('rect', {x: neckX - Math.max(3, W*.008), y: ground - aH, width: Math.max(6, W*.016), height: aH - (ground - passTop), fill: '#e0352b', opacity: 0}, svg);
   const line = Kit.mk('line', {x1: W*.04, y1: passTop, x2: neckX, y2: passTop, stroke: '#e0352b', 'stroke-width': 2, 'stroke-dasharray': '6 5', opacity: 0}, svg);
   const adult = figure(svg, aH, false), child = figure(svg, cH, true);
-  const aLab = Kit.mk('text', {y: ground - aH - fs*.6, 'text-anchor': 'middle', fill: '#1b1410', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
-  const cLab = Kit.mk('text', {y: ground + fs*1.4, 'text-anchor': 'middle', fill: '#ffe9c4', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
-  const tLab = Kit.mk('text', {x: (neckX + endX)/2, y: ground + fs*2.9, 'text-anchor': 'middle', fill: '#ffe9c4', 'font-family': 'var(--body)', 'font-size': Math.max(12, fs*.85), opacity: .85}, svg);
+  const aLab = Kit.mk('text', {y: ground - aH - fs*.6, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
+  const cLab = Kit.mk('text', {y: ground + fs*1.4, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
+  const tLab = Kit.mk('text', {x: (neckX + endX)/2, y: ground + fs*2.9, 'text-anchor': 'middle', fill: '#10100c', 'font-family': 'var(--body)', 'font-size': Math.max(12, fs*.85), opacity: .85}, svg);
   tLab.textContent = 'narrow tunnel';
   S = {W, H, ground, neckX, aH, cH, oreX, adult, child, aLab, cLab, ores, hit, line, fs};
   render();
@@ -88,7 +87,7 @@ function render() {
   const aBob = !stuck && holding ? -Math.abs(Math.sin(P*55))*aH*.02 : 0;
   adult.g.setAttribute('transform', `translate(${ax},${ground + aBob})`);
   aLab.setAttribute('x', Math.max(S.fs*4, ax)); aLab.textContent = stuck ? 'Adult: stuck' : 'Adult';
-  aLab.setAttribute('fill', stuck ? '#c0241b' : '#1b1410');
+  aLab.setAttribute('fill', stuck ? '#b01e15' : '#10100c');
   hit.setAttribute('opacity', stuck ? .85 : 0); line.setAttribute('opacity', stuck ? .9 : 0);
   const c0 = W*.07, cStop = oreX - cH*.5, cEnd = neckX + (cStop - neckX)*.35;
   let cx;

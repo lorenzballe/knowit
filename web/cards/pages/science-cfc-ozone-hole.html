@@ -1,0 +1,322 @@
+<!doctype html>
+<!-- slug: science-cfc-ozone-hole -->
+<!-- Look: a risograph print on cream paper, two inks (fluorescent pink, teal) overprinting with grain, halftone dots and slight misregistration.
+     Interaction: tap the four steps in the order you think they happen, say how sure you are; the chips Flip into the true order and the print acts each one out.
+     Wow: a UV photon wiggles from the sun, snaps a chlorine atom off the CFC, and the chlorine darts into an ozone molecule and bursts it apart. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How CFCs break ozone</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#card{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .08 0 0 0 0 .19 0 0 0 0 .23 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.26'/%3E%3C/svg%3E")}
+.q{text-shadow:2px 1.5px 0 rgba(255,61,151,.5)}
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#opts{display:flex;flex-direction:column;gap:.9cqh;flex:none}
+.opt{display:flex;align-items:center;gap:3cqw;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:rgba(0,129,139,.06);border:0;border-radius:1cqh;padding:1.05cqh 3.4cqw;cursor:pointer;box-shadow:inset 0 0 0 2px #00818b,3px 3px 0 0 rgba(255,61,151,.7);transition:background .15s,box-shadow .15s;overflow-wrap:anywhere}
+.opt .n{flex:none;width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:50%;display:grid;place-items:center;font:700 max(1.7cqh,12px)/1 var(--mono);box-shadow:inset 0 0 0 2px #00818b;color:var(--k)}
+.opt.picked{background:rgba(0,129,139,.16)}
+.opt.picked .n,.opt.ok .n{background:#00818b;color:#f5ecdc;box-shadow:2px 1.5px 0 #ff3d97}
+.opt.no .n{background:#ff3d97;color:#14303a;box-shadow:2px 1.5px 0 #00818b}
+.opt.now{background:rgba(255,61,151,.22);box-shadow:inset 0 0 0 2px #ff3d97,3px 3px 0 0 #00818b}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:none;min-width:0}
+#why .big{color:var(--k);text-shadow:2px 1.5px 0 rgba(255,61,151,.6);font-size:max(min(3.9cqh,7.6cqw),18px);line-height:1.04;margin:0;overflow-wrap:anywhere}
+#why .body{font-size:max(1.75cqh,13px);line-height:1.38;margin:0}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Put in order · how sure" style="--c:#f5ecdc;--k:#14303a;--edge:#d8cbb2">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PUT IN ORDER</span></div>
+    <h2 class="q">How do CFCs destroy the ozone layer?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A risograph sky: a CFC molecule on the ground, the sun, and ozone molecules floating in the stratosphere."></svg>
+      <div id="opts">
+        <button class="opt" data-i="2"><span class="n"></span><span>A chlorine atom breaks free</span></button>
+        <button class="opt" data-i="0"><span class="n"></span><span>The CFC drifts up to the stratosphere</span></button>
+        <button class="opt" data-i="3"><span class="n"></span><span>The chlorine breaks an ozone molecule</span></button>
+        <button class="opt" data-i="1"><span class="n"></span><span>A UV photon hits the CFC</span></button>
+      </div>
+      <div id="why" class="gone"><p class="big">UV frees chlorine. Chlorine breaks ozone.</p><p class="body">Light and stable, CFCs climb into the stratosphere and stay 50 to 100 years. There a UV photon of just the right energy snaps one apart, and the chlorine atom it frees breaks ozone.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the four steps in the order they happen.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The harm isn't the CFC itself but the chlorine that UV light sets free.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(Flip, DrawSVGPlugin);
+(() => {
+  const svg = Kit.$('pic'), box = Kit.$('opts'), say = Kit.$('say');
+  const PINK = '#ff3d97', TEAL = '#00818b', INK = '#14303a', PAPER = '#f5ecdc';
+  const SHORT = ['rises', 'UV hits', 'Cl breaks free', 'ozone broken'];
+  const TELL = [
+    'Light and stable, the CFC climbs into the stratosphere, and stays 50 to 100 years.',
+    'Up there, an ultraviolet photon of just the right energy hits it…',
+    '…and it breaks apart, releasing a chlorine atom.',
+    'The chlorine reacts with ozone, breaking it.'
+  ];
+  let W = 0, H = 0, fs = 12, r = 8, S = {}, P = {}, tl = null, bobs = [], phase = 'idle', order = [], locked = false, doneRes;
+  const done = new Promise(res => doneRes = res);
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+
+  // A label in one text element; the pink plate is printed by a misregistration filter.
+  function label(p, x, y, s, o = {}) {
+    const t = mk('text', {x, y, fill: INK, 'font-size': fs, 'font-weight': 700, 'text-anchor': o.anchor || 'middle', filter: 'url(#mis)', style: 'font-family:var(--mono)'}, p);
+    t.textContent = s;
+    if (o.op != null) t.setAttribute('opacity', o.op);
+    return t;
+  }
+  // An atom: grainy ink disc, an off-register ring in the other ink, a paper glint.
+  function atom(p, x, y, rad, col, alt) {
+    const g = mk('g', {}, p);
+    mk('circle', {cx: x + rad * .16 + .8, cy: y + rad * .12 + .6, r: rad, fill: 'none', stroke: alt, 'stroke-width': Math.max(1.2, rad * .16)}, g);
+    mk('circle', {cx: x, cy: y, r: rad, fill: col, filter: 'url(#grain)', style: 'mix-blend-mode:multiply'}, g);
+    mk('circle', {cx: x - rad * .34, cy: y - rad * .36, r: rad * .28, fill: PAPER, opacity: .6}, g);
+    return g;
+  }
+  const bond = (p, x1, y1, x2, y2) => mk('line', {x1, y1, x2, y2, stroke: INK, 'stroke-width': Math.max(2, r * .28), 'stroke-linecap': 'round'}, p);
+  const wave = (y, a, ph, n = 14) => Array.from({length: n + 1}, (_, i) => [-4 + (W + 8) * i / n, y + Math.sin(i * 1.3 + ph) * a]);
+  const poly = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('');
+
+  function layout() {
+    bobs.forEach(b => b.kill()); bobs = [];
+    const keepT = phase === 'playing' && tl ? tl.time() : 0;
+    if (tl) { tl.kill(); tl = null; }
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    if (W < 20 || H < 20) return;
+    fs = Math.max(12, Math.min(14, W / 27));
+    r = Math.max(6, Math.min(W * .032, H * .032, 11));
+    const defs = mk('defs', {}, svg);
+    defs.innerHTML = `<filter id="grain" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.85" result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/></filter>
+<filter id="mis" x="-10%" y="-40%" width="125%" height="190%"><feOffset in="SourceAlpha" dx="1.3" dy="1" result="o"/><feFlood flood-color="${PINK}" flood-opacity=".8"/><feComposite in2="o" operator="in" result="p"/><feMerge><feMergeNode in="p"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<pattern id="dP" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(20)"><circle cx="3.5" cy="3.5" r="1.5" fill="${PINK}"/></pattern>
+<pattern id="dT" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-15)"><circle cx="3" cy="3" r="1.4" fill="${TEAL}"/></pattern>`;
+
+    const y0 = H * .035, y1 = H * .5, GY = H * .9;
+    // The stratosphere: a halftone band of pink with wavy edges.
+    S.band = mk('g', {}, svg);
+    const top = wave(y0, H * .012, 0), bot = wave(y1, H * .015, 2).reverse();
+    const bd = poly(top) + poly(bot).replace('M', 'L') + 'Z';
+    mk('path', {d: bd, fill: PINK, opacity: .12, style: 'mix-blend-mode:multiply'}, S.band);
+    mk('path', {d: bd, fill: 'url(#dP)', opacity: .38}, S.band);
+    mk('path', {d: poly(wave(y1, H * .015, 2)), fill: 'none', stroke: TEAL, 'stroke-width': 1.4, 'stroke-dasharray': '2 5', 'stroke-linecap': 'round'}, S.band);
+    // Little printed sparkles in the thin air.
+    S.spk = [];
+    [[.42, .44], [.53, .19], [.74, .27], [.04, .43]].forEach(([fx, fy], i) => {
+      const g = mk('g', {}, S.band), x = W * fx, y = H * fy, k = r * .55;
+      mk('path', {d: `M${x - k},${y}H${x + k}M${x},${y - k}V${y + k}`, stroke: i % 2 ? PINK : TEAL, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
+      S.spk.push(g);
+    });
+    S.zl = label(S.band, fs * .5, y0 + fs * 1.15, 'OZONE LAYER', {anchor: 'start'});
+
+    // Clouds and hills below, printed in both inks.
+    const cloud = (cx, cy, s) => { const g = mk('g', {}, svg);
+      [[-1.1, .2, .8], [0, -.2, 1.05], [1.1, .25, .75], [.3, .45, .8]].forEach(([dx, dy, k]) => {
+        mk('circle', {cx: cx + dx * s + 2, cy: cy + dy * s + 1.5, r: k * s, fill: 'none', stroke: PINK, 'stroke-width': 1.3, opacity: .7}, g);
+        mk('circle', {cx: cx + dx * s, cy: cy + dy * s, r: k * s, fill: TEAL, opacity: .22, filter: 'url(#grain)', style: 'mix-blend-mode:multiply'}, g);
+      }); return g; };
+    S.clouds = [cloud(W * .18, H * .66, r * 1.6), cloud(W * .84, H * .6, r * 1.3)];
+    S.hills = mk('g', {}, svg);
+    const hb = `M-4,${H + 4} L-4,${GY - H * .03} Q${W * .25},${GY - H * .1} ${W * .5},${GY - H * .02} T${W + 4},${GY - H * .05} L${W + 4},${H + 4}Z`;
+    mk('path', {d: hb, fill: TEAL, opacity: .22, style: 'mix-blend-mode:multiply'}, S.hills);
+    mk('path', {d: hb, fill: 'url(#dT)', opacity: .7}, S.hills);
+    const hf = `M-4,${H + 4} L-4,${GY + H * .04} Q${W * .35},${GY - H * .03} ${W * .7},${GY + H * .03} T${W + 4},${GY + H * .01} L${W + 4},${H + 4}Z`;
+    mk('path', {d: hf, fill: PINK, opacity: .32, filter: 'url(#grain)', style: 'mix-blend-mode:multiply'}, S.hills);
+
+    // The sun, with slowly turning rays.
+    P.sun = {x: W * .86, y: H * .13}; P.R = Math.min(W, H) * .075;
+    S.sun = mk('g', {}, svg);
+    S.rays = mk('g', {}, S.sun);
+    for (let k = 0; k < 12; k++) { const a = k / 12 * Math.PI * 2, c = Math.cos(a), s = Math.sin(a), l = k % 2 ? 1.5 : 1.7;
+      mk('line', {x1: P.sun.x + c * P.R * 1.25, y1: P.sun.y + s * P.R * 1.25, x2: P.sun.x + c * P.R * l, y2: P.sun.y + s * P.R * l, stroke: TEAL, 'stroke-width': 2, 'stroke-linecap': 'round'}, S.rays); }
+    atom(S.sun, P.sun.x, P.sun.y, P.R, PINK, TEAL);
+    mk('circle', {cx: P.sun.x, cy: P.sun.y, r: P.R * .7, fill: 'url(#dT)', opacity: .35}, S.sun);
+
+    // Ozone: three O atoms, bent.
+    const OZ = [[.3, .3], [.1, .2], [.46, .14], [.85, .41], [.64, .08]];
+    S.ozW = [];
+    OZ.forEach(([fx, fy], i) => {
+      const x = W * fx, y = H * fy, w = mk('g', {}, svg); S.ozW.push(w);
+      const c0 = [x, y - r * .7], c1 = [x - r * 1.55, y + r * .55], c2 = [x + r * 1.55, y + r * .55];
+      if (i === 0) {
+        P.A = {x, y, c2};
+        S.b02 = bond(w, ...c0, ...c2);
+        S.o2 = mk('g', {}, w); bond(S.o2, ...c0, ...c1);
+        atom(S.o2, ...c0, r, TEAL, PINK); atom(S.o2, ...c1, r, TEAL, PINK);
+        S.a2 = atom(w, ...c2, r, TEAL, PINK);
+      } else {
+        bond(w, ...c0, ...c1); bond(w, ...c0, ...c2);
+        [c0, c1, c2].forEach(c => atom(w, ...c, r, TEAL, PINK));
+      }
+    });
+    S.ozLab = label(svg, P.A.x - r * 2.7 - 4, P.A.y + r * .55 + fs * .35, 'ozone', {anchor: 'end'});
+    S.broken = label(svg, P.A.x - r * 2.7 - 4, P.A.y + r * .55 + fs * .35, 'broken!', {anchor: 'end', op: 0});
+
+    // Keep the band's name clear of the "ozone" / "broken!" tag: if they collide, print it just below.
+    try {
+      const a = S.zl.getBBox(), b1 = S.ozLab.getBBox(), b2 = S.broken.getBBox(), pad = 4;
+      const ux = Math.min(b1.x, b2.x), uy = Math.min(b1.y, b2.y),
+            ux2 = Math.max(b1.x + b1.width, b2.x + b2.width), uy2 = Math.max(b1.y + b1.height, b2.y + b2.height);
+      if (a.x < ux2 + pad && ux < a.x + a.width + pad && a.y < uy2 + pad && uy < a.y + a.height + pad) {
+        const base = +S.zl.getAttribute('y');
+        S.zl.setAttribute('y', (uy2 + pad + 2 + (base - a.y)).toFixed(1));
+      }
+    } catch (e) {}
+
+    // Chlorine meets oxygen: the bond appears at the hit.
+    P.T = {x: P.A.x + r * 4.35, y: P.A.y + r * .55};
+    S.bClO = bond(svg, P.A.c2[0] + r * .6, P.T.y, P.T.x, P.T.y); S.bClO.setAttribute('opacity', 0);
+
+    // The CFC, CCl2F2, sitting on the ground; its upper-right chlorine is a separate piece.
+    P.S0 = {x: W * .57, y: GY - r * 3.6}; P.E = {x: W * .57, y: H * .31};
+    S.cfc = mk('g', {}, svg);
+    S.bCl = bond(S.cfc, 0, 0, r * 2.2, -r * 1.2);
+    bond(S.cfc, 0, 0, -r * 2.2, -r * 1.2); bond(S.cfc, 0, 0, -r * 1.9, r * 1.6); bond(S.cfc, 0, 0, r * 1.9, r * 1.6);
+    atom(S.cfc, -r * 2.2, -r * 1.2, r * 1.3, PINK, TEAL);
+    atom(S.cfc, -r * 1.9, r * 1.6, r * .95, TEAL, PINK); atom(S.cfc, r * 1.9, r * 1.6, r * .95, TEAL, PINK);
+    atom(S.cfc, 0, 0, r * 1.15, INK, PINK);
+    S.cfcLab = label(S.cfc, r * 4.3, fs * .35, 'CFC', {anchor: 'start'});
+    S.clg = mk('g', {}, svg);
+    atom(S.clg, 0, 0, r * 1.3, PINK, TEAL);
+    S.clLab = label(S.clg, 0, -r * 1.3 - fs * .5, 'Cl', {op: 0});
+    gsap.set(S.cfc, {x: P.S0.x, y: P.S0.y});
+    gsap.set(S.clg, {x: P.S0.x + r * 2.2, y: P.S0.y - r * 1.2});
+    S.yrs = label(svg, P.E.x, P.E.y + r * 2.6 + fs * 1.25, 'stays 50–100 years', {op: 0});
+
+    // The UV photon: a wiggle from the sun to the chlorine.
+    P.cl0 = {x: P.E.x + r * 2.2, y: P.E.y - r * 1.2};
+    const sx = P.sun.x, sy = P.sun.y, dx = P.cl0.x - sx, dy = P.cl0.y - sy, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, nx = -uy, ny = ux;
+    const a0 = P.R * 1.7, a1 = L - r * 1.5; let d = '';
+    for (let k = 0; k <= 80; k++) { const s = a0 + (a1 - a0) * k / 80, tp = Math.pow(Math.sin(Math.PI * k / 80), .6), w = Math.sin(k / 80 * Math.PI * 12) * r * .55 * tp;
+      d += (k ? 'L' : 'M') + (sx + ux * s + nx * w).toFixed(1) + ',' + (sy + uy * s + ny * w).toFixed(1); }
+    S.ph = [mk('path', {d, fill: 'none', stroke: TEAL, 'stroke-width': Math.max(2.5, r * .32), 'stroke-linecap': 'round', transform: 'translate(1.6,1.2)', opacity: .8}, svg),
+            mk('path', {d, fill: 'none', stroke: PINK, 'stroke-width': Math.max(2.5, r * .32), 'stroke-linecap': 'round'}, svg)];
+    gsap.set(S.ph, {drawSVG: '0% 0%'});
+    const ms = (a0 + a1) / 2;
+    S.uv = label(svg, sx + ux * ms - nx * fs * 1.7, sy + uy * ms - ny * fs * 1.7 + fs * .35, 'UV', {op: 0});
+    S.flash = mk('circle', {cx: P.cl0.x, cy: P.cl0.y, r: 0, fill: 'none', stroke: PINK, 'stroke-width': 3, opacity: 0}, svg);
+    // The burst at the hit.
+    P.hit = {x: (P.A.c2[0] + r * .6 + P.T.x) / 2, y: P.T.y};
+    S.ring = mk('circle', {cx: P.hit.x, cy: P.hit.y, r: 0, fill: 'none', stroke: PINK, 'stroke-width': 3.5, opacity: 0}, svg);
+    S.ring2 = mk('circle', {cx: P.hit.x + 2, cy: P.hit.y + 1.5, r: 0, fill: 'none', stroke: TEAL, 'stroke-width': 2, opacity: 0}, svg);
+    S.sp = []; P.sp = [];
+    for (let k = 0; k < 12; k++) { const a = k / 12 * Math.PI * 2 + .3, d2 = r * (2.6 + (k % 3) * 1.1);
+      S.sp.push(mk('circle', {cx: P.hit.x, cy: P.hit.y, r: Math.max(1.6, r * .22), fill: k % 2 ? PINK : TEAL, opacity: 0}, svg));
+      P.sp.push({x: P.hit.x + Math.cos(a) * d2, y: P.hit.y + Math.sin(a) * d2}); }
+
+    if (phase === 'done') { tl = makeChain(false); tl.progress(1); }
+    else if (phase === 'playing') { tl = makeChain(true); tl.eventCallback('onComplete', finishUI); tl.seek(keepT, true); }
+    if (!Kit.calm) {
+      S.ozW.forEach((w, i) => bobs.push(gsap.to(w, {y: r * .35, duration: 1.8 + i * .37, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .2})));
+      bobs.push(gsap.to(S.rays, {rotation: 360, svgOrigin: `${P.sun.x} ${P.sun.y}`, duration: 40, repeat: -1, ease: 'none'}));
+      S.spk.forEach((g, i) => bobs.push(gsap.to(g, {opacity: .25, duration: 1.1 + i * .3, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .4})));
+      S.clouds.forEach((c, i) => bobs.push(gsap.to(c, {x: (i ? -1 : 1) * r * .8, duration: 5 + i, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
+    }
+  }
+
+  // The real chain, acted out. ``ui`` lights the chips and speaks as it goes.
+  function makeChain(ui) {
+    const t = gsap.timeline(), E = P.E, c0 = P.cl0;
+    const mark = (k, at) => { if (ui) t.call(now, [k], at); };
+    mark(0, 0);
+    t.to(S.cfc, {x: E.x, y: E.y, duration: 1.7, ease: 'power2.inOut'}, 0)
+     .to(S.clg, {x: c0.x, y: c0.y, duration: 1.7, ease: 'power2.inOut'}, 0)
+     .to(S.yrs, {opacity: 1, duration: .4}, 1.4);
+    mark(1, 2);
+    t.to(S.uv, {opacity: 1, duration: .25}, 2)
+     .fromTo(S.ph, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: .5, ease: 'power2.in'}, 2)
+     .to(S.ph, {drawSVG: '100% 100%', duration: .3, ease: 'power1.out'}, 2.5);
+    mark(2, 2.5);
+    t.fromTo(S.flash, {attr: {r: 0}, opacity: 1}, {attr: {r: r * 3.6}, opacity: 0, duration: .7, ease: 'expo.out', immediateRender: false}, 2.5)
+     .to(S.bCl, {opacity: 0, duration: .15}, 2.5)
+     .to(S.clg, {x: c0.x + r * 1.8, y: c0.y - r * 1.4, duration: .55, ease: 'back.out(3)'}, 2.5)
+     .fromTo(S.cfc, {x: E.x - r * .5}, {x: E.x, duration: .6, ease: 'elastic.out(1,.3)', immediateRender: false}, 2.5)
+     .to(S.cfcLab, {opacity: 0, duration: .3}, 2.55)
+     .to(S.clLab, {opacity: 1, duration: .3}, 2.7)
+     .to(S.uv, {opacity: 0, duration: .4}, 3.1);
+    mark(3, 3.4);
+    t.to(S.clg, {x: P.T.x, y: P.T.y, duration: 1, ease: 'power3.inOut'}, 3.4)
+     .to(S.yrs, {opacity: 0, duration: .3}, 3.4)
+     .to(S.ozLab, {opacity: 0, duration: .2}, 4.2)
+     .to(S.b02, {opacity: 0, duration: .12}, 4.4)
+     .to(S.o2, {x: -r * 1.2, y: -r * 2.2, rotation: -28, transformOrigin: '50% 50%', duration: 1, ease: 'expo.out'}, 4.4)
+     .to(S.a2, {x: r * .6, duration: .45, ease: 'power3.out'}, 4.4)
+     .to(S.bClO, {opacity: 1, duration: .2}, 4.5)
+     .fromTo(S.ring, {attr: {r: 0}, opacity: 1}, {attr: {r: r * 5}, opacity: 0, duration: .9, ease: 'expo.out', immediateRender: false}, 4.4)
+     .fromTo(S.ring2, {attr: {r: 0}, opacity: .9}, {attr: {r: r * 3.6}, opacity: 0, duration: .8, ease: 'expo.out', immediateRender: false}, 4.45)
+     .fromTo(S.sp, {opacity: 1, attr: {cx: P.hit.x, cy: P.hit.y}}, {opacity: 0, attr: {cx: i => P.sp[i].x, cy: i => P.sp[i].y}, duration: 1, ease: 'expo.out', stagger: .01, immediateRender: false}, 4.4)
+     .fromTo(svg, {x: -5}, {x: 0, duration: .7, ease: 'elastic.out(1.2,.25)', clearProps: 'transform', immediateRender: false}, 4.4)
+     .to(S.broken, {opacity: 1, duration: .35}, 4.7)
+     .to({}, {duration: .7});
+    if (ui) t.call(() => Kit.haptic('success'), null, 4.4);
+    return t;
+  }
+
+  function now(k) {
+    [...box.children].forEach(c => c.classList.toggle('now', +c.dataset.i === k));
+    say.textContent = TELL[k]; Kit.haptic('light');
+  }
+  function runChain() {
+    phase = 'playing';
+    tl = makeChain(true); tl.eventCallback('onComplete', finishUI);
+    if (Kit.calm) { tl.progress(1); finishUI(); }
+  }
+  function finishUI() {
+    if (phase === 'done') return; phase = 'done';
+    Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    // The picture now has a new shape: reprint it at its final state.
+    requestAnimationFrame(layout);
+    if (!Kit.calm) gsap.from(['#why .big', '#why .body', '#keep'], {opacity: 0, y: 10, stagger: .1, duration: .5, ease: 'power3.out'});
+    doneRes();
+  }
+
+  function paintPicks() {
+    [...box.children].forEach(c => { const k = order.indexOf(+c.dataset.i); c.classList.toggle('picked', k >= 0); c.querySelector('.n').textContent = k >= 0 ? k + 1 : ''; });
+  }
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (phase !== 'idle') return; phase = 'flip';
+    const ok = order.every((v, k) => v === k);
+    Kit.answer({choice: order.map(i => SHORT[i]).join(' → '), correct: ok, sure: pct});
+    sure.grade(ok, pct, ok ? 'Right order' : 'Not quite the order');
+    const chips = [...box.children], st = Flip.getState(chips);
+    [0, 1, 2, 3].forEach(i => box.appendChild(chips.find(c => +c.dataset.i === i)));
+    chips.forEach(c => { const i = +c.dataset.i; c.classList.remove('picked'); c.classList.add(order.indexOf(i) === i ? 'ok' : 'no'); c.querySelector('.n').textContent = i + 1; });
+    if (Kit.calm) { runChain(); return; }
+    Flip.from(st, {duration: .9, ease: 'power3.inOut', stagger: .05, onComplete: runChain});
+  });
+  box.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || locked) return;
+    const i = +b.dataset.i, at = order.indexOf(i);
+    if (at >= 0) order = order.slice(0, at); else order.push(i);
+    paintPicks(); Kit.haptic('selection');
+    if (!Kit.calm) gsap.fromTo(b, {scale: .96}, {scale: 1, duration: .4, ease: 'back.out(3)', clearProps: 'scale'});
+    if (order.length === 4) { locked = true; say.textContent = 'Locked in. Now, how sure are you?'; sure.on(); }
+  });
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || phase !== 'idle' || !S.sun) return;
+    gsap.from(S.band, {opacity: 0, duration: .8, ease: 'power2.out'});
+    gsap.from([S.hills, ...S.clouds], {opacity: 0, y: 12, duration: .7, stagger: .1, ease: 'power3.out'});
+    gsap.from(S.sun, {scale: 0, rotation: -60, transformOrigin: '50% 50%', duration: .9, ease: 'back.out(2)', delay: .15});
+    gsap.from(S.ozW, {scale: 0, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(2.5)', stagger: .08, delay: .3});
+    gsap.from([S.cfc, S.clg], {opacity: 0, duration: .5, delay: .6});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .45, ease: 'power3.out', delay: .4});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(res => setTimeout(res, ms));
+    for (const i of [0, 1, 2, 3]) { box.querySelector(`[data-i="${i}"]`).click(); await w(60); }
+    await w(150);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await Promise.race([done, w(9000)]);
+    await w(400);
+  };
+})();
+Kit.single();
+</script>
+</html>

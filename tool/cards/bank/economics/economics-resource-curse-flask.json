@@ -1,0 +1,38 @@
+{
+  "id": "economics-resource-curse-flask",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.institutions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the DRC poor despite being rich in gold and cobalt?",
+  "answer": "The riches are taken through exploitation and fought over in conflict. The wealth flows out, past the people, so the DRC stays one of the poorest countries in the world.",
+  "move": "Rich ground is not a rich country: what matters is who gets the wealth.",
+  "keywords": [
+    "drc",
+    "congo",
+    "cobalt",
+    "coltan",
+    "gold"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A draggable timeline titled 'The resource curse', asking why the DR Congo is poor despite its gold and cobalt. It shows riches taken through exploitation and conflict, with the wealth flowing out past the people.",
+    "ground": "#0d2326"
+  },
+  "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=I-MMteT9YTM&t=132s",
+  "written": "2026-11-04"
+}

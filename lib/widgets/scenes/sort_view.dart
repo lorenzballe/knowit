@@ -881,16 +881,18 @@ class _Front extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // A long tag beside a long count ("1 VON 6") takes a second
+              // line rather than losing its end.
               Expanded(
                 child: Text(
                   scene.tag.toUpperCase(),
-                  maxLines: 1,
-                  overflow: TextOverflow.fade,
-                  softWrap: false,
+                  maxLines: 2,
                   style: small,
                 ),
               ),
+              const SizedBox(width: 8),
               Text(
                 context.l10n
                     .sceneNOfM(index + 1, scene.items.length)

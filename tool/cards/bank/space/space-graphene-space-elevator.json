@@ -29,8 +29,7 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A space elevator scene asks what a potential application of graphene in space is. Hold the lift button to send a platform up a graphene cable while watching the fuel gauge.",
-    "ground": "#05070f"
+    "label": "A space elevator scene asks what a potential application of graphene in space is. Hold the lift button to send a platform up a graphene cable while watching the fuel gauge."
   },
   "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=225s",
