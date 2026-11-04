@@ -178,7 +178,14 @@ class _WebCardFaceState extends State<WebCardFace> {
                 // A page that draws over a poster already shown fades in; a
                 // card let out of its hold before its page drew shows its
                 // poster at once, with no half-made page fading out over it.
-                duration: !drawn || MediaQuery.disableAnimationsOf(context)
+                // A card waiting under the top one has its clock stopped
+                // (only the top card moves), and a fade needs its ticks:
+                // under there it would stand at its first frame, the page
+                // nearly nothing, until the card rose. It shows at once.
+                duration:
+                    !drawn ||
+                        !TickerMode.valuesOf(context).enabled ||
+                        MediaQuery.disableAnimationsOf(context)
                     ? Duration.zero
                     : const Duration(milliseconds: 160),
                 curve: Curves.easeOut,

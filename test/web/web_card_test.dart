@@ -134,24 +134,25 @@ double _cardOpacity(WidgetTester tester) => tester
     )
     .opacity;
 
-/// How visible a card's page is inside its card: the card in front by
-/// default, the one under it at [depth] 1. The deck lays the card furthest
-/// back first.
+/// How visible a card's page is inside its card, as it is on screen this
+/// frame, not where its fade is headed: the card in front by default, the
+/// one under it at [depth] 1. The deck lays the card furthest back first.
 double _pageOpacity(WidgetTester tester, {int depth = 0}) {
   final List<Element> pages = find
       .byKey(const ValueKey('fake-page'))
       .evaluate()
       .toList();
   return tester
-      .widget<AnimatedOpacity>(
+      .widget<FadeTransition>(
         find
             .ancestor(
               of: find.byWidget(pages[pages.length - 1 - depth].widget),
-              matching: find.byType(AnimatedOpacity),
+              matching: find.byType(FadeTransition),
             )
             .first,
       )
-      .opacity;
+      .opacity
+      .value;
 }
 
 void main() {
@@ -240,6 +241,24 @@ void main() {
     FakeWebSurface.made[1].say(const PageReady());
     await settle(tester);
     expect(_pageOpacity(tester), 1);
+  });
+
+  testWidgets('the card under the top one shows its page as soon as it has '
+      'drawn, so it comes up whole', (tester) async {
+    readyOnLoad = false;
+    await tester.pumpWidget(
+      _Deck(deck: [_card('a'), _card('b')], answers: [], stints: []),
+    );
+    await settle(tester);
+    FakeWebSurface.made.first.say(const PageReady());
+    await settle(tester);
+    expect(_pageOpacity(tester, depth: 1), kWaitingOpacity);
+
+    // Drawn underneath, where the deck keeps the clock stopped: the page is
+    // on the card at once, not left on the first frame of a fade.
+    FakeWebSurface.made[1].say(const PageReady());
+    await settle(tester);
+    expect(_pageOpacity(tester, depth: 1), 1);
   });
 
   testWidgets('a card dealt to the front before its page drew waits for it '
