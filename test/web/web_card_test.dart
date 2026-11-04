@@ -349,10 +349,13 @@ void main() {
       '<assembled>${deck[0].web!.html}',
       '<assembled>${deck[1].web!.html}',
     ]);
-    // The one underneath is drawn, never shown.
+    // The one underneath plays its entrance out of sight, then holds still
+    // on its end, so it comes up whole.
     final FakeWebSurface first = FakeWebSurface.made[0];
     final FakeWebSurface second = FakeWebSurface.made[1];
-    expect(second.told, isNot(anyElement(equals({'t': 'show'}))));
+    expect(second.told, anyElement(equals({'t': 'show'})));
+    await tester.pump(WebCardPage.entrance);
+    expect(second.told.last, {'t': 'hide'});
 
     first.say(const PageDone());
     await settle(tester);
