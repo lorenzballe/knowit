@@ -100,11 +100,13 @@ class WebCardPage extends ChangeNotifier {
   bool _ready = false;
   bool _failed = false;
   bool _shown = false;
+  bool _primed = false;
   bool _gone = false;
   bool _heldLong = false;
   List<Rect> _zones = const [];
   Timer? _waiting;
   Timer? _holding;
+  Timer? _entering;
   final Stopwatch _took = Stopwatch()..start();
   bool _fetched = false;
 
@@ -186,7 +188,11 @@ class WebCardPage extends ChangeNotifier {
         if (_env.since(_built) case final Map<String, Object?> env) {
           surface.tell({'t': 'env', 'env': env});
         }
-        if (_shown) surface.tell(const {'t': 'show'});
+        if (_shown) {
+          surface.tell(const {'t': 'show'});
+        } else if (_primed) {
+          _enter();
+        }
         Analytics.capture('card page ready', {
           'pill_id': pill.id,
           'ms': _took.elapsedMilliseconds,
@@ -216,10 +222,32 @@ class WebCardPage extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// How long a page underneath is let run for its entrance before it holds
+  /// still: the kit's entrances are done within a second or two.
+  static const Duration entrance = Duration(milliseconds: 2500);
+
+  /// The card waits under the one on top: its page plays its entrance there,
+  /// out of sight, and holds still on its end, so the card comes up whole
+  /// when the one on top is thrown, not built up in front of the reader.
+  void prime() {
+    if (_primed || _shown) return;
+    _primed = true;
+    if (_ready) _enter();
+  }
+
+  void _enter() {
+    surface.tell(const {'t': 'show'});
+    _entering?.cancel();
+    _entering = Timer(entrance, () {
+      if (!_shown && !_gone && _ready) surface.tell(const {'t': 'hide'});
+    });
+  }
+
   /// The card is in front of the reader: the page's clock runs.
   void show() {
     if (_shown) return;
     _shown = true;
+    _entering?.cancel();
     if (_ready) surface.tell(const {'t': 'show'});
   }
 
@@ -243,6 +271,7 @@ class WebCardPage extends ChangeNotifier {
     _gone = true;
     _waiting?.cancel();
     _holding?.cancel();
+    _entering?.cancel();
     listener = null;
     surface.dispose();
     super.dispose();

@@ -304,6 +304,11 @@ class _PillCardStackState extends State<PillCardStack>
       dealt: dealt,
     );
     _pages.update(_envFor);
+    // The card under the top one comes up whole: its page draws and plays
+    // its entrance while it waits there, out of sight.
+    if (inSight && next < widget.deck.length) {
+      _pages[widget.deck[next].id]?.prime();
+    }
     // The pages of the next few free cards are fetched before the reader
     // gets to them, so a card arrives with its page the way a post arrives
     // with its picture.
