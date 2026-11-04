@@ -1,0 +1,363 @@
+<!doctype html>
+<!-- slug: maths-mersenne-glass-rack -->
+<!-- Look: a laboratory rack of glass test tubes on a deep teal card. Teal liquid is the conjecture's prediction, gold beads are the Mersenne primes found; the tubes breathe, shimmer and bubble, and each filled tube casts a soft glow on the rack.
+     Interaction: drag the spirit-level bubble to double p again and again. Each new tube fills and sloshes, and its gold beads bounce in. Past the biggest prime found, the tubes still fill but hold "?". Dragging fast stirs the glass.
+     Wow: at the end the two racks pour into one long rack. Every liquid surface lines up on one glowing line that runs to a glowing ∞ (p → ∞), and every tube surges at once. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mersenne primes, forever?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#card{background:radial-gradient(130% 70% at 50% 38%,#16444d 0%,#0c2630 58%,#071a20 100%)}
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:.8cqh}
+#read{display:flex;flex-wrap:wrap;align-items:center;gap:.5cqh 4cqw;font:600 max(1.7cqh,12px)/1.25 var(--mono);color:var(--k)}
+#rp{flex:1 1 100%;opacity:.85}
+.chip{white-space:nowrap}
+.chip b{font-weight:800}
+.chip i{display:inline-block;width:1.05em;height:1.05em;border-radius:50%;vertical-align:-.16em;margin-right:.45em}
+.chip.g i{background:radial-gradient(circle at 35% 32%,#fffbe6,#ffcf5a 42%,#c27410);box-shadow:0 0 .5em rgba(255,200,80,.6)}
+.chip.l i{border-radius:.2em .2em .55em .55em;background:linear-gradient(90deg,#22b89a,#7ff7df 45%,#148c78)}
+#wrap{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:.5cqh}
+#why .big{color:#a8fff0}
+.q{overflow-wrap:break-word}
+.answered .q{font-size:max(2.3cqh,14px)}
+.answered #rp{display:none}
+.answered #cv{cursor:pointer}
+.answered #why .big{font-size:max(3.6cqh,20px);line-height:1.05}
+.answered #why .body{font-size:max(2.15cqh,13px);line-height:1.38}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag along the glass · the prediction" style="--c:#0c2630;--k:#e9fbf6;--edge:#061519">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MERSENNE PRIMES</span></div>
+    <h2 class="q">What does the Lenstra–Pomerance–Wagstaff conjecture say about Mersenne primes?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read">
+        <span id="rp">Numbers 2ᵖ − 1 · one tube for each doubling of p</span>
+        <span class="chip g"><i></i>found <b id="rf">0</b></span>
+        <span class="chip l"><i></i>predicted <b id="rx">0</b></span>
+      </div>
+      <div id="wrap"><canvas id="cv" role="img" aria-label="Racks of glass test tubes, one per doubling of p. Teal liquid shows how many Mersenne primes the conjecture predicts in each tube, gold beads show the ones found. A spirit-level slider below sets how far p goes."></canvas></div>
+    </div>
+    <p class="say" id="say">Drag along the glass to double p again and again. Gold beads are the Mersenne primes found.</p>
+    <div id="why" class="gone">
+      <p class="big">The level never drops.</p>
+      <p class="body">The conjecture predicts about the same handful of Mersenne primes every time p doubles. That never runs dry, so there should be infinitely many, and so infinitely many even perfect numbers. But a conjecture is not a proof.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Predicted: Mersenne primes forever. Proven: not yet.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  // The exponents p of the 51 Mersenne primes 2^p − 1 in the video's data.
+  const EXP = [2,3,5,7,13,17,19,31,61,89,107,127,521,607,1279,2203,2281,3217,4253,4423,9689,9941,11213,19937,21701,23209,44497,86243,110503,132049,216091,756839,859433,1257787,1398269,2976221,3021377,6972593,13466917,20996011,24036583,25964951,30402457,32582657,37156667,42643801,43112609,57885161,74207281,77232917,82589933];
+  const EG = 1.781;            // predicted primes per doubling of p
+  const KNOWN = 26, LAST = 29, PER = 15;
+  const cnt = new Array(LAST + 1).fill(0);
+  EXP.forEach(p => cnt[Math.floor(Math.log2(p))]++);
+
+  const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say');
+  const css = getComputedStyle(card);
+  const MONO = css.getPropertyValue('--mono').trim() || 'monospace';
+  const HAND = css.getPropertyValue('--hand').trim() || 'cursive';
+  const DISP = css.getPropertyValue('--display').trim() || 'serif';
+  const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+  const sup = n => String(n).split('').map(d => SUP[+d]).join('');
+  const cl = v => Math.max(0, Math.min(1, v));
+
+  const T = [null];
+  for (let b = 1; b <= LAST; b++) T.push({f: 0, e: 0, inn: 1, on: false, beads: Array.from({length: cnt[b]}, () => ({o: 1, a: 0}))});
+  const bubbles = [];
+  const rev = {line: 0, inf: 0}, fx = {pulse: 0}, hint = {a: 1, dx: 0};
+  let x = null, W = 0, H = 0, G = {}, P = 0, touched = false, done = false, beyond = false, last = 0, lastPx = null, dragging = false;
+
+  // ---------- layout: two racks while exploring, one long rack at the end ----------
+  function layout() {
+    const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
+    if (done) return layoutLong();
+    const fs = Math.max(12, Math.min(14, W / 28));
+    const hS = Math.max(42, H * .13);
+    const x0 = W * .04, x1 = W * .96, slot = (x1 - x0) / PER;
+    const rh = (H - hS) / 2, lab = fs * 1.9;
+    const tw = Math.min(slot * .62, 30);
+    const avail = rh - lab - fs * .5;
+    const u = Math.max(5, Math.min(avail / 6.7, (tw - 3) / .9));
+    G = {mode: 0, fs, hS, x0, x1, slot, rh, lab, tw, u, r: u * .45, drop: rh * .45, bot: [rh - lab, rh * 2 - lab], ys: H - hS * .5, sh: Math.min(20, Math.max(14, hS * .4))};
+  }
+  function layoutLong() {
+    const fs = Math.max(12, Math.min(13, W / 30));
+    const infW = Math.max(fs * 2.8, 36);
+    const x0 = W * .02, x1 = W - infW, slot = (x1 - x0) / LAST;
+    const tw = Math.min(slot * .7, 16), lab = fs * 1.5;
+    const u = Math.max(2.2, Math.min((tw - 1.5) / .9, (H - lab - 8) / 6.6, 10));
+    const th = 6.4 * u, tot = th + lab + 6;
+    const bot = Math.min(H - lab, (H - tot) / 2 + 6 + th);
+    G = {mode: 1, fs, x0, x1, slot, lab, tw, u, r: u * .45, drop: H * .35, bot: [bot, bot], infX: x1 + infW / 2, infW, ys: -999, sh: 0, hS: 0};
+  }
+
+  const tubeX = b => G.mode ? G.x0 + G.slot * (b - .5) : G.x0 + G.slot * (((b - 1) % PER) + .5);
+  const rowOf = b => (G.mode || b <= PER) ? 0 : 1;
+  function tubePath(tx, top, bot, tw) {
+    const l = tx - tw / 2, rr = tw / 2;
+    x.beginPath(); x.moveTo(l, top); x.lineTo(l, bot - rr); x.arc(tx, bot - rr, rr, Math.PI, 0, true); x.lineTo(l + tw, top);
+  }
+  function rrect(x0, y0, w, h, r) {
+    x.beginPath(); x.moveTo(x0 + r, y0); x.arcTo(x0 + w, y0, x0 + w, y0 + h, r); x.arcTo(x0 + w, y0 + h, x0, y0 + h, r); x.arcTo(x0, y0 + h, x0, y0, r); x.arcTo(x0, y0, x0 + w, y0, r); x.closePath();
+  }
+  const sA = () => G.x0 + G.sh * .9, sB = () => G.x1 - G.sh * .9;
+  const pToX = p => sA() + (p / LAST) * (sB() - sA());
+  const xToP = px => Math.max(0, Math.min(LAST, (px - sA()) / (sB() - sA()) * LAST));
+  const infSize = () => Math.min(Math.max(G.fs * 2.1, G.u * 3.6), H * .62, G.infW * 1.1);
+
+  // ---------- state ----------
+  function setFill(b, on) {
+    const t = T[b]; if (t.on === on) return; t.on = on;
+    gsap.killTweensOf(t); t.beads.forEach(bd => gsap.killTweensOf(bd));
+    const c = Kit.calm;
+    if (on) {
+      t.e = Math.max(t.e, 1);
+      gsap.to(t, {f: 1, duration: c ? 0 : .95, ease: 'elastic.out(1,.42)'});
+      t.beads.forEach((bd, i) => {
+        gsap.fromTo(bd, {o: 1.15, a: 1}, {o: 0, duration: c ? 0 : .6, delay: c ? 0 : .1 + i * .09, ease: 'bounce.out'});
+      });
+      Kit.haptic('selection');
+    } else {
+      gsap.to(t, {f: 0, duration: c ? 0 : .35, ease: 'power2.in'});
+      t.beads.forEach(bd => gsap.to(bd, {o: 1.2, a: 0, duration: c ? 0 : .3, ease: 'power2.in'}));
+    }
+  }
+  function filled() { let n = 0; for (let b = 1; b <= LAST; b++) if (T[b].on) n++; return n; }
+  function readout() {
+    const n = filled();
+    let found = 0; for (let b = 1; b <= Math.min(n, KNOWN); b++) found += cnt[b];
+    Kit.$('rf').textContent = found;
+    Kit.$('rx').textContent = n ? '≈ ' + Math.round(EG * n) : '0';
+    if (done) Kit.$('rp').textContent = 'p → ∞ · the predicted level never drops';
+    else if (!n) Kit.$('rp').textContent = 'Numbers 2ᵖ − 1 · one tube for each doubling of p';
+    else Kit.$('rp').textContent = `2ᵖ − 1 with p < 2${sup(n + 1)}` + (n > KNOWN ? ' · past the biggest found' : '');
+    if (n > KNOWN && !beyond && !done) { beyond = true; say.innerHTML = 'Past the biggest one found. <b>The liquid still predicts more.</b> Keep going.'; }
+  }
+  function setP(p) {
+    if (done) return;
+    P = p;
+    for (let b = 1; b <= LAST; b++) setFill(b, P >= b - .5);
+    readout();
+    if (P >= LAST - .3) reveal();
+  }
+  function reveal() {
+    if (done) return; done = true; P = LAST;
+    for (let b = 1; b <= LAST; b++) {
+      const S = T[b]; gsap.killTweensOf(S); S.beads.forEach(bd => { gsap.killTweensOf(bd); bd.o = 0; bd.a = 1; });
+      S.on = true; S.f = 1;
+    }
+    Kit.haptic('success'); card.classList.add('answered');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); readout();
+    bubbles.length = 0; layout();
+    if (Kit.calm) { rev.line = 1; rev.inf = 1; return; }
+    // the two racks pour into one long rack
+    gsap.fromTo(T.slice(1), {inn: 0}, {inn: 1, duration: .6, ease: 'back.out(1.7)', stagger: .03});
+    gsap.to(rev, {line: 1, duration: 1.3, delay: 1, ease: 'power3.inOut'});
+    gsap.to(rev, {inf: 1, duration: .8, delay: 2, ease: 'back.out(2.4)'});
+    gsap.fromTo(fx, {pulse: 0}, {pulse: 1, duration: .45, delay: 2.1, yoyo: true, repeat: 1, ease: 'sine.inOut'});
+    for (let b = 1; b <= LAST; b++) gsap.delayedCall(1.05 + b * .042, () => { T[b].e = 1.5; });
+  }
+
+  // ---------- drawing ----------
+  function drawTube(b, t, shim, cur) {
+    const S = T[b], tx = tubeX(b), {u, tw, r} = G;
+    const bot = G.bot[rowOf(b)] + (1 - S.inn) * G.drop, top = bot - 6.4 * u, ghost = b > KNOWN;
+    const A = cl(S.inn);
+    x.globalAlpha = A;
+    if (cur === b && !done && P > .2) {
+      const cy = (top + bot) / 2, g = x.createRadialGradient(tx, cy, 0, tx, cy, tw * 2.4);
+      g.addColorStop(0, 'rgba(94,242,208,.30)'); g.addColorStop(1, 'rgba(94,242,208,0)');
+      x.fillStyle = g; x.fillRect(tx - tw * 2.5, top - tw, tw * 5, bot - top + tw * 2);
+    }
+    // glow the liquid casts onto the rack
+    if (S.f > .05) {
+      const gy = bot + 1, rg = tw * 1.4, g = x.createRadialGradient(tx, gy, 0, tx, gy, rg);
+      g.addColorStop(0, `rgba(94,242,208,${(.3 + fx.pulse * .3) * cl(S.f) * (ghost ? .55 : 1)})`); g.addColorStop(1, 'rgba(94,242,208,0)');
+      x.fillStyle = g; x.fillRect(tx - rg, gy - rg, rg * 2, rg * 2);
+    }
+    tubePath(tx, top, bot, tw); x.fillStyle = 'rgba(200,245,238,.05)'; x.fill();
+    x.save(); tubePath(tx, top, bot, tw); x.closePath(); x.clip();
+    if (S.f > .002) {
+      const h = S.f * EG * u;
+      const tilt = Math.sin(t * 7 + b * 1.3) * S.e * u * .45 + Math.sin(t * 1.4 + b * .8) * u * .07;
+      const sy = bot - h + Math.sin(t * 2.2 + b) * u * .03;
+      const l = tx - tw / 2 - 1, rr = tx + tw / 2 + 1;
+      const lg = x.createLinearGradient(l, 0, rr, 0), al = ghost ? .45 : .88;
+      lg.addColorStop(0, `rgba(34,184,154,${al})`); lg.addColorStop(.45, `rgba(127,247,223,${al})`); lg.addColorStop(1, `rgba(16,128,110,${al})`);
+      x.beginPath(); x.moveTo(l, sy + tilt); x.quadraticCurveTo(tx, sy + u * .16, rr, sy - tilt); x.lineTo(rr, bot + 2); x.lineTo(l, bot + 2); x.closePath(); x.fillStyle = lg; x.fill();
+      x.beginPath(); x.moveTo(l, sy + tilt); x.quadraticCurveTo(tx, sy + u * .16, rr, sy - tilt);
+      x.strokeStyle = 'rgba(225,255,249,.95)'; x.lineWidth = 1.3; x.stroke();
+      x.fillStyle = 'rgba(255,255,255,.55)';
+      for (const q of bubbles) if (q.b === b && q.h < h - 1) { x.beginPath(); x.arc(tx + q.dx, bot - q.h, q.r, 0, 7); x.fill(); }
+    }
+    S.beads.forEach((bd, i) => {
+      if (bd.a <= .01) return;
+      const cy = bot - u * (i + .5) - 1 - bd.o * (bot - top), rad = r * (1 + fx.pulse * .18);
+      const g = x.createRadialGradient(tx - rad * .35, cy - rad * .4, rad * .1, tx, cy, rad);
+      g.addColorStop(0, '#fffbe6'); g.addColorStop(.42, '#ffcf5a'); g.addColorStop(1, '#c27410');
+      x.globalAlpha = A * cl(bd.a); x.shadowColor = 'rgba(255,200,80,.85)'; x.shadowBlur = 6 + fx.pulse * 12;
+      x.beginPath(); x.arc(tx, cy, rad, 0, 7); x.fillStyle = g; x.fill(); x.shadowBlur = 0;
+    });
+    x.globalAlpha = A;
+    if (ghost && S.f > .3 && !G.mode) {
+      x.fillStyle = `rgba(233,251,246,${.9 * cl(S.f)})`; x.font = `800 ${Math.max(12, u * 1.15)}px ${MONO}`;
+      x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('?', tx, bot - EG * u * .5);
+    }
+    x.restore();
+    x.globalAlpha = A;
+    x.lineWidth = 1;
+    if (tw > 8) for (let g = 1; g <= 5; g++) { const gy = bot - u * g; x.beginPath(); x.moveTo(tx + tw / 2 - tw * .28, gy); x.lineTo(tx + tw / 2, gy); x.strokeStyle = 'rgba(233,251,246,.22)'; x.stroke(); }
+    if (ghost) x.setLineDash(G.mode ? [2, 2] : [3, 3]);
+    tubePath(tx, top, bot, tw); x.strokeStyle = ghost ? 'rgba(220,250,245,.38)' : 'rgba(220,250,245,.58)'; x.lineWidth = G.mode ? 1 : 1.2; x.stroke();
+    x.setLineDash([]);
+    const near = Math.max(0, 1 - Math.abs(tx - shim) / (W * .12));
+    x.beginPath(); x.moveTo(tx - tw * .22, top + u * .5); x.lineTo(tx - tw * .22, bot - tw * .65);
+    x.strokeStyle = `rgba(255,255,255,${.2 + .55 * near})`; x.lineWidth = Math.max(1, tw * .14); x.lineCap = 'round'; x.stroke(); x.lineCap = 'butt';
+    x.beginPath(); x.ellipse(tx, top, tw / 2 + (G.mode ? .8 : 1.5), Math.max(1.2, tw * .14), 0, 0, 7); x.strokeStyle = 'rgba(230,255,250,.6)'; x.lineWidth = 1.1; x.stroke();
+    const labs = G.mode ? [1, 10, 20, 29] : [1, 5, 10, 15, 16, 20, 25, 29];
+    if (labs.includes(b)) {
+      x.fillStyle = 'rgba(233,251,246,.62)'; x.font = `600 ${G.fs}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+      x.fillText('2' + sup(b), tx, bot + G.lab * .78);
+    }
+    x.globalAlpha = 1;
+  }
+
+  function drawRack(k) {
+    const {x0, slot, u, fs} = G, bot = G.bot[k], top = bot - 6.4 * u;
+    let xs, xe, fade;
+    if (G.mode) { xs = x0 - slot * .1; xe = G.x1 + slot * .4; fade = true; }
+    else { xs = x0 - slot * .08; xe = k ? x0 + slot * 14.9 : G.x1 + slot * .08; fade = !!k; }
+    const g = x.createLinearGradient(xs, 0, xe, 0);
+    g.addColorStop(0, 'rgba(170,240,228,.13)'); g.addColorStop(.85, 'rgba(170,240,228,.13)'); g.addColorStop(1, fade ? 'rgba(170,240,228,0)' : 'rgba(170,240,228,.13)');
+    const ph = Math.max(2, Math.min(u * .5, fs * .45));
+    rrect(xs, bot + 2, xe - xs, ph, ph / 2); x.fillStyle = g; x.fill();
+    x.beginPath(); x.moveTo(xs + ph, bot + 2.5); x.lineTo(xe - ph, bot + 2.5); x.strokeStyle = 'rgba(255,255,255,.22)'; x.lineWidth = 1; x.stroke();
+    const hy = top + u * 1.3;
+    rrect(xs, hy, xe - xs, ph * .8, ph * .4); x.fillStyle = g; x.fill();
+  }
+
+  function drawInf(t) {
+    const {u, tw, fs} = G;
+    if (!G.mode) {
+      const tx = G.x0 + G.slot * 14.5, bot = G.bot[1], top = bot - 6.4 * u;
+      x.globalAlpha = .22; x.setLineDash([3, 4]);
+      tubePath(tx, top, bot, tw); x.strokeStyle = '#dff'; x.lineWidth = 1.2; x.stroke(); x.setLineDash([]);
+      x.globalAlpha = .5; x.fillStyle = '#e9fbf6'; x.font = `700 ${fs}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.fillText('…', tx, bot - EG * u * .5); x.globalAlpha = 1;
+      return;
+    }
+    if (rev.inf <= 0) return;
+    const size = infSize(), cx = G.infX, cy = G.bot[0] - EG * u;
+    x.save(); x.translate(cx, cy); x.scale(rev.inf, rev.inf);
+    x.globalAlpha = cl(rev.inf); x.shadowColor = '#5ef2d0'; x.shadowBlur = 14 + Math.sin(t * 2.4) * 5;
+    x.fillStyle = '#b8fff2'; x.font = `800 ${size}px ${DISP}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.fillText('∞', 0, 0); x.restore();
+    x.globalAlpha = .62 * cl(rev.inf); x.fillStyle = '#e9fbf6'; x.font = `600 ${fs}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+    x.fillText('p→∞', cx, G.bot[0] + G.lab * .78); x.globalAlpha = 1;
+  }
+
+  function drawLevels(t) {
+    if (rev.line <= 0 || !G.mode) return;
+    const {x0, slot, tw, u} = G, p = cl(rev.line);
+    const y = G.bot[0] - EG * u, xs = x0 + slot * .5 - tw, xe = G.infX - infSize() * .62;
+    const xp = xs + (xe - xs) * p;
+    x.save(); x.shadowColor = '#5ef2d0'; x.shadowBlur = 12;
+    x.beginPath(); x.moveTo(xs, y); x.lineTo(xp, y); x.strokeStyle = 'rgba(184,255,242,.95)'; x.lineWidth = 2; x.stroke();
+    const sx = p < 1 ? xp : xs + (xe - xs) * ((t * .3) % 1);
+    const g = x.createRadialGradient(sx, y, 0, sx, y, 10); g.addColorStop(0, 'rgba(255,255,255,.95)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+    x.fillStyle = g; x.fillRect(sx - 11, y - 11, 22, 22);
+    x.restore();
+  }
+
+  function drawSlider(t) {
+    if (G.mode) return;
+    const {x0, x1, ys, sh, fs} = G, y0 = ys - sh / 2;
+    rrect(x0, y0, x1 - x0, sh, sh / 2); x.fillStyle = 'rgba(200,245,238,.07)'; x.fill();
+    const bx = pToX(P) + hint.dx;
+    x.save(); rrect(x0, y0, x1 - x0, sh, sh / 2); x.clip();
+    const g = x.createLinearGradient(0, y0, 0, y0 + sh); g.addColorStop(0, 'rgba(127,247,223,.55)'); g.addColorStop(1, 'rgba(22,140,120,.55)');
+    x.fillStyle = g; x.fillRect(x0, y0, Math.max(0, bx - x0), sh);
+    x.restore();
+    x.strokeStyle = 'rgba(233,251,246,.35)'; x.lineWidth = 1;
+    for (let b = 1; b <= LAST; b++) { const px = pToX(b - .5); x.beginPath(); x.moveTo(px, y0 + 2); x.lineTo(px, y0 + sh * .3); x.stroke(); }
+    rrect(x0, y0, x1 - x0, sh, sh / 2); x.strokeStyle = 'rgba(220,250,245,.55)'; x.lineWidth = 1.2; x.stroke();
+    x.beginPath(); x.moveTo(x0 + sh * .6, y0 + 2.2); x.lineTo(x1 - sh * .6, y0 + 2.2); x.strokeStyle = 'rgba(255,255,255,.28)'; x.stroke();
+    const wob = Math.sin(t * 3) * .04, rx = sh * .85 * (1 + wob), ry = sh * .3 * (1 - wob);
+    const bg = x.createRadialGradient(bx - rx * .3, ys - ry * .4, 1, bx, ys, rx);
+    bg.addColorStop(0, 'rgba(255,255,255,.95)'); bg.addColorStop(1, 'rgba(255,255,255,.35)');
+    x.save(); x.shadowColor = 'rgba(184,255,242,.9)'; x.shadowBlur = 10;
+    x.beginPath(); x.ellipse(bx, ys, rx, ry, 0, 0, 7); x.fillStyle = bg; x.fill(); x.restore();
+    if (hint.a > .01) {
+      x.globalAlpha = cl(hint.a); x.fillStyle = '#e9fbf6'; x.font = `700 ${Math.max(13, fs * 1.05)}px ${HAND}`;
+      x.textAlign = 'left'; x.textBaseline = 'middle'; x.fillText('drag →', bx + rx + 8, ys + 1); x.globalAlpha = 1;
+    }
+  }
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!x || !W) return;
+    const t = now / 1000, dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+    const decay = Math.pow(.18, dt);
+    for (let b = 1; b <= LAST; b++) {
+      const S = T[b]; S.e *= decay;
+      if (S.f > .5 && Math.random() < dt * .9) bubbles.push({b, dx: (Math.random() - .5) * G.tw * .45, h: 1, v: G.u * (.6 + Math.random() * .7), r: Math.min(.7 + Math.random() * 1.1, G.tw * .15)});
+    }
+    for (let i = bubbles.length - 1; i >= 0; i--) { const q = bubbles[i]; q.h += q.v * dt; if (q.h > T[q.b].f * EG * G.u) bubbles.splice(i, 1); }
+    x.clearRect(0, 0, W, H);
+    const shim = ((t * .16) % 1.5 - .25) * W;
+    const cur = done ? -1 : Math.max(1, Math.min(LAST, Math.round(P)));
+    for (let b = 1; b <= LAST; b++) drawTube(b, t, shim, cur);
+    drawRack(0); if (!G.mode) drawRack(1);
+    drawInf(t); drawLevels(t); drawSlider(t);
+  }
+
+  // ---------- touch ----------
+  const pxOf = e => e.clientX - cv.getBoundingClientRect().left;
+  function stir(px) {
+    const dv = lastPx == null ? 0 : Math.abs(px - lastPx); lastPx = px;
+    for (let b = 1; b <= LAST; b++) if (T[b].on) T[b].e = Math.min(1.6, T[b].e + dv * .012);
+  }
+  cv.addEventListener('pointerdown', e => {
+    dragging = true; try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+    if (!touched) { touched = true; gsap.killTweensOf(hint); gsap.to(hint, {a: 0, dx: 0, duration: .3, ease: 'power2.out'}); }
+    const px = pxOf(e); lastPx = px;
+    if (done) { for (let b = 1; b <= LAST; b++) T[b].e = Math.max(T[b].e, 1.1); Kit.haptic('light'); return; }
+    setP(xToP(px));
+  });
+  cv.addEventListener('pointermove', e => { if (!dragging) return; const px = pxOf(e); stir(px); setP(xToP(px)); });
+  const end = () => { dragging = false; lastPx = null; };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+  new ResizeObserver(() => { if (x) layout(); }).observe(Kit.$('wrap'));
+  Kit.onShow.card = layout;
+  requestAnimationFrame(frame);
+
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.fromTo(T.slice(1), {inn: 0}, {inn: 1, duration: .8, ease: 'back.out(1.6)', stagger: .025});
+    if (!touched) gsap.to(hint, {dx: 14, duration: .7, ease: 'power2.inOut', yoyo: true, repeat: -1, delay: 1});
+  };
+
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const r = cv.getBoundingClientRect();
+    const ys = G.ys;
+    const ev = (type, px) => cv.dispatchEvent(new PointerEvent(type, {clientX: r.left + px, clientY: r.top + ys, pointerId: 1, bubbles: true}));
+    const a = sA(), b = sB();
+    ev('pointerdown', a);
+    for (let i = 1; i <= 12; i++) { ev('pointermove', a + (b - a + 4) * i / 12); await wait(Kit.calm ? 10 : 50); }
+    ev('pointerup', b);
+    await wait(Kit.calm ? 100 : 3200);
+  };
+})();
+Kit.single();
+</script>
+</html>

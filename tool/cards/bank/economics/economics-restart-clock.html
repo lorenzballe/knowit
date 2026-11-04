@@ -1,0 +1,496 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: economics-restart-clock -->
+<!-- Look: a cyanotype blueprint of an LNG liquefaction train, drawn in white hairlines straight on Prussian blue (no box), with platforms, a flare, a cold coil, an LNG tank, a week timeline and engineer's dimension arrows.
+     Interaction: two drones dive into the train and it smokes, stamped SHUT DOWN. Tap the timeline to guess when it is back to full, then tap to let each week pass. Each week falls onto the timeline as a real Matter.js block: hatched while restarting, filled as output climbs.
+     Wow moment: in week 4 the smoke is gone, the LNG stream thickens into the tank, the flare lights, the stamp reads FULL CAPACITY and a dimension arrow sweeps out "≈ 4 weeks, best case", with a ghost fifth week dropping in.
+     Layout: the drawing re-composes itself for short stages (full plant → compact plant → status bar → timeline only), so nothing ever overlaps. -->
+<title>The restart clock</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/matter.min.js"></script>
+<style>
+#card{background-color:var(--c);background-image:
+  radial-gradient(120% 75% at 50% 38%,rgba(160,210,255,.10),transparent 62%),
+  linear-gradient(rgba(255,255,255,.065) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.065) 1px,transparent 1px),
+  linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:100% 100%,40px 40px,40px 40px,8px 8px,8px 8px}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
+#why{margin:0;font-size:15px;line-height:1.4}
+#why b{color:#ffd36b}
+.say b{color:#ffd36b}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Guess, then run the clock" style="--c:#123d6a;--k:#eef6ff;--edge:#0a2647">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RESTART CLOCK</span></div>
+    <h2 class="q">How long until a shut-down Qatar LNG plant is back at full output?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="pic" role="img" aria-label="Blueprint of a gas liquefaction plant hit by two drones, an LNG tank, and a timeline in weeks where week blocks fall into place."></canvas>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Two drones shut the plant down. <b>Tap the timeline</b> where you think it is back to full.</p>
+    <p class="body gone" id="why">Restarting liquefaction takes <b>two to three weeks</b>, then <b>two more</b> to reach full capacity: about four weeks, even in the best case.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A gas plant stops in a moment and needs about a month to come back.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const {Engine, Bodies, Composite, Body} = Matter;
+  const cv = Kit.$('pic'), say = Kit.$('say');
+  const INK = '#eef6ff', CARD = '#123d6a', CY = '#8fe3ff', YEL = '#ffd36b', COR = '#ff9a7a';
+  const OUT = [0, 0, .25, .6, 1];                  // output after each week (illustrative climb)
+  const STAMP = [['SHUT DOWN', COR], ['RESTARTING', YEL], ['PARTIAL', YEL], ['PARTIAL', YEL], ['FULL CAPACITY', CY]];
+  const engine = Engine.create(); engine.gravity.y = 1.1;
+  const st = {intro: 1, dro: 1, hint: 1, guess: -1, gv: 0, gA: 0, phase: 'guess', weeks: 0, out: 0, dimA: 0, dimB: 0, dimT: 0, dimG: 0, flash: 0, stampS: 1};
+  let x = null, W = 0, H = 0, fs = 12, mono = 'monospace', G = {}, blocks = [], drops = [], puffs = [], rings = [], hit = [1, 1], cap = 120, acc = 0, running = false;
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const line = (a, b, c, d) => { x.beginPath(); x.moveTo(a, b); x.lineTo(c, d); x.stroke(); };
+  const font = (w, s) => x.font = `${w} ${s}px ${mono}`;
+  const vis = i => clamp((st.intro * 1.6 - i * .12) / .5, 0, 1);
+  const pickLabel = (cands, maxW) => { for (const c of cands) if (x.measureText(c).width <= maxW) return c; return cands[cands.length - 1]; };
+
+  // ---------- layout: the drawing re-composes itself to the stage height ----------
+  function fit() {
+    const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
+    if (!W || !H) return;
+    fs = clamp(W / 28, 12, 14);
+    mono = getComputedStyle(cv).getPropertyValue('--mono').trim() || 'monospace';
+    const pad = Math.max(10, W * .04);
+    G.pad = pad; G.x0 = pad + fs * .4; G.x1 = W - pad; G.ww = (G.x1 - G.x0) / 6;
+    const axis = fs * 1.75, pillH = fs * 1.75, row = fs * 1.95, gapB = fs * .9, head = fs * 1.55;
+    const bhFull = clamp(Math.min(G.ww * .8, H * .13), 24, 52);
+    const C = [['plant', 2, 1], ['plant', 1, 1], ['bar', 2, 1], ['bar', 1, 1], ['bar', 1, 0], ['none', 1, 0], ['none', 0, 0]];
+    let c = C[C.length - 1], bh = 20;
+    for (const k of C) {
+      const b = k[2] ? bhFull : Math.min(bhFull, 22);
+      const top = k[0] === 'plant' ? head + fs * 5.2 : k[0] === 'bar' ? head + fs * .5 : 0;
+      if (top + k[1] * row + gapB + b + axis + (k[2] ? pillH : 0) <= H) { c = k; bh = b; break; }
+    }
+    G.mode = c[0]; G.rows = c[1]; G.pill = !!c[2]; G.bh = bh;
+    G.floor = H - axis - (G.pill ? pillH : 0);
+    G.y1 = G.floor - bh - gapB - fs * .6; G.y2 = G.y1 - row;
+    G.T = G.floor - bh - gapB - G.rows * row;
+    G.pillY = G.floor + axis + pillH * .5;
+    G.top = head; G.pb = G.T - fs * .8;
+    if (G.mode === 'plant') {
+      const L = pad, base = G.pb, ph = base - G.top;
+      G.tw = Math.min(W * .27, 140); G.tx1 = W - pad; G.tx0 = G.tx1 - G.tw;
+      const R = G.tx0 - fs * 1.2, pw = R - L;
+      Object.assign(G, {L, pw, ph});
+      G.fx = L + pw * .04; G.ft = base - ph * .7;
+      G.ax = L + pw * .22; G.aw = pw * .13; G.ah = ph * .74;
+      G.bx = L + pw * .43; G.bw = pw * .11; G.bH = ph * .52;
+      G.mx = L + pw * .72; G.mw = Math.min(pw * .2, ph * .5); G.mt = base - ph * .96;
+      G.pipeY = G.mt + G.mw * .62;
+      G.th = clamp(Math.min(ph * .5, base - G.pipeY - 16), 12, 999); G.ty1 = base; G.ty0 = base - G.th;
+      G.spX = (G.tx0 + G.tx1) / 2; G.spY = G.pipeY + Math.max(6, (G.ty0 - G.pipeY) * .45);
+      G.dr = clamp(W * .0075, 2.2, 3.4);
+      cap = clamp(Math.floor(G.tw * G.th * .5 / (4 * G.dr * G.dr)), 40, 260);
+    }
+    rebuild();
+    if (!running) { running = true; requestAnimationFrame(loop); }
+  }
+
+  function rebuild() {
+    Composite.clear(engine.world, false);
+    const S = {isStatic: true, friction: .9};
+    const parts = [Bodies.rectangle(W / 2, G.floor + 10, W * 3, 20, S),
+      Bodies.rectangle(G.x0 - 2, G.floor - G.bh / 2, 4, G.bh, S), Bodies.rectangle(G.x1 + 2, G.floor - G.bh / 2, 4, G.bh, S)];
+    if (G.mode === 'plant') parts.push(
+      Bodies.rectangle(G.tx0, (G.ty0 + G.ty1) / 2, 4, G.th, S), Bodies.rectangle(G.tx1, (G.ty0 + G.ty1) / 2, 4, G.th, S),
+      Bodies.rectangle((G.tx0 + G.tx1) / 2, G.ty1, G.tw + 4, 4, S));
+    for (let k = 1; k < 6; k++) parts.push(Bodies.rectangle(G.x0 + k * G.ww, G.floor - G.bh * .17, 2, G.bh * .34, S));
+    Composite.add(engine.world, parts);
+    for (const b of blocks) b.body = blockBody(b.k, true);
+    const n = G.mode === 'plant' ? Math.min(drops.length, cap) : 0; drops = [];
+    for (let i = 0; i < n; i++) addDrop(G.tx0 + 6 + Kit.rnd() * (G.tw - 12), G.ty1 - 6 - Kit.rnd() * G.th * .5);
+    puffs = [];
+  }
+
+  function blockBody(k, rest) {
+    const cx = G.x0 + (k - .5) * G.ww, w = G.ww * .82;
+    const sy = Math.max(G.bh * .6, G.T - G.bh * .2);
+    const b = Bodies.rectangle(cx, rest ? G.floor - G.bh / 2 : sy, w, G.bh, {restitution: .22, friction: .8, density: .004, chamfer: {radius: 2}});
+    if (!rest) { Body.setAngle(b, (Kit.rnd() - .5) * .35); Body.setVelocity(b, {x: 0, y: 3}); Body.setAngularVelocity(b, (Kit.rnd() - .5) * .04); }
+    Composite.add(engine.world, b); return b;
+  }
+  function dropBlock(k, ghost) { blocks.push({k, ghost, born: performance.now(), body: blockBody(k, Kit.calm)}); Kit.haptic('light'); }
+  function addDrop(px, py) {
+    const b = Bodies.circle(px, py, G.dr, {restitution: .05, friction: .01, frictionAir: .012, density: .0008});
+    Composite.add(engine.world, b); drops.push(b); return b;
+  }
+  function puff(px, py, big) { puffs.push({x: px, y: py, r: big ? 3 + Kit.rnd() * 3 : 2 + Kit.rnd() * 2, l: 1, vx: (Kit.rnd() - .3) * .25, vy: -(.25 + Kit.rnd() * .3)}); if (puffs.length > 70) puffs.shift(); }
+
+  // ---------- drawing ----------
+  function vessel(cx, base, w, h) {
+    const r = w / 2, t = base - h;
+    x.beginPath(); x.moveTo(cx - r, base); x.lineTo(cx - r, t + r); x.arc(cx, t + r, r, Math.PI, 0); x.lineTo(cx + r, base);
+    const g = x.createLinearGradient(cx - r, 0, cx + r, 0);
+    g.addColorStop(0, 'rgba(255,255,255,.12)'); g.addColorStop(.35, 'rgba(255,255,255,.03)'); g.addColorStop(1, 'rgba(0,10,30,.2)');
+    x.fillStyle = g; x.fill(); x.stroke();
+    x.save(); x.globalAlpha *= .35; x.setLineDash([8, 3, 2, 3]); line(cx, t - 5, cx, base); x.restore();
+    return t;
+  }
+  function platform(cx, r, y) {
+    x.save(); x.globalAlpha *= .75; x.lineWidth = 1;
+    line(cx - r - 5, y, cx + r + 5, y); line(cx - r - 5, y, cx - r - 5, y - 5); line(cx + r + 5, y, cx + r + 5, y - 5);
+    line(cx - r - 5, y - 5, cx - r, y - 5); line(cx + r, y - 5, cx + r + 5, y - 5); x.restore();
+  }
+
+  function header(now) {
+    if (G.mode === 'none') return;
+    x.globalAlpha = vis(1); font(700, fs); x.textBaseline = 'alphabetic';
+    const o = `OUTPUT ${Math.round(st.out * 100)}%`, ow = x.measureText(o).width;
+    x.textAlign = 'right'; x.fillStyle = st.out > .99 ? CY : INK; x.fillText(o, W - G.pad, fs * 1.1);
+    x.textAlign = 'left';
+    if (G.mode === 'plant') {
+      x.fillStyle = INK; x.fillText(pickLabel(['QATAR ENERGY · LNG TRAIN', 'QATAR LNG TRAIN', 'QATAR LNG'], W - 2 * G.pad - ow - fs), G.pad, fs * 1.1);
+    } else {
+      const [txt, col] = STAMP[Math.min(4, st.weeks)];
+      x.fillStyle = col; x.beginPath(); x.arc(G.pad + 4, fs * .72, 3.5, 0, 7); x.globalAlpha *= st.out > .99 ? 1 : .55 + .45 * Math.sin(now / 260); x.fill();
+      x.globalAlpha = vis(1); x.fillText(txt, G.pad + 13, fs * 1.1);
+      const by = fs * 1.62, bw = W - 2 * G.pad;
+      x.save(); x.globalAlpha *= .3; x.strokeStyle = INK; x.lineWidth = 1; for (let i = G.pad; i < G.pad + bw; i += 5) line(i, by + 3, i + 3, by); x.restore();
+      x.fillStyle = CY; x.fillRect(G.pad, by, bw * st.out, 3);
+    }
+    x.globalAlpha = 1;
+  }
+
+  function plant(now) {
+    if (G.mode !== 'plant') return;
+    const L = G.L, base = G.pb, ph = G.ph, run = st.out;
+    x.strokeStyle = INK; x.lineWidth = 1.2;
+    // ground with hatching
+    x.globalAlpha = vis(0);
+    line(L - 4, base, W - G.pad + 4, base);
+    x.save(); x.globalAlpha *= .3; for (let i = L; i < W - G.pad; i += 7) line(i, base + 1, i - 5, base + 6); x.restore();
+    // flare stack with guy wires
+    x.globalAlpha = vis(1);
+    const fx = G.fx, ft = G.ft;
+    line(fx - 1.6, base, fx - 1.2, ft); line(fx + 1.6, base, fx + 1.2, ft); line(fx - 4, ft, fx + 4, ft);
+    x.save(); x.globalAlpha *= .4; x.lineWidth = .9; line(fx, ft + ph * .15, fx + G.pw * .09, base); line(fx, ft + ph * .15, fx - G.pad * .6, base); x.restore();
+    if (run > .01) {
+      const fl = Math.min(ph * .24, 6 + 12 * run) * (1 + .12 * Math.sin(now / 70) + .08 * Math.sin(now / 37));
+      x.save(); x.shadowColor = YEL; x.shadowBlur = 14 * run; x.fillStyle = YEL; x.globalAlpha *= .9;
+      x.beginPath(); x.moveTo(fx - 3.5, ft); x.quadraticCurveTo(fx - 5, ft - fl * .5, fx + Math.sin(now / 90) * 2, ft - fl); x.quadraticCurveTo(fx + 5, ft - fl * .5, fx + 3.5, ft); x.fill(); x.restore();
+    } else {
+      x.save(); x.fillStyle = COR; x.globalAlpha *= .45 + .55 * Math.max(0, Math.sin(now / 240)); x.shadowColor = COR; x.shadowBlur = 8;
+      x.beginPath(); x.arc(fx, ft - 3, 2.6, 0, 7); x.fill(); x.restore();
+    }
+    // column A with trays and platform
+    x.globalAlpha = vis(2);
+    const ax = G.ax, aw = G.aw, at = vessel(ax, base, aw, G.ah);
+    x.save(); x.globalAlpha *= .45; for (let y = at + aw * .7; y < base - 4; y += 7) line(ax - aw / 2 + 2, y, ax + aw / 2 - 2, y); x.restore();
+    platform(ax, aw / 2, at + G.ah * .42);
+    // column B
+    x.globalAlpha = vis(3);
+    const bx = G.bx, bw = G.bw, bt = vessel(bx, base, bw, G.bH);
+    x.save(); x.globalAlpha *= .45; for (let y = bt + bw * .7; y < base - 4; y += 9) line(bx - bw / 2 + 2, y, bx + bw / 2 - 2, y); x.restore();
+    platform(bx, bw / 2, bt + G.bH * .5);
+    // main cryogenic heat exchanger with its cold coil
+    x.globalAlpha = vis(4);
+    const mx = G.mx, mw = G.mw, mt = vessel(mx, base, mw, base - G.mt);
+    x.save(); x.strokeStyle = run > .01 ? CY : INK; x.globalAlpha *= .35 + .65 * run; if (run > .01) { x.shadowColor = CY; x.shadowBlur = 8 * run; }
+    x.beginPath(); let s = 1; for (let y = base - 6; y > mt + mw * .6; y -= 6) { x.lineTo(mx + s * mw * .32, y); s = -s; } x.stroke(); x.restore();
+    platform(mx, mw / 2, mt + (base - mt) * .55);
+    // pipes between vessels, with valves
+    x.globalAlpha = vis(5);
+    const pY1 = base - G.ah * .55, pY2 = base - G.bH * .7;
+    for (const [x1, x2, y] of [[ax + aw / 2, bx - bw / 2, pY1], [bx + bw / 2, mx - mw / 2, pY2]]) {
+      line(x1, y - 2, x2, y - 2); line(x1, y + 2, x2, y + 2);
+      const vx = (x1 + x2) / 2; x.beginPath(); x.moveTo(vx - 4, y - 4); x.lineTo(vx + 4, y + 4); x.lineTo(vx + 4, y - 4); x.lineTo(vx - 4, y + 4); x.closePath();
+      x.fillStyle = CARD; x.fill(); x.stroke();
+    }
+    // out-pipe to the tank
+    const px0 = mx + mw / 2, py = G.pipeY;
+    x.beginPath(); x.moveTo(px0, py - 3); x.lineTo(G.spX + 3, py - 3); x.lineTo(G.spX + 3, G.spY);
+    x.moveTo(px0, py + 3); x.lineTo(G.spX - 3, py + 3); x.lineTo(G.spX - 3, G.spY); x.stroke();
+    line(G.spX - 6, G.spY, G.spX + 6, G.spY);
+    for (let k = 1; k < 3; k++) { const sx = px0 + (G.spX - px0) * k / 3; line(sx, py + 3, sx, base); }
+    if (run > .01) {
+      x.save(); x.strokeStyle = CY; x.lineWidth = 1.6; x.setLineDash([5, 5]); x.lineDashOffset = -now / 1000 * 50 * (.4 + run);
+      x.beginPath(); x.moveTo(px0, py); x.lineTo(G.spX, py); x.lineTo(G.spX, G.spY - 1); x.stroke(); x.restore();
+    }
+    x.globalAlpha = 1;
+  }
+
+  function smoke() {
+    if (G.mode !== 'plant') return;
+    const s = 1 - st.out;
+    if (!Kit.calm && s > .05) {
+      if (Kit.rnd() < s * .14) puff(G.mx + (Kit.rnd() - .5) * G.mw * .5, G.mt + 2);
+      if (Kit.rnd() < s * .06) puff(G.bx + (Kit.rnd() - .5) * G.bw * .4, G.pb - G.bH + 2);
+    }
+    x.save(); x.strokeStyle = INK; x.lineWidth = 1;
+    for (const p of puffs) {
+      p.x += p.vx; p.y += p.vy; p.r += .045; p.l -= .0065;
+      const top = clamp((p.y - G.top - p.r) / (fs * 1.6), 0, 1);
+      if (p.l <= 0 || top <= 0) { p.l = 0; continue; }
+      x.globalAlpha = p.l * top * .42; x.beginPath(); x.arc(p.x, p.y, p.r, 0, 7);
+      x.fillStyle = 'rgba(238,246,255,.07)'; x.fill(); x.stroke();
+    }
+    puffs = puffs.filter(p => p.l > 0);
+    x.restore();
+  }
+
+  function tank() {
+    if (G.mode !== 'plant') return;
+    x.globalAlpha = vis(5); x.strokeStyle = INK; x.lineWidth = 1.4;
+    x.beginPath(); x.moveTo(G.tx0, G.ty0); x.lineTo(G.tx0, G.ty1); x.lineTo(G.tx1, G.ty1); x.lineTo(G.tx1, G.ty0); x.stroke();
+    line(G.tx0 - 4, G.ty0, G.tx0 + 4, G.ty0); line(G.tx1 - 4, G.ty0, G.tx1 + 4, G.ty0);
+    x.save(); x.globalAlpha *= .5; x.lineWidth = 1;
+    for (let i = 1; i < 5; i++) { const y = G.ty1 - G.th * i / 5; line(G.tx1 + 1, y, G.tx1 + 5, y); }
+    x.restore(); x.globalAlpha = 1;
+  }
+
+  function drawDrops() {
+    if (G.mode !== 'plant' || !drops.length) return;
+    x.save(); x.fillStyle = CY; x.globalAlpha = .9;
+    if (st.flash > .01) { x.shadowColor = CY; x.shadowBlur = 16 * st.flash; }
+    x.beginPath();
+    for (const d of drops) { x.moveTo(d.position.x + G.dr, d.position.y); x.arc(d.position.x, d.position.y, G.dr, 0, 7); }
+    x.fill(); x.restore();
+  }
+
+  function stampDraw() {
+    if (G.mode !== 'plant') return;
+    const [txt, col] = STAMP[Math.min(4, st.weeks)];
+    x.save(); x.globalAlpha = vis(6); x.translate(G.L + G.pw * .46, G.pb - G.ph * .32); x.rotate(-.1); x.scale(st.stampS, st.stampS);
+    font(800, Math.max(12, Math.min(fs * 1.1, G.ph * .2))); x.textAlign = 'center'; x.textBaseline = 'middle';
+    const tw = x.measureText(txt).width + fs * 1.1, th = fs * 1.85;
+    x.fillStyle = 'rgba(18,61,106,.9)'; x.fillRect(-tw / 2, -th / 2, tw, th);
+    x.strokeStyle = col; x.lineWidth = 2; x.strokeRect(-tw / 2, -th / 2, tw, th); x.lineWidth = .8; x.strokeRect(-tw / 2 + 3, -th / 2 + 3, tw - 6, th - 6);
+    x.fillStyle = col; x.fillText(txt, 0, 1); x.restore();
+  }
+
+  function boom(px, py) {
+    rings.push({x: px, y: py, t: performance.now()});
+    for (let i = 0; i < 9; i++) puff(px + (Kit.rnd() - .5) * 10, py + (Kit.rnd() - .5) * 6, true);
+    stamp();
+  }
+  function drones(now) {
+    if (G.mode !== 'plant') return;
+    if (st.dro > 0 && st.dro < 1) for (let i = 0; i < 2; i++) {
+      const q = clamp((st.dro - i * .2) / .6, 0, 1);
+      const tx = G.mx + (i ? G.mw * .2 : -G.mw * .2), ty = G.mt + G.mw * .35;
+      if (q >= 1) { if (!hit[i]) { hit[i] = 1; boom(tx, ty); } continue; }
+      if (q <= 0) continue;
+      const sx = -fs, sy = G.top + G.ph * .1 + i * fs * .9, e = q * q;
+      const dx = sx + (tx - sx) * q, dy = sy + (ty - sy) * e, sz = fs * .55;
+      x.save(); x.strokeStyle = COR; x.lineWidth = 1; x.globalAlpha = .45; x.setLineDash([3, 4]);
+      x.beginPath(); for (let j = 0; j <= 12; j++) { const qq = q * j / 12; x.lineTo(sx + (tx - sx) * qq, sy + (ty - sy) * qq * qq); } x.stroke();
+      x.setLineDash([]); x.globalAlpha = 1; x.translate(dx, dy); x.rotate(Math.atan2((ty - sy) * 2 * q, tx - sx) * .5);
+      x.lineWidth = 1.3; line(-sz, -sz * .4, sz, sz * .4); line(-sz, sz * .4, sz, -sz * .4);
+      x.fillStyle = COR; x.fillRect(-2.5, -2, 5, 4);
+      const spin = Math.abs(Math.sin(now / 25));
+      for (const [ex, ey] of [[-sz, -sz * .4], [sz, sz * .4], [-sz, sz * .4], [sz, -sz * .4]]) { x.beginPath(); x.ellipse(ex, ey, sz * .5 * spin + 1, 1.2, 0, 0, 7); x.stroke(); }
+      x.restore();
+    }
+    rings = rings.filter(r => now - r.t < 700);
+    for (const r of rings) {
+      const a = (now - r.t) / 700;
+      x.save(); x.strokeStyle = COR; x.fillStyle = COR; x.globalAlpha = 1 - a; x.lineWidth = 2 - a;
+      x.beginPath(); x.arc(r.x, r.y, 4 + a * fs * 2.2, 0, 7); x.stroke();
+      x.globalAlpha = (1 - a) * .5; x.beginPath(); x.arc(r.x, r.y, 5 * (1 - a), 0, 7); x.fill(); x.restore();
+    }
+  }
+
+  function timeline(now) {
+    x.globalAlpha = vis(3); x.strokeStyle = INK; x.lineWidth = 1.6;
+    line(G.x0, G.floor, G.x1, G.floor);
+    x.save(); x.globalAlpha *= .3; x.lineWidth = 1; for (let i = G.x0; i < G.x1; i += 7) line(i, G.floor + 1, i - 5, G.floor + 6); x.restore();
+    font(600, fs); x.textBaseline = 'alphabetic';
+    for (let k = 0; k <= 6; k++) {
+      const xx = G.x0 + k * G.ww; x.lineWidth = 1.2; line(xx, G.floor, xx, G.floor + fs * .35);
+      x.fillStyle = k === 0 ? COR : INK;
+      x.textAlign = k === 6 ? 'right' : k === 0 ? 'left' : 'center';
+      x.fillText(k === 6 ? '6 wk' : String(k), k === 6 ? xx + 2 : k === 0 ? xx - 2 : xx, G.floor + fs * 1.35);
+    }
+    // empty slots, waiting
+    x.save(); x.globalAlpha *= .18; x.setLineDash([2, 4]); x.lineWidth = 1;
+    for (let k = 1; k <= 6; k++) x.strokeRect(G.x0 + (k - .5) * G.ww - G.ww * .41, G.floor - G.bh, G.ww * .82, G.bh);
+    x.restore();
+    // a scanner sweeping the axis while we wait for a guess
+    if (st.guess < 0 && !Kit.calm) {
+      const sx = G.x0 + ((now / 2600) % 1) * (G.x1 - G.x0);
+      x.save(); x.strokeStyle = YEL; x.shadowColor = YEL; x.shadowBlur = 10; x.lineWidth = 2.2; x.globalAlpha *= .85;
+      line(Math.max(G.x0, sx - 16), G.floor, Math.min(G.x1, sx + 16), G.floor);
+      x.fillStyle = YEL; x.beginPath(); x.arc(sx, G.floor, 2.6, 0, 7); x.fill(); x.restore();
+    }
+    // the next week waits to be tapped
+    if (st.phase === 'run' && st.weeks < 4) {
+      const k = st.weeks + 1;
+      x.save(); x.strokeStyle = YEL; x.lineWidth = 1.4; x.setLineDash([4, 3]); x.globalAlpha = .35 + .35 * Math.sin(now / 220);
+      x.strokeRect(G.x0 + (k - .5) * G.ww - G.ww * .41, G.floor - G.bh, G.ww * .82, G.bh); x.restore();
+    }
+    x.globalAlpha = 1;
+  }
+
+  function drawBlocks(now) {
+    const w = G.ww * .82, h = G.bh;
+    for (const b of blocks) {
+      const p = b.body.position, a = Math.min(1, (now - b.born) / 160), k = b.k;
+      x.save(); x.globalAlpha = a; x.translate(p.x, p.y); x.rotate(b.body.angle);
+      if (b.ghost) {
+        x.setLineDash([4, 3]); x.strokeStyle = INK; x.lineWidth = 1.3; x.globalAlpha = a * .8; x.strokeRect(-w / 2, -h / 2, w, h); x.setLineDash([]);
+      } else {
+        x.fillStyle = 'rgba(12,40,72,.92)'; x.fillRect(-w / 2, -h / 2, w, h);
+        const lvl = k >= 3 ? OUT[k] : 0;
+        if (lvl > 0) {
+          const g = x.createLinearGradient(0, h / 2, 0, -h / 2); g.addColorStop(0, 'rgba(143,227,255,.75)'); g.addColorStop(1, 'rgba(143,227,255,.35)');
+          x.fillStyle = g; x.fillRect(-w / 2, h / 2 - h * lvl, w, h * lvl);
+        } else {
+          x.save(); x.beginPath(); x.rect(-w / 2, -h / 2, w, h); x.clip(); x.strokeStyle = 'rgba(255,154,122,.55)'; x.lineWidth = 1;
+          for (let i = -h; i < w + h; i += 6) line(-w / 2 + i, h / 2, -w / 2 + i - h, -h / 2); x.restore();
+        }
+        x.strokeStyle = INK; x.lineWidth = 1.3; x.strokeRect(-w / 2, -h / 2, w, h);
+      }
+      font(800, fs); x.textAlign = 'center'; x.textBaseline = 'middle';
+      const lab = pickLabel(['WK ' + k, String(k)], w - 4), tw = x.measureText(lab).width + 6;
+      x.fillStyle = 'rgba(12,40,72,.85)'; x.fillRect(-tw / 2, -fs * .62, tw, fs * 1.24);
+      x.fillStyle = INK; x.fillText(lab, 0, 1);
+      x.restore();
+    }
+  }
+
+  function dim(xa, xb, y, p, cands, maxW, col, dashed, left) {
+    if (p <= .001) return;
+    const xe = xa + (xb - xa) * p, hs = fs * .42;
+    x.save(); x.strokeStyle = col; x.fillStyle = col; x.lineWidth = 1.2;
+    if (dashed) x.setLineDash([4, 4]); line(xa, y, xe, y); x.setLineDash([]);
+    line(xa, y - hs, xa, y + hs); line(xe, y - hs, xe, y + hs);
+    for (const [px, d] of [[xa, 1], [xe, -1]]) { x.beginPath(); x.moveTo(px, y); x.lineTo(px + d * 6, y - 3); x.lineTo(px + d * 6, y + 3); x.fill(); }
+    if (cands && p > .55) {
+      font(700, fs); x.textBaseline = 'alphabetic';
+      const t = pickLabel(cands, maxW), tw = x.measureText(t).width;
+      let cx;
+      if (left) { x.textAlign = 'left'; cx = Math.min(xa + 5, W - tw - 2); }
+      else { x.textAlign = 'center'; cx = clamp((xa + xb) / 2, tw / 2 + 2, W - tw / 2 - 2); }
+      x.globalAlpha *= Math.min(1, (p - .55) / .35); x.fillText(t, cx, y - fs * .5);
+    }
+    x.restore();
+  }
+
+  function dims() {
+    const A = G.x0, w = G.ww;
+    if (st.hint > .01 && G.rows) {
+      x.save(); x.globalAlpha = st.hint * .6 * vis(4);
+      dim(A, A + 6 * w, G.rows === 2 ? G.y2 : G.y1, 1, ['SHUT DOWN → FULL OUTPUT: ? WK', '? WEEKS TO FULL OUTPUT', '? WK TO FULL', '?'], 5.6 * w, INK, true);
+      x.restore();
+    }
+    if (!G.rows) return;
+    dim(A, A + 2 * w, G.y1, st.dimA, ['RESTART 2–3 WK', '2–3 WK'], 2 * w - 10, COR);
+    if (st.dimA > .99) { x.save(); x.globalAlpha = .7; x.strokeStyle = COR; x.setLineDash([2, 3]); line(A + 2 * w, G.y1 + fs * .45, A + 3 * w, G.y1 + fs * .45); line(A + 3 * w, G.y1 + fs * .1, A + 3 * w, G.y1 + fs * .8); x.restore(); }
+    dim(A + 2 * w, A + 4 * w, G.y1, st.dimB, ['RAMP-UP +2 WK', '+2 WK'], 2 * w - 10, CY);
+    if (G.rows < 2) return;
+    dim(A, A + 4 * w, G.y2, st.dimT, ['≈ 4 WEEKS · BEST CASE', '≈ 4 WK · BEST CASE', '≈ 4 WK'], 4 * w - 12, INK);
+    dim(A + 4 * w, A + 5 * w, G.y2, st.dimG, ['+1 IF 3', '+1'], W - (A + 4 * w) - 8, INK, true, true);
+  }
+
+  function guessMark() {
+    if (st.guess < 0) return;
+    const gx = G.x0 + st.gv * G.ww;
+    x.save(); x.globalAlpha = st.gA; x.strokeStyle = YEL; x.fillStyle = YEL; x.lineWidth = 1.6; x.setLineDash([3, 3]);
+    line(gx, G.floor - G.bh - fs * .2, gx, G.floor); x.setLineDash([]);
+    x.beginPath(); x.moveTo(gx, G.floor - 1); x.lineTo(gx - 5, G.floor + 7); x.lineTo(gx + 5, G.floor + 7); x.fill();
+    if (G.pill) {
+      font(800, fs); x.textAlign = 'center'; x.textBaseline = 'middle';
+      const t = `YOUR GUESS · ${st.guess} WK`, tw = x.measureText(t).width + fs, ph = fs * 1.4;
+      const cx = clamp(gx, tw / 2 + 2, W - tw / 2 - 2), cy = G.pillY;
+      x.beginPath(); x.roundRect ? x.roundRect(cx - tw / 2, cy - ph / 2, tw, ph, ph / 2) : x.rect(cx - tw / 2, cy - ph / 2, tw, ph); x.fill();
+      x.fillStyle = CARD; x.fillText(t, cx, cy + 1);
+    }
+    x.restore();
+  }
+
+  function loop(now) {
+    requestAnimationFrame(loop);
+    if (!x || !W) return;
+    if (G.mode === 'plant') {
+      acc += st.out * .9;
+      while (acc >= 1) { acc -= 1; const d = addDrop(G.spX + (Kit.rnd() - .5) * G.dr * 1.2, G.spY + G.dr); Body.setVelocity(d, {x: (Kit.rnd() - .5) * .2, y: 2.2}); if (drops.length > cap) Composite.remove(engine.world, drops.shift()); }
+    }
+    Engine.update(engine, 1000 / 60);
+    drops = drops.filter(d => { if (d.position.y > H + 40) { Composite.remove(engine.world, d); return false; } return true; });
+    x.clearRect(0, 0, W, H);
+    header(now); plant(now); smoke(); drawDrops(); tank(); stampDraw(); drones(now);
+    timeline(now); dims(); drawBlocks(now); guessMark();
+  }
+
+  // ---------- the reader ----------
+  const tween = vars => gsap.to(st, Object.assign({}, vars, Kit.calm ? {duration: 0, delay: 0} : {}));
+  function setGuess(g) {
+    const first = st.guess < 0; st.guess = g;
+    if (first) { st.gv = g; st.gA = 0; tween({gA: 1, duration: .35, ease: 'power3.out'}); tween({hint: 0, duration: .4}); sure.on(); }
+    else tween({gv: g, duration: .35, ease: 'back.out(2)'});
+    Kit.haptic('selection');
+  }
+  function stamp() { st.stampS = Kit.calm ? 1 : 1.7; tween({stampS: 1, duration: .55, ease: 'back.out(2.2)'}); }
+  const NOTES = ['',
+    'Week 1. Restarting the liquefaction: not a drop of LNG yet. <b>Tap again.</b>',
+    'Week 2. Best case, the plant is back on, but only partly. <b>Tap again.</b>',
+    'Week 3. Output climbs, still short of full capacity. <b>Tap again.</b>',
+    'Week 4. Full capacity, in the optimistic case.'];
+  function advance() {
+    if (st.phase !== 'run' || st.weeks >= 4) return;
+    st.weeks++; const k = st.weeks;
+    dropBlock(k, false); stamp();
+    tween({out: OUT[k], duration: 1.2, ease: 'power2.inOut'});
+    say.innerHTML = NOTES[k];
+    if (k === 2) tween({dimA: 1, duration: .8, ease: 'power3.out', delay: .3});
+    if (k === 4) finale();
+  }
+  function finale() {
+    st.phase = 'end';
+    const tl = gsap.timeline({defaults: {ease: 'power3.out'}, delay: Kit.calm ? 0 : .35});
+    tl.to(st, {dimB: 1, duration: .7})
+      .add(() => Kit.haptic('success'), '<')
+      .to(st, {flash: 1, duration: .15}, '<')
+      .to(st, {flash: 0, duration: 1.4, ease: 'power2.in'})
+      .to(st, {dimT: 1, duration: 1.1, ease: 'expo.out'}, '-=1.3')
+      .add(() => dropBlock(5, true), '-=.4')
+      .to(st, {dimG: 1, duration: .6}, '+=.5')
+      .add(reveal);
+    if (Kit.calm) tl.progress(1);
+  }
+  function reveal() { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const g = st.guess, ok = g >= 3.5 && g <= 5;
+    Kit.answer({choice: `about ${g} weeks`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${g} weeks, ${ok ? 'right' : g < 3.5 ? 'too soon' : 'too long'}`);
+    st.phase = 'run';
+    say.innerHTML = 'Now run the clock. <b>Tap the picture</b> to let a week pass.';
+  });
+
+  cv.addEventListener('pointerdown', e => {
+    const r = cv.getBoundingClientRect(), px = e.clientX - r.left;
+    if (st.phase === 'guess') setGuess(clamp(Math.round((px - G.x0) / G.ww * 2) / 2, .5, 6));
+    else advance();
+  });
+
+  if (window.ResizeObserver) new ResizeObserver(() => { if (x) fit(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = fit;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.fromTo(st, {intro: 0}, {intro: 1, duration: 1.6, ease: 'power3.out'});
+    hit = [0, 0];
+    gsap.fromTo(st, {dro: 0}, {dro: 1, duration: 2.6, ease: 'none', delay: .5});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setGuess(4); await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(150);
+    for (let i = 0; i < 4; i++) { advance(); await wait(Kit.calm ? 60 : 700); }
+    await wait(Kit.calm ? 150 : 3600);
+  };
+})();
+Kit.single();
+</script>
+</html>

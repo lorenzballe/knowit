@@ -1,0 +1,38 @@
+{
+  "id": "maths-mersenne-glass-rack",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the Lenstra–Pomerance–Wagstaff conjecture say about Mersenne primes?",
+  "answer": "The Lenstra–Pomerance–Wagstaff conjecture predicts about the same handful of Mersenne primes each time p doubles. Since that never runs dry, there should be infinitely many, and so infinitely many even perfect numbers. But it is a conjecture, not a proof.",
+  "move": "Predicted: Mersenne primes forever. Proven: not yet.",
+  "keywords": [
+    "mersenne primes",
+    "perfect numbers",
+    "prime numbers",
+    "lenstra-pomerance-wagstaff conjecture",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Glass tubes stacked for each doubling of p, with gold beads marking the Mersenne primes found so far. The level never drops as p doubles. Drag the glass to double p again and again.",
+    "ground": "#0c2630"
+  },
+  "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=1308s",
+  "written": "2026-11-04"
+}

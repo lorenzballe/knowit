@@ -1,0 +1,330 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-extinguisher-charges -->
+<!-- Look: a museum diorama of the robbed vault, cut from layered paper (wall of deposit boxes, counter, floor, a red extinguisher up front), each plane with grain, a soft drop shadow and its own parallax depth; the gang's prints glow cyan under a UV lamp, dust motes hang in the lamp light.
+     Interaction: the reader picks why the gang rigged the extinguishers and says how sure they are; the scene answers by setting off the tiny charge strapped to the extinguisher.
+     Wow: a flash, then powder and foam fly along real curved MotionPath arcs onto every print, heaps bloom over them, the UV counter drops from 5 to 0, a lamp sweep finds nothing, and a fine powder haze keeps drifting in the air. -->
+<title>Why rig the extinguishers?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible;touch-action:pan-y}
+#opts{display:flex;flex-direction:column;gap:.85cqh;flex:none}
+#why{display:flex;flex-direction:column;gap:.9cqh;flex:none}
+.opt{font:700 max(1.95cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 7%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 26%,transparent);border-radius:1.6cqh;padding:1.1cqh 3.6cqw;cursor:pointer;display:flex;gap:3cqw;align-items:center;overflow-wrap:anywhere;transition:background .15s}
+.opt i{font:700 max(1.5cqh,12px)/1 var(--mono);font-style:normal;opacity:.55}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt.on i{opacity:.8}
+.answered .q{font-size:max(2.4cqh,15px)}
+.answered #why .big{font-size:max(3.6cqh,21px);line-height:1.02;margin:0}
+.answered #why .body{font-size:max(1.85cqh,13px);line-height:1.38;margin:0}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure" style="--c:#1b2a31;--k:#f3ead7;--edge:#0c1519">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FORENSICS</span></div>
+    <h2 class="q">Why did the robbers put tiny explosive charges on the fire extinguishers?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A paper diorama of a bank vault: a wall of safe-deposit boxes, a counter, the floor, and a red fire extinguisher with a small charge taped to it. Fingerprints and handprints glow under a UV lamp."></svg>
+      <div id="opts">
+        <button class="opt" data-i="0" data-s="To open the boxes"><i>A</i>To blast open the safe-deposit boxes</button>
+        <button class="opt" data-i="1" data-s="To cover the traces"><i>B</i>To spray powder and foam over every surface</button>
+        <button class="opt" data-i="2" data-s="A decoy alarm"><i>C</i>To set off a false alarm as a decoy</button>
+      </div>
+      <div id="why" class="gone"><p class="big">To bury their traces</p><p class="body">The blasts burst the extinguishers, and their powder and foam covered most of the surfaces. Fingerprints and DNA under that layer became far less likely to be found.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the reason. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Extinguisher powder and foam make a blanket over fingerprints and DNA.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(MotionPathPlugin);
+const RIGHT = 1;
+let pick = -1;
+const svg = Kit.$('pic'), card = Kit.$('card');
+const UV = '#7df4e4', POW = '#efe8d8';
+let W = 0, H = 0, fs = 12, blown = false, tl = null, ledTw = null, breathTw = null, amb = [];
+let G = {}, prints = [], heaps = [], S = {};
+const mk = (t, a, p) => Kit.mk(t, a || {}, p);
+const rng = seed => { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; };
+const pos = (v, m) => Math.max(m || .5, v);
+
+function chipText(t) {
+  if (!S.chipT) return;
+  S.chipT.textContent = t;
+  const w = S.chipT.getComputedTextLength();
+  S.chipR.setAttribute('width', w + fs * 2.3);
+}
+
+// floating motes: dust in the lamp before, powder haze after
+function motes(layer, n, seed, col, box, maxOp) {
+  if (Kit.calm) return;
+  const R = rng(seed);
+  for (let k = 0; k < n; k++) {
+    const c = mk('circle', {cx: box.x0 + R() * (box.x1 - box.x0), cy: box.y0 + R() * (box.y1 - box.y0), r: fs * (.1 + R() * .22), fill: col, opacity: 0}, layer);
+    amb.push(gsap.to(c, {opacity: maxOp * (.4 + R() * .6), x: (R() - .5) * fs * 2.4, y: -fs * (.6 + R() * 1.6), duration: 2.6 + R() * 2.6, delay: R() * 2.5, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+  }
+}
+function haze() {
+  if (!G.fx) return;
+  motes(G.fx.i, 16, 5, POW, {x0: W * .14, x1: W * .86, y0: H * .2, y1: H * .78}, .45);
+}
+
+function layout() {
+  if (tl) { tl.kill(); tl = null; if (pick >= 0 && card.classList.contains('answered')) blown = true; }
+  if (ledTw) ledTw.kill(); if (breathTw) breathTw.kill();
+  amb.forEach(t => t.kill()); amb = [];
+  svg.innerHTML = '';
+  G = {}; S = {}; prints = []; heaps = [];
+  const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+  if (W < 80 || H < 80) return;
+  fs = Math.max(12, Math.min(14, W / 28));
+  const defs = mk('defs', {}, svg);
+  defs.innerHTML = `
+  <filter id="pp" x="-8%" y="-8%" width="118%" height="125%">
+    <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .55 0 0 0 -.22" result="na"/>
+    <feComposite in="na" in2="SourceAlpha" operator="in" result="g"/>
+    <feGaussianBlur in="SourceAlpha" stdDeviation="${fs * .4}" result="b"/>
+    <feOffset in="b" dx="${fs * .15}" dy="${fs * .35}" result="o"/>
+    <feFlood flood-color="#03070a" flood-opacity=".6"/>
+    <feComposite in2="o" operator="in" result="s"/>
+    <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/><feMergeNode in="g"/></feMerge>
+  </filter>
+  <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${fs * .22}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${fs * .13}"/></filter>
+  <filter id="blur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${fs * .5}"/></filter>
+  <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#44656f"/><stop offset="1" stop-color="#2a434b"/></linearGradient>
+  <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c454d"/><stop offset="1" stop-color="#152227"/></linearGradient>
+  <linearGradient id="gDoor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a7b84"/><stop offset="1" stop-color="#47656e"/></linearGradient>
+  <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6e140a"/><stop offset=".32" stop-color="#c63823"/><stop offset=".48" stop-color="#f06b4c"/><stop offset=".68" stop-color="#bf3121"/><stop offset="1" stop-color="#6a1408"/></linearGradient>
+  <linearGradient id="gSteel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a2f33"/><stop offset=".45" stop-color="#9aa4aa"/><stop offset="1" stop-color="#30373b"/></linearGradient>
+  <radialGradient id="gLamp"><stop offset="0" stop-color="#fff6dc" stop-opacity=".2"/><stop offset="1" stop-color="#fff6dc" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gFlash"><stop offset="0" stop-color="#fffbe8"/><stop offset=".35" stop-color="#ffd98a" stop-opacity=".85"/><stop offset="1" stop-color="#ff9a4a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gPow" cx=".4" cy=".35"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="${POW}"/><stop offset="1" stop-color="#d8cfbc"/></radialGradient>
+  <linearGradient id="gBeam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${UV}" stop-opacity="0"/><stop offset=".5" stop-color="${UV}" stop-opacity=".22"/><stop offset="1" stop-color="${UV}" stop-opacity="0"/></linearGradient>`;
+
+  for (const n of ['back', 'mid', 'fx', 'front', 'ui']) { const o = mk('g', {}, svg); G[n] = {o, i: mk('g', {}, o)}; }
+
+  // ---- back plane: floor, then the vault wall of deposit boxes ----
+  const x0 = W * .06, x1 = W * .94, yt = H * .04, yb = H * .66, r = Math.min(fs * 1.6, H * .08);
+  S.x0 = x0; S.x1 = x1; S.yt = yt; S.yb = yb;
+  const B = G.back.i;
+  const floorTop = yb - Math.min(fs, H * .04), fBot = H * .97;
+  mk('polygon', {points: `${W * .1},${floorTop} ${W * .9},${floorTop} ${W * .985},${fBot} ${W * .015},${fBot}`, fill: 'url(#gFloor)', filter: 'url(#pp)'}, B);
+  const vp = {x: W * .5, y: H * .2};
+  for (let k = 0; k <= 8; k++) {
+    const bx = W * .015 + (W * .97) * k / 8, t = (floorTop - vp.y) / (fBot - vp.y);
+    mk('line', {x1: vp.x + (bx - vp.x) * t, y1: floorTop, x2: bx, y2: fBot, stroke: '#fff', 'stroke-opacity': .05, 'stroke-width': 1}, B);
+  }
+  [.18, .42, .7].forEach(p => { const y = floorTop + (fBot - floorTop) * p, sp = (1 - p) * W * .08; mk('line', {x1: W * .03 + sp, x2: W * .97 - sp, y1: y, y2: y, stroke: '#fff', 'stroke-opacity': .05}, B); });
+
+  const wallD = `M${x0},${yb} V${yt + r} Q${x0},${yt} ${x0 + r},${yt} H${x1 - r} Q${x1},${yt} ${x1},${yt + r} V${yb} Z`;
+  mk('path', {d: wallD, fill: 'url(#gWall)', filter: 'url(#pp)'}, B);
+  const cp = mk('clipPath', {id: 'cw'}, defs); mk('path', {d: wallD}, cp);
+  mk('path', {d: wallD, fill: 'none', stroke: '#fff', 'stroke-opacity': .1, 'stroke-width': 1.2, transform: `translate(0,1.5)`}, B);
+  const gx0 = x0 + fs * .9, gx1 = x1 - fs * .9, gy0 = yt + Math.min(fs * 3.3, H * .14), gy1 = yb - Math.min(fs * .9, H * .03);
+  const cols = 6, rows = 4, cw = pos((gx1 - gx0) / cols, 4), ch = pos((gy1 - gy0) / rows, 4), gap = Math.max(2, cw * .07);
+  const open = new Set(['2,0', '4,2', '0,2']);
+  const dc = (c, rr) => ({x: gx0 + cw * (c + .5), y: gy0 + ch * (rr + .5)});
+  for (let rr = 0; rr < rows; rr++) for (let c = 0; c < cols; c++) {
+    const x = gx0 + c * cw + gap / 2, y = gy0 + rr * ch + gap / 2, w = pos(cw - gap, 1), h = pos(ch - gap, 1);
+    if (open.has(c + ',' + rr)) {
+      mk('rect', {x, y, width: w, height: h, rx: 2, fill: '#0d171b'}, B);
+      mk('rect', {x: x + w * .1, y: y + h * .15, width: w * .8, height: h * .7, fill: '#16242a'}, B);
+      mk('polygon', {points: `${x + w},${y} ${x + w + w * .32},${y - h * .1} ${x + w + w * .32},${y + h + h * .1} ${x + w},${y + h}`, fill: '#6b8b93', stroke: '#2a3f45', 'stroke-width': .8}, B);
+      continue;
+    }
+    mk('rect', {x, y, width: w, height: h, rx: 2, fill: 'url(#gDoor)', stroke: '#2c434a', 'stroke-width': .8}, B);
+    mk('line', {x1: x + 2, x2: x + w - 2, y1: y + 1.2, y2: y + 1.2, stroke: '#fff', 'stroke-opacity': .22}, B);
+    mk('rect', {x: x + w * .3, y: y + h * .16, width: w * .4, height: Math.max(2, h * .12), rx: 1, fill: '#c9a45c', opacity: .75}, B);
+    mk('circle', {cx: x + w * .78, cy: y + h * .6, r: Math.max(1.6, Math.min(w, h) * .07), fill: '#d7b46a', stroke: '#6b5426', 'stroke-width': .6}, B);
+  }
+  mk('ellipse', {cx: W * .5, cy: yt + H * .05, rx: (x1 - x0) * .5, ry: H * .26, fill: 'url(#gLamp)', 'clip-path': 'url(#cw)'}, B);
+  S.wall = {gx0, gx1, gy0, gy1};
+  if (!blown) motes(B, 10, 3, '#fff6dc', {x0: W * .25, x1: W * .75, y0: gy0, y1: H * .45}, .5);
+
+  // ---- mid plane: the counter with an emptied box ----
+  const M = G.mid.i, ct = H * .56, cm = H * .62, cb = H * .78;
+  const cg = mk('g', {filter: 'url(#pp)'}, M);
+  mk('polygon', {points: `${W * .56},${ct} ${W * .95},${ct} ${W * .975},${cm} ${W * .54},${cm}`, fill: '#6c8d92'}, cg);
+  mk('rect', {x: W * .54, y: cm, width: W * .435, height: cb - cm, fill: '#38545b'}, cg);
+  mk('line', {x1: W * .54, x2: W * .975, y1: cm + 1, y2: cm + 1, stroke: '#fff', 'stroke-opacity': .18}, M);
+  [.38, .7].forEach(p => mk('rect', {x: W * (.54 + .435 * p) - W * .07, y: cm + (cb - cm) * .2, width: W * .14, height: (cb - cm) * .6, rx: 2, fill: 'none', stroke: '#fff', 'stroke-opacity': .08}, M));
+  const tx = W * .84, ty = H * .575, tw = W * .09, th = Math.min(fs * .5, H * .025);
+  mk('polygon', {points: `${tx - tw / 2},${ty - th} ${tx + tw / 2},${ty - th} ${tx + tw * .6},${ty + th * .6} ${tx - tw * .6},${ty + th * .6}`, fill: 'url(#gSteel)', stroke: '#1d272b', 'stroke-width': .8}, M);
+  for (let k = 0; k < 3; k++) mk('ellipse', {cx: tx - tw * .7 - k * fs * .55, cy: ty + th * .3 + (k % 2) * 2, rx: fs * .28, ry: fs * .14, fill: '#e0b856', stroke: '#7a5a1a', 'stroke-width': .6}, M);
+  S.counter = {x0: W * .58, x1: W * .92, y0: ct + 3, y1: pos(cm - 2, ct + 4)};
+
+  // ---- the traces, glowing under UV ----
+  const sz = pos(Math.min(cw, ch), 4);
+  const addPrint = (layer, kind, x, y, s, rot) => {
+    s = pos(s, 4);
+    const g = mk('g', {transform: `translate(${x},${y}) rotate(${rot})`, filter: 'url(#glow)'}, layer);
+    if (kind === 'hand') {
+      mk('ellipse', {cx: 0, cy: s * .12, rx: s * .25, ry: s * .23, fill: UV, 'fill-opacity': .22, stroke: UV, 'stroke-width': 1.1}, g);
+      [[-.18, .26], [-.06, .32], [.06, .3], [.18, .24]].forEach(([dx, hh]) => mk('rect', {x: s * dx - s * .05, y: -s * .08 - s * hh, width: s * .1, height: s * hh + s * .02, rx: s * .05, fill: UV, 'fill-opacity': .22, stroke: UV, 'stroke-width': 1.1}, g));
+      mk('rect', {x: -s * .05, y: -s * .2, width: s * .1, height: s * .22, rx: s * .05, fill: UV, 'fill-opacity': .22, stroke: UV, 'stroke-width': 1.1, transform: `translate(${-s * .3},${s * .12}) rotate(-48)`}, g);
+    } else {
+      for (let i = 1; i <= 5; i++) { const rx = s * (.04 + .055 * i); mk('ellipse', {cx: 0, cy: 0, rx, ry: rx * 1.3, fill: 'none', stroke: UV, 'stroke-width': Math.max(1, s * .028), 'stroke-dasharray': `${rx * (2 + i % 3)} ${rx * .5}`}, g); }
+    }
+    prints.push({g, x, y, s, layer});
+  };
+  const p1 = dc(1, 1), p2 = dc(3, 0), p3 = dc(5, 1);
+  addPrint(B, 'hand', p1.x, p1.y, sz * 1.05, -10);
+  addPrint(B, 'finger', p2.x - cw * .1, p2.y + ch * .05, sz * .7, 18);
+  addPrint(B, 'finger', p3.x, p3.y, sz * .65, -25);
+  addPrint(M, 'finger', W * .68, H * .59, Math.min(sz * .6, (cm - ct) * 1.1), 70);
+  addPrint(B, 'hand', W * .45, H * .86, Math.min(sz * 1.15, H * .11), 160);
+
+  // ---- front plane: the extinguisher and its tiny charge ----
+  const F = G.front.i, ex = W * .22, base = H * .935, bw = Math.min(W * .15, H * .1), bh = H * .34, top = base - bh;
+  mk('ellipse', {cx: ex + fs * .4, cy: base + 1, rx: bw * .85, ry: Math.min(fs * .45, H * .02), fill: '#000', opacity: .45, filter: 'url(#blur)'}, F);
+  const eg = mk('g', {filter: 'url(#pp)'}, F);
+  mk('path', {d: `M${ex + bw * .18},${top - bh * .08} C${ex + bw * 1.05},${top - bh * .02} ${ex + bw * .95},${base - bh * .55} ${ex + bw * .66},${base - bh * .4}`, fill: 'none', stroke: '#15191b', 'stroke-width': Math.max(3, bw * .12), 'stroke-linecap': 'round'}, eg);
+  mk('polygon', {points: `${ex + bw * .6},${base - bh * .42} ${ex + bw * .74},${base - bh * .4} ${ex + bw * .8},${base - bh * .22} ${ex + bw * .5},${base - bh * .24}`, fill: '#1c2124'}, eg);
+  mk('rect', {x: ex - bw / 2, y: top, width: bw, height: bh, rx: bw * .38, fill: 'url(#gRed)'}, eg);
+  mk('rect', {x: ex - bw / 2, y: base - bh * .09, width: bw, height: bh * .09, rx: bw * .1, fill: '#4a0e06', opacity: .55}, eg);
+  mk('rect', {x: ex - bw * .3, y: top + bh * .1, width: bw * .09, height: bh * .72, rx: bw * .05, fill: '#fff', opacity: .3}, eg);
+  const ly = top + bh * .46, lh = bh * .24;
+  mk('rect', {x: ex - bw / 2, y: ly, width: bw, height: lh, fill: '#efe5cf'}, eg);
+  mk('rect', {x: ex - bw / 2, y: ly, width: bw, height: lh, fill: 'url(#gRed)', opacity: .18}, eg);
+  for (let k = 0; k < 3; k++) mk('line', {x1: ex - bw * .3, x2: ex + bw * (.3 - k * .12), y1: ly + lh * (.3 + k * .2), y2: ly + lh * (.3 + k * .2), stroke: '#5a1a10', 'stroke-width': 1.2, opacity: .7}, eg);
+  mk('rect', {x: ex - bw * .16, y: top - bh * .07, width: bw * .32, height: bh * .09, rx: 1.5, fill: 'url(#gSteel)'}, eg);
+  mk('path', {d: `M${ex - bw * .26},${top - bh * .07} H${ex + bw * .3} L${ex + bw * .2},${top - bh * .14} H${ex - bw * .18} Z`, fill: '#262c2f'}, eg);
+  mk('path', {d: `M${ex - bw * .2},${top - bh * .13} L${ex - bw * .62},${top - bh * .2}`, stroke: '#3a4246', 'stroke-width': Math.max(3, bw * .1), 'stroke-linecap': 'round'}, eg);
+  const chx = ex - bw * .02, chy = top + bh * .26, cwb = bw * .46, chb = bw * .3;
+  mk('path', {d: `M${chx + cwb * .45},${chy} C${chx + cwb * .9},${chy - bh * .12} ${ex + bw * .1},${top - bh * .02} ${ex + bw * .05},${top - bh * .05}`, fill: 'none', stroke: '#e84a3a', 'stroke-width': 1.4}, F);
+  mk('path', {d: `M${chx + cwb * .3},${chy} C${chx + cwb * .5},${chy - bh * .16} ${ex - bw * .1},${top - bh * .02} ${ex - bw * .12},${top - bh * .05}`, fill: 'none', stroke: '#f2c94c', 'stroke-width': 1.4}, F);
+  mk('rect', {x: chx - cwb / 2, y: chy - chb / 2, width: cwb, height: chb, rx: 2, fill: '#24282b', stroke: '#0c0e0f', 'stroke-width': .8, filter: 'url(#pp)'}, F);
+  [-.3, .3].forEach(p => mk('rect', {x: chx + cwb * p - bw * .05, y: chy - chb * .8, width: bw * .1, height: chb * 1.6, fill: '#c9c9bd', opacity: .7}, F));
+  const led = mk('circle', {cx: chx - cwb * .08, cy: chy, r: Math.max(2.2, fs * .26), fill: '#ff3b2f', filter: 'url(#glow)'}, F);
+  S.led = led; S.o = {x: chx, y: chy}; S.noz = {x: ex + bw * .68, y: base - bh * .24};
+  const lx = ex + bw * .5 + fs * 1.1;
+  mk('path', {d: `M${chx + cwb * .55},${chy + 2} Q${lx - fs * .4},${chy + fs * .1} ${lx - fs * .25},${chy - fs * .15}`, fill: 'none', stroke: 'var(--k)', 'stroke-width': 1.1, opacity: .85}, G.ui.i);
+  const lt = mk('text', {x: lx, y: chy - fs * .05, fill: '#f3ead7', 'font-size': fs * 1.05, style: 'font-family:var(--hand)'}, G.ui.i); lt.textContent = 'tiny charge';
+  S.label = lt;
+  if (blown) gsap.set(lt, {opacity: 0});
+
+  // ---- powder heaps, one per print, waiting ----
+  prints.forEach((p, i) => {
+    const h = mk('g', {filter: 'url(#soft)'}, p.layer), Rh = rng(30 + i);
+    for (let k = 0; k < 6; k++) { const a = Rh() * 6.28, d = Rh() * p.s * .28; mk('ellipse', {cx: p.x + Math.cos(a) * d, cy: p.y + Math.sin(a) * d * .7, rx: p.s * (.22 + Rh() * .18), ry: p.s * (.16 + Rh() * .14), fill: 'url(#gPow)', opacity: .95}, h); }
+    gsap.set(h, {scale: blown ? 1 : 0, svgOrigin: `${p.x} ${p.y}`});
+    heaps.push(h);
+  });
+
+  // ---- the UV readout and the lamp's beam ----
+  const U = G.ui.i;
+  S.chip = mk('g', {transform: `translate(${x0 + fs * .9},${yt + fs * .75})`}, U);
+  S.chipR = mk('rect', {x: 0, y: 0, height: fs * 1.75, width: fs * 10, rx: fs * .875, fill: '#0b1418', 'fill-opacity': .85, stroke: UV, 'stroke-opacity': .55}, S.chip);
+  mk('circle', {cx: fs * .85, cy: fs * .875, r: fs * .28, fill: UV, filter: 'url(#glow)'}, S.chip);
+  S.chipT = mk('text', {x: fs * 1.45, y: fs * 1.22, fill: UV, 'font-size': fs * .92, 'font-weight': 700, style: 'font-family:var(--mono)'}, S.chip);
+  chipText(blown ? 'UV · 0 READABLE' : 'UV · 5 TRACES');
+  S.beam = mk('rect', {x: x0, y: yt, width: fs * 4, height: H * .93 - yt, fill: 'url(#gBeam)', opacity: 0}, U);
+
+  if (blown) {
+    prints.forEach(p => p.g.setAttribute('opacity', .06));
+    led.setAttribute('fill', '#3a2a28'); led.removeAttribute('filter');
+    const Rd = rng(99);
+    for (let k = 0; k < 26; k++) { const d = surfacePoint(Rd); mk('circle', {cx: d.x, cy: d.y, r: fs * (.25 + Rd() * .4), fill: POW, opacity: .5, filter: 'url(#soft)'}, G.fx.i); }
+    haze();
+  } else if (!Kit.calm) {
+    ledTw = gsap.to(led, {opacity: .2, duration: .45, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+    if (pick >= 0) ledTw.timeScale(3);
+    breathTw = gsap.to(prints.map(p => p.g), {opacity: .55, duration: 1.4, repeat: -1, yoyo: true, ease: 'sine.inOut', stagger: .25});
+  }
+}
+
+function surfacePoint(Rr) {
+  const u = Rr();
+  if (u < .5) return {x: S.wall.gx0 + Rr() * (S.wall.gx1 - S.wall.gx0), y: S.wall.gy0 + Rr() * (S.wall.gy1 - S.wall.gy0)};
+  if (u < .65) return {x: S.counter.x0 + Rr() * (S.counter.x1 - S.counter.x0), y: S.counter.y0 + Rr() * (S.counter.y1 - S.counter.y0)};
+  return {x: W * (.32 + Rr() * .58), y: H * (.8 + Rr() * .11)};
+}
+
+// ---- the blast: powder and foam ride real curves onto every trace ----
+function blast() {
+  if (blown || tl) return;
+  if (ledTw) ledTw.kill(); if (breathTw) breathTw.kill();
+  if (Kit.calm || !S.o) { blown = true; layout(); return; }
+  const o = S.o, Rr = rng(11), fx = G.fx.i;
+  const flash = mk('circle', {cx: o.x, cy: o.y, r: Math.min(W, H) * .5, fill: 'url(#gFlash)', opacity: 0}, G.ui.i);
+  tl = gsap.timeline({onComplete: () => { blown = true; tl = null; haze(); }});
+  tl.to(S.led, {opacity: 1, scale: 1.7, svgOrigin: `${o.x} ${o.y}`, duration: .07, repeat: 5, yoyo: true, ease: 'power2.inOut'});
+  tl.add('boom');
+  tl.call(() => { Kit.haptic('success'); S.led.setAttribute('fill', '#3a2a28'); S.led.removeAttribute('filter'); }, null, 'boom');
+  tl.fromTo(flash, {scale: 0, opacity: 1}, {scale: 1, opacity: 0, svgOrigin: `${o.x} ${o.y}`, duration: .9, ease: 'expo.out', onComplete: () => flash.remove()}, 'boom');
+  tl.fromTo(G.front.i, {x: -fs * .6, rotation: -2, svgOrigin: `${o.x} ${H}`}, {x: 0, rotation: 0, duration: .9, ease: 'elastic.out(1,.25)'}, 'boom');
+  tl.to(S.label, {opacity: 0, duration: .3, ease: 'power2.out'}, 'boom');
+  const fly = (from, d, delay, settle) => {
+    const p = mk('circle', {cx: 0, cy: 0, r: fs * (.35 + Rr() * .5), fill: 'url(#gPow)', filter: 'url(#soft)'}, fx);
+    const mx = (from.x + d.x) / 2 + (Rr() - .5) * W * .25, my = Math.max(H * .06, Math.min(from.y, d.y) - H * (.08 + Rr() * .22));
+    const dur = .95 + Rr() * .6, at = `boom+=${delay.toFixed(3)}`;
+    tl.fromTo(p, {x: from.x, y: from.y, scale: .3, opacity: 1}, {motionPath: {path: [{x: from.x, y: from.y}, {x: mx, y: my}, {x: d.x, y: d.y}], curviness: 1.35}, scale: 1.3 + Rr() * .8, duration: dur, ease: 'power3.out'}, at);
+    tl.to(p, {opacity: settle, scale: settle ? .8 : 2, duration: .5, ease: 'power2.out', onComplete: settle ? null : () => p.remove()}, `boom+=${(delay + dur - .15).toFixed(3)}`);
+  };
+  prints.forEach((pr, i) => { for (let k = 0; k < 6; k++) { const a = Rr() * 6.28, dd = Rr() * pr.s * .35; fly(o, {x: pr.x + Math.cos(a) * dd, y: pr.y + Math.sin(a) * dd}, i * .03 + k * .015, 0); } });
+  for (let k = 0; k < 22; k++) fly(o, surfacePoint(Rr), .05 + k * .012, .5);
+  for (let k = 0; k < 8; k++) fly(S.noz, {x: W * (.3 + Rr() * .35), y: H * (.82 + Rr() * .09)}, .1 + k * .03, .55);
+  heaps.forEach((h, i) => tl.to(h, {scale: 1, duration: .75, ease: 'back.out(1.7)'}, `boom+=${(.75 + i * .09).toFixed(2)}`));
+  prints.forEach((p, i) => tl.to(p.g, {opacity: .06, duration: .6, ease: 'power2.in'}, `boom+=${(.8 + i * .09).toFixed(2)}`));
+  const cnt = {n: 5};
+  tl.to(cnt, {n: 0, duration: 1, ease: 'power2.in', onUpdate: () => chipText(`UV · ${Math.round(cnt.n)} TRACES`), onComplete: () => chipText('UV · 0 READABLE')}, 'boom+=.85');
+  tl.fromTo(S.chip, {scale: 1}, {scale: 1.12, svgOrigin: `${S.x0 + fs * 2} ${S.yt + fs}`, duration: .25, yoyo: true, repeat: 1, ease: 'power2.out'}, 'boom+=1.85');
+  tl.fromTo(S.beam, {x: 0, opacity: 1}, {x: S.x1 - S.x0 - fs * 4, duration: 1.3, ease: 'power2.inOut'}, 'boom+=1.9');
+  tl.to(S.beam, {opacity: 0, duration: .3}, '>-.2');
+  tl.set(S.beam, {x: 0});
+}
+
+// ---- depth: each paper plane drifts by its own amount ----
+const par = {tx: 0, ty: 0, x: 0, y: 0};
+const DEPTH = {back: 1.2, mid: 3.5, fx: 3.5, front: 7, ui: 0};
+gsap.ticker.add(t => {
+  if (Kit.calm || !G.back) return;
+  const sx = Math.sin(t * .55) * .35, sy = Math.cos(t * .4) * .25;
+  par.x += (par.tx + sx - par.x) * .08; par.y += (par.ty + sy - par.y) * .08;
+  const k = fs / 12;
+  for (const n in DEPTH) G[n].o.setAttribute('transform', `translate(${(par.x * DEPTH[n] * k).toFixed(2)},${(par.y * DEPTH[n] * .5 * k).toFixed(2)})`);
+});
+svg.addEventListener('pointermove', e => { const r = svg.getBoundingClientRect(); par.tx = ((e.clientX - r.left) / r.width - .5) * -1.6; par.ty = ((e.clientY - r.top) / r.height - .5) * -1.6; });
+svg.addEventListener('pointerleave', () => { par.tx = par.ty = 0; });
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, b = Kit.$('opts').children[pick], said = b.dataset.s;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); card.classList.add('answered');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .12, duration: .5, ease: 'power3.out', delay: .6});
+  requestAnimationFrame(() => { layout(); blast(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  if (!Kit.calm) { gsap.fromTo(b, {scale: .96}, {scale: 1, duration: .45, ease: 'back.out(3)'}); if (ledTw) ledTw.timeScale(3); }
+});
+Kit.onShow.card = layout;
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G.back) return;
+  gsap.timeline()
+    .from(G.back.i, {y: -H * .05, opacity: 0, duration: .8, ease: 'power3.out'})
+    .from(G.mid.i, {y: H * .06, opacity: 0, duration: .7, ease: 'power3.out'}, '-=.5')
+    .from(G.front.i, {y: H * .1, opacity: 0, duration: .9, ease: 'back.out(1.4)'}, '-=.45')
+    .from(G.ui.i, {opacity: 0, duration: .5, ease: 'power2.out'}, '-=.4')
+    .from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}, '-=.5');
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[1].click(); await wait(120);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(500);
+  if (tl) tl.progress(1);
+  await wait(200);
+};
+Kit.single();
+</script>
+</html>

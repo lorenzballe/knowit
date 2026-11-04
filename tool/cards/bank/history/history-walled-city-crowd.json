@@ -1,0 +1,39 @@
+{
+  "id": "history-walled-city-crowd",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.repeated_mistakes",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Before Hong Kong's cage homes, how many crammed into Kowloon Walled City?",
+  "answer": "Until its demolition in 1994, Kowloon Walled City crammed in 50,000 people, one of the most densely populated places on the planet. Today's cage homes, where 220,000 people live, carry on that crowding.",
+  "move": "Cage homes have a precedent: 50,000 people in one walled block, until 1994.",
+  "keywords": [
+    "kowloon walled city",
+    "cage homes",
+    "hong kong",
+    "population density",
+    "housing"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A horizontal scale with a draggable marker asks the reader to guess how many people lived in Kowloon Walled City, where each dot equals 100 people. Text links the walled city to Hong Kong's cage homes today.",
+    "graded": false,
+    "ground": "#efebe2"
+  },
+  "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=6fBSVSmYSaE&t=402s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "technology-solar-depot-grid",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What two jobs does the depot's 30 kW solar roof do?",
+  "answer": "The 30 kW solar roof does two jobs. First, it and its storage batteries recharge the whole convoy quickly. Once the train is full, the surplus is sold to the local grid, so the depot works as a small power plant.",
+  "move": "The train fills first. Whatever sunshine is left over goes to the grid.",
+  "keywords": [
+    "solar-depot",
+    "solar-roof",
+    "storage-batteries",
+    "local-grid"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A depot roof with solar panels sits under a sun the reader can drag across the sky. Arrows show energy flowing from the roof to the convoy's batteries and, once the train is full, out to the local grid. The page asks what two jobs the 30 kW solar roof does.",
+    "ground": "#0c1a2b"
+  },
+  "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=1famKvkfFKM&t=47s",
+  "written": "2026-11-04"
+}

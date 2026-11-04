@@ -10,6 +10,7 @@ import json
 import re
 import sys
 import unittest
+from unittest import mock
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -175,7 +176,9 @@ class CoreBlocksTest(unittest.TestCase):
 
     def test_a_grid_too_small_to_hold_a_question_is_refused(self):
         def grid(columns, shape):
-            return problems({"id": "g", "block": "grid", "columns": columns, "shape": shape, "source": {"shelf": "today"}})
+            # The bank's quarter moves a character or two as cards come in: the rule is held to a fixed one.
+            with mock.patch.object(core, "quarter_length", return_value=80):
+                return problems({"id": "g", "block": "grid", "columns": columns, "shape": shape, "source": {"shelf": "today"}})
 
         for columns, shape in [(2, "square"), (2, "portrait"), (2, "landscape"), (3, "square"), (3, "portrait"), (4, "portrait")]:
             with self.subTest(columns=columns, shape=shape):

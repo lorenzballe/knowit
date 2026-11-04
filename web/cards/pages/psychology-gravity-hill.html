@@ -1,0 +1,456 @@
+<!doctype html>
+<!-- slug: psychology-gravity-hill -->
+<!-- Look: a dusk forest road in side view, printed on deep green, two layers of trees and drifting fireflies, above a brass inclinometer with engraved ticks, a spirit-level vial, a blued needle and glass glare.
+     Interaction: swing the needle to guess the middle stretch's slope. A brass ball then rolls "uphill", and you brush about 700 leaves away with a finger.
+     Wow: a gust takes the last leaves, the true horizon draws in, the whole road tilts to the truth, the vial's bubble slides and the needle swings, damped, to downhill. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The road that climbs downhill</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+.done .q{font-size:max(2.4cqh,15px)}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Swing the needle · brush the trees" style="--c:#17231d;--k:#f3e7c9;--edge:#0b120e">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OPTICAL ILLUSION</span></div>
+    <h2 class="q">Why does a downhill road appear to be uphill?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" data-drag role="img" aria-label="A forest road in side view. The middle stretch seems to climb. Below it is a brass inclinometer whose needle you swing to guess the slope."></canvas>
+    </div>
+    <p class="say" id="say">Swing the needle: is the middle stretch going <b>up</b> or <b>down</b>?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>With no horizon to see, the brain judges a slope against the road next to it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say');
+  const oc = document.createElement('canvas');
+  let ox = null, x = null, W = 0, H = 0, dpr = 1, fs = 12, SH = 0, L = 0, LS = 0, rw = 6, rb = 5;
+  let RC = {x: 0, y: 0}, D = {cx: 0, cy: 0, R: 60}, MONO = 'monospace';
+  // The slopes are illustrative: two steep stretches around a gentle one, all going down.
+  const TRUE = [-14, -3, -14], FAKE = 11;
+  const S = {rot: FAKE, intro: 1, dial: 1, rev: 0, hz: 0, bub: 0, phase: 'guess', guess: null, touched: false};
+  let na = 0, nv = 0, nt = 0, parts = [], trees = [], back = [], bleaf = [], loose = 0, T = 0, lastT = 0, lastHap = 0;
+  const flies = Array.from({length: 16}, () => ({u: .05 + Kit.rnd() * .9, v: .12 + Kit.rnd() * .45, s: .4 + Kit.rnd() * .7, ph: Kit.rnd() * 6.28}));
+  const ball = {s: 0, v: 0, on: false, al: 0};
+  const rad = d => d * Math.PI / 180, cl = (v, a, b) => Math.max(a, Math.min(b, v));
+  const dir = t => ({x: Math.cos(rad(t)), y: -Math.sin(rad(t))});
+
+  function world() {
+    const a = dir(TRUE[0]), b = dir(TRUE[1]), c = dir(TRUE[2]);
+    const B0 = {x: -L / 2 * b.x, y: -L / 2 * b.y}, B1 = {x: L / 2 * b.x, y: L / 2 * b.y};
+    return {a, b, c, B0, B1, A0: {x: B0.x - LS * a.x, y: B0.y - LS * a.y}, C1: {x: B1.x + LS * c.x, y: B1.y + LS * c.y}};
+  }
+  function toScr(p, rot = S.rot) {
+    const f = rad(-rot), co = Math.cos(f), si = Math.sin(f);
+    return {x: RC.x + p.x * co - p.y * si, y: RC.y + p.x * si + p.y * co};
+  }
+  function roadY(xs, rot) {
+    const w = world(), P = [w.A0, w.B0, w.B1, w.C1].map(p => toScr(p, rot));
+    for (let i = 0; i < 3; i++) { const p = P[i], q = P[i + 1]; if (xs >= p.x && xs <= q.x) return p.y + (q.y - p.y) * (xs - p.x) / (q.x - p.x); }
+    return xs < P[0].x ? P[0].y : P[3].y;
+  }
+
+  // ---------- the forest: a far layer, then hundreds of near leaves, stored in units of the scene ----------
+  function build() {
+    parts = []; trees = []; back = []; bleaf = []; loose = 0;
+    for (let i = 0; i < 16; i++) back.push({u: (i + Kit.rnd()) / 16, v: .02 + Kit.rnd() * .12, w: .5 + Kit.rnd() * .7});
+    for (let i = 0; i < 130; i++) {
+      const k = Kit.rnd();
+      bleaf.push({u: Kit.rnd() * 1.04 - .02, v: Math.abs(Kit.gauss()) * .16, r: 1.6 + Kit.rnd() * 2.6, a: Kit.rnd() * 6.28, ph: Kit.rnd() * 6.28,
+        col: k < .5 ? '#14281b' : k < .85 ? '#1a3523' : '#22432b'});
+    }
+    const n = 10;
+    for (let i = 0; i < n; i++) {
+      const tx = (i + .5) / n * W + (Kit.rnd() - .5) * W * .05;
+      const ry = roadY(tx, FAKE);
+      const ty = Math.min(SH * (.1 + .2 * Kit.rnd()), ry - SH * .22);
+      trees.push({u: tx / W, v: ty / SH, w: .6 + Kit.rnd() * .6});
+      for (let j = 0; j < 72; j++) {
+        const hx = cl(tx + Kit.gauss() * W * .06, -W * .02, W * 1.02);
+        let hy = ty + Kit.gauss() * SH * .1;
+        const lim = roadY(hx, FAKE) - rw * 1.6 - SH * .02;
+        if (hy > lim) hy = lim - Kit.rnd() * SH * .05;
+        const k = Kit.rnd();
+        const col = k < .04 ? '#d9b35c' : k < .2 ? '#1d3a26' : k < .45 ? '#2e5636' : k < .72 ? '#3f6f43' : k < .92 ? '#55894f' : '#8fb562';
+        parts.push({hu: hx / W, hv: hy / SH, u: hx / W, v: hy / SH, vu: 0, vv: 0, r: 1.4 + Kit.rnd() * 2.4, a: Kit.rnd() * 6.28, va: 0,
+          ph: Kit.rnd() * 6.28, col, loose: false, gone: false, rel: 0, d: Kit.rnd() * .3 + hx / W * .3});
+      }
+    }
+  }
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H; dpr = cv.width / W || 1;
+    oc.width = cv.width; oc.height = cv.height; ox = oc.getContext('2d'); ox.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const m = getComputedStyle(card).getPropertyValue('--mono').trim(); MONO = m || 'monospace';
+    fs = Math.max(12, Math.min(15, W / 28));
+    SH = H * .6;
+    RC = {x: W * .5, y: SH * .64}; L = W * .42; LS = W * .56;
+    rw = Math.max(6, SH * .04); rb = Math.max(5, rw * .85);
+    const R = Math.max(60, Math.min(W * .42, (H - SH) - fs * 3.4));
+    D = {cx: W / 2, cy: H - fs * 3.0, R};
+    if (!parts.length && S.phase !== 'reveal') build();
+    draw();
+  }
+
+  // ---------- the scene ----------
+  function drawScene() {
+    const o = ox; o.clearRect(0, 0, W, H);
+    const w = world(), hzY = -SH * .44, la = 1 - S.rev, sc = Math.max(1, W / 380);
+    // dusk glow where the horizon is
+    const hs = toScr({x: 0, y: hzY});
+    let g = o.createRadialGradient(hs.x, hs.y, 0, hs.x, hs.y, W * .75);
+    g.addColorStop(0, `rgba(240,196,110,${.18 + .2 * S.rev})`); g.addColorStop(.5, `rgba(240,170,90,${.06 + .06 * S.rev})`); g.addColorStop(1, 'rgba(240,196,110,0)');
+    o.fillStyle = g; o.beginPath(); o.arc(hs.x, hs.y, W * .75, 0, 6.283); o.fill();
+
+    // the far forest: thin trunks and a dark canopy, it thins as you brush
+    const lb = la * S.intro * (1 - .55 * (parts.length ? loose / parts.length : 0));
+    if (lb > 0) {
+      o.globalAlpha = lb; o.lineCap = 'round';
+      for (const t of back) {
+        const tx = t.u * W, by = roadY(tx, S.rot) - rw * .5;
+        o.strokeStyle = '#0e1912'; o.lineWidth = Math.max(1.2, W * .006 * t.w);
+        o.beginPath(); o.moveTo(tx, t.v * SH); o.lineTo(tx, by); o.stroke();
+      }
+      for (const b of bleaf) {
+        o.fillStyle = b.col; o.beginPath();
+        o.ellipse(b.u * W + Math.sin(T * .8 + b.ph) * 1.2, b.v * SH, b.r * sc * 1.7, b.r * sc * .9, b.a, 0, 6.283); o.fill();
+      }
+      o.globalAlpha = 1;
+    }
+
+    o.save(); o.translate(RC.x, RC.y); o.rotate(rad(-S.rot));
+    // distant hills and the true level, once the trees are gone
+    if (S.rev > 0) {
+      o.globalAlpha = S.rev * .9; o.beginPath(); o.moveTo(-W * 1.2, hzY);
+      for (let i = 0; i <= 48; i++) { const xx = -W * 1.2 + i * W * 2.4 / 48; o.lineTo(xx, hzY - SH * (.02 + .03 * Math.abs(Math.sin(i * 1.7)) + .018 * Math.sin(i * .6))); }
+      o.lineTo(W * 1.2, hzY); o.closePath();
+      g = o.createLinearGradient(0, hzY - SH * .08, 0, hzY); g.addColorStop(0, '#34473a'); g.addColorStop(1, '#22302a');
+      o.fillStyle = g; o.fill(); o.globalAlpha = 1;
+    }
+    if (S.hz > 0) {
+      const x0 = -W * .62, x1 = x0 + W * 1.24 * S.hz;
+      o.strokeStyle = '#f0c96a'; o.lineWidth = 1.6; o.setLineDash([8, 5]);
+      o.beginPath(); o.moveTo(x0, hzY); o.lineTo(x1, hzY); o.stroke(); o.setLineDash([]);
+      o.lineWidth = 1.4;
+      for (let i = 0; i <= 12; i++) { const xx = x0 + i * W * 1.24 / 12; if (xx > x1) break; o.beginPath(); o.moveTo(xx, hzY - 3); o.lineTo(xx, hzY + 3); o.stroke(); }
+    }
+    // the hillside under the road
+    o.globalAlpha = S.intro;
+    o.beginPath(); o.moveTo(w.A0.x, w.A0.y); o.lineTo(w.B0.x, w.B0.y); o.lineTo(w.B1.x, w.B1.y); o.lineTo(w.C1.x, w.C1.y);
+    o.lineTo(w.C1.x, SH * 1.5); o.lineTo(w.A0.x, SH * 1.5); o.closePath();
+    g = o.createLinearGradient(0, w.A0.y, 0, SH * .5); g.addColorStop(0, '#3d3524'); g.addColorStop(1, '#1b2019');
+    o.fillStyle = g; o.fill();
+    const poly = dy => { o.beginPath(); o.moveTo(w.A0.x, w.A0.y + dy); o.lineTo(w.B0.x, w.B0.y + dy); o.lineTo(w.B1.x, w.B1.y + dy); o.lineTo(w.C1.x, w.C1.y + dy); };
+    o.lineJoin = 'round'; o.lineCap = 'round';
+    for (let i = 0; i < 4; i++) { poly(rw * (2.4 + i * 2.3)); o.strokeStyle = `rgba(243,231,201,${.06 - i * .012})`; o.lineWidth = 1; o.stroke(); }
+    o.globalAlpha = 1;
+    // the road, drawn in as the scene builds
+    const len = L + LS * 2;
+    if (S.intro < 1) o.setLineDash([len * S.intro, len * 2]);
+    poly(0); o.strokeStyle = '#2b2e31'; o.lineWidth = rw; o.stroke();
+    poly(-rw / 2); o.strokeStyle = 'rgba(243,231,201,.6)'; o.lineWidth = 1.2; o.stroke();
+    poly(rw / 2); o.strokeStyle = '#5f7d3e'; o.lineWidth = 1.4; o.stroke();
+    o.setLineDash(S.intro < 1 ? [0, 1e5] : [rw * 1.4, rw * 1.6]);
+    if (S.intro >= 1) { poly(0); o.strokeStyle = '#e9c766'; o.lineWidth = Math.max(1.4, rw * .16); o.stroke(); }
+    o.setLineDash([]);
+    // a bracket under the middle stretch
+    const bk = rw * .9 + fs * .35, n = {x: -Math.sin(rad(TRUE[1])), y: -Math.cos(rad(TRUE[1]))};
+    o.strokeStyle = 'rgba(240,201,106,.85)'; o.lineWidth = 1.4; o.beginPath();
+    o.moveTo(w.B0.x - n.x * (bk - 4), w.B0.y - n.y * (bk - 4)); o.lineTo(w.B0.x - n.x * bk, w.B0.y - n.y * bk);
+    o.lineTo(w.B1.x - n.x * bk, w.B1.y - n.y * bk); o.lineTo(w.B1.x - n.x * (bk - 4), w.B1.y - n.y * (bk - 4)); o.globalAlpha = S.intro; o.stroke(); o.globalAlpha = 1;
+    // the brass ball
+    if (ball.on) {
+      const s = ball.s; let p;
+      if (s <= 1) p = {x: w.B0.x + (w.B1.x - w.B0.x) * s, y: w.B0.y + (w.B1.y - w.B0.y) * s};
+      else { const d = (s - 1) * L; p = {x: w.B1.x + w.c.x * d, y: w.B1.y + w.c.y * d}; }
+      const off = rw / 2 + rb; p.x += n.x * off; p.y += n.y * off;
+      o.globalAlpha = ball.al * cl((1.6 - s) / .3, 0, 1);
+      o.fillStyle = 'rgba(0,0,0,.35)'; o.beginPath(); o.ellipse(p.x, p.y + rb * .9, rb * .9, rb * .25, 0, 0, 6.283); o.fill();
+      g = o.createRadialGradient(p.x - rb * .35, p.y - rb * .4, rb * .1, p.x, p.y, rb);
+      g.addColorStop(0, '#fff3c4'); g.addColorStop(.4, '#e0b552'); g.addColorStop(1, '#7a5718');
+      o.fillStyle = g; o.beginPath(); o.arc(p.x, p.y, rb, 0, 6.283); o.fill();
+      const sp = s * L / rb; o.strokeStyle = 'rgba(70,45,10,.6)'; o.lineWidth = 1;
+      o.beginPath(); o.moveTo(p.x + Math.cos(sp) * rb * .8, p.y + Math.sin(sp) * rb * .8); o.lineTo(p.x - Math.cos(sp) * rb * .8, p.y - Math.sin(sp) * rb * .8); o.stroke();
+      o.globalAlpha = 1;
+    }
+    o.restore();
+
+    // trunks and canopy shade, standing in the view
+    if (la > 0) {
+      for (const t of trees) {
+        const tx = t.u * W, ty = t.v * SH, by = roadY(tx, S.rot) - rw * .5;
+        o.globalAlpha = la * S.intro;
+        g = o.createRadialGradient(tx, ty, 0, tx, ty, W * .13); g.addColorStop(0, 'rgba(10,22,14,.7)'); g.addColorStop(1, 'rgba(10,22,14,0)');
+        o.fillStyle = g; o.beginPath(); o.arc(tx, ty, W * .13, 0, 6.283); o.fill();
+        const tw = Math.max(2, W * .012 * t.w);
+        o.strokeStyle = '#1a140d'; o.lineWidth = tw;
+        o.beginPath(); o.moveTo(tx, ty + SH * .03); o.lineTo(tx, by); o.stroke();
+        o.strokeStyle = 'rgba(240,196,110,.14)'; o.lineWidth = Math.max(.8, tw * .3);
+        o.beginPath(); o.moveTo(tx + tw * .3, ty + SH * .06); o.lineTo(tx + tw * .3, by - rw * .4); o.stroke();
+      }
+      o.globalAlpha = 1;
+    }
+    // the leaves
+    for (const p of parts) {
+      if (p.gone) continue;
+      let s = 1;
+      if (S.intro < 1) { s = cl(S.intro * 1.6 - p.hu * .6, 0, 1); if (!s) continue; s = 1 - Math.pow(1 - s, 3); }
+      o.fillStyle = p.col; o.beginPath();
+      o.ellipse(p.u * W, p.v * SH, p.r * sc * 1.6 * s, p.r * sc * .85 * s, p.a, 0, 6.283); o.fill();
+    }
+    // fireflies drifting in the dusk
+    for (const f of flies) {
+      const fx = (f.u + Math.sin(T * f.s + f.ph) * .03) * W, fy = (f.v + Math.cos(T * f.s * .8 + f.ph) * .04) * SH;
+      const a = S.intro * (.25 + .75 * Math.max(0, Math.sin(T * f.s * 2.2 + f.ph))) * (1 - .5 * S.rev);
+      o.globalAlpha = a * .35; o.fillStyle = '#f0c96a'; o.beginPath(); o.arc(fx, fy, 4.5, 0, 6.283); o.fill();
+      o.globalAlpha = a; o.fillStyle = '#fff0b8'; o.beginPath(); o.arc(fx, fy, 1.4, 0, 6.283); o.fill();
+    }
+    o.globalAlpha = 1;
+    // labels
+    o.textAlign = 'center'; o.textBaseline = 'alphabetic';
+    o.font = `700 ${fs}px ${MONO}`; o.fillStyle = 'rgba(240,201,106,.95)'; o.globalAlpha = S.intro;
+    const ml = toScr({x: 0, y: rw + fs * 1.8}); o.fillText('MIDDLE STRETCH', ml.x, ml.y);
+    o.globalAlpha = 1;
+    if (S.hz > .2) {
+      o.globalAlpha = cl((S.hz - .2) / .5, 0, 1);
+      const up = rw + rb * 2 + fs * .9;
+      const la2 = {x: w.B0.x - w.a.x * LS * .28, y: w.B0.y - w.a.y * LS * .28 - up};
+      const lc = {x: w.B1.x + w.c.x * LS * .28, y: w.B1.y + w.c.y * LS * .28 - up};
+      o.fillStyle = 'rgba(243,231,201,.9)';
+      let p = toScr(la2); o.fillText('−14°', p.x, p.y);
+      p = toScr(lc); o.fillText('−14°', p.x, p.y);
+      o.fillStyle = '#f0c96a'; p = toScr({x: 0, y: -up}); o.fillText('−3° · DOWN', p.x, p.y);
+      p = toScr({x: -W * .26, y: hzY - fs * .7}); o.fillText('TRUE LEVEL', p.x, p.y);
+      o.globalAlpha = 1;
+    }
+    // soften every edge into the card
+    o.globalCompositeOperation = 'destination-in';
+    g = o.createLinearGradient(0, 0, 0, SH * 1.05);
+    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(.05, '#000'); g.addColorStop(.8, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    o.fillStyle = g; o.fillRect(0, 0, W, H);
+    g = o.createLinearGradient(0, 0, W, 0);
+    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(.05, '#000'); g.addColorStop(.95, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    o.fillStyle = g; o.fillRect(0, 0, W, H);
+    o.globalCompositeOperation = 'source-over';
+  }
+
+  // ---------- the inclinometer ----------
+  const fmt = s => { const r = Math.round(s); return r > 0 ? `+${r}° UP` : r < 0 ? `−${-r}° DOWN` : '0° LEVEL'; };
+  const fmtS = s => { const r = Math.round(s); return r > 0 ? `+${r}°` : r < 0 ? `−${-r}°` : '0°'; };
+  const dAng = s => rad(-90 + s * 70 / 15);
+  function rr(cx, cy, w, h, r) { x.beginPath(); x.moveTo(cx - w / 2 + r, cy - h / 2); x.arcTo(cx + w / 2, cy - h / 2, cx + w / 2, cy + h / 2, r); x.arcTo(cx + w / 2, cy + h / 2, cx - w / 2, cy + h / 2, r); x.arcTo(cx - w / 2, cy + h / 2, cx - w / 2, cy - h / 2, r); x.arcTo(cx - w / 2, cy - h / 2, cx + w / 2, cy - h / 2, r); x.closePath(); }
+  function needle(s, ghost) {
+    const len = D.R * .86, tail = D.R * .18, w = Math.max(2.5, D.R * .03);
+    x.save(); x.translate(D.cx, D.cy); x.rotate(dAng(s) + Math.PI / 2);
+    if (!ghost) { x.shadowColor = 'rgba(40,25,5,.45)'; x.shadowBlur = 4; x.shadowOffsetX = 2; x.shadowOffsetY = 3; }
+    x.beginPath(); x.moveTo(-w, 0); x.lineTo(-w * .35, -len); x.lineTo(0, -len - w * 1.4); x.lineTo(w * .35, -len); x.lineTo(w, 0);
+    x.lineTo(w * 1.7, tail); x.lineTo(-w * 1.7, tail); x.closePath();
+    if (ghost) { x.setLineDash([3, 3]); x.strokeStyle = 'rgba(58,42,16,.55)'; x.lineWidth = 1.2; x.stroke(); x.setLineDash([]); }
+    else {
+      const g = x.createLinearGradient(-w, 0, w, 0); g.addColorStop(0, '#0e1622'); g.addColorStop(.5, '#3a5272'); g.addColorStop(1, '#0e1622');
+      x.fillStyle = g; x.fill(); x.shadowColor = 'transparent';
+      x.beginPath(); x.moveTo(-w * .45, -len * .8); x.lineTo(-w * .35, -len); x.lineTo(0, -len - w * 1.4); x.lineTo(w * .35, -len); x.lineTo(w * .45, -len * .8); x.closePath();
+      x.fillStyle = '#c23a2c'; x.fill();
+    }
+    x.restore();
+  }
+  function vial(cx, cy, R) {
+    const vy = cy - R * .36, hl = R * .23, hh = fs * .38;
+    rr(cx, vy, hl * 2 + 4, hh * 2 + 4, hh + 2); x.fillStyle = '#6b4c16'; x.fill();
+    rr(cx, vy, hl * 2, hh * 2, hh);
+    let g = x.createLinearGradient(0, vy - hh, 0, vy + hh);
+    g.addColorStop(0, '#e9eeb0'); g.addColorStop(.5, '#b9c46a'); g.addColorStop(1, '#7f8a3a');
+    x.fillStyle = g; x.fill();
+    const wob = Kit.calm ? 0 : (1 - S.rev) * .12 * Math.sin(T * 1.3);
+    const bx = cx + cl(S.bub + wob, -.75, .75) * (hl - hh * 1.3);
+    x.fillStyle = 'rgba(255,253,235,.92)'; x.beginPath(); x.ellipse(bx, vy - hh * .1, hh * 1.25, hh * .62, 0, 0, 6.283); x.fill();
+    x.fillStyle = '#fff'; x.beginPath(); x.ellipse(bx - hh * .4, vy - hh * .35, hh * .4, hh * .18, 0, 0, 6.283); x.fill();
+    x.strokeStyle = 'rgba(58,42,16,.75)'; x.lineWidth = 1;
+    for (const sx of [-1, 1]) { x.beginPath(); x.moveTo(cx + sx * hh * 1.6, vy - hh); x.lineTo(cx + sx * hh * 1.6, vy + hh); x.stroke(); }
+  }
+  function drawDial() {
+    const {cx, cy, R} = D, k = S.dial; if (k <= 0) return;
+    const big = R >= fs * 8.4, mid = R >= fs * 5.6, roomy = R >= fs * 6;
+    x.save(); x.globalAlpha = cl(k, 0, 1); x.translate(0, (1 - k) * fs * 4);
+    const dp = (r, b) => { x.beginPath(); x.arc(cx, cy, r, Math.PI, 0); x.lineTo(cx + r, cy + b); x.lineTo(cx - r, cy + b); x.closePath(); };
+    const Ro = R * 1.07, bo = fs * 1.15;
+    x.save(); x.shadowColor = 'rgba(0,0,0,.55)'; x.shadowBlur = fs * 1.6; x.shadowOffsetY = fs * .5;
+    let g = x.createLinearGradient(cx - Ro, cy - Ro, cx + Ro, cy + bo);
+    g.addColorStop(0, '#f7e2a0'); g.addColorStop(.3, '#c99a3c'); g.addColorStop(.55, '#8a6420'); g.addColorStop(.8, '#e4bf68'); g.addColorStop(1, '#9a7228');
+    x.fillStyle = g; dp(Ro, bo); x.fill(); x.restore();
+    dp(R * .995, fs * 1.0); x.fillStyle = '#4e3810'; x.fill();
+    const Rf = R * .97, bf = fs * .92;
+    g = x.createRadialGradient(cx, cy - R * .45, R * .05, cx, cy - R * .2, R * 1.1);
+    g.addColorStop(0, '#f8ecc6'); g.addColorStop(.6, '#e3c98a'); g.addColorStop(1, '#b8964f');
+    dp(Rf, bf); x.fillStyle = g; x.fill();
+    // guilloché rings
+    x.save(); dp(Rf, bf); x.clip(); x.strokeStyle = 'rgba(90,62,18,.09)'; x.lineWidth = .7;
+    for (let r = fs * 1.2; r < Rf; r += 3.2) { x.beginPath(); x.arc(cx, cy, r, Math.PI, 0); x.stroke(); }
+    x.restore();
+    // down and up zones
+    x.lineWidth = R * .045;
+    x.strokeStyle = 'rgba(47,104,118,.6)'; x.beginPath(); x.arc(cx, cy, R * .875, dAng(-15), dAng(0)); x.stroke();
+    x.strokeStyle = 'rgba(166,60,40,.6)'; x.beginPath(); x.arc(cx, cy, R * .875, dAng(0), dAng(15)); x.stroke();
+    // engraved ticks
+    x.strokeStyle = '#3a2a10'; x.lineCap = 'round';
+    for (let s = -15; s <= 15; s++) {
+      const a = dAng(s), maj = s % 5 === 0, r0 = maj ? R * .75 : R * .81, r1 = R * .9;
+      x.lineWidth = maj ? 2 : 1; x.beginPath(); x.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); x.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); x.stroke();
+    }
+    // numerals, as many as the dial has room for
+    x.font = `700 ${fs}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#3a2a10';
+    const rN = R * .73 - fs * .6;
+    const nums = big ? [-15, -10, -5, 0, 5, 10, 15] : mid ? [-10, 0, 10] : [];
+    for (const s of nums) { const a = dAng(s); x.fillText(String(Math.abs(s)), cx + Math.cos(a) * rN, cy + Math.sin(a) * rN); }
+    if (big) vial(cx, cy, R);
+    x.font = `700 ${fs}px ${MONO}`;
+    const hr = fs * .8, wx = roomy ? R * .56 : (hr + Rf) / 2;
+    x.fillStyle = '#2a5e6b'; x.fillText(big ? 'DOWNHILL' : 'DOWN', cx - wx, cy + fs * .5);
+    x.fillStyle = '#93331f'; x.fillText(big ? 'UPHILL' : 'UP', cx + wx, cy + fs * .5);
+    // screws
+    if (big) for (const sx of [-1, 1]) {
+      const px = cx + sx * R * .88, py = cy + fs * .42, r = Math.max(2.5, fs * .3);
+      g = x.createRadialGradient(px - r * .3, py - r * .3, 0, px, py, r); g.addColorStop(0, '#f5dc98'); g.addColorStop(1, '#7a5718');
+      x.fillStyle = g; x.beginPath(); x.arc(px, py, r, 0, 6.283); x.fill();
+      x.strokeStyle = '#3a2a10'; x.lineWidth = 1; x.beginPath(); x.moveTo(px - r * .7, py + r * .3 * sx); x.lineTo(px + r * .7, py - r * .3 * sx); x.stroke();
+    }
+    if (S.phase === 'reveal' && S.guess !== null) needle(S.guess, true);
+    needle(na, false);
+    // hub
+    g = x.createRadialGradient(cx - hr * .3, cy - hr * .3, 0, cx, cy, hr); g.addColorStop(0, '#fff0c0'); g.addColorStop(.5, '#d0a248'); g.addColorStop(1, '#6e4e14');
+    x.fillStyle = g; x.beginPath(); x.arc(cx, cy, hr, 0, 6.283); x.fill();
+    x.fillStyle = '#2a1e0a'; x.beginPath(); x.arc(cx, cy, hr * .28, 0, 6.283); x.fill();
+    // glass glare
+    x.save(); dp(Rf, bf); x.clip();
+    g = x.createLinearGradient(cx - R, cy - R, cx, cy);
+    g.addColorStop(0, 'rgba(255,255,255,.32)'); g.addColorStop(.45, 'rgba(255,255,255,.06)'); g.addColorStop(.5, 'rgba(255,255,255,0)');
+    x.fillStyle = g; x.beginPath(); x.ellipse(cx - R * .3, cy - R * .55, R * .75, R * .4, -.5, 0, 6.283); x.fill();
+    x.restore();
+    // engraved readout plate
+    let txt;
+    if (S.phase === 'guess') txt = S.touched ? fmt(nt) : 'DRAG THE NEEDLE';
+    else if (S.phase === 'roll' || S.rot > 3) txt = 'YOUR GUESS ' + fmt(S.guess);
+    else txt = `TRUE ${fmt(-3)} · YOU ${fmt(S.guess)}`;
+    x.font = `700 ${fs}px ${MONO}`;
+    if (x.measureText(txt).width + fs * 2 > W - 8 && S.phase === 'reveal') txt = `TRUE −3° · YOU ${fmtS(S.guess)}`;
+    const tw = Math.min(W - 4, x.measureText(txt).width + fs * 2), py = cy + fs * 2.0;
+    rr(cx, py, tw, fs * 1.55, fs * .4);
+    g = x.createLinearGradient(0, py - fs, 0, py + fs); g.addColorStop(0, '#3a2c12'); g.addColorStop(1, '#211809');
+    x.fillStyle = g; x.fill(); x.strokeStyle = '#c99a3c'; x.lineWidth = 1.2; x.stroke();
+    x.globalAlpha = cl(k, 0, 1) * (S.phase === 'guess' && !S.touched && !Kit.calm ? .65 + .35 * Math.sin(T * 4) : 1);
+    x.fillStyle = '#f3e1a6'; x.textBaseline = 'middle'; x.fillText(txt, cx, py + 1);
+    x.restore();
+  }
+
+  function draw() { if (!x || !W) return; drawScene(); x.clearRect(0, 0, W, H); x.drawImage(oc, 0, 0, W, H); drawDial(); }
+
+  // ---------- the loop: needle spring, leaves, ball ----------
+  function tick(t) {
+    const dt = Math.min(.05, lastT ? (t - lastT) / 1000 : .016); lastT = t; T += dt;
+    nv += (140 * (nt - na) - 7 * nv) * dt; na += nv * dt;     // an underdamped needle: it swings, then settles
+    for (const p of parts) {
+      if (p.gone) continue;
+      if (!p.loose) {
+        if (S.phase === 'reveal' && T >= p.rel) { p.loose = true; loose++; p.vu = .9 + Kit.rnd() * 1.4; p.vv = -(.2 + Kit.rnd() * .9); p.va = (Kit.rnd() - .5) * 12; }
+        else { p.u = p.hu + Math.sin(T * 1.4 + p.ph + p.hu * 3) * .004; p.v = p.hv + Math.cos(T * 1.1 + p.ph) * .003; continue; }
+      }
+      const dr = Math.pow(.3, dt);
+      p.u += p.vu * dt; p.v += p.vv * dt; p.vu *= dr; p.vv = p.vv * dr + .9 * dt; p.a += p.va * dt;
+      if (S.phase === 'reveal') p.vu += 1.4 * dt;
+      if (p.v > 1.15 || p.u > 1.15 || p.u < -.15 || p.v < -.5) p.gone = true;
+    }
+    if (ball.on) {
+      ball.v += .32 * (ball.s > 1 ? 4 : 1) * dt; ball.s += ball.v * dt; ball.al = Math.min(1, ball.al + dt * 3);
+      if (ball.s > 1.6) { ball.s = 0; ball.v = 0; ball.al = 0; }
+    }
+    draw(); requestAnimationFrame(tick);
+  }
+
+  // ---------- touch ----------
+  let mode = null, lp = null, lastDeg = null;
+  const pt = e => { const r = cv.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
+  function aim(p) {
+    let d = Math.atan2(p.y - D.cy, p.x - D.cx) * 180 / Math.PI + 90; if (d > 180) d -= 360;
+    d = cl(d, -70, 70); nt = d * 15 / 70; S.touched = true;
+    const r = Math.round(nt); if (r !== lastDeg) { lastDeg = r; Kit.haptic('selection'); }
+  }
+  function commit() {
+    if (S.phase !== 'guess') return;
+    S.guess = Math.round(nt); nt = S.guess; S.phase = 'roll';
+    ball.on = true; ball.s = 0; ball.v = 0; ball.al = 0; Kit.haptic('light'); cv.style.cursor = 'crosshair';
+    say.innerHTML = S.guess > 0
+      ? 'A climb, you say. Yet the ball rolls up it on its own. <b>Brush the trees away with your finger.</b>'
+      : 'Your eyes see a climb; you said no. <b>Brush the trees away with your finger</b> to check.';
+  }
+  function brush(a, b) {
+    const br = Math.max(34, W * .11), dx = b.x - a.x, dy = b.y - a.y, l2 = dx * dx + dy * dy || 1;
+    let hit = 0;
+    for (const o of parts) {
+      if (o.loose || o.gone) continue;
+      const px = o.u * W, py = o.v * SH, t = cl(((px - a.x) * dx + (py - a.y) * dy) / l2, 0, 1);
+      const qx = a.x + dx * t, qy = a.y + dy * t, d = Math.hypot(px - qx, py - qy);
+      if (d < br) {
+        o.loose = true; loose++; hit++;
+        const ang = Math.atan2(py - qy, px - qx), f = 1 - d / br;
+        o.vu = (Math.cos(ang) * f * 420 + dx * 18) / W; o.vv = (Math.sin(ang) * f * 420 + dy * 18 - 160) / SH; o.va = (Kit.rnd() - .5) * 14;
+      }
+    }
+    if (hit && T - lastHap > .08) { lastHap = T; Kit.haptic('light'); }
+    if (loose / parts.length > .4) reveal();
+  }
+  cv.addEventListener('pointerdown', e => {
+    const p = pt(e);
+    if (S.phase === 'guess') { mode = 'dial'; aim(p); }
+    else if (S.phase === 'roll') { mode = 'brush'; lp = p; brush({x: p.x - .1, y: p.y}, p); }
+    else return;
+    try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  cv.addEventListener('pointermove', e => { if (!mode) return; const p = pt(e); if (mode === 'dial') aim(p); else { brush(lp, p); lp = p; } });
+  const up = () => { if (mode === 'dial') commit(); mode = null; };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  // ---------- the truth ----------
+  function finish() {
+    say.innerHTML = '<b>It is downhill all the way.</b> The middle stretch is only gently down, between two steep drops, so next to them it looks like a climb. The trees hide the horizon, so the brain has no true level to check it against.';
+    Kit.show('keep');
+  }
+  function reveal() {
+    if (S.phase === 'reveal') return;
+    S.phase = 'reveal'; mode = null; cv.style.cursor = 'default';
+    parts.forEach(p => { p.rel = T + p.d; });
+    Kit.haptic('success'); card.classList.add('done');
+    if (Kit.calm || typeof gsap === 'undefined') { S.rot = 0; S.rev = 1; S.hz = 1; S.bub = -.55; parts.forEach(p => { p.gone = true; }); na = nt = -3; nv = 0; finish(); return; }
+    gsap.timeline()
+      .to(S, {rev: 1, duration: 1.4, ease: 'power2.out'}, .15)
+      .to(S, {rot: 0, duration: 1.9, ease: 'expo.inOut'}, .35)
+      .call(() => { nt = -3; nv -= 30; }, null, 1.25)
+      .to(S, {bub: -.55, duration: 1.4, ease: 'elastic.out(1,.45)'}, 1.3)
+      .to(S, {hz: 1, duration: 1.2, ease: 'power3.out'}, 1.45)
+      .call(finish, null, 2.3);
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.fromTo(S, {intro: 0}, {intro: 1, duration: 1.8, ease: 'power3.out'});
+    gsap.fromTo(S, {dial: 0}, {dial: 1, duration: 1.1, ease: 'back.out(1.4)', delay: .5});
+    gsap.delayedCall(.55, () => { if (S.phase === 'guess' && !S.touched) { na = -15; nv = 0; nt = 0; } });
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    aim({x: D.cx + D.R * .6, y: D.cy - D.R * .5}); await w(150);
+    commit(); await w(Kit.calm ? 50 : 700);
+    reveal(); await w(Kit.calm ? 120 : 3400);
+  };
+  requestAnimationFrame(tick);
+})();
+Kit.single();
+</script>
+</html>

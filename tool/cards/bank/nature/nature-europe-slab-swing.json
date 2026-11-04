@@ -1,0 +1,38 @@
+{
+  "id": "nature-europe-slab-swing",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Which way did a slab of Europe swing, 25 million years ago?",
+  "answer": "The slab tore off Europe and swung anticlockwise on the Gulf of Genoa, like a compass. Behind it the crust sank and the sea poured in. That swing later helped shape the Apennines.",
+  "move": "25–20 million years ago a slab of Europe swung anticlockwise and opened the Ligurian Sea.",
+  "keywords": [
+    "france",
+    "ligurian sea",
+    "apennines",
+    "gulf of genoa",
+    "europe"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz page: a slab of Europe swung 25 million years ago. Which way did it swing, clockwise or anticlockwise? A five-step diagram shows the crust tearing, the slab breaking off and swinging, the floor sinking, and the sea flooding in.",
+    "ground": "#070b18"
+  },
+  "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=DTOssDc8keo&t=777s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "technology-tatara-mass-balance",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "614 kg of iron sand, 670 kg of charcoal: how heavy is the block?",
+  "answer": "614 kg of iron sand and 670 kg of charcoal go in, 1,284 kg in all. The charcoal burns away, and 100 kg comes out as one lump of steel, iron and slag. Only about a third of it is good enough for a sword.",
+  "move": "A tatara turns 1,284 kg of sand and charcoal into one 100 kg block.",
+  "keywords": [
+    "tatara",
+    "iron sand",
+    "charcoal",
+    "steel",
+    "japan"
+  ],
+  "era": "early_modern",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Guess-the-yield page: 614 kg of iron sand and 670 kg of charcoal go into a tatara furnace. The reader drags the right-hand pile to the weight of the steel block they expect, out of 1,284 kg in.",
+    "graded": false,
+    "ground": "#f3e9d3"
+  },
+  "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=744s",
+  "written": "2026-11-04"
+}

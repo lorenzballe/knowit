@@ -1,0 +1,38 @@
+{
+  "id": "medicine-alcohol-group-one",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the international cancer agency classify alcohol?",
+  "answer": "The International Agency for Research on Cancer puts alcohol in Group 1: there is sufficient evidence that it causes cancer. Cigarette smoke is in the same group. So drinking raises the risk of some kinds of cancer.",
+  "move": "Alcohol is a Group 1 carcinogen, the same group as cigarette smoke.",
+  "keywords": [
+    "alcohol",
+    "cancer",
+    "cigarette smoke",
+    "iarc",
+    "carcinogens"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Page asks how the international cancer agency classifies alcohol. Each tap adds one study until the evidence is sufficient, then reveals Group 1: carcinogenic to humans, listed alongside cigarette smoke.",
+    "ground": "#f2eee4"
+  },
+  "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=205s",
+  "written": "2026-11-04"
+}

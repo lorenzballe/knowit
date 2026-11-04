@@ -1,0 +1,382 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-gravel-third-friction -->
+<!-- Look: a cathedral-window mosaic of a gravel hairpin that crumbles into the card at its edges, no frame. Amber glass road with a red-and-cream apex kerb on deep green-blue glass, a red glass rally car leaded in black, its forces built from glowing chevron tiles, glints twinkling in the glass.
+     Interaction: drag the jewel along a leaded wire from ROLL to SLIDE. The car's yaw, its countersteer, the gold (rolling, forward) and cyan (sliding, sideways) arrows and its predicted line all answer at once. All roll runs wide, all slide dies sideways. The words in the text wear the arrows' colours.
+     Wow: let go on the fine line in the middle and the bend's tiles light up one by one as the car drifts through the corner in a spray of glass gravel, then a white third arrow, roll plus slide, builds out of the car. -->
+<title>The third friction</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#cv,#ov{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ov{touch-action:none;cursor:ew-resize;overflow:visible}
+.lab{font-family:var(--mono);font-weight:700}
+.hand{font-family:var(--hand)}
+.pulse{animation:pl 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pl{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.3);opacity:0}}
+.kit-calm .pulse{display:none}
+.say{overflow-wrap:anywhere}
+.say .g{color:#ffc23d}
+.say .c{color:#4fd3ff}
+.answered .q{font-size:max(2.4cqh,15px)}
+.answered .say{font-size:max(1.85cqh,12.5px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag the balance · roll and slide" style="--c:#19140f;--k:#f7ecd6;--edge:#0c0907">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ROLL AND SLIDE</span></div>
+    <h2 class="q">What is the “third dimension of friction” when rallying on gravel?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" aria-hidden="true"></canvas>
+      <svg id="ov" data-drag role="img" aria-label="A stained-glass rally car in a gravel bend. A slider from roll to slide sets how its tyres meet the gravel; gold and cyan arrows show the rolling and sliding forces."></svg>
+    </div>
+    <p class="say" id="say">Drag the jewel between <b class="g">ROLL</b> and <b class="c">SLIDE</b>: how should the tyres meet the gravel?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Gravel grip is a hybrid: roll to go forward, slide to go sideways, at once.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), ov = Kit.$('ov'), say = Kit.$('say'), card = Kit.$('card');
+  const LEAD = '#17120d', GOLD = '#ffc23d', CYAN = '#4fd3ff', WHITE = '#fff6e0', PI = Math.PI;
+  const TH0 = PI * 1.17;
+  const S = {m: .08, th: TH0, res: 0}, K = {in: 1};
+  let mt = .08, W = 0, H = 0, fs = 13, ctx = null, C = {x: 0, y: 0}, R = 1, RW = 1, Lc = 1, Wc = 1, xa = 0, xb = 1, wireY = 0, s = 20, topY = 0, topY0 = 0, LEG = null;
+  let tiles = [], sparks = [], parts = [], ripples = [], entered = false, revealed = false, touched = false, running = false, zone = '', looping = false;
+  const now = () => performance.now() / 1000;
+  const P2 = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const mTo = gsap.quickTo(S, 'm', {duration: .32, ease: 'power3.out', onUpdate: () => render()});
+
+  const WHY = 'On gravel the tyres live on a thin line between rolling and sliding. <b><span class="g">Rolling pushes the car forward</span>, <span class="c">sliding moves it sideways</span></b>, and drivers use both to the full. Sliding before and during the bend means slowing down less.';
+  const SAY = {
+    roll: '<b class="g">All rolling:</b> plenty of push forward, but nothing swings the car round the bend. It runs wide.',
+    slide: '<b class="c">All sliding:</b> the car swings sideways, but nothing pushes it on. It just scrubs off speed.',
+    mid: '<b>Both at once:</b> <span class="g">rolling drives it forward</span>, <span class="c">sliding carries it sideways</span>. <b>Let go here.</b>'
+  };
+  const ROWS = [[GOLD, 'roll → forward'], [CYAN, 'slide → sideways'], [WHITE, 'both → third friction']];
+
+  function pose(th, m) {
+    const px = C.x + R * Math.cos(th), py = C.y + R * Math.sin(th);
+    const tan = Math.atan2(Math.cos(th), -Math.sin(th)), drift = m * .9;
+    return {px, py, tan, drift, hd: tan + drift};
+  }
+
+  // ---------- the mosaic, crumbling into the card at its edges ----------
+  function build() {
+    tiles = []; sparks = [];
+    s = clamp(Math.min(W, H) / 11, 15, 34);
+    const cols = Math.ceil(W / s) + 1, rows = Math.ceil(H / s) + 1, g = [];
+    for (let i = 0; i <= cols; i++) { g[i] = []; for (let j = 0; j <= rows; j++) g[i][j] = [i * s + (Kit.rnd() - .5) * s * .6, j * s + (Kit.rnd() - .5) * s * .6]; }
+    const pal = [[158, 45, 22], [192, 55, 26], [218, 50, 24], [140, 35, 18], [200, 60, 32], [175, 40, 20], [205, 45, 18]];
+    const add = poly => {
+      let cx = 0, cy = 0; poly.forEach(p => { cx += p[0]; cy += p[1]; }); cx /= poly.length; cy /= poly.length;
+      const e = Math.min(cx, W - cx, cy, H - cy) / s;
+      if (e < .1 + Kit.rnd() * 1.1) return;
+      const d = Math.hypot(cx - C.x, cy - C.y);
+      let th = Math.atan2(cy - C.y, cx - C.x); if (th < 0) th += 2 * PI;
+      const road = Math.abs(d - R) < RW / 2, edge = !road && Math.abs(d - R) < RW / 2 + s * .7;
+      let h, sa, l;
+      if (road) { h = 30 + Kit.rnd() * 16; sa = 62 + Kit.rnd() * 22; l = 44 + Kit.rnd() * 16; }
+      else if (edge) { h = 72 + Kit.rnd() * 26; sa = 30 + Kit.rnd() * 10; l = 19 + Kit.rnd() * 7; }
+      else { const p = pal[Math.floor(Kit.rnd() * pal.length)]; h = p[0] + (Kit.rnd() - .5) * 14; sa = p[1]; l = p[2] + Kit.rnd() * 8; }
+      tiles.push({pts: poly.map(p => [cx + (p[0] - cx) * .86, cy + (p[1] - cy) * .86]), cx, cy, h, s: sa, l, ph: Kit.rnd() * 6.28, fade: clamp(.4 + e * .4, .4, 1),
+        lit: (revealed && road && th > .95 * PI && th < 1.65 * PI) ? .45 : 0, in: 1, road, th});
+    };
+    for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) {
+      const a = g[i][j], b = g[i + 1][j], c = g[i + 1][j + 1], d = g[i][j + 1];
+      if (Kit.rnd() < .4) { if (Kit.rnd() < .5) { add([a, b, c]); add([a, c, d]); } else { add([a, b, d]); add([b, c, d]); } }
+      else add([a, b, c, d]);
+    }
+    const pool = tiles.filter(q => q.fade > .85);
+    for (let i = 0; i < 12 && pool.length; i++) { const q = pool[Math.floor(Kit.rnd() * pool.length)]; sparks.push({x: q.cx, y: q.cy, ph: Kit.rnd() * 6.28, sp: .7 + Kit.rnd() * .8}); }
+  }
+
+  function emit() {
+    const P = pose(S.th, S.m), side = Kit.rnd() < .5 ? -1 : 1;
+    const ch = Math.cos(P.hd), sh = Math.sin(P.hd), lx = -Lc * .32, ly = side * Wc * .5;
+    const x = P.px + ch * lx - sh * ly, y = P.py + sh * lx + ch * ly;
+    let ox = P.px - C.x, oy = P.py - C.y; const on = Math.hypot(ox, oy) || 1; ox /= on; oy /= on;
+    const k = clamp(Lc / 50, .6, 1.3), a = (60 + Kit.rnd() * 130) * k, b = (40 + Kit.rnd() * 90) * k;
+    parts.push({x, y, vx: ox * a - ch * b, vy: oy * a - sh * b, life: .6 + Kit.rnd() * .5, rot: Kit.rnd() * 6, sz: fs * (.22 + Kit.rnd() * .35), h: 28 + Kit.rnd() * 20});
+  }
+
+  let lastT = 0, acc = 0;
+  function loop() {
+    const t = now(), dt = Math.min(.05, lastT ? t - lastT : .016); lastT = t;
+    if (!Kit.calm && entered) {
+      acc += ((S.m > .15 ? S.m * 45 : 0) + (running ? 110 : 0)) * dt;
+      while (acc > 1 && parts.length < 90) { acc--; emit(); }
+      if (acc > 1) acc = 0;
+    }
+    draw(t, dt);
+    requestAnimationFrame(loop);
+  }
+
+  function kerb() {
+    const r1 = R - RW / 2, w = Math.max(4, RW * .15), r2 = r1 + w, step = fs * 1.15 / Math.max(r1, 1);
+    if (r1 < 4) return;
+    ctx.globalAlpha = K.in; ctx.strokeStyle = LEAD; ctx.lineWidth = 1.6; ctx.lineJoin = 'round';
+    let i = 0;
+    for (let th = PI * .76; th < PI * 1.86; th += step, i++) {
+      const mx = C.x + (r1 + w / 2) * Math.cos(th + step / 2), my = C.y + (r1 + w / 2) * Math.sin(th + step / 2);
+      if (Math.min(mx, W - mx, my, H - my) / s < .9) continue;
+      ctx.fillStyle = i % 2 ? '#f3e4c4' : '#d8392c';
+      ctx.beginPath(); ctx.arc(C.x, C.y, r2, th, th + step * .9); ctx.arc(C.x, C.y, r1, th + step * .9, th, true); ctx.closePath(); ctx.fill(); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function draw(t, dt) {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+    const T = Kit.calm ? 0 : t;
+    ripples = ripples.filter(r => t - r.t < 1.4);
+    for (const q of tiles) {
+      if (q.in <= 0) continue;
+      let L = q.l + (Kit.calm ? 0 : 5 * Math.sin(T * 1.2 + q.ph + q.cx * .012)), h = q.h, sa = q.s;
+      if (!Kit.calm) for (const r of ripples) {
+        const age = t - r.t, rad = age * Math.max(W, H) * .8, dd = Math.hypot(q.cx - r.x, q.cy - r.y);
+        L += 22 * Math.exp(-(((dd - rad) / (s * .9)) ** 2)) * (1 - age / 1.4);
+      }
+      const k = q.lit; h += (48 - h) * k; sa += (92 - sa) * k; L += (78 - L) * k;
+      ctx.globalAlpha = q.in * q.fade;
+      ctx.fillStyle = `hsl(${h.toFixed(1)} ${sa.toFixed(1)}% ${clamp(L, 4, 92).toFixed(1)}%)`;
+      ctx.beginPath(); q.pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    kerb();
+    // Light falling through the glass: painted only onto the glass, never into the lead gaps.
+    ctx.globalCompositeOperation = 'source-atop';
+    const g = ctx.createRadialGradient(W * .15, -H * .1, 0, W * .15, -H * .1, Math.max(W, H) * 1.2);
+    g.addColorStop(0, 'rgba(255,240,205,.28)'); g.addColorStop(.55, 'rgba(255,240,205,0)'); g.addColorStop(1, 'rgba(0,0,0,.3)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+    // Glints in the glass.
+    if (!Kit.calm) for (const sp of sparks) {
+      const a = Math.pow(Math.max(0, Math.sin(t * sp.sp + sp.ph)), 10);
+      if (a < .02) continue;
+      const z = s * .32 * (.6 + a * .6);
+      ctx.globalAlpha = a * .9; ctx.fillStyle = '#fffbea';
+      ctx.beginPath(); ctx.moveTo(sp.x, sp.y - z); ctx.lineTo(sp.x + z * .18, sp.y - z * .18); ctx.lineTo(sp.x + z, sp.y); ctx.lineTo(sp.x + z * .18, sp.y + z * .18);
+      ctx.lineTo(sp.x, sp.y + z); ctx.lineTo(sp.x - z * .18, sp.y + z * .18); ctx.lineTo(sp.x - z, sp.y); ctx.lineTo(sp.x - z * .18, sp.y - z * .18); ctx.closePath(); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    // Gravel spray, as shards of glass.
+    for (const p of parts) {
+      p.x += p.vx * dt; p.y += p.vy * dt; p.vx *= .93; p.vy *= .93; p.life -= dt; p.rot += dt * 6;
+      if (p.life <= 0) continue;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.globalAlpha = Math.min(1, p.life * 1.6);
+      ctx.fillStyle = `hsl(${p.h} 80% 64%)`; ctx.strokeStyle = LEAD; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(0, -p.sz); ctx.lineTo(p.sz * .9, p.sz * .6); ctx.lineTo(-p.sz * .8, p.sz * .5); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.restore();
+    }
+    parts = parts.filter(p => p.life > 0);
+    ctx.globalAlpha = 1;
+  }
+
+  // ---------- the overlay: wire, arrows, car ----------
+  function mosaicArrow(g, x0, y0, ang, len, col, o, glow) {
+    const u = fs * .85;
+    if (len < u * .6) return;
+    const a = {transform: `translate(${x0.toFixed(1)},${y0.toFixed(1)}) rotate(${(ang * 180 / PI).toFixed(2)})`};
+    if (glow) a.filter = 'url(#glow)';
+    const grp = Kit.mk('g', a, g), n = Math.max(0, Math.floor((len - u * 1.1) / u));
+    for (let i = 0; i < n; i++) {
+      const d = o + i * u;
+      Kit.mk('polygon', {points: P2([[d, -u * .42], [d + u * .5, -u * .42], [d + u * .9, 0], [d + u * .5, u * .42], [d, u * .42], [d + u * .4, 0]]), fill: col, 'fill-opacity': (.5 + .5 * (i + 1) / (n + 1)).toFixed(2), stroke: LEAD, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, grp);
+    }
+    const d0 = o + n * u;
+    Kit.mk('polygon', {points: P2([[d0, -u * .85], [d0 + u * 1.25, 0], [d0, u * .85], [d0 + u * .3, 0]]), fill: col, stroke: LEAD, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, grp);
+  }
+
+  function label(g, x, y, t, a) { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, stroke: LEAD, 'stroke-width': 3.4, 'paint-order': 'stroke', 'stroke-linejoin': 'round'}, a), g); e.textContent = t; return e; }
+  const inLeg = (x, y) => LEG && x < LEG.x + LEG.w + fs * .4 && y > LEG.top - fs * .4 && y < LEG.top + LEG.h + fs * .4;
+
+  function render() {
+    if (!W) return;
+    ov.innerHTML = '';
+    const defs = Kit.mk('defs', {}, ov);
+    const grad = (id, a, b, attrs) => { const gr = Kit.mk('linearGradient', Object.assign({id}, attrs || {x1: 0, y1: 0, x2: 1, y2: 1}), defs); Kit.mk('stop', {offset: '0', 'stop-color': a}, gr); Kit.mk('stop', {offset: '1', 'stop-color': b}, gr); };
+    grad('gRed', '#ff7b62', '#a8142a'); grad('gBlue', '#d4f6ff', '#2a74cf'); grad('gRoof', '#ffb08a', '#d2363c');
+    grad('gWire', GOLD, CYAN, {x1: 0, y1: 0, x2: 1, y2: 0});
+    const fg = Kit.mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: 3, result: 'b'}, fg);
+    const fm = Kit.mk('feMerge', {}, fg); Kit.mk('feMergeNode', {in: 'b'}, fm); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, fm);
+    const fsd = Kit.mk('filter', {id: 'shad', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs); Kit.mk('feGaussianBlur', {stdDeviation: 4}, fsd);
+
+    const P = pose(S.th, S.m), hl = Lc / 2, hw = Wc / 2;
+    const rollLen = Lc * 1.5 * Math.pow(1 - S.m, .9), slideLen = Lc * 1.25 * S.m;
+
+    // The line the car will take.
+    if (!running) {
+      const gD = Kit.mk('g', {}, ov);
+      let x = P.px, y = P.py, phi = P.tan;
+      const k = (.25 + 1.5 * S.m) / R, L = S.m <= .6 ? R * 1.15 : R * (1.15 - .85 * (S.m - .6) / .4), n = 16, ds = L / (n * 3);
+      let j = 0;
+      for (let i = 0; i < n * 3; i++) {
+        phi += k * ds; x += Math.cos(phi) * ds; y += Math.sin(phi) * ds;
+        if (y < topY0 - fs * .2) break;
+        if (i % 3 === 2) {
+          if (!inLeg(x, y)) {
+            const on = Math.abs(Math.hypot(x - C.x, y - C.y) - R) < RW / 2;
+            Kit.mk('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: Math.max(2.6, fs * .3), fill: on ? WHITE : '#ff5a4f', 'fill-opacity': (1 - j / n * .6).toFixed(2), stroke: LEAD, 'stroke-width': 1.5}, gD);
+          }
+          j++;
+        }
+      }
+    }
+
+    // The forces, under the car.
+    if (!running) {
+      const gA = Kit.mk('g', {}, ov), perp = P.hd + PI / 2;
+      if (S.res > 0) {
+        const vx = Math.cos(P.hd) * rollLen + Math.cos(perp) * slideLen, vy = Math.sin(P.hd) * rollLen + Math.sin(perp) * slideLen;
+        mosaicArrow(gA, P.px, P.py, Math.atan2(vy, vx), Math.hypot(vx, vy) * S.res + hw, WHITE, 0, true);
+      }
+      mosaicArrow(gA, P.px, P.py, P.hd, rollLen, GOLD, hl * .9, revealed);
+      mosaicArrow(gA, P.px, P.py, perp, slideLen, CYAN, hw * .9, revealed);
+    }
+
+    // The car, leaded glass.
+    const car = Kit.mk('g', {transform: `translate(${P.px.toFixed(1)},${P.py.toFixed(1)}) rotate(${(P.hd * 180 / PI).toFixed(2)})`}, ov);
+    Kit.mk('ellipse', {cx: 3, cy: 6, rx: hl * 1.05, ry: hw * 1.15, fill: 'rgba(0,0,0,.55)', filter: 'url(#shad)'}, car);
+    for (const [sx, sy] of [[.6, -1], [.6, 1], [-.62, -1], [-.62, 1]]) {
+      const rot = sx > 0 ? -P.drift * .8 * 180 / PI : 0;
+      const wg = Kit.mk('g', {transform: `translate(${(sx * hl).toFixed(1)},${(sy * hw * .92).toFixed(1)}) rotate(${rot.toFixed(1)})`}, car);
+      Kit.mk('rect', {x: -Lc * .11, y: -Wc * .12, width: Lc * .22, height: Wc * .24, rx: 2.5, fill: '#0d0b09', stroke: '#6b5844', 'stroke-width': 1.2}, wg);
+      Kit.mk('line', {x1: -Lc * .07, x2: Lc * .07, y1: 0, y2: 0, stroke: '#8a7458', 'stroke-width': 1}, wg);
+    }
+    const leadA = {stroke: LEAD, 'stroke-width': 2.2, 'stroke-linejoin': 'round'};
+    Kit.mk('polygon', Object.assign({points: P2([[-hl, -hw * .86], [hl * .62, -hw], [hl, -hw * .62], [hl, hw * .62], [hl * .62, hw], [-hl, hw * .86]]), fill: 'url(#gRed)'}, leadA, {'stroke-width': 2.8}), car);
+    Kit.mk('polygon', Object.assign({points: P2([[hl * .4, -hw * .74], [hl * .4, hw * .74], [hl * .08, hw * .62], [hl * .08, -hw * .62]]), fill: 'url(#gBlue)'}, leadA), car);
+    Kit.mk('polygon', Object.assign({points: P2([[hl * .08, -hw * .62], [hl * .08, hw * .62], [-hl * .44, hw * .62], [-hl * .44, -hw * .62]]), fill: 'url(#gRoof)'}, leadA), car);
+    Kit.mk('polygon', Object.assign({points: P2([[-hl * .17, -hw * .3], [hl * .0, 0], [-hl * .17, hw * .3], [-hl * .34, 0]]), fill: GOLD}, leadA, {'stroke-width': 1.5}), car);
+    Kit.mk('polygon', Object.assign({points: P2([[-hl * .44, -hw * .62], [-hl * .44, hw * .62], [-hl * .66, hw * .7], [-hl * .66, -hw * .7]]), fill: 'url(#gBlue)'}, leadA), car);
+    for (const sy of [-1, 1]) {
+      Kit.mk('polygon', Object.assign({points: P2([[hl * .45, sy * hw * .14], [hl * .97, sy * hw * .1], [hl * .97, sy * hw * .26], [hl * .45, sy * hw * .3]]), fill: GOLD}, leadA, {'stroke-width': 1.2}), car);
+      Kit.mk('polygon', Object.assign({points: P2([[hl * .82, sy * hw * .5], [hl, sy * hw * .45], [hl, sy * hw * .62], [hl * .68, sy * hw * .86]]), fill: '#fff4b8'}, leadA, {'stroke-width': 1.2}), car);
+    }
+    Kit.mk('path', {d: `M${-hl * .9},${-hw * .7} L${hl * .5},${-hw * .86}`, stroke: 'rgba(255,255,255,.55)', 'stroke-width': 1.6, 'stroke-linecap': 'round', fill: 'none'}, car);
+
+    // The wire: the thin line between rolling and sliding.
+    const gW = Kit.mk('g', {}, ov), xs = xa + (xb - xa) * .38, xe = xa + (xb - xa) * .62;
+    Kit.mk('line', {x1: xa, x2: xb, y1: wireY, y2: wireY, stroke: LEAD, 'stroke-width': fs * .8, 'stroke-linecap': 'round'}, gW);
+    Kit.mk('line', {x1: xa, x2: xb, y1: wireY, y2: wireY, stroke: 'rgba(247,236,214,.32)', 'stroke-width': fs * .3, 'stroke-linecap': 'round'}, gW);
+    Kit.mk('line', {x1: xs, x2: xe, y1: wireY, y2: wireY, stroke: 'url(#gWire)', 'stroke-width': fs * .34, 'stroke-linecap': 'round', filter: revealed ? 'url(#glow)' : null}, gW);
+    label(gW, xa - fs * 1.25, wireY + fs * .36, 'ROLL', {'text-anchor': 'end', fill: GOLD, class: 'lab'});
+    label(gW, xb + fs * 1.25, wireY + fs * .36, 'SLIDE', {'text-anchor': 'start', fill: CYAN, class: 'lab'});
+    label(gW, (xs + xe) / 2, wireY + fs * 1.95, 'the fine line', {'text-anchor': 'middle', fill: WHITE, class: 'hand', 'font-size': fs * 1.1});
+    const kx = xa + (xb - xa) * S.m, kr = fs * .95;
+    const kc = S.m < .5 ? `hsl(${45 + (S.m / .5) * 5} 100% ${62 + S.m * 40}%)` : `hsl(${50 + (S.m - .5) * 290} ${100 - (S.m - .5) * 40}% ${82 - (S.m - .5) * 40}%)`;
+    if (!touched) Kit.mk('circle', {cx: kx, cy: wireY, r: kr, fill: 'none', stroke: WHITE, 'stroke-width': 2, class: 'pulse'}, gW);
+    Kit.mk('circle', {cx: kx, cy: wireY, r: kr, fill: kc, stroke: LEAD, 'stroke-width': 2.6}, gW);
+    const dk = kr * .55;
+    Kit.mk('polygon', {points: P2([[kx, wireY - dk], [kx + dk, wireY], [kx, wireY + dk], [kx - dk, wireY]]), fill: 'rgba(255,255,255,.55)', stroke: LEAD, 'stroke-width': 1.2}, gW);
+    for (const [ax, ay] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) Kit.mk('line', {x1: kx + ax * dk, y1: wireY + ay * dk, x2: kx + ax * kr, y2: wireY + ay * kr, stroke: LEAD, 'stroke-width': 1.2}, gW);
+
+    // The legend, only where the glass leaves it room.
+    if (LEG) {
+      const gL = Kit.mk('g', {}, ov), n = revealed && LEG.n >= 3 ? 3 : 2;
+      ROWS.slice(0, n).forEach(([col, t], i) => {
+        const y = LEG.top + LEG.lh * (i + .5), u = fs * .5, x0 = LEG.x;
+        Kit.mk('polygon', {points: P2([[x0, y - u * .8], [x0 + u * .9, y - u * .8], [x0 + u * 1.7, y], [x0 + u * .9, y + u * .8], [x0, y + u * .8], [x0 + u * .8, y]]), fill: col, stroke: LEAD, 'stroke-width': 1.4}, gL);
+        label(gL, x0 + fs * 1.5, y + fs * .36, t, {fill: col, class: 'lab'});
+      });
+    }
+  }
+
+  // ---------- the composition ----------
+  function geo(top) {
+    topY = top; const hS = H - top;
+    R = Math.max(20, Math.min(W * .6, hS * .82));
+    Lc = Math.max(R * .31, Math.min(hS * .5, fs * 2.8)); Wc = Lc * .5; RW = Math.max(R * .34, Lc * 1.1);
+    C = {x: W * .88, y: top + R + RW / 2};
+  }
+  function free(b) {
+    const P = pose(TH0, .08), st = fs * .5;
+    if (b.top < topY0 || b.top + b.h > H - fs * .3 || b.x + b.w > W - fs * .3) return false;
+    for (let x = b.x; x <= b.x + b.w + .1; x += st) for (let y = b.top; y <= b.top + b.h + .1; y += st) {
+      if (Math.abs(Math.hypot(x - C.x, y - C.y) - R) < RW / 2 + fs * .3) return false;
+      if (Math.hypot(x - P.px, y - P.py) < Lc * 1.1) return false;
+    }
+    return true;
+  }
+  const legBox = (n, top) => { const lh = fs * 1.6, w = fs * 1.5 + Math.max(...ROWS.slice(0, n).map(r => r[1].length)) * fs * .62; return {x: fs * .7, top, w, h: n * lh, lh, n}; };
+  function placeLegend() {
+    if (LEG && LEG.band) return;
+    LEG = null;
+    for (const n of revealed ? [3, 2] : [2]) {
+      for (const top of [H - fs * .6 - n * fs * 1.6, topY0 + fs * .2]) { const b = legBox(n, top); if (free(b)) { LEG = b; return; } }
+    }
+  }
+
+  function layout() {
+    const c = Kit.fitCanvas(cv); ctx = c.x; W = c.W; H = c.H;
+    ov.setAttribute('viewBox', `0 0 ${W.toFixed(1)} ${H.toFixed(1)}`);
+    ov.setAttribute('preserveAspectRatio', 'none');
+    fs = clamp(Math.min(W, H * 1.6) / 22, 12, 15);
+    wireY = fs * 1.5; xa = fs * 4.6; xb = W - fs * 5.3; topY0 = wireY + fs * 2.6;
+    const b3 = legBox(3, topY0 + fs * .2);
+    LEG = null;
+    if (H - topY0 - b3.h > 200 && b3.w < W - fs) { LEG = Object.assign(b3, {band: true}); geo(topY0 + b3.h + fs * .6); }
+    else { geo(topY0); placeLegend(); }
+    build(); render();
+    if (!looping) { looping = true; requestAnimationFrame(loop); }
+  }
+
+  // ---------- the touch ----------
+  function updateZone() {
+    const z = mt < .38 ? 'roll' : mt > .62 ? 'slide' : 'mid';
+    if (z !== zone) { zone = z; Kit.haptic('selection'); if (!revealed) say.innerHTML = SAY[z]; }
+  }
+  function setMix(v) { mt = clamp(v, 0, 1); if (Kit.calm) { S.m = mt; render(); } else mTo(mt); updateZone(); }
+  let dragging = false, lastRip = 0;
+  const xOf = e => { const r = ov.getBoundingClientRect(); return ((e.clientX - r.left) * (W / (r.width || W)) - xa) / (xb - xa); };
+  const ripple = () => { const P = pose(S.th, S.m), t = now(); if (t - lastRip > .14) { lastRip = t; ripples.push({x: P.px, y: P.py, t}); } };
+  ov.addEventListener('pointerdown', e => { if (running) return; dragging = true; touched = true; ov.setPointerCapture(e.pointerId); setMix(xOf(e)); ripple(); });
+  ov.addEventListener('pointermove', e => { if (!dragging) return; setMix(xOf(e)); ripple(); });
+  const end = () => { if (!dragging) return; dragging = false; if (zone === 'mid' && !revealed) reveal(); };
+  ov.addEventListener('pointerup', end); ov.addEventListener('pointercancel', end);
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true; Kit.haptic('success');
+    mt = .5; card.classList.add('answered'); say.innerHTML = WHY; Kit.show('keep');
+    placeLegend();
+    const inBend = tiles.filter(q => q.road && q.th > .95 * PI && q.th < 1.65 * PI);
+    if (Kit.calm) { S.m = .5; S.res = 1; inBend.forEach(q => q.lit = .45); render(); return; }
+    gsap.to(S, {m: .5, duration: .4, ease: 'power3.out', onUpdate: render});
+    inBend.forEach(q => gsap.to(q, {keyframes: [{lit: 1, duration: .35, ease: 'power2.out'}, {lit: .45, duration: 1.3, ease: 'power2.inOut'}], delay: .25 + (q.th - .95 * PI) / (.7 * PI) * 1.5}));
+    running = true;
+    gsap.timeline({onUpdate: render, onComplete: () => { running = false; render(); }})
+      .to(S, {th: PI * 1.68, duration: 1.5, ease: 'power1.in', onUpdate: render})
+      .set(S, {th: PI * .86})
+      .to(S, {th: TH0, duration: 1.1, ease: 'power3.out', onUpdate: render})
+      .add(() => { running = false; ripples.push({x: pose(TH0, .5).px, y: pose(TH0, .5).py, t: now()}); })
+      .to(S, {res: 1, duration: .9, ease: 'expo.out', onUpdate: render});
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (entered) return; entered = true;
+    if (Kit.calm || !tiles.length) return;
+    const P = pose(TH0, S.m);
+    const sorted = tiles.slice().sort((a, b) => Math.hypot(a.cx - P.px, a.cy - P.py) - Math.hypot(b.cx - P.px, b.cy - P.py));
+    gsap.fromTo(sorted, {in: 0}, {in: 1, duration: .5, ease: 'power2.out', stagger: 1.1 / sorted.length});
+    gsap.fromTo(K, {in: 0}, {in: 1, duration: .7, delay: .7, ease: 'power2.out'});
+    gsap.from(ov, {opacity: 0, duration: .8, delay: .45, ease: 'power2.out'});
+    gsap.from(S, {th: PI * .88, duration: 1.4, delay: .4, ease: 'power3.out', onUpdate: render});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; setMix(.5);
+    await wait(Kit.calm ? 60 : 350);
+    reveal();
+    await wait(Kit.calm ? 100 : 3800);
+  };
+})();
+Kit.single();
+</script>
+</html>

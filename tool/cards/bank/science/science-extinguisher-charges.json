@@ -1,0 +1,38 @@
+{
+  "id": "science-extinguisher-charges",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Why did the robbers put tiny explosive charges on the fire extinguishers?",
+  "answer": "The robbers rigged the extinguishers to bury their traces. The blasts burst them open, and their powder and foam covered most surfaces. Fingerprints and DNA under that layer became far less likely to be found.",
+  "move": "Extinguisher powder and foam make a blanket over fingerprints and DNA.",
+  "keywords": [
+    "fire extinguishers",
+    "bank robbery",
+    "naples",
+    "fingerprints",
+    "dna"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz page asking why robbers put tiny explosive charges on fire extinguishers. Four options: blast open safe-deposit boxes, spray powder and foam, set off a false alarm, or bury traces. The reader picks one, then rates how sure they are.",
+    "ground": "#1b2a31"
+  },
+  "source": "Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=aRTxjOeJRbY&t=735s",
+  "written": "2026-11-04"
+}

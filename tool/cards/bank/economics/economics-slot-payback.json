@@ -1,0 +1,39 @@
+{
+  "id": "economics-slot-payback",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.risk_and_reward",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "Italians bet €33.5 billion on slots in 2022. How much came back?",
+  "answer": "Italians bet €33.5 billion on slots in 2022. On average, every euro put into a slot comes back as about 75 cents.",
+  "move": "On average, every euro put into a slot comes back as about 75 cents.",
+  "keywords": [
+    "slot machines",
+    "italy",
+    "gambling",
+    "payback",
+    "house edge"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A column chart with an empty column that the reader drags up to guess how much of the €33.5 billion Italians bet on slots in 2022 was won back by players. The answer reveals that about 75 cents of each euro comes back.",
+    "graded": false,
+    "ground": "#f4ecd8"
+  },
+  "source": "Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=5x3OF3zIuAc",
+  "written": "2026-11-04"
+}

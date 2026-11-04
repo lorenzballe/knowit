@@ -1,0 +1,290 @@
+<!doctype html>
+<!-- slug: maths-mercator-russia -->
+<!--
+  Look: a night observatory. Ink-black sky, a fine star field, a Mercator graticule drawn in starlight, glowing rings that measure the stretch.
+  Interaction: drag Russia south. It keeps its real size, so the Mercator map redraws it smaller with every degree, the ring at its latitude lights up, and its tag reads how much it was inflated.
+  Wow: at the equator Russia drops onto Africa and fits inside its north. Shockwave rings flare out, and the "bigger" chips flip into the true order.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Russia on the equator</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
+<style>
+#card{background:
+  radial-gradient(120% 60% at 78% 8%, #142256 0%, rgba(20,34,86,0) 62%),
+  radial-gradient(90% 55% at 8% 92%, #2b1238 0%, rgba(43,18,56,0) 60%),
+  var(--c)}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#pic:active{cursor:grabbing}
+#ledger{flex:none;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.8cqh 3cqw;padding-top:.8cqh;font:700 max(1.7cqh,12px)/1.2 var(--mono)}
+#lh{flex:none;color:#b7c3ff;letter-spacing:.12em;opacity:.8}
+.pair{flex:none;display:flex;align-items:center;gap:1.4cqw}
+.chip{padding:.5cqh 2.4cqw;border-radius:99px;white-space:nowrap}
+.gt{color:#b7c3ff;opacity:.75;font-style:normal}
+.ru{order:0;color:#8fe6ff;background:rgba(143,230,255,.1);box-shadow:inset 0 0 0 1px rgba(143,230,255,.55),0 0 12px rgba(143,230,255,.25)}
+.af{order:2;color:#ffcf7a;background:rgba(255,207,122,.1);box-shadow:inset 0 0 0 1px rgba(255,207,122,.55),0 0 12px rgba(255,207,122,.22)}
+.gr{order:0;color:#dfe4ff;background:rgba(223,228,255,.07);box-shadow:inset 0 0 0 1px rgba(223,228,255,.35)}
+.au{order:2;color:#dfe4ff;background:rgba(223,228,255,.07);box-shadow:inset 0 0 0 1px rgba(223,228,255,.35)}
+.gt{order:1}
+.truth .ru,.truth .gr{order:2}
+.truth .af,.truth .au{order:0}
+.say b{color:#8fe6ff}
+#why{font:500 max(1.8cqh,13px)/1.35 var(--body);color:var(--k);margin:0}
+#why b{color:#ffcf7a}
+.tw{animation:tw 3.2s ease-in-out infinite}
+@keyframes tw{50%{opacity:.15}}
+.spin{transform-box:fill-box;transform-origin:center;animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nudge{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(5px)}}
+.flow{animation:flow 2.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-18}}
+.breathe{animation:breathe 3.6s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.55}}
+.kit-calm .tw,.kit-calm .spin,.kit-calm .nudge,.kit-calm .flow,.kit-calm .breathe{animation:none}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag Russia south · true size" style="--c:#060912;--k:#eef1ff;--edge:#000000;--muted:#9aa6d6">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG RUSSIA</span></div>
+    <h2 class="q">Why does Russia look bigger than Africa on most world maps?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A Mercator world map at night: Russia glows in the far north, Africa on the equator, and a column of rings of equal real size grows toward the pole."></svg>
+      <div id="ledger">
+        <span id="lh">LOOKS BIGGER</span>
+        <span class="pair"><b class="chip ru">Russia</b><i class="gt">&gt;</i><b class="chip af">Africa</b></span>
+        <span class="pair"><b class="chip gr">Greenland</b><i class="gt">&gt;</i><b class="chip au">Australia</b></span>
+      </div>
+    </div>
+    <p class="say" id="say">On this Mercator map Russia looks bigger than Africa. <b>Drag Russia down to the equator.</b></p>
+    <p id="why" class="gone">Mercator draws places <b>bigger and bigger</b> the farther they are from the equator. Far-north Russia is blown up several times; Africa, on the equator, is near its true size.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>On a Mercator map, the farther from the equator, the bigger a place looks.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(Flip);
+  const svg = Kit.$('pic'), D = Math.PI / 180;
+  const merc = la => Math.log(Math.tan(Math.PI / 4 + la * D / 2));
+  const LON0 = -40, LON1 = 184, LAT0 = -50, LAT1 = 79.5;
+  const CY = '#8fe6ff', AM = '#ffcf7a', LAV = '#b7c3ff';
+
+  // Simplified outlines, [longitude, latitude].
+  const AFRICA = [[-17,21],[-16,28],[-10,30],[-6,36],[10,37],[11,33],[20,31],[25,32],[32,31],[34,28],[43,12],[51,12],[44,2],[40,-5],[40,-15],[35,-24],[32,-29],[27,-34],[20,-35],[18,-32],[12,-18],[13,-6],[9,-1],[9,4],[5,6],[-4,5],[-8,4],[-13,8],[-17,14]];
+  const RUSSIA = [[28,70],[33,69],[41,67],[44,68],[54,68],[60,69],[68,72],[73,73],[80,73],[87,75],[100,77],[105,78],[113,74],[130,72],[140,72],[150,71],[160,70],[170,70],[180,69],[178,65],[178,62],[170,60],[163,60],[160,55],[156,51],[155,57],[150,59],[142,59],[137,54],[140,48],[135,43],[131,43],[127,50],[120,53],[110,50],[97,50],[88,49],[80,51],[70,55],[60,51],[50,51],[48,46],[47,42],[40,43],[38,47],[33,52],[31,55],[28,57],[28,60],[30,62]];
+  const A_LON = 104, A_LAT = 60;           // Russia's anchor on the real map
+  const END_LON = 20, END_LAT = 9;         // where it lands on Africa
+  const RING_LATS = [-30, 0, 30, 50, 65, 75];
+
+  let W = 0, H = 0, fs = 12, k = 1, ox = 0, oy = 0;
+  let clon = A_LON, clat = A_LAT, dragged = false, revealed = false, entered = false;
+  const E = {};
+
+  const proj = (lon, lat) => [ox + (lon - LON0) * D * k, oy + (merc(LAT1) - merc(lat)) * k];
+  const inv = (x, y) => [(x - ox) / k / D + LON0, Math.atan(Math.sinh(merc(LAT1) - (y - oy) / k)) / D];
+  const pathOf = pts => 'M' + pts.map(p => proj(p[0], p[1]).map(v => v.toFixed(1)).join(',')).join('L') + 'Z';
+  // Russia moved as a real piece of the globe: north-south distances kept, east-west widths kept in km.
+  const russiaAt = (lo0, la0) => RUSSIA.map(([lo, la]) => {
+    const dy = la - A_LAT, dx = (lo - A_LON) * Math.cos(la * D);
+    const L = Math.max(-84, Math.min(84, la0 + dy));
+    return [lo0 + dx / Math.cos(L * D), L];
+  });
+  const txt = (parent, x, y, t, a = {}, style = '') => {
+    const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 700}, a), parent);
+    e.setAttribute('style', 'font-family:var(--mono);letter-spacing:.06em;' + style);
+    e.textContent = t; return e;
+  };
+
+  function layout() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, W / 28));
+    const pad = fs * .5, wR = (LON1 - LON0) * D, hR = merc(LAT1) - merc(LAT0);
+    k = Math.min((W - 2 * pad) / wR, (H - 2 * pad) / hR);
+    ox = (W - wR * k) / 2; oy = (H - hR * k) / 2;
+    const roomy = k * wR > fs * 22;
+
+    // ---- defs: glow, gradients
+    const defs = Kit.mk('defs', {}, svg);
+    const fl = Kit.mk('filter', {id: 'gl', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: Math.max(2, fs * .22), result: 'b'}, fl);
+    const mg = Kit.mk('feMerge', {}, fl); Kit.mk('feMergeNode', {in: 'b'}, mg); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, mg);
+    const grad = (id, c1, c2, o1, o2) => { const g = Kit.mk('linearGradient', {id, x1: 0, y1: 0, x2: 0, y2: 1}, defs); Kit.mk('stop', {offset: 0, 'stop-color': c1, 'stop-opacity': o1}, g); Kit.mk('stop', {offset: 1, 'stop-color': c2, 'stop-opacity': o2}, g); };
+    grad('gRu', '#bff1ff', '#2b8fd6', .55, .22);
+    grad('gAf', '#ffe2a3', '#d9792b', .42, .16);
+    const rg = Kit.mk('radialGradient', {id: 'gTs'}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': LAV, 'stop-opacity': .28}, rg);
+    Kit.mk('stop', {offset: 1, 'stop-color': LAV, 'stop-opacity': 0}, rg);
+    const eg = Kit.mk('linearGradient', {id: 'gEq', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': AM, 'stop-opacity': 0}, eg);
+    Kit.mk('stop', {offset: .5, 'stop-color': AM, 'stop-opacity': .09}, eg);
+    Kit.mk('stop', {offset: 1, 'stop-color': AM, 'stop-opacity': 0}, eg);
+
+    // ---- stars
+    const sg = Kit.mk('g', {}, svg), n = Math.min(170, Math.round(W * H / 1300));
+    for (let i = 0; i < n; i++) {
+      const r = Kit.rnd(), s = Kit.mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * H, r: r < .9 ? .5 + r * .5 : 1.3, fill: r > .96 ? '#ffe9c4' : '#dfe6ff', opacity: .25 + Kit.rnd() * .6}, sg);
+      if (Kit.rnd() < .3) { s.setAttribute('class', 'tw'); s.style.animationDelay = (Kit.rnd() * 3).toFixed(2) + 's'; }
+    }
+
+    // ---- graticule: parallels every 15°, ever further apart toward the pole
+    const gg = E.grat = Kit.mk('g', {}, svg);
+    const [bx0, by0] = proj(LON0, 12), [bx1, by1] = proj(LON1, -12);
+    Kit.mk('rect', {x: bx0, y: by0, width: bx1 - bx0, height: by1 - by0, fill: 'url(#gEq)', class: 'gl breathe'}, gg);
+    for (let lo = -30; lo <= 180; lo += 30) {
+      const [x, y0] = proj(lo, LAT0), [, y1] = proj(lo, LAT1);
+      Kit.mk('line', {x1: x, x2: x, y1: y0, y2: y1, stroke: LAV, 'stroke-opacity': .14, 'stroke-width': 1, class: 'gl'}, gg);
+    }
+    for (const la of [-45, -30, -15, 15, 30, 45, 60, 75]) {
+      const [x0, y] = proj(LON0, la), [x1] = proj(LON1, la);
+      Kit.mk('line', {x1: x0, x2: x1, y1: y, y2: y, stroke: LAV, 'stroke-opacity': la >= 45 ? .22 : .14, 'stroke-width': 1, class: 'gl'}, gg);
+      for (let lo = -30; lo <= 180; lo += 30) { const [x] = proj(lo, la); Kit.mk('circle', {cx: x, cy: y, r: 1.2, fill: LAV, opacity: .45, class: 'gl'}, gg); }
+    }
+    const [ex0, ey] = proj(LON0, 0), [ex1] = proj(LON1, 0);
+    Kit.mk('line', {x1: ex0, x2: ex1, y1: ey, y2: ey, stroke: AM, 'stroke-opacity': .6, 'stroke-width': 1.4, 'stroke-dasharray': '4 5', filter: 'url(#gl)', class: 'gl flow'}, gg);
+    E.eq = txt(gg, ex1 - pad, ey - fs * .45, 'EQUATOR', {'text-anchor': 'end', fill: AM, opacity: .9, class: 'gl'});
+
+    // ---- the instrument: rings of the same real size, drawn up a meridian
+    const tg = E.ts = Kit.mk('g', {}, svg);
+    E.tsr = [];
+    for (const la of RING_LATS) {
+      const [x, y] = proj(-22, la), r = 4 * D * k / Math.cos(la * D), g = Kit.mk('g', {opacity: .6}, tg);
+      Kit.mk('circle', {cx: x, cy: y, r, fill: 'url(#gTs)'}, g);
+      Kit.mk('circle', {cx: x, cy: y, r, fill: 'none', stroke: LAV, 'stroke-width': 1.3, filter: 'url(#gl)'}, g);
+      Kit.mk('path', {d: `M${x - r * .25},${y}H${x + r * .25}M${x},${y - r * .25}V${y + r * .25}`, stroke: LAV, 'stroke-width': 1, opacity: .7}, g);
+      g._la = la; E.tsr.push(g);
+    }
+    E.tsl = [];
+    const [lx, ly] = proj(LON0, -46.5), gap = (merc(-35) - merc(-46.5)) * k;
+    if (roomy && gap > fs * 1.2)
+      E.tsl.push(txt(tg, lx + pad, ly, '◯ rings: same real size', {fill: LAV, opacity: .9}, 'letter-spacing:.02em;font-weight:600;'));
+
+    // ---- Africa
+    const ag = E.af = Kit.mk('g', {}, svg), ad = pathOf(AFRICA);
+    Kit.mk('path', {d: ad, fill: 'url(#gAf)', stroke: 'none'}, ag);
+    E.afGlow = Kit.mk('path', {d: ad, fill: 'none', stroke: AM, 'stroke-width': 1.6, 'stroke-linejoin': 'round', filter: 'url(#gl)'}, ag);
+    const [alx, aly] = proj(25, -16);
+    txt(ag, alx, aly, 'AFRICA', {'text-anchor': 'middle', fill: AM}, 'paint-order:stroke;stroke:#060912;stroke-width:3px;');
+
+    // ---- Russia: its Mercator ghost, then the movable one
+    E.ghost = Kit.mk('path', {d: pathOf(RUSSIA), fill: 'rgba(143,230,255,.04)', stroke: CY, 'stroke-width': 1, 'stroke-dasharray': '3 4', opacity: dragged ? .5 : 0, class: 'flow'}, svg);
+    const rgp = E.ru = Kit.mk('g', {}, svg);
+    E.rus = Kit.mk('path', {fill: 'url(#gRu)', stroke: 'none'}, rgp);
+    E.rusG = Kit.mk('path', {fill: 'none', stroke: CY, 'stroke-width': 1.6, 'stroke-linejoin': 'round', filter: 'url(#gl)'}, rgp);
+    E.ring = Kit.mk('circle', {fill: 'none', stroke: CY, 'stroke-width': 1.4, filter: 'url(#gl)'}, rgp);
+    E.ringO = Kit.mk('circle', {fill: 'none', stroke: CY, 'stroke-width': 2, 'stroke-dasharray': '1.5 5', opacity: .8, class: 'spin'}, rgp);
+    E.dot = Kit.mk('circle', {r: 2.4, fill: '#eaffff', filter: 'url(#gl)'}, rgp);
+    E.ro = Kit.mk('g', {}, rgp);
+    E.roBg = Kit.mk('rect', {rx: fs * .8, fill: '#0b1530', 'fill-opacity': .92, stroke: CY, 'stroke-opacity': .65, 'stroke-width': 1}, E.ro);
+    E.roT = txt(E.ro, 0, 0, '', {'text-anchor': 'middle', fill: CY});
+    E.hint = Kit.mk('g', {class: 'nudge', opacity: dragged ? 0 : 1}, rgp);
+    E.hintP = Kit.mk('path', {fill: 'none', stroke: CY, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#gl)'}, E.hint);
+    E.fx = Kit.mk('g', {}, svg);
+    draw();
+  }
+
+  function draw() {
+    if (!E.rus) return;
+    const d = pathOf(russiaAt(clon, clat));
+    E.rus.setAttribute('d', d); E.rusG.setAttribute('d', d);
+    const [x, y] = proj(clon, clat), r = 6 * D * k / Math.cos(clat * D), ro = r * 1.3;
+    for (const [e, rr] of [[E.ring, r], [E.ringO, ro]]) { e.setAttribute('cx', x); e.setAttribute('cy', y); e.setAttribute('r', rr); }
+    E.dot.setAttribute('cx', x); E.dot.setAttribute('cy', y);
+    // the ring at Russia's latitude lights up
+    let best = E.tsr[0];
+    for (const g of E.tsr) if (Math.abs(g._la - clat) < Math.abs(best._la - clat)) best = g;
+    for (const g of E.tsr) g.setAttribute('opacity', g === best ? 1 : .55);
+
+    const area = 1 / Math.cos(clat * D) ** 2;
+    E.roT.textContent = area < 1.15 ? 'RUSSIA · TRUE SIZE' : `RUSSIA · DRAWN ×${area.toFixed(1)}`;
+    const tw = E.roT.getComputedTextLength() + fs * 1.3, th = fs * 1.7;
+    const minL = proj(-12, 0)[0];
+    let rx = Math.max(minL + tw / 2, x); rx = Math.min(W - tw / 2 - 2, rx);
+    const ry = Math.max(th / 2 + 2, y - ro - th / 2 - 4);
+    E.roT.setAttribute('x', rx); E.roT.setAttribute('y', ry + fs * .36);
+    Object.entries({x: rx - tw / 2, y: ry - th / 2, width: tw, height: th}).forEach(([a, v]) => E.roBg.setAttribute(a, v));
+    const hy = y + ro + 6;
+    E.hintP.setAttribute('d', `M${x},${hy}v${fs * 1.4}m-6,-6l6,6l6,-6`);
+  }
+
+  // ---------- the drag ----------
+  let drag = null;
+  svg.addEventListener('pointerdown', e => {
+    if (revealed) return;
+    const b = svg.getBoundingClientRect(), [cx, cy] = proj(clon, clat);
+    drag = {x: e.clientX - b.left, y: e.clientY - b.top, cx, cy};
+    svg.setPointerCapture(e.pointerId); Kit.haptic('selection');
+    if (!dragged) {
+      dragged = true;
+      gsap.to(E.hint, {opacity: 0, duration: .25});
+      gsap.to(E.ghost, {opacity: .5, duration: .4});
+    }
+    gsap.fromTo(E.ring, {attr: {'stroke-width': 3.5}}, {attr: {'stroke-width': 1.4}, duration: .5, ease: 'power3.out'});
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const b = svg.getBoundingClientRect();
+    const [lo, la] = inv(drag.cx + e.clientX - b.left - drag.x, drag.cy + e.clientY - b.top - drag.y);
+    clon = Math.max(15, Math.min(140, lo)); clat = Math.max(-18, Math.min(66, la));
+    draw();
+  });
+  const up = () => {
+    if (!drag) return; drag = null;
+    if (clat < 30) reveal();
+    else Kit.$('say').innerHTML = 'See it shrink? Same country, less stretch. <b>Keep going, all the way to the equator.</b>';
+  };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  // ---------- the reveal ----------
+  function reveal() {
+    if (revealed) return; revealed = true;
+    Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    const flip = () => {
+      const st = Flip.getState('#ledger .chip, #ledger .gt, #lh');
+      Kit.$('ledger').classList.add('truth'); Kit.$('lh').textContent = 'IS BIGGER';
+      if (!Kit.calm) Flip.from(st, {duration: .9, ease: 'back.out(1.5)', stagger: .05});
+    };
+    if (Kit.calm) { clon = END_LON; clat = END_LAT; draw(); flip(); return; }
+    const o = {lon: clon, lat: clat};
+    gsap.timeline()
+      .to(o, {lon: END_LON, lat: END_LAT, duration: 1, ease: 'expo.out', onUpdate: () => { clon = o.lon; clat = o.lat; draw(); }})
+      .add(() => {
+        const [x, y] = proj(clon, clat);
+        for (let i = 0; i < 3; i++) {
+          const c = Kit.mk('circle', {cx: x, cy: y, r: 10, fill: 'none', stroke: i === 1 ? AM : CY, 'stroke-width': 2, filter: 'url(#gl)'}, E.fx);
+          gsap.fromTo(c, {attr: {r: 10}, opacity: .9}, {attr: {r: Math.max(W, H) * .6}, opacity: 0, duration: 1.6, delay: i * .16, ease: 'power2.out', onComplete: () => c.remove()});
+        }
+        gsap.fromTo(E.afGlow, {attr: {'stroke-width': 5}}, {attr: {'stroke-width': 1.6}, duration: 1.4, ease: 'elastic.out(1,.4)'});
+        gsap.fromTo(E.ring, {attr: {'stroke-width': 5}}, {attr: {'stroke-width': 1.4}, duration: 1.2, ease: 'power3.out'});
+        gsap.fromTo(E.ro, {scale: 1.25, transformOrigin: '50% 50%'}, {scale: 1, duration: .7, ease: 'back.out(2.5)'});
+      }, '-=.35')
+      .add(flip, '-=.1');
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (entered || Kit.calm || !E.grat) return; entered = true;
+    const tl = gsap.timeline();
+    tl.from(E.grat.querySelectorAll('.gl'), {opacity: 0, duration: .45, stagger: .003, ease: 'power2.out'})
+      .from(E.ru, {opacity: 0, scale: 1.08, transformOrigin: '50% 50%', duration: .7, ease: 'expo.out'}, .1)
+      .from(E.af, {opacity: 0, y: 8, duration: .5, ease: 'power3.out'}, .15)
+      .from(E.tsr, {scale: 0, transformOrigin: '50% 50%', duration: .5, stagger: .06, ease: 'back.out(2)'}, .25)
+      .from(E.tsl, {opacity: 0, x: -6, duration: .35, ease: 'power3.out'}, .5)
+      .from('#ledger > *', {opacity: 0, y: 6, duration: .35, stagger: .06, ease: 'power3.out'}, .3);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    dragged = true; if (E.hint) E.hint.setAttribute('opacity', 0); if (E.ghost) E.ghost.setAttribute('opacity', .5);
+    clon = 60; clat = 24; draw();
+    reveal();
+    await wait(Kit.calm ? 120 : 2400);
+  };
+})();
+Kit.single();
+</script>
+</html>

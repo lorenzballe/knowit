@@ -1,0 +1,336 @@
+<!doctype html>
+<!-- slug: life-permanent-time-choice -->
+<!-- Look: laboratory glass on a deep teal night: two lit flasks of "summer" amber and "winter" ice, joined by a glass tube with a stopcock, the time sloshing back and forth.
+     Interaction: watch the hour slosh between the flasks, pick what the EU vote abolished, say how sure; then tap a flask to drop a country's choice into it.
+     Wow: the stopcock snaps shut and the connecting tube shatters, glass and liquid flying under gravity (Physics2D); both flasks remain, now "permanent". -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Abolished: the switch</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation;overflow:hidden}
+#opts{display:flex;gap:2cqw;flex:none;align-items:stretch}
+.opt{flex:1 1 0;min-width:0;font:700 max(1.9cqh,12px)/1.2 var(--body);color:var(--k);background:rgba(200,240,255,.07);border:0;box-shadow:inset 0 0 0 .2cqh rgba(200,240,255,.28),inset 0 .5cqh 1cqh rgba(255,255,255,.06);border-radius:1.6cqh;padding:1.2cqh 1.6cqw;cursor:pointer;overflow-wrap:break-word;hyphens:auto;transition:transform .12s cubic-bezier(.3,1.6,.5,1),background .2s}
+.opt:active{transform:scale(.96)}
+.opt.on{background:var(--k);color:var(--c);box-shadow:0 0 2.4cqh rgba(160,230,255,.35)}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex:none}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0}
+.sun{color:#ffc061}.ice{color:#8fe2ff}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Pick one · how sure" style="--c:#0c1a21;--k:#eef7f9;--edge:#04090c">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <h2 class="q">In 2019 an EU vote targeted summer time. What did it abolish?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Two glass flasks, summer time and winter time, joined by a tube with a valve; the liquid flows back and forth between them."></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Summer time itself</button>
+        <button class="opt" data-i="1">The switch between the two</button>
+        <button class="opt" data-i="2">Winter time</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The switch, not <span class="sun">summer time</span>.</p><p class="body">On 4 March 2019 it passed 23 to 11, none abstaining. Each country may keep <span class="sun">summer</span> or <span class="ice">winter time</span> all year: no more hopping.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">The hour sloshes from flask to flask twice a year. <b>What did the vote abolish?</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The EU ended the twice-yearly switch, not summer time: each country picks one hour for good.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dall'ora legale all'ora solare: i pro e contro del cambio orario e perché si parla di abolizione” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(Physics2DPlugin);
+const RIGHT = 1;
+let pick = -1;
+const svg = Kit.$('pic');
+const SUM = ['#ffd27a', '#ff8a2a'], WIN = ['#b4f0ff', '#2f86e6'];
+const S = {L: .45, R: .45, aL: .25, aR: .25, flow: 0, off: 0, revealed: false, t: 0};
+let G = null, slosh = null, prevL = .45;
+
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'text-anchor': 'middle', fill: '#eef7f9', style: 'font-family:var(--mono)'}, a), p); e.textContent = s; return e; };
+
+function grad(defs, id, stops, v = true, extra = {}) {
+  const g = mk('linearGradient', Object.assign({id, x1: 0, y1: 0, x2: v ? 0 : 1, y2: v ? 1 : 0}, extra), defs);
+  stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g));
+}
+function rgrad(defs, id, c, op) {
+  const g = mk('radialGradient', {id}, defs);
+  mk('stop', {offset: 0, 'stop-color': c, 'stop-opacity': op}, g);
+  mk('stop', {offset: 1, 'stop-color': c, 'stop-opacity': 0}, g);
+}
+function flaskPath(cx, by, bw, nw, top, sh) {
+  const r = bw * .09, hw = bw / 2, hn = nw / 2;
+  return `M${cx - hn},${top} L${cx - hn},${sh} L${cx - hw + r * .5},${by - r * .9} Q${cx - hw},${by} ${cx - hw + r * 1.5},${by} L${cx + hw - r * 1.5},${by} Q${cx + hw},${by} ${cx + hw - r * .5},${by - r * .9} L${cx + hn},${sh} L${cx + hn},${top} Z`;
+}
+const nameOf = (s, compact) => (S.revealed && compact) ? 'ALWAYS ' + s.n.split(' ')[0] : s.n;
+
+function layout() {
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(14, W / 27));
+  const compact = H < f * 17;
+  const defs = mk('defs', {}, svg);
+  grad(defs, 'glass', [[0, '#fff', .2], [.3, '#dff', .03], [.7, '#dff', .02], [1, '#fff', .16]], false);
+  grad(defs, 'liqL', [[0, SUM[0]], [1, SUM[1]]]);
+  grad(defs, 'liqR', [[0, WIN[0]], [1, WIN[1]]]);
+  grad(defs, 'tubeLiq', [[0, SUM[1]], [.5, '#c9a3c8'], [1, WIN[1]]], false);
+  rgrad(defs, 'glowL', '#ff9a3a', .32); rgrad(defs, 'glowR', '#3ea6ff', .32);
+  const dg = mk('radialGradient', {id: 'drop', cx: .35, cy: .35}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#fff'}, dg); mk('stop', {offset: 1, 'stop-color': '#9fd8e8'}, dg);
+
+  // vertical budget: icons above the mouths, one or two label rows below the shelf
+  const by = H - f * (compact ? 1.9 : 3.4), topY = f * 2.2;
+  const fh = Math.max(24, Math.min(by - topY, W * .72));
+  const bw = Math.min(W * .34, fh * .8), nw = bw * .3;
+  const top = by - fh, sh = top + fh * .32;
+  const sides = {L: {cx: W * .26, c: SUM, n: 'SUMMER TIME'}, R: {cx: W * .74, c: WIN, n: 'WINTER TIME'}};
+  const ty = by - fh * .14, th = Math.max(5, bw * .075);
+  const xa = sides.L.cx + bw * .44, xb = sides.R.cx - bw * .44;
+  G = {W, H, f, by, top, sh, bw, nw, ty, th, xa, xb, sides, compact, fh};
+
+  // light glows: kept inside the drawing's bounds
+  for (const k of ['L', 'R']) {
+    const s = sides[k], gy = by - fh * .35;
+    const rx = Math.min(bw * 1.05, s.cx, W - s.cx), ry = Math.min(fh * .7, gy, H - gy);
+    mk('ellipse', {cx: s.cx, cy: gy, rx, ry, fill: `url(#glow${k})`}, svg);
+    s.pool = mk('ellipse', {cx: s.cx, cy: by + 2, rx: Math.min(bw * .75, s.cx), ry: Math.min(f * .55, H - by - 3), fill: `url(#glow${k})`}, svg);
+  }
+  // the shelf
+  mk('line', {x1: W * .03, x2: W * .97, y1: by + 1, y2: by + 1, stroke: 'rgba(220,245,255,.22)', 'stroke-width': 1}, svg);
+  mk('line', {x1: W * .06, x2: W * .94, y1: by + 3.5, y2: by + 3.5, stroke: 'rgba(220,245,255,.07)', 'stroke-width': 2}, svg);
+
+  // the tube with its stopcock (only while the switch exists)
+  const tube = mk('g', {id: 'tube'}, svg); G.tube = tube;
+  const stubs = mk('g', {id: 'stubs', opacity: S.revealed ? 1 : 0}, svg); G.stubs = stubs;
+  const sl = (xb - xa) * .2;
+  [[xa, xa + sl, SUM[1]], [xb - sl, xb, WIN[1]]].forEach(([a, b, c], i) => {
+    mk('rect', {x: a, y: ty - th / 2, width: b - a, height: th, fill: c, opacity: .85}, stubs);
+    mk('rect', {x: a, y: ty - th / 2, width: b - a, height: th, rx: i ? th / 2 : 0, fill: 'url(#glass)', stroke: 'rgba(230,250,255,.6)', 'stroke-width': 1.2}, stubs);
+    mk('circle', {cx: i ? a : b, cy: ty, r: th * .62, fill: '#0c1a21', stroke: 'rgba(230,250,255,.7)', 'stroke-width': 1.2}, stubs);
+  });
+  if (!S.revealed) {
+    mk('rect', {x: xa, y: ty - th / 2, width: xb - xa, height: th, fill: 'url(#tubeLiq)', opacity: .9}, tube);
+    G.dash = mk('line', {x1: xa, x2: xb, y1: ty, y2: ty, stroke: '#fff', 'stroke-width': Math.max(1.4, th * .28), 'stroke-dasharray': '3 8', 'stroke-linecap': 'round', opacity: .7}, tube);
+    mk('rect', {x: xa, y: ty - th / 2, width: xb - xa, height: th, fill: 'url(#glass)', stroke: 'rgba(230,250,255,.6)', 'stroke-width': 1.2}, tube);
+    mk('line', {x1: xa, x2: xb, y1: ty - th * .28, y2: ty - th * .28, stroke: '#fff', 'stroke-width': 1, opacity: .45}, tube);
+    const vx = (xa + xb) / 2, vr = th * 1.15;
+    mk('circle', {cx: vx, cy: ty, r: vr, fill: 'rgba(200,240,255,.14)', stroke: 'rgba(230,250,255,.8)', 'stroke-width': 1.4}, tube);
+    G.handle = mk('g', {}, tube);
+    mk('rect', {x: vx - vr * 2, y: ty - th * .3, width: vr * 4, height: th * .6, rx: th * .3, fill: '#e9f6f9'}, G.handle);
+    mk('circle', {cx: vx, cy: ty, r: th * .38, fill: '#0c1a21'}, G.handle);
+    G.vx = vx;
+  }
+
+  // flasks
+  for (const k of ['L', 'R']) {
+    const s = sides[k], cx = s.cx;
+    const d = flaskPath(cx, by, bw, nw, top, sh);
+    const cp = mk('clipPath', {id: 'clip' + k}, defs); mk('path', {d}, cp);
+    const g = mk('g', {id: 'glass' + k}, svg); s.g = g;
+    mk('path', {d, fill: 'rgba(160,220,240,.04)'}, g);
+    const lq = mk('g', {'clip-path': `url(#clip${k})`}, g);
+    s.liq = mk('path', {fill: `url(#liq${k})`, opacity: .92}, lq);
+    s.bub = [0, 1, 2, 3, 4].map(i => mk('circle', {r: Math.max(1.2, bw * (.012 + .008 * (i % 3))), fill: 'none', stroke: '#fff', 'stroke-width': 1, opacity: .7}, lq));
+    s.surf = mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 1.6, opacity: .75, 'stroke-linecap': 'round'}, lq);
+    mk('path', {d, fill: 'url(#glass)', stroke: 'rgba(230,250,255,.62)', 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, g);
+    mk('rect', {x: cx - nw / 2 - 3, y: top - 3, width: nw + 6, height: 6, rx: 3, fill: 'rgba(220,245,255,.18)', stroke: 'rgba(230,250,255,.75)', 'stroke-width': 1.2}, g);
+    // refraction highlights
+    mk('path', {d: `M${cx - bw / 2 + bw * .14},${by - fh * .1} L${cx - nw / 2 + nw * .2},${sh + fh * .07}`, stroke: '#fff', 'stroke-width': 2.6, 'stroke-linecap': 'round', opacity: .42}, g);
+    mk('path', {d: `M${cx - bw / 2 + bw * .24},${by - fh * .08} L${cx - bw / 2 + bw * .3},${by - fh * .2}`, stroke: '#fff', 'stroke-width': 1.4, 'stroke-linecap': 'round', opacity: .3}, g);
+    mk('line', {x1: cx - nw / 2 + nw * .22, x2: cx - nw / 2 + nw * .22, y1: top + 5, y2: sh - 3, stroke: '#fff', 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: .35}, g);
+    mk('circle', {cx: cx + bw * .3, cy: by - fh * .09, r: 1.6, fill: '#fff', opacity: .7}, g);
+    for (let i = 1; i <= 4; i++) {
+      const y = by - (by - sh) * i / 5, x = cx + nw / 2 + (bw / 2 - nw / 2) * (1 - i / 5) * .9;
+      mk('line', {x1: x - bw * .1, x2: x - 2, y1: y, y2: y, stroke: 'rgba(230,250,255,.4)', 'stroke-width': 1}, g);
+    }
+    // vapour motes rising from the mouth
+    s.motes = [0, 1, 2].map(() => mk('circle', {r: 1.6, fill: s.c[0], opacity: 0}, g));
+    // icon above the mouth
+    const iy = top - f * 1.25, ic = mk('g', {opacity: .95}, g); s.icon = ic; s.iy = iy;
+    if (k === 'L') {
+      mk('circle', {cx, cy: iy, r: f * .34, fill: SUM[0]}, ic);
+      for (let a = 0; a < 8; a++) { const t = a * Math.PI / 4; mk('line', {x1: cx + Math.cos(t) * f * .5, y1: iy + Math.sin(t) * f * .5, x2: cx + Math.cos(t) * f * .72, y2: iy + Math.sin(t) * f * .72, stroke: SUM[0], 'stroke-width': 1.6, 'stroke-linecap': 'round'}, ic); }
+    } else {
+      for (let a = 0; a < 3; a++) { const t = a * Math.PI / 3; mk('line', {x1: cx - Math.cos(t) * f * .62, y1: iy - Math.sin(t) * f * .62, x2: cx + Math.cos(t) * f * .62, y2: iy + Math.sin(t) * f * .62, stroke: WIN[0], 'stroke-width': 1.8, 'stroke-linecap': 'round'}, ic); }
+    }
+    // labels
+    if (!compact) s.perm = txt(svg, cx, by + f * 1.35, 'PERMANENT', {'font-size': f * .9, 'font-weight': 600, fill: s.c[0], opacity: S.revealed ? 1 : 0, 'letter-spacing': '.12em'});
+    s.name = txt(svg, cx, by + f * (compact ? 1.45 : 2.75), nameOf(s, compact), {'font-size': f, 'font-weight': 800, 'letter-spacing': '.06em', fill: S.revealed && compact ? s.c[0] : '#eef7f9'});
+  }
+  // centre label, between the necks
+  const cy = compact ? Math.max(f * 1.1, ty - f * 2.4) : top + fh * .1;
+  G.c1 = txt(svg, W / 2, cy, S.revealed ? 'NO SWITCH' : 'THE SWITCH', {'font-size': f, 'font-weight': 800, 'letter-spacing': '.08em'});
+  G.c2 = txt(svg, W / 2, cy + f * 1.3, S.revealed ? 'tap to pick' : 'twice a year', {'font-size': f * .9, 'font-weight': 500, opacity: .7});
+  G.fx = mk('g', {}, svg);
+  if (S.revealed) tube.remove();
+  draw();
+}
+
+function surfY(l) { return G.by - 3 - l * (G.by - G.sh - 6); }
+function draw() {
+  if (!G) return;
+  const {bw, by, f} = G, t = S.t;
+  for (const k of ['L', 'R']) {
+    const s = G.sides[k], cx = s.cx, sy = surfY(S[k]), amp = (k === 'L' ? S.aL : S.aR) * f * .55;
+    const tilt = (k === 'L' ? 1 : -1) * Math.max(-1, Math.min(1, S.flow)) * f * .5 + amp * .6 * Math.sin(t * 4.2 + (k === 'L' ? 0 : 1.7));
+    let top = '';
+    for (let x = cx - bw / 2 - 2; x <= cx + bw / 2 + 6; x += 6) {
+      const u = (x - cx) / (bw / 2);
+      const y = sy + tilt * u + amp * Math.sin(u * 3.4 + t * 6.5) * .5 + .9 * Math.sin(u * 9 - t * 3.1);
+      top += (top ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+    }
+    s.surf.setAttribute('d', top);
+    s.liq.setAttribute('d', top + `L${cx + bw / 2 + 6},${by + 4} L${cx - bw / 2 - 2},${by + 4} Z`);
+    s.bub.forEach((b, i) => {
+      const p = ((t * (.16 + i * .035) + i * .23) % 1), y = by - 4 - p * (by - 4 - sy);
+      b.setAttribute('cx', cx + Math.sin(i * 2.1 + t * 1.3) * bw * .25);
+      b.setAttribute('cy', y);
+      b.setAttribute('opacity', (.7 * (1 - p)).toFixed(2));
+    });
+    // motes drift up the neck and fade before the icon
+    const y0 = G.sh + 4, y1 = G.top - f * .25;
+    s.motes.forEach((m, i) => {
+      const p = (t * .22 + i / 3 + (k === 'L' ? 0 : .17)) % 1;
+      m.setAttribute('cx', cx + Math.sin(t * 1.7 + i * 2.3) * G.nw * .28);
+      m.setAttribute('cy', y0 + (y1 - y0) * p);
+      m.setAttribute('opacity', (Math.sin(p * Math.PI) * .6).toFixed(2));
+    });
+    // icons breathe
+    const sc = 1 + .06 * Math.sin(t * 2 + (k === 'L' ? 0 : 1.5));
+    s.icon.setAttribute('transform', `translate(${cx},${s.iy}) scale(${sc.toFixed(3)}) rotate(${(k === 'L' ? t * 12 : -t * 8) % 360}) translate(${-cx},${-s.iy})`);
+  }
+  if (G.dash && !S.revealed) G.dash.setAttribute('stroke-dashoffset', S.off.toFixed(1));
+}
+
+gsap.ticker.add((time, dms) => {
+  const dt = Math.min(.05, dms / 1000);
+  if (!Kit.calm) S.t += dt;
+  const d = (S.L - prevL) / Math.max(dt, .001); prevL = S.L;
+  S.flow += (d * 1.6 - S.flow) * Math.min(1, dt * 8);
+  S.off += S.flow * dt * 60;
+  S.aL += (.08 - S.aL) * Math.min(1, dt * 1.1); S.aR += (.08 - S.aR) * Math.min(1, dt * 1.1);
+  draw();
+});
+
+function startSlosh() {
+  if (Kit.calm || S.revealed || slosh) return;
+  slosh = gsap.timeline({repeat: -1})
+    .to(S, {L: .74, R: .16, duration: 1.4, ease: 'power2.inOut', onStart: () => { S.aL = S.aR = .5; }})
+    .to(S, {L: .16, R: .74, duration: 1.4, ease: 'power2.inOut', delay: .55, onStart: () => { S.aL = S.aR = .5; }})
+    .to({}, {duration: .55});
+}
+
+// --- the reveal: the stopcock shuts, the tube shatters ---
+function burst(x0, y0, n, colors, opts = {}) {
+  for (let i = 0; i < n; i++) {
+    const shard = Math.random() < (opts.glass ?? .5);
+    const s = G.f * (shard ? .35 + Math.random() * .4 : .18 + Math.random() * .2);
+    const el = shard
+      ? mk('polygon', {points: `${-s},${-s * .4} ${s * .7},${-s} ${s * .4},${s} ${-s * .6},${s * .5}`, fill: 'rgba(220,245,255,.35)', stroke: 'rgba(240,252,255,.9)', 'stroke-width': .8}, G.fx)
+      : mk('circle', {r: s, fill: colors[i % colors.length]}, G.fx);
+    gsap.set(el, {x: x0 + (Math.random() - .5) * (opts.spread || 0), y: y0});
+    const dur = 1.1 + Math.random() * .7;
+    gsap.to(el, {duration: dur, rotation: (Math.random() - .5) * 720, physics2D: {velocity: (opts.v || 260) * (.45 + Math.random() * .8), angle: -90 + (Math.random() - .5) * (opts.cone || 150), gravity: opts.g || 820}, ease: 'none'});
+    gsap.to(el, {opacity: 0, duration: .45, delay: dur - .45, onComplete: () => el.remove()});
+  }
+}
+function reveal() {
+  if (S.revealed) return;
+  S.revealed = true;
+  if (slosh) { slosh.kill(); slosh = null; }
+  const done = () => {
+    G.tube.remove();
+    gsap.to(G.stubs, {opacity: 1, duration: .3});
+    for (const k of ['L', 'R']) {
+      const s = G.sides[k];
+      if (s.perm) gsap.fromTo(s.perm, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .6, ease: 'back.out(2)', delay: .15});
+      else { s.name.textContent = nameOf(s, true); s.name.setAttribute('fill', s.c[0]); if (!Kit.calm) gsap.from(s.name, {opacity: 0, y: 5, duration: .5, ease: 'back.out(2)'}); }
+    }
+    G.c1.textContent = 'NO SWITCH'; G.c2.textContent = 'tap to pick';
+    if (!Kit.calm) gsap.from([G.c1, G.c2], {opacity: 0, y: -6, duration: .5, stagger: .08, ease: 'power3.out'});
+    Kit.haptic('success');
+  };
+  if (Kit.calm) { S.L = S.R = .5; done(); return; }
+  gsap.to(S, {L: .5, R: .5, duration: .5, ease: 'power3.out'});
+  gsap.timeline()
+    .to(G.handle, {rotation: 90, svgOrigin: `${G.vx} ${G.ty}`, duration: .35, ease: 'back.out(3)'})
+    .to(G.tube, {x: 1.5, duration: .04, repeat: 5, yoyo: true, ease: 'none'}, '+=.15')
+    .add(() => {
+      const xm = (G.xa + G.xb) / 2;
+      burst(xm, G.ty, 16, ['#fff'], {glass: 1, spread: G.xb - G.xa, v: 300});
+      burst(xm - (G.xb - G.xa) * .25, G.ty, 7, [SUM[0], SUM[1]], {glass: 0, spread: 10, v: 220, cone: 110});
+      burst(xm + (G.xb - G.xa) * .25, G.ty, 7, [WIN[0], WIN[1]], {glass: 0, spread: 10, v: 220, cone: 110});
+      S.aL = S.aR = 1.6;
+      for (const k of ['L', 'R']) gsap.fromTo(G.sides[k].pool, {opacity: 1}, {opacity: .35, duration: .2, yoyo: true, repeat: 1});
+      done();
+    });
+}
+
+// --- after the reveal: drop a country's choice into a flask ---
+function launch(k) {
+  const s = G.sides[k], f = G.f;
+  if (Kit.calm) { S[k] = Math.min(.84, S[k] + .05); return; }
+  const drop = mk('circle', {r: f * .45, fill: 'url(#drop)', stroke: '#fff', 'stroke-width': 1}, G.fx);
+  const x0 = G.W / 2, y0 = G.ty - f * .5, x1 = s.cx, y1 = G.top - f * .2;
+  Kit.haptic('light');
+  const land = () => {
+    drop.remove();
+    S[k] = Math.min(.84, S[k] + .05);
+    S['a' + k] = 1.3;
+    burst(s.cx, surfY(S[k]), 6, [s.c[0], s.c[1]], {glass: 0, v: 140, g: 700, cone: 80});
+  };
+  const T = .7, g = 900, vx = (x1 - x0) / T, vy = (y1 - y0 - .5 * g * T * T) / T;
+  gsap.set(drop, {x: x0, y: y0});
+  gsap.from(drop, {scale: 0, duration: .15, ease: 'back.out(3)', transformOrigin: '50% 50%'});
+  gsap.timeline()
+    .to(drop, {duration: T, physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * 180 / Math.PI, gravity: g}, ease: 'none'})
+    .to(drop, {x: x1, y: surfY(S[k]), duration: .22, ease: 'power2.in', fill: s.c[0]})
+    .add(land);
+}
+svg.addEventListener('pointerdown', e => {
+  if (!S.revealed || !G) return;
+  const r = svg.getBoundingClientRect();
+  launch(e.clientX - r.left < r.width / 2 ? 'L' : 'R');
+});
+
+// --- the answer ---
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 10, stagger: .1, duration: .5, ease: 'power3.out'});
+  sure.grade(ok, pct, ok ? 'Right' : `Not ${said.toLowerCase()}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  if (!Kit.calm) gsap.fromTo(b, {scale: .94}, {scale: 1, duration: .5, ease: 'elastic.out(1,.45)'});
+});
+
+Kit.onShow.card = layout;
+let entered = false;
+Kit.onEnter.card = () => {
+  if (entered) return; entered = true;
+  if (Kit.calm) { if (!S.revealed) { S.L = .62; S.R = .28; } return; }
+  if (!S.revealed) gsap.fromTo(S, {L: 0, R: 0}, {L: .45, R: .45, duration: 1.3, ease: 'power3.out', delay: .25, onComplete: startSlosh});
+  gsap.from(['#glassL', '#glassR'], {y: 24, opacity: 0, duration: .8, stagger: .12, ease: 'back.out(1.6)'});
+  gsap.from('#tube', {scaleX: 0, transformOrigin: '50% 50%', opacity: 0, duration: .6, delay: .45, ease: 'expo.out'});
+  // rise in place: scale up from the bottom edge so the buttons never leave their row
+  gsap.from('.opt', {opacity: 0, scale: .9, transformOrigin: '50% 100%', stagger: .07, duration: .4, delay: .5, ease: 'power3.out', clearProps: 'transform'});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[1].click(); await wait(120);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(Kit.calm ? 100 : 1500);
+  launch('L'); await wait(Kit.calm ? 60 : 1300);
+};
+Kit.single();
+</script>
+</html>

@@ -6,7 +6,7 @@
 const String kEmbeddedRemote = r'''
 {
  "schema": 1,
- "hash": "186bff1c80b35ca3",
+ "hash": "135b215014ca4d39",
  "app": {
   "gate": null,
   "flags": {},
@@ -23,11 +23,43 @@ const String kEmbeddedRemote = r'''
     "size": "l",
     "gap": 0,
     "title": {
-     "en": "New jewel cards · debug (82, 1/2)",
-     "it": "Carte gioiello nuove · debug (82, 1/2)"
+     "en": "New jewel cards · debug (114, 1/2)",
+     "it": "Carte gioiello nuove · debug (114, 1/2)"
     },
     "source": {
      "ids": [
+      "science-extinguisher-charges",
+      "science-cold-laminar-flow-6",
+      "science-pressure-at-depth",
+      "science-cfc-ozone-hole",
+      "science-gravel-third-friction",
+      "history-walled-city-crowd",
+      "history-paradox-of-escalation",
+      "maths-mersenne-glass-rack",
+      "maths-knot-theory-renaissance",
+      "maths-mercator-russia",
+      "medicine-alcohol-group-one",
+      "economics-slot-payback",
+      "economics-restart-clock",
+      "economics-resource-curse-flask",
+      "economics-oil-countdown",
+      "psychology-gravity-hill",
+      "human_body-dream-switch",
+      "human_body-one-beer-curve",
+      "technology-fire-contains-methane",
+      "technology-motogp-power-weight",
+      "technology-tempered-glass-squeeze",
+      "technology-solar-depot-grid",
+      "technology-tatara-mass-balance",
+      "technology-graphene-fast-charge",
+      "nature-vesuvius-warning-signs",
+      "nature-ice-age-italy",
+      "nature-europe-slab-swing",
+      "nature-sharks-food-chain",
+      "space-earth-spaghettified",
+      "life-48-hour-shelter",
+      "life-permanent-time-choice",
+      "life-carving-cage-homes",
       "weird_facts-not-a-flamethrower",
       "weird_facts-bermuda-not-top-ten",
       "technology-yellow-button-anomaly",
@@ -52,7 +84,32 @@ const String kEmbeddedRemote = r'''
       "science-snow-flips-friction",
       "science-sludge-cannibalism",
       "science-rock-restoration",
-      "science-pacific-background-radiation",
+      "science-pacific-background-radiation"
+     ]
+    },
+    "limit": 57,
+    "audience": {
+     "platforms": [
+      "ios"
+     ],
+     "until": "2026-12-15"
+    },
+    "subtitle": {
+     "en": "Each with a look and a motion of its own, drawn straight on the card",
+     "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
+    }
+   },
+   {
+    "id": "debug-new-jewels-2",
+    "block": "carousel",
+    "size": "l",
+    "gap": 0,
+    "title": {
+     "en": "New jewel cards · debug (114, 2/2)",
+     "it": "Carte gioiello nuove · debug (114, 2/2)"
+    },
+    "source": {
+     "ids": [
       "science-one-way-light",
       "science-magnetic-stripes",
       "science-kepler-water-units",
@@ -87,32 +144,7 @@ const String kEmbeddedRemote = r'''
       "maths-feigenbaum-ratio-ladder",
       "maths-coin-rotation-paradox",
       "human_body-lead-hardened-arteries",
-      "human_body-inherited-gene-switches"
-     ]
-    },
-    "limit": 60,
-    "audience": {
-     "platforms": [
-      "ios"
-     ],
-     "until": "2026-12-15"
-    },
-    "subtitle": {
-     "en": "Each with a look and a motion of its own, drawn straight on the card",
-     "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
-    }
-   },
-   {
-    "id": "debug-new-jewels-2",
-    "block": "carousel",
-    "size": "l",
-    "gap": 0,
-    "title": {
-     "en": "New jewel cards · debug (82, 2/2)",
-     "it": "Carte gioiello nuove · debug (82, 2/2)"
-    },
-    "source": {
-     "ids": [
+      "human_body-inherited-gene-switches",
       "human_body-highway-hypnosis",
       "human_body-alcohol-synapse",
       "human_body-acetaldehyde-liver",
@@ -137,7 +169,7 @@ const String kEmbeddedRemote = r'''
       "maths-penrose-lookalikes"
      ]
     },
-    "limit": 22,
+    "limit": 57,
     "audience": {
      "platforms": [
       "ios"

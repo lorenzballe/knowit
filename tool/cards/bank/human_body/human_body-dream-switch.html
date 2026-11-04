@@ -1,0 +1,341 @@
+<!doctype html>
+<!-- slug: human_body-dream-switch -->
+<!--
+Look: a field-notebook page in cream, a pencil-hatched brain in pink and rose watercolour, a hand-drawn sleep chart, handwritten labels.
+Interaction: drag the moon through one night of sleep. Every time a dream starts, in light, deep or REM sleep, the same spot at the back of the brain glows and a thought bubble sketches the dream.
+Wow: find all four dreams and amber pencil lines draw themselves from each dream up to the same glowing spot. One switch, in any phase.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The dream switch</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display);margin:0 0 .7cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0}
+.hint{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(6px)}}
+.kit-calm .hint{animation:none}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Scrub the night · the dream switch" style="--c:#f3ead5;--k:#2b2219;--edge:#cdbb94">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SCRUB THE NIGHT</span></div>
+    <h2 class="q">Which part of the brain switches on every time you dream?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A brain seen from the side, a thought bubble, and a chart of one night of sleep with four dreams marked. A moon slider moves through the night."></svg>
+    </div>
+    <p class="say" id="say">Drag the moon through one night. <b>Watch the brain each time a dream starts.</b></p>
+    <div id="why" class="gone"><p class="big">A region at the back of the brain</p><p class="body">Light, deep or REM: whenever a dream starts, the same region at the back of the brain switches on. That is why researchers call it a real dream switch.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Dreams switch on at the back of the brain, in any phase of sleep.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(DrawSVGPlugin);
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const INK = '#2b2219', BLUE = '#3e4f8f', FIRE = '#c4531c', PAPER = '#f3ead5';
+  // An illustrative night: the phases come and go; dreams turn up in REM, deep and light sleep alike.
+  const SEG = [[0,.06,'light'],[.06,.18,'deep'],[.18,.24,'light'],[.24,.30,'rem'],[.30,.36,'light'],[.36,.50,'deep'],[.50,.62,'light'],[.62,.70,'deep'],[.70,.80,'light'],[.80,.94,'rem'],[.94,1,'light']];
+  const DREAMS = [[.25,.29],[.40,.45],[.54,.59],[.84,.90]];
+  const NAME = {light: 'light sleep', deep: 'deep sleep', rem: 'REM sleep'};
+  const OUT = 'M12,40 C8,24 22,8 42,7 C58,4 78,8 88,20 C96,30 97,42 91,48 C87,53 80,55 74,53 C66,56 58,56 52,54 C44,58 30,58 22,52 C15,49 13,45 12,40 Z';
+  const CERE = 'M70,54 C76,51 86,52 89,57 C91,63 82,68 73,65 C68,63 66,57 70,54 Z';
+  const STEM = 'M61,55 C63,62 62,68 60,74 L66,74 C67,68 67,62 67,56 Z';
+  const SULCI = ['M52,8 C49,18 56,26 51,37','M26,46 C38,42 50,40 63,38','M20,30 C26,24 30,30 36,24','M30,16 C34,22 40,18 44,24','M62,14 C66,22 72,18 76,26','M64,30 C70,34 76,30 83,36','M28,37 C34,33 40,38 46,34','M72,43 C76,47 82,45 87,41','M24,50 C32,52 40,50 48,52','M72,58 C78,56 84,57 88,60','M72,62 C78,61 83,62 86,63'];
+  const DOODLE = [
+    'M-0.75,0 C-0.35,-0.6 0.25,-0.55 0.45,0 C0.25,0.55 -0.35,0.6 -0.75,0 M0.45,0 L0.9,-0.4 L0.9,0.4 L0.45,0',
+    'M-0.6,0.65 L-0.6,-0.05 L0,-0.6 L0.6,-0.05 L0.6,0.65 L-0.6,0.65 M-0.15,0.65 L-0.15,0.2 L0.15,0.2 L0.15,0.65',
+    'M-0.9,0 Q-0.45,-0.6 0,0.05 Q0.45,-0.6 0.9,0 M-0.3,0.5 Q-0.1,0.2 0.1,0.5 Q0.3,0.2 0.5,0.5',
+    'M-0.8,-0.6 L-0.4,-0.6 L-0.4,-0.2 L0,-0.2 L0,0.2 L0.4,0.2 L0.4,0.6 L0.8,0.6'
+  ];
+  let t = .08, cur = -1, done = false, touched = false, drag = false;
+  const seen = new Set(), E = {}, G = {};
+  const clamp = (a, v, b) => Math.max(a, Math.min(b, v));
+  const mk = (tag, a, p) => Kit.mk(tag, a, p);
+  const tx = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y, fill: INK}, a || {}), p); e.textContent = s; return e; };
+  const stageAt = v => (SEG.find(s => v >= s[0] && v <= s[1]) || SEG[0])[2];
+  const dreamAt = v => DREAMS.findIndex(d => v >= d[0] && v <= d[1]);
+  const pairs = (d, fx, fy) => d.replace(/(-?[\d.]+),(-?[\d.]+)/g, (m, a, b) => `${fx(+a).toFixed(1)},${fy(+b).toFixed(1)}`);
+  function cloudD(cx, cy, rx, ry) {
+    const n = 8; let d = '';
+    for (let i = 0; i <= n; i++) {
+      const a = i / n * Math.PI * 2, x = cx + rx * Math.cos(a), y = cy + ry * Math.sin(a);
+      if (!i) d = `M${x.toFixed(1)},${y.toFixed(1)}`;
+      else { const m = (i - .5) / n * Math.PI * 2; d += ` Q${(cx + rx * 1.35 * Math.cos(m)).toFixed(1)},${(cy + ry * 1.35 * Math.sin(m)).toFixed(1)} ${x.toFixed(1)},${y.toFixed(1)}`; }
+    }
+    return d + ' Z';
+  }
+
+  function layout() {
+    gsap.killTweensOf('#pic *');
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg) || {};
+    const r0 = svg.getBoundingClientRect();
+    const W = +f.W || r0.width || 340, H = +f.H || r0.height || 400;
+    G.W = W; G.H = H;
+    const ms = clamp(12, W * .034, 14), hs = clamp(15, W * .05, 20), hr = clamp(10, ms * .95, 13);
+
+    // ---- paper tools: watercolour bleed, pencil hatching, the amber glow ----
+    const defs = mk('defs', {}, svg);
+    const fl = mk('filter', {id: 'wc', x: '-25%', y: '-25%', width: '150%', height: '150%'}, defs);
+    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.035', numOctaves: 3, seed: 7, result: 'n'}, fl);
+    mk('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: 7, xChannelSelector: 'R', yChannelSelector: 'G', result: 'd'}, fl);
+    mk('feGaussianBlur', {in: 'd', stdDeviation: .7}, fl);
+    const hp = (id, ang, gap, w) => { const p = mk('pattern', {id, patternUnits: 'userSpaceOnUse', width: gap, height: gap, patternTransform: `rotate(${ang})`}, defs); mk('line', {x1: 0, y1: 0, x2: 0, y2: gap, stroke: INK, 'stroke-width': w}, p); };
+    hp('h1', 38, 5, .6); hp('h2', -40, 3.4, .7);
+    const rg = mk('radialGradient', {id: 'gl'}, defs);
+    [[0,'#fff6d8',1],[.35,'#ffc061',.95],[.7,'#ee7a35',.45],[1,'#e0582a',0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, rg));
+
+    // ---- vertical plan: readout + bubble / brain / night chart ----
+    const rowGap = clamp(ms * 1.45, H * .055, ms * 2.4);
+    const chartH = hr * 2 + 6 + ms * .8 + rowGap * 2 + ms * .8 + ms * 1.7;
+    const chartTop = H - chartH, bandsTop = chartTop + hr * 2 + 6;
+    const gy0 = bandsTop + ms * .8, gy1 = gy0 + rowGap * 2, bandsBot = gy1 + ms * .8;
+    const RY = {rem: gy0, light: gy0 + rowGap, deep: gy1};
+    const gx0 = ms * 3.4 + 6, gx1 = W - 4, xs = v => gx0 + v * (gx1 - gx0);
+    const readH = hs + ms * 1.6 + 4;
+    const ry = clamp(15, H * .06, 30), rx = Math.min(W * .16, ry * 1.85);
+    const cy = ry * 1.35 + 2, cx = W - rx * 1.35 - 2;
+    Object.assign(G, {xs, gx0, gx1, RY, bandsTop});
+
+    // ---- the brain box ----
+    const bTop = Math.max(readH, cy + ry * .6) + 6, bBot = chartTop - 6;
+    const bx0 = W * .04, bx1 = W * .96;
+    const s = Math.max(.4, Math.min((bx1 - bx0) / 90, (bBot - bTop) / 71)); G.s = s;
+    const ox = (bx0 + bx1) / 2 - 52.5 * s, oy = (bTop + bBot) / 2 - 39.5 * s;
+    const X = x => ox + x * s, Y = y => oy + y * s, mp = d => pairs(d, X, Y);
+
+    // ---- the night ----
+    const hy = mk('g', {}, svg);
+    for (const k of ['rem', 'light', 'deep']) {
+      mk('line', {x1: gx0, x2: gx1, y1: RY[k], y2: RY[k], stroke: INK, 'stroke-width': .8, 'stroke-dasharray': '2 4', opacity: .35, class: 'draw'}, hy);
+      tx(hy, 0, RY[k] + ms * .35, k === 'rem' ? 'REM' : k, {style: `font:600 ${ms}px var(--mono)`, opacity: .8});
+    }
+    E.icons = [];
+    E.bands = DREAMS.map(([a, b]) => {
+      const g = mk('g', {class: 'band'}, hy), xm = xs((a + b) / 2), r = ms * .4, icy = bandsTop - r - 3;
+      mk('rect', {x: xs(a), y: bandsTop, width: xs(b) - xs(a), height: bandsBot - bandsTop, rx: 3, fill: '#6d82c4', opacity: .26, filter: 'url(#wc)', class: 'bw'}, g);
+      E.icons.push(mk('path', {d: `M${xm + r * .2},${icy - r} A${r},${r} 0 1 0 ${xm + r * .2},${icy + r} A${r * .78},${r * .78} 0 1 1 ${xm + r * .2},${icy - r} Z`, fill: BLUE}, g));
+      return g;
+    });
+    let d = `M${xs(0)},${RY[SEG[0][2]]}`;
+    SEG.forEach((sg, i) => { d += ` L${xs(sg[1])},${RY[sg[2]]}`; if (SEG[i + 1]) d += ` L${xs(sg[1])},${RY[SEG[i + 1][2]]}`; });
+    mk('path', {d: d + ` L${xs(1)},${bandsBot} L${xs(0)},${bandsBot} Z`, fill: '#8fa0d8', opacity: .18, filter: 'url(#wc)', class: 'wash'}, hy);
+    E.hyp = mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, hy);
+    tx(hy, gx0, H - 3, 'fall asleep', {style: `font:600 ${ms}px var(--mono)`, opacity: .7});
+    tx(hy, gx1, H - 3, 'wake up', {'text-anchor': 'end', style: `font:600 ${ms}px var(--mono)`, opacity: .7});
+
+    // ---- the brain, from the side, front to the left ----
+    const br = mk('g', {}, svg);
+    mk('path', {d: mp(STEM), fill: '#d9a79a', opacity: .75, filter: 'url(#wc)', class: 'wash'}, br);
+    mk('path', {d: mp(OUT), fill: '#eab9a6', opacity: .7, filter: 'url(#wc)', class: 'wash'}, br);
+    mk('path', {d: mp(CERE), fill: '#d9998a', opacity: .75, filter: 'url(#wc)', class: 'wash'}, br);
+    const cp = mk('clipPath', {id: 'bc'}, defs); mk('path', {d: mp(OUT)}, cp); mk('path', {d: mp(CERE)}, cp); mk('path', {d: mp(STEM)}, cp);
+    const hg = mk('g', {'clip-path': 'url(#bc)', class: 'wash'}, br);
+    mk('rect', {x: X(5), y: Y(0), width: 95 * s, height: 78 * s, fill: 'url(#h1)', opacity: .22}, hg);
+    mk('ellipse', {cx: X(50), cy: Y(60), rx: 46 * s, ry: 13 * s, fill: 'url(#h2)', opacity: .4}, hg);
+    mk('ellipse', {cx: X(80), cy: Y(63), rx: 13 * s, ry: 7 * s, fill: 'url(#h2)', opacity: .45}, hg);
+    mk('ellipse', {cx: X(64), cy: Y(70), rx: 5 * s, ry: 6 * s, fill: 'url(#h2)', opacity: .45}, hg);
+    // a soft warm wash at the back of the brain that blooms with each dream
+    E.warm = mk('ellipse', {cx: X(80), cy: Y(38), rx: 16 * s, ry: 14 * s, fill: '#f29a5c', opacity: 0, filter: 'url(#wc)'}, hg);
+    const lw = Math.max(1.3, s * .5);
+    mk('path', {d: mp(STEM), fill: 'none', stroke: INK, 'stroke-width': lw, class: 'draw'}, br);
+    [OUT, CERE].forEach(q => mk('path', {d: mp(q), fill: 'none', stroke: INK, 'stroke-width': lw * 1.4, 'stroke-linejoin': 'round', class: 'draw'}, br));
+    SULCI.forEach(q => mk('path', {d: mp(q), fill: 'none', stroke: INK, 'stroke-width': lw * .8, 'stroke-linecap': 'round', opacity: .75, class: 'draw'}, br));
+
+    E.links = mk('g', {}, svg);
+
+    // ---- the switch, back of the brain ----
+    const NX = X(80), NY = Y(38); G.N = [NX, NY];
+    const nd = mk('g', {transform: `translate(${NX},${NY})`}, svg);
+    E.ring = mk('circle', {r: s * 4.5, fill: 'none', stroke: INK, 'stroke-width': 1.1, 'stroke-dasharray': '2 3', opacity: .55}, nd);
+    E.gl = mk('g', {opacity: 0}, nd);
+    E.blob = mk('circle', {r: s * 12, fill: 'url(#gl)', filter: 'url(#wc)'}, E.gl);
+    mk('circle', {r: Math.max(3, s * 2.6), fill: '#fff4d4', stroke: FIRE, 'stroke-width': 1.2}, E.gl);
+    E.rays = [];
+    for (let i = 0; i < 9; i++) {
+      const a = i / 9 * Math.PI * 2 + .2, ra = s * 6.5, rb = s * (i % 2 ? 9 : 11);
+      E.rays.push(mk('line', {x1: Math.cos(a) * ra, y1: Math.sin(a) * ra, x2: Math.cos(a) * rb, y2: Math.sin(a) * rb, stroke: FIRE, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, E.gl));
+    }
+    E.lb = mk('g', {opacity: 0}, svg);
+    if (seen.size || done) E.lb.dataset.on = 1;
+    E.lead = mk('path', {d: `M${X(71)},${Y(27.5)} Q${X(77)},${Y(26.5)} ${X(78.6)},${Y(33.6)}`, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, E.lb);
+    tx(E.lb, X(70), Y(27.5) + hs * .3, 'dream switch', {'text-anchor': 'end', style: `font:700 ${hs}px var(--hand)`, stroke: PAPER, 'stroke-width': 4, 'paint-order': 'stroke', 'stroke-linejoin': 'round'});
+
+    // ---- the thought bubble, top right ----
+    E.cl = mk('g', {opacity: 0}, svg);
+    E.clIn = mk('g', {}, E.cl);
+    [[.3, 1.1], [.58, 1.6], [.84, 2.2]].forEach(([k, r]) => {
+      const x0 = X(86), y0 = Y(20), x1 = cx - rx * .35, y1 = cy + ry * 1.25;
+      mk('circle', {cx: x0 + (x1 - x0) * k, cy: y0 + (y1 - y0) * k, r: Math.max(2.5, Math.min(7, s * r)), fill: '#fbf6ea', stroke: INK, 'stroke-width': 1.3}, E.clIn);
+    });
+    E.cloudP = mk('path', {d: cloudD(cx, cy, rx, ry), fill: '#fbf6ea', stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, E.clIn);
+    mk('ellipse', {cx, cy, rx: rx * .85, ry: ry * .7, fill: '#8fa0d8', opacity: .3, filter: 'url(#wc)'}, E.clIn);
+    const k = ry * .62;
+    E.doo = DOODLE.map(q => mk('path', {d: pairs(q, u => cx + u * k * 1.35, v => cy + v * k), fill: 'none', stroke: BLUE, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', display: 'none'}, E.clIn));
+
+    // ---- the notebook readout, top left ----
+    E.rd1 = tx(svg, 0, hs, '', {style: `font:700 ${hs}px var(--hand)`});
+    E.rd2 = tx(svg, 0, hs + ms * 1.55, '', {style: `font:700 ${ms}px var(--mono)`, fill: BLUE});
+
+    // ---- the moon you drag ----
+    E.sc = mk('g', {}, svg);
+    mk('line', {x1: 0, x2: 0, y1: bandsTop - 2, y2: bandsBot + 2, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, E.sc);
+    E.dot = mk('circle', {cx: 0, cy: RY.light, r: 4, fill: PAPER, stroke: INK, 'stroke-width': 2}, E.sc);
+    E.hint = mk('g', {class: touched ? '' : 'hint'}, E.sc);
+    const my = chartTop + hr + 1;
+    mk('circle', {cx: 0, cy: my, r: hr, fill: BLUE, stroke: INK, 'stroke-width': 1.4}, E.hint);
+    mk('circle', {cx: -hr * .1, cy: my, r: hr * .55, fill: '#fbf1d4'}, E.hint);
+    mk('circle', {cx: hr * .17, cy: my - hr * .14, r: hr * .48, fill: BLUE}, E.hint);
+
+    // ---- idle life ----
+    if (!Kit.calm) {
+      gsap.to(E.ring, {rotation: 360, svgOrigin: '0 0', duration: 26, repeat: -1, ease: 'none'});
+      gsap.to(E.clIn, {y: -3, duration: 1.8, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+    }
+
+    apply();
+  }
+
+  function buildLinks() {
+    E.links.innerHTML = '';
+    const [NX, NY] = G.N, s = G.s;
+    return DREAMS.map(([a, b]) => {
+      const x = G.xs((a + b) / 2), y = G.bandsTop;
+      return mk('path', {d: `M${x},${y} C${x},${y - (y - NY) * .55} ${NX + (x - NX) * .25},${NY + s * 16} ${NX},${NY + s * 3}`, fill: 'none', stroke: FIRE, 'stroke-width': 1.7, 'stroke-linecap': 'round', opacity: .9}, E.links);
+    });
+  }
+
+  function readout() {
+    if (!E.rd1) return;
+    if (done) { E.rd1.textContent = 'every dream:'; E.rd2.textContent = 'same spot, any phase'; return; }
+    E.rd1.textContent = NAME[stageAt(t)];
+    E.rd2.textContent = cur >= 0 ? '✶ dreaming' : 'no dream';
+  }
+
+  function place() {
+    E.sc.setAttribute('transform', `translate(${G.xs(t)},0)`);
+    E.dot.setAttribute('cy', G.RY[stageAt(t)]);
+  }
+
+  // Redraws the state after a layout, without motion.
+  function apply() {
+    cur = dreamAt(t);
+    place();
+    E.bands.forEach((g, i) => g.querySelector('.bw').setAttribute('opacity', seen.has(i) ? .45 : .26));
+    E.icons.forEach((p, i) => p.setAttribute('fill', seen.has(i) ? FIRE : BLUE));
+    gsap.set(E.gl, {opacity: cur >= 0 || done ? 1 : 0});
+    gsap.set(E.warm, {opacity: cur >= 0 || done ? .45 : 0});
+    gsap.set(E.cl, {opacity: cur >= 0 ? 1 : 0});
+    E.doo.forEach((p, j) => p.setAttribute('display', j === cur ? 'inline' : 'none'));
+    gsap.set(E.lb, {opacity: seen.size || done ? 1 : 0});
+    if (done) buildLinks();
+    readout();
+  }
+
+  function setT(v) {
+    t = Math.max(0, Math.min(1, v));
+    if (!E.sc) return;
+    place();
+    const d = dreamAt(t);
+    if (d !== cur) { cur = d; d >= 0 ? onDream(d) : offDream(); }
+    readout();
+  }
+
+  function onDream(i) {
+    const calm = Kit.calm;
+    seen.add(i);
+    E.bands[i].querySelector('.bw').setAttribute('opacity', .45);
+    E.icons[i].setAttribute('fill', FIRE);
+    Kit.haptic('light');
+    gsap.killTweensOf([E.gl, E.cl, E.blob, E.warm]);
+    E.doo.forEach((p, j) => p.setAttribute('display', j === i ? 'inline' : 'none'));
+    if (calm) { gsap.set([E.gl, E.cl], {opacity: 1}); gsap.set(E.warm, {opacity: .45}); }
+    else {
+      gsap.to(E.gl, {opacity: 1, duration: .18, ease: 'power2.out'});
+      gsap.to(E.warm, {opacity: .45, duration: .5, ease: 'power2.out'});
+      gsap.fromTo(E.blob, {scale: .3, svgOrigin: '0 0'}, {scale: 1, svgOrigin: '0 0', duration: 1.1, ease: 'elastic.out(1,.45)'});
+      gsap.fromTo(E.rays, {drawSVG: '0%'}, {drawSVG: '100%', duration: .5, stagger: .03, ease: 'power3.out'});
+      gsap.fromTo(E.cl, {opacity: 0}, {opacity: 1, duration: .3, ease: 'power2.out'});
+      gsap.fromTo(E.cloudP, {drawSVG: '0%'}, {drawSVG: '100%', duration: .6, ease: 'power2.inOut'});
+      gsap.fromTo(E.doo[i], {drawSVG: '0%'}, {drawSVG: '100%', duration: .8, delay: .2, ease: 'power2.inOut'});
+      gsap.fromTo(E.icons[i], {scale: 1.8, transformOrigin: '50% 50%'}, {scale: 1, duration: .5, ease: 'back.out(3)'});
+    }
+    if (!E.lb.dataset.on) {
+      E.lb.dataset.on = 1;
+      if (calm) gsap.set(E.lb, {opacity: 1});
+      else { gsap.to(E.lb, {opacity: 1, duration: .4, delay: .3}); gsap.fromTo(E.lead, {drawSVG: '0%'}, {drawSVG: '100%', duration: .6, delay: .3, ease: 'power2.out'}); }
+    }
+    if (!done) say.innerHTML = `${seen.size} of 4 dreams found. This one is in <b>${NAME[stageAt(t)]}</b>, and the back of the brain lights up.`;
+    if (seen.size === 4 && !done) setTimeout(reveal, calm ? 50 : 900);
+  }
+
+  function offDream() {
+    gsap.killTweensOf([E.gl, E.cl, E.warm]);
+    const on = done ? 1 : 0;
+    if (Kit.calm) { gsap.set(E.gl, {opacity: on}); gsap.set(E.warm, {opacity: on * .45}); gsap.set(E.cl, {opacity: 0}); }
+    else {
+      gsap.to(E.gl, {opacity: on, duration: .45, ease: 'power2.in'});
+      gsap.to(E.warm, {opacity: on * .45, duration: .45, ease: 'power2.in'});
+      gsap.to(E.cl, {opacity: 0, duration: .3, ease: 'power2.in'});
+    }
+    if (!done && seen.size) say.innerHTML = `No dream here, and the switch goes dark. <b>${4 - seen.size} more to find.</b>`;
+  }
+
+  function reveal() {
+    if (done) return;
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.$('card').classList.add('answered');
+    // the stage may resize now; let the next layout settle, then draw the links
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      readout();
+      const ps = buildLinks();
+      gsap.to(E.gl, {opacity: 1, duration: .3});
+      gsap.to(E.warm, {opacity: .45, duration: .3});
+      if (Kit.calm) return;
+      gsap.from(ps, {drawSVG: '0%', duration: 1.1, stagger: .18, ease: 'power2.inOut'});
+      gsap.fromTo(E.blob, {scale: 1, svgOrigin: '0 0'}, {scale: 1.75, svgOrigin: '0 0', duration: .45, delay: 1.2, ease: 'power3.out', yoyo: true, repeat: 1});
+      gsap.fromTo(E.rays, {drawSVG: '0%'}, {drawSVG: '100%', duration: .6, delay: 1.2, stagger: .04, ease: 'expo.out'});
+      gsap.from([E.rd1, E.rd2], {opacity: 0, y: -6, duration: .5, stagger: .1, delay: 1.1, ease: 'back.out(2)'});
+    }));
+  }
+
+  // ---- the drag ----
+  const fx = e => { const r = svg.getBoundingClientRect(), k = G.W / (r.width || G.W); return ((e.clientX - r.left) * k - G.gx0) / (G.gx1 - G.gx0); };
+  svg.addEventListener('pointerdown', e => {
+    drag = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; E.hint && E.hint.classList.remove('hint'); }
+    Kit.haptic('selection'); setT(fx(e));
+  });
+  svg.addEventListener('pointermove', e => { if (drag) setT(fx(e)); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !E.hyp) return;
+    gsap.timeline()
+      .from('#pic .draw', {drawSVG: '0%', duration: 1.1, stagger: .04, ease: 'power2.inOut'}, 0)
+      .from('#pic .wash', {opacity: 0, duration: 1, ease: 'power2.out'}, .35)
+      .from(E.hyp, {drawSVG: '0%', duration: 1.4, ease: 'power3.inOut'}, .4)
+      .from('#pic .band', {opacity: 0, y: 10, stagger: .08, duration: .5, ease: 'back.out(1.6)'}, 1)
+      .from([E.rd1, E.rd2], {opacity: 0, x: -8, stagger: .1, duration: .5, ease: 'power3.out'}, 1.1)
+      .from(E.hint, {opacity: 0, scale: .4, transformOrigin: '50% 50%', duration: .6, ease: 'back.out(2.2)'}, 1.3);
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; E.hint && E.hint.classList.remove('hint');
+    for (const d of DREAMS) { setT((d[0] + d[1]) / 2); await w(Kit.calm ? 60 : 350); }
+    setT(.97);
+    await w(Kit.calm ? 250 : 2800);
+  };
+})();
+Kit.single();
+</script>
+</html>

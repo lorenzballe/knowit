@@ -1,0 +1,38 @@
+{
+  "id": "human_body-one-beer-curve",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.small_daily_habits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After one strong beer, does everyone's alcohol curve look the same?",
+  "answer": "After one strong beer, the card asks whether everyone's alcohol curve looks the same. One man drank one 8.6% beer and blew into a breathalyser every 10 minutes. The reader draws a guess for how his reading moved over 3 hours. How fast a body clears alcohol is personal, so his curve is his alone.",
+  "move": "How fast a body clears alcohol is personal: his curve is his alone.",
+  "keywords": [
+    "alcohol",
+    "beer",
+    "breathalyser",
+    "metabolism",
+    "blood alcohol"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Drawing page asking how one man's breath alcohol reading would change over 3 hours after one 8.6% beer, tested every 10 minutes. The reader draws a guess of the curve.",
+    "ground": "#17120b"
+  },
+  "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=iEM_OvUoolY&t=294s",
+  "written": "2026-11-04"
+}

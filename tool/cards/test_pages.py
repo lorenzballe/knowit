@@ -115,6 +115,12 @@ class ThePage(unittest.TestCase):
         # A blob it made itself, and a picture it carries, are its own.
         own = '<script>fetch(Kit.url("vendor/rive.wasm"))</script><img src="data:image/png;base64,AAAA">'
         self.assertEqual(self.problems(page=TEMPLATE.replace("</style>", "</style>" + own, 1)), [])
+        # A grain carried as data names its own filter, encoded as a data URL must be.
+        grain = ("<style>.g{background:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E"
+                 "%3Cfilter id='n'%3E%3CfeTurbulence/%3E%3C/filter%3E%3Crect filter='url(%23n)'/%3E%3C/svg%3E\")}</style>")
+        self.assertEqual(self.problems(page=TEMPLATE.replace("</style>", "</style>" + grain, 1)), [])
+        beside = grain.replace("}</style>", ",url(https://example.org/a.png)}</style>")
+        self.assertTrue(any("a stylesheet points at" in p for p in self.problems(page=TEMPLATE.replace("</style>", "</style>" + beside, 1))))
 
     def test_small_enough_to_travel_and_for_the_embedded_bank_to_hold(self):
         heavy = TEMPLATE.replace("</style>", "</style><!--" + "x" * pages.MAX_BYTES + "-->", 1)

@@ -1,0 +1,38 @@
+{
+  "id": "maths-mercator-russia",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Russia look bigger than Africa on most world maps?",
+  "answer": "Russia looks bigger than Africa on a Mercator map because the projection draws places larger the farther they are from the equator. Far-north Russia is blown up several times, while Africa, on the equator, is near its true size. Drag Russia down to the equator to compare the two.",
+  "move": "On a Mercator map, the farther from the equator, the bigger a place looks.",
+  "keywords": [
+    "russia",
+    "africa",
+    "mercator",
+    "equator",
+    "greenland"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A world map in Mercator projection with Russia and Africa. The reader is asked to drag Russia down to the equator to see whether Russia still looks bigger than Africa.",
+    "ground": "#060912"
+  },
+  "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=cKRRHQStYH0&t=71s",
+  "written": "2026-11-04"
+}

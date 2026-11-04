@@ -1,0 +1,341 @@
+<!doctype html>
+<!-- slug: economics-slot-payback -->
+<!-- Look: a field notebook page. Cream ruled paper, watercolour-washed bars with tide-line edges and soft ground stains, double pencil outlines, hatching, handwritten labels and a coffee ring.
+     Interaction: drag the empty right column to guess how much of the €33.5 B bet on Italian slots in 2022 came back. Then say how sure you are.
+     Wow: a dashed ghost of the full €33.5 B rises over the empty column, then 25 spinning coins (each one €1 B) are flung out of the "bet" bar along real gravity arcs (Physics2D), sparkle as they land and stack the green bar up, its label counting €1 B, €2 B … €25 B. They fall short: the gap left in the ghost fills with red hatch, "kept €8.5 B", and 74.6% pops and counts up. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>What the slots give back</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#card{background-image:
+  radial-gradient(120% 80% at 20% 0%,rgba(255,255,255,.35),transparent 60%),
+  radial-gradient(90% 70% at 100% 100%,rgba(150,110,50,.10),transparent 70%),
+  repeating-linear-gradient(180deg,transparent 0 25px,rgba(70,110,160,.12) 25px 26px)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+.hd{font-family:var(--hand)}
+.hint{animation:bob 1.3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.kit-calm .hint{animation:none}
+#say{font:600 max(1.9cqh,13px)/1.3 var(--body)}
+#say b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Drag to guess · how sure" style="--c:#f4ecd8;--k:#2b2418;--edge:#d6c6a0">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE PAYBACK</span></div>
+    <h2 class="q">Italians bet €33.5 billion on slots in 2022. How much came back?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A hand-drawn bar chart: €33.5 billion bet on slot machines in Italy in 2022, and an empty column for how much was paid back."></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say"><b>Drag the empty column</b> up to how much you think players won back.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>On average, every euro put into a slot comes back as about 75 cents.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(Physics2DPlugin, DrawSVGPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), keep = Kit.$('keep'), stage = Kit.$('stage');
+  const INK = '#2b2418', RED = '#a8392a', PAPER = '#f4ecd8', GD = '#2f5a22';
+  const MAX = 35, BET = 33.5, BACK = 25, N = 25;
+  const FINAL = 'Lights, music and small wins make slots feel generous. Yet the machines kept <b>€8.5 B</b>: only <b>74.6 %</b> came back.';
+  let W, H, fs, sf, GY, PT, BW, X1, X2, AX;
+  let guess = null, ret = 0, betV = BET, phase = 'guess', lastInt = null, hinted = false;
+  let busy = false, pending = false, lastSz = '', raf = 0;
+  const E = {};
+  const y = v => GY - v / MAX * (GY - PT);
+  const fmt = v => (v % 1 ? v.toFixed(1) : String(v));
+  const T = (p, x, yy, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y: yy, fill: INK, class: 'hd', 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+  const j = () => (Kit.rnd() - .5) * 1.8;
+  const wob = (x0, y0, x1, y1) => `M${x0 + j()},${y1 + 2} L${x0 + j()},${(y0 + y1) / 2} L${x0 + j()},${y0 + j()} L${(x0 + x1) / 2},${y0 + j()} L${x1 + j()},${y0 + j()} L${x1 + j()},${(y0 + y1) / 2} L${x1 + j()},${y1 + 2}`;
+  const show = (el, on) => { el.style.display = on ? '' : 'none'; el.style.opacity = on ? 1 : 0; };
+  const REVEALED = ['kept', 'keptR', 'keptL', 'links', 'pct', 'retO'];
+
+  function defs() {
+    const d = Kit.mk('defs', {}, svg);
+    const grad = (id, a, b) => { const g = Kit.mk('linearGradient', {id, x1: 0, y1: 0, x2: 0, y2: 1}, d); Kit.mk('stop', {offset: 0, 'stop-color': a, 'stop-opacity': .9}, g); Kit.mk('stop', {offset: 1, 'stop-color': b, 'stop-opacity': .8}, g); };
+    grad('gB', '#7fa2c9', '#3d6390'); grad('gG', '#9cc27a', '#4c7c3a');
+    const gg = Kit.mk('radialGradient', {id: 'gC', cx: .35, cy: .3, r: .8}, d);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#fbe7a1'}, gg); Kit.mk('stop', {offset: .6, 'stop-color': '#d9a63c'}, gg); Kit.mk('stop', {offset: 1, 'stop-color': '#9a6b1c'}, gg);
+    const hatch = (id, col, w, op, ang) => { const p = Kit.mk('pattern', {id, patternUnits: 'userSpaceOnUse', width: 5, height: 5, patternTransform: `rotate(${ang})`}, d); Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 5, stroke: col, 'stroke-width': w, opacity: op}, p); };
+    hatch('hP', INK, .9, .55, 38); hatch('hR', RED, 1.5, .85, -40);
+    const f = Kit.mk('filter', {id: 'wc', x: '-8%', y: '-8%', width: '116%', height: '116%'}, d);
+    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .045, numOctaves: 3, seed: 4, result: 'n'}, f);
+    Kit.mk('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: 6}, f);
+    const b = Kit.mk('filter', {id: 'bl', x: '-50%', y: '-300%', width: '200%', height: '700%'}, d);
+    Kit.mk('feGaussianBlur', {stdDeviation: 3}, b);
+  }
+
+  function bar(L, cx, grad, tide) {
+    const g = Kit.mk('g', {filter: 'url(#wc)'}, L);
+    const r = Kit.mk('rect', {x: cx - BW / 2, width: BW, fill: `url(#${grad})`}, g);
+    const t = Kit.mk('rect', {x: cx - BW / 2 + 1, width: BW - 2, fill: 'none', stroke: tide, 'stroke-width': 2.2, opacity: .55}, g);
+    const h = Kit.mk('rect', {x: cx + BW * .1, width: BW * .4, fill: 'url(#hP)', opacity: .45}, L);
+    return v => { const yy = y(v), hh = Math.max(0, GY - yy); for (const e of [r, t, h]) { e.setAttribute('y', yy); e.setAttribute('height', hh); } };
+  }
+
+  function render() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const rr = stage.getBoundingClientRect(); lastSz = Math.round(rr.width) + 'x' + Math.round(rr.height);
+    fs = Math.max(12, Math.min(18, f.f * 1.1, H / 15));
+    sf = Math.max(12, fs * .85);
+    PT = fs * 2.1; GY = Math.max(PT + 48, H - fs * 1.75);
+    AX = sf * 1.9 + 6;
+    const R = fs * 3.2, P0 = AX + 8, P = Math.max(90, W - R - P0);
+    BW = Math.min(P * .34, fs * 7);
+    X1 = P0 + P * .25; X2 = P0 + P * .75;
+    defs();
+    const L = Kit.mk('g', {}, svg);
+
+    // coffee ring, top right
+    const ring = Kit.mk('g', {filter: 'url(#wc)', opacity: .15}, L);
+    Kit.mk('circle', {cx: W - fs * 1.7, cy: fs * 1.4, r: fs * 1.25, fill: 'none', stroke: '#7a4e1e', 'stroke-width': 3}, ring);
+    Kit.mk('circle', {cx: W - fs * 1.6, cy: fs * 1.45, r: fs * 1.12, fill: 'none', stroke: '#7a4e1e', 'stroke-width': 1}, ring);
+
+    // axis + grid
+    E.axis = Kit.mk('path', {d: `M${AX + j()},${GY + 4} L${AX + j()},${PT - fs * .3}`, stroke: INK, 'stroke-width': 1.4, fill: 'none', 'stroke-linecap': 'round', opacity: .8}, L);
+    E.ticks = [];
+    const ticks = (GY - PT) / MAX * 10 >= sf * 1.35 ? [10, 20, 30] : [30];
+    for (const v of ticks) {
+      const g = Kit.mk('g', {}, L); E.ticks.push(g);
+      Kit.mk('line', {x1: AX - 4, x2: AX + 5, y1: y(v), y2: y(v), stroke: INK, 'stroke-width': 1.3}, g);
+      Kit.mk('line', {x1: AX + 8, x2: W - fs * .6, y1: y(v), y2: y(v), stroke: INK, 'stroke-width': .6, 'stroke-dasharray': '2 5', opacity: .3}, g);
+      T(g, AX - 7, y(v) + sf * .33, v, {'text-anchor': 'end', 'font-size': sf, opacity: .75});
+    }
+    T(L, 2, PT - fs * .85, '€ bn', {'font-size': sf, opacity: .7});
+
+    // ground stains under the bars
+    for (const cx of [X1, X2]) Kit.mk('ellipse', {cx, cy: GY + 3, rx: BW * .62, ry: fs * .32, fill: '#7a5a2a', opacity: .16, filter: 'url(#bl)'}, L);
+    E.base = Kit.mk('path', {d: `M${AX - 6},${GY + j() * .5} Q${W / 2},${GY + 1.5} ${W - fs * .5},${GY + j() * .5}`, stroke: INK, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round'}, L);
+
+    // bet bar, double pencil outline
+    E.setBet = bar(L, X1, 'gB', '#21456f');
+    E.betO = Kit.mk('path', {d: wob(X1 - BW / 2, y(BET), X1 + BW / 2, GY), stroke: INK, 'stroke-width': 1.4, fill: 'none', 'stroke-linejoin': 'round', opacity: .85}, L);
+    E.betO2 = Kit.mk('path', {d: wob(X1 - BW / 2 + 1.5, y(BET) - 1, X1 + BW / 2 - 1, GY), stroke: INK, 'stroke-width': .8, fill: 'none', 'stroke-linejoin': 'round', opacity: .35}, L);
+
+    // kept slice on the bet bar
+    E.kept = Kit.mk('g', {}, L);
+    Kit.mk('rect', {x: X1 - BW / 2, y: y(BET), width: BW, height: y(BACK) - y(BET), fill: 'url(#hR)'}, E.kept);
+    Kit.mk('path', {d: `M${X1 - BW / 2 - 3},${y(BACK)} L${X1 + BW / 2 + 3},${y(BACK) + j() * .5}`, stroke: RED, 'stroke-width': 1.7, fill: 'none', 'stroke-linecap': 'round'}, E.kept);
+
+    // right column: guides, ghost of the full bet, red gap
+    E.guides = Kit.mk('g', {opacity: .35}, L);
+    for (const sx of [-1, 1]) Kit.mk('line', {x1: X2 + sx * BW / 2, x2: X2 + sx * BW / 2, y1: GY, y2: PT, stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '3 5'}, E.guides);
+    E.ghostO = Kit.mk('path', {d: `M${X2 - BW / 2},${GY} L${X2 - BW / 2},${y(BET)} L${X2 + BW / 2},${y(BET)} L${X2 + BW / 2},${GY}`, stroke: INK, 'stroke-width': 1.2, fill: 'none', 'stroke-dasharray': '5 4', 'stroke-linejoin': 'round'}, L);
+    E.keptR = Kit.mk('g', {}, L);
+    Kit.mk('rect', {x: X2 - BW / 2 + 1, y: y(BET), width: BW - 2, height: y(BACK) - y(BET), fill: 'url(#hR)', opacity: .6}, E.keptR);
+
+    // payback bar
+    E.setRetBar = bar(L, X2, 'gG', GD);
+    E.retO = Kit.mk('path', {d: wob(X2 - BW / 2, y(BACK), X2 + BW / 2, GY), stroke: INK, 'stroke-width': 1.4, fill: 'none', 'stroke-linejoin': 'round'}, L);
+    E.links = Kit.mk('g', {}, L);
+    Kit.mk('line', {x1: X1 + BW / 2 + 4, x2: X2 - BW / 2 - 4, y1: y(BET), y2: y(BET), stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '3 4', opacity: .5}, E.links);
+    Kit.mk('line', {x1: X1 + BW / 2 + 4, x2: X2 - BW / 2 - 4, y1: y(BACK), y2: y(BACK), stroke: RED, 'stroke-width': 1.6, 'stroke-dasharray': '5 4'}, E.links);
+
+    // the guess
+    E.guess = Kit.mk('g', {}, L);
+    E.guessR = Kit.mk('rect', {x: X2 - BW / 2 + 3, width: BW - 6, fill: 'url(#hP)', stroke: INK, 'stroke-width': 1.2, opacity: .9}, E.guess);
+    E.guessLine = Kit.mk('line', {x1: X2 - BW / 2 - 4, x2: X2 + BW / 2 + 3, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '4 3'}, E.guess);
+    E.guessLab = T(E.guess, X2, 0, '', {'text-anchor': 'middle', 'font-size': fs * 1.05, 'font-weight': 800});
+
+    // labels
+    E.betLab = T(L, X1, 0, '€33.5 B', {'text-anchor': 'middle', 'font-size': fs * 1.1, 'font-weight': 800});
+    const halo = {stroke: PAPER, 'stroke-width': 4, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
+    E.keptL = Kit.mk('g', {}, L);
+    const gh = y(BACK) - y(BET), kf = Math.max(12, Math.min(fs, gh * .6, BW / 5.2));
+    const inside = gh * .6 >= 12;
+    T(E.keptL, X2, inside ? (y(BET) + y(BACK)) / 2 + kf * .33 : y(BET) - fs * .4, 'kept €8.5 B', Object.assign({'text-anchor': 'middle', fill: RED, 'font-size': kf, 'font-weight': 800}, halo));
+    const gHalo = {stroke: GD, 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
+    E.retT = T(L, X2, 0, '', Object.assign({'text-anchor': 'middle', fill: PAPER, 'font-size': fs * 1.05, 'font-weight': 800}, gHalo));
+    const top = y(BACK) + fs * 1.6, room = GY - top;
+    E.showRet = room >= 16;
+    const pTop = E.showRet ? top : y(BACK) + 4, pRoom = GY - pTop;
+    const pf = Math.max(12, Math.min(fs * 2, BW * .3, pRoom * .62));
+    E.pct = Kit.mk('g', {}, L);
+    E.pcy = pTop + pRoom / 2;
+    E.pctT = T(E.pct, X2, E.pcy + pf * .33, '74.6%', Object.assign({'text-anchor': 'middle', fill: PAPER, 'font-size': pf, 'font-weight': 800}, gHalo));
+
+    // captions under the bars
+    T(L, X1, GY + fs * 1.3, 'bet', {'text-anchor': 'middle', 'font-size': sf, opacity: .75});
+    E.capR = T(L, X2, GY + fs * 1.3, phase === 'guess' ? 'came back?' : 'came back', {'text-anchor': 'middle', 'font-size': sf, opacity: .75});
+
+    // hint
+    E.hint = Kit.mk('g', {class: 'hint'}, L);
+    const hy = Math.min((PT + GY) / 2 + fs, GY - fs * 1.8);
+    Kit.mk('path', {d: `M${X2},${hy} v-${fs * 2.2} m-6,8 l6,-8 l6,8`, stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.hint);
+    T(E.hint, X2, hy + fs * 1.3, 'drag', {'text-anchor': 'middle', 'font-size': fs});
+    E.coins = Kit.mk('g', {}, L);
+
+    // state
+    const done = phase === 'done';
+    E.setBet(betV); placeBetLab(betV);
+    setRet(done ? BACK : ret);
+    for (const k of REVEALED) show(E[k], done);
+    show(E.ghostO, phase !== 'guess'); E.ghostO.style.opacity = phase !== 'guess' ? .55 : 0;
+    E.guides.style.opacity = phase === 'guess' ? .35 : 0;
+    E.hint.style.display = guess === null && phase === 'guess' ? '' : 'none';
+    drawGuess();
+  }
+
+  function placeBetLab(v) { E.betLab.setAttribute('y', y(v) - fs * .45); }
+
+  function setRet(v) {
+    E.setRetBar(v);
+    const done = phase === 'done';
+    const ok = done ? E.showRet : GY - y(v) >= fs * 1.75;
+    E.retT.style.display = ok ? '' : 'none';
+    E.retT.setAttribute('y', y(v) + fs * 1.15);
+    E.retT.textContent = '€' + (done ? BACK : Math.round(v)) + ' B';
+  }
+
+  function drawGuess() {
+    if (guess === null) { E.guess.style.display = 'none'; return; }
+    E.guess.style.display = '';
+    const gy = y(guess);
+    E.guessR.setAttribute('y', gy); E.guessR.setAttribute('height', Math.max(0, GY - gy));
+    E.guessLine.setAttribute('y1', gy); E.guessLine.setAttribute('y2', gy);
+    if (phase === 'guess') {
+      E.guessR.style.display = '';
+      E.guessLab.setAttribute('x', X2); E.guessLab.setAttribute('y', gy - fs * .45);
+      E.guessLab.setAttribute('text-anchor', 'middle');
+      E.guessLab.setAttribute('font-size', fs * 1.05);
+      E.guessLab.textContent = `€${fmt(guess)} B?`;
+    } else {
+      E.guessR.style.display = 'none';
+      E.guessLab.setAttribute('x', X2 + BW / 2 + 5); E.guessLab.setAttribute('y', gy + sf * .33);
+      E.guessLab.setAttribute('text-anchor', 'start');
+      E.guessLab.setAttribute('font-size', sf);
+      E.guessLab.textContent = '← you';
+    }
+  }
+
+  function setGuess(v) {
+    guess = Math.max(0, Math.min(MAX, Math.round(v * 2) / 2));
+    if (!hinted) { hinted = true; gsap.to(E.hint, {opacity: 0, duration: .25, onComplete: () => E.hint.style.display = 'none'}); sure.on(); say.innerHTML = 'Fine-tune it, then <b>say how sure you are</b>.'; }
+    const i = Math.round(guess);
+    if (i !== lastInt) { lastInt = i; Kit.haptic('selection'); }
+    drawGuess();
+  }
+
+  let dragging = false;
+  const fromY = e => { const r = svg.getBoundingClientRect(); return (GY - (e.clientY - r.top) * (H / r.height)) / (GY - PT) * MAX; };
+  svg.addEventListener('pointerdown', e => { if (phase !== 'guess') return; dragging = true; svg.setPointerCapture(e.pointerId); setGuess(fromY(e)); if (!Kit.calm) gsap.fromTo(E.guessLab, {scale: 1.25, transformOrigin: '50% 100%'}, {scale: 1, duration: .35, ease: 'back.out(3)'}); });
+  svg.addEventListener('pointermove', e => { if (dragging) setGuess(fromY(e)); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => reveal(pct));
+
+  function reveal(pct) {
+    if (phase !== 'guess' || guess === null) return;
+    const ok = Math.abs(guess - BACK) <= 2.5;
+    Kit.answer({choice: `€${fmt(guess)} B`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `€${fmt(guess)} B: ${ok ? 'close!' : 'not quite'}`);
+    phase = 'flying'; ret = 0;
+    // settle the final layout first, so the chart never jumps mid-flight
+    say.innerHTML = FINAL; Kit.show('keep');
+    if (stage.getBoundingClientRect().height < 160) say.style.display = 'none';
+    E.hint.style.display = 'none';
+    drawGuess();
+    if (Kit.calm) { ret = BACK; phase = 'done'; render(); Kit.haptic('success'); return; }
+    say.style.visibility = keep.style.visibility = 'hidden';
+    busy = true;
+    requestAnimationFrame(() => requestAnimationFrame(() => { busy = false; relayout(); launch(); }));
+  }
+
+  function spark(x, yy) {
+    const p = Kit.mk('path', {d: `M${x - 9},${yy - 3} l-5,-5 M${x},${yy - 6} l0,-7 M${x + 9},${yy - 3} l5,-5`, stroke: '#9a6b1c', 'stroke-width': 1.5, 'stroke-linecap': 'round', fill: 'none'}, E.coins);
+    gsap.fromTo(p, {opacity: 1, scale: .6, svgOrigin: `${x} ${yy}`}, {opacity: 0, scale: 1.3, duration: .4, ease: 'power2.out', onComplete: () => p.remove()});
+  }
+
+  function launch() {
+    busy = true;
+    E.capR.textContent = 'came back';
+    gsap.to(E.guides, {opacity: 0, duration: .4});
+    show(E.ghostO, true); gsap.fromTo(E.ghostO, {opacity: 0}, {opacity: .55, duration: .6});
+    const r = Math.max(5, Math.min(fs * .52, BW * .13)), grav = Math.max(900, H * 3), Tt = .72, st = {v: 0};
+    for (let i = 0; i < N; i++) {
+      const c = Kit.mk('g', {}, E.coins), s = Kit.mk('g', {}, c);
+      Kit.mk('circle', {r, fill: 'url(#gC)', stroke: '#5a3e10', 'stroke-width': 1.1}, s);
+      Kit.mk('circle', {r: r * .58, fill: 'none', stroke: '#5a3e10', 'stroke-width': .8, opacity: .6}, s);
+      Kit.mk('path', {d: `M${-r * .45},${-r * .35} q${r * .3},${-r * .35} ${r * .7},${-r * .25}`, stroke: '#fff8dc', 'stroke-width': 1.2, fill: 'none', opacity: .8}, s);
+      const sx = X1 + (Kit.rnd() - .5) * BW * .5, sy = y(BACK - i - .5);
+      const tx = X2 + (Kit.rnd() - .5) * BW * .4, ty = y(i + 1) - r;
+      const vx = (tx - sx) / Tt, vy = (ty - sy - .5 * grav * Tt * Tt) / Tt;
+      gsap.set(c, {x: sx, y: sy, opacity: 0, scale: .4, transformOrigin: '50% 50%'});
+      gsap.to(s, {scaleX: .2, duration: .12, repeat: 5, yoyo: true, ease: 'sine.inOut', delay: i * .06, transformOrigin: '50% 50%'});
+      const tl = gsap.timeline({delay: i * .06});
+      tl.to(c, {opacity: 1, scale: 1, duration: .12, ease: 'back.out(3)'}, 0)
+        .to(c, {physics2D: {velocity: Math.hypot(vx, vy), angle: Math.atan2(vy, vx) * 180 / Math.PI, gravity: grav}, duration: Tt, ease: 'none'}, 0)
+        .to(c, {scaleY: .35, scaleX: 1.3, opacity: 0, duration: .18, ease: 'power2.in', onStart: () => {
+          gsap.to(st, {v: i + 1, duration: .3, ease: 'power3.out', overwrite: true, onUpdate: () => setRet(ret = st.v)});
+          if (i % 2 === 0) spark(tx, y(i + 1));
+          if (i % 4 === 0) Kit.haptic('light');
+          if (i === N - 1) gsap.delayedCall(.3, finish);
+        }, onComplete: () => c.remove()}, Tt);
+    }
+  }
+
+  function finish() {
+    phase = 'done'; ret = BACK; setRet(BACK);
+    Kit.haptic('success');
+    for (const k of REVEALED) { show(E[k], true); E[k].style.opacity = 0; }
+    E.pctT.textContent = '0.0%';
+    drawGuess();
+    const o = {v: 0};
+    gsap.timeline({onComplete: () => { busy = false; if (pending) { pending = false; render(); } }})
+      .to(E.retO, {opacity: 1, duration: .01}, 0)
+      .from(E.retO, {drawSVG: 0, duration: .6, ease: 'power2.inOut'}, 0)
+      .to([E.keptR, E.kept, E.keptL], {opacity: 1, duration: .4, stagger: .08}, .15)
+      .from(E.keptL, {y: -10, duration: .6, ease: 'bounce.out'}, .3)
+      .to(E.links, {opacity: 1, duration: .4}, .3)
+      .to(E.pct, {opacity: 1, duration: .25}, .35)
+      .fromTo(E.pct, {scale: .5, svgOrigin: `${X2} ${E.pcy}`}, {scale: 1, duration: .8, ease: 'elastic.out(1,.55)'}, .35)
+      .to(o, {v: 74.6, duration: 1.1, ease: 'power3.out', onUpdate: () => E.pctT.textContent = o.v.toFixed(1) + '%'}, .35)
+      .add(() => { say.style.visibility = ''; keep.style.visibility = ''; }, .5)
+      .fromTo([say, keep], {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .5, stagger: .12, ease: 'power2.out', clearProps: 'transform'}, .5);
+  }
+
+  function relayout() {
+    if (W === undefined) return;
+    const r = stage.getBoundingClientRect(), sz = Math.round(r.width) + 'x' + Math.round(r.height);
+    if (sz === lastSz) return;
+    if (busy) { pending = true; return; }
+    render();
+  }
+
+  Kit.onShow.card = () => { if (busy) pending = true; else render(); };
+  new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(relayout); }).observe(stage);
+  Kit.onEnter.card = () => {
+    if (Kit.calm || phase !== 'guess') return;
+    const o = {v: 0};
+    gsap.timeline()
+      .from(E.axis, {drawSVG: 0, duration: .6, ease: 'power2.out'})
+      .from(E.base, {drawSVG: 0, duration: .7, ease: 'power3.out'}, .1)
+      .from(E.ticks, {opacity: 0, x: -6, stagger: .08, duration: .4, ease: 'power3.out'}, .2)
+      .from([E.betO, E.betO2], {drawSVG: 0, duration: .8, stagger: .15, ease: 'power2.inOut'}, .3)
+      .to(o, {v: BET, duration: 1.3, ease: 'expo.out', onStart: () => { E.setBet(0); placeBetLab(0); }, onUpdate: () => { betV = o.v; E.setBet(o.v); placeBetLab(o.v); }}, .7)
+      .from(E.betLab, {opacity: 0, duration: .5}, .9)
+      .from(E.guides, {opacity: 0, duration: .5}, 1.1)
+      .from(E.hint, {opacity: 0, y: 8, duration: .5, ease: 'back.out(2)'}, 1.3);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    gsap.globalTimeline.progress(1);
+    betV = BET; E.setBet(BET); placeBetLab(BET);
+    setGuess(30);
+    await wait(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 300 : 4700);
+  };
+})();
+Kit.single();
+</script>
+</html>

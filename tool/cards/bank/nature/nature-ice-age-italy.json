@@ -1,0 +1,38 @@
+{
+  "id": "nature-ice-age-italy",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.greenhouse_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "During the last ice age, which of Italy's sea gaps were land?",
+  "answer": "Sicily, Calabria, Sardinia and Corsica were connected as one large island because sea levels were far lower. Lowering the sea joins islands up, so the gaps that now separate them were dry land.",
+  "move": "Coasts aren't fixed: lower the sea and islands join up.",
+  "keywords": [
+    "italy",
+    "sicily",
+    "sardinia",
+    "corsica",
+    "ice-age"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A map of Italy's sea gaps. The reader taps the gaps they think were dry land during the last ice age, then drags down to drain the sea and see which gaps were land.",
+    "ground": "#1d1013"
+  },
+  "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=JM-n3IqZRCo",
+  "written": "2026-11-04"
+}

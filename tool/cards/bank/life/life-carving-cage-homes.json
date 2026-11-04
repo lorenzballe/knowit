@@ -1,0 +1,37 @@
+{
+  "id": "life-carving-cage-homes",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.enough_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do Hong Kong landlords turn one flat into three homes?",
+  "answer": "Hong Kong landlords carve old flats in giant blocks like the Monster Building into three homes. They do it by adding thin, non-load-bearing walls to existing rooms, a method called cage-home construction, done without government authorization. The resulting homes are the size of a prison cell.",
+  "move": "One old flat, thinner walls, three homes the size of a prison cell.",
+  "keywords": [
+    "hong-kong",
+    "monster-building",
+    "cage-homes",
+    "subdivided-flats"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Floor plan of one old Hong Kong flat. Tap the two thick inner walls to see how the flat is carved into three small homes.",
+    "ground": "#123f72"
+  },
+  "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=6fBSVSmYSaE&t=57s",
+  "written": "2026-11-04"
+}

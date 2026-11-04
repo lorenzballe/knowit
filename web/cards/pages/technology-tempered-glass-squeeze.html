@@ -1,0 +1,420 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-tempered-glass-squeeze -->
+<!-- Look: a mid-century textbook plate on cream paper. A pane of glass in section, in muted teal, ochre and red, halftone dots, slightly off-register print and a numbered figure.
+     Interaction: flip between case A (ordinary) and case B (tempered), then press and hold to load the pane. Tempering plays out: heat to 700 °C with rising shimmer, then a sudden cool. The skin sets first and locks in a squeeze (cream chevrons).
+     Wow: as you load the tempered pane, your push must first eat the squeeze, chevron by chevron, before red pull appears. Then it bursts at about 6.5×, the shards flying with Physics2D. -->
+<title>Why tempered glass is tougher</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#card{background-image:radial-gradient(color-mix(in srgb,var(--k) 6%,transparent) .6px,transparent .8px);background-size:4px 4px}
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#sw{display:flex;gap:2.4cqw;justify-content:center;flex-wrap:wrap}
+.sw{font:700 max(1.6cqh,12px)/1 var(--mono);letter-spacing:.06em;color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 max(.22cqh,1.5px) var(--k);border-radius:99px;padding:max(1.1cqh,8px) max(3.6cqw,12px);cursor:pointer;display:flex;align-items:center;gap:1.6cqw;transition:transform .12s cubic-bezier(.3,1.6,.5,1)}
+.sw i{display:block;width:max(1.3cqh,9px);height:max(1.3cqh,9px);border-radius:50%;box-shadow:0 0 0 1.5px var(--k)}
+.sw.on{background:var(--k);color:var(--c)}
+.sw:active{transform:scale(.95)}
+.sw.nudge{animation:nudge 1.1s ease-in-out infinite}
+@keyframes nudge{50%{transform:scale(1.07)}}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:pointer;-webkit-user-select:none;user-select:none}
+#pic text{font-family:var(--mono);font-weight:700;letter-spacing:.06em}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{font-size:min(8.2cqw,4.8cqh);line-height:1.05}
+.say,.body{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Flip and press · tempered glass" style="--c:#efe5c9;--k:#2b2620;--edge:#cdbf98">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLIP &amp; PRESS</span></div>
+    <h2 class="q">How does thermal tempering make glass stronger?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sw" role="group" aria-label="Which glass">
+        <button class="sw on" data-m="o"><i style="background:#a9cdc2"></i>A · ORDINARY</button>
+        <button class="sw" data-m="t"><i style="background:#3f857e"></i>B · TEMPERED</button>
+      </div>
+      <svg id="pic" role="img" aria-label="Figure: a pane of glass in cross-section, resting on two trestles under a press, with a load gauge below."></svg>
+    </div>
+    <p class="say" id="say">A pane of glass under a press. <b>Press and hold the picture</b> to load it, ordinary glass first.</p>
+    <div id="why" class="gone"><p class="big">About 6–7× stronger</p><p class="body">Heated to about 700 °C, then cooled in an instant, the surface locks in a squeeze. Any knock or sudden heat must undo that squeeze before the glass gives way.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Tempered glass is tougher because its surface is born squeezed.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.Physics2DPlugin) gsap.registerPlugin(Physics2DPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const INK = '#2b2620', PAPER = '#efe5c9', OCHRE = '#c99a3a', GLASS = '#a9cdc2', DEEP = '#3f857e', RED = '#b6412e', HOT = '#d8692f';
+  const mix = (a, b, t) => gsap.utils.interpolate(a, b, Math.max(0, Math.min(1, t)));
+  const S = {load: 0, C: 0, heat: 0, skin: 0, glow: 0, jets: 0};
+  const SQ = 5.5;                       // the squeeze tempering adds, in units of ordinary strength (ordinary = 1)
+  let mode = 'o', holding = false, busy = false, tempering = false, done = false, speed = 1, chipText = null, passed1 = false, shown = false, hintTw = null;
+  const broken = {o: false, t: false}, marks = {};
+  let W = 0, H = 0, fs = 12, G = {}, E = {};
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs}, a), p); e.textContent = s; return e; };
+  const clamp = (a, v, b) => Math.max(a, Math.min(b, v));
+
+  const TT = [.1, .2, .3, .38, .62, .7, .8, .9], TB = [.1, .2, .3, .4, .6, .7, .8, .9];
+
+  function layout() {
+    if (hintTw) { hintTw.kill(); hintTw = null; }
+    svg.innerHTML = ''; E = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    if (!(W > 40 && H > 40)) return;
+    fs = clamp(12, W / 26, 15);
+    const x0 = W * .07, x1 = W * .93, cx = W / 2;
+    const compact = H < fs * 13.8;
+    const titleH = fs * 2.3, gaugeH = compact ? fs * 2.8 : fs * 3.7;
+    const gy = compact ? H - fs * .9 : H - fs * 1.75;
+    const top = titleH, bot = H - gaugeH - fs * .3, avail = bot - top;
+    const R0 = compact ? fs * 2.2 : fs * 2.6, U0 = compact ? fs * 1.6 : fs * 2.7;
+    const T = Math.max(fs * 1.6, Math.min(W * .17, avail * .3, avail - R0 - U0));
+    let U = Math.max(U0, Math.min(T * 1.3, avail - T - R0));
+    let R = avail - T - U, pad = 0;
+    if (R > fs * 6.5) { const ex = R - fs * 6.5; R = fs * 6.5; U += ex * .5; pad = ex * .5; }
+    const yT = top + pad + R, yB = yT + T, s = T * .26, bench = yB + U;
+    const ramTop = top + pad + fs * .75, headH = compact ? fs * 1.15 : fs * 1.5;
+    // Callout labels need clear space between the title rule and the pane; drop them when squeezed.
+    const labY = yT - fs * 1.05, showLab = labY - fs * .95 >= fs * 2.4;
+    G = {x0, x1, cx, ramTop, T, U, yT, yB, s, bench, gy, compact, headH, showLab};
+
+    const defs = mk('defs', {}, svg);
+    const pat = (id, sz, r, col) => { const p = mk('pattern', {id, width: sz, height: sz, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs); mk('circle', {cx: sz / 2, cy: sz / 2, r, fill: col}, p); };
+    pat('htA', 4.5, .9, INK); pat('htB', 3.4, 1.05, INK); pat('htR', 5, 1.5, RED);
+    const fl = mk('filter', {id: 'blur', x: '-30%', y: '-120%', width: '160%', height: '340%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: fs * .9}, fl);
+
+    // Title and rule: the printed plate. The readout chip shares the title row.
+    E.title = mk('g', {}, svg);
+    txt(E.title, x0, fs * 1.18, 'FIG. 7 — SECTION');
+    mk('line', {x1: x0, x2: x1, y1: fs * 2, y2: fs * 2, stroke: INK, 'stroke-width': 1, opacity: .5}, E.title);
+    mk('line', {x1: x0, x2: x0 + fs * 3, y1: fs * 2.25, y2: fs * 2.25, stroke: RED, 'stroke-width': 1.2, opacity: .6}, E.title);
+
+    // Bench, trestles and a halftone shadow.
+    E.base = mk('g', {}, svg);
+    mk('ellipse', {cx, cy: bench + fs * .3, rx: (x1 - x0) * .5, ry: fs * .45, fill: 'url(#htA)', opacity: .4}, E.base);
+    mk('line', {x1: x0 - fs * .6, x2: x1 + fs * .6, y1: bench, y2: bench, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, E.base);
+    E.supports = [];
+    const bw = fs * 1.1 + U * .08;
+    for (const xs of [x0 + fs * .9, x1 - fs * .9]) {
+      const g = mk('g', {}, E.base), d = `M${xs},${yB} L${xs + bw},${bench} L${xs - bw},${bench}Z`;
+      mk('path', {d, fill: OCHRE}, g); mk('path', {d, fill: 'url(#htA)', opacity: .35}, g);
+      mk('path', {d: `M${xs},${yB} L${xs + bw},${bench} L${xs - bw},${bench}Z`, fill: 'none', stroke: RED, 'stroke-width': 1, opacity: .35, transform: 'translate(1.5,1)'}, g);
+      mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+      E.supports.push(g);
+    }
+
+    // The heat glow behind the pane, and rising shimmer above it.
+    E.glow = mk('path', {fill: RED, filter: 'url(#blur)', opacity: 0}, svg);
+    E.heat = mk('g', {opacity: 0, fill: 'none', stroke: HOT, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, svg);
+    const hh = Math.min(fs * 1.5, R * .55), q = hh / 4;
+    for (const t of [.3, .38, .62, .7]) {
+      const x = x0 + (x1 - x0) * t, y = yT - fs * .35;
+      mk('path', {d: `M${x},${y} q${q * .9},${-q} 0,${-2 * q} t0,${-2 * q}`}, E.heat);
+    }
+
+    // The pane: a core between two surface skins.
+    E.slab = mk('g', {}, svg);
+    E.core = mk('path', {}, E.slab); E.skT = mk('path', {}, E.slab); E.skB = mk('path', {}, E.slab);
+    E.htC = mk('path', {fill: 'url(#htA)', opacity: .22}, E.slab);
+    E.htT = mk('path', {fill: 'url(#htB)', opacity: .2}, E.slab); E.htBt = mk('path', {fill: 'url(#htB)', opacity: .2}, E.slab);
+    E.ifT = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '4 3'}, E.slab);
+    E.ifB = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '4 3'}, E.slab);
+    E.mis = mk('path', {fill: 'none', stroke: RED, 'stroke-width': 1.4, opacity: .45, transform: 'translate(1.8,1.3)'}, E.slab);
+    E.out = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, E.slab);
+    E.hl = mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 1.4, opacity: .5, 'stroke-linecap': 'round'}, E.slab);
+
+    // Chevrons: cream = squeeze (pointing in), red = pull (pointing out).
+    E.chev = mk('g', {'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none', 'stroke-width': 2.2}, svg);
+    const a = Math.min(s * .34, fs * .5);
+    const chev = () => mk('path', {d: `M${-a},${-a} L0,0 L${-a},${a}`}, E.chev);
+    E.cT = TT.map(chev); E.cB = TB.map(chev);
+
+    // Cooling air jets.
+    E.jets = mk('g', {opacity: 0, stroke: DEEP, 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    E.jT = mk('g', {}, E.jets); E.jB = mk('g', {}, E.jets);
+    const L = Math.min(fs * 1.5, R * .5), Lb = Math.min(fs * 1.5, U * .55);
+    for (const t of [.14, .28, .72, .86]) { const x = x0 + (x1 - x0) * t; mk('path', {d: `M${x},${yT - fs * .4 - L} V${yT - fs * .4} m-4,-6 l4,6 l4,-6`}, E.jT); }
+    for (const t of [.2, .34, .5, .66, .8]) { const x = x0 + (x1 - x0) * t; mk('path', {d: `M${x},${yB + fs * .4 + Lb} V${yB + fs * .4} m-4,6 l4,-6 l4,6`}, E.jB); }
+
+    // The press.
+    E.ram = mk('g', {}, svg);
+    const rw = Math.max(fs * 2.6, W * .13);
+    G.rw = rw;
+    mk('rect', {x: cx - rw * .8, y: ramTop - fs * .55, width: rw * 1.6, height: fs * .55, fill: INK}, E.ram);
+    mk('rect', {x: cx - rw * .8, y: ramTop - fs * .55, width: rw * 1.6, height: fs * .55, fill: 'url(#htR)', opacity: .5}, E.ram);
+    E.shaft = mk('rect', {x: cx - rw * .12, y: ramTop, width: rw * .24, height: 0, fill: INK}, E.ram);
+    E.head = mk('rect', {x: cx - rw / 2, y: ramTop, width: rw, height: headH, rx: 2, fill: OCHRE, stroke: INK, 'stroke-width': 1.6}, E.ram);
+    E.headHt = mk('rect', {x: cx - rw / 2, y: ramTop, width: rw, height: headH, rx: 2, fill: 'url(#htA)', opacity: .35}, E.ram);
+
+    // Callouts.
+    E.lab = mk('g', showLab ? {} : {display: 'none'}, svg);
+    txt(E.lab, x0, labY, '① SURFACE');
+    txt(E.lab, x1, labY, '② CORE', {'text-anchor': 'end'});
+    E.ld1 = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1}, E.lab); E.ld1d = mk('circle', {cx: x0, cy: yT, r: 2.4, fill: INK}, E.lab);
+    E.ld2 = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1}, E.lab); E.ld2d = mk('circle', {cx: x1, cy: yT, r: 2.4, fill: INK}, E.lab);
+
+    // Load gauge.
+    E.gauge = mk('g', {}, svg);
+    mk('line', {x1: x0, x2: x1, y1: gy, y2: gy, stroke: INK, 'stroke-width': fs * .5, opacity: .14, 'stroke-linecap': 'round'}, E.gauge);
+    E.gFill = mk('line', {x1: x0, x2: x0, y1: gy, y2: gy, stroke: RED, 'stroke-width': fs * .5, 'stroke-linecap': 'round'}, E.gauge);
+    for (let v = 0; v <= 7; v++) {
+      const x = x0 + (x1 - x0) * v / 7;
+      mk('line', {x1: x, x2: x, y1: gy - fs * .4, y2: gy + fs * .4, stroke: INK, 'stroke-width': 1.2}, E.gauge);
+      if (v && !compact) txt(E.gauge, x, gy + fs * 1.45, `${v}×`, {'text-anchor': 'middle', 'font-weight': 600});
+    }
+    E.marks = mk('g', {}, E.gauge); drawMarks();
+
+    // Readout chip, in the title row.
+    E.chip = mk('g', {}, svg);
+    E.chipR = mk('rect', {x: x1 - fs * 5, y: fs * .08, width: fs * 5, height: fs * 1.55, rx: 3, fill: INK}, E.chip);
+    E.chipT = txt(E.chip, x1 - fs * .5, fs * 1.2, '', {fill: PAPER, 'text-anchor': 'end', 'font-size': Math.max(12, fs * .92)});
+
+    // Crack, burst, shards, hint.
+    E.crack = mk('path', {fill: 'none', stroke: RED, 'stroke-width': 2.4, 'stroke-linejoin': 'round', opacity: 0}, svg);
+    E.ring = mk('circle', {cx, cy: (yT + yB) / 2, r: fs, fill: 'none', stroke: RED, 'stroke-width': 3, opacity: 0}, svg);
+    E.shards = mk('g', {}, svg);
+    E.hint = txt(svg, cx, yB + Math.max(fs * 1.15, Math.min(fs * 1.9, U - fs * .45)), 'PRESS & HOLD THE GLASS', {'text-anchor': 'middle', fill: RED});
+    hintTw = gsap.fromTo(E.hint, {opacity: .45}, {opacity: 1, duration: .8, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+    render();
+  }
+
+  function drawMarks() {
+    if (!E.marks) return;
+    E.marks.innerHTML = '';
+    const {x0, x1, gy} = G;
+    for (const [k, v] of Object.entries(marks)) {
+      const x = x0 + (x1 - x0) * Math.min(7, v) / 7, r = fs * .38;
+      mk('path', {d: `M${x - r},${gy - r}L${x + r},${gy + r}M${x + r},${gy - r}L${x - r},${gy + r}`, stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, E.marks);
+      const pw = fs * 1.5, ph = fs * 1.25, py = gy - fs * 2.05;
+      mk('path', {d: `M${x},${gy - fs * .6} L${x - fs * .3},${py + ph} L${x + fs * .3},${py + ph}Z`, fill: INK}, E.marks);
+      mk('rect', {x: x - pw / 2, y: py, width: pw, height: ph, rx: ph / 2, fill: k === 'o' ? GLASS : DEEP, stroke: INK, 'stroke-width': 1.4}, E.marks);
+      txt(E.marks, x, py + ph * .76, k === 'o' ? 'A' : 'B', {'text-anchor': 'middle', fill: k === 'o' ? INK : PAPER, 'font-size': Math.max(12, fs * .85)});
+    }
+  }
+
+  const defl = () => Math.min(G.T * .22 * Math.pow(Math.max(0, S.load), .6), G.U * .72);
+
+  function render() {
+    if (!E.core) return;
+    const {x0, x1, cx, yT, yB, s, ramTop, headH} = G, d = defl();
+    const X = t => x0 + (x1 - x0) * t, yAt = (y0, t) => y0 + 4 * d * t * (1 - t);
+    const band = (a, b) => `M${x0},${a} Q${cx},${a + 2 * d} ${x1},${a} L${x1},${b} Q${cx},${b + 2 * d} ${x0},${b}Z`;
+    const line = a => `M${x0},${a} Q${cx},${a + 2 * d} ${x1},${a}`;
+    const c = S.C / SQ;
+    const coreCol = mix(GLASS, HOT, S.heat), skinBase = mix(GLASS, DEEP, c), skinCol = mix(skinBase, HOT, S.skin);
+    E.glow.setAttribute('d', band(yT, yB)); E.glow.setAttribute('opacity', S.glow * .6);
+    const ph = (gsap.ticker.time * .9) % 1;
+    E.heat.setAttribute('opacity', S.glow * (1 - ph * .8));
+    E.heat.setAttribute('transform', `translate(${Math.sin(gsap.ticker.time * 7) * 1.5},${-ph * fs * .6})`);
+    E.core.setAttribute('d', band(yT + s, yB - s)); E.core.setAttribute('fill', coreCol);
+    E.skT.setAttribute('d', band(yT, yT + s)); E.skT.setAttribute('fill', skinCol);
+    E.skB.setAttribute('d', band(yB - s, yB)); E.skB.setAttribute('fill', skinCol);
+    E.htC.setAttribute('d', band(yT + s, yB - s)); E.htT.setAttribute('d', band(yT, yT + s)); E.htBt.setAttribute('d', band(yB - s, yB));
+    E.ifT.setAttribute('d', line(yT + s)); E.ifB.setAttribute('d', line(yB - s));
+    E.ifT.setAttribute('opacity', .15 + .6 * c); E.ifB.setAttribute('opacity', .15 + .6 * c);
+    E.mis.setAttribute('d', band(yT, yB)); E.out.setAttribute('d', band(yT, yB));
+    E.hl.setAttribute('d', `M${x0 + 6},${yT + 3} Q${cx},${yT + 3 + 2 * d} ${x1 - 6},${yT + 3}`);
+
+    const place = (arr, ts, y0, inten, inward, col) => arr.forEach((p, i) => {
+      const t = ts[i], x = X(t), y = yAt(y0, t), sl = Math.atan(4 * d * (1 - 2 * t) / (x1 - x0)) * 180 / Math.PI;
+      const dir = (t < .5 ? 1 : -1) * (inward ? 1 : -1), sc = .55 + .45 * inten;
+      p.setAttribute('transform', `translate(${x},${y}) rotate(${sl}) scale(${dir * sc},${sc})`);
+      p.setAttribute('opacity', Math.min(1, inten)); p.setAttribute('stroke', col);
+    });
+    place(E.cT, TT, yT + s / 2, c, true, PAPER);
+    const net = S.C - S.load;
+    if (net >= 0) place(E.cB, TB, yB - s / 2, net / SQ, true, PAPER);
+    else place(E.cB, TB, yB - s / 2, Math.min(1, -net), false, RED);
+
+    E.jets.setAttribute('opacity', S.jets);
+    E.jT.setAttribute('transform', `translate(0,${-(1 - S.jets) * fs})`);
+    E.jB.setAttribute('transform', `translate(0,${(1 - S.jets) * fs})`);
+
+    const hb = yT + d, ht = hb - headH;
+    E.shaft.setAttribute('height', Math.max(0, ht - ramTop));
+    E.head.setAttribute('y', ht); E.headHt.setAttribute('y', ht);
+
+    const p1 = [X(.17), yAt(yT + s / 2, .17)], p2 = [X(.83), yAt((yT + yB) / 2, .83)];
+    E.ld1.setAttribute('d', `M${x0 + fs * 1.6},${yT - fs * .7} L${p1[0]},${p1[1]}`); E.ld1d.setAttribute('cx', p1[0]); E.ld1d.setAttribute('cy', p1[1]);
+    E.ld2.setAttribute('d', `M${x1 - fs * 1.6},${yT - fs * .7} L${p2[0]},${p2[1]}`); E.ld2d.setAttribute('cx', p2[0]); E.ld2d.setAttribute('cy', p2[1]);
+
+    const gx = x0 + (x1 - x0) * Math.min(7, S.load) / 7;
+    E.gFill.setAttribute('x2', gx); E.gFill.setAttribute('opacity', S.load > .02 ? 1 : 0);
+
+    const ct = chipText || `LOAD ×${S.load.toFixed(1)}`;
+    if (E.chipT.textContent !== ct) {
+      E.chipT.textContent = ct;
+      const w = E.chipT.getComputedTextLength() + fs * 1.1;
+      E.chipR.setAttribute('x', x1 - w); E.chipR.setAttribute('width', w);
+      E.chipT.setAttribute('x', x1 - fs * .55);
+    }
+    E.chipR.setAttribute('fill', chipText ? (S.heat > .3 ? RED : DEEP) : INK);
+    E.hint.style.display = (!holding && !busy && !tempering && !done && S.load < .05) ? '' : 'none';
+  }
+
+  // ---------- pressing ----------
+  function start() {
+    if (busy || tempering || holding) return;
+    holding = true; passed1 = false; Kit.haptic('selection');
+    if (done) return;
+    if (mode === 't') say.innerHTML = 'Your push must first <b>undo the squeeze</b> in the surface before it can pull it apart. Keep holding.';
+    else say.innerHTML = 'Ordinary glass: nothing in its surface pushes back. <b>Keep holding.</b>';
+  }
+  function stop() { holding = false; }
+  svg.addEventListener('pointerdown', e => { e.preventDefault(); try { svg.setPointerCapture(e.pointerId); } catch (_) {} start(); });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(n => svg.addEventListener(n, stop));
+
+  gsap.ticker.add((t, dtms) => {
+    const dt = Math.min(.05, dtms / 1000);
+    if (holding) {
+      S.load += dt * speed * (.9 + .6 * S.load);
+      if (mode === 't' && !passed1 && S.load > 1) { passed1 = true; Kit.haptic('light'); }
+      if (S.C - S.load < -1) brk();
+    } else if (S.load > 0 && !busy) S.load = Math.max(0, S.load - dt * (2.4 + 2 * S.load));
+    render();
+  });
+
+  // ---------- breaking ----------
+  function brk() {
+    holding = false; busy = true;
+    const which = mode; broken[which] = true; marks[which] = S.load; drawMarks();
+    Kit.haptic('light');
+    if (!E.core) { setTimeout(() => restore(which), 300); return; }
+    const {cx, yT, yB} = G, d = defl();
+    let pts = [[cx, yB + d]], n = 5;
+    for (let i = 1; i <= n; i++) pts.push([cx + (i % 2 ? 1 : -1) * fs * (.25 + Kit.rnd() * .4), yB + d - (yB - yT) * i / n]);
+    E.crack.setAttribute('d', 'M' + pts.map(p => p.join(',')).join('L'));
+    const len = E.crack.getTotalLength();
+    gsap.set(E.crack, {attr: {'stroke-dasharray': len, 'stroke-dashoffset': len}, opacity: 1});
+    if (Kit.calm) {
+      gsap.set(E.crack, {attr: {'stroke-dashoffset': 0}});
+      gsap.set([E.slab, E.chev], {opacity: .2});
+      setTimeout(() => restore(which), 700);
+      return;
+    }
+    gsap.to(E.crack, {attr: {'stroke-dashoffset': 0}, duration: .14, ease: 'power2.in', onComplete: () => shatter(which)});
+  }
+
+  function shatter(which) {
+    if (!E.core) { setTimeout(() => restore(which), 300); return; }
+    const {x0, x1, cx, yT, yB} = G, d = defl();
+    const yAt = (y0, t) => y0 + 4 * d * t * (1 - t), tOf = x => (x - x0) / (x1 - x0), yM = (yT + yB) / 2;
+    const coreCol = mix(GLASS, DEEP, S.C / SQ * .6);
+    gsap.set([E.slab, E.chev, E.glow, E.crack], {opacity: 0});
+    const N = which === 't' ? 9 : 6, cuts = [x0], jag = [0];
+    for (let i = 1; i < N; i++) { cuts.push(x0 + (x1 - x0) * (i / N) + (Kit.rnd() - .5) * (x1 - x0) / N * .5); jag.push((Kit.rnd() - .5) * fs * 1.3); }
+    cuts.push(x1); jag.push(0);
+    const k = Math.max(.6, H / 420);
+    for (let i = 0; i < N; i++) {
+      const xa = cuts[i], xb = cuts[i + 1], pts = [];
+      for (let j = 0; j <= 4; j++) { const x = xa + (xb - xa) * j / 4; pts.push([x, yAt(yT, tOf(x))]); }
+      pts.push([xb + jag[i + 1], yAt(yM, tOf(xb))]);
+      for (let j = 4; j >= 0; j--) { const x = xa + (xb - xa) * j / 4; pts.push([x, yAt(yB, tOf(x))]); }
+      pts.push([xa + jag[i], yAt(yM, tOf(xa))]);
+      const ps = pts.map(p => p.join(',')).join(' ');
+      const g = mk('g', {}, E.shards);
+      mk('polygon', {points: ps, fill: coreCol}, g);
+      mk('polygon', {points: ps, fill: 'url(#htB)', opacity: .25}, g);
+      mk('polygon', {points: ps, fill: 'none', stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, g);
+      const mx = (xa + xb) / 2;
+      const ang = -90 + ((mx - cx) / (W * .5)) * 62 + (Kit.rnd() - .5) * 24;
+      gsap.to(g, {duration: 1.5, physics2D: {velocity: (260 + Kit.rnd() * 300) * k * (which === 't' ? 1.25 : 1), angle: ang, gravity: 1500 * k}, rotation: (Kit.rnd() - .5) * 560, transformOrigin: '50% 50%'});
+      gsap.to(g, {opacity: 0, duration: .35, delay: 1.1});
+    }
+    for (let i = 0; i < 16; i++) {
+      const r = fs * (.2 + Kit.rnd() * .35), y = yM + d;
+      const p = mk('path', {d: `M${cx},${y - r}L${cx + r},${y + r}L${cx - r * .8},${y + r * .6}Z`, fill: i % 3 ? GLASS : RED, stroke: INK, 'stroke-width': 1}, E.shards);
+      gsap.to(p, {duration: 1.3, physics2D: {velocity: (200 + Kit.rnd() * 380) * k, angle: -90 + (Kit.rnd() - .5) * 150, gravity: 1300 * k}, rotation: Kit.rnd() * 720, transformOrigin: '50% 50%'});
+      gsap.to(p, {opacity: 0, duration: .3, delay: 1});
+    }
+    const ring = E.ring, rp = {r: fs, o: .9};
+    ring.setAttribute('cx', cx); ring.setAttribute('cy', yM + d);
+    gsap.to(rp, {r: W * .42, o: 0, duration: .7, ease: 'expo.out', onUpdate: () => { ring.setAttribute('r', rp.r); ring.setAttribute('opacity', rp.o); }});
+    gsap.to(S, {load: 0, duration: .7, ease: 'back.out(2)'});
+    setTimeout(() => restore(which), 1450);
+  }
+
+  function restore(which) {
+    S.load = 0;
+    if (E.core) {
+      E.shards.innerHTML = '';
+      gsap.set(E.crack, {opacity: 0});
+      gsap.set(E.glow, {opacity: 1});
+      if (Kit.calm) gsap.set([E.slab, E.chev], {opacity: 1, y: 0});
+      else gsap.fromTo([E.slab, E.chev], {opacity: 0, y: -G.T}, {opacity: 1, y: 0, duration: .7, ease: 'back.out(1.7)', stagger: .04});
+    }
+    busy = false;
+    if (which === 'o' && !done) {
+      say.innerHTML = 'Ordinary glass gave way at <b>1×</b>. Now flip to <b>B · Tempered</b> and watch how it is made.';
+      if (!broken.t) document.querySelector('.sw[data-m="t"]').classList.add('nudge');
+    }
+    if (which === 't' && !done) reveal();
+  }
+
+  function reveal() {
+    done = true;
+    Kit.hide('say'); Kit.hide('sw'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, duration: .4, stagger: .08, ease: 'power3.out'});
+  }
+
+  // ---------- the switch ----------
+  function setMode(m) {
+    if (m === mode || busy) return;
+    holding = false; mode = m;
+    document.querySelectorAll('.sw').forEach(b => { b.classList.toggle('on', b.dataset.m === m); b.classList.remove('nudge'); });
+    Kit.haptic('selection');
+    gsap.killTweensOf(S);
+    if (m === 'o') {
+      tempering = false; chipText = null;
+      gsap.to(S, {C: 0, heat: 0, skin: 0, glow: 0, jets: 0, duration: Kit.calm ? 0 : .6, ease: 'power2.out'});
+      if (!done) say.innerHTML = 'Ordinary glass: no squeeze in its surface. <b>Press and hold</b> to load it.';
+      return;
+    }
+    tempering = true;
+    if (!done) say.innerHTML = 'Making tempered glass: heat the pane to about <b>700 °C</b>…';
+    if (Kit.calm) { Object.assign(S, {C: SQ, heat: 0, skin: 0, glow: 0, jets: 0}); afterTemper(); return; }
+    gsap.timeline({onComplete: afterTemper})
+      .to(S, {heat: 1, skin: 1, glow: 1, C: 0, duration: 1, ease: 'power2.inOut', onUpdate: () => { chipText = `${Math.round(20 + 680 * S.heat)} °C`; }})
+      .add(() => { chipText = 'RAPID COOL'; Kit.haptic('light'); if (!done) say.innerHTML = '…then cool it <b>in an instant</b>. The surface cools and shrinks first, around a core still hot.'; }, '+=.25')
+      .to(S, {jets: 1, duration: .25, ease: 'power3.out'})
+      .to(S, {skin: 0, duration: .35, ease: 'expo.out'}, '<.05')
+      .to(S, {C: SQ, duration: 1, ease: 'back.out(2.4)'}, '<')
+      .to(S, {heat: 0, glow: 0, duration: 1.1, ease: 'power2.out'}, '<.3')
+      .to(S, {jets: 0, duration: .4, ease: 'power2.in'}, '-=.35');
+  }
+  function afterTemper() {
+    tempering = false; chipText = null;
+    if (!done) say.innerHTML = 'The surface is now <b>locked in a squeeze</b> (cream arrows). <b>Press and hold</b> again.';
+  }
+  Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('.sw'); if (b) setMode(b.dataset.m); });
+
+  let raf = 0;
+  new ResizeObserver(() => { if (!shown) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(layout); }).observe(Kit.$('stage'));
+  Kit.onShow.card = () => { shown = true; layout(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !E.core) return;
+    gsap.timeline()
+      .from(E.title, {opacity: 0, y: -6, duration: .5, ease: 'power3.out'})
+      .from(E.supports, {scaleY: 0, transformOrigin: '50% 100%', duration: .5, stagger: .08, ease: 'back.out(2)'}, '-=.2')
+      .from(E.slab, {y: -G.T * 1.6, opacity: 0, duration: .8, ease: 'bounce.out'}, '-=.2')
+      .from(E.ram, {y: -G.T * 1.4, opacity: 0, duration: .6, ease: 'power3.out'}, '-=.5')
+      .from([E.lab, E.chip], {opacity: 0, duration: .4, stagger: .1}, '-=.3')
+      .from(E.gauge, {opacity: 0, x: -10, duration: .5, ease: 'power3.out'}, '-=.3');
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    const until = async (f, max) => { const t0 = Date.now(); while (!f() && Date.now() - t0 < max) await w(40); };
+    speed = 4;
+    start(); await until(() => broken.o, 4000); stop(); await until(() => !busy, 4000);
+    setMode('t'); await until(() => !tempering, 6000);
+    start(); await until(() => broken.t, 6000); stop(); await until(() => done, 4000);
+    await w(Kit.calm ? 60 : 900); speed = 1;
+  };
+})();
+Kit.single();
+</script>
+</html>

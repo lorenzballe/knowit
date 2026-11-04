@@ -1,0 +1,38 @@
+{
+  "id": "psychology-gravity-hill",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.anchoring_bias",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a downhill road appear to be uphill?",
+  "answer": "The middle stretch actually runs downhill. With no horizon to see, the brain judges a slope against the road next to it, so a downhill stretch can look like it climbs.",
+  "move": "With no horizon to see, the brain judges a slope against the road next to it.",
+  "keywords": [
+    "gravity hill",
+    "horizon",
+    "trees",
+    "slope",
+    "car"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Titled The road that climbs downhill, an optical illusion page asks why a downhill road looks uphill. A swing-the-needle control asks whether the road's middle stretch is going up or down, with a short explanation about judging slope against nearby road when no horizon is visible.",
+    "ground": "#17231d"
+  },
+  "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=GDR2odTE7dM&t=918s",
+  "written": "2026-11-04"
+}
