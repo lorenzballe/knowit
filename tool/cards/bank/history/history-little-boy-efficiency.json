@@ -1,0 +1,38 @@
+{
+  "id": "history-little-boy-efficiency",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was Little Boy so inefficient?",
+  "answer": "Only 1.5% of Little Boy's uranium split; the other 98.5% was scattered as radioactive waste. Even so, the bomb released 16 kilotons of energy.",
+  "move": "Little Boy wasted 98.5% of its uranium and still released 16 kilotons.",
+  "keywords": [
+    "little boy",
+    "uranium",
+    "chain reaction",
+    "nuclear fission",
+    "hiroshima"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page. A grid of dots stands for uranium, each dot 0.1% of the bomb's uranium. Holding the button runs a chain reaction, showing how many dots split. Asks why Little Boy was so inefficient.",
+    "ground": "#0f1415"
+  },
+  "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=o47-tXGxpv8&t=236s",
+  "written": "2026-11-04"
+}

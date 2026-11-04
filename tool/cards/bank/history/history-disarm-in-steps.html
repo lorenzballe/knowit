@@ -1,0 +1,329 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-disarm-in-steps -->
+<!-- Look: a phosphor-green oscilloscope printed straight onto a black card. Graticule, glowing traces for the US and USSR stockpiles from 1950 to 1986, a slow idle scan line, a pulsing blip on the live trace and a scrolling terminal log.
+     Interaction: choose ALL AT ONCE (the US trace starts to plunge, the USSR trace climbs, BOTH DEFECT) or STEP BY STEP. Each tap cuts a few, a scan beam checks, and a ✓ is drawn while trust fills up.
+     Wow: the dashed plan's single cliff MORPHS into a staircase. At the end a beam sweeps the whole descent, every ✓ pulses in turn and the traces bloom. -->
+<title>Disarm in small steps</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#card{background-color:#04120a;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)}
+#card .q{color:#b6ffcb;text-shadow:0 0 14px rgba(110,255,160,.35)}
+#card .say,#card .body{color:#a6f7bd}
+#card .say b{color:#e6fff0}
+#stage{display:flex;flex:1;min-height:0;background:none !important;background-color:transparent !important;background-image:none !important;border:0 !important;outline:0 !important;box-shadow:none !important;border-radius:0 !important;backdrop-filter:none !important}
+#stage::before,#stage::after{content:none !important;display:none !important;background:none !important;box-shadow:none !important;border:0 !important}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;background:none;border:0;box-shadow:none;border-radius:0}
+#ctl{display:flex;gap:2.4cqw}
+.key{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.15 var(--mono);color:#b6ffcb;background:rgba(120,255,165,.06);border:0;box-shadow:inset 0 0 0 1.5px rgba(141,255,176,.55),0 0 14px rgba(90,255,150,.14);border-radius:.9cqh;padding:1.3cqh 3cqw;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;text-align:left;text-shadow:0 0 8px rgba(110,255,160,.45);overflow-wrap:anywhere}
+.key small{display:block;font:500 max(1.5cqh,12px)/1.2 var(--mono);text-transform:none;letter-spacing:0;opacity:.72;margin-top:.4cqh}
+.key:active{background:#8dffb0;color:#03100a;text-shadow:none}
+.key.amber{color:#ffd08a;box-shadow:inset 0 0 0 1.5px rgba(255,181,71,.6),0 0 14px rgba(255,181,71,.12);background:rgba(255,181,71,.05);text-shadow:0 0 8px rgba(255,181,71,.4)}
+.cur{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.kit-calm .cur{animation:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+#why .body{margin:0}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap · disarm step by step" style="--c:#04120a;--k:#9dffbb;--edge:#010503">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STEP BY STEP</span></div>
+    <h2 class="q">How did the US and USSR manage nuclear disarmament?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="An oscilloscope trace of US and Soviet nuclear stockpiles rising from 1950 to 1986, then a planned descent: one cliff or a staircase of small checked steps."></svg>
+    </div>
+    <div id="ctl">
+      <button class="key amber" id="bOnce">▸ All at once<small>one big treaty</small></button>
+      <button class="key" id="bStep">▸ Step by step<small>a few a year, then check</small></button>
+      <button class="key gone" id="bCut">▸ Cut a few · check<small id="yr">year 1 of 6</small></button>
+    </div>
+    <p class="say" id="say">Both sides want fewer nukes. <b>Pick how to disarm.</b></p>
+    <div id="why" class="gone"><p class="body">One all-or-nothing treaty is a single Prisoner’s Dilemma, and the safe move is to cheat. Cutting a few nukes a year, then checking, turns it into a repeated game. Every check builds trust for the next step.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Trust between rivals is built in small steps you can check.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), card = Kit.$('card'), say = Kit.$('say'), stage = Kit.$('stage');
+  const N = 6, G = '#8dffb0', G2 = '#4dff86', HOT = '#eafff0', AMBER = '#ffb547';
+  const TOPU = .9, TOPS = .85, BOTU = .16, BOTS = .1, PV = .875, PB = .13;
+  const dvU = (TOPU - BOTU) / N, dvS = (TOPS - BOTS) / N, PD = (PV - PB) / N;
+  let hasMorph = false, hasScr = false;
+  try { if (window.MorphSVGPlugin) { gsap.registerPlugin(MorphSVGPlugin); hasMorph = true; } } catch (e) {}
+  try { if (window.ScrambleTextPlugin) { gsap.registerPlugin(ScrambleTextPlugin); hasScr = true; } } catch (e) {}
+  const D = x => Kit.calm ? 0 : x;
+
+  let W = 0, H = 0, fs = 12, lfs = 12, pL, pR, pT, pB, xa, xb, sw;
+  let phase = 'intro', planShape = 'cliff', k = 0, busy = false, lastSize = '', shown = false;
+  const logs = ['> 1950–1986: BOTH KEEP ADDING NUKES', '> GOAL: DISARM. CHOOSE A PROTOCOL'];
+  const E = {rows: 3, amb: []};
+  const sizeKey = () => { const r = stage.getBoundingClientRect(); return `${Math.round(r.width)}x${Math.round(r.height)}`; };
+
+  const xs = t => pL + t * (W - pR - pL);
+  const ys = v => pT + (1 - v) * (pB - pT);
+  const mixD = (v0, dv, t) => { let d = `M${xa},${ys(v0)}`; for (let i = 1; i <= N; i++) d += ` V${ys(v0 - dv * (N * (1 - t) + i * t))} H${xa + i * sw}`; return d; };
+  const histU = s => .06 + .84 * Math.pow(s, 1.5) + .12 * Math.sin(s * Math.PI * 6) * s * (1 - s);
+  const histS = s => .02 + .83 * Math.pow(s, 1.8) + .1 * Math.sin(s * Math.PI * 5 + 1) * s * (1 - s);
+  const histD = fn => { let d = ''; for (let j = 0; j <= 64; j++) { const s = j / 64; d += (j ? ' L' : 'M') + `${xs(s * .42)},${ys(fn(s))}`; } return d + ` L${xa},${ys(fn(1))}`; };
+  const txt = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: G, style: `font:600 ${a.size || fs}px var(--mono);letter-spacing:.04em`}, a), parent); e.textContent = t; return e; };
+  const prep = (p, v) => { const L = p.getTotalLength() || 1; p._L = L; p.setAttribute('stroke-dasharray', `${L} ${L}`); p.setAttribute('stroke-dashoffset', L * (1 - v)); };
+  const place = (p, dot, v) => { if (!dot) return; try { const pt = p.getPointAtLength(p._L * v); dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y); } catch (e) {} };
+  const drawTo = (p, dot, a, b, dur, ease) => { const o = {v: a}; return gsap.fromTo(o, {v: a}, {v: b, duration: D(dur), ease, onUpdate: () => { p.setAttribute('stroke-dashoffset', p._L * (1 - o.v)); place(p, dot, o.v); }}); };
+  const scramble = (el, t, dur = .55) => {
+    if (!el) return;
+    el.textContent = t; moveCursor(el);
+    if (Kit.calm || !hasScr || !t) return;
+    el.textContent = '';
+    gsap.to(el, {duration: dur, scrambleText: {text: t, chars: '01#<>/_', speed: .7}});
+  };
+  function moveCursor(el) { if (!E.cur || el !== E.lastLine) return; let w = 0; try { w = el.getComputedTextLength(); } catch (e) {} E.cur.setAttribute('x', +el.getAttribute('x') + w + 3); E.cur.setAttribute('y', +el.getAttribute('y') - lfs * .8); }
+
+  function renderLog() {
+    const g = E.log; if (!g) return; g.innerHTML = '';
+    const R = E.rows, last = logs.slice(-R), off = R - last.length;
+    last.forEach((m, j) => {
+      const row = j + off;
+      const t = Kit.mk('text', {x: 1, y: lfs * 1.1 + row * lfs * 1.42, fill: G, opacity: 1 - (R - 1 - row) * .32, style: `font:500 ${lfs}px var(--mono)`}, g);
+      t.textContent = m;
+      try { const w = t.getComputedTextLength(), room = W - 6 - lfs; if (w > room) { t.setAttribute('textLength', room); t.setAttribute('lengthAdjust', 'spacingAndGlyphs'); } } catch (e) {}
+      E.lastLine = t;
+    });
+    E.cur = Kit.mk('rect', {width: lfs * .55, height: lfs * .95, fill: G, class: 'cur'}, g);
+    moveCursor(E.lastLine);
+  }
+  function log(m) { logs.push(m); if (!E.log) return; renderLog(); scramble(E.lastLine, m); if (!Kit.calm) gsap.from(E.log, {y: lfs * 1.42, duration: .35, ease: 'power3.out'}); }
+  function logSet(m) { logs[logs.length - 1] = m; if (E.lastLine) { E.lastLine.removeAttribute('textLength'); scramble(E.lastLine, m, .4); } }
+
+  // plan label: top-right over the empty future in the intro, then tucked into the empty corner under the staircase
+  function setLab(mode, anim) {
+    const a = E.planLab, b = E.planLab2; if (!a || !b) return;
+    const T = {intro: ['PLAN: ONE GIANT LEAP', ''], steps: ['PLAN:', 'SMALL STEPS'], done: ['✓ TRUST,', 'STEP BY STEP']}[mode];
+    if (mode === 'intro') { a.setAttribute('x', xb); a.setAttribute('y', pT + fs * 1.3); a.setAttribute('text-anchor', 'end'); }
+    else {
+      const x = xa + fs * .5;
+      a.setAttribute('x', x); a.setAttribute('y', pB - fs * 2.25); a.setAttribute('text-anchor', 'start');
+      b.setAttribute('x', x); b.setAttribute('y', pB - fs * .85);
+    }
+    const col = mode === 'intro' ? AMBER : mode === 'done' ? HOT : G;
+    a.setAttribute('fill', col); b.setAttribute('fill', col);
+    if (anim) { scramble(a, T[0]); scramble(b, T[1], .7); } else { a.textContent = T[0]; b.textContent = T[1]; }
+  }
+
+  function build() {
+    E.amb.forEach(t => t.kill()); E.amb = [];
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    lastSize = sizeKey();
+    svg.innerHTML = '';
+    if (W < 60 || H < 90) return;
+    fs = Math.max(12, Math.min(13.5, W / 28)); lfs = Math.max(12, Math.min(13, W / 30));
+    E.rows = H >= 210 ? 3 : H >= 150 ? 2 : 1;
+    pL = fs * 2; pR = fs * .5; pT = lfs * (1.42 * E.rows + .9); pB = H - fs * 2.1;
+    xa = xs(.47); xb = xs(1); sw = (xb - xa) / N;
+    const pw = W - pR - pL, ph = pB - pT;
+
+    const defs = Kit.mk('defs', {}, svg);
+    defs.innerHTML = `<filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feGaussianBlur stdDeviation="${fs * .2}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="bl" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><feGaussianBlur stdDeviation="${fs * .8}"/></filter>
+      <linearGradient id="bm" x1="0" x2="1"><stop offset="0" stop-color="${G}" stop-opacity="0"/><stop offset=".5" stop-color="${G}" stop-opacity=".5"/><stop offset="1" stop-color="${G}" stop-opacity="0"/></linearGradient>`;
+
+    // graticule
+    const gG = E.grid = Kit.mk('g', {}, svg);
+    for (let i = 0; i <= 10; i++) Kit.mk('line', {x1: pL + i * pw / 10, x2: pL + i * pw / 10, y1: pT, y2: pB, stroke: G, 'stroke-width': 1, opacity: i % 5 ? .1 : .2}, gG);
+    for (let i = 0; i <= 8; i++) Kit.mk('line', {x1: pL, x2: pL + pw, y1: pT + i * ph / 8, y2: pT + i * ph / 8, stroke: G, 'stroke-width': 1, opacity: i % 4 ? .1 : .2}, gG);
+    for (let i = 0; i <= 50; i++) { const x = pL + i * pw / 50; Kit.mk('line', {x1: x, x2: x, y1: pB - fs * (i % 5 ? .22 : .45), y2: pB, stroke: G, 'stroke-width': 1, opacity: .45}, gG); }
+    for (let i = 0; i <= 40; i++) { const y = pT + i * ph / 40; Kit.mk('line', {x1: pL, x2: pL + fs * (i % 5 ? .22 : .45), y1: y, y2: y, stroke: G, 'stroke-width': 1, opacity: .45}, gG); }
+    Kit.mk('line', {x1: xs(.42), x2: xs(.42), y1: pT, y2: pB, stroke: G, 'stroke-width': 1, 'stroke-dasharray': '2 4', opacity: .45}, gG);
+
+    // idle oscilloscope sweep
+    const scan = Kit.mk('rect', {x: pL, y: pT, width: fs * 3, height: ph, fill: 'url(#bm)', opacity: 0}, svg);
+    if (!Kit.calm) E.amb.push(gsap.fromTo(scan, {attr: {x: pL - fs * 3}, opacity: .2}, {attr: {x: pL + pw}, duration: 4.5, ease: 'none', repeat: -1, repeatDelay: 2.5, delay: 2.4}));
+
+    // axis words
+    const ay = H - fs * .5;
+    txt(svg, pL, ay, '1950', {opacity: .8});
+    txt(svg, xs(.42) + fs * .2, ay, '1986', {'text-anchor': 'end', opacity: .8});
+    txt(svg, xa, ay, 'LATE ’80s ON →', {opacity: .8});
+    const yl = txt(svg, fs * 1, (pT + pB) / 2, ph > fs * 8 ? 'STOCKPILE ↑' : 'NUKES ↑', {'text-anchor': 'middle', opacity: .75});
+    yl.setAttribute('transform', `rotate(-90 ${fs * 1} ${(pT + pB) / 2})`);
+
+    // legend
+    if (ph > fs * 6) {
+      const lx = pL + fs * .6, l1 = pT + fs * 1.3, l2 = pT + fs * 2.75;
+      Kit.mk('line', {x1: lx, x2: lx + fs * 1.4, y1: l1 - fs * .32, y2: l1 - fs * .32, stroke: G, 'stroke-width': fs * .2, 'stroke-linecap': 'round', filter: 'url(#gl)'}, svg);
+      txt(svg, lx + fs * 1.9, l1, 'US', {fill: HOT});
+      Kit.mk('line', {x1: lx, x2: lx + fs * 1.4, y1: l2 - fs * .32, y2: l2 - fs * .32, stroke: G2, 'stroke-width': fs * .13, 'stroke-linecap': 'round', opacity: .8, filter: 'url(#gl)'}, svg);
+      txt(svg, lx + fs * 1.9, l2, 'USSR', {opacity: .85});
+    }
+
+    // the plan, a dashed ghost
+    E.plan = Kit.mk('path', {d: mixD(PV, PD, planShape === 'stair' ? 1 : 0), fill: 'none', stroke: phase === 'intro' || phase === 'fail' ? AMBER : G, 'stroke-width': 1.4, 'stroke-dasharray': `${fs * .3} ${fs * .35}`, opacity: .55}, svg);
+    E.planLab = txt(svg, xb, pT + fs * 1.3, '');
+    E.planLab2 = txt(svg, xb, pT + fs * 1.3, '');
+    setLab(phase === 'done' ? 'done' : phase === 'steps' ? 'steps' : 'intro', false);
+    if (phase === 'fail') { E.planLab.setAttribute('opacity', 0); E.planLab2.setAttribute('opacity', 0); }
+
+    // afterglow + traces
+    E.glow = Kit.mk('g', {opacity: phase === 'done' ? .35 : 0, filter: 'url(#bl)'}, svg);
+    const tr = Kit.mk('g', {filter: 'url(#gl)'}, svg);
+    E.hS = Kit.mk('path', {d: histD(histS), fill: 'none', stroke: G2, 'stroke-width': fs * .13, opacity: .8, 'stroke-linejoin': 'round'}, tr);
+    E.hU = Kit.mk('path', {d: histD(histU), fill: 'none', stroke: G, 'stroke-width': fs * .2, 'stroke-linejoin': 'round'}, tr);
+    E.sS = Kit.mk('path', {d: mixD(TOPS, dvS, 1), fill: 'none', stroke: G2, 'stroke-width': fs * .13, opacity: .8, 'stroke-linejoin': 'round'}, tr);
+    E.sU = Kit.mk('path', {d: mixD(TOPU, dvU, 1), fill: 'none', stroke: G, 'stroke-width': fs * .2, 'stroke-linejoin': 'round'}, tr);
+    [E.hS, E.hU].forEach(p => prep(p, 1));
+    [E.sS, E.sU].forEach(p => prep(p, k / N));
+    Kit.mk('path', {d: mixD(TOPU, dvU, 1), fill: 'none', stroke: G, 'stroke-width': fs * .8}, E.glow);
+    Kit.mk('path', {d: mixD(TOPS, dvS, 1), fill: 'none', stroke: G2, 'stroke-width': fs * .6}, E.glow);
+
+    // the checks, one per year
+    E.checks = [];
+    const cs = Math.min(fs * .85, sw * .6);
+    for (let i = 1; i <= N; i++) {
+      const cx = xa + (i - .5) * sw, cy = ys(TOPU - i * dvU) - fs * .95;
+      const c = Kit.mk('path', {d: `M${cx - cs * .45},${cy} l${cs * .3},${cs * .32} l${cs * .6},${-cs * .72}`, fill: 'none', stroke: HOT, 'stroke-width': fs * .17, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: i <= k ? 1 : 0}, tr);
+      prep(c, 1); E.checks.push(c);
+    }
+    E.dS = Kit.mk('circle', {r: fs * .22, fill: HOT}, tr);
+    E.dU = Kit.mk('circle', {r: fs * .3, fill: HOT}, tr);
+    if (k > 0) { place(E.sU, E.dU, k / N); place(E.sS, E.dS, k / N); } else { place(E.hU, E.dU, 1); place(E.hS, E.dS, 1); }
+
+    // a live blip ring that rides the US dot
+    const ring = Kit.mk('circle', {r: fs * .3, fill: 'none', stroke: HOT, 'stroke-width': 1.2, opacity: 0}, tr);
+    if (!Kit.calm) E.amb.push(gsap.fromTo(ring, {attr: {r: fs * .3}, opacity: .85}, {attr: {r: fs * 1.4}, opacity: 0, duration: 1.6, ease: 'power2.out', repeat: -1, repeatDelay: .3, delay: 2,
+      onUpdate: () => { ring.setAttribute('cx', E.dU.getAttribute('cx')); ring.setAttribute('cy', E.dU.getAttribute('cy')); }}));
+
+    E.beam = Kit.mk('rect', {x: xa, y: pT, width: fs * 1.6, height: ph, fill: 'url(#bm)', opacity: 0}, svg);
+    E.fail = Kit.mk('g', {}, svg);
+    E.log = Kit.mk('g', {filter: 'url(#gl)'}, svg);
+    renderLog();
+  }
+
+  // ---------- one big deal ----------
+  function once() {
+    if (phase !== 'intro' || busy || !E.plan) return;
+    busy = true; phase = 'fail'; Kit.haptic('light');
+    log('> ONE DEAL = ONE PRISONER’S DILEMMA');
+    const g = E.fail, w = fs * .2;
+    const drop = Kit.mk('path', {d: `M${xa},${ys(TOPU)} V${ys(.42)}`, stroke: AMBER, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#gl)'}, g);
+    const climb = Kit.mk('path', {d: `M${xa},${ys(TOPS)} L${xa + sw * 1.3},${ys(.95)} H${xa + sw * 2.1}`, stroke: AMBER, 'stroke-width': w * .7, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#gl)'}, g);
+    prep(drop, 0); prep(climb, 0);
+    const cx = xa + (xb - xa) * .62, cy = ys(.52), r = fs * 1.4;
+    const X = Kit.mk('path', {d: `M${cx - r},${cy - r} L${cx + r},${cy + r} M${cx + r},${cy - r} L${cx - r},${cy + r}`, stroke: AMBER, 'stroke-width': fs * .3, 'stroke-linecap': 'round', opacity: 0, filter: 'url(#gl)'}, g);
+    const t1 = txt(g, cx, cy + r + fs * 1.5, 'BOTH DEFECT', {'text-anchor': 'middle', fill: AMBER, opacity: 0});
+    gsap.to([E.planLab, E.planLab2], {opacity: 0, duration: D(.2)});
+    const tl = gsap.timeline();
+    tl.add(drawTo(drop, null, 0, 1, .6, 'power3.in'), 0)
+      .call(() => log('> IF I DISARM AND YOU CHEAT, I LOSE'), null, D(.7))
+      .add(drawTo(climb, null, 0, 1, .6, 'power2.out'), D(.8))
+      .call(() => Kit.haptic('selection'), null, D(1.5))
+      .fromTo(X, {opacity: 0, scale: 2.4, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: D(.5), ease: 'expo.out'}, D(1.5))
+      .to(t1, {opacity: 1, duration: D(.3)}, D(1.65))
+      .call(() => log('> SO BOTH DEFECT. NOTHING IS CUT ✗'), null, D(1.9))
+      .to(g, {opacity: 0, duration: D(.6), ease: 'power2.in'}, D(3.1))
+      .call(() => { E.fail.innerHTML = ''; E.fail.setAttribute('opacity', 1); toSteps(true); }, null, D(3.7));
+  }
+
+  // ---------- small checked steps ----------
+  function toSteps(after) {
+    if (phase === 'steps' || phase === 'done') return;
+    phase = 'steps'; busy = false;
+    Kit.hide('bOnce'); Kit.hide('bStep'); Kit.show('bCut');
+    say.innerHTML = after ? 'One big deal is one dilemma, and cheating wins it. <b>Shrink it: tap to cut a few, then check.</b>'
+                          : 'Each year both cut a few, then check the other did too. <b>Tap for each year.</b>';
+    log(after ? '> NEW PLAN: SMALL CUTS, CHECKED' : '> PROTOCOL: A FEW A YEAR, THEN CHECK');
+    setTimeout(() => {
+      planShape = 'stair';
+      const p = E.plan; if (!p) return;
+      const target = mixD(PV, PD, 1);
+      gsap.set([E.planLab, E.planLab2], {opacity: 1}); setLab('steps', true);
+      p.setAttribute('stroke', G);
+      if (Kit.calm) { p.setAttribute('d', target); return; }
+      gsap.fromTo(p, {opacity: 1}, {opacity: .55, duration: 1.6, ease: 'power2.out'});
+      if (hasMorph) gsap.to(p, {morphSVG: target, duration: 1.3, ease: 'expo.inOut'});
+      else { const o = {t: 0}; gsap.to(o, {t: 1, duration: 1.3, ease: 'expo.inOut', onUpdate: () => p.setAttribute('d', mixD(PV, PD, o.t))}); }
+      Kit.haptic('selection');
+    }, 90);
+  }
+
+  function step() {
+    if (phase !== 'steps' || busy || k >= N || !E.sU) return;
+    busy = true; k++; const i = k; Kit.haptic('light');
+    Kit.$('yr').textContent = i < N ? `year ${i + 1} of ${N}` : 'checking…';
+    log(`> YEAR ${i}: BOTH CUT A FEW…`);
+    const sU = E.sU, sS = E.sS, beam = E.beam, chk = E.checks[i - 1];
+    const tl = gsap.timeline({onComplete: () => { busy = false; if (i === N) finish(); }});
+    tl.add(drawTo(sU, E.dU, (i - 1) / N, i / N, .7, 'power3.inOut'), 0)
+      .add(drawTo(sS, E.dS, (i - 1) / N, i / N, .7, 'power3.inOut'), D(.06))
+      .set(beam, {attr: {x: xa + (i - 1) * sw - fs * .8}}, D(.55))
+      .to(beam, {opacity: 1, duration: D(.12)}, D(.55))
+      .to(beam, {attr: {x: xa + i * sw - fs * .8}, duration: D(.45), ease: 'power2.inOut'}, D(.55))
+      .to(beam, {opacity: 0, duration: D(.2)}, D(.95))
+      .set(chk, {opacity: 1}, D(.9))
+      .add(drawTo(chk, null, 0, 1, .3, 'power2.out'), D(.9))
+      .fromTo(chk, {scale: .3, transformOrigin: '50% 50%'}, {scale: 1, duration: D(.5), ease: 'back.out(3)'}, D(.9))
+      .call(() => { logSet(`> YEAR ${i}: CHECKED ✓ TRUST [${'#'.repeat(i)}${'·'.repeat(N - i)}]`); Kit.haptic('selection'); }, null, D(.95));
+  }
+
+  function finish() {
+    phase = 'done'; card.classList.add('answered');
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    // the stage resizes as the explanation appears: redraw at the new size before the finale
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (!svg.childElementCount || sizeKey() !== lastSize) build();
+      setTimeout(wow, 140);
+    }));
+  }
+  function wow() {
+    log('> LATE ’80s ON: STOCKPILES FALL ✓'); Kit.haptic('success');
+    if (!E.beam) return;
+    setLab('done', true);
+    if (Kit.calm) { E.glow.setAttribute('opacity', .35); return; }
+    const tl = gsap.timeline();
+    tl.set(E.beam, {attr: {x: xa - fs * 1.6, width: fs * 2.4}, opacity: 1}, 0)
+      .to(E.beam, {attr: {x: xb}, duration: 1.2, ease: 'expo.inOut'}, 0)
+      .to(E.beam, {opacity: 0, duration: .3}, 1.1)
+      .fromTo(E.glow, {opacity: 0}, {opacity: 1, duration: .5, ease: 'power2.out'}, .3)
+      .to(E.glow, {opacity: .35, duration: 1.4, ease: 'power2.inOut'}, .9)
+      .fromTo(E.checks, {scale: .2, transformOrigin: '50% 50%'}, {scale: 1, duration: .9, stagger: .09, ease: 'elastic.out(1,.4)'}, .25)
+      .fromTo([E.sU, E.sS], {attr: {'stroke-width': fs * .45}}, {attr: {'stroke-width': (j) => j ? fs * .13 : fs * .2}, duration: 1.2, ease: 'power3.out'}, .4)
+      .fromTo([E.dU, E.dS], {attr: {r: fs * .9}}, {attr: {r: (j) => j ? fs * .22 : fs * .3}, duration: .9, ease: 'back.out(2)'}, .9);
+  }
+
+  const press = b => { if (!Kit.calm) gsap.fromTo(b, {scale: .95}, {scale: 1, duration: .45, ease: 'back.out(3)'}); };
+  Kit.$('bOnce').addEventListener('click', e => { press(e.currentTarget); once(); });
+  Kit.$('bStep').addEventListener('click', e => { press(e.currentTarget); if (phase === 'intro' && !busy) { Kit.haptic('light'); toSteps(false); } });
+  Kit.$('bCut').addEventListener('click', e => { press(e.currentTarget); step(); });
+
+  new ResizeObserver(() => {
+    if (!shown) return;
+    requestAnimationFrame(() => { if (sizeKey() !== lastSize) build(); });
+  }).observe(stage);
+
+  Kit.onShow.card = () => { shown = true; build(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !E.hU) return;
+    gsap.from(E.grid.children, {opacity: 0, duration: .5, stagger: .006, ease: 'power2.out'});
+    drawTo(E.hU, E.dU, 0, 1, 1.9, 'power2.inOut');
+    drawTo(E.hS, E.dS, 0, 1, 1.9, 'power2.inOut').delay(.15);
+    gsap.from(E.plan, {opacity: 0, duration: .8, delay: 1.7, ease: 'power2.out'});
+    gsap.from([E.planLab, E.planLab2], {opacity: 0, duration: .5, delay: 1.9});
+    if (E.log) gsap.from(E.log.querySelectorAll('text'), {opacity: 0, x: -8, duration: .4, stagger: .25, ease: 'power3.out'});
+    gsap.from('.key:not(.gone)', {opacity: 0, y: 10, stagger: .08, duration: .5, delay: 1.2, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    gsap.globalTimeline.timeScale(Kit.calm ? 1 : 5);
+    Kit.$('bStep').click(); await w(300);
+    for (let i = 0; i < N; i++) { let g = 0; while (busy && g++ < 100) await w(30); Kit.$('bCut').click(); await w(60); }
+    let g = 0; while (busy && g++ < 100) await w(30);
+    await w(Kit.calm ? 300 : 700);
+    gsap.globalTimeline.timeScale(1);
+  };
+})();
+Kit.single();
+</script>
+</html>

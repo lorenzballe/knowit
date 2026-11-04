@@ -1,0 +1,38 @@
+{
+  "id": "maths-perfect-tiling",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is every even perfect number a power of two times a Mersenne prime?",
+  "answer": "Every even perfect number splits into a power of two, 2^(p−1), times a prime of the form 2^p−1. The page's rectangle shows this: drag the pearl to change p and check whether the divisors fill the rectangle exactly. Nothing outside this form works.",
+  "move": "Every even perfect number is 2 p−1 times a prime of the form 2 p −1, and nothing else works.",
+  "keywords": [
+    "perfect_numbers",
+    "euler",
+    "mersenne_primes",
+    "euclid",
+    "divisors"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A rectangle split into two parts, a power of two and a Mersenne prime, with a draggable pearl that changes the exponent p. It asks whether the divisors of the perfect number 28 fill its rectangle exactly.",
+    "ground": "#06243f"
+  },
+  "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=779s",
+  "written": "2026-11-04"
+}

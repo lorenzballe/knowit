@@ -1,0 +1,37 @@
+{
+  "id": "science-thermite-steel-damper",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How is the temperature of thermite controlled?",
+  "answer": "Add pieces of pure steel to the thermite before lighting it. The steel does not react but absorbs heat as it melts, so the mix stays cooler, burns slower and throws fewer sparks. That is how thermite can be lit indoors.",
+  "move": "Steel that melts but doesn't burn soaks up the heat: it sets thermite's rate and temperature.",
+  "keywords": [
+    "thermite",
+    "steel",
+    "heat",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two labelled pots of thermite. A tap-to-act control on the right pot drops pieces of pure steel into it before both pots are lit. The question asked: how is the temperature of thermite controlled?",
+    "ground": "#140c09"
+  },
+  "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1382s",
+  "written": "2026-11-04"
+}

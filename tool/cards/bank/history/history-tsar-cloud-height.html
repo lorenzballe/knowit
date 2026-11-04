@@ -1,0 +1,343 @@
+<!doctype html>
+<!-- slug: history-tsar-cloud-height -->
+<!-- Look: a hand-coloured botanical engraving on cream paper; the cloud is a "specimen" in fine hatching, with Latin-style labels and a ruler in km. A tiny engraved bomber at 10 km and a dotted parachute path tell the drop.
+     Interaction: drag the bead along the stem below. The cloud climbs from the 4 km burst on a spring, its cap slowly churning, and spreads at true scale beside Everest.
+     Wow: each time the cloud passes another Everest height, a ghost Everest blooms on the stack (I…VII). At 64 km a brace draws itself up the stack and "≈ 7 × Everest" springs in. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Seven Everests of cloud</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#pic text{font-family:var(--body);fill:#2a1f14}
+#pic .lat{font-family:var(--display);font-style:italic;font-weight:500}
+#pic .num{font-family:var(--display);font-weight:700}
+.say,.keep{overflow-wrap:break-word}
+.pulse{animation:pulse 1.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{50%{transform:scale(1.18)}}
+.kit-calm .pulse{animation:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag · how big" style="--c:#efe5cc;--k:#2a1f14;--edge:#c9b68c">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE CLOUD</span></div>
+    <h2 class="q">How large was the Tsar Bomba's mushroom cloud?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="An engraving: the Tsar Bomba's mushroom cloud beside Mount Everest, with a height ruler in kilometres, the bomber at 10 km, and a bead to drag."></svg>
+    </div>
+    <p class="say" id="say">The bomb burst 4 km above the ground. <b>Drag the bead</b> to let its cloud rise beside Everest.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Tsar Bomba's cloud: 64 km high and 40 km wide, about 7 Everests tall.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
+  const INK = '#2a1f14', E = 8.85, ROM = ['I','II','III','IV','V','VI','VII'];
+  const ks = {p: .14};
+  let target = .14, done = false, touched = false, pendingWow = false, ph = 0;
+  let W = 0, H = 0, fs = 12, GY = 0, PX = 4, rulerX = 0, cx = 0, sx = 0, x0 = 0, x1 = 0, ty = 0, planeX = 0, planeY = 0;
+  let G = {}, shown = [], ghosts = [], bead, beadIn, trackOn, capClip, stemClip, plane = null, sevenT = null, brace = null;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const Y = km => GY - km * PX;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs}, a), p); e.textContent = s; return e; };
+  const smooth = pts => {
+    const n = pts.length, m = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+    let s = m(pts[n - 1], pts[0]), d = `M${s[0].toFixed(1)},${s[1].toFixed(1)}`;
+    for (let i = 0; i < n; i++) { const q = pts[i], e = m(q, pts[(i + 1) % n]); d += ` Q${q[0].toFixed(1)},${q[1].toFixed(1)} ${e[0].toFixed(1)},${e[1].toFixed(1)}`; }
+    return d + 'Z';
+  };
+  const EV = [[-1,0],[-.78,.26],[-.62,.24],[-.4,.54],[-.27,.49],[-.09,.86],[0,1],[.1,.9],[.22,.71],[.32,.76],[.5,.45],[.66,.5],[.85,.2],[1,0]];
+  const evPath = (x, yb) => 'M' + EV.map(([u, v]) => `${(x + u * 5 * PX).toFixed(1)},${(yb - v * E * PX).toFixed(1)}`).join(' L') + 'Z';
+
+  function layout() {
+    gsap.killTweensOf('#pic *');
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const sr = stage.getBoundingClientRect(); lw = sr.width; lh = sr.height;
+    fs = clamp(W / 28, 12, 14);
+    const band = fs * 4.2, rx0 = fs * 2.2;
+    GY = H - band;
+    PX = Math.max(.5, Math.min((GY - fs * 1.6) / 65, (W - rx0 - fs * .8 - fs * 4.4) / 52));
+    const slack = Math.max(0, W - (rx0 + fs * .8 + 52 * PX + fs * 4.4));
+    rulerX = rx0 + slack * .3; cx = rulerX + fs * .8 + 21 * PX + slack * .15; sx = cx + 26 * PX + slack * .25;
+    x0 = fs * 1.4; x1 = W - fs * 1.4; ty = GY + fs * 3.0;
+
+    const defs = mk('defs', {}, svg);
+    const pat = (id, w, rot, sw) => { const p = mk('pattern', {id, width: w, height: w, patternUnits: 'userSpaceOnUse', patternTransform: `rotate(${rot})`}, defs); mk('line', {x1: 0, y1: 0, x2: 0, y2: w, stroke: INK, 'stroke-width': sw}, p); };
+    pat('hatch', 3.2, -35, .55); pat('hatch2', 2.6, 40, .6); pat('hatchG', 4, 60, .7);
+    const lin = (id, stops) => { const g = mk('linearGradient', {id, x1: 0, y1: 0, x2: 0, y2: 1}, defs); stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op ?? 1}, g)); };
+    lin('gCap', [[0, '#fdf7e8'], [.6, '#efdcb6'], [1, '#d4b98a']]);
+    lin('gStem', [[0, '#e9d6ae'], [1, '#f8efd9']]);
+    lin('gEv', [[0, '#f6eedb'], [.25, '#d9c7a0'], [1, '#b39a6c']]);
+    const rg = mk('radialGradient', {id: 'glow'}, defs);
+    [[0, '#ffcf6e', .95], [.45, '#f1a24a', .55], [1, '#e48a3c', 0]].forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, rg));
+    capClip = mk('path', {}, mk('clipPath', {id: 'capClip'}, defs));
+    stemClip = mk('path', {}, mk('clipPath', {id: 'stemClip'}, defs));
+
+    G = {};
+    for (const k of ['sky', 'ruler', 'ground', 'stack', 'cloud', 'labels', 'seven', 'slider']) G[k] = mk('g', {id: k}, svg);
+
+    // Faint engraved gridlines, every 10 km
+    for (let k = 10; k <= 60; k += 10) mk('line', {x1: rulerX + fs * .7, x2: W - fs * .4, y1: Y(k), y2: Y(k), stroke: INK, 'stroke-width': .6, 'stroke-dasharray': '1 4', opacity: .22}, G.sky);
+
+    // Ruler of kilometres
+    const kTop = Math.min(70, Math.floor((GY - fs * .5) / PX / 2) * 2);
+    mk('line', {x1: rulerX, x2: rulerX, y1: GY, y2: Y(kTop), stroke: INK, 'stroke-width': 1.1}, G.ruler);
+    const tickStep = PX * 2 < 2.5 ? 4 : 2;
+    for (let k = tickStep; k <= kTop; k += tickStep) {
+      const big = k % 10 === 0;
+      mk('line', {x1: rulerX, x2: rulerX + (big ? fs * .55 : fs * .28), y1: Y(k), y2: Y(k), stroke: INK, 'stroke-width': big ? 1.1 : .6, class: 'tick'}, G.ruler);
+      if (big && k <= 60) txt(G.ruler, rulerX - 4, Y(k) + fs * .35, k, {'text-anchor': 'end', 'font-size': fs * .92 < 12 ? 12 : fs * .92, class: 'num tick'});
+    }
+    if ((kTop - 60) * PX >= fs * 1.25) txt(G.ruler, rulerX - 4, Y(kTop) + fs * .35, 'km', {'text-anchor': 'end', 'font-size': 12, class: 'lat tick'});
+
+    // The bomber at ~10 km and the parachute path down to the 4 km burst
+    plane = null;
+    if (PX >= 2.2) {
+      const u = clamp(PX * 2.2, 9, 15);
+      planeX = rulerX + fs * .7 + u + slack * .05; planeY = Y(10);
+      const dx = planeX + u * 1.5, by = Y(4), ex = cx - 2 * PX;
+      const tr = mk('path', {d: `M${dx},${planeY + u * .1} C${dx + (ex - dx) * .55},${planeY + (by - planeY) * .08} ${ex - (ex - dx) * .1},${by - (by - planeY) * .45} ${ex},${by}`, fill: 'none', stroke: INK, 'stroke-width': .8, 'stroke-dasharray': '1.5 3', opacity: .7}, G.sky);
+      const q = tr.getPointAtLength(tr.getTotalLength() * .5), r = fs * .4;
+      const pc = mk('g', {}, G.sky);
+      mk('path', {d: `M${q.x - r},${q.y} L${q.x},${q.y + r * 1.25} L${q.x + r},${q.y}`, fill: 'none', stroke: INK, 'stroke-width': .6}, pc);
+      mk('path', {d: `M${q.x - r},${q.y} Q${q.x},${q.y - r * 1.4} ${q.x + r},${q.y} Q${q.x},${q.y - r * .35} ${q.x - r},${q.y}Z`, fill: '#f6c56a', stroke: INK, 'stroke-width': .8}, pc);
+      mk('circle', {cx: q.x, cy: q.y + r * 1.35, r: 1.6, fill: INK}, pc);
+      mk('circle', {cx: dx, cy: planeY + u * .1, r: 1.3, fill: INK, opacity: .7}, G.sky);
+      plane = mk('g', {transform: `translate(${planeX},${planeY})`}, G.sky);
+      mk('path', {d: `M${-.1 * u},${.02 * u} L${.38 * u},${.55 * u} L${.54 * u},${.55 * u} L${.28 * u},${.02 * u}Z`, fill: '#e3d2ad', stroke: INK, 'stroke-width': .7, 'stroke-linejoin': 'round'}, plane);
+      mk('path', {d: `M${-u},0 Q${-.85 * u},${-.17 * u} 0,${-.15 * u} L${.78 * u},${-.1 * u} L${.98 * u},${-.48 * u} L${1.1 * u},${-.48 * u} L${1.02 * u},${.02 * u} Q${.2 * u},${.15 * u} ${-u},0Z`, fill: '#f6eedb', stroke: INK, 'stroke-width': .8, 'stroke-linejoin': 'round'}, plane);
+      mk('path', {d: `M${-.05 * u},${-.1 * u} L${.3 * u},${-.36 * u} L${.42 * u},${-.36 * u} L${.24 * u},${-.11 * u}`, fill: '#e3d2ad', stroke: INK, 'stroke-width': .6}, plane);
+      mk('line', {x1: -.7 * u, x2: .7 * u, y1: -.04 * u, y2: -.06 * u, stroke: INK, 'stroke-width': .4, opacity: .5}, plane);
+    }
+
+    // Ground: an engraved line and a band of earth strokes
+    mk('line', {x1: rulerX, x2: W - fs * .4, y1: GY, y2: GY, stroke: INK, 'stroke-width': 1.5}, G.ground);
+    for (let x = rulerX + 3; x < W - fs * .6; x += 4.5) mk('line', {x1: x, y1: GY + 2, x2: x - 3, y2: GY + 2 + fs * .32 * (.6 + .4 * Math.sin(x * .7)), stroke: INK, 'stroke-width': .6, opacity: .6}, G.ground);
+    const cap1 = txt(G.ground, rulerX, GY + fs * 1.6, 'Fig. I · Nubes fungiformis “Tsar”', {class: 'lat'});
+    const evl = txt(G.ground, sx, GY + fs * 1.6, 'Mons Everest', {'text-anchor': 'middle', class: 'lat'});
+    const ew = evl.getComputedTextLength(); if (sx + ew / 2 > W - 2) evl.setAttribute('x', W - 2 - ew / 2);
+    if (rulerX + cap1.getComputedTextLength() > +evl.getAttribute('x') - ew / 2 - fs) cap1.textContent = 'Fig. I · Nubes “Tsar”';
+    if (rulerX + cap1.getComputedTextLength() > +evl.getAttribute('x') - ew / 2 - fs) cap1.textContent = 'Fig. I';
+
+    // Everest and its ghost stack
+    ghosts = []; shown = [];
+    const step = Math.max(1, Math.ceil(fs * 1.05 / (E * PX)));
+    let numMax = 0;
+    for (let i = 0; i < 7; i++) {
+      const yb = GY - i * E * PX, g = mk('g', {}, G.stack);
+      if (i === 0) {
+        mk('path', {d: evPath(sx, yb), fill: 'url(#gEv)', stroke: INK, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, g);
+        const face = 'M' + [[0, 1], [.1, .9], [.22, .71], [.32, .76], [.5, .45], [.66, .5], [.85, .2], [1, 0], [.15, 0]].map(([u, v]) => `${sx + u * 5 * PX},${yb - v * E * PX}`).join(' L') + 'Z';
+        mk('path', {d: face, fill: 'url(#hatch2)', opacity: .7}, g);
+        mk('path', {d: `M${sx - .09 * 5 * PX},${yb - .86 * E * PX} L${sx},${yb - E * PX} L${sx + .1 * 5 * PX},${yb - .9 * E * PX} L${sx + .02 * 5 * PX},${yb - .8 * E * PX} Z`, fill: '#fffaf0', stroke: INK, 'stroke-width': .6}, g);
+      } else {
+        mk('path', {d: evPath(sx, yb), fill: 'rgba(42,31,20,.06)', stroke: INK, 'stroke-width': .9, 'stroke-dasharray': '3 2', 'stroke-linejoin': 'round'}, g);
+      }
+      let num = null;
+      if ((6 - i) % step === 0) {
+        num = txt(G.stack, sx + 5 * PX + fs * .35, yb - E * PX * .38 + fs * .35, ROM[i], {class: 'num', opacity: 0});
+        numMax = Math.max(numMax, num.getComputedTextLength());
+      }
+      ghosts.push({g, num, yb});
+      shown.push(false);
+    }
+
+    // The bead on its engraved stem
+    mk('line', {x1: x0, x2: x1, y1: ty, y2: ty, stroke: INK, 'stroke-width': .8, opacity: .55}, G.slider);
+    mk('line', {x1: x0, x2: x1, y1: ty + 3, y2: ty + 3, stroke: INK, 'stroke-width': .5, opacity: .35}, G.slider);
+    for (let i = 0; i <= 12; i++) { const x = x0 + (x1 - x0) * i / 12, big = i % 6 === 0; mk('line', {x1: x, x2: x, y1: ty - (big ? fs * .45 : fs * .22), y2: ty, stroke: INK, 'stroke-width': .7}, G.slider); }
+    trackOn = mk('line', {x1: x0, y1: ty, y2: ty, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, G.slider);
+    bead = mk('g', {}, G.slider);
+    beadIn = mk('g', {class: touched ? '' : 'pulse'}, bead);
+    const r = fs * .72;
+    mk('path', {d: `M0,${-r} q${r * .9},${-r * .9} ${r * 1.5},${-r * .6} q${-r * .6},${r * .7} ${-r * 1.5},${r * .6}Z`, fill: '#cfe0a8', stroke: INK, 'stroke-width': .8}, beadIn);
+    mk('circle', {r, fill: '#f6c56a', stroke: INK, 'stroke-width': 1.2}, beadIn);
+    mk('circle', {r: r * .42, fill: 'none', stroke: INK, 'stroke-width': .8}, beadIn);
+    mk('circle', {cx: -r * .35, cy: -r * .35, r: r * .18, fill: '#fffaf0'}, beadIn);
+
+    // The reveal: a brace up the whole stack, "≈ 7 × Everest" set along it
+    const yt = Y(7 * E), ym = (yt + GY) / 2, w = fs * .4;
+    let bx = sx + 5 * PX + fs * .35 + numMax + fs * .45;
+    bx = Math.min(bx, W - 3 - w - fs * 1.3);
+    brace = mk('path', {d: `M${bx - w},${yt} Q${bx},${yt} ${bx},${yt + w} L${bx},${ym - w} Q${bx},${ym} ${bx + w},${ym} Q${bx},${ym} ${bx},${ym + w} L${bx},${GY - w} Q${bx},${GY} ${bx - w},${GY}`, fill: 'none', stroke: INK, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, G.seven);
+    const tx = bx + w + fs * 1.05, rot = mk('g', {transform: `rotate(-90 ${tx} ${ym})`}, G.seven);
+    sevenT = txt(rot, tx, ym, '≈ 7 × Everest', {'text-anchor': 'middle', 'font-weight': 800});
+    if (sevenT.getComputedTextLength() > GY - yt - 2 * w - fs * .6) sevenT.textContent = '× 7';
+    G.seven.setAttribute('opacity', done && !pendingWow ? 1 : 0);
+
+    draw(true);
+    if (pendingWow) { pendingWow = false; setTimeout(wow, 60); }
+  }
+
+  function drawCloud() {
+    if (!G.cloud) return;
+    const p = clamp(ks.p, 0, 1);
+    const h = 4 + 60 * p, ct = Math.min(3 + 13 * p, h * .8), ch = 2.5 + 17.5 * Math.pow(p, .85);
+    const cyk = h - ct / 2, a = ch * PX, b = ct / 2 * PX, CY = Y(cyk);
+    const C = G.cloud; C.innerHTML = '';
+
+    // dust skirt at the foot
+    const dr = (3 + 7 * p) * PX, dh = (.8 + 1.6 * p) * PX, dpts = [];
+    for (let i = 0; i <= 14; i++) { const t = Math.PI * i / 14; dpts.push([cx - Math.cos(t) * dr, GY - Math.sin(t) * dh * (1 + .18 * Math.sin(i * 2.3 + ph * .8))]); }
+    mk('path', {d: 'M' + dpts.map(q => q.map(v => v.toFixed(1)).join(',')).join(' L') + 'Z', fill: 'url(#hatchG)', stroke: INK, 'stroke-width': .8, opacity: .8}, C);
+
+    // stem, swaying a hair
+    const sw = Math.sin(ph * .9) * .35 * PX;
+    const w0 = (1.6 + 1.4 * p) * PX, wm = (1.1 + p) * PX, wt = (2.2 + 2.4 * p) * PX, sT = CY, L = GY - sT;
+    const sd = `M${cx - w0},${GY} C${cx - wm + sw},${GY - L * .4} ${cx - wm - sw},${sT + L * .4} ${cx - wt},${sT} L${cx + wt},${sT} C${cx + wm - sw},${sT + L * .4} ${cx + wm + sw},${GY - L * .4} ${cx + w0},${GY}Z`;
+    stemClip.setAttribute('d', sd);
+    mk('path', {d: sd, fill: 'url(#gStem)', stroke: INK, 'stroke-width': 1.1}, C);
+    mk('rect', {x: cx - wt * .05, y: sT, width: wt * 1.1, height: L, fill: 'url(#hatch)', 'clip-path': 'url(#stemClip)'}, C);
+    if (p > .25) {
+      const yc = GY - L * .55, rx = wm * 2.6;
+      mk('ellipse', {cx, cy: yc, rx, ry: rx * .2, fill: 'rgba(253,247,232,.8)', stroke: INK, 'stroke-width': .8, opacity: clamp((p - .25) * 3, 0, 1)}, C);
+    }
+
+    // cap, slowly churning
+    const N = 40, pts = [];
+    for (let i = 0; i < N; i++) {
+      const t = i / N * Math.PI * 2, s = Math.sin(t), c = Math.cos(t), up = s < 0;
+      const n = up ? .09 * Math.sin(6 * t + 1.1 + ph) + .05 * Math.sin(13 * t + .3 - ph * 1.7) : .03 * Math.sin(9 * t + ph * .6);
+      pts.push([cx + a * c * (1 + n * .6), CY + b * (up ? s * (1 + n) : s * .55)]);
+    }
+    const cd = smooth(pts); capClip.setAttribute('d', cd);
+    mk('path', {d: cd, fill: 'url(#gCap)'}, C);
+    mk('circle', {cx, cy: CY, r: Math.max(a, b) * 1.1, fill: 'url(#glow)', opacity: Math.max(.18, 1 - p * 1.5) * (.9 + .1 * Math.sin(ph * 2.3)), 'clip-path': 'url(#capClip)'}, C);
+    mk('rect', {x: cx - a * 1.2, y: CY + b * .05, width: a * 2.4, height: b * 1.2, fill: 'url(#hatch)', 'clip-path': 'url(#capClip)'}, C);
+    mk('rect', {x: cx + a * .38, y: CY - b * 1.2, width: a, height: b * 2.4, fill: 'url(#hatch2)', opacity: .7, 'clip-path': 'url(#capClip)'}, C);
+    if (a > 14) for (let k = -2; k <= 2; k++) {
+      const bx = cx + k * a * .36 + Math.sin(ph + k) * a * .015, by = CY - b * .12 + Math.abs(k) * b * .14, r = a * .19;
+      mk('path', {d: `M${bx - r},${by} A${r} ${r * .75} 0 0 1 ${bx + r},${by}`, fill: 'none', stroke: INK, 'stroke-width': .7, opacity: .55}, C);
+    }
+    mk('path', {d: cd, fill: 'none', stroke: INK, 'stroke-width': 1.25, 'stroke-linejoin': 'round'}, C);
+
+    // labels
+    const Lb = G.labels; Lb.innerHTML = '';
+    const topY = Y(h) - b * .12;
+    mk('line', {x1: rulerX + fs * .6, x2: cx - a * .3, y1: Y(h), y2: Y(h), stroke: INK, 'stroke-width': .8, 'stroke-dasharray': '2 3'}, Lb);
+    txt(Lb, cx, Math.max(fs, topY - fs * .5), `${Math.round(h)} km high`, {'text-anchor': 'middle', 'font-weight': 800});
+    if (ch * 2 >= 14) {
+      const wy = CY + b * .55 + fs * .9;
+      mk('path', {d: `M${cx - a},${wy} H${cx + a} M${cx - a},${wy - 4} v8 M${cx + a},${wy - 4} v8`, stroke: INK, 'stroke-width': 1, fill: 'none'}, Lb);
+      const t = txt(Lb, cx, wy + fs * .36, `${Math.round(ch * 2)} km wide`, {'text-anchor': 'middle', 'font-weight': 700});
+      const tw = t.getComputedTextLength();
+      const chip = mk('rect', {x: cx - tw / 2 - 5, y: wy - fs * .7, width: tw + 10, height: fs * 1.4, rx: fs * .7, fill: '#efe5cc', stroke: INK, 'stroke-width': .7}, Lb);
+      Lb.insertBefore(chip, t);
+    }
+    return h;
+  }
+
+  function draw(silent) {
+    if (!G.cloud) return;
+    const h = drawCloud();
+    ghosts.forEach((gh, i) => {
+      const on = h >= (i + 1) * E - .01;
+      if (on !== shown[i] || silent) {
+        shown[i] = on;
+        const vis = i === 0 ? 1 : (on ? 1 : 0);
+        if (silent || Kit.calm) {
+          gsap.set(gh.g, {opacity: vis, scale: 1, svgOrigin: `${sx} ${gh.yb}`});
+          if (gh.num) gsap.set(gh.num, {opacity: on ? 1 : 0});
+        } else {
+          if (i > 0) gsap.to(gh.g, on ? {opacity: 1, scale: 1, startAt: {scale: .3}, duration: .8, ease: 'elastic.out(1,.45)', svgOrigin: `${sx} ${gh.yb}`, overwrite: true}
+                                      : {opacity: 0, scale: .6, duration: .3, ease: 'power3.in', svgOrigin: `${sx} ${gh.yb}`, overwrite: true});
+          if (gh.num) gsap.to(gh.num, {opacity: on ? 1 : 0, duration: .3, overwrite: true});
+          if (on && touched) Kit.haptic('selection');
+        }
+      }
+    });
+    if (!done && target >= .985 && ks.p >= .985) reveal();
+  }
+
+  function placeBead() {
+    if (!bead) return;
+    const x = x0 + (x1 - x0) * target;
+    bead.setAttribute('transform', `translate(${x},${ty})`);
+    trackOn.setAttribute('x2', x);
+  }
+
+  function setTarget(v, instant) {
+    target = clamp(v, 0, 1); if (target > .97) target = 1;
+    placeBead();
+    if (Kit.calm || instant) { gsap.killTweensOf(ks); ks.p = target; draw(); return; }
+    gsap.to(ks, {p: target, duration: .9, ease: 'elastic.out(1,.55)', overwrite: true, onUpdate: () => draw()});
+  }
+
+  function reveal() {
+    done = true; Kit.haptic('success');
+    say.innerHTML = 'Dropped from about 10 km, the bomb burst 4 km up. Its cloud climbed to <b>64 km</b>, seven Everests stacked, and spread <b>40 km</b> wide.';
+    pendingWow = true;
+    Kit.show('keep');
+    setTimeout(() => { if (pendingWow) { pendingWow = false; wow(); } }, 420);
+  }
+
+  function wow() {
+    if (!G.seven) return;
+    G.seven.setAttribute('opacity', 1);
+    if (Kit.calm) return;
+    const len = brace.getTotalLength();
+    gsap.fromTo(brace, {strokeDasharray: len, strokeDashoffset: len}, {strokeDashoffset: 0, duration: .9, ease: 'power2.inOut'});
+    gsap.fromTo(sevenT, {opacity: 0, scale: .2}, {opacity: 1, scale: 1, duration: 1.1, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%', delay: .55});
+    gsap.fromTo(G.cloud, {scale: 1}, {scale: 1.045, duration: .35, ease: 'power2.out', yoyo: true, repeat: 1, svgOrigin: `${cx} ${GY}`});
+    const nums = ghosts.map(g => g.num).filter(Boolean);
+    gsap.fromTo(nums, {scale: 1}, {scale: 1.5, duration: .22, yoyo: true, repeat: 1, stagger: .07, ease: 'back.out(3)', transformOrigin: '0% 50%'});
+  }
+
+  // idle life: the cap churns, the bomber bobs
+  let fr = 0;
+  gsap.ticker.add(() => {
+    if (Kit.calm || !G.cloud || document.hidden) return;
+    if (++fr % 2) return;
+    ph += .035;
+    drawCloud();
+    if (plane) plane.setAttribute('transform', `translate(${planeX + Math.sin(ph * .7) * 1.2},${planeY + Math.sin(ph * 1.3) * 1})`);
+  });
+
+  // relayout whenever the stage changes size (e.g. when the keep box appears)
+  let lw = 0, lh = 0, roT;
+  new ResizeObserver(() => {
+    const r = stage.getBoundingClientRect();
+    if (Math.abs(r.width - lw) < 1 && Math.abs(r.height - lh) < 1) return;
+    clearTimeout(roT);
+    roT = setTimeout(() => { if (!G.cloud) return; layout(); placeBead(); }, 90);
+  }).observe(stage);
+
+  // drag
+  let drag = false;
+  const fromX = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - x0) / (x1 - x0); };
+  svg.addEventListener('pointerdown', e => {
+    drag = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; beadIn.classList.remove('pulse'); }
+    Kit.haptic('light');
+    if (!Kit.calm) gsap.to(beadIn, {scale: 1.3, duration: .5, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%', overwrite: true});
+    setTarget(fromX(e));
+  });
+  svg.addEventListener('pointermove', e => { if (drag) setTarget(fromX(e)); });
+  const end = () => { if (!drag) return; drag = false; if (!Kit.calm) gsap.to(beadIn, {scale: 1, duration: .6, ease: 'elastic.out(1,.35)', transformOrigin: '50% 50%', overwrite: true}); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = () => { layout(); placeBead(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#ruler .tick', {opacity: 0, x: -6, stagger: .015, duration: .4, ease: 'power3.out'});
+    gsap.from('#sky', {opacity: 0, duration: .9, ease: 'power2.out', delay: .1});
+    gsap.from('#stack', {opacity: 0, y: 14, duration: .8, ease: 'back.out(1.8)', delay: .15});
+    gsap.from('#slider', {opacity: 0, y: 8, duration: .6, ease: 'power3.out', delay: .3});
+    ks.p = 0; draw();
+    gsap.to(ks, {p: target, duration: 1.4, ease: 'elastic.out(1,.5)', delay: .45, onUpdate: () => draw()});
+  };
+  Kit.play.card = async () => {
+    touched = true; if (beadIn) beadIn.classList.remove('pulse');
+    setTarget(1, true);
+    await new Promise(r => setTimeout(r, Kit.calm ? 80 : 900));
+    if (!done) reveal();
+  };
+})();
+Kit.single();
+</script>
+</html>

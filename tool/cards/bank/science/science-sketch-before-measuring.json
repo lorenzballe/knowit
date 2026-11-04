@@ -1,0 +1,38 @@
+{
+  "id": "science-sketch-before-measuring",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.testable_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the first step in constructing a geological section?",
+  "answer": "The first step is a hand sketch with no measures: the fault reaches the surface here, it's normal, here an anticline, there a syncline. This keeps the whole picture coherent. Only then do you project faults and fold axes precisely.",
+  "move": "Sketch the big picture by hand first; measure after.",
+  "keywords": [
+    "geological_section",
+    "geological_map",
+    "fault",
+    "anticline",
+    "syncline"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A geological map showing a fault and two fold axes, with a flat, empty geological section below it. The reader must tap the three marks on the map and is asked what the first step in constructing a geological section is.",
+    "ground": "#0e2a31"
+  },
+  "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=2087s",
+  "written": "2026-11-04"
+}

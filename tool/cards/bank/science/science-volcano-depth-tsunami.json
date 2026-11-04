@@ -1,0 +1,37 @@
+{
+  "id": "science-volcano-depth-tsunami",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.risk_in_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How deep must an undersea volcano be to pose little tsunami risk?",
+  "answer": "A submarine crater deeper than 500–600 m carries a very low tsunami risk. The 1 200 m volcano is well past that threshold, while Marsili, at 500 m and more, sits right at its edge.",
+  "move": "A submarine crater deeper than 500–600 m carries a very low tsunami risk.",
+  "keywords": [
+    "tsunami",
+    "submarine volcano",
+    "crater",
+    "marsili"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "The page asks how deep an undersea volcano must be to pose little tsunami risk, with two choices: a volcano 1 200 m deep, or Marsili at 500 m and more. A switch sets off one volcano, then the other.",
+    "ground": "#efe5cc"
+  },
+  "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=563s",
+  "written": "2026-11-04"
+}

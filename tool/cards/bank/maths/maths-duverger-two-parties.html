@@ -1,0 +1,453 @@
+<!doctype html>
+<!-- slug: maths-duverger-two-parties -->
+<!-- Look: a cyanotype blueprint. White hairlines on Prussian blue, engineer's mono lettering, dimension brackets, and three ballot jars drawn like graduated lab cylinders.
+     Interaction: sixty voters fall into three jars. The right wins with only 43% because the left vote is split. Tap the small party's jar and its voters arc over, one handful at a time, to the big party beside them.
+     Wow: as the last small-party voter leaves, the empty jar comes apart and tumbles away under real physics, leaving a ghost outline. Two parties are left. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why only two parties?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/matter.min.js"></script>
+<style>
+#card{background-color:var(--c);
+  background-image:
+    radial-gradient(120% 70% at 25% 0%,rgba(80,150,220,.35),transparent 65%),
+    radial-gradient(90% 60% at 100% 100%,rgba(0,10,40,.45),transparent 70%),
+    linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:100% 100%,100% 100%,40px 40px,40px 40px,10px 10px,10px 10px}
+#stage{display:flex;flex:1;min-height:0}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
+.say{font-size:max(1.9cqh,13px)}
+.say b{color:var(--k)}
+.answered .q{font-size:max(2.4cqh,15px)}
+.answered .say{font-size:max(1.7cqh,12.5px)}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Tap · tactical voting" style="--c:#123e6e;--k:#f2f8ff;--edge:#0a2748">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO SWITCH</span></div>
+    <h2 class="q">Why does winner-takes-all voting end with just two big parties?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="Three ballot jars on a blueprint: a small left party, a big left party and a right party, filled with voters as falling balls."></canvas>
+    </div>
+    <p class="say" id="say">Sixty voters, one vote each, and the most votes takes all. Watch them vote.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Winner-takes-all turns small parties into spoilers, so voters leave them and two parties remain.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const {Engine, Bodies, Composite, Body} = Matter;
+  const cv = Kit.$('cv'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#f2f8ff', BLUE = '#123e6e';
+  const cs = getComputedStyle(card);
+  const MONO = (cs.getPropertyValue('--mono') || '').trim() || 'monospace';
+  const HAND = (cs.getPropertyValue('--hand') || '').trim() || 'cursive';
+  const NAMES = ['SMALL LEFT', 'BIG LEFT', 'RIGHT'];
+  const TOTAL = 60;
+
+  const engine = Engine.create(); engine.gravity.y = 1.15;
+  engine.positionIterations = 10; engine.velocityIterations = 8;
+  const BO = {restitution: .12, friction: .08, frictionAir: .012, density: .002};
+
+  let ctx, W = 0, H = 0, fs = 13, r = 6, bw = 0, yT = 0, yB = 0, T = 22, bins = [];
+  let full = true, ny = 0, chy = 0, sy = 0, byOff = 0, blOff = 0;
+  let entered = false, phase = 'fall', taps = 0, gone = false, fast = false, lastWinner = -1;
+  const anim = {prog: 1, stamp: 1, ghost: 0, ring: 0, win: 0};
+  let fallen = [];
+
+  // Sixty voters: 13 small left, 21 big left, 26 right. The left side is the majority.
+  const voters = [];
+  [13, 21, 26].forEach((n, p) => { for (let i = 0; i < n; i++) voters.push({party: p, b: null, fly: null, order: 0}); });
+  for (let i = voters.length - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [voters[i], voters[j]] = [voters[j], voters[i]]; }
+  voters.forEach((v, i) => v.order = i);
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  // Two layouts: a full drawing with the spectrum line, and a compact one for short stages.
+  function geom() {
+    fs = clamp(Math.min(W / 27, H / 15), 12, 15);
+    full = H >= fs * 17;
+    const m = W * .04, g = W * .055;
+    bw = (W - 2 * m - 2 * g) / 3;
+    bins = [0, 1, 2].map(i => { const x0 = m + i * (bw + g); return {x0, x1: x0 + bw, cx: x0 + bw / 2, bodies: []}; });
+    if (full) { sy = fs * 1.15; ny = fs * 3.05; chy = fs * 4.25; yT = fs * 6.3; yB = H - fs * 3.7; byOff = fs * 1.05; blOff = fs * 1.45; }
+    else { ny = fs * 1.0; chy = fs * 2.3; yT = fs * 3.6; yB = H - fs * 2.5; byOff = fs * .75; blOff = fs * 1.25; }
+    if (yB < yT + 24) yB = yT + 24;
+    const hIn = yB - yT;
+    r = clamp(Math.sqrt(.6 * bw * hIn / (34 * 3.46)), 3, bw / 7);
+  }
+
+  function build() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    geom();
+    Composite.clear(engine.world, false);
+    fallen = [];
+    bins.forEach((b, i) => {
+      b.bodies = [];
+      if (i === 0 && gone) return;
+      const h = yB - yT + 3 * T, cy = (yT + yB + 3 * T) / 2;
+      const L = Bodies.rectangle(b.x0 - T / 2, cy, T, h, {isStatic: true}); L.len = h; L.vert = true;
+      const R = Bodies.rectangle(b.x1 + T / 2, cy, T, h, {isStatic: true}); R.len = h; R.vert = true;
+      const F = Bodies.rectangle(b.cx, yB + T, bw + 2 * T, 2 * T, {isStatic: true}); F.len = bw; F.vert = false;
+      // invisible guards above the rims, so no voter can perch on a wall top
+      const gh = H * 2 + yT;
+      const GL = Bodies.rectangle(b.x0 - T / 2, yT - gh / 2, T, gh, {isStatic: true}); GL.guard = true;
+      const GR = Bodies.rectangle(b.x1 + T / 2, yT - gh / 2, T, gh, {isStatic: true}); GR.guard = true;
+      b.bodies = [L, R, F, GL, GR]; Composite.add(engine.world, b.bodies);
+    });
+    const idx = [0, 0, 0];
+    const cols = Math.max(1, Math.floor((bw - 2) / (2 * r + .6)));
+    voters.forEach(v => {
+      if (v.fly) { gsap.killTweensOf(v.fly); v.fly = null; v.party = 1; }
+      const b = bins[v.party];
+      let x, y;
+      if (!entered) {
+        x = b.x0 + r + 1 + Kit.rnd() * (bw - 2 * r - 2);
+        y = -r * 2 - v.order * (H * .85 / TOTAL) - Kit.rnd() * r;
+      } else {
+        const i = idx[v.party]++, row = Math.floor(i / cols), col = i % cols;
+        const step = cols > 1 ? (bw - 2 * r - 2) / (cols - 1) : 0;
+        x = b.x0 + r + 1 + col * step + (row % 2 ? step * .3 : 0) * (col < cols - 1 ? 1 : 0);
+        y = yB - r - row * 2 * r * .97;
+      }
+      v.b = Bodies.circle(x, y, r, BO);
+      Composite.add(engine.world, v.b);
+    });
+  }
+
+  // ---------- counting ----------
+  function counts() {
+    const n = [0, 0, 0];
+    for (const v of voters) if (!v.fly && v.b && v.b.position.y > yT - r) n[v.party]++;
+    return n;
+  }
+  const winnerOf = n => n.indexOf(Math.max(...n));
+
+  // ---------- drawing helpers ----------
+  function text(s, x, y, maxW, size, align = 'center', weight = 700, font = MONO, color = INK) {
+    ctx.font = `${weight} ${size}px ${font}`;
+    const w = ctx.measureText(s).width;
+    if (w > maxW) { size = Math.max(12, size * maxW / w); ctx.font = `${weight} ${size}px ${font}`; }
+    ctx.textAlign = align; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = color; ctx.fillText(s, x, y);
+    return ctx.measureText(s).width;
+  }
+  function poly(pts, prog) {
+    let len = 0; const seg = [];
+    for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); seg.push(d); len += d; }
+    let left = len * prog; ctx.beginPath(); ctx.moveTo(...pts[0]);
+    for (let i = 1; i < pts.length && left > 0; i++) {
+      const t = Math.min(1, left / seg[i - 1]);
+      ctx.lineTo(pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * t, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * t);
+      left -= seg[i - 1];
+    }
+    ctx.stroke();
+  }
+  function rrect(x, y, w, h, rad) {
+    ctx.beginPath(); ctx.moveTo(x + rad, y); ctx.arcTo(x + w, y, x + w, y + h, rad); ctx.arcTo(x + w, y + h, x, y + h, rad);
+    ctx.arcTo(x, y + h, x, y, rad); ctx.arcTo(x, y, x + w, y, rad); ctx.closePath();
+  }
+  // Each party has its own drafting mark: a dotted ring, a solid disc, a hatched ring.
+  function ball(x, y, a, party, alpha, rr = r) {
+    ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.rotate(a);
+    ctx.lineWidth = Math.max(1.2, rr * .2); ctx.strokeStyle = INK; ctx.fillStyle = INK;
+    if (party === 1) {
+      const g = ctx.createRadialGradient(-rr * .35, -rr * .35, rr * .1, 0, 0, rr);
+      g.addColorStop(0, '#ffffff'); g.addColorStop(1, '#bcd6f2');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, rr, 0, 7); ctx.fill();
+    } else {
+      ctx.fillStyle = 'rgba(18,62,110,.85)'; ctx.beginPath(); ctx.arc(0, 0, rr - ctx.lineWidth / 2, 0, 7); ctx.fill(); ctx.stroke();
+      if (party === 0) { ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(0, 0, rr * .3, 0, 7); ctx.fill(); }
+      else {
+        ctx.save(); ctx.beginPath(); ctx.arc(0, 0, rr * .8, 0, 7); ctx.clip(); ctx.lineWidth = Math.max(1, rr * .14);
+        for (let k = -2; k <= 2; k++) { ctx.beginPath(); ctx.moveTo(k * rr * .45 - rr, -rr); ctx.lineTo(k * rr * .45 + rr, rr); ctx.stroke(); }
+        ctx.restore();
+      }
+    }
+    ctx.restore();
+  }
+  function bracket(xa, xb, y, label, alpha = 1) {
+    ctx.save(); ctx.globalAlpha = alpha; ctx.strokeStyle = INK; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(xa, y - fs * .4); ctx.lineTo(xa, y); ctx.lineTo(xb, y); ctx.lineTo(xb, y - fs * .4);
+    ctx.moveTo((xa + xb) / 2, y); ctx.lineTo((xa + xb) / 2, y + fs * .25); ctx.stroke();
+    for (const [x, d] of [[xa, 1], [xb, -1]]) { ctx.beginPath(); ctx.moveTo(x + d * 6, y - 3); ctx.lineTo(x, y); ctx.lineTo(x + d * 6, y + 3); ctx.stroke(); }
+    text(label, (xa + xb) / 2, y + blOff, xb - xa + 10, fs, 'center', 700);
+    ctx.restore();
+  }
+  // A drafting star over the winning jar.
+  function star(x, y, s, a) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(a); ctx.strokeStyle = INK; ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    for (let k = 0; k < 10; k++) { const rad = k % 2 ? s * .42 : s, t = k * Math.PI / 5 - Math.PI / 2; ctx.lineTo(Math.cos(t) * rad, Math.sin(t) * rad); }
+    ctx.closePath(); ctx.stroke(); ctx.restore();
+  }
+
+  // ---------- the picture ----------
+  function draw(time) {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const n = counts();
+    const win = phase !== 'fall' ? winnerOf(n) : -1;
+
+    // Spectrum dimension line along the top (only when there's room).
+    if (full) {
+      const m = bins[0].x0;
+      ctx.save(); ctx.globalAlpha = .8 * anim.prog;
+      const wl = text('LEFT', m, sy + fs * .35, 80, fs * .9, 'left', 700);
+      const wr = text('RIGHT', W - m, sy + fs * .35, 80, fs * .9, 'right', 700);
+      ctx.font = `500 ${Math.max(12, fs * .8)}px ${MONO}`;
+      const mid = 'SPECTRUM', wm = ctx.measureText(mid).width;
+      ctx.strokeStyle = INK; ctx.lineWidth = 1; ctx.setLineDash([]);
+      const a0 = m + wl + 8, a1 = W - m - wr - 8, c = W / 2;
+      ctx.beginPath(); ctx.moveTo(a0, sy); ctx.lineTo(c - wm / 2 - 8, sy); ctx.moveTo(c + wm / 2 + 8, sy); ctx.lineTo(a1, sy); ctx.stroke();
+      for (const [x, d] of [[a0, 1], [a1, -1]]) { ctx.beginPath(); ctx.moveTo(x + d * 7, sy - 3.5); ctx.lineTo(x, sy); ctx.lineTo(x + d * 7, sy + 3.5); ctx.stroke(); }
+      text(mid, c, sy + fs * .32, wm + 4, Math.max(12, fs * .8), 'center', 500, MONO, 'rgba(242,248,255,.75)');
+      ctx.restore();
+    }
+
+    // The jars.
+    bins.forEach((b, i) => {
+      const ghost = i === 0 && gone;
+      ctx.save();
+      ctx.strokeStyle = 'rgba(242,248,255,.16)'; ctx.lineWidth = 1; ctx.setLineDash([10, 4, 2, 4]);
+      ctx.beginPath(); ctx.moveTo(b.cx, yT - fs * .3); ctx.lineTo(b.cx, yB + fs * .5); ctx.stroke(); ctx.setLineDash([]);
+      if (ghost) {
+        ctx.globalAlpha = .55 * anim.ghost; ctx.strokeStyle = INK; ctx.lineWidth = 1.2; ctx.setLineDash([5, 5]);
+        poly([[b.x0, yT], [b.x0, yB], [b.x1, yB], [b.x1, yT]], anim.ghost);
+        ctx.setLineDash([]);
+        ctx.globalAlpha = anim.ghost;
+        ctx.translate(b.cx, (yT + yB) / 2); ctx.rotate(-.12);
+        const hs = Math.min(fs * 1.35, Math.max(12, (yB - yT) * .3));
+        text('only two', 0, -hs * .15, bw * .95, hs, 'center', 700, HAND);
+        text('parties left', 0, hs * .95, bw * .95, hs, 'center', 700, HAND);
+      } else {
+        // the winner's jar glows faintly from inside
+        const glow = i === win ? .045 + .06 * anim.win : .045;
+        ctx.fillStyle = `rgba(242,248,255,${glow})`; ctx.fillRect(b.x0, yT, bw, yB - yT);
+        ctx.strokeStyle = 'rgba(242,248,255,.35)'; ctx.lineWidth = 1;
+        poly([[b.x0 - 4, yT], [b.x0 - 4, yB + 4], [b.x1 + 4, yB + 4], [b.x1 + 4, yT]], anim.prog);
+        ctx.strokeStyle = INK; ctx.lineWidth = 2;
+        poly([[b.x0, yT], [b.x0, yB], [b.x1, yB], [b.x1, yT]], anim.prog);
+        // graduation ticks on the inner wall, like a measuring cylinder
+        ctx.globalAlpha = .45 * anim.prog; ctx.lineWidth = 1;
+        const steps = 6;
+        for (let k = 1; k < steps; k++) {
+          const y = yB - (yB - yT) * k / steps, l = k % 2 ? 4 : 7;
+          ctx.beginPath(); ctx.moveTo(b.x1, y); ctx.lineTo(b.x1 - l, y); ctx.stroke();
+        }
+        if (full) {
+          ctx.globalAlpha = .35 * anim.prog;
+          for (let x = b.x0; x < b.x1; x += 7) { ctx.beginPath(); ctx.moveTo(x, yB + 6); ctx.lineTo(x + 5, yB + 11); ctx.stroke(); }
+        }
+        ctx.globalAlpha = anim.prog; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(b.x0 - 7, yT); ctx.lineTo(b.x0 + 3, yT); ctx.moveTo(b.x1 - 3, yT); ctx.lineTo(b.x1 + 7, yT); ctx.stroke();
+      }
+      ctx.restore();
+    });
+
+    // The voters.
+    for (const v of voters) {
+      if (v.fly || !v.b) continue;
+      const p = v.b.position;
+      if (p.y < -r * 2) continue;
+      const dim = win >= 0 && v.party !== win ? .5 : 1;
+      ball(p.x, p.y, v.b.angle, v.party, dim);
+    }
+    // Voters in flight, with their path dotted in.
+    for (const v of voters) {
+      const f = v.fly; if (!f) continue;
+      const t = f.t, u = 1 - t;
+      ctx.save(); ctx.strokeStyle = 'rgba(242,248,255,.55)'; ctx.lineWidth = 1.2; ctx.setLineDash([2, 5]);
+      ctx.beginPath(); ctx.moveTo(f.x0, f.y0); ctx.quadraticCurveTo(f.cx, f.cy, f.x1, f.y1); ctx.stroke(); ctx.restore();
+      const x = u * u * f.x0 + 2 * u * t * f.cx + t * t * f.x1, y = u * u * f.y0 + 2 * u * t * f.cy + t * t * f.y1;
+      ball(x, y, t * 6, t < .5 ? 0 : 1, 1, r * (1 + Math.sin(t * Math.PI) * .35));
+    }
+
+    // The jar walls that came apart, tumbling.
+    for (const w of fallen) {
+      const p = w.position; if (p.y > H + 200) continue;
+      const a = w.angle, h = w.len / 2;
+      const dx = w.vert ? -Math.sin(a) * h : Math.cos(a) * h, dy = w.vert ? Math.cos(a) * h : Math.sin(a) * h;
+      ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(p.x - dx, p.y - dy); ctx.lineTo(p.x + dx, p.y + dy); ctx.stroke(); ctx.restore();
+    }
+
+    // Names, with their legend mark, and the tally chips.
+    bins.forEach((b, i) => {
+      ctx.save(); ctx.globalAlpha = anim.prog;
+      const ghost = i === 0 && gone;
+      ctx.font = `800 ${fs}px ${MONO}`;
+      let nw = Math.min(ctx.measureText(NAMES[i]).width, bw - fs * 1.2);
+      const gx = b.cx + fs * .55;
+      text(NAMES[i], gx, ny, bw - fs * 1.2, fs, 'center', 800, MONO, ghost ? 'rgba(242,248,255,.5)' : INK);
+      ball(gx - nw / 2 - fs * .7, ny - fs * .35, 0, i, ghost ? .5 : 1, Math.max(4, fs * .38));
+      if (ghost) { ctx.strokeStyle = INK; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(gx - nw / 2 - 2, ny - fs * .33); ctx.lineTo(gx - nw / 2 + (nw + 4) * anim.ghost, ny - fs * .33); ctx.stroke(); }
+      if (entered) {
+        let s = `${n[i]}`;
+        if (ghost) s = '0 · GONE';
+        else if (win >= 0) s += i === win ? ' · WINS' : ' · WASTED';
+        const isW = i === win && !ghost;
+        ctx.font = `800 ${Math.max(12, fs * .92)}px ${MONO}`;
+        const tw = Math.min(ctx.measureText(s).width, bw - 8), cw = tw + 12, chh = fs * 1.45;
+        ctx.save(); ctx.translate(b.cx, chy);
+        if (isW) {
+          ctx.scale(anim.stamp, anim.stamp); ctx.rotate((anim.stamp - 1) * -.3);
+          ctx.fillStyle = INK; rrect(-cw / 2, -chh / 2, cw, chh, chh * .2); ctx.fill();
+          text(s, 0, fs * .33, bw - 8, Math.max(12, fs * .92), 'center', 800, MONO, BLUE);
+          ctx.globalAlpha = anim.prog * .9;
+          const st = Kit.calm ? 0 : time / 2400;
+          star(cw / 2 + fs * .15, -chh / 2 - fs * .05, fs * .38, st);
+        } else {
+          ctx.strokeStyle = 'rgba(242,248,255,.4)'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+          rrect(-cw / 2, -chh / 2, cw, chh, chh * .2); ctx.stroke();
+          text(s, 0, fs * .33, bw - 8, Math.max(12, fs * .92), 'center', 700, MONO, win >= 0 ? 'rgba(242,248,255,.75)' : INK);
+        }
+        ctx.restore();
+      }
+      ctx.restore();
+    });
+
+    // Dimension brackets: how much of the electorate each side really has.
+    if (phase !== 'fall') {
+      const by = yB + byOff;
+      const leftN = n[0] + n[1] + voters.filter(v => v.fly).length;
+      if (!gone) bracket(bins[0].x0, bins[1].x1, by, `LEFT SIDE ${Math.round(leftN / TOTAL * 100)}%`);
+      else bracket(bins[1].x0, bins[1].x1, by, `${Math.round(n[1] / TOTAL * 100)}%`);
+      bracket(bins[2].x0, bins[2].x1, by, `${Math.round(n[2] / TOTAL * 100)}%`);
+    }
+
+    // The tap target, breathing, until the reader has tapped once.
+    if (phase === 'tactics' && taps === 0) {
+      let top = yB; for (const v of voters) if (v.party === 0 && v.b) top = Math.min(top, v.b.position.y);
+      const b = bins[0], cy = (top + yB) / 2, pulse = Kit.calm ? .5 : (Math.sin(time / 320) + 1) / 2;
+      const ar = Math.min(bw * .44, (yB - yT) * .6);
+      ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = 1.6; ctx.setLineDash([4, 4]);
+      ctx.globalAlpha = .45 + .45 * pulse;
+      ctx.beginPath(); ctx.arc(b.cx, cy, ar + pulse * 4, 0, 7); ctx.stroke();
+      ctx.setLineDash([]);
+      const ay = Math.max(yT + 2, top - r - fs * .5) - pulse * 4;
+      ctx.beginPath(); ctx.moveTo(b.cx, ay - fs * 1.1); ctx.lineTo(b.cx, ay);
+      ctx.moveTo(b.cx - 5, ay - fs * .4); ctx.lineTo(b.cx, ay); ctx.lineTo(b.cx + 5, ay - fs * .4); ctx.stroke();
+      ctx.restore();
+    }
+    if (anim.ring > 0) {
+      ctx.save(); ctx.strokeStyle = INK; ctx.globalAlpha = 1 - anim.ring; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(bins[0].cx, (yT + yB) / 2 + (yB - yT) * .25, bw * (.2 + anim.ring * .6), 0, 7); ctx.stroke(); ctx.restore();
+    }
+
+    // ---------- the story, driven by what the counts say ----------
+    const all = n[0] + n[1] + n[2];
+    if (phase === 'fall' && entered && all === TOTAL && !voters.some(v => v.fly)) { phase = 'settle'; setTimeout(result, Kit.calm || fast ? 0 : 450); }
+    if (phase === 'tactics' || phase === 'done') {
+      if (win !== lastWinner && lastWinner >= 0 && phase === 'tactics') {
+        say.innerHTML = 'Now <b>Big Left</b> wins. A small party’s votes only spoil its neighbour’s chance. <b>Keep tapping.</b>';
+        pop(); Kit.haptic('success');
+      }
+      lastWinner = win;
+      if (phase === 'tactics' && !voters.some(v => v.party === 0) && !voters.some(v => v.fly)) finale();
+    }
+  }
+
+  function pop() {
+    if (Kit.calm) { anim.stamp = 1; anim.win = 1; return; }
+    gsap.fromTo(anim, {stamp: 1.7}, {stamp: 1, duration: .7, ease: 'back.out(3)', overwrite: 'auto'});
+    gsap.fromTo(anim, {win: 1}, {win: .35, duration: 1.4, ease: 'power2.out'});
+  }
+
+  function result() {
+    if (phase !== 'settle') return;
+    phase = 'tactics'; lastWinner = 2; pop(); Kit.haptic('light');
+    say.innerHTML = 'Most voters lean left, yet <b>Right</b> wins with 43%: the left vote is split. <b>Tap the small party to make its voters switch.</b>';
+  }
+
+  // ---------- tactical voting ----------
+  function launch(v, delay) {
+    const p = v.b.position;
+    Composite.remove(engine.world, v.b); v.b = null;
+    const b1 = bins[1], x1 = b1.cx + (Kit.rnd() - .5) * (bw - 4 * r), y1 = yT - r * 2;
+    const cy = (4 * (yT - r * 3 - fs * .2) - p.y - y1) / 2;
+    v.fly = {t: 0, x0: p.x, y0: p.y, x1, y1, cx: (p.x + x1) / 2, cy};
+    if (fast || Kit.calm) { v.fly.t = 1; land(v); return; }
+    gsap.to(v.fly, {t: 1, duration: .8, delay, ease: 'power2.inOut', onComplete: () => land(v)});
+  }
+  function land(v) {
+    const f = v.fly; if (!f) return;
+    v.party = 1; v.fly = null;
+    v.b = Bodies.circle(f.x1, f.y1, r, BO); Body.setVelocity(v.b, {x: (Kit.rnd() - .5) * 2, y: 3});
+    Composite.add(engine.world, v.b);
+  }
+  function tap() {
+    if (phase !== 'tactics') return;
+    const pool = voters.filter(v => v.party === 0 && !v.fly && v.b).sort((a, b) => a.b.position.y - b.b.position.y).slice(0, 3);
+    if (!pool.length) return;
+    taps++; Kit.haptic('light');
+    if (!Kit.calm) gsap.fromTo(anim, {ring: 0}, {ring: 1, duration: .5, ease: 'power3.out'});
+    pool.forEach((v, i) => launch(v, i * .1));
+    if (taps === 1) say.innerHTML = 'They vote for the big party next to them instead, so their vote can count. <b>Keep tapping.</b>';
+  }
+  cv.addEventListener('pointerdown', tap);
+
+  // ---------- the end: the small party comes apart ----------
+  function finale() {
+    if (phase === 'done') return;
+    phase = 'done'; gone = true; Kit.haptic('success');
+    const b = bins[0];
+    for (const w of b.bodies) {
+      Composite.remove(engine.world, w);
+      if (Kit.calm || w.guard) continue;
+      const d = Bodies.rectangle(w.position.x, w.position.y, w.vert ? T : w.len + 2 * T, w.vert ? w.len : 2 * T, {frictionAir: .02, collisionFilter: {group: -1, mask: 0}});
+      d.len = w.vert ? yB - yT : w.len; d.vert = w.vert;
+      if (w.vert) Body.setPosition(d, {x: w.position.x + (w.position.x < b.cx ? T / 2 : -T / 2), y: (yT + yB) / 2});
+      else Body.setPosition(d, {x: b.cx, y: yB});
+      Body.setVelocity(d, {x: (Kit.rnd() - .5) * 4, y: -3 - Kit.rnd() * 3});
+      Body.setAngularVelocity(d, (Kit.rnd() - .5) * .12);
+      Composite.add(engine.world, d); fallen.push(d);
+    }
+    b.bodies = [];
+    if (Kit.calm || fast) anim.ghost = 1;
+    else gsap.fromTo(anim, {ghost: 0}, {ghost: 1, duration: 1.3, delay: .5, ease: 'power3.inOut'});
+    card.classList.add('answered');
+    say.innerHTML = 'When the most votes takes all, a small-party vote is wasted and splits its own side. Florida, 2000: Bush won by fewer than 600 votes; Nader, left of Gore, took almost 100,000. So voters drift to the nearest big party until two are left.';
+    Kit.show('keep');
+  }
+
+  // ---------- loop ----------
+  let looping = false;
+  function loop(t) {
+    if (entered) Engine.update(engine, 1000 / 60);
+    draw(t || 0);
+    requestAnimationFrame(loop);
+  }
+
+  Kit.onShow.card = () => { build(); draw(0); if (!looping) { looping = true; requestAnimationFrame(loop); } };
+  new ResizeObserver(() => { if (ctx) build(); }).observe(Kit.$('stage'));
+
+  function enter() {
+    if (entered) return;
+    entered = true;
+    if (Kit.calm) { build(); return; }
+    gsap.fromTo(anim, {prog: 0}, {prog: 1, duration: 1.1, ease: 'expo.out'});
+  }
+  Kit.onEnter.card = enter;
+
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(res => setTimeout(res, ms));
+    fast = true;
+    if (!entered) { entered = true; }
+    anim.prog = 1;
+    build();
+    await wait(150);
+    if (phase === 'fall' || phase === 'settle') { phase = 'settle'; result(); }
+    for (let i = 0; i < 6 && phase === 'tactics'; i++) { tap(); await wait(60); }
+    await wait(300);
+    if (phase !== 'done') finale();
+    await wait(700);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "technology-tail-pull-retract",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does this growing robot pull itself back in?",
+  "answer": "Pulling the tail drags the material back through the core of the body. At the tip, the wall turns inside out and goes back inside itself, so the robot ungrows. In a tight space, that is all it takes.",
+  "move": "To retract, pull the tail: the robot turns back inside itself.",
+  "keywords": [
+    "robot",
+    "retraction",
+    "inversion",
+    "veritasium",
+    "soft robot"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive diagram of a growing robot with a horizontal bar and a blue band. The reader drags the bar to pull the robot's tail and watches the blue band move back through the body.",
+    "ground": "#0d1d24"
+  },
+  "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg&t=161s",
+  "written": "2026-11-04"
+}

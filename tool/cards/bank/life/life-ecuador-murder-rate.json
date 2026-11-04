@@ -1,0 +1,39 @@
+{
+  "id": "life-ecuador-murder-rate",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.first_principles",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Each year in Ecuador, how many of every 100,000 people are murdered?",
+  "answer": "Each year in Ecuador, 40 of every 100,000 people are murdered. That is extreme violence, driven by organised crime. Ecuador's prison population grew from 11,000 in 2009 to over 31,000, and a presidential candidate was killed while campaigning for the October 2023 election.",
+  "move": "“Per 100,000” means a crowd of 100,000. In Ecuador, 40 of them are killed each year.",
+  "keywords": [
+    "ecuador",
+    "homicide",
+    "organised crime",
+    "prisons",
+    "election"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A multiple-choice question asking how many of every 100,000 people are murdered each year in Ecuador. Options are 4, 15 and 40 per 100k. A prompt says to pick a number, then a thermal scan counts one year.",
+    "graded": false,
+    "ground": "#0b0816"
+  },
+  "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=8-KoJBcxLek&t=409s",
+  "written": "2026-11-04"
+}

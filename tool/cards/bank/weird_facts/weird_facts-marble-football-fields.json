@@ -1,0 +1,37 @@
+{
+  "id": "weird_facts-marble-football-fields",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.places_that_should_not_exist",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What area does the marble used in Ashgabat equal?",
+  "answer": "Ashgabat built over 540 new buildings and clad them in about 4.5 million slabs of bright white Carrara marble. Laid flat, that marble would cover more than 692 football fields. Each white slip stands for one football field.",
+  "move": "Ashgabat's marble alone would carpet more than 692 football fields.",
+  "keywords": [
+    "ashgabat",
+    "turkmenistan",
+    "carrara_marble",
+    "football_field"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A white page titled Marble City asks what area the marble used in Ashgabat equals. Press and hold to lay white slabs, one slip per football field, until the marble fills the field.",
+    "ground": "#15513f"
+  },
+  "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=JswYQiixMT8&t=172s",
+  "written": "2026-11-04"
+}

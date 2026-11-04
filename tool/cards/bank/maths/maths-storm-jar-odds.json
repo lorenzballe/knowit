@@ -1,0 +1,39 @@
+{
+  "id": "maths-storm-jar-odds",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How often does a storm strong enough to topple Citicorp hit?",
+  "answer": "The flag asks how often a storm strong enough to topple Citicorp hits: once every how many years? Picture a jar with one slip per year, and each year the sky draws one. Once every N years means a 1-in-N chance each year, and it can come any year.",
+  "move": "“Once every N years” means a 1-in-N chance each year, and it can come any year.",
+  "keywords": [
+    "citicorp",
+    "storm",
+    "skyscraper",
+    "probability",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page: a draggable flag asks, once every how many years does a storm strong enough to topple Citicorp hit? The reader drags the flag to guess the number of years.",
+    "graded": false,
+    "ground": "#22314b"
+  },
+  "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=1129s",
+  "written": "2026-11-04"
+}

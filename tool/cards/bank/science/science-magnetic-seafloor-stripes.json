@@ -1,0 +1,38 @@
+{
+  "id": "science-magnetic-seafloor-stripes",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.theories_and_laws",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the seafloor's magnetic direction change with distance from the ridge?",
+  "answer": "New rock cools at the ridge and its magnetite freezes pointing along Earth's field. Distance from the ridge is time, so each stripe keeps the field from the day it cooled.",
+  "move": "Distance from the ridge is time: each stripe keeps the field from the day it cooled.",
+  "keywords": [
+    "seafloor spreading",
+    "magnetite",
+    "ridge",
+    "earth's magnetic field",
+    "paleomagnetism"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page titled 'The seafloor's magnetic tape'. It asks why the seafloor's magnetic direction changes with distance from the ridge. A side view of ocean floor folds at the ridge, with stripes showing the field direction, and a tap control flips Earth's field.",
+    "ground": "#f4ede0"
+  },
+  "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=194s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "science-cat-already-decided",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before you open the box, is the cat already alive or dead?",
+  "answer": "In the Many-Worlds view, the outcome is already decided before you open the box. Opening it doesn't create the outcome; it shows you which branch you are in.",
+  "move": "Opening the box doesn't make the outcome. It shows you which branch you're in.",
+  "keywords": [
+    "schrodinger-cat",
+    "many-worlds",
+    "parallel-universes",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A closed box holds an atom, a detector and a cat. The question asks whether the cat is already alive or dead before the box is opened. The reader taps the atom to continue.",
+    "ground": "#121729"
+  },
+  "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=617s",
+  "written": "2026-11-04"
+}

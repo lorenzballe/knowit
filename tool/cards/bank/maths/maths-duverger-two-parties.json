@@ -1,0 +1,38 @@
+{
+  "id": "maths-duverger-two-parties",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.game_theory",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does winner-takes-all voting end with just two big parties?",
+  "answer": "With winner-takes-all voting, sixty voters each cast one vote and the most votes takes all. Small parties become spoilers, so voters leave them. Only two big parties remain.",
+  "move": "Winner-takes-all turns small parties into spoilers, so voters leave them and two parties remain.",
+  "keywords": [
+    "duverger",
+    "winner-takes-all",
+    "spoiler effect",
+    "two-party system",
+    "voting"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page: sixty voters, each with one vote, shown as a set of markers. Tap to switch and watch small parties lose votes until two big parties remain. Asks why winner-takes-all voting ends with just two big parties.",
+    "ground": "#123e6e"
+  },
+  "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=121s",
+  "written": "2026-11-04"
+}

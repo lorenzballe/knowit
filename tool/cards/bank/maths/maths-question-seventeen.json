@@ -1,0 +1,38 @@
+{
+  "id": "maths-question-seventeen",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did nobody answer question 17 correctly?",
+  "answer": "Coin A turns 4 times, not 3. It turns 3 times to cover the length of B's edge, plus once more for going all the way around B. The test writers also thought 3, so 4 wasn't among the choices and nobody could pick the right answer.",
+  "move": "When everyone gets it wrong, check the answer key too.",
+  "keywords": [
+    "coin",
+    "sat",
+    "veritasium",
+    "answer key",
+    "test writers"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card titled 'Roll the coin' asking why nobody answered question 17 correctly. It shows coin A, with a third of coin B's radius, rolling once around B, with a tap-to-roll control. The answer key said B: 3.",
+    "ground": "#16241f"
+  },
+  "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=86s",
+  "written": "2026-11-04"
+}

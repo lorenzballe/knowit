@@ -1,0 +1,39 @@
+{
+  "id": "nature-vesuvius-ash-volume",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How much material did Vesuvius emit in the first ten days of 1944?",
+  "answer": "Vesuvius emitted more than 245 million m³ of material in about ten days, some 280 m³ every second. Packed into one cube, that is about 626 m on each side. Ash and lapilli fell on Pompei, Nocera, Scafati and Poggiomarino.",
+  "move": "Vesuvius, 1944: over 245 million m³ in ten days, a cube 626 m wide.",
+  "keywords": [
+    "vesuvius",
+    "pompei",
+    "ash",
+    "lapilli",
+    "1944 eruption"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A gauge with a needle and an ash cube beside it. The question asks how much material Vesuvius emitted in its first ten days in 1944. The reader turns the needle to a guess, and the cube shows the size of the answer.",
+    "graded": false,
+    "ground": "#1d1611"
+  },
+  "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IxqDIGusjko&t=300s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,365 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-elephants-foot-dose -->
+<!-- Look: a neon Geiger dial hung on dark brick under the faint lattice arch of the sarcophagus, pink scale tubes, a cyan guess needle and an amber glowing blob of corium below.
+     Interaction: you swing the needle along a log scale of mSv per year to guess the dose under the melted core, then measure it.
+     Wow: the sign flickers, sparks fly from the corium, a hot needle slams over with an overshoot, the colour band lights to 100 and the needle keeps trembling like a live counter. -->
+<title>The Elephant's Foot</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
+<style>
+#card{--c:#1d1214;--k:#fff0e6;--edge:#0a0506;--muted:#dcbcb2;
+  background-color:#1d1214;
+  background-image:
+    radial-gradient(110% 65% at 50% 36%,rgba(255,61,127,.17),transparent 62%),
+    radial-gradient(90% 40% at 50% 70%,rgba(255,170,60,.10),transparent 70%),
+    radial-gradient(150% 110% at 50% 50%,transparent 42%,rgba(0,0,0,.72)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='40'%3E%3Crect width='64' height='40' fill='%23120a0b'/%3E%3Crect x='1.5' y='1.5' width='61' height='17' rx='1.5' fill='%232a1719'/%3E%3Crect x='-30.5' y='21.5' width='61' height='17' rx='1.5' fill='%23241315'/%3E%3Crect x='33.5' y='21.5' width='61' height='17' rx='1.5' fill='%232f1a1c'/%3E%3Crect x='1.5' y='1.5' width='61' height='2' fill='%23ffffff' fill-opacity='.04'/%3E%3C/svg%3E");
+  background-size:auto,auto,auto,64px 40px}
+#card .q{color:#fff6f8;text-shadow:0 0 .5cqh rgba(255,61,127,.95),0 0 1.8cqh rgba(255,61,127,.55)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#say{color:#f3dcd4;overflow-wrap:anywhere}
+#say b{color:#c9fbff;text-shadow:0 0 1cqh rgba(63,240,255,.7)}
+#say .hot{color:#ffd0b8;text-shadow:0 0 1cqh rgba(255,90,42,.8);font-weight:800}
+#go{align-self:flex-start;font:800 max(2cqh,13px)/1.1 var(--body);color:#e6feff;background:rgba(63,240,255,.06);border:0;border-radius:99px;padding:1.3cqh 4.6cqw;cursor:pointer;
+  box-shadow:0 0 0 .22cqh #3ff0ff,0 0 1.8cqh rgba(63,240,255,.55),inset 0 0 1.4cqh rgba(63,240,255,.3);text-shadow:0 0 .8cqh rgba(63,240,255,.9);animation:hum 1.8s ease-in-out infinite}
+@keyframes hum{50%{box-shadow:0 0 0 .22cqh #3ff0ff,0 0 3cqh rgba(63,240,255,.8),inset 0 0 2cqh rgba(63,240,255,.45)}}
+.kit-calm #go{animation:none}
+#card .keep{overflow-wrap:anywhere}
+#card .keep b{color:#ffc36b;text-shadow:0 0 1cqh rgba(255,170,60,.7)}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Set the needle · dose rate" style="--c:#1d1214;--k:#fff0e6;--edge:#0a0506">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CHERNOBYL TODAY</span></div>
+    <h2 class="q">How strong is the radiation under Chernobyl's melted core today?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A neon dose meter on a brick wall under the arch of the sarcophagus, scaled from 0.1 to 100,000 millisieverts per year, above a glowing lump of solid corium called the Elephant's Foot."></svg>
+    </div>
+    <p class="say" id="say">Below the dial: the Elephant's Foot, melted core turned solid. <b>Swing the needle to your guess.</b></p>
+    <button class="btn gone" id="go">Measure the Elephant's Foot</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A dose rate means nothing without its time: one year is 8,760 hours.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(CustomEase);
+  CustomEase.create('flick', 'M0,0 L0.08,0.7 0.1,0.05 0.2,0.9 0.24,0.15 0.34,1 0.38,0.45 0.46,1 1,1');
+  CustomEase.create('swing', 'M0,0 C0.18,0 0.28,1.3 0.45,1.12 0.6,0.96 0.75,1.03 1,1');
+
+  const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go'), card = Kit.$('card');
+  const PINK = '#ff3d7f', CYAN = '#3ff0ff', AMBER = '#ffb547', HOT = '#ff5a2a';
+  const T_REAL = .5;                       // 100 mSv a year on a scale from 0.1 to 100,000
+  const S = {g: .15, r: 0, j: 0};
+  let W = 0, H = 0, fs = 12, cx = 0, cy = 0, R = 0, el = {}, guessed = false, revealed = false, entered = false, lastDec = -1;
+  let busy = false, pend = false, pulse = null, jitOn = false;
+
+  const val = t => Math.pow(10, -1 + 6 * t);
+  const fmt = v => v < 10 ? v.toFixed(1) : v < 1000 ? String(Math.round(v)) : Number(v.toPrecision(2)).toLocaleString('en');
+  const pt = (t, r) => { const a = Math.PI * (1 + t); return [cx + Math.cos(a) * r, cy + Math.sin(a) * r]; };
+  const arcD = (r, t0, t1) => { const [x0, y0] = pt(t0, r), [x1, y1] = pt(t1, r); return `M${x0},${y0} A${r},${r} 0 0 1 ${x1},${y1}`; };
+
+  function tube(p, d, c, w, o = 1) {
+    const g = Kit.mk('g', {filter: 'url(#glow)', opacity: o}, p);
+    Kit.mk('path', {d, stroke: c, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    Kit.mk('path', {d, stroke: '#fff', 'stroke-opacity': .78, 'stroke-width': Math.max(1, w * .3), fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    return g;
+  }
+  const glass = (p, d, w) => Kit.mk('path', {d, stroke: 'rgba(255,230,230,.07)', 'stroke-width': w * 1.5, fill: 'none', 'stroke-linecap': 'round'}, p);
+  function text(p, x, y, t, a) { const e = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle'}, a), p); e.textContent = t; return e; }
+  function fitText(p, x, y, t, a) {
+    const e = text(p, x, y, t, a), w = e.getComputedTextLength(), anc = a['text-anchor'] || 'middle';
+    const left = anc === 'end' ? x - w : anc === 'middle' ? x - w / 2 : x;
+    const sh = Math.max(3 - left, Math.min(0, W - 3 - (left + w)));
+    if (sh) e.setAttribute('x', x + sh);
+    return e;
+  }
+
+  function layout() {
+    if (pulse) { pulse.kill(); pulse = null; }
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(16, f.f || W / 26));
+    const B = Math.max(fs * 9.6, H * .36);
+    cx = W / 2; cy = H - B;
+    R = Math.max(50, Math.min(W / 2 - fs * 3.2, cy - fs * 2.2));
+    const o = (!entered && !Kit.calm) ? 0 : 1;
+    const yb = H - fs * .5;
+    el = {};
+
+    // light, filters
+    const defs = Kit.mk('defs', {}, svg);
+    const fl = Kit.mk('filter', {id: 'glow', filterUnits: 'userSpaceOnUse', x: -40, y: -40, width: W + 80, height: H + 80}, defs);
+    Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: fs * .9, result: 'b'}, fl);
+    Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: fs * .22, result: 'a'}, fl);
+    const m = Kit.mk('feMerge', {}, fl);
+    ['b', 'a', 'SourceGraphic'].forEach(n => Kit.mk('feMergeNode', {in: n}, m));
+    const rg = (id, c, a) => { const g = Kit.mk('radialGradient', {id}, defs); Kit.mk('stop', {offset: 0, 'stop-color': c, 'stop-opacity': a}, g); Kit.mk('stop', {offset: 1, 'stop-color': c, 'stop-opacity': 0}, g); };
+    rg('halo', PINK, .22); rg('fhalo', AMBER, .3);
+    const core = Kit.mk('radialGradient', {id: 'core', cx: .5, cy: .85, r: .8}, defs);
+    [[0, '#fff1c4', .9], [.35, '#ffa43a', .65], [1, '#7a1d08', .35]].forEach(([s, c, a]) => Kit.mk('stop', {offset: s, 'stop-color': c, 'stop-opacity': a}, core));
+
+    // the sarcophagus: a faint lattice arch over the whole scene
+    el.arch = Kit.mk('g', {opacity: o, fill: 'none', 'stroke-linecap': 'round'}, svg);
+    const top = cy - R - fs * 3.4;
+    if (top > 2) {
+      const rx = W / 2 - 1.5, ry = yb - top, rx2 = rx - fs * 1.1, ry2 = ry - fs * 1.1, N = 18;
+      const ar = (a, b) => `M${cx - a},${yb} A${a},${b} 0 0 1 ${cx + a},${yb}`;
+      Kit.mk('path', {d: ar(rx, ry) + ar(rx2, ry2), stroke: '#ffb3c9', 'stroke-opacity': .2, 'stroke-width': 1.4}, el.arch);
+      let tr = '';
+      for (let i = 0; i < N; i++) {
+        const th0 = Math.PI * i / N, th1 = Math.PI * (i + 1) / N;
+        const P = (a, b, th) => `${cx - a * Math.cos(th)},${yb - b * Math.sin(th)}`;
+        tr += `M${P(rx, ry, th0)} L${P(rx2, ry2, th1)} M${P(rx2, ry2, th1)} L${P(rx, ry, th1)}`;
+      }
+      Kit.mk('path', {d: tr, stroke: '#ffb3c9', 'stroke-opacity': .11, 'stroke-width': 1}, el.arch);
+      Kit.mk('line', {x1: 2, y1: yb, x2: W - 2, y2: yb, stroke: '#ffb3c9', 'stroke-opacity': .14, 'stroke-width': 1}, el.arch);
+    }
+
+    el.halo = Kit.mk('circle', {cx, cy: cy - R * .35, r: R * 1.35, fill: 'url(#halo)', opacity: o}, svg);
+
+    // the dial: glass tubes, then the lit neon
+    const back = Kit.mk('g', {}, svg);
+    glass(back, arcD(R, 0, 1), fs * .38);
+    el.arc = tube(svg, arcD(R, 0, 1), PINK, fs * .36, o);
+    [.04, .27, .5, .73, .96].forEach(t => { const [x, y] = pt(t, R); Kit.mk('rect', {x: x - fs * .25, y: y - fs * .25, width: fs * .5, height: fs * .5, rx: fs * .1, fill: '#3a2a2c', stroke: '#0b0607', 'stroke-width': 1, transform: `rotate(${180 * t} ${x} ${y})`}, svg); });
+
+    // colour band that lights up at the reveal
+    el.band = Kit.mk('g', {filter: 'url(#glow)', opacity: o}, svg);
+    el.segs = [];
+    const NS = 48, br = R * .74;
+    for (let i = 0; i < NS; i++) {
+      const t0 = i / NS + .004, t1 = (i + 1) / NS - .004, t = (i + .5) / NS;
+      el.segs.push(Kit.mk('path', {d: arcD(br, t0, t1), stroke: `hsl(${150 * (1 - t)},100%,58%)`, 'stroke-width': fs * .55, fill: 'none', opacity: .13}, el.band));
+    }
+
+    // ticks: one per tenfold, finer between
+    el.majors = []; let minor = '';
+    for (let k = 0; k <= 6; k++) {
+      const [x0, y0] = pt(k / 6, R * .84), [x1, y1] = pt(k / 6, R * .95);
+      el.majors.push(tube(svg, `M${x0},${y0} L${x1},${y1}`, '#ffd6e4', fs * .2, o));
+      if (k < 6) for (let s = 2; s <= 9; s++) { const t = (k + Math.log10(s)) / 6, [a, b] = pt(t, R * .9), [c, d] = pt(t, R * .95); minor += `M${a},${b} L${c},${d}`; }
+    }
+    el.minor = tube(svg, minor, PINK, fs * .1, o);
+    el.labels = ['0.1', '1', '10', '100', '1k', '10k', '100k'].map((s, k) => {
+      const [x, y] = pt(k / 6, R + fs * 1.2);
+      return text(svg, x, y + fs * .35, s, {fill: '#ffe6ee', 'font-family': 'var(--mono), monospace', 'font-size': fs * .95, 'font-weight': 700, filter: 'url(#glow)', opacity: o});
+    });
+    el.unit = text(svg, cx, cy - R * .5, 'mSv per year', {fill: '#f0c9d3', 'font-family': 'var(--mono), monospace', 'font-size': fs * .85, 'font-weight': 600, opacity: o * .9});
+
+    // the corium: the Elephant's Foot
+    const yT = cy + fs * 5.2, fh = Math.max(fs * 1.6, yb - yT), fw = Math.min(W * .4, fh * 2.2), fx = cx;
+    el.fx0 = fx; el.fy0 = yb - fh * .85; el.fw = fw;
+    el.foot = Kit.mk('g', {opacity: o}, svg);
+    el.fh = Kit.mk('ellipse', {cx: fx, cy: yb - fh * .4, rx: fw * .95, ry: fh * 1.1, fill: 'url(#fhalo)'}, el.foot);
+    const N = 14, P = [];
+    for (let i = 0; i <= N; i++) {
+      const a = Math.PI * (1 + i / N), wob = .88 + .07 * Math.sin(i * 2.7) + (i % 3 === 0 ? .05 : 0);
+      P.push([fx + Math.cos(a) * fw / 2 * (1 + .05 * Math.sin(i * 1.9)), yb + Math.sin(a) * fh * wob]);
+    }
+    let d = `M${fx - fw / 2 - fs},${yb} L${P[0][0]},${P[0][1]}`;
+    for (let i = 1; i < N; i++) { const mx = (P[i][0] + P[i + 1][0]) / 2, my = (P[i][1] + P[i + 1][1]) / 2; d += ` Q${P[i][0]},${P[i][1]} ${mx},${my}`; }
+    d += ` L${P[N][0]},${P[N][1]} L${fx + fw / 2 + fs},${yb}`;
+    Kit.mk('path', {d: d + 'Z', fill: 'url(#core)'}, el.foot);
+    tube(el.foot, d, AMBER, fs * .26);
+    tube(el.foot, `M${fx - fw * .28},${yb - fh * .3} Q${fx},${yb - fh * .5} ${fx + fw * .3},${yb - fh * .28} M${fx - fw * .17},${yb - fh * .6} Q${fx + fw * .02},${yb - fh * .74} ${fx + fw * .16},${yb - fh * .58}`, '#ffd27a', fs * .12);
+    const lh = fs * 1.6;
+    const ly = Math.min(yb - lh - fs * .15, Math.max(yb - fh * .55, cy + fs * 5.6));
+    const la = {fill: '#ffd9a6', 'font-family': 'var(--hand), cursive', 'font-size': fs * 1.05, 'font-weight': 700};
+    fitText(el.foot, fx + fw / 2 + fs * .5, ly, "Elephant's", Object.assign({'text-anchor': 'start'}, la));
+    fitText(el.foot, fx + fw / 2 + fs * .5, ly + lh, 'Foot', Object.assign({'text-anchor': 'start'}, la));
+    fitText(el.foot, fx - fw / 2 - fs * .5, ly, 'solid', Object.assign({'text-anchor': 'end'}, la));
+    fitText(el.foot, fx - fw / 2 - fs * .5, ly + lh, 'corium', Object.assign({'text-anchor': 'end'}, la));
+
+    // readouts
+    el.read = Kit.mk('g', {opacity: o}, svg);
+    const ca = {'font-family': 'var(--mono), monospace', 'font-size': fs * .8, 'font-weight': 700, 'letter-spacing': '.08em'};
+    const va = {'font-family': 'var(--mono), monospace', 'font-size': fs * 1.4, 'font-weight': 800, filter: 'url(#glow)'};
+    const yc = cy + fs * 2.1, yv = cy + fs * 4;
+    text(el.read, cx - R * .6, yc, 'YOUR GUESS', Object.assign({fill: CYAN}, ca));
+    el.gv = text(el.read, cx - R * .6, yv, '', Object.assign({fill: '#dcfeff'}, va));
+    el.rc = text(el.read, cx + R * .6, yc, 'MEASURED', Object.assign({fill: HOT}, ca));
+    el.rv = text(el.read, cx + R * .6, yv, '– –', Object.assign({fill: '#ffe1d2'}, va));
+    el.blip = Kit.mk('circle', {cx: cx + R * .6 + fs * 2.7, cy: yc - fs * .28, r: fs * .2, fill: HOT, filter: 'url(#glow)', opacity: 0}, el.read);
+
+    // needles and hub
+    el.guessG = tube(svg, '', CYAN, fs * .28, o);
+    el.real = tube(svg, '', HOT, fs * .36, revealed ? 1 : 0);
+    el.hub = Kit.mk('g', {opacity: o}, svg);
+    const hr = fs * 1.15;
+    Kit.mk('circle', {cx, cy, r: hr, fill: '#140b0d'}, el.hub);
+    tube(el.hub, `M${cx - hr},${cy} A${hr},${hr} 0 1 1 ${cx + hr},${cy} A${hr},${hr} 0 1 1 ${cx - hr},${cy}`, PINK, fs * .16);
+    el.tre = Kit.mk('g', {fill: AMBER, filter: 'url(#glow)'}, el.hub);
+    [90, 210, 330].forEach(c => {
+      const r0 = hr * .28, r1 = hr * .78, a0 = (c - 30) * Math.PI / 180, a1 = (c + 30) * Math.PI / 180;
+      Kit.mk('path', {d: `M${cx + Math.cos(a0) * r0},${cy + Math.sin(a0) * r0} L${cx + Math.cos(a0) * r1},${cy + Math.sin(a0) * r1} A${r1},${r1} 0 0 1 ${cx + Math.cos(a1) * r1},${cy + Math.sin(a1) * r1} L${cx + Math.cos(a1) * r0},${cy + Math.sin(a1) * r0} A${r0},${r0} 0 0 0 ${cx + Math.cos(a0) * r0},${cy + Math.sin(a0) * r0}Z`}, el.tre);
+    });
+    Kit.mk('circle', {cx, cy, r: hr * .17}, el.tre);
+    el.fx = Kit.mk('g', {}, svg);
+
+    drawGuess();
+    if (revealed) { el.guessG.setAttribute('opacity', .45); drawReal(); el.rv.textContent = fmt(val(S.r)); }
+    if (entered && !Kit.calm) startPulse();
+  }
+
+  function startPulse() {
+    if (!el.fh || pulse) return;
+    pulse = gsap.fromTo(el.fh, {opacity: 1}, {opacity: .55, duration: 1.7, ease: 'sine.inOut', yoyo: true, repeat: -1});
+  }
+
+  function setNeedle(g, t, len) {
+    const [x, y] = pt(t, len), d = `M${cx - (x - cx) * .14},${cy - (y - cy) * .14} L${x},${y}`;
+    g.querySelectorAll('path').forEach(p => p.setAttribute('d', d));
+  }
+  function drawGuess() { if (!el.guessG) return; setNeedle(el.guessG, S.g, R * .8); el.gv.textContent = fmt(val(S.g)); }
+  function drawReal() {
+    if (!el.real) return;
+    setNeedle(el.real, S.r + S.j, R * .9);
+    el.segs.forEach((s, i) => s.setAttribute('opacity', (i + .5) / el.segs.length <= Math.min(S.r, T_REAL) + .001 ? 1 : .13));
+    if (revealed && !busy) el.rv.textContent = fmt(val(Math.max(0, S.r)));
+    else if (revealed) el.rv.textContent = fmt(val(Math.max(0, S.r)));
+  }
+
+  // ---------- the guess ----------
+  const qg = gsap.quickTo(S, 'g', {duration: .28, ease: 'power3.out', onUpdate: drawGuess});
+  function aimT(t) {
+    if (revealed) return;
+    t = Math.max(0, Math.min(1, t));
+    if (Kit.calm) { S.g = t; drawGuess(); } else qg(t);
+    const dec = Math.floor(t * 6 + .5); if (dec !== lastDec) { lastDec = dec; Kit.haptic('selection'); }
+    if (!guessed) {
+      guessed = true; Kit.show('go');
+      say.innerHTML = 'Each big mark is <b>ten times</b> more than the last. <b>Set your guess, then measure.</b>';
+      if (!Kit.calm) gsap.from(go, {opacity: 0, y: 8, scale: .94, duration: .5, ease: 'back.out(2)'});
+    }
+  }
+  let drag = false;
+  function aim(e) {
+    const r = svg.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    const a = Math.atan2(y - cy, x - cx);
+    aimT(a <= 0 ? (a + Math.PI) / Math.PI : (x < cx ? 0 : 1));
+  }
+  svg.addEventListener('pointerdown', e => { if (revealed) return; drag = true; svg.setPointerCapture(e.pointerId); aim(e); });
+  svg.addEventListener('pointermove', e => { if (drag) aim(e); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // ---------- sparks from the corium, dust in the air ----------
+  function spark(n, strong) {
+    if (!el.fx || Kit.calm) return;
+    for (let i = 0; i < n; i++) {
+      const x0 = el.fx0 + (Kit.rnd() - .5) * el.fw * .6, y0 = el.fy0 + fs * .4;
+      const c = Kit.mk('circle', {cx: x0, cy: y0, r: fs * (.07 + Kit.rnd() * .1), fill: strong ? '#fff3c8' : AMBER, filter: 'url(#glow)'}, el.fx);
+      let tx, ty;
+      if (strong) { [tx, ty] = pt(Kit.rnd(), R * (.25 + Kit.rnd() * .75)); } else { tx = x0 + (Kit.rnd() - .5) * fs * 2; ty = y0 - fs * (2 + Kit.rnd() * 3); }
+      gsap.to(c, {attr: {cx: tx, cy: ty}, opacity: 0, duration: strong ? .7 + Kit.rnd() * .6 : 1.2 + Kit.rnd(), delay: strong ? Kit.rnd() * .5 : 0, ease: 'power2.out', onComplete: () => c.remove()});
+    }
+  }
+  function mote() {
+    if (!el.fx || Kit.calm) return;
+    const x = W * (.08 + Kit.rnd() * .84), y = H * (.6 + Kit.rnd() * .35);
+    const c = Kit.mk('circle', {cx: x, cy: y, r: fs * (.05 + Kit.rnd() * .07), fill: '#ffd7b8', opacity: 0}, el.fx);
+    const d = 5 + Kit.rnd() * 4;
+    gsap.to(c, {attr: {cx: x + (Kit.rnd() - .5) * fs * 4, cy: y - H * (.3 + Kit.rnd() * .3)}, duration: d, ease: 'none', onComplete: () => c.remove()});
+    gsap.to(c, {opacity: .45, duration: d / 2, ease: 'sine.inOut', yoyo: true, repeat: 1});
+  }
+  let ambOn = false;
+  function amb() {
+    if (ambOn) return; ambOn = true;
+    const loop = () => { spark(1, false); if (Kit.rnd() < .3) mote(); gsap.delayedCall(.18 + Kit.rnd() * .45, loop); };
+    loop();
+  }
+
+  // a live counter: the hot needle never quite settles, the lamp ticks
+  function jitter() {
+    if (jitOn || Kit.calm) return; jitOn = true;
+    const step = () => {
+      gsap.to(S, {j: (Kit.rnd() - .5) * .014, duration: .06 + Kit.rnd() * .12, ease: 'sine.inOut', onUpdate: drawReal, onComplete: step});
+      if (el.blip && Kit.rnd() < .35) gsap.fromTo(el.blip, {opacity: 1}, {opacity: 0, duration: .25, ease: 'power2.out'});
+    };
+    step();
+  }
+
+  // ---------- the measure ----------
+  function done(gv) {
+    const ratio = 100 / gv;
+    const off = Math.abs(Math.log10(ratio)) < .18 ? 'Spot on.'
+      : ratio > 1 ? `${fmt(ratio)}× too low.` : `${fmt(1 / ratio)}× too high.`;
+    say.innerHTML = `You said ${fmt(gv)}: ${off} <span class="hot">Up to 100 mSv a year</span>: Chernobyl's most dangerous spot, which is why the sarcophagus covers it. That is about 0.011 mSv an hour: the harm builds the longer you stay.`;
+    card.classList.add('answered');
+    Kit.show('keep');
+    if (el.blip) el.blip.setAttribute('opacity', Kit.calm ? 1 : 0);
+    if (!Kit.calm) { gsap.from(['#say', '#keep'], {opacity: 0, y: 10, stagger: .12, duration: .6, ease: 'power3.out'}); jitter(); }
+  }
+  function reveal() {
+    if (revealed || !guessed) return;
+    revealed = true; Kit.hide('go'); Kit.haptic('success');
+    gsap.killTweensOf(S, 'g');
+    const gv = val(S.g);
+    el.guessG.setAttribute('opacity', .45);
+    if (Kit.calm) { S.r = T_REAL; el.real.setAttribute('opacity', 1); drawReal(); el.rv.textContent = '100'; done(gv); return; }
+    S.r = 0; busy = true;
+    const tl = gsap.timeline({onComplete: () => {
+      busy = false; S.r = T_REAL; drawReal(); el.rv.textContent = '100'; done(gv);
+      if (pend) { pend = false; layout(); }
+    }});
+    tl.to(el.arc, {opacity: .15, duration: .08, yoyo: true, repeat: 3, ease: 'none'}, 0)
+      .to(el.foot, {opacity: .4, duration: .06, yoyo: true, repeat: 5, ease: 'none'}, 0)
+      .fromTo(el.arch, {opacity: 1}, {opacity: 2.2, duration: .12, yoyo: true, repeat: 3, ease: 'none'}, 0)
+      .add(() => spark(30, true), .1)
+      .fromTo(card, {filter: 'brightness(1.7) saturate(1.3)'}, {filter: 'brightness(1) saturate(1)', duration: .9, ease: 'expo.out', clearProps: 'filter'}, .15)
+      .fromTo(el.real, {opacity: 0}, {opacity: 1, duration: .5, ease: 'flick'}, .15)
+      .to(S, {r: T_REAL, duration: 1.9, ease: 'swing', onUpdate: drawReal}, .2)
+      .fromTo(el.tre, {rotation: 0}, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 1.6, ease: 'power3.out'}, .2)
+      .add(() => { spark(14, true); Kit.haptic('light'); }, 1)
+      .fromTo(el.labels[3], {attr: {'font-size': fs * .95}}, {attr: {'font-size': fs * 1.5}, fill: '#fff', duration: .35, ease: 'back.out(3)', yoyo: true, repeat: 1}, 1.4)
+      .fromTo(el.rc, {opacity: .3}, {opacity: 1, duration: .5, ease: 'flick'}, 1.3);
+  }
+  go.addEventListener('click', reveal);
+
+  // re-draw at the new size when the stage grows or shrinks (e.g. after the answer)
+  new ResizeObserver(() => {
+    if (!W) return;
+    const r = svg.getBoundingClientRect();
+    if (Math.abs(r.width - W) < 2 && Math.abs(r.height - H) < 2) return;
+    if (busy) { pend = true; return; }
+    requestAnimationFrame(layout);
+  }).observe(Kit.$('stage'));
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (entered) return;
+    entered = true;
+    if (Kit.calm || !el.arc) { layout(); return; }
+    const tl = gsap.timeline();
+    tl.to(el.arch, {opacity: 1, duration: 1.2, ease: 'power2.out'}, 0)
+      .to(el.halo, {opacity: 1, duration: 1.4, ease: 'power2.out'}, 0)
+      .to(el.arc, {opacity: 1, duration: 1, ease: 'flick'}, .1)
+      .to(el.majors, {opacity: 1, duration: .5, ease: 'flick', stagger: .06}, .45)
+      .to(el.minor, {opacity: 1, duration: .45, ease: 'flick'}, .7)
+      .to(el.labels, {opacity: 1, duration: .5, ease: 'flick', stagger: .05}, .75)
+      .to(el.band, {opacity: 1, duration: .6, ease: 'power2.out'}, .9)
+      .to(el.unit, {opacity: .9, duration: .5, ease: 'power2.out'}, 1)
+      .to(el.foot, {opacity: 1, duration: 1.1, ease: 'flick'}, .95)
+      .to(el.hub, {opacity: 1, duration: .5, ease: 'flick'}, 1.2)
+      .to(el.guessG, {opacity: 1, duration: .3, ease: 'power2.out'}, 1.3)
+      .fromTo(S, {g: 0}, {g: guessed ? S.g : .15, duration: 1.2, ease: 'elastic.out(1,.45)', onUpdate: drawGuess, immediateRender: false}, 1.3)
+      .to(el.read, {opacity: 1, duration: .6, ease: 'flick'}, 1.5)
+      .add(startPulse, 2.1)
+      .add(amb, 1.7);
+    gsap.from(['.q', '#say'], {opacity: 0, y: 8, stagger: .12, duration: .7, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    aimT(.25);
+    await wait(Kit.calm ? 60 : 400);
+    go.click();
+    await wait(Kit.calm ? 100 : 2800);
+  };
+})();
+Kit.single();
+</script>
+</html>

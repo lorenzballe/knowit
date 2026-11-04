@@ -1,0 +1,417 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-national-redoubt -->
+<!-- Look: a field-notebook cross-section of Switzerland on cream paper, from the lowland border up into the Alps, in pencil hatching, folded rock strata, watercolour washes and handwritten labels.
+     Interaction: drag the invader (or scrub the pencil timeline) inland; the Redoubt's red line, forts and the tunnels deep in the rock draw themselves as you near the mountains, and the cost meter climbs with every uphill step.
+     Wow: at the foot of the Redoubt the meter hits its end, a red wash blooms over the Alps, a "NOT WORTH IT" stamp lands, and the invader turns back along a red retreat arrow. -->
+<title>The National Redoubt</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#card{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .16 0 0 0 .10 0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>")}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
+.hint{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(5px)}}
+.kit-calm .hint{animation:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+.answered .say{font-size:max(1.85cqh,12.5px)}
+.say b{color:#a3241c}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag the invader · the cost of the climb" style="--c:#f3ead6;--k:#2b2418;--edge:#d6c7a3">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE INVADER</span></div>
+    <h2 class="q">What was Switzerland's 'National Redoubt', and why was it built?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A cross-section of Switzerland from the lowland border up into the Alps, where a red defensive line with forts and tunnels runs through the mountains. An invader can be dragged inland, and a meter shows the rising cost of invading."></svg>
+    </div>
+    <p class="say" id="say"><b>Drag the invader</b> from the border into Switzerland.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Make attacking you cost more than it could gain, and nobody tries.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.DrawSVGPlugin) gsap.registerPlugin(DrawSVGPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#2b2418', RED = '#b3261e', PAPER = '#f3ead6', SNOW = '#fcf9f1';
+  const HAND = 'var(--hand)';
+  const SAYS = [
+    '<b>Drag the invader</b> from the border into Switzerland.',
+    'The lowland is easy going. The main defence is not here: it sits <b>far back from the border</b>, on a line that already existed.',
+    'Deep in the mountains, the Swiss <b>massively expanded</b> that line: the National Redoubt. Keep going.',
+    'Every step is now uphill, under defenders who sit <b>higher than you</b>. In a fight, being higher is an advantage.'
+  ];
+  const WHY = 'The Swiss pulled their defence back into the high Alps, where every step costs an attacker dearly. They did not need to win: they needed an invasion to cost so much it stopped making sense.';
+  // Front and back ranges: x as a fraction of width, height as a "level" (.64 = the plain, .17 = the highest peak).
+  const FRONT = [[0,.64],[.4,.64],[.47,.62],[.52,.57],[.585,.535],[.64,.36],[.68,.41],[.73,.23],[.78,.31],[.84,.2],[.89,.29],[.94,.22],[1,.31]];
+  const BACK = [[.44,.64],[.55,.44],[.6,.48],[.67,.28],[.71,.34],[.8,.19],[.86,.27],[.92,.17],[1,.25]];
+  let W = 0, H = 0, fs = 13, X0 = 0, X1 = 0, railY = 0, botY = 0, TOP = 0, plainY = 0, D = 0, bx = 0;
+  let E = {}, st = {p: 0}, done = false, touched = false, stage = -1, built = false;
+  let ambient = [], lastW = 0, lastH = 0, settling = false;
+
+  const clamp = v => Math.max(0, Math.min(1, v));
+  const lerpCtrl = (C, u) => { for (let i = 1; i < C.length; i++) if (u <= C[i][0]) { const a = C[i-1], b = C[i], t = (u - a[0]) / (b[0] - a[0]); return a[1] + (b[1] - a[1]) * t; } return C[C.length-1][1]; };
+  const fy = f => TOP + (f - .17) / .47 * (plainY - TOP);
+  const gy = x => { const u = x / W, m = clamp((u - .45) / .15); return fy(lerpCtrl(FRONT, u)) + (Math.sin(x * .19) * 1.1 + Math.sin(x * .47 + 1.3) * .9) * fs * .17 * (.3 + m * 1.3); };
+  const by = x => fy(lerpCtrl(BACK, x / W)) + Math.sin(x * .13 + 2) * fs * .2;
+  const gal = x => plainY + fs * 1.15 + fs * .15 * Math.sin(x / W * 17);
+  const cost = p => p < .45 ? .12 * p / .45 : .12 + .88 * Math.pow((p - .45) / .55, 2.1);
+  const backOut = gsap.parseEase('back.out(2.2)');
+
+  const T = (parent, x, y, txt, o = {}) => {
+    const size = Math.max(12, o.size || fs);
+    const e = Kit.mk('text', {x, y, fill: o.fill || INK, 'text-anchor': o.anchor || 'start',
+      style: `font-family:${o.font || HAND};font-size:${size}px;font-weight:${o.weight || 700};` + (o.halo === false ? '' : `paint-order:stroke;stroke:${PAPER};stroke-width:${fs * .32}px;stroke-linejoin:round`)}, parent);
+    e.textContent = txt; return e;
+  };
+  const pathFrom = (fn, a, b, step = 3) => { let d = ''; for (let x = a; x <= b + .01; x += step) d += (d ? ' L' : 'M') + x.toFixed(1) + ',' + fn(x).toFixed(1); return d; };
+
+  function layout() {
+    ambient.forEach(t => t.kill()); ambient = [];
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    const r = svg.getBoundingClientRect(); lastW = r.width; lastH = r.height;
+    fs = Math.max(12, Math.min(15, Math.min(W / 25, H / 21)));
+    railY = H - fs * 1.9; botY = railY - fs * 1.25; TOP = fs * 3.3;
+    D = Math.max(fs * 4.8, (botY - TOP) * .3); plainY = botY - D;
+    bx = Math.max(fs * .7, W * .035); X0 = bx + fs * 3.2; X1 = W * .59;
+    const span = plainY - TOP;
+    svg.innerHTML = `<defs>
+      <filter id="wc" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="3" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="${fs*.8}" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation=".7"/></filter>
+      <filter id="pc" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="2" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="1.6"/></filter>
+      <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)"><line x1="0" y1="0" x2="0" y2="5" stroke="${INK}" stroke-width=".7" opacity=".32"/></pattern>
+      <pattern id="hatch2" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-48)"><line x1="0" y1="0" x2="0" y2="4" stroke="${INK}" stroke-width=".6" opacity=".26"/></pattern>
+      <pattern id="hatchR" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><line x1="0" y1="0" x2="0" y2="4" stroke="${RED}" stroke-width="1.3"/></pattern>
+      <linearGradient id="gg" gradientUnits="userSpaceOnUse" x1="0" x2="${W}" y1="0" y2="0"><stop offset="0" stop-color="#b8c07c"/><stop offset=".42" stop-color="#a5b273"/><stop offset=".56" stop-color="#8f9a8c"/><stop offset=".72" stop-color="#7d899a"/><stop offset="1" stop-color="#6c788c"/></linearGradient>
+      <linearGradient id="lit" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <linearGradient id="fadeG" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="${plainY + D * .3}" y2="${botY}"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <mask id="fade" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="url(#fadeG)"/></mask>
+      <radialGradient id="rb"><stop offset="0" stop-color="${RED}" stop-opacity=".42"/><stop offset=".6" stop-color="${RED}" stop-opacity=".2"/><stop offset="1" stop-color="${RED}" stop-opacity="0"/></radialGradient>
+    </defs>`;
+    E = {};
+    const L = () => Kit.mk('g', {}, svg);
+
+    // Sky: a pale sun behind the peaks, two washed clouds, a few birds.
+    const sky = E.sky = L();
+    E.sun = Kit.mk('circle', {cx: W * .9, cy: fs * 2.2, r: fs * 1.6, fill: '#e8b85a', opacity: .4, filter: 'url(#wc)'}, sky);
+    E.clouds = [[.2, .5, 1], [.44, .2, .8]].map(([u, v, s]) => {
+      const cx = W * u, cy = TOP + span * v + fs * .3, g = Kit.mk('g', {}, sky);
+      [[-1.1, .15, .62], [-.3, -.2, .85], [.6, .05, .7], [1.25, .25, .5]].forEach(([dx, dy, rr]) =>
+        Kit.mk('circle', {cx: cx + dx * fs * s, cy: cy + dy * fs * s, r: rr * fs * s, fill: SNOW, opacity: .9, filter: 'url(#wc)'}, g));
+      Kit.mk('path', {d: `M${cx - 1.6 * fs * s},${cy + .55 * fs * s} L${cx + 1.7 * fs * s},${cy + .55 * fs * s}`, stroke: INK, 'stroke-width': .8, opacity: .35, 'stroke-linecap': 'round', filter: 'url(#pc)'}, g);
+      return g;
+    });
+    E.birds = Kit.mk('g', {}, sky);
+    E.birdP = [[.54, .2], [.585, .13], [.6, .27]].map(([u, v], i) => {
+      const s = fs * (.36 - i * .04), x = W * u, y = TOP + span * v;
+      return Kit.mk('path', {d: `M${x - s},${y} q${s / 2},${-s * .6} ${s},0 q${s / 2},${-s * .6} ${s},0`, fill: 'none', stroke: INK, 'stroke-width': 1.1, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .75}, E.birds);
+    });
+
+    // Back range, a cooler wash further away.
+    const back = E.back = L();
+    Kit.mk('path', {d: pathFrom(by, W * .44, W, 3) + ` L${W},${plainY + fs} L${W*.44},${plainY + fs} Z`, fill: '#94a3b8', opacity: .45, filter: 'url(#wc)'}, back);
+    Kit.mk('path', {d: pathFrom(by, W * .44, W, 3), fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .35, filter: 'url(#pc)'}, back);
+
+    // The red bloom (hidden until the end), kept inside the picture.
+    E.bloom = Kit.mk('ellipse', {cx: W * .79, cy: (TOP + plainY) / 2, rx: W * .2, ry: Math.max(fs * 1.5, span * .55), fill: 'url(#rb)', opacity: 0, filter: 'url(#wc)', style: 'mix-blend-mode:multiply'}, svg);
+
+    // The ground: watercolour, light from above, pencil hatching, folded strata, fading into the paper.
+    const gnd = E.gnd = Kit.mk('g', {mask: 'url(#fade)'}, svg);
+    const top = pathFrom(gy, 0, W, 3);
+    const body = top + ` L${W},${botY} L0,${botY} Z`;
+    Kit.mk('path', {d: body, fill: 'url(#gg)', opacity: .62, filter: 'url(#wc)'}, gnd);
+    Kit.mk('path', {d: body, fill: 'url(#lit)'}, gnd);
+    Kit.mk('path', {d: body, fill: 'url(#hatch)'}, gnd);
+    Kit.mk('path', {d: pathFrom(gy, W * .46, W, 3) + ` L${W},${botY} L${W*.46},${botY} Z`, fill: 'url(#hatch2)'}, gnd);
+    [0, 1, 2].forEach(k => {
+      const off = D * (.3 + .22 * k), fold = .5 - .13 * k;
+      Kit.mk('path', {d: pathFrom(x => plainY + off + (gy(x) - plainY) * fold + Math.sin(x * .05 + k * 2) * fs * .12, 0, W, 4), fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .32, filter: 'url(#pc)'}, gnd);
+    });
+    E.profile = Kit.mk('path', {d: top, fill: 'none', stroke: INK, 'stroke-width': 1.7, 'stroke-linecap': 'round', filter: 'url(#pc)'}, svg);
+
+    // Snow caps on the front peaks.
+    const snow = E.snow = L();
+    FRONT.forEach((c, i) => {
+      if (c[1] > .32 || i === 0 || i === FRONT.length - 1) return;
+      const x = c[0] * W, a = fs * 1.05;
+      let d = pathFrom(gy, x - a, x + a, 2);
+      for (let k = 5; k >= 0; k--) { const xx = x - a + 2 * a * k / 5; d += ` L${xx.toFixed(1)},${(gy(xx) + fs * (k % 2 ? .55 : .22)).toFixed(1)}`; }
+      Kit.mk('path', {d: d + ' Z', fill: SNOW, stroke: INK, 'stroke-width': .8, 'stroke-linejoin': 'round', filter: 'url(#pc)'}, snow);
+    });
+
+    // The lowland: trees, a village with its church, pines on the first slopes.
+    const low = E.low = L();
+    [.25, .36, .395, .43].forEach((u, i) => {
+      const x = u * W, y = gy(x), g = Kit.mk('g', {}, low), rr = fs * (.5 + (i % 2) * .12);
+      Kit.mk('line', {x1: x, y1: y, x2: x, y2: y - fs * .9, stroke: INK, 'stroke-width': 1.1}, g);
+      Kit.mk('circle', {cx: x, cy: y - fs * 1.2, r: rr, fill: '#7f9a4f', opacity: .7, filter: 'url(#wc)'}, g);
+      Kit.mk('circle', {cx: x, cy: y - fs * 1.2, r: rr, fill: 'url(#hatch)', stroke: INK, 'stroke-width': .8, filter: 'url(#pc)'}, g);
+    });
+    {
+      const x = .29 * W, y = gy(x), w = fs * .9, h = fs * .7, g = Kit.mk('g', {}, low);
+      Kit.mk('rect', {x: x - w / 2, y: y - h, width: w, height: h, fill: SNOW, stroke: INK, 'stroke-width': .9}, g);
+      Kit.mk('path', {d: `M${x - w * .65},${y - h} L${x},${y - h - w * .6} L${x + w * .65},${y - h} Z`, fill: '#c2563f', opacity: .8, stroke: INK, 'stroke-width': .9, 'stroke-linejoin': 'round'}, g);
+      Kit.mk('rect', {x: x - w * .12, y: y - h * .55, width: w * .24, height: h * .55, fill: INK, opacity: .7}, g);
+    }
+    {
+      const x = .322 * W, y = gy(x), w = fs * .75, h = fs * .6, tw = fs * .32, g = Kit.mk('g', {}, low);
+      Kit.mk('rect', {x: x - w / 2, y: y - h, width: w, height: h, fill: SNOW, stroke: INK, 'stroke-width': .9}, g);
+      Kit.mk('path', {d: `M${x - w * .6},${y - h} L${x - w * .1},${y - h - w * .45} L${x + w * .3},${y - h} Z`, fill: '#c2563f', opacity: .8, stroke: INK, 'stroke-width': .9, 'stroke-linejoin': 'round'}, g);
+      const tx = x + w * .5 - tw, th = fs * 1.35;
+      Kit.mk('rect', {x: tx, y: y - th, width: tw, height: th, fill: SNOW, stroke: INK, 'stroke-width': .9}, g);
+      Kit.mk('path', {d: `M${tx - 1},${y - th} L${tx + tw / 2},${y - th - fs * .7} L${tx + tw + 1},${y - th} Z`, fill: '#c2563f', opacity: .85, stroke: INK, 'stroke-width': .9, 'stroke-linejoin': 'round'}, g);
+    }
+    [.485, .515, .548, .572].forEach((u, i) => {
+      const x = u * W, y = gy(x), h = fs * (.85 + (i % 2) * .2), w = fs * .3, g = Kit.mk('g', {}, low);
+      Kit.mk('path', {d: `M${x},${y - h} L${x + w},${y} L${x - w},${y} Z`, fill: '#5f7448', opacity: .8, stroke: INK, 'stroke-width': .8, 'stroke-linejoin': 'round', filter: 'url(#pc)'}, g);
+    });
+    const py = gy(bx);
+    const post = E.post = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: bx, y1: py, x2: bx, y2: py - fs * 2.9, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, post);
+    const fz = fs * 1.05;
+    Kit.mk('rect', {x: bx, y: py - fs * 2.9, width: fz, height: fz, fill: RED}, post);
+    Kit.mk('rect', {x: bx + fz * .41, y: py - fs * 2.9 + fz * .18, width: fz * .18, height: fz * .64, fill: SNOW}, post);
+    Kit.mk('rect', {x: bx + fz * .18, y: py - fs * 2.9 + fz * .41, width: fz * .64, height: fz * .18, fill: SNOW}, post);
+
+    // "Set far back from the border": a pencil dimension line under the plain.
+    const dim = E.dim = Kit.mk('g', {opacity: 0}, svg), dy = plainY + fs * 1.25, dx1 = W * .6;
+    Kit.mk('path', {d: `M${bx},${dy} L${dx1},${dy} M${bx + 6},${dy - 4} L${bx},${dy} L${bx + 6},${dy + 4} M${dx1 - 6},${dy - 4} L${dx1},${dy} L${dx1 - 6},${dy + 4}`, stroke: INK, 'stroke-width': 1.2, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#pc)'}, dim);
+    Kit.mk('line', {x1: bx, x2: bx, y1: dy - fs * .5, y2: dy + fs * .5, stroke: INK, 'stroke-width': 1}, dim);
+    Kit.mk('line', {x1: dx1, x2: dx1, y1: dy - fs * .5, y2: dy + fs * .5, stroke: INK, 'stroke-width': 1}, dim);
+    T(dim, (bx + dx1) / 2, plainY + fs * 2.45, 'set far back from the border', {anchor: 'middle', size: fs * .98});
+
+    // The old line in faint pencil, then the expanded line and its tunnels in red ink.
+    const R0 = W * .6, R1 = W * .985, ry = x => gy(x) + fs * .45;
+    E.old = Kit.mk('path', {d: pathFrom(ry, R0, W * .72, 3), fill: 'none', stroke: INK, 'stroke-width': 1.3, 'stroke-dasharray': '3 3', opacity: .5}, svg);
+    const tun = E.tun = Kit.mk('g', {}, svg);
+    const FX = [.64, .73, .84, .94].map(u => u * W);
+    const tds = [pathFrom(gal, W * .63, W * .975, 3)];
+    FX.forEach(x => { const y0 = gy(x) + fs * .6, x1 = x + fs * .3, y1 = gal(x1); tds.push(`M${x},${y0} Q${x + fs * .9},${(y0 + y1) / 2} ${x1},${y1}`); });
+    E.tpaths = [];
+    tds.forEach(d => {
+      E.tpaths.push(Kit.mk('path', {d, fill: 'none', stroke: RED, 'stroke-width': 3, 'stroke-linecap': 'round', opacity: .9}, tun));
+      E.tpaths.push(Kit.mk('path', {d, fill: 'none', stroke: SNOW, 'stroke-width': 1, 'stroke-linecap': 'round'}, tun));
+    });
+    E.caves = FX.map(x => Kit.mk('ellipse', {cx: x + fs * .3, cy: gal(x + fs * .3), rx: fs * .55, ry: fs * .32, fill: SNOW, stroke: RED, 'stroke-width': 1.5, opacity: 0}, tun));
+    E.red = Kit.mk('path', {d: pathFrom(ry, R0, R1, 3), fill: 'none', stroke: RED, 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#pc)'}, svg);
+
+    // Forts on the peaks, each with a lit gun slit and a red pennant.
+    E.forts = FX.map(x => {
+      const y = gy(x) + fs * .15, g = Kit.mk('g', {transform: `translate(${x},${y}) scale(0)`}, svg);
+      Kit.mk('line', {x1: 0, x2: 0, y1: -fs * .3, y2: -fs * 1.05, stroke: INK, 'stroke-width': 1}, g);
+      Kit.mk('path', {d: `M0,${-fs * 1.05} L${fs * .5},${-fs * .9} L0,${-fs * .74} Z`, fill: RED}, g);
+      Kit.mk('path', {d: `M${-fs * .6},${fs * .3} L${-fs * .45},${-fs * .32} L${fs * .45},${-fs * .32} L${fs * .6},${fs * .3} Z`, fill: INK, stroke: INK, 'stroke-width': 1, 'stroke-linejoin': 'round'}, g);
+      Kit.mk('line', {x1: -fs * .25, x2: fs * .25, y1: -fs * .06, y2: -fs * .06, stroke: '#f6d27a', 'stroke-width': 1.6, 'stroke-linecap': 'round'}, g);
+      return {g, x, y};
+    });
+
+    // Labels for the Redoubt, under the tunnel gallery.
+    E.rlab = Kit.mk('g', {opacity: 0}, svg);
+    T(E.rlab, W - fs * .4, plainY + fs * 2.75, 'National Redoubt', {anchor: 'end', fill: RED, size: fs * 1.2, weight: 800});
+    T(E.rlab, W - fs * .4, plainY + fs * 4.4, 'forts & tunnels in the rock', {anchor: 'end', size: fs * .98});
+
+    // Sightlines from the forts, downhill.
+    E.sight = Kit.mk('g', {opacity: 0}, svg);
+    E.lines = E.forts.map(fo => Kit.mk('line', {x1: fo.x, y1: fo.y, x2: fo.x, y2: fo.y, stroke: RED, 'stroke-width': 1.2, 'stroke-dasharray': '4 4', 'stroke-linecap': 'round'}, E.sight));
+
+    // The retreat arrow (drawn at the end).
+    const ra = X1 - fs * 1.6, rb2 = X1 - fs * 4.6, rf = x => gy(x) - fs * 1.55;
+    let rd = ''; for (let x = ra; x >= rb2 - .01; x -= 3) rd += (rd ? ' L' : 'M') + x.toFixed(1) + ',' + rf(x).toFixed(1);
+    E.ret = Kit.mk('g', {}, svg);
+    E.retP = Kit.mk('path', {d: rd, fill: 'none', stroke: RED, 'stroke-width': 1.8, 'stroke-linecap': 'round', filter: 'url(#pc)'}, E.ret);
+    E.retH = Kit.mk('path', {d: `M${rb2 + fs * .5},${rf(rb2) - fs * .35} L${rb2},${rf(rb2)} L${rb2 + fs * .5},${rf(rb2) + fs * .35}`, fill: 'none', stroke: RED, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, E.ret);
+    gsap.set(E.retP, {drawSVG: '0%'});
+
+    // The invader.
+    E.inv = Kit.mk('g', {}, svg);
+    E.invRot = Kit.mk('g', {}, E.inv);
+    const lift = Kit.mk('g', {transform: `translate(0,${-fs * .95})`}, E.invRot);
+    E.invIn = Kit.mk('g', {}, lift);
+    const s = fs;
+    const ad = `M${-1.1*s},${-.32*s} L${.15*s},${-.32*s} L${.15*s},${-.72*s} L${1.05*s},0 L${.15*s},${.72*s} L${.15*s},${.32*s} L${-1.1*s},${.32*s} Z`;
+    Kit.mk('path', {d: ad, fill: '#3d3427', stroke: INK, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, E.invIn);
+    Kit.mk('path', {d: ad, fill: 'url(#hatch)', opacity: .9}, E.invIn);
+    T(E.inv, 0, -fs * 2.15, 'invader', {anchor: 'middle', size: fs * .98});
+    E.hint = T(E.inv, -fs * 1.1, fs * 1.6, 'drag →', {size: fs * 1.05, fill: RED, weight: 800});
+    E.hint.setAttribute('class', 'hint');
+    if (touched) E.hint.setAttribute('opacity', 0);
+
+    // The stamp (hidden until the end).
+    E.stamp = Kit.mk('g', {opacity: 0}, svg);
+    E.stampIn = Kit.mk('g', {}, E.stamp);
+    const stx = T(E.stampIn, 0, fs * .55, 'NOT WORTH IT', {anchor: 'middle', fill: RED, size: fs * 1.5, weight: 800, halo: false});
+    const sw = stx.getComputedTextLength() + fs * 1.4, sh = fs * 2.5;
+    const bg = Kit.mk('rect', {x: -sw / 2, y: -sh / 2, width: sw, height: sh, rx: 4, fill: PAPER, opacity: .85}, E.stampIn);
+    E.stampIn.insertBefore(bg, stx);
+    Kit.mk('rect', {x: -sw / 2, y: -sh / 2, width: sw, height: sh, rx: 4, fill: 'none', stroke: RED, 'stroke-width': 2.2, filter: 'url(#pc)'}, E.stampIn);
+    Kit.mk('rect', {x: -sw / 2 + 3.5, y: -sh / 2 + 3.5, width: sw - 7, height: sh - 7, rx: 3, fill: 'none', stroke: RED, 'stroke-width': 1, filter: 'url(#pc)'}, E.stampIn);
+    const sx = Math.max(sw / 2 + 6, W * .3), sy = Math.max(fs * 2.9 + sh / 2 + 8, (fs * 2.9 + plainY - fs * 1.9) / 2);
+    E.stamp.setAttribute('transform', `translate(${sx},${sy})`);
+
+    // The cost meter, top left.
+    const mx0 = fs * .5, mx1 = W * .66, my = fs * 1.75, mh = fs * .75;
+    E.meter = Kit.mk('g', {}, svg);
+    T(E.meter, mx0, fs * 1.2, 'cost of invading', {size: fs * 1.05});
+    E.nwl = T(E.meter, mx1, fs * 1.2, 'not worth it', {anchor: 'end', fill: RED, size: fs * 1.05, weight: 800});
+    E.nwl.setAttribute('opacity', .45);
+    E.mwash = Kit.mk('rect', {x: mx0, y: my, width: 0, height: mh, fill: RED, opacity: .25, filter: 'url(#wc)'}, E.meter);
+    E.mfill = Kit.mk('rect', {x: mx0, y: my, width: 0, height: mh, fill: 'url(#hatchR)'}, E.meter);
+    Kit.mk('path', {d: `M${mx0},${my} L${mx1},${my + .6} L${mx1 - .4},${my + mh} L${mx0 + .5},${my + mh - .4} Z`, fill: 'none', stroke: INK, 'stroke-width': 1.3, 'stroke-linejoin': 'round', filter: 'url(#pc)'}, E.meter);
+    Kit.mk('line', {x1: mx1, x2: mx1, y1: my - fs * .3, y2: my + mh + fs * .3, stroke: RED, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, E.meter);
+    E.mW = mx1 - mx0;
+
+    // The timeline rail.
+    E.rail = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: X0, x2: X1, y1: railY, y2: railY, stroke: INK, 'stroke-width': 1.4, opacity: .55, 'stroke-linecap': 'round', filter: 'url(#pc)'}, E.rail);
+    E.rprog = Kit.mk('line', {x1: X0, x2: X0, y1: railY, y2: railY, stroke: RED, 'stroke-width': 2.6, 'stroke-linecap': 'round'}, E.rail);
+    [['border', 0], ['plain', .4], ['hills', .7], ['redoubt', 1]].forEach(([t, p]) => {
+      const x = X0 + (X1 - X0) * p;
+      Kit.mk('circle', {cx: x, cy: railY, r: 2.6, fill: INK}, E.rail);
+      T(E.rail, x, H - fs * .45, t, {anchor: 'middle', size: fs * .95, weight: 700});
+    });
+    E.handle = Kit.mk('circle', {cx: X0, cy: railY, r: fs * .55, fill: RED, stroke: SNOW, 'stroke-width': 2}, E.rail);
+
+    built = true;
+    render(st.p);
+    if (done) applyEnd();
+
+    // A little life in the sky.
+    if (!Kit.calm) {
+      ambient.push(gsap.to(E.birds, {x: fs * 1.1, y: -fs * .35, duration: 4.5, ease: 'sine.inOut', yoyo: true, repeat: -1}));
+      ambient.push(gsap.to(E.birdP, {scaleY: .45, transformOrigin: '50% 100%', duration: .38, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: .13}));
+      E.clouds.forEach((c, i) => ambient.push(gsap.to(c, {x: fs * (i ? -.7 : .8), duration: 6 + i * 2, ease: 'sine.inOut', yoyo: true, repeat: -1})));
+    }
+  }
+
+  function relayout() {
+    const r = svg.getBoundingClientRect();
+    if (built && Math.abs(r.width - lastW) < 2 && Math.abs(r.height - lastH) < 2) return;
+    layout();
+  }
+
+  function render(p) {
+    if (!built) return;
+    const x = X0 + (X1 - X0) * p, y = gy(x);
+    E.inv.setAttribute('transform', `translate(${x},${y})`);
+    const a = Math.atan2(gy(x + 6) - gy(x - 6), 12) * 180 / Math.PI;
+    E.invRot.setAttribute('transform', `rotate(${(a * .8).toFixed(2)})`);
+    const c = cost(p);
+    E.mfill.setAttribute('width', c * E.mW); E.mwash.setAttribute('width', c * E.mW);
+    E.mwash.setAttribute('opacity', .2 + .35 * c);
+    const lp = clamp((p - .42) / .3), tp = clamp((p - .52) / .28);
+    gsap.set(E.red, {drawSVG: `0% ${lp * 100}%`});
+    gsap.set(E.tpaths, {drawSVG: `0% ${tp * 100}%`});
+    E.caves.forEach((cv, i) => cv.setAttribute('opacity', clamp((tp - .25 - i * .15) / .15)));
+    E.forts.forEach((fo, i) => { const s = backOut(clamp((p - (.46 + i * .07)) / .06)); fo.g.setAttribute('transform', `translate(${fo.x},${fo.y}) scale(${s.toFixed(3)})`); });
+    E.rlab.setAttribute('opacity', clamp((p - .58) / .1));
+    E.dim.setAttribute('opacity', clamp((p - .1) / .08));
+    E.sight.setAttribute('opacity', clamp((p - .74) / .1) * .85);
+    E.lines.forEach(l => { l.setAttribute('x2', x); l.setAttribute('y2', y - fs * .95); });
+    E.handle.setAttribute('cx', x); E.rprog.setAttribute('x2', x);
+    const s = p < .1 ? 0 : p < .42 ? 1 : p < .74 ? 2 : 3;
+    if (s !== stage && !done) {
+      stage = s; say.innerHTML = SAYS[s];
+      if (!Kit.calm) gsap.fromTo(say, {opacity: .35, y: 3}, {opacity: 1, y: 0, duration: .35, ease: 'power3.out'});
+      if (s > 0) Kit.haptic('selection');
+    }
+    if (!done && p >= .995) finale();
+  }
+
+  function applyEnd() {
+    gsap.set(E.bloom, {opacity: 1, scale: 1, transformOrigin: '50% 50%'});
+    gsap.set(E.stamp, {opacity: 1});
+    gsap.set(E.stampIn, {rotation: -6, scale: 1, opacity: 1, transformOrigin: '50% 50%'});
+    gsap.set(E.invIn, {rotation: 180, transformOrigin: '50% 50%'});
+    gsap.set(E.retP, {drawSVG: '100%'});
+    E.retH.setAttribute('opacity', 1);
+    E.nwl.setAttribute('opacity', 1); E.red.setAttribute('stroke-width', 4);
+  }
+
+  function playEnd() {
+    gsap.timeline()
+      .to(E.meter, {x: 2, duration: .05, repeat: 5, yoyo: true, ease: 'power1.inOut'}, 0)
+      .fromTo(E.nwl, {attr: {opacity: .45}}, {attr: {opacity: 1}, duration: .3}, 0)
+      .fromTo(E.bloom, {opacity: 0, scale: .25, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: 1.5, ease: 'expo.out'}, .05)
+      .fromTo(E.red, {attr: {'stroke-width': 3}}, {attr: {'stroke-width': 4}, duration: .6, ease: 'power3.out'}, .05)
+      .fromTo(E.forts.map(f => f.g.children[2]), {fill: INK}, {fill: RED, duration: .12, repeat: 3, yoyo: true, stagger: .08}, .1)
+      .fromTo(E.invIn, {rotation: 0, transformOrigin: '50% 50%'}, {rotation: 180, transformOrigin: '50% 50%', duration: .8, ease: 'back.inOut(1.6)'}, .3)
+      .fromTo(E.stamp, {opacity: 0}, {opacity: 1, duration: .01}, .55)
+      .fromTo(E.stampIn, {scale: 2.6, rotation: -22, opacity: 0, transformOrigin: '50% 50%'}, {scale: 1, rotation: -6, opacity: 1, duration: .55, ease: 'back.out(1.7)'}, .55)
+      .fromTo(E.retP, {drawSVG: '0%'}, {drawSVG: '100%', duration: .6, ease: 'power2.inOut'}, .95)
+      .fromTo(E.retH, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: .2}, 1.45)
+      .fromTo('#keep', {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .5, ease: 'power3.out'}, .7);
+  }
+
+  function settle(cb) {
+    settling = true; let last = '', same = 0, n = 0;
+    const tick = () => {
+      const r = svg.getBoundingClientRect(), k = Math.round(r.width) + 'x' + Math.round(r.height);
+      same = k === last ? same + 1 : 0; last = k;
+      if (same >= 2 || ++n > 40) { settling = false; cb(); } else requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  function finale() {
+    if (done) return;
+    done = true;
+    card.classList.add('answered');
+    say.innerHTML = WHY; Kit.show('keep');
+    Kit.haptic('success');
+    if (Kit.calm) { relayout(); applyEnd(); return; }
+    gsap.set('#keep', {opacity: 0});
+    settle(() => { relayout(); playEnd(); });
+  }
+
+  let tw = null;
+  function setTarget(v) {
+    if (done) return;
+    v = clamp(v);
+    if (Kit.calm) { st.p = v; render(v); return; }
+    if (tw) tw.kill();
+    tw = gsap.to(st, {p: v, duration: .32, ease: 'power3.out', onUpdate: () => render(st.p)});
+  }
+  const pFrom = e => { const r = svg.getBoundingClientRect(); return ((e.clientX - r.left) * (W / r.width) - X0) / (X1 - X0); };
+  let dragging = false;
+  svg.addEventListener('pointerdown', e => {
+    if (done) return; dragging = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; gsap.to(E.hint, {opacity: 0, duration: .25}); }
+    Kit.haptic('light'); setTarget(pFrom(e));
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) setTarget(pFrom(e)); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  if (window.ResizeObserver) new ResizeObserver(() => { if (built && !settling) relayout(); }).observe(Kit.$('stage'));
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !built) return;
+    gsap.timeline()
+      .from(E.profile, {drawSVG: '0%', duration: 1.3, ease: 'power2.inOut'}, 0)
+      .from(E.gnd, {opacity: 0, duration: 1, ease: 'power2.out'}, .25)
+      .from(E.back, {opacity: 0, y: 8, duration: 1, ease: 'power3.out'}, .45)
+      .from(E.sun, {opacity: 0, scale: .4, transformOrigin: '50% 50%', duration: 1.2, ease: 'expo.out'}, .5)
+      .from(E.clouds, {opacity: 0, duration: 1, stagger: .2, ease: 'power2.out'}, .6)
+      .from(E.birds, {opacity: 0, duration: .8}, 1.2)
+      .from(E.snow.children, {opacity: 0, y: -4, stagger: .06, duration: .5, ease: 'power3.out'}, .9)
+      .from(E.low.children, {scale: 0, transformOrigin: '50% 100%', stagger: .05, duration: .5, ease: 'back.out(2)'}, .7)
+      .from(E.post, {y: fs * 2, opacity: 0, duration: .6, ease: 'back.out(1.8)'}, .8)
+      .from(E.old, {opacity: 0, duration: .6}, 1.1)
+      .from(E.meter, {opacity: 0, y: -6, duration: .5, ease: 'power3.out'}, 1)
+      .from(E.rail, {opacity: 0, y: 6, duration: .5, ease: 'power3.out'}, 1.1)
+      .from(E.inv, {opacity: 0, duration: .5, ease: 'power2.out'}, 1.2);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; if (E.hint) E.hint.setAttribute('opacity', 0);
+    for (const v of [.3, .6, .85, 1]) { setTarget(v); await wait(Kit.calm ? 30 : 380); }
+    if (!done) { st.p = 1; render(1); }
+    await wait(Kit.calm ? 60 : 1800);
+  };
+})();
+Kit.single();
+</script>
+</html>

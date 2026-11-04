@@ -1,0 +1,285 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-steel-bar-signal -->
+<!-- Look: a risograph print on cream paper, two inks only (fluorescent pink, teal) overprinting with multiply, grain holes and a slight misregistration of the pink plate.
+     Interaction: bet whether the bottom of a steel bar moves the instant its top is hit; your bet is drawn in pink on a time-vs-position chart beside the bar.
+     Wow: the hammer strikes with a spray of sparks, a squeeze runs down the sliced bar in slow motion while a dot traces the real line, the ball at the bottom is knocked off, your pink line swings elastically onto the teal truth, and the delay is marked on the time axis. -->
+<title>The bar that takes its time</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0;min-width:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#opts{display:flex;gap:2.4cqw;flex:none;align-items:stretch;min-width:0;width:100%;box-sizing:border-box;padding:0 .4cqh .3cqh 0}
+.opt{flex:1 1 0;min-width:0;max-width:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;white-space:normal;font:800 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:#0b5a63;background:color-mix(in srgb,#ff3fa4 9%,transparent);border:0;box-shadow:inset 0 0 0 .26cqh #0a8f95,.35cqh .25cqh 0 0 rgba(255,63,164,.6);border-radius:1.4cqh;padding:1.2cqh 2.4cqw;margin:0;cursor:pointer;transition:transform .12s cubic-bezier(.3,1.6,.5,1),background .15s;overflow:hidden;overflow-wrap:anywhere;word-break:normal;hyphens:none}
+.opt:active{transform:scale(.97)}
+.opt.on{background:#ff3fa4;color:var(--k);box-shadow:inset 0 0 0 .26cqh #0a8f95,.35cqh .25cqh 0 0 rgba(10,143,149,.55)}
+.opt small{display:block;max-width:100%;white-space:normal;font:600 max(1.5cqh,11.5px)/1.25 var(--body);opacity:.8;margin-top:.4cqh;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
+#why .big{color:#0b5a63;text-shadow:.25cqh .18cqh 0 rgba(255,63,164,.55);font-size:max(3.6cqh,24px);line-height:1.05;margin:0}
+#why .body{font-size:max(2cqh,14px);line-height:1.4;margin:0}
+.keep b{color:#0b5a63}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure" style="--c:#f4ecdc;--k:#1b2340;--edge:#d8cab0">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SIGNALS</span></div>
+    <h2 class="q">Hit the top of a steel bar. Does the bottom move at once?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A steel bar drawn as slices, a hammer above it, a ball under it, and beside it a chart of when each part of the bar starts to move."></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">At the same instant<small>steel is rigid</small></button>
+        <button class="opt" data-i="1">A tiny moment later<small>the push has to travel</small></button>
+      </div>
+      <div id="why" class="gone"><p class="big">A tiny moment later</p><p class="body">The hit squeezes the top, and the squeeze is passed down slice by slice: a signal. In steel it runs about 5 km every second, so the delay is tiny, but never zero. A falling slinky shows it slowly enough to see.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Bet first, then say how sure you are. Then watch it in slow motion.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Nothing is perfectly rigid: a change at one end takes time to reach the other.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const PINK = '#ff3fa4', TEAL = '#0a8f95', TEALD = '#0b5a63';
+const svg = Kit.$('pic'), say = Kit.$('say');
+const N = 16, WZ = .14, TREAL = .62, TBET = [0, TREAL * 1.35];
+const S = {p: 0, ang: -28, shake: 0, betDraw: 0, morph: 0, legBet: 0, legReal: 0, ph: 1, dl: 0, ball: {dx: 0, dy: 0, o: 1}, burst: 0};
+let W, H, fs, bw, bx, yTop, yBot, x0, x1, sx, sy, sh, A, E = null, lastW = 0, lastH = 0;
+let finish; const finished = new Promise(r => finish = r);
+
+const sm = v => { v = Math.max(0, Math.min(1, v)); return v * v * (3 - 2 * v); };
+const pos = v => Math.max(.5, v);
+const lineGen = d3.line().curve(d3.curveMonotoneY);
+function pts(tOf, upto) {
+  const out = [], K = 24;
+  for (let k = 0; k <= K; k++) { const s = Math.min(upto, k / K); out.push([sx(tOf(s)), sy(s)]); if (k / K >= upto) break; }
+  return out;
+}
+
+function layout() {
+  const r = svg.getBoundingClientRect();
+  if (r.width < 60 || r.height < 60) { E = null; svg.innerHTML = ''; return; }
+  svg.innerHTML = '';
+  const f = Kit.fitSvg(svg); W = f.W; H = f.H; lastW = r.width; lastH = r.height;
+  fs = Math.max(12, Math.min(15, W / 27, H / 11));
+  bw = Math.max(22, Math.min(W * .11, 46)); bx = W * .2;
+  const hh = fs * 1.55;
+  yTop = Math.max(hh + fs * 1.1, H * .1);
+  yBot = Math.max(yTop + fs * 4, H - fs * 3.7);
+  x0 = W * .44; x1 = W - fs * .5;
+  sx = d3.scaleLinear([0, 1], [x0 + fs * .5, x1 - fs * .6]);
+  sy = d3.scaleLinear([0, 1], [yTop, yBot]);
+  sh = Math.max(1, (yBot - yTop) / N); A = sh * .5;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const defs = mk('defs', {}, svg);
+  defs.innerHTML = `
+  <filter id="grain" filterUnits="userSpaceOnUse" x="-20" y="-80" width="${W + 40}" height="${H + 160}">
+    <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="w"/>
+    <feDisplacementMap in="SourceGraphic" in2="w" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -9 0 0 0 6" result="m"/>
+    <feComposite in="d" in2="m" operator="in"/>
+  </filter>
+  <pattern id="dots" patternUnits="userSpaceOnUse" width="4.5" height="4.5" patternTransform="rotate(30)"><circle cx="2.2" cy="2.2" r="1.15" fill="${PINK}"/></pattern>
+  <linearGradient id="steel" x1="0" x2="1"><stop offset="0" stop-color="${TEAL}" stop-opacity=".55"/><stop offset=".3" stop-color="${TEAL}" stop-opacity=".25"/><stop offset=".7" stop-color="${TEAL}" stop-opacity=".8"/><stop offset="1" stop-color="${TEAL}" stop-opacity="1"/></linearGradient>
+  <linearGradient id="band" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${PINK}" stop-opacity="0"/><stop offset=".75" stop-color="${PINK}" stop-opacity=".85"/><stop offset="1" stop-color="${PINK}" stop-opacity=".2"/></linearGradient>`;
+  const blend = 'mix-blend-mode:multiply';
+  const T = mk('g', {filter: 'url(#grain)', style: blend}, svg);
+  const P = mk('g', {filter: 'url(#grain)', style: blend + ';opacity:.92'}, svg);
+  const X = mk('g', {}, svg);
+  E = {T, P, X, slices: [], dots: [], sparks: []};
+
+  // chart axes, slice ticks & guides (teal plate)
+  mk('path', {d: `M${x0},${yTop - fs * .4} V${yBot} H${x1}`, stroke: TEAL, 'stroke-width': 2, fill: 'none'}, T);
+  mk('path', {d: `M${x1 - 7},${yBot - 5} L${x1},${yBot} L${x1 - 7},${yBot + 5}`, stroke: TEAL, 'stroke-width': 2, fill: 'none', 'stroke-linejoin': 'round'}, T);
+  for (let i = 1; i < N; i++) mk('line', {x1: x0 - 3, x2: x0 + (i % 4 ? 2 : 5), y1: sy(i / N), y2: sy(i / N), stroke: TEAL, 'stroke-width': 1.3}, T);
+  for (let i = 1; i <= 4; i++) for (let j = 1; j <= 5; j++) mk('circle', {cx: x0 + (x1 - x0) * i / 5, cy: yTop + (yBot - yTop) * j / 6, r: 1.1, fill: TEAL, opacity: .55}, T);
+  [yTop, yBot].forEach(y => mk('line', {x1: bx + bw / 2 + 4, x2: x0, y1: y, y2: y, stroke: TEAL, 'stroke-width': 1.3, 'stroke-dasharray': '3 4'}, T));
+
+  // the bar, in slices
+  const slH = pos(sh * .72);
+  for (let i = 0; i < N; i++) {
+    E.slices.push(mk('rect', {x: bx - bw / 2, width: bw, height: slH, rx: 1.5, fill: 'url(#steel)'}, T));
+    E.dots.push(mk('rect', {x: bx + bw * .1, width: bw * .4, height: slH, fill: 'url(#dots)'}, P));
+  }
+  E.band = mk('rect', {x: bx - bw / 2 - 5, width: bw + 10, height: 1, rx: 4, fill: 'url(#band)'}, P);
+
+  // ball under the bar
+  E.ballT = mk('circle', {r: fs * .62, fill: TEAL}, T);
+  E.ballP = mk('circle', {r: fs * .3, fill: PINK}, P);
+  E.burst = mk('circle', {r: 0, fill: 'none', stroke: PINK, 'stroke-width': 3}, P);
+
+  // impact sparks at the top of the bar
+  [-150, -120, -95, -70, -40, -25].forEach((a, k) => {
+    const l = mk('line', {stroke: k % 2 ? TEAL : PINK, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, k % 2 ? T : P);
+    E.sparks.push([l, a * Math.PI / 180, k % 2 ? 1.1 : 1.5]);
+  });
+
+  // hammer: handle in teal, head on both plates
+  const L = bx - fs * 1.1, pvx = bx - L, hw = bw * 1.1, pvy = yTop - hh / 2 - 1;
+  E.pv = [pvx, pvy];
+  E.hamT = mk('g', {}, T); E.hamP = mk('g', {}, P);
+  mk('rect', {x: pvx, y: pvy - fs * .22, width: pos(L - hw / 2), height: fs * .44, rx: fs * .22, fill: TEAL}, E.hamT);
+  mk('rect', {x: bx - hw / 2, y: yTop - hh - 1, width: hw, height: hh, rx: 3, fill: 'none', stroke: TEAL, 'stroke-width': 2}, E.hamT);
+  for (let k = 1; k < 4; k++) mk('line', {x1: bx - hw / 2 + hw * k / 4, x2: bx - hw / 2 + hw * k / 4, y1: yTop - hh + 3, y2: yTop - 4, stroke: TEAL, 'stroke-width': 1, opacity: .6}, E.hamT);
+  mk('rect', {x: bx - hw / 2, y: yTop - hh - 1, width: hw, height: hh, rx: 3, fill: PINK}, E.hamP);
+  mk('rect', {x: pvx - 1, y: pvy - fs * .3, width: L * .35, height: fs * .6, rx: fs * .3, fill: PINK}, E.hamP);
+
+  // the delay, marked on the time axis
+  E.dlg = mk('g', {}, P);
+  const dx1 = sx(0), dx2 = sx(TREAL);
+  mk('path', {d: `M${dx1},${yBot - 6} V${yBot + 2} M${dx1},${yBot - 2} H${dx2} M${dx2},${yBot - 6} V${yBot + 2}`, stroke: PINK, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round'}, E.dlg);
+
+  // lines on the chart
+  E.real = mk('path', {fill: 'none', stroke: TEAL, 'stroke-width': fs * .32, 'stroke-linecap': 'round'}, T);
+  E.bet = mk('path', {fill: 'none', stroke: PINK, 'stroke-width': fs * .32, 'stroke-linecap': 'round'}, P);
+  E.conn = mk('line', {stroke: PINK, 'stroke-width': 1.6, 'stroke-dasharray': '2 4'}, P);
+  E.dotP = mk('circle', {r: fs * .45, fill: PINK}, P);
+  E.dotT = mk('circle', {r: fs * .72, fill: 'none', stroke: TEAL, 'stroke-width': 2}, T);
+
+  // words (crisp, deep teal)
+  const tx = (x, y, t, a = {}) => { const e = mk('text', Object.assign({x, y, fill: TEALD, 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono)'}, a), X); e.textContent = t; return e; };
+  tx(bx + bw / 2 + fs * .4, yTop + fs * 1.15, 'TOP');
+  tx(bx + bw / 2 + fs * .4, yBot - fs * .45, 'BOTTOM');
+  tx(x0 + fs * .3, yBot + fs * 1.4, 'time after the hit →', {'font-weight': 800});
+  tx(x0 + fs * .3, yBot + fs * 3.15, '(hugely slowed down)', {'font-weight': 500});
+  E.dlt = tx((dx1 + dx2) / 2, yBot - fs * .75, 'the delay', {'text-anchor': 'middle', 'font-size': fs * 1.2, style: 'font-family:var(--hand)', fill: PINK, 'font-weight': 700});
+  E.hold = tx((x0 + x1) / 2, (yTop + yBot) / 2, 'your bet goes here', {'text-anchor': 'middle', 'font-size': fs * 1.25, style: 'font-family:var(--hand)', fill: TEAL});
+  // legend, tucked in the empty top-right of the chart
+  E.leg = [['your bet', PINK, yTop + fs * .9], ['real', TEAL, yTop + fs * 2.4]].map(([t, c, y]) => {
+    const g = mk('g', {}, X), e = mk('text', {x: x1, y, 'text-anchor': 'end', fill: TEALD, 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)', style: 'font-family:var(--body)'}, g);
+    e.textContent = t; const w = e.getComputedTextLength();
+    mk('line', {x1: x1 - w - fs * 2.1, x2: x1 - w - fs * .5, y1: y - fs * .33, y2: y - fs * .33, stroke: c, 'stroke-width': fs * .32, 'stroke-linecap': 'round', style: blend}, g);
+    return g;
+  });
+  render();
+}
+
+function render() {
+  if (!E) return;
+  const p = S.p, jit = S.shake;
+  E.P.setAttribute('transform', `translate(${1.6 + jit * 2.5},${-1.2 - jit * 1.5})`);
+  E.T.setAttribute('transform', `translate(${-jit},${jit * .6})`);
+  for (let i = 0; i < N; i++) {
+    const s = i / N, u = A * sm((p - s) / WZ), y = sy(s) + u;
+    E.slices[i].setAttribute('y', y); E.dots[i].setAttribute('y', y);
+  }
+  const front = Math.min(p, 1), on = p > 0 && p < 1 + WZ;
+  const bTop = sy(Math.max(0, p - WZ)) - 2;
+  E.band.setAttribute('y', bTop);
+  E.band.setAttribute('height', pos(sy(front) - sy(Math.max(0, p - WZ)) + sh * .5));
+  E.band.setAttribute('opacity', on ? 1 : 0);
+  // sparks
+  E.sparks.forEach(([l, a, k]) => {
+    const r0 = fs * (.5 + jit * .4), r1 = r0 + fs * k * jit;
+    l.setAttribute('x1', bx + Math.cos(a) * r0); l.setAttribute('y1', yTop + Math.sin(a) * r0 * .7);
+    l.setAttribute('x2', bx + Math.cos(a) * r1); l.setAttribute('y2', yTop + Math.sin(a) * r1 * .7);
+    l.setAttribute('opacity', jit > .02 ? 1 : 0);
+  });
+  // ball
+  const bb = yBot - sh * .28, r = fs * .62, cx = bx + S.ball.dx, cy = bb + r + 1 + S.ball.dy;
+  [E.ballT, E.ballP].forEach((c, k) => { c.setAttribute('cx', cx - (k ? r * .25 : 0)); c.setAttribute('cy', cy - (k ? r * .25 : 0)); c.setAttribute('opacity', S.ball.o); });
+  E.burst.setAttribute('cx', bx); E.burst.setAttribute('cy', bb);
+  E.burst.setAttribute('r', S.burst * fs * 3.2); E.burst.setAttribute('opacity', S.burst > 0 && S.burst < 1 ? 1 - S.burst : 0);
+  // hammer
+  const rot = `rotate(${S.ang} ${E.pv[0]} ${E.pv[1]})`;
+  E.hamT.setAttribute('transform', rot); E.hamP.setAttribute('transform', rot);
+  // chart
+  E.real.setAttribute('d', p > 0 ? lineGen(pts(s => s * TREAL, front)) : '');
+  if (pick >= 0 && S.betDraw > 0) {
+    const tb = TBET[pick], m = S.morph;
+    E.bet.setAttribute('d', lineGen(pts(s => (s * tb) * (1 - m) + (s * TREAL) * m, S.betDraw)));
+  } else E.bet.setAttribute('d', '');
+  const dx = sx(front * TREAL), dy = sy(front), showDot = p > 0 && p <= 1.001;
+  [E.dotP, E.dotT].forEach(c => { c.setAttribute('cx', dx); c.setAttribute('cy', dy); c.setAttribute('opacity', showDot ? 1 : 0); });
+  E.conn.setAttribute('x1', bx + bw / 2 + 4); E.conn.setAttribute('x2', dx - fs * .7);
+  E.conn.setAttribute('y1', dy); E.conn.setAttribute('y2', dy); E.conn.setAttribute('opacity', showDot && dx - bx > bw ? 1 : 0);
+  E.leg[0].setAttribute('opacity', S.legBet); E.leg[1].setAttribute('opacity', S.legReal);
+  E.dlg.setAttribute('opacity', S.dl); E.dlt.setAttribute('opacity', S.dl);
+  E.dlt.setAttribute('transform', `translate(0,${(1 - S.dl) * fs * .6})`);
+  E.hold.setAttribute('opacity', pick < 0 ? .9 * S.ph : 0);
+}
+
+// re-draw crisply whenever the stage changes size (e.g. when the answer appears)
+let rq = 0;
+new ResizeObserver(() => {
+  const r = svg.getBoundingClientRect();
+  if (Math.abs(r.width - lastW) < 2 && Math.abs(r.height - lastH) < 2) return;
+  cancelAnimationFrame(rq); rq = requestAnimationFrame(layout);
+}).observe(svg);
+
+// ---------- the bet ----------
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  say.textContent = 'Your bet is in pink. Now: how sure are you?';
+  if (Kit.calm) { S.betDraw = 1; S.legBet = 1; render(); return; }
+  gsap.timeline({onUpdate: render})
+    .to(S, {betDraw: 1, duration: .7, ease: 'power3.out'}, 0)
+    .to(S, {legBet: 1, duration: .4, ease: 'power2.out'}, .1);
+});
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].firstChild.textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  const end = () => {
+    Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    Kit.show('keep'); finish();
+  };
+  if (Kit.calm) {
+    Object.assign(S, {p: 1 + WZ, ang: -28, morph: 1, legReal: 1, betDraw: 1, legBet: 1, dl: 1});
+    Object.assign(S.ball, {dx: -W * .14, dy: fs * 2.5, o: 0}); render(); end(); return;
+  }
+  say.textContent = 'Strike!';
+  let kicked = false;
+  const tl = gsap.timeline({onUpdate: render});
+  tl.to(S, {ang: -50, duration: .38, ease: 'power2.out'})
+    .to(S, {ang: 0, duration: .16, ease: 'power4.in', onComplete: () => { Kit.haptic('light'); say.textContent = 'The top has moved. The bottom hasn’t felt a thing yet…'; }})
+    .to(S, {shake: 1, duration: .05, ease: 'power1.out'})
+    .to(S, {shake: 0, duration: .5, ease: 'elastic.out(1,.3)'})
+    .to(S, {legReal: 1, duration: .4, ease: 'power2.out'}, '<')
+    .to(S, {ang: -28, duration: .9, ease: 'back.out(1.6)'}, '<.1')
+    .to(S, {p: 1, duration: 2.6, ease: 'power1.inOut', onUpdate: () => {
+      if (!kicked && S.p > .955) {
+        kicked = true; Kit.haptic('success'); say.textContent = 'Only now does the bottom move.';
+        gsap.timeline({onUpdate: render})
+          .to(S.ball, {dx: -W * .14, duration: .9, ease: 'power2.out'}, 0)
+          .to(S.ball, {dy: fs * 2.6, duration: .9, ease: 'power2.in'}, 0)
+          .to(S.ball, {o: 0, duration: .3, ease: 'power1.in'}, .6)
+          .fromTo(S, {burst: 0}, {burst: 1, duration: .7, ease: 'expo.out'}, 0);
+      }
+    }}, .7)
+    .to(S, {p: 1 + WZ, duration: .4, ease: 'power2.out'})
+    .to(S, {dl: 1, duration: .6, ease: 'back.out(2)'}, '<')
+    .add(() => {
+      // the wow: your pink line swings onto the real one (d3 transition)
+      d3.select(svg).transition().duration(pick === 0 ? 1400 : 900)
+        .ease(d3.easeElasticOut.amplitude(1).period(.45))
+        .tween('morph', () => t => { S.morph = t; render(); })
+        .on('end', () => { S.morph = 1; render(); setTimeout(end, 250); });
+    });
+});
+
+Kit.onShow.card = layout;
+Kit.onEnter.card = () => {
+  if (Kit.calm || !E) return;
+  gsap.from(E.slices.concat(E.dots), {opacity: 0, x: -10, stagger: {each: .025, from: 'start'}, duration: .5, ease: 'power3.out'});
+  gsap.from([E.hamT, E.hamP], {opacity: 0, duration: .5, delay: .35, ease: 'power2.out'});
+  gsap.from(S, {ang: -70, duration: 1.1, delay: .3, ease: 'elastic.out(1,.5)', onUpdate: render});
+  gsap.from(S, {ph: 0, duration: .8, delay: .6, ease: 'power2.out', onUpdate: render});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .45, delay: .4, ease: 'power3.out', clearProps: 'transform'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 200));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await Promise.race([finished, new Promise(r => setTimeout(r, 9000))]);
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

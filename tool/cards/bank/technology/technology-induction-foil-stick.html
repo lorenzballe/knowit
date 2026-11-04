@@ -1,0 +1,301 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-induction-foil-stick -->
+<!-- Look: a mid-century textbook plate, "Fig. 16": a heated-tobacco device in section, printed in ochre, teal and red with halftone dots on cream paper.
+     Interaction: flip the coil switch. Teal field lines start flowing through the coil, eddy loops start circling the hidden metal foil, it glows, and heat spreads outward from the middle of the tobacco.
+     Wow: at 350 °C the readout snaps into place and a plume of halftone vapour is launched from the stick with Physics2D, rising and falling back under gravity. -->
+<title>Heat from the inside</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
+#ctrl{display:flex;align-items:center;justify-content:space-between;gap:3cqw;flex-wrap:wrap}
+.sw{display:flex;align-items:center;gap:2.6cqw;border:0;background:none;padding:.4cqh 0;cursor:pointer;font:800 max(1.9cqh,13px)/1 var(--mono);letter-spacing:.08em;color:var(--k)}
+.track{width:max(6.6cqh,48px);height:max(3.5cqh,26px);border-radius:99px;background:#1c2729;position:relative;flex:none;transition:background .25s;box-shadow:inset 0 1px 0 rgba(0,0,0,.25)}
+.knob{position:absolute;top:3px;left:3px;width:calc(max(3.5cqh,26px) - 6px);height:calc(max(3.5cqh,26px) - 6px);border-radius:50%;background:#ece0c2;transition:transform .32s cubic-bezier(.34,1.56,.64,1),background .2s}
+.sw.on .track{background:#c63f2b}
+.sw.on .knob{transform:translateX(calc(max(6.6cqh,48px) - max(3.5cqh,26px)));background:#fff6e2}
+.sw.nudge .knob{animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(5px)}}
+.kit-calm .sw.nudge .knob{animation:none}
+.leg{display:flex;align-items:center;gap:1.6cqw;font:600 max(1.6cqh,12px)/1.2 var(--mono);color:#2f7a78;letter-spacing:.04em;white-space:nowrap}
+.leg i{display:block;width:max(4cqh,26px);border-top:2.5px dashed #2f7a78}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{color:#c63f2b;font-size:clamp(22px,3.6cqh,34px);line-height:1.05}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Flip the switch · induction" style="--c:#ece0c2;--k:#1c2729;--edge:#b9a57a">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">INDUCTION</span></div>
+    <h2 class="q">How do new heated-tobacco sticks get hot from the inside?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Figure 16: a heated-tobacco stick inside a device, in section. A copper coil wraps the tobacco; a thin metal foil runs down its middle."></svg>
+    </div>
+    <div id="ctrl">
+      <button class="sw nudge" id="sw" aria-pressed="false"><span class="track"><span class="knob"></span></span><span id="swt">COIL OFF</span></button>
+      <span class="leg"><i></i>magnetic field</span>
+    </div>
+    <p class="say" id="say">Flip the switch to run current through the coil, then watch the middle of the stick.</p>
+    <div id="why" class="gone"><p class="big">Heat from the inside.</p><p class="body">The coil’s changing magnetic field heats the hidden metal foil, up to 350 °C at most, so the tobacco warms from its centre and gives off smoke.</p></div>
+    <div class="foot"><span class="src">Source · Geopop, “Apriamo una sigaretta con tabacco riscaldato in laboratorio” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const P2D = typeof Physics2DPlugin !== 'undefined';
+  if (P2D) gsap.registerPlugin(Physics2DPlugin);
+  const svg = Kit.$('pic'), sw = Kit.$('sw'), swt = Kit.$('swt');
+  const INK = '#1c2729', PAPER = '#ece0c2', OCH = '#d39b3c', TEAL = '#2f7a78', RED = '#c63f2b', TOB = '#7b4b27';
+  const st = {heat: 0, field: 0};
+  let on = false, done = false, D = {}, W = 0, H = 0, fs = 12, u = 30, emitCall = null;
+  const R = (a, b) => a + Kit.rnd() * (b - a);
+
+  function grad(defs, id, stops, x2 = 1, y2 = 0) {
+    const g = Kit.mk('linearGradient', {id, x1: 0, y1: 0, x2, y2}, defs);
+    stops.forEach(([o, c, a = 1]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, g));
+  }
+  function pat(defs, id, s, r, fill, op, rot = 45) {
+    const p = Kit.mk('pattern', {id, width: s, height: s, patternUnits: 'userSpaceOnUse', patternTransform: `rotate(${rot})`}, defs);
+    Kit.mk('circle', {cx: s / 2, cy: s / 2, r, fill, opacity: op}, p);
+  }
+  const txt = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono);paint-order:stroke', stroke: PAPER, 'stroke-width': 3, 'stroke-linejoin': 'round'}, a), parent); e.textContent = t; return e; };
+
+  function build() {
+    [D.flow, D.eddyFlow, D.shimmer].forEach(t => t && t.kill());
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, f.f || 13));
+    u = Math.min(W / 10.5, H / 14);
+    const cx = W * .45, sw2 = .8 * u, y0 = H * .15, yb = H * .82, len = yb - y0;
+    const yF = y0 + len * .3, yd = y0 + len * .4, yT = y0 + len * .46, yBot = Math.min(H * .93 - fs * .4, yb + .9 * u);
+    const bw2 = 2.1 * u, yc = (yT + yb) / 2, hl = (yb - yT) / 2;
+    D = {cx, y0, sw2, yT, yb};
+
+    const defs = Kit.mk('defs', {}, svg);
+    pat(defs, 'htInk', Math.max(4, u * .16), Math.max(.9, u * .045), INK, .55);
+    pat(defs, 'htTob', Math.max(4, u * .14), Math.max(.8, u * .04), '#2a170a', .6, 30);
+    pat(defs, 'htOch', Math.max(4, u * .15), Math.max(.9, u * .05), OCH, .9);
+    pat(defs, 'htV', 4, 1.15, TEAL, .9);
+    const fib = Kit.mk('pattern', {id: 'fib', width: 3, height: 10, patternUnits: 'userSpaceOnUse'}, defs);
+    Kit.mk('line', {x1: 1.5, y1: 0, x2: 1.5, y2: 10, stroke: '#b9a57a', 'stroke-width': .8}, fib);
+    grad(defs, 'gShade', [[0, '#000'], [.55, '#555'], [1, '#fff']]);
+    grad(defs, 'gHeat', [[0, RED, 0], [.5, '#ff7a3d', .9], [1, RED, 0]]);
+    grad(defs, 'gFoil', [[0, '#7d8686'], [.5, '#e9eeec'], [1, '#6a7272']]);
+    grad(defs, 'gHot', [[0, RED], [.5, '#ffd27a'], [1, RED]]);
+    grad(defs, 'gCu', [[0, '#e48a5c'], [1, '#7a2f17']], 1, 1);
+    const blur = Kit.mk('filter', {id: 'glow', x: '-200%', y: '-20%', width: '500%', height: '140%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: u * .35}, blur);
+    const mask = Kit.mk('mask', {id: 'mShade'}, defs);
+    Kit.mk('rect', {x: cx - bw2, y: yd, width: bw2 * 2, height: yBot - yd, fill: 'url(#gShade)'}, mask);
+
+    const L = {};
+    ['field0', 'body', 'stick', 'heat', 'foil', 'coil', 'field', 'vap', 'lab', 'read'].forEach(k => L[k] = Kit.mk('g', {}, svg));
+
+    // device body: flat teal print shadow, ochre casing, halftone shading, a lip and a button
+    const bodyG = Kit.mk('g', {}, L.body); D.bodyG = bodyG;
+    Kit.mk('rect', {x: cx - bw2 + u * .2, y: yd + u * .2, width: bw2 * 2, height: yBot - yd, rx: u * .55, fill: TEAL, opacity: .85}, bodyG);
+    Kit.mk('rect', {x: cx - bw2, y: yd, width: bw2 * 2, height: yBot - yd, rx: u * .55, fill: OCH}, bodyG);
+    Kit.mk('rect', {x: cx - bw2, y: yd, width: bw2 * 2, height: yBot - yd, rx: u * .55, fill: 'url(#htInk)', mask: 'url(#mShade)'}, bodyG);
+    Kit.mk('path', {d: `M${cx - bw2 + u * .3},${yd + u * .25}L${cx - bw2 + u * .3},${yBot - u * .5}`, stroke: '#f6d996', 'stroke-width': Math.max(1.5, u * .08), 'stroke-linecap': 'round', opacity: .8}, bodyG);
+    Kit.mk('rect', {x: cx - bw2, y: yd, width: bw2 * 2, height: yBot - yd, rx: u * .55, fill: 'none', stroke: INK, 'stroke-width': 1.8}, bodyG);
+    Kit.mk('rect', {x: cx - sw2 - u * .14, y: yd - 1, width: (sw2 + u * .14) * 2, height: yb + u * .14 - yd, fill: '#3b2a1b', stroke: INK, 'stroke-width': 1.4}, bodyG);
+    Kit.mk('rect', {x: cx - sw2 - u * .32, y: yd - u * .08, width: (sw2 + u * .32) * 2, height: u * .16, rx: u * .08, fill: INK}, bodyG);
+    D.led = Kit.mk('circle', {cx: cx, cy: yBot - u * .45, r: u * .14, fill: '#7a2a1d', stroke: INK, 'stroke-width': 1}, bodyG);
+
+    // the stick
+    const sg = Kit.mk('g', {}, L.stick); D.stickG = sg;
+    Kit.mk('rect', {x: cx - sw2, y: y0, width: sw2 * 2, height: yb - y0, fill: '#fbf5e6', stroke: INK, 'stroke-width': 1.6}, sg);
+    Kit.mk('rect', {x: cx - sw2, y: y0, width: sw2 * 2, height: yF - y0, fill: '#f3e7c6'}, sg);
+    Kit.mk('rect', {x: cx - sw2, y: y0, width: sw2 * 2, height: yF - y0, fill: 'url(#fib)'}, sg);
+    Kit.mk('rect', {x: cx - sw2, y: yF, width: sw2 * 2, height: yT - yF, fill: 'url(#htOch)'}, sg);
+    Kit.mk('rect', {x: cx - sw2, y: yT, width: sw2 * 2, height: yb - yT, fill: TOB}, sg);
+    Kit.mk('rect', {x: cx - sw2, y: yT, width: sw2 * 2, height: yb - yT, fill: 'url(#htTob)'}, sg);
+    [yF, yT].forEach(y => Kit.mk('line', {x1: cx - sw2, x2: cx + sw2, y1: y, y2: y, stroke: INK, 'stroke-width': 1.2}, sg));
+    Kit.mk('rect', {x: cx - sw2, y: y0, width: sw2 * 2, height: yb - y0, fill: 'none', stroke: INK, 'stroke-width': 1.6}, sg);
+
+    // heat spreading from the middle
+    D.heat = Kit.mk('rect', {x: cx - sw2 + 1, y: yT + 1, width: sw2 * 2 - 2, height: yb - yT - 2, fill: 'url(#gHeat)', opacity: 0}, L.heat);
+    gsap.set(D.heat, {transformOrigin: '50% 50%'});
+
+    // the foil, with eddy loops that circle it once the field changes
+    const fw = Math.max(2.5, u * .11), fy0 = yT + u * .15, fy1 = yb - u * .15;
+    D.foilGlow = Kit.mk('rect', {x: cx - fw * 2.5, y: fy0, width: fw * 5, height: fy1 - fy0, fill: '#ff6a2e', filter: 'url(#glow)', opacity: 0}, L.foil);
+    D.eddy = Kit.mk('g', {opacity: 0}, L.foil);
+    const eddies = [];
+    for (let i = 0; i < 4; i++) {
+      const y = fy0 + (i + .5) * (fy1 - fy0) / 4;
+      eddies.push(Kit.mk('ellipse', {cx, cy: y, rx: sw2 * .62, ry: (fy1 - fy0) / 11, fill: 'none', stroke: '#ffd27a', 'stroke-width': 1.4, 'stroke-dasharray': '3 3.5', 'stroke-linecap': 'round'}, D.eddy));
+    }
+    Kit.mk('rect', {x: cx - fw / 2, y: fy0, width: fw, height: fy1 - fy0, fill: 'url(#gFoil)', stroke: INK, 'stroke-width': .8}, L.foil);
+    D.foilHot = Kit.mk('rect', {x: cx - fw / 2, y: fy0, width: fw, height: fy1 - fy0, fill: 'url(#gHot)', opacity: 0}, L.foil);
+    D.fy0 = fy0; D.fy1 = fy1;
+    D.eddyFlow = gsap.to(eddies, {strokeDashoffset: -13, duration: .5, repeat: -1, ease: 'none'});
+    D.eddyFlow.timeScale(0.0001);
+
+    // the coil, in section: × going in on the left, • coming out on the right
+    const n = 6, cr = u * .27, ox = sw2 + u * .5;
+    D.coils = []; D.halo = []; D.coilY = [];
+    for (let i = 0; i < n; i++) {
+      const y = yT + (i + .5) * (yb - yT) / n; D.coilY.push(y);
+      [-1, 1].forEach(s => {
+        const x = cx + s * ox, g = Kit.mk('g', {}, L.coil);
+        D.halo.push(Kit.mk('circle', {cx: x, cy: y, r: cr * 1.9, fill: RED, opacity: 0, filter: 'url(#glow)'}, g));
+        Kit.mk('circle', {cx: x, cy: y, r: cr, fill: 'url(#gCu)', stroke: INK, 'stroke-width': 1.3}, g);
+        if (s < 0) Kit.mk('path', {d: `M${x - cr * .42},${y - cr * .42}L${x + cr * .42},${y + cr * .42}M${x + cr * .42},${y - cr * .42}L${x - cr * .42},${y + cr * .42}`, stroke: '#fff2dc', 'stroke-width': 1.3, 'stroke-linecap': 'round'}, g);
+        else Kit.mk('circle', {cx: x, cy: y, r: cr * .22, fill: '#fff2dc'}, g);
+        gsap.set(g, {transformOrigin: '50% 50%'});
+        D.coils.push(g);
+      });
+    }
+
+    // magnetic field lines: straight up the middle, looping round outside
+    D.field = Kit.mk('g', {opacity: .18}, L.field);
+    D.fieldPaths = [];
+    for (let k = 0; k < 3; k++) {
+      const i = sw2 * (.25 + k * .22), Rr = ox + cr + u * .45 + k * u * .55, a = u * .7 + k * u * .5;
+      [-1, 1].forEach(s => {
+        const xi = cx + s * i, xo = cx + s * Rr;
+        const d = `M${xi},${yc + hl}L${xi},${yc - hl}C${xi},${yc - hl - a} ${xo},${yc - hl - a} ${xo},${yc}C${xo},${yc + hl + a} ${xi},${yc + hl + a} ${xi},${yc + hl}`;
+        D.fieldPaths.push(Kit.mk('path', {d, fill: 'none', stroke: TEAL, 'stroke-width': 2, 'stroke-dasharray': '7 6', 'stroke-linecap': 'round'}, D.field));
+      });
+    }
+    D.flow = gsap.to(D.fieldPaths, {strokeDashoffset: -26, duration: .7, repeat: -1, ease: 'none'});
+    D.flow.timeScale(0.0001);
+
+    // numbered callouts (generous gaps so nothing touches)
+    const xr = cx + bw2 + u * .35, xl = cx - bw2 - u * .35;
+    D.labels = [];
+    const callout = (n, lines, side, ty, tx, tyy) => {
+      const g = Kit.mk('g', {}, L.lab), x = side ? xr : xl, cy = ty - fs * .35;
+      Kit.mk('path', {d: `M${x},${cy}L${tx},${tyy}`, stroke: INK, 'stroke-width': 1.1, fill: 'none'}, g);
+      Kit.mk('circle', {cx: tx, cy: tyy, r: 2.6, fill: INK, stroke: PAPER, 'stroke-width': 1}, g);
+      const chx = side ? x + fs * .7 : x - fs * .7;
+      Kit.mk('circle', {cx: chx, cy, r: fs * .66, fill: RED, stroke: INK, 'stroke-width': 1}, g);
+      txt(g, chx, cy + fs * .33, String(n), {'text-anchor': 'middle', fill: '#fff6e2', stroke: 'none', 'font-size': fs * .85, 'font-weight': 800});
+      lines.forEach((t, j) => txt(g, side ? x + fs * 1.9 : x - fs * 1.9, ty + j * fs * 1.5, t, {'text-anchor': side ? 'start' : 'end', 'font-weight': j ? 600 : 800}));
+      D.labels.push(g);
+    };
+    callout(1, ['COIL'], 0, D.coilY[2] + fs * .35, cx - ox - cr, D.coilY[2]);
+    callout(4, ['FILTER'], 0, (y0 + yF) / 2 + fs * .35, cx - sw2, (y0 + yF) / 2);
+    callout(2, ['METAL', 'FOIL'], 1, yT + (yb - yT) * .16, cx + fw / 2, yT + (yb - yT) * .16 - fs * .35);
+    callout(3, ['TOBACCO', 'PASTE'], 1, yT + (yb - yT) * .66, cx + sw2 * .45, yT + (yb - yT) * .66 - fs * .35);
+
+    // figure caption
+    const cap = Kit.mk('g', {}, L.lab); D.labels.push(cap);
+    txt(cap, 2, H - 3, 'FIG. 16', {fill: RED, 'font-weight': 800, stroke: 'none'});
+    txt(cap, 2 + fs * 4.6, H - 3, 'heated stick, in section', {'font-weight': 500, stroke: 'none', style: 'font-family:var(--hand)', 'font-size': fs * 1.1});
+
+    // temperature readout, top right — each line in its own band
+    const rg = Kit.mk('g', {}, L.read); D.read = rg;
+    const bwd = Math.min(W * .3, u * 4), rx = W - 3, big = fs * 2.3;
+    txt(rg, rx, fs * 1.05, 'FOIL TEMP', {'text-anchor': 'end', 'font-weight': 800, stroke: 'none', fill: TEAL});
+    const nb = fs * 1.6 + big;
+    D.num = txt(rg, rx, nb, '—', {'text-anchor': 'end', fill: RED, stroke: 'none', 'font-size': big, 'font-weight': 800, style: 'font-family:var(--display)'});
+    gsap.set(D.num, {transformOrigin: '100% 80%'});
+    const by = nb + big * .4;
+    Kit.mk('rect', {x: rx - bwd, y: by, width: bwd, height: fs * .55, fill: 'url(#htInk)', stroke: INK, 'stroke-width': 1.2}, rg);
+    D.bar = Kit.mk('rect', {x: rx - bwd, y: by, width: 0, height: fs * .55, fill: RED}, rg);
+    D.bw = bwd;
+    txt(rg, rx, by + fs * .55 + fs * 1.45, 'max 350 °C', {'text-anchor': 'end', 'font-weight': 600, stroke: 'none'});
+
+    D.vap = L.vap;
+    render();
+  }
+
+  function render() {
+    if (!D.foilHot) return;
+    const h = st.heat, fl = st.field;
+    D.foilHot.setAttribute('opacity', h);
+    D.foilGlow.setAttribute('opacity', h * .9);
+    gsap.set(D.heat, {scaleX: .12 + .88 * h, opacity: Math.min(1, h * 1.3)});
+    D.field.setAttribute('opacity', .18 + .82 * fl);
+    D.eddy.setAttribute('opacity', fl * .9);
+    D.halo.forEach(c => c.setAttribute('opacity', fl * .55));
+    D.led.setAttribute('fill', fl > .5 ? '#ff5a3a' : '#7a2a1d');
+    D.bar.setAttribute('width', D.bw * h);
+    D.num.textContent = h < .02 ? '—' : Math.round(h * 350) + ' °C';
+    const ts = Kit.calm ? .0001 : Math.max(.0001, fl);
+    if (D.flow) D.flow.timeScale(ts);
+    if (D.eddyFlow) D.eddyFlow.timeScale(ts);
+  }
+
+  // vapour, launched from the mouthpiece and pulled back by gravity
+  function launch(big) {
+    if (!D.vap) return;
+    const r = R(.1, big ? .34 : .26) * u, hot = big && Kit.rnd() < .3;
+    const c = Kit.mk('circle', {cx: 0, cy: 0, r, fill: hot ? RED : 'url(#htV)', opacity: hot ? .9 : .95}, D.vap);
+    gsap.set(c, {x: D.cx + R(-.6, .6) * D.sw2, y: D.y0, transformOrigin: '50% 50%'});
+    const dur = R(1.3, 2.1);
+    const ph = big ? {velocity: R(3, 7.5) * u, angle: R(-165, -15), gravity: u * 7} : {velocity: R(1.6, 3.2) * u, angle: R(-125, -55), gravity: u * 1.2};
+    if (P2D) gsap.to(c, {duration: dur, physics2D: ph, ease: 'none'});
+    else gsap.to(c, {duration: dur, y: '-=' + u * 3, x: '+=' + R(-1, 1) * u, ease: 'power2.out'});
+    gsap.to(c, {duration: dur, scale: R(1.4, 2.6), opacity: 0, ease: 'power2.in', onComplete: () => c.remove()});
+  }
+  function riseInside() {
+    const c = Kit.mk('circle', {cx: D.cx + R(-.7, .7) * D.sw2, cy: R(D.fy0, D.fy1), r: R(1, 2.2), fill: '#ffd9a8'}, D.vap);
+    gsap.fromTo(c, {opacity: 0}, {opacity: .9, duration: .25, ease: 'power2.out'});
+    gsap.to(c, {attr: {cy: '-=' + u * 1.4}, opacity: 0, duration: R(.8, 1.3), delay: .2, ease: 'power2.in', onComplete: () => c.remove()});
+  }
+  function emit() {
+    emitCall = null;
+    if (!on || Kit.calm) return;
+    if (st.heat > .2) riseInside();
+    if (st.heat > .45 && Kit.rnd() < st.heat) launch(false);
+    emitCall = gsap.delayedCall(.11, emit);
+  }
+
+  function reached() {
+    if (!on) return;
+    if (!Kit.calm) {
+      gsap.fromTo(D.num, {scale: 1.35}, {scale: 1, duration: .9, ease: 'elastic.out(1,.4)'});
+      if (D.shimmer) D.shimmer.kill();
+      D.shimmer = gsap.fromTo(D.foilGlow, {opacity: 1}, {opacity: .65, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+      for (let i = 0; i < 30; i++) launch(true);
+    }
+    if (!done) {
+      done = true;
+      Kit.haptic('success');
+      Kit.hide('say'); Kit.show('why');
+    }
+  }
+
+  sw.addEventListener('click', () => {
+    on = !on;
+    sw.classList.toggle('on', on); sw.classList.remove('nudge');
+    sw.setAttribute('aria-pressed', on); swt.textContent = on ? 'COIL ON' : 'COIL OFF';
+    Kit.haptic('selection');
+    gsap.killTweensOf(st);
+    if (D.shimmer) { D.shimmer.kill(); D.shimmer = null; }
+    if (emitCall) { emitCall.kill(); emitCall = null; }
+    if (Kit.calm) { st.field = st.heat = on ? 1 : 0; render(); if (on) reached(); return; }
+    if (on) {
+      gsap.to(st, {field: 1, duration: .45, ease: 'power3.out', onUpdate: render});
+      gsap.to(st, {heat: 1, duration: 2.3, delay: .2, ease: 'power2.inOut', onUpdate: render, onComplete: reached});
+      gsap.fromTo(D.coils, {scale: 1.25}, {scale: 1, duration: .6, stagger: .03, ease: 'back.out(3)'});
+      emit();
+    } else {
+      gsap.to(st, {field: 0, duration: .35, ease: 'power2.out', onUpdate: render});
+      gsap.to(st, {heat: 0, duration: 1.6, ease: 'power2.out', onUpdate: render});
+    }
+  });
+
+  Kit.onShow.card = () => { build(); if (on && st.heat >= 1 && !Kit.calm) D.shimmer = gsap.fromTo(D.foilGlow, {opacity: 1}, {opacity: .65, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut'}); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !D.bodyG) return;
+    const tl = gsap.timeline();
+    tl.from(D.bodyG, {scaleY: 0, transformOrigin: '50% 100%', duration: .7, ease: 'expo.out'})
+      .from(D.coils, {scale: 0, duration: .45, stagger: .035, ease: 'back.out(2.5)'}, .2)
+      .from(D.stickG, {y: -H * .35, opacity: 0, duration: .9, ease: 'power3.out'}, .3)
+      .from(D.labels, {opacity: 0, x: -8, duration: .45, stagger: .08, ease: 'power3.out'}, .85)
+      .from(D.read, {opacity: 0, y: -8, duration: .5, ease: 'power3.out'}, .9);
+  };
+  Kit.play.card = async () => {
+    sw.click();
+    await new Promise(r => setTimeout(r, Kit.calm ? 100 : 2900));
+  };
+})();
+Kit.single();
+</script>
+</html>

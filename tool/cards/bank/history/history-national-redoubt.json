@@ -1,0 +1,38 @@
+{
+  "id": "history-national-redoubt",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.disputed_borders",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was Switzerland's 'National Redoubt', and why was it built?",
+  "answer": "The National Redoubt was a massive defensive line built deep in the Swiss Alps. It was designed to make an invasion so costly and difficult that it would be strategically unviable.",
+  "move": "Make attacking you cost more than it could gain, and nobody tries.",
+  "keywords": [
+    "switzerland",
+    "alps",
+    "reduit",
+    "fortifications",
+    "invasion"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A diagram of the Swiss Alps with a red line tracing the defensive fortifications and tunnels. The reader drags an invader from the border into Switzerland and is asked what the National Redoubt was and why it was built.",
+    "ground": "#f3ead6"
+  },
+  "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=2Y0RgQmmESI&t=339s",
+  "written": "2026-11-04"
+}

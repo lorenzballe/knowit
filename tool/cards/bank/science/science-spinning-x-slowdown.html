@@ -1,0 +1,350 @@
+<!doctype html>
+<!-- slug: science-spinning-x-slowdown -->
+<!-- Look: a surveyor's topographic sheet on cream paper. Breathing contour lines that melt into the card, the tube drawn as a rotating summit, a compass rose, and speed routes inked across a map grid.
+     Interaction: the reader drags a map pin along a speed scale to guess how fast the X crosses your view. The contours bulge and ripple under the finger.
+     Wow: the tube steps aside to the map's corner, the routes draw themselves (tube +10, spin −7, X = 3, then O = 17), the true point sends contour ripples out, and the whole map surges. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why the X looks slow</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,17px)/1.1 var(--display);color:#1f5f86}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body)}
+.say b{color:#b4502a}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag the pin · the X's speed" style="--c:#efe7d2;--k:#2a2416;--edge:#cdbf9c">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPIN + SPEED</span></div>
+    <h2 class="q">How does the X's backward spin change how fast it moves?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A spinning tube seen end on, with the X on the side spinning backwards and the O on the side spinning forwards, above a speed scale with a draggable pin."></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Say the tube flies forward at 10 and the X's side spins back at 7. <b>Drag the pin</b> to show how fast the X crosses your view.</p>
+    <div id="why" class="gone"><p class="big">10 − 7 = 3: the X slows down</p><p class="body">The X spins backwards while the tube moves forwards, so its spin takes speed away. The O spins the same way the tube moves, so it races across your view much faster.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Spin against the motion subtracts; spin with it adds.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const INK = '#2a2416', RUST = '#b4502a', BLUE = '#1f5f86', PAPER = '#f7f1e0';
+  const TUBE = 10, SPIN = 7, XV = 3, OV = 17, MAX = 20;
+  let W = 0, H = 0, fs = 13, x0 = 0, x1 = 0, axis = 0, cx = 0, cy = 0, r = 0;
+  let guess = 10, picked = false, revealed = false, dragging = false, built = false;
+  let rowsT0 = 0, wowDone = false;
+  const G = {}, pinPos = {x: 10};
+  let tops = [], ph = 0, rot = 0;
+  const dist = {x: -999, y: -999, a: 0}, surge = {v: 0}, boost = {v: 1};
+  const X = v => x0 + (x1 - x0) * v / MAX;
+  const cl = (v, a, b) => Math.max(a, Math.min(b, v));
+  const T = (g, x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono)'}, a), g); e.textContent = s; return e; };
+  const H_ = (g, x, y, s, a = {}) => T(g, x, y, s, Object.assign({'font-size': fs * 1.15, style: 'font-family:var(--hand)'}, a));
+
+  function arrow(g, xa, ya, xb, yb, col, w, op = 1) {
+    const line = Kit.mk('line', {x1: xa, y1: ya, x2: xb, y2: yb, stroke: col, 'stroke-width': w, 'stroke-linecap': 'round', opacity: op}, g);
+    const a = Math.atan2(yb - ya, xb - xa), L = w * 1.6 + 6;
+    const p = ang => `${xb - Math.cos(a + ang) * L},${yb - Math.sin(a + ang) * L}`;
+    const head = Kit.mk('path', {d: `M${p(.5)} L${xb},${yb} L${p(-.5)}`, stroke: col, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: op}, g);
+    return {line, head, len: Math.hypot(xb - xa, yb - ya)};
+  }
+
+  // ---------- geometry of the routes (after the reveal) ----------
+  function rowGeom() {
+    const avail = axis - fs * .8, full = avail >= 4 * fs * 1.35;
+    const sp = Math.min(fs * 1.8, avail / (full ? 4 : 2));
+    const g = {full, sp, yX: axis - sp};
+    if (full) { g.yS = axis - 2 * sp; g.yT = axis - 3 * sp; g.yO = axis - 4 * sp; g.top = g.yO + fs * .8; }
+    else { g.yA = axis - 2 * sp; g.top = fs * .3; }
+    return g;
+  }
+
+  // ---------- the map ----------
+  function layout() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, W / 26));
+    x0 = Math.max(W * .25, fs * 6.4); x1 = W - fs * 1.3; axis = H - fs * 2.2;
+
+    const defs = Kit.mk('defs', {}, svg);
+    const tg = Kit.mk('radialGradient', {id: 'tg', cx: .35, cy: .3, r: .8}, defs);
+    [['0', '#fbf6e8'], ['.55', '#dcc79f'], ['1', '#a3845a']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, tg));
+    const vg = Kit.mk('radialGradient', {id: 'vg', cx: .5, cy: .5, r: .62}, defs);
+    [['0', '#fff'], ['.5', '#fff'], ['.97', '#000']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, vg));
+    const mask = Kit.mk('mask', {id: 'vig', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
+    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#vg)'}, mask);
+
+    for (const k of ['topo', 'grid', 'deco', 'tube', 'rows', 'axis', 'fx', 'pin']) G[k] = Kit.mk('g', {}, svg);
+    G.topo.setAttribute('mask', 'url(#vig)');
+    buildTopo(); buildAxis();
+
+    if (!revealed) {
+      const zTop = fs * 2.3, zBot = axis - fs * 3.6;
+      r = Math.max(14, Math.min(W * .17, (zBot - zTop - fs * 2.2) / 2));
+      cx = W * .4; cy = (zTop + zBot - fs * 2.2) / 2;
+      buildTube({mini: false, marks: true});
+      buildCompass(W - fs * 1.7, fs * 1.7, fs * 1.05);
+    } else {
+      const g = rowGeom(), xa = X(11), xb = x1;
+      const half = (axis - fs * .8 - g.top) / 2, mR = fs * .78, marks = half - mR >= fs * 1.1;
+      cx = (xa + xb) / 2; cy = g.top + half;
+      r = Math.min(marks ? half - mR : half - 5, (xb - xa) / 2 - 4, W * .17);
+      if (r >= 8) buildTube({mini: true, marks});
+    }
+    buildPin();
+    built = true;
+    if (revealed) playRows();
+    draw();
+  }
+
+  function buildTopo() {
+    const gap = fs * 1.5;
+    tops = [{x: W * .06, y: H * .12, n: 12, s: 1}, {x: W * .97, y: H * .7, n: 10, s: 2.3}, {x: W * .72, y: H * .02, n: 6, s: 4.1}];
+    const lo = [201, 214, 166], hi = [185, 141, 94];
+    tops.forEach(c => {
+      c.gap = gap; c.paths = [];
+      for (let k = c.n - 1; k >= 0; k--) {
+        const t = 1 - k / c.n, col = lo.map((v, i) => Math.round(v + (hi[i] - v) * t));
+        c.paths[k] = Kit.mk('path', {fill: `rgb(${col})`, 'fill-opacity': .13, stroke: INK, 'stroke-opacity': k % 4 === 0 ? .4 : .18, 'stroke-width': k % 4 === 0 ? 1.4 : .8}, G.topo);
+      }
+    });
+  }
+
+  function ring(c, k) {
+    const N = 56, pts = [], gap = c.gap;
+    for (let i = 0; i < N; i++) {
+      const th = i / N * Math.PI * 2;
+      let rr = gap * (1 + k) + gap * .35 * Math.sin(3 * th + ph * .6 + k * .7 + c.s) + gap * .22 * Math.sin(5 * th - ph * .9 + k + c.s * 2)
+        + Math.sin(ph * .8 + c.s) * gap * .15 + surge.v * gap * .9 * (k + 1) / c.n;
+      if (dist.a > .002 || dist.a < -.002) {
+        const px = c.x + rr * Math.cos(th), py = c.y + rr * Math.sin(th), d2 = (px - dist.x) ** 2 + (py - dist.y) ** 2, sg = fs * 3.2;
+        rr += dist.a * gap * 1.3 * Math.exp(-d2 / (2 * sg * sg));
+      }
+      pts.push([cl(c.x + rr * Math.cos(th), 1, W - 1), cl(c.y + rr * Math.sin(th), 1, H - 1)]);
+    }
+    const m = (a, b) => `${((a[0] + b[0]) / 2).toFixed(1)},${((a[1] + b[1]) / 2).toFixed(1)}`;
+    let d = `M${m(pts[N - 1], pts[0])}`;
+    for (let i = 0; i < N; i++) d += ` Q${pts[i][0].toFixed(1)},${pts[i][1].toFixed(1)} ${m(pts[i], pts[(i + 1) % N])}`;
+    return d + 'Z';
+  }
+
+  function buildCompass(x, y, s) {
+    const g = Kit.mk('g', {opacity: .75}, G.deco); G.compass = g;
+    Kit.mk('circle', {cx: x, cy: y, r: s, fill: 'none', stroke: INK, 'stroke-width': .9, opacity: .5}, g);
+    Kit.mk('circle', {cx: x, cy: y, r: s * .62, fill: 'none', stroke: INK, 'stroke-width': .7, opacity: .4, 'stroke-dasharray': '2 2'}, g);
+    const q = s * .22;
+    Kit.mk('path', {d: `M${x},${y - s * 1.15} L${x + q},${y} L${x},${y + s * 1.15} L${x - q},${y}Z`, fill: PAPER, stroke: INK, 'stroke-width': 1}, g);
+    Kit.mk('path', {d: `M${x},${y - s * 1.15} L${x + q},${y} L${x - q},${y}Z`, fill: RUST, stroke: INK, 'stroke-width': 1}, g);
+    Kit.mk('path', {d: `M${x - s * .8},${y} L${x},${y - q * .8} L${x + s * .8},${y} L${x},${y + q * .8}Z`, fill: INK, opacity: .55}, g);
+  }
+
+  function buildTube(o) {
+    const g = Kit.mk('g', {class: 'tubeG'}, G.tube); G.tubeG = g;
+    if (!o.mini) for (let i = 0; i < 3; i++) {
+      const y = cy + (i - 1) * r * .45, len = r * (.5 + .25 * (i % 2));
+      Kit.mk('line', {x1: cx - r - fs * .5 - len, x2: cx - r - fs * .5, y1: y, y2: y, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: .35, 'stroke-dasharray': '6 5'}, g);
+    }
+    Kit.mk('ellipse', {cx: cx + r * .08, cy: cy + r * .12, rx: r * 1.02, ry: r * .98, fill: INK, opacity: .13}, g);
+    Kit.mk('circle', {cx, cy, r, fill: 'url(#tg)', stroke: INK, 'stroke-width': o.mini ? 1.6 : 2}, g);
+    const rg = Kit.mk('g', {}, g); G.rot = rg;
+    [.74, .48, .24].forEach((q, i) => Kit.mk('circle', {cx, cy, r: r * q, fill: 'none', stroke: INK, 'stroke-width': i === 0 ? 1.2 : .8, opacity: .45, 'stroke-dasharray': i === 1 ? '3 4' : null}, rg));
+    const n = o.mini ? 12 : 18;
+    for (let i = 0; i < n; i++) {
+      const a = i / n * Math.PI * 2, long = i % 3 === 0;
+      Kit.mk('line', {x1: cx + Math.cos(a) * r * (long ? .8 : .88), y1: cy + Math.sin(a) * r * (long ? .8 : .88), x2: cx + Math.cos(a) * r * .97, y2: cy + Math.sin(a) * r * .97, stroke: INK, 'stroke-width': long ? 1.8 : 1, opacity: .7}, rg);
+    }
+    Kit.mk('path', {d: `M${cx},${cy - r * .24} L${cx},${cy - r * .74}`, stroke: RUST, 'stroke-width': o.mini ? 2 : 2.4, 'stroke-linecap': 'round'}, rg);
+    Kit.mk('circle', {cx, cy, r: 2.4, fill: INK}, g);
+
+    const mR = o.marks ? fs * .78 : Math.max(3.5, fs * .3);
+    const off = o.marks ? fs : mR + 4, len = o.mini ? fs * 1.4 : Math.max(r * .7, fs * 2.2);
+    arrow(g, cx + off, cy - r, cx + off + len, cy - r, RUST, o.mini ? 2 : 2.4);
+    arrow(g, cx - off, cy + r, cx - off - len, cy + r, RUST, o.mini ? 2 : 2.4);
+    const mark = (y, s, col) => {
+      if (!o.marks) return Kit.mk('circle', {cx, cy: y, r: mR, fill: col, stroke: PAPER, 'stroke-width': 1.5}, g);
+      const mg = Kit.mk('g', {}, g);
+      Kit.mk('circle', {cx, cy: y, r: mR, fill: PAPER, stroke: col, 'stroke-width': 2}, mg);
+      T(mg, cx, y + fs * .36, s, {'text-anchor': 'middle', fill: col, 'font-weight': 800});
+      return mg;
+    };
+    mark(cy - r, 'O', INK); G.xMark = mark(cy + r, 'X', BLUE);
+
+    if (!o.mini) {
+      const fx0 = cx + r + fs * .6, fx1 = fx0 + Math.max(r * .9, fs * 3);
+      arrow(g, fx0, cy, fx1, cy, INK, 3);
+      H_(g, fx0, cy - fs * .7, 'forward 10');
+      H_(g, cx, cy - r - fs * 1.2, 'O spins with it +7', {'text-anchor': 'middle', fill: INK});
+      H_(g, cx, cy + r + fs * 1.9, 'X spins back 7', {'text-anchor': 'middle', fill: BLUE});
+    }
+  }
+
+  function buildAxis() {
+    const g = G.axis;
+    for (let v = 0; v <= MAX; v += 5) Kit.mk('line', {x1: X(v), x2: X(v), y1: axis, y2: fs * .6, stroke: INK, 'stroke-width': 1, opacity: .16, 'stroke-dasharray': '2 4'}, G.grid);
+    Kit.mk('line', {x1: x0, x2: x1, y1: axis, y2: axis, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, g);
+    for (let v = 0; v <= MAX; v++) {
+      const big = v % 5 === 0;
+      Kit.mk('line', {x1: X(v), x2: X(v), y1: axis, y2: axis + (big ? fs * .55 : fs * .3), stroke: INK, 'stroke-width': big ? 1.8 : 1, class: 'tk'}, g);
+      if (big) T(g, X(v), axis + fs * 1.4, String(v), {'text-anchor': 'middle', class: 'tk'});
+    }
+    T(g, x0 - fs * .6, axis + fs * .36, 'speed', {'text-anchor': 'end', opacity: .7, 'font-weight': 600});
+  }
+
+  function buildPin() {
+    const g = Kit.mk('g', {}, G.pin); G.pinG = g;
+    const inner = Kit.mk('g', {}, g); G.pinIn = inner;
+    const a = fs * .62, hy = fs * 1.35;
+    Kit.mk('ellipse', {cx: 0, cy: 1, rx: fs * .45, ry: fs * .16, fill: INK, opacity: .25}, inner);
+    Kit.mk('path', {d: `M0,0 C${-a * .4},${-hy * .4} ${-a},${-hy * .65} ${-a},${-hy} A${a},${a} 0 1 1 ${a},${-hy} C${a},${-hy * .65} ${a * .4},${-hy * .4} 0,0Z`, fill: RUST, stroke: INK, 'stroke-width': 1.4}, inner);
+    Kit.mk('circle', {cx: 0, cy: -hy, r: a * .38, fill: PAPER}, inner);
+    if (revealed) { g.setAttribute('opacity', .4); G.read = null; }
+    else G.read = T(inner, 0, -hy - fs * 1.05, '', {'text-anchor': 'middle', 'font-size': fs * 1.05, 'font-weight': 800, fill: RUST});
+    pinPos.x = guess; setRead();
+  }
+  function setRead() { if (G.read) G.read.textContent = guess % 1 ? guess.toFixed(1) : String(guess); }
+  function applyPin() { if (G.pinG) G.pinG.setAttribute('transform', `translate(${X(pinPos.x)},${axis})`); }
+
+  // ---------- the routes, drawn at the reveal ----------
+  function playRows() {
+    if (G.tl) { G.tl.kill(); G.tl = null; }
+    const geo = rowGeom(), g = G.rows, lx = x0 - fs * .6, steps = [];
+    const lab = (y, s, col, w = 700) => T(g, lx, y + fs * .36, s, {'text-anchor': 'end', fill: col, 'font-weight': w});
+    const dot = (x, ya, yb, col) => Kit.mk('line', {x1: x, x2: x, y1: ya, y2: yb, stroke: col, 'stroke-width': 1.4, 'stroke-dasharray': '3 3', opacity: .8}, g);
+    if (geo.full) {
+      const {yO, yT, yS, yX} = geo;
+      steps.push({lab: lab(yT, 'tube 10', INK), arr: [arrow(g, X(0), yT, X(TUBE), yT, INK, 3.2)]});
+      steps.push({lab: lab(yS, 'spin −7', RUST), extra: [dot(X(TUBE), yT + 4, yS - 4, RUST)], arr: [arrow(g, X(TUBE), yS, X(XV), yS, RUST, 3.2)]});
+      steps.push({lab: lab(yX, 'X = 3', BLUE, 800), extra: [dot(X(XV), yS + 4, axis - 3, BLUE)], arr: [arrow(g, X(0), yX, X(XV), yX, BLUE, 5.5)], wow: true});
+      steps.push({lab: lab(yO, 'O = 17', INK, 800), arr: [arrow(g, X(0), yO, X(TUBE), yO, INK, 2.4, .55), arrow(g, X(TUBE), yO, X(OV), yO, RUST, 2.4, .85)]});
+    } else {
+      const {yA, yX} = geo, d = fs * .38;
+      steps.push({lab: lab(yA, '10 − 7', RUST), arr: [arrow(g, X(0), yA - d, X(TUBE), yA - d, INK, 2.6), arrow(g, X(TUBE), yA + d, X(XV), yA + d, RUST, 2.6)]});
+      steps.push({lab: lab(yX, 'X = 3', BLUE, 800), extra: [dot(X(XV), yA + d + 4, axis - 3, BLUE)], arr: [arrow(g, X(0), yX, X(XV), yX, BLUE, 5)], wow: true});
+    }
+    if (Kit.calm) { if (!wowDone) wow(); return; }
+    steps.forEach(s => { s.arr.forEach(a => { a.line.setAttribute('stroke-dasharray', a.len); a.line.setAttribute('stroke-dashoffset', a.len); a.head.setAttribute('opacity', 0); }); gsap.set([s.lab, ...(s.extra || [])], {opacity: 0}); });
+    const tl = gsap.timeline({paused: true}); let wowAt = 0;
+    if (G.tubeG) tl.from(G.tubeG, {opacity: 0, scale: .4, transformOrigin: `${cx}px ${cy}px`, duration: .7, ease: 'back.out(1.8)'}, 0);
+    steps.forEach((s, i) => {
+      const at = .15 + i * .42;
+      tl.fromTo(s.lab, {opacity: 0, x: -8}, {opacity: 1, x: 0, duration: .35, ease: 'power3.out'}, at);
+      if (s.extra) tl.to(s.extra, {opacity: .8, duration: .25}, at);
+      s.arr.forEach((a, j) => {
+        tl.to(a.line, {attr: {'stroke-dashoffset': 0}, duration: .45, ease: 'power3.inOut'}, at + j * .3);
+        tl.to(a.head, {opacity: a.line.getAttribute('opacity') || 1, duration: .15}, at + j * .3 + .38);
+      });
+      if (s.wow) { wowAt = at + .45; tl.add(() => { if (!wowDone) wow(); }, wowAt); }
+    });
+    const el = (performance.now() - rowsT0) / 1000;
+    tl.seek(Math.min(el, tl.duration()), true);
+    if (el > wowAt && !wowDone) wow();
+    tl.play(); G.tl = tl;
+  }
+
+  function wow() {
+    wowDone = true;
+    Kit.haptic('success');
+    const rx = Math.min(fs * 5, X(XV) - 3), ry = Math.min(fs * 1.6, H - axis - 3);
+    for (let i = 0; i < 4; i++) {
+      const k = (i + 1) / 4;
+      const c = Kit.mk('ellipse', {cx: X(XV), cy: axis, rx: 2, ry: 1, fill: 'none', stroke: BLUE, 'stroke-width': 2}, G.fx);
+      gsap.to(c, {attr: {rx: rx * k, ry: ry * k}, opacity: 0, duration: 1.3, delay: i * .14, ease: 'expo.out', onComplete: () => c.remove()});
+    }
+    dist.x = X(XV); dist.y = axis;
+    gsap.timeline().to(surge, {v: 1, duration: .45, ease: 'power3.out'}).to(surge, {v: 0, duration: 1.6, ease: 'elastic.out(1,.35)'});
+    gsap.timeline().to(boost, {v: .25, duration: .4, ease: 'power2.out'}).to(boost, {v: 1, duration: 1.6, ease: 'power2.inOut'}, '+=.4');
+    if (G.xMark) gsap.fromTo(G.xMark, {scale: 1}, {scale: 1.5, duration: .25, yoyo: true, repeat: 1, ease: 'back.out(3)', transformOrigin: '50% 50%'});
+    if (Kit.calm) draw();
+  }
+
+  function draw() {
+    if (!built) return;
+    tops.forEach(c => c.paths.forEach((p, k) => p.setAttribute('d', ring(c, k))));
+    if (G.rot) G.rot.setAttribute('transform', `rotate(${rot % 360} ${cx} ${cy})`);
+    if (G.compass) G.compass.setAttribute('transform', `rotate(${Math.sin(ph * 1.3) * 6} ${W - fs * 1.7} ${fs * 1.7})`);
+    applyPin();
+  }
+
+  let last = 0;
+  function tick(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    ph += dt * .7; rot += dt * 70 * boost.v;
+    draw(); requestAnimationFrame(tick);
+  }
+
+  // ---------- the guess ----------
+  function setGuess(v, snap) {
+    guess = Math.max(0, Math.min(MAX, Math.round(v * 2) / 2));
+    setRead();
+    if (Kit.calm || snap) { pinPos.x = guess; applyPin(); }
+    else gsap.to(pinPos, {x: guess, duration: .14, ease: 'power3.out', overwrite: true, onUpdate: () => { if (Kit.calm) applyPin(); }});
+  }
+  const fromE = e => { const b = svg.getBoundingClientRect(); return {x: e.clientX - b.left, y: e.clientY - b.top}; };
+  svg.addEventListener('pointerdown', e => {
+    if (revealed) return;
+    dragging = true; svg.setPointerCapture(e.pointerId);
+    if (G.pinIn) gsap.killTweensOf(G.pinIn), gsap.to(G.pinIn, {x: 0, y: -4, duration: .12, ease: 'power3.out'});
+    const p = fromE(e); dist.x = p.x; dist.y = p.y;
+    gsap.to(dist, {a: 1, duration: .25, ease: 'power3.out', overwrite: true});
+    gsap.to(boost, {v: 2.4, duration: .3, ease: 'power2.out', overwrite: true});
+    setGuess((p.x - x0) / (x1 - x0) * MAX);
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const p = fromE(e); dist.x = p.x; dist.y = p.y;
+    setGuess((p.x - x0) / (x1 - x0) * MAX);
+  });
+  function release() {
+    dragging = false;
+    if (G.pinIn) gsap.to(G.pinIn, {y: 0, duration: .5, ease: 'bounce.out'});
+    gsap.to(dist, {a: 0, duration: 1.4, ease: 'elastic.out(1,.4)', overwrite: true});
+    gsap.to(boost, {v: 1, duration: 1, ease: 'power2.inOut', overwrite: true});
+    Kit.haptic('selection');
+    if (!picked) { picked = true; sure.on(); }
+    say.innerHTML = `Your guess: <b>${guess % 1 ? guess.toFixed(1) : guess}</b>. Drag again, or say how sure you are.`;
+    if (Kit.calm) draw();
+  }
+  svg.addEventListener('pointerup', () => { if (dragging) release(); });
+  svg.addEventListener('pointercancel', () => { if (dragging) release(); });
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (revealed) return;
+    revealed = true; rowsT0 = performance.now();
+    const ok = Math.abs(guess - XV) <= 1, said = guess % 1 ? guess.toFixed(1) : String(guess);
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `You said ${said}. ${ok ? 'Right' : 'It is 3'}: 10 − 7`);
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    layout();
+  });
+
+  new ResizeObserver(() => { if (built) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  let started = false;
+  Kit.onEnter.card = () => {
+    if (Kit.calm) { draw(); return; }
+    if (!started) { started = true; requestAnimationFrame(tick); }
+    if (revealed) return;
+    surge.v = 1.4; gsap.to(surge, {v: 0, duration: 2, ease: 'expo.out'});
+    if (G.tubeG) gsap.from(G.tubeG, {opacity: 0, scale: .6, transformOrigin: `${cx}px ${cy}px`, duration: .9, ease: 'back.out(1.6)', delay: .15});
+    gsap.from('#pic .tk', {opacity: 0, y: 6, stagger: .02, duration: .35, ease: 'power3.out', delay: .3});
+    if (G.pinIn) gsap.timeline({delay: .7})
+      .from(G.pinIn, {y: -fs * 3, opacity: 0, duration: .7, ease: 'bounce.out'})
+      .to(G.pinIn, {x: 6, duration: .5, ease: 'sine.inOut', yoyo: true, repeat: 3});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(res => setTimeout(res, ms));
+    setGuess(5, true); release();
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 200 : 2600);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,456 @@
+<!doctype html>
+<!-- slug: maths-kepler-proof-dial -->
+<!-- Look: a vintage brass gauge on a walnut-dark card, with a knurled bezel, cream enamel face, engraved year ticks from 1611 and a red lacquered needle.
+     Interaction: swing the needle to guess how many years Kepler's 1611 sphere-stacking claim waited for proof. Hundreds of golden sparks stream along the dial's channel up to your guess, and they scatter as you whip the needle.
+     Wow: the needle swings with a damped wobble to 406 years (2017), the channel floods with light, sparks burst, and a red PROVEN 2017 stamp slams down. The layout adapts: on short stages the readout moves beside the gauge so nothing ever crowds. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Four centuries to prove the obvious</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#dial{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#dial:active{cursor:grabbing}
+#why{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere;color:var(--k)}
+#why b{font-weight:800}
+.say{overflow-wrap:anywhere}
+.answered .q{font-size:max(2.4cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Swing the dial · how sure" style="--c:#17130e;--k:#f3e6c9;--edge:#0a0806">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SWING THE DIAL</span></div>
+    <h2 class="q">Kepler said in 1611 how to stack spheres best. How long until proof?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="dial" role="img" aria-label="A brass gauge marked in years from 1611 to 2111, with a needle you swing to guess when Kepler's conjecture was proven."></canvas>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Swing the needle from 1611 to the year you think it was finally <b>proven</b>.</p>
+    <p class="body gone" id="why"><b>About 400 years.</b> In 1611 Kepler stated that stacking spheres like supermarket oranges fills about 74% of space, the best possible, but he never proved it. The formal proof was only published in 2017.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An answer can look obvious and still take centuries to prove.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('dial'), card = Kit.$('card'), say = Kit.$('say');
+  const MAXY = 500, TRUE = 406, START = 1611;
+  const A0 = 150 * Math.PI / 180, SW = 240 * Math.PI / 180;
+  const ang = v => A0 + (v / MAXY) * SW;
+  let x = null, W = 0, H = 0, dpr = 1, cx = 0, cy = 0, R = 100, f = 12, fb = 20, off = null, fontM = 'monospace', fontD = 'serif';
+  let mode = 'round', L = {};
+  const st = {th: 0, w: 0, target: 0, k: 230, c: 22, glow: 0, sa: 0, ss: 1, shake: 0, intro: 0};
+  let phase = 'idle', guess = null, drag = false, touched = false, introTl = null, lastCentury = 0;
+
+  // ---------- spark sprite ----------
+  const spr = document.createElement('canvas'); spr.width = spr.height = 64;
+  { const s = spr.getContext('2d'), g = s.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0, 'rgba(255,252,230,1)'); g.addColorStop(.22, 'rgba(255,210,110,.95)');
+    g.addColorStop(.55, 'rgba(255,150,40,.28)'); g.addColorStop(1, 'rgba(255,120,0,0)');
+    s.fillStyle = g; s.fillRect(0, 0, 64, 64); }
+
+  // ---------- particles: a stream of years along the channel ----------
+  const P = [];
+  for (let i = 0; i < 380; i++) P.push({pos: Kit.rnd(), spd: .03 + Kit.rnd() * .09, ro: Kit.rnd() * 2 - 1, ph: Kit.rnd() * 6.283, sz: .009 + Kit.rnd() * .016, fl: 2 + Kit.rnd() * 6, j: Kit.rnd() - .5});
+  const S = [];
+  const speck = []; for (let i = 0; i < 90; i++) speck.push([Kit.rnd() - .5, Kit.rnd() - .5, Kit.rnd()]);
+
+  function emitTip(n, sign, mag) {
+    const a = ang(st.th), ux = Math.cos(a), uy = Math.sin(a);
+    for (let i = 0; i < n && S.length < 420; i++) {
+      const sp = R * (.4 + Kit.rnd() * 1.2) * mag, out = R * (Kit.rnd() * .9), life = .5 + Kit.rnd() * .7;
+      S.push({x: cx + ux * R * .85, y: cy + uy * R * .85,
+        vx: -uy * sign * sp + ux * out + (Kit.rnd() - .5) * R * .4,
+        vy: ux * sign * sp + uy * out + (Kit.rnd() - .5) * R * .4,
+        life, max: life, s: .7 + Kit.rnd() * .8});
+    }
+  }
+  function burst() {
+    for (let i = 0; i < 360; i++) {
+      const v = TRUE * Math.pow(Kit.rnd(), .45), a = ang(v), ux = Math.cos(a), uy = Math.sin(a);
+      const r = R * (.8 + Kit.rnd() * .1), sp = R * (.4 + Kit.rnd() * 1.9), life = .8 + Kit.rnd() * 1.2;
+      S.push({x: cx + ux * r, y: cy + uy * r, vx: ux * sp + (Kit.rnd() - .5) * R * .5, vy: uy * sp + (Kit.rnd() - .5) * R * .5 - R * .3, life, max: life, s: .8 + Kit.rnd() * 1.1});
+    }
+  }
+
+  // ---------- helpers ----------
+  const circ = (c, r) => { c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); };
+  function engrave(c, t, px, py, font, al = 'center', ink = '#2a1d10') {
+    c.font = font; c.textAlign = al; c.textBaseline = 'middle';
+    c.fillStyle = 'rgba(255,250,235,.7)'; c.fillText(t, px + .6, py + .8);
+    c.fillStyle = ink; c.fillText(t, px, py);
+  }
+  function stampDims(fP, fY) {
+    x.font = `900 ${fP}px ${fontD}`; const tw = x.measureText('PROVEN').width;
+    const pad = Math.max(6, fP * .45);
+    return {w: tw + pad * 2, h: fP + fY + pad * 1.4, pad};
+  }
+
+  // ---------- static instrument, cached ----------
+  function drawStatic() {
+    off = document.createElement('canvas'); off.width = cv.width; off.height = cv.height;
+    const c = off.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    c.save(); c.shadowColor = 'rgba(0,0,0,.7)'; c.shadowBlur = R * .16; c.shadowOffsetY = R * .07;
+    circ(c, R); c.fillStyle = '#4a3418'; c.fill(); c.restore();
+    let g = c.createLinearGradient(cx - R, cy - R, cx + R, cy + R);
+    g.addColorStop(0, '#fff2bf'); g.addColorStop(.22, '#e3b65c'); g.addColorStop(.48, '#94652a');
+    g.addColorStop(.7, '#ecc574'); g.addColorStop(1, '#553813');
+    circ(c, R); c.fillStyle = g; c.fill();
+    c.strokeStyle = 'rgba(60,34,8,.5)'; c.lineWidth = Math.max(.6, R * .004);
+    const nk = R < 70 ? 110 : 180;
+    for (let i = 0; i < nk; i++) { const a = i / nk * Math.PI * 2; c.beginPath(); c.moveTo(cx + Math.cos(a) * R * .965, cy + Math.sin(a) * R * .965); c.lineTo(cx + Math.cos(a) * R * .995, cy + Math.sin(a) * R * .995); c.stroke(); }
+    g = c.createLinearGradient(cx - R, cy - R, cx + R, cy + R);
+    g.addColorStop(0, '#5a3b15'); g.addColorStop(.35, '#b7843a'); g.addColorStop(.6, '#fbe3a0'); g.addColorStop(1, '#c79443');
+    circ(c, R * .935); c.fillStyle = g; c.fill();
+    let rg = c.createRadialGradient(cx, cy, R * .78, cx, cy, R * .91);
+    rg.addColorStop(0, '#2b1d0e'); rg.addColorStop(.45, '#0a0604'); rg.addColorStop(1, '#22170b');
+    circ(c, R * .905); c.fillStyle = rg; c.fill();
+    rg = c.createRadialGradient(cx - R * .22, cy - R * .32, R * .04, cx, cy, R * .8);
+    rg.addColorStop(0, '#fdf6e2'); rg.addColorStop(.7, '#ebdcb5'); rg.addColorStop(1, '#c9b385');
+    circ(c, R * .79); c.fillStyle = rg; c.fill();
+    for (let i = 0; i < 700; i++) {
+      const a = Kit.rnd() * 6.283, r = Math.sqrt(Kit.rnd()) * R * .78;
+      c.fillStyle = Kit.rnd() < .5 ? 'rgba(90,60,20,.07)' : 'rgba(255,255,255,.12)';
+      c.fillRect(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 1, 1);
+    }
+    c.strokeStyle = 'rgba(80,55,20,.07)'; c.lineWidth = .7;
+    for (let i = 0; i < 36; i++) { const a = i / 36 * Math.PI * 2; c.beginPath(); c.arc(cx + Math.cos(a) * R * .09, cy + Math.sin(a) * R * .09, R * .16, 0, Math.PI * 2); c.stroke(); }
+    rg = c.createRadialGradient(cx, cy, R * .62, cx, cy, R * .79);
+    rg.addColorStop(0, 'rgba(60,40,10,0)'); rg.addColorStop(1, 'rgba(60,40,10,.28)');
+    circ(c, R * .79); c.fillStyle = rg; c.fill();
+    // scale
+    c.strokeStyle = '#2a1d10'; c.lineCap = 'round';
+    c.lineWidth = Math.max(1, R * .006); c.beginPath(); c.arc(cx, cy, R * .695, A0, A0 + SW); c.stroke();
+    const step = R < 60 ? 50 : 10, labels = R >= 80;
+    for (let v = 0; v <= MAXY; v += step) {
+      const a = ang(v), big = v % 100 === 0, mid = v % 50 === 0;
+      const r0 = R * .775, r1 = R * (big ? .67 : mid ? .705 : .735);
+      c.lineWidth = Math.max(.8, R * (big ? .012 : mid ? .008 : .005));
+      c.strokeStyle = 'rgba(255,250,235,.6)'; c.beginPath(); c.moveTo(cx + Math.cos(a) * r0 + .6, cy + Math.sin(a) * r0 + .8); c.lineTo(cx + Math.cos(a) * r1 + .6, cy + Math.sin(a) * r1 + .8); c.stroke();
+      c.strokeStyle = '#2a1d10'; c.beginPath(); c.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); c.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); c.stroke();
+      if (big && labels) engrave(c, String(START + v), cx + Math.cos(a) * R * .585, cy + Math.sin(a) * R * .585, `700 ${f}px ${fontM}`);
+    }
+    // brass pins at the ends of the channel
+    [0, MAXY].forEach(v => { const a = ang(v), px = cx + Math.cos(a) * R * .845, py = cy + Math.sin(a) * R * .845;
+      const gg = c.createRadialGradient(px - R * .008, py - R * .008, 0, px, py, R * .024);
+      gg.addColorStop(0, '#fff3c4'); gg.addColorStop(1, '#8a5d22');
+      c.beginPath(); c.arc(px, py, R * .022, 0, 6.283); c.fillStyle = gg; c.fill(); });
+    // slotted bezel screws
+    if (R >= 70) [-.25, .25, .75, 1.25].forEach(k => {
+      const a = k * Math.PI + Math.PI / 2, px = cx + Math.cos(a) * R * .95, py = cy + Math.sin(a) * R * .95, sr = R * .022;
+      const gg = c.createRadialGradient(px - sr * .4, py - sr * .4, 0, px, py, sr);
+      gg.addColorStop(0, '#fff1c0'); gg.addColorStop(1, '#6e4a1a');
+      c.beginPath(); c.arc(px, py, sr, 0, 6.283); c.fillStyle = gg; c.fill();
+      c.strokeStyle = 'rgba(50,28,6,.8)'; c.lineWidth = Math.max(.8, sr * .3);
+      c.beginPath(); c.moveTo(px - Math.cos(a + .7) * sr * .75, py - Math.sin(a + .7) * sr * .75); c.lineTo(px + Math.cos(a + .7) * sr * .75, py + Math.sin(a + .7) * sr * .75); c.stroke();
+    });
+    // glass glint
+    c.save(); circ(c, R * .9); c.clip();
+    const gl = c.createLinearGradient(cx - R, cy - R, cx + R * .2, cy + R * .2);
+    gl.addColorStop(0, 'rgba(255,255,255,.22)'); gl.addColorStop(.45, 'rgba(255,255,255,0)');
+    c.beginPath(); c.ellipse(cx - R * .25, cy - R * .4, R * .7, R * .38, -.6, 0, 6.283); c.fillStyle = gl; c.fill();
+    c.restore();
+  }
+
+  // ---------- engraved emblem: oranges in hexagonal packing ----------
+  function emblem(alpha) {
+    if (R < 80 || alpha <= .01) return;
+    x.font = `700 ${f}px ${fontM}`; const tw = x.measureText('74%').width;
+    let er, ex, ey;
+    if (mode === 'round') { er = R * .032; ex = cx - R * .07; ey = cy - R * .3; }
+    else { er = Math.max(3, R * .04); ey = cy + R * .42; ex = cx - (6.4 * er + tw) / 2 + 3 * er; }
+    x.save(); x.globalAlpha *= alpha;
+    const pts = [[0, 0]]; for (let i = 0; i < 6; i++) pts.push([Math.cos(i * Math.PI / 3) * er * 2, Math.sin(i * Math.PI / 3) * er * 2]);
+    pts.forEach(([dx, dy]) => {
+      const gg = x.createRadialGradient(ex + dx - er * .35, ey + dy - er * .35, er * .1, ex + dx, ey + dy, er);
+      gg.addColorStop(0, '#fff6dc'); gg.addColorStop(1, '#c6a86c');
+      x.beginPath(); x.arc(ex + dx, ey + dy, er * .96, 0, 6.283); x.fillStyle = gg; x.fill();
+      x.lineWidth = Math.max(.8, R * .005); x.strokeStyle = '#2a1d10'; x.stroke();
+    });
+    engrave(x, '74%', ex + er * 3.4, ey, `700 ${f}px ${fontM}`, 'left');
+    x.restore();
+  }
+
+  // ---------- the stamp ----------
+  function stamp(s) {
+    if (st.sa <= 0) return;
+    const d = stampDims(s.fP, 12);
+    x.save(); x.translate(s.x, s.y); x.rotate(s.rot); x.scale(st.ss, st.ss); x.globalAlpha = st.sa * st.intro;
+    const red = s.dark ? '#ef5d40' : '#c23a24';
+    const rr = (w, h, r) => { x.beginPath(); x.roundRect ? x.roundRect(-w / 2, -h / 2, w, h, r) : x.rect(-w / 2, -h / 2, w, h); };
+    if (!s.dark) { rr(d.w, d.h, d.pad * .5); x.fillStyle = 'rgba(250,242,222,.86)'; x.fill(); }
+    x.strokeStyle = red; x.lineWidth = Math.max(2, s.fP * .14);
+    rr(d.w, d.h, d.pad * .5); x.stroke();
+    x.lineWidth = Math.max(1, s.fP * .05); rr(d.w - d.pad * .55, d.h - d.pad * .55, d.pad * .3); x.stroke();
+    x.fillStyle = red; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.font = `900 ${s.fP}px ${fontD}`; x.fillText('PROVEN', 0, -d.h / 2 + d.pad * .7 + s.fP / 2);
+    x.font = `800 12px ${fontM}`; x.fillText('2017', 0, d.h / 2 - d.pad * .7 - 6);
+    x.fillStyle = s.dark ? 'rgba(23,19,14,.55)' : 'rgba(240,228,196,.6)';
+    for (const [a, b, c] of speck) x.fillRect(a * d.w, b * d.h, 1 + c * 2, 1 + c);
+    x.restore();
+  }
+
+  // ---------- frame ----------
+  function needle(v, ghost) {
+    const a = ang(v), ux = Math.cos(a), uy = Math.sin(a), px = -uy, py = ux;
+    const Ln = R * .86, T = R * .17, w = R * (ghost ? .009 : .026);
+    const path = (ox, oy) => { x.beginPath();
+      x.moveTo(cx - ux * T + px * w * .7 + ox, cy - uy * T + py * w * .7 + oy);
+      x.lineTo(cx + px * w + ox, cy + py * w + oy);
+      x.lineTo(cx + ux * Ln + px * .8 + ox, cy + uy * Ln + py * .8 + oy);
+      x.lineTo(cx + ux * Ln - px * .8 + ox, cy + uy * Ln - py * .8 + oy);
+      x.lineTo(cx - px * w + ox, cy - py * w + oy);
+      x.lineTo(cx - ux * T - px * w * .7 + ox, cy - uy * T - py * w * .7 + oy); x.closePath(); };
+    if (ghost) { path(0, 0); x.fillStyle = 'rgba(42,29,16,.45)'; x.fill(); return; }
+    x.save(); x.filter = `blur(${Math.max(1, R * .012)}px)`; path(R * .02, R * .04); x.fillStyle = 'rgba(30,15,5,.4)'; x.fill(); x.restore();
+    const g = x.createLinearGradient(cx + px * w, cy + py * w, cx - px * w, cy - py * w);
+    g.addColorStop(0, '#5c140b'); g.addColorStop(.45, '#d2523a'); g.addColorStop(1, '#4a0f08');
+    path(0, 0); x.fillStyle = g; x.fill();
+    x.beginPath(); x.arc(cx - ux * T * .82, cy - uy * T * .82, R * .035, 0, 6.283); x.fillStyle = '#6a180d'; x.fill();
+  }
+
+  function readout(yrs) {
+    const rev = phase === 'reveal';
+    if (mode === 'round') {
+      const ny = cy + R * .4;
+      x.textBaseline = 'alphabetic';
+      x.font = `800 ${fb}px ${fontM}`; const nw = x.measureText('000').width;
+      x.font = `700 ${f}px ${fontM}`; const yw = x.measureText('YEARS').width;
+      const gx = cx - (nw + f * .4 + yw) / 2, base = ny + fb * .35;
+      x.font = `800 ${fb}px ${fontM}`; x.textAlign = 'right'; x.fillStyle = '#2a1d10';
+      x.fillText(String(yrs), gx + nw, base);
+      x.font = `700 ${f}px ${fontM}`; x.textAlign = 'left'; x.fillStyle = 'rgba(42,29,16,.8)';
+      x.fillText('YEARS', gx + nw + f * .4, base);
+      x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.fillStyle = rev ? '#a82a18' : 'rgba(42,29,16,.72)';
+      x.fillText(`${START} → ${START + yrs}`, cx, ny + fb * .5 + f);
+      return;
+    }
+    let y = L.top;
+    x.textAlign = 'left'; x.textBaseline = 'alphabetic';
+    x.font = `800 ${fb}px ${fontM}`;
+    x.save();
+    if (rev) { x.shadowColor = `rgba(255,170,60,${.7 * st.glow})`; x.shadowBlur = fb * .5; }
+    x.fillStyle = rev ? '#ffd890' : '#f3e6c9';
+    x.fillText(String(yrs), L.px, y + fb * .8);
+    x.restore();
+    y += fb * .95 + 4;
+    x.textBaseline = 'middle'; x.font = `700 12px ${fontM}`;
+    x.fillStyle = 'rgba(243,230,201,.55)'; x.fillText('YEARS TO PROOF', L.px, y + 7);
+    y += 16;
+    x.font = `700 13px ${fontM}`;
+    x.fillStyle = rev ? '#ff8d6e' : 'rgba(243,230,201,.85)';
+    x.fillText(`${START} → ${START + yrs}`, L.px, y + 7);
+  }
+
+  let last = 0;
+  function frame(t) {
+    requestAnimationFrame(frame);
+    if (!x) return;
+    const dt = Math.min(.033, last ? (t - last) / 1000 : .016); last = t;
+    if (Kit.calm) { st.th = st.target; st.w = 0; }
+    else for (let i = 0, h = dt / 4; i < 4; i++) { const a = st.k * (st.target - st.th) - st.c * st.w; st.w += a * h; st.th += st.w * h; }
+    st.th = Math.max(-6, Math.min(MAXY + 6, st.th));
+    const om = st.w;
+    if (!Kit.calm && Math.abs(om) > 40 && phase !== 'reveal') emitTip(Math.min(7, Math.abs(om) / 70), Math.sign(om), Math.min(1.6, Math.abs(om) / 300));
+
+    x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    x.clearRect(0, 0, W, H);
+    const sk = st.shake * R * .03;
+    x.save();
+    x.translate(Math.sin(t * .09) * sk, Math.cos(t * .11) * sk * .6);
+    const sc = .9 + .1 * st.intro;
+    x.translate(cx, cy); x.scale(sc, sc); x.translate(-cx, -cy);
+    x.globalAlpha = st.intro;
+    x.drawImage(off, 0, 0, W, H);
+    emblem(mode === 'round' ? 1 - st.sa * .92 : 1);
+
+    const span = Math.max(0, Math.min(MAXY, st.th));
+    x.globalCompositeOperation = 'lighter';
+    x.lineCap = 'round';
+    if (span > 1) { x.strokeStyle = 'rgba(255,160,50,.14)'; x.lineWidth = R * .09; x.beginPath(); x.arc(cx, cy, R * .845, A0, ang(span)); x.stroke(); }
+    if (st.glow > 0) { x.strokeStyle = `rgba(255,205,110,${.42 * st.glow})`; x.lineWidth = R * .1; x.beginPath(); x.arc(cx, cy, R * .845, A0, ang(TRUE * st.glow)); x.stroke(); }
+    const turb = Math.min(R * .05, Math.abs(om) * R * .00025);
+    const dens = Math.min(1, .25 + span / 90);
+    for (const p of P) {
+      p.pos += p.spd * dt * (1 + Math.min(4, Math.abs(om) / 120)); if (p.pos > 1) p.pos -= 1;
+      if (span < 1) continue;
+      const a = ang(p.pos * span), r = R * (.845 + p.ro * .033) + Math.sin(t * .003 + p.ph) * R * .004 + p.j * turb * 2;
+      const fl = .55 + .45 * Math.sin(t * .001 * p.fl + p.ph);
+      const s = R * p.sz * (1 + turb / R * 6);
+      x.globalAlpha = st.intro * dens * fl * (1 - Math.pow(p.pos, 6) * .5);
+      x.drawImage(spr, cx + Math.cos(a) * r - s * 2, cy + Math.sin(a) * r - s * 2, s * 4, s * 4);
+    }
+    x.globalAlpha = st.intro;
+    x.globalCompositeOperation = 'source-over';
+
+    if (phase === 'reveal') {
+      if (guess !== null) needle(guess, true);
+      const a = ang(TRUE), ux = Math.cos(a), uy = Math.sin(a), px = -uy, py = ux;
+      x.globalAlpha = st.glow * st.intro;
+      x.beginPath(); x.moveTo(cx + ux * R * .79, cy + uy * R * .79);
+      x.lineTo(cx + ux * R * .735 + px * R * .03, cy + uy * R * .735 + py * R * .03);
+      x.lineTo(cx + ux * R * .735 - px * R * .03, cy + uy * R * .735 - py * R * .03); x.closePath();
+      x.fillStyle = '#b8321f'; x.fill();
+      x.globalAlpha = st.intro;
+    }
+
+    readout(Math.round(span));
+
+    needle(st.th, false);
+    const hg = x.createRadialGradient(cx - R * .025, cy - R * .025, 0, cx, cy, R * .075);
+    hg.addColorStop(0, '#fff4c8'); hg.addColorStop(.6, '#c8953f'); hg.addColorStop(1, '#5a3b14');
+    x.beginPath(); x.arc(cx, cy, R * .07, 0, 6.283); x.fillStyle = hg; x.fill();
+    x.strokeStyle = 'rgba(60,35,10,.7)'; x.lineWidth = Math.max(1, R * .008);
+    x.beginPath(); x.moveTo(cx - R * .035, cy - R * .012); x.lineTo(cx + R * .035, cy + R * .012); x.stroke();
+
+    if (!touched && phase === 'idle' && st.intro > .99) {
+      const a = ang(st.th), q = (t % 1400) / 1400;
+      x.strokeStyle = `rgba(255,210,120,${.9 * (1 - q)})`; x.lineWidth = 2;
+      x.beginPath(); x.arc(cx + Math.cos(a) * R * .85, cy + Math.sin(a) * R * .85, R * (.03 + q * .09) + 3, 0, 6.283); x.stroke();
+    }
+
+    if (L.stamp) stamp(L.stamp);
+    x.restore();
+
+    x.globalCompositeOperation = 'lighter';
+    for (let i = S.length - 1; i >= 0; i--) {
+      const s = S[i]; s.life -= dt;
+      if (s.life <= 0) { S.splice(i, 1); continue; }
+      s.vy += R * 1.4 * dt; s.vx *= 1 - 1.6 * dt; s.vy *= 1 - 1.6 * dt;
+      s.x += s.vx * dt; s.y += s.vy * dt;
+      const k = s.life / s.max, z = Math.max(1.2, R * .014) * s.s * (.4 + k);
+      x.globalAlpha = Math.min(1, k * 1.4);
+      x.drawImage(spr, s.x - z * 2, s.y - z * 2, z * 4, z * 4);
+    }
+    x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+  }
+
+  // ---------- layout: round gauge when tall, gauge + side readout when short ----------
+  function layout() {
+    const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H; dpr = cv.width / W || 1;
+    const cs = getComputedStyle(card);
+    fontM = cs.getPropertyValue('--mono').trim() || 'monospace';
+    fontD = cs.getPropertyValue('--display').trim() || 'serif';
+    x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    L = {};
+    const Rr = Math.min(W * .46, H * .47);
+    if (Rr >= 108) {
+      mode = 'round'; R = Rr; cx = W / 2; cy = H / 2;
+      f = Math.max(12, R * .08); fb = Math.max(16, R * .17);
+      L.stamp = {x: cx - R * .02, y: cy - R * .25, rot: -.18, dark: false, fP: Math.max(13, R * .11)};
+    } else {
+      mode = 'side'; f = 12;
+      x.font = `700 12px ${fontM}`;
+      let PW = x.measureText('YEARS TO PROOF').width;
+      x.font = `700 13px ${fontM}`; PW = Math.max(PW, x.measureText('1611 → 2111').width);
+      fb = Math.max(22, Math.min(40, H * .28));
+      x.font = `800 ${fb}px ${fontM}`; PW = Math.max(PW, x.measureText('000').width);
+      const gap = Math.max(14, Math.min(28, W * .05));
+      R = Math.max(26, Math.min(H * .47, (W - PW - gap) / 2 - 4));
+      const blockH = fb * .95 + 34, sd = stampDims(16, 12);
+      cy = H / 2;
+      if (blockH + 14 + sd.h <= H * .94) {
+        const tot = 2 * R + gap + PW;
+        cx = (W - tot) / 2 + R; L.px = cx + R + gap;
+        const all = blockH + 14 + sd.h; L.top = cy - all / 2;
+        L.stamp = {x: L.px + sd.w / 2 + 2, y: L.top + blockH + 14 + sd.h / 2, rot: -.08, dark: true, fP: 16};
+      } else if (W - (2 * R + gap + PW) >= gap + sd.w * 1.08) {
+        const tot = 2 * R + gap + PW + gap + sd.w;
+        cx = (W - tot) / 2 + R; L.px = cx + R + gap; L.top = cy - blockH / 2;
+        L.stamp = {x: L.px + PW + gap + sd.w / 2, y: cy, rot: -.12, dark: true, fP: 16};
+      } else {
+        const tot = 2 * R + gap + PW;
+        cx = (W - tot) / 2 + R; L.px = cx + R + gap; L.top = cy - blockH / 2;
+        L.stamp = {x: cx, y: cy - R * .1, rot: -.18, dark: false, fP: 12};
+      }
+    }
+    drawStatic();
+  }
+
+  // ---------- touch ----------
+  function valAt(e) {
+    const b = cv.getBoundingClientRect();
+    const a = Math.atan2(e.clientY - b.top - cy, e.clientX - b.left - cx) * 180 / Math.PI;
+    let rel = ((a - 150) % 360 + 360) % 360;
+    if (rel > 240) rel = rel > 300 ? 0 : 240;
+    return rel / 240 * MAXY;
+  }
+  function setTarget(v) {
+    st.target = v;
+    const cen = Math.floor(v / 50);
+    if (cen !== lastCentury) { lastCentury = cen; Kit.haptic('selection'); }
+  }
+  cv.addEventListener('pointerdown', e => {
+    if (phase === 'reveal') return;
+    drag = true; touched = true;
+    if (introTl) { introTl.kill(); introTl = null; st.intro = 1; }
+    st.k = 230; st.c = 22;
+    try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+    setTarget(valAt(e)); Kit.haptic('light');
+  });
+  cv.addEventListener('pointermove', e => { if (drag) setTarget(valAt(e)); });
+  const up = () => {
+    if (!drag) return; drag = false;
+    guess = Math.round(st.target);
+    say.innerHTML = `Your guess: <b>${guess} years</b>, proven in ${START + guess}. Now say how sure you are.`;
+    if (phase === 'idle') { phase = 'sure'; sure.on(); }
+  };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  // ---------- the reveal ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (phase === 'reveal' || guess === null) return;
+    const ok = Math.abs(guess - TRUE) <= 40;
+    Kit.answer({choice: `${guess} years`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${guess} years, ${ok ? 'right' : 'wrong'}`);
+    reveal();
+  });
+  function reveal() {
+    phase = 'reveal';
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered');
+    st.target = TRUE; st.k = 46; st.c = 3.4;
+    if (Kit.calm || typeof gsap === 'undefined') { st.th = TRUE; st.glow = 1; st.sa = 1; st.ss = 1; return; }
+    gsap.to(st, {glow: 1, duration: 1.6, ease: 'power3.out', delay: .2});
+    gsap.delayedCall(1.25, () => {
+      burst();
+      gsap.timeline()
+        .fromTo(st, {ss: 2.6, sa: 0}, {ss: 1, sa: 1, duration: .34, ease: 'power4.in'})
+        .call(() => { Kit.haptic('success'); st.w += 90; })
+        .fromTo(st, {shake: 1}, {shake: 0, duration: .7, ease: 'power3.out'});
+    });
+  }
+
+  // ---------- entrance: the instrument self-tests ----------
+  Kit.onShow.card = layout;
+  new ResizeObserver(() => { if (x) layout(); }).observe(Kit.$('stage'));
+  let started = false;
+  Kit.onEnter.card = () => {
+    if (!started) { started = true; requestAnimationFrame(frame); }
+    if (Kit.calm || typeof gsap === 'undefined' || touched) { st.intro = 1; return; }
+    st.intro = 0; st.k = 120; st.c = 9;
+    introTl = gsap.timeline({onComplete: () => { introTl = null; st.k = 230; st.c = 22; }})
+      .to(st, {intro: 1, duration: .8, ease: 'power3.out'})
+      .to(st, {target: MAXY, duration: .9, ease: 'power2.inOut'}, .25)
+      .to(st, {target: 0, duration: 1, ease: 'power3.inOut'}, '+=.1');
+  };
+  if (!started) { st.intro = 1; }
+
+  // ---------- the checker's run ----------
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (!started) { started = true; requestAnimationFrame(frame); }
+    const b = cv.getBoundingClientRect(), a = ang(250);
+    const o = {clientX: b.left + cx + Math.cos(a) * R * .6, clientY: b.top + cy + Math.sin(a) * R * .6, pointerId: 1, bubbles: true};
+    cv.dispatchEvent(new PointerEvent('pointerdown', o));
+    cv.dispatchEvent(new PointerEvent('pointermove', o));
+    cv.dispatchEvent(new PointerEvent('pointerup', o));
+    await wait(150);
+    const btn = Kit.$('sure').querySelector('[data-v="80"]'); if (btn) btn.click();
+    await wait(Kit.calm ? 120 : 2900);
+  };
+})();
+Kit.single();
+</script>
+</html>

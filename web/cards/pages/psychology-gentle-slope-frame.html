@@ -1,0 +1,390 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-gentle-slope-frame -->
+<!-- Look: a field-notebook page on cream paper with a faint ruled grid. A road in profile, washed in slate watercolour over pencil-hatched ground, with handwritten notes, red-pencil "brain's level" dashes and blue-pencil truths.
+     Interaction: drag a pencil along a four-step line to add the world back: first upright trees (they lean), then the horizon you couldn't see (tilted too), then level the world. The rolling ball and the arrow show the middle stretch the whole time.
+     Wow: at the last step the whole scene turns to true level, the red reference lines vanish, the arrow's "looks uphill" turns into "gently downhill", and a blue wash blooms in a hand-drawn ring. -->
+<title>The slope that lies</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#card{background-image:
+  radial-gradient(120% 70% at 15% 0%,rgba(255,255,255,.45),transparent 60%),
+  radial-gradient(90% 60% at 100% 100%,rgba(140,100,50,.10),transparent 70%),
+  repeating-linear-gradient(0deg,transparent 0 calc(3.4cqh - 1px),rgba(60,95,150,.07) calc(3.4cqh - 1px) 3.4cqh)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
+.hand{font-family:var(--hand)}
+.bob{animation:bob 1.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(6px,-2px)}}
+.march{animation:march 1.6s linear infinite}
+@keyframes march{to{stroke-dashoffset:-20}}
+.touched .bob,.kit-calm .bob,.kit-calm .march{animation:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+.say b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Scrub · add the world back" style="--c:#f3ead4;--k:#2b261f;--edge:#d6c39c">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PERCEPTION</span></div>
+    <h2 class="q">Why can't your brain tell which way a gentle slope tilts?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A road in profile: a steep stretch, a gentle stretch, another steep stretch. A pencil slider adds trees, the horizon, and finally turns the scene to true level."></svg>
+    </div>
+    <p class="say" id="say"><b>Drag the pencil</b> to put the world back around the road, one piece at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No outside reference? The brain borrows the nearest one, even a tilted one.</div>
+    <div class="foot"><span class="src">Source · Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const hasDraw = typeof DrawSVGPlugin !== 'undefined';
+  if (hasDraw) gsap.registerPlugin(DrawSVGPlugin);
+  const A = 16, B = 4;                       // steep and gentle slopes in the diagram, degrees downhill
+  const rad = d => d * Math.PI / 180;
+  const INK = '#2b261f', GRAPH = '#5a5246', RED = '#b4473a', BLUE = '#2f63a3';
+  const st = {t: 0};
+  let W = 0, H = 0, fs = 14, R = 1, C = {x: 0, y: 0}, P = [], els = {layers: []}, revealed = false, touched = false;
+  let lastKey = '', sx0 = 0, sx1 = 1, sy = 0, rw = 6, br = 6, n2 = {x: 0, y: -1}, px = 0, py = 0, oneLine = false;
+  const cl = v => Math.max(0, Math.min(1, v));
+  const io = p => p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+  const bo = p => { if (p <= 0) return 0; const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); };
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs, fill: INK, class: 'hand'}, a), p); e.textContent = s; return e; };
+  const draw = (el, p) => {
+    if (hasDraw) gsap.set(el, {drawSVG: `0% ${p * 100}%`});
+    else { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L * (1 - p); }
+  };
+  const vis = (el, o) => { el.style.opacity = o; el.style.visibility = o < .01 ? 'hidden' : 'visible'; };
+  const lerp = (a, b, u) => ({x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u});
+
+  const NOTES = {
+    k0: ['Only the road: nothing around it,', 'no view past the crest. Red = "level".'],
+    kA: ['+ trees, which stand straight up…', 'they lean! Your "level" is tilted.'],
+    kB: ['+ the horizon you couldn\'t see…', 'tilted too. Something is off.'],
+    kC: ['Now turn the world to true level,', 'and watch the middle stretch.'],
+    kE: ['It goes gently DOWN.', 'Only your reference was wrong.']
+  };
+  const STEPS = ['road only', '+ trees', '+ horizon', 'level it'];
+
+  function tree(parent, x, y, h) {
+    const outer = mk('g', {transform: `translate(${x},${y})`}, parent), g = mk('g', {}, outer), w = h * .42;
+    mk('ellipse', {cx: 0, cy: 0, rx: w * .9, ry: h * .05, fill: 'rgba(60,70,40,.25)'}, g);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: -h * .38, stroke: '#6b4b2e', 'stroke-width': Math.max(1.5, h * .07), 'stroke-linecap': 'round'}, g);
+    let d = '';
+    for (let k = 0; k < 3; k++) { const by = -h * (.25 + k * .22), ty = by - h * .42, ww = w * (1 - k * .22); d += `M${-ww},${by} L0,${ty} L${ww},${by} Z`; }
+    mk('path', {d, fill: '#7f9d62', opacity: .85, filter: 'url(#wash)'}, g);
+    mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': .9, 'stroke-linejoin': 'round', filter: 'url(#pen)'}, g);
+    mk('path', {d: `M${-w * .35},${-h * .35} L${-w * .05},${-h * .55} M${-w * .25},${-h * .6} L${-w * .02},${-h * .76}`, stroke: '#4f6a3a', 'stroke-width': .8, fill: 'none', 'stroke-linecap': 'round'}, g);
+    return g;
+  }
+
+  // ---------- the scene, in the TRUE frame; every layer's rotation is your brain's frame ----------
+  function build(R_, dr) {
+    R = R_;
+    svg.innerHTML = ''; els = {layers: []}; lastKey = '';
+    P = [{x: 0, y: 0}];
+    [[A, .3], [B, .36], [A, .3]].forEach(([d, l]) => { const q = P[P.length - 1]; P.push({x: q.x + R * l * Math.cos(rad(d)), y: q.y + R * l * Math.sin(rad(d))}); });
+    C = {x: (P[0].x + P[3].x) / 2, y: (P[0].y + P[3].y) / 2};
+    rw = Math.max(5, R * .03); br = Math.max(5, R * .022);
+    n2 = {x: Math.sin(rad(B)), y: -Math.cos(rad(B))};
+    const D = R * dr;
+
+    const defs = mk('defs', {}, svg);
+    defs.innerHTML = `
+      <filter id="pen" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter>
+      <filter id="wash" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="${Math.max(2, R * .014).toFixed(1)}" result="d"/><feGaussianBlur in="d" stdDeviation="1"/></filter>
+      <pattern id="hatch" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(38)"><line x1="0" y1="0" x2="0" y2="5" stroke="${GRAPH}" stroke-width=".8" opacity=".55"/></pattern>
+      <linearGradient id="fade" gradientUnits="userSpaceOnUse" x1="0" y1="${P[0].y}" x2="0" y2="${P[3].y + D}"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <mask id="fm" maskUnits="userSpaceOnUse" x="${-R}" y="${-R}" width="${R * 3}" height="${R * 3}"><rect x="${-R}" y="${-R}" width="${R * 3}" height="${R * 3}" fill="url(#fade)"/></mask>
+      <radialGradient id="ballg" cx=".35" cy=".35" r=".75"><stop offset="0" stop-color="#ee9a7c"/><stop offset="1" stop-color="#a23e2e"/></radialGradient>
+      <radialGradient id="bloom"><stop offset="0" stop-color="#5b8fd0" stop-opacity=".55"/><stop offset=".65" stop-color="#5b8fd0" stop-opacity=".22"/><stop offset="1" stop-color="#5b8fd0" stop-opacity="0"/></radialGradient>`;
+
+    const S = mk('g', {}, svg); els.scene = S;
+    const L = () => { const g = mk('g', {}, S); els.layers.push(g); return g; };
+    const mid = lerp(P[1], P[2], .5);
+    const labBase = mid.y + n2.y * R * .125;
+
+    // horizon, distant hills, a cloud and birds (step 3)
+    const hzG = L();
+    const hzY = Math.min(P[0].y - R * .12, labBase - fs * 2.1);
+    const hx0 = P[0].x - R * .03, hx1 = P[3].x + R * .03;
+    els.sky = mk('g', {}, hzG);
+    const cx = P[3].x - R * .2, cyy = hzY - R * .055, a = R * .055;
+    mk('path', {d: `M${cx - a},${cyy} a${a * .3},${a * .3} 0 0 1 ${a * .45},${-a * .25} a${a * .35},${a * .35} 0 0 1 ${a * .7},${-a * .05} a${a * .3},${a * .3} 0 0 1 ${a * .6},${a * .18} a${a * .2},${a * .2} 0 0 1 ${a * .25},${a * .12} Z`, fill: '#fbf7ec', stroke: GRAPH, 'stroke-width': .9, filter: 'url(#pen)'}, els.sky);
+    const bs = Math.max(4, R * .014);
+    [[P[0].x + R * .45, hzY - R * .07, 1], [P[0].x + R * .5, hzY - R * .05, .75]].forEach(([x, y, k]) =>
+      mk('path', {d: `M${x - bs * k},${y} Q${x - bs * k / 2},${y - bs * k * .6} ${x},${y} Q${x + bs * k / 2},${y - bs * k * .6} ${x + bs * k},${y}`, stroke: INK, 'stroke-width': 1, fill: 'none', 'stroke-linecap': 'round'}, els.sky));
+    els.hzL = txt(hzG, P[0].x, hzY - fs * .45, 'true level', {fill: BLUE, 'font-weight': 700});
+    const lw = els.hzL.getComputedTextLength();
+    const xs = P[0].x + lw + fs * .6;
+    let hd = '';
+    if (xs < hx1 - R * .05) {
+      hd = `M${xs},${hzY}`;
+      for (let x = xs; x <= hx1; x += R * .03) hd += ` L${x.toFixed(1)},${(hzY - R * (.012 + .03 * Math.abs(Math.sin(x / R * 7.3) * Math.sin(x / R * 2.1 + 1)))).toFixed(1)}`;
+      hd += ` L${hx1},${hzY} Z`;
+    }
+    els.hills = mk('path', {d: hd || 'M0,0', fill: '#a7b6c8', filter: 'url(#wash)'}, hzG);
+    els.hz = mk('path', {d: `M${hx0},${hzY} L${hx1},${hzY}`, stroke: BLUE, 'stroke-width': 1.7, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#pen)'}, hzG);
+
+    // the ground under the road: watercolour, a darker soil band, pencil hatching, stones, fading downward
+    const gg = L(); els.ground = gg;
+    const gm = mk('g', {mask: 'url(#fm)'}, gg);
+    const gpts = `${P.map(p => p.x + ',' + p.y).join(' ')} ${P[3].x},${P[3].y + D} ${P[0].x},${P[0].y + D}`;
+    mk('polygon', {points: gpts, fill: '#c9b47a', opacity: .55, filter: 'url(#wash)'}, gm);
+    const band = R * .035;
+    const bpts = `${P.map(p => p.x + ',' + p.y).join(' ')} ${[...P].reverse().map(p => p.x + ',' + (p.y + band)).join(' ')}`;
+    mk('polygon', {points: bpts, fill: '#9c7f4c', opacity: .45, filter: 'url(#wash)'}, gm);
+    mk('polygon', {points: gpts, fill: 'url(#hatch)'}, gm);
+    for (let i = 0; i < 26; i++) {
+      const s = Math.floor(Kit.rnd() * 3), u = Kit.rnd(), p = lerp(P[s], P[s + 1], u), dd = R * (.05 + Kit.rnd() * Math.max(.1, dr * .55));
+      mk('ellipse', {cx: p.x, cy: p.y + dd, rx: R * (.006 + Kit.rnd() * .008), ry: R * (.004 + Kit.rnd() * .005), fill: 'rgba(90,82,70,.18)', stroke: GRAPH, 'stroke-width': .7}, gm);
+    }
+
+    // trees (step 2): upright in the true frame, so they lean while your frame is tilted
+    const tg = L();
+    els.trees = [[0, .3, 1], [0, .72, .85], [2, .3, .95], [2, .74, 1.1]].map(([s, u, k]) => { const p = lerp(P[s], P[s + 1], u); return tree(tg, p.x, p.y + rw * .2, R * .08 * k); });
+
+    // the bloom behind the middle stretch (the reveal)
+    const bg = L();
+    const rc = {x: mid.x + n2.x * R * .02, y: mid.y + n2.y * R * .02};
+    els.bloomT = `translate(${rc.x},${rc.y}) rotate(${B})`;
+    els.bloom = mk('ellipse', {cx: 0, cy: 0, rx: R * .27, ry: R * .1, fill: 'url(#bloom)', transform: `${els.bloomT} scale(${revealed ? 1 : 0})`}, bg);
+
+    // the road: slate wash, pencil edges, painted centre line, scruffy verge
+    const rg = L();
+    const poly = dy => 'M' + P.map(p => `${p.x.toFixed(1)},${(p.y + dy).toFixed(1)}`).join(' L');
+    mk('path', {d: poly(0), stroke: '#76869a', 'stroke-width': rw, fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'butt', filter: 'url(#wash)', opacity: .95}, rg);
+    els.edge = mk('path', {d: poly(-rw / 2), stroke: INK, 'stroke-width': 1.6, fill: 'none', 'stroke-linejoin': 'round', filter: 'url(#pen)'}, rg);
+    els.edge2 = mk('path', {d: poly(rw / 2), stroke: INK, 'stroke-width': .9, fill: 'none', 'stroke-linejoin': 'round', opacity: .7}, rg);
+    mk('path', {d: poly(0), stroke: '#f7f0de', 'stroke-width': 1.1, 'stroke-dasharray': '6 6', fill: 'none'}, rg);
+    let gd = '';
+    [A, B, A].forEach((d, s) => {
+      const nn = {x: Math.sin(rad(d)), y: -Math.cos(rad(d))}, len = Math.max(3, rw * .7);
+      for (let u = .03; u < .97; u += .04 + Kit.rnd() * .05) {
+        const p = lerp(P[s], P[s + 1], u), b = {x: p.x + nn.x * rw / 2, y: p.y + nn.y * rw / 2};
+        [-.5, .1, .55].forEach(o => { const k = len * (.6 + Kit.rnd() * .5); gd += `M${b.x.toFixed(1)},${b.y.toFixed(1)} l${((nn.x * Math.cos(o) - nn.y * Math.sin(o)) * k).toFixed(1)},${((nn.x * Math.sin(o) + nn.y * Math.cos(o)) * k).toFixed(1)} `; });
+      }
+    });
+    mk('path', {d: gd, stroke: '#6d7d44', 'stroke-width': .9, fill: 'none', 'stroke-linecap': 'round', opacity: .8}, rg);
+
+    // your brain's "level": the steep stretches, extended
+    els.refs = L();
+    const d1 = {x: Math.cos(rad(A)), y: Math.sin(rad(A))}, ext = (p, k) => ({x: p.x + d1.x * R * k, y: p.y + d1.y * R * k});
+    [[ext(P[0], -.06), ext(P[1], .42)], [ext(P[2], -.42), ext(P[3], .06)]].forEach(([a, b]) =>
+      mk('path', {d: `M${a.x},${a.y} L${b.x},${b.y}`, stroke: RED, 'stroke-width': 1.4, 'stroke-dasharray': '5 5', fill: 'none', 'stroke-linecap': 'round', class: 'march'}, els.refs));
+
+    // what you can't see past the ends
+    els.qs = L();
+    txt(els.qs, P[0].x + fs * .3, P[0].y - R * .06, '?', {'text-anchor': 'middle', 'font-size': fs * 1.5, fill: GRAPH, 'font-weight': 700});
+    txt(els.qs, P[3].x - fs * .1, P[3].y - R * .06, '?', {'text-anchor': 'middle', 'font-size': fs * 1.5, fill: GRAPH, 'font-weight': 700});
+
+    // the ball on the middle stretch
+    const balG = L();
+    els.ball = mk('g', {transform: `translate(${mid.x + n2.x * (rw / 2 + br)},${mid.y + n2.y * (rw / 2 + br)})`}, balG);
+    els.ballR = mk('g', {}, els.ball);
+    mk('circle', {r: br, fill: 'url(#ballg)', stroke: INK, 'stroke-width': .9}, els.ballR);
+    mk('path', {d: `M${-br * .8},0 Q0,${-br * .45} ${br * .8},0`, stroke: '#fbe9d8', 'stroke-width': 1, fill: 'none'}, els.ballR);
+
+    // the arrow along the middle stretch, and what it seems to say
+    const ag = L();
+    const off = R * .06, a0 = lerp(P[1], P[2], .16), a1 = lerp(P[1], P[2], .84);
+    const s0 = {x: a0.x + n2.x * off, y: a0.y + n2.y * off}, s1 = {x: a1.x + n2.x * off, y: a1.y + n2.y * off};
+    const hl = fs * .7, ang = rad(B);
+    const h1 = {x: s1.x - hl * Math.cos(ang - .45), y: s1.y - hl * Math.sin(ang - .45)}, h2 = {x: s1.x - hl * Math.cos(ang + .45), y: s1.y - hl * Math.sin(ang + .45)};
+    els.arrow = mk('path', {d: `M${s0.x},${s0.y} L${s1.x},${s1.y} M${h1.x},${h1.y} L${s1.x},${s1.y} L${h2.x},${h2.y}`, stroke: RED, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#pen)'}, ag);
+    els.arrowL = txt(ag, mid.x + n2.x * R * .125, labBase, 'looks uphill', {'text-anchor': 'middle', fill: RED, 'font-size': fs * 1.1, 'font-weight': 700});
+
+    // the ring drawn at the reveal
+    const rgG = L();
+    let rd = '';
+    for (let i = 0; i <= 60; i++) { const a = -.5 + i / 60 * (Math.PI * 2 + .7), rx = R * .22 * (1 + .03 * Math.sin(a * 3)), ry = R * .078 * (1 + .05 * Math.cos(a * 2)); rd += (i ? ' L' : 'M') + (Math.cos(a) * rx).toFixed(1) + ',' + (Math.sin(a) * ry).toFixed(1); }
+    els.ring = mk('path', {d: rd, transform: els.bloomT, stroke: BLUE, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#pen)'}, rgG);
+    draw(els.ring, revealed ? 1 : 0);
+  }
+
+  // union of every layer's box, over every tilt the scene can take, around the pivot
+  function measure() {
+    els.bloom.setAttribute('transform', `${els.bloomT} scale(1)`);
+    const lab = els.arrowL.textContent; els.arrowL.textContent = 'gently downhill';
+    const angs = [-A, -A * .75, -A * .5, -A * .25, 0].map(rad);
+    let a0 = 1e9, b0 = 1e9, a1 = -1e9, b1 = -1e9;
+    els.layers.forEach(g => {
+      let b; try { b = g.getBBox(); } catch (e) { return; }
+      if (!b.width && !b.height) return;
+      const cs = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].map(([x, y]) => [x - C.x, y - C.y]);
+      angs.forEach(a => { const c = Math.cos(a), s = Math.sin(a); cs.forEach(([x, y]) => { const X = x * c - y * s, Y = x * s + y * c; a0 = Math.min(a0, X); a1 = Math.max(a1, X); b0 = Math.min(b0, Y); b1 = Math.max(b1, Y); }); });
+    });
+    els.arrowL.textContent = lab;
+    els.bloom.setAttribute('transform', `${els.bloomT} scale(${revealed ? 1 : 0})`);
+    return {x: a0, y: b0, w: a1 - a0, h: b1 - b0};
+  }
+
+  function buildUI() {
+    els.n1 = txt(svg, W * .04, fs * 1.25, '', {'font-weight': 700});
+    els.n2 = txt(svg, W * .04, fs * 2.6, '', {fill: GRAPH});
+    if (oneLine) els.n2.style.display = 'none';
+
+    sx0 = W * .1; sx1 = W * .9;
+    mk('path', {d: `M${sx0},${sy} L${sx1},${sy}`, stroke: GRAPH, 'stroke-width': 1.2, opacity: .45, filter: 'url(#pen)'}, svg);
+    els.prog = mk('path', {d: `M${sx0},${sy} L${sx1},${sy}`, stroke: INK, 'stroke-width': 2.6, 'stroke-linecap': 'round', fill: 'none', filter: 'url(#pen)'}, svg);
+    const ls = Math.max(12, fs * .85);
+    els.ticks = STEPS.map((s, i) => {
+      const x = sx0 + (sx1 - sx0) * i / 3;
+      mk('line', {x1: x, x2: x, y1: sy - fs * .3, y2: sy + fs * .3, stroke: INK, 'stroke-width': 1.3, 'stroke-linecap': 'round'}, svg);
+      const e = txt(svg, x, sy + fs * 1.55, s, {'text-anchor': 'middle', 'font-size': ls, fill: GRAPH});
+      const w = e.getComputedTextLength(), l = x - w / 2, sh = Math.max(2 - l, Math.min(0, W - 2 - (l + w)));
+      if (sh) e.setAttribute('x', x + sh);
+      return e;
+    });
+    els.knob = mk('g', {}, svg);
+    mk('ellipse', {cx: 0, cy: fs * .12, rx: fs * .55, ry: fs * .16, fill: 'rgba(43,38,31,.18)'}, els.knob);
+    els.press = mk('g', {}, els.knob);
+    const bob = mk('g', {class: 'bob'}, els.press), pen = mk('g', {transform: 'rotate(28)'}, bob), w = fs * .62;
+    mk('path', {d: `M0,0 L${-w / 2},${-fs * .9} L${w / 2},${-fs * .9} Z`, fill: '#ead2a3', stroke: INK, 'stroke-width': 1, 'stroke-linejoin': 'round'}, pen);
+    mk('path', {d: `M0,0 L${-w * .17},${-fs * .3} L${w * .17},${-fs * .3} Z`, fill: '#3a352d'}, pen);
+    mk('rect', {x: -w / 2, y: -fs * 2.5, width: w, height: fs * 1.6, fill: '#e8b54a', stroke: INK, 'stroke-width': 1}, pen);
+    mk('line', {x1: 0, y1: -fs * 2.5, x2: 0, y2: -fs * .9, stroke: '#c48a22', 'stroke-width': 1}, pen);
+    mk('rect', {x: -w / 2, y: -fs * 2.9, width: w, height: fs * .4, fill: '#b9b3a6', stroke: INK, 'stroke-width': 1}, pen);
+    mk('rect', {x: -w / 2, y: -fs * 3.3, width: w, height: fs * .45, rx: w * .2, fill: '#e59a9a', stroke: INK, 'stroke-width': 1}, pen);
+  }
+
+  function layout() {
+    const f = Kit.fitSvg(svg); if (!f.W || !f.H) return;
+    W = f.W; H = f.H;
+    fs = Math.max(14, Math.min(18, W / 22));
+    oneLine = H < fs * 16;
+    const noteH = oneLine ? fs * 1.75 : fs * 3.25, slH = fs * 3.4;
+    sy = H - slH + fs * 1.1;
+    const box = {l: W * .03, t: noteH + fs * .3}, aw = W * .94, ah = Math.max(30, sy - fs * .75 - box.t);
+    let Rg = aw, dr = .3, U;
+    for (let i = 0; i < 6; i++) {
+      build(Rg, dr); U = measure();
+      const k = Math.min(aw / U.w, ah / U.h);
+      if ((k >= .995 && k < 1.03) || i === 5) break;
+      Rg = Math.max(40, Rg * k * (k < 1 ? .99 : 1));
+    }
+    // spend spare height on deeper ground
+    if (ah - U.h > fs) {
+      const dr2 = Math.min(.85, dr + (ah - U.h) * .85 / R);
+      build(R, dr2); const U2 = measure();
+      if (U2.h <= ah + .5 && U2.w <= aw + .5) U = U2; else { build(R, dr); U = measure(); }
+    }
+    px = box.l + (aw - U.w) / 2 - U.x;
+    py = box.t + (ah - U.h) / 2 - U.y;
+    buildUI();
+    render();
+  }
+
+  function setNote(k) {
+    if (k === lastKey) return; lastKey = k;
+    const [a, b] = NOTES[k];
+    [[els.n1, a], [els.n2, b]].forEach(([e, s]) => {
+      e.textContent = s; e.setAttribute('font-size', fs);
+      const L = e.getComputedTextLength(), max = W * .92;
+      if (L > max) e.setAttribute('font-size', Math.max(12, fs * max / L));
+    });
+    if (!Kit.calm) gsap.fromTo([els.n1, els.n2], {opacity: 0, x: -8}, {opacity: 1, x: 0, duration: .4, ease: 'power3.out', stagger: .06, overwrite: true});
+  }
+
+  function render() {
+    if (!els.scene || !els.knob) return;
+    const t = cl(st.t), pA = cl(t * 3), pB = cl(t * 3 - 1), pC = cl(t * 3 - 2), e = io(pC);
+    const deg = -A * (1 - e);
+    const T = `translate(${px},${py}) rotate(${deg}) translate(${-C.x},${-C.y})`;
+    els.layers.forEach(g => g.setAttribute('transform', T));
+    els.trees.forEach((g, i) => { const p = cl(pA * 1.7 - i * .23); g.setAttribute('transform', `scale(${bo(p)})`); g.style.visibility = p > 0 ? 'visible' : 'hidden'; });
+    draw(els.hz, pB);
+    vis(els.hills, pB * .75);
+    vis(els.sky, cl(pB * 1.6 - .4));
+    vis(els.hzL, cl(pB * 2 - 1));
+    vis(els.qs, cl(1 - pB * 2));
+    vis(els.refs, (1 - e) * .95);
+    const col = gsap.utils.interpolate(RED, BLUE, e);
+    els.arrow.setAttribute('stroke', col); els.arrowL.setAttribute('fill', col);
+    const sa = B - A * (1 - e);               // how the middle stretch tilts on the screen
+    const lab = t >= .985 ? 'gently downhill' : sa < -1.2 ? 'looks uphill' : sa > 1.2 ? 'goes downhill' : 'looks… flat?';
+    if (els.arrowL.textContent !== lab) els.arrowL.textContent = lab;
+    els.knob.setAttribute('transform', `translate(${sx0 + (sx1 - sx0) * t},${sy})`);
+    draw(els.prog, t);
+    const near = Math.round(t * 3);
+    els.ticks.forEach((e2, i) => { e2.setAttribute('fill', i === near ? INK : GRAPH); e2.setAttribute('font-weight', i === near ? 800 : 400); });
+    setNote(t >= .985 ? 'kE' : pC > 0 ? 'kC' : pB > .02 ? 'kB' : pA > .02 ? 'kA' : 'k0');
+    if (t >= .985 && !revealed) reveal();
+  }
+
+  // the ball rolls the true way down the middle stretch, whatever your frame says
+  gsap.ticker.add(time => {
+    if (!els.ball || !P.length) return;
+    const u = Kit.calm ? .5 : (time * .16) % 1, uu = .1 + .8 * u;
+    const p = lerp(P[1], P[2], uu), c = {x: p.x + n2.x * (rw / 2 + br), y: p.y + n2.y * (rw / 2 + br)};
+    const dist = Math.hypot(P[2].x - P[1].x, P[2].y - P[1].y) * uu;
+    els.ball.setAttribute('transform', `translate(${c.x},${c.y})`);
+    els.ballR.setAttribute('transform', `rotate(${dist / br * 57.3})`);
+    els.ball.style.opacity = Kit.calm ? 1 : Math.min(1, u / .1, (1 - u) / .1);
+  });
+
+  function reveal() {
+    revealed = true; Kit.haptic('success');
+    say.innerHTML = '<b>Why:</b> your brain judges a slope against what surrounds it. With no view past the crest, it took the two steep stretches as "level", and against them the gentle one looked uphill.';
+    Kit.show('keep'); card.classList.add('answered');
+    setTimeout(() => {
+      if (!els.bloom) return;
+      if (Kit.calm) { els.bloom.setAttribute('transform', `${els.bloomT} scale(1)`); draw(els.ring, 1); return; }
+      const z = {s: 0};
+      gsap.to(z, {s: 1, duration: 1.4, ease: 'elastic.out(1,.45)', onUpdate: () => els.bloom && els.bloom.setAttribute('transform', `${els.bloomT} scale(${z.s})`)});
+      if (hasDraw) gsap.fromTo(els.ring, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: 1, ease: 'power2.inOut', delay: .1});
+      else draw(els.ring, 1);
+      gsap.fromTo(els.arrowL, {scale: .6}, {scale: 1, duration: 1, ease: 'elastic.out(1,.4)', transformOrigin: '50% 50%'});
+    }, 90);
+  }
+
+  // ---------- the scrub ----------
+  const go = (target, dur, ease = 'power3.out') => {
+    if (Kit.calm) { gsap.killTweensOf(st); st.t = target; render(); return; }
+    gsap.to(st, {t: target, duration: dur, ease, overwrite: true, onUpdate: render});
+  };
+  const fromX = ev => { const r = svg.getBoundingClientRect(); return cl((ev.clientX - r.left - sx0) / (sx1 - sx0)); };
+  const press = s => { const z = {s: s > 1 ? 1 : 1.18}; gsap.to(z, {s, duration: .18, ease: s > 1 ? 'back.out(3)' : 'power2.out', onUpdate: () => els.press && els.press.setAttribute('transform', `scale(${z.s})`)}); };
+  let dragging = false;
+  svg.addEventListener('pointerdown', ev => {
+    dragging = true; svg.setPointerCapture(ev.pointerId);
+    if (!touched) { touched = true; card.classList.add('touched'); }
+    Kit.haptic('selection'); press(1.18); go(fromX(ev), .22);
+  });
+  svg.addEventListener('pointermove', ev => { if (dragging) go(fromX(ev), .18); });
+  const end = () => {
+    if (!dragging) return; dragging = false; press(1);
+    const snap = Math.round(cl(st.t) * 3) / 3;
+    Kit.haptic('light'); go(snap, .6);
+  };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  new ResizeObserver(() => { if (!els.scene) return; const r = svg.getBoundingClientRect(); if (Math.round(r.width) + 'x' + Math.round(r.height) !== Math.round(W) + 'x' + Math.round(H)) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !els.scene) return;
+    const tl = gsap.timeline();
+    if (hasDraw) tl.from([els.edge, els.edge2], {drawSVG: '0% 0%', duration: 1.1, ease: 'power2.inOut', stagger: .15});
+    tl.from(els.ground, {opacity: 0, duration: .9, ease: 'power2.out'}, .3)
+      .from(els.refs, {opacity: 0, duration: .6, ease: 'power2.out'}, .9)
+      .from(els.qs, {opacity: 0, duration: .5}, 1);
+    if (hasDraw) tl.from(els.arrow, {drawSVG: '0% 0%', duration: .7, ease: 'power3.out'}, 1.1);
+    tl.from(els.arrowL, {opacity: 0, y: 6, duration: .5, ease: 'back.out(2)'}, 1.4)
+      .from(els.knob, {opacity: 0, duration: .5, ease: 'power2.out'}, 1.2);
+  };
+
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; card.classList.add('touched');
+    for (const v of [1 / 3, 2 / 3, 1]) { go(v, .4); await wait(Kit.calm ? 60 : 650); }
+    st.t = 1; render();
+    await wait(Kit.calm ? 100 : 1500);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,381 @@
+<!doctype html>
+<!-- slug: human_body-hyper-g-head -->
+<!-- Look: a museum diorama of cut paper on a dusk-indigo ground. A paper sky holds the flight's curve, ridges and a seated passenger stand in front, and a magnifier shows the inner ear.
+     Interaction: drag sideways to turn the head. The fluid in the ear's ring lags and sloshes and fills a QUEASY strip. In level flight it settles at once. Pull up into hyper-G and the same turn sets it swirling.
+     Wow: the strip overflows, the face turns green, the whole diorama jolts and a VOMIT COMET stamp slams onto the paper sky. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Keep your head still in hyper-G</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
+#up{align-self:flex-start}
+#why{margin:0;font:600 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.say b{color:#ffc56b}
+.say{overflow-wrap:anywhere}
+.hintA{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(-4px)}50%{transform:translateX(4px)}}
+.kit-calm .hintA{animation:none}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Drag the head · hyper-G" style="--c:#23324f;--k:#fbf1df;--edge:#141d33">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TURN THE HEAD</span></div>
+    <h2 class="q">Why are passengers told to keep their heads still in hyper-G?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A paper diorama: a plane flying a curved path through a paper sky, a seated passenger, and a magnified ring of inner-ear fluid with a queasiness strip."></svg>
+    </div>
+    <p class="say" id="say">Level flight, normal gravity. <b>Drag sideways to turn the passenger's head</b> and watch the ear.</p>
+    <button class="btn gone" id="up">Pull up into hyper-G</button>
+    <p class="body gone" id="why">In hyper-G your vestibular system, the balance sense in your inner ear, becomes hypersensitive to movement. The same small head turn hits it far harder and brings on motion sickness. That's why the plane is nicknamed the vomit comet.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In hyper-G, keep your head still and look straight ahead.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin, ScrambleTextPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), up = Kit.$('up');
+  const P = {paper:'#f7ecd6', paper2:'#e6d2ad', peach:'#f2bb92', peachD:'#d39068', terra:'#e2694b', terraL:'#ff9b7c',
+    mustard:'#f4c04f', teal:'#3f8f8a', tealL:'#55a69e', teal2:'#2b6466', ridge:'#3a5680', ink:'#1a2238',
+    sick:'#a9cf5b', canal:'#d4ecf5', wall:'#8fbfd4', fluid:'#2e7fb4', hair:'#3b2622'};
+  const MONO = 'font-family:var(--mono)';
+  const HY = 'HYPER-G · pressed down', LV = '1 g · level flight';
+  const S = {step:0, th:0, thPrev:0, rel:0, relv:0, meter:0, sick:0, hyper:0, travel:0, revealed:false, touched:false, t:0};
+  const PL = {p:-1};
+  let E = null, G = {}, W = 0, H = 0, fs = 12, planeTw = null, bobTw = null, twk = [];
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, t) => { const A = hex(a), B = hex(b); return 'rgb(' + A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',') + ')'; };
+  const hash = i => { const s = Math.sin(i * 12.9898) * 43758.5453; return s - Math.floor(s); };
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 700, fill: P.paper, style: MONO}, a), p); e.textContent = s; return e; };
+  const keepIn = e => { const w = e.getComputedTextLength(), x = +e.getAttribute('x'), an = e.getAttribute('text-anchor') || 'start';
+    const l = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x; const sh = Math.max(3 - l, Math.min(0, W - 3 - (l + w))); if (sh) e.setAttribute('x', x + sh); return e; };
+  const leftOf = e => { const w = e.getComputedTextLength(), x = +e.getAttribute('x'), an = e.getAttribute('text-anchor') || 'start'; return an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x; };
+  const bez = (a, b, c, d, t) => { const u = 1 - t; return [u*u*u*a[0] + 3*u*u*t*b[0] + 3*u*t*t*c[0] + t*t*t*d[0], u*u*u*a[1] + 3*u*u*t*b[1] + 3*u*t*t*c[1] + t*t*t*d[1]]; };
+
+  const filt = (id, dy, b, o) => `<filter id="${id}" x="-25%" y="-25%" width="150%" height="160%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  .5 0 0 0 -.17" result="g"/>
+    <feComposite in="g" in2="SourceAlpha" operator="in" result="gi"/>
+    <feGaussianBlur in="SourceAlpha" stdDeviation="${b}"/><feOffset dx="${dy * .4}" dy="${dy}" result="bo"/>
+    <feFlood flood-color="#090e1f" flood-opacity="${o}"/><feComposite in2="bo" operator="in" result="sh"/>
+    <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/><feMergeNode in="gi"/></feMerge></filter>`;
+  const layer = (name, f) => { const w = mk('g', {class: 'lay'}, svg); const i = mk('g', f ? {filter: `url(#${f})`} : {}, w); G[name] = i; G[name + 'W'] = w; return i; };
+
+  function cloud(p, x, y, s) {
+    const g = mk('g', {opacity: .9}, p);
+    mk('circle', {cx: x - s, cy: y, r: s * .62, fill: P.paper}, g);
+    mk('circle', {cx: x, cy: y - s * .25, r: s * .9, fill: P.paper}, g);
+    mk('circle', {cx: x + s * .95, cy: y, r: s * .66, fill: P.paper}, g);
+    mk('rect', {x: x - s * 1.6, y, width: s * 3.2, height: s * .55, rx: s * .27, fill: P.paper}, g);
+    return g;
+  }
+  function sparkle(p, x, y, s, col) {
+    return mk('path', {d: `M${x},${y - s} Q${x + s * .18},${y - s * .18} ${x + s},${y} Q${x + s * .18},${y + s * .18} ${x},${y + s} Q${x - s * .18},${y + s * .18} ${x - s},${y} Q${x - s * .18},${y - s * .18} ${x},${y - s}Z`, fill: col}, p);
+  }
+  function ridge(p, yTop, amp, yBot, col, seed) {
+    const yAt = x => yTop + amp * (.6 * Math.sin(x / W * 8.2 + seed) + .4 * Math.sin(x / W * 19.5 + seed * 2));
+    let d = `M-4,${yAt(-4)}`;
+    for (let i = 1; i <= 30; i++) { const x = -4 + i * (W + 8) / 30; d += ` L${x.toFixed(1)},${yAt(x).toFixed(1)}`; }
+    d += ` L${W + 4},${yBot} Q${W * .5},${yBot + amp * .5} -4,${yBot} Z`;
+    mk('path', {d, fill: col}, p);
+    return yAt;
+  }
+  function spiral(cx, cy, R) {
+    let d = ''; const n = 40, turns = 2.2;
+    for (let i = 0; i <= n; i++) { const a = i / n * turns * Math.PI * 2, rr = R * i / n; d += (i ? ' L' : 'M') + (cx + Math.cos(a) * rr).toFixed(1) + ',' + (cy + Math.sin(a) * rr).toFixed(1); }
+    return d;
+  }
+
+  function layout() {
+    if (planeTw) planeTw.kill(); if (bobTw) bobTw.kill(); twk.forEach(t => t.kill()); twk = [];
+    svg.innerHTML = ''; G = {};
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; fs = clamp(f.f || 13, 12, 15);
+    mk('defs', {}, svg).innerHTML = filt('pf', fs * .35, fs * .3, .5) + filt('pff', fs * .18, fs * .16, .35);
+    E = {lab: []};
+    const sky = H * .36;
+    const t0 = fs * 2.55, rg = Math.max(fs * 3, sky - t0);           // the flight lives below the chip row
+
+    // ---- far: stars, the sun and paper clouds
+    const gStar = layer('stars');
+    [[.6, .2, .5], [.73, .55, .38], [.44, .34, .3], [.97, .62, .32], [.02, .6, .3], [.56, .78, .26]].forEach(([px, py, s], i) => {
+      const st = sparkle(gStar, W * px, t0 * .5 + rg * py * .9, fs * s, i % 2 ? P.paper : P.mustard);
+      st.setAttribute('opacity', .55);
+      if (!Kit.calm) twk.push(gsap.to(st, {opacity: .12, duration: 1.1 + hash(i) * 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: hash(i + 5)}));
+    });
+    const gSun = layer('sun', 'pff'), sr = Math.min(W * .07, rg * .2), sx = W * .9, sy = Math.max(sr * 1.6, t0 * .6);
+    mk('circle', {cx: sx, cy: sy, r: sr * 1.5, fill: P.mustard, opacity: .2}, gSun);
+    mk('circle', {cx: sx, cy: sy, r: sr, fill: P.mustard}, gSun);
+    mk('circle', {cx: sx - sr * .22, cy: sy - sr * .22, r: sr * .55, fill: '#ffd97a'}, gSun);
+    const gCl = layer('clouds', 'pff');
+    const c1g = cloud(gCl, W * .1, t0 + rg * .3, Math.max(8, Math.min(W * .036, rg * .1)));
+    const c2g = cloud(gCl, W * .51, t0 + rg * .68, Math.max(7, Math.min(W * .03, rg * .09)));
+    if (!Kit.calm) { twk.push(gsap.to(c1g, {x: W * .02, duration: 5, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+      twk.push(gsap.to(c2g, {x: -W * .015, duration: 6.5, yoyo: true, repeat: -1, ease: 'sine.inOut'})); }
+
+    // ---- the flight: level, pull-up (hyper-G), parabola (zero-G), pull-out (hyper-G), level
+    const gSky = layer('sky', 'pff');
+    const yb = t0 + rg * .82, ya = t0 + rg * .42, pk = t0 + rg * .04, T = 1.19;
+    const x0 = W * .03, x1 = W * .19, ex1 = W * .34, ex2 = W * .68, dh = (yb - ya) * .5;
+    const c1 = [x1 + W * .07, yb], c2 = [ex1 - dh / T, ya + dh], a = (ya - pk) / (.75 * T);
+    const x5 = ex2 + (ex1 - x1), m1 = [ex2 + dh / T, ya + dh], m2 = [x5 - (c1[0] - x1), yb], xe = W * .97;
+    const segD = [`M${x0},${yb} L${x1},${yb}`,
+      `M${x1},${yb} C${c1} ${c2} ${ex1},${ya}`,
+      `M${ex1},${ya} C${ex1 + a},${ya - a * T} ${ex2 - a},${ya - a * T} ${ex2},${ya}`,
+      `M${ex2},${ya} C${m1} ${m2} ${x5},${yb}`,
+      `M${x5},${yb} L${xe},${yb}`];
+    const sty = [
+      {stroke: P.paper, 'stroke-width': fs * .14, 'stroke-dasharray': `${fs * .5} ${fs * .4}`, opacity: .55},
+      {stroke: P.terra, 'stroke-width': fs * .34, 'stroke-linecap': 'round'},
+      {stroke: P.paper, 'stroke-width': fs * .22, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${fs * .62}`},
+      {stroke: P.terra, 'stroke-width': fs * .34, 'stroke-linecap': 'round'},
+      {stroke: P.paper, 'stroke-width': fs * .14, 'stroke-dasharray': `${fs * .5} ${fs * .4}`, opacity: .55}];
+    E.segs = segD.map((d, i) => mk('path', Object.assign({d, fill: 'none'}, sty[i]), gSky));
+    E.fp = mk('path', {d: `M${x0},${yb} L${x1},${yb} C${c1} ${c2} ${ex1},${ya} C${ex1 + a},${ya - a * T} ${ex2 - a},${ya - a * T} ${ex2},${ya} C${m1} ${m2} ${x5},${yb} L${xe},${yb}`, fill: 'none', stroke: 'none'}, gSky);
+    const len = E.segs.map(s => s.getTotalLength()), tot = len.reduce((s, v) => s + v, 0);
+    E.fr = {p0: len[0] * .55 / tot, up: (len[0] + len[1] * .74) / tot};
+    const hm1 = bez([x1, yb], c1, c2, [ex1, ya], .5), hm2 = bez([ex2, ya], m1, m2, [x5, yb], .5);
+    const gLab = mk('g', {}, gSky);
+    E.lab.push(keepIn(txt(gLab, hm1[0] - fs * .7, hm1[1] + fs * .35, 'hyper-G', {fill: P.terraL, 'text-anchor': 'end'})));
+    E.lab.push(keepIn(txt(gLab, hm2[0] + fs * .7, hm2[1] + fs * .35, 'hyper-G', {fill: P.terraL})));
+    E.lab.push(txt(gLab, (ex1 + ex2) / 2, Math.min(pk + fs * 1.6, ya + fs * .2), 'zero-G', {'text-anchor': 'middle', opacity: .85}));
+    if (S.revealed) E.lab.forEach(l => l.setAttribute('opacity', 0));
+
+    // the plane, a paper cut-out
+    const L = clamp(W * .11, 34, 62), pg = mk('g', {}, gSky), pin = mk('g', {}, pg);
+    E.plane = pg; E.planeIn = pin;
+    mk('path', {d: `M${-.46 * L},${-.06 * L} L${-.6 * L},${-.32 * L} L${-.45 * L},${-.32 * L} L${-.26 * L},${-.07 * L}Z`, fill: P.terra}, pin);
+    mk('path', {d: `M${-.5 * L},${-.07 * L} L${.3 * L},${-.085 * L} Q${.53 * L},${-.075 * L} ${.53 * L},0 Q${.52 * L},${.075 * L} ${.3 * L},${.085 * L} L${-.46 * L},${.06 * L}Z`, fill: P.paper}, pin);
+    mk('rect', {x: -.46 * L, y: .012 * L, width: .86 * L, height: .028 * L, fill: P.mustard}, pin);
+    for (let i = 0; i < 6; i++) mk('circle', {cx: -.26 * L + i * .1 * L, cy: -.03 * L, r: .019 * L, fill: P.ridge}, pin);
+    mk('path', {d: `M${.36 * L},${-.065 * L} Q${.47 * L},${-.055 * L} ${.51 * L},${-.015 * L} L${.36 * L},${-.015 * L}Z`, fill: P.ridge}, pin);
+    mk('path', {d: `M${-.02 * L},${.03 * L} L${-.2 * L},${.3 * L} L${-.07 * L},${.3 * L} L${.15 * L},${.035 * L}Z`, fill: P.paper2}, pin);
+    if (PL.p < 0) PL.p = S.step >= 2 ? E.fr.up : E.fr.p0;
+    planeTw = gsap.to(pg, {motionPath: {path: E.fp, align: E.fp, alignOrigin: [.5, .5], autoRotate: true}, duration: 1, ease: 'none', paused: true});
+    planeTw.progress(PL.p);
+    if (!Kit.calm) bobTw = gsap.to(pin, {y: -2.5, duration: 1.3, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+
+    // the chip: what the passengers feel now, on its own row above the flight
+    const gChip = layer('chip');
+    const h2 = S.step >= 2;
+    E.chipR = mk('rect', {x: fs * .3, y: fs * .3, height: fs * 1.75, rx: fs * .87, fill: h2 ? P.terra : P.paper}, gChip);
+    E.gtxt = txt(gChip, fs * 1, fs * 1.55, HY, {fill: h2 ? P.paper : P.ink});
+    const wH = E.gtxt.getComputedTextLength() + fs * 1.4;
+    E.gtxt.textContent = LV;
+    const wL = E.gtxt.getComputedTextLength() + fs * 1.4;
+    E.chipW = [wL, wH];
+    E.gtxt.textContent = h2 ? HY : LV;
+    E.chipR.setAttribute('width', h2 ? wH : wL);
+
+    // ---- mid: paper ridges with a few pines
+    ridge(layer('ridge1', 'pff'), sky * .9, sky * .06, sky * 1.13, P.ridge, 3);
+    const gR2 = layer('ridge2', 'pf'), yAt = ridge(gR2, sky * .99, sky * .05, sky * 1.2, P.teal2, 9);
+    [.05, .09, .93, .965].forEach((p, i) => { const x = W * p, y = yAt(x) + 3, h = sky * (.13 + .04 * (i % 2)), w = h * .42;
+      mk('path', {d: `M${x},${y - h} L${x + w / 2},${y} L${x - w / 2},${y}Z`, fill: i % 2 ? '#24585a' : P.teal}, gR2); });
+
+    // ---- near: the passenger in a paper seat
+    const top = sky * 1.04, bot = H - fs * 2.4, av = bot - top;
+    const r = Math.min(W * .155, av * .29), hx = W * .27, hy = top + av * .42;
+    const cx = W * .75, cy = top + av * .46, R = Math.max(20, Math.min(W * .19, av * .46 - fs * 1.9, av * .54 - fs * 2.3));
+    E.g = {r, hx, hy, cx, cy, R};
+    const gSeat = layer('seat', 'pf');
+    mk('rect', {x: hx - 1.12 * r, y: hy - 1.08 * r, width: 2.24 * r, height: 3.03 * r, rx: .45 * r, fill: P.teal}, gSeat);
+    mk('rect', {x: hx - .94 * r, y: hy - .94 * r, width: 1.88 * r, height: 1.3 * r, rx: .36 * r, fill: P.tealL}, gSeat);
+    const gHead = layer('head', 'pf');
+    E.body = mk('g', {}, gHead);
+    mk('rect', {x: hx - .27 * r, y: hy + .55 * r, width: .54 * r, height: .45 * r, fill: P.peachD}, E.body);
+    mk('path', {d: `M${hx - 1.42 * r},${hy + 1.97 * r} Q${hx - 1.36 * r},${hy + .92 * r} ${hx - .3 * r},${hy + .84 * r} L${hx + .3 * r},${hy + .84 * r} Q${hx + 1.36 * r},${hy + .92 * r} ${hx + 1.42 * r},${hy + 1.97 * r}Z`, fill: P.terra}, E.body);
+    mk('path', {d: `M${hx - .34 * r},${hy + .86 * r} L${hx},${hy + 1.22 * r} L${hx + .34 * r},${hy + .86 * r}`, fill: 'none', stroke: P.paper, 'stroke-width': r * .08, 'stroke-linejoin': 'round'}, E.body);
+    if (!S.touched) {
+      E.hint = mk('g', {class: 'hintA'}, E.body);
+      const ay = hy + 1.55 * r, aw = .55 * r, k = r * .13;
+      mk('path', {d: `M${hx - aw},${ay} H${hx + aw} M${hx - aw + k},${ay - k} L${hx - aw},${ay} L${hx - aw + k},${ay + k} M${hx + aw - k},${ay - k} L${hx + aw},${ay} L${hx + aw - k},${ay + k}`, fill: 'none', stroke: P.paper, 'stroke-width': Math.max(2, r * .07), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.hint);
+    }
+    E.faceG = mk('g', {}, gHead);
+    E.ears = mk('g', {}, E.faceG);
+    [-1, 1].forEach(s => { mk('circle', {cx: hx + s * .97 * r, cy: hy + .05 * r, r: .2 * r, fill: P.peachD}, E.ears); });
+    E.skin = mk('circle', {cx: hx, cy: hy, r, fill: P.peach}, E.faceG);
+    E.hair = mk('path', {d: `M${hx - r * 1.0},${hy - r * .05} Q${hx - r * 1.06},${hy - r * 1.15} ${hx},${hy - r * 1.1} Q${hx + r * 1.06},${hy - r * 1.15} ${hx + r * 1.0},${hy - r * .05} Q${hx + r * .72},${hy - r * .62} ${hx + r * .1},${hy - r * .56} Q${hx - r * .62},${hy - r * .62} ${hx - r * 1.0},${hy - r * .05}Z`, fill: P.hair}, E.faceG);
+    E.feat = mk('g', {}, E.faceG);
+    E.cheeks = mk('g', {opacity: .4}, E.feat);
+    [-1, 1].forEach(s => mk('circle', {cx: hx + s * .52 * r, cy: hy + .26 * r, r: .13 * r, fill: P.terra}, E.cheeks));
+    E.eyes = mk('g', {}, E.feat);
+    [-1, 1].forEach(s => { mk('circle', {cx: hx + s * .36 * r, cy: hy - .02 * r, r: .1 * r, fill: P.ink}, E.eyes); mk('circle', {cx: hx + s * .36 * r + .03 * r, cy: hy - .05 * r, r: .032 * r, fill: '#fff'}, E.eyes); });
+    E.squint = mk('g', {display: 'none'}, E.feat);
+    [-1, 1].forEach(s => mk('path', {d: `M${hx + s * .48 * r},${hy - .1 * r} L${hx + s * .28 * r},${hy - .02 * r} L${hx + s * .48 * r},${hy + .06 * r}`, fill: 'none', stroke: P.ink, 'stroke-width': r * .07, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.squint));
+    E.brows = mk('g', {}, E.feat);
+    [-1, 1].forEach(s => mk('path', {d: `M${hx + s * .24 * r},${hy - .24 * r} Q${hx + s * .36 * r},${hy - .3 * r} ${hx + s * .48 * r},${hy - .24 * r}`, fill: 'none', stroke: P.hair, 'stroke-width': r * .06, 'stroke-linecap': 'round'}, E.brows));
+    mk('path', {d: `M${hx + .02 * r},${hy + .05 * r} q${.1 * r},${.15 * r} ${-.05 * r},${.2 * r}`, fill: 'none', stroke: P.peachD, 'stroke-width': r * .06, 'stroke-linecap': 'round'}, E.feat);
+    E.mouth = mk('path', {fill: 'none', stroke: P.ink, 'stroke-width': r * .065, 'stroke-linecap': 'round'}, E.feat);
+    E.smile = `M${hx - .22 * r},${hy + .42 * r} Q${hx},${hy + .58 * r} ${hx + .22 * r},${hy + .42 * r}`;
+    E.wavy = `M${hx - .26 * r},${hy + .5 * r} q${.065 * r},${-.08 * r} ${.13 * r},0 t${.13 * r},0 t${.13 * r},0 t${.13 * r},0`;
+    E.mouthOn = '';
+    const gFx = layer('fx');
+    E.chev = mk('g', {opacity: 0}, gFx);
+    [-.45, 0, .45].forEach(dx => mk('path', {d: `M${hx + dx * r - .11 * r},${hy - 1.5 * r} L${hx + dx * r},${hy - 1.37 * r} L${hx + dx * r + .11 * r},${hy - 1.5 * r}`, fill: 'none', stroke: P.mustard, 'stroke-width': Math.max(2, r * .07), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.chev));
+    E.sw = [[hx - 1.24 * r, hy - .72 * r, .26 * r], [hx + 1.18 * r, hy - 1.02 * r, .2 * r], [hx - 1.06 * r, hy + .3 * r, .17 * r]].map(([x, y, rr]) => {
+      const p = mk('path', {d: spiral(x, y, rr), fill: 'none', stroke: P.sick, 'stroke-width': Math.max(2, fs * .2), 'stroke-linecap': 'round', opacity: 0}, gFx); p._x = x; p._y = y; return p; });
+
+    // ---- the magnifier: a ring of the inner ear, its fluid, its little flap
+    const gLens = layer('lens', 'pf');
+    mk('line', {x1: hx + 1.2 * r, y1: hy + .05 * r, x2: cx - R * 1.02, y2: cy, stroke: P.paper, 'stroke-width': 1.6, 'stroke-dasharray': '4 4', opacity: .7}, gLens);
+    mk('circle', {cx, cy, r: R, fill: P.paper, stroke: P.mustard, 'stroke-width': R * .07}, gLens);
+    mk('circle', {cx, cy, r: R * .36, fill: '#efdfbe'}, gLens);
+    E.canal = mk('g', {}, gLens);
+    mk('circle', {cx, cy, r: R * .6, fill: 'none', stroke: P.wall, 'stroke-width': R * .3}, E.canal);
+    mk('circle', {cx, cy, r: R * .6, fill: 'none', stroke: P.canal, 'stroke-width': R * .23}, E.canal);
+    for (let i = 0; i < 16; i++) { const an = i / 16 * Math.PI * 2, c = Math.cos(an), s = Math.sin(an);
+      mk('line', {x1: cx + c * R * .72, y1: cy + s * R * .72, x2: cx + c * R * .76, y2: cy + s * R * .76, stroke: '#5f93ab', 'stroke-width': 1.4}, E.canal); }
+    E.fluid = mk('g', {}, E.canal);
+    for (let i = 0; i < 3; i++) { const a0 = i * 2.1 + .3;
+      mk('path', {d: `M${cx + Math.cos(a0) * R * .6},${cy + Math.sin(a0) * R * .6} A${R * .6} ${R * .6} 0 0 1 ${cx + Math.cos(a0 + .7) * R * .6},${cy + Math.sin(a0 + .7) * R * .6}`, fill: 'none', stroke: P.fluid, 'stroke-width': R * .05, 'stroke-linecap': 'round', opacity: .35}, E.fluid); }
+    for (let i = 0; i < 30; i++) { const an = i / 30 * Math.PI * 2 + (hash(i) - .5) * .18, rr = R * .6 + (hash(i + 40) - .5) * R * .15;
+      mk('circle', {cx: cx + Math.cos(an) * rr, cy: cy + Math.sin(an) * rr, r: R * (.026 + hash(i + 80) * .02), fill: P.fluid, opacity: .5 + hash(i + 9) * .45}, E.fluid); }
+    mk('ellipse', {cx, cy: cy - R * .47, rx: R * .08, ry: R * .035, fill: P.terra}, E.canal);
+    E.cup = mk('path', {fill: 'none', stroke: P.mustard, 'stroke-width': R * .075, 'stroke-linecap': 'round'}, E.canal);
+    mk('path', {d: `M${cx - R * .62},${cy - R * .55} A${R * .83} ${R * .83} 0 0 1 ${cx - R * .1},${cy - R * .82}`, fill: 'none', stroke: '#fff', 'stroke-width': R * .06, 'stroke-linecap': 'round', opacity: .55}, gLens);
+    keepIn(txt(gLens, cx, cy - R - fs * .6, 'vestibular system', {'text-anchor': 'middle', fill: P.mustard}));
+    const ie = keepIn(txt(gLens, cx, cy + R + fs * 1.35, 'inside the inner ear', {'text-anchor': 'middle', 'font-weight': 600, opacity: .85}));
+    if (leftOf(ie) < hx + 1.42 * r + fs * .6) { ie.setAttribute('x', cx); ie.textContent = 'the inner ear'; keepIn(ie); }
+
+    // ---- the queasy strip
+    const gM = layer('meter'), my = H - fs * 1.35;
+    const ml = txt(gM, fs * .3, my + fs * .36, 'QUEASY', {fill: P.paper});
+    const bx = fs * .3 + ml.getComputedTextLength() + fs * .7, bw = W - fs * .4 - bx;
+    mk('rect', {x: bx, y: my - fs * .34, width: bw, height: fs * .68, rx: fs * .34, fill: P.paper, opacity: .16}, gM);
+    E.mf = mk('rect', {x: bx, y: my - fs * .34, width: 0, height: fs * .68, rx: fs * .34, fill: P.mustard}, gM);
+    E.mw = bw;
+
+    // ---- the stamp, for the end
+    const gSt = layer('stamp');
+    const ss = clamp(W * .066, 14, fs * 2.2), stW = mk('g', {transform: `translate(${W * .66} ${t0 + rg * .5})`}, gSt);
+    E.stamp = mk('g', {opacity: S.revealed ? 1 : 0}, stW);
+    const st = txt(E.stamp, 0, ss * .36, 'VOMIT COMET', {'text-anchor': 'middle', 'font-size': ss, 'font-weight': 800, fill: P.terra, style: 'font-family:var(--display);letter-spacing:.04em'});
+    const sw = st.getComputedTextLength() + ss * 1.1, shh = ss * 1.7;
+    const back = mk('rect', {x: -sw / 2, y: -shh / 2, width: sw, height: shh, rx: 4, fill: '#fff4de', stroke: P.terra, 'stroke-width': 3}, E.stamp);
+    mk('rect', {x: -sw / 2 + 4, y: -shh / 2 + 4, width: sw - 8, height: shh - 8, rx: 2, fill: 'none', stroke: P.terra, 'stroke-width': 1}, E.stamp);
+    E.stamp.insertBefore(back, st); E.stamp.appendChild(st);
+    gsap.set(E.stamp, {svgOrigin: '0 0', rotation: -6, scale: 1});
+    draw();
+  }
+
+  function draw() {
+    if (!E || !E.skin) return;
+    const {r, hx, hy, cx, cy, R} = E.g, th = S.th, hp = S.hyper;
+    E.faceG.setAttribute('transform', `translate(0 ${hp * r * .08}) rotate(${th * 9} ${hx} ${hy + r})`);
+    E.body.setAttribute('transform', `translate(0 ${hp * r * .05})`);
+    E.feat.setAttribute('transform', `translate(${th * r * .42} ${hp * r * .05})`);
+    E.hair.setAttribute('transform', `translate(${th * r * .12} 0)`);
+    E.ears.setAttribute('transform', `translate(${-th * r * .1} 0)`);
+    E.skin.setAttribute('fill', mix(P.peach, P.sick, Math.pow(S.sick, 1.2)));
+    E.cheeks.setAttribute('opacity', .4 * (1 - S.sick));
+    const m = S.sick > .55 ? E.wavy : E.smile;
+    if (E.mouthOn !== m) { E.mouthOn = m; E.mouth.setAttribute('d', m); }
+    const sq = S.sick > .75;
+    E.eyes.setAttribute('display', sq ? 'none' : 'inline'); E.squint.setAttribute('display', sq ? 'inline' : 'none');
+    E.sw.forEach((s, i) => { s.setAttribute('opacity', clamp((S.sick - .25) * 1.6, 0, 1)); if (!Kit.calm) s.setAttribute('transform', `rotate(${S.t * (140 + i * 50) * (i % 2 ? -1 : 1)} ${s._x} ${s._y})`); });
+    E.chev.setAttribute('opacity', hp * (Kit.calm ? 1 : .65 + .35 * Math.sin(S.t * 6)));
+    E.chev.setAttribute('transform', `translate(0 ${Kit.calm ? 0 : hp * r * .05 * Math.sin(S.t * 6)})`);
+    E.canal.setAttribute('transform', `rotate(${th * 30} ${cx} ${cy})`);
+    E.fluid.setAttribute('transform', `rotate(${S.rel * 52} ${cx} ${cy})`);
+    const b = clamp(S.rel, -1.4, 1.4) * R * .26;
+    E.cup.setAttribute('d', `M${cx},${cy - R * .47} Q${cx + b * .45},${cy - R * .6} ${cx + b},${cy - R * .73}`);
+    E.mf.setAttribute('width', Math.max(0, E.mw * S.meter));
+    E.mf.setAttribute('fill', S.meter < .5 ? mix(P.mustard, P.terra, S.meter * 2) : mix(P.terra, P.sick, (S.meter - .5) * 2));
+    const px = {stars: 1, sun: 2, clouds: 4, sky: 3, ridge1: 7, ridge2: 11};
+    for (const k in px) if (G[k]) G[k].setAttribute('transform', `translate(${-th * px[k]} 0)`);
+  }
+
+  gsap.ticker.add((time, dms) => {
+    const dt = Math.min(.05, dms / 1000); S.t = time;
+    const gain = 1 + S.hyper * 2.6, damp = 9 - S.hyper * 6.6;
+    const dth = S.th - S.thPrev; S.thPrev = S.th;
+    S.relv -= dth * 3 * gain;
+    S.relv += (-60 * S.rel - damp * S.relv) * dt;
+    S.rel = clamp(S.rel + S.relv * dt, -2.3, 2.3);
+    S.travel += Math.abs(dth);
+    const k = .022 + S.hyper * .04;
+    S.meter = clamp(S.meter + Math.abs(S.relv) * dt * k - dt * .05, S.revealed ? .94 : 0, S.step < 2 ? .32 : 1);
+    S.sick += (S.meter - S.sick) * Math.min(1, dt * 5);
+    if (S.step === 0 && S.travel > 2.6) toStep1();
+    if (S.step === 2 && S.hyper > .8 && S.meter >= .995 && !S.revealed) reveal();
+    draw();
+  });
+
+  function toStep1() {
+    S.step = 1;
+    say.innerHTML = 'Barely a wobble: the fluid settles at once. <b>Now pull the plane up.</b>';
+    Kit.show('up');
+    if (!Kit.calm) gsap.fromTo(up, {y: 10}, {y: 0, duration: .5, ease: 'back.out(2)'});
+  }
+  function setChip(h) {
+    if (!E) return;
+    gsap.to(E.chipR, {attr: {fill: h ? P.terra : P.paper, width: E.chipW[h ? 1 : 0]}, duration: .45, ease: 'back.out(1.6)'});
+    E.gtxt.setAttribute('fill', h ? P.paper : P.ink);
+    if (Kit.calm) E.gtxt.textContent = HY;
+    else gsap.to(E.gtxt, {duration: .7, scrambleText: {text: HY, chars: 'upperCase', speed: .6}});
+  }
+  up.addEventListener('click', () => {
+    if (S.step !== 1) return;
+    S.step = 2; Kit.hide('up'); Kit.haptic('light');
+    say.innerHTML = 'The climb presses you into the seat, like someone lying on you. <b>Turn the head the same way again.</b>';
+    const tgt = E.fr.up;
+    if (Kit.calm) { PL.p = tgt; planeTw && planeTw.progress(tgt); S.hyper = 1; setChip(true); return; }
+    gsap.to(PL, {p: tgt, duration: 1.8, ease: 'power2.inOut', onUpdate: () => planeTw && planeTw.progress(PL.p)});
+    gsap.to(S, {hyper: 1, duration: 1.1, delay: .5, ease: 'power2.in'});
+    gsap.delayedCall(.6, () => setChip(true));
+    gsap.to('.lay', {y: i => 1.5 + i * .9, duration: .35, delay: 1.1, yoyo: true, repeat: 1, ease: 'power2.out'});
+  });
+
+  function reveal() {
+    S.revealed = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (Kit.calm) { E.stamp.setAttribute('opacity', 1); E.lab.forEach(l => l.setAttribute('opacity', 0)); return; }
+    gsap.to(E.lab, {opacity: 0, duration: .3});
+    gsap.fromTo(E.stamp, {opacity: 0, scale: 2.8, rotation: -24, svgOrigin: '0 0'}, {opacity: 1, scale: 1, rotation: -6, duration: .6, ease: 'back.out(2.6)'});
+    gsap.to('.lay', {keyframes: {x: [0, -7, 6, -4, 2, 0]}, duration: .5, delay: .45, ease: 'power2.out'});
+  }
+
+  let drag = null;
+  svg.addEventListener('pointerdown', e => {
+    drag = {x: e.clientX, th: S.th}; gsap.killTweensOf(S, 'th'); svg.setPointerCapture(e.pointerId);
+    if (!S.touched) { S.touched = true; if (E && E.hint) gsap.to(E.hint, {opacity: 0, duration: .25}); }
+    Kit.haptic('selection');
+  });
+  svg.addEventListener('pointermove', e => { if (drag) S.th = clamp(drag.th + (e.clientX - drag.x) / (W * .22), -1, 1); });
+  const end = () => { if (!drag) return; drag = null; gsap.to(S, {th: 0, duration: .8, ease: 'power3.out'}); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !E) return;
+    const ws = ['starsW', 'sunW', 'cloudsW', 'skyW', 'chipW', 'ridge1W', 'ridge2W', 'seatW', 'headW', 'lensW', 'meterW'].map(k => G[k]).filter(Boolean);
+    gsap.from(ws, {y: H * .07, opacity: 0, duration: .9, stagger: .08, ease: 'back.out(1.5)'});
+    gsap.from([E.segs[1], E.segs[3]], {drawSVG: 0, duration: .8, stagger: .25, delay: .5, ease: 'power2.inOut'});
+    gsap.from([E.segs[0], E.segs[2], E.segs[4]], {opacity: 0, duration: .6, stagger: .15, delay: .4, ease: 'power2.out'});
+    gsap.fromTo(PL, {p: 0}, {p: E.fr.p0, duration: 1.5, delay: .5, ease: 'power3.out', onUpdate: () => planeTw && planeTw.progress(PL.p)});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    S.touched = true;
+    const sweep = async n => { for (let i = 0; i < n; i++) for (const v of [1, -1]) { S.th = v; await wait(130); } S.th = 0; };
+    await sweep(3);
+    if (S.step < 1) toStep1();
+    await wait(100); up.click();
+    await wait(Kit.calm ? 100 : 1900);
+    S.hyper = 1;
+    await sweep(5);
+    if (!S.revealed) { S.meter = 1; reveal(); }
+    await wait(Kit.calm ? 100 : 1000);
+  };
+})();
+Kit.single();
+</script>
+</html>

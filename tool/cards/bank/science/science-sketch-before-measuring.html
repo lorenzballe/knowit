@@ -1,0 +1,354 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-sketch-before-measuring -->
+<!-- Look: laboratory glass on deep teal. A translucent glass map plate floats above a glass tank of layered coloured liquids that is the cross-section, with refraction highlights, rim light and rising bubbles.
+     Interaction: tap the three marks on the map (a fault trace and two fold axes). Each one projects down, beads splash up with gravity, and the liquid layers slosh into the shape that mark demands: an anticline, a syncline, a normal fault. No numbers, no angles.
+     Wow: on the third mark a light sweep runs across the glass, all three points splash at once, and a white hand pencil traces the whole picture over the liquid: a coherent sketch, before any measuring. -->
+<title>Sketch before you measure</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;overflow:visible}
+#pic .hit{cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.say b{color:#ffd27a}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap the map · sketch first" style="--c:#0e2a31;--k:#eef8f7;--edge:#071619">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP THE MAP</span></div>
+    <h2 class="q">What is the first step in constructing a geological section?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A glass map plate above a glass tank of coloured liquid layers that stands for the geological section. Three marks on the map: two fold axes and a fault."></svg>
+    </div>
+    <p class="say" id="say">The map shows a fault and two fold axes, but the section below is still flat. <b>Tap the three marks on the map.</b></p>
+    <div id="why" class="gone"><p class="body">First, a hand sketch with no measures at all: this fault must reach the surface here, it's normal, here an anticline, there a syncline. That keeps the whole picture coherent. Only then do you project faults and fold axes precisely.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Sketch the big picture by hand first; measure after.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(Physics2DPlugin, DrawSVGPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
+  const DARK = '#0b1f26', LIGHT = '#eefcfa';
+  const COLS = [['#a4ecdf', '#3fb3a3'], ['#ffd88a', '#e39a2e'], ['#ffa3b6', '#d4506f'], ['#bcadff', '#6a55d9']];
+  const MARKS = {
+    fa: {u: .26, name: 'anticline', col: '#ffd27a', say: 'A fold axis on the map: underneath, the layers must <b>arch up</b>. An anticline, by eye. No angles yet.'},
+    fs: {u: .58, name: 'syncline', col: '#ffa3b6', say: 'Another axis: here the layers must <b>sag down</b> into a syncline. Just the shape.'},
+    ft: {u: .82, name: 'normal fault', col: '#ff8a76', say: 'A fault reaches the ground here, so it must cut the section here. Call it <b>normal</b>: the right side drops.'}
+  };
+  const ORDER = ['fa', 'fs', 'ft'];
+  const st = {fa: 0, fs: 0, ft: 0, slosh: 0, fill: 1};
+  const FINAL = {fa: 1, fs: 1, ft: 1, slosh: 0};
+  const done = {fa: false, fs: false, ft: false};
+  let revealed = false, built = false, entered = false, lastW = 0, lastH = 0, rt;
+  let W, H, fs, tx0, tx1, tw, tTop, tBot, th, gY, pTop, pBot, sk, A, THROW, DIP;
+  let xs = [], layerP = [], menisP = [], groundP, groundGlow, groundClipP, inner, liqG, beadG, structG, projG, sketchG, markerG = {}, plateG, tankG, bubbleG;
+
+  const xOf = u => tx0 + u * tw;
+  const uOf = x => (x - tx0) / tw;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clampY = y => Math.max(tTop, Math.min(tBot, y));
+  const plate = (u, v) => [lerp(lerp(tx0 + sk, tx1 - sk, u), lerp(tx0, tx1, u), v), lerp(pTop, pBot, v)];
+  const sl = (u, t, s, depth) => (s.slosh || 0) * th * .035 * Math.sin(u * 10 - t * 7) * (1 - depth * .55);
+  const fold = (u, s) => -s.fa * A * Math.exp(-(((u - .26) / .17) ** 2)) + s.fs * A * Math.exp(-(((u - .58) / .17) ** 2));
+  const faultX = y => xOf(.82) + (y - gY) * DIP;
+  function bnd(j, x, s, t) {
+    const u = uOf(x);
+    let y = gY + th * [.14, .32, .5][j] + fold(u, s);
+    if (x > faultX(y)) y += s.ft * THROW;
+    return y + sl(u, t, s, (j + 1) / 4);
+  }
+  const ground = (x, t) => gY + th * .012 * Math.sin(uOf(x) * 5.5) + sl(uOf(x), t, st, 0);
+  const pts = (arr, ys) => arr.map((x, i) => `${x.toFixed(1)},${ys[i].toFixed(1)}`);
+
+  function render() {
+    if (!built) return;
+    const t = gsap.ticker.time, B = [[], [], []], gr = [];
+    const off = (1 - st.fill) * (tBot - gY + 6);
+    xs.forEach((x, i) => { gr[i] = clampY(ground(x, t) + off); for (let j = 0; j < 3; j++) B[j][i] = clampY(bnd(j, x, st, t) + off); });
+    const topFlat = xs.map(() => tTop), bot = xs.map(() => tBot);
+    for (let k = 0; k < 4; k++) {
+      const top = k ? B[k - 1] : topFlat, bo = k < 3 ? B[k] : bot;
+      const a = pts(xs, top), b = pts(xs, bo).reverse();
+      layerP[k].setAttribute('d', 'M' + a.join('L') + 'L' + b.join('L') + 'Z');
+    }
+    for (let j = 0; j < 3; j++) menisP[j].setAttribute('d', 'M' + pts(xs, B[j]).join('L'));
+    const g = 'M' + pts(xs, gr).join('L');
+    groundP.setAttribute('d', g); groundGlow.setAttribute('d', g);
+    groundP.setAttribute('opacity', st.fill < .02 ? 0 : 1); groundGlow.setAttribute('opacity', st.fill < .02 ? 0 : 1);
+    const r = Math.min(fs * 1.2, tw * .05, th * .25);
+    groundClipP.setAttribute('d', g + `L${tx1},${tBot - r}Q${tx1},${tBot} ${tx1 - r},${tBot}L${tx0 + r},${tBot}Q${tx0},${tBot} ${tx0},${tBot - r}Z`);
+  }
+  gsap.ticker.add(render);
+
+  function txt(parent, x, y, s, a = {}) {
+    const e = Kit.mk('text', Object.assign({x, y, fill: LIGHT, 'font-size': fs}, a), parent);
+    e.removeAttribute('mono');
+    e.style.fontFamily = a.mono ? 'var(--mono)' : 'var(--hand)';
+    e.textContent = s; return e;
+  }
+
+  function build(skipSketch) {
+    gsap.killTweensOf(svg.querySelectorAll('*'));
+    svg.innerHTML = '';
+    const sr = stage.getBoundingClientRect(); lastW = sr.width; lastH = sr.height;
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, f.f || W / 26));
+    if (H < fs * 16) fs = Math.max(10, H / 16);
+    tx0 = W * .06; tx1 = W * .94; tw = tx1 - tx0; sk = tw * .07;
+    // vertical budget: plate, gap, tank — the tank always keeps room for its labels
+    pTop = fs * 1.7;
+    const mb = fs * 1.2, avail = H - pTop - mb, thMin = fs * 6.5;
+    let ph = Math.max(fs * 3.2, H * .14), gp = Math.max(fs * 2.4, H * .075);
+    if (avail - ph - gp < thMin) { const k = Math.max(.35, (avail - thMin) / (ph + gp)); ph *= k; gp *= k; }
+    pBot = pTop + ph;
+    tTop = pBot + gp;
+    tBot = Math.max(H - mb, tTop + fs * 2);
+    th = tBot - tTop;
+    gY = tTop + Math.min(Math.max(th * .15, fs * 2.6), th * .3);
+    A = th * .22; THROW = th * .12;
+    DIP = (xOf(.95) - xOf(.82)) / Math.max(1, tBot - gY);
+    xs = []; const N = 150; for (let i = 0; i <= N; i++) xs.push(tx0 + tw * i / N);
+
+    // ---- defs ----
+    const defs = Kit.mk('defs', {}, svg);
+    COLS.forEach((c, k) => {
+      const lg = Kit.mk('linearGradient', {id: 'lg' + k, x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+      Kit.mk('stop', {offset: 0, 'stop-color': c[0], 'stop-opacity': .78}, lg);
+      Kit.mk('stop', {offset: 1, 'stop-color': c[1], 'stop-opacity': .9}, lg);
+    });
+    const glass = Kit.mk('linearGradient', {id: 'glass', x1: 0, y1: 0, x2: 1, y2: 0}, defs);
+    [[0, .16], [.12, .03], [.85, .02], [1, .14]].forEach(([o, a]) => Kit.mk('stop', {offset: o, 'stop-color': '#dffbff', 'stop-opacity': a}, glass));
+    const hl = Kit.mk('linearGradient', {id: 'hl', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#fff', 'stop-opacity': .55}, hl);
+    Kit.mk('stop', {offset: 1, 'stop-color': '#fff', 'stop-opacity': 0}, hl);
+    const sw = Kit.mk('linearGradient', {id: 'sw', x1: 0, y1: 0, x2: 1, y2: 0}, defs);
+    [[0, 0], [.5, .45], [1, 0]].forEach(([o, a]) => Kit.mk('stop', {offset: o, 'stop-color': '#fff', 'stop-opacity': a}, sw));
+    const pl = Kit.mk('linearGradient', {id: 'pl', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#e8fffb', 'stop-opacity': .05}, pl);
+    Kit.mk('stop', {offset: 1, 'stop-color': '#e8fffb', 'stop-opacity': .16}, pl);
+    const sh = Kit.mk('radialGradient', {id: 'sh'}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#000', 'stop-opacity': .45}, sh);
+    Kit.mk('stop', {offset: 1, 'stop-color': '#000', 'stop-opacity': 0}, sh);
+    const r = Math.min(fs * 1.2, tw * .05, th * .25);
+    const tankD = `M${tx0},${tTop}L${tx0},${tBot - r}Q${tx0},${tBot} ${tx0 + r},${tBot}L${tx1 - r},${tBot}Q${tx1},${tBot} ${tx1},${tBot - r}L${tx1},${tTop}`;
+    const tc = Kit.mk('clipPath', {id: 'tankClip'}, defs); Kit.mk('path', {d: tankD + 'Z'}, tc);
+    const gc = Kit.mk('clipPath', {id: 'groundClip'}, defs); groundClipP = Kit.mk('path', {d: ''}, gc);
+
+    // ---- the floor shadow, under the tank ----
+    Kit.mk('ellipse', {cx: (tx0 + tx1) / 2, cy: tBot + fs * .4, rx: tw * .52, ry: fs * .55, fill: 'url(#sh)'}, svg);
+
+    // ---- the tank and its liquid section ----
+    tankG = Kit.mk('g', {}, svg);
+    Kit.mk('path', {d: tankD + 'Z', fill: 'url(#glass)'}, tankG);
+    liqG = Kit.mk('g', {'clip-path': 'url(#tankClip)'}, tankG);
+    inner = Kit.mk('g', {}, liqG);
+    const clipped = Kit.mk('g', {'clip-path': 'url(#groundClip)'}, inner);
+    layerP = COLS.map((c, k) => Kit.mk('path', {fill: `url(#lg${k})`}, clipped));
+    const grain = Kit.mk('g', {opacity: .28}, clipped);
+    for (let i = 0; i < 70; i++) Kit.mk('circle', {cx: tx0 + 3 + Kit.rnd() * (tw - 6), cy: gY + 3 + Kit.rnd() * Math.max(0, tBot - gY - 6), r: (.5 + Kit.rnd() * 1.1).toFixed(2), fill: '#fff'}, grain);
+    menisP = [0, 1, 2].map(() => Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-opacity': .6, 'stroke-width': 1.2}, clipped));
+    bubbleG = Kit.mk('g', {}, clipped);
+    groundGlow = Kit.mk('path', {fill: 'none', stroke: '#c9fff4', 'stroke-opacity': .18, 'stroke-width': 6, 'stroke-linecap': 'round'}, inner);
+    groundP = Kit.mk('path', {fill: 'none', stroke: LIGHT, 'stroke-width': 2, 'stroke-linecap': 'round'}, inner);
+    // glass walls, highlights, graduation, rim
+    Kit.mk('path', {d: tankD, fill: 'none', stroke: '#e6fbff', 'stroke-opacity': .6, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, tankG);
+    Kit.mk('rect', {x: tx0 + 4, y: tTop + 6, width: Math.max(4, tw * .03), height: Math.max(0, th - r - 12), rx: 3, fill: 'url(#hl)'}, tankG);
+    Kit.mk('line', {x1: tx1 - 5, x2: tx1 - 5, y1: tTop + 10, y2: Math.max(tTop + 10, tBot - r - 4), stroke: '#fff', 'stroke-opacity': .3, 'stroke-width': 1.2}, tankG);
+    for (let i = 1; i < 10; i++) { const y = tTop + th * i / 10; Kit.mk('line', {x1: tx1 - 12 - (i % 5 ? 0 : 6), x2: tx1 - 9, y1: y, y2: y, stroke: '#fff', 'stroke-opacity': .35, 'stroke-width': 1}, tankG); }
+    Kit.mk('line', {x1: tx0 - 3, x2: tx1 + 3, y1: tTop, y2: tTop, stroke: '#f2feff', 'stroke-opacity': .75, 'stroke-width': 3, 'stroke-linecap': 'round'}, tankG);
+    txt(tankG, tx0 + fs * .9, tTop + fs * 1.35, 'SECTION', {mono: 1, 'font-size': 12, 'letter-spacing': 1.5, opacity: .7});
+
+    // ---- the glass map plate ----
+    plateG = Kit.mk('g', {}, svg);
+    const P = (u, v) => plate(u, v).map(n => n.toFixed(1)).join(',');
+    Kit.mk('polygon', {points: [P(0, 0), P(1, 0), P(1, 1), P(0, 1)].join(' '), fill: 'url(#pl)', stroke: 'none', transform: 'translate(0,4)', opacity: .5}, plateG);
+    const band = u => { const x = xOf(u); let k = 0; for (let j = 0; j < 3; j++) if (bnd(j, x, FINAL, 0) < gY) k++; return k; };
+    let u0 = 0, k0 = band(0);
+    for (let u = .005; u <= 1.0001; u += .005) {
+      const k = u >= 1 ? -1 : band(u);
+      if (k !== k0) { Kit.mk('polygon', {points: [P(u0, 0), P(Math.min(u, 1), 0), P(Math.min(u, 1), 1), P(u0, 1)].join(' '), fill: COLS[k0][1], 'fill-opacity': .55}, plateG); u0 = u; k0 = k; }
+    }
+    Kit.mk('polygon', {points: [P(0, 0), P(1, 0), P(1, 1), P(0, 1)].join(' '), fill: 'url(#pl)', stroke: '#eafcff', 'stroke-opacity': .7, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, plateG);
+    Kit.mk('line', {x1: plate(0, 1)[0], y1: pBot + 1.5, x2: plate(1, 1)[0], y2: pBot + 1.5, stroke: '#fff', 'stroke-opacity': .5, 'stroke-width': 2}, plateG);
+    txt(plateG, plate(0, 0)[0], pTop - fs * .55, 'MAP · what the ground shows', {mono: 1, 'font-size': 12, 'letter-spacing': 1, opacity: .75});
+    const arrow = (x, y, dir) => `M${x},${y}h${dir * fs * .7}m${-dir * 4},-3.5l${dir * 4},3.5l${-dir * 4},3.5`;
+    ['fa', 'fs'].forEach(id => {
+      const u = MARKS[id].u, a = plate(u, 0), b = plate(u, 1), m = plate(u, .5);
+      Kit.mk('line', {x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: LIGHT, 'stroke-width': 1.8}, plateG);
+      const out = id === 'fa';
+      [-1, 1].forEach(d => {
+        const x0 = out ? m[0] + d * 3 : m[0] + d * (fs * .7 + 3);
+        Kit.mk('path', {d: arrow(x0, m[1] - fs * .9, out ? d : -d), fill: 'none', stroke: LIGHT, 'stroke-width': 1.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, plateG);
+      });
+    });
+    { const a = plate(.86, 0), b = plate(.82, 1);
+      Kit.mk('line', {x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: MARKS.ft.col, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, plateG);
+      for (const v of [.2, .8]) { const p = [lerp(a[0], b[0], v), lerp(a[1], b[1], v)]; Kit.mk('line', {x1: p[0], y1: p[1], x2: p[0] + 6, y2: p[1] + 1, stroke: MARKS.ft.col, 'stroke-width': 2, 'stroke-linecap': 'round'}, plateG); } }
+
+    projG = Kit.mk('g', {}, svg);
+    structG = Kit.mk('g', {}, svg);
+    sketchG = Kit.mk('g', {}, svg);
+    // ---- markers ----
+    ORDER.forEach(id => {
+      const m = MARKS[id], p = id === 'ft' ? plate(.84, .5) : plate(m.u, .5);
+      const g = Kit.mk('g', {class: 'hit', transform: `translate(${p[0].toFixed(1)},${(p[1] + fs * .35).toFixed(1)})`}, svg);
+      const halo = Kit.mk('circle', {r: fs * .95, fill: 'none', stroke: m.col, 'stroke-width': 1.6, opacity: .9}, g);
+      const core = Kit.mk('circle', {r: fs * .48, fill: done[id] ? m.col : 'rgba(255,255,255,.25)', stroke: '#fff', 'stroke-width': 1.4}, g);
+      Kit.mk('circle', {r: fs * .16, cx: -fs * .16, cy: -fs * .16, fill: '#fff', opacity: .85}, g);
+      Kit.mk('circle', {r: fs * 1.6, fill: 'transparent'}, g);
+      markerG[id] = {g, halo, core, p};
+      if (!done[id] && !Kit.calm) gsap.to(halo, {attr: {r: fs * 1.35}, opacity: .15, duration: 1.1, repeat: -1, ease: 'sine.out'});
+      else if (done[id]) halo.setAttribute('opacity', 0);
+      g.addEventListener('pointerdown', e => { e.preventDefault(); tap(id); });
+    });
+    beadG = Kit.mk('g', {}, svg);
+
+    for (let i = 0; i < 9; i++) {
+      const c = Kit.mk('circle', {r: (1.2 + Kit.rnd() * 2).toFixed(1), cx: xOf(.05 + Kit.rnd() * .9), cy: 0, fill: 'none', stroke: '#fff', 'stroke-opacity': .5, 'stroke-width': .9}, bubbleG);
+      const y0 = tBot - 6, y1 = gY + th * .1;
+      if (Kit.calm) gsap.set(c, {y: lerp(y0, y1, Kit.rnd())});
+      else gsap.fromTo(c, {y: y0}, {y: y1, duration: 5 + Kit.rnd() * 5, ease: 'sine.in', repeat: -1, delay: -Kit.rnd() * 8});
+    }
+
+    built = true;
+    ORDER.forEach(id => { if (done[id]) structure(id, false); });
+    if (revealed && !skipSketch) sketch(false);
+    render();
+  }
+
+  // ---------- one mark on the map becomes a shape in the section ----------
+  function structure(id, anim) {
+    const m = MARKS[id], x = xOf(id === 'ft' ? .82 : m.u);
+    const proj = Kit.mk('line', {x1: x, x2: x, y1: pBot + 4, y2: gY - 3, stroke: m.col, 'stroke-width': 1.4, 'stroke-dasharray': '3 4', opacity: .85}, projG);
+    const dot = Kit.mk('circle', {cx: x, cy: gY, r: 3.2, fill: m.col, stroke: '#fff', 'stroke-width': 1.2}, projG);
+    const g = Kit.mk('g', {}, structG);
+    let line, lab;
+    if (id === 'ft') {
+      const yB = tBot - 3, d = `M${x},${gY}L${faultX(yB).toFixed(1)},${yB}`;
+      Kit.mk('path', {d, stroke: DARK, 'stroke-width': 5, 'stroke-opacity': .5, fill: 'none', 'stroke-linecap': 'round'}, g);
+      line = Kit.mk('path', {d, stroke: m.col, 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round'}, g);
+      const ym = gY + (tBot - gY) * .5, xm = faultX(ym), L = Math.min(fs * .7, (tBot - gY) * .3);
+      const arr = Kit.mk('g', {fill: 'none', stroke: '#fff', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+      Kit.mk('path', {d: `M${xm - fs * .8},${ym + L}V${ym - L}m-3.5,4l3.5,-4l3.5,4`}, arr);
+      Kit.mk('path', {d: `M${xm + fs * .8},${ym - L}V${ym + L}m-3.5,-4l3.5,4l3.5,-4`}, arr);
+      lab = txt(g, x - fs * .6, Math.min(gY + fs * 1.45, tBot - fs * .4), m.name, {'text-anchor': 'end', 'font-weight': 700, stroke: DARK, 'stroke-width': 3.5, 'paint-order': 'stroke'});
+      if (anim) gsap.from(arr, {opacity: 0, duration: .5, delay: .9});
+    } else {
+      line = Kit.mk('line', {x1: x, x2: x, y1: gY + 2, y2: Math.max(gY + 2, tBot - fs * 2.1), stroke: '#fff', 'stroke-width': 1.4, 'stroke-opacity': .75, 'stroke-linecap': 'round'}, g);
+      lab = txt(g, x, tBot - fs * .75, m.name, {'text-anchor': 'middle', 'font-weight': 700, stroke: DARK, 'stroke-width': 3.5, 'paint-order': 'stroke'});
+    }
+    const mk = markerG[id];
+    gsap.killTweensOf(mk.halo);
+    if (!anim) { st[id] = 1; mk.halo.setAttribute('opacity', 0); mk.core.setAttribute('fill', m.col); return; }
+    gsap.timeline()
+      .to(mk.g, {scale: .78, transformOrigin: 'center', duration: .08, ease: 'power2.out'}, 0)
+      .to(mk.g, {scale: 1, duration: .5, ease: 'elastic.out(1.1,.4)'}, .08)
+      .to(mk.halo, {attr: {r: fs * 2.4}, opacity: 0, duration: .5, ease: 'expo.out'}, 0)
+      .set(mk.core, {attr: {fill: m.col}}, 0)
+      .fromTo(proj, {attr: {y2: pBot + 4}}, {attr: {y2: gY - 3}, duration: .32, ease: 'power3.in'}, .02)
+      .from(dot, {attr: {r: 0}, duration: .5, ease: 'back.out(3)'}, .32)
+      .add(() => { splash(x, ground(x, gsap.ticker.time), 16, id); kick(1); }, .34)
+      .to(st, {[id]: 1, duration: id === 'ft' ? 1.1 : 1.6, ease: id === 'ft' ? 'back.out(2.2)' : 'elastic.out(1,.42)'}, .34)
+      .fromTo(line, {drawSVG: '0%'}, {drawSVG: '100%', duration: .7, ease: 'power3.out'}, .4)
+      .from(lab, {opacity: 0, y: 6, duration: .5, ease: 'back.out(2)'}, .8);
+  }
+
+  function kick(a) { if (Kit.calm) return; st.slosh = a; gsap.to(st, {slosh: 0, duration: 2.6, ease: 'power2.out', overwrite: 'auto'}); }
+
+  function splash(x, y, n, id) {
+    if (Kit.calm) return;
+    const pal = [MARKS[id].col, '#ffffff', COLS[0][0], COLS[3][0]];
+    for (let i = 0; i < n; i++) {
+      const c = Kit.mk('circle', {r: (1.6 + Kit.rnd() * 2.8).toFixed(1), fill: pal[i % pal.length], 'fill-opacity': .85, stroke: '#fff', 'stroke-opacity': .7, 'stroke-width': .7}, beadG);
+      gsap.set(c, {x, y});
+      gsap.to(c, {duration: 1 + Kit.rnd() * .5, physics2D: {velocity: H * (.28 + Kit.rnd() * .36), angle: -90 + (Kit.rnd() - .5) * 110, gravity: H * 1.9}});
+      gsap.to(c, {opacity: 0, scale: .4, duration: .45, delay: .65 + Kit.rnd() * .3, ease: 'power2.in', onComplete: () => c.remove()});
+    }
+  }
+
+  // ---------- the whole picture, drawn by hand ----------
+  function sketch(anim) {
+    sketchG.innerHTML = '';
+    const paths = [];
+    for (let j = 0; j < 3; j++) {
+      const p = xs.filter((_, i) => i % 3 === 0).map(x => [x, bnd(j, x, FINAL, 0)]).filter(([x, y]) => y > gY + 2 && y < tBot - 3);
+      if (p.length < 2) continue;
+      let d = '', last = null;
+      p.forEach(([x, y]) => {
+        const jy = y + (Kit.rnd() - .5) * 1.6;
+        d += (last === null || Math.abs(y - last) > THROW * .5 ? 'M' : 'L') + x.toFixed(1) + ',' + jy.toFixed(1); last = y;
+      });
+      paths.push(Kit.mk('path', {d, fill: 'none', stroke: '#fff', 'stroke-width': 1.7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .95}, sketchG));
+    }
+    const note = txt(sketchG, tx1 - fs * 1.4, tTop + fs * 1.35, 'a sketch · no measures yet', {'text-anchor': 'end', 'font-weight': 700, fill: '#ffd27a'});
+    if (!anim) return;
+    // a transient light sweep, created only for the reveal and removed after
+    const sweep = Kit.mk('rect', {x: tx0, y: tTop, width: tw * .22, height: Math.max(0, th), fill: 'url(#sw)', opacity: 0}, liqG);
+    gsap.timeline({onComplete: () => sweep.remove()})
+      .set(sweep, {opacity: 1, x: -tw * .25})
+      .to(sweep, {x: tw * 1.05, duration: 1.3, ease: 'power2.inOut'}, 0)
+      .to(sweep, {opacity: 0, duration: .3}, 1.1)
+      .add(() => { ORDER.forEach(id => { const x = xOf(id === 'ft' ? .82 : MARKS[id].u); splash(x, ground(x, gsap.ticker.time), 12, id); }); kick(1.3); }, .15)
+      .fromTo(paths, {drawSVG: '0%'}, {drawSVG: '100%', duration: .9, stagger: .2, ease: 'power2.inOut'}, .35)
+      .from(note, {opacity: 0, x: 8, duration: .6, ease: 'back.out(2)'}, 1.1)
+      .from(structG.querySelectorAll('text'), {scale: 1.25, transformOrigin: 'center', duration: .5, stagger: .08, ease: 'back.out(3)'}, .9);
+  }
+
+  function reveal() {
+    if (revealed) return; revealed = true;
+    Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => {
+      build(true);            // refit the drawing to the new, shorter stage
+      sketch(!Kit.calm);
+      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, duration: .5, stagger: .12, ease: 'power3.out'});
+    });
+  }
+
+  function tap(id) {
+    if (!built || done[id]) return;
+    done[id] = true; Kit.haptic('selection');
+    structure(id, !Kit.calm);
+    const left = ORDER.filter(k => !done[k]).length;
+    say.innerHTML = MARKS[id].say + (left ? ` <b>${left} more.</b>` : '');
+    if (!left) setTimeout(reveal, Kit.calm ? 0 : 1300);
+  }
+
+  if (window.ResizeObserver) new ResizeObserver(() => {
+    clearTimeout(rt);
+    rt = setTimeout(() => {
+      if (!built) return;
+      const r = stage.getBoundingClientRect();
+      if (Math.abs(r.width - lastW) > 2 || Math.abs(r.height - lastH) > 2) build();
+    }, 160);
+  }).observe(stage);
+
+  Kit.onShow.card = () => build();
+  Kit.onEnter.card = () => {
+    if (entered || !built || Kit.calm) return; entered = true;
+    gsap.timeline()
+      .from(plateG, {y: -fs * 1.2, opacity: 0, duration: .8, ease: 'power3.out'}, 0)
+      .from(tankG, {opacity: 0, duration: .5, ease: 'power2.out'}, .1)
+      .fromTo(st, {fill: 0}, {fill: 1, duration: 1.4, ease: 'power3.out'}, .25)
+      .add(() => kick(.9), 1.1)
+      .from(ORDER.map(id => markerG[id].g), {scale: 0, transformOrigin: 'center', duration: .6, stagger: .1, ease: 'back.out(2.5)'}, .7);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    for (const id of ORDER) { tap(id); await wait(Kit.calm ? 60 : 700); }
+    await wait(Kit.calm ? 100 : 2400);
+    reveal();
+    await wait(Kit.calm ? 100 : 1800);
+  };
+})();
+Kit.single();
+</script>
+</html>

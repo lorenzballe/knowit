@@ -1,0 +1,286 @@
+<!doctype html>
+<!-- slug: life-ecuador-murder-rate -->
+<!-- Look: a thermal camera over a crowd of exactly 100,000 people, one cell per person, in an ironbow heat palette on a night ground, with a cyan scan line sweeping it.
+     Interaction: guess how many of every 100,000 Ecuadorians are murdered in a year (4, 15 or 40). A one-year scan then sweeps the crowd, and each killing flares white-hot as the line passes.
+     Wow: the counter runs past your guess and stops at 40. The whole field flashes and forty heat rings bloom at once, then keep pulsing: 40 in 100,000, every year. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Forty in a hundred thousand</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#field{flex:1 1 0;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqw;flex:none}
+.opt{font:700 max(3.6cqh,20px)/1 var(--mono);color:#ffd27a;background:rgba(255,150,60,.07);border:0;box-shadow:inset 0 0 0 max(.2cqh,1.5px) rgba(255,170,80,.45),0 0 2.4cqh rgba(255,110,40,.14);border-radius:1.2cqh;padding:1.5cqh 1cqw 1.3cqh;display:flex;flex-direction:column;align-items:center;gap:.8cqh;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
+.opt small{font:600 max(1.45cqh,12px)/1.1 var(--mono);color:rgba(246,239,228,.62);letter-spacing:.04em}
+.opt.on{background:linear-gradient(180deg,#fcffd8,#fbb61a 45%,#ee6a1f);color:#1a0612;box-shadow:0 0 3.2cqh rgba(251,140,30,.55)}
+.opt.on small{color:#3a0d1e}
+#why{display:flex;flex-direction:column;gap:.7cqh;flex:none}
+#why .big{font:800 max(3.2cqh,19px)/1.05 var(--display);background:linear-gradient(90deg,#fcffd8,#fbb61a 40%,#ee6a1f 75%,#c8344d);-webkit-background-clip:text;background-clip:text;color:transparent;margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.32 var(--body);color:rgba(246,239,228,.86);margin:0;overflow-wrap:anywhere}
+.keep{overflow-wrap:anywhere}
+.q,.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Pick one · thermal count" style="--c:#0b0816;--k:#f6efe4;--edge:#000000">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <h2 class="q">Each year in Ecuador, how many of every 100,000 people are murdered?</h2>
+    <div class="stagebox" id="stage">
+      <div id="field"><canvas id="cv" role="img" aria-label="A thermal image of a crowd of 100,000 people. A scan line sweeps it, and each murder in one year lights up as a hot spot."></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0">4<small>per 100k</small></button>
+        <button class="opt" data-i="1">15<small>per 100k</small></button>
+        <button class="opt" data-i="2">40<small>per 100k</small></button>
+      </div>
+      <div id="why" class="gone"><p class="big">40 per 100,000</p><p class="body">Extreme violence, driven by organised crime. Ecuador's prison population grew from 11,000 in 2009 to over 31,000, and a presidential candidate was killed while campaigning for the October 2023 election.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a number. The thermal scan then counts one year.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>“Per 100,000” means a crowd of 100,000. In Ecuador, 40 of them are killed each year.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(CustomEase);
+  CustomEase.create('astBoot', 'M0,0 C0.18,0.72 0.34,1 1,1');
+  CustomEase.create('astScan', 'M0,0 C0.38,0.02 0.5,0.62 0.7,0.86 0.82,1 0.9,1 1,1');
+  CustomEase.create('astPop', 'M0,0 C0.22,1.35 0.48,1 1,1');
+
+  const VALS = [4, 15, 40], RIGHT = 2, N = 100000, TRUE = 40;
+  const cv = Kit.$('cv');
+  let pick = -1, mode = 'idle', count = 0, last = null, fast = false, idleTw = null;
+  let x = null, W = 0, H = 0, fs = 12, fx = 0, fy = 0, fw = 0, fh = 0, R = 6, dimC = null, brightC = null, MONO = 'monospace';
+  const S = {boot: Kit.calm ? 1 : 0, scan: 0, flash: 0, ring: 0};
+
+  // Forty killings, scattered through the crowd, apart from each other.
+  const spots = [];
+  while (spots.length < TRUE) {
+    const u = .07 + Kit.rnd() * .86, v = .06 + Kit.rnd() * .88;
+    if (spots.every(s => Math.hypot(s.u - u, (s.v - v) * .8) > .06) || spots.length > 0 && Kit.rnd() < .02) spots.push({u, v, g: 0, on: false, ph: Kit.rnd()});
+  }
+  spots.sort((a, b) => a.v - b.v);
+
+  // The ironbow palette of a thermal camera, starting from the card's own night.
+  const STOPS = [[0, [11, 8, 22]], [.14, [29, 11, 74]], [.3, [74, 12, 107]], [.46, [138, 28, 106]], [.62, [200, 52, 77]], [.76, [238, 106, 31]], [.89, [251, 182, 26]], [1, [252, 255, 216]]];
+  const bow = t => {
+    t = Math.max(0, Math.min(1, t));
+    for (let i = 1; i < STOPS.length; i++) if (t <= STOPS[i][0]) {
+      const [a, ca] = STOPS[i - 1], [b, cb] = STOPS[i], k = (t - a) / (b - a);
+      return [ca[0] + (cb[0] - ca[0]) * k, ca[1] + (cb[1] - ca[1]) * k, ca[2] + (cb[2] - ca[2]) * k];
+    }
+    return STOPS[STOPS.length - 1][1];
+  };
+  const P = [Kit.rnd() * 6, Kit.rnd() * 6, Kit.rnd() * 6, Kit.rnd() * 6];
+  const hash = i => { const s = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return s - Math.floor(s); };
+  const smooth = t => { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); };
+
+  // One cell per person: exactly 100,000 of them, a dim view and a scanned view.
+  function build() {
+    const cols = Math.max(50, Math.round(Math.sqrt(N * fw / fh))), rows = Math.ceil(N / cols);
+    const mk = () => { const c = document.createElement('canvas'); c.width = cols; c.height = rows; return c; };
+    dimC = mk(); brightC = mk();
+    const dc = dimC.getContext('2d'), bc = brightC.getContext('2d');
+    const di = dc.createImageData(cols, rows), bi = bc.createImageData(cols, rows);
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const i = r * cols + c, o = i * 4;
+      if (i >= N) continue;
+      const u = (c + .5) / cols, v = (r + .5) / rows;
+      let n = .5 + .22 * Math.sin(u * 6.1 + P[0]) * Math.cos(v * 4.3 + P[1]) + .16 * Math.sin((u * 1.3 - v) * 11 + P[2]) + .12 * Math.sin(v * 17 + u * 5 + P[3]);
+      n = Math.max(0, Math.min(1, n));
+      const g = hash(i) - .5, alt = (c + r) % 2 ? .9 : 1;
+      const a = smooth(Math.min(u, 1 - u, v, 1 - v) / .07);
+      const cd = bow((.1 + .3 * n + .1 * g) * alt), cb = bow((.2 + .5 * n + .12 * g) * alt);
+      di.data[o] = cd[0]; di.data[o + 1] = cd[1]; di.data[o + 2] = cd[2]; di.data[o + 3] = 255 * a * .9;
+      bi.data[o] = cb[0]; bi.data[o + 1] = cb[1]; bi.data[o + 2] = cb[2]; bi.data[o + 3] = 255 * a;
+    }
+    dc.putImageData(di, 0, 0); bc.putImageData(bi, 0, 0);
+  }
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
+    if (W < 20 || H < 30) return;
+    fs = Math.max(12, Math.min(14, W / 27));
+    MONO = (getComputedStyle(document.documentElement).getPropertyValue('--mono') || 'monospace').trim() || 'monospace';
+    fx = 2; fw = W - 4; fy = fs * 3.7; fh = Math.max(16, H - fy - 3);
+    R = Math.max(5, Math.min(fw * .032, fh * .09, 18));
+    build(); draw();
+  }
+
+  const clipDraw = (img, y0, y1) => {
+    if (y1 <= y0) return;
+    x.save(); x.beginPath(); x.rect(fx, y0, fw, y1 - y0); x.clip();
+    x.drawImage(img, fx, fy, fw, fh); x.restore();
+  };
+
+  function brackets() {
+    const L = Math.min(fw, fh) * .09, i = 1.5;
+    x.strokeStyle = 'rgba(159,243,255,.55)'; x.lineWidth = 1.5; x.beginPath();
+    for (const [cx, cy, sx, sy] of [[fx + i, fy + i, 1, 1], [fx + fw - i, fy + i, -1, 1], [fx + fw - i, fy + fh - i, -1, -1], [fx + i, fy + fh - i, 1, -1]]) {
+      x.moveTo(cx, cy + sy * L); x.lineTo(cx, cy); x.lineTo(cx + sx * L, cy);
+    }
+    x.stroke();
+  }
+
+  function draw() {
+    if (!x || !dimC) return;
+    const t = Kit.calm ? 0 : performance.now() / 1000;
+    x.clearRect(0, 0, W, H);
+    x.imageSmoothingEnabled = false;
+    const bootY = fy + fh * S.boot, sy = fy + fh * S.scan;
+    clipDraw(dimC, fy, bootY);
+    if (S.boot >= 1) {
+      if (mode === 'idle') clipDraw(brightC, sy - fh * .14, sy);
+      else clipDraw(brightC, fy, mode === 'done' ? fy + fh : sy);
+    }
+    // After the count, the camera keeps refreshing: a faint warm band rolls down.
+    if (mode === 'done' && !Kit.calm) {
+      const by = fy + fh * ((t / 4.2) % 1);
+      x.save(); x.globalCompositeOperation = 'lighter'; x.globalAlpha = .28;
+      x.beginPath(); x.rect(fx, by - fh * .06, fw, fh * .06); x.clip();
+      x.drawImage(brightC, fx, fy, fw, fh); x.restore();
+    }
+    if (S.flash > 0) { x.save(); x.globalCompositeOperation = 'lighter'; x.globalAlpha = S.flash * .5; x.drawImage(brightC, fx, fy, fw, fh); x.restore(); }
+    x.imageSmoothingEnabled = true;
+    if (S.boot >= 1) brackets();
+
+    // The killings: white-hot cores in an ironbow halo, still breathing once counted.
+    x.save(); x.globalCompositeOperation = 'lighter';
+    for (const s of spots) if (s.g > 0) {
+      const cx = fx + s.u * fw, cy = fy + s.v * fh;
+      const pulse = mode === 'done' ? 1 + .1 * Math.sin(t * 2.4 + s.ph * 6.28) : 1;
+      const r = R * Math.max(.05, s.g) * pulse;
+      const gr = x.createRadialGradient(cx, cy, 0, cx, cy, r * 1.7);
+      gr.addColorStop(0, '#ffffff'); gr.addColorStop(.18, '#fff3b0'); gr.addColorStop(.42, 'rgba(251,182,26,.85)');
+      gr.addColorStop(.7, 'rgba(238,106,31,.32)'); gr.addColorStop(1, 'rgba(200,52,77,0)');
+      x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, r * 1.7, 0, Math.PI * 2); x.fill();
+      if (S.ring > 0 && S.ring < 1) {
+        x.strokeStyle = `rgba(252,255,216,${(1 - S.ring) * .85})`; x.lineWidth = 1.5;
+        x.beginPath(); x.arc(cx, cy, R * (1 + S.ring * 3.2), 0, Math.PI * 2); x.stroke();
+      } else if (mode === 'done' && !Kit.calm) {
+        const k = (t / 3.4 + s.ph) % 1;
+        x.strokeStyle = `rgba(251,182,26,${(1 - k) * .4})`; x.lineWidth = 1;
+        x.beginPath(); x.arc(cx, cy, R * (1 + k * 2.2), 0, Math.PI * 2); x.stroke();
+      }
+    }
+    x.restore();
+    // A reticle locks on the latest one.
+    if (mode === 'reveal' && last) {
+      const cx = fx + last.u * fw, cy = fy + last.v * fh, b = R * 1.9, k = b * .45;
+      x.strokeStyle = '#9ff3ff'; x.lineWidth = 1.4; x.beginPath();
+      for (const [sx, sy2] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
+        x.moveTo(cx + sx * b, cy + sy2 * (b - k)); x.lineTo(cx + sx * b, cy + sy2 * b); x.lineTo(cx + sx * (b - k), cy + sy2 * b);
+      }
+      x.stroke();
+    }
+    // The scan line, with its glow trailing behind it.
+    if (S.boot < 1) {
+      x.fillStyle = '#bff7ff'; x.fillRect(fx + fw * .04, bootY - 1, fw * .92, 2);
+    } else if (mode !== 'done') {
+      const gl = x.createLinearGradient(0, sy - 18, 0, sy);
+      gl.addColorStop(0, 'rgba(120,235,255,0)'); gl.addColorStop(1, 'rgba(120,235,255,.32)');
+      x.fillStyle = gl; x.fillRect(fx + fw * .03, sy - 18, fw * .94, 18);
+      x.fillStyle = '#d9fbff'; x.fillRect(fx + fw * .03, sy - .75, fw * .94, 1.5);
+    }
+    readout();
+  }
+
+  function readout() {
+    const y1 = fs * 1.1;
+    x.textBaseline = 'alphabetic';
+    const right = mode === 'idle' ? '◌ STANDBY' : `KILLED ${String(count).padStart(2, '0')}`;
+    x.font = `800 ${fs}px ${MONO}`; const rw = x.measureText(right).width;
+    x.font = `600 ${fs}px ${MONO}`;
+    let left = '100,000 PEOPLE · 1 YEAR';
+    if (x.measureText(left).width + rw + fs * 1.5 > W) left = '100,000 PEOPLE';
+    x.textAlign = 'left'; x.fillStyle = 'rgba(246,239,228,.72)'; x.fillText(left, fx, y1);
+    x.textAlign = 'right'; x.font = `800 ${fs}px ${MONO}`;
+    x.fillStyle = mode === 'idle' ? 'rgba(159,243,255,.85)' : (count > VALS[pick] ? '#fbb61a' : '#f6efe4');
+    x.fillText(right, fx + fw, y1);
+    if (mode === 'idle') return;
+    // The gauge: the count climbs past (or up to) your guess.
+    const gy = fs * 1.7, max = 45, X = v => fx + fw * v / max;
+    x.fillStyle = 'rgba(246,239,228,.14)'; x.fillRect(fx, gy, fw, 3);
+    const gg = x.createLinearGradient(fx, 0, fx + fw, 0);
+    STOPS.slice(2).forEach(([t, c], i, a) => gg.addColorStop(i / (a.length - 1), `rgb(${c.join(',')})`));
+    x.fillStyle = gg; x.fillRect(fx, gy, X(count) - fx, 3);
+    const gx = X(VALS[pick]);
+    x.fillStyle = '#9ff3ff'; x.fillRect(gx - 1, gy - 4, 2, 11);
+    x.font = `700 ${fs}px ${MONO}`;
+    const lab = `YOUR GUESS ${VALS[pick]}`, lw = x.measureText(lab).width;
+    x.textAlign = 'left'; x.fillText(lab, Math.max(fx, Math.min(fx + fw - lw, gx - lw / 2)), fs * 2.95);
+  }
+
+  function light(s) {
+    s.on = true; count++; last = s;
+    if (Kit.calm) { s.g = 1; return; }
+    gsap.fromTo(s, {g: 0}, {g: 1, duration: .85, ease: 'elastic.out(1,.42)'});
+  }
+  function tick() {
+    if (mode === 'reveal') for (const s of spots) if (!s.on && s.v <= S.scan) light(s);
+    draw();
+  }
+
+  function reveal() {
+    mode = 'reveal'; if (idleTw) idleTw.kill(); S.scan = 0; S.boot = 1;
+    if (Kit.calm) { S.scan = 1; finish(); return; }
+    const tl = gsap.timeline({onComplete: finish}).to(S, {scan: 1, duration: 3.4, ease: 'astScan'});
+    if (fast) tl.timeScale(5);
+  }
+  function finish() {
+    spots.forEach(s => { if (!s.on) light(s); });
+    count = TRUE; mode = 'done'; last = null;
+    Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (Kit.calm) { draw(); return; }
+    gsap.timeline()
+      .fromTo(S, {flash: 0}, {flash: 1, duration: .16, ease: 'power2.out'})
+      .to(S, {flash: 0, duration: 1, ease: 'power3.out'})
+      .fromTo(S, {ring: 0}, {ring: 1, duration: 1.4, ease: 'expo.out'}, 0);
+    gsap.from('#why > *', {y: 14, opacity: 0, duration: .6, stagger: .09, ease: 'astPop'});
+    gsap.from('#keep', {y: 10, opacity: 0, duration: .5, delay: .25, ease: 'power3.out'});
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = `${VALS[pick]} per 100,000`;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('opts'); Kit.hide('say');
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    reveal();
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+    if (!Kit.calm) gsap.fromTo(b, {scale: .9}, {scale: 1, duration: .5, ease: 'back.out(3)'});
+    draw();
+  });
+
+  new ResizeObserver(() => { if (x) layout(); }).observe(Kit.$('field'));
+  Kit.onShow.card = layout;
+  let ticking = false;
+  Kit.onEnter.card = () => {
+    if (!ticking) { ticking = true; gsap.ticker.add(tick); }
+    if (Kit.calm) { S.boot = 1; S.scan = .5; draw(); return; }
+    const tl = gsap.timeline();
+    tl.fromTo(S, {boot: 0}, {boot: 1, duration: 1.3, ease: 'astBoot'})
+      .from('.opt', {opacity: 0, y: 16, scale: .92, duration: .6, stagger: .09, ease: 'astPop'}, .45)
+      .from('#say', {opacity: 0, y: 8, duration: .5, ease: 'power3.out'}, .7)
+      .call(() => { if (mode === 'idle') idleTw = gsap.fromTo(S, {scan: 0}, {scan: 1, duration: 2.8, ease: 'power1.inOut', repeat: -1, repeatDelay: .35}); });
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    fast = true;
+    if (!ticking) { ticking = true; gsap.ticker.add(tick); }
+    S.boot = 1;
+    Kit.$('opts').children[1].click();
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 200 : 2200);
+  };
+})();
+Kit.single();
+</script>
+</html>

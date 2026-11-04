@@ -1,0 +1,389 @@
+<!doctype html>
+<!-- slug: maths-borda-spoiler-dial -->
+<!-- Look: a brass Borda-meter on dark green leather: enamel face, engraved ticks, blued needle, jewel lamps, two parchment ballots and a brass points staircase.
+     Interaction: each tap adds a candidate who can't win. The points staircase morphs to the new candidate count, ballots re-rank, totals recount, the needle swings.
+     Wow: the first no-hoper makes the needle swing from Ada to Ben, and the winner's lamp flips, though no voter changed their mind about Ada vs Ben. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Borda's irrelevant alternatives</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<style>
+#card{background-image:radial-gradient(120% 65% at 50% 30%,rgba(255,214,140,.09),transparent 62%),radial-gradient(140% 90% at 50% 110%,rgba(0,0,0,.35),transparent 60%)}
+#stage{flex:1;min-height:0;display:flex}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#pic text{user-select:none;-webkit-user-select:none}
+#pic .mono{font-family:var(--mono)}
+#pic .disp{font-family:var(--display)}
+#pic .bod{font-family:var(--body)}
+.brassbtn{align-self:flex-start;flex-shrink:0;font:800 max(2cqh,14px)/1.1 var(--body);color:#2a1a06;background:linear-gradient(#fbe3a0,#d39d45 52%,#93621f);border:0;border-radius:99px;padding:max(1.2cqh,9px) max(5cqw,18px);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 0 rgba(90,55,10,.35),0 .45cqh 0 #4f330c,0 1cqh 2cqh rgba(0,0,0,.4);cursor:pointer;transition:transform .08s ease-out,box-shadow .08s ease-out;-webkit-tap-highlight-color:transparent}
+.brassbtn:active{transform:translateY(.4cqh);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 .05cqh 0 #4f330c,0 .4cqh 1cqh rgba(0,0,0,.4)}
+.say b{color:#f6cf78}
+#why .body{margin:0}
+#why q{font-style:italic;color:#f6cf78}
+.q,.say,.body{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Tap to add · the spoiler" style="--c:#16221e;--k:#f4e8c8;--edge:#0a1210">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BORDA COUNT</span></div>
+    <h2 class="q">Why did Condorcet reject the Borda count voting method?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A brass meter whose needle points to the Borda winner, Ada or Ben, above two ranked ballots and a staircase of points per rank."></svg>
+    </div>
+    <p class="say" id="say">3 voters rank Ada over Ben, 2 rank Ben over Ada. Ada wins. <b>Add a candidate who can't win.</b></p>
+    <div id="why" class="gone"><p class="body">Five running: 1st gets 4 points, last 0. Each no-hoper adds points, and they flipped the winner. Condorcet: Borda <q>relies on irrelevant factors</q>.</p></div>
+    <button class="brassbtn" id="add">+ Add Cy, who can't win</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Under Borda, who else is on the ballot can decide who wins.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), btn = Kit.$('add');
+  const MORPH = typeof MorphSVGPlugin !== 'undefined';
+  if (MORPH) gsap.registerPlugin(MorphSVGPlugin);
+
+  const NM = {A:'Ada', B:'Ben', C:'Cy', D:'Dot', E:'Eve'};
+  const FILL = {A:'#f28d5f', B:'#6fc4e6', C:'#ddd3b8', D:'#ddd3b8', E:'#ddd3b8'};
+  const DEEP = {A:'#b5441b', B:'#1c6d92'};
+  const INK = '#2a1d0c', CREAM = '#f4e8c8', MAXK = 3;
+  const F = v => Math.max(12, v);
+
+  let k = 0, drawK = 0, G = null, busy = false, lastSize = '', jitOn = false;
+  const ang = {v: 0}, jit = {v: 0};
+  const L = n => ['A','B','C','D','E'].slice(0, n + 2);
+  const Rr = n => ['B', ...['C','D','E'].slice(0, n).reverse(), 'A'];
+  const tA = n => 3 * (n + 1), tB = n => 5 * n + 2;
+  const fA = n => `3×${n + 1} + 2×0`, fB = n => `3×${n} + 2×${n + 1}`;
+  const aOf = d => Math.sign(d) * 70 * (1 - Math.exp(-Math.abs(d) / 2.2));
+  const target = n => aOf(tB(n) - tA(n));
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y}, a), p); e.textContent = s; return e; };
+  const pol = (cx, cy, r, th) => { const t = th * Math.PI / 180; return [cx + r * Math.sin(t), cy - r * Math.cos(t)]; };
+
+  function layout() {
+    gsap.killTweensOf(ang);
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const rect = svg.getBoundingClientRect(); lastSize = Math.round(rect.width) + 'x' + Math.round(rect.height);
+    const fs = Math.max(12, Math.min(15, W / 27));
+    const rows = Math.min(5, k + 2);
+    const head = fs * 2, foot = fs * .5, gap = fs * .9, minRow = fs * 1.6, P0 = fs * 3.5;
+    const Rfull = Math.min(W * .41, (H - (head + rows * minRow + foot) - gap - P0 - 4) / 1.16);
+    const Rdial = Math.min(W * .41, (H - P0 - 4) / 1.16);
+    const mode = Rfull >= fs * 7 ? 'full' : Rdial >= fs * 7 ? 'dial' : 'side';
+    const C = fs * 8.8, gx = fs * .9;
+    let R, cx, cy, rowH = 0;
+    if (mode === 'full') {
+      R = Rfull;
+      const avail = H - (2 + 1.16 * R + P0 + gap) - head - foot;
+      rowH = Math.min(fs * 2.3, Math.max(minRow, avail / rows));
+      const total = 2 + 1.16 * R + P0 + gap + head + rows * rowH + foot;
+      cx = W / 2; cy = Math.max(0, (H - total) / 2) + 1.08 * R + 2;
+    } else if (mode === 'dial') {
+      R = Rdial;
+      const total = 2 + 1.16 * R + P0;
+      cx = W / 2; cy = Math.max(0, (H - total) / 2) + 1.08 * R + 2;
+    } else {
+      R = Math.max(40, Math.min((H - 4) / 1.184, (W - C - gx - 4) / 2.16));
+      const gw = 2 * 1.08 * R + gx + C;
+      cx = Math.max(0, (W - gw) / 2) + 1.08 * R; cy = Math.max(0, (H - 1.184 * R) / 2) + 1.08 * R;
+    }
+    const b = R * .08, Ro = R + b;
+    const arc = (r, a0, a1) => { const [x0, y0] = pol(cx, cy, r, a0), [x1, y1] = pol(cx, cy, r, a1); return `M${x0},${y0} A${r},${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${x1},${y1}`; };
+
+    // ---------- defs ----------
+    const defs = mk('defs', {}, svg);
+    const grad = (tag, id, at, stops) => { const g = mk(tag, Object.assign({id}, at), defs); stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g)); };
+    grad('linearGradient', 'bd-brass', {x1: 0, y1: 0, x2: 1, y2: 1}, [[0,'#fff1b4'],[.2,'#e4b65c'],[.48,'#9c6b25'],[.7,'#f2d283'],[1,'#6a4413']]);
+    grad('linearGradient', 'bd-brassV', {x1: 0, y1: 0, x2: 0, y2: 1}, [[0,'#f9e09a'],[.5,'#cf9a43'],[1,'#86581b']]);
+    grad('radialGradient', 'bd-face', {cx: .5, cy: .95, r: .95}, [[0,'#fffaea'],[.65,'#f3e7c6'],[1,'#d6c08f']]);
+    grad('radialGradient', 'bd-hub', {cx: .35, cy: .32, r: .75}, [[0,'#fff4c8'],[.4,'#d8a54b'],[1,'#5a3a0f']]);
+    grad('linearGradient', 'bd-parch', {x1: 0, y1: 0, x2: 0, y2: 1}, [[0,'#f8efd6'],[1,'#e2d2aa']]);
+    grad('radialGradient', 'bd-lampOff', {cx: .38, cy: .35, r: .7}, [[0,'#7a6852'],[1,'#1c140d']]);
+    grad('radialGradient', 'bd-lampA', {cx: .38, cy: .35, r: .7}, [[0,'#fff3dc'],[.35,'#ff9b5e'],[1,'#a02f0b']]);
+    grad('radialGradient', 'bd-lampB', {cx: .38, cy: .35, r: .7}, [[0,'#ecfcff'],[.35,'#66ccf2'],[1,'#0c4d70']]);
+    grad('linearGradient', 'bd-steel', {x1: 0, y1: 0, x2: 1, y2: 0}, [[0,'#0f0f14'],[.5,'#3a3d4a'],[1,'#121218']]);
+    const sh = mk('filter', {id: 'bd-sh', x: '-20%', y: '-20%', width: '140%', height: '160%'}, defs);
+    mk('feDropShadow', {dx: 0, dy: R * .035, stdDeviation: R * .045, 'flood-color': '#000', 'flood-opacity': .6}, sh);
+    const sh2 = mk('filter', {id: 'bd-sh2', x: '-20%', y: '-20%', width: '140%', height: '150%'}, defs);
+    mk('feDropShadow', {dx: 0, dy: fs * .25, stdDeviation: fs * .35, 'flood-color': '#000', 'flood-opacity': .5}, sh2);
+    const gl = mk('filter', {id: 'bd-glow', x: '-150%', y: '-150%', width: '400%', height: '400%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: fs * .45}, gl);
+    const bl = mk('filter', {id: 'bd-blur', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: 1.6}, bl);
+
+    // ---------- the instrument ----------
+    const wrap = mk('g', {}, svg);
+    const gD = mk('g', {}, wrap);
+    const yb = mode === 'side' ? cy + b * 1.3 : cy + b + P0;
+    const rr = Math.min(fs * .7, (yb - cy) * .45);
+    let Wp = 2 * Ro, px = 0, py = 0, Hp = 0;
+    if (mode !== 'side') {
+      Wp = Math.min(W - 2, Math.max(2 * Ro, fs * 18));
+      if (Wp > 2 * Ro + 1) {
+        mk('rect', {x: cx - Wp / 2, y: cy + b * .4, width: Wp, height: yb - cy - b * .4, rx: fs * .6, fill: 'url(#bd-brass)', filter: 'url(#bd-sh)', stroke: '#4a300c', 'stroke-width': 1}, gD);
+        mk('rect', {x: cx - Wp / 2 + 2.5, y: cy + b * .4 + 2.5, width: Wp - 5, height: yb - cy - b * .4 - 5, rx: fs * .45, fill: 'none', stroke: 'rgba(255,248,210,.4)', 'stroke-width': 1}, gD);
+      }
+    } else {
+      Hp = Math.min(yb - (cy - Ro), fs * 7.2); px = cx + Ro + gx; py = yb - Hp;
+      mk('rect', {x: cx + Ro - 4, y: yb - fs * 1.7, width: gx + 8, height: fs * .9, fill: 'url(#bd-brassV)', stroke: '#4a300c', 'stroke-width': .8}, gD);
+      mk('rect', {x: px, y: py, width: C, height: Hp, rx: fs * .6, fill: 'url(#bd-brass)', filter: 'url(#bd-sh)', stroke: '#4a300c', 'stroke-width': 1}, gD);
+      mk('rect', {x: px + 2.5, y: py + 2.5, width: C - 5, height: Hp - 5, rx: fs * .45, fill: 'none', stroke: 'rgba(255,248,210,.45)', 'stroke-width': 1}, gD);
+      mk('line', {x1: px + fs * .6, x2: px + C - fs * .6, y1: py + Hp / 2, y2: py + Hp / 2, stroke: 'rgba(60,35,5,.45)', 'stroke-width': 1}, gD);
+    }
+    mk('path', {d: `M${cx - Ro},${cy} A${Ro},${Ro} 0 0 1 ${cx + Ro},${cy} V${yb - rr} Q${cx + Ro},${yb} ${cx + Ro - rr},${yb} H${cx - Ro + rr} Q${cx - Ro},${yb} ${cx - Ro},${yb - rr} Z`, fill: 'url(#bd-brass)', filter: 'url(#bd-sh)', stroke: '#4a300c', 'stroke-width': 1}, gD);
+    mk('path', {d: arc(Ro - 1.2, -90, 90), fill: 'none', stroke: 'rgba(255,248,210,.6)', 'stroke-width': 1}, gD);
+    mk('path', {d: arc(R + b * .5, -90, 90), fill: 'none', stroke: 'rgba(70,45,10,.45)', 'stroke-width': 1}, gD);
+    [-1, 1].forEach(s => { const x = cx + s * (R + b * .5), y = cy + b * .1, r = Math.max(2, b * .32);
+      mk('circle', {cx: x, cy: y, r, fill: 'url(#bd-hub)', stroke: '#4a300c', 'stroke-width': .8}, gD);
+      mk('line', {x1: x - r * .7, y1: y - r * .3, x2: x + r * .7, y2: y + r * .3, stroke: '#3a2608', 'stroke-width': 1}, gD); });
+
+    const facePath = `M${cx - R},${cy + b * .35} L${cx - R},${cy} A${R},${R} 0 0 1 ${cx + R},${cy} L${cx + R},${cy + b * .35} Z`;
+    mk('path', {d: facePath, fill: 'url(#bd-face)', stroke: '#5a3c12', 'stroke-width': 1.2}, gD);
+    for (let r = .16; r < .64; r += .08) mk('path', {d: arc(R * r, -90, 90), fill: 'none', stroke: 'rgba(90,60,20,.09)', 'stroke-width': .8}, gD);
+    for (let t = -84; t <= 84; t += 6) { const [x0, y0] = pol(cx, cy, R * .14, t), [x1, y1] = pol(cx, cy, R * .62, t); mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, stroke: 'rgba(90,60,20,.05)', 'stroke-width': .8}, gD); }
+    mk('path', {d: arc(R - 2, -90, 90), fill: 'none', stroke: 'rgba(60,40,10,.28)', 'stroke-width': 3.5}, gD);
+    mk('path', {d: arc(R * .945, -80, 0), fill: 'none', stroke: DEEP.A, 'stroke-opacity': .6, 'stroke-width': R * .04}, gD);
+    mk('path', {d: arc(R * .945, 0, 80), fill: 'none', stroke: DEEP.B, 'stroke-opacity': .6, 'stroke-width': R * .04}, gD);
+    const ticks = [];
+    for (let t = -80; t <= 80.01; t += 4) { const [x0, y0] = pol(cx, cy, R * .86, t), [x1, y1] = pol(cx, cy, R * .905, t); ticks.push(mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, stroke: INK, 'stroke-opacity': .55, 'stroke-width': 1}, gD)); }
+    for (let d = -6; d <= 6; d++) { const t = aOf(d), [x0, y0] = pol(cx, cy, R * .79, t), [x1, y1] = pol(cx, cy, R * .915, t); ticks.push(mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, stroke: INK, 'stroke-width': d ? 1.7 : 2.4, 'stroke-linecap': 'round'}, gD)); }
+    const nf = F(fs * .82), nameF = F(fs * 1.05), nameY = cy - fs * .55;
+    const marks = [[0, 'TIE'], [1, '1'], [2, '2'], [-1, '1'], [-2, '2']];
+    // only show the "5" marks if they clear the ADA / BEN names below them
+    const fiveBottom = cy - R * .69 * Math.cos(aOf(5) * Math.PI / 180) + nf * .6;
+    const nameTop = nameY - nameF * 1.0;
+    if (R >= fs * 6 && fiveBottom + 3 <= nameTop) marks.push([5, '5'], [-5, '5']);
+    marks.forEach(([d, s]) => {
+      const [x, y] = pol(cx, cy, R * .69, aOf(d));
+      ticks.push(txt(gD, x, y, s, {class: 'mono', 'font-size': nf, 'font-weight': 700, fill: INK, 'text-anchor': 'middle', 'dominant-baseline': 'central'}));
+    });
+    if (R > fs * 7) txt(gD, cx, cy - R * .28, 'POINT LEAD', {class: 'mono', 'font-size': F(fs * .72), 'font-weight': 700, fill: INK, 'fill-opacity': .55, 'text-anchor': 'middle', 'letter-spacing': '.12em'});
+    txt(gD, cx - R * .55, nameY, 'ADA', {class: 'disp', 'font-size': nameF, 'font-weight': 800, fill: DEEP.A, 'text-anchor': 'middle', 'letter-spacing': '.08em'});
+    txt(gD, cx + R * .55, nameY, 'BEN', {class: 'disp', 'font-size': nameF, 'font-weight': 800, fill: DEEP.B, 'text-anchor': 'middle', 'letter-spacing': '.08em'});
+
+    const nL = R * .84, nw = Math.max(2.2, R * .03);
+    const nd = `M${cx},${cy - nL} L${cx + nw},${cy - nL * .25} L${cx + nw * 1.5},${cy + R * .1} L${cx - nw * 1.5},${cy + R * .1} L${cx - nw},${cy - nL * .25} Z`;
+    const nshadow = mk('path', {d: nd, fill: '#000', opacity: .3, filter: 'url(#bd-blur)'}, gD);
+    const needle = mk('g', {}, gD);
+    mk('path', {d: nd, fill: 'url(#bd-steel)', stroke: '#050507', 'stroke-width': .6}, needle);
+    mk('path', {d: `M${cx},${cy - nL} L${cx + nw * .55},${cy - nL * .7} L${cx - nw * .55},${cy - nL * .7} Z`, fill: '#d63c22'}, needle);
+    mk('line', {x1: cx - nw * .25, y1: cy - nL * .68, x2: cx - nw * .55, y2: cy - nL * .25, stroke: 'rgba(255,255,255,.35)', 'stroke-width': .8}, needle);
+    const hr = R * .085;
+    mk('circle', {cx, cy, r: hr, fill: 'url(#bd-hub)', stroke: '#4a300c', 'stroke-width': 1}, gD);
+    mk('circle', {cx, cy, r: hr * .42, fill: '#7a5317', stroke: 'rgba(255,240,190,.5)', 'stroke-width': .6}, gD);
+    mk('line', {x1: cx - hr * .35, y1: cy + hr * .1, x2: cx + hr * .35, y2: cy - hr * .1, stroke: '#2a1a05', 'stroke-width': 1.2}, gD);
+    const [g0x, g0y] = pol(cx, cy, R * .9, -78), [g1x, g1y] = pol(cx, cy, R * .9, -14);
+    mk('path', {d: `M${g0x},${g0y} A${R * .9},${R * .9} 0 0 1 ${g1x},${g1y} A${R * 1.2},${R * 1.2} 0 0 0 ${g0x},${g0y} Z`, fill: '#fff', opacity: .16}, gD);
+    const flash = mk('path', {d: facePath, fill: '#fffbe8', opacity: 0}, gD);
+
+    // readouts
+    const lr = fs * .42, wh = fs * 1.45, ww = fs * 2.5;
+    function readout(id, x0, wid, ly, ly2) {
+      const lx = x0 + lr, lcy = ly - fs * .34;
+      const glow = mk('circle', {cx: lx, cy: lcy, r: lr * 2.2, fill: FILL[id], opacity: 0, filter: 'url(#bd-glow)'}, gD);
+      const lamp = mk('circle', {cx: lx, cy: lcy, r: lr, fill: 'url(#bd-lampOff)', stroke: '#3a2608', 'stroke-width': 1}, gD);
+      mk('circle', {cx: lx - lr * .32, cy: lcy - lr * .35, r: lr * .28, fill: '#fff', opacity: .6}, gD);
+      const nx = x0 + lr * 2 + fs * .35;
+      const name = txt(gD, nx, ly, NM[id].toUpperCase(), {class: 'disp', 'font-size': F(fs * .95), 'font-weight': 800, fill: '#2a1a06', 'letter-spacing': '.06em'});
+      const wx = Math.max(nx + name.getComputedTextLength() + fs * .35, x0 + wid - ww);
+      mk('rect', {x: wx, y: ly - wh * .78, width: ww, height: wh, rx: fs * .25, fill: '#16100a', stroke: '#f6d98c', 'stroke-opacity': .55, 'stroke-width': 1}, gD);
+      mk('rect', {x: wx + 1.5, y: ly - wh * .78 + 1.5, width: ww - 3, height: wh * .35, rx: fs * .2, fill: '#fff', opacity: .06}, gD);
+      const num = txt(gD, wx + ww / 2, ly - wh * .78 + wh / 2, String(id === 'A' ? tA(drawK) : tB(drawK)), {class: 'mono', 'font-size': F(fs * 1.05), 'font-weight': 700, fill: '#ffe7aa', 'text-anchor': 'middle', 'dominant-baseline': 'central'});
+      const fm = txt(gD, x0, ly2, id === 'A' ? fA(drawK) : fB(drawK), {class: 'mono', 'font-size': F(fs * .8), 'font-weight': 700, fill: '#3b2709'});
+      return {lamp, glow, num, fm, lx, ly: lcy, lr};
+    }
+    let rA, rB;
+    if (mode === 'side') {
+      const ly = py + fs * .6 + wh * .78, ly2 = ly + fs * 1.4;
+      rA = readout('A', px + fs * .6, C - fs * 1.2, ly, ly2);
+      rB = readout('B', px + fs * .6, C - fs * 1.2, ly + Hp / 2, ly2 + Hp / 2);
+    } else {
+      const ly = cy + b + fs * 1.2, ly2 = ly + fs * 1.45, sec = Wp / 2 - fs * 1.3;
+      rA = readout('A', cx - Wp / 2 + fs * .7, sec, ly, ly2);
+      rB = readout('B', cx + fs * .6, sec, ly, ly2);
+    }
+    const ring = mk('circle', {cx: 0, cy: 0, r: 1, fill: 'none', 'stroke-width': 2, opacity: 0}, gD);
+
+    G = {mode, R, cx, cy, by: 0, sh: R * .03, needle, nshadow, rA, rB, ring, flash, wrap, ticks, win: null, ready: false};
+
+    // ---------- the ballots and the points staircase ----------
+    if (mode === 'full') {
+      const by = yb + gap, sw = W * .335, sxL = W * .012, sxR = W - W * .012 - sw, pad = fs * .45;
+      const rowY = i => by + head + rowH * (i + .5);
+      const ch = Math.min(rowH * .76, fs * 1.8);
+      const n0 = drawK + 2;
+      const ccx = W / 2, colW = sxR - (sxL + sw) - fs * .6, unit = colW * .92 / 4, bh = Math.min(rowH * .5, fs * 1.05);
+      const stairD = n => { let d = ''; for (let i = 0; i < 5; i++) { const on = i < n, w = on ? (n - 1 - i) * unit : 0, hh = on ? bh : 0, y = rowY(Math.min(i, n - 1)) - hh / 2, x = ccx - w / 2; d += `M${x.toFixed(2)},${y.toFixed(2)} H${(x + w).toFixed(2)} V${(y + hh).toFixed(2)} H${x.toFixed(2)} Z `; } return d; };
+
+      const gB = mk('g', {}, svg);
+      const guides = [];
+      for (let i = 0; i < rows; i++) guides.push(mk('line', {x1: sxL + sw, x2: sxR, y1: rowY(i), y2: rowY(i), stroke: CREAM, 'stroke-opacity': .2, 'stroke-width': 1, 'stroke-dasharray': '2 4', opacity: i < n0 ? 1 : 0}, gB));
+      txt(gB, ccx, by + head * .6, 'POINTS', {class: 'mono', 'font-size': F(fs * .8), 'font-weight': 700, fill: CREAM, 'fill-opacity': .85, 'text-anchor': 'middle', 'letter-spacing': '.14em'});
+      const stair = mk('path', {d: stairD(n0), fill: 'url(#bd-brassV)'}, gB);
+      const cr = Math.max(fs * .62, Math.min(rowH * .36, fs * .85));
+      const coins = [];
+      for (let i = 0; i < rows; i++) {
+        const g = mk('g', {}, gB);
+        mk('circle', {cx: ccx, cy: rowY(i), r: cr, fill: 'url(#bd-hub)', stroke: '#4a300c', 'stroke-width': 1}, g);
+        mk('circle', {cx: ccx, cy: rowY(i), r: cr * .78, fill: 'none', stroke: 'rgba(60,35,5,.4)', 'stroke-width': .7}, g);
+        const t = txt(g, ccx, rowY(i), i < n0 ? String(n0 - 1 - i) : '', {class: 'mono', 'font-size': F(fs * .88), 'font-weight': 800, fill: INK, 'text-anchor': 'middle', 'dominant-baseline': 'central'});
+        gsap.set(g, {autoAlpha: i < n0 ? 1 : 0});
+        coins.push({g, t});
+      }
+      function slip(sx, label) {
+        const g = mk('g', {}, gB);
+        const r = mk('rect', {x: sx, y: by, width: sw, height: head + rowH * n0 + foot, rx: fs * .35, fill: 'url(#bd-parch)', filter: 'url(#bd-sh2)', stroke: '#b9a173', 'stroke-width': .8}, g);
+        txt(g, sx + sw / 2, by + head * .6, label, {class: 'mono', 'font-size': F(fs * .82), 'font-weight': 800, fill: INK, 'text-anchor': 'middle', 'letter-spacing': '.12em'});
+        mk('line', {x1: sx + pad, x2: sx + sw - pad, y1: by + head * .92, y2: by + head * .92, stroke: INK, 'stroke-opacity': .35, 'stroke-dasharray': '3 3'}, g);
+        return {g, r};
+      }
+      function chip(p, id) {
+        const g = mk('g', {}, p), w = sw - 2 * pad, dummy = id > 'B';
+        const at = {x: 0, y: -ch / 2, width: w, height: ch, rx: ch / 2, fill: FILL[id], stroke: dummy ? '#8b8166' : DEEP[id], 'stroke-width': 1.2};
+        if (dummy) at['stroke-dasharray'] = '4 3';
+        const r = mk('rect', at, g);
+        txt(g, ch * .45, 0, NM[id], {class: 'disp', 'font-size': F(fs * .95), 'font-weight': 800, fill: INK, 'dominant-baseline': 'central'});
+        if (dummy) txt(g, w - ch * .4, 0, 'no hope', {class: 'mono', 'font-size': F(fs * .7), 'font-weight': 600, fill: '#6b6250', 'text-anchor': 'end', 'dominant-baseline': 'central'});
+        g._r = r;
+        return g;
+      }
+      const sL = slip(sxL, '3 VOTERS'), sR = slip(sxR, '2 VOTERS');
+      const chL = {}, chR = {};
+      ['A','B','C','D','E'].forEach(id => { chL[id] = chip(sL.g, id); chR[id] = chip(sR.g, id); });
+      ['A','B','C','D','E'].forEach(id => {
+        const li = L(drawK).indexOf(id), ri = Rr(drawK).indexOf(id);
+        gsap.set(chL[id], {x: sxL + pad, y: rowY(li < 0 ? 0 : li), autoAlpha: li < 0 ? 0 : 1});
+        gsap.set(chR[id], {x: sxR + pad, y: rowY(ri < 0 ? 0 : ri), autoAlpha: ri < 0 ? 0 : 1});
+      });
+      Object.assign(G, {by, bal: gB, stair, stairD, coins, guides, slipRects: [sL.r, sR.r], slips: [sL.g, sR.g], chL, chR, rowY, sxL, sxR, pad, rowH, head, foot});
+    }
+
+    ang.v = target(drawK);
+    G.win = ang.v < 0 ? 'A' : 'B';
+    setNeedle(); lamps(false);
+    G.ready = true;
+  }
+
+  function setNeedle() {
+    if (!G) return;
+    const r = `rotate(${(ang.v + jit.v).toFixed(2)} ${G.cx} ${G.cy})`;
+    G.needle.setAttribute('transform', r);
+    G.nshadow.setAttribute('transform', `translate(${G.sh},${G.sh * 1.6}) ${r}`);
+    const w = ang.v < 0 ? 'A' : 'B';
+    if (G.ready && w !== G.win) { G.win = w; lamps(true); }
+  }
+
+  function startJit() {
+    if (jitOn || Kit.calm) return;
+    jitOn = true; jit.v = -.6;
+    gsap.to(jit, {v: .6, duration: 1.7, ease: 'sine.inOut', yoyo: true, repeat: -1, onUpdate: setNeedle});
+  }
+
+  function lamps(anim) {
+    const g = G, w = g.win;
+    g.rA.lamp.setAttribute('fill', w === 'A' ? 'url(#bd-lampA)' : 'url(#bd-lampOff)');
+    g.rB.lamp.setAttribute('fill', w === 'B' ? 'url(#bd-lampB)' : 'url(#bd-lampOff)');
+    const on = w === 'A' ? g.rA : g.rB, off = w === 'A' ? g.rB : g.rA;
+    if (anim && !Kit.calm) {
+      gsap.to(off.glow, {opacity: 0, duration: .25, ease: 'power2.out'});
+      gsap.fromTo(on.glow, {opacity: 1}, {opacity: .6, duration: .9, ease: 'power2.out'});
+      gsap.set(g.ring, {attr: {cx: on.lx, cy: on.ly, r: on.lr, stroke: FILL[w]}, opacity: 1});
+      gsap.to(g.ring, {attr: {r: on.lr * 7}, opacity: 0, duration: 1.1, ease: 'expo.out'});
+      gsap.fromTo(g.flash, {opacity: .5}, {opacity: 0, duration: 1, ease: 'power2.out'});
+      gsap.fromTo(on.num, {scale: 1.6, transformOrigin: '50% 50%'}, {scale: 1, duration: .7, ease: 'back.out(3)'});
+      Kit.haptic('success');
+    } else { gsap.set(on.glow, {opacity: .6}); gsap.set(off.glow, {opacity: 0}); }
+  }
+
+  function animate() {
+    drawK = k;
+    if (Kit.calm || !G) { layout(); return; }
+    const g = G, kk = k, n = kk + 2;
+    Kit.haptic('light');
+    if (g.mode === 'full') {
+      const nd = g.stairD(n);
+      gsap.to(g.stair, Object.assign({duration: .8, ease: 'power3.inOut'}, MORPH ? {morphSVG: nd} : {attr: {d: nd}}));
+      g.coins.forEach((c, i) => {
+        if (i >= n) return;
+        const v = String(n - 1 - i);
+        if (i === n - 1) { c.t.textContent = v; gsap.fromTo(c.g, {autoAlpha: 0, scale: 0, transformOrigin: '50% 50%'}, {autoAlpha: 1, scale: 1, duration: .6, ease: 'back.out(2.4)', delay: .25}); }
+        else gsap.to(c.t, {scaleY: 0, transformOrigin: '50% 50%', duration: .12, ease: 'power2.in', delay: i * .06, onComplete: () => { c.t.textContent = v; gsap.to(c.t, {scaleY: 1, duration: .35, ease: 'back.out(3)'}); }});
+      });
+      if (g.guides[n - 1]) gsap.to(g.guides[n - 1], {opacity: 1, duration: .5, delay: .2});
+      gsap.to(g.slipRects, {attr: {height: g.head + g.rowH * n + g.foot}, duration: .65, ease: 'back.out(1.5)'});
+      const nid = L(kk)[n - 1];
+      gsap.fromTo(g.chL[nid], {autoAlpha: 0, x: g.sxL + g.pad, y: g.rowY(n - 1) - g.rowH * .9}, {autoAlpha: 1, y: g.rowY(n - 1), duration: .65, ease: 'back.out(1.8)', delay: .2});
+      Rr(kk).forEach((id, i) => {
+        if (id === nid) gsap.fromTo(g.chR[id], {autoAlpha: 0, scale: .4, x: g.sxR + g.pad, y: g.rowY(i), transformOrigin: '50% 50%'}, {autoAlpha: 1, scale: 1, duration: .6, ease: 'back.out(2)', delay: .3});
+        else gsap.to(g.chR[id], {y: g.rowY(i), duration: .7, ease: 'power3.inOut', delay: id === 'A' ? 0 : .05});
+      });
+      gsap.fromTo(g.chR.A._r, {attr: {'stroke-width': 4}}, {attr: {'stroke-width': 1.2}, duration: 1.4, ease: 'power2.out', delay: .4});
+    }
+    const o = {a: +g.rA.num.textContent, b: +g.rB.num.textContent};
+    gsap.to(o, {a: tA(kk), b: tB(kk), duration: .9, delay: .35, ease: 'power2.out', snap: {a: 1, b: 1}, onUpdate: () => { g.rA.num.textContent = o.a; g.rB.num.textContent = o.b; }});
+    [[g.rA.fm, fA(kk)], [g.rB.fm, fB(kk)]].forEach(([el, s]) => gsap.to(el, {opacity: 0, duration: .12, delay: .3, onComplete: () => { el.textContent = s; gsap.to(el, {opacity: 1, duration: .35}); }}));
+    gsap.to(ang, {v: target(kk), duration: 2.8, delay: .5, ease: 'elastic.out(1,0.32)', onUpdate: setNeedle});
+  }
+
+  function flip(p) {
+    const g = G, s = p.R / g.R, dx = p.cx - g.cx, dy = p.cy - g.cy;
+    if (Math.abs(s - 1) > .01 || Math.abs(dx) > 1 || Math.abs(dy) > 1)
+      gsap.from(g.wrap, {scale: s, x: dx, y: dy, svgOrigin: `${g.cx} ${g.cy}`, duration: .75, ease: 'power3.inOut'});
+    if (g.mode === 'full') {
+      if (p.mode === 'full' && Math.abs(p.by - g.by) > 1) gsap.from(g.bal, {y: p.by - g.by, duration: .75, ease: 'power3.inOut'});
+      else if (p.mode !== 'full') gsap.from(g.bal, {opacity: 0, duration: .5});
+    }
+  }
+
+  function words() {
+    if (k === 1) { say.innerHTML = '<b>Cy</b> gets just 2 points and can\u2019t win. No voter changed their mind about Ada and Ben, yet <b>Ben now wins.</b>'; btn.textContent = '+ Add Dot'; }
+    else if (k === 2) { say.innerHTML = 'Add <b>Dot</b>: every rank is worth one point more, and Ben\u2019s lead grows. <b>One more makes five.</b>'; btn.textContent = '+ Add Eve'; }
+    else { Kit.hide('say'); Kit.hide('add'); Kit.show('why'); Kit.show('keep'); }
+  }
+
+  function go() {
+    if (busy || k >= MAXK) return;
+    busy = true; k++;
+    words();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const prev = G && {R: G.R, cx: G.cx, cy: G.cy, by: G.by, mode: G.mode};
+      layout(); busy = false;
+      if (prev && !Kit.calm) flip(prev);
+      animate(); startJit();
+    }));
+  }
+  btn.addEventListener('click', go);
+  svg.addEventListener('click', go);
+
+  Kit.onShow.card = () => {
+    const r = svg.getBoundingClientRect(), s = Math.round(r.width) + 'x' + Math.round(r.height);
+    if (G && s === lastSize) return;
+    layout();
+  };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G) return;
+    const g = G;
+    gsap.from(g.wrap, {opacity: 0, y: 14, duration: .8, ease: 'power3.out'});
+    gsap.from(g.ticks, {opacity: 0, duration: .3, stagger: .01, delay: .3, ease: 'power2.out'});
+    if (g.mode === 'full') {
+      gsap.from(g.slips, {opacity: 0, y: 18, duration: .7, stagger: .12, delay: .35, ease: 'power3.out'});
+      gsap.from([g.stair, ...g.coins.map(c => c.g)], {opacity: 0, duration: .5, stagger: .06, delay: .5});
+    }
+    gsap.killTweensOf(ang);
+    const t = target(drawK); ang.v = -84; setNeedle();
+    gsap.to(ang, {v: t, duration: 2.6, delay: .7, ease: 'elastic.out(1,0.3)', onUpdate: setNeedle});
+    startJit();
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    for (let i = 0; i < MAXK; i++) { btn.click(); await w(Kit.calm ? 120 : 900); }
+    await w(Kit.calm ? 150 : 1600);
+  };
+})();
+Kit.single();
+</script>
+</html>

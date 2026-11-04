@@ -1,0 +1,38 @@
+{
+  "id": "science-bomb-layer",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some geologists start the Anthropocene around 1950–1960?",
+  "answer": "Some geologists date the Anthropocene to around 1950–1960 because hydrogen-bomb tests in the 1950s and 60s spread a radioactive layer worldwide. That layer forms a clear marker in the mud everywhere. An era needs a mark found everywhere at once, and this one qualifies.",
+  "move": "An era needs a mark found everywhere at once: the 1950s bomb fallout is one.",
+  "keywords": [
+    "anthropocene",
+    "geologists",
+    "sediment",
+    "nuclear-tests",
+    "hydrogen-bomb"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A world map with columns of mud, one tube per site on Earth. Drag a slider through the years to watch a bright radioactive ash layer appear. Asks why some geologists start the Anthropocene around 1950–1960.",
+    "ground": "#0f3a6b"
+  },
+  "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=CpGW8eA6Qik&t=49s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "maths-fibonacci-gaps",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do the gaps in a Penrose tiling hide the Fibonacci numbers?",
+  "answer": "Penrose tilings have long and short gaps between their shapes. Counting the long and short gaps gives Fibonacci numbers, and the ratio between those counts closes in on the golden ratio. Drag up from the bottom of the page to count the gaps yourself.",
+  "move": "Count the long and short gaps: you get Fibonacci numbers, and their ratio closes in on the golden ratio.",
+  "keywords": [
+    "penrose tiling",
+    "fibonacci",
+    "golden ratio",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tiling of shapes with long and short gaps between them. The reader drags up from the bottom of the page to count the gaps, asking how they reveal the Fibonacci numbers.",
+    "ground": "#1c2340"
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=855s",
+  "written": "2026-11-04"
+}

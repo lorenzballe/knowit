@@ -1,0 +1,464 @@
+<!doctype html>
+<!-- slug: nature-vesuvius-ash-volume -->
+<!-- Look: a brass gauge from an old observatory on soot-dark walnut. The cream enamel face has engraved log ticks, and the reading sits on a riveted brass nameplate. Beside or below it is an engraved Vesuvius with the Somma ridge, live lava threads and a lit ash column, plus a stratified cube of ash.
+     Interaction: turn the needle to guess the volume. The volcano throws ash, which settles into a cube whose side grows only with the cube root of your number.
+     Wow: on reveal the needle swings to 245 million m³ with a damped wobble. The crater flashes, a glint crosses the glass, and the view zooms in while hundreds of embers arc out to build the real 626 m cube around or beside your dashed ghost. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vesuvius 1944: the ash gauge</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;display:block;flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#cv:active{cursor:grabbing}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{margin:0;font:600 max(1.9cqh,13px)/1.3 var(--body)}
+.say b,#why b{color:#ffcf7a}
+.answered .q{font-size:max(2.4cqh,15px)}
+</style>
+<article class="card" id="card" style="--c:#1d1611;--k:#f4e7c9;--edge:#0b0806" data-topic="nature" data-kind="Turn the dial · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TURN THE DIAL</span></div>
+    <h2 class="q">How much material did Vesuvius emit in the first ten days of 1944?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A brass gauge measuring erupted volume in cubic metres on a log scale, next to an engraved Vesuvius throwing ash into a cube."></canvas>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say"><b>Turn the needle</b> to your guess. The ash cube shows how big that is.</p>
+    <div id="why" class="gone"><p class="body">More than <b>245 million m³</b> in about ten days, some 280 m³ every second. Packed into one cube: about <b>626 m</b> on each side. Ash and lapilli fell on Pompei, Nocera, Scafati and Poggiomarino.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Vesuvius, 1944: over 245 million m³ in ten days, a cube 626 m wide.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
+  const REAL = 245e6, TMIN = 6, TSPAN = 4, CB = Math.cbrt(1e10);
+  const tOf = V => (Math.log10(V) - TMIN) / TSPAN, vOf = t => Math.pow(10, TMIN + TSPAN * Math.max(0, Math.min(1, t)));
+  const TR = tOf(REAL);
+  const MONO = (getComputedStyle(card).getPropertyValue('--mono') || '').trim() || 'monospace';
+  let x = null, W = 0, H = 0, dpr = 1, fs = 12, faceC = null, G = {}, hatch = [], scree = [], lavaR = [], lavaL = [];
+  const S = {intro: 1, flash: 0, labels: 0, heat: .2, zoom: 1, glint: 0};
+  const needle = {p: .2, v: 0, T: .2, k: 120, c: 12};
+  let phase = 'guess', guessT = .2, touched = false, dragging = false, released = false;
+  let fill = 0, realFill = 0, queue = 0, ghostT = null, lastDec = -1, dyCur = 0;
+  const parts = [], puffs = [];
+
+  const fmt = V => V < 1e7 ? (V / 1e6).toFixed(1) + ' million m³' : V < 1e9 ? Math.round(V / 1e6) + ' million m³' : (V / 1e9).toFixed(1) + ' billion m³';
+  const side = V => Math.round(Math.cbrt(V));
+  const ang = t => (150 + 240 * t) * Math.PI / 180;
+  const zoomTarget = () => Math.max(.6, Math.min(5, .92 * CB / Math.cbrt(Math.max(REAL, vOf(ghostT !== null ? ghostT : guessT)))));
+
+  // ---------- layout: tall (gauge above scene) or wide (gauge beside scene) ----------
+  function layout() {
+    const r = Kit.fitCanvas(cv); if (!r || r.W < 40 || r.H < 40) return;
+    x = r.x; W = r.W; H = r.H; dpr = cv.width / W || 1;
+    fs = Math.max(12, Math.min(14, W / 26));
+    x.font = `700 ${fs}px ${MONO}`;
+    const ph = Math.round(fs * 1.9), pw = x.measureText('10.0 billion m³').width + fs * 2.6;
+    G.ph = ph; G.pw = pw;
+    G.wide = H < W * .78;
+    let R;
+    if (!G.wide) {
+      R = Math.max(40, Math.min(W * .36, (H * .56 - ph / 2 - 4) / 1.9));
+      G.cx = W / 2; G.cy = R + 4;
+      G.sx0 = 0; G.sy0 = G.cy + R * .9 + ph / 2 + 6;
+    } else {
+      R = Math.max(30, Math.min(W * .21, (H - 4 - ph / 2) / 1.92));
+      const col = Math.max(2 * R + 10, pw + 6);
+      G.cx = col / 2; G.cy = Math.max(R + 2, (H - 1.9 * R - ph / 2) / 2 + R);
+      G.sx0 = col + 8; G.sy0 = 2;
+    }
+    G.R = R; G.px = Math.max(pw / 2 + 2, Math.min(W - pw / 2 - 2, G.cx)); G.py = G.cy + R * .9;
+    G.ground = H - 3;
+    const SW = W - G.sx0; G.SW = SW;
+    G.band = fs * 2.4 + 4;
+    const bh = G.ground - G.sy0; G.bh = bh;
+    G.vx = G.sx0 + SW * .22; G.vw = SW * .21; G.vh = Math.max(16, Math.min((bh - G.band) * .8, SW * .26)); G.cw = G.vw * .2;
+    G.top = G.ground - G.vh;
+    G.ax = G.sx0 + SW * .45; G.ay = G.ground - 1;
+    G.smax = Math.max(8, Math.min((bh - G.band - 2) / 1.24, (W - G.ax - 6) / 1.42));
+    G.k = G.smax / CB;
+    hatch = []; for (let i = -60; i < 80; i++) hatch.push(i * 4.5);
+    scree = []; for (let i = 0; i < 46; i++) scree.push([G.sx0 * .3 + Kit.rnd() * (W - G.sx0 * .3), .6 + Kit.rnd() * 1.6, Kit.rnd()]);
+    lavaR = []; for (let i = 0; i <= 14; i++) lavaR.push([.04 + i / 14 * .6, (Kit.rnd() - .5) * 1.6]);
+    lavaL = []; for (let i = 0; i <= 8; i++) lavaL.push([.05 + i / 8 * .36, (Kit.rnd() - .5) * 1.4]);
+    parts.length = 0; puffs.length = 0;
+    faceC = renderFace();
+  }
+  function off() { const c = document.createElement('canvas'); c.width = Math.ceil(W * dpr); c.height = Math.ceil(H * dpr); const g = c.getContext('2d'); g.scale(dpr, dpr); return [c, g]; }
+  function renderFace() {
+    const [c, g] = off(), {cx, cy, R} = G;
+    g.save(); g.shadowColor = 'rgba(0,0,0,.7)'; g.shadowBlur = R * .16; g.shadowOffsetY = R * .06;
+    g.beginPath(); g.arc(cx, cy, R, 0, 7); g.fillStyle = '#5a3c12'; g.fill(); g.restore();
+    let lg = g.createLinearGradient(cx - R, cy - R, cx + R, cy + R);
+    [[0, '#fbe6a6'], [.22, '#c8963a'], [.48, '#7a5419'], [.7, '#e2b866'], [1, '#4e3410']].forEach(s => lg.addColorStop(...s));
+    g.beginPath(); g.arc(cx, cy, R, 0, 7); g.fillStyle = lg; g.fill();
+    g.save(); g.strokeStyle = 'rgba(40,24,6,.35)'; g.lineWidth = 1;
+    const kn = Math.round(R * 1.4);
+    for (let i = 0; i < kn; i++) { const a = i / kn * Math.PI * 2; g.beginPath(); g.moveTo(cx + Math.cos(a) * R * .965, cy + Math.sin(a) * R * .965); g.lineTo(cx + Math.cos(a) * R * .995, cy + Math.sin(a) * R * .995); g.stroke(); }
+    g.restore();
+    lg = g.createLinearGradient(cx + R, cy + R, cx - R, cy - R);
+    [[0, '#f2d58c'], [.5, '#8a6122'], [1, '#3e290b']].forEach(s => lg.addColorStop(...s));
+    g.beginPath(); g.arc(cx, cy, R * .925, 0, 7); g.fillStyle = lg; g.fill();
+    const Rf = R * .875;
+    const rg = g.createRadialGradient(cx - R * .2, cy - R * .25, R * .05, cx, cy, Rf);
+    [[0, '#fbf3df'], [.6, '#efe1bd'], [.92, '#d9c393'], [1, '#a88d58']].forEach(s => rg.addColorStop(...s));
+    g.beginPath(); g.arc(cx, cy, Rf, 0, 7); g.fillStyle = rg; g.fill();
+    g.save(); g.beginPath(); g.arc(cx, cy, Rf, 0, 7); g.clip();
+    for (let i = 0; i < R * 14; i++) {
+      const a = Kit.rnd() * 7, d = Math.sqrt(Kit.rnd()) * Rf;
+      g.fillStyle = `rgba(90,60,20,${.04 + Kit.rnd() * .08})`;
+      g.fillRect(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 1, 1);
+    }
+    for (let i = 0; i < 5; i++) { const a = Kit.rnd() * 7, d = Kit.rnd() * Rf * .8, rr = R * (.05 + Kit.rnd() * .1);
+      const fg = g.createRadialGradient(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 0, cx + Math.cos(a) * d, cy + Math.sin(a) * d, rr);
+      fg.addColorStop(0, 'rgba(150,100,40,.10)'); fg.addColorStop(1, 'rgba(150,100,40,0)'); g.fillStyle = fg; g.fillRect(cx - R, cy - R, 2 * R, 2 * R); }
+    g.restore();
+    const engrave = (fn, w) => { g.save(); g.translate(.6, .7); g.strokeStyle = 'rgba(255,250,235,.7)'; g.lineWidth = w; fn(); g.restore(); g.strokeStyle = '#2b1d0c'; g.lineWidth = w; fn(); };
+    engrave(() => { g.beginPath(); g.arc(cx, cy, R * .8, ang(0), ang(1)); g.stroke(); }, 1.2);
+    g.beginPath(); g.arc(cx, cy, R * .835, ang(.75), ang(1)); g.strokeStyle = 'rgba(170,50,20,.6)'; g.lineWidth = R * .04; g.stroke();
+    const tick = (t, r2, w) => { const a = ang(t); engrave(() => { g.beginPath(); g.moveTo(cx + Math.cos(a) * R * .8, cy + Math.sin(a) * R * .8); g.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2); g.stroke(); }, w); };
+    for (let d = 0; d < 4; d++) for (let m = 1; m <= 9; m++) tick((d + Math.log10(m)) / 4, m === 1 ? R * .7 : m === 5 ? R * .73 : R * .755, m === 1 ? 2 : 1);
+    tick(1, R * .7, 2);
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    const ink = (s, lx, ly, col) => { g.fillStyle = 'rgba(255,250,235,.7)'; g.fillText(s, lx + .6, ly + .7); g.fillStyle = col; g.fillText(s, lx, ly); };
+    if (R >= 56) {
+      const full = R >= 90, rr = full ? .54 : .5;
+      g.font = `700 ${fs}px ${MONO}`;
+      (full ? ['1 M', '10 M', '100 M', '1 B', '10 B'] : ['1M', '10M', '100M', '1B', '10B']).forEach((s, i) => {
+        const a = ang(i / 4); ink(s, cx + Math.cos(a) * R * rr, cy + Math.sin(a) * R * rr, '#2b1d0c');
+      });
+    }
+    g.font = `600 ${fs}px ${MONO}`;
+    if (R >= 100) ink('m³ · FIRST 10 DAYS', cx, cy + R * .45, '#6b4a1c');
+    else ink('m³', cx, cy + R * .35, '#6b4a1c');
+    [45, 135, 225, 315].forEach((deg, i) => {
+      const a = deg * Math.PI / 180, sx = cx + Math.cos(a) * R * .94, sy = cy + Math.sin(a) * R * .94, sr = Math.max(2.2, R * .028);
+      const sg = g.createRadialGradient(sx - sr * .4, sy - sr * .4, 0, sx, sy, sr);
+      sg.addColorStop(0, '#fff0c0'); sg.addColorStop(1, '#6a4a16');
+      g.beginPath(); g.arc(sx, sy, sr, 0, 7); g.fillStyle = sg; g.fill();
+      g.save(); g.translate(sx, sy); g.rotate(i * .9 + .3); g.strokeStyle = '#3a2508'; g.lineWidth = 1; g.beginPath(); g.moveTo(-sr * .8, 0); g.lineTo(sr * .8, 0); g.stroke(); g.restore();
+    });
+    return c;
+  }
+
+  // ---------- the gauge, every frame ----------
+  function drawNeedle(t, ghost) {
+    const {cx, cy, R} = G, L = R * .76, tail = R * .2, w = Math.max(2, R * .032);
+    x.save(); x.translate(cx, cy); x.rotate(ang(t));
+    if (ghost) { x.globalAlpha = .5; x.strokeStyle = '#7a5a2a'; x.lineWidth = 1.5; x.setLineDash([4, 3]); x.beginPath(); x.moveTo(0, 0); x.lineTo(L * .95, 0); x.stroke(); x.restore(); return; }
+    x.shadowColor = 'rgba(50,25,0,.45)'; x.shadowBlur = 3; x.shadowOffsetX = 2; x.shadowOffsetY = 3;
+    const ng = x.createLinearGradient(0, -w, 0, w); ng.addColorStop(0, '#3f5772'); ng.addColorStop(.5, '#16222f'); ng.addColorStop(1, '#0b121b');
+    x.beginPath(); x.moveTo(-tail, -w * 1.1); x.lineTo(L * .82, -w * .35); x.lineTo(L, 0); x.lineTo(L * .82, w * .35); x.lineTo(-tail, w * 1.1); x.closePath();
+    x.fillStyle = ng; x.fill();
+    x.beginPath(); x.arc(-tail * .8, 0, R * .065, 0, 7); x.fill();
+    x.shadowColor = 'transparent';
+    x.beginPath(); x.moveTo(L * .8, -w * .38); x.lineTo(L, 0); x.lineTo(L * .8, w * .38); x.closePath(); x.fillStyle = '#c0391b'; x.fill();
+    x.restore();
+    const hr = Math.max(4, R * .085), hg = x.createRadialGradient(cx - hr * .4, cy - hr * .4, 0, cx, cy, hr);
+    hg.addColorStop(0, '#fff3c8'); hg.addColorStop(.6, '#c8963a'); hg.addColorStop(1, '#5a3c12');
+    x.beginPath(); x.arc(cx, cy, hr, 0, 7); x.fillStyle = hg; x.fill();
+    x.strokeStyle = 'rgba(40,24,6,.6)'; x.lineWidth = 1; x.beginPath(); x.moveTo(cx - hr * .6, cy + hr * .2); x.lineTo(cx + hr * .6, cy - hr * .2); x.stroke();
+  }
+  function drawPlaque(V) {
+    const {px, py, ph} = G, txt = fmt(V);
+    x.font = `700 ${fs}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+    const tw = x.measureText(txt).width, w = tw + fs * 2.6, l = px - w / 2, t = py - ph / 2;
+    x.save(); x.shadowColor = 'rgba(0,0,0,.6)'; x.shadowBlur = 7; x.shadowOffsetY = 2;
+    x.beginPath(); x.roundRect(l, t, w, ph, ph * .3);
+    const bg = x.createLinearGradient(0, t, 0, t + ph); bg.addColorStop(0, '#f6dc96'); bg.addColorStop(.45, '#c18f38'); bg.addColorStop(1, '#6a4814');
+    x.fillStyle = bg; x.fill(); x.restore();
+    x.strokeStyle = 'rgba(40,24,6,.7)'; x.lineWidth = 1; x.beginPath(); x.roundRect(l + .5, t + .5, w - 1, ph - 1, ph * .3); x.stroke();
+    const wl = l + fs * 1.05, ww = w - fs * 2.1;
+    x.beginPath(); x.roundRect(wl, t + 3, ww, ph - 6, 3);
+    const cg = x.createLinearGradient(0, t + 3, 0, t + ph - 3); cg.addColorStop(0, '#0d0804'); cg.addColorStop(1, '#2d2014');
+    x.fillStyle = cg; x.fill();
+    [l + fs * .52, l + w - fs * .52].forEach(rx => {
+      const rr = Math.max(1.8, fs * .17), rg = x.createRadialGradient(rx - rr * .4, py - rr * .4, 0, rx, py, rr);
+      rg.addColorStop(0, '#fff2c4'); rg.addColorStop(1, '#5a3c12'); x.beginPath(); x.arc(rx, py, rr, 0, 7); x.fillStyle = rg; x.fill();
+    });
+    x.fillStyle = phase === 'reveal' ? '#ffd88a' : '#ffbf5e';
+    x.shadowColor = 'rgba(255,170,60,.6)'; x.shadowBlur = 6; x.fillText(txt, px, py + 1); x.shadowBlur = 0;
+  }
+  function drawGlass() {
+    const {cx, cy, R} = G, Rf = R * .875;
+    x.save(); x.beginPath(); x.arc(cx, cy, Rf, 0, 7); x.clip();
+    const gg = x.createLinearGradient(cx - Rf, cy - Rf, cx + Rf * .2, cy + Rf * .2);
+    gg.addColorStop(0, 'rgba(255,255,255,.28)'); gg.addColorStop(.45, 'rgba(255,255,255,.05)'); gg.addColorStop(.46, 'rgba(255,255,255,0)');
+    x.fillStyle = gg; x.beginPath(); x.ellipse(cx - Rf * .25, cy - Rf * .3, Rf * .95, Rf * .6, -.6, 0, 7); x.fill();
+    if (S.glint > 0 && S.glint < 1) {
+      x.save(); x.translate(cx, cy); x.rotate(-.7);
+      const p = -Rf * 1.3 + S.glint * Rf * 2.6, sg = x.createLinearGradient(p - Rf * .25, 0, p + Rf * .25, 0);
+      sg.addColorStop(0, 'rgba(255,250,230,0)'); sg.addColorStop(.5, 'rgba(255,250,230,.38)'); sg.addColorStop(1, 'rgba(255,250,230,0)');
+      x.fillStyle = sg; x.fillRect(-Rf, -Rf, Rf * 2, Rf * 2); x.restore();
+    }
+    const vg = x.createRadialGradient(cx, cy, Rf * .7, cx, cy, Rf); vg.addColorStop(0, 'rgba(60,35,5,0)'); vg.addColorStop(1, 'rgba(60,35,5,.28)');
+    x.fillStyle = vg; x.fillRect(cx - Rf, cy - Rf, Rf * 2, Rf * 2);
+    x.restore();
+  }
+  function drawGauge() {
+    const {cx, cy, R} = G, it = S.intro;
+    x.save(); x.globalAlpha = Math.min(1, it * 1.5);
+    const sc = .9 + .1 * it; x.translate(cx, cy); x.scale(sc, sc); x.translate(-cx, -cy - (1 - it) * 10);
+    x.drawImage(faceC, 0, 0, W, H);
+    if (phase === 'reveal') {
+      const a = ang(TR), r0 = R * .8, r1 = R * .9;
+      x.beginPath(); x.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0);
+      x.lineTo(cx + Math.cos(a + .07) * r1, cy + Math.sin(a + .07) * r1); x.lineTo(cx + Math.cos(a - .07) * r1, cy + Math.sin(a - .07) * r1); x.closePath();
+      x.fillStyle = '#e8b75a'; x.fill(); x.strokeStyle = '#5a3c12'; x.lineWidth = 1; x.stroke();
+      if (ghostT !== null) drawNeedle(ghostT, true);
+    }
+    drawNeedle(needle.p, false);
+    drawGlass();
+    drawPlaque(phase === 'reveal' && Math.abs(needle.p - TR) < .002 ? REAL : vOf(needle.p));
+    x.restore();
+  }
+
+  // ---------- the landscape ----------
+  function volcanoPath() {
+    const {vx, vw, cw, ground, vh} = G, top = G.top + dyCur;
+    x.beginPath(); x.moveTo(vx - vw, ground);
+    x.quadraticCurveTo(vx - vw * .4, ground - vh * .22, vx - cw, top);
+    x.lineTo(vx - cw * .4, top + vh * .06); x.lineTo(vx + cw * .35, top + vh * .05); x.lineTo(vx + cw, top + 1);
+    x.quadraticCurveTo(vx + vw * .42, ground - vh * .2, vx + vw, ground); x.closePath();
+  }
+  function flank(t, s) {
+    const {vx, vw, cw, ground, vh} = G, top = G.top + dyCur;
+    const P0 = s > 0 ? [vx + cw, top + 1] : [vx - cw, top], C = s > 0 ? [vx + vw * .42, ground - vh * .2] : [vx - vw * .4, ground - vh * .22], P2 = [vx + s * vw, ground];
+    const u = 1 - t; return [u * u * P0[0] + 2 * u * t * C[0] + t * t * P2[0], u * u * P0[1] + 2 * u * t * C[1] + t * t * P2[1]];
+  }
+  function drawSomma() {
+    const {vx, vw, vh, ground} = G, d = dyCur * .7;
+    const pts = [[-1.3, 0], [-1.0, .4], [-.82, .55], [-.7, .62], [-.6, .57], [-.5, .66], [-.4, .6], [-.3, .56], [-.12, .5], [0, 0]];
+    const path = () => { x.beginPath(); pts.forEach(([a, b], i) => { const px = vx + a * vw, py = ground - b * vh + (b ? d : 0); i ? x.lineTo(px, py) : x.moveTo(px, py); }); x.closePath(); };
+    path(); const sg = x.createLinearGradient(0, ground - vh * .66, 0, ground); sg.addColorStop(0, '#3a2c20'); sg.addColorStop(1, '#1f1711');
+    x.fillStyle = sg; x.fill();
+    x.save(); path(); x.clip(); x.strokeStyle = 'rgba(244,231,201,.07)'; x.lineWidth = 1;
+    for (const o of hatch) { x.beginPath(); x.moveTo(vx + o, ground - vh); x.lineTo(vx + o + vh * .9, ground); x.stroke(); }
+    x.restore();
+    path(); x.strokeStyle = 'rgba(244,231,201,.28)'; x.lineWidth = 1; x.stroke();
+  }
+  function drawLava(list, s, now) {
+    const pts = list.map(([t, j]) => { const p = flank(t, s); return [p[0] - s * (2.5 + j), p[1] + 1.5]; });
+    const line = () => { x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); };
+    const h = Math.min(1, .35 + S.heat * .7 + S.flash);
+    x.save(); x.lineCap = 'round'; x.lineJoin = 'round';
+    line(); x.strokeStyle = `rgba(255,110,40,${.16 * h})`; x.lineWidth = 5; x.stroke();
+    line(); x.strokeStyle = `rgba(255,${150 + 50 * h | 0},70,${.55 + .4 * h})`; x.lineWidth = 1.4;
+    x.setLineDash([5, 3]); x.lineDashOffset = -now * .012; x.stroke();
+    x.restore();
+  }
+  function drawVolcano(now) {
+    const {vx, vh, cw, ground} = G, top = G.top + dyCur;
+    const hg = x.createRadialGradient(vx, top, 0, vx, top, vh * (.6 + S.heat * .8 + S.flash * 1.6));
+    hg.addColorStop(0, `rgba(255,150,60,${Math.min(.85, .15 + S.heat * .45 + S.flash * .6)})`); hg.addColorStop(1, 'rgba(255,90,30,0)');
+    x.fillStyle = hg; x.fillRect(vx - vh * 3, top - vh * 3, vh * 6, vh * 6);
+    volcanoPath();
+    const vg = x.createLinearGradient(0, top, 0, ground); vg.addColorStop(0, '#6a5340'); vg.addColorStop(1, '#251b14');
+    x.fillStyle = vg; x.fill();
+    x.save(); volcanoPath(); x.clip(); x.strokeStyle = 'rgba(244,231,201,.13)'; x.lineWidth = 1;
+    for (const o of hatch) { x.beginPath(); x.moveTo(vx + o, top); x.lineTo(vx + o - vh * 1.2, ground); x.stroke(); }
+    const lg = x.createLinearGradient(vx - G.vw, 0, vx + G.vw, 0); lg.addColorStop(0, 'rgba(0,0,0,.25)'); lg.addColorStop(.6, 'rgba(0,0,0,0)'); lg.addColorStop(1, 'rgba(255,170,90,.08)');
+    x.fillStyle = lg; x.fillRect(vx - G.vw, top, G.vw * 2, vh);
+    x.restore();
+    drawLava(lavaR, 1, now); drawLava(lavaL, -1, now * .8);
+    volcanoPath(); x.strokeStyle = 'rgba(244,231,201,.55)'; x.lineWidth = 1.3; x.stroke();
+    x.strokeStyle = `rgba(255,${170 + 50 * S.flash | 0},80,${.4 + S.heat * .5})`; x.lineWidth = 2;
+    x.beginPath(); x.moveTo(vx - cw * .9, top + 1); x.lineTo(vx + cw * .9, top + 1); x.stroke();
+  }
+  function poly(pts) { x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.closePath(); }
+  function drawCube(s, f, edge, ghost, warm) {
+    const {ax, ay} = G, dx = s * .42, dy = -s * .24, h = s * Math.max(0, Math.min(1, f));
+    if (!ghost) {
+      x.fillStyle = 'rgba(0,0,0,.35)'; x.beginPath(); x.ellipse(ax + s * .7, ay + 1, s * .85, Math.max(2, s * .08), 0, 0, 7); x.fill();
+      if (h > .3) {
+        const front = [[ax, ay], [ax + s, ay], [ax + s, ay - h], [ax, ay - h]];
+        let g1 = x.createLinearGradient(0, ay - h, 0, ay); g1.addColorStop(0, warm ? '#a48662' : '#8b7562'); g1.addColorStop(1, warm ? '#5f4632' : '#5e4c3e');
+        poly(front); x.fillStyle = g1; x.fill();
+        x.save(); poly(front); x.clip(); x.strokeStyle = 'rgba(30,20,12,.28)'; x.lineWidth = 1;
+        const step = Math.max(3, s / 9);
+        for (let yy = ay - step; yy > ay - h; yy -= step) { x.beginPath(); x.moveTo(ax, yy + Math.sin(yy) * .6); x.lineTo(ax + s, yy - Math.sin(yy * 1.3) * .6); x.stroke(); }
+        x.restore();
+        const sideF = [[ax + s, ay], [ax + s + dx, ay + dy], [ax + s + dx, ay + dy - h], [ax + s, ay - h]];
+        poly(sideF); x.fillStyle = warm ? '#43342a' : '#3e3229'; x.fill();
+        x.save(); poly(sideF); x.clip(); x.strokeStyle = 'rgba(244,231,201,.08)';
+        for (let i = 2; i < dx; i += 3) { x.beginPath(); x.moveTo(ax + s + i, ay - h - 2); x.lineTo(ax + s + i, ay + 2); x.stroke(); }
+        x.restore();
+        poly([[ax, ay - h], [ax + s, ay - h], [ax + s + dx, ay - h + dy], [ax + dx, ay - h + dy]]); x.fillStyle = warm ? '#c9ad86' : '#ad967c'; x.fill();
+      }
+    }
+    x.save(); x.strokeStyle = edge; x.lineWidth = ghost ? 1.4 : 1.6; x.lineJoin = 'round';
+    if (ghost) x.setLineDash([4, 3]);
+    poly([[ax, ay], [ax + s, ay], [ax + s, ay - s], [ax, ay - s]]); x.stroke();
+    poly([[ax, ay - s], [ax + s, ay - s], [ax + s + dx, ay - s + dy], [ax + dx, ay - s + dy]]); x.stroke();
+    x.beginPath(); x.moveTo(ax + s, ay); x.lineTo(ax + s + dx, ay + dy); x.lineTo(ax + s + dx, ay - s + dy); x.stroke();
+    x.restore();
+  }
+  const sPx = t => Math.cbrt(vOf(t)) * G.k * S.zoom;
+  function label(txt, y, col, dashed, a) {
+    x.save(); x.globalAlpha = a;
+    x.font = `700 ${fs}px ${MONO}`; x.textAlign = 'right'; x.textBaseline = 'middle';
+    const rx = W - 4, tw = x.measureText(txt).width, sw = Math.round(fs * .7), sx = rx - tw - sw - 7;
+    x.lineJoin = 'round'; x.lineWidth = 4; x.strokeStyle = 'rgba(29,22,17,.9)'; x.strokeText(txt, rx, y);
+    x.fillStyle = col; x.fillText(txt, rx, y);
+    if (dashed) { x.setLineDash([2, 2]); x.strokeStyle = col; x.lineWidth = 1.2; x.strokeRect(sx + .5, y - sw / 2 + .5, sw, sw); }
+    else { x.fillStyle = col; x.fillRect(sx, y - sw / 2, sw, sw); }
+    x.restore();
+  }
+
+  // ---------- particles ----------
+  function emit(toReal) {
+    if (parts.length > 1300) return;
+    const s = toReal ? Math.cbrt(REAL) * G.k * zoomTarget() : sPx(Math.max(0, Math.min(1, needle.p)));
+    const f = toReal ? realFill : fill;
+    const u = Kit.rnd(), w = Kit.rnd(), dx = s * .42, dy = -s * .24;
+    const tx = G.ax + u * s + w * dx, ty = G.ay - s * Math.min(1, f) + w * dy;
+    const x0 = G.vx + (Kit.rnd() - .5) * G.cw * 1.4, y0 = G.top + dyCur + 2;
+    const g = H * 1.7, T = .75 + Kit.rnd() * .55;
+    parts.push({x0, y0, x: x0, y: y0, px: x0, py: y0, vx: (tx - x0) / T, vy: (ty - y0 - .5 * g * T * T) / T, g, t: 0, T, r: toReal,
+      ember: Kit.rnd() < (toReal ? .55 : .3), size: .9 + Kit.rnd() * 1.6});
+  }
+  function puff() {
+    if (puffs.length > 60) return;
+    puffs.push({x: G.vx + (Kit.rnd() - .5) * G.cw, y: G.top + dyCur, r: G.cw * .6, vx: (Kit.rnd() - .75) * 9, vy: -(12 + Kit.rnd() * 16), life: 0, L: 2.4 + Kit.rnd() * 2});
+  }
+  let acc = 0, pacc = 0, last = 0, dirty = false;
+  function tick(now) {
+    requestAnimationFrame(tick);
+    if (dirty) { dirty = false; layout(); }
+    if (!x || !G.R) return;
+    const dt = Math.min(.04, last ? (now - last) / 1000 : .016); last = now;
+    if (Kit.calm) { needle.p = needle.T; needle.v = 0; }
+    else {
+      for (let i = 0; i < 4; i++) { const h = dt / 4; needle.v += (needle.k * (needle.T - needle.p) - needle.c * needle.v) * h; needle.p += needle.v * h; }
+      if (needle.p < -.015) { needle.p = -.015; needle.v *= -.3; } if (needle.p > 1.015) { needle.p = 1.015; needle.v *= -.3; }
+      if (phase === 'reveal' && Math.abs(needle.p - TR) < .0008 && Math.abs(needle.v) < .01) { needle.p = TR; needle.v = 0; }
+    }
+    const rate = phase === 'guess' ? (dragging ? 70 + 300 * needle.p : touched ? 10 : 4) : 3;
+    if (!Kit.calm) {
+      acc += rate * dt; while (acc >= 1) { acc--; emit(false); }
+      if (queue > 0) { const n = Math.min(queue, Math.ceil(520 * dt)); queue -= n; for (let i = 0; i < n; i++) emit(true); }
+      pacc += (2.2 + rate * .05 + (queue > 0 ? 18 : 0)) * dt; while (pacc >= 1) { pacc--; puff(); }
+    }
+    const want = Math.min(1, .15 + rate / 300 + (queue > 0 ? .8 : 0));
+    S.heat += (want - S.heat) * Math.min(1, dt * 4);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i]; p.t += dt; p.px = p.x; p.py = p.y;
+      p.x = p.x0 + p.vx * p.t; p.y = p.y0 + p.vy * p.t + .5 * p.g * p.t * p.t;
+      if (p.t >= p.T) { if (p.r) realFill = Math.min(1, realFill + 1 / 520); else if (phase === 'guess') fill = Math.min(1, fill + 1 / 240); parts.splice(i, 1); }
+    }
+    const rmax = G.vh * .8;
+    for (let i = puffs.length - 1; i >= 0; i--) { const q = puffs[i]; q.life += dt; q.x += q.vx * dt; q.y += q.vy * dt; q.r = Math.min(rmax, q.r + 8 * dt); if (q.life > q.L || q.y < G.sy0 - 6) puffs.splice(i, 1); }
+    draw(now);
+  }
+  function draw(now) {
+    x.clearRect(0, 0, W, H);
+    dyCur = (1 - S.intro) * G.vh * .8;
+    const {ground} = G;
+    x.strokeStyle = 'rgba(244,231,201,.4)'; x.lineWidth = 1.2; x.beginPath(); x.moveTo(0, ground); x.lineTo(W, ground); x.stroke();
+    for (const [sx, w, a] of scree) { x.fillStyle = `rgba(244,231,201,${.12 + a * .2})`; x.fillRect(sx, ground - 1.5, w + 1, 1); }
+    drawSomma();
+    // the ash column, lit from the crater
+    const top = G.top + dyCur;
+    for (const q of puffs) {
+      const a = Math.sin(Math.PI * q.life / q.L) * .22, lit = Math.max(0, 1 - (top - q.y) / (G.vh * 1.4)) * (.4 + S.heat * .6);
+      const r = 150 + 90 * lit | 0, gg = 132 + 30 * lit | 0, b = 118 - 20 * lit | 0;
+      const pg = x.createRadialGradient(q.x - q.r * .25, q.y - q.r * .3, 0, q.x, q.y, q.r);
+      pg.addColorStop(0, `rgba(${r + 25},${gg + 22},${b + 18},${a})`); pg.addColorStop(1, `rgba(${r},${gg},${b},0)`);
+      x.fillStyle = pg; x.beginPath(); x.arc(q.x, q.y, q.r, 0, 7); x.fill();
+    }
+    drawVolcano(now);
+    const gS = sPx(phase === 'reveal' ? ghostT : Math.max(0, Math.min(1, needle.p)));
+    if (phase === 'guess') drawCube(gS, fill, 'rgba(244,231,201,.85)', false, false);
+    else { drawCube(Math.cbrt(REAL) * G.k * S.zoom, realFill, '#e8b75a', false, true); drawCube(gS, 1, 'rgba(244,231,201,.85)', true, false); }
+    for (const p of parts) {
+      const k = p.t / p.T;
+      if (p.ember && k < .75) {
+        x.strokeStyle = `rgba(255,${150 + 60 * (1 - k) | 0},70,${.9 - k})`; x.lineWidth = p.size;
+        x.beginPath(); x.moveTo(p.px, p.py); x.lineTo(p.x, p.y); x.stroke();
+      } else { x.fillStyle = `rgba(${200 - k * 40 | 0},${180 - k * 40 | 0},${160 - k * 40 | 0},.9)`; x.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size); }
+    }
+    if (S.flash > .01) {
+      x.save(); x.globalCompositeOperation = 'lighter';
+      const fg = x.createRadialGradient(G.vx, top, 0, G.vx, top, G.SW * .7);
+      fg.addColorStop(0, `rgba(255,170,90,${S.flash * .35})`); fg.addColorStop(1, 'rgba(255,120,40,0)');
+      x.fillStyle = fg; x.fillRect(G.sx0, G.sy0, G.SW, G.bh); x.restore();
+    }
+    const ly = G.sy0 + fs * .8;
+    label(`YOU  ${side(vOf(phase === 'reveal' ? ghostT : needle.p))} m wide`, ly, '#f4e7c9', phase === 'reveal', 1);
+    if (S.labels > 0) label(`REAL ${side(REAL)} m wide`, ly + fs * 1.45, '#ffcf7a', false, S.labels);
+    drawGauge();
+  }
+
+  // ---------- touch ----------
+  function setGuess(t) {
+    guessT = Math.max(0, Math.min(1, t)); needle.T = guessT;
+    const dec = Math.floor(guessT * 4 - 1e-6);
+    if (dec !== lastDec) { if (lastDec >= 0) Kit.haptic('selection'); lastDec = dec; }
+  }
+  function fromEvent(e) {
+    const r = cv.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top;
+    let a = Math.atan2(py - G.cy, px - G.cx) * 180 / Math.PI;
+    let d = ((a - 150) % 360 + 360) % 360;
+    if (d > 240) d = d > 300 ? 0 : 240;
+    setGuess(d / 240);
+  }
+  function release() {
+    dragging = false;
+    if (phase === 'guess' && touched && !released) { released = true; sure.on(); say.innerHTML = 'Turn it again if you like. <b>Then say how sure you are.</b>'; }
+  }
+  cv.addEventListener('pointerdown', e => { if (phase !== 'guess') return; dragging = true; touched = true; cv.setPointerCapture(e.pointerId); fromEvent(e); });
+  cv.addEventListener('pointermove', e => { if (dragging) fromEvent(e); });
+  cv.addEventListener('pointerup', release); cv.addEventListener('pointercancel', release);
+
+  // ---------- the reveal ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const V = vOf(guessT), off = Math.log10(V / REAL), ok = Math.abs(off) <= .3;
+    Kit.answer({choice: fmt(V), correct: ok, sure: pct});
+    const fac = Math.pow(10, Math.abs(off));
+    sure.grade(ok, pct, `${fmt(V)}, ${ok ? 'close' : (off < 0 ? fac.toFixed(fac < 10 ? 1 : 0) + '× too low' : fac.toFixed(fac < 10 ? 1 : 0) + '× too high')}`);
+    reveal();
+  });
+  function reveal() {
+    if (phase === 'reveal') return;
+    phase = 'reveal'; ghostT = guessT; dragging = false;
+    card.classList.add('answered');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.haptic('success');
+    if (Kit.calm) { needle.p = needle.T = TR; realFill = 1; S.labels = 1; S.zoom = zoomTarget(); return; }
+    needle.c = 4.2; needle.k = 140; needle.T = TR;
+    queue = 560;
+    gsap.timeline()
+      .to(S, {flash: 1, duration: .12, ease: 'power2.out'})
+      .to(S, {flash: 0, duration: 1.4, ease: 'expo.out'})
+      .to(S, {labels: 1, duration: .6, ease: 'power3.out'}, 1.1);
+    gsap.to(S, {zoom: zoomTarget(), duration: 1.8, ease: 'power3.inOut', delay: .2});
+    gsap.fromTo(S, {glint: 0}, {glint: 1, duration: 1.1, ease: 'power2.inOut', delay: .7});
+    gsap.delayedCall(3, () => { if (realFill < 1) gsap.to({}, {duration: .6, onUpdate() { realFill = Math.max(realFill, this.progress()); }}); });
+  }
+
+  Kit.onShow.card = layout;
+  if (window.ResizeObserver) new ResizeObserver(() => { dirty = true; }).observe(stage);
+  requestAnimationFrame(tick);
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.fromTo(S, {intro: 0}, {intro: 1, duration: 1.3, ease: 'expo.out'});
+    needle.p = 0; needle.v = 0; needle.T = 0;
+    gsap.delayedCall(.5, () => { if (!touched) { needle.T = .55; gsap.delayedCall(.45, () => { if (!touched) needle.T = guessT; }); } });
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; dragging = true; setGuess(.42);
+    await w(Kit.calm ? 50 : 500);
+    release();
+    await w(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(Kit.calm ? 200 : 3200);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "maths-kepler-proof-dial",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Kepler said in 1611 how to stack spheres best. How long until proof?",
+  "answer": "Kepler stated in 1611 that stacking spheres like supermarket oranges fills about 74% of space, the best possible, but he never proved it. The formal proof was published in 2017, about 400 years later.",
+  "move": "An answer can look obvious and still take centuries to prove.",
+  "keywords": [
+    "kepler",
+    "sphere packing",
+    "supermarket oranges",
+    "kepler conjecture"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dial with a needle starting at 1611. The reader swings it to the year they think the sphere-packing proof was finished, asking how long it took to prove Kepler's 1611 claim about stacking spheres.",
+    "graded": false,
+    "ground": "#17130e"
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=126s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "history-disarm-in-steps",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the US and USSR manage nuclear disarmament?",
+  "answer": "The US and USSR cut a few nukes a year, then checked, instead of making one all-or-nothing treaty. A single treaty is a Prisoner's Dilemma where cheating is safe. Small steps make a repeated game, and each check builds trust for the next.",
+  "move": "Trust between rivals is built in small steps you can check.",
+  "keywords": [
+    "nuclear weapons",
+    "usa",
+    "ussr",
+    "disarmament",
+    "game theory"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Page titled 'Disarm in small steps' asks how the US and USSR managed nuclear disarmament. It offers two choices: all at once in one big treaty, or step by step, cutting a few nukes a year and then checking. The step-by-step option shows a progress marker at 'year 1 of 6'.",
+    "ground": "#04120a"
+  },
+  "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=1380s",
+  "written": "2026-11-04"
+}

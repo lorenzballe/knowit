@@ -1,0 +1,481 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-milk-carton-layers -->
+<!-- Look: a chalkboard lecture. A gable-top carton (with its little plastic cap) chalked on the board, a teacher's arrow zooming into its wall, and the wall drawn as a thick strip that asks "just paper?".
+     Interaction: drag on the strip (or tap) to pull the wall apart. Yellow glue threads stretch and the layers cling; let go too soon and they spring back.
+     Wow: the glue snaps in a puff of chalk dust and the strip flies apart into paper, plastic and aluminium, which keep floating gently. Then the teacher chalks the labels and the verdict.
+     Layout: the board is planned, not stretched. Tall boards stack carton over strip; short boards put the carton beside the strip; notes only appear where they truly fit, so nothing ever overlaps. -->
+<title>The milk carton problem</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#card{background:
+  radial-gradient(70% 38% at 22% 18%, rgba(244,241,232,.07), transparent 70%),
+  radial-gradient(60% 30% at 82% 62%, rgba(244,241,232,.06), transparent 70%),
+  radial-gradient(90% 40% at 50% 105%, rgba(0,0,0,.28), transparent 70%),
+  var(--c)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;overflow:visible}
+#pic:active{cursor:grabbing}
+.hand{font-family:var(--hand)}
+.pulse{animation:pulse 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{50%{transform:scaleY(1.2)}}
+.kit-calm .pulse{animation:none}
+.say b{color:#f5df73}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pull apart · three layers" style="--c:#22302b;--k:#f4f1e8;--edge:#141c19">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PULL IT APART</span></div>
+    <h2 class="q">Why are some milk and juice cartons so hard to recycle?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A milk carton chalked on a blackboard, and its wall zoomed in as a strip of three layers stuck together: paper, plastic and aluminium."></svg>
+    </div>
+    <p class="say" id="say">That strip is the carton's wall, up close. <b>Drag on it to pull its layers apart.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One carton, three materials glued as one: that's what made it so hard to recycle.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il processo di riciclo della carta” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(DrawSVGPlugin);
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
+  const CH = '#f4f1e8', DIM = '#cfccc1', YEL = '#f5df73', PINK = '#ff9e94', BLUE = '#a9dbf4', PAPC = '#f1dfb4', ALC = '#e1e8ee';
+  const WHY = 'A carton isn’t just paper. It’s <b>paper, plastic and aluminium stuck together</b> in three layers, and until recently that made it unrecyclable. Lately, some plants have been equipped to handle it.';
+  const NS = Kit.mk;
+  const s = {g: 0};
+  let W = 0, H = 0, fs = 13, lay = null, C, hp, ht, G, gSnap, x0, x1;
+  let open = false, dragging = false, yStart = 0, moved = 0, told = false, lastW = 0, lastH = 0;
+  let L = {}, bands = [], glue = [], bobs = [], mcache = {};
+  const J = a => (Kit.rnd() - .5) * a;
+
+  // The teacher's verdict: four airy lines on a tall board, two dense ones on a short board.
+  const VERDICT = {
+    tall: [
+      {segs: [['until recently,', DIM]]},
+      {segs: [['NOT recyclable', PINK]], under: 0, mark: 'x'},
+      {segs: [['lately, some plants', DIM]]},
+      {segs: [['are equipped for it', YEL]], mark: 'tick'}],
+    tallDy: [0, 1, 2.3, 3.3],
+    short: [
+      {segs: [['until recently, ', DIM], ['NOT recyclable', PINK]], under: 1, mark: 'x'},
+      {segs: [['lately, some plants ', DIM], ['can handle it', YEL]], mark: 'tick'}],
+    shortDy: [0, 1.1]
+  };
+  const lineStr = l => l.segs.map(x => x[0]).join('');
+
+  // A hand-drawn line through points: each segment bows a little, like chalk.
+  function poly(pts, j = 2, close = false) {
+    const P = close ? [...pts, pts[0]] : pts;
+    let d = `M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;
+    for (let i = 1; i < P.length; i++) {
+      const [ax, ay] = P[i - 1], [bx, by] = P[i];
+      d += ` Q${((ax + bx) / 2 + J(j)).toFixed(1)},${((ay + by) / 2 + J(j)).toFixed(1)} ${bx.toFixed(1)},${by.toFixed(1)}`;
+    }
+    return d;
+  }
+  const chalk = (parent, d, a = {}) => NS('path', Object.assign({d, fill: 'none', stroke: CH, 'stroke-width': Math.max(1.7, fs * .15), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#chalk)'}, a), parent);
+  // Chalk words, one tspan per letter, so the teacher can write them live. str may be [[text, colour], ...].
+  function write(parent, x, y, str, a = {}) {
+    const t = NS('text', Object.assign({x, y, fill: CH, class: 'hand', 'font-size': fs * 1.1, 'font-weight': 700, filter: 'url(#chalkT)'}, a), parent);
+    const segs = typeof str === 'string' ? [[str, null]] : str;
+    for (const [txt, col] of segs) for (const ch of txt) { const sp = NS('tspan', col ? {fill: col} : {}, t); sp.textContent = ch === ' ' ? '\u00a0' : ch; }
+    return t;
+  }
+  function fit(t, maxW) {
+    const size = +t.getAttribute('font-size'), w = t.getComputedTextLength();
+    if (w > maxW && w > 0) t.setAttribute('font-size', Math.max(12, size * maxW / w));
+    return t.getComputedTextLength();
+  }
+  function measure(str, size) {
+    const key = str + '|' + size.toFixed(2);
+    if (mcache[key] != null) return mcache[key];
+    const t = NS('text', {x: 0, y: -9999, class: 'hand', 'font-size': size, 'font-weight': 700}, svg);
+    t.textContent = str; const w = t.getComputedTextLength(); t.remove();
+    return (mcache[key] = w);
+  }
+  const chars = t => Array.from(t.children);
+  const writeIn = (tl, t, at) => t && tl.fromTo(chars(t), {attr: {'fill-opacity': 0}}, {attr: {'fill-opacity': 1}, duration: .06, stagger: .032, ease: 'power1.out'}, at);
+
+  // ---------- planning the board ----------
+  function cartonGeo(fx, by, bh) {
+    const cw = Math.min(W * .2, bh * .42), d = cw * .5, fin = bh * .06, ay = by + fin + d * .5, top = ay + bh * .2, bot = by + bh, ax = fx + cw / 2;
+    const cx = fx + cw + d * .5, cy = (top + bot) / 2 - d * .25, r = Math.max(6, d * .34);
+    return {fx, by, bh, cw, d, fin, ay, top, bot, ax, cx, cy, r, right: fx + cw + d};
+  }
+  function tryPlan(mode, f, force) {
+    const p = {mode, f, lf: f * 1.15, nf: f * 1.05};
+    p.lh = p.nf * 1.5; p.hp = f * 1.45; p.ht = f * .68;
+    p.G = Math.max(p.lf * 1.4 - p.ht, f * .8); p.gSnap = p.G * .55;
+    p.strip = p.hp + 2 * p.ht + (open ? 2 : 1) * p.G;
+    const labW = Math.max(measure('aluminium', p.lf), measure('pull', f * 1.2) + f * 1.3);
+    p.x1 = W - labW - f * 2.4;
+    p.notes = mode !== 'bare'; p.cap = mode === 'stack' || mode === 'side';
+    const capH = p.cap ? f * 2.5 : 0;
+    p.vl = mode === 'stack' ? VERDICT.tall : VERDICT.short;
+    p.vdy = mode === 'stack' ? VERDICT.tallDy : VERDICT.shortDy;
+    const noteW = open ? Math.max(...p.vl.map(l => measure(lineStr(l), p.nf))) + f * 2 : measure('its wall, up close', p.nf) + 4;
+    if (mode === 'stack') {
+      const cMin = f * 6.4, noteH = open ? p.nf * .9 + p.lh * 3.3 + p.nf * .3 : 0, gap0 = f * 2.4;
+      const need = Math.max(cMin, noteH) + gap0 + p.strip + capH;
+      if (need > H && !force) return null;
+      const bh = Math.max(cMin, Math.min(cMin + (H - need) * .5, f * 10.5, H * .5));
+      const top = Math.max(bh, noteH), rest = H - (top + gap0 + p.strip + capH);
+      const gap = gap0 + Math.max(0, Math.min(rest * .35, f * 2.2));
+      const total = top + gap + p.strip + capH, oy = Math.max(0, (H - total) * .45);
+      p.k = cartonGeo(f * .5, oy + (top - bh) / 2, bh);
+      p.x0 = f * 2.4;
+      if (p.x1 - p.x0 < W * .4 && !force) return null;
+      p.stripTop = oy + top + gap;
+      p.ex = Math.max(p.x0 + (p.x1 - p.x0) * .38, p.k.cx + p.k.r + f * 2.2); p.ey = p.stripTop - f * .45;
+      p.vx = Math.max(p.ex + f * 2.2, p.k.right + f * 2.4, W * .42);
+      if (p.vx + noteW > W && !force) return null;
+      p.vy = oy + (top - noteH) / 2 + p.nf * .9;
+      p.zy = p.k.cy + p.nf * .35;
+    } else {
+      const noteH = p.notes ? (open ? p.nf * .9 + p.lh * 1.1 + p.nf * .3 : p.nf * 1.2) + f * 1.1 : 0;
+      const colH = noteH + p.strip + capH;
+      const bh = Math.max(f * 5.5, Math.min(colH * .92, f * 9, H));
+      const need = Math.max(colH, bh);
+      if (need > H && !force) return null;
+      const oy = Math.max(0, (H - need) * .45), colTop = oy + (need - colH) / 2;
+      p.k = cartonGeo(f * .4, oy + (need - bh) / 2, bh);
+      p.x0 = p.k.right + f * 2.4;
+      if (p.x1 - p.x0 < W * .26 && !force) return null;
+      if (p.notes && p.x0 + noteW > W && !force) return null;
+      p.stripTop = colTop + noteH;
+      p.vx = p.x0; p.vy = colTop + p.nf * .9; p.zy = p.vy;
+      p.ex = p.x0 - f * .5;
+    }
+    p.C = p.stripTop + (open ? p.G : p.G * .5) + p.hp + p.ht / 2;
+    if (mode !== 'stack') p.ey = p.C;
+    p.capY = p.stripTop + p.strip + f * 1.75;
+    return p;
+  }
+  function plan() {
+    const fMax = Math.max(12, Math.min(16.5, W / 23));
+    for (const m of ['stack', 'side', 'sideNoCap', 'bare'])
+      for (let f = fMax; ; f = Math.max(12, f - .5)) { const p = tryPlan(m, f); if (p) return p; if (f === 12) break; }
+    return tryPlan('bare', 12, true);
+  }
+
+  function build(skipReveal) {
+    bobs.forEach(t => t.kill()); bobs = [];
+    svg.innerHTML = ''; L = {}; bands = []; glue = []; mcache = {};
+    const fz = Kit.fitSvg(svg); W = fz.W; H = fz.H; lastW = W; lastH = H;
+    lay = plan(); fs = lay.f;
+    ({C, hp, ht, G, gSnap, x0, x1} = lay);
+
+    const defs = NS('defs', {}, svg);
+    const reg = `filterUnits="userSpaceOnUse" x="${-W * .2}" y="${-H * .3}" width="${W * 1.4}" height="${H * 1.6}"`;
+    defs.innerHTML = `
+      <filter id="chalk" ${reg}>
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="d"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.6 0 0 0 -0.45" result="m"/>
+        <feComposite in="d" in2="m" operator="in"/>
+      </filter>
+      <filter id="chalkT" ${reg}>
+        <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" seed="3" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.1" xChannelSelector="R" yChannelSelector="G" result="d"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.9 0 0 0 0.12" result="m"/>
+        <feComposite in="d" in2="m" operator="in"/>
+      </filter>
+      <filter id="smudge" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="${Math.max(8, W * .045)}"/></filter>
+      <filter id="soft" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="${Math.max(2, ht * .25)}"/></filter>
+      <linearGradient id="alu" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7f878f"/><stop offset=".3" stop-color="#f3f6f8"/><stop offset=".5" stop-color="#9fa8b0"/>
+        <stop offset=".72" stop-color="#eef1f4"/><stop offset="1" stop-color="#868e96"/></linearGradient>
+      <linearGradient id="pl" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#c4e9fb" stop-opacity=".95"/><stop offset="1" stop-color="#6aaed8" stop-opacity=".75"/></linearGradient>
+      <linearGradient id="pap" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f3e5c4"/><stop offset=".6" stop-color="#e3cfa2"/><stop offset="1" stop-color="#c8ad7d"/></linearGradient>`;
+
+    // Dusty smudges where yesterday's lesson was wiped off.
+    const sm = NS('g', {}, svg);
+    [[.22, .2, .28, .07], [.78, .58, .3, .08], [.35, .93, .38, .05], [.86, .14, .18, .06]].forEach(([x, y, rx, ry]) =>
+      NS('ellipse', {cx: W * x, cy: H * y, rx: W * rx, ry: H * ry, fill: CH, opacity: .05, filter: 'url(#smudge)'}, sm));
+
+    for (const k of ['carton', 'arrow', 'bands', 'glue', 'marks', 'notes', 'hint', 'dust']) L[k] = NS('g', {}, svg);
+    drawCarton(); drawArrow(); drawBands(defs);
+    if (!open) drawClosed();
+    if (open && !skipReveal) { s.g = G; apply(); reveal(false); startBob(); } else apply();
+  }
+
+  // ---------- the carton on the board ----------
+  function drawCarton() {
+    const P = L.carton, k = lay.k, {fx, cw, d, fin, ay, top, bot, ax, bh} = k;
+    L.fills = [
+      NS('path', {d: poly([[fx, top], [fx + cw, top], [fx + cw, bot], [fx, bot]], 1, true), fill: CH, opacity: .08}, P),
+      NS('path', {d: poly([[fx + cw, top], [fx + cw + d, top - d * .5], [fx + cw + d, bot - d * .5], [fx + cw, bot]], 1, true), fill: CH, opacity: .16}, P),
+      NS('path', {d: poly([[fx, top], [ax, ay], [fx + cw, top]], 1, true), fill: CH, opacity: .12}, P),
+      NS('path', {d: poly([[ax, ay], [ax + d, ay - d * .5], [fx + cw + d, top - d * .5], [fx + cw, top]], 1, true), fill: CH, opacity: .22}, P)
+    ];
+    // chalk hatching in the shadow of the side wall
+    for (let i = 0; i < 4; i++) {
+      const t = .15 + i * .2, x = fx + cw + d * t, y = bot - d * .5 * t - bh * .04;
+      L.fills.push(chalk(P, `M${x},${y} L${x + d * .1},${y - d * .05 - bh * .14}`, {'stroke-width': Math.max(1.1, fs * .09), opacity: .35}));
+    }
+    L.strokes = [
+      chalk(P, poly([[fx, top], [fx, bot], [fx + cw, bot], [fx + cw, top], [fx, top]], 2)),
+      chalk(P, poly([[fx + cw, bot], [fx + cw + d, bot - d * .5], [fx + cw + d, top - d * .5], [fx + cw, top]], 2)),
+      chalk(P, poly([[fx, top], [ax, ay], [fx + cw, top]], 2)),
+      chalk(P, poly([[ax, ay], [ax + d, ay - d * .5], [fx + cw + d, top - d * .5]], 2)),
+      chalk(P, poly([[ax, ay], [ax, ay - fin], [ax + d, ay - d * .5 - fin], [ax + d, ay - d * .5]], 1.5)),
+      chalk(P, poly([[fx + cw * .2, top + (bot - top) * .68], [fx + cw * .5, top + (bot - top) * .62], [fx + cw * .8, top + (bot - top) * .68]], 3), {opacity: .7})
+    ];
+    // the little plastic screw cap on the roof
+    const R = [[ax, ay], [ax + d, ay - d * .5], [fx + cw + d, top - d * .5], [fx + cw, top]];
+    const pcx = R.reduce((a, q) => a + q[0], 0) / 4, pcy = R.reduce((a, q) => a + q[1], 0) / 4 + d * .05;
+    const rx = Math.max(3, cw * .12), ry = rx * .45, chh = rx * .85;
+    L.fills.push(NS('path', {d: `M${pcx - rx},${pcy - chh} L${pcx - rx},${pcy} A${rx},${ry} 0 0 0 ${pcx + rx},${pcy} L${pcx + rx},${pcy - chh} A${rx},${ry} 0 0 0 ${pcx - rx},${pcy - chh}Z`, fill: BLUE, opacity: .3}, P));
+    L.strokes.push(chalk(P, `M${pcx - rx},${pcy - chh} L${pcx - rx},${pcy} A${rx},${ry} 0 0 0 ${pcx + rx},${pcy} L${pcx + rx},${pcy - chh} A${rx},${ry} 0 1 0 ${pcx - rx},${pcy - chh} A${rx},${ry} 0 1 0 ${pcx + rx},${pcy - chh}`, {stroke: BLUE, 'stroke-width': Math.max(1.3, fs * .1)}));
+    // A drop of milk and the word (only where it truly fits on the front).
+    const dx = fx + cw / 2, dy = top + (bot - top) * .22, dr = Math.max(3, cw * .07);
+    L.fills.push(NS('path', {d: `M${dx},${dy - dr * 1.8} Q${dx + dr * 1.1},${dy - dr * .2} ${dx},${dy + dr} Q${dx - dr * 1.1},${dy - dr * .2} ${dx},${dy - dr * 1.8}Z`, fill: CH, opacity: .85, filter: 'url(#chalkT)'}, P));
+    L.milk = null;
+    if (cw >= 40) { L.milk = write(P, dx, top + (bot - top) * .5, 'MILK', {'text-anchor': 'middle', 'font-size': Math.max(12, Math.min(fs * 1.15, cw * .3))}); fit(L.milk, cw * .86); }
+  }
+
+  // The magnifier on the side wall, and the teacher's arrow to the strip.
+  function drawArrow() {
+    const k = lay.k, f = lay.f, sw = Math.max(1.7, f * .15);
+    const ring = NS('path', {d: `M${k.cx + k.r},${k.cy} A${k.r},${k.r} 0 1 1 ${k.cx + k.r - .1},${k.cy - 1}`, fill: 'none', stroke: YEL, 'stroke-width': sw, 'stroke-linecap': 'round', filter: 'url(#chalk)'}, L.arrow);
+    const sx = k.cx + k.r + 2, sy = k.cy, ex = lay.ex, ey = lay.ey;
+    let c1x, c1y, c2x, c2y;
+    if (lay.mode === 'stack') { c1x = ex - f * .2; c1y = sy + f * .15; c2x = ex + f * .7; c2y = ey - (ey - sy) * .5; }
+    else { c1x = sx + f * 1.3; c1y = sy; c2x = ex - f * 1.4; c2y = ey; }
+    const shaft = chalk(L.arrow, `M${sx},${sy} C${c1x},${c1y} ${c2x},${c2y} ${ex},${ey}`, {stroke: YEL});
+    const ang = Math.atan2(ey - c2y, ex - c2x), hl = f * .7;
+    const head = chalk(L.arrow, `M${ex + hl * Math.cos(ang + 2.6)},${ey + hl * Math.sin(ang + 2.6)} L${ex},${ey} L${ex + hl * Math.cos(ang - 2.6)},${ey + hl * Math.sin(ang - 2.6)}`, {stroke: YEL});
+    L.arrowParts = [ring, shaft, head];
+  }
+
+  // ---------- the wall, as a strip of three layers ----------
+  function bandShape(ya, yb) {
+    const pts = [[x0, ya], [x1, ya], [x1, yb], [x0, yb]], n = Math.max(2, Math.round((yb - ya) / 5));
+    for (let k = 1; k < n; k++) pts.push([x0 + (k % 2 ? -4 : 2) + J(2), yb - (yb - ya) * k / n]);
+    return poly(pts, .6, true);
+  }
+  function drawBands(defs) {
+    const spec = [
+      {name: 'paper', ya: C - ht / 2 - hp, yb: C - ht / 2, sign: -1, fill: 'url(#pap)', col: PAPC},
+      {name: 'plastic', ya: C - ht / 2, yb: C + ht / 2, sign: 0, fill: 'url(#pl)', col: BLUE},
+      {name: 'aluminium', ya: C + ht / 2, yb: C + ht / 2 + ht, sign: 1, fill: 'url(#alu)', col: ALC}
+    ];
+    spec.forEach((b, i) => {
+      const g = NS('g', {}, L.bands), inner = NS('g', {}, g), shape = bandShape(b.ya, b.yb);
+      const cp = NS('clipPath', {id: 'cp' + i}, defs); NS('path', {d: shape}, cp);
+      NS('path', {d: shape, fill: '#000', opacity: .35, transform: `translate(3,${ht * .35})`, filter: 'url(#soft)'}, inner);
+      NS('path', {d: shape, fill: b.fill}, inner);
+      const tex = NS('g', {'clip-path': `url(#cp${i})`}, inner);
+      const bh = b.yb - b.ya;
+      if (i === 0) {
+        // paper: a mat of fibres
+        const n = Math.round(Math.max(40, (x1 - x0) * bh / 38));
+        for (let k = 0; k < n; k++) {
+          const x = x0 + Kit.rnd() * (x1 - x0), y = b.ya + Kit.rnd() * bh, l = 4 + Kit.rnd() * 9, a = J(1.2);
+          NS('line', {x1: x, y1: y, x2: x + l * Math.cos(a), y2: y + l * Math.sin(a), stroke: Kit.rnd() < .5 ? '#a8895a' : '#fff6de', 'stroke-width': .9, opacity: .6, 'stroke-linecap': 'round'}, tex);
+        }
+        NS('line', {x1: x0, x2: x1, y1: b.ya + 1.5, y2: b.ya + 1.5, stroke: '#fffaf0', 'stroke-width': 1.4, opacity: .7}, tex);
+      } else if (i === 1) {
+        // plastic: a glossy film
+        NS('line', {x1: x0 + 8, x2: x1 - 6, y1: b.ya + bh * .32, y2: b.ya + bh * .32, stroke: '#fff', 'stroke-width': Math.max(1, bh * .16), opacity: .6, 'stroke-linecap': 'round'}, tex);
+        for (let k = 0; k < 9; k++) NS('circle', {cx: x0 + (x1 - x0) * (k + .5) / 9 + J(10), cy: b.ya + bh * .66, r: Math.max(.8, bh * .08), fill: '#fff', opacity: .45}, tex);
+      } else {
+        // aluminium: a bright foil with streaks of sheen
+        for (let k = 0; k < 12; k++) { const x = x0 + (x1 - x0) * k / 11 + J(8); NS('line', {x1: x, y1: b.yb, x2: x + bh * 1.4, y2: b.ya, stroke: '#fff', 'stroke-width': 1.6, opacity: .55}, tex); }
+        NS('line', {x1: x0, x2: x1, y1: b.yb - 1, y2: b.yb - 1, stroke: '#5b636b', 'stroke-width': 1.2, opacity: .7}, tex);
+      }
+      chalk(inner, shape, {'stroke-width': Math.max(1.4, fs * .12), opacity: .95});
+      bands.push(Object.assign({}, b, {g, inner}));
+    });
+    // The glue: threads that stretch across each gap as the layers part.
+    for (let gap = 0; gap < 2; gap++) for (let k = 0; k < 7; k++) {
+      const el = NS('path', {fill: 'none', stroke: YEL, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L.glue);
+      glue.push({el, gap, x: x0 + (x1 - x0) * (k + .5) / 7 + J(10), w: Kit.rnd() < .5 ? 1 : -1});
+    }
+  }
+
+  // Before the pull: the zoom note, the teasing question and the pull hint.
+  function drawClosed() {
+    const f = lay.f;
+    L.zoomNote = null; L.just = null;
+    if (lay.notes) { L.zoomNote = write(L.arrow, lay.vx, lay.zy, 'its wall, up close', {fill: YEL, 'font-size': lay.nf}); fit(L.zoomNote, W - lay.vx - 3); }
+    if (lay.cap) { L.just = write(L.notes, x0, lay.capY, 'just paper?', {fill: CH, 'font-size': lay.nf * 1.05}); fit(L.just, W - x0 - 4); }
+    const x = x1 + f * 1.2, h = f * 1.5, hl = f * .45;
+    const ar = NS('g', {class: 'pulse'}, L.hint);
+    chalk(ar, `M${x},${C - h} L${x},${C + h} M${x - hl},${C - h + hl} L${x},${C - h} L${x + hl},${C - h + hl} M${x - hl},${C + h - hl} L${x},${C + h} L${x + hl},${C + h - hl}`, {stroke: YEL});
+    const pw = write(L.hint, x + f * .8, C + f * .4, 'pull', {fill: YEL, 'font-size': f * 1.2});
+    fit(pw, W - x - f * .8 - 2);
+  }
+
+  function gaps(g) { return [[C - ht / 2 - g, C - ht / 2], [C + ht / 2, C + ht / 2 + g]]; }
+  function apply() {
+    const g = s.g;
+    bands.forEach(b => b.g.setAttribute('transform', `translate(0,${(b.sign * g).toFixed(2)})`));
+    const gp = gaps(g);
+    glue.forEach(t => {
+      if (open || g < .6) { t.el.setAttribute('d', ''); return; }
+      const [ya, yb] = gp[t.gap], n = 4, amp = Math.min(4, 1 + g * .2);
+      let d = `M${t.x.toFixed(1)},${ya.toFixed(1)}`;
+      for (let k = 1; k <= n; k++) d += ` L${(t.x + (k < n ? (k % 2 ? amp : -amp) * t.w : 0)).toFixed(1)},${(ya + (yb - ya) * k / n).toFixed(1)}`;
+      t.el.setAttribute('d', d);
+      t.el.setAttribute('stroke-width', Math.max(.7, 2.3 - 1.6 * g / gSnap).toFixed(2));
+      t.el.setAttribute('opacity', Math.min(1, g / 5).toFixed(2));
+    });
+  }
+
+  // Once apart, the three layers keep drifting gently, each at its own pace.
+  function startBob() {
+    if (Kit.calm) return;
+    bands.forEach((b, i) => bobs.push(gsap.to(b.inner, {y: [-1.4, 1, 1.6][i], duration: 1.9 + i * .4, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
+  }
+
+  // ---------- after the snap: the teacher labels the board ----------
+  function reveal(anim) {
+    const A = anim && !Kit.calm, p = lay, f = p.f;
+    L.hint.innerHTML = '';
+    const tl = gsap.timeline({delay: .35, paused: !A});
+    const lx = x1 + f * 1.5;
+
+    bands.forEach(b => {
+      const cy = (b.ya + b.yb) / 2 + b.sign * G;
+      const lead = chalk(L.marks, poly([[x1 + f * .35, cy], [lx - f * .35, cy]], 1.5), {stroke: b.col});
+      const t = write(L.notes, lx, cy + p.lf * .36, b.name, {fill: b.col, 'font-size': p.lf});
+      fit(t, W - lx - 3);
+      tl.from(lead, {drawSVG: '0%', duration: .3, ease: 'power2.out'});
+      writeIn(tl, t, '<.12');
+    });
+
+    const top = p.stripTop, bot = p.stripTop + p.strip;
+    if (p.mode === 'stack') {
+      const mid = (top + bot) / 2, bx = x0 - f * 1.9, bw = f * 1.3, hh = bot - top;
+      const brace = chalk(L.marks, `M${bx + bw},${top} Q${bx + bw * .25},${top} ${bx + bw * .35},${top + hh * .2} L${bx + bw * .35},${mid - hh * .06} Q${bx + bw * .35},${mid} ${bx},${mid} Q${bx + bw * .35},${mid} ${bx + bw * .35},${mid + hh * .06} L${bx + bw * .35},${bot - hh * .2} Q${bx + bw * .25},${bot} ${bx + bw},${bot}`, {stroke: YEL});
+      tl.from(brace, {drawSVG: '50% 50%', duration: .55, ease: 'power3.out'}, '-=.1');
+    }
+    if (p.cap) {
+      const cap = write(L.notes, x0, p.capY, '3 materials, glued as one', {fill: YEL, 'font-size': p.nf * 1.05});
+      fit(cap, W - x0 - 4);
+      writeIn(tl, cap, '<.2');
+    }
+
+    if (p.notes) {
+      const m = f * .42;
+      p.vl.forEach((l, i) => {
+        const y = p.vy + p.vdy[i] * p.lh;
+        const t = write(L.notes, p.vx, y, l.segs, {'font-size': p.nf});
+        const w = fit(t, W - p.vx - f * 2);
+        writeIn(tl, t, i ? '+=.08' : '+=.2');
+        if (l.under != null) {
+          let st = 0; for (let j = 0; j < l.under; j++) st += l.segs[j][0].length;
+          let ux = p.vx, uw = w;
+          try { ux = p.vx + (st ? t.getSubStringLength(0, st) : 0); uw = t.getSubStringLength(st, l.segs[l.under][0].length); } catch (_) {}
+          const under = chalk(L.marks, poly([[ux, y + f * .35], [ux + uw, y + f * .3]], 2), {stroke: PINK});
+          tl.from(under, {drawSVG: '0%', duration: .3, ease: 'power2.out'});
+        }
+        const mx = p.vx + w + f * .9, my = y - f * .35;
+        if (l.mark === 'x') {
+          const cross = chalk(L.marks, `M${mx - m},${my - m} L${mx + m},${my + m} M${mx + m},${my - m} L${mx - m},${my + m}`, {stroke: PINK});
+          tl.from(cross, {drawSVG: '0%', duration: .35, ease: 'power2.inOut'}, '<.1');
+        } else if (l.mark === 'tick') {
+          const tick = chalk(L.marks, `M${mx - m},${my} L${mx - m * .2},${my + m * .8} L${mx + m * 1.1},${my - m}`, {stroke: YEL});
+          tl.from(tick, {drawSVG: '0%', duration: .35, ease: 'back.out(2)'});
+        }
+      });
+    }
+    if (!A) tl.progress(1).kill();
+  }
+
+  // ---------- the pull ----------
+  function burst() {
+    const gp = gaps(s.g);
+    glue.forEach(t => {
+      const [ya, yb] = gp[t.gap];
+      for (let k = 0; k < 3; k++) {
+        const pt = NS('circle', {cx: t.x, cy: (ya + yb) / 2, r: 1 + Kit.rnd() * 1.8, fill: k ? CH : YEL, opacity: .9}, L.dust);
+        gsap.to(pt, {x: J(70), y: J(55) + 10, opacity: 0, duration: .7 + Kit.rnd() * .6, ease: 'power3.out', onComplete: () => pt.remove()});
+      }
+    });
+    gsap.fromTo(svg, {x: -4}, {x: 0, duration: .6, ease: 'elastic.out(1,.3)'});
+  }
+  function snap() {
+    if (open) return;
+    open = true; dragging = false; gsap.killTweensOf(s); Kit.haptic('success');
+    say.innerHTML = WHY; Kit.show('keep');
+    // the text and the keep box take their room first; then the wow plays on the final layout
+    requestAnimationFrame(() => {
+      build(true); s.g = gSnap; apply();
+      if (Kit.calm) { s.g = G; apply(); reveal(false); return; }
+      if (lay.cap) {
+        const ghost = write(L.notes, x0, lay.capY, 'just paper?', {fill: CH, 'font-size': lay.nf * 1.05});
+        gsap.to(ghost, {opacity: 0, y: -6, duration: .4, delay: .05, ease: 'power2.in', onComplete: () => ghost.remove()});
+      }
+      burst();
+      gsap.to(s, {g: G, duration: 1.3, ease: 'elastic.out(1,.38)', onUpdate: apply, onComplete: startBob});
+      reveal(true);
+    });
+  }
+  function autoPull() {
+    Kit.haptic('light');
+    if (Kit.calm) { snap(); return; }
+    gsap.to(s, {g: gSnap, duration: .7, ease: 'power2.in', onUpdate: apply, onComplete: snap});
+  }
+  const pull = d => { const gs = gSnap * 1.25; return gs * (1 - Math.exp(-d * .5 / gs)); };
+
+  svg.addEventListener('pointerdown', e => {
+    if (open) return;
+    dragging = true; yStart = e.clientY; moved = 0; gsap.killTweensOf(s);
+    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    Kit.haptic('selection');
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!dragging || open) return;
+    moved = Math.abs(e.clientY - yStart);
+    s.g = pull(moved); apply();
+    if (moved > 8 && !told) { told = true; say.innerHTML = 'Feel them cling? Yellow glue holds the layers together. <b>Keep pulling.</b>'; }
+    if (s.g >= gSnap) snap();
+  });
+  const release = () => {
+    if (!dragging || open) return;
+    dragging = false;
+    if (moved < 8) { autoPull(); return; }
+    say.innerHTML = 'Back together: the layers are stuck to each other. <b>Pull harder</b>, or just tap.';
+    Kit.haptic('light');
+    if (Kit.calm) { s.g = 0; apply(); return; }
+    gsap.to(s, {g: 0, duration: .9, ease: 'elastic.out(1,.32)', onUpdate: apply});
+  };
+  svg.addEventListener('pointerup', release); svg.addEventListener('pointercancel', release);
+
+  new ResizeObserver(() => {
+    const r = svg.getBoundingClientRect();
+    if (lastW && (Math.abs(r.width - lastW) > 1 || Math.abs(r.height - lastH) > 1)) build();
+  }).observe(stage);
+
+  Kit.onShow.card = () => build();
+  Kit.onEnter.card = () => {
+    if (Kit.calm || open || !L.strokes) return;
+    const tl = gsap.timeline();
+    tl.from(L.strokes, {drawSVG: '0%', duration: .7, stagger: .08, ease: 'power2.inOut'})
+      .from(L.fills, {opacity: 0, duration: .6, ease: 'power1.out'}, '<.35');
+    if (L.milk) writeIn(tl, L.milk, '<.2');
+    tl.from(L.arrowParts, {drawSVG: '0%', duration: .5, stagger: .15, ease: 'power3.out'}, '-=.2');
+    if (L.zoomNote) writeIn(tl, L.zoomNote, '<.2');
+    tl.from(bands.map(b => b.inner), {opacity: 0, x: -W * .18, duration: .8, stagger: .12, ease: 'expo.out'}, '-=.5');
+    if (L.just) writeIn(tl, L.just, '-=.35');
+    tl.from(L.hint, {opacity: 0, duration: .5, ease: 'power2.out'}, '-=.3');
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const r = svg.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height * .6;
+    const ev = (t, yy) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: yy, pointerId: 1, bubbles: true}));
+    ev('pointerdown', y);
+    for (let i = 1; i <= 8; i++) { ev('pointermove', y + i * 40); await wait(16); }
+    ev('pointerup', y + 320);
+    await wait(Kit.calm ? 300 : 3200);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "science-arlington-teflon-blast",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a 1944 attempt to make Teflon end in an explosion?",
+  "answer": "In 1944, an attempt to make Teflon from TFE gas sealed in a cylinder ended in an explosion. Turning TFE into Teflon generated heat, and the sealed solid mass could not lose it. The trapped heat built up pressure until the cylinder failed.",
+  "move": "A reaction that makes heat needs a way to lose it, or the heat becomes force.",
+  "keywords": [
+    "teflon",
+    "tfe",
+    "arlington",
+    "polymerization",
+    "explosion"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Page with a sealed cylinder of TFE gas and a Tap to react prompt, asking why a 1944 attempt to make Teflon ended in an explosion.",
+    "ground": "#1f2a33"
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=513s",
+  "written": "2026-11-04"
+}

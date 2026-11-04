@@ -1,0 +1,344 @@
+<!doctype html>
+<!-- slug: history-little-boy-efficiency -->
+<!-- Look: a night-ink data-journalism chart. Little Boy's uranium is a glowing, softly twinkling waffle of 1,000 dots (1 dot = 0.1%), with live readouts on top and a 0–100% bar underneath. No box: the drawing sits straight on the card.
+     Interaction: hold the button (or the drawing) and the chain reaction runs. Neutrons fly along curved paths from atom to atom, each split flares orange and fills the bar. Let go and it stops.
+     Wow: after the 15th split (1.5%) the bomb blows the block apart. 985 green dots scatter and fade, the bar floods grey with "98.5% never split", and the readout holds at 16 kt while the 15 split atoms keep glowing. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The efficiency gap</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;overflow:visible}
+.mono{font-family:var(--mono)}
+.disp{font-family:var(--display)}
+#hold{align-self:center;font:800 max(2cqh,14px)/1.1 var(--body);color:#1b0e04;background:#ff9a3c;border:0;border-radius:99px;padding:1.5cqh 6cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;
+  box-shadow:0 0 0 .3cqh rgba(255,154,60,.25),0 .6cqh 2.4cqh rgba(255,120,40,.35);transition:transform .12s cubic-bezier(.2,.8,.3,1.4),box-shadow .2s}
+#hold.on{transform:scale(.95);background:#ffb46a;box-shadow:0 0 0 .9cqh rgba(255,154,60,.22),0 0 4cqh rgba(255,150,60,.65)}
+#hold .dot{display:inline-block;width:1cqh;height:1cqh;min-width:7px;min-height:7px;border-radius:50%;background:#1b0e04;margin-right:2cqw;vertical-align:middle}
+#hold.on .dot{animation:blink .5s ease-in-out infinite alternate}
+@keyframes blink{to{opacity:.2}}
+.say b{color:#ff9a3c}
+.keep b{color:#ff9a3c}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Hold · chain reaction" style="--c:#0f1415;--k:#efe9dc;--edge:#060909">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE EFFICIENCY GAP</span></div>
+    <h2 class="q">Why was Little Boy so inefficient?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A block of 1,000 dots standing for Little Boy's uranium, readouts of the share split and the energy released, and a bar from 0 to 100 percent."></svg>
+    </div>
+    <button id="hold"><span class="dot"></span>Hold to run the chain reaction</button>
+    <p class="say" id="say">Each dot is 0.1% of the bomb's uranium. <b>Hold the button</b> and watch how much of it splits.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Little Boy wasted 98.5% of its uranium and still released 16 kilotons.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MotionPathPlugin);
+  const svg = Kit.$('pic'), btn = Kit.$('hold'), say = Kit.$('say'), card = Kit.$('card');
+  const N = 1000;                                   // 1,000 dots: one dot = 0.1% of the uranium
+  const ORANGE = '#ff9a3c', HOT = '#fff0d2', U = '#a9d38f', INK = '#efe9dc';
+  const SHAPES = [[40, 25], [50, 20], [25, 40]];    // the block reshapes to fit the phone, always 1,000 dots
+  const GENS = [1, 2, 3, 4, 5];                     // 15 splits = 1.5%
+  const HOP = .55;
+
+  // seeded random, so every phone and every resize tells the same story
+  const seeded = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const r0 = seeded(11);
+  const shade = Array.from({length: N}, () => .5 + r0() * .42);
+  const scat = Array.from({length: N}, () => ({d: 1.5 + r0() * 6, j: (r0() - .5) * 1.2, o: .07 + r0() * .12}));
+  const twinkle = Array.from({length: N}, () => r0() < .09);
+
+  // ---------- the chain, in grid units ----------
+  const chains = {};
+  function makeChain(C, R) {
+    const id = C + 'x' + R; if (chains[id]) return chains[id];
+    const rnd = seeded(C * 31 + R), key = (c, r) => r * C + c;
+    const sx = C >= R ? 1.3 : .8, sy = C >= R ? .8 : 1.3;
+    const ch = [{c: Math.floor(C / 2), r: Math.floor(R / 2), p: -1, g: 0, k: 0}];
+    const used = new Set([key(ch[0].c, ch[0].r)]);
+    const near = (c, r) => { for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) if (used.has(key(c + a, r + b))) return true; return false; };
+    for (let g = 1; g < GENS.length; g++) {
+      const prev = ch.map((n, i) => i).filter(i => ch[i].g === g - 1);
+      for (let k = 0; k < GENS[g]; k++) {
+        let ok = null;
+        for (let t = 0; t < 300 && !ok; t++) {
+          const pi = prev[(k + Math.floor(rnd() * prev.length)) % prev.length], p = ch[pi];
+          const a = rnd() * Math.PI * 2, d = 2.4 + rnd() * 2.4 + t * .02;
+          const c = Math.round(p.c + Math.cos(a) * d * sx), r = Math.round(p.r + Math.sin(a) * d * sy);
+          if (c < 1 || c > C - 2 || r < 1 || r > R - 2 || near(c, r)) continue;
+          ok = {c, r, p: pi, g, k};
+        }
+        if (!ok) {
+          const p = ch[prev[0]];
+          for (let s = 2; s < 30 && !ok; s++) for (let a = 0; a < 16 && !ok; a++) {
+            const c = Math.round(p.c + Math.cos(a / 16 * 6.283) * s), r = Math.round(p.r + Math.sin(a / 16 * 6.283) * s * .7);
+            if (c >= 1 && c <= C - 2 && r >= 1 && r <= R - 2 && !near(c, r)) ok = {c, r, p: prev[0], g, k};
+          }
+        }
+        used.add(key(ok.c, ok.r)); ch.push(ok);
+      }
+    }
+    ch.forEach(n => { n.t = .7 + n.g * .78 + n.k * .1; n.bend = (rnd() < .5 ? -1 : 1) * (.22 + rnd() * .28); n.i = key(n.c, n.r); });
+    return chains[id] = ch;
+  }
+
+  // ---------- drawing ----------
+  let W = 0, H = 0, C = 40, R = 25, cell = 8, gx0 = 0, gy0 = 0, rad = 3, mark = 6;
+  let chain = makeChain(40, 25), inChain = new Set();
+  let dots = [], tl = null, rv = null, done = false, holding = false, started = false, told = false, idle = [];
+  let E = {};
+  const P = n => ({x: gx0 + (n.c + .5) * cell, y: gy0 + (n.r + .5) * cell});
+  const T = (par, x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y}, a), par); e.textContent = s; return e; };
+  const killIdle = () => { idle.forEach(t => t.kill()); idle = []; };
+
+  function defs() {
+    const d = Kit.mk('defs', {}, svg);
+    const gU = Kit.mk('radialGradient', {id: 'gU'}, d);
+    [[0, '#b6ec8e', .42], [.55, '#7fc46a', .14], [1, '#5aa04f', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gU));
+    const gF = Kit.mk('radialGradient', {id: 'gF'}, d);
+    [[0, '#fff3dc', .95], [.22, '#ffb35c', .6], [.6, '#ff6a24', .18], [1, '#ff4a12', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gF));
+    const hp = Kit.mk('pattern', {id: 'hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, d);
+    Kit.mk('rect', {width: 6, height: 6, fill: 'rgba(239,233,220,.12)'}, hp);
+    Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: 'rgba(239,233,220,.32)', 'stroke-width': 2}, hp);
+    const fl = Kit.mk('filter', {id: 'ng', x: '-200%', y: '-200%', width: '500%', height: '500%'}, d);
+    Kit.mk('feGaussianBlur', {stdDeviation: Math.max(1.2, cell * .28), result: 'b'}, fl);
+    const m = Kit.mk('feMerge', {}, fl); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
+    return d;
+  }
+
+  function layout(force) {
+    const box = svg.getBoundingClientRect();
+    if (box.width < 20 || box.height < 20) return;
+    if (!force && dots.length && Math.abs(box.width - W) < 1 && Math.abs(box.height - H) < 1) return;
+    W = box.width; H = box.height;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const keep = tl ? tl.time() : 0, wasDone = done;
+    if (tl) tl.kill(); if (rv) rv.kill(); killIdle();
+    svg.innerHTML = '';
+    const d = defs();
+
+    // ---- zones, in real pixels ----
+    const BF = Math.max(24, Math.min(36, H * .11, W * .1));
+    const labY = 12, numY = labY + 10 + BF * .98, ruleY = numY + 9;
+    const tickY = H - 2, barB = H - 17, bh = Math.max(18, Math.min(24, H * .07)), barY = barB - bh, callY = barY - 8;
+    const zoneTop = ruleY + 10, zoneBot = callY - 14 - 10;
+    const showCap = zoneBot - zoneTop > 160;
+    const areaTop = zoneTop + 2, areaBot = showCap ? zoneBot - 22 : zoneBot;
+    mark = 7;
+    const avW = W - mark * 2 - 6, avH = Math.max(20, areaBot - areaTop - mark * 2);
+    let best = SHAPES[0], bc = 0;
+    SHAPES.forEach(s => { const c = Math.min(avW / s[0], avH / s[1]); if (c > bc + .05) { bc = c; best = s; } });
+    [C, R] = best; cell = Math.max(2.4, Math.min(16, bc));
+    chain = makeChain(C, R); inChain = new Set(chain.map(n => n.i));
+    const gw = cell * C, gh = cell * R;
+    gx0 = (W - gw) / 2; gy0 = areaTop + mark + Math.max(0, (avH - gh) / 2); rad = cell * .34;
+    const ctr = P(chain[0]);
+
+    // the scatter stays inside the drawing's own zone (never smaller than the block itself)
+    const cp = Kit.mk('clipPath', {id: 'zone'}, d);
+    const blockBot = gy0 + gh + mark + 2;
+    const clipBot = showCap ? blockBot : Math.max(zoneBot + 4, blockBot);
+    Kit.mk('rect', {x: -30, y: zoneTop - 4, width: W + 60, height: Math.max(1, clipBot - zoneTop + 4)}, cp);
+
+    // glows behind the block
+    E.glowU = Kit.mk('ellipse', {cx: W / 2, cy: gy0 + gh / 2, rx: gw * .62, ry: gh * .78, fill: 'url(#gU)', opacity: .85}, svg);
+    E.glowF = Kit.mk('circle', {cx: ctr.x, cy: ctr.y, r: cell * 9, fill: 'url(#gF)', opacity: 0}, svg);
+
+    // crop marks at the block's corners
+    const L = Math.min(14, cell * 2.5 + 4), m = mark;
+    [[gx0 - m, gy0 - m, 1, 1], [gx0 + gw + m, gy0 - m, -1, 1], [gx0 - m, gy0 + gh + m, 1, -1], [gx0 + gw + m, gy0 + gh + m, -1, -1]]
+      .forEach(([x, y, sx, sy]) => Kit.mk('path', {d: `M${x + sx * L},${y} H${x} V${y + sy * L}`, stroke: INK, 'stroke-opacity': .4, 'stroke-width': 1.2, fill: 'none'}, svg));
+
+    // the uranium: 1,000 dots
+    const gD = Kit.mk('g', {'clip-path': 'url(#zone)'}, svg);
+    dots = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      const i = r * C + c;
+      dots[i] = Kit.mk('circle', {cx: gx0 + (c + .5) * cell, cy: gy0 + (r + .5) * cell, r: rad, fill: U, opacity: shade[i]}, gD);
+    }
+    E.trails = Kit.mk('g', {}, svg); E.rings = Kit.mk('g', {}, svg); E.neut = Kit.mk('g', {}, svg);
+    E.aim = Kit.mk('circle', {cx: ctr.x, cy: ctr.y, r: rad, fill: 'none', stroke: HOT, 'stroke-width': 1.2, opacity: 0}, svg);
+
+    // readouts
+    const sm = {'font-size': 12, fill: INK, 'fill-opacity': .62, 'letter-spacing': '.08em', class: 'mono'};
+    T(svg, 0, labY, 'URANIUM SPLIT', sm);
+    T(svg, W, labY, 'ENERGY', Object.assign({}, sm, {'text-anchor': 'end'}));
+    E.pct = T(svg, 0, numY, '0.0%', {'font-size': BF, 'font-weight': 800, fill: ORANGE, class: 'disp'});
+    E.kt = T(svg, W, numY, '0 kt', {'font-size': BF, 'font-weight': 800, fill: INK, 'text-anchor': 'end', class: 'disp'});
+    Kit.mk('line', {x1: 0, x2: W, y1: ruleY, y2: ruleY, stroke: INK, 'stroke-opacity': .18, 'stroke-dasharray': '2 4'}, svg);
+    if (showCap) T(svg, W / 2, gy0 + gh + mark + 17, '1 DOT = 0.1% OF LITTLE BOY’S URANIUM', {'font-size': 12, fill: INK, 'fill-opacity': .55, 'letter-spacing': '.04em', 'text-anchor': 'middle', class: 'mono'});
+
+    // the bar: 0 to 100% of the uranium
+    E.call = T(svg, 12, callY, showCap ? 'Share of the uranium that split' : 'Share split · 1 dot = 0.1%', {'font-size': 14, 'font-weight': 700, fill: INK, 'fill-opacity': .72});
+    const sx = Math.max(1.5, W * .0075);
+    E.lead = Kit.mk('path', {d: `M${sx},${barY} V${callY - 5} H${8}`, stroke: ORANGE, 'stroke-width': 1.5, fill: 'none', opacity: 0}, svg);
+    E.scat = Kit.mk('rect', {x: W * .015 + 1, y: barY, width: 0, height: bh, fill: 'url(#hatch)'}, svg);
+    Kit.mk('rect', {x: .5, y: barY, width: Math.max(1, W - 1), height: bh, fill: 'none', stroke: INK, 'stroke-opacity': .4, 'stroke-width': 1}, svg);
+    E.sliver = Kit.mk('rect', {x: 0, y: barY - 1, width: 0, height: bh + 2, fill: ORANGE}, svg);
+    E.scatT = T(svg, W - 8, barY + bh / 2 + 4.5, '98.5% never split: scattered', {'font-size': 12.5, 'font-weight': 800, fill: INK, 'text-anchor': 'end', opacity: 0});
+    [0, 25, 50, 75, 100].forEach((v, j) => {
+      const x = Math.min(W - .5, Math.max(.5, W * v / 100));
+      Kit.mk('line', {x1: x, x2: x, y1: barB, y2: barB + 4, stroke: INK, 'stroke-opacity': .5}, svg);
+      T(svg, x, tickY, v + '%', {'font-size': 12, fill: INK, 'fill-opacity': .55, 'text-anchor': j === 0 ? 'start' : j === 4 ? 'end' : 'middle', class: 'mono'});
+    });
+
+    buildChain();
+    if (wasDone) { tl.progress(1, true); readout(); reveal(true); }
+    else {
+      tl.time(keep, true); readout();
+      if (holding && !Kit.calm) tl.play();
+      if (!Kit.calm) life(keep < .05);
+    }
+  }
+
+  // ---------- idle life: the block breathes, a few atoms twinkle, the first target pulses ----------
+  function life(aim) {
+    const wait = started ? 0 : 1.8;
+    idle.push(gsap.to(E.glowU, {opacity: 1, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: wait}));
+    for (let i = 0; i < N; i++) if (twinkle[i] && !inChain.has(i))
+      idle.push(gsap.to(dots[i], {opacity: shade[i] * .35, duration: .9 + (i % 7) * .25, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: wait + (i % 13) * .19}));
+    if (aim) idle.push(gsap.fromTo(E.aim, {attr: {r: rad}, opacity: .9}, {attr: {r: cell * 2.6}, opacity: 0, duration: 1.4, ease: 'power2.out', repeat: -1, repeatDelay: .4, delay: wait}));
+  }
+
+  // ---------- the chain reaction, as one timeline the reader's thumb plays ----------
+  function buildChain() {
+    tl = gsap.timeline({paused: true, onUpdate: readout, onComplete: () => reveal(false)});
+    tl.to({}, {duration: .3}, 0);
+    chain.forEach((n, i) => {
+      const e = P(n), tf = n.t, t0 = tf - HOP;
+      const s = n.p < 0 ? {x: gx0 - mark, y: gy0 - mark} : P(chain[n.p]);
+      const dx = e.x - s.x, dy = e.y - s.y, len = Math.hypot(dx, dy) || 1, px = -dy / len, py = dx / len, b = n.bend * len;
+      const c1 = {x: s.x + dx * .3 + px * b, y: s.y + dy * .3 + py * b}, c2 = {x: s.x + dx * .72 + px * b, y: s.y + dy * .72 + py * b};
+      const tr = Kit.mk('path', {d: `M${s.x},${s.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${e.x},${e.y}`, fill: 'none', stroke: ORANGE, 'stroke-width': Math.max(1.2, cell * .14), 'stroke-linecap': 'round', opacity: 0}, E.trails);
+      const tlen = tr.getTotalLength(); tr.setAttribute('stroke-dasharray', tlen); tr.setAttribute('stroke-dashoffset', tlen);
+      const nu = Kit.mk('circle', {cx: 0, cy: 0, r: Math.max(2, cell * .24), fill: HOT, filter: 'url(#ng)', opacity: 0}, E.neut);
+      const ring = Kit.mk('circle', {cx: e.x, cy: e.y, r: rad, fill: 'none', stroke: ORANGE, 'stroke-width': Math.max(1, cell * .16), opacity: 0}, E.rings);
+      const fl = Kit.mk('circle', {cx: e.x, cy: e.y, r: cell * 1.6, fill: 'url(#gF)', opacity: 0}, E.rings);
+      const dot = dots[n.i];
+      tl.set(nu, {x: s.x, y: s.y, opacity: 1}, t0)
+        .to(nu, {motionPath: {path: [s, c1, c2, e], type: 'cubic'}, duration: HOP, ease: 'power2.in'}, t0)
+        .to(tr, {opacity: .75, attr: {'stroke-dashoffset': 0}, duration: HOP, ease: 'power2.in'}, t0)
+        .to(nu, {opacity: 0, duration: .06}, tf)
+        .to(tr, {opacity: 0, duration: .7, ease: 'power2.out'}, tf + .05)
+        .to(dot, {fill: ORANGE, opacity: 1, attr: {r: rad * 1.3}, duration: .45, ease: 'back.out(3)'}, tf)
+        .fromTo(ring, {attr: {r: rad}, opacity: .95}, {attr: {r: cell * 2.8}, opacity: 0, duration: .9, ease: 'expo.out', immediateRender: false}, tf)
+        .fromTo(fl, {opacity: 1, attr: {r: cell * .6}}, {opacity: 0, attr: {r: cell * 2.4}, duration: .6, ease: 'power3.out', immediateRender: false}, tf)
+        .to(E.glowF, {opacity: .25 + .6 * (i + 1) / chain.length, attr: {r: cell * (5 + 6 * (i + 1) / chain.length)}, duration: .5, ease: 'power2.out'}, tf)
+        .to(E.sliver, {attr: {width: Math.max(1.5, W * .015) * (i + 1) / chain.length}, duration: .35, ease: 'power3.out'}, tf)
+        .call(() => Kit.haptic('light'), null, tf);
+    });
+  }
+
+  function readout() {
+    if (!tl) return;
+    const t = tl.time(), n = chain.filter(c => t >= c.t - 1e-4).length;
+    E.pct.textContent = (n * .1).toFixed(1) + '%';
+    E.kt.textContent = Math.round(n / chain.length * 16) + ' kt';
+  }
+
+  // ---------- the reveal: the block flies apart ----------
+  function reveal(instant) {
+    done = true; holding = false; btn.classList.remove('on');
+    killIdle(); gsap.set(E.aim, {opacity: 0});
+    const ctr = P(chain[0]);
+    const others = [], chainDots = chain.map(n => dots[n.i]);
+    const ox = [], oy = [], oo = [], od = [];
+    for (let i = 0; i < N; i++) {
+      if (inChain.has(i)) continue;
+      const d = dots[i], x = +d.getAttribute('cx'), y = +d.getAttribute('cy');
+      const dx = x - ctr.x, dy = y - ctr.y, L = Math.hypot(dx, dy) || 1, a = Math.atan2(dy, dx) + scat[i].j * .5;
+      others.push(d); ox.push(Math.cos(a) * cell * scat[i].d); oy.push(Math.sin(a) * cell * scat[i].d * .8); oo.push(scat[i].o); od.push(L / (cell * Math.max(C, R)));
+    }
+    E.call.textContent = '1.5% split → 16,000 tonnes of TNT';
+    E.call.setAttribute('fill', ORANGE); E.call.setAttribute('fill-opacity', 1);
+    rv = gsap.timeline({onComplete: () => { afterglow(); showWhy(); }});
+    rv.to(E.glowF, {opacity: 1, attr: {r: cell * 22}, duration: .3, ease: 'power4.out'}, 0)
+      .to(E.glowF, {opacity: .6, attr: {r: cell * 9}, duration: 1.4, ease: 'power2.inOut'}, .3)
+      .to(E.glowU, {opacity: .06, duration: 1.6, ease: 'power2.out'}, .1)
+      .to(others, {x: i => ox[i], y: i => oy[i], opacity: i => oo[i], duration: 1.9, ease: 'expo.out', stagger: i => .1 + od[i] * .5}, .1)
+      .to(chainDots, {attr: {r: rad * 1.55}, duration: .9, ease: 'elastic.out(1,.35)', stagger: .03}, .2)
+      .to(E.scat, {attr: {width: Math.max(0, W * .985 - 2)}, duration: 1.3, ease: 'power3.inOut'}, .6)
+      .fromTo(E.scatT, {opacity: 0, x: 10}, {opacity: 1, x: 0, duration: .6, ease: 'power3.out'}, 1.55)
+      .fromTo(E.call, {opacity: 0, x: -8}, {opacity: 1, x: 0, duration: .6, ease: 'power3.out'}, 1.3)
+      .to(E.lead, {opacity: 1, duration: .4}, 1.3)
+      .fromTo([E.pct, E.kt], {scale: 1}, {scale: 1.12, transformOrigin: '50% 60%', duration: .25, yoyo: true, repeat: 1, ease: 'power2.out'}, .15);
+    if (instant || Kit.calm) rv.progress(1);
+    else Kit.haptic('success');
+  }
+
+  // the 15 split atoms keep smouldering; the scattered dust drifts
+  function afterglow() {
+    if (Kit.calm) return;
+    killIdle();
+    idle.push(gsap.to(E.glowF, {opacity: .35, attr: {r: cell * 7.5}, duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1}));
+    chain.forEach((n, i) => idle.push(gsap.to(dots[n.i], {opacity: .55, duration: .8 + (i % 5) * .22, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .07})));
+  }
+
+  function showWhy() {
+    if (told) return; told = true;
+    Kit.hide('hold');
+    card.classList.add('answered');
+    say.innerHTML = 'Only <b>1.5%</b> of the uranium split. The other <b>98.5%</b> never reacted and was scattered as radioactive material. Yet that 1.5% released <b>16 kilotons</b>: 16,000 tonnes of TNT.';
+    Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#say', '#keep'], {opacity: 0, y: 8, duration: .5, stagger: .12, ease: 'power3.out'});
+  }
+
+  // ---------- the hold ----------
+  const press = e => {
+    if (done || !tl) return;
+    if (e) { e.preventDefault(); try { (e.currentTarget || btn).setPointerCapture(e.pointerId); } catch (_) {} }
+    holding = true; btn.classList.add('on'); Kit.haptic('selection');
+    gsap.killTweensOf(E.aim); gsap.to(E.aim, {opacity: 0, duration: .15});
+    if (Kit.calm) { tl.progress(1); return; }
+    gsap.killTweensOf(tl);
+    tl.timeScale(.3).play();
+    gsap.to(tl, {timeScale: 1, duration: .45, ease: 'power2.out'});
+    if (tl.time() < .1) say.innerHTML = 'One neutron splits an atom, which fires more neutrons, which split more atoms. <b>Keep holding.</b>';
+  };
+  const release = () => {
+    if (!holding) return; holding = false; btn.classList.remove('on');
+    if (done || !tl) return;
+    gsap.killTweensOf(tl);
+    const t = tl; gsap.to(t, {timeScale: 0, duration: .25, ease: 'power2.out', onComplete: () => t.pause()});
+  };
+  [btn, svg].forEach(el => {
+    el.addEventListener('pointerdown', press);
+    el.addEventListener('pointerup', release);
+    el.addEventListener('pointercancel', release);
+    el.addEventListener('lostpointercapture', release);
+  });
+  btn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); press(); } });
+  btn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') release(); });
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+
+  let raf = 0;
+  if (window.ResizeObserver) new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => layout(false)); }).observe(svg);
+
+  Kit.onShow.card = () => layout(true);
+  Kit.onEnter.card = () => {
+    if (started) return; started = true;
+    if (Kit.calm || !dots.length || (tl && tl.time() > 0)) return;
+    gsap.from(dots, {opacity: 0, duration: .7, ease: 'power2.out', stagger: {grid: [R, C], from: 'center', amount: .9}});
+    gsap.from([E.pct, E.kt], {opacity: 0, y: 8, duration: .6, stagger: .1, ease: 'power3.out', delay: .3});
+    gsap.from('#hold', {opacity: 0, y: 10, duration: .5, ease: 'back.out(2)', delay: .7});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1}));
+    await wait(300);
+    if (tl && !done) tl.progress(1);
+    await wait(100);
+    if (rv) rv.progress(1);
+    showWhy();
+    await wait(400);
+  };
+})();
+Kit.single();
+</script>
+</html>

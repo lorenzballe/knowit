@@ -1,0 +1,38 @@
+{
+  "id": "science-air-torpedo-sphere",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a falling sphere slip through liquid like a torpedo?",
+  "answer": "Heat the right sphere so that it is wrapped in air. Once wrapped, the sphere meets the liquid as a torpedo rather than a ball, so it can slice through the water as it falls.",
+  "move": "Wrap a sphere in air and the liquid meets a torpedo, not a ball.",
+  "keywords": [
+    "sphere",
+    "torpedo",
+    "drag",
+    "water",
+    "the_action_lab"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two spheres sit above a liquid. The question asks how a falling sphere can slip through liquid like a torpedo. The reader taps the right sphere to heat it, then drops both spheres into the liquid to compare how they fall.",
+    "ground": "#0d2b36"
+  },
+  "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=EQCzO4RfZAM&t=302s",
+  "written": "2026-11-04"
+}

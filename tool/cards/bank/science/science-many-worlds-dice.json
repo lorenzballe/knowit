@@ -1,0 +1,38 @@
+{
+  "id": "science-many-worlds-dice",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does Many-Worlds make the universe deterministic again?",
+  "answer": "Many-Worlds makes the universe deterministic again: when the die is rolled, all six faces land, each in its own world, every time. Nothing picks a face. You see only one because you live in one tiny sliver of the multiverse, so the outcome only looks random.",
+  "move": "In Many-Worlds the whole is certain. Only your slice looks like chance.",
+  "keywords": [
+    "many-worlds",
+    "multiverse",
+    "determinism",
+    "die",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A die on a table, with each of its six faces shown on a separate parallel table. The page asks whether Many-Worlds makes the universe deterministic again, and answers that every face lands in its own world, 100% of the time.",
+    "ground": "#efebe1"
+  },
+  "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=730s",
+  "written": "2026-11-04"
+}

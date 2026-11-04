@@ -1,0 +1,38 @@
+{
+  "id": "history-nato-shrinking-cushion",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.disputed_borders",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did NATO's growth after the USSR shrink Russia's buffer?",
+  "answer": "NATO's eastward growth after the USSR shrank the cushion Russia wants between itself and the US, its old rival. Dragging the timeline east shows NATO reaching Russia's doorstep, leaving only Ukraine as a buffer.",
+  "move": "NATO reached Russia's doorstep: only Ukraine is left as Russia's cushion.",
+  "keywords": [
+    "nato",
+    "russia",
+    "ukraine",
+    "ussr",
+    "eastward_expansion"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A map animation of NATO's borders moving eastward over time, toward Russia. The question asks how NATO's growth after the USSR shrank the buffer Russia wants between itself and the US. Drag the timeline east to watch it happen.",
+    "ground": "#0b1020"
+  },
+  "source": "Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=BkJY93_hauY&t=128s",
+  "written": "2026-11-04"
+}

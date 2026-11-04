@@ -1,0 +1,38 @@
+{
+  "id": "history-ivy-mike-blocks",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How much more powerful was the Ivy Mike H-bomb than Trinity?",
+  "answer": "The answer is about 400 times. Ivy Mike yielded 10.4 megatons of TNT, while Trinity yielded 25 kilotons. An H-bomb is three bombs in one: explosives trigger fission, whose heat and pressure trigger fusion.",
+  "move": "An H-bomb uses a fission bomb just to light fusion: 400 Trinitys in one.",
+  "keywords": [
+    "ivy mike",
+    "trinity test",
+    "hydrogen bomb",
+    "fission",
+    "fusion"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Gold blocks represent the Trinity test's yield. The reader picks how many blocks make the Ivy Mike hydrogen bomb: 40, 400, 4,000, or about 400 times Trinity.",
+    "ground": "#0b2233"
+  },
+  "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=1641s",
+  "written": "2026-11-04"
+}

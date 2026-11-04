@@ -1,0 +1,38 @@
+{
+  "id": "technology-folding-the-steel",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "What are the two main benefits of folding a sword's steel?",
+  "answer": "Folding spreads out impurities such as silicon, sulfur and phosphorus until there is no weak point. The layers also give the steel a grain, strongest where the blade will be hit. The right pair is impurities spread out and grain.",
+  "move": "Folding evens out the impurities and lines the grain up where the blade gets hit.",
+  "keywords": [
+    "sword",
+    "steel",
+    "impurities",
+    "grain",
+    "japan"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question card asking the two main benefits of folding a sword's steel, with three answer options: lighter and sharper; spreads out impurities and gives grain; adds carbon and hardens the edge. The reader picks a pair and rates how sure they are.",
+    "ground": "#070b18"
+  },
+  "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=909s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "science-dilute-fukushima-water",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.risk_in_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Diluted 500 times, how radioactive is Fukushima's tank water?",
+  "answer": "Tap to pour clean water into the tank water, and the page counts the pours. At ×500 dilution, 700,000 Bq per litre falls to 1,500, six times under the WHO's 10,000 limit for drinking water. It takes about 50 pours. The tritium doesn't vanish; it spreads through more litres.",
+  "move": "Diluted 500 times, the tank water ends six times under the drinking-water limit.",
+  "keywords": [
+    "fukushima",
+    "tritium",
+    "tank_water",
+    "dilution",
+    "who_limit"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Bar chart comparing 700,000 Bq/L of tank water, the 10,000 Bq/L WHO drinking limit, and 1,500 Bq/L after 500-fold dilution. Tap to pour in clean water and count pours to get under the limit.",
+    "ground": "#0b2731"
+  },
+  "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=IPH3uqi0a-w&t=240s",
+  "written": "2026-11-04"
+}

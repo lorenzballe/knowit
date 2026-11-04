@@ -1,0 +1,38 @@
+{
+  "id": "technology-five-times-downforce",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How hard can a tiny fan press a robot mouse down?",
+  "answer": "A fan built from handheld drone parts can press a micromouse down with five times its weight. The scale reads the mouse's weight plus the air's push, so the reading shows the fan's downforce along with the mouse itself.",
+  "move": "A fan from handheld drone parts presses a micromouse down with 5× its weight.",
+  "keywords": [
+    "micromouse",
+    "vacuum fan",
+    "drone parts",
+    "veritasium",
+    "maze"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A robot mouse with a fan sits on a scale. A throttle slider reads FAN 0%, and the page asks the reader to drag it to see how hard the fan presses the mouse down.",
+    "ground": "#0d3d73"
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=1214s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,449 @@
+<!doctype html>
+<!-- slug: science-fault-breaks-layer -->
+<!-- Look: a paper cut-out geological section on kraft-cream paper: torn strata sheets with white torn rims, grain, a grass strip, cut-out trees, a house, a paper sun and cloud, boiling stop-motion edges.
+     Interaction: before the fault slips, the reader picks one of three torn paper tiles (unbroken / dropped and flat / dropped and dipping); their guess is laid on the section as a dashed ghost.
+     Wow: the right-hand block creaks, then slides down the fault in stop-motion steps, the card thuds and shakes, the house and trees wobble, a dust puff bursts at the scarp, and Matter.js paper scraps tumble off the new scarp and pile at its foot while the offset and the dipping base stamp in. Labels are placed so they never cover each other. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Where a fault cuts a layer</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/matter.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#art{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+#opts{display:flex;gap:2.6cqw;flex:none;padding:.8cqh 1cqw 0}
+.opt{position:relative;flex:1;min-width:0;border:0;background:none;padding:0;cursor:pointer;color:var(--k);
+  font:700 max(1.6cqh,12px)/1.15 var(--body);filter:drop-shadow(0 .45cqh .5cqh rgba(60,36,12,.32));
+  transition:transform .28s cubic-bezier(.3,1.7,.5,1)}
+.opt:nth-child(1){transform:rotate(-2.2deg)}
+.opt:nth-child(2){transform:rotate(1.4deg)}
+.opt:nth-child(3){transform:rotate(-.8deg)}
+.opt:active{transform:scale(.95)}
+.opt .p{display:flex;flex-direction:column;align-items:center;gap:.6cqh;padding:1.3cqh 2.2cqw 1.5cqh;background:#f8f2e4;
+  clip-path:polygon(0 5%,11% 0,29% 3%,50% 0,70% 4%,87% 1%,100% 6%,98% 31%,100% 63%,97% 100%,76% 96%,55% 100%,33% 97%,13% 100%,0 95%,2% 61%,0 32%);
+  transition:background .2s,color .2s}
+.opt svg{width:100%;height:max(4.6cqh,28px);display:block}
+.opt .tx{overflow-wrap:anywhere;text-align:center}
+.opt.on{transform:translateY(-.9cqh) rotate(0) scale(1.05)}
+.opt.on .p{background:#1e1a15;color:#f8f2e4}
+.opt.on::after{content:"";position:absolute;top:-.8cqh;left:50%;width:42%;height:1.7cqh;background:rgba(222,75,50,.82);transform:translateX(-50%) rotate(-5deg)}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex:none}
+#why .big{font-size:max(3.9cqh,22px);line-height:1.02}
+#why .body{font-size:max(1.6cqh,12px);line-height:1.38}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure" style="--c:#eee4cf;--k:#1e1a15;--edge:#c8b693">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">What happens to a rock layer where a fault cuts it?</h2>
+    <div class="stagebox" id="stage">
+      <div id="art"><canvas id="pic" role="img" aria-label="A cross-section of tilted rock layers with a red unit, cut by a steep fault."></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0"><span class="p"><svg viewBox="0 0 64 40"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.4" opacity=".5"/><polygon points="0,12 31,18.2 31,25.2 0,19" fill="#de4b32"/><polygon points="34,18.8 64,24.8 64,31.8 34,25.8" fill="#de4b32"/><line x1="31" y1="7" x2="36" y2="40" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.5"/></svg><span class="tx">Runs on, unbroken</span></span></button>
+        <button class="opt" data-i="1"><span class="p"><svg viewBox="0 0 64 40"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.4" opacity=".5"/><polygon points="0,12 31,18.2 31,25.2 0,19" fill="#de4b32"/><polygon points="35,28 64,28 64,35 35,35" fill="#de4b32"/><line x1="31" y1="7" x2="36" y2="40" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.5"/></svg><span class="tx">Drops, base lies flat</span></span></button>
+        <button class="opt" data-i="2"><span class="p"><svg viewBox="0 0 64 40"><line x1="2" y1="7" x2="62" y2="7" stroke="currentColor" stroke-width="1.4" opacity=".5"/><polygon points="0,12 31,18.2 31,25.2 0,19" fill="#de4b32"/><polygon points="35,28 64,33.8 64,40 35,35" fill="#de4b32"/><line x1="31" y1="7" x2="36" y2="40" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2.5"/></svg><span class="tx">Drops, base dips</span></span></button>
+      </div>
+      <div id="why" class="gone"><p class="big">It breaks, drops, and its base dips.</p><p class="body">The fault cuts the red unit in two and one side slides down it: the layer stops at the fault and carries on lower down. Beyond the fault its base still dips; it is not flat.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">The fault is about to slip. <b>Pick where the red layer ends up.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A fault breaks a layer's continuity: offset, with a dipping base, not a flat one.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('pic'), card = Kit.$('card'), say = Kit.$('say');
+  const INK = '#1e1a15', CORE = '#fbf6ea', CHIP = '#f8f2e4';
+  const UNITS = ['#d6bd8c', '#2f6b70', '#de4b32', '#e2a83c', '#3c4a78'];
+  const A = [.07, .22, .38, .54];      // the contacts at the left edge, as a share of the depth
+  const LABELS = ['Runs on, unbroken', 'Drops, base lies flat', 'Drops, base dips'];
+  const RIGHT = 2;
+  const {Engine, Bodies, Composite, Body} = Matter;
+  const engine = Engine.create(); engine.gravity.y = 1; engine.gravity.scale = .0012;
+
+  let ctx = null, W = 0, H = 0, fs = 12, hand = 'cursive', looping = false;
+  const P = {};
+  const B = [0, 1, 2, 3, 4].map(() => ({v: 1}));     // each sheet laid down
+  const G = {tree: 1, fault: 1, ghost: 0, lab: 0, sh: 0, slip: 0, dust: 1};
+  let pick = -1, phase = 'pick', scraps = [], scrapsOn = false;
+
+  // ---------- geometry ----------
+  const fx = y => P.ftx + (y - P.yT) * P.k;
+  const cy = (i, x, dx, dy) => P.a[i] + dy + P.dip * (x - dx - P.x0);
+  const hit = a => { const y = (a + P.dip * (P.ftx - P.yT * P.k - P.x0)) / (1 - P.dip * P.k); return {x: fx(y), y}; };
+  const hash = (i, s) => { const v = Math.sin(i * 127.1 + s * 311.7) * 43758.5453; return v - Math.floor(v); };
+
+  function layout() {
+    const r = Kit.fitCanvas(cv); ctx = r.x; W = r.W; H = r.H;
+    fs = Math.max(12, Math.min(15, W / 25));
+    hand = getComputedStyle(card).getPropertyValue('--hand').trim() || 'cursive';
+    P.x0 = W * .03; P.x1 = W * .97; P.yT = H * .2; P.yB = H * .965; P.D = P.yB - P.yT;
+    P.ftx = W * .45; P.fbx = P.ftx + Math.min(W * .15, P.D * .36); P.k = (P.fbx - P.ftx) / P.D;
+    P.dip = Math.min(.2, .3 * P.D / (P.x1 - P.x0));   // the dip never runs the layers out of the section
+    const len = Math.hypot(P.fbx - P.ftx, P.D); P.ux = (P.fbx - P.ftx) / len; P.uy = P.D / len;
+    P.slip = P.D * .16 / P.uy;
+    P.a = A.map(f => P.yT + P.D * f);
+    if (scrapsOn) { buildWorld(); spawn(true); }
+    if (!looping) { looping = true; requestAnimationFrame(loop); } else draw(performance.now());
+  }
+
+  // ---------- paper ----------
+  function torn(pts, seed, amp, step = 7, closed = true) {
+    const out = [], n = pts.length; let idx = 0;
+    for (let i = 0; i < (closed ? n : n - 1); i++) {
+      const a = pts[i], b = pts[(i + 1) % n], L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+      const nx = -(b[1] - a[1]) / L, ny = (b[0] - a[0]) / L, k = Math.max(1, Math.round(L / step));
+      for (let j = 0; j < k; j++) {
+        const t = j / k, o = j === 0 ? 0 : (hash(idx++, seed) - .5) * 2 * amp * (hash(idx, seed + 3) > .86 ? 2.3 : 1);
+        out.push([a[0] + (b[0] - a[0]) * t + nx * o, a[1] + (b[1] - a[1]) * t + ny * o]);
+      }
+    }
+    if (!closed) out.push(pts[n - 1]);
+    return out;
+  }
+  const path = pts => { ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]); ctx.closePath(); };
+  const circ = (x, y, r, n = 14) => Array.from({length: n}, (_, i) => [x + Math.cos(i / n * 6.283) * r, y + Math.sin(i / n * 6.283) * r]);
+  let grain = null;
+  function grainPattern() {
+    if (grain) return grain;
+    const c = document.createElement('canvas'); c.width = c.height = 140; const g = c.getContext('2d');
+    for (let i = 0; i < 900; i++) { g.fillStyle = Math.random() < .5 ? 'rgba(30,20,10,.09)' : 'rgba(255,250,235,.12)'; g.fillRect(Math.random() * 140, Math.random() * 140, 1 + Math.random() * 1.6, 1 + Math.random() * 1.2); }
+    for (let i = 0; i < 26; i++) { g.strokeStyle = 'rgba(255,250,235,.1)'; g.lineWidth = .7; const x = Math.random() * 140, y = Math.random() * 140; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + 5, y + 2, x + 9 + Math.random() * 6, y + Math.random() * 4); g.stroke(); }
+    return (grain = ctx.createPattern(c, 'repeat'));
+  }
+  const step = (v, n) => Math.round(v * n) / n;      // stop-motion: motion in whole frames
+  const shadow = (b = 4, y = 2, a = .35) => { ctx.shadowColor = `rgba(45,25,8,${a})`; ctx.shadowBlur = b; ctx.shadowOffsetY = y; };
+
+  // One block of the section: its sheets stacked, each torn sheet laid over the one beneath.
+  function block(side, dx, dy, ph) {
+    const g = 1.7, Y0 = -60, Y1 = H + 80, X0 = -60, X1 = W + 60;
+    const poly = side ? [[fx(Y0) + g, Y0], [X1, Y0], [X1, Y1], [fx(Y1) + g, Y1]] : [[X0, Y0], [fx(Y0) - g, Y0], [fx(Y1) - g, Y1], [X0, Y1]];
+    ctx.save(); path(torn(poly, 11 + side * 7 + ph, .9, 9)); ctx.clip();
+    for (let i = 4; i >= 0; i--) {
+      const b = step(B[i].v, 7); if (b <= 0) continue;
+      const lift = (1 - b) * H * .35;
+      const yTop = x => i === 0 ? -60 : cy(i - 1, x, dx, dy) - 5 - lift;
+      const yBot = x => i === 4 ? H + 80 : cy(i, x, dx, dy) - lift;
+      const bottom = torn([[X1, yBot(X1)], [X0, yBot(X0)]], 40 + i * 13 + side * 5 + ph, 1.9, 6, false);
+      const pts = [[X0, yTop(X0)], [X1, yTop(X1)], ...bottom];
+      ctx.globalAlpha = Math.min(1, b * 1.6);
+      if (i < 4) {
+        ctx.save(); shadow(5, 2.6, .38);
+        ctx.fillStyle = CORE; path([[X0, yTop(X0)], [X1, yTop(X1)], ...bottom.map(p => [p[0], p[1] + 1.9])]); ctx.fill(); ctx.restore();
+      }
+      ctx.fillStyle = UNITS[i]; path(pts); ctx.fill();
+      // laminae: fine lines that run with the bedding
+      ctx.save(); path(pts); ctx.clip();
+      ctx.strokeStyle = i === 0 || i === 3 ? 'rgba(80,50,20,.18)' : 'rgba(255,248,230,.16)'; ctx.lineWidth = 1.1; ctx.setLineDash([7, 5]);
+      for (const f of [.35, .7]) {
+        const yA = x => i === 0 ? cy(0, x, dx, dy) - P.D * (.025 + .06 * f) : i === 4 ? cy(3, x, dx, dy) + P.D * .12 * f * 2 : cy(i - 1, x, dx, dy) + (cy(i, x, dx, dy) - cy(i - 1, x, dx, dy)) * f;
+        ctx.beginPath(); ctx.moveTo(X0, yA(X0) - lift); ctx.lineTo(X1, yA(X1) - lift); ctx.stroke();
+      }
+      if (i === 2) { ctx.setLineDash([]); ctx.fillStyle = 'rgba(255,230,210,.22)'; for (let s = 0; s < 70; s++) { const x = P.x0 + hash(s, 5 + side) * (P.x1 - P.x0), t = hash(s, 9 + side); const y = cy(1, x, dx, dy) + (cy(2, x, dx, dy) - cy(1, x, dx, dy)) * (.15 + t * .7) - lift; ctx.beginPath(); ctx.arc(x, y, 1.2, 0, 7); ctx.fill(); } }
+      if (i === 4) { ctx.setLineDash([]); ctx.fillStyle = 'rgba(255,248,230,.1)'; for (let s = 0; s < 40; s++) { const x = P.x0 + hash(s, 21 + side) * (P.x1 - P.x0), y = cy(3, x, dx, dy) + P.D * (.04 + hash(s, 23) * .4) - lift; ctx.beginPath(); ctx.arc(x, y, 1.6, 0, 7); ctx.fill(); } }
+      ctx.restore();
+      ctx.globalAlpha = 1;
+    }
+    // the soil and grass on top of the block
+    if (G.tree > .01) {
+      const yS = P.yT + dy, th = Math.max(3, P.D * .028);
+      ctx.globalAlpha = Math.min(1, G.tree);
+      ctx.save(); shadow(3, 1.5, .3); ctx.fillStyle = '#4c7f44';
+      path([[X0, yS - 8], [X1, yS - 8], ...torn([[X1, yS + th], [X0, yS + th]], 60 + side * 3 + ph, 1.3, 5, false)]); ctx.fill(); ctx.restore();
+      ctx.fillStyle = '#6d9f56';
+      path([[X0, yS - 8], [X1, yS - 8], ...torn([[X1, yS + th * .4], [X0, yS + th * .4]], 66 + side * 3 + ph, 1, 5, false)]); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    ctx.fillStyle = grainPattern(); ctx.fillRect(-60, -60, W + 120, H + 140);
+    ctx.restore();
+  }
+
+  function tree(x, y, h, seed, ph, rot) {
+    const a = G.tree; if (a <= .01) return;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(a, a); shadow();
+    ctx.fillStyle = '#6b4a2c'; path(torn([[-h * .05, 0], [h * .05, 0], [h * .05, -h * .3], [-h * .05, -h * .3]], seed + ph, .5, 5)); ctx.fill();
+    [['#2f5d3a', 1, .22], ['#467a44', .78, .5], ['#5d9150', .55, .74]].forEach(([c, s, y0], j) => {
+      ctx.fillStyle = c; path(torn([[-h * .26 * s, -h * y0], [h * .26 * s, -h * y0], [0, -h * (y0 + .42 * s + .1)]], seed + j * 3 + ph, .9, 5)); ctx.fill();
+    });
+    ctx.restore();
+  }
+  function house(x, y, h, seed, ph, rot) {
+    const a = G.tree; if (a <= .01) return;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(a, a); shadow();
+    ctx.fillStyle = CORE; path(torn([[-h * .4, 0], [h * .4, 0], [h * .4, -h * .55], [-h * .4, -h * .55]], seed + ph, .8, 6)); ctx.fill();
+    ctx.fillStyle = '#b8452c'; path(torn([[-h * .5, -h * .5], [h * .5, -h * .5], [0, -h * .98]], seed + 4 + ph, .9, 6)); ctx.fill();
+    ctx.fillStyle = '#7a5a3a'; ctx.fillRect(h * .2, -h * .9, h * .1, h * .22);
+    ctx.shadowColor = 'transparent'; ctx.fillStyle = INK;
+    ctx.fillRect(-h * .1, -h * .3, h * .2, h * .3); ctx.fillRect(h * .17, -h * .42, h * .14, h * .12); ctx.fillRect(-h * .31, -h * .42, h * .14, h * .12);
+    ctx.restore();
+  }
+  function sky(t, ph) {
+    const a = Math.min(1, G.tree); if (a <= .01) return;
+    const r = Math.min(P.yT * .2, W * .04); if (r < 5) return;
+    ctx.save(); ctx.globalAlpha = a;
+    // a paper sun with slowly turning rays
+    const sx = P.x0 + (P.x1 - P.x0) * .78, sy = P.yT * .42, turn = Kit.calm ? 0 : step(t * .00012 % 1, 24) * 6.283;
+    ctx.save(); ctx.translate(sx, sy); ctx.rotate(turn); shadow(3, 1.5, .25); ctx.fillStyle = '#e9b949';
+    for (let i = 0; i < 9; i++) { const q = i / 9 * 6.283; path(torn([[Math.cos(q - .17) * r * 1.05, Math.sin(q - .17) * r * 1.05], [Math.cos(q) * r * 1.65, Math.sin(q) * r * 1.65], [Math.cos(q + .17) * r * 1.05, Math.sin(q + .17) * r * 1.05]], 200 + i + ph, .5, 4)); ctx.fill(); }
+    ctx.fillStyle = '#f3c650'; path(torn(circ(0, 0, r), 210 + ph, .7, 4)); ctx.fill(); ctx.restore();
+    // a paper cloud drifting
+    const cx = P.x0 + W * .1 + (Kit.calm ? 0 : Math.round(Math.sin(t * .0005) * 4) * W * .005), cyy = P.yT * .42;
+    ctx.save(); shadow(4, 2, .25); ctx.fillStyle = CORE;
+    path(torn([...circ(cx - r * .9, cyy + r * .2, r * .7, 10).slice(3, 9), ...circ(cx, cyy - r * .1, r * .95, 12).slice(5, 12), ...circ(cx + r * .95, cyy + r * .25, r * .62, 10).slice(6, 10), [cx + r * 1.5, cyy + r * .75], [cx - r * 1.5, cyy + r * .75]], 220 + ph, .8, 5)); ctx.fill();
+    ctx.restore(); ctx.restore();
+    return {x: cx - r * 1.6, y: cyy - r * 1.1, w: r * 3.2, h: r * 1.9};
+  }
+
+  function cm(text, dash) {
+    ctx.font = `700 ${fs * 1.08}px ${hand}`;
+    const dw = dash ? fs * 2 : 0;
+    return {w: ctx.measureText(text).width + dw + fs * 1.1, h: fs * 1.75, dw};
+  }
+  function chip(text, x, y, a, seed, ph, dash) {
+    if (a <= .01) return;
+    const m = cm(text, dash);
+    ctx.save(); ctx.translate(x, y);
+    const sc = 1 + (1 - Math.min(1, a)) * .5; ctx.scale(sc, sc); ctx.globalAlpha = Math.min(1, a);
+    shadow();
+    ctx.fillStyle = CHIP; path(torn([[-m.w / 2, -m.h / 2], [m.w / 2, -m.h / 2], [m.w / 2, m.h / 2], [-m.w / 2, m.h / 2]], seed + ph, .9, 6)); ctx.fill();
+    ctx.shadowColor = 'transparent'; ctx.fillStyle = INK; ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+    const x0 = -m.w / 2 + fs * .55;
+    if (dash) { ctx.strokeStyle = INK; ctx.lineWidth = 2; ctx.setLineDash([4, 3]); ctx.strokeRect(x0, -fs * .35, fs * 1.5, fs * .7); ctx.setLineDash([]); }
+    ctx.fillText(text, x0 + m.dw, fs * .05);
+    ctx.restore();
+  }
+
+  // the label placer: every label takes the first free spot from its list
+  function placer() {
+    const taken = [], pad = 4;
+    const free = r => r.x >= 2 && r.y >= 1 && r.x + r.w <= W - 2 && r.y + r.h <= H - 1 &&
+      !taken.some(q => r.x < q.x + q.w + pad && r.x + r.w + pad > q.x && r.y < q.y + q.h + pad && r.y + r.h + pad > q.y);
+    return {
+      block(r) { if (r) taken.push(r); },
+      spot(cands, w, h) {
+        for (const [x, y] of cands) { const r = {x: x - w / 2, y: y - h / 2, w, h}; if (free(r)) { taken.push(r); return [x, y]; } }
+        const [x, y] = cands[0]; taken.push({x: x - w / 2, y: y - h / 2, w, h}); return [x, y];
+      }
+    };
+  }
+
+  function ghostPoly(o) {
+    const X0 = -60, X1 = W + 60, sx = P.slip * P.ux, sy = P.slip * P.uy;
+    if (o === 1) { const y1 = hit(P.a[1]).y + sy, y2 = hit(P.a[2]).y + sy; return [[X0, y1], [X1, y1], [X1, y2], [X0, y2]]; }
+    const dx = o === 2 ? sx : 0, dy = o === 2 ? sy : 0;
+    return [[X0, cy(1, X0, dx, dy)], [X1, cy(1, X1, dx, dy)], [X1, cy(2, X1, dx, dy)], [X0, cy(2, X0, dx, dy)]];
+  }
+
+  // ---------- the picture ----------
+  function draw(t) {
+    if (!ctx) return;
+    const ph = Kit.calm ? 0 : Math.floor(t / 130) % 3;
+    const s = P.slip * step(G.slip, 16), sx = s * P.ux, sy = s * P.uy;
+    const SX = P.slip * P.ux, SY = P.slip * P.uy;
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    if (G.sh > .001) ctx.translate(G.sh * 7 * Math.sin(t * .09), G.sh * 5 * Math.cos(t * .13));
+    const L = placer();
+    L.block(sky(t, ph));
+
+    // the section: shadow, then everything clipped to its torn outline
+    const sect = torn([[P.x0, P.yT], [P.ftx, P.yT], [P.ftx + sx, P.yT + sy], [P.x1, P.yT + sy], [P.x1, P.yB], [P.x0, P.yB]], 3 + ph, 1.6, 7);
+    ctx.save(); shadow(12, 5, .38); ctx.fillStyle = UNITS[4]; path(sect); ctx.fill(); ctx.restore();
+    ctx.save(); path(sect); ctx.clip();
+    block(0, 0, 0, ph);
+    block(1, sx, sy, ph);
+    // the base of the red unit: its contact with the rock below
+    if (G.lab > .01) {
+      ctx.save(); ctx.globalAlpha = Math.min(1, G.lab); ctx.strokeStyle = INK; ctx.lineWidth = 3; ctx.lineCap = 'round';
+      const p2 = hit(P.a[2]);
+      path(torn([[P.x0 - 10, cy(2, P.x0 - 10, 0, 0)], [p2.x - 2, p2.y]], 70 + ph, .8, 7, false)); ctx.stroke();
+      path(torn([[p2.x + sx + 2, p2.y + sy], [P.x1 + 10, cy(2, P.x1 + 10, sx, sy)]], 75 + ph, .8, 7, false)); ctx.stroke();
+      ctx.restore();
+    }
+    // the reader's guess, laid on the right-hand block
+    if (pick >= 0 && G.ghost > .01) {
+      const g = step(G.ghost, 6);
+      ctx.save(); ctx.beginPath(); ctx.moveTo(fx(-60) + 3, -60); ctx.lineTo(W + 60, -60); ctx.lineTo(W + 60, H + 80); ctx.lineTo(fx(H + 80) + 3, H + 80); ctx.closePath(); ctx.clip();
+      ctx.translate(0, -(1 - g) * fs * 2); ctx.globalAlpha = Math.min(1, g);
+      const gp = ghostPoly(pick);
+      ctx.fillStyle = 'rgba(255,250,236,.3)'; path(gp); ctx.fill();
+      ctx.strokeStyle = INK; ctx.lineWidth = 2.2; ctx.setLineDash([6, 4]); ctx.lineDashOffset = -ph * 3; path(gp); ctx.stroke();
+      ctx.restore();
+    }
+    ctx.restore();
+
+    // the fault
+    const fa = G.fault;
+    if (fa > .01) {
+      ctx.save(); ctx.strokeStyle = INK; ctx.lineWidth = phase === 'done' ? 2.6 : 2.2; ctx.lineCap = 'round';
+      if (phase !== 'done') ctx.setLineDash([7, 5]);
+      ctx.beginPath(); ctx.moveTo(P.ftx, P.yT); ctx.lineTo(P.ftx + (P.fbx - P.ftx) * fa, P.yT + P.D * fa); ctx.stroke(); ctx.restore();
+    }
+
+    // on the surface: the right-hand pieces wobble when the ground jumps
+    const th = Math.min(P.yT * .72, W * .13), wob = (k) => G.sh * .22 * Math.sin(t * .05 + k);
+    const T1 = [P.ftx - W * .075, P.yT + 1, th], HS = [P.ftx + W * .2 + sx, P.yT + sy + 1, th * .75], T2 = [P.x1 - W * .08 + sx, P.yT + sy + 1, th * .9];
+    tree(T1[0], T1[1], T1[2], 90, ph, wob(1) * .3);
+    house(HS[0], HS[1], HS[2], 95, ph, wob(2));
+    tree(T2[0], T2[1], T2[2], 99, ph, wob(3));
+    for (const [x, y, h] of [T1, T2]) L.block({x: x - h * .28, y: y - h * .96, w: h * .56, h: h * .96});
+    L.block({x: HS[0] - HS[2] * .5, y: HS[1] - HS[2], w: HS[2], h: HS[2]});
+
+    // the dust puff at the foot of the new scarp
+    if (G.dust < .999) {
+      const d = step(G.dust, 10), bx = P.ftx + SX, by = P.yT + SY;
+      ctx.save(); ctx.globalAlpha = (1 - d) * .85; ctx.fillStyle = '#efe2c4'; shadow(3, 1, .2);
+      for (let i = 0; i < 7; i++) { const q = -Math.PI * (.1 + i / 6 * .8); path(torn(circ(bx + Math.cos(q) * fs * 2.4 * d * (1 + i % 2 * .4), by - fs * .3 + Math.sin(q) * fs * 1.6 * d, fs * (.35 + d * .6), 9), 300 + i + ph, .8, 4)); ctx.fill(); }
+      ctx.restore();
+    }
+
+    // the scraps that fall off the new scarp
+    for (const b of scraps) {
+      ctx.save(); shadow(3, 1.5); ctx.fillStyle = b.col;
+      path(b.vertices.map((v, j) => [v.x + (hash(j + b.id, ph) - .5) * 1.2, v.y + (hash(j + b.id, ph + 7) - .5) * 1.2])); ctx.fill(); ctx.restore();
+    }
+
+    // the name of the red unit, written on it
+    const lx = (P.x0 + P.ftx) * .5 - W * .02, ly = (cy(1, lx, 0, 0) + cy(2, lx, 0, 0)) / 2;
+    ctx.save(); ctx.font = `700 ${fs * 1.2}px ${hand}`; const ltw = ctx.measureText('red unit').width; ctx.restore();
+    L.block({x: lx - ltw / 2, y: ly - fs * .75 - ltw * P.dip / 2, w: ltw, h: fs * 1.5 + ltw * P.dip});
+    ctx.save(); ctx.translate(lx, ly); ctx.rotate(Math.atan(P.dip)); ctx.globalAlpha = step(B[2].v, 7);
+    ctx.font = `700 ${fs * 1.2}px ${hand}`; ctx.fillStyle = '#fff6ea'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('red unit', 0, 0); ctx.restore();
+
+    // the marks of the answer
+    const p2 = hit(P.a[2]), nx = P.uy, ny = -P.ux, o = 7;
+    const ax = p2.x + nx * o, ay = p2.y + ny * o, bx = ax + SX, by = ay + SY;
+    const xq = p2.x + SX + W * .06, yq = cy(2, xq, SX, SY), rr = Math.min(W * .09, fs * 3.6);
+    if (G.lab > .01) {
+      L.block({x: Math.min(ax, bx) - 5, y: ay - 3, w: Math.abs(bx - ax) + 10, h: by - ay + 6});
+      L.block({x: xq - 2, y: yq - 3, w: rr * 1.35 + 4, h: rr * Math.sin(Math.atan(P.dip)) + 6});
+      ctx.save(); ctx.globalAlpha = Math.min(1, G.lab); ctx.strokeStyle = INK; ctx.fillStyle = INK; ctx.lineWidth = 2; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+      for (const [x, y, d] of [[ax, ay, -1], [bx, by, 1]]) { ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - d * P.ux * 7 + nx * 4, y - d * P.uy * 7 + ny * 4); ctx.lineTo(x - d * P.ux * 7 - nx * 4, y - d * P.uy * 7 - ny * 4); ctx.closePath(); ctx.fill(); }
+      // the dip of the base beyond the fault, against the horizontal
+      ctx.lineWidth = 1.8; ctx.setLineDash([4, 3]);
+      ctx.beginPath(); ctx.moveTo(xq, yq); ctx.lineTo(xq + rr * 1.35, yq); ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); ctx.arc(xq, yq, rr, 0, Math.atan(P.dip)); ctx.stroke();
+      ctx.restore();
+    }
+
+    // the chips, each in its own free spot
+    const mf = cm('fault'), fp = L.spot([.3, .2, .42, .12, .55].map(f => [fx(P.yT + P.D * f), P.yT + P.D * f]), mf.w, mf.h);
+    chip('fault', fp[0], fp[1], fa, 20, ph);
+    if (G.lab > .01) {
+      const mo = cm('offset'), my = p2.y + SY / 2, xl = fx(my) - mo.w / 2 - fs * .7, xr = fx(my) + o + mo.w / 2 + fs * .6;
+      const op = L.spot([[xl, my], [xl, my + mo.h * .9], [xl, my - mo.h * .9], [xr, my + SY * .4], [xl - fs * 2, my + mo.h * 1.6]], mo.w, mo.h);
+      chip('offset', op[0], op[1], G.lab, 40, ph);
+      const mb = cm('its base dips'), c = [];
+      for (const xc of [P.x1 - mb.w / 2 - 4, P.x1 - mb.w / 2 - W * .12, P.x1 - mb.w / 2 - W * .2]) {
+        c.push([xc, cy(2, xc + mb.w / 2, SX, SY) + mb.h / 2 + 4]);
+        c.push([xc, cy(2, xc - mb.w / 2, SX, SY) - mb.h / 2 - 4]);
+      }
+      const bp = L.spot(c, mb.w, mb.h);
+      chip('its base dips', bp[0], bp[1], G.lab, 50, ph);
+    }
+    if (pick >= 0) {
+      const mg = cm('your guess', true);
+      const gp = L.spot([[P.x0 + mg.w / 2 + 4, Math.max(mg.h / 2 + 2, P.yT * .45)], [P.x0 + mg.w / 2 + 6, P.yB - mg.h / 2 - 6], [P.x0 + mg.w / 2 + 6, P.yB - mg.h * 1.6 - 6], [P.x1 - mg.w / 2 - 6, P.yB - mg.h / 2 - 6]], mg.w, mg.h);
+      chip('your guess', gp[0], gp[1], G.ghost, 30, ph, true);
+    }
+    ctx.restore();
+  }
+
+  function loop(t) {
+    if (scraps.length && !Kit.calm) Engine.update(engine, 1000 / 60);
+    draw(t);
+    requestAnimationFrame(loop);
+  }
+
+  // ---------- Matter: the scarp and its debris ----------
+  function buildWorld() {
+    Composite.clear(engine.world, false); scraps = [];
+    const sx = P.slip * P.ux, sy = P.slip * P.uy, st = {isStatic: true, friction: .8};
+    const fl = fx(P.yT + sy);
+    Composite.add(engine.world, [
+      Bodies.rectangle((fl + P.x1) / 2, P.yT + sy + 10, P.x1 - fl + 60, 20, st),
+      Bodies.rectangle((P.x0 + P.ftx) / 2, P.yT + 10, P.ftx - P.x0, 20, st),
+      Bodies.rectangle(P.ftx + sx / 2 - P.uy * 10, P.yT + sy / 2 + P.ux * 10, P.slip + 14, 20, Object.assign({angle: Math.atan2(P.uy, P.ux)}, st)),
+      Bodies.rectangle(P.x1 + 10, H / 2, 20, H * 2, st),
+      Bodies.rectangle(P.x0 - 10, H / 2, 20, H * 2, st)
+    ]);
+  }
+  function spawn(settled) {
+    const cols = [UNITS[0], '#c9ab72', '#e4d1a6', '#b08c58', '#6d9f56', UNITS[0], '#8a6a43'];
+    for (let i = 0; i < 16; i++) {
+      const b = Bodies.polygon(P.ftx + 3 + Kit.rnd() * fs * 1.2, P.yT - fs * .4 - Kit.rnd() * fs * 2.4, 3 + Math.floor(Kit.rnd() * 3), fs * (.22 + Kit.rnd() * .3),
+        {restitution: .15, friction: .7, frictionAir: .015, angle: Kit.rnd() * 6});
+      b.col = cols[i % cols.length];
+      Body.setVelocity(b, {x: .4 + Kit.rnd() * 1.6, y: -Kit.rnd() * 2.2});
+      Body.setAngularVelocity(b, (Kit.rnd() - .5) * .35);
+      scraps.push(b);
+    }
+    Composite.add(engine.world, scraps);
+    if (settled || Kit.calm) for (let i = 0; i < 420; i++) Engine.update(engine, 1000 / 60);
+  }
+
+  // ---------- the slip ----------
+  function thud() {
+    Kit.haptic('success');
+    scrapsOn = true; buildWorld(); spawn(Kit.calm);
+    if (Kit.calm) { G.sh = 0; G.lab = 1; G.dust = 1; return; }
+    gsap.fromTo(G, {sh: 1}, {sh: 0, duration: .9, ease: 'expo.out'});
+    gsap.fromTo(G, {dust: 0}, {dust: 1, duration: 1.1, ease: 'power2.out'});
+    gsap.to(G, {lab: 1, duration: .55, ease: 'back.out(2.2)', delay: .3});
+  }
+  function reveal() {
+    phase = 'done';
+    if (Kit.calm) { G.slip = 1; G.ghost = 1; thud(); return; }
+    gsap.timeline()
+      .to(G, {slip: .07, duration: .12, ease: 'sine.inOut', yoyo: true, repeat: 3})
+      .to(G, {slip: 1, duration: .8, ease: 'power3.in', onComplete: thud});
+  }
+
+  // ---------- the reader ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = LABELS[pick];
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    Kit.show('keep');
+    reveal();
+  });
+  let sureOn = false;
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || phase === 'done') return;
+    [...Kit.$('opts').children].forEach(c => c.classList.toggle('on', c === b));
+    pick = +b.dataset.i; Kit.haptic('selection');
+    if (Kit.calm) G.ghost = 1; else gsap.fromTo(G, {ghost: 0}, {ghost: 1, duration: .45, ease: 'back.out(1.8)'});
+    say.innerHTML = 'Your guess is the dashed piece. <b>Now say how sure you are.</b>';
+    if (!sureOn) { sureOn = true; sure.on(); }
+  });
+
+  new ResizeObserver(() => { if (ctx) layout(); }).observe(Kit.$('art'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || phase !== 'pick') return;
+    B.forEach(b => b.v = 0); G.tree = 0; G.fault = 0;
+    gsap.timeline()
+      .to(B.slice().reverse(), {v: 1, duration: .6, ease: 'back.out(1.5)', stagger: .14})
+      .to(G, {tree: 1, duration: .8, ease: 'elastic.out(1,.5)'}, '-=.25')
+      .to(G, {fault: 1, duration: .7, ease: 'power2.inOut'}, '-=.6');
+    gsap.from('.opt', {opacity: 0, y: 14, rotation: () => (Math.random() - .5) * 14, stagger: .08, duration: .5, ease: 'back.out(1.7)', delay: .6, clearProps: 'opacity,transform'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    gsap.globalTimeline.progress(1);
+    B.forEach(b => b.v = 1); G.tree = 1; G.fault = 1;
+    Kit.$('opts').children[RIGHT].click();
+    await wait(Kit.calm ? 80 : 500);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 200 : 2600);
+  };
+})();
+Kit.single();
+</script>
+</html>

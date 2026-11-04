@@ -89,11 +89,105 @@
    "size": "l",
    "gap": 0,
    "title": {
-    "en": "New jewel cards · debug (114, 1/2)",
-    "it": "Carte gioiello nuove · debug (114, 1/2)"
+    "en": "New jewel cards · debug (183, 1/4)",
+    "it": "Carte gioiello nuove · debug (183, 1/4)"
    },
    "source": {
     "ids": [
+     "science-graphene-helium-seal",
+     "science-dilute-fukushima-water",
+     "science-air-torpedo-sphere",
+     "science-push-harder-spin",
+     "science-cat-already-decided",
+     "science-arlington-teflon-blast",
+     "science-spinning-x-slowdown",
+     "science-many-worlds-dice",
+     "science-reynolds-goes-up",
+     "science-zero-g-smoke",
+     "science-thermite-steel-damper",
+     "science-weight-is-a-pull",
+     "science-bomb-layer",
+     "science-little-boy-waste",
+     "science-teflon-chain-reaction",
+     "science-sketch-before-measuring",
+     "science-foraminifera-clay-line",
+     "science-fault-breaks-layer",
+     "science-volcano-depth-tsunami",
+     "science-dna-spooled-tight",
+     "science-vinegar-eats-eggshell",
+     "science-rift-to-ocean",
+     "science-frozen-compass",
+     "science-magnetic-seafloor-stripes",
+     "science-steel-bar-signal",
+     "history-ivy-mike-blocks",
+     "history-little-boy-efficiency",
+     "history-shield-or-dove",
+     "history-tsar-cloud-height",
+     "history-disarm-in-steps",
+     "history-national-redoubt",
+     "history-great-power-war",
+     "history-nato-shrinking-cushion",
+     "history-silk-road-sentence",
+     "history-elephants-foot-dose",
+     "maths-perfect-tiling",
+     "maths-duverger-two-parties",
+     "maths-storm-jar-odds",
+     "maths-kepler-proof-dial",
+     "maths-question-seventeen",
+     "maths-fibonacci-gaps",
+     "maths-borda-spoiler-dial",
+     "medicine-eclipse-blind-spot",
+     "medicine-triple-dependency-window",
+     "food-acid-squeezes-protein",
+     "food-shark-mercury-climb"
+    ]
+   },
+   "limit": 46,
+   "audience": {
+    "platforms": [
+     "ios"
+    ],
+    "until": "2026-12-15"
+   },
+   "subtitle": {
+    "en": "Each with a look and a motion of its own, drawn straight on the card",
+    "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
+   }
+  },
+  {
+   "id": "debug-new-jewels-2",
+   "block": "carousel",
+   "size": "l",
+   "gap": 0,
+   "title": {
+    "en": "New jewel cards · debug (183, 2/4)",
+    "it": "Carte gioiello nuove · debug (183, 2/4)"
+   },
+   "source": {
+    "ids": [
+     "psychology-gentle-slope-frame",
+     "human_body-hyper-g-head",
+     "human_body-sweat-evaporation-heat",
+     "human_body-habits-mark-genes",
+     "technology-tape-growing-robot",
+     "technology-tail-pull-retract",
+     "technology-milk-carton-layers",
+     "technology-gps-light-rose",
+     "technology-five-times-downforce",
+     "technology-folding-the-steel",
+     "technology-messina-record-span",
+     "technology-sludge-to-biogas",
+     "technology-induction-foil-stick",
+     "technology-xm42-flamethrower",
+     "technology-backlash-pin-hole",
+     "nature-adriatic-dry-floor",
+     "nature-adria-sea-floor",
+     "nature-everest-underwater",
+     "nature-vesuvius-ash-volume",
+     "thinking-bermuda-per-ship",
+     "weird_facts-marble-football-fields",
+     "life-border-coin-flip",
+     "life-ecuador-murder-rate",
      "science-extinguisher-charges",
      "science-cold-laminar-flow-6",
      "science-pressure-at-depth",
@@ -116,7 +210,28 @@
      "technology-motogp-power-weight",
      "technology-tempered-glass-squeeze",
      "technology-solar-depot-grid",
-     "technology-tatara-mass-balance",
+     "technology-tatara-mass-balance"
+    ]
+   },
+   "limit": 46,
+   "audience": {
+    "platforms": [
+     "ios"
+    ],
+    "until": "2026-12-15"
+   }
+  },
+  {
+   "id": "debug-new-jewels-3",
+   "block": "carousel",
+   "size": "l",
+   "gap": 0,
+   "title": {
+    "en": "New jewel cards · debug (183, 3/4)",
+    "it": "Carte gioiello nuove · debug (183, 3/4)"
+   },
+   "source": {
+    "ids": [
      "technology-graphene-fast-charge",
      "nature-vesuvius-warning-signs",
      "nature-ice-age-italy",
@@ -150,32 +265,7 @@
      "science-snow-flips-friction",
      "science-sludge-cannibalism",
      "science-rock-restoration",
-     "science-pacific-background-radiation"
-    ]
-   },
-   "limit": 57,
-   "audience": {
-    "platforms": [
-     "ios"
-    ],
-    "until": "2026-12-15"
-   },
-   "subtitle": {
-    "en": "Each with a look and a motion of its own, drawn straight on the card",
-    "it": "Ognuna col suo stile e la sua animazione, disegnata direttamente sulla carta"
-   }
-  },
-  {
-   "id": "debug-new-jewels-2",
-   "block": "carousel",
-   "size": "l",
-   "gap": 0,
-   "title": {
-    "en": "New jewel cards · debug (114, 2/2)",
-    "it": "Carte gioiello nuove · debug (114, 2/2)"
-   },
-   "source": {
-    "ids": [
+     "science-pacific-background-radiation",
      "science-one-way-light",
      "science-magnetic-stripes",
      "science-kepler-water-units",
@@ -187,7 +277,28 @@
      "science-grape-microwave-trap",
      "science-granite-near-diamond",
      "science-fourth-power-glow",
-     "science-fallout-layer",
+     "science-fallout-layer"
+    ]
+   },
+   "limit": 46,
+   "audience": {
+    "platforms": [
+     "ios"
+    ],
+    "until": "2026-12-15"
+   }
+  },
+  {
+   "id": "debug-new-jewels-4",
+   "block": "carousel",
+   "size": "l",
+   "gap": 0,
+   "title": {
+    "en": "New jewel cards · debug (183, 4/4)",
+    "it": "Carte gioiello nuove · debug (183, 4/4)"
+   },
+   "source": {
+    "ids": [
      "science-energy-glass",
      "science-bouncing-egg-bubbles",
      "science-bio-not-biodegradable",
@@ -235,7 +346,7 @@
      "maths-penrose-lookalikes"
     ]
    },
-   "limit": 57,
+   "limit": 45,
    "audience": {
     "platforms": [
      "ios"

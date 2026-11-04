@@ -1,0 +1,38 @@
+{
+  "id": "human_body-hyper-g-head",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are passengers told to keep their heads still in hyper-G?",
+  "answer": "In hyper-G, the vestibular system, the balance sense in your inner ear, becomes hypersensitive to movement. The same small head turn hits it far harder and brings on motion sickness, which is why the plane is nicknamed the vomit comet. Passengers are advised to keep their heads still and look straight ahead.",
+  "move": "In hyper-G, keep your head still and look straight ahead.",
+  "keywords": [
+    "vestibular system",
+    "inner ear",
+    "motion sickness",
+    "vomit comet",
+    "hyper-g"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive diagram of a passenger's head with the inner ear shown. Drag sideways to turn the head in level flight at normal gravity, then pull up into hyper-G and turn it again. Asks why passengers are told to keep their heads still in hyper-G.",
+    "ground": "#23324f"
+  },
+  "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=100s",
+  "written": "2026-11-04"
+}

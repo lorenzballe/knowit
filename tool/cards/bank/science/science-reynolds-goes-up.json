@@ -1,0 +1,38 @@
+{
+  "id": "science-reynolds-goes-up",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Same viscosity: what happens to flow as density or speed rise?",
+  "answer": "Raising density or speed while viscosity stays fixed raises the Reynolds number, since it is density times speed times pipe width divided by viscosity. Density and speed sit on top, so the smooth layers break into eddies and the flow turns turbulent.",
+  "move": "Heavier or faster fluid, same viscosity: Reynolds goes up, flow turns turbulent.",
+  "keywords": [
+    "reynolds number",
+    "turbulence",
+    "laminar flow",
+    "viscosity",
+    "pipe"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Dye flowing in a pipe, drawn as smooth laminar layers that turn into turbulent eddies. Asks what happens to flow when density or speed rise while viscosity stays fixed. Tap Density or Speed to see the Reynolds number change.",
+    "ground": "#f1ede4"
+  },
+  "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=I3IpKEtWqvU&t=152s",
+  "written": "2026-11-04"
+}

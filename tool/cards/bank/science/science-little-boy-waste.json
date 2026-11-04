@@ -1,0 +1,39 @@
+{
+  "id": "science-little-boy-waste",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Little Boy carried 64 kg of uranium-235. How much of it actually fissioned?",
+  "answer": "Only 1.5% of Little Boy's 64 kg of uranium-235 split, which is less than 1 kg. The other 98.5% never reacted; it was blown apart and fell back as radioactive debris.",
+  "move": "Little Boy wasted 98.5% of its uranium: the gun-type bomb is inefficient.",
+  "keywords": [
+    "little boy",
+    "uranium-235",
+    "gun-type bomb",
+    "fission",
+    "radioactive debris"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Asks how much of Little Boy's 64 kg of uranium-235 fissioned, with three tappable guesses: 50% (32 kg), 15% (about 10 kg), and 1.5% (about 1 kg). Reveals that only 1.5% split and the other 98.5% fell as debris.",
+    "graded": false,
+    "ground": "#13151d"
+  },
+  "source": "Geopop, “La bomba atomica di Oppenheimer - Animazione 3D di come funziona e com'è fatta dentro” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=oDETa3ktK8M&t=200s",
+  "written": "2026-11-04"
+}

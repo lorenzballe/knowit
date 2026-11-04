@@ -1,0 +1,330 @@
+<!doctype html>
+<!-- slug: technology-tape-growing-robot -->
+<!-- Look: a pop-art comic strip on yellow Ben-Day paper. Thick black outlines, halftone shading, a red toy car and a cyan vine robot.
+     Interaction: guess who crosses a strip of sticky pink tape and say how sure you are. Then watch both try: the car rolls on and gets glued down, the robot grows across.
+     Wow: the car hops while glue strings snap it back ("STUCK!"). The robot's tip unrolls over the tape while its stripes stay fixed to the ground ("OVER IT!"). -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Over the tape</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
+<style>
+#card{background-image:radial-gradient(color-mix(in srgb,#e8322b 20%,transparent) 22%,transparent 26%);background-size:9px 9px}
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#pic.replay{cursor:pointer}
+#opts{display:flex;gap:2.6cqw;padding:0 5px 5px 0;flex:none}
+.opt{flex:1;min-width:0;font:900 max(2.2cqh,14px)/1.1 var(--display);color:var(--k);background:#fff;border:max(.32cqh,2px) solid var(--k);border-radius:1.4cqh;padding:1.4cqh .6cqw;cursor:pointer;box-shadow:4px 4px 0 var(--k);transition:transform .08s cubic-bezier(.3,1.6,.5,1),box-shadow .08s;overflow-wrap:anywhere}
+.opt:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--k)}
+.opt.on{background:#e8322b;color:#fff;transform:translate(2px,2px);box-shadow:2px 2px 0 var(--k)}
+#why{display:flex;flex-direction:column;gap:.7cqh;flex:none}
+#why .big{margin:0;font:900 max(2.8cqh,19px)/1.02 var(--display);text-transform:uppercase;letter-spacing:.01em}
+#why .big span{color:#e8322b;-webkit-text-stroke:0}
+#why .body{margin:0;font:600 max(1.75cqh,13px)/1.3 var(--body)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure" style="--c:#ffd23f;--k:#141414;--edge:#c99a00">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <h2 class="q">A car and a growing robot meet sticky tape. Which one gets across?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Two comic lanes: a red toy car and an inflatable robot growing from a tank of air, each facing a strip of sticky pink tape."></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">The car</button>
+        <button class="opt" data-i="1">The robot</button>
+        <button class="opt" data-i="2">Both</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It never rolls. <span>It grows.</span></p><p class="body">Compressed air pushes new skin out at the tip, so the part already lying on the tape never moves again: watch the stripes stay put. The car must pull its wheels off the glue, and the glue wins.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick who makes it over the tape, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>What grows from its tip can't be held by what it lies on.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const hasCE = typeof CustomEase !== 'undefined';
+  if (hasCE) {
+    gsap.registerPlugin(CustomEase);
+    CustomEase.create('drop', 'M0,0 C0.25,0.1 0.35,1 0.5,1 0.6,0.9 0.68,0.9 0.76,1 0.84,0.97 0.9,0.97 1,1');
+    CustomEase.create('snap', 'M0,0 C0.12,0 0.18,1.18 0.45,1.06 0.65,0.98 0.8,1 1,1');
+    CustomEase.create('grow', 'M0,0 C0.3,0 0.35,0.55 0.55,0.75 0.75,0.95 0.85,1 1,1');
+  }
+  const E = (n, f) => hasCE ? n : f;
+  const INK = '#141414', RED = '#e8322b', PINK = '#ff4f9a', CYAN = '#36c2f0', PAPER = '#ffd23f';
+  const RIGHT = 1;
+  const svg = Kit.$('pic');
+  let W, H, U, fs, g1, g2, tT, tx0, tx1, cStart, cStuck, tankX, tankW, tInit, tTarget, D, sw, b1, b2, tankY;
+  const R = {};
+  const S = {carP: 0, carY: 0, tt: 0, spin: 0, speed: 0, glue: 0, g0: 1, tipP: 0, b1: 0, b2: 0, air: 0};
+  let pick = -1, answered = false, tl = null;
+  const wxRel = [0, 0];
+
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, style: 'font-family:var(--display);font-weight:900'}, a), p); e.textContent = s; return e; };
+  const star = (n, ro, ri) => { let s = ''; for (let i = 0; i < n * 2; i++) { const a = Math.PI * i / n - Math.PI / 2, r = i % 2 ? ri * (0.92 + 0.16 * ((i * 7) % 3) / 2) : ro; s += `${(Math.cos(a) * r).toFixed(1)},${(Math.sin(a) * r).toFixed(1)} `; } return s; };
+  const pos = v => Math.max(0, v);
+
+  function defs() {
+    const d = mk('defs', {}, svg);
+    const pat = (id, fill, r, s) => { const p = mk('pattern', {id, width: s, height: s, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, d); mk('circle', {cx: s / 2, cy: s / 2, r, fill}, p); };
+    pat('bd', INK, 1.25, 5.5); pat('bdw', '#fff', 1.4, 6); pat('bdr', '#8a0f0f', 1.3, 5);
+    const grad = (id, stops) => { const g = mk('linearGradient', {id, x1: 0, y1: 0, x2: 0, y2: 1}, d); stops.forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, g)); };
+    grad('gCar', [[0, '#ff6a55'], [.55, RED], [1, '#a8161a']]);
+    grad('gTube', [[0, '#c8f1ff'], [.3, '#5fd0f5'], [.75, CYAN], [1, '#1b7fb8']]);
+    grad('gTank', [[0, '#ffffff'], [1, '#d9dde3']]);
+    grad('gGlass', [[0, '#d8f4ff'], [1, '#7fc9e8']]);
+    const c = mk('clipPath', {id: 'tubeClip'}, d); R.clip = mk('path', {}, c);
+  }
+
+  function ground(g) {
+    mk('rect', {x: 0, y: g + 1, width: W, height: pos(Math.min(U * .45, H - g - 1)), fill: 'url(#bd)', opacity: .35}, svg);
+    mk('line', {x1: sw, x2: W - sw, y1: g, y2: g, stroke: INK, 'stroke-width': sw * 1.4, 'stroke-linecap': 'round'}, svg);
+  }
+  function tape(g) {
+    const grp = mk('g', {}, svg);
+    mk('rect', {x: tx0, y: g - tT, width: tx1 - tx0, height: tT + 1, fill: PINK, stroke: INK, 'stroke-width': sw * .8}, grp);
+    mk('rect', {x: tx0, y: g - tT, width: tx1 - tx0, height: tT, fill: 'url(#bdw)', opacity: .6}, grp);
+    // glossy glue blobs bulging on top
+    for (let i = 0; i < 4; i++) {
+      const x = tx0 + (tx1 - tx0) * (.14 + i * .24), rr = U * (.09 + (i % 2) * .04);
+      mk('ellipse', {cx: x, cy: g - tT, rx: rr * 1.6, ry: rr, fill: PINK, stroke: INK, 'stroke-width': sw * .55}, grp);
+      mk('circle', {cx: x - rr * .5, cy: g - tT - rr * .3, r: rr * .3, fill: '#fff'}, grp);
+    }
+    mk('line', {x1: tx0 + U * .2, x2: tx1 - U * .4, y1: g - tT * .55, y2: g - tT * .55, stroke: '#fff', 'stroke-width': Math.max(1, tT * .18), 'stroke-linecap': 'round', opacity: .8}, grp);
+    // a peeled corner
+    mk('path', {d: `M${tx1},${g - tT} l${U * .32},${-U * .2} l${-U * .08},${U * .2} Z`, fill: '#ff9ccb', stroke: INK, 'stroke-width': sw * .7, 'stroke-linejoin': 'round'}, grp);
+    return grp;
+  }
+  function caption(x, y, s) {
+    const g = mk('g', {}, svg);
+    const sh = mk('rect', {x: 3, y: 3, height: fs * 1.75, fill: INK}, g);
+    const bx = mk('rect', {x: 0, y: 0, height: fs * 1.75, fill: '#fff', stroke: INK, 'stroke-width': sw * .8}, g);
+    const t = txt(g, fs * .5, fs * 1.22, s, {'font-size': fs, style: 'font-family:var(--display);font-weight:900;letter-spacing:.04em'});
+    const w = t.getComputedTextLength() + fs;
+    sh.setAttribute('width', w); bx.setAttribute('width', w);
+    g.setAttribute('transform', `translate(${x},${y}) rotate(-1.5)`);
+    return {g, w: w + 3};
+  }
+  function burst(label, fill, ink, Rr) {
+    const g = mk('g', {}, svg);
+    mk('polygon', {points: star(13, Rr, Rr * .68), fill: INK, transform: 'translate(3,3)'}, g);
+    mk('polygon', {points: star(13, Rr, Rr * .68), fill, stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round'}, g);
+    mk('polygon', {points: star(13, Rr * .78, Rr * .56), fill: 'url(#bdw)', opacity: .45}, g);
+    let f = Math.max(12, Rr * .36);
+    const t = txt(g, 0, f * .36, label, {'font-size': f, 'text-anchor': 'middle', fill: ink, stroke: INK, 'stroke-width': f * .12, 'paint-order': 'stroke', style: 'font-family:var(--display);font-weight:900;letter-spacing:.02em'});
+    const len = t.getComputedTextLength();
+    if (len > Rr * 1.7) { f = Math.max(12, f * Rr * 1.7 / len); t.setAttribute('font-size', f); t.setAttribute('y', f * .36); t.setAttribute('stroke-width', f * .12); }
+    return g;
+  }
+  // place a burst in the free top-right of a lane, clear of that lane's caption
+  function spot(laneTop, floor, cap, capY, capH, rWant, xMinFree) {
+    let r = Math.max(20, Math.min(rWant, (W - xMinFree - 10) / 2, (floor - laneTop - 4) / 2));
+    let top = laneTop + 3;
+    if (W * .035 + cap.w + 8 > W - 6 - 2 * r) { top = capY + capH + 4; r = Math.max(18, Math.min(r, (floor - top) / 2)); }
+    return {r, x: W - r - 6, y: Math.max(top + r, floor - r)};
+  }
+
+  function layout() {
+    svg.innerHTML = '';
+    for (const k in R) delete R[k];
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    if (!W || W < 80 || H < 70) return;
+    fs = Math.max(12, Math.min(15, W / 26));
+    const capH = fs * 1.75, labRow = fs * 1.8, pad = Math.max(6, H * .025);
+    const Lh = (H - labRow) / 2;
+    g1 = Lh - pad; g2 = H - labRow;
+    U = Math.max(8, Math.min(W / 13.5, (g1 - capH - 12) / 1.95));
+    sw = Math.max(2, U * .085);
+    tT = Math.max(4, U * .17);
+    tx0 = W * .44; tx1 = W * .74;
+    cStart = W * .04; cStuck = tx0 - .25 * U;
+    tankW = Math.max(U * 1.15, 28); tankX = W * .035;
+    tInit = tankX + tankW + U * 1.1; tTarget = Math.min(W - U * .3, tx1 + U * 1.8);
+    D = U * .74;
+    defs();
+
+    // caption rows sit just above each lane's tallest object
+    const capAt = (laneTop, objTop) => { const free = objTop - laneTop - capH; return Math.max(laneTop + 6, objTop - capH - Math.min(2 * U, Math.max(5, free * .4))); };
+    const capY1 = capAt(0, g1 - tT - 1.75 * U), capY2 = capAt(Lh, g2 - 1.75 * U);
+
+    // ---- lane 1: the car ----
+    ground(g1);
+    R.tape1 = tape(g1);
+    R.glue = mk('path', {fill: 'none', stroke: PINK, 'stroke-width': Math.max(1.4, U * .06), 'stroke-linecap': 'round', opacity: 0}, svg);
+    R.glueI = mk('path', {fill: 'none', stroke: INK, 'stroke-width': .8, opacity: 0}, svg);
+    const car = R.car = mk('g', {}, svg);
+    const u = U, r = .38 * u;
+    wxRel[0] = .6 * u; wxRel[1] = 1.85 * u;
+    // speed lines + exhaust puffs (shown only while rolling)
+    R.speed = mk('g', {opacity: 0, visibility: 'hidden'}, car);
+    [[-.25, -.95, .7], [-.5, -.65, .9], [-.2, -.35, .5]].forEach(([x, y, l]) => mk('line', {x1: x * u, x2: (x - l) * u, y1: y * u, y2: y * u, stroke: INK, 'stroke-width': sw, 'stroke-linecap': 'round'}, R.speed));
+    [[-.15, -.32, .13], [-.5, -.42, .18], [-.92, -.5, .22]].forEach(([x, y, rr]) => mk('circle', {cx: x * u, cy: y * u, r: rr * u, fill: '#fff', stroke: INK, 'stroke-width': sw * .6}, R.speed));
+    // shadow, cabin, body
+    mk('ellipse', {cx: 1.28 * u, cy: 0, rx: 1.3 * u, ry: .08 * u, fill: INK, opacity: .25}, car);
+    const cab = `M${.55 * u},${-1.02 * u} L${.9 * u},${-1.62 * u} Q${.95 * u},${-1.7 * u} ${1.05 * u},${-1.7 * u} H${1.6 * u} Q${1.7 * u},${-1.7 * u} ${1.76 * u},${-1.62 * u} L${2.1 * u},${-1.02 * u} Z`;
+    mk('path', {d: cab, fill: 'url(#gCar)', stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round'}, car);
+    mk('path', {d: `M${.82 * u},${-1.06 * u} L${1.06 * u},${-1.52 * u} H${1.28 * u} V${-1.06 * u} Z M${1.4 * u},${-1.06 * u} V${-1.52 * u} H${1.6 * u} L${1.86 * u},${-1.06 * u} Z`, fill: 'url(#gGlass)', stroke: INK, 'stroke-width': sw * .7, 'stroke-linejoin': 'round'}, car);
+    mk('path', {d: `M${1.1 * u},${-1.45 * u} l${.08 * u},${-.02 * u}`, stroke: '#fff', 'stroke-width': sw, 'stroke-linecap': 'round'}, car);
+    const body = `M${.12 * u},${-.42 * u} Q0,${-.42 * u} 0,${-.56 * u} V${-.9 * u} Q0,${-1.06 * u} ${.18 * u},${-1.06 * u} H${2.3 * u} Q${2.52 * u},${-1.04 * u} ${2.55 * u},${-.8 * u} V${-.56 * u} Q${2.55 * u},${-.42 * u} ${2.42 * u},${-.42 * u} Z`;
+    mk('path', {d: body, fill: 'url(#gCar)', stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round'}, car);
+    mk('path', {d: body, fill: 'url(#bdr)', opacity: .45, transform: `translate(0,${.12 * u}) scale(1,.82)`}, car);
+    mk('path', {d: `M${.25 * u},${-.95 * u} H${2.2 * u}`, stroke: '#fff', 'stroke-width': sw * .9, 'stroke-linecap': 'round', opacity: .8}, car);
+    mk('rect', {x: -.06 * u, y: -.66 * u, width: .2 * u, height: .14 * u, rx: .05 * u, fill: '#ffb000', stroke: INK, 'stroke-width': sw * .5}, car);
+    mk('circle', {cx: 2.42 * u, cy: -.8 * u, r: .09 * u, fill: '#fff6a8', stroke: INK, 'stroke-width': sw * .6}, car);
+    R.wheels = wxRel.map(wx => {
+      const w = mk('g', {}, car);
+      mk('circle', {cx: wx, cy: -r, r, fill: INK}, w);
+      mk('circle', {cx: wx, cy: -r, r: r * .5, fill: '#fff', stroke: INK, 'stroke-width': sw * .5}, w);
+      for (let k = 0; k < 4; k++) { const a = k * Math.PI / 2; mk('line', {x1: wx, y1: -r, x2: wx + Math.cos(a) * r * .5, y2: -r + Math.sin(a) * r * .5, stroke: INK, 'stroke-width': sw * .6}, w); }
+      mk('circle', {cx: wx, cy: -r, r: r * .12, fill: RED}, w);
+      return w;
+    });
+    const c1 = caption(W * .035, capY1, 'TOY CAR · ROLLS');
+    R.capt1 = c1.g;
+
+    // ---- lane 2: the robot ----
+    ground(g2);
+    R.tape2 = tape(g2);
+    txt(svg, (tx0 + tx1) / 2, g2 + fs * 1.3, 'STICKY TAPE', {'font-size': 12, 'text-anchor': 'middle', stroke: PAPER, 'stroke-width': 4, 'paint-order': 'stroke', style: 'font-family:var(--mono);font-weight:700;letter-spacing:.08em'});
+    R.tube = mk('path', {fill: 'url(#gTube)', stroke: INK, 'stroke-width': sw, 'stroke-linejoin': 'round'}, svg);
+    const inner = mk('g', {'clip-path': 'url(#tubeClip)'}, svg);
+    const top = g2 - tT - D, bot = g2 - tT;
+    for (let x = tankX + tankW + U * .25; x < W + U; x += U * .62) mk('rect', {x, y: top, width: U * .2, height: D, fill: INK, opacity: .2}, inner);
+    mk('rect', {x: 0, y: top + D * .55, width: W, height: D * .45, fill: 'url(#bd)', opacity: .35}, inner);
+    R.hi = mk('line', {x1: tankX + tankW, y1: top + D * .2, y2: top + D * .2, stroke: '#fff', 'stroke-width': sw, 'stroke-linecap': 'round', opacity: .9}, inner);
+    R.air = mk('line', {x1: tankX + tankW + U * .1, y1: top + D * .55, y2: top + D * .55, stroke: '#fff', 'stroke-width': sw * .9, 'stroke-linecap': 'round', 'stroke-dasharray': `${U * .22} ${U * .3}`, opacity: .85}, inner);
+    // the tip: skin turning inside out
+    R.tip = mk('g', {}, svg);
+    mk('path', {d: `M0,${top + D * .2} A${D * .3},${D * .3} 0 0 1 0,${bot - D * .2}`, fill: 'none', stroke: '#fff', 'stroke-width': sw * .9, 'stroke-linecap': 'round'}, R.tip);
+    R.arrow = mk('path', {d: `M${D * .7},${top + D * .2} l${D * .32},${D * .3} l${-D * .32},${D * .3}`, fill: 'none', stroke: INK, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, R.tip);
+    // the tank of compressed air
+    tankY = g2 - 1.75 * U;
+    const ty = tankY;
+    R.tank = mk('g', {}, svg);
+    mk('rect', {x: tankX + 3, y: ty + 3, width: tankW, height: 1.75 * U, rx: U * .28, fill: INK}, R.tank);
+    mk('rect', {x: tankX, y: ty, width: tankW, height: 1.75 * U, rx: U * .28, fill: 'url(#gTank)', stroke: INK, 'stroke-width': sw}, R.tank);
+    mk('rect', {x: tankX, y: ty + U * .9, width: tankW, height: pos(U * .85 - sw), rx: U * .2, fill: 'url(#bd)', opacity: .3}, R.tank);
+    mk('rect', {x: tankX, y: ty + U * .62, width: tankW, height: U * .16, fill: RED, stroke: INK, 'stroke-width': sw * .6}, R.tank);
+    mk('rect', {x: tankX + tankW * .3, y: ty - U * .16, width: tankW * .4, height: U * .18, rx: U * .05, fill: '#9aa3ad', stroke: INK, 'stroke-width': sw * .6}, R.tank);
+    mk('circle', {cx: tankX + tankW / 2, cy: ty + U * .34, r: U * .2, fill: '#fff', stroke: INK, 'stroke-width': sw * .7}, R.tank);
+    R.needle = mk('line', {x1: tankX + tankW / 2, y1: ty + U * .34, x2: tankX + tankW / 2 + U * .13, y2: ty + U * .25, stroke: RED, 'stroke-width': sw * .7, 'stroke-linecap': 'round'}, R.tank);
+    txt(R.tank, tankX + tankW / 2, ty + U * 1.38, 'AIR', {'font-size': 12, 'text-anchor': 'middle', style: 'font-family:var(--mono);font-weight:700'});
+    const c2 = caption(W * .035, capY2, 'VINE ROBOT · GROWS');
+    R.capt2 = c2.g;
+
+    // ---- the bursts ----
+    b1 = spot(0, g1 - tT - 3, c1, capY1, capH, 1.3 * U + 6, cStuck + 2.75 * U);
+    b2 = spot(Lh, g2 - tT - D - 3, c2, capY2, capH, 1.3 * U + 6, tankX + tankW);
+    R.b1 = burst('STUCK!', '#fff', RED, b1.r);
+    R.b2 = burst('OVER IT!', CYAN, '#fff', b2.r);
+    update();
+  }
+
+  function update() {
+    if (!R.car || !W) return;
+    const u = U, r = .38 * u;
+    const carX = cStart + (cStuck - cStart) * S.carP + S.tt * .12 * u;
+    const carY = g1 - tT - S.carY * u - S.tt * .3 * u;
+    R.car.setAttribute('transform', `translate(${carX},${carY}) rotate(${-S.tt * 4},${wxRel[0]},0)`);
+    const ang = (carX - cStart) / r * 57.3 + S.spin;
+    R.wheels.forEach((w, i) => w.setAttribute('transform', `rotate(${ang},${wxRel[i]},${-r})`));
+    R.speed.setAttribute('opacity', S.speed);
+    R.speed.setAttribute('visibility', S.speed > .01 ? 'visible' : 'hidden');
+    // glue strings: tape where the wheels landed, stretched to where the wheels are now
+    let d = '';
+    if (S.glue > 0) {
+      const tTop = g1 - tT, lift = S.tt * .3 * u, tilt = S.tt * 4 * Math.PI / 180;
+      wxRel.forEach(wx => {
+        const by = tTop - lift - (wx - wxRel[0]) * Math.sin(tilt) - 1;
+        [-.24, -.1, .06, .2].forEach((k, j) => {
+          const ax = cStuck + wx + k * u, bx = carX + wx + k * .55 * u, bow = (j % 2 ? 1 : -1) * u * .06;
+          d += `M${ax.toFixed(1)},${tTop} Q${((ax + bx) / 2 + bow).toFixed(1)},${((tTop + by) / 2).toFixed(1)} ${bx.toFixed(1)},${by.toFixed(1)} `;
+        });
+      });
+    }
+    R.glue.setAttribute('d', d); R.glueI.setAttribute('d', d);
+    R.glue.setAttribute('opacity', S.glue); R.glueI.setAttribute('opacity', S.glue * .5);
+    // the robot
+    const x0 = tankX + tankW * .5;
+    const tip = x0 + (tInit - x0) * S.g0 + (tTarget - tInit) * S.tipP;
+    const top = g2 - tT - D, bot = g2 - tT, tx = Math.max(x0 + 1, tip - D / 2);
+    const td = `M${x0},${top} H${tx} A${D / 2},${D / 2} 0 0 1 ${tx},${bot} H${x0} Z`;
+    R.tube.setAttribute('d', td); R.clip.setAttribute('d', td);
+    R.hi.setAttribute('x2', Math.max(x0, tip - D * .6));
+    R.air.setAttribute('x2', Math.max(x0, tip - D * .75));
+    R.air.setAttribute('stroke-dashoffset', -S.air * U * .52);
+    R.tip.setAttribute('transform', `translate(${tx},0)`);
+    R.arrow.setAttribute('opacity', S.tipP > 0 && S.tipP < .995 ? 1 : 0);
+    R.needle.setAttribute('transform', `rotate(${S.tipP * 60 - 20},${tankX + tankW / 2},${tankY + U * .34})`);
+    R.b1.setAttribute('transform', `translate(${b1.x},${b1.y}) scale(${Math.max(.001, S.b1)}) rotate(${-10 + S.b1 * 4})`);
+    R.b2.setAttribute('transform', `translate(${b2.x},${b2.y}) scale(${Math.max(.001, S.b2)}) rotate(${8 - S.b2 * 4})`);
+  }
+
+  // air always flowing inside the tube
+  let airTw = null;
+  const airOn = () => { if (Kit.calm || airTw) return; airTw = gsap.to(S, {air: '+=1', duration: .45, repeat: -1, ease: 'none', onRepeat: () => { S.air %= 100; }, onUpdate: update}); };
+
+  function reveal() {
+    if (tl) tl.kill();
+    Object.assign(S, {carP: 0, carY: 0, tt: 0, spin: 0, speed: 0, glue: 0, g0: 1, tipP: 0, b1: 0, b2: 0});
+    if (Kit.calm) { Object.assign(S, {carP: 1, glue: 1, tipP: 1, b1: 1, b2: 1}); update(); return; }
+    tl = gsap.timeline({onUpdate: update});
+    tl.to(S, {speed: 1, duration: .25, ease: 'power2.out'}, 0)
+      .to(S, {carP: .8, duration: .9, ease: 'power2.in'}, 0)
+      .to(S, {carP: 1, duration: .32, ease: 'power4.out'})
+      .to(S, {speed: 0, glue: 1, duration: .18, ease: 'power2.out'}, '<')
+      .call(() => Kit.haptic('light'))
+      .to(S, {tt: 1, duration: .2, ease: 'power2.out', repeat: 3, yoyo: true, repeatDelay: .04})
+      .to(S, {spin: '+=900', duration: .96, ease: 'power1.inOut'}, '<')
+      .to(S, {b1: 1, duration: .75, ease: 'elastic.out(1,.42)'}, '<+.15')
+      .to(S, {tipP: 1, duration: 2.3, ease: E('grow', 'power2.out')}, .15)
+      .call(() => Kit.haptic('success'), null, 2.35)
+      .to(S, {b2: 1, duration: .85, ease: 'elastic.out(1.1,.38)'}, 2.3);
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    answered = true;
+    Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    Kit.show('keep');
+    svg.classList.add('replay');
+    requestAnimationFrame(() => { layout(); reveal(); });
+    if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 12, stagger: .12, duration: .5, ease: 'back.out(2)'});
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+    if (!Kit.calm) gsap.fromTo(b, {scale: .92}, {scale: 1, duration: .35, ease: 'back.out(3)', clearProps: 'scale'});
+  });
+  svg.addEventListener('click', () => { if (answered) { Kit.haptic('light'); reveal(); } });
+
+  new ResizeObserver(() => { if (W !== undefined) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    airOn();
+    if (Kit.calm || !R.car) return;
+    S.carY = 1.1; S.g0 = 0; update();
+    const e = gsap.timeline({defaults: {ease: 'power3.out'}});
+    e.from([R.tape1, R.tape2], {scaleX: 0, svgOrigin: `${tx0} 0`, duration: .5, stagger: .12, ease: E('snap', 'back.out(2)')}, 0)
+     .from([R.capt1, R.capt2], {opacity: 0, duration: .45, stagger: .1}, .1)
+     .from(R.car, {opacity: 0, duration: .2}, .2)
+     .to(S, {carY: 0, duration: .9, ease: E('drop', 'bounce.out'), onUpdate: update}, .2)
+     .from(R.tank, {scale: 0, svgOrigin: `${tankX + tankW / 2} ${g2}`, duration: .55, ease: E('snap', 'back.out(2)')}, .3)
+     .to(S, {g0: 1, duration: .7, ease: 'expo.out', onUpdate: update}, .65)
+     .from('.opt', {opacity: 0, y: 14, stagger: .08, duration: .5, ease: E('snap', 'back.out(2)'), clearProps: 'opacity,transform'}, .55);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('opts').children[1].click(); await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(300);
+    if (tl) tl.progress(1); update(); await wait(300);
+  };
+})();
+Kit.single();
+</script>
+</html>

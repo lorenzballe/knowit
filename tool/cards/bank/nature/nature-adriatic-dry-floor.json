@@ -1,0 +1,38 @@
+{
+  "id": "nature-adriatic-dry-floor",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.greenhouse_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was there no Adriatic Sea as we know it in the last ice age?",
+  "answer": "In the last glacial period the sea sat about 120 m lower, not 10 or 15, so much of today's Adriatic floor was dry land. Dropping the sea that far moves the coast about 200 km south.",
+  "move": "Drop the sea 120 m and the Adriatic coast moves about 200 km south.",
+  "keywords": [
+    "adriatic-sea",
+    "last-glacial-period",
+    "sea-level",
+    "italy",
+    "coastline"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Cross-section diagram of the Adriatic with a sea surface you drag downward. It asks why there was no Adriatic Sea as we know it in the last ice age, and shows where the coastline ends up as the sea drops.",
+    "ground": "#1d1216"
+  },
+  "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=JM-n3IqZRCo&t=95s",
+  "written": "2026-11-04"
+}

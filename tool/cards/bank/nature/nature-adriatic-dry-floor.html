@@ -1,0 +1,300 @@
+<!doctype html>
+<!-- slug: nature-adriatic-dry-floor -->
+<!-- Look: a neon sign on dark brick. The cross-section of the Adriatic runs north to south: an amber seabed tube, a cyan sea with rising bubbles, a pink "today" line, and readouts buzzing in one mono row along the top.
+     Interaction: drag the sea down along a ticked neon rail toward the pink "ice age" notch. The water falls metre by metre, the coast dot slides south, and the exposed floor lights up green. The two readouts trade off: sea level against coast distance.
+     Wow: at −120 m a ghost of today's sea flickers on, then morphs (MorphSVG) down onto the floor as a green strip of dry land. Grass tufts sprout along it, the 120 m arrow draws itself on the rail, and a dimension line under the ground measures the ≈200 km of dry floor. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Adriatic that wasn't</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#card{
+  background-image:
+    radial-gradient(ellipse 80% 45% at 50% 42%, rgba(255,79,163,.13), transparent 70%),
+    radial-gradient(ellipse 120% 60% at 50% 115%, rgba(0,0,0,.65), transparent 70%),
+    radial-gradient(ellipse 120% 50% at 50% -15%, rgba(0,0,0,.55), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='32'%3E%3Cg fill='none' stroke='%23000' stroke-opacity='.5' stroke-width='2'%3E%3Cpath d='M0 1H64M0 17H64M1 1V17M33 17V33'/%3E%3C/g%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.04'%3E%3Cpath d='M3 3.5H31M35 19.5H63'/%3E%3C/g%3E%3C/svg%3E");
+}
+#card .q{text-shadow:0 0 .6cqh rgba(255,79,163,.55),0 0 2cqh rgba(255,79,163,.25)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:visible}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:600 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why .body b{color:#ff8cc4;text-shadow:0 0 8px rgba(255,79,163,.55)}
+.say{overflow-wrap:anywhere}
+.say b{color:#7dfcff;text-shadow:0 0 8px rgba(63,232,255,.6)}
+.buzz{animation:buzz 7s infinite}
+.buzz.b2{animation-delay:-3.1s;animation-duration:9s}
+@keyframes buzz{0%,90%,100%{opacity:1}91%{opacity:.35}92%{opacity:1}93.5%{opacity:.55}94.5%{opacity:1}}
+.pulse{animation:pulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{50%{transform:scale(1.5);opacity:.5}}
+.flow{animation:flow 1.8s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-28}}
+.nudge{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(4px)}}
+.bub{animation:rise var(--d,5s) linear infinite;animation-delay:var(--dl,0s)}
+@keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.85}85%{opacity:.6}100%{transform:translateY(var(--rise,-100px));opacity:0}}
+.kit-calm .buzz,.kit-calm .pulse,.kit-calm .flow,.kit-calm .nudge,.kit-calm .bub{animation:none}
+.kit-calm .bub{opacity:.5}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag the sea down · depth against coast" style="--c:#1d1216;--k:#fdeef4;--edge:#0c0608">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ICE AGE SEAS</span></div>
+    <h2 class="q">Why was there no Adriatic Sea as we know it in the last ice age?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Cross-section of the Adriatic from north to south: the seabed, today's sea level, and a sea you can drag down to 120 metres lower, which moves the coast about 200 km south."></svg>
+    </div>
+    <p class="say" id="say">Ice age: the sea sits lower. <b>Drag the sea down</b> and watch where the coast ends up.</p>
+    <div id="why" class="gone"><p class="body">In the last glacial period the sea sat about <b>120 m</b> lower, not 10 or 15, so much of today's Adriatic floor was dry land.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Drop the sea 120 m and the Adriatic coast moves about 200 km south.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MorphSVGPlugin, DrawSVGPlugin);
+  const svg = Kit.$('pic');
+  const PINK = '#ff4fa3', CYAN = '#3fe8ff', GREEN = '#7dff9e', AMBER = '#ffb54d', INK = '#fdeef4';
+  const S = {s: 0};
+  let done = false, touched = false, built = false, W = 0, H = 0, fs = 13, pad = 8, yTop = 0, yBot = 0;
+  let E = {}, lastStep = 0;
+  const K0 = -40, K1 = 340, TOP = 20, BOT = -175, LOW = 120, KH = 326;
+  const F = v => Math.max(12, v);
+
+  const X = k => pad + (k - K0) / (K1 - K0) * (W - 2 * pad);
+  const Y = m => yTop + (TOP - m) / (TOP - BOT) * (yBot - yTop);
+  // A schematic seabed, north (left) to south (right): a long gentle floor, then a steep drop.
+  const elev = k => {
+    if (k < 0) return -k * .5;
+    if (k <= 200) return -.6 * k + 3 * Math.sin(k * Math.PI / 25);
+    if (k <= 240) return -120 - (k - 200) * .9;
+    return -156 - (k - 240) * .08;
+  };
+  // Where the water meets the floor, for a sea s metres lower.
+  const coastK = s => {
+    if (s <= 0) return 0;
+    let a = 0, b = 240;
+    for (let i = 0; i < 30; i++) { const m = (a + b) / 2; if (elev(m) > -s) a = m; else b = m; }
+    return (a + b) / 2;
+  };
+  const bedPts = (a, b, step = 2) => { const p = []; for (let k = a; k < b; k += step) p.push([X(k), Y(elev(k))]); p.push([X(b), Y(elev(b))]); return p; };
+  const pl = p => p.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('');
+  const T = (parent, x, y, str, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--mono)', 'font-size': F(fs), 'font-weight': 700}, a), parent);
+    e.style.fontFamily = 'var(--mono)'; e.textContent = str; return e;
+  };
+
+  function layout() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, W / 27));
+    pad = fs * .6; yTop = fs * 2.3; yBot = H - fs * 1.7;
+    const ns = svg;
+    const xh = X(KH);
+
+    // ---------- light ----------
+    const defs = Kit.mk('defs', {}, ns);
+    const mkGlow = (id, sd) => {
+      const fl = Kit.mk('filter', {id, filterUnits: 'userSpaceOnUse', x: -20, y: -20, width: W + 40, height: H + 40}, defs);
+      Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: sd, result: 'b'}, fl);
+      Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: sd * 3, result: 'c'}, fl);
+      const m = Kit.mk('feMerge', {}, fl);
+      ['c', 'b', 'b', 'SourceGraphic'].forEach(n => Kit.mk('feMergeNode', {in: n}, m));
+    };
+    mkGlow('glow', fs * .18); mkGlow('glowS', fs * .1);
+    const wg = Kit.mk('linearGradient', {id: 'water', gradientUnits: 'userSpaceOnUse', x1: 0, x2: 0, y1: Y(0), y2: yBot}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': CYAN, 'stop-opacity': .38}, wg);
+    Kit.mk('stop', {offset: .55, 'stop-color': '#1a6bff', 'stop-opacity': .16}, wg);
+    Kit.mk('stop', {offset: 1, 'stop-color': '#1a2bff', 'stop-opacity': .06}, wg);
+    const eg = Kit.mk('linearGradient', {id: 'earth', gradientUnits: 'userSpaceOnUse', x1: 0, x2: 0, y1: Y(20), y2: yBot}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#3a1d14', 'stop-opacity': .85}, eg);
+    Kit.mk('stop', {offset: 1, 'stop-color': '#120709', 'stop-opacity': .2}, eg);
+    const cp = Kit.mk('clipPath', {id: 'wclip', clipPathUnits: 'userSpaceOnUse'}, defs);
+    E.clip = Kit.mk('path', {}, cp);
+
+    // ---------- the earth under the sea ----------
+    const gEarth = Kit.mk('g', {}, ns);
+    const bed = bedPts(K0, K1);
+    Kit.mk('path', {d: pl(bed) + `L${X(K1)},${yBot}L${X(K0)},${yBot}Z`, fill: 'url(#earth)'}, gEarth);
+    [1, 2, 3].forEach(i => Kit.mk('path', {d: pl(bed.map(p => [p[0], p[1] + fs * 1.1 * i])), fill: 'none', stroke: AMBER, 'stroke-opacity': .12 - i * .025, 'stroke-width': 1, 'stroke-dasharray': `${2 + i} ${6 + i * 2}`}, gEarth));
+
+    // ---------- the sea ----------
+    E.gWater = Kit.mk('g', {}, ns);
+    E.water = Kit.mk('path', {fill: 'url(#water)'}, E.gWater);
+    const gBub = Kit.mk('g', {'clip-path': 'url(#wclip)'}, E.gWater);
+    [[252, 2.2, 5.2, 0], [268, 1.4, 4.1, -1.3], [284, 2.8, 6.3, -3.1], [300, 1.6, 4.6, -2.2], [315, 2.2, 5.6, -.6], [333, 1.3, 3.9, -2.8], [292, 1.2, 3.6, -1.9]].forEach(([k, r, d, dl]) => {
+      const y0 = Y(elev(k)) - r - 2;
+      const c = Kit.mk('circle', {cx: X(k), cy: y0, r: r * fs / 13, fill: 'none', stroke: '#bff8ff', 'stroke-width': 1.1, 'stroke-opacity': .75, class: 'bub'}, gBub);
+      c.style.setProperty('--rise', (Y(0) - y0) + 'px'); c.style.setProperty('--d', d + 's'); c.style.setProperty('--dl', dl + 's');
+    });
+    E.surf = Kit.mk('path', {fill: 'none', stroke: CYAN, 'stroke-width': fs * .2, 'stroke-linecap': 'round', filter: 'url(#glow)', class: 'buzz'}, E.gWater);
+    E.ripple = Kit.mk('path', {fill: 'none', stroke: '#e6fdff', 'stroke-width': 1.2, 'stroke-dasharray': '6 22', 'stroke-linecap': 'round', class: 'flow', opacity: .8}, E.gWater);
+
+    // ---------- the rail the handle runs on ----------
+    E.gRail = Kit.mk('g', {}, ns);
+    Kit.mk('path', {d: `M${xh},${Y(0)}L${xh},${Y(-LOW)}`, stroke: CYAN, 'stroke-opacity': .3, 'stroke-width': 1.5, 'stroke-dasharray': '2 4'}, E.gRail);
+    let tk = '';
+    for (let m = 20; m < LOW; m += 20) tk += `M${xh - fs * .25},${Y(-m)}L${xh + fs * .25},${Y(-m)}`;
+    Kit.mk('path', {d: tk, stroke: CYAN, 'stroke-opacity': .45, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, E.gRail);
+    E.gTarget = Kit.mk('g', {}, ns);
+    Kit.mk('path', {d: `M${xh - fs * .7},${Y(-LOW)}L${xh + fs * .7},${Y(-LOW)}`, stroke: PINK, 'stroke-width': 2.2, 'stroke-linecap': 'round', filter: 'url(#glowS)', class: 'buzz b2'}, E.gTarget);
+    T(E.gTarget, xh - fs * 1.5, Y(-LOW) + fs * .35, 'ice age', {'text-anchor': 'end', fill: PINK, 'fill-opacity': .85, 'font-size': F(fs * .9), filter: 'url(#glowS)'});
+
+    // ---------- today's sea level ----------
+    E.gToday = Kit.mk('g', {}, ns);
+    Kit.mk('path', {d: `M${X(0)},${Y(0)}L${X(K1)},${Y(0)}`, stroke: PINK, 'stroke-width': fs * .13, 'stroke-dasharray': `${fs * .7} ${fs * .45}`, filter: 'url(#glowS)', class: 'buzz b2'}, E.gToday);
+    T(E.gToday, X(0) + fs * .9, Y(0) - fs * .45, "today's sea level", {fill: PINK, filter: 'url(#glowS)', 'font-size': F(fs * .9)});
+
+    // ---------- the seabed tube ----------
+    E.gBed = Kit.mk('g', {}, ns);
+    E.bed = Kit.mk('path', {d: pl(bed), fill: 'none', stroke: AMBER, 'stroke-width': fs * .17, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', filter: 'url(#glow)'}, E.gBed);
+    E.floor = Kit.mk('path', {fill: 'none', stroke: GREEN, 'stroke-width': fs * .24, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', filter: 'url(#glow)'}, E.gBed);
+
+    // ---------- the reveal (built hidden) ----------
+    E.gReveal = Kit.mk('g', {}, ns);
+    const c200 = 200, ah = fs * .45;
+    E.ghost = Kit.mk('path', {d: `M${X(0)},${Y(0)}L${X(c200)},${Y(0)}` + pl(bedPts(0, c200).reverse()).replace('M', 'L') + 'Z', fill: CYAN, 'fill-opacity': .3, stroke: CYAN, 'stroke-width': 2, filter: 'url(#glowS)', opacity: 0}, E.gReveal);
+    E.stripD = pl(bedPts(0, c200)) + pl(bedPts(0, c200).reverse().map(p => [p[0], p[1] + 2.5])).replace('M', 'L') + 'Z';
+    E.ghostD = E.ghost.getAttribute('d');
+    // grass tufts sprouting on the new dry land
+    let td = '';
+    for (let k = 34; k <= 186; k += 19) {
+      const x = X(k), y = Y(elev(k)) - fs * .12, h = fs * (.45 + .2 * Math.abs(Math.sin(k)));
+      td += `M${x},${y}L${x - h * .45},${y - h * .8}M${x},${y}L${x},${y - h}M${x},${y}L${x + h * .45},${y - h * .8}`;
+    }
+    E.tufts = Kit.mk('path', {d: td, fill: 'none', stroke: GREEN, 'stroke-width': 1.6, 'stroke-linecap': 'round', filter: 'url(#glowS)', opacity: 0}, E.gReveal);
+    // the 200 km dimension line, drawn under the ground
+    const yA = Math.max(Y(-LOW) + fs * .45, Math.min(Y(-LOW) + fs * 1.3, yBot - fs * 1.5));
+    E.ticks = Kit.mk('path', {d: `M${X(0)},${Y(0) + fs * .5}L${X(0)},${yA + ah}M${X(c200)},${Y(-LOW) + fs * .5}L${X(c200)},${yA + ah}`, stroke: INK, 'stroke-opacity': .5, 'stroke-width': 1.2, 'stroke-dasharray': '2 3', opacity: 0}, E.gReveal);
+    E.dim = Kit.mk('path', {d: `M${X(0)},${yA}L${X(c200)},${yA}M${X(0) + ah},${yA - ah * .7}L${X(0)},${yA}L${X(0) + ah},${yA + ah * .7}M${X(c200) - ah},${yA - ah * .7}L${X(c200)},${yA}L${X(c200) - ah},${yA + ah * .7}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#glowS)', opacity: 0}, E.gReveal);
+    E.dimT = T(E.gReveal, X(c200 / 2), yA + fs * 1.25, '≈200 km of dry sea floor', {'text-anchor': 'middle', fill: GREEN, 'font-size': F(fs * .92), filter: 'url(#glowS)', opacity: 0});
+    // the 120 m drop, drawn on the rail
+    E.vArr = Kit.mk('path', {d: `M${xh},${Y(0)}L${xh},${Y(-LOW)}M${xh - ah * .7},${Y(0) + ah}L${xh},${Y(0)}L${xh + ah * .7},${Y(0) + ah}M${xh - ah * .7},${Y(-LOW) - ah}L${xh},${Y(-LOW)}L${xh + ah * .7},${Y(-LOW) - ah}`, fill: 'none', stroke: PINK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#glowS)', opacity: 0}, E.gReveal);
+    E.vT = T(E.gReveal, xh - fs * .6, Y(-LOW / 2) + fs * .38, '120 m', {'text-anchor': 'end', fill: PINK, filter: 'url(#glowS)', opacity: 0, 'font-size': F(fs * 1.1)});
+
+    // ---------- the coast ----------
+    E.gCoast = Kit.mk('g', {}, ns);
+    E.coastHalo = Kit.mk('circle', {r: fs * .45, fill: PINK, opacity: .7, class: 'pulse'}, E.gCoast);
+    E.coast = Kit.mk('circle', {r: fs * .3, fill: '#fff', stroke: PINK, 'stroke-width': 2, filter: 'url(#glowS)'}, E.gCoast);
+
+    // ---------- the handle ----------
+    E.gHandle = Kit.mk('g', {}, ns);
+    const hk = Kit.mk('g', {class: 'nudge'}, E.gHandle);
+    Kit.mk('circle', {r: fs * .95, fill: '#1d1216', stroke: CYAN, 'stroke-width': 2.2, filter: 'url(#glowS)'}, hk);
+    const cv = fs * .3;
+    Kit.mk('path', {d: `M${-cv},${-cv * .4}L0,${-cv * 1.3}L${cv},${-cv * .4}M${-cv},${cv * .4}L0,${cv * 1.3}L${cv},${cv * .4}`, fill: 'none', stroke: '#e6fdff', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hk);
+    E.hint = T(E.gHandle, -fs * 1.5, fs * 1.9, 'drag down', {'text-anchor': 'end', fill: CYAN, 'font-size': F(fs * .95), filter: 'url(#glowS)'});
+
+    // ---------- readouts: one row along the top ----------
+    E.gRO = Kit.mk('g', {}, ns);
+    const ro = (x, anchor, lab, col) => {
+      const t = Kit.mk('text', {x, y: fs * 1.15, 'text-anchor': anchor, 'font-size': F(fs * 1.05), 'font-weight': 700}, E.gRO); t.style.fontFamily = 'var(--mono)';
+      const a = Kit.mk('tspan', {fill: INK, 'fill-opacity': .62}, t); a.textContent = lab;
+      const b = Kit.mk('tspan', {fill: col, filter: 'url(#glowS)'}, t); return b;
+    };
+    E.ro1 = ro(pad, 'start', 'SEA ', PINK);
+    E.ro2 = ro(W - pad, 'end', 'COAST ', CYAN);
+
+    const gNS = Kit.mk('g', {opacity: .6}, ns);
+    T(gNS, pad, yBot + fs * 1.3, '◂ NORTH', {'font-size': F(fs * .9)});
+    T(gNS, W - pad, yBot + fs * 1.3, 'SOUTH ▸', {'font-size': F(fs * .9), 'text-anchor': 'end'});
+
+    built = true;
+    update();
+    if (done) finalReveal();
+    if (touched || done) E.hint.setAttribute('opacity', 0);
+  }
+
+  function update() {
+    if (!built) return;
+    const s = S.s, c = coastK(s), ys = Y(-s);
+    const below = bedPts(Math.min(c + .01, K1), K1).reverse();
+    const wd = `M${X(c)},${ys}L${X(K1)},${ys}` + pl(below).replace('M', 'L') + 'Z';
+    E.water.setAttribute('d', wd); E.clip.setAttribute('d', wd);
+    E.surf.setAttribute('d', `M${X(c)},${ys}L${X(K1)},${ys}`);
+    E.ripple.setAttribute('d', `M${X(c) + fs},${ys + fs * .35}L${X(K1)},${ys + fs * .35}`);
+    E.floor.setAttribute('d', c > .5 ? pl(bedPts(0, c, 1)) : '');
+    E.coast.setAttribute('cx', X(c)); E.coast.setAttribute('cy', ys);
+    E.coastHalo.setAttribute('cx', X(c)); E.coastHalo.setAttribute('cy', ys);
+    E.gHandle.setAttribute('transform', `translate(${X(KH)},${ys})`);
+    E.ro1.textContent = s < .5 ? 'today' : `−${Math.round(s)} m`;
+    E.ro2.textContent = c < .5 ? 'today' : `${Math.round(c)} km south`;
+    const step = Math.floor(s / 20);
+    if (step !== lastStep) { lastStep = step; if (touched) Kit.haptic('selection'); }
+    if (!done && s >= LOW - .5) reveal();
+  }
+
+  function finalReveal() {
+    E.ghost.setAttribute('opacity', 0);
+    [E.dim, E.ticks, E.dimT, E.vArr, E.vT, E.tufts].forEach(e => e.setAttribute('opacity', 1));
+    [E.hint, E.gHandle, E.gTarget].forEach(e => e.setAttribute('opacity', 0));
+    svg.style.cursor = 'default';
+  }
+
+  const flick = (t, el, at) => t.fromTo(el, {opacity: 0}, {keyframes: [{opacity: .85, duration: .05}, {opacity: .1, duration: .07}, {opacity: 1, duration: .05}, {opacity: .35, duration: .05}, {opacity: 1, duration: .12}]}, at);
+
+  function reveal() {
+    done = true; S.s = LOW;
+    Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    svg.style.cursor = 'default';
+    if (Kit.calm) { finalReveal(); return; }
+    gsap.to(E.hint, {opacity: 0, duration: .2});
+    const t = gsap.timeline();
+    // The ghost of today's sea flickers on above the drained floor...
+    t.set(E.ghost, {attr: {d: E.ghostD}, fill: CYAN, stroke: CYAN});
+    flick(t, E.ghost, 0);
+    // ...then collapses onto the floor and becomes land.
+    t.to(E.ghost, {morphSVG: E.stripD, fill: GREEN, stroke: GREEN, duration: 1.2, ease: 'power3.inOut'}, .55)
+     .to(E.floor, {attr: {'stroke-width': fs * .5}, duration: .25, ease: 'power2.out', yoyo: true, repeat: 1}, 1.6)
+     .to(E.ghost, {opacity: 0, duration: .5, ease: 'power2.out'}, 1.75)
+     .to([E.gHandle, E.gTarget], {opacity: 0, duration: .35, ease: 'power2.in'}, 1.5);
+    t.set(E.tufts, {opacity: 1}, 1.8)
+     .fromTo(E.tufts, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1, ease: 'power2.out'}, 1.8);
+    t.set([E.dim, E.vArr], {opacity: 1}, 1.85)
+     .fromTo(E.vArr, {drawSVG: '0%'}, {drawSVG: '100%', duration: .7, ease: 'expo.out'}, 1.85)
+     .fromTo(E.ticks, {opacity: 0}, {opacity: 1, duration: .4}, 2.05)
+     .fromTo(E.dim, {drawSVG: '50% 50%'}, {drawSVG: '0% 100%', duration: .9, ease: 'expo.out'}, 2.1);
+    flick(t, E.vT, 2.25); flick(t, E.dimT, 2.6);
+    t.fromTo([E.ro1, E.ro2], {opacity: .2}, {opacity: 1, duration: .5, stagger: .15, ease: 'back.out(3)'}, 1.7);
+  }
+
+  // ---------- the drag ----------
+  let drag = null;
+  const pxPerM = () => (yBot - yTop) / (TOP - BOT);
+  const goTo = (v, d = .2, ease = 'power3.out') => gsap.to(S, {s: v, duration: Kit.calm ? .01 : d, ease, overwrite: true, onUpdate: update});
+  svg.addEventListener('pointerdown', e => {
+    if (done) return;
+    touched = true; gsap.to(E.hint, {opacity: 0, duration: .25});
+    drag = {y: e.clientY, s: S.s}; svg.setPointerCapture(e.pointerId); Kit.haptic('light');
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag || done) return;
+    goTo(Math.max(0, Math.min(LOW, drag.s + (e.clientY - drag.y) / pxPerM())));
+  });
+  const end = () => { if (!drag) return; drag = null; if (!done && S.s > 105) goTo(LOW, .45, 'back.out(1.6)'); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  new ResizeObserver(() => { if (built) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !built || done) return;
+    const t = gsap.timeline();
+    t.fromTo(E.bed, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1.1, ease: 'power3.inOut'}, 0);
+    flick(t, E.gToday, .5); flick(t, E.gWater, .75); flick(t, E.gRail, .9); flick(t, E.gCoast, 1); flick(t, E.gRO, 1.1); flick(t, E.gTarget, 1.2); flick(t, E.gHandle, 1.3);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; if (E.hint) E.hint.setAttribute('opacity', 0);
+    await new Promise(r => gsap.to(S, {s: LOW, duration: Kit.calm ? .01 : 1, ease: 'power2.inOut', onUpdate: update, onComplete: r}));
+    if (!done) { update(); if (!done) reveal(); }
+    await wait(Kit.calm ? 100 : 3500);
+  };
+})();
+Kit.single();
+</script>
+</html>

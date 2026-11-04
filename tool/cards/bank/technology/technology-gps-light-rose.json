@@ -1,0 +1,37 @@
+{
+  "id": "technology-gps-light-rose",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does GPS depend on light being equally fast in every direction?",
+  "answer": "GPS turns each pulse's travel time into a distance. That only works if light moves at the same speed in every direction. Drag the slider to let light run faster leftward than rightward.",
+  "move": "GPS is built on an assumption: light's speed is the same in all directions.",
+  "keywords": [
+    "gps",
+    "speed_of_light",
+    "satellites",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page titled GPS and the speed of light. It asks how GPS depends on light being equally fast in every direction, and offers a slider to let light run faster leftward than rightward.",
+    "ground": "#f2e8d2"
+  },
+  "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=pTn6Ewhb27k&t=620s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,418 @@
+<!doctype html>
+<!-- slug: technology-xm42-flamethrower -->
+<!-- Look: a hand-coloured botanical engraving plate on cream paper. Three flamethrowers are drawn as "specimens", with Latin names, fine hatching, a reach scale and a stamped seal.
+     Interaction: turn the brass dial from Musk's toy to the XM42 to the army's M9. Each specimen springs in, its engraved flame stretches along the reach scale, embers drift off, and its classification and habitat lines rewrite.
+     Wow: once you have seen both real flamethrowers, the dial springs back to the XM42 and a green "HOBBYIST · ON SALE" seal slams onto the plate. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why the XM42 sits on a gun-store shelf</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#card{background:radial-gradient(130% 80% at 25% 12%,#f7efdc 0%,#eee1c4 55%,#e2d0aa 100%)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
+.say{overflow-wrap:anywhere}
+.hintp{animation:hp 1.3s ease-in-out infinite}
+@keyframes hp{50%{opacity:.25}}
+.answered .q{font-size:max(2.5cqh,15px)}
+@media (max-height:720px){
+  .answered .say{font-size:15px;line-height:1.35}
+  .answered .keep{font-size:15px;padding-top:10px;padding-bottom:10px}
+}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Turn the dial · how it is classified" style="--c:#efe5cf;--k:#2b1f14;--edge:#c3ad83">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TURN THE DIAL</span></div>
+    <h2 class="q">Why can the XM42 flamethrower be bought in U.S. gun stores?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="An engraved specimen plate of a flamethrower with its flame, its classification and a dial to compare three models."></svg>
+    </div>
+    <p class="say" id="say">Turn the dial: Musk's flamethrower, then the <b>XM42</b>, then the army's <b>M9</b>.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Where a device can be sold depends on how the law classifies it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#2b1f14', SEPIA = '#6a5236', PAPER = '#fbf4e2';
+  const SP = [
+    {latin: 'Ignis ludicrus', common: "ELON MUSK'S FLAMETHROWER", len: .2,
+     rows: [['Jet', 'short, and rather cute'], ['Origo', "Elon Musk's own line"], ['Next', 'turn the dial →']], seal: null},
+    {latin: 'Ignis civilis', common: 'XM42 · CIVILIAN', len: .64,
+     rows: [['Classis', 'non-lethal incendiary device'], ['Lex', 'hobbyist regulations'], ['Habitat', 'U.S. gun-store shelves']],
+     seal: {full: 'HOBBYIST · XM42 · ON SALE · ', short: 'HOBBYIST · ON SALE · ', icon: 'flame', col: '#2f5d3e'}},
+    {latin: 'Ignis militaris', common: 'M9 · MILITARY, 1960s', len: 1,
+     rows: [['Classis', 'military weapon'], ['Usus', 'the Vietnam War'], ['Habitat', 'the army, not the shop']],
+     seal: {full: 'MILITARY · M9 · VIETNAM · ', short: 'MILITARY · VIETNAM · ', icon: 'star', col: '#8c2414'}}
+  ];
+  // Specimens drawn in units: nozzle tip at (0,0), body to the left.
+  const DEV = [
+    [['M-198,-11 L-150,-13 L-150,12 L-188,24 Q-200,10 -198,-11Z', 'dark'],
+     ['M-128,12 L-112,12 L-103,48 Q-110,53 -119,50Z', 'dark'],
+     ['M-112,12 Q-104,30 -92,12', 'line'],
+     ['M-150,-14 L-42,-14 Q-34,-14 -34,-6 L-34,6 Q-34,14 -42,14 L-150,14Z', 'metal'],
+     ['M-140,-8 L-50,-8', 'shine'],
+     ['M-34,-8 L-6,-8 L0,-5 L0,5 L-6,8 L-34,8Z', 'metal'],
+     ['M-28,-4 L-10,-4 M-28,0 L-10,0 M-28,4 L-10,4', 'line'],
+     ['M-84,14 L-58,14 L-58,50 Q-71,58 -84,50Z', 'brass'],
+     ['M-80,22 L-62,22 M-80,40 L-62,40', 'line']],
+    [['M-150,9 L-136,9 L-128,52 Q-136,57 -144,54Z', 'dark'],
+     ['M-46,9 L-34,9 L-31,46 Q-38,50 -46,46Z', 'dark'],
+     ['M-180,-9 L-24,-9 L-24,9 L-180,9 Q-188,0 -180,-9Z', 'metal'],
+     ['M-172,-4 L-30,-4', 'shine'],
+     ['M-62,-9 L-60,-21 L-34,-21 L-30,-9Z', 'dark'],
+     ['M-24,-6 L-3,-5 L0,-3 L0,3 L-3,5 L-24,6Z', 'brass'],
+     ['M-156,12 L-60,12 Q-50,12 -50,24 Q-50,36 -60,36 L-156,36 Q-166,36 -166,24 Q-166,12 -156,12Z', 'metal'],
+     ['M-130,12 L-130,36 M-82,12 L-82,36', 'line'],
+     ['M-150,18 L-66,18', 'shine']],
+    [['M-112,8 C-118,50 -150,80 -170,56', 'hose'],
+     ['M-202,-48 Q-202,-58 -191,-58 Q-180,-58 -180,-48 L-180,50 Q-180,58 -191,58 Q-202,58 -202,50Z', 'metal'],
+     ['M-176,-48 Q-176,-58 -165,-58 Q-154,-58 -154,-48 L-154,50 Q-154,58 -165,58 Q-176,58 -176,50Z', 'metal'],
+     ['M-189,-68 a11,11 0 1,0 22,0 a11,11 0 1,0 -22,0Z', 'brass'],
+     ['M-202,-30 L-154,-30 M-202,30 L-154,30', 'line'],
+     ['M-196,-44 L-196,44 M-170,-44 L-170,44', 'shine'],
+     ['M-108,6 L-96,6 L-91,40 Q-98,45 -104,42Z', 'dark'],
+     ['M-52,5 L-40,5 L-37,36 Q-44,40 -50,37Z', 'dark'],
+     ['M-118,-6 L-12,-5 L0,-4 L0,4 L-12,5 L-118,6 Q-122,0 -118,-6Z', 'metal'],
+     ['M-28,-5 L-28,-15 L-8,-15 L-8,-5Z', 'brass'],
+     ['M-112,-2 L-20,-2', 'shine']]
+  ];
+
+  const st = {v: 0, grow: 1};
+  let cur = 0, target = 0, revealed = false, touched = false, dragging = false, ph = 0, ticking = false;
+  const visited = new Set([0]);
+  let W, H, fs, NX, NY, S, LMAX, X0, X1, SY, R, SCY, compact, G = {};
+
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK}, a), p); e.textContent = s; return e; };
+  const fitTo = (e, max) => { e.removeAttribute('textLength'); if (e.getComputedTextLength() > max) { e.setAttribute('textLength', max); e.setAttribute('lengthAdjust', 'spacingAndGlyphs'); } };
+
+  function defs() {
+    const d = mk('defs', {}, svg);
+    const lg = (id, stops, x2 = 0, y2 = 1) => { const g = mk('linearGradient', {id, x1: 0, y1: 0, x2, y2}, d); stops.forEach(([o, c, a = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, g)); };
+    lg('metal', [[0, '#fbf3df'], [.45, '#d9c7a0'], [1, '#a68d62']]);
+    lg('dark', [[0, '#8a7556'], [1, '#3d2f20']]);
+    lg('brass', [[0, '#f4d98a'], [.5, '#b8893a'], [1, '#6d4f1f']]);
+    lg('fo', [[0, '#f6c24a'], [.3, '#e8742a'], [.75, '#c03b1c'], [1, '#7d2212', .5]], 1, 0);
+    lg('fm', [[0, '#fbe08a'], [.6, '#f1a23c'], [1, '#e2702a', .6]], 1, 0);
+    lg('fc', [[0, '#fffbe6'], [.7, '#fbe08a', .9], [1, '#f6c24a', 0]], 1, 0);
+    const kb = mk('radialGradient', {id: 'knob', cx: .38, cy: .32, r: .75}, d);
+    [[0, '#fff1c0'], [.45, '#d4a64c'], [1, '#6d4f1f']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, kb));
+    const gl = mk('radialGradient', {id: 'glow', cx: .5, cy: .5, r: .5}, d);
+    [[0, '#f6c24a', .35], [1, '#f6c24a', 0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gl));
+    const p = mk('pattern', {id: 'hatch', width: 3.2, height: 3.2, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)'}, d);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 3.2, stroke: INK, 'stroke-width': .6}, p);
+    const pf = mk('pattern', {id: 'fhatch', width: 3.4, height: 3.4, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(-28)'}, d);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 3.4, stroke: '#6e1d0e', 'stroke-width': .55}, pf);
+  }
+
+  function shape(g, d, kind) {
+    const nss = {'vector-effect': 'non-scaling-stroke', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none'};
+    if (kind === 'line') return mk('path', Object.assign({d, stroke: INK, 'stroke-width': 1.1}, nss), g);
+    if (kind === 'shine') return mk('path', Object.assign({d, stroke: PAPER, 'stroke-width': 1.4, opacity: .85}, nss), g);
+    if (kind === 'hose') { mk('path', {d, stroke: INK, 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round'}, g); mk('path', {d, stroke: '#8a7556', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round'}, g); return mk('path', {d, stroke: 'url(#hatch)', 'stroke-width': 4, fill: 'none', opacity: .6}, g); }
+    mk('path', {d, fill: `url(#${kind})`}, g);
+    mk('path', {d, fill: 'url(#hatch)', opacity: kind === 'dark' ? .7 : .42}, g);
+    mk('path', Object.assign({d, stroke: INK, 'stroke-width': 1.3}, nss), g);
+  }
+
+  function layout() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(13, Math.min(16, W / 24));
+    compact = H < 230;
+    R = compact ? 34 : Math.max(38, Math.min(48, W * .12, H * .09));
+    defs();
+    const X = W * .05;
+    const kr = Math.max(14, fs * 1.15);
+    const tS = compact ? fs * 1.25 : fs * 1.6;
+    const tY = compact ? tS * .95 : fs * 1.55;
+    const cFs = compact ? 12 : Math.max(12, fs * .85);
+    // keep the common name clear of the title's descenders and its own ascenders
+    const cY = tY + Math.max(compact ? 15 : fs * 1.45, tS * .32 + cFs * 1.02 + 3);
+    const ruleY = cY + (compact ? 7 : fs * .62);
+    const headH = ruleY + 6;
+    const lh = fs * 1.45;
+    const labY = H - (compact ? 3 : fs * .5);
+    SY = labY - Math.max(fs * 2.2, kr + 15);
+    const rowBase = SY - kr - fs * 1.1;
+    const top = compact ? headH + 4 : Math.max(headH + 4, 2 * R + 10);
+
+    // pick how many classification rows fit, keeping a generous drawing band
+    let n = compact ? 0 : 3, bot = 0;
+    for (; n >= 0; n--) {
+      bot = n ? rowBase - (n - 1) * lh - fs * 1.5 : SY - kr - 8;
+      if (n === 0 || bot - top >= 100) break;
+    }
+    const r1 = rowBase - (n - 1) * lh;
+
+    S = Math.max(.25, Math.min((W * .46) / 205, (bot - top) / 140, 1.5));
+    NX = Math.min(W * .5, X + 205 * S + W * .02);
+    NY = (top + bot) / 2 + 10 * S;
+    LMAX = W * .96 - NX;
+    X0 = W * .14; X1 = W * .86;
+
+    // ground shadow and glow
+    mk('ellipse', {cx: NX - 100 * S, cy: NY + 60 * S + 5, rx: 108 * S, ry: Math.max(3, 6 * S), fill: 'url(#hatch)', opacity: .35}, svg);
+    G.glow = mk('ellipse', {cx: NX, cy: NY, rx: 10, ry: 10, fill: 'url(#glow)'}, svg);
+
+    // reach scale under the flame
+    SCY = Math.min(NY + Math.max(42, 62 * S), bot + 4);
+    G.scale = mk('g', {opacity: compact ? 0 : 1}, svg);
+    if (!compact) {
+      mk('path', {d: `M${NX + 2},${SCY} H${NX + 2 + LMAX}`, stroke: SEPIA, 'stroke-width': .9}, G.scale);
+      for (let k = 0; k <= 12; k++) {
+        const x = NX + 2 + LMAX * k / 12, h = k % 4 === 0 ? 6 : k % 2 === 0 ? 4 : 2.5;
+        mk('path', {d: `M${x},${SCY} v${h}`, stroke: SEPIA, 'stroke-width': .9}, G.scale);
+      }
+      G.reach = mk('path', {d: 'M0,-1 l4,-6 h-8z', fill: '#c03b1c', stroke: INK, 'stroke-width': .7}, G.scale);
+    }
+
+    // flame
+    G.fg = mk('g', {}, svg);
+    G.fo = mk('path', {fill: 'url(#fo)'}, G.fg);
+    G.fh = mk('path', {fill: 'url(#fhatch)', opacity: .45}, G.fg);
+    G.fm = mk('path', {fill: 'url(#fm)'}, G.fg);
+    G.fc = mk('path', {fill: 'url(#fc)'}, G.fg);
+    G.fl = mk('path', {fill: 'none', stroke: '#6e1d0e', 'stroke-width': .8, opacity: .7}, G.fg);
+    // embers
+    G.emb = mk('g', {}, svg);
+    G.P = Array.from({length: 18}, () => ({life: 0, el: mk('circle', {r: 1.2, fill: '#f1a23c', stroke: '#7d2212', 'stroke-width': .4, opacity: 0}, G.emb)}));
+
+    G.devs = DEV.map((parts, i) => {
+      const o = mk('g', {transform: `translate(${NX},${NY}) scale(${S})`}, svg), inn = mk('g', {}, o);
+      parts.forEach(([d, k]) => shape(inn, d, k));
+      gsap.set(inn, {opacity: i === cur ? 1 : 0, transformOrigin: '50% 50%'});
+      return inn;
+    });
+
+    // plate heading
+    G.head = mk('g', {}, svg);
+    G.title = txt(G.head, X, tY, '', {'font-size': tS, style: 'font-family:var(--display);font-style:italic;font-weight:700'});
+    G.common = txt(G.head, X, cY, '', {'font-size': cFs, fill: SEPIA, style: 'font-family:var(--mono);letter-spacing:.08em;font-weight:700'});
+    mk('path', {d: `M${X},${ruleY} h${W * .3} m4,0 l3,-3 l3,3 l-3,3z`, stroke: INK, 'stroke-width': .9, fill: INK}, G.head);
+
+    // seal
+    const so = mk('g', {transform: compact ? `translate(${W - R - 4},${R + 2})` : `translate(${W - R - 6},${R + 6})`}, svg);
+    G.seal = mk('g', {}, so);
+    G.shock = mk('circle', {r: R, fill: 'none', stroke: '#2f5d3e', 'stroke-width': 2, opacity: 0}, so);
+
+    // classification rows
+    G.wash = mk('rect', {x: X - 3, y: r1 - fs * 1.05, height: fs * 1.45, width: 10, rx: fs * .3, fill: '#e9b949', opacity: 0}, svg);
+    G.rows = Array.from({length: n}, (_, k) => txt(svg, X, r1 + k * lh, '', {'font-size': fs}));
+
+    // the dial
+    const sl = mk('g', {}, svg);
+    mk('path', {d: `M${X0},${SY - 1.6} H${X1} M${X0},${SY + 1.6} H${X1}`, stroke: INK, 'stroke-width': 1}, sl);
+    mk('path', {d: `M${X0},${SY} H${X1}`, stroke: 'url(#hatch)', 'stroke-width': 3}, sl);
+    G.labs = ['I · Musk', 'II · XM42', 'III · M9'].map((s, i) => {
+      const x = X0 + (X1 - X0) * i / 2;
+      mk('path', {d: `M${x},${SY - 6} l4,6 l-4,6 l-4,-6z`, fill: INK}, sl);
+      return txt(sl, x, labY, s, {'font-size': compact ? 12 : Math.max(12, fs * .85), 'text-anchor': 'middle', style: 'font-family:var(--mono)'});
+    });
+    G.knob = mk('g', {}, sl);
+    G.knobIn = mk('g', {}, G.knob);
+    mk('circle', {r: kr + 2, cy: 2, fill: INK, opacity: .18}, G.knobIn);
+    mk('circle', {r: kr, fill: 'url(#knob)', stroke: INK, 'stroke-width': 1.3}, G.knobIn);
+    mk('circle', {r: kr * .62, fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .7}, G.knobIn);
+    for (let a = 0; a < 12; a++) { const t = a * Math.PI / 6; mk('line', {x1: Math.cos(t) * kr * .7, y1: Math.sin(t) * kr * .7, x2: Math.cos(t) * kr * .92, y2: Math.sin(t) * kr * .92, stroke: INK, 'stroke-width': .7}, G.knobIn); }
+    mk('path', {d: `M0,${-kr * .35} q${kr * .25},${kr * .3} 0,${kr * .62} q${-kr * .25},${-kr * .32} 0,${-kr * .62}z`, fill: '#c03b1c', stroke: INK, 'stroke-width': .7}, G.knobIn);
+    G.hint = mk('g', {class: 'hintp', opacity: touched ? 0 : 1}, G.knob);
+    mk('path', {d: `M${kr + 6},-5 l5,5 l-5,5 M${-kr - 6},-5 l-5,5 l5,5`, stroke: INK, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round'}, G.hint);
+
+    setTexts(cur, false); setSeal(cur, false); render();
+    if (!ticking && !Kit.calm) { ticking = true; gsap.ticker.add(() => { ph += .11; drawFlame(); embers(); }); }
+  }
+
+  function lenAt(v) { const i = Math.max(0, Math.min(1, Math.floor(v))), f = v - i; return Math.max(0, SP[i].len + (SP[i + 1].len - SP[i].len) * f); }
+  function flameD(L, w, k, lk) {
+    const N = 24, up = [], dn = [], LL = L * lk;
+    for (let i = 0; i <= N; i++) {
+      const t = i / N, x = NX + 2 + t * LL;
+      const hw = w * k * (.14 + .86 * Math.sin(Math.PI * Math.pow(t, .65)));
+      const drop = t * t * LL * .07, wob = Math.sin(t * 10 - ph + k * 3) * w * .2 * t;
+      up.push(`${x.toFixed(1)},${(NY + drop - hw + wob).toFixed(1)}`);
+      dn.unshift(`${x.toFixed(1)},${(NY + drop + hw + wob * .7).toFixed(1)}`);
+    }
+    return `M${up.join(' L')} L${dn.join(' L')}Z`;
+  }
+  function drawFlame() {
+    if (!G.fo) return;
+    const L = LMAX * lenAt(st.v) * st.grow;
+    if (G.reach) G.reach.setAttribute('transform', `translate(${NX + 2 + Math.max(0, L)},${SCY})`);
+    if (L < 3) { [G.fo, G.fh, G.fm, G.fc, G.fl].forEach(p => p.setAttribute('d', '')); G.glow.setAttribute('rx', 0); return; }
+    const w = (5 + L * .12) * (1 + .05 * Math.sin(ph * 2.7));
+    const o = flameD(L, w, 1, 1);
+    G.fo.setAttribute('d', o); G.fh.setAttribute('d', o);
+    G.fm.setAttribute('d', flameD(L, w, .6, .9));
+    G.fc.setAttribute('d', flameD(L, w, .28, .72));
+    G.fl.setAttribute('d', o);
+    G.glow.setAttribute('cx', NX + L * .5); G.glow.setAttribute('cy', NY + L * .02);
+    G.glow.setAttribute('rx', L * .7); G.glow.setAttribute('ry', w * 2.4);
+  }
+  function embers() {
+    if (!G.P) return;
+    const L = LMAX * lenAt(st.v) * st.grow;
+    G.P.forEach(p => {
+      if (p.life <= 0) {
+        if (L > 18 && Math.random() < .03 + .1 * L / LMAX) {
+          const t = .35 + Math.random() * .65, w = 5 + L * .12;
+          p.x = NX + t * L; p.y = NY + t * t * L * .07 - w * .6 * Math.random();
+          p.vx = .25 + Math.random() * .8; p.vy = -(.35 + Math.random() * .8); p.life = 1;
+          p.el.setAttribute('r', (.8 + Math.random() * 1.5).toFixed(1));
+        } else { p.el.setAttribute('opacity', 0); return; }
+      }
+      p.x += p.vx + Math.sin(ph * 2 + p.y * .12) * .3; p.y += p.vy; p.vy *= .985; p.life -= .022;
+      p.el.setAttribute('cx', p.x.toFixed(1)); p.el.setAttribute('cy', p.y.toFixed(1));
+      p.el.setAttribute('opacity', Math.max(0, p.life).toFixed(2));
+      p.el.setAttribute('fill', p.life > .55 ? '#f6c24a' : '#c03b1c');
+    });
+  }
+
+  function setTexts(i, anim) {
+    const sp = SP[i], X = W * .05;
+    G.title.textContent = sp.latin; fitTo(G.title, W - 2 * R - 20 - X);
+    G.common.textContent = sp.common; fitTo(G.common, W - 2 * R - 20 - X);
+    sp.rows.forEach(([a, b], k) => {
+      const t = G.rows[k]; if (!t) return; t.textContent = '';
+      const s1 = mk('tspan', {fill: SEPIA, style: 'font-family:var(--display);font-style:italic'}, t); s1.textContent = a + ' · ';
+      const s2 = mk('tspan', {style: 'font-family:var(--body);font-weight:700'}, t); s2.textContent = b;
+      fitTo(t, W - X - 6);
+    });
+    const on = revealed && i === 1 && G.rows.length > 0;
+    if (on) { const b = G.rows[0].getBBox(); G.wash.setAttribute('width', b.width + 6); }
+    gsap.set(G.wash, {opacity: on ? .45 : 0});
+    G.labs.forEach((l, j) => { l.setAttribute('font-weight', j === i ? 800 : 500); l.setAttribute('fill', j === i ? INK : SEPIA); });
+    if (anim && !Kit.calm) {
+      gsap.fromTo([G.title, G.common], {opacity: 0, x: -10}, {opacity: 1, x: 0, duration: .55, stagger: .05, ease: 'back.out(2.2)', overwrite: true});
+      if (G.rows.length) gsap.fromTo(G.rows, {opacity: 0, x: -8}, {opacity: 1, x: 0, duration: .5, stagger: .06, ease: 'back.out(2)', overwrite: true});
+    }
+  }
+
+  function emblem(g, kind, rr, col) {
+    if (kind === 'star') {
+      let d = '';
+      for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, rad = k % 2 ? rr * .42 : rr; d += (k ? 'L' : 'M') + (Math.cos(a) * rad).toFixed(1) + ',' + (Math.sin(a) * rad).toFixed(1); }
+      mk('path', {d: d + 'Z', fill: col, 'fill-opacity': .85, stroke: col, 'stroke-width': .8, 'stroke-linejoin': 'round'}, g);
+    } else {
+      const drop = s => `M0,${-rr * s} C${rr * .75 * s},${-rr * .25 * s} ${rr * .7 * s},${rr * .75 * s} 0,${rr * .8 * s} C${-rr * .7 * s},${rr * .75 * s} ${-rr * .75 * s},${-rr * .25 * s} 0,${-rr * s}Z`;
+      mk('path', {d: drop(1), fill: col, 'fill-opacity': .88}, g);
+      mk('path', {d: drop(.48), fill: '#f1e6cc', transform: `translate(0,${rr * .3})`}, g);
+    }
+    mk('path', {d: `M${-rr * 1.15},${rr * 1.05} H${rr * 1.15}`, stroke: col, 'stroke-width': 1}, g);
+    [-1, 1].forEach(sx => mk('path', {d: `M${sx * rr * 1.45},${-rr * .1} l2,2.5 l-2,2.5 l-2,-2.5z`, fill: col}, g));
+  }
+
+  function setSeal(i, anim) {
+    const s = SP[i].seal, g = G.seal;
+    g.innerHTML = '';
+    if (!s) {
+      // an empty, waiting stamp: classification not yet decided
+      mk('circle', {r: R - 2, fill: 'none', stroke: SEPIA, 'stroke-width': 1.2, 'stroke-dasharray': '3 4', opacity: .5}, g);
+      mk('circle', {r: R - 11, fill: 'url(#hatch)', opacity: .12}, g);
+      if (anim && !Kit.calm) gsap.fromTo(g, {opacity: 0, scale: .7}, {opacity: 1, scale: 1, rotation: 0, duration: .4, ease: 'back.out(2)', svgOrigin: '0 0', overwrite: true});
+      else gsap.set(g, {opacity: 1, scale: 1, rotation: 0, svgOrigin: '0 0'});
+      return;
+    }
+    const r = R - 10, circ = 2 * Math.PI * r * .97;
+    const ring = circ >= s.full.length * 7.4 ? s.full : s.short;
+    mk('circle', {r: R - 1, fill: s.col, 'fill-opacity': .08, stroke: s.col, 'stroke-width': 2}, g);
+    mk('circle', {r: r - 3, fill: 'none', stroke: s.col, 'stroke-width': 1}, g);
+    mk('path', {id: 'ringp', d: `M${-r},0 a${r},${r} 0 1,1 ${2 * r},0 a${r},${r} 0 1,1 ${-2 * r},0`, fill: 'none'}, g);
+    const t = mk('text', {'font-size': 12, fill: s.col, 'font-weight': 700, style: 'font-family:var(--mono)'}, g);
+    const tp = mk('textPath', {href: '#ringp', textLength: circ, lengthAdjust: 'spacing'}, t); tp.textContent = ring;
+    emblem(g, s.icon, (r - 6) * .55, s.col);
+    G.shock.setAttribute('stroke', s.col);
+    if (anim && !Kit.calm) gsap.fromTo(g, {opacity: 0, scale: 1.7, rotation: -40}, {opacity: 1, scale: 1, rotation: -12, duration: .6, ease: 'back.out(2.4)', svgOrigin: '0 0', overwrite: true});
+    else gsap.set(g, {opacity: 1, scale: 1, rotation: -12, svgOrigin: '0 0'});
+  }
+
+  function swap(i) {
+    const prev = cur; cur = i; visited.add(i);
+    G.devs.forEach((d, j) => { if (j !== i && j !== prev) gsap.set(d, {opacity: 0}); });
+    if (!Kit.calm) {
+      gsap.to(G.devs[prev], {opacity: 0, scale: .82, y: 14, duration: .22, ease: 'back.in(2)', transformOrigin: '50% 50%', overwrite: true});
+      gsap.fromTo(G.devs[i], {opacity: 0, scale: .7, y: -12, rotation: -5}, {opacity: 1, scale: 1, y: 0, rotation: 0, duration: .9, ease: 'elastic.out(1,.45)', transformOrigin: '50% 50%', overwrite: true});
+    } else { gsap.set(G.devs[prev], {opacity: 0}); gsap.set(G.devs[i], {opacity: 1, scale: 1, y: 0, rotation: 0}); }
+    setTexts(i, true); setSeal(i, true); Kit.haptic('selection');
+  }
+
+  function render() {
+    const i = Math.max(0, Math.min(2, Math.round(st.v)));
+    if (i !== cur) swap(i);
+    const kv = Math.max(-.08, Math.min(2.08, st.v));
+    G.knob.setAttribute('transform', `translate(${X0 + (X1 - X0) * kv / 2},${SY})`);
+    drawFlame();
+  }
+
+  function moveTo(v) {
+    target = v;
+    if (Kit.calm) { st.v = v; render(); return; }
+    gsap.to(st, {v, duration: .28, ease: 'power3.out', overwrite: true, onUpdate: render});
+  }
+  function release() {
+    const v = Math.round(target); target = v;
+    if (!Kit.calm) gsap.to(G.knobIn, {scale: 1, duration: .8, ease: 'elastic.out(1,.4)', overwrite: true});
+    const done = () => { if (!revealed && visited.has(1) && visited.has(2)) reveal(); };
+    if (Kit.calm) { st.v = v; render(); done(); return; }
+    gsap.to(st, {v, duration: 1, ease: 'elastic.out(1,.4)', overwrite: true, onUpdate: render});
+    setTimeout(done, 450);
+  }
+
+  function reveal() {
+    revealed = true;
+    say.innerHTML = 'The law files the XM42 as a <b>non-lethal incendiary device</b>, so it is sold under <b>hobbyist rules</b>, in ordinary gun stores. The M9 is a military weapon, from the Vietnam War.';
+    card.classList.add('answered'); Kit.show('keep'); Kit.haptic('success');
+    setTimeout(wow, 220);
+  }
+  function wow() {
+    target = 1;
+    if (Kit.calm) { st.v = 1; render(); setTexts(1, false); setSeal(1, false); return; }
+    gsap.to(st, {v: 1, duration: 1.1, ease: 'elastic.out(1,.4)', overwrite: true, onUpdate: render});
+    gsap.delayedCall(.35, () => {
+      setTexts(1, false);
+      gsap.fromTo(G.seal, {opacity: 0, scale: 2.8, rotation: -50}, {opacity: 1, scale: 1, rotation: -12, duration: .7, ease: 'back.out(2.6)', svgOrigin: '0 0', overwrite: true});
+      gsap.fromTo(G.shock, {attr: {r: R}, opacity: .8}, {attr: {r: R * 2.3}, opacity: 0, duration: .9, delay: .45, ease: 'expo.out'});
+      if (G.rows.length) gsap.fromTo(G.wash, {opacity: .45, scaleX: 0}, {scaleX: 1, duration: .7, delay: .5, ease: 'power3.out', transformOrigin: '0% 50%'});
+      gsap.fromTo(G.devs[1], {rotation: 0}, {keyframes: [{rotation: -4, duration: .12}, {rotation: 0, duration: .9, ease: 'elastic.out(1,.3)'}], delay: .45, transformOrigin: '50% 50%'});
+      Kit.haptic('light');
+    });
+  }
+
+  const vOf = e => { const r = svg.getBoundingClientRect(); return Math.max(0, Math.min(2, ((e.clientX - r.left) - X0) / (X1 - X0) * 2)); };
+  svg.addEventListener('pointerdown', e => {
+    dragging = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; gsap.to(G.hint, {opacity: 0, duration: .2}); }
+    if (!Kit.calm) gsap.to(G.knobIn, {scale: 1.25, duration: .3, ease: 'back.out(3)', overwrite: true});
+    moveTo(vOf(e));
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) moveTo(vOf(e)); });
+  const end = () => { if (!dragging) return; dragging = false; release(); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G.title) return;
+    st.grow = 0;
+    const tl = gsap.timeline()
+      .from(G.head.children, {opacity: 0, x: -14, duration: .6, stagger: .08, ease: 'power3.out'})
+      .from(G.devs[cur], {opacity: 0, scale: .6, rotation: -8, duration: 1, ease: 'elastic.out(1,.5)', transformOrigin: '50% 50%'}, .1)
+      .from(G.scale, {opacity: 0, duration: .6}, .3)
+      .to(st, {grow: 1, duration: 1.5, ease: 'elastic.out(1,.35)', onUpdate: drawFlame}, .45)
+      .from(G.seal, {opacity: 0, scale: .6, duration: .6, ease: 'back.out(2)', svgOrigin: '0 0'}, .5)
+      .from(G.knobIn, {y: -40, opacity: 0, duration: .9, ease: 'bounce.out'}, .6);
+    if (G.rows.length) tl.from(G.rows, {opacity: 0, y: 8, duration: .5, stagger: .07, ease: 'back.out(2)'}, .5);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; st.grow = 1;
+    moveTo(2); await wait(Kit.calm ? 40 : 350); release(); await wait(Kit.calm ? 40 : 600);
+    moveTo(1); await wait(Kit.calm ? 40 : 300); release(); await wait(Kit.calm ? 300 : 1900);
+  };
+})();
+Kit.single();
+</script>
+</html>

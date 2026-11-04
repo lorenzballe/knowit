@@ -1,0 +1,337 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-frozen-compass -->
+<!-- Look: two lumps of lava on a volcanic night ground, each full of tiny magnetic needles, inside a blue stream of thousands of dots that is Earth's field.
+     Interaction: hold to cool the right lava below its Curie point. Its needles freeze from the rim inward. Then reverse Earth's field.
+     Wow: the field stream stalls and runs backwards, and the hot lava's needles scramble and swing round. The cooled rock does not move, and its record glows. -->
+<title>The frozen compass</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer}
+#flip{align-self:flex-start;background:#8fc8ff;color:#0e0c0b;font:800 max(2cqh,14px)/1.2 var(--body);border:0;border-radius:99px;padding:1.3cqh 5cqw;cursor:pointer;box-shadow:0 0 2.4cqh rgba(143,200,255,.45)}
+#why{font:600 max(1.95cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why b{color:#ffc46b}
+.say b{color:#ffc46b}
+.q,.say,.keep,#why{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold to cool · flip the field" style="--c:#14110f;--k:#f6efe6;--edge:#000">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FROZEN COMPASS</span></div>
+    <h2 class="q">Why do cooled rocks keep the magnetic direction they had while hot?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="pic" role="img" aria-label="Two lumps of lava full of tiny magnetic needles inside Earth's magnetic field. The left one stays hot, and you can cool the right one."></canvas>
+    </div>
+    <p class="say" id="say">Both lavas line up with Earth's field. <b>Hold the picture</b> to cool the right lava below its Curie point.</p>
+    <button class="gone" id="flip">Reverse Earth's field</button>
+    <p class="gone" id="why">Grains of magnetite and hematite line up with the field while the rock is hot. <b>Below the Curie point they lock in place</b>, so when the field later reverses, the cooled rock keeps pointing the old way.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A cooled lava is a frozen compass: it keeps the field it set in.</div>
+    <div class="foot"><span class="src">Source · Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('pic'), say = Kit.$('say'), btn = Kit.$('flip');
+  const CUR = .5, INK = '#f6efe6', FIELD = '143,200,255', ICE = '#a8e6ff', HOT = '#ffc46b';
+  const MONO = (getComputedStyle(document.documentElement).getPropertyValue('--mono') || '').trim() || 'monospace';
+  let ctx = null, W = 0, H = 0, fs = 12, R = 40, cy = 0, y0 = 0, last = 0, running = false, tier = 'full';
+  let step = 'cool', hold = false, flipping = false, flips = 0, firstLock = false;
+  const F = {fd: 0, A: 0, ring: 0, ringA: 0};
+
+  // ---------- the world ----------
+  const wrap = a => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a; };
+  function mkRock(hot) {
+    const r = {T: 1, hot, pts: [], dom: [], speck: [], steam: [], emb: [], cracks: [], cx: 0, free: 150};
+    const s1 = Kit.rnd() * 6, s2 = Kit.rnd() * 6;
+    for (let i = 0; i < 56; i++) { const th = i / 56 * Math.PI * 2; r.pts.push([th, 1 + .06 * Math.sin(3 * th + s1) + .04 * Math.sin(5 * th + s2) + (Kit.rnd() - .5) * .025]); }
+    let n = 0;
+    while (n < 150) {
+      const u = Kit.rnd() * 2 - 1, v = Kit.rnd() * 2 - 1, d = Math.hypot(u, v);
+      if (d > .84) continue;
+      r.dom.push({u, v, d, a: Kit.rnd() * Math.PI * 2 - Math.PI, rate: 1.6 + Kit.rnd() * 2.6, locked: false, flash: 0});
+      n++;
+    }
+    for (let i = 0; i < 70; i++) { const th = Kit.rnd() * 6.28, d = Math.sqrt(Kit.rnd()) * .9; r.speck.push([Math.cos(th) * d, Math.sin(th) * d, .6 + Kit.rnd() * 1.6, .25 + Kit.rnd() * .5]); }
+    for (let i = 0; i < 9; i++) {
+      const th = Kit.rnd() * 6.28, d = Math.sqrt(Kit.rnd()) * .75;
+      let x = Math.cos(th) * d, y = Math.sin(th) * d, a = Kit.rnd() * 6.28;
+      const p = [[x, y]];
+      for (let j = 0; j < 4; j++) { a += (Kit.rnd() - .5) * 1.4; const l = .1 + Kit.rnd() * .14; x += Math.cos(a) * l; y += Math.sin(a) * l; p.push([x, y]); }
+      r.cracks.push(p);
+    }
+    return r;
+  }
+  const rocks = [mkRock(true), mkRock(false)];
+  const parts = [];
+  for (let i = 0; i < 520; i++) parts.push({x: Kit.rnd(), y: Kit.rnd(), v: .05 + Kit.rnd() * .12, a: .18 + Kit.rnd() * .4, w: Kit.rnd() < .15 ? 1.6 : 1});
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, W / 27));
+    const Rmax = W * .175;
+    const tiers = [
+      {k: 'full', top: fs * 3.4, bot: fs * 4.5},
+      {k: 'mid', top: fs * 3.4, bot: fs * 3.0},
+      {k: 'mini', top: fs * 2.0, bot: fs * 1.8}
+    ];
+    let pick = tiers[2];
+    for (const t of tiers) { if (Math.min(Rmax, (H - t.top - t.bot) / 2.2) >= Math.min(Rmax, 40)) { pick = t; break; } }
+    tier = pick.k;
+    R = Math.max(10, Math.min(Rmax, (H - pick.top - pick.bot) / 2.2));
+    const B = pick.top + 2.2 * R + pick.bot;
+    y0 = Math.max(0, (H - B) / 2);
+    cy = y0 + pick.top + R * 1.1;
+    rocks[0].cx = W * .27; rocks[1].cx = W * .73;
+    draw();
+  }
+
+  // ---------- physics ----------
+  function update(dt) {
+    const str = Math.abs(F.fd), target = F.fd >= 0 ? -Math.PI / 2 : Math.PI / 2;
+    for (const p of parts) {
+      p.y -= p.v * F.fd * dt * (flipping ? 1.4 : 1);
+      if (p.y < -.05) { p.y += 1.1; p.x = Kit.rnd(); }
+      if (p.y > 1.05) { p.y -= 1.1; p.x = Kit.rnd(); }
+    }
+    const right = rocks[1];
+    if (step === 'cool' && hold) right.T = Math.max(0, right.T - dt * .32);
+    if (step !== 'cool' && right.T > .12) right.T += (.12 - right.T) * Math.min(1, dt * 1.2);
+    for (const r of rocks) {
+      let free = 0;
+      for (const d of r.dom) {
+        const Tl = r.T + .14 * (1 - d.d) - .07;          // the rim cools first
+        if (!d.locked && !r.hot && Tl < CUR) {
+          d.locked = true; d.flash = 1;
+          if (!firstLock) { firstLock = true; Kit.haptic('light'); }
+        }
+        if (d.locked) { d.flash = Math.max(0, d.flash - dt * 1.8); continue; }
+        free++;
+        const heat = Math.max(.25, Tl);
+        d.a = wrap(d.a + wrap(target - d.a) * Math.min(1, d.rate * str * dt) + Kit.gauss() * Math.sqrt(dt) * (.35 + (1 - str) * 3.2) * heat);
+      }
+      r.free = free;
+      if (r === right && step === 'cool' && free === 0) locked();
+      if (r === right && hold && step === 'cool' && Kit.rnd() < dt * 40) r.steam.push({x: (Kit.rnd() - .5) * 1.4, y: -.8 - Kit.rnd() * .2, l: 1, s: 1 + Kit.rnd() * 2});
+      for (const s of r.steam) { s.y -= dt * .55; s.x += Math.sin(s.y * 6) * dt * .1; s.l -= dt * .7; }
+      r.steam = r.steam.filter(s => s.l > 0);
+      // embers off molten rock
+      if (r.T > .35 && F.A > .5 && Kit.rnd() < dt * 9 * r.T) r.emb.push({x: (Kit.rnd() - .5) * 1.3, y: -.7 - Kit.rnd() * .2, l: 1, ph: Kit.rnd() * 6, z: .8 + Kit.rnd() * 1.1});
+      for (const e of r.emb) { e.y -= dt * .32; e.x += Math.sin(e.ph + e.y * 5) * dt * .12; e.l -= dt * .55; }
+      r.emb = r.emb.filter(e => e.l > 0);
+    }
+  }
+
+  // ---------- drawing ----------
+  const mix = (a, b, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const A = p(a), B = p(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`; };
+  function rockPath(r, s) {
+    ctx.beginPath();
+    r.pts.forEach(([th, k], i) => { const x = r.cx + Math.cos(th) * R * k * s, y = cy + Math.sin(th) * R * k * s; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+    ctx.closePath();
+  }
+  function text(t, x, y, o = {}) {
+    let s = o.s || fs;
+    ctx.font = `${o.w || 700} ${s}px ${o.f || MONO}`;
+    const max = o.max || W * .44, w = ctx.measureText(t).width;
+    if (w > max) { s = Math.max(12, s * max / w); ctx.font = `${o.w || 700} ${s}px ${o.f || MONO}`; }
+    ctx.textAlign = o.al || 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = o.c || INK; ctx.globalAlpha = (o.a ?? 1) * F.A;
+    ctx.fillText(t, x, y); ctx.globalAlpha = 1;
+  }
+  function arrow(x, y1, y2, col, w, head) {
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = w; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x, y1); ctx.lineTo(x, y2 + Math.sign(y1 - y2) * head * .6); ctx.stroke();
+    const s = Math.sign(y2 - y1) || 1;
+    ctx.beginPath(); ctx.moveTo(x, y2); ctx.lineTo(x - head * .6, y2 - s * head); ctx.lineTo(x + head * .6, y2 - s * head); ctx.closePath(); ctx.fill();
+  }
+
+  function draw() {
+    if (!ctx) return;
+    const now = performance.now() / 1000;
+    ctx.clearRect(0, 0, W, H);
+    const str = Math.abs(F.fd), dir = Math.sign(F.fd) || 1;
+
+    // Earth's field: a stream of fine blue dots, dissolving into the card at every edge
+    ctx.lineCap = 'round';
+    for (const p of parts) {
+      const x = p.x * W, y = p.y * H, len = 1.5 + p.v * H * .28 * str;
+      ctx.strokeStyle = `rgba(${FIELD},${p.a * (.35 + .65 * str) * F.A})`; ctx.lineWidth = p.w;
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + len * dir); ctx.stroke();
+    }
+    ctx.save(); ctx.globalCompositeOperation = 'destination-in';
+    const gx = ctx.createLinearGradient(0, 0, W, 0);
+    gx.addColorStop(0, 'rgba(0,0,0,0)'); gx.addColorStop(.16, '#000'); gx.addColorStop(.84, '#000'); gx.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gx; ctx.fillRect(0, 0, W, H);
+    const gy = ctx.createLinearGradient(0, 0, 0, H);
+    gy.addColorStop(0, 'rgba(0,0,0,0)'); gy.addColorStop(.18, '#000'); gy.addColorStop(.82, '#000'); gy.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gy; ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+
+    // the field arrow between the two lavas
+    if (str > .03) {
+      const L = R * .85 * str * F.A;
+      ctx.save(); ctx.shadowColor = `rgba(${FIELD},.9)`; ctx.shadowBlur = 14;
+      arrow(W / 2, cy + L * dir, cy - L * dir, `rgba(${FIELD},${.95 * F.A})`, 3, 9);
+      ctx.restore();
+    }
+    const title = flipping ? "EARTH'S FIELD · FLIPPING" : F.fd >= 0 ? "EARTH'S FIELD  ↑  NORMAL" : "EARTH'S FIELD  ↓  REVERSED";
+    text(title, W / 2, y0 + fs * .9, {c: `rgb(${FIELD})`, w: 800, max: W * .94});
+
+    for (const r of rocks) drawRock(r, now);
+
+    if (F.ringA > 0) {
+      ctx.save(); ctx.strokeStyle = `rgba(168,230,255,${F.ringA})`; ctx.lineWidth = 2.5; ctx.shadowColor = ICE; ctx.shadowBlur = 18;
+      rockPath(rocks[1], 1 + F.ring * .35); ctx.stroke(); ctx.restore();
+    }
+  }
+
+  function drawRock(r, now) {
+    const T = r.T, A = F.A, s = .7 + .3 * A;
+    ctx.save();
+    ctx.globalAlpha = A;
+    // the ground it rests on: a soft shadow and the lava's own glow thrown on it
+    const gy = cy + R * 1.0 * s;
+    const sg = ctx.createRadialGradient(r.cx, gy, 0, r.cx, gy, R * 1.25);
+    sg.addColorStop(0, `rgba(${Math.round(60 + 160 * T)},${Math.round(30 + 50 * T)},10,${.25 + .25 * T})`); sg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.save(); ctx.translate(r.cx, gy); ctx.scale(1, .18); ctx.translate(-r.cx, -gy);
+    ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(r.cx, gy, R * 1.25, 0, 6.3); ctx.fill(); ctx.restore();
+
+    // the glow of molten rock
+    ctx.shadowColor = `rgba(255,110,30,${.85 * T})`; ctx.shadowBlur = R * .7 * T * (1 + .08 * Math.sin(now * 2.3 + r.cx));
+    const g = ctx.createRadialGradient(r.cx - R * .2, cy - R * .25, R * .05, r.cx, cy, R * 1.1);
+    g.addColorStop(0, mix('#5c5650', '#ffd27a', T));
+    g.addColorStop(.55, mix('#36322e', '#f0641e', T));
+    g.addColorStop(1, mix('#181614', '#7a1e08', T));
+    rockPath(r, s); ctx.fillStyle = g; ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.save(); rockPath(r, s); ctx.clip();
+    for (const [u, v, z, a] of r.speck) { ctx.fillStyle = `rgba(${u > 0 ? '255,255,255' : '0,0,0'},${a * (1 - T) * .5})`; ctx.beginPath(); ctx.arc(r.cx + u * R * s, cy + v * R * s, z, 0, 6.3); ctx.fill(); }
+    // crust cracks: glowing seams while molten, dark fissures once cold
+    const flick = .85 + .15 * Math.sin(now * 3.1 + r.cx * .1);
+    for (const c of r.cracks) {
+      ctx.beginPath();
+      c.forEach(([u, v], i) => { const x = r.cx + u * R * s, y = cy + v * R * s; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+      if (T > .05) { ctx.strokeStyle = `rgba(255,214,120,${.22 * T * flick})`; ctx.lineWidth = 4; ctx.stroke(); ctx.strokeStyle = `rgba(255,240,190,${.55 * T * flick})`; ctx.lineWidth = 1.2; ctx.stroke(); }
+      if (T < .9) { ctx.strokeStyle = `rgba(0,0,0,${.5 * (1 - T)})`; ctx.lineWidth = 1.1; ctx.stroke(); }
+    }
+    const sh = ctx.createLinearGradient(r.cx - R, cy - R, r.cx + R, cy + R);
+    sh.addColorStop(0, 'rgba(255,255,255,.12)'); sh.addColorStop(.6, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,0,.35)');
+    ctx.fillStyle = sh; ctx.fillRect(r.cx - R * 1.2, cy - R * 1.2, R * 2.4, R * 2.4);
+    ctx.restore();
+    rockPath(r, s); ctx.strokeStyle = `rgba(255,255,255,${.08 + .1 * (1 - T)})`; ctx.lineWidth = 1; ctx.stroke();
+
+    // the magnetic grains
+    const L = R * .1 * s;
+    for (const d of r.dom) {
+      const x = r.cx + d.u * R * s, y = cy + d.v * R * s, c = Math.cos(d.a) * L, sn = Math.sin(d.a) * L;
+      if (d.locked) {
+        ctx.strokeStyle = ICE; ctx.fillStyle = ICE;
+        if (d.flash > 0) { ctx.save(); ctx.globalAlpha = A * d.flash; ctx.fillStyle = '#e8f8ff'; ctx.beginPath(); ctx.arc(x, y, L * 1.3 * d.flash + 1, 0, 6.3); ctx.fill(); ctx.restore(); }
+      } else { ctx.strokeStyle = '#2b0b02'; ctx.fillStyle = '#2b0b02'; }
+      ctx.lineWidth = Math.max(1.2, Math.min(1.7, R / 30));
+      ctx.beginPath(); ctx.moveTo(x - c, y - sn); ctx.lineTo(x + c * .4, y + sn * .4); ctx.stroke();
+      ctx.beginPath();
+      const ca = Math.cos(d.a), sa = Math.sin(d.a), hx = x + c, hy = y + sn, b = L * .55, w = L * .38;
+      ctx.moveTo(hx, hy); ctx.lineTo(hx - ca * b - sa * w, hy - sa * b + ca * w); ctx.lineTo(hx - ca * b + sa * w, hy - sa * b - ca * w); ctx.closePath(); ctx.fill();
+    }
+    for (const st of r.steam) { ctx.fillStyle = `rgba(225,232,240,${st.l * .45})`; ctx.beginPath(); ctx.arc(r.cx + st.x * R, cy + st.y * R, st.s * (2 - st.l), 0, 6.3); ctx.fill(); }
+    for (const e of r.emb) { ctx.fillStyle = `rgba(255,${Math.round(150 + 80 * e.l)},80,${e.l * .9 * Math.min(1, T * 1.5)})`; ctx.beginPath(); ctx.arc(r.cx + e.x * R, cy + e.y * R, e.z, 0, 6.3); ctx.fill(); }
+    ctx.restore();
+
+    // labels
+    const bot = cy + R * 1.1;
+    const below = !r.hot && r.free === 0;
+    let m = 0; for (const d of r.dom) m += Math.sin(d.a); m /= r.dom.length;
+    const pt = m < -.45 ? '↑' : m > .45 ? '↓' : '·';
+    const name = r.hot ? 'KEPT HOT' : step === 'cool' ? (hold ? 'COOLING…' : 'LAVA') : 'COOLED';
+    const nameC = r.hot || step === 'cool' ? HOT : ICE;
+    const state = `${below ? 'recorded' : 'follows'}  ${pt}`, stateC = below ? ICE : HOT;
+    if (tier === 'mini') {
+      const short = r.hot ? 'HOT' : step === 'cool' ? (hold ? 'COOLING' : 'LAVA') : 'COOLED';
+      text(`${short} · ${below ? 'locked' : 'follows'} ${pt}`, r.cx, bot + fs * .9, {w: 800, c: stateC});
+      return;
+    }
+    text(name, r.cx, cy - R * 1.1 - fs * .9, {w: 800, c: nameC});
+    const bw = R * 1.5, bx = r.cx - bw / 2, by = bot + fs * .9, bh = Math.max(4, fs * .32);
+    ctx.globalAlpha = A;
+    ctx.fillStyle = 'rgba(246,239,230,.14)'; ctx.beginPath(); ctx.roundRect(bx, by - bh / 2, bw, bh, bh); ctx.fill();
+    const tg = ctx.createLinearGradient(bx, 0, bx + bw, 0); tg.addColorStop(0, ICE); tg.addColorStop(.5, '#d98a4a'); tg.addColorStop(1, '#ffd27a');
+    ctx.fillStyle = tg; ctx.beginPath(); ctx.roundRect(bx, by - bh / 2, Math.max(bh, bw * T), bh, bh); ctx.fill();
+    ctx.fillStyle = INK; ctx.fillRect(bx + bw * CUR - 1, by - bh * 1.4, 2, bh * 2.8);
+    ctx.globalAlpha = 1;
+    if (tier === 'full') {
+      text(below ? 'below Curie' : 'above Curie', r.cx, bot + fs * 2.4, {s: Math.max(12, fs * .9), c: below ? ICE : INK, a: .85});
+      text(state, r.cx, bot + fs * 3.75, {w: 800, c: stateC});
+    } else {
+      text(state, r.cx, bot + fs * 2.3, {w: 800, c: stateC});
+    }
+  }
+
+  function tick(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    update(dt); draw();
+    requestAnimationFrame(tick);
+  }
+
+  // ---------- the story ----------
+  function locked() {
+    step = 'flip'; hold = false; Kit.haptic('success');
+    say.innerHTML = 'Its grains froze from the rim inward, all pointing up. <b>Now reverse Earth’s field.</b>';
+    Kit.show('flip');
+    if (!Kit.calm) gsap.from(btn, {y: 10, scale: .9, duration: .6, ease: 'back.out(2)'});
+  }
+  function flip() {
+    if (flipping || step === 'cool') return;
+    flipping = true; Kit.haptic('light');
+    const target = F.fd >= 0 ? -1 : 1;
+    const done = () => {
+      flipping = false; flips++;
+      F.ring = 0; F.ringA = 1;
+      if (Kit.calm) F.ringA = .8; else gsap.to(F, {ring: 1, ringA: 0, duration: 1.4, ease: 'expo.out'});
+      Kit.haptic('success');
+      if (step !== 'done') {
+        step = 'done';
+        Kit.hide('say'); Kit.hide('flip'); Kit.show('why'); Kit.show('keep');
+      }
+    };
+    if (Kit.calm) {
+      F.fd = target;
+      const a = target > 0 ? -Math.PI / 2 : Math.PI / 2;
+      for (const r of rocks) for (const d of r.dom) if (!d.locked) d.a = a + Kit.gauss() * .15;
+      done(); return;
+    }
+    gsap.to(F, {fd: target, duration: 2.8, ease: 'power2.inOut', onComplete: done});
+  }
+  btn.addEventListener('click', flip);
+  cv.addEventListener('pointerdown', e => {
+    if (step === 'cool') { hold = true; Kit.haptic('selection'); cv.setPointerCapture(e.pointerId); }
+    else if (step === 'done') flip();
+  });
+  const up = () => { hold = false; };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  new ResizeObserver(() => { if (ctx) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  const start = () => { if (!running) { running = true; requestAnimationFrame(tick); } };
+  Kit.onEnter.card = () => {
+    start();
+    if (Kit.calm) { F.A = 1; F.fd = 1; for (const r of rocks) for (const d of r.dom) d.a = -Math.PI / 2 + Kit.gauss() * .2; return; }
+    gsap.timeline()
+      .to(F, {A: 1, duration: 1.1, ease: 'power3.out'})
+      .to(F, {fd: 1, duration: 1.8, ease: 'power2.out'}, .35);
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start(); F.A = 1; if (F.fd < .9) F.fd = 1;
+    rocks[1].T = .3;
+    await wait(Kit.calm ? 80 : 400);
+    if (step === 'cool') { for (const d of rocks[1].dom) d.locked = true; locked(); }
+    await wait(120);
+    flip();
+    await wait(Kit.calm ? 100 : 3600);
+  };
+})();
+Kit.single();
+</script>
+</html>

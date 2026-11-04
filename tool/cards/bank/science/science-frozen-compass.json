@@ -1,0 +1,38 @@
+{
+  "id": "science-frozen-compass",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do cooled rocks keep the magnetic direction they had while hot?",
+  "answer": "Magnetite and hematite grains line up with Earth's field while the rock is hot. Below the Curie point they lock in place, so when the field later reverses, the cooled rock keeps pointing the old way.",
+  "move": "A cooled lava is a frozen compass: it keeps the field it set in.",
+  "keywords": [
+    "lava",
+    "magnetite",
+    "hematite",
+    "curie point",
+    "earth's magnetic field"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A diagram of two lavas and Earth's magnetic field. A prompt asks the reader to hold the picture to cool the right lava below its Curie point, and the card explains how the cooled rock keeps its old field direction.",
+    "ground": "#14110f"
+  },
+  "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=86s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,386 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-dna-spooled-tight -->
+<!-- Look: laboratory glass on a deep teal bench; a lit test tube of sloshing liquid holding an amber DNA thread, histones as glossy pink glass beads.
+     Interaction: stir the tube and the loose thread flails; drag the bead along the glass dial to wrap it on histones, coil it, fold it. Stirring it then barely moves it.
+     Wow: at the end the thread locks into a banded X chromosome (two identical sister chromatids pinched at the centromere) with an elastic glow, a light ring and a refraction sweep across the glass. -->
+<title>DNA, spooled tight</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+.answered .q{font-size:max(2.5cqh,15px)}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub the timeline · fold the DNA" style="--c:#0c2630;--k:#e8f7fa;--edge:#05141a">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DNA PACKING</span></div>
+    <h2 class="q">How does DNA fit into a chromosome without tangling?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="pic" role="img" aria-label="A glass test tube of liquid holding a DNA thread. A dial below folds it from a loose thread, to beads on histones, to a coiled fiber, to an X-shaped chromosome."></canvas>
+    </div>
+    <p class="say" id="say">Loose DNA: a wiggly thread about <b>2 nm wide</b>. <b>Stir the glass, then drag the bead along the tube.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>DNA is never stuffed in loose: it spools on histones, then folds, and folds again.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Women Are Stripey” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('pic'), card = Kit.$('card'), say = Kit.$('say'), stage = Kit.$('stage');
+  const M = 64, N = 2200, TAU = Math.PI * 2;
+  const INK = '#e8f7fa';
+  const SAY = [
+    'Loose DNA: a wiggly thread about <b>2 nm wide</b>. <b>Stir the glass, then drag the bead along the tube.</b>',
+    'It wraps around <b>histone proteins</b>, like thread on beads: each bead is a <b>nucleosome</b>. Stir it now.',
+    'The beaded string coils on itself into a thicker fiber. <b>Keep folding.</b>',
+  ];
+  const WHY = 'Unwound, a chromosome’s DNA is centimeters long but only 2 nm wide. Wrapped on histones, then folded again and again, it packs tight and stays in order. It takes this X shape only when a cell is ready to divide.';
+  const CAP = ['loose · 2 nm wide', 'on histone beads', 'coiled fiber', 'chromosome'];
+  const TICK = ['loose', 'beads', 'coil', 'chromosome'];
+  const BANDS = [[-.80, .05], [-.64, .08], [-.47, .04], [-.33, .07], [-.19, .03], [.17, .05], [.31, .09], [.48, .04], [.6, .07], [.76, .05]];
+
+  const S = {t: 0, tv: 0}, fx = {build: 1, flash: 0, sweep: -1, pop: 1};
+  let x, W = 0, H = 0, fs = 12, G = null, MONO = 'monospace', time = 0, last = 0;
+  let stir = 0, slA = 0, slV = 0, revealed = false, touched = false, stageShown = 0, running = false;
+
+  const sm = (a, b, v) => { v = Math.min(1, Math.max(0, (v - a) / (b - a))); return v * v * (3 - 2 * v); };
+  const lerp = (a, b, f) => a + (b - a) * f;
+  const loose = s => [.62 * Math.sin(s * 19 + 1) + .24 * Math.sin(s * 53 + .3), .72 * Math.sin(s * 11 + .2) + .18 * Math.cos(s * 37 + .5)];
+
+  // ---------- the four shapes the thread takes ----------
+  const BC = [[], [], [], []], BR = [0, .062, .046, .04];
+  const xmOf = y => .075 + .2 * Math.pow(Math.abs(y) / .86, 1.5);
+  for (let b = 0; b < M; b++) {
+    BC[0][b] = loose((b + .5) / M);
+    const r = Math.floor(b / 8); let c = b % 8; if (r % 2) c = 7 - c;
+    BC[1][b] = [-.78 + c * 1.56 / 7, -.75 + r * .214 + .04 * Math.sin(b * 1.7)];
+    const p = b / (M - 1), ph = b * TAU / 6;
+    BC[2][b] = [.2 * Math.sin(p * 4 + .6) + .26 * Math.cos(ph), -.84 + 1.68 * p + .03 * Math.sin(ph)];
+    let k, q, side; if (b < 32) { k = b; q = k / 31; side = -1; } else { k = b - 32; q = 1 - k / 31; side = 1; }
+    const y = -.86 + 1.72 * q, zig = (k % 2 ? 1 : -1) * .055;
+    BC[3][b] = [side * xmOf(y) + zig, y];
+  }
+  // sister chromatid centerlines, top to bottom
+  const CL = [-1, 1].map(side => Array.from({length: 32}, (_, i) => { const y = -.86 + 1.72 * i / 31; return [side * xmOf(y), y, side < 0 ? i : 63 - i]; }));
+  const P = [0, 1, 2, 3].map(() => new Float32Array(N * 4));
+  for (let i = 0; i < N; i++) {
+    const s = i / (N - 1), b = Math.min(M - 1, Math.floor(s * M)), l = s * M - b;
+    const L = loose(s); P[0].set([L[0], L[1], 0, 0], i * 4);
+    const d = l < .15 ? (l / .15 - 1) * .5 : l > .85 ? (l - .85) / .15 * .5 : 0;
+    const q = Math.min(M - 1, Math.max(0, b + d)), q0 = Math.floor(q), q1 = Math.min(M - 1, q0 + 1), f = q - q0;
+    const env = sm(.12, .24, l) * (1 - sm(.76, .88, l)), th = (l - .15) / .7 * TAU * 1.7 + b * .9;
+    for (let k = 1; k <= 3; k++) {
+      const A = BC[k][q0], B = BC[k][q1], R = BR[k] * 1.3 * env;
+      P[k].set([lerp(A[0], B[0], f), lerp(A[1], B[1], f), R * Math.cos(th), R * Math.sin(th)], i * 4);
+    }
+  }
+  const XY = new Float32Array(N * 2), BXY = new Float32Array(M * 2);
+  const bubbles = Array.from({length: 12}, () => ({x: Kit.rnd(), p: Kit.rnd(), v: .08 + Kit.rnd() * .12, r: 1.2 + Kit.rnd() * 2.2}));
+
+  // ---------- layout ----------
+  function layout() {
+    const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
+    fs = Math.max(12, Math.min(15, W / 25));
+    MONO = getComputedStyle(card).getPropertyValue('--mono').trim() || 'monospace';
+    const th = fs * 1.05, ty = H - fs * 2.3;
+    const vy = fs * .9, vh = Math.max(60, ty - th / 2 - fs * 1.3 - vy), vw = Math.min(W * .64, vh * .62);
+    const vx = W / 2 - vw / 2, full = vy + Math.max(vh * .2, fs * 2.5);
+    const bh = (vy + vh - full) * .8, cy = full + (vy + vh - full) * .47, bw = vw * .8;
+    G = {vx, vy, vw, vh, cx: W / 2, cy, bw, bh, U: Math.min(bw, bh) / 2, full, th, ty, tx0: W * .13, tx1: W * .87};
+    draw();
+  }
+  let lastW = 0, lastH = 0;
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
+    const r = stage.getBoundingClientRect();
+    if (Math.abs(r.width - lastW) > .5 || Math.abs(r.height - lastH) > .5) { lastW = r.width; lastH = r.height; if (r.width > 0 && r.height > 0) layout(); }
+  }).observe(stage);
+
+  const vial = (c, i) => {
+    const {vx, vy, vw, vh} = G, r = vw / 2 - i, by = vy + vh - vw / 2;
+    c.beginPath(); c.moveTo(vx + i, vy); c.lineTo(vx + i, by); c.arc(vx + vw / 2, by, r, Math.PI, 0, true); c.lineTo(vx + vw - i, vy);
+  };
+  const capsule = (c, x0, y0, w, h) => {
+    const r = h / 2; c.beginPath(); c.moveTo(x0 + r, y0); c.lineTo(x0 + w - r, y0); c.arc(x0 + w - r, y0 + r, r, -Math.PI / 2, Math.PI / 2); c.lineTo(x0 + r, y0 + h); c.arc(x0 + r, y0 + r, r, Math.PI / 2, Math.PI * 1.5); c.closePath();
+  };
+  // a tube of varying width around a centerline, with round ends
+  const tube = (c, pts, hw) => {
+    const n = pts.length, nx = [], ny = [];
+    for (let i = 0; i < n; i++) {
+      const a = pts[Math.max(0, i - 1)], b = pts[Math.min(n - 1, i + 1)];
+      let tx = b[0] - a[0], ty = b[1] - a[1]; const l = Math.hypot(tx, ty) || 1; tx /= l; ty /= l;
+      nx[i] = -ty; ny[i] = tx;
+    }
+    c.beginPath();
+    for (let i = 0; i < n; i++) { const px = pts[i][0] + nx[i] * hw[i], py = pts[i][1] + ny[i] * hw[i]; i ? c.lineTo(px, py) : c.moveTo(px, py); }
+    const aE = Math.atan2(ny[n - 1], nx[n - 1]); c.arc(pts[n - 1][0], pts[n - 1][1], hw[n - 1], aE, aE - Math.PI, true);
+    for (let i = n - 1; i >= 0; i--) c.lineTo(pts[i][0] - nx[i] * hw[i], pts[i][1] - ny[i] * hw[i]);
+    const aS = Math.atan2(ny[0], nx[0]); c.arc(pts[0][0], pts[0][1], hw[0], aS + Math.PI, aS, true);
+    c.closePath();
+    return {nx, ny};
+  };
+
+  // ---------- drawing ----------
+  function draw() {
+    if (!G) return;
+    const c = x, {vx, vy, vw, vh, cx, cy, bw, bh, U, full} = G;
+    c.clearRect(0, 0, W, H);
+    const tv = Math.max(0, Math.min(3, S.tv)), B = fx.build, aV = sm(0, .3, B);
+    const k = Math.min(2, Math.floor(tv)), f = sm(0, 1, tv - k);
+    const sc = revealed ? lerp(1, .88 + .12 * fx.pop, sm(2, 3, tv)) : 1;
+    const amp = U * (.012 + stir * .13) * (1 - .82 * tv / 3) * (Kit.calm ? 0 : 1);
+    const fl = (1 - tv / 3) * (1 - tv / 3);
+
+    c.save(); c.globalAlpha = aV;
+    // the glass, back wall
+    vial(c, 0);
+    const gb = c.createLinearGradient(vx, 0, vx + vw, 0);
+    gb.addColorStop(0, 'rgba(190,235,255,.17)'); gb.addColorStop(.5, 'rgba(190,235,255,.03)'); gb.addColorStop(1, 'rgba(190,235,255,.12)');
+    c.fillStyle = gb; c.fill();
+
+    // inside: liquid, bubbles, DNA
+    c.save(); vial(c, 2.5); c.clip();
+    const level = lerp(vy + vh + 6, full, sm(0, .6, B));
+    const slope = Math.max(-.35, Math.min(.35, slA + (Kit.calm ? 0 : .02 * Math.sin(time * .9))));
+    const surf = xx => level + slope * (xx - cx) + fs * .14 * Math.sin(xx * .06 + time * 2.2) + stir * fs * .5 * Math.sin(xx * .11 - time * 6);
+    c.beginPath(); c.moveTo(vx - 2, surf(vx - 2));
+    for (let xx = vx; xx <= vx + vw + 6; xx += 5) c.lineTo(xx, surf(xx));
+    c.lineTo(vx + vw + 6, vy + vh + 6); c.lineTo(vx - 2, vy + vh + 6); c.closePath();
+    const gl = c.createLinearGradient(0, full, 0, vy + vh);
+    gl.addColorStop(0, 'rgba(120,235,225,.20)'); gl.addColorStop(1, 'rgba(25,130,160,.45)');
+    c.fillStyle = gl; c.fill();
+    c.beginPath(); for (let xx = vx - 2; xx <= vx + vw + 6; xx += 5) xx === vx - 2 ? c.moveTo(xx, surf(xx)) : c.lineTo(xx, surf(xx));
+    c.strokeStyle = 'rgba(225,255,250,.75)'; c.lineWidth = 1.6; c.stroke();
+    c.translate(0, fs * .35); c.strokeStyle = 'rgba(225,255,250,.18)'; c.lineWidth = 3; c.stroke(); c.translate(0, -fs * .35);
+    // caustics
+    c.lineWidth = 7; c.strokeStyle = 'rgba(255,255,255,.045)';
+    for (let j = 0; j < 3; j++) {
+      const yy = level + (vy + vh - level) * (.25 + .25 * j);
+      c.beginPath(); for (let xx = vx; xx <= vx + vw; xx += 8) { const y = yy + Math.sin(xx * .04 + time * (.6 + j * .2) + j * 2) * fs * .6; xx === vx ? c.moveTo(xx, y) : c.lineTo(xx, y); } c.stroke();
+    }
+    // bubbles
+    const bot = vy + vh - fs;
+    for (const b of bubbles) {
+      const ph = (time * b.v + b.p) % 1, bx = vx + vw * (.12 + .76 * b.x) + Math.sin(time * 2 + b.p * 9) * 3, y = bot - ph * (bot - level);
+      if (y < surf(bx) + 4) continue;
+      c.beginPath(); c.arc(bx, y, b.r, 0, TAU); c.strokeStyle = 'rgba(230,255,255,.45)'; c.lineWidth = 1; c.stroke();
+      c.beginPath(); c.arc(bx - b.r * .35, y - b.r * .35, b.r * .3, 0, TAU); c.fillStyle = 'rgba(255,255,255,.6)'; c.fill();
+    }
+
+    // DNA positions now
+    const A = P[k], Bq = P[k + 1];
+    for (let i = 0; i < N; i++) {
+      const o = i * 4, s = i / (N - 1);
+      const ux = lerp(A[o], Bq[o], f), uy = lerp(A[o + 1], Bq[o + 1], f), ox = lerp(A[o + 2], Bq[o + 2], f), oy = lerp(A[o + 3], Bq[o + 3], f);
+      const jx = amp * Math.sin(time * 1.7 + s * 9 + 1.3) + amp * .6 * fl * Math.sin(time * 3.1 + s * 41);
+      const jy = amp * Math.cos(time * 1.3 + s * 7) + amp * .6 * fl * Math.cos(time * 2.7 + s * 37);
+      XY[i * 2] = cx + (ux * bw / 2 + ox * U) * sc + jx; XY[i * 2 + 1] = cy + (uy * bh / 2 + oy * U) * sc + jy;
+    }
+    for (let b = 0; b < M; b++) {
+      const s = (b + .5) / M, P0 = BC[k][b], P1 = BC[k + 1][b];
+      BXY[b * 2] = cx + lerp(P0[0], P1[0], f) * bw / 2 * sc + amp * Math.sin(time * 1.7 + s * 9 + 1.3);
+      BXY[b * 2 + 1] = cy + lerp(P0[1], P1[1], f) * bh / 2 * sc + amp * Math.cos(time * 1.3 + s * 7);
+    }
+    const ha = sm(2.2, 3, tv), body = sm(2.45, 3, tv);
+    // the chromosome's glow
+    if (ha > 0) {
+      for (const cl of CL) {
+        c.beginPath();
+        cl.forEach(([ux, uy], i) => { const X = cx + ux * bw / 2 * sc, Y = cy + uy * bh / 2 * sc; i ? c.lineTo(X, Y) : c.moveTo(X, Y); });
+        c.lineCap = 'round'; c.lineJoin = 'round';
+        c.lineWidth = U * .55 * (.85 + .15 * fx.pop); c.strokeStyle = `rgba(255,110,165,${.09 * ha})`; c.stroke();
+        c.lineWidth = U * .4; c.strokeStyle = `rgba(255,150,190,${.12 * ha})`; c.stroke();
+      }
+    }
+    // histone beads (they melt into the chromatid body at the end)
+    const ba = sm(.1, 1, tv) * (1 - .85 * body);
+    if (ba > 0) {
+      const br = lerp(BR[k], BR[k + 1], f) * U * sc * (k === 0 ? f : 1);
+      for (let b = 0; b < M; b++) {
+        const bx = BXY[b * 2], by = BXY[b * 2 + 1];
+        if (br < .5) continue;
+        const g = c.createRadialGradient(bx - br * .35, by - br * .4, br * .1, bx, by, br);
+        g.addColorStop(0, `rgba(255,225,236,${ba})`); g.addColorStop(.45, `rgba(255,110,160,${ba * .95})`); g.addColorStop(1, `rgba(140,30,80,${ba * .9})`);
+        c.beginPath(); c.arc(bx, by, br, 0, TAU); c.fillStyle = g; c.fill();
+      }
+    }
+    // the sister chromatids: glossy, banded, pinched at the centromere
+    if (body > 0) {
+      const pop = .9 + .1 * fx.pop;
+      for (const cl of CL) {
+        const pts = cl.map(([ux, uy, b]) => {
+          const s = (b + .5) / M;
+          return [cx + ux * bw / 2 * sc + amp * Math.sin(time * 1.7 + s * 9 + 1.3), cy + uy * bh / 2 * sc + amp * Math.cos(time * 1.3 + s * 7)];
+        });
+        const hw = cl.map(([, uy]) => U * .15 * pop * sc * (1 - .38 * Math.exp(-Math.pow(uy / .13, 2))) * (1 - .18 * Math.pow(Math.abs(uy) / .86, 4)));
+        const mx = pts.reduce((a, p) => a + p[0], 0) / pts.length, side = cl[0][0] < 0 ? -1 : 1;
+        c.save(); c.globalAlpha = aV * body;
+        const {nx, ny} = tube(c, pts, hw);
+        const bg = c.createLinearGradient(mx - U * .45, 0, mx + U * .45, 0);
+        bg.addColorStop(0, '#ffb3cd'); bg.addColorStop(.4, '#f06396'); bg.addColorStop(1, '#7c1f4c');
+        c.fillStyle = bg; c.fill();
+        c.save(); c.clip();
+        for (const [y0, t] of BANDS) {
+          const Y = cy + y0 * bh / 2 * sc, h = t * bh / 2 * sc;
+          c.fillStyle = 'rgba(70,6,38,.55)'; c.fillRect(mx - U, Y - h / 2, U * 2, h);
+          c.fillStyle = 'rgba(255,220,235,.16)'; c.fillRect(mx - U, Y + h / 2, U * 2, Math.max(1, h * .25));
+        }
+        // inner shade for roundness
+        const rg = c.createLinearGradient(mx - U * .2, 0, mx + U * .2, 0);
+        rg.addColorStop(0, 'rgba(255,255,255,.0)'); rg.addColorStop(.75, 'rgba(40,0,25,0)'); rg.addColorStop(1, 'rgba(40,0,25,.35)');
+        c.fillStyle = rg; c.fillRect(mx - U, cy - bh, U * 2, bh * 2);
+        c.restore();
+        c.strokeStyle = 'rgba(255,205,225,.55)'; c.lineWidth = 1; c.stroke();
+        // specular streak
+        c.beginPath();
+        for (let i = 2; i < pts.length - 2; i++) {
+          if (Math.abs(cl[i][1]) < .16) { c.stroke(); c.beginPath(); continue; }
+          const X = pts[i][0] + nx[i] * hw[i] * .5 * (side < 0 ? 1 : 1), Y = pts[i][1] + ny[i] * hw[i] * .5;
+          c.lineTo(X - hw[i] * .15, Y);
+        }
+        c.strokeStyle = 'rgba(255,255,255,.4)'; c.lineWidth = Math.max(1.2, U * .025); c.lineCap = 'round'; c.stroke();
+        c.restore();
+      }
+      // centromere knot
+      const ky = cy, kr = U * .06 * sc;
+      const kg = c.createRadialGradient(cx - kr * .3, ky - kr * .3, kr * .1, cx, ky, kr * 1.4);
+      kg.addColorStop(0, `rgba(255,236,200,${body})`); kg.addColorStop(1, `rgba(255,170,90,0)`);
+      c.beginPath(); c.arc(cx, ky, kr * 1.4, 0, TAU); c.fillStyle = kg; c.fill();
+    }
+    // the thread
+    const cnt = Math.floor(N * sm(.25, 1, B)), cut0 = Math.floor(31.85 / M * N), cut1 = Math.ceil(32.15 / M * N), split = tv > 2.5;
+    const path = () => {
+      c.beginPath(); let pen = false;
+      for (let i = 0; i < cnt; i++) {
+        if (split && i > cut0 && i < cut1) { pen = false; continue; }
+        pen ? c.lineTo(XY[i * 2], XY[i * 2 + 1]) : c.moveTo(XY[i * 2], XY[i * 2 + 1]); pen = true;
+      }
+    };
+    path(); c.lineCap = 'round'; c.lineJoin = 'round';
+    c.lineWidth = Math.max(4, U * .06); c.strokeStyle = `rgba(255,200,97,${.18 * (1 - .7 * body)})`; c.stroke();
+    c.lineWidth = lerp(2.2, 1.2, tv / 3); c.strokeStyle = `rgba(255,210,122,${1 - .55 * body})`; c.stroke();
+    // the reveal's ring of light
+    if (fx.flash > 0 && fx.flash < 1) {
+      c.beginPath(); c.arc(cx, cy, lerp(.1, 1.2, fx.flash) * vh * .5, 0, TAU);
+      c.strokeStyle = `rgba(255,214,140,${(1 - fx.flash) * .85})`; c.lineWidth = 2.5 * (1 - fx.flash) + .5; c.stroke();
+    }
+    c.restore();
+
+    // the glass, front: highlights, ticks, rim, outline
+    const by0 = vy + vh - vw / 2, hx = vx + vw * .1, hTop = full + fs * .4;
+    const hg = c.createLinearGradient(hx, 0, hx + vw * .08, 0);
+    hg.addColorStop(0, 'rgba(255,255,255,0)'); hg.addColorStop(.45, 'rgba(255,255,255,.26)'); hg.addColorStop(1, 'rgba(255,255,255,0)');
+    if (by0 > hTop) { c.fillStyle = hg; c.fillRect(hx, hTop, vw * .08, by0 - hTop); }
+    c.fillStyle = 'rgba(255,255,255,.18)'; if (by0 > hTop) c.fillRect(vx + vw * .86, hTop, 2, (by0 - hTop) * .8);
+    c.beginPath(); c.arc(vx + vw / 2, by0, vw / 2 - 5, Math.PI * .62, Math.PI * .86); c.strokeStyle = 'rgba(255,255,255,.3)'; c.lineWidth = 2.5; c.stroke();
+    c.strokeStyle = 'rgba(225,248,255,.38)'; c.lineWidth = 1.2;
+    for (let j = 0; j <= 10; j++) { const y = lerp(full, by0, j / 10), len = j % 5 ? vw * .05 : vw * .1; c.beginPath(); c.moveTo(vx + vw - 2, y); c.lineTo(vx + vw - 2 - len, y); c.stroke(); }
+    vial(c, 0); c.strokeStyle = 'rgba(225,248,255,.62)'; c.lineWidth = 1.8; c.stroke();
+    c.beginPath(); c.ellipse(cx, vy, vw / 2 + 3, fs * .32, 0, 0, TAU); c.fillStyle = 'rgba(255,255,255,.05)'; c.fill(); c.strokeStyle = 'rgba(225,248,255,.7)'; c.lineWidth = 2; c.stroke();
+    // refraction sweep
+    if (fx.sweep > -.3 && fx.sweep < 1.3) {
+      c.save(); vial(c, 0); c.clip();
+      const sg = c.createLinearGradient(vx, vy, vx + vw, vy + vh), s0 = fx.sweep;
+      const st = (p, col) => { if (p >= 0 && p <= 1) sg.addColorStop(p, col); };
+      sg.addColorStop(0, 'rgba(255,255,255,0)'); st(s0 - .07, 'rgba(255,255,255,0)'); st(s0, 'rgba(255,255,255,.32)'); st(s0 + .07, 'rgba(255,255,255,0)'); sg.addColorStop(1, 'rgba(255,255,255,0)');
+      c.fillStyle = sg; c.fillRect(vx, vy, vw, vh); c.restore();
+    }
+    // the etched caption
+    const ci = Math.round(tv), ca = Math.max(0, 1 - Math.abs(tv - ci) * 2.2);
+    c.font = `700 ${fs}px ${MONO}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = `rgba(232,247,250,${.9 * ca})`; c.fillText(CAP[ci], cx, vy + (full - vy) * .55);
+    c.restore();
+
+    // the dial: a glass tube that fills as the DNA folds
+    const {th, ty, tx0, tx1} = G, kx = lerp(tx0, tx1, tv / 3);
+    capsule(c, tx0 - th / 2, ty - th / 2, tx1 - tx0 + th, th);
+    c.fillStyle = 'rgba(190,235,255,.08)'; c.fill(); c.strokeStyle = 'rgba(225,248,255,.5)'; c.lineWidth = 1.4; c.stroke();
+    c.save(); capsule(c, tx0 - th / 2 + 2, ty - th / 2 + 2, tx1 - tx0 + th - 4, th - 4); c.clip();
+    const lg = c.createLinearGradient(tx0, 0, tx1, 0); lg.addColorStop(0, 'rgba(255,200,97,.55)'); lg.addColorStop(1, 'rgba(255,110,160,.75)');
+    c.beginPath(); c.moveTo(tx0 - th, ty - th);
+    for (let y = ty - th / 2; y <= ty + th / 2; y += 2) c.lineTo(kx + Math.sin(y * .5 + time * 5) * 1.5, y);
+    c.lineTo(tx0 - th, ty + th); c.closePath(); c.fillStyle = lg; c.fill();
+    c.fillStyle = 'rgba(255,255,255,.25)'; c.fillRect(tx0 - th / 2, ty - th * .32, tx1 - tx0 + th, th * .14);
+    c.restore();
+    c.textBaseline = 'alphabetic';
+    for (let j = 0; j < 4; j++) {
+      const tx = lerp(tx0, tx1, j / 3), on = j === ci;
+      c.beginPath(); c.arc(tx, ty, th * .14, 0, TAU); c.fillStyle = 'rgba(232,247,250,.7)'; c.fill();
+      c.font = `${on ? 800 : 600} ${fs}px ${MONO}`;
+      const w = c.measureText(TICK[j]).width, lx = Math.max(2 + w / 2, Math.min(W - 2 - w / 2, tx));
+      c.fillStyle = on ? INK : 'rgba(232,247,250,.55)'; c.textAlign = 'center'; c.fillText(TICK[j], lx, ty + th / 2 + fs * 1.3);
+    }
+    const kr = th * .85;
+    if (!touched && !Kit.calm) { const ph = (time * 1.1) % 1; c.beginPath(); c.arc(kx, ty, kr * (1.1 + ph * .9), 0, TAU); c.strokeStyle = `rgba(255,214,140,${.7 * (1 - ph)})`; c.lineWidth = 2; c.stroke(); }
+    const kg = c.createRadialGradient(kx - kr * .35, ty - kr * .4, kr * .1, kx, ty, kr);
+    kg.addColorStop(0, '#fff6e2'); kg.addColorStop(.5, '#ffc861'); kg.addColorStop(1, '#b7701e');
+    c.beginPath(); c.arc(kx, ty, kr, 0, TAU); c.fillStyle = kg; c.fill(); c.strokeStyle = 'rgba(255,255,255,.7)'; c.lineWidth = 1.2; c.stroke();
+  }
+
+  // ---------- the loop: liquid breathes, thread drifts ----------
+  function frame(now) {
+    const dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+    if (!Kit.calm) time += dt;
+    S.tv = Kit.calm ? S.t : S.tv + (S.t - S.tv) * Math.min(1, dt * 11);
+    stir *= Math.pow(.3, dt);
+    slV += (-slA * 42 - slV * 3.2) * dt; slA += slV * dt;
+    const st = Math.round(Math.max(0, Math.min(3, S.tv)));
+    if (st !== stageShown) { stageShown = st; Kit.haptic('selection'); if (!revealed && st < 3) say.innerHTML = SAY[st]; }
+    if (!revealed && S.tv > 2.94) reveal();
+    draw();
+    requestAnimationFrame(frame);
+  }
+  function start() { if (!running) { running = true; requestAnimationFrame(frame); } }
+
+  function reveal() {
+    revealed = true; Kit.haptic('success');
+    say.innerHTML = WHY; card.classList.add('answered'); Kit.show('keep');
+    requestAnimationFrame(() => layout());
+    if (Kit.calm || typeof gsap === 'undefined') { fx.pop = 1; return; }
+    slV += .7;
+    gsap.timeline()
+      .fromTo(fx, {pop: 0}, {pop: 1, duration: 1.5, ease: 'elastic.out(1,.4)'}, 0)
+      .fromTo(fx, {flash: 0}, {flash: 1, duration: 1.2, ease: 'expo.out'}, 0)
+      .fromTo(fx, {sweep: -.3}, {sweep: 1.3, duration: 1.3, ease: 'power2.inOut'}, .12);
+  }
+
+  // ---------- touch: stir the glass, or drag the dial ----------
+  let mode = null, lx = 0, ly = 0;
+  const pt = e => { const r = cv.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
+  const setT = px => { S.t = Math.max(0, Math.min(3, (px - G.tx0) / (G.tx1 - G.tx0) * 3)); };
+  cv.addEventListener('pointerdown', e => {
+    if (!G) return; const p = pt(e); cv.setPointerCapture(e.pointerId); lx = p.x; ly = p.y;
+    mode = p.y > G.ty - G.th * 1.8 ? 'scrub' : 'stir';
+    if (mode === 'scrub') { touched = true; if (typeof gsap !== 'undefined') gsap.killTweensOf(S); setT(p.x); Kit.haptic('light'); }
+    else { stir = Math.min(1, stir + .3); slV += (p.x < G.cx ? 1 : -1) * .5; Kit.haptic('light'); }
+  });
+  cv.addEventListener('pointermove', e => {
+    if (!mode) return; const p = pt(e);
+    if (mode === 'scrub') setT(p.x);
+    else { const dx = p.x - lx, dy = p.y - ly; stir = Math.min(1, stir + Math.hypot(dx, dy) / W * 1.4); slV += dx / W * 3; }
+    lx = p.x; ly = p.y;
+  });
+  const up = () => {
+    if (mode === 'scrub') { const to = Math.round(S.t); if (Kit.calm || typeof gsap === 'undefined') S.t = to; else gsap.to(S, {t: to, duration: .45, ease: 'power3.out'}); }
+    mode = null;
+  };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+  Kit.onShow.card = () => { layout(); start(); };
+  Kit.onEnter.card = () => {
+    start();
+    if (!Kit.calm && typeof gsap !== 'undefined') gsap.fromTo(fx, {build: 0}, {build: 1, duration: 2.2, ease: 'power3.inOut'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start(); touched = true; fx.build = 1;
+    S.t = 3; if (Kit.calm) S.tv = 3;
+    await wait(Kit.calm ? 80 : 900);
+    if (!revealed) { S.tv = 3; reveal(); }
+    await wait(Kit.calm ? 80 : 1500);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-dna-spooled-tight",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does DNA fit into a chromosome without tangling?",
+  "answer": "DNA is never stuffed in loose. It wraps around histone proteins like thread on a spool, then folds, and folds again. A strand about 2 nm wide ends up packed into a chromosome without tangling.",
+  "move": "DNA is never stuffed in loose: it spools on histones, then folds, and folds again.",
+  "keywords": [
+    "dna",
+    "chromosome",
+    "histone",
+    "nucleosome"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled DNA, spooled tight, asking how DNA fits into a chromosome without tangling. It shows a wiggly 2 nm thread, with an instruction to stir the glass, then drag the bead along the tube.",
+    "ground": "#0c2630"
+  },
+  "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=18s",
+  "written": "2026-11-04"
+}

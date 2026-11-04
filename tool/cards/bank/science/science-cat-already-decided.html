@@ -1,0 +1,485 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-cat-already-decided -->
+<!-- Look: a night-lit stained-glass window. A glass box holds an atom, a detector and a cat; a mosaic road rises from it to a rose window, then forks to two round windows.
+     Interaction: tap the atom, the detector, then the air. Each one takes on both states, the tiles light one by one up both branches, and "you" split into two identical travellers.
+     Wow: tap a window. Its shutters burst open on a cat that was already alive (or dead), and the other branch opens too, still lit, now holding someone who is no longer you. -->
+<title>Schrödinger's cat, already decided</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;-webkit-tap-highlight-color:transparent;user-select:none}
+#pic [data-hot]{cursor:pointer}
+.say b{color:#f6c453}
+.keep b{color:#f6c453}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap the picture · many worlds" style="--c:#121729;--k:#f6eedb;--edge:#080b16">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MANY WORLDS</span></div>
+    <h2 class="q">Before you open the box, is the cat already alive or dead?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A stained-glass window: a glass box with an atom, a detector and a cat; a mosaic road rises from it, forks at a rose window, and leads to two round shuttered windows."></svg>
+    </div>
+    <p class="say" id="say">Inside the box: an atom, a detector, a cat. <b>Tap the atom.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Opening the box doesn't make the outcome. It shows you which branch you're in.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
+  const LEAD = '#070914', CREAM = '#f6eedb', GOLD = '#f6c453', JADE = '#3fd7a4', RUBY = '#f0507f', GROUND = '#121729';
+  const PAL = {
+    trunk: ['#f2b134', '#e8893a', '#f6d06b', '#d9792b', '#ffd98a'],
+    L: ['#2fbf8f', '#4fd1c5', '#7fdc7a', '#1f9e7a', '#a6f0c6'],
+    R: ['#e0457b', '#b5179e', '#ff6b81', '#9d1c4f', '#f08aa8'],
+    rose: ['#f6d06b', '#fff3cf', '#4fd1c5', '#e0457b', '#f2b134', '#7fdc7a']
+  };
+  const S = {walk: 0, oL: 0, oR: 0, dim: 0, atom: 0, det: 0};
+  const glow = {trunk: 0, rose: 0, L: 0, R: 0};
+  let step = 0, mine = null, W = 0, H = 0, fs = 13, m = 0, lw = 1.6;
+  let g = {}, geo = {}, tiles = [], mols = [], motes = [], chips = {}, glowEls = {}, sheens = {};
+  const rnd = Kit.rnd, mk = (t, a, p) => Kit.mk(t, a, p);
+  const D = x => Kit.calm ? 0 : x;
+  const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+  const pick = a => a[Math.floor(rnd() * a.length)];
+  const polar = (c, r, a) => [c[0] + Math.cos(a) * r, c[1] + Math.sin(a) * r];
+  const P = p => p[0].toFixed(1) + ',' + p[1].toFixed(1);
+  const other = () => mine === 'L' ? 'R' : 'L';
+  const vis = (el, op) => { el.setAttribute('opacity', (+op).toFixed(2)); el.setAttribute('visibility', op > .01 ? 'visible' : 'hidden'); };
+
+  function addTile(d, cy, key, pal, o, layer, lead) {
+    const el = mk('path', {d, fill: pick(pal)}, layer);
+    lead.d += d;
+    tiles.push({el, key, o, cy, ph: rnd() * 6.28, lit: 0, in: 1});
+  }
+  function wedge(c, r0, r1, a0, a1) {
+    const p0 = polar(c, r1, a0), p1 = polar(c, r1, a1), p2 = polar(c, r0, a1), p3 = polar(c, r0, a0);
+    return `M${P(p0)}A${r1},${r1} 0 0 1 ${P(p1)}L${P(p2)}A${r0},${r0} 0 0 0 ${P(p3)}Z`;
+  }
+
+  // A mosaic road from A to B: a grid of jittered glass pieces, some cut in two.
+  function seg(A, B, wd, key, layer, lead) {
+    const dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len, nx = -uy, ny = ux;
+    const C = 3, R = Math.max(3, Math.round(len / (wd * .42))), G = [];
+    for (let k = 0; k <= R; k++) {
+      G.push([]);
+      for (let j = 0; j <= C; j++) {
+        let a = k / R * len, b = (j / C - .5) * wd;
+        if (k > 0 && k < R && j > 0 && j < C) { a += (rnd() - .5) * len / R * .55; b += (rnd() - .5) * wd / C * .5; }
+        G[k].push([A[0] + ux * a + nx * b, A[1] + uy * a + ny * b]);
+      }
+    }
+    for (let k = 0; k < R; k++) for (let j = 0; j < C; j++) {
+      const q = [G[k][j], G[k + 1][j], G[k + 1][j + 1], G[k][j + 1]], o = (k + .5) / R;
+      const polys = rnd() < .5 ? (rnd() < .5 ? [[q[0], q[1], q[2]], [q[0], q[2], q[3]]] : [[q[0], q[1], q[3]], [q[1], q[2], q[3]]]) : [q];
+      polys.forEach(pp => addTile('M' + pp.map(P).join('L') + 'Z', pp.reduce((s, p) => s + p[1], 0) / pp.length, key, PAL[key], o, layer, lead));
+    }
+    const h = wd / 2;
+    return [[A[0] + nx * h, A[1] + ny * h], [B[0] + nx * h, B[1] + ny * h], [B[0] - nx * h, B[1] - ny * h], [A[0] - nx * h, A[1] - ny * h]];
+  }
+
+  function chip(parent, col) {
+    const gC = mk('g', {opacity: 0, visibility: 'hidden', 'pointer-events': 'none'}, parent), fz = Math.max(12, fs * .86);
+    const r = mk('rect', {rx: fs * .72, height: fs * 1.5, y: -fs * .75, fill: LEAD, stroke: col, 'stroke-width': 1.4}, gC);
+    const tx = mk('text', {'text-anchor': 'middle', y: fz * .36, fill: CREAM, 'font-size': fz, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.08em'}, gC);
+    const c = {g: gC, w: 0, s: ''};
+    c.set = s => {
+      if (s === c.s) return; c.s = s; tx.textContent = s;
+      c.w = (tx.getComputedTextLength() || s.length * fz * .62) + fs * 1.2;
+      r.setAttribute('x', -c.w / 2); r.setAttribute('width', c.w);
+    };
+    return c;
+  }
+
+  function fig(parent) {
+    const th = geo.th, gf = mk('g', {}, parent);
+    mk('ellipse', {cx: 0, cy: 0, rx: th * .28, ry: th * .07, fill: LEAD, opacity: .6}, gf);
+    mk('path', {d: `M${-th * .22},0 L${-th * .17},${-th * .5} Q0,${-th * .66} ${th * .17},${-th * .5} L${th * .22},0 Z`, fill: CREAM, stroke: LEAD, 'stroke-width': lw * 1.3, 'stroke-linejoin': 'round'}, gf);
+    mk('path', {d: `M0,${-th * .58} V${-th * .04} M${-th * .19},${-th * .26} H${th * .19}`, stroke: LEAD, 'stroke-width': lw * .8, fill: 'none'}, gf);
+    mk('circle', {cx: 0, cy: -th * .78, r: th * .15, fill: CREAM, stroke: LEAD, 'stroke-width': lw * 1.3}, gf);
+    return gf;
+  }
+
+  function windowAt(c, k) {
+    const [cx, cy] = c, wr = geo.wr, ri = wr * .76;
+    const gw = mk('g', {'data-hot': 'win' + k}, g.win);
+    const rays = mk('g', {opacity: 0, 'pointer-events': 'none'}, gw);
+    for (let i = 0; i < 18; i++) {
+      const a = i / 18 * Math.PI * 2, p0 = polar(c, wr * 1.1, a), p1 = polar(c, wr * (i % 2 ? 1.5 : 1.85), a);
+      mk('line', {x1: p0[0], y1: p0[1], x2: p1[0], y2: p1[1], stroke: k === 'L' ? '#c8ffe4' : '#ffd0dc', 'stroke-width': lw * 1.5, 'stroke-linecap': 'round'}, rays);
+    }
+    mk('circle', {cx, cy, r: wr, fill: GROUND}, gw);
+    const lead = {d: ''};
+    for (let i = 0; i < 12; i++) {
+      const a0 = -Math.PI / 2 + i / 12 * Math.PI * 2, a1 = a0 + Math.PI * 2 / 12;
+      addTile(wedge(c, ri, wr * .97, a0, a1), cy, k, PAL[k], 1.02 + i / 12 * .35, gw, lead);
+    }
+    mk('path', {d: lead.d, fill: 'none', stroke: LEAD, 'stroke-width': lw * 1.5, 'stroke-linejoin': 'round'}, gw);
+    mk('circle', {cx, cy, r: wr, fill: 'none', stroke: LEAD, 'stroke-width': lw * 2.6}, gw);
+    const inner = mk('g', {}, gw);
+    mk('circle', {cx, cy, r: ri, fill: `url(#gw${k})`, stroke: LEAD, 'stroke-width': lw * 1.8}, inner);
+    const cat = mk('g', {transform: `translate(${cx},${cy}) scale(${ri * .74})`, fill: LEAD}, inner);
+    let tail = null;
+    if (k === 'L') {
+      mk('path', {d: 'M-.36,.62 C-.44,.12 -.24,-.18 0,-.18 C.24,-.18 .44,.12 .36,.62 Z'}, cat);
+      mk('circle', {cx: 0, cy: -.4, r: .27}, cat);
+      mk('path', {d: 'M-.25,-.5 L-.21,-.8 L-.05,-.64 Z M.25,-.5 L.21,-.8 L.05,-.64 Z'}, cat);
+      tail = mk('path', {d: 'M.3,.58 C.68,.62 .74,.2 .52,.06', fill: 'none', stroke: LEAD, 'stroke-width': .1, 'stroke-linecap': 'round'}, cat);
+      mk('circle', {cx: -.1, cy: -.42, r: .055, fill: '#e4fff1'}, cat);
+      mk('circle', {cx: .1, cy: -.42, r: .055, fill: '#e4fff1'}, cat);
+    } else {
+      mk('ellipse', {cx: .08, cy: .36, rx: .5, ry: .2}, cat);
+      mk('circle', {cx: -.5, cy: .28, r: .21}, cat);
+      mk('path', {d: 'M-.64,.16 L-.74,-.06 L-.54,.1 Z M-.44,.1 L-.38,-.12 L-.32,.12 Z'}, cat);
+      mk('path', {d: 'M-.15,.5 L-.2,.7 M.1,.54 L.08,.72 M.32,.5 L.36,.68 M.56,.34 C.72,.34 .78,.4 .86,.38', fill: 'none', stroke: LEAD, 'stroke-width': .08, 'stroke-linecap': 'round'}, cat);
+      mk('path', {d: 'M-.62,.21 L-.5,.33 M-.5,.21 L-.62,.33', fill: 'none', stroke: '#ffe3ea', 'stroke-width': .05, 'stroke-linecap': 'round'}, cat);
+    }
+    const flare = mk('circle', {cx, cy, r: ri, fill: '#fffbe8', opacity: 0, 'pointer-events': 'none'}, inner);
+    const sh = [];
+    for (const side of [-1, 1]) {
+      const gs = mk('g', {}, inner), sw = side < 0 ? 0 : 1;
+      mk('path', {d: `M${cx},${cy - ri} A${ri},${ri} 0 0 ${sw} ${cx},${cy + ri} Z`, fill: 'url(#gSh)', stroke: LEAD, 'stroke-width': lw * 1.3}, gs);
+      mk('path', {d: `M${cx},${cy - ri * .2} L${cx + side * ri * .7},${cy - ri * .7} M${cx},${cy + ri * .3} L${cx + side * ri * .8},${cy + ri * .55}`, stroke: LEAD, 'stroke-width': lw * .9, fill: 'none'}, gs);
+      sh.push({el: gs, hx: cx + side * ri});
+    }
+    const qm = mk('text', {x: cx, y: cy + ri * .3, 'text-anchor': 'middle', fill: CREAM, 'font-size': ri * .95, style: 'font-family:var(--hand)', 'pointer-events': 'none'}, inner);
+    qm.textContent = '?';
+    const ch = chip(g.chips, k === 'L' ? JADE : RUBY);
+    ch.set(k === 'L' ? 'ALIVE' : 'DEAD');
+    ch.g.setAttribute('transform', `translate(${cx},${cy - wr - fs * .95})`);
+    g['w' + k] = {gw, rays, sh, qm, flare, ch, inner, c, tail};
+  }
+
+  function layout() {
+    gsap.killTweensOf('#pic *');
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; m = Math.min(W, H);
+    fs = Math.max(12, Math.min(14, W / 28));
+    lw = Math.max(1.3, m * .0055);
+    tiles = []; mols = []; motes = [];
+
+    const w = Math.max(24, Math.min(50, m * .13));
+    const bw = Math.min(W * .66, 300), lbl = fs * 1.6;
+    const bh = Math.max(fs * 4.4, Math.min(bw * .46, H * .2));
+    const bx = (W - bw) / 2, by = H - bh - fs * .5, d = bh * .2;
+    const wr = Math.max(26, Math.min(W * .15, H * .105));
+    const WL = [Math.max(wr + 6, W * .2), fs * 2.4 + wr], WR = [W - WL[0], WL[1]];
+    const rr = Math.max(w * .8, m * .075);
+    const F = [W / 2, WL[1] + wr + (by - d - (WL[1] + wr)) * .48];
+    const A = [W / 2, by - d * .4];
+    const th = Math.max(22, Math.min(40, w * .95));
+    geo = {w, bw, bh, bx, by, d, wr, WL, WR, F, rr, A, th, lbl};
+    geo.T0 = lerp(A, [F[0], F[1] + rr], .5);
+    geo.SL = lerp(F, WL, .4); geo.SR = lerp(F, WR, .4);
+
+    const defs = mk('defs', {}, svg);
+    defs.innerHTML = `
+      <radialGradient id="gwL" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#d8ffea"/><stop offset=".45" stop-color="#2fbf8f"/><stop offset="1" stop-color="#0b3b30"/></radialGradient>
+      <radialGradient id="gwR" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#ffd6e0"/><stop offset=".45" stop-color="#d23a6c"/><stop offset="1" stop-color="#3a0a20"/></radialGradient>
+      <linearGradient id="gSh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#36407a"/><stop offset="1" stop-color="#141935"/></linearGradient>
+      <linearGradient id="gBox" x1="0" y1="0" x2=".6" y2="1"><stop offset="0" stop-color="#5b8ff0"/><stop offset=".6" stop-color="#2d5bd1"/><stop offset="1" stop-color="#1a347e"/></linearGradient>
+      <linearGradient id="gSheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <filter id="blur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${(w * .45).toFixed(1)}"/></filter>`;
+
+    for (const k of ['motes', 'glow', 'road', 'roadLead', 'rose', 'win', 'hit', 'box', 'mols', 'fx', 'figs', 'chips', 'pulse']) g[k] = mk('g', {}, svg);
+    for (const k of ['pulse', 'mols', 'fx', 'motes', 'chips']) g[k].setAttribute('pointer-events', 'none');
+
+    // Dust in the light.
+    for (let i = 0; i < 22; i++) motes.push({el: mk('circle', {r: .7 + rnd() * 1.3, fill: CREAM}, g.motes), x: rnd() * W, y: rnd() * H * .8, sp: 4 + rnd() * 8, ph: rnd() * 6});
+
+    // The roads: a trunk up from the box, two branches out of the rose.
+    const lead = {d: ''}, outlines = {};
+    const rIn = Math.sqrt(Math.max(1, rr * rr - (w * .5) ** 2)) * .98;
+    outlines.trunk = seg(A, [F[0], F[1] + rIn], w, 'trunk', g.road, lead);
+    for (const k of ['L', 'R']) {
+      const Wc = k === 'L' ? WL : WR, dx = Wc[0] - F[0], dy = Wc[1] - F[1], len = Math.hypot(dx, dy), u = [dx / len, dy / len];
+      const bwd = w * .86, eIn = Math.sqrt(Math.max(1, wr * wr - (bwd * .5) ** 2)) * .98;
+      outlines[k] = seg([F[0] + u[0] * rIn * .95, F[1] + u[1] * rIn * .95], [Wc[0] - u[0] * eIn, Wc[1] - u[1] * eIn], bwd, k, g.road, lead);
+    }
+    const col = {trunk: GOLD, L: JADE, R: RUBY};
+    for (const k in outlines) {
+      const d = 'M' + outlines[k].map(P).join('L') + 'Z';
+      glowEls[k] = mk('path', {d, fill: col[k], filter: 'url(#blur)', opacity: 0}, g.glow);
+      sheens[k] = mk('path', {d, fill: 'url(#gSheen)', opacity: 0, 'pointer-events': 'none'}, g.roadLead);
+      mk('path', {d, fill: 'none', stroke: LEAD, 'stroke-width': lw * 2.6, 'stroke-linejoin': 'round'}, g.roadLead);
+    }
+    mk('path', {d: lead.d, fill: 'none', stroke: LEAD, 'stroke-width': lw, 'stroke-linejoin': 'round'}, g.roadLead);
+    g.roadLead.insertBefore(g.roadLead.lastChild, g.roadLead.firstChild);
+
+    // The rose at the fork, where the world splits.
+    glowEls.rose = mk('circle', {cx: F[0], cy: F[1], r: rr * 1.1, fill: '#ffe9a8', filter: 'url(#blur)', opacity: 0}, g.glow);
+    mk('circle', {cx: F[0], cy: F[1], r: rr, fill: GROUND}, g.rose);
+    const rl = {d: ''}, rt = mk('g', {}, g.rose);
+    addTile(`M${F[0] - rr * .24},${F[1]}a${rr * .24},${rr * .24} 0 1 0 ${rr * .48},0a${rr * .24},${rr * .24} 0 1 0 ${-rr * .48},0Z`, F[1], 'rose', ['#fff3cf'], 0, rt, rl);
+    for (let i = 0; i < 6; i++) { const a0 = -Math.PI / 2 + i / 6 * Math.PI * 2; addTile(wedge(F, rr * .24, rr * .54, a0, a0 + Math.PI / 3), F[1], 'rose', PAL.rose, .4, rt, rl); }
+    for (let i = 0; i < 12; i++) { const a0 = -Math.PI / 2 + (i + .5) / 12 * Math.PI * 2; addTile(wedge(F, rr * .54, rr * .97, a0, a0 + Math.PI / 6), F[1], 'rose', i % 2 ? PAL.L : PAL.R, .8, rt, rl); }
+    mk('path', {d: rl.d, fill: 'none', stroke: LEAD, 'stroke-width': lw * 1.3, 'stroke-linejoin': 'round'}, g.rose);
+    mk('circle', {cx: F[0], cy: F[1], r: rr, fill: 'none', stroke: LEAD, 'stroke-width': lw * 2.8}, g.rose);
+    g.flash = mk('circle', {cx: F[0], cy: F[1], r: rr, fill: 'none', stroke: '#fff7d6', 'stroke-width': lw * 2, opacity: 0}, g.fx);
+
+    windowAt(WL, 'L'); windowAt(WR, 'R');
+
+    // The air hit area, behind the box so the box parts catch their own taps.
+    const ecx = W / 2, ecy = by + bh * .55, erx = bw / 2 + fs * 1.6, ery = bh * .55 + d + fs * 1.3;
+    mk('ellipse', {cx: ecx, cy: ecy, rx: erx + fs, ry: ery + fs * .6, fill: '#000', 'fill-opacity': 0, 'data-hot': 'air'}, g.hit);
+
+    // The box: a lid of three panes, three windows of glass, a lead frame.
+    const B = g.box, bl = {d: ''};
+    const top = t => [bx + bw * .07 + bw * .86 * t, by - d], bot = t => [bx + bw * t, by];
+    const lids = ['#1b2d6b', '#24408f', '#1a2a60'];
+    for (let i = 0; i < 3; i++) { const pp = [bot(i / 3), bot((i + 1) / 3), top((i + 1) / 3), top(i / 3)], dd = 'M' + pp.map(P).join('L') + 'Z'; mk('path', {d: dd, fill: lids[i]}, B); bl.d += dd; }
+    mk('path', {d: `M${P(lerp(top(0), top(1), .04))}L${P(lerp(top(0), top(1), .5))}`, stroke: '#9cc0ff', 'stroke-width': lw, opacity: .35, 'stroke-linecap': 'round'}, B);
+    const fr = [.31, .29, .40], keys = ['atom', 'cat', 'det'], names = ['ATOM', 'CAT', 'DETECTOR'];
+    let x = bx; g.pane = {};
+    const ih = bh - lbl, ar = Math.min(bw * .3, ih) * .3;
+    for (let i = 0; i < 3; i++) {
+      const pw = bw * fr[i], pg = mk('g', {'data-hot': keys[i]}, B), cx = x + pw / 2, iy = by + ih * .52;
+      mk('rect', {x, y: by, width: pw, height: ih, fill: 'url(#gBox)'}, pg);
+      // A plain name-plate under each pane: no lead line through the letters.
+      mk('rect', {x, y: by + ih, width: pw, height: lbl, fill: i === 1 ? '#1f3683' : '#182c70'}, pg);
+      mk('path', {d: `M${x + 3},${by + ih + 2.5}H${x + pw - 3}`, stroke: '#7fa6ff', 'stroke-width': 1, opacity: .35}, pg);
+      bl.d += `M${x},${by + ih}H${x + pw}`;
+      mk('path', {d: `M${x + pw * .08},${by + ih * .12} l${pw * .18},0 l${-pw * .1},${ih * .3}z`, fill: '#fff', opacity: .14}, pg);
+      g.pane[keys[i]] = {el: pg, cx, cy: iy};
+      if (keys[i] === 'atom') {
+        g.orb = mk('g', {}, pg);
+        for (const a of [0, 60, 120]) mk('ellipse', {cx, cy: iy, rx: ar, ry: ar * .36, fill: 'none', stroke: CREAM, 'stroke-width': lw * .8, opacity: .75, transform: `rotate(${a} ${cx} ${iy})`}, g.orb);
+        g.nuc = mk('circle', {cx, cy: iy, r: ar * .3, fill: GOLD, stroke: LEAD, 'stroke-width': lw}, pg);
+        g.ghA = mk('circle', {cx, cy: iy, r: ar * .3, fill: JADE, stroke: LEAD, 'stroke-width': lw, opacity: 0}, pg);
+        g.ghR = mk('g', {opacity: 0}, pg);
+        mk('circle', {cx, cy: iy, r: ar * .3, fill: RUBY, stroke: LEAD, 'stroke-width': lw}, g.ghR);
+        mk('circle', {cx: cx + ar * .7, cy: iy - ar * .55, r: ar * .1, fill: '#ffd0dc'}, g.ghR);
+        geo.atomC = [cx, iy]; geo.ar = ar;
+      } else if (keys[i] === 'det') {
+        const gy = iy + ar * .5, r = ar * 1.05;
+        mk('path', {d: `M${cx - r},${gy}A${r},${r} 0 0 1 ${cx + r},${gy}Z`, fill: '#0f1733', stroke: CREAM, 'stroke-width': lw}, pg);
+        for (let t = 0; t < 5; t++) { const a = Math.PI + .3 + t / 4 * (Math.PI - .6), p0 = polar([cx, gy], r * .78, a), p1 = polar([cx, gy], r * .95, a); mk('line', {x1: p0[0], y1: p0[1], x2: p1[0], y2: p1[1], stroke: CREAM, 'stroke-width': lw * .8}, pg); }
+        const needle = (a, c) => { const p = polar([cx, gy], r * .82, a); return mk('line', {x1: cx, y1: gy, x2: p[0], y2: p[1], stroke: c, 'stroke-width': lw * 1.5, 'stroke-linecap': 'round'}, pg); };
+        g.nd = needle(Math.PI + .38, CREAM); g.ndA = needle(Math.PI + .38, JADE); g.ndR = needle(2 * Math.PI - .38, RUBY);
+        g.ndA.setAttribute('opacity', 0); g.ndR.setAttribute('opacity', 0);
+        mk('circle', {cx, cy: gy, r: lw * 1.6, fill: CREAM}, pg);
+        geo.detC = [cx, iy + ar * .2];
+      } else {
+        const q = mk('text', {x: cx, y: iy + ih * .2, 'text-anchor': 'middle', fill: CREAM, 'font-size': ih * .6, style: 'font-family:var(--hand)'}, pg);
+        q.textContent = '?';
+      }
+      const t = mk('text', {x: cx, y: by + ih + lbl * .68, 'text-anchor': 'middle', fill: CREAM, 'font-size': 12, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.06em'}, pg);
+      t.textContent = names[i];
+      if ((t.getComputedTextLength() || 0) > pw - 8) t.setAttribute('style', 'font-family:var(--mono);letter-spacing:0');
+      if (i) bl.d += `M${x},${by}V${by + bh}`;
+      x += pw;
+    }
+    mk('path', {d: bl.d, fill: 'none', stroke: LEAD, 'stroke-width': lw * 1.3}, B);
+    mk('path', {d: `M${bx},${by}H${bx + bw}V${by + bh}H${bx}Z M${P(top(0))}L${P(top(1))}L${bx + bw},${by}M${P(top(0))}L${bx},${by}`, fill: 'none', stroke: LEAD, 'stroke-width': lw * 2.6, 'stroke-linejoin': 'round'}, B);
+    if (bx > fs * 3.4) {
+      const a = mk('text', {x: bx - fs * 1.9, y: by + bh * .62, 'text-anchor': 'end', fill: CREAM, opacity: .8, 'font-size': 12, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.06em'}, g.box);
+      a.textContent = 'AIR';
+    }
+
+    // Air molecules drifting around the box.
+    for (let i = 0; i < 16; i++) {
+      const a = Math.PI - .2 + (i + rnd() * .6) / 16 * (Math.PI + .4);
+      const bx0 = ecx + Math.cos(a) * erx * (.92 + rnd() * .16), by0 = ecy + Math.sin(a) * ery * (.92 + rnd() * .16);
+      mols.push({el: mk('circle', {r: fs * (.16 + rnd() * .14), fill: CREAM, opacity: .8}, g.mols), x: bx0, y: Math.min(by0, H - 4), ph: rnd() * 6.28, sp: .6 + rnd() * .8, amp: fs * (.3 + rnd() * .3)});
+    }
+    geo.airC = [Math.max(fs * 1.6, bx - fs * 1.3), by + bh * .25];
+
+    // You: two travellers, one on top of the other until the world splits.
+    g.figA = fig(g.figs); g.figB = fig(g.figs);
+    chips.A = chip(g.chips, CREAM); chips.B = chip(g.chips, CREAM);
+
+    // Restore whatever the reader has already done.
+    const lit = step >= 2.5 ? 1 : 0;
+    tiles.forEach(T => T.lit = lit);
+    if (step >= 2.5) for (const k in glow) glow[k] = 1;
+    setPulse();
+  }
+
+  function setPulse() {
+    gsap.killTweensOf(g.pulse.querySelectorAll('circle'));
+    g.pulse.innerHTML = '';
+    let pts = [];
+    if (step === 0) pts = [[...geo.atomC, geo.ar * 1.5]];
+    else if (step === 1) pts = [[...geo.detC, geo.ar * 1.5]];
+    else if (step === 2) pts = [[...geo.airC, fs * 1.4]];
+    else if (step === 3) pts = [[...geo.WL, geo.wr * 1.08], [...geo.WR, geo.wr * 1.08]];
+    pts.forEach(([x, y, r], i) => {
+      const c = mk('circle', {cx: x, cy: y, r, fill: 'none', stroke: GOLD, 'stroke-width': lw * 1.8}, g.pulse);
+      if (Kit.calm) c.setAttribute('opacity', .9);
+      else gsap.fromTo(c, {scale: .86, opacity: .95}, {scale: 1.28, opacity: 0, duration: 1.4, repeat: -1, ease: 'power2.out', delay: i * .3, svgOrigin: `${x} ${y}`});
+    });
+  }
+
+  function figPos(w, side) {
+    const {T0, F, SL, SR, th} = geo, p = w <= .4 ? lerp(T0, F, w / .4) : lerp(F, side === 'L' ? SL : SR, (w - .4) / .6);
+    return [p[0], p[1] + th * .32];
+  }
+
+  function render(t) {
+    const oth = mine ? other() : null;
+    for (const T of tiles) {
+      let l = T.lit; if (oth && T.key === oth) l *= 1 - .38 * S.dim;
+      const op = T.in * (.12 + .05 * Math.sin(t * .9 + T.ph) + l * (.72 + .1 * Math.sin(t * 1.7 + T.ph)));
+      T.el.setAttribute('opacity', op.toFixed(3));
+    }
+    for (const k in glowEls) {
+      let v = glow[k]; if (oth && k === oth) v *= 1 - .5 * S.dim;
+      glowEls[k].setAttribute('opacity', (v * (.42 + .1 * Math.sin(t * 1.2 + (k === 'L' ? 1 : k === 'R' ? 2 : 0)))).toFixed(3));
+      if (sheens[k]) sheens[k].setAttribute('opacity', (v * .9).toFixed(3));
+    }
+    for (const M of motes) {
+      const y = ((M.y - t * M.sp) % (H * .85) + H * .85) % (H * .85);
+      M.el.setAttribute('cx', (M.x + Math.sin(t * .4 + M.ph) * 6).toFixed(1)); M.el.setAttribute('cy', y.toFixed(1));
+      M.el.setAttribute('opacity', (.12 + .18 * (.5 + .5 * Math.sin(t * 1.3 + M.ph))).toFixed(2));
+    }
+    for (const M of mols) {
+      M.el.setAttribute('cx', (M.x + Math.sin(t * M.sp + M.ph) * M.amp).toFixed(1));
+      M.el.setAttribute('cy', (M.y + Math.cos(t * M.sp * 1.3 + M.ph) * M.amp * .7).toFixed(1));
+    }
+    const [ax, ay] = geo.atomC, ar = geo.ar;
+    g.orb.setAttribute('transform', `rotate(${(t * 40) % 360} ${ax} ${ay})`);
+    const off = ar * .34 * S.atom * (.75 + .25 * Math.sin(t * 3.2));
+    g.ghA.setAttribute('transform', `translate(${-off},0)`); g.ghA.setAttribute('opacity', (S.atom * .92).toFixed(2));
+    g.ghR.setAttribute('transform', `translate(${off},0)`); g.ghR.setAttribute('opacity', (S.atom * .92).toFixed(2));
+    g.nuc.setAttribute('opacity', (1 - S.atom * .85).toFixed(2));
+    g.nd.setAttribute('opacity', (1 - S.det).toFixed(2));
+    g.ndA.setAttribute('opacity', (S.det * (.75 + .25 * Math.sin(t * 2.6))).toFixed(2));
+    g.ndR.setAttribute('opacity', (S.det * (.75 + .25 * Math.sin(t * 2.6 + 3.14))).toFixed(2));
+
+    const th = geo.th, pA = figPos(S.walk, 'L'), pB = figPos(S.walk, 'R'), bob = Math.sin(t * 2.2) * 1.2;
+    g.figA.setAttribute('transform', `translate(${pA[0].toFixed(1)},${(pA[1] + bob).toFixed(1)})`);
+    g.figB.setAttribute('transform', `translate(${pB[0].toFixed(1)},${(pB[1] - bob).toFixed(1)})`);
+    vis(g.figB, S.walk > .4 ? (mine === 'L' ? 1 - .4 * S.dim : 1) : 0);
+    vis(g.figA, mine === 'R' ? 1 - .4 * S.dim : 1);
+    const cOp = S.walk < .5 ? Math.max(0, 1 - S.walk * 6) : Math.max(0, (S.walk - .85) / .15);
+    for (const [k, c, p, side] of [['A', chips.A, pA, 'L'], ['B', chips.B, pB, 'R']]) {
+      c.set(step >= 4 && mine !== side && S.dim > .5 ? 'NOT YOU' : 'YOU');
+      let cx = S.walk < .5 ? p[0] + th * .42 + c.w / 2 + 4 : side === 'L' ? p[0] - th * .42 - c.w / 2 - 4 : p[0] + th * .42 + c.w / 2 + 4;
+      cx = Math.max(c.w / 2 + 2, Math.min(W - c.w / 2 - 2, cx));
+      c.g.setAttribute('transform', `translate(${cx.toFixed(1)},${(p[1] - th * .62).toFixed(1)})`);
+      vis(c.g, k === 'B' && S.walk < .5 ? 0 : cOp);
+    }
+    for (const k of ['L', 'R']) {
+      const o = S['o' + k], wv = g['w' + k], s = Math.max(.001, 1 - o);
+      wv.sh.forEach(z => z.el.setAttribute('transform', `translate(${z.hx},0) scale(${s.toFixed(3)},1) translate(${-z.hx},0)`));
+      wv.qm.setAttribute('opacity', Math.max(0, 1 - o * 1.6) * (.75 + .25 * Math.sin(t * 1.8 + (k === 'L' ? 0 : 1.5))));
+      vis(wv.ch.g, o);
+      if (wv.tail) wv.tail.setAttribute('transform', `rotate(${(Math.sin(t * 2.4) * 14).toFixed(1)} .32 .58)`);
+    }
+  }
+
+  let t0 = 0, running = false;
+  const frame = now => { if (!t0) t0 = now; render(Kit.calm ? 0 : (now - t0) / 1000); requestAnimationFrame(frame); };
+
+  // ---------- the taps ----------
+  const punch = el => { const b = el.getBBox(); gsap.fromTo(el, {scale: .93}, {scale: 1, duration: D(.5), ease: 'back.out(3)', svgOrigin: `${b.x + b.width / 2} ${b.y + b.height / 2}`}); };
+  function doAtom() {
+    step = 1; Kit.haptic('light'); punch(g.pane.atom.el);
+    gsap.to(S, {atom: 1, duration: D(.7), ease: 'back.out(2)'});
+    say.innerHTML = 'The atom is in two states at once: decayed and not decayed. <b>Tap the detector.</b>';
+    setPulse();
+  }
+  function doDet() {
+    step = 2; Kit.haptic('light'); punch(g.pane.det.el);
+    gsap.to(S, {det: 1, duration: D(.7), ease: 'back.out(2)'});
+    say.innerHTML = 'The detector gets entangled with it: it clicked, and it didn\u2019t. <b>Tap the air in the box.</b>';
+    setPulse();
+  }
+  function doAir() {
+    step = 2.5; Kit.haptic('selection');
+    g.pulse.innerHTML = '';
+    // Every molecule bounces two ways: one for each state of the detector.
+    if (!Kit.calm) mols.forEach(M => {
+      const x = +M.el.getAttribute('cx'), y = +M.el.getAttribute('cy'), r = +M.el.getAttribute('r');
+      [[JADE, -1], [RUBY, 1]].forEach(([c, s]) => {
+        const e = mk('circle', {cx: x, cy: y, r, fill: c}, g.fx);
+        gsap.to(e, {attr: {cx: x + s * fs * (1.5 + rnd() * 1.5), cy: y - fs * (.5 + rnd() * 1.5)}, opacity: 0, duration: 1.1, ease: 'expo.out', onComplete: () => e.remove()});
+      });
+    });
+    const by = k => tiles.filter(T => T.key === k), LR = tiles.filter(T => T.key === 'L' || T.key === 'R');
+    const F = geo.F;
+    const tl = gsap.timeline({onComplete: () => {
+      step = 3; setPulse(); Kit.haptic('success');
+      say.innerHTML = 'Air bounces off differently in each case, so the world splits in two, and so do you. <b>Tap a window to open the box.</b>';
+    }});
+    tl.to(by('trunk'), {lit: 1, duration: D(.5), ease: 'power3.out', delay: (i, T) => D(.15 + T.o * .8)}, 0)
+      .to(glow, {trunk: 1, duration: D(1), ease: 'power2.out'}, D(.2))
+      .to(by('rose'), {lit: 1, duration: D(.5), ease: 'back.out(2)', delay: (i, T) => D(T.o * .35)}, D(.95))
+      .fromTo(g.rose, {scale: .8}, {scale: 1, duration: D(1.1), ease: 'elastic.out(1,.45)', svgOrigin: `${F[0]} ${F[1]}`}, D(.95))
+      .fromTo(g.flash, {opacity: 1, scale: 1}, {opacity: 0, scale: 2.6, duration: D(.9), ease: 'expo.out', svgOrigin: `${F[0]} ${F[1]}`}, D(1.05))
+      .to(glow, {rose: 1, duration: D(.8)}, D(1))
+      .to(LR, {lit: 1, duration: D(.5), ease: 'power3.out', delay: (i, T) => D(T.o * 1.1)}, D(1.3))
+      .to(glow, {L: 1, R: 1, duration: D(1.3), ease: 'power2.out'}, D(1.35))
+      .to(S, {walk: 1, duration: D(1.9), ease: 'power2.inOut'}, D(1.1));
+  }
+  function burst(k, strength) {
+    const wv = g['w' + k], [cx, cy] = wv.c;
+    gsap.fromTo(wv.rays, {opacity: strength, scale: .7}, {opacity: 0, scale: 1.35, duration: D(1.3), ease: 'expo.out', svgOrigin: `${cx} ${cy}`});
+    gsap.fromTo(wv.flare, {opacity: .9 * strength}, {opacity: 0, duration: D(.9), ease: 'power2.out'});
+  }
+  function doOpen(k) {
+    mine = k; step = 4; setPulse(); Kit.haptic('success');
+    const o = other();
+    const tl = gsap.timeline();
+    tl.to(S, {['o' + k]: 1, duration: D(.9), ease: 'expo.out'}, 0)
+      .add(() => burst(k, 1), 0)
+      .to(S, {['o' + o]: 1, duration: D(.9), ease: 'expo.out'}, D(.7))
+      .add(() => burst(o, .55), D(.7))
+      .to(S, {dim: 1, duration: D(.9), ease: 'power2.inOut'}, D(1.2));
+    const cat = k === 'L' ? 'alive' : 'dead', otherCat = k === 'L' ? 'dead' : 'alive';
+    say.innerHTML = `The cat was already ${cat} in your branch, ${otherCat} in the other, before you looked. That outcome happened too, to a copy who is no longer <b>you</b>.`;
+    Kit.show('keep');
+    const keep = Kit.$('keep');
+    if (Kit.calm) gsap.set(keep, {opacity: 1, y: 0});
+    else gsap.fromTo(keep, {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .6, delay: .5, ease: 'power3.out'});
+  }
+
+  svg.addEventListener('click', e => {
+    const h = e.target.closest('[data-hot]'); if (!h) return;
+    const k = h.dataset.hot;
+    if (step === 0 && k === 'atom') return doAtom();
+    if (step === 1 && k === 'det') return doDet();
+    if (step === 2 && ['air', 'atom', 'det', 'cat'].includes(k)) return doAir();
+    if (step === 3 && (k === 'winL' || k === 'winR')) return doOpen(k.slice(3));
+    if (step < 2.5 || step === 3) {
+      Kit.haptic('selection');
+      gsap.fromTo(h, {x: -3}, {x: 0, duration: D(.45), ease: 'elastic.out(1,.3)'});
+    }
+  });
+
+  // Re-compose when the text below grows, so the window always fills its stage.
+  let lastW = 0, lastH = 0, rq = 0;
+  const measure = () => { const r = stage.getBoundingClientRect(); lastW = r.width; lastH = r.height; };
+  if (window.ResizeObserver) new ResizeObserver(() => {
+    if (!running) return;
+    cancelAnimationFrame(rq);
+    rq = requestAnimationFrame(() => {
+      const r = stage.getBoundingClientRect();
+      if (Math.abs(r.width - lastW) > 4 || Math.abs(r.height - lastH) > 4) { measure(); layout(); }
+    });
+  }).observe(stage);
+
+  Kit.onShow.card = () => { layout(); measure(); if (!running) { running = true; requestAnimationFrame(frame); } };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    tiles.forEach(T => T.in = 0);
+    gsap.to(tiles, {in: 1, duration: .6, ease: 'power2.out', delay: (i, T) => .15 + (1 - T.cy / H) * 1.1 + rnd() * .15});
+    gsap.from(g.box, {y: fs * 1.5, opacity: 0, duration: .9, ease: 'back.out(1.6)'});
+    gsap.from(g.mols, {opacity: 0, duration: 1, delay: .4});
+    gsap.from(g.figs, {opacity: 0, y: -fs, duration: .7, delay: .7, ease: 'power3.out'});
+    gsap.from([g.wL.inner, g.wR.inner], {scale: .4, opacity: 0, transformOrigin: '50% 50%', duration: .9, delay: 1.2, stagger: .1, ease: 'back.out(2)'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const tap = k => { const el = svg.querySelector(`[data-hot="${k}"]`); if (el) el.dispatchEvent(new MouseEvent('click', {bubbles: true})); };
+    tap('atom'); await wait(300); tap('det'); await wait(300); tap('air');
+    for (let i = 0; i < 60 && step < 3; i++) await wait(100);
+    tap('winL'); await wait(Kit.calm ? 200 : 2400);
+  };
+})();
+Kit.single();
+</script>
+</html>

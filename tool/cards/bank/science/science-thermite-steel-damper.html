@@ -1,0 +1,441 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-thermite-steel-damper -->
+<!-- Look: a forge at night. Two cutaway clay crucibles sit straight on a soot-black card, each holding about 480 grains of rust and aluminium, with embers drifting through the dark.
+     Interaction: tap the right pot to drop chunks of pure steel into the grains, then ignite both. Heat spreads cell by cell, and the steel soaks it up as it melts.
+     Wow: the pure pot flares white, shakes, smokes and sprays sparks everywhere. The steel pot burns slowly and orange while its chunks glow and melt into droplets.
+     Molten iron pools at the bottom of both. -->
+<title>Taming thermite</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
+#go{align-self:flex-start;font:800 max(2.1cqh,14px)/1.1 var(--body);color:#1a0904;background:linear-gradient(180deg,#ffd27a,#ff7a1a);border:0;border-radius:99px;padding:1.3cqh 5.5cqw;cursor:pointer;box-shadow:0 0 2.4cqh rgba(255,120,30,.45);transition:transform .15s,opacity .2s,filter .2s}
+#go:active{transform:scale(.96)}
+#go:disabled{background:color-mix(in srgb,var(--k) 14%,transparent);color:color-mix(in srgb,var(--k) 70%,transparent);box-shadow:none;cursor:default}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0}
+#why b{color:#ffb35c}
+.say b{color:#ffb35c}
+.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drop steel · race two pots" style="--c:#140c09;--k:#fff1e2;--edge:#000">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RACE TWO POTS</span></div>
+    <h2 class="q">How is the temperature of thermite controlled?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="Two clay crucibles full of thermite grains. The right one can be given pieces of pure steel. Ignited, the pure one burns hot and throws sparks; the one with steel burns slower and cooler as the steel melts."></canvas>
+    </div>
+    <p class="say" id="say"><b>Tap the right pot</b> to drop in pieces of pure steel. Then ignite both.</p>
+    <div id="why" class="gone"><p class="body">The steel doesn't react. It <b>absorbs heat as it melts</b>, so the mix around it stays cooler, burns slower and throws far fewer sparks. That's how thermite can be lit indoors.</p></div>
+    <button id="go" disabled>Drop steel in first</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Steel that melts but doesn't burn soaks up the heat: it sets thermite's rate and temperature.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), go = Kit.$('go'), say = Kit.$('say');
+  // ---- the model: a grid of heat under each pot, grains that ignite and burn faster the hotter it gets,
+  //      and steel chunks that take heat out of their neighbourhood until they have melted.
+  const COLS = 16, ROWS = 12, N = 480, IGN = .12, MELT = .55, K = 1.8, D = 5, LOSS = .9, A = 8, CAP = 40, MAXCH = 8, SPK = .75, HS = 1.8;
+  const halfw = v => .5 * (1 - .32 * v * v);
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const cell = (u, v) => clamp(v * ROWS | 0, 0, ROWS - 1) * COLS + clamp(u * COLS | 0, 0, COLS - 1);
+  const R = Kit.rnd;
+  const MONO = 'ui-monospace, "JetBrains Mono", Menlo, monospace';
+
+  function mkPot(side) {
+    const g = [];
+    while (g.length < N) {
+      const u = R(), v = .2 + R() * .78;
+      if (Math.abs(u - .5) < halfw(v) - .035) g.push({u, v, s: 0, f: 1, c: cell(u, v), al: R() < .42, j: R() * 6.28, d: (1 - v) * .75 + R() * .35});
+    }
+    return {side, g, ch: [], sp: [], dr: [], sm: [], heat: new Float32Array(COLS * ROWS), tmp: new Float32Array(COLS * ROWS),
+      t: 0, lit: false, done: 0, hot: 0, disp: 0, peak: 0, sparks: 0, mx: 0, burnt: 0, pool: 0, poolH: .6};
+  }
+  const pots = [mkPot(0), mkPot(1)];
+  const P = {intro: 0, fuse: -1, revealed: 0};
+  const AMB = Array.from({length: 20}, () => ({x: R(), y: R(), s: .3 + R() * .7, ph: R() * 6.28}));
+  let state = 'load', ctx, W = 0, H = 0, fs = 13, simAcc = 0;
+
+  function ignite(p) { if (p.lit) return; p.lit = true; for (const q of p.g) if (q.s === 0 && q.v < .3 && Math.abs(q.u - .5) < .09) q.s = 1; }
+
+  function step(p, dt) {
+    if (!p.lit || p.done) { stepParticles(p, dt); return; }
+    p.t += dt;
+    const Hh = p.heat, boost = p.t > 14 ? (p.t - 14) * .3 : 0;
+    let burning = 0, fresh = 0, lowFresh = null;
+    for (const q of p.g) {
+      if (q.s === 1) {
+        burning++;
+        const r = Math.min(q.f, (.5 + 1.4 * Hh[q.c]) * dt);
+        q.f -= r; Hh[q.c] += r * K; if (q.f <= 0) { q.s = 2; p.burnt++; }
+      } else if (q.s === 0) {
+        fresh++; if (!lowFresh || q.v < lowFresh.v) lowFresh = q;
+        const h = Hh[q.c]; if (R() < ((h > IGN ? (h - IGN) * 8 : 0) + boost) * dt) q.s = 1;
+      }
+    }
+    // Steel: takes the heat above its melting point from a 5×5 patch around it, until it has all melted.
+    for (const c of p.ch) {
+      if (!c.land || c.m <= 0) continue;
+      const cx = c.c % COLS, cy = c.c / COLS | 0; let took = 0;
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+        const xx = cx + dx, yy = cy + dy; if (xx < 0 || yy < 0 || xx >= COLS || yy >= ROWS) continue;
+        const i = yy * COLS + xx, w = 1 / (1 + dx * dx + dy * dy), h = Hh[i];
+        if (h > MELT) { const a = Math.min(c.m, (h - MELT) * A * w * dt); Hh[i] -= a; c.m -= a; took += a; }
+      }
+      c.h = Hh[c.c] + (took > 0 ? .4 : 0); c.em += took;
+      while (c.em > 1.2 && c.m > 0) { c.em -= 1.2; p.dr.push({u: c.u + (R() - .5) * .05, v: c.v, vv: .05, set: 0}); }
+    }
+    // Spread and loss.
+    const T = p.tmp; let mx = 0, sum = 0, n = 0;
+    for (let y = 0; y < ROWS; y++) for (let xx = 0; xx < COLS; xx++) {
+      const i = y * COLS + xx, h = Hh[i];
+      const l = xx ? Hh[i - 1] : h, r = xx < COLS - 1 ? Hh[i + 1] : h, u = y ? Hh[i - COLS] : h * .6, d = y < ROWS - 1 ? Hh[i + COLS] : h;
+      const v2 = Math.max(0, h + D * dt * (l + r + u + d - 4 * h) - LOSS * dt * h);
+      T[i] = v2; if (v2 > mx) mx = v2; if (v2 > .3) { sum += v2; n++; }
+      // Sparks fly where it is hottest.
+      if (v2 > SPK && R() < (v2 - SPK) * dt * 5) {
+        p.sparks++;
+        if (p.sp.length < 520) {
+          const su = (xx + R()) / COLS, sv = Math.max(.12, (y + R()) / ROWS - .05), k = .6 + v2 * .4;
+          p.sp.push({u: su, v: sv, vu: (R() - .5) * 1.2 * k, vv: -(.7 + R() * 1.1) * k, life: 0, max: .7 + R() * .8, dust: 0});
+        }
+      }
+    }
+    p.heat = T; p.tmp = Hh; p.mx = mx; p.hot = n ? sum / n : 0;
+    p.disp += (p.hot - p.disp) * Math.min(1, dt * 5); p.peak = Math.max(p.peak, p.disp);
+    // Smoke rises from the fire.
+    if (p.sm.length < 70 && R() < (.6 + p.disp * 7) * dt)
+      p.sm.push({u: .5 + (R() - .5) * .5, v: .18, vu: (R() - .5) * .1, vv: -(.12 + R() * .12), life: 0, max: 2.4 + R() * 1.6, r: .07 + R() * .06});
+    if (burning < 2 && fresh > 0 && lowFresh && p.t > .3) lowFresh.s = 1;   // never stall
+    if ((burning === 0 && fresh === 0 && p.t > .5) || p.t > 26) p.done = p.t;
+    stepParticles(p, dt);
+  }
+  function stepParticles(p, dt) {
+    for (let i = p.sp.length - 1; i >= 0; i--) {
+      const s = p.sp[i]; s.life += dt; s.u += s.vu * dt; s.v += s.vv * dt; s.vv += (s.dust ? 1.2 : 2.3) * dt; s.vu *= (1 - dt * .4);
+      if (s.life > s.max) p.sp.splice(i, 1);
+    }
+    for (let i = p.sm.length - 1; i >= 0; i--) {
+      const s = p.sm[i]; s.life += dt; s.u += s.vu * dt; s.v += s.vv * dt; s.vv *= (1 - dt * .2);
+      if (s.life > s.max) p.sm.splice(i, 1);
+    }
+    for (const d of p.dr) if (!d.set) { d.vv += dt * .6; d.v += d.vv * dt; const lim = .955 - R() * .04; if (d.v > lim) { d.v = lim; d.set = 1; } }
+    p.pool += (p.burnt / N - p.pool) * Math.min(1, dt * 2);
+    const burningNow = p.lit && !p.done;
+    p.poolH += ((burningNow ? Math.max(.7, p.disp * 1.4 + .35) : .5) - p.poolH) * Math.min(1, dt * (burningNow ? 2 : .5));
+    if (!burningNow) { p.disp += (p.hot - p.disp) * Math.min(1, dt * 3); p.hot *= (1 - dt); }
+  }
+
+  // ---- drawing ----
+  const RAMP = [[0, [59, 28, 20]], [.2, [120, 22, 8]], [.4, [214, 60, 12]], [.62, [255, 138, 30]], [.82, [255, 214, 110]], [1, [255, 252, 236]]];
+  const lerpCol = t => { t = clamp(t); for (let i = 1; i < RAMP.length; i++) if (t <= RAMP[i][0]) { const [a, ca] = RAMP[i - 1], [b, cb] = RAMP[i], k = (t - a) / (b - a); return ca.map((v, j) => Math.round(v + (cb[j] - v) * k)); } return RAMP[RAMP.length - 1][1]; };
+  const COLS64 = Array.from({length: 64}, (_, i) => `rgb(${lerpCol(i / 63)})`);
+  const heatCol = h => COLS64[clamp(h / HS * 63 | 0, 0, 63)];
+  const sprite = (col, a0, a1) => {
+    const c = document.createElement('canvas'); c.width = c.height = 48; const g = c.getContext('2d'), gr = g.createRadialGradient(24, 24, 0, 24, 24, 24);
+    gr.addColorStop(0, `rgba(${col},${a0})`); gr.addColorStop(.35, `rgba(${col},${a1})`); gr.addColorStop(1, `rgba(${col},0)`);
+    g.fillStyle = gr; g.fillRect(0, 0, 48, 48); return c;   // a glow sprite, not a backdrop
+  };
+  const SPR = Array.from({length: 6}, (_, i) => sprite(lerpCol(.35 + i * .13), .9, .35));
+  const SMK = sprite('120,104,94', .5, .3);
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    fs = clamp(Math.min(W / 26, H / 13), 12, 15);
+    const TOP = fs * 3.2, Rd = fs * 4.5;
+    let bh = Math.min((H - TOP - Rd) / 1.1, W * .41 * .82); bh = Math.max(36, bh);
+    const bw = bh / .82, wall = bw * .07, G = TOP + bh + wall * 1.15 + Rd;
+    const y0 = TOP + Math.max(0, (H - G) * .5);
+    const colw = Math.min(W * .44, Math.max(bw * 1.12, fs * 11.6));
+    pots.forEach((p, i) => Object.assign(p, {cx: W * (i ? .74 : .26), y0, bw, bh, wall, colw}));
+    draw(0);
+  }
+  const PX = (p, u) => p.cx + (u - .5) * p.bw, PY = (p, v) => p.y0 + v * p.bh;
+
+  function bowl(p, off, up) {
+    const pts = [];
+    for (let i = 0; i <= 20; i++) { const v = i / 20; pts.push([PX(p, .5 - halfw(v)) - off, PY(p, v) + off * v * v]); }
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], up ? -H : pts[0][1]);
+    pts.forEach(q => ctx.lineTo(q[0], q[1]));
+    const bot = PY(p, 1) + off, r = Math.min(p.bw * .1, off + p.bw * .05);
+    ctx.quadraticCurveTo(pts[20][0], bot, pts[20][0] + r, bot);
+    const rx = 2 * p.cx - pts[20][0];
+    ctx.lineTo(rx - r, bot); ctx.quadraticCurveTo(rx, bot, rx, pts[20][1]);
+    for (let i = 20; i >= 0; i--) ctx.lineTo(2 * p.cx - pts[i][0], pts[i][1]);
+    if (up) ctx.lineTo(2 * p.cx - pts[0][0], -H);
+    ctx.closePath();
+  }
+
+  function drawPot(p, now) {
+    const {cx, y0, bw, bh, wall} = p, floor = PY(p, 1) + wall * 1.15, glow = clamp(p.disp / 1.3);
+    // Light thrown on the floor, and the pot's shadow.
+    ctx.globalCompositeOperation = 'lighter';
+    const fl = Math.max(glow, p.pool * .35);
+    if (fl > .02) {
+      const g = ctx.createRadialGradient(cx, floor, 0, cx, floor, bw * (1 + fl));
+      g.addColorStop(0, `rgba(255,120,30,${.45 * fl})`); g.addColorStop(1, 'rgba(255,80,10,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(cx, floor, bw * (1 + fl), bw * .22 * (1 + fl), 0, 0, 7); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    const sh = ctx.createRadialGradient(cx, floor, 0, cx, floor, bw * .7);
+    sh.addColorStop(0, 'rgba(0,0,0,.7)'); sh.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = sh; ctx.beginPath(); ctx.ellipse(cx, floor, bw * .7, bw * .1, 0, 0, 7); ctx.fill();
+    // The clay crucible, cut away.
+    bowl(p, wall, false);
+    const cg = ctx.createLinearGradient(cx - bw * .6, 0, cx + bw * .6, 0);
+    cg.addColorStop(0, '#3a2c25'); cg.addColorStop(.3, '#8b776a'); cg.addColorStop(.55, '#6d5a4f'); cg.addColorStop(1, '#2a1f1a');
+    ctx.fillStyle = cg; ctx.fill();
+    ctx.globalCompositeOperation = 'lighter';
+    if (fl > .02) { ctx.fillStyle = `rgba(255,90,20,${.28 * fl})`; ctx.fill(); }
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(0,0,0,.2)';   // speckled clay
+    for (let i = 0; i < 40; i++) { const a = (i * 2.399) % 1, v = (i * .618) % 1, side = i % 2 ? 1 : -1; ctx.fillRect(cx + side * (halfw(v) * bw + wall * a), PY(p, v), 1.4, 1.4); }
+    bowl(p, 0, false);
+    const ig = ctx.createLinearGradient(0, y0, 0, PY(p, 1));
+    ig.addColorStop(0, '#0d0705'); ig.addColorStop(1, '#1d110c'); ctx.fillStyle = ig; ctx.fill();
+    // The inside: grains, steel, molten drops, the iron pool.
+    ctx.save(); bowl(p, 0, true); ctx.clip();
+    const r = Math.max(1.3, bw * .0125), it = P.intro;
+    const ofs = q => { const k = clamp((it - q.d) / .5); return (1 - k) * (1 - k) * -1.4; };
+    for (const pass of [0, 1]) {   // fresh grains in two batches: rust and aluminium
+      ctx.fillStyle = pass ? '#aeb5bb' : '#9a3e22'; ctx.beginPath();
+      for (const q of p.g) if (q.s === 0 && q.al === !!pass) { const X = PX(p, q.u), Y = PY(p, q.v + ofs(q)); ctx.moveTo(X + r, Y); ctx.arc(X, Y, r, 0, 6.283); }
+      ctx.fill();
+    }
+    for (const q of p.g) if (q.s) {
+      const h = p.heat[q.c], jig = q.s === 1 ? Math.sin(now * .02 + q.j) * r * .5 : 0;
+      ctx.fillStyle = heatCol(q.s === 1 ? h + .5 : h);
+      ctx.beginPath(); ctx.arc(PX(p, q.u) + jig, PY(p, q.v) - Math.abs(jig), r * (q.s === 1 ? 1.15 : 1), 0, 6.283); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'lighter';
+    for (const q of p.g) if (q.s) {
+      const h = p.heat[q.c]; if (h < .25) continue;
+      const k = clamp(h / HS), s = r * (4 + k * 7);
+      ctx.globalAlpha = clamp(.1 + k * .35); ctx.drawImage(SPR[clamp(k * 6 | 0, 0, 5)], PX(p, q.u) - s, PY(p, q.v) - s, s * 2, s * 2);
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+    for (const c of p.ch) drawChunk(p, c);
+    for (const d of p.dr) {
+      const h = p.heat[cell(d.u, d.v)] + (d.set ? .3 : 1);
+      ctx.fillStyle = heatCol(h); ctx.beginPath(); ctx.arc(PX(p, d.u), PY(p, d.v), r * 1.3, 0, 6.283); ctx.fill();
+    }
+    if (p.pool > .004) {   // molten iron sinks to the bottom
+      const top = PY(p, 1 - .12 * p.pool), bot = PY(p, 1) + 2, x0 = cx - bw * .6;
+      const pg = ctx.createLinearGradient(0, top, 0, bot);
+      pg.addColorStop(0, heatCol(p.poolH + .55)); pg.addColorStop(.3, heatCol(p.poolH)); pg.addColorStop(1, heatCol(p.poolH * .35));
+      ctx.fillStyle = pg; ctx.beginPath(); ctx.moveTo(x0, bot);
+      for (let i = 0; i <= 24; i++) { const X = x0 + bw * 1.2 * i / 24; ctx.lineTo(X, top + (Kit.calm ? 0 : Math.sin(now * .004 + i * .9) * r * .35)); }
+      ctx.lineTo(x0 + bw * 1.2, bot); ctx.closePath(); ctx.fill();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.strokeStyle = `rgba(255,230,170,${.25 + .35 * clamp(p.poolH / 1.4)})`; ctx.lineWidth = Math.max(1, r * .6);
+      ctx.beginPath(); ctx.moveTo(cx - bw * .3, top + r * .3); ctx.lineTo(cx + bw * .1, top + r * .3); ctx.stroke();
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    ctx.restore();
+    // Rim highlight.
+    ctx.strokeStyle = 'rgba(255,230,210,.35)'; ctx.lineWidth = 1.4;
+    for (const sd of [-1, 1]) { ctx.beginPath(); ctx.moveTo(cx + sd * (bw * .5 + wall), y0); ctx.lineTo(cx + sd * bw * .5, y0); ctx.stroke(); }
+    // Smoke.
+    for (const s of p.sm) {
+      const a = Math.sin(Math.PI * s.life / s.max) * .22, sz = s.r * bw * (1 + s.life * .8);
+      ctx.globalAlpha = a; ctx.drawImage(SMK, PX(p, s.u) - sz, PY(p, s.v) - sz, sz * 2, sz * 2);
+    }
+    ctx.globalAlpha = 1;
+    // Bloom above the fire.
+    if (glow > .03) {
+      ctx.globalCompositeOperation = 'lighter';
+      const by = PY(p, .22), br = bw * (.35 + glow * glow * 1.1);
+      const bg = ctx.createRadialGradient(cx, by, 0, cx, by, br);
+      bg.addColorStop(0, `rgba(255,250,225,${.55 * glow * glow})`); bg.addColorStop(.3, `rgba(255,170,60,${.3 * glow})`); bg.addColorStop(1, 'rgba(255,90,20,0)');
+      ctx.fillStyle = bg; ctx.beginPath(); ctx.arc(cx, by, br, 0, 6.283); ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    // Sparks: streaks of light.
+    ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round';
+    for (const s of p.sp) {
+      const a = 1 - s.life / s.max, X = PX(p, s.u), Y = PY(p, s.v);
+      if (s.dust) { ctx.fillStyle = `rgba(190,180,170,${a * .5})`; ctx.beginPath(); ctx.arc(X, Y, r * .9, 0, 6.283); ctx.fill(); continue; }
+      ctx.strokeStyle = `rgba(255,${200 + 55 * a | 0},${120 + 120 * a | 0},${a})`; ctx.lineWidth = Math.max(1, r * .8);
+      ctx.beginPath(); ctx.moveTo(X, Y); ctx.lineTo(X - s.vu * bw * .045, Y - s.vv * bh * .045); ctx.stroke();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    drawReadout(p, floor);
+  }
+
+  function drawChunk(p, c) {
+    if (c.m <= 0) return;
+    const sz = p.bw * .055 * (.35 + .65 * Math.sqrt(c.m / CAP)), X = PX(p, c.u), Y = PY(p, c.v + c.dv);
+    ctx.beginPath();
+    c.shape.forEach((rr, i) => { const a = c.rot + i / c.shape.length * 6.283; ctx[i ? 'lineTo' : 'moveTo'](X + Math.cos(a) * sz * rr, Y + Math.sin(a) * sz * rr * .85); });
+    ctx.closePath();
+    const g = ctx.createLinearGradient(X - sz, Y - sz, X + sz, Y + sz);
+    g.addColorStop(0, '#eef3f7'); g.addColorStop(.45, '#8d99a4'); g.addColorStop(1, '#3b444c');
+    ctx.fillStyle = g; ctx.fill();
+    const hot = clamp(((c.h || 0) - .25) / 1.2);
+    if (hot > 0) { ctx.fillStyle = `rgba(255,${120 + 80 * hot | 0},40,${.85 * hot})`; ctx.fill(); }
+    ctx.strokeStyle = hot > .3 ? 'rgba(255,230,160,.9)' : 'rgba(255,255,255,.55)'; ctx.lineWidth = 1; ctx.stroke();
+  }
+
+  function txt(t, X, Y, o = {}) {
+    ctx.font = `${o.w || 700} ${o.s || fs}px ${MONO}`;
+    ctx.textAlign = o.a || 'left'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = o.c || '#fff1e2'; ctx.fillText(t, X, Y);
+  }
+
+  function drawReadout(p, floor) {
+    const x0 = p.cx - p.colw / 2, x1 = p.cx + p.colw / 2, y = floor + fs * 1.5;
+    const n = p.ch.length, name = p.side ? (n ? `thermite + ${n} steel` : 'thermite + steel?') : 'pure thermite';
+    txt(name, x0, y, {w: 800});
+    ctx.font = `600 ${fs}px ${MONO}`;
+    const lw = Math.max(ctx.measureText('SPARKS').width, ctx.measureText('HEAT').width) + fs * .8;
+    const end = state === 'end', HM = Math.max(.8, pots[0].peak * 1.1, pots[1].peak * 1.1);
+    const bhh = Math.max(6, fs * .45), by = y + fs * .75, bx = x0 + lw, bl = Math.max(10, x1 - bx);
+    const dim = 'rgba(255,241,226,.62)';
+    txt(end ? 'PEAK' : 'HEAT', x0, by + bhh / 2 + fs * .35, {w: 600, c: dim});
+    ctx.fillStyle = 'rgba(255,241,226,.12)'; ctx.fillRect(bx, by, bl, bhh);
+    const v = clamp((end ? p.peak : p.disp) / HM);
+    if (v > 0) { const g = ctx.createLinearGradient(bx, 0, bx + bl, 0); g.addColorStop(0, '#b4260c'); g.addColorStop(.6, '#ff8a1e'); g.addColorStop(1, '#fff6d8'); ctx.fillStyle = g; ctx.fillRect(bx, by, bl * v, bhh); }
+    if (p.peak > 0) { ctx.fillStyle = '#fff1e2'; ctx.fillRect(bx + bl * clamp(p.peak / HM) - 1, by - 2, 2, bhh + 4); }
+    const sy = by + bhh + fs * 1.35, most = p.sparks > 20 && p.sparks >= Math.max(pots[0].sparks, pots[1].sparks);
+    txt('SPARKS', x0, sy, {w: 600, c: dim});
+    txt(String(p.sparks), bx, sy, {w: 800, c: most ? '#ffb35c' : '#fff1e2'});
+  }
+
+  function drawTop(now) {
+    const L = pots[0], Rr = pots[1], ty = L.y0 - fs * 1.2;
+    if (state === 'load' && P.intro > .9) {
+      const bob = Kit.calm ? 0 : Math.sin(now * .005) * 3;
+      txt('tap: drop steel', Rr.cx, ty - fs * .9 + bob, {a: 'center', w: 800, c: '#ffb35c'});
+      ctx.strokeStyle = '#ffb35c'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.beginPath();
+      const ay = ty - fs * .2 + bob; ctx.moveTo(Rr.cx, ay); ctx.lineTo(Rr.cx, ay + fs * .8); ctx.moveTo(Rr.cx - 4, ay + fs * .45); ctx.lineTo(Rr.cx, ay + fs * .8); ctx.lineTo(Rr.cx + 4, ay + fs * .45); ctx.stroke();
+      txt('stays pure', L.cx, ty - fs * .9, {a: 'center', w: 600, c: 'rgba(255,241,226,.55)'});
+    }
+    if (P.fuse >= 0 && P.fuse < 1) {
+      ctx.globalCompositeOperation = 'lighter';
+      for (const p of pots) { const Y = -10 + (PY(p, .2) + 10) * P.fuse, s = p.bw * .14; ctx.drawImage(SPR[5], p.cx - s, Y - s, s * 2, s * 2); }
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    if (state === 'end') {
+      ctx.globalAlpha = clamp(P.revealed);
+      txt('FIERCE', L.cx, ty - fs * .4, {a: 'center', w: 800, s: fs * 1.25, c: '#fff6d8'});
+      txt('TAME', Rr.cx, ty - fs * .4, {a: 'center', w: 800, s: fs * 1.25, c: '#ffb35c'});
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function drawAmbient(now) {   // embers drifting through the forge
+    ctx.globalCompositeOperation = 'lighter';
+    for (const e of AMB) {
+      const a = .12 + .2 * (.5 + .5 * Math.sin(now * .003 + e.ph));
+      ctx.fillStyle = `rgba(255,140,50,${a})`; ctx.beginPath(); ctx.arc(e.x * W, e.y * H, .8 + e.s * 1.1, 0, 6.283); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function draw(now) {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+    drawAmbient(now);
+    ctx.save();
+    const q = Kit.calm ? 0 : clamp((pots[0].disp - .7) * 5, 0, 3);
+    if (q > 0 && state === 'burn') ctx.translate((Math.random() - .5) * q, (Math.random() - .5) * q);
+    for (const p of pots) drawPot(p, now);
+    ctx.restore();
+    drawTop(now);
+  }
+
+  // ---- loop ----
+  let last = 0, running = false;
+  function tick(ts) {
+    const dt = Math.min(.05, last ? (ts - last) / 1000 : .016); last = ts;
+    if (!Kit.calm) {
+      const sp = 1 + (pots[0].disp + pots[1].disp) * 2;
+      for (const e of AMB) { e.y -= dt * (.012 + .025 * e.s) * sp; e.x += Math.sin(ts * .0005 + e.ph) * dt * .006; if (e.y < -.03) { e.y = 1.03; e.x = R(); } }
+    }
+    if (state === 'burn') {
+      simAcc += dt * 1.5;
+      while (simAcc > 1 / 60) { simAcc -= 1 / 60; for (const p of pots) step(p, 1 / 60); }
+      if (pots[0].done && pots[1].done) finish();
+    } else for (const p of pots) stepParticles(p, dt);
+    draw(ts);
+    requestAnimationFrame(tick);
+  }
+  const start = () => { if (!running) { running = true; requestAnimationFrame(tick); } };
+
+  // ---- the reader's touches ----
+  function dropSteel(instant) {
+    const p = pots[1]; if (state !== 'load' || p.ch.length >= MAXCH) return false;
+    let u, v, tries = 0;
+    do { v = .34 + R() * .52; u = .5 + (R() - .5) * 2 * (halfw(v) - .11); tries++; }
+    while (tries < 30 && p.ch.some(c => Math.hypot(c.u - u, (c.v - v) * .9) < .17));
+    const c = {u, v, m: CAP, c: cell(u, v), land: false, dv: -(v + .9), rot: R() * 6.28, em: 0, h: 0, shape: Array.from({length: 7}, () => .7 + R() * .45)};
+    p.ch.push(c);
+    const land = () => {
+      c.dv = 0; c.land = true; Kit.haptic('light');
+      for (let i = 0; i < 10; i++) p.sp.push({u: c.u, v: c.v - .03, vu: (R() - .5) * .8, vv: -.3 - R() * .5, life: 0, max: .5 + R() * .3, dust: 1});
+    };
+    if (instant || Kit.calm) land();
+    else gsap.to(c, {dv: 0, duration: .5, ease: 'power3.in', onComplete: land});
+    Kit.haptic('selection');
+    go.disabled = false; go.textContent = 'Ignite both';
+    if (p.ch.length >= MAXCH) say.innerHTML = 'The pot is full of steel. <b>Ignite both.</b>';
+    return true;
+  }
+  cv.addEventListener('pointerdown', e => {
+    if (state !== 'load') return;
+    const r = cv.getBoundingClientRect(), xx = e.clientX - r.left;
+    if (xx > W / 2) dropSteel();
+    else if (!Kit.calm) gsap.fromTo(P, {intro: 1.2}, {intro: 1.6, duration: .4, ease: 'power2.out'});
+  });
+
+  function lightUp() { for (const p of pots) ignite(p); P.fuse = -1; Kit.haptic('success'); }
+  go.addEventListener('click', () => {
+    if (state !== 'load' || !pots[1].ch.length) return;
+    for (const c of pots[1].ch) { gsap.killTweensOf(c); c.dv = 0; c.land = true; }
+    gsap.killTweensOf(P); P.intro = Math.max(P.intro, 1.6);
+    state = 'burn'; go.disabled = true; Kit.hide('go');
+    say.innerHTML = 'Watch the <b>heat bars</b> and the <b>sparks</b>.';
+    if (Kit.calm) { lightUp(); fastForward(); finish(); return; }
+    P.fuse = 0; gsap.to(P, {fuse: 1, duration: .55, ease: 'power2.in', onComplete: lightUp});
+  });
+  function fastForward() {
+    for (let i = 0; i < 4000 && !(pots[0].done && pots[1].done); i++) for (const p of pots) step(p, 1 / 60);
+    for (const p of pots) {
+      p.sp.length = 0; p.sm.length = 0; p.pool = p.burnt / N; p.poolH = .55;
+      for (const d of p.dr) { d.set = 1; d.v = .93 + R() * .03; }
+    }
+  }
+  function finish() {
+    if (state === 'end') return;
+    state = 'end';
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (Kit.calm) { P.revealed = 1; draw(0); return; }
+    gsap.to(P, {revealed: 1, duration: .9, ease: 'back.out(2)'});
+    gsap.from('#why .body', {opacity: 0, y: 8, duration: .5, ease: 'power3.out'});
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    start();
+    if (Kit.calm) { P.intro = 2; return; }
+    gsap.to(P, {intro: 1.6, duration: 2, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start(); gsap.killTweensOf(P); P.intro = 2;
+    for (let i = 0; i < 6; i++) dropSteel(true);
+    go.click();
+    await wait(Kit.calm ? 60 : 700);
+    gsap.killTweensOf(P); P.fuse = -1;
+    if (state !== 'end') { lightUp(); fastForward(); finish(); }
+    gsap.killTweensOf(P); P.revealed = 1; draw(0);
+    await wait(300);
+  };
+})();
+Kit.single();
+</script>
+</html>

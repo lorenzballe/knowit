@@ -1,0 +1,38 @@
+{
+  "id": "technology-xm42-flamethrower",
+  "topic": "technology",
+  "genre": "technology.tech_and_society",
+  "strand": "technology.tech_and_society.regulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can the XM42 flamethrower be bought in U.S. gun stores?",
+  "answer": "The XM42 is classified under U.S. law as a non-lethal incendiary device and sold under hobbyist rules, not as a fully military-grade weapon. Where a device can be sold depends on how the law classifies it. Turning the dial compares it with Musk's flamethrower and the army's M9.",
+  "move": "Where a device can be sold depends on how the law classifies it.",
+  "keywords": [
+    "xm42",
+    "flamethrower",
+    "elon_musk",
+    "gun_store",
+    "us_law"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A puzzle asking why the XM42 flamethrower can be bought in U.S. gun stores. A dial lets the reader compare Musk's flamethrower, the XM42, and the army's M9.",
+    "ground": "#efe5cf"
+  },
+  "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=CKMyBFiiED8",
+  "written": "2026-11-04"
+}

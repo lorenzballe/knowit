@@ -1,0 +1,295 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-reynolds-goes-up -->
+<!-- Look: Swiss poster on warm paper. A huge "Re ×N" numeral, a strict fraction ρ·v·D over a locked μ, black pipe walls drawn straight on the paper, a needle feeding one hot vermilion thread of dye, and a regime ruler under the pipe.
+     Interaction: tap Density or Speed. Each tap raises its factor, the numeral scrambles to the new Reynolds multiple, the marker slides along the ruler and the dye thread answers: a dead-straight line, then a growing wave downstream, then a torn, mixing smear.
+     Wow: once Re passes ×8 the pipe jolts, the thread shatters across the bore and TURBULENT slams in letter by letter, followed by the why. -->
+<title>Heavier or faster: turbulent</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
+<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
+<style>
+:root{--hot:#ff3b1f}
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#top{display:grid;grid-template-columns:auto 1fr;align-items:end;column-gap:4cqw;border-top:max(.5cqh,3px) solid var(--k);padding-top:.8cqh}
+#num{font:900 max(11cqh,54px)/.86 var(--body);letter-spacing:-.04em;color:var(--k);white-space:nowrap}
+#num .re{font-size:.42em;letter-spacing:0;vertical-align:.95em;margin-right:.08em}
+#val{color:var(--hot);display:inline-block;min-width:2.1ch}
+#frac{justify-self:end;text-align:center;font:800 max(2.6cqh,15px)/1 var(--mono);color:var(--k);padding-bottom:.6cqh}
+#frac .n span{transition:color .2s}
+#frac .n span.up{color:var(--hot)}
+#frac .bar{height:max(.35cqh,2px);background:var(--k);margin:.7cqh 0}
+#frac .d{display:inline-flex;gap:1.2cqw;align-items:center}
+#frac .d i{font:700 max(1.3cqh,12px)/1 var(--body);font-style:normal;text-transform:uppercase;letter-spacing:.08em;background:var(--k);color:var(--c);padding:.4cqh 1.4cqw}
+#row{display:flex;justify-content:space-between;align-items:baseline;font:800 max(1.6cqh,12px)/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--k)}
+#regime{color:var(--hot)}
+#pipe{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:grid;grid-template-columns:1fr 1fr;gap:3cqw}
+.tap{font:800 max(2.1cqh,14px)/1.1 var(--body);text-align:left;color:var(--c);background:var(--k);border:0;border-radius:0;padding:1.5cqh 3.5cqw;cursor:pointer;display:flex;justify-content:space-between;align-items:center;touch-action:manipulation;transition:background .15s}
+.tap b{font:900 max(3.2cqh,18px)/1 var(--mono);color:var(--hot)}
+.tap small{display:block;font:600 max(1.4cqh,12px)/1.2 var(--mono);opacity:.75;margin-top:.4cqh}
+.tap:disabled{background:color-mix(in srgb,var(--k) 35%,transparent);cursor:default}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:900 max(5cqh,28px)/1 var(--body);letter-spacing:-.02em;color:var(--hot);overflow:hidden}
+#why .body{font:600 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+.q{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to add · Reynolds number" style="--c:#f1ede4;--k:#111111;--edge:#d6d0c2">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO PUSH</span></div>
+    <h2 class="q">Same viscosity: what happens to flow as density or speed rise?</h2>
+    <div class="stagebox" id="stage">
+      <div id="top">
+        <div id="num"><span class="re">Re</span><span id="val">×1</span></div>
+        <div id="frac"><div class="n"><span id="fR">ρ</span> · <span id="fV">v</span> · D</div><div class="bar"></div><div class="d">μ <i>fixed</i></div></div>
+      </div>
+      <div id="row"><span>Dye in a pipe</span><span id="regime">Laminar</span></div>
+      <div id="pipe"><canvas id="cv" role="img" aria-label="A pipe with a needle feeding a red thread of dye into the flow; the thread stays straight when the flow is laminar, waves in transition and tears apart when turbulent. A ruler below marks the Reynolds multiple."></canvas></div>
+      <div id="ctl">
+        <button class="tap" id="bR"><span>Density<small id="sR">×1</small></span><b>+</b></button>
+        <button class="tap" id="bV"><span>Speed<small id="sV">×1</small></span><b>+</b></button>
+      </div>
+      <div id="why" class="gone"><p class="big" id="word">TURBULENT</p><p class="body">Reynolds number is density × speed × pipe width ÷ viscosity. Density and speed sit on top, so raising either one raises it, and the smooth layers break into eddies.</p></div>
+    </div>
+    <p class="say" id="say">Tap <b>Density</b> or <b>Speed</b>. Viscosity stays locked.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Heavier or faster fluid, same viscosity: Reynolds goes up, flow turns turbulent.</div>
+    <div class="foot"><span class="src">Source · Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.gsap) { try { gsap.registerPlugin(SplitText, ScrambleTextPlugin); } catch (e) {} }
+  const HOT = '#ff3b1f', INK = '#111111', PAPER = '#f1ede4';
+  const cv = Kit.$('cv'), val = Kit.$('val'), reg = Kit.$('regime');
+  const MONO = (getComputedStyle(Kit.$('card')).getPropertyValue('--mono') || 'monospace').trim();
+  let rho = 1, vel = 1, done = false;
+  let x = null, W = 0, H = 0, cy = 0, R = 0, wt = 6, G = 0, nx = 0;
+  let tt = 0, time = 0, last = 0, running = false, kick = 0, reShow = 1;
+  let P = [], S = [];
+  const Re = () => rho * vel;
+  const target = () => Math.max(0, Math.min(1, (Re() - 1.5) / 6.5));
+  const tuNow = () => Math.min(1, tt + kick);
+  const base = () => W * .075 * (0.6 + vel * .55);
+
+  // the flow: a parabola that flattens when turbulent, plus a wavy cross-stream field that grows downstream
+  function uAt(y, tu) {
+    const lam = 1.5 * (1 - y * y), flat = 1.15 * (1 - Math.pow(Math.abs(y), 6));
+    return (lam * (1 - tu) + flat * tu) * base();
+  }
+  function vyAt(X, y, tu, ph) {
+    const k = 1 / Math.max(20, R), grow = Math.min(1, Math.max(0, (X - nx) / (W * .45)));
+    const w = Math.sin(X * k * 1.7 - time * 3.1 + ph)
+            + .65 * Math.sin(X * k * 3.3 + time * 2.3 + 1.3 + y * 2.4)
+            + .45 * Math.sin(X * k * 5.9 - time * 4.7 + y * 4.1 + ph * .5);
+    return tu * 2.4 * w * (1 - y * y * .8) * (.25 + .75 * grow);
+  }
+
+  function spawn(n) {
+    for (let i = 0; i < n; i++) {
+      const lane = Kit.rnd() * 1.9 - .95;
+      P.push({lane, y: lane, x: Kit.rnd() * W, ph: Kit.rnd() * 6.28, h: []});
+    }
+  }
+  function seedStreak() {
+    S = [];
+    for (let X = nx; X < W + 4; X += 3) S.unshift({x: X, y: 0});
+  }
+  function fit() {
+    if (!cv.clientWidth || !cv.clientHeight) return;
+    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
+    G = H >= 150 ? 46 : 0;
+    const ph = H - G;
+    R = Math.max(10, Math.min(ph * .38, W * .22));
+    wt = Math.max(6, R * .1);
+    cy = ph * .5 + (G ? 4 : 0);
+    nx = W * .07;
+    P.forEach(p => p.h = []);
+    if (!P.length) spawn(60);
+    seedStreak();
+    draw();
+  }
+
+  function stepSim(dt) {
+    tt += (target() - tt) * Math.min(1, dt * 1.8);
+    time += dt;
+    kick = Math.max(0, kick - dt * 1.2);
+    reShow += (Re() - reShow) * Math.min(1, dt * 5);
+    const tu = tuNow();
+    // background fluid parcels
+    for (const p of P) {
+      p.x += uAt(p.y, tu) * dt * (1 + tu * .25 * Math.sin(time * 4 + p.ph));
+      p.y += (vyAt(p.x, p.y, tu, p.ph) * .35 + Kit.gauss() * tu * 1.4) * dt;
+      if (p.y > .95) p.y = 1.9 - p.y;
+      if (p.y < -.95) p.y = -1.9 - p.y;
+      if (p.x > W) { p.x = 0; p.h = []; p.y = p.lane * (1 - tu) + p.y * tu; }
+      p.h.push([p.x, p.y]); if (p.h.length > 9) p.h.shift();
+    }
+    // the dye thread: points released at the needle, carried by the flow (a streakline)
+    const sp = uAt(0, tu) * dt, steps = Math.max(1, Math.ceil(sp / 3));
+    for (let i = 0; i < steps; i++) S.push({x: nx + sp * i / steps, y: (Kit.rnd() - .5) * .01});
+    for (const s of S) {
+      s.x += uAt(s.y, tu) * dt * (1 + tu * .3 * Math.sin(time * 5 + s.x * .02));
+      s.y += vyAt(s.x, s.y, tu, 0) * .22 * dt + Kit.gauss() * tu * 1.1 * Math.sqrt(dt) * Math.min(1, (s.x - nx) / (W * .3));
+      if (s.y > .94) s.y = 1.88 - s.y;
+      if (s.y < -.94) s.y = -1.88 - s.y;
+    }
+    while (S.length && S[0].x > W + 6) S.shift();
+    if (S.length > 1400) S.splice(0, S.length - 1400);
+  }
+
+  function draw() {
+    if (!x) return;
+    x.clearRect(0, 0, W, H);
+    const top = cy - R, bot = cy + R, tu = tuNow(), Y = y => cy + y * R * .92;
+    // glass: a hairline just inside each wall
+    x.fillStyle = 'rgba(17,17,17,.14)';
+    x.fillRect(0, top + 3, W, 1); x.fillRect(0, bot - 4, W, 1);
+
+    // background parcels: faint ink dashes
+    x.lineCap = 'round';
+    x.strokeStyle = 'rgba(17,17,17,.34)'; x.lineWidth = Math.max(1.1, R * .018);
+    x.beginPath();
+    for (const p of P) {
+      if (p.h.length < 2) continue;
+      p.h.forEach(([hx, hy], i) => i ? x.lineTo(hx, Y(hy)) : x.moveTo(hx, Y(hy)));
+    }
+    x.stroke();
+
+    // velocity profile near the outlet: a parabola that flattens as flow turns turbulent
+    const px = W * .82, len = W * .055 * (0.6 + vel * .4);
+    x.strokeStyle = 'rgba(17,17,17,.4)'; x.lineWidth = 1.2;
+    x.beginPath(); x.moveTo(px, top); x.lineTo(px, bot); x.stroke();
+    x.beginPath();
+    for (let i = 0; i <= 30; i++) {
+      const y = -1 + i / 15, lam = 1 - y * y, flat = 1 - Math.pow(Math.abs(y), 6);
+      const X = px + len * (lam * (1 - tu) + flat * tu), YY = cy + y * R;
+      i ? x.lineTo(X, YY) : x.moveTo(X, YY);
+    }
+    x.strokeStyle = 'rgba(17,17,17,.6)'; x.lineWidth = 1.6; x.stroke();
+    for (const y of [-.6, 0, .6]) {
+      const lam = 1 - y * y, flat = 1 - Math.pow(Math.abs(y), 6);
+      const X = px + len * (lam * (1 - tu) + flat * tu), YY = cy + y * R;
+      x.beginPath(); x.moveTo(X - 5, YY - 3.5); x.lineTo(X, YY); x.lineTo(X - 5, YY + 3.5); x.stroke();
+    }
+
+    // the dye thread: soft halo when torn, crisp core always
+    const dw = Math.max(2.4, R * .045);
+    const thread = () => {
+      x.beginPath();
+      let prev = null;
+      for (const s of S) {
+        const X = s.x, YY = Y(s.y);
+        if (!prev || Math.abs(YY - prev[1]) > R * .45 || Math.abs(X - prev[0]) > 40) x.moveTo(X, YY); else x.lineTo(X, YY);
+        prev = [X, YY];
+      }
+    };
+    if (tu > .15) {
+      thread(); x.strokeStyle = `rgba(255,59,31,${.18 * tu})`; x.lineWidth = dw * (1.5 + tu * 3); x.lineJoin = 'round'; x.stroke();
+    }
+    thread(); x.strokeStyle = HOT; x.lineWidth = dw * (1 - tu * .35); x.lineJoin = 'round'; x.stroke();
+
+    // the needle feeding dye in from above
+    x.strokeStyle = INK; x.lineWidth = Math.max(2, R * .035); x.lineCap = 'butt';
+    x.beginPath(); x.moveTo(nx - R * .18, top - wt - Math.min(10, top - wt)); x.lineTo(nx - R * .18, cy - R * .12);
+    x.quadraticCurveTo(nx - R * .18, cy, nx - R * .04, cy); x.lineTo(nx, cy); x.stroke();
+    x.fillStyle = HOT; x.beginPath(); x.arc(nx + 1, cy, dw * .75, 0, 6.29); x.fill();
+    if (top - wt > 12) { // a small reservoir cap on the needle
+      x.fillStyle = INK; x.fillRect(nx - R * .18 - 5, Math.max(0, top - wt - 12), 10, 4);
+    }
+
+    // walls: solid black bars with paper tick marks
+    x.fillStyle = INK;
+    x.fillRect(0, top - wt, W, wt); x.fillRect(0, bot, W, wt);
+    x.fillStyle = 'rgba(241,237,228,.55)';
+    for (let k = 0; k < 14; k++) { const tx = (k + .5) * W / 14; x.fillRect(tx, top - wt * .6, 1.2, wt * .4); x.fillRect(tx, bot + wt * .2, 1.2, wt * .4); }
+
+    // regime ruler: ×0 … ×16, thresholds at ×3 and ×8
+    if (G) {
+      const gy = bot + wt + 26, sx = v => 2 + (W - 4) * v / 16, f = '700 12px ' + MONO;
+      x.font = f; x.textBaseline = 'alphabetic';
+      x.fillStyle = 'rgba(17,17,17,.35)'; x.fillRect(0, gy - .5, sx(3), 1);
+      for (let X = sx(3); X < sx(8); X += 6) x.fillRect(X, gy - .75, 3, 1.5);
+      x.fillStyle = HOT; x.fillRect(sx(8), gy - 1.5, W - sx(8), 3);
+      x.fillStyle = INK;
+      for (const v of [3, 8]) { x.fillRect(sx(v) - .75, gy - 5, 1.5, 10); x.textAlign = 'center'; x.fillText('×' + v, sx(v), gy - 9); }
+      x.textAlign = 'left'; x.textBaseline = 'top';
+      x.fillStyle = 'rgba(17,17,17,.6)'; x.fillText('LAMINAR', 0, gy + 7);
+      x.fillStyle = HOT; x.fillText('TURBULENT', sx(8) + 4, gy + 7);
+      // the live marker
+      const mx = sx(Math.min(16, reShow));
+      x.fillStyle = HOT; x.strokeStyle = PAPER; x.lineWidth = 2;
+      x.beginPath(); x.arc(mx, gy, 5.5, 0, 6.29); x.fill(); x.stroke();
+    }
+  }
+
+  function loop(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    if (x) { stepSim(dt); draw(); }
+    requestAnimationFrame(loop);
+  }
+
+  function regimeName() { const r = Re(); return r >= 8 ? 'Turbulent' : r >= 3 ? 'Transition' : 'Laminar'; }
+  function update() {
+    const txt = '×' + Re();
+    if (window.gsap && !Kit.calm) {
+      gsap.to(val, {duration: .45, scrambleText: {text: txt, chars: '0123456789×', speed: .8}, ease: 'none'});
+      gsap.fromTo(val, {y: -6}, {y: 0, duration: .5, ease: 'back.out(3)'});
+      const name = regimeName();
+      if (reg.textContent !== name) gsap.to(reg, {duration: .5, scrambleText: {text: name, chars: 'upperCase', speed: .7}});
+    } else { val.textContent = txt; reg.textContent = regimeName(); }
+    Kit.$('sR').textContent = '×' + rho; Kit.$('sV').textContent = '×' + vel;
+    Kit.$('fR').classList.toggle('up', rho > 1); Kit.$('fV').classList.toggle('up', vel > 1);
+    Kit.$('bR').disabled = rho >= 4; Kit.$('bV').disabled = vel >= 4;
+    const say = Kit.$('say');
+    if (!done && Re() >= 3 && Re() < 8) say.innerHTML = 'The dye starts to wave. <b>Keep pushing.</b>';
+    if (Re() >= 8 && !done) reveal();
+  }
+
+  function tap(which, btn) {
+    if (done) return;
+    if (which === 'r') { if (rho >= 4) return; rho++; spawn(20); } else { if (vel >= 4) return; vel++; }
+    Kit.haptic('selection');
+    if (window.gsap && !Kit.calm) gsap.fromTo(btn, {scale: .94}, {scale: 1, duration: .45, ease: 'back.out(4)'});
+    kick = Math.min(.25, kick + .12);
+    update();
+  }
+  Kit.$('bR').addEventListener('click', e => tap('r', e.currentTarget));
+  Kit.$('bV').addEventListener('click', e => tap('v', e.currentTarget));
+
+  function reveal() {
+    done = true; Kit.haptic('success');
+    kick = .7;
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!window.gsap || Kit.calm) return;
+    gsap.fromTo(cv, {x: -7}, {x: 0, duration: .9, ease: 'elastic.out(1,.25)'});
+    gsap.fromTo('#num', {scale: 1.08, transformOrigin: 'left bottom'}, {scale: 1, duration: .7, ease: 'expo.out'});
+    try {
+      const sp = new SplitText('#word', {type: 'chars'});
+      gsap.from(sp.chars, {yPercent: 110, rotate: 8, opacity: 0, duration: .6, stagger: .045, ease: 'back.out(2.4)'});
+    } catch (e) {}
+    gsap.from('#why .body, #keep', {opacity: 0, y: 10, duration: .5, stagger: .12, delay: .35, ease: 'power3.out'});
+  }
+
+  if (window.ResizeObserver) new ResizeObserver(() => fit()).observe(Kit.$('pipe'));
+  Kit.onShow.card = fit;
+  Kit.onEnter.card = () => {
+    if (!running) { running = true; requestAnimationFrame(loop); }
+    if (Kit.calm || !window.gsap) return;
+    gsap.from('#top', {opacity: 0, y: 14, duration: .6, ease: 'power3.out'});
+    gsap.from(val, {duration: .8, scrambleText: {text: '×1', chars: '0123456789', speed: .6}});
+    gsap.from(cv, {opacity: 0, scaleX: .85, duration: .8, delay: .1, ease: 'expo.out'});
+    gsap.from('.tap', {opacity: 0, y: 12, stagger: .08, duration: .5, delay: .25, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (!running) { running = true; requestAnimationFrame(loop); }
+    for (const id of ['bR', 'bV', 'bR', 'bV']) { Kit.$(id).click(); await wait(Kit.calm ? 40 : 160); }
+    await wait(Kit.calm ? 100 : 900);
+  };
+})();
+Kit.single();
+</script>
+</html>

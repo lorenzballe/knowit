@@ -1,0 +1,383 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-tail-pull-retract -->
+<!-- Look: laboratory glass at night, buried in rubble. A glass flask holds the spool and a small liquid gauge. A serpentine glass channel winds through scattered rocks and carries an amber film robot with a cyan band painted on its wall.
+     Interaction: scrub the bar like a time-lapse. Pulling the tail winds it onto the spool, layer on layer. The wall turns inside out at the tip and runs back down the core, and the cyan band shows where the material goes.
+     Wow: at the end the robot is gone into its flask. A cyan light sweeps the empty channel, a ring pulses from the neck, the spool springs, the gauge sloshes and a chip names it: all back inside. -->
+<title>Pull the tail</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+.lab{font-family:var(--mono);font-weight:600}
+.nudge{animation:nd 1.3s ease-in-out infinite}
+@keyframes nd{50%{transform:translateX(5px)}}
+.kit-calm .nudge{animation:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Scrub · time-lapse" style="--c:#0d1d24;--k:#eaf5f2;--edge:#050e12">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PULL THE TAIL</span></div>
+    <h2 class="q">How does this growing robot pull itself back in?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A glass flask with a spool, and a robot made of film lying in a winding glass channel among rocks. A bar below pulls its tail."></svg>
+    </div>
+    <p class="say" id="say">Drag along the bar to <b>pull the tail</b>. Watch the <b>blue band</b>.</p>
+    <div id="why" class="gone"><p class="body">Pulling the tail drags the material back through the core of the body. At the tip, the wall turns inside out and goes back inside itself: the robot ungrows. In a tight space, that is all it takes.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>To retract, pull the tail: the robot turns back inside itself.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const AMB = '#ffab52', AMB_D = '#c8641e', AMB_L = '#ffe2a6', CY = '#6cf2ff', LIQ = '#46d9c6', GROUND = '#0d1d24';
+  const GL = a => `rgba(200,238,250,${a})`;
+  const st = {p: 0, sl: 0, sv: 0, glow: 0, t: 0, done: false, touched: false, hl: 'wall', tick: 0};
+  let G = null, E = {}, intro = null, drag = null;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const hit = (a, b) => a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+
+  function layout() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = clamp(f.f || 13, 12, 14);
+    let r = Math.min(W * .19, H * .2), cw, fr, y0, extra = 0;
+    for (; r > 14; r -= 1) {
+      cw = r * .5; fr = r * .62;
+      y0 = H - Math.max(fs * 3.4 + fr, fs * 4.8 + cw / 2);
+      extra = y0 - 4 * r - cw / 2 - fs * 1.9;
+      if (extra >= 0) break;
+    }
+    y0 -= Math.max(0, extra) * .45;
+    const rw = cw * .74, coreW = rw * .34, bx = fr + 6, xs = bx + fr * .96;
+    const xr = W - r - cw / 2 - 6, xl = r + cw / 2 + 6, xe = W - cw * .4 - 6;
+    const D = (o, x0) => `M${x0},${y0 - o} H${xr} A${r - o},${r - o} 0 0 0 ${xr},${y0 - 2 * r + o} H${xl} A${r + o},${r + o} 0 0 1 ${xl},${y0 - 4 * r - o} H${xe}`;
+    const trackY = H - fs * 2.1, tx0 = fs * 1.3, tx1 = W - fs * 1.3;
+    G = {W, H, fs, r, cw, fr, y0, rw, coreW, bx, xs, xr, xl, xe, trackY, tx0, tx1};
+
+    const defs = mk('defs', {}, svg);
+    const rg = mk('radialGradient', {id: 'flaskG', cx: '35%', cy: '30%', r: '75%'}, defs);
+    mk('stop', {offset: '0', 'stop-color': '#bfefff', 'stop-opacity': .16}, rg);
+    mk('stop', {offset: '.6', 'stop-color': '#7fc9dc', 'stop-opacity': .05}, rg);
+    mk('stop', {offset: '1', 'stop-color': '#bfefff', 'stop-opacity': .14}, rg);
+    const tg = mk('radialGradient', {id: 'tipG'}, defs);
+    mk('stop', {offset: '0', 'stop-color': AMB_L, 'stop-opacity': .9}, tg);
+    mk('stop', {offset: '1', 'stop-color': AMB, 'stop-opacity': 0}, tg);
+    const blur = mk('filter', {id: 'soft', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+    mk('feGaussianBlur', {stdDeviation: 2.2}, blur);
+
+    // ---- the glass channel: a tight space for the robot
+    const glass = E.glass = mk('g', {}, svg);
+    const c0x = bx + fr * .5;
+    const chan = mk('path', {d: D(0, c0x), fill: 'none', stroke: GL(.05), 'stroke-width': cw}, glass);
+    mk('path', {d: D(cw / 2 + 4, c0x), fill: 'none', stroke: GL(.22), 'stroke-width': 4, 'stroke-dasharray': '1 13'}, glass);
+    mk('path', {d: D(cw / 2, c0x), fill: 'none', stroke: GL(.5), 'stroke-width': 1.4}, glass);
+    mk('path', {d: D(-cw / 2, c0x), fill: 'none', stroke: GL(.5), 'stroke-width': 1.4}, glass);
+    mk('path', {d: D(cw * .32, c0x), fill: 'none', stroke: GL(.32), 'stroke-width': 1.2}, glass);
+    mk('path', {d: D(-cw * .34, c0x), fill: 'none', stroke: GL(.1), 'stroke-width': 1}, glass);
+    const yTop = y0 - 4 * r;
+    mk('path', {d: `M${xe},${yTop - cw / 2 - 3} V${yTop + cw / 2 + 3}`, stroke: GL(.6), 'stroke-width': 2.4, 'stroke-linecap': 'round'}, glass);
+    E.glint = mk('path', {d: D(cw * .32, c0x), fill: 'none', stroke: '#ffffff', 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .55}, glass);
+    E.glint2 = mk('path', {d: D(-cw * .34, c0x), fill: 'none', stroke: '#ffffff', 'stroke-width': 1.4, 'stroke-linecap': 'round', opacity: .3}, glass);
+    G.glen = E.glint.getTotalLength();
+    E.glint.setAttribute('stroke-dasharray', `${cw * 1.3} ${G.glen + 240}`);
+    E.glint2.setAttribute('stroke-dasharray', `${cw * .8} ${G.glen + 240}`);
+    E.sweep = mk('path', {d: D(0, c0x), fill: 'none', stroke: CY, 'stroke-width': cw * .9, 'stroke-linecap': 'round', opacity: 0, filter: 'url(#soft)', 'stroke-dasharray': `${r * 1.6} ${G.glen + 600}`}, glass);
+
+    // ---- the flask: the base, with the spool that winds the tail
+    const fl = E.flask = mk('g', {}, svg);
+    mk('circle', {cx: bx, cy: y0, r: fr, fill: GROUND, opacity: .92}, fl);
+    mk('circle', {cx: bx, cy: y0, r: fr, fill: 'url(#flaskG)'}, fl);
+    E.spoolWrap = mk('g', {}, fl);
+    const hub = fr * .17;
+    E.wound = mk('circle', {cx: bx, cy: y0, fill: 'none', stroke: AMB, opacity: .88}, E.spoolWrap);
+    E.layers = [.3, .55, .8].map(k => ({k, el: mk('circle', {cx: bx, cy: y0, fill: 'none', stroke: AMB_D, 'stroke-width': .9, opacity: .55}, E.spoolWrap)}));
+    E.woundEdge = mk('circle', {cx: bx, cy: y0, fill: 'none', stroke: AMB_D, 'stroke-width': 1.2}, E.spoolWrap);
+    E.woundShine = mk('path', {fill: 'none', stroke: AMB_L, 'stroke-width': 1.3, 'stroke-linecap': 'round', opacity: .7}, E.spoolWrap);
+    E.spokes = mk('g', {}, E.spoolWrap);
+    mk('circle', {cx: bx, cy: y0, r: hub, fill: '#17343e', stroke: GL(.7), 'stroke-width': 1.4}, E.spokes);
+    for (let i = 0; i < 3; i++) { const a = i * 2.094; mk('line', {x1: bx, y1: y0, x2: bx + Math.cos(a) * hub, y2: y0 + Math.sin(a) * hub, stroke: GL(.8), 'stroke-width': 1.4}, E.spokes); }
+    mk('circle', {cx: bx, cy: y0, r: hub * .3, fill: GL(.9)}, E.spokes);
+    E.tailIn = mk('line', {stroke: AMB_L, 'stroke-width': coreW, 'stroke-linecap': 'round', opacity: .95}, fl);
+    E.hlSpool = mk('circle', {r: Math.max(2.5, coreW * .55), fill: CY, opacity: 0}, fl);
+    mk('circle', {cx: bx, cy: y0, r: fr, fill: 'none', stroke: GL(.6), 'stroke-width': 1.6}, fl);
+    const arc = (a0, a1, rr) => `M${bx + Math.cos(a0) * rr},${y0 + Math.sin(a0) * rr} A${rr},${rr} 0 0 1 ${bx + Math.cos(a1) * rr},${y0 + Math.sin(a1) * rr}`;
+    G.arc = arc;
+    mk('path', {d: arc(3.5, 4.4, fr * .82), fill: 'none', stroke: '#fff', 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: .55}, fl);
+    mk('path', {d: arc(.5, 1.1, fr * .85), fill: 'none', stroke: '#fff', 'stroke-width': 1.2, 'stroke-linecap': 'round', opacity: .22}, fl);
+    mk('circle', {cx: bx - fr * .42, cy: y0 - fr * .5, r: 1.6, fill: '#fff', opacity: .8}, fl);
+
+    // ---- the liquid gauge on the flask
+    const tw = Math.max(4, fr * .16), x1 = bx - fr * .3, x2 = bx + fr * .3, bR = (x2 - x1) / 2;
+    const yb = y0 - fr - bR - 3, yt = y0 - 2 * r + cw / 2 + 9, mh = yb - yt;
+    G.mano = mh > fs * 1.2 ? {x1, x2, yb, yt, mh, bR, tw} : null;
+    G.obs = [{x0: bx - fr - 2, x1: bx + fr + 2, y0: y0 - fr - 2, y1: y0 + fr + 2}, {x0: 0, x1: W, y0: trackY - fs * .95, y1: H}];
+    if (G.mano) {
+      const mg = E.mano = mk('g', {}, svg), U = `M${x1},${yt} V${yb} A${bR},${bR} 0 0 0 ${x2},${yb} V${yt}`;
+      mk('path', {d: `M${bx},${yb + bR} V${y0 - fr + 2}`, stroke: GL(.5), 'stroke-width': tw * .7}, mg);
+      mk('path', {d: U, fill: 'none', stroke: GL(.55), 'stroke-width': tw + 2.4, 'stroke-linecap': 'round'}, mg);
+      mk('path', {d: U, fill: 'none', stroke: '#12303a', 'stroke-width': tw, 'stroke-linecap': 'round'}, mg);
+      E.liq = mk('path', {fill: 'none', stroke: LIQ, 'stroke-width': tw * .72, opacity: .9}, mg);
+      E.menL = mk('line', {stroke: '#d9fffa', 'stroke-width': 1.2, 'stroke-linecap': 'round'}, mg);
+      E.menR = mk('line', {stroke: '#d9fffa', 'stroke-width': 1.2, 'stroke-linecap': 'round'}, mg);
+      for (let i = 1; i < 5; i++) mk('line', {x1: x2 + tw * .7, x2: x2 + tw * 1.4, y1: yt + mh * i / 5, y2: yt + mh * i / 5, stroke: GL(.45), 'stroke-width': 1}, mg);
+      mk('line', {x1: x1 - tw * .2, x2: x1 - tw * .2, y1: yt + 2, y2: yb - 2, stroke: '#fff', 'stroke-width': 1, opacity: .35}, mg);
+      G.obs.push({x0: x1 - tw * 1.5, x1: x2 + tw * 1.8, y0: yt - tw, y1: y0 - fr});
+    }
+
+    // ---- rubble around the channel: the tight space it lives in
+    const soil = E.soil = mk('g', {}, null);
+    svg.insertBefore(soil, glass);
+    {
+      let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+      const L0 = chan.getTotalLength(), pts = [];
+      for (let s = 0; s <= L0; s += 5) pts.push(chan.getPointAtLength(s));
+      const rocks = [], yMin = Math.max(2, yTop - cw / 2 - r * .7), yMax = y0 + cw / 2 + fr * .5;
+      const big = r * .17, small = 1.4;
+      for (let i = 0; i < 700 && rocks.length < 48; i++) {
+        const k = i / 700, sz = big - (big - small) * Math.pow(k, .6) * (.7 + .3 * rnd());
+        const x = 3 + rnd() * (W - 6), y = yMin + rnd() * (yMax - yMin);
+        let dmin = 1e9; for (const p of pts) { const d = Math.hypot(p.x - x, p.y - y); if (d < dmin) dmin = d; }
+        if (dmin < cw / 2 + 6 + sz) continue;
+        const bb = {x0: x - sz - 3, x1: x + sz + 3, y0: y - sz - 3, y1: y + sz + 3};
+        if (G.obs.some(o => hit(o, bb))) continue;
+        if (rocks.some(q => Math.hypot(q.x - x, q.y - y) < q.s + sz + 3)) continue;
+        if (y < yTop && x > xe - 4) continue;
+        rocks.push({x, y, s: sz});
+        const n = 6 + Math.floor(rnd() * 3), rot = rnd() * 6.28; let d = '';
+        for (let j = 0; j < n; j++) { const a = rot + j / n * 6.283, rr = sz * (.68 + rnd() * .38); d += (j ? 'L' : 'M') + (x + Math.cos(a) * rr).toFixed(1) + ',' + (y + Math.sin(a) * rr * .82).toFixed(1); }
+        const tone = sz > 4 ? .11 : .2;
+        mk('path', {d: d + 'Z', fill: `rgba(120,175,188,${tone})`, stroke: GL(sz > 4 ? .2 : 0), 'stroke-width': .9, 'stroke-linejoin': 'round'}, soil);
+        if (sz > 5) mk('path', {d: `M${x - sz * .45},${y - sz * .3} Q${x - sz * .1},${y - sz * .62} ${x + sz * .35},${y - sz * .45}`, fill: 'none', stroke: GL(.3), 'stroke-width': 1, 'stroke-linecap': 'round'}, soil);
+      }
+    }
+
+    // ---- the robot: a film tube whose wall lies still and whose core runs back to the base
+    const rob = E.rob = mk('g', {}, svg);
+    E.wallEdge = mk('path', {d: D(0, xs), fill: 'none', stroke: AMB_D, 'stroke-linecap': 'round'}, rob);
+    E.wall = mk('path', {d: D(0, xs), fill: 'none', stroke: AMB, 'stroke-linecap': 'round', opacity: .66}, rob);
+    G.rlen = E.wall.getTotalLength(); G.Lmax = G.rlen - cw * .55;
+    E.bands = mk('g', {}, rob);
+    E.coreEdge = mk('path', {d: D(0, xs), fill: 'none', stroke: AMB_D, 'stroke-width': coreW + 2, 'stroke-linecap': 'round', opacity: .85}, rob);
+    E.core = mk('path', {d: D(0, xs), fill: 'none', stroke: AMB_L, 'stroke-width': coreW, 'stroke-linecap': 'round'}, rob);
+    E.dots = mk('g', {}, rob);
+    const m = rw * 1.1; G.us = []; E.mk = [];
+    for (let u = m * .5; u < 2 * G.Lmax; u += m) G.us.push(u);
+    const want = (xr - xs) + Math.PI * r + (xr - xl) * .5;
+    let hi = 0; G.us.forEach((u, i) => { if (Math.abs(u - want) < Math.abs(G.us[hi] - want)) hi = i; });
+    G.hi = hi;
+    G.us.forEach((u, i) => E.mk.push(mk('line', {stroke: i === hi ? CY : AMB_D, 'stroke-linecap': 'round'}, E.bands)));
+    E.hlGlow = mk('line', {stroke: CY, 'stroke-linecap': 'round', opacity: .5, filter: 'url(#soft)'}, rob);
+    E.mk[hi].remove(); rob.appendChild(E.mk[hi]);
+    E.tipGlow = mk('circle', {r: rw * 1.4, fill: 'url(#tipG)', opacity: 0}, rob);
+    E.fold = mk('g', {opacity: 0}, rob);
+    const fa = (sg) => {
+      const R = rw;
+      mk('path', {d: `M${-R * 1.5},${sg * R * .95} C${R * .2},${sg * R * 1.05} ${R * 1.15},${sg * R * .55} ${R * .25},${sg * R * .1}`, fill: 'none', stroke: '#fff', 'stroke-width': 1.7, 'stroke-linecap': 'round'}, E.fold);
+      mk('path', {d: `M${R * .62},${sg * R * .02} L${R * .2},${sg * R * .1} L${R * .5},${sg * R * .42}`, fill: 'none', stroke: '#fff', 'stroke-width': 1.7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.fold);
+    };
+    fa(-1); fa(1);
+
+    // ---- the bar: the time-lapse of a pull
+    const tr = E.track = mk('g', {}, svg);
+    mk('line', {x1: tx0, x2: tx1, y1: trackY, y2: trackY, stroke: GL(.45), 'stroke-width': fs * .6, 'stroke-linecap': 'round'}, tr);
+    mk('line', {x1: tx0, x2: tx1, y1: trackY, y2: trackY, stroke: '#10272f', 'stroke-width': fs * .6 - 2.4, 'stroke-linecap': 'round'}, tr);
+    for (let i = 0; i <= 8; i++) { const x = tx0 + (tx1 - tx0) * i / 8; mk('line', {x1: x, x2: x, y1: trackY + fs * .5, y2: trackY + fs * .8, stroke: GL(.45), 'stroke-width': 1.2}, tr); }
+    E.fill = mk('line', {x1: tx0, y1: trackY, y2: trackY, stroke: AMB, 'stroke-width': fs * .22, 'stroke-linecap': 'round'}, tr);
+    const l1 = mk('text', {x: tx0 - fs * .5, y: trackY + fs * 1.75, class: 'lab', 'font-size': fs, fill: GL(.75)}, tr); l1.textContent = 'grown';
+    const l2 = mk('text', {x: tx1 + fs * .5, y: trackY + fs * 1.75, class: 'lab', 'font-size': fs, fill: GL(.75), 'text-anchor': 'end'}, tr); l2.textContent = 'back inside';
+    E.handle = mk('g', {}, tr);
+    E.hint = mk('g', {}, E.handle);
+    const hn = mk('g', {class: 'nudge'}, E.hint);
+    for (let i = 0; i < 2; i++) mk('path', {d: `M${fs * (1.25 + i * .5)},${-fs * .32} l${fs * .3},${fs * .32} l${-fs * .3},${fs * .32}`, fill: 'none', stroke: AMB_L, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 1 - i * .4}, hn);
+    mk('circle', {r: fs * .85, fill: AMB, stroke: AMB_L, 'stroke-width': 1.6}, E.handle);
+    mk('circle', {r: fs * .34, fill: GROUND}, E.handle);
+    mk('path', {d: `M${-fs * .55},${-fs * .35} A${fs * .65},${fs * .65} 0 0 1 ${fs * .1},${-fs * .65}`, fill: 'none', stroke: '#fff', 'stroke-width': 1.3, 'stroke-linecap': 'round', opacity: .7}, E.handle);
+
+    // ---- labels that ride with the robot
+    E.chips = mk('g', {}, svg);
+    const mkChip = col => { const g = mk('g', {opacity: 0}, E.chips); const rect = mk('rect', {rx: fs * .45, fill: 'rgba(5,14,18,.88)', stroke: col, 'stroke-opacity': .7, 'stroke-width': 1}, g); const tx = mk('text', {class: 'lab', 'font-size': fs, fill: col, 'text-anchor': 'middle', 'dominant-baseline': 'central'}, g); return {g, rect, tx, txt: '', w: 0}; };
+    E.tipChip = mkChip(AMB_L); E.mChip = mkChip(CY); E.endChip = mkChip(CY);
+    E.ring = mk('circle', {cx: xs, cy: y0, r: 0, fill: 'none', stroke: CY, 'stroke-width': 2.4, opacity: 0}, svg);
+    render();
+  }
+
+  function P(s) { return E.wall.getPointAtLength(clamp(s, 0, G.rlen)); }
+  function frameAt(s) { const a = P(s - .7), b = P(s + .7), p = P(s); let tx = b.x - a.x, ty = b.y - a.y; const l = Math.hypot(tx, ty) || 1; tx /= l; ty /= l; return {x: p.x, y: p.y, tx, ty, nx: -ty, ny: tx}; }
+
+  function chipAt(c, txt, x, yRow, side, avoid) {
+    if (c.txt !== txt) { c.tx.textContent = txt; c.txt = txt; c.w = c.tx.getComputedTextLength() + G.fs * 1.1; }
+    const h = G.fs * 1.55, w = c.w;
+    for (const sd of [side, -side]) {
+      const cy = yRow + sd * (G.cw / 2 + h / 2 + 4), cx = clamp(x, w / 2 + 2, G.W - w / 2 - 2);
+      const b = {x0: cx - w / 2, x1: cx + w / 2, y0: cy - h / 2, y1: cy + h / 2};
+      if (b.y0 < 1) continue;
+      if (G.obs.some(o => hit(o, b)) || (avoid && hit({x0: avoid.x0 - 6, x1: avoid.x1 + 6, y0: avoid.y0 - G.fs * .4, y1: avoid.y1 + G.fs * .4}, b))) continue;
+      c.rect.setAttribute('x', b.x0); c.rect.setAttribute('y', b.y0); c.rect.setAttribute('width', w); c.rect.setAttribute('height', h);
+      c.tx.setAttribute('x', cx); c.tx.setAttribute('y', cy);
+      c.g.setAttribute('opacity', 1); return b;
+    }
+    c.g.setAttribute('opacity', 0); return null;
+  }
+
+  function render() {
+    if (!G) return;
+    const g = G, L = g.Lmax * (1 - st.p), amb = Kit.calm ? 0 : 1;
+    const br = 1 + amb * (.03 * Math.sin(st.t * 1.8) + st.glow * .05 * Math.sin(st.t * 24));
+    const rwN = g.rw * br, vis = clamp(L / g.rw, 0, 1);
+    E.wall.setAttribute('stroke-width', rwN); E.wallEdge.setAttribute('stroke-width', rwN + 2.4);
+    const big = g.rlen * 2 + 100, dw = Math.max(.01, L - g.rw * .5), dc = Math.max(.01, L - g.rw * .55);
+    E.wall.setAttribute('stroke-dasharray', `${dw} ${big}`); E.wallEdge.setAttribute('stroke-dasharray', `${dw} ${big}`);
+    E.core.setAttribute('stroke-dasharray', `${dc} ${big}`); E.coreEdge.setAttribute('stroke-dasharray', `${dc} ${big}`);
+    E.rob.setAttribute('opacity', vis);
+
+    // material marks: still on the wall, travelling in the core, gone onto the spool
+    let hiInfo = null;
+    g.us.forEach((u, i) => {
+      const e = E.mk[i], isH = i === g.hi;
+      let s, half, w, where;
+      if (u < L) { s = u; half = rwN * .46; w = isH ? 3.6 : 2; where = 'wall';
+        const cap = L - g.rw * .5; if (s > cap) { const k = (s - cap) / (g.rw * .5); half *= Math.sqrt(Math.max(0, 1 - k * k)); } }
+      else if (u < 2 * L) { s = 2 * L - u; half = g.coreW * .8; w = isH ? 4 : 2.6; where = 'core'; }
+      else { e.setAttribute('opacity', 0); if (isH) hiInfo = {where: 'spool'}; return; }
+      const fr = frameAt(s);
+      e.setAttribute('x1', fr.x + fr.nx * half); e.setAttribute('y1', fr.y + fr.ny * half);
+      e.setAttribute('x2', fr.x - fr.nx * half); e.setAttribute('y2', fr.y - fr.ny * half);
+      e.setAttribute('stroke-width', w); e.setAttribute('opacity', isH ? 1 : (where === 'wall' ? .55 : .9));
+      if (isH) { hiInfo = {where, s, fr}; ['x1', 'y1', 'x2', 'y2'].forEach(k => E.hlGlow.setAttribute(k, e.getAttribute(k))); E.hlGlow.setAttribute('stroke-width', w * 2.6); }
+    });
+    E.hlGlow.setAttribute('opacity', hiInfo.where === 'spool' ? 0 : .5);
+
+    // the tip, where the wall turns inside out
+    const tip = frameAt(Math.max(0, L - g.rw * .5)), ang = Math.atan2(tip.ty, tip.tx) * 57.2958;
+    E.fold.setAttribute('transform', `translate(${tip.x},${tip.y}) rotate(${ang})`);
+    E.fold.setAttribute('opacity', st.p > .003 && st.p < .995 ? clamp(.35 + st.glow * 1.4, 0, 1) : 0);
+    E.tipGlow.setAttribute('cx', tip.x + tip.tx * g.rw * .3); E.tipGlow.setAttribute('cy', tip.y + tip.ty * g.rw * .3);
+    E.tipGlow.setAttribute('opacity', clamp(.25 + .15 * amb * Math.sin(st.t * 2.2) + st.glow, 0, 1));
+
+    // the spool winds the tail, layer on layer
+    const hub = g.fr * .17, rsp = g.fr * (.21 + .43 * st.p);
+    E.wound.setAttribute('r', (hub + rsp) / 2); E.wound.setAttribute('stroke-width', Math.max(.5, rsp - hub));
+    E.woundEdge.setAttribute('r', rsp);
+    E.layers.forEach(l => { const rr = hub + (rsp - hub) * l.k; l.el.setAttribute('r', rr); l.el.setAttribute('opacity', rsp - hub > 6 ? .5 : 0); });
+    E.woundShine.setAttribute('d', g.arc(3.6, 4.5, Math.max(hub + 1, rsp - 2)));
+    const rotR = 2 * g.Lmax * st.p / (g.fr * .6);
+    E.spokes.setAttribute('transform', `rotate(${-rotR * 57.2958} ${g.bx} ${g.y0})`);
+    E.tailIn.setAttribute('x1', g.xs); E.tailIn.setAttribute('y1', g.y0);
+    E.tailIn.setAttribute('x2', g.bx); E.tailIn.setAttribute('y2', g.y0 - rsp);
+    E.tailIn.setAttribute('opacity', st.p > .999 ? .4 : .95);
+    if (hiInfo.where === 'spool') {
+      const th = -Math.PI / 2 - (g.us[g.hi] - 2 * L) / (g.fr * .6), rr = rsp * .92;
+      E.hlSpool.setAttribute('cx', g.bx + Math.cos(th) * rr); E.hlSpool.setAttribute('cy', g.y0 + Math.sin(th) * rr); E.hlSpool.setAttribute('opacity', 1);
+    } else E.hlSpool.setAttribute('opacity', 0);
+
+    // the gauge sloshes
+    if (g.mano && E.liq) {
+      const M = g.mano, sl = clamp(st.sl + amb * .07 * Math.sin(st.t * 1.4), -1.4, 1.4);
+      const ym = M.yb - M.mh * .4, d = M.mh * .12 + sl * M.mh * .22;
+      const yL = clamp(ym + d, M.yt + 3, M.yb), yR = clamp(ym - d, M.yt + 3, M.yb);
+      E.liq.setAttribute('d', `M${M.x1},${yL} V${M.yb} A${M.bR},${M.bR} 0 0 0 ${M.x2},${M.yb} V${yR}`);
+      const hw = M.tw * .36;
+      E.menL.setAttribute('x1', M.x1 - hw); E.menL.setAttribute('x2', M.x1 + hw); E.menL.setAttribute('y1', yL + 1); E.menL.setAttribute('y2', yL + 1 + sl * 1.5);
+      E.menR.setAttribute('x1', M.x2 - hw); E.menR.setAttribute('x2', M.x2 + hw); E.menR.setAttribute('y1', yR + 1); E.menR.setAttribute('y2', yR + 1 - sl * 1.5);
+    }
+
+    // glass glints drift along the channel
+    const per = g.glen + 240;
+    E.glint.setAttribute('stroke-dashoffset', -((st.t * 70) % per));
+    E.glint2.setAttribute('stroke-dashoffset', -((st.t * 45 + per * .5) % per));
+
+    // the bar
+    const hx = g.tx0 + st.p * (g.tx1 - g.tx0);
+    E.handle.setAttribute('transform', `translate(${hx},${g.trackY})`);
+    E.fill.setAttribute('x2', hx);
+    E.hint.setAttribute('opacity', st.touched || st.p > .02 ? 0 : 1);
+
+    // labels
+    let tb = null;
+    if (st.p > .004 && L > g.cw * .8) tb = chipAt(E.tipChip, 'tip turns inside out', tip.x, tip.y, -1, null);
+    else E.tipChip.g.setAttribute('opacity', 0);
+    if (hiInfo.where === 'wall' && L - hiInfo.s > g.rw * 1.6) chipAt(E.mChip, 'wall stays put', hiInfo.fr.x, hiInfo.fr.y, 1, tb);
+    else if (hiInfo.where === 'core' && L - hiInfo.s > g.rw * 1.6) chipAt(E.mChip, 'back down the core', hiInfo.fr.x, hiInfo.fr.y, 1, tb);
+    else E.mChip.g.setAttribute('opacity', 0);
+    if (st.p > .995) chipAt(E.endChip, 'all back inside', (g.xs + g.xr) / 2, g.y0, -1, null);
+    else E.endChip.g.setAttribute('opacity', 0);
+
+    if (hiInfo.where !== st.hl) {
+      st.hl = hiInfo.where;
+      if (!st.done && st.hl === 'core') say.innerHTML = 'The blue band reached the tip, <b>turned inside out</b>, and is heading back down the core.';
+      if (!st.done && st.hl === 'spool') say.innerHTML = 'Now it is wound on the spool. <b>Keep pulling.</b>';
+      if (!st.done && st.hl === 'wall') say.innerHTML = 'Drag along the bar to <b>pull the tail</b>. Watch the <b>blue band</b>.';
+    }
+  }
+
+  function setP(v) {
+    v = clamp(v, 0, 1);
+    const dp = v - st.p; st.p = v;
+    if (!Kit.calm) { st.sv += dp * 34; st.glow = Math.min(1, st.glow + Math.abs(dp) * 9); }
+    const t = Math.floor(v * 8 + 1e-6); if (t !== st.tick) { st.tick = t; Kit.haptic('selection'); }
+    if (v >= .995 && !st.done) finish();
+    render();
+  }
+
+  function finish() {
+    st.done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    setTimeout(wow, 160);
+  }
+  function wow() {
+    if (Kit.calm || !G) return;
+    st.sv += 5;
+    gsap.fromTo(E.sweep, {attr: {'stroke-dashoffset': -G.glen}, opacity: .9}, {attr: {'stroke-dashoffset': G.r * 1.6}, duration: 1.3, ease: 'expo.inOut', onComplete: () => gsap.to(E.sweep, {opacity: 0, duration: .4})});
+    gsap.fromTo(E.ring, {attr: {r: 2}, opacity: 1}, {attr: {r: G.r * 1.5}, opacity: 0, duration: 1.1, delay: 1, ease: 'power3.out'});
+    gsap.fromTo(E.spoolWrap, {scale: 1.22, svgOrigin: `${G.bx} ${G.y0}`}, {scale: 1, svgOrigin: `${G.bx} ${G.y0}`, duration: 1.3, delay: 1, ease: 'elastic.out(1,.35)'});
+    gsap.fromTo(E.chips, {opacity: 0}, {opacity: 1, duration: .5, delay: 1.1, ease: 'power2.out'});
+  }
+
+  gsap.ticker.add((time, dms) => {
+    if (!G) return;
+    const d = Math.min(.05, dms / 1000);
+    if (!Kit.calm) st.t = time;
+    const acc = -55 * st.sl - 4.5 * st.sv; st.sv += acc * d; st.sl = clamp(st.sl + st.sv * d, -1.6, 1.6);
+    st.glow *= Math.pow(.05, d);
+    render();
+  });
+
+  const killIntro = () => { if (intro) { intro.kill(); intro = null; } };
+  svg.addEventListener('pointerdown', e => {
+    if (!G) return; killIntro();
+    const rc = svg.getBoundingClientRect(), y = e.clientY - rc.top, x = e.clientX - rc.left;
+    st.touched = true;
+    if (y > G.trackY - G.fs * 1.6) setP((x - G.tx0) / (G.tx1 - G.tx0));
+    drag = {x: e.clientX, p: st.p};
+    svg.setPointerCapture(e.pointerId);
+  });
+  svg.addEventListener('pointermove', e => { if (drag) setP(drag.p + (e.clientX - drag.x) / (G.tx1 - G.tx0)); });
+  const end = () => { drag = null; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G || st.touched) return;
+    gsap.from(E.soil, {opacity: 0, duration: 1.2, ease: 'power1.out'});
+    gsap.from(E.glass.children, {opacity: 0, duration: .7, stagger: .05, ease: 'power2.out'});
+    gsap.from(E.flask, {scale: .7, opacity: 0, svgOrigin: `${G.bx} ${G.y0}`, duration: .8, ease: 'back.out(1.7)'});
+    gsap.from(E.track, {opacity: 0, y: 8, duration: .6, delay: .3, ease: 'power3.out'});
+    const o = {p: 1}; st.p = 1;
+    intro = gsap.to(o, {p: 0, duration: 2.2, delay: .35, ease: 'power2.inOut', onUpdate: () => { st.p = o.p; st.glow = .4; }, onComplete: () => { intro = null; }});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    killIntro(); st.touched = true;
+    for (let i = 1; i <= 20; i++) { setP(i / 20); await wait(Kit.calm ? 5 : 30); }
+    await wait(Kit.calm ? 100 : 900);
+  };
+})();
+Kit.single();
+</script>
+</html>
