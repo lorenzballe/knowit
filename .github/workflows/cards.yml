@@ -9,7 +9,8 @@ name: Write tonight's cards
 # publishes web/cards/v2/cards.json (and each free card's page beside it) and every phone picks it up.
 #
 # Needs two things set once in the repository:
-#   Settings → Secrets → Actions → ANTHROPIC_API_KEY
+#   Settings → Secrets → Actions → ANTHROPIC_API_KEY (and TYPESAFE_API_KEY
+#   for the last look, see tool/quality/last_look.py)
 #   Settings → Actions → General → "Allow GitHub Actions to create and
 #   approve pull requests"
 #
@@ -148,6 +149,18 @@ jobs:
       - name: Send the doubtful ones to a person
         if: steps.go.outputs.run == 'true'
         run: python3 tool/quality/route.py --outcomes cards-outcomes.json --report cards-report.md --today "$(date -u +%F)"
+
+      # TypeSafe has the last word: a card it finds written like a machine's —
+      # a filler opening, praise for itself, a poster's saying, a question
+      # that gives its answer away, nothing concrete — is thrown away, and one
+      # it is not sure about does not go out. A card it could not look at
+      # waits for a person. Needs the TYPESAFE_API_KEY secret; without it the
+      # pull request says the last look was skipped.
+      - name: The last look
+        if: steps.go.outputs.run == 'true' && inputs.fake != true
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+        run: python3 tool/quality/last_look.py --night cards-outcomes.json --report cards-report.md --today "$(date -u +%F)"
 
       - name: Gate the bank again, with the new cards in it, and bundle
         if: steps.go.outputs.run == 'true'
