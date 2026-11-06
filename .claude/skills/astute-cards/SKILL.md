@@ -67,6 +67,11 @@ frame**, never instead of it.
    Fix and re-run.
 3. Hand the screenshots to a separate critic agent, which scores each card with CRITERI.
    Below the bar, back to step 3.
+4. **The last look is TypeSafe's** (the `typesafe-ai` skill explains its API):
+   `python3 tool/quality/last_look.py <id> --shots <screenshot-dir>`. A card it throws away
+   (written like a machine's, mostly empty, text plainly cut) or is unsure about does not
+   go out: rewrite it or drop it. It needs pillow and `TYPESAFE_API_KEY` (in a Claude
+   session the network proxy supplies the key).
 
 ## 6. Show and learn
 - Publish the page for the owner. Cards are in English. Offer an Italian version for judging.

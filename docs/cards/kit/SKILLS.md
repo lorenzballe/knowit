@@ -27,6 +27,7 @@ Le skill si attivano da sole quando il lavoro le chiede. Quali usare per le cart
 | Carta *Video* stile 3Blue1Brown | `mo-manim-composer`, `mo-manimce-best-practices`, `mo-manim-video`, `mo-3b1b-explainers` (Manim: `tool/cards/setup_manim.sh`) |
 | Animazioni Lottie o Rive (leggere, perfette in Flutter) | `mo-lottie-motion-design`, `mo-text-to-lottie`, `mo-rive-interactive` |
 | **Scrivere il testo** | `ct-feynman-technique` (prima il meccanismo, un'analogia onesta), `ct-humanizer` e `ct-avoid-ai-writing` (via i tic da IA) |
+| **L'ultimo controllo sulle carte** | `typesafe-ai` (TypeSafe, installata come plugin del progetto in `.claude/settings.json`): il suo modello Jev risponde a domande sì/no sulla carta e sulle sue foto, e `tool/quality/last_look.py` decide cosa buttare |
 | **Verificare i fatti e le fonti** | `ct-fact-check-workflow`, `ct-source-verification`, `ct-fact-checker`, `ct-scientific-critical-thinking` (quanto è solido uno studio), `ct-citation-management` |
 | Ricerca approfondita su un tema | `ct-research`, `ct-research-deep` |
 | Grafici e dati | `dataviz`, `ct-data-storytelling`, `ct-data-visualization-discipline` |

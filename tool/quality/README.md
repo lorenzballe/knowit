@@ -9,6 +9,7 @@ cards that are already out.
 
     confidence.py   how far a new card can be trusted without a person, and why not more
     route.py        after the night: the doubtful cards and a sample of the rest to a person
+    last_look.py    the last word, TypeSafe's: what reads as written by a machine is thrown away
     review.py       the cards waiting for a person, as an issue checklist, and what a tick does
     mutate.py       errors planted in good cards: a figure off by ten, the wrong option marked right
     evalset.py      the set the critic is measured on, and how its answers are scored
@@ -32,6 +33,21 @@ cards that are already out.
    the rest as a spot check, leave the bank for `tool/cards/review/`. The
    rest go out with the night's pull request — merged by hand, or by itself
    when the repository variable `CARDS_AUTOMERGE` is `true`.
+   **Then TypeSafe has the last look** (`last_look.py`) at every card the
+   night wrote, wherever routing left it. Its model, Jev, answers a few
+   yes-or-no questions a reader would answer at a glance — does the answer
+   open on a filler phrase, does the card praise itself, is the line to keep
+   a poster's saying, does the question give its answer away, is there
+   nothing concrete in it — and the code decides: a clear yes throws the card
+   away, a question it is not sure about keeps the card out, and a card it
+   could not look at waits for a person. With photographs of the card
+   (`--shots`, from `tool/cards/card_check.cjs` or `tool/card_shots.dart`) it
+   also throws away a card that is mostly empty or whose text is plainly cut
+   or overlapping; the measuring stays the program's. Whether a card is
+   *beautiful* is asked and written down, and decides nothing until it has
+   been measured against the owner's verdicts: on the bank, Jev gave a card
+   and the same card spoiled with a machine's phrases nearly the same marks.
+   Needs the `TYPESAFE_API_KEY` secret; without it the night says it skipped.
 4. **A person reads them** in the issue labelled `cards-review`, each card
    shown whole with **Publish** and **Drop** under it. A tick runs
    `.github/workflows/review.yml`: Publish puts the card in the bank with
