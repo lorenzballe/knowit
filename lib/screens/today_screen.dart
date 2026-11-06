@@ -11,6 +11,7 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import '../data/topics.dart';
 import '../widgets/magic_card.dart';
+import '../data/pills_repository.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
@@ -332,6 +333,32 @@ class _TodayScreenState extends State<TodayScreen> {
 }
 
 /// The header while the day is being read.
+/// Today before its day has come: the same screen in the same places, the
+/// word Today and the bars, with the deck in grey where the cards will
+/// stand. The app opens on it at once, as a feed opens on the outline of its
+/// posts, and the day lands in the room it kept.
+class TodaySkeleton extends StatelessWidget {
+  const TodaySkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // The padding, the header and the gaps of [_TodayScreenState._reading].
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(kDeckMargin, 10, kDeckMargin, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _ReadingHeader(streak: 0),
+          SizedBox(height: 16),
+          _ProgressBars(total: kPillsPerDay, index: 0),
+          SizedBox(height: 16),
+          Expanded(child: DeckSkeleton()),
+        ],
+      ),
+    );
+  }
+}
+
 class _ReadingHeader extends StatelessWidget {
   final int streak;
   final bool frozen;

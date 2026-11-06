@@ -875,86 +875,115 @@ class _Front extends StatelessWidget {
   Widget build(BuildContext context) {
     final item = scene.items[index];
     final small = AppText.label(size: 10.5, color: ink.withValues(alpha: 0.62));
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(18, 14, 18, 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return LayoutBuilder(
+      builder: (context, slip) {
+        // A slip drawn small, on a card shown in a shelf rather than on the
+        // table, keeps its word: the hint goes first, then the head, before
+        // anything would spill. Measured against the text size, which grows
+        // the head and the hint with it.
+        final double h = slip.maxHeight;
+        final double scale = MediaQuery.textScalerOf(context).scale(10) / 10;
+        final bool head = !h.isFinite || h >= 96 * scale;
+        final bool hint = !h.isFinite || h >= 150 * scale;
+        final bool roomy = head;
+        return Padding(
+          padding: EdgeInsets.fromLTRB(18, roomy ? 14 : 6, 18, roomy ? 12 : 6),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // A long tag beside a long count ("1 VON 6") takes a second
-              // line rather than losing its end.
-              Expanded(
-                child: Text(
-                  scene.tag.toUpperCase(),
-                  maxLines: 2,
-                  style: small,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                context.l10n
-                    .sceneNOfM(index + 1, scene.items.length)
-                    .toUpperCase(),
-                style: small.copyWith(fontWeight: FontWeight.w800, color: ink),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Container(height: 1.5, color: ink.withValues(alpha: 0.2)),
-          // The word and its note as one block in the middle of the slip,
-          // the word as large as the room allows: a poster on a tall phone.
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, box) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: _FitText(
-                      text: item.text,
-                      max: (box.maxHeight * 0.3).clamp(40.0, 84.0),
-                      min: 20,
-                      lines: 2,
-                      shrink: true,
-                      style: (s) => AppText.display(
-                        size: s,
-                        weight: FontWeight.w800,
-                        height: 1.0,
-                        spacing: -s * 0.025,
+              if (head) ...[
+                Row(
+                  children: [
+                    // A long tag beside a long count ("1 VON 6") is set a little
+                    // smaller rather than losing its end. Never a second line: a
+                    // slip drawn small, on a card in a shelf, has no room for one.
+                    Expanded(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          scene.tag.toUpperCase(),
+                          maxLines: 1,
+                          softWrap: false,
+                          style: small,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      context.l10n
+                          .sceneNOfM(index + 1, scene.items.length)
+                          .toUpperCase(),
+                      style: small.copyWith(
+                        fontWeight: FontWeight.w800,
                         color: ink,
                       ),
                     ),
-                  ),
-                  if (item.note.isNotEmpty) ...[
-                    SizedBox(height: box.maxHeight > 220 ? 14 : 8),
-                    Text(
-                      item.note,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.body(
-                        size: box.maxHeight > 220 ? 17 : 14.5,
-                        weight: FontWeight.w500,
-                        height: 1.3,
-                        color: ink.withValues(alpha: 0.82),
-                      ),
-                    ),
                   ],
-                ],
+                ),
+                const SizedBox(height: 8),
+                Container(height: 1.5, color: ink.withValues(alpha: 0.2)),
+              ],
+              // The word and its note as one block in the middle of the slip,
+              // the word as large as the room allows: a poster on a tall phone.
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, box) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: _FitText(
+                          text: item.text,
+                          max: (box.maxHeight * 0.3).clamp(40.0, 84.0),
+                          min: 20,
+                          lines: 2,
+                          shrink: true,
+                          style: (s) => AppText.display(
+                            size: s,
+                            weight: FontWeight.w800,
+                            height: 1.0,
+                            spacing: -s * 0.025,
+                            color: ink,
+                          ),
+                        ),
+                      ),
+                      if (item.note.isNotEmpty &&
+                          box.maxHeight > 72 * scale) ...[
+                        SizedBox(height: box.maxHeight > 220 ? 14 : 8),
+                        Text(
+                          item.note,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.body(
+                            size: box.maxHeight > 220 ? 17 : 14.5,
+                            weight: FontWeight.w500,
+                            height: 1.3,
+                            color: ink.withValues(alpha: 0.82),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Text('← ', style: small.copyWith(letterSpacing: 0)),
-              Text(context.l10n.sceneSwipeHint.toUpperCase(), style: small),
-              Text(' →', style: small.copyWith(letterSpacing: 0)),
+              if (hint) ...[
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Text('← ', style: small.copyWith(letterSpacing: 0)),
+                    Text(
+                      context.l10n.sceneSwipeHint.toUpperCase(),
+                      style: small,
+                    ),
+                    Text(' →', style: small.copyWith(letterSpacing: 0)),
+                  ],
+                ),
+              ],
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

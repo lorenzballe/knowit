@@ -352,8 +352,8 @@ void main() {
           ('archive', const <String, Object>{}),
           ('see the plans', const <String, Object>{}),
         ]) {
-          // The longest the small print gets: the trial's three days, the
-          // reminder among them, and how to cancel under them.
+          // The small print at its fullest: one line under the button, and
+          // the three links.
           await open(
             tester,
             source,
@@ -371,7 +371,6 @@ void main() {
           ]) {
             expect(find.text(perk), findsOneWidget, reason: '$source $perk');
           }
-          expect(find.byKey(const ValueKey('paywall-trial')), findsOneWidget);
           expect(find.byKey(const ValueKey('paywall-cancel')), findsOneWidget);
           expect(find.text(l.restorePurchases), findsOneWidget);
           expect(find.byType(Scrollable), findsNothing);
@@ -380,133 +379,48 @@ void main() {
     }
   });
 
-  group('a trial is told as its days', () {
-    final Finder timeline = find.byKey(const ValueKey('paywall-trial'));
+  group('under the button, one line and the links', () {
+    // The owner asked for the room back: no trial calendar, no lines of
+    // terms. The price and the plan are on the button and the tiles.
+    final Finder line = find.byKey(const ValueKey('paywall-cancel'));
 
-    testWidgets('a debug build with no store: the plan as sold, two weeks', (
-      tester,
-    ) async {
-      await open(tester, 'see the plans', notifies: true);
-      expect(timeline, findsOneWidget);
-      for (final String step in const [
-        'Today · all of Astute+, free',
-        'Day 12 · we remind you',
-        'Day 14 · €29,99 a year, renewing automatically until you cancel',
-      ]) {
-        expect(
-          find.descendant(of: timeline, matching: find.text(step)),
-          findsOneWidget,
-        );
-      }
-      // Said once: the days say what "no charge today" used to.
-      expect(find.textContaining('No charge today'), findsNothing);
-      // And how to stop it, before anything has started.
-      expect(
-        find.text(
-          'Cancel any time in Google Play › Payments & subscriptions › '
-          'Subscriptions, at least 24 hours before it renews.',
-        ),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('the reminder is promised only where it can reach the reader', (
-      tester,
-    ) async {
-      // A phone that has not let the app notify: the reminder would be a
-      // notification nobody sees, so the days do not promise one.
-      await open(tester, 'see the plans');
-      expect(timeline, findsOneWidget);
-      expect(find.textContaining('we remind you'), findsNothing);
-      expect(
-        find.text(
-          'Day 14 · €29,99 a year, renewing automatically until you cancel',
-        ),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('the store\'s own days and its own price', (tester) async {
+    testWidgets('a trial: its days and price on the button, one line under '
+        'it', (tester) async {
       store.answerForTest(
         offering: _yearAt('\$29.99', intro: _freeFor(PeriodUnit.week, 1)),
       );
       await open(tester, 'journey', notifies: true);
-      expect(find.text('Day 5 · we remind you'), findsOneWidget);
       expect(
-        find.text(
-          'Day 7 · \$29.99 a year, renewing automatically until you cancel',
+        find.descendant(
+          of: find.byKey(const ValueKey('paywall-buy')),
+          matching: find.textContaining('\$29.99'),
         ),
         findsOneWidget,
       );
-      expect(find.textContaining('€29,99'), findsNothing);
+      expect(line, findsOneWidget);
+      expect(find.text('Cancel any time'), findsOneWidget);
+      for (final String gone in const [
+        'we remind you',
+        'renewing automatically',
+        'at least 24 hours',
+      ]) {
+        expect(find.textContaining(gone), findsNothing, reason: gone);
+      }
+      expect(find.text('Restore purchases'), findsOneWidget);
+      expect(find.text('Terms of Use'), findsOneWidget);
+      expect(find.text('Privacy Policy'), findsOneWidget);
       expect(sink.last('paywall shown')!['store'], 'ready');
-      expect(sink.last('paywall shown')!['store_answered'], isTrue);
     });
 
-    testWidgets('a trial too short for a reminder has no day for it', (
-      tester,
-    ) async {
-      store.answerForTest(
-        offering: _yearAt('\$29.99', intro: _freeFor(PeriodUnit.day, 2)),
-      );
-      await open(tester, 'archive', notifies: true);
-      expect(timeline, findsOneWidget);
-      expect(find.textContaining('we remind you'), findsNothing);
-      expect(
-        find.text(
-          'Day 2 · \$29.99 a year, renewing automatically until you cancel',
-        ),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('no trial on sale, none shown', (tester) async {
+    testWidgets('no trial on sale: the same one line', (tester) async {
       store.answerForTest(offering: _yearAt('\$29.99'));
       await open(tester, 'sixth card');
-      expect(timeline, findsNothing);
-      expect(
-        find.text(
-          '\$29.99/yr charged today, renewing automatically until you cancel',
-        ),
-        findsOneWidget,
-      );
-      expect(find.byKey(const ValueKey('paywall-cancel')), findsOneWidget);
+      expect(line, findsOneWidget);
+      expect(find.textContaining('charged today'), findsNothing);
       // Only the year is on sale, so only the year is shown: no month at a
       // price the store never gave.
       expect(find.text('Monthly'), findsNothing);
       expect(find.textContaining('€'), findsNothing);
-    });
-
-    testWidgets('none for a reader the store says has had it', (tester) async {
-      store.answerForTest(
-        offering: _yearAt('\$29.99', intro: _freeFor(PeriodUnit.week, 2)),
-        yearlyEligibility:
-            IntroEligibilityStatus.introEligibilityStatusIneligible,
-      );
-      await open(tester, 'journey');
-      expect(timeline, findsNothing);
-      expect(find.textContaining('days free'), findsNothing);
-    });
-
-    testWidgets('none for the month, which starts without one', (tester) async {
-      await open(tester, 'see the plans');
-      expect(timeline, findsOneWidget);
-      await tester.tap(find.text('Monthly'));
-      for (var i = 0; i < 4; i++) {
-        await tester.pump(const Duration(milliseconds: 100));
-      }
-      expect(timeline, findsNothing);
-      expect(
-        find.text(
-          '€3,99/mo charged today, renewing automatically until you cancel',
-        ),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('none for a reader already on Astute+', (tester) async {
-      await open(tester, 'manage plan', plus: true);
-      expect(timeline, findsNothing);
     });
   });
 
@@ -561,20 +475,15 @@ void main() {
       expect(find.text('Try 7 days free, then \$29.99/yr'), findsOneWidget);
     });
 
-    testWidgets('on an iPhone: the App Store, and Settings to cancel', (
+    testWidgets('on an iPhone: the App Store, then its price and one line', (
       tester,
     ) async {
       await open(tester, 'sixth card');
       expect(find.text('Couldn’t reach the App Store'), findsOneWidget);
       store.answerForTest(offering: _yearAt('\$29.99'));
       await tester.pump();
-      expect(
-        find.text(
-          'Cancel any time in Settings › your name › Subscriptions, at least '
-          '24 hours before it renews.',
-        ),
-        findsOneWidget,
-      );
+      expect(find.text('Cancel any time'), findsOneWidget);
+      expect(find.textContaining('Settings ›'), findsNothing);
     }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
 
     test('the terms are Apple’s on an iPhone and the site’s elsewhere', () {
