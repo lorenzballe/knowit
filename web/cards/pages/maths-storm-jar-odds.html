@@ -1,490 +1,258 @@
 <!doctype html>
-<!-- slug: maths-storm-jar-odds -->
-<!-- Look: paper cut-out collage on a night-storm blue: Citicorp on its stilts against a torn-paper skyline, an open glass jar of torn paper year-slips with a hand-written label, one red storm slip, all boiling like stop-motion.
-     Interaction: drag the flag along a 120-year timeline. The jar fills or empties to one slip per year of your guess, while bolts mark each storm on the line.
-     Wow: the reveal pours the jar to 67 slips. Then you cut the power: the damper in the crown goes dark, rain and wind tear past, lightning cracks, 51 slips drop through the floor and storms crowd the timeline at 1 in 16. -->
+<!-- slug: maths-storm-odds -->
+<!-- Thought to carry: "once every N years" is an average, not a schedule. If each year is its own independent draw, the odds of being hit within N years are about 2 in 3.
+     Both figures from the video sit together: with the damper working, such a storm came every 67 years on average; with its power out, the chance was 1 in 16 in any given year.
+     Front: the Citicorp tower on its stilts, with a tiny person at its foot. The tower is the gauge: drag up it to fill it to your odds (never at the stilts, certain at the crown).
+     Back: Matter.js drops 48 balls, each one possible 16-year run with the damper unpowered. 31 land in "a storm hit" and 17 in "16 calm years", then a bar sets the real 64% against your guess.
+     The front shows no number but yours: no true line, no count, no verdict until the card turns. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>The storm in the jar</title>
+<title>The 1-in-16 storm</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/matter.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-#cut{align-self:flex-start}
-.say b{color:#f2b632}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* the unturned back is mirrored, so its source would sit in the save and share corner: keep it out of view until the turn reaches halfway */
+.turn>.back{visibility:hidden;transition:visibility 0s linear .37s}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn,.kit-calm .turn>.back{transition:none}
+.face{gap:1.2cqh}
+.face .stagebox{flex:1 1 auto;min-height:0;position:relative}
+#pic,#pic2{position:absolute;inset:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.back .big{margin:0}
+.back .body{margin:0;font-size:max(1.75cqh,12px);line-height:1.3}
+.say{overflow-wrap:break-word;margin:0}
+.front .foot.spacer{flex:0 0 auto;min-height:max(6cqh,44px)}
+/* keep the source clear of the save and share corner */
+.back .foot{padding-right:100px;box-sizing:border-box;min-height:44px}
+.back .foot .src{display:block;max-width:100%;font-size:max(1.5cqh,12px);line-height:1.3}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Drag to guess · how sure" style="--c:#22314b;--k:#f6efe0;--edge:#131c2d">
+<article class="card" id="card" data-topic="maths" data-kind="Drag your odds · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">1 IN N</span></div>
-    <h2 class="q">How often does a storm strong enough to topple Citicorp hit?</h2>
-    <div class="stagebox" id="stage">
-      <canvas id="pic" role="img" aria-label="A 120-year timeline with a draggable flag, the Citicorp tower on its stilts in a storm, and a glass jar of paper slips, one per year, one of them a red storm slip."></canvas>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ODDS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">A 1-in-16 chance, any given year, of a storm that topples Citicorp. Odds of one within 16 years?</h2>
+        <p class="say" id="say">With the damper working, such storms came every 67 years on average. Its power is out. <b>Drag up the tower</b> to set your odds.</p>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="The Citicorp tower on its stilts, used as a gauge: drag up it to set your odds."></svg></div>
+        <div id="sure"></div>
+        <div class="foot spacer" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">About 2 in 3: 64%</p>
+        <div class="stagebox"><canvas id="pic2" role="img" aria-label="48 balls, each a run of 16 years: 31 fall into the storm-hit bin, 17 into the calm bin."></canvas></div>
+        <p class="body">Each ball is one run of 16 years. If each year is its own 1-in-16 draw, unaffected by the last, all 16 stay calm only (15/16)<sup>16</sup> ≈ 36% of the time.</p>
+        <div class="keep"><b>WHAT TO KEEP</b>Every 67 years with the damper on, 1 in 16 a year with it off. Either way, “once every N years” means about 2 in 3 odds within N years.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)</span></div>
+      </section>
     </div>
-    <div id="sure"></div>
-    <p class="say" id="say"><b>Drag the flag:</b> once every how many years? The jar holds one slip per year, and each year the sky draws one.</p>
-    <button class="btn gone" id="cut">Now cut the power</button>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>“Once every N years” means a 1-in-N chance each year, and it can come any year.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  const {Engine, Bodies, Composite, Body} = Matter;
-  const cv = Kit.$('pic'), say = Kit.$('say'), cutBtn = Kit.$('cut');
-  const INK = '#f6efe0', RED = '#e4532f', MUST = '#f2b632', DEEP = '#16223a', GLASS = '#6f88a8';
-  const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || 'monospace';
-  let MONO = 'monospace', HAND = 'cursive';
-  const TONES = ['#efe6d2', '#e8dcc2', '#f5eee0', '#dde5ec', '#eadfca'];
-  const YEARS = 120, ANSWER = 67;
+  const card = Kit.$('card'), svg = Kit.$('pic');
+  const RED = '#d8432b';
+  const TRUE = 1 - Math.pow(15 / 16, 16);               // 0.644: at least one 1-in-16 year among 16, years independent
+  const N = 48, HIT = Math.round(N * TRUE);             // 31 of 48 runs
+  let g = null, answered = false, turned = false, F = {};
+  const css = v => getComputedStyle(card).getPropertyValue(v).trim();
 
-  let ctx = null, W = 0, H = 0, fs = 12, G = {}, engine = null, slips = [], grain = null, boil = 0;
-  let guess = 30, target = 0, phase = 'guess', touched = false, armed = false, dragging = false, started = false;
-  let bolts = [], flags = [];
-  const st = {tl: 1, tower: 1, jar: 1, power: 1, wind: 0, pulse: 0};
-  let line1 = '1 storm slip in 30', line2 = 'each year, the sky draws one';
-
-  const mul = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-  function torn(pts, amp, seed, step = 6) {
-    const r = mul(seed), p = new Path2D(); let first = true;
-    for (let i = 0; i < pts.length; i++) {
-      const [x0, y0] = pts[i], [x1, y1] = pts[(i + 1) % pts.length];
-      const L = Math.hypot(x1 - x0, y1 - y0) || 1, n = Math.max(1, Math.round(L / step)), nx = -(y1 - y0) / L, ny = (x1 - x0) / L;
-      for (let k = 0; k < n; k++) {
-        const t = k / n, o = (r() - .5) * 2 * amp, x = x0 + (x1 - x0) * t + nx * o, y = y0 + (y1 - y0) * t + ny * o;
-        if (first) { p.moveTo(x, y); first = false; } else p.lineTo(x, y);
-      }
+  // ---------- front: the tower as a gauge ----------
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': F.fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
+  function front() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 26));
+    const GY = H - fs * 1.2, top = fs * 1.2;
+    const tw = Math.min(W * .28, (GY - top) * .24), x0 = W * .26, x1 = x0 + tw;
+    const stiltTop = GY - (GY - top) * .14, drop = tw * .7;
+    F = {fs, W, H, GY, top, x0, x1, stiltTop};
+    // ground
+    Kit.mk('line', {x1: W * .04, x2: W * .96, y1: GY, y2: GY, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    // stilts: one at each side, one in the middle of the face
+    const sw = tw * .11;
+    [x0, x0 + tw / 2 - sw / 2, x1 - sw].forEach(sx => Kit.mk('rect', {x: sx, y: stiltTop, width: sw, height: GY - stiltTop, fill: 'var(--k)'}, svg));
+    // the slab with its slanted crown
+    const pts = `${x0},${stiltTop} ${x1},${stiltTop} ${x1},${top + drop} ${x0},${top}`;
+    const defs = Kit.mk('defs', {}, svg), cp = Kit.mk('clipPath', {id: 'slab'}, defs);
+    Kit.mk('polygon', {points: pts}, cp);
+    const body = Kit.mk('g', {'clip-path': 'url(#slab)'}, svg);
+    Kit.mk('polygon', {points: pts, fill: '#fff', 'fill-opacity': .5}, body);
+    for (let y = stiltTop - 5; y > top; y -= 7) Kit.mk('line', {x1: x0, x2: x1, y1: y, y2: y, stroke: 'var(--k)', 'stroke-opacity': .18, 'stroke-width': 1}, body);
+    if (g !== null) {
+      const gy = stiltTop - g / 100 * (stiltTop - top);
+      Kit.mk('rect', {x: x0, y: gy, width: tw, height: stiltTop - gy, fill: 'var(--k)'}, body);
+      F.gy = gy;
     }
-    p.closePath(); return p;
-  }
-  const tri = (pts, amp, seed, step) => [0, 1, 2].map(v => torn(pts, amp, seed * 7 + v * 131, step));
-  function piece(paths, fill, sh = 3, ga = .35) {
-    const p = Array.isArray(paths) ? paths[boil] : paths;
-    if (sh > 0) { ctx.save(); ctx.translate(sh * .6, sh); ctx.fillStyle = 'rgba(4,8,18,.45)'; ctx.fill(p); ctx.restore(); }
-    ctx.fillStyle = fill; ctx.fill(p);
-    if (grain && ga > 0) { ctx.globalAlpha *= ga; ctx.fillStyle = grain; ctx.fill(p); ctx.globalAlpha /= ga; }
-  }
-  const xOf = y => G.x0 + (G.x1 - G.x0) * y / YEARS;
-
-  function makeGrain() {
-    const c = document.createElement('canvas'); c.width = c.height = 90;
-    const g = c.getContext('2d'), r = mul(9);
-    for (let i = 0; i < 900; i++) { g.fillStyle = r() < .5 ? 'rgba(60,40,20,.16)' : 'rgba(255,255,255,.2)'; g.fillRect(r() * 90, r() * 90, 1 + r() * 1.4, 1); }
-    for (let i = 0; i < 14; i++) { g.strokeStyle = 'rgba(80,60,40,.12)'; g.beginPath(); const x = r() * 90, y = r() * 90; g.moveTo(x, y); g.lineTo(x + r() * 14 - 7, y + r() * 6 - 3); g.stroke(); }
-    grain = ctx.createPattern(c, 'repeat');
-  }
-  function blob(cx, cy, rx, ry, seed) {
-    const r = mul(seed), pts = [];
-    for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2, k = .78 + r() * .36, s = Math.sin(a); pts.push([cx + Math.cos(a) * rx * k, cy + s * ry * k * (s > 0 ? .5 : 1)]); }
-    return tri(pts, 1.5, seed, 6);
-  }
-
-  // ---------- layout & world ----------
-  function layout() {
-    MONO = cssv('--mono'); HAND = cssv('--hand');
-    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(17, Math.min(W / 24, H / 21)));
-    makeGrain();
-    const pad = Math.max(16, W * .05);
-    const TL = fs * 2.85, y0 = TL + fs * 2.45, GY = H - fs * 1.55, sh = Math.max(20, GY - y0);
-    const tx = pad, tw = Math.max(30, Math.min(W * .24, sh * .3));
-    const top = y0 + fs * .2, crownH = Math.min(tw * .85, sh * .28);
-    const crownBase = top + crownH, stiltTop = GY - Math.max(fs * .9, sh * .14);
-    const jx = tx + tw + Math.max(fs * 1.4, W * .07), jr = W - pad, jTop = y0 + fs * .7, jBot = GY - 2;
-    G = {pad, TL, y0, GY, sh, tx, tw, top, crownH, crownBase, stiltTop, jx, jr, jTop, jBot, x0: pad, x1: W - pad};
-    const A = (jr - jx) * (jBot - jTop), sa = A * .78 * .6 / YEARS;
-    G.sw = Math.sqrt(sa * 1.9); G.sh = G.sw / 1.9;
-
-    G.ground = tri([[-6, GY], [W + 6, GY], [W + 6, H + 8], [-6, H + 8]], 2.2, 11, 7);
-    G.strip = tri([[G.x0 - 6, TL - fs * .2], [G.x1 + 6, TL - fs * .2], [G.x1 + 6, TL + fs * .2], [G.x0 - 6, TL + fs * .2]], 1.3, 12, 6);
-    G.body = tri([[tx, crownBase], [tx + tw, crownBase], [tx + tw, stiltTop], [tx, stiltTop]], 1.3, 13, 7);
-    G.crown = tri([[tx, crownBase + 1], [tx, crownBase - crownH * .1], [tx + tw, crownBase - crownH], [tx + tw, crownBase + 1]], 1.3, 14, 7);
-    const wx0 = tx + tw * .4, wx1 = tx + tw * .9, wy0 = crownBase - crownH * .36, wy1 = crownBase - crownH * .07;
-    G.win = {x0: wx0, x1: wx1, y0: wy0, y1: wy1};
-    G.winP = tri([[wx0, wy0], [wx1, wy0], [wx1, wy1], [wx0, wy1]], .7, 25, 4);
-    const cw = tw * .22, ew = tw * .12;
-    G.cols = [
-      tri([[tx + tw / 2 - cw / 2, stiltTop - 2], [tx + tw / 2 + cw / 2, stiltTop - 2], [tx + tw / 2 + cw / 2, GY + 2], [tx + tw / 2 - cw / 2, GY + 2]], 1, 15, 6),
-      tri([[tx + 2, stiltTop - 2], [tx + 2 + ew, stiltTop - 2], [tx + 2 + ew, GY + 2], [tx + 2, GY + 2]], 1, 16, 6),
-      tri([[tx + tw - 2 - ew, stiltTop - 2], [tx + tw - 2, stiltTop - 2], [tx + tw - 2, GY + 2], [tx + tw - 2 - ew, GY + 2]], 1, 17, 6)];
-    const chx = tx + ew + 5, chw = tw / 2 - cw / 2 - ew - 8, chh = (GY - stiltTop) * .62;
-    G.church = chw > 6 ? tri([[chx, GY], [chx, GY - chh * .6], [chx + chw / 2, GY - chh], [chx + chw, GY - chh * .6], [chx + chw, GY]], .8, 18, 4) : null;
-    // lit windows in the glass bands
-    const band = Math.max(5, fs * .48), rr = mul(51); G.band = band; G.lit = [];
-    for (let y = crownBase + band * .6; y < stiltTop - band * .4; y += band)
-      for (let k = 0; k < 3; k++) if (rr() < .3) G.lit.push([tx + rr() * tw * .85, y + band * .08, tw * .1, band * .34, rr() * 6]);
-    // a torn-paper skyline and storm clouds behind
-    const r = mul(31); G.city = []; let x = -4;
-    while (x < W) {
-      const w = fs * (1.1 + r() * 1.6), inJar = x + w > jx && x < jr;
-      const h = Math.min(sh * .36, fs * (inJar ? .7 + r() * 1.4 : 1.4 + r() * 2.6));
-      const wins = []; for (let k = 0; k < 4; k++) if (r() < .55) wins.push([x + w * (.2 + r() * .6), GY - h * (.2 + r() * .65), r() * 6]);
-      G.city.push({p: tri([[x, GY + 2], [x, GY - h], [x + w, GY - h], [x + w, GY + 2]], 1, 40 + G.city.length, 6), wins});
-      x += w + fs * (.1 + r() * .4);
-    }
-    G.c1 = {x: tx + tw * 1.05, y: top + fs * 1.3, rx: tw * .85, ry: fs * .95};
-    G.c2 = {x: (tx + tw + jx) / 2 + fs * .4, y: top + crownH + fs * 1.6, rx: Math.max(fs * 1.4, tw * .45), ry: fs * .7};
-    G.cloud1 = blob(G.c1.x, G.c1.y, G.c1.rx, G.c1.ry, 61);
-    G.cloud2 = blob(G.c2.x, G.c2.y, G.c2.rx, G.c2.ry, 62);
-    // the jar: open glass, torn paper edges
-    G.rim = tri([[jx - 5, jTop - fs * .35], [jr + 5, jTop - fs * .35], [jr + 5, jTop + fs * .12], [jx - 5, jTop + fs * .12]], 1.2, 20, 6);
-    G.sideL = tri([[jx - 3, jTop], [jx + 1, jTop], [jx + 1, jBot + 2], [jx - 3, jBot + 2]], .8, 21, 7);
-    G.sideR = tri([[jr - 1, jTop], [jr + 3, jTop], [jr + 3, jBot + 2], [jr - 1, jBot + 2]], .8, 22, 7);
-    G.floor = tri([[jx - 3, jBot], [jr + 3, jBot], [jr + 3, jBot + 4], [jx - 3, jBot + 4]], .8, 23, 7);
-    G.shine = tri([[jx + 6, jTop + fs * .7], [jx + 10, jTop + fs * .7], [jx + 10, jBot - fs * 1.2], [jx + 6, jBot - fs * 1.2]], .8, 24, 7);
-    G.shine2 = tri([[jr - 9, jTop + fs * 1.2], [jr - 7, jTop + fs * 1.2], [jr - 7, jTop + fs * 3], [jr - 9, jTop + fs * 3]], .6, 26, 5);
-    // ruler marks on the glass: every 20 slips
-    buildWorld();
-    draw(performance.now());
-  }
-
-  function buildWorld() {
-    const keep = slips.filter(s => !s.out).map(s => s.storm);
-    engine = Engine.create(); engine.gravity.y = 1; engine.positionIterations = 8; engine.velocityIterations = 6;
-    const {jx, jr, jBot} = G, T = 80;
-    Composite.add(engine.world, [
-      Bodies.rectangle((jx + jr) / 2, jBot + T / 2, jr - jx + T * 2, T, {isStatic: true, friction: .7}),
-      Bodies.rectangle(jx - T / 2, jBot - H, T, H * 2, {isStatic: true, friction: .3}),
-      Bodies.rectangle(jr + T / 2, jBot - H, T, H * 2, {isStatic: true, friction: .3})]);
-    slips = [];
-    const cols = Math.max(1, Math.floor((jr - jx - 4) / (G.sw * 1.04)));
-    keep.forEach((s, i) => { const c = i % cols, r = Math.floor(i / cols); addSlip(jx + 2 + G.sw * .52 + c * G.sw * 1.04, jBot - G.sh * (r + .55) * 1.04, s, 0); });
-  }
-
-  function addSlip(x, y, storm, ang) {
-    const w = G.sw, h = G.sh;
-    const b = Bodies.rectangle(x, y, w, h, {angle: ang, friction: .5, frictionAir: .012, restitution: .08, density: .002, chamfer: {radius: Math.min(3, h * .2)}});
-    Composite.add(engine.world, b);
-    const seed = (Kit.rnd() * 1e6) | 0;
-    slips.push({b, storm, out: false, paths: tri([[-w / 2, -h / 2], [w / 2, -h / 2], [w / 2, h / 2], [-w / 2, h / 2]], Math.max(.5, h * .07), seed, 4), tone: TONES[(Kit.rnd() * TONES.length) | 0], l: .3 + Kit.rnd() * .5});
-  }
-
-  function manage(fast) {
-    const live = slips.filter(s => !s.out); let n = live.length;
-    let hasStorm = live.some(s => s.storm);
-    if (n < target) {
-      const k = fast ? 3 : (target - n > 18 ? 2 : 1);
-      for (let i = 0; i < k && n < target; i++, n++) {
-        let storm = false;
-        if (!hasStorm && n >= Math.min(3, target - 1)) { storm = true; hasStorm = true; }
-        addSlip(G.jx + G.sw * .7 + Kit.rnd() * (G.jr - G.jx - G.sw * 1.4), G.jTop - G.sh * (2 + Kit.rnd() * 3), storm, (Kit.rnd() - .5) * 1.4);
-      }
-    } else if (n > target) {
-      const calm = live.filter(s => !s.storm);
-      for (let i = calm.length - 1; i > 0; i--) { const j = (Kit.rnd() * (i + 1)) | 0; [calm[i], calm[j]] = [calm[j], calm[i]]; }
-      calm.slice(0, n - target).forEach(s => { s.out = true; s.b.collisionFilter.mask = 0; Body.setVelocity(s.b, {x: (Kit.rnd() - .5) * 2, y: 1 + Kit.rnd() * 2}); });
-    }
-    for (const s of slips) if (s.out && s.b.position.y > H + 80) Composite.remove(engine.world, s.b);
-    slips = slips.filter(s => !(s.out && s.b.position.y > H + 80));
-  }
-  function settle() {
-    for (let i = 0; i < 520; i++) { manage(true); Engine.update(engine, 1000 / 60); }
-    slips.filter(s => s.out).forEach(s => Composite.remove(engine.world, s.b));
-    slips = slips.filter(s => !s.out);
-  }
-
-  function setBolts(iv, anim) {
-    bolts = [];
-    for (let k = iv; k <= YEARS; k += iv) bolts.push({yr: k, s: anim && !Kit.calm ? 0 : 1});
-    if (anim && !Kit.calm) gsap.to(bolts, {s: 1, duration: .55, ease: 'back.out(3)', stagger: .09, delay: .15});
-  }
-
-  // ---------- drawing ----------
-  function boltPath(x, y, s) {
-    const P = [[.15, -1], [-.38, .12], [.02, .12], [-.16, 1], [.42, -.18], [.02, -.18]];
-    const p = new Path2D(); P.forEach(([a, b], i) => p[i ? 'lineTo' : 'moveTo'](x + a * s, y + b * s)); p.closePath(); return p;
-  }
-
-  function flagBox(yr, txt) {
-    ctx.font = `700 ${Math.max(12, fs * .85)}px ${MONO}`;
-    const x = xOf(yr), fw = ctx.measureText(txt).width + fs * 1.1, right = x + fw < W - 3;
-    return {x, fw, right, l: right ? x : x - fw, r: right ? x + fw : x};
-  }
-  function flag(yr, txt, col, tcol, up, s, seed) {
-    if (s < .02) return;
-    const TL = G.TL, fh = fs * 1.55, {x, fw, right} = flagBox(yr, txt), poleL = (up ? fs * 2.3 : fs * 2.1) * s;
-    ctx.strokeStyle = INK; ctx.lineWidth = 2; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(x, TL); ctx.lineTo(x, up ? TL - poleL : TL + poleL); ctx.stroke();
-    const fx = right ? x : x - fw, fy = up ? TL - poleL : TL + poleL - fh;
-    const notch = fs * .4, pts = right
-      ? [[fx, fy], [fx + fw, fy], [fx + fw - notch, fy + fh / 2], [fx + fw, fy + fh], [fx, fy + fh]]
-      : [[fx, fy], [fx + fw, fy], [fx + fw, fy + fh], [fx, fy + fh], [fx + notch, fy + fh / 2]];
-    ctx.save(); ctx.globalAlpha = Math.min(1, s * 1.5);
-    piece(torn(pts, 1.1, seed * 7 + boil * 131, 5), col, 3);
-    ctx.fillStyle = tcol; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-    ctx.fillText(txt, fx + (fw + (right ? -notch : notch)) / 2, fy + fh * .7);
-    ctx.restore();
-  }
-
-  function draw(t) {
-    if (!ctx) return;
-    boil = Kit.calm ? 0 : Math.floor(t / 125) % 3;
-    ctx.clearRect(0, 0, W, H);
-    const {TL, GY, tx, tw, crownBase, crownH, stiltTop, jx, jr, jTop, jBot, y0} = G;
-    const cut = phase === 'cut', wind = st.wind;
-
-    // --- timeline: the next 120 years ---
-    ctx.save();
-    ctx.beginPath(); ctx.rect(0, 0, G.x0 - 8 + (G.x1 - G.x0 + 16) * st.tl, TL + fs); ctx.clip();
-    piece(G.strip, '#d9cfb8', 2.5);
-    ctx.fillStyle = 'rgba(22,34,58,.55)';
-    for (let y = 0; y <= YEARS; y += 10) { const x = xOf(y), l = y % 30 === 0 ? fs * .32 : fs * .18; ctx.fillRect(x - .75, TL - l, 1.5, l * 2); }
-    ctx.restore();
-    const gl = phase === 'guess' ? `every ${guess} yrs` : `you: ${guess}`, gb = flagBox(guess, gl);
-    ctx.font = `600 ${Math.max(12, fs * .75)}px ${MONO}`; ctx.textBaseline = 'alphabetic';
-    const nowW = ctx.measureText('now').width, endW = ctx.measureText('+120 yrs').width;
-    ctx.fillStyle = `rgba(246,239,224,${gb.l < G.x0 + nowW + fs * .6 ? .25 : .75})`;
-    ctx.textAlign = 'left'; ctx.fillText('now', G.x0, TL - fs * .6);
-    ctx.fillStyle = `rgba(246,239,224,${gb.r > G.x1 - endW - fs * .6 ? .25 : .75})`;
-    ctx.textAlign = 'right'; ctx.fillText('+120 yrs', G.x1, TL - fs * .6);
-    const bs = bolts.length > 12 ? fs * .62 : fs * .85;
-    for (const b of bolts) if (b.s > .01) piece(boltPath(xOf(b.yr), TL, bs * b.s), cut ? RED : (phase === 'guess' ? '#f08a5d' : MUST), 2, .15);
-
-    // --- sky: clouds drifting, lightning when the power is cut ---
-    const drift = Kit.calm ? 0 : Math.sin(t / 2600) * fs * .35;
-    const cloudCol = cut ? '#1d2a42' : '#2c3d5c';
-    ctx.save(); ctx.globalAlpha = st.tower;
-    ctx.save(); ctx.translate(drift, 0); piece(G.cloud1, cloudCol, 2, .18); ctx.restore();
-    ctx.save(); ctx.translate(-drift * .7, 0); piece(G.cloud2, cloudCol, 2, .18); ctx.restore();
-    if (wind > .3 && !Kit.calm) {
-      const q = t % 2700, a = q < 80 ? 1 : q < 160 ? 0 : q < 260 ? .75 : 0;
-      if (a > 0) {
-        const r = mul(900 + Math.floor(t / 2700)), bx = G.c2.x - drift * .7, by = G.c2.y + G.c2.ry * .3;
-        ctx.save(); ctx.globalAlpha = a * wind; ctx.strokeStyle = MUST; ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
-        ctx.shadowColor = 'rgba(242,182,50,.9)'; ctx.shadowBlur = 14;
-        ctx.beginPath(); ctx.moveTo(bx, by); let lx = bx;
-        const n = 6; for (let k = 1; k <= n; k++) { lx += (r() - .5) * fs * 1.1; ctx.lineTo(lx, by + (GY - by) * k / n); }
-        ctx.stroke(); ctx.restore();
-      }
-    }
-    ctx.restore();
-
-    // --- skyline & ground ---
-    for (const b of G.city) {
-      piece(b.p, '#1a2740', 0, .14);
-      for (const [wx, wy, ph] of b.wins) { ctx.fillStyle = `rgba(242,200,110,${.35 + (Kit.calm ? 0 : .15 * Math.sin(t / 700 + ph))})`; ctx.fillRect(wx, wy, 2, 2); }
-    }
-    piece(G.ground, '#141e30', 0, .25);
-
-    // --- rain, slanted by the wind ---
-    if (wind > .02) {
-      ctx.save(); ctx.strokeStyle = `rgba(214,228,244,${.32 * wind})`; ctx.lineWidth = 1.1; ctx.beginPath();
-      const span = GY - y0, sl = fs * .45;
-      for (let i = 0; i < 44; i++) {
-        const xr = ((i * 73.3 + (Kit.calm ? 0 : t * .32)) % (W + 40)) - 20;
-        const yr = y0 + ((i * 41.7 + (Kit.calm ? 0 : t * .85)) % span);
-        ctx.moveTo(xr, yr); ctx.lineTo(xr + sl, yr + fs * .8);
-      }
-      ctx.stroke(); ctx.restore();
-    }
-
-    // --- the tower, on its stilts, swaying when the wind comes ---
-    ctx.save();
-    const dy = (1 - st.tower) * (GY - y0 + fs * 4);
-    ctx.beginPath(); ctx.rect(0, 0, jx - 2, GY + 1); ctx.clip();
-    const sway = wind * (Kit.calm ? .01 : (.016 * Math.sin(t / 380) + .004 * Math.sin(t / 97)));
-    ctx.translate(tx + tw / 2, GY + dy); ctx.rotate(sway); ctx.translate(-(tx + tw / 2), -GY);
-    if (G.church) piece(G.church, '#8a5a44', 2);
-    G.cols.forEach(c => piece(c, '#b8b2a3', 2.5));
-    piece(G.body, '#ddd7c8', 4);
-    ctx.save(); ctx.clip(G.body[boil]);
-    const band = G.band;
-    for (let y = crownBase + band * .6; y < stiltTop - band * .4; y += band) {
-      ctx.fillStyle = GLASS; ctx.fillRect(tx, y, tw, band * .5);
-      ctx.fillStyle = 'rgba(255,255,255,.18)'; ctx.fillRect(tx, y, tw, 1);
-    }
-    for (const [lx, ly, lw, lh, ph] of G.lit) { ctx.fillStyle = `rgba(242,213,138,${.5 + (Kit.calm ? 0 : .2 * Math.sin(t / 900 + ph))})`; ctx.fillRect(lx, ly, lw, lh); }
-    const lg = ctx.createLinearGradient(tx, 0, tx + tw, 0); lg.addColorStop(0, 'rgba(255,255,255,.12)'); lg.addColorStop(1, 'rgba(10,20,40,.28)');
-    ctx.fillStyle = lg; ctx.fillRect(tx, crownBase, tw, stiltTop - crownBase);
-    ctx.restore();
-    piece(G.crown, '#cfc8b6', 3);
-    // the tuned mass damper, seen through a cut-away in the crown
-    const on = st.power, w = G.win, ww = w.x1 - w.x0, wh = w.y1 - w.y0;
-    const dcx = (w.x0 + w.x1) / 2, dcy = (w.y0 + w.y1) / 2;
-    if (on > .02) {
-      const rg = ctx.createRadialGradient(dcx, dcy, 1, dcx, dcy, tw * .55);
-      rg.addColorStop(0, `rgba(242,182,50,${.6 * on})`); rg.addColorStop(1, 'rgba(242,182,50,0)');
-      ctx.fillStyle = rg; ctx.beginPath(); ctx.arc(dcx, dcy, tw * .55, 0, 7); ctx.fill();
-    }
-    piece(G.winP, on > .5 ? '#2a2a26' : '#141c2b', 1, .15);
-    const bw = ww * .34, bh = wh * .62, slide = Kit.calm ? 0 : Math.sin(t / 420) * (ww - bw) * .28 * on;
-    const bx = dcx + slide;
-    ctx.strokeStyle = on > .5 ? 'rgba(246,239,224,.75)' : 'rgba(150,160,175,.6)'; ctx.lineWidth = 1.1; ctx.beginPath();
-    for (const sg of [-1, 1]) {
-      const a = bx + sg * bw / 2, e = sg < 0 ? w.x0 + 1 : w.x1 - 1;
-      ctx.moveTo(a, dcy); for (let k = 1; k <= 5; k++) ctx.lineTo(a + (e - a) * k / 5, dcy + (k === 5 ? 0 : (k % 2 ? -1 : 1) * bh * .28));
-    }
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(246,239,224,.25)'; ctx.fillRect(w.x0 + 1, w.y1 - 2, ww - 2, 1.2);
-    piece(torn([[bx - bw / 2, dcy - bh / 2], [bx + bw / 2, dcy - bh / 2], [bx + bw / 2, w.y1 - 2], [bx - bw / 2, w.y1 - 2]], .6, 77 + boil * 131, 3), on > .5 ? MUST : '#5d6676', 1, .25);
-    ctx.restore();
-    // wind: torn strips tearing across the tower
-    if (wind > .02) {
-      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, jx - 4, GY); ctx.clip();
-      for (let i = 0; i < 6; i++) {
-        const span = jx + fs * 2, len = fs * (1.6 + (i % 3) * .8), sp = .22 + (i % 3) * .07;
-        const x = ((Kit.calm ? i * 61 : t * sp + i * 97) % (span + len)) - len;
-        const y = crownBase + (stiltTop - crownBase) * (i + .5) / 6 + Math.sin(t / 200 + i) * 3;
-        ctx.globalAlpha = .7 * wind;
-        piece(torn([[x, y], [x + len, y - 1], [x + len, y + 3], [x, y + 3.5]], .8, i * 5 + boil * 131, 4), '#eef3f8', 1.5, .2);
-      }
-      ctx.restore();
-    }
-    ctx.font = `700 ${Math.max(12, fs * .72)}px ${MONO}`; ctx.fillStyle = 'rgba(246,239,224,.8)'; ctx.textAlign = 'center';
-    const lblY = Math.min(H - 3, GY + fs * 1.08);
-    ctx.fillText('CITICORP', tx + tw / 2, lblY);
-
-    // --- the jar of years ---
-    const cx = (jx + jr) / 2, jw = jr - jx;
-    ctx.save(); ctx.globalAlpha = st.jar;
-    ctx.fillStyle = 'rgba(214,230,246,.045)'; ctx.fillRect(jx, jTop, jw, jBot - jTop);
-    for (const s of slips) {
-      const {position: p, angle} = s.b;
-      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(angle);
-      if (s.out) ctx.globalAlpha = st.jar * Math.max(0, 1 - (p.y - jBot) / (fs * 4));
-      const path = s.paths[boil];
-      ctx.save(); ctx.translate(1, 1.6); ctx.fillStyle = 'rgba(4,8,18,.42)'; ctx.fill(path); ctx.restore();
-      ctx.fillStyle = s.storm ? RED : s.tone; ctx.fill(path);
-      if (s.storm) { ctx.fillStyle = INK; ctx.fill(boltPath(0, 0, G.sh * .42)); }
-      else { ctx.strokeStyle = 'rgba(22,34,58,.3)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(-G.sw * .32, -G.sh * .08); ctx.lineTo(G.sw * (s.l - .3), -G.sh * .08); ctx.moveTo(-G.sw * .32, G.sh * .2); ctx.lineTo(G.sw * .05, G.sh * .2); ctx.stroke(); }
-      ctx.restore();
-    }
-    const storm = slips.find(s => s.storm && !s.out);
-    if (storm && st.pulse > 0 && st.pulse < 1) {
-      ctx.strokeStyle = `rgba(242,182,50,${1 - st.pulse})`; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.arc(storm.b.position.x, storm.b.position.y, G.sw * (.6 + st.pulse * 1.6), 0, 7); ctx.stroke();
-    }
-    piece(G.shine, 'rgba(255,255,255,.2)', 0, 0);
-    piece(G.shine2, 'rgba(255,255,255,.18)', 0, 0);
-    piece(G.sideL, 'rgba(230,238,246,.8)', 1.5, .2);
-    piece(G.sideR, 'rgba(230,238,246,.8)', 1.5, .2);
-    piece(G.floor, 'rgba(230,238,246,.8)', 1.5, .2);
-    piece(G.rim, '#e9e2d0', 2.5);
-    // the paper label stuck on the glass
-    let hs = fs * 1.15; ctx.font = `700 ${hs}px ${HAND}`;
-    let lw1 = ctx.measureText(line1).width; const maxw = jw * .84 - fs * 1.2;
-    if (lw1 > maxw) { hs = Math.max(12, hs * maxw / lw1); ctx.font = `700 ${hs}px ${HAND}`; lw1 = ctx.measureText(line1).width; }
-    const lbw = lw1 + fs * 1.2, lbh = hs * 1.5, ly = jTop + fs * .55 + lbh / 2;
-    ctx.save(); ctx.translate(cx, ly); ctx.rotate(-.025);
-    piece(torn([[-lbw / 2, -lbh / 2], [lbw / 2, -lbh / 2], [lbw / 2, lbh / 2], [-lbw / 2, lbh / 2]], 1.1, 88 + boil * 131, 5), '#f3ead6', 2.5, .4);
-    ctx.fillStyle = cut ? '#b8381c' : DEEP; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(line1, 0, hs * .05);
-    ctx.restore();
-    ctx.restore();
-
-    // --- status, printed on the ground under the jar ---
-    let ms = Math.max(12, fs * .72); ctx.font = `600 ${ms}px ${MONO}`;
-    const l2w = ctx.measureText(line2).width; if (l2w > jw + 6) { ms = Math.max(12, ms * (jw + 6) / l2w); ctx.font = `600 ${ms}px ${MONO}`; }
-    ctx.fillStyle = cut ? '#ff9a7a' : 'rgba(246,239,224,.62)'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-    ctx.fillText(line2, cx, lblY);
-
-    // --- flags ---
-    for (const f of flags) flag(f.yr, f.txt, f.col, f.tc, false, f.s, f.seed);
-    const gx = xOf(guess);
-    if (!touched && !Kit.calm) {
-      const o = Math.sin(t / 260) * 3;
-      ctx.fillStyle = INK;
-      for (const sg of [-1, 1]) { const ax = gx + sg * (fs * .55 - o * sg + 2); ctx.beginPath(); ctx.moveTo(ax + sg * fs * .45, TL - fs * .55); ctx.lineTo(ax, TL - fs * .85); ctx.lineTo(ax, TL - fs * .25); ctx.closePath(); ctx.fill(); }
-    }
-    flag(guess, gl, INK, DEEP, true, 1, 5);
-  }
-
-  // ---------- loop ----------
-  let lastT = 0;
-  function tick(t) {
-    if (engine && ctx) {
-      manage(false);
-      const steps = lastT && t - lastT > 25 ? 2 : 1; lastT = t;
-      for (let i = 0; i < steps; i++) Engine.update(engine, 1000 / 60);
-      draw(t);
-    }
-    requestAnimationFrame(tick);
-  }
-  function start() {
-    if (started) return; started = true;
-    target = guess; line1 = `1 storm slip in ${guess}`; setBolts(guess, true);
-    if (Kit.calm) settle();
-    else gsap.timeline()
-      .fromTo(st, {tl: 0}, {tl: 1, duration: .8, ease: 'power3.out'})
-      .fromTo(st, {tower: 0}, {tower: 1, duration: 1, ease: 'back.out(1.4)'}, .1)
-      .fromTo(st, {jar: 0}, {jar: 1, duration: .6, ease: 'power2.out'}, .3);
-    requestAnimationFrame(tick);
-  }
-
-  // ---------- the guess ----------
-  function setGuess(e) {
-    const r = cv.getBoundingClientRect();
-    const yr = Math.round(Math.max(5, Math.min(YEARS, (e.clientX - r.left - G.x0) / (G.x1 - G.x0) * YEARS)));
-    touched = true;
-    if (yr !== guess) {
-      Kit.haptic('selection');
-      guess = yr; target = yr; setBolts(yr, false); line1 = `1 storm slip in ${yr}`;
+    Kit.mk('polygon', {points: pts, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+    // a person at its foot, for scale
+    const px = x1 + tw * .45, ph = fs * 1.15;
+    Kit.mk('line', {x1: px, x2: px, y1: GY - 1, y2: GY - ph * .62, stroke: 'var(--k)', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    Kit.mk('circle', {cx: px, cy: GY - ph * .82, r: ph * .2, fill: 'var(--k)'}, svg);
+    // the gauge's two ends
+    Kit.mk('line', {x1: x0 - 4, x2: x0 - fs * .8, y1: top, y2: top, stroke: 'var(--k)', 'stroke-width': 1.2}, svg);
+    txt(svg, x0 - fs, top + fs * .35, 'certain', {'text-anchor': 'end', 'font-weight': 600});
+    Kit.mk('line', {x1: x0 - 4, x2: x0 - fs * .8, y1: stiltTop, y2: stiltTop, stroke: 'var(--k)', 'stroke-width': 1.2}, svg);
+    txt(svg, x0 - fs, stiltTop + fs * .35, 'never', {'text-anchor': 'end', 'font-weight': 600});
+    if (g !== null) {
+      const gy = F.gy, lx = x1 + fs * 1.2, big = fs * 2.6;
+      // label baseline sits above ly, the big number's box starts clearly below ly
+      const ly = Math.max(top + fs * 1.4, Math.min(stiltTop - big * 1.15, gy));
+      Kit.mk('path', {d: `M${x1 + 3},${gy} L${lx - 6},${ly}`, stroke: 'var(--k)', 'stroke-width': 1.2, fill: 'none'}, svg);
+      txt(svg, lx, ly - fs * .45, 'your guess', {'font-weight': 600});
+      txt(svg, lx, ly + big * 1.15, `${g}%`, {'font-family': 'var(--display)', 'font-size': big, 'font-weight': 800});
+    } else {
+      const ax = x0 + tw / 2, ay = stiltTop - (stiltTop - top) * .2;
+      Kit.mk('path', {d: `M${ax},${ay} v-${fs * 2.4} m-6,7 l6,-7 l6,7`, stroke: 'var(--k)', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
     }
   }
-  cv.addEventListener('pointerdown', e => { if (phase !== 'guess' || !G.x1) return; dragging = true; try { cv.setPointerCapture(e.pointerId); } catch (_) {} setGuess(e); });
-  cv.addEventListener('pointermove', e => { if (dragging) setGuess(e); });
-  const end = () => {
-    if (!dragging) return; dragging = false;
-    if (!armed) { armed = true; sure.on(); say.innerHTML = `A storm <b>every ${guess} years</b> means 1 slip in ${guess}. Keep dragging, or say how sure you are.`; }
-    else say.innerHTML = `A storm <b>every ${guess} years</b> means 1 slip in ${guess}. How sure are you?`;
+  const setFromY = e => {
+    const r = svg.getBoundingClientRect(), y = e.clientY - r.top;
+    g = Math.round(Math.max(0, Math.min(1, (F.stiltTop - y) / (F.stiltTop - F.top))) * 100);
+    front();
   };
-  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  let drag = false;
+  svg.addEventListener('pointerdown', e => { if (answered) return; drag = true; svg.setPointerCapture(e.pointerId); setFromY(e); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (drag) setFromY(e); });
+  const end = () => { if (!drag) return; drag = false; if (g !== null) sure.on(); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
   const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-    const ok = Math.abs(guess - ANSWER) <= 12;
-    Kit.answer({choice: `once every ${guess} years`, correct: ok, sure: pct});
-    sure.grade(ok, pct, `every ${guess} yrs, ${ok ? 'close' : 'off'}`);
-    reveal();
+    if (answered || g === null) return; answered = true;
+    const ok = Math.abs(g - 64) <= 10;
+    Kit.answer({choice: `${g}%`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${g}%, ${ok ? 'close' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
   });
 
-  function reveal() {
-    phase = 'reveal'; dragging = false; Kit.haptic('success');
-    target = ANSWER; setBolts(ANSWER, true);
-    line1 = '1 storm slip in 67'; line2 = 'damper ON · one draw a year';
-    const f = {yr: ANSWER, txt: '67 yrs', col: MUST, tc: DEEP, s: Kit.calm ? 1 : 0, seed: 8};
-    flags.push(f);
-    say.innerHTML = 'With its damper running, a storm able to tear it apart came about <b>once every 67 years</b>: a 1-in-67 draw, every single year.';
-    Kit.show('cut');
-    if (Kit.calm) { settle(); return; }
-    gsap.to(f, {s: 1, duration: .9, ease: 'elastic.out(1,.5)'});
-    gsap.fromTo(st, {pulse: 0}, {pulse: 1, duration: 1.1, ease: 'power2.out', repeat: 2, delay: 1.2});
+  // ---------- back: 48 runs of 16 years, falling into two bins ----------
+  let eng = null, balls = [], raf = 0, B = {}, FAST = false;
+  function back(animate) {
+    cancelAnimationFrame(raf); if (B.timer) clearInterval(B.timer);
+    const cv = Kit.$('pic2'), {x: ctx, W, H} = Kit.fitCanvas(cv);
+    const fs = Math.max(12, Math.min(14, W / 26)), ink = css('--k') || '#111', paper = css('--c') || '#fff', fam = css('--body') || 'sans-serif';
+    const lab = fs * 1.9, under = fs * 4.9;               // room for bin labels above, bar and its labels below
+    const gap = W * .08, binW = Math.min(W * .38, (W - gap) / 2 - fs);
+    const bx = [(W - 2 * binW - gap) / 2]; bx[1] = bx[0] + binW + gap;
+    const avail = Math.max(fs * 3, H - lab - under);
+    // largest ball that still lets the fuller bin sit inside its walls
+    let r = Math.max(4, Math.min(binW / 12, H * .045)), per, rows, need;
+    for (;;) {
+      per = Math.max(1, Math.floor(binW / (2 * r))); rows = Math.ceil(HIT / per);
+      need = rows * 2 * r * .95 + r * 2.5;
+      if (need <= avail || r <= 4) break;
+      r -= .5;
+    }
+    const binH = Math.min(need, avail);
+    const block = lab + binH + under, off = Math.max(0, (H - block) / 2);
+    const binTop = off + lab, binBot = binTop + binH, barY = binBot + fs * 2.3;
+    B = {ctx, W, H, fs, ink, paper, fam, barY, binBot, binTop, binW, bx, r, t: animate ? 0 : 1, spawned: 0, done: false};
+    const M = Matter;
+    eng = M.Engine.create(); eng.gravity.y = 1;
+    const st = {isStatic: true, friction: .1};
+    const walls = [];
+    bx.forEach(x => {
+      walls.push(M.Bodies.rectangle(x + binW / 2, binBot + 10, binW + 40, 20, st));
+      walls.push(M.Bodies.rectangle(x - 10, binBot - H, 20, H * 2, st));
+      walls.push(M.Bodies.rectangle(x + binW + 10, binBot - H, 20, H * 2, st));
+    });
+    M.Composite.add(eng.world, walls);
+    const kinds = Array.from({length: N}, (_, i) => i < HIT);
+    for (let i = N - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [kinds[i], kinds[j]] = [kinds[j], kinds[i]]; }
+    balls = [];
+    const spawn = (storm, y) => {
+      const x0 = bx[storm ? 0 : 1], b = M.Bodies.circle(x0 + r + Kit.rnd() * (binW - 2 * r), y, r * .96, {restitution: .15, friction: .05, frictionAir: .01});
+      b.storm = storm; balls.push(b); M.Composite.add(eng.world, b);
+    };
+    if (!animate) {
+      const k = [0, 0];
+      kinds.forEach(s => { const i = s ? 0 : 1; spawn(s, binBot - r - k[i]++ * 2.2 * r); });
+      for (let i = 0; i < 700; i++) M.Engine.update(eng, 1000 / 60);
+      B.spawned = N; B.done = true; draw(); return;
+    }
+    B.timer = setInterval(() => {
+      if (B.spawned >= N) { clearInterval(B.timer); B.timer = 0; B.endAt = performance.now(); return; }
+      spawn(kinds[B.spawned++], -r * 2);
+    }, 65);
+    const loop = () => {
+      M.Engine.update(eng, 1000 / 60); draw();
+      if (B.endAt && !B.bar && performance.now() - B.endAt > 1100) {
+        B.bar = true;
+        gsap.to(B, {t: 1, duration: .9, ease: 'power2.out', onComplete: () => { B.done = true; }});
+      }
+      if (!B.done) raf = requestAnimationFrame(loop); else draw();
+    };
+    raf = requestAnimationFrame(loop);
   }
-
-  function cutPower() {
-    if (phase !== 'reveal') return;
-    phase = 'cut'; Kit.hide('cut'); Kit.haptic('light');
-    target = 16;
-    line1 = '1 storm slip in 16'; line2 = 'power cut · damper OFF';
-    const f = {yr: 16, txt: '16 yrs', col: RED, tc: INK, s: Kit.calm ? 1 : 0, seed: 9};
-    flags.push(f);
-    say.innerHTML = 'The damper ran on power. Without it, <b>110 km/h winds for five minutes</b> were enough: a <b>1-in-16</b> chance every year.';
-    Kit.show('keep');
-    if (Kit.calm) { st.power = 0; st.wind = 1; setBolts(16, false); settle(); return; }
-    setBolts(16, true);
-    gsap.timeline()
-      .to(st, {power: .15, duration: .08}).to(st, {power: .8, duration: .06}).to(st, {power: 0, duration: .08})
-      .to(st, {power: .5, duration: .05}).to(st, {power: 0, duration: .3, ease: 'power2.in'})
-      .to(st, {wind: 1, duration: 1.2, ease: 'power2.out'}, .2)
-      .to(f, {s: 1, duration: .9, ease: 'elastic.out(1,.5)'}, .3);
+  function draw() {
+    const {ctx, W, H, fs, ink, paper, fam, barY, binBot, binTop, binW, bx, r} = B;
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    // the two bins
+    ctx.strokeStyle = ink; ctx.lineWidth = 2;
+    bx.forEach(x => { ctx.beginPath(); ctx.moveTo(x, binTop); ctx.lineTo(x, binBot); ctx.lineTo(x + binW, binBot); ctx.lineTo(x + binW, binTop); ctx.stroke(); });
+    // the balls
+    const n = [0, 0];
+    balls.forEach(b => {
+      ctx.beginPath(); ctx.arc(b.position.x, b.position.y, r * .96, 0, Math.PI * 2);
+      ctx.fillStyle = b.storm ? RED : paper; ctx.fill();
+      ctx.lineWidth = 1.4; ctx.strokeStyle = ink; ctx.stroke();
+      if (b.position.y > binTop) n[b.storm ? 0 : 1]++;
+    });
+    // counts over the bins
+    ctx.fillStyle = ink; ctx.textAlign = 'center'; ctx.font = `700 ${fs}px ${fam}`;
+    ctx.fillText(`a storm hit: ${n[0]}`, bx[0] + binW / 2, binTop - fs * .7);
+    ctx.fillText(`16 calm years: ${n[1]}`, bx[1] + binW / 2, binTop - fs * .7);
+    // the odds bar, truth against the guess
+    if (B.t > 0) {
+      const a = bx[0], b = bx[1] + binW, xt = a + (b - a) * TRUE * B.t;
+      ctx.globalAlpha = Math.min(1, B.t * 3);
+      ctx.lineWidth = 6; ctx.strokeStyle = ink; ctx.globalAlpha *= .2;
+      ctx.beginPath(); ctx.moveTo(a, barY); ctx.lineTo(b, barY); ctx.stroke();
+      ctx.globalAlpha = Math.min(1, B.t * 3);
+      ctx.strokeStyle = RED; ctx.beginPath(); ctx.moveTo(a, barY); ctx.lineTo(Math.max(a + .1, xt), barY); ctx.stroke();
+      ctx.fillStyle = ink; ctx.font = `800 ${fs}px ${fam}`;
+      const tl = `real odds: ${Math.round(TRUE * 100 * B.t)}%`, tw = ctx.measureText(tl).width;
+      ctx.textAlign = 'left';
+      ctx.fillText(tl, Math.max(2, Math.min(W - tw - 2, xt - tw / 2)), barY - fs * .75);
+      if (g !== null) {
+        const xg = a + (b - a) * g / 100;
+        ctx.strokeStyle = ink; ctx.lineWidth = 1.6; ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(xg, barY - 8); ctx.lineTo(xg, barY + 8); ctx.stroke(); ctx.setLineDash([]);
+        ctx.font = `600 ${fs}px ${fam}`;
+        const gl = `your guess: ${g}%`, gw = ctx.measureText(gl).width;
+        ctx.fillText(gl, Math.max(2, Math.min(W - gw - 2, xg - gw / 2)), barY + fs * 1.6);
+      }
+      ctx.globalAlpha = 1;
+    }
   }
-  cutBtn.addEventListener('click', cutPower);
+  document.addEventListener('turned', () => {
+    turned = true;
+    setTimeout(() => back(!Kit.calm && !FAST), Kit.calm ? 0 : 780);
+  });
 
-  Kit.onShow.card = layout;
-  Kit.onEnter.card = start;
+  Kit.onShow.card = () => { front(); if (turned && B.ctx) back(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#pic > *', {opacity: 0, y: 8, stagger: .04, duration: .45, ease: 'power3.out'});
+  };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    start(); await wait(Kit.calm ? 60 : 400);
-    const r = cv.getBoundingClientRect(), y = r.top + G.TL;
-    const fire = (type, x) => cv.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
-    const xa = r.left + G.x0 + (G.x1 - G.x0) * 40 / YEARS;
-    fire('pointerdown', xa - 40); fire('pointermove', xa - 15); fire('pointermove', xa); fire('pointerup', xa);
-    await wait(Kit.calm ? 60 : 500);
+    FAST = true; g = 40; front(); sure.on();
+    await wait(100);
     Kit.$('sure').querySelector('[data-v="80"]').click();
-    await wait(Kit.calm ? 60 : 1200);
-    cutBtn.click();
-    await wait(Kit.calm ? 60 : 1800);
+    await wait(2000);
   };
 })();
 Kit.single();

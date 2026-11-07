@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611070230,
- "built": "2026-11-07T02:30:09Z",
+ "version": 202611071329,
+ "built": "2026-11-07T13:29:04Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -55175,11 +55175,11 @@ const String kEmbeddedBank = r'''
    "genre": "history.decisions_that_changed_history",
    "strand": "history.decisions_that_changed_history.small_causes_big_effects",
    "kind": "page",
-   "difficulty": "medium",
-   "principle": "estimation",
-   "question": "How much more powerful was the Ivy Mike H-bomb than Trinity?",
-   "answer": "The answer is about 400 times. Ivy Mike yielded 10.4 megatons of TNT, while Trinity yielded 25 kilotons. An H-bomb is three bombs in one: explosives trigger fission, whose heat and pressure trigger fusion.",
-   "move": "An H-bomb uses a fission bomb just to light fusion: 400 Trinitys in one.",
+   "difficulty": "hard",
+   "principle": "computation",
+   "question": "Ivy Mike yielded 10.4 megatons; Trinity, 25 kilotons. How many times stronger?",
+   "answer": "Ivy Mike yielded 10.4 megatons, about 400 times Trinity's 25 kilotons. Since 10.4 megatons is 10,400 kilotons, dividing 10.4 by 25 gives about 0.4, and mega is 1,000 times kilo, so the ratio is roughly 400. The smaller-looking number hides a far bigger yield.",
+   "move": "Compare the digits, then multiply by the ratio of the prefixes.",
    "keywords": [
     "ivy mike",
     "trinity test",
@@ -55199,15 +55199,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Gold blocks represent the Trinity test's yield. The reader picks how many blocks make the Ivy Mike hydrogen bomb: 40, 400, 4,000, or about 400 times Trinity.",
-    "ground": "#0b2233",
-    "page": "pages/history-ivy-mike-blocks.html?v=6f0f2d081e7e",
-    "bytes": 19442
+    "touch": "drags",
+    "label": "Two nuclear test yields: Ivy Mike at 10.4 megatons and Trinity at 25 kilotons. A drag activity asks how many Trinity yields add up to one Ivy Mike.",
+    "page": "pages/history-ivy-mike-blocks.html?v=626d1322b5d5",
+    "bytes": 15241
    },
    "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=1641s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "history-jack-foley-maps",
@@ -100649,10 +100648,10 @@ const String kEmbeddedBank = r'''
    "strand": "maths.everyday_maths.risk",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "none",
-   "question": "How often does a storm strong enough to topple Citicorp hit?",
-   "answer": "The flag asks how often a storm strong enough to topple Citicorp hits: once every how many years? Picture a jar with one slip per year, and each year the sky draws one. Once every N years means a 1-in-N chance each year, and it can come any year.",
-   "move": "“Once every N years” means a 1-in-N chance each year, and it can come any year.",
+   "principle": "independence",
+   "question": "A 1-in-16 chance, any given year, of a storm that topples Citicorp. Odds of one within 16 years?",
+   "answer": "The reveal is about 2 in 3, or 64%. Each ball is one run of 16 years. If each year is its own 1-in-16 draw, unaffected by the last, all 16 stay calm only 36% of the time.",
+   "move": "Either way, “once every N years” means about 2 in 3 odds within N years.",
    "keywords": [
     "citicorp",
     "storm",
@@ -100673,15 +100672,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page: a draggable flag asks, once every how many years does a storm strong enough to topple Citicorp hit? The reader drags the flag to guess the number of years.",
-    "graded": false,
-    "ground": "#22314b",
-    "page": "pages/maths-storm-jar-odds.html?v=61256a322a30",
-    "bytes": 29250
+    "label": "A tower-shaped slider asks the reader to set the odds that a storm topples Citicorp within 16 years, given a 1-in-16 chance each year. The reveal shows the answer is about 2 in 3 (64%), with 16 balls each standing for one year.",
+    "page": "pages/maths-storm-jar-odds.html?v=0b62d6700c4b",
+    "bytes": 15600
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=1129s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "maths-tao-arbitrarily-small",
@@ -182608,12 +182605,12 @@ const String kEmbeddedBank = r'''
    "topic": "science",
    "genre": "science.physics",
    "strand": "science.physics.quantum",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Before you open the box, is the cat already alive or dead?",
-   "answer": "In the Many-Worlds view, the outcome is already decided before you open the box. Opening it doesn't create the outcome; it shows you which branch you are in.",
-   "move": "Opening the box doesn't make the outcome. It shows you which branch you're in.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "In Many-Worlds, before you open the box, is the cat alive or dead?",
+   "answer": "In Many-Worlds, the cat is already alive or already dead, with no undecided middle. The detector tangles with the air and light in the box almost at once, splitting the world and you into two identical copies. Opening the box only tells you which copy you are.",
+   "move": "Not knowing an outcome is not the same as it being undecided.",
    "keywords": [
     "schrodinger-cat",
     "many-worlds",
@@ -182633,14 +182630,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A closed box holds an atom, a detector and a cat. The question asks whether the cat is already alive or dead before the box is opened. The reader taps the atom to continue.",
-    "ground": "#121729",
-    "page": "pages/science-cat-already-decided.html?v=3824cd6685aa",
-    "bytes": 31968
+    "label": "Schrödinger's cat puzzle. The reader picks which Many-Worlds answer is right from three options: alive and dead until looked at, neither yet, or already one or the other. Then they rate how sure they are.",
+    "page": "pages/science-cat-already-decided.html?v=668548da2ced",
+    "bytes": 22310
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=617s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-cerberus-heat-dome",
@@ -185472,12 +185468,12 @@ const String kEmbeddedBank = r'''
    "topic": "science",
    "genre": "science.materials",
    "strand": "science.materials.plastics",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How does DNA fit into a chromosome without tangling?",
-   "answer": "DNA is never stuffed in loose. It wraps around histone proteins like thread on a spool, then folds, and folds again. A strand about 2 nm wide ends up packed into a chromosome without tangling.",
-   "move": "DNA is never stuffed in loose: it spools on histones, then folds, and folds again.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "DNA is 2 nm wide. A chromosome is cm long. How does it fit without tangling?",
+   "answer": "DNA wraps around histone proteins, forming nucleosomes. The nucleosomes then fold again and again, packing a strand 2 nm wide into a chromosome centimetres long without tangling.",
+   "move": "To pack something long without knots, wrap it first, then fold what you wrapped.",
    "keywords": [
     "dna",
     "chromosome",
@@ -185496,15 +185492,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Card titled DNA, spooled tight, asking how DNA fits into a chromosome without tangling. It shows a wiggly 2 nm thread, with an instruction to stir the glass, then drag the bead along the tube.",
-    "ground": "#0c2630",
-    "page": "pages/science-dna-spooled-tight.html?v=4a91f86afd1f",
-    "bytes": 23869
+    "touch": "taps",
+    "label": "Puzzle asking how DNA fits into a chromosome without tangling. The reader taps two steps, from thread to chromosome, in order, then rates how sure they are. The steps are wrapping DNA around histone proteins, then folding the nucleosomes again and again.",
+    "page": "pages/science-dna-spooled-tight.html?v=5522426c10d2",
+    "bytes": 19240
    },
    "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
    "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=18s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-doubled-gem-facets",
@@ -193330,12 +193325,12 @@ const String kEmbeddedBank = r'''
    "topic": "science",
    "genre": "science.how_science_knows",
    "strand": "science.how_science_knows.theories_and_laws",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why does the seafloor's magnetic direction change with distance from the ridge?",
-   "answer": "New rock cools at the ridge and its magnetite freezes pointing along Earth's field. Distance from the ridge is time, so each stripe keeps the field from the day it cooled.",
-   "move": "Distance from the ridge is time: each stripe keeps the field from the day it cooled.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Walk away from a mid-ocean ridge. What do the rock's magnets do?",
+   "answer": "Bands: the rock's magnets point differently with distance. Cooling magnetite takes the direction of Earth's field, so rock farther from the ridge is older and kept an older field. Dark bands carry today's positive polarity, light bands a different one, confirming the seafloor is spreading.",
+   "move": "When a record is laid down over time and carried off, distance becomes a clock.",
    "keywords": [
     "seafloor spreading",
     "magnetite",
@@ -193356,14 +193351,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Interactive page titled 'The seafloor's magnetic tape'. It asks why the seafloor's magnetic direction changes with distance from the ridge. A side view of ocean floor folds at the ridge, with stripes showing the field direction, and a tap control flips Earth's field.",
-    "ground": "#f4ede0",
-    "page": "pages/science-magnetic-seafloor-stripes.html?v=e5f4479a3ec4",
-    "bytes": 23327
+    "label": "Side view of seafloor bands moving away from a mid-ocean ridge. Question: what do the rock's magnets do? Choices: all point the same way, point differently in bands with distance, or point every which way at random. Pick one to see arrows appear in the rock.",
+    "page": "pages/science-magnetic-seafloor-stripes.html?v=d815ff45c4fa",
+    "bytes": 16765
    },
    "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=194s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-magnetic-stripes",
@@ -201128,10 +201122,10 @@ const String kEmbeddedBank = r'''
    "strand": "science.physics.energy",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "none",
-   "question": "How does the X's backward spin change how fast it moves?",
-   "answer": "The X spins backwards while the tube moves forwards, so its spin takes speed away. With the tube at 10 and the spin at 7, the X slows to 10 − 7 = 3. The O spins the same way the tube moves, so it races across your view much faster.",
-   "move": "Spin against the motion subtracts; spin with it adds.",
+   "principle": "reflection",
+   "question": "A tube flies forward. The X on it spins backwards. How fast does the X move?",
+   "answer": "The X moves slower than the tube itself. It travels with the tube, but its backward spin subtracts from the tube's speed, so its velocity is reduced. The O, spinning forward, adds to the speed and crosses the view much faster.",
+   "move": "A mark on a spinning tube moves at the tube's speed plus its spin: backward spin subtracts, forward spin adds.",
    "keywords": [
     "veritasium",
     "spinning tube trick",
@@ -201152,15 +201146,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page asking how the X's backward spin changes its speed. A tube moves forward at 10 while the X on its side spins back at 7. Drag the pin to show how fast the X crosses your view.",
-    "graded": false,
-    "ground": "#efe7d2",
-    "page": "pages/science-spinning-x-slowdown.html?v=e851bcd32848",
-    "bytes": 20941
+    "label": "A tube flies forward while an X mark on it spins backwards. The reader drags an arrow to guess how fast the X moves next to the tube, and the reveal says it moves slower than the tube, while an O spinning forward moves faster.",
+    "page": "pages/science-spinning-x-slowdown.html?v=ec9b1a9c6d49",
+    "bytes": 14313
    },
    "source": "Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=7rAiZR_zasg&t=48s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-squeezed-plutonium",
@@ -202514,12 +202506,12 @@ const String kEmbeddedBank = r'''
    "topic": "science",
    "genre": "science.cold_and_heat",
    "strand": "science.cold_and_heat.fire",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How is the temperature of thermite controlled?",
-   "answer": "Add pieces of pure steel to the thermite before lighting it. The steel does not react but absorbs heat as it melts, so the mix stays cooler, burns slower and throws fewer sparks. That is how thermite can be lit indoors.",
-   "move": "Steel that melts but doesn't burn soaks up the heat: it sets thermite's rate and temperature.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "This thermite has pieces of pure steel mixed in. What does the steel do?",
+   "answer": "The steel never reacts; it just melts. It stays out of the reaction but soaks up heat as it melts, which helps control how fast the thermite burns and how hot it gets. It is one part of a recipe so dialed in that thermite can be lit indoors.",
+   "move": "You can help tame a fierce reaction without joining it: give its heat something to melt.",
    "keywords": [
     "thermite",
     "steel",
@@ -202539,14 +202531,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two labelled pots of thermite. A tap-to-act control on the right pot drops pieces of pure steel into it before both pots are lit. The question asked: how is the temperature of thermite controlled?",
-    "ground": "#140c09",
-    "page": "pages/science-thermite-steel-damper.html?v=e78511e0303b",
-    "bytes": 25674
+    "label": "Thermite powder with pieces of steel mixed in. The reader taps the picture to drop the steel in, then picks what the steel does: burns as extra fuel, reacts and slows the chemistry, or takes no part and only melts.",
+    "page": "pages/science-thermite-steel-damper.html?v=7c468275b39c",
+    "bytes": 18238
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1382s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-thermite-tap-time",
@@ -230996,12 +230987,12 @@ const String kEmbeddedBank = r'''
    "topic": "technology",
    "genre": "technology.old_machines",
    "strand": "technology.old_machines.lessons_from_failures",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What makes a pin hinge imprecise when it changes direction?",
-   "answer": "Backlash is the give in a pin-in-a-hole hinge, and it delays every reversal. That is why a pin hinge is imprecise when it changes direction. Drag the knob and watch the blue pen each time you turn back. The card suggests swapping in a joint that bends.",
-   "move": "Backlash: the give in a pin-in-a-hole hinge delays every reversal.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "When the handle turns back, what does the pointer do first?",
+   "answer": "It waits, then follows. A hinge is a pin in a hole, with some give. When the motion reverses, the pointer waits before it follows, so it no longer matches the handle. That delay is backlash, the main cause of inaccuracy in traditional mechanisms.",
+   "move": "That delay is backlash, the main cause of inaccuracy in traditional mechanisms.",
    "keywords": [
     "backlash",
     "hinge",
@@ -231021,14 +231012,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page: a hinge with a draggable knob that moves left and right, and a blue pen that marks each time you turn back. It asks what makes a pin hinge imprecise when it changes direction.",
-    "ground": "#f3ead5",
-    "page": "pages/technology-backlash-pin-hole.html?v=4d4e511ec2e7",
-    "bytes": 25720
+    "label": "Multiple-choice question: when a hinge's handle turns back, what does the pointer do first? Options: moves at once, waits then follows, or jumps past the hold point then lets go. Choices unlock after a first pass through the text.",
+    "page": "pages/technology-backlash-pin-hole.html?v=370b228fb017",
+    "bytes": 18012
    },
    "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=320s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "technology-ballast-drains-water",

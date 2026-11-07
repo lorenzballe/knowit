@@ -3,12 +3,12 @@
   "topic": "technology",
   "genre": "technology.old_machines",
   "strand": "technology.old_machines.lessons_from_failures",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "What makes a pin hinge imprecise when it changes direction?",
-  "answer": "Backlash is the give in a pin-in-a-hole hinge, and it delays every reversal. That is why a pin hinge is imprecise when it changes direction. Drag the knob and watch the blue pen each time you turn back. The card suggests swapping in a joint that bends.",
-  "move": "Backlash: the give in a pin-in-a-hole hinge delays every reversal.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When the handle turns back, what does the pointer do first?",
+  "answer": "It waits, then follows. A hinge is a pin in a hole, with some give. When the motion reverses, the pointer waits before it follows, so it no longer matches the handle. That delay is backlash, the main cause of inaccuracy in traditional mechanisms.",
+  "move": "That delay is backlash, the main cause of inaccuracy in traditional mechanisms.",
   "keywords": [
     "backlash",
     "hinge",
@@ -28,10 +28,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page: a hinge with a draggable knob that moves left and right, and a blue pen that marks each time you turn back. It asks what makes a pin hinge imprecise when it changes direction.",
-    "ground": "#f3ead5"
+    "label": "Multiple-choice question: when a hinge's handle turns back, what does the pointer do first? Options: moves at once, waits then follows, or jumps past the hold point then lets go. Choices unlock after a first pass through the text."
   },
   "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=320s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

@@ -1,366 +1,302 @@
-<!doctype html>
-<!-- slug: technology-backlash-pin-hole -->
-<!-- Look: a field-notebook page in cream paper, with a pencil-hatched slider and a blue watercolour arm whose hole rides loosely on a graphite pin. A pen writes on ruled paper that scrolls down the page.
-     Interaction: drag the knob left and right. The pin has to cross the hole before the arm moves, so at every reversal the blue line stays put while your pencil line turns back. Red washes mark each stall.
-     Wow: after three "clunks" the hole flares, specks of watercolour and graphite fly out (Physics2D), and "the give" is marked. Then you swap in a bending joint: the hole closes on the pin and the two lines turn back together. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>The give in a hinge</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-backlash-hinge -->
+<!-- Design note.
+     Thought to carry: a hinge is a pin in a hole with some give. When the motion reverses, the pointer waits before it follows,
+     so it no longer matches the handle. That delay is backlash, the main cause of inaccuracy in traditional mechanisms.
+     Front: a pointer arm hung from a pivot. The handle's red pin sits in a hole in the arm, with some give around it.
+     Hold: the handle pushes right and the pointer goes with it. Let go: the handle pulls back. The frame stops while the
+     pointer has not moved yet. The answers stay locked until that gesture is done.
+     Back: one drawing. Handle and pointer position over time, drawn on the same axes. While pushing, the two lines are one.
+     At the turn the pointer line stays flat ("waits"), then follows, but it now runs above the handle line. It is off.
+     Four labels: handle, pointer, waits, time. -->
+<title>Backlash</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
 <style>
-#card{background-image:radial-gradient(130% 70% at 12% 0%,rgba(255,252,240,.75),transparent 62%),radial-gradient(110% 60% at 100% 100%,rgba(176,132,64,.16),transparent 72%)}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
-.hd{font-family:var(--hand);font-weight:700}
-.nudge{animation:nudge 1.5s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateX(5px)}}
-.kit-calm .nudge{animation:none}
-#next{align-self:flex-start}
-.say{overflow-wrap:anywhere}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding-bottom:64px;box-sizing:border-box}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* once the card has turned, the front is fully gone, so its labels never sit under the back's */
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .375s}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+
+#hold{align-self:flex-start;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;margin-bottom:16px}
+#hold.down{background:var(--k);color:var(--c)}
+#hold:disabled{background:transparent;color:var(--k);box-shadow:inset 0 0 0 1.5px var(--k);opacity:1;cursor:default}
+
+#opts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.opt{font:700 14px/1.2 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 1.5px var(--k);border-radius:999px;padding:9px 14px;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt:disabled{color:color-mix(in srgb,var(--k) 40%,transparent);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 40%,transparent);cursor:default}
+.opt.on:disabled{background:var(--k);color:var(--c);box-shadow:none}
+
+#sure.locked,#sure.locked *{color:color-mix(in srgb,var(--k) 40%,transparent)!important;opacity:1!important}
+#sure.locked button{background:transparent!important;border-color:transparent!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 40%,transparent)!important;cursor:default}
+
+.lk{width:.8em;height:.95em;vertical-align:-.1em;margin-right:.35em}
+.front .say{margin-right:96px}
+.back .say{margin:1.2cqh 0 1cqh}
+.foot{padding-right:96px}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Drag back and forth · feel the give" style="--c:#f3ead5;--k:#2b241b;--edge:#cdb98f">
+<article class="card" id="card" data-topic="technology" data-kind="Hold, let go · pick one">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">BACK AND FORTH</span></div>
-    <h2 class="q">What makes a pin hinge imprecise when it changes direction?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" data-drag role="img" aria-label="A slider with a knob drives a pin that sits in an oversized hole in a blue arm. The arm's pen draws on scrolling paper beside a pencil line showing your hand."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD, THEN GUESS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">When the handle turns back, what does the pointer do first?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A pointer arm hanging from a pivot. The handle's pin sits in a hole in the arm, with some give."></svg></div>
+        <button class="btn" id="hold">Hold to push, let go to pull back</button>
+        <div id="opts">
+          <button class="opt" data-i="0" disabled>moves at once</button>
+          <button class="opt" data-i="1" disabled>waits, then follows</button>
+          <button class="opt" data-i="2" disabled>jumps past</button>
+        </div>
+        <div class="sure locked" id="sure"></div>
+        <p class="say" id="say"><svg class="lk" viewBox="0 0 12 14" aria-hidden="true"><rect x="1" y="6" width="10" height="7.5" rx="1.5" fill="currentColor"/><path d="M3.5 6V4a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><b>Hold, then let go.</b> The choices unlock after that.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It waits, then follows.</p>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="Handle and pointer position over time. While the handle pushes, the two lines are one. When it pulls back, the pointer line stays flat for a while, then follows, but now it no longer matches the handle."></svg></div>
+        <p class="say">A hinge is a pin in a hole, with some give. When the motion reverses, the pointer waits before it follows, so it no longer matches the handle. That delay is backlash, the main cause of inaccuracy in traditional mechanisms. Parts that bend instead of pivoting don’t suffer from it.</p>
+        <div class="foot"><span class="src">Source · Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)</span></div>
+      </section>
     </div>
-    <p class="say" id="say">Drag the knob <b>left and right</b>. Watch the blue pen each time you turn back.</p>
-    <button class="btn gone" id="next">Swap in a joint that bends</button>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Backlash: the give in a pin-in-a-hole hinge delays every reversal.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  gsap.registerPlugin(Physics2DPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), next = Kit.$('next');
-  const INK = '#2b241b', GRAPH = '#6b655a', BLUE = '#2c5d8c', RED = '#b4412c', OCHRE = '#c8893a', PAPER = '#f8f1df', CREAM = '#f3ead5';
-  const G = .13; // the gap, as a share of the drawing's unit (exaggerated so you can see it)
-  const S = {pIn: .5, tgt: .5, pOut: null, gapK: 1, flexK: 0, lastSide: 1, clunks: 0, phase: 'play', touched: false, t: 0, vel: 0, jolt: {v: 0}};
-  const hist = [];
-  let W, H, fs, M, U, pr, gp, hr0, pw, ph, bw, bh, kr, yRail, yPin, paperTop, x0, x1, TW, v, sp, kyG;
-  let els = null, lastSz = '';
-  const mk = (t, a, p) => Kit.mk(t, a, p);
-  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, class: 'hd', 'font-size': fs, fill: INK, stroke: CREAM, 'stroke-width': 3.5, 'stroke-linejoin': 'round', 'paint-order': 'stroke'}, a), p); e.textContent = s; return e; };
+  const RED = '#e4402f', INK = 'fill:var(--k)', HOLE = 'fill:var(--c)';
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), say = Kit.$('say'), hold = Kit.$('hold'), opts = Kit.$('opts'), sureEl = Kit.$('sure');
+  const RIGHT = 1;
+  // u: handle pin position, v: hole centre position, both in units of the handle's half travel
+  const S = {u: -0.5, v: -0.5, gn: .15, dir: 0};
+  let G = null, FS = 13, phase = 0, tween = null, pick = -1, turned = false, started = false;
 
-  // ---- the physics of a pin in a hole (one step)
-  function step(dt, quiet) {
-    S.t += dt;
-    if (!S.touched && S.phase === 'play' && (quiet || !Kit.calm)) S.tgt = .5 + .32 * Math.sin(S.t * 1.15);
-    const prev = S.pIn;
-    S.pIn += (S.tgt - S.pIn) * (1 - Math.exp(-dt * 13));
-    const half = S.gapK * gp / 2 / TW;
-    const rel = S.pIn - S.pOut; let contact = 0;
-    if (rel >= half - 1e-6) { S.pOut = S.pIn - half; contact = 1; }
-    else if (rel <= -half + 1e-6) { S.pOut = S.pIn + half; contact = -1; }
-    if (contact && contact !== S.lastSide) { S.lastSide = contact; if (S.gapK > .3 && !quiet) clunk(contact); }
-    S.vel = (S.pIn - prev) / dt;
-    hist.push({t: S.t, a: S.pIn, b: S.pOut, s: !contact && Math.abs(S.pIn - prev) > 1e-4});
-    while (hist.length && (S.t - hist[0].t) * v > H - paperTop + 30) hist.shift();
-  }
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree, sans-serif', 'font-size': FS, 'font-weight': 700, style: INK}, a), p); e.textContent = t; return e; };
+  const arrowD = (x, y, len, dir, h) => { const a = x - dir * len / 2, b = x + dir * len / 2;
+    return `M${a},${y} L${b},${y} M${b - dir * h},${y - h * .8} L${b},${y} L${b - dir * h},${y + h * .8}`; };
 
-  function layout() {
+  // ---------- the front: pivot, pointer arm with a hole, handle whose pin sits in it ----------
+  function build() {
     svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    const r0 = svg.getBoundingClientRect(); lastSz = Math.round(r0.width) + 'x' + Math.round(r0.height);
-    fs = Math.max(14, Math.min(19, W / 21));
-    M = H * .46; U = Math.min(W, M * 1.9);
-    pr = Math.max(7, U * .036); gp = U * G; hr0 = pr + gp / 2; pw = hr0 + U * .055; ph = hr0 + U * .04;
-    bw = U * .17; bh = fs * 1.1; kr = fs * .6;
-    yRail = Math.max(fs * 2.2, M * .2); paperTop = M + fs * .3; yPin = M - fs * 1.1 - ph;
-    x0 = pw + gp / 2 + 4; x1 = W - pw - gp / 2 - 4; TW = x1 - x0;
-    v = (H - paperTop) / 8; sp = fs * 1.5;
-    if (S.pOut === null) S.pOut = S.pIn - gp / 2 / TW;
-    // a page already written on: the paper never starts blank
-    if (!hist.length) { const n = Math.ceil(9 / .02); for (let i = 0; i < n; i++) step(.02, true); }
-    els = {};
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H;
+    if (W < 40 || H < 40) { G = null; return; }
+    const fs = clamp(W / 26, 12, 14); FS = fs;
+    const aw = clamp(H * .1, 18, 38);
+    const py = aw * 1.5 + 12;
+    const Lt = Math.min(H - py - 6, W * 1.05);
+    const Lh = Lt * .44, rh = aw * .38, rp = rh * .5, g = rh - rp, R = Lh * .3;
+    const cx = W * .56, dist = Math.min(W * .42, cx - R - aw * .9);
+    S.gn = g / R;
+    G = {W, H, fs, aw, py, Lt, Lh, rh, rp, g, R, cx, dist};
 
-    // ---- defs: watercolour bleed, pencil wobble, hatching, graphite, paper clip and fade
-    const defs = mk('defs', {}, svg);
-    const wc = mk('filter', {id: 'wc', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
-    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.04', numOctaves: 3, seed: 4, result: 'n'}, wc);
-    mk('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: 7, xChannelSelector: 'R', yChannelSelector: 'G'}, wc);
-    const pf = mk('filter', {id: 'pencil', x: '-10%', y: '-10%', width: '120%', height: '120%'}, defs);
-    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.9', numOctaves: 2, seed: 7, result: 'n'}, pf);
-    mk('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: 1.6, xChannelSelector: 'R', yChannelSelector: 'G'}, pf);
-    const hp = mk('pattern', {id: 'hatch', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)'}, defs);
-    mk('line', {x1: 0, y1: 0, x2: 0, y2: 5, stroke: INK, 'stroke-width': .8, opacity: .5}, hp);
-    const pg = mk('radialGradient', {id: 'pinG', cx: '.35', cy: '.3', r: '.8'}, defs);
-    mk('stop', {offset: '0', 'stop-color': '#a39b8c'}, pg); mk('stop', {offset: '.55', 'stop-color': '#4a443a'}, pg); mk('stop', {offset: '1', 'stop-color': '#221d16'}, pg);
-    const kg = mk('radialGradient', {id: 'knobG', cx: '.35', cy: '.3', r: '.85'}, defs);
-    mk('stop', {offset: '0', 'stop-color': '#f2c57e'}, kg); mk('stop', {offset: '.6', 'stop-color': OCHRE}, kg); mk('stop', {offset: '1', 'stop-color': '#7a4d1a'}, kg);
-    const ah = mk('marker', {id: 'ah', viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: 5, markerHeight: 5, orient: 'auto-start-reverse'}, defs);
-    mk('path', {d: 'M0,0 L10,5 L0,10 z', fill: RED}, ah);
-    const cp = mk('clipPath', {id: 'paperClip'}, defs);
-    mk('rect', {x: 0, y: paperTop, width: W, height: H - paperTop}, cp);
-    const fg = mk('linearGradient', {id: 'fade', gradientUnits: 'userSpaceOnUse', x1: 0, x2: 0, y1: H - fs * 2.9, y2: H - fs * 1.6}, defs);
-    mk('stop', {offset: '0', 'stop-color': '#fff'}, fg); mk('stop', {offset: '1', 'stop-color': '#000'}, fg);
-    const mask = mk('mask', {id: 'paperFade', maskUnits: 'userSpaceOnUse', x: -W, y: -H, width: W * 3, height: H * 3}, defs);
-    mk('rect', {x: -W, y: -H, width: W * 3, height: H * 3, fill: 'url(#fade)'}, mask);
+    G.rod = Kit.mk('rect', {height: rp * 1.1, rx: rp * .55, fill: RED}, svg);
+    G.knob = Kit.mk('circle', {r: aw * .55, fill: RED}, svg);
+    Kit.mk('rect', {x: cx - aw * 1.5, y: py - aw * 1.45, width: aw * 3, height: aw * .32, rx: aw * .1, style: INK}, svg);
+    Kit.mk('path', {d: `M${cx - aw * .7},${py - aw * 1.2} L${cx + aw * .7},${py - aw * 1.2} L${cx},${py} Z`, style: INK}, svg);
+    G.arm = Kit.mk('g', {}, svg);
+    const hy0 = py + Lh;
+    Kit.mk('path', {'fill-rule': 'evenodd', style: INK, d:
+      `M${cx - aw / 2},${py} A${aw / 2},${aw / 2} 0 0 1 ${cx + aw / 2},${py} L${cx + aw / 2},${py + Lt * .8} L${cx},${py + Lt} L${cx - aw / 2},${py + Lt * .8} Z ` +
+      `M${cx + rh},${hy0} a${rh},${rh} 0 1 0 ${-2 * rh},0 a${rh},${rh} 0 1 0 ${2 * rh},0 Z`}, G.arm);
+    Kit.mk('circle', {cx, cy: py, r: aw * .2, style: HOLE}, G.arm);
+    G.pin = Kit.mk('circle', {r: rp, fill: RED}, svg);
+    G.arrow = Kit.mk('path', {fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: 'color:var(--k)'}, svg);
 
-    // ---- washes printed on the page (no backdrop: loose blooms only)
-    const wash = mk('g', {filter: 'url(#wc)', opacity: .9}, svg);
-    mk('ellipse', {cx: W * .5, cy: yPin, rx: W * .46, ry: ph * 1.35, fill: BLUE, opacity: .08}, wash);
-    mk('ellipse', {cx: W * .3, cy: yRail, rx: W * .3, ry: fs * 1.2, fill: OCHRE, opacity: .1}, wash);
-
-    // ---- ruled paper, scrolling (kept inside the page)
-    const paper = mk('g', {'clip-path': 'url(#paperClip)'}, svg);
-    els.grid = mk('g', {}, paper);
-    els.gridLines = [];
-    for (let y = paperTop - sp; y < H + sp; y += sp) els.gridLines.push(mk('line', {x1: 0, x2: W, y1: y, y2: y, stroke: BLUE, 'stroke-width': .7, opacity: .16}, els.grid));
-    mk('line', {x1: W * .05, x2: W * .05, y1: paperTop, y2: H, stroke: RED, 'stroke-width': 1, opacity: .35}, paper);
-    mk('line', {x1: W * .03, x2: W * .97, y1: paperTop, y2: paperTop, stroke: INK, 'stroke-width': .8, opacity: .25, 'stroke-dasharray': '2 4'}, svg);
-
-    // ---- rails
-    els.rails = mk('g', {}, svg);
-    mk('rect', {x: W * .03, y: yRail - fs * .18, width: W * .94, height: fs * .36, rx: 2, fill: 'url(#hatch)', stroke: INK, 'stroke-width': 1.3, filter: 'url(#pencil)'}, els.rails);
-    for (const bx of [W * .045, W * .955]) { mk('circle', {cx: bx, cy: yRail, r: fs * .3, fill: '#d9ccb0', stroke: INK, 'stroke-width': 1.2}, els.rails); mk('line', {x1: bx - fs * .18, x2: bx + fs * .18, y1: yRail - fs * .1, y2: yRail + fs * .1, stroke: INK, 'stroke-width': 1}, els.rails); }
-    mk('line', {x1: W * .02, x2: W * .98, y1: yPin - fs * .12, y2: yPin - fs * .12, stroke: INK, 'stroke-width': 1, opacity: .55, filter: 'url(#pencil)'}, els.rails);
-    mk('line', {x1: W * .02, x2: W * .98, y1: yPin + fs * .12, y2: yPin + fs * .12, stroke: INK, 'stroke-width': 1, opacity: .55, filter: 'url(#pencil)'}, els.rails);
-
-    // ---- traces on the paper (clipped to the page, fading out above the legend)
-    const tr = mk('g', {'clip-path': 'url(#paperClip)'}, svg);
-    const trm = mk('g', {mask: 'url(#paperFade)'}, tr);
-    els.washRun = mk('path', {d: '', fill: 'none', stroke: RED, 'stroke-width': fs * .85, opacity: .42, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#wc)'}, trm);
-    els.trA = mk('path', {d: '', fill: 'none', stroke: GRAPH, 'stroke-width': 1.6, 'stroke-linejoin': 'round', opacity: .9, filter: 'url(#pencil)'}, trm);
-    els.trB = mk('path', {d: '', fill: 'none', stroke: BLUE, 'stroke-width': 2.8, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, trm);
-
-    // ---- the arm: a plate with a hole, and its pen
-    els.gOutPos = mk('g', {}, svg); els.gOut = mk('g', {}, els.gOutPos);
-    const O = els.gOut;
-    mk('ellipse', {cx: 4, cy: yPin + ph + 3, rx: pw * .9, ry: fs * .35, fill: INK, opacity: .12, filter: 'url(#wc)'}, O);
-    mk('line', {x1: 0, x2: 0, y1: yPin + ph - 2, y2: paperTop - fs * .35, stroke: BLUE, 'stroke-width': Math.max(2, U * .012), 'stroke-linecap': 'round'}, O);
-    mk('path', {d: `M${-fs * .28},${paperTop - fs * .45} L${fs * .28},${paperTop - fs * .45} L0,${paperTop} z`, fill: BLUE, stroke: INK, 'stroke-width': 1, 'stroke-linejoin': 'round'}, O);
-    mk('rect', {x: -pw, y: yPin - ph, width: pw * 2, height: ph * 2, rx: ph * .45, fill: BLUE, opacity: .32, filter: 'url(#wc)'}, O);
-    mk('rect', {x: -pw, y: yPin - ph, width: pw * 2, height: ph * 2, rx: ph * .45, fill: 'url(#hatch)', opacity: .45}, O);
-    mk('rect', {x: -pw, y: yPin - ph, width: pw * 2, height: ph * 2, rx: ph * .45, fill: 'none', stroke: INK, 'stroke-width': 1.6, filter: 'url(#pencil)'}, O);
-    for (const sx of [-1, 1]) mk('circle', {cx: sx * (pw - U * .028), cy: yPin - ph + U * .028, r: Math.max(2, U * .009), fill: INK, opacity: .7}, O);
-    els.hole = mk('circle', {cx: 0, cy: yPin, r: hr0, fill: PAPER, stroke: INK, 'stroke-width': 1.8}, O);
-    els.holeShade = mk('path', {d: '', fill: 'none', stroke: INK, 'stroke-width': 3, opacity: .18}, O);
-    // the bending joint: the hole fills in, one solid piece
-    els.weld = mk('g', {opacity: 0}, O);
-    mk('circle', {cx: 0, cy: yPin, r: hr0 * 1.05, fill: BLUE, opacity: .55, filter: 'url(#wc)'}, els.weld);
-    mk('circle', {cx: 0, cy: yPin, r: hr0, fill: 'url(#hatch)', opacity: .6}, els.weld);
-    els.ring = mk('circle', {cx: 0, cy: yPin, r: hr0, fill: 'none', stroke: RED, 'stroke-width': 3, opacity: 0, filter: 'url(#wc)'}, O);
-    els.gapArrow = mk('line', {x1: 0, x2: 0, y1: yPin, y2: yPin, stroke: RED, 'stroke-width': 1.8, 'marker-start': 'url(#ah)', 'marker-end': 'url(#ah)', opacity: S.phase === 'why' ? 1 : 0}, O);
-    els.plateLbl = txt(O, pw + fs * .4, yPin + fs * .35, S.phase === 'play' ? 'pin in a hole' : S.phase === 'why' ? 'the give' : 'bends: no gap', {fill: S.phase === 'why' ? RED : S.phase === 'flex' ? BLUE : INK});
-
-    // ---- your side: slider block, knob, arm and pin
-    els.gInPos = mk('g', {}, svg); els.gIn = mk('g', {}, els.gInPos);
-    const I = els.gIn;
-    mk('line', {x1: 0, x2: 0, y1: yPin + pr, y2: paperTop - fs * .4, stroke: GRAPH, 'stroke-width': 1, 'stroke-dasharray': '2 3', opacity: .55}, I);
-    mk('path', {d: `M${-fs * .26},${paperTop - fs * .42} L${fs * .26},${paperTop - fs * .42} L0,${paperTop} z`, fill: GRAPH, stroke: INK, 'stroke-width': .8}, I);
-    els.arm = mk('path', {d: '', fill: 'none', stroke: INK, 'stroke-width': Math.max(4, U * .024), 'stroke-linecap': 'round'}, I);
-    els.armHi = mk('path', {d: '', fill: 'none', stroke: '#fff', 'stroke-width': 1, opacity: .35, 'stroke-linecap': 'round'}, I);
-    mk('rect', {x: -bw / 2, y: yRail - bh / 2, width: bw, height: bh, rx: 4, fill: '#e3d5b6', stroke: INK, 'stroke-width': 1.5, filter: 'url(#pencil)'}, I);
-    mk('rect', {x: -bw / 2, y: yRail - bh / 2, width: bw, height: bh, rx: 4, fill: 'url(#hatch)', opacity: .5}, I);
-    for (const sx of [-1, 1]) mk('circle', {cx: sx * bw * .32, cy: yRail, r: Math.max(1.6, fs * .12), fill: INK}, I);
-    const ky = yRail - bh / 2 - kr * .55; kyG = ky;
-    mk('line', {x1: 0, x2: 0, y1: ky, y2: yRail - bh / 2, stroke: INK, 'stroke-width': 3}, I);
-    mk('circle', {cx: 0, cy: ky, r: kr, fill: 'url(#knobG)', stroke: INK, 'stroke-width': 1.4}, I);
-    mk('ellipse', {cx: -kr * .3, cy: ky - kr * .35, rx: kr * .32, ry: kr * .18, fill: '#fff', opacity: .6}, I);
-    els.pin = mk('circle', {cx: 0, cy: yPin, r: pr, fill: 'url(#pinG)', stroke: INK, 'stroke-width': 1.3}, I);
-    mk('circle', {cx: -pr * .3, cy: yPin - pr * .3, r: pr * .25, fill: '#fff', opacity: .5}, I);
-    els.handLbl = txt(I, kr + fs * .4, ky, 'your hand');
-    els.hint = mk('g', {opacity: S.touched ? 0 : 1}, I);
-    const hg = mk('g', {class: 'nudge'}, els.hint), cy = yRail, cx = bw / 2 + fs * .5, c = fs * .32;
-    mk('path', {d: `M${cx},${cy - c} l${c},${c} l${-c},${c} M${cx + c * .9},${cy - c} l${c},${c} l${-c},${c}`, stroke: RED, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hg);
-    mk('path', {d: `M${-cx},${cy - c} l${-c},${c} l${c},${c} M${-cx - c * .9},${cy - c} l${-c},${c} l${c},${c}`, stroke: RED, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hg);
-
-    els.stuckLbl = txt(svg, 0, 0, 'stuck', {fill: RED, opacity: 0});
-
-    // ---- legend: one line, in the faded foot of the page
-    const ly = H - fs * .45, lx = W * .05 + fs * .5;
-    mk('line', {x1: lx, x2: lx + fs * 1.2, y1: ly - fs * .3, y2: ly - fs * .3, stroke: GRAPH, 'stroke-width': 1.8}, svg);
-    const t1 = txt(svg, lx + fs * 1.5, ly, 'your hand', {fill: GRAPH});
-    const lx2 = lx + fs * 1.5 + Math.max(fs * 5.6, t1.getComputedTextLength ? t1.getComputedTextLength() + fs * 1.2 : fs * 5.6);
-    mk('line', {x1: lx2, x2: lx2 + fs * 1.2, y1: ly - fs * .3, y2: ly - fs * .3, stroke: BLUE, 'stroke-width': 2.8, 'stroke-linecap': 'round'}, svg);
-    txt(svg, lx2 + fs * 1.5, ly, 'the arm', {fill: BLUE});
-
-    els.fx = mk('g', {}, svg);
-    draw();
+    G.lHandle = txt(svg, 0, 0, 'handle', {'text-anchor': 'middle'});
+    G.lPointer = txt(svg, 0, 0, 'pointer');
+    G.pw = G.lPointer.getComputedTextLength();
+    G.lead = Kit.mk('line', {stroke: 'currentColor', 'stroke-width': 1.3, style: 'color:var(--k)'}, svg);
+    G.ly0 = py + Lh * .45;
+    G.lPin = txt(svg, 0, G.ly0, 'pin in a hole');
+    const w = G.lPin.getComputedTextLength();
+    G.lw = w;
+    G.lPin.setAttribute('x', Math.min(cx + R * .5 + aw * .7 + 8, W - 2 - w));
+    update();
   }
 
-  let last = 0, running = false;
-  function frame(now) {
-    const dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
-    if (els) { step(dt, false); draw(); }
-    requestAnimationFrame(frame);
-  }
-
-  const tw = (e, fb) => { try { const n = e.getComputedTextLength(); return n > 0 ? n : fb; } catch (_) { return fb; } };
-
-  function draw() {
-    const xi = x0 + S.pIn * TW, xo = x0 + S.pOut * TW, hr = pr + S.gapK * gp / 2;
-    els.gInPos.setAttribute('transform', `translate(${xi},0)`);
-    els.gOutPos.setAttribute('transform', `translate(${xo + S.jolt.v},0)`);
-    // arm: rigid, or a blade that flexes once the joint bends
-    const top = yRail + bh / 2, bend = Math.max(-U * .08, Math.min(U * .08, -S.vel * TW * .06)) * S.flexK;
-    const d = `M0,${top} C${bend},${top + (yPin - top) * .35} ${bend},${top + (yPin - top) * .7} 0,${yPin}`;
-    els.arm.setAttribute('d', d); els.armHi.setAttribute('d', d);
-    els.hole.setAttribute('r', hr);
-    els.weld.setAttribute('opacity', S.flexK);
-    const a = hr - 1.5;
-    els.holeShade.setAttribute('d', `M${-a},${yPin} A${a},${a} 0 0 1 ${a},${yPin}`);
-    els.holeShade.setAttribute('opacity', .18 * (1 - S.flexK));
-    // the gap, measured from the pin to the far wall
-    const dp = xi - xo;
-    let ax1, ax2;
-    if (dp >= 0) { ax1 = -hr + 3; ax2 = dp - pr - 3; } else { ax1 = dp + pr + 3; ax2 = hr - 3; }
-    els.gapArrow.setAttribute('x1', ax1); els.gapArrow.setAttribute('x2', ax2);
-    els.gapArrow.style.visibility = ax2 - ax1 > 10 ? 'visible' : 'hidden';
-    // labels: always on the side with more room, and never on top of each other
-    const rR = W - (xo + pw), rL = xo - pw, pl = els.plateLbl, hl = els.handLbl;
-    const handR = W - xi >= xi;
-    if (handR) { hl.setAttribute('x', kr + fs * .4); hl.setAttribute('text-anchor', 'start'); } else { hl.setAttribute('x', -kr - fs * .4); hl.setAttribute('text-anchor', 'end'); }
-    const pWid = tw(pl, fs * 6.5), hWid = tw(hl, fs * 5);
-    const hTop = kyG - fs * .85, hBot = kyG + fs * .3;
-    const hX0 = handR ? xi + kr + fs * .4 : xi - kr - fs * .4 - hWid, hX1 = hX0 + hWid;
-    const pBase = yPin + fs * .35;
-    let side = rR >= rL ? 1 : -1, py = pBase, px;
-    const pBox = (sd, y, ox) => { const x = sd > 0 ? xo + ox : xo - ox - pWid; return {x0: x, x1: x + pWid, y0: y - fs * .85, y1: y + fs * .3}; };
-    const hits = b => b.x1 > hX0 - fs * .3 && b.x0 < hX1 + fs * .3 && b.y1 > hTop - 2 && b.y0 < hBot + 2;
-    px = pw + fs * .4;
-    if (hits(pBox(side, py, px))) {
-      const other = -side, room = other > 0 ? rR : rL;
-      if (room >= pWid + fs * .6 && !hits(pBox(other, py, px))) side = other;
-      else {
-        // tuck it under the plate, beside the pen
-        py = Math.min(yPin + ph + fs * .95, paperTop - fs * .15);
-        px = fs * .5;
-        side = (W - xo) >= xo ? 1 : -1;
-        if (hits(pBox(side, py, px))) side = -side;
+  function update() {
+    if (!G) return;
+    if (S.u - S.v > S.gn) S.v = S.u - S.gn;
+    if (S.v - S.u > S.gn) S.v = S.u + S.gn;
+    const {cx, py, Lh, Lt, R, aw, dist, fs, rp, rh, W, H} = G;
+    const xi = S.u * R, xo = S.v * R;
+    const th = Math.asin(clamp(xo / Lh, -.9, .9));
+    G.arm.setAttribute('transform', `rotate(${th * 180 / Math.PI} ${cx} ${py})`);
+    const hx = cx + Lh * Math.sin(th), hy = py + Lh * Math.cos(th);
+    const px = cx + xi, kx = px - dist;
+    G.pin.setAttribute('cx', px); G.pin.setAttribute('cy', hy);
+    // the rod runs behind the arm and stops short of the hole, so the give stays visible on both sides
+    G.rod.setAttribute('x', kx); G.rod.setAttribute('y', hy - rp * .55); G.rod.setAttribute('width', Math.max(0, hx - rh - 1 - kx));
+    G.knob.setAttribute('cx', kx); G.knob.setAttribute('cy', hy);
+    if (S.dir) G.arrow.setAttribute('d', arrowD((kx + aw * .6 + hx - aw / 2) / 2, hy - fs * .95, fs * 1.6, S.dir, 5));
+    else G.arrow.setAttribute('d', '');
+    G.lHandle.setAttribute('x', kx); G.lHandle.setAttribute('y', hy + aw * .55 + fs * 1.3);
+    // "pointer" sits right beside the arm, low down, and travels with it
+    const q = .7, ax = cx + Lt * q * Math.sin(th) + (aw / 2) * Math.cos(th), ay = py + Lt * q * Math.cos(th);
+    let pX = Math.min(ax + 10, W - 2 - G.pw), pY = ay + fs * .35;
+    const lx = +G.lPin.getAttribute('x');
+    let ly = G.ly0;
+    // keep "pointer" and "pin in a hole" apart when the stage is short
+    const sep = fs * 1.4;
+    const xHit = (x) => x < lx + G.lw + 4 && x + G.pw > lx - 4;
+    if (xHit(pX) && Math.abs(pY - ly) < sep) {
+      pY = ly + sep;
+      const maxY = H - fs * .3;
+      if (pY > maxY) {
+        pY = maxY;
+        ly = Math.max(py + fs * .35, pY - sep);
+      }
+      if (Math.abs(pY - ly) < sep) {
+        // still crowded: move "pointer" to the other side of the arm
+        const axL = cx + Lt * q * Math.sin(th) - (aw / 2) * Math.cos(th);
+        pX = Math.max(2, axL - 10 - G.pw); pY = ay + fs * .35; ly = G.ly0;
       }
     }
-    pl.setAttribute('y', py);
-    if (side > 0) { pl.setAttribute('x', px); pl.setAttribute('text-anchor', 'start'); } else { pl.setAttribute('x', -px); pl.setAttribute('text-anchor', 'end'); }
-    // paper
-    els.grid.setAttribute('transform', `translate(0,${(S.t * v) % sp})`);
-    let da = '', db = '', dw = '', inRun = false, run = null;
-    for (let i = hist.length - 1; i >= 0; i--) {
-      const h = hist[i], y = (paperTop + (S.t - h.t) * v).toFixed(1), xa = (x0 + h.a * TW).toFixed(1), xb = (x0 + h.b * TW).toFixed(1);
-      da += (da ? 'L' : 'M') + xa + ',' + y; db += (db ? 'L' : 'M') + xb + ',' + y;
-      if (h.s) { dw += (inRun ? 'L' : 'M') + xb + ',' + y; if (!inRun && !run) run = {y0: +y, y1: +y, x: +xb, n: 0, open: true}; if (run && run.open) { run.y1 = +y; run.n++; } inRun = true; }
-      else { if (run) run.open = false; inRun = false; }
-    }
-    els.trA.setAttribute('d', da); els.trB.setAttribute('d', db); els.washRun.setAttribute('d', dw);
-    const sl = els.stuckLbl;
-    if (run && run.n > 3 && S.phase !== 'flex') {
-      const y = (run.y0 + run.y1) / 2 + fs * .35;
-      if (y > H - fs * 3.2 || y < paperTop + fs) sl.setAttribute('opacity', 0);
-      else {
-        sl.setAttribute('opacity', 1); sl.setAttribute('y', y);
-        if (run.x > W * .55) { sl.setAttribute('x', run.x - fs * .9); sl.setAttribute('text-anchor', 'end'); } else { sl.setAttribute('x', run.x + fs * .9); sl.setAttribute('text-anchor', 'start'); }
-      }
-    } else sl.setAttribute('opacity', 0);
+    G.lPointer.setAttribute('x', pX); G.lPointer.setAttribute('y', pY);
+    G.lPin.setAttribute('y', ly);
+    G.lead.setAttribute('x1', lx - 4); G.lead.setAttribute('y1', ly - fs * .35);
+    G.lead.setAttribute('x2', hx + rh * .72); G.lead.setAttribute('y2', hy - rh * .72);
   }
 
-  // ---- launched specks: graphite and watercolour
-  function flecks(x, y, n, dir, spread, cols) {
-    if (Kit.calm || !els) return;
-    for (let i = 0; i < n; i++) {
-      const c = mk('circle', {cx: x, cy: y, r: gsap.utils.random(1.2, 3.2), fill: cols[i % cols.length], opacity: .85}, els.fx);
-      gsap.to(c, {duration: gsap.utils.random(.7, 1.2), physics2D: {velocity: gsap.utils.random(90, 240), angle: dir + gsap.utils.random(-spread, spread), gravity: 520}, opacity: 0, ease: 'power1.in', onComplete: () => c.remove()});
-    }
+  // ---------- hold to push, let go to pull back ----------
+  function unlock() {
+    [...opts.children].forEach(b => b.disabled = false);
+    say.innerHTML = 'The handle has turned back. <b>Pick what the pointer does first.</b>';
+    Kit.haptic('selection');
   }
-  function pop(s, x, y, col) {
-    if (Kit.calm || !els) return;
-    const t = txt(els.fx, x, y, s, {fill: col, 'text-anchor': 'middle'});
-    gsap.timeline({onComplete: () => t.remove()})
-      .fromTo(t, {opacity: 0, scale: .4, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .28, ease: 'back.out(3)'})
-      .to(t, {y: -14, opacity: 0, duration: .5, ease: 'power2.in'}, '+=.25');
+  function down(e) {
+    e.preventDefault(); if (phase !== 0) return;
+    phase = 1; hold.classList.add('down'); Kit.haptic('light'); S.dir = 1;
+    try { hold.setPointerCapture(e.pointerId); } catch (_) {}
+    if (Kit.calm) { S.u = 1; update(); return; }
+    if (tween) tween.kill();
+    tween = gsap.to(S, {u: 1, duration: Math.max(.2, (1 - S.u) * .9), ease: 'power1.inOut', onUpdate: update});
   }
+  function up() {
+    if (phase !== 1) return;
+    phase = 2; hold.classList.remove('down');
+    if (tween) { tween.kill(); tween = null; }
+    hold.disabled = true; hold.textContent = 'Paused';
+    S.dir = -1;
+    // pull back, and stop while the give is still being taken up: the pointer has not moved yet
+    const target = S.v - S.gn * .8;
+    if (Kit.calm) { S.u = target; update(); unlock(); return; }
+    tween = gsap.to(S, {u: target, duration: 1, ease: 'power2.out', onUpdate: update, onComplete: unlock});
+  }
+  hold.addEventListener('pointerdown', down);
+  hold.addEventListener('pointerup', up); hold.addEventListener('pointercancel', up); hold.addEventListener('lostpointercapture', up);
+  hold.addEventListener('contextmenu', e => e.preventDefault());
 
-  function clunk(side) {
-    const xi = x0 + S.pIn * TW, cx = xi + side * pr;
-    gsap.fromTo(S.jolt, {v: side * U * .014}, {v: 0, duration: .55, ease: 'elastic.out(1,.35)'});
-    flecks(cx, yPin, 7, side > 0 ? -45 : -135, 35, [INK, GRAPH, OCHRE]);
-    pop('clunk!', cx + side * fs * .4, yPin - pr - fs * .5, INK);
-    if (!S.touched) return;
-    Kit.haptic('light');
-    S.clunks++;
-    if (S.phase !== 'play') return;
-    if (S.clunks === 1) say.innerHTML = 'Hear that <b>clunk</b>? You turned back, but the blue pen sat still first. <b>Do it again.</b>';
-    if (S.clunks >= 3) reveal();
-  }
-
-  function reveal() {
-    if (S.phase !== 'play') return;
-    S.phase = 'why'; Kit.haptic('success');
-    say.innerHTML = 'That delay is <b>backlash</b>. A hinge is just a pin in a hole, and it has give: when the motion reverses, the pin crosses the gap before the arm moves.';
-    Kit.show('next');
-    const pl = els.plateLbl; pl.textContent = 'the give'; pl.setAttribute('fill', RED);
-    const xo = x0 + S.pOut * TW, hr = pr + S.gapK * gp / 2;
-    if (Kit.calm) { els.gapArrow.setAttribute('opacity', 1); return; }
-    gsap.fromTo(pl, {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .6, ease: 'back.out(2.2)'});
-    gsap.fromTo(els.gapArrow, {opacity: 0}, {opacity: 1, duration: .5, delay: .2});
-    gsap.fromTo(els.ring, {attr: {r: hr}, opacity: .9}, {attr: {r: hr * 2.8}, opacity: 0, duration: 1.1, ease: 'expo.out'});
-    gsap.fromTo(els.washRun, {attr: {'stroke-width': fs * 2.2}, opacity: .8}, {attr: {'stroke-width': fs * .85}, opacity: .42, duration: 1.2, ease: 'power3.out'});
-    flecks(xo, yPin, 22, -90, 80, [RED, BLUE, OCHRE, INK]);
-  }
-
-  next.addEventListener('click', () => {
-    if (S.phase === 'flex') return;
-    if (S.phase === 'play') reveal();
-    S.phase = 'flex'; Kit.hide('next'); Kit.haptic('selection');
-    say.innerHTML = 'Now the joint <b>bends</b> instead: no pin, no hole, no give. Turn back, and the blue pen turns back with you.';
-    const pl = els.plateLbl; pl.textContent = 'bends: no gap'; pl.setAttribute('fill', BLUE);
-    gsap.to(els.gapArrow, {opacity: 0, duration: .3});
-    if (Kit.calm) { S.gapK = 0; S.flexK = 1; }
-    else {
-      gsap.to(S, {gapK: 0, flexK: 1, duration: 1.3, ease: 'power3.inOut'});
-      gsap.fromTo(pl, {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .6, ease: 'back.out(2.2)', delay: .5});
-      gsap.fromTo(els.ring, {attr: {r: pr * 3}, opacity: 0, stroke: BLUE}, {attr: {r: pr}, opacity: .9, duration: 1.1, ease: 'expo.inOut', yoyo: true, repeat: 1});
-    }
-    Kit.show('keep');
+  // ---------- answer, how sure, turn ----------
+  const sure = Kit.sure(sureEl, 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = opts.children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  sureEl.classList.add('locked');
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || b.disabled || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    [...opts.children].forEach(o => o.disabled = true);
+    sureEl.classList.remove('locked'); sure.on();
+    say.innerHTML = '<b>Now, how sure are you?</b>';
   });
 
-  // ---- touch
-  let drag = false;
-  const toward = e => {
-    const r = svg.getBoundingClientRect();
-    S.tgt = Math.max(0, Math.min(1, ((e.clientX - r.left) * (W / r.width) - x0) / TW));
-    if (!S.touched) { S.touched = true; if (els) gsap.to(els.hint, {opacity: 0, duration: .3}); }
-  };
-  svg.addEventListener('pointerdown', e => { drag = true; svg.setPointerCapture(e.pointerId); toward(e); Kit.haptic('selection'); });
-  svg.addEventListener('pointermove', e => { if (drag) toward(e); });
-  const end = () => { drag = false; };
-  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  // ---------- the back: handle and pointer over time, on the same axes ----------
+  // handle: up, turn, down. Pointer: the same until the turn, flat while the give is taken up, then parallel but off.
+  const PEAK = .9, TURN = .45, GIVE = .24, SLOPE = PEAK / (1 - TURN);
+  const TF = TURN + GIVE / SLOPE;
+  const HANDLE = [[0, .12], [TURN, PEAK], [1, 0]];
+  const POINTER = [[0, .12], [TURN, PEAK], [TF, PEAK], [1, GIVE]];
 
-  // re-draw for the new room when the stage grows or shrinks (e.g. when the takeaway appears)
-  if (window.ResizeObserver) {
-    let q = 0;
-    new ResizeObserver(() => {
-      if (!els || q) return;
-      q = requestAnimationFrame(() => {
-        q = 0;
-        const r = svg.getBoundingClientRect(), k = Math.round(r.width) + 'x' + Math.round(r.height);
-        if (r.width > 0 && r.height > 0 && k !== lastSz) layout();
-      });
-    }).observe(Kit.$('stage'));
+  function build2(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H;
+    if (W < 40 || H < 40) return;
+    const fs = clamp(W / 26, 12, 14); FS = fs;
+    const go = animate && !Kit.calm;
+
+    const root = Kit.mk('g', {}, svg2);
+    const ends = Kit.mk('g', {}, root);
+    const eH = txt(ends, 0, 0, 'handle'), eP = txt(ends, 0, 0, 'pointer');
+    const lw = Math.max(eH.getComputedTextLength(), eP.getComputedTextLength());
+
+    const cw = Math.min(W, 480), ox = (W - cw) / 2;
+    const x0 = ox + 2, x1 = ox + cw - lw - 12;
+    const top = fs + 14, bot = H - (fs + 24);
+    const h = Math.max(40, Math.min(bot - top, (x1 - x0) * .7));
+    const yT = top + Math.max(0, (bot - top - h) / 2), yB = yT + h;
+    const X = q => x0 + q * (x1 - x0), Y = v => yB - v * h;
+    const path = pts => pts.map(([q, v], i) => `${i ? 'L' : 'M'}${X(q).toFixed(1)},${Y(v).toFixed(1)}`).join('');
+
+    const id = 'clip' + Math.round(Math.random() * 1e6);
+    const cp = Kit.mk('clipPath', {id}, Kit.mk('defs', {}, svg2));
+    const crect = Kit.mk('rect', {x: 0, y: -H, width: go ? 0 : W, height: 3 * H}, cp);
+    const lanes = Kit.mk('g', {'clip-path': `url(#${id})`}, root);
+    // red drawn wide underneath, ink drawn thin on top: while they agree, they read as one line
+    Kit.mk('path', {d: path(HANDLE), fill: 'none', stroke: RED, 'stroke-width': 7, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, lanes);
+    Kit.mk('path', {d: path(POINTER), fill: 'none', stroke: 'currentColor', 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', style: 'color:var(--k)'}, lanes);
+
+    // end labels, beside the end of each line
+    let yh = Y(0) + fs * .35, yp = Y(GIVE) + fs * .35;
+    if (yh - yp < fs * 1.2) { const m = (yh + yp) / 2; yh = m + fs * .6; yp = m - fs * .6; }
+    eH.setAttribute('x', x1 + 10); eH.setAttribute('y', yh);
+    eP.setAttribute('x', x1 + 10); eP.setAttribute('y', yp);
+
+    // the one thing to see: the flat stretch after the turn
+    const waits = Kit.mk('g', {}, root);
+    txt(waits, X((TURN + TF) / 2), Y(PEAK) - 11, 'waits', {'text-anchor': 'middle'});
+
+    // time runs left to right
+    const axis = Kit.mk('g', {}, root);
+    const ya = yB + 12;
+    Kit.mk('path', {d: `M${x0},${ya} L${x1},${ya} M${x1 - 6},${ya - 4} L${x1},${ya} L${x1 - 6},${ya + 4}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: 'color:var(--k)'}, axis);
+    txt(axis, x0, ya + fs + 4, 'time', {'font-weight': 600});
+
+    if (!go) return;
+    gsap.set([ends, waits, axis], {opacity: 0});
+    gsap.timeline({delay: .35})
+      .to(axis, {opacity: 1, duration: .35, ease: 'power2.out'})
+      .to(crect, {attr: {width: W}, duration: 2, ease: 'none'})
+      .to(waits, {opacity: 1, duration: .4, ease: 'power2.out'}, '-=.9')
+      .to(ends, {opacity: 1, duration: .4, ease: 'power2.out'}, '-=.1');
   }
+  document.addEventListener('turned', () => { turned = true; build2(true); });
 
-  const start = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
-  Kit.onShow.card = layout;
+  new ResizeObserver(() => { build(); }).observe(Kit.$('stage'));
+  new ResizeObserver(() => { if (turned) build2(false); }).observe(Kit.$('stage2'));
+  Kit.onShow.card = () => { build(); if (turned) build2(false); };
   Kit.onEnter.card = () => {
-    start();
-    if (Kit.calm || !els) return;
-    gsap.from(els.rails.children, {opacity: 0, x: -14, stagger: .05, duration: .5, ease: 'power3.out'});
-    gsap.from(els.gridLines, {opacity: 0, stagger: .03, duration: .4, ease: 'power2.out'});
-    gsap.from(els.gOut, {y: H * .08, opacity: 0, duration: .9, ease: 'power3.out', delay: .15});
-    gsap.from(els.gIn, {y: -H * .12, opacity: 0, duration: .9, ease: 'back.out(1.5)', delay: .3});
+    if (Kit.calm || !G || !G.arm || started) return; started = true;
+    gsap.from([G.arm, G.pin, G.rod, G.knob], {opacity: 0, duration: .5, stagger: .08, ease: 'power2.out'});
+    gsap.from([G.lHandle, G.lPointer, G.lPin, G.lead], {opacity: 0, duration: .4, delay: .4, ease: 'power2.out'});
   };
   Kit.play.card = async () => {
-    const w = ms => new Promise(r => setTimeout(r, ms));
-    start(); S.touched = true; if (els) els.hint.setAttribute('opacity', 0);
-    for (const p of [.85, .15, .85, .15]) { S.tgt = p; await w(Kit.calm ? 300 : 480); }
-    reveal(); await w(Kit.calm ? 80 : 400);
-    next.click(); await w(Kit.calm ? 100 : 1500);
-    for (const p of [.7, .3, .6]) { S.tgt = p; await w(400); }
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (tween) { tween.kill(); tween = null; }
+    S.u = 1; update();
+    S.dir = -1; S.u = S.v - S.gn * .8; update();
+    phase = 2; hold.disabled = true; hold.textContent = 'Paused'; unlock();
+    await wait(120);
+    opts.children[RIGHT].click();
+    await wait(120);
+    sureEl.querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 5600);
   };
 })();
 Kit.single();

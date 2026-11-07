@@ -5,10 +5,10 @@
   "strand": "science.physics.energy",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "none",
-  "question": "How does the X's backward spin change how fast it moves?",
-  "answer": "The X spins backwards while the tube moves forwards, so its spin takes speed away. With the tube at 10 and the spin at 7, the X slows to 10 − 7 = 3. The O spins the same way the tube moves, so it races across your view much faster.",
-  "move": "Spin against the motion subtracts; spin with it adds.",
+  "principle": "reflection",
+  "question": "A tube flies forward. The X on it spins backwards. How fast does the X move?",
+  "answer": "The X moves slower than the tube itself. It travels with the tube, but its backward spin subtracts from the tube's speed, so its velocity is reduced. The O, spinning forward, adds to the speed and crosses the view much faster.",
+  "move": "A mark on a spinning tube moves at the tube's speed plus its spin: backward spin subtracts, forward spin adds.",
   "keywords": [
     "veritasium",
     "spinning tube trick",
@@ -29,11 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page asking how the X's backward spin changes its speed. A tube moves forward at 10 while the X on its side spins back at 7. Drag the pin to show how fast the X crosses your view.",
-    "graded": false,
-    "ground": "#efe7d2"
+    "label": "A tube flies forward while an X mark on it spins backwards. The reader drags an arrow to guess how fast the X moves next to the tube, and the reveal says it moves slower than the tube, while an O spinning forward moves faster."
   },
   "source": "Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)",
   "reference": "https://www.youtube.com/watch?v=7rAiZR_zasg&t=48s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }
