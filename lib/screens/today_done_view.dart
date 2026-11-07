@@ -781,7 +781,12 @@ class _Front extends StatelessWidget {
         // style leaves unsaid, the screen's default fills in, letter
         // spacing included, and the painter has to see the same.
         final TextStyle base = DefaultTextStyle.of(context).style;
-        final String key = '${pill.id}|${box.maxWidth}|${box.maxHeight}|$s';
+        // At the phone's own text size, as the Text below will set it: a
+        // reader with larger text was measured at the standard size, told
+        // the question fit, and shown it cut off with an ellipsis.
+        final TextScaler scaler = MediaQuery.textScalerOf(context);
+        final String key =
+            '${pill.id}|${box.maxWidth}|${box.maxHeight}|$s|${scaler.scale(10)}';
         final (double size, double room) = _fits.putIfAbsent(key, () {
           if (_fits.length > 64) _fits.clear();
           final double lineHeight = _measure(
@@ -789,6 +794,7 @@ class _Front extends StatelessWidget {
             base.merge(line),
             box.maxWidth,
             maxLines: 3,
+            scaler: scaler,
           );
           final double room = box.maxHeight - lineHeight - 1 - 36 * s;
           return (
@@ -797,13 +803,19 @@ class _Front extends StatelessWidget {
               (size) => base.merge(_question(size)),
               box.maxWidth,
               room,
-              min: 19 * s,
+              // Far enough down that the whole question nearly always fits:
+              // the reader sees it entire, never cut.
+              min: 14 * s,
               max: 31 * s,
+              scaler: scaler,
             ),
             room,
           );
         });
-        final int lines = math.max(1, (room / (size * 1.1)).floor());
+        final int lines = math.max(
+          1,
+          (room / scaler.scale(size * 1.1)).floor(),
+        );
         // Measured to fit, and still allowed a few pixels over, clipped: a
         // font's real line box can run a hair past its nominal height, and
         // the hair of a descender is not worth a striped bar.
@@ -846,11 +858,13 @@ class _Front extends StatelessWidget {
     TextStyle style,
     double width, {
     int? maxLines,
+    TextScaler scaler = TextScaler.noScaling,
   }) {
     final painter = TextPainter(
       text: TextSpan(text: text, style: style),
       textDirection: TextDirection.ltr,
       maxLines: maxLines,
+      textScaler: scaler,
     )..layout(maxWidth: width);
     return painter.height;
   }
@@ -863,11 +877,13 @@ class _Front extends StatelessWidget {
     double height, {
     required double min,
     required double max,
+    TextScaler scaler = TextScaler.noScaling,
   }) {
     if (!width.isFinite || !height.isFinite || width <= 0 || height <= 0) {
       return min;
     }
-    bool fits(double size) => _measure(text, styleFor(size), width) <= height;
+    bool fits(double size) =>
+        _measure(text, styleFor(size), width, scaler: scaler) <= height;
     if (fits(max)) return max;
     var lo = min;
     var hi = max;
@@ -927,36 +943,49 @@ class _Back extends StatelessWidget {
   /// takes whatever the screen's default style says for anything the
   /// style leaves unsaid, letter spacing included, and a quarter of a
   /// point of tracking the painter never saw was a whole extra line.
-  double _height(String text, TextStyle style, double width, TextStyle base) {
+  double _height(
+    String text,
+    TextStyle style,
+    double width,
+    TextStyle base,
+    TextScaler scaler,
+  ) {
     final painter = TextPainter(
       text: TextSpan(text: text, style: base.merge(style)),
       textDirection: TextDirection.ltr,
+      textScaler: scaler,
     )..layout(maxWidth: width);
     return painter.height;
   }
 
   /// The block's height at scale [s]: the three texts, the three gaps of
   /// sixteen between and around the rule, and the rule.
-  double _blockHeight(double s, double width, TextStyle base) =>
-      _height(pill.question, _questionStyle(s), width, base) +
+  double _blockHeight(
+    double s,
+    double width,
+    TextStyle base,
+    TextScaler scaler,
+  ) =>
+      _height(pill.question, _questionStyle(s), width, base, scaler) +
       48 * s +
-      _height(pill.answer, _answerStyle(s), width, base) +
+      _height(pill.answer, _answerStyle(s), width, base, scaler) +
       1 +
-      _height(pill.barMove, _lineStyle(s), width, base);
+      _height(pill.barMove, _lineStyle(s), width, base, scaler);
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, box) {
         final TextStyle base = DefaultTextStyle.of(context).style;
+        final TextScaler scaler = MediaQuery.textScalerOf(context);
         final double full = scale;
         double s = full;
-        if (_blockHeight(s, box.maxWidth, base) > box.maxHeight) {
+        if (_blockHeight(s, box.maxWidth, base, scaler) > box.maxHeight) {
           var lo = full * _floor;
           var hi = full;
           while (hi - lo > full * 0.01) {
             final mid = (lo + hi) / 2;
-            if (_blockHeight(mid, box.maxWidth, base) <= box.maxHeight) {
+            if (_blockHeight(mid, box.maxWidth, base, scaler) <= box.maxHeight) {
               lo = mid;
             } else {
               hi = mid;
@@ -982,7 +1011,7 @@ class _Back extends StatelessWidget {
         // Past the floor it scrolls, and the foot of it dissolves rather
         // than being cut: text sliced through the middle of a line reads as
         // a fault, text fading out reads as more below.
-        final bool fits = _blockHeight(s, box.maxWidth, base) <= box.maxHeight;
+        final bool fits = _blockHeight(s, box.maxWidth, base, scaler) <= box.maxHeight;
         final Widget rising = RiseIn(
           duration: const Duration(milliseconds: 300),
           distance: 8,
