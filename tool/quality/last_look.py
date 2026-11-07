@@ -83,8 +83,10 @@ def noul(instructions: str, yes: str | None = None, no: str | None = None) -> di
 # house style, and asking about them threw good cards away.
 FLAWS = {
     "filler_opening": noul(
-        "Does `card.answer` open with a filler phrase such as \"Interestingly\", \"In fact\", "
-        "\"It turns out\" or \"Surprisingly\"?",
+        "Does `card.answer` begin with a throat-clearing phrase before it gets to the point?",
+        yes="Its first words are an opener such as \"Interestingly\", \"In fact\", \"It turns out\", "
+            "\"As it happens\", \"Surprisingly\", \"Believe it or not\" or \"Fun fact\".",
+        no="Its first words already say something about the subject.",
     ),
     "self_praise": noul(
         "Does the text of `card` call its own content fascinating, incredible, remarkable or mind-blowing?",
@@ -92,15 +94,26 @@ FLAWS = {
     "cliche_ending": noul(
         "Is `card.ending` a well-worn saying, the kind of line printed on a motivational poster?",
     ),
+    # Catches a question that gives its answer away only some of the time —
+    # comparing the question with the answer is a weak spot of Jev's — but
+    # it has never flagged a good card, so it stays.
     "answer_in_question": noul(
         "Does `card.question` already state the answer it asks for?",
         yes="Reading the question is enough to know its answer.",
         no="The answer is only on the back of the card.",
     ),
     "nothing_concrete": noul(
-        "Does `card.answer` explain without a single concrete number, name, place, object or date?",
+        "Is `card.answer` vague, with nothing specific in it that a reader could picture or check?",
+        yes="General words only: a process, a mechanism, some factors, an effect.",
+        no="It names at least one particular number, person, place, object or date.",
     ),
 }
+
+# Measured with last_look_bench.py on 40 cards across the topics, each also
+# spoiled five ways, on jev-1.14.0 (November 2026): on the half of the cards
+# the wordings were not chosen on, these caught 100%, 100%, 100%, 27% and
+# 100% of the spoiled cards, threw away none of the untouched ones, and left
+# 5% of them unsure.
 
 # What a beautiful card has. Asked and written down; deciding nothing yet.
 STRENGTHS = {
@@ -126,13 +139,17 @@ PICTURE_FLAWS = {
     "empty_card": noul(
         "Is a large part of the card in `front` empty, with nothing on it?",
     ),
-    "tiny_text": noul(
-        "Is any text in `front` too small to read on a phone held at a normal distance?",
-    ),
     "cut_text_after": noul(
         "Is any text in `back` cut off by the edge of the card or of the box it sits in?",
     ),
 }
+
+# Measured the same way on 16 jewels from the bank, each photographed as the
+# app shows it and spoiled with a line of CSS: on the cards the wordings were
+# not chosen on, these caught 89%, 89% and 100% of the spoiled photographs
+# and threw away none of the untouched ones. Text too small to read is not
+# asked: Jev caught it on no card at all, and tool/cards/card_check.cjs
+# already measures every size of type on every phone.
 
 # Asked of the photographs and written down, deciding nothing yet: a clean
 # vector drawing on a card can read as stock art, and that is not a flaw until

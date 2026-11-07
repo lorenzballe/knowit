@@ -10,6 +10,7 @@ cards that are already out.
     confidence.py   how far a new card can be trusted without a person, and why not more
     route.py        after the night: the doubtful cards and a sample of the rest to a person
     last_look.py    the last word, TypeSafe's: what reads as written by a machine is thrown away
+    last_look_bench.py  how well those questions see: good cards, and the same cards spoiled
     review.py       the cards waiting for a person, as an issue checklist, and what a tick does
     mutate.py       errors planted in good cards: a figure off by ten, the wrong option marked right
     evalset.py      the set the critic is measured on, and how its answers are scored
@@ -43,11 +44,23 @@ cards that are already out.
    could not look at waits for a person. With photographs of the card
    (`--shots`, from `tool/cards/card_check.cjs` or `tool/card_shots.dart`) it
    also throws away a card that is mostly empty or whose text is plainly cut
-   or overlapping; the measuring stays the program's. Whether a card is
-   *beautiful* is asked and written down, and decides nothing until it has
-   been measured against the owner's verdicts: on the bank, Jev gave a card
-   and the same card spoiled with a machine's phrases nearly the same marks.
-   Needs the `TYPESAFE_API_KEY` secret; without it the night says it skipped.
+   or overlapping; the measuring, type size included, stays the program's.
+   Whether a card is *beautiful* is asked and written down, and decides
+   nothing until it has been measured against the owner's verdicts: on the
+   bank, Jev gave a card and the same card spoiled with a machine's phrases
+   nearly the same marks. Needs the `TYPESAFE_API_KEY` secret; without it the
+   night says it skipped.
+
+   **How well it sees** is measured by `last_look_bench.py`: cards from the
+   bank, and the same cards spoiled the way a machine spoils them — a filler
+   opening, self-praise, a poster's saying, the answer in the question,
+   nothing concrete — or, with `--pictures`, photographed with the text cut,
+   overlapping or gone. Each wording is chosen on half the cards and checked
+   on the other half. On jev-1.14.0 (November 2026), on the half it was not
+   chosen on, it caught every spoiled card but a quarter of the questions
+   that give their answer away (a known weak spot of the model), nine in ten
+   of the spoiled photographs, and threw away no good card. A new wording or
+   a new model is benched before it goes in.
 4. **A person reads them** in the issue labelled `cards-review`, each card
    shown whole with **Publish** and **Drop** under it. A tick runs
    `.github/workflows/review.yml`: Publish puts the card in the bank with
@@ -102,6 +115,8 @@ an eval of forty-eight a few dollars each.
     python3 tool/quality/evals.py --per-kind 4 --batch         # the real thing, with a key
     python3 tool/quality/recheck.py --dry-run                  # which cards are due, and why
     python3 tool/quality/stats.py                              # the readers' scorecard
+    python3 tool/quality/last_look_bench.py --dry-run          # one card, spoiled five ways, nothing sent
+    python3 tool/quality/last_look_bench.py --cards 40         # the real thing, with TYPESAFE_API_KEY
 
 ## What stays private
 

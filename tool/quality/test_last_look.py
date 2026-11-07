@@ -74,7 +74,7 @@ class TheTable(unittest.TestCase):
         self.assertFalse(lk.passes)
 
     def test_a_flaw_in_the_picture_counts_only_as_a_clear_yes(self):
-        self.assertEqual(L.decide("c", {"filler_opening": 0.1, "tiny_text": 0.5}).verdict, "clean")
+        self.assertEqual(L.decide("c", {"filler_opening": 0.1, "overlapping_text": 0.5}).verdict, "clean")
         self.assertEqual(L.decide("c", {"filler_opening": 0.1, "empty_card": 0.8}).verdict, "thrown")
 
     def test_the_notes_decide_nothing(self):
