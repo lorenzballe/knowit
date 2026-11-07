@@ -1,487 +1,318 @@
-<!doctype html>
-<!-- slug: science-arlington-teflon-blast -->
-<!-- Look: a museum diorama in cut paper on a deep slate ground: far factory skyline, near tanks, a cream pedestal under a spotlight, a cut-away steel cylinder with a pressure gauge and a core thermometer, a brass rope barrier and a museum plaque in front. The backdrop dissolves into the card at its edges, so there is no box. Every plane casts its own soft shadow and drifts in parallax, and dust floats in the spotlight.
-     Interaction: each tap turns more TFE gas into solid Teflon, growing from the walls inward. Glowing heat beads leave through the wall while the wall is near, then get trapped in the middle as the solid closes in. The core thermometer and the pressure needle climb faster with every tap.
-     Wow: the fourth tap runs away. The cylinder swells and shudders, then bursts into paper flames, drawn rays and steel shards that bounce onto the pedestal. A torn stub keeps burning, with embers rising through the smoke. The plaque adds "two workers killed". A replay with a way out for the heat leaves the needle low. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Why the Teflon cylinder burst</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-trapped-heat-runaway -->
+<!-- Design note.
+     Thought to carry (the brief's own): polymerizing TFE in one solid cylinder made heat that could not get away.
+     It stayed in, expanded and built up pressure until the plant failed catastrophically.
+     Front: the instruction comes right under the question. Below it is the cylinder seen from above: a flat disc of TFE turning solid,
+     with short polymer-chain marks in an even weave inside a thick steel wall. There is room all around the disc.
+     The reader taps where the reaction's heat ends up: inside the solid, or out past the wall. The confidence chips appear only after the tap.
+     Back: the same disc at the same size. It warms evenly, right through, because nothing in the brief says one spot was hotter.
+     Short red arrows press out from inside and stop at the steel, because the heat cannot leave and builds the force.
+     The wall stays whole, since the brief speaks of pressure and failure, not of a vessel tearing.
+     There are three labels: heat stays in, pressure builds and your tap. A placement check keeps every label clear of the others.
+     Layout: the face turned away is hidden (visibility) at the half-turn, so its mirrored content never sits under the corner buttons. -->
+<title>The heat had no way out</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
-.gas{animation:gas 2.6s ease-in-out infinite}
-@keyframes gas{50%{transform:translate(2px,-3px)}}
-.jit{animation:jit .22s ease-in-out infinite}
-@keyframes jit{25%{transform:translate(1.2px,-1px)}50%{transform:translate(-1px,1.2px)}75%{transform:translate(1px,1px)}}
-.hint{animation:hint 1.6s ease-in-out infinite}
-@keyframes hint{50%{opacity:.2}}
-.puff{animation:puff 6s ease-in-out infinite}
-@keyframes puff{50%{transform:translate(5px,-4px)}}
-.halo{transform-box:fill-box;transform-origin:center;animation:halo 1.9s ease-out infinite}
-@keyframes halo{0%{opacity:.55;transform:scale(1)}100%{opacity:0;transform:scale(1.1,1.6)}}
-.flick{transform-box:fill-box;transform-origin:50% 100%;animation:flick .45s ease-in-out infinite alternate}
-@keyframes flick{0%{transform:scale(1,1) skewX(0deg)}100%{transform:scale(.86,1.16) skewX(-6deg)}}
-.mote{animation:mote 8s linear infinite}
-@keyframes mote{0%{transform:translate(0,0);opacity:0}25%{opacity:.75}100%{transform:translate(9px,-44px);opacity:0}}
-.kit-calm .gas,.kit-calm .jit,.kit-calm .hint,.kit-calm .puff,.kit-calm .halo,.kit-calm .flick,.kit-calm .mote{animation:none}
-.kit-calm .halo{opacity:0}
-.answered .q{font-size:max(2.5cqh,15px)}
-.say{overflow-wrap:anywhere}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s linear .3s}
+.turn>.front{visibility:visible;transition:visibility 0s linear .3s}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{cursor:crosshair;touch-action:none}
+.q,.say{overflow-wrap:anywhere}
+.card .front .say{flex:0 0 auto;margin:.4cqh 0 .6cqh;padding:0;font-size:max(2.2cqh,15px);line-height:1.3;max-width:none}
+.front .sure{flex:0 0 auto}
+.front .sure.wait{visibility:hidden}
+.turn.over>.front .sure{visibility:hidden}
+.front .fspace{flex:0 0 44px}
+.card .back .big{font-size:clamp(26px,8.6cqw,34px);line-height:1.04;margin:0 0 .4cqh}
+.back .body{font:500 max(1.8cqh,12px)/1.32 var(--body);margin:.6cqh 0;overflow-wrap:anywhere}
+.back .keep{font-size:max(1.75cqh,12px)}
+.back .foot{min-height:44px;padding-right:100px;box-sizing:border-box}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Tap the cylinder · trapped heat" style="--c:#1f2a33;--k:#f3e9d6;--edge:#121a20;--muted:#9fb0ba">
+<article class="card" id="card" data-topic="science" data-kind="Tap the plan · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO REACT</span></div>
-    <h2 class="q">Why did a 1944 attempt to make Teflon end in an explosion?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A paper diorama of a factory: a cut-away cylinder of TFE gas with a pressure gauge and a thermometer on its core."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ARLINGTON 1944</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Why did the 1944 Teflon production attempt cause a massive explosion?</h2>
+        <p class="say" id="say">Seen from above: one solid cylinder of TFE turning into Teflon, making heat. <b>Tap where that heat ends up.</b></p>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A steel cylinder seen from above, filled evenly with TFE turning into solid Teflon. Tap where the reaction's heat ends up: inside the solid, or outside the cylinder."></svg></div>
+        <div class="sure wait" id="sure"></div>
+        <div class="fspace" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">The heat had no way out.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same cylinder, now warm right through. Arrows push outward from inside and stop at the steel wall: the heat stays in and pressure builds."></svg></div>
+        <p class="body">Polymerizing the solid cylinder made heat that could not dissipate. It stayed in, expanded and built up pressure until it failed: a massive explosion at Arlington in 1944 that killed two workers.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> A reaction that makes heat needs a way to take that heat away. Without one, the heat stays in, expands and creates the force.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
+      </section>
     </div>
-    <p class="say" id="say">TFE gas, sealed in a cylinder. <b>Tap it</b> to start turning it into Teflon.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A reaction that makes heat needs a way to lose it, or the heat becomes force.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-gsap.registerPlugin(DrawSVGPlugin);
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const C = {paper:'#f3e9d6', ink:'#1f2a33', ember:'#ff8a3d', hot:'#ffd27a', rust:'#c4572d', cool:'#7fd3e6', dark:'#10171c'};
-  const SAY = [
-    'TFE gas, sealed in a cylinder. <b>Tap it</b> to start turning it into Teflon.',
-    'It turns solid and gives off heat. Near the wall, the heat gets out. <b>Tap again.</b>',
-    'The new solid stands in the way. Heat from the middle stays in. <b>Tap again.</b>',
-    'Trapped, the heat expands and pushes on the walls. <b>Tap once more.</b>',
-    'Hotter makes it react faster, which releases even more energy, all at once…'
-  ];
-  const WHY = 'Turning TFE into Teflon gives off heat. In a solid cylinder that heat had no way out, so it stayed in, expanded and built a force the cylinder could not hold. <b>Arlington, 1944.</b>';
-  const SAFE = 'Same reaction, but the heat is taken away as it is made: no build-up, no burst.';
-  const TT = [0, .16, .38, .64], ESC = [.8, .4, .1];
-  const lerp = (a, b, t) => a + (b - a) * t, clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const pts = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  if (window.gsap && window.MorphSVGPlugin) gsap.registerPlugin(MorphSVGPlugin);
+  const HOT = '#c63b22', YOU = '#2459c9', PALE = '#fdf0e2', WARM = '#f7c09b';
+  const ZONE = ['inside the solid', 'outside the cylinder'], RIGHT = 0;
+  const pic = Kit.$('pic'), pic2 = Kit.$('pic2'), say = Kit.$('say'), sureBox = Kit.$('sure');
+  let tap = null, pick = -1, answered = false, turned = false, G = {cx: 0, cy: 0, R: 1}, fs = 13;
+  const rad = d => d * Math.PI / 180;
 
-  let W = 0, H = 0, fs = 12, G = {}, g = {}, loops = [];
-  let n = 0, phase = 'build', cooling = false, exploded = false, bombed = false, busy = false, entered = false;
-  const st = {p: 0, T: 0};
-  let trapped = [];
-  const GAS = [...Array(30)].map(() => ({u: (Kit.rnd() * 2 - 1) * .9, v: .05 + Kit.rnd() * .9, d: Kit.rnd() * 2.6}));
-  const MOTES = [...Array(10)].map(() => ({u: Kit.rnd() - .5, v: Kit.rnd(), d: Kit.rnd() * 8}));
-  const SHARDS = [...Array(16)].map((_, i) => {
-    const k = 3 + Math.floor(Kit.rnd() * 3), p = [];
-    for (let j = 0; j < k; j++) { const a = j / k * Math.PI * 2 + Kit.rnd() * .8, r = .55 + Kit.rnd() * .45; p.push([Math.cos(a) * r, Math.sin(a) * r]); }
-    return {p, poly: i % 4 === 0, u: (i / 15 - .5) * 1.8 + (Kit.rnd() - .5) * .12, s: .6 + Kit.rnd() * .7, rot: (Kit.rnd() - .5) * 720, depth: i % 3, rise: .2 + Kit.rnd() * .3, sx: Kit.rnd() - .5, sy: Kit.rnd()};
-  });
-
-  // ---------- helpers ----------
-  function grad(defs, id, stops, vertical) {
-    const lg = Kit.mk('linearGradient', {id, x1: 0, y1: 0, x2: vertical ? 0 : 1, y2: vertical ? 1 : 0}, defs);
-    stops.forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a == null ? 1 : a}, lg));
-  }
-  function paperF(defs, id, dy, blur, op) {
-    const fl = Kit.mk('filter', {id, x: '-20%', y: '-20%', width: '140%', height: '160%', 'color-interpolation-filters': 'sRGB'}, defs);
-    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .85, numOctaves: 2, seed: 7, result: 'n'}, fl);
-    Kit.mk('feColorMatrix', {in: 'n', type: 'matrix', values: '0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  .35 0 0 0 -.1', result: 's'}, fl);
-    Kit.mk('feComposite', {in: 's', in2: 'SourceGraphic', operator: 'in', result: 't'}, fl);
-    const m = Kit.mk('feMerge', {result: 'm'}, fl); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m); Kit.mk('feMergeNode', {in: 't'}, m);
-    Kit.mk('feDropShadow', {in: 'm', dx: 0, dy, stdDeviation: blur, 'flood-color': '#05090c', 'flood-opacity': op}, fl);
-  }
-  function fadeMask(defs, id, gid) {
-    const m = Kit.mk('mask', {id, maskUnits: 'userSpaceOnUse', x: -W, y: -H, width: W * 3, height: H * 3}, defs);
-    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: `url(#${gid})`}, m);
-  }
-  function txt(p, x, y, s, a = {}) {
-    const e = Kit.mk('text', Object.assign({x, y, fill: C.paper, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.04em'}, a), p);
-    e.textContent = s;
-    const w = e.getComputedTextLength(), an = a['text-anchor'] || 'start', l = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
-    const sh = Math.max(3 - l, Math.min(0, W - 3 - (l + w))); if (sh) e.setAttribute('x', x + sh);
+  const txt = (parent, x, y, lines, W, o = {}) => {
+    const anc = o.anchor || 'middle', lh = fs * 1.22;
+    const e = Kit.mk('text', {x, y, 'text-anchor': anc, 'font-size': fs, 'font-weight': 700, style: `font-family:var(--body);fill:${o.fill || 'var(--k)'}`}, parent);
+    [].concat(lines).forEach((t, i) => { const s = Kit.mk('tspan', {x, dy: i ? lh : 0}, e); s.textContent = t; });
+    if (o.clamp !== false) {
+      const b = e.getBBox(), sh = b.x < 3 ? 3 - b.x : b.x + b.width > W - 3 ? W - 3 - b.x - b.width : 0;
+      if (sh) { e.setAttribute('x', x + sh); e.querySelectorAll('tspan').forEach(s => s.setAttribute('x', x + sh)); }
+    }
     return e;
-  }
-  const star = (cx, cy, R, r, k, rot) => { const a = []; for (let i = 0; i < k * 2; i++) { const ang = rot + i * Math.PI / k, rr = i % 2 ? r : R * (.8 + ((i * 7) % 5) / 20); a.push([cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr]); } return pts(a); };
-  const gp = (a, R) => [g.gx + R * Math.sin(a * Math.PI / 180), g.gy - R * Math.cos(a * Math.PI / 180)];
-  const flame = (x, b, w, h) => `M${x - w},${b} C${x - w * 1.1},${b - h * .45} ${x - w * .2},${b - h * .6} ${x},${b - h} C${x + w * .15},${b - h * .55} ${x + w * 1.1},${b - h * .45} ${x + w},${b} Z`;
+  };
+  const lead = (parent, x1, y1, x2, y2, col) => Kit.mk('line', {x1, y1, x2, y2, style: `stroke:${col || 'var(--k)'}`, 'stroke-width': 1.3, 'stroke-linecap': 'round'}, parent);
 
-  // ---------- the diorama ----------
-  function layout() {
-    loops.forEach(t => t.kill()); loops = [];
-    svg.innerHTML = ''; G = {};
-    const r = Kit.fitSvg(svg); W = r.W; H = r.H; fs = clamp(r.f * .8, 12, 15);
-    const defs = Kit.mk('defs', {}, svg);
-    grad(defs, 'steel', [[0, '#46525b'], [.2, '#aeb8bf'], [.42, '#eef1f2'], [.68, '#8f9ca5'], [1, '#3a454e']]);
-    grad(defs, 'polyL', [[0, '#ddd0b5'], [1, '#fbf7ee']]);
-    grad(defs, 'polyR', [[0, '#fbf7ee'], [1, '#ddd0b5']]);
-    grad(defs, 'core', [[0, C.ember, 0], [.5, C.ember, .95], [1, C.ember, 0]]);
-    grad(defs, 'hotc', [[0, C.hot, 0], [.5, '#fff8e6', 1], [1, C.hot, 0]]);
-    grad(defs, 'plinth', [[0, '#dcc8a0'], [1, '#b39a6e']], 1);
-    grad(defs, 'beam', [[0, '#fff3d6', .14], [1, '#fff3d6', 0]], 1);
-    grad(defs, 'brass', [[0, '#8a6a25'], [.45, '#e8c36a'], [1, '#7a5c1e']]);
-    grad(defs, 'merc', [[0, C.ember], [1, C.rust]], 1);
-    grad(defs, 'fadeX', [[0, '#fff', 0], [.15, '#fff', 1], [.85, '#fff', 1], [1, '#fff', 0]]);
-    grad(defs, 'fadeY', [[0, '#fff', 0], [.24, '#fff', 1], [1, '#fff', 1]], 1);
-    fadeMask(defs, 'vigX', 'fadeX'); fadeMask(defs, 'vigY', 'fadeY');
-    const rg = Kit.mk('radialGradient', {id: 'spot'}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': '#fff3d6', 'stop-opacity': .45}, rg); Kit.mk('stop', {offset: 1, 'stop-color': '#fff3d6', 'stop-opacity': 0}, rg);
-    const rs = Kit.mk('radialGradient', {id: 'sh'}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': '#05090c', 'stop-opacity': .55}, rs); Kit.mk('stop', {offset: 1, 'stop-color': '#05090c', 'stop-opacity': 0}, rs);
-    paperF(defs, 'pa1', 1.5, 2, .35); paperF(defs, 'pa2', 3, 4, .45); paperF(defs, 'pa3', 6, 6, .55);
-    const gl = Kit.mk('filter', {id: 'glow', x: '-150%', y: '-150%', width: '400%', height: '400%'}, defs);
-    Kit.mk('feGaussianBlur', {stdDeviation: fs * .22, result: 'b'}, gl);
-    const gm = Kit.mk('feMerge', {}, gl); Kit.mk('feMergeNode', {in: 'b'}, gm); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, gm);
+  // where the reader's tap sits on a given drawing: kept clear of the wall, kept on the stage
+  const spot = (cx, cy, R, sw, W, H, m) => {
+    if (!tap) return null;
+    const d = Math.hypot(tap.x, tap.y) || .001;
+    const inMax = 1 - (sw / 2 + m + 3) / R, outMin = 1 + (sw / 2 + m + 3) / R;
+    let k = 1;
+    if (tap.inside) { if (d > inMax) k = Math.max(0, inMax) / d; }
+    else if (d < outMin) k = outMin / d;
+    const x = Math.min(W - m - 3, Math.max(m + 3, cx + tap.x * k * R));
+    const y = Math.min(H - m - 3, Math.max(m + 3, cy + tap.y * k * R));
+    return [x, y];
+  };
+  // the biggest disc the back can hold
+  const backR = (W, H, f) => { const f2 = Math.max(12, Math.min(14, f)); return Math.max(26, Math.min((H - f2 * 1.9 - 4) / 2.07, W * .4)); };
 
-    // geometry
-    const plaqueH = fs * 3.3, plaqueTop = H - plaqueH - fs * .3;
-    let cw = Math.min(W * .33, H * .34);
-    const y0 = H * .25;
-    const ch = Math.max(fs * 6, Math.min(cw * 1.85, plaqueTop - fs * 2.1 - y0));
-    cw = Math.min(cw, ch / 1.35);
-    const cx = W * .44, y1 = y0 + ch, floorY = y1 + Math.min(H * .03, fs * .9), t = cw * .085;
-    g = {cx, cw, ch, y0, y1, floorY, t, plaqueH, plaqueTop, ix0: cx - cw / 2 + t, ix1: cx + cw / 2 - t, iy0: y0 + t * 1.4, iy1: y1 - t * 1.1};
-    g.hw = (g.ix1 - g.ix0) / 2; g.coreY = (g.iy0 + g.iy1) / 2;
-    g.gr = Math.min(H * .06, W * .075, y0 * .38); g.gx = cx; g.gy = y0 - g.gr * 1.55;
-    g.tw = Math.max(9, cw * .12); g.tx = cx + cw / 2 + (W - (cx + cw / 2)) * .5; g.tt = y0 + ch * .12; g.tb = y1 - ch * .1 - g.tw;
-    const cp = Kit.mk('clipPath', {id: 'win'}, defs);
-    Kit.mk('rect', {x: g.ix0, y: g.iy0, width: 2 * g.hw, height: g.iy1 - g.iy0, rx: t * .3}, cp);
-
-    const root = G.root = Kit.mk('g', {}, svg);
-    const plane = (name, filt, vig) => {
-      const o = Kit.mk('g', {}, root);
-      let h = o; if (vig) h = Kit.mk('g', {mask: 'url(#vigY)'}, Kit.mk('g', {mask: 'url(#vigX)'}, o));
-      const i = Kit.mk('g', filt ? {filter: `url(#${filt})`} : {}, h); G[name] = o; G[name + 'In'] = i; return i;
-    };
-    const far = plane('far', 'pa1', 1), near = plane('near', 'pa2', 1), light = plane('light', 0, 1), floor = plane('floor', 'pa2'), mid = plane('mid'), fx = plane('fx'), front = plane('front');
-
-    // far skyline: stacks, sawtooth roofs, a water tower (dissolving into the card at the edges)
-    const sk = [[-W * .06, floorY], [-W * .06, H * .5], [W * .05, H * .5], [W * .05, H * .1], [W * .1, H * .1], [W * .1, H * .44]];
-    for (let i = 0; i < 6; i++) { const x = W * (.14 + i * .075); sk.push([x, H * .44], [x + W * .055, H * .35], [x + W * .055, H * .44]); }
-    sk.push([W * .6, H * .44], [W * .6, H * .26], [W * .66, H * .22], [W * .72, H * .26], [W * .72, H * .4], [W * .84, H * .4], [W * .84, H * .06], [W * .885, H * .06], [W * .885, H * .4], [W * 1.06, H * .4], [W * 1.06, floorY]);
-    Kit.mk('polygon', {points: pts(sk), fill: '#2b3a46'}, far);
-    for (let i = 0; i < 7; i++) Kit.mk('rect', {x: W * (.15 + i * .066), y: H * .47, width: W * .022, height: H * .028, fill: '#f6d58e', opacity: .22 + ((i * 3) % 4) * .1}, far);
-    [[W * .075, H * .07, fs * .9], [W * .1, H * .03, fs * .7], [W * .865, H * .03, fs * .8]].forEach(([x, y, rr], i) => Kit.mk('circle', {cx: x, cy: y, r: rr, fill: '#364753', class: 'puff', style: `animation-delay:${-i * 1.7}s`}, far));
-
-    // near: a low block, a pipe, a domed tank
-    Kit.mk('polygon', {points: pts([[-W * .06, floorY], [-W * .06, H * .6], [W * .18, H * .6], [W * .18, H * .54], [W * .26, H * .54], [W * .26, floorY]]), fill: '#3a4c59'}, near);
-    Kit.mk('rect', {x: W * .25, y: H * .63, width: W * .4, height: fs * .5, fill: '#475b6b'}, near);
-    Kit.mk('path', {d: `M${W * .64},${floorY} V${H * .57} A${W * .09},${W * .05} 0 0 1 ${W * .82},${H * .57} V${floorY} Z`, fill: '#3a4c59'}, near);
-    [.64, .7].forEach(k => Kit.mk('line', {x1: W * .64, x2: W * .82, y1: H * k, y2: H * k, stroke: '#2e3d48', 'stroke-width': 1.5}, near));
-
-    // museum light, with dust floating in it
-    Kit.mk('polygon', {points: pts([[cx - cw * .15, -2], [cx + cw * .15, -2], [cx + cw * 1.1, floorY], [cx - cw * 1.1, floorY]]), fill: 'url(#beam)'}, light);
-    MOTES.forEach(m => { const y = lerp(H * .2, floorY - fs, m.v), half = lerp(cw * .15, cw * 1.1, y / floorY) * .8;
-      Kit.mk('circle', {cx: cx + m.u * 2 * half, cy: y, r: Math.max(1, fs * .08), fill: '#fff3d6', class: 'mote', style: `animation-delay:${-m.d}s`}, light); });
-
-    // pedestal: an object of its own, inset from the stage edges
-    Kit.mk('ellipse', {cx: W / 2, cy: floorY + fs * 1.9, rx: W * .5, ry: fs * 1.1, fill: 'url(#sh)'}, G.floor.insertBefore(Kit.mk('g', {}, G.floor), G.floorIn));
-    Kit.mk('polygon', {points: pts([[W * .07, floorY - fs * .6], [W * .93, floorY - fs * .6], [W * .98, floorY + fs], [W * .02, floorY + fs]]), fill: 'url(#plinth)'}, floor);
-    Kit.mk('rect', {x: W * .02, y: floorY + fs, width: W * .96, height: fs * .6, fill: '#8a7350'}, floor);
-    Kit.mk('line', {x1: W * .02, x2: W * .98, y1: floorY + fs, y2: floorY + fs, stroke: '#f6e9c8', 'stroke-width': 1, opacity: .5}, floor);
-    Kit.mk('ellipse', {cx, cy: floorY - fs * .1, rx: cw * 1.1, ry: fs * 1.1, fill: 'url(#spot)'}, light);
-
-    // shard hosts by depth
-    G.sh0 = Kit.mk('g', {filter: 'url(#pa1)'}, mid);
-
-    if (!exploded) drawCylinder(mid);
-    drawThermo(mid);
-    G.sh1 = Kit.mk('g', {filter: 'url(#pa2)'}, mid);
-
-    // front: shards, rope barrier, plaque
-    G.sh2 = Kit.mk('g', {filter: 'url(#pa3)'}, front);
-    const fr = Kit.mk('g', {filter: 'url(#pa3)'}, front);
-    const p1 = W * .72, p2 = W * .95, ptop = floorY + fs * .3, pbot = plaqueTop + plaqueH;
-    Kit.mk('path', {d: `M${p1},${ptop + fs * .5} Q${(p1 + p2) / 2},${ptop + fs * 2.2} ${p2},${ptop + fs * .5}`, stroke: '#9c2f2f', 'stroke-width': fs * .3, fill: 'none', 'stroke-linecap': 'round'}, fr);
-    [p1, p2].forEach(x => { Kit.mk('rect', {x: x - fs * .17, y: ptop, width: fs * .34, height: pbot - ptop, fill: 'url(#brass)'}, fr); Kit.mk('circle', {cx: x, cy: ptop, r: fs * .32, fill: '#e8c36a'}, fr); Kit.mk('rect', {x: x - fs * .5, y: pbot - fs * .25, width: fs, height: fs * .25, rx: 2, fill: '#7a5c1e'}, fr); });
-    const pl = G.plaque = Kit.mk('g', {filter: 'url(#pa3)'}, front);
-    const pr = Kit.mk('rect', {x: fs * .6, y: plaqueTop, width: 10, height: plaqueH, rx: fs * .25, fill: '#e9dcc0'}, pl);
-    const l1 = txt(pl, fs * 1.2, plaqueTop + fs * 1.35, 'ARLINGTON PLANT · 1944', {fill: '#2a2117', 'font-weight': 800});
-    G.pl2 = txt(pl, fs * 1.2, plaqueTop + fs * 2.75, 'TWO WORKERS KILLED', {fill: '#a8401c', 'font-weight': 800, opacity: bombed ? 1 : 0});
-    pr.setAttribute('width', Math.max(l1.getComputedTextLength(), G.pl2.getComputedTextLength()) + fs * 1.2);
-
-    G.ui = Kit.mk('g', {}, svg);
-    if (exploded) buildBoom(null);
-    updateDyn();
-  }
-
-  function drawCylinder(mid) {
-    const {cx, cw, ch, y0, y1, t, ix0, ix1, iy0, iy1, hw, gx, gy, gr} = g;
-    Kit.mk('ellipse', {cx, cy: y1 + fs * .1, rx: cw * .62, ry: fs * .4, fill: '#000', opacity: .35}, mid);
-    const cyl = G.cyl = Kit.mk('g', {}, mid);
-    const body = Kit.mk('g', {filter: 'url(#pa2)'}, cyl);
-    Kit.mk('rect', {x: cx - cw / 2, y: y0, width: cw, height: ch, rx: t * .6, fill: 'url(#steel)'}, body);
-    G.tint = Kit.mk('rect', {x: cx - cw / 2, y: y0, width: cw, height: ch, rx: t * .6, fill: C.ember, opacity: 0}, body);
-    [[y0 - t * .4, t * 1.3], [y1 - t * 1, t * 1.2]].forEach(([y, h]) => {
-      Kit.mk('rect', {x: cx - cw * .54, y, width: cw * 1.08, height: h, rx: t * .3, fill: 'url(#steel)'}, body);
-      for (let i = 0; i < 6; i++) Kit.mk('circle', {cx: cx - cw * .46 + i * cw * .184, cy: y + h / 2, r: t * .17, fill: '#2f3940'}, body);
-    });
-    Kit.mk('rect', {x: ix0, y: iy0, width: 2 * hw, height: iy1 - iy0, rx: t * .3, fill: C.dark}, body);
-
-    const ins = Kit.mk('g', {'clip-path': 'url(#win)'}, cyl);
-    G.gas = GAS.map(d => ({u: d.u, e: Kit.mk('circle', {cx: cx + d.u * hw, cy: lerp(iy0, iy1, d.v), r: fs * .15, fill: '#a9c9d6', opacity: .6, class: 'gas', style: `animation-delay:${-d.d}s`}, ins)}));
-    G.glow = Kit.mk('rect', {x: ix0, y: iy0, width: 2 * hw, height: iy1 - iy0, fill: 'url(#core)', opacity: 0}, ins);
-    G.polyL = Kit.mk('rect', {x: ix0, y: iy0, width: 0, height: iy1 - iy0, fill: 'url(#polyL)'}, ins);
-    G.polyR = Kit.mk('rect', {x: ix1, y: iy0, width: 0, height: iy1 - iy0, fill: 'url(#polyR)'}, ins);
-    G.edgeL = Kit.mk('line', {x1: ix0, x2: ix0, y1: iy0, y2: iy1, stroke: '#bfae86', 'stroke-width': 1.4}, ins);
-    G.edgeR = Kit.mk('line', {x1: ix1, x2: ix1, y1: iy0, y2: iy1, stroke: '#bfae86', 'stroke-width': 1.4}, ins);
-    G.glow2 = Kit.mk('rect', {x: ix0, y: iy0, width: 2 * hw, height: iy1 - iy0, fill: 'url(#core)', opacity: 0, style: 'mix-blend-mode:screen'}, ins);
-    G.hotR = Kit.mk('rect', {x: ix0, y: iy0, width: 2 * hw, height: iy1 - iy0, fill: 'url(#hotc)', opacity: 0}, ins);
-    Kit.mk('line', {x1: ix1, x2: cx + fs * .4, y1: g.coreY, y2: g.coreY, stroke: C.paper, 'stroke-width': 1.3, 'stroke-dasharray': '3 3', opacity: .8}, ins);
-    Kit.mk('circle', {cx: cx, cy: g.coreY, r: fs * .3, fill: 'none', stroke: C.paper, 'stroke-width': 1.3, opacity: .8}, ins);
-    G.trap = Kit.mk('g', {}, ins);
-    trapped.forEach(d => Kit.mk('circle', {cx: cx + d.u * hw, cy: lerp(iy0, iy1, d.v), r: fs * .24, fill: C.hot, filter: 'url(#glow)', class: 'jit', style: `animation-delay:${-d.u * 3}s`}, G.trap));
-    Kit.mk('rect', {x: ix0, y: iy0, width: 2 * hw, height: iy1 - iy0, rx: t * .3, fill: 'none', stroke: '#2b343b', 'stroke-width': 2}, cyl);
-
-    // cooling channels
-    G.chan = Kit.mk('g', {}, cyl);
-    if (cooling) for (let k = 0; k < 5; k++) {
-      const y = lerp(iy0, iy1, (k + .5) / 5);
-      [-1, 1].forEach(s => Kit.mk('path', {d: `M${cx},${y} H${cx + s * (cw / 2 + fs * .7)}`, stroke: C.cool, 'stroke-width': Math.max(2, fs * .2), 'stroke-linecap': 'round', fill: 'none', class: 'chan'}, G.chan));
+  // ---------- front: the plan, even and blank ----------
+  function drawFront() {
+    pic.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(pic); fs = Math.max(12, Math.min(14, f));
+    const top = fs + 2, bot = fs * 1.5 + 4;
+    let R = Math.max(30, Math.min(W * .36, (H - top - bot) / 2.04));
+    const bb = Kit.fitSvg(pic2), br = backR(bb.W, bb.H, bb.f);
+    if (br >= 90) R = Math.min(R, br);               // the same object, the same size, on both faces
+    const sw = Math.max(5, R * .07), cx = W / 2, cy = top + R + Math.max(0, (H - top - bot - 2 * R - sw / 2) / 2);
+    G = {cx, cy, R, W, H};
+    const g = Kit.mk('g', {id: 'plan'}, pic);
+    Kit.mk('circle', {cx, cy, r: R, fill: '#fff', opacity: .55}, g);
+    // TFE turning into chains, evenly, right through
+    const mg = Kit.mk('g', {id: 'mols'}, g), d = R * .21, s = Math.max(2.6, R * .032), h = Math.max(1.8, R * .022);
+    for (let j = -6; j <= 6; j++) for (let i = -6; i <= 6; i++) {
+      const x = cx + (i + (j & 1) * .5) * d, y = cy + j * d * .866;
+      if (Math.hypot(x - cx, y - cy) > R * .8) continue;
+      const a = ((((i + 2 * j) % 3) + 3) % 3) * Math.PI / 3 + .3, ux = Math.cos(a), uy = Math.sin(a);
+      let p = '';
+      [-1.5, -.5, .5, 1.5].forEach((t, k) => { const o = k % 2 ? h : -h;
+        p += (k ? 'L' : 'M') + (x + ux * t * s - uy * o).toFixed(1) + ',' + (y + uy * t * s + ux * o).toFixed(1); });
+      Kit.mk('path', {d: p, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .3}, mg);
     }
-    G.fly = Kit.mk('g', {}, cyl);
-
-    // gauge
-    const ga = G.gauge = Kit.mk('g', {}, mid);
-    const gb = Kit.mk('g', {filter: 'url(#pa2)'}, ga);
-    Kit.mk('rect', {x: gx - gr * .14, y: gy, width: gr * .28, height: y0 - gy, fill: 'url(#steel)'}, gb);
-    Kit.mk('circle', {cx: gx, cy: gy, r: gr, fill: C.paper, stroke: '#2f3940', 'stroke-width': gr * .13}, gb);
-    const a1 = gp(55, gr * .72), a2 = gp(130, gr * .72);
-    Kit.mk('path', {d: `M${a1} A${gr * .72},${gr * .72} 0 0 1 ${a2}`, stroke: C.rust, 'stroke-width': gr * .17, fill: 'none', class: 'draw'}, ga);
-    for (let i = 0; i < 9; i++) { const a = -130 + i * 32.5, p = gp(a, gr * .5), q = gp(a, gr * .64); Kit.mk('line', {x1: p[0], y1: p[1], x2: q[0], y2: q[1], stroke: C.ink, 'stroke-width': 1.3, class: 'draw'}, ga); }
-    G.needle = Kit.mk('line', {x1: gx, y1: gy + gr * .18, x2: gx, y2: gy - gr * .74, stroke: '#a8401c', 'stroke-width': Math.max(2, gr * .08), 'stroke-linecap': 'round'}, ga);
-    Kit.mk('circle', {cx: gx, cy: gy, r: gr * .12, fill: C.ink}, ga);
-    txt(ga, gx + gr + fs * .5, gy + fs * .35, 'PRESSURE');
-
-    // labels on the left
-    const lab = G.lab = Kit.mk('g', {}, mid), lx = cx - cw / 2 - fs * .5, ly = y0 + ch * .16;
-    G.gasLab = Kit.mk('g', {}, lab);
-    txt(G.gasLab, lx, ly, 'TFE GAS', {'text-anchor': 'end'});
-    Kit.mk('path', {d: `M${lx + fs * .3},${ly - fs * .35} H${cx}`, stroke: C.paper, 'stroke-width': 1.2, fill: 'none', class: 'draw'}, G.gasLab);
-    Kit.mk('circle', {cx, cy: ly - fs * .35, r: fs * .16, fill: C.paper}, G.gasLab);
-    G.tefLab = Kit.mk('g', {opacity: 0}, lab);
-    const ty = ly + fs * 1.9;
-    txt(G.tefLab, lx, ty, 'TEFLON', {'text-anchor': 'end'});
-    G.tefLead = Kit.mk('line', {x1: lx + fs * .3, x2: ix0, y1: ty - fs * .35, y2: ty - fs * .35, stroke: C.ink, 'stroke-width': 1.4}, G.tefLab);
-    G.tefDot = Kit.mk('circle', {cx: ix0, cy: ty - fs * .35, r: fs * .16, fill: C.ink}, G.tefLab);
-
-    if (phase === 'build' && n === 0) G.hint = Kit.mk('rect', {x: cx - cw * .62, y: y0 - t * .9, width: cw * 1.24, height: ch + t * 1.6, rx: fs, fill: 'none', stroke: C.paper, 'stroke-width': 1.5, 'stroke-dasharray': '5 6', class: 'hint'}, mid);
-  }
-
-  function drawThermo(mid) {
-    const {tx, tt, tb, tw, cx, cw} = g;
-    const th = G.thermo = Kit.mk('g', {}, mid);
-    G.thLead = Kit.mk('path', {d: `M${tx - tw / 2},${g.coreY} H${cx + cw / 2}`, stroke: C.paper, 'stroke-width': 1.3, fill: 'none', 'stroke-dasharray': '3 3', opacity: exploded ? 0 : .8}, th);
-    const tb2 = Kit.mk('g', {filter: 'url(#pa2)'}, th);
-    Kit.mk('rect', {x: tx - tw / 2, y: tt, width: tw, height: tb - tt + tw * .4, rx: tw / 2, fill: C.paper}, tb2);
-    Kit.mk('circle', {cx: tx, cy: tb + tw * .55, r: tw * .85, fill: C.paper}, tb2);
-    G.tf = Kit.mk('rect', {x: tx - tw * .22, y: tb, width: tw * .44, height: 0, rx: tw * .22, fill: 'url(#merc)'}, th);
-    Kit.mk('circle', {cx: tx, cy: tb + tw * .55, r: tw * .6, fill: C.rust}, th);
-    for (let i = 1; i <= 4; i++) { const y = lerp(tb, tt, i / 5); Kit.mk('line', {x1: tx - tw * .5, x2: tx - tw * .05, y1: y, y2: y, stroke: C.ink, 'stroke-width': 1.2, class: 'draw'}, th); }
-    txt(th, tx, tt - fs * .7, 'CORE HEAT', {'text-anchor': 'middle'});
-  }
-
-  function updateDyn() {
-    const {ix0, ix1, hw} = g, pw = st.p * hw, T = Math.min(1, st.T);
-    if (G.polyL && G.polyL.isConnected) {
-      G.polyL.setAttribute('width', pw); G.polyR.setAttribute('x', ix1 - pw); G.polyR.setAttribute('width', pw);
-      G.edgeL.setAttribute('x1', ix0 + pw); G.edgeL.setAttribute('x2', ix0 + pw); G.edgeR.setAttribute('x1', ix1 - pw); G.edgeR.setAttribute('x2', ix1 - pw);
-      const eo = pw > .5 && st.p < .995 ? 1 : 0; G.edgeL.setAttribute('opacity', eo); G.edgeR.setAttribute('opacity', eo);
-      G.gas.forEach(d => d.e.setAttribute('opacity', Math.abs(d.u) * hw < hw - pw - fs * .2 ? .6 : 0));
-      G.glow.setAttribute('opacity', Math.min(1, T * 1.2));
-      G.glow2.setAttribute('opacity', Math.min(1, T * 1.1) * clamp(st.p * 1.3, 0, 1));
-      G.hotR.setAttribute('opacity', clamp((T - .6) / .4, 0, 1));
-      G.tint.setAttribute('opacity', T * .32);
-      G.gasLab.setAttribute('opacity', clamp(1 - st.p * 1.25, 0, 1));
-      G.tefLab.setAttribute('opacity', clamp(st.p * 4, 0, 1));
-      const x2 = ix0 + Math.max(pw * .5, 2); G.tefLead.setAttribute('x2', x2); G.tefDot.setAttribute('cx', x2);
-    }
-    if (G.needle && G.needle.isConnected) G.needle.setAttribute('transform', `rotate(${-130 + 260 * T} ${g.gx} ${g.gy})`);
-    if (G.tf) { const h = (g.tb - g.tt) * (.05 + T * .95); G.tf.setAttribute('y', g.tb - h); G.tf.setAttribute('height', h + g.tw * .4); }
-  }
-
-  // ---------- heat beads: out through the wall, or trapped in the core ----------
-  function squig(x, y, side) {
-    const room = side < 0 ? x - fs * .4 : g.tx - g.tw - x - fs * .3, L = Math.max(fs * 2, Math.min(W * .11, room)), a = fs * .4, s = side * L / 4;
-    return `M${x},${y} q${s / 2},${-a} ${s},0 t${s},0 t${s},0 t${s},0`;
-  }
-  function heat(tl, p0, p1, esc, o) {
-    const N = 10, out = Math.round(N * esc), {cx, cw, hw, ix0, ix1, iy0, iy1} = g;
-    const chY = cooling ? [...Array(5)].map((_, k) => lerp(iy0, iy1, (k + .5) / 5)) : null;
-    for (let i = 0; i < N; i++) {
-      const side = i % 2 ? 1 : -1, d = p0 + (p1 - p0) * (.3 + .4 * Kit.rnd());
-      const x = side < 0 ? ix0 + d * hw : ix1 - d * hw;
-      let y = i < out ? lerp(iy0, iy1, .56 + .38 * Kit.rnd()) : lerp(iy0, iy1, .12 + .76 * Kit.rnd());
-      if (chY) y = chY[i % 5];
-      const dot = Kit.mk('circle', {cx: x, cy: y, r: 0, fill: C.hot, filter: 'url(#glow)'}, G.fly);
-      const at = o + .08 + i * .035;
-      tl.to(dot, {attr: {r: fs * .26}, duration: .25, ease: 'back.out(3)'}, at);
-      if (i < out) {
-        const wx = side < 0 ? cx - cw / 2 : cx + cw / 2;
-        tl.to(dot, {attr: {cx: wx}, duration: .45, ease: 'power2.in'}, at + .25).to(dot, {opacity: 0, duration: .15, ease: 'power1.out'}, at + .65);
-        const sq = Kit.mk('path', {d: squig(wx, y, side), stroke: C.ember, 'stroke-width': Math.max(2, fs * .17), 'stroke-linecap': 'round', fill: 'none'}, G.fly);
-        gsap.set(sq, {drawSVG: '0% 0%'});
-        tl.to(sq, {drawSVG: '0% 100%', duration: .4, ease: 'power2.out'}, at + .62).to(sq, {drawSVG: '100% 100%', duration: .45, ease: 'power2.in'}, at + 1.02).call(() => { sq.remove(); dot.remove(); }, null, at + 1.5);
-      } else {
-        const td = {u: (Kit.rnd() - .5) * .55 * Math.max(.3, 1 - p1 + .3), v: .12 + Kit.rnd() * .76};
-        trapped.push(td);
-        tl.to(dot, {attr: {cx: cx + td.u * hw, cy: lerp(iy0, iy1, td.v)}, duration: .7, ease: 'power3.inOut'}, at + .25)
-          .call(() => { if (dot.isConnected) { dot.classList.add('jit'); dot.style.animationDelay = (-i * .07) + 's'; } }, null, at + .95);
-      }
+    Kit.mk('circle', {cx, cy, r: R, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': sw}, g);
+    // steel wall: label up-left, short leader to the rim
+    const ly = cy - R - fs * .25, lx = cx - R * .66, ro = R + sw / 2 + 1;
+    txt(g, lx, ly + fs * .35, 'steel wall', W, {anchor: 'end'});
+    lead(g, lx + 4, ly, cx + Math.cos(rad(-118)) * ro, cy + Math.sin(rad(-118)) * ro);
+    // the material: label down-right, leader touching just inside the rim
+    const cap = txt(g, cx + R * .95, cy + R + sw / 2 + fs * 1.25, 'TFE turning solid, right through', W, {anchor: 'end'});
+    const cb = cap.getBBox(), ri = R - sw - 5, ix = cx + Math.cos(rad(48)) * ri, iy = cy + Math.sin(rad(48)) * ri;
+    lead(g, Math.min(cb.x + cb.width - 10, cx + R * .8), cb.y - 1, ix, iy);
+    Kit.mk('circle', {cx: ix, cy: iy, r: 2.2, style: 'fill:var(--k)'}, g);
+    const p = spot(cx, cy, R, sw, W, H, fs * 1.1);
+    if (p) {
+      Kit.mk('circle', {cx: p[0], cy: p[1], r: fs * 1.1, fill: 'none', stroke: YOU, 'stroke-width': 2}, pic);
+      Kit.mk('circle', {cx: p[0], cy: p[1], r: fs * .42, fill: YOU, id: 'dot'}, pic);
     }
   }
 
-  // ---------- the taps ----------
-  function step() {
-    if (phase !== 'build' || busy) return;
-    n++; busy = true; Kit.haptic('selection');
-    if (G.hint) { const h = G.hint; G.hint = null; gsap.to(h, {opacity: 0, duration: .25, onComplete: () => h.remove()}); }
-    if (n === 4) { say.innerHTML = SAY[4]; runaway(); return; }
-    say.innerHTML = SAY[n];
-    const p0 = st.p, p1 = n / 4;
-    if (Kit.calm) {
-      const N = 10, out = Math.round(N * ESC[n - 1]);
-      for (let i = out; i < N; i++) trapped.push({u: (Kit.rnd() - .5) * .45, v: .12 + Kit.rnd() * .76});
-      st.p = p1; st.T = TT[n]; busy = false; layout(); return;
-    }
-    gsap.fromTo(G.cyl, {scaleY: .965, scaleX: 1.02}, {scaleY: 1, scaleX: 1, transformOrigin: '50% 100%', duration: .7, ease: 'elastic.out(1,.35)'});
-    const tl = gsap.timeline({onUpdate: updateDyn});
-    tl.to(st, {p: p1, duration: .7, ease: 'power3.out'}, 0).to(st, {T: TT[n], duration: 1, ease: 'power2.inOut'}, .35);
-    heat(tl, p0, p1, ESC[n - 1], 0);
-    gsap.delayedCall(.6, () => { busy = false; });
-  }
-
-  function runaway() {
-    if (Kit.calm) { st.p = 1; st.T = 1; exploded = bombed = true; phase = 'boom'; layout(); afterBoom(); return; }
-    const tl = gsap.timeline({onUpdate: updateDyn, onComplete: explode});
-    tl.to(st, {p: 1, duration: .6, ease: 'power3.out'}, 0);
-    heat(tl, .75, 1, 0, 0);
-    tl.to(st, {T: 1, duration: 1.6, ease: 'expo.in'}, .3);
-    tl.to(G.cyl, {scaleX: 1.08, transformOrigin: '50% 100%', duration: 1.6, ease: 'expo.in'}, .3);
-    tl.to(G.cyl, {x: 'random(-3,3)', duration: .05, repeat: 21, yoyo: true, repeatRefresh: true, ease: 'sine.inOut'}, .85);
-    tl.call(() => Kit.haptic('light'), null, 1.2);
-  }
-
-  function explode() {
-    exploded = bombed = true; phase = 'boom'; Kit.haptic('success');
-    const {cx, cw} = g, cy = g.coreY;
-    const tl = gsap.timeline({onComplete: afterBoom});
-    gsap.set([G.cyl, G.lab], {opacity: 0});
-    if (G.thLead) tl.to(G.thLead, {opacity: 0, duration: .2}, 0);
-    tl.to(G.gauge, {x: W * .35, y: -H * .5, rotation: 400, transformOrigin: '50% 50%', duration: 1, ease: 'power3.out'}, 0).set(G.gauge, {opacity: 0}, 1);
-    tl.fromTo(G.root, {x: -7}, {x: 0, duration: .8, ease: 'elastic.out(1.2,.15)'}, 0);
-    const fl = Kit.mk('circle', {cx, cy, r: cw * .2, fill: '#fff3d0', opacity: .95}, G.fxIn);
-    tl.to(fl, {attr: {r: Math.hypot(W, H)}, opacity: 0, duration: .8, ease: 'expo.out'}, 0).call(() => fl.remove(), null, .85);
-    const burst = Kit.mk('g', {filter: 'url(#pa3)'}, G.fxIn);
-    [[1.5, C.hot], [1.1, C.ember], [.7, '#fff6e0']].forEach(([R, c], i) => Kit.mk('polygon', {points: star(cx, cy, cw * R, cw * R * .45, 11, i * .3), fill: c}, burst));
-    tl.fromTo(burst.children, {scale: 0, rotation: -25, transformOrigin: '50% 50%'}, {scale: 1, rotation: 0, duration: .5, stagger: .06, ease: 'back.out(2.2)'}, 0)
-      .to(burst.children, {scale: .3, opacity: 0, duration: .7, stagger: .05, ease: 'power2.in'}, .8).call(() => burst.remove(), null, 1.7);
-    const rays = Kit.mk('g', {}, G.fxIn);
-    for (let k = 0; k < 14; k++) { const a = k / 14 * Math.PI * 2 + .1; Kit.mk('line', {x1: cx + Math.cos(a) * cw * .6, y1: cy + Math.sin(a) * cw * .6, x2: cx + Math.cos(a) * cw * 2.2, y2: cy + Math.sin(a) * cw * 2.2, stroke: '#fff3d0', 'stroke-width': fs * .22, 'stroke-linecap': 'round'}, rays); }
-    gsap.set(rays.children, {drawSVG: '0% 0%'});
-    tl.to(rays.children, {drawSVG: '0% 100%', duration: .35, ease: 'power3.out', stagger: .012}, .05).to(rays.children, {drawSVG: '100% 100%', duration: .45, ease: 'power2.in'}, .45).call(() => rays.remove(), null, 1.1);
-    buildBoom(tl);
-    tl.fromTo(G.pl2, {opacity: 0, y: fs * .6}, {opacity: 1, y: 0, duration: .7, ease: 'power3.out'}, 1.4);
-  }
-
-  function buildBoom(tl) {
-    const {cx, cw, ch, y0, y1, floorY, t} = g;
-    const stub = Kit.mk('g', {filter: 'url(#pa2)'}, G.midIn);
-    const jag = []; for (let k = 0; k <= 7; k++) jag.push([cx - cw / 2 + cw * k / 7, y1 - ch * (.16 + ((k * 37) % 5) / 5 * .16)]);
-    Kit.mk('polygon', {points: pts([[cx - cw / 2, y1], ...jag, [cx + cw / 2, y1]]), fill: 'url(#steel)'}, stub);
-    Kit.mk('polygon', {points: pts([[cx - cw / 2 + t, y1 - t], ...jag.slice(1, -1).map(([x, y]) => [x, y + t * .9]), [cx + cw / 2 - t, y1 - t]]), fill: '#1b1410'}, stub);
-    Kit.mk('rect', {x: cx - cw * .54, y: y1 - t, width: cw * 1.08, height: t * 1.2, rx: t * .3, fill: 'url(#steel)'}, stub);
-    // smoke
-    const cl = Kit.mk('g', {filter: 'url(#pa2)'}, G.fxIn);
-    [[0, 0, .5], [-.45, .15, .36], [.45, .12, .38], [-.2, -.35, .34], [.25, -.32, .3], [0, .35, .3]].forEach(([dx, dy, r], i) =>
-      Kit.mk('circle', {cx: cx + dx * cw, cy: y0 + ch * .4 + dy * cw, r: r * cw, fill: ['#6b7881', '#56636d', '#7b878f'][i % 3], class: 'puff', style: `animation-delay:${-i}s`}, cl));
-    // paper flames still burning in the torn stub
-    const base = y1 - ch * .17, fg = Kit.mk('g', {filter: 'url(#pa1)'}, G.fxIn);
-    [[-.3, .11, .42], [.28, .1, .38], [-.1, .13, .6], [.1, .12, .52]].forEach(([dx, w, h], i) => {
-      const x = cx + dx * cw, f = Kit.mk('g', {}, fg);
-      [[1, C.rust], [.7, C.ember], [.38, C.hot]].forEach(([k, c], j) =>
-        Kit.mk('path', {d: flame(x, base, cw * w * k, cw * h * k), fill: c, class: 'flick', style: `animation-delay:${-(i * .17 + j * .09)}s;animation-duration:${.38 + j * .07 + i * .03}s`}, f));
-    });
-    const eg = Kit.mk('g', {}, G.fxIn);
-    if (!Kit.calm) for (let i = 0; i < 9; i++) {
-      const e = Kit.mk('circle', {cx: cx + (Kit.rnd() - .5) * cw * .6, cy: base, r: Math.max(1.5, fs * .11), fill: C.hot, filter: 'url(#glow)', opacity: 0}, eg);
-      loops.push(gsap.timeline({repeat: -1, delay: (tl ? 1.6 : 0) + i * .28, repeatDelay: Kit.rnd() * .6})
-        .fromTo(e, {y: 0, x: 0, opacity: 1}, {y: -ch * (.45 + Kit.rnd() * .3), x: (Kit.rnd() - .5) * cw * .5, opacity: 0, duration: 1.5 + Kit.rnd() * .8, ease: 'power1.out'}));
-    }
-    SHARDS.forEach(sh => {
-      const host = [G.sh0, G.sh1, G.sh2][sh.depth], sz = cw * .16 * sh.s;
-      const fx = clamp(cx + sh.u * W * .5, Math.max(sz, W * .05), Math.min(W - sz, W * .95)), fy = floorY - sz * .35 + sh.depth * fs * .25;
-      const e = Kit.mk('g', {}, host);
-      Kit.mk('polygon', {points: pts(sh.p.map(([a, b]) => [a * sz, b * sz])), fill: sh.poly ? '#fbf7ee' : 'url(#steel)', stroke: sh.poly ? '#cdbf9f' : '#3f4a53', 'stroke-width': 1}, e);
-      if (!tl) { gsap.set(e, {x: fx, y: fy, rotation: sh.rot, transformOrigin: '50% 50%'}); return; }
-      const sx = cx + sh.sx * cw * .8, sy = lerp(y0, y1, sh.sy), d = .9 + sh.s * .35;
-      gsap.set(e, {x: sx, y: sy, rotation: 0, transformOrigin: '50% 50%'});
-      tl.to(e, {x: fx, duration: d, ease: 'power2.out'}, .05)
-        .to(e, {keyframes: [{y: sy - H * sh.rise, duration: d * .4, ease: 'power2.out'}, {y: fy, duration: d * .6, ease: 'bounce.out'}]}, .05)
-        .to(e, {rotation: sh.rot, duration: d, ease: 'power2.out'}, .05);
-    });
-    if (tl) {
-      tl.from(cl.children, {scale: 0, opacity: 0, transformOrigin: '50% 50%', duration: 1.2, stagger: .05, ease: 'expo.out'}, .3);
-      tl.from(fg, {scaleY: 0, opacity: 0, transformOrigin: `50% ${base}px`, duration: .6, ease: 'back.out(2)'}, 1.1);
-    }
-    // the replay chip: solid, with a breathing halo behind it
-    const chip = G.chip = Kit.mk('g', {id: 'chip', style: 'cursor:pointer'}, G.ui);
-    const halo = Kit.mk('rect', {x: fs * .4, y: fs * .4, width: 10, height: fs * 2.3, rx: fs * 1.15, fill: 'none', stroke: C.paper, 'stroke-width': 1.5, class: 'halo'}, chip);
-    const cr = Kit.mk('rect', {x: fs * .4, y: fs * .4, width: 10, height: fs * 2.3, rx: fs * 1.15, fill: C.paper, filter: 'url(#pa1)'}, chip);
-    const ct = Kit.mk('text', {x: fs * 1.3, y: fs * 1.95, fill: C.ink, 'font-size': fs, 'font-weight': 800, style: 'font-family:var(--body)'}, chip);
-    ct.textContent = 'Now give the heat a way out →';
-    const cwid = ct.getComputedTextLength() + fs * 1.8; cr.setAttribute('width', cwid); halo.setAttribute('width', cwid);
-    if (tl) tl.from(chip, {scale: 0, opacity: 0, transformOrigin: '0% 50%', duration: .55, ease: 'back.out(2)'}, 1.9);
-  }
-
-  function afterBoom() {
-    say.innerHTML = WHY; Kit.show('keep'); card.classList.add('answered');
-  }
-
-  // ---------- the replay with the heat taken away ----------
-  function coolRun() {
-    if (phase !== 'boom') return;
-    phase = 'cool'; cooling = true; exploded = false; n = 0; st.p = 0; st.T = 0; trapped = [];
-    Kit.haptic('selection');
-    say.innerHTML = 'The same reaction, but now the heat has a way out…';
-    if (Kit.calm) { st.p = 1; st.T = .06; phase = 'safe'; layout(); afterSafe(); return; }
-    layout();
-    const tl = gsap.timeline({onUpdate: updateDyn, onComplete: () => { phase = 'safe'; afterSafe(); }});
-    tl.from([G.cyl, G.lab], {y: -H * .7, duration: .8, ease: 'bounce.out', stagger: .05}, 0).from(G.gauge, {y: -H * .7, duration: .8, ease: 'bounce.out'}, .1);
-    const ch = G.chan.querySelectorAll('path');
-    gsap.set(ch, {drawSVG: '0% 0%'});
-    tl.to(ch, {drawSVG: '0% 100%', duration: .6, stagger: .05, ease: 'power3.out'}, .85);
-    for (let k = 1; k <= 4; k++) {
-      const o = 1.45 + (k - 1) * .85;
-      tl.to(st, {p: k / 4, duration: .55, ease: 'power3.out'}, o).to(st, {T: .05 + k * .01, duration: .5, ease: 'power2.inOut'}, o + .2);
-      heat(tl, (k - 1) / 4, k / 4, 1, o);
+  let sureOn = false;
+  function tapAt(rx, ry) {
+    if (answered) return;
+    const inside = Math.hypot(rx, ry) < 1;
+    tap = {x: rx, y: ry, inside};
+    pick = inside ? 0 : 1;
+    say.innerHTML = `You tapped <b>${ZONE[pick]}</b>. Tap again to move it, then say how sure you are.`;
+    drawFront(); Kit.haptic('selection');
+    if (!Kit.calm) gsap.from('#dot', {attr: {r: 0}, duration: .25, ease: 'power3.out'});
+    if (!sureOn) {
+      sureOn = true; sureBox.classList.remove('wait'); sure.on();
+      if (!Kit.calm) gsap.from(sureBox, {opacity: 0, y: 6, duration: .35, ease: 'power2.out'});
     }
   }
-  function afterSafe() { say.innerHTML = SAFE; Kit.haptic('success'); }
-
-  // ---------- touch ----------
-  function parallax(e) {
-    if (Kit.calm || !G.far) return;
-    const r = svg.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - .5, dy = (e.clientY - r.top) / r.height - .5;
-    [['far', -.025], ['near', -.015], ['light', -.01], ['floor', -.005], ['mid', .004], ['fx', .006], ['front', .028]].forEach(([k, a]) =>
-      gsap.to(G[k], {x: dx * W * a, y: dy * H * a * .4, duration: .9, ease: 'power3.out', overwrite: 'auto'}));
-  }
-  svg.addEventListener('pointermove', parallax);
-  svg.addEventListener('pointerdown', parallax);
-  svg.addEventListener('click', e => {
-    if (e.target.closest && e.target.closest('#chip')) { coolRun(); return; }
-    if (phase === 'build') step();
+  pic.addEventListener('pointerdown', e => {
+    const r = pic.getBoundingClientRect();
+    tapAt((e.clientX - r.left - G.cx) / G.R, (e.clientY - r.top - G.cy) / G.R);
   });
 
-  Kit.onShow.card = layout;
+  const sure = Kit.sure(sureBox, 'How sure are you?', pct => {
+    if (pick < 0 || answered) return;
+    answered = true;
+    const ok = pick === RIGHT;
+    Kit.answer({choice: ZONE[pick], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${ZONE[pick][0].toUpperCase() + ZONE[pick].slice(1)}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back: the same cylinder, warm right through, pushing on its wall ----------
+  let tl = null;
+  function drawBack(animate) {
+    if (tl) { tl.kill(); tl = null; }
+    pic2.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(pic2); fs = Math.max(12, Math.min(14, f));
+    const R = Math.min(G.R || 999, backR(W, H, f));
+    const sw = Math.max(5, R * .07), top = fs * 1.9, cx = W / 2;
+    const cy = top + R + Math.max(0, (H - top - 2 * R - sw - 4) / 2);
+    const at = (d, r) => [cx + Math.cos(rad(d)) * r, cy + Math.sin(rad(d)) * r];
+    const lh = fs * 1.22, Rin = R - sw / 2 - 3, Rout = R + sw / 2 + 3, op = animate ? 0 : 1;
+    const obst = [];
+
+    const g = Kit.mk('g', {}, pic2);
+    // the solid, one flat warmth right through
+    const disc = Kit.mk('circle', {cx, cy, r: R, fill: animate ? PALE : WARM}, g);
+    // heat pressing out from inside, stopped by the steel
+    const AG = Kit.mk('g', {}, g), arrows = [], aw = Math.max(2.2, R * .022), ah = Math.max(4.5, R * .06);
+    const tipR = R - sw / 2 - 1.5;
+    [22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5].forEach(d => {
+      const c = Math.cos(rad(d)), s = Math.sin(rad(d)), [x0, y0] = at(d, R * .5), [x1, y1] = at(d, tipR);
+      const hx1 = x1 - c * ah - s * ah * .75, hy1 = y1 - s * ah + c * ah * .75, hx2 = x1 - c * ah + s * ah * .75, hy2 = y1 - s * ah - c * ah * .75;
+      const el = Kit.mk('g', {}, AG);
+      Kit.mk('path', {d: `M${x0.toFixed(2)},${y0.toFixed(2)}L${x1.toFixed(2)},${y1.toFixed(2)}M${hx1.toFixed(2)},${hy1.toFixed(2)}L${x1.toFixed(2)},${y1.toFixed(2)}L${hx2.toFixed(2)},${hy2.toFixed(2)}`,
+        fill: 'none', stroke: HOT, 'stroke-width': aw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, el);
+      arrows.push({el, c, s});
+      obst.push({seg: [x0, y0, x1, y1]}, {seg: [hx1, hy1, x1, y1]}, {seg: [hx2, hy2, x1, y1]});
+    });
+    // the steel wall, whole
+    const wall = Kit.mk('circle', {cx, cy, r: R, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': sw}, g);
+
+    // placement helpers: every label goes where nothing else is
+    const box = el => { const b = el.getBBox(); return {x: b.x - 3, y: b.y - 2, w: b.width + 6, h: b.height + 4}; };
+    const rectHit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+    const segRect = ([x0, y0, x1, y1], b) => { for (let i = 0; i <= 12; i++) { const x = x0 + (x1 - x0) * i / 12, y = y0 + (y1 - y0) * i / 12;
+      if (x > b.x && x < b.x + b.w && y > b.y && y < b.y + b.h) return true; } return false; };
+    const clash = b => obst.some(o => o.seg ? segRect(o.seg, b) : rectHit(o, b));
+    const corners = b => [[b.x, b.y], [b.x + b.w, b.y], [b.x, b.y + b.h], [b.x + b.w, b.y + b.h]];
+    const inDisc = b => corners(b).every(([x, y]) => Math.hypot(x - cx, y - cy) < Rin);
+    const near = (b, r) => Math.hypot(Math.max(b.x - cx, 0, cx - b.x - b.w), Math.max(b.y - cy, 0, cy - b.y - b.h)) < r;
+    const outDisc = b => !near(b, Rout);
+    const inStage = b => b.x >= 0 && b.y >= 0 && b.x + b.w <= W && b.y + b.h <= H;
+    const place = (cands, mine) => {
+      for (const mk of cands) {
+        const r = mk(), b = box(r.t);
+        const leadBad = r.lead && obst.some(o => !o.seg && !(mine && o.mk) && segRect(r.lead, o));
+        if (inStage(b) && (!r.ok || r.ok(b)) && !clash(b) && !leadBad) { obst.push(b); if (r.lead) obst.push({seg: r.lead}); return r.g; }
+        r.g.remove();
+      }
+      const r = cands[0](); obst.push(box(r.t)); return r.g;
+    };
+    const block = (parent, x, yc, lines, anchor, fill) =>
+      txt(parent, x, yc - (lines.length - 1) * lh / 2 + fs * .35, lines, W, {anchor, fill, clamp: false});
+
+    // your tap, as a marker first so labels keep clear of it
+    const TG = Kit.mk('g', {opacity: op}, pic2), m = fs * .85;
+    const p = spot(cx, cy, R, sw, W, H, m);
+    const [px, py] = p || [0, 0];
+    if (p) {
+      Kit.mk('circle', {cx: px, cy: py, r: m, fill: 'none', stroke: '#fff4e6', 'stroke-width': 5}, TG);
+      Kit.mk('circle', {cx: px, cy: py, r: m, fill: 'none', stroke: YOU, 'stroke-width': 2.4}, TG);
+      Kit.mk('circle', {cx: px, cy: py, r: fs * .32, fill: YOU}, TG);
+      obst.push({x: px - m - 3, y: py - m - 3, w: 2 * m + 6, h: 2 * m + 6, mk: true});
+    }
+
+    const L = Kit.mk('g', {}, pic2);
+    // label 1: the heat stays in
+    const heatC = [cy, cy - R * .3, cy + R * .3].map(yc => () => {
+      const gg = Kit.mk('g', {opacity: op}, L);
+      return {g: gg, t: block(gg, cx, yc, ['heat stays in'], 'middle'), ok: inDisc};
+    }).concat([-1, 1].map(side => () => {
+      const gg = Kit.mk('g', {opacity: op}, L), x = cx + side * (R + sw / 2 + 14);
+      const t = block(gg, x, cy, ['heat', 'stays in'], side < 0 ? 'end' : 'start');
+      const ln = [x - side * 4, cy, cx + side * R * .3, cy];
+      lead(gg, ...ln);
+      return {g: gg, t, lead: ln, ok: outDisc};
+    }));
+    const heat = place(heatC);
+
+    // label 2: pressure builds against the steel
+    const presC = [1, -1].map(side => () => {
+      const gg = Kit.mk('g', {opacity: op}, L), x = cx + side * R * .42, yc = cy - R - sw / 2 - fs * .9;
+      const t = block(gg, x, yc, ['pressure builds'], side > 0 ? 'start' : 'end'), b = t.getBBox();
+      const [ex, ey] = at(side > 0 ? -72 : -108, Rout);
+      const ln = [side > 0 ? b.x - 4 : b.x + b.width + 4, yc, ex, ey];
+      lead(gg, ...ln);
+      return {g: gg, t, lead: ln, ok: outDisc};
+    }).concat([1, -1].map(side => () => {
+      const gg = Kit.mk('g', {opacity: op}, L), x = cx + side * (R + sw / 2 + 12), yc = cy - R * .66;
+      const t = block(gg, x, yc, ['pressure', 'builds'], side > 0 ? 'start' : 'end');
+      const [ex, ey] = at(side > 0 ? -42 : -138, Rout);
+      const ln = [x - side * 4, yc, ex, ey];
+      lead(gg, ...ln);
+      return {g: gg, t, lead: ln, ok: outDisc};
+    }));
+    const pres = place(presC);
+
+    // label 3: your tap, on its own leader
+    if (p) {
+      const tc = [];
+      for (const D of [10, 22, 36, 52, 70]) for (const d of [180, 0, 155, 205, 25, 335, 90, 270, 125, 55, 235, 305]) tc.push(() => {
+        const c = Math.cos(rad(d)), s = Math.sin(rad(d)), gg = Kit.mk('g', {}, TG);
+        const ax = px + c * (m + D), ay = py + s * (m + D);
+        const anchor = c > .35 ? 'start' : c < -.35 ? 'end' : 'middle';
+        const x = ax + (anchor === 'start' ? 3 : anchor === 'end' ? -3 : 0);
+        const y = anchor === 'middle' ? (s > 0 ? ay + fs * .9 : ay - 3) : ay + fs * .35;
+        const ln = [px + c * (m + 2), py + s * (m + 2), ax, ay];
+        lead(gg, ...ln, YOU);
+        return {g: gg, t: txt(gg, x, y, 'your tap', W, {anchor, fill: YOU, clamp: false}), lead: ln, ok: b => inDisc(b) || outDisc(b)};
+      });
+      place(tc, true);
+    }
+
+    if (!animate) return;
+    tl = gsap.timeline({delay: .2});
+    // beat 1: the whole solid warms, right through
+    tl.to(disc, {attr: {fill: WARM}, duration: .9, ease: 'power1.inOut'})
+      .to([heat, TG], {opacity: 1, duration: .3}, '-=.3')
+    // beat 2: the heat pushes out and meets the steel
+      .addLabel('push', '+=.1');
+    arrows.forEach((a, i) => tl.fromTo(a.el, {opacity: 0, x: -a.c * R * .18, y: -a.s * R * .18},
+      {opacity: 1, x: 0, y: 0, duration: .5, ease: 'power2.in'}, 'push+=' + (i * .03)));
+    // beat 3: nowhere to go, so the force builds
+    tl.to(wall, {attr: {'stroke-width': sw * 1.3}, duration: .14, yoyo: true, repeat: 1, ease: 'power2.out'}, 'push+=.6')
+      .to(pres, {opacity: 1, duration: .3}, 'push+=.65');
+  }
+
+  document.addEventListener('turned', () => { turned = true; setTimeout(() => drawBack(!Kit.calm), Kit.calm ? 0 : 450); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
   Kit.onEnter.card = () => {
-    if (Kit.calm || !G.far || entered) return; entered = true;
-    const tl = gsap.timeline();
-    tl.from([G.farIn, G.nearIn, G.lightIn, G.floorIn, G.midIn, G.frontIn], {y: H * .14, opacity: 0, duration: 1, stagger: .1, ease: 'back.out(1.3)'});
-    const dr = svg.querySelectorAll('.draw');
-    if (dr.length) tl.fromTo(dr, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: .7, stagger: .03, ease: 'power2.inOut'}, .7);
-    if (G.needle) tl.fromTo(G.needle, {attr: {transform: `rotate(60 ${g.gx} ${g.gy})`}}, {attr: {transform: `rotate(-130 ${g.gx} ${g.gy})`}, duration: 1, ease: 'elastic.out(1,.4)'}, .9);
+    if (Kit.calm) return;
+    gsap.from('#plan', {opacity: 0, scale: .96, transformOrigin: '50% 50%', duration: .6, ease: 'power3.out'});
+    gsap.from('#mols path', {opacity: 0, duration: .4, stagger: .008, delay: .25, ease: 'power2.out'});
   };
   Kit.play.card = async () => {
-    const w = ms => new Promise(r => setTimeout(r, ms));
-    for (let i = 0; i < 4; i++) { busy = false; step(); await w(Kit.calm ? 40 : 900); }
-    await w(Kit.calm ? 100 : 4500);
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    tapAt(.05, -.08);
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4400);
   };
 })();
 Kit.single();

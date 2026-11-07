@@ -1,375 +1,337 @@
-<!doctype html>
-<!-- slug: technology-folding-the-steel -->
-<!--
-Look: a night observatory. An ink-black sky with a fine star field, glowing ice-blue instrument rings with 30 fold ticks, and a moonlit steel billet across them, speckled with ember-orange impurities. Embers drift up off the warm bar.
-Interaction: bet on the two benefits and say how sure you are, then be the smith. Each Fold heats, squashes, stretches and stacks the bar, so the clumps of silicon, sulfur and phosphorus smear out and the layers double.
-Wow: "Fold 26 more times". The bar glows white-hot, the ticks sweep round the ring, the count scrambles up to 1,073,741,824 layers, a shockwave crosses the rings, the impurities scatter evenly and dark layer patterns bloom along the grain.
--->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Why fold a sword?</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-folded-steel -->
+<!-- Thought to carry: a flaw spread thin enough everywhere stops being a weak point anywhere, and the same folds give the steel a grain.
+     Front: a bar of raw steel on an anvil, three rust flecks of impurity in it, a faint fold line at its centre and the hammer mid-strike. The reader picks two of four reasons for folding, then says how sure.
+     The wrong options are the exact opposites of the two the video gives: "gathers them in one spot" against "spreads them through", "equally strong every way" against "gives a grain".
+     Back: the reader's own picks, marked, with their confidence echoed. Then the same bar twice: raw, with its three flecks, and folded, the flecks cut and spread thin.
+     The folded bar is live: "Fold again" folds it for real. An arrow shows the direction of the hit, which the grain reinforces.
+     No layer counts are claimed; the only figure is the video's own: some swords have more than a billion layers. -->
+<title>Why smiths fold steel</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
-<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#card{background:radial-gradient(130% 75% at 50% 38%,#0f1b36 0%,#080d1d 45%,#05070f 100%)}
-#stage{display:flex;flex-direction:column;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
-#opts{display:flex;flex-direction:column;gap:.8cqh;flex:none;padding-bottom:12px;box-sizing:border-box}
-#why{display:flex;flex-direction:column;gap:.6cqh;flex:none}
-#why .big{color:#ffd27a;font-size:max(2.8cqh,18px)}
-#why .body{font:500 max(1.7cqh,12.5px)/1.35 var(--body);color:#dfe6f7}
-.opt{display:block;width:100%;max-width:100%;height:auto;min-height:0;max-height:none;box-sizing:border-box;font:700 max(1.85cqh,13px)/1.22 var(--body);text-align:left;color:var(--k);background:rgba(143,216,255,.07);border:0;box-shadow:inset 0 0 0 .2cqh rgba(143,216,255,.32);border-radius:1.6cqh;padding:1.05cqh 4cqw;cursor:pointer;white-space:normal;overflow-wrap:anywhere;flex:none;transition:transform .12s cubic-bezier(.3,1.6,.5,1),background .15s}
-.opt:active{transform:scale(.97)}
-.opt.on{background:#8fd8ff;color:#06101f;box-shadow:0 0 2cqh rgba(143,216,255,.5)}
-.forge{flex:none;align-self:center;font:800 max(2.1cqh,14px)/1 var(--body);color:#1a1004;background:linear-gradient(#ffe2a0,#ff9a3a);border:0;border-radius:99px;padding:1.5cqh 7cqw;box-shadow:0 0 2.6cqh rgba(255,170,70,.5),inset 0 -.3cqh 0 rgba(120,50,0,.35);cursor:pointer;transition:transform .1s cubic-bezier(.3,1.6,.5,1)}
-.forge:active{transform:scale(.94)}
-.say{color:#c9d3ea}
-.say b{color:#ffd27a}
-.keep{overflow-wrap:anywhere}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;grid-template-rows:minmax(0,1fr);grid-template-columns:minmax(0,1fr);transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* the face turned away is truly gone, so its labels never sit under the other face */
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face .stagebox{flex:1;min-height:0;position:relative;display:flex}
+#pic,#pic2{flex:1;min-width:0;min-height:0;width:100%;height:100%;display:block;overflow:visible}
+
+/* front, in reading order: drawing, instruction, options, confidence */
+.front .say{margin:.6cqh 0 1.1cqh}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.5cqw;margin:0}
+.opt{font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#sure{margin-top:2.4cqh}
+#sure.locked,#sure.locked *{opacity:1!important;color:var(--k)!important}
+#sure.locked button{background:transparent!important;box-shadow:none!important;border:1.5px dashed color-mix(in srgb,var(--k) 70%,transparent)!important;cursor:not-allowed}
+
+/* back */
+.back .big{font-size:max(3cqh,18px);line-height:1.15;margin:0 0 1cqh}
+#you{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 1.4cqh}
+.chip{font:700 max(1.55cqh,12px)/1 var(--body);padding:.55em .8em;border-radius:99px;white-space:nowrap;color:var(--k)}
+.chip.ok{background:var(--k);color:var(--c)}
+.chip.no{box-shadow:inset 0 0 0 1.5px var(--k)}
+.chip.no .t{text-decoration:line-through;text-decoration-thickness:1.5px}
+.verdict{flex-basis:100%;font:600 max(1.6cqh,12px)/1.3 var(--body);color:var(--k);margin-top:2px}
+.ctrl{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:44px;margin:1.4cqh 0 1.6cqh}
+.note{margin:0;font:600 max(1.7cqh,13px)/1.25 var(--body);color:var(--k)}
+#fold{flex:none;font-size:max(1.8cqh,13px)}
+.back .body{font-size:max(1.8cqh,13px);line-height:1.3;margin:0 0 1.6cqh}
+.face .foot .src{display:block;max-width:calc(100% - 104px);line-height:1.25}
+
+/* short screens: tighten the back so everything stays inside the card, never under 12px */
+@media (max-height:720px){
+  .back .big{font-size:17px;margin:0 0 5px}
+  #you{margin:0 0 6px;gap:4px}
+  .verdict{margin-top:0}
+  .ctrl{margin:6px 0 8px}
+  .note{font-size:12.5px}
+  .back .body{font-size:13px;line-height:1.25;margin:0 0 8px}
+  .back .keep{font-size:13px;line-height:1.25}
+  .back .foot .src{font-size:12px}
+}
+@media (max-height:560px){
+  .back .big{font-size:16px}
+  .chip,.verdict,.note,.back .body,.back .keep,.back .foot .src{font-size:12px}
+  .ctrl{margin:4px 0 6px}
+}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure · fold" style="--c:#070b18;--k:#eef3ff;--edge:#000">
+<article class="card" id="card" data-topic="technology" data-kind="Pick two · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">FOLD THE STEEL</span></div>
-    <h2 class="q">What are the two main benefits of folding a sword's steel?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A steel bar inside glowing instrument rings, with clumps of orange impurities in it."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag" id="tag">PICK TWO</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Smiths fold the steel again and again. Which two things does that buy?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A bar of raw steel on an anvil with three rust-coloured flecks of impurity in it, a faint fold line at its centre, and a hammer coming down on it."></svg></div>
+        <p class="say" id="say">Pick the two real reasons. Then say how sure you are.</p>
+        <div id="opts">
+          <button class="opt" data-i="0">Gathers the impurities in one spot</button>
+          <button class="opt" data-i="1">Spreads the impurities through</button>
+          <button class="opt" data-i="2">Gives the steel a grain</button>
+          <button class="opt" data-i="3">Makes it equally strong every way</button>
+        </div>
+        <div class="sure locked" id="sure"></div>
+        <div class="foot" aria-hidden="true"><span class="src">&nbsp;</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It spreads the impurities, and it gives the steel a grain.</p>
+        <div id="you"></div>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same bar twice. Above, raw, with three lumps of impurity. Below, folded: the lumps are cut and spread into thin streaks through the steel. An arrow shows the direction of the hit, which the grain reinforces."></svg></div>
+        <div class="ctrl">
+          <p class="note" id="cnt" aria-live="polite">Each fold spreads the flecks thinner.</p>
+          <button class="btn gone" id="fold">Fold again</button>
+        </div>
+        <p class="body">The impurities end up spread throughout, so no spot is weak, and the grain reinforces the blade in the direction it will be hit.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Spread a flaw thin enough, everywhere, and it stops being a weak point.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (2024)</span></div>
+      </section>
     </div>
-    <div id="opts">
-      <button class="opt" data-i="0">It makes the blade lighter and sharper</button>
-      <button class="opt" data-i="1">It spreads out impurities and gives the steel a grain</button>
-      <button class="opt" data-i="2">It adds carbon and hardens the edge</button>
-    </div>
-    <button class="forge gone" id="foldbtn">Fold the steel</button>
-    <div id="why" class="gone"><p class="big" id="bigline">Spread out, and lined up</p><p class="body">Each fold stretches and stacks the steel, so clumps of silicon, sulfur and phosphorus thin out until there is no weak point. The layers give it a grain, strongest where it will be hit. A little oxidation darkens each layer, which makes the patterns.</p></div>
-    <div id="sure"></div>
-    <p class="say" id="say">Pick the pair you'd bet on, then say how sure you are.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Folding evens out the impurities and lines the grain up where the blade gets hit.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-const RIGHT = 1;
-let pick = -1;
-const hasScr = typeof ScrambleTextPlugin !== 'undefined', hasSplit = typeof SplitText !== 'undefined';
-if (typeof gsap !== 'undefined') gsap.registerPlugin(...[hasScr && ScrambleTextPlugin, hasSplit && SplitText].filter(Boolean));
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const STEEL = '#d4d9dd', OX = '#9aa1a8', RUST = '#b8442a', RUSTD = '#6b2313', WOOD = '#9a6a3a';
+  const card = Kit.$('card'), mk = Kit.mk;
+  const css = v => getComputedStyle(card).getPropertyValue(v).trim();
+  const ink = () => css('--k') || '#111';
+  const paper = () => css('--c') || '#00e8a2';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const text = (g, x, y, t, a = {}, st = '') => { const e = mk('text', Object.assign({x, y, fill: ink(), style: 'font-family:var(--body);font-weight:700;' + st}, a), g); e.textContent = t; return e; };
 
-const S = (() => {
-  const svg = Kit.$('pic');
-  const AMBER = '#ffcf6e', ICE = '#8fd8ff', IMP = '#ff7a2f', INK = '#070b18';
-  const MONO = 'font-family:var(--mono),ui-monospace,monospace', DISP = 'font-family:var(--display),Georgia,serif';
-  let n = 0, done = false, busy = false, entered = false, laid = false, loops = [], emberT = null;
-  let W = 0, H = 0, fs = 12, cs = 24, cx = 0, cy = 0, R = 0, bx = 0, by = 0, bw = 0, bh = 0, showCap = true, countY = 0;
-  const G = {};
-  const cl = v => Math.max(.02, Math.min(.98, v));
-  const clumps = [[.18, .32, 'silicon'], [.52, .68, 'sulfur'], [.83, .38, 'phosphorus']];
-  const dots = [];
-  clumps.forEach(([u, v], c) => { for (let i = 0; i < 22; i++) dots.push({u: cl(u + Kit.gauss() * .022), v: cl(v + Kit.gauss() * .07), c}); });
-  // One fold: hammer the bar out to twice its length, fold the far half back over the top.
-  const fold = d => { let u = d.u * 2, v = d.v / 2; if (u > 1) { u = 2 - u; v = 1 - v; } d.u = u; d.v = v; };
-  const X = u => bx + bw * (.015 + .97 * u), Y = v => by + bh * (.08 + .84 * v);
-  const txt = (p, x, y, t, a = {}) => {
-    const e = Kit.mk('text', Object.assign({x, y, fill: ICE, style: MONO, 'font-size': fs, 'text-anchor': 'middle', 'paint-order': 'stroke', stroke: INK, 'stroke-width': 4, 'stroke-linejoin': 'round'}, a), p);
-    e.textContent = t; return e;
-  };
-  const countStr = () => n === 0 ? '1 layer' : `${(2 ** n).toLocaleString('en-US')} layers`;
-
-  function layout() {
-    loops.forEach(t => t.kill()); loops = [];
-    if (emberT) { emberT.kill(); emberT = null; }
-    gsap.killTweensOf(svg.querySelectorAll('*'));
-    svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H; laid = true;
-    fs = Math.max(12, Math.min(14, W / 27));
-    cs = Math.max(18, Math.min(fs * 2.1, W * .9 / 10.2));
-    showCap = H > 230;
-    const top = showCap ? fs * 1.5 : 0;
-    countY = top + cs * .92; const tb = countY + cs * .38;
-    const room = Math.max(40, H - tb);
-    cx = W / 2; cy = tb + room / 2; R = Math.min(W * .47, room / 2 * .97);
-    bw = W * .84; bx = (W - bw) / 2;
-    bh = Math.max(16, Math.min(R * .36, W * .15, room * .4)); by = cy - bh / 2;
-
-    const defs = Kit.mk('defs', {}, svg);
-    defs.innerHTML = `
-      <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#f4f7fd"/><stop offset=".18" stop-color="#d3dbea"/><stop offset=".6" stop-color="#9aa6bf"/><stop offset="1" stop-color="#5d6884"/></linearGradient>
-      <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#fff" stop-opacity=".35"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <linearGradient id="hot" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#ff4d12" stop-opacity=".7"/><stop offset=".5" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff4d12" stop-opacity=".7"/></linearGradient>
-      <radialGradient id="halo"><stop offset="0" stop-color="${ICE}" stop-opacity=".16"/><stop offset="1" stop-color="${ICE}" stop-opacity="0"/></radialGradient>
-      <radialGradient id="hearth"><stop offset="0" stop-color="#ff8a3a" stop-opacity=".5"/><stop offset="1" stop-color="#ff8a3a" stop-opacity="0"/></radialGradient>
-      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
-      <clipPath id="barclip"><rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="${bh * .12}"/></clipPath>`;
-
-    // Stars
-    G.stars = Kit.mk('g', {}, svg);
-    for (let i = 0; i < 120; i++) {
-      const r = .3 + Math.pow(Kit.rnd(), 3) * 1.2;
-      Kit.mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * H, r, fill: Kit.rnd() < .15 ? '#ffe7b0' : '#dfe9ff', opacity: .25 + Kit.rnd() * .6}, G.stars);
+  // ---------- the impurities: three hand-shaped flecks, in bar units (u along 0..1, v up 0..1) ----------
+  const JIT = [1, .78, .93, .66, 1.06, .86, .72, .98, .9, .8, .95];
+  const SEED = [[.18, .6, 1], [.4, .37, -1], [.72, .58, .6]];
+  const fleck0 = SEED.map(([cu, cv, sk], k) => {
+    const P = [];
+    for (let i = 0; i < 11; i++) {
+      const a = i / 11 * 6.2832 + k * .5, r = JIT[(i + k * 4) % 11], ex = Math.cos(a) * r, ey = Math.sin(a) * r;
+      P.push([cu + ex * .036 + ey * .011 * sk, cv + ey * .16]);
     }
-    // Instrument rings
-    G.rings = Kit.mk('g', {}, svg);
-    Kit.mk('circle', {cx, cy, r: R, fill: 'url(#halo)'}, G.rings);
-    Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: ICE, 'stroke-width': 3, opacity: .25, filter: 'url(#soft)'}, G.rings);
-    G.outer = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: ICE, 'stroke-width': 1.3, opacity: .7}, G.rings);
-    G.dash = Kit.mk('circle', {cx, cy, r: R * .86, fill: 'none', stroke: ICE, 'stroke-width': 1, opacity: .4, 'stroke-dasharray': '2 6'}, G.rings);
-    Kit.mk('circle', {cx, cy, r: R * .64, fill: 'none', stroke: ICE, 'stroke-width': .8, opacity: .18}, G.rings);
-    G.fine = Kit.mk('g', {}, G.rings);
-    for (let i = 0; i < 72; i++) {
-      const a = i / 72 * Math.PI * 2, r0 = R * .78, r1 = r0 + (i % 6 ? 3 : 7);
-      Kit.mk('line', {x1: cx + Math.cos(a) * r0, y1: cy + Math.sin(a) * r0, x2: cx + Math.cos(a) * r1, y2: cy + Math.sin(a) * r1, stroke: ICE, 'stroke-width': .7, opacity: .3}, G.fine);
-    }
-    G.ticks = [];
-    for (let i = 0; i < 30; i++) {
-      const a = (-90 + i * 12) * Math.PI / 180, r0 = R * .91, r1 = R * .99;
-      const on = i < n;
-      G.ticks.push(Kit.mk('line', {x1: cx + Math.cos(a) * r0, y1: cy + Math.sin(a) * r0, x2: cx + Math.cos(a) * r1, y2: cy + Math.sin(a) * r1, stroke: on ? AMBER : ICE, 'stroke-width': on ? 2.6 : 1.4, opacity: on ? 1 : .45, 'stroke-linecap': 'round', filter: on ? 'url(#glow)' : null}, G.rings));
-    }
-    G.wave = Kit.mk('circle', {cx, cy, r: R * .3, fill: 'none', stroke: AMBER, 'stroke-width': 2, opacity: 0}, svg);
-
-    // Hearth glow under the bar, and the bar
-    G.hearth = Kit.mk('ellipse', {cx, cy, rx: bw * .55, ry: bh * 1.4, fill: 'url(#hearth)', opacity: 0}, svg);
-    Kit.mk('ellipse', {cx, cy: by + bh + bh * .25, rx: bw * .46, ry: bh * .18, fill: ICE, opacity: .12, filter: 'url(#soft)'}, svg);
-    G.embers = Kit.mk('g', {}, svg);
-    G.bar = Kit.mk('g', {}, svg);
-    Kit.mk('rect', {x: bx, y: by, width: bw, height: bh, rx: bh * .12, fill: 'url(#steel)'}, G.bar);
-    const inside = Kit.mk('g', {'clip-path': 'url(#barclip)'}, G.bar);
-    G.grain0 = Kit.mk('g', {opacity: n ? 0 : 1}, inside);
-    for (let i = 0; i < 70; i++) {
-      const x = bx + Kit.rnd() * bw, y = by + Kit.rnd() * bh, a = Kit.rnd() * Math.PI, l = bh * (.12 + Kit.rnd() * .22);
-      Kit.mk('line', {x1: x, y1: y, x2: x + Math.cos(a) * l, y2: y + Math.sin(a) * l, stroke: '#2a3550', 'stroke-width': 1, opacity: .45, 'stroke-linecap': 'round'}, G.grain0);
-    }
-    G.layers = Kit.mk('g', {}, inside);
-    Kit.mk('rect', {x: bx, y: by, width: bw, height: bh, fill: 'url(#sheen)', opacity: .7}, inside);
-    G.heat = Kit.mk('rect', {x: bx, y: by, width: bw, height: bh, fill: 'url(#hot)', opacity: 0}, inside);
-    G.flash = Kit.mk('rect', {x: bx, y: by, width: bw, height: bh, fill: '#fff', opacity: 0}, inside);
-    Kit.mk('line', {x1: bx + bh * .12, x2: bx + bw - bh * .12, y1: by + .8, y2: by + .8, stroke: '#fff', 'stroke-width': 1.2, opacity: .8}, G.bar);
-    Kit.mk('rect', {x: bx, y: by, width: bw, height: bh, rx: bh * .12, fill: 'none', stroke: '#e8f4ff', 'stroke-width': 1, opacity: .5}, G.bar);
-    G.dotg = Kit.mk('g', {filter: 'url(#glow)'}, G.bar);
-    const rr = Math.max(1.7, bh * .045);
-    G.dots = dots.map(d => Kit.mk('circle', {cx: X(d.u), cy: Y(d.v), r: rr, fill: IMP, stroke: '#4a1a04', 'stroke-width': .5}, G.dotg));
-    G.fx = Kit.mk('g', {}, svg);
-
-    // Readouts: a clear band above the rings, so nothing sits on the ticks
-    G.cap = showCap ? txt(svg, cx, fs * 1.05, `FOLDS · ${n} / 30`, {'letter-spacing': 1.5, opacity: .85}) : null;
-    G.count = Kit.mk('text', {x: cx, y: countY, fill: AMBER, style: DISP, 'font-size': cs, 'font-weight': 800, 'text-anchor': 'middle', filter: 'url(#glow)'}, svg);
-    G.count.textContent = countStr();
-    G.below = Kit.mk('g', {}, svg);
-    G.strike = Kit.mk('g', {opacity: done ? 1 : 0}, svg);
-    const sx = bx + bw * .9, top2 = Math.max(tb + 2, by - fs * 2.2);
-    Kit.mk('path', {d: `M${sx},${top2} V${by - 4} M${sx - 4},${by - 10} L${sx},${by - 3} L${sx + 4},${by - 10}`, stroke: AMBER, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.strike);
-    if (by - fs * 1.7 > countY + cs * .3) txt(G.strike, sx - 8, by - fs * .7, 'hit here', {'text-anchor': 'end', fill: AMBER});
-
-    drawLayers(false); drawBelow();
-    if (entered) startLoops();
-  }
-
-  function drawBelow() {
-    G.below.innerHTML = '';
-    const y = by + bh + fs * 1.55;
-    // Only label below the bar when there is real room; never clamp it up onto the bar or the count.
-    if (y > H - 2 || y - fs < countY + cs * .3) return;
-    if (n === 0) clumps.forEach(([u, , name]) => {
-      Kit.mk('line', {x1: X(u), x2: X(u), y1: by + bh + 3, y2: y - fs * .95, stroke: IMP, 'stroke-width': 1, opacity: .8}, G.below);
-      txt(G.below, X(u), y, name, {fill: '#ffb38a'});
-    });
-    else if (!done) txt(G.below, cx, y, 'impurities spreading out', {fill: '#ffb38a'});
-    else txt(G.below, cx, y, '← grain along the blade →', {fill: ICE});
-  }
-
-  function drawLayers(anim) {
-    G.layers.innerHTML = '';
-    G.grain0.setAttribute('opacity', n ? 0 : 1);
-    const els = [];
-    if (n >= 1 && n <= 8) {
-      const L = 2 ** n;
-      for (let k = 0; k < L; k++) {
-        const y = by + k * bh / L;
-        if (k % 2) els.push(Kit.mk('rect', {x: bx, y, width: bw, height: bh / L, fill: '#1c2742', opacity: .3}, G.layers));
-        if (k) els.push(Kit.mk('line', {x1: bx, x2: bx + bw, y1: y, y2: y, stroke: '#24304d', 'stroke-width': .7, opacity: .55}, G.layers));
-      }
-    } else if (n > 8) {
-      const N = 34;
-      for (let i = 0; i < N; i++) {
-        let d = '';
-        for (let x = bx; x <= bx + bw + 6; x += 5) {
-          const t = (x - bx) / bw, y = by + bh * (i + .5) / N + Math.sin(t * Math.PI * 4.6 + i * .5) * bh * .07 + Math.sin(t * Math.PI * 11 + i) * bh * .02;
-          d += (d ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
-        }
-        els.push(Kit.mk('path', {d, fill: 'none', stroke: i % 2 ? '#1b2540' : '#3a4766', 'stroke-width': bh / N * (i % 2 ? 1 : .5), opacity: i % 2 ? .55 : .4}, G.layers));
-      }
-    }
-    if (anim && !Kit.calm && els.length) gsap.from(els, {opacity: 0, duration: .5, stagger: {each: Math.min(.03, .6 / els.length), from: 'center'}, ease: 'power2.out'});
-  }
-
-  function moveDots(dur) {
-    G.dots.forEach((el, i) => {
-      const d = dots[i], a = {cx: X(d.u), cy: Y(d.v)};
-      if (Kit.calm) { el.setAttribute('cx', a.cx); el.setAttribute('cy', a.cy); }
-      else gsap.to(el, {attr: a, duration: dur, delay: Kit.rnd() * .12, ease: dur > 1 ? 'expo.inOut' : 'power3.inOut'});
-    });
-  }
-
-  function setCount(dur) {
-    const s = countStr();
-    if (hasScr && !Kit.calm) gsap.to(G.count, {duration: dur, scrambleText: {text: s, chars: '0123456789', speed: .5}, ease: 'none'});
-    else G.count.textContent = s;
-    if (G.cap) G.cap.textContent = `FOLDS · ${n} / 30`;
-  }
-
-  function lightTicks(from) {
-    G.ticks.forEach((t, i) => {
-      if (i < from || i >= n) return;
-      const go = () => { t.setAttribute('stroke', AMBER); t.setAttribute('filter', 'url(#glow)'); };
-      if (Kit.calm) { go(); gsap.set(t, {attr: {'stroke-width': 2.6}, opacity: 1}); }
-      else gsap.to(t, {attr: {'stroke-width': 2.6}, opacity: 1, duration: .35, delay: (i - from) * .05, ease: 'back.out(3)', onStart: go});
-    });
-  }
-
-  function heat(level, dur) {
-    if (Kit.calm) return;
-    gsap.fromTo(G.heat, {opacity: level}, {opacity: 0, duration: dur, ease: 'power2.out'});
-    gsap.fromTo(G.hearth, {opacity: level}, {opacity: 0, duration: dur * 1.2, ease: 'power2.out'});
-  }
-
-  function sparks(k = 14) {
-    if (Kit.calm) return;
-    for (let i = 0; i < k; i++) {
-      const s = Kit.mk('circle', {cx, cy: by, r: 1 + Kit.rnd() * 1.6, fill: Kit.rnd() < .5 ? AMBER : '#fff'}, G.fx);
-      const a = -Math.PI * (.1 + Kit.rnd() * .8), dist = bh * (.8 + Kit.rnd() * 1.4);
-      gsap.to(s, {attr: {cx: cx + Math.cos(a) * dist * 1.6, cy: by + Math.sin(a) * dist}, opacity: 0, duration: .6 + Kit.rnd() * .4, ease: 'power3.out', onComplete: () => s.remove()});
-    }
-    gsap.fromTo(G.flash, {opacity: .55}, {opacity: 0, duration: .45, ease: 'power2.out'});
-  }
-
-  function ember() {
-    const x = bx + bw * (.05 + Kit.rnd() * .9);
-    const e = Kit.mk('circle', {cx: x, cy: by + 2, r: .6 + Kit.rnd() * 1.1, fill: Kit.rnd() < .7 ? '#ffb04a' : '#fff1c9', opacity: 0}, G.embers);
-    const rise = bh * (1.2 + Kit.rnd() * 1.6);
-    gsap.timeline({onComplete: () => e.remove()})
-      .to(e, {opacity: .9, duration: .25})
-      .to(e, {attr: {cy: by - rise, cx: x + (Kit.rnd() - .5) * bh}, duration: 1.6 + Kit.rnd(), ease: 'sine.out'}, 0)
-      .to(e, {opacity: 0, duration: .8}, '-=.8');
-    emberT = gsap.delayedCall(.16 + Kit.rnd() * .3, ember);
-  }
-
-  function doFold(times, then) {
-    busy = true; Kit.haptic('light');
-    const prev = n;
-    for (let t = 0; t < times; t++) dots.forEach(fold);
-    n += times; if (n >= 30) done = true;
-    const finish = () => { busy = false; then && then(); };
-    const hit = () => {
-      sparks(times > 1 ? 26 : 14); heat(times > 1 ? 1 : .65, times > 1 ? 2.6 : 1.2);
-      drawLayers(true); drawBelow(); setCount(times > 1 ? 1.6 : .45); lightTicks(prev); moveDots(times > 1 ? 1.5 : .7);
-    };
-    if (Kit.calm) { hit(); finish(); return; }
-    gsap.timeline({onComplete: finish})
-      .to(G.bar, {scaleY: .72, scaleX: 1.03, transformOrigin: '50% 50%', duration: .1, ease: 'power2.in'})
-      .add(hit)
-      .to(G.bar, {scaleY: 1, scaleX: 1, duration: .7, ease: 'elastic.out(1,.45)'})
-      .to({}, {duration: times > 1 ? 1.1 : .05});
-  }
-
-  function wow() {
-    if (Kit.calm) { G.strike.setAttribute('opacity', 1); return; }
-    gsap.fromTo(G.wave, {attr: {r: R * .3, 'stroke-width': 3}, opacity: .9}, {attr: {r: R * 1.25, 'stroke-width': .5}, opacity: 0, duration: 1.3, ease: 'expo.out'});
-    gsap.fromTo(G.outer, {attr: {'stroke-width': 4}}, {attr: {'stroke-width': 1.3}, duration: 1.2, ease: 'power3.out'});
-    gsap.fromTo(G.stars.children, {opacity: 1}, {opacity: () => .25 + Kit.rnd() * .6, duration: 1.4, stagger: .004, ease: 'power2.out'});
-    gsap.from(G.layers.children, {opacity: 0, duration: .7, stagger: {each: .02, from: 'center'}, ease: 'power2.out'});
-    heat(.55, 1.6);
-    gsap.from(G.count, {scale: 1.12, svgOrigin: `${cx} ${G.count.getAttribute('y')}`, duration: .8, ease: 'back.out(2)'});
-    gsap.to(G.strike, {opacity: 1, duration: .6, delay: .3, ease: 'power2.out'});
-    gsap.from(G.strike, {y: -12, duration: .7, delay: .3, ease: 'back.out(2)'});
-  }
-
-  function startLoops() {
-    if (Kit.calm) return;
-    loops.push(gsap.to(G.dash, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 120, repeat: -1, ease: 'none'}));
-    loops.push(gsap.to(G.fine, {rotation: -360, svgOrigin: `${cx} ${cy}`, duration: 200, repeat: -1, ease: 'none'}));
-    [...G.stars.children].forEach((s, i) => { if (i % 4 === 0) loops.push(gsap.to(s, {opacity: .1, duration: 1 + Kit.rnd() * 2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Kit.rnd() * 2})); });
-    if (!emberT) ember();
-  }
-
-  function enter() {
-    entered = true; startLoops();
-    if (Kit.calm) return;
-    gsap.from(G.rings.children, {opacity: 0, scale: .85, svgOrigin: `${cx} ${cy}`, duration: 1.1, stagger: .012, ease: 'expo.out'});
-    gsap.from(G.bar, {scaleX: 0, transformOrigin: '50% 50%', duration: .9, delay: .2, ease: 'expo.out'});
-    gsap.fromTo(G.heat, {opacity: .9}, {opacity: 0, duration: 2, delay: .4, ease: 'power2.out'});
-    gsap.fromTo(G.hearth, {opacity: .8}, {opacity: 0, duration: 2.4, delay: .4, ease: 'power2.out'});
-    gsap.from(G.dots, {attr: {r: 0}, duration: .5, delay: .7, stagger: .006, ease: 'back.out(3)'});
-    gsap.from(G.below.children, {opacity: 0, y: 6, duration: .5, delay: 1, stagger: .05, ease: 'power3.out'});
-    if (hasScr) gsap.from(G.count, {duration: .9, delay: .4, scrambleText: {text: '', chars: '0123456789', speed: .6}});
-  }
-
-  // Re-draw at the real size whenever the stage changes, so text never shrinks below legibility.
-  function refit() {
-    if (!laid || busy) return;
-    const b = svg.getBoundingClientRect();
-    if (b.width < 2 || b.height < 2) return;
-    if (Math.abs(b.width - W) > 2 || Math.abs(b.height - H) > 2) layout();
-  }
-
-  return {layout, enter, doFold, wow, refit, get n() { return n; }, get busy() { return busy; }, get done() { return done; }};
-})();
-
-const say = Kit.$('say'), btn = Kit.$('foldbtn');
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
-  Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.show('foldbtn');
-  sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: ${ok ? 'impurities and grain' : 'it spreads impurities and gives a grain'}`);
-  say.innerHTML = 'Now be the smith. <b>Tap Fold</b> and watch the orange impurities.';
-  S.refit();
-  if (!Kit.calm) gsap.from(btn, {scale: .6, opacity: 0, duration: .6, ease: 'back.out(2.2)'});
-});
-Kit.$('opts').addEventListener('click', e => {
-  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
-  if (!Kit.calm) gsap.fromTo(b, {scale: .96}, {scale: 1, duration: .5, ease: 'elastic.out(1,.4)'});
-});
-
-function reveal() {
-  Kit.hide('foldbtn'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-  Kit.haptic('success'); S.refit(); S.wow();
-  if (Kit.calm) return;
-  const big = Kit.$('bigline');
-  if (hasSplit) { const sp = new SplitText(big, {type: 'chars'}); gsap.from(sp.chars, {opacity: 0, y: 14, rotationX: -80, duration: .6, stagger: .025, ease: 'back.out(2)'}); }
-  else gsap.from(big, {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
-  gsap.from('#why .body, #keep', {opacity: 0, y: 8, duration: .6, delay: .35, stagger: .12, ease: 'power3.out'});
-}
-
-btn.addEventListener('click', () => {
-  if (S.busy || S.done) return;
-  if (!Kit.calm) gsap.fromTo(btn, {scale: .92}, {scale: 1, duration: .45, ease: 'elastic.out(1,.4)'});
-  if (S.n < 4) S.doFold(1, () => {
-    if (S.n === 1) say.innerHTML = 'Drawn out and folded back on itself: <b>two layers</b>, and the clumps smear thin.';
-    if (S.n >= 4) { say.innerHTML = 'Every fold doubles the layers. Some swords have <b>more than a billion</b>.'; btn.textContent = 'Fold 26 more times'; }
-    S.refit();
+    return P;
   });
-  else S.doFold(30 - S.n, reveal);
-});
+  // one fold, exactly: cut at the middle, the right half turns over onto the left, then all is drawn back to length
+  const clipX = (P, left) => {
+    const ins = p => left ? p[0] <= .5 : p[0] >= .5, out = [];
+    for (let i = 0; i < P.length; i++) {
+      const a = P[i], b = P[(i + 1) % P.length], ia = ins(a), ib = ins(b);
+      if (ia) out.push(a);
+      if (ia !== ib) { const t = (.5 - a[0]) / (b[0] - a[0]); out.push([.5, a[1] + t * (b[1] - a[1])]); }
+    }
+    return out.length > 2 ? out : null;
+  };
+  const foldOnce = polys => { const r = []; polys.forEach(P => {
+    const L = clipX(P, true), R = clipX(P, false);
+    if (L) r.push(L.map(([u, v]) => [2 * u, v / 2]));
+    if (R) r.push(R.map(([u, v]) => [2 * (1 - u), 1 - v / 2]));
+  }); return r; };
+  const MAXF = 6;
+  const states = [fleck0]; for (let i = 1; i <= MAXF; i++) states.push(foldOnce(states[i - 1]));
+  const piecesAt = n => states[Math.min(n, MAXF)];
+  const mapper = G => { const mx = 8, my = Math.min(8, G.h * .2);
+    return {X: u => G.x0 + mx + u * (G.w - 2 * mx), Y: v => G.y0 + my + (1 - v) * (G.h - 2 * my)}; };
 
-if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => S.refit()).observe(Kit.$('pic'));
+  // the bar, in side view, after n folds (the darker bands are the oxidised steel the video mentions)
+  function strip(g, defs, G, n, id) {
+    const {x0, y0, w, h} = G, {X, Y} = mapper(G), K = ink();
+    mk('rect', {x: x0, y: y0, width: w, height: h, fill: STEEL}, g);
+    if (n) { const s = Math.min(2 ** n, 64);
+      for (let i = 1; i < s; i += 2) { const top = i === s - 1 ? y0 : Y((i + 1) / s), bot = Y(i / s);
+        mk('rect', {x: x0, y: top, width: w, height: Math.max(.3, bot - top + .15), fill: OX}, g); } }
+    const cp = mk('clipPath', {id}, defs); mk('rect', {x: x0 + 2, y: y0 + 1, width: w - 4, height: h - 2}, cp);
+    const fg = mk('g', {'clip-path': `url(#${id})`}, g), sw = n === 0 ? 1.1 : n < 5 ? .7 : .5;
+    piecesAt(n).forEach(P => mk('path', {d: 'M' + P.map(([u, v]) => X(u).toFixed(2) + ',' + Y(v).toFixed(2)).join('L') + 'Z',
+      fill: RUST, stroke: RUSTD, 'stroke-width': sw, 'stroke-linejoin': 'round'}, fg));
+    mk('rect', {x: x0, y: y0, width: w, height: h, fill: 'none', stroke: K, 'stroke-width': 1.6}, g);
+  }
 
-Kit.onShow.card = () => S.layout();
-Kit.onEnter.card = () => {
-  S.enter();
-  if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .45, delay: .5, ease: 'power3.out'});
-};
-Kit.play.card = async () => {
-  const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 60 : ms));
-  Kit.$('opts').children[1].click(); await wait(150);
-  Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(500);
-  for (let i = 0; i < 4; i++) { btn.click(); await wait(950); }
-  btn.click(); await wait(2900);
-};
+  // ---------- front: raw steel under the hammer ----------
+  const svg = Kit.$('pic');
+  function drawFront() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = clamp(W / 27, 12, 14), K = ink();
+    const defs = mk('defs', {}, svg);
+    const L1 = 'impurities: silicon, sulfur, phosphorus', L2 = 'silicon, sulfur, phosphorus';
+    const pr = text(svg, 0, -200, L1, {}, `font-size:${fs}px`), tw1 = pr.getComputedTextLength();
+    pr.textContent = L2; const tw2 = pr.getComputedTextLength(); pr.remove();
+    const S29 = Math.sin(29 * Math.PI / 180), C29 = Math.cos(29 * Math.PI / 180);
+
+    const geo = h => {
+      const w = Math.min(W * .92, h * 10), x0 = (W - w) / 2, hd = h * .72, hh = h * 1.15, gap = 3, th = Math.max(5, h * .22);
+      let hx = x0 + w * .7; const avail = hx - hd / 2 - 14 - x0, one = tw1 <= avail;
+      if (!one && tw2 > avail) hx = Math.min(x0 + w * .8, x0 + tw2 + 14 + hd / 2);
+      const L = Math.max(h, Math.min(w * .32, (W - 6 - hx) / C29));
+      const hamAbove = Math.max(gap + hh, gap + hh * .62 + L * S29 + th) + 6;
+      const labAbove = (one ? fs * 1.3 : fs * 2.6) + 14;
+      const above = Math.max(hamAbove, labAbove);
+      const aw = w * .48, ah = Math.min(aw * .62, H - above - h - 2);
+      return {w, x0, hd, hh, gap, th, hx, L, one, above, aw, ah, h, total: above + h + ah};
+    };
+    let g; for (let h = clamp(H * .14, 20, 40); ; h -= 2) { g = geo(h); if ((g.total <= H && g.ah >= g.aw * .36) || h <= 14) break; }
+    const {w, x0, hd, hh, gap, th, hx, L, one, above, aw, ah, h} = g;
+    const oy = Math.max(0, (H - g.total) / 2), y0 = oy + above, ty = y0 + h, G = {x0, y0, w, h};
+
+    // the anvil: horn, face, waist, feet — one ink, one cut-out highlight on the face
+    const ax = x0 + w * .56, fl = ax - aw / 2, fr = ax + aw / 2, hl = aw * .5, B = ty + Math.max(8, ah), A = B - ty, ft = A * .27;
+    const an = mk('g', {}, svg);
+    mk('path', {fill: K, d: `M${fl},${ty} H${fr} V${ty + ft * .75} Q${fr},${ty + ft} ${fr - aw * .1},${ty + ft} Q${ax + aw * .2},${ty + ft} ${ax + aw * .19},${ty + A * .52} Q${ax + aw * .19},${ty + A * .8} ${ax + aw * .42},${B - A * .09} V${B} H${ax - aw * .42} V${B - A * .09} Q${ax - aw * .19},${ty + A * .8} ${ax - aw * .19},${ty + A * .52} Q${ax - aw * .2},${ty + ft} ${fl + aw * .02},${ty + ft} Q${fl - hl * .55},${ty + ft * 1.05} ${fl - hl},${ty + ft * .2} Q${fl - hl * .5},${ty - .5} ${fl},${ty} Z`}, an);
+    mk('rect', {x: fl + aw * .05, y: ty + ft * .36, width: aw * .78, height: Math.max(1.5, ft * .14), rx: 1, style: `fill:${paper()}`}, an);
+
+    // the bar, with the fold line it is about to get
+    const bg = mk('g', {}, svg); strip(bg, defs, G, 0, 'fin');
+    mk('line', {x1: x0 + w / 2, x2: x0 + w / 2, y1: y0 + 3, y2: y0 + h - 3, stroke: K, 'stroke-width': 1.2, 'stroke-dasharray': '3 3', opacity: .35}, bg);
+
+    // the hammer, mid-strike, with one short impact mark
+    const sy = y0 - gap, hm = mk('g', {transform: `rotate(-7 ${hx} ${sy})`}, svg), ay = sy - hh * .62;
+    mk('rect', {x: hx, y: ay - th / 2, width: L, height: th, rx: th / 2, fill: WOOD, stroke: K, 'stroke-width': 1.3, transform: `rotate(-22 ${hx} ${ay})`}, hm);
+    const c = hd * .12;
+    mk('path', {fill: K, d: `M${hx - hd / 2 + c},${sy - hh} H${hx + hd / 2 - c} L${hx + hd / 2},${sy - hh + c} V${sy - c} L${hx + hd / 2 - c},${sy} H${hx - hd / 2 + c} L${hx - hd / 2},${sy - c} V${sy - hh + c} Z`}, hm);
+    const ix = hx - hd / 2 - 4, iy = y0 - 3, r1 = h * .16, r2 = h * .42, im = mk('g', {stroke: K, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
+    [200, 228, 256].forEach(d => { const a = d * Math.PI / 180;
+      mk('line', {x1: ix + Math.cos(a) * r1, y1: iy + Math.sin(a) * r1, x2: ix + Math.cos(a) * r2, y2: iy + Math.sin(a) * r2}, im); });
+
+    // one label, pinned to one fleck
+    const {X, Y} = mapper(G), A0 = fleck0[0], top = Y(Math.max(...A0.map(p => p[1]))), lx = X(.18);
+    const lab = mk('g', {}, svg), base = y0 - 14 - (one ? fs * .3 : fs * 1.6);
+    const t = text(lab, x0, base, '', {}, `font-size:${fs}px`);
+    if (one) t.textContent = L1;
+    else { const a = mk('tspan', {x: x0}, t); a.textContent = 'impurities:';
+      const b = mk('tspan', {x: x0, dy: fs * 1.3, style: 'font-weight:600'}, t); b.textContent = L2; }
+    const lineBottom = one ? base : base + fs * 1.3;
+    mk('line', {x1: lx, x2: lx, y1: lineBottom + 5, y2: top - 2, stroke: K, 'stroke-width': 1.2}, lab);
+  }
+
+  // ---------- back: raw, then folded (live) ----------
+  const svg2 = Kit.$('pic2'), foldBtn = Kit.$('fold'), note = Kit.$('cnt');
+  let GL = null, liveG, labLive, rowsG = [], tl = null, busy = false, built = false, n = 2, defs2;
+  const NOTE = 'Each fold spreads the flecks thinner.', LAST = 'Some swords have more than a billion layers.';
+
+  function paintNote() { note.textContent = n >= MAXF ? LAST : NOTE; }
+  function paintLive() { liveG.innerHTML = ''; defs2.querySelectorAll('#blive').forEach(e => e.remove()); strip(liveG, defs2, GL, n, 'blive'); }
+
+  function drawBack() {
+    if (tl) { tl.kill(); tl = null; busy = false; }
+    svg2.innerHTML = ''; rowsG = [];
+    const {W, H} = Kit.fitSvg(svg2), fs = clamp(W / 28, 12, 13), K = ink();
+    defs2 = mk('defs', {}, svg2);
+    const band = fs * 1.75, gap = clamp(H * .07, 6, 22), x0 = 1, w = W - 2;
+    const h = clamp((H - 2 * band - gap - 4) / 2, 10, 38);
+    const used = 2 * band + gap + 2 * h, oy = Math.max(2, (H - used) / 2);
+    const G1 = {x0, y0: oy + band, w, h}, G2 = {x0, y0: G1.y0 + h + gap + band, w, h};
+    const base = G => G.y0 - band + fs;
+
+    // row 1: raw steel, the impurities in lumps
+    const r1 = mk('g', {}, svg2); rowsG.push(r1);
+    strip(r1, defs2, G1, 0, 'b0');
+    { const {X, Y} = mapper(G1), A0 = fleck0[0], top = Y(Math.max(...A0.map(p => p[1]))), lx = X(.18);
+      text(r1, x0, base(G1), 'impurities', {}, `font-size:${fs}px`);
+      mk('line', {x1: lx, x2: lx, y1: base(G1) + 4, y2: top - 2, stroke: K, 'stroke-width': 1.2}, r1); }
+
+    // row 2: folded, live; the hit comes from above and the grain reinforces it
+    const r2 = mk('g', {}, svg2); rowsG.push(r2);
+    GL = G2; liveG = mk('g', {}, r2); labLive = mk('g', {}, r2);
+    const hitT = text(labLive, 0, base(G2), 'grain: reinforced this way', {}, `font-size:${fs}px`);
+    const tw = hitT.getComputedTextLength(), tx = x0 + w - tw, ax = tx - 9;
+    hitT.setAttribute('x', tx);
+    const ay1 = G2.y0 - band + 2, ay2 = G2.y0 - 3;
+    mk('path', {d: `M${ax},${ay1} V${ay2} m-4,-5 l4,5 l4,-5`, stroke: K, 'stroke-width': 1.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, labLive);
+    const fl = text(labLive, x0, base(G2), 'folded, spread thin', {}, `font-size:${fs}px`);
+    if (x0 + fl.getComputedTextLength() > ax - 14) fl.textContent = 'folded';
+    const cl = mk('clipPath', {id: 'cl'}, defs2); mk('rect', {x: x0 - 2, y: G2.y0 - 2, width: w / 2 + 2, height: h + 4}, cl);
+    const cr = mk('clipPath', {id: 'cr'}, defs2); mk('rect', {x: x0 + w / 2, y: G2.y0 - 2, width: w / 2 + 2, height: h + 4}, cr);
+    paintLive();
+
+    paintNote();
+    if (!built && !Kit.calm) { rowsG.forEach(r => r.setAttribute('opacity', 0)); note.style.opacity = 0; }
+  }
+
+  function fold() {
+    if (busy || n >= MAXF || !GL) return; busy = true; Kit.haptic('selection');
+    const {x0, y0, w, h} = GL, mid = x0 + w / 2;
+    const finish = () => { n++; tl = null; busy = false; paintLive(); paintNote(); gsap.set(labLive, {opacity: 1});
+      if (n >= MAXF) { Kit.hide('fold'); Kit.haptic('success'); } };
+    if (Kit.calm) { finish(); return; }
+    liveG.innerHTML = ''; defs2.querySelectorAll('#blive').forEach(e => e.remove());
+    const all = mk('g', {}, liveG), Lh = mk('g', {}, all), S = mk('g', {}, all), R = mk('g', {}, S);
+    strip(mk('g', {'clip-path': 'url(#cl)'}, Lh), defs2, GL, n, 'blive');
+    strip(mk('g', {'clip-path': 'url(#cr)'}, R), defs2, GL, n, 'blive2');
+    const o = `${mid} ${y0}`;
+    tl = gsap.timeline({onComplete: () => { defs2.querySelectorAll('#blive2').forEach(e => e.remove()); finish(); }})
+      .to(labLive, {opacity: 0, duration: .2}, 0)
+      .to(R, {rotation: -180, svgOrigin: o, duration: .9, ease: 'power2.inOut'}, .1)
+      .to(S, {scaleY: .14, svgOrigin: o, duration: .45, ease: 'power1.in'}, .1)
+      .to(S, {scaleY: 1, svgOrigin: o, duration: .45, ease: 'power1.out'}, .55)
+      .to(all, {scaleX: 2, scaleY: .5, svgOrigin: `${x0} ${y0 + h}`, duration: .5, ease: 'power3.out'}, 1.02);
+  }
+  foldBtn.addEventListener('click', fold);
+
+  function build() {
+    if (built) return; built = true;
+    if (Kit.calm) { rowsG.forEach(r => r.setAttribute('opacity', 1)); note.style.opacity = 1; Kit.show('fold'); return; }
+    gsap.fromTo(rowsG, {opacity: 0, y: 6}, {opacity: 1, y: 0, stagger: .4, duration: .45, ease: 'power2.out'});
+    const end = .4 * (rowsG.length - 1) + .3;
+    gsap.to(note, {opacity: 1, duration: .4, delay: end});
+    setTimeout(() => { Kit.show('fold'); gsap.from(foldBtn, {opacity: 0, y: 6, duration: .4, ease: 'power2.out'}); }, (end + .3) * 1000);
+  }
+  let score = '';
+  document.addEventListener('turned', () => { if (score) Kit.$('tag').textContent = score; setTimeout(build, Kit.calm ? 0 : 500); });
+
+  // ---------- the guess ----------
+  const RIGHT = [1, 2], SHORT = ['Gathers them in one spot', 'Spreads them through', 'Gives a grain', 'Equally strong every way'];
+  const picked = [], opts = Kit.$('opts'), sureEl = Kit.$('sure');
+  const sure = Kit.sure(sureEl, 'How sure are you?', pct => {
+    const hits = picked.filter(i => RIGHT.includes(i)).length, ok = hits === 2;
+    const said = picked.map(i => opts.children[i].textContent).join(' + ');
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, ok ? 'Both right' : `${hits} of 2 right`);
+    // the back, made personal
+    const you = Kit.$('you'); you.innerHTML = '';
+    picked.forEach(i => { const r = RIGHT.includes(i), s = document.createElement('span');
+      s.className = 'chip ' + (r ? 'ok' : 'no'); s.setAttribute('aria-label', (r ? 'Right: ' : 'Wrong: ') + SHORT[i]);
+      s.innerHTML = `<span aria-hidden="true">${r ? '✓' : '✗'}</span> <span class="t"></span>`; s.querySelector('.t').textContent = SHORT[i]; you.append(s); });
+    const hi = pct >= 70;
+    const word = hits === 2 ? (hi ? 'Earned.' : 'You knew more than you said.') : hits === 1 ? (hi ? 'More sure than right.' : 'A fair hedge.') : (pct >= 60 ? 'Too sure.' : 'At least you hedged.');
+    const v = document.createElement('span'); v.className = 'verdict'; v.textContent = `You said ${pct}% — ${hits} of 2 right. ${word}`; you.append(v);
+    score = `${hits} OF 2 RIGHT`;
+    drawBack();
+    setTimeout(() => Turn.over(), 700);
+  });
+  sureEl.classList.add('locked');
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b) return;
+    const i = +b.dataset.i, k = picked.indexOf(i);
+    if (k >= 0) { picked.splice(k, 1); b.classList.remove('on'); return; }
+    if (picked.length >= 2) return;
+    picked.push(i); b.classList.add('on'); Kit.haptic('selection');
+    if (picked.length === 2) { Kit.$('say').textContent = 'Two picked. Now, how sure?'; sureEl.classList.remove('locked'); sure.on(); }
+  });
+
+  Kit.onShow.card = () => { drawFront(); drawBack(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#pic > *:not(defs)', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .06, duration: .4, delay: .25, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    opts.children[1].click(); opts.children[2].click();
+    await wait(100);
+    sureEl.querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 4200);
+  };
+})();
 Kit.single();
 </script>
 </html>

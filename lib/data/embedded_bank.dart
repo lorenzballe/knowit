@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611062359,
- "built": "2026-11-06T23:59:12Z",
+ "version": 202611070105,
+ "built": "2026-11-07T01:05:15Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -87547,10 +87547,10 @@ const String kEmbeddedBank = r'''
    "strand": "life.ask_better_questions.first_principles",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "none",
-   "question": "Each year in Ecuador, how many of every 100,000 people are murdered?",
-   "answer": "Each year in Ecuador, 40 of every 100,000 people are murdered. That is extreme violence, driven by organised crime. Ecuador's prison population grew from 11,000 in 2009 to over 31,000, and a presidential candidate was killed while campaigning for the October 2023 election.",
-   "move": "“Per 100,000” means a crowd of 100,000. In Ecuador, 40 of them are killed each year.",
+   "principle": "estimation",
+   "question": "For every 100,000 Ecuadorians, how many homicides a year?",
+   "answer": "Homicides in Ecuador have reached 1 in 2,500 people a year. On average that is 40 per 100,000. Dividing 100,000 by 40 gives 2,500, so each block of 2,500 people has one homicide a year.",
+   "move": "Divide 100,000 by it and you get the size of the group where it happens once a year.",
    "keywords": [
     "ecuador",
     "homicide",
@@ -87570,16 +87570,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "A multiple-choice question asking how many of every 100,000 people are murdered each year in Ecuador. Options are 4, 15 and 40 per 100k. A prompt says to pick a number, then a thermal scan counts one year.",
-    "graded": false,
-    "ground": "#0b0816",
-    "page": "pages/life-ecuador-murder-rate.html?v=286f37688b9d",
-    "bytes": 16013
+    "touch": "drags",
+    "label": "A crowd of figures on a slider. Drag sideways to guess how many homicides a year occur per 100,000 Ecuadorians. The headline reads 'One in 2,500'.",
+    "page": "pages/life-ecuador-murder-rate.html?v=a0e1263de71b",
+    "bytes": 13903
    },
    "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=8-KoJBcxLek&t=409s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "life-enough-money-1",
@@ -95484,12 +95482,12 @@ const String kEmbeddedBank = r'''
    "topic": "maths",
    "genre": "maths.puzzles",
    "strand": "maths.puzzles.paradoxes",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why did Condorcet reject the Borda count voting method?",
-   "answer": "Under the Borda count, points depend on how many candidates are running. Adding a candidate who cannot win gives the others extra points, which flipped the winner from Ada to another candidate. Condorcet rejected the method because it relies on this irrelevant factor.",
-   "move": "Under Borda, who else is on the ballot can decide who wins.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "independence",
+   "question": "Add a hopeless third candidate to this made-up Borda count. Who wins now?",
+   "answer": "Carl can't win, yet adding him flips the made-up Borda count: Ben beats Ann 7 to 6, though Ann led 3 to 2 without him. Carl sits between them on Ben's ballots, doubling Ben's lead there. Borda's points depend on how many names are on the ballot, so the irrelevant candidate changed the winner.",
+   "move": "A fair choice between two things can't hinge on a third nobody picks.",
    "keywords": [
     "condorcet",
     "borda count",
@@ -95510,14 +95508,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Card titled Borda's irrelevant alternatives. Three voters rank Ada over Ben and two rank Ben over Ada, so Ada wins. Adding a candidate who cannot win, with 4 points for first place and 0 for last, shifts the point totals and flips the winner. Asks why Condorcet rejected the Borda count.",
-    "ground": "#16221e",
-    "page": "pages/maths-borda-spoiler-dial.html?v=203dc8da4052",
-    "bytes": 27771
+    "label": "Asks who wins a made-up three-candidate Borda count of Ann, Ben and Carl, with Carl a hopeless ghost slot on every ballot. Shows Ann ahead 3 to 2 before Carl, then Ben ahead 7 to 6 once Carl is counted, with gap brackets on each ballot.",
+    "page": "pages/maths-borda-spoiler-dial.html?v=36a19336f008",
+    "bytes": 17550
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=506s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "maths-charts-3",
@@ -181054,12 +181051,12 @@ const String kEmbeddedBank = r'''
    "topic": "science",
    "genre": "science.materials",
    "strand": "science.materials.plastics",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why did a 1944 attempt to make Teflon end in an explosion?",
-   "answer": "In 1944, an attempt to make Teflon from TFE gas sealed in a cylinder ended in an explosion. Turning TFE into Teflon generated heat, and the sealed solid mass could not lose it. The trapped heat built up pressure until the cylinder failed.",
-   "move": "A reaction that makes heat needs a way to lose it, or the heat becomes force.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "conditional",
+   "question": "Why did the 1944 Teflon production attempt cause a massive explosion?",
+   "answer": "Polymerizing the solid cylinder made heat that could not dissipate. The heat stayed in, expanded and built up pressure until it failed. It caused a massive explosion at Arlington in 1944 that killed two workers.",
+   "move": "A reaction that makes heat needs a way to take that heat away. Without one, the heat stays in, expands and creates the force.",
    "keywords": [
     "teflon",
     "tfe",
@@ -181079,15 +181076,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Page with a sealed cylinder of TFE gas and a Tap to react prompt, asking why a 1944 attempt to make Teflon ended in an explosion.",
-    "ground": "#1f2a33",
-    "page": "pages/science-arlington-teflon-blast.html?v=0b77532c95e6",
-    "bytes": 37397
+    "touch": "drags",
+    "label": "Seen from above, one solid cylinder of TFE turns into Teflon, making heat. Tap where that heat ends up.",
+    "page": "pages/science-arlington-teflon-blast.html?v=f2302a001d1a",
+    "bytes": 19382
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=513s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-artesian-well-pressure",
@@ -193297,12 +193293,12 @@ const String kEmbeddedBank = r'''
    "topic": "science",
    "genre": "science.physics",
    "strand": "science.physics.quantum",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Does Many-Worlds make the universe deterministic again?",
-   "answer": "Many-Worlds makes the universe deterministic again: when the die is rolled, all six faces land, each in its own world, every time. Nothing picks a face. You see only one because you live in one tiny sliver of the multiverse, so the outcome only looks random.",
-   "move": "In Many-Worlds the whole is certain. Only your slice looks like chance.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "sampling",
+   "question": "If Many-Worlds is true, is a quantum outcome random?",
+   "answer": "Fixed. Every face lands, 100% of the time. In Many-Worlds every possible outcome happens, each in its own branch. It only looks random because you experience one tiny sliver of the multiverse.",
+   "move": "Random from inside your sliver. Deterministic for the universe as a whole.",
    "keywords": [
     "many-worlds",
     "multiverse",
@@ -193322,15 +193318,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A die on a table, with each of its six faces shown on a separate parallel table. The page asks whether Many-Worlds makes the universe deterministic again, and answers that every face lands in its own world, 100% of the time.",
-    "ground": "#efebe1",
-    "page": "pages/science-many-worlds-dice.html?v=11b6fedbbd32",
-    "bytes": 16643
+    "touch": "taps",
+    "label": "A die stands in for a quantum object. The page asks whether Many-Worlds makes quantum outcomes truly random, offering three choices: truly random, fixed, or random until you look. It shows every die face landing in parallel branches.",
+    "page": "pages/science-many-worlds-dice.html?v=750d25a0bd2a",
+    "bytes": 17370
    },
    "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=730s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-many-worlds-flow",
@@ -235677,10 +235672,10 @@ const String kEmbeddedBank = r'''
    "strand": "technology.where_things_come_from.rare_metals",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "conjunction",
-   "question": "What are the two main benefits of folding a sword's steel?",
-   "answer": "Folding spreads out impurities such as silicon, sulfur and phosphorus until there is no weak point. The layers also give the steel a grain, strongest where the blade will be hit. The right pair is impurities spread out and grain.",
-   "move": "Folding evens out the impurities and lines the grain up where the blade gets hit.",
+   "principle": "exponential",
+   "question": "Smiths fold the steel again and again. Which two things does that buy?",
+   "answer": "Smiths fold steel to spread impurities thinner and to give it a grain. Each fold spreads the flecks further apart, so no spot stays weak. The grain reinforces the blade in the direction it will be hit, rather than making it equally strong in every direction.",
+   "move": "Spread a flaw thin enough, everywhere, and it stops being a weak point.",
    "keywords": [
     "sword",
     "steel",
@@ -235701,14 +235696,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question card asking the two main benefits of folding a sword's steel, with three answer options: lighter and sharper; spreads out impurities and gives grain; adds carbon and hardens the edge. The reader picks a pair and rates how sure they are.",
-    "ground": "#070b18",
-    "page": "pages/technology-folding-the-steel.html?v=b8e0ed2827ab",
-    "bytes": 23834
+    "label": "Multiple-choice quiz asking which two reasons smiths fold steel again and again, from four options: gathers impurities in one spot, spreads impurities through the steel, gives the steel a grain, or makes it equally strong every way. The reader then rates how sure they are.",
+    "page": "pages/technology-folding-the-steel.html?v=263722f7bbeb",
+    "bytes": 22271
    },
    "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=909s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "technology-fukushima-sea-wall",
@@ -241771,12 +241765,12 @@ const String kEmbeddedBank = r'''
    "topic": "technology",
    "genre": "technology.where_things_come_from",
    "strand": "technology.where_things_come_from.factories",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How does this growing robot pull itself back in?",
-   "answer": "Pulling the tail drags the material back through the core of the body. At the tip, the wall turns inside out and goes back inside itself, so the robot ungrows. In a tight space, that is all it takes.",
-   "move": "To retract, pull the tail: the robot turns back inside itself.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Pull the robot’s tail. What does its body do?",
+   "answer": "The body goes back inside itself. The tail is material running through the core; pulling it passes the body back through that core and turns it inside itself. In a tight space, pulling the tail does it; a big open area is another case.",
+   "move": "Retraction is a hard problem.",
    "keywords": [
     "robot",
     "retraction",
@@ -241797,14 +241791,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "An interactive diagram of a growing robot with a horizontal bar and a blue band. The reader drags the bar to pull the robot's tail and watches the blue band move back through the body.",
-    "ground": "#0d1d24",
-    "page": "pages/technology-tail-pull-retract.html?v=7e687d1a072d",
-    "bytes": 26774
+    "label": "Pick-one quiz asking how the robot pulls back. Options: it slides back out the way it went in, it goes back inside itself, it folds up like an accordion, or it is in a tight space. A draggable picture shows before, after and in-between states.",
+    "page": "pages/technology-tail-pull-retract.html?v=d0295b4d3e52",
+    "bytes": 18807
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg&t=161s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "technology-tape-growing-robot",

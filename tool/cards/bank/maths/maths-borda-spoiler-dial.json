@@ -3,12 +3,12 @@
   "topic": "maths",
   "genre": "maths.puzzles",
   "strand": "maths.puzzles.paradoxes",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Why did Condorcet reject the Borda count voting method?",
-  "answer": "Under the Borda count, points depend on how many candidates are running. Adding a candidate who cannot win gives the others extra points, which flipped the winner from Ada to another candidate. Condorcet rejected the method because it relies on this irrelevant factor.",
-  "move": "Under Borda, who else is on the ballot can decide who wins.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "Add a hopeless third candidate to this made-up Borda count. Who wins now?",
+  "answer": "Carl can't win, yet adding him flips the made-up Borda count: Ben beats Ann 7 to 6, though Ann led 3 to 2 without him. Carl sits between them on Ben's ballots, doubling Ben's lead there. Borda's points depend on how many names are on the ballot, so the irrelevant candidate changed the winner.",
+  "move": "A fair choice between two things can't hinge on a third nobody picks.",
   "keywords": [
     "condorcet",
     "borda count",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Card titled Borda's irrelevant alternatives. Three voters rank Ada over Ben and two rank Ben over Ada, so Ada wins. Adding a candidate who cannot win, with 4 points for first place and 0 for last, shifts the point totals and flips the winner. Asks why Condorcet rejected the Borda count.",
-    "ground": "#16221e"
+    "label": "Asks who wins a made-up three-candidate Borda count of Ann, Ben and Carl, with Carl a hopeless ghost slot on every ballot. Shows Ann ahead 3 to 2 before Carl, then Ben ahead 7 to 6 once Carl is counted, with gap brackets on each ballot."
   },
   "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=506s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

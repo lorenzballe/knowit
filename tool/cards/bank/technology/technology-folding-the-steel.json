@@ -5,10 +5,10 @@
   "strand": "technology.where_things_come_from.rare_metals",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "conjunction",
-  "question": "What are the two main benefits of folding a sword's steel?",
-  "answer": "Folding spreads out impurities such as silicon, sulfur and phosphorus until there is no weak point. The layers also give the steel a grain, strongest where the blade will be hit. The right pair is impurities spread out and grain.",
-  "move": "Folding evens out the impurities and lines the grain up where the blade gets hit.",
+  "principle": "exponential",
+  "question": "Smiths fold the steel again and again. Which two things does that buy?",
+  "answer": "Smiths fold steel to spread impurities thinner and to give it a grain. Each fold spreads the flecks further apart, so no spot stays weak. The grain reinforces the blade in the direction it will be hit, rather than making it equally strong in every direction.",
+  "move": "Spread a flaw thin enough, everywhere, and it stops being a weak point.",
   "keywords": [
     "sword",
     "steel",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Question card asking the two main benefits of folding a sword's steel, with three answer options: lighter and sharper; spreads out impurities and gives grain; adds carbon and hardens the edge. The reader picks a pair and rates how sure they are.",
-    "ground": "#070b18"
+    "label": "Multiple-choice quiz asking which two reasons smiths fold steel again and again, from four options: gathers impurities in one spot, spreads impurities through the steel, gives the steel a grain, or makes it equally strong every way. The reader then rates how sure they are."
   },
   "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=909s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

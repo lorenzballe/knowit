@@ -1,332 +1,272 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: science-many-worlds-dice -->
-<!-- Look: a Swiss poster on warm paper, with a strict 3×2 grid of six worlds, hairline rules, one huge numeral and a single hot red accent.
-     Interaction: pull the die back and let go. Its 462 particles split and fly into all six worlds, and each lands as its own face, but five worlds stay behind shut blinds and you see one face.
-     Wow: lift the veil. The blinds open in a wave, every face is there, the particles flash red and the numeral counts up to 100%. -->
-<title>Every face, every roll</title>
+<!-- slug: science-many-worlds-determinism -->
+<!-- Design note.
+     Thought to carry (the video's point): in Many-Worlds every possible outcome happens, 100% of the time.
+     A result only looks random because you experience one tiny sliver of the multiverse.
+     The die is a stand-in for a quantum object, and the front says so plainly.
+     Front: one big die on a table, you beside it, a hand-drawn curl that says "tap". Each roll fills one die outline in your tally.
+     Then you pick: truly random, fixed, or random until you look.
+     Back: the same scene, small, at the top. One roll fans into six branches. Each ends in one face and one copy of you.
+     Your branch, the face you last rolled, is the red line. A bracket under all six: every one happens.
+     Two labels on each face. No frames, no panels, no backdrop. Flat colour only.
+     The face turned away is hidden after the flip, so its mirrored text never sits under save and share. -->
+<title>Every face, every time</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
-#pic:active{cursor:grabbing}
-#next{align-self:flex-start}
-#why{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-#why b{color:#e5301a}
-.answered .q{font-size:max(2.5cqh,15px)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* The face turned away is out of play: hidden at the midpoint of the flip. */
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.1cqh}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{cursor:pointer;touch-action:manipulation}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+
+/* Confidence row, waiting: full contrast, outline pills, label in the body colour. */
+.surewrap.wait .sure,.surewrap.wait .sure *{opacity:1!important;filter:none!important}
+.surewrap.wait .sure,.surewrap.wait .sure *:not(button){color:var(--k)!important}
+.surewrap.wait .sure button{background:transparent!important;color:var(--k)!important;border-color:var(--k)!important;box-shadow:inset 0 0 0 2px var(--k)!important;pointer-events:none}
+
+/* Keep the confidence row and the closing line clear of the save and share buttons. */
+.front .surewrap{box-sizing:border-box;padding-right:108px;min-width:0}
+.front .say{width:fit-content;max-width:calc(100% - 108px);padding-right:0;font-size:max(1.9cqh,13px);margin-right:auto}
+
+.back .big{font-size:clamp(24px,4.2cqh,38px);line-height:1.04}
+.back .body{font-size:max(1.9cqh,13px)}
+.back .foot{box-sizing:border-box;padding-right:108px;min-height:44px}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Aim and launch · every world" style="--c:#efebe1;--k:#141414;--edge:#d3ccbd">
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">MANY WORLDS</span></div>
-    <h2 class="q">Does Many-Worlds make the universe deterministic again?</h2>
-    <div class="stagebox" id="stage">
-      <canvas id="pic" role="img" aria-label="A die at the top and a grid of six worlds below. When rolled, the die splits into all six worlds, and each world lands on a different face."></canvas>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">If Many-Worlds is true, is a quantum outcome random?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A die on a table with you beside it. Tap the die to roll it."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">Truly random: nothing decides the face</button>
+          <button class="opt" data-i="1">Fixed: the whole result was certain</button>
+          <button class="opt" data-i="2">Random until you look, then fixed</button>
+        </div>
+        <div class="surewrap wait" id="surewrap"><div class="sure" id="sure"></div></div>
+        <p class="say" id="say">The die stands in for a quantum object.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Fixed. Every face lands, 100% of the time.</p>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="One roll fans into six branches, each with one face and one copy of you."></svg></div>
+        <p class="body">In Many-Worlds every possible outcome happens, each in its own branch. It only looks random because you experience one tiny sliver of the multiverse.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Random from inside your sliver. Deterministic for the universe as a whole.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
+      </section>
     </div>
-    <p class="say" id="say">Pull the die back and let go. <b>Which face will you see?</b></p>
-    <p class="gone" id="why">Nothing picked a face. All six landed, each in its own world, on every roll: <b>100% of the time</b>. It only looks random because you live in one tiny sliver and see one face.</p>
-    <button class="btn gone" id="next">Lift the veil: see all six worlds</button>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In Many-Worlds the whole is certain. Only your slice looks like chance.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  const cv = Kit.$('pic'), card = Kit.$('card'), say = Kit.$('say'), next = Kit.$('next');
-  const INK = '#141414', ACC = '#ff3b1e', MUTED = '#8a8579', PAPER = '#efebe1', FACE = '#f8f5ee';
-  let EDGE = '#d3ccbd';
-  const FACES = [
-    [[0,0]],
-    [[-1,-1],[1,1]],
-    [[-1,-1],[0,0],[1,1]],
-    [[-1,-1],[1,-1],[-1,1],[1,1]],
-    [[-1,-1],[1,-1],[0,0],[-1,1],[1,1]],
-    [[-1,-1],[-1,0],[-1,1],[1,-1],[1,0],[1,1]]
-  ];
-  const PER = 22, P = [];
+  const RIGHT = 1, SHORT = ['Truly random', 'Fixed', 'Random until you look'];
+  const YOU = '#e0482f', DIE = '#ffffff';
+  let INK = '#111', CC = '#ccc';
+  let pick = -1, face = 5, seen = [], rolling = false, turned = false, built = false;
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let F = {}, dieInner = null, shadow = null, tallyG = null;
   const cl = (v, a, b) => Math.max(a, Math.min(b, v));
-  FACES.forEach((pips, c) => pips.forEach(([px, py], q) => {
-    for (let k = 0; k < PER; k++) {
-      const rad = Math.sqrt((k + .5) / PER), ang = k * 2.39996 + c * .7 + q * 1.3;
-      P.push({c, px, py, ux: Math.cos(ang) * rad, uy: Math.sin(ang) * rad,
-        jx: cl(Kit.gauss(), -2, 2), jy: cl(Kit.gauss(), -2, 2),
-        f: Kit.rnd(), ph: Kit.rnd() * 7, x: 0, y: 0, vx: 0, vy: 0, t0: 0});
-    }
-  }));
 
-  let x = null, W = 0, H = 0, pad = 0, fsS = 12, g = 8, topH = 0, gy0 = 0, cw = 0, ch = 0, ds = 0, homeX = 0, homeY = 0, pr = 2;
-  let DISP = 'sans-serif', MONO = 'monospace';
-  let mode = 'die', me = -1, rolls = 0, revealed = false, busy = false, now = 0, last = 0, started = false, first = true;
-  const covers = FACES.map(() => ({a: 1}));
-  const fx = {line: 1, flash: 0, dieA: 1, rdS: 1};
-  const rd = {mode: 'q', face: 0, pct: 0};
-  const drag = {on: false, x: 0, y: 0};
-  const seen = [];
+  const colors = () => { const cs = getComputedStyle(Kit.$('card')); INK = cs.getPropertyValue('--k').trim() || '#111'; CC = cs.getPropertyValue('--c').trim() || '#ddd'; };
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': a.fs || 13, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.removeAttribute('fs'); e.textContent = t; return e; };
+  const line = (p, d, a = {}) => Kit.mk('path', Object.assign({d, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', pathLength: 1}, a), p);
 
-  const cell = i => {
-    const col = i % 3, row = Math.floor(i / 3);
-    return {x: col * (cw + g), y: gy0 + row * (ch + g), w: cw, h: ch};
-  };
-  const faceGeo = i => {
-    const c = cell(i), s = Math.min(c.w * .6, c.h - fsS * 3.4);
-    return {cx: c.x + c.w / 2 - s * .03, cy: c.y + c.h / 2 + fsS * .55 - s * .03, s};
-  };
-  const diePos = () => {
-    if (!drag.on) {
-      const bob = (mode === 'die' && !Kit.calm) ? Math.sin(now * 1.7) * ds * .025 : 0;
-      return [homeX, homeY + bob];
-    }
-    let dx = drag.x - homeX, dy = drag.y - homeY; const L = Math.hypot(dx, dy), m = ds * 1.1;
-    if (L > m) { dx *= m / L; dy *= m / L; }
-    return [homeX + dx * .4, homeY + dy * .4];
-  };
-  const goalR = () => (mode === 'die' || mode === 'gather') ? ds * .085 * .34 : faceGeo(0).s * .085 * .34;
-  function target(p) {
-    if (mode === 'die' || mode === 'gather') {
-      const [dx, dy] = diePos(), o = ds * .27, r = ds * .085;
-      const w = Kit.calm ? 0 : ds * .012;
-      return [dx + p.px * o + p.ux * r + p.jx * ds * .01 + Math.sin(now * 3 + p.ph) * w,
-              dy + p.py * o + p.uy * r + p.jy * ds * .01 + Math.cos(now * 2.6 + p.ph) * w];
-    }
-    const f = faceGeo(p.c), o = f.s * .27, r = f.s * .085;
-    return [f.cx + p.px * o + p.ux * r, f.cy + p.py * o + p.uy * r];
+  const PIPS = {1: [[0,0]], 2: [[-1,-1],[1,1]], 3: [[-1,-1],[0,0],[1,1]], 4: [[-1,-1],[1,-1],[-1,1],[1,1]], 5: [[-1,-1],[1,-1],[0,0],[-1,1],[1,1]], 6: [[-1,-1],[1,-1],[-1,0],[1,0],[-1,1],[1,1]]};
+  function drawDie(g, n, ds) {
+    g.innerHTML = '';
+    Kit.mk('rect', {x: -ds/2, y: -ds/2, width: ds, height: ds, rx: ds*.18, fill: DIE, stroke: INK, 'stroke-width': Math.max(1.4, ds*.045)}, g);
+    if (n) for (const [px, py] of PIPS[n]) Kit.mk('circle', {cx: px*ds*.26, cy: py*ds*.26, r: Math.max(1.2, ds*.085), fill: INK}, g);
+  }
+  // A table and a person beside it; origin is the floor under the table's centre.
+  function drawTable(g, tw, figColor, figOpacity = 1) {
+    const th = tw*.5, leg = tw*.05;
+    Kit.mk('rect', {x: -tw/2, y: -th, width: tw, height: th*.12, rx: th*.03, fill: INK}, g);
+    for (const s of [-1, 1]) Kit.mk('rect', {x: s*tw*.4 - leg/2, y: -th*.9, width: leg, height: th*.9, fill: INK}, g);
+    const fx = -tw*.72, bw = tw*.16, bh = tw*.62, r = tw*.1, hy = -bh - r*1.25;
+    const fig = Kit.mk('g', {opacity: figOpacity}, g);
+    Kit.mk('rect', {x: fx - bw/2, y: -bh, width: bw, height: bh, rx: bw/2, fill: figColor}, fig);
+    Kit.mk('circle', {cx: fx, cy: hy, r, fill: figColor}, fig);
+    Kit.mk('circle', {cx: fx + r*.4, cy: hy - r*.1, r: Math.max(1.1, r*.14), fill: INK}, fig);
+  }
+  // A small copy of you standing on the floor at (x, gy).
+  function mini(g, x, gy, s, op) {
+    const bw = s*.32, bh = s*.85, r = s*.24, hy = gy - bh - r*1.25;
+    const f = Kit.mk('g', {opacity: op}, g);
+    Kit.mk('rect', {x: x - bw/2, y: gy - bh, width: bw, height: bh, rx: bw/2, fill: YOU}, f);
+    Kit.mk('circle', {cx: x, cy: hy, r, fill: YOU}, f);
+    Kit.mk('circle', {cx: x + r*.4, cy: hy - r*.1, r: Math.max(1.1, r*.16), fill: INK}, f);
   }
 
-  function layout() {
-    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
-    const cs = getComputedStyle(card);
-    DISP = cs.getPropertyValue('--display').trim() || 'sans-serif';
-    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
-    EDGE = cs.getPropertyValue('--edge').trim() || EDGE;
-    fsS = Math.max(12, Math.min(14, W / 28)); pad = Math.max(4, W * .015); g = Math.max(6, W * .022);
-    topH = Math.round(H * .33); gy0 = topH + g * 1.4;
-    cw = (W - 2 * g) / 3; ch = (H - gy0 - g) / 2;
-    ds = Math.min(topH * .5, W * .19);
-    homeX = W - pad - ds * .66; homeY = topH * .44;
-    pr = Math.max(.9, goalR());
-    if (first || mode !== 'fly') P.forEach(p => { const [tx, ty] = target(p); p.x = tx; p.y = ty; p.vx = p.vy = 0; });
-    first = false;
-    if (!started) { started = true; requestAnimationFrame(tick); }
-    draw();
-  }
+  // ---------- front ----------
+  function layoutFront() {
+    svg.innerHTML = ''; gsap.killTweensOf('*');
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, f.f || 13));
 
-  function step(dt) {
-    const G = H * 3;
-    for (const p of P) {
-      const [tx, ty] = target(p);
-      if (mode === 'fly') {
-        const s = cl((now - p.t0) / .45, 0, 1), k = s * s * 170, d = 1 + s * 17;
-        p.vx += ((tx - p.x) * k - p.vx * d) * dt;
-        p.vy += ((ty - p.y) * k - p.vy * d + G * (1 - s)) * dt;
-      } else {
-        const k = mode === 'land' ? 150 : 120, d = 14;
-        p.vx += ((tx - p.x) * k - p.vx * d) * dt;
-        p.vy += ((ty - p.y) * k - p.vy * d) * dt;
-      }
-      p.x += p.vx * dt; p.y += p.vy * dt;
-    }
-    pr += (Math.max(.9, goalR()) - pr) * Math.min(1, dt * 6);
-  }
-  function tick(t) {
-    const dt = Math.min(.033, last ? (t - last) / 1000 : .016); last = t; now += dt;
-    if (x) { step(dt); draw(); }
-    requestAnimationFrame(tick);
-  }
+    // The tally: six empty die outlines that fill in as you roll.
+    tallyG = Kit.mk('g', {}, svg);
+    const lab = txt(svg, 2, 0, 'Your rolls', {fs});
+    const x0 = 2 + lab.getComputedTextLength() + fs*.9;
+    const step = Math.min(fs*1.65*1.32, (W - 2 - x0)/6), cs = Math.min(fs*1.65, step/1.28), ty = cs/2 + 2;
+    lab.setAttribute('y', ty + fs*.36);
+    F = {W, H, fs, x0, step, cs, ty};
+    drawTally(false);
 
-  function rrect(X, Y, w, h, r) { x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); }
-  function dieBody(cx, cy, s, lw) {
-    const off = s * .07, r = s * .17;
-    x.fillStyle = EDGE; rrect(cx - s / 2 + off, cy - s / 2 + off, s, s, r); x.fill();
-    x.fillStyle = FACE; rrect(cx - s / 2, cy - s / 2, s, s, r); x.fill();
-    x.strokeStyle = INK; x.lineWidth = lw; x.stroke();
+    // The scene, as large as the stage allows.
+    const T = cs + 4 + fs*.6, FY = H - 2;
+    const tw = cl(Math.min(W*.6, (FY - T - 4)/1.03), 60, 400), ds = tw*.42, cx = W/2 + tw*.15;
+    const dy = FY - tw*.5 - ds/2;
+    Object.assign(F, {tw, ds, cx, FY, jump: Math.max(ds*.25, Math.min(ds*.7, dy - ds/2 - T))});
+    Kit.mk('line', {x1: 0, x2: W, y1: FY, y2: FY, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    drawTable(Kit.mk('g', {transform: `translate(${cx},${FY})`}, svg), tw, YOU);
+    shadow = Kit.mk('ellipse', {cx, cy: FY - tw*.5 - 1, rx: ds*.55, ry: Math.max(2, ds*.07), fill: INK, opacity: .18}, svg);
+    const outer = Kit.mk('g', {transform: `translate(${cx},${dy})`}, svg);
+    dieInner = Kit.mk('g', {}, outer);
+    drawDie(dieInner, face, ds);
+
+    // Tap mark: a curl over the die's corner, same flat line as the drawing.
+    const hint = Kit.mk('g', {transform: `translate(${cx},${dy})`}, svg);
+    const R = ds*.8, a0 = -70*Math.PI/180, a1 = -22*Math.PI/180;
+    const p0 = [R*Math.cos(a0), R*Math.sin(a0)], p1 = [R*Math.cos(a1), R*Math.sin(a1)];
+    Kit.mk('path', {d: `M${p0} A${R} ${R} 0 0 1 ${p1}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, hint);
+    const t = [-Math.sin(a1), Math.cos(a1)], nrm = [Math.cos(a1), Math.sin(a1)], h = ds*.13;
+    const tip = [p1[0] + t[0]*h*.7, p1[1] + t[1]*h*.7], bk = [p1[0] - t[0]*h*.5, p1[1] - t[1]*h*.5];
+    Kit.mk('path', {d: `M${bk[0] + nrm[0]*h*.75},${bk[1] + nrm[1]*h*.75} L${tip} L${bk[0] - nrm[0]*h*.75},${bk[1] - nrm[1]*h*.75}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
+    txt(hint, ds*.62, ds*.22, 'tap', {fs});
   }
-
-  function draw() {
-    x.clearRect(0, 0, W, H);
-    const L = fx.line;
-    // Swiss rules: a heavy bar over the grid, hairlines through the gutters
-    x.fillStyle = INK; x.fillRect(0, gy0 - g * .9, W * L, Math.max(3, H * .007));
-    x.fillRect(0, 0, W * L * .35, 1.2);
-    x.strokeStyle = INK; x.lineWidth = 1; x.globalAlpha = .25;
-    for (let c = 1; c < 3; c++) { const gx = c * (cw + g) - g / 2; x.beginPath(); x.moveTo(gx, gy0); x.lineTo(gx, gy0 + (H - gy0) * L); x.stroke(); }
-    const hy = gy0 + ch + g / 2; x.beginPath(); x.moveTo(0, hy); x.lineTo(W * L, hy); x.stroke();
-    x.globalAlpha = 1;
-
-    // a blank die waiting in each world
+  function drawTally(pop) {
+    const {x0, step, cs, ty} = F; tallyG.innerHTML = '';
+    const show = seen.slice(-6); let last = null;
     for (let i = 0; i < 6; i++) {
-      const f = faceGeo(i);
-      x.globalAlpha = L; dieBody(f.cx, f.cy, f.s, 1.3); x.globalAlpha = 1;
+      const g = Kit.mk('g', {transform: `translate(${x0 + i*step + cs/2},${ty})`}, tallyG);
+      if (show[i]) { drawDie(g, show[i], cs); last = g; }
+      else Kit.mk('rect', {x: -cs/2 + .75, y: -cs/2 + .75, width: cs - 1.5, height: cs - 1.5, rx: cs*.18, fill: 'none', stroke: INK, 'stroke-width': 1.5}, g);
+    }
+    if (pop && last && !Kit.calm) gsap.from(last, {scale: .4, opacity: 0, duration: .3, ease: 'back.out(2)', transformOrigin: '50% 50%'});
+  }
+  function roll() {
+    if (rolling || turned) return;
+    rolling = true; Kit.haptic('selection');
+    const n = 1 + Math.floor(Math.random()*6), {ds, jump} = F;
+    const done = () => { face = n; drawDie(dieInner, n, ds); seen.push(n); drawTally(true); rolling = false; Kit.haptic('light'); };
+    if (Kit.calm) { done(); return; }
+    const swap = setInterval(() => drawDie(dieInner, 1 + Math.floor(Math.random()*6), ds), 75);
+    gsap.timeline({onComplete: () => { clearInterval(swap); gsap.set(dieInner, {rotation: 0}); done(); }})
+      .to(dieInner, {y: -jump, rotation: 190, duration: .28, ease: 'power2.out', svgOrigin: '0 0'})
+      .to(shadow, {attr: {rx: ds*.3}, opacity: .08, duration: .28, ease: 'power2.out'}, 0)
+      .to(dieInner, {y: 0, rotation: 360, duration: .28, ease: 'power2.in', svgOrigin: '0 0'})
+      .to(shadow, {attr: {rx: ds*.55}, opacity: .18, duration: .28, ease: 'power2.in'}, .28)
+      .to(dieInner, {rotation: 352, duration: .07, yoyo: true, repeat: 1, svgOrigin: '0 0'});
+  }
+  svg.addEventListener('click', roll);
+
+  // ---------- back ----------
+  function layoutBack(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, f.f || 13));
+    const last = seen.length ? seen[seen.length - 1] : face;
+    svg2.setAttribute('aria-label', `One roll fans into six branches, each with one face and one copy of you. Your branch shows the ${last}. All six happen, 100% of the time.`);
+
+    // Bottom up: the closing label, the bracket, "you see one", the six endings.
+    const colW = W/6;
+    const wholeY = H - fs*.3, by = wholeY - fs*1.3, youY = by - fs*.75, gy = youY - fs*1.15;
+    const ds = cl(Math.min(colW*.42, gy*.22), 12, 28), ey = gy - ds*1.5 - 4;
+
+    // Top: the front's scene, small, the die in the air and blank. Dropped if there is no room.
+    const tw0 = Math.min(70, W*.2, (ey - 22)/1.15), scene = tw0 >= 30;
+    const ox = W/2, oy = scene ? tw0*1.05 + 2 : 2;
+    let originG = null;
+    if (scene) {
+      originG = Kit.mk('g', {transform: `translate(${ox},${oy})`}, svg2);
+      Kit.mk('line', {x1: -tw0*.95, x2: tw0*.62, y1: 0, y2: 0, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, originG);
+      drawTable(originG, tw0, YOU);
+      drawDie(Kit.mk('g', {transform: `translate(0,${-tw0*.8}) rotate(18)`}, originG), 0, tw0*.32);
     }
 
-    // the die at home: every face at once
-    const [dX, dY] = diePos();
-    if (fx.dieA > .01) { x.globalAlpha = fx.dieA; dieBody(dX, dY, ds, 2.2); x.globalAlpha = 1; }
-
-    // the particles: one die, then six
-    x.lineCap = 'round'; x.lineWidth = pr * 2;
-    const fast = (W * .25) ** 2;
-    for (let pass = 0; pass < 2; pass++) {
-      x.strokeStyle = pass ? ACC : INK; x.beginPath();
-      for (const p of P) {
-        const open = p.c === me && covers[p.c].a < .5 && mode !== 'fly' && mode !== 'gather';
-        const red = open || p.f < fx.flash;
-        if (red !== !!pass) continue;
-        if (p.vx * p.vx + p.vy * p.vy > fast) { x.moveTo(p.x - p.vx * .016, p.y - p.vy * .016); x.lineTo(p.x, p.y); }
-        else { x.moveTo(p.x, p.y); x.lineTo(p.x + .01, p.y); }
-      }
-      x.stroke();
-    }
-    x.lineCap = 'butt';
-
-    // the worlds you do not see: venetian blinds that open slat by slat
+    // One roll, six branches. Yours in red.
+    const y0 = oy + (scene ? 3 : 0), fan = [];
+    let redD = '';
     for (let i = 0; i < 6; i++) {
-      const c = cell(i), a = covers[i].a; if (a <= .001) continue;
-      const N = Math.max(5, Math.round(c.h / 22)), slot = c.h / N;
-      for (let j = 0; j < N; j++) {
-        const aj = cl((a - .45 * j / (N - 1)) / .55, 0, 1); if (aj <= 0) continue;
-        const h = slot * aj, y = c.y + j * slot + (slot - h) / 2;
-        x.fillStyle = INK; x.fillRect(c.x, y, c.w, h + (aj >= 1 ? .6 : 0));
-        if (h > 3) { x.fillStyle = 'rgba(255,255,255,.08)'; x.fillRect(c.x, y, c.w, 1); }
-      }
-      if (a > .85) {
-        x.globalAlpha = (a - .85) / .15; x.fillStyle = MUTED; x.font = `600 ${fsS}px ${MONO}`; x.textAlign = 'center';
-        x.fillText('UNSEEN', c.x + c.w / 2, c.y + c.h / 2 + fsS * .9); x.textAlign = 'left'; x.globalAlpha = 1;
-      }
+      const ex = colW*(i + .5);
+      const d = `M${ox},${y0} C${ox},${y0 + (ey - y0)*.6} ${ex},${y0 + (ey - y0)*.4} ${ex},${ey}`;
+      if (i + 1 === last) redD = d; else fan.push(line(svg2, d, {'stroke-opacity': .3}));
     }
-    // cell labels
+    const redP = line(svg2, redD, {stroke: YOU, 'stroke-width': 3});
+
+    // Six endings: a face and a copy of you on each.
+    const units = [];
     for (let i = 0; i < 6; i++) {
-      const c = cell(i), dark = covers[i].a > .55;
-      const lab = revealed ? `${i + 1} · 100%` : `WORLD ${i + 1}`;
-      x.font = `700 ${fsS}px ${MONO}`; x.fillStyle = dark ? '#cfc9bc' : INK;
-      x.fillText(lab, c.x + 6, c.y + fsS + 5);
-      if (i === me && covers[i].a < .5) {
-        const lw = x.measureText(lab).width;
-        x.font = `800 ${fsS}px ${MONO}`; const t = 'YOU', w = x.measureText(t).width + 10;
-        let tx = c.x + c.w - w - 6, ty = c.y + 4;
-        if (6 + lw + 8 + w + 6 > c.w) { tx = c.x + 6; ty = c.y + c.h - fsS - 10; }
-        x.fillStyle = ACC; x.fillRect(tx, ty, w, fsS + 6);
-        x.fillStyle = PAPER; x.fillText(t, tx + 5, ty + fsS + 1);
-      }
+      const ex = colW*(i + .5), mine = i + 1 === last, g = Kit.mk('g', {}, svg2);
+      Kit.mk('line', {x1: ex - ds*.9, x2: ex + ds*.9, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-opacity': mine ? 1 : .3}, g);
+      mini(g, ex - ds*.55, gy, ds, mine ? 1 : .35);
+      drawDie(Kit.mk('g', {transform: `translate(${ex + ds*.32},${gy - ds/2})`}, g), i + 1, ds);
+      units.push(g);
     }
 
-    // the readout: one huge numeral
-    const avail = homeX - ds * .7 - pad * 3;
-    x.font = `700 ${fsS}px ${MONO}`; x.fillStyle = INK;
-    x.fillText(rd.mode === 'pct' ? 'EACH FACE LANDS' : 'WHAT YOU SEE', pad, pad + fsS);
-    let size = (topH - fsS * 2.6 - pad - fsS - 6) / .74;
-    x.font = `800 ${size}px ${DISP}`; const mw = x.measureText('100%').width;
-    if (mw > avail) size *= avail / mw;
-    const str = rd.mode === 'pct' ? Math.round(rd.pct) + '%' : rd.mode === 'face' ? String(rd.face) : '?';
-    const base = topH - fsS * 2.1;
-    x.save(); x.translate(pad, base); x.scale(fx.rdS, fx.rdS);
-    x.font = `800 ${size}px ${DISP}`; x.fillStyle = rd.mode === 'q' ? INK : ACC; x.fillText(str, -size * .03, 0);
-    x.restore();
-    x.font = `600 ${fsS}px ${MONO}`; x.fillStyle = INK;
-    x.fillText(rd.mode === 'pct' ? 'EVERY FACE, EVERY ROLL' : 'YOUR ODDS: 1 IN 6', pad, topH - fsS * .35);
+    const exR = colW*(last - .5);
+    const youL = txt(svg2, 0, youY, 'you see one', {fs});
+    const yw = youL.getComputedTextLength();
+    youL.setAttribute('x', cl(exR - yw/2, fs*.6 + 4, W - fs*.6 - 4 - yw));
+    const brace = Kit.mk('path', {d: `M${fs*.6},${by - fs*.5} V${by} H${W - fs*.6} V${by - fs*.5}`, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg2);
+    const wholeL = txt(svg2, W/2, wholeY, 'all six happen, 100% of the time', {fs, 'text-anchor': 'middle', 'font-weight': 800});
+    if (wholeL.getComputedTextLength() > W - 8) wholeL.textContent = 'all six, 100% of the time';
 
-    // the rubber band and the aim
-    if (drag.on) {
-      x.strokeStyle = INK; x.lineWidth = 1.2; x.setLineDash([3, 4]);
-      x.beginPath(); x.moveTo(homeX, homeY); x.lineTo(drag.x, drag.y); x.stroke(); x.setLineDash([]);
-      const v = launchVec(); x.fillStyle = ACC;
-      for (let i = 1; i < 12; i++) { const t = i * .035, px = dX + v[0] * t, py = dY + v[1] * t + .5 * H * 3 * t * t; x.beginPath(); x.arc(px, py, Math.max(1.5, 3.2 - i * .15), 0, 7); x.fill(); }
-    }
-    if (rolls === 0 && !drag.on && mode === 'die') {
-      const a = .55 + .45 * Math.sin(now * 4);
-      x.globalAlpha = a; x.font = `800 ${fsS}px ${MONO}`; x.fillStyle = ACC; x.textAlign = 'center';
-      x.fillText('PULL ↙', homeX, homeY + ds / 2 + ds * .07 + fsS + 6); x.textAlign = 'left'; x.globalAlpha = 1;
-    }
+    if (!animate || Kit.calm) return;
+    const paths = [...fan, redP];
+    paths.forEach(p => gsap.set(p, {attr: {'stroke-dasharray': '1 2', 'stroke-dashoffset': 1}}));
+    gsap.set([youL, brace, wholeL, ...units], {opacity: 0});
+    const tl = gsap.timeline({delay: .45});
+    if (originG) tl.from(originG, {opacity: 0, duration: .4, ease: 'power2.out'});
+    tl.to(paths, {attr: {'stroke-dashoffset': 0}, duration: .8, ease: 'power2.inOut'})
+      .to(units, {opacity: 1, duration: .3, stagger: .06, ease: 'power2.out'}, '-=.2')
+      .to(youL, {opacity: 1, duration: .35}, '+=.05')
+      .to([brace, wholeL], {opacity: 1, duration: .45, ease: 'power2.out'}, '+=.2');
   }
+  document.addEventListener('turned', () => { turned = true; built = true; layoutBack(true); });
 
-  function launchVec() {
-    let dx = homeX - drag.x, dy = homeY - drag.y; const Ln = Math.hypot(dx, dy);
-    if (Ln < 12) { dx = -.45; dy = -1; } else { dx /= Ln; dy /= Ln; }
-    const sp = W * (1.1 + 1.6 * cl(Ln / (ds * 1.1), 0, 1));
-    return [dx * sp, dy * sp];
-  }
-
-  function gather() {
-    if (busy) return false;
-    mode = 'gather'; me = -1;
-    gsap.to(fx, {dieA: 1, duration: .2, ease: 'power2.out'});
-    if (!revealed) { gsap.to(covers, {a: 1, duration: .3, ease: 'power3.inOut', overwrite: true}); rd.mode = 'q'; }
-    return true;
-  }
-  function launch() {
-    const v = launchVec(), [dX, dY] = diePos();
-    drag.on = false; busy = true; mode = 'fly'; Kit.haptic('light');
-    gsap.to(fx, {dieA: 0, duration: .25, ease: 'power2.in'});
-    for (const p of P) {
-      p.x = dX + p.px * ds * .27 + p.ux * ds * .085; p.y = dY + p.py * ds * .27 + p.uy * ds * .085;
-      p.vx = v[0] + Kit.gauss() * W * .18; p.vy = v[1] + Kit.gauss() * W * .18;
-      p.t0 = now + .08 + Kit.rnd() * .24;
-    }
-    if (Kit.calm) { P.forEach(p => { mode = 'land'; const [tx, ty] = target(p); p.x = tx; p.y = ty; p.vx = p.vy = 0; }); land(); }
-    else setTimeout(land, 1250);
-  }
-  function land() {
-    mode = 'land'; busy = false; rolls++;
-    me = Math.floor(Kit.rnd() * 6); seen.push(me + 1);
-    if (revealed) { Kit.haptic('selection'); return; }
-    rd.mode = 'face'; rd.face = me + 1;
-    if (Kit.calm) { covers[me].a = 0; fx.rdS = 1; }
-    else {
-      gsap.to(covers[me], {a: 0, duration: .8, ease: 'expo.out', overwrite: true});
-      gsap.fromTo(fx, {rdS: .55}, {rdS: 1, duration: .6, ease: 'back.out(2.2)'});
-    }
-    Kit.haptic('selection');
-    if (rolls === 1) say.innerHTML = `A <b>${me + 1}</b>. You had a 1 in 6 chance of seeing that. <b>Roll again.</b>`;
-    else {
-      say.innerHTML = `You saw ${seen.join(', ')}. Looks like pure luck. But the dots flew into <b>every</b> world, not just yours.`;
-      Kit.show('next');
-    }
-  }
-
-  function reveal() {
-    if (revealed || busy) return;
-    revealed = true; Kit.haptic('success');
-    Kit.hide('say'); Kit.hide('next'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered');
-    rd.mode = 'pct';
-    if (Kit.calm) { covers.forEach(c => c.a = 0); rd.pct = 100; return; }
-    gsap.to(covers, {a: 0, duration: 1, ease: 'power2.inOut', stagger: {each: .09, from: 'random'}, overwrite: true});
-    for (const p of P) { const a = Kit.rnd() * 7; const k = W * (.4 + Kit.rnd() * .9); p.vx += Math.cos(a) * k; p.vy += Math.sin(a) * k; }
-    rd.pct = 0;
-    gsap.timeline()
-      .fromTo(fx, {rdS: .5}, {rdS: 1, duration: .8, ease: 'elastic.out(1,.55)'}, .25)
-      .to(rd, {pct: 100, duration: 1.4, ease: 'power3.out'}, .25)
-      .fromTo(fx, {flash: 0}, {flash: 1, duration: .5, ease: 'power2.out'}, .3)
-      .to(fx, {flash: 0, duration: 1.2, ease: 'power2.inOut'}, 1.1);
-  }
-  next.addEventListener('click', reveal);
-
-  const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-  cv.addEventListener('pointerdown', e => {
-    if (!gather()) return;
-    drag.on = true; [drag.x, drag.y] = pos(e); cv.setPointerCapture(e.pointerId); Kit.haptic('selection');
+  // ---------- the answer ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT;
+    Kit.answer({choice: SHORT[pick], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${SHORT[pick]}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
   });
-  cv.addEventListener('pointermove', e => { if (drag.on) [drag.x, drag.y] = pos(e); });
-  cv.addEventListener('pointerup', () => { if (drag.on) launch(); });
-  cv.addEventListener('pointercancel', () => { if (drag.on) launch(); });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    Kit.$('surewrap').classList.remove('wait'); sure.on();
+  });
 
-  Kit.onShow.card = layout;
+  Kit.onShow.card = () => { colors(); layoutFront(); if (built) layoutBack(false); };
   Kit.onEnter.card = () => {
-    if (Kit.calm || !x) return;
-    P.forEach(p => { p.x = Kit.rnd() * W; p.y = gy0 + Kit.rnd() * (H - gy0); p.vx = Kit.gauss() * 80; p.vy = Kit.gauss() * 80; });
-    gsap.fromTo(fx, {line: 0}, {line: 1, duration: 1.1, ease: 'expo.out'});
-    covers.forEach(c => c.a = 0);
-    gsap.to(covers, {a: 1, duration: .7, ease: 'power3.out', stagger: .07, delay: .25});
-    gsap.fromTo(fx, {rdS: .6}, {rdS: 1, duration: .7, ease: 'back.out(2)', delay: .3});
+    if (Kit.calm) return;
+    gsap.from('#pic > *', {opacity: 0, y: 8, stagger: .06, duration: .45, ease: 'power3.out'});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .3, ease: 'power3.out'});
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    for (let i = 0; i < 2; i++) {
-      gather(); drag.on = true; drag.x = homeX + ds * .8; drag.y = homeY + ds * .7;
-      await wait(Kit.calm ? 30 : 200); launch();
-      await wait(Kit.calm ? 60 : 1500);
-    }
-    next.click();
-    await wait(Kit.calm ? 60 : 2200);
+    for (let i = 0; i < 3; i++) { roll(); await wait(Kit.calm ? 50 : 850); }
+    Kit.$('opts').children[1].click(); await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4800);
   };
 })();
 Kit.single();

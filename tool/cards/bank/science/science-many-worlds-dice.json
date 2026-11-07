@@ -3,12 +3,12 @@
   "topic": "science",
   "genre": "science.physics",
   "strand": "science.physics.quantum",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Does Many-Worlds make the universe deterministic again?",
-  "answer": "Many-Worlds makes the universe deterministic again: when the die is rolled, all six faces land, each in its own world, every time. Nothing picks a face. You see only one because you live in one tiny sliver of the multiverse, so the outcome only looks random.",
-  "move": "In Many-Worlds the whole is certain. Only your slice looks like chance.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "If Many-Worlds is true, is a quantum outcome random?",
+  "answer": "Fixed. Every face lands, 100% of the time. In Many-Worlds every possible outcome happens, each in its own branch. It only looks random because you experience one tiny sliver of the multiverse.",
+  "move": "Random from inside your sliver. Deterministic for the universe as a whole.",
   "keywords": [
     "many-worlds",
     "multiverse",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A die on a table, with each of its six faces shown on a separate parallel table. The page asks whether Many-Worlds makes the universe deterministic again, and answers that every face lands in its own world, 100% of the time.",
-    "ground": "#efebe1"
+    "touch": "taps",
+    "label": "A die stands in for a quantum object. The page asks whether Many-Worlds makes quantum outcomes truly random, offering three choices: truly random, fixed, or random until you look. It shows every die face landing in parallel branches."
   },
   "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=730s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }
