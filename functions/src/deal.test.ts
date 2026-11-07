@@ -275,8 +275,10 @@ test('what was seen is never dealt again; the taste leans the draw', () => {
   for (const id of second.own) assert.ok(!first.own.includes(id));
   // A reader who loves black holes gets them first.
   const holes = Object.fromEntries(['strand:space.black_holes.event_horizons', 'strand:space.black_holes.hawking_radiation', 'strand:space.black_holes.supermassive_ones', 'genre:space.black_holes'].map((k) => [k, 0.6]));
+  // Over sixty days: a lean shows in what a reader gets over weeks, and over
+  // three a handful of cards either way is the luck of the draw.
   let withHoles = 0, without = 0;
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 60; i++) {
     const date = shiftDate(DAY, i);
     const lover = { ...profileOf({ topicWeights: { space: 1 }, pickedTopics: ['space', 'thinking'] }), taste: holes };
     withHoles += dealDay(bank, lover, date, 'r').own.filter((id) => bank.byId.get(id)?.genre === 'space.black_holes').length;

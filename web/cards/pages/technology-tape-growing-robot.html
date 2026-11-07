@@ -1,0 +1,289 @@
+<!doctype html>
+<!-- slug: technology-growing-robot-tape -->
+<!-- Design note
+     Thought to carry: a robot that grows from its tip grows over sticky tape instead of getting stuck to it. A car just gets stuck.
+     Front: seen from above, two plain lanes drawn straight on the card, each ending in a ring. A car waits on one. A soft robot waits on the other: an air box, a hose and a short closed tube nose, with nothing that shows how it moves. A strip of sticky tape is parked at the right edge, off both routes. The reader drags it into the middle so it crosses both lanes, then picks who gets across. Three labels: car, soft robot, sticky tape.
+     Back: the same lanes and the tape in the same place. Both set off together. The car rolls onto the tape and stops: "stuck". The robot's tube lengthens from its coral tip, over the tape, to the far ring: "grows from the tip". One focal point, the coral tip crossing the tape. Three labels.
+     Front gives nothing away: both travellers sit still, the robot is only a closed stub, and nothing hints at who crosses.
+     No floor band, frame or backdrop behind the drawing; text never enters the strip kept for save and share. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why tape can't stop the growing robot</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn>.front{transition:visibility 0s .38s}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.front{transition:none}
+
+.stagebox{display:flex;flex:1;min-height:0}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:grab}
+#opts{display:flex;gap:2.4cqw;margin-top:.8cqh}
+.opt{flex:1;font:700 max(2cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 1cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt:disabled{opacity:1;cursor:default;background:transparent;color:color-mix(in srgb,var(--k) 45%,transparent);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 45%,transparent)}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none;opacity:1}
+#sure{margin-bottom:12px}
+#sure.wait,#sure.wait *{opacity:1!important;color:color-mix(in srgb,var(--k) 45%,transparent)!important}
+#sure.wait button{background:transparent!important;border-color:color-mix(in srgb,var(--k) 45%,transparent)!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 45%,transparent)!important}
+
+/* the strip at the foot of each face belongs to save and share: no text enters it */
+.dock{flex:0 0 calc(56px + env(safe-area-inset-bottom,0px))}
+.front .say{margin:0;padding:0}
+.back .big{margin:0 0 .6cqh;font-size:clamp(26px,4.4cqh,40px);line-height:1.02}
+.back .body{font-size:max(1.8cqh,13px);line-height:1.34;margin:.8cqh 0}
+.back .keep{font-size:max(1.75cqh,13px)}
+.back .foot{margin:0;padding:0}
+.back .foot .src{display:block;font-size:max(1.5cqh,12px);line-height:1.3;margin:.8cqh 0 0}
+.hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(-6px)}}
+.kit-calm .hint{animation:none}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag the tape · pick one">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE TAPE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Lay sticky tape across the floor. Which one makes it across?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="Seen from above: two lanes, each ending in a ring. A small car waits at the start of one; a soft robot, an air box with a hose and a short closed tube, waits at the start of the other. A strip of sticky tape is parked at the right edge; drag it into the middle so it crosses both lanes."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0" disabled>The car</button>
+          <button class="opt" data-i="1" disabled>The robot</button>
+          <button class="opt" data-i="2" disabled>Neither</button>
+        </div>
+        <div id="sure"></div>
+        <p class="say" id="say"><b>Drag the tape left</b> into the middle of the floor. Then pick.</p>
+        <div class="dock" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Only the robot gets across.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The car rolls onto the tape and is stuck. The robot's tube grows from its tip, over the tape, all the way to the far ring."></svg></div>
+        <p class="body">Powered by compressed air, the robot grows from its tip, so it grows over the tape instead of getting stuck to it. Something like a car just gets stuck.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> A thing that grows from its tip goes over glue rather than getting stuck in it. Nothing holds it back.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “This Unstoppable Robot Could Save Your Life” (2021)</span></div>
+        <div class="dock" aria-hidden="true"></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script>
+(() => {
+  const card = Kit.$('card'), svg = Kit.$('pic'), svg2 = Kit.$('pic2'), say = Kit.$('say');
+  const TAPE = '#ffd23f', SKIN = '#ffffff', FRESH = '#ff7a59';
+  let INK = '#14140f', PAPER = '#eeeeee';
+  const S = {placed: false, pick: -1, turned: false};
+  let F = null, backTL = null;
+  const OPTS = ['The car', 'The robot', 'Neither'], RIGHT = 1;
+
+  function colors() { const cs = getComputedStyle(card); INK = cs.getPropertyValue('--k').trim() || INK; PAPER = cs.getPropertyValue('--c').trim() || PAPER; }
+
+  // one plan for both faces, so the back reads as the front played out
+  function geo(el) {
+    const f = Kit.fitSvg(el), W = f.W, H = f.H;
+    const g = {W, H, fs: Math.max(12, Math.min(14, W / 27)), sw: 1.8};
+    const pad = g.fs + 12;
+    g.top = pad; g.bot = Math.max(pad + 60, H - pad);
+    const sp = g.bot - g.top;
+    g.cl = Math.max(30, Math.min(W * .12, 46, sp * .26)); g.cw = g.cl * .52; g.R = g.cw * .3;
+    g.bw = g.cw * .8; g.bs = g.cw * 1.25; g.ringR = g.bw * .85;
+    g.tw = Math.max(22, Math.min(W * .085, 32));
+    g.xs = W * .12; g.x1 = W * .8; g.tx = W * .5;
+    g.a = g.top + sp * .22; g.b = g.top + sp * .74;
+    g.tLen = sp; g.ty = (g.top + g.bot) / 2;
+    g.parkX = W - g.tw / 2 - 2;
+    return g;
+  }
+
+  function text(p, g, x, y, t, anchor = 'start', w = 700) {
+    const e = Kit.mk('text', {x, y, fill: INK, 'text-anchor': anchor, style: `font:${w} ${g.fs}px var(--body)`}, p);
+    e.textContent = t;
+    const L = e.getComputedTextLength(), left = anchor === 'end' ? x - L : anchor === 'middle' ? x - L / 2 : x;
+    const shift = Math.max(3 - left, Math.min(0, g.W - 3 - (left + L)));
+    if (shift) e.setAttribute('x', x + shift);
+    return e;
+  }
+  const line = (p, x1, y1, x2, y2, o = {}) => Kit.mk('line', Object.assign({x1, y1, x2, y2, stroke: INK, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, o), p);
+
+  // ---- the pieces, seen from above, drawn straight on the card ----
+  function lanes(el, g) {
+    const f = Kit.mk('g', {}, el);
+    for (const y of [g.a, g.b]) {
+      line(f, g.xs + g.cl * .5, y, g.x1 - g.ringR, y, {'stroke-width': 1.4, 'stroke-dasharray': '2 6', opacity: .5});
+      Kit.mk('circle', {cx: g.x1, cy: y, r: g.ringR, fill: 'none', stroke: INK, 'stroke-width': g.sw}, f);
+    }
+  }
+  function tape(p, g, inside) {
+    const t = Kit.mk('g', {}, p), w = g.tw / 2, l = g.tLen / 2, n = 4, pts = [];
+    for (let i = 0; i <= n; i++) pts.push([-w + 2 * w * i / n, -l + (i % 2 ? 4 : 0)]);
+    for (let i = n; i >= 0; i--) pts.push([-w + 2 * w * i / n, l - (i % 2 ? 4 : 0)]);
+    Kit.mk('polygon', {points: pts.map(q => q.join(',')).join(' '), fill: TAPE, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, t);
+    if (inside) {
+      const tt = Kit.mk('text', {x: 0, y: 0, fill: INK, 'text-anchor': 'middle', 'dominant-baseline': 'central', transform: 'rotate(-90)', style: `font:800 ${Math.min(g.fs, g.tw * .6)}px var(--body)`}, t);
+      tt.textContent = 'sticky tape';
+    }
+    return t;
+  }
+  function car(p, g) {
+    const c = Kit.mk('g', {}, p), L = g.cl, Wd = g.cw;
+    for (const sx of [-.3, .3]) for (const sy of [-1, 1])
+      Kit.mk('rect', {x: sx * L - L * .11, y: sy < 0 ? -Wd / 2 - Wd * .1 : Wd / 2 - Wd * .1, width: L * .22, height: Wd * .2, rx: 1.5, fill: INK}, c);
+    Kit.mk('rect', {x: -L / 2, y: -Wd / 2, width: L, height: Wd, rx: g.R, fill: INK}, c);
+    Kit.mk('rect', {x: L * .06, y: -Wd * .34, width: L * .15, height: Wd * .68, rx: 2, fill: PAPER}, c);
+    Kit.mk('rect', {x: -L * .34, y: -Wd * .3, width: L * .1, height: Wd * .6, rx: 2, fill: PAPER}, c);
+    return c;
+  }
+  function tube(p, g) {
+    const xb = g.xs + g.bs - g.sw;
+    const o = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': g.bw + 2 * g.sw, 'stroke-linecap': 'round'}, p);
+    const s = Kit.mk('path', {fill: 'none', stroke: SKIN, 'stroke-width': g.bw, 'stroke-linecap': 'round'}, p);
+    return {xb, set(l) { const d = `M${xb},${g.b} H${xb + l}`; o.setAttribute('d', d); s.setAttribute('d', d); }};
+  }
+  function airBox(p, g) {
+    const b = Kit.mk('g', {}, p), s = g.bs, x = g.xs, y = g.b - s / 2;
+    Kit.mk('path', {d: `M${x},${g.b} C${x - s * .6},${g.b} ${x - s * .5},${g.b - s * .8} 2,${g.b - s * .8}`, fill: 'none', stroke: INK, 'stroke-width': g.sw * 1.4, 'stroke-linecap': 'round'}, b);
+    Kit.mk('rect', {x, y, width: s, height: s, rx: g.R, fill: SKIN, stroke: INK, 'stroke-width': g.sw}, b);
+    Kit.mk('circle', {cx: x + s * .32, cy: g.b, r: s * .12, fill: INK}, b);
+    return b;
+  }
+
+  // ---- the front: slide the tape into the middle ----
+  function setTape() { if (F) F.tg.setAttribute('transform', `translate(${F.x},${F.g.ty})`); }
+  function drawFront() {
+    svg.innerHTML = '';
+    const g = geo(svg); F = {g};
+    lanes(svg, g);
+    const T = tube(svg, g); T.set(g.bw * 1.1);
+    airBox(svg, g);
+    const c = car(svg, g); c.setAttribute('transform', `translate(${g.xs + g.cl / 2},${g.a})`);
+    text(svg, g, g.xs + g.cl / 2, g.a - g.cw * .6 - 6, 'car', 'middle');
+    text(svg, g, g.xs, g.b + g.bs / 2 + g.fs + 4, 'soft robot');
+    F.tg = tape(svg, g, true);
+    F.x = S.placed ? g.tx : g.parkX;
+    setTape();
+    if (!S.placed) {
+      F.hint = Kit.mk('g', {class: 'hint'}, svg);
+      const hx = g.parkX - g.tw / 2 - 8, L = g.fs * 1.6;
+      Kit.mk('path', {d: `M${hx},${g.ty} h${-L} m6,-5 l-6,5 l6,5`, stroke: INK, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, F.hint);
+    }
+  }
+
+  function placed() {
+    if (S.placed) return; S.placed = true;
+    if (F && F.hint) F.hint.remove();
+    document.querySelectorAll('.opt').forEach(b => b.disabled = false);
+    say.innerHTML = 'The tape is down. <b>Which one gets past it?</b>';
+    Kit.haptic('selection');
+  }
+
+  let drag = null;
+  const pt = e => { const r = svg.getBoundingClientRect(); return {x: e.clientX - r.left, y: e.clientY - r.top}; };
+  svg.addEventListener('pointerdown', e => {
+    if (S.placed || !F) return;
+    const p = pt(e); drag = {dx: F.x - p.x, x0: p.x};
+    svg.setPointerCapture(e.pointerId); if (F.hint) F.hint.style.display = 'none';
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const g = F.g, p = pt(e);
+    drag.moved = Math.max(drag.moved || 0, Math.abs(p.x - drag.x0));
+    F.x = Math.max(g.tw / 2 + 2, Math.min(g.parkX, p.x + drag.dx)); setTape();
+  });
+  const up = () => {
+    if (!drag) return;
+    const g = F.g, tapped = (drag.moved || 0) < 4; drag = null;
+    const go = tapped || F.x < g.parkX - (g.parkX - g.tx) * .35;
+    gsap.to(F, {x: go ? g.tx : g.parkX, duration: Kit.calm ? 0 : .35, ease: 'power3.out', onUpdate: setTape,
+      onComplete: go ? placed : () => { if (F.hint) F.hint.style.display = ''; }});
+  };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  // ---- the answer ----
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = S.pick === RIGHT, said = OPTS[S.pick];
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('sure').classList.add('wait');
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || b.disabled || S.pick >= 0) return;
+    S.pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    Kit.$('sure').classList.remove('wait'); sure.on();
+  });
+
+  // ---- the back: the same lanes, played out ----
+  function drawBack(end) {
+    if (backTL) backTL.kill();
+    svg2.innerHTML = '';
+    const g = geo(svg2);
+    lanes(svg2, g);
+    const tg = tape(svg2, g, false); tg.setAttribute('transform', `translate(${g.tx},${g.ty})`);
+    text(svg2, g, g.tx + g.tw / 2 + 6, g.top - 6, 'sticky tape');
+
+    // the robot: the tube lengthens from its coral tip, over the tape
+    const T = tube(svg2, g); airBox(svg2, g);
+    const xe = g.x1 - g.bw * .2, BL = xe - T.xb, stub = g.bw * 1.1, fr = g.bw * 1.6;
+    const fresh = Kit.mk('path', {fill: 'none', stroke: FRESH, 'stroke-width': g.bw, 'stroke-linecap': 'round'}, svg2);
+    const grow = {p: 0};
+    const paint = () => {
+      const l = stub + (BL - stub) * grow.p; T.set(l);
+      fresh.setAttribute('d', `M${Math.max(T.xb + g.bw * .5, T.xb + l - fr + g.bw * .5)},${g.b} H${T.xb + l}`);
+    };
+    paint();
+    const tipLab = Kit.mk('g', {opacity: 0}, svg2);
+    text(tipLab, g, g.x1, g.b + g.ringR + g.fs + 2, 'grows from the tip', 'middle');
+
+    // the car: rolls onto the tape and stays there
+    const L = g.cl, cxStop = g.tx - g.tw * .1 - .3 * L;
+    const c = car(svg2, g), cp = {x: g.xs + L / 2};
+    const setCar = () => c.setAttribute('transform', `translate(${cp.x},${g.a})`);
+    setCar();
+    const stuck = Kit.mk('g', {opacity: 0}, svg2);
+    text(stuck, g, g.tx - g.tw / 2 - 6, g.a - g.cw * .6 - 6, 'stuck', 'end');
+
+    backTL = gsap.timeline({delay: end ? 0 : .6});
+    backTL.to(cp, {x: cxStop, duration: 1.2, ease: 'power1.in', onUpdate: setCar}, 0)
+          .to(cp, {x: cxStop - 2.5, duration: .07, yoyo: true, repeat: 3, ease: 'none', onUpdate: setCar})
+          .to(stuck, {opacity: 1, duration: .4, ease: 'power2.out'}, '<')
+          .to(grow, {p: 1, duration: 3, ease: 'power1.inOut', onUpdate: paint}, 0)
+          .to(tipLab, {opacity: 1, duration: .5, ease: 'power2.out'}, '-=.3');
+    if (end || Kit.calm) backTL.progress(1);
+  }
+
+  document.addEventListener('turned', () => { S.turned = true; drawBack(false); });
+
+  Kit.onShow.card = () => { colors(); drawFront(); if (S.turned) drawBack(true); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !F) return;
+    gsap.from(F.tg, {opacity: 0, duration: .5, delay: .2, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (F) { F.x = F.g.tx; setTape(); }
+    placed();
+    await wait(80);
+    Kit.$('opts').children[2].click();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(1000);
+    if (backTL) backTL.progress(1);
+    await wait(300);
+  };
+})();
+Kit.single();
+</script>
+</html>

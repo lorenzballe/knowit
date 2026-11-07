@@ -1,0 +1,37 @@
+{
+  "id": "technology-tape-growing-robot",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Lay sticky tape across the floor. Which one makes it across?",
+  "answer": "The robot is the one that gets across. Powered by compressed air, it grows from its tip, so it grows over the tape instead of getting stuck to it. Something like a car just gets stuck.",
+  "move": "A thing that grows from its tip goes over glue rather than getting stuck in it.",
+  "keywords": [
+    "soft robot",
+    "sticky tape",
+    "adhesion",
+    "growing robot",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A floor with sticky tape across it. Drag the tape into the middle, then pick which gets across: the car, the robot, or neither. Only the robot gets across."
+  },
+  "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg",
+  "written": "2026-11-07"
+}

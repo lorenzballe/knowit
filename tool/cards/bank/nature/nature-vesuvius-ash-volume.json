@@ -1,0 +1,37 @@
+{
+  "id": "nature-vesuvius-ash-volume",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How much material did Vesuvius throw out in ten days in 1944?",
+  "answer": "Vesuvius threw out more than 245 million m³ of material in ten days. That much would fill a cube about 626 m on each side. Falling ash and lapilli damaged towns including Pompei, Nocera, Scafati and Poggiomarino.",
+  "move": "Ten times wider holds a thousand times more: big volumes hide in small cubes.",
+  "keywords": [
+    "vesuvius",
+    "pompei",
+    "ash",
+    "lapilli",
+    "1944 eruption"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A 3D cube the reader drags up or down until it holds the material Vesuvius erupted in its first ten days in 1944, more than 245 million cubic metres."
+  },
+  "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IxqDIGusjko&t=300s",
+  "written": "2026-11-06"
+}

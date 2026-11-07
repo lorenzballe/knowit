@@ -1,0 +1,37 @@
+{
+  "id": "science-air-torpedo-sphere",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A falling ball is wrapped in air. What shape does the water feel?",
+  "answer": "The researchers combined two tricks: the Leidenfrost effect and superhydrophobicity, a water-repelling surface. Together they trap air around a dropped sphere, which then slices through the liquid as a torpedo shape.",
+  "move": "To cut drag, change the shape the liquid touches, not the thing inside.",
+  "keywords": [
+    "sphere",
+    "torpedo",
+    "drag",
+    "water",
+    "the_action_lab"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A falling ball wrapped in air, with the question of which shape the water feels. The reader taps one of the offered shapes to show the air shape that really forms as the ball falls."
+  },
+  "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=EQCzO4RfZAM&t=302s",
+  "written": "2026-11-07"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "science-bomb-layer",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why do some geologists mark the Anthropocene’s beginning around 1950‑1960?",
+  "answer": "Some geologists mark the Anthropocene's start around 1950-1960 because hydrogen-bomb tests in the 1950s and 60s sent massive fallout across the whole globe in the same years. That left one radioactive layer, a clear marker.",
+  "move": "A start date in the Earth’s layers needs a mark laid down everywhere at the same time.",
+  "keywords": [
+    "anthropocene",
+    "geologists",
+    "sediment",
+    "nuclear-tests",
+    "hydrogen-bomb"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A world map shows a thin, bright radioactive ash layer spread everywhere after the 1950s nuclear tests. The page asks why some geologists mark the Anthropocene's beginning around 1950 to 1960, with three choices to pick from."
+  },
+  "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=CpGW8eA6Qik&t=49s",
+  "written": "2026-11-06"
+}

@@ -1,0 +1,267 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-duverger-squeeze -->
+<!-- Thought to carry: under winner-takes-all, a vote for your favourite can elect your least favourite, so voters desert small parties and the field shrinks to two.
+     Every number in the race (45 / 32 / 23, ten elections, a quarter of Green's voters leaving after each loss) is a made-up toy example, and both faces say so.
+     The only real figures are the video's Florida 2000 ones: Nader almost 100,000 votes, Bush ahead by fewer than 600.
+     Front: one made-up election on a 0–50% scale. The reader drags a single handle on the 10th-election rail.
+     Back: the same toy race over ten elections. Four end labels only. A row of winner dots under the axis shows Right winning while the left is split, then Left winning.
+     Colours: Right is dark ink; the left camp is cream (Green has a dark casing, so it stays the protagonist); the reader's guess is warm yellow. No glows, no pulse, no boxes. -->
+<title>Why winner-takes-all leaves two parties</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+/* each face is only laid out for view while it faces the reader (swap happens edge-on, mid-turn) */
+.turn.over>.front{visibility:hidden;transition:visibility 0s .38s}
+.turn.over>.back{visibility:visible;transition:visibility 0s .38s}
+.kit-calm .turn.over>.front,.kit-calm .turn.over>.back{transition:none}
+.kit-calm .turn{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.face>*+*{margin-top:1.2cqh}
+.front .q{margin-bottom:0}
+.front .say{max-width:calc(100% - 112px);overflow-wrap:anywhere;margin-bottom:0}
+.back .big{margin:0}
+.back .model{font:600 12px/1.3 var(--body);margin:.6cqh 0 0;opacity:.9}
+.back .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin-bottom:0;overflow-wrap:anywhere}
+.back .keep{overflow-wrap:anywhere}
+.back .foot .src{display:block;max-width:calc(100% - 112px);overflow-wrap:anywhere}
+/* confidence step: live, full contrast, the chosen pill filled */
+#sure{color:var(--k)!important;opacity:1!important}
+#sure *{opacity:1!important}
+#sure *:not([data-v]){color:inherit!important}
+#sure [data-v]{color:var(--k)!important;border:2px solid var(--k)!important;background:transparent!important}
+#sure [data-v].chosen{background:var(--k)!important;color:var(--ground,#109a6e)!important}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag the dot · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO GUESS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Winner takes all. Imagine a third party on 23%. What happens to it?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A made-up first election: Right 45%, Left 32%, Green 23%. On a 0 to 50% scale at the tenth election, a handle sets your guess for Green."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">A made-up race. Green voters prefer Left, but while Green runs, Right wins on 45%. <b>Drag Green to where it is after 10 elections.</b></p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It all but vanishes.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="A toy model with made-up numbers, over ten elections. Right wins the first three on 45% while Left and Green split the left vote. After each loss a quarter of Green's voters move to Left: Green falls from 23% to about 2%, Left climbs from 32% to 53% and wins from the fourth election on."></svg></div>
+        <p class="model">Made-up numbers, not from the video: after each loss, a quarter of Green’s voters switch to Left.</p>
+        <p class="body">The real case: in Florida in 2000, Nader, the Green candidate, got almost 100,000 votes and Bush won by fewer than 600. Each loss pushes voters to the bigger party, until two are left.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Under winner-takes-all, a vote for your favourite can elect your least favourite.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Why Democracy Is Mathematically Impossible” (2024)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const INK = 'var(--k)', DARK = '#0d2a1f', GUESS = '#ffd04d';
+  const N = 10, MOVE = .25;               // toy model: ten elections, a quarter of Green's voters leave after each loss
+  const R = [], L = [], G = [];
+  { let g = 23, l = 32; for (let e = 0; e < N; e++) { R.push(45); L.push(l); G.push(g); const m = g * MOVE; g -= m; l += m; } }
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), card = Kit.$('card');
+  let guess = 23, touched = false, answered = false, turned = false, geo = null, fgeo = null;
+
+  function ground() {
+    for (const el of [card, card.querySelector('.in')]) {
+      const c = el && getComputedStyle(el).backgroundColor;
+      if (c && c !== 'transparent' && !/rgba\(0, 0, 0, 0\)/.test(c)) return c;
+    }
+    return '#109a6e';
+  }
+  card.style.setProperty('--ground', ground());
+
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree, sans-serif', 'font-size': geo.fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
+  const measure = (p, s, size, w = 800) => { const t = Kit.mk('text', {'font-size': size, 'font-weight': w, 'font-family': 'Figtree, sans-serif'}, p); t.textContent = s; const n = t.getComputedTextLength(); t.remove(); return n || s.length * size * .58; };
+
+  function frame(s, o) {
+    const f = Kit.fitSvg(s), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, W / 28));
+    const padL = o.l(fs), padR = o.r(fs), padT = o.t(fs), padB = o.b(fs);
+    const X = e => padL + e / (N - 1) * (W - padL - padR);
+    const Y = v => H - padB - v / o.top * (H - padB - padT);
+    return {W, H, fs, X, Y, top: o.top};
+  }
+
+  // a straight segment with an optional rectangular hole (so lines pass behind labels, never through them)
+  function seg(p, x1, y1, x2, y2, a, box) {
+    const dx = x2 - x1, dy = y2 - y1;
+    let a0 = 0, a1 = 1, hit = !!box;
+    if (box) {
+      const P = [-dx, dx, -dy, dy], Q = [x1 - box.x0, box.x1 - x1, y1 - box.y0, box.y1 - y1];
+      for (let i = 0; i < 4 && hit; i++) {
+        if (P[i] === 0) { if (Q[i] < 0) hit = false; continue; }
+        const r = Q[i] / P[i];
+        if (P[i] < 0) { if (r > a0) a0 = r; } else { if (r < a1) a1 = r; }
+      }
+      if (a0 >= a1) hit = false;
+    }
+    const piece = (t0, t1) => { if (t1 - t0 < 1e-3) return; Kit.mk('line', Object.assign({x1: x1 + dx * t0, y1: y1 + dy * t0, x2: x1 + dx * t1, y2: y1 + dy * t1}, a), p); };
+    if (!hit) piece(0, 1); else { piece(0, a0); piece(a1, 1); }
+  }
+
+  // ---------- the front: one made-up election, and your line ----------
+  function drawFront() {
+    svg.innerHTML = '';
+    geo = fgeo = frame(svg, {top: 50, l: fs => fs * 6.1, r: fs => fs * 4.4, t: fs => fs * 1.7, b: fs => fs * 2.3});
+    const {W, fs, X, Y} = geo, sm = Math.max(12, fs * .88);
+    const gRail = Kit.mk('g', {}, svg), gLine = Kit.mk('g', {}, svg), gMid = Kit.mk('g', {}, svg), gTop = Kit.mk('g', {}, svg);
+    const gx = X(N - 1), gy = Y(guess), rDot = fs * 1.05;
+
+    // your guess, centred over the handle with 12px clear; below it only when the top edge is too close
+    const lab = txt(gTop, gx, 0, `your guess: ${Math.round(guess)}%`, {fill: GUESS, 'font-weight': 800, 'text-anchor': 'middle'});
+    const lw = lab.getComputedTextLength() || 110;
+    const lx = Math.max(lw / 2 + 2, Math.min(W - lw / 2 - 2, gx));
+    let base = gy - rDot - 12 - fs * .22;
+    if (base - fs * .78 < 2) base = gy + rDot + 12 + fs * .78;
+    lab.setAttribute('x', lx); lab.setAttribute('y', base);
+    const box = {x0: lx - lw / 2 - 4, x1: lx + lw / 2 + 4, y0: base - fs * .8 - 3, y1: base + fs * .25 + 3};
+
+    // the 0–50% rail the handle slides on: only its two ends are named
+    seg(gRail, gx, Y(50), gx, Y(0), {stroke: INK, 'stroke-width': 1.2, opacity: .4}, box);
+    [0, 50].forEach(v => {
+      const y = Y(v);
+      Kit.mk('line', {x1: gx - fs * .35, x2: gx + fs * .35, y1: y, y2: y, stroke: INK, 'stroke-width': 1.2, opacity: .5}, gRail);
+      const sx = gx + fs * 1.6;
+      if (y + sm * .3 > box.y0 && y - sm * .75 < box.y1 && sx < box.x1) return;
+      txt(gRail, sx, y + sm * .36, `${v}%`, {'font-size': sm, 'font-weight': 600, opacity: .8});
+    });
+
+    // x-axis: just the two ends
+    Kit.mk('line', {x1: X(0) - fs * .4, x2: gx + fs * .4, y1: Y(0), y2: Y(0), stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, gRail);
+    txt(gRail, X(0) - fs * .4, Y(0) + fs * 1.55, '1st election', {'font-size': sm, 'font-weight': 600, opacity: .8});
+    txt(gRail, gx, Y(0) + fs * 1.55, '10th', {'font-size': sm, 'font-weight': 600, opacity: .8, 'text-anchor': 'middle'});
+
+    // your line: from Green's dot to the handle, passing behind the label if it must
+    const sx0 = X(0), sy0 = Y(23), d = Math.hypot(gx - sx0, gy - sy0) || 1, ux = (gx - sx0) / d, uy = (gy - sy0) / d;
+    seg(gLine, sx0 + ux * fs * .9, sy0 + uy * fs * .9, gx - ux * (rDot + 4), gy - uy * (rDot + 4),
+      {stroke: GUESS, 'stroke-width': 3, 'stroke-dasharray': '7 6', 'stroke-linecap': 'round'}, box);
+
+    // the first election
+    [['Right', 45, DARK, 0], ['Left', 32, INK, 0], ['Green', 23, INK, 2]].forEach(([n, v, c, ring]) => {
+      Kit.mk('circle', Object.assign({cx: X(0), cy: Y(v), r: fs * .48, fill: c}, ring ? {stroke: DARK, 'stroke-width': ring} : {}), gMid);
+      txt(gMid, X(0) - fs * .9, Y(v) + fs * .36, `${n} ${v}%`, {'text-anchor': 'end', fill: c, 'font-weight': 800});
+    });
+
+    // the handle: one flat dot, one chevron pair inside
+    Kit.mk('circle', {cx: gx, cy: gy, r: rDot, fill: GUESS}, gMid);
+    const c = fs * .3;
+    Kit.mk('path', {d: `M${gx - c},${gy - fs * .16} l${c},${-c * .8} l${c},${c * .8} M${gx - c},${gy + fs * .16} l${c},${c * .8} l${c},${-c * .8}`,
+      stroke: DARK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, gMid);
+  }
+  function setGuess(v) { guess = Math.max(0, Math.min(50, v)); drawFront(); }
+  let drag = false;
+  const val = e => { const r = svg.getBoundingClientRect(), y = e.clientY - r.top; return (fgeo.Y(0) - y) / (fgeo.Y(0) - fgeo.Y(50)) * 50; };
+  svg.addEventListener('pointerdown', e => {
+    if (answered) return; drag = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; Kit.haptic('selection'); }
+    setGuess(val(e));
+  });
+  svg.addEventListener('pointermove', e => { if (drag) setGuess(val(e)); });
+  const up = () => { drag = false; }; svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  // ---------- the back: the toy race over ten elections ----------
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const ends = [
+      {t: `Left ${Math.round(L[N - 1])}%`, v: L[N - 1], c: INK},
+      {t: 'Right 45%', v: 45, c: DARK},
+      {t: `your guess ${Math.round(guess)}%`, v: guess, c: GUESS},
+      {t: `Green ${Math.round(G[N - 1])}%`, v: G[N - 1], c: INK}
+    ];
+    geo = frame(svg2, {top: 55,
+      l: fs => Math.max(fs * 1.2, measure(svg2, 'winner', Math.max(12, fs * .9), 600) + fs * 1.1),
+      r: fs => fs * 1.3 + Math.max(...ends.map(o => measure(svg2, o.t, fs))) + 4,
+      t: fs => fs * .9, b: fs => fs * 3});
+    const {fs, X, Y} = geo, sm = Math.max(12, fs * .9);
+
+    // axis, with the winner of each election under it
+    Kit.mk('line', {x1: X(0) - fs * .4, x2: X(N - 1) + fs * .4, y1: Y(0), y2: Y(0), stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, svg2);
+    const wy = Y(0) + fs * .95, wins = [];
+    for (let e = 0; e < N; e++) wins.push(Kit.mk('circle', {cx: X(e), cy: wy, r: fs * .32, fill: R[e] >= L[e] ? DARK : INK}, svg2));
+    txt(svg2, X(0) - fs * .7, wy + sm * .36, 'winner', {'font-size': sm, 'font-weight': 600, 'text-anchor': 'end'});
+    txt(svg2, X(0), Y(0) + fs * 2.45, '1st', {'font-size': sm, 'font-weight': 600, opacity: .8, 'text-anchor': 'middle'});
+    txt(svg2, X(N - 1), Y(0) + fs * 2.45, '10th', {'font-size': sm, 'font-weight': 600, opacity: .8, 'text-anchor': 'middle'});
+
+    // the lines
+    const pts = a => a.map((v, e) => `${X(e).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
+    const line = (a, c, w, dash) => Kit.mk('polyline', Object.assign({points: pts(a), fill: 'none', stroke: c, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, dash ? {'stroke-dasharray': '7 6'} : {}), svg2);
+    const gLine = line(Array.from({length: N}, (_, e) => 23 + (guess - 23) * e / (N - 1)), GUESS, 2.6, true);
+    const rL = line(R, DARK, 3), lL = line(L, INK, 3.2), gC = line(G, DARK, 7.5), gT = line(G, INK, 4);
+
+    // start and end dots
+    const starts = [
+      Kit.mk('circle', {cx: X(0), cy: Y(45), r: fs * .34, fill: DARK}, svg2),
+      Kit.mk('circle', {cx: X(0), cy: Y(32), r: fs * .34, fill: INK}, svg2),
+      Kit.mk('circle', {cx: X(0), cy: Y(23), r: fs * .34, fill: INK, stroke: DARK, 'stroke-width': 2}, svg2)
+    ];
+    const dots = [
+      Kit.mk('circle', {cx: X(N - 1), cy: Y(45), r: fs * .42, fill: DARK}, svg2),
+      Kit.mk('circle', {cx: X(N - 1), cy: Y(L[N - 1]), r: fs * .42, fill: INK}, svg2),
+      Kit.mk('circle', {cx: X(N - 1), cy: Y(G[N - 1]), r: fs * .42, fill: INK, stroke: DARK, 'stroke-width': 2}, svg2)
+    ];
+
+    // four labels at the line ends, kept a full line apart
+    const lab = ends.map(o => Object.assign({}, o, {y: Y(o.v)})).sort((a, b) => a.y - b.y);
+    const gap = fs * 1.35;
+    for (let i = 1; i < lab.length; i++) if (lab[i].y - lab[i - 1].y < gap) lab[i].y = lab[i - 1].y + gap;
+    const over = lab[lab.length - 1].y - (Y(0) - fs * .3);
+    if (over > 0) lab.forEach(o => o.y -= over);
+    const labs = Kit.mk('g', {}, svg2), lx = X(N - 1) + fs * 1.3;
+    lab.forEach(o => {
+      if (Math.abs(o.y - Y(o.v)) > 3) Kit.mk('line', {x1: X(N - 1) + fs * .55, y1: Y(o.v), x2: lx - 3, y2: o.y, stroke: o.c, 'stroke-width': 1, opacity: .8}, labs);
+      txt(labs, lx, o.y + fs * .36, o.t, {fill: o.c, 'font-weight': 800});
+    });
+
+    if (!animate || Kit.calm) return;
+    const draw = el => { const n = el.getTotalLength(); el.style.strokeDasharray = n; el.style.strokeDashoffset = n; };
+    [rL, lL, gC, gT].forEach(draw);
+    gsap.timeline()
+      .from([gLine, ...starts], {opacity: 0, duration: .4, ease: 'power2.out'})
+      .to([rL, lL], {strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut', stagger: .1}, '+=.2')
+      .to([gC, gT], {strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut'}, '<')
+      .from(wins, {opacity: 0, scale: 0, transformOrigin: 'center', duration: .25, stagger: .11}, '<')
+      .from(dots, {opacity: 0, scale: 0, transformOrigin: 'center', duration: .3, stagger: .06}, '-=.2')
+      .from(labs.children, {opacity: 0, x: -6, duration: .4, stagger: .07, ease: 'power2.out'}, '-=.2');
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    answered = true;
+    const b = Kit.$('sure').querySelector(`[data-v="${pct}"]`); if (b) b.classList.add('chosen');
+    const ok = guess <= 8;
+    Kit.answer({choice: `${Math.round(guess)}%`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${Math.round(guess)}%, ${ok ? 'right' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  sure.on();
+  document.addEventListener('turned', () => {
+    turned = true;
+    const tag = document.querySelector('.label .tag'); if (tag) tag.textContent = `YOUR GUESS: ${Math.round(guess)}%`;
+    drawBack(true);
+  });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic circle, #pic text', {opacity: 0, y: 6, stagger: .04, duration: .4, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; sure.on(); setGuess(18);
+    await wait(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1200 : 5000);
+  };
+})();
+Kit.single();
+</script>
+</html>

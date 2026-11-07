@@ -1,0 +1,37 @@
+{
+  "id": "technology-milk-carton-layers",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why are some milk and juice cartons difficult to recycle?",
+  "answer": "The carton wall is three layers stuck together: paper, plastic and aluminium. Until recently these cartons were not recyclable, and some plants have only lately been equipped to take them. So recyclability depends on the plants as well as the material.",
+  "move": "Our reading: “recyclable” isn't settled by the material alone.",
+  "keywords": [
+    "milk carton",
+    "recycling",
+    "aluminum",
+    "plastic",
+    "paper"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section of a milk carton wall. The reader taps what the wall is made of from four options: paper, plastic, aluminium, wax. The question asks why some milk and juice cartons are difficult to recycle."
+  },
+  "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=AFEMHZioqJU&t=282s",
+  "written": "2026-11-06"
+}

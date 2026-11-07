@@ -1,0 +1,324 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-bermuda-per-ship -->
+<!-- Look: a phosphor-green oscilloscope printed straight on a black, scan-lined card. Three seas on top (the vast Triangle, two smaller seas), live ship traffic, and a glowing trace with a phosphor fill that counts the wrecks.
+     Interaction: drag the dial from WRECKS to WRECKS ÷ SHIPS. The trace morphs (MorphSVG) from one huge Bermuda spike into three equal bumps, and the readouts switch from "LOST 160" to "1 IN 25".
+     Wow: at the end the trace flares, a level line draws through three identical peaks and "SAME RISK PER SHIP" decodes onto the screen. The scene re-lays itself out whenever the stage changes size, so text never shrinks and labels never collide.
+     Traffic numbers are a simulation with one risk per ship, as the video argues. -->
+<title>Why the Bermuda Triangle is not deadlier</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
+<style>
+#card{background:
+  repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px),
+  radial-gradient(120% 75% at 50% 42%,#0b1f12 0%,#050c07 55%,#020503 100%)}
+#card .q{text-shadow:0 0 1.2cqh color-mix(in srgb,var(--k) 45%,transparent)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:visible}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:600 max(1.9cqh,13px)/1.35 var(--body);color:var(--k);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.pulse{animation:pl 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pl{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.3)}}
+.kit-calm .pulse{animation:none;opacity:.5}
+.answered .q{font-size:max(2.4cqh,15px)}
+@media (max-height:720px){.answered #why .body{font-size:13px;line-height:1.3}}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Drag the dial · divide by ships" style="--c:#050c07;--k:#8dffae;--edge:#010302">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DIVIDE IT</span></div>
+    <h2 class="q">Why isn't the Bermuda Triangle more dangerous than other seas?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="An oscilloscope: three seas with ship traffic, and a trace of lost ships that can be divided by the number of ships crossing each sea."></svg>
+    </div>
+    <p class="say" id="say">The Triangle counts the most wrecks. <b>Drag the dial right</b> to divide each sea's wrecks by the ships that cross it.</p>
+    <div id="why" class="gone"><p class="body">The Triangle is vast and busy, so it piles up wrecks. Per ship crossing it, the risk is the same as in other seas.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A big count means little until you divide it by how many passed.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa c'è di vero nel "mistero" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), card = Kit.$('card'), stage = Kit.$('stage');
+  const G = '#8dffae', HOT = '#eafff1', DIM = 'rgba(141,255,174,.15)';
+  const MORPH = typeof MorphSVGPlugin !== 'undefined';
+  if (MORPH) gsap.registerPlugin(MorphSVGPlugin);
+  const RISK = 25;   // simulated: every sea, one ship in 25 lost: the same risk per ship
+  const Z = [
+    {name: 'BERMUDA', t: 10, ships: 4000, lost: 160, acc: 0, timer: 0},
+    {name: 'SEA X',   t: 3,  ships: 1200, lost: 48,  acc: 0, timer: 0},
+    {name: 'SEA Y',   t: 2,  ships: 800,  lost: 32,  acc: 0, timer: 0}
+  ];
+  const prox = {p: 0};
+  let W = 0, H = 0, fs = 12, cw = 0, p = 0, done = false, touched = false, started = false, revealT = 0;
+  let trace = null, glow = null, area = null, morph = null, knob = null, fillLine = null, ylab = null, logT = null;
+  let level = null, levelLab = null, clipRect = null, sweep = null, tops = [], inPlot = true, finalLog = '';
+  let xs = [], rawY = [], normY = [], x0 = 0, x1 = 0, trackY = 0, base = 0, sx = 0, ships = [], shipLayer = [];
+  let lastSize = '';
+
+  const mono = s => `font-family:var(--mono);${s || ''}`;
+  const txt = (par, x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: G, 'font-size': Math.max(12, fs * .9), style: mono('letter-spacing:.06em')}, a), par); e.textContent = s; return e; };
+  function scramble(el, text, dur = .5) {
+    if (!el) return;
+    if (el._tw) el._tw.kill();
+    if (Kit.calm) { el.textContent = text; return; }
+    const o = {k: 0}, C = '#%01<>/=+*';
+    el._tw = gsap.to(o, {k: 1, duration: dur, ease: 'power2.out',
+      onUpdate: () => { const n = Math.floor(o.k * text.length); el.textContent = text.slice(0, n) + [...text.slice(n)].map(c => c === ' ' ? ' ' : C[Math.random() * C.length | 0]).join(''); },
+      onComplete: () => { el.textContent = text; }});
+  }
+  const dOf = arr => xs.map((x, i) => `${i ? 'L' : 'M'}${x.toFixed(1)},${arr[i].toFixed(1)}`).join(' ');
+
+  function layout() {
+    const sr = stage.getBoundingClientRect();
+    if (sr.width < 10 || sr.height < 10) return;
+    lastSize = Math.round(sr.width) + 'x' + Math.round(sr.height);
+    gsap.killTweensOf('#pic *');
+    svg.innerHTML = ''; ships = []; shipLayer = []; tops = [];
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, W / 27)); cw = W / 3;
+
+    // ---- vertical budget: seas · readouts · scope header · plot · dial ----
+    const compact = H < fs * 17;
+    const zTop = fs * 1.75, rowH = fs * 1.35, rows = compact ? 1 : 2;
+    const bottom = fs * (compact ? 3.4 : 4.2), header = fs * 1.5;
+    const free = H - zTop - rows * rowH - fs * .4 - header - bottom;
+    const zH = Math.max(fs * 2, free * (compact ? .4 : .45));
+    const zBot = zTop + zH;
+    const r1 = zBot + fs * 1.25, r2 = rows === 2 ? r1 + rowH : r1;
+    const sTop = r2 + fs * .5, hBase = sTop + fs * .95, gTop = sTop + header;
+    base = H - bottom;
+    trackY = H - fs * (compact ? 1.95 : 2.3);
+    const labY = H - fs * (compact ? .3 : .45), kr = fs * (compact ? .62 : .75);
+
+    const defs = Kit.mk('defs', {}, svg);
+    const ph = Kit.mk('filter', {id: 'ph', x: '-30%', y: '-60%', width: '160%', height: '220%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: fs * .22, result: 'b'}, ph);
+    const mg = Kit.mk('feMerge', {}, ph); Kit.mk('feMergeNode', {in: 'b'}, mg); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, mg);
+    const bl = Kit.mk('filter', {id: 'bl', x: '-30%', y: '-60%', width: '160%', height: '220%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: fs * .5}, bl);
+    const ag = Kit.mk('linearGradient', {id: 'ag', gradientUnits: 'userSpaceOnUse', x1: 0, x2: 0, y1: gTop, y2: base}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': G, 'stop-opacity': .32}, ag);
+    Kit.mk('stop', {offset: 1, 'stop-color': G, 'stop-opacity': 0}, ag);
+
+    // ---- the seas ----
+    Z.forEach((z, i) => {
+      const cx = cw * (i + .5); z.cx = cx;
+      let d;
+      if (i === 0) {
+        const hw = Math.min(cw * .46, zH * .85);
+        d = `M${cx},${zTop} L${cx + hw},${zBot} L${cx - hw},${zBot} Z`;
+        z.halfW = y => hw * Math.max(0, (y - zTop) / (zBot - zTop));
+        z.yr = [zTop + (zBot - zTop) * .3, zBot - 3];
+      } else {
+        const ry = zH * (i === 1 ? .3 : .22), rx = Math.min(cw * (i === 1 ? .27 : .2), ry * 2.6), cy = (zTop + zBot) / 2 + zH * .12;
+        d = `M${cx - rx},${cy} A${rx},${ry} 0 1 0 ${cx + rx},${cy} A${rx},${ry} 0 1 0 ${cx - rx},${cy} Z`;
+        z.halfW = y => rx * Math.sqrt(Math.max(0, 1 - ((y - cy) / ry) ** 2));
+        z.yr = [cy - ry * .75, cy + ry * .75];
+      }
+      const cp = Kit.mk('clipPath', {id: 'zc' + i}, defs); Kit.mk('path', {d}, cp);
+      const g = Kit.mk('g', {class: 'zg'}, svg);
+      Kit.mk('path', {d, fill: 'rgba(141,255,174,.045)', stroke: G, 'stroke-width': 1.4, 'stroke-dasharray': '4 3', opacity: .8, filter: 'url(#ph)'}, g);
+      // traffic density, in proportion to how busy the sea is
+      const dots = Kit.mk('g', {'clip-path': `url(#zc${i})`, opacity: .45}, g);
+      for (let k = 0; k < z.t * 9; k++) {
+        const y = z.yr[0] + Kit.rnd() * (z.yr[1] - z.yr[0]), hw = z.halfW(y);
+        Kit.mk('circle', {cx: cx + (Kit.rnd() * 2 - 1) * hw, cy: y, r: .9, fill: G}, dots);
+      }
+      shipLayer[i] = Kit.mk('g', {'clip-path': `url(#zc${i})`}, g);
+      txt(g, cx, fs * 1.05, z.name, {'text-anchor': 'middle', 'font-weight': 700, 'font-size': Math.max(12, fs * .95), style: mono('letter-spacing:.14em'), filter: 'url(#ph)'});
+      z.t1 = rows === 2 ? txt(svg, cx, r1, '', {'text-anchor': 'middle', opacity: .75}) : null;
+      z.t2 = txt(svg, cx, r2, '', {'text-anchor': 'middle', 'font-weight': 700, fill: HOT});
+    });
+
+    // ---- the scope ----
+    const gr = Kit.mk('g', {}, svg);
+    for (let k = 0; k <= 4; k++) { const y = gTop + (base - gTop) * k / 4; Kit.mk('line', {class: 'gr', x1: 0, x2: W, y1: y, y2: y, stroke: k === 4 ? 'rgba(141,255,174,.45)' : DIM, 'stroke-width': 1, 'stroke-dasharray': k === 4 ? '' : '2 4'}, gr); }
+    for (let k = 1; k < 3; k++) Kit.mk('line', {class: 'gr', x1: cw * k, x2: cw * k, y1: gTop, y2: base, stroke: DIM, 'stroke-dasharray': '2 4'}, gr);
+    for (let x = 0; x <= W; x += cw / 6) Kit.mk('line', {class: 'gr', x1: x, x2: x, y1: base, y2: base + fs * .35, stroke: 'rgba(141,255,174,.4)'}, gr);
+    ylab = txt(svg, 2, hBase, '', {'font-weight': 700});
+
+    // the trace: one spike for raw wrecks, three equal bumps per ship
+    const peakTop = gTop + fs * .45, A = Math.max(fs, base - peakTop), sig = cw * .16;
+    const normH = A < fs * 5 ? A * .55 : A * .34;
+    const lvlY = base - 1 - normH, labBase = lvlY - fs * .85;
+    inPlot = labBase - fs * .85 > hBase + fs * .35;
+    finalLog = inPlot ? 'RISK X = Y = BERMUDA' : 'SAME RISK PER SHIP';
+    logT = txt(svg, W - 2, hBase, done ? finalLog : 'SIM · LIVE', {'text-anchor': 'end', opacity: .7});
+
+    xs = []; rawY = []; normY = [];
+    for (let x = fs * .3; x <= W - fs * .3; x += 3) xs.push(x);
+    const noise = x => fs * .1 * (Math.sin(x * .21) + .6 * Math.sin(x * .67 + 1));
+    xs.forEach(x => {
+      let r = 0, n = 0;
+      Z.forEach(z => { const e = Math.exp(-(((x - z.cx) / sig) ** 2)); r += A * z.t / 10 * e; n += normH * e; });
+      rawY.push(base - 1 - r - noise(x)); normY.push(base - 1 - n - noise(x));
+    });
+    const tc = Kit.mk('clipPath', {id: 'tc'}, defs);
+    clipRect = Kit.mk('rect', {x: 0, y: 0, width: W, height: H}, tc);
+    const tg = Kit.mk('g', {'clip-path': 'url(#tc)'}, svg);
+    area = Kit.mk('path', {d: '', fill: 'url(#ag)', stroke: 'none'}, tg);
+    level = Kit.mk('line', {x1: 0, x2: W, y1: lvlY, y2: lvlY, stroke: HOT, 'stroke-width': 1.2, 'stroke-dasharray': '6 5', opacity: 0}, tg);
+    glow = Kit.mk('path', {d: dOf(rawY), fill: 'none', stroke: G, 'stroke-width': fs * .45, opacity: .45, filter: 'url(#bl)'}, tg);
+    trace = Kit.mk('path', {d: dOf(rawY), fill: 'none', stroke: HOT, 'stroke-width': 1.8, 'stroke-linejoin': 'round', filter: 'url(#ph)'}, tg);
+    Z.forEach(z => tops.push(Kit.mk('circle', {cx: z.cx, cy: lvlY, r: fs * .28, fill: HOT, filter: 'url(#ph)', opacity: 0}, tg)));
+    sweep = Kit.mk('circle', {cx: 0, cy: base, r: fs * .26, fill: HOT, filter: 'url(#ph)'}, tg);
+    levelLab = inPlot ? txt(svg, W / 2, labBase, 'SAME RISK PER SHIP', {'text-anchor': 'middle', 'font-weight': 700, fill: HOT, opacity: 0, filter: 'url(#ph)'}) : null;
+    morph = MORPH ? gsap.to(trace, {morphSVG: dOf(normY), ease: 'none', paused: true}) : null;
+
+    // ---- the dial ----
+    x0 = fs * 1.2; x1 = W - fs * 1.2;
+    Kit.mk('line', {x1: x0, x2: x1, y1: trackY, y2: trackY, stroke: 'rgba(141,255,174,.3)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    for (let k = 0; k <= 10; k++) { const x = x0 + (x1 - x0) * k / 10; Kit.mk('line', {x1: x, x2: x, y1: trackY - (k % 5 ? 3 : 6), y2: trackY + (k % 5 ? 3 : 6), stroke: 'rgba(141,255,174,.45)'}, svg); }
+    fillLine = Kit.mk('line', {x1: x0, x2: x0, y1: trackY, y2: trackY, stroke: G, 'stroke-width': 3, 'stroke-linecap': 'round', filter: 'url(#ph)'}, svg);
+    txt(svg, x0 - fs * .6, labY, 'WRECKS', {opacity: .8});
+    txt(svg, x1 + fs * .6, labY, 'WRECKS ÷ SHIPS', {'text-anchor': 'end', 'font-weight': 700});
+    knob = Kit.mk('g', {class: 'knob'}, svg);
+    if (!touched) Kit.mk('circle', {r: kr, fill: 'none', stroke: G, 'stroke-width': 1.5, class: 'pulse'}, knob);
+    Kit.mk('circle', {r: kr, fill: '#04100a', stroke: G, 'stroke-width': 2, filter: 'url(#ph)'}, knob);
+    Kit.mk('circle', {r: fs * .25, fill: HOT}, knob);
+
+    apply(true);
+    if (done && !Kit.calm && performance.now() - revealT < 2500) revealFx();
+  }
+
+  function readouts() {
+    Z.forEach(z => {
+      if (z.t1) z.t1.textContent = `SHIPS ${z.ships}`;
+      if (z.t2) z.t2.textContent = p < .5 ? `LOST ${z.lost}` : `1 IN ${RISK}`;
+    });
+  }
+
+  function apply(quiet) {
+    p = prox.p;
+    if (!trace) return;
+    if (morph) morph.progress(p);
+    else trace.setAttribute('d', dOf(normY.map((v, i) => rawY[i] + (v - rawY[i]) * p)));
+    const d = trace.getAttribute('d');
+    glow.setAttribute('d', d);
+    area.setAttribute('d', `${d} L${xs[xs.length - 1].toFixed(1)},${base} L${xs[0].toFixed(1)},${base} Z`);
+    const kx = x0 + (x1 - x0) * p;
+    knob.setAttribute('transform', `translate(${kx},${trackY})`);
+    fillLine.setAttribute('x2', kx);
+    const want = p < .5 ? 'LOST SHIPS' : 'LOST PER SHIP';
+    if (ylab.dataset.v !== want) {
+      const first = !ylab.dataset.v; ylab.dataset.v = want;
+      if (first || quiet) ylab.textContent = want; else scramble(ylab, want, .35);
+      Z.forEach(z => { if (!first && !quiet && !Kit.calm) gsap.fromTo(z.t2, {opacity: 0}, {opacity: 1, duration: .35, ease: 'power2.out'}); });
+    }
+    readouts();
+    const show = done ? Math.max(0, Math.min(1, (p - .8) / .2)) : 0;
+    level.setAttribute('opacity', show * .7); if (levelLab) levelLab.setAttribute('opacity', show);
+    tops.forEach(t => t.setAttribute('opacity', show));
+    if (!done && p > .96) reveal();
+  }
+
+  function revealFx() {
+    if (levelLab) scramble(levelLab, 'SAME RISK PER SHIP', .9);
+    scramble(logT, finalLog, .9);
+    level.setAttribute('opacity', .7); if (levelLab) levelLab.setAttribute('opacity', 1); tops.forEach(t => t.setAttribute('opacity', 1));
+    if (Kit.calm) return;
+    gsap.fromTo(glow, {attr: {'stroke-width': fs * 1.6}, opacity: 1}, {attr: {'stroke-width': fs * .45}, opacity: .45, duration: 1.4, ease: 'expo.out'});
+    gsap.fromTo(area, {opacity: 2.2}, {opacity: 1, duration: 1.4, ease: 'expo.out'});
+    const L = W; level.setAttribute('stroke-dasharray', `${L} ${L}`);
+    gsap.fromTo(level, {attr: {'stroke-dashoffset': L}}, {attr: {'stroke-dashoffset': 0}, duration: .9, ease: 'power3.inOut', onComplete: () => level.setAttribute('stroke-dasharray', '6 5')});
+    gsap.from(tops, {attr: {r: 0}, duration: .7, stagger: .12, ease: 'back.out(3)', delay: .3});
+  }
+  function reveal() {
+    done = true; revealT = performance.now(); Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered');
+    revealFx();
+  }
+
+  // ---- the drag ----
+  let dragging = false;
+  const pOf = e => { const r = svg.getBoundingClientRect(); return Math.max(0, Math.min(1, (e.clientX - r.left - x0) / (x1 - x0))); };
+  const go = (v, dur) => {
+    if (Kit.calm) { gsap.killTweensOf(prox); prox.p = v; apply(); return; }
+    gsap.to(prox, {p: v, duration: dur, ease: 'power3.out', overwrite: true, onUpdate: apply});
+  };
+  svg.addEventListener('pointerdown', e => {
+    dragging = true; svg.setPointerCapture(e.pointerId); Kit.haptic('selection');
+    if (!touched) { touched = true; const pu = svg.querySelector('.pulse'); if (pu) pu.remove(); }
+    go(pOf(e), .45);
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) go(pOf(e), .18); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // ---- the traffic: every ship, in every sea, runs the same risk ----
+  function spawn(i) {
+    const z = Z[i], lay = shipLayer[i]; if (!lay) return;
+    z.ships++; z.acc++;
+    const y = z.yr[0] + Kit.rnd() * (z.yr[1] - z.yr[0]);
+    const s = {i, y, x: z.cx - cw / 2 - 4, v: cw / (2.2 + Kit.rnd()), doom: false, lay};
+    if (z.acc >= RISK) { z.acc = 0; s.doom = true; s.dx = z.cx + (Kit.rnd() * 2 - 1) * z.halfW(y) * .6; }
+    s.g = Kit.mk('g', {}, lay);
+    Kit.mk('line', {x1: -fs * .9, x2: 0, y1: 0, y2: 0, stroke: G, 'stroke-width': 1.2, opacity: .45}, s.g);
+    Kit.mk('circle', {r: fs * .2, fill: HOT}, s.g);
+    ships.push(s);
+  }
+  function wreck(s) {
+    const z = Z[s.i], lay = shipLayer[s.i]; z.lost++;
+    s.g.remove();
+    const ring = Kit.mk('circle', {cx: s.x, cy: s.y, r: 1, fill: 'none', stroke: HOT, 'stroke-width': 1.5}, lay);
+    const r = fs * .35, xm = Kit.mk('path', {d: `M${s.x - r},${s.y - r} L${s.x + r},${s.y + r} M${s.x + r},${s.y - r} L${s.x - r},${s.y + r}`, stroke: HOT, 'stroke-width': 1.6, filter: 'url(#ph)'}, lay);
+    gsap.to(ring, {attr: {r: fs * 1.4}, opacity: 0, duration: 1, ease: 'expo.out', onComplete: () => ring.remove()});
+    gsap.to(xm, {opacity: 0, duration: 1.5, delay: 3.5, ease: 'power2.in', onComplete: () => xm.remove()});
+    if (!done) scramble(logT, `${z.name}: 1 LOST`, .4);
+    if (p < .5 && !Kit.calm) gsap.fromTo(z.t2, {attr: {fill: '#ffffff'}}, {attr: {fill: HOT}, duration: .8});
+    readouts();
+  }
+  let last = 0;
+  function tick(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    if (trace && !Kit.calm) {
+      Z.forEach((z, i) => { z.timer += dt * z.t * .55; while (z.timer >= 1) { z.timer -= 1; spawn(i); } });
+      ships = ships.filter(s => {
+        if (s.lay !== shipLayer[s.i]) return false;
+        s.x += s.v * dt;
+        if (s.doom && s.x >= s.dx) { wreck(s); return false; }
+        if (s.x > Z[s.i].cx + cw / 2 + fs) { s.g.remove(); return false; }
+        s.g.setAttribute('transform', `translate(${s.x},${s.y})`);
+        return true;
+      });
+      readouts();
+      // the beam sweeping the trace
+      sx += dt * W / 1.7; if (sx > xs[xs.length - 1]) sx = xs[0];
+      const k = Math.max(0, Math.min(xs.length - 1, Math.round((sx - xs[0]) / 3)));
+      sweep.setAttribute('cx', xs[k]); sweep.setAttribute('cy', rawY[k] + (normY[k] - rawY[k]) * p);
+    }
+    requestAnimationFrame(tick);
+  }
+  const start = () => { if (!started) { started = true; requestAnimationFrame(tick); } };
+
+  // re-lay the scene at its true size whenever the stage changes (e.g. when the answer appears)
+  let roT = 0;
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
+    if (!trace) return;
+    const r = stage.getBoundingClientRect(), k = Math.round(r.width) + 'x' + Math.round(r.height);
+    if (k === lastSize) return;
+    clearTimeout(roT); roT = setTimeout(layout, 90);
+  }).observe(stage);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    start();
+    if (Kit.calm || !trace) return;
+    gsap.from('#pic .zg', {opacity: 0, y: -10, duration: .8, stagger: .14, ease: 'power3.out'});
+    gsap.from('#pic .gr', {opacity: 0, duration: .5, stagger: .02, ease: 'power2.out', delay: .2});
+    gsap.fromTo(clipRect, {attr: {width: 0}}, {attr: {width: W}, duration: 1.5, ease: 'power2.inOut', delay: .4});
+    gsap.from('#pic .knob', {scale: 0, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(2.5)', delay: 1.1});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start(); touched = true;
+    gsap.killTweensOf(prox); prox.p = 1; apply();
+    await wait(Kit.calm ? 80 : 900);
+  };
+})();
+Kit.single();
+</script>
+</html>

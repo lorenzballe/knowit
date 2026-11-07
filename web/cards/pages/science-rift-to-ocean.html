@@ -1,0 +1,543 @@
+<!doctype html>
+<!-- slug: science-rift-to-ocean -->
+<!-- Look: a vintage map engraved in ochre on a deep-sea teal card, with hills, rivers, a lake and a compass rose; under it (or beside it, on short screens) a brass dial with an etched face, curved engraved stage names, end-stop pins and a blued-steel needle with a damped swing.
+     Interaction: turning the dial (or dragging across the map) runs time through millions of years. Rift shoulders rise, the crack runs down the continent, the halves drift apart, the trough sinks, and hundreds of seawater particles pour in from the open ocean.
+     Wow: the needle hits its stop, the volcanic chain along the middle flares, sparks burst, and bands of new sea floor glow, newest and warmest at the middle, oldest at the edges. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>A crack the sea moved into</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#cv:active{cursor:grabbing}
+#why{display:flex;flex-direction:column;gap:.7cqh}
+#why .wbig{margin:0;font:800 max(2.5cqh,15px)/1.15 var(--display);color:var(--k);overflow-wrap:anywhere}
+#why .wbody{margin:0;font:500 max(1.8cqh,12.5px)/1.34 var(--body);color:var(--k);opacity:.92;overflow-wrap:anywhere}
+.answered .q{font-size:max(2.4cqh,15px)}
+.say b{color:#f0c768}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Turn the dial · millions of years" style="--c:#15252a;--k:#f2e7c9;--edge:#0a1316">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TURN THE DIAL</span></div>
+    <h2 class="q">How does a continent splitting in two make an ocean?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" role="img" aria-label="A map of a continent with an open ocean to the north, and a brass dial that runs time forward. Turning it splits the continent, the sea floods the gap, and volcanoes along the middle build new sea floor."></canvas>
+    </div>
+    <div id="why" class="gone">
+      <p class="wbig">A crack the sea moved into.</p>
+      <p class="wbody">The two halves keep drifting apart for millions of years, and the sea follows them in. Along the middle, a chain of volcanoes builds new sea floor. That is what makes it an ocean, not a sea, and why the Red Sea is one.</p>
+    </div>
+    <p class="say" id="say">Turn the brass dial to run time forward, through <b>millions of years</b>.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An ocean starts as a continent torn in two, flooded by the sea, with volcanoes building its floor.</div>
+    <div class="foot"><span class="src">Source · Geopop, “IL Mar Rosso é un OCEANO!” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say');
+  const MONO = (getComputedStyle(card).getPropertyValue('--mono') || '').trim() || 'monospace';
+  const C = {ink: '#4a3416', cream: '#f2e7c9', engr: '#3a2810', sea: '#2f7684', halo: 'rgba(238,220,170,.92)'};
+  const S = {intro: 1, flare: 0, labA: 0};
+  const SW0 = .06; // the needle sweeps between two stop pins, never lying flat on the plate
+  let x = null, W = 0, H = 0, G = {}, SP = [];
+  let t = 0, vel = 0, target = 0, touched = false, done = false, phase = 0, dragging = false, started = false, lastQ = 0, floodedOnce = false;
+  let mode = 0, sx = 0, st = 0;
+
+  // The shape of the crack, fixed once: a jagged line down the continent.
+  const RAW = []; for (let i = 0; i <= 16; i++) RAW.push(Kit.rnd() - .5);
+  const OFF = RAW.map((v, i) => (i === 0 || i === 16) ? v * .6 : (RAW[i - 1] + 2 * v + RAW[i + 1]) / 4 * 1.6);
+  // Engraved terrain, fixed once: hills and two rivers fed by lakes.
+  const HILLS = []; for (let i = 0; i < 54; i++) HILLS.push({u: .03 + Kit.rnd() * .94, v: .06 + Kit.rnd() * .86, s: .7 + Kit.rnd() * .6});
+  const RIV = [.18, .76].map(u0 => { const pts = []; let u = u0; for (let i = 0; i <= 7; i++) { pts.push({u, v: .72 - i * .105}); u += (Kit.rnd() - .5) * .05; } return pts; });
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ramp = (v, a, b) => clamp((v - a) / (b - a), 0, 1);
+  const ss = v => v * v * (3 - 2 * v);
+  const eo3 = v => 1 - Math.pow(1 - v, 3);
+  const coastAt = xx => G.coast + Math.sin(xx * .045) * 3 + Math.sin(xx * .017 + 1) * 5;
+  const A = tt => Math.PI * (1 + SW0 + tt * (1 - 2 * SW0));
+
+  function layout() {
+    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
+    const side = H / W < .58;
+    let R, cx, py, mw, y1;
+    if (side) {
+      // short stage: map on the left, dial on the right
+      R = Math.max(40, Math.min(H * .86 - 8, W * .22));
+      cx = W - R * 1.04 - 2; py = H - R * .1 - 3; mw = W - R * 2.1 - 12; y1 = H - 2;
+    } else {
+      R = Math.min(W * .42, H * .33);
+      cx = W / 2; py = H - R * .1 - 3; mw = W; y1 = py - R - 12;
+    }
+    G = {side, R, py, cx, mw, mc: mw / 2, y1, coast: clamp(y1 * .2, 30, 90), maxD: mw * .14, amp: mw * .04,
+      fs: Math.max(12, Math.min(14, mw / 30)), df: Math.max(12, Math.min(14, R * .1)), hs: clamp(mw / 110, 3.5, 6)};
+    G.top = coastAt(G.mc); G.bot = y1 + 8; G.fade = G.top + (y1 - G.top) * .7;
+    G.cr = clamp(mw * .035, 9, 16); G.cpx = mw * .86; G.cpy = G.top + (y1 - G.top) * .58;
+    SP = [];
+    for (let i = 0; i <= 16; i++) { const px = G.mc + OFF[i] * G.amp; SP.push({x: px, y: i === 0 ? coastAt(px) : G.top + (G.bot - G.top) * i / 16}); }
+    initParticles();
+    render(performance.now());
+  }
+  function mid(y) {
+    const fi = clamp((y - SP[0].y) / (SP[16].y - SP[0].y), 0, 1) * 16, i = Math.min(15, Math.floor(fi)), r = fi - i;
+    return SP[i].x + (SP[i + 1].x - SP[i].x) * r;
+  }
+  const gapD = () => G.maxD * ss(ramp(t, .1, 1));
+  const front = () => G.top + (G.bot - G.top) * eo3(ramp(t, .42, .64));
+
+  // ---------- particles: seawater and lava ----------
+  const P = [], L = [];
+  function seaP(p) { p.m = 0; p.x = Math.random() * G.mw; p.y = 3 + Math.random() * (G.coast - 8); p.ph = Math.random() * 6.28; p.s = .6 + Math.random() * 1.2; return p; }
+  function initParticles() { P.length = 0; L.length = 0; for (let i = 0; i < 520; i++) P.push(seaP({})); }
+  function spawnLava(n, hot) {
+    for (let i = 0; i < n && L.length < 320; i++) {
+      const y = G.top + 6 + Math.random() * (G.bot - G.top - 10), sp = (hot ? 40 : 14) * (.4 + Math.random());
+      const a = Math.random() * 6.28;
+      L.push({x: mid(y), y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * .5, life: 1, max: .5 + Math.random() * .8});
+    }
+  }
+  function updateParticles(dt) {
+    const d = gapD(), F = front(), flooded = F > G.top + 3 && d > .5, MW = G.mw;
+    const boost = 1 + Math.min(4, Math.abs(vel) * 3);
+    const mouth = mid(G.top);
+    let inRift = 0; for (const p of P) if (p.m) inRift++;
+    for (const p of P) {
+      if (p.m === 0) {
+        p.ph += dt * p.s * 2;
+        p.x += Math.cos(p.ph) * .25 + dt * 6;
+        const dx = mouth - p.x, w = Math.exp(-Math.abs(dx) / (MW * .22));
+        const pull = (d > 1 ? (flooded ? 1.4 : .3) : 0) * boost * w;
+        p.x += dx * pull * dt * .7;
+        p.y += ((G.top - 4) - p.y) * pull * dt * .5 + Math.sin(p.ph) * .15;
+        if (p.x > MW + 4) p.x = -4; if (p.x < -4) p.x = MW + 4;
+        p.y = clamp(p.y, 2, G.coast - 2);
+        if (flooded && Math.abs(dx) < d * .9 && p.y > G.top - 16 && inRift < 380 && Math.random() < dt * 7 * boost) {
+          p.m = 1; inRift++; p.u = clamp(-dx / d, -.9, .9); p.y = G.top; p.ty = G.top + (F - G.top) * Math.sqrt(Math.random());
+        }
+      } else {
+        p.u = clamp(p.u + (Math.random() - .5) * dt * 1.4 * boost, -.92, .92);
+        if (Math.abs(p.ty - p.y) < 3 || p.ty > F) p.ty = G.top + (F - G.top) * Math.sqrt(Math.random());
+        p.y += (p.ty - p.y) * Math.min(1, dt * (.7 + .9 * boost) * p.s);
+        if (p.y > F) p.y = F;
+        if (!flooded) { p.m = 0; p.y = G.top - 4 - Math.random() * 8; continue; }
+        p.x = mid(p.y) + p.u * d;
+      }
+    }
+    const vol = ramp(t, .16, .32);
+    if (vol > 0 && d > .5) { const want = vol * (6 + 50 * Math.min(1, Math.abs(vel))) * dt; spawnLava(Math.floor(want) + (Math.random() < want % 1 ? 1 : 0), false); }
+    for (let i = L.length - 1; i >= 0; i--) {
+      const l = L[i]; l.life -= dt / l.max; l.x += l.vx * dt; l.y += l.vy * dt; l.vx *= .94; l.vy *= .94;
+      if (l.life <= 0) L.splice(i, 1);
+    }
+  }
+
+  // ---------- drawing ----------
+  function halfPath(side) {
+    x.beginPath();
+    if (side < 0) {
+      x.moveTo(-30, coastAt(-30));
+      for (let xx = -30; xx < SP[0].x; xx += 8) x.lineTo(xx, coastAt(xx));
+      SP.forEach(p => x.lineTo(p.x, p.y));
+      x.lineTo(-30, G.bot);
+    } else {
+      x.moveTo(SP[0].x, SP[0].y);
+      for (let xx = SP[0].x + 8; xx < G.mw + 30; xx += 8) x.lineTo(xx, coastAt(xx));
+      x.lineTo(G.mw + 30, G.bot);
+      for (let i = 16; i >= 0; i--) x.lineTo(SP[i].x, SP[i].y);
+    }
+    x.closePath();
+  }
+  function riftPath(d) {
+    x.beginPath();
+    SP.forEach((p, i) => i ? x.lineTo(p.x - d, p.y) : x.moveTo(p.x - d, p.y));
+    for (let i = 16; i >= 0; i--) x.lineTo(SP[i].x + d, SP[i].y);
+    x.closePath();
+  }
+  function splitLine(off, upto = 16) { x.beginPath(); for (let i = 0; i <= upto; i++) { const p = SP[i]; i ? x.lineTo(p.x + off, p.y) : x.moveTo(p.x + off, p.y); } }
+  function peak(px, py, s) {
+    x.moveTo(px - s, py); x.lineTo(px - s * .15, py - s * 1.1); x.lineTo(px + s, py);
+    for (let j = 1; j <= 3; j++) { const f = j / 4, ax = px - s * .15 + s * 1.15 * f, ay = py - s * 1.1 * (1 - f); x.moveTo(ax, ay); x.lineTo(ax - s * .35, py); }
+  }
+  function terrain(side) {
+    const lh = G.y1 - G.top, sh = ramp(t, 0, .14);
+    x.lineCap = 'round'; x.lineJoin = 'round';
+    // rivers, each fed by a lake
+    RIV.forEach(r => {
+      const pts = r.map(p => { const px = p.u * G.mw; return {x: px, y: Math.max(coastAt(px) + 1, G.top + p.v * lh)}; });
+      if ((pts[0].x < mid(pts[0].y) ? -1 : 1) !== side) return;
+      x.beginPath(); x.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length - 1; i++) x.quadraticCurveTo(pts[i].x, pts[i].y, (pts[i].x + pts[i + 1].x) / 2, (pts[i].y + pts[i + 1].y) / 2);
+      x.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y - 2);
+      x.strokeStyle = 'rgba(47,118,132,.8)'; x.lineWidth = 1.4; x.stroke();
+      x.beginPath(); x.ellipse(pts[0].x, pts[0].y + 2, G.hs * 1.6, G.hs * .8, 0, 0, 6.29);
+      x.fillStyle = 'rgba(58,135,150,.75)'; x.fill(); x.strokeStyle = 'rgba(74,52,22,.65)'; x.lineWidth = .8; x.stroke();
+    });
+    // hills
+    x.beginPath();
+    for (const h of HILLS) {
+      const px = h.u * G.mw, py = G.top + h.v * lh;
+      if (py < coastAt(px) + 12) continue;
+      const m = mid(py); if ((px < m ? -1 : 1) !== side || Math.abs(px - m) < 34) continue;
+      if (Math.hypot(px - G.cpx, py - G.cpy) < G.cr * 1.9) continue;
+      peak(px, py, G.hs * h.s);
+    }
+    x.strokeStyle = 'rgba(74,52,22,.5)'; x.lineWidth = .9; x.stroke();
+    // the rift shoulders, lifted as the continent stretches
+    if (sh > 0) {
+      x.beginPath();
+      for (let i = 2; i < 16; i++) { const p = SP[i]; peak(p.x + side * (12 + (i % 2) * 6), p.y, (G.hs * .9 + (i % 3)) * sh); }
+      x.strokeStyle = `rgba(74,52,22,${.7 * sh})`; x.lineWidth = 1; x.stroke();
+    }
+  }
+  function land(side, d) {
+    x.save(); x.translate(side * d, 0);
+    halfPath(side);
+    const g = x.createLinearGradient(0, G.top, 0, G.bot); g.addColorStop(0, '#e8d29b'); g.addColorStop(1, '#c09d5c');
+    x.fillStyle = g; x.fill();
+    x.save(); x.clip();
+    x.beginPath();
+    for (let s = -H; s < G.mw + H; s += 7) { x.moveTo(s, G.top - 20); x.lineTo(s + (G.bot - G.top + 20), G.bot); }
+    x.strokeStyle = 'rgba(74,52,22,.11)'; x.lineWidth = .8; x.stroke();
+    const k = Math.min(1, d / 8);
+    if (k > 0) [5, 11, 18].forEach((o, j) => { splitLine(side * o); x.strokeStyle = `rgba(74,52,22,${(.42 - j * .11) * k})`; x.lineWidth = 1; x.stroke(); });
+    terrain(side);
+    x.restore();
+    halfPath(side); x.strokeStyle = C.ink; x.lineWidth = 1.4; x.stroke();
+    // engraved shoreline ripples
+    [4, 8].forEach((o, j) => {
+      x.beginPath();
+      const a = side < 0 ? -30 : SP[0].x + 2, b = side < 0 ? SP[0].x - 2 : G.mw + 30;
+      for (let xx = a; xx <= b; xx += 6) xx === a ? x.moveTo(xx, coastAt(xx) - o) : x.lineTo(xx, coastAt(xx) - o);
+      x.strokeStyle = `rgba(242,231,201,${.32 - j * .14})`; x.lineWidth = 1; x.stroke();
+    });
+    x.restore();
+  }
+  function compass() {
+    const X = G.cpx, Y = G.cpy, r = G.cr;
+    x.save();
+    x.beginPath(); x.arc(X, Y, r, 0, 6.29); x.strokeStyle = 'rgba(74,52,22,.6)'; x.lineWidth = 1; x.stroke();
+    x.beginPath(); x.arc(X, Y, r * .72, 0, 6.29); x.lineWidth = .6; x.stroke();
+    x.beginPath();
+    for (let i = 0; i < 4; i++) { const a = Math.PI / 4 + i * Math.PI / 2; x.moveTo(X, Y); x.lineTo(X + Math.cos(a) * r * .9, Y + Math.sin(a) * r * .9); }
+    x.strokeStyle = 'rgba(74,52,22,.55)'; x.lineWidth = .8; x.stroke();
+    for (let i = 0; i < 4; i++) {
+      const a = i * Math.PI / 2 - Math.PI / 2, ca = Math.cos(a), sa = Math.sin(a), cp = Math.cos(a + Math.PI / 2), sp = Math.sin(a + Math.PI / 2);
+      const tx = X + ca * r * 1.3, ty = Y + sa * r * 1.3, w = r * .22;
+      x.beginPath(); x.moveTo(X, Y); x.lineTo(tx, ty); x.lineTo(X + cp * w, Y + sp * w); x.closePath(); x.fillStyle = i === 0 ? '#8a3216' : '#4a3416'; x.fill();
+      x.beginPath(); x.moveTo(X, Y); x.lineTo(tx, ty); x.lineTo(X - cp * w, Y - sp * w); x.closePath(); x.fillStyle = '#f3e4bb'; x.fill();
+      x.strokeStyle = 'rgba(74,52,22,.75)'; x.lineWidth = .7; x.stroke();
+    }
+    x.restore();
+    text('N', X, Y - r * 1.3 - G.fs * .65, 'center', '#4a3416', 800, 1, C.halo);
+  }
+  function chevrons(cxp, cy, dir, a) {
+    x.save(); x.globalAlpha *= a; x.strokeStyle = C.ink; x.lineWidth = 2; x.lineCap = 'round'; x.lineJoin = 'round';
+    for (let k = 0; k < 2; k++) { const ox = cxp + dir * k * 7; x.beginPath(); x.moveTo(ox - dir * 4, cy - 6); x.lineTo(ox + dir * 2, cy); x.lineTo(ox - dir * 4, cy + 6); x.stroke(); }
+    x.restore();
+  }
+  function text(s, px, py, align, color, weight = 700, alpha = 1, halo = null, size = G.fs) {
+    x.save(); x.globalAlpha *= alpha; x.font = `${weight} ${size}px ${MONO}`; x.textAlign = align; x.textBaseline = 'middle';
+    if (halo) { x.lineJoin = 'round'; x.lineWidth = 4; x.strokeStyle = halo; x.strokeText(s, px, py); }
+    x.fillStyle = color; x.fillText(s, px, py); x.restore();
+  }
+
+  function render(now) {
+    if (!x) return;
+    x.clearRect(0, 0, W, H);
+    const MW = G.mw, d = gapD(), F = front(), vol = ramp(t, .16, .32), crack = ramp(t, .02, .14), spd = Math.min(1, Math.abs(vel));
+    const ia = Math.min(1, S.intro * 1.6);
+    x.save(); x.beginPath(); x.rect(0, 0, MW, H); x.clip();
+    x.save(); x.globalAlpha = ia;
+
+    // the open ocean, fading up into the deep
+    const og = x.createLinearGradient(0, 0, 0, G.coast + 10);
+    og.addColorStop(0, 'rgba(47,118,132,0)'); og.addColorStop(.55, 'rgba(47,118,132,.75)'); og.addColorStop(1, '#3a8796');
+    x.fillStyle = og; x.fillRect(-2, 0, MW + 4, G.coast + 12);
+    x.beginPath();
+    for (let r = 0; r < 3; r++) {
+      const y = G.coast * (.3 + .2 * r), sh = ((now * .008 * (r % 2 ? 1 : -1)) % 26 + 26) % 26;
+      for (let xx = sh - 26 + r * 9; xx < MW; xx += 26) { x.moveTo(xx, y); x.quadraticCurveTo(xx + 5, y - 3, xx + 10, y); }
+    }
+    x.strokeStyle = 'rgba(242,231,201,.22)'; x.lineWidth = 1; x.stroke();
+
+    // the trough, then the water that floods it
+    if (d > .3) {
+      riftPath(d);
+      const fg = x.createLinearGradient(0, G.top, 0, G.bot); fg.addColorStop(0, '#56331a'); fg.addColorStop(1, '#22140b');
+      x.fillStyle = fg; x.fill();
+      if (F > G.top + 1) {
+        x.save(); riftPath(d); x.clip(); x.beginPath(); x.rect(0, G.top - 14, MW, F - G.top + 14); x.clip();
+        const wg = x.createLinearGradient(0, G.top, 0, G.bot); wg.addColorStop(0, '#3a8796'); wg.addColorStop(1, '#1d5f6d');
+        x.fillStyle = wg; x.fillRect(0, G.top - 14, MW, F - G.top + 14);
+        // new sea floor: each band born at the middle, carried outward with its half
+        const s = G.maxD / 6;
+        for (let k = 0; k < 40; k++) {
+          const c = d - (k + .5) * s; if (c < -s * .5) break;
+          const col = k % 2 ? `rgba(160,224,230,${.13 + .08 * S.labA})` : 'rgba(8,36,44,.16)';
+          for (const sg of [-1, 1]) { splitLine(sg * c); x.strokeStyle = col; x.lineWidth = s + .6; x.stroke(); }
+        }
+        // the youngest crust is still warm
+        splitLine(0); x.strokeStyle = `rgba(255,150,70,${(.2 + .25 * S.labA) * vol})`; x.lineWidth = Math.min(d * 2, s * 1.6); x.stroke();
+        for (let k = 1; k < 30; k++) {
+          const off = d - k * s; if (off < 0) break;
+          for (const sg of [-1, 1]) { splitLine(sg * off); x.strokeStyle = `rgba(242,231,201,${(k % 2 ? .24 : .12) * (.6 + .4 * S.labA)})`; x.lineWidth = .8; x.stroke(); }
+        }
+        x.beginPath(); x.moveTo(mid(F) - d - 2, F); x.lineTo(mid(F) + d + 2, F);
+        x.strokeStyle = `rgba(242,231,201,${.75 * (1 - ramp(t, .6, .66))})`; x.lineWidth = 2; x.stroke();
+        x.restore();
+      }
+      // the sill that keeps the sea out, until it gives way
+      const sill = 1 - ramp(t, .42, .47);
+      if (sill > 0) {
+        x.save(); x.globalAlpha *= sill; x.beginPath();
+        x.moveTo(SP[0].x - d - 1, SP[0].y - 1); x.lineTo(SP[0].x + d + 1, SP[0].y - 1); x.lineTo(mid(G.top + 9) + d + 1, G.top + 9); x.lineTo(mid(G.top + 9) - d - 1, G.top + 9); x.closePath();
+        x.fillStyle = '#e2c98f'; x.fill(); x.strokeStyle = C.ink; x.lineWidth = 1; x.stroke(); x.restore();
+      }
+    }
+    land(-1, d); land(1, d);
+
+    // the crack running down before it opens
+    if (crack > 0 && d < 3) {
+      splitLine(0, Math.max(1, Math.round(crack * 16)));
+      x.setLineDash([4, 3]); x.strokeStyle = `rgba(58,40,16,${.85 * (1 - d / 3)})`; x.lineWidth = 1.6; x.stroke(); x.setLineDash([]);
+    }
+    compass();
+
+    // the volcanic chain along the middle
+    if (vol > 0 && d > .4) {
+      if (S.flare > .01) { splitLine(0); x.strokeStyle = `rgba(255,170,80,${.5 * S.flare})`; x.lineWidth = 4 + 16 * S.flare; x.stroke(); }
+      for (let y = G.top + 10, i = 0; y < G.bot; y += 15, i++) {
+        const mx = mid(y), fl = .55 + .45 * Math.sin(now * .005 + i * 1.7), r = (4 + 7 * S.flare) * (.7 + .3 * fl);
+        const rg = x.createRadialGradient(mx, y, 0, mx, y, r * 2.2);
+        rg.addColorStop(0, `rgba(255,226,140,${vol})`); rg.addColorStop(.35, `rgba(255,120,40,${.7 * vol * fl})`); rg.addColorStop(1, 'rgba(255,80,20,0)');
+        x.fillStyle = rg; x.fillRect(mx - r * 2.2, y - r * 2.2, r * 4.4, r * 4.4);
+      }
+    }
+
+    // particles: seawater and sparks
+    x.save(); x.globalCompositeOperation = 'lighter';
+    x.fillStyle = 'rgba(160,215,222,.42)';
+    for (const p of P) if (!p.m) x.fillRect(p.x, p.y, 1.4, 1.4);
+    x.fillStyle = 'rgba(170,240,248,.62)';
+    for (const p of P) if (p.m) x.fillRect(p.x - .8, p.y - .8, 1.8, 1.8);
+    for (const l of L) { x.fillStyle = l.life > .55 ? `rgba(255,230,150,${l.life})` : `rgba(255,110,40,${l.life * 1.4})`; x.fillRect(l.x - 1, l.y - 1, 2, 2); }
+    x.restore();
+
+    // drift arrows
+    if (d > .5) { const cy = G.top + (G.bot - G.top) * .66, m = mid(cy); chevrons(m - d - 16, cy, -1, Math.min(1, d / 6) * (.35 + .65 * spd)); chevrons(m + d + 16, cy, 1, Math.min(1, d / 6) * (.35 + .65 * spd)); }
+    x.restore();
+
+    // fade the map into the card: bottom and sides, as if printed
+    x.save(); x.globalCompositeOperation = 'destination-out';
+    const fb = x.createLinearGradient(0, G.fade, 0, G.y1); fb.addColorStop(0, 'rgba(0,0,0,0)'); fb.addColorStop(1, 'rgba(0,0,0,1)');
+    x.fillStyle = fb; x.fillRect(0, G.fade, MW, G.y1 - G.fade); x.fillStyle = '#000'; x.fillRect(0, G.y1 - .5, MW, G.bot - G.y1 + 6);
+    for (const sd of [0, 1]) {
+      const ex = MW * .07, g = x.createLinearGradient(sd ? MW : 0, 0, sd ? MW - ex : ex, 0);
+      g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+      x.fillStyle = g; x.fillRect(sd ? MW - ex : 0, 0, ex, G.bot + 6);
+    }
+    x.restore();
+
+    // labels, crisp above the fade
+    x.save(); x.globalAlpha = ia;
+    const ly = Math.max(G.fs, G.coast * .32);
+    text('OPEN OCEAN', MW * .05, ly, 'left', C.cream, 700, .9);
+    const pour = ramp(t, .42, .5) * (1 - ramp(t, .8, .9));
+    if (pour > 0) text('SEA POURS IN ↓', MW * .95, ly, 'right', '#bfeef3', 700, pour);
+    if (S.labA > 0) {
+      const lh = G.fs * 1.3;
+      const y1 = G.top + (G.bot - G.top) * .42, m1 = mid(y1), tx1 = m1 + d + 12;
+      x.save(); x.globalAlpha *= S.labA; x.strokeStyle = C.ink; x.lineWidth = 1.2;
+      x.beginPath(); x.moveTo(m1 + 4, y1); x.lineTo(tx1 - 3, y1); x.stroke(); x.restore();
+      text('VOLCANIC', tx1, y1, 'left', '#2c1d08', 800, S.labA, C.halo); text('CHAIN', tx1, y1 + lh, 'left', '#2c1d08', 800, S.labA, C.halo);
+      const y2 = G.top + (G.bot - G.top) * .2, m2 = mid(y2), tx2 = m2 - d - 12;
+      x.save(); x.globalAlpha *= S.labA; x.strokeStyle = C.ink; x.lineWidth = 1.2;
+      x.beginPath(); x.moveTo(m2 - d * .5, y2); x.lineTo(tx2 + 3, y2); x.stroke(); x.restore();
+      text('NEW SEA', tx2, y2, 'right', '#2c1d08', 800, S.labA, C.halo); text('FLOOR', tx2, y2 + lh, 'right', '#2c1d08', 800, S.labA, C.halo);
+    }
+    x.restore();
+    x.restore();
+
+    dial(now);
+  }
+
+  function arcText(str, cx, py, rad, ang, size, color, weight, alpha, sp) {
+    x.save(); x.globalAlpha *= alpha; x.font = `${weight} ${size}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+    const ch = [...str], ws = ch.map(c => x.measureText(c).width + sp), tot = ws.reduce((a, b) => a + b, 0);
+    let s = -tot / 2;
+    ch.forEach((c, i) => {
+      const a = ang + (s + ws[i] / 2) / rad; s += ws[i];
+      x.save(); x.translate(cx + Math.cos(a) * rad, py + Math.sin(a) * rad); x.rotate(a + Math.PI / 2);
+      x.fillStyle = 'rgba(255,248,226,.7)'; x.fillText(c, 0, .8);
+      x.fillStyle = color; x.fillText(c, 0, 0); x.restore();
+    });
+    x.restore();
+  }
+
+  function dial(now) {
+    const {cx, R, df} = G, py = G.py + (1 - S.intro) * R * .2;
+    x.save(); x.globalAlpha = Math.min(1, S.intro * 2);
+    // shadow and brass bezel
+    x.beginPath(); x.arc(cx + 2, py + 4, R, Math.PI, 0); x.closePath(); x.fillStyle = 'rgba(0,0,0,.35)'; x.fill();
+    const br = x.createLinearGradient(cx - R, py - R, cx + R, py);
+    br.addColorStop(0, '#5e4419'); br.addColorStop(.28, '#d4ab52'); br.addColorStop(.45, '#f7e0a0'); br.addColorStop(.62, '#b88c37'); br.addColorStop(1, '#4f3913');
+    x.beginPath(); x.arc(cx, py, R, Math.PI, 0); x.closePath(); x.fillStyle = br; x.fill();
+    // knurled rim
+    x.beginPath();
+    for (let i = 0; i <= 90; i++) { const a = Math.PI + Math.PI * i / 90, c = Math.cos(a), s = Math.sin(a); x.moveTo(cx + c * R * .965, py + s * R * .965); x.lineTo(cx + c * R * .99, py + s * R * .99); }
+    x.strokeStyle = 'rgba(60,40,10,.28)'; x.lineWidth = .8; x.stroke();
+    x.beginPath(); x.arc(cx, py, R * .955, Math.PI, 0); x.strokeStyle = 'rgba(40,26,6,.55)'; x.lineWidth = 1.2; x.stroke();
+    x.beginPath(); x.arc(cx, py, R * .995, Math.PI, 0); x.strokeStyle = 'rgba(255,240,200,.5)'; x.lineWidth = 1; x.stroke();
+    // etched face
+    const fg = x.createRadialGradient(cx, py - R * .3, R * .1, cx, py, R * .92);
+    fg.addColorStop(0, '#f8eed2'); fg.addColorStop(1, '#d6c08d');
+    x.beginPath(); x.arc(cx, py, R * .91, Math.PI, 0); x.closePath(); x.fillStyle = fg; x.fill();
+    x.beginPath(); x.arc(cx, py, R * .91, Math.PI, 0); x.strokeStyle = 'rgba(60,40,10,.6)'; x.lineWidth = 1.5; x.stroke();
+    // guilloché rings
+    [.4, .56].forEach(rr => { x.beginPath(); x.arc(cx, py, R * rr, Math.PI, 0); x.strokeStyle = 'rgba(90,64,24,.14)'; x.lineWidth = .8; x.stroke(); });
+    // brass base plate
+    const bp = x.createLinearGradient(0, py, 0, py + R * .09); bp.addColorStop(0, '#e6c36f'); bp.addColorStop(1, '#6b4f1c');
+    x.fillStyle = bp; x.fillRect(cx - R * 1.03, py - 1, R * 2.06, R * .09);
+    x.fillStyle = 'rgba(255,240,200,.45)'; x.fillRect(cx - R * 1.03, py - 1, R * 2.06, 1);
+    // phase band
+    [[0, .12, '#9b7a45'], [.12, .42, '#b2532a'], [.42, 1, '#2f7684']].forEach(([a, b, c]) => {
+      x.beginPath(); x.arc(cx, py, R * .79, A(a) + .01, A(b) - .01); x.strokeStyle = c; x.lineWidth = Math.max(3, R * .03); x.stroke();
+    });
+    // engraved ticks
+    const n = Math.round(S.intro * 40);
+    for (let i = 0; i <= n; i++) {
+      const a = A(i / 40), maj = i % 10 === 0, half = i % 5 === 0, r0 = R * (maj ? .82 : half ? .855 : .88), r1 = R * .93;
+      const c = Math.cos(a), s = Math.sin(a);
+      x.beginPath(); x.moveTo(cx + c * r0, py + s * r0 + .8); x.lineTo(cx + c * r1, py + s * r1 + .8); x.strokeStyle = 'rgba(255,248,226,.7)'; x.lineWidth = maj ? 1.6 : .9; x.stroke();
+      x.beginPath(); x.moveTo(cx + c * r0, py + s * r0); x.lineTo(cx + c * r1, py + s * r1); x.strokeStyle = C.engr; x.stroke();
+    }
+    // brass stop pins
+    [-.045, 1.045].forEach(tt => {
+      const a = A(tt), pr = Math.max(2.5, R * .022), px = cx + Math.cos(a) * R * .86, ppy = py + Math.sin(a) * R * .86;
+      const pg = x.createRadialGradient(px - pr * .3, ppy - pr * .3, .5, px, ppy, pr);
+      pg.addColorStop(0, '#fff0bd'); pg.addColorStop(1, '#6b4f1c');
+      x.beginPath(); x.arc(px, ppy, pr, 0, 6.29); x.fillStyle = pg; x.fill();
+    });
+    // stage names, engraved along the band
+    [['CRACK', .27, .12, .42], ['SEA IN', .56, .42, .7], ['OCEAN', .85, .7, 1.01]].forEach(([s, at, a, b]) => {
+      const on = t >= a && t < b;
+      arcText(s, cx, py, R * .675, A(at), df, on ? '#7a2c12' : C.engr, on ? 800 : 600, on ? 1 : .62, R > 150 ? 1.5 : .6);
+    });
+    arcText('MILLIONS OF YEARS', cx, py, R * .49, Math.PI * 1.5, df, C.engr, 700, 1, R > 150 ? 1.2 : .3);
+    // hint: turn this way
+    if (!touched) {
+      const pa = .45 + .45 * Math.sin(now * .006), r = R * .6, a0 = A(.0), a1 = A(.12);
+      x.save(); x.globalAlpha *= pa; x.strokeStyle = '#7a2c12'; x.lineWidth = 2.2; x.lineCap = 'round';
+      x.beginPath(); x.arc(cx, py, r, a0, a1); x.stroke();
+      const hx = cx + Math.cos(a1) * r, hy = py + Math.sin(a1) * r, ta = a1 + Math.PI / 2;
+      x.beginPath(); x.moveTo(hx + Math.cos(ta - 2.5) * 6, hy + Math.sin(ta - 2.5) * 6); x.lineTo(hx, hy); x.lineTo(hx + Math.cos(ta + 2.5) * 6, hy + Math.sin(ta + 2.5) * 6); x.stroke();
+      x.restore();
+    }
+    // the needle, with its shadow
+    const na = A(clamp(t, -.02, 1.02));
+    const needle = (dx, dy, shadow) => {
+      x.save(); x.translate(cx + dx, py + dy); x.rotate(na);
+      x.beginPath(); x.moveTo(-R * .17, -2.6); x.lineTo(R * .84, -.5); x.lineTo(R * .87, 0); x.lineTo(R * .84, .5); x.lineTo(-R * .17, 2.6); x.closePath();
+      if (shadow) { x.fillStyle = 'rgba(30,18,4,.28)'; x.fill(); }
+      else {
+        const ng = x.createLinearGradient(0, -3, 0, 3); ng.addColorStop(0, '#46617a'); ng.addColorStop(.5, '#1b2a37'); ng.addColorStop(1, '#0f1820');
+        x.fillStyle = ng; x.fill();
+        x.beginPath(); x.moveTo(R * .7, 0); x.lineTo(R * .87, 0); x.strokeStyle = '#a3321b'; x.lineWidth = 1.6; x.stroke();
+        x.beginPath(); x.arc(-R * .14, 0, R * .035, 0, 6.29); x.fillStyle = '#1b2a37'; x.fill();
+      }
+      x.restore();
+    };
+    needle(2.5, 3.5, true); needle(0, 0, false);
+    // brass hub with a screw
+    const hr = Math.max(7, R * .075), hg = x.createRadialGradient(cx - hr * .3, py - hr * .4, 1, cx, py, hr);
+    hg.addColorStop(0, '#fff0bd'); hg.addColorStop(.5, '#c99d45'); hg.addColorStop(1, '#5c4216');
+    x.beginPath(); x.arc(cx, py, hr, 0, 6.29); x.fillStyle = hg; x.fill(); x.strokeStyle = 'rgba(40,26,6,.7)'; x.lineWidth = 1; x.stroke();
+    x.save(); x.translate(cx, py); x.rotate(.6); x.beginPath(); x.moveTo(-hr * .55, 0); x.lineTo(hr * .55, 0); x.strokeStyle = 'rgba(40,26,6,.8)'; x.lineWidth = 1.6; x.stroke(); x.restore();
+    // glass glint
+    x.beginPath(); x.arc(cx, py, R * .78, Math.PI * 1.1, Math.PI * 1.38); x.strokeStyle = 'rgba(255,255,255,.18)'; x.lineWidth = R * .06; x.lineCap = 'round'; x.stroke();
+    x.restore();
+  }
+
+  // ---------- the dial and the story ----------
+  const SAYS = [
+    'Turn the brass dial to run time forward, through <b>millions of years</b>.',
+    'The continent cracks. The two halves drift apart and the middle sinks into a long trough. <b>Keep turning.</b>',
+    'The trough opens to the open ocean, and seawater pours in. <b>Keep turning.</b>',
+    'Down the middle, a chain of volcanoes pours out lava. <b>Turn it all the way.</b>'
+  ];
+  function story() {
+    const p = t >= .7 ? 3 : t >= .42 ? 2 : t >= .12 ? 1 : 0;
+    if (p !== phase && !done) { phase = p; say.innerHTML = SAYS[p]; if (!Kit.calm) gsap.fromTo(say, {opacity: .3, y: 4}, {opacity: 1, y: 0, duration: .45, ease: 'power3.out'}); }
+    if (t >= .42 && !floodedOnce) { floodedOnce = true; Kit.haptic('light'); }
+    const q = Math.floor(clamp(t, 0, 1) * 4); if (q !== lastQ) { lastQ = q; if (touched) Kit.haptic('selection'); }
+    if (t >= .97 && !done) reveal();
+  }
+  function reveal() {
+    done = true; Kit.haptic('success');
+    card.classList.add('answered'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (Kit.calm || typeof gsap === 'undefined') { S.labA = 1; S.flare = 0; return; }
+    spawnLava(180, true);
+    gsap.timeline().to(S, {flare: 1, duration: .3, ease: 'power3.out'}).to(S, {flare: 0, duration: 1.8, ease: 'expo.out'});
+    gsap.to(S, {labA: 1, duration: .9, delay: .35, ease: 'power2.out'});
+    gsap.from('#why > *, #keep', {opacity: 0, y: 10, stagger: .09, duration: .55, ease: 'power3.out'});
+  }
+
+  function step(dt) {
+    if (Kit.calm) { t = target; vel = 0; return; }
+    const k = 60, c = 5.4;
+    vel += (k * (target - t) - c * vel) * dt;
+    t += vel * dt;
+    if (t < 0) { t = 0; vel = -vel * .3; }
+    if (t > 1) { t = 1; vel = -vel * .3; }
+  }
+  let last = 0;
+  function loop(now) {
+    const dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+    if (x) { step(dt); story(); updateParticles(dt); render(now); }
+    requestAnimationFrame(loop);
+  }
+  const start = () => { if (!started) { started = true; requestAnimationFrame(loop); } };
+
+  function local(e) { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+  function setFrom(e) {
+    const [px, py] = local(e);
+    let a = Math.atan2(G.py - py, px - G.cx); if (a < 0) a = px < G.cx ? Math.PI : 0;
+    target = clamp((1 - a / Math.PI - SW0) / (1 - 2 * SW0), 0, 1);
+  }
+  cv.addEventListener('pointerdown', e => {
+    if (!touched) Kit.haptic('selection'); touched = true; dragging = true; cv.setPointerCapture(e.pointerId);
+    const [px, py] = local(e);
+    mode = (Math.hypot(px - G.cx, py - G.py) < G.R * 1.2 && py < G.py + G.R * .3) ? 1 : 2;
+    if (mode === 1) setFrom(e); else { sx = e.clientX; st = target; }
+    start();
+  });
+  cv.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    if (mode === 1) setFrom(e); else target = clamp(st + (e.clientX - sx) / (G.mw * .75), 0, 1);
+  });
+  const end = () => { dragging = false; };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+  Kit.onShow.card = () => { layout(); start(); };
+  Kit.onEnter.card = () => {
+    start();
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    S.intro = 0; t = .09; vel = -.5; target = 0;
+    gsap.to(S, {intro: 1, duration: 1.6, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start(); touched = true; S.intro = 1; target = 1;
+    await wait(Kit.calm ? 150 : 2200);
+    t = 1; vel = 0; story(); if (!done) reveal();
+    for (let i = 0; i < 80; i++) updateParticles(.03);
+    await wait(Kit.calm ? 100 : 900);
+    render(performance.now());
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<!-- slug: thinking-slow-disarmament -->
+<!-- Thought to carry: if one betrayal could cost everything, take steps small enough to check.
+     Front: two plans for a pair of rivals' stockpiles (drawn marks, a model, no count given): one giant leap, or a staircase of small cuts. The reader taps the plan they think the US and USSR chose, then says how sure.
+     Back: one focal drawing, the staircase. A stockpile drops a little each year, a green check after every cut. It does not reach zero; the brief only says they started reducing.
+     The front gives nothing away: both plans show the same start and the same end, and "at once" looks faster. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why disarm slowly</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s linear .38s}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .38s}
+.kit-calm .turn,.kit-calm .turn>.back,.kit-calm .turn.over>.front{transition:none}
+
+.face{gap:1.2cqh}
+.front{padding-bottom:50px}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic .lane{transition:opacity .25s ease}
+.front .say{max-width:calc(100% - 100px);margin:0;white-space:normal;overflow-wrap:anywhere}
+.back .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+.back .body{font:500 max(1.7cqh,12.5px)/1.35 var(--body);margin:0}
+.back .keep{font-size:max(1.7cqh,12.5px);flex:0 0 auto}
+.back .foot{min-height:44px;flex:0 0 auto}
+.back .foot .src{display:block;padding-right:100px;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick a plan · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GAME THEORY</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">From the late '80s, the US and USSR cut their nukes. Which plan did they use?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="Two plans for two stockpiles of warheads: one giant drop all at once, or a staircase of small cuts with a check after each."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Tap the plan you would bet on.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Small steps, checked every year.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="A stockpile shrinking a little each year, with a check after every cut."></svg></div>
+        <p class="body">One deal to scrap everything would be a single prisoner's dilemma, with the trap of defecting at once. After building nukes from 1950 to 1986, the US and USSR instead cut a few each year, checked that both had cooperated, and repeated.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> If one betrayal could cost everything, take steps small enough to check.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const RIGHT = 1, NAMES = ['All at once', 'Small checked steps'];
+  const GREEN = '#17734a';
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), say = Kit.$('say');
+  let pick = -1, done = false, turned = false, C = {k: '#111', c: '#fff', body: 'sans-serif'};
+  let lanes = [], titles = [];
+
+  const colors = () => {
+    const s = getComputedStyle(Kit.$('card'));
+    C.k = s.getPropertyValue('--k').trim() || '#111';
+    C.c = s.getPropertyValue('--c').trim() || '#fff';
+    C.body = s.getPropertyValue('--body').trim() || 'sans-serif';
+  };
+  const text = (p, x, y, t, fs, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: C.k, 'font-family': C.body, 'font-size': fs, 'font-weight': 700}, a), p);
+    e.textContent = t; return e;
+  };
+  // Keep a label inside the picture.
+  const fit = (e, W) => {
+    const w = e.getComputedTextLength(), a = e.getAttribute('text-anchor') || 'start', x = +e.getAttribute('x');
+    const left = a === 'end' ? x - w : a === 'middle' ? x - w / 2 : x;
+    const sh = Math.max(2 - left, Math.min(0, W - 2 - (left + w)));
+    if (sh) e.setAttribute('x', x + sh);
+    return e;
+  };
+  // An upright warhead: a body with a rounded nose.
+  const up = (p, x, y, w, h, fill) => Kit.mk('path', {class: 'mk', fill,
+    d: `M${x},${y + h} V${y + h * .42} Q${x},${y} ${x + w / 2},${y} Q${x + w},${y} ${x + w},${y + h * .42} V${y + h} Z`}, p);
+  // A warhead lying on a shelf, nose to the right.
+  const lying = (p, x, y, w, h, fill) => Kit.mk('path', {fill,
+    d: `M${x},${y} H${x + w - h * .8} Q${x + w},${y} ${x + w},${y + h / 2} Q${x + w},${y + h} ${x + w - h * .8},${y + h} H${x} Z`}, p);
+
+  // ---------- the front: two plans, same start, same end ----------
+  function drawFront() {
+    svg.innerHTML = ''; lanes = []; titles = [];
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, W / 26));
+    const head = fs * 1.7, laneH = (H - head) / 2, sw = W * .36, m0 = sw + W * .05, m1 = W - sw - W * .05;
+    text(svg, sw / 2, fs * 1.05, 'US', fs, {'text-anchor': 'middle', 'font-weight': 800});
+    text(svg, W - sw / 2, fs * 1.05, 'USSR', fs, {'text-anchor': 'middle', 'font-weight': 800});
+    const T = ['One deal: both scrap all at once', 'A few a year, check, repeat'];
+    for (let i = 0; i < 2; i++) {
+      const y0 = head + i * laneH, g = Kit.mk('g', {class: 'lane'}, svg);
+      const t = fit(text(g, 0, y0 + fs * 1.2, T[i], fs, {'font-weight': 800}), W);
+      titles.push(t);
+      const ay0 = y0 + fs * 2, ay1 = y0 + laneH - fs * .9, rh = (ay1 - ay0) / 2, cw = sw / 6;
+      const w = Math.min(cw * .6, rh * .4), h = Math.min(w * 2.3, rh * .9);
+      for (const sx of [0, W - sw]) for (let r = 0; r < 2; r++) for (let c = 0; c < 6; c++)
+        up(g, sx + c * cw + (cw - w) / 2, ay0 + r * rh + (rh - h) / 2, w, h, C.k);
+      const iy0 = ay0 + rh * .3, iy1 = ay1 - rh * .3, mid = (m0 + m1) / 2;
+      let d;
+      if (i === 0) d = `M${m0},${iy0} H${mid} V${iy1} H${m1}`;
+      else { d = `M${m0},${iy0}`; const n = 6, dx = (m1 - m0) / n, dy = (iy1 - iy0) / n;
+        for (let k = 0; k < n; k++) d += ` h${dx} v${dy}`; }
+      Kit.mk('path', {class: 'mk', d, fill: 'none', stroke: C.k, 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+      const hit = Kit.mk('rect', {x: 0, y: y0, width: W, height: laneH, fill: 'transparent', style: 'cursor:pointer'}, g);
+      hit.addEventListener('click', () => choose(i));
+      lanes.push(g);
+    }
+    mark();
+  }
+  function mark() {
+    lanes.forEach((g, i) => {
+      g.style.opacity = pick < 0 || pick === i ? 1 : .3;
+      const old = g.querySelector('.ul'); if (old) old.remove();
+      if (pick === i) {
+        const t = titles[i], x = +t.getAttribute('x'), y = +t.getAttribute('y');
+        Kit.mk('line', {class: 'ul', x1: x, x2: x + t.getComputedTextLength(), y1: y + 4, y2: y + 4, stroke: C.k, 'stroke-width': 2.2}, g);
+      }
+    });
+  }
+  function choose(i) {
+    if (done) return;
+    const first = pick < 0; pick = i; mark(); Kit.haptic('selection');
+    say.innerHTML = `Your bet: <b>${i ? 'small, checked steps' : 'all at once'}</b>. How sure are you?`;
+    if (first) sure.on();
+  }
+
+  // ---------- the back: one staircase, a check after every cut ----------
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, W / 26));
+    // The label owns its own row at the top, so no check can ever reach it.
+    const lab = fit(text(svg2, 0, fs * 1.05, 'A few each year, then both check', fs, {fill: GREEN, 'font-weight': 800}), W);
+    const N = 7, START = 12;
+    const Tp = fs * 2.9, B = H - fs * 1.9, colW = W / N, mh = (B - Tp) / START;
+    const hh = mh * .62, ww = Math.min(colW * .72, hh * 4.4);
+    const cols = [];
+    for (let j = 0; j < N; j++) {
+      const g = Kit.mk('g', {}, svg2), cx = colW * (j + .5), n = START - j;
+      for (let k = 0; k < n; k++) lying(g, cx - ww / 2, B - (k + 1) * mh + (mh - hh) / 2, ww, hh, C.k);
+      if (j) {
+        const s = Math.min(fs * .45, colW * .22), y = B - n * mh - s * 1.1;
+        Kit.mk('path', {d: `M${cx - s},${y} l${s * .7},${s * .7} l${s * 1.3},${-s * 1.4}`, fill: 'none', stroke: GREEN, 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+      }
+      cols.push(g);
+    }
+    const axis = Kit.mk('g', {}, svg2);
+    Kit.mk('line', {x1: 0, x2: W, y1: B + 3, y2: B + 3, stroke: C.k, 'stroke-width': 1.4, opacity: .45}, axis);
+    fit(text(axis, W, B + fs * 1.45, 'years →', fs, {'text-anchor': 'end', 'font-weight': 600, opacity: .75}), W);
+
+    if (!animate || Kit.calm || typeof gsap === 'undefined') return;
+    const tl = gsap.timeline({delay: .55});
+    tl.from(cols[0].children, {opacity: 0, y: 4, stagger: .035, duration: .3, ease: 'power2.out'})
+      .from(axis, {opacity: 0, duration: .3}, '<')
+      .from(cols.slice(1), {opacity: 0, y: 6, stagger: .3, duration: .35, ease: 'power3.out'}, '+=.2')
+      .from(lab, {opacity: 0, duration: .45}, '-=.4');
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (pick < 0 || done) return;
+    done = true;
+    const ok = pick === RIGHT, said = NAMES[pick];
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { colors(); drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.from('#pic .mk', {opacity: 0, y: 5, stagger: .008, duration: .35, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    choose(0); await wait(120);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 900 : 4200);
+  };
+})();
+Kit.single();
+</script>
+</html>

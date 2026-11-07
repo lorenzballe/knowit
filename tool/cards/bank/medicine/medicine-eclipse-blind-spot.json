@@ -1,0 +1,39 @@
+{
+  "id": "medicine-eclipse-blind-spot",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A 20-year-old stared at the 2017 eclipse. How long until permanent damage?",
+  "answer": "Six seconds was enough. The eclipse burned the centre of her retina for good (solar retinopathy), leaving a scotoma: a black spot right where she looks.",
+  "move": "Never look at the sun with the naked eye: seconds can scar the retina for life.",
+  "keywords": [
+    "eclipse",
+    "retina",
+    "scotoma",
+    "sun",
+    "solar retinopathy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A draggable pin on a time scale asks how long a 20-year-old stared at the 2017 eclipse, followed by a choice of how sure you are. The reveal states that six seconds was enough to leave a permanent black spot in her central vision.",
+    "graded": false,
+    "ground": "#efe6d2"
+  },
+  "source": "Geopop, “Non guardare mai il sole ad occhio nudo, si potrebbero avere danni alla retina, anche permanenti!” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=7CUTjOwAU4w&t=30s",
+  "written": "2026-11-04"
+}

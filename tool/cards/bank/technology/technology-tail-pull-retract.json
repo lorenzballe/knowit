@@ -1,0 +1,37 @@
+{
+  "id": "technology-tail-pull-retract",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Pull the robot’s tail. What does its body do?",
+  "answer": "The body goes back inside itself. The tail is material running through the core; pulling it passes the body back through that core and turns it inside itself. In a tight space, pulling the tail does it; a big open area is another case.",
+  "move": "Retraction is a hard problem.",
+  "keywords": [
+    "robot",
+    "retraction",
+    "inversion",
+    "veritasium",
+    "soft robot"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Pick-one quiz asking how the robot pulls back. Options: it slides back out the way it went in, it goes back inside itself, it folds up like an accordion, or it is in a tight space. A draggable picture shows before, after and in-between states."
+  },
+  "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg&t=161s",
+  "written": "2026-11-07"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "maths-storm-jar-odds",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "A 1-in-16 chance, any given year, of a storm that topples Citicorp. Odds of one within 16 years?",
+  "answer": "The reveal is about 2 in 3, or 64%. Each ball is one run of 16 years. If each year is its own 1-in-16 draw, unaffected by the last, all 16 stay calm only 36% of the time.",
+  "move": "Either way, “once every N years” means about 2 in 3 odds within N years.",
+  "keywords": [
+    "citicorp",
+    "storm",
+    "skyscraper",
+    "probability",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tower-shaped slider asks the reader to set the odds that a storm topples Citicorp within 16 years, given a 1-in-16 chance each year. The reveal shows the answer is about 2 in 3 (64%), with 16 balls each standing for one year."
+  },
+  "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=1129s",
+  "written": "2026-11-07"
+}

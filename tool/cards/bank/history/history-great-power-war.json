@@ -1,0 +1,37 @@
+{
+  "id": "history-great-power-war",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.what_if",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the potential consequence if the conflict becomes direct?",
+  "answer": "While the powers clash only through Iran, the conflict stays regional. If one strikes the other directly, it becomes a clash between great powers, with consequences no one can predict.",
+  "move": "Through Iran, the war is regional. Direct, it is great powers, and unpredictable.",
+  "keywords": [
+    "iran",
+    "great powers",
+    "regional war",
+    "direct confrontation"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks what the potential consequence is if the conflict becomes direct. Shows a drag-to-aim, release-to-launch interface: drag from your power to aim at Iran, and a photo of a nuclear explosion captioned Direct Confrontation.",
+    "ground": "#efebe2"
+  },
+  "source": "Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=WZuXvvDRTgg&t=2003s",
+  "written": "2026-11-04"
+}

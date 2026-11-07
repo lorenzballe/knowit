@@ -1,0 +1,38 @@
+{
+  "id": "technology-induction-foil-stick",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do new heated-tobacco sticks get hot from the inside?",
+  "answer": "The coil's changing magnetic field heats a hidden metal foil inside the stick, up to 350 °C at most. The tobacco warms from its centre and gives off smoke. Flip the switch to run current through the coil and watch the middle of the stick.",
+  "move": "Heat from the inside.",
+  "keywords": [
+    "heated tobacco",
+    "induction heating",
+    "metal foil",
+    "induction coil",
+    "tobacco stick"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Cross-section of a heated-tobacco stick with a coil around it. A switch runs current through the coil. The question asks how the stick heats from the inside. Flip the switch and watch the middle of the stick.",
+    "ground": "#ece0c2"
+  },
+  "source": "Geopop, “Apriamo una sigaretta con tabacco riscaldato in laboratorio” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=B3VHnN4UzEg&t=316s",
+  "written": "2026-11-04"
+}

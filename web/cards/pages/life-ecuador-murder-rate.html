@@ -1,0 +1,250 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-flip-the-rate -->
+<!-- Thought to carry: a rate "per 100,000" hides its size until you flip it into "one in so many": homicides in Ecuador have reached 40 per 100,000, so 100,000 ÷ 40 = one person in every 2,500, a year.
+     Front: 100,000 Ecuadorians drawn as 40 blocks of 2,500 ink dots (8 × 5). Dragging sets a guess on a log scale, and that many red marks light up in place across the blocks.
+     Back: the same 40 blocks. The blocks your guess filled keep a thin blue outline, then the 40 real homicides appear in red, one per block. Guess and truth sit in one picture.
+     Why the front gives nothing away: it shows only the crowd and the reader's own marks. No true value, no reference line, no verdict until the turn. -->
+<title>One in 2,500</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;grid-template-rows:minmax(0,1fr);grid-template-columns:minmax(0,1fr);transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;min-width:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+.face{gap:1.1cqh}
+.face>*{flex:0 0 auto}
+.face .stagebox{flex:1 1 0;min-height:0;position:relative;display:block}
+.face canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* the source sits above the save/share row, never beside or under it */
+.face .foot{margin-top:auto;padding:0 0 50px;box-sizing:border-box}
+.face .foot .src{display:block;font-size:12px;line-height:1.3;overflow-wrap:anywhere;opacity:.75}
+#pic{touch-action:none;cursor:ew-resize}
+.say{overflow-wrap:anywhere;margin:0}
+.back .big{font-size:max(3cqh,18px);line-height:1.12;overflow-wrap:anywhere;margin:0}
+.back .key{list-style:none;margin:0;padding:0;font-size:max(1.7cqh,12.5px);line-height:1.3;font-weight:600}
+.back .key li{display:flex;gap:.55em;align-items:flex-start}
+.back .key li+li{margin-top:.25em}
+.back .key svg{flex:0 0 auto;width:12px;height:12px;margin-top:.22em}
+.back .body{font-size:max(1.8cqh,12.5px);line-height:1.3;overflow-wrap:anywhere;margin:0}
+.back .cap{font-weight:700}
+.back .note{font-size:max(1.7cqh,12.5px);line-height:1.3;margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Aim a guess · a rate flipped">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ECUADOR</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">For every 100,000 Ecuadorians, how many homicides a year?</h2>
+        <div class="stagebox"><canvas id="pic" role="img" aria-label="100,000 people drawn as 40 blocks of 2,500 dots. Drag sideways to mark your guess in red."></canvas></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag sideways across the crowd to set your guess.</p>
+        <div class="foot"><span class="src">Source · Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024).</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Homicides in Ecuador have reached 1 in 2,500 people a year.</p>
+        <ul class="key" id="key">
+          <li><svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="4" fill="#b3362b"/></svg><span>On average 40 per 100,000. 100,000 ÷ 40 = 2,500: one in each block.</span></li>
+          <li><svg viewBox="0 0 12 12"><rect x="1.5" y="1.5" width="9" height="9" fill="none" stroke="#2c56a8" stroke-width="1.5"/></svg><span id="kg">Your guess</span></li>
+        </ul>
+        <div class="stagebox"><canvas id="pic2" role="img" aria-label="The same 40 blocks of 2,500 people, each with one homicide a year; the blocks your guess filled are outlined."></canvas></div>
+        <p class="body cap" id="cap"></p>
+        <p class="note"><b>What to keep.</b> A rate per 100,000 is hard to feel. Divide 100,000 by it and you get the size of the group where it happens once a year.</p>
+        <div class="foot"><span class="src">Source · Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const card = Kit.$('card'), cv = Kit.$('pic'), cv2 = Kit.$('pic2');
+  const css = n => getComputedStyle(card).getPropertyValue(n).trim();
+  const INK = [38, 33, 28], INKC = '#26211c', RED = '#b3362b', BLUE = '#2c56a8';
+  const SIDE = 50, TRUTH = 40;                 // 50 × 50 = 2,500 people a block; 40 per 100,000 (Geopop)
+  const SLOTS = [12, 6, 18, 8, 16, 2, 22, 10, 14, 0, 24, 4, 20, 7, 17, 11, 13, 1, 23, 3, 21, 5, 19, 9, 15];
+  const blockOf = i => ((i % 40) * 13) % 40;
+  const slotOf = i => Math.floor(i / 40);
+  let N = 1, touched = false, done = false, turned = false;
+  const st = {t: 0, g: 0};
+  const sc = d3.scaleLog().domain([1, 1000]).clamp(true);
+  let F = null, B2 = null;
+  const fnt = (w, px, fam) => `${w} ${px}px ${css(fam) || 'sans-serif'}`;
+
+  // ---------- the crowd: 8 × 5 blocks of 2,500 dots, drawn pixel-true ----------
+  function geo(W, top, h, k) {
+    const g0 = Math.max(6, W * .024);
+    let B = Math.max(8, Math.min((W - 7 * g0) / 8, (h - 4 * g0) / 5));
+    let pd = B * k / SIDE; if (pd >= 2) pd = Math.floor(pd);
+    const T = Math.max(10, Math.round(pd * SIDE)); B = T / k;
+    const gx = Math.max(3, Math.min((W - 8 * B) / 7, B * .45));
+    const gy = Math.max(3, Math.min(gx, (h - 5 * B) / 4));
+    const tw = 8 * B + 7 * gx, th = 5 * B + 4 * gy;
+    return {B, T, pd, gx, gy, k, x0: (W - tw) / 2, y0: top + Math.max(0, (h - th) / 2),
+      r: Math.min(3.2, Math.max(1.8, B * .08))};
+  }
+  const tiles = {};
+  function tile(G) {
+    const key = G.T + '|' + G.pd;
+    if (tiles[key]) return tiles[key];
+    const c = document.createElement('canvas'); c.width = c.height = G.T;
+    const x = c.getContext('2d'), im = x.createImageData(G.T, G.T), d = im.data;
+    const s = Math.max(1, Math.round(G.pd * .5)), a = G.pd >= 2 ? 150 : 70;
+    for (let i = 0; i < SIDE; i++) for (let j = 0; j < SIDE; j++) {
+      const px = Math.round(i * G.pd + (G.pd - s) / 2), py = Math.round(j * G.pd + (G.pd - s) / 2);
+      for (let u = 0; u < s; u++) for (let v = 0; v < s; v++) {
+        const X = px + u, Y = py + v; if (X >= G.T || Y >= G.T) continue;
+        const o = (Y * G.T + X) * 4; d[o] = INK[0]; d[o + 1] = INK[1]; d[o + 2] = INK[2]; d[o + 3] = a;
+      }
+    }
+    x.putImageData(im, 0, 0);
+    return (tiles[key] = c);
+  }
+  const corner = (G, b) => [G.x0 + (b % 8) * (G.B + G.gx), G.y0 + Math.floor(b / 8) * (G.B + G.gy)];
+  function crowd(x, G) {
+    const t = tile(G);
+    x.save(); x.setTransform(1, 0, 0, 1, 0, 0);
+    for (let b = 0; b < 40; b++) { const [bx, by] = corner(G, b); x.drawImage(t, Math.round(bx * G.k), Math.round(by * G.k)); }
+    x.restore();
+  }
+  function spot(G, i) {
+    const [bx, by] = corner(G, blockOf(i)), l = SLOTS[slotOf(i)];
+    return [bx + ((l % 5) + .5) / 5 * G.B, by + (Math.floor(l / 5) + .5) / 5 * G.B];
+  }
+  function mark(x, G, i, col, ring) {
+    const [cx, cy] = spot(G, i);
+    x.beginPath(); x.arc(cx, cy, G.r, 0, 7);
+    if (ring) { x.strokeStyle = col; x.lineWidth = 1.2; x.stroke(); } else { x.fillStyle = col; x.fill(); }
+  }
+
+  // ---------- the front: your guess, as marks in the crowd ----------
+  function drawFront() {
+    const {x, W, H} = Kit.fitCanvas(cv);
+    const k = cv.width / W;
+    const fs = Math.max(12, Math.min(14, W / 27));
+    const top = fs * 3.6, bot = fs * 3.6;
+    const G = geo(W, top, H - top - bot, k);
+    F = {x, W, H, fs, G};
+    sc.range([fs * .6, W - fs * 1.7]);
+    paintFront();
+  }
+  function paintFront() {
+    if (!F) return;
+    const {x, W, H, fs, G} = F;
+    x.clearRect(0, 0, W, H);
+    x.textBaseline = 'alphabetic'; x.textAlign = 'left';
+    x.font = fnt(800, fs * 2.6, '--display'); x.fillStyle = touched ? RED : INKC;
+    const num = touched ? N.toLocaleString('en-US') : '?';
+    x.fillText(num, 0, fs * 2.5);
+    const nw = x.measureText(num).width;
+    x.fillStyle = INKC; x.font = fnt(700, fs, '--body');
+    x.fillText('in 100,000,', nw + fs * .6, fs * 1.2);
+    x.fillText('homicides a year', nw + fs * .6, fs * 2.45);
+    crowd(x, G);
+    if (touched) for (let i = 0; i < N; i++) mark(x, G, i, RED);
+    const ty = H - fs * 2.2, [a, b] = sc.range();
+    x.strokeStyle = INKC; x.globalAlpha = .45; x.lineWidth = 1.5;
+    x.beginPath(); x.moveTo(a, ty); x.lineTo(b, ty); x.stroke();
+    for (const v of [1, 10, 100, 1000]) { const tx = sc(v); x.beginPath(); x.moveTo(tx, ty - 4); x.lineTo(tx, ty + 4); x.stroke(); }
+    x.globalAlpha = 1;
+    x.font = fnt(600, fs, '--body'); x.textAlign = 'center'; x.fillStyle = INKC;
+    for (const v of [1, 10, 100, 1000]) x.fillText(v.toLocaleString('en-US'), sc(v), ty + fs * 1.6);
+    x.beginPath(); x.arc(sc(N), ty, fs * .55, 0, 7); x.fillStyle = touched ? RED : INKC; x.fill();
+  }
+  const snap = v => v < 20 ? Math.round(v) : v < 200 ? Math.round(v / 5) * 5 : Math.round(v / 10) * 10;
+  function setN(v) {
+    N = Math.max(1, Math.min(1000, snap(v))); paintFront();
+    Kit.$('say').textContent = `Each red mark is one homicide a year: ${N.toLocaleString('en-US')} in 100,000. How sure are you?`;
+  }
+  let drag = false;
+  const fromX = e => sc.invert(e.clientX - cv.getBoundingClientRect().left);
+  cv.addEventListener('pointerdown', e => {
+    if (done) return; drag = true; cv.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; sure.on(); }
+    Kit.haptic('selection'); setN(fromX(e));
+  });
+  cv.addEventListener('pointermove', e => { if (drag && !done) setN(fromX(e)); });
+  const end = () => { drag = false; };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+
+  // ---------- the back: the same crowd, the truth beside the guess ----------
+  const WORDS = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  function caption() {
+    const g = 100000 / N, one = `1 in ${Number.isInteger(g) ? '' : 'about '}${Math.round(g).toLocaleString('en-US')}`;
+    if (N === TRUTH) return 'You guessed 1 in 2,500. That is exactly it.';
+    const f = N < TRUTH ? TRUTH / N : N / TRUTH, n = Math.round(f);
+    const fr = Math.abs(f - n) < .05 ? (WORDS[n] || n.toLocaleString('en-US')) : f.toFixed(1);
+    return N < TRUTH ? `You guessed ${one}. It is 1 in 2,500, ${fr} times more.`
+                     : `You guessed ${one}. It is 1 in 2,500: your guess was ${fr} times too high.`;
+  }
+  function drawBack() {
+    const {x, W, H} = Kit.fitCanvas(cv2);
+    const k = cv2.width / W;
+    const G = geo(W, 4, H - 8, k);
+    B2 = {x, W, H, G};
+    paintBack();
+  }
+  function paintBack() {
+    if (!B2) return;
+    const {x, W, H, G} = B2;
+    x.clearRect(0, 0, W, H);
+    crowd(x, G);
+    x.globalAlpha = st.g; x.strokeStyle = BLUE; x.lineWidth = 1.5;
+    const o = Math.min(2.5, G.gx / 2 - .5, G.gy / 2 - .5);
+    for (let i = 0; i < Math.min(N, 40); i++) {
+      const [bx, by] = corner(G, blockOf(i));
+      x.strokeRect(bx - o, by - o, G.B + 2 * o, G.B + 2 * o);
+    }
+    for (let i = 40; i < N; i++) mark(x, G, i, BLUE, true);
+    x.globalAlpha = 1;
+    const shown = Math.round(st.t * TRUTH);
+    for (let i = 0; i < shown; i++) mark(x, G, i, RED);
+  }
+  document.addEventListener('turned', () => {
+    turned = true;
+    Kit.$('kg').textContent = `Your guess: ${N.toLocaleString('en-US')} in 100,000`;
+    Kit.$('cap').textContent = caption();
+    drawBack();
+    if (Kit.calm) { Object.assign(st, {t: 1, g: 1}); paintBack(); return; }
+    gsap.set(['#cap'], {opacity: 0});
+    gsap.timeline({delay: .55, onUpdate: paintBack, onComplete: paintBack})
+      .to(st, {g: 1, duration: .5, ease: 'power2.out'})
+      .to(st, {t: 1, duration: 1.6, ease: 'power1.inOut'}, '+=.2')
+      .to('#cap', {opacity: 1, duration: .5, ease: 'power2.out'}, '-=.2');
+  });
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (done) return; done = true;
+    const ok = N >= 27 && N <= 60;
+    Kit.answer({choice: `${N} per 100,000`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${N.toLocaleString('en-US')} per 100,000, ${ok ? 'close' : 'off'}`);
+    setTimeout(() => { drawFront(); Turn.over(); }, 700);
+  });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .6, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    if (!touched) { touched = true; sure.on(); }
+    setN(8); await w(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(Kit.calm ? 1000 : 4200);
+  };
+  if (window.ResizeObserver) {
+    let raf = 0;
+    new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (F) drawFront(); if (turned) drawBack(); }); })
+      .observe(cv.parentNode);
+  }
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-magnetic-seafloor-stripes",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.theories_and_laws",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Walk away from a mid-ocean ridge. What do the rock's magnets do?",
+  "answer": "Bands: the rock's magnets point differently with distance. Cooling magnetite takes the direction of Earth's field, so rock farther from the ridge is older and kept an older field. Dark bands carry today's positive polarity, light bands a different one, confirming the seafloor is spreading.",
+  "move": "When a record is laid down over time and carried off, distance becomes a clock.",
+  "keywords": [
+    "seafloor spreading",
+    "magnetite",
+    "ridge",
+    "earth's magnetic field",
+    "paleomagnetism"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Side view of seafloor bands moving away from a mid-ocean ridge. Question: what do the rock's magnets do? Choices: all point the same way, point differently in bands with distance, or point every which way at random. Pick one to see arrows appear in the rock."
+  },
+  "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=194s",
+  "written": "2026-11-07"
+}

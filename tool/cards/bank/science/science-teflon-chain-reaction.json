@@ -1,0 +1,37 @@
+{
+  "id": "science-teflon-chain-reaction",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a cylinder of TFE gas turn into solid Teflon powder?",
+  "answer": "Raising the pressure on the TFE gas in the cylinder broke one double bond. That single break set off a chain reaction, and the gas turned into solid Teflon powder made of long, slippery polytetrafluoroethylene chains.",
+  "move": "One broken double bond set off a chain reaction that turned a gas into Teflon.",
+  "keywords": [
+    "teflon",
+    "tfe",
+    "polytetrafluoroethylene",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A page titled How a gas turned into Teflon. A pressure dial raises the pressure on TFE gas in a cylinder. The question asks how that gas became solid Teflon powder.",
+    "ground": "#0d0b16"
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=165s",
+  "written": "2026-11-04"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "food-shark-mercury-climb",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.food_safety",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Why can shark meat pose a mercury risk to humans?",
+  "answer": "Sharks sit at the top of the food chain. Each fish keeps the methylmercury of all it ate, so mercury piles up meal after meal. High doses can harm children's development and pregnancy.",
+  "move": "The higher up the food chain, the more mercury in every bite.",
+  "keywords": [
+    "shark",
+    "mercury",
+    "methylmercury",
+    "food chain",
+    "pregnancy"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A food chain graphic ends with a shark, showing mercury building up at each step. The question asks why shark meat can pose a mercury risk to humans. The reader picks a reason, then rates how sure they are.",
+    "ground": "#0a0d1c"
+  },
+  "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=810s",
+  "written": "2026-11-04"
+}

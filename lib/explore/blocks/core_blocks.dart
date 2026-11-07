@@ -7,6 +7,7 @@ library;
 
 import '../explore_block.dart';
 import 'core/card_blocks.dart';
+import 'core/feed_block.dart';
 import 'core/other_blocks.dart';
 import 'core/shelf_blocks.dart';
 
@@ -15,4 +16,5 @@ const List<ExploreBlock> blocks = [
   ...shelfBlocks,
   ...cardBlocks,
   ...otherBlocks,
+  FeedBlock(),
 ];

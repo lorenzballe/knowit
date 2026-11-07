@@ -1,0 +1,216 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-the-blame-trap -->
+<!-- Design note.
+     Thought to carry: "whose fault?" looks back and "who can move next?" looks forward; they are two questions, and they can have two different answers.
+     Front: a person stands between someone else and a mirror. Dragging the dot from Disagree to Agree swings their pointing finger from the other person to the mirror, where the reflection points back.
+     Back: the same scene split in two panels at one scale. "Who caused it?" points at them (often fair); "Who moves next?" points at the mirror (still you). Then the best case for the view and against it.
+     Front gives nothing away: no verdict, no labels on who is right. Each end of the line is drawn just as plainly, and the reader only chooses where to point. -->
+<title>The blame trap</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);transition:visibility 0s .37s}
+.turn:not(.over)>.back{visibility:hidden}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .37s}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+.face svg.pic{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+.front{gap:1cqh;padding-bottom:max(44px,5.5cqh)}
+.back{gap:.9cqh}
+.back .big{margin:0;font:800 max(3cqh,17px)/1.15 var(--display)}
+.lean{margin:0;font:600 max(1.7cqh,12px)/1.3 var(--body);color:var(--muted)}
+.case{margin:0;font:500 max(1.75cqh,12px)/1.32 var(--body);overflow-wrap:break-word}
+.case b{font-weight:800}
+.dot{display:inline-block;width:.75em;height:.75em;border-radius:50%;margin-right:.35em;vertical-align:-.05em}
+.back .keep{font-size:max(1.8cqh,12px)}
+.back .foot{padding-right:112px}
+.src{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Take a side · a point of view">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: does blaming others for your problems hand away your power?</h2>
+        <div class="stagebox"><svg id="pic" class="pic" role="img" aria-label="A person between someone else and a mirror, pointing; below, a line from Disagree to Agree with a dot to drag."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag the dot to where you stand. Then say how sure you are.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Two questions, not one.</p>
+        <p class="lean" id="lean">You leaned: on the fence.</p>
+        <div class="stagebox"><svg id="pic2" class="pic" role="img" aria-label="Two panels. Who caused it: the person points at someone else. Who moves next: the person points at a mirror and the reflection points back."></svg></div>
+        <p class="case"><span class="dot" style="background:#2a5fc4"></span><b>For the view:</b> blame hands the next move to someone else, so you wait. Asking “what was my part?” keeps a lever in your hand.</p>
+        <p class="case"><span class="dot" style="background:#d9482b"></span><b>Against:</b> sometimes others really are at fault. Saying so is honest and fair, and is often the first step to a fix.</p>
+        <p class="case">The trap is fusing the two questions. Fault looks back and power looks forward, and their answers can differ.</p>
+        <div class="keep"><b>ASK YOURSELF</b> Whoever is at fault, what is the next move only I can make?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2020) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const RED = '#d9482b', BLUE = '#2a5fc4';
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let t = 0, touched = false, committed = false, turned = false, built2 = false;
+  let F = null;                       // front scene parts
+  const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+
+  const txt = (p, x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree, var(--body)', 'font-weight': 700}, a), p); e.style.fill = 'var(--k)'; e.textContent = s; return e; };
+
+  // A round-headed figure; its arm turns at the shoulder. ang in degrees: 0 right, 90 down, 180 left.
+  function fig(p, x, gy, s, col, ang) {
+    const g = Kit.mk('g', {}, p), sh = gy - s * .56;
+    const arm = Kit.mk('g', {}, g);
+    Kit.mk('line', {x1: 0, y1: 0, x2: s * .36, y2: 0, stroke: col, 'stroke-width': s * .075, 'stroke-linecap': 'round'}, arm);
+    Kit.mk('line', {x1: s * .34, y1: 0, x2: s * .45, y2: 0, stroke: col, 'stroke-width': s * .034, 'stroke-linecap': 'round'}, arm);
+    Kit.mk('path', {d: `M${x - s * .17},${gy} L${x - s * .13},${sh + s * .06} Q${x - s * .13},${sh - s * .05} ${x},${sh - s * .05} Q${x + s * .13},${sh - s * .05} ${x + s * .13},${sh + s * .06} L${x + s * .17},${gy} Z`, fill: col}, g);
+    const hy = sh - s * .2;
+    Kit.mk('circle', {cx: x, cy: hy, r: s * .13, fill: col}, g);
+    const eye = Kit.mk('circle', {cx: x, cy: hy - s * .01, r: Math.max(1.6, s * .02)}, g); eye.style.fill = 'var(--c)';
+    const o = {g, set(a) {
+      arm.setAttribute('transform', `translate(${x},${sh + s * .04}) rotate(${a})`);
+      eye.setAttribute('cx', x + Math.cos(a * Math.PI / 180) * s * .065);
+    }};
+    o.set(ang); return o;
+  }
+
+  // A standing mirror with the figure's reflection inside it.
+  function mirror(p, mx, gy, s, ang, id) {
+    const g = Kit.mk('g', {}, p), cy = gy - s * .6, rx = s * .32, ry = s * .5;
+    const K = ink();
+    Kit.mk('line', {x1: mx - rx * .55, y1: cy + ry * .8, x2: mx - rx * .8, y2: gy, stroke: K, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, g);
+    Kit.mk('line', {x1: mx + rx * .55, y1: cy + ry * .8, x2: mx + rx * .8, y2: gy, stroke: K, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, g);
+    Kit.mk('ellipse', {cx: mx, cy, rx, ry, fill: 'rgba(255,255,255,.62)'}, g);
+    const cp = Kit.mk('clipPath', {id}, g); Kit.mk('ellipse', {cx: mx, cy, rx: rx - 1, ry: ry - 1}, cp);
+    const inner = Kit.mk('g', {'clip-path': `url(#${id})`}, g);
+    const r = fig(inner, mx, cy + ry * .98, s * .78, BLUE, 180 - ang);
+    Kit.mk('ellipse', {cx: mx, cy, rx, ry, fill: 'none', stroke: K, 'stroke-width': 3}, g);
+    return {g, set(a) { r.set(180 - a); }};
+  }
+
+  // ---------- front ----------
+  const angOf = v => 90 - v * 105;
+  function drawFront() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 26)), K = ink();
+    const gy = H * .62, s = Math.min(H * .46, W * .3);
+    const tx0 = W * .12, tx1 = W * .88, ty = Math.min(H - fs * 2.2, gy + fs * 3.6);
+    const gGround = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: W * .04, x2: W * .96, y1: gy, y2: gy, stroke: K, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .55}, gGround);
+    const other = fig(svg, W * .15, gy, s, RED, 90);
+    const me = fig(svg, W * .5, gy, s, K, angOf(t));
+    const mir = mirror(svg, W * .85, gy, s, angOf(t), 'mclip');
+    const labs = Kit.mk('g', {}, svg);
+    txt(labs, W * .15, gy + fs * 1.4, 'someone else', {'text-anchor': 'middle', 'font-size': fs});
+    txt(labs, W * .85, gy + fs * 1.4, 'a mirror', {'text-anchor': 'middle', 'font-size': fs});
+    // the line between the two views
+    const track = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: tx0, x2: tx1, y1: ty, y2: ty, stroke: K, 'stroke-width': 2.5, 'stroke-linecap': 'round', opacity: .4}, track);
+    Kit.mk('circle', {cx: tx0, cy: ty, r: 4, fill: RED}, track);
+    Kit.mk('circle', {cx: tx1, cy: ty, r: 4, fill: BLUE}, track);
+    txt(track, tx0 - 4, ty + fs * 1.55, 'Disagree', {'font-size': fs});
+    txt(track, tx1 + 4, ty + fs * 1.55, 'Agree', {'text-anchor': 'end', 'font-size': fs});
+    const knob = Kit.mk('g', {}, track);
+    Kit.mk('circle', {cx: 0, cy: 0, r: Math.max(10, fs * .85), fill: K}, knob);
+    const inner = Kit.mk('circle', {cx: 0, cy: 0, r: Math.max(3.5, fs * .3)}, knob); inner.style.fill = 'var(--c)';
+    const nudge = Kit.mk('g', {opacity: touched ? 0 : .7}, knob);
+    const d = fs * 1.5;
+    Kit.mk('path', {d: `M${-d},-5 l-5,5 l5,5 M${d},-5 l5,5 l-5,5`, stroke: K, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, nudge);
+    F = {other, me, mir, knob, nudge, tx0, tx1, ty, gGround, labs, track};
+    placeFront();
+  }
+  function placeFront() {
+    if (!F) return;
+    const a = angOf(t);
+    F.me.set(a); F.mir.set(a);
+    F.knob.setAttribute('transform', `translate(${F.tx0 + (t + 1) / 2 * (F.tx1 - F.tx0)},${F.ty})`);
+  }
+  const fromX = e => { const r = svg.getBoundingClientRect(); return Math.max(-1, Math.min(1, ((e.clientX - r.left) - F.tx0) / (F.tx1 - F.tx0) * 2 - 1)); };
+  let drag = false;
+  svg.addEventListener('pointerdown', e => {
+    if (committed || !F) return; drag = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; F.nudge.setAttribute('opacity', 0); sure.on(); Kit.haptic('selection'); }
+    t = fromX(e); placeFront();
+  });
+  svg.addEventListener('pointermove', e => { if (drag && !committed) { t = fromX(e); placeFront(); } });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const word = v => v < -.6 ? 'disagree' : v < -.2 ? 'lean disagree' : v <= .2 ? 'on the fence' : v <= .6 ? 'lean agree' : 'agree';
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (committed) return; committed = true;
+    const w = word(t);
+    Kit.answer({choice: w, correct: null, sure: pct});
+    Kit.$('lean').textContent = `You said: ${w}, ${pct}% sure. Nothing here is right or wrong. Here is the best of both sides.`;
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back ----------
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg2), fs = Math.max(12, Math.min(14, W / 26)), K = ink();
+    const top = fs * 1.2, gy = H - fs * 2.2, s = Math.min(gy - top - fs * 1.2, W * .21);
+    const g0 = Kit.mk('g', {}, svg2);
+    Kit.mk('line', {x1: W * .5, x2: W * .5, y1: top - fs * .6, y2: gy + fs * 1.6, stroke: K, 'stroke-width': 1.2, 'stroke-dasharray': '3 5', opacity: .45}, g0);
+    Kit.mk('line', {x1: W * .03, x2: W * .46, y1: gy, y2: gy, stroke: K, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .55}, g0);
+    Kit.mk('line', {x1: W * .54, x2: W * .97, y1: gy, y2: gy, stroke: K, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .55}, g0);
+    const figs = Kit.mk('g', {}, svg2);
+    const them = fig(figs, W * .12, gy, s, RED, 90);
+    const meL = fig(figs, W * .35, gy, s, K, 90);
+    const meR = fig(figs, W * .63, gy, s, K, 90);
+    const mir = mirror(figs, W * .87, gy, s, 90, 'mclip2');
+    const heads = Kit.mk('g', {}, svg2), subs = Kit.mk('g', {}, svg2);
+    txt(heads, W * .25, top, 'Who caused it?', {'text-anchor': 'middle', 'font-size': fs * 1.05, 'font-weight': 800});
+    txt(heads, W * .75, top, 'Who moves next?', {'text-anchor': 'middle', 'font-size': fs * 1.05, 'font-weight': 800});
+    txt(subs, W * .25, gy + fs * 1.45, 'Often them', {'text-anchor': 'middle', 'font-size': fs, 'font-weight': 600});
+    txt(subs, W * .75, gy + fs * 1.45, 'Still you', {'text-anchor': 'middle', 'font-size': fs, 'font-weight': 600});
+    const aL = {a: 90}, aR = {a: 90}, upd = () => { meL.set(aL.a); meR.set(aR.a); mir.set(aR.a); };
+    const endL = 192, endR = -12;
+    if (!animate || Kit.calm) { aL.a = endL; aR.a = endR; upd(); return; }
+    gsap.timeline()
+      .from([g0, figs], {opacity: 0, duration: .5, stagger: .1, ease: 'power2.out'})
+      .from(heads.children[0], {opacity: 0, y: -6, duration: .4, ease: 'power3.out'}, '+=.1')
+      .to(aL, {a: endL, duration: .7, ease: 'power3.out', onUpdate: upd}, '<')
+      .from(subs.children[0], {opacity: 0, duration: .35}, '-=.2')
+      .from(heads.children[1], {opacity: 0, y: -6, duration: .4, ease: 'power3.out'}, '+=.25')
+      .to(aR, {a: endR, duration: .7, ease: 'power3.out', onUpdate: upd}, '<')
+      .from(subs.children[1], {opacity: 0, duration: .35}, '-=.2');
+  }
+  document.addEventListener('turned', () => { turned = true; setTimeout(() => { drawBack(true); built2 = true; }, Kit.calm ? 0 : 350); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned && built2) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !F) return;
+    gsap.timeline()
+      .from(F.gGround, {opacity: 0, duration: .4, ease: 'power2.out'})
+      .from([F.other.g, F.me.g, F.mir.g], {opacity: 0, y: 8, duration: .5, stagger: .12, ease: 'power3.out'})
+      .from(F.labs, {opacity: 0, duration: .35})
+      .from(F.track, {opacity: 0, y: 6, duration: .4, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (!touched) { touched = true; if (F) F.nudge.setAttribute('opacity', 0); sure.on(); }
+    t = .55; placeFront();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 3800);
+  };
+})();
+Kit.single();
+</script>
+</html>

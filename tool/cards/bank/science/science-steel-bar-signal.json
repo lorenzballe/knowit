@@ -1,0 +1,36 @@
+{
+  "id": "science-steel-bar-signal",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Change one end of a steel bar. When does the far end feel it?",
+  "answer": "The far end responds a very, very short time later, not at the same instant. The change at one end is a signal that must travel, and in steel that time is tiny but never zero.",
+  "move": "Even in a rigid steel bar, a signal takes a finite time to get from one end to the other.",
+  "keywords": [
+    "steel",
+    "slinky",
+    "veritasium",
+    "signal"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A steel bar with one end changed. The reader picks when the far end responds: at the same instant, a very short time later, long enough to watch it wait, or a very, very short time later."
+  },
+  "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=uiyMuHuCFo4&t=169s",
+  "written": "2026-11-07"
+}

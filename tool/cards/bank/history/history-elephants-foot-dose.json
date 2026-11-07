@@ -1,0 +1,38 @@
+{
+  "id": "history-elephants-foot-dose",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.hindsight_in_history",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How strong is the radiation under Chernobyl's melted core today?",
+  "answer": "The Elephant's Foot, the melted Chernobyl core turned solid, still emits up to 100 mSv per year. Without shielding, that dose is immediately lethal to humans. A dose rate means nothing without its time, since one year is 8,760 hours.",
+  "move": "A dose rate means nothing without its time: one year is 8,760 hours.",
+  "keywords": [
+    "chernobyl",
+    "elephant's foot",
+    "reactor core",
+    "radiation",
+    "corium"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A radiation dial with a needle, beside a photo of the Elephant's Foot, the melted Chernobyl core turned solid. The question asks how strong the radiation under the melted core is today; the reader swings the needle to a guess.",
+    "ground": "#1d1214"
+  },
+  "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=ksyOBogBKvc&t=1198s",
+  "written": "2026-11-04"
+}

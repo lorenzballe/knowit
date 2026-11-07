@@ -1,0 +1,36 @@
+{
+  "id": "science-cat-already-decided",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In Many-Worlds, before you open the box, is the cat alive or dead?",
+  "answer": "In Many-Worlds, the cat is already alive or already dead, with no undecided middle. The detector tangles with the air and light in the box almost at once, splitting the world and you into two identical copies. Opening the box only tells you which copy you are.",
+  "move": "Not knowing an outcome is not the same as it being undecided.",
+  "keywords": [
+    "schrodinger-cat",
+    "many-worlds",
+    "parallel-universes",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Schrödinger's cat puzzle. The reader picks which Many-Worlds answer is right from three options: alive and dead until looked at, neither yet, or already one or the other. Then they rate how sure they are."
+  },
+  "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=617s",
+  "written": "2026-11-07"
+}

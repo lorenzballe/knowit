@@ -371,4 +371,6 @@ BLOCKS: dict[str, Callable[[dict], list[str]]] = {
     "spacer": spacer,
     "divider": divider,
     "web": web,
+    # The whole bank in the day's order, for as long as the reader scrolls: it deals its own.
+    "feed": shelf(),
 }

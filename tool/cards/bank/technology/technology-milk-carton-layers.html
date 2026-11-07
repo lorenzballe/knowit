@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-milk-carton-layers -->
+<!-- Design note.
+     The thought to carry: one carton wall is three materials stuck together (paper, plastic, aluminium). Until recently that made it not recyclable. Lately some plants have been equipped for it.
+     Front: a gable-top milk carton. A magnifier on its side wall shows the cut edge seen side-on, with four blank slots. Each material the reader taps fills the next slot, so building the wall is the question. Nothing says how many layers there are or that they are stuck together. Wax is the trap. The confidence row only appears once the reader has picked a material.
+     Back: the same cut edge, drawn large and alone. Three loose bands slide together and close into one sheet. Each band carries the reader's score (found or missed). Wax gets a line only if the reader picked it. No more than four labels.
+     Facts are only the video's: three layers (paper, plastic, aluminium) stuck together, not recyclable until recently, some plants equipped lately. No cause is given for why, because the video gives none. The closing line is marked as our reading. -->
+<title>The milk carton problem</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+.turn>.face.gone{visibility:hidden}
+
+.stagebox{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+#pic,#pic2{flex:1 1 auto;min-height:0;width:100%;display:block}
+#chips{display:flex;flex-wrap:wrap;gap:1cqh 2.4cqw;justify-content:center}
+.chip{font:700 max(2cqh,13px)/1.1 var(--body);color:var(--k);background:transparent;border:0;
+  box-shadow:inset 0 0 0 max(.22cqh,1.5px) color-mix(in srgb,var(--k) 35%,transparent);
+  border-radius:99px;padding:1.2cqh 4cqw 1.2cqh 3cqw;cursor:pointer;display:inline-flex;align-items:center;gap:1.6cqw}
+.chip i{width:max(1.8cqh,12px);height:max(1.8cqh,12px);border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--k);flex:none}
+.chip.on{background:var(--k);color:var(--c);box-shadow:none}
+.chip.on i{box-shadow:inset 0 0 0 1.5px var(--c)}
+.chip:disabled{cursor:default}
+#surewrap.wait{visibility:hidden}
+.card .front .say{padding-right:0!important;margin-right:116px!important;max-width:calc(100% - 116px);min-height:46px;box-sizing:border-box}
+
+.back .big{font:800 max(3cqh,17px)/1.15 var(--display);margin:0}
+.back .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0}
+.back{gap:1.4cqh}
+.back .stagebox{gap:0}
+.back .foot{padding-right:104px;min-height:46px;overflow-wrap:anywhere}
+.q,.say,.body,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="What's inside · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WHAT'S INSIDE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Why are some milk and juice cartons difficult to recycle?</h2>
+        <div class="stagebox" id="stage">
+          <svg id="pic" role="img" aria-label="A milk carton, with a magnifier on its wall showing the cut edge and empty slots for its materials."></svg>
+          <div id="chips">
+            <button class="chip" data-m="paper"><i style="background:#c99a5e"></i>Paper</button>
+            <button class="chip" data-m="plastic"><i style="background:#f3f0e8"></i>Plastic</button>
+            <button class="chip" data-m="aluminium"><i style="background:#a7acb4"></i>Aluminium</button>
+            <button class="chip" data-m="wax"><i style="background:#ecd98a"></i>Wax</button>
+          </div>
+        </div>
+        <div id="surewrap" class="wait"><div class="sure" id="sure"></div></div>
+        <p class="say" id="say">Tap what the wall is made of.</p>
+      </section>
+      <section class="face back gone" aria-hidden="true">
+        <p class="big">Three layers stuck together: paper, plastic, aluminium.</p>
+        <div class="stagebox">
+          <svg id="pic2" role="img" aria-label="The carton's cut edge: a band of paper, a band of plastic and a band of aluminium stuck into one sheet, each marked with your pick."></svg>
+        </div>
+        <p class="body">Until recently, these cartons were not recyclable. Lately, some plants have been equipped to take them.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Our reading: “recyclable” isn't settled by the material alone. This carton only became recyclable once some plants were equipped for it.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Il processo di riciclo della carta” (YouTube, 2021)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    const f = t.querySelector('.front'), b = t.querySelector('.back');
+    b.classList.remove('gone');
+    t.classList.add('over'); f.setAttribute('aria-hidden', 'true'); b.removeAttribute('aria-hidden');
+    setTimeout(() => f.classList.add('gone'), Kit.calm ? 0 : 760);
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const ORDER = ['paper', 'plastic', 'aluminium', 'wax'];
+  const FILL = {paper: '#c99a5e', plastic: '#f3f0e8', aluminium: '#a7acb4', wax: '#ecd98a'};
+  const NAME = {paper: 'paper', plastic: 'plastic', aluminium: 'aluminium', wax: 'wax'};
+  const CAP = {paper: 'Paper', plastic: 'Plastic', aluminium: 'Aluminium', wax: 'Wax'};
+  const TRUE = ['paper', 'plastic', 'aluminium'];
+  const seq = [];                       // the reader's picks, in tap order: they fill the slots
+  let locked = false, turned = false, lastAdded = null;
+  const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: ink(), 'font-family': 'Figtree, sans-serif', 'font-weight': 700, 'text-anchor': 'middle', 'dominant-baseline': 'central'}, a), p); e.textContent = t; return e; };
+
+  // ---------- front: the carton and the magnified cut edge ----------
+  function drawFront() {
+    const s = Kit.$('pic'); s.innerHTML = '';
+    const {W, H} = Kit.fitSvg(s); if (W < 10 || H < 10) return;
+    const K = ink(), fs = clamp(W / 26, 12, 14);
+    const ch = H * .86, bh = ch * .7, cw = Math.min(W * .2, bh * .36), sw = cw * .5, k = sw * .38;
+    const x0 = W * .05, yb = H * .95, yt = yb - bh, ridge = yt - ch * .17;
+    const g = Kit.mk('g', {}, s);
+    Kit.mk('ellipse', {cx: x0 + (cw + sw) / 2, cy: yb, rx: (cw + sw) * .62, ry: H * .018, fill: K, opacity: .12}, g);
+    const st = {stroke: K, 'stroke-width': 2, 'stroke-linejoin': 'round'};
+    Kit.mk('polygon', Object.assign({points: `${x0 + cw},${yb} ${x0 + cw + sw},${yb - k} ${x0 + cw + sw},${yt - k} ${x0 + cw},${yt}`, fill: '#e4dfd3'}, st), g);
+    Kit.mk('rect', Object.assign({x: x0, y: yt, width: cw, height: bh, fill: '#fbfaf6'}, st), g);
+    Kit.mk('polygon', Object.assign({points: `${x0},${yt} ${x0 + cw},${yt} ${x0 + cw + sw / 2},${ridge} ${x0 + sw / 2},${ridge}`, fill: '#f1eee6'}, st), g);
+    Kit.mk('polygon', Object.assign({points: `${x0 + cw},${yt} ${x0 + cw + sw},${yt - k} ${x0 + cw + sw / 2},${ridge}`, fill: '#d6d0c2'}, st), g);
+    Kit.mk('rect', Object.assign({x: x0 + sw / 2, y: ridge - ch * .06, width: cw, height: ch * .06, fill: '#fbfaf6'}, st), g);
+    Kit.mk('rect', {x: x0 + 1, y: yt + bh * .5, width: cw - 2, height: bh * .3, fill: '#2f5fa8'}, g);
+    const dx = x0 + cw / 2, dy = yt + bh * .28, dr = cw * .16;
+    Kit.mk('path', {d: `M${dx},${dy - dr * 1.9} C${dx + dr * .3},${dy - dr} ${dx + dr},${dy - dr * .2} ${dx + dr},${dy + dr * .2} A${dr},${dr} 0 0 1 ${dx - dr},${dy + dr * .2} C${dx - dr},${dy - dr * .2} ${dx - dr * .3},${dy - dr} ${dx},${dy - dr * 1.9}Z`, fill: '#2f5fa8'}, g);
+
+    // the spot on the side wall, and the lens that enlarges it
+    const px = x0 + cw + sw / 2, py = yt + bh * .42 - k / 2;
+    const left = x0 + cw + sw + 18;
+    const R = Math.max(30, Math.min((W - left - 6) / 2, H * .4));
+    const mx = W - R - 6, my = H * .47;
+    const d = Math.hypot(px - mx, py - my);
+    if (d > R + 2) {
+      const th = Math.atan2(py - my, px - mx), a = Math.acos(R / d);
+      [th - a, th + a].forEach(f => Kit.mk('line', {x1: px, y1: py, x2: mx + R * Math.cos(f), y2: my + R * Math.sin(f), stroke: K, 'stroke-width': 1.3, opacity: .6}, s));
+    }
+    Kit.mk('circle', {cx: px, cy: py, r: 4, fill: '#e4dfd3', stroke: K, 'stroke-width': 1.6}, s);
+
+    const defs = Kit.mk('defs', {}, s), cp = Kit.mk('clipPath', {id: 'clipM'}, defs);
+    Kit.mk('circle', {cx: mx, cy: my, r: R}, cp);
+    const inner = Kit.mk('g', {'clip-path': 'url(#clipM)'}, s);
+    // the cut edge seen side-on: four slots, filled in the order the reader taps
+    const N = 4, T = Math.min(2 * R * .78, N * fs * 2.6), sh = T / N;
+    const cutX = mx - R * .62, lx = mx + R * .12;
+    for (let i = 0; i < N; i++) {
+      const y = my - T / 2 + i * sh, m = seq[i];
+      if (!m) {
+        Kit.mk('rect', {x: cutX, y: y + 2, width: mx + R - cutX + 4, height: sh - 4, fill: 'none', stroke: K, 'stroke-width': 1.5, 'stroke-dasharray': '5 4', opacity: .55}, inner);
+        continue;
+      }
+      const b = Kit.mk('g', {}, inner);
+      Kit.mk('rect', {x: cutX, y, width: mx + R - cutX + 4, height: sh, fill: FILL[m], stroke: K, 'stroke-width': 1.5}, b);
+      txt(b, lx, y + sh / 2, NAME[m], {'font-size': fs});
+      if (m === lastAdded && !Kit.calm) gsap.from(b, {x: -18, opacity: 0, duration: .4, ease: 'power3.out'});
+    }
+    Kit.mk('circle', {cx: mx, cy: my, r: R, fill: 'none', stroke: K, 'stroke-width': 2.5}, s);
+    lastAdded = null;
+  }
+
+  // ---------- back: the real cut edge, the three bands closing into one sheet ----------
+  function drawBack(animate) {
+    const s = Kit.$('pic2'); s.innerHTML = '';
+    const {W, H} = Kit.fitSvg(s); if (W < 10 || H < 10) return;
+    const K = ink(), fs = clamp(W / 24, 12, 15);
+    const wax = seq.includes('wax');
+    const foot = wax ? fs * 2.4 : 0;
+    const G = clamp(H * .06, 6, 16);
+    const bh = clamp((H - foot - 2 * G - 8) / 3, 24, 60);
+    const w = Math.min(W * .9, 340), x = (W - w) / 2;
+    const y0 = (H - foot - 3 * bh) / 2;
+    const g = Kit.mk('g', {}, s);
+
+    function draw(p) {
+      g.innerHTML = '';
+      const gap = (1 - p) * G;
+      TRUE.forEach((m, i) => {
+        const y = y0 + i * bh + (i - 1) * gap;
+        Kit.mk('rect', {x, y, width: w, height: bh, fill: FILL[m], stroke: K, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+        txt(g, x + 16, y + bh / 2, `${CAP[m]} · ${seq.includes(m) ? 'found' : 'missed'}`, {'font-size': fs, 'text-anchor': 'start'});
+      });
+      const o = clamp((p - .8) / .2, 0, 1);
+      if (o > 0) [1, 2].forEach(i => Kit.mk('line', {x1: x, x2: x + w, y1: y0 + i * bh, y2: y0 + i * bh, stroke: K, 'stroke-width': 4, opacity: o}, g));
+    }
+    const gW = Kit.mk('g', {}, s);
+    if (wax) txt(gW, W / 2, H - foot / 2, 'Wax · not in it', {'font-size': fs, 'font-weight': 600});
+
+    if (!animate || Kit.calm) { draw(1); return; }
+    draw(0);
+    const st = {p: 0};
+    gsap.timeline()
+      .from(g, {opacity: 0, y: 8, duration: .45, ease: 'power3.out'})
+      .to(st, {p: 1, duration: .9, ease: 'power3.inOut', onUpdate: () => draw(st.p)}, '+=.25')
+      .from(gW, {opacity: 0, duration: .4}, '-=.1');
+  }
+
+  // ---------- the guess ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (locked) return; locked = true;
+    document.querySelectorAll('.chip').forEach(c => c.disabled = true);
+    const list = ORDER.filter(m => seq.includes(m));
+    const ok = list.length === 3 && TRUE.every(m => seq.includes(m));
+    const said = list.map(m => NAME[m]).join(' + ');
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'not quite'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('chips').addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b || locked) return;
+    const m = b.dataset.m, i = seq.indexOf(m);
+    if (i >= 0) { seq.splice(i, 1); b.classList.remove('on'); }
+    else { seq.push(m); b.classList.add('on'); lastAdded = m; }
+    Kit.haptic('selection');
+    if (seq.length) { Kit.$('surewrap').classList.remove('wait'); sure.on(); }
+    drawFront();
+  });
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic > *', {opacity: 0, y: 8, duration: .5, stagger: .03, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    document.querySelector('.chip[data-m="paper"]').click();
+    await wait(120);
+    document.querySelector('.chip[data-m="wax"]').click();
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4200);
+  };
+})();
+Kit.single();
+</script>
+</html>

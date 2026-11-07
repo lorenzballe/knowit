@@ -1,0 +1,291 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-conflict-two-addresses -->
+<!-- Thought to carry: a conflict you avoid does not go away. It moves inside you, and inside you can't settle it with anyone.
+     Front: you stand between the other person and a mirror. Drag yourself toward "say no" or "put up with it". The jagged line of conflict grows on the side you lean to and shrinks on the other. No verdict.
+     Back: the same figures and the same jagged line, now on two timelines. Saying no is one large spike (about 3.5x a single put-up spike, and wider). Putting up with it is a small spike every time it comes back. The areas are shaded, so the reader compares totals, not peaks. The case against is drawn at the same weight: a no whose cost stays. The reader's row is marked and the other row fades. -->
+<title>One conflict, two addresses</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-sizing:border-box;padding-bottom:calc(max(9cqh,64px) + env(safe-area-inset-bottom,0px))}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible;transition:visibility 0s linear .36s}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .36s}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block;color:var(--k)}
+#pic{touch-action:none;cursor:ew-resize}
+#pic text,#pic2 text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#pic text.ax{font-weight:600}
+#pic2 text.pill{fill:var(--c);font-weight:800}
+.front .say{flex:none;margin:12px 0 0}
+#commit{align-self:flex-start;flex:none;margin-top:16px;font:700 max(2.1cqh,14px)/1.2 var(--body);background:#fff;color:var(--c);border:0;opacity:1;transition:background-color .25s,color .25s}
+#commit:disabled{opacity:1;background:rgba(255,255,255,.35);color:rgba(255,255,255,.7)}
+.back .foot{flex:none}
+.back .big{flex:none;font-size:max(3.4cqh,19px)}
+.back .why{flex:none;margin:0;font-size:max(1.85cqh,12.5px);line-height:1.3}
+.back .why b{font-weight:800}
+#why1{margin-top:24px}
+#why2{margin-top:12px}
+@media (max-height:740px){
+  .back .big{font-size:20px}
+  .back .why{font-size:12.5px;line-height:1.24}
+  .back .keep{padding-top:9px;padding-bottom:9px}
+}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Take a side · point of view">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: saying no hurts less than quietly putting up with it. Agree?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="You stand between another person and a mirror. A jagged line of conflict runs to each; it grows on the side you move toward."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag yourself to the side you'd take. The jagged line is the conflict: <b>watch where it goes.</b></p>
+        <button class="btn" id="commit" disabled>This is my side</button>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">One conflict, two addresses.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Two timelines, each starting from the same figures. Saying no: one large spike, then calm, or a cost that stays. Putting up with it: a smaller spike every time it comes back. The areas under the lines are shaded."></svg></div>
+        <p class="body why" id="why1"><b>For the view:</b> a no is one hard talk with someone who can answer back; a swallowed yes argues with you again every time it comes back.</p>
+        <p class="body why" id="why2"><b>Against it:</b> a no can cost a job, a friend or your safety, and some of that never comes back. Weigh the shaded areas, not the peaks.</p>
+        <div class="keep"><b>ASK YOURSELF</b> Of the two costs, which could I still undo in a year: the hard talk, or the quiet yes?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2021) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const S = {p: .5, touched: false, done: false, turned: false};
+  let F = null, backTl = null;
+  const clamp = (a, b, v) => Math.max(a, Math.min(b, v));
+  const zones = ['Say no', 'Mostly say no', 'It depends', 'Mostly put up with it', 'Put up with it'];
+  const zi = p => p < .2 ? 0 : p < .4 ? 1 : p <= .6 ? 2 : p <= .8 ? 3 : 4;
+  const zone = p => zones[zi(p)];
+
+  const text = (g, x, y, t, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs}, a), g); e.textContent = t; return e; };
+  const keepIn = (e, W) => { const b = e.getBBox(); let dx = 0; if (b.x < 2) dx = 2 - b.x; else if (b.x + b.width > W - 2) dx = W - 2 - b.x - b.width; if (dx) e.setAttribute('x', +e.getAttribute('x') + dx); };
+
+  // A round-headed figure; facing -1 left, 1 right, 0 straight at the reader.
+  function figure(g, x, base, h, facing, fill, eye, op = 1, sw = 2) {
+    const bw = h * .42, bh = h * .6, r = h * .16, hy = base - bh - r * 1.18;
+    const grp = Kit.mk('g', {opacity: op}, g);
+    Kit.mk('path', {d: `M${x - bw / 2},${base} L${x - bw / 2},${base - bh + bw * .38} Q${x - bw / 2},${base - bh} ${x},${base - bh} Q${x + bw / 2},${base - bh} ${x + bw / 2},${base - bh + bw * .38} L${x + bw / 2},${base} Z`, fill, stroke: 'currentColor', 'stroke-width': sw, 'stroke-linejoin': 'round'}, grp);
+    Kit.mk('circle', {cx: x, cy: hy, r, fill, stroke: 'currentColor', 'stroke-width': sw}, grp);
+    Kit.mk('circle', {cx: x + facing * r * .48, cy: hy - r * .12, r: Math.max(1.3, r * .12), fill: eye}, grp);
+    return {hy, r};
+  }
+  function zig(g, x1, y1, x2, y2, amp, w) {
+    const n = Math.max(3, Math.round(Math.abs(x2 - x1) / (amp * 1.1 + 6)));
+    let d = `M${x1},${y1}`;
+    for (let i = 1; i < n; i++) { const t = i / n; d += ` L${x1 + (x2 - x1) * t},${y1 + (y2 - y1) * t + (i % 2 ? -amp : amp)}`; }
+    d += ` L${x2},${y2}`;
+    return Kit.mk('path', {d, fill: 'none', stroke: 'currentColor', 'stroke-width': w, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
+  }
+  // A mirror on a stand, with you inside the glass.
+  function mirror(g, x, ground, h, id, svg, sw = 2.6) {
+    const rx = h * .25, ry = h * .46, cy = ground - h * .58, mb = cy + ry;
+    Kit.mk('path', {d: `M${x - rx * .55},${mb - 2} L${x - rx * .95},${ground} M${x + rx * .55},${mb - 2} L${x + rx * .95},${ground}`, stroke: 'currentColor', 'stroke-width': sw * .9, 'stroke-linecap': 'round'}, g);
+    Kit.mk('ellipse', {cx: x, cy, rx, ry, fill: 'rgba(255,255,255,.22)'}, g);
+    const cp = Kit.mk('clipPath', {id}, svg); Kit.mk('ellipse', {cx: x, cy, rx: rx - 1, ry: ry - 1}, cp);
+    const inner = Kit.mk('g', {'clip-path': `url(#${id})`}, g);
+    const rf = figure(inner, x, mb + 2, h * .86, -1, 'currentColor', 'var(--c)', .6, sw * .7);
+    Kit.mk('ellipse', {cx: x, cy, rx, ry, fill: 'none', stroke: 'currentColor', 'stroke-width': sw}, g);
+    return {rx, ry, cy, mb, rf};
+  }
+
+  // ---------- the front ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = clamp(12, 14, W / 25), fa = 15, under = 37;
+    const fh = Math.max(44, Math.min(W * .44, (H - fs * 1.6 - under - 4) / 1.06));
+    const B = fh * 1.06 + fs * 1.6 + under;
+    const top = Math.max(2, (H - B) * .28);
+    const GY = top + fh * 1.06 + fs * 1.6;
+    const bw = fh * .42;
+    const xO = Math.max(bw / 2 + 3, W * .12), xM = Math.min(W - fh * .25 - 3, W * .87);
+    let xmin = xO + fh * .7, xmax = xM - fh * .7;
+    if (xmax < xmin) xmin = xmax = (xO + xM) / 2;
+    F = {W, H, fs, fa, GY, fh, xO, xM, xmin, xmax};
+    const still = Kit.mk('g', {class: 'b1'}, svg);
+    Kit.mk('line', {x1: 0, x2: W, y1: GY, y2: GY, stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round'}, still);
+    const o = figure(still, xO, GY, fh, 1, 'currentColor', 'var(--c)');
+    F.oH = o.hy; F.oR = o.r;
+    const l1 = text(still, xO - bw / 2, GY - fh * 1.06 - fs * .5, 'the other person', fs); keepIn(l1, W);
+    // each side labelled where it lives, at the two ends of the ground
+    const ly = GY + 32;
+    F.lSay = text(still, 3, ly, 'say no', fa, {class: 'ax'});
+    F.lPut = text(still, W - 3, ly, 'put up with it', fa, {class: 'ax', 'text-anchor': 'end'});
+    const mg = Kit.mk('g', {class: 'b1'}, svg);
+    const m = mirror(mg, xM, GY, fh, 'glass' + Math.round(W), svg);
+    F.rf = m.rf;
+    const l2 = text(mg, xM, m.cy - m.ry - fs * .55, 'your reflection', fs, {'text-anchor': 'middle'}); keepIn(l2, W);
+    F.live = Kit.mk('g', {class: 'b2'}, svg);
+    paintFront();
+  }
+  function paintFront() {
+    if (!F) return;
+    const {fs, GY, fh, xO, xM, xmin, xmax, rf, oH, oR} = F, p = S.p, L = F.live;
+    L.innerHTML = '';
+    const x = xmin + (xmax - xmin) * p;
+    const face = !S.touched ? 0 : (p < .5 ? -1 : 1);
+    const me = figure(L, x, GY, fh, face, 'currentColor', 'var(--c)');
+    // the conflict: larger on the side you lean toward, smaller on the other
+    const z = (x1, y1, x2, y2, a) => { if (Math.abs(x2 - x1) < 6) return;
+      zig(L, x1, y1, x2, y2, fs * (.28 + .8 * a), 1.6 + 2.2 * a).setAttribute('opacity', (.45 + .55 * a).toFixed(2)); };
+    z(x - me.r * 1.25, me.hy, xO + oR * 1.25, oH, 1 - p);
+    z(x + me.r * 1.25, me.hy, xM - rf.r * 1.4, rf.hy, p);
+    // a two-way arrow under your feet: you can be moved
+    if (!S.done) {
+      const ay = GY + 11, d = fs * 1.05, hh = fs * .38;
+      Kit.mk('path', {d: `M${x - d},${ay} H${x + d} M${x - d + hh},${ay - hh} L${x - d},${ay} L${x - d + hh},${ay + hh} M${x + d - hh},${ay - hh} L${x + d},${ay} L${x + d - hh},${ay + hh}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .85}, L);
+    }
+    F.lSay.setAttribute('opacity', S.touched && p > .5 ? .6 : 1);
+    F.lPut.setAttribute('opacity', S.touched && p < .5 ? .6 : 1);
+  }
+  function setP(v) { S.p = clamp(0, 1, v); paintFront(); }
+
+  const pic = Kit.$('pic'); let drag = false;
+  const fromX = e => { const r = pic.getBoundingClientRect(); return (e.clientX - r.left - F.W * .22) / (F.W * .56); };
+  pic.addEventListener('pointerdown', e => { if (S.done || !F) return; drag = true; pic.setPointerCapture(e.pointerId);
+    if (!S.touched) { S.touched = true; Kit.$('commit').disabled = false; Kit.haptic('selection'); } setP(fromX(e)); });
+  pic.addEventListener('pointermove', e => { if (drag) setP(fromX(e)); });
+  const end = () => { drag = false; }; pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+  Kit.$('commit').addEventListener('click', () => {
+    if (S.done || !S.touched) return; S.done = true;
+    const said = zone(S.p);
+    Kit.answer({choice: said, correct: null, sure: Math.round(Math.abs(S.p - .5) * 200)});
+    Kit.haptic('success');
+    paintFront();
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- the back ----------
+  const marks = [
+    ['you: say no', 'you are here', 'you'],
+    ['you: mostly say no', 'you, mostly', 'you'],
+    ['you: it depends', 'you, partly', 'you'],
+    ['you: mostly put up with it', 'you, mostly', 'you'],
+    ['you: put up with it', 'you are here', 'you']
+  ];
+  function drawBack(animate) {
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = clamp(12, 13.5, W / 24);
+    const capY = fs * 1.3, low = fs * .45, gap = fs * .85;
+    const cH = Math.max(14, Math.min((H - 2 - (capY + low) * 2 - gap) / 2, W * .34));
+    const yA = 2 + cH, yB = yA + capY + low + gap + cH;
+    const sw = clamp(2, 3, cH / 24);
+    // the front's own figures, small
+    const fhI = Math.max(12, Math.min(cH / 1.06, W * .13, 64));
+    const bwI = fhI * .42, rxI = fhI * .25;
+    const xYou = bwI / 2 + 2, zg = Math.max(fhI * .6, fs * 1.5);
+    const xTo = xYou + bwI + zg, xMi = xYou + bwI / 2 + zg + rxI;
+    const xs = Math.max(xTo + bwI / 2, xMi + rxI) + fs * .9, xe = W - 3, span = xe - xs;
+    // timelines: the first put-up spike and the no share a moment
+    const n = 7, step = span / n, w1 = step * .42, hb = cH / 3.5, bigW = w1 * 1.8, c0 = xs + step * .5;
+    const k = zi(S.p), side = k < 2 ? 'A' : k > 2 ? 'B' : 'AB';
+    const rowA = Kit.mk('g', {opacity: side === 'B' ? .6 : 1}, svg);
+    const rowB = Kit.mk('g', {opacity: side === 'A' ? .6 : 1}, svg);
+    const clip = (id, x0, w0) => { const cp = Kit.mk('clipPath', {id}, svg); return Kit.mk('rect', {x: x0, y: -4, width: w0, height: H + 8}, cp); };
+    const tag = Math.round(W) + '' + Math.round(H);
+    const line = (g, d, extra = {}) => Kit.mk('path', Object.assign({d, fill: 'none', stroke: 'currentColor', 'stroke-width': sw, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, extra), g);
+
+    // row A: you and the other person, then the no
+    const iA = Kit.mk('g', {}, rowA);
+    const meA = figure(iA, xYou, yA, fhI, 1, 'currentColor', 'var(--c)', 1, 1.6);
+    const ot = figure(iA, xTo, yA, fhI, -1, 'currentColor', 'var(--c)', 1, 1.6);
+    zig(iA, xYou + meA.r * 1.25, meA.hy, xTo - ot.r * 1.25, ot.hy, Math.max(2, fhI * .08), sw * .85);
+    const rA = clip('cA' + tag, -2, animate ? xs + 2 : W + 4);
+    const gA = Kit.mk('g', {'clip-path': `url(#cA${tag})`}, rowA);
+    const bx1 = c0 - bigW / 2, bx2 = c0 + bigW / 2;
+    // the case against: part of the no's cost stays, drawn at the same weight
+    const hs = hb * .5, xd = c0 + (bigW / 2) * (1 - hs / cH);
+    const rC = clip('cC' + tag, xd - sw, animate ? 0 : W);
+    const gC = Kit.mk('g', {'clip-path': `url(#cC${tag})`}, rowA);
+    Kit.mk('path', {d: `M${xd},${yA - hs} L${xe},${yA - hs} L${xe},${yA} L${bx2},${yA} Z`, fill: 'rgba(255,255,255,.1)'}, gC);
+    Kit.mk('path', {d: `M${bx1},${yA} L${c0},${yA - cH} L${bx2},${yA} Z`, fill: 'rgba(255,255,255,.2)'}, gA);
+    line(gA, `M0,${yA} L${bx1},${yA} L${c0},${yA - cH} L${bx2},${yA} L${xe},${yA}`);
+    line(gC, `M${xd},${yA - hs} L${xe},${yA - hs}`, {'stroke-dasharray': `${sw * 2.6} ${sw * 2.2}`});
+    const costL = text(rowA, xe, Math.max(fs * .9, yA - hs - sw / 2 - fs * .4), 'or a cost that stays', fs, {'text-anchor': 'end'});
+    const capA = text(rowA, 0, yA + capY, "say no: one hard talk, then it's over", fs);
+
+    // row B: you and the mirror, then the yes that comes back
+    const iB = Kit.mk('g', {}, rowB);
+    const meB = figure(iB, xYou, yB, fhI, 1, 'currentColor', 'var(--c)', 1, 1.6);
+    const mB = mirror(iB, xMi, yB, fhI, 'bglass' + tag, svg, 1.8);
+    zig(iB, xYou + meB.r * 1.25, meB.hy, xMi - mB.rf.r * 1.4, mB.rf.hy, Math.max(2, fhI * .08), sw * .85);
+    const rB = clip('cB' + tag, -2, animate ? xs + 2 : W + 4);
+    const gB = Kit.mk('g', {'clip-path': `url(#cB${tag})`}, rowB);
+    let dB = `M0,${yB}`, fB = '';
+    for (let i = 0; i < n; i++) { const c = xs + step * (i + .5), a = c - w1 / 2, b = c + w1 / 2;
+      dB += ` L${a},${yB} L${c},${yB - hb} L${b},${yB}`; fB += `M${a},${yB} L${c},${yB - hb} L${b},${yB} Z `; }
+    dB += ` L${xe},${yB}`;
+    Kit.mk('path', {d: fB, fill: 'rgba(255,255,255,.2)'}, gB);
+    line(gB, dB);
+    const capB = text(rowB, 0, yB + capY, 'put up with it: paid every time', fs);
+
+    // the reader's answer, on their own row
+    function mark(row, cap) {
+      const y = +cap.getAttribute('y'), avail = W - 2 - (cap.getBBox().width + fs * .8), pad = fs * .5;
+      for (const t of marks[k]) {
+        const e = text(row, 0, y, t, fs, {class: 'pill'}), tw = e.getComputedTextLength();
+        if (tw + pad * 2 <= avail) {
+          const x = W - 2 - tw - pad * 2;
+          const bg = Kit.mk('rect', {x, y: y - fs * 1.02, width: tw + pad * 2, height: fs * 1.42, rx: fs * .71, fill: 'currentColor'}, row);
+          row.insertBefore(bg, e); e.setAttribute('x', x + pad);
+          return [bg, e];
+        }
+        e.remove();
+      }
+      return [Kit.mk('line', {x1: 0, x2: cap.getBBox().width, y1: y + fs * .32, y2: y + fs * .32, stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round'}, row)];
+    }
+    const pins = side === 'B' ? mark(rowB, capB) : mark(rowA, capA);
+
+    if (backTl) backTl.kill(); backTl = null;
+    if (!animate) return;
+    gsap.set([capA, capB, costL, ...pins, iA, iB], {opacity: 0});
+    backTl = gsap.timeline({delay: .45})
+      .to([iA, iB], {opacity: 1, duration: .4, stagger: .12, ease: 'power2.out'})
+      .to(rA, {attr: {width: W + 4}, duration: .9, ease: 'power2.inOut'})
+      .to(capA, {opacity: 1, duration: .3}, '-=.4')
+      .to(rB, {attr: {width: W + 4}, duration: 1.3, ease: 'power1.inOut'}, '+=.1')
+      .to(capB, {opacity: 1, duration: .3}, '-=.5')
+      .to(rC, {attr: {width: W}, duration: .8, ease: 'power2.out'}, '+=.15')
+      .to(costL, {opacity: 1, duration: .3}, '-=.4')
+      .to(pins, {opacity: 1, duration: .35, ease: 'power2.out'});
+  }
+  document.addEventListener('turned', () => { S.turned = true; drawBack(!Kit.calm); });
+
+  Kit.onShow.card = () => { drawFront(); if (S.turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || S.done) return;
+    gsap.from('#pic .b1', {opacity: 0, y: 8, stagger: .15, duration: .5, ease: 'power3.out'});
+    gsap.from('#pic .b2', {opacity: 0, duration: .5, delay: .4, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    S.touched = true; Kit.$('commit').disabled = false; setP(.25);
+    await wait(150);
+    Kit.$('commit').click();
+    await wait(Kit.calm ? 800 : 1700);
+    if (backTl) backTl.progress(1);
+    await wait(150);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "food-acid-squeezes-protein",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.cooking_myths",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Acid, no heat. What does the world’s strongest acid do to meat?",
+  "answer": "Like heat, acids squeeze the meat's proteins; chemists call this denaturing. Squeezed, the proteins lose all their juices, and the meat turns dry and stringy, the way overcooked meat does.",
+  "move": "Heat isn't the only thing that cooks: an acid squeezes the proteins just the same.",
+  "keywords": [
+    "fluoroantimonic acid",
+    "protein",
+    "meat",
+    "denaturation",
+    "heat"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: what does the world's strongest acid do to meat? Three choices are shown: juicier, still raw, or dry and stringy. Tap one to see whether your guess was right, then the reveal that acid cooks meat by squeezing its proteins."
+  },
+  "source": "Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=5G0YVPLSbW8&t=364s",
+  "written": "2026-11-07"
+}

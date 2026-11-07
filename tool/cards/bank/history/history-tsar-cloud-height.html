@@ -1,0 +1,299 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-tsar-cloud-height -->
+<!-- Design note.
+     Thought to carry: our sense of "very high" stops where mountains and planes stop. Past that, count in heights you know instead of picturing.
+     Front: Everest, a km ruler to 80 and the plane at its 10 km drop height. The reader drags the cloud's top. A live tag on the guess line shows the number, then the reader says how sure.
+     Back: one focal point, the real 64 km cloud in flat ink. The reader's cloud sits solid white inside it, and a plain white arrow runs from its top to the real top.
+     Seven Everests are stacked beside it at the same scale, so 64 km reads as seven Everests. The 40 km bracket sits at the cap's widest points.
+     Four labels only: "7 Everests", "40 km wide", "your N km", "10 km drop". No ground scale bar and no burst mark.
+     One height for the answer, everywhere: 64 km, about seven Everests (the brief's figures). The 10 km and 4 km heights appear only in the body text, as the drop and burst.
+     The front shows only the reader's number, Everest and the drop height (true facts, not the answer): no real line, no 64, no verdict. -->
+<title>The Tsar Bomba's cloud</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s .37s}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .37s}
+.turn{transform-origin:center}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.back .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0 0 .6cqh}
+.back .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:.8cqh 0}
+.card .turn .face .say,.card .turn .face .foot{padding-right:0;margin-right:max(24cqw,104px)}
+.say{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);margin-top:16px;margin-left:0;padding-left:0}
+.q{overflow-wrap:break-word}
+/* Confidence: full black ink, never ochre on ochre. */
+#sure,#sure *{opacity:1!important}
+#sure{color:var(--k)}
+#sure :not([data-v]):not([data-v] *){color:var(--k)!important}
+#sure [data-v]{background:transparent!important;border:1.6px solid var(--k)!important;color:var(--k)!important;box-shadow:none!important;filter:none!important}
+#sure [data-v].mine{background:var(--k)!important;color:var(--c)!important}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag the cloud up · how high">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOW HIGH</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">How high did the Tsar Bomba's mushroom cloud rise?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="Mount Everest, a ruler in kilometres up to 80, the plane at its 10 km drop height, and a mushroom cloud you drag to your guess."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag the cloud's top to your guess. Then say how sure you are.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">64 km high, 40 km wide</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The real cloud, 64 km tall and 40 km wide, with your guess drawn inside it, the 10 km drop line and seven Everests stacked to the same height."></svg></div>
+        <p class="body">Dropped from about 10 km, it went off at 4 km. Its cloud rose 64 km high: roughly seven Everests stacked.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Past mountains and planes, our eye stops measuring: count in heights you know.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024).</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const TOP = 64, WIDE = 40, EV = TOP / 7, DROP = 10, MAXK = 80;
+  const INK = 'var(--k)', WHITE = '#ffffff';
+  let guess = 15, touched = false, answered = false, turned = false;
+  let F = null;   // front geometry
+
+  const txt = (p, x, y, t, a = {}, fs = 13) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree, var(--body)', 'font-size': fs, 'font-weight': 700}, a), p);
+    e.textContent = t; return e;
+  };
+  const halo = {stroke: 'var(--c)', 'stroke-width': 4, 'paint-order': 'stroke', 'stroke-linejoin': 'round'};
+
+  // Half-width of the mushroom, as a share of its full width, at relative height t.
+  const halfFrac = t => (t < 0 || t > 1.01) ? 0 : t <= .25 ? .14 - .42 * t : t <= .6 ? .035 : t <= .65 ? .035 + (t - .6) * 9.3 : .5;
+
+  // A mushroom cloud, hKm tall and wKm wide, on the ground at gy.
+  function cloudD(cx, gy, hKm, wKm, k) {
+    const h = hKm * k, w = wKm * k, P = (s, t) => `${(cx + s * w).toFixed(1)},${(gy - t * h).toFixed(1)}`;
+    return `M${P(-.14, 0)}C${P(-.06, .02)} ${P(-.036, .1)} ${P(-.034, .25)}L${P(-.03, .6)}` +
+      `C${P(-.07, .64)} ${P(-.3, .63)} ${P(-.42, .645)}` +
+      `C${P(-.49, .655)} ${P(-.5, .7)} ${P(-.5, .76)}` +
+      `C${P(-.5, .84)} ${P(-.44, .9)} ${P(-.35, .9)}` +
+      `C${P(-.31, .98)} ${P(-.18, 1)} ${P(-.1, .965)}` +
+      `C${P(-.04, 1.01)} ${P(.07, 1.01)} ${P(.12, .965)}` +
+      `C${P(.2, 1)} ${P(.33, .98)} ${P(.36, .9)}` +
+      `C${P(.45, .9)} ${P(.5, .84)} ${P(.5, .76)}` +
+      `C${P(.5, .7)} ${P(.49, .655)} ${P(.42, .645)}` +
+      `C${P(.3, .63)} ${P(.07, .64)} ${P(.03, .6)}` +
+      `L${P(.034, .25)}C${P(.036, .1)} ${P(.06, .02)} ${P(.14, 0)}Z`;
+  }
+  // Everest, redrawn as a plain ridge.
+  function everestPts(x0, base, k, w) {
+    const P = [[0,0],[.16,.32],[.27,.28],[.44,.78],[.52,1],[.6,.76],[.7,.6],[.8,.42],[.9,.3],[1,0]];
+    return P.map(([a, b]) => `${(x0 + a * w).toFixed(1)},${(base - b * EV * k).toFixed(1)}`).join(' ');
+  }
+  function plane(p, px, py) {
+    Kit.mk('path', {d: `M${px - 11},${py} L${px + 9},${py} M${px - 2},${py} l-5,-6 M${px - 2},${py} l-5,6 M${px - 11},${py} l-2,-4`, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none'}, p);
+  }
+
+  // Shared frame: ground and ruler.
+  function frame(svg, opt = {}) {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, W / 26));
+    const x0 = Math.round(fs * 2.6 + 24), GY = H - fs * .9, top = fs * 1.8;
+    const evW = fs * 3.4, labE = fs * 5.6;
+    const evX = x0 + Math.max(fs * .6, labE / 2 - evW / 2 + 4);
+    const labR = evX + evW / 2 + labE / 2;
+    let k = Math.max(.5, (GY - top) / MAXK);
+    if (opt.wide) k = Math.max(.5, Math.min(k, (W - labR - 18) / WIDE));
+    const y = km => GY - km * k;
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: x0, x2: W, y1: GY, y2: GY, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, g);
+    Kit.mk('line', {x1: x0, x2: x0, y1: GY, y2: y(MAXK), stroke: INK, 'stroke-width': 1.4, opacity: .55}, g);
+    for (let m = 10; m <= MAXK; m += 10) {
+      Kit.mk('line', {x1: x0 - (m % 20 ? 3 : 6), x2: x0, y1: y(m), y2: y(m), stroke: INK, 'stroke-width': 1.4, opacity: .55}, g);
+      if (m % 20 === 0) txt(g, x0 - 9, y(m) + fs * .35, m === MAXK ? `${m} km` : `${m}`, {'text-anchor': 'end', 'font-weight': 600, opacity: .75}, fs);
+    }
+    return {svg, W, H, fs, x0, GY, k, y, evW, evX, labR};
+  }
+
+  // ---------- the front ----------
+  let gCloud, gTag, gLine, gDrop, gDropLine, gPill, gHint;
+  function drawFront() {
+    const svg = Kit.$('pic');
+    F = frame(svg);
+    const {W, fs, GY, k, y, evW, evX, x0} = F;
+    F.cx = Math.max(evX + evW + fs * 2.5, Math.min(W - 25 * k - 6, x0 + (W - x0) * .5));
+    F.px = W - fs * 1.2; F.py = y(DROP);
+    plane(svg, F.px, F.py);
+    gDropLine = Kit.mk('line', {x1: x0, x2: F.px - 16, y1: F.py, y2: F.py, stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '3 4', opacity: .55}, svg);
+    gDrop = txt(svg, F.px + 9, F.py, '', {'text-anchor': 'end', 'font-weight': 600, ...halo}, fs);
+    gCloud = Kit.mk('path', {fill: WHITE, 'fill-opacity': .75, stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, svg);
+    Kit.mk('polygon', {points: everestPts(evX, GY, k, evW), fill: INK}, svg);
+    txt(svg, evX + evW * .52, y(EV) - fs * .6, 'Everest', {'text-anchor': 'middle', ...halo}, fs);
+    gLine = Kit.mk('line', {x1: x0, y1: 0, x2: 0, y2: 0, stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '3 4', opacity: .6}, svg);
+    gTag = txt(svg, 0, 0, '', {'font-weight': 800, ...halo}, fs);
+    gPill = Kit.mk('rect', {width: 18, height: 6, rx: 3, fill: INK}, svg);
+    gHint = txt(svg, 0, 0, 'drag ↑', {'text-anchor': 'middle', 'font-weight': 700, ...halo}, fs);
+    paintGuess();
+  }
+
+  // Rightmost x of the reader's cloud (plus its grip and hint) between two heights, in km.
+  function frontRight(lo, hi) {
+    const {cx, k, fs} = F, g = guess, w = g * WIDE / TOP;
+    let r = -1e9;
+    for (let i = 0; i <= 16; i++) {
+      const f = halfFrac((lo + (hi - lo) * i / 16) / g);
+      if (f > 0) r = Math.max(r, cx + f * w * k);
+    }
+    if (hi >= g - .5 && lo <= g + fs * 1.9 / k) r = Math.max(r, cx + (touched ? 9 : Math.max(9, F.hintW / 2)));
+    return r;
+  }
+
+  function paintGuess() {
+    if (!F) return;
+    const {GY, k, y, cx, x0, fs, px, py} = F, g = guess, w = g * WIDE / TOP, half = .5 * w * k, top = y(g);
+    gCloud.setAttribute('d', cloudD(cx, GY, g, w, k));
+    gPill.setAttribute('x', cx - 9); gPill.setAttribute('y', top - 3);
+    gHint.setAttribute('x', cx); gHint.setAttribute('y', top - 12);
+    gHint.setAttribute('opacity', touched ? 0 : 1);
+    F.hintW = gHint.getComputedTextLength();
+    gTag.textContent = `${Math.round(g)} km`;
+    const tw = gTag.getComputedTextLength();
+    let tx = cx - half - 8, anchor = 'end';
+    if (tx - tw < x0 + 6) { tx = cx + half + 8; anchor = 'start'; }
+    gTag.setAttribute('x', tx); gTag.setAttribute('y', top + fs * .35); gTag.setAttribute('text-anchor', anchor);
+    gLine.setAttribute('y1', top); gLine.setAttribute('y2', top); gLine.setAttribute('x2', Math.max(x0, cx - half - 4));
+    const rAt = frontRight(DROP - .3, DROP + .3);
+    gDropLine.setAttribute('x1', rAt > -1e8 ? Math.min(px - 20, rAt + 16) : x0);
+    const cands = [['dropped from 10 km', 1], ['dropped from 10 km', -1], ['10 km', 1], ['10 km', -1]];
+    for (const [s, side] of cands) {
+      gDrop.textContent = s;
+      const lw = gDrop.getComputedTextLength(), b = side > 0 ? py + fs * 1.25 : py - fs * .6;
+      const hiKm = (GY - (b - fs * .78)) / k, loKm = (GY - (b + fs * .22)) / k;
+      const left = px + 9 - lw;
+      gDrop.setAttribute('y', b);
+      if (b <= GY - 3 && left >= x0 + 4 && left >= frontRight(loKm, hiKm) + 16) break;
+    }
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered) return; answered = true;
+    const chip = Kit.$('sure').querySelector(`[data-v="${pct}"]`); if (chip) chip.classList.add('mine');
+    const g = Math.round(guess), ok = Math.abs(g - TOP) <= 8;
+    Kit.answer({choice: `${g} km`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${g} km; it rose to 64 km`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  const pic = Kit.$('pic');
+  let drag = false;
+  const fromY = e => { const r = pic.getBoundingClientRect(); return (F.GY - (e.clientY - r.top)) / F.k; };
+  const setG = v => { guess = Math.max(2, Math.min(MAXK, v)); paintGuess(); };
+  pic.addEventListener('pointerdown', e => { if (answered) return; drag = true; pic.setPointerCapture(e.pointerId); setG(fromY(e)); Kit.haptic('selection'); });
+  pic.addEventListener('pointermove', e => { if (drag) setG(fromY(e)); });
+  const end = () => { if (!drag) return; drag = false; if (!touched) { touched = true; sure.on(); paintGuess(); } };
+  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+  // ---------- the back ----------
+  function drawBack(animate) {
+    const B = frame(Kit.$('pic2'), {wide: true});
+    const {svg, W, fs, GY, k, y, evW, evX, labR} = B;
+    const half = WIDE / 2 * k;
+    const cMin = labR + 12 + half, cMax = W - 6 - half;
+    const cx = cMin + Math.max(0, cMax - cMin) * .35;
+    const g = Math.round(guess), wG = g * WIDE / TOP, diff = TOP - g;
+    const px = W - fs * 1.2, py = y(DROP);
+
+    // The plane and its 10 km line, as on the front.
+    const anchors = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: evX + evW + 6, x2: px - 16, y1: py, y2: py, stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '3 4', opacity: .55}, anchors);
+    plane(anchors, px, py);
+
+    // The reader's cloud, solid white; behind the real one if it was taller.
+    const ghostAttrs = {d: cloudD(cx, GY, g, wG, k), fill: WHITE, stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round'};
+    let mine = null;
+    if (diff < 0) mine = Kit.mk('path', ghostAttrs, svg);
+    const truth = Kit.mk('path', {d: cloudD(cx, GY, TOP, WIDE, k), fill: INK, 'stroke-linejoin': 'round'}, svg);
+    if (diff >= 0) mine = Kit.mk('path', ghostAttrs, svg);
+
+    // Seven Everests at the same scale: together they reach the 64 km top.
+    const stack = Kit.mk('g', {}, svg), evs = [];
+    for (let i = 0; i < 7; i++) {
+      evs.push(Kit.mk('polygon', {points: everestPts(evX, GY - i * EV * k, k, evW), fill: INK, stroke: 'var(--c)', 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, stack));
+    }
+    const evL = txt(svg, evX + evW / 2, y(TOP) - fs * .6, '7 Everests', {'text-anchor': 'middle', ...halo}, fs);
+
+    // The width, measured at the cap's widest points.
+    const meas = Kit.mk('g', {}, svg), capY = y(TOP * .76);
+    let wy = y(Math.max(TOP, g)) - fs * .8, ly = wy - fs * .5;
+    if (ly - fs < 0) { wy = y(TOP * .6) + fs * .2; ly = wy + fs * 1.25; }
+    Kit.mk('path', {d: `M${cx - half},${wy}V${capY}M${cx + half},${wy}V${capY}`, stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '2 3', opacity: .45, fill: 'none'}, meas);
+    Kit.mk('path', {d: `M${cx - half},${wy - 4}v8M${cx - half},${wy}H${cx + half}M${cx + half},${wy - 4}v8`, stroke: INK, 'stroke-width': 1.4, fill: 'none'}, meas);
+    txt(meas, cx, ly, '40 km wide', {'text-anchor': 'middle', 'font-weight': 800, ...halo}, fs);
+
+    // The gap, drawn without words: from the guess's top to the real top.
+    const gap = Kit.mk('g', {}, svg);
+    if (diff >= 3) {
+      const yA = y(g) - 3, yB = y(TOP) + 6;
+      if (yA - yB > fs * 1.4) {
+        Kit.mk('path', {d: `M${cx - 5},${yA}H${cx + 5}M${cx},${yA}V${yB}M${cx - 4},${yB + 5}L${cx},${yB}L${cx + 4},${yB + 5}`, stroke: WHITE, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none'}, gap);
+      }
+    } else if (diff <= -3 && (g - TOP) * k > fs * 1.5) {
+      const yA = y(TOP) - 3, yB = y(g) + 4;
+      Kit.mk('path', {d: `M${cx - 5},${yB}H${cx + 5}M${cx},${yB}V${yA}M${cx - 4},${yA - 5}L${cx},${yA}L${cx + 4},${yA - 5}`, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none'}, gap);
+    }
+
+    // Labels: the guess on the left of the cloud, the drop height by the plane.
+    const halfAt = h => Math.max(halfFrac(h / TOP) * WIDE, halfFrac(h / g) * wG) * k;
+    const gl = txt(svg, 0, 0, `your ${g} km`, {'text-anchor': 'end', 'font-weight': 700, ...halo}, fs);
+    const lw = gl.getComputedTextLength(), minX = evX + evW + 6;
+    let hL = g * .8, xe = cx - 8;
+    for (; hL > fs * .3 / k; hL -= 1) {
+      const lo = hL - fs * .25 / k, hi = hL + fs * .78 / k;
+      // keep clear of the 10 km drop line
+      if (DROP * k > (hL - fs * .25 / k) * k - 2 && DROP * k < (hL + fs * .78 / k) * k + 2) continue;
+      let m = 0; for (let i = 0; i <= 8; i++) m = Math.max(m, halfAt(lo + (hi - lo) * i / 8));
+      xe = cx - m - 8;
+      if (xe - lw >= minX) break;
+    }
+    gl.setAttribute('x', xe); gl.setAttribute('y', y(Math.max(hL, fs * .3 / k)));
+
+    const dl = txt(anchors, px + 9, py - fs * .6, '10 km drop', {'text-anchor': 'end', 'font-weight': 600, ...halo}, fs);
+    const dw = dl.getComputedTextLength();
+    let dm = 0; for (let i = 0; i <= 8; i++) dm = Math.max(dm, halfAt(DROP + i * fs / k / 8));
+    if (px + 9 - dw < cx + dm + 10) dl.setAttribute('y', py + fs * 1.25);
+
+    if (!animate || Kit.calm) return;
+    gsap.timeline()
+      .from(mine, {opacity: 0, duration: .4, ease: 'power2.out'}, .15)
+      .from(gl, {opacity: 0, duration: .4}, .2)
+      .from(evs, {opacity: 0, y: -10, duration: .3, stagger: .12, ease: 'power3.out'}, .5)
+      .from(evL, {opacity: 0, duration: .3}, 1.3)
+      .from(truth, {scaleY: 0, svgOrigin: `${cx} ${GY}`, duration: 1.2, ease: 'power3.out'}, 1.5)
+      .from(gap, {opacity: 0, duration: .4}, 2.6)
+      .from(meas, {opacity: 0, duration: .4}, 2.8);
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm && gCloud) gsap.from(gCloud, {scaleY: 0, svgOrigin: `${F.cx} ${F.GY}`, duration: .9, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (!touched) { touched = true; sure.on(); }
+    setG(18);
+    await wait(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4200);
+  };
+})();
+Kit.single();
+</script>
+</html>

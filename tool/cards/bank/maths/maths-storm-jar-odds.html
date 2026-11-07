@@ -1,0 +1,260 @@
+<!doctype html>
+<!-- slug: maths-storm-odds -->
+<!-- Thought to carry: "once every N years" is an average, not a schedule. If each year is its own independent draw, the odds of being hit within N years are about 2 in 3.
+     Both figures from the video sit together: with the damper working, such a storm came every 67 years on average; with its power out, the chance was 1 in 16 in any given year.
+     Front: the Citicorp tower on its stilts, with a tiny person at its foot. The tower is the gauge: drag up it to fill it to your odds (never at the stilts, certain at the crown).
+     Back: Matter.js drops 48 balls, each one possible 16-year run with the damper unpowered. 31 land in "a storm hit" and 17 in "16 calm years", then a bar sets the real 64% against your guess.
+     The front shows no number but yours: no true line, no count, no verdict until the card turns. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The 1-in-16 storm</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/matter.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* the unturned back is mirrored, so its source would sit in the save and share corner: keep it out of view until the turn reaches halfway */
+.turn>.back{visibility:hidden;transition:visibility 0s linear .37s}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn,.kit-calm .turn>.back{transition:none}
+.face{gap:1.2cqh}
+.face .stagebox{flex:1 1 auto;min-height:0;position:relative}
+#pic,#pic2{position:absolute;inset:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.back .big{margin:0}
+.back .body{margin:0;font-size:max(1.75cqh,12px);line-height:1.3}
+.say{overflow-wrap:break-word;margin:0}
+.front .foot.spacer{flex:0 0 auto;min-height:max(6cqh,44px)}
+/* keep the source clear of the save and share corner */
+.back .foot{padding-right:100px;box-sizing:border-box;min-height:44px}
+.back .foot .src{display:block;max-width:100%;font-size:max(1.5cqh,12px);line-height:1.3}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag your odds · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ODDS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">A 1-in-16 chance, any given year, of a storm that topples Citicorp. Odds of one within 16 years?</h2>
+        <p class="say" id="say">With the damper working, such storms came every 67 years on average. Its power is out. <b>Drag up the tower</b> to set your odds.</p>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="The Citicorp tower on its stilts, used as a gauge: drag up it to set your odds."></svg></div>
+        <div id="sure"></div>
+        <div class="foot spacer" aria-hidden="true"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">About 2 in 3: 64%</p>
+        <div class="stagebox"><canvas id="pic2" role="img" aria-label="48 balls, each a run of 16 years: 31 fall into the storm-hit bin, 17 into the calm bin."></canvas></div>
+        <p class="body">Each ball is one run of 16 years. If each year is its own 1-in-16 draw, unaffected by the last, all 16 stay calm only (15/16)<sup>16</sup> ≈ 36% of the time.</p>
+        <div class="keep"><b>WHAT TO KEEP</b>Every 67 years with the damper on, 1 in 16 a year with it off. Either way, “once every N years” means about 2 in 3 odds within N years.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const card = Kit.$('card'), svg = Kit.$('pic');
+  const RED = '#d8432b';
+  const TRUE = 1 - Math.pow(15 / 16, 16);               // 0.644: at least one 1-in-16 year among 16, years independent
+  const N = 48, HIT = Math.round(N * TRUE);             // 31 of 48 runs
+  let g = null, answered = false, turned = false, F = {};
+  const css = v => getComputedStyle(card).getPropertyValue(v).trim();
+
+  // ---------- front: the tower as a gauge ----------
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': F.fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
+  function front() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 26));
+    const GY = H - fs * 1.2, top = fs * 1.2;
+    const tw = Math.min(W * .28, (GY - top) * .24), x0 = W * .26, x1 = x0 + tw;
+    const stiltTop = GY - (GY - top) * .14, drop = tw * .7;
+    F = {fs, W, H, GY, top, x0, x1, stiltTop};
+    // ground
+    Kit.mk('line', {x1: W * .04, x2: W * .96, y1: GY, y2: GY, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    // stilts: one at each side, one in the middle of the face
+    const sw = tw * .11;
+    [x0, x0 + tw / 2 - sw / 2, x1 - sw].forEach(sx => Kit.mk('rect', {x: sx, y: stiltTop, width: sw, height: GY - stiltTop, fill: 'var(--k)'}, svg));
+    // the slab with its slanted crown
+    const pts = `${x0},${stiltTop} ${x1},${stiltTop} ${x1},${top + drop} ${x0},${top}`;
+    const defs = Kit.mk('defs', {}, svg), cp = Kit.mk('clipPath', {id: 'slab'}, defs);
+    Kit.mk('polygon', {points: pts}, cp);
+    const body = Kit.mk('g', {'clip-path': 'url(#slab)'}, svg);
+    Kit.mk('polygon', {points: pts, fill: '#fff', 'fill-opacity': .5}, body);
+    for (let y = stiltTop - 5; y > top; y -= 7) Kit.mk('line', {x1: x0, x2: x1, y1: y, y2: y, stroke: 'var(--k)', 'stroke-opacity': .18, 'stroke-width': 1}, body);
+    if (g !== null) {
+      const gy = stiltTop - g / 100 * (stiltTop - top);
+      Kit.mk('rect', {x: x0, y: gy, width: tw, height: stiltTop - gy, fill: 'var(--k)'}, body);
+      F.gy = gy;
+    }
+    Kit.mk('polygon', {points: pts, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+    // a person at its foot, for scale
+    const px = x1 + tw * .45, ph = fs * 1.15;
+    Kit.mk('line', {x1: px, x2: px, y1: GY - 1, y2: GY - ph * .62, stroke: 'var(--k)', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    Kit.mk('circle', {cx: px, cy: GY - ph * .82, r: ph * .2, fill: 'var(--k)'}, svg);
+    // the gauge's two ends
+    Kit.mk('line', {x1: x0 - 4, x2: x0 - fs * .8, y1: top, y2: top, stroke: 'var(--k)', 'stroke-width': 1.2}, svg);
+    txt(svg, x0 - fs, top + fs * .35, 'certain', {'text-anchor': 'end', 'font-weight': 600});
+    Kit.mk('line', {x1: x0 - 4, x2: x0 - fs * .8, y1: stiltTop, y2: stiltTop, stroke: 'var(--k)', 'stroke-width': 1.2}, svg);
+    txt(svg, x0 - fs, stiltTop + fs * .35, 'never', {'text-anchor': 'end', 'font-weight': 600});
+    if (g !== null) {
+      const gy = F.gy, lx = x1 + fs * 1.2, big = fs * 2.6;
+      // label baseline sits above ly, the big number's box starts clearly below ly
+      const ly = Math.max(top + fs * 1.4, Math.min(stiltTop - big * 1.15, gy));
+      Kit.mk('path', {d: `M${x1 + 3},${gy} L${lx - 6},${ly}`, stroke: 'var(--k)', 'stroke-width': 1.2, fill: 'none'}, svg);
+      txt(svg, lx, ly - fs * .45, 'your guess', {'font-weight': 600});
+      txt(svg, lx, ly + big * 1.15, `${g}%`, {'font-family': 'var(--display)', 'font-size': big, 'font-weight': 800});
+    } else {
+      const ax = x0 + tw / 2, ay = stiltTop - (stiltTop - top) * .2;
+      Kit.mk('path', {d: `M${ax},${ay} v-${fs * 2.4} m-6,7 l6,-7 l6,7`, stroke: 'var(--k)', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    }
+  }
+  const setFromY = e => {
+    const r = svg.getBoundingClientRect(), y = e.clientY - r.top;
+    g = Math.round(Math.max(0, Math.min(1, (F.stiltTop - y) / (F.stiltTop - F.top))) * 100);
+    front();
+  };
+  let drag = false;
+  svg.addEventListener('pointerdown', e => { if (answered) return; drag = true; svg.setPointerCapture(e.pointerId); setFromY(e); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (drag) setFromY(e); });
+  const end = () => { if (!drag) return; drag = false; if (g !== null) sure.on(); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered || g === null) return; answered = true;
+    const ok = Math.abs(g - 64) <= 10;
+    Kit.answer({choice: `${g}%`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${g}%, ${ok ? 'close' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back: 48 runs of 16 years, falling into two bins ----------
+  let eng = null, balls = [], raf = 0, B = {}, FAST = false;
+  function back(animate) {
+    cancelAnimationFrame(raf); if (B.timer) clearInterval(B.timer);
+    const cv = Kit.$('pic2'), {x: ctx, W, H} = Kit.fitCanvas(cv);
+    const fs = Math.max(12, Math.min(14, W / 26)), ink = css('--k') || '#111', paper = css('--c') || '#fff', fam = css('--body') || 'sans-serif';
+    const lab = fs * 1.9, under = fs * 4.9;               // room for bin labels above, bar and its labels below
+    const gap = W * .08, binW = Math.min(W * .38, (W - gap) / 2 - fs);
+    const bx = [(W - 2 * binW - gap) / 2]; bx[1] = bx[0] + binW + gap;
+    const avail = Math.max(fs * 3, H - lab - under);
+    // largest ball that still lets the fuller bin sit inside its walls
+    let r = Math.max(4, Math.min(binW / 12, H * .045)), per, rows, need;
+    for (;;) {
+      per = Math.max(1, Math.floor(binW / (2 * r))); rows = Math.ceil(HIT / per);
+      need = rows * 2 * r * .95 + r * 2.5;
+      if (need <= avail || r <= 4) break;
+      r -= .5;
+    }
+    const binH = Math.min(need, avail);
+    const block = lab + binH + under, off = Math.max(0, (H - block) / 2);
+    const binTop = off + lab, binBot = binTop + binH, barY = binBot + fs * 2.3;
+    B = {ctx, W, H, fs, ink, paper, fam, barY, binBot, binTop, binW, bx, r, t: animate ? 0 : 1, spawned: 0, done: false};
+    const M = Matter;
+    eng = M.Engine.create(); eng.gravity.y = 1;
+    const st = {isStatic: true, friction: .1};
+    const walls = [];
+    bx.forEach(x => {
+      walls.push(M.Bodies.rectangle(x + binW / 2, binBot + 10, binW + 40, 20, st));
+      walls.push(M.Bodies.rectangle(x - 10, binBot - H, 20, H * 2, st));
+      walls.push(M.Bodies.rectangle(x + binW + 10, binBot - H, 20, H * 2, st));
+    });
+    M.Composite.add(eng.world, walls);
+    const kinds = Array.from({length: N}, (_, i) => i < HIT);
+    for (let i = N - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [kinds[i], kinds[j]] = [kinds[j], kinds[i]]; }
+    balls = [];
+    const spawn = (storm, y) => {
+      const x0 = bx[storm ? 0 : 1], b = M.Bodies.circle(x0 + r + Kit.rnd() * (binW - 2 * r), y, r * .96, {restitution: .15, friction: .05, frictionAir: .01});
+      b.storm = storm; balls.push(b); M.Composite.add(eng.world, b);
+    };
+    if (!animate) {
+      const k = [0, 0];
+      kinds.forEach(s => { const i = s ? 0 : 1; spawn(s, binBot - r - k[i]++ * 2.2 * r); });
+      for (let i = 0; i < 700; i++) M.Engine.update(eng, 1000 / 60);
+      B.spawned = N; B.done = true; draw(); return;
+    }
+    B.timer = setInterval(() => {
+      if (B.spawned >= N) { clearInterval(B.timer); B.timer = 0; B.endAt = performance.now(); return; }
+      spawn(kinds[B.spawned++], -r * 2);
+    }, 65);
+    const loop = () => {
+      M.Engine.update(eng, 1000 / 60); draw();
+      if (B.endAt && !B.bar && performance.now() - B.endAt > 1100) {
+        B.bar = true;
+        gsap.to(B, {t: 1, duration: .9, ease: 'power2.out', onComplete: () => { B.done = true; }});
+      }
+      if (!B.done) raf = requestAnimationFrame(loop); else draw();
+    };
+    raf = requestAnimationFrame(loop);
+  }
+  function draw() {
+    const {ctx, W, H, fs, ink, paper, fam, barY, binBot, binTop, binW, bx, r} = B;
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    // the two bins
+    ctx.strokeStyle = ink; ctx.lineWidth = 2;
+    bx.forEach(x => { ctx.beginPath(); ctx.moveTo(x, binTop); ctx.lineTo(x, binBot); ctx.lineTo(x + binW, binBot); ctx.lineTo(x + binW, binTop); ctx.stroke(); });
+    // the balls
+    const n = [0, 0];
+    balls.forEach(b => {
+      ctx.beginPath(); ctx.arc(b.position.x, b.position.y, r * .96, 0, Math.PI * 2);
+      ctx.fillStyle = b.storm ? RED : paper; ctx.fill();
+      ctx.lineWidth = 1.4; ctx.strokeStyle = ink; ctx.stroke();
+      if (b.position.y > binTop) n[b.storm ? 0 : 1]++;
+    });
+    // counts over the bins
+    ctx.fillStyle = ink; ctx.textAlign = 'center'; ctx.font = `700 ${fs}px ${fam}`;
+    ctx.fillText(`a storm hit: ${n[0]}`, bx[0] + binW / 2, binTop - fs * .7);
+    ctx.fillText(`16 calm years: ${n[1]}`, bx[1] + binW / 2, binTop - fs * .7);
+    // the odds bar, truth against the guess
+    if (B.t > 0) {
+      const a = bx[0], b = bx[1] + binW, xt = a + (b - a) * TRUE * B.t;
+      ctx.globalAlpha = Math.min(1, B.t * 3);
+      ctx.lineWidth = 6; ctx.strokeStyle = ink; ctx.globalAlpha *= .2;
+      ctx.beginPath(); ctx.moveTo(a, barY); ctx.lineTo(b, barY); ctx.stroke();
+      ctx.globalAlpha = Math.min(1, B.t * 3);
+      ctx.strokeStyle = RED; ctx.beginPath(); ctx.moveTo(a, barY); ctx.lineTo(Math.max(a + .1, xt), barY); ctx.stroke();
+      ctx.fillStyle = ink; ctx.font = `800 ${fs}px ${fam}`;
+      const tl = `real odds: ${Math.round(TRUE * 100 * B.t)}%`, tw = ctx.measureText(tl).width;
+      ctx.textAlign = 'left';
+      ctx.fillText(tl, Math.max(2, Math.min(W - tw - 2, xt - tw / 2)), barY - fs * .75);
+      if (g !== null) {
+        const xg = a + (b - a) * g / 100;
+        ctx.strokeStyle = ink; ctx.lineWidth = 1.6; ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(xg, barY - 8); ctx.lineTo(xg, barY + 8); ctx.stroke(); ctx.setLineDash([]);
+        ctx.font = `600 ${fs}px ${fam}`;
+        const gl = `your guess: ${g}%`, gw = ctx.measureText(gl).width;
+        ctx.fillText(gl, Math.max(2, Math.min(W - gw - 2, xg - gw / 2)), barY + fs * 1.6);
+      }
+      ctx.globalAlpha = 1;
+    }
+  }
+  document.addEventListener('turned', () => {
+    turned = true;
+    setTimeout(() => back(!Kit.calm && !FAST), Kit.calm ? 0 : 780);
+  });
+
+  Kit.onShow.card = () => { front(); if (turned && B.ctx) back(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm) return;
+    gsap.from('#pic > *', {opacity: 0, y: 8, stagger: .04, duration: .45, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    FAST = true; g = 40; front(); sure.on();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(2000);
+  };
+})();
+Kit.single();
+</script>
+</html>

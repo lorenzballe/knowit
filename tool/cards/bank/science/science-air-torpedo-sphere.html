@@ -1,0 +1,241 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-air-torpedo -->
+<!-- Design note.
+     Thought to carry: drag belongs to the shape the liquid touches, not to the solid inside it. Trap air round a sphere and the liquid meets a torpedo.
+     Front: three identical balls under one wavy water line, each wrapped in air a different way (thin skin, round bubble, torpedo).
+       All three envelopes share the same 90px band, the same 2px stroke and the same white. Their order is shuffled on every load,
+       so nothing points at the answer. No tank fill: the drawing sits right on the card.
+     Back: the same water line and the same ball. On the left the sphere on its own. On the right the same sphere inside its torpedo of air,
+       with four thin lines of liquid sliding past it and meeting again at the tip. The torpedo is the one focal point.
+       Two labels, each centred under its subject, so they never cross the drawing or each other. -->
+<title>The ball that turns torpedo</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;grid-template-rows:minmax(0,1fr);grid-template-columns:minmax(0,1fr);transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+/* The face that is turned away takes no room in the corner and cannot be hit. */
+.turn:not(.over)>.back{visibility:hidden}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .38s}
+.kit-calm .turn.over>.front{transition:none}
+
+/* Keep the bottom strip clear for the save and share buttons. */
+.turn>.front{padding-bottom:60px}
+.turn>.back{padding-bottom:0}
+
+.face .stagebox{position:relative;flex:1;min-height:0;display:flex;overflow:hidden}
+#pic,#pic2{position:absolute;inset:0;width:100%;height:100%;display:block}
+#pic{cursor:pointer}
+#pic text,#pic2 text{font-family:var(--body);font-weight:700;fill:var(--k)}
+.surf{fill:none;stroke:var(--k);stroke-width:1.8;stroke-linecap:round}
+.air{fill:#fff;stroke:var(--k);stroke-width:2;stroke-linejoin:round}
+.ball{fill:var(--k)}
+.ln{fill:none;stroke:var(--k);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.flow{fill:none;stroke:var(--k);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.fall{fill:none;stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 5;stroke-linecap:round;opacity:.35}
+#pic text.picked{fill:#d9521f}
+.mark{stroke:#d9521f;stroke-width:3;stroke-linecap:round}
+
+/* Front: question, instruction, drawing, chips. */
+.front .q,.front .sure,.front .say{flex:none}
+.front .say{margin:.4cqh 0 1.2cqh;font-weight:600}
+.front .sure{margin-top:1cqh}
+#sure [data-v]{color:var(--k)!important;opacity:1!important;border:1.5px solid var(--k)!important;background:transparent!important}
+#sure [data-v].chosen{background:var(--k)!important;color:#fff!important}
+
+/* Back: short headline, the reader's own line, then the drawing. */
+.back .big{margin:0 0 .5cqh;flex:none;font-size:clamp(24px,7.4cqw,30px);line-height:1.05}
+.back .reply{flex:none;margin:.2cqh 0 .6cqh;font:600 max(1.9cqh,13px)/1.3 var(--body)}
+.back .body{font:500 max(1.8cqh,12.5px)/1.35 var(--body);margin:.8cqh 0;flex:none}
+.back .keep{flex:none}
+.back .foot{flex:none;padding-right:104px;min-height:56px;box-sizing:border-box}
+.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK THE SHAPE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">A falling ball is wrapped in air. What shape does the water feel?</h2>
+        <p class="say" id="say">Tap the shape the air really takes as the ball falls.</p>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="Three balls falling in water, each wrapped in air: a thin skin, a round bubble, and a torpedo."></svg></div>
+        <div class="sure" id="sure"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Trapped air turns the ball into a torpedo</p>
+        <p class="reply" id="reply"></p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Two spheres in water. On the left, the sphere on its own. On the right, the same sphere with air trapped round it in a torpedo shape, the liquid sliding past it and meeting again at its tip."></svg></div>
+        <p class="body">The researchers combined two tricks: the Leidenfrost effect and superhydrophobicity, a water-repelling surface. Together they trap air around a dropped sphere, which then slices through the liquid as a torpedo shape.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> To cut drag, change the shape the liquid touches, not the thing inside.</div>
+        <div class="foot"><span class="src">Source · The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const NAMES = ['a thin skin', 'a round bubble', 'a torpedo'], RIGHT = 2;
+  const REPLY = [
+    p => `You picked a thin skin at ${p}%: not quite. The trapped air takes a torpedo shape.`,
+    p => `You picked a round bubble at ${p}%: not quite. The trapped air takes a torpedo shape.`,
+    p => `You picked a torpedo at ${p}%: right.`
+  ];
+  // A fresh left-to-right order on every load, so position gives nothing away.
+  const ORDER = [0, 1, 2];
+  for (let i = 2; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [ORDER[i], ORDER[j]] = [ORDER[j], ORDER[i]]; }
+
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let pick = -1, turned = false, entered = false, backTl = null;
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y}, a), p); e.textContent = t; return e; };
+  const poly = pts => pts.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ');
+
+  // Half-width of the torpedo of air at height dy below the ball's centre (the ball falls down, the point faces up).
+  const tearH = (R, L) => dy => {
+    if (dy >= R || dy <= -L) return 0;
+    if (dy >= 0) return Math.sqrt(R * R - dy * dy);
+    const t = -dy / L; return R * Math.pow(1 - Math.pow(t, 1.6), .9);
+  };
+  function tearPath(cx, cy, R, L) {
+    const h = tearH(R, L), n = 36, right = [], left = [];
+    for (let i = 0; i <= n; i++) { const dy = -L + L * i / n; right.push([cx + h(dy), cy + dy]); }
+    for (let i = n; i >= 0; i--) { const dy = -L + L * i / n; left.push([cx - h(dy), cy + dy]); }
+    return poly(right) + ` A${R},${R} 0 0 1 ${cx - R},${cy} ` + poly(left).replace(/^M/, 'L') + 'Z';
+  }
+  const circ = (cx, cy, R) => `M${cx - R},${cy} a${R},${R} 0 1 0 ${R * 2},0 a${R},${R} 0 1 0 ${-R * 2},0Z`;
+  // Smooth a half-width profile, so a line of liquid starts to bend before it reaches the body.
+  function blur(h, dy, sig) {
+    let s = 0, w = 0;
+    for (let u = -2 * sig; u <= 2 * sig; u += sig / 6) { const k = Math.exp(-u * u / (2 * sig * sig)); s += h(dy + u) * k; w += k; }
+    return s / w;
+  }
+  const surface = (x0, x1, S, seed) => {
+    let d = `M${x0},${S}`; const n = 40;
+    for (let i = 1; i <= n; i++) { const x = x0 + (x1 - x0) * i / n; d += ` L${x.toFixed(1)},${(S + Math.sin(i * .9 + seed) * 1.6).toFixed(1)}`; }
+    return d;
+  };
+
+  // ---------- the front: three ways the air could sit, equal in weight ----------
+  function drawFront(anim) {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = Math.max(12, Math.min(14, W / 28));
+    const S = 6, B = H - fs * 2.4, D = B - S, x0 = W * .02, x1 = W * .98, cw = (x1 - x0) / 3;
+    const k = Math.max(.4, Math.min(1, cw * .78 / 90, D * .5 / 90));
+    const r = 28 * k, Rb = 45 * k, Rs = r + 4 * k, Rt = r * 1.13, Lt = 90 * k - Rt;  // every envelope sits in the same 90px band
+    const mid = S + D * .45, cy = mid - (Rb - Lt) / 2;
+    const top = cy - Lt, bot = cy + Rb;
+    const wg = Kit.mk('g', {class: 'fwater'}, svg);
+    Kit.mk('path', {d: surface(x0, x1, S, 1), class: 'surf'}, wg);
+    for (let p = 0; p < 3; p++) {
+      const i = ORDER[p], cx = x0 + cw * (p + .5);
+      const g = Kit.mk('g', {class: 'fcol'}, svg);
+      if (top - 8 - (S + 10) > 12) Kit.mk('path', {d: `M${cx},${S + 10} V${top - 8}`, class: 'fall ffall'}, g);
+      const mv = Kit.mk('g', {class: 'mover'}, g);
+      const d = i === 0 ? circ(cx, cy, Rs) : i === 1 ? circ(cx, cy, Rb) : tearPath(cx, cy, Rt, Lt);
+      Kit.mk('path', {d, class: 'air fair'}, mv);
+      Kit.mk('circle', {cx, cy, r, class: 'ball'}, mv);
+      const ay = bot + 8, al = Math.max(10, 16 * k);
+      if (ay + al < B - 4) Kit.mk('path', {d: `M${cx},${ay} v${al} m-4,-5 l4,5 l4,-5`, class: 'ln farrow'}, g);
+      const lb = txt(g, cx, B + fs * 1.45, NAMES[i], {'text-anchor': 'middle', 'font-size': fs, class: i === pick ? 'picked' : ''});
+      if (i === pick) { const tw = lb.getComputedTextLength(); Kit.mk('line', {x1: cx - tw / 2, x2: cx + tw / 2, y1: B + fs * 1.95, y2: B + fs * 1.95, class: 'mark'}, g); }
+      Kit.mk('rect', {x: x0 + cw * p, y: 0, width: cw, height: H, fill: 'transparent', 'data-i': i}, g);
+    }
+    if (anim && !Kit.calm) {
+      gsap.timeline()
+        .from('.fwater', {opacity: 0, duration: .45, ease: 'power2.out'})
+        .from('#pic .mover', {y: -(cy - S - r), duration: .9, stagger: .12, ease: 'power3.out'}, '-=.1')
+        .from('#pic .fair', {opacity: 0, duration: .5, stagger: .12, ease: 'power2.out'}, '-=.5')
+        .from('#pic .farrow, #pic .ffall, #pic text', {opacity: 0, duration: .4, ease: 'power2.out'}, '-=.2');
+    }
+  }
+
+  // ---------- the back: the same sphere, alone and inside its torpedo of air ----------
+  function drawBack(anim) {
+    if (backTl) backTl.kill();
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H, fs = Math.max(12, Math.min(13.5, W / 28)), lh = fs * 1.2;
+    const S = 4, x0 = W * .02, x1 = W * .98;
+    const labH = 8 + fs * .85 + lh + fs * .3;                 // two label lines under the drawing
+    const B = H - labH, top = S + 10, band = Math.max(20, B - top);
+    const r = Math.max(5, Math.min(W * .065, 26, band / 6.9));
+    const R = r * 1.13, L = r * 4.4;
+    const cy = top + band / 2 + (L - R) / 2;                    // torpedo centred in the band
+    const cl = W * .27, cr = W * .71;
+
+    const base = Kit.mk('g', {}, svg2);
+    Kit.mk('path', {d: surface(x0, x1, S, 2.4), class: 'surf'}, base);
+    const lines = Kit.mk('g', {}, svg2), objs = Kit.mk('g', {}, svg2), notes = Kit.mk('g', {}, svg2);
+
+    // The liquid slides past the torpedo and meets again above its tip.
+    const ht = tearH(R, L), yTop = Math.max(top, cy - L - r * .9), yBot = Math.min(B - 2, cy + R + r * .9);
+    for (const [s, a, c, sg] of [[-1, .35, 1, .4], [1, .35, 1, .4], [-1, 1.1, .6, 1.1], [1, 1.1, .6, 1.1]]) {
+      const pts = [];
+      for (let y = yBot; y >= yTop; y -= 3) pts.push([cr + s * R * a + s * c * blur(ht, y - cy, sg * r), y]);
+      if (pts.length > 1) Kit.mk('path', {d: poly(pts), class: 'flow'}, lines);
+    }
+
+    Kit.mk('circle', {cx: cl, cy, r, class: 'ball'}, objs);
+    Kit.mk('path', {d: tearPath(cr, cy, R, L), class: 'air'}, objs);
+    Kit.mk('circle', {cx: cr, cy, r, class: 'ball'}, objs);
+
+    // Two labels, each centred under what it names.
+    function note(ax, l1, l2) {
+      const y1 = B + 8 + fs * .85;
+      const a = txt(notes, ax, y1, l1, {'font-size': fs, 'text-anchor': 'middle'}), b = txt(notes, ax, y1 + lh, l2, {'font-size': fs, 'text-anchor': 'middle'});
+      const hw = Math.max(a.getComputedTextLength(), b.getComputedTextLength()) / 2;
+      const x = Math.max(x0 + hw, Math.min(x1 - hw, ax));
+      a.setAttribute('x', x); b.setAttribute('x', x);
+    }
+    note(cl, 'the sphere', 'on its own');
+    note(cr, 'air trapped round it:', 'a torpedo shape');
+
+    if (!anim || Kit.calm) return;
+    const flows = svg2.querySelectorAll('.flow');
+    flows.forEach(p => { p.setAttribute('pathLength', 1); p.setAttribute('stroke-dasharray', 1); p.setAttribute('stroke-dashoffset', 1); });
+    gsap.set([base, objs, notes], {opacity: 0});
+    backTl = gsap.timeline({delay: .55})
+      .to(base, {opacity: 1, duration: .4, ease: 'power2.out'})
+      .fromTo(objs, {y: -16}, {opacity: 1, y: 0, duration: .55, ease: 'power3.out'}, '-=.1')
+      .to(flows, {attr: {'stroke-dashoffset': 0}, duration: 1.2, stagger: .08, ease: 'power1.inOut'}, '-=.1')
+      .to(notes, {opacity: 1, duration: .45, ease: 'power2.out'}, '-=.3');
+  }
+
+  // ---------- the answer ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT;
+    const chip = Kit.$('sure').querySelector(`[data-v="${pct}"]`); if (chip) chip.classList.add('chosen');
+    Kit.$('reply').textContent = REPLY[pick](pct);
+    Kit.answer({choice: NAMES[pick], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${NAMES[pick]}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  svg.addEventListener('click', e => {
+    const t = e.target.closest('[data-i]'); if (!t || pick >= 0) return;
+    pick = +t.dataset.i; Kit.haptic('selection'); drawFront(false); sure.on();
+    Kit.$('say').textContent = 'Now: how sure are you?';
+  });
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(false); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!entered) { entered = true; if (!Kit.calm && pick < 0) drawFront(true); } };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    svg.querySelector('rect[data-i="2"]').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4400);
+  };
+})();
+Kit.single();
+</script>
+</html>

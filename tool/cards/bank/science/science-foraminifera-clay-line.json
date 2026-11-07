@@ -1,0 +1,38 @@
+{
+  "id": "science-foraminifera-clay-line",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.testable_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did tiny fossils prove the dinosaurs' extinction was sudden?",
+  "answer": "Tiny plankton fossils above and below one thin red clay line belong to two different worlds. The change came all at once, at that line.",
+  "move": "One thin red clay line, two different worlds of plankton: the change came at once.",
+  "keywords": [
+    "dinosaurs",
+    "plankton",
+    "micro-fossils",
+    "gubbio",
+    "bottaccione-gorge"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A photo of layered rock with one thin red line running across it. A round lens sits on the rock; drag it up and down to explore. The page asks how tiny fossils proved the dinosaurs' extinction was sudden.",
+    "ground": "#0d1c20"
+  },
+  "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=_oHnlF70NaQ&t=360s",
+  "written": "2026-11-04"
+}

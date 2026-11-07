@@ -19,7 +19,6 @@ import '../store_links.dart'
 import '../sync/review_access.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
-import '../utils/reminders.dart' show remindersSupported;
 import '../widgets/chunky.dart';
 import '../widgets/fit_text.dart';
 import '../data/topics.dart';
@@ -416,52 +415,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
     return days != null
         ? l.tryFreeThen(days, price, suffix)
         : l.subscribeFor(price, suffix);
-  }
-
-  /// Where a plan is cancelled, as the reader's store names it.
-  String get _cancelWhere => defaultTargetPlatform == TargetPlatform.iOS
-      ? context.l10n.cancelWhereIos
-      : context.l10n.cancelWhereAndroid;
-
-  /// The line under the button when the plan on screen has no free days:
-  /// what is charged today, and that it renews by itself until cancelled.
-  /// A plan with free days has the trial's steps there instead, which end
-  /// on the same.
-  String get _terms {
-    final l = context.l10n;
-    final Plan plan = _shown;
-    return l.chargedTodayRenews(
-      _priceFor(plan),
-      plan == Plan.year ? l.perYearShort : l.perMonthShort,
-    );
-  }
-
-  /// Whether the reminder two days before a trial ends can be delivered to
-  /// this reader: the system lets the app notify them. Promised only then —
-  /// the reminder is a notification on the phone, and a reader who has not
-  /// allowed one would wait for a warning that never comes.
-  bool get _canRemind => remindersSupported && widget.app.notificationsAllowed;
-
-  /// The free trial as it will go, when the plan on screen starts with one
-  /// this reader can have: today, the reminder where it can reach them, and
-  /// the day it is charged, at the store's own price. Null when there is no
-  /// trial to show.
-  ///
-  /// A [short] phone leaves today out — the button above it already says
-  /// the days are free — so that the renewal and the way to cancel fit
-  /// beside the three perks on one screen.
-  List<String>? _trialSteps({required bool short}) {
-    final Plan plan = _shown;
-    final int? days = _freeDays(plan);
-    if (days == null || widget.app.isPlus) return null;
-    final l = context.l10n;
-    return [
-      if (!short) l.trialToday,
-      // The app reminds the reader two days before a trial ends. A trial
-      // too short to have that day has no step for it.
-      if (days >= 3 && _canRemind) l.trialReminder(days - 2),
-      l.trialCharge(days, _priceFor(plan), plan.name),
-    ];
   }
 
   /// The package for the plan on screen, if the store has offered one.
@@ -971,7 +924,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 onTap: () => _pick(Plan.month),
               ),
     ];
-    final List<String>? trial = _trialSteps(short: short && oneScreen);
     return [
       // Side by side, the same height on their own: three lines each, every
       // line fitted to the tile's width. At the largest text sizes, one
@@ -1036,42 +988,21 @@ class _PaywallScreenState extends State<PaywallScreen> {
             ),
           ),
         )
-      else ...[
-        // What today costs, when that changes, and that it goes on until it
-        // is cancelled. The thing that stops people starting is not the
-        // price, it is not knowing when they will be charged: with a trial,
-        // its days; without one, a line.
-        if (trial != null)
-          Padding(
-            padding: EdgeInsets.only(top: short ? 8 : 12),
-            child: _TrialTimeline(
-              key: const ValueKey('paywall-trial'),
-              steps: trial,
-              pad: short ? 1 : 2,
-            ),
-          )
-        else
-          Padding(
-            padding: EdgeInsets.only(top: short ? 8 : 10),
-            child: Text(
-              _terms,
-              key: const ValueKey('paywall-terms'),
-              textAlign: TextAlign.center,
-              style: _smallPrintStyle(context),
-            ),
-          ),
-        // And how to stop it, said before the purchase rather than after:
-        // where, and by when.
+      else
+        // Under the button, one line. The price and the plan are on the
+        // button and on the tiles, the store's own sheet says the rest
+        // before anything is charged, and the owner asked for the room back
+        // from the trial's calendar and the two lines of terms that sat
+        // here.
         Padding(
-          padding: EdgeInsets.only(top: short ? 4 : 6),
+          padding: EdgeInsets.only(top: short ? 8 : 10),
           child: Text(
-            l.cancelHow(_cancelWhere),
+            l.cancelAnyTime,
             key: const ValueKey('paywall-cancel'),
             textAlign: TextAlign.center,
             style: _smallPrintStyle(context),
           ),
         ),
-      ],
     ];
   }
 }
@@ -1272,128 +1203,6 @@ class _SmallLink extends StatelessWidget {
       child: Text(label, style: _smallPrintStyle(context)),
     ),
   );
-}
-
-/// The free trial under the button, as the days it will go by: today, the
-/// day the reader is reminded, and the day the plan is charged.
-///
-/// Small print, in the small print's size, because these are the terms; a
-/// dot for each step on a hairline, the first one filled because it is the
-/// one the reader is on. Centred as a block under the button, its steps
-/// aligned on their dots, and as wide as its longest step.
-class _TrialTimeline extends StatelessWidget {
-  const _TrialTimeline({super.key, required this.steps, this.pad = 2});
-
-  final List<String> steps;
-
-  /// Above and below each step's words, inside the step, so the rail runs
-  /// unbroken from one dot to the next. Less on a short phone.
-  final double pad;
-
-  @override
-  Widget build(BuildContext context) {
-    final Color ink = context.p.ink;
-    final TextStyle style = _smallPrintStyle(context);
-    // The dot sits on the middle of a step's first line, wherever the
-    // phone's text size puts that line.
-    final double line =
-        MediaQuery.textScalerOf(context).scale(style.fontSize!) * style.height!;
-    return Center(
-      child: IntrinsicWidth(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (final (int i, String step) in steps.indexed)
-              IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(
-                      width: 9,
-                      child: CustomPaint(
-                        painter: _RailPainter(
-                          dotAt: pad + line / 2,
-                          first: i == 0,
-                          last: i == steps.length - 1,
-                          ink: ink,
-                          ground: context.p.surface,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 9),
-                    Flexible(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: pad),
-                        child: Text(
-                          step,
-                          style: i == 0
-                              ? style.copyWith(
-                                  color: ink.withValues(alpha: 0.62),
-                                )
-                              : style,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// One step's piece of the trial's rail: the hairline through it, and its
-/// dot — filled for today, an open ring for the days to come.
-class _RailPainter extends CustomPainter {
-  const _RailPainter({
-    required this.dotAt,
-    required this.first,
-    required this.last,
-    required this.ink,
-    required this.ground,
-  });
-
-  /// How far down the step its dot sits.
-  final double dotAt;
-  final bool first;
-  final bool last;
-  final Color ink;
-  final Color ground;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final double x = size.width / 2;
-    final Offset dot = Offset(x, dotAt);
-    final Paint rail = Paint()
-      ..strokeWidth = 1
-      ..color = ink.withValues(alpha: 0.16);
-    if (!first) canvas.drawLine(Offset(x, 0), dot, rail);
-    if (!last) canvas.drawLine(dot, Offset(x, size.height), rail);
-    if (first) {
-      canvas.drawCircle(dot, 3.5, Paint()..color = ink.withValues(alpha: 0.62));
-      return;
-    }
-    canvas
-      ..drawCircle(dot, 3.5, Paint()..color = ground)
-      ..drawCircle(
-        dot,
-        3,
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.2
-          ..color = ink.withValues(alpha: 0.38),
-      );
-  }
-
-  @override
-  bool shouldRepaint(_RailPainter old) =>
-      old.dotAt != dotAt ||
-      old.first != first ||
-      old.last != last ||
-      old.ink != ink ||
-      old.ground != ground;
 }
 
 /// The three lights behind the top of the paywall: yellow, teal and violet,

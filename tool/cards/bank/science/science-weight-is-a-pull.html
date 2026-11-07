@@ -1,0 +1,326 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-weight-is-a-pull -->
+<!-- Look: a mid-century textbook plate, "Fig. 5", on cream paper: an ochre halftone globe with teal lands, a red ball on a teal spring scale, a red WEIGHT vector, mono labels.
+     Interaction: flip the switch to take the Earth away and bring it back; tap round the globe to move the scale to any of 6 stations, and the weight always aims at the Earth's centre.
+     Wow: when the Earth returns, loose pebbles are pulled back in with Physics2D, red lines of pull converge on the centre, and the ball drops, stretching the spring back to 5 kg. -->
+<title>Weight is a pull</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<style>
+#card{background-image:radial-gradient(color-mix(in srgb,var(--k) 7%,transparent) .7px,transparent 1.1px);background-size:7px 7px}
+#read{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+#read>div{display:flex;flex-direction:column;gap:3px}
+#read>div:last-child{align-items:flex-end;text-align:right}
+#read small{font:700 12px/1.15 var(--mono);letter-spacing:.06em;opacity:.72}
+#read b{display:inline-block;font:800 max(2.7cqh,20px)/1 var(--display)}
+#rv{color:#c2412d;font-variant-numeric:tabular-nums}
+#mv{color:#1d4743}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:pointer;overflow:visible}
+#sw{display:flex;align-self:center;gap:.4cqw;padding:.5cqh;border-radius:99px;background:color-mix(in srgb,var(--k) 8%,transparent);box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 22%,transparent)}
+#sw button{font:700 max(1.9cqh,13px)/1.1 var(--body);padding:1.2cqh 4.4cqw;border:0;border-radius:99px;background:transparent;color:var(--k);cursor:pointer;transition:background .18s,color .18s}
+#sw button.on{background:#2f6f6a;color:#f6efdc;box-shadow:0 .3cqh 0 #1d4743}
+#sw button i{font-style:normal;display:inline-block;width:1.1em;height:1.1em;border-radius:50%;vertical-align:-.18em;margin-right:.45em;background:radial-gradient(circle at 35% 30%,#f0c46a,#b07a22);box-shadow:inset 0 0 0 1.5px currentColor}
+#sw button[data-v="0"] i{background:none;box-shadow:inset 0 0 0 1.5px currentColor}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .big{font:800 max(2.4cqh,16px)/1.15 var(--display);color:#9e3322;margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Flip a switch · two cases" style="--c:#efe4c8;--k:#1f2b2c;--edge:#cdbd96">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MASS VS WEIGHT</span></div>
+    <h2 class="q">What is the fundamental definition of weight?</h2>
+    <div id="read" aria-live="polite">
+      <div><small>SCALE READS</small><b id="rv">5.0 kg</b></div>
+      <div><small>MATTER IN BALL</small><b id="mv">5 kg</b></div>
+    </div>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Figure 5: the Earth as a halftone globe, a red ball hanging from a spring scale on its surface, and a red arrow labelled Weight pointing from the ball to the Earth's centre."></svg>
+    </div>
+    <div id="sw" role="group" aria-label="The Earth">
+      <button data-v="1" class="on"><i></i>Earth here</button>
+      <button data-v="0"><i></i>Take Earth away</button>
+    </div>
+    <p class="say" id="say">Take the Earth away, then bring it back. <b>Tap the globe</b> to move the scale.</p>
+    <div id="why" class="gone">
+      <p class="big">Weight is a pull, not something the ball has.</p>
+      <p class="body">It is the Earth pulling the ball toward its centre, so "down" points there from every spot. Take the Earth away and the weight goes; the 5 kg of matter, the mass, stays.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Mass is how much matter; weight is the Earth's pull on it.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Difference Between Mass and Weight” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  if (window.Physics2DPlugin) gsap.registerPlugin(Physics2DPlugin);
+  const svg = Kit.$('pic'), say = Kit.$('say'), rv = Kit.$('rv');
+  const INK = '#1f2b2c', PAPER = '#f5edd6', OCH = '#d39a2e', TEAL = '#2f6f6a', TEALD = '#1d4743', RED = '#c2412d';
+  const MONO = getComputedStyle(document.documentElement).getPropertyValue('--mono') || 'monospace';
+  const st = {s: 1, w: 1, read: 5, th: 0, bob: 0};
+  let earthOn = true, cycled = false, lastW = 0, lastH = 0;
+  let W, H, fs, cx, cy, R, P, A, B, br, hook, RAY, E = {};
+  const peb = [...Array(6)].map((_, k) => ({a: 30 + 60 * k, dr: .32 + Kit.rnd() * .4, da: (Kit.rnd() - .5) * 16, rot: (Kit.rnd() - .5) * 120, pts: [...Array(7)].map(() => .7 + Kit.rnd() * .45)}));
+  const stars = [...Array(12)].map(() => ({a: Kit.rnd() * 360, d: 1.15 + Kit.rnd() * .6, s: .5 + Kit.rnd() * .6}));
+  const m = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = m('text', Object.assign({x, y, fill: INK, 'font-family': MONO, 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+  const rad = d => d * Math.PI / 180;
+
+  function layout() {
+    gsap.killTweensOf('#pic *');
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; lastW = W; lastH = H;
+    fs = 12;
+    const avail = H - fs * 2.2;
+    R = Math.max(28, Math.min((W / 2 - fs * .8) / 1.85, avail / 3.75));
+    cx = W / 2; cy = fs * .3 + avail / 2;
+    P = .75 * R; A = .32 * R; B = .2 * R; br = .1 * R; hook = .05 * R; RAY = 1.8 * R;
+
+    const defs = m('defs', {}, svg);
+    const eg = m('radialGradient', {id: 'eg', cx: '.38', cy: '.32', r: '.75'}, defs);
+    [['0', '#f3cc78'], ['.55', OCH], ['1', '#97621a']].forEach(([o, c]) => m('stop', {offset: o, 'stop-color': c}, eg));
+    const bg = m('radialGradient', {id: 'bg', cx: '.35', cy: '.3', r: '.8'}, defs);
+    [['0', '#ec8a6c'], ['.5', RED], ['1', '#6f2013']].forEach(([o, c]) => m('stop', {offset: o, 'stop-color': c}, bg));
+    const pat = m('pattern', {id: 'ht', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(30)'}, defs);
+    m('circle', {cx: 2.5, cy: 2.5, r: 1.25, fill: INK}, pat);
+    const lp = m('pattern', {id: 'lt', width: 4, height: 4, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(-35)'}, defs);
+    m('line', {x1: 0, y1: 0, x2: 0, y2: 4, stroke: TEALD, 'stroke-width': 1}, lp);
+    const mg = m('radialGradient', {id: 'mg', gradientUnits: 'userSpaceOnUse', cx: cx + .55 * R, cy: cy + .6 * R, r: 1.55 * R}, defs);
+    [['0', '#fff'], ['.5', '#666'], ['1', '#000']].forEach(([o, c]) => m('stop', {offset: o, 'stop-color': c}, mg));
+    const mask = m('mask', {id: 'hm'}, defs); m('circle', {cx, cy, r: R, fill: 'url(#mg)'}, mask);
+    const clip = m('clipPath', {id: 'ec'}, defs); m('circle', {cx, cy, r: R}, clip);
+
+    // Lines of "down": from each of the 6 stations to the centre.
+    E.rays = m('g', {}, svg); E.flash = []; E.dots = [];
+    for (let k = 0; k < 6; k++) {
+      const a = rad(k * 60), ox = cx + Math.sin(a) * RAY, oy = cy - Math.cos(a) * RAY;
+      E.dots.push(m('line', {x1: cx, y1: cy, x2: ox, y2: oy, stroke: TEAL, 'stroke-width': 1.2, 'stroke-dasharray': '2 5', opacity: .45}, E.rays));
+      E.flash.push(m('line', {x1: ox, y1: oy, x2: cx, y2: cy, stroke: RED, 'stroke-width': 2.4, 'stroke-linecap': 'round', opacity: 0, 'stroke-dasharray': RAY, 'stroke-dashoffset': RAY}, E.rays));
+    }
+
+    // The ghost left when the Earth is taken away: an empty outline in empty space.
+    E.ghost = m('g', {opacity: 0}, svg);
+    stars.forEach(s => {
+      const x = cx + Math.sin(rad(s.a)) * s.d * R, y = cy - Math.cos(rad(s.a)) * s.d * R, l = 2 + s.s * 3;
+      m('path', {d: `M${x - l},${y}H${x + l}M${x},${y - l}V${y + l}`, stroke: INK, 'stroke-width': 1, opacity: .35 + s.s * .3}, E.ghost);
+    });
+    m('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '5 6', opacity: .5}, E.ghost);
+    txt(E.ghost, cx, cy - fs * .2, 'no Earth,', {'text-anchor': 'middle', opacity: .75});
+    txt(E.ghost, cx, cy + fs * 1.1, 'no pull', {'text-anchor': 'middle', opacity: .75});
+
+    // The Earth: ochre globe, teal lands, halftone shade, the centre.
+    E.earth = m('g', {}, svg);
+    m('circle', {cx: cx + R * .06, cy: cy + R * .08, r: R, fill: INK, opacity: .12}, E.earth);
+    m('circle', {cx, cy, r: R, fill: 'url(#eg)'}, E.earth);
+    const lands = m('g', {'clip-path': 'url(#ec)'}, E.earth);
+    [[-.35, -.35, .38], [.42, -.1, .3], [-.1, .45, .33], [.5, .62, .2], [-.7, .2, .18]].forEach(([dx, dy, s], i) => {
+      let d = ''; const n = 9;
+      for (let j = 0; j <= n; j++) { const a = j / n * Math.PI * 2, rr = s * R * (.72 + .42 * Math.abs(Math.sin(j * 1.7 + i * 2.3))); d += (j ? 'L' : 'M') + (cx + dx * R + Math.cos(a) * rr).toFixed(1) + ',' + (cy + dy * R + Math.sin(a) * rr * .8).toFixed(1); }
+      m('path', {d: d + 'Z', fill: TEAL, opacity: .9, stroke: TEALD, 'stroke-width': 1, 'stroke-linejoin': 'round'}, lands);
+      m('path', {d: d + 'Z', fill: 'url(#lt)', opacity: .35}, lands);
+    });
+    m('ellipse', {cx, cy, rx: R, ry: R * .26, fill: 'none', stroke: INK, 'stroke-width': 1, opacity: .35}, lands);
+    m('ellipse', {cx, cy, rx: R * .32, ry: R, fill: 'none', stroke: INK, 'stroke-width': 1, opacity: .25}, lands);
+    m('ellipse', {cx, cy: cy - R * .5, rx: R * .87, ry: R * .2, fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .2}, lands);
+    m('circle', {cx, cy, r: R, fill: 'url(#ht)', mask: 'url(#hm)', opacity: .55}, E.earth);
+    m('ellipse', {cx: cx - R * .4, cy: cy - R * .48, rx: R * .22, ry: R * .12, fill: '#fff', opacity: .3, transform: `rotate(-35 ${cx - R * .4} ${cy - R * .48})`}, E.earth);
+    m('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-width': 1.8}, E.earth);
+    for (let k = 0; k < 6; k++) { const a = rad(k * 60); m('line', {x1: cx + Math.sin(a) * R, y1: cy - Math.cos(a) * R, x2: cx + Math.sin(a) * (R + 5), y2: cy - Math.cos(a) * (R + 5), stroke: INK, 'stroke-width': 1.6}, E.earth); }
+    E.cLab = m('g', {}, E.earth);
+    E.cChip = m('rect', {rx: 3, fill: PAPER, stroke: INK, 'stroke-width': 1, height: fs * 1.4}, E.cLab);
+    E.cTxt = txt(E.cLab, 0, 0, "EARTH'S CENTRE", {'text-anchor': 'middle', 'font-weight': 800});
+    if (E.cTxt.getComputedTextLength() > 1.75 * R) E.cTxt.textContent = 'CENTRE';
+    E.cW = E.cTxt.getComputedTextLength() + fs * .8;
+    E.cChip.setAttribute('width', E.cW);
+    m('circle', {cx, cy, r: 3.2, fill: RED, stroke: PAPER, 'stroke-width': 1.4}, E.earth);
+
+    // Loose pebbles on the ground, each with its own small weight.
+    E.peb = [];
+    peb.forEach((p, i) => {
+      const a = rad(p.a), ps = Math.max(4.5, .055 * R);
+      const outer = m('g', {transform: `translate(${cx + Math.sin(a) * (R + ps * .75)},${cy - Math.cos(a) * (R + ps * .75)})`}, svg);
+      const inner = m('g', {}, outer);
+      const arr = m('path', {fill: 'none', stroke: RED, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, inner);
+      m('polygon', {points: p.pts.map((r, j) => { const t = j / 7 * Math.PI * 2; return `${(Math.cos(t) * r * ps).toFixed(1)},${(Math.sin(t) * r * ps * .8).toFixed(1)}`; }).join(' '), fill: i % 2 ? TEALD : '#6b4f22', stroke: INK, 'stroke-width': 1}, inner);
+      E.peb.push({inner, arr, a, ps});
+    });
+
+    // The scale on its post: built upright, then turned to its station.
+    E.asm = m('g', {}, svg);
+    E.asmIn = m('g', {}, E.asm);
+    const G = E.asmIn;
+    m('path', {d: `M${-.09 * R},0 L${.09 * R},0 L${.05 * R},${-.04 * R} L${-.05 * R},${-.04 * R}Z`, fill: INK}, G);
+    m('rect', {x: -.022 * R, y: -P, width: .044 * R, height: P - .03 * R, fill: INK}, G);
+    m('rect', {x: -.03 * R, y: -P - .02 * R, width: A + .07 * R, height: .045 * R, rx: .01 * R, fill: INK}, G);
+    m('path', {d: `M${-.01 * R},${-P + .18 * R} L${.16 * R},${-P + .02 * R}`, stroke: INK, 'stroke-width': 1.4}, G);
+    m('line', {x1: A, y1: -P + .02 * R, x2: A, y2: -P + .055 * R, stroke: INK, 'stroke-width': 1.6}, G);
+    m('rect', {x: A - .07 * R, y: -P + .05 * R, width: .14 * R, height: B - .05 * R, rx: .025 * R, fill: TEAL, stroke: INK, 'stroke-width': 1.3}, G);
+    m('rect', {x: A - .07 * R, y: -P + .05 * R, width: .035 * R, height: B - .05 * R, rx: .015 * R, fill: '#fff', opacity: .18}, G);
+    E.dialY = -P + .05 * R + (B - .05 * R) / 2;
+    m('circle', {cx: A, cy: E.dialY, r: .048 * R, fill: PAPER, stroke: INK, 'stroke-width': 1.1}, G);
+    E.needle = m('line', {stroke: RED, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, G);
+    E.spring = m('path', {fill: 'none', stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, G);
+    E.hook = m('path', {fill: 'none', stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, G);
+    E.ball = m('g', {}, G);
+    m('ellipse', {cx: br * .15, cy: br * .2, rx: br * 1.02, ry: br * 1.02, fill: INK, opacity: .15}, E.ball);
+    m('circle', {r: br, fill: 'url(#bg)', stroke: INK, 'stroke-width': 1.3}, E.ball);
+    m('ellipse', {cx: -br * .35, cy: -br * .4, rx: br * .3, ry: br * .2, fill: '#fff', opacity: .55, transform: `rotate(-30 ${-br * .35} ${-br * .4})`}, E.ball);
+    E.aCase = m('path', {fill: 'none', stroke: PAPER, 'stroke-width': 6, 'stroke-linecap': 'round'}, G);
+    E.aLine = m('path', {fill: 'none', stroke: RED, 'stroke-width': 2.8, 'stroke-linecap': 'round'}, G);
+    E.aHead = m('polygon', {fill: RED, stroke: PAPER, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, G);
+
+    // Labels that stay upright.
+    E.fx = m('g', {}, svg);
+    E.ring = m('circle', {cx, cy, r: 0, fill: 'none', stroke: RED, 'stroke-width': 2, opacity: 0}, E.fx);
+    const L = m('g', {}, svg);
+    E.wLab = txt(L, 0, 0, 'WEIGHT', {fill: RED, 'font-weight': 800, 'dominant-baseline': 'middle', stroke: PAPER, 'stroke-width': 3, 'paint-order': 'stroke'});
+    txt(L, cx, H - fs * .35, 'FIG. 5 · A BALL ON A SPRING SCALE', {'font-weight': 600, opacity: .7, 'text-anchor': 'middle'});
+
+    if (!earthOn) {
+      gsap.set(E.earth, {opacity: 0}); gsap.set(E.ghost, {opacity: 1});
+      E.peb.forEach((p, i) => gsap.set(p.inner, drift(i)));
+    }
+    render();
+  }
+
+  const drift = i => { const p = peb[i], a = rad(p.a + p.da); return {x: Math.sin(a) * p.dr * R, y: -Math.cos(a) * p.dr * R, rotation: p.rot}; };
+
+  function render() {
+    if (!E.asm) return;
+    const th = rad(st.th), c = Math.cos(th), s = Math.sin(th);
+    const Sx = cx + s * R, Sy = cy - c * R;
+    E.asm.setAttribute('transform', `translate(${Sx},${Sy}) rotate(${st.th})`);
+    const top = -P + B, onY = -.07 * R - br, offY = top + .1 * R + hook + br;
+    const by = offY + (onY - offY) * st.s + st.bob * .07 * R * (1 - st.s), sEnd = by - br - hook;
+    let d = `M${A},${top}`; const n = 10, amp = .045 * R;
+    for (let i = 1; i <= n; i++) d += `L${(A + (i % 2 ? amp : -amp)).toFixed(1)},${(top + (sEnd - top) * (i - .5) / n).toFixed(1)}`;
+    E.spring.setAttribute('d', d + `L${A},${sEnd}`);
+    E.hook.setAttribute('d', `M${A},${sEnd} L${A},${by - br - hook * .2} M${A - hook * .4},${by - br - hook * .5} Q${A},${by - br + hook * .3} ${A + hook * .4},${by - br - hook * .5}`);
+    E.ball.setAttribute('transform', `translate(${A},${by}) rotate(${st.bob * 14 * (1 - st.s)})`);
+    const na = rad(-135 + st.read / 5 * 270), nl = .036 * R;
+    E.needle.setAttribute('x1', A); E.needle.setAttribute('y1', E.dialY);
+    E.needle.setAttribute('x2', A + Math.sin(na) * nl); E.needle.setAttribute('y2', E.dialY - Math.cos(na) * nl);
+    // The weight: from the ball to the Earth's centre, at (0, R) in the post's frame.
+    const vx = -A, vy = R - by, vl = Math.hypot(vx, vy), ux = vx / vl, uy = vy / vl;
+    const sx = A + ux * br, sy = by + uy * br, len = Math.max(0, (vl - br) * st.w);
+    const ex = sx + ux * len, ey = sy + uy * len, hl = Math.max(9, .1 * R);
+    const show = st.w > .02;
+    const ld = show ? `M${sx},${sy} L${ex - ux * hl * .6},${ey - uy * hl * .6}` : '';
+    E.aCase.setAttribute('d', ld); E.aLine.setAttribute('d', ld);
+    E.aHead.setAttribute('points', show ? `${ex},${ey} ${ex - ux * hl - uy * hl * .5},${ey - uy * hl + ux * hl * .5} ${ex - ux * hl + uy * hl * .5},${ey - uy * hl - ux * hl * .5}` : '');
+    // Its label, upright, beside the arrow.
+    const lx = A + vx * .4, ly = by + vy * .4, px = vy / vl, py = -vx / vl;
+    const gx = Sx + lx * c - ly * s, gy = Sy + lx * s + ly * c, gpx = px * c - py * s, gpy = px * s + py * c;
+    E.wLab.setAttribute('x', gx + gpx * fs * .8); E.wLab.setAttribute('y', gy + gpy * fs * .8);
+    E.wLab.setAttribute('text-anchor', gpx >= 0 ? 'start' : 'end');
+    E.wLab.setAttribute('opacity', Math.max(0, (st.w - .4) / .6));
+    // The centre's label, on the far side from the arrow.
+    const clx = cx - s * fs * 1.9, cly = cy + c * fs * 1.9;
+    E.cChip.setAttribute('x', clx - E.cW / 2); E.cChip.setAttribute('y', cly - fs * .7);
+    E.cTxt.setAttribute('x', clx); E.cTxt.setAttribute('y', cly + fs * .36);
+    // Each pebble's own weight.
+    E.peb.forEach(p => {
+      const dx = -Math.sin(p.a), dy = Math.cos(p.a), l0 = p.ps * 1.3, l = l0 + .26 * R * st.w, h = 5;
+      p.arr.setAttribute('d', st.w > .02 ? `M${dx * l0},${dy * l0} L${dx * l},${dy * l} M${dx * (l - h) - dy * h * .7},${dy * (l - h) + dx * h * .7} L${dx * l},${dy * l} L${dx * (l - h) + dy * h * .7},${dy * (l - h) - dx * h * .7}` : '');
+    });
+    rv.textContent = st.read.toFixed(1) + ' kg';
+  }
+
+  function setEarth(on) {
+    if (on === earthOn) return;
+    earthOn = on; Kit.haptic('selection');
+    Kit.$('sw').querySelectorAll('button').forEach(b => b.classList.toggle('on', (b.dataset.v === '1') === on));
+    const org = `${cx} ${cy}`;
+    if (!on) {
+      if (!cycled) say.innerHTML = 'The needle drops to 0 and the weight is gone. The ball still holds its <b>5 kg</b> of matter. <b>Bring the Earth back.</b>';
+      if (Kit.calm) { Object.assign(st, {s: 0, w: 0, read: 0}); gsap.set(E.earth, {opacity: 0}); gsap.set(E.ghost, {opacity: 1}); E.peb.forEach((p, i) => gsap.set(p.inner, drift(i))); render(); return; }
+      gsap.to(st, {w: 0, duration: .35, ease: 'power3.in', onUpdate: render});
+      gsap.to(st, {s: 0, duration: 1.3, delay: .08, ease: 'elastic.out(1,.32)', onUpdate: render});
+      gsap.to(st, {read: 0, duration: .9, ease: 'power3.out', onUpdate: render});
+      // Weightless: the ball floats and turns gently on its slack spring.
+      gsap.fromTo(st, {bob: 0}, {bob: 1, duration: 1.7, delay: 1, repeat: -1, yoyo: true, ease: 'sine.inOut', onUpdate: render});
+      gsap.to(E.earth, {scale: .5, opacity: 0, svgOrigin: org, duration: .6, ease: 'power3.in'});
+      gsap.to(E.ghost, {opacity: 1, duration: .5, delay: .35, ease: 'power2.out'});
+      gsap.to(E.dots, {opacity: .15, duration: .5});
+      E.peb.forEach((p, i) => gsap.to(p.inner, Object.assign(drift(i), {duration: 2.2, delay: .1 + i * .04, ease: 'power2.out'})));
+      gsap.fromTo('#mv', {scale: 1.3}, {scale: 1, transformOrigin: '100% 60%', duration: .8, delay: .4, ease: 'elastic.out(1,.4)'});
+    } else {
+      const reveal = () => { if (cycled) return; cycled = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); };
+      if (Kit.calm) { Object.assign(st, {s: 1, w: 1, read: 5, bob: 0}); gsap.set(E.earth, {opacity: 1, scale: 1, svgOrigin: org}); gsap.set(E.ghost, {opacity: 0}); gsap.set(E.dots, {opacity: .45}); E.peb.forEach(p => gsap.set(p.inner, {x: 0, y: 0, rotation: 0})); render(); reveal(); return; }
+      gsap.to(st, {bob: 0, duration: .3, onUpdate: render});
+      gsap.fromTo(E.earth, {scale: .5, opacity: 0}, {scale: 1, opacity: 1, svgOrigin: org, duration: .75, ease: 'back.out(1.7)'});
+      gsap.to(E.ghost, {opacity: 0, duration: .3});
+      gsap.to(E.dots, {opacity: .45, duration: .5, delay: .4});
+      // Pulled home: each pebble falls toward the centre, faster and faster.
+      E.peb.forEach((p, i) => {
+        gsap.killTweensOf(p.inner);
+        const x = gsap.getProperty(p.inner, 'x'), y = gsap.getProperty(p.inner, 'y'), dd = Math.hypot(x, y);
+        const t = .42 + i * .05, ang = Math.atan2(-y, -x) * 180 / Math.PI, acc = 2 * dd / (t * t);
+        const ix = -Math.sin(p.a), iy = Math.cos(p.a);
+        gsap.to(p.inner, {duration: t, delay: .3, rotation: 0, ease: 'none', physics2D: {velocity: 0, angle: ang, acceleration: acc, accelerationAngle: ang},
+          onComplete: () => { gsap.set(p.inner, {x: 0, y: 0}); gsap.fromTo(p.inner, {x: -ix * 4, y: -iy * 4}, {x: 0, y: 0, duration: .35, ease: 'bounce.out'}); }});
+      });
+      E.flash.forEach((f, i) => gsap.timeline({delay: .4 + i * .05})
+        .set(f, {opacity: .9, attr: {'stroke-dashoffset': RAY}})
+        .to(f, {attr: {'stroke-dashoffset': 0}, duration: .55, ease: 'power3.in'})
+        .to(f, {opacity: 0, duration: .4, ease: 'power2.out'}));
+      gsap.fromTo(E.ring, {attr: {r: RAY}, opacity: .8}, {attr: {r: 3}, opacity: 0, duration: .85, delay: .35, ease: 'power3.in'});
+      gsap.to(st, {s: 1, duration: 1.4, delay: .35, ease: 'elastic.out(1,.38)', onUpdate: render});
+      gsap.to(st, {read: 5, duration: 1, delay: .35, ease: 'power3.out', onUpdate: render});
+      gsap.to(st, {w: 1, duration: .8, delay: .65, ease: 'expo.out', onUpdate: render});
+      gsap.fromTo('#rv', {scale: 1}, {scale: 1.18, transformOrigin: '0% 60%', duration: .25, delay: 1.1, yoyo: true, repeat: 1, ease: 'power2.out'});
+      gsap.delayedCall(1.5, reveal);
+    }
+  }
+
+  Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setEarth(b.dataset.v === '1'); });
+
+  // Tap round the globe: the scale moves to the nearest of 6 stations, and its weight re-aims.
+  svg.addEventListener('pointerdown', e => {
+    if (!E.asm) return;
+    const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * W / r.width, y = (e.clientY - r.top) * H / r.height;
+    const ang = Math.atan2(x - cx, -(y - cy)) * 180 / Math.PI, target = Math.round(ang / 60) * 60;
+    let dlt = ((target - st.th) % 360 + 540) % 360 - 180;
+    if (Math.abs(dlt) < 1) return;
+    Kit.haptic('light');
+    if (Kit.calm) { st.th += dlt; render(); return; }
+    gsap.to(st, {th: st.th + dlt, duration: .75, ease: 'back.out(1.3)', onUpdate: render});
+  });
+
+  // Redraw at true size whenever the stage changes (e.g. when the answer appears), so text never shrinks.
+  let raf = 0;
+  new ResizeObserver(() => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      if (!E.asm) return;
+      const r = Kit.$('stage').getBoundingClientRect();
+      if (Math.abs(r.width - lastW) > 1 || Math.abs(r.height - lastH) > 1) layout();
+    });
+  }).observe(Kit.$('stage'));
+
+  gsap.defaults({overwrite: 'auto'});
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !E.earth) return;
+    gsap.from(E.earth, {scale: .7, opacity: 0, svgOrigin: `${cx} ${cy}`, duration: .9, ease: 'back.out(1.4)'});
+    gsap.from(E.dots, {opacity: 0, duration: .5, stagger: .06, delay: .3});
+    E.peb.forEach((p, i) => gsap.from(p.inner, {scale: 0, duration: .45, delay: .5 + i * .05, ease: 'back.out(2)'}));
+    gsap.from(E.asmIn, {opacity: 0, y: -.35 * R, duration: .7, delay: .35, ease: 'power3.out'});
+    Object.assign(st, {s: 0, w: 0, read: 0}); render();
+    gsap.to(st, {s: 1, duration: 1.4, delay: .8, ease: 'elastic.out(1,.38)', onUpdate: render});
+    gsap.to(st, {read: 5, duration: 1, delay: .8, ease: 'power3.out', onUpdate: render});
+    gsap.to(st, {w: 1, duration: .8, delay: 1.1, ease: 'expo.out', onUpdate: render});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    Kit.$('sw').children[1].click();
+    await wait(Kit.calm ? 80 : 1000);
+    Kit.$('sw').children[0].click();
+    await wait(Kit.calm ? 120 : 2400);
+  };
+})();
+Kit.single();
+</script>
+</html>

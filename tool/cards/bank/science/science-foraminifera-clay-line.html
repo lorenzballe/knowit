@@ -1,0 +1,403 @@
+<!doctype html>
+<!-- slug: science-foraminifera-clay-line -->
+<!-- Look: laboratory glass on a dark lab ground. A glass core tube holds the pink Bottaccione limestone and its dark red clay; a brass-and-glass microscope loupe floats beside it, with refraction highlights and water that sloshes at the top of the tube. Faint plankton motes drift in the dark.
+     Interaction: drag the lens ring up and down the rock. The loupe shows what lives in each layer: many-chambered foraminifera below, none in the clay, and different ones above. Every drag shakes the water and the slide.
+     Wow: once you have seen both sides, the loupe splits in two. Last Cretaceous layer below, first Paleogene layer above, and the red clay seam runs out of the tube between them: "no foraminifera". On short screens the two lenses tuck to the left and their labels sit beside them, so nothing collides. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The red line in the rock</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#card{background:radial-gradient(130% 75% at 72% 38%,#18363b 0%,#0d1c20 58%,#081215 100%)}
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:visible}
+.hint{animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{opacity:.35}}
+.kit-calm .hint{animation:none}
+.answered .q{font-size:max(2.5cqh,15px)}
+.answered .say{font-size:clamp(13px,2.5cqh,17px);line-height:1.4}
+.answered .keep{font-size:clamp(13px,2.4cqh,17px)}
+.say b{color:#bff4ec}
+</style>
+<article class="card" id="card" style="--c:#0d1c20;--k:#e9f7f4;--edge:#050d0f" data-topic="science" data-kind="Drag the lens · two layers">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE LENS</span></div>
+    <h2 class="q">How did tiny fossils prove the dinosaurs' extinction was sudden?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A glass tube of rock from the Bottaccione gorge: pink limestone, a thin dark red clay, pink limestone again. A microscope lens shows the plankton fossils in the layer you choose."></svg>
+    </div>
+    <p class="say" id="say">Rock from the Bottaccione gorge, near Gubbio. <b>Drag the lens up and down the rock.</b></p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One thin red clay line, two different worlds of plankton: the change came at once.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const INKF = '#4b3423', GL = '#c4f7ef';
+  const st = {split: 0, seam: 0, water: 1, glow: 0};
+  let W = 0, H = 0, fs = 12, G = {ok: false}, E = {};
+  let d = .22, seenK = true, seenP = false, revealed = false, touched = false, jolt = 0, zoneNow = 'K', running = false;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const sstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+
+  const SAY = {
+    K: 'Cretaceous limestone, pink and full of tiny plankton shells: <b>foraminifera</b>. Now drag up through the dark red line.',
+    C: 'A thin layer of <b>dark red clay</b>. Look closely: not one foraminifer.',
+    P: 'Paleogene limestone, just above the clay. Foraminifera again, but <b>not the same species</b>. Compare with below.'
+  };
+  const WHY = 'In the early 1960s Isabella Premoli Silva saw it here: the plankton under the clay and over it are <b>completely different species</b>, and the dark red clay holds none. A near-total die-off of the oceans’ calcareous plankton.';
+
+  // ---------- drawing helpers ----------
+  function grad(defs, type, id, attrs, stops) {
+    const g = mk(type, Object.assign({id}, attrs), defs);
+    stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g));
+    return g;
+  }
+  function grains(p, n, col, op, rad = 99) {
+    for (let i = 0; i < n; i++) {
+      const a = Kit.rnd() * Math.PI * 2, r = Math.sqrt(Kit.rnd()) * rad;
+      mk('circle', {cx: Math.cos(a) * r, cy: Math.sin(a) * r, r: .5 + Kit.rnd() * 1.3, fill: col, opacity: op * (.4 + Kit.rnd() * .6)}, p);
+    }
+  }
+  function chamber(g, x, y, r, dots) {
+    mk('circle', {cx: x, cy: y, r, fill: 'url(#calc)', stroke: INKF, 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke'}, g);
+    if (dots) for (let k = 0; k < dots; k++) {
+      const a = Kit.rnd() * 6.283, q = Math.sqrt(Kit.rnd()) * r * .72;
+      mk('circle', {cx: x + Math.cos(a) * q, cy: y + Math.sin(a) * q, r: .03, fill: INKF, opacity: .45}, g);
+    }
+    mk('ellipse', {cx: x - r * .3, cy: y - r * .38, rx: r * .32, ry: r * .18, fill: '#fff', opacity: .65, transform: `rotate(-30 ${x - r * .3} ${y - r * .38})`}, g);
+  }
+  function foram(type, p) {
+    const g = mk('g', {}, p);
+    if (type === 'A') {
+      mk('circle', {r: 1.06, fill: '#efe1c6', opacity: .55, stroke: INKF, 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke'}, g);
+      mk('circle', {r: .95, fill: 'none', stroke: INKF, opacity: .55, 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke'}, g);
+      for (let i = 0; i < 8; i++) { const a = i * .86 + .3, q = .1 + i * .075; chamber(g, Math.cos(a) * q, Math.sin(a) * q, .13 + i * .035, 0); }
+      mk('circle', {r: .07, fill: INKF, opacity: .6}, g);
+    } else if (type === 'B') {
+      for (let i = 0; i < 8; i++) chamber(g, (i % 2 ? 1 : -1) * (.07 + i * .035), .78 - i * .22, .1 + i * .04, 0);
+    } else if (type === 'C') {
+      [[-.36, .32, .38], [.32, .36, .43], [.38, -.28, .48], [-.3, -.36, .54]].forEach(([x, y, r]) => chamber(g, x, y, r, 14));
+    } else if (type === 'a') {
+      [[-.22, .3, .36], [.26, .22, .42], [0, -.26, .52]].forEach(([x, y, r]) => chamber(g, x, y, r, 0));
+    } else {
+      [[.3, .32, .3], [-.3, .28, .38], [-.22, -.32, .46], [.34, -.24, .52]].forEach(([x, y, r]) => chamber(g, x, y, r, 0));
+    }
+    return g;
+  }
+  const K_SET = [['A', -38, -34, 30, 15], ['B', 40, -40, 30, -35], ['C', -8, 36, 27, 0], ['A', 54, 30, 22, 120], ['B', -64, 28, 20, 50]];
+  const P_SET = [['a', -48, -40, 9], ['b', 8, -58, 7], ['a', 50, -28, 8], ['b', -14, -8, 10], ['a', 32, 18, 7], ['b', -56, 26, 8], ['a', 4, 52, 9], ['b', 52, 50, 7], ['a', -30, -66, 6], ['b', 72, -2, 6], ['b', -26, 60, 6]];
+
+  function buildLoupe(parent) {
+    const g = mk('g', {}, parent), L = {g, fs: []};
+    mk('circle', {r: 122, fill: 'url(#glow)'}, g);
+    mk('circle', {r: 108, fill: '#091315'}, g);
+    const field = mk('g', {'clip-path': 'url(#lensClip)'}, g);
+    mk('circle', {r: 100, fill: 'url(#field)'}, field);
+    grains(field, 110, '#9b5a4e', .28);
+    L.gK = mk('g', {}, field); L.gC = mk('g', {}, field); L.gP = mk('g', {}, field);
+    mk('circle', {r: 100, fill: 'url(#fieldClay)'}, L.gC);
+    grains(L.gC, 170, '#e2907a', .4); grains(L.gC, 70, '#240605', .55);
+    K_SET.forEach(([t, x, y, s, r], i) => L.fs.push({el: foram(t, L.gK), bx: x, by: y, s, br: r, ph: i * 1.7, pop: 1}));
+    P_SET.forEach(([t, x, y, s], i) => L.fs.push({el: foram(t, L.gP), bx: x, by: y, s, br: i * 47, ph: i * 2.3 + 1, pop: 1, p: true}));
+    const ret = mk('g', {stroke: '#3a2a20', opacity: .18, 'stroke-width': .7}, field);
+    mk('line', {x1: -100, x2: 100, y1: 0, y2: 0}, ret); mk('line', {y1: -100, y2: 100, x1: 0, x2: 0}, ret);
+    for (let i = -5; i <= 5; i++) mk('line', {x1: i * 8, x2: i * 8, y1: 0, y2: i % 5 ? -3 : -6}, ret);
+    mk('circle', {r: 100, fill: 'url(#vign)'}, g);
+    mk('circle', {r: 104, fill: 'none', stroke: 'url(#rim)', 'stroke-width': 8}, g);
+    mk('circle', {r: 100, fill: 'none', stroke: '#fff', opacity: .55, 'stroke-width': 1}, g);
+    mk('circle', {r: 108, fill: 'none', stroke: '#000', opacity: .5, 'stroke-width': 1}, g);
+    const arc = (r, a0, a1) => { const p = a => [Math.cos(a * Math.PI / 180) * r, Math.sin(a * Math.PI / 180) * r]; const [x0, y0] = p(a0), [x1, y1] = p(a1); return `M${x0},${y0} A${r},${r} 0 0 1 ${x1},${y1}`; };
+    L.hl = mk('path', {d: arc(89, 203, 262), fill: 'none', stroke: '#fff', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: .5}, g);
+    mk('path', {d: arc(80, 214, 236), fill: 'none', stroke: '#fff', 'stroke-width': 3, 'stroke-linecap': 'round', opacity: .4}, g);
+    mk('path', {d: arc(91, 20, 70), fill: 'none', stroke: '#cffff7', 'stroke-width': 3, 'stroke-linecap': 'round', opacity: .22}, g);
+    mk('circle', {cx: -58, cy: -60, r: 4, fill: '#fff', opacity: .7}, g);
+    return L;
+  }
+  function mkChip(parent) {
+    const g = mk('g', {}, parent);
+    const r = mk('rect', {height: fs * 1.7, y: -fs * .85, rx: fs * .85, fill: 'rgba(6,18,20,.92)', stroke: 'rgba(196,247,239,.6)', 'stroke-width': 1}, g);
+    const t = mk('text', {y: fs * .36, 'text-anchor': 'middle', fill: '#e4fbf6', 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.04em'}, g);
+    return {g, r, t, txt: '', w: 0};
+  }
+  function setChip(c, text, x, y, op, left) {
+    if (c.txt !== text) {
+      c.t.textContent = text; c.txt = text;
+      c.w = Math.max(c.t.getComputedTextLength() || 0, text.length * fs * .64) + fs * 1.4;
+      c.r.setAttribute('width', c.w); c.r.setAttribute('x', -c.w / 2);
+    }
+    if (left) x += c.w / 2;
+    x = clamp(x, c.w / 2 + 2, W - c.w / 2 - 2);
+    c.g.setAttribute('transform', `translate(${x},${y})`); c.g.setAttribute('opacity', op);
+  }
+  function mkMarker(parent, hint) {
+    const g = mk('g', {}, parent), x0 = G.tx - G.tw / 2 - 5, w = G.tw + 10;
+    mk('rect', {x: x0, y: -G.hb, width: w, height: G.hb * 2, rx: 5, fill: 'rgba(170,245,235,.16)', stroke: GL, 'stroke-width': 1.8}, g);
+    mk('rect', {x: x0 + 3, y: -G.hb + 2, width: w * .3, height: 2, rx: 1, fill: '#fff', opacity: .6}, g);
+    mk('line', {x1: x0, x2: x0 + w, y1: 0, y2: 0, stroke: '#fff', 'stroke-width': 1, opacity: .85}, g);
+    mk('circle', {cx: x0 + w, cy: 0, r: 3.6, fill: GL}, g);
+    if (hint) {
+      const h = mk('g', {class: 'hint', stroke: '#fff', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+      mk('path', {d: `M${G.tx - 6},${-G.hb - 5} l6,-6 l6,6`}, h);
+      mk('path', {d: `M${G.tx - 6},${G.hb + 5} l6,6 l6,-6`}, h);
+      E.hint = h;
+    }
+    return g;
+  }
+
+  // ---------- the scene ----------
+  function layout() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    if (W < 40 || H < 40) return;
+    fs = Math.max(12, Math.min(14, W / 27));
+    const g = G = {ok: true};
+    g.tw = Math.max(34, Math.min(64, W * .15));
+    g.tx = Math.max(g.tw / 2 + fs * 1.9, W * .15);
+    g.ty0 = H * .035; g.ty1 = H * .975;
+    g.ri = g.tw * .4; g.il = g.tx - g.ri; g.ir = g.tx + g.ri;
+    g.wTop = g.ty0 + Math.max(10, H * .03);
+    g.rT = H * .14; g.rB = g.ty1 - g.ri * .9;
+    g.clayY = H * .5; g.ch = Math.max(9, H * .03); g.sh = fs * 1.6;
+    g.yOf = v => g.rB - v * (g.rB - g.rT); g.dOf = y => (g.rB - y) / (g.rB - g.rT);
+    g.cl0 = g.dOf(g.clayY + g.ch / 2); g.cl1 = g.dOf(g.clayY - g.ch / 2);
+    g.dK = g.cl0 - .035; g.dP = g.cl1 + .035;
+    g.tr = g.tx + g.tw / 2 + 5; g.hb = Math.max(9, H * .026);
+    const ax0 = g.tx + g.tw / 2 + fs * 1.4, aw = W - ax0; g.ax0 = ax0; g.cx = ax0 + aw / 2;
+    g.r1 = Math.max(30, Math.min(aw / 2 - 4, H * .34, (H - fs * .9 - 6) / 2));
+    g.cy1 = Math.max(g.r1 + 4, Math.min(H * .45, H - g.r1 - fs * .9 - 4));
+    // split layout: stacked lenses with labels under them, or (on short stages) lenses to the left with labels beside them
+    const k = fs * .85, gap = 6;
+    const r2s = Math.min(aw / 2 - 4, (g.clayY - g.sh / 2 - gap - 2 - k) / 2, (H - g.clayY - g.sh / 2 - gap - 2 - k) / 2);
+    g.compact = r2s < 40;
+    if (!g.compact) {
+      g.r2 = r2s; g.cx2 = g.cx;
+      g.cyT = g.clayY - g.sh / 2 - gap - k - g.r2; g.cyB = g.clayY + g.sh / 2 + 4 + g.r2;
+    } else {
+      const cw = 15 * fs * .68 + fs * 1.4;
+      g.r2 = Math.max(18, Math.min((g.clayY - g.sh / 2 - 6) / 2, (H - g.clayY - g.sh / 2 - 6) / 2, (aw - cw - 16) / 2));
+      g.cx2 = ax0 + g.r2 + 4;
+      g.cyT = g.clayY - g.sh / 2 - 4 - g.r2; g.cyB = g.clayY + g.sh / 2 + 4 + g.r2;
+      g.chX = g.cx2 + g.r2 + 10;
+    }
+
+    const defs = mk('defs', {}, svg);
+    grad(defs, 'linearGradient', 'glassG', {x1: 0, x2: 1, y1: 0, y2: 0}, [[0, '#fff', .2], [.25, '#dffcf7', .05], [.7, '#dffcf7', .03], [.92, '#fff', .14], [1, '#fff', .28]]);
+    grad(defs, 'linearGradient', 'edgeShade', {x1: 0, x2: 1, y1: 0, y2: 0}, [[0, '#000', .42], [.22, '#000', 0], [.78, '#000', 0], [1, '#000', .38]]);
+    grad(defs, 'linearGradient', 'rockK', {x1: 0, x2: 0, y1: 0, y2: 1}, [[0, '#eaa597'], [1, '#c97f74']]);
+    grad(defs, 'linearGradient', 'rockP', {x1: 0, x2: 0, y1: 0, y2: 1}, [[0, '#f0bcae'], [1, '#e2a294']]);
+    grad(defs, 'linearGradient', 'clayG', {x1: 0, x2: 0, y1: 0, y2: 1}, [[0, '#8e2a22'], [.5, '#62150f'], [1, '#4a0e0b']]);
+    grad(defs, 'linearGradient', 'waterG', {x1: 0, x2: 0, y1: 0, y2: 1}, [[0, '#9ff0e6', .45], [1, '#3fa9a0', .3]]);
+    grad(defs, 'radialGradient', 'field', {cx: .45, cy: .42, r: .62}, [[0, '#fff6ef'], [.6, '#f4dcd2'], [1, '#c99a8e']]);
+    grad(defs, 'radialGradient', 'fieldClay', {cx: .45, cy: .42, r: .62}, [[0, '#a33a2c'], [.6, '#6d1a14'], [1, '#3a0a08']]);
+    grad(defs, 'radialGradient', 'calc', {cx: .38, cy: .34, r: .72}, [[0, '#ffffff', .96], [.55, '#f3e6cf', .92], [1, '#b39670', .9]]);
+    grad(defs, 'radialGradient', 'vign', {cx: .5, cy: .5, r: .5}, [[.72, '#000', 0], [1, '#000', .4]]);
+    grad(defs, 'radialGradient', 'glow', {cx: .5, cy: .5, r: .5}, [[.8, '#7ff0e2', .22], [1, '#7ff0e2', 0]]);
+    grad(defs, 'radialGradient', 'tubeGlow', {cx: .5, cy: .5, r: .5}, [[0, '#6fe3d5', .16], [1, '#6fe3d5', 0]]);
+    grad(defs, 'linearGradient', 'rim', {x1: 0, y1: 0, x2: 1, y2: 1}, [[0, '#f2fffc'], [.33, '#7fb3ac'], [.6, '#1b3133'], [.85, '#9fd8cf'], [1, '#ffffff']]);
+    const lc = mk('clipPath', {id: 'lensClip'}, defs); mk('circle', {r: 100}, lc);
+    const tubeIn = `M${g.il},${g.ty0 + 2} V${g.ty1 - 3 - g.ri} A${g.ri},${g.ri} 0 0 0 ${g.ir},${g.ty1 - 3 - g.ri} V${g.ty0 + 2}Z`;
+    const tc = mk('clipPath', {id: 'tubeClip'}, defs); mk('path', {d: tubeIn}, tc);
+    const sc = mk('clipPath', {id: 'seamClip'}, defs); E.seamRect = mk('rect', {x: g.tr - 4, y: 0, width: 0, height: H}, sc);
+
+    // drifting plankton motes in the dark water of the card
+    const mg = mk('g', {}, svg); E.motes = [];
+    for (let i = 0; i < 20; i++) E.motes.push({el: mk('circle', {r: .6 + Kit.rnd() * 1.4, fill: '#a9efe4'}, mg), x: Kit.rnd() * W, y: Kit.rnd() * H, sp: 3 + Kit.rnd() * 7, ph: Kit.rnd() * 9, o: .08 + Kit.rnd() * .16});
+    mk('ellipse', {cx: g.tx, cy: (g.ty0 + g.ty1) / 2, rx: g.tw * 1.3, ry: (g.ty1 - g.ty0) * .58, fill: 'url(#tubeGlow)'}, svg);
+
+    // the tube and its rock
+    E.tubeW = mk('g', {}, svg);
+    const lab = (t, y, room) => {
+      const x = g.tx - g.tw / 2 - fs * .85;
+      const e = mk('text', {x, y, transform: `rotate(-90 ${x} ${y})`, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: '#9fd9cf', 'font-size': fs, 'font-weight': 700}, E.tubeW);
+      e.textContent = t;
+      for (const ls of [.12, .04]) {
+        e.setAttribute('style', `font-family:var(--mono);letter-spacing:${ls}em`);
+        const len = Math.max(e.getComputedTextLength() || 0, t.length * fs * (.6 + ls));
+        if (len <= room - 10) return;
+      }
+      e.remove();
+    };
+    lab('PALEOGENE', (g.rT + g.clayY - g.ch / 2) / 2, g.clayY - g.ch / 2 - g.rT);
+    lab('CRETACEOUS', (g.clayY + g.ch / 2 + g.rB) / 2, g.rB - g.clayY - g.ch / 2);
+    const R = g.tw / 2, outer = `M${g.tx - R},${g.ty0} V${g.ty1 - R} A${R},${R} 0 0 0 ${g.tx + R},${g.ty1 - R} V${g.ty0}`;
+    mk('path', {d: outer, fill: 'url(#glassG)'}, E.tubeW);
+    const inner = mk('g', {'clip-path': 'url(#tubeClip)'}, E.tubeW);
+    E.water = mk('path', {fill: 'url(#waterG)'}, inner);
+    E.bub = [];
+    for (let i = 0; i < 6; i++) E.bub.push({el: mk('circle', {r: 1 + (i % 3) * .7, fill: 'none', stroke: '#e8fffb', 'stroke-width': .9}, inner), x: g.il + g.ri * 2 * (.2 + .6 * ((i * .37) % 1)), off: i / 6, sp: .18 + (i % 3) * .07});
+    E.surf = mk('path', {fill: 'none', stroke: '#e8fffb', 'stroke-width': 1.4, opacity: .7}, inner);
+    mk('rect', {x: g.il - 2, y: g.clayY, width: g.ri * 2 + 4, height: g.ty1 - g.clayY, fill: 'url(#rockK)'}, inner);
+    let top = `M${g.il - 2},${g.clayY} V${g.rT}`;
+    for (let i = 0; i <= 8; i++) top += ` L${g.il + g.ri * 2 * i / 8},${g.rT + (i % 2 ? 1.8 : -.6) + Kit.rnd()}`;
+    mk('path', {d: top + ` L${g.ir + 2},${g.rT} V${g.clayY}Z`, fill: 'url(#rockP)'}, inner);
+    const step = (g.rB - g.rT) / 13;
+    for (let y = g.rT + step * .7; y < g.ty1; y += step * (.8 + Kit.rnd() * .4)) {
+      if (Math.abs(y - g.clayY) < g.ch) continue;
+      mk('path', {d: `M${g.il},${y} Q${g.tx},${y + 1.5 + Kit.rnd() * 1.5} ${g.ir},${y - .5}`, fill: 'none', stroke: '#9c5047', 'stroke-width': 1, opacity: .4}, inner);
+    }
+    for (let i = 0; i < 90; i++) mk('circle', {cx: g.il + Kit.rnd() * g.ri * 2, cy: g.rT + 3 + Kit.rnd() * (g.ty1 - g.rT), r: .5 + Kit.rnd() * .8, fill: Kit.rnd() < .5 ? '#fff' : '#7a3a33', opacity: .3}, inner);
+    mk('rect', {x: g.il - 2, y: g.clayY - g.ch / 2, width: g.ri * 2 + 4, height: g.ch, fill: 'url(#clayG)'}, inner);
+    mk('line', {x1: g.il, x2: g.ir, y1: g.clayY - g.ch / 2 + .6, y2: g.clayY - g.ch / 2 + .6, stroke: '#d0685a', 'stroke-width': 1, opacity: .7}, inner);
+    E.clayGlow = mk('rect', {x: g.il - 1, y: g.clayY - g.ch / 2, width: g.ri * 2 + 2, height: g.ch, fill: 'none', stroke: '#ff9a7a', 'stroke-width': 2.5, opacity: 0}, inner);
+    mk('rect', {x: g.il - 2, y: g.ty0, width: g.ri * 2 + 4, height: g.ty1 - g.ty0, fill: 'url(#edgeShade)'}, inner);
+    mk('path', {d: outer, fill: 'none', stroke: GL, 'stroke-width': 1.4, opacity: .7}, E.tubeW);
+    mk('ellipse', {cx: g.tx, cy: g.ty0, rx: R + 3, ry: 3.4, fill: 'none', stroke: GL, 'stroke-width': 1.6, opacity: .85}, E.tubeW);
+    mk('rect', {x: g.tx - R + g.tw * .12, y: g.ty0 + 7, width: Math.max(2, g.tw * .08), height: (g.ty1 - g.ty0) * .82, rx: 2, fill: '#fff', opacity: .38}, E.tubeW);
+    mk('rect', {x: g.tx + R - g.tw * .17, y: g.ty0 + 20, width: Math.max(1.5, g.tw * .04), height: (g.ty1 - g.ty0) * .6, rx: 1, fill: '#fff', opacity: .18}, E.tubeW);
+    for (let i = 0; i <= 10; i++) { const y = g.yOf(i / 10), xr = g.tx + R - 2; mk('line', {x1: xr - (i % 5 ? 4 : 8), x2: xr, y1: y, y2: y, stroke: '#e0fffa', 'stroke-width': 1, opacity: .55}, E.tubeW); }
+
+    // cones from the tube to the lenses
+    const cone = () => mk('path', {fill: 'rgba(196,247,239,.07)', stroke: 'rgba(196,247,239,.35)', 'stroke-width': 1, 'stroke-linejoin': 'round'}, svg);
+    E.c1 = cone(); E.c2 = cone();
+    // the clay seam that runs out between the two lenses, ending in a rounded tip
+    E.seam = mk('g', {'clip-path': 'url(#seamClip)'}, svg);
+    const x0 = g.tr - 3, x1 = g.ax0, yc = g.clayY, h1 = g.ch / 2, h2 = g.sh / 2, xm = (x0 + x1) / 2, xe = W - 2 - h2;
+    mk('path', {d: `M${x0},${yc - h1} C${xm},${yc - h1} ${xm},${yc - h2} ${x1},${yc - h2} H${xe} A${h2},${h2} 0 0 1 ${xe},${yc + h2} H${x1} C${xm},${yc + h2} ${xm},${yc + h1} ${x0},${yc + h1}Z`, fill: 'url(#clayG)'}, E.seam);
+    mk('line', {x1, x2: xe, y1: yc - h2 + .7, y2: yc - h2 + .7, stroke: '#d0685a', 'stroke-width': 1}, E.seam);
+    grains(mk('g', {transform: `translate(${(x1 + xe) / 2},${yc}) scale(${(xe - x1) / 200},${h2 / 100})`}, E.seam), 80, '#e2907a', .45);
+    E.seamGlow = mk('rect', {x: x1, y: yc - h2, width: W - 2 - x1, height: g.sh, rx: h2, fill: 'none', stroke: '#ff9a7a', 'stroke-width': 2, opacity: 0}, E.seam);
+    E.seamT = mk('text', {x: (x1 + W - 2) / 2, y: yc + fs * .36, 'text-anchor': 'middle', fill: '#ffe0d6', 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.08em'}, E.seam);
+    E.seamT.textContent = 'NO FORAMINIFERA';
+
+    E.marks = mk('g', {}, svg);
+    E.m2 = mkMarker(E.marks, false); E.m1 = mkMarker(E.marks, !touched);
+    E.loupeW = mk('g', {}, svg);
+    E.L2 = buildLoupe(E.loupeW); E.L1 = buildLoupe(E.loupeW);
+    const chips = mk('g', {}, svg);
+    E.ch2 = mkChip(chips); E.ch1 = mkChip(chips);
+    render(running ? gsap.ticker.time : 0);
+  }
+
+  function zone(v) { const e = .03, a = sstep(G.cl0 - e, G.cl0, v), b = sstep(G.cl1, G.cl1 + e, v); return [1 - a, a - b, b]; }
+  const zoneName = v => v < G.cl0 ? 'CRETACEOUS LIMESTONE' : v > G.cl1 ? 'PALEOGENE LIMESTONE' : 'RED CLAY · NO FORAMINIFERA';
+
+  function render(t) {
+    if (!G.ok) return;
+    const sp = st.split, g = G;
+    // motes
+    E.motes.forEach(m => {
+      const y = ((m.y - t * m.sp) % H + H) % H;
+      m.el.setAttribute('cx', m.x + Math.sin(t * .4 + m.ph) * 6); m.el.setAttribute('cy', y);
+      m.el.setAttribute('opacity', m.o * (.6 + .4 * Math.sin(t * .9 + m.ph)));
+    });
+    // water, sloshing
+    const wy = lerp(g.rT, g.wTop, st.water), sl = Math.sin(t * 1.7) * (1 + jolt * 7), dip = 2 + Math.sin(t * 1.1) * .6;
+    const surf = `M${g.il - 2},${wy + sl} Q${g.tx},${wy + dip + sl * .2} ${g.ir + 2},${wy - sl}`;
+    E.water.setAttribute('d', `${surf} L${g.ir + 2},${g.rT + 4} L${g.il - 2},${g.rT + 4}Z`);
+    E.surf.setAttribute('d', surf);
+    E.bub.forEach(b => {
+      const fr = (t * b.sp + b.off) % 1, y = lerp(g.rT - 2, wy + 4, fr);
+      b.el.setAttribute('cx', b.x + Math.sin(t * 2 + b.off * 9) * 1.5); b.el.setAttribute('cy', y);
+      b.el.setAttribute('opacity', g.rT - wy > 8 ? Math.sin(fr * Math.PI) * .8 : 0);
+    });
+    // markers, lenses, cones
+    const y1 = g.yOf(lerp(d, g.dK, sp)), y2 = g.yOf(lerp(d, g.dP, sp));
+    E.m1.setAttribute('transform', `translate(0,${y1})`);
+    E.m2.setAttribute('transform', `translate(0,${y2})`); E.m2.setAttribute('opacity', clamp(sp * 2, 0, 1));
+    const r = lerp(g.r1, g.r2, sp), c1y = lerp(g.cy1, g.cyB, sp), c2y = lerp(g.cy1, g.cyT, sp), cx = lerp(g.cx, g.cx2, sp);
+    const sx = jolt * Math.sin(t * 37) * 2.5, sy = jolt * Math.cos(t * 29) * 2.5, sc = r / 108;
+    E.L1.g.setAttribute('transform', `translate(${cx + sx},${c1y + sy}) scale(${sc})`);
+    E.L2.g.setAttribute('transform', `translate(${cx - sx},${c2y - sy}) scale(${sc})`);
+    E.L2.g.setAttribute('opacity', clamp(sp * 1.8, 0, 1));
+    E.c1.setAttribute('d', `M${g.tr},${y1 - g.hb} L${cx},${c1y - r * .93} L${cx},${c1y + r * .93} L${g.tr},${y1 + g.hb}Z`);
+    E.c2.setAttribute('d', `M${g.tr},${y2 - g.hb} L${cx},${c2y - r * .93} L${cx},${c2y + r * .93} L${g.tr},${y2 + g.hb}Z`);
+    E.c2.setAttribute('opacity', clamp(sp * 1.8, 0, 1));
+    // what each lens sees
+    const z = zone(d), w1 = [lerp(z[0], 1, sp), lerp(z[1], 0, sp), lerp(z[2], 0, sp)];
+    E.L1.gK.setAttribute('opacity', w1[0]); E.L1.gC.setAttribute('opacity', w1[1]); E.L1.gP.setAttribute('opacity', w1[2]);
+    E.L2.gK.setAttribute('opacity', 0); E.L2.gC.setAttribute('opacity', 0); E.L2.gP.setAttribute('opacity', 1);
+    [E.L1, E.L2].forEach((L, li) => {
+      L.hl.setAttribute('opacity', .42 + .16 * Math.sin(t * .8 + li));
+      L.fs.forEach(f => {
+        const x = f.bx + Math.sin(t * .35 + f.ph) * 1.6, y = f.by + Math.cos(t * .3 + f.ph * 1.3) * 1.6;
+        const rot = f.br + Math.sin(t * .22 + f.ph) * 5 + jolt * Math.sin(t * 23 + f.ph) * 9;
+        f.el.setAttribute('transform', `translate(${x},${y}) rotate(${rot}) scale(${f.s * Math.max(0, f.pop)})`);
+      });
+    });
+    // chips: the single lens's label fades out mid-split and comes back in its new place
+    const op1 = sp <= 0 ? 1 : Math.abs(sp - .5) * 2;
+    if (sp > .5) {
+      if (g.compact) setChip(E.ch1, 'LAST CRETACEOUS', g.chX, c1y, op1, true);
+      else setChip(E.ch1, 'LAST CRETACEOUS LAYER', cx, c1y + r, op1);
+    } else setChip(E.ch1, zoneName(d), cx, c1y + r, op1);
+    const op2 = clamp((sp - .55) / .4, 0, 1);
+    if (g.compact) setChip(E.ch2, 'FIRST PALEOGENE', g.chX, c2y, op2, true);
+    else setChip(E.ch2, 'FIRST PALEOGENE LAYER', cx, c2y + r, op2);
+    E.seamRect.setAttribute('width', (W - g.tr + 6) * st.seam);
+    E.seamT.setAttribute('opacity', clamp((st.seam - .7) / .3, 0, 1));
+    E.clayGlow.setAttribute('opacity', st.glow); E.seamGlow.setAttribute('opacity', st.glow);
+  }
+
+  // ---------- touch ----------
+  function setD(v) {
+    d = clamp(v, .02, .98);
+    if (d < G.cl0 - .03) seenK = true;
+    if (d > G.cl1 + .03) seenP = true;
+    const zn = d < G.cl0 ? 'K' : d > G.cl1 ? 'P' : 'C';
+    if (zn !== zoneNow && !revealed) { zoneNow = zn; say.innerHTML = SAY[zn]; Kit.haptic('selection'); }
+    if (!running) render(0);
+  }
+  let drag = false, lastY = 0;
+  const yIn = e => e.clientY - svg.getBoundingClientRect().top;
+  svg.addEventListener('pointerdown', e => {
+    if (!G.ok) return;
+    drag = true; lastY = e.clientY; svg.setPointerCapture(e.pointerId);
+    jolt = Math.min(1.6, jolt + .35);
+    if (!touched) { touched = true; if (E.hint) E.hint.remove(); }
+    if (!revealed) { if (zoneNow === 'K' && d < G.cl0) say.innerHTML = SAY.K; setD(G.dOf(yIn(e))); }
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag) return;
+    jolt = Math.min(1.6, jolt + Math.abs(e.clientY - lastY) * .015); lastY = e.clientY;
+    if (!revealed) setD(G.dOf(yIn(e)));
+  });
+  const end = () => { if (!drag) return; drag = false; if (seenK && seenP && !revealed) reveal(); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true; touched = true; if (E.hint) E.hint.remove();
+    Kit.haptic('success');
+    say.innerHTML = WHY; card.classList.add('answered'); Kit.show('keep');
+    if (Kit.calm) { st.split = 1; st.seam = 1; st.glow = .35; render(0); return; }
+    jolt = 1.3;
+    E.L2.fs.forEach(f => { f.pop = 0; });
+    gsap.timeline()
+      .to(st, {split: 1, duration: 1.5, ease: 'expo.inOut'})
+      .to(st, {seam: 1, duration: .9, ease: 'power3.out'}, '-=.75')
+      .fromTo(st, {glow: 1}, {glow: .3, duration: 1.6, ease: 'power2.out'}, '<')
+      .to(E.L2.fs, {pop: 1, duration: .7, ease: 'back.out(2.4)', stagger: .04}, '-=1.4');
+  }
+
+  function tick() { jolt *= .93; render(gsap.ticker.time); }
+  new ResizeObserver(() => requestAnimationFrame(layout)).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || running) { render(0); return; }
+    running = true; gsap.ticker.add(tick);
+    if (!G.ok) return;
+    const all = E.L1.fs;
+    gsap.from(E.tubeW, {opacity: 0, y: 26, duration: .9, ease: 'power3.out'});
+    gsap.fromTo(st, {water: 0}, {water: 1, duration: 1.8, ease: 'power2.out', delay: .35, onStart: () => { jolt = 1.4; }});
+    gsap.from([E.marks, E.c1], {opacity: 0, duration: .6, delay: .5, ease: 'power2.out'});
+    gsap.from(E.loupeW, {opacity: 0, scale: .55, svgOrigin: `${G.cx} ${G.cy1}`, duration: 1, delay: .25, ease: 'back.out(1.6)'});
+    all.forEach(f => { f.pop = 0; });
+    gsap.to(all, {pop: 1, duration: .6, ease: 'back.out(2.2)', stagger: .05, delay: .7});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    if (!G.ok) layout();
+    touched = true; if (E.hint) E.hint.remove();
+    setD(.15); await w(120); setD(.5); await w(120); setD(.9); await w(120);
+    reveal(); await w(Kit.calm ? 100 : 2300);
+  };
+})();
+Kit.single();
+</script>
+</html>

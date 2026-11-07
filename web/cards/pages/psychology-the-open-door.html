@@ -1,0 +1,220 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-the-open-door -->
+<!-- Thought to carry: a trait you show trades many mild maybes for a few strong yeses, and it only pays if it is rare AND wanted, and findable.
+     Front: a door in a wall, "what's unusual about you" behind it, a line of passers-by; the reader drags from "Blend in" to "Show it all" and the door swings open as far as they choose.
+     Back: at the reader's own opening, some passers-by turn and walk off (put off) while fewer, white figures walk in from the edge and stand at the door (came for it): both sides of the trade, drawn.
+     The front only lets you choose how open; nobody reacts, nothing counts, no verdict. The crowd sorts itself only after you commit. -->
+<title>The open door</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding-bottom:60px;box-sizing:border-box}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
+#pic{touch-action:none;cursor:ew-resize}
+.front .say{margin-bottom:.6cqh}
+#go{align-self:flex-start;margin-bottom:max(1cqh,6px);transition:opacity .3s}
+#go[disabled]{opacity:.35;pointer-events:none}
+.back .big{font:800 max(2.7cqh,16px)/1.15 var(--display);margin:0 0 .6cqh}
+.back .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:.5cqh 0 0;overflow-wrap:anywhere}
+.back .body b{font-weight:800}
+.back .keep{margin-top:1cqh}
+.back .foot{padding-right:96px}
+.nudge{animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(5px)}}
+.kit-calm .nudge{animation:none}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Point of view · where you stand">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: show what makes you odd, even if most people leave?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A door in a wall with what is unusual about you behind it, a line of passers-by, and a slider from Blend in to Show it all."></svg></div>
+        <p class="say" id="say">Drag to set how far <b>you</b> would open the door. Then commit.</p>
+        <button class="btn" id="go" disabled>This is where I stand</button>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Showing it swaps many maybes for fewer yeses.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="At your door, some passers-by walk away and a few new people arrive and stand at the door."></svg></div>
+        <p class="body"><b>For:</b> hiding it puts no one off, but it never draws the people searching for exactly that, and they are the ones who stay.</p>
+        <p class="body"><b>Against:</b> many traits push away far more people than they pull in, and plenty of big audiences are built on being easy to relate to.</p>
+        <div class="keep"><b>ASK YOURSELF</b> Is what I hide rare and wanted, or only rare?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2024) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), go = Kit.$('go'), say = Kit.$('say');
+  let K = '#111', C = '#fff', P = .5, touched = false, committed = false, turned = false;
+  const WHITE = '#ffffff';
+  let F = {};   // front geometry
+
+  const colours = () => { const cs = getComputedStyle(Kit.$('card')); K = cs.getPropertyValue('--k').trim() || '#111'; C = cs.getPropertyValue('--c').trim() || '#eee'; };
+  const text = (par, x, y, t, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: K, 'font-family': 'Figtree, sans-serif', 'font-size': fs, 'font-weight': 700}, a), par); e.textContent = t; return e; };
+
+  // A simple round-headed figure standing on gy, drawn around x = 0 so gsap can move it.
+  function person(par, gy, h, kind, dir) {
+    const g = Kit.mk('g', {}, par), bw = h * .17, bh = h * .62, r = h * .15, white = kind === 'white';
+    const fill = white ? WHITE : K, st = white ? {stroke: K, 'stroke-width': 1.6} : {};
+    if (!white) g.setAttribute('opacity', .34);
+    Kit.mk('path', Object.assign({d: `M${-bw},${gy} L${-bw * .82},${gy - bh + bw * .8} Q${-bw * .82},${gy - bh} 0,${gy - bh} Q${bw * .82},${gy - bh} ${bw * .82},${gy - bh + bw * .8} L${bw},${gy} Z`, fill}, st), g);
+    const cy = gy - bh - r * 1.2;
+    Kit.mk('circle', Object.assign({cx: 0, cy, r, fill}, st), g);
+    g.eye = Kit.mk('circle', {cx: dir * r * .45, cy: cy - r * .1, r: Math.max(1.3, r * .14), fill: white ? K : C}, g);
+    g.r = r; g.headY = cy - r; g.half = Math.max(bw, r) + 2;
+    return g;
+  }
+
+  // The shared scene: wall, doorway, light on the floor, door panel, passers-by.
+  function scene(s, W, H, fs, GY, yt) {
+    const dh = GY - yt, dw = Math.min(dh * .46, W * .17), xc = W * .4, x0 = xc - dw / 2;
+    Kit.mk('rect', {x: x0 - dw * .4, y: yt - dh * .1, width: dw * 1.8, height: GY - yt + dh * .1, fill: K, 'fill-opacity': .09}, s);
+    Kit.mk('rect', {x: x0 - 3, y: yt - 3, width: dw + 6, height: dh + 3, fill: K}, s);
+    Kit.mk('rect', {x: x0, y: yt, width: dw, height: dh, fill: WHITE}, s);
+    const spill = Kit.mk('polygon', {fill: WHITE}, s);
+    Kit.mk('line', {x1: 0, x2: W, y1: GY, y2: GY, stroke: K, 'stroke-width': 2}, s);
+    const panel = Kit.mk('polygon', {fill: K}, s), knob = Kit.mk('circle', {fill: C}, s);
+    const ph = Math.min(dh * .62, W * .12), crowd = Kit.mk('g', {}, s), people = [];
+    const cx0 = W * .585, gap = W * .052;
+    for (let i = 0; i < 7; i++) { const g = person(crowd, GY, ph * (i % 3 === 1 ? .92 : 1), 'faint', -1); g.px = cx0 + i * gap; gsap.set(g, {x: g.px}); people.push(g); }
+    const door = p => {
+      const a = p * 1.35, xe = x0 + dw * Math.cos(a), grow = dh * .07 * Math.sin(a);
+      panel.setAttribute('points', `${x0},${yt} ${xe},${yt - grow} ${xe},${GY + grow * .35} ${x0},${GY}`);
+      const open = xe - x0 > dw * .25;
+      knob.setAttribute('cx', x0 + (xe - x0) * .84); knob.setAttribute('cy', yt + dh * .55); knob.setAttribute('r', open ? Math.max(1.6, dw * .05) : 0);
+      const d = fs * 1.1, sp = dw * .55 * p;
+      spill.setAttribute('points', `${x0},${GY} ${x0 + dw},${GY} ${x0 + dw + sp},${GY + d} ${x0 - sp},${GY + d}`);
+      spill.setAttribute('fill-opacity', .9 * p);
+    };
+    return {dh, dw, xc, x0, ph, people, door};
+  }
+
+  // ---------- front ----------
+  function drawFront() {
+    colours(); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 26));
+    const GY = H - fs * 4.6, yt = fs * 2.9;
+    const sc = scene(svg, W, H, fs, GY, yt);
+    // Label pinned to the doorway.
+    const lx = sc.xc;
+    Kit.mk('path', {d: `M${lx},${yt + sc.dh * .2} V${fs * 1.05} H${lx + fs * .3}`, stroke: K, 'stroke-width': 1.2, fill: 'none'}, svg);
+    Kit.mk('circle', {cx: lx, cy: yt + sc.dh * .2, r: 2.4, fill: K}, svg);
+    text(svg, lx + fs * .5, fs * 1.05 + fs * .35, 'what’s unusual about you', fs);
+    // The slider.
+    const TY = GY + fs * 2, tx0 = W * .08, tx1 = W * .92;
+    Kit.mk('line', {x1: tx0, x2: tx1, y1: TY, y2: TY, stroke: K, 'stroke-opacity': .3, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    const fillLine = Kit.mk('line', {x1: tx0, y1: TY, y2: TY, stroke: K, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    const kg = Kit.mk('g', {}, svg), kin = Kit.mk('g', {class: touched ? '' : 'nudge'}, kg);
+    Kit.mk('circle', {cx: 0, cy: TY, r: fs * .85, fill: K}, kin);
+    Kit.mk('circle', {cx: 0, cy: TY, r: fs * .3, fill: C}, kin);
+    text(svg, tx0, TY + fs * 2, 'Blend in', fs, {'font-weight': 600});
+    text(svg, tx1, TY + fs * 2, 'Show it all', fs, {'font-weight': 600, 'text-anchor': 'end'});
+    F = {tx0, tx1, sc, fillLine, kg, kin};
+    setP(P);
+  }
+  function setP(p) {
+    P = Math.max(0, Math.min(1, p));
+    if (!F.sc) return;
+    F.sc.door(P);
+    const x = F.tx0 + (F.tx1 - F.tx0) * P;
+    F.fillLine.setAttribute('x2', x); F.kg.setAttribute('transform', `translate(${x},0)`);
+  }
+  const fromX = e => { const r = svg.getBoundingClientRect(); return ((e.clientX - r.left) - F.tx0) / (F.tx1 - F.tx0); };
+  let drag = false;
+  svg.addEventListener('pointerdown', e => {
+    if (committed) return; drag = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; go.disabled = false; F.kin && F.kin.classList.remove('nudge'); Kit.haptic('selection'); }
+    setP(fromX(e));
+  });
+  svg.addEventListener('pointermove', e => { if (drag) setP(fromX(e)); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  go.addEventListener('click', () => {
+    if (committed) return; committed = true;
+    const pct = Math.round(P * 100), side = pct < 40 ? 'leans to blending in' : pct > 60 ? 'leans to showing it' : 'in between';
+    Kit.answer({choice: `Door ${pct}% open (${side})`, correct: null});
+    go.disabled = true; say.innerHTML = `You’d open it <b>${pct}%</b>. Now see who stays.`;
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back ----------
+  function drawBack(animate) {
+    colours(); svg2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg2), fs = Math.max(12, Math.min(14, W / 26));
+    const GY = H - fs * .9, yt = fs * 3.3;
+    const sc = scene(svg2, W, H, fs, GY, yt);
+    sc.door(P);
+    const pct = Math.round(P * 100);
+    const nL = Math.round(5 * P), nA = P < .1 ? 0 : Math.round(1 + 3 * P);
+    const order = [6, 4, 2, 5, 3], leavers = order.slice(0, nL).map(i => sc.people[i]);
+    // Each leaver walks right, but never past the edge of the picture.
+    const room = W - 2;
+    leavers.forEach(g => { g.shift = Math.max(0, Math.min(W * .14, room - g.half - g.px)); });
+    const arrivals = [];
+    for (let i = 0; i < nA; i++) { const g = person(svg2, GY, sc.ph * (i === 1 ? .9 : 1), 'white', 1); gsap.set(g, {x: -sc.ph}); g.to = sc.x0 - fs * .7 - i * sc.ph * .46; arrivals.push(g); }
+
+    const labels = Kit.mk('g', {opacity: 0}, svg2);
+    text(labels, sc.xc, fs * 1.25, `your door: ${pct}% open`, fs, {'text-anchor': 'middle', 'font-weight': 800});
+    const r2 = fs * 2.65;
+    if (nA) {
+      const t = arrivals[0], hx = t.to, hy = t.headY;
+      text(labels, 4, r2, 'came for it', fs);
+      Kit.mk('path', {d: `M${fs * 2.2},${r2 + fs * .4} L${fs * 2.2},${r2 + fs * .9} L${hx},${hy - 3}`, stroke: K, 'stroke-width': 1.2, fill: 'none'}, labels);
+    }
+    if (nL) {
+      const t = leavers[0], hx = t.px + t.shift;
+      const fx = Math.min(hx, W - fs);
+      text(labels, W - 4, r2, 'put off by it', fs, {'text-anchor': 'end'});
+      Kit.mk('path', {d: `M${W - fs * 3},${r2 + fs * .4} L${fx},${t.headY - 3}`, stroke: K, 'stroke-width': 1.2, fill: 'none'}, labels);
+    }
+    if (!nA && !nL) text(labels, sc.xc, r2, 'no one put off, no one drawn in', fs, {'text-anchor': 'middle', 'font-weight': 600});
+
+    const leave = g => { g.eye.setAttribute('cx', -g.eye.getAttribute('cx')); };
+    if (!animate || Kit.calm) {
+      leavers.forEach(g => { leave(g); gsap.set(g, {x: g.px + g.shift, opacity: .14}); });
+      arrivals.forEach(g => gsap.set(g, {x: g.to}));
+      labels.setAttribute('opacity', 1);
+      return;
+    }
+    const tl = gsap.timeline({delay: .55});
+    tl.from(svg2.children, {opacity: 0, duration: .4, ease: 'power2.out'});
+    tl.add(() => leavers.forEach(leave), '+=.25');
+    tl.to(leavers, {x: (i, g) => g.px + g.shift, opacity: .14, duration: 1, stagger: .1, ease: 'power2.inOut'});
+    arrivals.forEach((g, i) => tl.to(g, {x: g.to, duration: 1.1, ease: 'power3.out'}, (i ? '<+.16' : '-=.35')));
+    tl.to(labels, {opacity: 1, duration: .45, ease: 'power2.out'}, '+=.1');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !F.sc) return;
+    gsap.from(F.sc.people, {opacity: 0, y: 8, stagger: .06, duration: .45, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; go.disabled = false; setP(.7);
+    await wait(100);
+    go.click();
+    await wait(Kit.calm ? 900 : 3800);
+  };
+})();
+Kit.single();
+</script>
+</html>

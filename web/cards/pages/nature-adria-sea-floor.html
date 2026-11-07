@@ -1,0 +1,411 @@
+<!doctype html>
+<!-- slug: nature-adria-sea-floor -->
+<!-- Look: a museum diorama cut from paper. Europe and Africa stand as card flats, the Tethys is layered
+     cellophane, and Adria is a brown block under the sea, dotted with coral mounds and swaying weed.
+     Soft drop shadows, paper grain, and parallax depth.
+     Interaction: tap four paper slips in the order you think they happened, then say how sure you are.
+     Wow: the slips shuffle into the real order while the diorama plays it. Carbonate flakes drift down
+     curved paths and bury the reef in layers, the layers harden to stone, the sea drains, and pale peaks rise from Adria. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The sea floor on the mountain tops</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.3cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:pan-y;overflow:hidden}
+#steps{display:flex;flex-direction:column;gap:.85cqh;flex:none}
+#why{display:flex;flex-direction:column;gap:.9cqh;flex:none}
+.chip{display:flex;align-items:center;gap:3cqw;font:700 max(1.95cqh,13px)/1.15 var(--body);color:var(--k);background:#fbf6e9;border:0;border-radius:.5cqh;padding:1cqh 3.5cqw;text-align:left;cursor:pointer;box-shadow:0 .35cqh .9cqh rgba(80,52,12,.18),0 0 0 1px rgba(80,52,12,.07);overflow-wrap:anywhere;-webkit-tap-highlight-color:transparent}
+.chip .n{flex:none;width:max(3.3cqh,22px);height:max(3.3cqh,22px);border-radius:50%;display:grid;place-items:center;font:800 max(1.7cqh,12px)/1 var(--mono);border:2px dashed rgba(31,43,51,.35);color:var(--k);box-sizing:border-box}
+.chip.set .n{border:0;background:var(--k);color:#fbf6e9}
+.chip.ok .n{background:#3d7656;color:#fff}
+.chip.no .n{background:#a4472a;color:#fff}
+.chip .t2{flex:1;min-width:0}
+.chip .was{flex:none;font:700 max(1.45cqh,12px)/1 var(--mono);color:#a4472a}
+.chip.now{box-shadow:0 0 0 .3cqh var(--k),0 .8cqh 1.6cqh rgba(80,52,12,.28)}
+.lb{font-family:var(--mono);font-weight:700;letter-spacing:.06em}
+#why .big{margin:0;font-size:max(4.2cqh,26px);line-height:1.02}
+#why .body{margin:0;font-size:max(1.85cqh,12.5px);line-height:1.36}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Put in order · how sure" style="--c:#efe5cf;--k:#1f2b33;--edge:#cdb98f">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PUT IN ORDER</span></div>
+    <h2 class="q">What kind of place was the Adria microplate 220 million years ago?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A paper diorama: Europe on the left, Africa on the right, and between them the Adria block under a sea."></svg>
+      <div id="steps"></div>
+      <div id="why" class="gone"><p class="big">A sea floor.</p><p class="body">About 220 million years ago Adria, a microplate wedged between Africa and Europe, lay under the Tethys sea. Thick carbonate sediment piled up on it and hardened into Triassic limestone and dolomite, the rock now found high in the Alps and Apennines.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the four steps in the order they happened.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Italy's limestone and dolomite peaks began as sea floor on Adria.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  gsap.registerPlugin(MotionPathPlugin, Flip);
+  const svg = Kit.$('pic'), stepsBox = Kit.$('steps'), say = Kit.$('say');
+  const INK = '#1f2b33';
+  const STEPS = ['Adria lies under the sea', 'Carbonate sediment piles up on it', 'The layers harden into rock', 'The rock now sits high in the Alps'];
+  const SHOW = [2, 0, 3, 1];
+  const WET = ['#fbf3df', '#f0e3c4', '#f8edd3', '#ebdcba', '#f5ead0'];
+  const STONE = ['#dcd6c9', '#c5bdad', '#d4cdbe', '#bbb2a0', '#cfc8b8'];
+
+  // ---------- the slips ----------
+  SHOW.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.className = 'chip'; b.dataset.s = s;
+    b.innerHTML = `<span class="n"></span><span class="t2">${STEPS[s]}</span>`;
+    stepsBox.appendChild(b);
+    gsap.set(b, {rotation: [-.8, .6, -.4, .9][i]});
+  });
+  const chips = () => [...stepsBox.children];
+
+  let ord = [], locked = false, phase = 'start', tl = null, finished = false, entered = false;
+  let result = {ok: false, pct: 0, right: 0};
+  let W = 0, H = 0, fs = 12, sm = 12, yS = 0, yF = 0, yB = 0, xa = 0, xb = 0, bandTotal = 0, mh = 0;
+  let L = {}, G = {}, pars = [], idle = [];
+
+  // ---------- drawing helpers ----------
+  let seed = 7;
+  const R = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  function jag(pts, amp = 1.2, step = 13) {
+    const out = [];
+    for (let i = 0; i < pts.length; i++) {
+      const [x0, y0] = pts[i], [x1, y1] = pts[(i + 1) % pts.length];
+      const d = Math.hypot(x1 - x0, y1 - y0) || 1, n = Math.max(1, Math.round(d / step));
+      const nx = -(y1 - y0) / d, ny = (x1 - x0) / d;
+      for (let k = 0; k < n; k++) { const t = k / n, j = k ? (R() - .5) * 2 * amp : 0; out.push(`${(x0 + (x1 - x0) * t + nx * j).toFixed(1)},${(y0 + (y1 - y0) * t + ny * j).toFixed(1)}`); }
+    }
+    return out.join(' ');
+  }
+  const poly = (g, pts, a = {}, amp = 1.2) => Kit.mk('polygon', Object.assign({points: jag(pts, amp)}, a), g);
+  const txt = (g, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, class: 'lb', 'text-anchor': 'middle', fill: INK}, a), g); e.textContent = t; return e; };
+  const layer = (name, d, filter) => { const w = Kit.mk('g', {}, svg); w.dataset.d = d; const g = Kit.mk('g', filter ? {filter: `url(#${filter})`} : {}, w); L[name] = g; pars.push(w); return g; };
+
+  function setTime(t) {
+    if (!G.time) return;
+    G.time.textContent = t;
+    const w = G.time.getComputedTextLength();
+    G.timeBox.setAttribute('width', w + fs * 1.2);
+  }
+
+  // ---------- the diorama ----------
+  function build() {
+    idle.forEach(t => t.kill()); idle = [];
+    let mustFinish = false;
+    if (tl && tl.isActive()) { tl.kill(); tl = null; phase = 'end'; mustFinish = true; }
+    svg.innerHTML = ''; pars = []; L = {}; G = {}; seed = 7;
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    if (W < 40 || H < 40) { if (mustFinish) finish(); return; }
+    fs = Math.max(12, Math.min(15, Math.min(W / 26, H / 19)));
+    sm = Math.max(12, fs * .86);
+    const sh = Math.max(2, Math.min(W, H) * .012);
+    yS = Math.max(H * .22, fs * 3.6); yF = Math.max(H * .7, yS + fs * 4.5); yB = Math.max(H * .97, yF + fs * 1.6);
+    xa = W * .17; xb = W * .83;
+    bandTotal = Math.max(fs * 2.4, H * .13);
+    const topPeak = Math.max(H * .17, fs * 3.4); mh = Math.max(fs * 2, yF - topPeak);
+
+    const defs = Kit.mk('defs', {}, svg);
+    const filt = (id, s, op) => `<filter id="${id}" x="-20%" y="-20%" width="140%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="${s}"/><feOffset dx="${(s * .45).toFixed(1)}" dy="${s}" result="b"/>
+      <feFlood flood-color="#4a3210" flood-opacity="${op}"/><feComposite in2="b" operator="in" result="s"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="4" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  .3 0 0 0 -.08" result="na"/>
+      <feComposite in="na" in2="SourceGraphic" operator="in" result="g"/>
+      <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/><feMergeNode in="g"/></feMerge></filter>`;
+    defs.innerHTML = filt('pp', sh, .34) + filt('pd', sh * 1.7, .38) + filt('ps', sh * .6, .2) + `
+      <linearGradient id="wgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd4cf"/><stop offset=".55" stop-color="#4fa3ad"/><stop offset="1" stop-color="#2b6f84"/></linearGradient>
+      <linearGradient id="wgF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6fbf6" stop-opacity=".8"/><stop offset="1" stop-color="#9fdcd6" stop-opacity=".15"/></linearGradient>
+      <radialGradient id="sun" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffe7a3"/><stop offset="1" stop-color="#f0b84f"/></radialGradient>
+      <linearGradient id="mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7efe1"/><stop offset="1" stop-color="#d9cfbb"/></linearGradient>
+      <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2a98f" stop-opacity=".75"/><stop offset=".5" stop-color="#f2a98f" stop-opacity="0"/></linearGradient>
+      <linearGradient id="adr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9b7a58"/><stop offset="1" stop-color="#6f5440"/></linearGradient>`;
+
+    // sky: sun and two paper clouds
+    const sky = layer('sky', .15, 'ps');
+    const sr = Math.min(W, H) * .055, sx = W * .87, sy = Math.max(fs * 2.3, H * .1);
+    for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2; Kit.mk('polygon', {points: `${sx + Math.cos(a - .12) * sr * 1.2},${sy + Math.sin(a - .12) * sr * 1.2} ${sx + Math.cos(a) * sr * 1.65},${sy + Math.sin(a) * sr * 1.65} ${sx + Math.cos(a + .12) * sr * 1.2},${sy + Math.sin(a + .12) * sr * 1.2}`, fill: '#f0b84f'}, sky); }
+    Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: 'url(#sun)'}, sky);
+    const cloud = (cx, cy, s) => Kit.mk('path', {d: `M${cx - 2.2 * s},${cy} h${4.4 * s} a${s} ${s} 0 0 0 -${1.3 * s},-${1.1 * s} a${1.15 * s} ${1.15 * s} 0 0 0 -${1.9 * s},-${.5 * s} a${.9 * s} ${.9 * s} 0 0 0 -${1.2 * s},${1.6 * s}z`, fill: '#fffdf6'}, sky);
+    cloud(W * .63, Math.max(fs * 2.6, H * .11), Math.min(W, H) * .028);
+    cloud(W * .36, Math.max(fs * 3.2, H * .15), Math.min(W, H) * .022);
+
+    // land: Europe and Africa as card flats
+    const land = layer('land', .45, 'pp');
+    const lt = Math.max(H * .14, fs * 2.9);
+    poly(land, [[-24, H + 4], [-24, lt], [W * .05, lt - fs * .5], [W * .1, lt + fs * .2], [W * .15, yS - fs * .4], [W * .2, yS + H * .05], [W * .19, yF], [W * .205, H + 4]], {fill: '#7f9c64'}, 1.4);
+    poly(land, [[-24, H + 4], [-24, H * .5], [W * .1, H * .48], [W * .2, H * .53], [W * .205, H + 4]], {fill: '#5f7b4b'}, 1.2);
+    poly(land, [[W + 24, H + 4], [W + 24, lt + fs * .3], [W * .94, lt - fs * .2], [W * .89, lt + fs * .5], [W * .85, yS - fs * .2], [W * .8, yS + H * .06], [W * .81, yF], [W * .795, H + 4]], {fill: '#d4a462'}, 1.2);
+    poly(land, [[W + 24, H + 4], [W + 24, H * .52], [W * .9, H * .5], [W * .8, H * .55], [W * .795, H + 4]], {fill: '#b0824a'}, 1.2);
+    // little paper trees on Europe, a palm on Africa
+    for (let i = 0; i < 3; i++) { const tx = W * (.025 + i * .04), ty = lt + fs * (.2 + (i % 2) * .3) - (i === 1 ? fs * .5 : 0), s = fs * .55; Kit.mk('polygon', {points: `${tx},${ty - s * 1.8} ${tx + s * .6},${ty} ${tx - s * .6},${ty}`, fill: '#4e6b3c'}, land); }
+    { const tx = W * .95, ty = lt, s = fs * .5; Kit.mk('path', {d: `M${tx},${ty} q${s * .2},${-s * 1.2} ${-s * .1},${-s * 2.2}`, stroke: '#7a5530', 'stroke-width': 1.6, fill: 'none'}, land);
+      [[-1.3, -.2], [1.3, -.1], [-.9, .6], [1, .7]].forEach(([dx, dy]) => Kit.mk('path', {d: `M${tx - s * .1},${ty - s * 2.2} q${dx * s * .5},${-s * .6} ${dx * s},${dy * s}`, stroke: '#5f7b4b', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, land)); }
+    const lf = Math.max(12, Math.min(sm, W * .16 / 4.1)), ly = Math.max(lt, yS) + fs * 1.6;
+    txt(land, W * .085, ly, 'EUROPE', {'font-size': lf, fill: '#fbf6e9'});
+    txt(land, W * .915, ly, 'AFRICA', {'font-size': lf, fill: '#3b2a14'});
+
+    // the sea behind, its reef and its fish
+    const wb = layer('wback', .6, 'ps');
+    const sxa = W * .165, sxb = W * .835;
+    const top = []; for (let x = sxa; x <= sxb + .1; x += 7) top.push(`${x.toFixed(1)},${(yS + Math.sin(x * .09) * 2).toFixed(1)}`);
+    Kit.mk('polygon', {points: `${top.join(' ')} ${sxb},${yF + 6} ${sxa},${yF + 6}`, fill: 'url(#wgB)', opacity: .93}, wb);
+    // light shafts
+    for (let i = 0; i < 3; i++) { const x = xa + (xb - xa) * (.2 + i * .3); Kit.mk('polygon', {points: `${x},${yS + 3} ${x + W * .05},${yS + 3} ${x + W * .1},${yF - bandTotal * .4} ${x + W * .02},${yF - bandTotal * .4}`, fill: '#e9fffb', opacity: .12}, wb); }
+    G.reef = Kit.mk('g', {}, wb); G.weeds = []; G.vents = [];
+    const rn = 7;
+    for (let i = 0; i < rn; i++) {
+      const x = xa + W * .09 + (i + .5) / rn * (xb - xa - W * .18) + (R() - .5) * W * .02;
+      if (i % 2 === 0) {
+        const r = bandTotal * (.2 + R() * .1);
+        Kit.mk('path', {d: `M${x - r * 1.4},${yF} q0,${-r * 1.6} ${r * 1.4},${-r * 1.6} q${r * 1.4},0 ${r * 1.4},${r * 1.6}z`, fill: ['#e58f73', '#f0b27a', '#d97d6a', '#eea27c'][i / 2 % 4]}, G.reef);
+        for (let k = 0; k < 3; k++) Kit.mk('circle', {cx: x + (k - 1) * r * .6, cy: yF - r * (.7 + (k % 2) * .4), r: r * .16, fill: '#fbe3c8', opacity: .75}, G.reef);
+        G.vents.push(x);
+      } else {
+        const h = bandTotal * (.55 + R() * .25);
+        const p = Kit.mk('path', {d: `M${x},${yF} c${-h * .3},${-h * .3} ${h * .3},${-h * .6} 0,${-h}`, fill: 'none', stroke: '#3e8a66', 'stroke-width': Math.max(1.8, fs * .17), 'stroke-linecap': 'round'}, G.reef);
+        G.weeds.push([p, x]);
+      }
+    }
+    G.fish = [['#ee7d4a', .45], ['#f6cf6a', .62]].map(([c, p]) => {
+      const g = Kit.mk('g', {opacity: 0}, wb), s = Math.max(5, fs * .45);
+      Kit.mk('ellipse', {cx: 0, cy: 0, rx: s * 1.4, ry: s * .7, fill: c}, g);
+      Kit.mk('polygon', {points: `${-s * 1.2},0 ${-s * 2.2},${-s * .7} ${-s * 2.2},${s * .7}`, fill: c}, g);
+      Kit.mk('circle', {cx: s * .7, cy: -s * .15, r: s * .16, fill: INK}, g);
+      g.dataset.p = p; return g;
+    });
+
+    // the mountains of today, waiting behind Adria
+    const mt = layer('mount', .75, 'pd');
+    const fr = [[.2, 0], [.25, .38], [.29, .44], [.33, .82], [.37, .76], [.42, 1], [.47, .66], [.52, .9], [.56, .58], [.61, .74], [.67, .4], [.73, .48], [.8, 0]];
+    const pk = fr.map(([fx, fy]) => [W * fx, yF + 2 - mh * fy]);
+    const clip = Kit.mk('clipPath', {id: 'mc'}, defs);
+    const pts = jag(pk, 1.3);
+    Kit.mk('polygon', {points: pts}, clip);
+    Kit.mk('polygon', {points: pts, fill: 'url(#mtn)'}, mt);
+    const mg = Kit.mk('g', {'clip-path': 'url(#mc)'}, mt), bb = mh / 9;
+    for (let k = 0; k < 11; k++) Kit.mk('rect', {x: W * .05, y: yF - (k + 1) * bb, width: W * .9, height: Math.max(.5, bb * .55), fill: k % 2 ? '#cfc4ae' : '#e2d8c5', opacity: .8, transform: `rotate(-6 ${W / 2} ${yF - mh / 2})`}, mg);
+    for (let i = 1; i < pk.length - 1; i++) if (fr[i][1] > fr[i - 1][1] && fr[i][1] > fr[i + 1][1]) Kit.mk('polygon', {points: `${pk[i][0]},${pk[i][1]} ${pk[i + 1][0]},${pk[i + 1][1]} ${pk[i + 1][0]},${yF + 4} ${pk[i][0]},${yF + 4}`, fill: '#3b2a14', opacity: .13}, mg);
+    // snow caps on the tallest peaks
+    [5, 3, 7].forEach(i => { const [x, y] = pk[i], d = mh * .1; Kit.mk('polygon', {points: `${x},${y} ${x + d * .9},${y + d} ${x + d * .3},${y + d * .75} ${x - d * .2},${y + d * 1.05} ${x - d * .8},${y + d}`, fill: '#fffdf8'}, mg); });
+    Kit.mk('rect', {x: W * .18, y: yF - mh - 4, width: W * .64, height: mh + 8, fill: 'url(#glow)'}, mg);
+    if (mh > fs * 5.2) {
+      txt(mt, W / 2, yF - mh * .22, 'limestone · dolomite', {'font-size': sm});
+      txt(mt, W / 2, yF - mh * .22 - sm * 1.4, 'TRIASSIC', {'font-size': sm, opacity: .7});
+    } else if (mh > fs * 2.8) {
+      txt(mt, W / 2, yF - mh * .25, 'limestone · dolomite', {'font-size': sm});
+    }
+    txt(mt, W / 2, yF - mh - fs * .6, 'ALPS · APENNINES', {'font-size': fs});
+
+    // Adria, the block in the middle
+    const ad = layer('adria', .8, 'pd');
+    poly(ad, [[xa, yF], [xb, yF], [xb + W * .012, yB], [xa - W * .012, yB]], {fill: 'url(#adr)'}, 1.6);
+    poly(ad, [[xa - W * .004, yF + (yB - yF) * .62], [xb + W * .004, yF + (yB - yF) * .58], [xb + W * .012, yB], [xa - W * .012, yB]], {fill: '#5e4635', opacity: .55}, 1.2);
+    const room = yB - yF > fs * 3.4;
+    txt(ad, W / 2, (yF + yB) / 2 + (room ? -fs * .2 : fs * .35), 'ADRIA', {'font-size': fs, fill: '#fbf6e9', 'letter-spacing': '.3em'});
+    if (room) txt(ad, W / 2, (yF + yB) / 2 + fs * 1.15, 'microplate', {'font-size': sm, fill: '#f1e3cc', opacity: .85});
+
+    // the strata that the sea will lay down
+    const st = layer('strata', .85, 'ps');
+    const bh = bandTotal / 5;
+    G.bands = WET.map((c, i) => {
+      const y1 = yF - i * bh + .5, y0 = yF - (i + 1) * bh, ins = W * (.02 + i * .012);
+      const b = poly(st, [[xa + ins, y0], [xb - ins, y0], [xb - ins + W * .01, y1], [xa + ins - W * .01, y1]], {fill: c}, .8);
+      b.dataset.yb = y1; return b;
+    });
+    G.cracks = Kit.mk('g', {opacity: 0}, st);
+    for (let i = 0; i < 9; i++) { const x = xa + W * .06 + R() * (xb - xa - W * .12), k = Math.floor(R() * 5), y = yF - (k + .5) * bh; Kit.mk('path', {d: `M${x},${y - bh * .4} l${(R() - .5) * 2},${bh * .8}`, stroke: '#6f6656', 'stroke-width': 1, opacity: .6}, G.cracks); }
+    for (let i = 0; i < 7; i++) { const x = xa + W * .07 + R() * (xb - xa - W * .14), y = yF - (Math.floor(R() * 5) + .5) * bh; Kit.mk('path', {d: `M${x - 3},${y} a3 2.4 0 0 1 6 0 z`, fill: '#8a816f', opacity: .55}, G.cracks); }
+    G.slabel = txt(st, W / 2, yF - bandTotal / 2 + sm * .35, 'limestone · dolomite', {'font-size': sm});
+    gsap.set(G.slabel, {autoAlpha: 0});
+    L.flakes = Kit.mk('g', {}, svg);
+
+    // the sea in front: a cellophane wave and the sea's name
+    const wf = layer('wfront', 1.1);
+    const crest = []; for (let x = sxa; x <= sxb + .1; x += 6) crest.push([x, yS + Math.sin(x * .09 + 1) * 2.4]);
+    Kit.mk('polygon', {points: crest.map(p => p.join(',')).join(' ') + ` ${sxb},${yS + H * .08} ${sxa},${yS + H * .08}`, fill: 'url(#wgF)'}, wf);
+    Kit.mk('polyline', {points: crest.map(p => p.join(',')).join(' '), fill: 'none', stroke: '#ffffff', 'stroke-width': 1.8, opacity: .9}, wf);
+    G.tethys = txt(wf, W / 2, yS + fs * 1.75, 'TETHYS SEA', {'font-size': fs, fill: '#174b5c', 'letter-spacing': '.22em'});
+
+    // the time chip
+    const ui = layer('ui', .1, 'ps');
+    G.timeBox = Kit.mk('rect', {x: fs * .35, y: fs * .35, height: fs * 1.75, width: 10, rx: fs * .3, fill: INK}, ui);
+    G.time = txt(ui, fs * .95, fs * .35 + fs * 1.18, '', {'font-size': sm, fill: '#fbf6e9', 'text-anchor': 'start'});
+    setTime(phase === 'end' ? 'TODAY' : '220 MILLION YEARS AGO');
+
+    // state
+    if (phase === 'end') {
+      gsap.set([L.wback, L.wfront, L.strata], {autoAlpha: 0});
+    } else {
+      G.bands.forEach(b => gsap.set(b, {scaleY: 0, svgOrigin: `${W / 2} ${b.dataset.yb}`}));
+      gsap.set(L.mount, {y: mh + H * .08, autoAlpha: 0});
+      if (entered) swim();
+    }
+    if (mustFinish) finish();
+  }
+
+  function swim() {
+    if (Kit.calm || !G.fish || !G.weeds || !G.vents) return;
+    G.fish.forEach((g, i) => {
+      const y = yS + (yF - bandTotal - yS) * +g.dataset.p;
+      const path = [{x: xa + W * .03, y}, {x: W * .38, y: y - fs * .8}, {x: W * .6, y: y + fs * .6}, {x: xb - W * .03, y: y - fs * .3}];
+      idle.push(gsap.timeline({repeat: -1, delay: i * 3.2, repeatDelay: 1.5})
+        .set(g, {opacity: 0})
+        .to(g, {motionPath: {path, curviness: 1.3, autoRotate: true}, duration: 7.5, ease: 'sine.inOut'})
+        .to(g, {opacity: 1, duration: .7}, 0)
+        .to(g, {opacity: 0, duration: .7}, 6.8));
+    });
+    G.weeds.forEach(([p, x], i) => idle.push(gsap.fromTo(p, {rotation: -8, svgOrigin: `${x} ${yF}`}, {rotation: 8, svgOrigin: `${x} ${yF}`, duration: 1.5 + i * .25, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
+    G.vents.forEach((x, i) => {
+      const b = Kit.mk('circle', {cx: x, cy: yF - bandTotal * .3, r: Math.max(1.6, fs * .14), fill: 'none', stroke: '#e9fffb', 'stroke-width': 1, opacity: 0}, G.reef);
+      idle.push(gsap.timeline({repeat: -1, delay: .6 + i * 1.1, repeatDelay: 1.4})
+        .fromTo(b, {y: 0, x: 0, opacity: .9}, {y: -(yF - bandTotal * .3 - yS - 4), x: fs * .4, duration: 2.6, ease: 'sine.in'})
+        .to(b, {opacity: 0, duration: .4}, 2.2));
+    });
+  }
+
+  function ripple() {
+    if (Kit.calm || !L.wfront || phase === 'end') return;
+    const e = Kit.mk('ellipse', {cx: xa + R() * (xb - xa), cy: yS + 2, rx: 2, ry: 1, fill: 'none', stroke: '#fff', 'stroke-width': 1.6}, L.wfront);
+    gsap.fromTo(e, {attr: {rx: 2, ry: 1}, opacity: 1}, {attr: {rx: W * .09, ry: 4.5}, opacity: 0, duration: .9, ease: 'power3.out', onComplete: () => e.remove()});
+  }
+
+  // ---------- parallax: the layers drift at their own depths ----------
+  let px = 0, py = 0, cx = 0, cy = 0, lastMove = -1e9;
+  svg.addEventListener('pointermove', e => { const r = svg.getBoundingClientRect(); px = (e.clientX - r.left) / r.width - .5; py = (e.clientY - r.top) / r.height - .5; lastMove = performance.now(); });
+  gsap.ticker.add(() => {
+    if (Kit.calm) return;
+    const now = performance.now();
+    if (now - lastMove > 2500) { const t = now / 1000; px = Math.sin(t * .35) * .35; py = Math.cos(t * .27) * .2; }
+    cx += (px - cx) * .06; cy += (py - cy) * .06;
+    pars.forEach(w => { const d = +w.dataset.d; w.setAttribute('transform', `translate(${(cx * d * 16).toFixed(2)} ${(cy * d * 7).toFixed(2)})`); });
+  });
+
+  // ---------- ordering ----------
+  function paintChips() {
+    chips().forEach(c => { const k = ord.indexOf(+c.dataset.s); c.querySelector('.n').textContent = k >= 0 ? k + 1 : ''; c.classList.toggle('set', k >= 0); });
+  }
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => reveal(pct));
+  stepsBox.addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b || locked) return;
+    const s = +b.dataset.s, k = ord.indexOf(s);
+    if (k >= 0) ord.splice(k, 1); else ord.push(s);
+    paintChips(); Kit.haptic('selection'); ripple();
+    gsap.fromTo(b, {y: -4, scale: 1.03}, {y: 0, scale: 1, duration: .55, ease: 'elastic.out(1,.5)', overwrite: 'auto'});
+    if (k < 0) gsap.fromTo(b.querySelector('.n'), {scale: .3}, {scale: 1, duration: .45, ease: 'back.out(3)'});
+    if (ord.length === 4) { locked = true; say.textContent = 'Your order is in.'; sure.on(); }
+  });
+
+  function reveal(pct) {
+    const right = ord.filter((s, i) => s === i).length, ok = right === 4;
+    result = {ok, pct, right};
+    Kit.answer({choice: ord.map(s => STEPS[s]).join(' → '), correct: ok, sure: pct});
+    say.textContent = 'Watch the real order play out.';
+    const state = Flip.getState(chips());
+    chips().sort((a, b) => a.dataset.s - b.dataset.s).forEach(c => {
+      stepsBox.appendChild(c);
+      const s = +c.dataset.s, mine = ord.indexOf(s);
+      c.querySelector('.n').textContent = s + 1;
+      c.classList.add(mine === s ? 'ok' : 'no');
+      if (mine !== s) { const w = document.createElement('span'); w.className = 'was'; w.textContent = `you: ${mine + 1}`; c.appendChild(w); }
+    });
+    if (Kit.calm) { phase = 'end'; build(); finish(); return; }
+    Flip.from(state, {duration: .75, ease: 'power3.inOut', stagger: .05});
+    play();
+  }
+
+  function now(i) { chips().forEach(c => c.classList.toggle('now', +c.dataset.s === i)); if (i >= 0) Kit.haptic('light'); }
+
+  function play() {
+    // the diorama may not be drawn yet (too little room): skip straight to the end state
+    if (!G.bands || !G.fish || !L.flakes || !L.mount) { phase = 'end'; finish(); return; }
+    tl = gsap.timeline({delay: .8, onComplete: () => { phase = 'end'; finish(); }});
+    // 1 · Adria under the sea
+    tl.call(() => now(0), null, 0)
+      .fromTo(G.timeBox, {scale: 1}, {scale: 1.08, svgOrigin: `${fs * 2} ${fs}`, duration: .25, yoyo: true, repeat: 1, ease: 'power2.out'}, 0)
+      .to(L.wfront, {y: 4, duration: .3, yoyo: true, repeat: 3, ease: 'sine.inOut'}, .1)
+      .fromTo(G.tethys, {opacity: .4}, {opacity: 1, duration: .4, yoyo: true, repeat: 1, ease: 'power2.inOut'}, .1);
+    // 2 · carbonate flakes drift down curved paths, pile up and bury the reef
+    tl.call(() => now(1), null, 1.3);
+    for (let i = 0; i < 30; i++) {
+      const x0 = xa + R() * (xb - xa), y0 = yS + fs * .4, x1 = xa + W * .05 + R() * (xb - xa - W * .1), y1 = yF - R() * bandTotal * .7;
+      const sw = (R() - .5) * W * .22, d = 1.2 + R() * .7, t0 = 1.35 + i * .055;
+      const fl = i % 4 ? Kit.mk('circle', {cx: 0, cy: 0, r: 1.4 + R() * 1.6, fill: '#fffbf0', opacity: 0}, L.flakes)
+                       : Kit.mk('path', {d: 'M-3,0 a3 2.4 0 0 1 6 0 z', fill: '#fff6e0', stroke: '#cdb98f', 'stroke-width': .6, opacity: 0}, L.flakes);
+      tl.set(fl, {x: x0, y: y0}, t0)
+        .to(fl, {opacity: 1, duration: .2}, t0)
+        .to(fl, {motionPath: {path: [{x: x0, y: y0}, {x: x0 + sw, y: y0 + (y1 - y0) * .35}, {x: x1 - sw * .5, y: y0 + (y1 - y0) * .7}, {x: x1, y: y1}], curviness: 1.4}, rotation: (R() - .5) * 360, duration: d, ease: 'sine.inOut'}, t0)
+        .to(fl, {opacity: 0, scale: .4, duration: .3, ease: 'power2.in'}, t0 + d - .15);
+    }
+    G.bands.forEach((b, i) => tl.to(b, {scaleY: 1, svgOrigin: `${W / 2} ${b.dataset.yb}`, duration: .55, ease: 'back.out(1.6)'}, 1.7 + i * .34));
+    // 3 · the layers harden into limestone and dolomite
+    tl.call(() => { now(2); setTime('MILLIONS OF YEARS LATER'); }, null, 3.8);
+    G.bands.forEach((b, i) => tl.to(b, {fill: STONE[i], duration: .7, ease: 'power2.inOut'}, 3.85 + i * .07));
+    tl.to(L.strata, {scaleY: .9, svgOrigin: `${W / 2} ${yF}`, duration: .5, ease: 'power3.in'}, 3.9)
+      .to(L.strata, {scaleY: 1, svgOrigin: `${W / 2} ${yF}`, duration: .6, ease: 'elastic.out(1,.45)'}, 4.4)
+      .to(G.cracks, {opacity: 1, duration: .5}, 4.2)
+      .to(G.slabel, {autoAlpha: 1, duration: .5, ease: 'power2.out'}, 4.3);
+    // 4 · the sea drains and the peaks rise: the wow
+    tl.call(() => { now(3); idle.forEach(t => t.kill()); idle = []; }, null, 5.1)
+      .to(G.fish, {opacity: 0, duration: .3}, 5.1)
+      .to(G.tethys, {opacity: 0, duration: .3}, 5.1)
+      .to(L.wfront, {y: yF - yS - H * .06, autoAlpha: 0, duration: 1, ease: 'power2.in'}, 5.2)
+      .to(L.wback, {scaleY: 0, svgOrigin: `${W / 2} ${yF}`, duration: 1.1, ease: 'power3.in'}, 5.2)
+      .call(() => setTime('TODAY'), null, 5.5)
+      .to(L.strata, {autoAlpha: 0, y: -fs, duration: .6, ease: 'power2.in'}, 5.8)
+      .to(L.mount, {autoAlpha: 1, duration: .35}, 5.75)
+      .to(L.mount, {y: 0, duration: 1.5, ease: 'back.out(1.15)'}, 5.75)
+      .call(() => Kit.haptic('success'), null, 6.8);
+  }
+
+  // keep the answer inside its block and leave the diorama room to breathe
+  function fitWhy() {
+    const st = Kit.$('stage'), body = document.querySelector('#why .body');
+    body.style.fontSize = '';
+    let s = parseFloat(getComputedStyle(body).fontSize), n = 0;
+    const want = () => Math.min(150, st.clientHeight * .36);
+    while ((st.scrollHeight > st.clientHeight + 1 || svg.clientHeight < want()) && s > 12.2 && n++ < 24) {
+      s = Math.max(12, s - .5); body.style.fontSize = s + 'px';
+    }
+  }
+
+  function finish() {
+    if (finished) return; finished = true;
+    now(-1);
+    Kit.hide('steps'); Kit.hide('say'); Kit.show('why');
+    sure.grade(result.ok, result.pct, `${result.right}/4 in place`);
+    Kit.show('keep');
+    fitWhy();
+    if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .5, ease: 'power3.out'});
+  }
+
+  // ---------- frame ----------
+  let raf = 0;
+  new ResizeObserver(() => { if (!G.time && !W) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(build); }).observe(svg);
+  Kit.onShow.card = build;
+  Kit.onEnter.card = () => {
+    entered = true;
+    if (Kit.calm) return;
+    swim();
+    gsap.from(pars.map(w => w.firstChild), {y: (i) => H * .12 * (1 - i * .1), opacity: 0, stagger: .09, duration: .9, ease: 'power3.out'});
+    gsap.from('.chip', {opacity: 0, y: 12, stagger: .07, duration: .5, delay: .4, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    for (let s = 0; s < 4; s++) { stepsBox.querySelector(`.chip[data-s="${s}"]`).click(); await w(60); }
+    await w(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(1200);
+    if (tl) tl.progress(1);
+    await w(700);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "maths-duverger-two-parties",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.game_theory",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Winner takes all. Imagine a third party on 23%. What happens to it?",
+  "answer": "In the made-up race, Green's voters switch to Left after each loss, so Green shrinks until it all but vanishes after 10 elections. In the real case, Florida in 2000, Nader got almost 100,000 votes while Bush won by fewer than 600.",
+  "move": "Under winner-takes-all, a vote for your favourite can elect your least favourite.",
+  "keywords": [
+    "duverger",
+    "winner-takes-all",
+    "spoiler effect",
+    "two-party system",
+    "voting"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page: a made-up three-party race where the reader drags the Green party marker to where it stands after ten elections. Green shrinks as its voters switch to Left, and the page asks where it ends up."
+  },
+  "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=121s",
+  "written": "2026-11-07"
+}

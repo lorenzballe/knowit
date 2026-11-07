@@ -1,0 +1,37 @@
+{
+  "id": "human_body-habits-mark-genes",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.small_daily_habits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can the way you live switch your genes on or off?",
+  "answer": "Habits add or remove chemical marks on genes, changing which genes get used. They never change the letters the genes are written in.",
+  "move": "Habits can change which genes get used, never the letters they're written in.",
+  "keywords": [
+    "epigenetics",
+    "genes",
+    "dna",
+    "habits"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Titled 'Habits mark your genes', the page asks how the way you live switches genes on or off. A slider labelled REMOVE and ADD adds or removes chemical marks on one gene when dragged.",
+    "ground": "#0b3a63"
+  },
+  "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=266s",
+  "written": "2026-11-04"
+}

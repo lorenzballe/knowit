@@ -1,0 +1,36 @@
+{
+  "id": "science-dna-spooled-tight",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "DNA is 2 nm wide. A chromosome is cm long. How does it fit without tangling?",
+  "answer": "DNA wraps around histone proteins, forming nucleosomes. The nucleosomes then fold again and again, packing a strand 2 nm wide into a chromosome centimetres long without tangling.",
+  "move": "To pack something long without knots, wrap it first, then fold what you wrapped.",
+  "keywords": [
+    "dna",
+    "chromosome",
+    "histone",
+    "nucleosome"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Puzzle asking how DNA fits into a chromosome without tangling. The reader taps two steps, from thread to chromosome, in order, then rates how sure they are. The steps are wrapping DNA around histone proteins, then folding the nucleosomes again and again."
+  },
+  "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=18s",
+  "written": "2026-11-07"
+}

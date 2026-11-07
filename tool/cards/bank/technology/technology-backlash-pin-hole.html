@@ -1,0 +1,304 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-backlash-hinge -->
+<!-- Design note.
+     Thought to carry: a hinge is a pin in a hole with some give. When the motion reverses, the pointer waits before it follows,
+     so it no longer matches the handle. That delay is backlash, the main cause of inaccuracy in traditional mechanisms.
+     Front: a pointer arm hung from a pivot. The handle's red pin sits in a hole in the arm, with some give around it.
+     Hold: the handle pushes right and the pointer goes with it. Let go: the handle pulls back. The frame stops while the
+     pointer has not moved yet. The answers stay locked until that gesture is done.
+     Back: one drawing. Handle and pointer position over time, drawn on the same axes. While pushing, the two lines are one.
+     At the turn the pointer line stays flat ("waits"), then follows, but it now runs above the handle line. It is off.
+     Four labels: handle, pointer, waits, time. -->
+<title>Backlash</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding-bottom:64px;box-sizing:border-box}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* once the card has turned, the front is fully gone, so its labels never sit under the back's */
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .375s}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+
+#hold{align-self:flex-start;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;margin-bottom:16px}
+#hold.down{background:var(--k);color:var(--c)}
+#hold:disabled{background:transparent;color:var(--k);box-shadow:inset 0 0 0 1.5px var(--k);opacity:1;cursor:default}
+
+#opts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.opt{font:700 14px/1.2 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 1.5px var(--k);border-radius:999px;padding:9px 14px;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt:disabled{color:color-mix(in srgb,var(--k) 40%,transparent);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 40%,transparent);cursor:default}
+.opt.on:disabled{background:var(--k);color:var(--c);box-shadow:none}
+
+#sure.locked,#sure.locked *{color:color-mix(in srgb,var(--k) 40%,transparent)!important;opacity:1!important}
+#sure.locked button{background:transparent!important;border-color:transparent!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 40%,transparent)!important;cursor:default}
+
+.lk{width:.8em;height:.95em;vertical-align:-.1em;margin-right:.35em}
+.front .say{margin-right:96px}
+.back .say{margin:1.2cqh 0 1cqh}
+.foot{padding-right:96px}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Hold, let go · pick one">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD, THEN GUESS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">When the handle turns back, what does the pointer do first?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A pointer arm hanging from a pivot. The handle's pin sits in a hole in the arm, with some give."></svg></div>
+        <button class="btn" id="hold">Hold to push, let go to pull back</button>
+        <div id="opts">
+          <button class="opt" data-i="0" disabled>moves at once</button>
+          <button class="opt" data-i="1" disabled>waits, then follows</button>
+          <button class="opt" data-i="2" disabled>jumps past</button>
+        </div>
+        <div class="sure locked" id="sure"></div>
+        <p class="say" id="say"><svg class="lk" viewBox="0 0 12 14" aria-hidden="true"><rect x="1" y="6" width="10" height="7.5" rx="1.5" fill="currentColor"/><path d="M3.5 6V4a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><b>Hold, then let go.</b> The choices unlock after that.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It waits, then follows.</p>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="Handle and pointer position over time. While the handle pushes, the two lines are one. When it pulls back, the pointer line stays flat for a while, then follows, but now it no longer matches the handle."></svg></div>
+        <p class="say">A hinge is a pin in a hole, with some give. When the motion reverses, the pointer waits before it follows, so it no longer matches the handle. That delay is backlash, the main cause of inaccuracy in traditional mechanisms. Parts that bend instead of pivoting don’t suffer from it.</p>
+        <div class="foot"><span class="src">Source · Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const RED = '#e4402f', INK = 'fill:var(--k)', HOLE = 'fill:var(--c)';
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), say = Kit.$('say'), hold = Kit.$('hold'), opts = Kit.$('opts'), sureEl = Kit.$('sure');
+  const RIGHT = 1;
+  // u: handle pin position, v: hole centre position, both in units of the handle's half travel
+  const S = {u: -0.5, v: -0.5, gn: .15, dir: 0};
+  let G = null, FS = 13, phase = 0, tween = null, pick = -1, turned = false, started = false;
+
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree, sans-serif', 'font-size': FS, 'font-weight': 700, style: INK}, a), p); e.textContent = t; return e; };
+  const arrowD = (x, y, len, dir, h) => { const a = x - dir * len / 2, b = x + dir * len / 2;
+    return `M${a},${y} L${b},${y} M${b - dir * h},${y - h * .8} L${b},${y} L${b - dir * h},${y + h * .8}`; };
+
+  // ---------- the front: pivot, pointer arm with a hole, handle whose pin sits in it ----------
+  function build() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H;
+    if (W < 40 || H < 40) { G = null; return; }
+    const fs = clamp(W / 26, 12, 14); FS = fs;
+    const aw = clamp(H * .1, 18, 38);
+    const py = aw * 1.5 + 12;
+    const Lt = Math.min(H - py - 6, W * 1.05);
+    const Lh = Lt * .44, rh = aw * .38, rp = rh * .5, g = rh - rp, R = Lh * .3;
+    const cx = W * .56, dist = Math.min(W * .42, cx - R - aw * .9);
+    S.gn = g / R;
+    G = {W, H, fs, aw, py, Lt, Lh, rh, rp, g, R, cx, dist};
+
+    G.rod = Kit.mk('rect', {height: rp * 1.1, rx: rp * .55, fill: RED}, svg);
+    G.knob = Kit.mk('circle', {r: aw * .55, fill: RED}, svg);
+    Kit.mk('rect', {x: cx - aw * 1.5, y: py - aw * 1.45, width: aw * 3, height: aw * .32, rx: aw * .1, style: INK}, svg);
+    Kit.mk('path', {d: `M${cx - aw * .7},${py - aw * 1.2} L${cx + aw * .7},${py - aw * 1.2} L${cx},${py} Z`, style: INK}, svg);
+    G.arm = Kit.mk('g', {}, svg);
+    const hy0 = py + Lh;
+    Kit.mk('path', {'fill-rule': 'evenodd', style: INK, d:
+      `M${cx - aw / 2},${py} A${aw / 2},${aw / 2} 0 0 1 ${cx + aw / 2},${py} L${cx + aw / 2},${py + Lt * .8} L${cx},${py + Lt} L${cx - aw / 2},${py + Lt * .8} Z ` +
+      `M${cx + rh},${hy0} a${rh},${rh} 0 1 0 ${-2 * rh},0 a${rh},${rh} 0 1 0 ${2 * rh},0 Z`}, G.arm);
+    Kit.mk('circle', {cx, cy: py, r: aw * .2, style: HOLE}, G.arm);
+    G.pin = Kit.mk('circle', {r: rp, fill: RED}, svg);
+    G.arrow = Kit.mk('path', {fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: 'color:var(--k)'}, svg);
+
+    G.lHandle = txt(svg, 0, 0, 'handle', {'text-anchor': 'middle'});
+    G.lPointer = txt(svg, 0, 0, 'pointer');
+    G.pw = G.lPointer.getComputedTextLength();
+    G.lead = Kit.mk('line', {stroke: 'currentColor', 'stroke-width': 1.3, style: 'color:var(--k)'}, svg);
+    G.ly0 = py + Lh * .45;
+    G.lPin = txt(svg, 0, G.ly0, 'pin in a hole');
+    const w = G.lPin.getComputedTextLength();
+    G.lw = w;
+    G.lPin.setAttribute('x', Math.min(cx + R * .5 + aw * .7 + 8, W - 2 - w));
+    update();
+  }
+
+  function update() {
+    if (!G) return;
+    if (S.u - S.v > S.gn) S.v = S.u - S.gn;
+    if (S.v - S.u > S.gn) S.v = S.u + S.gn;
+    const {cx, py, Lh, Lt, R, aw, dist, fs, rp, rh, W, H} = G;
+    const xi = S.u * R, xo = S.v * R;
+    const th = Math.asin(clamp(xo / Lh, -.9, .9));
+    G.arm.setAttribute('transform', `rotate(${th * 180 / Math.PI} ${cx} ${py})`);
+    const hx = cx + Lh * Math.sin(th), hy = py + Lh * Math.cos(th);
+    const px = cx + xi, kx = px - dist;
+    G.pin.setAttribute('cx', px); G.pin.setAttribute('cy', hy);
+    // the rod runs behind the arm and stops short of the hole, so the give stays visible on both sides
+    G.rod.setAttribute('x', kx); G.rod.setAttribute('y', hy - rp * .55); G.rod.setAttribute('width', Math.max(0, hx - rh - 1 - kx));
+    G.knob.setAttribute('cx', kx); G.knob.setAttribute('cy', hy);
+    if (S.dir) G.arrow.setAttribute('d', arrowD((kx + aw * .6 + hx - aw / 2) / 2, hy - fs * .95, fs * 1.6, S.dir, 5));
+    else G.arrow.setAttribute('d', '');
+    G.lHandle.setAttribute('x', kx); G.lHandle.setAttribute('y', hy + aw * .55 + fs * 1.3);
+    // "pointer" sits right beside the arm, low down, and travels with it
+    const q = .7, ax = cx + Lt * q * Math.sin(th) + (aw / 2) * Math.cos(th), ay = py + Lt * q * Math.cos(th);
+    let pX = Math.min(ax + 10, W - 2 - G.pw), pY = ay + fs * .35;
+    const lx = +G.lPin.getAttribute('x');
+    let ly = G.ly0;
+    // keep "pointer" and "pin in a hole" apart when the stage is short
+    const sep = fs * 1.4;
+    const xHit = (x) => x < lx + G.lw + 4 && x + G.pw > lx - 4;
+    if (xHit(pX) && Math.abs(pY - ly) < sep) {
+      pY = ly + sep;
+      const maxY = H - fs * .3;
+      if (pY > maxY) {
+        pY = maxY;
+        ly = Math.max(py + fs * .35, pY - sep);
+      }
+      if (Math.abs(pY - ly) < sep) {
+        // still crowded: move "pointer" to the other side of the arm
+        const axL = cx + Lt * q * Math.sin(th) - (aw / 2) * Math.cos(th);
+        pX = Math.max(2, axL - 10 - G.pw); pY = ay + fs * .35; ly = G.ly0;
+      }
+    }
+    G.lPointer.setAttribute('x', pX); G.lPointer.setAttribute('y', pY);
+    G.lPin.setAttribute('y', ly);
+    G.lead.setAttribute('x1', lx - 4); G.lead.setAttribute('y1', ly - fs * .35);
+    G.lead.setAttribute('x2', hx + rh * .72); G.lead.setAttribute('y2', hy - rh * .72);
+  }
+
+  // ---------- hold to push, let go to pull back ----------
+  function unlock() {
+    [...opts.children].forEach(b => b.disabled = false);
+    say.innerHTML = 'The handle has turned back. <b>Pick what the pointer does first.</b>';
+    Kit.haptic('selection');
+  }
+  function down(e) {
+    e.preventDefault(); if (phase !== 0) return;
+    phase = 1; hold.classList.add('down'); Kit.haptic('light'); S.dir = 1;
+    try { hold.setPointerCapture(e.pointerId); } catch (_) {}
+    if (Kit.calm) { S.u = 1; update(); return; }
+    if (tween) tween.kill();
+    tween = gsap.to(S, {u: 1, duration: Math.max(.2, (1 - S.u) * .9), ease: 'power1.inOut', onUpdate: update});
+  }
+  function up() {
+    if (phase !== 1) return;
+    phase = 2; hold.classList.remove('down');
+    if (tween) { tween.kill(); tween = null; }
+    hold.disabled = true; hold.textContent = 'Paused';
+    S.dir = -1;
+    // pull back, and stop while the give is still being taken up: the pointer has not moved yet
+    const target = S.v - S.gn * .8;
+    if (Kit.calm) { S.u = target; update(); unlock(); return; }
+    tween = gsap.to(S, {u: target, duration: 1, ease: 'power2.out', onUpdate: update, onComplete: unlock});
+  }
+  hold.addEventListener('pointerdown', down);
+  hold.addEventListener('pointerup', up); hold.addEventListener('pointercancel', up); hold.addEventListener('lostpointercapture', up);
+  hold.addEventListener('contextmenu', e => e.preventDefault());
+
+  // ---------- answer, how sure, turn ----------
+  const sure = Kit.sure(sureEl, 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = opts.children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  sureEl.classList.add('locked');
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || b.disabled || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    [...opts.children].forEach(o => o.disabled = true);
+    sureEl.classList.remove('locked'); sure.on();
+    say.innerHTML = '<b>Now, how sure are you?</b>';
+  });
+
+  // ---------- the back: handle and pointer over time, on the same axes ----------
+  // handle: up, turn, down. Pointer: the same until the turn, flat while the give is taken up, then parallel but off.
+  const PEAK = .9, TURN = .45, GIVE = .24, SLOPE = PEAK / (1 - TURN);
+  const TF = TURN + GIVE / SLOPE;
+  const HANDLE = [[0, .12], [TURN, PEAK], [1, 0]];
+  const POINTER = [[0, .12], [TURN, PEAK], [TF, PEAK], [1, GIVE]];
+
+  function build2(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H;
+    if (W < 40 || H < 40) return;
+    const fs = clamp(W / 26, 12, 14); FS = fs;
+    const go = animate && !Kit.calm;
+
+    const root = Kit.mk('g', {}, svg2);
+    const ends = Kit.mk('g', {}, root);
+    const eH = txt(ends, 0, 0, 'handle'), eP = txt(ends, 0, 0, 'pointer');
+    const lw = Math.max(eH.getComputedTextLength(), eP.getComputedTextLength());
+
+    const cw = Math.min(W, 480), ox = (W - cw) / 2;
+    const x0 = ox + 2, x1 = ox + cw - lw - 12;
+    const top = fs + 14, bot = H - (fs + 24);
+    const h = Math.max(40, Math.min(bot - top, (x1 - x0) * .7));
+    const yT = top + Math.max(0, (bot - top - h) / 2), yB = yT + h;
+    const X = q => x0 + q * (x1 - x0), Y = v => yB - v * h;
+    const path = pts => pts.map(([q, v], i) => `${i ? 'L' : 'M'}${X(q).toFixed(1)},${Y(v).toFixed(1)}`).join('');
+
+    const id = 'clip' + Math.round(Math.random() * 1e6);
+    const cp = Kit.mk('clipPath', {id}, Kit.mk('defs', {}, svg2));
+    const crect = Kit.mk('rect', {x: 0, y: -H, width: go ? 0 : W, height: 3 * H}, cp);
+    const lanes = Kit.mk('g', {'clip-path': `url(#${id})`}, root);
+    // red drawn wide underneath, ink drawn thin on top: while they agree, they read as one line
+    Kit.mk('path', {d: path(HANDLE), fill: 'none', stroke: RED, 'stroke-width': 7, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, lanes);
+    Kit.mk('path', {d: path(POINTER), fill: 'none', stroke: 'currentColor', 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', style: 'color:var(--k)'}, lanes);
+
+    // end labels, beside the end of each line
+    let yh = Y(0) + fs * .35, yp = Y(GIVE) + fs * .35;
+    if (yh - yp < fs * 1.2) { const m = (yh + yp) / 2; yh = m + fs * .6; yp = m - fs * .6; }
+    eH.setAttribute('x', x1 + 10); eH.setAttribute('y', yh);
+    eP.setAttribute('x', x1 + 10); eP.setAttribute('y', yp);
+
+    // the one thing to see: the flat stretch after the turn
+    const waits = Kit.mk('g', {}, root);
+    txt(waits, X((TURN + TF) / 2), Y(PEAK) - 11, 'waits', {'text-anchor': 'middle'});
+
+    // time runs left to right
+    const axis = Kit.mk('g', {}, root);
+    const ya = yB + 12;
+    Kit.mk('path', {d: `M${x0},${ya} L${x1},${ya} M${x1 - 6},${ya - 4} L${x1},${ya} L${x1 - 6},${ya + 4}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: 'color:var(--k)'}, axis);
+    txt(axis, x0, ya + fs + 4, 'time', {'font-weight': 600});
+
+    if (!go) return;
+    gsap.set([ends, waits, axis], {opacity: 0});
+    gsap.timeline({delay: .35})
+      .to(axis, {opacity: 1, duration: .35, ease: 'power2.out'})
+      .to(crect, {attr: {width: W}, duration: 2, ease: 'none'})
+      .to(waits, {opacity: 1, duration: .4, ease: 'power2.out'}, '-=.9')
+      .to(ends, {opacity: 1, duration: .4, ease: 'power2.out'}, '-=.1');
+  }
+  document.addEventListener('turned', () => { turned = true; build2(true); });
+
+  new ResizeObserver(() => { build(); }).observe(Kit.$('stage'));
+  new ResizeObserver(() => { if (turned) build2(false); }).observe(Kit.$('stage2'));
+  Kit.onShow.card = () => { build(); if (turned) build2(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !G || !G.arm || started) return; started = true;
+    gsap.from([G.arm, G.pin, G.rod, G.knob], {opacity: 0, duration: .5, stagger: .08, ease: 'power2.out'});
+    gsap.from([G.lHandle, G.lPointer, G.lPin, G.lead], {opacity: 0, duration: .4, delay: .4, ease: 'power2.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (tween) { tween.kill(); tween = null; }
+    S.u = 1; update();
+    S.dir = -1; S.u = S.v - S.gn * .8; update();
+    phase = 2; hold.disabled = true; hold.textContent = 'Paused'; unlock();
+    await wait(120);
+    opts.children[RIGHT].click();
+    await wait(120);
+    sureEl.querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 5600);
+  };
+})();
+Kit.single();
+</script>
+</html>

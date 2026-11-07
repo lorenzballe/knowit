@@ -1,0 +1,320 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-graphene-helium-seal -->
+<!-- Look: a paper cut-out collage on cream stock. A torn teal jar, a black honeycomb sheet taped on top, kraft and sky scraps, everything boiling like stop-motion.
+     Interaction: hold the pump. Helium atoms pour in, speed up and hammer the graphene sheet, which bulges into a dome with elastic weight. The "helium out" counter stays at 0.
+     Wow: at full pressure the dome kicks and wobbles, and a rubber stamp slams down: SEALED. Not one atom got through. -->
+<title>The sheet nothing gets through</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex:1;min-height:0}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;overflow:visible}
+#ctl{display:flex;align-items:center;gap:3.5cqw}
+#ctl .say{flex:1;min-width:0;margin:0}
+#pump{flex:none;background:none;border:0;padding:0;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;filter:drop-shadow(.4cqh .6cqh 0 rgba(60,40,15,.32));transform:rotate(-2.5deg)}
+#pump span{display:block;font:800 max(2cqh,13px)/1.1 var(--body);color:#fff7ea;background:linear-gradient(160deg,#e4683a,#c94a1f);padding:1.7cqh 4.6cqw 1.9cqh;clip-path:polygon(0 6%,9% 0,22% 4%,37% 1%,51% 5%,66% 0,81% 3%,100% 0,98% 30%,100% 58%,97% 100%,80% 95%,63% 100%,47% 96%,30% 100%,14% 95%,2% 100%,3% 62%,0 34%);white-space:nowrap}
+#pump span small{display:block;font:600 max(1.5cqh,12px)/1.2 var(--body);opacity:.85}
+.say b{color:inherit}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold to pump · gas against a sheet" style="--c:#f3e8d3;--k:#1c1915;--edge:#d5c09a">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO PUMP</span></div>
+    <h2 class="q">What is the most impermeable material known?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A paper jar full of helium atoms, sealed on top by a one-atom-thick sheet of graphene. A counter shows how much helium got out."></svg>
+    </div>
+    <div id="ctl">
+      <button id="pump" aria-label="Hold to pump helium"><span>Hold to pump<small>helium in</small></span></button>
+      <p class="say" id="say">The lid is a sheet of <b>graphene</b>. <b>Hold the pump</b> and push helium against it.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Graphene lets no gas through, not even helium: the most impermeable material known.</div>
+    <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), btn = Kit.$('pump'), say = Kit.$('say');
+  const INK = '#1c1915', ORANGE = '#ee7b30', TEAL = '#2c6e72', SKY = '#cfe2dd', KRAFT = '#dfc493', CREAM = '#fbf3e2';
+  const S = {p: 0, bulge: 0, pumping: false, done: false, boil: 1, touched: false};
+  let W, H, fs, x0, x1, sy, y1, t, maxB, ar, pipeY;
+  let G = {}, atoms = [], scraps = [], built = false, started = false, entered = false;
+  let lastFx = 0, lastB = 0, spawnT = 0, needleTo = null;
+  const bulgeTo = gsap.quickTo(S, 'bulge', {duration: .9, ease: 'elastic.out(1,.35)'});
+
+  const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let q = Math.imul(seed ^ seed >>> 15, 1 | seed); q = q + Math.imul(q ^ q >>> 7, 61 | q) ^ q; return ((q ^ q >>> 14) >>> 0) / 4294967296; };
+  const mk = (tag, a, p) => Kit.mk(tag, a, p);
+  const txt = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y, fill: INK}, a), p); e.textContent = s; return e; };
+
+  // A torn edge: each segment of the outline gets small random bites, re-cut on every boil frame.
+  function jag(pts, amp, seed, closed) {
+    const r = rng(seed), out = [], n = pts.length, lim = closed ? n : n - 1;
+    for (let i = 0; i < lim; i++) {
+      const a = pts[i], b = pts[(i + 1) % n], dx = b[0] - a[0], dy = b[1] - a[1], len = Math.hypot(dx, dy) || 1;
+      const segs = Math.max(1, Math.round(len / (fs * .8)));
+      for (let s = 0; s < segs; s++) {
+        const u = s / segs, j = (r() - .5) * 2 * amp * (s === 0 ? .25 : 1);
+        out.push([a[0] + dx * u - dy / len * j, a[1] + dy * u + dx / len * j]);
+      }
+    }
+    if (!closed) out.push(pts[n - 1]);
+    return out;
+  }
+  const dOf = (pts, close) => 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + (close ? 'Z' : '');
+  const top = x => { const u = (x - x0) / (x1 - x0); return (u <= 0 || u >= 1) ? sy : sy - S.bulge * Math.sin(Math.PI * u); };
+
+  function scrap(parent, pts, fill, amp, seed, extra) {
+    const el = mk('path', Object.assign({fill, filter: 'url(#pp)'}, extra || {}), parent);
+    const s = {el, pts, amp, seed, redraw() { el.setAttribute('d', dOf(jag(pts, amp, seed + S.boil * 17, true), true)); }};
+    s.redraw(); scraps.push(s); return el;
+  }
+  const bb = el => { try { return el.getBBox(); } catch (_) { return null; } };
+
+  function layout() {
+    svg.innerHTML = ''; scraps = [];
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(15, (f.f || 13)));
+    x0 = W * .08; x1 = W * .67; sy = H * .44; y1 = H * .95;
+    t = Math.max(15, H * .052);
+    maxB = Math.min(H * .2, (x1 - x0) * .36);
+    ar = Math.max(5, Math.min(W, H) * .022);
+    pipeY = y1 - (y1 - sy) * .22;
+
+    const defs = mk('defs', {}, svg);
+    defs.innerHTML = `
+      <filter id="pp" x="-8%" y="-8%" width="120%" height="125%">
+        <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 .1  0 0 0 0 .07  0 0 0 0 .03  .75 0 0 0 -.3" result="g"/>
+        <feComposite in="g" in2="SourceGraphic" operator="in" result="gi"/>
+        <feMerge result="m"><feMergeNode in="SourceGraphic"/><feMergeNode in="gi"/></feMerge>
+        <feDropShadow in="m" dx="1.6" dy="2.6" stdDeviation="0" flood-color="#3b2a12" flood-opacity=".3"/>
+      </filter>
+      <filter id="sh" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="1" dy="1.8" stdDeviation="0" flood-color="#0d2426" flood-opacity=".45"/></filter>
+      <linearGradient id="jarG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b8a8d"/><stop offset="1" stop-color="${TEAL}"/></linearGradient>
+      <linearGradient id="shG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3835"/><stop offset=".5" stop-color="#1d1c1a"/><stop offset="1" stop-color="#2b2926"/></linearGradient>
+      <radialGradient id="atG" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#ffc07a"/><stop offset=".55" stop-color="${ORANGE}"/><stop offset="1" stop-color="#c85a1a"/></radialGradient>`;
+
+    G.back = mk('g', {}, svg);
+    G.jarWrap = mk('g', {}, svg);
+    G.sheetWrap = mk('g', {}, svg);
+    G.fx = mk('g', {}, svg);
+    G.ui = mk('g', {}, svg);
+
+    // Background scraps: a sky-paper "outside", a kraft column for the readouts.
+    scrap(G.back, [[W * .015, H * .015], [x1 + W * .05, H * .03], [x1 + W * .04, sy + t * .2], [W * .02, sy + t * .1]], SKY, 3, 11);
+    scrap(G.back, [[x1 + W * .055, sy - fs * 1.2], [W * .985, sy - fs * 1.6], [W * .99, H * .985], [x1 + W * .06, H * .97]], KRAFT, 3, 23);
+    for (let i = 0; i < 5; i++) { const r = rng(90 + i), cx = W * (.2 + r() * .45), cy = H * (.12 + r() * .2); mk('circle', {cx, cy, r: 1.4 + r() * 1.6, fill: '#fff', opacity: .7}, G.back); }
+
+    // The pump pipe coming in from the left.
+    scrap(G.jarWrap, [[-4, pipeY - ar * 1.3], [x0 + ar * .8, pipeY - ar * 1.3], [x0 + ar * .8, pipeY + ar * 1.3], [-4, pipeY + ar * 1.3]], '#8d867a', 1.5, 31);
+    // The jar, its top following the sheet.
+    G.jar = mk('path', {fill: 'url(#jarG)', filter: 'url(#pp)'}, G.jarWrap);
+    G.pipeMouth = mk('ellipse', {cx: x0 + ar * .8, cy: pipeY, rx: ar * .5, ry: ar * 1.1, fill: '#4e4943'}, G.jarWrap);
+    // A cream label on the jar: the key to the dots.
+    const lx = x0 + (x1 - x0) * .14, ly = y1 - fs * 2.7, lw = Math.min((x1 - x0) * .7, fs * 9.2);
+    scrap(G.jarWrap, [[lx, ly], [lx + lw, ly + 2], [lx + lw - 2, ly + fs * 1.9], [lx + 2, ly + fs * 1.85]], CREAM, 1.8, 41, {transform: `rotate(-2 ${lx} ${ly})`});
+    mk('circle', {cx: lx + fs * .9, cy: ly + fs * .95, r: ar, fill: 'url(#atG)'}, G.jarWrap);
+    txt(G.jarWrap, lx + fs * 1.75, ly + fs * 1.33, '= a helium atom', {style: 'font:700 ' + fs + 'px var(--body)', transform: `rotate(-2 ${lx} ${ly})`});
+    G.atoms = mk('g', {filter: 'url(#sh)'}, G.jarWrap);
+
+    // The graphene sheet: a black band with a honeycomb printed on it, taped at both ends.
+    G.sheet = mk('path', {fill: 'url(#shG)', stroke: '#0e0d0c', 'stroke-width': .8}, G.sheetWrap);
+    G.comb = mk('path', {fill: 'none', stroke: '#9fc4c4', 'stroke-width': Math.max(1, t * .07), 'stroke-linejoin': 'round', opacity: .85}, G.sheetWrap);
+    G.nodes = mk('path', {fill: '#d8efe9'}, G.sheetWrap);
+    G.shine = mk('path', {fill: 'none', stroke: '#ffffff', 'stroke-width': Math.max(1.2, t * .09), 'stroke-linecap': 'round', opacity: .35}, G.sheetWrap);
+    for (const [x, rot] of [[x0, -14], [x1, 12]]) mk('rect', {x: x - fs * .9, y: sy - t * .95, width: fs * 1.8, height: t * 1.9, fill: '#f6ecc8', opacity: .72, transform: `rotate(${rot} ${x} ${sy})`}, G.sheetWrap);
+
+    // Readouts: the label, then the big hand-drawn counter measured to sit clearly below it.
+    const cx0 = W * .05;
+    const lab = txt(G.ui, cx0, fs * 1.4, 'HELIUM OUT', {style: `font:700 ${fs}px var(--mono)`, 'letter-spacing': '.06em'});
+    const zs = fs * 2.5;
+    G.zero = txt(G.ui, cx0 + 1, 0, '0', {style: `font:700 ${zs}px var(--hand)`, fill: '#c94a1f'});
+    const lb = bb(lab), zb = bb(G.zero);
+    const lBottom = lb ? lb.y + lb.height : fs * 1.75;
+    const zTop = zb && zb.height ? zb.y : -zs * 1.1;
+    const zy = lBottom + fs * .45 - zTop;
+    G.zero.setAttribute('y', zy.toFixed(1));
+    G.zeroBox = {x: cx0, y: lBottom + fs * .45, h: zb && zb.height ? zb.height : zs * 1.3};
+    txt(G.ui, cx0 + zs * .75, zy - zs * .12, 'atoms', {style: `font:600 ${fs}px var(--body)`, opacity: .7});
+
+    // Sheet labels: second line measured to sit clearly below the first.
+    const tx = x1 + W * .075;
+    const gl = txt(G.ui, tx, sy + fs * .1, 'graphene', {style: `font:800 ${fs}px var(--body)`});
+    const tl = txt(G.ui, tx, 0, '1 atom thick', {style: `font:600 ${fs}px var(--body)`, opacity: .8});
+    const gb = bb(gl), tb = bb(tl);
+    const gBottom = gb && gb.height ? gb.y + gb.height : sy + fs * .45;
+    const tTop = tb && tb.height ? tb.y : -fs * 1.0;
+    tl.setAttribute('y', (gBottom + fs * .3 - tTop).toFixed(1));
+    mk('path', {d: `M${tx - 3},${sy - fs * .35} Q${(tx + x1) / 2},${sy - fs * 1.3} ${x1 + 4},${sy - t * .4}`, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '3 3'}, G.ui);
+
+    // Pressure gauge, a paper dial.
+    const gcx = (x1 + W) / 2 + W * .03, gcy = H * .76, R = Math.min(W * .12, H * .11);
+    const dial = [];
+    for (let i = 0; i <= 12; i++) { const a = Math.PI + Math.PI * i / 12; dial.push([gcx + Math.cos(a) * R * 1.12, gcy + Math.sin(a) * R * 1.12]); }
+    dial.push([gcx + R * 1.12, gcy + R * .25], [gcx - R * 1.12, gcy + R * .25]);
+    scrap(G.ui, dial, CREAM, 1.6, 51);
+    mk('path', {d: `M${gcx - R * .82},${gcy} A${R * .82},${R * .82} 0 0 1 ${gcx + R * .82},${gcy}`, fill: 'none', stroke: '#e7d9b9', 'stroke-width': R * .2}, G.ui);
+    mk('path', {d: `M${gcx + R * .82 * Math.cos(Math.PI * 1.7)},${gcy + R * .82 * Math.sin(Math.PI * 1.7)} A${R * .82},${R * .82} 0 0 1 ${gcx + R * .82},${gcy}`, fill: 'none', stroke: '#d9582b', 'stroke-width': R * .2}, G.ui);
+    for (let i = 0; i <= 8; i++) { const a = Math.PI + Math.PI * i / 8; mk('line', {x1: gcx + Math.cos(a) * R * .55, y1: gcy + Math.sin(a) * R * .55, x2: gcx + Math.cos(a) * R * .68, y2: gcy + Math.sin(a) * R * .68, stroke: INK, 'stroke-width': 1.3}, G.ui); }
+    G.needle = mk('path', {d: `M${gcx - R * .07},${gcy} L${gcx},${gcy - R * .9} L${gcx + R * .07},${gcy} Z`, fill: INK}, G.ui);
+    mk('circle', {cx: gcx, cy: gcy, r: R * .11, fill: '#c94a1f'}, G.ui);
+    txt(G.ui, gcx, gcy + R * .25 + fs * 1.25, 'PRESSURE', {'text-anchor': 'middle', style: `font:700 ${fs}px var(--mono)`});
+    gsap.set(G.needle, {svgOrigin: `${gcx} ${gcy}`, rotation: -90 + 180 * (S.done ? 1 : S.p)});
+    needleTo = gsap.quickTo(G.needle, 'rotation', {duration: .7, ease: 'elastic.out(1,.4)'});
+
+    // The stamp, hidden until the end: right side of the sky scrap, clear of the counter.
+    const skyR = x1 + W * .03, stW = fs * 7.2;
+    const stx = Math.max(cx0 + fs * 8 + stW / 2, Math.min(W * .5, skyR - stW / 2 - 4)), sty = fs * 2.6;
+    G.stamp = mk('g', {opacity: S.done ? 1 : 0}, G.ui);
+    mk('rect', {x: stx - stW / 2, y: sty - fs * 1.15, width: stW, height: fs * 2.3, rx: fs * .35, fill: 'rgba(255,248,236,.55)', stroke: '#b8321b', 'stroke-width': Math.max(2.2, fs * .2)}, G.stamp);
+    txt(G.stamp, stx, sty + fs * .55, 'SEALED', {'text-anchor': 'middle', fill: '#b8321b', style: `font:900 ${fs * 1.55}px var(--display)`, 'letter-spacing': '.08em'});
+    gsap.set(G.stamp, {svgOrigin: `${stx} ${sty}`, rotation: -8});
+
+    // Atoms: keep however many there were.
+    const n = Math.max(atoms.length, 9), r = rng(5);
+    atoms = [];
+    gsap.killTweensOf(S);
+    S.bulge = maxB * (S.done ? 1 : S.p);
+    for (let i = 0; i < n; i++) addAtom(x0 + ar * 2 + r() * (x1 - x0 - ar * 4), sy + t + ar + r() * (y1 - sy - t - ar * 3), r);
+    built = true; draw();
+    if (!started) { started = true; requestAnimationFrame(tick); }
+  }
+
+  function addAtom(x, y, r, vx, vy) {
+    const a = r() * Math.PI * 2, g = mk('g', {}, G.atoms);
+    mk('circle', {r: ar, fill: 'url(#atG)'}, g);
+    mk('circle', {r: ar * .28, cx: -ar * .3, cy: -ar * .32, fill: '#fff', opacity: .6}, g);
+    const at = {x, y, vx: vx ?? Math.cos(a), vy: vy ?? Math.sin(a), g};
+    atoms.push(at); return at;
+  }
+  const rs = rng(77);
+  function spawn() {
+    const at = addAtom(x0 + ar * 1.6, pipeY, rs, .9, (rs() - .5) * .9);
+    if (!Kit.calm) gsap.from(at.g, {scale: 0, duration: .35, ease: 'back.out(3)'});
+    if (!Kit.calm) gsap.fromTo(G.pipeMouth, {attr: {rx: ar * .9}}, {attr: {rx: ar * .5}, duration: .3, ease: 'elastic.out(1,.4)'});
+  }
+
+  function hit(x, y) {
+    const now = performance.now(); if (Kit.calm || now - lastFx < 65) return; lastFx = now;
+    const pts = []; for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2, rr = i % 2 ? ar * .45 : ar * 1.25; pts.push([x + Math.cos(a) * rr, y + Math.sin(a) * rr]); }
+    const s = mk('path', {d: dOf(pts, true), fill: '#fff3c4', stroke: '#f2b84b', 'stroke-width': 1}, G.fx);
+    gsap.timeline({onComplete: () => s.remove()})
+      .fromTo(s, {scale: .2, transformOrigin: `${x}px ${y}px`}, {scale: 1, duration: .16, ease: 'back.out(3)'})
+      .to(s, {opacity: 0, scale: .6, duration: .22, ease: 'power2.in'});
+  }
+
+  function move(dt) {
+    const sp = (55 + 170 * S.p) * Math.max(.7, H / 420);
+    for (const a of atoms) {
+      a.x += a.vx * sp * dt; a.y += a.vy * sp * dt;
+      if (a.x < x0 + ar + 3) { a.x = x0 + ar + 3; a.vx = Math.abs(a.vx); }
+      if (a.x > x1 - ar - 3) { a.x = x1 - ar - 3; a.vx = -Math.abs(a.vx); }
+      if (a.y > y1 - ar - 3) { a.y = y1 - ar - 3; a.vy = -Math.abs(a.vy); }
+      const ty = top(a.x) + t / 2 + ar;
+      if (a.y < ty) { a.y = ty; a.vy = Math.abs(a.vy) + .1; hit(a.x, ty - ar); }
+      const m = Math.hypot(a.vx, a.vy); a.vx /= m; a.vy /= m;
+      a.g.setAttribute('transform', `translate(${a.x.toFixed(1)},${a.y.toFixed(1)})`);
+    }
+  }
+
+  function draw() {
+    if (!built) return;
+    // Jar: smooth top under the sheet, torn everywhere else.
+    const N = 32, topPts = [];
+    for (let i = 0; i <= N; i++) { const x = x0 + (x1 - x0) * i / N; topPts.push([x, top(x) + t * .3]); }
+    const side = jag([[x1, sy + t * .3], [x1, y1], [x0, y1], [x0, sy + t * .3]], 2.6, 61 + S.boil * 13, false);
+    G.jar.setAttribute('d', dOf(topPts.concat(side), true));
+    // Sheet band.
+    const ov = fs * .7, up = [], dn = [], sh = [];
+    for (let i = 0; i <= 40; i++) { const x = x0 - ov + (x1 - x0 + ov * 2) * i / 40, y = top(x); up.push([x, y - t / 2]); dn.unshift([x, y + t / 2]); if (i > 8 && i < 22) sh.push([x, y - t * .36]); }
+    G.sheet.setAttribute('d', dOf(up.concat(dn), true));
+    G.shine.setAttribute('d', dOf(sh, false));
+    // Honeycomb riding the curve.
+    const hr = t / 3.6, dx = Math.sqrt(3) * hr; let d = '', nd = '';
+    for (const [row, off] of [[0, -hr * .75], [1, hr * .75]]) {
+      for (let cx = x0 - ov + hr + (row ? dx / 2 : 0); cx < x1 + ov - hr * .8; cx += dx) {
+        const cy = top(cx), sl = (top(cx + 1) - top(cx - 1)) / 2, ang = Math.atan(sl), ca = Math.cos(ang), sa = Math.sin(ang);
+        const px = cx - sa * off, py = cy + ca * off;
+        for (let k = 0; k < 6; k++) {
+          const a = Math.PI / 6 + k * Math.PI / 3, vx = Math.cos(a) * hr, vy = Math.sin(a) * hr;
+          const X = px + vx * ca - vy * sa, Y = py + vx * sa + vy * ca;
+          d += (k ? 'L' : 'M') + X.toFixed(1) + ',' + Y.toFixed(1);
+          if (k % 2 === 0) nd += `M${(X - 1.3).toFixed(1)},${Y.toFixed(1)}a1.3,1.3 0 1 0 2.6,0a1.3,1.3 0 1 0 -2.6,0`;
+        }
+        d += 'Z';
+      }
+    }
+    G.comb.setAttribute('d', d); G.nodes.setAttribute('d', nd);
+  }
+
+  let last = 0, boilT = 0;
+  function tick(now) {
+    const dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+    if (built) {
+      if (S.pumping && !S.done) {
+        S.p = Math.min(1, S.p + dt / 2.8);
+        spawnT -= dt; if (spawnT <= 0 && atoms.length < 50) { spawn(); spawnT = .075; }
+        if (now - lastB > 110) { lastB = now; bulgeTo(maxB * S.p); needleTo(-90 + 180 * S.p); }
+        if (S.p > .35 && say.dataset.s !== 'mid') { say.dataset.s = 'mid'; say.innerHTML = 'The sheet bulges like a balloon. <b>Keep pushing</b> and watch “helium out”.'; }
+        if (S.p >= 1) finish();
+      }
+      if (!Kit.calm && now - boilT > 125) { boilT = now; S.boil = S.boil % 3 + 1; scraps.forEach(s => s.redraw()); }
+      move(dt); draw();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function press(e) {
+    if (S.done) return;
+    if (e) { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (_) {} }
+    S.pumping = true; S.touched = true; Kit.haptic('light');
+    gsap.to(btn, {scale: .9, rotation: -4, duration: .18, ease: 'back.out(3)'});
+  }
+  function release() {
+    if (!S.pumping) return;
+    S.pumping = false;
+    gsap.to(btn, {scale: 1, rotation: -2.5, duration: .6, ease: 'elastic.out(1,.35)'});
+    if (!S.done) { bulgeTo(maxB * S.p); needleTo(-90 + 180 * S.p); say.dataset.s = 'rest'; say.innerHTML = 'You let go, and the dome stays up: nothing leaks out. <b>Hold again</b> to push harder.'; }
+  }
+  btn.addEventListener('pointerdown', press);
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => btn.addEventListener(ev, release));
+  btn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); press(); } });
+  btn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') release(); });
+
+  function finish() {
+    if (S.done) return;
+    S.done = true; S.pumping = false; S.p = 1;
+    Kit.haptic('success');
+    needleTo && needleTo(90);
+    gsap.killTweensOf(S);
+    gsap.to(btn, {scale: 0, opacity: 0, duration: .35, ease: 'back.in(2)', onComplete: () => { btn.style.display = 'none'; }});
+    say.innerHTML = 'You pushed helium until the sheet ballooned, and <b>not one atom got out</b>. Graphene, a honeycomb of carbon one atom thick, is the most impermeable material known: no gas passes, not even helium.';
+    Kit.show('keep');
+    if (Kit.calm) { S.bulge = maxB; gsap.set(G.stamp, {opacity: 1, scale: 1}); return; }
+    gsap.fromTo(S, {bulge: maxB * 1.22}, {bulge: maxB, duration: 1.8, ease: 'elastic.out(1.2,.22)'});
+    gsap.fromTo(G.stamp, {opacity: 0, scale: 2.6, rotation: -24}, {opacity: 1, scale: 1, rotation: -8, duration: .5, delay: .25, ease: 'back.out(2.4)'});
+    gsap.fromTo(G.zero, {rotation: -14, transformOrigin: '50% 80%'}, {rotation: 0, duration: 1, delay: .3, ease: 'elastic.out(1,.3)'});
+    gsap.from(say, {opacity: 0, y: 8, duration: .5, ease: 'power3.out'});
+  }
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = () => {
+    if (entered || !built || Kit.calm) return; entered = true;
+    gsap.from(G.back.children, {opacity: 0, scale: .8, rotation: () => (Math.random() - .5) * 14, transformOrigin: '50% 50%', duration: .7, stagger: .06, ease: 'back.out(1.6)'});
+    gsap.from(G.jarWrap, {y: H * .45, opacity: 0, duration: .8, delay: .1, ease: 'back.out(1.5)'});
+    gsap.from(G.sheetWrap, {y: -H * .5, rotation: -6, transformOrigin: '50% 50%', duration: 1.1, delay: .35, ease: 'elastic.out(1,.5)'});
+    gsap.from(G.ui.children, {opacity: 0, duration: .5, delay: .5, stagger: .03, ease: 'power2.out'});
+    gsap.from(btn, {scale: 0, rotation: 20, duration: .7, delay: .7, ease: 'elastic.out(1,.45)'});
+  };
+  Kit.play.card = async () => {
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    press(); await w(Kit.calm ? 80 : 400);
+    S.p = Math.max(S.p, .99); await w(Kit.calm ? 80 : 200);
+    release(); if (!S.done) finish();
+    await w(Kit.calm ? 100 : 900);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -2140,35 +2140,25 @@ void main() {
     await _settle(tester);
 
     // Yearly leads and is preselected, so the call to action opens on it:
-    // the year starts with two weeks free, and the days under the button
-    // say nothing is charged today, when that changes, and that it renews
-    // until it is cancelled. A debug build with no store shows the plans
-    // as sold; a store build shows only the store's (paywall_doors_test).
+    // the year starts with two weeks free, and its price is on the button.
+    // Under it one line, and the links. A debug build with no store shows
+    // the plans as sold; a store build shows only the store's
+    // (paywall_doors_test).
     expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
-    expect(find.text('Today · all of Astute+, free'), findsOneWidget);
-    expect(
-      find.text(
-        'Day 14 · €29,99 a year, renewing automatically until you cancel',
-      ),
-      findsOneWidget,
-    );
+    expect(find.text('Cancel any time'), findsOneWidget);
+    expect(find.textContaining('Today · all of Astute+'), findsNothing);
 
     // The saving is worked out from the two prices rather than asserted.
     expect(find.text('SAVE 37%'), findsOneWidget);
 
-    // The month has no free week, so it does not promise one: it is
-    // charged today, and renews.
+    // The month has no free week, so it does not promise one, and the line
+    // under the button is the same.
     await tester.tap(find.text('Monthly'));
     await _settle(tester);
     expect(find.text('Subscribe for €3,99/mo'), findsOneWidget);
     expect(find.textContaining('Try 14 days free'), findsNothing);
-    expect(
-      find.text(
-        '€3,99/mo charged today, renewing automatically until you cancel',
-      ),
-      findsOneWidget,
-    );
-    expect(find.textContaining('No payment is taken'), findsNothing);
+    expect(find.text('Cancel any time'), findsOneWidget);
+    expect(find.textContaining('charged today'), findsNothing);
   });
 
   testWidgets('the paywall links the terms and the privacy policy', (

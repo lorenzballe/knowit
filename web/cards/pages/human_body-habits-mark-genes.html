@@ -1,0 +1,380 @@
+<!doctype html>
+<!-- slug: human_body-habits-mark-genes -->
+<!--
+Look: a cyanotype engineering sheet: white hairlines on Prussian blue, a gene wound on five histone spools, dimension arrows, mono lettering.
+Interaction: drag the slider and chemical marks fly from STRESS / DIET / HABITS along curved paths onto the DNA and histones; the spools pack shut, the DNA stops flowing and the gene's glow and output dim, yet the letters below never change.
+Wow: at full marks the gene is wound shut, rings burst out, and a scanner sweeps the sequence: 0 letters changed.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Habits mark your genes</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
+<style>
+#card{background-color:var(--c);background-image:
+  radial-gradient(130% 75% at 50% 42%,rgba(120,185,255,.16),transparent 62%),
+  radial-gradient(140% 100% at 50% 50%,transparent 55%,rgba(2,14,30,.45)),
+  linear-gradient(rgba(238,246,255,.07) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(238,246,255,.07) 1px,transparent 1px),
+  linear-gradient(rgba(238,246,255,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(238,246,255,.03) 1px,transparent 1px);
+  background-size:100% 100%,100% 100%,28px 28px,28px 28px,7px 7px,7px 7px}
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:max(.6cqh,4px)}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+.lbl{font-family:var(--mono);font-weight:600;letter-spacing:.05em;fill:var(--k)}
+#ctl{display:flex;align-items:center;gap:3cqw;font:700 max(1.5cqh,12px)/1 var(--mono);letter-spacing:.08em;color:color-mix(in srgb,var(--k) 80%,transparent)}
+#ctl span{white-space:nowrap}
+#sl{--p:0%;flex:1;min-width:0;-webkit-appearance:none;appearance:none;background:transparent;height:max(4.6cqh,32px);margin:0;cursor:pointer;touch-action:pan-y}
+#sl::-webkit-slider-runnable-track{height:3px;border-radius:3px;background:linear-gradient(90deg,#ffe08a var(--p),rgba(238,246,255,.3) var(--p))}
+#sl::-moz-range-track{height:3px;border-radius:3px;background:linear-gradient(90deg,#ffe08a var(--p),rgba(238,246,255,.3) var(--p))}
+#sl::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.2cqh,24px);height:max(3.2cqh,24px);margin-top:calc((3px - max(3.2cqh,24px))/2);border-radius:50%;background:radial-gradient(circle at 38% 34%,#fffaf0,#ffe08a 55%,#d9a93c);border:2px solid #fff;box-shadow:0 0 0 6px rgba(255,224,138,.16),0 0 18px rgba(255,224,138,.55)}
+#sl::-moz-range-thumb{width:max(3.2cqh,24px);height:max(3.2cqh,24px);border-radius:50%;background:radial-gradient(circle at 38% 34%,#fffaf0,#ffe08a 55%,#d9a93c);border:2px solid #fff;box-shadow:0 0 0 6px rgba(255,224,138,.16),0 0 18px rgba(255,224,138,.55)}
+.say b{color:#ffe08a}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Drag the slider · marks on a gene" style="--c:#0b3a63;--k:#eef6ff;--edge:#06233f">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EPIGENETICS</span></div>
+    <h2 class="q">How can the way you live switch your genes on or off?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Behaviours send chemical marks onto a gene wound around histone spools; more marks pack it shut and its activity drops, while its DNA letters stay the same."></svg>
+      <div id="ctl"><span>− REMOVE</span><input id="sl" type="range" min="0" max="9" step="1" value="0" aria-label="Chemical marks on the gene"><span>ADD +</span></div>
+    </div>
+    <p class="say" id="say">Drag the slider: habits add or remove <b>chemical marks</b> on one gene.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Habits can change which genes get used, never the letters they're written in.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Women Are Stripey” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
+(() => {
+  const svg = Kit.$('pic'), sl = Kit.$('sl'), say = Kit.$('say');
+  const MAX = 9, INK = '#eef6ff', MARK = '#ffe08a', RNA = '#8fe4ff', DEEP = '#0a3358';
+  const ORDER = [['t',2],['l',1],['t',1],['l',2],['t',3],['l',0],['t',0],['l',3],['t',4]];
+  const SEQ = 'ATGGCCCTGTGGATGCGCCTCCTGCCCCTGCTGGCGCTGCTGGCC';
+  const WHY = 'Marks on DNA and its histone spools dial a gene down or up, yet <b>its letters never change</b>.';
+  const BRAIN = 'M0,-.8C-.35,-1 -.9,-.85 -.95,-.35C-1.15,-.1 -1.05,.45 -.65,.6C-.45,.85 -.05,.8 0,.6C.05,.8 .45,.85 .65,.6C1.05,.45 1.15,-.1 .95,-.35C.9,-.85 .35,-1 0,-.8Z M0,-.8V.6 M-.62,-.42q.22,.15 .1,.36 M-.36,.04q.26,-.05 .3,.22 M.62,-.42q-.22,.15 -.1,.36 M.36,.04q-.26,-.05 -.3,.22 M-.78,.16q.16,.16 .36,.1 M.78,.16q-.16,.16 -.36,.1';
+  const S = {c: 0};
+  let marks = [], n = 0, revealed = false, built = false, entered = false, looping = false, tight = false, flow = 0, lastW = 0, lastH = 0;
+  let W = 0, H = 0, fs = 13, rh = 16, mr = 5, a = 6, yB, bh, yCap, yD, yG, yM, mh, yS, yL, sOpen, sClosed;
+  let G = {}, srcs = [], spools = [], links = [], letters = [], brainG, hatchR, aura, brk, brkExt, brkT, brkW = 0, stateT, mFill, mX0, mW, pctT, readT, chip, dimHi, scan, rvr, rings = [];
+
+  const lerp = (p, q, t) => p + (q - p) * t, clamp = (v, l, h) => Math.max(l, Math.min(h, v));
+  const sstep = (e0, e1, x) => { const t = clamp((x - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
+  const act = () => Math.pow(1 - clamp(S.c, 0, 1), 1.4);
+  const sx = (i, c) => W / 2 + (i - 2) * lerp(sOpen, sClosed, c);
+  const txt = (p, x, y, t, at = {}) => { const e = Kit.mk('text', Object.assign({x, y, class: 'lbl', 'font-size': fs}, at), p); e.textContent = t; return e; };
+  const hex = r => { let d = ''; for (let i = 0; i < 6; i++) { const t = Math.PI / 3 * i + Math.PI / 6; d += (i ? 'L' : 'M') + (r * Math.cos(t)).toFixed(2) + ',' + (r * Math.sin(t)).toFixed(2); } return d + 'Z'; };
+  const paintSl = () => sl.style.setProperty('--p', (sl.value / MAX * 100) + '%');
+
+  function slot(k, c) {
+    const [t, i] = ORDER[k];
+    if (t === 't') { const x = sx(i, c); return {ax: x + rh * .5, ay: yD - rh * .86, hx: x + rh * .64, hy: yD - rh - (tight ? mr * 1.9 : fs * 1.15)}; }
+    const m = (sx(i, c) + sx(i + 1, c)) / 2; return {ax: m, ay: yD - a * .6, hx: m, hy: yD - a - (tight ? mr * 2.2 : fs * .95)};
+  }
+
+  function helix(x0, x1, ph) {
+    if (x1 - x0 < 3) return ['', '', ''];
+    const k = 2 * Math.PI / (rh * 1.6), tp = rh * .35; let p1 = '', p2 = '', r = '';
+    const f = x => Math.max(0, Math.min(1, (x - x0) / tp, (x1 - x) / tp));
+    for (let x = x0, j = 0; ; x += 2, j++) {
+      if (x > x1) x = x1;
+      const t = (x - x0) * k + ph, am = a * f(x) * Math.sin(t);
+      p1 += (j ? 'L' : 'M') + x.toFixed(1) + ',' + (yD + am).toFixed(1);
+      p2 += (j ? 'L' : 'M') + x.toFixed(1) + ',' + (yD - am).toFixed(1);
+      if (x >= x1) break;
+    }
+    for (let x = x0 + rh * .25; x < x1 - rh * .15; x += rh * .32) { const am = a * f(x) * Math.sin((x - x0) * k + ph); r += `M${x.toFixed(1)},${(yD + am).toFixed(1)}V${(yD - am).toFixed(1)}`; }
+    return [p1, p2, r];
+  }
+
+  // vertical budget: full layout when there is room, a compact one when the stage is short
+  function plan(tt, r) {
+    const bh = fs * (tt ? 1.55 : 1.75), busY = fs * .5 + 2, yB = busY + fs * .5 + bh / 2, yCap = yB + bh / 2 + fs * 1.25;
+    const hdr = tt ? yB + bh / 2 : yCap + fs * .3;
+    const up = tt ? r + mr * 3.9 : r + fs * 2.5 + mr, dn = tt ? r * 1.12 + 3 : r * 1.12 + fs * 1.5;
+    const yS = H - fs * .85, yL = yS - fs * 1.65;
+    const yM = tt ? yL - fs * 2.1 : yL - fs * 1.5 - mh / 2;
+    const mTop = tt ? yM - fs * .7 : yM - mh / 2 - fs * 1.2;
+    return {tt, r, bh, busY, yB, yCap, hdr, up, dn, yS, yL, yM, free: mTop - hdr - up - dn};
+  }
+  const need = p => p.free - fs * (p.tt ? 1.1 : 1.6);
+
+  function layout() {
+    marks.forEach(m => gsap.killTweensOf([m.g, m.inn]));
+    const keep = marks.length; marks = []; srcs = []; spools = []; links = []; letters = []; rings = [];
+    svg.innerHTML = ''; stateT = null;
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H; lastW = svg.clientWidth; lastH = svg.clientHeight;
+    fs = Math.max(12, Math.min(14, W / 26, f.f || 14));
+    mr = Math.max(4, fs * .38); mh = fs * .7;
+    const rh0 = clamp(Math.min(W * .05, H * .07), 11, 20);
+    let P = plan(false, rh0);
+    if (need(P) < 0) P = plan(false, Math.max(10, rh0 + need(P) / 2.2));
+    if (need(P) < 0) { P = plan(true, rh0); if (need(P) < 0) P = plan(true, Math.max(8, rh0 + need(P) / 2.2)); }
+    tight = P.tt; rh = P.r; a = rh * .42; bh = P.bh; yB = P.yB; yCap = P.yCap; yS = P.yS; yL = P.yL; yM = P.yM;
+    sClosed = rh * 2.45; sOpen = Math.max(sClosed * 1.3, Math.min(W * .18, (W - fs * 1.2 - rh * 2.4) / 4));
+    yD = P.hdr + fs * (tight ? .55 : .8) + Math.max(0, need(P)) * .45 + P.up;
+    yG = yD - rh - fs * 1.15 - mr - fs * .95;
+
+    const defs = Kit.mk('defs', {}, svg);
+    defs.innerHTML = `
+      <radialGradient id="hist" cx=".38" cy=".34" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".45" stop-color="#b4d7ff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></radialGradient>
+      <radialGradient id="aura"><stop offset="0" stop-color="${RNA}" stop-opacity=".5"/><stop offset=".6" stop-color="${RNA}" stop-opacity=".14"/><stop offset="1" stop-color="${RNA}" stop-opacity="0"/></radialGradient>
+      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#eef6ff" stroke-width="1.1"/></pattern>
+      <linearGradient id="mfill" x1="0" x2="1"><stop offset="0" stop-color="${RNA}" stop-opacity=".55"/><stop offset="1" stop-color="#fff"/></linearGradient>
+      <linearGradient id="scanG" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <filter id="glow" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="2.6"/></filter>
+      <clipPath id="rv"><rect id="rvr" x="0" y="0" width="${W}" height="${H}"/></clipPath>`;
+    rvr = defs.querySelector('#rvr');
+    G.top = Kit.mk('g', {}, svg);
+    G.chrom = Kit.mk('g', {'clip-path': 'url(#rv)'}, svg);
+    aura = Kit.mk('ellipse', {cx: W / 2, cy: yD, rx: W * .3, ry: rh * 1.9, fill: 'url(#aura)'}, G.chrom);
+    G.links = Kit.mk('g', {}, G.chrom); G.spools = Kit.mk('g', {}, G.chrom); G.over = Kit.mk('g', {}, G.chrom);
+    G.stalks = Kit.mk('g', {}, svg); G.rna = Kit.mk('g', {}, svg); G.marks = Kit.mk('g', {}, svg);
+    G.meter = Kit.mk('g', {}, svg); G.seq = Kit.mk('g', {}, svg); G.wow = Kit.mk('g', {}, svg);
+
+    // You → behaviours
+    const rb = Math.min(W * .055, fs * 1.2, bh * .62), bxC = fs * .3 + rb * 1.12;
+    const bw = Kit.mk('g', {transform: `translate(${bxC},${yB})`}, G.top); brainG = Kit.mk('g', {}, bw);
+    Kit.mk('circle', {r: rb * 1.05, fill: RNA, opacity: .12}, brainG);
+    Kit.mk('path', {d: BRAIN, transform: `scale(${rb})`, fill: 'rgba(238,246,255,.1)', stroke: INK, 'stroke-width': 1.4, 'vector-effect': 'non-scaling-stroke', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, brainG);
+    if (!tight) txt(G.top, bxC, yCap, 'YOU', {'text-anchor': 'middle', 'font-weight': 700});
+    const busY = P.busY, names = ['STRESS', 'DIET', 'HABITS'], px = [.37, .6, .83];
+    const wires = Kit.mk('g', {}, G.top);
+    names.forEach((t, i) => {
+      const x = W * px[i], g = Kit.mk('g', {transform: `translate(${x},${yB})`}, G.top), inn = Kit.mk('g', {}, g);
+      const r = Kit.mk('rect', {y: -bh / 2, height: bh, rx: 2, fill: 'rgba(238,246,255,.07)', stroke: INK, 'stroke-width': 1}, inn);
+      const tx = txt(inn, 0, fs * .36, t, {'text-anchor': 'middle', 'font-weight': 700});
+      const w = tx.getComputedTextLength() + fs * 1.1; r.setAttribute('x', -w / 2); r.setAttribute('width', w);
+      Kit.mk('path', {d: `M${-w / 2 + 3},${bh / 2 - 3}h4M${w / 2 - 3},${bh / 2 - 3}h-4`, stroke: INK, 'stroke-width': 1, opacity: .6}, inn);
+      const top = yB - bh / 2 - 1.5;
+      Kit.mk('path', {d: `M${x},${busY}V${top}M${x - 3},${top - 4}L${x},${top}L${x + 3},${top - 4}`, stroke: INK, 'stroke-width': 1, fill: 'none', opacity: .75}, wires);
+      Kit.mk('circle', {cx: x, cy: busY, r: 1.8, fill: INK}, wires);
+      srcs.push({x, y: yB + bh / 2, w, inn, r});
+    });
+    Kit.mk('path', {d: `M${bxC + rb * .35},${yB - rb * .8}Q${bxC + rb * .6},${busY} ${bxC + rb * 1.5},${busY}H${W * px[2]}`, stroke: INK, 'stroke-width': 1, fill: 'none', opacity: .75}, wires);
+    if (!tight) {
+      const lx = srcs[0].x - srcs[0].w / 2 + mr, ly = yCap - fs * .33, lg = Kit.mk('g', {}, G.top);
+      Kit.mk('path', {d: hex(mr), transform: `translate(${lx},${ly})`, fill: MARK, stroke: '#fff', 'stroke-width': 1}, lg);
+      txt(lg, lx + mr + fs * .45, yCap, '= ONE CHEMICAL MARK', {opacity: .85});
+    }
+
+    // the gene: DNA wound on histone spools
+    for (let j = 0; j < 6; j++) {
+      const g = Kit.mk('g', {}, G.links);
+      links.push({
+        s2: Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.3, opacity: .45}, g),
+        r: Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .45}, g),
+        s1: Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g)
+      });
+    }
+    for (let i = 0; i < 5; i++) {
+      const g = Kit.mk('g', {}, G.spools), inn = Kit.mk('g', {}, g);
+      Kit.mk('ellipse', {rx: rh * 1.1, ry: rh * .98, fill: 'none', stroke: INK, 'stroke-width': 1.3, opacity: .45, transform: 'rotate(24)'}, inn);
+      Kit.mk('circle', {r: rh, fill: 'url(#hist)', stroke: INK, 'stroke-width': 1}, inn);
+      const dash = Kit.mk('circle', {r: rh * .6, fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .4, 'stroke-dasharray': '2 3'}, inn);
+      Kit.mk('path', {d: `M${-rh * .62},${-rh * .42}A${rh * .75} ${rh * .75} 0 0 1 ${rh * .15},${-rh * .74}`, fill: 'none', stroke: '#fff', 'stroke-width': 1.6, opacity: .7, 'stroke-linecap': 'round'}, inn);
+      Kit.mk('ellipse', {rx: rh * 1.1, ry: rh * .98, fill: 'none', stroke: INK, 'stroke-width': 1.9, transform: 'rotate(-24)'}, inn);
+      Kit.mk('circle', {r: 1.6, fill: INK}, inn);
+      spools.push({g, inn, dash});
+    }
+    hatchR = Kit.mk('rect', {y: yD - rh * 1.18, height: rh * 2.36, rx: rh * 1.1, fill: 'url(#hatch)', stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '4 3', opacity: 0}, G.over);
+    brkExt = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': .8, 'stroke-dasharray': '2 3', opacity: .5}, G.over);
+    brk = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.1}, G.over);
+    brkT = txt(G.over, W / 2, yG + fs * .36, 'GENE', {'text-anchor': 'middle', 'font-weight': 700});
+    brkW = brkT.getComputedTextLength();
+    if (tight) { brk.style.display = brkExt.style.display = brkT.style.display = 'none'; }
+    else stateT = txt(G.chrom, W / 2, yD + rh * 1.12 + fs * 1.25, '', {'text-anchor': 'middle', opacity: .9});
+
+    // activity meter
+    if (tight) {
+      const lab = txt(G.meter, fs * .4, yM + fs * .36, 'ACTIVITY', {'font-weight': 700});
+      pctT = txt(G.meter, W - fs * .4, yM + fs * .36, '100%', {'text-anchor': 'end', 'font-weight': 700, fill: RNA});
+      mX0 = fs * .4 + lab.getComputedTextLength() + fs * .7;
+      mW = Math.max(20, W - fs * .4 - pctT.getComputedTextLength() - fs * .7 - mX0);
+    } else {
+      mX0 = fs * .4; mW = W - fs * .8;
+      const ly2 = yM - mh / 2 - fs * .45;
+      txt(G.meter, mX0, ly2, 'GENE ACTIVITY', {'font-weight': 700});
+      pctT = txt(G.meter, mX0 + mW, ly2, '100%', {'text-anchor': 'end', 'font-weight': 700, fill: RNA});
+    }
+    Kit.mk('rect', {x: mX0, y: yM - mh / 2, width: mW, height: mh, rx: mh / 2, fill: 'rgba(238,246,255,.06)', stroke: INK, 'stroke-width': 1}, G.meter);
+    mFill = Kit.mk('rect', {x: mX0, y: yM - mh / 2, width: mW, height: mh, rx: mh / 2, fill: 'url(#mfill)'}, G.meter);
+    if (!tight) { let tk = ''; for (let q = 0; q <= 4; q++) { const x = mX0 + mW * q / 4; tk += `M${x},${yM + mh / 2 + 1}v${fs * .3}`; } Kit.mk('path', {d: tk, stroke: INK, 'stroke-width': 1, opacity: .6}, G.meter); }
+
+    // the sequence
+    txt(G.seq, fs * .4, yL, 'DNA SEQUENCE', {'font-weight': 700});
+    chip = Kit.mk('rect', {fill: MARK, rx: 3, opacity: 0}, G.seq);
+    readT = txt(G.seq, W - fs * .4, yL, 'LETTERS CHANGED: 0', {'text-anchor': 'end', 'font-weight': 700});
+    const bb = readT.getBBox(); chip.setAttribute('x', bb.x - 5); chip.setAttribute('y', bb.y - 3); chip.setAttribute('width', bb.width + 10); chip.setAttribute('height', bb.height + 6);
+    const N = Math.min(SEQ.length, Math.floor((W - fs * .8) / (fs * .95))), sp = (W - fs * .8) / N;
+    for (let i = 0; i < N; i++) letters.push(txt(G.seq, fs * .4 + sp * (i + .5), yS, SEQ[i], {'text-anchor': 'middle', 'font-size': fs * 1.05, 'font-weight': 700}));
+    const dx0 = fs * .4 + sp * .15, dx1 = W - fs * .4 - sp * .15, dy = yS + fs * .5;
+    const dimD = `M${dx0},${dy - 3}V${dy + 3}M${dx1},${dy - 3}V${dy + 3}M${dx0},${dy}H${dx1}M${dx0 + 5},${dy - 2.5}L${dx0},${dy}L${dx0 + 5},${dy + 2.5}M${dx1 - 5},${dy - 2.5}L${dx1},${dy}L${dx1 - 5},${dy + 2.5}`;
+    Kit.mk('path', {d: dimD, stroke: INK, 'stroke-width': 1, fill: 'none', opacity: .35}, G.seq);
+    dimHi = Kit.mk('path', {d: `M${dx0},${dy}H${dx1}`, stroke: MARK, 'stroke-width': 2, fill: 'none', opacity: 0}, G.seq);
+    scan = Kit.mk('rect', {x: 0, y: yS - fs * 1.15, width: fs * 1.6, height: fs * 1.75, fill: 'url(#scanG)', opacity: 0}, G.wow);
+    for (let i = 0; i < 3; i++) rings.push(Kit.mk('circle', {cx: W / 2, cy: yD, r: rh, fill: 'none', stroke: MARK, 'stroke-width': 1.6, opacity: 0}, G.wow));
+
+    built = true;
+    for (let k = 0; k < keep; k++) { const m = mkMark(k); marks.push(m); land(m, true); }
+    if (revealed) wowEnd();
+    draw();
+  }
+
+  function mkMark(k) {
+    const st = Kit.mk('line', {stroke: INK, 'stroke-width': 1.3, opacity: 0}, G.stalks);
+    const g = Kit.mk('g', {}, G.marks), inn = Kit.mk('g', {}, g);
+    Kit.mk('circle', {r: mr * 1.7, fill: MARK, opacity: .25, filter: 'url(#glow)'}, inn);
+    Kit.mk('path', {d: hex(mr), fill: MARK, stroke: '#fff', 'stroke-width': 1}, inn);
+    Kit.mk('circle', {r: mr * .32, fill: DEEP}, inn);
+    return {k, g, inn, st, state: 'fly'};
+  }
+  function land(m, quiet) {
+    if (m.state === 'off') return;
+    m.state = 'on'; m.st.setAttribute('opacity', .9);
+    if (quiet || Kit.calm) return;
+    gsap.fromTo(m.inn, {scale: 1.8}, {scale: 1, svgOrigin: '0 0', duration: .7, ease: 'elastic.out(1,.45)'});
+  }
+  function addMark(k, d, cT) {
+    const m = mkMark(k); marks.push(m);
+    if (Kit.calm || !entered) { land(m, true); return; }
+    const s = srcs[k % 3], p = slot(k, cT);
+    gsap.set(m.g, {x: s.x, y: s.y}); gsap.set(m.inn, {scale: .3, svgOrigin: '0 0'});
+    const mid = {x: clamp((s.x + p.hx) / 2 + (k % 2 ? 1 : -1) * W * .14, W * .1, W * .9), y: (s.y + p.hy) / 2 - fs * .3};
+    gsap.to(m.inn, {scale: 1, svgOrigin: '0 0', duration: .4, delay: d, ease: 'back.out(2)'});
+    gsap.to(m.g, {motionPath: {path: [mid, {x: p.hx, y: p.hy}], curviness: 1.2}, duration: .85, delay: d, ease: 'power2.inOut', onComplete: () => land(m)});
+    gsap.fromTo(s.inn, {scale: 1.14}, {scale: 1, svgOrigin: '0 0', duration: .45, delay: d, ease: 'power3.out'});
+    gsap.fromTo(s.r, {attr: {fill: 'rgba(255,224,138,.45)'}}, {attr: {fill: 'rgba(238,246,255,.07)'}, duration: .6, delay: d, ease: 'power2.out'});
+    gsap.fromTo(brainG, {scale: 1.08}, {scale: 1, svgOrigin: '0 0', duration: .4, delay: d, ease: 'power2.out'});
+  }
+  function dropMark(m, d) {
+    m.state = 'off'; gsap.killTweensOf([m.g, m.inn]); m.st.remove();
+    if (Kit.calm || !entered) { m.g.remove(); return; }
+    const s = srcs[m.k % 3], x = gsap.getProperty(m.g, 'x'), y = gsap.getProperty(m.g, 'y');
+    const mid = {x: clamp((x + s.x) / 2 + (m.k % 2 ? -1 : 1) * W * .12, W * .1, W * .9), y: (y + s.y) / 2};
+    gsap.to(m.g, {motionPath: {path: [mid, {x: s.x, y: s.y}], curviness: 1.2}, duration: .7, delay: d, ease: 'power2.in', onComplete: () => m.g.remove()});
+    gsap.to(m.inn, {scale: .2, opacity: 0, svgOrigin: '0 0', duration: .7, delay: d, ease: 'power2.in'});
+  }
+
+  function setN(v) {
+    v = clamp(v | 0, 0, MAX); const cT = v / MAX; let j = 0;
+    while (marks.length < v) addMark(marks.length, j++ * .09, cT);
+    while (marks.length > v) dropMark(marks.pop(), j++ * .06);
+    n = v;
+    gsap.to(S, {c: cT, duration: (Kit.calm || !entered) ? 0 : 1, ease: 'power3.out', overwrite: true});
+    if (v === MAX && !revealed) gsap.delayedCall(Kit.calm ? 0 : 1.15, () => { if (n === MAX && !revealed) reveal(); });
+  }
+
+  function draw() {
+    if (!built) return;
+    const c = clamp(S.c, 0, 1), A = act(), xs = [0, 1, 2, 3, 4].map(i => sx(i, c)), e = rh * 1.08;
+    if (entered && !Kit.calm) flow += .045 * A * gsap.ticker.deltaRatio();
+    spools.forEach((s, i) => { s.g.setAttribute('transform', `translate(${xs[i].toFixed(2)},${yD})`); s.dash.setAttribute('transform', `rotate(${(flow * 40 + i * 30) % 360})`); });
+    const segs = [[fs * .3, xs[0] - e], [xs[0] + e, xs[1] - e], [xs[1] + e, xs[2] - e], [xs[2] + e, xs[3] - e], [xs[3] + e, xs[4] - e], [xs[4] + e, W - fs * .3]];
+    segs.forEach((sg, j) => { const [p1, p2, r] = helix(sg[0], sg[1], j * 1.1 - flow); links[j].s1.setAttribute('d', p1); links[j].s2.setAttribute('d', p2); links[j].r.setAttribute('d', r); });
+    const b0 = xs[0] - rh * 1.12, b1 = xs[4] + rh * 1.12, cx = (b0 + b1) / 2, gp = brkW / 2 + fs * .4, ah = fs * .4;
+    aura.setAttribute('rx', Math.min(W / 2 - 1, (b1 - b0) / 2 + rh * .8).toFixed(1));
+    aura.setAttribute('opacity', (.15 + .85 * A).toFixed(3));
+    if (!tight) {
+      brk.setAttribute('d', `M${b0},${yG - ah}V${yG + ah}M${b1},${yG - ah}V${yG + ah}M${b0},${yG}H${cx - gp}M${cx + gp},${yG}H${b1}M${b0 + ah * 1.4},${yG - ah * .6}L${b0},${yG}L${b0 + ah * 1.4},${yG + ah * .6}M${b1 - ah * 1.4},${yG - ah * .6}L${b1},${yG}L${b1 - ah * 1.4},${yG + ah * .6}`);
+      brkExt.setAttribute('d', `M${b0},${yG + ah}V${yD - rh * .3}M${b1},${yG + ah}V${yD - rh * .3}`);
+      brkT.setAttribute('x', cx);
+    }
+    hatchR.setAttribute('x', b0 + rh * .05); hatchR.setAttribute('width', Math.max(0, b1 - b0 - rh * .1));
+    hatchR.setAttribute('opacity', (sstep(.55, 1, c) * .6).toFixed(3));
+    marks.forEach(m => {
+      if (m.state !== 'on') return;
+      const p = slot(m.k, c); gsap.set(m.g, {x: p.hx, y: p.hy});
+      m.st.setAttribute('x1', p.ax); m.st.setAttribute('y1', p.ay); m.st.setAttribute('x2', p.hx); m.st.setAttribute('y2', p.hy);
+    });
+    mFill.setAttribute('width', Math.max(0, mW * A)); pctT.textContent = Math.round(A * 100) + '%';
+    if (stateT) stateT.textContent = c < .34 ? 'LOOSE ON HISTONES · READABLE' : c < .78 ? 'MARKS PILING UP · READ LESS' : 'WOUND SHUT · GENE SWITCHED OFF';
+  }
+  gsap.ticker.add(draw);
+
+  // copies of the gene being read: they fly to the activity meter
+  function spawn() {
+    const A = act();
+    if (built && entered && !Kit.calm && A > .06) {
+      const c = clamp(S.c, 0, 1), i = Math.floor(Kit.rnd() * 4), x = (sx(i, c) + sx(i + 1, c)) / 2;
+      const st = {x, y: yD + a + 3}, end = {x: mX0 + mW * A, y: yM};
+      const el = Kit.mk('path', {d: 'M-7,0q1.75,-3.5 3.5,0t3.5,0t3.5,0t3.5,0', stroke: RNA, 'stroke-width': 1.7, fill: 'none', 'stroke-linecap': 'round'}, G.rna);
+      gsap.set(el, {x: st.x, y: st.y, opacity: 0});
+      const mid = {x: clamp(st.x + (end.x - st.x) * .35 + (Kit.rnd() - .5) * W * .25, W * .08, W * .92), y: (st.y + end.y) / 2 + fs * .2};
+      gsap.timeline({onComplete: () => el.remove()})
+        .to(el, {opacity: 1, duration: .2})
+        .to(el, {motionPath: {path: [mid, end], curviness: 1.2, autoRotate: true}, duration: 1.1, ease: 'power1.inOut'}, 0)
+        .to(el, {opacity: 0, scale: .4, duration: .25}, '-=.25');
+    }
+    gsap.delayedCall(A > .06 ? .22 + .9 * (1 - A) : .6, spawn);
+  }
+
+  function wowEnd() { chip.setAttribute('opacity', 1); readT.style.fill = DEEP; dimHi.setAttribute('opacity', 1); }
+  function wowPlay() {
+    if (!built) return;
+    const sw = fs * 1.6, x0 = Math.max(0, letters[0].getBBox().x - sw), x1 = W - sw;
+    gsap.timeline({onComplete: () => { gsap.set(rings, {attr: {r: rh}, opacity: 0}); gsap.set(scan, {attr: {x: 0}, opacity: 0}); wowEnd(); }})
+      .fromTo(rings, {attr: {r: rh}, opacity: .9}, {attr: {r: W * .46}, opacity: 0, duration: 1.4, ease: 'expo.out', stagger: .14}, 0)
+      .fromTo(spools.map(s => s.inn), {scale: 1.12}, {scale: 1, svgOrigin: '0 0', duration: .8, ease: 'elastic.out(1,.4)', stagger: .05}, 0)
+      .set(scan, {opacity: 1}, .35)
+      .fromTo(scan, {attr: {x: x0}}, {attr: {x: x1}, duration: 1.2, ease: 'power2.inOut'}, .35)
+      .to(letters, {fill: MARK, duration: .12, stagger: {each: 1.1 / letters.length}, yoyo: true, repeat: 1}, .45)
+      .to(scan, {opacity: 0, duration: .3}, 1.5)
+      .fromTo(dimHi, {drawSVG: '50% 50%', opacity: 1}, {drawSVG: '0% 100%', duration: .8, ease: 'expo.out'}, 1.3)
+      .fromTo(chip, {opacity: 1, scaleX: 0, svgOrigin: `${W - fs * .4} 0`}, {scaleX: 1, duration: .6, ease: 'back.out(1.6)'}, 1.45)
+      .to(readT, {fill: DEEP, duration: .2}, 1.55);
+  }
+  function reveal() {
+    revealed = true; Kit.haptic('success');
+    say.innerHTML = WHY; Kit.show('keep');
+    if (Kit.calm || !built) { if (built) wowEnd(); return; }
+    gsap.delayedCall(.18, wowPlay); // let the stage settle to its new height first
+  }
+
+  function enter() {
+    if (entered) return; if (!built) layout(); entered = true;
+    if (Kit.calm) { sl.value = 2; paintSl(); setN(2); return; }
+    gsap.timeline()
+      .from(G.top.children, {opacity: 0, y: -6, duration: .6, ease: 'power3.out', stagger: .06})
+      .fromTo(rvr, {attr: {width: 0}}, {attr: {width: W}, duration: 1.3, ease: 'expo.inOut'}, .1)
+      .from(spools.map(s => s.inn), {scale: 0, svgOrigin: '0 0', duration: .7, ease: 'back.out(1.8)', stagger: .08}, .35)
+      .from([G.meter, G.seq], {opacity: 0, duration: .6, ease: 'power3.out', stagger: .1}, .5)
+      .from(letters, {opacity: 0, duration: .3, stagger: .015}, .7)
+      .add(() => { if (n === 0 && +sl.value === 0) { sl.value = 2; paintSl(); setN(2); } }, 1.1);
+    if (!looping) { looping = true; gsap.delayedCall(1.6, spawn); }
+  }
+
+  sl.addEventListener('input', () => {
+    paintSl(); if (!entered) enter();
+    const v = +sl.value; if (v !== n) { Kit.haptic('selection'); setN(v); }
+  });
+  paintSl();
+
+  // re-fit whenever the stage changes height (e.g. when the takeaway appears)
+  let rq = 0;
+  if (window.ResizeObserver) new ResizeObserver(() => {
+    if (rq) return;
+    rq = requestAnimationFrame(() => {
+      rq = 0; if (!built) return;
+      const w = svg.clientWidth, h = svg.clientHeight;
+      if (w && h && (Math.abs(w - lastW) > 1 || Math.abs(h - lastH) > 1)) layout();
+    });
+  }).observe(svg);
+
+  Kit.onShow.card = layout;
+  Kit.onEnter.card = enter;
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    enter(); await wait(Kit.calm ? 60 : 1300);
+    sl.value = MAX; sl.dispatchEvent(new Event('input', {bubbles: true}));
+    await wait(Kit.calm ? 150 : 1500);
+    if (!revealed) reveal();
+    await wait(Kit.calm ? 60 : 2500);
+  };
+})();
+Kit.single();
+</script>
+</html>
