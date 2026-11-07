@@ -1,0 +1,38 @@
+{
+  "id": "psychology-rage-steel-balloon",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.anger",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "One view: does raging at someone reveal weakness, not strength?",
+  "answer": "Rage can hide a void or carry a cause. Supporters say people who can win with skill or reasons rarely explode, so rage fills a gap, like a steel balloon: hard outside, empty inside. Opponents say anger at a real wrong can be fair. The tell isn't volume but having no other lever.",
+  "move": "The tell isn't the volume, it's having no other lever.",
+  "keywords": [
+    "rage",
+    "anger",
+    "insecurity",
+    "raised_voice",
+    "steel_balloon"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A point-of-view card asking whether raging at someone reveals weakness rather than strength. The reader drags a dot to show where they stand on the view, with arguments for and against shown beside it. It closes by asking: the last time I raised my voice, was it a choice, or the only lever I had left?",
+    "graded": false
+  },
+  "source": "Diventare Strong, “7 Errori Che Ti Fanno Apparire INSICURO e Come Risolvere In Dettaglio” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=SAcaFzEQx0w",
+  "written": "2026-11-07"
+}

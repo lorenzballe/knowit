@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611070213,
- "built": "2026-11-07T02:13:22Z",
+ "version": 202611070230,
+ "built": "2026-11-07T02:30:09Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -175659,6 +175659,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "psychology-rage-steel-balloon",
+   "topic": "psychology",
+   "genre": "psychology.emotions",
+   "strand": "psychology.emotions.anger",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "One view: does raging at someone reveal weakness, not strength?",
+   "answer": "Rage can hide a void or carry a cause. Supporters say people who can win with skill or reasons rarely explode, so rage fills a gap, like a steel balloon: hard outside, empty inside. Opponents say anger at a real wrong can be fair. The tell isn't volume but having no other lever.",
+   "move": "The tell isn't the volume, it's having no other lever.",
+   "keywords": [
+    "rage",
+    "anger",
+    "insecurity",
+    "raised_voice",
+    "steel_balloon"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A point-of-view card asking whether raging at someone reveals weakness rather than strength. The reader drags a dot to show where they stand on the view, with arguments for and against shown beside it. It closes by asking: the last time I raised my voice, was it a choice, or the only lever I had left?",
+    "graded": false,
+    "page": "pages/psychology-rage-steel-balloon.html?v=115c81c17703",
+    "bytes": 15549
+   },
+   "source": "Diventare Strong, “7 Errori Che Ti Fanno Apparire INSICURO e Come Risolvere In Dettaglio” (YouTube, 2026)",
+   "reference": "https://www.youtube.com/watch?v=SAcaFzEQx0w",
+   "written": "2026-11-07"
+  },
+  {
    "id": "psychology-reading-faces-1",
    "topic": "psychology",
    "genre": "psychology.other_people",
@@ -178843,6 +178883,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-09-26"
   },
   {
+   "id": "psychology-the-open-door",
+   "topic": "psychology",
+   "genre": "psychology.emotions",
+   "strand": "psychology.emotions.fear",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "One view: show what makes you odd, even if most people leave?",
+   "answer": "Hiding an odd trait puts no one off, but it also never draws the people searching for exactly that. Many traits push away far more people than they pull in, and many large audiences are built on being easy to relate to. The page presents this as one view, not a settled answer.",
+   "move": "Is what I hide rare and wanted, or only rare?",
+   "keywords": [
+    "audience",
+    "niche",
+    "uniqueness",
+    "creators",
+    "youtube"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card titled 'The open door' asks how far you would open up odd traits to an audience. A draggable control sets how far you would open the door, then you commit. It sets out a case for showing unusual traits and a case against, then asks whether what you hide is rare and wanted, or only rare.",
+    "graded": false,
+    "page": "pages/psychology-the-open-door.html?v=aaf26ef9c7dc",
+    "bytes": 13402
+   },
+   "source": "Diventare Strong, “Esci alla Scoperto: Basta PAURA di Mostrarti!” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=V4vPy9iy9aA&t=1019s",
+   "written": "2026-11-07"
+  },
+  {
    "id": "psychology-tiny-habits-1",
    "topic": "psychology",
    "genre": "psychology.habits",
@@ -179077,6 +179157,46 @@ const String kEmbeddedBank = r'''
    "source_kind": "paper",
    "reference": "Vul & Pashler, Measuring the crowd within: probabilistic representations within individuals, Psychological Science, 2008",
    "written": "2026-10-03"
+  },
+  {
+   "id": "psychology-who-holds-wheel",
+   "topic": "psychology",
+   "genre": "psychology.think_under_pressure",
+   "strand": "psychology.think_under_pressure.stress_and_choices",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Does a steady character prove you're the one steering?",
+   "answer": "A steady character can prove you are the one steering, but a steady hand and a jammed wheel draw the same line until the road bends. Decide who you are before the pressure comes. Test steadiness at bends: if things changed and you didn't, ask whether that was a choice or a habit.",
+   "move": "Decide who you are before the pressure comes, and the moment can't steer you.",
+   "keywords": [
+    "alex onofri",
+    "steering wheel",
+    "pressure",
+    "steadiness",
+    "self-determination"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "paradox",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A car on a track that you drag toward the side you lean to, under the question of who holds the wheel: a steady character, or pressure steering you. It asks: when the road last bent, did you turn, or just stay who you'd said you were?",
+    "graded": false,
+    "page": "pages/psychology-who-holds-wheel.html?v=122743e63aa1",
+    "bytes": 19708
+   },
+   "source": "Diventare Strong, “Come Trattare Gli Altri Per Apparire Più Cazzuti Determinati Valorosi” (YouTube, 2017)",
+   "reference": "https://www.youtube.com/watch?v=ASfJDsJgi1E",
+   "written": "2026-11-07"
   },
   {
    "id": "psychology-why-we-cry-1",
@@ -248715,6 +248835,44 @@ const String kEmbeddedBank = r'''
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=836s",
    "written": "2026-11-03"
+  },
+  {
+   "id": "thinking-the-blame-trap",
+   "topic": "thinking",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "One view: does blaming others for your problems hand away your power?",
+   "answer": "Blame hands the next move to someone else, so you wait. Fault looks back and power looks forward, and their answers can differ. The trap is fusing the two questions, so ask what your next move is, whoever is at fault.",
+   "move": "Whoever is at fault, what is the next move only I can make?",
+   "keywords": [
+    "blame",
+    "personal power",
+    "fault",
+    "responsibility",
+    "agency"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A point-of-view slider asks whether blaming others for your problems hands away your power. Drag a dot to where you stand, then rate how sure you are. The page ends with the question: whoever is at fault, what is the next move only I can make?",
+    "graded": false,
+    "page": "pages/thinking-the-blame-trap.html?v=69a98e732957",
+    "bytes": 14193
+   },
+   "source": "Diventare Strong, “Mentalità D'Acciaio: 7 Pensieri da Eliminare dalla Tua Mente (Atteggiamento Mentale Vincente Strong)” (YouTube, 2020)",
+   "reference": "https://www.youtube.com/watch?v=XuSUFo5JdZo&t=844s",
+   "written": "2026-11-07"
   },
   {
    "id": "thinking-three-letters",

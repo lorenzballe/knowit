@@ -1,0 +1,38 @@
+{
+  "id": "psychology-the-open-door",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "One view: show what makes you odd, even if most people leave?",
+  "answer": "Hiding an odd trait puts no one off, but it also never draws the people searching for exactly that. Many traits push away far more people than they pull in, and many large audiences are built on being easy to relate to. The page presents this as one view, not a settled answer.",
+  "move": "Is what I hide rare and wanted, or only rare?",
+  "keywords": [
+    "audience",
+    "niche",
+    "uniqueness",
+    "creators",
+    "youtube"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card titled 'The open door' asks how far you would open up odd traits to an audience. A draggable control sets how far you would open the door, then you commit. It sets out a case for showing unusual traits and a case against, then asks whether what you hide is rare and wanted, or only rare.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Esci alla Scoperto: Basta PAURA di Mostrarti!” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=V4vPy9iy9aA&t=1019s",
+  "written": "2026-11-07"
+}
