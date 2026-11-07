@@ -5,7 +5,7 @@
   "strand": "science.physics.energy",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "computation",
+  "principle": "reflection",
   "question": "Keep viscosity fixed. Make the liquid denser and faster. What happens to the flow?",
   "answer": "Denser and faster both push the same way: with viscosity fixed, raising either one lifts the Reynolds number, so the flow turns chaotic. That ratio is the Reynolds number, and raising any term on top climbs toward turbulence.",
   "move": "Ask which side of the ratio a change sits on.",

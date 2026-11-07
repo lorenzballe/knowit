@@ -5,7 +5,7 @@
   "strand": "maths.puzzles.paradoxes",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "independence",
+  "principle": "reflection",
   "question": "Add a hopeless third candidate to this made-up Borda count. Who wins now?",
   "answer": "Carl can't win, yet adding him flips the made-up Borda count: Ben beats Ann 7 to 6, though Ann led 3 to 2 without him. Carl sits between them on Ben's ballots, doubling Ben's lead there. Borda's points depend on how many names are on the ballot, so the irrelevant candidate changed the winner.",
   "move": "A fair choice between two things can't hinge on a third nobody picks.",

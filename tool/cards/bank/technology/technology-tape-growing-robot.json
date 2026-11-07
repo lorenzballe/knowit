@@ -5,10 +5,10 @@
   "strand": "technology.old_machines.lessons_from_failures",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "conditional",
-  "question": "A car and a growing robot meet sticky tape. Which one gets across?",
-  "answer": "The robot gets across, because it never rolls: it grows, with new skin pushed out at the tip, so the part on the tape never moves. The car must pull its wheels off the glue, and the glue wins.",
-  "move": "What grows from its tip can't be held by what it lies on.",
+  "principle": "reflection",
+  "question": "Lay sticky tape across the floor. Which one makes it across?",
+  "answer": "The robot is the one that gets across. Powered by compressed air, it grows from its tip, so it grows over the tape instead of getting stuck to it. Something like a car just gets stuck.",
+  "move": "A thing that grows from its tip goes over glue rather than getting stuck in it.",
   "keywords": [
     "soft robot",
     "sticky tape",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Over a strip of sticky tape, a car and a growing robot try to cross. The reader picks the car, the robot, or both, then rates how sure they are. Stripes on the tape show which part stays still.",
-    "ground": "#ffd23f"
+    "touch": "drags",
+    "label": "A floor with sticky tape across it. Drag the tape into the middle, then pick which gets across: the car, the robot, or neither. Only the robot gets across."
   },
   "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
   "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

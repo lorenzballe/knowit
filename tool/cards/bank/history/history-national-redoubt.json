@@ -3,12 +3,12 @@
   "topic": "history",
   "genre": "history.maps_and_borders",
   "strand": "history.maps_and_borders.disputed_borders",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "What was Switzerland's 'National Redoubt', and why was it built?",
-  "answer": "The National Redoubt was a massive defensive line built deep in the Swiss Alps. It was designed to make an invasion so costly and difficult that it would be strategically unviable.",
-  "move": "Make attacking you cost more than it could gain, and nobody tries.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Switzerland massively expanded one defence line. Where did it run?",
+  "answer": "Not at the border: Switzerland massively expanded an older line set back from its borders, high in the mountains, the National Redoubt. Standing higher than the enemy is an advantage. The aim was not to beat an attacker but to make an attack not worth its price.",
+  "move": "You don't have to beat an attacker, only make the attack not worth its price.",
   "keywords": [
     "switzerland",
     "alps",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A diagram of the Swiss Alps with a red line tracing the defensive fortifications and tunnels. The reader drags an invader from the border into Switzerland and is asked what the National Redoubt was and why it was built.",
-    "ground": "#f3ead6"
+    "label": "A map of Switzerland asks where its defence line ran. The reader draws the line on the map with a finger, then rates how sure they are of the answer."
   },
   "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=2Y0RgQmmESI&t=339s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

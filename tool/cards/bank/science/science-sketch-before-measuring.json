@@ -3,12 +3,12 @@
   "topic": "science",
   "genre": "science.think_like_a_scientist",
   "strand": "science.think_like_a_scientist.testable_claims",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "What is the first step in constructing a geological section?",
-  "answer": "The first step is a hand sketch with no measures: the fault reaches the surface here, it's normal, here an anticline, there a syncline. This keeps the whole picture coherent. Only then do you project faults and fold axes precisely.",
-  "move": "Sketch the big picture by hand first; measure after.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Building a geological section from a map: what do you do first?",
+  "answer": "The first step is a quick hand sketch with no measurements, showing where each fault must surface and where the folds sit. Precise measurements come after. Drawing the shape of the answer first gives you a picture that already holds together.",
+  "move": "Draw the shape of the answer first, then measure into a picture that already holds together.",
   "keywords": [
     "geological_section",
     "geological_map",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A geological map showing a fault and two fold axes, with a flat, empty geological section below it. The reader must tap the three marks on the map and is asked what the first step in constructing a geological section is.",
-    "ground": "#0e2a31"
+    "label": "Ordering task: 'Building a geological section from a map: what do you do first?' Four steps to tap in order: draw the ground's profile along the section; do the precise measurements; sketch faults and folds by hand with no measures; project faults and fold axes onto the section. An undo button is available."
   },
   "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=2087s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

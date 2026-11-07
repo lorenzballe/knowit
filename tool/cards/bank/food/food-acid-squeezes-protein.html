@@ -1,332 +1,346 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: food-acid-squeezes-protein -->
-<!-- Look: a Swiss poster on warm paper. A strict two-column hairline grid. The left column holds a giant hot-red numeral that counts the squeezes, a tally and a typed log. The right column holds one glossy coiled protein, red drops of juice held in its folds, breathing gently.
-     Interaction: tap HEAT or ACID. Heat sends red shimmer lines up through the coil. Acid fires H+ protons into it. Both give the same squeeze: the coil wrings tighter, drops are forced out of its folds and splash into a puddle that grows below.
-     Wow: on the fourth squeeze the coil gives a last hard wring, its gloss dries to a dull brown knot, and the numeral scrambles letter by letter into a red DRY. -->
-<title>Acid squeezes meat dry</title>
+<!-- slug: food-acid-cooks-meat -->
+<!-- Design note.
+     Thought to carry, the video's and only the video's: heat and acids do the same thing to meat. They "squeeze" its proteins (chemists say denature them). Squeezed proteins lose all the meat's juices, which is why overcooked meat turns out dry and stringy. So an acid like fluoroantimonic acid "cooks" meat with no heat.
+     Front: one object on the bare card. A piece of meat hangs from tongs, held by a gloved hand, over a bowl of green acid. There is no flame. The reader picks one of three short answers (juicier, still raw, dry and stringy) and the meat in the tongs is redrawn as that guess. The "how sure" row appears only after a pick.
+     Back: the same meat, now grey, shrunken and stringy, drips into a small puddle of its own juice. Beside it, the raw piece lies on the counter. A small figure on the right shows one protein squeezed tight, with a flame on one side and a drop of acid on the other: the same squeeze from either.
+-->
+<title>Acid cooks meat</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
-<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;height:100%;display:block}
-#acts{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2.6cqw;margin-top:1cqh}
-.act{box-sizing:border-box;min-width:0;width:100%;overflow:hidden;white-space:nowrap;font:800 min(max(2.2cqh,14px),5.2cqw)/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--c);background:var(--k);border:0;border-radius:0;padding:max(1.7cqh,11px) 3cqw;display:flex;align-items:center;justify-content:center;gap:2.4cqw;cursor:pointer;transition:transform .09s cubic-bezier(.3,1.6,.5,1),background .2s;-webkit-tap-highlight-color:transparent}
-.act:active{transform:scale(.96)}
-.act i{display:block;width:max(1.4cqh,10px);height:max(1.4cqh,10px);background:#ff3d17;flex:none}
-.act[disabled]{opacity:.35;cursor:default}
-#why{display:flex;flex-direction:column;gap:.8cqh;margin-top:.8cqh}
-#why .big{font:900 max(4.4cqh,26px)/1 var(--display);color:#ff3d17;letter-spacing:-.01em;margin:0}
-#why .body{font:600 max(1.85cqh,13px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
-.say{overflow-wrap:anywhere;margin-top:1.1cqh}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .4s}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front{transition:none}
+
+.stagebox{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.front .stagebox{gap:1.4cqh}
+#pic,#pic2{flex:1 1 auto;min-height:0;width:100%;height:100%;display:block}
+#opts{display:flex;gap:2cqw}
+.opt{flex:1 1 0;min-width:0;font:700 clamp(12px,1.8cqh,15px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 1cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt[disabled]{cursor:default}
+
+#sure{margin-top:20px;color:var(--k)}
+#sure > :not(button):not(:has(button)){color:var(--k);opacity:1}
+.card:not(.picked) #sure{visibility:hidden}
+
+.card .front p.say#say{padding-right:0!important;margin-right:112px!important;box-sizing:border-box}
+
+.card .back .big{font-size:clamp(22px,4.4cqh,36px);line-height:1.04;margin:0 0 1cqh}
+.card .back .body{font-size:clamp(13px,2cqh,16px);line-height:1.38;margin:1.2cqh 0 1.4cqh}
+.card .back .foot{margin-top:14px;padding-right:104px}
+.card .back .src{font-size:12px;line-height:1.3;color:var(--k);opacity:.82}
+.turn:not(.over) .back .src{display:none}
 </style>
-<article class="card" id="card" data-topic="food" data-kind="Tap to squeeze · denaturing" style="--c:#efebe2;--k:#121110;--edge:#cdc6b8">
+<article class="card" id="card" data-topic="food" data-kind="Pick one · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">PROTEINS</span></div>
-    <h2 class="q">How does an acid like fluoroantimonic acid “cook” meat?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A coiled meat protein holding red drops of juice in its folds, with a puddle of squeezed-out juice below it."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ACID COOKING</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Acid, no heat. What does the world’s strongest acid do to meat?</h2>
+        <div class="stagebox" id="stage">
+          <svg id="pic" role="img" aria-label="A piece of raw meat hangs from tongs, held by a gloved hand, over a bowl of fluoroantimonic acid. No flame anywhere."></svg>
+          <div id="opts">
+            <button class="opt" data-i="0">Juicier</button>
+            <button class="opt" data-i="1">Still raw</button>
+            <button class="opt" data-i="2">Dry, stringy</button>
+          </div>
+        </div>
+        <div id="sure"></div>
+        <p class="say" id="say">Tap how you think the meat turns out. It shows your guess.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It cooks it: dry and stringy, its juices gone.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The meat lifted in tongs, grey, shrunken and stringy, dripping into a small puddle of its own juice. Beside it, the raw piece from before. On the right, one protein squeezed tight, with a flame on one side and a drop of acid on the other."></svg></div>
+        <p class="body">Like heat, acids squeeze the meat’s proteins: chemists call it denaturing. Squeezed, they lose all the juices, and the meat turns dry and stringy, the way overcooked meat does.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Heat isn’t the only thing that cooks: an acid squeezes the proteins just the same.</div>
+        <div class="foot"><span class="src">Source · Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023).</span></div>
+      </section>
     </div>
-    <div id="acts">
-      <button class="act" data-k="heat"><i></i>+ Heat</button>
-      <button class="act" data-k="acid"><i></i>+ Acid</button>
-    </div>
-    <div id="why" class="gone"><p class="big" id="bigw">Denatured.</p><p class="body">Heat and acid do the same thing to a protein: they squeeze it. Chemists call it denaturing. A squeezed protein loses its juices, which is why overcooked meat, like meat in acid, turns dry and stringy.</p></div>
-    <p class="say" id="say">Tap heat or acid to squeeze the protein, one step at a time.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An acid “cooks” meat as heat does: it wrings the proteins dry.</div>
-    <div class="foot"><span class="src">Source · Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)</span></div>
   </div>
 </article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
 <script src="kit/astute-card.js"></script>
 <script>
 (() => {
-  const hasSplit = typeof SplitText !== 'undefined', hasScr = typeof ScrambleTextPlugin !== 'undefined';
-  if (hasSplit) gsap.registerPlugin(SplitText);
-  if (hasScr) gsap.registerPlugin(ScrambleTextPlugin);
-  const ACC = '#ff3d17', ACC2 = '#b8200a', INK = '#121110', PAPER = '#efebe2', DRYC = '#8f7f6e';
-  const AZ = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const svg = Kit.$('pic'), say = Kit.$('say');
-  const STEPS = 4, ND = 16, NS = 150, BEAD = 5;
-  const st = {sq: 0, kick: 0, dry: 0, pool: 0, enter: 1};
-  let step = 0, done = false, rev = false, W = 0, H = 0, fs = 12, R0 = 50, cx = 0, cy = 0, big = 100, colX = 100, pw = 100;
-  const E = {}, log = [];
-  const drops = [];
-  for (let i = 0; i < ND; i++) {
-    const a = Kit.rnd() * Math.PI * 2, r = Math.sqrt(.15 + Kit.rnd() * .85) * .7;
-    drops.push({u: Math.cos(a) * r, v: Math.sin(a) * r, g: i % STEPS, out: 0, pop: 1, rank: 0, rot: (Kit.rnd() - .5) * 40, ph: Kit.rnd() * 6});
+  const RIGHT = 2;
+  const MEAT = '#c8323f', JUICE = '#b8343f', ACID = '#9cc72a', ACIDDK = '#6c9216';
+  const RAW = '#e0606a', FAT = '#f6e4d6';
+  const COOK = '#9a867a', COOKFAT = '#d8cdc3', COOKDK = '#6c5a50';
+  const COAT = '#fffaf3', FLAME = '#ffd23f';
+  const card = Kit.$('card');
+  const col = (v, d) => (getComputedStyle(card).getPropertyValue(v) || '').trim() || d;
+  let K = '#15120f';
+  let pick = -1, answered = false, backOn = false;
+
+  const txt = (parent, x, y, t, a = {}, W = 1e4) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: K, 'font-family': 'Figtree, sans-serif', 'font-weight': 700}, a), parent);
+    e.textContent = t;
+    const w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
+    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const sh = Math.max(4 - left, Math.min(0, W - 4 - (left + w)));
+    if (sh) e.setAttribute('x', x + sh);
+    return e;
+  };
+
+  // shared meat drawings (unit coordinates)
+  const BLOB = 'M-1,-.4 C-.9,-.82 .2,-.78 .72,-.56 C1.06,-.4 1.08,.3 .72,.5 C.2,.76 -.62,.72 -.92,.46 C-1.12,.26 -1.1,-.16 -1,-.4Z';
+  const HANG = 'M-.34,0 C-.1,-.08 .2,-.06 .38,.02 C.56,.3 .48,.7 .52,1 C.56,1.3 .4,1.62 .1,1.68 C-.2,1.72 -.46,1.5 -.44,1.2 C-.42,.9 -.56,.5 -.48,.22 C-.46,.1 -.42,.03 -.34,0Z';
+  const ns = {'vector-effect': 'non-scaling-stroke'};
+  function rawFlat(g) {
+    Kit.mk('path', Object.assign({d: BLOB, fill: FAT, stroke: K, 'stroke-width': 1.6}, ns), g);
+    Kit.mk('path', {d: BLOB, transform: 'translate(.02,.01) scale(.82)', fill: RAW}, g);
+    Kit.mk('path', {d: 'M-.55,-.15 C-.3,-.3 0,-.05 .3,-.2', fill: 'none', stroke: FAT, 'stroke-width': .07, 'stroke-linecap': 'round'}, g);
+    Kit.mk('path', {d: 'M-.4,.25 C-.15,.12 .15,.35 .45,.18', fill: 'none', stroke: FAT, 'stroke-width': .06, 'stroke-linecap': 'round'}, g);
   }
-  drops.map((d, i) => i).sort((a, b) => drops[a].g - drops[b].g || drops[a].u - drops[b].u).forEach((i, r) => drops[i].rank = r);
-
-  const mk = (t, a, p) => Kit.mk(t, a, p);
-  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, style: 'font-family:var(--mono);font-weight:700;letter-spacing:.08em', 'font-size': fs}, a), p); e.textContent = s; return e; };
-  const landX = d => cx + (d.rank / (ND - 1) - .5) * pw * .7;
-
-  function fitNum(text) {
-    const e = E.num, ot = e.textContent, of = e.getAttribute('font-size');
-    e.setAttribute('font-size', big); e.textContent = text;
-    let L = 0; try { L = e.getComputedTextLength(); } catch (_) {}
-    e.textContent = ot; e.setAttribute('font-size', of);
-    const max = colX - fs * .9;
-    return L > max ? big * max / L : big;
+  function rawHang(g) {
+    Kit.mk('path', Object.assign({d: HANG, fill: FAT, stroke: K, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, ns), g);
+    Kit.mk('path', {d: HANG, transform: 'translate(0,.17) scale(.8)', fill: RAW}, g);
+    Kit.mk('path', {d: 'M-.18,.45 C-.04,.62 -.22,.82 -.06,1', fill: 'none', stroke: FAT, 'stroke-width': .06, 'stroke-linecap': 'round'}, g);
+    Kit.mk('path', {d: 'M.16,.8 C.28,1 .1,1.2 .22,1.36', fill: 'none', stroke: FAT, 'stroke-width': .06, 'stroke-linecap': 'round'}, g);
   }
-
-  function logLine(i) {
-    const y = E.logY + i * fs * 1.55;
-    if (y > H - fs * 2.4) return;
-    const g = mk('g', {}, E.logG);
-    mk('rect', {x: 0, y: y - fs * .62, width: fs * .5, height: fs * .5, fill: ACC}, g);
-    txt(g, fs * .85, y, `0${i + 1} ${log[i].toUpperCase()}`, {'font-weight': 500});
-    return g;
+  function cookedHang(g) {
+    Kit.mk('path', Object.assign({d: HANG, fill: COOKFAT, stroke: K, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, ns), g);
+    Kit.mk('path', {d: HANG, transform: 'translate(0,.17) scale(.8)', fill: COOK}, g);
+    for (const x of [-.24, -.08, .08, .24])
+      Kit.mk('path', Object.assign({d: `M${x},.3 C${x + .06},.58 ${x - .06},.84 ${x},1.08 S${x + .05},1.32 ${x},1.42`, fill: 'none', stroke: COOKDK, 'stroke-width': 1.3, 'stroke-linecap': 'round'}, ns), g);
   }
+  // a gloved hand on a white sleeve, coming in from the top right, holding tongs at (cx, hy)
+  function handTongs(parent, cx, hy, yTop, sc, aw) {
+    Kit.mk('path', {d: `M${cx},${hy} L${cx - .22 * sc},${yTop + .12 * sc} M${cx},${hy} L${cx + .22 * sc},${yTop + .12 * sc}`, stroke: K, 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round'}, parent);
+    const ax = cx + sc * 1.4, armD = `M${ax},${-aw * 2} L${cx},${hy}`;
+    Kit.mk('path', {d: armD, stroke: K, 'stroke-width': aw + 4, 'stroke-linecap': 'round'}, parent);
+    Kit.mk('path', {d: armD, stroke: COAT, 'stroke-width': aw, 'stroke-linecap': 'round'}, parent);
+    const dl = Math.hypot(cx - ax, hy + aw * 2) || 1, ux = (cx - ax) / dl, uy = (hy + aw * 2) / dl;
+    Kit.mk('line', {x1: cx - ux * aw * 1.3, y1: hy - uy * aw * 1.3, x2: cx, y2: hy, stroke: K, 'stroke-width': aw + 4, 'stroke-linecap': 'round'}, parent);
+    Kit.mk('circle', {cx, cy: hy, r: aw * .72, fill: K}, parent);
+  }
+  const FLAMEP = 'M0,-1 C.3,-.6 .66,-.3 .66,.28 C.66,.72 .36,1 0,1 C-.36,1 -.66,.72 -.66,.28 C-.66,-.04 -.46,-.26 -.3,-.42 C-.28,-.16 -.18,-.02 -.04,.02 C-.12,-.4 -.08,-.72 0,-1Z';
+  const DROPP = 'M0,-1 C.35,-.45 .66,-.05 .66,.3 C.66,.7 .36,.96 0,.96 C-.36,.96 -.66,.7 -.66,.3 C-.66,-.05 -.35,-.45 0,-1Z';
 
-  function layout() {
-    svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    if (!W || !H) return;
-    fs = Math.max(12, Math.min(14, Math.min(W, H) / 24));
-    colX = Math.max(W * .34, fs * 7.6);
-    big = Math.min(H * .3, colX * 1.2);
-    const numY = big * .86, hY = numY + big * .26;
-    const top = fs * 3.8, bot = H - fs * 3;
-    cx = colX + (W - colX) / 2; cy = (top + bot) / 2;
-    R0 = Math.max(10, Math.min((W - colX) * .37, (bot - top) * .42));
-    pw = (W - colX) * .82;
+  // ---------------- FRONT: meat over the acid ----------------
+  const F = {dt: []};
+  function drawFront() {
+    F.dt.forEach(t => t.kill()); F.dt = [];
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg); const fs = Math.max(12, Math.min(14, f));
+    K = col('--k', '#15120f');
+    const gy = H - fs * 2.2;
+    const bw = Math.min(W * .6, H * .62), bh = bw * .42, bx = W * .5, ay = gy - bh * .62, rim = gy - bh;
+    const sc = Math.max(10, Math.min(W * .17, (rim - 14) / 2.35));
+    const cx = bx, yTop = rim - 14 - 1.72 * sc, hy = yTop - sc * .45;
+    Object.assign(F, {W, H, fs, gy, ay, cx, yTop, sc});
 
-    const defs = mk('defs', {}, svg);
-    const shg = mk('radialGradient', {id: 'shd'}, defs);
-    mk('stop', {offset: 0, 'stop-color': INK, 'stop-opacity': .26}, shg);
-    mk('stop', {offset: 1, 'stop-color': INK, 'stop-opacity': 0}, shg);
-    const dg = mk('radialGradient', {id: 'drp', cx: .35, cy: .62, r: .75}, defs);
-    mk('stop', {offset: 0, 'stop-color': '#ff8a6a'}, dg);
-    mk('stop', {offset: .45, 'stop-color': ACC}, dg);
-    mk('stop', {offset: 1, 'stop-color': ACC2}, dg);
-    const pg = mk('linearGradient', {id: 'pool', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    mk('stop', {offset: 0, 'stop-color': ACC}, pg);
-    mk('stop', {offset: 1, 'stop-color': ACC2}, pg);
+    // the bowl of acid: one flat green level
+    const bowlD = `M${bx - bw / 2},${rim} C${bx - bw / 2},${gy - bh * .15} ${bx - bw * .32},${gy} ${bx - bw * .2},${gy} L${bx + bw * .2},${gy} C${bx + bw * .32},${gy} ${bx + bw / 2},${gy - bh * .15} ${bx + bw / 2},${rim}`;
+    const bg = Kit.mk('g', {id: 'bowl'}, svg);
+    const defs = Kit.mk('defs', {}, bg), cp = Kit.mk('clipPath', {id: 'bowlClip'}, defs);
+    Kit.mk('path', {d: bowlD + 'Z'}, cp);
+    const lq = Kit.mk('g', {'clip-path': 'url(#bowlClip)'}, bg);
+    Kit.mk('rect', {x: bx - bw / 2, y: ay, width: bw, height: gy - ay + 2, fill: ACID}, lq);
+    Kit.mk('line', {x1: bx - bw / 2, x2: bx + bw / 2, y1: ay, y2: ay, stroke: ACIDDK, 'stroke-width': 2}, lq);
+    Kit.mk('path', {d: bowlD, fill: 'none', stroke: K, 'stroke-width': 2.4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, bg);
 
-    // hairline grid
-    const grid = mk('g', {stroke: INK, 'stroke-width': 1, opacity: .16}, svg);
-    mk('line', {x1: colX, x2: colX, y1: 0, y2: H}, grid);
-    mk('line', {x1: 0, x2: colX, y1: hY, y2: hY}, grid);
-    mk('line', {x1: colX, x2: W, y1: fs * 3.2, y2: fs * 3.2}, grid);
-    mk('line', {x1: 0, x2: W, y1: H - fs * 1.5, y2: H - fs * 1.5}, grid);
+    // the counter
+    Kit.mk('line', {x1: W * .03, x2: W * .97, y1: gy, y2: gy, stroke: K, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
 
-    // left column: numeral, tally, log
-    E.num = mk('text', {x: 0, y: numY, fill: ACC, style: 'font-family:var(--display);font-weight:900;letter-spacing:-.04em', 'font-size': big}, svg);
-    E.num.textContent = '0';
-    if (rev) E.num.setAttribute('font-size', fitNum('DRY'));
-    E.num.textContent = rev ? 'DRY' : String(step);
-    E.sub = txt(svg, 0, hY + fs * 1.45, rev ? 'DENATURED' : 'SQUEEZES');
-    E.sq = [];
-    for (let i = 0; i < STEPS; i++) E.sq.push(mk('rect', {x: i * fs * 1.15 + .7, y: hY + fs * 2.1, width: fs * .8, height: fs * .8, fill: i < step ? ACC : 'none', stroke: INK, 'stroke-width': 1.4}, svg));
-    E.logY = hY + fs * 4.7;
-    E.logG = mk('g', {}, svg);
-    log.forEach((_, i) => logLine(i));
+    // the meat, in three possible states
+    F.mid = Kit.mk('g', {id: 'steak'}, svg);
+    F.juicy = Kit.mk('g', {opacity: 0}, F.mid);
+    const jg = Kit.mk('g', {transform: `translate(${cx},${yTop}) scale(${sc * 1.12})`}, F.juicy);
+    rawHang(jg);
+    Kit.mk('path', {d: 'M-.3,.3 C-.36,.5 -.34,.66 -.3,.78', fill: 'none', stroke: '#fff', 'stroke-width': .07, 'stroke-linecap': 'round', opacity: .8}, jg);
+    F.raw = Kit.mk('g', {}, F.mid);
+    rawHang(Kit.mk('g', {transform: `translate(${cx},${yTop}) scale(${sc})`}, F.raw));
+    F.dry = Kit.mk('g', {opacity: 0}, F.mid);
+    cookedHang(Kit.mk('g', {transform: `translate(${cx},${yTop}) scale(${sc * .86})`}, F.dry));
+    F.drops = Kit.mk('g', {}, F.dry);
+    F.tip = [cx + .1 * sc * .86, yTop + 1.68 * sc * .86];
 
-    // right column labels (spaced so their glyph boxes never touch)
-    E.t1 = txt(svg, W, fs * 1.0, rev ? 'WRUNG' : 'A PROTEIN', {'text-anchor': 'end', 'font-weight': 800});
-    E.t2 = txt(svg, W, fs * 2.6, rev ? 'no juice left' : '+ its juice', {'text-anchor': 'end', 'font-weight': 500, fill: rev ? ACC2 : INK});
+    // hand and tongs
+    const hg = Kit.mk('g', {id: 'hand'}, svg);
+    handTongs(hg, cx, hy, yTop, sc, Math.max(5, sc * .26));
 
-    // puddle
-    E.poolY = H - fs * 2.35;
-    E.pool = mk('ellipse', {cx, cy: E.poolY, rx: 0, ry: 0, fill: 'url(#pool)'}, svg);
-    E.poolHi = mk('ellipse', {cx, cy: E.poolY, rx: 0, ry: 0, fill: '#fff', opacity: .35}, svg);
-    E.plab = txt(svg, colX + fs * .6, H - fs * .3, 'JUICE SQUEEZED OUT', {'font-weight': 600});
-    // when the stage is squashed short, the bottom label would collide with the top labels: drop it
-    if (H < fs * 5.6) E.plab.setAttribute('display', 'none');
+    // two labels
+    F.lab = Kit.mk('g', {id: 'flabels'}, svg);
+    const ly = yTop + sc * .95, lx = cx - sc * .66 - 10;
+    Kit.mk('line', {x1: lx + 4, x2: cx - sc * .36, y1: ly - fs * .35, y2: ly - fs * .35, stroke: K, 'stroke-width': 1.2}, F.lab);
+    F.ltxt = txt(F.lab, lx, ly, pick < 0 ? 'raw meat' : 'your guess', {'font-size': fs, 'text-anchor': 'end'}, W);
+    txt(F.lab, bx, gy + fs * 1.45, 'fluoroantimonic acid', {'font-size': fs, 'text-anchor': 'middle'}, W);
 
-    // protein
-    E.shadow = mk('ellipse', {cx, cy: cy + R0, rx: R0, ry: R0 * .14, fill: 'url(#shd)'}, svg);
-    E.prot = mk('g', {}, svg);
-    E.under = mk('path', {fill: 'none', stroke: PAPER, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.prot);
-    E.chain = mk('path', {fill: 'none', stroke: INK, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.prot);
-    E.gloss = mk('path', {fill: 'none', stroke: '#fff', 'stroke-linecap': 'round', 'stroke-dasharray': '2 9'}, E.prot);
-    E.beads = []; E.hl = [];
-    for (let i = 0; i < NS; i += BEAD) {
-      E.beads.push(mk('circle', {r: 1, fill: INK}, E.prot));
-      E.hl.push(mk('circle', {r: 1, fill: '#fff'}, E.prot));
-    }
-    E.drops = drops.map(() => {
-      const g = mk('g', {}, svg);
-      mk('path', {d: 'M0,-1.5 C.55,-.6 1,-.05 1,.45 A1,1 0 1 1 -1,.45 C-1,-.05 -.55,-.6 0,-1.5Z', fill: 'url(#drp)', stroke: ACC2, 'stroke-width': .08}, g);
-      mk('ellipse', {cx: -.35, cy: .25, rx: .22, ry: .32, fill: '#fff', opacity: .8}, g);
-      return g;
-    });
-    E.fx = mk('g', {}, svg);
-    render();
+    look(pick, true);
   }
 
-  function smooth(p) {
-    let d = `M${p[0][0].toFixed(1)},${p[0][1].toFixed(1)}`;
-    for (let i = 0; i < p.length - 1; i++) {
-      const a = p[i - 1] || p[i], b = p[i], c = p[i + 1], e = p[i + 2] || c;
-      d += `C${(b[0] + (c[0] - a[0]) / 6).toFixed(1)},${(b[1] + (c[1] - a[1]) / 6).toFixed(1)} ${(c[0] - (e[0] - b[0]) / 6).toFixed(1)},${(c[1] - (e[1] - b[1]) / 6).toFixed(1)} ${c[0].toFixed(1)},${c[1].toFixed(1)}`;
+  function drips(on) {
+    F.dt.forEach(t => t.kill()); F.dt = [];
+    if (!F.drops) return; F.drops.innerHTML = '';
+    if (!on) return;
+    const [x, y0] = F.tip, rr = Math.max(2, F.sc * .07), yEnd = F.ay - rr;
+    const c = Kit.mk('circle', {cx: x, cy: y0 + rr, r: rr, fill: JUICE}, F.drops);
+    if (Kit.calm) { c.setAttribute('cy', y0 + (yEnd - y0) * .45); return; }
+    F.dt.push(gsap.fromTo(c, {attr: {cy: y0 + rr}, opacity: 1}, {attr: {cy: yEnd}, duration: .6, ease: 'power2.in', repeat: -1, repeatDelay: .6, delay: .4}));
+  }
+
+  function look(i, instant) {
+    if (!F.raw) return;
+    const d = instant || Kit.calm ? 0 : .45;
+    const show = i === 0 ? F.juicy : i === 2 ? F.dry : F.raw;
+    [F.juicy, F.raw, F.dry].forEach(gr => { gsap.killTweensOf(gr); gsap.to(gr, {opacity: gr === show ? 1 : 0, scale: 1, svgOrigin: `${F.cx} ${F.yTop}`, duration: d, ease: 'power2.out'}); });
+    if (d && i >= 0) gsap.fromTo(show, {scale: .9}, {scale: 1, svgOrigin: `${F.cx} ${F.yTop}`, duration: .5, ease: 'back.out(2)'});
+    if (i >= 0) F.ltxt.textContent = 'your guess';
+    drips(i === 2);
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered || pick < 0) return; answered = true;
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    [...Kit.$('opts').children].forEach(b => b.disabled = true);
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'not quite'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || answered) return;
+    const first = pick < 0;
+    [...Kit.$('opts').children].forEach(o => o.classList.remove('on'));
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    card.classList.add('picked');
+    look(pick, false);
+    if (first) sure.on();
+  });
+
+  // ---------------- BACK: before and after, and one protein ----------------
+  let tl = null, btw = [];
+  function coilD(xc, yc, L, r) {
+    const k = 4, N = 160; let d = '';
+    for (let i = 0; i <= N; i++) {
+      const t = i / N, a = t * k * Math.PI * 2;
+      d += (i ? 'L' : 'M') + (xc + (t - .5) * L - r * .9 * Math.sin(a)).toFixed(1) + ',' + (yc - r * .8 * Math.cos(a)).toFixed(1);
     }
     return d;
   }
 
-  function render() {
-    if (!E.chain || !E.chain.isConnected) return;
-    const sq = st.sq, en = st.enter, T = gsap.ticker.time;
-    const amb = Kit.calm ? 0 : (1 - .85 * st.dry);
-    const R = R0 * (1 - .56 * sq) * (.25 + .75 * en);
-    const sx = 1 + .12 * st.kick, sy = 1 - .16 * st.kick;
-    const col = gsap.utils.interpolate(INK, DRYC, st.dry);
-    const pts = [];
-    for (let i = 0; i < NS; i++) {
-      const t = i / (NS - 1);
-      const th = Math.PI * 2 * 2.6 * t + sq * 7 * t + .4 + en * .6 + amb * .06 * Math.sin(T * 1.6 + t * 9);
-      const rr = R * (.3 + .7 * Math.abs(Math.sin(t * Math.PI * 3.5 + .4 + sq * 1.3))) * (1 + amb * .025 * Math.sin(T * 2.1 + t * 14));
-      const kink = Math.sin(t * 90) * R * .05 * sq;
-      pts.push([cx + (Math.cos(th) * rr + kink) * sx, cy + (Math.sin(th) * rr * .92 + kink) * sy]);
+  function buildBack(instant) {
+    if (tl) tl.kill(); btw.forEach(t => t.kill()); btw = [];
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg); const fs = Math.max(12, Math.min(14, f));
+    K = col('--k', '#15120f');
+    const gy = H - fs * 1.8;
+    const s = Math.max(14, Math.min(W * .14, (gy - 4) / 2.85)), sc = s * .78;
+
+    // before: the raw piece, lying on the counter
+    const rx0 = W * .17, bs = s * .82;
+    const before = Kit.mk('g', {}, svg);
+    rawFlat(Kit.mk('g', {transform: `translate(${rx0},${gy - bs * .74}) scale(${bs})`}, before));
+
+    // after: lifted, grey and stringy, dripping into its own juice
+    const cx = W * .46, yTop = gy - s * .8 - 1.7 * sc, hy = yTop - s * .5;
+    const prx = s * .6, pry = Math.max(2.5, s * .075);
+    const puddle = Kit.mk('ellipse', {cx, cy: gy - 1, rx: prx, ry: pry, fill: JUICE}, svg);
+    Kit.mk('line', {x1: W * .02, x2: W * .62, y1: gy, y2: gy, stroke: K, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    const lift = Kit.mk('g', {}, svg);
+    cookedHang(Kit.mk('g', {transform: `translate(${cx},${yTop}) scale(${sc})`}, lift));
+    const rr = Math.max(2, s * .065), tipX = cx + .1 * sc, tipY = yTop + 1.7 * sc + rr;
+    Kit.mk('circle', {cx: tipX, cy: tipY, r: rr, fill: JUICE}, lift);
+    handTongs(lift, cx, hy, yTop, sc, Math.max(5, s * .22));
+    const fall = Kit.mk('circle', {cx: tipX, cy: tipY, r: rr, fill: JUICE, opacity: 0}, svg);
+
+    // labels under the counter
+    const labs = Kit.mk('g', {}, svg);
+    txt(labs, rx0, gy + fs * 1.3, 'before', {'font-size': fs, 'text-anchor': 'middle'}, W);
+    txt(labs, cx, gy + fs * 1.3, 'after', {'font-size': fs, 'text-anchor': 'middle'}, W);
+
+    // one protein, the same squeeze from a flame or a drop of acid
+    const xI = W * .81, wI = W * .34;
+    const rL = Math.max(5, Math.min(s * .24, wI * .1)), rT = rL * .62;
+    const Ll = wI * .42, Lt = wI * .26;
+    const si = Math.max(7, Math.min(wI * .07, 10));
+    const yI = Math.max(rL + si + 4, Math.min(yTop + .7 * sc, gy - fs * 1.3 - rL * 1.9));
+    const side = (dir, kind) => {
+      const g = Kit.mk('g', {}, svg);
+      const ix = xI - dir * (wI / 2 - si);
+      Kit.mk('path', Object.assign({d: kind === 'heat' ? FLAMEP : DROPP, transform: `translate(${ix},${yI}) scale(${si})`, fill: kind === 'heat' ? FLAME : ACID, stroke: K, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, ns), g);
+      const a0 = ix + dir * (si * .85 + 3), a1 = xI - dir * (Ll / 2 + rL * .9 + 3), h = Math.max(3, si * .38);
+      Kit.mk('path', {d: `M${a0},${yI} L${a1},${yI} M${a1 - dir * h},${yI - h} L${a1},${yI} L${a1 - dir * h},${yI + h}`, fill: 'none', stroke: K, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+      return g;
+    };
+    const heatG = side(1, 'heat'), acidG = side(-1, 'acid');
+    const coilEl = Kit.mk('path', {d: coilD(xI, yI, Ll, rL), fill: 'none', stroke: MEAT, 'stroke-width': Math.max(2.4, rL * .34), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    const dotsG = Kit.mk('g', {}, svg), dr = Math.max(1.8, rL * .28);
+    const dots = [0, 1, 2, 3].map(j => Kit.mk('circle', {cx: xI + ((j + .5) / 4 - .5) * Ll, cy: yI, r: dr, fill: JUICE, opacity: .85}, dotsG));
+    const ilab = txt(svg, xI, yI + rL * 1.9 + fs, 'a protein, squeezed', {'font-size': fs, 'text-anchor': 'middle'}, W);
+
+    const setCoil = p => {
+      const L = Ll + (Lt - Ll) * p, r = rL + (rT - rL) * p;
+      coilEl.setAttribute('d', coilD(xI, yI, L, r));
+      const dx = (Ll - L) / 2;
+      heatG.setAttribute('transform', `translate(${dx.toFixed(1)},0)`);
+      acidG.setAttribute('transform', `translate(${(-dx).toFixed(1)},0)`);
+      dots.forEach((c, j) => {
+        c.setAttribute('cx', (xI + ((j + .5) / 4 - .5) * L).toFixed(1));
+        if (p > 0) { c.setAttribute('cy', (yI + p * rL * 1.2).toFixed(1)); c.setAttribute('opacity', (.85 * (1 - p)).toFixed(2)); }
+      });
+    };
+    const dripLoop = () => {
+      btw.push(gsap.fromTo(fall, {attr: {cy: tipY}, opacity: 1}, {attr: {cy: gy - pry - 1}, duration: .55, ease: 'power2.in', repeat: 3, repeatDelay: .7, onComplete: () => fall.setAttribute('opacity', 0)}));
+    };
+
+    if (instant) {
+      setCoil(1);
+      if (Kit.calm) { fall.setAttribute('opacity', 1); fall.setAttribute('cy', tipY + (gy - tipY) * .5); }
+      return;
     }
-    const d = smooth(pts), sw = Math.max(3, R0 * .075);
-    E.under.setAttribute('d', d); E.under.setAttribute('stroke-width', sw + 4);
-    E.chain.setAttribute('d', d); E.chain.setAttribute('stroke-width', sw); E.chain.setAttribute('stroke', col);
-    E.gloss.setAttribute('d', d); E.gloss.setAttribute('stroke-width', sw * .28); E.gloss.setAttribute('opacity', .55 * (1 - st.dry));
-    E.gloss.setAttribute('stroke-dashoffset', (-T * 14 * amb).toFixed(1));
-    E.prot.setAttribute('opacity', Math.min(1, en * 1.5));
-    E.beads.forEach((b, j) => {
-      const p = pts[j * BEAD], r = sw * (j % 2 ? .85 : 1.25);
-      b.setAttribute('cx', p[0]); b.setAttribute('cy', p[1]); b.setAttribute('r', r); b.setAttribute('fill', col);
-      const h = E.hl[j]; h.setAttribute('cx', p[0] - r * .35); h.setAttribute('cy', p[1] - r * .35); h.setAttribute('r', r * .3); h.setAttribute('opacity', .75 * (1 - st.dry));
-    });
-    E.shadow.setAttribute('rx', R * 1.05); E.shadow.setAttribute('cy', cy + R * .98 + sw);
-    const ds = fs * .62 * (1 - .2 * sq);
-    drops.forEach((dr, i) => {
-      const x0 = cx + dr.u * R * sx, y0 = cy + dr.v * R * sy + (1 - dr.out) * amb * ds * .18 * Math.sin(T * 2.4 + dr.ph);
-      const x1 = landX(dr), y1 = E.poolY;
-      const o = dr.out, x = x0 + (x1 - x0) * o, y = y0 + (y1 - y0) * o - Math.sin(o * Math.PI) * R0 * .55;
-      const s = ds * dr.pop * (1 + .25 * Math.sin(o * Math.PI));
-      E.drops[i].setAttribute('transform', `translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${(dr.rot * (1 - o)).toFixed(1)}) scale(${Math.max(0, s).toFixed(2)})`);
-      E.drops[i].setAttribute('opacity', o > .92 ? Math.max(0, (1 - o) / .08) : 1);
-    });
-    const pr = st.pool;
-    E.pool.setAttribute('rx', pw / 2 * pr); E.pool.setAttribute('ry', pr > 0 ? fs * .22 + fs * .42 * pr : 0);
-    E.poolHi.setAttribute('rx', pw / 2 * pr * .55); E.poolHi.setAttribute('ry', pr > 0 ? fs * .1 + fs * .12 * pr : 0);
-    E.poolHi.setAttribute('cy', E.poolY - fs * .12 * pr);
-  }
-  gsap.ticker.add(render);
-
-  const scr = (el, text, dur = .5, chars = '0123456789') => {
-    if (Kit.calm || !hasScr) { el.textContent = text; return; }
-    gsap.to(el, {duration: dur, scrambleText: {text, chars, speed: .6}, ease: 'none'});
-  };
-
-  // heat: red shimmer rising through the coil
-  function heatFx() {
-    const h = R0 * .55;
-    for (let j = 0; j < 3; j++) {
-      const x = cx + (j - 1) * R0 * .5, y = cy + R0 * 1.05;
-      const p = mk('path', {d: `M${x},${y} q${h * .14},${-h / 6} 0,${-h / 3} q${-h * .14},${-h / 6} 0,${-h / 3} q${h * .14},${-h / 6} 0,${-h / 3}`, fill: 'none', stroke: ACC, 'stroke-width': Math.max(2, fs * .2), 'stroke-linecap': 'round', opacity: 0}, E.fx);
-      gsap.timeline({delay: j * .08, onComplete: () => p.remove()})
-        .to(p, {opacity: .9, duration: .2})
-        .to(p, {y: -R0 * .9, duration: 1, ease: 'power1.out'}, 0)
-        .to(p, {opacity: 0, duration: .45}, .55);
-    }
-  }
-  // acid: protons fired into the coil
-  function acidFx() {
-    for (let j = 0; j < 5; j++) {
-      const x0 = colX + fs * .5, y0 = cy + (j - 2) * R0 * .32;
-      const t = txt(E.fx, x0, y0, 'H+', {fill: ACC, 'font-weight': 800, opacity: 0});
-      gsap.timeline({delay: j * .06, onComplete: () => t.remove()})
-        .to(t, {opacity: 1, duration: .12})
-        .to(t, {x: (cx - fs * .7 - x0) * .85, y: (cy - y0) * .6, duration: .5, ease: 'power2.in'}, 0)
-        .to(t, {opacity: 0, duration: .15}, .4);
-    }
-  }
-  function ripple(x) {
-    if (!E.fx || !E.fx.isConnected) return;
-    const r = mk('ellipse', {cx: x, cy: E.poolY, rx: 1, ry: .5, fill: 'none', stroke: ACC2, 'stroke-width': 1.5, opacity: .8}, E.fx);
-    gsap.to(r, {attr: {rx: fs * 1.3, ry: fs * .38}, opacity: 0, duration: .55, ease: 'power2.out', onComplete: () => r.remove()});
+    setCoil(0);
+    const len = coilEl.getTotalLength();
+    gsap.set(coilEl, {attr: {'stroke-dasharray': len, 'stroke-dashoffset': len}});
+    gsap.set(before, {opacity: 0});
+    gsap.set(lift, {y: s * .7, opacity: 0});
+    gsap.set(puddle, {attr: {rx: 0}});
+    gsap.set([labs, ilab, heatG, acidG], {opacity: 0});
+    gsap.set(dots, {opacity: 0});
+    const P = {p: 0};
+    tl = gsap.timeline({delay: .35})
+      .to(before, {opacity: 1, duration: .4})
+      .to(lift, {y: 0, opacity: 1, duration: .7, ease: 'power3.out'}, '+=.1')
+      .add(dripLoop)
+      .to(puddle, {attr: {rx: prx}, duration: 1.2, ease: 'power2.out'}, '<+.3')
+      .to(labs, {opacity: 1, duration: .35}, '<+.2')
+      .to(coilEl, {attr: {'stroke-dashoffset': 0}, duration: .7, ease: 'power2.out'}, '+=.1')
+      .to(dots, {opacity: .85, duration: .2, stagger: .05}, '-=.3')
+      .to([heatG, acidG], {opacity: 1, duration: .3}, '+=.1')
+      .add(() => { coilEl.setAttribute('stroke-dasharray', 'none'); Kit.haptic('selection'); }, '+=.15')
+      .to(P, {p: 1, duration: 1.1, ease: 'power2.inOut', onUpdate: () => setCoil(P.p)}, '<')
+      .to(ilab, {opacity: 1, duration: .3}, '-=.4');
   }
 
-  function squeeze(kind, btn) {
-    if (step >= STEPS) return;
-    step++; const k = step;
-    log.push(kind);
-    Kit.haptic(k === STEPS ? 'success' : 'light');
-    say.innerHTML = kind === 'heat'
-      ? `<b>Heat</b> squeezes the protein: juice is forced out of its folds. ${k < STEPS ? 'Again.' : ''}`
-      : `<b>Acid</b> gives the very same squeeze. ${k < STEPS ? 'Again.' : ''}`;
-    E.sq[k - 1].setAttribute('fill', ACC);
-    const ln = logLine(k - 1);
-    scr(E.num, String(k), .45);
-    const out = drops.filter(d => d.g === k - 1);
-    const cnt = drops.filter(d => d.g < k).length;
-    if (Kit.calm) {
-      st.sq = k / STEPS; out.forEach(d => d.out = 1); st.pool = cnt / ND;
-    } else {
-      if (ln) gsap.from(ln, {opacity: 0, x: -8, duration: .4, ease: 'power3.out'});
-      kind === 'heat' ? heatFx() : acidFx();
-      if (btn) gsap.fromTo(btn, {scale: .93}, {scale: 1, duration: .5, ease: 'back.out(3)'});
-      gsap.fromTo(st, {kick: 1}, {kick: 0, duration: .9, delay: .25, ease: 'elastic.out(1,.32)', overwrite: false});
-      gsap.to(st, {sq: k / STEPS, duration: .75, delay: .25, ease: 'power3.out'});
-      out.forEach((d, i) => gsap.to(d, {out: 1, duration: .85, delay: .32 + i * .07, ease: 'power2.in', onComplete: () => ripple(landX(d))}));
-      gsap.to(st, {pool: cnt / ND, duration: .7, delay: .9, ease: 'power3.out'});
-    }
-    if (k === STEPS) {
-      document.querySelectorAll('.act').forEach(b => b.disabled = true);
-      Kit.calm ? finish() : gsap.delayedCall(1.4, finish);
-    }
-  }
+  document.addEventListener('turned', () => { backOn = true; F.dt.forEach(t => t.kill()); F.dt = []; requestAnimationFrame(() => buildBack(Kit.calm)); });
 
-  function finish() {
-    if (done) return; done = true;
-    Kit.hide('acts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (Kit.calm) { st.dry = 1; rev = true; layout(); return; }
-    gsap.fromTo(st, {kick: 1.4}, {kick: 0, duration: 1.2, ease: 'elastic.out(1,.28)'});
-    gsap.to(st, {dry: 1, duration: 1, ease: 'power2.inOut'});
-    if (hasSplit) {
-      const sp = new SplitText('#bigw', {type: 'chars'});
-      gsap.from(sp.chars, {yPercent: 110, opacity: 0, rotate: 8, stagger: .045, duration: .6, ease: 'back.out(2)'});
-    }
-    gsap.from('#why .body, #keep', {opacity: 0, y: 10, stagger: .12, delay: .3, duration: .5, ease: 'power3.out'});
-    // let the stage settle to its new size, then scramble the poster into DRY
-    gsap.delayedCall(.15, () => {
-      rev = true;
-      const fsz = fitNum('DRY');
-      gsap.to(E.num, {attr: {'font-size': fsz}, duration: .5, ease: 'expo.out'});
-      scr(E.num, 'DRY', .9, AZ);
-      scr(E.sub, 'DENATURED', .8, AZ);
-      scr(E.t1, 'WRUNG', .6, AZ);
-      E.t2.textContent = 'no juice left'; E.t2.setAttribute('fill', ACC2);
-      gsap.from(E.t2, {opacity: 0, duration: .5, delay: .3});
-    });
-  }
-
-  Kit.$('acts').addEventListener('click', e => {
-    const b = e.target.closest('.act'); if (!b || b.disabled) return;
-    squeeze(b.dataset.k, b);
-  });
-
-  let raf = 0, lastW = 0, lastH = 0;
-  if (typeof ResizeObserver !== 'undefined') {
-    new ResizeObserver(() => {
-      const w = svg.clientWidth, h = svg.clientHeight;
-      if (!w || !h || (Math.abs(w - lastW) < 1 && Math.abs(h - lastH) < 1)) return;
-      lastW = w; lastH = h;
-      cancelAnimationFrame(raf); raf = requestAnimationFrame(layout);
-    }).observe(Kit.$('stage'));
-  }
-
-  Kit.onShow.card = layout;
+  Kit.onShow.card = () => { drawFront(); if (backOn) buildBack(true); };
   Kit.onEnter.card = () => {
-    if (Kit.calm || step) return;
-    st.enter = 0; drops.forEach(d => d.pop = 0);
-    gsap.to(st, {enter: 1, duration: 1.3, ease: 'expo.out'});
-    drops.forEach((d, i) => gsap.to(d, {pop: 1, duration: .55, delay: .5 + i * .035, ease: 'back.out(3)'}));
-    if (E.num) scr(E.num, '0', .7);
-    gsap.from('.act', {opacity: 0, stagger: .08, delay: .35, duration: .5, ease: 'power2.out'});
+    if (Kit.calm || backOn) return;
+    gsap.from(['#bowl', '#steak', '#hand'], {opacity: 0, y: 8, duration: .5, stagger: .12, ease: 'power3.out'});
+    gsap.from('#flabels', {opacity: 0, duration: .4, delay: .45});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .3, ease: 'power3.out'});
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    const bs = document.querySelectorAll('.act');
-    for (let i = 0; i < STEPS; i++) { bs[i % 2].click(); await wait(Kit.calm ? 60 : 500); }
-    await wait(Kit.calm ? 150 : 2600);
+    Kit.$('opts').children[0].click();
+    await wait(Kit.calm ? 100 : 500);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 1100 : 5600);
   };
 })();
 Kit.single();

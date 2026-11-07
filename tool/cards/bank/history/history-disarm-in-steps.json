@@ -3,12 +3,12 @@
   "topic": "history",
   "genre": "history.decisions_that_changed_history",
   "strand": "history.decisions_that_changed_history.small_causes_big_effects",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How did the US and USSR manage nuclear disarmament?",
-  "answer": "The US and USSR cut a few nukes a year, then checked, instead of making one all-or-nothing treaty. A single treaty is a Prisoner's Dilemma where cheating is safe. Small steps make a repeated game, and each check builds trust for the next.",
-  "move": "Trust between rivals is built in small steps you can check.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "From the late '80s, the US and USSR cut their nukes. Which plan did they use?",
+  "answer": "The US and USSR did not use one deal to scrap everything, which would be a single prisoner's dilemma with the trap of defecting at once. Instead, after building nukes from 1950 to 1986, they cut a few each year, checked that both had cooperated, and repeated.",
+  "move": "If one betrayal could cost everything, take steps small enough to check.",
   "keywords": [
     "nuclear weapons",
     "usa",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Page titled 'Disarm in small steps' asks how the US and USSR managed nuclear disarmament. It offers two choices: all at once in one big treaty, or step by step, cutting a few nukes a year and then checking. The step-by-step option shows a progress marker at 'year 1 of 6'.",
-    "ground": "#04120a"
+    "label": "Text about how the US and USSR cut their nuclear weapons from the late 1980s. It asks the reader to tap the plan they would bet on: one big deal to scrap everything, or small yearly cuts, each checked before the next."
   },
   "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=1380s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

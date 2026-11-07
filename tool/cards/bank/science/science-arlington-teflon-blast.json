@@ -5,7 +5,7 @@
   "strand": "science.materials.plastics",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "conditional",
+  "principle": "reflection",
   "question": "Why did the 1944 Teflon production attempt cause a massive explosion?",
   "answer": "Polymerizing the solid cylinder made heat that could not dissipate. The heat stayed in, expanded and built up pressure until it failed. It caused a massive explosion at Arlington in 1944 that killed two workers.",
   "move": "A reaction that makes heat needs a way to take that heat away. Without one, the heat stays in, expands and creates the force.",

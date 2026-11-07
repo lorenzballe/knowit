@@ -5,7 +5,7 @@
   "strand": "technology.where_things_come_from.rare_metals",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "exponential",
+  "principle": "reflection",
   "question": "Smiths fold the steel again and again. Which two things does that buy?",
   "answer": "Smiths fold steel to spread impurities thinner and to give it a grain. Each fold spreads the flecks further apart, so no spot stays weak. The grain reinforces the blade in the direction it will be hit, rather than making it equally strong in every direction.",
   "move": "Spread a flaw thin enough, everywhere, and it stops being a weak point.",

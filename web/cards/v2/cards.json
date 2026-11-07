@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611070105,
- "built": "2026-11-07T01:05:15Z",
+ "version": 202611070213,
+ "built": "2026-11-07T02:13:22Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -36792,12 +36792,12 @@
    "topic": "food",
    "genre": "food.cooking_science",
    "strand": "food.cooking_science.cooking_myths",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How does an acid like fluoroantimonic acid “cook” meat?",
-   "answer": "Heat and acid both denature proteins, which chemists describe as squeezing them. A squeezed protein loses its juices, so overcooked meat and meat in acid turn dry and stringy.",
-   "move": "An acid “cooks” meat as heat does: it wrings the proteins dry.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Acid, no heat. What does the world’s strongest acid do to meat?",
+   "answer": "Like heat, acids squeeze the meat's proteins; chemists call this denaturing. Squeezed, the proteins lose all their juices, and the meat turns dry and stringy, the way overcooked meat does.",
+   "move": "Heat isn't the only thing that cooks: an acid squeezes the proteins just the same.",
    "keywords": [
     "fluoroantimonic acid",
     "protein",
@@ -36818,14 +36818,13 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A protein structure being squeezed dry, shown as a tap-to-apply sequence. The reader taps heat or acid to squeeze the protein one step at a time, and the page asks how an acid like fluoroantimonic acid cooks meat.",
-    "ground": "#efebe2",
-    "page": "pages/food-acid-squeezes-protein.html?v=9aa9e52f84e6",
-    "bytes": 19155
+    "label": "Question: what does the world's strongest acid do to meat? Three choices are shown: juicier, still raw, or dry and stringy. Tap one to see whether your guess was right, then the reveal that acid cooks meat by squeezing its proteins.",
+    "page": "pages/food-acid-squeezes-protein.html?v=a72809948191",
+    "bytes": 21399
    },
    "source": "Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=5G0YVPLSbW8&t=364s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "food-apple-slow-breath",
@@ -51956,12 +51955,12 @@
    "topic": "history",
    "genre": "history.decisions_that_changed_history",
    "strand": "history.decisions_that_changed_history.small_causes_big_effects",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How did the US and USSR manage nuclear disarmament?",
-   "answer": "The US and USSR cut a few nukes a year, then checked, instead of making one all-or-nothing treaty. A single treaty is a Prisoner's Dilemma where cheating is safe. Small steps make a repeated game, and each check builds trust for the next.",
-   "move": "Trust between rivals is built in small steps you can check.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "From the late '80s, the US and USSR cut their nukes. Which plan did they use?",
+   "answer": "The US and USSR did not use one deal to scrap everything, which would be a single prisoner's dilemma with the trap of defecting at once. Instead, after building nukes from 1950 to 1986, they cut a few each year, checked that both had cooperated, and repeated.",
+   "move": "If one betrayal could cost everything, take steps small enough to check.",
    "keywords": [
     "nuclear weapons",
     "usa",
@@ -51982,14 +51981,13 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Page titled 'Disarm in small steps' asks how the US and USSR managed nuclear disarmament. It offers two choices: all at once in one big treaty, or step by step, cutting a few nukes a year and then checking. The step-by-step option shows a progress marker at 'year 1 of 6'.",
-    "ground": "#04120a",
-    "page": "pages/history-disarm-in-steps.html?v=079fc5e35184",
-    "bytes": 23590
+    "label": "Text about how the US and USSR cut their nuclear weapons from the late 1980s. It asks the reader to tap the plan they would bet on: one big deal to scrap everything, or small yearly cuts, each checked before the next.",
+    "page": "pages/history-disarm-in-steps.html?v=ff247bd0acc5",
+    "bytes": 11212
    },
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=1380s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "history-dresden-twelve-bullets",
@@ -56574,12 +56572,12 @@
    "topic": "history",
    "genre": "history.maps_and_borders",
    "strand": "history.maps_and_borders.disputed_borders",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What was Switzerland's 'National Redoubt', and why was it built?",
-   "answer": "The National Redoubt was a massive defensive line built deep in the Swiss Alps. It was designed to make an invasion so costly and difficult that it would be strategically unviable.",
-   "move": "Make attacking you cost more than it could gain, and nobody tries.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Switzerland massively expanded one defence line. Where did it run?",
+   "answer": "Not at the border: Switzerland massively expanded an older line set back from its borders, high in the mountains, the National Redoubt. Standing higher than the enemy is an advantage. The aim was not to beat an attacker but to make an attack not worth its price.",
+   "move": "You don't have to beat an attacker, only make the attack not worth its price.",
    "keywords": [
     "switzerland",
     "alps",
@@ -56600,14 +56598,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A diagram of the Swiss Alps with a red line tracing the defensive fortifications and tunnels. The reader drags an invader from the border into Switzerland and is asked what the National Redoubt was and why it was built.",
-    "ground": "#f3ead6",
-    "page": "pages/history-national-redoubt.html?v=56e1e8c18ac6",
-    "bytes": 30285
+    "label": "A map of Switzerland asks where its defence line ran. The reader draws the line on the map with a finger, then rates how sure they are of the answer.",
+    "page": "pages/history-national-redoubt.html?v=363e2fb70e45",
+    "bytes": 21210
    },
    "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=2Y0RgQmmESI&t=339s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "history-nato-nuclear-yes",
@@ -87541,7 +87538,7 @@
    "strand": "life.ask_better_questions.first_principles",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "estimation",
+   "principle": "computation",
    "question": "For every 100,000 Ecuadorians, how many homicides a year?",
    "answer": "Homicides in Ecuador have reached 1 in 2,500 people a year. On average that is 40 per 100,000. Dividing 100,000 by 40 gives 2,500, so each block of 2,500 people has one homicide a year.",
    "move": "Divide 100,000 by it and you get the size of the group where it happens once a year.",
@@ -95478,7 +95475,7 @@
    "strand": "maths.puzzles.paradoxes",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "independence",
+   "principle": "reflection",
    "question": "Add a hopeless third candidate to this made-up Borda count. Who wins now?",
    "answer": "Carl can't win, yet adding him flips the made-up Borda count: Ben beats Ann 7 to 6, though Ann led 3 to 2 without him. Carl sits between them on Ben's ballots, doubling Ben's lead there. Borda's points depend on how many names are on the ballot, so the irrelevant candidate changed the winner.",
    "move": "A fair choice between two things can't hinge on a third nobody picks.",
@@ -96341,12 +96338,12 @@
    "topic": "maths",
    "genre": "maths.puzzles",
    "strand": "maths.puzzles.game_theory",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why does winner-takes-all voting end with just two big parties?",
-   "answer": "With winner-takes-all voting, sixty voters each cast one vote and the most votes takes all. Small parties become spoilers, so voters leave them. Only two big parties remain.",
-   "move": "Winner-takes-all turns small parties into spoilers, so voters leave them and two parties remain.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Winner takes all. Imagine a third party on 23%. What happens to it?",
+   "answer": "In the made-up race, Green's voters switch to Left after each loss, so Green shrinks until it all but vanishes after 10 elections. In the real case, Florida in 2000, Nader got almost 100,000 votes while Bush won by fewer than 600.",
+   "move": "Under winner-takes-all, a vote for your favourite can elect your least favourite.",
    "keywords": [
     "duverger",
     "winner-takes-all",
@@ -96366,15 +96363,14 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Interactive page: sixty voters, each with one vote, shown as a set of markers. Tap to switch and watch small parties lose votes until two big parties remain. Asks why winner-takes-all voting ends with just two big parties.",
-    "ground": "#123e6e",
-    "page": "pages/maths-duverger-two-parties.html?v=83372321d1e6",
-    "bytes": 23961
+    "touch": "drags",
+    "label": "Interactive page: a made-up three-party race where the reader drags the Green party marker to where it stands after ten elections. Green shrinks as its voters switch to Left, and the page asks where it ends up.",
+    "page": "pages/maths-duverger-two-parties.html?v=29ed9c92a58b",
+    "bytes": 17194
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=121s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "maths-feigenbaum-ratio-ladder",
@@ -133547,7 +133543,7 @@
    "strand": "nature.oceans.deep_sea",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "estimation",
+   "principle": "reflection",
    "question": "Stand Everest on the deepest seabed. Where does its summit end up?",
    "answer": "Even with its foot resting on the seabed of the Challenger Deep, Everest's summit stays over 2 km under water. The trench goes down over 10,900 m, while Everest is about 8,848 m tall, so the gap is over 2 km.",
    "move": "We size things from the surface we can see; measure the hidden half before you compare.",
@@ -171519,7 +171515,7 @@
    "strand": "psychology.bias.anchoring_bias",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "anchoring",
+   "principle": "reflection",
    "question": "Walking this road, what does your brain judge the middle stretch against?",
    "answer": "The middle stretch is gentle, lying between two steep ones. Nothing beyond the road gives a comparison, and there is no view past the horizon. So the brain uses the steep neighbors as its reference and struggles to tell which way the middle goes.",
    "move": "With no outside reference, the brain uses the slopes next to a slope as its reference.",
@@ -181047,7 +181043,7 @@
    "strand": "science.materials.plastics",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "conditional",
+   "principle": "reflection",
    "question": "Why did the 1944 Teflon production attempt cause a massive explosion?",
    "answer": "Polymerizing the solid cylinder made heat that could not dissipate. The heat stayed in, expanded and built up pressure until it failed. It caused a massive explosion at Arlington in 1944 that killed two workers.",
    "move": "A reaction that makes heat needs a way to take that heat away. Without one, the heat stays in, expands and creates the force.",
@@ -181940,7 +181936,7 @@
    "strand": "science.how_science_knows.experiments",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "coincidence",
+   "principle": "reflection",
    "question": "Why do some geologists mark the Anthropocene’s beginning around 1950‑1960?",
    "answer": "Some geologists mark the Anthropocene's start around 1950-1960 because hydrogen-bomb tests in the 1950s and 60s sent massive fallout across the whole globe in the same years. That left one radioactive layer, a clear marker.",
    "move": "A start date in the Earth’s layers needs a mark laid down everywhere at the same time.",
@@ -185313,7 +185309,7 @@
    "strand": "science.numbers_and_chance.risk_in_numbers",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "estimation",
+   "principle": "computation",
    "question": "700,000 Bq/L, diluted 500 times. Where does it land?",
    "answer": "Diluted 500 times, 700,000 Bq/L lands at about 1,500 Bq/L, six times under the WHO's 10,000 limit for drinking water. \"Seventy times the limit\" sounds alarming, but ÷500 is a longer step than ×70.",
    "move": "Hear “X times too much”? Ask how many times it will be divided.",
@@ -193289,7 +193285,7 @@
    "strand": "science.physics.quantum",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "sampling",
+   "principle": "reflection",
    "question": "If Many-Worlds is true, is a quantum outcome random?",
    "answer": "Fixed. Every face lands, 100% of the time. In Many-Worlds every possible outcome happens, each in its own branch. It only looks random because you experience one tiny sliver of the multiverse.",
    "move": "Random from inside your sliver. Deterministic for the universe as a whole.",
@@ -198898,7 +198894,7 @@
    "strand": "science.physics.energy",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "computation",
+   "principle": "reflection",
    "question": "Keep viscosity fixed. Make the liquid denser and faster. What happens to the flow?",
    "answer": "Denser and faster both push the same way: with viscosity fixed, raising either one lifts the Reynolds number, so the flow turns chaotic. That ratio is the Reynolds number, and raising any term on top climbs toward turbulence.",
    "move": "Ask which side of the ratio a change sits on.",
@@ -200459,12 +200455,12 @@
    "topic": "science",
    "genre": "science.think_like_a_scientist",
    "strand": "science.think_like_a_scientist.testable_claims",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What is the first step in constructing a geological section?",
-   "answer": "The first step is a hand sketch with no measures: the fault reaches the surface here, it's normal, here an anticline, there a syncline. This keeps the whole picture coherent. Only then do you project faults and fold axes precisely.",
-   "move": "Sketch the big picture by hand first; measure after.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Building a geological section from a map: what do you do first?",
+   "answer": "The first step is a quick hand sketch with no measurements, showing where each fault must surface and where the folds sit. Precise measurements come after. Drawing the shape of the answer first gives you a picture that already holds together.",
+   "move": "Draw the shape of the answer first, then measure into a picture that already holds together.",
    "keywords": [
     "geological_section",
     "geological_map",
@@ -200485,14 +200481,13 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A geological map showing a fault and two fold axes, with a flat, empty geological section below it. The reader must tap the three marks on the map and is asked what the first step in constructing a geological section is.",
-    "ground": "#0e2a31",
-    "page": "pages/science-sketch-before-measuring.html?v=ca1974e1b195",
-    "bytes": 23540
+    "label": "Ordering task: 'Building a geological section from a map: what do you do first?' Four steps to tap in order: draw the ground's profile along the section; do the precise measurements; sketch faults and folds by hand with no measures; project faults and fold axes onto the section. An undo button is available.",
+    "page": "pages/science-sketch-before-measuring.html?v=8f9c4182f3c7",
+    "bytes": 18893
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=2087s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-slinky-bottom-waits",
@@ -201517,10 +201512,10 @@
    "strand": "science.materials.steel",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "none",
-   "question": "Hit the top of a steel bar. Does the bottom move at once?",
-   "answer": "Hit the top of a steel bar and the bottom does not move at once. The squeeze is passed down slice by slice as a signal. In steel it runs about 5 km every second, so the delay is tiny but never zero.",
-   "move": "Nothing is perfectly rigid: a change at one end takes time to reach the other.",
+   "principle": "reflection",
+   "question": "Change one end of a steel bar. When does the far end feel it?",
+   "answer": "The far end responds a very, very short time later, not at the same instant. The change at one end is a signal that must travel, and in steel that time is tiny but never zero.",
+   "move": "Even in a rigid steel bar, a signal takes a finite time to get from one end to the other.",
    "keywords": [
     "steel",
     "slinky",
@@ -201540,15 +201535,13 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "A steel bar with a hit on its top end. The question asks whether the bottom moves at once. The reader is asked to bet and say how sure they are, then watch a slow-motion replay of the squeeze travelling down the bar.",
-    "graded": false,
-    "ground": "#f4ecdc",
-    "page": "pages/science-steel-bar-signal.html?v=5b56256b3b1b",
-    "bytes": 18804
+    "label": "A steel bar with one end changed. The reader picks when the far end responds: at the same instant, a very short time later, long enough to watch it wait, or a very, very short time later.",
+    "page": "pages/science-steel-bar-signal.html?v=12e43525b6ac",
+    "bytes": 17055
    },
    "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=uiyMuHuCFo4&t=169s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-steel-heat-capacity",
@@ -235666,7 +235659,7 @@
    "strand": "technology.where_things_come_from.rare_metals",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "exponential",
+   "principle": "reflection",
    "question": "Smiths fold the steel again and again. Which two things does that buy?",
    "answer": "Smiths fold steel to spread impurities thinner and to give it a grain. Each fold spreads the flecks further apart, so no spot stays weak. The grain reinforces the blade in the direction it will be hit, rather than making it equally strong in every direction.",
    "move": "Spread a flaw thin enough, everywhere, and it stops being a weak point.",
@@ -235781,12 +235774,12 @@
    "topic": "technology",
    "genre": "technology.the_internet",
    "strand": "technology.the_internet.cables",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How does GPS depend on light being equally fast in every direction?",
-   "answer": "GPS turns each pulse's travel time into a distance. That only works if light moves at the same speed in every direction. Drag the slider to let light run faster leftward than rightward.",
-   "move": "GPS is built on an assumption: light's speed is the same in all directions.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "How does GPS depend on light having the same speed in all directions?",
+   "answer": "GPS satellites send time-stamped signals. If light's speed changed with direction, the signals would arrive at different rates, so the clocks wouldn't be properly synced. Positioning needs that sync.",
+   "move": "GPS doesn't check that light is the same every way. It's built on it.",
    "keywords": [
     "gps",
     "speed_of_light",
@@ -235806,14 +235799,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page titled GPS and the speed of light. It asks how GPS depends on light being equally fast in every direction, and offers a slider to let light run faster leftward than rightward.",
-    "ground": "#f2e8d2",
-    "page": "pages/technology-gps-light-rose.html?v=50350db699af",
-    "bytes": 22518
+    "label": "A quiz asking how GPS depends on light travelling at the same speed in every direction. The reader drags a light pulse, then picks one of three answers: it doesn't need it, to sync its clocks, or to aim its signals.",
+    "page": "pages/technology-gps-light-rose.html?v=19cd5fb48f20",
+    "bytes": 19355
    },
    "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=pTn6Ewhb27k&t=620s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "technology-graphene-bionic-limbs",
@@ -237984,12 +237976,12 @@
    "topic": "technology",
    "genre": "technology.think_about_tech",
    "strand": "technology.think_about_tech.hype_cycles",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Messina's bridge would span 3,300 m. How long is today's longest single span?",
-   "answer": "Today's longest single span is about 1,900 m. The Messina bridge would need one 3,300 m span, 1.4 km past that record. The card asks readers to drag a tower to where they think the record ends, then measure it.",
-   "move": "Messina needs one 3,300 m span: 1.4 km past the ~1,900 m record.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "estimation",
+   "question": "The Messina Bridge would hang in one span. How long, against today's record?",
+   "answer": "The longest single span today is about 1,900 m. To cross the Strait in one leap, Messina would need 3,300 m: more than 1 km longer. Read as a ratio, that is about 1.7 times the record.",
+   "move": "Read any leap past a record as a ratio first.",
    "keywords": [
     "messina-bridge",
     "strait-of-messina",
@@ -238009,14 +238001,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Bridge span guessing game. Shows the planned Messina bridge at 3,300 m, the reader's guess of 800 m, and an unknown record marked '?' m. The reader drags a gold tower to where they think today's record span ends, then measures the record.",
-    "ground": "#0b1024",
-    "page": "pages/technology-messina-record-span.html?v=2dbd23a1ee1f",
-    "bytes": 23420
+    "label": "A bridge-span comparison. The reader drags a red tower outward to where a single span across the Strait of Messina would end, then turns the card to see how that span compares with the longest span today.",
+    "page": "pages/technology-messina-record-span.html?v=2ef997960bea",
+    "bytes": 17597
    },
    "source": "Geopop, “Ponte sullo stretto di Messina: sarebbe un'assurdità dal punto di vista geologico ?” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=-Jcz-q5tih4&t=441s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "technology-micromouse-diagonal-blinders",
@@ -238222,7 +238213,7 @@
    "strand": "technology.where_things_come_from.factories",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "conditional",
+   "principle": "reflection",
    "question": "Why are some milk and juice cartons difficult to recycle?",
    "answer": "The carton wall is three layers stuck together: paper, plastic and aluminium. Until recently these cartons were not recyclable, and some plants have only lately been equipped to take them. So recyclability depends on the plants as well as the material.",
    "move": "Our reading: “recyclable” isn't settled by the material alone.",
@@ -241800,10 +241791,10 @@
    "strand": "technology.old_machines.lessons_from_failures",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "conditional",
-   "question": "A car and a growing robot meet sticky tape. Which one gets across?",
-   "answer": "The robot gets across, because it never rolls: it grows, with new skin pushed out at the tip, so the part on the tape never moves. The car must pull its wheels off the glue, and the glue wins.",
-   "move": "What grows from its tip can't be held by what it lies on.",
+   "principle": "reflection",
+   "question": "Lay sticky tape across the floor. Which one makes it across?",
+   "answer": "The robot is the one that gets across. Powered by compressed air, it grows from its tip, so it grows over the tape instead of getting stuck to it. Something like a car just gets stuck.",
+   "move": "A thing that grows from its tip goes over glue rather than getting stuck in it.",
    "keywords": [
     "soft robot",
     "sticky tape",
@@ -241823,15 +241814,14 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Over a strip of sticky tape, a car and a growing robot try to cross. The reader picks the car, the robot, or both, then rates how sure they are. Stripes on the tape show which part stays still.",
-    "ground": "#ffd23f",
-    "page": "pages/technology-tape-growing-robot.html?v=f993e7537bf6",
-    "bytes": 22807
+    "touch": "drags",
+    "label": "A floor with sticky tape across it. Drag the tape into the middle, then pick which gets across: the car, the robot, or neither. Only the robot gets across.",
+    "page": "pages/technology-tape-growing-robot.html?v=5a086b660f62",
+    "bytes": 16385
    },
    "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "technology-tatara-mass-balance",
@@ -244701,7 +244691,7 @@
    "strand": "technology.tech_and_society.regulation",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "conditional",
+   "principle": "reflection",
    "question": "Why can the XM42 flamethrower be bought in U.S. gun stores?",
    "answer": "The law files the XM42 as a hobby tool. It is classed as a non-lethal incendiary device and sold under hobbyist rules, unlike fully military-grade weapons.",
    "move": "What you may buy depends on how the law files it, not on how fierce it looks.",

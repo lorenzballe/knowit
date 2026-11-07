@@ -3,12 +3,12 @@
   "topic": "technology",
   "genre": "technology.the_internet",
   "strand": "technology.the_internet.cables",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How does GPS depend on light being equally fast in every direction?",
-  "answer": "GPS turns each pulse's travel time into a distance. That only works if light moves at the same speed in every direction. Drag the slider to let light run faster leftward than rightward.",
-  "move": "GPS is built on an assumption: light's speed is the same in all directions.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How does GPS depend on light having the same speed in all directions?",
+  "answer": "GPS satellites send time-stamped signals. If light's speed changed with direction, the signals would arrive at different rates, so the clocks wouldn't be properly synced. Positioning needs that sync.",
+  "move": "GPS doesn't check that light is the same every way. It's built on it.",
   "keywords": [
     "gps",
     "speed_of_light",
@@ -28,10 +28,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Interactive page titled GPS and the speed of light. It asks how GPS depends on light being equally fast in every direction, and offers a slider to let light run faster leftward than rightward.",
-    "ground": "#f2e8d2"
+    "label": "A quiz asking how GPS depends on light travelling at the same speed in every direction. The reader drags a light pulse, then picks one of three answers: it doesn't need it, to sync its clocks, or to aim its signals."
   },
   "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
   "reference": "https://www.youtube.com/watch?v=pTn6Ewhb27k&t=620s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

@@ -5,7 +5,7 @@
   "strand": "science.physics.quantum",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "sampling",
+  "principle": "reflection",
   "question": "If Many-Worlds is true, is a quantum outcome random?",
   "answer": "Fixed. Every face lands, 100% of the time. In Many-Worlds every possible outcome happens, each in its own branch. It only looks random because you experience one tiny sliver of the multiverse.",
   "move": "Random from inside your sliver. Deterministic for the universe as a whole.",

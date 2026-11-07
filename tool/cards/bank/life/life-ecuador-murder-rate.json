@@ -5,7 +5,7 @@
   "strand": "life.ask_better_questions.first_principles",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "estimation",
+  "principle": "computation",
   "question": "For every 100,000 Ecuadorians, how many homicides a year?",
   "answer": "Homicides in Ecuador have reached 1 in 2,500 people a year. On average that is 40 per 100,000. Dividing 100,000 by 40 gives 2,500, so each block of 2,500 people has one homicide a year.",
   "move": "Divide 100,000 by it and you get the size of the group where it happens once a year.",

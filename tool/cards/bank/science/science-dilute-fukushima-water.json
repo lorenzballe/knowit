@@ -5,7 +5,7 @@
   "strand": "science.numbers_and_chance.risk_in_numbers",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "estimation",
+  "principle": "computation",
   "question": "700,000 Bq/L, diluted 500 times. Where does it land?",
   "answer": "Diluted 500 times, 700,000 Bq/L lands at about 1,500 Bq/L, six times under the WHO's 10,000 limit for drinking water. \"Seventy times the limit\" sounds alarming, but ÷500 is a longer step than ×70.",
   "move": "Hear “X times too much”? Ask how many times it will be divided.",

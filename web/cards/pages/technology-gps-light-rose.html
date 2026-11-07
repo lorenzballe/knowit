@@ -1,303 +1,307 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: technology-gps-light-rose -->
-<!-- Look: a botanical engraving plate on cream paper. Seed-pod satellites with leaf panels, fern sprigs on a hatched earth, Latin labels, sepia ink, a twinkling engraved sky.
-     Interaction: drag the slider to make light faster one way. Each satellite's wavefronts tilt into off-centre ellipses, light beads run down the rays, the "rosa lucis" flower leans away from its dotted reference circle,
-     and the receiver's range circles spring apart (elastic easing) until they no longer meet where you stand. Wow: at the reveal the computed fix bursts out as a red star.
-     All long curves are clipped in code to the stage, so nothing spills past the drawing. -->
-<title>GPS and the speed of light</title>
+<!doctype html>
+<!-- slug: technology-gps-light-sync -->
+<!-- Design note.
+     Thought to carry: GPS rests on an assumption. Its satellites send time-stamped signals, and keeping their clocks in sync only works if light runs at the same speed in every direction.
+     Front: a hiker holding her phone up to two satellites, with light pulses running down the two beams. The reader drags the pulse. Dragging right makes the light on one beam run faster ("faster") and on the other slower ("slower"). One prompt sits under the picture. The confidence row stays hidden until an answer is picked.
+     Back: the same scene, frozen at one moment. Both pulses left their satellites with the same time stamp. One is already at the phone, the other is still halfway down its beam. Three labels, no panels. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>What GPS assumes about light</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{background-image:radial-gradient(120% 80% at 50% 35%,rgba(255,252,240,.75),rgba(255,252,240,0) 70%),radial-gradient(140% 100% at 50% 110%,rgba(120,90,40,.16),rgba(120,90,40,0) 60%)}
-#stage{display:flex;flex:1;min-height:0;background:none;border:0;box-shadow:none}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
-#ctrl{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:2.6cqw;margin:.4cqh 0 .2cqh}
-#ctrl span{font:600 max(1.45cqh,12px)/1.15 var(--mono);color:var(--k);opacity:.78;max-width:22cqw}
-#ctrl span:last-child{text-align:right}
-#sl{-webkit-appearance:none;appearance:none;width:100%;height:max(4.6cqh,34px);background:transparent;margin:0;cursor:ew-resize;touch-action:none}
-#sl::-webkit-slider-runnable-track{height:5px;border-top:1.4px solid var(--k);border-bottom:1px solid color-mix(in srgb,var(--k) 55%,transparent);background:repeating-linear-gradient(90deg,var(--k) 0 1px,transparent 1px 7px);opacity:.85}
-#sl::-moz-range-track{height:5px;border-top:1.4px solid var(--k);border-bottom:1px solid var(--k);background:repeating-linear-gradient(90deg,var(--k) 0 1px,transparent 1px 7px)}
-#sl::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.4cqh,26px);height:max(3.4cqh,26px);margin-top:calc(max(3.4cqh,26px)/-2 + 2px);border-radius:50% 50% 50% 8%;transform:rotate(-45deg);background:radial-gradient(circle at 35% 35%,#f8efd9,#c9a86a 70%,#8a6a35);border:1.6px solid var(--k);box-shadow:0 2px 0 rgba(42,32,22,.35);transition:transform .25s cubic-bezier(.34,1.8,.5,1)}
-#sl:active::-webkit-slider-thumb{transform:rotate(-45deg) scale(1.18)}
-#sl::-moz-range-thumb{width:24px;height:24px;border-radius:50% 50% 50% 8%;background:#c9a86a;border:1.6px solid var(--k)}
-.answered .q{font-size:max(2.4cqh,15px)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s .38s}
+.turn.over>.back{visibility:visible;transition-delay:0s}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .38s}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;display:flex;overflow:hidden}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:grab}
+#pic:active{cursor:grabbing}
+.front .say{margin:.8cqh 0 .2cqh;max-width:none}
+#opts{display:flex;gap:1.6cqw;flex-wrap:wrap;margin:.6cqh 0 .8cqh}
+.opt{flex:1 1 0;min-width:0;font:700 max(1.8cqh,12px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+/* the confidence row only exists once there is an answer to be sure about */
+.front:not(.picked) #sure{display:none}
+#sure [data-v]{min-height:0;height:44px;padding-top:0;padding-bottom:0}
+/* a clean footer row for the bookmark and share icons */
+.front::after{content:"";flex:0 0 44px}
+.back .big{margin:0 0 .6cqh}
+.back .body{margin:.6cqh 0;font-size:max(1.75cqh,12px)}
+.back .keep{margin:.4cqh 0}
+.back .foot{padding-right:100px}
+.q,.say,.body,.big{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Drag the slider · light's direction" style="--c:#f2e8d2;--k:#2a2016;--edge:#bfa77a">
+<article class="card" id="card" data-topic="technology" data-kind="Drag, then pick · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">BEND THE LIGHT</span></div>
-    <h2 class="q">How does GPS depend on light being equally fast in every direction?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Three satellites send light pulses to a receiver on the ground. Circles of measured distance meet at the receiver only when light is equally fast every way."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GPS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">How does GPS depend on light having the same speed in all directions?</h2>
+        <div class="stagebox"><svg id="pic" data-drag role="img" aria-label="A hiker holds her phone up to two satellites. Light pulses run down both beams. Drag the pulse to make light faster in one direction and slower in the other."></svg></div>
+        <p class="say" id="say">Drag the pulse. Then pick.</p>
+        <div id="opts">
+          <button class="opt" data-i="0">It doesn't need it</button>
+          <button class="opt" data-i="1">To sync its clocks</button>
+          <button class="opt" data-i="2">To aim its signals</button>
+        </div>
+        <div class="sure" id="sure"></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">It syncs its clocks on it.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Two satellites send pulses with the same time stamp. One pulse is already at the hiker's phone, the other is still halfway down its beam."></svg></div>
+        <p class="body">GPS satellites send time-stamped signals. If light's speed changed with direction, the signals would arrive at different rates and the clocks wouldn't be properly synced, and positioning needs that sync.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> GPS doesn't check that light is the same every way. It's built on it.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)</span></div>
+      </section>
     </div>
-    <div id="ctrl"><span>same speed every way</span><input id="sl" type="range" min="0" max="100" value="0" aria-label="How much faster light goes one way"><span>faster one way</span></div>
-    <p class="say" id="say">GPS turns each pulse's travel time into a distance. <b>Drag the slider</b>: let light run faster leftward than rightward.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>GPS is built on an assumption: light's speed is the same in all directions.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  const svg = Kit.$('pic'), sl = Kit.$('sl'), say = Kit.$('say'), card = Kit.$('card');
-  const INK = '#2a2016', PAPER = '#f2e8d2', MAD = '#9b2f1e';
-  const COL = ['#3f6b52', '#5a3f22', '#3c4a7a'];
-  const KMAX = .35;
-  const st = {k: 0};
-  let W = 0, H = 0, fs = 12, u = 1, R = {x: 0, y: 0}, S = [], built = false, done = false;
-  let X0 = 1, Y0 = 1, X1 = 1, Y1 = 1;
-  let fronts = [], rings = [], glows = [], satIn = [], ferns = [], groundEls = [], beads = [], sparks = [];
-  let rosePath, roseInner, roseVeins, fixOuter, fixInner, fixLabel, errLine, cross, roseG;
-  const mk = (t, a, p) => Kit.mk(t, a, p);
-  const halo = 'paint-order:stroke;stroke:' + PAPER + ';stroke-width:3.4px;stroke-linejoin:round;';
-  const txt = (p, x, y, s, a = {}, style = '') => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs}, a), p); e.setAttribute('style', halo + 'font-family:var(--body);' + style); e.textContent = s; return e; };
+  if (window.gsap && window.DrawSVGPlugin) gsap.registerPlugin(DrawSVGPlugin);
+  const HOT = '#ff5a36';               // the one accent: light
+  let K = '#111', C = '#fff';
+  let s = .55, F = null, pA = .15, pB = .55, pick = -1, turned = false, backDone = false, touched = false;
+  const RIGHT = 1;
 
-  // Clip a polyline to the stage so long curves never leave the drawing.
-  function clipSeg(x0, y0, x1, y1) {
-    let t0 = 0, t1 = 1; const dx = x1 - x0, dy = y1 - y0;
-    const P = [-dx, dx, -dy, dy], Q = [x0 - X0, X1 - x0, y0 - Y0, Y1 - y0];
-    for (let i = 0; i < 4; i++) {
-      if (P[i] === 0) { if (Q[i] < 0) return null; }
-      else { const r = Q[i] / P[i]; if (P[i] < 0) { if (r > t1) return null; if (r > t0) t0 = r; } else { if (r < t0) return null; if (r < t1) t1 = r; } }
+  const lerp = (a, b, t) => ({x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t});
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const txt = (p, x, y, t, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: K, 'font-family': 'Figtree, sans-serif', 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
+  const fitTxt = (p, x, y, t, fs, W, a = {}) => {
+    const e = txt(p, x, y, t, fs, a), w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
+    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const sh = Math.max(2 - left, Math.min(0, W - 2 - (left + w)));
+    if (sh) e.setAttribute('x', x + sh); return e;
+  };
+  // the longest wording that fits the room
+  const pickTxt = (p, x, y, list, fs, maxW, a = {}) => {
+    let e = null;
+    for (const t of list) { if (e) e.remove(); e = txt(p, x, y, t, fs, a); if (e.getComputedTextLength() <= maxW) break; }
+    return e;
+  };
+  const box = e => { try { return e.getBBox(); } catch (_) { return {x: 0, y: 0, width: 0, height: 0}; } };
+  const segDist = (p, a, b) => {
+    const dx = b.x - a.x, dy = b.y - a.y, t = clamp(((p.x - a.x) * dx + (p.y - a.y) * dy) / (dx * dx + dy * dy || 1), 0, 1);
+    return Math.hypot(p.x - a.x - dx * t, p.y - a.y - dy * t);
+  };
+  const segHits = (a, b, e, pad = 4) => { const q = box(e);
+    for (let i = 0; i <= 60; i++) { const x = a.x + (b.x - a.x) * i / 60, y = a.y + (b.y - a.y) * i / 60;
+      if (x > q.x - pad && x < q.x + q.width + pad && y > q.y - pad && y < q.y + q.height + pad) return true; }
+    return false; };
+
+  function sat(g, x, y, fs) {
+    for (const d of [-1, 1]) {
+      const px = d < 0 ? x - fs * 2.5 : x + fs * 1;
+      Kit.mk('rect', {x: px, y: y - fs * .38, width: fs * 1.5, height: fs * .76, fill: '#fff', stroke: K, 'stroke-width': 1.5, rx: 1.5}, g);
+      Kit.mk('line', {x1: px + fs * .75, x2: px + fs * .75, y1: y - fs * .38, y2: y + fs * .38, stroke: K, 'stroke-width': 1}, g);
     }
-    return [x0 + t0 * dx, y0 + t0 * dy, x0 + t1 * dx, y0 + t1 * dy, t0 === 0, t1 === 1];
+    Kit.mk('rect', {x: x - fs * .75, y: y - fs * .6, width: fs * 1.5, height: fs * 1.2, rx: 3, fill: K}, g);
+    Kit.mk('line', {x1: x, x2: x, y1: y + fs * .6, y2: y + fs * .95, stroke: K, 'stroke-width': 2, 'stroke-linecap': 'round'}, g);
   }
-  function poly(pts) {
-    let s = '', open = false;
-    for (let i = 0; i + 1 < pts.length; i++) {
-      const c = clipSeg(pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1]);
-      if (!c) { open = false; continue; }
-      if (!open || !c[4]) s += 'M' + c[0].toFixed(1) + ',' + c[1].toFixed(1);
-      s += 'L' + c[2].toFixed(1) + ',' + c[3].toFixed(1);
-      open = c[5];
+
+  // A hand-drawn arrow riding beside a beam, on its outer side.
+  function beamArrow(path, p, q, t0, len, side, fs) {
+    const dx = q.x - p.x, dy = q.y - p.y, L = Math.hypot(dx, dy) || 1, u = {x: dx / L, y: dy / L};
+    const n = side < 0 ? {x: -u.y, y: u.x} : {x: u.y, y: -u.x}, off = fs * .75;
+    const a = {x: p.x + dx * t0 + n.x * off, y: p.y + dy * t0 + n.y * off};
+    const e = {x: a.x + u.x * len, y: a.y + u.y * len};
+    const m = {x: (a.x + e.x) / 2 + n.x * 2.5, y: (a.y + e.y) / 2 + n.y * 2.5};
+    const h = fs * .45, bx = -u.x, by = -u.y, c = Math.cos(.5), sn = Math.sin(.5);
+    const h1 = {x: e.x + h * (bx * c - by * sn), y: e.y + h * (bx * sn + by * c)};
+    const h2 = {x: e.x + h * (bx * c + by * sn), y: e.y + h * (-bx * sn + by * c)};
+    path.setAttribute('d', `M${a.x},${a.y} Q${m.x},${m.y} ${e.x},${e.y} M${h1.x},${h1.y} L${e.x},${e.y} L${h2.x},${h2.y}`);
+  }
+
+  // The scene shared by both faces: ground, a hiker holding her phone up, two satellites.
+  function scene(svg, o) {
+    svg.innerHTML = '';
+    const cs = getComputedStyle(Kit.$('card'));
+    K = cs.getPropertyValue('--k').trim() || K; C = cs.getPropertyValue('--c').trim() || C;
+    const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, f || 13));
+    const gy = H - fs * o.gb, ph = Math.max(fs * 3.2, Math.min(H * o.ph, 120)), x0 = W * o.fx;
+    const sy = Math.max(fs * .75, Math.min(H * .1, fs * 1.8));
+    const A = {x: Math.max(W * o.ax, fs * 2.7), y: sy + fs * .95}, B = {x: Math.min(W * o.bx, W - fs * 2.7), y: sy + fs * .95};
+    const r = ph * .12, hy = gy - ph + r, sh = hy + r * 1.3, hip = gy - ph * .4, dotR = fs * .42;
+    // the phone is held up beside the head; lift it until the west beam clears the head by 12px or more
+    let px = x0 + ph * .32, py = hy - ph * .02;
+    const top = () => ({x: px, y: py - ph * .075});
+    for (let i = 0; i < 60 && segDist({x: x0, y: hy}, A, top()) < r + 12 + dotR; i++) py -= 1.5;
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('path', {d: `M0,${gy + 2} C${W * .25},${gy - 5} ${W * .6},${gy + 4} ${W},${gy - 3}`, stroke: K, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, g);
+    Kit.mk('path', {d: `M${x0 - r * .45},${hip} L${x0 - r * .6},${gy - 2} M${x0 + r * .45},${hip} L${x0 + r * .7},${gy - 2}`, stroke: K, 'stroke-width': r * .55, 'stroke-linecap': 'round', fill: 'none'}, g);
+    Kit.mk('rect', {x: x0 - r * .95, y: sh, width: r * 1.9, height: hip - sh + r * .3, rx: r * .8, fill: K}, g);
+    Kit.mk('path', {d: `M${x0 + r * .55},${sh + r * .5} Q${px},${sh + r * .5} ${px},${py + ph * .06}`, stroke: K, 'stroke-width': r * .45, 'stroke-linecap': 'round', fill: 'none'}, g);
+    Kit.mk('rect', {x: px - ph * .045, y: py - ph * .075, width: ph * .09, height: ph * .15, rx: 2, fill: '#fff', stroke: K, 'stroke-width': 1.5}, g);
+    Kit.mk('circle', {cx: x0, cy: hy, r, fill: K}, g);
+    Kit.mk('circle', {cx: x0 + r * .45, cy: hy - r * .15, r: Math.max(1.4, r * .13), fill: C}, g);
+    sat(g, A.x, sy, fs); sat(g, B.x, sy, fs);
+    return {W, H, fs, gy, ph, x0, r, hy, sy, A, B, P: top(), svg};
+  }
+
+  // ---------- front ----------
+  let lA, lB, dA, dB, arF, arS, tF, tS;
+  function drawFront() {
+    F = scene(Kit.$('pic'), {gb: .7, ph: .36, fx: .5, ax: .16, bx: .84});
+    const {W, fs, A, B, P, x0, r, hy, sy} = F, svg = F.svg;
+    lA = Kit.mk('path', {d: `M${A.x},${A.y} L${P.x},${P.y}`, stroke: K, 'stroke-width': 1.6, opacity: .55, fill: 'none'}, svg);
+    lB = Kit.mk('path', {d: `M${B.x},${B.y} L${P.x},${P.y}`, stroke: K, 'stroke-width': 1.6, opacity: .55, fill: 'none'}, svg);
+    // label 1: the satellite, beside it in the open sky
+    fitTxt(svg, A.x + fs * 2.5 + 6, sy + fs * .38, 'satellite', fs, W);
+    // label 2: you, level with the head
+    const you = fitTxt(svg, x0 - r - 8, hy + fs * .35, 'you', fs, W, {'text-anchor': 'end'});
+    if (segHits(A, P, you)) you.setAttribute('y', hy + fs * .9);
+    // labels 3 and 4: the beams' roles, outside the V
+    const st = {stroke: K, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'};
+    arF = Kit.mk('path', st, svg); arS = Kit.mk('path', st, svg);
+    const mF = lerp(A, P, .56), mS = lerp(B, P, .56);
+    tF = fitTxt(svg, mF.x - fs * .8, mF.y + fs * 1.05, 'faster', fs, W, {'text-anchor': 'end'});
+    tS = fitTxt(svg, mS.x + fs * .8, mS.y + fs * 1.05, 'slower', fs, W);
+    for (let i = 0; i < 4 && segHits(A, P, tF); i++) tF.setAttribute('y', +tF.getAttribute('y') + fs * .5);
+    for (let i = 0; i < 4 && segHits(B, P, tS); i++) tS.setAttribute('y', +tS.getAttribute('y') + fs * .5);
+    dA = Kit.mk('circle', {r: fs * .42, fill: HOT, stroke: K, 'stroke-width': 1.5}, svg);
+    dB = Kit.mk('circle', {r: fs * .42, fill: HOT, stroke: K, 'stroke-width': 1.5}, svg);
+    setS(s); place();
+  }
+  function setS(v) {
+    s = clamp(v, 0, 1);
+    if (!F) return;
+    const {A, B, P, fs} = F, LA = Math.hypot(P.x - A.x, P.y - A.y), LB = Math.hypot(P.x - B.x, P.y - B.y);
+    beamArrow(arF, A, P, .1, Math.max(fs, LA * (.14 + .18 * s)), -1, fs);
+    beamArrow(arS, B, P, .1, Math.max(fs * .8, LB * (.14 - .07 * s)), 1, fs);
+    const o = clamp((s - .05) * 4, 0, 1);
+    for (const e of [arF, arS, tF, tS]) e.setAttribute('opacity', o);
+  }
+  function place() {
+    if (!F) return;
+    const a = lerp(F.A, F.P, pA), b = lerp(F.B, F.P, pB);
+    dA.setAttribute('cx', a.x); dA.setAttribute('cy', a.y); dB.setAttribute('cx', b.x); dB.setAttribute('cy', b.y);
+  }
+  const calmPlace = () => { pA = .45 + .4 * s; pB = .45 - .2 * s; place(); };
+  // the two beams carry light in two different directions
+  function tick(time, dt) {
+    if (turned || !F || Kit.calm) return;
+    const T = 2.4, k = Math.min(dt, 50) / 1000;
+    pA += k * (1 + .9 * s) / T; pB += k * (1 - .45 * s) / T;
+    if (pA >= 1) pA -= 1;
+    if (pB >= 1) pB -= 1;
+    place();
+  }
+  // drag the pulse: pushing right speeds one direction and slows the other
+  const pic = Kit.$('pic');
+  let drag = false, sx = 0, s0 = 0, demo = null;
+  pic.addEventListener('pointerdown', e => {
+    if (!F || turned) return; drag = true; touched = true; if (demo) demo.kill();
+    pic.setPointerCapture(e.pointerId); sx = e.clientX; s0 = s; Kit.haptic('selection');
+    dA.setAttribute('r', F.fs * .58);
+  });
+  pic.addEventListener('pointermove', e => {
+    if (!drag) return; setS(s0 + (e.clientX - sx) / (F.W * .4)); if (Kit.calm) calmPlace();
+  });
+  const up = () => { if (!drag) return; drag = false; if (dA && F) dA.setAttribute('r', F.fs * .42); };
+  pic.addEventListener('pointerup', up); pic.addEventListener('pointercancel', up);
+
+  // ---------- answering ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    document.querySelector('.front').classList.add('picked'); sure.on();
+  });
+
+  // ---------- back ----------
+  // One moment: both pulses left with the same stamp; one is here, one is still on its way.
+  function drawBack(still) {
+    const G = scene(Kit.$('pic2'), {gb: .7, ph: .36, fx: .5, ax: .16, bx: .84});
+    const {W, fs, A, B, P, sy, svg} = G;
+    const a = Kit.mk('path', {d: `M${A.x},${A.y} L${P.x},${P.y}`, stroke: K, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round'}, svg);
+    const b = Kit.mk('path', {d: `M${B.x},${B.y} L${P.x},${P.y}`, stroke: K, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round'}, svg);
+    const qa = lerp(A, P, .93), qb = lerp(B, P, .5);
+
+    // label 1: what both pulses carry, in the sky between the satellites
+    const room = B.x - A.x - fs * 5 - 16;
+    const stamp = pickTxt(svg, (A.x + B.x) / 2, sy + fs * .38, ['both sent with the same time stamp', 'same time stamp', 'same stamp'], fs, room, {'text-anchor': 'middle'});
+    // label 2: the pulse already at the phone, outside the V
+    const mA = lerp(A, P, .74);
+    const tA = fitTxt(svg, mA.x - fs * .8, mA.y + fs * 1.05, 'here first', fs, W, {'text-anchor': 'end'});
+    for (let i = 0; i < 4 && segHits(A, P, tA); i++) tA.setAttribute('y', +tA.getAttribute('y') + fs * .5);
+    // label 3: the pulse still halfway, outside the V, beside it
+    const tB = fitTxt(svg, qb.x + fs * .9, qb.y + fs * .4, 'still on its way', fs, W);
+    for (let i = 0; i < 6 && segHits(B, P, tB); i++) tB.setAttribute('y', +tB.getAttribute('y') + fs * .5);
+
+    const dA2 = Kit.mk('circle', {cx: qa.x, cy: qa.y, r: fs * .42, fill: HOT, stroke: K, 'stroke-width': 1.5}, svg);
+    const dB2 = Kit.mk('circle', {cx: qb.x, cy: qb.y, r: fs * .42, fill: HOT, stroke: K, 'stroke-width': 1.5}, svg);
+
+    if (still || Kit.calm) return;
+    gsap.set([dA2, dB2, stamp, tA, tB], {opacity: 0});
+    gsap.timeline({delay: .55})
+      .from([a, b], {drawSVG: 0, duration: .8, ease: 'power2.inOut', stagger: .1})
+      .to(stamp, {opacity: 1, duration: .4})
+      .set([dA2, dB2], {opacity: 1}, '+=.1')
+      // same start, same time spent: different distances covered
+      .from(dA2, {attr: {cx: A.x, cy: A.y}, duration: 1.3, ease: 'power1.inOut'})
+      .from(dB2, {attr: {cx: B.x, cy: B.y}, duration: 1.3, ease: 'power1.inOut'}, '<')
+      .to(tA, {opacity: 1, duration: .4})
+      .to(tB, {opacity: 1, duration: .4}, '<.15');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(false); backDone = true; });
+
+  Kit.onShow.card = () => { drawFront(); if (backDone) drawBack(true); };
+  // Redraw only when a picture's box really changes size, and do it outside the
+  // observer callback so a redraw can never feed back into the same delivery.
+  const sizes = new Map();
+  let raf = 0, needFront = false, needBack = false;
+  const ro = new ResizeObserver(entries => {
+    for (const en of entries) {
+      const r = en.contentRect, key = Math.round(r.width) + 'x' + Math.round(r.height);
+      if (sizes.get(en.target) === key) continue;
+      const first = !sizes.has(en.target);
+      sizes.set(en.target, key);
+      if (first) continue;
+      if (en.target.id === 'pic') needFront = true; else needBack = true;
     }
-    return s || 'M0,0';
-  }
-  // A conic with the satellite at its focus: how far light gets in time L/c when its speed depends on direction.
-  const conicPts = (cx, cy, L, k, n = 72) => { const p = []; for (let j = 0; j <= n; j++) { const a = j / n * Math.PI * 2, r = L / (1 + k * Math.cos(a)); p.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); } return p; };
-  const conicRaw = (cx, cy, L, k) => conicPts(cx, cy, L, k, 56).map((q, j) => (j ? 'L' : 'M') + q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('') + 'Z';
-  const circlePts = (cx, cy, r) => { const p = []; for (let j = 0; j <= 140; j++) { const a = j / 140 * Math.PI * 2; p.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]); } return p; };
-
-  function fern(g, x, y, s, lean) {
-    const gg = mk('g', {}, g);
-    const cx = x + lean * s * .15, cy = y - s * .6, tx = x + lean * s * .5, ty = y - s;
-    mk('path', {d: `M${x},${y} Q${cx},${cy} ${tx},${ty}`, stroke: INK, 'stroke-width': 1, fill: 'none'}, gg);
-    for (let n = 1; n <= 7; n++) {
-      const t = n / 8, px = (1 - t) * (1 - t) * x + 2 * (1 - t) * t * cx + t * t * tx, py = (1 - t) * (1 - t) * y + 2 * (1 - t) * t * cy + t * t * ty;
-      const L = s * .28 * (1 - t * .75);
-      for (const sg of [-1, 1]) mk('path', {d: `M${px},${py} q${sg * L * .5},${-L * .55} ${sg * L},${-L * .25} q${-sg * L * .45},${L * .25} ${-sg * L},${L * .25}`, stroke: INK, 'stroke-width': .7, fill: 'rgba(63,107,82,.2)'}, gg);
-    }
-    return gg;
-  }
-
-  function satellite(g, x, y, col, name) {
-    const outer = mk('g', {transform: `translate(${x},${y})`}, g), inner = mk('g', {}, outer);
-    const bw = fs * .85 * u, bh = fs * .6 * u, pl = fs * 2.3 * u;
-    for (const sg of [-1, 1]) {
-      const x0 = sg * bw * .9, x1 = sg * (bw + pl);
-      mk('line', {x1: sg * bw * .6, y1: 0, x2: x0, y2: 0, stroke: INK, 'stroke-width': 1.2}, inner);
-      mk('path', {d: `M${x0},0 Q${(x0 + x1) / 2},${-fs * .9 * u} ${x1},0 Q${(x0 + x1) / 2},${fs * .9 * u} ${x0},0Z`, fill: 'url(#leafG)', stroke: INK, 'stroke-width': 1}, inner);
-      mk('line', {x1: x0, y1: 0, x2: x1, y2: 0, stroke: INK, 'stroke-width': .7}, inner);
-      for (let v = 1; v <= 4; v++) { const vx = x0 + (x1 - x0) * v / 5, d = fs * .5 * u * Math.sin(Math.PI * v / 5); mk('path', {d: `M${vx - sg * fs * .2 * u},0 L${vx},${-d} M${vx - sg * fs * .2 * u},0 L${vx},${d}`, stroke: INK, 'stroke-width': .55, fill: 'none'}, inner); }
-    }
-    mk('ellipse', {cx: 0, cy: 0, rx: bw, ry: bh, fill: 'url(#bodyG)', stroke: INK, 'stroke-width': 1.3}, inner);
-    mk('ellipse', {cx: 0, cy: 0, rx: bw, ry: bh, fill: 'url(#hx)', opacity: .55}, inner);
-    mk('path', {d: `M${-bw * .55},${-bh * .75} Q0,${bh * .2} ${bw * .55},${-bh * .75}`, stroke: INK, 'stroke-width': .6, fill: 'none', opacity: .7}, inner);
-    mk('ellipse', {cx: -bw * .3, cy: -bh * .35, rx: bw * .3, ry: bh * .18, fill: '#fffaf0', opacity: .75}, inner);
-    mk('path', {d: `M0,${bh} v${fs * .5 * u}`, stroke: INK, 'stroke-width': 1.1}, inner);
-    mk('circle', {cx: 0, cy: bh + fs * .6 * u, r: fs * .18, fill: col, stroke: INK, 'stroke-width': .8}, inner);
-    txt(outer, 0, bh + fs * .6 * u + fs * 1.45, name, {'text-anchor': 'middle', fill: col, 'font-weight': 700}, 'font-style:italic;');
-    satIn.push(inner);
-  }
-
-  function sparkle(g, x, y, r) {
-    return mk('path', {d: `M${x},${y - r} L${x + r * .22},${y - r * .22} L${x + r},${y} L${x + r * .22},${y + r * .22} L${x},${y + r} L${x - r * .22},${y + r * .22} L${x - r},${y} L${x - r * .22},${y - r * .22}Z`, fill: INK, opacity: .35}, g);
-  }
-
-  function layout() {
-    svg.innerHTML = ''; fronts = []; rings = []; glows = []; satIn = []; ferns = []; groundEls = []; beads = []; sparks = [];
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    X0 = 1; Y0 = 1; X1 = W - 1; Y1 = H - 1;
-    fs = Math.max(12, Math.min(14, W / 28));
-    u = Math.max(.72, Math.min(1, H / (fs * 24)));
-    const defs = mk('defs', {}, svg);
-    defs.innerHTML = `<pattern id="hx" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><line x1="0" y1="0" x2="0" y2="3" stroke="${INK}" stroke-width=".6"/></pattern>
-      <radialGradient id="bodyG" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#fbf3df"/><stop offset=".6" stop-color="#d7bd86"/><stop offset="1" stop-color="#8f6d3a"/></radialGradient>
-      <linearGradient id="leafG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fbf9c"/><stop offset="1" stop-color="#4f7a5e"/></linearGradient>
-      <radialGradient id="glowG"><stop offset="0" stop-color="#fff6d8" stop-opacity="1"/><stop offset="1" stop-color="#e9c46a" stop-opacity="0"/></radialGradient>`;
-
-    R = {x: W * .5, y: Math.min(H * .78, H - fs * 2.4)};
-    const Rg = W * 2.4, gy = x => R.y + Rg - Math.sqrt(Rg * Rg - (x - W / 2) ** 2);
-    const S2y = Math.max(H * .13, fs * 1.3);
-    S = [
-      {x: W * .16, y: Math.min(Math.max(H * .45, fs * 4.8), gy(W * .16) - fs * 2.6)},
-      {x: W * .56, y: S2y},
-      {x: W * .85, y: Math.max(H * .33, S2y + fs * 2.2)}
-    ];
-    S.forEach(s => { s.d = Math.hypot(R.x - s.x, R.y - s.y); s.ux = (R.x - s.x) / s.d; s.uy = (R.y - s.y) / s.d; });
-
-    // engraved sky: a few twinkling sparkles
-    const gSky = mk('g', {}, svg);
-    [[.34, .1], [.43, .3], [.7, .16], [.95, .08], [.3, .48], [.66, .44], [.08, .3]].forEach(([px, py], i) => {
-      const y = py * R.y; if (y < fs) return;
-      sparks.push(sparkle(gSky, W * px, y, (i % 3 ? 2.6 : 3.6)));
+    if ((needFront || needBack) && !raf) raf = requestAnimationFrame(() => {
+      raf = 0;
+      const f = needFront, b = needBack; needFront = needBack = false;
+      if (f && F) drawFront();
+      if (b && backDone) drawBack(true);
     });
-
-    // earth: hatched arcs, clipped to the stage
-    const gG = mk('g', {}, svg);
-    for (let i = 0; i < 12; i++) {
-      const pts = []; for (let n = 0; n <= 48; n++) { const x = -2 + (W + 4) * n / 48; pts.push([x, gy(x) + i * 3.4]); }
-      groundEls.push(mk('path', {d: poly(pts), fill: 'none', stroke: INK, 'stroke-width': i ? .7 : 1.6, opacity: i ? Math.max(.08, .55 - i * .045) : .95}, gG));
-    }
-    [[.07, .85, 1], [.28, .7, 1], [.37, .55, -1], [.66, .6, 1], [.78, .85, -1], [.93, .6, -1]].forEach(([p, s, l]) => ferns.push(fern(gG, W * p, gy(W * p) + 1, fs * 2.4 * s * u, l)));
-
-    // rays from each satellite to where you stand
-    const gRay = mk('g', {}, svg);
-    S.forEach((s, i) => mk('line', {x1: s.x, y1: s.y, x2: R.x, y2: R.y, stroke: COL[i], 'stroke-width': .8, 'stroke-dasharray': '1 4', opacity: .45}, gRay));
-
-    const gF = mk('g', {}, svg), gRi = mk('g', {}, svg);
-    S.forEach((s, i) => {
-      for (let j = 0; j < 2; j++) fronts.push({i, j, prev: 0, el: mk('path', {fill: 'none', stroke: COL[i], 'stroke-width': 1.1, 'stroke-dasharray': '1.5 2.5'}, gF)});
-      rings.push(mk('path', {fill: 'none', stroke: COL[i], 'stroke-width': 1.1, opacity: .75}, gRi));
-      for (let j = 0; j < 2; j++) beads.push({i, j, el: mk('circle', {r: fs * .2, fill: COL[i], stroke: PAPER, 'stroke-width': 1.2, opacity: 0}, gF)});
-    });
-
-    // receiver
-    const gR = mk('g', {}, svg), ah = fs * 1.6 * u;
-    mk('path', {d: `M${R.x - fs * .7},${R.y} L${R.x},${R.y - ah} L${R.x + fs * .7},${R.y} M${R.x},${R.y} V${R.y - ah}`, stroke: INK, 'stroke-width': 1.2, fill: 'none'}, gR);
-    mk('path', {d: `M${R.x - fs * .8},${R.y - ah - fs * .25} Q${R.x},${R.y - ah + fs * .55} ${R.x + fs * .8},${R.y - ah - fs * .25}`, stroke: INK, 'stroke-width': 1.3, fill: 'url(#hx)'}, gR);
-    S.forEach((s, i) => glows.push(mk('circle', {cx: R.x, cy: R.y - ah, r: fs * .3, fill: 'url(#glowG)', stroke: COL[i], 'stroke-width': 1.2, opacity: 0}, gR)));
-    cross = mk('g', {}, gR);
-    mk('circle', {cx: R.x, cy: R.y, r: fs * .32, fill: PAPER, stroke: INK, 'stroke-width': 1.3}, cross);
-    mk('path', {d: `M${R.x - fs * .55},${R.y} h${fs * 1.1} M${R.x},${R.y - fs * .55} v${fs * 1.1}`, stroke: INK, 'stroke-width': .9}, cross);
-    txt(gR, R.x, R.y + fs * 1.6, 'Receptor · locus verus', {'text-anchor': 'middle', 'font-weight': 700}, 'font-style:italic;');
-
-    const gS = mk('g', {}, svg);
-    ['Satelles I', 'Satelles II', 'Satelles III'].forEach((n, i) => satellite(gS, S[i].x, S[i].y, COL[i], n));
-
-    // rosa lucis: the speed of light in every direction, as a flower, beside its dotted "same speed" circle
-    roseG = mk('g', {}, svg);
-    const Lr = fs * .95 * u, rc = {x: Lr * 1.75 + 4, y: Lr * 1.75 + 4, L: Lr};
-    mk('circle', {cx: rc.x, cy: rc.y, r: Lr, fill: 'none', stroke: INK, 'stroke-width': .7, 'stroke-dasharray': '1 2.2', opacity: .6}, roseG);
-    roseVeins = mk('path', {fill: 'none', stroke: INK, 'stroke-width': .6, opacity: .7}, roseG);
-    rosePath = mk('path', {fill: 'rgba(155,47,30,.14)', stroke: INK, 'stroke-width': 1.2}, roseG);
-    roseInner = mk('path', {fill: 'none', stroke: INK, 'stroke-width': .7}, roseG);
-    mk('circle', {cx: rc.x, cy: rc.y, r: 2.2, fill: INK}, roseG);
-    layout.rose = rc;
-    txt(roseG, rc.x + Lr * 1.85, rc.y + fs * .35, 'rosa lucis', {'font-weight': 700}, 'font-style:italic;');
-
-    // the fix the receiver computes, assuming one speed
-    errLine = mk('line', {x1: R.x, y1: R.y, x2: R.x, y2: R.y, stroke: MAD, 'stroke-width': 1.4, 'stroke-dasharray': '4 3', opacity: done ? .9 : 0}, svg);
-    fixOuter = mk('g', {opacity: 0}, svg); fixInner = mk('g', {}, fixOuter);
-    let star = ''; for (let j = 0; j < 16; j++) { const a = j / 16 * Math.PI * 2 - Math.PI / 2, r = j % 2 ? fs * .28 : fs * .78; star += (j ? 'L' : 'M') + (r * Math.cos(a)).toFixed(1) + ',' + (r * Math.sin(a)).toFixed(1); }
-    mk('path', {d: star + 'Z', fill: MAD, stroke: '#4a140b', 'stroke-width': .8}, fixInner);
-    mk('circle', {cx: 0, cy: 0, r: fs * .16, fill: '#ffe9c4'}, fixInner);
-    fixLabel = txt(svg, 0, 0, 'locus computatus', {'text-anchor': 'middle', fill: MAD, 'font-weight': 800, opacity: 0}, 'font-style:italic;');
-    built = true;
-    draw();
-  }
-
-  function solveFix() {
-    const p = {x: R.x, y: R.y};
-    for (let it = 0; it < 12; it++) {
-      let a = 0, b = 0, c = 0, g1 = 0, g2 = 0;
-      for (const s of S) { const dx = p.x - s.x, dy = p.y - s.y, d = Math.hypot(dx, dy), jx = dx / d, jy = dy / d, res = d - s.r; a += jx * jx; b += jx * jy; c += jy * jy; g1 += jx * res; g2 += jy * res; }
-      const det = a * c - b * b; if (Math.abs(det) < 1e-9) break;
-      p.x -= (c * g1 - b * g2) / det; p.y -= (a * g2 - b * g1) / det;
-    }
-    p.x = Math.max(fs * 1.2, Math.min(W - fs * 1.2, p.x)); p.y = Math.max(fs * 2.6, Math.min(H - fs * 1.2, p.y));
-    return p;
-  }
-
-  function draw() {
-    if (!built) return;
-    const k = st.k, t = gsap.ticker.time;
-    S.forEach((s, i) => { s.r = s.d * (1 + k * s.ux); rings[i].setAttribute('d', poly(circlePts(s.x, s.y, s.r))); });
-    for (const fr of fronts) {
-      const s = S[fr.i], ph = Kit.calm ? .3 + fr.j * .4 : ((t / 3 + fr.j * .5 + fr.i * .21) % 1);
-      const L = ph * s.d * 1.45, hit = s.d * (1 + k * s.ux);
-      if (!Kit.calm && fr.prev < hit && L >= hit) flash(fr.i);
-      fr.prev = L;
-      fr.el.setAttribute('d', poly(conicPts(s.x, s.y, Math.max(1, L), k)));
-      fr.el.setAttribute('opacity', (Math.pow(1 - ph, 1.3) * .85).toFixed(2));
-      // a bead of light riding the front down the ray toward the receiver
-      const b = beads[fr.i * 2 + fr.j], along = L / (1 + k * s.ux);
-      if (along < s.d - fs * .4) {
-        b.el.setAttribute('cx', (s.x + s.ux * along).toFixed(1)); b.el.setAttribute('cy', (s.y + s.uy * along).toFixed(1));
-        b.el.setAttribute('opacity', Math.min(1, along / (fs * 1.5)).toFixed(2));
-      } else b.el.setAttribute('opacity', 0);
-    }
-    const rc = layout.rose, Lr = rc.L;
-    rosePath.setAttribute('d', conicRaw(rc.x, rc.y, Lr, k));
-    roseInner.setAttribute('d', conicRaw(rc.x, rc.y, Lr * .55, k));
-    let v = ''; for (let j = 0; j < 12; j++) { const a = j / 12 * Math.PI * 2, r = Lr / (1 + k * Math.cos(a)); v += `M${rc.x},${rc.y}L${(rc.x + r * Math.cos(a)).toFixed(1)},${(rc.y + r * Math.sin(a)).toFixed(1)}`; }
-    roseVeins.setAttribute('d', v);
-    const p = solveFix(), miss = Math.hypot(p.x - R.x, p.y - R.y), vis = Math.min(1, Math.max(0, (miss - fs * .6) / (fs * .8)));
-    fixOuter.setAttribute('transform', `translate(${p.x.toFixed(1)},${p.y.toFixed(1)})`);
-    fixOuter.setAttribute('opacity', vis.toFixed(2));
-    errLine.setAttribute('x2', p.x.toFixed(1)); errLine.setAttribute('y2', p.y.toFixed(1));
-    const lw = fs * 5.4, lx = Math.max(lw + 2, Math.min(W - lw - 2, p.x));
-    fixLabel.setAttribute('x', lx.toFixed(1)); fixLabel.setAttribute('y', (p.y - fs * 1.15).toFixed(1));
-    fixLabel.setAttribute('opacity', (vis * (miss > fs * 2.2 ? 1 : 0)).toFixed(2));
-  }
-
-  function flash(i) {
-    const g = glows[i]; if (!g) return;
-    gsap.fromTo(g, {attr: {r: fs * .25}, opacity: .95}, {attr: {r: fs * 1.6}, opacity: 0, duration: .8, ease: 'power3.out', overwrite: true});
-  }
-
-  // the slider: light's speed leans with it, and everything follows on a spring
-  let lastV = 0, lastHap = 0;
-  function onInput() {
-    const v = +sl.value / 100, target = v * KMAX, dir = Math.sign(v - lastV); lastV = v;
-    if (Kit.calm) { st.k = target; draw(); }
-    else {
-      gsap.to(st, {k: target, duration: 1.2, ease: 'elastic.out(1,0.38)', overwrite: true});
-      satIn.forEach((el, i) => gsap.timeline({overwrite: true}).to(el, {rotation: dir * (3 + i), duration: .1, ease: 'power2.out', transformOrigin: '50% 50%'}).to(el, {rotation: 0, duration: 1.1, ease: 'elastic.out(1.1,0.3)'}));
-      if (roseG) gsap.fromTo(roseG, {rotation: dir * -6, transformOrigin: '15% 50%'}, {rotation: 0, duration: 1, ease: 'elastic.out(1.2,0.3)', overwrite: true});
-    }
-    const now = performance.now(); if (now - lastHap > 90) { Kit.haptic('selection'); lastHap = now; }
-    if (!done && v > .2 && say.dataset.mid !== '1') { say.dataset.mid = '1'; say.innerHTML = 'The wavefronts stretch into ellipses, but the receiver still divides by one speed. <b>Watch the circles.</b>'; }
-  }
-  function onChange() { if (!done && +sl.value >= 45) reveal(); }
-
-  function reveal() {
-    done = true; card.classList.add('answered'); Kit.haptic('success');
-    say.innerHTML = 'A time stamp is a distance only if light is equally fast every way; if not, <b>the circles miss you</b>. Yet GPS clocks are synced by light itself, so they\'d still read c.';
-    Kit.show('keep');
-    if (Kit.calm) { errLine.setAttribute('opacity', .9); return; }
-    const len = Math.hypot(+errLine.getAttribute('x2') - R.x, +errLine.getAttribute('y2') - R.y) + 20;
-    gsap.timeline()
-      .fromTo(fixInner, {scale: 2.4, rotation: -90, transformOrigin: '50% 50%'}, {scale: 1, rotation: 0, duration: 1.3, ease: 'elastic.out(1,0.35)'})
-      .fromTo(errLine, {opacity: .9, attr: {'stroke-dasharray': `0 ${len}`}}, {attr: {'stroke-dasharray': `${len} 0`}, duration: .6, ease: 'power3.out', onComplete: () => errLine.setAttribute('stroke-dasharray', '4 3')}, 0)
-      .fromTo(rings, {attr: {'stroke-width': 3}}, {attr: {'stroke-width': 1.1}, duration: 1.4, ease: 'elastic.out(1,0.3)', stagger: .09}, 0)
-      .fromTo(cross, {scale: 1.6, transformOrigin: '50% 50%'}, {scale: 1, duration: 1, ease: 'back.out(3)'}, .1)
-      .from('#keep', {y: 14, opacity: 0, duration: .7, ease: 'back.out(1.8)'}, .2);
-  }
-
-  sl.addEventListener('input', onInput);
-  sl.addEventListener('change', onChange);
-  sl.addEventListener('pointerup', onChange);
-
-  gsap.ticker.add(() => { if (built && !Kit.calm) draw(); });
-
-  Kit.onShow.card = layout;
+  });
+  ro.observe(Kit.$('pic')); ro.observe(Kit.$('pic2'));
+  let started = false;
   Kit.onEnter.card = () => {
-    if (Kit.calm || !built) return;
-    gsap.from(groundEls, {opacity: 0, duration: .8, stagger: .04, ease: 'power2.out'});
-    gsap.from(ferns, {scale: 0, transformOrigin: '50% 100%', duration: 1.2, stagger: .08, ease: 'elastic.out(1,0.45)', delay: .2});
-    gsap.from(satIn, {y: -fs * 3, opacity: 0, rotation: -12, transformOrigin: '50% 50%', duration: 1.1, stagger: .12, ease: 'back.out(2.2)', delay: .1});
-    gsap.from(rings, {opacity: 0, duration: 1, stagger: .1, ease: 'power3.out', delay: .6});
-    gsap.from(roseG, {scale: 0, rotation: -120, transformOrigin: '15% 50%', duration: 1.3, ease: 'elastic.out(1,0.4)', delay: .3});
-    sparks.forEach((s, i) => gsap.to(s, {opacity: .08, scale: .6, transformOrigin: '50% 50%', duration: 1.1 + i * .23, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: i * .3}));
-    gsap.from('#ctrl', {y: 10, opacity: 0, duration: .7, ease: 'back.out(2)', delay: .5});
+    if (started) return; started = true;
+    if (Kit.calm) { setS(.7); calmPlace(); return; }
+    gsap.ticker.add(tick);
+    gsap.from([lA, lB], {drawSVG: 0, duration: .9, ease: 'power2.out', stagger: .12});
+    gsap.from('.opt', {opacity: 0, y: 8, stagger: .07, duration: .4, delay: .5, ease: 'power3.out'});
+    // a small show of the gesture: one direction speeds up, then settles
+    const o = {v: s};
+    demo = gsap.to(o, {v: 1, duration: 1.1, delay: 1.1, ease: 'power2.inOut', yoyo: true, repeat: 1, onUpdate: () => { if (!drag && !touched) setS(o.v); }});
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    sl.value = 40; sl.dispatchEvent(new Event('input'));
-    await wait(Kit.calm ? 40 : 200);
-    sl.value = 85; sl.dispatchEvent(new Event('input')); sl.dispatchEvent(new Event('change'));
-    await wait(Kit.calm ? 100 : 1600);
+    touched = true; setS(.8);
+    Kit.$('opts').children[0].click(); await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 4600);
   };
 })();
 Kit.single();

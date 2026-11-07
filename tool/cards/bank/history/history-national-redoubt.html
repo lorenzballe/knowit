@@ -1,415 +1,321 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!doctype html>
 <!-- slug: history-national-redoubt -->
-<!-- Look: a field-notebook cross-section of Switzerland on cream paper, from the lowland border up into the Alps, in pencil hatching, folded rock strata, watercolour washes and handwritten labels.
-     Interaction: drag the invader (or scrub the pencil timeline) inland; the Redoubt's red line, forts and the tunnels deep in the rock draw themselves as you near the mountains, and the cost meter climbs with every uphill step.
-     Wow: at the foot of the Redoubt the meter hits its end, a red wash blooms over the Alps, a "NOT WORTH IT" stamp lands, and the invader turns back along a red retreat arrow. -->
+<!-- Design note.
+     Thought to carry: a small defender doesn't have to win. It has to make the attack cost more than it is worth, and it picks the ground that does that: higher than the enemy.
+     Front: one flat map of Switzerland with light relief (the Jura and the Alps drawn evenly in one ochre mark) and a single plain label. It fills its stage, so there is room to draw. The question only says what the video says: an existing line was massively expanded. Where did it run?
+     Back: the same map, quieter and unlabelled. Only new layers arrive: the reader's line, dashed, then the National Redoubt as a flat red tint with a crisp stroke. The headline states where the line sat; it does not guess what the reader drew. Below the map, a small cross-section gives the reason: the defender stands higher than the attacker, and the body says why that matters.
+     Nothing on the front points at the answer. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The National Redoubt</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .16 0 0 0 .10 0'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>")}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;overflow:hidden}
-.hint{animation:nudge 1.3s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateX(5px)}}
-.kit-calm .hint{animation:none}
-.answered .q{font-size:max(2.5cqh,15px)}
-.answered .say{font-size:max(1.85cqh,12.5px)}
-.say b{color:#a3241c}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;grid-template-rows:minmax(0,1fr);grid-template-columns:minmax(0,1fr);transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+/* The face that is turned away is hidden, and its bottom row is flipped back so it never lands in the corner. */
+.turn>.face.away{visibility:hidden}
+.face.away .sayrow,.face.away .foot{transform:scaleX(-1)}
+
+.face{gap:1.2cqh}
+.face .q{margin:0;box-sizing:border-box}
+.stagebox{flex:1;min-height:0;display:flex}
+#pic,#pic2{flex:1 1 auto;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:crosshair}
+#cut{flex:0 0 auto;display:block;width:100%;height:clamp(56px,10cqh,92px)}
+.front .sayrow{flex:0 0 auto;min-height:46px;padding-right:104px;box-sizing:border-box}
+.front .say{display:block;margin:0;padding:0;overflow-wrap:anywhere}
+.back .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.back .body b{color:#c8102e;font-weight:800}
+.back .foot{flex:0 0 auto;min-height:46px;padding-right:104px;box-sizing:border-box}
+.back .src{display:block;overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="history" data-kind="Drag the invader · the cost of the climb" style="--c:#f3ead6;--k:#2b2418;--edge:#d6c7a3">
+<article class="card" id="card" data-topic="history" data-kind="Draw the line · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE INVADER</span></div>
-    <h2 class="q">What was Switzerland's 'National Redoubt', and why was it built?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" data-drag role="img" aria-label="A cross-section of Switzerland from the lowland border up into the Alps, where a red defensive line with forts and tunnels runs through the mountains. An invader can be dragged inland, and a meter shows the rising cost of invading."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAW THE LINE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q" id="q1">Switzerland massively expanded one defence line. Where did it run?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" role="img" aria-label="A map of Switzerland with its mountains drawn lightly. Draw a line on it with your finger."></svg></div>
+        <div class="sure" id="sure"></div>
+        <div class="sayrow"><p class="say" id="say">Draw the line on the map with your finger. Then say how sure you are.</p></div>
+      </section>
+      <section class="face back away" aria-hidden="true">
+        <h2 class="q" id="q2">Not there: it sat back from the border, high in the mountains.</h2>
+        <div class="stagebox" id="stage2"><svg id="pic2" role="img" aria-label="The same map: your line dashed, and the National Redoubt in red, set back from the border inside the mountains."></svg></div>
+        <svg id="cut" role="img" aria-label="Cross-section: an attacker in the lowland on the left, and a defender on a mountain top on the right, higher than the attacker. Reaching him is too costly."></svg>
+        <p class="body">Switzerland massively expanded an older line set back from its borders, up in the mountains: <b>the National Redoubt</b>. Standing higher than the enemy is an advantage.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> You don't have to beat an attacker, only make the attack not worth its price.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023).</span></div>
+      </section>
     </div>
-    <p class="say" id="say"><b>Drag the invader</b> from the border into Switzerland.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Make attacking you cost more than it could gain, and nobody tries.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    const f = t.querySelector('.front'), b = t.querySelector('.back');
+    b.classList.remove('away');
+    t.classList.add('over'); f.setAttribute('aria-hidden', 'true'); b.removeAttribute('aria-hidden');
+    setTimeout(() => f.classList.add('away'), Kit.calm ? 0 : 780);
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  if (window.DrawSVGPlugin) gsap.registerPlugin(DrawSVGPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const INK = '#2b2418', RED = '#b3261e', PAPER = '#f3ead6', SNOW = '#fcf9f1';
-  const HAND = 'var(--hand)';
-  const SAYS = [
-    '<b>Drag the invader</b> from the border into Switzerland.',
-    'The lowland is easy going. The main defence is not here: it sits <b>far back from the border</b>, on a line that already existed.',
-    'Deep in the mountains, the Swiss <b>massively expanded</b> that line: the National Redoubt. Keep going.',
-    'Every step is now uphill, under defenders who sit <b>higher than you</b>. In a fight, being higher is an advantage.'
-  ];
-  const WHY = 'The Swiss pulled their defence back into the high Alps, where every step costs an attacker dearly. They did not need to win: they needed an invasion to cost so much it stopped making sense.';
-  // Front and back ranges: x as a fraction of width, height as a "level" (.64 = the plain, .17 = the highest peak).
-  const FRONT = [[0,.64],[.4,.64],[.47,.62],[.52,.57],[.585,.535],[.64,.36],[.68,.41],[.73,.23],[.78,.31],[.84,.2],[.89,.29],[.94,.22],[1,.31]];
-  const BACK = [[.44,.64],[.55,.44],[.6,.48],[.67,.28],[.71,.34],[.8,.19],[.86,.27],[.92,.17],[1,.25]];
-  let W = 0, H = 0, fs = 13, X0 = 0, X1 = 0, railY = 0, botY = 0, TOP = 0, plainY = 0, D = 0, bx = 0;
-  let E = {}, st = {p: 0}, done = false, touched = false, stage = -1, built = false;
-  let ambient = [], lastW = 0, lastH = 0, settling = false;
+  const card = Kit.$('card'), svg = Kit.$('pic'), svg2 = Kit.$('pic2'), cut = Kit.$('cut');
+  const RED = '#c8102e', LAND = '#ffd77a', OCHRE = '#e0a23f', TINT = '#f6b5a9', PINK = '#ea8f84';
+  const V_NO = 'Not there: it sat back from the border, high in the mountains.';
+  const V_OK = 'Yes: it sat back from the border, high in the mountains.';
+  // Switzerland, simplified (lon, lat).
+  const CH = [[5.96,46.14],[6.12,46.42],[6.06,46.6],[6.43,46.92],[6.7,47.08],[6.95,47.25],[6.98,47.45],[7.2,47.49],[7.45,47.45],[7.59,47.58],[7.95,47.55],[8.2,47.6],[8.45,47.57],[8.6,47.8],[8.85,47.7],[8.75,47.65],[9.2,47.66],[9.55,47.53],[9.65,47.38],[9.53,47.27],[9.48,47.05],[9.87,46.95],[10.15,46.85],[10.47,46.87],[10.45,46.55],[10.25,46.62],[10.1,46.23],[9.95,46.38],[9.7,46.3],[9.45,46.48],[9.28,46.5],[9.25,46.22],[9.0,46.0],[9.02,45.82],[8.85,45.95],[8.72,46.1],[8.45,46.25],[8.4,46.45],[8.1,46.25],[7.85,45.93],[7.55,45.98],[7.05,45.9],[6.8,46.13],[6.85,46.4],[6.5,46.4],[6.25,46.3],[6.1,46.25]];
+  // Relief: the Alps in the south, the Jura along the north-west. The plateau between stays open.
+  const ALPS = [[6.75,46.15],[6.8,46.42],[7.3,46.62],[8.0,46.78],[8.6,46.92],[9.2,47.05],[9.55,47.2],[10.5,46.9],[10.5,46.2],[9.0,45.8],[7.0,45.82]];
+  const JURA = [[5.98,46.2],[6.15,46.5],[6.45,46.85],[6.85,47.15],[7.25,47.38],[7.6,47.47],[8.05,47.5],[8.35,47.52],[8.3,47.42],[7.9,47.38],[7.45,47.3],[7.05,47.12],[6.7,46.9],[6.35,46.58],[6.15,46.3]];
+  // The National Redoubt: the mountain heart, kept clear of the border all round.
+  const RD = [[7.08,46.25],[7.2,46.45],[7.45,46.6],[7.85,46.72],[8.25,46.9],[8.7,47.0],[9.1,47.04],[9.33,46.98],[9.4,46.82],[9.2,46.64],[8.95,46.55],[8.6,46.55],[8.4,46.58],[8.15,46.45],[7.8,46.22],[7.35,46.18]];
 
-  const clamp = v => Math.max(0, Math.min(1, v));
-  const lerpCtrl = (C, u) => { for (let i = 1; i < C.length; i++) if (u <= C[i][0]) { const a = C[i-1], b = C[i], t = (u - a[0]) / (b[0] - a[0]); return a[1] + (b[1] - a[1]) * t; } return C[C.length-1][1]; };
-  const fy = f => TOP + (f - .17) / .47 * (plainY - TOP);
-  const gy = x => { const u = x / W, m = clamp((u - .45) / .15); return fy(lerpCtrl(FRONT, u)) + (Math.sin(x * .19) * 1.1 + Math.sin(x * .47 + 1.3) * .9) * fs * .17 * (.3 + m * 1.3); };
-  const by = x => fy(lerpCtrl(BACK, x / W)) + Math.sin(x * .13 + 2) * fs * .2;
-  const gal = x => plainY + fs * 1.15 + fs * .15 * Math.sin(x / W * 17);
-  const cost = p => p < .45 ? .12 * p / .45 : .12 + .88 * Math.pow((p - .45) / .55, 2.1);
-  const backOut = gsap.parseEase('back.out(2.2)');
+  let units = [], answered = false, turned = false, lastOk = false, F1 = null, F2 = null;
+  let frontG = null, guessEl = null, layer = null, cutG = null;
+  const col = n => getComputedStyle(card).getPropertyValue(n).trim();
+  const ink = () => col('--k') || '#111';
 
-  const T = (parent, x, y, txt, o = {}) => {
-    const size = Math.max(12, o.size || fs);
-    const e = Kit.mk('text', {x, y, fill: o.fill || INK, 'text-anchor': o.anchor || 'start',
-      style: `font-family:${o.font || HAND};font-size:${size}px;font-weight:${o.weight || 700};` + (o.halo === false ? '' : `paint-order:stroke;stroke:${PAPER};stroke-width:${fs * .32}px;stroke-linejoin:round`)}, parent);
-    e.textContent = txt; return e;
-  };
-  const pathFrom = (fn, a, b, step = 3) => { let d = ''; for (let x = a; x <= b + .01; x += step) d += (d ? ' L' : 'M') + x.toFixed(1) + ',' + fn(x).toFixed(1); return d; };
+  const inPoly = ([x, y], poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
+  const dOf = pts => 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z';
+  function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  const txt = (parent, x, y, s, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 700, fill: ink(), style: 'font-family:var(--body)'}, a), parent); e.textContent = s; return e; };
+  const hit = (a, b) => { const r = a.getBBox(), q = b.getBBox(); return r.x < q.x + q.width && q.x < r.x + r.width && r.y < q.y + q.height && q.y < r.y + r.height; };
 
+  // One frame per face: the map is fitted and centred in whatever room the face gives it.
+  function frame(el) {
+    const f = Kit.fitSvg(el), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, (f.f || 13)));
+    const padT = fs * .4, padB = fs * .4, padX = fs * .6, mw = 3.15, mh = 2.06;
+    const s = Math.max(10, Math.min((W - 2 * padX) / mw, (H - padT - padB) / mh));
+    const ox = (W - mw * s) / 2, oy = padT + Math.max(0, (H - padT - padB) - mh * s) / 2;
+    const P = (lon, lat) => [ox + (lon - 5.9) * .684 * s, oy + (47.85 - lat) * s];
+    return {W, H, fs, s, ox, oy, P};
+  }
+
+  // The relief, one mark in one ochre.
+  function relief(F) {
+    const r = rng(7), out = [], st = .17;
+    let row = 0;
+    for (let lat = 47.56; lat > 45.8; lat -= st * .62, row++) {
+      for (let lon = 5.95 + (row % 2) * st * .75; lon < 10.5; lon += st * 1.5) {
+        const ln = lon + (r() - .5) * .05, lt = lat + (r() - .5) * .03, k = r();
+        const z = inPoly([ln, lt], ALPS) ? 1 : inPoly([ln, lt], JURA) ? .62 : 0;
+        if (!z) continue;
+        const [x, y] = F.P(ln, lt);
+        out.push([x, y, Math.max(2.5, F.s * .085 * z * (.75 + k * .5))]);
+      }
+    }
+    return out;
+  }
+  const peak = ([x, y, h]) => { const w = h * 1.7; return `M${(x - w / 2).toFixed(1)},${y.toFixed(1)}L${(x - w * .06).toFixed(1)},${(y - h).toFixed(1)}L${(x + w / 2).toFixed(1)},${y.toFixed(1)}Z`; };
+
+  function placeName(g, F, ch) {
+    const fs = F.fs, t = txt(g, 0, 0, 'Switzerland', fs);
+    const w = t.getComputedTextLength();
+    const az = ALPS.map(p => F.P(...p)), jz = JURA.map(p => F.P(...p));
+    const clear = (x0, y0, x1, y1) => [[x0, y0], [x1, y0], [x0, y1], [x1, y1], [(x0 + x1) / 2, y0], [(x0 + x1) / 2, y1]].every(p => inPoly(p, ch) && !inPoly(p, az) && !inPoly(p, jz));
+    const c = F.P(7.75, 47.0), bx = c[0] - w / 2, by = c[1] + fs * .35;
+    if (clear(bx - 3, by - fs * .85, bx + w + 3, by + fs * .3)) { t.setAttribute('x', bx); t.setAttribute('y', by); return t; }
+    // Too tight inside: set it above the north-west edge, clear of the outline.
+    const x0 = F.ox + F.s * .05, x1 = x0 + w; let top = Infinity;
+    for (let i = 0; i < ch.length; i++) { const a = ch[i], b = ch[(i + 1) % ch.length];
+      for (let k = 0; k <= 8; k++) { const x = a[0] + (b[0] - a[0]) * k / 8, y = a[1] + (b[1] - a[1]) * k / 8; if (x >= x0 - 2 && x <= x1 + 2) top = Math.min(top, y); } }
+    t.setAttribute('x', x0); t.setAttribute('y', Math.max(fs * .85, top - 4));
+    return t;
+  }
+
+  function drawMap(el, F, id, named) {
+    const defs = Kit.mk('defs', {}, el);
+    const ch = CH.map(p => F.P(...p)), d = dOf(ch);
+    const cp = Kit.mk('clipPath', {id: 'chc' + id}, defs); Kit.mk('path', {d}, cp);
+    const g = Kit.mk('g', {}, el);
+    Kit.mk('path', {d, fill: LAND}, g);
+    const rel = Kit.mk('g', {'clip-path': `url(#chc${id})`}, g);
+    for (const m of relief(F)) Kit.mk('path', {d: peak(m), fill: OCHRE}, rel);
+    Kit.mk('path', {d, fill: 'none', stroke: ink(), 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    if (named) placeName(g, F, ch);
+    return {g};
+  }
+
+  // Lock the two headlines to the same height so the bodies start level.
   function layout() {
-    ambient.forEach(t => t.kill()); ambient = [];
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    const r = svg.getBoundingClientRect(); lastW = r.width; lastH = r.height;
-    fs = Math.max(12, Math.min(15, Math.min(W / 25, H / 21)));
-    railY = H - fs * 1.9; botY = railY - fs * 1.25; TOP = fs * 3.3;
-    D = Math.max(fs * 4.8, (botY - TOP) * .3); plainY = botY - D;
-    bx = Math.max(fs * .7, W * .035); X0 = bx + fs * 3.2; X1 = W * .59;
-    const span = plainY - TOP;
-    svg.innerHTML = `<defs>
-      <filter id="wc" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="3" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="${fs*.8}" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation=".7"/></filter>
-      <filter id="pc" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="2" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="1.6"/></filter>
-      <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)"><line x1="0" y1="0" x2="0" y2="5" stroke="${INK}" stroke-width=".7" opacity=".32"/></pattern>
-      <pattern id="hatch2" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-48)"><line x1="0" y1="0" x2="0" y2="4" stroke="${INK}" stroke-width=".6" opacity=".26"/></pattern>
-      <pattern id="hatchR" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><line x1="0" y1="0" x2="0" y2="4" stroke="${RED}" stroke-width="1.3"/></pattern>
-      <linearGradient id="gg" gradientUnits="userSpaceOnUse" x1="0" x2="${W}" y1="0" y2="0"><stop offset="0" stop-color="#b8c07c"/><stop offset=".42" stop-color="#a5b273"/><stop offset=".56" stop-color="#8f9a8c"/><stop offset=".72" stop-color="#7d899a"/><stop offset="1" stop-color="#6c788c"/></linearGradient>
-      <linearGradient id="lit" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <linearGradient id="fadeG" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="${plainY + D * .3}" y2="${botY}"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <mask id="fade" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="url(#fadeG)"/></mask>
-      <radialGradient id="rb"><stop offset="0" stop-color="${RED}" stop-opacity=".42"/><stop offset=".6" stop-color="${RED}" stop-opacity=".2"/><stop offset="1" stop-color="${RED}" stop-opacity="0"/></radialGradient>
-    </defs>`;
-    E = {};
-    const L = () => Kit.mk('g', {}, svg);
-
-    // Sky: a pale sun behind the peaks, two washed clouds, a few birds.
-    const sky = E.sky = L();
-    E.sun = Kit.mk('circle', {cx: W * .9, cy: fs * 2.2, r: fs * 1.6, fill: '#e8b85a', opacity: .4, filter: 'url(#wc)'}, sky);
-    E.clouds = [[.2, .5, 1], [.44, .2, .8]].map(([u, v, s]) => {
-      const cx = W * u, cy = TOP + span * v + fs * .3, g = Kit.mk('g', {}, sky);
-      [[-1.1, .15, .62], [-.3, -.2, .85], [.6, .05, .7], [1.25, .25, .5]].forEach(([dx, dy, rr]) =>
-        Kit.mk('circle', {cx: cx + dx * fs * s, cy: cy + dy * fs * s, r: rr * fs * s, fill: SNOW, opacity: .9, filter: 'url(#wc)'}, g));
-      Kit.mk('path', {d: `M${cx - 1.6 * fs * s},${cy + .55 * fs * s} L${cx + 1.7 * fs * s},${cy + .55 * fs * s}`, stroke: INK, 'stroke-width': .8, opacity: .35, 'stroke-linecap': 'round', filter: 'url(#pc)'}, g);
-      return g;
-    });
-    E.birds = Kit.mk('g', {}, sky);
-    E.birdP = [[.54, .2], [.585, .13], [.6, .27]].map(([u, v], i) => {
-      const s = fs * (.36 - i * .04), x = W * u, y = TOP + span * v;
-      return Kit.mk('path', {d: `M${x - s},${y} q${s / 2},${-s * .6} ${s},0 q${s / 2},${-s * .6} ${s},0`, fill: 'none', stroke: INK, 'stroke-width': 1.1, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .75}, E.birds);
-    });
-
-    // Back range, a cooler wash further away.
-    const back = E.back = L();
-    Kit.mk('path', {d: pathFrom(by, W * .44, W, 3) + ` L${W},${plainY + fs} L${W*.44},${plainY + fs} Z`, fill: '#94a3b8', opacity: .45, filter: 'url(#wc)'}, back);
-    Kit.mk('path', {d: pathFrom(by, W * .44, W, 3), fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .35, filter: 'url(#pc)'}, back);
-
-    // The red bloom (hidden until the end), kept inside the picture.
-    E.bloom = Kit.mk('ellipse', {cx: W * .79, cy: (TOP + plainY) / 2, rx: W * .2, ry: Math.max(fs * 1.5, span * .55), fill: 'url(#rb)', opacity: 0, filter: 'url(#wc)', style: 'mix-blend-mode:multiply'}, svg);
-
-    // The ground: watercolour, light from above, pencil hatching, folded strata, fading into the paper.
-    const gnd = E.gnd = Kit.mk('g', {mask: 'url(#fade)'}, svg);
-    const top = pathFrom(gy, 0, W, 3);
-    const body = top + ` L${W},${botY} L0,${botY} Z`;
-    Kit.mk('path', {d: body, fill: 'url(#gg)', opacity: .62, filter: 'url(#wc)'}, gnd);
-    Kit.mk('path', {d: body, fill: 'url(#lit)'}, gnd);
-    Kit.mk('path', {d: body, fill: 'url(#hatch)'}, gnd);
-    Kit.mk('path', {d: pathFrom(gy, W * .46, W, 3) + ` L${W},${botY} L${W*.46},${botY} Z`, fill: 'url(#hatch2)'}, gnd);
-    [0, 1, 2].forEach(k => {
-      const off = D * (.3 + .22 * k), fold = .5 - .13 * k;
-      Kit.mk('path', {d: pathFrom(x => plainY + off + (gy(x) - plainY) * fold + Math.sin(x * .05 + k * 2) * fs * .12, 0, W, 4), fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .32, filter: 'url(#pc)'}, gnd);
-    });
-    E.profile = Kit.mk('path', {d: top, fill: 'none', stroke: INK, 'stroke-width': 1.7, 'stroke-linecap': 'round', filter: 'url(#pc)'}, svg);
-
-    // Snow caps on the front peaks.
-    const snow = E.snow = L();
-    FRONT.forEach((c, i) => {
-      if (c[1] > .32 || i === 0 || i === FRONT.length - 1) return;
-      const x = c[0] * W, a = fs * 1.05;
-      let d = pathFrom(gy, x - a, x + a, 2);
-      for (let k = 5; k >= 0; k--) { const xx = x - a + 2 * a * k / 5; d += ` L${xx.toFixed(1)},${(gy(xx) + fs * (k % 2 ? .55 : .22)).toFixed(1)}`; }
-      Kit.mk('path', {d: d + ' Z', fill: SNOW, stroke: INK, 'stroke-width': .8, 'stroke-linejoin': 'round', filter: 'url(#pc)'}, snow);
-    });
-
-    // The lowland: trees, a village with its church, pines on the first slopes.
-    const low = E.low = L();
-    [.25, .36, .395, .43].forEach((u, i) => {
-      const x = u * W, y = gy(x), g = Kit.mk('g', {}, low), rr = fs * (.5 + (i % 2) * .12);
-      Kit.mk('line', {x1: x, y1: y, x2: x, y2: y - fs * .9, stroke: INK, 'stroke-width': 1.1}, g);
-      Kit.mk('circle', {cx: x, cy: y - fs * 1.2, r: rr, fill: '#7f9a4f', opacity: .7, filter: 'url(#wc)'}, g);
-      Kit.mk('circle', {cx: x, cy: y - fs * 1.2, r: rr, fill: 'url(#hatch)', stroke: INK, 'stroke-width': .8, filter: 'url(#pc)'}, g);
-    });
-    {
-      const x = .29 * W, y = gy(x), w = fs * .9, h = fs * .7, g = Kit.mk('g', {}, low);
-      Kit.mk('rect', {x: x - w / 2, y: y - h, width: w, height: h, fill: SNOW, stroke: INK, 'stroke-width': .9}, g);
-      Kit.mk('path', {d: `M${x - w * .65},${y - h} L${x},${y - h - w * .6} L${x + w * .65},${y - h} Z`, fill: '#c2563f', opacity: .8, stroke: INK, 'stroke-width': .9, 'stroke-linejoin': 'round'}, g);
-      Kit.mk('rect', {x: x - w * .12, y: y - h * .55, width: w * .24, height: h * .55, fill: INK, opacity: .7}, g);
-    }
-    {
-      const x = .322 * W, y = gy(x), w = fs * .75, h = fs * .6, tw = fs * .32, g = Kit.mk('g', {}, low);
-      Kit.mk('rect', {x: x - w / 2, y: y - h, width: w, height: h, fill: SNOW, stroke: INK, 'stroke-width': .9}, g);
-      Kit.mk('path', {d: `M${x - w * .6},${y - h} L${x - w * .1},${y - h - w * .45} L${x + w * .3},${y - h} Z`, fill: '#c2563f', opacity: .8, stroke: INK, 'stroke-width': .9, 'stroke-linejoin': 'round'}, g);
-      const tx = x + w * .5 - tw, th = fs * 1.35;
-      Kit.mk('rect', {x: tx, y: y - th, width: tw, height: th, fill: SNOW, stroke: INK, 'stroke-width': .9}, g);
-      Kit.mk('path', {d: `M${tx - 1},${y - th} L${tx + tw / 2},${y - th - fs * .7} L${tx + tw + 1},${y - th} Z`, fill: '#c2563f', opacity: .85, stroke: INK, 'stroke-width': .9, 'stroke-linejoin': 'round'}, g);
-    }
-    [.485, .515, .548, .572].forEach((u, i) => {
-      const x = u * W, y = gy(x), h = fs * (.85 + (i % 2) * .2), w = fs * .3, g = Kit.mk('g', {}, low);
-      Kit.mk('path', {d: `M${x},${y - h} L${x + w},${y} L${x - w},${y} Z`, fill: '#5f7448', opacity: .8, stroke: INK, 'stroke-width': .8, 'stroke-linejoin': 'round', filter: 'url(#pc)'}, g);
-    });
-    const py = gy(bx);
-    const post = E.post = Kit.mk('g', {}, svg);
-    Kit.mk('line', {x1: bx, y1: py, x2: bx, y2: py - fs * 2.9, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, post);
-    const fz = fs * 1.05;
-    Kit.mk('rect', {x: bx, y: py - fs * 2.9, width: fz, height: fz, fill: RED}, post);
-    Kit.mk('rect', {x: bx + fz * .41, y: py - fs * 2.9 + fz * .18, width: fz * .18, height: fz * .64, fill: SNOW}, post);
-    Kit.mk('rect', {x: bx + fz * .18, y: py - fs * 2.9 + fz * .41, width: fz * .64, height: fz * .18, fill: SNOW}, post);
-
-    // "Set far back from the border": a pencil dimension line under the plain.
-    const dim = E.dim = Kit.mk('g', {opacity: 0}, svg), dy = plainY + fs * 1.25, dx1 = W * .6;
-    Kit.mk('path', {d: `M${bx},${dy} L${dx1},${dy} M${bx + 6},${dy - 4} L${bx},${dy} L${bx + 6},${dy + 4} M${dx1 - 6},${dy - 4} L${dx1},${dy} L${dx1 - 6},${dy + 4}`, stroke: INK, 'stroke-width': 1.2, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#pc)'}, dim);
-    Kit.mk('line', {x1: bx, x2: bx, y1: dy - fs * .5, y2: dy + fs * .5, stroke: INK, 'stroke-width': 1}, dim);
-    Kit.mk('line', {x1: dx1, x2: dx1, y1: dy - fs * .5, y2: dy + fs * .5, stroke: INK, 'stroke-width': 1}, dim);
-    T(dim, (bx + dx1) / 2, plainY + fs * 2.45, 'set far back from the border', {anchor: 'middle', size: fs * .98});
-
-    // The old line in faint pencil, then the expanded line and its tunnels in red ink.
-    const R0 = W * .6, R1 = W * .985, ry = x => gy(x) + fs * .45;
-    E.old = Kit.mk('path', {d: pathFrom(ry, R0, W * .72, 3), fill: 'none', stroke: INK, 'stroke-width': 1.3, 'stroke-dasharray': '3 3', opacity: .5}, svg);
-    const tun = E.tun = Kit.mk('g', {}, svg);
-    const FX = [.64, .73, .84, .94].map(u => u * W);
-    const tds = [pathFrom(gal, W * .63, W * .975, 3)];
-    FX.forEach(x => { const y0 = gy(x) + fs * .6, x1 = x + fs * .3, y1 = gal(x1); tds.push(`M${x},${y0} Q${x + fs * .9},${(y0 + y1) / 2} ${x1},${y1}`); });
-    E.tpaths = [];
-    tds.forEach(d => {
-      E.tpaths.push(Kit.mk('path', {d, fill: 'none', stroke: RED, 'stroke-width': 3, 'stroke-linecap': 'round', opacity: .9}, tun));
-      E.tpaths.push(Kit.mk('path', {d, fill: 'none', stroke: SNOW, 'stroke-width': 1, 'stroke-linecap': 'round'}, tun));
-    });
-    E.caves = FX.map(x => Kit.mk('ellipse', {cx: x + fs * .3, cy: gal(x + fs * .3), rx: fs * .55, ry: fs * .32, fill: SNOW, stroke: RED, 'stroke-width': 1.5, opacity: 0}, tun));
-    E.red = Kit.mk('path', {d: pathFrom(ry, R0, R1, 3), fill: 'none', stroke: RED, 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#pc)'}, svg);
-
-    // Forts on the peaks, each with a lit gun slit and a red pennant.
-    E.forts = FX.map(x => {
-      const y = gy(x) + fs * .15, g = Kit.mk('g', {transform: `translate(${x},${y}) scale(0)`}, svg);
-      Kit.mk('line', {x1: 0, x2: 0, y1: -fs * .3, y2: -fs * 1.05, stroke: INK, 'stroke-width': 1}, g);
-      Kit.mk('path', {d: `M0,${-fs * 1.05} L${fs * .5},${-fs * .9} L0,${-fs * .74} Z`, fill: RED}, g);
-      Kit.mk('path', {d: `M${-fs * .6},${fs * .3} L${-fs * .45},${-fs * .32} L${fs * .45},${-fs * .32} L${fs * .6},${fs * .3} Z`, fill: INK, stroke: INK, 'stroke-width': 1, 'stroke-linejoin': 'round'}, g);
-      Kit.mk('line', {x1: -fs * .25, x2: fs * .25, y1: -fs * .06, y2: -fs * .06, stroke: '#f6d27a', 'stroke-width': 1.6, 'stroke-linecap': 'round'}, g);
-      return {g, x, y};
-    });
-
-    // Labels for the Redoubt, under the tunnel gallery.
-    E.rlab = Kit.mk('g', {opacity: 0}, svg);
-    T(E.rlab, W - fs * .4, plainY + fs * 2.75, 'National Redoubt', {anchor: 'end', fill: RED, size: fs * 1.2, weight: 800});
-    T(E.rlab, W - fs * .4, plainY + fs * 4.4, 'forts & tunnels in the rock', {anchor: 'end', size: fs * .98});
-
-    // Sightlines from the forts, downhill.
-    E.sight = Kit.mk('g', {opacity: 0}, svg);
-    E.lines = E.forts.map(fo => Kit.mk('line', {x1: fo.x, y1: fo.y, x2: fo.x, y2: fo.y, stroke: RED, 'stroke-width': 1.2, 'stroke-dasharray': '4 4', 'stroke-linecap': 'round'}, E.sight));
-
-    // The retreat arrow (drawn at the end).
-    const ra = X1 - fs * 1.6, rb2 = X1 - fs * 4.6, rf = x => gy(x) - fs * 1.55;
-    let rd = ''; for (let x = ra; x >= rb2 - .01; x -= 3) rd += (rd ? ' L' : 'M') + x.toFixed(1) + ',' + rf(x).toFixed(1);
-    E.ret = Kit.mk('g', {}, svg);
-    E.retP = Kit.mk('path', {d: rd, fill: 'none', stroke: RED, 'stroke-width': 1.8, 'stroke-linecap': 'round', filter: 'url(#pc)'}, E.ret);
-    E.retH = Kit.mk('path', {d: `M${rb2 + fs * .5},${rf(rb2) - fs * .35} L${rb2},${rf(rb2)} L${rb2 + fs * .5},${rf(rb2) + fs * .35}`, fill: 'none', stroke: RED, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, E.ret);
-    gsap.set(E.retP, {drawSVG: '0%'});
-
-    // The invader.
-    E.inv = Kit.mk('g', {}, svg);
-    E.invRot = Kit.mk('g', {}, E.inv);
-    const lift = Kit.mk('g', {transform: `translate(0,${-fs * .95})`}, E.invRot);
-    E.invIn = Kit.mk('g', {}, lift);
-    const s = fs;
-    const ad = `M${-1.1*s},${-.32*s} L${.15*s},${-.32*s} L${.15*s},${-.72*s} L${1.05*s},0 L${.15*s},${.72*s} L${.15*s},${.32*s} L${-1.1*s},${.32*s} Z`;
-    Kit.mk('path', {d: ad, fill: '#3d3427', stroke: INK, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, E.invIn);
-    Kit.mk('path', {d: ad, fill: 'url(#hatch)', opacity: .9}, E.invIn);
-    T(E.inv, 0, -fs * 2.15, 'invader', {anchor: 'middle', size: fs * .98});
-    E.hint = T(E.inv, -fs * 1.1, fs * 1.6, 'drag →', {size: fs * 1.05, fill: RED, weight: 800});
-    E.hint.setAttribute('class', 'hint');
-    if (touched) E.hint.setAttribute('opacity', 0);
-
-    // The stamp (hidden until the end).
-    E.stamp = Kit.mk('g', {opacity: 0}, svg);
-    E.stampIn = Kit.mk('g', {}, E.stamp);
-    const stx = T(E.stampIn, 0, fs * .55, 'NOT WORTH IT', {anchor: 'middle', fill: RED, size: fs * 1.5, weight: 800, halo: false});
-    const sw = stx.getComputedTextLength() + fs * 1.4, sh = fs * 2.5;
-    const bg = Kit.mk('rect', {x: -sw / 2, y: -sh / 2, width: sw, height: sh, rx: 4, fill: PAPER, opacity: .85}, E.stampIn);
-    E.stampIn.insertBefore(bg, stx);
-    Kit.mk('rect', {x: -sw / 2, y: -sh / 2, width: sw, height: sh, rx: 4, fill: 'none', stroke: RED, 'stroke-width': 2.2, filter: 'url(#pc)'}, E.stampIn);
-    Kit.mk('rect', {x: -sw / 2 + 3.5, y: -sh / 2 + 3.5, width: sw - 7, height: sh - 7, rx: 3, fill: 'none', stroke: RED, 'stroke-width': 1, filter: 'url(#pc)'}, E.stampIn);
-    const sx = Math.max(sw / 2 + 6, W * .3), sy = Math.max(fs * 2.9 + sh / 2 + 8, (fs * 2.9 + plainY - fs * 1.9) / 2);
-    E.stamp.setAttribute('transform', `translate(${sx},${sy})`);
-
-    // The cost meter, top left.
-    const mx0 = fs * .5, mx1 = W * .66, my = fs * 1.75, mh = fs * .75;
-    E.meter = Kit.mk('g', {}, svg);
-    T(E.meter, mx0, fs * 1.2, 'cost of invading', {size: fs * 1.05});
-    E.nwl = T(E.meter, mx1, fs * 1.2, 'not worth it', {anchor: 'end', fill: RED, size: fs * 1.05, weight: 800});
-    E.nwl.setAttribute('opacity', .45);
-    E.mwash = Kit.mk('rect', {x: mx0, y: my, width: 0, height: mh, fill: RED, opacity: .25, filter: 'url(#wc)'}, E.meter);
-    E.mfill = Kit.mk('rect', {x: mx0, y: my, width: 0, height: mh, fill: 'url(#hatchR)'}, E.meter);
-    Kit.mk('path', {d: `M${mx0},${my} L${mx1},${my + .6} L${mx1 - .4},${my + mh} L${mx0 + .5},${my + mh - .4} Z`, fill: 'none', stroke: INK, 'stroke-width': 1.3, 'stroke-linejoin': 'round', filter: 'url(#pc)'}, E.meter);
-    Kit.mk('line', {x1: mx1, x2: mx1, y1: my - fs * .3, y2: my + mh + fs * .3, stroke: RED, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, E.meter);
-    E.mW = mx1 - mx0;
-
-    // The timeline rail.
-    E.rail = Kit.mk('g', {}, svg);
-    Kit.mk('line', {x1: X0, x2: X1, y1: railY, y2: railY, stroke: INK, 'stroke-width': 1.4, opacity: .55, 'stroke-linecap': 'round', filter: 'url(#pc)'}, E.rail);
-    E.rprog = Kit.mk('line', {x1: X0, x2: X0, y1: railY, y2: railY, stroke: RED, 'stroke-width': 2.6, 'stroke-linecap': 'round'}, E.rail);
-    [['border', 0], ['plain', .4], ['hills', .7], ['redoubt', 1]].forEach(([t, p]) => {
-      const x = X0 + (X1 - X0) * p;
-      Kit.mk('circle', {cx: x, cy: railY, r: 2.6, fill: INK}, E.rail);
-      T(E.rail, x, H - fs * .45, t, {anchor: 'middle', size: fs * .95, weight: 700});
-    });
-    E.handle = Kit.mk('circle', {cx: X0, cy: railY, r: fs * .55, fill: RED, stroke: SNOW, 'stroke-width': 2}, E.rail);
-
-    built = true;
-    render(st.p);
-    if (done) applyEnd();
-
-    // A little life in the sky.
-    if (!Kit.calm) {
-      ambient.push(gsap.to(E.birds, {x: fs * 1.1, y: -fs * .35, duration: 4.5, ease: 'sine.inOut', yoyo: true, repeat: -1}));
-      ambient.push(gsap.to(E.birdP, {scaleY: .45, transformOrigin: '50% 100%', duration: .38, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: .13}));
-      E.clouds.forEach((c, i) => ambient.push(gsap.to(c, {x: fs * (i ? -.7 : .8), duration: 6 + i * 2, ease: 'sine.inOut', yoyo: true, repeat: -1})));
-    }
+    const q1 = Kit.$('q1'), q2 = Kit.$('q2');
+    q1.style.minHeight = q2.style.minHeight = '';
+    const now = q2.textContent; let h = q1.offsetHeight;
+    for (const t of [V_NO, V_OK]) { q2.textContent = t; h = Math.max(h, q2.offsetHeight); }
+    q2.textContent = now;
+    q1.style.minHeight = q2.style.minHeight = h + 'px';
   }
 
-  function relayout() {
-    const r = svg.getBoundingClientRect();
-    if (built && Math.abs(r.width - lastW) < 2 && Math.abs(r.height - lastH) < 2) return;
-    layout();
+  // ---------- front ----------
+  function drawFront() {
+    svg.innerHTML = '';
+    const F = F1 = frame(svg);
+    frontG = drawMap(svg, F, '1', true).g;
+    guessEl = Kit.mk('polyline', {points: '', fill: 'none', stroke: ink(), 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    paintGuess();
+  }
+  function paintGuess() {
+    if (!guessEl || !F1) return;
+    guessEl.setAttribute('points', units.map(([u, v]) => (F1.ox + u * F1.s).toFixed(1) + ',' + (F1.oy + v * F1.s).toFixed(1)).join(' '));
   }
 
-  function render(p) {
-    if (!built) return;
-    const x = X0 + (X1 - X0) * p, y = gy(x);
-    E.inv.setAttribute('transform', `translate(${x},${y})`);
-    const a = Math.atan2(gy(x + 6) - gy(x - 6), 12) * 180 / Math.PI;
-    E.invRot.setAttribute('transform', `rotate(${(a * .8).toFixed(2)})`);
-    const c = cost(p);
-    E.mfill.setAttribute('width', c * E.mW); E.mwash.setAttribute('width', c * E.mW);
-    E.mwash.setAttribute('opacity', .2 + .35 * c);
-    const lp = clamp((p - .42) / .3), tp = clamp((p - .52) / .28);
-    gsap.set(E.red, {drawSVG: `0% ${lp * 100}%`});
-    gsap.set(E.tpaths, {drawSVG: `0% ${tp * 100}%`});
-    E.caves.forEach((cv, i) => cv.setAttribute('opacity', clamp((tp - .25 - i * .15) / .15)));
-    E.forts.forEach((fo, i) => { const s = backOut(clamp((p - (.46 + i * .07)) / .06)); fo.g.setAttribute('transform', `translate(${fo.x},${fo.y}) scale(${s.toFixed(3)})`); });
-    E.rlab.setAttribute('opacity', clamp((p - .58) / .1));
-    E.dim.setAttribute('opacity', clamp((p - .1) / .08));
-    E.sight.setAttribute('opacity', clamp((p - .74) / .1) * .85);
-    E.lines.forEach(l => { l.setAttribute('x2', x); l.setAttribute('y2', y - fs * .95); });
-    E.handle.setAttribute('cx', x); E.rprog.setAttribute('x2', x);
-    const s = p < .1 ? 0 : p < .42 ? 1 : p < .74 ? 2 : 3;
-    if (s !== stage && !done) {
-      stage = s; say.innerHTML = SAYS[s];
-      if (!Kit.calm) gsap.fromTo(say, {opacity: .35, y: 3}, {opacity: 1, y: 0, duration: .35, ease: 'power3.out'});
-      if (s > 0) Kit.haptic('selection');
-    }
-    if (!done && p >= .995) finale();
-  }
-
-  function applyEnd() {
-    gsap.set(E.bloom, {opacity: 1, scale: 1, transformOrigin: '50% 50%'});
-    gsap.set(E.stamp, {opacity: 1});
-    gsap.set(E.stampIn, {rotation: -6, scale: 1, opacity: 1, transformOrigin: '50% 50%'});
-    gsap.set(E.invIn, {rotation: 180, transformOrigin: '50% 50%'});
-    gsap.set(E.retP, {drawSVG: '100%'});
-    E.retH.setAttribute('opacity', 1);
-    E.nwl.setAttribute('opacity', 1); E.red.setAttribute('stroke-width', 4);
-  }
-
-  function playEnd() {
-    gsap.timeline()
-      .to(E.meter, {x: 2, duration: .05, repeat: 5, yoyo: true, ease: 'power1.inOut'}, 0)
-      .fromTo(E.nwl, {attr: {opacity: .45}}, {attr: {opacity: 1}, duration: .3}, 0)
-      .fromTo(E.bloom, {opacity: 0, scale: .25, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: 1.5, ease: 'expo.out'}, .05)
-      .fromTo(E.red, {attr: {'stroke-width': 3}}, {attr: {'stroke-width': 4}, duration: .6, ease: 'power3.out'}, .05)
-      .fromTo(E.forts.map(f => f.g.children[2]), {fill: INK}, {fill: RED, duration: .12, repeat: 3, yoyo: true, stagger: .08}, .1)
-      .fromTo(E.invIn, {rotation: 0, transformOrigin: '50% 50%'}, {rotation: 180, transformOrigin: '50% 50%', duration: .8, ease: 'back.inOut(1.6)'}, .3)
-      .fromTo(E.stamp, {opacity: 0}, {opacity: 1, duration: .01}, .55)
-      .fromTo(E.stampIn, {scale: 2.6, rotation: -22, opacity: 0, transformOrigin: '50% 50%'}, {scale: 1, rotation: -6, opacity: 1, duration: .55, ease: 'back.out(1.7)'}, .55)
-      .fromTo(E.retP, {drawSVG: '0%'}, {drawSVG: '100%', duration: .6, ease: 'power2.inOut'}, .95)
-      .fromTo(E.retH, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: .2}, 1.45)
-      .fromTo('#keep', {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .5, ease: 'power3.out'}, .7);
-  }
-
-  function settle(cb) {
-    settling = true; let last = '', same = 0, n = 0;
-    const tick = () => {
-      const r = svg.getBoundingClientRect(), k = Math.round(r.width) + 'x' + Math.round(r.height);
-      same = k === last ? same + 1 : 0; last = k;
-      if (same >= 2 || ++n > 40) { settling = false; cb(); } else requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }
-
-  function finale() {
-    if (done) return;
-    done = true;
-    card.classList.add('answered');
-    say.innerHTML = WHY; Kit.show('keep');
-    Kit.haptic('success');
-    if (Kit.calm) { relayout(); applyEnd(); return; }
-    gsap.set('#keep', {opacity: 0});
-    settle(() => { relayout(); playEnd(); });
-  }
-
-  let tw = null;
-  function setTarget(v) {
-    if (done) return;
-    v = clamp(v);
-    if (Kit.calm) { st.p = v; render(v); return; }
-    if (tw) tw.kill();
-    tw = gsap.to(st, {p: v, duration: .32, ease: 'power3.out', onUpdate: () => render(st.p)});
-  }
-  const pFrom = e => { const r = svg.getBoundingClientRect(); return ((e.clientX - r.left) * (W / r.width) - X0) / (X1 - X0); };
-  let dragging = false;
+  let drawing = false, len = 0;
+  const local = e => { const r = svg.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  const toU = ([x, y]) => [(x - F1.ox) / F1.s, (y - F1.oy) / F1.s];
   svg.addEventListener('pointerdown', e => {
-    if (done) return; dragging = true; svg.setPointerCapture(e.pointerId);
-    if (!touched) { touched = true; gsap.to(E.hint, {opacity: 0, duration: .25}); }
-    Kit.haptic('light'); setTarget(pFrom(e));
+    if (answered || !F1) return;
+    drawing = true; len = 0; units = [toU(local(e))];
+    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    paintGuess(); Kit.haptic('selection');
   });
-  svg.addEventListener('pointermove', e => { if (dragging) setTarget(pFrom(e)); });
-  const end = () => { dragging = false; };
+  svg.addEventListener('pointermove', e => {
+    if (!drawing) return;
+    const u = toU(local(e)), last = units[units.length - 1], d = Math.hypot(u[0] - last[0], u[1] - last[1]) * F1.s;
+    if (d < 2) return;
+    len += d; units.push(u); paintGuess();
+  });
+  const end = () => { if (!drawing) return; drawing = false; if (len > F1.s * .35) sure.on(); };
   svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
-  if (window.ResizeObserver) new ResizeObserver(() => { if (built && !settling) relayout(); }).observe(Kit.$('stage'));
+  function judge() {
+    // Is the line drawn in the mountain heart, or elsewhere?
+    const c = RD.reduce((a, p) => [a[0] + p[0] / RD.length, a[1] + p[1] / RD.length], [0, 0]);
+    const big = RD.map(([lo, la]) => [c[0] + (lo - c[0]) * 1.35, c[1] + (la - c[1]) * 1.35]);
+    const proj = ([lo, la]) => [(lo - 5.9) * .684, 47.85 - la];
+    const poly = big.map(proj);
+    const inside = units.filter(p => inPoly(p, poly)).length / Math.max(1, units.length);
+    return inside >= .5;
+  }
 
-  Kit.onShow.card = layout;
-  Kit.onEnter.card = () => {
-    if (Kit.calm || !built) return;
-    gsap.timeline()
-      .from(E.profile, {drawSVG: '0%', duration: 1.3, ease: 'power2.inOut'}, 0)
-      .from(E.gnd, {opacity: 0, duration: 1, ease: 'power2.out'}, .25)
-      .from(E.back, {opacity: 0, y: 8, duration: 1, ease: 'power3.out'}, .45)
-      .from(E.sun, {opacity: 0, scale: .4, transformOrigin: '50% 50%', duration: 1.2, ease: 'expo.out'}, .5)
-      .from(E.clouds, {opacity: 0, duration: 1, stagger: .2, ease: 'power2.out'}, .6)
-      .from(E.birds, {opacity: 0, duration: .8}, 1.2)
-      .from(E.snow.children, {opacity: 0, y: -4, stagger: .06, duration: .5, ease: 'power3.out'}, .9)
-      .from(E.low.children, {scale: 0, transformOrigin: '50% 100%', stagger: .05, duration: .5, ease: 'back.out(2)'}, .7)
-      .from(E.post, {y: fs * 2, opacity: 0, duration: .6, ease: 'back.out(1.8)'}, .8)
-      .from(E.old, {opacity: 0, duration: .6}, 1.1)
-      .from(E.meter, {opacity: 0, y: -6, duration: .5, ease: 'power3.out'}, 1)
-      .from(E.rail, {opacity: 0, y: 6, duration: .5, ease: 'power3.out'}, 1.1)
-      .from(E.inv, {opacity: 0, duration: .5, ease: 'power2.out'}, 1.2);
-  };
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered) return; answered = true;
+    const ok = lastOk = judge(), choice = ok ? 'a line deep in the Alps' : 'a line outside the mountain heart';
+    Kit.$('q2').textContent = ok ? V_OK : V_NO;
+    Kit.answer({choice, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${choice}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- back ----------
+  function drawBase2() {
+    svg2.innerHTML = ''; layer = null;
+    F2 = frame(svg2);
+    drawMap(svg2, F2, '2', false);
+  }
+
+  // The reason, in profile: an attacker in the lowland, a defender higher up.
+  function drawCut() {
+    cut.innerHTML = '';
+    const f = Kit.fitSvg(cut), W = f.W, H = f.H, k = ink();
+    const fs = Math.max(12, Math.min(13, W / 26));
+    const g = cutG = Kit.mk('g', {}, cut);
+    const low = H * .88, plat = H * .76, px = W * .85, py = Math.max(16, H * .2);
+    const prof = [[0, low], [W * .15, low], [W * .24, plat], [W * .58, plat], [W * .66, H * .5], [W * .71, H * .58], [px - 5, py], [px + 5, py], [W * .93, H * .38], [W * .96, H * .45], [W, H * .4]];
+    const pp = prof.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1));
+    Kit.mk('path', {d: 'M' + pp.join('L') + `L${W},${H}L0,${H}Z`, fill: LAND}, g);
+    Kit.mk('polyline', {points: pp.join(' '), fill: 'none', stroke: k, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    const pawn = (x, y, c) => {
+      Kit.mk('path', {d: `M${x - 4},${y}L${x - 1.8},${y - 6.5}L${x + 1.8},${y - 6.5}L${x + 4},${y}Z`, fill: c}, g);
+      Kit.mk('circle', {cx: x, cy: y - 9.5, r: 2.8, fill: c}, g);
+    };
+    pawn(W * .07, low, k);
+    pawn(px, py, RED);
+    // The attack crosses the open plateau and stops at the foot of the mountains.
+    const ay = plat - 5, ex = W * .555;
+    Kit.mk('polyline', {points: `${W * .12},${low - 5} ${W * .15},${low - 5} ${W * .24},${ay} ${ex},${ay}`, fill: 'none', stroke: k, 'stroke-width': 1.4, 'stroke-dasharray': '4 3', 'stroke-linejoin': 'round'}, g);
+    Kit.mk('path', {d: `M${ex},${ay - 3.5}L${ex + 6},${ay}L${ex},${ay + 3.5}Z`, fill: k}, g);
+    const t2 = txt(g, W * .39, ay - 6, 'too costly to take', fs, {'text-anchor': 'middle'});
+    // Defender's label sits in the sky, just clear of the slope.
+    const y1 = py - 6 + fs * .35, yb = y1 + 3;
+    const tt = Math.max(0, Math.min(1, (H * .58 - yb) / (H * .58 - py)));
+    const xs = W * .71 + tt * (px - 5 - W * .71);
+    const ex1 = Math.min(px - 10, xs - 5);
+    const t1 = txt(g, ex1, y1, 'higher than the attacker', fs, {'text-anchor': 'end'});
+    if (ex1 - t1.getComputedTextLength() < 2) t1.setAttribute('x', 2 + t1.getComputedTextLength());
+    if (hit(t1, t2)) t2.setAttribute('y', Math.max(ay - 6, t1.getBBox().y + t1.getBBox().height + fs));
+  }
+
+  function drawBack(animate) {
+    if (!F2) return;
+    if (layer) layer.remove();
+    const F = F2, k = ink(), L = layer = Kit.mk('g', {}, svg2);
+    const rd = RD.map(p => F.P(...p)), rdD = dOf(rd);
+    const defs = Kit.mk('defs', {}, L), cp = Kit.mk('clipPath', {id: 'rdc'}, defs); Kit.mk('path', {d: rdD}, cp);
+
+    // The Redoubt: flat tint, the same relief showing through in a deeper pink, a crisp red edge.
+    const zone = Kit.mk('g', {}, L);
+    Kit.mk('path', {d: rdD, fill: TINT}, zone);
+    const pk = Kit.mk('g', {'clip-path': 'url(#rdc)'}, zone);
+    for (const m of relief(F)) Kit.mk('path', {d: peak(m), fill: PINK}, pk);
+    const line = Kit.mk('path', {d: rdD, fill: 'none', stroke: RED, 'stroke-width': 2, 'stroke-linejoin': 'round'}, L);
+
+    // The reader's line, dashed, named once at its western end.
+    const you = Kit.mk('g', {}, L), dim = Kit.mk('g', {}, L);
+    const pts = units.map(([u, v]) => [F.ox + u * F.s, F.oy + v * F.s]);
+    if (pts.length) {
+      Kit.mk('polyline', {points: pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' '), fill: 'none', stroke: k, 'stroke-width': 2.5, 'stroke-dasharray': '6 5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, you);
+      const west = pts.reduce((a, p) => p[0] < a[0] ? p : a);
+      const e = txt(you, west[0], Math.min(F.H - 3, west[1] + F.fs * 1.3), 'your line', F.fs);
+      const w = e.getComputedTextLength();
+      e.setAttribute('x', Math.max(3, Math.min(F.W - 3 - w, west[0])));
+      // If the label would sit on the red edge, lift it above the line instead.
+      const bb = e.getBBox(), corners = [[bb.x, bb.y], [bb.x + bb.width, bb.y], [bb.x, bb.y + bb.height], [bb.x + bb.width, bb.y + bb.height]];
+      if (corners.some(p => inPoly(p, rd))) e.setAttribute('y', Math.max(F.fs, west[1] - F.fs * .6));
+      // How far it sat from the heights: a plain dimension from the middle of the line to the Redoubt.
+      const mid = pts[pts.length >> 1];
+      if (!lastOk && !inPoly(mid, rd)) {
+        let bq = null, bd = 1e9;
+        for (let i = 0; i < rd.length; i++) { const a = rd[i], b = rd[(i + 1) % rd.length], dx = b[0] - a[0], dy = b[1] - a[1];
+          const t = Math.max(0, Math.min(1, ((mid[0] - a[0]) * dx + (mid[1] - a[1]) * dy) / (dx * dx + dy * dy || 1)));
+          const q = [a[0] + t * dx, a[1] + t * dy], d = Math.hypot(mid[0] - q[0], mid[1] - q[1]); if (d < bd) { bd = d; bq = q; } }
+        if (bq && bd > F.fs * 1.2) {
+          const ux = (bq[0] - mid[0]) / bd, uy = (bq[1] - mid[1]) / bd, a = [mid[0] + ux * 4, mid[1] + uy * 4], b = [bq[0] - ux * 3, bq[1] - uy * 3], nx = -uy * 4, ny = ux * 4;
+          Kit.mk('path', {d: `M${a[0]},${a[1]}L${b[0]},${b[1]}M${a[0] - nx},${a[1] - ny}L${a[0] + nx},${a[1] + ny}M${b[0] - nx},${b[1] - ny}L${b[0] + nx},${b[1] + ny}`, stroke: k, 'stroke-width': 1.2, fill: 'none', 'stroke-linecap': 'round'}, dim);
+        }
+      }
+    }
+
+    if (!animate || Kit.calm || typeof gsap === 'undefined') return;
+    const Lg = line.getTotalLength();
+    gsap.set(line, {strokeDasharray: Lg, strokeDashoffset: Lg});
+    gsap.timeline({delay: .45})
+      .from(you, {opacity: 0, duration: .35, ease: 'power2.out'})
+      .to(line, {strokeDashoffset: 0, duration: .9, ease: 'power2.inOut'}, '+=.15')
+      .from(zone, {opacity: 0, duration: .45, ease: 'power2.out'}, '-=.35')
+      .from(dim, {opacity: 0, duration: .3, ease: 'power2.out'}, '+=.05')
+      .from(cutG, {opacity: 0, y: 4, duration: .4, ease: 'power3.out'}, '-=.1')
+      .add(() => gsap.set(line, {clearProps: 'strokeDasharray,strokeDashoffset'}));
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  const redraw = () => { layout(); drawFront(); drawBase2(); drawCut(); if (turned) drawBack(false); };
+  let rt = 0; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(redraw, 150); });
+
+  Kit.onShow.card = redraw;
+  Kit.onEnter.card = () => { if (!Kit.calm && frontG && typeof gsap !== 'undefined') gsap.from(frontG, {opacity: 0, y: 6, duration: .5, ease: 'power3.out'}); };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    touched = true; if (E.hint) E.hint.setAttribute('opacity', 0);
-    for (const v of [.3, .6, .85, 1]) { setTarget(v); await wait(Kit.calm ? 30 : 380); }
-    if (!done) { st.p = 1; render(1); }
-    await wait(Kit.calm ? 60 : 1800);
+    if (!F1) redraw();
+    const r = svg.getBoundingClientRect();
+    const route = [];
+    for (let i = 0; i <= 14; i++) { const k = i / 14; route.push(F1.P(6.5 + k * 2.8, 47.0 + k * .5)); }
+    const ev = (type, [x, y]) => svg.dispatchEvent(new PointerEvent(type, {clientX: r.left + x, clientY: r.top + y, pointerId: 1, bubbles: true, isPrimary: true}));
+    ev('pointerdown', route[0]);
+    for (const p of route.slice(1)) ev('pointermove', p);
+    ev('pointerup', route[route.length - 1]);
+    await wait(150);
+    const b = Kit.$('sure').querySelector('[data-v="80"]') || Kit.$('sure').querySelector('button');
+    if (b) b.click();
+    await wait(Kit.calm ? 900 : 3800);
   };
 })();
 Kit.single();
