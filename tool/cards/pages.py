@@ -47,7 +47,9 @@ MEDIA_SRC = re.compile(r"<(img|audio|video|source|track|image)\b[^>]*\b(?:src|hr
 IMPORT_MAP = re.compile(r"<script\b[^>]*\btype\s*=\s*[\"']importmap[\"'][^>]*>([\s\S]*?)</script\s*>", re.I)
 IMPORT_FROM = re.compile(r"""\b(?:import|from)\s*\(?\s*["']([^"']+)["']""")
 KIT_URL = re.compile(r"""Kit\.url\(\s*['"]([^'"]+)['"]\s*\)""")
-CSS_URL = re.compile(r"""url\(\s*(['"]?)([^'")]+)\1\s*\)""")
+# A stylesheet's url( stands after a colon, a comma, a space or a bracket; a script's curl(...) or
+# toUrl(...) is a function of the page, not a picture it loads.
+CSS_URL = re.compile(r"""(?<![\w$])url\(\s*(['"]?)([^'")]+)\1\s*\)""")
 # A picture carried as data names its own parts (a grain filter at url(%23n)), and a picture shown
 # as an image loads nothing from outside: what is inside it is its own.
 CSS_DATA = re.compile(r"""url\(\s*(?:"data:[^"]*"|'data:[^']*')\s*\)""")

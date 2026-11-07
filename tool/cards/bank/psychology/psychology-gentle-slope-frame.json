@@ -3,12 +3,12 @@
   "topic": "psychology",
   "genre": "psychology.bias",
   "strand": "psychology.bias.anchoring_bias",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Why can't your brain tell which way a gentle slope tilts?",
-  "answer": "A gentle slope has no clear reference to measure against, so the brain borrows the nearest one, even when that one is tilted. Here a low segment sits between steep ones, and the steep neighbors act as a false frame, making its direction hard to judge.",
-  "move": "No outside reference? The brain borrows the nearest one, even a tilted one.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Walking this road, what does your brain judge the middle stretch against?",
+  "answer": "The middle stretch is gentle, lying between two steep ones. Nothing beyond the road gives a comparison, and there is no view past the horizon. So the brain uses the steep neighbors as its reference and struggles to tell which way the middle goes.",
+  "move": "With no outside reference, the brain uses the slopes next to a slope as its reference.",
   "keywords": [
     "slope",
     "road",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Diagram of a road in three segments, steep, flat, then steep, with arrows showing perceived versus actual slope. A pencil can be dragged to restore the scenery around the road one piece at a time.",
-    "ground": "#f3ead4"
+    "label": "A road with a gentle middle stretch between two steep stretches. Drag the orange dot to show which way the middle slopes, then say how sure you are. The dot must be moved first to unlock the answer."
   },
   "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=GDR2odTE7dM&t=1269s",
-  "written": "2026-11-04"
+  "written": "2026-11-06"
 }

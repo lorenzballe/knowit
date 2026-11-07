@@ -1,298 +1,295 @@
-<!doctype html>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-adriatic-dry-floor -->
-<!-- Look: a neon sign on dark brick. The cross-section of the Adriatic runs north to south: an amber seabed tube, a cyan sea with rising bubbles, a pink "today" line, and readouts buzzing in one mono row along the top.
-     Interaction: drag the sea down along a ticked neon rail toward the pink "ice age" notch. The water falls metre by metre, the coast dot slides south, and the exposed floor lights up green. The two readouts trade off: sea level against coast distance.
-     Wow: at −120 m a ghost of today's sea flickers on, then morphs (MorphSVG) down onto the floor as a green strip of dry land. Grass tufts sprout along it, the 120 m arrow draws itself on the rail, and a dimension line under the ground measures the ≈200 km of dry floor. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>The Adriatic that wasn't</title>
+<!-- Design note.
+     Thought to carry: on nearly flat ground, a small change in height becomes a huge change in distance (120 m down, 200 km sideways).
+     Front: a flat cross-section of the northern Adriatic. As the reader drags the sea down, the beach-goer walks after the shoreline, and a live counter tells how many km south the coast has moved, on a faint 0–200 km axis. The true value is never shown.
+     Back: the sea drains to 120 m. A 200 km bar drops a tick to the ice-age coast. The reader's guess sits under it as an orange bar and dot, read as distance.
+     Only three labels on the back drawing: 200 km, sea level today, ice-age sea. The answer itself lives in the headline.
+     The 0.6 m per km in the text is stated as what it is: the average implied by the video's two numbers, not a measured slope. -->
+<title>The sea that walked away</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{
-  background-image:
-    radial-gradient(ellipse 80% 45% at 50% 42%, rgba(255,79,163,.13), transparent 70%),
-    radial-gradient(ellipse 120% 60% at 50% 115%, rgba(0,0,0,.65), transparent 70%),
-    radial-gradient(ellipse 120% 50% at 50% -15%, rgba(0,0,0,.55), transparent 70%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='32'%3E%3Cg fill='none' stroke='%23000' stroke-opacity='.5' stroke-width='2'%3E%3Cpath d='M0 1H64M0 17H64M1 1V17M33 17V33'/%3E%3C/g%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.04'%3E%3Cpath d='M3 3.5H31M35 19.5H63'/%3E%3C/g%3E%3C/svg%3E");
-}
-#card .q{text-shadow:0 0 .6cqh rgba(255,79,163,.55),0 0 2cqh rgba(255,79,163,.25)}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:visible}
-#why{display:flex;flex-direction:column;gap:.6cqh}
-#why .body{font:600 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
-#why .body b{color:#ff8cc4;text-shadow:0 0 8px rgba(255,79,163,.55)}
-.say{overflow-wrap:anywhere}
-.say b{color:#7dfcff;text-shadow:0 0 8px rgba(63,232,255,.6)}
-.buzz{animation:buzz 7s infinite}
-.buzz.b2{animation-delay:-3.1s;animation-duration:9s}
-@keyframes buzz{0%,90%,100%{opacity:1}91%{opacity:.35}92%{opacity:1}93.5%{opacity:.55}94.5%{opacity:1}}
-.pulse{animation:pulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes pulse{50%{transform:scale(1.5);opacity:.5}}
-.flow{animation:flow 1.8s linear infinite}
-@keyframes flow{to{stroke-dashoffset:-28}}
-.nudge{animation:nudge 1.3s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateY(4px)}}
-.bub{animation:rise var(--d,5s) linear infinite;animation-delay:var(--dl,0s)}
-@keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.85}85%{opacity:.6}100%{transform:translateY(var(--rise,-100px));opacity:0}}
-.kit-calm .buzz,.kit-calm .pulse,.kit-calm .flow,.kit-calm .nudge,.kit-calm .bub{animation:none}
-.kit-calm .bub{opacity:.5}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .38s}
+.kit-calm .turn,.kit-calm .turn.over>.front{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.front .say{padding-right:0;margin-right:104px;min-height:44px;box-sizing:border-box;overflow-wrap:anywhere}
+.back .foot{padding-right:96px;min-height:44px;box-sizing:border-box}
+.back .big{margin:0 0 1cqh}
+.back .mine{display:flex;align-items:center;gap:8px;margin:1cqh 0 0;font:700 13px/1.3 var(--body);color:var(--k)}
+.back .mine i{flex:none;width:20px;height:4px;border-radius:2px;background:#ff8c2e;border:1px solid var(--k);box-sizing:content-box}
+.back .body{margin:1cqh 0;overflow-wrap:anywhere}
+.back .keep{margin-bottom:1cqh}
+/* Confidence row: room above, near-black label, legible pills, filled once picked. */
+#sure{margin-top:22px}
+#sure>:not([data-v]):not(:has([data-v])){font:600 15px/1.25 var(--body)!important;color:var(--k)!important;opacity:1!important}
+#sure [data-v]{color:#0d3d1f!important;border:1.5px solid #0d3d1f!important;background:transparent!important;opacity:1!important;font-weight:700}
+#sure [data-v]:disabled,#sure [data-v][aria-disabled="true"]{opacity:.7!important}
+#sure [data-v].pick{background:#0d3d1f!important;color:#fff!important;opacity:1!important}
+.hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(5px)}}
+.kit-calm .hint{animation:none}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Drag the sea down · depth against coast" style="--c:#1d1216;--k:#fdeef4;--edge:#0c0608">
+<article class="card" id="card" data-topic="nature" data-kind="Drag the sea down · the ice-age coast">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">ICE AGE SEAS</span></div>
-    <h2 class="q">Why was there no Adriatic Sea as we know it in the last ice age?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Cross-section of the Adriatic from north to south: the seabed, today's sea level, and a sea you can drag down to 120 metres lower, which moves the coast about 200 km south."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE SEA</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">In the ice age, the northern Adriatic was land. How much lower was the sea?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A cross-section of the northern Adriatic: the sea over a nearly flat seabed. Drag down to lower the sea and watch how far south the coast moves."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say"><b>Drag the sea down</b> to your guess. Depths are drawn stretched.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">About 120&nbsp;m lower</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The sea drops 120 metres and the coast moves 200 kilometres south, across a seabed that is almost flat."></svg></div>
+        <p class="mine" id="mine"></p>
+        <p class="body">A 120&nbsp;m drop spread over 200&nbsp;km is, on average, only about 0.6&nbsp;m per km. So when the sea fell, the coast moved about 200&nbsp;km south, and the Adriatic as we know it was gone.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> On flat ground, a small change in height is a huge change in distance.</div>
+        <div class="foot"><span class="src">Source · Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023).</span></div>
+      </section>
     </div>
-    <p class="say" id="say">Ice age: the sea sits lower. <b>Drag the sea down</b> and watch where the coast ends up.</p>
-    <div id="why" class="gone"><p class="body">In the last glacial period the sea sat about <b>120 m</b> lower, not 10 or 15, so much of today's Adriatic floor was dry land.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Drop the sea 120 m and the Adriatic coast moves about 200 km south.</div>
-    <div class="foot"><span class="src">Source · Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  gsap.registerPlugin(MorphSVGPlugin, DrawSVGPlugin);
-  const svg = Kit.$('pic');
-  const PINK = '#ff4fa3', CYAN = '#3fe8ff', GREEN = '#7dff9e', AMBER = '#ffb54d', INK = '#fdeef4';
-  const S = {s: 0};
-  let done = false, touched = false, built = false, W = 0, H = 0, fs = 13, pad = 8, yTop = 0, yBot = 0;
-  let E = {}, lastStep = 0;
-  const K0 = -40, K1 = 340, TOP = 20, BOT = -175, LOW = 120, KH = 326;
-  const F = v => Math.max(12, v);
+  const ORANGE = '#ff8c2e', WHITE = '#ffffff', SEA = '#3b8bd0', DARK = '#0d3d1f';
+  const KMAX = 360, TRUE = 120, COAST = 200, GMAX = 190;
+  // A drawn profile, not a survey: it averages the slope implied by the video's two numbers
+  // (120 m over 200 km), with a gentle wobble so it reads as ground, not a ruler.
+  const depth = k => k < 0 ? 1.4 * k : .6 * k + 1.2 * Math.sin(k * Math.PI / 25) * Math.min(1, k / 30);
+  const coastK = L => { if (L <= 0) return 0; for (let k = 0; k <= KMAX; k += .25) if (depth(k) >= L) return k; return KMAX; };
+  const r5 = v => Math.round(v / 5) * 5;
+  const fsOf = f => Math.max(12, Math.min(14, f.f || 13));
 
-  const X = k => pad + (k - K0) / (K1 - K0) * (W - 2 * pad);
-  const Y = m => yTop + (TOP - m) / (TOP - BOT) * (yBot - yTop);
-  // A schematic seabed, north (left) to south (right): a long gentle floor, then a steep drop.
-  const elev = k => {
-    if (k < 0) return -k * .5;
-    if (k <= 200) return -.6 * k + 3 * Math.sin(k * Math.PI / 25);
-    if (k <= 240) return -120 - (k - 200) * .9;
-    return -156 - (k - 240) * .08;
+  function mkG(W, H, x0, y0, yB, dmax) {
+    const sx = (W - x0) / KMAX, sy = (yB - y0) / dmax;
+    return {W, H, x0, y0, yB, sx, sy, X: k => x0 + k * sx, Y: d => y0 + d * sy, K: x => (x - x0) / sx};
+  }
+  const clampY = (G, y) => Math.max(0, Math.min(G.yB, y));
+  const floorPts = (G, k0) => {
+    const a = [];
+    for (let x = G.X(k0); x < G.W; x += 3) a.push([x, clampY(G, G.Y(depth(G.K(x))))]);
+    a.push([G.W, clampY(G, G.Y(depth(G.K(G.W))))]);
+    return a;
   };
-  // Where the water meets the floor, for a sea s metres lower.
-  const coastK = s => {
-    if (s <= 0) return 0;
-    let a = 0, b = 240;
-    for (let i = 0; i < 30; i++) { const m = (a + b) / 2; if (elev(m) > -s) a = m; else b = m; }
-    return (a + b) / 2;
+  const groundPath = G => `M0,${G.yB} ` + floorPts(G, G.K(0)).map(p => `L${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ') + ` L${G.W},${G.yB} Z`;
+  const seaPath = (G, L) => {
+    const kc = coastK(L), xc = G.X(kc), yL = G.Y(L), pts = floorPts(G, kc).reverse();
+    return `M${xc.toFixed(1)},${yL.toFixed(1)} L${G.W},${yL.toFixed(1)} ` + pts.map(p => `L${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ') + ' Z';
   };
-  const bedPts = (a, b, step = 2) => { const p = []; for (let k = a; k < b; k += step) p.push([X(k), Y(elev(k))]); p.push([X(b), Y(elev(b))]); return p; };
-  const pl = p => p.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('');
-  const T = (parent, x, y, str, a = {}) => {
-    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--mono)', 'font-size': F(fs), 'font-weight': 700}, a), parent);
-    e.style.fontFamily = 'var(--mono)'; e.textContent = str; return e;
+  const txt = (parent, x, y, t, size, weight, extra = {}, fam = 'var(--body)', fill = 'var(--k)') => {
+    const e = Kit.mk('text', Object.assign({x, y, style: `font:${weight} ${size}px ${fam};fill:${fill}`}, extra), parent);
+    e.textContent = t; return e;
   };
-
-  function layout() {
-    svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(15, W / 27));
-    pad = fs * .6; yTop = fs * 2.3; yBot = H - fs * 1.7;
-    const ns = svg;
-    const xh = X(KH);
-
-    // ---------- light ----------
-    const defs = Kit.mk('defs', {}, ns);
-    const mkGlow = (id, sd) => {
-      const fl = Kit.mk('filter', {id, filterUnits: 'userSpaceOnUse', x: -20, y: -20, width: W + 40, height: H + 40}, defs);
-      Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: sd, result: 'b'}, fl);
-      Kit.mk('feGaussianBlur', {in: 'SourceGraphic', stdDeviation: sd * 3, result: 'c'}, fl);
-      const m = Kit.mk('feMerge', {}, fl);
-      ['c', 'b', 'b', 'SourceGraphic'].forEach(n => Kit.mk('feMergeNode', {in: n}, m));
-    };
-    mkGlow('glow', fs * .18); mkGlow('glowS', fs * .1);
-    const wg = Kit.mk('linearGradient', {id: 'water', gradientUnits: 'userSpaceOnUse', x1: 0, x2: 0, y1: Y(0), y2: yBot}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': CYAN, 'stop-opacity': .38}, wg);
-    Kit.mk('stop', {offset: .55, 'stop-color': '#1a6bff', 'stop-opacity': .16}, wg);
-    Kit.mk('stop', {offset: 1, 'stop-color': '#1a2bff', 'stop-opacity': .06}, wg);
-    const eg = Kit.mk('linearGradient', {id: 'earth', gradientUnits: 'userSpaceOnUse', x1: 0, x2: 0, y1: Y(20), y2: yBot}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': '#3a1d14', 'stop-opacity': .85}, eg);
-    Kit.mk('stop', {offset: 1, 'stop-color': '#120709', 'stop-opacity': .2}, eg);
-    const cp = Kit.mk('clipPath', {id: 'wclip', clipPathUnits: 'userSpaceOnUse'}, defs);
-    E.clip = Kit.mk('path', {}, cp);
-
-    // ---------- the earth under the sea ----------
-    const gEarth = Kit.mk('g', {}, ns);
-    const bed = bedPts(K0, K1);
-    Kit.mk('path', {d: pl(bed) + `L${X(K1)},${yBot}L${X(K0)},${yBot}Z`, fill: 'url(#earth)'}, gEarth);
-    [1, 2, 3].forEach(i => Kit.mk('path', {d: pl(bed.map(p => [p[0], p[1] + fs * 1.1 * i])), fill: 'none', stroke: AMBER, 'stroke-opacity': .12 - i * .025, 'stroke-width': 1, 'stroke-dasharray': `${2 + i} ${6 + i * 2}`}, gEarth));
-
-    // ---------- the sea ----------
-    E.gWater = Kit.mk('g', {}, ns);
-    E.water = Kit.mk('path', {fill: 'url(#water)'}, E.gWater);
-    const gBub = Kit.mk('g', {'clip-path': 'url(#wclip)'}, E.gWater);
-    [[252, 2.2, 5.2, 0], [268, 1.4, 4.1, -1.3], [284, 2.8, 6.3, -3.1], [300, 1.6, 4.6, -2.2], [315, 2.2, 5.6, -.6], [333, 1.3, 3.9, -2.8], [292, 1.2, 3.6, -1.9]].forEach(([k, r, d, dl]) => {
-      const y0 = Y(elev(k)) - r - 2;
-      const c = Kit.mk('circle', {cx: X(k), cy: y0, r: r * fs / 13, fill: 'none', stroke: '#bff8ff', 'stroke-width': 1.1, 'stroke-opacity': .75, class: 'bub'}, gBub);
-      c.style.setProperty('--rise', (Y(0) - y0) + 'px'); c.style.setProperty('--d', d + 's'); c.style.setProperty('--dl', dl + 's');
+  const tlen = (el, fb) => { let w = 0; try { w = el.getComputedTextLength(); } catch (_) {} return w > 0 ? w : fb; };
+  const line = (parent, x1, y1, x2, y2, style) => Kit.mk('line', {x1, y1, x2, y2, style}, parent);
+  // A vertical line that breaks around labels instead of running through them.
+  function vline(parent, x, ya, yb, boxes, style) {
+    let segs = [[ya, yb]];
+    boxes.forEach(b => {
+      if (!b || x < b.x0 - 3 || x > b.x1 + 3) return;
+      const out = [];
+      segs.forEach(([a, c]) => {
+        if (c <= b.y0 - 3 || a >= b.y1 + 3) { out.push([a, c]); return; }
+        if (a < b.y0 - 3) out.push([a, b.y0 - 3]);
+        if (c > b.y1 + 3) out.push([b.y1 + 3, c]);
+      });
+      segs = out;
     });
-    E.surf = Kit.mk('path', {fill: 'none', stroke: CYAN, 'stroke-width': fs * .2, 'stroke-linecap': 'round', filter: 'url(#glow)', class: 'buzz'}, E.gWater);
-    E.ripple = Kit.mk('path', {fill: 'none', stroke: '#e6fdff', 'stroke-width': 1.2, 'stroke-dasharray': '6 22', 'stroke-linecap': 'round', class: 'flow', opacity: .8}, E.gWater);
+    segs.filter(s => s[1] - s[0] > 2).forEach(s => line(parent, x, s[0], x, s[1], style));
+  }
+  // A beach-goer, feet at the origin, looking out to sea (south).
+  function person(parent, h) {
+    const g = Kit.mk('g', {}, parent), w = h * .46;
+    Kit.mk('path', {d: `M${-w / 2},0 L${-w * .32},${-h * .6} Q0,${-h * .7} ${w * .32},${-h * .6} L${w / 2},0 Z`, style: `fill:${WHITE}`}, g);
+    Kit.mk('circle', {cx: 0, cy: -h * .8, r: h * .17, style: `fill:${WHITE}`}, g);
+    Kit.mk('circle', {cx: h * .07, cy: -h * .82, r: Math.max(1.3, h * .03), style: 'fill:var(--k)'}, g);
+    return g;
+  }
 
-    // ---------- the rail the handle runs on ----------
-    E.gRail = Kit.mk('g', {}, ns);
-    Kit.mk('path', {d: `M${xh},${Y(0)}L${xh},${Y(-LOW)}`, stroke: CYAN, 'stroke-opacity': .3, 'stroke-width': 1.5, 'stroke-dasharray': '2 4'}, E.gRail);
-    let tk = '';
-    for (let m = 20; m < LOW; m += 20) tk += `M${xh - fs * .25},${Y(-m)}L${xh + fs * .25},${Y(-m)}`;
-    Kit.mk('path', {d: tk, stroke: CYAN, 'stroke-opacity': .45, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, E.gRail);
-    E.gTarget = Kit.mk('g', {}, ns);
-    Kit.mk('path', {d: `M${xh - fs * .7},${Y(-LOW)}L${xh + fs * .7},${Y(-LOW)}`, stroke: PINK, 'stroke-width': 2.2, 'stroke-linecap': 'round', filter: 'url(#glowS)', class: 'buzz b2'}, E.gTarget);
-    T(E.gTarget, xh - fs * 1.5, Y(-LOW) + fs * .35, 'ice age', {'text-anchor': 'end', fill: PINK, 'fill-opacity': .85, 'font-size': F(fs * .9), filter: 'url(#glowS)'});
+  // ---------- front: the reader's guess, read as distance ----------
+  const pic = Kit.$('pic');
+  let G1, sea1, man1, handle, hint, ro1, ro2, dot1, guess = 0, touched = false, locked = false, dragging = false;
+  function drawFront() {
+    pic.innerHTML = '';
+    const f = Kit.fitSvg(pic), W = f.W, H = f.H, fs = fsOf(f), hP = fs * 1.75;
+    const yB = H - fs * 2.3, y0 = Math.max(H * .24, hP + fs * 3.25 + 4);
+    const G = G1 = mkG(W, H, W * .08, y0, yB, 200); G.fs = fs;
+    const r = Math.max(10, fs * .85);
+    Kit.mk('path', {d: groundPath(G), style: 'fill:var(--k)'}, pic);
+    sea1 = Kit.mk('path', {style: `fill:${SEA}`}, pic);
+    line(pic, G.X(0), y0, W, y0, 'stroke:var(--k);stroke-width:1.6;stroke-dasharray:5 5');
+    txt(pic, W - 2 * r - 10, y0 - fs * .55, 'sea level today', fs, 700, {'text-anchor': 'end'});
+    // Live readout above the starting coast: the depth guessed, and how far south the coast has gone.
+    const b2 = y0 - hP - fs * .55, b1 = b2 - fs * 1.35;
+    ro1 = txt(pic, G.X(0) + 1, b1, '', fs * 1.5, 800, {}, 'var(--display)');
+    ro2 = txt(pic, G.X(0) + 1, b2, '', fs, 700);
+    // Faint 0–200 km axis under the section, with the coast riding on it.
+    const yA = yB + fs * .6, axis = Kit.mk('g', {}, pic);
+    line(axis, G.X(0), yA, G.X(200), yA, `stroke:${DARK};stroke-width:1.2;opacity:.45`);
+    for (let k = 0; k <= 200; k += 50) line(axis, G.X(k), yA, G.X(k), yA + 4, `stroke:${DARK};stroke-width:1.2;opacity:.45`);
+    txt(axis, G.X(0), yA + fs * 1.35, '0', fs, 600, {'text-anchor': 'middle'}, 'var(--body)', DARK);
+    txt(axis, G.X(200), yA + fs * 1.35, '200 km', fs, 600, {'text-anchor': 'middle'}, 'var(--body)', DARK);
+    dot1 = Kit.mk('circle', {cx: G.X(0), cy: yA, r: 3.5, style: 'fill:var(--k)'}, pic);
+    man1 = person(pic, hP);
+    handle = Kit.mk('g', {}, pic);
+    Kit.mk('circle', {cx: 0, cy: 0, r, style: `fill:${ORANGE};stroke:var(--k);stroke-width:2`}, handle);
+    Kit.mk('path', {d: `M${-r * .4},${-r * .15} L0,${r * .3} L${r * .4},${-r * .15}`, style: 'fill:none;stroke:var(--k);stroke-width:2;stroke-linecap:round;stroke-linejoin:round'}, handle);
+    hint = Kit.mk('g', {class: 'hint'}, handle);
+    if (!touched) Kit.mk('path', {d: `M0,${r + 6} v${fs * 1.3} m-5,-6 l5,6 l5,-6`, style: 'fill:none;stroke:var(--k);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round'}, hint);
+    handle._r = r;
+    setGuess(guess);
+  }
+  function setGuess(g) {
+    guess = g; const G = G1; if (!G) return;
+    const yL = G.Y(g), kc = coastK(g), r = handle._r;
+    sea1.setAttribute('d', seaPath(G, g));
+    man1.setAttribute('transform', `translate(${G.X(kc).toFixed(1)},${yL.toFixed(1)})`);
+    handle.setAttribute('transform', `translate(${G.W - r - 3},${yL})`);
+    dot1.setAttribute('cx', G.X(kc));
+    if (touched) { ro1.textContent = `${g} m lower`; ro2.textContent = `coast ${r5(kc)} km south`; }
+  }
+  const fromY = e => { const b = pic.getBoundingClientRect(); const L = (e.clientY - b.top - G1.y0) / G1.sy; return Math.max(0, Math.min(GMAX, Math.round(L / 5) * 5)); };
+  pic.addEventListener('pointerdown', e => {
+    if (locked) return; dragging = true;
+    try { pic.setPointerCapture(e.pointerId); } catch (_) {}
+    if (!touched) { touched = true; hint.innerHTML = ''; Kit.haptic('selection'); }
+    setGuess(fromY(e));
+  });
+  pic.addEventListener('pointermove', e => { if (dragging && !locked) setGuess(fromY(e)); });
+  const end = () => { if (!dragging) return; dragging = false; if (touched && !locked) sure.on(); };
+  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
 
-    // ---------- today's sea level ----------
-    E.gToday = Kit.mk('g', {}, ns);
-    Kit.mk('path', {d: `M${X(0)},${Y(0)}L${X(K1)},${Y(0)}`, stroke: PINK, 'stroke-width': fs * .13, 'stroke-dasharray': `${fs * .7} ${fs * .45}`, filter: 'url(#glowS)', class: 'buzz b2'}, E.gToday);
-    T(E.gToday, X(0) + fs * .9, Y(0) - fs * .45, "today's sea level", {fill: PINK, filter: 'url(#glowS)', 'font-size': F(fs * .9)});
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (locked) return; locked = true;
+    const b = Kit.$('sure').querySelector(`[data-v="${pct}"]`); if (b) b.classList.add('pick');
+    const ok = Math.abs(guess - TRUE) <= 20;
+    Kit.answer({choice: `${guess} m lower`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${guess} m, ${ok ? 'close' : 'not close'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
 
-    // ---------- the seabed tube ----------
-    E.gBed = Kit.mk('g', {}, ns);
-    E.bed = Kit.mk('path', {d: pl(bed), fill: 'none', stroke: AMBER, 'stroke-width': fs * .17, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', filter: 'url(#glow)'}, E.gBed);
-    E.floor = Kit.mk('path', {fill: 'none', stroke: GREEN, 'stroke-width': fs * .24, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', filter: 'url(#glow)'}, E.gBed);
+  // ---------- back: the truth, measured coast to coast ----------
+  const pic2 = Kit.$('pic2'), mine = Kit.$('mine');
+  let turned = false, tl = null;
+  function drawBack(animate) {
+    if (tl) tl.kill();
+    pic2.innerHTML = '';
+    const f = Kit.fitSvg(pic2), W = f.W, H = f.H, fs = fsOf(f), pad = fs * .5;
+    const dsz = Math.round(fs * 1.3), bY = 4 + dsz * .62, oY = bY + dsz * .66, y0 = oY + Math.max(7, fs * .55);
+    const G = mkG(W, H, W * .08, y0, H - 2, Math.max(135, guess + 15));
+    const X = G.X, Y = G.Y, ax = X(0), xT = X(COAST), yT = Y(TRUE), hP = fs * 1.7, wP = hP * .46;
+    const kg = coastK(guess), xg = X(kg), yg = Y(guess);
 
-    // ---------- the reveal (built hidden) ----------
-    E.gReveal = Kit.mk('g', {}, ns);
-    const c200 = 200, ah = fs * .45;
-    E.ghost = Kit.mk('path', {d: `M${X(0)},${Y(0)}L${X(c200)},${Y(0)}` + pl(bedPts(0, c200).reverse()).replace('M', 'L') + 'Z', fill: CYAN, 'fill-opacity': .3, stroke: CYAN, 'stroke-width': 2, filter: 'url(#glowS)', opacity: 0}, E.gReveal);
-    E.stripD = pl(bedPts(0, c200)) + pl(bedPts(0, c200).reverse().map(p => [p[0], p[1] + 2.5])).replace('M', 'L') + 'Z';
-    E.ghostD = E.ghost.getAttribute('d');
-    // grass tufts sprouting on the new dry land
-    let td = '';
-    for (let k = 34; k <= 186; k += 19) {
-      const x = X(k), y = Y(elev(k)) - fs * .12, h = fs * (.45 + .2 * Math.abs(Math.sin(k)));
-      td += `M${x},${y}L${x - h * .45},${y - h * .8}M${x},${y}L${x},${y - h}M${x},${y}L${x + h * .45},${y - h * .8}`;
-    }
-    E.tufts = Kit.mk('path', {d: td, fill: 'none', stroke: GREEN, 'stroke-width': 1.6, 'stroke-linecap': 'round', filter: 'url(#glowS)', opacity: 0}, E.gReveal);
-    // the 200 km dimension line, drawn under the ground
-    const yA = Math.max(Y(-LOW) + fs * .45, Math.min(Y(-LOW) + fs * 1.3, yBot - fs * 1.5));
-    E.ticks = Kit.mk('path', {d: `M${X(0)},${Y(0) + fs * .5}L${X(0)},${yA + ah}M${X(c200)},${Y(-LOW) + fs * .5}L${X(c200)},${yA + ah}`, stroke: INK, 'stroke-opacity': .5, 'stroke-width': 1.2, 'stroke-dasharray': '2 3', opacity: 0}, E.gReveal);
-    E.dim = Kit.mk('path', {d: `M${X(0)},${yA}L${X(c200)},${yA}M${X(0) + ah},${yA - ah * .7}L${X(0)},${yA}L${X(0) + ah},${yA + ah * .7}M${X(c200) - ah},${yA - ah * .7}L${X(c200)},${yA}L${X(c200) - ah},${yA + ah * .7}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#glowS)', opacity: 0}, E.gReveal);
-    E.dimT = T(E.gReveal, X(c200 / 2), yA + fs * 1.25, '≈200 km of dry sea floor', {'text-anchor': 'middle', fill: GREEN, 'font-size': F(fs * .92), filter: 'url(#glowS)', opacity: 0});
-    // the 120 m drop, drawn on the rail
-    E.vArr = Kit.mk('path', {d: `M${xh},${Y(0)}L${xh},${Y(-LOW)}M${xh - ah * .7},${Y(0) + ah}L${xh},${Y(0)}L${xh + ah * .7},${Y(0) + ah}M${xh - ah * .7},${Y(-LOW) - ah}L${xh},${Y(-LOW)}L${xh + ah * .7},${Y(-LOW) - ah}`, fill: 'none', stroke: PINK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#glowS)', opacity: 0}, E.gReveal);
-    E.vT = T(E.gReveal, xh - fs * .6, Y(-LOW / 2) + fs * .38, '120 m', {'text-anchor': 'end', fill: PINK, filter: 'url(#glowS)', opacity: 0, 'font-size': F(fs * 1.1)});
+    Kit.mk('path', {d: groundPath(G), style: 'fill:var(--k)'}, pic2);
+    const sea = Kit.mk('path', {style: `fill:${SEA}`}, pic2);
+    line(pic2, ax, y0, W, y0, 'stroke:var(--k);stroke-width:1.6;stroke-dasharray:5 5');
 
-    // ---------- the coast ----------
-    E.gCoast = Kit.mk('g', {}, ns);
-    E.coastHalo = Kit.mk('circle', {r: fs * .45, fill: PINK, opacity: .7, class: 'pulse'}, E.gCoast);
-    E.coast = Kit.mk('circle', {r: fs * .3, fill: '#fff', stroke: PINK, 'stroke-width': 2, filter: 'url(#glowS)'}, E.gCoast);
-
-    // ---------- the handle ----------
-    E.gHandle = Kit.mk('g', {}, ns);
-    const hk = Kit.mk('g', {class: 'nudge'}, E.gHandle);
-    Kit.mk('circle', {r: fs * .95, fill: '#1d1216', stroke: CYAN, 'stroke-width': 2.2, filter: 'url(#glowS)'}, hk);
-    const cv = fs * .3;
-    Kit.mk('path', {d: `M${-cv},${-cv * .4}L0,${-cv * 1.3}L${cv},${-cv * .4}M${-cv},${cv * .4}L0,${cv * 1.3}L${cv},${cv * .4}`, fill: 'none', stroke: '#e6fdff', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hk);
-    E.hint = T(E.gHandle, -fs * 1.5, fs * 1.9, 'drag down', {'text-anchor': 'end', fill: CYAN, 'font-size': F(fs * .95), filter: 'url(#glowS)'});
-
-    // ---------- readouts: one row along the top ----------
-    E.gRO = Kit.mk('g', {}, ns);
-    const ro = (x, anchor, lab, col) => {
-      const t = Kit.mk('text', {x, y: fs * 1.15, 'text-anchor': anchor, 'font-size': F(fs * 1.05), 'font-weight': 700}, E.gRO); t.style.fontFamily = 'var(--mono)';
-      const a = Kit.mk('tspan', {fill: INK, 'fill-opacity': .62}, t); a.textContent = lab;
-      const b = Kit.mk('tspan', {fill: col, filter: 'url(#glowS)'}, t); return b;
+    // The 200 km bar, close to the profile, with its label set inside the line.
+    const bars = Kit.mk('g', {}, pic2), ink2 = 'stroke:var(--k);stroke-width:2';
+    line(bars, ax, bY - dsz * .36, ax, y0, 'stroke:var(--k);stroke-width:1.6');
+    const seg1 = line(bars, ax, bY, ax, bY, ink2), seg2 = line(bars, ax, bY, ax, bY, ink2);
+    const rt = line(bars, ax, bY - dsz * .36, ax, bY + dsz * .36, ink2);
+    const km = txt(bars, ax, bY + dsz * .34, '0 km', dsz, 800, {'text-anchor': 'middle'}, 'var(--display)');
+    const setBar = (xc, label) => {
+      km.textContent = label;
+      const tw = tlen(km, dsz * .56 * label.length), g = fs * .45, len = xc - ax;
+      rt.setAttribute('x1', xc); rt.setAttribute('x2', xc);
+      if (len >= tw + 2 * g + fs) {
+        const mid = (ax + xc) / 2;
+        seg1.setAttribute('x2', mid - tw / 2 - g); seg2.setAttribute('x1', mid + tw / 2 + g); seg2.setAttribute('x2', xc);
+        km.setAttribute('x', mid);
+      } else {
+        seg1.setAttribute('x2', xc); seg2.setAttribute('x1', xc); seg2.setAttribute('x2', xc);
+        km.setAttribute('x', xc + g + tw / 2);
+      }
     };
-    E.ro1 = ro(pad, 'start', 'SEA ', PINK);
-    E.ro2 = ro(W - pad, 'end', 'COAST ', CYAN);
+    const man = person(pic2, hP);
+    const figBox = {x0: xT - wP / 2 - 2, x1: xT + wP / 2 + 2, y0: yT - hP - 2, y1: yT + 2};
 
-    const gNS = Kit.mk('g', {opacity: .6}, ns);
-    T(gNS, pad, yBot + fs * 1.3, '◂ NORTH', {'font-size': F(fs * .9)});
-    T(gNS, W - pad, yBot + fs * 1.3, 'SOUTH ▸', {'font-size': F(fs * .9), 'text-anchor': 'end'});
+    const late = Kit.mk('g', {}, pic2);
+    // 'ice-age sea', right-aligned above the new waterline, kept 12 px clear of the figure.
+    let tsz = fs * 1.3, tb = yT - fs * .45;
+    const truth = txt(late, W - pad, tb, 'ice-age sea', tsz, 800, {'text-anchor': 'end'}, 'var(--display)');
+    let tw = tlen(truth, tsz * .56 * 11);
+    const avail = W - pad - (xT + wP / 2 + 12);
+    if (tw > avail) {
+      const n = Math.max(fs, tsz * avail / tw); tw *= n / tsz; tsz = n;
+      truth.setAttribute('style', `font:800 ${tsz}px var(--display);fill:var(--k)`);
+    }
+    if (W - pad - tw < xT + wP / 2 + 12) { tb = yT - hP - 5; truth.setAttribute('y', tb); }
+    const truthBox = {x0: W - pad - tw, x1: W - pad, y0: tb - tsz * .78, y1: tb + 2};
 
-    built = true;
-    update();
-    if (done) finalReveal();
-    if (touched || done) E.hint.setAttribute('opacity', 0);
+    // 'sea level today': under the dashed line if there is room, else above it.
+    const seaLab = txt(pic2, W - pad, y0 + fs * 1.15, 'sea level today', fs, 700, {'text-anchor': 'end'});
+    const sw = tlen(seaLab, fs * .52 * 15);
+    let seaBox = {x0: W - pad - sw, x1: W - pad, y0: y0 + fs * .25, y1: y0 + fs * 1.4};
+    if (seaBox.y1 + 3 > truthBox.y0 && W - pad - sw > Math.max(xT, xg) + 8) {
+      seaLab.setAttribute('y', y0 - fs * .45);
+      seaBox = {x0: W - pad - sw, x1: W - pad, y0: y0 - fs * 1.3, y1: y0 - fs * .1};
+    }
+    const avoid = [seaBox, truthBox, figBox];
+    // Tick from the bar's far end down to the ice-age shoreline.
+    vline(late, xT, bY + dsz * .36, yT - hP - 3, [seaBox, truthBox], 'stroke:var(--k);stroke-width:1.2');
+
+    // The reader's guess, as distance: an orange bar from today's coast, a tick, a dot on the profile.
+    const og = Kit.mk('g', {}, late);
+    if (xg - ax > 1) Kit.mk('rect', {x: ax, y: oY - 2, width: xg - ax, height: 4, rx: 2, style: `fill:${ORANGE};stroke:var(--k);stroke-width:.9`}, og);
+    if (yg - 5 > oY + 3) vline(og, xg, oY + 2, yg - 5, avoid, `stroke:${ORANGE};stroke-width:2`);
+    Kit.mk('circle', {cx: xg, cy: yg, r: 4.5, style: `fill:${ORANGE};stroke:var(--k);stroke-width:1.5`}, og);
+
+    mine.innerHTML = '<i></i><span></span>';
+    mine.querySelector('span').textContent = `your guess · ${guess} m → coast ~${r5(kg)} km south`;
+
+    const setL = L => {
+      const kc = coastK(L), xc = X(kc);
+      sea.setAttribute('d', seaPath(G, L));
+      man.setAttribute('transform', `translate(${xc.toFixed(1)},${Y(L).toFixed(1)})`);
+      setBar(xc, L >= TRUE - .01 ? `${COAST} km` : `${r5(kc)} km`);
+    };
+    if (!animate || Kit.calm || typeof gsap === 'undefined') { setL(TRUE); return; }
+    setL(0); gsap.set([late, mine], {opacity: 0});
+    const z = {L: 0};
+    tl = gsap.timeline({delay: .35})
+      .to(z, {L: TRUE, duration: 2, ease: 'power2.inOut', onUpdate: () => setL(z.L), onComplete: () => { setL(TRUE); Kit.haptic('success'); }})
+      .to(late, {opacity: 1, duration: .45, ease: 'power2.out'}, '+=.1')
+      .to(mine, {opacity: 1, duration: .45, ease: 'power2.out'}, '-=.2');
   }
+  document.addEventListener('turned', () => { turned = true; requestAnimationFrame(() => drawBack(true)); });
 
-  function update() {
-    if (!built) return;
-    const s = S.s, c = coastK(s), ys = Y(-s);
-    const below = bedPts(Math.min(c + .01, K1), K1).reverse();
-    const wd = `M${X(c)},${ys}L${X(K1)},${ys}` + pl(below).replace('M', 'L') + 'Z';
-    E.water.setAttribute('d', wd); E.clip.setAttribute('d', wd);
-    E.surf.setAttribute('d', `M${X(c)},${ys}L${X(K1)},${ys}`);
-    E.ripple.setAttribute('d', `M${X(c) + fs},${ys + fs * .35}L${X(K1)},${ys + fs * .35}`);
-    E.floor.setAttribute('d', c > .5 ? pl(bedPts(0, c, 1)) : '');
-    E.coast.setAttribute('cx', X(c)); E.coast.setAttribute('cy', ys);
-    E.coastHalo.setAttribute('cx', X(c)); E.coastHalo.setAttribute('cy', ys);
-    E.gHandle.setAttribute('transform', `translate(${X(KH)},${ys})`);
-    E.ro1.textContent = s < .5 ? 'today' : `−${Math.round(s)} m`;
-    E.ro2.textContent = c < .5 ? 'today' : `${Math.round(c)} km south`;
-    const step = Math.floor(s / 20);
-    if (step !== lastStep) { lastStep = step; if (touched) Kit.haptic('selection'); }
-    if (!done && s >= LOW - .5) reveal();
-  }
-
-  function finalReveal() {
-    E.ghost.setAttribute('opacity', 0);
-    [E.dim, E.ticks, E.dimT, E.vArr, E.vT, E.tufts].forEach(e => e.setAttribute('opacity', 1));
-    [E.hint, E.gHandle, E.gTarget].forEach(e => e.setAttribute('opacity', 0));
-    svg.style.cursor = 'default';
-  }
-
-  const flick = (t, el, at) => t.fromTo(el, {opacity: 0}, {keyframes: [{opacity: .85, duration: .05}, {opacity: .1, duration: .07}, {opacity: 1, duration: .05}, {opacity: .35, duration: .05}, {opacity: 1, duration: .12}]}, at);
-
-  function reveal() {
-    done = true; S.s = LOW;
-    Kit.haptic('success');
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    svg.style.cursor = 'default';
-    if (Kit.calm) { finalReveal(); return; }
-    gsap.to(E.hint, {opacity: 0, duration: .2});
-    const t = gsap.timeline();
-    // The ghost of today's sea flickers on above the drained floor...
-    t.set(E.ghost, {attr: {d: E.ghostD}, fill: CYAN, stroke: CYAN});
-    flick(t, E.ghost, 0);
-    // ...then collapses onto the floor and becomes land.
-    t.to(E.ghost, {morphSVG: E.stripD, fill: GREEN, stroke: GREEN, duration: 1.2, ease: 'power3.inOut'}, .55)
-     .to(E.floor, {attr: {'stroke-width': fs * .5}, duration: .25, ease: 'power2.out', yoyo: true, repeat: 1}, 1.6)
-     .to(E.ghost, {opacity: 0, duration: .5, ease: 'power2.out'}, 1.75)
-     .to([E.gHandle, E.gTarget], {opacity: 0, duration: .35, ease: 'power2.in'}, 1.5);
-    t.set(E.tufts, {opacity: 1}, 1.8)
-     .fromTo(E.tufts, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1, ease: 'power2.out'}, 1.8);
-    t.set([E.dim, E.vArr], {opacity: 1}, 1.85)
-     .fromTo(E.vArr, {drawSVG: '0%'}, {drawSVG: '100%', duration: .7, ease: 'expo.out'}, 1.85)
-     .fromTo(E.ticks, {opacity: 0}, {opacity: 1, duration: .4}, 2.05)
-     .fromTo(E.dim, {drawSVG: '50% 50%'}, {drawSVG: '0% 100%', duration: .9, ease: 'expo.out'}, 2.1);
-    flick(t, E.vT, 2.25); flick(t, E.dimT, 2.6);
-    t.fromTo([E.ro1, E.ro2], {opacity: .2}, {opacity: 1, duration: .5, stagger: .15, ease: 'back.out(3)'}, 1.7);
-  }
-
-  // ---------- the drag ----------
-  let drag = null;
-  const pxPerM = () => (yBot - yTop) / (TOP - BOT);
-  const goTo = (v, d = .2, ease = 'power3.out') => gsap.to(S, {s: v, duration: Kit.calm ? .01 : d, ease, overwrite: true, onUpdate: update});
-  svg.addEventListener('pointerdown', e => {
-    if (done) return;
-    touched = true; gsap.to(E.hint, {opacity: 0, duration: .25});
-    drag = {y: e.clientY, s: S.s}; svg.setPointerCapture(e.pointerId); Kit.haptic('light');
-  });
-  svg.addEventListener('pointermove', e => {
-    if (!drag || done) return;
-    goTo(Math.max(0, Math.min(LOW, drag.s + (e.clientY - drag.y) / pxPerM())));
-  });
-  const end = () => { if (!drag) return; drag = null; if (!done && S.s > 105) goTo(LOW, .45, 'back.out(1.6)'); };
-  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
-
-  new ResizeObserver(() => { if (built) layout(); }).observe(Kit.$('stage'));
-  Kit.onShow.card = layout;
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
   Kit.onEnter.card = () => {
-    if (Kit.calm || !built || done) return;
-    const t = gsap.timeline();
-    t.fromTo(E.bed, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1.1, ease: 'power3.inOut'}, 0);
-    flick(t, E.gToday, .5); flick(t, E.gWater, .75); flick(t, E.gRail, .9); flick(t, E.gCoast, 1); flick(t, E.gRO, 1.1); flick(t, E.gTarget, 1.2); flick(t, E.gHandle, 1.3);
+    if (Kit.calm || typeof gsap === 'undefined' || !sea1) return;
+    gsap.from(sea1, {opacity: 0, duration: .6, ease: 'power2.out'});
+    gsap.from(man1, {opacity: 0, duration: .5, delay: .35, ease: 'power2.out'});
+    gsap.from(handle, {opacity: 0, duration: .5, delay: .6, ease: 'power3.out'});
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    touched = true; if (E.hint) E.hint.setAttribute('opacity', 0);
-    await new Promise(r => gsap.to(S, {s: LOW, duration: Kit.calm ? .01 : 1, ease: 'power2.inOut', onUpdate: update, onComplete: r}));
-    if (!done) { update(); if (!done) reveal(); }
-    await wait(Kit.calm ? 100 : 3500);
+    const r = pic.getBoundingClientRect();
+    const o = {bubbles: true, pointerId: 1, clientX: r.left + r.width * .85, clientY: r.top + G1.Y(40)};
+    pic.dispatchEvent(new PointerEvent('pointerdown', o));
+    pic.dispatchEvent(new PointerEvent('pointermove', o));
+    pic.dispatchEvent(new PointerEvent('pointerup', o));
+    await wait(150);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 4600);
   };
 })();
 Kit.single();

@@ -1,309 +1,280 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: science-dilute-fukushima-water -->
-<!-- Look: laboratory glass on a deep teal ground. A beaker of glowing tank water, a burette of clean water above it with a drop swelling at its tip, and a glass thermometer-style gauge of Bq per litre on a log scale.
-     Interaction: every tap opens the stopcock. A drop falls with gravity, the liquid sloshes and rises, the glowing tritium specks thin out, and the gauge falls. Count your pours to the WHO drinking limit.
-     Wow moment: "Pour to the plan" sends a stream of drops and splashes. The gauge drains from 700,000 to 1,500 Bq/L and turns mint, six times under the limit. -->
+<!doctype html>
+<!-- slug: science-diluted-five-hundred -->
+<!--
+The thought to carry: "70 times over the limit" is only half a sentence. Put it next to the divisor and the scare flips: on a ladder of tens, ÷500 is a longer step than ×70, so it has to end below the limit.
+Front: the ladder from 100 to a million Bq/L, a squat steel tank at 700,000 and a glass at the WHO limit. The reader drags an orange drop, parked just under the tank, to where the water lands after ÷500.
+Back: the same ladder at the same scale and position. A ×70 bracket runs from the limit up to the tank, and beside it the longer ÷500 arrow runs from the tank down to 1,500. The guess stays on the left of the axis, and the result sits on the right.
+The front shows only the inputs (tank level, limit, the factor in the question). It gives no landing point and no verdict until the reader commits.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Diluted 500 times</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#why{display:flex;flex-direction:column;gap:1cqh}
-#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere;color:var(--k);opacity:1}
-.say{overflow-wrap:anywhere}
-#next{align-self:flex-start}
-#pic .col{transition:fill .6s ease}
-.answered .q{font-size:max(2.4cqh,15px)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.2cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:visible}
+#pic{touch-action:none;cursor:ns-resize}
+#pic text,#pic2 text{font-family:var(--body)}
+
+/* the confidence pills read as live controls */
+#sure,#sure [data-v]{opacity:1!important}
+#sure>:first-child{color:#0d0d0d!important;opacity:1!important}
+#sure [data-v]{border:1.5px solid #0d0d0d!important;color:#0d0d0d!important}
+
+/* keep text clear of save and share: the box itself is narrower, not padded */
+.front .say{align-self:flex-start;max-width:calc(100% - max(108px,29cqw));margin:0}
+
+.back .big{margin:0;font-size:max(3cqh,19px);line-height:1.15;white-space:nowrap;overflow:hidden}
+.back .you{margin:-.5cqh 0 0;font-size:max(1.8cqh,13px);line-height:1.3;font-weight:700;color:#a83a05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.back .body{margin:0;font-size:max(1.8cqh,13px);line-height:1.3}
+.back .keep{font-size:max(1.75cqh,13px);padding-top:10px;padding-bottom:10px}
+.back .foot{padding-right:max(100px,26cqw)}
+.src{overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Tap to pour · count to safe" style="--c:#0b2731;--k:#eafcff;--edge:#04141a">
+<article class="card" id="card" data-topic="science" data-kind="Drag your guess · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">DILUTE IT</span></div>
-    <h2 class="q">Diluted 500 times, how radioactive is Fukushima's tank water?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A beaker of tank water under a burette of clean water, beside a gauge of becquerel per litre with the WHO drinking-water limit marked at 10,000."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG YOUR GUESS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">700,000 Bq/L, diluted 500 times. Where does it land?</h2>
+        <div class="stagebox"><svg id="pic" data-drag role="img" aria-label="A ladder of radioactivity in steps of ten, from 100 to a million becquerel per litre. A steel tank sits at 700,000, a glass at the WHO drinking limit of 10,000, and an orange drop you can drag down to your guess."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag the drop to your guess, then say how sure.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big" id="big">Six times under the limit.</p>
+        <p class="you" id="you">&nbsp;</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="On the same ladder, the tank at 700,000 is 70 times the WHO limit of 10,000. Dividing by 500 is a longer step than that, so the water lands at 1,500 Bq/L, below the limit."></svg></div>
+        <p class="body">“Seventy times the limit” sounds alarming. But ÷500 is a longer step than ×70, so 700,000 Bq/L lands at about 1,500, under the WHO’s 10,000 for drinking water.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Hear “X times too much”? Ask how many times it will be divided.</div>
+        <div class="foot"><span class="src">Source · Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021).</span></div>
+      </section>
     </div>
-    <p class="say" id="say">The tank water holds <b>700,000 Bq per litre</b>, 70 times the WHO drinking limit. <b>Tap to pour in clean water</b>, and count the pours it takes to get under the limit.</p>
-    <button class="btn gone" id="next">Pour to the plan: ×500</button>
-    <div id="why" class="gone"><p class="body">The tritium doesn't vanish: each pour spreads it through more litres. At ×500, 700,000 Bq per litre becomes <b>1,500</b>, six times under the WHO's 10,000 for drinking water. About 50 of your pours.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Diluted 500 times, the tank water ends six times under the drinking-water limit.</div>
-    <div class="foot"><span class="src">Source · Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021).</span></div>
   </div>
 </article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
 <script src="kit/astute-card.js"></script>
 <script>
 (() => {
-  const hasPhys = typeof Physics2DPlugin !== 'undefined';
-  if (hasPhys) gsap.registerPlugin(Physics2DPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const NS = 140, LIMIT = 1e4;
-  const S = {shown: 1, amp: 0, ph: 0, pours: 0, phase: 'tap', hang: .2};
-  const E = {g: 1};
-  let G = {};
-  const HOT = '#ff9a62', MINT = '#7dffc9', INK = '#eafcff';
-  const specks = Array.from({length: NS}, () => ({u: Kit.rnd(), v: Kit.rnd(), s: .7 + Kit.rnd() * .6, o: Kit.rnd() * 6.28}));
+  const LO = 2, HI = 6;                 // the ladder: 100 to 1,000,000 Bq/L, in steps of ten
+  const TANK = 700000, LIMIT = 10000, AFTER = 1500;
+  const GUESS = '#a83a05', TRUE = '#0b2a6f';
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), card = Kit.$('card');
+  let G = 600000, touched = false, locked = false, turned = false, backTl = null, PCT = null;
+  let F = null, FF = null, gGuess = null, INK = '#111';
 
-  // 1 L of tank water + clean water. The video rounds 700,000 / 500 to 1,500, so the curve lands there.
-  const conc = f => 7e5 / f * (1 + (1 / 14) * Math.min(1, Math.max(0, (f - 71) / 429)));
-  const fmt = n => (n >= 1e4 ? Math.round(n / 100) * 100 : Math.round(n / 10) * 10).toLocaleString('en-US');
-  const mix = (a, b, t) => { const p = s => [1, 3, 5].map(i => parseInt(s.substr(i, 2), 16)); const A = p(a), B = p(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
-  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
-  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--body)', 'font-size': G.fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
-  const dropPath = s => `M0,${-s} C${s * .62},${-s * .1} ${s * .62},${s * .7} 0,${s * .7} C${-s * .62},${s * .7} ${-s * .62},${-s * .1} 0,${-s} Z`;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': F.fs, 'font-weight': 700}, a), p); e.textContent = s; return e; };
+  const round2 = v => { const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
+  const fmt = v => round2(v).toLocaleString('en-US');
+  const dropPath = (x, y, r) => `M${x},${y - 1.75 * r} Q${x + r * 1.05},${y - .55 * r} ${x + r},${y + .1 * r} A${r},${r} 0 0 1 ${x - r},${y + .1 * r} Q${x - r * 1.05},${y - .55 * r} ${x},${y - 1.75 * r}Z`;
+  const cv = document.createElement('canvas').getContext('2d');
+  const fam = n => getComputedStyle(card).getPropertyValue(n).trim() || 'sans-serif';
+  const tw = (s, size, w = 700, f = '--body') => { cv.font = `${w} ${size}px ${fam(f)}`; return cv.measureText(s).width; };
+  const absY = el => { let y = 0; for (let e = el; e; e = e.offsetParent) y += e.offsetTop; return y; };
 
-  function layout() {
-    svg.innerHTML = '';
-    const fit = Kit.fitSvg(svg), W = fit.W, H = fit.H;
-    const fs = Math.max(12, Math.min(15, fit.f || 13, W / 25, H / 20));
-    G = {W, H, fs};
-    const pad = fs * .4, LH = fs * 1.4;
-    // readout baselines: big number and its small caption, spaced so their boxes never touch
-    const yBig = fs * 1.8, ySmall = fs * 3.7;
-    // ---- defs ----
-    const defs = Kit.mk('defs', {}, svg);
-    const lg = (id, x2, y2, stops) => { const g = Kit.mk('linearGradient', {id, x1: 0, y1: 0, x2, y2}, defs); return stops.map(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, g)); };
-    lg('glass', 1, 0, [[0, '#ffffff', .16], [.18, '#ffffff', .04], [.7, '#ffffff', .02], [.92, '#ffffff', .12], [1, '#ffffff', .05]]);
-    lg('shine', 0, 1, [[0, '#ffffff', 0], [.25, '#ffffff', .7], [1, '#ffffff', .05]]);
-    G.liqStops = lg('liq', 0, 1, [[0, '#9dffd6', .6], [1, '#1fbf8c', .85]]);
-    lg('clean', 0, 1, [[0, '#cfeeff', .35], [1, '#6fbfff', .6]]);
-    const rg = Kit.mk('radialGradient', {id: 'speck'}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': '#eafff6', 'stop-opacity': 1}, rg);
-    Kit.mk('stop', {offset: .35, 'stop-color': '#7dffc9', 'stop-opacity': .9}, rg);
-    Kit.mk('stop', {offset: 1, 'stop-color': '#7dffc9', 'stop-opacity': 0}, rg);
-    const pool = Kit.mk('radialGradient', {id: 'pool'}, defs);
-    Kit.mk('stop', {offset: 0, 'stop-color': '#7dffc9', 'stop-opacity': .45}, pool);
-    Kit.mk('stop', {offset: 1, 'stop-color': '#7dffc9', 'stop-opacity': 0}, pool);
-    const fl = Kit.mk('filter', {id: 'glow', x: '-80%', y: '-20%', width: '260%', height: '140%'}, defs);
-    Kit.mk('feGaussianBlur', {stdDeviation: fs * .35, result: 'b'}, fl);
-    const fm = Kit.mk('feMerge', {}, fl); Kit.mk('feMergeNode', {in: 'b'}, fm); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, fm);
+  // One chart window shared by both faces, so the ladder does not move when the card turns.
+  function frame(s) {
+    s.innerHTML = '';
+    INK = getComputedStyle(card).getPropertyValue('--k').trim() || '#111';
+    const f = Kit.fitSvg(s), W = f.W, H = f.H;
+    const fs = Math.max(12, Math.min(14, W / 24));
+    const boxes = [...card.querySelectorAll('.stagebox')];
+    const o = absY(s.parentNode);
+    let wT = Math.max(...boxes.map(absY)) - o, wB = Math.min(...boxes.map(b => absY(b) + b.offsetHeight)) - o;
+    if (!(wB - wT > fs * 8)) { wT = 0; wB = H; }
+    const hy = wT + fs, top = wT + fs * 2.9, bot = wB - fs * 1.7;
+    const y = v => top + (HI - Math.log10(v)) / (HI - LO) * (bot - top);
+    const v = py => Math.pow(10, HI - (py - top) / (bot - top) * (HI - LO));
+    const D = (bot - top) / (HI - LO);
+    const r = fs * .58;
+    // columns: left labels | axis | icons | labels | ×70 bracket | ÷500 arrow
+    const ax = Math.max(W * .22, Math.ceil(Math.max(tw('1 million', fs, 600), tw('your guess', fs, 700), tw('you said', fs, 700)) + r + 8));
+    const AR = W - 6, BR = AR - Math.max(36, tw('×70', fs * 1.15, 800, '--display') + 14);
+    const TW = Math.max(tw('Tank water', fs, 600), tw('WHO limit', fs, 600), tw('700,000', fs, 800));
+    const lx = BR - 9 - TW;
+    const s0 = Math.max(18, Math.min(32, D * .5)), tkW = s0 * 1.45;
+    const ix = lx - 9 - tkW / 2, gEnd = ix - tkW / 2 - 7;
+    return F = {W, H, fs, hy, top, bot, y, v, D, r, ax, AR, BR, lx, ix, s: s0, tkW, gEnd, ticks: []};
+  }
 
-    // ---- geometry ----
-    const bx0 = W * .05, bx1 = W * .5, bBot = H - fs * 2.3, bTop = Math.max(H * .4, fs * 9.4);
-    const cx = (bx0 + bx1) / 2, ix0 = bx0 + 3, ix1 = bx1 - 3, r = fs * 1.2;
-    const tipY = bTop - fs * 1.3, valveY = tipY - fs * .9, burTop = fs * 4.6, bw = Math.max(10, W * .036);
-    const tw = Math.max(16, W * .064), gx = W * .645, br = tw * .9;
-    const gt = fs * 4.4, gb = H - fs * .5 - br * 1.6, top6 = gt + fs * .7;
-    const yOf = c => gb - (Math.log10(c) - 2) / 4 * (gb - top6);
-    Object.assign(G, {bx0, bx1, bBot, bTop, cx, ix0, ix1, tipY, gx, tw, gb, yOf, br});
-
-    // ---- beaker: soft glow pool, back glass ----
-    G.pool = Kit.mk('ellipse', {cx, cy: bBot + fs * .4, rx: (bx1 - bx0) * .62, ry: fs * .9, fill: 'url(#pool)'}, svg);
-    const outer = `M${bx0 - fs * .5},${bTop - fs * .25} Q${bx0},${bTop - fs * .2} ${bx0},${bTop + fs * .4} L${bx0},${bBot - r} Q${bx0},${bBot} ${bx0 + r},${bBot} L${bx1 - r},${bBot} Q${bx1},${bBot} ${bx1},${bBot - r} L${bx1},${bTop + fs * .2} Q${bx1},${bTop - fs * .2} ${bx1 + fs * .2},${bTop - fs * .25}`;
-    const gBk = Kit.mk('g', {class: 'glass'}, svg);
-    Kit.mk('path', {d: outer + ' Z', fill: 'url(#glass)'}, gBk);
-    const clip = Kit.mk('clipPath', {id: 'inside'}, defs);
-    Kit.mk('path', {d: `M${ix0},${bTop} L${ix0},${bBot - r + 2} Q${ix0},${bBot - 3} ${ix0 + r},${bBot - 3} L${ix1 - r},${bBot - 3} Q${ix1},${bBot - 3} ${ix1},${bBot - r + 2} L${ix1},${bTop} Z`}, clip);
-    const lq = Kit.mk('g', {'clip-path': 'url(#inside)'}, gBk);
-    G.liq = Kit.mk('path', {fill: 'url(#liq)'}, lq);
-    G.sp = specks.map(p => Kit.mk('circle', {r: fs * .32 * p.s, fill: 'url(#speck)', opacity: 1}, lq));
-    G.surf = Kit.mk('path', {fill: 'none', stroke: '#ffffff', 'stroke-opacity': .75, 'stroke-width': 1.6}, lq);
-    // front glass
-    const gFr = Kit.mk('g', {class: 'glass'}, svg);
-    Kit.mk('path', {d: outer, fill: 'none', stroke: '#ffffff', 'stroke-opacity': .6, 'stroke-width': 2, 'stroke-linejoin': 'round'}, gFr);
-    Kit.mk('rect', {x: bx0 + fs * .55, y: bTop + fs * .8, width: fs * .42, height: (bBot - bTop) * .72, rx: fs * .21, fill: 'url(#shine)', opacity: .7}, gFr);
-    Kit.mk('rect', {x: bx0 + fs * 1.25, y: bTop + fs * 1.6, width: fs * .14, height: (bBot - bTop) * .4, rx: fs * .07, fill: '#fff', opacity: .3}, gFr);
-    Kit.mk('rect', {x: bx1 - fs * .45, y: bTop + fs * 1.4, width: fs * .16, height: (bBot - bTop) * .55, rx: fs * .08, fill: '#fff', opacity: .22}, gFr);
-    for (let k = 1; k < 8; k++) { const y = bBot - (bBot - bTop) * k / 8.4; Kit.mk('line', {x1: bx1 - fs * (k % 2 ? 1 : 1.6), x2: bx1 - fs * .7, y1: y, y2: y, stroke: '#fff', 'stroke-opacity': .45, 'stroke-width': 1.2}, gFr); }
-    G.blabel = txt(svg, cx, H - fs * .65, '', {'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 600, opacity: .85});
-
-    // ---- burette of clean water ----
-    const gB = Kit.mk('g', {class: 'glass'}, svg);
-    const bh = Math.max(fs, valveY - burTop - fs * .3);
-    Kit.mk('rect', {x: cx - bw / 2, y: burTop, width: bw, height: bh, rx: bw * .3, fill: 'url(#glass)', stroke: '#fff', 'stroke-opacity': .55, 'stroke-width': 1.4}, gB);
-    const wTop = burTop + Math.min(fs * .9, bh * .3);
-    Kit.mk('rect', {x: cx - bw / 2 + 2, y: wTop, width: bw - 4, height: Math.max(2, burTop + bh - wTop - 2), rx: 2, fill: 'url(#clean)'}, gB);
-    Kit.mk('path', {d: `M${cx - bw / 2 + 2},${wTop} q${(bw - 4) / 2},${fs * .3} ${bw - 4},0`, stroke: '#fff', 'stroke-opacity': .8, fill: 'none', 'stroke-width': 1.2}, gB);
-    for (let k = 1; k < 6; k++) { const y = wTop + (burTop + bh - wTop - fs * .3) * k / 6; Kit.mk('line', {x1: cx + bw / 2 - 1, x2: cx + bw / 2 - bw * .4, y1: y, y2: y, stroke: '#fff', 'stroke-opacity': .5}, gB); }
-    Kit.mk('path', {d: `M${cx - bw * .22},${valveY} L${cx - bw * .08},${tipY} L${cx + bw * .08},${tipY} L${cx + bw * .22},${valveY} Z`, fill: 'rgba(255,255,255,.18)', stroke: '#fff', 'stroke-opacity': .55, 'stroke-width': 1.2}, gB);
-    Kit.mk('circle', {cx, cy: valveY, r: bw * .42, fill: '#0b2731', stroke: '#fff', 'stroke-opacity': .7, 'stroke-width': 1.4}, gB);
-    G.valve = Kit.mk('rect', {x: cx - bw * 1.1, y: valveY - bw * .13, width: bw * 2.2, height: bw * .26, rx: bw * .13, fill: '#dff6ff'}, gB);
-    G.valveO = `${cx} ${valveY}`;
-    // hand label on the left of the burette, two well-spaced lines and a little arrow
-    const hx = cx - bw / 2 - fs * .6, hf = fs * 1.05, hy1 = burTop + fs * 1, hy2 = hy1 + fs * 1.75;
-    txt(gB, hx, hy1, 'clean', {'text-anchor': 'end', 'font-family': 'var(--hand)', 'font-size': hf, 'font-weight': 600, opacity: .9});
-    txt(gB, hx, hy2, 'water', {'text-anchor': 'end', 'font-family': 'var(--hand)', 'font-size': hf, 'font-weight': 600, opacity: .9});
-    Kit.mk('path', {d: `M${hx + fs * .1},${hy1 - fs * .35} q${fs * .35},${-fs * .1} ${fs * .45},${fs * .35}`, fill: 'none', stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, gB);
-    // the drop that swells at the tip
-    G.hangS = fs * .42;
-    G.hang = Kit.mk('path', {d: dropPath(G.hangS), fill: '#d6f1ff', 'fill-opacity': .92, stroke: '#fff', 'stroke-width': .8}, svg);
-
-    // ---- readouts ----
-    G.fBig = txt(svg, pad, yBig, '×1', {'font-family': 'var(--mono)', 'font-size': fs * 1.75, 'font-weight': 700});
-    G.fSmall = txt(svg, pad, ySmall, 'pours: 0', {'font-weight': 600, opacity: .8});
-    G.cBig = txt(svg, W - pad, yBig, '700,000', {'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': fs * 1.75, 'font-weight': 700, fill: HOT});
-    txt(svg, W - pad, ySmall, 'Bq per litre', {'text-anchor': 'end', 'font-weight': 600, opacity: .8});
-
-    // ---- the gauge: a glass tube on a log scale ----
-    const gG = Kit.mk('g', {class: 'glass'}, svg);
-    Kit.mk('rect', {x: gx - tw / 2, y: gt, width: tw, height: gb - gt + br * .5, rx: tw / 2, fill: 'url(#glass)'}, gG);
-    Kit.mk('circle', {cx: gx, cy: gb + br * .5, r: br, fill: 'url(#glass)'}, gG);
-    G.col = Kit.mk('rect', {x: gx - tw / 2 + 4, width: tw - 8, rx: (tw - 8) / 2, class: 'col', filter: 'url(#glow)', style: `fill:${HOT}`}, gG);
-    G.bulb = Kit.mk('circle', {cx: gx, cy: gb + br * .5, r: br - 4, class: 'col', filter: 'url(#glow)', style: `fill:${HOT}`}, gG);
-    Kit.mk('path', {d: `M${gx - tw / 2},${gb} L${gx - tw / 2},${gt + tw / 2} A${tw / 2},${tw / 2} 0 0 1 ${gx + tw / 2},${gt + tw / 2} L${gx + tw / 2},${gb} A${br},${br} 0 1 1 ${gx - tw / 2},${gb}`, fill: 'none', stroke: '#fff', 'stroke-opacity': .65, 'stroke-width': 1.8}, gG);
-    Kit.mk('rect', {x: gx - tw / 2 + tw * .2, y: gt + tw * .6, width: tw * .16, height: Math.max(0, gb - gt - tw), rx: tw * .08, fill: '#fff', opacity: .45}, gG);
-    const tl = gx - tw / 2;
-    [[1e3, '1k'], [1e4, '10k'], [1e5, '100k'], [1e6, '1M']].forEach(([c, s]) => {
-      const y = yOf(c);
-      Kit.mk('line', {x1: tl - fs * .55, x2: tl - 2, y1: y, y2: y, stroke: INK, 'stroke-width': 1.6}, gG);
-      txt(gG, tl - fs * .75, y + fs * .35, s, {'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 600, opacity: .85});
-      if (c < 1e6) for (let m = 2; m < 10; m++) { const ym = yOf(c * m); Kit.mk('line', {x1: tl - fs * .3, x2: tl - 2, y1: ym, y2: ym, stroke: INK, 'stroke-opacity': .35}, gG); }
+  // The ladder, the tank and the glass: the same on both faces.
+  function scene(p) {
+    const {W, fs, hy, y, ax, ix, s, tkW, lx} = F;
+    const g = mk('g', {}, p);
+    txt(g, 0, hy, 'Bq per litre', {'font-weight': 600, opacity: .75});
+    mk('line', {x1: ax, x2: ax, y1: F.top - 4, y2: F.bot + 4, stroke: INK, 'stroke-width': 1.6}, g);
+    ['100', '1,000', '10,000', '100,000', '1 million'].forEach((t, i) => {
+      const yy = y(Math.pow(10, LO + i));
+      mk('line', {x1: ax - 5, x2: ax, y1: yy, y2: yy, stroke: INK, 'stroke-width': 1.4}, g);
+      F.ticks.push({y: yy, el: txt(g, 0, yy + fs * .35, t, {'font-weight': 600, opacity: .75})});
     });
-    const lx = gx + tw / 2 + fs * .9;
-    const y10 = yOf(LIMIT), y7 = yOf(7e5), y15 = yOf(1500);
-    Kit.mk('line', {x1: tl - fs * .55, x2: W - pad, y1: y10, y2: y10, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '5 4'}, gG);
-    Kit.mk('path', {d: `M${gx + tw / 2 + 2},${y7} l${fs * .5},${-fs * .32} v${fs * .64} Z`, fill: HOT}, gG);
-    // stack the right-hand labels so they never collide; drop lines on tight screens
-    let whoL = [['WHO limit', 800, INK, 1], ['drinking water', 600, INK, .85]];
-    let tankL = [['tank water', 800, HOT, 1], ['70× the limit', 600, INK, .85]];
-    const topMin = ySmall + LH;
-    const plan = () => {
-      const whoTop = y10 - fs * .45 - (whoL.length - 1) * LH;
-      const tankTop = Math.max(topMin, Math.min(y7 + fs * .35 - (tankL.length > 1 ? fs * .65 : 0), whoTop - tankL.length * LH));
-      return {whoTop, tankTop, ok: tankTop + (tankL.length - 1) * LH <= whoTop - LH + .5};
-    };
-    let P = plan();
-    if (!P.ok) { tankL = [['tank · 70×', 800, HOT, 1]]; P = plan(); }
-    if (!P.ok) { whoL = [whoL[0]]; P = plan(); }
-    const put = (arr, y0, p = gG) => arr.forEach(([t, w, f, o], i) => txt(p, lx, y0 + i * LH, t, {'font-weight': w, fill: f, opacity: o}));
-    put(tankL, P.tankTop); put(whoL, P.whoTop);
-    // the plan, revealed at the end
-    G.fin = Kit.mk('g', {opacity: S.phase === 'done' ? 1 : 0}, svg);
-    const bxL = gx + tw / 2 + fs * .3;
-    G.brk = Kit.mk('path', {d: `M${bxL},${y10 + 2} q${fs * .35},0 ${fs * .35},${fs * .35} V${Math.max(y10 + fs * .7, y15 - fs * .35)} q0,${fs * .35} ${-fs * .35},${fs * .35}`, fill: 'none', stroke: MINT, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, G.fin);
-    let f1 = Math.max(y15 + fs * .4, y10 + fs * 1.4);
-    if (f1 + LH > H - fs * .3) f1 = H - fs * .3 - LH;
-    put([['after ×500', 800, MINT, 1], ['6× under it', 600, INK, 1]], f1, G.fin);
-
-    G.drops = Kit.mk('g', {}, svg);
-    render(true);
-  }
-
-  const levelY = () => G.bBot - (G.bBot - G.bTop) * (.17 + .66 * clamp(Math.log(S.shown) / Math.log(500)));
-  let lastTxt = '';
-  function render(force) {
-    if (!G.liq) return;
-    const {ix0, ix1, bBot, fs} = G, L = levelY(), n = 20;
-    let pts = [];
-    for (let i = 0; i <= n; i++) { const t = i / n, x = ix0 + (ix1 - ix0) * t; pts.push([x, L + S.amp * Math.sin(t * Math.PI * 2.1 + S.ph * 2.2) + S.amp * .5 * Math.cos(t * Math.PI - S.ph * 1.3) + Math.sin(t * 9 + S.ph * 3) * .6]); }
-    const line = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
-    G.surf.setAttribute('d', line);
-    G.liq.setAttribute('d', line + ` L${ix1},${bBot + 2} L${ix0},${bBot + 2} Z`);
-    const t = clamp(Math.log(S.shown) / Math.log(500));
-    G.liqStops[0].setAttribute('stop-color', mix('#9dffd6', '#bfe4ff', t)); G.liqStops[0].setAttribute('stop-opacity', .6 - .25 * t);
-    G.liqStops[1].setAttribute('stop-color', mix('#1fbf8c', '#2d7fd2', t)); G.liqStops[1].setAttribute('stop-opacity', .85 - .2 * t);
-    G.pool.setAttribute('opacity', .15 + .85 * (1 - t));
-    const vis = Math.ceil(NS / S.shown);
-    G.sp.forEach((c, i) => {
-      const p = specks[i];
-      c.setAttribute('cx', ix0 + 8 + p.u * (ix1 - ix0 - 16) + Math.sin(S.ph * .7 + p.o) * fs * .25);
-      c.setAttribute('cy', L + fs * .6 + p.v * Math.max(0, bBot - L - fs * 1.2) + Math.cos(S.ph * .5 + p.o) * fs * .2);
-      c.setAttribute('r', fs * .32 * p.s * (.8 + .25 * Math.sin(S.ph * 1.6 + p.o * 3)));
-      const o = i < vis ? 1 : 0; if (c._o !== o) { c._o = o; c.setAttribute('opacity', o); }
-    });
-    // the swelling drop at the burette tip
-    const h = Kit.calm ? .75 : S.hang, k = .25 + .75 * h;
-    G.hang.setAttribute('transform', `translate(${G.cx},${G.tipY + G.hangS * k}) scale(${k})`);
-    const c = conc(S.shown), safe = c < LIMIT, col = safe ? MINT : HOT;
-    const cy = G.gb - (G.gb - G.yOf(c)) * E.g;
-    G.col.setAttribute('y', cy); G.col.setAttribute('height', Math.max(0, G.gb - cy + G.br * .5));
-    G.col.style.fill = col; G.bulb.style.fill = col;
-    const f = Math.round(S.shown), key = f + '|' + S.pours + '|' + fmt(c) + S.phase;
-    if (force || key !== lastTxt) {
-      lastTxt = key;
-      G.fBig.textContent = '×' + f;
-      G.fSmall.textContent = S.phase === 'done' ? 'the plan' : `pours: ${S.pours}`;
-      G.cBig.textContent = fmt(c); G.cBig.setAttribute('fill', col);
-      G.blabel.textContent = `1 L tank + ${f - 1} L clean`;
+    // the tank: squat steel cylinder, flat roof, one weld seam
+    const ty = y(TANK), ly = y(LIMIT);
+    mk('line', {x1: ax, x2: W, y1: ty, y2: ty, stroke: INK, 'stroke-width': 1.2, opacity: .55}, g);
+    const x0 = ix - tkW / 2, t0 = ty - s / 2, rf = s * .11, bT = t0 + rf, bH = s - rf;
+    mk('rect', {x: x0, y: bT, width: tkW, height: bH, fill: '#fff', 'fill-opacity': .4}, g);
+    mk('rect', {x: ix + tkW * .16, y: bT, width: tkW * .34, height: bH, fill: INK, 'fill-opacity': .2}, g);
+    mk('line', {x1: x0, x2: x0 + tkW, y1: bT + bH * .5, y2: bT + bH * .5, stroke: INK, 'stroke-width': 1}, g);
+    mk('rect', {x: x0, y: bT, width: tkW, height: bH, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    mk('rect', {x: x0 - 1.5, y: t0, width: tkW + 3, height: rf + .8, rx: .8, fill: INK}, g);
+    // tank labels: number under the line if there is room above the limit labels, otherwise both stack above the line
+    const numBottom = ty + fs + 3 + fs * .3, whoTop = ly - fs - 8 - fs * .85;
+    if (whoTop - numBottom >= 4) {
+      txt(g, lx, ty - 5, 'Tank water', {'font-weight': 600});
+      txt(g, lx, ty + fs + 3, '700,000', {'font-weight': 800});
+    } else {
+      txt(g, lx, ty - fs - 8, 'Tank water', {'font-weight': 600});
+      txt(g, lx, ty - 5, '700,000', {'font-weight': 800});
     }
+    // the glass at the WHO limit, same height as the tank
+    mk('line', {x1: ax, x2: W, y1: ly, y2: ly, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '6 5'}, g);
+    const gw = s * .8, gt = ly - s / 2, gb = ly + s / 2;
+    mk('path', {d: `M${ix - gw * .4},${gt + s * .35} L${ix + gw * .4},${gt + s * .35} L${ix + gw * .31},${gb} L${ix - gw * .31},${gb} Z`, fill: INK, 'fill-opacity': .22}, g);
+    mk('path', {d: `M${ix - gw / 2},${gt} L${ix - gw * .34},${gb} L${ix + gw * .34},${gb} L${ix + gw / 2},${gt}`, fill: '#fff', 'fill-opacity': .35, stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+    txt(g, lx, ly - fs - 8, 'WHO limit', {'font-weight': 600});
+    txt(g, lx, ly - 5, '10,000', {'font-weight': 800});
+    return g;
   }
-  gsap.ticker.add(() => { if (!Kit.calm) { S.ph += .045; S.hang = Math.min(1, S.hang + .008); } render(); });
+  // the guess label sits left of the axis; any tick label it would touch steps aside
+  function guessLabel(p, gy, word) {
+    const {fs, ticks} = F, gT = gy - 5 - fs * .8, gB = gy + fs * 1.3 + 3;
+    ticks.forEach(t => { const hit = t.y - fs * .45 < gB + 3 && t.y + fs * .6 > gT - 3; t.el.style.visibility = hit ? 'hidden' : ''; });
+    txt(p, 0, gy - 5, word, {fill: GUESS, 'font-weight': 700});
+    txt(p, 0, gy + fs + 3, fmt(G), {fill: GUESS, 'font-weight': 800});
+  }
 
-  // ---- drops, launched with gravity ----
-  function launch(big, spread) {
-    if (!G.drops || Kit.calm) return;
-    S.hang = 0;
-    const {fs, cx, tipY} = G, d = Kit.mk('path', {d: dropPath(fs * (big ? .5 : .36)), fill: '#d6f1ff', 'fill-opacity': .92, stroke: '#fff', 'stroke-width': .8}, G.drops);
-    const v = 30 + Kit.rnd() * 40, g = 1500, ang = 90 + (Kit.rnd() - .5) * spread;
-    const dist = Math.max(4, levelY() - tipY), vy = v * Math.sin(ang * Math.PI / 180), dur = (-vy + Math.sqrt(vy * vy + 2 * g * dist)) / g;
-    gsap.set(d, {x: cx, y: tipY + fs * .3});
-    const land = () => { const x = gsap.getProperty(d, 'x'); d.remove(); splash(x, big ? 6 : 3); };
-    if (hasPhys) gsap.to(d, {duration: dur, physics2D: {velocity: v, angle: ang, gravity: g}, onComplete: land});
-    else gsap.to(d, {duration: dur, y: levelY(), ease: 'power2.in', onComplete: land});
+  // ---------- front ----------
+  function drawFront() {
+    FF = frame(svg); scene(svg);
+    gGuess = mk('g', {}, svg);
+    drawGuess();
   }
-  function splash(x, n) {
-    if (!G.drops) return;
-    const {fs} = G, y = levelY();
-    const ring = Kit.mk('ellipse', {cx: x, cy: y, rx: fs * .3, ry: fs * .1, fill: 'none', stroke: '#fff', 'stroke-width': 1.4}, G.drops);
-    gsap.to(ring, {attr: {rx: fs * 2.2, ry: fs * .45}, opacity: 0, duration: .7, ease: 'power3.out', onComplete: () => ring.remove()});
-    for (let i = 0; i < n; i++) {
-      const b = Kit.mk('circle', {r: fs * (.1 + Kit.rnd() * .13), fill: '#e6f7ff'}, G.drops);
-      gsap.set(b, {x, y});
-      const opts = {duration: .55, opacity: 0, ease: 'power1.in', onComplete: () => b.remove()};
-      if (hasPhys) opts.physics2D = {velocity: 90 + Kit.rnd() * 110, angle: -90 + (Kit.rnd() - .5) * 110, gravity: 900};
-      else { opts.y = y - fs; opts.x = x + (Kit.rnd() - .5) * fs * 2; }
-      gsap.to(b, opts);
+  function drawGuess() {
+    if (!gGuess || !FF) return;
+    F = FF; gGuess.innerHTML = '';
+    const {fs, y, ax, gEnd, r} = F, gy = y(G);
+    mk('line', {x1: ax, x2: gEnd, y1: gy, y2: gy, stroke: GUESS, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, gGuess);
+    if (!touched) {          // a faint hint down into the empty band
+      const hx = ax + 16, h0 = gy + r + 10, h1 = y(160);
+      const h = mk('g', {opacity: .5}, gGuess);
+      mk('path', {d: `M${hx},${h0} V${h1}`, stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '2 4', 'stroke-linecap': 'round', fill: 'none'}, h);
+      mk('path', {d: `M${hx - 5},${h1 - 7} L${hx},${h1} L${hx + 5},${h1 - 7}`, stroke: INK, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, h);
+      txt(h, hx + 10, h1 + fs * .1, 'drag down', {'font-weight': 600});
     }
-    gsap.fromTo(S, {amp: Math.max(S.amp, fs * .55)}, {amp: 0, duration: 1.6, ease: 'elastic.out(1,.32)', overwrite: 'auto'});
+    mk('path', {d: dropPath(ax, gy, r * 1.15), fill: GUESS}, gGuess);
+    guessLabel(gGuess, gy, 'your guess');
   }
-  const turnValve = () => { if (!Kit.calm && G.valve) gsap.fromTo(G.valve, {rotation: 0}, {rotation: 90, svgOrigin: G.valveO, duration: .12, ease: 'power2.out', yoyo: true, repeat: 1}); };
+  function setFromY(py) {
+    G = Math.max(100, Math.min(1000000, FF.v(py)));
+    drawGuess();
+  }
+  let dragging = false;
+  const localY = e => e.clientY - svg.getBoundingClientRect().top;
+  svg.addEventListener('pointerdown', e => {
+    if (locked) return; dragging = true; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; Kit.haptic('selection'); sure.on(); }
+    setFromY(localY(e));
+  });
+  svg.addEventListener('pointermove', e => { if (dragging) setFromY(localY(e)); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
-  // ---- the reader's pours ----
-  function pour() {
-    if (S.phase === 'done') return;
-    S.pours++; Kit.haptic('selection'); turnValve(); launch(true, 8);
-    const target = 1 + 10 * S.pours;
-    if (Kit.calm) S.shown = target; else gsap.to(S, {shown: target, duration: .9, delay: .15, ease: 'power3.out', overwrite: false});
-    render(true);
-    if (S.pours >= 50) { finale(); return; }
-    if (S.phase === 'tap' && conc(target) < LIMIT) { S.phase = 'crossed'; setTimeout(crossed, Kit.calm ? 0 : 650); }
+  function youLine() {
+    const g = round2(G), ok = g >= 1000 && g <= 2500, at = PCT != null ? `, at ${PCT}% sure` : '';
+    if (ok) return `You were close${at}.`;
+    const k = g > AFTER ? g / AFTER : AFTER / g;
+    const ks = k < 10 ? (Math.round(k * 10) / 10).toString() : Math.round(k).toLocaleString('en-US');
+    return `You were ${ks}× too ${g > AFTER ? 'high' : 'low'}${at}.`;
   }
-  function crossed() {
-    if (S.phase === 'done') return;
-    Kit.haptic('light');
-    say.innerHTML = `<b>${S.pours} pours:</b> 1 litre of tank water in ${1 + 10 * S.pours}, and you're just under the limit. The real plan dilutes much more. Keep tapping, or pour to the plan.`;
-    Kit.show('next');
-    if (!Kit.calm) gsap.from('#next', {opacity: 0, y: 8, duration: .45, ease: 'back.out(2)'});
-  }
-  function finale() {
-    if (S.phase === 'done') return;
-    S.phase = 'done';
-    Kit.hide('next'); Kit.hide('say'); card.classList.add('answered');
-    Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .5, ease: 'power3.out', clearProps: 'opacity,transform'});
-    const end = () => {
-      Kit.haptic('success');
-      render(true);
-      if (Kit.calm) { G.fin.setAttribute('opacity', 1); return; }
-      gsap.fromTo(G.fin, {opacity: 0, x: -10}, {opacity: 1, x: 0, duration: .6, ease: 'power3.out'});
-      const len = G.brk.getTotalLength();
-      gsap.fromTo(G.brk, {strokeDasharray: len, strokeDashoffset: len}, {strokeDashoffset: 0, duration: .8, ease: 'power2.inOut'});
-      gsap.fromTo(G.cBig, {scale: 1.25, transformOrigin: '100% 50%'}, {scale: 1, duration: .9, ease: 'elastic.out(1,.4)'});
-    };
-    if (Kit.calm) { S.shown = 500; end(); return; }
-    const tl = gsap.timeline({onComplete: end});
-    for (let i = 0; i < 38; i++) tl.call(() => { launch(i % 4 === 0, 26); if (i % 3 === 0) turnValve(); }, null, i * .055);
-    tl.to(S, {shown: 500, duration: 2.4, ease: 'power2.inOut'}, .15);
-    tl.call(() => { const {ix0, ix1} = G; for (let k = 0; k < 4; k++) splash(ix0 + (ix1 - ix0) * (.2 + .2 * k), 7); }, null, 2.3);
-  }
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    locked = true; PCT = pct;
+    const g = round2(G), ok = g >= 1000 && g <= 2500, said = `${fmt(G)} Bq/L`;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'off'}`);
+    Kit.$('you').textContent = youLine();
+    setTimeout(() => Turn.over(), 700);
+  });
 
-  svg.addEventListener('pointerdown', e => { e.preventDefault(); pour(); });
-  Kit.$('next').addEventListener('click', finale);
+  // ---------- back ----------
+  function drawBack(animate) {
+    if (backTl) { backTl.kill(); backTl = null; }
+    frame(svg2);
+    const {W, fs, y, ax, ix, lx, AR, BR, gEnd, r} = F;
+    const y7 = y(TANK), y10 = y(LIMIT), y15 = y(AFTER);
+    // the diluted drop, under the tank and the glass, so it seems to come out of the tank
+    const drop = mk('path', {d: dropPath(ix, y15, r), fill: TRUE}, svg2);
+    const gA = scene(svg2);
+    // the reader's guess, kept on the left
+    const gGs = mk('g', {}, svg2), gy = y(G);
+    mk('line', {x1: ax, x2: gEnd, y1: gy, y2: gy, stroke: GUESS, 'stroke-width': 2, 'stroke-dasharray': '3 4'}, gGs);
+    mk('path', {d: dropPath(ax, gy, r), fill: GUESS}, gGs);
+    guessLabel(gGs, gy, 'you said');
+    // ×70: the limit up to the tank
+    const gB = mk('g', {}, svg2), bl = 10 + (y10 - y7);
+    const brk = mk('path', {d: `M${BR - 5},${y7} H${BR} V${y10} H${BR - 5}`, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round', 'stroke-dasharray': bl, 'stroke-dashoffset': 0}, gB);
+    const t70 = txt(gB, (BR + AR) / 2, (y7 + y10) / 2 + fs * .4, '×70', {'text-anchor': 'middle', 'font-size': fs * 1.15, 'font-weight': 800, style: 'font-family:var(--display)'});
+    // ÷500: the tank down to where the water lands; a longer step, so it ends below the limit
+    const len = y15 - y7;
+    const arrow = mk('path', {d: `M${AR},${y7} V${y15 - 1}`, stroke: TRUE, 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-dasharray': len, 'stroke-dashoffset': 0}, svg2);
+    const head = mk('path', {d: `M${AR - 5},${y15 - 8} L${AR},${y15} L${AR + 5},${y15 - 8}`, stroke: TRUE, 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg2);
+    const dz = fs * 1.3;
+    const div = txt(svg2, AR - 10, (y10 + y15) / 2 + dz * .36, '÷500', {'text-anchor': 'end', fill: TRUE, 'font-size': dz, 'font-weight': 800, style: 'font-family:var(--display)'});
+    // where it lands
+    const gT = mk('g', {}, svg2);
+    mk('line', {x1: ax, x2: W, y1: y15, y2: y15, stroke: TRUE, 'stroke-width': 2.4}, gT);
+    txt(gT, lx, y15 + fs + 4, 'after dilution', {fill: TRUE, 'font-weight': 700});
+    txt(gT, lx, y15 + fs * 2 + 8, '1,500', {fill: TRUE, 'font-weight': 800});
+    svg2.insertBefore(gT, drop);
 
-  Kit.onShow.card = layout;
+    if (!animate || Kit.calm || typeof gsap === 'undefined') return;
+    backTl = gsap.timeline({delay: .35})
+      .from(gA, {opacity: 0, duration: .45, ease: 'power2.out'})
+      .from(gGs, {opacity: 0, duration: .35, ease: 'power2.out'}, '+=.05')
+      .fromTo(brk, {attr: {'stroke-dashoffset': bl}}, {attr: {'stroke-dashoffset': 0}, duration: .6, ease: 'power2.out'}, '+=.2')
+      .from(t70, {opacity: 0, duration: .3, ease: 'power2.out'}, '-=.2')
+      .fromTo(arrow, {attr: {'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: 1.2, ease: 'power2.inOut'}, '+=.3')
+      .from(drop, {y: y7 - y15, duration: 1.2, ease: 'power2.inOut'}, '<')
+      .from([head, div], {opacity: 0, duration: .35, ease: 'power2.out'}, '-=.35')
+      .from(gT, {opacity: 0, duration: .5, ease: 'power2.out'});
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  function fitBig() {
+    const b = Kit.$('big'); b.style.fontSize = '';
+    let z = parseFloat(getComputedStyle(b).fontSize) || 19;
+    while (b.scrollWidth > b.clientWidth + 1 && z > 15) { z -= .5; b.style.fontSize = z + 'px'; }
+  }
+  Kit.onShow.card = () => { fitBig(); drawFront(); if (turned) drawBack(false); };
   Kit.onEnter.card = () => {
-    if (Kit.calm) return;
-    gsap.fromTo(E, {g: 0}, {g: 1, duration: 1.6, delay: .35, ease: 'expo.out'});
-    gsap.from('#pic .glass', {opacity: 0, y: 14, stagger: .1, duration: .7, ease: 'power3.out'});
-    gsap.fromTo(S, {amp: G.fs * .8}, {amp: 0, duration: 2, delay: .3, ease: 'elastic.out(1,.3)'});
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.from(svg.children, {opacity: 0, y: 6, stagger: .12, duration: .45, ease: 'power3.out'});
   };
   Kit.play.card = async () => {
-    const w = ms => new Promise(r => setTimeout(r, ms));
-    for (let i = 0; i < 7; i++) { pour(); await w(Kit.calm ? 20 : 140); }
-    await w(Kit.calm ? 60 : 900);
-    Kit.$('next').click();
-    await w(Kit.calm ? 150 : 4600);
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    touched = true; sure.on(); G = 4000; drawGuess();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(1100);
+    if (backTl) backTl.progress(1);
+    await wait(150);
   };
 })();
 Kit.single();

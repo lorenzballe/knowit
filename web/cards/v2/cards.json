@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611042116,
- "built": "2026-11-04T21:16:05Z",
+ "version": 202611062359,
+ "built": "2026-11-06T23:59:12Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -127469,12 +127469,12 @@
    "topic": "nature",
    "genre": "nature.climate",
    "strand": "nature.climate.greenhouse_effect",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why was there no Adriatic Sea as we know it in the last ice age?",
-   "answer": "In the last glacial period the sea sat about 120 m lower, not 10 or 15, so much of today's Adriatic floor was dry land. Dropping the sea that far moves the coast about 200 km south.",
-   "move": "Drop the sea 120 m and the Adriatic coast moves about 200 km south.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "estimation",
+   "question": "In the ice age, the northern Adriatic was land. How much lower was the sea?",
+   "answer": "The sea was about 120 m lower in the ice age. Spread over 200 km, that is only about 0.6 m per km, so the coast moved roughly 200 km south and the Adriatic as we know it was gone.",
+   "move": "On flat ground, a small change in height is a huge change in distance.",
    "keywords": [
     "adriatic-sea",
     "last-glacial-period",
@@ -127495,14 +127495,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Cross-section diagram of the Adriatic with a sea surface you drag downward. It asks why there was no Adriatic Sea as we know it in the last ice age, and shows where the coastline ends up as the sea drops.",
-    "ground": "#1d1216",
-    "page": "pages/nature-adriatic-dry-floor.html?v=4ec6c3ddbd3a",
-    "bytes": 20508
+    "label": "A drag-to-guess page with a sea-level graphic. The reader drags the sea down to a guess for how far lower it was in the ice age. The reveal says about 120 m lower, moving the coast about 200 km south.",
+    "page": "pages/nature-adriatic-dry-floor.html?v=5620743ffba0",
+    "bytes": 18523
    },
    "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=JM-n3IqZRCo&t=95s",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "nature-alps-trap-smog",
@@ -133551,10 +133550,10 @@
    "strand": "nature.oceans.deep_sea",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "none",
-   "question": "Drop Everest into the Challenger Deep. How much water covers its peak?",
-   "answer": "The Challenger Deep is over 10,900 m deep, and Everest is about 8,848 m tall. Stood on the bottom, its summit stays more than 2 km under the sea.",
-   "move": "The sea's deepest hole is deeper than the highest mountain is tall.",
+   "principle": "estimation",
+   "question": "Stand Everest on the deepest seabed. Where does its summit end up?",
+   "answer": "Even with its foot resting on the seabed of the Challenger Deep, Everest's summit stays over 2 km under water. The trench goes down over 10,900 m, while Everest is about 8,848 m tall, so the gap is over 2 km.",
+   "move": "We size things from the surface we can see; measure the hidden half before you compare.",
    "keywords": [
     "challenger deep",
     "mount everest",
@@ -133575,15 +133574,14 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Cross-section of the Challenger Deep with Mount Everest standing on the trench bottom. The reader drags a flag to where the summit ends up and is asked how much water covers its peak.",
-    "graded": false,
-    "ground": "#ffd23f",
-    "page": "pages/nature-everest-underwater.html?v=900e5cb4c46e",
-    "bytes": 21981
+    "label": "A side view of Mount Everest above a dark ocean, with a drag handle. The reader drags Everest down until its base rests on the seabed of the Challenger Deep, then sees where its summit ends up relative to the water surface.",
+    "ground": "#e4ecee",
+    "page": "pages/nature-everest-underwater.html?v=afbf0cc10746",
+    "bytes": 13789
    },
    "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=CYUaD_ROqGM",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "nature-feedback-loops-1",
@@ -142451,11 +142449,11 @@
    "genre": "nature.systems_thinking",
    "strand": "nature.systems_thinking.chain_reactions",
    "kind": "page",
-   "difficulty": "hard",
-   "principle": "none",
-   "question": "How much material did Vesuvius emit in the first ten days of 1944?",
-   "answer": "Vesuvius emitted more than 245 million m³ of material in about ten days, some 280 m³ every second. Packed into one cube, that is about 626 m on each side. Ash and lapilli fell on Pompei, Nocera, Scafati and Poggiomarino.",
-   "move": "Vesuvius, 1944: over 245 million m³ in ten days, a cube 626 m wide.",
+   "difficulty": "medium",
+   "principle": "estimation",
+   "question": "How much material did Vesuvius throw out in ten days in 1944?",
+   "answer": "Vesuvius threw out more than 245 million m³ of material in ten days. That much would fill a cube about 626 m on each side. Falling ash and lapilli damaged towns including Pompei, Nocera, Scafati and Poggiomarino.",
+   "move": "Ten times wider holds a thousand times more: big volumes hide in small cubes.",
    "keywords": [
     "vesuvius",
     "pompei",
@@ -142476,15 +142474,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A gauge with a needle and an ash cube beside it. The question asks how much material Vesuvius emitted in its first ten days in 1944. The reader turns the needle to a guess, and the cube shows the size of the answer.",
-    "graded": false,
-    "ground": "#1d1611",
-    "page": "pages/nature-vesuvius-ash-volume.html?v=cf11f66672ec",
-    "bytes": 30677
+    "label": "A 3D cube the reader drags up or down until it holds the material Vesuvius erupted in its first ten days in 1944, more than 245 million cubic metres.",
+    "page": "pages/nature-vesuvius-ash-volume.html?v=c86a22244d9f",
+    "bytes": 11969
    },
    "source": "Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=IxqDIGusjko&t=300s",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "nature-vesuvius-inside-somma",
@@ -171524,12 +171520,12 @@
    "topic": "psychology",
    "genre": "psychology.bias",
    "strand": "psychology.bias.anchoring_bias",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why can't your brain tell which way a gentle slope tilts?",
-   "answer": "A gentle slope has no clear reference to measure against, so the brain borrows the nearest one, even when that one is tilted. Here a low segment sits between steep ones, and the steep neighbors act as a false frame, making its direction hard to judge.",
-   "move": "No outside reference? The brain borrows the nearest one, even a tilted one.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "anchoring",
+   "question": "Walking this road, what does your brain judge the middle stretch against?",
+   "answer": "The middle stretch is gentle, lying between two steep ones. Nothing beyond the road gives a comparison, and there is no view past the horizon. So the brain uses the steep neighbors as its reference and struggles to tell which way the middle goes.",
+   "move": "With no outside reference, the brain uses the slopes next to a slope as its reference.",
    "keywords": [
     "slope",
     "road",
@@ -171550,14 +171546,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Diagram of a road in three segments, steep, flat, then steep, with arrows showing perceived versus actual slope. A pencil can be dragged to restore the scenery around the road one piece at a time.",
-    "ground": "#f3ead4",
-    "page": "pages/psychology-gentle-slope-frame.html?v=bac4dcc78984",
-    "bytes": 26395
+    "label": "A road with a gentle middle stretch between two steep stretches. Drag the orange dot to show which way the middle slopes, then say how sure you are. The dot must be moved first to unlock the answer.",
+    "page": "pages/psychology-gentle-slope-frame.html?v=e4d315127a5c",
+    "bytes": 13593
    },
    "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=GDR2odTE7dM&t=1269s",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "psychology-goals-that-work-1",
@@ -181947,12 +181942,12 @@
    "topic": "science",
    "genre": "science.how_science_knows",
    "strand": "science.how_science_knows.experiments",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why do some geologists start the Anthropocene around 1950–1960?",
-   "answer": "Some geologists date the Anthropocene to around 1950–1960 because hydrogen-bomb tests in the 1950s and 60s spread a radioactive layer worldwide. That layer forms a clear marker in the mud everywhere. An era needs a mark found everywhere at once, and this one qualifies.",
-   "move": "An era needs a mark found everywhere at once: the 1950s bomb fallout is one.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "coincidence",
+   "question": "Why do some geologists mark the Anthropocene’s beginning around 1950‑1960?",
+   "answer": "Some geologists mark the Anthropocene's start around 1950-1960 because hydrogen-bomb tests in the 1950s and 60s sent massive fallout across the whole globe in the same years. That left one radioactive layer, a clear marker.",
+   "move": "A start date in the Earth’s layers needs a mark laid down everywhere at the same time.",
    "keywords": [
     "anthropocene",
     "geologists",
@@ -181972,15 +181967,14 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A world map with columns of mud, one tube per site on Earth. Drag a slider through the years to watch a bright radioactive ash layer appear. Asks why some geologists start the Anthropocene around 1950–1960.",
-    "ground": "#0f3a6b",
-    "page": "pages/science-bomb-layer.html?v=e3627e028861",
-    "bytes": 28282
+    "touch": "taps",
+    "label": "A world map shows a thin, bright radioactive ash layer spread everywhere after the 1950s nuclear tests. The page asks why some geologists mark the Anthropocene's beginning around 1950 to 1960, with three choices to pick from.",
+    "page": "pages/science-bomb-layer.html?v=87cce670e533",
+    "bytes": 10442
    },
    "source": "Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=CpGW8eA6Qik&t=49s",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "science-bouncing-egg-bubbles",
@@ -185321,12 +185315,12 @@
    "topic": "science",
    "genre": "science.numbers_and_chance",
    "strand": "science.numbers_and_chance.risk_in_numbers",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Diluted 500 times, how radioactive is Fukushima's tank water?",
-   "answer": "Tap to pour clean water into the tank water, and the page counts the pours. At ×500 dilution, 700,000 Bq per litre falls to 1,500, six times under the WHO's 10,000 limit for drinking water. It takes about 50 pours. The tritium doesn't vanish; it spreads through more litres.",
-   "move": "Diluted 500 times, the tank water ends six times under the drinking-water limit.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "estimation",
+   "question": "700,000 Bq/L, diluted 500 times. Where does it land?",
+   "answer": "Diluted 500 times, 700,000 Bq/L lands at about 1,500 Bq/L, six times under the WHO's 10,000 limit for drinking water. \"Seventy times the limit\" sounds alarming, but ÷500 is a longer step than ×70.",
+   "move": "Hear “X times too much”? Ask how many times it will be divided.",
    "keywords": [
     "fukushima",
     "tritium",
@@ -185346,15 +185340,14 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Bar chart comparing 700,000 Bq/L of tank water, the 10,000 Bq/L WHO drinking limit, and 1,500 Bq/L after 500-fold dilution. Tap to pour in clean water and count pours to get under the limit.",
-    "ground": "#0b2731",
-    "page": "pages/science-dilute-fukushima-water.html?v=5fbe0be26916",
-    "bytes": 23179
+    "touch": "drags",
+    "label": "A drag-to-guess prompt: water with 700,000 becquerels per litre is diluted 500 times. Drag a marker to your guess for the result and say how sure you are. The reveal compares the result with the WHO's 10,000 drinking-water limit.",
+    "page": "pages/science-dilute-fukushima-water.html?v=f9ae71e06f63",
+    "bytes": 17763
    },
    "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=IPH3uqi0a-w&t=240s",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "science-dna-spooled-tight",
@@ -198908,12 +198901,12 @@
    "topic": "science",
    "genre": "science.physics",
    "strand": "science.physics.energy",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Same viscosity: what happens to flow as density or speed rise?",
-   "answer": "Raising density or speed while viscosity stays fixed raises the Reynolds number, since it is density times speed times pipe width divided by viscosity. Density and speed sit on top, so the smooth layers break into eddies and the flow turns turbulent.",
-   "move": "Heavier or faster fluid, same viscosity: Reynolds goes up, flow turns turbulent.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "computation",
+   "question": "Keep viscosity fixed. Make the liquid denser and faster. What happens to the flow?",
+   "answer": "Denser and faster both push the same way: with viscosity fixed, raising either one lifts the Reynolds number, so the flow turns chaotic. That ratio is the Reynolds number, and raising any term on top climbs toward turbulence.",
+   "move": "Ask which side of the ratio a change sits on.",
    "keywords": [
     "reynolds number",
     "turbulence",
@@ -198934,14 +198927,13 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Dye flowing in a pipe, drawn as smooth laminar layers that turn into turbulent eddies. Asks what happens to flow when density or speed rise while viscosity stays fixed. Tap Density or Speed to see the Reynolds number change.",
-    "ground": "#f1ede4",
-    "page": "pages/science-reynolds-goes-up.html?v=78d9674b4d33",
-    "bytes": 16260
+    "label": "Interactive card asking what fluid flow does when density or speed rises while viscosity stays fixed. Choices are smooth or chaotic, plus a confidence picker. The revealed answer is chaotic, because both changes push the Reynolds number up.",
+    "page": "pages/science-reynolds-goes-up.html?v=c27cdccd072b",
+    "bytes": 13309
    },
    "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=I3IpKEtWqvU&t=152s",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "science-rift-to-ocean",
@@ -238234,12 +238226,12 @@
    "topic": "technology",
    "genre": "technology.where_things_come_from",
    "strand": "technology.where_things_come_from.factories",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why are some milk and juice cartons so hard to recycle?",
-   "answer": "Some milk and juice cartons are made of three layers: paper, plastic and aluminum. Those materials are glued together as one wall, which made the carton hard to recycle. The page lets you drag the wall apart to see each layer.",
-   "move": "One carton, three materials glued as one: that's what made it so hard to recycle.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "conditional",
+   "question": "Why are some milk and juice cartons difficult to recycle?",
+   "answer": "The carton wall is three layers stuck together: paper, plastic and aluminium. Until recently these cartons were not recyclable, and some plants have only lately been equipped to take them. So recyclability depends on the plants as well as the material.",
+   "move": "Our reading: “recyclable” isn't settled by the material alone.",
    "keywords": [
     "milk carton",
     "recycling",
@@ -238259,15 +238251,14 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A close-up strip showing the wall of a milk carton, which can be dragged to pull its layers apart. The question asks why some milk and juice cartons are hard to recycle.",
-    "ground": "#22302b",
-    "page": "pages/technology-milk-carton-layers.html?v=b448e21b2426",
-    "bytes": 29038
+    "touch": "taps",
+    "label": "A cross-section of a milk carton wall. The reader taps what the wall is made of from four options: paper, plastic, aluminium, wax. The question asks why some milk and juice cartons are difficult to recycle.",
+    "page": "pages/technology-milk-carton-layers.html?v=e3e4b3139c0c",
+    "bytes": 13681
    },
    "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=AFEMHZioqJU&t=282s",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "technology-morandi-rusted-cables",
@@ -244715,12 +244706,12 @@
    "topic": "technology",
    "genre": "technology.tech_and_society",
    "strand": "technology.tech_and_society.regulation",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "conditional",
    "question": "Why can the XM42 flamethrower be bought in U.S. gun stores?",
-   "answer": "The XM42 is classified under U.S. law as a non-lethal incendiary device and sold under hobbyist rules, not as a fully military-grade weapon. Where a device can be sold depends on how the law classifies it. Turning the dial compares it with Musk's flamethrower and the army's M9.",
-   "move": "Where a device can be sold depends on how the law classifies it.",
+   "answer": "The law files the XM42 as a hobby tool. It is classed as a non-lethal incendiary device and sold under hobbyist rules, unlike fully military-grade weapons.",
+   "move": "What you may buy depends on how the law files it, not on how fierce it looks.",
    "keywords": [
     "xm42",
     "flamethrower",
@@ -244740,15 +244731,14 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "A puzzle asking why the XM42 flamethrower can be bought in U.S. gun stores. A dial lets the reader compare Musk's flamethrower, the XM42, and the army's M9.",
-    "ground": "#efe5cf",
-    "page": "pages/technology-xm42-flamethrower.html?v=b6ef5ede8e58",
-    "bytes": 25598
+    "touch": "taps",
+    "label": "Multiple-choice card asking why the XM42 flamethrower can be bought in U.S. gun stores. Four options: its tank is too small for a weapon, it counts as a non-lethal hobby device, it is sold only with a federal permit, or the law files it as a hobby tool. The reader picks one.",
+    "page": "pages/technology-xm42-flamethrower.html?v=dff2e0621928",
+    "bytes": 14798
    },
    "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=CKMyBFiiED8",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "technology-yakutsk-stilt-houses",
@@ -254343,12 +254333,12 @@
    "topic": "weird_facts",
    "genre": "weird_facts.odd_places",
    "strand": "weird_facts.odd_places.places_that_should_not_exist",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What area does the marble used in Ashgabat equal?",
-   "answer": "Ashgabat built over 540 new buildings and clad them in about 4.5 million slabs of bright white Carrara marble. Laid flat, that marble would cover more than 692 football fields. Each white slip stands for one football field.",
-   "move": "Ashgabat's marble alone would carpet more than 692 football fields.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "estimation",
+   "question": "Ashgabat's marble, laid flat: how many football fields would it cover?",
+   "answer": "Ashgabat's marble, laid flat, would pave more than 692 football fields: a square only about 26 across. The city has over 540 new buildings and about 4.5 million slabs of white Carrara marble.",
+   "move": "Don't divide, root it: √692 ≈ 26 fields a side.",
    "keywords": [
     "ashgabat",
     "turkmenistan",
@@ -254368,14 +254358,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A white page titled Marble City asks what area the marble used in Ashgabat equals. Press and hold to lay white slabs, one slip per football field, until the marble fills the field.",
-    "ground": "#15513f",
-    "page": "pages/weird_facts-marble-football-fields.html?v=bbad7956aebb",
-    "bytes": 18149
+    "label": "Ashgabat's marble, laid flat: a draggable square block asks how many football fields it would cover. Drag the corner to size the block; the reveal says more than 692 fields, about 26 across.",
+    "page": "pages/weird_facts-marble-football-fields.html?v=b6658974e0a6",
+    "bytes": 15776
    },
    "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=JswYQiixMT8&t=172s",
-   "written": "2026-11-04"
+   "written": "2026-11-06"
   },
   {
    "id": "weird_facts-names-1",

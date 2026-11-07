@@ -1,306 +1,212 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-everest-underwater -->
-<!-- Look: pop-art comic cross-section of the Pacific: yellow Ben-Day paper, thick black outlines, dotted blue sea with shimmering light rays, magenta trench walls, an orange Everest with a white cap, and the little bathyscaphe Trieste bobbing in the deep.
-     Interaction: the reader drags a flag to guess where Everest's summit would sit if it stood on the floor of the Challenger Deep (10,900 m). A dashed ghost mountain grows from the floor to the flag.
-     Wow moment: the real Everest drops in from the sky, splashes through the surface, sinks with a thud, and a comic burst shouts that more than 2 km of water still sits on top. -->
+<!-- Design note.
+     Thought to carry: we size the world from the surface we can see, so the hidden half (a depth, a base, a cost) gets shrunk.
+     Front: a flat cross-section of a calm sea with Everest drawn to vertical scale; the reader drags the mountain down to where they think its foot meets the deepest seabed, and a live chip says where the summit ends up.
+     Back: the real trench floor at 10,900 m appears, Everest settles from the reader's guess onto it, a yellow bracket shows the "2 km" of sea still over the summit, and the Trieste dives along its route to the bottom.
+     The front gives nothing away: the sea fades into darkness with no floor, no depth scale and no trench value; the only number shown is the reader's own guess. -->
 <title>Everest in the Challenger Deep</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/CustomEase.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
 <style>
-#card{background-image:radial-gradient(circle,rgba(20,20,20,.085) 0 1.1px,transparent 1.6px);background-size:9px 9px}
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:visible}
-#why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0;overflow-wrap:anywhere}
-#why .body{font:600 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
-#why .short{display:none}
-.say{overflow-wrap:anywhere}
-.bub{animation:bub 4.2s ease-in infinite;opacity:0;transform-box:fill-box}
-@keyframes bub{0%{transform:translateY(0);opacity:0}25%{opacity:.85}100%{transform:translateY(-46px);opacity:0}}
-.kit-calm .bub{animation:none;opacity:.6}
-@media (max-height:760px){
-  #why .big,#why .long{display:none}
-  #why .short{display:inline}
-  .answered #keep{display:none!important}
-}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+/* the face turned away is also taken out of view once it has rotated past edge-on */
+.turn>.front{visibility:visible;transition:visibility 0s .38s}
+.turn.over>.front{visibility:hidden}
+.turn>.back{visibility:hidden;transition:visibility 0s .38s}
+.turn.over>.back{visibility:visible}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face{gap:1.2cqh}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.card .front p.say{padding-right:96px;overflow-wrap:anywhere}
+.back .body{overflow-wrap:anywhere}
+.foot .src{display:block;padding-right:96px;overflow-wrap:anywhere}
+.front .foot.spacer .src{visibility:hidden}
+.hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(4px)}}
+.kit-calm .hint{animation:none}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Drag the flag · drop the mountain" style="--c:#ffd23f;--k:#141414;--edge:#cf9c00">
+<article class="card" id="card" data-topic="nature" data-kind="Drag Everest down · how deep" style="--c:#e4ecee;--k:#10212c;--edge:#b7c8ce">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">DROP EVEREST</span></div>
-    <h2 class="q">Drop Everest into the Challenger Deep. How much water covers its peak?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A cross-section of the ocean down to the floor of the Challenger Deep at 10,900 m, with a flag you drag to guess where Everest's summit would sit."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE MOUNTAIN</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Stand Everest on the deepest seabed. Where does its summit end up?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A sea in cross-section with Mount Everest drawn to scale; drag it down into the dark water."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say"><b>Drag Everest down</b> until its foot rests on the deepest seabed, wherever you think that is.</p>
+        <div class="foot spacer" aria-hidden="true"><span class="src">&nbsp;</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Over 2 km under the waves.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Everest standing on the floor of the Challenger Deep, its summit over 2 km below the surface, and the Trieste diving to the bottom."></svg></div>
+        <p class="body">The Challenger Deep, in the Pacific, goes down over 10,900 m. Everest is about 8,848 m tall, so even standing on the bottom its summit stays over 2 km under water.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> We size things from the surface we can see; measure the hidden half before you compare.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024).</span></div>
+      </section>
     </div>
-    <div id="sure"></div>
-    <p class="say" id="say">Stand Everest on the bottom. <b>Drag the flag</b> to where its summit ends up.</p>
-    <div id="why" class="gone"><p class="big">Over 2 km of water on top</p><p class="body"><span class="long">The Challenger Deep is over 10,900 m deep; Everest is about 8,848 m tall. Stand it on the bottom and its summit stays more than 2 km under the sea.</span><span class="short">10,900 m of trench, 8,848 m of Everest: over 2 km of sea still sits on the summit.</span></p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The sea's deepest hole is deeper than the highest mountain is tall.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+gsap.registerPlugin(MotionPathPlugin);
 (() => {
-  gsap.registerPlugin(CustomEase);
-  CustomEase.create('pop', 'M0,0 C0.2,0 0.3,1.25 0.55,1.1 0.75,0.98 0.9,1 1,1');
-  CustomEase.create('thud', 'M0,0 C0.14,0.5 0.3,0.9 0.6,0.99 0.78,1.03 0.9,1 1,1');
+  const TOP = 3, BOT = -12.4, EV = 8.848, DEEP = 10.9, TRUE_PEAK = EV - DEEP; // -2.052 km
+  const INK = '#10212c', CREAM = '#f3efe4', GUESS_SEA = '#ffa552', GUESS_SKY = '#b4530a', TRUTH = '#ffd75e';
+  const STONE = '#8f8c84', SHADE = '#6c6962', BED = '#34302a';
+  const R = [[0,0],[.1,.07],[.16,.06],[.27,.17],[.36,.22],[.5,.42],[.62,.5],[.78,.74],[.9,.86],[1,1]];
+  const L = [[-.09,.05],[-.15,.1],[-.24,.12],[-.35,.3],[-.48,.4],[-.6,.58],[-.76,.7],[-.88,.9],[-1,1]];
+  const SH = [[0,0],[.1,.07],[.16,.06],[.27,.17],[.36,.22],[.5,.42],[.62,.5],[.78,.74],[.9,.86],[1,1],[.32,1],[.14,.52],[.05,.2]];
+  const SNOW = [[0,0],[.1,.07],[.16,.06],[.21,.11],[.14,.14],[.08,.11],[.01,.16],[-.06,.11],[-.12,.13],[-.15,.1],[-.09,.05]];
 
-  const card = Kit.$('card'), svg = Kit.$('pic'), say = Kit.$('say');
-  const INK = '#141414', ROCK = '#e8329a', MT = '#ff6a1f', FLAG = '#ff2d55', SUB = '#ffd23f';
-  const D = 10900, EV = 8848, ABOVE = 1500;
-  let W, H, fs, PX, SY, FY, cx, bw, MH, dMin = -800;
-  let guess = 0, released = false, dragging = false, phase = 0, crossed = false;
-  const L = {tw: []};
-  const fmt = n => Math.round(n).toLocaleString('en-US');
-  const mk = (t, a, p) => Kit.mk(t, a, p);
-  const txt = (p, x, y, s, a) => { const e = mk('text', Object.assign({x, y}, a), p); e.textContent = s; return e; };
-  const SH = [[-1,0],[-.78,.2],[-.66,.24],[-.5,.46],[-.38,.44],[-.22,.72],[-.12,.8],[-.04,.95],[0,1],[.08,.93],[.16,.86],[.26,.66],[.36,.62],[.52,.4],[.64,.36],[.8,.18],[1,0]];
-  const pts = h => SH.map(([u, v]) => `${cx + u * bw},${FY - v * h}`).join(' ');
-  const chip = d => d < 0 ? `${fmt(-d)} m ABOVE` : d === 0 ? 'SEA LEVEL' : `${fmt(d)} m UNDER`;
-  const outlined = (extra) => Object.assign({fill: '#fff', stroke: INK, 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'}, extra);
+  let peak = 2.2, guess = null, touched = false, asked = false, committed = false, turned = false;
+  let W = 0, H = 0, fs = 13, PX = 1, gM = null, gL = null, readout = null, lead = null, hint = null, cx = 0, hw = 0;
+  const yOf = k => (TOP - k) / (TOP - BOT) * H;
+  const label = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.textContent = t; return e; };
+  const pts = (arr, x0, y0, hgt, w) => arr.map(([x, y]) => `${(x0 + x * w).toFixed(1)},${(y0 + y * hgt).toFixed(1)}`).join(' ');
 
-  function layout() {
-    L.tw.forEach(t => t.kill()); L.tw = [];
-    svg.innerHTML = '';
-    const f = Kit.fitSvg(svg); W = Math.max(120, f.W); H = Math.max(80, f.H);
-    fs = Math.max(12, Math.min(14, W / 28));
-    const top = fs * .5, bot = fs * 2.3;
-    PX = Math.max(.002, (H - top - bot) / (D + ABOVE));
-    SY = top + ABOVE * PX; FY = SY + D * PX; cx = W * .5; MH = EV * PX;
-    bw = Math.max(12, Math.min(W * .36, (FY - SY) * .55));
-    dMin = Math.min(0, -Math.floor(Math.max(0, SY - top - fs * 1.4) / PX / 100) * 100);
-    guess = Math.max(dMin, guess);
+  function sea(svg, id, deep) {
+    const defs = Kit.mk('defs', {}, svg), y0 = yOf(0);
+    const g = Kit.mk('linearGradient', {id, x1: 0, y1: y0, x2: 0, y2: H, gradientUnits: 'userSpaceOnUse'}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#3a8bad'}, g);
+    Kit.mk('stop', {offset: 1, 'stop-color': deep}, g);
+    Kit.mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: `url(#${id})`}, svg);
+  }
+  function mountain(p, x0, py) {
+    const hgt = EV * PX;
+    Kit.mk('polygon', {points: pts([...L.slice().reverse(), ...R], x0, py, hgt, hw), fill: STONE}, p);
+    Kit.mk('polygon', {points: pts(SH, x0, py, hgt, hw), fill: SHADE}, p);
+    Kit.mk('polygon', {points: pts(SNOW, x0, py, hgt, hw), fill: '#ffffff'}, p);
+  }
+  function tint(svg) { const y0 = yOf(0); Kit.mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: '#0a2c40', opacity: .45}, svg); }
+  function surface(svg) {
+    const y0 = yOf(0); let d = `M0,${y0}`;
+    for (let x = 0; x < W; x += 24) d += ` q6,-2.2 12,0 q6,2.2 12,0`;
+    Kit.mk('path', {d, stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, svg);
+  }
+  const guessColour = k => k > 0 ? GUESS_SKY : GUESS_SEA;
 
-    // ---- defs: gradients, Ben-Day dots, the mountain's clip
-    const defs = mk('defs', {}, svg);
-    const wg = mk('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    [['0', '#3aa6ff'], ['.3', '#1a63e0'], ['1', '#081a5c']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, wg));
-    const rg = mk('linearGradient', {id: 'rg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    [['0', '#fff', .28], ['1', '#fff', 0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, rg));
-    const dots = (id, r, fill, op, s = 7) => { const p = mk('pattern', {id, width: s, height: s, patternUnits: 'userSpaceOnUse'}, defs); [[s / 2, s / 2], [0, 0], [s, 0], [0, s], [s, s]].forEach(([x, y]) => mk('circle', {cx: x, cy: y, r, fill, opacity: op}, p)); };
-    dots('dw', 1.4, '#fff', .2); dots('dk', 1.7, '#000', .3, 6); dots('ds', 1.6, '#ff8a00', .55, 6);
-    const cp = mk('clipPath', {id: 'mclip'}, defs); mk('polygon', {points: pts(MH)}, cp);
-
-    // ---- sky: a dotted comic sun
-    const sr = Math.max(7, Math.min(fs * 1.3, (SY - top) * .42)), sx = W - fs * 2.6, sy = top + (SY - top) * .48;
-    const sun = mk('g', {class: 'sun'}, svg);
-    const rays0 = mk('g', {}, sun);
-    for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2; mk('line', {x1: sx + Math.cos(a) * sr * 1.25, y1: sy + Math.sin(a) * sr * 1.25, x2: sx + Math.cos(a) * sr * 1.6, y2: sy + Math.sin(a) * sr * 1.6, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, rays0); }
-    mk('circle', {cx: sx, cy: sy, r: sr, fill: '#fff6c4', stroke: INK, 'stroke-width': 2.5}, sun);
-    mk('circle', {cx: sx, cy: sy, r: Math.max(1, sr - 1.5), fill: 'url(#ds)'}, sun);
-    if (!Kit.calm) L.tw.push(gsap.to(rays0, {rotation: 360, svgOrigin: `${sx} ${sy}`, duration: 24, repeat: -1, ease: 'none'}));
-
-    // ---- the sea, with shafts of light
-    let wave = `M0,${SY}`;
-    for (let x = 0; x < W; x += 22) wave += ` q5.5,-4 11,0 q5.5,4 11,0`;
-    const wgp = mk('g', {class: 'w'}, svg);
-    mk('path', {d: `${wave} L${W},${FY + 4} L0,${FY + 4} Z`, fill: 'url(#wg)'}, wgp);
-    mk('path', {d: `${wave} L${W},${FY + 4} L0,${FY + 4} Z`, fill: 'url(#dw)'}, wgp);
-    const shafts = mk('g', {}, wgp), rd = 3600 * PX;
-    [.06, .3, .55, .78].forEach((u, i) => {
-      const x0 = W * u, w0 = W * (.05 + (i % 2) * .03);
-      mk('polygon', {points: `${x0},${SY} ${x0 + w0},${SY} ${x0 + w0 + W * .16},${SY + rd} ${x0 + W * .1},${SY + rd}`, fill: 'url(#rg)'}, shafts);
-    });
-    if (!Kit.calm) L.tw.push(gsap.fromTo(shafts, {opacity: 1}, {opacity: .45, duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
-
-    // ---- the bathyscaphe Trieste, idling in the deep
-    const s = Math.max(6, Math.min(fs * .85, H * .032));
-    const tx = Math.max(W * .23, fs * 3.7 + 2 * s), ty = SY + 3300 * PX;
-    const tr = mk('g', {class: 'tr'}, svg), tb = mk('g', {}, tr);
-    mk('polygon', {points: `${tx - s * .3},${ty + s * 1.8} ${tx + s * .3},${ty + s * 1.8} ${tx + s * 1.3},${ty + s * 4.2} ${tx - s * 1.3},${ty + s * 4.2}`, fill: 'url(#rg)', opacity: .8}, tb);
-    mk('line', {x1: tx, y1: ty + s * .5, x2: tx, y2: ty + s * 1.05, stroke: INK, 'stroke-width': 2}, tb);
-    mk('circle', {cx: tx, cy: ty + s * 1.4, r: s * .52, fill: '#fff', stroke: INK, 'stroke-width': 2}, tb);
-    mk('circle', {cx: tx + s * .08, cy: ty + s * 1.42, r: s * .2, fill: '#3aa6ff', stroke: INK, 'stroke-width': 1.2}, tb);
-    mk('rect', {x: tx - s * .35, y: ty - s * 1.05, width: s * .7, height: s * .55, rx: s * .12, fill: SUB, stroke: INK, 'stroke-width': 2}, tb);
-    mk('rect', {x: tx - s * 2, y: ty - s * .6, width: s * 4, height: s * 1.2, rx: s * .6, fill: SUB, stroke: INK, 'stroke-width': 2.2}, tb);
-    mk('rect', {x: tx - s * 2, y: ty - s * .6, width: s * 4, height: s * 1.2, rx: s * .6, fill: 'url(#ds)'}, tb);
-    mk('path', {d: `M${tx - s * 1.4},${ty - s * .18} H${tx + s * 1.1}`, stroke: '#fff', 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: .9}, tb);
-    if (!Kit.calm) L.tw.push(gsap.fromTo(tb, {y: -s * .35}, {y: s * .35, duration: 2.3, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
-    const bubs = mk('g', {}, svg);
-    [[tx - s * .2, ty - s * 1.3, 0, 2.2], [tx + s * .25, ty - s * 1.5, 1.4, 1.7], [tx, ty - s * 1.2, 2.6, 2.6], [W * .88, SY + 2900 * PX, .6, 2.6], [W * .93, SY + 3800 * PX, 2.1, 2.2]].forEach(([x, y, dl, r]) =>
-      mk('circle', {cx: x, cy: y, r, fill: 'none', stroke: '#fff', 'stroke-width': 1.4, class: 'bub', style: `animation-delay:${dl}s`}, bubs));
-
-    // ---- the guess: a dashed ghost mountain from the floor to the flag
-    L.gh = mk('polygon', {class: 'gh', fill: 'rgba(255,255,255,.14)', stroke: '#fff', 'stroke-width': 2.4, 'stroke-dasharray': '7 5', 'stroke-linejoin': 'round'}, svg);
-
-    // ---- the real Everest (it falls in at the reveal)
-    L.mg = mk('g', {}, svg);
-    mk('polygon', {points: pts(MH), fill: INK, transform: 'translate(5,4)'}, L.mg);
-    mk('polygon', {points: pts(MH), fill: MT}, L.mg);
-    const cl = mk('g', {'clip-path': 'url(#mclip)'}, L.mg);
-    mk('polygon', {points: `${cx},${FY - MH} ${cx + bw * 1.1},${FY} ${cx + bw * .12},${FY} ${cx + bw * .05},${FY - MH * .5}`, fill: 'url(#dk)'}, cl);
-    let snow = `${cx - bw},${FY - MH * 1.2} ${cx + bw},${FY - MH * 1.2} ${cx + bw * .5},${FY - MH * .7}`;
-    for (let i = 0; i <= 10; i++) snow += ` ${cx + bw * .5 - i * bw / 10},${FY - MH * (i % 2 ? .78 : .69)}`;
-    mk('polygon', {points: snow, fill: '#fff'}, cl);
-    mk('polygon', {points: `${cx},${FY - MH} ${cx + bw * .5},${FY - MH * .7} ${cx + bw * .1},${FY - MH * .72}`, fill: 'url(#dk)', opacity: .7}, cl);
-    mk('path', {d: `M${cx},${FY - MH} L${cx + bw * .12},${FY - MH * .6} L${cx + bw * .05},${FY - MH * .3} M${cx - bw * .22},${FY - MH * .72} L${cx - bw * .3},${FY - MH * .5}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, L.mg);
-    mk('polygon', {points: pts(MH), fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, L.mg);
-    L.evY = FY - MH * .2;
-    L.evl = txt(L.mg, cx, L.evY, 'EVEREST · 8,848 m', outlined({'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs}));
-
-    // ---- the trench walls, in front of the mountain's feet
-    const wall = [[0, 5600], [W * .1, 5900], [W * .19, 7700], [W * .25, 9300], [W * .3, 10400], [W * .34, D], [W * .66, D], [W * .71, 10200], [W * .77, 8600], [W * .83, 7000], [W * .92, 6100], [W, 5800]]
-      .map(([x, d]) => `${x},${SY + d * PX}`).join(' ') + ` ${W},${H + 6} 0,${H + 6}`;
-    const rk = mk('g', {class: 'rk'}, svg);
-    mk('polygon', {points: wall, fill: ROCK}, rk);
-    mk('polygon', {points: wall, fill: 'url(#dk)'}, rk);
-    mk('polygon', {points: wall, fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, rk);
-    mk('path', {d: wave, fill: 'none', stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
-
-    // ---- the depth scale (spacing adapts so labels never touch)
-    txt(svg, fs * .85, SY - fs * .45, 'SEA LEVEL', {'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs, fill: INK, class: 'tk'});
-    const st = [2, 4, 5, 10].find(k => k * 1000 * PX >= fs * 1.5) || 10;
-    for (let k = st; k <= 10; k += st) {
-      const y = SY + k * 1000 * PX, g = mk('g', {class: 'tk'}, svg);
-      mk('line', {x1: 0, x2: fs * .6, y1: y, y2: y, stroke: '#fff', 'stroke-width': 2.4}, g);
-      txt(g, fs * .85, y + fs * .35, `${k} km`, outlined({'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}));
+  // ---------- front ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, W / 26)); PX = H / (TOP - BOT);
+    cx = W * .4; hw = W * .3;
+    sea(svg, 'seaA', '#050f16');
+    gM = Kit.mk('g', {}, svg); mountain(gM, cx, yOf(0));
+    tint(svg);
+    gL = Kit.mk('g', {}, svg);
+    label(gL, cx, yOf(0) + EV * PX * .55, 'Everest, 8,848 m', {'text-anchor': 'middle', fill: CREAM});
+    lead = Kit.mk('line', {x1: cx + fs * .5, x2: cx + hw * .42 - 5, y1: yOf(0), y2: yOf(0), 'stroke-width': 1.2}, gL);
+    readout = label(gL, cx + hw * .42, yOf(0) + fs * .35, '', {'font-weight': 800});
+    if (!touched) {
+      hint = Kit.mk('g', {class: 'hint'}, gL);
+      const ay = yOf(0) + EV * PX * .26;
+      Kit.mk('path', {d: `M${cx - hw * .1},${ay} v${fs * 1.4} m-5,-6 l5,6 l5,-6`, stroke: CREAM, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
     }
-    txt(svg, cx, FY + fs * 1.5, 'CHALLENGER DEEP · 10,900 m', outlined({'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs, class: 'tk'}));
-
-    // ---- the reveal: a bracket of water and a comic burst
-    const yP = FY - MH, bx = cx + fs * 1.5;
-    L.br = mk('g', {}, svg);
-    const bd = `M${bx - 6},${yP} H${bx + 6} M${bx},${yP} V${SY} M${bx - 6},${SY} H${bx + 6}`;
-    mk('path', {d: bd, fill: 'none', stroke: INK, 'stroke-width': 5.5, 'stroke-linecap': 'round'}, L.br);
-    mk('path', {d: bd, fill: 'none', stroke: '#fff', 'stroke-width': 2.6, 'stroke-linecap': 'round'}, L.br);
-    const R = Math.max(56, Math.min(80, W * .18, (H - 8) / 2.2));
-    const bcx = Math.min(W - R * .95 - 4, Math.max(bx + R * 1.05, W * .76));
-    const bcy = Math.max(R + 4, Math.min((SY + yP) / 2, FY - R));
-    L.bu = mk('g', {}, svg);
-    let star = '';
-    for (let i = 0; i < 28; i++) { const a = i / 28 * Math.PI * 2 - Math.PI / 2, r = i % 2 ? R * .8 : R * (.97 + Kit.rnd() * .1); star += `${bcx + Math.cos(a) * r},${bcy + Math.sin(a) * r} `; }
-    mk('polygon', {points: star, fill: FLAG, stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round', transform: 'translate(5,5)'}, L.bu);
-    mk('polygon', {points: star, fill: '#fff', stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, L.bu);
-    const small = Math.max(12, R * .19), bigS = R * .42;
-    L.bt = [
-      txt(L.bu, bcx, bcy - R * .37, 'OVER', {'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': small, fill: INK}),
-      txt(L.bu, bcx, bcy + R * .14, '2 KM', {'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 900, 'font-size': bigS, fill: FLAG, stroke: INK, 'stroke-width': 1.6, 'paint-order': 'stroke'}),
-      txt(L.bu, bcx, bcy + R * .52, 'OF WATER', {'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': small, fill: INK})
-    ];
-
-    // ---- the flag the reader drags
-    L.fl = mk('g', {class: 'fl'}, svg);
-    L.pole = mk('line', {stroke: INK, 'stroke-width': 2.6, 'stroke-linecap': 'round'}, L.fl);
-    L.flag = mk('polygon', {fill: FLAG, stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, L.fl);
-    L.dot = mk('circle', {r: 3.4, fill: '#fff', stroke: INK, 'stroke-width': 2}, L.fl);
-    L.chip = mk('g', {}, L.fl);
-    L.cr = mk('rect', {rx: 4, fill: '#fff', stroke: INK, 'stroke-width': 2.2}, L.chip);
-    L.ct = txt(L.chip, 0, 0, '', {'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs, fill: INK});
-    L.you = txt(L.fl, 0, 0, 'YOU', outlined({'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}));
-
-    drawGhost();
-    const done = phase >= 1;
-    L.mg.style.visibility = done ? 'visible' : 'hidden';
-    L.br.style.display = L.bu.style.display = done ? '' : 'none';
-    L.chip.style.display = done ? 'none' : '';
-    const yF = SY + guess * PX - fs * .95;
-    L.you.style.display = done && Math.abs(yF - L.evY) > fs * 1.6 ? '' : 'none';
-    if (done) L.gh.setAttribute('opacity', .55);
+    surface(svg);
+    setPeak(peak);
   }
-
-  function drawGhost() {
-    const yG = SY + guess * PX, h = FY - yG, py = yG - fs * 1.3;
-    L.gh.setAttribute('points', pts(h));
-    Object.entries({x1: cx, x2: cx, y1: yG, y2: py}).forEach(([k, v]) => L.pole.setAttribute(k, v));
-    L.flag.setAttribute('points', `${cx},${py} ${cx + fs * 1.15},${py + fs * .35} ${cx},${py + fs * .7}`);
-    L.dot.setAttribute('cx', cx); L.dot.setAttribute('cy', yG);
-    L.ct.textContent = chip(guess);
-    const w = L.ct.getComputedTextLength(), pad = 6;
-    let x = cx + fs * 1.6; if (x + w + pad > W - 2) x = W - 2 - w - pad;
-    const ty = py + fs * .35;
-    L.ct.setAttribute('x', x); L.ct.setAttribute('y', ty + fs * .36);
-    Object.entries({x: x - pad, y: ty - fs * .72, width: w + pad * 2, height: fs * 1.45}).forEach(([k, v]) => L.cr.setAttribute(k, v));
-    L.you.setAttribute('x', cx - fs * .5); L.you.setAttribute('y', ty + fs * .36);
+  function setPeak(v) {
+    peak = Math.max(-5, Math.min(2.6, v));
+    const dy = yOf(peak) - yOf(0);
+    gM.setAttribute('transform', `translate(0,${dy})`); gL.setAttribute('transform', `translate(0,${dy})`);
+    const c = guessColour(peak);
+    readout.setAttribute('fill', c); lead.setAttribute('stroke', c);
+    readout.textContent = Math.abs(peak) < .05 ? 'summit: at the surface' : peak > 0 ? `summit: ${peak.toFixed(1)} km up` : `summit: ${(-peak).toFixed(1)} km under`;
   }
-
-  // ---- dragging the flag
-  const fromY = e => e.clientY - svg.getBoundingClientRect().top;
-  function setG(y) {
-    const d = Math.round(Math.max(dMin, Math.min(D - 900, (y - SY) / PX)) / 100) * 100;
-    if ((guess > 0) !== (d > 0) && crossed) Kit.haptic('light');
-    crossed = true; guess = d; drawGhost();
-  }
+  const svg = Kit.$('pic'); let drag = null;
   svg.addEventListener('pointerdown', e => {
-    if (phase) return; dragging = true; Kit.haptic('selection');
-    try { svg.setPointerCapture(e.pointerId); } catch (_) {}
-    gsap.fromTo(L.flag, {scale: 1.35, transformOrigin: '0% 50%'}, {scale: 1, duration: .35, ease: 'back.out(3)'});
-    setG(fromY(e));
+    if (committed) return; drag = {y: e.clientY, p: peak}; svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; if (hint) hint.remove(); Kit.haptic('selection'); }
   });
-  svg.addEventListener('pointermove', e => { if (dragging && !phase) setG(fromY(e)); });
-  const up = () => {
-    if (!dragging) return; dragging = false;
-    if (!released) { released = true; sure.on(); say.innerHTML = 'Happy with your flag? <b>Say how sure you are.</b> You can still drag it.'; }
+  svg.addEventListener('pointermove', e => { if (drag) setPeak(drag.p - (e.clientY - drag.y) / PX); });
+  const end = () => {
+    if (!drag) return; drag = null;
+    if (!asked && touched) { asked = true; sure.on(); Kit.$('say').innerHTML = 'Move it again if you like. <b>Then say how sure you are.</b>'; }
   };
-  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
-  // ---- the answer, then the drop
   const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-    if (phase) return;
-    const ok = guess >= 1500 && guess <= 2600, said = `Summit ${chip(guess).toLowerCase()}`;
+    if (committed) return; committed = true; guess = peak;
+    const ok = guess <= -1.5 && guess >= -2.6, said = readout.textContent;
     Kit.answer({choice: said, correct: ok, sure: pct});
     sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-    reveal();
+    setTimeout(() => Turn.over(), 700);
   });
 
-  const raf = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-  async function reveal() {
-    phase = 1; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); card.classList.add('answered');
-    await raf(); layout();
-    if (Kit.calm) { phase = 2; return; }
-    const why = Kit.$('why'), keep = Kit.$('keep');
-    gsap.set([why, keep], {opacity: 0, y: 8});
-    gsap.set(L.mg, {y: -FY - 8});
-    gsap.set(L.bu, {scale: 0, rotation: -25, transformOrigin: '50% 50%'});
-    gsap.set(L.bt, {scale: 0, transformOrigin: '50% 50%'});
-    const len = FY - MH > SY ? (FY - MH - SY) + 30 : 30;
-    [...L.br.children].forEach(p => { p.style.strokeDasharray = len; p.style.strokeDashoffset = len; });
-    const tl = gsap.timeline({onComplete: () => { phase = 2; }});
-    tl.to(L.mg, {y: SY - FY, duration: .42, ease: 'power2.in'})
-      .add(splash)
-      .to(L.mg, {y: 0, duration: 1.1, ease: 'thud'})
-      .add(() => { Kit.haptic('success'); gsap.timeline().to(svg, {y: 5, duration: .06, ease: 'power2.out'}).to(svg, {y: -3, duration: .08}).to(svg, {y: 0, duration: .3, ease: 'elastic.out(1,.4)'}); }, '-=.75')
-      .to(L.gh, {opacity: .55, duration: .4}, '<')
-      .to([...L.br.children], {strokeDashoffset: 0, duration: .5, ease: 'power3.out'}, '-=.35')
-      .to(L.bu, {scale: 1, rotation: 0, duration: .8, ease: 'elastic.out(1,.45)'}, '-=.25')
-      .to(L.bt, {scale: 1, duration: .45, stagger: .08, ease: 'back.out(3)'}, '-=.6')
-      .to([why, keep], {opacity: 1, y: 0, duration: .5, stagger: .1, ease: 'power3.out'}, '-=.5');
-  }
+  // ---------- back ----------
+  function drawBack(anim) {
+    const s = Kit.$('pic2'); s.innerHTML = '';
+    const f = Kit.fitSvg(s); W = f.W; H = f.H;
+    fs = Math.max(12, Math.min(14, W / 26)); PX = H / (TOP - BOT);
+    cx = W * .4; hw = W * .3;
+    const floorY = yOf(-DEEP), py = yOf(TRUE_PEAK), g0 = guess == null ? -1 : guess;
+    sea(s, 'seaB', '#06141d');
+    const bed = Kit.mk('path', {d: `M0,${yOf(-6.4)} C${W * .12},${yOf(-6.6)} ${W * .2},${yOf(-8.6)} ${W * .28},${floorY} L${W * .86},${floorY} C${W * .92},${yOf(-9)} ${W * .95},${yOf(-6.8)} ${W},${yOf(-6.2)} L${W},${H} L0,${H}Z`, fill: BED}, s);
+    const m = Kit.mk('g', {}, s); mountain(m, cx, py);
+    Kit.mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: BED}, s);
+    tint(s);
+    const top = Kit.mk('g', {}, s);
+    // the reader's guess
+    const gy = yOf(g0), gc = guessColour(g0);
+    const gLine = Kit.mk('g', {}, top);
+    Kit.mk('line', {x1: W * .03, x2: W * .97, y1: gy, y2: gy, stroke: gc, 'stroke-width': 1.8, 'stroke-dasharray': '6 5'}, gLine);
+    label(gLine, W * .03, gy - fs * .45, 'your guess', {fill: gc, 'font-weight': 800});
+    // labels pinned to what they name
+    const evL = label(top, cx, yOf(-6.6), 'Everest, 8,848 m', {'text-anchor': 'middle', fill: CREAM});
+    const flL = label(top, W * .03, floorY + fs * 1.25, 'deepest floor: 10,900 m', {fill: CREAM});
+    // the truth: 2 km of sea over the summit
+    const bx = cx + fs * .7, y0 = yOf(0);
+    const br = Kit.mk('path', {d: `M${bx - 4},${y0} h8 M${bx},${y0} V${py} M${bx - 4},${py} h8`, stroke: TRUTH, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round'}, top);
+    const hs = Math.max(fs * 1.6, Math.min(fs * 3.2, (y0 - py) * 1.05));
+    const hero = Kit.mk('text', {x: bx + fs * .6, y: (y0 + py) / 2 + hs * .34, fill: TRUTH, 'font-size': hs, 'font-weight': 800, style: 'font-family:var(--display)'}, top);
+    hero.textContent = '2 km';
+    // the Trieste's dive, 1960
+    const route = Kit.mk('path', {d: `M${W * .86},${y0 + fs * .4} C${W * .97},${yOf(-4)} ${W * .7},${yOf(-7.2)} ${W * .8},${floorY - fs * .7}`, stroke: CREAM, 'stroke-width': 1.3, fill: 'none', 'stroke-dasharray': '2 5', opacity: .45, 'stroke-linecap': 'round'}, top);
+    const sub = Kit.mk('g', {opacity: 0}, top), u = fs * .9;
+    Kit.mk('rect', {x: -u * .15, y: -u * .75, width: u * .3, height: u * .35, fill: CREAM}, sub);
+    Kit.mk('ellipse', {cx: 0, cy: -u * .2, rx: u, ry: u * .32, fill: CREAM}, sub);
+    Kit.mk('circle', {cx: 0, cy: u * .3, r: u * .3, fill: CREAM, stroke: INK, 'stroke-width': 1}, sub);
+    const trL = label(top, W - 4, floorY + fs * 1.25, 'Trieste, 1960', {'text-anchor': 'end', fill: CREAM});
+    surface(s);
 
-  function splash() {
-    const g = mk('g', {}, svg), r0 = Math.max(4, bw * .3);
-    const ring = mk('ellipse', {cx, cy: SY, rx: r0, ry: 4, fill: 'none', stroke: '#fff', 'stroke-width': 3}, g);
-    gsap.to(ring, {attr: {rx: Math.max(r0 + 6, bw * 1.4), ry: 10}, opacity: 0, duration: .7, ease: 'expo.out'});
-    for (let i = 0; i < 16; i++) {
-      const x0 = cx + (Kit.rnd() - .5) * bw * 1.2, c = mk('circle', {cx: x0, cy: SY, r: 2.5 + Kit.rnd() * 3, fill: '#fff', stroke: INK, 'stroke-width': 1.5}, g);
-      const dx = (x0 - cx) * (.6 + Kit.rnd() * .6), dy = -(14 + Kit.rnd() * Math.max(14, SY - fs));
-      gsap.timeline().to(c, {x: dx * .6, y: dy, duration: .32, ease: 'power2.out'}).to(c, {x: dx, y: 16, opacity: 0, duration: .38, ease: 'power2.in'});
-    }
-    setTimeout(() => g.remove(), 1000);
+    const tl = gsap.timeline();
+    tl.from(bed, {opacity: 0, duration: .5, ease: 'power2.out'})
+      .fromTo(m, {y: yOf(g0) - py}, {y: 0, duration: 1, ease: 'power3.inOut'}, '+=.15')
+      .from([evL, flL], {opacity: 0, duration: .4, ease: 'power2.out'}, '-=.3')
+      .from(br, {opacity: 0, duration: .45, ease: 'power2.out'})
+      .from(hero, {opacity: 0, x: -6, duration: .5, ease: 'power3.out'}, '<')
+      .from(route, {opacity: 0, duration: .3}, '+=.1')
+      .set(sub, {opacity: 1})
+      .to(sub, {motionPath: {path: route, align: route, alignOrigin: [.5, .5]}, duration: 3, ease: 'power1.inOut'})
+      .from(trL, {opacity: 0, duration: .4, ease: 'power2.out'});
+    if (!anim || Kit.calm) tl.progress(1);
   }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
 
-  Kit.onShow.card = layout;
-  let entered = false;
-  Kit.onEnter.card = () => {
-    if (entered || Kit.calm || phase) return; entered = true;
-    const q = s => svg.querySelectorAll(s);
-    gsap.timeline()
-      .from(q('.w'), {scaleY: 0, transformOrigin: '50% 0%', duration: .8, ease: 'expo.out'})
-      .from(q('.rk'), {y: 60, opacity: 0, duration: .7, ease: 'pop'}, '-=.5')
-      .from(q('.sun'), {scale: 0, rotation: -90, transformOrigin: '50% 50%', duration: .7, ease: 'back.out(2.5)'}, '-=.55')
-      .from(q('.tr'), {y: -40, opacity: 0, duration: .8, ease: 'power3.out'}, '-=.5')
-      .from(q('.tk'), {x: -12, opacity: 0, duration: .4, stagger: .05, ease: 'power3.out'}, '-=.6')
-      .from(q('.gh'), {scaleY: 0, transformOrigin: '50% 100%', duration: .7, ease: 'pop'}, '-=.35')
-      .from(q('.fl'), {y: -24, opacity: 0, duration: .55, ease: 'back.out(3)'}, '-=.3');
-  };
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 8, duration: .6, ease: 'power3.out'}); };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    const r = svg.getBoundingClientRect(), o = {clientX: r.left + cx, clientY: r.top + SY + 1900 * PX, pointerId: 1, bubbles: true};
-    ['pointerdown', 'pointermove', 'pointerup'].forEach(t => svg.dispatchEvent(new PointerEvent(t, o)));
-    await wait(150);
+    touched = true; if (hint) hint.remove(); setPeak(-0.6);
+    if (!asked) { asked = true; sure.on(); }
+    await wait(120);
     Kit.$('sure').querySelector('[data-v="80"]').click();
-    await wait(Kit.calm ? 300 : 3400);
+    await wait(Kit.calm ? 1000 : 2200);
   };
 })();
 Kit.single();

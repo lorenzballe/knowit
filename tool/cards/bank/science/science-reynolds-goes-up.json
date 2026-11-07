@@ -3,12 +3,12 @@
   "topic": "science",
   "genre": "science.physics",
   "strand": "science.physics.energy",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Same viscosity: what happens to flow as density or speed rise?",
-  "answer": "Raising density or speed while viscosity stays fixed raises the Reynolds number, since it is density times speed times pipe width divided by viscosity. Density and speed sit on top, so the smooth layers break into eddies and the flow turns turbulent.",
-  "move": "Heavier or faster fluid, same viscosity: Reynolds goes up, flow turns turbulent.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Keep viscosity fixed. Make the liquid denser and faster. What happens to the flow?",
+  "answer": "Denser and faster both push the same way: with viscosity fixed, raising either one lifts the Reynolds number, so the flow turns chaotic. That ratio is the Reynolds number, and raising any term on top climbs toward turbulence.",
+  "move": "Ask which side of the ratio a change sits on.",
   "keywords": [
     "reynolds number",
     "turbulence",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Dye flowing in a pipe, drawn as smooth laminar layers that turn into turbulent eddies. Asks what happens to flow when density or speed rise while viscosity stays fixed. Tap Density or Speed to see the Reynolds number change.",
-    "ground": "#f1ede4"
+    "label": "Interactive card asking what fluid flow does when density or speed rises while viscosity stays fixed. Choices are smooth or chaotic, plus a confidence picker. The revealed answer is chaotic, because both changes push the Reynolds number up."
   },
   "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=I3IpKEtWqvU&t=152s",
-  "written": "2026-11-04"
+  "written": "2026-11-06"
 }

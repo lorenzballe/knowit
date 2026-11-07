@@ -1,501 +1,167 @@
 <!doctype html>
-<!-- slug: science-bomb-layer -->
-<!-- Look: a cyanotype blueprint section: white hairlines on Prussian blue, four core tubes cut into hatched ground at four far-apart sites (break lines between them), a stratosphere datum with drifting hairline clouds and settling dust, a year ruler and engineer's lettering.
-     Interaction: drag along the time ruler and real Matter.js grains of mud fall and stack in every tube, each site at its own speed. At 1950 time slows, an H-bomb cloud rises and amber fallout spreads across the whole sky and rains into all four tubes.
-     Wow: at 2000 a white datum line sweeps across the sites through the buried amber grains, dimension arrows measure four different depths from each mud surface, and the layer breathes with a travelling glint: one date, everywhere. -->
+<!-- slug: science-anthropocene-start-line -->
+<!-- Design note.
+     The thought to carry: some geologists date the Anthropocene's start to 1950–1960 because bomb-test fallout left one radioactive layer across the whole globe, laid down in the same years, a clear marker in the Earth's layers.
+     Front: one cross-section of layered ground, flat and clean, running edge to edge. A straight dashed line with a "?" asks where the new era starts. The reader picks one of three reasons, then says how sure.
+     Back: the same ground. The fallout layer appears along its whole width at once, one bright band marked 1950–1960. No second case and no argument against the other options: only what the video says. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>The bomb layer</title>
+<title>The Anthropocene's start line</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/matter.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
 <style>
-#card{background-color:var(--c);
-  background-image:
-    radial-gradient(120% 75% at 50% 28%, rgba(255,255,255,.08), transparent 62%),
-    radial-gradient(140% 100% at 50% 110%, rgba(0,10,30,.35), transparent 60%),
-    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
-  background-size:100% 100%,100% 100%,22px 22px,22px 22px}
-#stage{flex:1;min-height:0;position:relative;display:block}
-#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-.say b{color:#ffd84d}
-.answered .q{font-size:max(2.4cqh,15px)}
-.keep b{color:#ffd84d}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s .37s}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{flex:1;min-height:0;display:flex;margin:.6cqh 0}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
+.back .stagebox{min-height:52px}
+#opts{display:flex;flex-direction:column;gap:.8cqh;margin-top:.4cqh}
+.opt{font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.05cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.say{max-width:calc(100% - 104px);min-height:44px;margin:.6cqh 0 0;font-size:max(1.8cqh,13px);line-height:1.3;box-sizing:border-box}
+.back .big{font-size:clamp(20px,4.1cqh,34px);line-height:1.04;margin:0 0 .4cqh;flex:none}
+.back .body{font-size:max(1.8cqh,12.5px);line-height:1.38;margin:.4cqh 0 .8cqh;flex:none}
+.back .keep{margin:0;flex:none;max-width:calc(100% - 104px);box-sizing:border-box}
+.foot{flex:none;max-width:calc(100% - 104px);min-height:44px;display:flex;align-items:flex-end;box-sizing:border-box;margin-top:.4cqh}
+.src{overflow-wrap:anywhere;font-size:12px;line-height:1.3}
+@media (max-height:720px){
+  .back .big{font-size:20px}
+  .back .body{font-size:12.5px;line-height:1.34;margin:.3cqh 0 .6cqh}
+  .back .keep{font-size:12.5px;line-height:1.3}
+  .src{font-size:11px;line-height:1.28}
+  .back .stagebox{min-height:44px;margin:.4cqh 0}
+}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Drag the years · the bomb layer" style="--c:#0f3a6b;--k:#f3f8ff;--edge:#071f3f">
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THROUGH TIME</span></div>
-    <h2 class="q">Why do some geologists start the Anthropocene around 1950–1960?</h2>
-    <div class="stagebox" id="stage">
-      <canvas id="pic" data-drag role="img" aria-label="Blueprint cross-section: four sediment tubes at four sites, a sky with the stratosphere, and a year ruler from 1900 to 2000."></canvas>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Why do some geologists mark the Anthropocene’s beginning around 1950‑1960?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A cross-section of layered ground, with a dashed line and a question mark asking where the new era starts."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">Human impact on the Earth was at its peak</button>
+          <button class="opt" data-i="1">Something fell on the whole planet in the same few years</button>
+          <button class="opt" data-i="2">Cities and factories had spread across the world</button>
+        </div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Pick one, then say how sure.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Bomb-test fallout: one layer, laid worldwide at once</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same layered ground, now with one bright radioactive layer running through its whole width, marked 1950 to 1960."></svg></div>
+        <p class="body">In the 1950s and 60s, hydrogen-bomb tests sent massive fallout into the atmosphere. It came down across the whole globe in the same years and left one radioactive layer. Some geologists use that layer as a clear marker for the start of the Anthropocene.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> A start date in the Earth’s layers needs a mark laid down everywhere at the same time.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019).</span></div>
+      </section>
     </div>
-    <p class="say" id="say">Each tube is mud piling up at a different site on Earth. <b>Drag right along the years.</b></p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An era needs a mark found everywhere at once: the 1950s bomb fallout is one.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  const cv = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const AMB = '#ffd84d', INK = '#f3f8ff', DEEP = '#0a2c55', GROUND = '#0f3a6b';
-  const {Engine, Bodies, Composite, Body} = Matter;
-  const TINT = [['#eaf3fe', '#93b8e6'], ['#d9eef8', '#7fb4d6'], ['#eceffc', '#a2abe0'], ['#e2eefa', '#8cabd2']];
-  const WHY = 'Mud piles up at its own speed at every site, so depth can’t give a date. Fallout from 1950s H-bomb tests landed everywhere at once: <b>one thin radioactive layer</b>, the line some geologists start the Anthropocene from.';
-  let x, W = 0, H = 0, RH = 54, s = 1, ox = 0, oy = 0, MONO = 'monospace';
-  let G = null, engine = null, glow = [];
-  let year = 1900, target = 1900, touched = false, fast = false, revealed = false, c50 = false, c60 = false, c60f = false;
-  let lastSpawn = 0, lastT = 0, running = false, dustT = 0;
-  const st = {intro: 1, stem: 0, cap: 0, flash: 0, spread: 0, cloudA: 1, rev: 0, sky: 0, pulse: 0, glowFade: 1};
-  const rain = [], dust = [];
+  const RIGHT = 1, FALL = '#f4c430';
+  let pick = -1, turned = false, backDone = false;
+  const INK = 'fill:var(--k)', STK = 'stroke:var(--k)';
+  const HALO = 'fill:var(--k);stroke:var(--c);stroke-width:5;stroke-linejoin:round;paint-order:stroke';
 
-  // ---------- the world: four tubes at four sites ----------
-  function build() {
-    const WW = W, WH = H - RH;
-    engine = Engine.create({enableSleeping: true});
-    engine.positionIterations = 8; engine.velocityIterations = 6;
-    const mx = WW * .06, g = WW * .075, tw = (WW - 2 * mx - 3 * g) / 4;
-    const yS = WH * .075, y0 = WH * .29, yb = WH - 28;
-    const r = Math.max(2.4, Math.min(7, tw / 13));
-    const fills = [.86, .55, .74, .64], tubes = [];
-    for (let i = 0; i < 4; i++) {
-      const tx = mx + i * (tw + g), oh = (yb - y0) * (.1 + .09 * Kit.rnd()), base = yb - oh;
-      const wc = (y0 - 100 + yb + 20) / 2, wh = yb - y0 + 120;
-      Composite.add(engine.world, [
-        Bodies.rectangle(tx - 15, wc, 30, wh, {isStatic: true, friction: .4}),
-        Bodies.rectangle(tx + tw + 15, wc, 30, wh, {isStatic: true, friction: .4}),
-        Bodies.rectangle(tx + tw / 2, base + 20, tw + 60, 40, {isStatic: true, friction: .8})
-      ]);
-      const cap = .56 * tw * (base - y0) / (Math.PI * r * r);
-      const F = Math.max(5, Math.round(1.6 * tw / (2 * r)));
-      const N = Math.max(12, cap * fills[i] - F);
-      let mod = Array.from({length: 10}, () => .45 + Kit.rnd() * 1.1);
-      const sm = mod.reduce((a, b) => a + b); mod = mod.map(v => v * 10 / sm);
-      tubes.push({x: tx, w: tw, base, oh, N, F, nf: 0, mod, q: [], acc: 0, accF: 0, cd: 0, grains: [], fall: [], top: null});
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, style: INK, 'font-family': 'Figtree, sans-serif', 'font-weight': 700, 'text-anchor': 'middle'}, a), p); e.textContent = t; return e; };
+
+  // One cross-section of ground, the same recipe on both faces.
+  // Boundaries follow a gentle hill line that flattens with depth.
+  const CUTS = [0, .07, .17, .24, .36, .45, .58, .66, .79, .88, 1];
+  const TONES = [.10, .22, .14, .32, .18, .26, .12, .36, .20, .28];
+  function ground(p, W, top, bot) {
+    const amp = Math.min(12, (bot - top) * .1);
+    const wave = x => .5 + .5 * Math.sin(x / W * Math.PI * 2.2 + .5) * .75 + .5 * Math.sin(x / W * Math.PI * 5.1 + 1.3) * .25 - .25;
+    const yAt = (x, f) => top + amp * wave(x) * (1 - f * .7) + f * (bot - top - amp);
+    const N = 48, xs = d3.range(N + 1).map(i => W * i / N);
+    const path = f => xs.map(x => [x, yAt(x, f)]);
+    const g = Kit.mk('g', {class: 'ground'}, p);
+    for (let i = 0; i < CUTS.length - 1; i++) {
+      const a = path(CUTS[i]), b = path(CUTS[i + 1]).reverse();
+      Kit.mk('path', {d: d3.line()(a.concat(b)) + 'Z', style: INK, opacity: TONES[i]}, g);
     }
-    const sk = y0 - yS;
-    const clouds = [
-      {x: WW * .1, y: yS + sk * .42, R: Math.max(7, tw * .16), sp: .9},
-      {x: WW * .55, y: yS + sk * .28, R: Math.max(6, tw * .13), sp: .6},
-      {x: WW * .82, y: yS + sk * .62, R: Math.max(5, tw * .11), sp: 1.2}
-    ];
-    G = {WW, WH, mx, g, tw, yS, y0, yb, r, tubes, clouds, cx: tubes[1].x + tw + g / 2};
-    glow = new Array(Math.ceil(WW / 4) + 1).fill(0);
+    Kit.mk('path', {d: d3.line()(path(0)), fill: 'none', style: STK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, g);
+    return {g, yAt, line: f => d3.line()(path(f))};
   }
 
-  function fit() {
-    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
-    RH = Math.max(54, H * .13);
-    MONO = (getComputedStyle(card).getPropertyValue('--mono') || '').trim() || 'monospace';
-    if (!G) build();
-    s = Math.min(W / G.WW, (H - RH) / G.WH);
-    ox = (W - G.WW * s) / 2; oy = (H - RH) - G.WH * s;
-    draw(performance.now());
+  function frame(svg) {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    if (!(W > 40 && H > 40)) return null;
+    const fs = Math.max(12, Math.min(14, W / 26));
+    return {W, H, fs};
   }
 
-  // ---------- time passes: each site gets its own share of mud ----------
-  function advance(dy) {
-    while (dy > 1e-6) {
-      const inc = Math.min(.25, dy), yr = year; dy -= inc;
-      const d = Math.max(0, Math.min(9, Math.floor((yr - 1900) / 10)));
-      for (const t of G.tubes) {
-        t.acc += t.N / 100 * t.mod[d] * inc;
-        while (t.acc >= 1) { t.q.push({k: 'n', d}); t.acc--; }
-        if (yr >= 1950 && yr < 1960) {
-          t.accF += t.F / 10 * inc;
-          while (t.accF >= 1 && t.nf < t.F) { t.q.push({k: 'f', d}); t.accF--; t.nf++; }
-        }
-      }
-      const before = year; year = Math.min(2000, year + inc);
-      if (before < 1960 && year >= 1960 && !c60f) { c60f = true; for (const t of G.tubes) while (t.nf < t.F) { t.q.push({k: 'f', d: 5}); t.nf++; } }
-      if (Math.floor(year / 10) > Math.floor(before / 10)) Kit.haptic('selection');
-      if (!c50 && year >= 1950) boom();
-      if (!c60 && year >= 1961) quiet();
-    }
+  function drawFront() {
+    const svg = Kit.$('pic'), f = frame(svg); if (!f) return;
+    const {W, H, fs} = f;
+    const top = 6, bot = H - 4;
+    const G = ground(svg, W, top, bot);
+    // The line nobody has placed yet: straight, while the layers are not.
+    const y = G.yAt(W / 2, .4);
+    Kit.mk('line', {x1: 0, x2: W * .84, y1: y, y2: y, style: STK, 'stroke-width': 2, 'stroke-dasharray': '7 5', 'stroke-linecap': 'round', class: 'ask'}, svg);
+    txt(svg, W * .92, y + fs * .55, '?', {'font-size': fs * 1.7, 'font-weight': 800, style: HALO, class: 'ask'});
   }
 
-  function grain(t, i, g) {
-    const rr = G.r * (g.k === 'f' ? .78 + .2 * Math.random() : .82 + .32 * Math.random());
-    const b = Bodies.polygon(t.x + rr + Math.random() * (t.w - 2 * rr), G.y0 - 48 - Math.random() * 30,
-      5 + Math.floor(Math.random() * 3), rr,
-      {friction: .7, frictionStatic: 1, frictionAir: .07, restitution: 0, density: .0015, slop: .04});
-    Body.setAngle(b, Math.random() * 6.28);
-    b.k = g.k; b.d = g.d; b.tone = Math.random();
-    Composite.add(engine.world, b); t.grains.push(b); if (g.k === 'f') t.fall.push(b);
-    lastSpawn = performance.now();
+  function drawBack(animate) {
+    const svg = Kit.$('pic2'), f = frame(svg); if (!f) return;
+    const {W, H, fs} = f;
+    const top = fs * 2.1, bot = H - 4;
+    const G = ground(svg, W, top, bot);
+    const F = .1, bh = Math.max(5, Math.min(9, (bot - top) * .07));
+    const edge = Kit.mk('path', {d: G.line(F), fill: 'none', style: STK, 'stroke-width': bh + 2.4}, svg);
+    const band = Kit.mk('path', {d: G.line(F), fill: 'none', stroke: FALL, 'stroke-width': bh}, svg);
+    // One label, with a short leader into the band.
+    const lx = W * .74, ly = G.yAt(lx, F);
+    const lead = Kit.mk('line', {x1: lx, x2: lx, y1: fs * 1.45, y2: ly - bh / 2 - 1, style: STK, 'stroke-width': 1.4}, svg);
+    const lab = txt(svg, lx, fs * 1.1, '1950–1960', {'font-size': fs});
+    if (!(animate && !Kit.calm)) return;
+    gsap.from(G.g, {opacity: 0, duration: .5, ease: 'power2.out'});
+    // The whole layer arrives at once, along its full width.
+    gsap.from(edge, {attr: {'stroke-width': 0}, duration: .7, delay: .7, ease: 'power3.out'});
+    gsap.from(band, {attr: {'stroke-width': 0}, duration: .7, delay: .7, ease: 'power3.out'});
+    gsap.from([lead, lab], {opacity: 0, duration: .45, delay: 1.4, ease: 'power2.out'});
   }
 
-  function feed(dt) {
-    G.tubes.forEach((t, i) => {
-      t.cd -= dt; let n = 0;
-      while (t.q.length && t.cd <= 0 && n < 3) { grain(t, i, t.q.shift()); t.cd += fast ? 6 : 24; n++; }
-      if (!t.q.length && t.cd < 0) t.cd = 0;
-    });
-  }
-
-  // Fallout drifting down from the stratosphere over the whole map.
-  function updRain(dt) {
-    const k = dt / 16.7 * (fast ? 2 : 1);
-    if (year >= 1950 && year < 1961 && st.spread > .05)
-      for (let i = 0; i < (fast ? 4 : 3); i++) rain.push({x: G.cx + (Math.random() * 2 - 1) * st.spread * G.WW * 1.05, y: G.yS + Math.random() * 4, v: .6 + Math.random() * .9, ph: Math.random() * 6});
-    for (let i = rain.length - 1; i >= 0; i--) {
-      const p = rain[i]; p.y += p.v * k; p.ph += .06 * k;
-      const inT = G.tubes.some(t => p.x > t.x - 2 && p.x < t.x + t.w + 2);
-      if (inT && p.y > G.y0 - 50) { rain.splice(i, 1); continue; }
-      if (p.y >= G.y0) {
-        const b = Math.floor(p.x / 4);
-        if (b >= 0 && b < glow.length) { glow[b] = Math.min(1, glow[b] + .4); if (b + 1 < glow.length) glow[b + 1] = Math.min(1, glow[b + 1] + .18); if (b > 0) glow[b - 1] = Math.min(1, glow[b - 1] + .18); }
-        rain.splice(i, 1);
-      }
-    }
-  }
-
-  // Fine dust settling into the tubes all the time: the slow life of the scene.
-  function updDust(dt) {
-    if (!revealed && !Kit.calm) {
-      dustT += dt;
-      const every = target > year ? 70 : 170;
-      while (dustT > every) {
-        dustT -= every;
-        const t = G.tubes[Math.floor(Math.random() * 4)];
-        dust.push({x: t.x + 3 + Math.random() * (t.w - 6), y: G.yS + 6 + Math.random() * (G.y0 - G.yS) * .35, v: .18 + Math.random() * .22, ph: Math.random() * 6, a: 0});
-      }
-    }
-    const k = dt / 16.7;
-    for (let i = dust.length - 1; i >= 0; i--) {
-      const p = dust[i]; p.y += p.v * k; p.ph += .03 * k; p.a = Math.min(1, p.a + .03 * k);
-      if (p.y > G.y0 + 6) dust.splice(i, 1);
-    }
-  }
-
-  // ---------- story beats ----------
-  function boom() {
-    c50 = true; Kit.haptic('light');
-    say.innerHTML = '<b>1950s:</b> hydrogen-bomb tests blast radioactive fallout high into the sky, and it spreads over the whole planet.';
-    if (Kit.calm) { Object.assign(st, {stem: 1, cap: 1, flash: 0, spread: 1}); return; }
-    gsap.timeline()
-      .to(st, {flash: 1, duration: .12, ease: 'power2.out'})
-      .to(st, {flash: 0, duration: 1.3, ease: 'expo.out'})
-      .to(st, {stem: 1, duration: .9, ease: 'power3.out'}, .05)
-      .to(st, {cap: 1, duration: 1.1, ease: 'back.out(1.7)'}, .35)
-      .to(st, {spread: 1, duration: fast ? .4 : 1.5, ease: 'power2.inOut'}, fast ? .2 : .8);
-  }
-  function quiet() {
-    c60 = true;
-    if (!revealed) say.innerHTML = 'After 1960, ordinary mud keeps falling and buries the fallout. <b>Keep going to 2000.</b>';
-    if (Kit.calm) { st.cloudA = .22; st.glowFade = .35; return; }
-    gsap.to(st, {cloudA: .22, duration: 1.2, ease: 'power2.out'});
-    gsap.to(st, {glowFade: .35, duration: 3, ease: 'power1.inOut'});
-  }
-  function reveal() {
-    revealed = true; Kit.haptic('success');
-    // Today's mud surface in every tube, for the depth arrows.
-    G.tubes.forEach(t => {
-      const ys = t.grains.map(b => b.position.y).sort((a, b) => a - b);
-      t.top = ys.length ? ys[Math.min(4, ys.length - 1)] - G.r * .6 : G.y0;
-    });
-    say.innerHTML = WHY; Kit.show('keep'); card.classList.add('answered');
-    if (Kit.calm) { Object.assign(st, {cloudA: 0, rev: 1, sky: 1, pulse: .25}); return; }
-    const d = fast ? .5 : 1;
-    gsap.timeline()
-      .to(st, {cloudA: 0, duration: .4 * d}, 0)
-      .to(st, {rev: 1, duration: 1.4 * d, ease: 'expo.inOut'}, 0)
-      .to(st, {sky: 1, duration: .6 * d, ease: 'power3.out'}, .9 * d)
-      .to(st, {pulse: 1, duration: .3 * d, ease: 'power2.out'}, 1.15 * d)
-      .to(st, {pulse: .25, duration: 1 * d, ease: 'power2.inOut'});
-  }
-
-  // ---------- drawing ----------
-  const line = (a, b, c, d) => { x.beginPath(); x.moveTo(a, b); x.lineTo(c, d); x.stroke(); };
-  function txt(str, X, Y, o = {}) {
-    x.font = `${o.w || 700} ${(o.size || 12) / (o.screen ? 1 : s)}px ${MONO}`;
-    x.fillStyle = o.c || INK; x.globalAlpha = o.a ?? 1; x.textAlign = o.al || 'left'; x.textBaseline = 'alphabetic';
-    x.fillText(str, X, Y); x.globalAlpha = 1;
-  }
-  function hatch(a, b, w, h, gap, dir = 1) {
-    if (w <= 0 || h <= 0) return;
-    x.save(); x.beginPath(); x.rect(a, b, w, h); x.clip(); x.beginPath();
-    for (let k = -h; k < w + h; k += gap) { x.moveTo(a + k, b + h); x.lineTo(a + k + h * dir, b); }
-    x.stroke(); x.restore();
-  }
-  function poly(b) { const v = b.vertices; x.beginPath(); x.moveTo(v[0].x, v[0].y); for (let k = 1; k < v.length; k++) x.lineTo(v[k].x, v[k].y); x.closePath(); }
-  function arrowHead(px, py, dir, L) { x.beginPath(); x.moveTo(px - 3 * L * 1.2, py - dir * 5 * L); x.lineTo(px, py); x.lineTo(px + 3 * L * 1.2, py - dir * 5 * L); x.stroke(); }
-
-  // A blueprint cloud: hairline outline of overlapping puffs, flat base.
-  const PUFF = [[-1, 0, .55], [-.45, -.35, .7], [.25, -.45, .8], [.95, -.05, .55], [0, 0, .6]];
-  function cloud(cx0, cy0, R, a, L) {
-    if (a <= .01) return;
-    x.save(); x.globalAlpha = a;
-    x.strokeStyle = 'rgba(243,248,255,.55)'; x.lineWidth = 2 * L;
-    PUFF.forEach(([u, v, w]) => { x.beginPath(); x.arc(cx0 + u * R, cy0 + v * R, w * R, Math.PI, 0); x.stroke(); });
-    x.fillStyle = GROUND; x.beginPath();
-    PUFF.forEach(([u, v, w]) => { x.moveTo(cx0 + u * R + w * R, cy0 + v * R); x.arc(cx0 + u * R, cy0 + v * R, w * R, Math.PI, 0); });
-    x.rect(cx0 - 1.55 * R, cy0 - .2 * R, 3.05 * R, .2 * R); x.fill();
-    x.lineWidth = L; line(cx0 - 1.55 * R, cy0, cx0 + 1.5 * R, cy0);
-    x.globalAlpha = a * .5; line(cx0 - 1.2 * R, cy0 + 4 * L, cx0 + .6 * R, cy0 + 4 * L);
-    x.restore();
-  }
-
-  function draw(now) {
-    if (!G || !x) return;
-    x.clearRect(0, 0, W, H);
-    const {WW, yS, y0, yb, tubes, cx, g, tw} = G, L = 1 / s, I = st.intro;
-    const pl = st.pulse + (revealed && !Kit.calm ? .22 * (1 + Math.sin(now / 520)) / 2 : 0);
-    x.save(); x.translate(ox, oy); x.scale(s, s); x.lineCap = 'round'; x.lineJoin = 'round';
-
-    // Sky: the stratosphere datum (it steps back when the reveal labels arrive).
-    const fade = 1 - .85 * st.sky;
-    x.strokeStyle = INK; x.lineWidth = L; x.globalAlpha = .55 * I * (1 - .5 * st.sky); x.setLineDash([6 * L, 5 * L]);
-    line(0, yS, WW * I, yS); x.setLineDash([]); x.globalAlpha = 1;
-    txt('STRATOSPHERE', 2, yS - 5 * L, {a: .75 * I * fade, w: 600});
-    if (st.spread > 0) {
-      x.save(); x.globalAlpha = st.cloudA; x.strokeStyle = AMB; x.lineWidth = 3 * L; x.shadowColor = AMB; x.shadowBlur = 10;
-      x.setLineDash([2 * L, 5 * L]);
-      line(Math.max(0, cx - st.spread * WW * 1.05), yS, Math.min(WW, cx + st.spread * WW * 1.05), yS); x.restore();
-    }
-
-    // Weather drifting by: ordinary sky before the bombs.
-    const ca = I * (1 - .8 * Math.min(1, st.cap)) * (1 - st.sky);
-    G.clouds.forEach(c => {
-      const span = WW + c.R * 4, px = ((c.x + (Kit.calm ? 0 : now * .004 * c.sp)) % span + span) % span - c.R * 2;
-      cloud(px, c.y, c.R, .9 * ca, L);
-    });
-
-    // Dust settling.
-    x.fillStyle = INK;
-    for (const p of dust) {
-      const f = Math.min(1, (y0 + 6 - p.y) / 14);
-      x.globalAlpha = .55 * p.a * f * I * (1 - st.sky);
-      x.fillRect(p.x + Math.sin(p.ph) * 1.2, p.y, 1.6 * L, 1.6 * L);
-    }
-    x.globalAlpha = 1;
-
-    // Ground: hatched section between the sites, broken where the map jumps continents.
-    const regions = [[0, tubes[0].x]];
-    for (let i = 0; i < 3; i++) regions.push([tubes[i].x + tw, tubes[i + 1].x]);
-    regions.push([tubes[3].x + tw, WW]);
-    x.strokeStyle = INK; x.lineWidth = .8 * L; x.globalAlpha = .17 * I;
-    regions.forEach(([a, b]) => hatch(a, y0, b - a, (yb - y0) * I, 8));
-    x.globalAlpha = 1;
-    for (let i = 0; i < 3; i++) {
-      const gx = tubes[i].x + tw + g / 2, my = y0 + (yb - y0) * .55;
-      x.fillStyle = GROUND; x.fillRect(gx - 3.5 * L, y0 + 2, 7 * L, (yb - y0 - 2) * I);
-      x.strokeStyle = INK; x.lineWidth = L; x.globalAlpha = .7 * I;
-      x.beginPath(); x.moveTo(gx, y0 + 3); x.lineTo(gx, my - 8); x.lineTo(gx - 4, my - 3); x.lineTo(gx + 4, my + 3); x.lineTo(gx, my + 8); x.lineTo(gx, y0 + (yb - y0) * I); x.stroke();
-      x.globalAlpha = 1;
-    }
-    x.strokeStyle = INK; x.lineWidth = 1.5 * L; x.globalAlpha = I;
-    regions.forEach(([a, b]) => line(a, y0, a + (b - a) * I, y0));
-    x.globalAlpha = 1;
-    // Fallout settled on the land between the tubes.
-    x.save(); x.strokeStyle = AMB; x.lineWidth = 2.4 * L; x.shadowColor = AMB; x.shadowBlur = 6;
-    for (let b = 0; b < glow.length; b++) if (glow[b] > .02) { x.globalAlpha = glow[b] * st.glowFade; line(b * 4, y0 - .5, b * 4 + 4, y0 - .5); }
-    x.restore();
-
-    // The tubes.
-    tubes.forEach((t, i) => {
-      const h = (yb - y0) * I;
-      x.fillStyle = 'rgba(255,255,255,.035)'; x.fillRect(t.x, y0, t.w, h);
-      if (I > .98) {
-        x.fillStyle = 'rgba(255,255,255,.05)'; x.fillRect(t.x, t.base, t.w, t.oh);
-        x.strokeStyle = INK; x.lineWidth = .7 * L; x.globalAlpha = .32;
-        hatch(t.x, t.base, t.w, t.oh, 5, 1); hatch(t.x, t.base, t.w, t.oh, 5, -1); x.globalAlpha = 1;
-        x.lineWidth = L; x.globalAlpha = .6; line(t.x, t.base, t.x + t.w, t.base); x.globalAlpha = 1;
-        if (i === 0 && t.oh * s > 17) {
-          x.fillStyle = GROUND; const lw = 44 * L; x.fillRect(t.x + t.w / 2 - lw / 2, t.base + t.oh / 2 - 8 * L, lw, 13 * L);
-          txt('OLDER', t.x + t.w / 2, t.base + t.oh / 2 + 4 * L, {al: 'center', w: 600, a: .8});
-        }
-      }
-    });
-
-    // Grains: ordinary mud, decade by decade.
-    x.lineWidth = .8 * L;
-    tubes.forEach((t, i) => {
-      for (const b of t.grains) {
-        if (b.k === 'f' || b.position.y < y0 - 110) continue;
-        poly(b); x.globalAlpha = .78 + .2 * b.tone; x.fillStyle = TINT[i][b.d % 2]; x.fill();
-        x.globalAlpha = .55; x.strokeStyle = DEEP; x.stroke();
-      }
-    });
-    x.globalAlpha = 1;
-    // Fallout grains, glowing.
-    x.save(); x.shadowColor = AMB; x.shadowBlur = 6 + 16 * pl; x.fillStyle = AMB; x.strokeStyle = '#fff6c8'; x.lineWidth = .6 * L;
-    tubes.forEach(t => t.fall.forEach(b => { poly(b); x.fill(); x.stroke(); }));
-    x.restore();
-
-    // Tube walls on top, with depth ticks.
-    tubes.forEach((t, i) => {
-      const h = (yb - y0) * I;
-      x.strokeStyle = INK; x.lineWidth = 1.5 * L;
-      line(t.x, y0, t.x, y0 + h); line(t.x + t.w, y0, t.x + t.w, y0 + h);
-      x.lineWidth = .8 * L; x.globalAlpha = .4;
-      line(t.x - 3 * L, y0, t.x - 3 * L, y0 + h); line(t.x + t.w + 3 * L, y0, t.x + t.w + 3 * L, y0 + h);
-      for (let k = 1; k < 10; k++) { const ty = y0 + (yb - y0) * k / 10; if (ty < y0 + h) line(t.x + t.w - 4 * L, ty, t.x + t.w, ty); }
-      x.globalAlpha = 1;
-      if (I > .98) { x.lineWidth = 1.5 * L; line(t.x, yb, t.x + t.w, yb); }
-      txt('SITE ' + 'ABCD'[i], t.x + t.w / 2, yb + 16, {al: 'center', w: 700, a: .9 * I});
-    });
-
-    // Rain of fallout.
-    x.save(); x.fillStyle = AMB; x.shadowColor = AMB; x.shadowBlur = 5;
-    for (const p of rain) { x.globalAlpha = .9; x.beginPath(); x.arc(p.x + Math.sin(p.ph) * 1.5, p.y, 1.4 * L, 0, 7); x.fill(); }
-    x.restore();
-
-    // The H-bomb cloud.
-    if (st.stem > 0 || st.flash > 0) {
-      const Hc = y0 - yS - 4, A = st.cloudA;
-      if (st.flash > .01) {
-        const gr = x.createRadialGradient(cx, y0, 0, cx, y0, Hc * 1.5);
-        gr.addColorStop(0, `rgba(255,236,150,${.9 * st.flash})`); gr.addColorStop(1, 'rgba(255,216,77,0)');
-        x.fillStyle = gr; x.beginPath(); x.arc(cx, y0, Hc * 1.5, 0, 7); x.fill();
-      }
-      const sw = Math.max(5, g * .32), top = y0 - Hc * .6 * st.stem;
-      x.globalAlpha = A;
-      x.beginPath(); x.moveTo(cx - sw * .75, y0); x.quadraticCurveTo(cx - sw * .3, (y0 + top) / 2, cx - sw * .4, top);
-      x.lineTo(cx + sw * .4, top); x.quadraticCurveTo(cx + sw * .3, (y0 + top) / 2, cx + sw * .75, y0); x.closePath();
-      x.fillStyle = 'rgba(243,248,255,.16)'; x.fill(); x.strokeStyle = INK; x.lineWidth = 1.1 * L; x.stroke();
-      x.globalAlpha = .6 * A; x.beginPath(); x.ellipse(cx, y0 - Hc * .28 * st.stem, sw * 1.25, sw * .32, 0, 0, 7); x.stroke();
-      const R = Hc * .25 * st.cap, cy = top - R * .25;
-      if (R > .5) {
-        const C = [[-.72, .12, .55], [.72, .12, .55], [0, -.38, .72], [-.38, -.12, .62], [.4, -.16, .62], [0, .18, .6]];
-        x.globalAlpha = A; x.fillStyle = 'rgba(243,248,255,.2)'; x.beginPath();
-        C.forEach(([a, b, c]) => { x.moveTo(cx + a * R + c * R, cy + b * R); x.arc(cx + a * R, cy + b * R, c * R, 0, 7); }); x.fill();
-        x.strokeStyle = INK; x.lineWidth = L; x.globalAlpha = .85 * A;
-        C.forEach(([a, b, c]) => { x.beginPath(); x.arc(cx + a * R, cy + b * R, c * R, 0, 7); x.stroke(); });
-        const capTop = cy - R * 1.1;
-        if (capTop - yS > 9 && st.cap > .9) {
-          x.globalAlpha = .8 * A; x.setLineDash([3 * L, 3 * L]); line(cx, capTop, cx, yS + 2); x.setLineDash([]); arrowHead(cx, yS + 2, -1, L);
-        }
-        let lx = cx + R * 1.3 + 6, al = 'left';
-        x.font = `700 ${12 / s}px ${MONO}`;
-        if (lx + x.measureText('H-BOMB TESTS').width > WW - 2) { lx = cx - R * 1.3 - 6; al = 'right'; }
-        txt('H-BOMB TESTS', lx, cy - 2 * L, {al, a: A * Math.min(1, st.cap)});
-        txt('1950s', lx, cy + 15 * L, {al, a: .8 * A * Math.min(1, st.cap), w: 600, c: AMB});
-      }
-      x.globalAlpha = 1;
-    }
-
-    // The reveal: one date, four depths.
-    if (st.rev > 0) {
-      const pts = tubes.map(t => {
-        if (!t.fall.length) return null; let sy = 0; t.fall.forEach(b => sy += b.position.y);
-        return {x: t.x + t.w / 2, y: sy / t.fall.length, t};
-      }).filter(Boolean);
-      const dd = (4 + 2 * pl) * L;
-      // Dimension arrows inside each core: today's mud surface down to the layer.
-      pts.forEach(p => {
-        const top = Math.min(p.y - 12 * L, p.t.top ?? y0), a = Math.min(1, st.rev * 1.4);
-        const yy = top + (p.y - dd - 2 * L - top) * Math.min(1, st.rev * 1.3);
-        x.save(); x.globalAlpha = .55 * a; x.strokeStyle = INK; x.lineWidth = L; x.setLineDash([2 * L, 3 * L]);
-        line(p.t.x + 2 * L, top, p.t.x + p.t.w - 2 * L, top); x.restore();
-        x.save(); x.globalAlpha = a;
-        x.strokeStyle = DEEP; x.lineWidth = 3.4 * L; line(p.x, top + 1, p.x, yy); arrowHead(p.x, top + 1, -1, L); if (st.rev > .7) arrowHead(p.x, yy, 1, L);
-        x.strokeStyle = INK; x.lineWidth = 1.3 * L; line(p.x, top + 1, p.x, yy); arrowHead(p.x, top + 1, -1, L); if (st.rev > .7) arrowHead(p.x, yy, 1, L);
-        x.restore();
-      });
-      // The datum line through the layer, sweeping left to right.
-      if (pts.length > 1) {
-        const seg = []; let tot = 0;
-        for (let k = 1; k < pts.length; k++) { const l = Math.hypot(pts[k].x - pts[k - 1].x, pts[k].y - pts[k - 1].y); seg.push(l); tot += l; }
-        const at = d => { let px = pts[0].x, py = pts[0].y; for (let k = 1; k < pts.length && d > 0; k++) { const f = Math.min(1, d / seg[k - 1]); px = pts[k - 1].x + (pts[k].x - pts[k - 1].x) * f; py = pts[k - 1].y + (pts[k].y - pts[k - 1].y) * f; d -= seg[k - 1]; } return [px, py]; };
-        let left = tot * st.rev, hx = pts[0].x, hy = pts[0].y;
-        x.save(); x.strokeStyle = INK; x.lineWidth = 1.8 * L; x.shadowColor = AMB; x.shadowBlur = 8 + 10 * pl;
-        x.setLineDash([5 * L, 3 * L]); x.lineDashOffset = Kit.calm ? 0 : -now / 90 * L; x.globalAlpha = 1;
-        x.beginPath(); x.moveTo(pts[0].x, pts[0].y);
-        for (let k = 1; k < pts.length && left > 0; k++) {
-          const f = Math.min(1, left / seg[k - 1]);
-          hx = pts[k - 1].x + (pts[k].x - pts[k - 1].x) * f; hy = pts[k - 1].y + (pts[k].y - pts[k - 1].y) * f;
-          x.lineTo(hx, hy); left -= seg[k - 1];
-        }
-        x.stroke(); x.setLineDash([]);
-        const spark = (sx, sy, rr, a) => {
-          const gr = x.createRadialGradient(sx, sy, 0, sx, sy, rr);
-          gr.addColorStop(0, `rgba(255,246,200,${a})`); gr.addColorStop(1, 'rgba(255,216,77,0)');
-          x.fillStyle = gr; x.beginPath(); x.arc(sx, sy, rr, 0, 7); x.fill();
-        };
-        if (st.rev < .999) spark(hx, hy, 14 * L, .95);
-        else if (!Kit.calm) { const u = (now / 2400) % 1, [gx2, gy2] = at(u * tot); spark(gx2, gy2, 11 * L, .7 * Math.sin(u * Math.PI)); }
-        x.restore();
-        // Diamonds where it meets each site.
-        pts.forEach((p, k) => {
-          const on = st.rev * (pts.length - 1) >= k - .02; if (!on) return;
-          x.save(); x.shadowColor = AMB; x.shadowBlur = 10; x.fillStyle = AMB; x.strokeStyle = INK; x.lineWidth = L;
-          x.beginPath(); x.moveTo(p.x, p.y - dd); x.lineTo(p.x + dd, p.y); x.lineTo(p.x, p.y + dd); x.lineTo(p.x - dd, p.y); x.closePath(); x.fill(); x.stroke(); x.restore();
-        });
-      }
-      x.globalAlpha = 1;
-      if (st.sky > 0) {
-        const ly2 = y0 - 8 * L, ly1 = ly2 - 17 * L, sh = (1 - st.sky) * 6 * L;
-        txt('↕ DEPTH: DIFFERENT AT EVERY SITE', 2, ly1 + sh, {a: st.sky, w: 700});
-        txt('◆ 1950–60 LAYER: THE SAME IN ALL', 2, ly2 + sh, {a: st.sky, w: 700, c: AMB});
-      }
-    }
-    x.restore();
-
-    // ---------- the year ruler ----------
-    const yr0 = H - RH, base = yr0 + RH * .54, rx0 = 14, rx1 = W - 14, X = v => rx0 + (v - 1900) / 100 * (rx1 - rx0);
-    x.lineCap = 'round'; x.strokeStyle = INK; x.lineWidth = 1;
-    x.globalAlpha = .45 * I; line(rx0, base, rx1, base);
-    x.globalAlpha = .65 * I;
-    for (let v = 1900; v <= 2000; v += 5) { const hh = v % 25 === 0 ? 9 : v % 10 === 0 ? 6 : 3; line(X(v), base, X(v), base + hh); }
-    x.globalAlpha = I; x.lineWidth = 2; line(rx0, base, X(year), base);
-    x.save(); x.strokeStyle = AMB; x.lineWidth = 3.5; x.shadowColor = AMB; x.shadowBlur = c50 ? 8 : 0; x.globalAlpha = I * (c50 ? 1 : .7);
-    line(X(1950), base, X(1960), base); x.restore();
-    [1900, 1925, 1950, 1975, 2000].forEach((v, k) =>
-      txt(String(v), X(v), base + 22, {screen: true, size: 12, w: 600, a: .8 * I, al: k === 0 ? 'left' : k === 4 ? 'right' : 'center'}));
-    const bob = touched ? 0 : Math.sin(now / 280) * 3, hx = X(year) + bob;
-    x.globalAlpha = I; x.fillStyle = INK;
-    x.beginPath(); x.moveTo(hx - 6, base - 11); x.lineTo(hx + 6, base - 11); x.lineTo(hx, base - 2); x.closePath(); x.fill();
-    const label = touched ? String(Math.floor(year)) : '1900 · DRAG →';
-    x.font = `700 14px ${MONO}`; const lw = x.measureText(label).width;
-    const lx = Math.max(rx0 + lw / 2, Math.min(rx1 - lw / 2, hx));
-    txt(label, lx, base - 15, {screen: true, size: 14, al: 'center', a: I, c: year >= 1950 && year < 1961 ? AMB : INK});
-    x.globalAlpha = 1;
-  }
-
-  // ---------- loop ----------
-  function frame(t) {
-    const dt = Math.min(50, lastT ? t - lastT : 16.7); lastT = t;
-    if (G) {
-      if (target > year && !revealed) {
-        const sp = fast ? 75 : (year > 1947 && year < 1962 ? 4.5 : 22);
-        advance(Math.min(target - year, sp * dt / 1000));
-      }
-      feed(dt);
-      for (let k = 0; k < (fast ? 2 : 1); k++) Engine.update(engine, 1000 / 60);
-      updRain(dt); updDust(dt);
-      if (!revealed && year >= 2000 && G.tubes.every(tb => !tb.q.length) && performance.now() - lastSpawn > (fast ? 500 : 1200)) reveal();
-      draw(t);
-    }
-    requestAnimationFrame(frame);
-  }
-  const start = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
-
-  // ---------- touch ----------
-  const fromX = e => { const r = cv.getBoundingClientRect(); return Math.max(1900, Math.min(2000, 1900 + (e.clientX - r.left - 14) / (r.width - 28) * 100)); };
-  let drag = false;
-  cv.addEventListener('pointerdown', e => {
-    if (revealed) return; drag = true; cv.setPointerCapture(e.pointerId);
-    if (!touched) { touched = true; Kit.haptic('light'); }
-    target = Math.max(target, fromX(e));
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('say');
+    sure.grade(ok, pct, ok ? 'Right: a shared layer' : 'Not that one');
+    setTimeout(() => Turn.over(), 700);
   });
-  cv.addEventListener('pointermove', e => { if (drag) target = Math.max(target, fromX(e)); });
-  const end = () => { drag = false; };
-  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  });
+  document.addEventListener('turned', () => { turned = true; drawBack(!backDone); backDone = true; });
 
-  Kit.onShow.card = () => { fit(); start(); };
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
   Kit.onEnter.card = () => {
-    start();
-    if (Kit.calm || touched) { st.intro = 1; return; }
-    st.intro = 0; gsap.to(st, {intro: 1, duration: 1.4, ease: 'power3.out'});
+    if (Kit.calm) return;
+    gsap.from('#pic .ground', {opacity: 0, y: 10, duration: .55, ease: 'power3.out'});
+    gsap.from('#pic .ask', {opacity: 0, duration: .5, delay: .45, ease: 'power2.out'});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .3, ease: 'power3.out'});
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    fast = true; touched = true; gsap.killTweensOf(st, 'intro'); st.intro = 1; start(); target = 2000;
-    const t0 = performance.now();
-    while (!revealed && performance.now() - t0 < 9000) await wait(100);
-    await wait(Kit.calm ? 150 : 1200);
+    Kit.$('opts').children[0].click(); await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 3600);
   };
 })();
 Kit.single();

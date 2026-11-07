@@ -5,10 +5,10 @@
   "strand": "nature.oceans.deep_sea",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "none",
-  "question": "Drop Everest into the Challenger Deep. How much water covers its peak?",
-  "answer": "The Challenger Deep is over 10,900 m deep, and Everest is about 8,848 m tall. Stood on the bottom, its summit stays more than 2 km under the sea.",
-  "move": "The sea's deepest hole is deeper than the highest mountain is tall.",
+  "principle": "estimation",
+  "question": "Stand Everest on the deepest seabed. Where does its summit end up?",
+  "answer": "Even with its foot resting on the seabed of the Challenger Deep, Everest's summit stays over 2 km under water. The trench goes down over 10,900 m, while Everest is about 8,848 m tall, so the gap is over 2 km.",
+  "move": "We size things from the surface we can see; measure the hidden half before you compare.",
   "keywords": [
     "challenger deep",
     "mount everest",
@@ -29,11 +29,10 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Cross-section of the Challenger Deep with Mount Everest standing on the trench bottom. The reader drags a flag to where the summit ends up and is asked how much water covers its peak.",
-    "graded": false,
-    "ground": "#ffd23f"
+    "label": "A side view of Mount Everest above a dark ocean, with a drag handle. The reader drags Everest down until its base rests on the seabed of the Challenger Deep, then sees where its summit ends up relative to the water surface.",
+    "ground": "#e4ecee"
   },
   "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=CYUaD_ROqGM",
-  "written": "2026-11-04"
+  "written": "2026-11-06"
 }
