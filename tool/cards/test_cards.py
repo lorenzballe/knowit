@@ -164,6 +164,12 @@ class TheGate(unittest.TestCase):
         self.assertTrue(any("astrology" in p for p in self.check(read_card(topic="astrology"))))
         self.assertTrue(any("colour" in p for p in self.check(read_card(colour="red"))))
 
+    def test_traits_are_kept_and_held_to_their_range(self):
+        good = read_card(traits={"level": 7, "specificity": 4, "emotion": "awe", "sensitive": ["death"], "interests": ["cooking"]})
+        self.assertEqual([p for p in self.check(good) if "traits" in p], [])
+        self.assertTrue(any("traits" in p for p in self.check(read_card(traits={"level": 11}))))
+        self.assertTrue(any("traits" in p for p in self.check(read_card(traits={"iq": 120}))))
+
     def test_the_listicle_is_refused(self):
         card = read_card(answer="Honey never spoils, which is why it is found in tombs, and the rest of this answer is padding to reach the floor for a read.")
         self.assertTrue(any("banned" in p for p in self.check(card)))
