@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-steam-feeds-power -->
-<!-- Look: a reactor console, drawn in ink straight on the card. A scrolling power trace on a log scale with a filled glow sits above a graphite core of segmented fuel channels, water and hundreds of neutrons. Scanlines and a ticker log complete it.
-     Interaction: hold the core to boil it. A heat ripple blooms under your finger, water dots turn into rising steam rings, fewer neutrons are absorbed, the swarm thickens, the core warms to amber and the trace climbs. Let go early and it settles; push past the brink and the steam feeds itself.
-     Wow: the AZ-5 lamp blinks, the rods drop and jam a third of the way down with sparks, the screen flashes, and the trace pegs at 30 GW while a scrambled "30 GW · 10× NOMINAL" locks in. The layout adapts so nothing collides on short stages. -->
+<!-- Look: a page from a printed science book. A plain line chart of power on a log scale sits above a cross-section of the graphite core: flat fuel channels with their pellets, a flat pool of blue water filling the core from below, a few curls of steam above its surface, and short ink tracks for the neutrons.
+     Interaction: hold the core to boil it. Rings of heat spread under your finger, the water surface churns and sinks as it turns to steam, fewer neutrons are absorbed, the tracks multiply, the fuel channels warm to amber and the line climbs. Let go early and it settles; push past the brink and the steam feeds itself.
+     Wow: the AZ-5 lamp blinks, the rods drop and jam a third of the way down with hot tips, the page flashes, and the line holds at 30 GW while a scrambling "30 GW · 10× nominal" settles. The layout adapts so nothing collides on short stages. -->
 <title>Steam feeds the fire</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -21,7 +21,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HOLD TO BOIL</span></div>
     <h2 class="q">Why did Chernobyl's core suddenly make 10 times its normal power?</h2>
     <div class="stagebox" id="stage">
-      <canvas id="cv" role="img" aria-label="A reactor console: a power trace above a core of fuel channels, cooling water and flying neutrons. Holding the core boils the water into steam."></canvas>
+      <canvas id="cv" role="img" aria-label="A chart of the reactor's power above a cross-section of its core: fuel channels, cooling water and flying neutrons. Holding the core boils the water into steam."></canvas>
     </div>
     <div id="why" class="gone">
       <p class="big">Steam set the neutrons free.</p>
@@ -36,20 +36,25 @@
 <script>
 (() => {
   const cv = Kit.$('cv'), say = Kit.$('say'), card = Kit.$('card');
-  const G = '16,16,12';                   // ink, drawn on the card
-  const L = '0,229,160';                  // card colour, for text on small dark chips
-  const A = '176,64,0';                   // burnt amber, reads on the card
+  let K = [16, 16, 12];                   // ink, read from var(--k)
+  let C = [0, 229, 160];                  // card colour, read from var(--c)
+  const A = [176, 64, 0];                 // burnt amber: heat
+  const WTR = [24, 88, 132];              // flat blue: liquid water
   const S = {P: 1, v: .2, hold: false, phase: 'idle', rod: 0, intro: 1, fl: 0, wow: 0, ws: 1, touched: false, logY: 0, hv: 0, hx: -1, hy: -1, spark: 0};
-  let x = null, W = 0, H = 0, fs = 12, MONO = 'monospace', sprite = null, rodsFired = false, msgMid = false, loopOn = false;
+  let x = null, W = 0, H = 0, fs = 12, BODY = 'Figtree, sans-serif', DISPLAY = 'serif', rodsFired = false, msgMid = false, loopOn = false;
   const clamp = (a, lo, hi) => Math.max(lo, Math.min(hi, a));
+  const rgba = (a, al) => `rgba(${a[0]},${a[1]},${a[2]},${al})`;
+  const tint = p => [0, 1, 2].map(i => Math.round(K[i] * p + C[i] * (1 - p)));
+  const mixc = (a, b, p) => [0, 1, 2].map(i => Math.round(a[i] * p + b[i] * (1 - p)));
 
-  // The core: fuel channels, water dots between them, control rods between those.
+  // The core: fuel channels, water cells between them, control rods between those.
+  // Water sits in a pool: a cell is still liquid while it lies below the steam line (ny >= v).
   const FUEL = [.1, .3, .5, .7, .9], RODS = [.2, .4, .6, .8], COLS = 16, ROWS = 12;
   const grid = [], dots = [];
   for (let r = 0; r < ROWS; r++) { grid[r] = []; for (let c = 0; c < COLS; c++) {
     const nx = (c + .5 + (Kit.rnd() - .5) * .5) / COLS, ny = (r + .5 + (Kit.rnd() - .5) * .5) / ROWS;
     if (FUEL.some(f => Math.abs(f - nx) < .028)) { grid[r][c] = null; continue; }
-    const d = {nx, ny, th: Kit.rnd() * .92 + .04, ph: Kit.rnd()}; grid[r][c] = d; dots.push(d);
+    Kit.rnd(); const d = {nx, ny, th: clamp(ny, .04, .96), ph: Kit.rnd()}; grid[r][c] = d; dots.push(d);
   } }
   const MAXN = 720, neut = [], flashes = [], logs = [], HN = 240, hist = [], sparks = [];
   for (let i = 0; i < HN; i++) hist.push(1);
@@ -67,7 +72,7 @@
       S.v = clamp(S.v + dv * dt, .05, .97);
       S.P = clamp(S.P * Math.exp(2.6 * (S.v - .2) * dt), .5, 30);  // more voids, fewer absorbed neutrons, more power
       if (S.phase === 'idle' && S.hold && S.P > 1.4 && !msgMid) {
-        msgMid = true; addLog('> VOIDS UP · ABSORPTION DOWN');
+        msgMid = true; addLog('Voids up, absorption down');
         say.innerHTML = 'Steam soaks up fewer neutrons than water, so power climbs and boils more water. <b>Let go to cool it, or keep holding.</b>';
       }
       if (S.phase === 'idle' && S.P > 3.2) runaway();
@@ -100,15 +105,15 @@
 
   function runaway() {
     S.phase = 'run'; S.hold = false; Kit.haptic('light');
-    addLog('> STEAM FEEDS POWER');
+    addLog('Steam feeds power');
     say.innerHTML = '<b>Too late.</b> Power now boils water faster than it can cool: power makes steam, steam makes power.';
     if (Kit.calm) { S.P = 30; S.v = .97; finish(); }
   }
   function fireRods() {
-    if (rodsFired) return; rodsFired = true; addLog('> AZ-5 · RODS DROP');
-    if (Kit.calm) { S.rod = 1 / 3; addLog('> RODS JAMMED AT 1/3'); return; }
+    if (rodsFired) return; rodsFired = true; addLog('AZ-5: rods drop');
+    if (Kit.calm) { S.rod = 1 / 3; addLog('Rods jammed at 1/3'); return; }
     gsap.to(S, {rod: 1 / 3, duration: .42, ease: 'power3.in', onComplete: () => {
-      addLog('> RODS JAMMED AT 1/3'); Kit.haptic('light');
+      addLog('Rods jammed at 1/3'); Kit.haptic('light');
       RODS.forEach(r => { for (let k = 0; k < 9; k++) { const a = -Math.PI * Math.random(); sparks.push({x: r, y: 1 / 3, vx: Math.cos(a) * .25, vy: Math.sin(a) * .5, a: 1}); } });
       gsap.fromTo(cv, {y: -3}, {y: 0, duration: .4, ease: 'elastic.out(1,.3)'});
     }});
@@ -116,7 +121,7 @@
   function finish() {
     if (S.phase === 'done') return;
     S.phase = 'done'; S.P = 30; S.v = .97; fireRods();
-    addLog('> 30 GW · 10x NOMINAL'); Kit.haptic('success');
+    addLog('30 GW, 10× nominal'); Kit.haptic('success');
     if (Kit.calm) { S.rod = 1 / 3; S.wow = 1; S.ws = 1; reveal(); return; }
     gsap.timeline()
       .to(S, {fl: 1, duration: .07, ease: 'power2.in'})
@@ -129,11 +134,11 @@
 
   // ---------- drawing ----------
   function rr(c, a, b, w, h, r) { r = Math.min(r, w / 2, h / 2); c.beginPath(); c.moveTo(a + r, b); c.arcTo(a + w, b, a + w, b + h, r); c.arcTo(a + w, b + h, a, b + h, r); c.arcTo(a, b + h, a, b, r); c.arcTo(a, b, a + w, b, r); c.closePath(); }
-  function tag(c, txt, cx, cy, col, align) {      // text on a small ink chip
-    const w = c.measureText(txt).width, h = fs * 1.35;
-    const lx = align === 'left' ? cx : align === 'right' ? cx - w : cx - w / 2;
-    c.fillStyle = 'rgba(16,16,12,.88)'; c.fillRect(lx - 5, cy - h / 2, w + 10, h);
-    c.fillStyle = col; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText(txt, lx, cy + 1);
+  // a printed label: body font, with a thin knock-out edge in the colour behind it so it reads over the drawing
+  function label(c, txt, px, py, col, align, behind) {
+    c.textAlign = align || 'center'; c.textBaseline = 'middle';
+    c.lineJoin = 'round'; c.lineWidth = 4; c.strokeStyle = rgba(behind, 1); c.strokeText(txt, px, py);
+    c.fillStyle = col; c.fillText(txt, px, py);
   }
   function draw(t) {
     if (!x) return;
@@ -141,203 +146,193 @@
     c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1;
     c.clearRect(0, 0, W, H);
     const pad = Math.max(8, W * .03), hdr = fs * (compact ? 1.9 : 2.3);
-    const mono = (w, k) => `${w} ${Math.max(12, fs * k)}px ${MONO}`;
+    const body = (w, k) => `${w} ${Math.max(12, fs * k)}px ${BODY}`;
     const glowP = clamp(Math.log(S.P / .5) / Math.log(60), 0, 1);
     const hot = S.phase !== 'idle';
+    const graphite = tint(.1);
 
-    // header readouts
-    c.textBaseline = 'middle'; c.font = mono(700, compact ? 1 : 1.15); c.textAlign = 'left';
+    // the two numbers, printed above the chart
+    c.textBaseline = 'middle'; c.font = body(600, compact ? 1 : 1.1); c.textAlign = 'left';
     const blink = S.phase === 'done' ? (Math.sin(t * 9) > -.3 ? 1 : .45) : 1;
-    c.fillStyle = S.phase === 'done' ? `rgba(${A},${blink * I})` : `rgba(${G},${.95 * I})`;
-    c.shadowBlur = 0;
-    c.fillText(`PWR ${S.P.toFixed(S.P < 10 ? 2 : 1)} GW`, pad, hdr * .55);
-    c.fillStyle = `rgba(${G},${.95 * I})`;
-    c.textAlign = 'right'; c.fillText(`STEAM ${Math.round(S.v * 100)}%`, W - pad, hdr * .55);
-    // status lamp in the middle
-    if (W > 300) {
-      const lit = rodsFired ? (Math.sin(t * 12) > 0 ? 1 : .25) : 0, lx = W / 2, ly = hdr * .55;
-      const lbl = rodsFired ? 'AZ-5' : (S.hold || hot ? 'HEAT' : 'IDLE');
-      c.font = mono(700, .85); const lw = c.measureText(lbl).width;
-      const col = rodsFired ? `rgba(200,40,0,${.4 + .6 * lit})` : (S.hold || hot ? `rgba(${A},.95)` : `rgba(${G},.5)`);
-      c.fillStyle = col; c.shadowColor = col; c.shadowBlur = rodsFired ? 8 * lit : 0;
-      c.beginPath(); c.arc(lx - lw / 2 - fs * .55, ly, fs * .28, 0, 6.283); c.fill(); c.shadowBlur = 0;
-      c.textAlign = 'left'; c.fillText(lbl, lx - lw / 2, ly + 1);
+    c.fillStyle = S.phase === 'done' ? rgba(A, blink * I) : rgba(K, I);
+    c.fillText(`Power ${S.P.toFixed(S.P < 10 ? 2 : 1)} GW`, pad, hdr * .55);
+    c.fillStyle = rgba(K, I);
+    c.textAlign = 'right'; c.fillText(`Steam ${Math.round(S.v * 100)}%`, W - pad, hdr * .55);
+    // the lamp, only when something is happening
+    if (W > 300 && (rodsFired || S.hold || hot)) {
+      const lit = rodsFired ? (Math.sin(t * 12) > 0 ? 1 : .3) : 1, lx = W / 2, ly = hdr * .55;
+      const lbl = rodsFired ? 'AZ-5' : 'Heat';
+      c.font = body(600, .95); const lw = c.measureText(lbl).width;
+      c.fillStyle = rgba(A, rodsFired ? lit : .9);
+      c.beginPath(); c.arc(lx - lw / 2 - fs * .55, ly, fs * .3, 0, 6.283); c.fill();
+      c.fillStyle = rgba(A, 1); c.textAlign = 'left'; c.fillText(lbl, lx - lw / 2, ly + 1);
     }
 
-    // the scope
+    // the chart
     const py0 = hdr, py1 = compact ? py0 + Math.max(fs * 2.4, (H - hdr) * .3) : H * .35, ph = py1 - py0;
     const sx0 = pad * .5, sw = W - pad;
-    c.save(); rr(c, sx0, py0, sw, ph, 8); c.clip();
-    const gs = sw / 10, off = (t * 40) % gs;
-    c.strokeStyle = `rgba(${G},${.1 * I})`; c.lineWidth = 1;
-    for (let gx = sx0 + gs - off; gx < W; gx += gs) { c.beginPath(); c.moveTo(gx, py0); c.lineTo(gx, py1); c.stroke(); }
-    for (let k = 1; k < 4; k++) { const gy = py0 + ph * k / 4; c.beginPath(); c.moveTo(0, gy); c.lineTo(W, gy); c.stroke(); }
+    c.save(); c.beginPath(); c.rect(sx0, py0 - 2, sw, ph + 4); c.clip();
     const yOf = P => py1 - 6 - Math.log(P / .5) / Math.log(80) * (ph - 12);
     const yN = yOf(3), y30 = yOf(30);
-    c.setLineDash([5, 5]); c.strokeStyle = `rgba(${G},${.5 * I})`;
-    c.beginPath(); c.moveTo(0, yN); c.lineTo(W, yN); c.stroke();
-    c.strokeStyle = `rgba(${A},${.75 * I})`; c.beginPath(); c.moveTo(0, y30); c.lineTo(W, y30); c.stroke(); c.setLineDash([]);
-    // the trace, with a soft fill under it
+    c.lineWidth = 1.2;
+    c.strokeStyle = rgba(K, .4 * I); c.beginPath(); c.moveTo(sx0, yN); c.lineTo(sx0 + sw, yN); c.stroke();
+    c.strokeStyle = rgba(A, .85 * I); c.setLineDash([6, 4]); c.beginPath(); c.moveTo(sx0, y30); c.lineTo(sx0 + sw, y30); c.stroke(); c.setLineDash([]);
+    // the line, with a flat wash under it
     const n = Math.max(2, Math.floor(HN * I)), dx = sw / (HN - 1);
-    c.beginPath();
-    for (let i = HN - n; i < HN; i++) { const px = sx0 + i * dx, py = yOf(hist[i]); i === HN - n ? c.moveTo(px, py) : c.lineTo(px, py); }
-    c.save(); c.lineTo(sx0 + (HN - 1) * dx, py1); c.lineTo(sx0 + (HN - n) * dx, py1); c.closePath();
-    const fg0 = c.createLinearGradient(0, py0, 0, py1);
-    fg0.addColorStop(0, hot ? `rgba(${A},.32)` : `rgba(${G},.22)`); fg0.addColorStop(1, `rgba(${G},0)`);
-    c.fillStyle = fg0; c.fill(); c.restore();
-    c.beginPath();
-    for (let i = HN - n; i < HN; i++) { const px = sx0 + i * dx, py = yOf(hist[i]); i === HN - n ? c.moveTo(px, py) : c.lineTo(px, py); }
-    c.lineJoin = 'round'; c.strokeStyle = `rgba(${G},.12)`; c.lineWidth = 6; c.stroke();
-    c.strokeStyle = `rgba(${G},1)`; c.lineWidth = 1.8; c.stroke();
+    const path = () => { c.beginPath(); for (let i = HN - n; i < HN; i++) { const px = sx0 + i * dx, py = yOf(hist[i]); i === HN - n ? c.moveTo(px, py) : c.lineTo(px, py); } };
+    path(); c.lineTo(sx0 + (HN - 1) * dx, py1); c.lineTo(sx0 + (HN - n) * dx, py1); c.closePath();
+    c.fillStyle = hot ? rgba(A, .2) : rgba(K, .1); c.fill();
+    path(); c.lineJoin = 'round'; c.lineCap = 'round'; c.strokeStyle = rgba(K, 1); c.lineWidth = 2.2; c.stroke();
     const hx = W - pad * .5, hy = yOf(hist[HN - 1]);
-    c.fillStyle = '#10100c'; c.beginPath(); c.arc(hx - 1, hy, 3, 0, 6.283); c.fill();
-    c.fillStyle = `rgba(${G},${.2 + .15 * Math.sin(t * 6)})`; c.beginPath(); c.arc(hx - 1, hy, 7, 0, 6.283); c.fill();
-    // scope labels, shown only when they have room
-    c.font = mono(600, .9);
-    if (ph > fs * 2.2) tag(c, '30 GW', W - pad - 8, y30 + fs * .85, `rgba(255,200,110,${.95 * I})`, 'right');
-    if (yN - y30 > fs * 2.8) tag(c, 'NOMINAL ×1', W - pad - 8, yN - fs * .85, `rgba(${L},${.95 * I})`, 'right');
-    if (ph > fs * 3.6 && py1 - yN > fs * .2) tag(c, `×${(S.P / 3).toFixed(1)} NOMINAL`, sx0 + 10, py1 - fs * .85, `rgba(${L},${.95 * I})`, 'left');
+    c.fillStyle = rgba(K, 1); c.beginPath(); c.arc(hx - 3, hy, 3.5, 0, 6.283); c.fill();
+    // chart labels, shown only when they have room
+    c.font = body(600, .9);
+    if (ph > fs * 2.2) label(c, '30 GW', W - pad - 8, y30 + fs * .85, rgba(A, I), 'right', C);
+    if (yN - y30 > fs * 2.8) label(c, 'Normal ×1', W - pad - 8, yN - fs * .85, rgba(K, .8 * I), 'right', C);
+    if (ph > fs * 3.6 && py1 - yN > fs * .2) label(c, `×${(S.P / 3).toFixed(1)} nominal`, sx0 + 4, py1 - fs * .85, rgba(K, I), 'left', C);
     c.restore();
+    c.strokeStyle = rgba(K, .9 * I); c.lineWidth = 1.5;
+    c.beginPath(); c.moveTo(sx0, py1); c.lineTo(sx0 + sw, py1); c.stroke();
 
-    // the core
+    // the core, in cross-section
     const cx0 = pad * .5, cy0 = py1 + Math.max(6, H * .025), cw = W - pad, ch = H - cy0 - pad * .5;
     const X = nx => cx0 + nx * cw, Y = ny => cy0 + ny * ch;
     c.save(); rr(c, cx0, cy0, cw, ch, 10); c.clip();
-    // heat from below, and the core warming as power climbs (a soft glow, fading before the edges)
+    c.fillStyle = rgba(graphite, 1); c.fillRect(cx0, cy0, cw, ch);
+    // the core warming: a flat amber wash that deepens with heat and power
     const heatVis = S.phase === 'idle' ? (S.hold ? 1 : 0) : 1;
     S.hv += (heatVis - S.hv) * .15;
-    const hr = Math.min(cw * .45, ch * .8), hgx = cx0 + cw / 2, hgy = cy0 + ch;
-    const hg = c.createRadialGradient(hgx, hgy, 0, hgx, hgy, hr);
-    hg.addColorStop(0, `rgba(230,90,0,${S.hv * .2 + glowP * .2})`); hg.addColorStop(1, 'rgba(230,90,0,0)');
-    c.fillStyle = hg; c.fillRect(hgx - hr, hgy - hr, hr * 2, hr * 2);
-    // fuel channels with pellets
-    FUEL.forEach(f => {
-      const fx = X(f), fw = Math.max(4, cw * .022);
-      const fg = c.createLinearGradient(fx - fw * 1.6, 0, fx + fw * 1.6, 0);
-      const fa = (.18 + .5 * glowP) * I;
-      fg.addColorStop(0, `rgba(${G},0)`); fg.addColorStop(.5, hot ? `rgba(${A},${fa})` : `rgba(${G},${fa})`); fg.addColorStop(1, `rgba(${G},0)`);
-      c.fillStyle = fg; c.fillRect(fx - fw * 1.6, Y(1 - I), fw * 3.2, ch * I);
-      c.fillStyle = `rgba(${G},${.6 * I})`; c.fillRect(fx - .75, Y(1 - I), 1.5, ch * I);
-      c.fillStyle = `rgba(${L},${.8 * I})`;
-      for (let py = Y(1 - I) + 6; py < cy0 + ch; py += Math.max(8, fs * .8)) c.fillRect(fx - 1.5, py, 3, 1);
-    });
-    // water and steam
-    const dr = Math.max(1.6, cw * .0055);
-    for (const d of dots) {
-      const a = clamp((I * 1.4 - (1 - d.ny)) * 3, 0, 1); if (!a) continue;
-      if (d.th >= S.v) { c.fillStyle = `rgba(0,85,120,${.75 * a})`; c.beginPath(); c.arc(X(d.nx), Y(d.ny), dr, 0, 6.283); c.fill(); }
-      else {
-        const k = (t * .55 + d.ph) % 1, by = Y(d.ny) - k * ch / ROWS * 1.6, br = dr * (1.4 + k * 1.6);
-        c.strokeStyle = `rgba(${G},${(.8 - k * .55) * a})`; c.lineWidth = 1.2;
-        c.beginPath(); c.arc(X(d.nx) + Math.sin(t * 3 + d.ph * 9) * 1.5, by, br, 0, 6.283); c.stroke();
-      }
-    }
-    // control rods, hatched, with a hot jammed tip
-    if (S.rod > .001) RODS.forEach(r => {
-      const rx = X(r), rw = Math.max(5, cw * .036), rh = S.rod * ch;
-      c.fillStyle = 'rgba(16,16,12,.85)'; c.fillRect(rx - rw / 2, cy0, rw, rh);
-      c.save(); c.beginPath(); c.rect(rx - rw / 2, cy0, rw, rh); c.clip();
-      c.strokeStyle = `rgba(${L},.35)`; c.lineWidth = 1;
-      for (let k = -rw; k < rh; k += 5) { c.beginPath(); c.moveTo(rx - rw / 2, cy0 + k); c.lineTo(rx + rw / 2, cy0 + k + rw); c.stroke(); }
-      c.restore();
-      c.strokeStyle = `rgba(${G},.9)`; c.lineWidth = 1.2; c.strokeRect(rx - rw / 2, cy0 - 2, rw, rh + 2);
-      const jam = S.rod > .32;
-      c.fillStyle = jam ? `rgba(255,120,30,${.8 + .2 * Math.sin(t * 10 + r * 20)})` : `rgba(${L},.95)`;
-      c.shadowColor = 'rgba(255,120,30,1)'; c.shadowBlur = jam ? 6 : 0;
-      c.fillRect(rx - rw / 2 - 1, cy0 + rh - 3, rw + 2, 3); c.shadowBlur = 0;
-    });
-    // neutrons
-    for (const nn of neut) {
-      const px = X(nn.x), py = Y(nn.y);
-      c.drawImage(sprite, px - 6, py - 6, 12, 12);
-      c.strokeStyle = `rgba(${G},.75)`; c.lineWidth = 1.2;
-      c.beginPath(); c.moveTo(px, py); c.lineTo(px - nn.vx * cw * .025, py - nn.vy * ch * .025); c.stroke();
-    }
-    for (const f of flashes) { c.strokeStyle = `rgba(0,85,120,${f.a * .8})`; c.lineWidth = 1; c.beginPath(); c.arc(X(f.x), Y(f.y), 2 + (1 - f.a) * 6, 0, 6.283); c.stroke(); }
-    for (const s of sparks) { c.fillStyle = `rgba(210,70,0,${s.a})`; c.fillRect(X(s.x) - 1, Y(s.y) - 1, 2.4, 2.4); }
-    // heat ripple under the finger
-    if (S.hold && S.hx >= 0) {
-      for (let k = 0; k < 3; k++) {
-        const p = (t * 1.2 + k / 3) % 1;
-        c.strokeStyle = `rgba(${A},${(1 - p) * .8})`; c.lineWidth = 2;
-        c.beginPath(); c.arc(S.hx, S.hy, 6 + p * Math.min(cw, ch) * .22, 0, 6.283); c.stroke();
-      }
-      const rg = c.createRadialGradient(S.hx, S.hy, 0, S.hx, S.hy, fs * 3);
-      rg.addColorStop(0, 'rgba(230,90,0,.3)'); rg.addColorStop(1, 'rgba(230,90,0,0)');
-      c.fillStyle = rg; c.fillRect(S.hx - fs * 3, S.hy - fs * 3, fs * 6, fs * 6);
+    c.fillStyle = rgba(A, S.hv * .06 + glowP * .16); c.fillRect(cx0, cy0, cw, ch);
+
+    // water: one flat pool filling the core from below; its surface sinks as it boils to steam
+    const lvl = 1 - (1 - S.v) * clamp(I * 1.2, 0, 1);       // steam line, 0 = top, 1 = bottom
+    const surf = Y(lvl), churn = 1.2 + 2.6 * Math.max(S.hv, glowP);
+    const wave = px => surf + Math.sin(px * .045 + t * 2.4) * churn + Math.sin(px * .11 - t * 3.1) * churn * .45;
+    c.beginPath(); c.moveTo(cx0, cy0 + ch);
+    for (let px = cx0; px <= cx0 + cw + 6; px += 6) c.lineTo(px, wave(px));
+    c.lineTo(cx0 + cw, cy0 + ch); c.closePath();
+    c.fillStyle = rgba(mixc(WTR, graphite, .55), 1); c.fill();
+    c.beginPath();
+    for (let px = cx0; px <= cx0 + cw + 6; px += 6) px === cx0 ? c.moveTo(px, wave(px)) : c.lineTo(px, wave(px));
+    c.strokeStyle = rgba(WTR, 1); c.lineWidth = 2; c.stroke();
+
+    // steam: a few curls rising above the surface, between the fuel channels
+    const room = surf - cy0;
+    if (room > fs * 1.2) {
+      c.strokeStyle = rgba(K, .55); c.lineWidth = 1.6; c.lineCap = 'round';
+      [.17, .23, .37, .43, .57, .63, .77, .83].forEach((gx, k) => {
+        const len = Math.min(room * .8, ch * .22, fs * 3.2), k0 = (t * .35 + k * .37) % 1;
+        const base = surf - 4 - k0 * Math.max(0, room - len - 4);
+        c.globalAlpha = Math.sin(k0 * Math.PI) * .9 + .1;
+        c.beginPath();
+        for (let s = 0; s <= 1.0001; s += .1) {
+          const px = X(gx) + Math.sin(s * 5.5 + t * 2 + k) * fs * .3, py = base - s * len;
+          s === 0 ? c.moveTo(px, py) : c.lineTo(px, py);
+        }
+        c.stroke();
+      });
+      c.globalAlpha = 1;
     }
 
-    // ticker log (fades out once the big number lands, hidden on short stages)
-    const tickA = clamp(1 - S.wow * 1.5, 0, 1) * I;
-    if (!compact && tickA > .01) {
-      c.font = mono(600, .9); c.textAlign = 'left'; c.textBaseline = 'top';
-      const shown = logs.slice(-2), lh = fs * 1.35;
-      if (shown.length) {
-        const tw = Math.max(...shown.map(l => c.measureText(l.s).width));
-        c.globalAlpha = tickA;
-        c.fillStyle = 'rgba(16,16,12,.88)'; c.fillRect(cx0 + 6, cy0 + 6, tw + 12, lh * shown.length + 6);
-        c.save(); c.beginPath(); c.rect(cx0 + 6, cy0 + 6, tw + 12, lh * shown.length + 6); c.clip();
-        shown.forEach((l, i) => { c.fillStyle = `rgba(${L},${l.a * (i === shown.length - 1 ? 1 : .6)})`; c.fillText(l.s, cx0 + 12, cy0 + 9 + i * lh + S.logY * lh); });
-        c.restore(); c.globalAlpha = 1;
+    // fuel channels with pellets
+    FUEL.forEach(f => {
+      const fx = X(f), fw = Math.max(4, cw * .022), top = Y(1 - I);
+      c.fillStyle = rgba(tint(.28), I); c.fillRect(fx - fw, top, fw * 2, ch * I);
+      if (glowP > .01) { c.fillStyle = rgba(A, (hot ? .75 : .35) * glowP * I); c.fillRect(fx - fw, top, fw * 2, ch * I); }
+      c.fillStyle = rgba(K, .55 * I);
+      for (let py = top + 6; py < cy0 + ch; py += Math.max(8, fs * .8)) c.fillRect(fx - fw * .6, py, fw * 1.2, 1.5);
+    });
+    // control rods: plain ink bars, the jammed tip turns hot
+    if (S.rod > .001) RODS.forEach(r => {
+      const rx = X(r), rw = Math.max(5, cw * .036), rh = S.rod * ch;
+      c.fillStyle = rgba(K, .92); c.fillRect(rx - rw / 2, cy0, rw, rh);
+      const jam = S.rod > .32;
+      c.fillStyle = jam ? rgba(A, .75 + .25 * Math.sin(t * 10 + r * 20)) : rgba(tint(.5), 1);
+      c.fillRect(rx - rw / 2, cy0 + rh - 4, rw, 4);
+    });
+    // neutrons: short ink tracks along their flight, more of them as power climbs
+    const vis = Math.round(10 + 80 * clamp((neut.length - 40) / (MAXN - 40), 0, 1));
+    const stp = Math.max(1, neut.length / vis), tl = .09;
+    c.strokeStyle = rgba(K, .85); c.lineWidth = 1.6; c.lineCap = 'round';
+    c.beginPath();
+    for (let i = 0; i < neut.length; i += stp) {
+      const nn = neut[i | 0], px = X(nn.x), py = Y(nn.y);
+      c.moveTo(px, py); c.lineTo(px - nn.vx * cw * tl, py - nn.vy * ch * tl);
+    }
+    c.stroke();
+    // heat spreading from the finger
+    if (S.hold && S.hx >= 0) {
+      for (let k = 0; k < 2; k++) {
+        const p = (t * 1.2 + k / 2) % 1;
+        c.strokeStyle = rgba(A, (1 - p) * .8); c.lineWidth = 2;
+        c.beginPath(); c.arc(S.hx, S.hy, 6 + p * Math.min(cw, ch) * .22, 0, 6.283); c.stroke();
       }
+      c.fillStyle = rgba(A, .85); c.beginPath(); c.arc(S.hx, S.hy, 5, 0, 6.283); c.fill();
+    }
+
+    // what is happening, as a single printed caption (fades once the big number lands; hidden on short stages)
+    const tickA = clamp(1 - S.wow * 1.5, 0, 1) * I;
+    if (!compact && tickA > .01 && logs.length) {
+      const l = logs[logs.length - 1];
+      c.font = body(600, .95); c.globalAlpha = tickA * l.a;
+      label(c, l.s, cx0 + 10, cy0 + fs * .95 + S.logY * fs, rgba(K, 1), 'left', graphite);
+      c.globalAlpha = 1;
     }
     // rods label, just under the jammed tips, between the middle rods
     const rodLbl = rodsFired && S.rod > .3 && ch > fs * 8;
     const rodY = Y(1 / 3) + fs * 1.05;
-    if (rodLbl) { c.font = mono(700, .95); tag(c, 'RODS JAMMED AT 1/3', X(.5), rodY, 'rgba(255,200,110,1)', 'center'); }
+    if (rodLbl) { c.font = body(700, .95); label(c, 'Rods jammed at 1/3', X(.5), rodY, rgba(A, 1), 'center', graphite); }
     // hint
     if (!S.touched && S.phase === 'idle' && I > .9) {
       const k = (t * .8) % 1, hx2 = X(.5), hy2 = Y(.5);
-      c.strokeStyle = `rgba(${G},${1 - k})`; c.lineWidth = 2; c.beginPath(); c.arc(hx2, hy2, 8 + k * 26, 0, 6.283); c.stroke();
-      c.strokeStyle = `rgba(${G},.6)`; c.lineWidth = 1.5; c.beginPath(); c.arc(hx2, hy2, 22, 0, 6.283); c.stroke();
-      c.fillStyle = `rgba(${G},1)`; c.beginPath(); c.arc(hx2, hy2, 6, 0, 6.283); c.fill();
-      c.font = mono(700, 1);
+      c.strokeStyle = rgba(K, 1 - k); c.lineWidth = 2; c.beginPath(); c.arc(hx2, hy2, 8 + k * 26, 0, 6.283); c.stroke();
+      c.fillStyle = rgba(K, 1); c.beginPath(); c.arc(hx2, hy2, 6, 0, 6.283); c.fill();
+      c.font = body(700, 1);
       const ly = Math.min(hy2 + 36 + fs * .7, cy0 + ch - fs);
-      tag(c, 'HOLD TO HEAT', hx2, ly, `rgba(${L},1)`, 'center');
+      label(c, 'Hold to heat', hx2, ly, rgba(K, 1), 'center', mixc(WTR, graphite, .55));
     }
-    // the wow, fitted into the space under the rods
+    // the big number, fitted into the space under the rods
     if (S.wow > .01) {
       let top = rodLbl ? rodY + fs * .9 : Y(1 / 3) + 4, bot = cy0 + ch - 4;
       if (bot - top < fs * 1.6) { top = cy0 + 4; }
       const rh = bot - top, cyW = top + rh / 2;
       const num = S.wow < .9 ? String(10 + ((Math.random() * 89) | 0)) : '30';
-      const big = `${num} GW`, sub = '10 × NOMINAL';
+      const big = `${num} GW`, sub = '10 × nominal';
       c.save(); c.translate(X(.5), cyW); c.scale(S.ws, S.ws); c.globalAlpha = clamp(S.wow, 0, 1);
       c.textBaseline = 'middle'; c.textAlign = 'left';
       const subF = Math.max(12, fs * (tiny ? .9 : 1.05));
       if (rh > fs * 4.6) {                                        // stacked
         const bigF = Math.max(16, Math.min(fs * 3.3, rh * .42, cw * .11));
-        c.font = `800 ${bigF}px ${MONO}`; const bw = c.measureText(big).width;
-        c.font = `700 ${subF}px ${MONO}`; const sw2 = c.measureText(sub).width;
+        c.font = `800 ${bigF}px ${DISPLAY}`; const bw = c.measureText(big).width;
+        c.font = `600 ${subF}px ${BODY}`; const sw2 = c.measureText(sub).width;
         const bh = bigF * 1.1 + subF * 1.5 + 14, bwid = Math.max(bw, sw2) + 28;
-        c.fillStyle = 'rgba(16,16,12,.92)'; rr(c, -bwid / 2, -bh / 2, bwid, bh, 6); c.fill();
-        c.strokeStyle = 'rgba(255,190,90,.5)'; c.lineWidth = 1; c.stroke();
+        c.fillStyle = rgba(C, 1); rr(c, -bwid / 2, -bh / 2, bwid, bh, 6); c.fill();
+        c.strokeStyle = rgba(K, 1); c.lineWidth = 2; c.stroke();
         c.textAlign = 'center';
-        c.font = `800 ${bigF}px ${MONO}`; c.shadowColor = 'rgba(255,190,90,1)'; c.shadowBlur = 18; c.fillStyle = '#ffe2a8';
+        c.font = `800 ${bigF}px ${DISPLAY}`; c.fillStyle = rgba(K, 1);
         c.fillText(big, 0, -bh / 2 + 7 + bigF * .58);
-        c.shadowBlur = 0; c.font = `700 ${subF}px ${MONO}`; c.fillStyle = `rgba(${L},1)`;
+        c.font = `600 ${subF}px ${BODY}`; c.fillStyle = rgba(A, 1);
         c.fillText(sub, 0, bh / 2 - 7 - subF * .7);
       } else {                                                    // one line
         const bigF = Math.max(14, Math.min(fs * 2.4, rh * .75));
-        c.font = `800 ${bigF}px ${MONO}`; const bw = c.measureText(big).width;
-        c.font = `700 ${subF}px ${MONO}`; const sw2 = c.measureText(sub).width;
+        c.font = `800 ${bigF}px ${DISPLAY}`; const bw = c.measureText(big).width;
+        c.font = `600 ${subF}px ${BODY}`; const sw2 = c.measureText(sub).width;
         const gap = fs * .8, tot = bw + gap + sw2, bh = Math.max(bigF, subF) * 1.25;
-        c.fillStyle = 'rgba(16,16,12,.92)'; rr(c, -tot / 2 - 10, -bh / 2, tot + 20, bh, 5); c.fill();
-        c.strokeStyle = 'rgba(255,190,90,.5)'; c.lineWidth = 1; c.stroke();
-        c.font = `800 ${bigF}px ${MONO}`; c.shadowColor = 'rgba(255,190,90,1)'; c.shadowBlur = 14; c.fillStyle = '#ffe2a8';
+        c.fillStyle = rgba(C, 1); rr(c, -tot / 2 - 10, -bh / 2, tot + 20, bh, 5); c.fill();
+        c.strokeStyle = rgba(K, 1); c.lineWidth = 2; c.stroke();
+        c.font = `800 ${bigF}px ${DISPLAY}`; c.fillStyle = rgba(K, 1);
         c.fillText(big, -tot / 2, 1);
-        c.shadowBlur = 0; c.font = `700 ${subF}px ${MONO}`; c.fillStyle = `rgba(${L},1)`;
+        c.font = `600 ${subF}px ${BODY}`; c.fillStyle = rgba(A, 1);
         c.fillText(sub, -tot / 2 + bw + gap, 1);
       }
       c.restore();
     }
     c.restore();
+    // outline of the core block
+    c.strokeStyle = rgba(K, .9 * I); c.lineWidth = 1.5; rr(c, cx0, cy0, cw, ch, 10); c.stroke();
 
-    // soft scan band, flash
-    const sy = (t * 60) % (H + 80) - 40, sg = c.createLinearGradient(0, sy - 40, 0, sy + 40);
-    sg.addColorStop(0, `rgba(${G},0)`); sg.addColorStop(.5, `rgba(${G},.04)`); sg.addColorStop(1, `rgba(${G},0)`);
-    c.fillStyle = sg; c.fillRect(0, sy - 40, W, 80);
-    if (S.fl > .01) { c.fillStyle = `rgba(230,255,235,${S.fl * .9})`; c.fillRect(0, 0, W, H); }
+    // the flash of the surge
+    if (S.fl > .01) { c.fillStyle = `rgba(255,255,255,${S.fl * .85})`; c.fillRect(0, 0, W, H); }
   }
 
   let last = 0;
@@ -355,7 +350,7 @@
   }
   cv.addEventListener('pointerdown', e => {
     if (S.phase !== 'idle') return;
-    if (!S.touched) addLog('> HEATING · WATER → STEAM');
+    if (!S.touched) addLog('Heating: water to steam');
     S.hold = true; S.touched = true; aim(e); Kit.haptic('light');
     try { cv.setPointerCapture(e.pointerId); } catch (_) {}
   });
@@ -363,16 +358,22 @@
   const up = () => { S.hold = false; };
   cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
 
+  // resolve a CSS colour (variables, color-mix...) to [r,g,b]
+  function probe(v) {
+    const old = cv.style.color; cv.style.color = v;
+    const s = getComputedStyle(cv).color; cv.style.color = old;
+    const m = s && s.match(/-?[\d.]+/g); if (!m || m.length < 3) return null;
+    const f = /^color\(/.test(s) ? 255 : 1;
+    return m.slice(0, 3).map(n => Math.round(Number(n) * f));
+  }
+
   Kit.onShow.card = () => {
     const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
     fs = Math.max(12, Math.min(15, W / 26));
-    MONO = getComputedStyle(cv).getPropertyValue('--mono').trim() || 'monospace';
-    if (!sprite) {
-      sprite = document.createElement('canvas'); sprite.width = sprite.height = 24;
-      const s = sprite.getContext('2d'), g = s.createRadialGradient(12, 12, 0, 12, 12, 12);
-      g.addColorStop(0, `rgba(${G},.85)`); g.addColorStop(.3, `rgba(${G},.3)`); g.addColorStop(1, `rgba(${G},0)`);
-      s.fillStyle = g; s.fillRect(0, 0, 24, 24);
-    }
+    const cs = getComputedStyle(cv);
+    BODY = cs.getPropertyValue('--body').trim() || 'Figtree, sans-serif';
+    DISPLAY = cs.getPropertyValue('--display').trim() || BODY;
+    K = probe('var(--k)') || K; C = probe('var(--c)') || C;
     if (!loopOn) { loopOn = true; requestAnimationFrame(loop); } else draw(performance.now() / 1000);
   };
   Kit.onEnter.card = () => {

@@ -29,6 +29,8 @@
 <script>
 const REC = -63, TMAX = 20, TMIN = -80;
 const INK = '#10100c';
+const SNOW = '#f7f8f2';
+const TINT = n => `fill:color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 const st = {g: -20, cur: -20, picked: false, revealed: false};
 const fmt = n => (n < 0 ? '−' : '') + Math.abs(Math.round(n));
 let G = null; // geometry and live elements
@@ -58,64 +60,87 @@ function draw(){
   const {W, H, f: f0} = Kit.fitSvg(svg);
   const f = Math.max(13, f0);
   const mk = (t, a, p = svg) => Kit.mk(t, a, p);
-  // stars
-  for (let i = 0; i < 30; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * H * .5, r: .6 + Kit.rnd() * 1.1, fill: '#fff', opacity: .45 + Kit.rnd() * .5});
-  // skyline
-  const base = H * .8;
-  let x = -4;
-  while (x < W){
-    const bw = W * (.06 + Kit.rnd() * .08), bh = H * (.08 + Kit.rnd() * .16);
-    mk('rect', {x, y: base - bh, width: bw, height: H - base + bh, fill: '#0a8f3c'});
-    mk('rect', {x: x - 1, y: base - bh - 3, width: bw + 2, height: 4, rx: 2, fill: '#eef6ff'});
-    for (let wy = base - bh + 8; wy < H - 6; wy += 10) for (let wx = x + 4; wx < x + bw - 5; wx += 8)
-      if (Kit.rnd() < .3) mk('rect', {x: wx, y: wy, width: 3, height: 4, fill: '#fff3c4', opacity: .9});
-    x += bw + 2;
+
+  // Yakutsk blocks: raised on piles above the frozen ground
+  const base = H * .8, ground = H * .93, raise = H * .88;
+  // power-station stack, its steam rising straight up in still frozen air
+  const sx = W * .1, sw = Math.max(8, W * .03), stTop = H * .44;
+  mk('path', {d: `M${sx - sw * .6},${raise} L${sx - sw / 2},${stTop} h${sw} L${sx + sw * .6},${raise} z`, style: TINT(30)});
+  const steam = 'fill:color-mix(in srgb, #fff 65%, var(--c))';
+  const ph = H * .2;
+  mk('path', {d: `M${sx - sw / 2},${stTop} C${sx - sw * 1.4},${stTop - ph * .3} ${sx - sw * 2},${stTop - ph * .6} ${sx - sw * 1.3},${stTop - ph} Q${sx},${stTop - ph * 1.12} ${sx + sw * 1.3},${stTop - ph} C${sx + sw * 2},${stTop - ph * .6} ${sx + sw * 1.4},${stTop - ph * .3} ${sx + sw / 2},${stTop} z`, style: steam});
+
+  // a row of blocks that fits exactly inside the picture
+  let x = 0;
+  const minW = W * .08;
+  while (x < W - 1){
+    let bw = W * (.09 + Kit.rnd() * .07);
+    if (W - (x + bw + 3) < minW) bw = W - x;
+    const bh = H * (.1 + Kit.rnd() * .14);
+    const yt = base - bh;
+    // piles
+    for (let px = x + 4; px < x + bw - 4; px += Math.max(9, bw / 5))
+      mk('rect', {x: px, y: raise, width: 2.5, height: ground - raise, style: TINT(45)});
+    mk('rect', {x, y: yt, width: bw, height: raise - yt, style: TINT(22)});
+    // snow on the flat roof, a little uneven
+    mk('path', {d: `M${x},${yt + 1} q${bw * .25},-5 ${bw * .5},-3 t${bw * .5},0 v4 h${-bw} z`, fill: SNOW});
+    // windows in rows; the lit ones are homes awake through the night
+    const rowH = Math.max(13, H * .05), cols = Math.max(2, Math.min(4, Math.round(bw / 16)));
+    const colW = bw / cols, ww = Math.max(4, colW * .38), wh = Math.max(5, rowH * .42);
+    for (let wy = yt + rowH * .6; wy < raise - rowH * .6; wy += rowH)
+      for (let c = 0; c < cols; c++)
+        mk('rect', {x: x + colW * c + (colW - ww) / 2, y: wy, width: ww, height: wh, style: Kit.rnd() < .25 ? 'fill:#ffd45c' : TINT(36)});
+    x += bw + 3;
   }
-  mk('rect', {x: 0, y: H * .93, width: W, height: H * .07, fill: '#eef6ff'});
-  // frost tint (no panel behind the drawing: kept as an invisible element)
-  const frost = mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'none', opacity: st.revealed ? .35 : 0, 'pointer-events': 'none'});
+  // frozen ground
+  mk('path', {d: `M0,${ground + 2} q${W * .25},-4 ${W * .5},-1 t${W * .5},0 V${H} H0 z`, fill: SNOW});
+
+  // a car left running all night, its exhaust hanging in the air
+  const cw = Math.min(W * .13, H * .2), chh = cw * .32, carX = W * .7, wr = cw * .1;
+  const cy0 = ground - wr * 1.2;
+  mk('path', {d: `M${carX},${cy0} v${-chh * .55} q0,-3 3,-3 h${cw * .12} l${cw * .14},${-chh * .45} h${cw * .42} l${cw * .14},${chh * .45} h${cw * .12} q3,0 3,3 v${chh * .55} z`, fill: INK});
+  mk('rect', {x: carX + cw * .3, y: cy0 - chh * .92, width: cw * .16, height: chh * .3, rx: 1, style: TINT(15)});
+  mk('rect', {x: carX + cw * .5, y: cy0 - chh * .92, width: cw * .16, height: chh * .3, rx: 1, style: TINT(15)});
+  mk('rect', {x: carX + 1, y: cy0 - chh * .5, width: cw * .06, height: chh * .16, fill: '#ffd45c'});
+  [carX + cw * .22, carX + cw * .78].forEach(wx => mk('circle', {cx: wx, cy: cy0, r: wr, fill: INK}));
+  const ex = carX + cw + 3, ey = cy0 - chh * .15;
+  mk('path', {d: `M${ex},${ey} C${ex + cw * .15},${ey - cw * .02} ${ex + cw * .3},${ey - cw * .1} ${ex + cw * .36},${ey - cw * .3} C${ex + cw * .48},${ey - cw * .22} ${ex + cw * .44},${ey + cw * .04} ${ex + cw * .2},${ey + cw * .08} Q${ex + cw * .06},${ey + cw * .08} ${ex},${ey} z`, style: steam});
+
+  // ice fog that settles over the town in the deepest cold
+  const frost = mk('rect', {x: 0, y: H * .55, width: W, height: H * .45, fill: '#fff', opacity: st.revealed ? .35 : 0, 'pointer-events': 'none'});
+
   // thermometer
   const cx = W * .38, br = Math.min(W * .07, H * .055), tw = br * 1.05;
   const by = H * .86 - br, top = H * .07, bot = by - br * 1.1;
   const y = T => top + (TMAX - T) / (TMAX - TMIN) * (bot - top);
-  mk('rect', {x: cx - tw / 2 - 3, y: top - tw / 2 - 3, width: tw + 6, height: by - top + tw / 2, rx: tw / 2 + 3, fill: INK, opacity: .35});
-  mk('rect', {x: cx - tw / 2, y: top - tw / 2, width: tw, height: by - top + tw / 2, rx: tw / 2, fill: '#f4f8ff'});
-  mk('circle', {cx, cy: by, r: br + 3, fill: INK, opacity: .35});
-  mk('circle', {cx, cy: by, r: br, fill: '#f4f8ff'});
+  mk('rect', {x: cx - tw / 2, y: top - tw / 2, width: tw, height: by - top + tw / 2, rx: tw / 2, fill: INK, stroke: INK, 'stroke-width': 6});
+  mk('circle', {cx, cy: by, r: br, fill: INK, stroke: INK, 'stroke-width': 6});
+  mk('rect', {x: cx - tw / 2, y: top - tw / 2, width: tw, height: by - top + tw / 2, rx: tw / 2, fill: SNOW});
+  mk('circle', {cx, cy: by, r: br, fill: SNOW});
   // ticks
   const pitch = (bot - top) / 10;
   const step = pitch >= f * 1.35 * 1.05 ? 10 : 20;
   for (let T = TMAX; T >= TMIN; T -= 10){
     const yy = y(T);
-    mk('line', {x1: cx - tw / 2 + 2, x2: cx - tw / 2 + tw * .3, y1: yy, y2: yy, stroke: '#5b6b8c', 'stroke-width': 1.5});
+    mk('line', {x1: cx - tw / 2 + 2, x2: cx - tw / 2 + tw * .3, y1: yy, y2: yy, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'});
     if (T % step === 0){
-      const t = mk('text', {x: cx - tw / 2 - 8, y: yy, 'text-anchor': 'end', 'dominant-baseline': 'central', fill: INK, 'font-size': f, style: 'font-family:var(--mono);font-weight:600'});
+      const t = mk('text', {x: cx - tw / 2 - 8, y: yy, 'text-anchor': 'end', 'dominant-baseline': 'central', fill: INK, 'font-size': f, style: 'font-family:var(--body);font-weight:600'});
       t.textContent = fmt(T) + '°';
     }
   }
   const mw = tw * .5;
-  mk('circle', {cx, cy: by, r: br * .78, fill: '#e2402f'});
+  mk('circle', {cx, cy: by, r: br * .72, fill: '#e2402f'});
   const merc = mk('rect', {x: cx - mw / 2, width: mw, rx: mw / 2, fill: '#e2402f'});
   // guess marker (shown after reveal)
-  const gline = mk('line', {x1: cx - tw * .9, x2: cx + tw * 1.2, stroke: '#8a1d10', 'stroke-width': 2.5, 'stroke-dasharray': '5 4', opacity: 0});
+  const gline = mk('line', {x1: cx - tw * .9, x2: cx + tw * 1.2, stroke: '#8a1d10', 'stroke-width': 2.5, 'stroke-dasharray': '5 4', 'stroke-linecap': 'round', opacity: 0});
   const glab = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: '#8a1d10', 'font-size': f, opacity: 0, style: 'font-family:var(--body);font-weight:700'});
-  // readout
+  // the reading
   const big = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: INK, 'font-size': f * 2.1, style: 'font-family:var(--display);font-weight:800'});
   const small = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: INK, 'font-size': f, style: 'font-family:var(--body);font-weight:600'});
   const arrow = mk('path', {fill: INK});
-  // snow
-  const sg = mk('g', {'pointer-events': 'none'});
   const flakes = [];
-  for (let i = 0; i < 36; i++){
-    const c = mk('circle', {class: 'flake', cx: Kit.rnd() * W, cy: Kit.rnd() * H, r: 1 + Kit.rnd() * 2.2, fill: '#fff', opacity: .55 + Kit.rnd() * .4}, sg);
-    flakes.push(c);
-  }
   G = {W, H, f, cx, tw, by, top, bot, y, merc, mw, gline, glab, big, small, arrow, frost, flakes};
   update();
-  if (!Kit.calm) flakes.forEach(c => {
-    const d = 4 + Kit.rnd() * 5;
-    gsap.fromTo(c, {attr: {cy: -10}}, {attr: {cy: H + 10, cx: '+=' + (Kit.rnd() * 30 - 15)}, duration: d, ease: 'none', repeat: -1, delay: -Kit.rnd() * d});
-  });
 }
 
 function update(){

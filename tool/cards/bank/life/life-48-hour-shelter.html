@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: life-48-hour-shelter -->
-<!-- Look: a cathedral rose window on a night-indigo card, leaded glass and gold rims studded at every hour; its 48 outer tiles are the hours, its warm petals the fallout outside, an arched glass door in the centre.
-     Interaction: drag the gold bead round the clock and each hour's tile lights up; tap the door to try leaving and the window flares red, because outside it is still the peak.
-     Wow: at hour 48 a gold ring bursts out, the whole window sweeps from ember red to cool blue, the falling dust thins and the door swings open onto slowly turning rays of light. -->
+<!-- Look: a printed-book diagram on a night-indigo card. A flat 48-hour clock face in solid ink; its 48 outer cells are the hours. Inside it, the shelter: a plain dark room with a door, ringed by a flat ember band, which is the fallout outside.
+     Interaction: drag the gold bead round the clock and each hour's cell fills in; tap the door to try leaving and the clock flashes red, because outside it is still the peak.
+     Wow: at hour 48 a gold ring bursts out, the cells and the band turn from ember to a cool green, and the door swings open, letting a flat patch of daylight onto the floor. -->
 <title>The 48-hour window</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -21,7 +21,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">48 HOURS</span></div>
     <h2 class="q">After a nuclear blast, why wait 48 hours before leaving shelter?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A stained-glass rose window shaped like a 48-hour clock, with a glass door at its centre."></svg>
+      <svg id="pic" role="img" aria-label="A 48-hour clock face with a shelter door at its centre and a band of fallout around it."></svg>
     </div>
     <p class="say" id="say">You are sheltered. <b>Drag the gold bead round the clock</b> to let the hours pass. Tap the door to try leaving.</p>
     <p class="body gone" id="why">For the first <b>48 hours</b> the fallout outside is at its most intense. Staying in through that window spares you the most lethal dose. Even after, wait for the authorities' all-clear if you can.</p>
@@ -33,7 +33,7 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say');
-  const LEAD = '#0b0814', GOLD = '#e9c46c', INK = '#f6eedd';
+  const CARD = '#15102a', GOLD = '#e9c46c', INK = '#f6eedd';
   const D = x => Kit.calm ? 0 : x;
   const wait = ms => new Promise(r => setTimeout(r, ms));
 
@@ -43,17 +43,20 @@
     const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
     return '#' + [f(0), f(8), f(4)].map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join('');
   }
+  // A tint of the ink into the card colour, as a plain hex so it can be tweened.
+  const tint = t => '#' + [[0xf6, 0x15], [0xee, 0x10], [0xdd, 0x2a]].map(([k, c]) => Math.round(k * t + c * (1 - t)).toString(16).padStart(2, '0')).join('');
+  const ROOM = tint(.08), TRACK = tint(.26), LEAF = tint(.34);
 
-  // The glass: 48 hours, two rows of tiles each, with their own unlit, ember and cool colour.
+  // The clock face: 48 hours, two rows of cells each, with their own unlit, ember and cool colour.
   const TILES = [];
   for (let i = 0; i < 48; i++) for (let j = 0; j < 2; j++) TILES.push({
     i, j, lit: false,
-    dim: hex(220 + Kit.rnd() * 80, 32, 17 + Kit.rnd() * 10),
-    warm: hex(358 + Kit.rnd() * 40, 90, 47 + Kit.rnd() * 13),
-    cool: hex(172 + Kit.rnd() * 50, 64, 48 + Kit.rnd() * 14)
+    dim: tint(.12 + Kit.rnd() * .05),
+    warm: hex(10 + Kit.rnd() * 14, 72, 52 + Kit.rnd() * 7),
+    cool: hex(160 + Kit.rnd() * 16, 34, 62 + Kit.rnd() * 7)
   });
-  const PW = ['#e8322a', '#ff7a1a'], PC = ['#2fb3c9', '#6fdcae'], DW = '#ffc23d', DC = '#c4ecff';
-  const DUST = Array.from({length: 46}, () => ({x: Kit.rnd(), y: Kit.rnd(), s: .5 + Kit.rnd(), r: .6 + Kit.rnd() * 1.4, p: Kit.rnd() * 6}));
+  const PW = ['#d9542f', '#e2683a'], PC = ['#7fb7a8', '#8fc3b4'];
+  const LIGHT = '#f3dfa0', RED = '#d9412b';
 
   let W = 0, H = 0, fs = 13, cx = 0, cy = 0, R = 100, Rg = 107, rt = 75, dcy = 0;
   let hours = 0, done = false, touched = false, dragging = false, prevA = 0, lastSix = 0;
@@ -66,19 +69,14 @@
     const [x0, y0] = P(a0, r1), [x1, y1] = P(a1, r1), [x2, y2] = P(a1, r0), [x3, y3] = P(a0, r0);
     return `M${x0},${y0}A${r1},${r1} 0 0 1 ${x1},${y1}L${x2},${y2}A${r0},${r0} 0 0 0 ${x3},${y3}Z`;
   }
-  const T = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--mono);font-weight:700'}, a), p); e.textContent = t; return e; };
-  const grad = (defs, id, type, attrs, stops) => {
-    const g = Kit.mk(type, Object.assign({id}, attrs), defs);
-    stops.forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g));
-    return g;
-  };
+  const T = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--body);font-weight:600'}, a), p); e.textContent = t; return e; };
 
   function layout() {
     gsap.killTweensOf(svg.querySelectorAll('*'));
     svg.innerHTML = '';
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     fs = Math.max(12, Math.min(15, f.f || 13));
-    // Rg = outer gold rim. Room for side labels, top label, and the two readout lines below "24 h".
+    // Rg = outer edge of the face. Room for side labels, top label, and the two lines below "24 h".
     Rg = Math.max(44, Math.min(W / 2 - fs * 3.4, (H - fs * 7) / 2));
     R = Rg / 1.075;
     cx = W / 2;
@@ -86,119 +84,79 @@
     rt = R * .745;
 
     const defs = Kit.mk('defs', {}, svg);
-    grad(defs, 'hw', 'radialGradient', {}, [[0, '#ff6a2a', .55], [.55, '#ff3a1e', .22], [1, '#ff3a1e', 0]]);
-    grad(defs, 'hc', 'radialGradient', {}, [[0, '#7fe6ff', .5], [.55, '#3fb8d8', .2], [1, '#3fb8d8', 0]]);
-    grad(defs, 'sheen', 'radialGradient', {cx: .32, cy: .26, r: .8}, [[0, '#ffffff', .32], [.45, '#ffffff', .06], [1, '#000000', .28]]);
-    grad(defs, 'dl', 'radialGradient', {cx: .5, cy: .7, r: .8}, [[0, '#fffdf0'], [.6, '#ffe7a6'], [1, '#f4b94e']]);
-    grad(defs, 'spill', 'radialGradient', {}, [[0, '#fff3c4', .9], [.5, '#ffd77a', .35], [1, '#ffd77a', 0]]);
-    grad(defs, 'ray', 'radialGradient', {}, [[0, '#fff1bf', .55], [1, '#fff1bf', 0]]);
-    grad(defs, 'red', 'radialGradient', {}, [[0, '#ff2a1a', .75], [.7, '#ff2a1a', .25], [1, '#ff2a1a', 0]]);
-    grad(defs, 'med', 'radialGradient', {cx: .5, cy: .45, r: .6}, [[0, '#2a2048'], [1, '#140e26']]);
-    const fg = Kit.mk('filter', {id: 'grain', x: 0, y: 0, width: 1, height: 1}, defs);
-    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .85, numOctaves: 2, seed: 4}, fg);
-    Kit.mk('feColorMatrix', {type: 'matrix', values: '0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.1 -.5'}, fg);
-    Kit.mk('feComposite', {in2: 'SourceGraphic', operator: 'in'}, fg);
 
-    // Fallout dust, drifting down past the window.
-    S.dust = Kit.mk('g', {opacity: .7}, svg);
-    DUST.forEach(d => d.el = Kit.mk('circle', {r: d.r * fs * .14, fill: '#e6dcae'}, S.dust));
+    // The face: a solid disc with an ink rim.
+    Kit.mk('circle', {cx, cy, r: R * 1.04, fill: CARD, stroke: INK, 'stroke-width': fs * .13}, svg);
 
-    // Halo of light the glass throws on the night.
-    S.hw = Kit.mk('circle', {cx, cy, r: R * 1.34, fill: 'url(#hw)'}, svg);
-    S.hc = Kit.mk('circle', {cx, cy, r: R * 1.34, fill: 'url(#hc)', opacity: 0}, svg);
-
-    // The lead and gold of the window.
-    Kit.mk('circle', {cx, cy, r: R * 1.04, fill: 'none', stroke: GOLD, 'stroke-width': fs * .22, opacity: .9}, svg);
-    Kit.mk('circle', {cx, cy, r: Rg, fill: 'none', stroke: GOLD, 'stroke-width': fs * .07, opacity: .5}, svg);
-    Kit.mk('circle', {cx, cy, r: R * 1.02, fill: LEAD}, svg);
-
-    // The 48 hour tiles.
+    // The 48 hour cells.
     S.win = Kit.mk('g', {}, svg);
     const lw = Math.max(1.3, R * .013);
     TILES.forEach(t => {
       const a0 = angOf(t.i), a1 = angOf(t.i + 1);
       const r0 = t.j ? R * .9 : R * .8, r1 = t.j ? R : R * .9;
-      t.el = Kit.mk('path', {d: sector(a0, a1, r0, r1), fill: t.lit ? (done ? t.cool : t.warm) : t.dim, stroke: LEAD, 'stroke-width': lw, 'stroke-linejoin': 'round'}, S.win);
+      t.el = Kit.mk('path', {d: sector(a0, a1, r0, r1), fill: t.lit ? (done ? t.cool : t.warm) : t.dim, stroke: CARD, 'stroke-width': lw, 'stroke-linejoin': 'round'}, S.win);
     });
-    [0, 12, 24, 36].forEach(h => { const a = angOf(h), [x0, y0] = P(a, R * .8), [x1, y1] = P(a, R * 1.02); Kit.mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, stroke: GOLD, 'stroke-width': fs * .16, 'stroke-linecap': 'round'}, S.win); });
+    [0, 12, 24, 36].forEach(h => { const a = angOf(h), [x0, y0] = P(a, R * .8), [x1, y1] = P(a, R * 1.04); Kit.mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, stroke: INK, 'stroke-width': fs * .14, 'stroke-linecap': 'round'}, S.win); });
 
-    // Gold studs on the rim, one per hour; every sixth a larger rivet.
+    // Empty slots on the rim, one per hour, kept so the script can count them; nothing is drawn.
     S.studs = [];
     for (let h = 0; h < 48; h++) {
-      const [x, y] = P(angOf(h), R * 1.04), big = h % 6 === 0;
-      S.studs.push(Kit.mk('circle', {cx: x, cy: y, r: fs * (big ? .2 : .11), fill: big ? '#fff1c2' : GOLD, stroke: LEAD, 'stroke-width': big ? 1 : .6}, svg));
+      const [x, y] = P(angOf(h), R * 1.04);
+      S.studs.push(Kit.mk('circle', {cx: x, cy: y, r: 0, fill: INK}, svg));
     }
 
     // The track for the bead.
-    Kit.mk('circle', {cx, cy, r: rt, fill: 'none', stroke: GOLD, 'stroke-width': fs * .12, 'stroke-dasharray': `${fs * .1} ${fs * .45}`, 'stroke-linecap': 'round', opacity: .55}, svg);
+    Kit.mk('circle', {cx, cy, r: rt, fill: 'none', stroke: TRACK, 'stroke-width': fs * .1}, svg);
     S.arc = Kit.mk('path', {fill: 'none', stroke: GOLD, 'stroke-width': fs * .3, 'stroke-linecap': 'round'}, svg);
-    [0, 12, 24, 36].forEach(h => { const [x, y] = P(angOf(h), rt); Kit.mk('rect', {x: x - fs * .2, y: y - fs * .2, width: fs * .4, height: fs * .4, fill: GOLD, transform: `rotate(45 ${x} ${y})`}, svg); });
 
-    // The petals: the fallout outside, flickering while it is at its peak.
-    Kit.mk('circle', {cx, cy, r: R * .69, fill: 'none', stroke: GOLD, 'stroke-width': fs * .1, opacity: .7}, svg);
+    // The band: the fallout outside the shelter, flickering while it is at its peak.
     S.pet = Kit.mk('g', {}, svg); S.petals = []; S.dia = [];
-    const N = 16, r0 = R * .42, r1 = R * .675, rm = (r0 + r1) / 2, w = Math.PI / N * .78;
+    const N = 16, r0 = R * .42, r1 = R * .675, w = Math.PI / N * .93;
     for (let k = 0; k < N; k++) {
       const a = k / N * Math.PI * 2 - Math.PI / 2;
-      const [ax, ay] = P(a, r0), [bx, by] = P(a, r1), [lx, ly] = P(a - w, rm * 1.05), [rx, ry] = P(a + w, rm * 1.05);
-      S.petals.push(Kit.mk('path', {d: `M${ax},${ay}Q${lx},${ly} ${bx},${by}Q${rx},${ry} ${ax},${ay}Z`, fill: done ? PC[k % 2] : PW[k % 2], stroke: LEAD, 'stroke-width': lw}, S.pet));
-      // a thin gold vein down each petal
-      const [vx, vy] = P(a, r0 + (r1 - r0) * .2), [ux, uy] = P(a, r1 - (r1 - r0) * .18);
-      Kit.mk('line', {x1: vx, y1: vy, x2: ux, y2: uy, stroke: '#ffe2a0', 'stroke-width': lw * .6, opacity: .45, 'stroke-linecap': 'round'}, S.pet);
-      const b = a + Math.PI / N, [dx, dy] = P(b, R * .62), s = R * .045;
-      S.dia.push(Kit.mk('rect', {x: dx - s, y: dy - s, width: 2 * s, height: 2 * s, fill: done ? DC : DW, stroke: LEAD, 'stroke-width': lw * .8, transform: `rotate(${b * 180 / Math.PI + 45} ${dx} ${dy})`}, S.pet));
-      const [qx, qy] = P(b, R * .47);
-      Kit.mk('circle', {cx: qx, cy: qy, r: R * .018, fill: GOLD, opacity: .8}, S.pet);
+      S.petals.push(Kit.mk('path', {d: sector(a - w, a + w, r0, r1), fill: done ? PC[k % 2] : PW[k % 2]}, S.pet));
     }
 
-    // Light and grain over the glass.
-    Kit.mk('circle', {cx, cy, r: R, fill: 'url(#sheen)', 'pointer-events': 'none'}, svg);
-    Kit.mk('circle', {cx, cy, r: R, fill: '#fff', opacity: .16, filter: 'url(#grain)', 'pointer-events': 'none'}, svg);
-
-    // The medallion and the door.
-    Kit.mk('circle', {cx, cy, r: R * .4, fill: 'url(#med)', stroke: GOLD, 'stroke-width': fs * .1}, svg);
-    Kit.mk('circle', {cx, cy, r: R * .365, fill: 'none', stroke: GOLD, 'stroke-width': fs * .05, 'stroke-dasharray': `${fs * .08} ${fs * .3}`, opacity: .6}, svg);
-    S.red = Kit.mk('circle', {cx, cy, r: R * 1.1, fill: 'url(#red)', opacity: 0, 'pointer-events': 'none'}, svg);
+    // The shelter room and its door.
+    Kit.mk('circle', {cx, cy, r: R * .4, fill: ROOM, stroke: INK, 'stroke-width': fs * .1}, svg);
+    S.red = Kit.mk('circle', {cx, cy, r: R * 1.06, fill: RED, opacity: 0, 'pointer-events': 'none'}, svg);
     S.door = Kit.mk('g', {id: 'door'}, svg);
     const dw = R * .34, dh = R * .52; dcy = cy + R * .03;
     const x0 = cx - dw / 2, x1 = cx + dw / 2, yb = dcy + dh / 2, ya = dcy - dh / 2 + dw / 2;
     const arch = `M${x0},${yb}V${ya}A${dw / 2},${dw / 2} 0 0 1 ${x1},${ya}V${yb}Z`;
     Kit.mk('circle', {cx, cy, r: R * .39, fill: 'transparent'}, S.door);
-    S.spill = Kit.mk('g', {opacity: done ? 1 : 0, 'pointer-events': 'none'}, S.door);
-    S.rays = Kit.mk('g', {}, S.spill);
-    for (let k = 0; k < 14; k++) {
-      const a = k / 14 * Math.PI * 2, ww = .09, rr = R * .78;
-      Kit.mk('path', {d: `M${cx},${dcy}L${cx + rr * Math.cos(a - ww)},${dcy + rr * Math.sin(a - ww)}L${cx + rr * Math.cos(a + ww)},${dcy + rr * Math.sin(a + ww)}Z`, fill: 'url(#ray)'}, S.rays);
-    }
-    Kit.mk('circle', {cx, cy: dcy, r: R * .62, fill: 'url(#spill)'}, S.spill);
-    Kit.mk('path', {d: arch, fill: 'url(#dl)'}, S.door);
+    // Daylight on the floor, once the door is open: one flat patch spilling from the doorway.
+    const rc = Kit.mk('clipPath', {id: 'rclip'}, defs); Kit.mk('circle', {cx, cy, r: R * .385}, rc);
+    S.spill = Kit.mk('g', {opacity: done ? 1 : 0, 'pointer-events': 'none', 'clip-path': 'url(#rclip)'}, S.door);
+    Kit.mk('path', {d: `M${x0},${yb}L${x1},${yb}L${x1 + dw * .75},${cy + R * .45}L${x0 - dw * .75},${cy + R * .45}Z`, fill: LIGHT, opacity: .5}, S.spill);
+    Kit.mk('path', {d: arch, fill: LIGHT}, S.door);
     const cp = Kit.mk('clipPath', {id: 'dclip'}, defs); Kit.mk('path', {d: arch}, cp);
     S.leaf = Kit.mk('g', {}, S.door);
     const lg = Kit.mk('g', {'clip-path': 'url(#dclip)'}, S.leaf);
-    const top = dcy - dh / 2, ph = dh / 3, cols = ['#7a2348', '#4b2c74', '#8c3a2a', '#2f3f7a', '#6a2a5e', '#7a2348'];
-    for (let r = 0; r < 3; r++) for (let c = 0; c < 2; c++) Kit.mk('rect', {x: x0 + c * dw / 2, y: top + r * ph, width: dw / 2, height: ph, fill: cols[r * 2 + c], stroke: LEAD, 'stroke-width': lw}, lg);
-    Kit.mk('path', {d: arch, fill: 'url(#sheen)', opacity: .7}, lg);
-    Kit.mk('path', {d: arch, fill: 'none', stroke: GOLD, 'stroke-width': fs * .14}, S.leaf);
-    Kit.mk('circle', {cx: x1 - dw * .16, cy: dcy + dh * .08, r: fs * .2, fill: GOLD}, S.leaf);
-    Kit.mk('line', {x1: x0 - dw * .12, y1: yb, x2: x1 + dw * .12, y2: yb, stroke: GOLD, 'stroke-width': fs * .14, 'stroke-linecap': 'round'}, S.door);
+    Kit.mk('path', {d: arch, fill: LEAF}, lg);
+    const pi = dw * .17;
+    Kit.mk('path', {d: `M${x0 + pi},${ya + dh * .02}A${dw / 2 - pi},${dw / 2 - pi} 0 0 1 ${x1 - pi},${ya + dh * .02}V${dcy}H${x0 + pi}Z`, fill: 'none', stroke: CARD, 'stroke-width': lw, 'stroke-linejoin': 'round'}, lg);
+    Kit.mk('rect', {x: x0 + pi, y: dcy + dh * .1, width: dw - 2 * pi, height: yb - dcy - dh * .1 - pi, fill: 'none', stroke: CARD, 'stroke-width': lw}, lg);
+    Kit.mk('path', {d: arch, fill: 'none', stroke: INK, 'stroke-width': fs * .14, 'stroke-linejoin': 'round'}, S.leaf);
+    Kit.mk('circle', {cx: x1 - dw * .16, cy: dcy + dh * .04, r: fs * .18, fill: INK}, S.leaf);
+    Kit.mk('line', {x1: x0 - dw * .12, y1: yb, x2: x1 + dw * .12, y2: yb, stroke: INK, 'stroke-width': fs * .14, 'stroke-linecap': 'round'}, S.door);
     S.hinge = `${x0} ${dcy}`;
     gsap.set(S.leaf, {scaleX: done ? .06 : 1, svgOrigin: S.hinge});
 
-    // Hour labels and the readout, stacked with clear gaps below the rim.
+    // Hour labels and the two lines below, with clear gaps below the rim.
     T(svg, cx, cy - Rg - fs * .55, '0 · 48 h', {'text-anchor': 'middle', opacity: .75});
     T(svg, cx + Rg + fs * .45, cy + fs * .35, '12 h', {opacity: .75});
     T(svg, cx - Rg - fs * .45, cy + fs * .35, '36 h', {'text-anchor': 'end', opacity: .75});
     T(svg, cx, cy + Rg + fs * 1.2, '24 h', {'text-anchor': 'middle', opacity: .75});
-    S.r1 = T(svg, cx, cy + Rg + fs * 3.25, '', {'text-anchor': 'middle', fill: GOLD, 'font-size': fs * 1.15, style: 'font-family:var(--mono);font-weight:800;letter-spacing:.08em'});
-    S.r2 = T(svg, cx, cy + Rg + fs * 4.85, '', {'text-anchor': 'middle', style: 'font-family:var(--body);font-weight:700'});
+    S.r1 = T(svg, cx, cy + Rg + fs * 3.25, '', {'text-anchor': 'middle', fill: GOLD, 'font-size': fs * 1.15, style: 'font-family:var(--display);font-weight:700'});
+    S.r2 = T(svg, cx, cy + Rg + fs * 4.85, '', {'text-anchor': 'middle', style: 'font-family:var(--body);font-weight:600'});
 
     // The bead, and the burst for the reveal.
     S.bead = Kit.mk('g', {}, svg);
     S.hint = Kit.mk('circle', {r: fs * .8, fill: 'none', stroke: GOLD, 'stroke-width': 2, opacity: 0}, S.bead);
-    Kit.mk('circle', {r: fs * .78, fill: GOLD, stroke: LEAD, 'stroke-width': 2}, S.bead);
-    Kit.mk('circle', {r: fs * .3, cx: -fs * .22, cy: -fs * .22, fill: '#fff8e0', opacity: .85}, S.bead);
+    Kit.mk('circle', {r: fs * .78, fill: GOLD, stroke: CARD, 'stroke-width': 2.5}, S.bead);
     S.burst = Kit.mk('circle', {cx, cy, r: R * .4, fill: 'none', stroke: GOLD, 'stroke-width': fs * .35, opacity: 0, 'pointer-events': 'none'}, svg);
-    S.burst2 = Kit.mk('circle', {cx, cy, r: R * .4, fill: 'none', stroke: '#bff2ff', 'stroke-width': fs * .15, opacity: 0, 'pointer-events': 'none'}, svg);
+    S.burst2 = Kit.mk('circle', {cx, cy, r: R * .4, fill: 'none', stroke: PC[1], 'stroke-width': fs * .15, opacity: 0, 'pointer-events': 'none'}, svg);
 
     if (!touched && !Kit.calm) gsap.fromTo(S.hint, {attr: {r: fs * .8}, opacity: .9}, {attr: {r: fs * 2.1}, opacity: 0, duration: 1.4, ease: 'power2.out', repeat: -1});
     drawBead(); text(); paintDust(0);
@@ -215,15 +173,15 @@
   }
   function text(msg) {
     if (!S.r1) return;
-    S.r1.textContent = done ? '48 HOURS PASSED' : `HOUR ${Math.floor(hours)} / 48`;
+    S.r1.textContent = done ? '48 hours passed' : `Hour ${Math.floor(hours)} / 48`;
     S.r2.textContent = msg || (done ? 'the peak of the fallout is over' : 'fallout outside: at its most intense');
-    S.r2.setAttribute('fill', msg ? '#ff8a6a' : INK);
+    S.r2.setAttribute('fill', msg ? '#e8775a' : INK);
   }
   function tiles() {
     const n = Math.floor(hours + 1e-6);
     TILES.forEach(t => {
       const lit = t.i < n; if (lit === t.lit) return; t.lit = lit;
-      if (lit) gsap.fromTo(t.el, {fill: '#fff4cc'}, {fill: t.warm, duration: D(.55), ease: 'power3.out', delay: t.j * .04});
+      if (lit) gsap.fromTo(t.el, {fill: INK}, {fill: t.warm, duration: D(.55), ease: 'power3.out', delay: t.j * .04});
       else gsap.to(t.el, {fill: t.dim, duration: D(.3), ease: 'power2.out'});
     });
   }
@@ -231,11 +189,7 @@
     if (done) return;
     hours = Math.max(0, Math.min(48, v));
     const six = Math.floor(hours / 6);
-    if (six !== lastSix) {
-      lastSix = six; Kit.haptic('selection');
-      const s = S.studs && S.studs[(six * 6) % 48];
-      if (s && !Kit.calm) gsap.fromTo(s, {attr: {r: fs * .45}}, {attr: {r: fs * .2}, duration: .5, ease: 'back.out(3)'});
-    }
+    if (six !== lastSix) { lastSix = six; Kit.haptic('selection'); }
     drawBead(); tiles(); text();
     if (hours >= 47.95) reveal();
   }
@@ -243,7 +197,7 @@
   function doorTap() {
     if (done) return;
     Kit.haptic('light');
-    gsap.fromTo(S.red, {opacity: .95}, {opacity: 0, duration: D(1.1), ease: 'power2.out'});
+    gsap.fromTo(S.red, {opacity: .6}, {opacity: 0, duration: D(1.1), ease: 'power2.out'});
     gsap.fromTo(S.door, {x: -fs * .5}, {x: 0, duration: D(.6), ease: 'elastic.out(1,.25)'});
     gsap.fromTo(S.petals, {scale: 1.08, svgOrigin: `${cx} ${cy}`}, {scale: 1, svgOrigin: `${cx} ${cy}`, duration: D(.5), ease: 'back.out(3)'});
     text('too soon: fallout at its peak');
@@ -256,10 +210,8 @@
     text();
     gsap.fromTo(S.burst, {attr: {r: R * .4}, opacity: 1}, {attr: {r: R * 1.45}, opacity: 0, duration: D(1.5), ease: 'expo.out'});
     gsap.fromTo(S.burst2, {attr: {r: R * .4}, opacity: .9}, {attr: {r: R * 1.3}, opacity: 0, duration: D(1.8), ease: 'expo.out', delay: D(.25)});
-    TILES.forEach(t => { t.lit = true; gsap.fromTo(t.el, {fill: '#ffffff'}, {fill: t.cool, duration: D(.6), ease: 'power2.out', delay: D(.15 + t.i * .022 + t.j * .06)}); });
-    S.studs.forEach((s, h) => gsap.fromTo(s, {fill: '#ffffff'}, {fill: h % 6 ? GOLD : '#fff1c2', duration: D(.5), delay: D(.15 + h * .022)}));
+    TILES.forEach(t => { t.lit = true; gsap.fromTo(t.el, {fill: INK}, {fill: t.cool, duration: D(.6), ease: 'power2.out', delay: D(.15 + t.i * .022 + t.j * .06)}); });
     S.petals.forEach((p, k) => gsap.to(p, {fill: PC[k % 2], duration: D(.8), ease: 'power2.inOut', delay: D(.5 + k * .03)}));
-    S.dia.forEach(p => gsap.to(p, {fill: DC, duration: D(.8), delay: D(.7)}));
     gsap.to(st, {I: .14, duration: D(2.6), ease: 'expo.out', delay: D(.2)});
     gsap.to(S.leaf, {scaleX: .06, svgOrigin: S.hinge, duration: D(1.2), ease: 'power3.inOut', delay: D(1)});
     gsap.fromTo(S.spill, {opacity: 0, scale: .5, svgOrigin: `${cx} ${dcy}`}, {opacity: 1, scale: 1, svgOrigin: `${cx} ${dcy}`, duration: D(1.4), ease: 'expo.out', delay: D(1.3)});
@@ -267,23 +219,14 @@
     if (!Kit.calm) gsap.fromTo(['#why', '#keep'], {opacity: 0, y: 8}, {opacity: 1, y: 0, stagger: .12, duration: .5, ease: 'power3.out', delay: .4, clearProps: 'opacity,transform'});
   }
 
-  // ---------- the ambient loop: dust falls, petals flicker, the halo breathes, rays turn ----------
+  // ---------- the ambient loop: the fallout band flickers while it is at its peak ----------
   function paintDust(t) {
     const I = st.I;
-    DUST.forEach(d => {
-      d.el.setAttribute('cx', (d.x * W + Math.sin(t * .6 + d.p) * fs * .8).toFixed(1));
-      d.el.setAttribute('cy', (d.y * H).toFixed(1));
-    });
-    if (S.dust) S.dust.setAttribute('opacity', (.12 + .62 * I).toFixed(3));
-    if (S.hw) { S.hw.setAttribute('opacity', (I * (.7 + .3 * Math.sin(t * 2.1))).toFixed(3)); S.hc.setAttribute('opacity', ((1 - I) * (.75 + .2 * Math.sin(t * .9))).toFixed(3)); }
     if (S.petals) S.petals.forEach((p, k) => p.setAttribute('opacity', (1 - (.12 + .2 * I) * (.5 + .5 * Math.sin(t * (1.2 + 5 * I) + k * 1.7))).toFixed(3)));
-    if (S.rays) S.rays.setAttribute('transform', `rotate(${(t * 6).toFixed(2)} ${cx} ${dcy})`);
   }
-  let last = 0, running = false;
+  let running = false;
   function loop(ms) {
-    const t = ms / 1000, dt = Math.min(.05, last ? t - last : .016); last = t;
-    DUST.forEach(d => { d.y += dt * (.012 + .07 * st.I) * d.s; if (d.y > 1.02) { d.y = -.02; d.x = Kit.rnd(); } });
-    paintDust(t);
+    paintDust(ms / 1000);
     requestAnimationFrame(loop);
   }
   const start = () => { if (!running && !Kit.calm) { running = true; requestAnimationFrame(loop); } };
@@ -311,7 +254,6 @@
     if (Kit.calm) return;
     const o = `${cx} ${cy}`;
     gsap.from(TILES.map(t => t.el), {opacity: 0, scale: .82, svgOrigin: o, duration: .5, ease: 'power3.out', stagger: .008});
-    gsap.from(S.studs, {opacity: 0, duration: .3, stagger: .012, delay: .2});
     gsap.from(S.petals, {scale: 0, opacity: 0, svgOrigin: o, duration: .7, ease: 'back.out(1.6)', stagger: .03, delay: .3});
     gsap.from(S.door, {opacity: 0, y: fs, duration: .6, ease: 'power3.out', delay: .6});
     gsap.from(S.bead, {opacity: 0, duration: .5, ease: 'power2.out', delay: .9});

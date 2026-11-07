@@ -42,58 +42,54 @@
 <script>
 const RIGHT = 2;
 let pick = -1, done = false, geo = null, twinkle = null;
-const N = 150, G = [];
-for (let i = 0; i < N; i++) G.push({u: Kit.rnd(), v: Kit.rnd(), s: Kit.rnd(), t: Kit.rnd(), z: .5 + Kit.rnd() * .8});
 const LANDS = [
   [[-.62,-.5],[-.25,-.72],[0,-.45],[-.12,-.12],[-.42,0],[-.72,-.22]],
   [[.18,.08],[.55,-.08],[.74,.28],[.48,.72],[.26,.5]],
   [[-.32,.34],[-.06,.3],[-.1,.66],[-.36,.6]],
   [[.3,-.62],[.6,-.55],[.5,-.36],[.28,-.4]]
 ];
-function startPos(p){ const a = 2*Math.PI*p.u, d = Math.sqrt(p.v)*.88*geo.r; return [geo.cx + Math.cos(a)*d, geo.cy + Math.sin(a)*d]; }
-function heapPos(p){
-  let s = p.s, t = p.t; if (s + t > 1){ s = 1 - s; t = 1 - t; }
-  const r = geo.r, A = [0, -.55*r], B = [-.75*r, 0], C = [.75*r, 0];
-  return [geo.cx + A[0] + s*(B[0]-A[0]) + t*(C[0]-A[0]), geo.by + A[1] + s*(B[1]-A[1]) + t*(C[1]-A[1])];
-}
 function draw(){
   const svg = Kit.$('g'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const r = Math.max(20, Math.min(W*.32, (H - 2.6*f)/2.72));
   const cx = W/2, cy = H - r - 3, by = cy - r - r*.14, ay = by - r*.55;
   geo = {W, H, f, r, cx, cy, by, ay};
+  const sw = Math.max(2, r*.025);
   const defs = Kit.mk('defs', {}, svg);
   const cp = Kit.mk('clipPath', {id: 'globeclip'}, defs);
   Kit.mk('circle', {cx, cy, r}, cp);
-  const ocean = Kit.mk('circle', {cx, cy, r, fill: '#1c63a8'}, svg);
-  ocean.style.stroke = 'var(--k)'; ocean.style.strokeWidth = Math.max(2, r*.025);
+  // the sea: one flat deep tint of the card's ink
+  const ocean = Kit.mk('circle', {cx, cy, r}, svg);
+  ocean.style.fill = 'color-mix(in srgb, var(--k) 72%, var(--c))';
+  // the salt still dissolved in it: a flat milky wash over the water only, gone once the salt is pulled out
+  const salty = Kit.mk('circle', {id: 'salty', cx, cy, r, opacity: done ? 0 : 1}, svg);
+  salty.style.fill = 'color-mix(in srgb, var(--k) 48%, #fff)';
+  // the land: flat paper-light patches with a plain ink coast
   const land = Kit.mk('g', {'clip-path': 'url(#globeclip)'}, svg);
-  LANDS.forEach(L => Kit.mk('polygon', {points: L.map(q => (cx + q[0]*r) + ',' + (cy + q[1]*r)).join(' '), fill: '#3d9460'}, land));
-  Kit.mk('ellipse', {cx: cx - r*.35, cy: cy - r*.4, rx: r*.28, ry: r*.14, fill: '#fff', opacity: .14, transform: `rotate(-30 ${cx - r*.35} ${cy - r*.4})`}, svg);
-  const heap = Kit.mk('polygon', {id: 'heap', points: `${cx},${ay} ${cx - .75*r},${by} ${cx + .75*r},${by}`, fill: '#f4f6f8', opacity: done ? 1 : 0}, svg);
-  heap.style.stroke = 'var(--k)'; heap.style.strokeWidth = Math.max(1.5, r*.015);
-  const gg = Kit.mk('g', {id: 'grains'}, svg);
-  G.forEach(p => {
-    const [x, y] = done ? heapPos(p) : startPos(p);
-    p.el = Kit.mk('circle', {cx: x, cy: y, r: Math.max(1.3, r*.02*p.z), fill: '#ffffff', opacity: done ? .9 : .6}, gg);
+  LANDS.forEach(L => {
+    const pg = Kit.mk('polygon', {points: L.map(q => (cx + q[0]*r) + ',' + (cy + q[1]*r)).join(' '), 'stroke-linejoin': 'round'}, land);
+    pg.style.fill = 'color-mix(in srgb, var(--k) 22%, var(--c))';
+    pg.style.stroke = 'var(--k)'; pg.style.strokeWidth = Math.max(1, sw*.5);
   });
-  const nacl = Kit.mk('text', {id: 'nacl', x: cx, y: by - r*.13, 'text-anchor': 'middle', 'font-size': Math.max(12, f*.9), 'font-weight': 800, opacity: done ? 1 : 0}, svg);
-  nacl.style.fill = '#16324f'; nacl.style.fontFamily = 'var(--body)'; nacl.textContent = 'NaCl';
+  const rim = Kit.mk('circle', {cx, cy, r, fill: 'none'}, svg);
+  rim.style.stroke = 'var(--k)'; rim.style.strokeWidth = sw;
+  // the pile of salt pulled out of the sea: one plain white mound
+  const heap = Kit.mk('path', {id: 'heap', d: `M${cx - .75*r},${by} Q${cx - .32*r},${ay + .04*r} ${cx},${ay} Q${cx + .3*r},${ay + .06*r} ${cx + .75*r},${by} Z`, 'stroke-linejoin': 'round', opacity: done ? 1 : 0}, svg);
+  heap.style.fill = '#fff';
+  heap.style.stroke = 'var(--k)'; heap.style.strokeWidth = Math.max(1.5, r*.02);
+  heap.style.transformBox = 'fill-box'; heap.style.transformOrigin = '50% 100%';
+  const nacl = Kit.mk('text', {id: 'nacl', x: cx, y: by - r*.13, 'text-anchor': 'middle', 'font-size': Math.max(12, f*.9), 'font-weight': 700, opacity: done ? 1 : 0}, svg);
+  nacl.style.fill = 'var(--k)'; nacl.style.fontFamily = 'var(--body)'; nacl.textContent = 'NaCl';
   const lab = Kit.mk('text', {id: 'lab', x: cx, y: Math.max(f*1.3, ay - f*.6), 'text-anchor': 'middle', 'font-size': Math.max(14, f*1.35), 'font-weight': 800, opacity: done ? 1 : 0}, svg);
   lab.style.fill = 'var(--k)'; lab.style.fontFamily = 'var(--display)'; lab.textContent = '4 × 10¹⁹ kg of salt';
-  if (!done && !Kit.calm){
-    if (twinkle) twinkle.kill();
-    twinkle = gsap.to(G.map(p => p.el), {opacity: .2, duration: 1.2, yoyo: true, repeat: -1, stagger: {each: .02, from: 'random'}, ease: 'sine.inOut'});
-  }
+  if (twinkle){ twinkle.kill(); twinkle = null; }
 }
 function reveal(){
   done = true; if (twinkle){ twinkle.kill(); twinkle = null; }
   if (Kit.calm){ draw(); return; }
-  G.forEach((p, i) => {
-    const [x, y] = heapPos(p);
-    gsap.to(p.el, {attr: {cx: x, cy: y}, opacity: .9, duration: 1.1, delay: i*.006, ease: 'power3.inOut'});
-  });
-  gsap.to('#heap', {opacity: 1, duration: .5, delay: 1.1});
+  gsap.to('#salty', {opacity: 0, duration: 1.1, ease: 'power3.inOut'});
+  gsap.fromTo('#heap', {scaleY: .15}, {scaleY: 1, duration: 1.1, delay: .4, ease: 'power3.out'});
+  gsap.to('#heap', {opacity: 1, duration: .5, delay: .4});
   gsap.to('#nacl', {opacity: 1, duration: .4, delay: 1.4});
   gsap.fromTo('#lab', {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .5, delay: 1.3, ease: 'back.out(2)'});
 }
