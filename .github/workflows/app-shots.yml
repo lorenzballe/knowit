@@ -1,0 +1,65 @@
+name: App shots
+
+# Runs the app's cameras (tool/*_shots.dart) on a machine with Flutter and
+# publishes the pictures on the app-shots branch, so the screens can be seen
+# without a phone or a Mac: Explore, the app past the onboarding, the journey,
+# whatever the input names. Nothing is built or signed, nothing is checked:
+# a camera that breaks is reported and the others still run.
+
+on:
+  workflow_dispatch:
+    inputs:
+      cameras:
+        description: Which cameras, by file name without _shots.dart, separated by spaces
+        default: explore app screens journey
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: app-shots
+  cancel-in-progress: true
+
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Take the pictures
+        env:
+          CAMERAS: ${{ inputs.cameras }}
+        run: |
+          for c in $CAMERAS; do
+            echo "::group::$c"
+            flutter test "tool/${c}_shots.dart" --update-goldens || echo "::warning::the $c camera failed"
+            echo "::endgroup::"
+          done
+          mkdir -p "$RUNNER_TEMP/shots"
+          cp -r tool/shots/. "$RUNNER_TEMP/shots/" 2>/dev/null || true
+          find "$RUNNER_TEMP/shots" -name '*.png' | wc -l
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-shots
+          path: ${{ runner.temp }}/shots
+
+      # One commit on a branch of its own, replaced each run.
+      - name: Publish on the app-shots branch
+        run: |
+          cd "$RUNNER_TEMP/shots"
+          git init -q
+          git checkout -q -b app-shots
+          git add .
+          git -c user.name="app-shots" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "App shots for ${GITHUB_SHA::7}"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" app-shots
