@@ -1,0 +1,308 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-rumor-communicating-vessels -->
+<!-- Design note.
+     Thought to carry: a rumor sinks through every link of a network on its own. What people already hold of you is the only thing that sits on top of it, and it has to be poured into each person.
+     Front: a row of connected glasses, one for each person you both know. A dark cup has already tipped a rumor into the far glass, and it lies at the same height in all of them.
+     Your yellow jug is the slider knob. Dragging it moves the same jug above the glasses, from glass 1 ("answer it head-on", one person) to the middle of the row ("show your value", everyone). The two ends of the line carry two equal white icons: a stopper and a jug.
+     Back: the jug pours where you stood. At the head-on end it fills glass 1 only and pushes the rumor down there, while the other four stay dark. At the other end it pours a yellow layer into every glass, and the dark layer stays underneath in all of them. Middle positions mix the two.
+     Yellow is one flat colour that floats on the dark and never blends into it. -->
+<title>Pour in your own story</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s .38s}
+.turn>.front{transition:visibility 0s .38s}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+
+.face{gap:1.1cqh}
+.stagebox{display:flex;flex:1;min-height:0}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+#go{align-self:flex-start}
+.front .say{max-width:calc(100% - 100px);min-height:46px;margin:0}
+.back .big{font-size:max(2.5cqh,16px);line-height:1.15;margin:0;overflow-wrap:break-word}
+.back .body{font:500 max(1.75cqh,12.5px)/1.32 var(--body);margin:0;overflow-wrap:break-word}
+.back .keep{font-size:max(1.75cqh,12.5px)}
+.foot .src{display:block;max-width:calc(100% - 100px)}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Point of view · where you stand">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POINT OF VIEW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">One view: answer a rumor by showing your worth, not chasing it. Agree?</h2>
+        <div class="stagebox" id="stage">
+          <svg id="pic" role="img" aria-label="Five connected glasses, one for each person you both know. A dark cup has poured a rumor into the last glass, and it stands at the same level in all five. Your yellow jug hangs above the glasses and moves with the slider, from over the first glass (answer the rumor head-on) to the middle of the row (show your value)."></svg>
+        </div>
+        <button class="btn gone" id="go">This is where I stand</button>
+        <p class="say" id="say">Drag your jug to where you stand between the two views.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big" id="ans">You lean toward showing your value.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Your jug pours yellow into the connected glasses where you stood. The dark rumor stays underneath."></svg></div>
+        <p class="body"><b>For:</b> a rumor is judged against what people already hold of you; the more they hold, the less room it has. <b>Against:</b> talking yourself up can look defensive or vain, and the dark layer never drains by itself: a claim nobody answers can harden into “what everyone knows”.</p>
+        <div class="keep"><b>ASK YOURSELF</b> When you hear a rumor about someone you know, what wins: their denial, or what you had already seen of them?</div>
+        <div class="foot"><span class="src">Source · Diventare Strong (YouTube, 2016) · a point of view</span></div>
+      </section>
+    </div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+(() => {
+  const RUM = '#4b3b63', YOU = '#F7C548';         // the rumor, and you: one flat colour each
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2'), card = Kit.$('card');
+  let INK = '#fff', t = .5, touched = false, done = false, turned = false, F = null, tl = null;
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const rot = (x, y, d) => { const r = d * Math.PI / 180, c = Math.cos(r), s = Math.sin(r); return [x * c - y * s, x * s + y * c]; };
+  const pts = p => p.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('L');
+
+  // Five glasses of different shapes, joined at the bottom. Glass 1 is straight so its left wall lines up with the text.
+  const PROF = [u => .85, u => .8 + 1.4 * Math.exp(-(((u - .55) / .2) ** 2)), u => .7 + 1.7 * u * u, u => .7, u => 1 + 1.2 * (1 - u) ** 2];
+  const MAXW = PROF.map(f => { let m = 0; for (let k = 0; k <= 40; k++) m = Math.max(m, f(k / 40)); return m; });
+  function geom(W, H, fs, top, bz, extraR) {
+    const g = (W - 2 - extraR) / (4 + .16 * (MAXW[0] + MAXW[4])), s = g * .16;
+    const cx = [0, 1, 2, 3, 4].map(i => 1 + MAXW[0] * s + g * i);
+    const ph = Math.max(8, fs * .95), y0 = top, yb = H - bz - ph;
+    return {W, H, fs, g, s, cx, ph, y0, yb, X0: cx[0] - s * PROF[0](1), Xn: cx[4] + s * PROF[4](1)};
+  }
+  function side(G, i, yA, yB = G.yb) {
+    const L = [], R = [], N = 28;
+    for (let k = 0; k <= N; k++) {
+      const y = yA + (yB - yA) * k / N, u = clamp((y - G.y0) / (G.yb - G.y0), 0, 1), hw = G.s * PROF[i](u);
+      L.push([G.cx[i] - hw, y]); R.push([G.cx[i] + hw, y]);
+    }
+    return {L, R};
+  }
+  const band = (G, i, yA, yB, ext = 0) => {
+    const {L, R} = side(G, i, yA, yB);
+    if (ext) { L.push([L[L.length - 1][0], yB + ext]); R.push([R[R.length - 1][0], yB + ext]); }
+    return 'M' + pts(L) + 'L' + pts(R.reverse()) + 'Z';
+  };
+  const pipeD = (G, close = true) => { const r = G.ph / 2, b = G.yb + G.ph;
+    return `M${G.X0},${G.yb}V${b - r}A${r},${r} 0 0 0 ${G.X0 + r},${b}H${G.Xn - r}A${r},${r} 0 0 0 ${G.Xn},${b - r}V${G.yb}` + (close ? 'Z' : ''); };
+
+  function label(parent, x, y, lines, fs, a = {}) {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), parent);
+    lines.forEach((ln, k) => { const ts = Kit.mk('tspan', {x, dy: k ? '1.3em' : 0}, e); ts.textContent = ln; });
+    return e;
+  }
+  const moveX = (e, x) => { e.setAttribute('x', x); e.querySelectorAll('tspan').forEach(ts => ts.setAttribute('x', x)); };
+  const line = (p, x1, y1, x2, y2) => Kit.mk('line', {x1, y1, x2, y2, stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, p);
+
+  // The glasses: empty glass, dark rumor, yellow layer, then the outline on top.
+  function vessels(G, parent) {
+    const glass = Kit.mk('g', {fill: '#ffffff', opacity: .42}, parent);
+    for (let i = 0; i < 5; i++) Kit.mk('path', {d: band(G, i, G.y0, G.yb, 1)}, glass);
+    Kit.mk('path', {d: pipeD(G)}, glass);
+    const dk = Kit.mk('g', {fill: RUM}, parent), yl = Kit.mk('g', {fill: YOU}, parent);
+    Kit.mk('path', {d: pipeD(G)}, dk);
+    const dark = [0, 1, 2, 3, 4].map(() => Kit.mk('path', {d: 'M0,0'}, dk));
+    const yel = [0, 1, 2, 3, 4].map(() => Kit.mk('path', {d: 'M0,0'}, yl));
+    const out = Kit.mk('g', {fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, parent);
+    const bot = [];
+    for (let i = 0; i < 5; i++) { const {L, R} = side(G, i, G.y0); Kit.mk('path', {d: 'M' + pts(L) + 'M' + pts(R)}, out); bot.push([L[L.length - 1][0], R[R.length - 1][0]]); }
+    Kit.mk('path', {d: pipeD(G, false)}, out);
+    for (let i = 0; i < 4; i++) Kit.mk('path', {d: `M${bot[i][1]},${G.yb}H${bot[i + 1][0]}`}, out);
+    return {dark, yel};
+  }
+  function setLevels(G, V, ifc, top) {
+    V.dark.forEach((p, i) => p.setAttribute('d', band(G, i, ifc[i], G.yb, 1)));
+    V.yel.forEach((p, i) => p.setAttribute('d', top[i] < ifc[i] - .3 ? band(G, i, top[i], ifc[i]) : 'M0,0'));
+  }
+
+  const JUG = 'M-1.35,-1.25L.75,-1L.85,.95Q.85,1.2 .6,1.2L-.6,1.2Q-.85,1.2 -.85,.95L-.88,-.55Z';
+  function jug(parent, fill) {
+    const g = Kit.mk('g', {}, parent);
+    Kit.mk('path', {d: 'M.78,-.6C1.55,-.6 1.55,.6 .82,.6', fill: 'none', stroke: INK, 'stroke-width': 2.2, 'vector-effect': 'non-scaling-stroke', 'stroke-linecap': 'round'}, g);
+    Kit.mk('path', {d: JUG, fill, stroke: INK, 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round'}, g);
+    return g;
+  }
+  function stopper(parent) {
+    const g = Kit.mk('g', {}, parent), st = {fill: '#ffffff', stroke: INK, 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round'};
+    Kit.mk('circle', Object.assign({cx: 0, cy: -.95, r: .32}, st), g);
+    Kit.mk('path', Object.assign({d: 'M-.8,-.6H.8L.55,1.05H-.55Z'}, st), g);
+    return g;
+  }
+
+  // ---------- the front ----------
+  let knob, jugF;
+  const jugX = G => lerp(G.cx[0] + 1.35 * G.js, G.cx[2], t);   // spout over glass 1 … centred over the row
+  function place() {
+    if (!F) return;
+    jugF.setAttribute('transform', `translate(${jugX(F)},${F.y0 - 6 - 1.2 * F.js}) scale(${F.js})`);
+    const k = F.fs * .78;
+    knob.setAttribute('transform', `translate(${lerp(F.xa, F.xb, t) - .1 * k},${F.sy - .1 * k}) scale(${k})`);
+  }
+  function drawFront() {
+    INK = getComputedStyle(card).getPropertyValue('--k').trim() || '#fff';
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = clamp(W / 28, 12, 14), js = fs * .85;
+    F = geom(W, H, fs, Math.round(8 + 2.45 * js), fs * 7.4, 0); F.js = js;
+    const D = F.y0 + (F.yb - F.y0) * .42;
+
+    const base = Kit.mk('g', {class: 'b1'}, svg);
+    const V = vessels(F, base);
+    setLevels(F, V, [D, D, D, D, D], [D, D, D, D, D]);
+
+    // The rumor, already tipped into the far glass.
+    const cup = Kit.mk('g', {class: 'b2'}, svg), cs = fs * .95;
+    const lipX = F.cx[4] - F.s * .5, cupY = F.y0 - fs * 1.15, lipY = cupY + .23 * cs;
+    Kit.mk('path', {d: `M${lipX},${lipY}Q${lipX - 4},${lipY + 8} ${lipX - 4},${D}`, fill: 'none', stroke: RUM, 'stroke-width': Math.max(2.5, fs * .24), 'stroke-linecap': 'round'}, cup);
+    Kit.mk('path', {d: 'M-.55,-.85L.55,-.85L.42,.85L-.42,.85Z', fill: RUM, stroke: INK, 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round', transform: `translate(${lipX + .99 * cs},${cupY}) rotate(-70) scale(${cs})`}, cup);
+    line(cup, lipX - fs * 1.35, cupY, lipX - fs * .45, cupY);
+    label(cup, lipX - fs * 1.75, cupY + fs * .35, ['a rumor goes in'], fs, {'text-anchor': 'end'});
+
+    // Who the glasses are: the tick reaches into the shared pipe under glass 3.
+    const gy = F.yb + F.ph + fs * 1.5, who = Kit.mk('g', {class: 'b2'}, svg);
+    line(who, F.cx[2], gy - fs * 1.05, F.cx[2], F.yb + F.ph * .5);
+    label(who, F.cx[2], gy, ['each glass: someone you both know'], fs, {'text-anchor': 'middle'});
+
+    // Your jug above the glasses, and the same jug as the knob of the line between the two views.
+    jugF = jug(Kit.mk('g', {class: 'b3'}, svg), YOU);
+    const sl = Kit.mk('g', {class: 'b3'}, svg);
+    F.sy = gy + fs * 2.15; F.xa = fs * 2.5; F.xb = W - fs * 2.5;
+    Kit.mk('line', {x1: F.xa, x2: F.xb, y1: F.sy, y2: F.sy, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, sl);
+    stopper(sl).setAttribute('transform', `translate(${fs * .85},${F.sy}) scale(${fs * .62})`);
+    jug(sl, '#ffffff').setAttribute('transform', `translate(${W - fs * 1.15},${F.sy}) scale(${fs * .55})`);
+    label(sl, 0, F.sy + fs * 2.15, ['Answer the rumor', 'head-on'], fs);
+    label(sl, W, F.sy + fs * 2.15, ['Show your value,', 'don’t chase it'], fs, {'text-anchor': 'end'});
+    knob = jug(sl, YOU);
+    place();
+  }
+
+  function setT(v) {
+    if (done) return;
+    t = clamp(v, 0, 1); place();
+    if (!touched) { touched = true; Kit.show('go'); }
+  }
+  let drag = false;
+  const fromX = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - F.xa) / (F.xb - F.xa); };
+  svg.addEventListener('pointerdown', e => { if (done || !F) return; drag = true; svg.setPointerCapture(e.pointerId); setT(fromX(e)); Kit.haptic('selection'); });
+  svg.addEventListener('pointermove', e => { if (drag) setT(fromX(e)); });
+  const end = () => { drag = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  const kind = () => t < .4 ? 'head' : t > .6 ? 'value' : 'mid';
+  const choice = () => ({head: 'Answer the rumor head-on', value: 'Show your value, don’t chase it', mid: 'Somewhere in between'})[kind()];
+  Kit.$('go').addEventListener('click', () => {
+    if (done) return; done = true;
+    Kit.answer({choice: choice(), correct: null, sure: Math.round(Math.abs(t - .5) * 200)});
+    Kit.$('ans').textContent = ({head: 'You lean toward answering it head-on.', value: 'You lean toward showing your value.', mid: 'You stand in the middle.'})[kind()];
+    svg2.setAttribute('aria-label', ({
+      head: 'Your jug pours only into the first glass. There the yellow pushes the rumor down; the other four glasses stay dark.',
+      value: 'Your jug pours a yellow layer into every glass. It floats on the rumor, which stays underneath at the same height in all five.',
+      mid: 'Your jug fills the first glass and pours a thinner yellow layer into the others. The rumor stays underneath.'})[kind()]);
+    Kit.hide('go'); Kit.$('say').textContent = 'Noted. Now the best case each way.';
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- the back ----------
+  function drawBack(still) {
+    if (tl) { tl.kill(); tl = null; }
+    svg2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg2), fs = clamp(W / 28, 12, 14), js = fs * .85, top = Math.round(8 + 2.7 * js);
+    let G = geom(W, H, fs, top, fs * 3.4, 0);
+    const over = G.cx[4] + 3.4 * js - (W - 1);
+    if (over > 0) G = geom(W, H, fs, top, fs * 3.4, over * 1.15 + 2);
+    G.js = js;
+
+    // Yellow floats on the rumor. Each glass gets the share the jug gives it; a heavier yellow column presses the dark down in its own glass.
+    const h = G.yb - G.y0, Dk = G.y0 + h * .55, Y = h * .3, K = .6, rest = t > .04 ? t : 0, w = [1, rest, rest, rest, rest];
+    const levels = f => {
+      const y = w.map((v, i) => Y * v * f[i]), m = y.reduce((a, b) => a + b, 0) / 5;
+      const ifc = y.map(v => Dk + K * (v - m));
+      return {ifc, top: ifc.map((v, i) => v - y[i])};
+    };
+
+    const g1 = Kit.mk('g', {}, svg2);
+    const V = vessels(G, g1);
+    const stream = Kit.mk('line', {stroke: YOU, 'stroke-width': Math.max(3, fs * .3), 'stroke-linecap': 'round', opacity: 0}, svg2);
+    const jgo = Kit.mk('g', {}, svg2), jg = jug(jgo, YOU);
+    const gy = G.y0 - 6 - 1.4 * js, at = i => G.cx[i] + 1.8 * js, endX = jugX(G);
+
+    const z = {a: 0, gx: at(0), sp: 0, op: 0, f0: 0, f1: 0, f2: 0, f3: 0, f4: 0};
+    function render() {
+      const L = levels([z.f0, z.f1, z.f2, z.f3, z.f4]);
+      setLevels(G, V, L.ifc, L.top);
+      jg.setAttribute('transform', `translate(${z.gx},${gy}) rotate(${z.a}) scale(${js})`);
+      const [ox, oy] = rot(-1.35, -1.25, z.a), sx = z.gx + ox * js, sy = gy + oy * js;
+      let j = 0; G.cx.forEach((c, i) => { if (Math.abs(c - sx) < Math.abs(G.cx[j] - sx)) j = i; });
+      Kit.attr ? 0 : 0;
+      stream.setAttribute('x1', sx); stream.setAttribute('x2', sx);
+      stream.setAttribute('y1', sy); stream.setAttribute('y2', lerp(sy, L.top[j], z.sp));
+      stream.setAttribute('opacity', z.op);
+    }
+
+    // Two labels that describe what this pour did.
+    const fin = levels([1, 1, 1, 1, 1]), k = kind(), ty = G.yb + G.ph + fs * 1.5, labs = Kit.mk('g', {}, svg2);
+    const yMid = i => (fin.top[i] + fin.ifc[i]) / 2, dMid = i => (fin.ifc[i] + G.yb) / 2;
+    const L1 = k === 'value' ? {y: dMid(0), t: ['the claim stays', 'underneath']} : {y: yMid(0), t: ['one person hears', 'your side']};
+    const L2 = k === 'value' ? {y: yMid(3), t: ['your value reaches', 'every glass']}
+             : k === 'head' ? {y: dMid(3), t: ['the rest still', 'hold the claim']} : {y: yMid(3), t: ['the rest get', 'less of you']};
+    line(labs, G.cx[0], ty - fs * 1.05, G.cx[0], L1.y);
+    const e1 = label(labs, 0, ty, L1.t, fs);
+    line(labs, G.cx[3], ty - fs * 1.05, G.cx[3], L2.y);
+    const e2 = label(labs, G.cx[3] - fs, ty, L2.t, fs);
+    try {
+      const w1 = e1.getBBox().width, w2 = e2.getBBox().width;
+      moveX(e2, clamp(G.cx[3] - fs, w1 + fs, W - w2));
+    } catch (_) {}
+
+    const finish = () => { Object.assign(z, {a: -12, gx: endX, sp: 0, op: 0, f0: 1, f1: 1, f2: 1, f3: 1, f4: 1}); render(); };
+    if (still || Kit.calm || typeof gsap === 'undefined') { finish(); return; }
+
+    render();
+    tl = gsap.timeline({onUpdate: render});
+    tl.from(g1, {opacity: 0, duration: .45, ease: 'power2.out'})
+      .from(jgo, {opacity: 0, duration: .3, ease: 'power2.out'}, '-=.1')
+      .to(z, {a: -55, duration: .55, ease: 'power3.inOut'})
+      .set(z, {op: 1})
+      .to(z, {sp: 1, duration: .22, ease: 'power2.in'})
+      .to(z, {f0: 1, duration: .85, ease: 'power2.inOut'});
+    if (rest > 0) for (let i = 1; i < 5; i++) {
+      tl.to(z, {op: 0, duration: .08})
+        .set(z, {sp: 0})
+        .to(z, {gx: at(i), duration: .26, ease: 'power2.inOut'})
+        .set(z, {op: 1})
+        .to(z, {sp: 1, duration: .12, ease: 'power2.in'})
+        .to(z, {['f' + i]: 1, duration: .32, ease: 'power1.inOut'});
+    }
+    tl.to(z, {op: 0, duration: .12})
+      .to(z, {a: -12, gx: endX, duration: .6, ease: 'power2.out'})
+      .from(labs.children, {opacity: 0, duration: .4, stagger: .12, ease: 'power2.out'}, '-=.3');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(false); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(true); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    gsap.timeline()
+      .from('#pic .b1', {opacity: 0, duration: .45, ease: 'power2.out'})
+      .from('#pic .b2', {opacity: 0, duration: .4, stagger: .12, ease: 'power2.out'})
+      .from('#pic .b3', {opacity: 0, duration: .4, stagger: .1, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setT(.8); await wait(80);
+    Kit.$('go').click();
+    await wait(Kit.calm ? 1000 : 7400);
+  };
+})();
+Kit.single();
+</script>
+</html>
