@@ -44,11 +44,11 @@ test('the shelves that turn over are the phone\'s, card for card', () => {
     'space-expansion-8', 'sport-suits-7', 'economics-rent-7', 'weird_facts-axolotls-7', 'technology-factories-5', 'thinking-10',
   ]);
   assert.deepEqual(pickedCards(bank, ALL_TIME_SEED, 6).map((c) => c.id), [
-    'language-double-negatives-3', 'economics-education-3', 'nature-bees-7', 'technology-training-9', 'thinking-h13', 'medicine-resistance-7',
+    'language-double-negatives-3', 'economics-education-3', 'nature-bees-7', 'technology-five-times-downforce', 'thinking-h13', 'medicine-resistance-7',
   ]);
   // Reference values printed by askingPills (lib/data/pills_repository.dart).
   assert.deepEqual(askingCards(bank, ALL_TIME_SEED, 6).map((c) => c.id), [
-    'language-double-negatives-3', 'economics-averages-that-mislead-2', 'nature-bees-1', 'technology-training-4', 'thinking-h10', 'medicine-resistance-10',
+    'language-double-negatives-3', 'economics-averages-that-mislead-2', 'nature-bees-1', 'technology-five-times-downforce', 'thinking-h10', 'medicine-resistance-10',
   ]);
 });
 
