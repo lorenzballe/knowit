@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611071528,
- "built": "2026-11-07T15:28:26Z",
+ "version": 202611071646,
+ "built": "2026-11-07T16:46:41Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -178990,6 +178990,46 @@
    "written": "2026-09-26"
   },
   {
+   "id": "psychology-the-lucky-trap",
+   "topic": "psychology",
+   "genre": "psychology.know_your_own_mind",
+   "strand": "psychology.know_your_own_mind.overconfidence",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "One view: does feeling lucky set you up for a harder fall?",
+   "answer": "Believing luck will carry you can stop you from checking, so the first real blow lands from full height. Others argue that hopeful people try more and get up faster. The risk is hope that replaces the safety net.",
+   "move": "The risk is not hope. It is hope that replaces the net.",
+   "keywords": [
+    "tightrope",
+    "walker",
+    "luck",
+    "safety_net",
+    "overconfidence"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A walker on a tightrope with a net below. Drag the walker along the rope to show where you stand, then rate how sure you are. Asks whether feeling lucky makes a harder fall more likely.",
+    "graded": false,
+    "page": "pages/psychology-the-lucky-trap.html?v=cd05e93e98d3",
+    "bytes": 20397
+   },
+   "source": "Diventare Strong, “Mentalità D'Acciaio: 7 Pensieri da Eliminare dalla Tua Mente (Atteggiamento Mentale Vincente Strong)” (YouTube, 2020)",
+   "reference": "https://www.youtube.com/watch?v=XuSUFo5JdZo&t=567s",
+   "written": "2026-11-07"
+  },
+  {
    "id": "psychology-the-open-door",
    "topic": "psychology",
    "genre": "psychology.emotions",
@@ -188039,12 +188079,12 @@
    "topic": "science",
    "genre": "science.think_like_a_scientist",
    "strand": "science.think_like_a_scientist.testable_claims",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How did tiny fossils prove the dinosaurs' extinction was sudden?",
-   "answer": "Tiny plankton fossils above and below one thin red clay line belong to two different worlds. The change came all at once, at that line.",
-   "move": "One thin red clay line, two different worlds of plankton: the change came at once.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "In Gubbio's rocks, how do the plankton shells change across the extinction?",
+   "answer": "Gubbio's last Cretaceous layer and first Paleogene layer hold completely different foraminifera, tiny plankton shells. Between them lies dark red clay with no foraminifera. The plankton died almost all at once, leaving a step rather than a slope.",
+   "move": "A slow cause leaves a slope in the record; a sudden one leaves a step.",
    "keywords": [
     "dinosaurs",
     "plankton",
@@ -188065,14 +188105,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A photo of layered rock with one thin red line running across it. A round lens sits on the rock; drag it up and down to explore. The page asks how tiny fossils proved the dinosaurs' extinction was sudden.",
-    "ground": "#0d1c20",
-    "page": "pages/science-foraminifera-clay-line.html?v=fcb80c3ea3ee",
-    "bytes": 27613
+    "label": "Interactive page: a vertical stack of pink rock layers from Gubbio. Drag up through them and mark, from none to all, whether each layer's plankton shells are still Cretaceous kinds.",
+    "page": "pages/science-foraminifera-clay-line.html?v=9a228a7b476f",
+    "bytes": 14682
    },
    "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=_oHnlF70NaQ&t=360s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-fourth-power-glow",
@@ -248040,6 +248079,44 @@
    "reference": "Tversky & Kahneman, Belief in the law of small numbers, Psychological Bulletin, 1971"
   },
   {
+   "id": "thinking-inaction-sure-failure",
+   "topic": "thinking",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "One view: is doing nothing a guaranteed failure?",
+   "answer": "A coach claims that if you never try, you fail anyway, so trying can only add a chance. The card's counterpoint: waiting is not always a no, and when a mistake does lasting harm, preparing first beats leaping. Where you stand depends on how far you could fall.",
+   "move": "It hangs on how far you could fall.",
+   "keywords": [
+    "inaction",
+    "risk",
+    "decision",
+    "coach",
+    "failure"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "paradox",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "abstract",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A point-of-view card asking whether doing nothing is a sure failure. A draggable figure lets the reader place themselves between two views. The reader is asked what trying and failing would lose beyond what waiting already costs.",
+    "graded": false,
+    "page": "pages/thinking-inaction-sure-failure.html?v=cecaafd266d1",
+    "bytes": 14486
+   },
+   "source": "Diventare Strong, “Come Eliminare Blocchi Emotivi E Mentali” (YouTube, 2017)",
+   "reference": "https://www.youtube.com/watch?v=fQI6yxRsP74&t=585s",
+   "written": "2026-11-07"
+  },
+  {
    "id": "thinking-k1",
    "topic": "thinking",
    "kind": "pickOne",
@@ -248821,6 +248898,44 @@
    "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=781s",
    "written": "2026-11-03"
+  },
+  {
+   "id": "thinking-rotten-cake-no",
+   "topic": "thinking",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "One view: why not refuse bad treatment as fast as a rotten cake?",
+   "answer": "Diventare Strong argues bad treatment should be refused as fast as a rotten cake, since you never debate the cake. Every excuse you invent is work you do for someone else. But people are rarely as plain as a cake: an unclear slight may have a reason, and a fast no can be wrong.",
+   "move": "Am I still weighing this because it's unclear, or because saying no feels rude?",
+   "keywords": [
+    "rotten cake",
+    "saying no",
+    "boundaries",
+    "excuses",
+    "bad treatment"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A point-of-view card: drag a dot to show where you stand on refusing bad treatment as fast as a rotten cake. Pros and cons are listed, plus the question: am I still weighing this because it's unclear, or because saying no feels rude?",
+    "graded": false,
+    "page": "pages/thinking-rotten-cake-no.html?v=8151615c769d",
+    "bytes": 18894
+   },
+   "source": "Diventare Strong, “Come Smettere di Essere Troppo Buoni” (YouTube, 2021)",
+   "reference": "https://www.youtube.com/watch?v=Gz7sy88tSQw&t=1627s",
+   "written": "2026-11-07"
   },
   {
    "id": "thinking-s1",

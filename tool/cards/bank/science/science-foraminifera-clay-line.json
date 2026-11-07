@@ -3,12 +3,12 @@
   "topic": "science",
   "genre": "science.think_like_a_scientist",
   "strand": "science.think_like_a_scientist.testable_claims",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How did tiny fossils prove the dinosaurs' extinction was sudden?",
-  "answer": "Tiny plankton fossils above and below one thin red clay line belong to two different worlds. The change came all at once, at that line.",
-  "move": "One thin red clay line, two different worlds of plankton: the change came at once.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In Gubbio's rocks, how do the plankton shells change across the extinction?",
+  "answer": "Gubbio's last Cretaceous layer and first Paleogene layer hold completely different foraminifera, tiny plankton shells. Between them lies dark red clay with no foraminifera. The plankton died almost all at once, leaving a step rather than a slope.",
+  "move": "A slow cause leaves a slope in the record; a sudden one leaves a step.",
   "keywords": [
     "dinosaurs",
     "plankton",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A photo of layered rock with one thin red line running across it. A round lens sits on the rock; drag it up and down to explore. The page asks how tiny fossils proved the dinosaurs' extinction was sudden.",
-    "ground": "#0d1c20"
+    "label": "Interactive page: a vertical stack of pink rock layers from Gubbio. Drag up through them and mark, from none to all, whether each layer's plankton shells are still Cretaceous kinds."
   },
   "source": "Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)",
   "reference": "https://www.youtube.com/watch?v=_oHnlF70NaQ&t=360s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }
