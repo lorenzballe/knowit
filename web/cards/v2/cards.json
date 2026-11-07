@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611072330,
- "built": "2026-11-07T23:30:51Z",
+ "version": 202611072345,
+ "built": "2026-11-07T23:45:20Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -137141,8 +137141,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A slider for summer temperature in Yakutsk, running from 20 °C up to 35–38 °C. Dragging it shows how the frozen ground under the city's buildings would thaw.",
-    "page": "pages/nature-permafrost-thaw-line.html?v=5add6d3ed152",
-    "bytes": 25396
+    "page": "pages/nature-permafrost-thaw-line.html?v=bc3103411e83",
+    "bytes": 20943
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=311s",
@@ -190393,8 +190393,8 @@
     "touch": "drags",
     "label": "Shows a ring-shaped reactor beside a thermometer running from deep blue (cold) to bright white (hot). Asks the reader to drag a marker to set how cold the superconducting magnets must be; the answer is −269 °C.",
     "graded": false,
-    "page": "pages/science-iter-hot-cold.html?v=8d4d9b4b982a",
-    "bytes": 10046
+    "page": "pages/science-iter-hot-cold.html?v=3aae7c4f1988",
+    "bytes": 10044
    },
    "source": "Geopop, “Fusione nucleare, a che punto è la ricerca? L'eccellenza del progetto ITER” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=W3C02y8A8LY&t=57s",
@@ -197320,8 +197320,8 @@
     "touch": "drags",
     "label": "A broken rock section with two faults and two sunken blocks showing glowing layers. Drag each sunken block up until its layers meet the ones beside it. The question asks why geologists undo the faults in the rock.",
     "ground": "#140b09",
-    "page": "pages/science-rock-restoration.html?v=453ba4a5609e",
-    "bytes": 20960
+    "page": "pages/science-rock-restoration.html?v=e841a721a8c0",
+    "bytes": 20943
    },
    "source": "Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=5bpnCxW-HSI&t=6125s",
@@ -199943,8 +199943,8 @@
     "touch": "drags",
     "label": "A bridge that climbs like a wall, shown at a zoom ring that can be dragged to 5 times magnification while the camera backs away to keep the bridge in frame. The page asks why zoomed photos make the bridge look so steep.",
     "ground": "#0d3561",
-    "page": "pages/science-telephoto-steep-bridge.html?v=baf2cc3df6cd",
-    "bytes": 28830
+    "page": "pages/science-telephoto-steep-bridge.html?v=146a75f1e8ce",
+    "bytes": 24811
    },
    "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=aU4aGIzz1W4&t=125s",
@@ -214261,8 +214261,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A sky view with Earth at the centre and a rock you can drag around it. A circle marks what a ground telescope can see. A switch changes the view to infrared. The question asks why some asteroids hit before telescopes spot them.",
-    "page": "pages/space-sunward-blind-spot.html?v=266f821f3494",
-    "bytes": 17351
+    "page": "pages/space-sunward-blind-spot.html?v=63151d4eaf9d",
+    "bytes": 16704
    },
    "source": "Veritasium, “These are the asteroids to worry about” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=4Wrc4fHSCpw",
@@ -252035,8 +252035,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Card asking which change moves a flamethrower box to the novelty counter. Three options: give it a smaller flame, name it Not-a-Flamethrower, or sell it only online. The reveal says the name classed it as a novelty item, not a weapon.",
-    "page": "pages/weird_facts-not-a-flamethrower.html?v=7497959192bc",
-    "bytes": 26750
+    "page": "pages/weird_facts-not-a-flamethrower.html?v=c2a7ac321afe",
+    "bytes": 21553
    },
    "source": "Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=CKMyBFiiED8",

@@ -1,8 +1,9 @@
 <!doctype html>
 <!-- slug: science-rock-restoration -->
-<!-- Look: a neon sign in the dark. A block of rock drawn in glowing tubes: cyan layers on top, pink clinoforms, amber layers below, red fault cracks.
-     Interaction: the block flickers on flat, cracks along two faults and slides down. The reader drags each sunken block back up the fault and undoes its throw, piece by piece like a puzzle.
-     Wow moment: when the last block snaps home, sparks run down the joins, the cracks go dark, the clinoforms blaze brighter, and an "UNDEFORMED STATE" sign flickers on letter by letter. -->
+<!-- Look: a block diagram from a printed geology textbook. Flat bands of rock in tints of the card's ink: pale beds on top,
+     a sandy ochre unit where dark clinoform lines lean out to the left, darker beds below, two vermilion fault lines.
+     Interaction: the block appears whole, cracks along two faults and slides down. The reader drags each sunken block back up the fault and undoes its throw, piece by piece like a puzzle.
+     Wow moment: when the last block snaps home, small dots run down the joins, the fault lines fade to faint seams, the clinoforms thicken, and "Undeformed state" appears letter by letter. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Undo the faults</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -25,7 +26,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">RESTORE THE ROCK</span></div>
     <h2 class="q">Why do geologists undo the faults in a broken rock section?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A neon block of layered rock cut by two faults. The blocks to the right have slid down. Drag them back up until the layers line up."></svg>
+      <svg id="pic" role="img" aria-label="A block of layered rock cut by two faults. The blocks to the right have slid down. Drag them back up until the layers line up."></svg>
     </div>
     <p class="say" id="say">Two faults broke this rock and dropped it. <b>Drag each sunken block up</b> until its glowing layers meet the ones beside it.</p>
     <p class="body gone" id="why">Faults break the layers and shift them, so their first shape is lost. Undoing each fault's throw, like a puzzle, brings back the undeformed state, and the clinoforms building out to the left become plain to see.</p>
@@ -42,7 +43,11 @@
   CustomEase.create('settle', 'M0,0 C0.22,0 0.32,1.14 0.58,1.05 0.78,0.98 0.9,1 1,1');
 
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), stage = Kit.$('stage');
-  const CY = '#5ef3ff', PK = '#ff4fd8', AM = '#ffb347', RD = '#ff3b3b', WH = '#eef4ff', GO = '#ffd76a';
+  // Flat paint: tints of the card's ink, one sandy ochre for the clinoform unit, one vermilion for the faults.
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+  const SAND = '#d39a52', RD = '#e0553a', FLASH = '#f6efe4';
+  const T1 = tint(84), T2 = tint(68), L1 = tint(48), L2 = tint(36), TOPF = tint(92);
+  const shade = col => `color-mix(in srgb, ${col} 70%, var(--c))`;
   const F = [[.30, .38], [.64, .72]];   // faults: x at the top and at the bottom of the block (normal faults dipping right)
   const SL = .08;                        // horizontal slip per unit of throw: the blocks slide along the fault plane
   const PRESENT = [.13, .10];            // today's throw on each fault, in block heights
@@ -58,8 +63,17 @@
   const wave = (u, i) => .006 * Math.sin(u * 7 + i * 1.7);
   const CLINO = Array.from({length: 8}, (_, i) => ({xi: .86 - i * .09, top: .29 - i * .004, bot: .615}));
   const clinoV = (c, u) => c.top + (c.bot - c.top) / (1 + Math.exp((u - c.xi) / .05));
+  // Bed boundaries (top to bottom) and the flat fill of the band below each one.
+  const BOUNDS = [
+    {v: -.05, f: () => -.05},
+    ...CYV.map((v, i) => ({v, f: u => v + wave(u, i), line: true})),
+    {v: PKV, f: () => PKV, line: true},
+    ...AMV.map((v, i) => ({v, f: u => v + wave(u, i + 3) * .6, line: true})),
+    {v: 1.05, f: () => 1.05}
+  ];
+  const FILLS = [T1, T2, T1, T2, SAND, L1, L2, L1, L2, L1];
 
-  // Lay the sign's letters out one by one, each measured on its own, with a gap that covers stroke and glow,
+  // Lay the sign's letters out one by one, each measured on its own, with a small gap,
   // so neighbouring letters never touch whatever the font's kerning does.
   function layoutSign() {
     if (!G || !G.letters.length) return;
@@ -86,7 +100,6 @@
         const t = G.letters[li++];
         t.setAttribute('x', x.toFixed(1));
         t.setAttribute('font-size', fs);
-        t.setAttribute('stroke-width', Math.max(1.1, fs * .05));
       }
       x += r.ws[i] + r.gap;
     }
@@ -119,70 +132,71 @@
     const X = u => x0 + u * bw, Y = v => y0 + v * bh;
     const path = pts => 'M' + pts.map(([u, v]) => X(u).toFixed(1) + ',' + Y(v).toFixed(1)).join('L');
     const poly = pts => pts.map(([u, v]) => X(u).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ');
-    const s1 = Math.max(1.6, lw * 1.2), s2 = Math.max(4, lw * 3.6);
+    const edge = `fill:none;stroke:var(--c);stroke-linejoin:round`;
 
-    svg.innerHTML = `<defs>
-      <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c0e1c" stop-opacity=".88"/><stop offset="1" stop-color="#140a1c" stop-opacity=".93"/></linearGradient>
-      <linearGradient id="topf" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#2a2340"/><stop offset="1" stop-color="#16122a"/></linearGradient>
-      <filter id="neon" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceGraphic" stdDeviation="${s1}" result="a"/><feGaussianBlur in="SourceGraphic" stdDeviation="${s2}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="a"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    </defs>`;
+    svg.innerHTML = `<defs></defs>`;
 
-    // No wall, no panel: the card itself is the dark ground. An empty group stays for the entrance timeline.
+    // No wall, no panel: the card itself is the ground. An empty group stays for the entrance timeline.
     const bg = Kit.mk('g', {}, svg);
 
-    // The sign under the block, lit only once the rock is restored.
+    // The words under the block, shown only once the rock is restored.
     const sign = Kit.mk('g', {opacity: done && !today ? 1 : 0}, svg);
     const cx = x0 + bw * (1 + DX) / 2;
-    const word = 'UNDEFORMED STATE';
+    const word = 'Undeformed state';
     signH = sfs * 1.05 + fs2 * 1.7 + 6;
     const sy = y0 + bh + Math.max(4, (room - signH) / 2) + sfs * .95, letters = [];
-    const sg = Kit.mk('g', {filter: 'url(#neon)'}, sign);
+    const sg = Kit.mk('g', {}, sign);
     for (let i = 0; i < word.length; i++) {
       if (word[i] === ' ') continue;
-      const t = Kit.mk('text', {x: 0, y: sy, fill: 'rgba(255,215,106,.16)', stroke: GO, 'stroke-width': Math.max(1.1, sfs * .05), 'font-size': sfs, style: DISP}, sg);
+      const t = Kit.mk('text', {x: 0, y: sy, 'font-size': sfs, style: DISP + ';fill:var(--k)'}, sg);
       t.textContent = word[i]; letters.push(t);
     }
-    const sub = Kit.mk('text', {x: cx, y: sy + fs2 * 1.55, fill: PK, 'text-anchor': 'middle', 'font-size': fs2, filter: 'url(#neon)', style: 'font-family:var(--mono);font-weight:700'}, sign);
+    const sub = Kit.mk('text', {x: cx, y: sy + fs2 * 1.55, 'text-anchor': 'middle', 'font-size': fs2, style: `font-family:var(--body);font-weight:600;fill:${SAND}`}, sign);
     sub.textContent = '← clinoforms build out to the left';
 
-    // The three blocks: top face, front face, layers clipped inside, outline, fault crack, hint.
+    // The three blocks: top face, front face with flat beds clipped inside, outline, fault line, handle.
     const tops = [0, F[0][0], F[1][0], 1], bots = [0, F[0][1], F[1][1], 1];
     const blocks = [], faults = [], hints = [], clino = [], lines = [];
     for (let k = 0; k < 3; k++) {
       const g = Kit.mk('g', {}, svg); blocks.push(g);
       const front = [[tops[k], 0], [tops[k + 1], 0], [bots[k + 1], 1], [bots[k], 1]];
       if (k === 2) {
-        Kit.mk('polygon', {points: poly([[1, 0], [1, 1], [1 + DX, 1 - DY], [1 + DX, -DY]]), fill: '#0a0814', stroke: WH, 'stroke-opacity': .35, 'stroke-width': 1}, g);
-        const rf = Kit.mk('g', {filter: 'url(#neon)', opacity: .7, 'stroke-linecap': 'round'}, g);
-        [[CYV, CY], [AMV, AM], [[PKV], PK]].forEach(([vs, col]) => vs.forEach(v => lines.push(Kit.mk('path', {d: path([[1, v], [1 + DX, v - DY]]), stroke: col, 'stroke-width': lw * .8, fill: 'none'}, rf))));
+        // the right-hand side face: the same beds, in shade, running back into the block
+        for (let i = 0; i < FILLS.length; i++) {
+          const v1 = Math.max(0, BOUNDS[i].v), v2 = Math.min(1, BOUNDS[i + 1].v);
+          Kit.mk('polygon', {points: poly([[1, v1], [1 + DX, v1 - DY], [1 + DX, v2 - DY], [1, v2]]), style: `fill:${shade(FILLS[i])}`}, g);
+        }
+        BOUNDS.filter(b => b.line).forEach(b => lines.push(Kit.mk('path', {d: path([[1, b.v], [1 + DX, b.v - DY]]), 'stroke-width': lw * .6, style: edge + ';opacity:.5'}, g)));
+        Kit.mk('polygon', {points: poly([[1, 0], [1, 1], [1 + DX, 1 - DY], [1 + DX, -DY]]), 'stroke-width': lw * .9, style: edge}, g);
       }
-      Kit.mk('polygon', {points: poly([[tops[k], 0], [tops[k + 1], 0], [tops[k + 1] + DX, -DY], [tops[k] + DX, -DY]]), fill: 'url(#topf)', stroke: WH, 'stroke-opacity': .4, 'stroke-width': 1}, g);
-      Kit.mk('polygon', {points: poly(front), fill: 'url(#glass)'}, g);
+      Kit.mk('polygon', {points: poly([[tops[k], 0], [tops[k + 1], 0], [tops[k + 1] + DX, -DY], [tops[k] + DX, -DY]]), 'stroke-width': lw * .9, style: `fill:${TOPF};stroke:var(--c);stroke-linejoin:round`}, g);
       const cid = 'clip' + k, cp = Kit.mk('clipPath', {id: cid}, svg.querySelector('defs'));
       Kit.mk('polygon', {points: poly(front)}, cp);
       const inner = Kit.mk('g', {'clip-path': `url(#${cid})`}, g);
-      const mkSet = (col, w) => Kit.mk('g', {filter: 'url(#neon)', stroke: col, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, inner);
-      const gc = mkSet(CY, lw), gp = mkSet(PK, lw), ga = mkSet(AM, lw);
-      // only draw tubes across this block's own width, so nothing hides outside the frame
+      // only draw beds across this block's own width, so nothing hides outside the frame
       const lo = Math.min(tops[k], bots[k]) - .01, hi = Math.max(tops[k + 1], bots[k + 1]) + .01;
       const U = []; for (let u = lo; u <= hi + 1e-6; u += .01) U.push(u);
-      CYV.forEach((v, i) => lines.push(Kit.mk('path', {d: path(U.map(u => [u, v + wave(u, i)]))}, gc)));
-      AMV.forEach((v, i) => lines.push(Kit.mk('path', {d: path(U.map(u => [u, v + wave(u, i + 3) * .6]))}, ga)));
-      lines.push(Kit.mk('path', {d: path(U.map(u => [u, PKV]))}, gp));
+      for (let i = 0; i < FILLS.length; i++) {
+        const a = U.map(u => [u, BOUNDS[i].f(u)]), b = U.map(u => [u, BOUNDS[i + 1].f(u)]).reverse();
+        Kit.mk('polygon', {points: poly(a.concat(b)), style: `fill:${FILLS[i]}`}, inner);
+      }
+      const gl = Kit.mk('g', {'stroke-width': lw * .6, style: edge + ';opacity:.5;stroke-linecap:round'}, inner);
+      BOUNDS.filter(b => b.line).forEach(b => lines.push(Kit.mk('path', {d: path(U.map(u => [u, b.f(u)]))}, gl)));
+      const gp = Kit.mk('g', {'stroke-width': lw, style: edge + ';stroke-linecap:round'}, inner);
       CLINO.forEach(c => {
         const pts = U.filter(u => u > c.xi - .24 && u < c.xi + .2).map(u => [u, clinoV(c, u)]);
         if (pts.length < 2) return;
-        const p = Kit.mk('path', {d: path(pts)}, gp); clino.push(p); lines.push(p);
+        const p = Kit.mk('path', {d: path(pts), 'stroke-width': lw}, gp); clino.push(p); lines.push(p);
       });
-      Kit.mk('polygon', {points: poly(front), fill: 'none', stroke: WH, 'stroke-opacity': .55, 'stroke-width': 1.1, filter: 'url(#neon)'}, g);
+      Kit.mk('polygon', {points: poly(front), 'stroke-width': lw * .9, style: edge}, g);
       if (k > 0) {
         const [a, b] = F[k - 1];
-        faults.push(Kit.mk('path', {d: path([[a, 0], [b, 1]]), stroke: RD, 'stroke-width': lw * 1.4, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#neon)', opacity: done && !today ? .15 : 1}, g));
-        // drag handle: a dark puck with glowing chevrons
+        faults.push(Kit.mk('path', {d: path([[a, 0], [b, 1]]), stroke: RD, 'stroke-width': lw * 1.6, fill: 'none', 'stroke-linecap': 'round', opacity: done && !today ? .15 : 1}, g));
+        // drag handle: a plain paper disc with two up-chevrons
         const hx = X((tops[k] + tops[k + 1] + bots[k] + bots[k + 1]) / 4 + .015), hy = Y(.47), c = Math.max(6, Math.min(bw, bh) * .028);
         const hg = Kit.mk('g', {opacity: off[k - 1] === 0 || done ? 0 : 1}, g), hb = Kit.mk('g', {class: 'bob'}, hg);
-        Kit.mk('circle', {cx: hx, cy: hy - c * .2, r: c * 2, fill: 'rgba(8,6,18,.82)', stroke: WH, 'stroke-opacity': .35, 'stroke-width': 1}, hb);
-        Kit.mk('path', {d: `M${hx - c},${hy - c * .1} l${c},${-c} l${c},${c} M${hx - c},${hy + c} l${c},${-c} l${c},${c}`, stroke: WH, 'stroke-width': lw * 1.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', filter: 'url(#neon)'}, hb);
+        Kit.mk('circle', {cx: hx, cy: hy - c * .2, r: c * 2, 'stroke-width': lw, style: 'fill:var(--k);stroke:var(--c)'}, hb);
+        Kit.mk('path', {d: `M${hx - c},${hy - c * .1} l${c},${-c} l${c},${c} M${hx - c},${hy + c} l${c},${-c} l${c},${c}`, 'stroke-width': lw * 1.4, style: 'fill:none;stroke:var(--c);stroke-linecap:round;stroke-linejoin:round'}, hb);
         hints.push(hg);
       }
     }
@@ -202,14 +216,13 @@
     G.blocks.forEach((g, k) => g.setAttribute('transform', `translate(${(s[k] * SL * G.bw).toFixed(2)},${(s[k] * G.bh).toFixed(2)})`));
   }
 
-  // Sparks run down the fault where the layers meet again.
+  // Small dots run down the fault where the layers meet again.
   function sparks(j) {
     if (Kit.calm || !G) return;
     const [a, b] = F[j], g = G.blocks[j + 1];
     const vs = [...CYV, PKV, ...AMV];
     vs.forEach((v, i) => {
-      const col = v < .25 ? CY : v < .5 ? PK : AM;
-      const c = Kit.mk('circle', {cx: G.X(a + (b - a) * v), cy: G.Y(v), r: 0, fill: WH, stroke: col, 'stroke-width': G.lw, filter: 'url(#neon)'}, g);
+      const c = Kit.mk('circle', {cx: G.X(a + (b - a) * v), cy: G.Y(v), r: 0, style: 'fill:var(--k);stroke:var(--c)', 'stroke-width': G.lw * .7}, g);
       gsap.timeline({delay: i * .035, onComplete: () => c.remove()})
         .to(c, {attr: {r: G.lw * 2.6}, duration: .14, ease: 'power3.out'})
         .to(c, {attr: {r: G.lw * 4}, opacity: 0, duration: .4, ease: 'power2.out'});
@@ -219,7 +232,7 @@
   function flash(j) {
     Kit.haptic('light');
     const f = G.faults[j], h = G.hints[j];
-    gsap.timeline().to(f, {attr: {stroke: '#ffffff'}, duration: .08}).to(f, {attr: {stroke: RD}, duration: .6, ease: 'power2.out'});
+    gsap.timeline().to(f, {attr: {stroke: FLASH}, duration: .08}).to(f, {attr: {stroke: RD}, duration: .6, ease: 'power2.out'});
     gsap.to(h, {opacity: 0, duration: .3});
     sparks(j);
     if (!done && !(off[0] === 0 && off[1] === 0)) say.innerHTML = 'Click: one fault undone, its layers meet again. <b>Now the other block.</b>';
@@ -291,7 +304,7 @@
     if (!today) tlAct.add(() => { sparks(0); sparks(1); }).to(G.faults, {opacity: .15, duration: .4}).to(G.sign, {opacity: 1, duration: .6, ease: 'flick'}, '-=.2');
   });
 
-  // ---------- an idle neon hum: now and then one tube stutters ----------
+  // ---------- idle: now and then one bed line briefly fades and returns ----------
   (function hum() {
     gsap.delayedCall(1.6 + Math.random() * 2.8, () => {
       if (G && !Kit.calm && !busy && !drag) {
@@ -313,7 +326,7 @@
     });
   }).observe(stage);
 
-  // ---------- the entrance: a flat block lights up, cracks, and drops ----------
+  // ---------- the entrance: a whole block appears, cracks, and drops ----------
   Kit.onShow.card = build;
   Kit.onEnter.card = () => {
     if (Kit.calm || done || !G) return;

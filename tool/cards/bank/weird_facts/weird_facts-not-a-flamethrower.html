@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: weird_facts-not-a-flamethrower -->
-<!-- Look: a night-lit isometric diorama shop. A grey WEAPONS counter (license needed) and a candy NOVELTIES counter (no license) sit under two neon boards hung from the ceiling. Tiny clerks, a racked gun wall, toy shelves, a rug, a plant, and dust motes drifting through the light.
+<!-- Look: a flat, printed-book cutaway of a small shop, drawn in dark ink lines on the card colour. A dark ink WEAPONS counter (license needed, padlocked, guns racked on the wall) and a yellow NOVELTIES counter (no license, polka dots, toy shelves) sit under two painted boards hung from the ceiling. Two clerks and a buyer are drawn flat.
      Interaction: pick which change moves the boxed flamethrower from the weapons counter to the novelty one, then say how sure you are.
-     Wow: the box's tag scrambles into "NOT-A-FLAMETHROWER", a NOVELTY ITEM stamp slams on, the WEAPONS neon sputters out, the box hops across the shop (Flip), the NOVELTIES neon blazes and a tiny buyer walks over. -->
+     Wow: the box's tag scrambles into "NOT-A-FLAMETHROWER", a yellow NOVELTY ITEM sticker slams on, the Weapons board goes dark, the box hops across the shop (Flip), the Novelties board lights up and the buyer walks over. -->
 <title>The Not-a-Flamethrower</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -11,18 +11,18 @@
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#world{flex:1 1 0;min-height:0;position:relative;overflow:visible;background:none;box-shadow:none;border-radius:0}
+#world{--ink:#2a1f3d;--pop:#ffd34d;flex:1 1 0;min-height:0;position:relative;overflow:visible;background:none;box-shadow:none;border-radius:0}
 #pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
 .slot{position:absolute;width:0;height:0;z-index:2}
 #crate{position:absolute;width:calc(var(--u,16px)*2.6);height:calc(var(--u,16px)*2.6);left:calc(var(--u,16px)*-1.3);top:calc(var(--u,16px)*-1.92)}
 .hop{position:absolute;inset:0;transform-origin:50% 74%}
-.box{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 .4cqh .5cqh rgba(0,0,0,.45))}
-.ctag{position:absolute;left:50%;top:46%;background:#fbf4e2;color:#17130f;font:700 max(var(--fs,12px),12px)/1.15 var(--mono);letter-spacing:.02em;
-  padding:.4cqh 1.3cqw;border-radius:.5cqh;white-space:nowrap;text-align:center;box-shadow:0 .3cqh .6cqh rgba(0,0,0,.45),inset 0 -.2cqh 0 rgba(0,0,0,.08)}
-.ctag::before{content:"";position:absolute;left:50%;top:-.9cqh;width:.35cqh;height:1cqh;margin-left:-.17cqh;background:#c9b48a;border-radius:.2cqh}
+.box{width:100%;height:100%;display:block;overflow:visible}
+.ctag{position:absolute;left:50%;top:46%;background:var(--k);color:var(--ink);font:800 max(var(--fs,12px),12px)/1.15 var(--body);letter-spacing:0;
+  padding:.4cqh 1.3cqw;border-radius:.4cqh;white-space:nowrap;text-align:center;border:.2cqh solid var(--ink)}
+.ctag::before{content:"";position:absolute;left:50%;top:-1cqh;width:.3cqh;height:1cqh;margin-left:-.15cqh;background:var(--ink)}
 .ctag span{display:block}
-.stamp{position:absolute;left:50%;top:calc(100% + 1.3cqh);margin-left:-50%;width:100%;text-align:center;font:800 max(1.4cqh,12px)/1 var(--body);letter-spacing:.06em;font-style:normal;
-  color:#ff3b55;background:rgba(15,18,38,.86);border:.22cqh solid #ff3b55;border-radius:.6cqh;padding:.45cqh .4cqw;opacity:0;white-space:nowrap;box-shadow:0 0 1.2cqh rgba(255,59,85,.45)}
+.stamp{position:absolute;left:50%;top:calc(100% + 1.3cqh);margin-left:-50%;width:100%;text-align:center;font:800 max(1.4cqh,12px)/1 var(--body);letter-spacing:0;font-style:normal;
+  color:var(--ink);background:var(--pop);border:.22cqh solid var(--ink);border-radius:.4cqh;padding:.45cqh .4cqw;opacity:0;white-space:nowrap}
 #opts{display:flex;flex-direction:column;gap:.9cqh;flex-shrink:0;padding-bottom:12px}
 #why{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0}
 #why .big{font:800 max(2.4cqh,16px)/1.15 var(--display)}
@@ -31,7 +31,7 @@
   box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.25cqh 4cqw;cursor:pointer;transition:transform .12s cubic-bezier(.3,1.6,.5,1)}
 .opt:active{transform:scale(.97)}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
-.opt b{font-family:var(--mono);font-weight:700;overflow-wrap:anywhere}
+.opt b{font-family:inherit;font-weight:800;overflow-wrap:anywhere}
 @media (max-height:720px){#why .big{display:none}#why .body{line-height:1.3}}
 </style>
 <article class="card" id="card" data-topic="weird_facts" data-kind="Pick one · how sure">
@@ -44,21 +44,13 @@
         <div class="slot" id="slotA">
           <div id="crate"><div class="hop" id="hop">
             <svg class="box" viewBox="0 0 100 100" aria-hidden="true">
-              <defs>
-                <linearGradient id="wt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2c27a"/><stop offset="1" stop-color="#d79a4e"/></linearGradient>
-                <linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c7833d"/><stop offset="1" stop-color="#9a5f27"/></linearGradient>
-                <linearGradient id="wr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a86a2f"/><stop offset="1" stop-color="#7a4818"/></linearGradient>
-              </defs>
-              <polygon points="8,30 50,52 50,96 8,74" fill="url(#wl)"/>
-              <polygon points="50,52 92,30 92,74 50,96" fill="url(#wr)"/>
-              <polygon points="50,8 92,30 50,52 8,30" fill="url(#wt)"/>
-              <g stroke="rgba(60,30,8,.45)" stroke-width="1.4" fill="none">
-                <path d="M8,44.7 L50,66.7 M8,59.3 L50,81.3 M50,66.7 L92,44.7 M50,81.3 L92,59.3"/>
-                <path d="M29,19 L71,41 M29,41 L71,19" stroke="rgba(120,70,20,.35)"/>
-              </g>
-              <path d="M62,58 l6,-3 l0,8 l-6,3z M76,51 l6,-3 l0,8 l-6,3z" fill="rgba(40,20,5,.35)"/>
-              <path d="M8,30 L50,52 L92,30 M50,52 V96" stroke="rgba(255,235,200,.55)" stroke-width="1.2" fill="none"/>
-              <path d="M50,8 L92,30 L92,74 L50,96 L8,74 L8,30 Z" stroke="#4a2a0c" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+              <polygon points="8,30 50,52 50,96 8,74" style="fill:color-mix(in srgb,var(--k) 72%,var(--c))"/>
+              <polygon points="50,52 92,30 92,74 50,96" style="fill:color-mix(in srgb,var(--k) 50%,var(--c))"/>
+              <polygon points="50,8 92,30 50,52 8,30" style="fill:var(--k)"/>
+              <path d="M29,19 L71,41" style="stroke:color-mix(in srgb,var(--k) 55%,var(--c));stroke-width:7;fill:none"/>
+              <path d="M62,58 l6,-3 l0,8 l-6,3z M76,51 l6,-3 l0,8 l-6,3z" style="fill:var(--ink)"/>
+              <path d="M8,30 L50,52 L92,30 M50,52 V96" style="stroke:var(--ink);stroke-width:1.8;fill:none;stroke-linejoin:round"/>
+              <path d="M50,8 L92,30 L92,74 L50,96 L8,74 L8,30 Z" style="stroke:var(--ink);stroke-width:2.4;fill:none;stroke-linejoin:round"/>
             </svg>
             <div class="ctag" id="tagEl"><span id="n1"></span><span id="n2">FLAMETHROWER</span><i class="stamp" id="stamp">NOVELTY ITEM</i></div>
           </div></div>
@@ -87,34 +79,34 @@ const svg = Kit.$('pic'), world = Kit.$('world'), crate = Kit.$('crate'), hop = 
 const slotA = Kit.$('slotA'), slotB = Kit.$('slotB');
 gsap.set(tagEl, {xPercent: -50, yPercent: -50, rotation: -3});
 
-let W = 0, H = 0, s = 16, ox = 0, oy = 0, fs = 12, WH = 5, compact = false;
+let W = 0, H = 0, s = 16, ox = 0, oy = 0, fs = 12, WH = 5, compact = false, LW = 1.2;
 const st = {walk: 0, glow: 0, dim: 0, check: 0};
 const L = {};
 let loops = [];
+// Palette: ink lines, the card colour and its tints, yellow for "novelty".
+const INK = 'var(--ink)', POP = 'var(--pop)', K = 'var(--k)';
+const T = n => `color-mix(in srgb,var(--k) ${n}%,var(--c))`;
+const S = (fill, stroke, sw) => `fill:${fill}` + (stroke ? `;stroke:${stroke};stroke-width:${sw || LW};stroke-linejoin:round;stroke-linecap:round` : '');
 const P = (x, y, z = 0) => [ox + (x - y) * .866 * s, oy + (x + y) * .5 * s - z * s];
 const pts = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
-const poly = (par, ps, fill, extra = {}) => Kit.mk('polygon', Object.assign({points: pts(ps), fill}, extra), par);
+const poly = (par, ps, fill, o = {}) => Kit.mk('polygon', Object.assign({points: pts(ps), style: S(fill, o.stroke, o.sw)}, o.cls ? {class: o.cls} : {}), par);
+const line = (par, a, b, col, w) => Kit.mk('line', {x1: a[0], y1: a[1], x2: b[0], y2: b[1], style: `stroke:${col};stroke-width:${w};stroke-linecap:round`}, par);
 function box(par, x0, x1, y0, y1, z0, z1, c) {
-  poly(par, [P(x0, y1, z1), P(x1, y1, z1), P(x1, y1, z0), P(x0, y1, z0)], c.l);
-  poly(par, [P(x1, y0, z1), P(x1, y1, z1), P(x1, y1, z0), P(x1, y0, z0)], c.r);
-  poly(par, [P(x0, y0, z1), P(x1, y0, z1), P(x1, y1, z1), P(x0, y1, z1)], c.top);
-}
-function grad(defs, id, x2, y2, stops, radial) {
-  const g = Kit.mk(radial ? 'radialGradient' : 'linearGradient', radial ? {id} : {id, x1: 0, y1: 0, x2, y2}, defs);
-  stops.forEach(([o, c, a = 1]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, g));
+  const o = {stroke: c.s, sw: c.sw};
+  poly(par, [P(x0, y1, z1), P(x1, y1, z1), P(x1, y1, z0), P(x0, y1, z0)], c.l, o);
+  poly(par, [P(x1, y0, z1), P(x1, y1, z1), P(x1, y1, z0), P(x1, y0, z0)], c.r, o);
+  poly(par, [P(x0, y0, z1), P(x1, y0, z1), P(x1, y1, z1), P(x0, y1, z1)], c.top, o);
 }
 
-// A tiny person: shadow, legs, body, head, hair.
+// A tiny person, drawn flat: legs, body, head, hair.
 function fig(par, x, y, col, o = {}) {
   const [px, py0] = P(x, y, 0), g = Kit.mk('g', {class: o.cls || ''}, par);
-  const py = py0 + (o.bob || 0) * s, sw = o.swing || 0;
-  Kit.mk('ellipse', {cx: px, cy: py0, rx: .32 * s, ry: .15 * s, fill: 'rgba(0,0,0,.4)'}, g);
-  Kit.mk('rect', {x: px - .17 * s, y: py - .64 * s - sw * s, width: .14 * s, height: .64 * s, rx: .06 * s, fill: '#191a30'}, g);
-  Kit.mk('rect', {x: px + .03 * s, y: py - .64 * s + sw * s, width: .14 * s, height: .64 * s, rx: .06 * s, fill: '#22233d'}, g);
-  Kit.mk('rect', {x: px - .26 * s, y: py - 1.38 * s, width: .52 * s, height: .84 * s, rx: .22 * s, fill: col}, g);
-  Kit.mk('rect', {x: px - .26 * s, y: py - 1.38 * s, width: .2 * s, height: .84 * s, rx: .1 * s, fill: 'rgba(255,255,255,.18)'}, g);
-  Kit.mk('circle', {cx: px, cy: py - 1.64 * s, r: .26 * s, fill: o.skin || '#f2c6a0'}, g);
-  Kit.mk('path', {d: `M${px - .27 * s},${py - 1.62 * s} a${.27 * s},${.27 * s} 0 0 1 ${.54 * s},0 q${-.27 * s},${-.1 * s} ${-.54 * s},0z`, fill: o.hair || '#2b1d14'}, g);
+  const py = py0 + (o.bob || 0) * s, sw = o.swing || 0, lw = Math.max(.8, s * .05);
+  Kit.mk('rect', {x: px - .17 * s, y: py - .64 * s - sw * s, width: .14 * s, height: .64 * s, rx: .06 * s, style: S(INK)}, g);
+  Kit.mk('rect', {x: px + .03 * s, y: py - .64 * s + sw * s, width: .14 * s, height: .64 * s, rx: .06 * s, style: S(INK)}, g);
+  Kit.mk('rect', {x: px - .26 * s, y: py - 1.38 * s, width: .52 * s, height: .84 * s, rx: .22 * s, style: S(col, INK, lw)}, g);
+  Kit.mk('circle', {cx: px, cy: py - 1.64 * s, r: .26 * s, style: S(K, INK, lw)}, g);
+  Kit.mk('path', {d: `M${px - .27 * s},${py - 1.62 * s} a${.27 * s},${.27 * s} 0 0 1 ${.54 * s},0 q${-.27 * s},${-.1 * s} ${-.54 * s},0z`, style: S(INK)}, g);
   return g;
 }
 
@@ -141,99 +133,63 @@ function layout() {
   ox = W / 2; oy = top + Bh + d;
   WH = Math.max(3.4, Math.min(7.5, (oy + 2) / s));
   world.style.setProperty('--u', s + 'px');
-
-  const defs = Kit.mk('defs', {}, svg);
-  grad(defs, 'gLw', 0, 1, [[0, '#262b66'], [1, '#1a1d45']]);
-  grad(defs, 'gRw', 0, 1, [[0, '#343b88'], [1, '#232858']]);
-  grad(defs, 'gRed', 0, 0, [[0, '#ff3c55', .45], [1, '#ff3c55', 0]], true);
-  grad(defs, 'gTeal', 0, 0, [[0, '#5ef2c8', .55], [1, '#5ef2c8', 0]], true);
-  grad(defs, 'gWarm', 0, 0, [[0, '#ffd27a', .2], [1, '#ffd27a', 0]], true);
-  grad(defs, 'hRed', 0, 0, [[0, '#ff4a62', .38], [1, '#ff4a62', 0]], true);
-  grad(defs, 'hTeal', 0, 0, [[0, '#5ef2c8', .5], [1, '#5ef2c8', 0]], true);
-  const fl = Kit.mk('filter', {id: 'neon', x: '-30%', y: '-80%', width: '160%', height: '260%'}, defs);
-  Kit.mk('feGaussianBlur', {stdDeviation: Math.max(1.5, fs * .16), result: 'b'}, fl);
-  const m = Kit.mk('feMerge', {}, fl); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
+  LW = Math.max(1, s * .07);
 
   for (const k of ['floor', 'glow', 'walls', 'decor', 'clerks', 'ctr', 'props', 'motes', 'dust', 'cust', 'signs']) L[k] = Kit.mk('g', {}, svg);
 
-  // Floor slab with visible thickness, then a checker of tiles under a warm pool of light.
-  poly(L.floor, [P(0, 8, 0), P(8, 8, 0), P(8, 8, -.4), P(0, 8, -.4)], '#151837');
-  poly(L.floor, [P(8, 0, 0), P(8, 8, 0), P(8, 8, -.4), P(8, 0, -.4)], '#0f1129');
-  Kit.mk('polyline', {points: pts([P(0, 8), P(8, 8), P(8, 0)]), fill: 'none', stroke: 'rgba(255,255,255,.18)', 'stroke-width': 1}, L.floor);
-  for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++)
-    poly(L.floor, [P(i, j), P(i + 1, j), P(i + 1, j + 1), P(i, j + 1)], (i + j) % 2 ? '#232856' : '#1c2047', {class: 'tile', stroke: 'rgba(255,255,255,.05)', 'stroke-width': .6});
-  // A candy rug in front of the novelties.
-  poly(L.floor, [P(3.6, 3.3), P(7.3, 3.3), P(7.3, 5.2), P(3.6, 5.2)], '#5a2a6e', {class: 'tile'});
-  poly(L.floor, [P(3.85, 3.5), P(7.05, 3.5), P(7.05, 5), P(3.85, 5)], 'none', {class: 'tile', stroke: '#ffd166', 'stroke-width': Math.max(1, s * .06), 'stroke-dasharray': `${s * .2} ${s * .16}`});
-  const c0 = P(4, 4);
-  Kit.mk('ellipse', {cx: c0[0], cy: c0[1], rx: 6 * s, ry: 3.4 * s, fill: 'url(#gWarm)'}, L.floor);
+  // Floor: one plain slab, inked edge.
+  poly(L.floor, [P(0, 8, 0), P(8, 8, 0), P(8, 8, -.4), P(0, 8, -.4)], INK);
+  poly(L.floor, [P(8, 0, 0), P(8, 8, 0), P(8, 8, -.4), P(8, 0, -.4)], INK);
+  poly(L.floor, [P(0, 0), P(8, 0), P(8, 8), P(0, 8)], T(58), {cls: 'tile', stroke: INK});
+  // Pools of light in front of each counter: which one is "open".
   const pa = P(1.8, 5.6), pb = P(5.6, 1.8);
-  L.gW = Kit.mk('ellipse', {cx: pa[0], cy: pa[1], rx: 3.2 * s, ry: 1.8 * s, fill: 'url(#gRed)'}, L.glow);
-  L.gN = Kit.mk('ellipse', {cx: pb[0], cy: pb[1], rx: 3.4 * s, ry: 1.9 * s, fill: 'url(#gTeal)'}, L.glow);
+  L.gW = Kit.mk('ellipse', {cx: pa[0], cy: pa[1], rx: 3.2 * s, ry: 1.8 * s, style: 'fill:var(--k);fill-opacity:.35'}, L.glow);
+  L.gN = Kit.mk('ellipse', {cx: pb[0], cy: pb[1], rx: 3.4 * s, ry: 1.9 * s, style: 'fill:var(--pop);fill-opacity:.55'}, L.glow);
 
-  // Walls, with a lit top edge, a skirting line and a dark corner seam.
+  // Walls, with an inked cap and corner.
   const wl = Kit.mk('g', {class: 'wall'}, L.walls);
-  poly(wl, [P(0, 0, 0), P(0, 8, 0), P(0, 8, WH), P(0, 0, WH)], 'url(#gLw)');
-  poly(wl, [P(0, 0, 0), P(8, 0, 0), P(8, 0, WH), P(0, 0, WH)], 'url(#gRw)');
-  for (let k = 1; k < 8; k++) {
-    const a = P(0, k, 0), b = P(0, k, WH), c = P(k, 0, 0), e = P(k, 0, WH);
-    Kit.mk('line', {x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: 'rgba(255,255,255,.03)', 'stroke-width': 1}, wl);
-    Kit.mk('line', {x1: c[0], y1: c[1], x2: e[0], y2: e[1], stroke: 'rgba(255,255,255,.03)', 'stroke-width': 1}, wl);
-  }
-  poly(wl, [P(0, 0, WH), P(0, 8, WH), P(-.18, 8, WH), P(-.18, -.18, WH), P(8, -.18, WH), P(8, 0, WH)], '#4a53a8');
-  Kit.mk('polyline', {points: pts([P(0, 8, .25), P(0, 0, .25), P(8, 0, .25)]), fill: 'none', stroke: 'rgba(255,255,255,.12)', 'stroke-width': 1.2}, wl);
-  Kit.mk('line', {x1: P(0, 0)[0], y1: P(0, 0, 0)[1], x2: P(0, 0)[0], y2: P(0, 0, WH)[1], stroke: 'rgba(0,0,0,.35)', 'stroke-width': 1.5}, wl);
+  poly(wl, [P(0, 0, 0), P(0, 8, 0), P(0, 8, WH), P(0, 0, WH)], T(30), {stroke: INK});
+  poly(wl, [P(0, 0, 0), P(8, 0, 0), P(8, 0, WH), P(0, 0, WH)], T(40), {stroke: INK});
+  poly(wl, [P(0, 0, WH), P(0, 8, WH), P(-.18, 8, WH), P(-.18, -.18, WH), P(8, -.18, WH), P(8, 0, WH)], INK);
+  line(wl, P(0, 0, 0), P(0, 0, WH), INK, LW);
 
-  // Weapons wall: a dark pegboard with racked long guns.
+  // Weapons wall: a dark board with racked long guns.
   const dl = Kit.mk('g', {class: 'wall'}, L.decor);
-  poly(dl, [P(0, 4.2, 1.4), P(0, 7.0, 1.4), P(0, 7.0, 2.85), P(0, 4.2, 2.85)], '#12142e', {stroke: '#3a3f6e', 'stroke-width': 1});
-  for (let i = 0; i < 6; i++) for (let j = 0; j < 3; j++) { const q = P(0, 4.45 + i * .46, 1.6 + j * .5); Kit.mk('circle', {cx: q[0], cy: q[1], r: Math.max(.6, s * .03), fill: 'rgba(255,255,255,.12)'}, dl); }
+  poly(dl, [P(0, 4.2, 1.4), P(0, 7.0, 1.4), P(0, 7.0, 2.85), P(0, 4.2, 2.85)], INK);
   [1.8, 2.2, 2.6].forEach(z => {
-    const a = P(0, 4.5, z), b = P(0, 6.7, z), c = P(0, 6.15, z - .1), e = P(0, 6.75, z - .12);
-    Kit.mk('line', {x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: '#9aa3c0', 'stroke-width': Math.max(1.5, s * .1), 'stroke-linecap': 'round'}, dl);
-    Kit.mk('line', {x1: c[0], y1: c[1], x2: e[0], y2: e[1], stroke: '#6b5a48', 'stroke-width': Math.max(2.5, s * .2), 'stroke-linecap': 'round'}, dl);
+    line(dl, P(0, 4.5, z), P(0, 6.7, z), T(75), Math.max(1.5, s * .1));
+    line(dl, P(0, 6.15, z - .1), P(0, 6.75, z - .12), K, Math.max(2.5, s * .2));
   });
-  // Novelty wall: shelves of bright toys.
-  const toys = ['#ff6f91', '#ffd166', '#5ef2c8', '#b388ff', '#4cc9f0'];
+  // Novelty wall: shelves of toys.
+  const toys = [POP, K, T(75)];
   [1.4, 2.2].forEach((z, r) => {
-    box(dl, 4.2, 7.0, 0, .45, z - .08, z, {top: '#c98a4b', l: '#8a5a2b', r: '#6e4520'});
+    box(dl, 4.2, 7.0, 0, .45, z - .08, z, {top: INK, l: INK, r: INK});
     for (let k = 0; k < 5; k++) {
-      const x = 4.45 + k * .55, cz = toys[(k + r * 2) % 5];
-      if ((k + r) % 2) box(dl, x, x + .32, .06, .38, z, z + .32, {top: cz, l: cz, r: 'rgba(0,0,0,.35)'});
-      else { const q = P(x + .16, .22, z + .2); Kit.mk('circle', {cx: q[0], cy: q[1], r: .2 * s, fill: cz}, dl); Kit.mk('circle', {cx: q[0] - .06 * s, cy: q[1] - .07 * s, r: .06 * s, fill: 'rgba(255,255,255,.7)'}, dl); }
+      const x = 4.45 + k * .55, cz = toys[(k + r) % 3];
+      if ((k + r) % 2) box(dl, x, x + .32, .06, .38, z, z + .32, {top: cz, l: cz, r: cz, s: INK, sw: Math.max(.8, s * .05)});
+      else { const q = P(x + .16, .22, z + .2); Kit.mk('circle', {cx: q[0], cy: q[1], r: .2 * s, style: S(cz, INK, Math.max(.8, s * .05))}, dl); }
     }
   });
 
-  // Clerks peeking over their counters.
-  fig(L.clerks, .35, 5.6, '#8f97b3', {cls: 'ppl', skin: '#d9a77f', hair: '#c9c9d6'});
-  fig(L.clerks, 5.6, .35, '#b388ff', {cls: 'ppl', skin: '#c98b62', hair: '#ff6f91'});
+  // Clerks behind their counters.
+  fig(L.clerks, .35, 5.6, T(80), {cls: 'ppl'});
+  fig(L.clerks, 5.6, .35, INK, {cls: 'ppl'});
 
-  // The two counters.
+  // The two counters: dark and locked for weapons, yellow and dotted for novelties.
   const cw = Kit.mk('g', {class: 'ctr'}, L.ctr);
-  box(cw, .8, 2.8, 4.2, 7.0, 0, 1.2, {top: '#66708c', l: '#3d4357', r: '#2c3040'});
-  poly(cw, [P(.8, 7, .78), P(2.8, 7, .78), P(2.8, 7, .62), P(.8, 7, .62)], '#ff3c55');
-  poly(cw, [P(2.8, 4.2, .78), P(2.8, 7, .78), P(2.8, 7, .62), P(2.8, 4.2, .62)], '#c42a40');
-  // A padlock on the weapons counter front.
-  { const q = P(1.8, 7, .3), r = .15 * s;
-    Kit.mk('path', {d: `M${q[0] - r * .7},${q[1] - r * .2} v${-r * .6} a${r * .7},${r * .7} 0 0 1 ${r * 1.4},0 v${r * .6}`, fill: 'none', stroke: '#c9cede', 'stroke-width': Math.max(1, r * .35)}, cw);
-    Kit.mk('rect', {x: q[0] - r, y: q[1] - r * .25, width: r * 2, height: r * 1.5, rx: r * .3, fill: '#ffd166'}, cw); }
-  Kit.mk('polyline', {points: pts([P(.8, 7, 1.2), P(2.8, 7, 1.2), P(2.8, 4.2, 1.2)]), fill: 'none', stroke: 'rgba(255,255,255,.35)', 'stroke-width': 1}, cw);
+  box(cw, .8, 2.8, 4.2, 7.0, 0, 1.2, {top: '#54486b', l: '#2a1f3d', r: '#1d152c', s: INK});
+  { const q = P(1.8, 7, .5), r = .2 * s;
+    Kit.mk('path', {d: `M${q[0] - r * .6},${q[1] - r * .2} v${-r * .6} a${r * .6},${r * .6} 0 0 1 ${r * 1.2},0 v${r * .6}`, style: `fill:none;stroke:${K};stroke-width:${Math.max(1.2, r * .3)}`}, cw);
+    Kit.mk('rect', {x: q[0] - r, y: q[1] - r * .25, width: r * 2, height: r * 1.5, rx: r * .25, style: S(K)}, cw);
+    Kit.mk('circle', {cx: q[0], cy: q[1] + r * .45, r: r * .22, style: S(INK)}, cw); }
   const cn = Kit.mk('g', {class: 'ctr'}, L.ctr);
-  box(cn, 4.2, 7.0, .8, 2.8, 0, 1.2, {top: '#ffd877', l: '#ff6f91', r: '#d94f76'});
-  for (let k = 0; k < 5; k++) { const q = P(4.5 + k * .55, 2.8, .55 + (k % 2) * .25); Kit.mk('circle', {cx: q[0], cy: q[1], r: .11 * s, fill: '#fff3c4', class: 'bulb'}, cn); }
-  for (let k = 0; k < 4; k++) { const q = P(7, 1.1 + k * .5, .55 + (k % 2) * .25); Kit.mk('circle', {cx: q[0], cy: q[1], r: .1 * s, fill: '#ffd166', class: 'bulb'}, cn); }
-  Kit.mk('polyline', {points: pts([P(4.2, 2.8, 1.2), P(7, 2.8, 1.2), P(7, .8, 1.2)]), fill: 'none', stroke: 'rgba(255,255,255,.55)', 'stroke-width': 1}, cn);
+  box(cn, 4.2, 7.0, .8, 2.8, 0, 1.2, {top: POP, l: '#f0b52e', r: '#d6971a', s: INK});
+  for (let k = 0; k < 5; k++) { const q = P(4.5 + k * .55, 2.8, .55 + (k % 2) * .25); Kit.mk('circle', {cx: q[0], cy: q[1], r: .11 * s, style: S(K), class: 'bulb'}, cn); }
+  for (let k = 0; k < 4; k++) { const q = P(7, 1.1 + k * .5, .55 + (k % 2) * .25); Kit.mk('circle', {cx: q[0], cy: q[1], r: .1 * s, style: S(K), class: 'bulb'}, cn); }
 
-  // A potted plant in the front corner.
-  const pl = Kit.mk('g', {class: 'ctr'}, L.props);
-  box(pl, 7.0, 7.6, 6.6, 7.2, 0, .5, {top: '#3b2a20', l: '#c56a4a', r: '#9b4d33'});
-  [[0, 1.05, .32, '#2fbf8a'], [-.22, .85, .26, '#24a676'], [.24, .82, .25, '#3ed69b'], [0, .7, .22, '#1f8f66']].forEach(([dx, z, r, c]) => {
-    const q = P(7.3, 6.9, z); Kit.mk('circle', {cx: q[0] + dx * s, cy: q[1], r: r * s, fill: c}, pl);
-  });
-
-  // Hanging neon boards, face-on, over each counter.
-  L.sW = sign('WEAPONS', 'license needed', '#ff5a6b', '#ffc2c9', 'hRed');
-  L.sN = sign('NOVELTIES', 'no license', '#5ef2c8', '#d4fff3', 'hTeal');
+  // Hanging boards, face-on, over each counter.
+  L.sW = sign('Weapons', 'license needed', INK, K, T(72));
+  L.sN = sign('Novelties', 'no license', POP, INK, INK);
   const bw = Math.max(L.sW.w, L.sN.w);
   const off = Math.max(bw / 2 + 6, Math.min(3.3 * s, W / 2 - bw / 2 - 6));
   const yb = oy - d, yt = yb - Bh;
@@ -248,46 +204,35 @@ function layout() {
   if (!Kit.calm) startLoops();
 }
 
-function sign(title, sub, col, sub2, halo) {
+function sign(title, sub, board, txt, sub2) {
   const g = Kit.mk('g', {class: 'sign'}, L.signs);
   const wires = Kit.mk('g', {}, g), back = Kit.mk('g', {}, g);
-  const neon = Kit.mk('g', {filter: 'url(#neon)'}, g);
-  const t1 = Kit.mk('text', {'text-anchor': 'middle', fill: col, style: `font:800 ${fs * 1.1}px var(--display),Georgia,serif;letter-spacing:.08em`}, neon);
+  const neon = Kit.mk('g', {}, g);
+  const t1 = Kit.mk('text', {'text-anchor': 'middle', style: `fill:${txt};font:800 ${fs * 1.2}px var(--display),Georgia,serif`}, neon);
   t1.textContent = title;
   let t2 = null;
-  if (!compact) { t2 = Kit.mk('text', {'text-anchor': 'middle', fill: sub2, style: `font:700 ${fs}px var(--body),Figtree,sans-serif`}, g); t2.textContent = sub; }
+  if (!compact) { t2 = Kit.mk('text', {'text-anchor': 'middle', style: `fill:${sub2};font:700 ${fs}px var(--body),Figtree,sans-serif`}, g); t2.textContent = sub; }
   let w1 = 0, w2 = 0;
   try { w1 = t1.getBBox().width; if (t2) w2 = t2.getBBox().width; } catch (e) {}
-  if (!w1) w1 = title.length * fs * .82;
+  if (!w1) w1 = title.length * fs * .7;
   if (t2 && !w2) w2 = sub.length * fs * .56;
-  return {g, wires, back, neon, t1, t2, col, halo, w: Math.max(w1, w2) + fs * 1.8};
+  return {g, wires, back, neon, t1, t2, board, w: Math.max(w1, w2) + fs * 1.8};
 }
 function placeSign(o, cx, yt, bw, Bh) {
-  const x0 = cx - bw / 2;
-  if (yt > 3) [-.32, .32].forEach(k => {
-    Kit.mk('line', {x1: cx + k * bw, y1: 0, x2: cx + k * bw, y2: yt, stroke: 'rgba(255,255,255,.7)', 'stroke-width': 1}, o.wires);
-    Kit.mk('circle', {cx: cx + k * bw, cy: yt + 2.5, r: 1.6, fill: '#ffffff'}, o.wires);
-  });
-  o.haloEl = Kit.mk('ellipse', {cx, cy: yt + Bh / 2, rx: bw * .85, ry: Bh * 1.2, fill: `url(#${o.halo})`}, o.back);
-  Kit.mk('rect', {x: x0, y: yt, width: bw, height: Bh, rx: fs * .45, fill: '#0c0a1b', stroke: o.col, 'stroke-opacity': .7, 'stroke-width': 1.4}, o.back);
-  Kit.mk('rect', {x: x0 + 3, y: yt + 3, width: bw - 6, height: Bh - 6, rx: fs * .3, fill: 'none', stroke: o.col, 'stroke-opacity': .18, 'stroke-width': 1}, o.back);
-  if (compact) { o.t1.setAttribute('x', cx); o.t1.setAttribute('y', yt + fs * 1.42); }
+  const x0 = cx - bw / 2, pad = Math.max(2.5, fs * .28);
+  if (yt > 3) [-.32, .32].forEach(k => line(o.wires, [cx + k * bw, 0], [cx + k * bw, yt], INK, 1.5));
+  // A pale margin around the board: shows the board is lit.
+  o.haloEl = Kit.mk('rect', {x: x0 - pad, y: yt - pad, width: bw + pad * 2, height: Bh + pad * 2, rx: fs * .4 + pad, style: S(K)}, o.back);
+  Kit.mk('rect', {x: x0, y: yt, width: bw, height: Bh, rx: fs * .4, style: S(o.board, INK, 1.6)}, o.back);
+  if (compact) { o.t1.setAttribute('x', cx); o.t1.setAttribute('y', yt + fs * 1.48); }
   else {
-    o.t1.setAttribute('x', cx); o.t1.setAttribute('y', yt + fs * 1.5);
+    o.t1.setAttribute('x', cx); o.t1.setAttribute('y', yt + fs * 1.6);
     o.t2.setAttribute('x', cx); o.t2.setAttribute('y', yt + fs * 3.2);
   }
 }
 
-// Ambient life: drifting motes, a buzzing weapons neon, twinkling counter bulbs.
+// Ambient life: a buzzing weapons board, twinkling counter dots, breathing clerks.
 function startLoops() {
-  for (let k = 0; k < 12; k++) {
-    const [x, y] = P(1 + Math.random() * 6.4, 1 + Math.random() * 6.4, .2);
-    const c = Kit.mk('circle', {cx: x, cy: y, r: Math.max(.9, s * .05), fill: k % 2 ? '#ffd27a' : '#ffffff', opacity: 0}, L.motes);
-    loops.push(gsap.timeline({repeat: -1, delay: Math.random() * 4, repeatDelay: Math.random() * 2})
-      .to(c, {attr: {cy: y - 3.2 * s, cx: x + (Math.random() - .5) * s}, duration: 4.5, ease: 'none'}, 0)
-      .to(c, {opacity: .75, duration: 1.2}, 0)
-      .to(c, {opacity: 0, duration: 1.4}, 3.1));
-  }
   loops.push(gsap.timeline({repeat: -1, repeatDelay: 2.6, delay: 2})
     .to(L.sW.neon, {opacity: .25, duration: .05}).to(L.sW.neon, {opacity: 1, duration: .05})
     .to(L.sW.neon, {opacity: .4, duration: .06}, '+=.1').to(L.sW.neon, {opacity: 1, duration: .08}));
@@ -301,11 +246,11 @@ function drawCust() {
   L.cust.innerHTML = '';
   const t = st.walk, x = 3.5 + (4.5 - 3.5) * t, y = 6.2 + (4.5 - 6.2) * t;
   const moving = t > 0 && t < 1, ph = t * Math.PI * 7;
-  const g = fig(L.cust, x, y, '#4cc9f0', {cls: 'ppl', bob: moving ? -Math.abs(Math.sin(ph)) * .12 : 0, swing: moving ? Math.sin(ph) * .08 : 0, skin: '#f0c19a', hair: '#3b2416'});
+  const g = fig(L.cust, x, y, K, {cls: 'ppl', bob: moving ? -Math.abs(Math.sin(ph)) * .12 : 0, swing: moving ? Math.sin(ph) * .08 : 0});
   if (st.check > 0) {
     const [hx, hy] = P(x, y, 1.75), cx = hx - .85 * s, cy = hy - .15 * s, r = .34 * s * st.check;
-    Kit.mk('circle', {cx, cy, r, fill: '#5ef2c8', filter: 'url(#neon)'}, g);
-    Kit.mk('path', {d: `M${cx - r * .45},${cy} l${r * .3},${r * .32} l${r * .6},${-r * .62}`, stroke: '#0f1226', 'stroke-width': Math.max(1.6, r * .28), fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    Kit.mk('circle', {cx, cy, r, style: S(POP, INK, Math.max(1, r * .14))}, g);
+    Kit.mk('path', {d: `M${cx - r * .45},${cy} l${r * .3},${r * .32} l${r * .6},${-r * .62}`, style: `fill:none;stroke:${INK};stroke-width:${Math.max(1.6, r * .28)};stroke-linecap:round;stroke-linejoin:round`}, g);
   }
 }
 function applyGlow() {
@@ -322,7 +267,7 @@ function applyGlow() {
 function dust() {
   const [cx, cy] = P(5.6, 1.8, 1.2);
   for (let k = 0; k < 12; k++) {
-    const a = (k / 12) * Math.PI * 2, c = Kit.mk('circle', {cx, cy, r: .16 * s, fill: ['#5ef2c8', '#fff3c4', '#ff6f91'][k % 3]}, L.dust);
+    const a = (k / 12) * Math.PI * 2, c = Kit.mk('circle', {cx, cy, r: .16 * s, style: S([INK, K, POP][k % 3])}, L.dust);
     gsap.to(c, {attr: {cx: cx + Math.cos(a) * 1.8 * s, cy: cy + Math.sin(a) * .9 * s, r: .02 * s}, opacity: 0, duration: .75, ease: 'power3.out', onComplete: () => c.remove()});
   }
 }
