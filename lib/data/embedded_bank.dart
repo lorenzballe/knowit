@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611071646,
- "built": "2026-11-07T16:46:41Z",
+ "version": 202611071901,
+ "built": "2026-11-07T19:01:22Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -46667,10 +46667,10 @@ const String kEmbeddedBank = r'''
    "strand": "food.fermentation.food_safety",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "exponential",
-   "question": "Why can shark meat pose a mercury risk to humans?",
-   "answer": "Sharks sit at the top of the food chain. Each fish keeps the methylmercury of all it ate, so mercury piles up meal after meal. High doses can harm children's development and pregnancy.",
-   "move": "The higher up the food chain, the more mercury in every bite.",
+   "principle": "reflection",
+   "question": "A mollusc, two fish, a shark. Where does the most mercury end up?",
+   "answer": "The shark. Mercury builds up along a food chain, so the biggest fish ends up holding the most. In high doses it can harm development, above all in children and in pregnancy. It is still fish, with benefits too.",
+   "move": "What builds up along a food chain ends up at the top.",
    "keywords": [
     "shark",
     "mercury",
@@ -46690,15 +46690,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "A food chain graphic ends with a shark, showing mercury building up at each step. The question asks why shark meat can pose a mercury risk to humans. The reader picks a reason, then rates how sure they are.",
-    "ground": "#0a0d1c",
-    "page": "pages/food-shark-mercury-climb.html?v=4deaa25cea46",
-    "bytes": 23296
+    "touch": "drags",
+    "label": "A food chain picture showing a mollusc, two fish and a shark. The question asks where the most mercury ends up. Drag across the picture to pick an animal.",
+    "page": "pages/food-shark-mercury-climb.html?v=158fa89657c3",
+    "bytes": 14813
    },
    "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=810s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "food-sourdough-1",
@@ -57636,12 +57635,12 @@ const String kEmbeddedBank = r'''
    "topic": "history",
    "genre": "history.decisions_that_changed_history",
    "strand": "history.decisions_that_changed_history.bad_calls",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "What happens to Iran the more it widens the conflict?",
-   "answer": "The more Iran widens the war, the more it risks hastening its own end. It opens a front on each neutral, and widening a war to set everyone against you can isolate you.",
-   "move": "Widening a war to set everyone against you can isolate you and hasten your end.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "If Iran sets all against all, what do analysts say it risks?",
+   "answer": "Widening the war to set all against all risks isolating Iran further and hastening its own end. Some, the video says, would openly enter the conflict alongside the United States. Analysts call this the paradox of escalation.",
+   "move": "Before you widen a fight, ask where each new player would stand: beside you, or beside your enemy?",
    "keywords": [
     "iran",
     "israel",
@@ -57661,15 +57660,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Interactive page titled The paradox of escalation, asking what happens to Iran the more it widens the conflict. A draggable stem widens the war, and each step opens a front on a neutral country.",
-    "ground": "#efe5cb",
-    "page": "pages/history-paradox-of-escalation.html?v=befa4a0a21a0",
-    "bytes": 24606
+    "touch": "taps",
+    "label": "Multiple-choice question: If Iran sets all against all, what do analysts say it risks? Options: it splits its enemies apart; the others keep out of the fight; it risks isolating itself and hastening its end. The reader picks one, then rates how sure they are.",
+    "page": "pages/history-paradox-of-escalation.html?v=ce29cde250ca",
+    "bytes": 15946
    },
    "source": "Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=WZuXvvDRTgg&t=1972s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "history-pile-one-reactor",
@@ -71636,12 +71634,12 @@ const String kEmbeddedBank = r'''
    "topic": "human_body",
    "genre": "human_body.your_body_your_choices",
    "strand": "human_body.your_body_your_choices.small_daily_habits",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "After one strong beer, does everyone's alcohol curve look the same?",
-   "answer": "After one strong beer, the card asks whether everyone's alcohol curve looks the same. One man drank one 8.6% beer and blew into a breathalyser every 10 minutes. The reader draws a guess for how his reading moved over 3 hours. How fast a body clears alcohol is personal, so his curve is his alone.",
-   "move": "How fast a body clears alcohol is personal: his curve is his alone.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "sampling",
+   "question": "After one 8.6% beer, where is your blood alcohol 2 h 55 later?",
+   "answer": "He drank one 8.6% beer and blew into a professional breathalyser every 10 minutes. At 2 h 55 he read 0.20 g/L. That curve is his, with his metabolism and all the conditions of that single test; another body clears the same glass at its own pace.",
+   "move": "A careful measurement on one body describes that body, not yours.",
    "keywords": [
     "alcohol",
     "beer",
@@ -71662,14 +71660,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Drawing page asking how one man's breath alcohol reading would change over 3 hours after one 8.6% beer, tested every 10 minutes. The reader draws a guess of the curve.",
-    "ground": "#17120b",
-    "page": "pages/human_body-one-beer-curve.html?v=bd2512facc1b",
-    "bytes": 25005
+    "label": "Interactive chart of blood alcohol over time after one 8.6% beer, with a dashed line the reader drags up or down to set a point. The reader is asked where their own blood alcohol is 2 hours 55 minutes after the drink.",
+    "page": "pages/human_body-one-beer-curve.html?v=4de0388f1ad3",
+    "bytes": 14830
    },
    "source": "Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=iEM_OvUoolY&t=294s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "human_body-one-strong-beer",
@@ -97986,12 +97983,12 @@ const String kEmbeddedBank = r'''
    "topic": "maths",
    "genre": "maths.shapes",
    "strand": "maths.shapes.projections",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why does Russia look bigger than Africa on most world maps?",
-   "answer": "Russia looks bigger than Africa on a Mercator map because the projection draws places larger the farther they are from the equator. Far-north Russia is blown up several times, while Africa, on the equator, is near its true size. Drag Russia down to the equator to compare the two.",
-   "move": "On a Mercator map, the farther from the equator, the bigger a place looks.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Russia looks bigger than Africa. Laid on Africa at true size, how big?",
+   "answer": "Russia is smaller than Africa, though it looks bigger. Mercator draws land bigger the farther it lies from the equator. Russia lies far north, so it swells; Africa straddles the equator and stays close to true.",
+   "move": "On a Mercator map, distance from the equator buys size: compare countries only at the same latitude.",
    "keywords": [
     "russia",
     "africa",
@@ -98012,14 +98009,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A world map in Mercator projection with Russia and Africa. The reader is asked to drag Russia down to the equator to see whether Russia still looks bigger than Africa.",
-    "ground": "#060912",
-    "page": "pages/maths-mercator-russia.html?v=231e469246e1",
-    "bytes": 18284
+    "label": "A white Russia shape drawn over a map of Africa, sized by dragging up or down. The page asks how big Russia would be if laid on Africa at true size.",
+    "page": "pages/maths-mercator-russia.html?v=45df57557cd0",
+    "bytes": 21891
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=cKRRHQStYH0&t=71s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "maths-mercator-stretch",
@@ -173772,6 +173768,46 @@ const String kEmbeddedBank = r'''
    "written": "2026-11-03"
   },
   {
+   "id": "psychology-lottery-versus-love",
+   "topic": "psychology",
+   "genre": "psychology.emotions",
+   "strand": "psychology.emotions.fear",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "One view: why risk 1‑in‑20,000 on lottery, not 1‑in‑10 on love?",
+   "answer": "The view says the odds aren't the whole price: a stranger's 'no' is gone by lunch, so passing up love can be fear rather than maths. Against it, a lost ticket is cheap and private, while a 'no' from someone in your life can cost a friendship, so the fear can be fair.",
+   "move": "Is it the odds that stop me, or what this one \"no\" would really cost?",
+   "keywords": [
+    "lottery",
+    "love",
+    "rejection",
+    "fear",
+    "odds"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A point-of-view card titled 'The lottery and love'. It asks why people risk a 1-in-20,000 lottery ticket but not a 1-in-10 chance in love, and argues that fear of a 'no' outweighs the odds. It ends by asking: is it the odds that stop me, or what this one 'no' would really cost?",
+    "graded": false,
+    "page": "pages/psychology-lottery-versus-love.html?v=4488e8dbd57b",
+    "bytes": 16428
+   },
+   "source": "Diventare Strong, “Sei MENO Intelligente di Quanto Pensi: 7 Segni” (YouTube, 2024)",
+   "reference": "https://www.youtube.com/watch?v=cevmdNkWJ5g&t=741s",
+   "written": "2026-11-07"
+  },
+  {
    "id": "psychology-memory-and-stress-1",
    "topic": "psychology",
    "genre": "psychology.memory",
@@ -177601,6 +177637,46 @@ const String kEmbeddedBank = r'''
    "source": "Diventare Strong, “Come apparire Dominanti, Sicuri di sé stessi, Determinati, Alpha, Tosti e Produttivi” (YouTube, 2015)",
    "reference": "https://www.youtube.com/watch?v=ztJI8JOLJmY",
    "written": "2026-11-03"
+  },
+  {
+   "id": "psychology-status-leverage",
+   "topic": "psychology",
+   "genre": "psychology.resist_persuasion",
+   "strand": "psychology.resist_persuasion.authority",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Does fame or wealth, by itself, give someone power over you?",
+   "answer": "One view: status gives no hold on you without leverage, meaning what someone can give or withhold that you need. Need nothing from them and their gold card is blank. The other view: status pulls with nothing given. Ask what exactly they could give or take away.",
+   "move": "When someone important makes me shrink, what exactly could they give me, or take away?",
+   "keywords": [
+    "status",
+    "fame",
+    "wealth",
+    "leverage",
+    "celebrity"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "abstract",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks whether fame or wealth alone gives someone power over you. The reader drags a marker to where they stand between two views: one says status gives no hold, the other says leverage is what counts. A question asks what someone important could actually give or take away.",
+    "graded": false,
+    "page": "pages/psychology-status-leverage.html?v=8adbe41ee5ac",
+    "bytes": 21773
+   },
+   "source": "Diventare Strong, “Come Fregarsene Di Tutto E Di Tutti (giudizio degli altri, resistere, durare)” (YouTube, 2016)",
+   "reference": "https://www.youtube.com/watch?v=r9nhyukd_Sw&t=159s",
+   "written": "2026-11-07"
   },
   {
    "id": "psychology-steelmanning-1",
@@ -235807,12 +235883,12 @@ const String kEmbeddedBank = r'''
    "topic": "technology",
    "genre": "technology.where_things_come_from",
    "strand": "technology.where_things_come_from.supply_chains",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How hard can a tiny fan press a robot mouse down?",
-   "answer": "A fan built from handheld drone parts can press a micromouse down with five times its weight. The scale reads the mouse's weight plus the air's push, so the reading shows the fan's downforce along with the mouse itself.",
-   "move": "A fan from handheld drone parts presses a micromouse down with 5× its weight.",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "A micromouse's fan sucks it to the floor. How hard, in mouse weights?",
+   "answer": "A micromouse's fan sucks it to the floor. Its fan, often built from handheld drone parts, pulls the mouse down with five times the force of its weight. A small fan can press a robot to the floor far harder than its own weight does.",
+   "move": "A small fan can press a robot to the floor far harder than its own weight does.",
    "keywords": [
     "micromouse",
     "vacuum fan",
@@ -235832,15 +235908,14 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "A robot mouse with a fan sits on a scale. A throttle slider reads FAN 0%, and the page asks the reader to drag it to see how hard the fan presses the mouse down.",
-    "ground": "#0d3d73",
-    "page": "pages/technology-five-times-downforce.html?v=86486772cea2",
-    "bytes": 24578
+    "touch": "drags",
+    "label": "Blocks to drag up to show how hard a micromouse's fan pulls it to the floor, in mouse weights. Drag first, then choose Drag up to stack the fan's pull.",
+    "page": "pages/technology-five-times-downforce.html?v=e617deb1f6a9",
+    "bytes": 15483
    },
    "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=1214s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "technology-flip-pivoting-fixtures",
@@ -242617,12 +242692,12 @@ const String kEmbeddedBank = r'''
    "topic": "technology",
    "genre": "technology.where_things_come_from",
    "strand": "technology.where_things_come_from.factories",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How does thermal tempering make glass stronger?",
-   "answer": "Tempered glass is heated to about 700 °C and then cooled in an instant. The surface locks in a squeeze, so a knock or sudden heat must undo that squeeze before the glass gives way. That makes it about 6–7× stronger than ordinary glass.",
-   "move": "Tempered glass is tougher because its surface is born squeezed.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Red-hot glass is cooled in an instant. Its skin ends up squeezed or stretched?",
+   "answer": "Tempered glass is heated to about 700 °C, then cooled in an instant. Its outer surface contracts and locks in compression, a squeeze that raises its resistance to mechanical stress and thermal shock.",
+   "move": "Tempered glass is tougher because its skin is locked in a squeeze.",
    "keywords": [
     "tempered-glass",
     "thermal-tempering",
@@ -242642,14 +242717,13 @@ const String kEmbeddedBank = r'''
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A pane of glass under a press, shown as two versions: A, ordinary glass, and B, tempered glass. The reader presses and holds to load each picture, ordinary first. The question asked is how thermal tempering makes glass stronger.",
-    "ground": "#efe5c9",
-    "page": "pages/technology-tempered-glass-squeeze.html?v=7202cb971b37",
-    "bytes": 27022
+    "label": "Page titled 'Why tempered glass is tough' asks whether the glass skin ends up squeezed or stretched. A slice can be dragged sideways: left squeezes the skin, right stretches it. The reader's answer is marked right or wrong.",
+    "page": "pages/technology-tempered-glass-squeeze.html?v=acadd0962c20",
+    "bytes": 18744
    },
    "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=QB4WuTk_ja8&t=129s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "technology-the-weak-weld",

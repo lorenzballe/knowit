@@ -1,0 +1,38 @@
+{
+  "id": "psychology-status-leverage",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.authority",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does fame or wealth, by itself, give someone power over you?",
+  "answer": "One view: status gives no hold on you without leverage, meaning what someone can give or withhold that you need. Need nothing from them and their gold card is blank. The other view: status pulls with nothing given. Ask what exactly they could give or take away.",
+  "move": "When someone important makes me shrink, what exactly could they give me, or take away?",
+  "keywords": [
+    "status",
+    "fame",
+    "wealth",
+    "leverage",
+    "celebrity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks whether fame or wealth alone gives someone power over you. The reader drags a marker to where they stand between two views: one says status gives no hold, the other says leverage is what counts. A question asks what someone important could actually give or take away.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Come Fregarsene Di Tutto E Di Tutti (giudizio degli altri, resistere, durare)” (YouTube, 2016)",
+  "reference": "https://www.youtube.com/watch?v=r9nhyukd_Sw&t=159s",
+  "written": "2026-11-07"
+}

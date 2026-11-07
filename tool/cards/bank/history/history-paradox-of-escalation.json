@@ -3,12 +3,12 @@
   "topic": "history",
   "genre": "history.decisions_that_changed_history",
   "strand": "history.decisions_that_changed_history.bad_calls",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "What happens to Iran the more it widens the conflict?",
-  "answer": "The more Iran widens the war, the more it risks hastening its own end. It opens a front on each neutral, and widening a war to set everyone against you can isolate you.",
-  "move": "Widening a war to set everyone against you can isolate you and hasten your end.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "If Iran sets all against all, what do analysts say it risks?",
+  "answer": "Widening the war to set all against all risks isolating Iran further and hastening its own end. Some, the video says, would openly enter the conflict alongside the United States. Analysts call this the paradox of escalation.",
+  "move": "Before you widen a fight, ask where each new player would stand: beside you, or beside your enemy?",
   "keywords": [
     "iran",
     "israel",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Interactive page titled The paradox of escalation, asking what happens to Iran the more it widens the conflict. A draggable stem widens the war, and each step opens a front on a neutral country.",
-    "ground": "#efe5cb"
+    "touch": "taps",
+    "label": "Multiple-choice question: If Iran sets all against all, what do analysts say it risks? Options: it splits its enemies apart; the others keep out of the fight; it risks isolating itself and hastening its end. The reader picks one, then rates how sure they are."
   },
   "source": "Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)",
   "reference": "https://www.youtube.com/watch?v=WZuXvvDRTgg&t=1972s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

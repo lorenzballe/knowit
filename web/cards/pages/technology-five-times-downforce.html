@@ -1,367 +1,266 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: technology-five-times-downforce -->
-<!-- Look: a cyanotype blueprint of a micromouse standing on a physician-style platform scale, white hairlines and engineer's lettering on Prussian blue, with hatched sections, isobars, centre lines and dimension arrows. The drawing sits straight on the card's blueprint grid.
-     Interaction: drag the fan throttle. The rotor spins, air streams travel under the skirt and out of the fan, the air pushing up from below fades while the air above keeps pressing, the isobars sag over the robot, the plate sinks, and a dimension line measures the push in mouse weights.
-     Wow moment: at full throttle five ghost mice swoop in along curved paths and stack on the robot, the needle springs to 6, and the push reads five times its own weight. -->
+<!-- slug: technology-fan-downforce -->
+<!-- Thought to carry: a small fan can press a robot to the floor far harder than its own weight does.
+     Front: a small robot mouse on the floor. The reader drags up to stack blocks on it, each block one mouse-weight of fan pull.
+     Back: the same mouse twice, at the same scale. Fan off: one outlined block, its own weight. Fan on: five solid blocks, the fan's pull.
+     The reader's guess is a short level mark beside the five.
+     The front shows only the reader's own stack and its number. The true count, the "5×" and any verdict appear only after the turn. -->
 <title>Five times its weight</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{
-  background-image:
-    radial-gradient(120% 80% at 50% 35%, rgba(255,255,255,.07), rgba(0,0,0,0) 60%),
-    radial-gradient(140% 100% at 50% 50%, rgba(0,0,0,0) 55%, rgba(2,16,40,.45)),
-    linear-gradient(rgba(238,245,255,.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(238,245,255,.07) 1px, transparent 1px),
-    linear-gradient(rgba(238,245,255,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(238,245,255,.035) 1px, transparent 1px);
-  background-size:100% 100%,100% 100%,max(9cqh,60px) max(9cqh,60px),max(9cqh,60px) max(9cqh,60px),max(1.8cqh,12px) max(1.8cqh,12px),max(1.8cqh,12px) max(1.8cqh,12px);
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .75s}
+.turn:not(.over)>.back{visibility:hidden}
+.kit-calm .turn{transition:none}
+.kit-calm .turn.over>.front{transition:none}
+.stagebox{display:flex;flex:1;min-height:0}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.back .big{margin:0 0 1.2cqh}
+.back .body{margin:1.2cqh 0 1cqh}
+
+/* confidence chips: legible before and after the drag */
+#sure{opacity:1!important;color:var(--k)!important}
+#sure :is(span,b,p,div,label,small):not([data-v]){color:var(--k)!important}
+#sure [data-v]{opacity:1!important;color:var(--k)!important;background:transparent!important;border:2px solid var(--k)!important;box-shadow:none!important}
+#sure [data-v].pick{background:var(--k)!important;color:#fff!important}
+.first{margin:.6cqh 0 0;font:600 13px/1.3 var(--body);color:var(--k)}
+
+/* footer: full width, above the icon row, clear of it */
+.face .foot{display:block;padding:0 0 68px;margin-top:auto}
+.face .foot .src{display:block;max-width:none;font-size:13px;line-height:1.35;white-space:normal;overflow-wrap:normal}
+
+/* short phones: give the drawing its room back */
+@media (max-height:760px){
+  .back .big{font-size:36px!important;line-height:1.02!important}
+  .back .body{font-size:15px!important;line-height:1.38!important}
+  .back .keep{padding-top:12px!important;padding-bottom:12px!important}
+  .face .foot{padding-bottom:60px}
 }
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:visible}
-#ctl{display:flex;align-items:center;gap:3cqw;margin:.4cqh 0 .2cqh}
-#ctl .lab{font:700 max(1.6cqh,12px)/1 var(--mono);letter-spacing:.12em;color:var(--k)}
-#ctl .val{font:700 max(1.9cqh,13px)/1 var(--mono);color:var(--k);min-width:4.2em;text-align:right}
-#thr{flex:1;min-width:0;-webkit-appearance:none;appearance:none;background:transparent;height:max(4.6cqh,34px);margin:0;cursor:ew-resize;touch-action:pan-y}
-#thr::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg,var(--k) var(--p,0%),rgba(238,245,255,.28) var(--p,0%))}
-#thr::-moz-range-track{height:2px;background:rgba(238,245,255,.28)}
-#thr::-moz-range-progress{height:2px;background:var(--k)}
-#thr::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:var(--c);border:2px solid var(--k);margin-top:calc(max(3.4cqh,26px) / -2 + 1px);box-shadow:0 0 0 6px rgba(238,245,255,.12),inset 0 0 0 5px var(--c),inset 0 0 0 9px var(--k)}
-#thr::-moz-range-thumb{width:max(3.4cqh,26px);height:max(3.4cqh,26px);border-radius:50%;background:var(--c);border:2px solid var(--k);box-shadow:0 0 0 6px rgba(238,245,255,.12),inset 0 0 0 5px var(--c),inset 0 0 0 9px var(--k)}
-.say b{color:var(--k)}
 </style>
-<article class="card" id="card" data-topic="technology" data-kind="Drag the throttle · downforce" style="--c:#0d3d73;--k:#eef5ff;--edge:#072a52;--muted:#b4cbea">
+<article class="card" id="card" data-topic="technology" data-kind="Drag to guess · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">VACUUM FAN</span></div>
-    <h2 class="q">How hard can a tiny fan press a robot mouse down?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Blueprint of a maze-solving robot mouse with a vacuum fan, standing on a platform scale whose dial reads in mouse weights."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STACK THE PULL</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">A micromouse's fan sucks it to the floor. How hard, in mouse weights?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A small robot mouse with a fan, on the floor. Drag up to stack blocks on it, each block one mouse weight."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="first" id="first">drag first, then choose</p>
+        <p class="say" id="say"><b>Drag up</b> to stack the fan's pull. Each block is the mouse's own weight.</p>
+        <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Five times its weight.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same mouse twice, at the same scale. Fan off: one block, its own weight. Fan on: five blocks of fan pull."></svg></div>
+        <p class="body">Its fan, often just built from handheld drone parts, pulls the mouse down with five times the force of its weight.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> A small fan can press a robot to the floor far harder than its own weight does.</div>
+        <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
+      </section>
     </div>
-    <div id="ctl"><span class="lab">FAN</span><input id="thr" type="range" min="0" max="100" value="0" aria-label="Fan throttle"><span class="val" id="val">0%</span></div>
-    <p class="say" id="say"><b>Drag the fan throttle.</b> The scale feels the mouse's weight plus the air's push.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A fan from handheld drone parts presses a micromouse down with 5× its weight.</div>
-    <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
-  const svg = Kit.$('pic'), thr = Kit.$('thr'), say = Kit.$('say'), val = Kit.$('val');
-  const INK = '#eef5ff', BG = '#0d3d73', SOFT = 'rgba(238,245,255,', MONO = getComputedStyle(document.body).getPropertyValue('--mono') || 'monospace';
-  const st = {t: 0}, nd = {v: 1}, pl = {o: 0, s: .6};
-  let W = 0, H = 0, fs = 12, PY = 0, mw = 0, mh = 0, cx = 0, x0 = 0, s = .5, gh = 0, top = 0;
-  let D = {}, flowTl = null, ang = 0, clock = 0, revealed = false, midSaid = false, ready = false;
-  const gOp = [0, 0, 0, 0, 0], gPos = [0, 1, 2, 3, 4].map(() => ({x: 0, y: 0}));
-  const mk = (t, a, p) => Kit.mk(t, a, p);
-  const txt = (p, x, y, t, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-family': MONO, 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
-  const curve = pts => { let d = `M${pts[0][0]},${pts[0][1]}`; for (let i = 0; i < pts.length - 1; i++) { const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2; d += ` C${p1[0] + (p2[0] - p0[0]) / 6},${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6},${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]},${p2[1]}`; } return d; };
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const arrow = (x, ya, yb, hs) => { const dir = yb > ya ? 1 : -1; return `M${x},${ya} V${yb} M${x - hs},${yb - dir * hs * 1.4} L${x},${yb} L${x + hs},${yb - dir * hs * 1.4}`; };
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  const MAX = 8, TRUE = 5;
+  let N = 0, touched = false, answered = false, turned = false;
+  let F = {};
+  let stackG = null, heroT = null, noteG = null, hintG = null;
 
-  // The robot mouse in side elevation, drawn from its bottom-left corner (front faces right).
-  function drawMouse(p, ghost) {
-    const sw = ghost ? {'vector-effect': 'non-scaling-stroke'} : {};
-    const cls = ghost ? {} : {class: 'draw'};
-    const L = (tag, a) => mk(tag, Object.assign({stroke: INK, 'stroke-width': 1.4, fill: 'none'}, sw, cls, a), p);
-    L('path', {d: `M${.28 * mw},${-.4 * mh} L${.3 * mw},${-.05 * mh} L${.7 * mw},${-.05 * mh} L${.72 * mw},${-.4 * mh}`, fill: ghost ? SOFT + '.04)' : 'url(#hatch)'});
-    for (const fx of [.17, .83]) {
-      L('circle', {cx: fx * mw, cy: -.2 * mh, r: .2 * mh, fill: SOFT + (ghost ? '.04)' : '.06)')});
-      if (!ghost) mk('circle', {cx: fx * mw, cy: -.2 * mh, r: .15 * mh, fill: 'none', stroke: SOFT + '.55)', 'stroke-width': 1, 'stroke-dasharray': '2 3'}, p);
-      L('circle', {cx: fx * mw, cy: -.2 * mh, r: .05 * mh, fill: INK});
-      L('rect', {x: fx * mw - .07 * mw, y: -.4 * mh, width: .14 * mw, height: .08 * mh, rx: 2});
-    }
-    L('rect', {x: .03 * mw, y: -.48 * mh, width: .94 * mw, height: .08 * mh, fill: SOFT + (ghost ? '.06)' : '.14)')});
-    if (!ghost) for (let i = 0; i < 9; i++) mk('rect', {x: (.08 + i * .045) * mw, y: -.47 * mh, width: .02 * mw, height: .02 * mh, fill: SOFT + '.5)'}, p);
-    L('path', {d: `M${.37 * mw},${-.48 * mh} L${.39 * mw},${-.9 * mh} L${.61 * mw},${-.9 * mh} L${.63 * mw},${-.48 * mh}`, fill: SOFT + (ghost ? '.05)' : '.08)')});
-    if (!ghost) for (let i = 1; i < 5; i++) { const y = -(.48 + i * .084) * mh; mk('line', {x1: .385 * mw, x2: .615 * mw, y1: y, y2: y, stroke: SOFT + '.4)', 'stroke-width': 1}, p); }
-    L('ellipse', {cx: .5 * mw, cy: -.92 * mh, rx: .13 * mw, ry: .03 * mw});
-    L('path', {d: `M${.9 * mw},${-.48 * mh} L${.98 * mw},${-.72 * mh} L${1.04 * mw},${-.72 * mh}`});
-    L('rect', {x: .95 * mw, y: -.8 * mh, width: .07 * mw, height: .08 * mh, rx: 1.5, fill: SOFT + (ghost ? '.06)' : '.2)')});
-    L('rect', {x: .1 * mw, y: -.62 * mh, width: .18 * mw, height: .14 * mh, rx: 2});
-  }
-
-  function layout() {
-    if (flowTl) flowTl.kill();
-    svg.innerHTML = '';
-    D = {};
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = clamp(W / 28, 12, 14);
-    const showTitle = H > 220;
-    top = showTitle ? fs * 2.2 : 4;
-    const hb = clamp(H * .06, 8, 18);
-    const bTop = H - 5 - hb;
-    PY = bTop - 9;
-    const r = clamp(Math.min(W * .15, (PY - top - fs * 1.5 - 6) / 2), 20, 58);
-    const gx = W - r - 6;
-    const gy = clamp(PY - (PY - top) * .45, top + r + fs * 1.5, PY - r - 6);
-    const R = gx - r - 8, labW = fs * 5.2;
-    mw = Math.max(40, Math.min((R - 10 - fs * .9 - labW) / .9, (R - 6) / 1.04, (PY - top) * .9, 240));
-    mh = mw * .36;
-    s = clamp((PY - mh - top - 6) / (5 * mh), .2, .8); gh = mh * s;
-    const xdOff = Math.max(mw * s / 2, mw * .3) + fs * .9;
-    cx = 6 + mw * .5;
-    const slack = R - Math.max(cx + .54 * mw, cx + xdOff + 7 + labW);
-    if (slack > 0) cx += slack * .35;
-    x0 = cx - mw / 2;
-
-    const defs = mk('defs', {}, svg);
-    const hp = mk('pattern', {id: 'hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
-    mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: SOFT + '.45)', 'stroke-width': 1}, hp);
-    const bg = mk('linearGradient', {id: 'body', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    mk('stop', {offset: 0, 'stop-color': INK, 'stop-opacity': .14}, bg); mk('stop', {offset: 1, 'stop-color': INK, 'stop-opacity': .03}, bg);
-    const glow = mk('radialGradient', {id: 'glow'}, defs);
-    mk('stop', {offset: 0, 'stop-color': INK, 'stop-opacity': .4}, glow); mk('stop', {offset: 1, 'stop-color': INK, 'stop-opacity': 0}, glow);
-    const mkr = mk('marker', {id: 'ah', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse'}, defs);
-    mk('path', {d: 'M0,1 L10,5 L0,9 Z', fill: INK}, mkr);
-
-    // Title strip: one line, engineer's lettering
-    if (showTitle) {
-      const tfs = Math.max(12, fs * .9);
-      txt(svg, 2, fs * 1.05, 'FIG. 1 · MICROMOUSE', {'font-size': tfs, opacity: .8, 'letter-spacing': '.1em'});
-      if (W > 300) txt(svg, W - 2, fs * 1.05, 'SIDE ELEVATION', {'text-anchor': 'end', 'font-size': 12, opacity: .5, 'letter-spacing': '.1em', 'font-weight': 500});
-      mk('line', {x1: 0, x2: W, y1: fs * 1.55, y2: fs * 1.55, stroke: SOFT + '.28)', 'stroke-width': 1}, svg);
-      for (const x of [.5, W - .5]) mk('line', {x1: x, x2: x, y1: fs * 1.55 - 3, y2: fs * 1.55 + 3, stroke: SOFT + '.5)', 'stroke-width': 1}, svg);
-    }
-
-    // isobars: the still air above, sagging over the robot as the fan pulls
-    D.isoG = mk('g', {fill: 'none', stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '6 4'}, svg);
-    const gap = PY - mh - top;
-    D.iso = []; D.isoY = []; D.isoR = R; D.isoA = Math.min(mh * .5, gap * .12);
-    if (gap > 40) for (let k = 0; k < 3; k++) { D.isoY.push(PY - mh - gap * (.16 + .3 * k)); D.iso.push(mk('path', {}, D.isoG)); }
-
-    // ---- the fixed scale: base, load posts, column ----
-    const plateL = Math.max(2, x0 - mw * .06), plateR = gx - 10;
-    const fixed = mk('g', {}, svg);
-    mk('line', {x1: 0, x2: W, y1: H - 1.5, y2: H - 1.5, stroke: SOFT + '.3)', 'stroke-width': 1, 'stroke-dasharray': '2 4'}, fixed);
-    const baseL = plateL - 2, baseR = gx + 14;
-    mk('rect', {x: baseL, y: bTop, width: baseR - baseL, height: hb, rx: 3, fill: 'url(#body)', stroke: INK, 'stroke-width': 1.5, class: 'draw'}, fixed);
-    if (hb > 11) mk('line', {x1: baseL + 5, x2: baseR - 5, y1: bTop + hb * .5, y2: bTop + hb * .5, stroke: SOFT + '.3)', 'stroke-width': 1, 'stroke-dasharray': '1 3'}, fixed);
-    for (const fx of [baseL + 14, baseR - 14]) mk('rect', {x: fx - 7, y: H - 5, width: 14, height: 3, fill: INK}, fixed);
-    for (const fx of [plateL + (plateR - plateL) * .14, plateL + (plateR - plateL) * .86]) mk('rect', {x: fx - 2.5, y: PY + 5, width: 5, height: bTop - PY - 5, fill: SOFT + '.25)', stroke: INK, 'stroke-width': 1}, fixed);
-    mk('rect', {x: gx - 3.5, y: gy + r, width: 7, height: bTop - gy - r, fill: 'url(#hatch)', stroke: INK, 'stroke-width': 1.3, class: 'draw'}, fixed);
-    mk('rect', {x: gx - 7, y: bTop - 4, width: 14, height: 4, fill: SOFT + '.2)', stroke: INK, 'stroke-width': 1}, fixed);
-
-    // ---- the sinking group: plate, mouse, air, ghosts ----
-    D.sink = mk('g', {}, svg);
-    const G = D.sink;
-    mk('rect', {x: plateL, y: PY, width: plateR - plateL, height: 6, rx: 2, fill: 'url(#hatch)', stroke: INK, 'stroke-width': 1.5, class: 'draw'}, G);
-    mk('line', {x1: cx, x2: cx, y1: PY + 4, y2: PY - mh * 1.12, stroke: SOFT + '.45)', 'stroke-width': 1, 'stroke-dasharray': '10 3 2 3'}, G);
-
-    // air streamlines with particles
-    D.air = mk('g', {opacity: 0}, G);
-    const paths = [];
-    for (const d of [-1, 1]) for (const k of [0, 1]) {
-      const ex = x => clamp(x, 3, R);
-      const pts = [
-        [ex(cx + d * mw * (.62 + k * .14)), PY - mh * (.025 + k * .02)],
-        [cx + d * mw * .34, PY - mh * .03],
-        [cx + d * mw * .1, PY - mh * .12],
-        [cx + d * mw * .03, PY - mh * .45],
-        [cx + d * mw * .04, PY - mh * .9],
-        [cx + d * mw * (.22 + .1 * k), PY - mh * (1.08 + .14 * k)],
-        [ex(cx + d * mw * (.48 + .14 * k)), PY - mh * (1.0 + .3 * k)]
-      ];
-      paths.push(mk('path', {d: curve(pts), fill: 'none', stroke: SOFT + '.35)', 'stroke-width': 1, 'stroke-dasharray': '3 4'}, D.air));
-    }
-    flowTl = gsap.timeline();
-    paths.forEach((pe, j) => {
-      for (let i = 0; i < 4; i++) {
-        const dot = mk('circle', {cx: 0, cy: 0, r: 1.8, fill: INK}, D.air);
-        flowTl.to(dot, {motionPath: {path: pe}, duration: 1.4, ease: 'power2.in', repeat: -1}, i * .35 + j * .09);
-      }
-    });
-    flowTl.time(8);
-    if (Kit.calm) flowTl.pause();
-
-    const m = mk('g', {transform: `translate(${x0},${PY})`}, G);
-    drawMouse(m, false);
-    D.rotor = mk('g', {}, G);
-    D.blur = mk('ellipse', {cx, cy: PY - .92 * mh, rx: .13 * mw, ry: .03 * mw, fill: SOFT + '0)'}, G);
-
-    // pressure: air above presses down (steady), air below pushes up (fades as the fan empties it)
-    D.hs = clamp(mh * .08, 2.5, 4);
-    D.down = [[.19, -.64], [.31, -.5], [.69, -.5], [.81, -.5]].map(([fx, ye]) => ({x: x0 + fx * mw, y: PY + ye * mh, el: mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G)}));
-    D.up = [.4, .6].map(fx => ({x: x0 + fx * mw, el: mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G)}));
-
-    // part callout (start only)
-    D.call = null;
-    if (showTitle && gap > fs * 2.4) {
-      D.call = mk('g', {}, G);
-      const yc = PY - mh * 1.02 - fs * 1.1;
-      mk('line', {x1: cx, x2: cx, y1: yc + 4, y2: PY - mh * 1.02, stroke: INK, 'stroke-width': 1}, D.call);
-      mk('circle', {cx, cy: PY - mh * 1.0, r: 2, fill: INK}, D.call);
-      txt(D.call, cx, yc, 'VACUUM FAN', {'text-anchor': 'middle', 'font-size': 12, 'letter-spacing': '.08em', opacity: .85});
-    }
-
-    // ghost stack: five more mouse weights
-    D.ghosts = [];
-    for (let i = 0; i < 5; i++) {
-      const outer = mk('g', {opacity: 0}, G);
-      const inner = mk('g', {transform: `translate(${cx - mw * s / 2},${PY - mh - i * gh}) scale(${s})`, 'stroke-dasharray': '3 2'}, outer);
-      drawMouse(inner, true);
-      D.ghosts.push(outer);
-    }
-
-    // dimension line measuring the push
-    D.dim = mk('g', {}, G);
-    D.xd = cx + xdOff;
-    D.dline = mk('line', {x1: D.xd, x2: D.xd, stroke: INK, 'stroke-width': 1.3, 'marker-start': 'url(#ah)', 'marker-end': 'url(#ah)'}, D.dim);
-    D.ext0 = mk('line', {stroke: SOFT + '.6)', 'stroke-width': 1}, D.dim);
-    D.ext1 = mk('line', {stroke: SOFT + '.6)', 'stroke-width': 1}, D.dim);
-    D.ticks = mk('path', {stroke: INK, 'stroke-width': 1.2, fill: 'none'}, D.dim);
-    const lx = D.xd + 7, l2fs = Math.max(12, fs * .95);
-    // line gaps sized from the real font boxes so the three labels never touch
-    D.lg1 = 12 * .35 + l2fs * 1.05 + 5;
-    D.lg2 = l2fs * .3 + 12 * 1.05 + 4;
-    D.l1 = txt(D.dim, lx, 0, 'fan push', {'font-size': 12, 'font-weight': 500, opacity: .75});
-    D.l2 = txt(D.dim, lx, 0, '', {'font-size': l2fs, 'font-weight': 800});
-    D.l3 = txt(D.dim, lx, 0, '× weight', {'font-size': 12, 'font-weight': 600});
-
-    // ---- the dial head on its column ----
-    const dial = mk('g', {}, svg);
-    D.dial = {cx: gx, cy: gy, r};
-    D.pulse = mk('circle', {cx: gx, cy: gy, r: r * 1.25, fill: 'url(#glow)', opacity: 0}, dial);
-    mk('circle', {cx: gx, cy: gy, r: r + 3, fill: BG, stroke: INK, 'stroke-width': 1.7, class: 'draw'}, dial);
-    mk('circle', {cx: gx, cy: gy, r: r - 1, fill: SOFT + '.06)', stroke: SOFT + '.45)', 'stroke-width': 1}, dial);
-    mk('circle', {cx: gx, cy: gy, r: r * .9, fill: 'none', stroke: SOFT + '.3)', 'stroke-width': 1}, dial);
-    for (let k = 0; k < 4; k++) { const a = Math.PI / 4 + k * Math.PI / 2; mk('circle', {cx: gx + Math.cos(a) * (r + 1), cy: gy + Math.sin(a) * (r + 1), r: 1.1, fill: INK}, dial); }
-    const A = v => (-120 + v / 6 * 240) * Math.PI / 180;
-    D.A = A;
-    const big = r > 34;
-    for (let v = 0; v <= 6.001; v += .5) {
-      const a = A(v), maj = v % 1 === 0, r1 = r * .9, r0 = maj ? r * .76 : r * .83;
-      mk('line', {x1: gx + Math.sin(a) * r0, y1: gy - Math.cos(a) * r0, x2: gx + Math.sin(a) * r1, y2: gy - Math.cos(a) * r1, stroke: INK, 'stroke-width': maj ? 1.6 : 1}, dial);
-      if (maj && big) txt(dial, gx + Math.sin(a) * r * .6, gy - Math.cos(a) * r * .6 + 4, String(v), {'text-anchor': 'middle', 'font-size': 12});
-    }
-    // dotted band from 1 to 6: the fan's whole share
-    const a5 = A(1), a6 = A(6), rr = r * .96;
-    mk('path', {d: `M${gx + Math.sin(a5) * rr},${gy - Math.cos(a5) * rr} A${rr},${rr} 0 1 1 ${gx + Math.sin(a6) * rr},${gy - Math.cos(a6) * rr}`, fill: 'none', stroke: SOFT + '.55)', 'stroke-width': 2.5, 'stroke-dasharray': '1 3'}, dial);
-    D.needle = mk('g', {}, dial);
-    mk('path', {d: `M${gx - 2.2},${gy + r * .14} L${gx},${gy - r * .84} L${gx + 2.2},${gy + r * .14} Z`, fill: INK}, D.needle);
-    mk('circle', {cx: gx, cy: gy, r: Math.max(3, r * .08), fill: BG, stroke: INK, 'stroke-width': 1.6}, dial);
-    D.read = txt(dial, gx, gy + r * (big ? .74 : .66), '1.0×', {'text-anchor': 'middle', 'font-size': Math.max(12, Math.min(fs * 1.05, r * .36)), 'font-weight': 800});
-    const lab = ['MOUSE WEIGHTS', 'IN MICE', 'MICE'].find(t => t.length * 12 * .66 <= 2 * r + 4);
-    if (lab) txt(dial, gx, gy - r - 4 - fs * .35, lab, {'text-anchor': 'middle', 'font-size': 12, 'letter-spacing': '.06em', opacity: .8});
-
-    ready = true;
-    render(0, 16);
-  }
-
-  function render(time, dt) {
-    if (!ready) return;
-    dt = dt || 16;
-    const t = st.t;
-    if (!Kit.calm) { clock += dt / 1000; ang += dt / 1000 * (2 + t * 55); }
-    // rotor
-    D.rotor.innerHTML = '';
-    const rcx = cx, rcy = PY - .92 * mh, rx = .13 * mw, ry = .03 * mw;
-    for (let k = 0; k < 3; k++) {
-      const a = ang + k * 2.094, front = Math.sin(a);
-      mk('line', {x1: rcx, y1: rcy, x2: rcx + Math.cos(a) * rx, y2: rcy + front * ry, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: (.35 + .65 * (front + 1) / 2) * (1 - t * .6)}, D.rotor);
-    }
-    D.blur.setAttribute('fill', SOFT + (t * .28).toFixed(3) + ')');
-    // air
-    D.air.setAttribute('opacity', Math.min(1, t * 1.6));
-    if (flowTl && !Kit.calm) flowTl.timeScale(Math.max(.001, t * 1.5));
-    // isobars breathe and sag over the robot
-    D.isoG.setAttribute('opacity', (.2 + .2 * t).toFixed(3));
-    D.iso.forEach((p, k) => {
-      const y = D.isoY[k], A = D.isoA * (1 - .25 * k);
-      let d = '';
-      for (let i = 0; i <= 40; i++) {
-        const x = 4 + (D.isoR - 4) * i / 40, g = Math.exp(-(((x - cx) / (mw * .6)) ** 2));
-        const yy = y + Math.sin(x * .045 + clock * 1.1 + k * 1.7) * 1.6 + A * t * g;
-        d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + yy.toFixed(1);
-      }
-      p.setAttribute('d', d);
-    });
-    // pressure arrows
-    const L0 = mh * .28, hs = D.hs;
-    D.down.forEach(a => { a.el.setAttribute('d', arrow(a.x, a.y - L0, a.y, hs)); a.el.setAttribute('opacity', (.5 + .5 * t).toFixed(2)); });
-    D.up.forEach(a => {
-      const len = mh * .24 * (1 - t), yb = PY - .08 * mh;
-      a.el.setAttribute('d', len < 2 ? '' : arrow(a.x, yb, yb - len, hs * .9));
-      a.el.setAttribute('opacity', (.75 * (1 - t) + .1).toFixed(2));
-    });
-    // plate sinks with the load; needle follows
-    const v = nd.v, sink = clamp((v - 1) / 5, -.1, 1.1) * 3.5;
-    D.sink.setAttribute('transform', `translate(0,${sink})`);
-    D.needle.setAttribute('transform', `rotate(${D.A(v) * 180 / Math.PI},${D.dial.cx},${D.dial.cy})`);
-    D.read.textContent = clamp(v, 1, 6).toFixed(1) + '×';
-    D.pulse.setAttribute('opacity', pl.o.toFixed(3));
-    D.pulse.setAttribute('r', (D.dial.r * 1.3 * pl.s).toFixed(1));
-    // callout gives way once the fan runs
-    if (D.call) D.call.setAttribute('display', t < .03 ? 'inline' : 'none');
-    // dimension line of the push, in mouse weights
-    const push = 5 * t, yb = PY - mh, yt = yb - push * gh;
-    D.dim.setAttribute('display', t < .03 ? 'none' : 'inline');
-    D.dline.setAttribute('y1', yb); D.dline.setAttribute('y2', Math.min(yt, yb - 1));
-    for (const [e, y] of [[D.ext0, yb], [D.ext1, yt]]) { e.setAttribute('x1', D.xd - 8); e.setAttribute('x2', D.xd + 5); e.setAttribute('y1', y); e.setAttribute('y2', y); }
-    let td = '';
-    for (let i = 1; i < push - .05; i++) { const y = yb - i * gh; td += `M${D.xd - 4},${y} H${D.xd + 4}`; }
-    D.ticks.setAttribute('d', td);
-    const ly = clamp(yt + fs * .4, top + fs, PY - mh - D.lg1 - D.lg2 - 4);
-    D.l1.setAttribute('y', ly); D.l2.setAttribute('y', ly + D.lg1); D.l3.setAttribute('y', ly + D.lg1 + D.lg2);
-    D.l2.textContent = revealed && t > .99 ? '= 5' : push.toFixed(1);
-    // ghosts: one more mouse weight for each 1× of push
-    D.ghosts.forEach((g, i) => {
-      g.setAttribute('transform', `translate(${gPos[i].x.toFixed(1)},${gPos[i].y.toFixed(1)})`);
-      g.setAttribute('opacity', (gOp[i] * clamp(push - i, 0, 1) * .9).toFixed(3));
-    });
-  }
-  gsap.ticker.add(render);
-
-  function setThrottle(p) {
-    thr.style.setProperty('--p', p + '%');
-    val.textContent = p + '%';
-    const t = p / 100;
-    if (Kit.calm) { st.t = t; nd.v = 1 + 5 * t; }
-    else {
-      gsap.to(st, {t, duration: .35, ease: 'power3.out', overwrite: true});
-      gsap.to(nd, {v: 1 + 5 * t, duration: 1, ease: 'elastic.out(1,.45)', overwrite: true});
-    }
-    if (!midSaid && !revealed && p > 35) { midSaid = true; say.innerHTML = 'The fan empties the air under the robot, so the air above <b>pushes it down</b>. Keep going.'; }
-    if (!revealed && p >= 99) reveal();
-  }
-
-  function reveal() {
-    revealed = true; Kit.haptic('success');
-    say.innerHTML = 'The air above now presses down with <b>5× the robot’s weight</b>, like five more mice on its back.';
-    Kit.show('keep');
-    if (Kit.calm) { gOp.fill(1); return; }
-    gPos.forEach((p, i) => {
-      const sx = W * .55 + i * 8, sy = -H * .6, o = {k: 0};
-      gsap.fromTo(p, {x: sx, y: sy}, {
-        motionPath: {path: [{x: sx, y: sy}, {x: W * .3, y: -H * .32 - i * 6}, {x: W * .05, y: -gh * 1.2}, {x: 0, y: 0}], curviness: 1.3},
-        duration: .9, delay: .1 + i * .13, ease: 'power3.out'
-      });
-      gsap.to(o, {k: 1, duration: .35, delay: .1 + i * .13, ease: 'power2.out', onUpdate: () => { gOp[i] = o.k; }});
-    });
-    gsap.fromTo(pl, {o: 1, s: .6}, {o: 0, s: 1.3, duration: 1.2, delay: .8, ease: 'expo.out'});
-    gsap.fromTo(nd, {v: 6.6}, {v: 6, duration: 1.2, delay: .85, ease: 'elastic.out(1.2,.35)'});
-  }
-
-  thr.addEventListener('input', () => { Kit.haptic('selection'); setThrottle(+thr.value); });
-
-  new ResizeObserver(() => { if (ready) layout(); }).observe(Kit.$('stage'));
-  Kit.onShow.card = layout;
-  Kit.onEnter.card = () => {
-    if (Kit.calm) return;
-    gsap.from('#pic .draw', {drawSVG: '0%', duration: 1.2, ease: 'power2.inOut', stagger: {amount: .7}});
-    gsap.from('#pic text', {opacity: 0, y: 4, duration: .6, delay: .6, stagger: .02, ease: 'power3.out'});
-    gsap.fromTo(nd, {v: 0}, {v: 1, duration: 1.2, delay: .9, ease: 'elastic.out(1,.4)'});
-    gsap.from('#ctl', {opacity: 0, y: 8, duration: .5, delay: 1, ease: 'power3.out'});
+  const txt = (p, x, y, t, a = {}, st = '') => {
+    const e = Kit.mk('text', Object.assign({x, y}, a), p);
+    e.setAttribute('style', 'fill:var(--k);font-family:var(--body);font-weight:700;' + st);
+    e.textContent = t; return e;
   };
+  const fit = (e, W) => {
+    const w = e.getComputedTextLength(), an = e.getAttribute('text-anchor') || 'start', x = +e.getAttribute('x');
+    const l = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const s = Math.max(2 - l, Math.min(0, W - 2 - (l + w))); if (s) e.setAttribute('x', x + s);
+  };
+  const NONNEG = ['width', 'height', 'r', 'rx', 'ry'];
+  const shape = (tag, a, p, st) => {
+    const b = Object.assign({}, a);
+    for (const k of NONNEG) if (k in b) { const v = +b[k]; b[k] = isFinite(v) ? Math.max(0, v) : 0; }
+    const e = Kit.mk(tag, b, p); e.setAttribute('style', st); return e;
+  };
+
+  // The micromouse, side view: a low board, small wheels, a fan housing on top
+  // and its skirt below the board reaching the floor. With the fan on, air is drawn in under the board.
+  function mouse(p, cx, fy, w, sw, fan = true) {
+    w = Math.max(0, w);
+    const g = Kit.mk('g', {}, p);
+    const st = `fill:#fff;stroke:var(--k);stroke-width:${sw};stroke-linejoin:round`;
+    const r = w * .075, ay = fy - r, ph = Math.max(5, w * .036), py = ay - ph / 2, pb = py + ph;
+    const sTop = w * .12, sBot = w * .15;
+    shape('path', {d: `M${cx - sTop},${pb} L${cx - sBot},${fy - sw / 2} L${cx + sBot},${fy - sw / 2} L${cx + sTop},${pb} Z`}, g, st);
+    shape('rect', {x: cx - w / 2, y: py, width: w, height: ph, rx: Math.min(3, ph / 2)}, g, st);
+    const hw = w * .24, hh = w * .075, hy = py - hh;
+    shape('rect', {x: cx - hw / 2, y: hy, width: hw, height: hh + sw / 2, rx: 3}, g, st);
+    const mw2 = w * .07, mh = Math.max(3, w * .022);
+    shape('rect', {x: cx - mw2 / 2, y: hy - mh, width: mw2, height: mh + 1, rx: 1.5}, g, 'fill:var(--k)');
+    for (const s of [-1, 1]) {
+      shape('circle', {cx: cx + s * w * .31, cy: ay, r}, g, 'fill:var(--k)');
+      shape('circle', {cx: cx + s * w * .31, cy: ay, r: r * .38}, g, 'fill:#fff');
+    }
+    if (fan) {
+      const yA = (pb + fy) / 2, aw = Math.max(1.6, sw * .7), h = Math.max(2.5, w * .014);
+      for (const s of [-1, 1]) {
+        const x1 = cx + s * w * .228, x2 = cx + s * w * .168;
+        shape('path', {d: `M${x1},${yA} L${x2},${yA} M${x2 + s * h},${yA - h} L${x2},${yA} L${x2 + s * h},${yA + h}`}, g,
+          `fill:none;stroke:var(--k);stroke-width:${aw};stroke-linecap:round;stroke-linejoin:round`);
+      }
+    }
+    return {g, top: hy - mh};
+  }
+  const block = (p, cx, y, bw, bh, st) => shape('rect', {x: cx - bw / 2, y: y - bh + 1.5, width: bw, height: bh - 3, rx: Math.min(4, bh * .2)}, p, st);
+  const blockO = (p, cx, y, bw, bh, sw) => shape('rect', {x: cx - bw / 2 + sw / 2, y: y - bh + 1.5 + sw / 2, width: bw - sw, height: Math.max(1, bh - 3 - sw), rx: Math.min(4, bh * .2)}, p, `fill:none;stroke:var(--k);stroke-width:${sw}`);
+
+  // ---------- the front ----------
+  function drawFront() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), fs = Math.max(12, Math.min(14, W / 26));
+    const cr = Kit.$('card').getBoundingClientRect(), sr = svg.getBoundingClientRect();
+    let fy = cr.top + cr.height * .6 - sr.top;
+    fy = Math.max(H * .5, Math.min(H - fs * .6, fy));
+    const mw = Math.max(0, Math.min(W * .46, 250, fy * .9)), sw = mw > 150 ? 3 : 2.2, cx = W * .48;
+    shape('line', {x1: 0, x2: W, y1: fy, y2: fy}, svg, 'stroke:var(--k);stroke-width:2;stroke-linecap:round');
+    const m = mouse(svg, cx, fy, mw, sw, true);
+    const bw = mw * .42, bh = Math.max(1, Math.min(bw * .42, (m.top - fs * .6) / (MAX + .3)));
+    F = {W, H, fs, cx, bw, bh, sw, top: m.top};
+    stackG = Kit.mk('g', {}, svg); noteG = Kit.mk('g', {}, svg); hintG = Kit.mk('g', {}, svg);
+    const hs = Math.max(1, Math.min(W * .13, H * .14, 60));
+    heroT = txt(svg, cx + bw / 2 + fs * 1.2, 0, '', {}, `font-family:var(--display);font-size:${hs}px;font-weight:800`);
+    F.hs = hs;
+    paintStack(-1);
+  }
+  function paintStack(added) {
+    const {cx, bw, bh, top, fs, W, hs, sw} = F;
+    stackG.innerHTML = ''; noteG.innerHTML = ''; hintG.innerHTML = '';
+    gsap.killTweensOf(hintG); hintG.removeAttribute('transform');
+    for (let i = 0; i < N; i++) {
+      const b = block(stackG, cx, top - i * bh, bw, bh, `fill:#fff;stroke:var(--k);stroke-width:${sw}`);
+      if (i === added && !Kit.calm) gsap.from(b, {y: -bh * .8, opacity: 0, duration: .28, ease: 'power3.out'});
+    }
+    heroT.textContent = '×' + N;
+    heroT.setAttribute('y', Math.max(hs * .8, top - Math.max(N, 1) * bh + hs * .35));
+    if (N > 0) {
+      const ly = top - bh / 2, lx = cx - bw / 2 - fs * .9;
+      shape('line', {x1: lx, x2: cx - bw / 2 - 3, y1: ly, y2: ly}, noteG, 'stroke:var(--k);stroke-width:1.5');
+      const a = txt(noteG, lx - 5, ly - fs * .2, 'one block =', {'text-anchor': 'end', 'font-size': fs}, 'font-weight:600');
+      const b = txt(noteG, lx - 5, ly + fs * 1.1, 'its own weight', {'text-anchor': 'end', 'font-size': fs});
+      fit(a, W); fit(b, W);
+    } else if (!touched) {
+      const ay = top - fs * .6;
+      shape('path', {d: `M${cx},${ay} v-${fs * 2} m-6,7 l6,-7 l6,7`}, hintG, 'stroke:var(--k);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round');
+      const t = txt(hintG, cx - bw / 2 - 14, ay - fs * .9, 'drag up', {'text-anchor': 'end', 'font-size': fs});
+      fit(t, W);
+      if (!Kit.calm) gsap.to(hintG, {y: -5, duration: .7, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+    }
+  }
+  function setN(n) {
+    n = Math.max(0, Math.min(MAX, n));
+    if (n === N) return;
+    const prev = N; N = n; Kit.haptic('selection');
+    paintStack(n > prev ? n - 1 : -1);
+  }
+  const ready = () => { const f = Kit.$('first'); if (f) f.style.visibility = 'hidden'; sure.on(); };
+  let drag = false;
+  const nFrom = e => { const r = svg.getBoundingClientRect(); return Math.round((F.top - (e.clientY - r.top)) / F.bh + .15); };
+  svg.addEventListener('pointerdown', e => { if (answered) return; drag = true; svg.setPointerCapture(e.pointerId); if (!touched) touched = true; setN(nFrom(e)); paintStack(-1); });
+  svg.addEventListener('pointermove', e => { if (drag) setN(nFrom(e)); });
+  const up = () => { if (!drag) return; drag = false; ready(); };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (answered) return; answered = true;
+    const chip = Kit.$('sure').querySelector(`[data-v="${pct}"]`); if (chip) chip.classList.add('pick');
+    const ok = Math.abs(N - TRUE) <= 1;
+    Kit.answer({choice: '×' + N, correct: ok, sure: pct});
+    sure.grade(ok, pct, `×${N}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- the back: fan off and fan on, same scale ----------
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg2), fs = Math.max(12, Math.min(13, W / 30));
+    const fy = H - 3;
+    const n = Math.max(TRUE, N);
+    const mw = Math.max(40, Math.min(W * .34, 220, H * 1.05)), sw = mw > 150 ? 3 : 2.2;
+    const c1 = W * .2, c2 = W * .66;
+    const floor = shape('line', {x1: 0, x2: W, y1: fy, y2: fy}, svg2, 'stroke:var(--k);stroke-width:2;stroke-linecap:round');
+    const g1 = Kit.mk('g', {}, svg2), g2 = Kit.mk('g', {}, svg2);
+    const m1 = mouse(g1, c1, fy, mw, sw, false), m2 = mouse(g2, c2, fy, mw, sw, true);
+    const top = m2.top, bw = mw * .42;
+    const bh = Math.max(4, Math.min(bw * .36, (top - fs * .6) / (n + .2)));
+
+    // fan off: its own weight
+    blockO(g1, c1, m1.top, bw, bh, sw);
+    const own = txt(g1, c1, m1.top - bh - fs * .6, 'its weight', {'text-anchor': 'middle', 'font-size': fs});
+    fit(own, W);
+
+    // fan on: five blocks of pull, same block size
+    const blocks = [];
+    for (let i = 0; i < TRUE; i++) blocks.push(block(g2, c2, top - i * bh, bw, bh, 'fill:var(--k)'));
+
+    // the number, and what it counts: the label's cap height plus the hero's descent keep them apart
+    const hs = Math.max(1, Math.min(56, W * .12, bh * 2.6));
+    const hx = c2 - bw / 2 - 10;
+    let yl = top - bh * .6, yh = yl - fs * 1.05 - hs * .3;
+    if (yh - hs * .8 < 0) { const d = hs * .8 - yh; yh += d; yl += d; }
+    const heroG = Kit.mk('g', {}, svg2);
+    const hero = txt(heroG, hx, yh, '5×', {'text-anchor': 'end'}, `font-family:var(--display);font-size:${hs}px;font-weight:800`);
+    const pull = txt(heroG, hx, yl, "fan's pull", {'text-anchor': 'end', 'font-size': fs});
+    fit(hero, W); fit(pull, W);
+    // measured guard: if the real glyph boxes still touch, open the gap
+    try {
+      const hb = hero.getBBox(), pb = pull.getBBox();
+      const ov = hb.y + hb.height + 3 - pb.y;
+      if (ov > 0) {
+        const upRoom = Math.max(0, hb.y - 1), mv = Math.min(ov, upRoom);
+        hero.setAttribute('y', +hero.getAttribute('y') - mv);
+        if (ov - mv > 0) pull.setAttribute('y', +pull.getAttribute('y') + (ov - mv));
+      }
+    } catch (e) {}
+
+    // the reader's guess: a short level mark out to the right
+    const sx = c2 + bw / 2, gy = top - N * bh;
+    const guess = Kit.mk('g', {}, svg2);
+    shape('line', {x1: sx + 4, x2: sx + 22, y1: gy, y2: gy}, guess, 'stroke:var(--k);stroke-width:1.5;stroke-dasharray:4 3');
+    const gl = txt(guess, sx + 28, gy + fs * .35, 'you: ×' + N, {'font-size': fs}, 'font-weight:600');
+    fit(gl, W);
+
+    if (!animate || Kit.calm) return;
+    gsap.timeline()
+      .from([floor, g1, g2], {opacity: 0, y: 8, duration: .5, stagger: .06, ease: 'power2.out'})
+      .from(blocks, {opacity: 0, y: -bh * 1.5, duration: .35, stagger: .14, ease: 'power3.out'}, '+=.15')
+      .from(heroG, {opacity: 0, x: -10, duration: .45, ease: 'power2.out'}, '-=.1')
+      .from(guess, {opacity: 0, duration: .45, ease: 'power2.out'}, '+=.2');
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {};
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    thr.value = 50; thr.dispatchEvent(new Event('input'));
-    await wait(Kit.calm ? 60 : 300);
-    thr.value = 100; thr.dispatchEvent(new Event('input'));
-    await wait(Kit.calm ? 100 : 2400);
+    touched = true;
+    setN(2); paintStack(-1); ready();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 3400);
   };
 })();
 Kit.single();

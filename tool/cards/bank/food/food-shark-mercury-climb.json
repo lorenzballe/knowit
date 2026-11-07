@@ -5,10 +5,10 @@
   "strand": "food.fermentation.food_safety",
   "kind": "page",
   "difficulty": "medium",
-  "principle": "exponential",
-  "question": "Why can shark meat pose a mercury risk to humans?",
-  "answer": "Sharks sit at the top of the food chain. Each fish keeps the methylmercury of all it ate, so mercury piles up meal after meal. High doses can harm children's development and pregnancy.",
-  "move": "The higher up the food chain, the more mercury in every bite.",
+  "principle": "reflection",
+  "question": "A mollusc, two fish, a shark. Where does the most mercury end up?",
+  "answer": "The shark. Mercury builds up along a food chain, so the biggest fish ends up holding the most. In high doses it can harm development, above all in children and in pregnancy. It is still fish, with benefits too.",
+  "move": "What builds up along a food chain ends up at the top.",
   "keywords": [
     "shark",
     "mercury",
@@ -28,11 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "A food chain graphic ends with a shark, showing mercury building up at each step. The question asks why shark meat can pose a mercury risk to humans. The reader picks a reason, then rates how sure they are.",
-    "ground": "#0a0d1c"
+    "touch": "drags",
+    "label": "A food chain picture showing a mollusc, two fish and a shark. The question asks where the most mercury ends up. Drag across the picture to pick an animal."
   },
   "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
   "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=810s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

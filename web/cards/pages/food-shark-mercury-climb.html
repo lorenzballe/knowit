@@ -1,321 +1,270 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: food-shark-mercury-climb -->
-<!-- Look: a night observatory. Ink-black sky, a fine star field and a faint Milky Way. The food chain (mollusc, small fish, big fish, shark) sits in four glowing instrument rings that grow left to right. Each ring has a gauge, and every name sits on one shared baseline under its ring.
-     Interaction: bet on why shark meat carries mercury and say how sure you are. Then each meal plays out: the silver methylmercury grains of the prey fly into the next predator, they pile up, and the gauges climb.
-     Wow: the grains converge on the shark, its ring flares red and keeps pulsing, the shark's gauge fills, and BIOMAGNIFICATION scrambles into place letter by letter across the sky. -->
-<title>Mercury climbs the food chain</title>
+<!doctype html>
+<!-- slug: food-mercury-up-the-chain -->
+<!--
+  The thought to carry: methylmercury builds up along a food chain, so the risk sits with the animal at the top, the shark.
+  Front: a mollusc holding a red speck of methylmercury, a small fish, a bigger fish and a shark in a row, each eating the one on its left. The reader drags along the row to pick where the most mercury ends up.
+  Back: the same row again. The arrows draw themselves and red specks gather in each animal, more at each step, until the shark holds the most. The dot counts are only a picture of "more", never a figure. The reader's pick is marked.
+  The front gives nothing away: only the chain and the mercury in the mollusc.
+-->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mercury up the food chain</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
-<script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
+<script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#card{background:radial-gradient(130% 75% at 72% 28%,#17214d 0%,#0d1230 38%,#0a0d1c 72%)}
-#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
-#sky{flex:1;min-height:0;width:100%;display:block;overflow:hidden}
-#opts{display:flex;flex-direction:column;gap:.9cqh}
-.opt{font:700 max(2cqh,13px)/1.22 var(--body);text-align:left;color:var(--k);background:rgba(150,180,255,.07);border:0;box-shadow:inset 0 0 0 .2cqh rgba(160,190,255,.32);border-radius:1.8cqh;padding:1.25cqh 4cqw;cursor:pointer;transition:transform .12s ease-out,background .15s}
-.opt:active{transform:scale(.98)}
-.opt.on{background:#dcecff;color:#0a0e1c;box-shadow:0 0 2.6cqh rgba(120,190,255,.5)}
-#why{display:flex;flex-direction:column;gap:.7cqh}
-#why .big{font:800 max(2.7cqh,17px)/1.1 var(--display);color:#ffd2a0;text-shadow:0 0 2cqh rgba(255,120,110,.35);overflow-wrap:anywhere}
-#why .body{font:500 max(1.8cqh,13px)/1.34 var(--body);color:#d6ddf5;overflow-wrap:anywhere}
-.say{color:#c9d3f2}
-.keep{overflow-wrap:anywhere}
-.flow{animation:flow 1.6s linear infinite}
-@keyframes flow{to{stroke-dashoffset:-16}}
-.kit-calm .flow{animation:none}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn:not(.over)>.back,.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex}
+.face .stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize;outline:none}
+.front .say{padding-right:0;margin-right:96px;box-sizing:border-box}
+.back .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0 0 .6cqh}
+.back .body{font:500 max(1.8cqh,12.5px)/1.32 var(--body);margin:.8cqh 0;overflow-wrap:break-word}
+.back .keep{font-size:max(1.8cqh,12.5px)}
+.back .foot .src{display:block;margin-right:96px}
 </style>
-<article class="card" id="card" data-topic="food" data-kind="Pick one · how sure" style="--c:#0a0d1c;--k:#eef2ff;--edge:#04060d">
+<article class="card" id="card" data-topic="food" data-kind="Drag to pick · up the food chain">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">FOOD CHAIN</span></div>
-    <h2 class="q">Why can shark meat pose a mercury risk to humans?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="sky" role="img" aria-label="Four glowing rings in a night sky: a mollusc, a small fish, a big fish and a shark, each with a gauge of the methylmercury it holds."></svg>
-      <div id="opts">
-        <button class="opt" data-i="0">Sharks swim in dirtier water than other fish</button>
-        <button class="opt" data-i="1">They eat fish that ate fish, so mercury piles up</button>
-        <button class="opt" data-i="2">Mercury gets in when the meat is preserved</button>
-      </div>
-      <div id="why" class="gone"><p class="big">It piles up, meal after meal.</p><p class="body">Each fish keeps the methylmercury of all it ate, and sharks sit at the top. High doses can harm children's development and pregnancy. Fish still has real benefits.</p></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">A mollusc, two fish, a shark. Where does the most mercury end up?</h2>
+        <div class="stagebox"><svg id="pic" tabindex="0" role="img" aria-label="A mollusc holding a speck of methylmercury, a small fish, a bigger fish and a shark in a row, each eating the one on its left. Drag or use the arrow keys to pick where the most mercury ends up."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag across the picture to pick an animal.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">The shark. The mercury ends up at the top.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same chain: mollusc, small fish, bigger fish, shark. Red specks of methylmercury gather in each animal, more at each step, and the shark at the top holds the most."></svg></div>
+        <p class="body">A big fish eats a smaller one, which ate a smaller one still, which ate a mollusc. The methylmercury builds up along the chain and the biggest fish ends up holding it. In high doses it can cause problems, above all during development: for children and in pregnancy. It is still fish, with benefits too.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> What builds up along a food chain ends up at the top.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025).</span></div>
+      </section>
     </div>
-    <div id="sure"></div>
-    <p class="say" id="say">Pick the reason. Then say how sure you are.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The higher up the food chain, the more mercury in every bite.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)</span></div>
   </div>
 </article>
+<script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
 <script src="kit/astute-card.js"></script>
 <script>
-const RIGHT = 1;
-let pick = -1;
-const SKY = (() => {
-  const plug = [window.ScrambleTextPlugin, window.SplitText].filter(Boolean);
-  if (plug.length) gsap.registerPlugin(...plug);
-  const svg = Kit.$('sky'), mk = Kit.mk;
-  // Illustration only: how many grains each step holds is a picture of "more at each step", not a measurement.
-  const N = [3, 8, 16, 30], FR = [.12, .3, .58, 1];
-  const NAMES = ['MOLLUSC', 'SMALL FISH', 'BIG FISH', 'SHARK'];
-  const COL = ['#8fe3ff', '#c4dcff', '#ffbe7a', '#ff5f78'];
-  const MULT = [.5, .66, .83, 1.06], OUT = 1.22;
-  const INK = '#dbe6ff';
-  // The animals in unit space, all facing left, towards their prey.
-  const SHAPES = [
-    [{d: 'M-.95,.35 C-.9,-.55 .9,-.55 .95,.35 C.4,.62 -.4,.62 -.95,.35Z', f: 1}, {d: 'M0,.5 L-.62,-.12 M0,.5 L-.31,-.31 M0,.5 L0,-.38 M0,.5 L.31,-.31 M0,.5 L.62,-.12 M-.2,.52 h.4'}],
-    [{d: 'M-1,0 C-.6,-.5 .3,-.45 .6,0 C.3,.45 -.6,.5 -1,0Z', f: 1}, {d: 'M.55,0 L1,-.4 L.88,0 L1,.4Z', f: 1}, {d: 'M-.45,-.25 Q-.38,0 -.45,.25'}, {e: [-.72, -.07]}],
-    [{d: 'M-.55,0 C-.3,-.36 .3,-.3 .62,0 C.3,.3 -.3,.34 -.55,0Z', f: 1}, {d: 'M-1,-.03 L-.52,-.05'}, {d: 'M-.25,-.22 L-.05,-.58 L.12,-.2Z', f: 1}, {d: 'M.6,0 L.98,-.46 L.86,0 L.98,.46Z', f: 1}, {e: [-.38, -.06]}],
-    [{d: 'M-1,.05 C-.7,-.25 .2,-.3 .6,-.05 L1,-.48 L.86,.02 L1,.36 L.6,.08 C.2,.3 -.6,.3 -1,.05Z', f: 1}, {d: 'M-.15,-.24 L.06,-.64 L.22,-.21Z', f: 1}, {d: 'M-.35,.2 L-.12,.5 L-.04,.21Z', f: 1}, {d: 'M-.55,-.08 v.18 M-.48,-.09 v.19 M-.41,-.09 v.19'}, {e: [-.76, -.03]}]
-  ];
-  let G = null, revealed = false, tl = null, loops = [], lastSize = '';
-  const seeded = s => () => (s = (s * 16807) % 2147483647, (s - 1) / 2147483646);
+(() => {
+  if (window.DrawSVGPlugin) gsap.registerPlugin(DrawSVGPlugin);
+  const card = Kit.$('card'), pic = Kit.$('pic'), pic2 = Kit.$('pic2');
+  const RED = '#d33a24';
+  const NAMES = ['the mollusc', 'the small fish', 'the bigger fish', 'the shark'];
+  const TRUE = 3;
+  let INK = '#121212', PAPER = '#ffffff', fs = 13;
+  let pick = -1, answered = false, turned = false, backTl = null;
+  const F = {};
 
-  function layout(force) {
-    const b = svg.getBoundingClientRect(), sk = Math.round(b.width) + 'x' + Math.round(b.height);
-    if (!force && G && sk === lastSize) return;
-    lastSize = sk;
-    if (tl) { tl.kill(); tl = null; }
-    loops.forEach(t => t.kill()); loops = [];
-    svg.innerHTML = '';
-    const {W, H} = Kit.fitSvg(svg); if (W < 20 || H < 20) { G = null; return; }
-    const fs = Math.max(12, Math.min(14, W / 27)), rnd = seeded(11), m = 6;
-    const mono = 'font-family:var(--mono)';
-    const defs = mk('defs', {}, svg);
-    const mw = (id, cx, cy, r, c, o) => `<radialGradient id="${id}" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${r}" gradientTransform="translate(${cx} ${cy}) rotate(-16) scale(1 .2) translate(${-cx} ${-cy})"><stop offset="0" stop-color="${c}" stop-opacity="${o}"/><stop offset=".5" stop-color="${c}" stop-opacity="${o * .35}"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></radialGradient>`;
-    defs.innerHTML = `<filter id="gl" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <radialGradient id="well"><stop offset="0" stop-color="#1e2d63" stop-opacity=".95"/><stop offset=".72" stop-color="#121b3e" stop-opacity=".55"/><stop offset="1" stop-color="#0a0e1c" stop-opacity="0"/></radialGradient>
-      <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4e8c"/><stop offset="1" stop-color="#0f1736"/></linearGradient>
-      <radialGradient id="dot"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#d9f1ff"/><stop offset="1" stop-color="#8fbfe0"/></radialGradient>
-      ${mw('mw1', W * .55, H * .42, W * .85, '#4c62b0', .3)}${mw('mw2', W * .7, H * .3, W * .4, '#8a7bd6', .2)}`;
+  // Animals in unit boxes, facing left. Aspect = height / width.
+  const SHAPE = {
+    mussel: 'M0,.62 C.08,.15 .62,-.02 1,.3 C.85,.78 .35,1.02 0,.62Z',
+    fish: 'M0,.5 C.16,.12 .58,.12 .76,.46 L1,.18 L.94,.5 L1,.82 L.76,.54 C.58,.88 .16,.88 0,.5Z',
+    shark: 'M0,.52 C.08,.36 .3,.3 .52,.34 L.62,.06 L.66,.37 C.75,.4 .82,.44 .86,.47 L1,.1 L.95,.52 L1,.9 L.86,.57 C.7,.66 .5,.7 .44,.69 L.47,.92 L.33,.69 C.18,.68 .06,.62 0,.52Z'
+  };
+  const AS = {mussel: .55, fish: .5, shark: .42};
+  const BODY = {mussel: [.5, .5, .28, .2], fish: [.38, .5, .27, .22], shark: [.44, .52, .3, .13]};
+  const KINDS = ['mussel', 'fish', 'fish', 'shark'];
 
-    // The sky: a soft Milky Way painted inside the frame, and a fine field of stars.
-    mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#mw1)'}, svg);
-    mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#mw2)'}, svg);
-    const starG = mk('g', {}, svg), stars = [];
-    const ns = Math.min(240, Math.round(W * H / 650));
-    for (let i = 0; i < ns; i++) {
-      const s = mk('circle', {cx: 2 + rnd() * (W - 4), cy: 2 + rnd() * (H - 4), r: .3 + Math.pow(rnd(), 3) * 1.2, fill: rnd() < .15 ? '#ffe7c4' : '#f2f5ff', opacity: .2 + rnd() * .7}, starG);
-      stars.push(s);
-      if (!Kit.calm && rnd() < .3) loops.push(gsap.to(s, {opacity: .08, duration: 1 + rnd() * 2.2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: rnd() * 2}));
+  const colours = () => {
+    const cs = getComputedStyle(card);
+    INK = cs.getPropertyValue('--k').trim() || INK;
+    PAPER = cs.getPropertyValue('--c').trim() || PAPER;
+  };
+  const text = (p, x, y, t, a = {}) => {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p);
+    e.textContent = t; return e;
+  };
+  function animal(p, kind, cx, cy, w) {
+    const h = w * AS[kind], g = Kit.mk('g', {}, p);
+    Kit.mk('path', {d: SHAPE[kind], fill: INK, transform: `translate(${cx - w / 2},${cy - h / 2}) scale(${w},${h})`}, g);
+    if (kind !== 'mussel' && w > 14) Kit.mk('circle', {cx: cx - w / 2 + w * (kind === 'shark' ? .1 : .14), cy: cy - h * .06, r: Math.max(1.2, w * .018), fill: PAPER}, g);
+    return g;
+  }
+  // Points inside the animal's body, packed tight enough for n dots, from the middle out.
+  function dots(kind, cx, cy, w, n) {
+    const h = w * AS[kind], b = BODY[kind];
+    const ex = cx - w / 2 + b[0] * w, ey = cy - h / 2 + b[1] * h, rx = b[2] * w, ry = b[3] * h;
+    let s = Math.max(rx, ry) * 1.2, pts = [];
+    for (let k = 0; k < 80; k++) {
+      pts = [];
+      let row = 0;
+      for (let y = ey - ry; y <= ey + ry + .01; y += s * .87, row++) {
+        for (let x = ex - rx + (row % 2 ? s / 2 : 0); x <= ex + rx + .01; x += s) {
+          if (((x - ex) / rx) ** 2 + ((y - ey) / ry) ** 2 <= 1) pts.push([x, y]);
+        }
+      }
+      if (pts.length >= n) break;
+      s *= .93;
     }
+    if (n === 1) pts = [[ex, ey]];
+    pts.sort((a, c) => (((a[0] - ex) / rx) ** 2 + ((a[1] - ey) / ry) ** 2) - (((c[0] - ex) / rx) ** 2 + ((c[1] - ey) / ry) ** 2));
+    return {pts: pts.slice(0, n), r: Math.max(1.4, Math.min(s * .34, w * .06))};
+  }
+  const arrow = (p, x0, x1, y) => Kit.mk('path', {d: `M${x0},${y} H${x1} M${x1 - 4},${y - 3.5} L${x1},${y} L${x1 - 4},${y + 3.5}`, stroke: INK, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', class: 'arw'}, p);
+  const tri = (x, y, s) => `M${x - s},${y - s * 1.3} L${x + s},${y - s * 1.3} L${x},${y}Z`;
+  const clampX = (x, label, W, m) => { const hw = label.length * fs * .3; return Math.max(m + hw, Math.min(W - m - hw, x)); };
 
-    // Measure the names, so rings are spaced for their labels as well as their size.
-    const meas = (t, ls, w) => { const e = mk('text', {'font-size': fs, 'font-weight': w, 'letter-spacing': ls, style: mono}, svg); e.textContent = t; const v = e.getComputedTextLength(); e.remove(); return v; };
-    const lw = NAMES.map(n => meas(n, '.06em', 700) + fs * .3);
-    const wm = meas('MOST MERCURY', '.06em', 800);
-    const wk = meas('methylmercury', '0', 400);
-    const wa = meas('BIOMAGNIFICATION', '.14em', 700);
+  // One row of the chain, laid out the same way on both faces.
+  function row(W, sw) {
+    const m = W * .04, sizes = [W * .08, W * .11, W * .17, sw];
+    const gap = (W - 2 * m - sizes.reduce((a, b) => a + b)) / 3;
+    let x = m; const cx = [];
+    sizes.forEach(w => { cx.push(x + w / 2); x += w + gap; });
+    return {m, sizes, gap, cx};
+  }
 
-    // Vertical room: the arc above, names (and a second line) below.
-    const k3 = 2 * MULT[3] * OUT;
-    let two = true, Rh = (H - fs * 6) / k3;
-    if (Rh < 22) { two = false; Rh = (H - fs * 4.6) / k3; }
-    const span = R => {
-      const ro = MULT.map(k => k * R * OUT), dx = [];
-      for (let i = 1; i < 4; i++) dx.push(Math.max(ro[i - 1] + ro[i] + R * .22, (lw[i - 1] + lw[i]) / 2 + fs * .9));
-      const L = Math.max(ro[0] * 1.08, lw[0] / 2), Rt = Math.max(ro[3] * 1.08, lw[3] / 2);
-      return {ro, dx, L, tot: L + Rt + dx.reduce((a, c) => a + c, 0)};
-    };
-    let lo = 8, hi = Math.max(8, Math.min(Rh, 220));
-    for (let it = 0; it < 30; it++) { const mid = (lo + hi) / 2; if (span(mid).tot <= W - 2 * m) lo = mid; else hi = mid; }
-    const R = lo, sp = span(R), ro = sp.ro, rr = MULT.map(k => k * R);
-    const extra = Math.max(0, W - 2 * m - sp.tot), eg = Math.min(extra * .7 / 3, R * .5), side = (extra - 3 * eg) / 2;
-    const cxs = [m + side + sp.L]; sp.dx.forEach(d => cxs.push(cxs[cxs.length - 1] + d + eg));
-    const roS = ro[3], content = 2 * roS + fs * (two ? 6 : 4.6), T = Math.max(0, (H - content) / 2), cy = T + fs * 2.8 + roS;
-    const labelY = roS + fs * 1.35;
+  // ---------- FRONT ----------
+  function drawFront() {
+    colours();
+    pic.innerHTML = '';
+    const {W, H} = Kit.fitSvg(pic);
+    fs = Math.max(12, Math.min(14, W / 26));
+    const fit = (H - fs * 8.4) / AS.shark;
+    const sw = Math.min(W * .42, Math.max(Math.min(W * .26, Math.max(W * .14, fit)), fit)), sh = sw * AS.shark;
+    const R = row(W, sw);
+    const above = sh / 2 + fs * 3, below = Math.max(fs * 4.6, sh / 2 + fs * 1.8);
+    const cy = Math.max(0, (H - above - below) / 2) + above;
 
-    // Faint observatory orbits round the shark, drawn only where they stay in the sky.
-    const orbit = r => { let d = '', pen = false; for (let k = 0; k <= 160; k++) { const a = k / 160 * Math.PI * 2, x = cxs[3] + r * Math.cos(a), y = cy + r * Math.sin(a); if (x > 1 && x < W - 1 && y > 1 && y < H - 1) { d += (pen ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); pen = true; } else pen = false; } return d; };
-    [1.55, 2.2, 3].forEach((k, i) => { const d = orbit(roS * k); if (d) mk('path', {d, fill: 'none', stroke: '#8ea6ff', 'stroke-opacity': .1 - i * .025, 'stroke-width': 1, 'stroke-dasharray': i === 1 ? '2 6' : 'none'}, svg); });
-    mk('line', {x1: 1, x2: W - 1, y1: cy, y2: cy, stroke: '#8ea6ff', 'stroke-opacity': .1, 'stroke-dasharray': '1 7'}, svg);
-    const hg = mk('radialGradient', {id: 'hot', gradientUnits: 'userSpaceOnUse', cx: cxs[3], cy, r: roS * 1.9}, defs);
-    [[0, .5], [.55, .14], [1, 0]].forEach(([o, a]) => mk('stop', {offset: o, 'stop-color': '#ff5f78', 'stop-opacity': a}, hg));
-    const hot = mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#hot)', opacity: 0}, svg);
-
-    // The arc that names what happens.
-    const x0 = cxs[0], y0 = cy - ro[0] - fs * .35, x3 = cxs[3] - roS * .3, y3 = cy - roS - fs * .3;
-    const xc = (cxs[1] + cxs[2]) / 2, yp = T + fs * 1.6, yc = 2 * yp - (y0 + y3) / 2;
-    const ag = mk('linearGradient', {id: 'arcg', gradientUnits: 'userSpaceOnUse', x1: x0, x2: x3, y1: 0, y2: 0}, defs);
-    COL.forEach((c, i) => mk('stop', {offset: i / 3, 'stop-color': c}, ag));
-    const arc = mk('path', {d: `M${x0},${y0} Q${xc},${yc} ${x3},${y3}`, fill: 'none', stroke: 'url(#arcg)', 'stroke-width': 1.5, 'stroke-dasharray': '4 4', class: 'flow', opacity: .75}, svg);
-    const ang = Math.atan2(y3 - yc, x3 - xc), hl = fs * .6;
-    const head = mk('path', {d: `M${x3 - hl * Math.cos(ang - .45)},${y3 - hl * Math.sin(ang - .45)} L${x3},${y3} L${x3 - hl * Math.cos(ang + .45)},${y3 - hl * Math.sin(ang + .45)}`, fill: 'none', stroke: COL[3], 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .85}, svg);
-
-    // Rings.
-    const dr = Math.max(1.6, R * .055), rings = [];
-    ro.forEach((o, i) => {
-      const r = rr[i], cx = cxs[i], grp = mk('g', {transform: `translate(${cx},${cy})`}, svg);
-      mk('circle', {r: o * 1.08, fill: 'url(#well)'}, grp);
-      mk('circle', {r: r * .78, fill: 'none', stroke: '#a9bdff', 'stroke-opacity': .08, 'stroke-width': 1, 'stroke-dasharray': '1 3'}, grp);
-      const ticks = mk('g', {}, grp);
-      for (let k = 0; k < 36; k++) {
-        const a = k / 36 * Math.PI * 2, l = k % 3 ? .07 : .14, c = Math.cos(a), s = Math.sin(a);
-        mk('line', {x1: c * r * 1.03, y1: s * r * 1.03, x2: c * r * (1.03 + l), y2: s * r * (1.03 + l), stroke: '#a9bdff', 'stroke-opacity': k % 3 ? .3 : .6, 'stroke-width': 1}, ticks);
-      }
-      const rg = o * .985, gw = Math.max(2.5, r * .08), gc = 2 * Math.PI * rg;
-      mk('circle', {r: rg, fill: 'none', stroke: '#a9bdff', 'stroke-opacity': .14, 'stroke-width': gw}, grp);
-      const gauge = mk('circle', {r: rg, fill: 'none', stroke: COL[i], 'stroke-width': gw, 'stroke-linecap': 'round', 'stroke-dasharray': gc, 'stroke-dashoffset': gc, transform: 'rotate(-90)', filter: 'url(#gl)'}, grp);
-      const line = mk('circle', {r, fill: 'none', stroke: '#b9ccff', 'stroke-opacity': .8, 'stroke-width': 1.4, filter: 'url(#gl)'}, grp);
-      const bw = mk('g', {}, grp), beast = mk('g', {transform: `scale(${r * .62})`}, bw);
-      SHAPES[i].forEach(p => {
-        if (p.e) mk('circle', {cx: p.e[0], cy: p.e[1], r: .055, fill: INK}, beast);
-        else mk('path', {d: p.d, fill: p.f ? 'url(#body)' : 'none', stroke: INK, 'stroke-width': 1.2, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'stroke-opacity': .9}, beast);
-      });
-      const dg = mk('g', {}, grp), dots = [], dp = [];
-      for (let k = 0; k < N[i]; k++) {
-        const a = rnd() * Math.PI * 2, d = Math.sqrt(rnd()) * r * .7, p = [Math.cos(a) * d, Math.sin(a) * d * .9];
-        dp.push(p); dots.push(mk('circle', {cx: p[0], cy: p[1], r: dr, fill: 'url(#dot)', filter: 'url(#gl)', opacity: 0}, dg));
-      }
-      // A fine plumb line from each ring down to its name on the shared baseline.
-      const ly0 = o * 1.08 + 2, ly1 = labelY - fs * 1.05;
-      if (ly1 - ly0 > fs * .4) mk('line', {x1: 0, x2: 0, y1: ly0, y2: ly1, stroke: '#8ea6ff', 'stroke-opacity': .4, 'stroke-dasharray': '1 3'}, grp);
-      const label = mk('text', {x: 0, y: labelY, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, fill: '#c9d4ff', 'letter-spacing': '.06em', style: mono}, grp);
-      label.textContent = NAMES[i];
-      const flare = mk('circle', {r: o, fill: 'none', stroke: COL[i], 'stroke-width': 2, opacity: 0}, grp);
-      rings.push({grp, cx, cy, r, o, gauge, gc, line, bw, ticks, dots, dp, label, flare});
+    const g = Kit.mk('g', {}, pic);
+    KINDS.forEach((k, i) => {
+      animal(g, k, R.cx[i], cy, R.sizes[i]);
+      if (i < 3) arrow(g, R.cx[i] + R.sizes[i] / 2 + R.gap * .18, R.cx[i + 1] - R.sizes[i + 1] / 2 - R.gap * .18, cy);
     });
-    const fly = mk('g', {}, svg);
+    // The mollusc's methylmercury.
+    const md = dots('mussel', R.cx[0], cy, R.sizes[0], 1);
+    Kit.mk('circle', {cx: md.pts[0][0], cy: md.pts[0][1], r: Math.max(2.4, R.sizes[0] * .14), fill: RED}, g);
+    const mBot = cy + R.sizes[0] * AS.mussel / 2;
+    const mY = mBot + fs * 2;
+    Kit.mk('line', {x1: R.cx[0], x2: R.cx[0], y1: mBot + 3, y2: mY - fs * .95, stroke: RED, 'stroke-width': 1.2}, g);
+    text(g, R.m, mY, 'methylmercury', {fill: RED, 'font-weight': 800});
+    // The rule.
+    text(g, R.m, cy + below - fs * .3, 'Each eats the one on its left.', {'font-weight': 600});
 
-    // The second line: MOST MERCURY under the shark, and the key on the left.
-    const S = rings[3];
-    let most = null, mostLeft = W;
-    if (two) {
-      most = mk('text', {x: 0, y: roS + fs * 2.75, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: COL[3], 'letter-spacing': '.06em', style: mono, opacity: 0}, S.grp);
-      most.textContent = 'MOST MERCURY';
-      const over = S.cx + wm / 2 - (W - m);
-      if (over > 0) most.setAttribute('x', -over);
-      mostLeft = S.cx - wm / 2 - Math.max(0, over);
-    }
-    const keyW = dr * 2 + 6 + wk;
-    let keyX = m, keyY = cy + roS + fs * 2.75, arcX = xc;
-    const fitArc = x => Math.min(W - m - wa / 2, Math.max(m + wa / 2, x));
-    if (!two || m + keyW + fs > mostLeft) {
-      keyY = T + fs;
-      arcX = fitArc(Math.max(xc, m + keyW + fs + wa / 2));
-      if (arcX - wa / 2 < m + keyW + fs * .6) keyY = null;
-    } else arcX = fitArc(xc);
-    let key = null;
-    if (keyY !== null) {
-      key = mk('g', {}, svg);
-      mk('circle', {cx: keyX + dr + 1, cy: keyY - fs * .35, r: dr, fill: 'url(#dot)', filter: 'url(#gl)'}, key);
-      mk('text', {x: keyX + dr * 2 + 6, y: keyY, 'font-size': fs, fill: '#aebbe6', style: mono}, key).textContent = 'methylmercury';
-    }
-    const arcText = mk('text', {x: arcX, y: T + fs, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, fill: '#9fb6ff', 'letter-spacing': '.14em', style: mono}, svg);
-    arcText.textContent = 'UP THE FOOD CHAIN';
-    const flareMax = Math.max(S.o * 1.05, Math.min(W - 1 - S.cx, S.cy - 1, H - 1 - S.cy));
-
-    G = {W, H, fs, rings, fly, dr, hot, arc, head, arcText, most, stars, key, flareMax};
-    // Each animal breathes gently in its ring.
-    if (!Kit.calm) rings.forEach((Rg, i) => loops.push(gsap.to(Rg.bw, {y: -Rg.r * .05, duration: 1.5 + i * .3, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: i * .2})));
-    if (revealed) applyFinal(); else rings[0].dots.forEach(d => d.setAttribute('opacity', 1));
+    // The reader's marker, riding just above the row.
+    F.cx = R.cx; F.W = W; F.m = R.m;
+    F.markY = cy - sh / 2 - fs * .45;
+    F.tri = Kit.mk('path', {d: '', fill: RED, opacity: 0}, g);
+    F.lab = text(g, clampX(R.cx[0], 'most here?', W, R.m), F.markY - fs * 1.15, 'most here?', {fill: RED, 'font-weight': 800, 'text-anchor': 'middle', opacity: 0});
+    F.anim = g;
+    paintPick();
   }
-
-  const off = i => G.rings[i].gc * (1 - FR[i]);
-  function pulse() {
-    if (Kit.calm || !G) return;
-    loops.push(gsap.fromTo(G.hot, {attr: {opacity: 1}}, {attr: {opacity: .55}, duration: 1.8, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+  function paintPick() {
+    if (!F.tri) return;
+    const on = pick >= 0 ? 1 : 0;
+    F.tri.setAttribute('opacity', on); F.lab.setAttribute('opacity', on);
+    if (!on) return;
+    const x = F.cx[pick];
+    F.tri.setAttribute('d', tri(x, F.markY, fs * .4));
+    F.lab.setAttribute('x', clampX(x, 'most here?', F.W, F.m));
   }
-  function applyFinal() {
-    G.rings.forEach((Rg, i) => { Rg.dots.forEach(d => d.setAttribute('opacity', 1)); Rg.gauge.setAttribute('stroke-dashoffset', off(i)); });
-    G.arcText.textContent = 'BIOMAGNIFICATION'; G.arcText.setAttribute('fill', '#ffd9a8');
-    if (G.most) G.most.setAttribute('opacity', 1); else G.rings[3].label.setAttribute('fill', COL[3]);
-    G.hot.setAttribute('opacity', 1);
-    G.rings[3].line.setAttribute('stroke', '#ffb0bb');
-    pulse();
+  function setPick(i) {
+    if (answered) return;
+    i = Math.max(0, Math.min(3, i));
+    const first = pick < 0;
+    if (i !== pick) { pick = i; paintPick(); Kit.haptic('selection'); }
+    if (first) sure.on();
   }
+  let dragging = false;
+  const fromX = e => {
+    const x = e.clientX - pic.getBoundingClientRect().left;
+    let best = 0;
+    F.cx.forEach((c, i) => { if (Math.abs(c - x) < Math.abs(F.cx[best] - x)) best = i; });
+    return best;
+  };
+  pic.addEventListener('pointerdown', e => { if (answered) return; dragging = true; pic.setPointerCapture(e.pointerId); setPick(fromX(e)); });
+  pic.addEventListener('pointermove', e => { if (dragging) setPick(fromX(e)); });
+  const end = () => { dragging = false; };
+  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+  pic.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { setPick(pick < 0 ? 0 : pick + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { setPick(pick < 0 ? 0 : pick - 1); e.preventDefault(); }
+  });
 
-  function enter() {
-    if (Kit.calm || !G) return;
-    gsap.from(G.stars, {opacity: 0, duration: 1.2, stagger: {amount: .9, from: 'random'}, ease: 'power2.out'});
-    G.rings.forEach((Rg, i) => {
-      const c = 2 * Math.PI * Rg.r;
-      gsap.fromTo(Rg.line, {attr: {'stroke-dasharray': c, 'stroke-dashoffset': c}}, {attr: {'stroke-dashoffset': 0}, duration: 1.2, delay: .15 + i * .14, ease: 'expo.out'});
-      gsap.from(Rg.ticks, {opacity: 0, rotation: -50, svgOrigin: '0 0', duration: 1.3, delay: .2 + i * .14, ease: 'power3.out'});
-      gsap.from(Rg.bw.firstChild, {opacity: 0, duration: .9, delay: .35 + i * .14, ease: 'power2.out'});
-      gsap.from(Rg.label, {opacity: 0, duration: .6, delay: .5 + i * .14, ease: 'power2.out'});
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    answered = true;
+    const ok = pick === TRUE;
+    Kit.answer({choice: NAMES[pick], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${NAMES[pick]}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+
+  // ---------- BACK ----------
+  // Red specks grow along the chain. A picture of "more", not a count.
+  const SPECKS = [1, 3, 7, 18];
+  function drawBack(animate) {
+    colours();
+    pic2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(pic2);
+    fs = Math.max(12, Math.min(14, W / 26));
+    const sw = Math.max(W * .2, Math.min(W * .42, (H - fs * 4.4) / AS.shark)), sh = sw * AS.shark;
+    const R = row(W, sw);
+    const cy = fs * 2.2 + sh / 2 + Math.max(0, (H - fs * 4.4 - sh) / 2);
+
+    const gA = Kit.mk('g', {}, pic2), gD = Kit.mk('g', {}, pic2), gT = Kit.mk('g', {}, pic2);
+    const animals = [], arws = [], specks = [[], [], [], []];
+    KINDS.forEach((k, i) => {
+      animals.push(animal(gA, k, R.cx[i], cy, R.sizes[i]));
+      if (i < 3) arws.push(arrow(gA, R.cx[i] + R.sizes[i] / 2 + R.gap * .18, R.cx[i + 1] - R.sizes[i + 1] / 2 - R.gap * .18, cy));
+      const d = dots(k, R.cx[i], cy, R.sizes[i], SPECKS[i]);
+      const r = i === 0 ? Math.max(2.4, R.sizes[0] * .14) : d.r;
+      d.pts.forEach(([px, py]) => specks[i].push(Kit.mk('circle', {cx: px, cy: py, r, fill: RED}, gD)));
     });
-    gsap.from([G.arc, G.head, G.arcText, G.key].filter(Boolean), {opacity: 0, duration: .9, delay: .8, stagger: .1, ease: 'power2.out'});
-    gsap.from('.opt', {opacity: 0, scale: .96, transformOrigin: '50% 50%', stagger: .07, duration: .5, delay: .3, ease: 'power2.out'});
+
+    const yb = Math.min(H - 3, cy + sh / 2 + fs * 1.5);
+    const lm = text(gT, R.m, yb, 'mollusc', {'font-weight': 600});
+    const ls = text(gT, W - R.m, yb, 'shark, at the top', {'text-anchor': 'end', fill: RED, 'font-weight': 800});
+    const p = pick < 0 ? TRUE : pick, my = cy - sh / 2 - fs * .35;
+    const mk = Kit.mk('path', {d: tri(R.cx[p], my, fs * .4), fill: INK}, gT);
+    const yl = text(gT, clampX(R.cx[p], 'your pick', W, R.m), my - fs * 1.1, 'your pick', {'text-anchor': 'middle', 'font-weight': 600});
+
+    if (backTl) backTl.kill();
+    if (!animate || Kit.calm) return;
+    gsap.set(animals.slice(1), {opacity: .25});
+    gsap.set([...specks[1], ...specks[2], ...specks[3]], {opacity: 0});
+    gsap.set([ls, mk, yl], {opacity: 0});
+    if (window.DrawSVGPlugin) gsap.set(arws, {drawSVG: '0%'});
+    backTl = gsap.timeline({delay: .35})
+      .from([animals[0], ...specks[0], lm], {opacity: 0, duration: .4, ease: 'power2.out'});
+    for (let i = 1; i < 4; i++) {
+      if (window.DrawSVGPlugin) backTl.to(arws[i - 1], {drawSVG: '100%', duration: .35, ease: 'power2.inOut'}, '+=.05');
+      backTl.to(animals[i], {opacity: 1, duration: .3, ease: 'power2.out'}, '-=.1')
+        .to(specks[i], {opacity: 1, duration: .2, stagger: .025, ease: 'power2.out'}, '-=.15');
+    }
+    backTl.to(ls, {opacity: 1, duration: .35, ease: 'power2.out'})
+      .to([mk, yl], {opacity: 1, duration: .35, ease: 'power2.out'}, '-=.1');
   }
 
-  function reveal() {
-    layout(); // the stage just changed size: settle the drawing first, then play
-    revealed = true;
-    if (!G) return;
-    if (Kit.calm) { applyFinal(); return; }
-    const A = G.arcText, rings = G.rings;
-    tl = gsap.timeline({onComplete: () => { tl = null; pulse(); }});
-    tl.to(rings[0].gauge, {attr: {'stroke-dashoffset': off(0)}, duration: .6, ease: 'power3.out'}, .1);
-    for (let i = 0; i < 3; i++) {
-      const S = rings[i], D = rings[i + 1], t = .45 + i * 1.05;
-      // Every grain the prey held goes into the predator: it is kept, not shed.
-      S.dp.forEach((p, j) => {
-        const q = D.dp[j], at = t + j * .025;
-        const c = mk('circle', {cx: S.cx + p[0], cy: S.cy + p[1], r: G.dr, fill: 'url(#dot)', filter: 'url(#gl)', opacity: 0}, G.fly);
-        tl.set(c, {attr: {opacity: 1}}, at);
-        tl.to(c, {attr: {cx: D.cx + q[0], cy: D.cy + q[1]}, duration: .75, ease: 'power3.inOut'}, at);
-        tl.set(c, {attr: {opacity: 0}}, at + .75);
-        tl.set(D.dots[j], {attr: {opacity: 1}}, at + .75);
-      });
-      // ...and it eats many more, so new grains keep arriving.
-      tl.fromTo(D.dots.slice(S.dots.length), {attr: {opacity: 0, r: 0}}, {attr: {opacity: 1, r: G.dr}, duration: .4, stagger: .018, ease: 'back.out(3)'}, t + .6);
-      tl.to(D.gauge, {attr: {'stroke-dashoffset': off(i + 1)}, duration: .9, ease: 'power3.out'}, t + .5);
-      tl.fromTo(D.line, {attr: {'stroke-width': 4}}, {attr: {'stroke-width': 1.4}, duration: .6, ease: 'power2.out'}, t + .72);
-      tl.fromTo(D.label, {attr: {fill: '#ffffff'}}, {attr: {fill: '#c9d4ff'}, duration: .8, ease: 'power2.out'}, t + .72);
-      tl.call(() => Kit.haptic('light'), null, t + .72);
-    }
-    // The shark: the whole chain ends up here.
-    const w = .45 + 3 * 1.05, S = rings[3];
-    tl.to(G.hot, {attr: {opacity: 1}, duration: 1.2, ease: 'expo.out'}, w - .3);
-    tl.fromTo(S.flare, {attr: {opacity: .95, r: S.o}}, {attr: {opacity: 0, r: G.flareMax}, duration: 1.4, ease: 'expo.out'}, w - .3);
-    tl.fromTo(S.flare, {attr: {opacity: .6, r: S.o}}, {attr: {opacity: 0, r: S.o + (G.flareMax - S.o) * .6}, duration: 1.2, ease: 'expo.out', immediateRender: false}, w);
-    tl.set(S.flare, {attr: {r: S.o, opacity: 0}}, w + 1.3);
-    tl.to(S.line, {attr: {stroke: '#ffb0bb'}, duration: .6}, w - .3);
-    tl.from(S.bw.firstChild, {x: .05, duration: .5, ease: 'elastic.out(1.4,.25)'}, w - .3);
-    if (!G.most) tl.to(S.label, {attr: {fill: COL[3]}, duration: .6}, w + .9);
-    tl.call(() => Kit.haptic('success'), null, w - .3);
-    tl.to(A, {attr: {fill: '#ffd9a8'}, duration: .8}, w - .5);
-    if (window.ScrambleTextPlugin) {
-      tl.to(A, {duration: 1.6, scrambleText: {text: 'BIOMAGNIFICATION', chars: 'ABCDEFGHIKLMNOQRSTUVXYZ0123456789', speed: .5, revealDelay: .4}, ease: 'none'}, w - .5);
-      if (G.most) {
-        tl.set(G.most, {attr: {opacity: 1}}, w);
-        tl.fromTo(G.most, {scrambleText: {text: ' '}}, {duration: 1, scrambleText: {text: 'MOST MERCURY', chars: 'upperCase', speed: .6}}, w);
-      }
-    } else {
-      tl.call(() => { A.textContent = 'BIOMAGNIFICATION'; }, null, w - .5);
-      if (G.most) tl.to(G.most, {attr: {opacity: 1}, duration: .6}, w);
-    }
-  }
-
-  if (window.ResizeObserver) new ResizeObserver(() => layout()).observe(svg);
-  return {layout, enter, reveal, finish: () => { if (tl) tl.progress(1); }};
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || !F.anim) return;
+    const arw = F.anim.querySelectorAll('.arw');
+    if (window.DrawSVGPlugin) gsap.from(arw, {drawSVG: '0%', duration: .5, stagger: .15, delay: .3, ease: 'power2.out'});
+    gsap.from(F.anim.querySelectorAll('g>path'), {opacity: 0, x: -6, duration: .45, stagger: .1, ease: 'power3.out'});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    setPick(2);
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 900 : 1700);
+    if (backTl) backTl.progress(1);
+    await wait(200);
+  };
 })();
-
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
-  Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, ok ? 'Right: it piles up the chain' : 'No: it piles up the chain');
-  Kit.show('keep');
-  if (!Kit.calm && window.SplitText) {
-    const s = new SplitText('#why .big', {type: 'words,chars'});
-    gsap.from(s.chars, {opacity: 0, y: 8, rotation: -8, stagger: .022, duration: .5, ease: 'back.out(2)'});
-    gsap.from('#why .body', {opacity: 0, duration: .7, delay: .4, ease: 'power2.out'});
-  }
-  SKY.reveal();
-});
-Kit.$('opts').addEventListener('click', e => {
-  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
-  if (!Kit.calm) gsap.fromTo(b, {scale: .97}, {scale: 1, duration: .35, ease: 'power2.out'});
-});
-Kit.onShow.card = () => SKY.layout();
-Kit.onEnter.card = () => SKY.enter();
-Kit.play.card = async () => {
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  Kit.$('opts').children[RIGHT].click(); await wait(100);
-  Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(600);
-  SKY.finish(); await wait(150);
-};
 Kit.single();
 </script>
 </html>
