@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: human_body-highway-hypnosis -->
-<!-- Look: a night road tunnel made of thousands of light particles: segmented teal walls lit in amber pools by sodium lamps, green walkway beacons, white lane lines streaking past, the dark hood of the car, and a violet swarm that stands for the driver's attention.
-     Interaction: drag across the tunnel to drive on into the night. The attention swarm collapses onto the lane lines, the eyelids close in, reflexes drop, and the car wanders toward the line.
-     Wow: "Put it on rails". The lane-line particles take off and land as steel rails, sleepers and an overhead wire, the car locks to the track, the gaze is free again, and the risk drains away while HIGHWAY HYPNOSIS scrambles into THE RAILS STEER. -->
+<!-- Look: a night road tunnel painted like a page from a printed book: flat bands of tunnel wall, each lamp throwing a flat amber pool on the road, plain white lane lines, the dark flat hood of the car, the driver's gaze drawn as a short scan path of a few joined fixations, and flat eyelids that close in.
+     Interaction: drag across the tunnel to drive on into the night. The scan path collapses onto the lane line, the eyelids close in, reflexes drop, and the car wanders toward the line.
+     Wow: "Put it on rails". The lane lines slide in and become two steel rails, sleepers fill in under them and an overhead wire drops down. The car locks to the track, the gaze is free again, the risk drains away, and HIGHWAY HYPNOSIS scrambles into THE RAILS STEER. -->
 <title>Highway hypnosis</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -12,8 +12,8 @@
 <style>
 #stage{position:relative;display:flex;flex:1;min-height:0;overflow:hidden;background:none;border:0;border-radius:0;box-shadow:none}
 #cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-#word{position:absolute;left:50%;top:33%;transform:translate(-50%,-50%);font:800 max(2.5cqh,15px)/1.1 var(--mono);letter-spacing:.14em;color:#f3eaff;text-shadow:0 0 1.2cqh rgba(190,160,255,.9),0 0 3cqh rgba(140,100,255,.6);white-space:nowrap;pointer-events:none;opacity:0;max-width:none}
-#word.rail{color:#e6f6ff;text-shadow:0 0 1.2cqh rgba(140,210,255,.95),0 0 3cqh rgba(80,170,255,.6)}
+#word{position:absolute;left:50%;top:33%;transform:translate(-50%,-50%);font:700 max(2.5cqh,15px)/1.1 var(--display);letter-spacing:0;color:var(--k);background:var(--c);padding:.12em .4em;border-radius:.18em;white-space:nowrap;pointer-events:none;opacity:0;max-width:none}
+#word.rail{color:var(--k)}
 #why{margin:0}
 #why .body{margin:0;font-size:max(2.15cqh,14px);line-height:1.42}
 #rail{align-self:flex-start}
@@ -24,7 +24,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">ROAD OR RAIL</span></div>
     <h2 class="q">What physiological phenomenon discourages building a road tunnel under the Channel?</h2>
     <div class="stagebox" id="stage">
-      <canvas id="cv" data-drag role="img" aria-label="A night road tunnel seen from the driver's seat, drawn in particles of light, with the driver's attention as a swarm of dots and three gauges: attention, reflexes, accident risk."></canvas>
+      <canvas id="cv" data-drag role="img" aria-label="A night road tunnel seen from the driver's seat, drawn in flat colour, with the driver's attention as a swarm of dots and three gauges: attention, reflexes, accident risk."></canvas>
       <div id="word" aria-hidden="true"></div>
     </div>
     <p class="say" id="say">Drag across the tunnel, left to right, to <b>drive on into the night</b>.</p>
@@ -42,50 +42,48 @@
   const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
   const lerp = (a, b, k) => a + (b - a) * k;
   const sstep = (a, b, v) => { const k = clamp((v - a) / (b - a)); return k * k * (3 - 2 * k); };
-  const RANGE = 42, FLOOR = .6;
+  const RANGE = 42, FLOOR = .6, NEAR = .15;
 
-  let x = null, W = 0, H = 0, f = 1, cx = 0, cy = 0, fs = 12, MONO = 'monospace';
+  let x = null, W = 0, H = 0, f = 1, cx = 0, cy = 0, fs = 12, BODY = 'sans-serif';
   let showMeters = true, showHours = true, showHood = true;
   let t = 0, tv = 0, mode = 'road', touched = false, wordOn = false, btnOn = false, stage1 = false;
   let time = 2, worldZ = 0, camX = 0, last = 0, running = false, wasDanger = false, spd = 9;
   const M = {m: 0}, intro = {v: 1};
 
-  // soft glow sprites
-  const sprite = (r, g, b) => {
-    const c = document.createElement('canvas'); c.width = c.height = 64;
-    const k = c.getContext('2d'), gr = k.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gr.addColorStop(0, `rgba(${r},${g},${b},1)`); gr.addColorStop(.25, `rgba(${r},${g},${b},.45)`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
-    k.fillStyle = gr; k.fillRect(0, 0, 64, 64); return c;
+  // ---------- flat palette: ink, card colour, their tints, plus amber light and red danger ----------
+  const toRGB = s => {
+    s = (s || '').trim();
+    if (s[0] === '#') {
+      if (s.length === 4) s = '#' + s[1] + s[1] + s[2] + s[2] + s[3] + s[3];
+      return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16));
+    }
+    const n = s.match(/\d+(\.\d+)?/g); return n && n.length >= 3 ? n.slice(0, 3).map(Number) : null;
   };
-  const gAmber = sprite(255, 170, 70), gGreen = sprite(90, 255, 170);
+  const mixc = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
+  const rgb = (a, al = 1) => `rgba(${a[0] | 0},${a[1] | 0},${a[2] | 0},${al})`;
+  const AMBER = [236, 158, 64], RED = [226, 62, 62];
+  let CK = [243, 234, 255], CC = [5, 4, 12];
+  let WALL, WALL_LIT, ROAD, ROAD_LIT, LAMP, LANE, RAIL, SLEEPER, TRACK;
+  function palette() {
+    WALL = mixc(CC, CK, .14); WALL_LIT = mixc(CC, AMBER, .38);
+    ROAD = mixc(CC, CK, .08); ROAD_LIT = mixc(CC, AMBER, .24);
+    LAMP = mixc(AMBER, CK, .45); LANE = mixc(CC, CK, .88); RAIL = mixc(CC, CK, .62);
+    SLEEPER = mixc(CC, CK, .3); TRACK = mixc(CC, CK, .24);
+  }
+  palette();
 
-  // ---------- particles (seeded, built once) ----------
-  const rnd = Kit.rnd;
-  const walls = [], lamps = [], beacons = [], lines = [], grain = [], gaze = [];
+  // tunnel cross-section: floor edge, walls, round roof
   const prof = s => {
     const L = 1 + Math.PI * 1.8 + 1, d = s * L;
     if (d < 1) return [-1.8, FLOOR - d];
     if (d < 1 + Math.PI * 1.8) { const a = Math.PI + (d - 1) / 1.8; return [1.8 * Math.cos(a), -0.4 + 1.8 * Math.sin(a)]; }
     return [1.8, -0.4 + (d - 1 - Math.PI * 1.8)];
   };
-  for (let i = 0; i < 2200; i++) {
-    const [wx, wy] = prof(rnd());
-    const z0 = rnd() < .45 ? Math.floor(rnd() * RANGE / 2) * 2 + Kit.gauss() * .04 : rnd() * RANGE;
-    const d = ((z0 % 3) + 3) % 3, lit = Math.exp(-((d - .45) ** 2) / .3) * (wy < -1 ? 1 : .55);
-    walls.push({wx, wy, z0, b: .4 + rnd() * .6, lit});
-  }
-  for (let b = 0; b < 14; b++) for (let j = 0; j < 12; j++) lamps.push({wx: (rnd() - .5) * .3, wy: -2.12 + rnd() * .04, z0: b * 3 + rnd() * .9});
-  for (let b = 0; b < 28; b++) for (const s of [-1, 1]) beacons.push({wx: s * 1.76, wy: .12, z0: b * 1.5 + .7});
-  for (let i = 0; i < 1200; i++) {
-    const side = rnd() < .5 ? -1 : 1;
-    const rr = rnd(); let rx, rz = rnd() * RANGE, sleeper = false;
-    if (rr < .34) rx = -.5 + (rnd() - .5) * .02;
-    else if (rr < .68) rx = .5 + (rnd() - .5) * .02;
-    else { sleeper = true; rx = (rnd() - .5) * 1.5; rz = Math.round(rz) + (rnd() - .5) * .08; }
-    lines.push({x0: side + (rnd() - .5) * .05, rx, z0: rnd() * RANGE, rz, dashed: side < 0, sleeper, d: rnd(), lift: .3 + rnd() * .9});
-  }
-  for (let i = 0; i < 420; i++) grain.push({wx: (rnd() - .5) * 3.5, z0: rnd() * RANGE, b: rnd()});
-  for (let i = 0; i < 440; i++) gaze.push({gx: Kit.gauss() * .36, gy: Kit.gauss() * .26 - .02, side: rnd() < .5 ? -1 : 1, lz: 2.2 + rnd() * 5, ph: rnd() * 6.28, sp: .6 + rnd() * 1.6, px: 0, py: 0, init: false});
+  const PROF = []; for (let i = 0; i <= 28; i++) PROF.push(prof(i / 28));
+
+  // where the driver is looking: a short scan path of a few fixations, in order
+  const GZ = [[-.27, -.2], [.2, -.24], [.04, -.02], [-.2, .18], [.28, .12], [-.02, .3]];
+  const gaze = GZ.map((p, i) => ({gx: p[0], gy: p[1], side: 1, lz: 2.4 + i * .45, ph: .4 + i * 1.7, sp: .7 + .22 * i, px: 0, py: 0, init: false}));
 
   // keep the headline word inside the stage, at any size
   let wordY = 0;
@@ -108,7 +106,8 @@
     f = Math.min(W * .55, H * .62); cx = W / 2; cy = H * .42;
     fs = Math.max(12, Math.min(14, W / 28));
     const cs = getComputedStyle(card);
-    MONO = (cs.getPropertyValue('--mono') || '').trim() || 'monospace';
+    BODY = (cs.getPropertyValue('--body') || '').trim() || 'sans-serif';
+    CK = toRGB(cs.getPropertyValue('--k')) || CK; CC = toRGB(cs.getPropertyValue('--c')) || CC; palette();
     showMeters = H >= fs * 13; showHours = H >= fs * 8; showHood = H >= 220;
     const rowH = fs * 1.55, pad = fs * .6, metB = fs * .7 + pad * 1.4 + rowH * 3 - (rowH - fs);
     let wy;
@@ -132,34 +131,106 @@
   } catch (e) {}
 
   const proj = (wx, wy, z) => { const k = f / z; return [cx + (wx - camX) * k, cy + wy * k, k]; };
-  const zOf = z0 => ((z0 - worldZ) % RANGE + RANGE) % RANGE + .3;
+  const wrapZ = z0 => ((z0 - worldZ) % RANGE + RANGE) % RANGE;
+  const fogK = z => Math.pow(clamp(z / RANGE), .65) * .92;
 
   function quad(a, b, c, d) { x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.lineTo(c[0], c[1]); x.lineTo(d[0], d[1]); x.closePath(); x.fill(); }
+  function ring(z) { PROF.forEach((p, j) => { const q = proj(p[0], p[1], z); j ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1]); }); x.closePath(); }
+  // every span [z0, z0+len) along the tunnel, wrapped around the loop and clipped at the windscreen
+  function spans(z0, len, fn) {
+    const z = wrapZ(z0);
+    for (const zz of z > RANGE - len ? [z, z - RANGE] : [z]) {
+      const zs = Math.max(zz, NEAR), ze = Math.min(zz + len, RANGE + .3);
+      if (ze > zs) fn(zs, ze, zz);
+    }
+  }
 
-  function railGeo(a) {
-    for (let i = 0; i < RANGE; i++) {
-      const z = zOf(i); if (z < .5) continue;
-      const fog = Math.pow(1 - z / RANGE, 1.3);
-      x.fillStyle = `rgba(120,150,195,${fog * .42 * a})`;
-      quad(proj(-.78, FLOOR, z), proj(.78, FLOOR, z), proj(.78, FLOOR, z + .16), proj(-.78, FLOOR, z + .16));
+  // the tunnel: bands of wall, lit in turn by a lamp above, each with its pool of light on the road
+  function tunnel() {
+    const bands = [];
+    for (let i = 0; i < RANGE / 1.5; i++) spans(i * 1.5, 1.5, (zs, ze, z) => bands.push([zs, ze, z, i % 2 === 0]));
+    bands.sort((a, b) => b[0] - a[0]);
+    for (const [zs, ze, z, lit] of bands) {
+      const fg = fogK(zs);
+      x.beginPath(); ring(zs); ring(ze);
+      x.fillStyle = rgb(mixc(lit ? WALL_LIT : WALL, CC, fg)); x.fill('evenodd');
+      x.fillStyle = rgb(mixc(lit ? ROAD_LIT : ROAD, CC, fg));
+      quad(proj(-1.8, FLOOR, zs), proj(1.8, FLOOR, zs), proj(1.8, FLOOR, ze), proj(-1.8, FLOOR, ze));
+      if (lit) {
+        const l1 = Math.max(z + .35, NEAR), l2 = z + 1.15;
+        if (l2 > l1) {
+          x.fillStyle = rgb(mixc(LAMP, CC, fg * .6));
+          quad(proj(-.16, -2.16, l1), proj(.16, -2.16, l1), proj(.16, -2.16, l2), proj(-.16, -2.16, l2));
+        }
+      }
     }
-    for (const s of [-.5, .5]) {
-      const n = proj(s, FLOOR, .6), fa = proj(s, FLOOR, RANGE);
-      const gr = x.createLinearGradient(n[0], n[1], fa[0], fa[1]);
-      gr.addColorStop(0, `rgba(215,240,255,${.95 * a})`); gr.addColorStop(.7, `rgba(140,195,255,${.35 * a})`); gr.addColorStop(1, 'rgba(120,180,255,0)');
-      x.fillStyle = gr;
-      quad(proj(s - .035, FLOOR, .6), proj(s + .035, FLOOR, .6), proj(s + .035, FLOOR, RANGE), proj(s - .035, FLOOR, RANGE));
+  }
+
+  // lane lines, which slide in and become rails on sleepers under a wire
+  function track(m, danger, iv) {
+    if (m > .01) {
+      x.globalAlpha = iv * clamp(m * 1.5);
+      const hw = .78 * sstep(0, .8, m);
+      for (let i = 0; i < RANGE; i++) spans(i, .18, (zs, ze) => {
+        x.fillStyle = rgb(mixc(SLEEPER, CC, fogK(zs)));
+        quad(proj(-hw, FLOOR, zs), proj(hw, FLOOR, zs), proj(hw, FLOOR, ze), proj(-hw, FLOOR, ze));
+      });
+      x.globalAlpha = iv;
     }
-    const w0 = proj(0, -1.72, .6), w1 = proj(0, -1.72, RANGE);
-    const gw = x.createLinearGradient(w0[0], w0[1], w1[0], w1[1]);
-    gw.addColorStop(0, `rgba(200,230,255,${.6 * a})`); gw.addColorStop(1, 'rgba(200,230,255,0)');
-    x.strokeStyle = gw; x.lineWidth = 1.2; x.beginPath(); x.moveTo(w0[0], w0[1]); x.lineTo(w1[0], w1[1]); x.stroke();
-    for (let i = 0; i < RANGE; i += 4) {
-      const z = zOf(i + 1); if (z < .8) continue;
-      const fog = Math.pow(1 - z / RANGE, 1.3), p1 = proj(0, -1.72, z), p2 = proj(0, -1.98, z);
-      x.strokeStyle = `rgba(200,230,255,${fog * .5 * a})`; x.lineWidth = 1;
-      x.beginPath(); x.moveTo(p1[0], p1[1]); x.lineTo(p2[0], p2[1]); x.stroke();
+    for (const s of [-1, 1]) {
+      const X = lerp(s, s * .5, m), hw = lerp(.045, .04, m);
+      const len = s < 0 ? lerp(1.5, 3, m) : 3;
+      const red = (1 - m) * danger * ((s > 0) === (camX > 0) ? 1 : 0);
+      const col = mixc(mixc(LANE, RAIL, m), RED, red);
+      for (let j = 0; j < RANGE / 3; j++) spans(j * 3, len, (zs, ze) => {
+        x.fillStyle = rgb(mixc(col, CC, fogK(zs) * (1 - red * .5)));
+        quad(proj(X - hw, FLOOR, zs), proj(X + hw, FLOOR, zs), proj(X + hw, FLOOR, ze), proj(X - hw, FLOOR, ze));
+      });
     }
+    if (m > .01) {
+      const wy = lerp(-2.15, -1.72, m);
+      x.globalAlpha = iv * clamp(m * 1.5);
+      x.strokeStyle = rgb(mixc(CC, CK, .55)); x.lineWidth = 1.5; x.lineCap = 'round';
+      const w0 = proj(0, wy, .6), w1 = proj(0, wy, RANGE * .9);
+      x.beginPath(); x.moveTo(w0[0], w0[1]); x.lineTo(w1[0], w1[1]); x.stroke();
+      x.lineWidth = 1;
+      for (let i = 0; i < RANGE; i += 4) {
+        const z = wrapZ(i + 1); if (z < .8) continue;
+        const p1 = proj(0, wy, z), p2 = proj(0, -2.18, z);
+        x.strokeStyle = rgb(mixc(mixc(CC, CK, .45), CC, fogK(z)));
+        x.beginPath(); x.moveTo(p1[0], p1[1]); x.lineTo(p2[0], p2[1]); x.stroke();
+      }
+      x.globalAlpha = iv;
+    }
+  }
+
+  // the driver's gaze: a scan path that roams the scene, then shrinks onto the lane line
+  function scanPath(kLock, m, iv, dt) {
+    for (const g of gaze) {
+      const dart = (1 - kLock) * (1 + m * .3);
+      const wxT = cx + (g.gx + Math.sin(time * g.sp * .5 + g.ph) * .05 * dart) * W;
+      const wyT = cy + (g.gy + Math.cos(time * g.sp * .4 + g.ph) * .04 * dart) * H;
+      const [lx, ly] = proj(g.side, FLOOR, g.lz);
+      const tx = lerp(wxT, lx, kLock), ty = lerp(wyT, ly, kLock);
+      if (!g.init || Kit.calm) { g.px = tx; g.py = ty; g.init = true; }
+      else { const e = clamp(dt * lerp(2.4, 5, kLock)); g.px += (tx - g.px) * e; g.py += (ty - g.py) * e; }
+    }
+    const ink = rgb(CK), r = Math.max(3, fs * .3);
+    x.lineCap = 'round'; x.lineJoin = 'round';
+    // the path between fixations, outlined in card colour so it reads over the lamps
+    x.globalAlpha = .85 * iv;
+    x.beginPath(); gaze.forEach((g, i) => i ? x.lineTo(g.px, g.py) : x.moveTo(g.px, g.py));
+    x.strokeStyle = rgb(CC); x.lineWidth = 4.5; x.stroke();
+    x.strokeStyle = ink; x.lineWidth = 2; x.stroke();
+    // the fixations; the last one is where the eye is now
+    x.globalAlpha = iv;
+    gaze.forEach((g, i) => {
+      const now = i === gaze.length - 1, rr = now ? r * 1.7 : r;
+      x.beginPath(); x.arc(g.px, g.py, rr + 1.5, 0, 6.283); x.fillStyle = rgb(CC); x.fill();
+      x.beginPath(); x.arc(g.px, g.py, rr, 0, 6.283); x.fillStyle = ink; x.fill();
+      if (now) { x.beginPath(); x.arc(g.px, g.py, rr * .45, 0, 6.283); x.fillStyle = rgb(CC); x.fill(); }
+    });
+    x.globalAlpha = 1;
   }
 
   // ---------- one frame ----------
@@ -175,150 +246,83 @@
 
     x.globalCompositeOperation = 'source-over'; x.globalAlpha = 1;
     x.clearRect(0, 0, W, H);
-    const vg = x.createRadialGradient(cx - camX * f / 40, cy, 0, cx, cy, W * .22);
-    vg.addColorStop(0, `rgba(255,190,110,${.35 * iv})`); vg.addColorStop(1, 'rgba(255,190,110,0)');
-    x.fillStyle = vg; x.fillRect(0, 0, W, H);
+    x.fillStyle = rgb(CC); x.fillRect(0, 0, W, H);
 
-    x.globalCompositeOperation = 'lighter';
-    for (const p of walls) {
-      const z = zOf(p.z0); const [sx, sy, k] = proj(p.wx, p.wy, z);
-      if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
-      const fog = Math.pow(1 - z / RANGE, 1.4), s = Math.min(2.6, Math.max(.7, .045 * k)), L = p.lit * .75;
-      x.fillStyle = `rgba(${lerp(90, 255, L) | 0},${lerp(200, 175, L) | 0},${lerp(255, 105, L) | 0},${fog * .5 * p.b * (1 + p.lit * .7) * iv})`;
-      x.fillRect(sx, sy, s, s);
-    }
-    for (const p of beacons) {
-      const z = zOf(p.z0); const [sx, sy, k] = proj(p.wx, p.wy, z);
-      if (sx < -20 || sx > W + 20 || sy > H + 20) continue;
-      const fog = Math.pow(1 - z / RANGE, 1.3), s = clamp(.18 * k, 3, 14);
-      x.globalAlpha = fog * .7 * iv * sstep(.4, 1.5, z); x.drawImage(gGreen, sx - s / 2, sy - s / 2, s, s);
-    }
-    x.globalAlpha = 1;
-    if (m > .45) railGeo(sstep(.45, 1, m) * iv);
-    for (const p of grain) {
-      const z = zOf(p.z0); const [sx, sy, k] = proj(p.wx, FLOOR, z);
-      if (sy > H || sx < 0 || sx > W) continue;
-      const fog = Math.pow(1 - z / RANGE, 1.5), s = Math.min(2, Math.max(.6, .03 * k));
-      x.fillStyle = `rgba(${lerp(150, 120, m) | 0},${lerp(130, 140, m) | 0},${lerp(170, 160, m) | 0},${fog * .35 * p.b * iv})`; x.fillRect(sx, sy, s, s);
-    }
-    x.lineCap = 'round';
-    const baseDz = Math.min(1.4, .05 + spd * .035);
-    for (const p of lines) {
-      let mi = clamp(m * 1.5 - p.d * .5); mi = mi * mi * (3 - 2 * mi);
-      const z0 = lerp(p.z0, p.rz, mi), z = zOf(z0);
-      const wx = lerp(p.x0, p.rx, mi), wy = FLOOR - Math.sin(Math.PI * mi) * p.lift;
-      let vis = 1;
-      if (p.dashed && mi < 1) { const on = ((p.z0 % 3) + 3) % 3 < 1.5 ? 1 : 0; vis = lerp(on, 1, mi); }
-      if (vis < .02) continue;
-      const [sx, sy, k] = proj(wx, wy, z);
-      if (sy > H + 4 || sx < -4 || sx > W + 4) continue;
-      const dz = baseDz * (p.sleeper ? lerp(1, .15, mi) : 1), [sx2, sy2] = proj(wx, wy, z + dz);
-      const fog = Math.pow(1 - z / RANGE, 1.3), s = Math.min(3.4, Math.max(.8, .06 * k));
-      const red = (1 - mi) * danger * ((p.x0 > 0) === (camX > 0) ? 1 : 0);
-      const rC = lerp(lerp(250, 150, mi), 255, red) | 0, gC = lerp(lerp(244, 215, mi), 70, red) | 0, bC = lerp(lerp(225, 255, mi), 90, red) | 0;
-      const a = fog * vis * (p.sleeper ? lerp(.9, .55, mi) : .95) * iv;
-      x.strokeStyle = `rgba(${rC},${gC},${bC},${a})`; x.lineWidth = s;
-      x.beginPath(); x.moveTo(sx, sy); x.lineTo(sx2, sy2); x.stroke();
-    }
-    for (const p of lamps) {
-      const z = zOf(p.z0); const [sx, sy, k] = proj(p.wx, p.wy, z);
-      if (sy < -24 || sx < -24 || sx > W + 24) continue;
-      const fog = Math.pow(1 - z / RANGE, 1.2), near = sstep(.35, 2.2, z), s = clamp(.35 * k, 2.5, 22), a = fog * near * iv;
-      x.globalAlpha = a * .5; x.drawImage(gAmber, sx - s / 2, sy - s / 2, s, s);
-      x.globalAlpha = 1; x.fillStyle = `rgba(255,232,190,${a * .9})`; const c = Math.max(1, s * .16); x.fillRect(sx - c / 2, sy - c / 2, c, c);
-    }
-    x.globalAlpha = 1;
+    x.globalAlpha = iv;
+    tunnel();
+    track(m, danger, iv);
 
     const kLock = sstep(.15, .85, h) * (1 - m);
-    for (const g of gaze) {
-      const dart = (1 - kLock) * (1 + m * .3);
-      const wxT = cx + (g.gx + Math.sin(time * g.sp * .5 + g.ph) * .05 * dart) * W;
-      const wyT = cy + (g.gy + Math.cos(time * g.sp * .4 + g.ph) * .04 * dart) * H;
-      const [lx, ly] = proj(g.side, FLOOR, g.lz);
-      const tx = lerp(wxT, lx + Math.sin(g.ph) * 2, kLock), ty = lerp(wyT, ly + Math.cos(g.ph) * 2, kLock);
-      if (!g.init || Kit.calm) { g.px = tx; g.py = ty; g.init = true; }
-      else { const e = clamp(dt * lerp(2.4, 5, kLock)); g.px += (tx - g.px) * e; g.py += (ty - g.py) * e; }
-      const a = (.75 - .35 * kLock) * iv;
-      x.fillStyle = m > .5 ? `rgba(255,214,150,${a * .8})` : `rgba(${lerp(200, 230, kLock) | 0},${lerp(180, 140, kLock) | 0},255,${a})`;
-      x.fillRect(g.px - .85, g.py - .85, 1.7, 1.7);
-    }
-    x.globalCompositeOperation = 'source-over';
+    scanPath(kLock, m, iv, dt);
 
     if (showHood) {
       const hh = Math.min(H * .14, 72), top = H - hh;
       x.beginPath(); x.moveTo(0, H); x.lineTo(0, top + hh * .55); x.quadraticCurveTo(cx, top - hh * .25, W, top + hh * .55); x.lineTo(W, H); x.closePath();
-      const hg = x.createLinearGradient(0, top, 0, H); hg.addColorStop(0, '#0e0b1a'); hg.addColorStop(1, '#020105');
-      x.fillStyle = hg; x.fill();
-      const pulse = Math.pow((Math.cos(worldZ / 3 * 6.283 - 1) + 1) / 2, 3), al = (.12 + .5 * pulse) * iv;
-      const col = m > .5 ? '170,215,255' : '255,190,120';
-      const sg = x.createLinearGradient(0, 0, W, 0);
-      sg.addColorStop(0, `rgba(${col},0)`); sg.addColorStop(.5, `rgba(${col},${al})`); sg.addColorStop(1, `rgba(${col},0)`);
-      x.strokeStyle = sg; x.lineWidth = 1.6;
+      x.fillStyle = rgb(mixc(CC, CK, .03)); x.fill();
+      x.strokeStyle = rgb(mixc(CC, CK, .3)); x.lineWidth = 1.5;
       x.beginPath(); x.moveTo(0, top + hh * .55); x.quadraticCurveTo(cx, top - hh * .25, W, top + hh * .55); x.stroke();
     }
     if (danger > .01) {
-      const right = camX > 0, gr = x.createLinearGradient(right ? W : 0, 0, right ? W * .7 : W * .3, 0);
-      gr.addColorStop(0, `rgba(255,50,70,${.45 * danger})`); gr.addColorStop(1, 'rgba(255,50,70,0)');
-      x.fillStyle = gr; x.fillRect(0, 0, W, H);
+      x.fillStyle = rgb(RED, .7 * danger);
+      x.fillRect(camX > 0 ? W - fs * .45 : 0, 0, fs * .45, H);
     }
+    // heavy eyelids closing in
     const lid = H * .17 * h * h * (.75 + .25 * Math.sin(time * .9)) * (1 - m * .7);
     if (lid > .5) {
-      let g1 = x.createLinearGradient(0, 0, 0, lid * 1.6); g1.addColorStop(0, 'rgba(2,1,6,1)'); g1.addColorStop(.6, 'rgba(2,1,6,.9)'); g1.addColorStop(1, 'rgba(2,1,6,0)');
-      x.fillStyle = g1; x.fillRect(0, 0, W, lid * 1.6);
-      g1 = x.createLinearGradient(0, H, 0, H - lid * 1.6); g1.addColorStop(0, 'rgba(2,1,6,1)'); g1.addColorStop(.6, 'rgba(2,1,6,.9)'); g1.addColorStop(1, 'rgba(2,1,6,0)');
-      x.fillStyle = g1; x.fillRect(0, H - lid * 1.6, W, lid * 1.6);
+      const side = lid * 1.5, mid = lid * .8, ctrl = 2 * mid - side;
+      x.fillStyle = rgb(CC);
+      x.beginPath(); x.moveTo(0, 0); x.lineTo(W, 0); x.lineTo(W, side); x.quadraticCurveTo(cx, ctrl, 0, side); x.closePath(); x.fill();
+      x.beginPath(); x.moveTo(0, H); x.lineTo(W, H); x.lineTo(W, H - side); x.quadraticCurveTo(cx, H - ctrl, 0, H - side); x.closePath(); x.fill();
+      x.strokeStyle = rgb(mixc(CC, CK, .28)); x.lineWidth = 1.5;
+      x.beginPath(); x.moveTo(W, side); x.quadraticCurveTo(cx, ctrl, 0, side); x.stroke();
+      x.beginPath(); x.moveTo(W, H - side); x.quadraticCurveTo(cx, H - ctrl, 0, H - side); x.stroke();
     }
 
     if (showMeters) meters(h, m, danger);
     if (showHours) hours(h, m);
   }
 
+  function label(s, px, py) {
+    x.lineJoin = 'round'; x.strokeStyle = rgb(CC); x.lineWidth = 3.5; x.strokeText(s, px, py);
+    x.fillStyle = rgb(CK); x.fillText(s, px, py);
+  }
+
   function meters(h, m, danger) {
     const rows = [
-      ['ATTENTION', 1 - .75 * h * (1 - m * .8), '190,170,255'],
-      ['REFLEXES', 1 - .7 * h * (1 - m * .8), '120,215,255'],
-      ['ACCIDENT RISK', clamp(lerp(.08 + .8 * Math.pow(h, 1.5) + .2 * danger, .04, m)), '255,80,95']
+      ['Attention', 1 - .75 * h * (1 - m * .8), CK],
+      ['Reflexes', 1 - .7 * h * (1 - m * .8), CK],
+      ['Accident risk', clamp(lerp(.08 + .8 * Math.pow(h, 1.5) + .2 * danger, .04, m)), RED]
     ];
-    x.font = `700 ${fs}px ${MONO}`; x.textBaseline = 'middle'; x.textAlign = 'left';
+    x.font = `600 ${fs}px ${BODY}`; x.textBaseline = 'middle'; x.textAlign = 'left';
     const lw = Math.max(...rows.map(r => x.measureText(r[0]).width));
-    const N = 10, dot = fs * .42, gap = fs * .62, pad = fs * .6, rowH = fs * 1.55;
-    const bw = pad * 2 + lw + fs * .7 + N * gap, bh = pad * 1.4 + rowH * rows.length - (rowH - fs);
-    const x0 = fs * .7, y0 = fs * .7;
-    x.fillStyle = 'rgba(4,3,12,.8)'; rr(x0, y0, bw, bh, fs * .6); x.fill();
-    x.strokeStyle = 'rgba(255,255,255,.1)'; x.lineWidth = 1; x.stroke();
+    const N = 10, gap = fs * .62, pad = fs * .6, rowH = fs * 1.55, bh = fs * .42;
+    const x0 = fs * .7, y0 = fs * .7, bx = x0 + pad + lw + fs * .7, bw = N * gap;
     rows.forEach(([name, v, c], i) => {
       const y = y0 + pad * .7 + fs / 2 + i * rowH;
-      x.fillStyle = 'rgba(235,230,250,.92)'; x.fillText(name, x0 + pad, y);
-      const on = v * N;
-      for (let j = 0; j < N; j++) {
-        const px = x0 + pad + lw + fs * .7 + j * gap + dot / 2, k = clamp(on - j);
-        x.beginPath(); x.arc(px, y, dot / 2, 0, 6.283);
-        x.fillStyle = `rgba(${c},${.16 + .84 * k})`; x.fill();
-      }
+      label(name, x0 + pad, y);
+      x.fillStyle = rgb(CC); x.fillRect(bx - 1.5, y - bh / 2 - 1.5, bw + 3, bh + 3);
+      x.fillStyle = rgb(TRACK); x.fillRect(bx, y - bh / 2, bw, bh);
+      x.fillStyle = rgb(c); x.fillRect(bx, y - bh / 2, bw * clamp(v), bh);
     });
   }
-  function rr(a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
 
   function hours(h, m) {
     const y = H - fs * 1.25, a = fs * 1.2, b = W - fs * 1.2;
-    x.font = `700 ${fs}px ${MONO}`; x.textBaseline = 'alphabetic';
-    x.fillStyle = 'rgba(235,230,250,.78)'; x.textAlign = 'left'; x.fillText('dusk', a, y - fs * .75);
-    x.textAlign = 'right'; x.fillText('deep night', b, y - fs * .75); x.textAlign = 'left';
-    const n = Math.max(12, Math.floor((b - a) / (fs * .55)));
-    for (let i = 0; i <= n; i++) {
-      const px = a + (b - a) * i / n, on = i / n <= h;
-      x.beginPath(); x.arc(px, y, on ? 1.6 : 1.1, 0, 6.283);
-      x.fillStyle = on ? (m > .5 ? 'rgba(150,215,255,.95)' : 'rgba(200,180,255,.95)') : 'rgba(255,255,255,.22)'; x.fill();
-    }
+    x.font = `600 ${fs}px ${BODY}`; x.textBaseline = 'alphabetic';
+    x.textAlign = 'left'; label('dusk', a, y - fs * .75);
+    x.textAlign = 'right'; label('deep night', b, y - fs * .75); x.textAlign = 'left';
     const hx = a + (b - a) * h;
-    const glow = x.createRadialGradient(hx, y, 0, hx, y, fs * 1.3);
-    glow.addColorStop(0, 'rgba(255,240,210,.9)'); glow.addColorStop(.3, 'rgba(255,220,170,.35)'); glow.addColorStop(1, 'rgba(255,220,170,0)');
-    x.fillStyle = glow; x.fillRect(hx - fs * 1.3, y - fs * 1.3, fs * 2.6, fs * 2.6);
-    x.beginPath(); x.arc(hx, y, fs * .42, 0, 6.283); x.fillStyle = '#fff4dc'; x.fill();
-    x.beginPath(); x.arc(hx + fs * .16, y - fs * .08, fs * .34, 0, 6.283); x.fillStyle = '#1a1230'; x.fill();
+    x.lineCap = 'round';
+    x.strokeStyle = rgb(TRACK); x.lineWidth = 2;
+    x.beginPath(); x.moveTo(a, y); x.lineTo(b, y); x.stroke();
+    x.strokeStyle = rgb(CK); x.lineWidth = 2.5;
+    x.beginPath(); x.moveTo(a, y); x.lineTo(hx, y); x.stroke();
+    // the moon rising through the night
+    x.beginPath(); x.arc(hx, y, fs * .42, 0, 6.283); x.fillStyle = rgb(CK); x.fill();
+    x.beginPath(); x.arc(hx + fs * .16, y - fs * .08, fs * .34, 0, 6.283); x.fillStyle = rgb(CC); x.fill();
     if (!touched) {
       const p = (Math.sin(time * 4) + 1) / 2;
-      x.strokeStyle = `rgba(255,240,210,${.4 + .5 * p})`; x.lineWidth = 2; x.lineCap = 'round';
+      x.strokeStyle = rgb(CK, .4 + .5 * p); x.lineWidth = 2; x.lineCap = 'round'; x.lineJoin = 'round';
       for (let i = 0; i < 3; i++) { const ax = hx + fs * (1.1 + i * .6 + p * .3); x.beginPath(); x.moveTo(ax, y - fs * .3); x.lineTo(ax + fs * .25, y); x.lineTo(ax, y + fs * .3); x.stroke(); }
     }
   }

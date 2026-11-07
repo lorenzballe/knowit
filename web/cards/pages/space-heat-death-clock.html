@@ -11,14 +11,14 @@
 #stage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:1.2cqh;-webkit-user-select:none;user-select:none}
 #dial{position:relative;flex:1;min-height:0;width:100%;overflow:hidden;color:var(--k);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 #sky,#ring{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
-#ring text{font-family:var(--mono);font-weight:700;fill:currentColor}
-#ring .lg{font-family:var(--body);font-weight:600;opacity:.78}
+#ring text{font-family:var(--body);font-weight:700;fill:currentColor}
+#ring .lg{font-family:var(--body);font-weight:600}
 #ctl{display:flex;align-items:center;justify-content:space-between;gap:3cqw}
 #count{min-width:0}
 #yrs{font:800 max(4.4cqh,24px)/1 var(--display);color:var(--k);white-space:nowrap;padding-top:.1em}
 #yrs span{font-size:.52em;font-weight:700}
 sup{font-size:max(.56em,12px);line-height:1;vertical-align:top}
-#cap{font:600 max(1.7cqh,12px)/1.3 var(--mono);color:var(--muted);margin-top:.6cqh;white-space:nowrap}
+#cap{font:600 max(1.7cqh,12px)/1.3 var(--body);color:color-mix(in srgb,var(--k) 72%,var(--c));margin-top:.6cqh;white-space:nowrap}
 #add{flex:none;font:800 max(2.2cqh,14px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:max(1.7cqh,12px) max(4.6cqw,16px);cursor:pointer;white-space:nowrap;touch-action:manipulation}
 #add:active{transform:scale(.95)}
 #why{display:flex;flex-direction:column;gap:.8cqh}
@@ -52,50 +52,58 @@ const svg = Kit.$('ring'), sky = Kit.$('sky'), dial = Kit.$('dial');
 // The hand runs from 6° to 354° in ten taps; the 100 zeros sit along that arc, after the 1 at the top.
 const A0 = 6, SPAN = 348, NZ = 100, TAPS = 10, TAU = Math.PI * 2;
 const st = {s: 0, fin: 0, amp: 0, ph: 0, intro: 1};
-let G = null, ctx = null, taps = 0, done = false, shown = false, lastN = -1, raf = 0;
+let G = null, ctx = null, taps = 0, done = false, shown = false, lastN = -1, raf = 0, C = null;
 const cl = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const sm = (a, b, v) => { const t = cl((v - a) / (b - a)); return t * t * (3 - 2 * t); };
-const mix = (a, b, t) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
+const lerp = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+const mix = (a, b, t) => `rgb(${lerp(a, b, t).map(Math.round).join(',')})`;
+const rgb = a => mix(a, a, 0);
 const back = k => { const c = 1.70158, t = k - 1; return 1 + (c + 1) * t * t * t + c * t * t; };
 
-// A seeded sky: stars and galaxies that run down, the last black hole, and the even glow left after it.
-const STARS = [], DUST = [], SPARKS = [];
-for (let i = 0; i < 170; i++) {
-  const a = Kit.rnd() * TAU, d = Math.sqrt(Kit.rnd()) * .97, q = Kit.rnd();
-  STARS.push({x: Math.cos(a) * d, y: Math.sin(a) * d, r: .45 + Math.pow(Kit.rnd(), 2.6) * 1.6, b: .35 + Kit.rnd() * .65,
-    L: .12 + Kit.rnd() * .8, c: q < .7 ? '255,255,255' : q < .86 ? '200,220,255' : '255,214,170'});
+// The card's ink and colour, read from the page, so the sky is painted in the card's own flat tints.
+function rgbOf(el, prop) {
+  const s = getComputedStyle(el)[prop] || '', m = s.match(/[\d.]+/g);
+  if (!m || m.length < 3) return null;
+  const v = m.slice(0, 3).map(Number);
+  return s.startsWith('color(') ? v.map(n => n * 255) : v;
 }
-for (let gx = -1; gx < 1.01; gx += .11) for (let gy = -1; gy < 1.01; gy += .11) {
-  const x = gx + (Kit.rnd() - .5) * .05, y = gy + (Kit.rnd() - .5) * .05;
-  if (x * x + y * y < .94) DUST.push({x, y});
+function paints() {
+  const k = rgbOf(dial, 'color') || [255, 255, 255], c = rgbOf(Kit.$('add'), 'color') || [40, 90, 255];
+  const night = lerp(c, [8, 10, 26], .8), ember = [238, 136, 70];
+  C = {k, night, ember, sun: lerp(k, [255, 206, 110], .6), gal: lerp(night, k, .2), core: lerp(night, k, .5),
+    end: lerp(lerp(night, ember, .2), k, .07)};
 }
-for (let i = 0; i < 28; i++) SPARKS.push({a: i / 28 * TAU + Kit.rnd() * .2, v: .6 + Kit.rnd() * .8});
-const GLOWS = [
-  {x: -.4, y: -.34, rx: .46, ry: .16, rot: -.45, c: '160,120,255'},
-  {x: -.3, y: .5, rx: .27, ry: .1, rot: .35, c: '110,165,255'},
-  {x: .5, y: -.46, rx: .19, ry: .08, rot: .8, c: '255,140,205'}];
-const BH = {x: .36, y: .3, r: .11}, SPACE0 = [26, 32, 74], SPACE1 = [5, 6, 16], HAZE = [62, 30, 36];
+
+// The sky, kept to a few things: three suns that cool and go out, three galaxies that fade, and the last black hole.
+const SUNS = [
+  {x: .64, y: -.08, r: 8, L: .3},
+  {x: -.68, y: .1, r: 6.5, L: .5},
+  {x: .1, y: .7, r: 5.5, L: .7}];
+const GALS = [
+  {x: -.4, y: -.34, rx: .3, ry: .1, rot: -.45},
+  {x: -.32, y: .5, rx: .18, ry: .065, rot: .35},
+  {x: .5, y: -.46, rx: .13, ry: .05, rot: .8}];
+const BH = {x: .36, y: .3, r: .11};
 
 // Draw at the card's real size: the ring of zeros, the 1, the hand (SVG) over the sky (canvas).
 function build() {
   if (dial.clientWidth < 40 || dial.clientHeight < 40) return;
   sky.style.width = sky.style.height = svg.style.width = svg.style.height = '';
   svg.textContent = '';
+  paints();
   const {W, H} = Kit.fitSvg(svg);
   ctx = Kit.fitCanvas(sky).x;
   const fl = Math.max(12, Math.min(16, Math.min(W, H) * .045));
   const lgH = shown ? 0 : fl * 1.9, m = Math.max(40, Math.min(W, H - lgH));
   const top = Math.max(0, (H - m - lgH) / 2), cx = W / 2, cy = top + m / 2;
   const R = m / 2 - Math.max(8, m * .035), sp = R * .0607, Rf = R - Math.max(10, sp * 1.6);
-  G = {W, H, cx, cy, R, Rf, u: Rf / 120, ang: [], zx: [], zy: [], zeros: [], dots: [], zs: [], os: []};
-  Kit.mk('circle', {cx, cy, r: Rf + .5, fill: 'none', stroke: 'currentColor', 'stroke-opacity': .35, 'stroke-width': Math.max(1.2, sp * .2)}, svg);
-  const gd = Kit.mk('g', {fill: 'currentColor'}, svg);
-  const gz = Kit.mk('g', {fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(.9, sp * .13).toFixed(2)}, svg);
+  G = {W, H, cx, cy, R, Rf, u: Rf / 120, ang: [], zx: [], zy: [], zeros: [], zs: []};
+  Kit.mk('circle', {cx, cy, r: Rf + .5, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(2, sp * .4)}, svg);
+  const gz = Kit.mk('g', {fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(1.1, sp * .16).toFixed(2)}, svg);
   for (let j = 0; j < NZ; j++) {
     const a = A0 + SPAN * (j + .5) / NZ, t = a * Math.PI / 180;
     const zx = (cx + R * Math.sin(t)).toFixed(2), zy = (cy - R * Math.cos(t)).toFixed(2);
     G.ang.push(a); G.zx.push(zx); G.zy.push(zy);
-    G.dots.push(Kit.mk('circle', {cx: zx, cy: zy, r: Math.max(.8, sp * .1), opacity: 0}, gd));
     G.zeros.push(Kit.mk('ellipse', {cx: 0, cy: 0, rx: sp * .205, ry: sp * .3, transform: 'scale(0)'}, gz));
   }
   const one = Kit.mk('text', {x: cx, y: cy - R, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': Math.max(13, sp * 1.7)}, svg);
@@ -106,9 +114,9 @@ function build() {
   }
   const hw = Math.max(2, sp * .32), L = Rf - Math.max(7, sp), tl = Rf * .16;
   G.hand = Kit.mk('path', {d: `M${cx - hw} ${cy + tl}L${cx + hw} ${cy + tl}L${cx + hw * .4} ${cy - L + hw * 3}L${cx} ${cy - L}L${cx - hw * .4} ${cy - L + hw * 3}Z`,
-    fill: '#fff3da', stroke: 'rgba(0,0,0,.45)', 'stroke-width': 1, 'stroke-linejoin': 'round'}, svg);
-  Kit.mk('circle', {cx, cy, r: hw * 2, fill: '#fff3da', stroke: 'rgba(0,0,0,.45)', 'stroke-width': 1}, svg);
-  Kit.mk('circle', {cx, cy, r: hw * .75, fill: '#1b1720'}, svg);
+    fill: 'currentColor', 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('circle', {cx, cy, r: hw * 2, fill: 'currentColor'}, svg);
+  Kit.mk('circle', {cx, cy, r: hw * .75, fill: rgb(C.night)}, svg);
   render();
 }
 
@@ -124,8 +132,6 @@ function render() {
     if (k >= .5) n++;
     const z = k <= 0 ? '0' : back(k).toFixed(3);
     if (G.zs[j] !== z) { G.zs[j] = z; G.zeros[j].setAttribute('transform', `translate(${G.zx[j]} ${G.zy[j]}) scale(${z})`); }
-    const o = (.4 * (1 - k) * cl((it * 400 - G.ang[j]) / 40)).toFixed(2);
-    if (G.os[j] !== o) { G.os[j] = o; G.dots[j].setAttribute('opacity', o); }
   }
   G.hand.setAttribute('transform', `rotate(${(pa + 16 * st.amp * Math.sin(st.ph) - 30 * (1 - it)).toFixed(2)} ${G.cx} ${G.cy})`);
   count(n);
@@ -139,77 +145,59 @@ function count(n) {
   Kit.$('cap').textContent = n ? `1 and ${n} zero${n > 1 ? 's' : ''}` : 'from now';
 }
 
+// The face, painted flat: a night sky that empties and settles into one even tone.
 function drawSky() {
-  if (!ctx) return;
+  if (!ctx || !C) return;
   const x = ctx, {cx, cy, Rf, u} = G, p = st.s / TAPS, fin = st.fin;
   x.clearRect(0, 0, G.W, G.H);
   x.save();
   x.beginPath(); x.arc(cx, cy, Rf, 0, TAU); x.clip();
   const hz = cl(sm(.3, 1, p) * .65 + fin * .35);
-  const g = x.createRadialGradient(cx, cy - Rf * .2, 0, cx, cy, Rf);
-  g.addColorStop(0, mix(SPACE0, HAZE, hz)); g.addColorStop(1, mix(SPACE1, HAZE, hz));
-  x.fillStyle = g; x.fillRect(cx - Rf, cy - Rf, Rf * 2, Rf * 2);
-  x.globalCompositeOperation = 'lighter';
+  x.fillStyle = mix(C.night, C.end, hz); x.fillRect(cx - Rf, cy - Rf, Rf * 2, Rf * 2);
+  // Galaxies: a flat lens with a lighter middle; they fade before the suns go out.
   const ga = cl(1 - p / .8);
-  if (ga > 0) for (const o of GLOWS) {
-    x.save(); x.translate(cx + o.x * Rf, cy + o.y * Rf); x.rotate(o.rot); x.scale(1, o.ry / o.rx);
-    const rr = o.rx * Rf, gg = x.createRadialGradient(0, 0, 0, 0, 0, rr);
-    gg.addColorStop(0, `rgba(${o.c},${(.6 * ga).toFixed(3)})`); gg.addColorStop(.3, `rgba(${o.c},${(.24 * ga).toFixed(3)})`); gg.addColorStop(1, `rgba(${o.c},0)`);
-    x.fillStyle = gg; x.beginPath(); x.arc(0, 0, rr, 0, TAU); x.fill(); x.restore();
+  if (ga > 0) for (const o of GALS) {
+    x.save(); x.globalAlpha = ga; x.translate(cx + o.x * Rf, cy + o.y * Rf); x.rotate(o.rot);
+    const rx = o.rx * Rf, ry = o.ry * Rf;
+    x.fillStyle = rgb(C.gal); x.beginPath(); x.ellipse(0, 0, rx, ry, 0, 0, TAU); x.fill();
+    x.fillStyle = rgb(C.core); x.beginPath(); x.ellipse(0, 0, rx * .4, ry * .55, 0, 0, TAU); x.fill();
+    x.restore();
   }
-  for (const s of STARS) {
-    const a = s.b * cl((s.L - p) / .08);
+  // Suns: each cools from warm yellow to ember, shrinks, and goes dark in its own time.
+  for (const s of SUNS) {
+    const a = cl((s.L - p) / .14);
     if (a < .02) continue;
-    const sx = cx + s.x * Rf, sy = cy + s.y * Rf, r = Math.max(.5, s.r * u);
-    if (s.r > 1.3) {
-      const h = x.createRadialGradient(sx, sy, 0, sx, sy, r * 5);
-      h.addColorStop(0, `rgba(${s.c},${(.35 * a).toFixed(3)})`); h.addColorStop(1, `rgba(${s.c},0)`);
-      x.fillStyle = h; x.beginPath(); x.arc(sx, sy, r * 5, 0, TAU); x.fill();
-    }
-    x.fillStyle = `rgba(${s.c},${a.toFixed(3)})`; x.beginPath(); x.arc(sx, sy, r, 0, TAU); x.fill();
+    const col = a > .5 ? mix(C.ember, C.sun, (a - .5) * 2) : mix(C.night, C.ember, a * 2);
+    x.fillStyle = col; x.beginPath();
+    x.arc(cx + s.x * Rf, cy + s.y * Rf, s.r * u * (.55 + .45 * a), 0, TAU); x.fill();
   }
-  x.globalCompositeOperation = 'source-over';
-  const da = .2 * sm(.55, 1, p);
-  if (da > .005) {
-    x.fillStyle = `rgba(255,196,186,${da.toFixed(3)})`;
-    const dr = Math.max(.6, .7 * u);
-    for (const d of DUST) { x.beginPath(); x.arc(cx + d.x * Rf, cy + d.y * Rf, dr, 0, TAU); x.fill(); }
-  }
-  // The last black hole: it shrinks slowly, then evaporates in a flash and spreads out.
+  // The last black hole: it shrinks slowly, then evaporates in one warm puff that spreads out.
   const bx = cx + BH.x * Rf, by = cy + BH.y * Rf, r0 = BH.r * Rf;
   const r = r0 * (1 - .35 * p) * Math.sqrt(cl(1 - fin / .55));
   if (r > .4) hole(bx, by, r);
   const fb = cl((fin - .3) / .55);
   if (fb > 0 && fb < 1) {
-    const b = Math.sin(Math.PI * fb), fr = r0 * (1.2 + 5 * b);
-    const f = x.createRadialGradient(bx, by, 0, bx, by, fr);
-    f.addColorStop(0, `rgba(255,252,240,${b.toFixed(3)})`); f.addColorStop(.3, `rgba(255,214,150,${(.6 * b).toFixed(3)})`); f.addColorStop(1, 'rgba(255,150,80,0)');
-    x.fillStyle = f; x.beginPath(); x.arc(bx, by, fr, 0, TAU); x.fill();
-    x.fillStyle = `rgba(255,226,190,${(.9 * (1 - fb)).toFixed(3)})`;
-    const pr = Math.max(.7, .9 * u);
-    for (const k of SPARKS) { const dd = r0 * (1 + 7 * fb * k.v); x.beginPath(); x.arc(bx + Math.cos(k.a) * dd, by + Math.sin(k.a) * dd, pr, 0, TAU); x.fill(); }
+    x.globalAlpha = .85 * Math.sin(Math.PI * Math.min(1, fb * 1.6)) * (1 - fb);
+    x.fillStyle = rgb(C.ember); x.beginPath(); x.arc(bx, by, r0 * (.5 + 2.6 * fb), 0, TAU); x.fill();
+    x.globalAlpha = 1;
   }
   x.restore();
 }
 
 function hole(bx, by, r) {
-  const x = ctx, h = x.createRadialGradient(bx, by, r * .8, bx, by, r * 3.4);
-  h.addColorStop(0, 'rgba(255,160,70,.42)'); h.addColorStop(1, 'rgba(255,110,40,0)');
-  x.fillStyle = h; x.beginPath(); x.arc(bx, by, r * 3.4, 0, TAU); x.fill();
-  disk(bx, by, r, 0, TAU);
+  const x = ctx;
+  disk(bx, by, r, Math.PI, TAU);
   x.fillStyle = '#000'; x.beginPath(); x.arc(bx, by, r, 0, TAU); x.fill();
-  x.strokeStyle = 'rgba(255,226,180,.85)'; x.lineWidth = Math.max(.8, r * .09); x.beginPath(); x.arc(bx, by, r * 1.05, 0, TAU); x.stroke();
   disk(bx, by, r, 0, Math.PI);
 }
 
 function disk(bx, by, r, a0, a1) {
   const x = ctx;
   x.save(); x.translate(bx, by); x.rotate(-.32); x.scale(1, .3);
-  x.beginPath(); x.arc(0, 0, r * 2.05, a0, a1);
+  x.beginPath(); x.arc(0, 0, r * 1.9, a0, a1);
   x.restore();
-  x.lineCap = 'round';
-  x.strokeStyle = 'rgba(255,170,90,.9)'; x.lineWidth = r * .5; x.stroke();
-  x.strokeStyle = 'rgba(255,240,215,.95)'; x.lineWidth = r * .16; x.stroke();
+  x.lineCap = 'butt';
+  x.strokeStyle = rgb(C.ember); x.lineWidth = r * .36; x.stroke();
 }
 
 // One tap: ten more zeros, the years times ten billion, and the sky runs down a step.

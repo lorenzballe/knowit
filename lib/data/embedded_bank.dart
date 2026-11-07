@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 2,
- "version": 202611072345,
- "built": "2026-11-07T23:45:20Z",
+ "version": 202611072351,
+ "built": "2026-11-07T23:51:43Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -68171,8 +68171,8 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "Page titled Road or Rail. A road tunnel is drawn across the page; the reader drags it from left to right to drive on into the night, then is told to put it on rails. The question asks what physiological phenomenon discourages building a road tunnel under the Channel.",
     "ground": "#05040c",
-    "page": "pages/human_body-highway-hypnosis.html?v=9750f3a39170",
-    "bytes": 23789
+    "page": "pages/human_body-highway-hypnosis.html?v=143ca42f7e99",
+    "bytes": 21539
    },
    "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=1i1Z63xL3MQ&t=333s",
@@ -84735,8 +84735,8 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A shelter scene with a clock and a gold bead to drag through 48 hours, and a door to tap to try leaving. The page asks why you should wait 48 hours before going out after a nuclear blast.",
     "ground": "#15102a",
-    "page": "pages/life-48-hour-shelter.html?v=8677fccdbaf7",
-    "bytes": 21500
+    "page": "pages/life-48-hour-shelter.html?v=2a96e256fc6a",
+    "bytes": 16483
    },
    "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=VNWX06NkitE&t=418s",
@@ -100405,8 +100405,8 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A dark underwater scene with a lamp to drag down. Dragging it lights up what lies under the water, revealing the hidden causes of the 2.6 million alcohol deaths in 2019. A counter shows how many deaths are lit so far.",
     "ground": "#06223a",
-    "page": "pages/medicine-alcohol-iceberg.html?v=7d2b765eb198",
-    "bytes": 25314
+    "page": "pages/medicine-alcohol-iceberg.html?v=607eb7512ce4",
+    "bytes": 19209
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=224s",
@@ -129015,8 +129015,8 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "A layered hillside with a sky to tap for rain. Tapping it shows water sinking through rock and stopping on a thin clay layer. Asks: how can a thin layer of clay make a whole hillside slide?",
     "ground": "#f1e9d6",
-    "page": "pages/nature-clay-slide-plane.html?v=e900c45e266c",
-    "bytes": 22542
+    "page": "pages/nature-clay-slide-plane.html?v=4380ce810037",
+    "bytes": 19933
    },
    "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=v98N4kQ52io&t=277s",
@@ -134055,8 +134055,8 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A map of Italy's sea gaps. The reader taps the gaps they think were dry land during the last ice age, then drags down to drain the sea and see which gaps were land.",
     "ground": "#1d1013",
-    "page": "pages/nature-ice-age-italy.html?v=7f0e85496d01",
-    "bytes": 25422
+    "page": "pages/nature-ice-age-italy.html?v=909faf0d72ce",
+    "bytes": 22241
    },
    "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=JM-n3IqZRCo",
@@ -142066,8 +142066,8 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A thermometer you drag up or down to guess the lowest temperature ever recorded in Yakutsk. Its needle is stuck at -63 °C against a snowy skyline. The question asks for the record low.",
     "graded": false,
-    "page": "pages/nature-yakutsk-record-cold.html?v=aa5e67877c75",
-    "bytes": 9392
+    "page": "pages/nature-yakutsk-record-cold.html?v=d039642e8ee7",
+    "bytes": 11496
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=1s",
@@ -187490,8 +187490,8 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "Card asking how a strong electric field turns air into glowing plasma. Two gaps are offered, a weak field and a strong field, and the reader must pick which gap makes plasma first.",
     "graded": false,
-    "page": "pages/science-grape-plasma-ions.html?v=83dc2f6405a1",
-    "bytes": 9236
+    "page": "pages/science-grape-plasma-ions.html?v=6dd2d7d4849c",
+    "bytes": 11788
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=301s",
@@ -192207,8 +192207,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "taps",
     "label": "Multiple-choice question: How much sodium chloride is dissolved in the world's oceans? Three options: about 4 billion kg, about 4 million billion kg, and about 40 billion billion kg. The last option is marked correct: about 4 × 10¹⁹ kg.",
-    "page": "pages/science-ocean-salt-mass.html?v=9ab90bf9a7e3",
-    "bytes": 7132
+    "page": "pages/science-ocean-salt-mass.html?v=3962423fdbee",
+    "bytes": 6937
    },
    "source": "Geopop, “Perché il sodio esplode a contatto con l’acqua? La reazione chimica spiegata con un esperimento” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=x-7g0VrlPQ0&t=698s",
@@ -199168,8 +199168,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive reactor core: hold the button to boil the core's water into steam and watch the power climb. Asks why the core's power rises as steam forms.",
-    "page": "pages/science-steam-feeds-power.html?v=dc04912a98ec",
-    "bytes": 24816
+    "page": "pages/science-steam-feeds-power.html?v=6897f4448707",
+    "bytes": 23698
    },
    "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=4G-cqJy_6_o&t=551s",
@@ -203728,8 +203728,8 @@ const String kEmbeddedBank = r'''
     "touch": "drags",
     "label": "A dial-driven page. Drag the dial to keep a right leg in orbit for up to a year while watching the bone inside it. The page asks how much faster bones thin in space than on Earth.",
     "ground": "#efe3c4",
-    "page": "pages/space-bones-in-orbit.html?v=7ee018fa7e97",
-    "bytes": 17024
+    "page": "pages/space-bones-in-orbit.html?v=baea4cc9d628",
+    "bytes": 16357
    },
    "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=SAQ-iIJkLzA&t=144s",
@@ -207266,8 +207266,8 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "A cartoon spaceship with Wi-Fi and hot chocolate flies past a flat Earth and a flat Mars. The question asks how to prove Earth is round to a flat-Earth believer. Four plan steps are shown to tap in the order you would do them.",
     "graded": false,
-    "page": "pages/space-flat-earth-challenge.html?v=f87090d83b97",
-    "bytes": 11050
+    "page": "pages/space-flat-earth-challenge.html?v=7eef11d0a766",
+    "bytes": 12091
    },
    "source": "Geopop, “▶️TERRA PIATTA, IENE, TERRAPIATTISTI: MESSAGGIO A ELON MUSK |GeologiaPOP🌍” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=Y9H-52XGLhg&t=60s",
@@ -208594,8 +208594,8 @@ const String kEmbeddedBank = r'''
     "touch": "taps",
     "label": "A question card asking when the universe will reach heat death. Answer choices are 1 year from now, 100 years, and more than 10 to the 100 years, with a tap button that adds ten zeros to the years. Revealed text says heat death waits for the last black hole to evaporate, and time no longer has a direction.",
     "ground": "#1b1720",
-    "page": "pages/space-heat-death-clock.html?v=0de9b5843a8d",
-    "bytes": 14923
+    "page": "pages/space-heat-death-clock.html?v=af989101dab7",
+    "bytes": 13242
    },
    "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=DxL2HoqLbyA",
@@ -238743,8 +238743,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Photo from above of a switched-on white LED with its yellow coat intact. A finger rubs the yellow coat away to show the light underneath. The question asks what colour that light is.",
-    "page": "pages/technology-secretly-blue.html?v=4eb1a65b3dbe",
-    "bytes": 19526
+    "page": "pages/technology-secretly-blue.html?v=108e91d9f337",
+    "bytes": 18887
    },
    "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=AF8d72mA41M",
@@ -247985,8 +247985,8 @@ const String kEmbeddedBank = r'''
     "kit": 1,
     "touch": "drags",
     "label": "Interactive page titled 'The air holds you up'. A scale reads 70.000 kg in air beside a jar with a pump and an air-level control at 100%. A slider sets your weight, and holding the pump removes air from the jar. Asks: how much of your weight is the air holding up right now?",
-    "page": "pages/weird_facts-air-holds-you-up.html?v=afcc49fe4ef0",
-    "bytes": 14843
+    "page": "pages/weird_facts-air-holds-you-up.html?v=5685e2502871",
+    "bytes": 14868
    },
    "source": "Veritasium, “World's Heaviest Weight” (YouTube, 2017)",
    "reference": "https://www.youtube.com/watch?v=_k9egfWvb7Y",
