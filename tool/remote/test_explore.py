@@ -202,6 +202,13 @@ class CoreBlocksTest(unittest.TestCase):
         self.assertTrue(one(bento(ratio=3), "how tall a row is for its width"))
         self.assertTrue(one(bento(items=[]), "`items` is a list of one to twelve spans"))
 
+    def test_the_feed_is_the_whole_bank_and_stands_last(self):
+        self.assertEqual(problems({"id": "f", "block": "feed", "title": "Keep exploring"}), [])
+        got = problems({"id": "f", "block": "feed", "source": {"shelf": "today"}})
+        self.assertTrue(one(got, "deals its own cards and reads no `source`"))
+        got = problems({"id": "f", "block": "feed"}, {"id": "after", "block": "top"})
+        self.assertTrue(one(got, "the feed goes on without an end, so it stands last"))
+
     def test_text_countdown_subjects_promo_spacer_divider_web(self):
         self.assertEqual(problems(
             {"id": "t", "block": "text", "kind": "quote", "text": {"en": "Look twice."}, "by": "A reader", "subject": "space", "style": {"align": "center"}},

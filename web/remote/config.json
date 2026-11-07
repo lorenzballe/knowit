@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "hash": "55c594e9fc2fac83",
+ "hash": "05427ce4a59770cc",
  "app": {
   "gate": null,
   "flags": {},
@@ -1849,6 +1849,40 @@
    {
     "id": "theme-practical-0",
     "block": "practical"
+   },
+   {
+    "id": "feed",
+    "block": "feed",
+    "title": {
+     "en": "Keep exploring",
+     "it": "Continua a esplorare",
+     "de": "Weiter entdecken",
+     "es": "Sigue explorando",
+     "fr": "Continue d'explorer",
+     "ja": "もっと探す",
+     "ko": "계속 둘러보기",
+     "nl": "Verder ontdekken",
+     "pl": "Odkrywaj dalej",
+     "pt": "Continua a explorar",
+     "ru": "Исследуй дальше",
+     "tr": "Keşfetmeye devam et",
+     "zh": "继续探索"
+    },
+    "subtitle": {
+     "en": "The same for everyone. Nothing here is picked for you.",
+     "it": "Uguale per tutti. Niente qui è scelto per te.",
+     "de": "Für alle gleich. Nichts hier ist für dich ausgesucht.",
+     "es": "Igual para todos. Nada aquí está elegido para ti.",
+     "fr": "Pareil pour tout le monde. Rien ici n'est choisi pour toi.",
+     "ja": "誰にとっても同じ。あなた向けに選んだものはありません。",
+     "ko": "누구에게나 똑같아요. 맞춤으로 고른 건 없어요.",
+     "nl": "Voor iedereen hetzelfde. Niets hier is voor jou gekozen.",
+     "pl": "Dla wszystkich to samo. Nic tu nie jest wybrane dla ciebie.",
+     "pt": "Igual para todos. Nada aqui foi escolhido para ti.",
+     "ru": "Для всех одинаково. Здесь ничего не подобрано под тебя.",
+     "tr": "Herkes için aynı. Burada hiçbir şey senin için seçilmedi.",
+     "zh": "人人看到的都一样，没有为你挑选。"
+    }
    }
   ]
  },

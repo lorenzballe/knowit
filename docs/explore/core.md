@@ -199,6 +199,31 @@ Fields: `source` (required).
  "source": {"ids": ["psychology-streaks-1"]}}
 ```
 
+### `feed`
+
+Explore without an end. After the shelves, the whole bank in the day's
+order — the same on every phone, turning with the day, never chosen for the
+reader — in a mosaic of two columns that goes on for as long as the reader
+scrolls: one card across, two side by side, a tall one beside two, two, two
+beside a tall one, two, and round again. A card read already is left out,
+and one about a place reaches only the readers who live there, as on every
+shelf. It is built a band at a time as each band comes near the screen, so
+the whole bank costs what the screen shows; a tap opens a card among the
+ones laid so far.
+
+It stands last: the checker refuses a section after it, which could never be
+reached. A build that meets a feed anywhere else draws its first round of
+bands, thirteen cards.
+
+Fields: `title`, `subtitle`. No `source`: it is the whole bank.
+
+```json
+{"id": "feed", "block": "feed",
+ "title": {"en": "Keep exploring", "it": "Continua a esplorare"},
+ "subtitle": {"en": "The same for everyone. Nothing here is picked for you.",
+              "it": "Uguale per tutti. Niente qui è scelto per te."}}
+```
+
 ## Not cards
 
 ### `text`
