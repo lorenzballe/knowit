@@ -1,9 +1,9 @@
 <!doctype html>
 <!-- slug: space-apollo13-tank-fire -->
 <!--
-  Look: a stained-glass rose window of Apollo 13's oxygen tank, with lead lines, cobalt oxygen tiles, an amber stirrer fan, twisted copper fan cables and a brass pressure gauge, drawn straight on the card with a faint lead-line mosaic around it.
-  Interaction: the glass breathes, the fan turns and the needle ticks. The reader taps the chain in order: fan, cables, gauge, tank. Each tap pushes the loop along the way the real failure went.
-  Wow: the short circuit burns along the cables, flames lick the wire and the tiles catch fire one by one. Gas bubbles rise, hairline cracks run through the glass and the needle hits red. Then the window bursts, the needle drops to zero, shards crack tank 2, embers drift, and the why appears.
+  Look: a printed-book cutaway of Apollo 13's oxygen tank: a thick shell around flat liquid oxygen, a four-blade stirrer fan at the centre, a twisted copper pair of fan cables running out of the bottom, a plain dial gauge on a pipe, and a smaller second tank beside it. Flat fills in the card's ink and colour, fire colours only for the fire.
+  Interaction: the tank breathes, the fan turns and the needle ticks. The reader taps the chain in order: fan, cables, gauge, tank. Each tap pushes the loop along the way the real failure went.
+  Wow: the short circuit burns along the cables, flames lick the wire and the heat spreads out from the fan in bands. Gas bubbles rise, hairline cracks run through the tank and the needle hits red. Then the tank bursts, the needle drops to zero, pieces crack tank 2, embers drift, and the why appears.
 -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Apollo 13: the spark inside the tank</title>
@@ -25,7 +25,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP IN ORDER</span></div>
     <h2 class="q">What actually made Apollo 13's oxygen tank explode?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A stained-glass cross-section of an oxygen tank with a stirrer fan, its power cables and a pressure gauge, beside a second oxygen tank."></svg>
+      <svg id="pic" role="img" aria-label="A cutaway of an oxygen tank with a stirrer fan, its power cables and a pressure gauge, beside a second oxygen tank."></svg>
     </div>
     <div id="why" class="gone">
       <p class="big">Shorted fan cables caught fire.</p>
@@ -40,11 +40,7 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const LEAD = '#0b0a12';
-  const O2 = ['#1d4fa6', '#2b6fd8', '#3f8fe6', '#1a8aa6', '#5fb0f7', '#183f8c', '#2d5fc0', '#4aa3d8'];
   const FIRE = ['#fff3c2', '#ffd34d', '#f7a21b', '#ee6a1a', '#d8341c', '#b01a2a', '#8a1030'];
-  const BG = ['#15122b', '#1b1838', '#231a3d', '#112035', '#1a2b40', '#1e1430', '#0f1a2c'];
-  const JEWEL = ['#4a35a0', '#7a2766', '#1f6a78', '#7a6420', '#2a52a8', '#2f7a4a'];
   const SAY = [
     'Tap the <b>glowing fan</b> inside the oxygen tank to start the chain.',
     'A stirrer fan mixes the oxygen. It was switched on because a sensor was misreading. <b>Tap its cables.</b>',
@@ -57,6 +53,7 @@
   let cx1, cy1, r1, cx2, cy2, r2, gx, gy, gr, Fx, Fy, wx, wireEnd, wireD, hitAng;
   let wirePts = [], tiles1 = [], tiles2 = [], bgTiles = [], cracks = [], gCracks = [], flames = [], embers = [], labels = [], tws = [];
   let E = {};
+  let K = '#fff', C = '#2c5cff', OXY = '#6f8fff', FANG = '#95adff', LIGHT = '#fff', DARK = '#16307f';
   const amb = {sp: 1.2, heat: 0};
   const mk = (t, a, p) => Kit.mk(t, a, p);
   const P = (cx, cy, r, a) => [cx + r * Math.sin(a), cy - r * Math.cos(a)];
@@ -67,17 +64,38 @@
   const box = (x, y, r) => ({L: x - r, T: y - r, R: x + r, B: y + r});
   const inter = (a, b) => Math.max(0, Math.min(a.R, b.R) - Math.max(a.L, b.L)) * Math.max(0, Math.min(a.B, b.B) - Math.max(a.T, b.T));
 
+  // The card's own ink and colour, and tints mixed from them (like color-mix in srgb).
+  function rgbOf(v) {
+    const d = document.createElement('i'); d.style.color = v; card.appendChild(d);
+    const s = getComputedStyle(d).color; d.remove();
+    const n = (s.match(/-?[\d.]+/g) || []).map(Number);
+    if (n.length < 3) return null;
+    return /^color\(/.test(s) ? n.slice(0, 3).map(x => x * 255) : n.slice(0, 3);
+  }
+  const rgb = a => `rgb(${a.map(x => Math.round(clamp(x, 0, 255))).join(',')})`;
+  const mixA = (a, b, t) => a.map((x, i) => x * t + b[i] * (1 - t));
+  const lum = a => (.2126 * a[0] + .7152 * a[1] + .0722 * a[2]) / 255;
+  function paint() {
+    const k = rgbOf('var(--k)') || [255, 255, 255], c = rgbOf('var(--c)') || [44, 92, 255];
+    K = rgb(k); C = rgb(c);
+    OXY = rgb(mixA(k, c, .24)); FANG = rgb(mixA(k, c, .5));
+    const light = lum(k) > .5;
+    LIGHT = light ? K : '#fbf6ea';
+    DARK = light ? rgb(mixA(c, [0, 0, 0], .5)) : K;
+  }
+
   function sect(cx, cy, ra, rb, a0, a1) {
     const A = P(cx, cy, ra, a0), B = P(cx, cy, rb, a0), C = P(cx, cy, rb, a1), D = P(cx, cy, ra, a1);
     return `M${A}L${B}A${rb},${rb} 0 0 1 ${C}L${D}A${ra},${ra} 0 0 0 ${A}Z`;
   }
-  function rose(parent, cx, cy, R, fr, ns, rnd) {
+  // The oxygen inside a tank: one flat fill, cut into the pieces it will break into.
+  function rose(parent, cx, cy, R, fr, ns, rnd, col) {
     const out = [];
     for (let i = 0; i < ns.length; i++) {
       const ra = fr[i] * R, rb = fr[i + 1] * R, n = ns[i], off = (i % 2) * Math.PI / n;
-      const cA = O2[Math.floor(rnd() * O2.length)], cB = O2[Math.floor(rnd() * O2.length)];
+      rnd(); rnd();
       for (let k = 0; k < n; k++) {
-        const col = rnd() < .22 ? O2[Math.floor(rnd() * O2.length)] : (k % 2 ? cA : cB);
+        if (rnd() < .22) rnd();
         let el, a = 0, c = [cx, cy];
         if (n === 1) el = mk('circle', {cx, cy, r: rb, fill: col}, parent);
         else {
@@ -85,7 +103,7 @@
           el = mk('path', {d: sect(cx, cy, ra, rb, a0, a1), fill: col}, parent);
           c = P(cx, cy, (ra + rb) / 2, a);
         }
-        el.setAttribute('stroke', LEAD); el.setAttribute('stroke-width', lw); el.setAttribute('stroke-linejoin', 'round');
+        el.setAttribute('stroke', col); el.setAttribute('stroke-width', lw * .6); el.setAttribute('stroke-linejoin', 'round');
         out.push({el, col, a: ((a % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI), ring: i, rn: (ra + rb) / 2 / R, cx: c[0], cy: c[1], ph: rnd() * 6.28});
       }
     }
@@ -95,8 +113,8 @@
   // Labels: each has candidate spots; the first one that hits nothing wins.
   function lab(text, cands, obs) {
     const g = mk('g', {}, E.lg);
-    const r = mk('rect', {x: 0, y: 0, width: 1, height: 1, rx: fs * .35, fill: LEAD, 'fill-opacity': .88, stroke: '#4a4270', 'stroke-width': 1}, g);
-    const t = mk('text', {x: 0, y: 0, fill: '#f6efdc', 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--mono);letter-spacing:.06em'}, g);
+    const r = mk('rect', {x: 0, y: 0, width: 1, height: 1, fill: 'none', stroke: 'none'}, g);
+    const t = mk('text', {x: 0, y: 0, fill: K, 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body)'}, g);
     const o = {g, r, t, text, cands, obs}; labels.push(o); return o;
   }
   function layout() {
@@ -128,6 +146,7 @@
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     if (W < 40 || H < 40) { built = false; return; }
     built = true;
+    paint();
     fs = clamp(W / 27, 12, 14);
     const R = rng(11);
     const land = W / H > 1.2;
@@ -140,58 +159,30 @@
     gx = cx1 + r1 * .74; gy = Math.max(cy1 - r1 * .9, gr * 1.2 + 4);
     Fx = cx1 - r1 * .33; Fy = cy1 + r1 * .5;
     wx = cx1 - r1 * .2; wireEnd = H - lw * 2;
-    const so1 = `${cx1} ${cy1}`, deg = Math.PI / 180;
+    const deg = Math.PI / 180;
 
-    const defs = mk('defs', {}, svg);
-    defs.innerHTML = `
-      <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${lw * 1.6}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <radialGradient id="cool" gradientUnits="userSpaceOnUse" cx="${cx1}" cy="${cy1}" r="${r1 * 1.9}"><stop offset="0" stop-color="#bcd6ff" stop-opacity=".34"/><stop offset=".55" stop-color="#9fbcff" stop-opacity=".1"/><stop offset="1" stop-color="#9fbcff" stop-opacity="0"/></radialGradient>
-      <radialGradient id="warm" gradientUnits="userSpaceOnUse" cx="${cx1}" cy="${cy1}" r="${r1 * 2.1}"><stop offset="0" stop-color="#ffb04a" stop-opacity=".55"/><stop offset=".5" stop-color="#ff5a1f" stop-opacity=".18"/><stop offset="1" stop-color="#ff5a1f" stop-opacity="0"/></radialGradient>
-      <radialGradient id="sheen" cx=".33" cy=".27" r=".72"><stop offset="0" stop-color="#fff" stop-opacity=".36"/><stop offset=".5" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-      <radialGradient id="face" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#fff8e6"/><stop offset="1" stop-color="#d8c9a4"/></radialGradient>
-      <radialGradient id="fanG"><stop offset="0" stop-color="#ffd76a" stop-opacity=".6"/><stop offset=".6" stop-color="#ffb030" stop-opacity=".18"/><stop offset="1" stop-color="#ffb030" stop-opacity="0"/></radialGradient>
-      <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3d488"/><stop offset=".5" stop-color="#b9813a"/><stop offset="1" stop-color="#6e4a1e"/></linearGradient>
-      <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff4a1a"/><stop offset=".6" stop-color="#ffa52a"/><stop offset="1" stop-color="#ffe28a"/></linearGradient>`;
     const world = mk('g', {}, svg); E.world = world;
-
-    // Faint lead lines of the mosaic, drawn straight on the card (no fill)
-    const bgG = mk('g', {}, world);
-    const s = Math.max(26, Math.min(W, H) / 7.5), cols = Math.max(3, Math.round(W / s)), rows = Math.max(3, Math.round(H / s)), sx = W / cols, sy = H / rows, pts = [];
-    for (let j = 0; j <= rows; j++) { pts[j] = []; for (let i = 0; i <= cols; i++) pts[j][i] = [i * sx + (i > 0 && i < cols ? (R() - .5) * .6 * sx : 0), j * sy + (j > 0 && j < rows ? (R() - .5) * .6 * sy : 0)]; }
-    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
-      const a = pts[j][i], b = pts[j][i + 1], c = pts[j + 1][i + 1], d = pts[j + 1][i];
-      const polys = R() < .35 ? [[a, b, c], [a, c, d]] : [[a, b, c, d]];
-      for (const pl of polys) {
-        R(); R();
-        const el = mk('path', {d: 'M' + pl.join('L') + 'Z', fill: 'none', stroke: '#ffffff', 'stroke-opacity': .17, 'stroke-width': lw * .8, 'stroke-linejoin': 'round'}, bgG);
-        bgTiles.push({el, jewel: false, d: 3, dl: 0});
-      }
-    }
-    E.cool = mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#cool)', 'pointer-events': 'none'}, world);
-    E.warm = mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#warm)', opacity: 0, 'pointer-events': 'none'}, world);
+    E.cool = mk('g', {}, world);
+    // Heat around the burning tank: one flat warm disc
+    E.warm = mk('circle', {cx: cx1, cy: cy1, r: r1 * 1.28, fill: '#f7a21b', 'fill-opacity': .26, opacity: 0, 'pointer-events': 'none'}, world);
 
     // Tank 2
     const t2 = mk('g', {}, world); E.t2 = t2;
-    mk('circle', {cx: cx2 + lw * 2, cy: cy2 + lw * 3, r: r2 + lw * 2, fill: '#000', 'fill-opacity': .28}, t2);
-    tiles2 = rose(t2, cx2, cy2, r2, [0, .3, .62, 1], [1, 8, 14], R);
+    tiles2 = rose(t2, cx2, cy2, r2, [0, .3, .62, 1], [1, 8, 14], R, OXY);
     hitAng = (Math.atan2(cx1 - cx2, -(cy1 - cy2)) + 2 * Math.PI) % (2 * Math.PI);
-    tiles2.forEach(t => { t.dmg = t.ring >= 1 && angDiff(t.a, hitAng) < .85; t.dcol = R() < .5 ? '#3a1020' : '#5b1a2c'; });
-    mk('circle', {cx: cx2, cy: cy2, r: r2, fill: 'none', stroke: LEAD, 'stroke-width': lw * 2.8}, t2);
-    mk('circle', {cx: cx2, cy: cy2, r: r2 - lw * 1.3, fill: 'none', stroke: '#9a93c8', 'stroke-width': lw * .5, 'stroke-opacity': .5}, t2);
-    for (let k = 0; k < 8; k++) { const p = P(cx2, cy2, r2, k * Math.PI / 4); mk('circle', {cx: p[0], cy: p[1], r: lw * .9, fill: '#6d6596', stroke: LEAD, 'stroke-width': lw * .5}, t2); }
-    mk('circle', {cx: cx2, cy: cy2, r: r2, fill: 'url(#sheen)', 'pointer-events': 'none'}, t2);
-    E.crackG = mk('g', {filter: 'url(#glow)'}, t2);
+    tiles2.forEach(t => { t.dmg = t.ring >= 1 && angDiff(t.a, hitAng) < .85; t.dcol = R() < .5 ? '#2a1712' : '#3d2219'; });
+    mk('circle', {cx: cx2, cy: cy2, r: r2, fill: 'none', stroke: K, 'stroke-width': lw * 2.8}, t2);
+    E.crackG = mk('g', {}, t2);
     for (let k = 0; k < 3; k++) {
       let a = hitAng + (k - 1) * .28, rr = r2, p = P(cx2, cy2, rr, a), d = `M${p}`;
       for (let q = 0; q < 4; q++) { rr -= r2 * (.15 + R() * .1); a += (R() - .5) * .5; p = P(cx2, cy2, rr, a); d += `L${p}`; }
-      cracks.push(mk('path', {d, fill: 'none', stroke: '#f3f7ff', 'stroke-width': lw * .8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, E.crackG));
+      cracks.push(mk('path', {d, fill: 'none', stroke: K, 'stroke-width': lw * .8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, E.crackG));
     }
 
-    // Tank 1: the rose window
+    // Tank 1: the cutaway
     const t1 = mk('g', {}, world); E.t1 = t1;
-    mk('circle', {cx: cx1 + lw * 3, cy: cy1 + lw * 4, r: r1 + lw * 2, fill: '#000', 'fill-opacity': .28}, t1);
     const tg = mk('g', {}, t1);
-    tiles1 = rose(tg, cx1, cy1, r1, [0, .17, .36, .53, .7, .85, 1], [1, 8, 12, 16, 20, 26], R);
+    tiles1 = rose(tg, cx1, cy1, r1, [0, .17, .36, .53, .7, .85, 1], [1, 8, 12, 16, 20, 26], R, OXY);
     tiles1.forEach(t => {
       t.fd = Math.hypot(t.cx - Fx, t.cy - Fy) / r1;
       t.fire = FIRE[clamp(Math.floor(t.fd * 3.3 + (R() - .5) * 1.4), 0, 6)];
@@ -207,20 +198,20 @@
       const d = r1 * (.25 + R() * .8) * (.5 + t.rn);
       t.ex = Object.assign(fin(t, ux / L * d, uy / L * d), {r: (R() - .5) * 260});
     });
-    // Hairline cracks that the pressure opens in the glass
+    // Hairline cracks that the pressure opens in the tank
     E.gc = mk('g', {'pointer-events': 'none'}, t1);
     for (let k = 0; k < 5; k++) {
       let a = k * 1.25 + R() * .6 + .3, rr = r1 * .98, p = P(cx1, cy1, rr, a), d = `M${p}`;
       for (let q = 0; q < 4; q++) { rr -= r1 * (.08 + R() * .07); a += (R() - .5) * .35; p = P(cx1, cy1, rr, a); d += `L${p}`; }
-      gCracks.push(mk('path', {d, fill: 'none', stroke: '#eef5ff', 'stroke-width': lw * .65, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, E.gc));
+      gCracks.push(mk('path', {d, fill: 'none', stroke: DARK, 'stroke-width': lw * .65, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, E.gc));
     }
-    // Fan cables: a twisted copper pair in a lead casing
+    // Fan cables: a twisted copper pair in its sleeve
     wireD = `M${cx1},${cy1 + r1 * .08} Q${cx1 - r1 * .62},${cy1 + r1 * .3} ${cx1 - r1 * .26},${cy1 + r1 * .8} L${wx},${wireEnd}`;
     const wg = mk('g', {}, t1); E.wg = wg;
-    mk('path', {d: wireD, fill: 'none', stroke: LEAD, 'stroke-width': lw * 4.2, 'stroke-linecap': 'round'}, wg);
+    mk('path', {d: wireD, fill: 'none', stroke: K, 'stroke-width': lw * 4.2, 'stroke-linecap': 'round'}, wg);
     E.wire = mk('path', {d: wireD, fill: 'none', stroke: '#c9772e', 'stroke-width': lw * 2, 'stroke-linecap': 'round'}, wg);
-    E.twist = mk('path', {d: wireD, fill: 'none', stroke: '#f4c27e', 'stroke-width': lw * .8, 'stroke-dasharray': `${lw * 1.4} ${lw * 1.8}`}, wg);
-    E.burn = mk('path', {d: wireD, fill: 'none', stroke: '#ff6a2a', 'stroke-width': lw * 2.2, 'stroke-linecap': 'round', filter: 'url(#glow)', opacity: 0}, wg);
+    E.twist = mk('path', {d: wireD, fill: 'none', stroke: '#7f4519', 'stroke-width': lw * .8, 'stroke-dasharray': `${lw * 1.4} ${lw * 1.8}`}, wg);
+    E.burn = mk('path', {d: wireD, fill: 'none', stroke: '#ff6a2a', 'stroke-width': lw * 2.2, 'stroke-linecap': 'round', opacity: 0}, wg);
     const wl = E.wire.getTotalLength();
     for (let i = 0; i <= 30; i++) { const p = E.wire.getPointAtLength(wl * i / 30); wirePts.push([p.x, p.y]); }
     // Flames along the burning cables
@@ -231,41 +222,35 @@
       const sz = r1 * (.045 + R() * .025);
       const fp = k => `M${px},${py} C${px + sz * .7 * k},${py - sz * .5 * k} ${px + sz * .35 * k},${py - sz * 1.4 * k} ${px},${py - sz * 2 * k} C${px - sz * .35 * k},${py - sz * 1.4 * k} ${px - sz * .7 * k},${py - sz * .5 * k} ${px},${py}Z`;
       const g = mk('g', {}, E.flames);
-      const o = mk('path', {d: fp(1), fill: 'url(#flame)', stroke: LEAD, 'stroke-width': lw * .5, 'stroke-linejoin': 'round'}, g);
-      const n = mk('path', {d: fp(.5), fill: '#fff3c2'}, g);
+      const o = mk('path', {d: fp(1), fill: '#f7a21b', stroke: '#d8341c', 'stroke-width': lw * .45, 'stroke-linejoin': 'round'}, g);
+      const n = mk('path', {d: fp(.5), fill: '#ffd34d'}, g);
       flames.push({g, o, n, px, py, ph: R()});
     }
     E.gas = mk('g', {'pointer-events': 'none'}, t1);
-    // Rim and sheen
+    // Tank wall
     E.rim = mk('g', {}, t1);
-    mk('circle', {cx: cx1, cy: cy1, r: r1, fill: 'none', stroke: LEAD, 'stroke-width': lw * 3.4}, E.rim);
-    mk('circle', {cx: cx1, cy: cy1, r: r1 - lw * 1.6, fill: 'none', stroke: '#a39ad6', 'stroke-width': lw * .55, 'stroke-opacity': .55}, E.rim);
-    for (let k = 0; k < 12; k++) { const p = P(cx1, cy1, r1, k * Math.PI / 6); mk('circle', {cx: p[0], cy: p[1], r: lw * 1.2, fill: '#6d6596', stroke: LEAD, 'stroke-width': lw * .6}, E.rim); }
-    E.sheen = mk('circle', {cx: cx1, cy: cy1, r: r1, fill: 'url(#sheen)', 'pointer-events': 'none'}, t1);
+    mk('circle', {cx: cx1, cy: cy1, r: r1, fill: 'none', stroke: K, 'stroke-width': lw * 3.4}, E.rim);
+    E.sheen = mk('g', {'pointer-events': 'none'}, t1);
     // Stirrer fan
     E.fan = mk('g', {}, t1);
     const L = r1 * .34, w = r1 * .13;
-    E.fanGlow = mk('circle', {cx: cx1, cy: cy1, r: r1 * .5, fill: 'url(#fanG)', opacity: 0, 'pointer-events': 'none'}, E.fan);
-    E.blur = mk('circle', {cx: cx1, cy: cy1, r: L, fill: '#f6cf6a', opacity: 0}, E.fan);
-    E.rotor = mk('g', {}, E.fan);
-    for (let k = 0; k < 4; k++) mk('path', {d: `M0,0 C${w},${-L * .3} ${w * .6},${-L} 0,${-L} C${-w * .6},${-L} ${-w},${-L * .3} 0,0Z`, transform: `translate(${cx1} ${cy1}) rotate(${k * 90 + 45})`, fill: k % 2 ? '#e39b2d' : '#f2c14e', stroke: LEAD, 'stroke-width': lw, 'stroke-linejoin': 'round'}, E.rotor);
-    mk('circle', {cx: cx1, cy: cy1, r: r1 * .075, fill: '#cfc8ee', stroke: LEAD, 'stroke-width': lw * 1.2}, E.rotor);
-    mk('circle', {cx: cx1 - r1 * .02, cy: cy1 - r1 * .02, r: r1 * .025, fill: '#fff', 'fill-opacity': .8}, E.rotor);
+    E.fanGlow = mk('circle', {cx: cx1, cy: cy1, r: r1 * .5, fill: FANG, opacity: 0, 'pointer-events': 'none'}, E.fan);
+    E.blur = mk('circle', {cx: cx1, cy: cy1, r: L, fill: K, opacity: 0}, E.fan);
+    const hub = mk('g', {transform: `translate(${cx1} ${cy1})`}, E.fan);
+    E.rotor = mk('g', {}, hub);
+    for (let k = 0; k < 4; k++) mk('path', {d: `M0,0 C${w},${-L * .3} ${w * .6},${-L} 0,${-L} C${-w * .6},${-L} ${-w},${-L * .3} 0,0Z`, transform: `rotate(${k * 90 + 45})`, fill: K, stroke: C, 'stroke-width': lw * .9, 'stroke-linejoin': 'round'}, E.rotor);
+    mk('circle', {cx: 0, cy: 0, r: r1 * .075, fill: C, stroke: K, 'stroke-width': lw * 1.2}, E.rotor);
 
     // Gauge
     const gG = mk('g', {}, world); E.gauge = gG;
     const ga = Math.atan2(gx - cx1, -(gy - cy1)), rp = P(cx1, cy1, r1, ga);
-    mk('line', {x1: rp[0], y1: rp[1], x2: gx, y2: gy, stroke: LEAD, 'stroke-width': gr * .55, 'stroke-linecap': 'round'}, gG);
-    mk('line', {x1: rp[0], y1: rp[1], x2: gx, y2: gy, stroke: '#b9813a', 'stroke-width': gr * .25, 'stroke-linecap': 'round'}, gG);
-    mk('circle', {cx: gx, cy: gy, r: gr * 1.15, fill: 'url(#brass)', stroke: LEAD, 'stroke-width': lw * 1.3}, gG);
-    E.face = mk('circle', {cx: gx, cy: gy, r: gr, fill: 'url(#face)', stroke: LEAD, 'stroke-width': lw}, gG);
+    mk('line', {x1: rp[0], y1: rp[1], x2: gx, y2: gy, stroke: K, 'stroke-width': gr * .4, 'stroke-linecap': 'round'}, gG);
+    E.face = mk('circle', {cx: gx, cy: gy, r: gr * 1.1, fill: LIGHT, stroke: K, 'stroke-width': lw * 1.3}, gG);
     const z0 = P(gx, gy, gr * .76, 60 * deg), z1 = P(gx, gy, gr * .76, 128 * deg);
     mk('path', {d: `M${z0}A${gr * .76},${gr * .76} 0 0 1 ${z1}`, fill: 'none', stroke: '#d8341c', 'stroke-width': gr * .2}, gG);
-    for (let a = -120; a <= 120; a += 40) { const p0 = P(gx, gy, gr * .6, a * deg), p1 = P(gx, gy, gr * .86, a * deg); mk('line', {x1: p0[0], y1: p0[1], x2: p1[0], y2: p1[1], stroke: LEAD, 'stroke-width': Math.max(1, gr * .07)}, gG); }
-    E.needle = mk('line', {x1: gx, y1: gy + gr * .12, x2: gx, y2: gy - gr * .72, stroke: '#14111f', 'stroke-width': Math.max(2, gr * .12), 'stroke-linecap': 'round'}, gG);
-    mk('circle', {cx: gx, cy: gy, r: gr * .13, fill: LEAD}, gG);
-    const h0 = P(gx, gy, gr * .8, -75 * deg), h1 = P(gx, gy, gr * .8, -15 * deg);
-    mk('path', {d: `M${h0}A${gr * .8},${gr * .8} 0 0 1 ${h1}`, fill: 'none', stroke: '#fff', 'stroke-opacity': .7, 'stroke-width': gr * .09, 'stroke-linecap': 'round'}, gG);
+    for (let a = -120; a <= 120; a += 40) { const p0 = P(gx, gy, gr * .6, a * deg), p1 = P(gx, gy, gr * .86, a * deg); mk('line', {x1: p0[0], y1: p0[1], x2: p1[0], y2: p1[1], stroke: DARK, 'stroke-width': Math.max(1, gr * .07)}, gG); }
+    E.needle = mk('line', {x1: gx, y1: gy + gr * .12, x2: gx, y2: gy - gr * .72, stroke: DARK, 'stroke-width': Math.max(2, gr * .12), 'stroke-linecap': 'round'}, gG);
+    mk('circle', {cx: gx, cy: gy, r: gr * .13, fill: DARK}, gG);
 
     // Effects, embers, labels, hint
     E.fx = mk('g', {'pointer-events': 'none'}, world);
@@ -279,10 +264,10 @@
     const gaugeB = {L: gx - gr * 1.25, T: gy - gr * 1.25, R: gx + gr * 1.25, B: gy + gr * 1.25};
     const t2B = box(cx2, cy2, r2 * 1.06), fanB = box(cx1, cy1, r1 * .38);
     const wireB = {L: wx - lw * 2.5, T: cy1 + r1 * .8, R: wx + lw * 2.5, B: H};
-    E.L1 = lab('O₂ TANK 1', () => [[cx1 - r1 * .92, cy1 - r1 - fs * .45, 0], [cx1 - r1 * 1.05, cy1 - r1 * .72, 0], [cx1 - r1 * .3, cy1 - r1 - fs * .45, .5], [6, fs * 1.2, 0]], () => [gaugeB, t2B]);
-    E.L3 = lab('PRESSURE', () => [[gx + gr * 1.25 + fs * .4, gy + fs * .35, 0], [gx, gy + gr * 1.25 + fs * 1.25, .5], [gx - gr * 1.25 - fs * .4, gy + fs * .35, 1], [gx, gy - gr * 1.25 - fs * .45, .5]], () => [gaugeB, t2B, fanB]);
-    E.L2 = lab('O₂ TANK 2', () => [[cx2, cy2 - r2 - fs * .55, .5], [cx2 + r2, cy2 - r2 - fs * .55, 1], [cx2 - r2 - fs * .4, cy2 + fs * .35, 1], [cx2, cy2 + r2 + fs * 1.3, .5]], () => [gaugeB]);
-    E.L4 = lab('FAN CABLES', () => { const yb = (cy1 + r1 + H) / 2 + fs * .35; return [[wx - lw * 3 - fs * .5, yb, 1], [wx + lw * 3 + fs * .5, yb, 0], [wx - lw * 3 - fs * .5, cy1 + r1 * .72, 1], [wx + lw * 3 + fs * .5, cy1 + r1 * .95, 0]]; }, () => [gaugeB, t2B, wireB, step < 4 ? fanB : box(-99, -99, 0)]);
+    E.L1 = lab('O₂ tank 1', () => [[cx1 - r1 * .92, cy1 - r1 - fs * .45, 0], [cx1 - r1 * 1.05, cy1 - r1 * .72, 0], [cx1 - r1 * .3, cy1 - r1 - fs * .45, .5], [6, fs * 1.2, 0]], () => [gaugeB, t2B]);
+    E.L3 = lab('Pressure', () => [[gx + gr * 1.25 + fs * .4, gy + fs * .35, 0], [gx, gy + gr * 1.25 + fs * 1.25, .5], [gx - gr * 1.25 - fs * .4, gy + fs * .35, 1], [gx, gy - gr * 1.25 - fs * .45, .5]], () => [gaugeB, t2B, fanB]);
+    E.L2 = lab('O₂ tank 2', () => [[cx2, cy2 - r2 - fs * .55, .5], [cx2 + r2, cy2 - r2 - fs * .55, 1], [cx2 - r2 - fs * .4, cy2 + fs * .35, 1], [cx2, cy2 + r2 + fs * 1.3, .5]], () => [gaugeB]);
+    E.L4 = lab('Fan cables', () => { const yb = (cy1 + r1 + H) / 2 + fs * .35; return [[wx - lw * 3 - fs * .5, yb, 1], [wx + lw * 3 + fs * .5, yb, 0], [wx - lw * 3 - fs * .5, cy1 + r1 * .72, 1], [wx + lw * 3 + fs * .5, cy1 + r1 * .95, 0]]; }, () => [gaugeB, t2B, wireB, step < 4 ? fanB : box(-99, -99, 0)]);
     E.hint = mk('g', {'pointer-events': 'none'}, world);
     E.flash = mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#fff6dc', opacity: 0, 'pointer-events': 'none'}, svg);
 
@@ -300,7 +285,7 @@
     gsap.set(E.fanGlow, {opacity: step === 0 ? 1 : 0});
     gsap.set(E.blur, {opacity: step >= 1 && step < 4 ? .16 : 0});
     if (step >= 2) {
-      tiles1.forEach(t => t.el.setAttribute('fill', t.fire));
+      tiles1.forEach(t => { t.el.setAttribute('fill', t.fire); t.el.setAttribute('stroke', t.fire); });
       E.wire.setAttribute('stroke', '#ff6a2a'); E.twist.setAttribute('stroke', '#ffd27a');
       gsap.set(E.burn, {opacity: 1}); gsap.set(E.flames, {opacity: 1});
       gsap.set(E.warm, {opacity: 1}); gsap.set(E.cool, {opacity: .3});
@@ -311,10 +296,10 @@
       gsap.set(E.fan, {x: r1 * .12, y: r1 * .38, rotation: -200, svgOrigin: so1});
       gsap.set(E.rim, {opacity: .2, scale: 1.06, svgOrigin: so1}); gsap.set(E.sheen, {opacity: 0});
       gsap.set([E.flames, E.gc, E.gas], {opacity: 0});
-      tiles2.forEach(t => { if (t.dmg) t.el.setAttribute('fill', t.dcol); });
+      tiles2.forEach(t => { if (t.dmg) { t.el.setAttribute('fill', t.dcol); t.el.setAttribute('stroke', t.dcol); } });
       cracks.forEach(c => c.setAttribute('opacity', 1));
       if (Kit.calm) embers.forEach((m, i) => { if (i % 2) m.el.setAttribute('opacity', .7); });
-      E.L1.text = 'TANK 1 BURST'; E.L2.text = 'TANK 2 DAMAGED';
+      E.L1.text = 'Tank 1 burst'; E.L2.text = 'Tank 2 damaged';
       card.classList.add('answered');
     }
   }
@@ -338,11 +323,11 @@
   }
 
   function ambient() {
-    if (Kit.calm) { tiles1.concat(tiles2).forEach(t => t.el.setAttribute('fill-opacity', .92)); return; }
+    if (Kit.calm) return;
     const so1 = `${cx1} ${cy1}`, go = `${gx} ${gy}`;
     keep(gsap.fromTo(E.cool, {opacity: step >= 2 ? .3 : 1}, {opacity: step >= 2 ? .18 : .7, duration: 3.2, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
     if (step < 4) {
-      E.fanTw = keep(gsap.to(E.rotor, {rotation: '+=360', svgOrigin: so1, duration: 5, repeat: -1, ease: 'none'}));
+      E.fanTw = keep(gsap.to(E.rotor, {rotation: '+=360', svgOrigin: '0 0', duration: 5, repeat: -1, ease: 'none'}));
       E.fanTw.timeScale(step >= 1 ? 5 : 1);
       if (step === 0) E.glowTw = keep(gsap.fromTo(E.fanGlow, {opacity: 1}, {opacity: .45, duration: 1.1, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
       E.tick = keep(step >= 3
@@ -365,7 +350,7 @@
     for (let i = 0; i < 12; i++) {
       const x0 = Fx + (R() - .5) * r1 * .35, y0 = Fy + (R() - .4) * r1 * .15, x1 = x0 + (R() - .3) * r1 * .35, y1 = cy1 - r1 * (.42 + R() * .2), d = 2 + R() * 1.2;
       const ra = r1 * .02, rb = r1 * (.04 + R() * .03);
-      const c = mk('circle', {cx: x0, cy: y0, r: ra, fill: 'rgba(255,240,210,.14)', stroke: '#fff0cf', 'stroke-width': lw * .6, opacity: 0}, E.gas);
+      const c = mk('circle', {cx: x0, cy: y0, r: ra, fill: 'none', stroke: DARK, 'stroke-width': lw * .6, opacity: 0}, E.gas);
       const tl = gsap.timeline({repeat: -1, delay: R() * 2});
       tl.fromTo(c, {x: 0, y: 0, attr: {r: ra}}, {x: x1 - x0, y: y1 - y0, attr: {r: rb}, duration: d, ease: 'power1.in'}, 0)
         .fromTo(c, {opacity: 0}, {opacity: .9, duration: .4, ease: 'power2.out'}, 0)
@@ -377,7 +362,7 @@
   function hint() {
     E.hint.innerHTML = '';
     if (step >= 4) return;
-    const a = {fill: 'none', stroke: '#fff3c4', 'stroke-width': lw * 1.4, filter: 'url(#glow)', 'stroke-dasharray': `${lw * 2.2} ${lw * 2.6}`, 'stroke-linecap': 'round'};
+    const a = {fill: 'none', stroke: K, 'stroke-width': lw * 1.4, 'stroke-dasharray': `${lw * 2.2} ${lw * 2.6}`, 'stroke-linecap': 'round'};
     let el;
     if (step === 0) el = mk('circle', Object.assign({cx: cx1, cy: cy1, r: r1 * .43}, a), E.hint);
     if (step === 1) el = mk('path', Object.assign({d: wireD}, a, {'stroke-width': lw * 1.2, 'stroke-dasharray': `${lw * 1.5} ${lw * 3}`}), E.hint);
@@ -388,15 +373,14 @@
     keep(gsap.to(el, {attr: {'stroke-dashoffset': -lw * 48}, duration: 3, repeat: -1, ease: 'none'}));
   }
 
-  // The ambient shimmer of the glass: light sweeping round the window, firelight once it burns.
+  // Firelight: once the cables burn, the hot oxygen flickers.
   gsap.ticker.add(() => {
-    if (Kit.calm || !built || !tiles1.length) return;
+    if (Kit.calm || !built || !tiles1.length || step < 2) return;
     const t = gsap.ticker.time;
     for (const k of tiles1) {
-      const o = step >= 2 ? .8 + .2 * Math.sin(t * (6 + amb.heat * 7) + k.ph) * Math.sin(t * 1.7 + k.ph * 2) : .76 + .24 * Math.sin(t * amb.sp - k.rn * 4 + k.a);
+      const o = .8 + .2 * Math.sin(t * (6 + amb.heat * 7) + k.ph) * Math.sin(t * 1.7 + k.ph * 2);
       k.el.setAttribute('fill-opacity', o.toFixed(3));
     }
-    for (const k of tiles2) k.el.setAttribute('fill-opacity', (.8 + .2 * Math.sin(t * 1.1 - k.rn * 3 + k.a)).toFixed(3));
   });
 
   function setSay() { say.innerHTML = SAY[Math.min(step, 3)]; if (!Kit.calm) gsap.fromTo(say, {opacity: .2, y: 4}, {opacity: 1, y: 0, duration: .45, ease: 'power3.out'}); }
@@ -405,28 +389,27 @@
 
   function burst(x, y, n, col, len) {
     for (let i = 0; i < n; i++) {
-      const a = i / n * 6.283 + Math.random() * .3, l = mk('line', {x1: x, y1: y, x2: x + Math.sin(a) * len, y2: y - Math.cos(a) * len, stroke: col, 'stroke-width': lw * .9, 'stroke-linecap': 'round', filter: 'url(#glow)'}, E.fx);
+      const a = i / n * 6.283 + Math.random() * .3, l = mk('line', {x1: x, y1: y, x2: x + Math.sin(a) * len, y2: y - Math.cos(a) * len, stroke: col, 'stroke-width': lw * .9, 'stroke-linecap': 'round'}, E.fx);
       gsap.fromTo(l, {scale: 0, opacity: 1, svgOrigin: `${x} ${y}`}, {scale: 1.6, opacity: 0, duration: .6 + Math.random() * .3, ease: 'expo.out', onComplete: () => l.remove()});
     }
   }
   function ring(x, y, r0, r, col, w, d) {
-    const c = mk('circle', {cx: x, cy: y, r: r0, fill: 'none', stroke: col, 'stroke-width': w, filter: 'url(#glow)'}, E.fx);
+    const c = mk('circle', {cx: x, cy: y, r: r0, fill: 'none', stroke: col, 'stroke-width': w}, E.fx);
     gsap.to(c, {attr: {r, 'stroke-width': 0}, opacity: 0, duration: d, ease: 'expo.out', onComplete: () => c.remove()});
   }
 
   function toFan() {
-    const so1 = `${cx1} ${cy1}`;
     E.glowTw && E.glowTw.kill();
     gsap.to(E.fanGlow, {opacity: 0, duration: .6, ease: 'power2.out'});
     gsap.to(E.blur, {opacity: .16, duration: 1.2, ease: 'power2.in'});
-    gsap.fromTo(E.rotor, {scale: 1}, {scale: 1.15, svgOrigin: so1, duration: .12, yoyo: true, repeat: 1, ease: 'power2.out'});
+    gsap.fromTo(E.rotor, {scale: 1}, {scale: 1.15, svgOrigin: '0 0', duration: .12, yoyo: true, repeat: 1, ease: 'power2.out'});
     E.fanTw && gsap.to(E.fanTw, {timeScale: 5, duration: 1.4, ease: 'power2.in'});
     gsap.to(amb, {sp: 4, duration: 1.2, ease: 'power2.inOut'});
-    ring(cx1, cy1, r1 * .35, r1 * .98, '#cfe3ff', lw * 2, 1.1);
+    ring(cx1, cy1, r1 * .35, r1 * .98, K, lw * 2, 1.1);
     unlock(.5);
   }
   function toFire() {
-    burst(Fx, Fy, 12, '#fff3b0', r1 * .22);
+    burst(Fx, Fy, 12, '#ffd34d', r1 * .22);
     ring(Fx, Fy, 2, r1 * .4, '#ffd34d', lw * 2.5, .7);
     gsap.fromTo(E.t1, {x: -3}, {x: 0, duration: .5, ease: 'elastic.out(1,.3)'});
     gsap.to(E.wire, {attr: {stroke: '#ff6a2a'}, duration: .3, ease: 'power2.out'});
@@ -436,7 +419,7 @@
     gsap.set(E.flames, {opacity: 1});
     flames.forEach((fl, i) => gsap.fromTo(fl.g, {scale: 0, svgOrigin: `${fl.px} ${fl.py}`}, {scale: 1, duration: .45, delay: .15 + i * .08, ease: 'back.out(3)'}));
     gsap.delayedCall(.6, () => { if (step >= 2 && step < 4) flicker(); });
-    tiles1.forEach(t => gsap.to(t.el, {attr: {fill: t.fire}, duration: .55, delay: .25 + t.fd * 1.1, ease: 'power2.out'}));
+    tiles1.forEach(t => gsap.to(t.el, {attr: {fill: t.fire, stroke: t.fire}, duration: .55, delay: .25 + t.fd * 1.1, ease: 'power2.out'}));
     gsap.to(E.warm, {opacity: 1, duration: 1.8, ease: 'power2.inOut'});
     gsap.to(E.cool, {opacity: .3, duration: 1.8, ease: 'power2.inOut'});
     gsap.delayedCall(.9, () => { if (step >= 2 && step < 4) startGas(step >= 3 ? 2.2 : 1); });
@@ -450,7 +433,7 @@
       .to(E.needle, {rotation: 108, svgOrigin: go, duration: .5, ease: 'elastic.out(1,.4)'})
       .add(() => { if (step === 3) E.tick = keep(gsap.to(E.needle, {rotation: '+=3', svgOrigin: go, duration: .07, yoyo: true, repeat: -1, ease: 'power1.inOut'})); });
     gsap.to(E.face, {attr: {fill: '#ffd2bd'}, duration: 1.5, ease: 'power2.in'});
-    gsap.delayedCall(1.5, () => { if (step === 3) ring(gx, gy, gr, gr * 2.4, '#ff6a4a', lw * 1.6, .8); });
+    gsap.delayedCall(1.5, () => { if (step === 3) ring(gx, gy, gr, gr * 2.4, '#d8341c', lw * 1.6, .8); });
     gCracks.forEach((c, i) => {
       const L = c.getTotalLength();
       gsap.fromTo(c, {attr: {'stroke-dasharray': `${L} ${L}`, 'stroke-dashoffset': L}, opacity: 1}, {attr: {'stroke-dashoffset': 0}, duration: .35, delay: .5 + i * .22, ease: 'power3.out'});
@@ -470,8 +453,8 @@
     E.fanTw && E.fanTw.kill(); E.tick && E.tick.kill(); E.hint.innerHTML = '';
     gsap.to(E.blur, {opacity: 0, duration: .3});
     gsap.timeline().to(E.flash, {opacity: .85, duration: .07, ease: 'power2.out'}).to(E.flash, {opacity: 0, duration: .8, ease: 'power3.out'});
-    ring(cx1, cy1, r1, r1 * 2.7, '#ffcf6a', lw * 4, 1.1);
-    burst(cx1, cy1, 18, '#fff1c0', r1 * .7);
+    ring(cx1, cy1, r1, r1 * 2.7, '#f7a21b', lw * 4, 1.1);
+    burst(cx1, cy1, 18, '#ffd34d', r1 * .7);
     gsap.fromTo(E.world, {x: -9, y: 4}, {x: 0, y: 0, duration: .9, ease: 'elastic.out(1.2,.25)'});
     // The tank is open: the pressure falls straight back to zero.
     gsap.timeline().to(E.needle, {rotation: 128, svgOrigin: go, duration: .08, ease: 'power2.out'})
@@ -484,21 +467,21 @@
     gsap.to(E.fan, {x: r1 * .12, y: r1 * .38, rotation: -200, svgOrigin: so1, duration: 1.7, ease: 'expo.out'});
     gsap.to(E.rim, {opacity: .2, scale: 1.06, svgOrigin: so1, duration: .6, ease: 'power2.out'});
     gsap.to(E.sheen, {opacity: 0, duration: .3});
-    E.L1.text = 'TANK 1 BURST'; layout();
+    E.L1.text = 'Tank 1 burst'; layout();
     gsap.fromTo(E.L1.g, {opacity: 0}, {opacity: 1, duration: .4, delay: .2, ease: 'power2.out'});
     gsap.delayedCall(1.8, () => { keep(gsap.to(E.warm, {opacity: .7, duration: 1.4, yoyo: true, repeat: -1, ease: 'sine.inOut'})); startEmbers(); });
   }
   function impact() {
     Kit.haptic('light');
     const p = P(cx2, cy2, r2, hitAng);
-    burst(p[0], p[1], 10, '#e8f1ff', r2 * .6);
+    burst(p[0], p[1], 10, K, r2 * .6);
     gsap.fromTo(E.t2, {x: 6}, {x: 0, duration: .7, ease: 'elastic.out(1,.3)'});
-    tiles2.forEach(t => { if (t.dmg) gsap.to(t.el, {attr: {fill: t.dcol}, duration: .4, delay: Math.random() * .25, ease: 'power2.out'}); });
+    tiles2.forEach(t => { if (t.dmg) gsap.to(t.el, {attr: {fill: t.dcol, stroke: t.dcol}, duration: .4, delay: Math.random() * .25, ease: 'power2.out'}); });
     cracks.forEach((c, i) => {
       const L = c.getTotalLength();
       gsap.fromTo(c, {attr: {'stroke-dasharray': `${L} ${L}`, 'stroke-dashoffset': L}, opacity: 1}, {attr: {'stroke-dashoffset': 0}, duration: .5, delay: i * .08, ease: 'power3.out'});
     });
-    E.L2.text = 'TANK 2 DAMAGED'; layout();
+    E.L2.text = 'Tank 2 damaged'; layout();
     if (!Kit.calm) gsap.fromTo(E.L2.g, {scale: 1.25, transformOrigin: '50% 50%'}, {scale: 1, duration: .6, ease: 'back.out(3)'});
   }
 
@@ -550,11 +533,10 @@
     entered = true;
     const so1 = `${cx1} ${cy1}`;
     const tl = gsap.timeline();
-    tl.from(bgTiles.map(b => b.el), {opacity: 0, duration: .6, stagger: {amount: .7, from: 'random'}, ease: 'power2.out'}, 0)
-      .from(E.rim, {opacity: 0, scale: .85, svgOrigin: so1, duration: .8, ease: 'back.out(1.6)'}, .1)
+    tl.from(E.rim, {opacity: 0, scale: .85, svgOrigin: so1, duration: .8, ease: 'back.out(1.6)'}, .1)
       .from(tiles1.map(t => t.el), {opacity: 0, duration: .35, stagger: {amount: 1.1}, ease: 'power2.out'}, .2)
       .from(tiles2.map(t => t.el), {opacity: 0, duration: .3, stagger: {amount: .5}, ease: 'power2.out'}, .6)
-      .from(E.rotor, {scale: 0, svgOrigin: so1, duration: .7, ease: 'back.out(2.2)'}, .9)
+      .from(E.rotor, {scale: 0, svgOrigin: '0 0', duration: .7, ease: 'back.out(2.2)'}, .9)
       .from(E.gauge, {opacity: 0, y: -10, duration: .5, ease: 'power3.out'}, 1)
       .from(labels.map(l => l.g), {opacity: 0, y: 4, duration: .4, stagger: .08, ease: 'power3.out'}, 1.2);
   };

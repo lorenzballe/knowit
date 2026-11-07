@@ -38,16 +38,18 @@ let G = null, E = {};
 const STARS = Array.from({length: 46}, () => [Kit.rnd(), Kit.rnd() * 0.8, 0.4 + Kit.rnd() * 1.1]);
 const NS = 'http://www.w3.org/2000/svg';
 
+const INK = 'var(--k)';
+const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+const LAND = '#4fae6e';
+const LOAD = '#ffc93d';
+
 function draw() {
   const svg = Kit.$('sky');
-  svg.innerHTML = `<defs>
-    <radialGradient id="gea" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3f86ff"/><stop offset=".5" stop-color="#1b45c4"/><stop offset="1" stop-color="#0b2a8a"/></radialGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  </defs>`;
+  svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f * 0.85, 12);
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
-  STARS.forEach(([x, y, r], i) => { const rr = r * Math.max(1, W / 360); mk('circle', {class: 'star', cx: rr + x * (W - 2 * rr), cy: rr + y * H, r: rr, fill: '#fff', opacity: .4 + (i % 4) * .15}); });
+  const lw = Math.max(1.6, W * 0.005);
 
   const cx = W / 2;
   const topY = H * 0.84;
@@ -55,23 +57,33 @@ function draw() {
   const ecy = topY + R;
   const satH = Math.max(W * 0.05, 14);
   const satY = fs * 2.4 + satH * 0.6;            // satellite centre
-  const gea = svg.querySelector('#gea');
-  gea.setAttribute('cx', cx); gea.setAttribute('cy', ecy - R * 0.9); gea.setAttribute('r', R * 1.2);
   const cap = (r) => { const y0 = ecy - Math.sqrt(r * r - cx * cx); return `M0 ${y0.toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 1 ${W} ${y0.toFixed(1)} L${W} ${H} L0 ${H}Z`; };
-  // orbit
-  const ro = ecy - satY, oy = ecy - Math.sqrt(ro * ro - cx * cx);
-  mk('path', {d: `M0 ${oy.toFixed(1)} A${ro.toFixed(1)} ${ro.toFixed(1)} 0 0 1 ${W} ${oy.toFixed(1)}`, fill: 'none', stroke: '#ffffff', 'stroke-opacity': .55, 'stroke-width': 1.5, 'stroke-dasharray': '4 7'});
-  // Earth
-  mk('path', {d: cap(R + 6), fill: '#bfe0ff', opacity: .45, filter: 'url(#glow)'});
-  mk('path', {d: cap(R), fill: 'url(#gea)'});
-  mk('ellipse', {cx: cx - W * .25, cy: topY + H * .07, rx: W * .16, ry: H * .025, fill: '#3fae6a', opacity: .8});
-  mk('ellipse', {cx: cx + W * .3, cy: topY + H * .1, rx: W * .12, ry: H * .02, fill: '#3fae6a', opacity: .7});
-  const et = mk('text', {x: cx, y: H - fs * 0.6, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}); et.textContent = 'Earth';
+  const surf = x => ecy - Math.sqrt(R * R - (x - cx) * (x - cx));
 
-  // cable: a chain of graphene hexagons
+  // orbit: a plain dashed path
+  const ro = ecy - satY, oy = ecy - Math.sqrt(ro * ro - cx * cx);
+  mk('path', {d: `M0 ${oy.toFixed(1)} A${ro.toFixed(1)} ${ro.toFixed(1)} 0 0 1 ${W} ${oy.toFixed(1)}`, fill: 'none', style: `stroke:${tint(55)}`, 'stroke-width': lw, 'stroke-dasharray': `${lw * 3} ${lw * 4}`, 'stroke-linecap': 'round'});
+
+  // Earth: a flat cap of ocean with two hand-drawn landmasses
+  mk('path', {d: cap(R), style: `fill:${tint(22)}`});
+  const blob = (x0, w, h) => {
+    const y0 = surf(x0) + h * 0.9;
+    return `M${x0 - w} ${y0}` +
+      ` Q${x0 - w * .8} ${y0 - h * 1.1} ${x0 - w * .25} ${y0 - h * .8}` +
+      ` Q${x0 + w * .1} ${y0 - h * 1.3} ${x0 + w * .55} ${y0 - h * .7}` +
+      ` Q${x0 + w * 1.05} ${y0 - h * .5} ${x0 + w} ${y0 + h * .2}` +
+      ` Q${x0 + w * .4} ${y0 + h * .9} ${x0 - w * .2} ${y0 + h * .55}` +
+      ` Q${x0 - w * .9} ${y0 + h * .7} ${x0 - w} ${y0}Z`;
+  };
+  mk('path', {d: blob(cx - W * .25, W * .16, H * .028), fill: LAND});
+  mk('path', {d: blob(cx + W * .3, W * .12, H * .022), fill: LAND});
+  // ground anchor where the cable is tied
+  const aw = Math.max(W * 0.05, 16);
+  mk('path', {d: `M${cx - aw} ${topY + aw * .55} L${cx - aw * .35} ${topY - 1} L${cx + aw * .35} ${topY - 1} L${cx + aw} ${topY + aw * .55}Z`, style: `fill:${INK}`});
+  const et = mk('text', {x: cx, y: H - fs * 0.6, 'text-anchor': 'middle', style: `fill:${INK}`, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}); et.textContent = 'Earth';
+
+  // cable: a ribbon of graphene hexagons
   const cg = mk('g', {id: 'cable'});
-  const cw = Math.max(3, W * 0.011);
-  mk('line', {x1: cx, y1: topY, x2: cx, y2: satY, stroke: '#a8f1ff', 'stroke-width': cw, filter: 'url(#glow)', 'stroke-linecap': 'round'}, cg);
   const hs = Math.max(W * 0.014, 5); let d = '';
   for (let y = topY - hs; y > satY + satH * 0.6; y -= hs * 1.75) {
     for (let k = 0; k < 6; k++) {
@@ -80,28 +92,33 @@ function draw() {
     }
     d += 'Z';
   }
-  mk('path', {d, fill: 'none', stroke: '#ffffff', 'stroke-width': 1.2, opacity: .95}, cg);
+  mk('path', {d, style: `fill:${tint(30)};stroke:${INK}`, 'stroke-width': Math.max(1.4, lw * .85), 'stroke-linejoin': 'round'}, cg);
 
   // satellite
   const sg = mk('g', {id: 'sat'});
   const pw = satH * 1.6;
-  mk('circle', {id: 'satglow', cx, cy: satY, r: satH * 1.4, fill: '#ffe27a', opacity: S.done ? .45 : 0, filter: 'url(#glow)'}, sg);
-  mk('rect', {x: cx - satH * .6 - pw, y: satY - satH * .35, width: pw, height: satH * .7, fill: '#0b2a8a', stroke: '#ffffff', 'stroke-width': 1}, sg);
-  mk('rect', {x: cx + satH * .6, y: satY - satH * .35, width: pw, height: satH * .7, fill: '#0b2a8a', stroke: '#ffffff', 'stroke-width': 1}, sg);
-  mk('rect', {x: cx - satH * .6, y: satY - satH * .6, width: satH * 1.2, height: satH * 1.2, rx: 3, fill: '#e8edf5'}, sg);
-  const st = mk('text', {x: cx, y: satY - satH * .6 - fs * 0.7, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}); st.textContent = 'Satellite in orbit';
+  mk('circle', {id: 'satglow', cx, cy: satY, r: satH * 1.4, style: `fill:${tint(28)}`, opacity: S.done ? .45 : 0}, sg);
+  const panel = (x) => {
+    mk('rect', {x, y: satY - satH * .35, width: pw, height: satH * .7, style: `fill:${tint(40)};stroke:${INK}`, 'stroke-width': lw, 'stroke-linejoin': 'round'}, sg);
+    for (let i = 1; i < 3; i++) mk('line', {x1: x + pw * i / 3, y1: satY - satH * .35, x2: x + pw * i / 3, y2: satY + satH * .35, style: `stroke:${INK}`, 'stroke-width': lw * .7}, sg);
+  };
+  panel(cx - satH * .6 - pw);
+  panel(cx + satH * .6);
+  mk('rect', {x: cx - satH * .6, y: satY - satH * .6, width: satH * 1.2, height: satH * 1.2, rx: 3, style: `fill:${INK}`}, sg);
+  const st = mk('text', {x: cx, y: satY - satH * .6 - fs * 0.7, 'text-anchor': 'middle', style: `fill:${INK}`, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}); st.textContent = 'Satellite in orbit';
 
-  // fuel readout (left)
+  // fuel (left)
   const fx = Math.max(f * 0.7, 10), fy = H * 0.46;
-  const f1 = mk('text', {x: fx, y: fy, fill: '#ffffff', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': Math.max(fs * .8, 12)}); f1.textContent = 'FUEL BURNED';
-  const f2 = mk('text', {id: 'fuel', x: fx, y: fy + fs * 3, fill: '#8dffbc', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.1}); f2.textContent = '0 g';
+  const f1 = mk('text', {x: fx, y: fy, style: `fill:${INK}`, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}); f1.textContent = 'Fuel burned';
+  const f2 = mk('text', {id: 'fuel', x: fx, y: fy + fs * 3, style: `fill:${INK}`, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.1}); f2.textContent = '0 g';
 
-  // platform
+  // platform: a small cabin clamped to the cable
   const plw = Math.max(W * 0.13, 40), plh = Math.max(W * 0.05, 16);
   const pg = mk('g', {id: 'plat'});
-  mk('rect', {x: cx - plw / 2, y: -plh, width: plw, height: plh, rx: 4, fill: '#ffc93d', stroke: '#fff3c4', 'stroke-width': 1.5}, pg);
-  mk('rect', {x: cx - plw * .22, y: -plh * 1.7, width: plw * .44, height: plh * .7, rx: 2, fill: '#ff8a3d'}, pg);
-  const pl = mk('text', {id: 'plabel', x: cx + plw / 2 + fs * .5, y: -plh * .25, fill: '#ffe08a', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, pg); pl.textContent = 'Platform';
+  mk('rect', {x: cx - plw / 2, y: -plh, width: plw, height: plh, rx: 3, fill: LOAD, style: `stroke:${INK}`, 'stroke-width': lw}, pg);
+  mk('rect', {x: cx - plw * .22, y: -plh * 1.7, width: plw * .44, height: plh * .7, rx: 2, fill: LOAD, style: `stroke:${INK}`, 'stroke-width': lw}, pg);
+  mk('line', {x1: cx - plw / 2 + plw * .12, y1: -plh * .5, x2: cx + plw / 2 - plw * .12, y2: -plh * .5, style: `stroke:${INK}`, 'stroke-width': lw * .8, 'stroke-linecap': 'round'}, pg);
+  const pl = mk('text', {id: 'plabel', x: cx + plw / 2 + fs * .5, y: -plh * .25, style: `fill:${INK}`, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, pg); pl.textContent = 'Platform';
 
   G = {topY, satY, satH, plh, cx};
   E = {plat: pg, plabel: pl, fuel: f2, glow: svg.querySelector('#satglow'), cable: cg};
@@ -159,7 +176,6 @@ Kit.onEnter.card = () => {
   if (Kit.calm || !E.cable) return;
   gsap.from(E.cable, {scaleY: 0, transformOrigin: '50% 100%', duration: 1.1, ease: 'power2.out'});
   gsap.from('#sat', {opacity: 0, y: -10, duration: .6, delay: .7});
-  gsap.to('.star', {opacity: .2, duration: 1.4, stagger: {each: .05, repeat: -1, yoyo: true}});
 };
 
 Kit.play.card = async () => {

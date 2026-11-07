@@ -13,6 +13,8 @@
 #why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
 #why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
 .say,.q,.keep{overflow-wrap:break-word}
+#sky text{font-family:var(--body);font-weight:600}
+#sky .clk{font-family:var(--display);font-weight:800}
 </style>
 <article class="card" id="card" data-topic="space" data-kind="Build it · watch">
   <div class="in">
@@ -35,6 +37,11 @@ const K = 0.5; // orbit angle covered while the news travels (drawing only)
 let g = {};
 let tl = null;
 
+const INK = 'var(--k)';
+const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+const SUN = '#ffc233', NEWS = '#c4f0ff';
+function st(el, css) { el.setAttribute('style', css); return el; }
+
 function build() {
   const svg = Kit.$('sky');
   svg.innerHTML = '';
@@ -43,35 +50,40 @@ function build() {
   const R = Math.max(30, Math.min(W * 0.36, (H - top - 3.4 * f) / 2));
   const cx = W * 0.44, cy = top + 1.6 * f + R;
   const sunR = Math.max(10, R * 0.16), eR = Math.max(6, R * 0.07);
-  const defs = Kit.mk('defs', {}, svg);
-  const gr = Kit.mk('radialGradient', {id: 'glow'}, defs);
-  Kit.mk('stop', {offset: '0%', 'stop-color': '#ffd25a', 'stop-opacity': 0.9}, gr);
-  Kit.mk('stop', {offset: '100%', 'stop-color': '#ffd25a', 'stop-opacity': 0}, gr);
-  // a few fixed stars
-  for (let i = 0; i < 40; i++) {
-    const s = Math.sin(i * 12.9898) * 43758.5453, t = Math.sin(i * 78.233) * 12345.678;
-    Kit.mk('circle', {cx: (s - Math.floor(s)) * W, cy: (t - Math.floor(t)) * H, r: 0.8 + (i % 3) * 0.4, fill: '#fff', opacity: 0.2 + (i % 4) * 0.1}, svg);
-  }
-  Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#ffffff', 'stroke-opacity': 0.45, 'stroke-width': 1.2, 'stroke-dasharray': '3 6'}, svg);
-  const dist = Kit.mk('line', {stroke: '#ffffff', 'stroke-opacity': 0.75, 'stroke-width': 1.2, 'stroke-dasharray': '5 4'}, svg);
-  const distT = Kit.mk('text', {fill: '#fff', 'font-size': f * 0.95, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
+
+  // the region the news has already reached: a flat tinted disc
+  const news = st(Kit.mk('circle', {cx, cy, r: 0}, svg), `fill:${tint(14)}`);
+  // the orbit: a plain line
+  st(Kit.mk('circle', {cx, cy, r: R, fill: 'none', 'stroke-width': 1.5}, svg), `stroke:${tint(45)}`);
+  // distance measure, like a ruler in a book
+  const dist = st(Kit.mk('line', {'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg), `stroke:${INK}`);
+  const distT = st(Kit.mk('text', {'font-size': f * 0.95}, svg), `fill:${INK}`);
   distT.textContent = '150 million km';
+  // the Sun: a flat disc with short, slightly uneven rays
   const sunG = Kit.mk('g', {}, svg);
-  Kit.mk('circle', {cx, cy, r: sunR * 2.4, fill: 'url(#glow)'}, sunG);
-  Kit.mk('circle', {cx, cy, r: sunR, fill: '#ffc233'}, sunG);
-  const sunT = Kit.mk('text', {x: cx - sunR * 2.4 - 0.2 * f, y: cy + 0.35 * f, fill: '#ffd25a', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': 'end'}, svg);
+  for (let i = 0; i < 12; i++) {
+    const a = i * Math.PI / 6 + 0.13, r1 = sunR * 1.25, r2 = sunR * (i % 2 ? 1.6 : 1.75), w = 0.16;
+    const p = [[cx + r1 * Math.cos(a - w), cy + r1 * Math.sin(a - w)], [cx + r2 * Math.cos(a), cy + r2 * Math.sin(a)], [cx + r1 * Math.cos(a + w), cy + r1 * Math.sin(a + w)]];
+    Kit.mk('path', {d: `M${p[0]}L${p[1]}L${p[2]}Z`, fill: SUN}, sunG);
+  }
+  Kit.mk('circle', {cx, cy, r: sunR, fill: SUN}, sunG);
+  const sunT = Kit.mk('text', {x: cx - sunR * 2.4 - 0.2 * f, y: cy + 0.35 * f, fill: SUN, 'font-size': f, 'text-anchor': 'end'}, svg);
   sunT.textContent = 'Sun';
-  const empty = Kit.mk('circle', {cx, cy, r: sunR, fill: 'none', stroke: '#ffffff', 'stroke-opacity': 0.6, 'stroke-dasharray': '2 3'}, svg);
-  const rings = [0, 1, 2].map(i => Kit.mk('circle', {cx, cy, r: 0, fill: 'none', stroke: '#c4f0ff', 'stroke-width': i ? 1.4 : 2.6}, svg));
-  const ringT = Kit.mk('text', {x: cx, fill: '#c4f0ff', 'font-size': f * 0.95, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': 'middle'}, svg);
+  // the empty spot left behind
+  const empty = st(Kit.mk('circle', {cx, cy, r: sunR, fill: 'none', 'stroke-width': 1.5, 'stroke-dasharray': '3 4'}, svg), `stroke:${INK}`);
+  // the news front: one clear edge
+  const rings = [0, 1, 2].map(i => Kit.mk('circle', {cx, cy, r: 0, fill: 'none', stroke: i ? 'none' : NEWS, 'stroke-width': 2.4}, svg));
+  const ringT = Kit.mk('text', {x: cx, fill: NEWS, 'font-size': f * 0.95, 'text-anchor': 'middle'}, svg);
   ringT.textContent = 'gravity · 300,000 km/s';
-  const trail = Kit.mk('path', {fill: 'none', stroke: '#e3f4ff', 'stroke-width': 2, 'stroke-opacity': 0.85}, svg);
-  const earth = Kit.mk('circle', {r: eR, fill: '#7fd0ff', stroke: '#ffffff', 'stroke-width': 1.5}, svg);
-  const earthT = Kit.mk('text', {fill: '#ffffff', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': 'middle'}, svg);
+  // Earth's path and Earth
+  const trail = st(Kit.mk('path', {fill: 'none', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg), `stroke:${INK}`);
+  const earth = st(Kit.mk('circle', {r: eR, fill: '#7fd0ff', 'stroke-width': 1.8}, svg), `stroke:${INK}`);
+  const earthT = st(Kit.mk('text', {'font-size': f, 'text-anchor': 'middle'}, svg), `fill:${INK}`);
   earthT.textContent = 'Earth';
-  const clock = Kit.mk('text', {x: W / 2, y: 2.5 * f, fill: '#fff', 'font-size': f * 2.4, 'font-weight': 800, 'font-family': 'var(--mono)', 'text-anchor': 'middle'}, svg);
-  const cap = Kit.mk('text', {x: W / 2, y: 4.6 * f, fill: '#fff', 'fill-opacity': 0.85, 'font-size': f * 0.9, 'font-family': 'var(--body)', 'text-anchor': 'middle'}, svg);
-  g = {svg, W, H, f, cx, cy, R, sunR, eR, dist, distT, sunG, sunT, empty, rings, ringT, trail, earth, earthT, clock, cap};
+  // the clock
+  const clock = Kit.mk('text', {x: W / 2, y: 2.5 * f, class: 'clk', 'font-size': f * 2.4, 'text-anchor': 'middle'}, svg);
+  const cap = st(Kit.mk('text', {x: W / 2, y: 4.6 * f, 'font-size': f * 0.9, 'text-anchor': 'middle'}, svg), `fill:${INK}`);
+  g = {svg, W, H, f, cx, cy, R, sunR, eR, news, dist, distT, sunG, sunT, empty, rings, ringT, trail, earth, earthT, clock, cap};
   render();
 }
 
@@ -87,7 +99,7 @@ function render() {
   const {cx, cy, R, f, sunR, eR} = g, p = S.p;
   const sec = Math.round(Math.min(p, 1) * 500);
   g.clock.textContent = `${Math.floor(sec / 60)} min ${String(sec % 60).padStart(2, '0')} s`;
-  g.clock.setAttribute('fill', S.arrived ? '#c4f0ff' : '#fff');
+  g.clock.setAttribute('style', `fill:${S.arrived ? NEWS : 'var(--k)'}`);
   g.cap.textContent = !S.started ? 'the Sun is shining' : S.arrived ? 'the pull is gone: Earth flies straight' : 'since the Sun vanished';
   g.sunG.setAttribute('opacity', S.sun);
   g.sunT.setAttribute('opacity', S.sun);
@@ -98,6 +110,8 @@ function render() {
     c.setAttribute('r', r);
     c.setAttribute('opacity', r > sunR ? ro * (1 - i * 0.3) : 0);
   });
+  g.news.setAttribute('r', Math.max(0, R * p));
+  g.news.setAttribute('opacity', R * p > sunR ? ro : 0);
   const rr = R * p;
   g.ringT.setAttribute('y', cy - rr - 0.5 * f);
   g.ringT.setAttribute('opacity', S.started && rr > sunR + 2.5 * f && p <= 1 ? 1 : 0);

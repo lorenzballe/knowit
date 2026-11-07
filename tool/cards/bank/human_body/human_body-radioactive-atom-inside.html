@@ -7,18 +7,19 @@
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
-#pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
-#pic .lab{letter-spacing:.08em}
-#pic .num{font-family:var(--mono)}
-.skin{fill:color-mix(in srgb,var(--k) 26%,transparent)}
-.cell{fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:2.2}
-.nuc{fill:color-mix(in srgb,var(--k) 14%,transparent);stroke:var(--k);stroke-width:1.6;stroke-dasharray:5 4}
-.dna{fill:none;stroke:var(--k);stroke-width:2.6;stroke-linecap:round}
-.rung{stroke:var(--k);stroke-width:1.3;opacity:.55}
-.dust{fill:var(--k);opacity:.35}
+#pic text{font-family:var(--body);font-weight:600;fill:var(--k)}
+#pic .num{font-variant-numeric:tabular-nums}
+#pic .onskin{fill:var(--c)}
+.skin{fill:color-mix(in srgb,var(--k) 78%,var(--c))}
+.skinline{stroke:var(--c);stroke-width:1.6;stroke-linecap:round}
+.cell{fill:color-mix(in srgb,var(--k) 16%,var(--c));stroke:var(--k);stroke-width:2.4;stroke-linejoin:round}
+.nuc{fill:color-mix(in srgb,var(--k) 30%,var(--c));stroke:var(--k);stroke-width:1.8;stroke-linejoin:round}
+.dna{fill:none;stroke:var(--k);stroke-width:2.8;stroke-linecap:round}
+.rung{stroke:color-mix(in srgb,var(--k) 60%,var(--c));stroke-width:1.6;stroke-linecap:round}
+.dust{fill:color-mix(in srgb,var(--k) 55%,var(--c))}
 .ray{stroke:var(--k);stroke-width:2.2;stroke-linecap:round}
 .hit{fill:#ffd400;stroke:var(--k);stroke-width:1.2}
-.stop{fill:var(--k)}
+.stop{fill:var(--c)}
 #why{display:flex;flex-direction:column;gap:.8cqh;margin-top:1cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
 </style>
@@ -40,6 +41,18 @@
 let G = null, t = 0, drag = false, hits = 0, blocked = 0, parts = [], done = false, acc = 0, inside = 0;
 const svg = Kit.$('pic');
 
+// a closed, gently uneven outline around (cx,cy): looks drawn by hand, not by compass
+function blob(cx, cy, r, wob, seed) {
+  let d = '';
+  const n = 48;
+  for (let i = 0; i <= n; i++) {
+    const a = i / n * Math.PI * 2;
+    const rr = r * (1 + wob * (Math.sin(a * 3 + seed) * .6 + Math.sin(a * 5 + seed * 2.3) * .4));
+    d += (i ? 'L' : 'M') + (cx + rr * Math.cos(a)).toFixed(1) + ' ' + (cy + rr * Math.sin(a)).toFixed(1);
+  }
+  return d + 'Z';
+}
+
 Kit.onShow.card = () => {
   svg.innerHTML = ''; parts = [];
   const {W, H, f} = Kit.fitSvg(svg);
@@ -51,11 +64,22 @@ Kit.onShow.card = () => {
   const Rr = Math.max(.16 * H, (skinT - y0) * 1.25);
   G = {W, H, fs, skinT, skinB, cx, cy, R, nr, xs, xe, a, k, y0, y1, Rr};
   const mk = (tg, at, p) => Kit.mk(tg, at, p || svg);
-  // layers
-  mk('rect', {x: 0, y: skinT, width: W, height: skinB - skinT, class: 'skin'});
-  for (let i = 0; i < 26; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * skinT * .92 + 4, r: 1 + Kit.rnd() * 1.6, class: 'dust'});
-  mk('circle', {cx, cy, r: R, class: 'cell'});
-  mk('circle', {cx, cy, r: nr, class: 'nuc'});
+  // skin: a band of flattened cells, drawn as a cross-section
+  mk('rect', {x: 0, y: skinT, width: W, height: skinB - skinT, rx: 3, class: 'skin'});
+  const sh = skinB - skinT, cw = sh * 1.7, lx = 8 + fs * 2.6;
+  for (let x = lx, j = 0; x < W - cw * .4; x += cw, j++) {
+    mk('line', {x1: x, y1: skinT + 3, x2: x + (j % 2 ? 2 : -2), y2: skinB - 3, class: 'skinline'});
+  }
+  // dust in the air: a few small irregular grains
+  for (let i = 0; i < 16; i++) {
+    const gx = Kit.rnd() * W, gy = Kit.rnd() * skinT * .92 + 4, gr = 1.6 + Kit.rnd() * 1.8, rot = Kit.rnd() * 6;
+    let d = '';
+    for (let j = 0; j < 5; j++) { const an = rot + j / 5 * Math.PI * 2, rr = gr * (j % 2 ? .7 : 1.1); d += (j ? 'L' : 'M') + (gx + rr * Math.cos(an)).toFixed(1) + ' ' + (gy + rr * Math.sin(an)).toFixed(1); }
+    mk('path', {d: d + 'Z', class: 'dust'});
+  }
+  // the cell and its nucleus
+  mk('path', {d: blob(cx, cy, R, .018, 1.3), class: 'cell'});
+  mk('path', {d: blob(cx, cy, nr, .03, 4.1), class: 'nuc'});
   // DNA double helix
   const s = (x, ph) => cy + a * Math.sin(k * (x - xs) + ph);
   let d1 = '', d2 = '';
@@ -63,22 +87,20 @@ Kit.onShow.card = () => {
   for (let i = 1; i < 16; i++) { const x = xs + (xe - xs) * i / 16; mk('line', {x1: x, y1: s(x, 0), x2: x, y2: s(x, Math.PI), class: 'rung'}); }
   G.dnaA = mk('path', {d: d1, class: 'dna'}); G.dnaB = mk('path', {d: d2, class: 'dna'});
   G.s = s;
-  // labels
+  // labels: few, short, sentence case
   const T = (x, y, txt, anchor, cls) => { const e = mk('text', {x, y, 'text-anchor': anchor || 'start', 'font-size': fs, class: cls || 'lab'}); e.textContent = txt; return e; };
-  T(8, fs * 1.3, 'OUTSIDE · DUST');
-  T(8, (skinT + skinB) / 2 + fs * .35, 'SKIN');
-  T(cx, cy + R * .8, 'CELL', 'middle');
+  T(8, fs * 1.3, 'Outside · dust');
+  T(8, (skinT + skinB) / 2 + fs * .35, 'Skin', 'start', 'lab onskin');
+  T(cx, cy + R * .8, 'Cell', 'middle');
   T(cx, cy + nr * .72, 'DNA', 'middle');
   G.cHit = T(W - 8, fs * 1.3, '', 'end', 'num');
   G.cStop = T(W - 8, fs * 2.75, '', 'end', 'num');
   G.fx = mk('g', {}); G.rays = mk('g', {});
-  // atom
+  // atom: a small yellow speck with a dark core
   G.atom = mk('g', {});
   const ar = Math.max(8, R * .075);
-  G.ring = mk('circle', {r: ar * 2.2, fill: '#ffd400', opacity: .3}, G.atom);
   mk('circle', {r: ar, fill: '#ffd400', stroke: 'var(--k)', 'stroke-width': 2.2}, G.atom);
   mk('circle', {r: ar * .35, fill: 'var(--k)'}, G.atom);
-  if (!Kit.calm) gsap.fromTo(G.ring, {attr: {r: ar * 1.4}, opacity: .45}, {attr: {r: ar * 2.6}, opacity: .08, duration: 1.1, repeat: -1, ease: 'sine.out'});
   place(); counts();
 };
 

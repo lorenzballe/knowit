@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: science-energy-glass -->
-<!-- Look: an old botanical plate, with sepia line engraving, a specimen glass "Vas atmosphaerae", CO₂ molecules drawn like seeds, a sun and Latin labels, printed straight on the card.
-     Interaction: drag a brass knob along the engraved scale from 320 ppm (1960) to 430 ppm (2025). Molecules multiply and the glass of absorbed energy rises on a spring, with bubbles stirring inside.
-     Wow: past 2025 the glass brims and spills, the puddle spreads across the plate, and the label turns to "Ultra intellectum". -->
+<!-- Look: a page from a printed science book. A plain drinking glass in flat ink line, filling with flat warm "heat" orange. CO₂ molecules are drawn simply as one dark carbon between two open oxygens. A flat sun sends its light into the glass, and a plain track with a brass knob sits below.
+     Interaction: drag the brass knob along the scale from 320 ppm (1960) to 430 ppm (2025). Molecules multiply and the glass of absorbed energy rises on a spring, with bubbles stirring inside.
+     Wow: past 2025 the glass brims and spills, the puddle spreads across the page, and the label turns to "Ultra intellectum". -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The energy glass</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -10,10 +10,13 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;background:none}
-#pic text.lat{font-family:var(--display);font-style:italic}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;background:none;color:var(--k)}
+#pic text.lat,#pic text.lab{font-family:var(--body)}
 #pic text.disp{font-family:var(--display)}
-#pic text.mono{font-family:var(--mono)}
+#pic .pap{fill:var(--c)}
+#pic .t1{fill:color-mix(in srgb,var(--k) 8%,var(--c))}
+#pic .t2{fill:color-mix(in srgb,var(--k) 20%,var(--c))}
+#pic .trk{stroke:color-mix(in srgb,var(--k) 22%,var(--c))}
 #why{display:flex;flex-direction:column;gap:.6cqh}
 #why .big{font:800 max(2.5cqh,16px)/1.1 var(--display)}
 #why .body{font:500 max(1.7cqh,12px)/1.3 var(--body)}
@@ -43,7 +46,7 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say');
-  const INK = '#10100c', RED = '#9b2a16', MAXN = 46;
+  const INK = 'currentColor', HEAT = '#d4552a', HEAT2 = '#f0a066', BRASS = '#c99a3a', MAXN = 46;
   let W = 0, H = 0, fs = 13, sm = 12, lfs = 13, lgap = 16, G = {}, mols = [];
   let cx, gt, gb, gw, bw, bt, wt, sy, x0, x1, x2, elx, ely, rx, ry1, ry2, wide = false, colRight = 0, labEnd = 0, leftLim = 0, rightLim = 0;
   let u = 0, lv = .3, lvT = .3, lvV = 0, ov = 0, ovS = 0, ovV = 0, last = 0;
@@ -72,15 +75,12 @@
     return `M${p.join(' L')} Z`;
   };
 
+  // CO₂: one dark carbon between two open oxygens, flat
   function molecule(p, s) {
     const g = mk('g', {}, p);
-    for (const d of [-.17, .17]) mk('line', {x1: -s * 1.2, x2: s * 1.2, y1: s * d, y2: s * d, stroke: INK, 'stroke-width': .9}, g);
-    for (const d of [-1.25, 1.25]) {
-      mk('circle', {cx: s * d, cy: 0, r: s * .62, fill: 'url(#oxy)', stroke: INK, 'stroke-width': .8}, g);
-      mk('path', {d: `M${s * d - s * .35},${s * .1} a${s * .4},${s * .4} 0 0 0 ${s * .55},${s * .38}`, stroke: INK, 'stroke-width': .5, fill: 'none', opacity: .6}, g);
-    }
-    mk('circle', {cx: 0, cy: 0, r: s * .72, fill: 'url(#carb)', stroke: INK, 'stroke-width': .8}, g);
-    mk('circle', {cx: -s * .22, cy: -s * .25, r: s * .16, fill: '#fff', opacity: .55}, g);
+    mk('line', {x1: -s * 1.25, x2: s * 1.25, y1: 0, y2: 0, stroke: INK, 'stroke-width': Math.max(1, s * .28), 'stroke-linecap': 'round'}, g);
+    for (const d of [-1.25, 1.25]) mk('circle', {cx: s * d, cy: 0, r: s * .62, class: 'pap', stroke: INK, 'stroke-width': 1}, g);
+    mk('circle', {cx: 0, cy: 0, r: s * .72, fill: INK}, g);
     return g;
   }
 
@@ -97,22 +97,8 @@
     fs = Math.max(12, Math.min(15, W / 24, H / 20));
     sm = Math.max(12, fs * .85);
     wide = H < W * .95;
-    lfs = wide ? sm : fs;
+    lfs = sm;
     const defs = mk('defs', {}, svg);
-    const grad = (tag, id, stops, a = {}) => { const g = mk(tag, Object.assign({id}, a), defs); stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g)); };
-    grad('linearGradient', 'liq', [[0, '#e8913f'], [.45, '#c4471e'], [1, '#6a150a']], {x1: 0, y1: 0, x2: 0, y2: 1});
-    grad('linearGradient', 'surf', [[0, '#f9cf86'], [.6, '#efa457'], [1, '#d96f2f']], {x1: 0, y1: 0, x2: 1, y2: 0});
-    grad('linearGradient', 'glass', [[0, '#ffffff', .6], [.16, '#ffffff', .28], [.72, '#ffffff', .1], [1, '#10100c', .14]], {x1: 0, y1: 0, x2: 1, y2: 0});
-    grad('radialGradient', 'brass', [[0, '#fff3c8'], [.5, '#d8a548'], [1, '#6f4b14']], {cx: '35%', cy: '30%', r: '75%'});
-    grad('linearGradient', 'pud', [[0, '#d4642a'], [.55, '#a8361a'], [1, '#6a150a']], {x1: 0, y1: 0, x2: 0, y2: 1});
-    grad('radialGradient', 'sun', [[0, '#fff6cf'], [.6, '#f1c464'], [1, '#c4842a']], {cx: '40%', cy: '38%'});
-    grad('radialGradient', 'oxy', [[0, '#fde9dc'], [.6, '#d9805a'], [1, '#8a2c14']], {cx: '35%', cy: '30%'});
-    grad('radialGradient', 'carb', [[0, '#e0d7c6'], [.6, '#5e4e3c'], [1, '#1c140d']], {cx: '35%', cy: '30%'});
-    grad('radialGradient', 'halo', [[0, '#fff6cf', .75], [1, '#fff6cf', 0]]);
-    const pat = mk('pattern', {id: 'hatch', width: 3.2, height: 3.2, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
-    mk('line', {x1: 0, y1: 0, x2: 0, y2: 3.2, stroke: INK, 'stroke-width': .6}, pat);
-    const pl = mk('pattern', {id: 'lines', width: 6, height: 2.8, patternUnits: 'userSpaceOnUse'}, defs);
-    mk('line', {x1: 0, y1: 1.4, x2: 6, y2: 1.4, stroke: INK, 'stroke-width': .45, opacity: .35}, pl);
 
     // ---- frame geometry (kept as layout margins only; nothing is drawn there)
     const m = 4, m2 = 10, cart = H > fs * 14;
@@ -130,24 +116,15 @@
     x0 = m2 + fs * 1.2; x2 = W - m2 - fs * 2.9; x1 = x0 + (x2 - x0) / 1.25;
 
     const plate = mk('g', {class: 'plate'}, svg);
-    // cartouche
+    // plate title, plain
     if (cart) {
-      const ct = txt(plate, W / 2, cy, 'TAB. II · VAS ATMOSPHAERAE', {class: 'mono', 'font-size': sm, 'text-anchor': 'middle', 'letter-spacing': '.1em', opacity: .85});
-      let cw = ct.getComputedTextLength();
-      const maxw = W - 2 * m2 - fs * 2;
-      if (cw > maxw) { ct.setAttribute('textLength', maxw); ct.setAttribute('lengthAdjust', 'spacingAndGlyphs'); cw = maxw; }
-      const ca = W / 2 - cw / 2 - fs * .6, cb = W / 2 + cw / 2 + fs * .6, ly = cy - sm * .32;
-      if (ca - m2 > fs * 2.2) {
-        for (const [p, q, s] of [[m2 + fs * .6, ca, 1], [cb, W - m2 - fs * .6, -1]]) {
-          mk('line', {x1: p, x2: q, y1: ly, y2: ly, stroke: INK, 'stroke-width': .6}, plate);
-          const lx = s > 0 ? q - fs * .2 : p + fs * .2;
-          mk('path', {d: `M${lx},${ly} q${-s * fs * .5},${-fs * .55} ${-s * fs * 1.1},${-fs * .1} q${s * fs * .5},${fs * .15} ${s * fs * 1.1},${fs * .1}Z`, fill: '#0b6b49', stroke: INK, 'stroke-width': .6}, plate);
-        }
-      }
+      const ct = txt(plate, W / 2, cy, 'Tab. II · Vas atmosphaerae', {class: 'lab', 'font-size': sm, 'text-anchor': 'middle', opacity: .7});
+      const cw = ct.getComputedTextLength(), maxw = W - 2 * m2 - fs * 2;
+      if (cw > maxw) { ct.setAttribute('textLength', maxw); ct.setAttribute('lengthAdjust', 'spacingAndGlyphs'); }
     }
-    // readout (measured before the glass is placed)
+    // the number (measured before the glass is placed)
     G.num = txt(plate, rx, ry1, '> 430', {class: 'disp', 'font-size': fn, 'font-weight': 800});
-    G.unit = txt(plate, rx, ry1, 'ppm', {class: 'mono', 'font-size': sm, opacity: .8});
+    G.unit = txt(plate, rx, ry1, 'ppm', {class: 'lab', 'font-size': sm});
     const nw = G.num.getComputedTextLength() + fs * .35 + G.unit.getComputedTextLength();
     const icon = molecule(plate, fs * .32); icon.setAttribute('transform', `translate(${rx + fs * .6},${ry2 - sm * .33})`);
     G.year = txt(plate, rx + fs * 1.45, ry2, 'CO₂ · 1960 → 2025', {class: 'lat', 'font-size': sm});
@@ -190,48 +167,42 @@
     mk('clipPath', {id: 'gin'}, defs).appendChild(mk('path', {d: gpath(wt, gt - fs * 1.6, gb - bt, gw * .06)}, svg));
     mk('clipPath', {id: 'gout'}, defs).appendChild(mk('path', {d: gpath(0, gt, gb, gw * .08)}, svg));
 
-    // sun, halo and its light
-    mk('circle', {cx: sx, cy: syy, r: sr * 2.6, fill: 'url(#halo)'}, plate);
+    // the sun and its light falling into the glass
     const sun = mk('g', {transform: `translate(${sx},${syy})`}, plate);
     const rays = mk('g', {class: 'spin'}, sun);
-    for (let i = 0; i < 20; i++) {
-      const a = i / 20 * Math.PI * 2, r2 = sr * (i % 2 ? 1.45 : 1.75);
-      mk('line', {x1: Math.cos(a) * sr * 1.15, y1: Math.sin(a) * sr * 1.15, x2: Math.cos(a) * r2, y2: Math.sin(a) * r2, stroke: INK, 'stroke-width': i % 2 ? .6 : 1}, rays);
+    for (let i = 0; i < 12; i++) {
+      const a = i / 12 * Math.PI * 2;
+      mk('line', {x1: Math.cos(a) * sr * 1.3, y1: Math.sin(a) * sr * 1.3, x2: Math.cos(a) * sr * 1.7, y2: Math.sin(a) * sr * 1.7, stroke: INK, 'stroke-width': 1.3, 'stroke-linecap': 'round'}, rays);
     }
-    mk('circle', {r: sr, fill: 'url(#sun)', stroke: INK, 'stroke-width': 1}, sun);
-    mk('circle', {r: sr * .68, fill: 'none', stroke: INK, 'stroke-width': .45, 'stroke-dasharray': '1.5 2'}, sun);
+    mk('circle', {r: sr, fill: HEAT2, stroke: INK, 'stroke-width': 1.3}, sun);
     for (const [ex, ey] of [[cx + gw * .18, gt - fs * .3], [cx - gw * .12, gt - fs * .1]]) {
       const ax = sx - sr * 1.3, ay = syy + sr * .7;
-      mk('line', {x1: ax, y1: ay, x2: ex, y2: ey, stroke: '#6b3d00', 'stroke-width': 1.1, 'stroke-dasharray': '5 2', class: 'flow', opacity: .85}, plate);
+      mk('line', {x1: ax, y1: ay, x2: ex, y2: ey, stroke: HEAT, 'stroke-width': 1.4, 'stroke-dasharray': '5 3', 'stroke-linecap': 'round', class: 'flow'}, plate);
     }
 
-    // shadow, puddle, ripples
-    mk('ellipse', {cx, cy: gb, rx: gw * .62, ry: fs * .3, fill: 'url(#hatch)', opacity: .45}, plate);
-    G.rip = [0, 1, 2].map(() => mk('path', {fill: 'none', stroke: RED, 'stroke-width': 1, opacity: 0}, svg));
-    G.pud = mk('path', {fill: 'url(#pud)', stroke: INK, 'stroke-width': .7, opacity: 0}, svg);
-    G.pudL = mk('path', {fill: 'url(#lines)', opacity: 0}, svg);
+    // puddle, ripples
+    G.rip = [0, 1, 2].map(() => mk('path', {fill: 'none', stroke: HEAT, 'stroke-width': 1.2, opacity: 0}, svg));
+    G.pud = mk('path', {fill: HEAT, stroke: INK, 'stroke-width': 1, opacity: 0}, svg);
+    G.pudL = mk('path', {fill: 'none', opacity: 0}, svg);
 
-    // glass back
-    mk('path', {d: `M${cx - gw / 2},${gt} A${gw / 2},${gw * .07} 0 0 1 ${cx + gw / 2},${gt}`, fill: 'none', stroke: INK, 'stroke-width': .8, opacity: .7}, svg);
+    // glass body: a pale flat tint, with its thick base
+    mk('path', {d: gpath(0, gt, gb, gw * .08), class: 't1'}, svg);
+    const gclip = mk('g', {'clip-path': 'url(#gout)'}, svg);
+    mk('rect', {x: cx - gw / 2, y: gb - bt, width: gw, height: bt, class: 't2'}, gclip);
+    mk('path', {d: `M${cx - gw / 2},${gt} A${gw / 2},${gw * .07} 0 0 1 ${cx + gw / 2},${gt}`, fill: 'none', stroke: INK, 'stroke-width': 1, opacity: .6}, svg);
     // liquid with bubbles
     const lq = mk('g', {'clip-path': 'url(#gin)'}, svg);
-    G.body = mk('path', {fill: 'url(#liq)'}, lq);
-    G.bodyL = mk('path', {fill: 'url(#lines)'}, lq);
-    G.bub = bubs.map((b, i) => mk('circle', {r: fs * (.07 + .05 * (i % 3)), fill: '#fbd79a', 'fill-opacity': .55, stroke: '#5e1208', 'stroke-width': .4, opacity: 0}, lq));
-    G.surf = mk('path', {fill: 'url(#surf)', stroke: INK, 'stroke-width': .7}, lq);
-    // glass front
-    mk('path', {d: gpath(0, gt, gb, gw * .08), fill: 'url(#glass)'}, svg);
-    const gclip = mk('g', {'clip-path': 'url(#gout)'}, svg);
-    mk('rect', {x: cx + gw * .26, y: gt, width: gw * .3, height: gh, fill: 'url(#hatch)', opacity: .38}, gclip);
-    mk('rect', {x: cx - gw / 2 + wt * 1.6, y: gt + fs * .4, width: gw * .06, height: gh * .8, fill: '#fff', opacity: .55, rx: gw * .03}, gclip);
-    mk('rect', {x: cx - gw / 2, y: gb - bt, width: gw, height: bt, fill: 'url(#hatch)', opacity: .5}, gclip);
-    mk('ellipse', {cx, cy: gb - bt, rx: hw(gb - bt) + wt, ry: Math.max(1, fs * .22), fill: 'none', stroke: INK, 'stroke-width': .6}, svg);
-    mk('path', {d: gpath(0, gt, gb, gw * .08), fill: 'none', stroke: INK, 'stroke-width': 1.4, class: 'draw', pathLength: 1, 'stroke-dasharray': 1}, svg);
-    mk('path', {d: `M${cx - gw / 2},${gt} A${gw / 2},${gw * .07} 0 0 0 ${cx + gw / 2},${gt}`, fill: 'none', stroke: INK, 'stroke-width': 1.3}, svg);
-    for (let k = 1; k <= 4; k++) { const yy = gb - bt - (gb - bt - gt) * k / 5; mk('line', {x1: cx - hw(yy) - wt, x2: cx - hw(yy) + fs * .4, y1: yy, y2: yy, stroke: INK, 'stroke-width': .6, opacity: .7}, svg); }
+    G.body = mk('path', {fill: HEAT}, lq);
+    G.bodyL = mk('path', {fill: 'none'}, lq);
+    G.bub = bubs.map((b, i) => mk('circle', {r: fs * (.07 + .05 * (i % 3)), fill: HEAT2, opacity: 0}, lq));
+    G.surf = mk('path', {fill: HEAT2, stroke: INK, 'stroke-width': 1}, lq);
+    // glass outline
+    mk('path', {d: `M${cx - bw / 2 + wt},${gb - bt} L${cx + bw / 2 - wt},${gb - bt}`, stroke: INK, 'stroke-width': 1}, svg);
+    mk('path', {d: gpath(0, gt, gb, gw * .08), fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round', class: 'draw', pathLength: 1, 'stroke-dasharray': 1}, svg);
+    mk('path', {d: `M${cx - gw / 2},${gt} A${gw / 2},${gw * .07} 0 0 0 ${cx + gw / 2},${gt}`, fill: 'none', stroke: INK, 'stroke-width': 1.8}, svg);
     // spill
-    G.sp = [-1, 1].map(() => mk('path', {fill: 'none', stroke: '#a8361a', 'stroke-linecap': 'round', opacity: 0}, svg));
-    G.dr = Array.from({length: 6}, () => mk('circle', {r: 1, fill: '#8e2410', opacity: 0}, svg));
+    G.sp = [-1, 1].map(() => mk('path', {fill: 'none', stroke: HEAT, 'stroke-linecap': 'round', opacity: 0}, svg));
+    G.dr = Array.from({length: 6}, () => mk('circle', {r: 1, fill: HEAT, opacity: 0}, svg));
 
     // molecules, kept off every label
     const pts = [], dmin = fs * 2.2;
@@ -256,8 +227,8 @@
     updateMols();
 
     // energy label
-    G.lead = mk('line', {stroke: INK, 'stroke-width': .7}, svg);
-    G.dot = mk('circle', {r: 1.8, fill: INK}, svg);
+    G.lead = mk('line', {stroke: INK, 'stroke-width': 1}, svg);
+    G.dot = mk('circle', {r: 2.2, fill: INK}, svg);
     G.elab = mk('g', {}, svg);
     G.el1 = txt(G.elab, elx, ely, stage >= 2 ? 'Ultra' : 'Energia', {class: 'lat', 'font-weight': 600, 'font-size': lfs});
     G.el2 = txt(G.elab, elx, ely + lgap, stage >= 2 ? 'intellectum' : 'absorpta', {class: 'lat', 'font-weight': 600, 'font-size': lfs});
@@ -265,14 +236,13 @@
     if (cap) txt(svg, cx, gb + fs * 1.6, 'Vas atmosphaerae', {class: 'lat', 'text-anchor': 'middle', 'font-size': sm});
 
     // scale
-    mk('line', {x1: x0, x2: x1, y1: sy, y2: sy, stroke: INK, 'stroke-width': fs * .32, 'stroke-linecap': 'round'}, svg);
-    mk('line', {x1: x0, x2: x1, y1: sy, y2: sy, stroke: '#00E5A0', 'stroke-width': fs * .13, 'stroke-linecap': 'round'}, svg);
-    mk('line', {x1: x1 + fs * .3, x2: x2, y1: sy, y2: sy, stroke: INK, 'stroke-width': 1.1, 'stroke-dasharray': '2 3'}, svg);
-    for (let k = 0; k <= 10; k++) { const xx = x0 + (x1 - x0) * k / 10, big = k % 5 === 0; mk('line', {x1: xx, x2: xx, y1: sy - fs * .25, y2: sy - fs * (big ? .75 : .5), stroke: INK, 'stroke-width': big ? 1 : .6}, svg); }
-    G.fill = mk('line', {x1: x0, x2: x0, y1: sy, y2: sy, stroke: RED, 'stroke-width': fs * .14, 'stroke-linecap': 'round'}, svg);
+    mk('line', {x1: x0, x2: x1, y1: sy, y2: sy, class: 'trk', 'stroke-width': fs * .32, 'stroke-linecap': 'round'}, svg);
+    mk('line', {x1: x1 + fs * .3, x2: x2, y1: sy, y2: sy, stroke: INK, 'stroke-width': 1.3, 'stroke-dasharray': '2 3', 'stroke-linecap': 'round'}, svg);
+    for (let k = 0; k <= 10; k += 5) { const xx = x0 + (x1 - x0) * k / 10; mk('line', {x1: xx, x2: xx, y1: sy - fs * .3, y2: sy - fs * .75, stroke: INK, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, svg); }
+    G.fill = mk('line', {x1: x0, x2: x0, y1: sy, y2: sy, stroke: HEAT, 'stroke-width': fs * .32, 'stroke-linecap': 'round'}, svg);
     const ty = sy + fs * 1.6;
-    const la = txt(svg, x0 - fs * .3, ty, '320 ppm · 1960', {class: 'mono', 'font-size': sm});
-    const lbt = txt(svg, x1, ty, '430 ppm · 2025', {class: 'mono', 'font-size': sm, 'text-anchor': 'middle'});
+    const la = txt(svg, x0 - fs * .3, ty, '320 ppm · 1960', {class: 'lab', 'font-size': sm});
+    const lbt = txt(svg, x1, ty, '430 ppm · 2025', {class: 'lab', 'font-size': sm, 'text-anchor': 'middle'});
     if (x0 - fs * .3 + la.getComputedTextLength() + fs > x1 - lbt.getComputedTextLength() / 2) { la.textContent = '1960'; lbt.textContent = '2025'; }
     txt(svg, x2 + fs * 1.6, sy + fs * .48, '?', {class: 'disp', 'font-size': fs * 1.4, 'font-weight': 800, 'text-anchor': 'middle'});
     G.knob = mk('g', {}, svg);
@@ -280,10 +250,8 @@
     mk('path', {d: `M${fs * 1.1},${-fs * .45} l${fs * .5},${fs * .45} l${-fs * .5},${fs * .45}`, fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G.hint);
     if (touched) G.hint.style.display = 'none';
     G.kin = mk('g', {}, G.knob);
-    mk('circle', {cy: fs * .12, r: fs * .82, fill: INK, opacity: .25}, G.kin);
-    mk('circle', {r: fs * .8, fill: 'url(#brass)', stroke: INK, 'stroke-width': 1.1}, G.kin);
-    mk('circle', {r: fs * .38, fill: 'none', stroke: INK, 'stroke-width': .6}, G.kin);
-    for (const d of [-.15, 0, .15]) mk('line', {x1: fs * d, x2: fs * d, y1: -fs * .2, y2: fs * .2, stroke: INK, 'stroke-width': .7}, G.kin);
+    mk('circle', {r: fs * .8, fill: BRASS, stroke: INK, 'stroke-width': 1.5}, G.kin);
+    mk('circle', {r: fs * .25, fill: INK}, G.kin);
     gsap.set(G.kin, {svgOrigin: '0 0'});
     G.liq = true;
     readout();

@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-gold-codes-card -->
-<!-- Look: a night-lab bench under a warm spotlight. A stitched leather nuclear football with brass corners, a CRT screen and a glass card bay with brass alignment notches. A translucent gold-tinted plastic Gold Code card with a moving sheen. A brass-capped glass vial of liquid gold keeps count.
-     Interaction: drag the card down into the bay. Each row that crosses the read line is checked character by character: gold where it agrees, red where it doesn't. The vial fills and sloshes with the number of matching characters.
-     Wow: line up the right row and the six characters light up one by one. The vial climbs to the top, the screen flashes AUTHENTICATED, the LED turns gold and a ring of gold sparks bursts from the bay. -->
+<!-- Look: a flat, printed-book illustration. A plain leather briefcase (the football) drawn in solid browns from the card's ink and colour, with a black screen and a dark slot for the card. The Gold Code card is a cream plastic card with an amber header band and its codes in ink. Beside it, a column of six boxes, one per character, fills with ink as characters match.
+     Interaction: drag the card down into the slot. Each row that crosses the read line is checked character by character: dark gold where it agrees, red where it doesn't. The boxes fill with the number of matching characters.
+     Wow: line up the right row and the six characters turn gold one by one. All six boxes fill, the screen flashes Authenticated, the light turns amber and a ring spreads out from the slot. -->
 <title>The Gold Codes</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -21,7 +21,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">GOLD CODES</span></div>
     <h2 class="q">What device does the US president use to authenticate a nuclear launch?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A plastic Gold Code card with three rows of codes, a nuclear football briefcase with a screen showing a code, and a glass vial that fills as the codes match."></svg>
+      <svg id="pic" role="img" aria-label="A plastic Gold Code card with three rows of codes, a nuclear football briefcase with a screen showing a code, and a column of six boxes that fills as the codes match."></svg>
     </div>
     <p class="say" id="say">Drag the president's plastic card into the football. <b>Line up the row that matches the screen.</b></p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No match, no launch: the plastic card in his pocket unlocks the football.</div>
@@ -33,15 +33,17 @@
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
   const SCREEN = '7X Q4 R9', ROWS = ['K2 V8 T5', '7X Q1 M3', '7X Q4 R9'], RIGHT = 2;
-  const GOLD = '#f6c955', CYAN = '#8fe9ff', RED = '#ff7070', WHITE = '#f4f7ff', IDLE = 'rgba(244,247,255,.92)';
-  const INK = '#10100c';
+  const PAPER = '#fbf4e2', RED = '#d8402a', LEDOFF = '#5a2222';
+  // resolved in layout() from the card's own colours
+  let K = '#10100c', C = '#ffb300', LEA = '#3a2a10', LEA2 = '#2a1e0c', STITCH = '#6b4c14', BRASS = '#c08600', BAYF = '#1a140a',
+    DIM = '#d99a00', CG = '#a87400', CI = '#7a7266', SG = '#ffb300', SW = PAPER, RULE = '#ddd4c0', EMPTY = '#f0a800';
   const WHY = 'The football could, in theory, launch a strike from afar, so first the president must prove it is really him. The NSA generates the <b>Gold Codes</b> and prints them on a small plastic card he carries. His code must <b>match</b> the one the football shows.';
   const CODE_IDX = [0, 1, 3, 4, 6, 7];
   let W = 0, H = 0, fs = 12, G = {}, D = {}, done = false, drag = null, shown = false, count = -1, ambient = [], hintGone = false;
-  const pos = {x: 0, y: 0}, level = {v: 0}, slosh = {a: 0}, sheen = {s: -2};
+  const pos = {x: 0, y: 0}, level = {v: 0}, slosh = {a: 0};
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const mk = (t, a, p) => Kit.mk(t, a, p);
-  const txt = (p, x, y, s, a = {}, fam = '--mono') => { const e = mk('text', Object.assign({x, y, 'font-size': fs}, a), p); e.style.fontFamily = `var(${fam})`; if (s != null) e.textContent = s; return e; };
+  const txt = (p, x, y, s, a = {}, fam = '--body') => { const e = mk('text', Object.assign({x, y, 'font-size': fs}, a), p); e.style.fontFamily = `var(${fam})`; if (s != null) e.textContent = s; return e; };
   function fit(el, maxW) {
     el.removeAttribute('textLength'); el.removeAttribute('lengthAdjust');
     const w = el.getComputedTextLength();
@@ -52,9 +54,27 @@
     fit(el, maxW);
   }
 
-  function tubeD(i) {
-    const {vx, vw, vy0, vy1} = D, x0 = vx + i, x1 = vx + vw - i, r = vw / 2 - i;
-    return `M${x0} ${vy0} V${vy1 - vw / 2} A${r} ${r} 0 0 0 ${x1} ${vy1 - vw / 2} V${vy0} Z`;
+  // turn a CSS colour expression (vars, color-mix) into a plain hex for SVG attributes
+  let probe = null;
+  function col(expr, fb) {
+    if (!probe) { probe = document.createElement('span'); probe.style.display = 'none'; card.appendChild(probe); }
+    probe.style.color = ''; probe.style.color = expr;
+    const s = getComputedStyle(probe).color || '';
+    const hx = v => Math.round(clamp(v, 0, 255)).toString(16).padStart(2, '0');
+    let m = s.match(/color\(srgb\s+([\d.e+-]+)\s+([\d.e+-]+)\s+([\d.e+-]+)/);
+    if (m) return '#' + [1, 2, 3].map(i => hx(+m[i] * 255)).join('');
+    m = s.match(/rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/);
+    if (m) return '#' + [1, 2, 3].map(i => hx(+m[i])).join('');
+    return fb;
+  }
+  function colours() {
+    const mix = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+    K = col('var(--k)', K); C = col('var(--c)', C);
+    LEA = col(mix(80), LEA); LEA2 = col(mix(88), LEA2); STITCH = col(mix(55), STITCH);
+    BRASS = col(mix(25), BRASS); BAYF = col(mix(93), BAYF); DIM = col(mix(18), DIM);
+    CG = col(mix(38), CG); SG = C; EMPTY = col(mix(8), EMPTY);
+    CI = col(`color-mix(in srgb, var(--k) 55%, ${PAPER})`, CI);
+    RULE = col(`color-mix(in srgb, var(--k) 16%, ${PAPER})`, RULE);
   }
 
   function layout() {
@@ -64,6 +84,7 @@
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     if (!W || !H) return;
     fs = clamp(W / 27, 12, 14);
+    colours();
 
     // ---- vertical budget: card on top, football below, never overlapping ----
     const pad = Math.max(10, W * .04), cx = pad, cw = W - 2 * pad;
@@ -92,102 +113,53 @@
     const big = clamp(Math.min((cBot - cTop) * .8, (sc.w - 16) / (8 * .6)), 13, 26);
     const codeY = mid + big * .36, laserY = mid;
 
-    // ---- card + vial ----
+    // ---- card + counter ----
     const cardW = bay.w * .93, rx = fs * .6;
     const f2 = clamp(Math.min((cardW - 12) / (8 * .6), rs * .66), 12, 21);
     const home = {x: bay.x + (bay.w - cardW) / 2, y: top0};
     const vw = clamp(W * .072, 22, 30), vx = pad + 3, vlabY = top0 + fs * .95, vy0 = vlabY + fs * 1.15, vy1 = cy - fs * .8;
     D = {pad, cx, cw, ch, cy, hH, sc, bay, vw, vx, vy0, vy1, cardW, cardH, hh, rs, f2, big, codeY, laserY, home, top0};
 
-    svg.innerHTML = `<defs>
-<linearGradient id="leaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#43342a"/><stop offset=".5" stop-color="#241b14"/><stop offset="1" stop-color="#120d09"/></linearGradient>
-<linearGradient id="bevG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(255,232,196,.16)"/><stop offset=".14" stop-color="rgba(255,232,196,0)"/><stop offset=".9" stop-color="rgba(0,0,0,0)"/><stop offset="1" stop-color="rgba(0,0,0,.35)"/></linearGradient>
-<pattern id="grainP" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="2" r=".7" fill="rgba(255,255,255,.05)"/><circle cx="5" cy="5.5" r=".8" fill="rgba(0,0,0,.35)"/><circle cx="5.5" cy="1" r=".5" fill="rgba(255,255,255,.04)"/></pattern>
-<linearGradient id="brassG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b8"/><stop offset=".45" stop-color="#d9a441"/><stop offset="1" stop-color="#6e4a14"/></linearGradient>
-<linearGradient id="scrG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b3743"/><stop offset="1" stop-color="#021116"/></linearGradient>
-<radialGradient id="scrGlow" cx="50%" cy="55%" r="62%"><stop offset="0" stop-color="rgba(143,233,255,.24)"/><stop offset="1" stop-color="rgba(143,233,255,0)"/></radialGradient>
-<pattern id="scanP" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="rgba(0,0,0,.28)"/></pattern>
-<linearGradient id="bayG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(143,233,255,.09)"/><stop offset="1" stop-color="rgba(143,233,255,.02)"/></linearGradient>
-<linearGradient id="cardG1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(58,48,26,.94)"/><stop offset=".45" stop-color="rgba(28,24,14,.9)"/><stop offset="1" stop-color="rgba(84,60,10,.94)"/></linearGradient>
-<linearGradient id="swG" gradientUnits="userSpaceOnUse" x1="-999" y1="0" x2="-900" y2="${(cardH * .3).toFixed(1)}"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".5"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-<linearGradient id="liqG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9621a"/><stop offset=".4" stop-color="#a8420a"/><stop offset="1" stop-color="#5a2200"/></linearGradient>
-<linearGradient id="tubeG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,255,255,.4)"/><stop offset=".35" stop-color="rgba(255,255,255,.06)"/><stop offset=".8" stop-color="rgba(255,255,255,.14)"/><stop offset="1" stop-color="rgba(255,255,255,.4)"/></linearGradient>
-<filter id="glowF" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-<filter id="shF" x="-40%" y="-40%" width="180%" height="190%"><feGaussianBlur stdDeviation="5"/></filter>
-<clipPath id="scClip"><rect x="${sc.x}" y="${sc.y}" width="${sc.w}" height="${sc.h}" rx="6"/></clipPath>
-<clipPath id="tubeClip"><path d="${tubeD(2)}"/></clipPath>
-</defs>`;
-    G.swG = svg.querySelector('#swG');
+    svg.innerHTML = `<defs><clipPath id="scClip"><rect x="${sc.x}" y="${sc.y}" width="${sc.w}" height="${sc.h}" rx="6"/></clipPath></defs>`;
 
-    // ---- the bench (no backdrop: the drawing sits on the card) ----
-    G.dust = [];
-    for (let k = 0; k < 16; k++) {
-      const x = pad + ((k * .618 + .07) % 1) * cw, y = pad * .6 + ((k * .371 + .13) % 1) * Math.max(10, cy - pad * 1.4);
-      G.dust.push(mk('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: .6 + (k % 3) * .3, fill: INK, opacity: .25}, svg));
+    // ---- the counter: one box per character of the code, filled in ink as they match ----
+    const vial = G.vialG = mk('g', {}, svg);
+    G.vlab = txt(vial, pad, vlabY, 'Match 0/6', {fill: K, 'font-weight': 700});
+    G.tube = mk('g', {stroke: K, 'stroke-width': 1.5}, vial);
+    const gap = 3, cellH = Math.max(4, (vy1 - vy0 - 5 * gap) / 6);
+    G.cells = [];
+    for (let k = 0; k < 6; k++) {
+      const y = vy1 - (k + 1) * cellH - k * gap;
+      mk('rect', {x: vx, y, width: vw, height: cellH, rx: 3, fill: EMPTY}, G.tube);
+      const fr = mk('rect', {x: vx, y: y + cellH, width: vw, height: 0, rx: 2, fill: K}, vial);
+      G.cells.push({f: fr, y, h: cellH});
     }
 
-    // ---- the vial: one tick per character of the code ----
-    const vial = G.vialG = mk('g', {}, svg);
-    G.vlab = txt(vial, pad, vlabY, 'MATCH 0/6', {fill: INK, 'font-weight': 700});
-    mk('path', {d: tubeD(0), fill: 'rgba(16,16,12,.08)'}, vial);
-    const lq = mk('g', {'clip-path': 'url(#tubeClip)'}, vial);
-    G.liq = mk('path', {fill: 'url(#liqG)'}, lq);
-    G.bub = [0, 1, 2, 3].map(i => mk('circle', {r: 1.2 + (i % 2) * .8, fill: 'rgba(255,250,220,.7)', cx: vx + vw * (.28 + .14 * i), cy: vy1 - 4}, lq));
-    G.men = mk('path', {fill: 'none', stroke: 'rgba(255,255,240,.85)', 'stroke-width': 1.3}, lq);
-    G.tube = mk('path', {d: tubeD(0), fill: 'url(#tubeG)', stroke: 'rgba(16,16,12,.75)', 'stroke-width': 1.4}, vial);
-    const vbot = vy1 - 2, vtop = vy0 + 6;
-    for (let k = 1; k <= 6; k++) { const y = vbot - k / 6 * (vbot - vtop); mk('line', {x1: vx + vw - 7, x2: vx + vw - 2, y1: y, y2: y, stroke: 'rgba(16,16,12,.6)', 'stroke-width': 1}, vial); }
-    mk('path', {d: `M${vx + vw * .26} ${vy0 + 8} V${vy1 - vw * .55}`, stroke: 'rgba(255,255,255,.6)', 'stroke-width': 2, 'stroke-linecap': 'round'}, vial);
-    mk('rect', {x: vx - 3, y: vy0 - 5, width: vw + 6, height: 6, rx: 2, fill: 'url(#brassG)'}, vial);
-    mk('line', {x1: vx - 2, x2: vx + vw + 2, y1: vy0 - 2, y2: vy0 - 2, stroke: 'rgba(90,60,10,.5)', 'stroke-width': .8}, vial);
-
-    // ---- the football ----
+    // ---- the football: a plain leather briefcase ----
     const cs = G.caseG = mk('g', {}, svg);
-    mk('ellipse', {cx: cx + cw / 2, cy: cy + ch - 1, rx: cw * .46, ry: pad * .3, fill: 'rgba(0,0,0,.35)', filter: 'url(#shF)'}, cs);
     const hw = cw * .13, hr = hH * .5, mx = cx + cw / 2;
     const hd = `M${mx - hw} ${cy + 2} V${cy - hH + hr} Q${mx - hw} ${cy - hH} ${mx - hw + hr} ${cy - hH} H${mx + hw - hr} Q${mx + hw} ${cy - hH} ${mx + hw} ${cy - hH + hr} V${cy + 2}`;
-    mk('path', {d: hd, fill: 'none', stroke: '#2a2018', 'stroke-width': hH * .48, 'stroke-linecap': 'round'}, cs);
-    mk('path', {d: hd, fill: 'none', stroke: 'rgba(255,230,190,.16)', 'stroke-width': 1.1, transform: 'translate(-1.2 -1.2)'}, cs);
-    [mx - hw, mx + hw].forEach(x => mk('rect', {x: x - fs * .55, y: cy - 3, width: fs * 1.1, height: fs * .6, rx: 2, fill: 'url(#brassG)'}, cs));
-    mk('rect', {x: cx, y: cy, width: cw, height: ch, rx: fs * .8, fill: 'url(#leaG)'}, cs);
-    mk('rect', {x: cx, y: cy, width: cw, height: ch, rx: fs * .8, fill: 'url(#grainP)'}, cs);
-    mk('rect', {x: cx, y: cy, width: cw, height: ch, rx: fs * .8, fill: 'url(#bevG)'}, cs);
-    mk('rect', {x: cx + .5, y: cy + .5, width: cw - 1, height: ch - 1, rx: fs * .8, fill: 'none', stroke: 'rgba(255,255,255,.1)'}, cs);
+    mk('path', {d: hd, fill: 'none', stroke: LEA2, 'stroke-width': hH * .48, 'stroke-linecap': 'round'}, cs);
+    [mx - hw, mx + hw].forEach(x => mk('rect', {x: x - fs * .55, y: cy - 3, width: fs * 1.1, height: fs * .6, rx: 2, fill: BRASS}, cs));
+    mk('rect', {x: cx, y: cy, width: cw, height: ch, rx: fs * .8, fill: LEA}, cs);
     const si = fs * .42;
-    mk('rect', {x: cx + si, y: cy + si, width: cw - 2 * si, height: ch - 2 * si, rx: fs * .5, fill: 'none', stroke: 'rgba(255,225,180,.22)', 'stroke-dasharray': '3 3'}, cs);
-    const cl = fs * 1.3;
-    [[cx, cy, 1, 1], [cx + cw, cy, -1, 1], [cx, cy + ch, 1, -1], [cx + cw, cy + ch, -1, -1]].forEach(([x, y, sx, sy]) =>
-      mk('path', {d: `M${x + sx * 1.5} ${y + sy * cl} V${y + sy * 4} Q${x + sx * 1.5} ${y + sy * 1.5} ${x + sx * 4} ${y + sy * 1.5} H${x + sx * cl}`, fill: 'none', stroke: 'url(#brassG)', 'stroke-width': 3.2, 'stroke-linecap': 'round'}, cs));
-    [cx + cw * .13, cx + cw * .9].forEach(x => {
-      mk('rect', {x: x - fs * .7, y: cy - 2, width: fs * 1.4, height: fs * .8, rx: 2, fill: 'url(#brassG)'}, cs);
-      mk('circle', {cx: x, cy: cy + fs * .2, r: 1.3, fill: '#3a2608'}, cs);
-    });
+    mk('rect', {x: cx + si, y: cy + si, width: cw - 2 * si, height: ch - 2 * si, rx: fs * .5, fill: 'none', stroke: STITCH, 'stroke-width': 1, 'stroke-dasharray': '4 3'}, cs);
+    [cx + cw * .13, cx + cw * .9].forEach(x => mk('rect', {x: x - fs * .7, y: cy - 2, width: fs * 1.4, height: fs * .8, rx: 2, fill: BRASS}, cs));
 
-    // name plate + LED
-    const nm = txt(cs, mx, plateY, null, {'text-anchor': 'middle', fill: '#e2b052', 'font-weight': 700, 'letter-spacing': '.12em'});
-    pick(nm, ['NUCLEAR FOOTBALL', 'FOOTBALL'], cw * .58);
-    const pw = Math.min(cw * .66, nm.getComputedTextLength() + fs * 1.8);
-    const plate = mk('rect', {x: mx - pw / 2, y: plateY - fs * 1.0, width: pw, height: fs * 1.35, rx: 3, fill: 'rgba(217,164,65,.08)', stroke: 'rgba(217,164,65,.38)', 'stroke-width': .8}, cs);
-    cs.insertBefore(plate, nm);
-    [mx - pw / 2 + fs * .4, mx + pw / 2 - fs * .4].forEach(x => mk('circle', {cx: x, cy: plateY - fs * .33, r: 1.6, fill: 'url(#brassG)'}, cs));
-    G.led = mk('circle', {cx: cx + cw * .06, cy: plateY - fs * .33, r: fs * .28, fill: '#5a2222', stroke: 'rgba(0,0,0,.5)'}, cs);
+    // name + light
+    const nm = txt(cs, mx, plateY, null, {'text-anchor': 'middle', fill: BRASS, 'font-weight': 700});
+    pick(nm, ['Nuclear football', 'Football'], cw * .58);
+    G.led = mk('circle', {cx: cx + cw * .06, cy: plateY - fs * .33, r: fs * .28, fill: LEDOFF}, cs);
 
     // the screen
-    mk('rect', {x: sc.x - 4, y: sc.y - 4, width: sc.w + 8, height: sc.h + 8, rx: 9, fill: '#0b0d10', stroke: '#5a4834', 'stroke-width': 1}, cs);
-    [[sc.x - 1, sc.y - 1], [sc.x + sc.w + 1, sc.y - 1], [sc.x - 1, sc.y + sc.h + 1], [sc.x + sc.w + 1, sc.y + sc.h + 1]].forEach(([x, y]) => mk('circle', {cx: x, cy: y, r: 1.4, fill: 'url(#brassG)'}, cs));
-    mk('rect', {x: sc.x, y: sc.y, width: sc.w, height: sc.h, rx: 6, fill: 'url(#scrG)'}, cs);
+    mk('rect', {x: sc.x, y: sc.y, width: sc.w, height: sc.h, rx: 6, fill: K}, cs);
     const scg = mk('g', {'clip-path': 'url(#scClip)'}, cs);
-    mk('rect', {x: sc.x, y: sc.y, width: sc.w, height: sc.h, fill: 'url(#scrGlow)'}, scg);
-    mk('rect', {x: sc.x, y: sc.y, width: sc.w, height: sc.h, fill: 'url(#scanP)'}, scg);
-    G.scan = mk('rect', {x: sc.x, y: sc.y, width: sc.w, height: 7, fill: 'rgba(143,233,255,.1)'}, scg);
-    mk('line', {x1: sc.x + 6, x2: sc.x + sc.w - 6, y1: laserY, y2: laserY, stroke: 'rgba(143,233,255,.12)', 'stroke-dasharray': '2 3'}, scg);
-    mk('path', {d: `M${sc.x} ${sc.y} H${sc.x + sc.w * .55} L${sc.x + sc.w * .25} ${sc.y + sc.h} H${sc.x} Z`, fill: 'rgba(255,255,255,.04)'}, scg);
-    G.flash = mk('rect', {x: sc.x, y: sc.y, width: sc.w, height: sc.h, fill: '#fff6d8', opacity: 0}, scg);
-    const lab = txt(cs, sc.x + 7, labY, null, {fill: CYAN, opacity: .75, 'font-weight': 600});
-    pick(lab, ['CODE ON SCREEN', 'ON SCREEN', 'SCREEN'], sc.w - 14);
-    const ct = txt(cs, sc.x + sc.w / 2, codeY, null, {'text-anchor': 'middle', 'font-size': big, 'font-weight': 800, fill: WHITE});
+    G.flash = mk('rect', {x: sc.x, y: sc.y, width: sc.w, height: sc.h, fill: PAPER, opacity: 0}, scg);
+    const lab = txt(cs, sc.x + 8, labY, null, {fill: DIM, 'font-weight': 600});
+    pick(lab, ['Code on screen', 'On screen', 'Screen'], sc.w - 16);
+    const ct = txt(cs, sc.x + sc.w / 2, codeY, null, {'text-anchor': 'middle', 'font-size': big, 'font-weight': 800, fill: SW}, '--mono');
     ct.style.whiteSpace = 'pre';
-    G.code = [...SCREEN].map(c => { const s = mk('tspan', {fill: WHITE}, ct); s.textContent = c; return s; });
+    G.code = [...SCREEN].map(c => { const s = mk('tspan', {fill: SW, 'fill-opacity': 1}, ct); s.textContent = c; return s; });
     G.codeT = ct; fit(ct, sc.w - 12);
     // keep the code clear of the label above and the status line below
     const placeCode = () => {
@@ -207,29 +179,27 @@
     if (cb0.y < lb0.y + lb0.height + 2 || cb0.y + cb0.height > statY - fs * .95 - 2) {
       if (!placeCode()) { lab.remove(); placeCode(); }
     }
-    const st = txt(cs, sc.x + sc.w / 2, statY, null, {'text-anchor': 'middle', fill: CYAN, 'font-weight': 700});
+    const st = txt(cs, sc.x + sc.w / 2, statY, null, {'text-anchor': 'middle', fill: DIM, 'font-weight': 700});
     st.style.whiteSpace = 'pre';
     G.statMain = mk('tspan', {}, st); G.cur = mk('tspan', {}, st); G.cur.textContent = '_'; G.stat = st;
 
-    // the bay that takes the card
+    // the slot that takes the card
     const by = mk('g', {}, cs);
-    mk('rect', {x: bay.x - 2, y: bay.y - 2, width: bay.w + 4, height: bay.h + 4, rx: 9, fill: 'rgba(0,0,0,.35)'}, by);
-    G.bayRect = mk('rect', {x: bay.x, y: bay.y, width: bay.w, height: bay.h, rx: 7, fill: 'url(#bayG)', stroke: 'rgba(143,233,255,.38)', 'stroke-dasharray': '4 4'}, by);
-    [bay.x + 4, bay.x + bay.w - 4].forEach(x => mk('line', {x1: x, x2: x, y1: bay.y + 8, y2: bay.y + bay.h - 8, stroke: 'rgba(143,233,255,.18)', 'stroke-width': 2, 'stroke-linecap': 'round'}, by));
-    G.bayLab = txt(by, bay.x + bay.w / 2, bay.y + bay.h - fs * .75, null, {'text-anchor': 'middle', fill: CYAN, opacity: .6, 'font-weight': 600});
-    pick(G.bayLab, ['INSERT CARD', 'INSERT'], bay.w - 12);
-    G.laser = mk('line', {x1: sc.x + sc.w + 4, x2: bay.x + bay.w, y1: laserY, y2: laserY, stroke: CYAN, 'stroke-width': 1.4, 'stroke-dasharray': '2 5', opacity: .5, class: 'flowd'}, cs);
+    G.bayRect = mk('rect', {x: bay.x, y: bay.y, width: bay.w, height: bay.h, rx: 7, fill: BAYF, stroke: STITCH, 'stroke-width': 1.2, 'stroke-dasharray': '4 4'}, by);
+    G.bayLab = txt(by, bay.x + bay.w / 2, bay.y + bay.h - fs * .75, null, {'text-anchor': 'middle', fill: DIM, 'font-weight': 600});
+    pick(G.bayLab, ['Insert card', 'Insert'], bay.w - 12);
+    G.laser = mk('line', {x1: sc.x + sc.w + 4, x2: bay.x + bay.w, y1: laserY, y2: laserY, stroke: DIM, 'stroke-width': 1.4, 'stroke-dasharray': '2 5', opacity: .9, class: 'flowd'}, cs);
     const nt = fs * .45;
     G.notches = [
-      mk('path', {d: `M${bay.x - 1} ${laserY} l${-nt} ${-nt * .8} v${nt * 1.6} Z`, fill: 'url(#brassG)'}, cs),
-      mk('path', {d: `M${bay.x + bay.w + 1} ${laserY} l${nt} ${-nt * .8} v${nt * 1.6} Z`, fill: 'url(#brassG)'}, cs)
+      mk('path', {d: `M${bay.x - 1} ${laserY} l${-nt} ${-nt * .8} v${nt * 1.6} Z`, fill: BRASS}, cs),
+      mk('path', {d: `M${bay.x + bay.w + 1} ${laserY} l${nt} ${-nt * .8} v${nt * 1.6} Z`, fill: BRASS}, cs)
     ];
 
-    // ---- the hint: words beside the card, an arrow down into the bay ----
+    // ---- the hint: words beside the card, an arrow down into the slot ----
     const hg = G.hint = mk('g', {}, svg);
     const zx0 = vx + vw + 12, zx1 = home.x - 10, zw = zx1 - zx0, hx = (zx0 + zx1) / 2, hyc = top0 + cardH * .5;
     if (zw > 44) {
-      const hs = fs * 1.3, attrs = {'text-anchor': 'middle', fill: INK, 'font-size': hs, 'font-weight': 700};
+      const hs = fs * 1.3, attrs = {'text-anchor': 'middle', fill: K, 'font-size': hs, 'font-weight': 700};
       const one = txt(hg, hx, hyc + hs * .3, 'drag the card in', attrs, '--hand');
       const w1 = one.getComputedTextLength();
       if (w1 > zw) {
@@ -242,49 +212,36 @@
       }
     }
     const ax = home.x + cardW / 2, ay0 = top0 + cardH + fs * .4, ay1 = bay.y + fs * 1.3;
-    mk('path', {d: `M${ax} ${ay0} V${ay1}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '4 3', class: 'flowd', opacity: .9}, hg);
-    G.hintHead = mk('path', {d: `M${ax - 5} ${ay1 - 6} L${ax} ${ay1} L${ax + 5} ${ay1 - 6}`, fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hg);
+    mk('path', {d: `M${ax} ${ay0} V${ay1}`, fill: 'none', stroke: K, 'stroke-width': 2, 'stroke-dasharray': '4 3', class: 'flowd', opacity: .9}, hg);
+    G.hintHead = mk('path', {d: `M${ax - 5} ${ay1 - 6} L${ax} ${ay1} L${ax + 5} ${ay1 - 6}`, fill: 'none', stroke: K, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hg);
 
-    // ---- the Gold Code card ----
+    // ---- the Gold Code card: cream plastic, amber band, codes in ink ----
     G.cardG = mk('g', {id: 'cardG', style: 'cursor:grab'}, svg);
     G.cardBob = mk('g', {}, G.cardG);
     const ci = G.cardIn = mk('g', {}, G.cardBob);
-    mk('rect', {x: 1.5, y: 4, width: cardW - 3, height: cardH, rx, fill: 'rgba(0,0,0,.3)', filter: 'url(#shF)'}, ci);
-    G.cardBody = mk('rect', {width: cardW, height: cardH, rx, fill: 'url(#cardG1)', stroke: 'rgba(255,226,160,.75)', 'stroke-width': 1.2}, ci);
-    mk('rect', {width: cardW, height: cardH, rx, fill: 'url(#swG)'}, ci);
-    mk('path', {d: `M${rx * .55} ${cardH * .55} V${rx} Q${rx * .55} 1.6 ${rx * 1.5} 1.6 H${cardW * .7}`, fill: 'none', stroke: 'rgba(255,255,255,.75)', 'stroke-width': 1.4, 'stroke-linecap': 'round'}, ci);
-    mk('rect', {x: 3, y: 3, width: cardW - 6, height: cardH - 6, rx: rx * .7, fill: 'none', stroke: 'rgba(255,255,255,.18)'}, ci);
-    const chip = mk('g', {}, ci);
-    const chw = fs * 1.1, chh = fs * .85, chy = hh * .5 - chh / 2;
-    mk('rect', {x: 7, y: chy, width: chw, height: chh, rx: 2, fill: 'url(#brassG)'}, chip);
-    mk('path', {d: `M7 ${chy + chh / 2} H${7 + chw} M${7 + chw / 2} ${chy} V${chy + chh}`, stroke: 'rgba(90,60,10,.6)', 'stroke-width': .8}, chip);
-    const head = txt(ci, 7 + chw + 5, hh * .5 + fs * .35, 'NSA · GOLD CODES', {fill: GOLD, 'font-weight': 800});
-    if (7 + chw + 5 + head.getComputedTextLength() > cardW - 6) {
-      head.textContent = 'GOLD CODES';
-      if (7 + chw + 5 + head.getComputedTextLength() > cardW - 6) { chip.remove(); head.setAttribute('x', 7); fit(head, cardW - 14); }
-    }
-    mk('line', {x1: 7, x2: cardW - 7, y1: hh, y2: hh, stroke: 'rgba(246,201,85,.5)'}, ci);
-    for (let i = 1; i < 3; i++) mk('line', {x1: 10, x2: cardW - 10, y1: hh + rs * i, y2: hh + rs * i, stroke: 'rgba(255,255,255,.14)', 'stroke-dasharray': '2 3'}, ci);
+    G.cardBody = mk('rect', {width: cardW, height: cardH, rx, fill: PAPER, stroke: K, 'stroke-width': 1.5}, ci);
+    mk('rect', {x: .75, y: .75, width: cardW - 1.5, height: hh - .75, rx: rx * .9, fill: C}, ci);
+    mk('rect', {x: .75, y: hh * .5, width: cardW - 1.5, height: hh * .5, fill: C}, ci);
+    const head = txt(ci, 8, hh * .5 + fs * .35, 'NSA · Gold Codes', {fill: K, 'font-weight': 700});
+    if (8 + head.getComputedTextLength() > cardW - 6) { head.textContent = 'Gold Codes'; fit(head, cardW - 14); }
+    mk('line', {x1: 0, x2: cardW, y1: hh, y2: hh, stroke: K, 'stroke-width': 1.2}, ci);
+    for (let i = 1; i < 3; i++) mk('line', {x1: 10, x2: cardW - 10, y1: hh + rs * i, y2: hh + rs * i, stroke: RULE, 'stroke-width': 1}, ci);
     G.rowEls = []; G.rows = ROWS.map((r, i) => {
-      const t = txt(ci, cardW / 2, hh + rs * (i + .5) + f2 * .36, null, {'text-anchor': 'middle', 'font-size': f2, 'font-weight': 800});
+      const t = txt(ci, cardW / 2, hh + rs * (i + .5) + f2 * .36, null, {'text-anchor': 'middle', 'font-size': f2, 'font-weight': 800}, '--mono');
       t.style.whiteSpace = 'pre'; G.rowEls.push(t);
-      const spans = [...r].map(c => { const s = mk('tspan', {fill: IDLE}, t); s.textContent = c; return s; });
+      const spans = [...r].map(c => { const s = mk('tspan', {fill: CI}, t); s.textContent = c; return s; });
       fit(t, cardW - 12);
       return spans;
     });
 
-    // ---- the burst (kept inside the stage, hidden when idle) ----
+    // ---- the ring (kept inside the stage, hidden when idle) ----
     const bcx = bay.x + bay.w / 2;
     G.maxR = Math.max(12, Math.min(bcx, W - bcx, laserY, H - laserY) - 4);
     G.fx = mk('g', {visibility: 'hidden'}, svg);
-    G.ring = mk('circle', {cx: bcx, cy: laserY, r: 1, fill: 'none', stroke: INK, 'stroke-width': 3}, G.fx);
-    G.ring2 = mk('circle', {cx: bcx, cy: laserY, r: 1, fill: 'none', stroke: '#fff3c4', 'stroke-width': 1.5}, G.fx);
-    G.sparks = [...Array(12)].map((_, k) => mk('circle', {cx: bcx, cy: laserY, r: 1.6 + (k % 3) * .6, fill: k % 2 ? INK : '#fff3c4'}, G.fx));
+    G.ring = mk('circle', {cx: bcx, cy: laserY, r: 1, fill: 'none', stroke: K, 'stroke-width': 3}, G.fx);
+    G.ring2 = mk('circle', {cx: bcx, cy: laserY, r: 1, fill: 'none', stroke: PAPER, 'stroke-width': 1.5}, G.fx);
+    G.sparks = [];
     G.bc = {x: bcx, y: laserY};
-
-    // ---- ambient motion ----
-    sheen.s = -2;
-    if (!Kit.calm) ambient.push(gsap.fromTo(sheen, {s: -1}, {s: 1.5, duration: 1.6, ease: 'power2.inOut', repeat: -1, repeatDelay: 2.4, delay: 1}));
 
     // ---- state ----
     count = -1;
@@ -295,7 +252,7 @@
     } else {
       pos.x = home.x; pos.y = home.y; place();
       if (drag || hintGone) G.hint.setAttribute('visibility', 'hidden');
-      setStatus('AWAITING CARD', CYAN, true);
+      setStatus('Awaiting card', DIM, true);
       paintMatch(-1);
     }
   }
@@ -309,7 +266,7 @@
   }
 
   function fillTo(n) {
-    G.vlab.textContent = `MATCH ${n}/6`;
+    G.vlab.textContent = `Match ${n}/6`;
     if (Kit.calm) { level.v = n / 6; return; }
     gsap.to(level, {v: n / 6, duration: 1, ease: 'elastic.out(1,.45)', overwrite: true});
     slosh.a = Math.min(7, slosh.a + 2.5);
@@ -327,9 +284,9 @@
     G.rows.forEach((spans, i) => spans.forEach((s, j) => {
       if (SCREEN[j] === ' ') return;
       const m = ROWS[i][j] === SCREEN[j]; if (i === row && m) n++;
-      s.setAttribute('fill', i !== row ? IDLE : m ? GOLD : RED);
+      s.setAttribute('fill', i !== row ? CI : m ? CG : RED);
     }));
-    G.code.forEach((s, j) => { if (SCREEN[j] !== ' ') s.setAttribute('fill', row >= 0 && ROWS[row][j] === SCREEN[j] ? GOLD : WHITE); });
+    G.code.forEach((s, j) => { if (SCREEN[j] !== ' ') s.setAttribute('fill', row >= 0 && ROWS[row][j] === SCREEN[j] ? SG : SW); });
     if (n !== count) { count = n; fillTo(n); }
     const {bay, cardW, cardH} = D;
     const over = pos.x < bay.x + bay.w && pos.x + cardW > bay.x && pos.y < bay.y + bay.h && pos.y + cardH > bay.y;
@@ -356,57 +313,51 @@
     if (done) return;
     if (i === RIGHT) { success(false); return; }
     if (i < 0) {
-      setStatus('ALIGN A ROW', CYAN, true);
+      setStatus('Align a row', DIM, true);
       say.innerHTML = 'Slide the card until one row sits on the <b>read line</b> next to the screen.';
       return;
     }
     paintMatch(i);
-    setStatus('NO MATCH', RED, false); Kit.haptic('light');
+    setStatus('No match', RED, false); Kit.haptic('light');
     if (!Kit.calm) {
       gsap.fromTo(G.cardIn, {x: -8}, {x: 0, duration: .6, ease: 'elastic.out(1,.3)'});
-      gsap.fromTo(G.led, {attr: {fill: '#ff5a5a'}}, {attr: {fill: '#5a2222'}, duration: 1, ease: 'power2.in'});
+      gsap.fromTo(G.led, {attr: {fill: '#ff5a5a'}}, {attr: {fill: LEDOFF}, duration: 1, ease: 'power2.in'});
     }
     say.innerHTML = `Row ${i + 1}: only ${count} of 6 characters agree. <b>No match, no launch. Try another row.</b>`;
   }
 
   function success(instant) {
     done = true; G.cardBob.removeAttribute('transform');
-    G.rows.forEach(r => r.forEach(s => s.setAttribute('fill', IDLE)));
-    G.code.forEach(s => s.setAttribute('fill', WHITE));
+    G.rows.forEach(r => r.forEach(s => s.setAttribute('fill', CI)));
+    G.code.forEach(s => s.setAttribute('fill', SW));
     G.bayLab.setAttribute('visibility', 'hidden');
     const final = () => {
-      setStatus('AUTHENTICATED', GOLD, false);
-      G.led.setAttribute('fill', GOLD); G.led.setAttribute('filter', 'url(#glowF)');
-      G.laser.setAttribute('stroke', GOLD); G.laser.setAttribute('stroke-dasharray', 'none'); G.laser.setAttribute('opacity', .9);
-      G.bayRect.setAttribute('stroke', GOLD); G.bayRect.setAttribute('stroke-dasharray', 'none');
-      G.cardBody.setAttribute('stroke', GOLD); G.cardBody.setAttribute('stroke-width', 2);
-      G.rowEls[RIGHT].setAttribute('filter', 'url(#glowF)');
-      G.tube.setAttribute('stroke', INK); G.tube.setAttribute('stroke-width', 2);
+      setStatus('Authenticated', SG, false);
+      G.led.setAttribute('fill', C);
+      G.laser.setAttribute('stroke', SG); G.laser.setAttribute('stroke-dasharray', 'none'); G.laser.setAttribute('opacity', 1);
+      G.bayRect.setAttribute('stroke', SG); G.bayRect.setAttribute('stroke-dasharray', 'none');
+      G.cardBody.setAttribute('stroke', K); G.cardBody.setAttribute('stroke-width', 2.5);
+      G.tube.setAttribute('stroke', K); G.tube.setAttribute('stroke-width', 2.2);
     };
     if (instant || Kit.calm) {
-      CODE_IDX.forEach(j => { G.rows[RIGHT][j].setAttribute('fill', GOLD); G.code[j].setAttribute('fill', GOLD); });
-      count = 6; G.vlab.textContent = 'MATCH 6/6'; level.v = 1;
+      CODE_IDX.forEach(j => { G.rows[RIGHT][j].setAttribute('fill', CG); G.code[j].setAttribute('fill', SG); });
+      count = 6; G.vlab.textContent = 'Match 6/6'; level.v = 1;
       final(); finishText(); return;
     }
-    setStatus('CHECKING', CYAN, true);
+    setStatus('Checking', DIM, true);
     const tl = gsap.timeline(), T = 1.05, {x: bx, y: byy} = G.bc, R = G.maxR;
     CODE_IDX.forEach((j, k) => tl.call(() => {
-      G.rows[RIGHT][j].setAttribute('fill', GOLD); G.code[j].setAttribute('fill', GOLD);
+      G.rows[RIGHT][j].setAttribute('fill', CG); G.code[j].setAttribute('fill', SG);
       count = k + 1; fillTo(k + 1); Kit.haptic('selection');
     }, null, .12 + k * .14));
     tl.call(() => { final(); Kit.haptic('success'); slosh.a = 9; G.fx.setAttribute('visibility', 'visible'); }, null, T);
     tl.fromTo(G.flash, {attr: {opacity: .6}}, {attr: {opacity: 0}, duration: .8, ease: 'power2.out'}, T);
     tl.fromTo(G.ring, {attr: {r: 4, 'stroke-width': 5}, opacity: 1}, {attr: {r: R, 'stroke-width': .6}, opacity: 0, duration: 1.1, ease: 'expo.out'}, T);
     tl.fromTo(G.ring2, {attr: {r: 2}, opacity: .9}, {attr: {r: R * .7}, opacity: 0, duration: 1.2, ease: 'expo.out'}, T + .12);
-    G.sparks.forEach((s, k) => {
-      const a = k / 12 * Math.PI * 2 + .2, d = R * (.55 + .4 * ((k * .37) % 1));
-      tl.fromTo(s, {attr: {cx: bx, cy: byy}, opacity: 1}, {attr: {cx: bx + Math.cos(a) * d, cy: byy + Math.sin(a) * d}, opacity: 0, duration: .9, ease: 'power3.out'}, T);
-    });
     tl.fromTo(G.cardIn, {scale: 1}, {scale: 1.05, transformOrigin: '50% 50%', yoyo: true, repeat: 1, duration: .2, ease: 'power2.out'}, T);
     tl.fromTo(G.codeT, {scale: 1}, {scale: 1.08, transformOrigin: '50% 50%', yoyo: true, repeat: 1, duration: .2, ease: 'power2.out'}, T);
     tl.call(() => {
       G.fx.setAttribute('visibility', 'hidden'); G.ring.setAttribute('r', 1); G.ring2.setAttribute('r', 1);
-      G.sparks.forEach(s => { s.setAttribute('cx', bx); s.setAttribute('cy', byy); });
     }, null, T + 1.35);
     tl.call(finishText, null, T + 1.4);
   }
@@ -432,7 +383,7 @@
     svg.setPointerCapture(e.pointerId); gsap.killTweensOf(pos);
     hideHint(); Kit.haptic('light');
     if (!Kit.calm) gsap.to(G.cardIn, {scale: 1.04, x: 0, transformOrigin: '50% 50%', duration: .15, ease: 'power2.out'});
-    setStatus('AWAITING CARD', CYAN, true);
+    setStatus('Awaiting card', DIM, true);
   });
   svg.addEventListener('pointermove', e => {
     if (!drag) return;
@@ -449,30 +400,20 @@
   };
   svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
 
-  // ---- the ambient loop: liquid, bubbles, scanline, sheen, dust, floating card ----
+  // ---- the ambient loop: counter boxes, floating card, cursor, hint arrow ----
   function tick(t) {
-    if (!G.liq || !D.vw || !G.liq.isConnected) return;
-    const calm = Kit.calm, {vx, vw, vy0, vy1, sc, cardW, cardH} = D;
+    if (!G.cells || !D.vw || !G.vialG || !G.vialG.isConnected) return;
+    const calm = Kit.calm, {cardW, cardH} = D;
     slosh.a *= .955;
-    const amp = calm ? 0 : .9 + slosh.a, tilt = calm ? 0 : slosh.a;
-    const bot = vy1 - 1, top = vy0 + 6, ly = bot - level.v * (bot - top);
-    const pts = [];
-    for (let s = 0; s <= 10; s++) { const u = s / 10; pts.push([vx + vw * u, ly + Math.sin(t * 3.2 + u * 5) * amp * .5 + Math.sin(t * 5.1) * tilt * (u - .5) * 1.6]); }
-    G.liq.setAttribute('d', `M${vx} ${vy1} ` + pts.map(p => `L${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ') + ` L${vx + vw} ${vy1} Z`);
-    G.men.setAttribute('d', 'M' + pts.map(p => `${p[0].toFixed(1)} ${(p[1] + 1).toFixed(1)}`).join(' L'));
-    G.men.setAttribute('opacity', level.v > .02 ? .8 : 0);
-    G.bub.forEach((b, i) => {
-      const k = calm ? .5 : (t * (.35 + i * .07) + i * .27) % 1, y = bot - 3 - k * (bot - 3 - ly);
-      b.setAttribute('cy', y.toFixed(1)); b.setAttribute('opacity', level.v > .08 && y > ly + 3 ? (.7 * (1 - k * .6)).toFixed(2) : 0);
+    G.cells.forEach((c, k) => {
+      const h = c.h * clamp(level.v * 6 - k, 0, 1);
+      c.f.setAttribute('y', (c.y + c.h - h).toFixed(1));
+      c.f.setAttribute('height', h.toFixed(1));
+      c.f.setAttribute('rx', Math.min(2, h / 2).toFixed(1));
     });
     if (!drag && !done && !calm) G.cardBob.setAttribute('transform', `translate(0 ${(Math.sin(t * 1.7) * 2).toFixed(2)}) rotate(${(Math.sin(t * 1.1) * .6).toFixed(2)} ${cardW / 2} ${cardH / 2})`);
     else G.cardBob.removeAttribute('transform');
-    if (!done) G.laser.setAttribute('opacity', calm ? .5 : (.35 + .3 * Math.sin(t * 4)).toFixed(2));
     if (G.cursorOn) G.cur.setAttribute('opacity', calm || (t * 1.6) % 1 < .55 ? 1 : 0);
-    G.scan.setAttribute('y', (sc.y - 7 + ((calm ? .3 : t * .32) % 1) * (sc.h + 7)).toFixed(1));
-    const s = (calm ? -2 : sheen.s) * cardW;
-    G.swG.setAttribute('x1', s.toFixed(1)); G.swG.setAttribute('x2', (s + cardW * .6).toFixed(1));
-    G.dust.forEach((d, i) => d.setAttribute('opacity', calm ? .2 : (.08 + .2 * (.5 + .5 * Math.sin(t * 1.3 + i * 1.7))).toFixed(2)));
     if (G.hintHead && !calm) G.hintHead.setAttribute('transform', `translate(0 ${(Math.abs(Math.sin(t * 3)) * 3).toFixed(1)})`);
   }
   gsap.ticker.add(tick);

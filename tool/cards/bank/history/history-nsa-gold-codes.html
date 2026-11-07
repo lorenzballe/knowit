@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: history-nsa-gold-codes -->
-<!-- Look: a night museum diorama of cut-paper planes (far dunes with a tiny White House, a ledge with the NSA on it, a hanging code panel and a card printer, the president and his briefcase on the front plane), grained paper with soft drop shadows, gold as the only accent. The ground dissolves into the card's own night colour, so there is no box, and the planes drift apart in parallax under the finger.
-     Interaction: tap the glowing piece to build the chain link by link. The NSA lights up and generates the gold codes, the printer stamps them onto a plastic card, the card travels to the president's pocket, then into the nuclear football. Gold lines draw themselves as each link forms.
-     Wow: the football opens and a spark races down the whole chain from the NSA to the briefcase. Gold rays burst out, the code panel swings and reads AUTHENTICATED, and a gold seal with a check slams onto the briefcase.
+<!-- Look: a flat printed-book illustration at night. Two flat dune shapes, with a small White House on the far one. A ledge with the NSA building and its antenna. A dark code slip hanging on two threads, and a card printer. In front, the president and his briefcase. Everything is in the card's cream ink, its night blue and their tints. Gold is the only meaning colour: it marks the codes and the chain. There are no gradients, glows or shadows.
+     Interaction: tap the highlighted piece to build the chain link by link. The NSA's windows turn gold and it sends the gold codes, the printer prints them onto a plastic card, the card travels to the president's pocket, then into the nuclear football. Each gold line draws itself as its link forms.
+     Wow: the football opens and a spark runs down the whole chain from the NSA to the briefcase. Short gold rays burst out, the code slip swings and reads Authenticated, and a gold seal with a check lands on the briefcase.
      Layout: two compositions (tall and wide) re-flow whenever the stage changes size, and a label solver keeps every caption apart. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Who makes the gold codes</title>
@@ -14,9 +14,10 @@
 <style>
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;overflow:visible}
-#pic .mono{font-family:var(--mono);font-weight:700}
-#pic .lbl{font-family:var(--mono);font-weight:700;letter-spacing:.04em;paint-order:stroke;stroke:#0a0f18;stroke-width:3.5px;stroke-linejoin:round}
-#pic .sign{font-family:var(--display);font-weight:800;letter-spacing:.1em}
+#pic .mono{font-family:var(--mono);font-weight:600}
+#pic .ttl{font-family:var(--body);font-weight:600}
+#pic .lbl{font-family:var(--body);font-weight:600;paint-order:stroke;stroke:var(--c);stroke-width:3px;stroke-linejoin:round}
+#pic .sign{font-family:var(--display);font-weight:800}
 .say b{color:#f4c04e}
 .keep b{color:#f4c04e}
 </style>
@@ -37,7 +38,11 @@
 (() => {
   gsap.registerPlugin(DrawSVGPlugin, ScrambleTextPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
-  const GOLD = '#f4c04e', CREAM = '#f2e7cd', CREAMD = '#d3c29c', NIGHT = '#0d131e', BG = '#1b2537';
+  const GOLD = '#f4c04e', INK = '#f4ead4', BG = '#1b2537', EDGE = '#0d131e', TIE = '#b5403f';
+  // flat tints: p% of the card's ink over the card's colour
+  const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mix = p => '#' + rgb(INK).map((a, i) => Math.round(a * p / 100 + rgb(BG)[i] * (1 - p / 100)).toString(16).padStart(2, '0')).join('');
+  const CREAM = INK, CREAMD = mix(72), NIGHT = EDGE;
   const CODE = 'K7Q3·X9M2';
   const SAY = [
     'Tap the glowing piece to build the chain, one link at a time.',
@@ -53,17 +58,6 @@
   const $$ = s => [...svg.querySelectorAll(s)];
   const A = o => Object.entries(o).map(([k, v]) => `${k}="${typeof v === 'number' ? +v.toFixed(2) : v}"`).join(' ');
   const el = (t, o, inner = '') => `<${t} ${A(o)}>${inner}</${t}>`;
-  const lg = (id, stops) => `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">${stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('')}</linearGradient>`;
-  const rg = (id, stops) => `<radialGradient id="${id}" cx=".5" cy=".4" r=".7">${stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('')}</radialGradient>`;
-  const paper = (id, b, op) => `<filter id="${id}" x="-25%" y="-25%" width="150%" height="165%" color-interpolation-filters="sRGB">
-    <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7" result="n"/>
-    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.6 .4" result="g"/>
-    <feComposite in="g" in2="SourceAlpha" operator="in" result="gr"/>
-    <feGaussianBlur in="SourceAlpha" stdDeviation="${b}" result="b"/>
-    <feOffset in="b" dx="${b * .35}" dy="${b * .9}" result="o"/>
-    <feFlood flood-color="#03060c" flood-opacity="${op}"/>
-    <feComposite in2="o" operator="in" result="sh"/>
-    <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/><feMergeNode in="gr"/></feMerge></filter>`;
 
   function placeCard() {
     if (!R.card) return;
@@ -132,72 +126,53 @@
     G = {pcx, outY, hidY, pkX, restY, chipO};
 
     const LB = wide ? [
-      {t: '1 · NSA MAKES', x: ncx, y: nyb + fs * 1.35, a: 'middle'},
-      {t: '2 · PRINTS IT', x: pcx - cw / 2 - fs * .5, y: slotY + fs * 1.4, a: 'end'},
-      {t: '3 · CARRIES IT', x: prX + bw2 / 2 + fs * .4, y: hcy + fs * .3, a: 'start'},
-      {t: '4 · THE FOOTBALL', x: fx0 - fs * .5, y: fy0 + fh2 * .55 + fs * .35, a: 'end'}
+      {t: '1 · NSA makes', x: ncx, y: nyb + fs * 1.35, a: 'middle'},
+      {t: '2 · Prints it', x: pcx - cw / 2 - fs * .5, y: slotY + fs * 1.4, a: 'end'},
+      {t: '3 · Carries it', x: prX + bw2 / 2 + fs * .4, y: hcy + fs * .3, a: 'start'},
+      {t: '4 · The football', x: fx0 - fs * .5, y: fy0 + fh2 * .55 + fs * .35, a: 'end'}
     ] : [
-      {t: '1 · NSA MAKES', x: ncx, y: nyb + fs * 1.45, a: 'middle'},
-      {t: '2 · PRINTS IT', x: pcx - cw / 2 - fs * .5, y: slotY + fs * 1.3, a: 'end'},
-      {t: '3 · CARRIES IT', x: prX, y: hcy - hr - fs * .6, a: 'middle'},
-      {t: '4 · THE FOOTBALL', x: fcx, y: fy0 - fh2 * .36 - fs * .6, a: 'middle'}
+      {t: '1 · NSA makes', x: ncx, y: nyb + fs * 1.45, a: 'middle'},
+      {t: '2 · Prints it', x: pcx - cw / 2 - fs * .5, y: slotY + fs * 1.3, a: 'end'},
+      {t: '3 · Carries it', x: prX, y: hcy - hr - fs * .6, a: 'middle'},
+      {t: '4 · The football', x: fcx, y: fy0 - fh2 * .36 - fs * .6, a: 'middle'}
     ];
     placeLabels(LB, [{x0: cx0, x1: cx0 + chW, y0: cy0, y1: cy0 + chH}]);
     const cap = i => el('text', {id: 'gc-cap' + i, class: `lbl gc-cap ${i < 2 ? 'e-m' : 'e-f'}`, x: LB[i].x, y: LB[i].y, 'text-anchor': LB[i].a, 'font-size': fs, fill: CREAM}, LB[i].t);
 
-    let sd = 11; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
-    const mv = clamp((H - fs * 1.8) / H, .5, .98).toFixed(3);
-    let s = `<defs>${paper('gc-p1', 2.2, .55)}${paper('gc-p2', 5, .5)}
-      <filter id="gc-glow" filterUnits="userSpaceOnUse" x="-20" y="-20" width="${W + 40}" height="${H + 40}"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      ${lg('gc-hA', [[0, '#2b3b59'], [.55, '#223049'], [1, BG]])}${lg('gc-hB', [[0, '#34486b'], [.5, '#283853'], [1, BG]])}
-      ${lg('gc-cl', [[0, '#3a4e72'], [1, '#26365a']])}${lg('gc-fl', [[0, '#40567d'], [1, BG]])}
-      ${lg('gc-cr', [[0, CREAM], [1, CREAMD]])}${lg('gc-cr2', [[0, '#e4d6b4'], [1, '#c4b28b']])}
-      ${lg('gc-gd', [[0, '#ffe08a'], [.5, GOLD], [1, '#b07b22']])}${lg('gc-lea', [[0, '#2d3443'], [1, '#0f131a']])}
-      ${lg('gc-suit', [[0, '#1c2536'], [1, '#0a0e16']])}${lg('gc-cd', [[0, '#fffaf0'], [1, '#e2d4b4']])}
-      ${rg('gc-face', [[0, '#f7ecd6'], [1, '#d6c098']])}${rg('gc-in', [[0, '#fff3c0'], [.55, GOLD], [1, '#9a6a1c']])}
-      <radialGradient id="gc-halo"><stop offset="0" stop-color="${GOLD}" stop-opacity=".42"/><stop offset=".55" stop-color="${GOLD}" stop-opacity=".12"/><stop offset="1" stop-color="${GOLD}" stop-opacity="0"/></radialGradient>
-      <linearGradient id="gc-mh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".09" stop-color="#fff"/><stop offset=".91" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <linearGradient id="gc-mv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="${mv}" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <mask id="gc-fh" maskUnits="userSpaceOnUse" x="-40" y="-40" width="${W + 80}" height="${H + 80}"><rect x="0" y="-40" width="${W}" height="${H + 80}" fill="url(#gc-mh)"/></mask>
-      <mask id="gc-fv" maskUnits="userSpaceOnUse" x="-40" y="-40" width="${W + 80}" height="${H + 80}"><rect x="-40" y="-40" width="${W + 80}" height="40" fill="#fff"/><rect x="-40" y="0" width="${W + 80}" height="${H}" fill="url(#gc-mv)"/></mask>
-      <clipPath id="gc-clip" clipPathUnits="userSpaceOnUse"><rect x="0" y="${slotY - fs * .25}" width="${W}" height="${H}"/></clipPath></defs>`;
+    let s = `<defs><clipPath id="gc-clip" clipPathUnits="userSpaceOnUse"><rect x="0" y="${slotY - fs * .25}" width="${W}" height="${H}"/></clipPath></defs>`;
 
-    // ---- back plane: stars, far dunes that melt into the card, a tiny White House
-    let stars = '';
-    for (let i = 0; i < (wide ? 18 : 26); i++) stars += el('circle', {class: 'gc-star', cx: rnd() * W, cy: rnd() * H * (wide ? .5 : .4), r: .5 + rnd() * 1.1, fill: CREAM, opacity: .2 + rnd() * .5});
+    // ---- back plane: two flat dunes, a small White House on the far one
     const hA0 = H * (wide ? .6 : .52), hAy = H * (wide ? .48 : .44), hA1 = H * (wide ? .52 : .48);
     const hB0 = H * (wide ? .76 : .72), hb = H * (wide ? .7 : .66), hB1 = H * (wide ? .74 : .69);
     let wh = '';
     if (!wide) {
-      const w = clamp(W * .14, fs * 3.4, fs * 4.4), x = W * .5, y = hb + 1;
-      const wins = [-.4, -.3, -.22, .22, .3, .4].map(k => el('rect', {class: 'gc-whw', x: x + w * k - w * .025, y: y - w * .22, width: w * .05, height: w * .09, fill: '#2a3753'})).join('');
-      wh = `<g opacity=".82" filter="url(#gc-p1)">
-        ${el('rect', {x: x - w / 2, y: y - w * .3, width: w, height: w * .3, fill: CREAMD})}
-        ${el('rect', {x: x - w * .53, y: y - w * .33, width: w * 1.06, height: w * .04, fill: CREAM})}
-        ${el('rect', {x: x - w * .16, y: y - w * .4, width: w * .32, height: w * .4, fill: CREAM})}
-        ${el('path', {d: `M${x - w * .19},${y - w * .4} L${x},${y - w * .52} L${x + w * .19},${y - w * .4}Z`, fill: CREAM})}
-        ${[-.11, -.04, .04, .11].map(k => el('line', {x1: x + w * k, x2: x + w * k, y1: y - w * .37, y2: y, stroke: '#a8966f', 'stroke-width': 1})).join('')}
-        ${el('line', {x1: x, x2: x, y1: y - w * .52, y2: y - w * .52 - fs * .8, stroke: CREAMD, 'stroke-width': 1})}
-        ${el('rect', {x: x, y: y - w * .52 - fs * .8, width: fs * .55, height: fs * .32, fill: CREAM})}
+      const w = clamp(W * .14, fs * 3.4, fs * 4.4), x = W * .5, y = hb + 1, wc = mix(52), wl = mix(62);
+      const wins = [-.4, -.3, -.22, .22, .3, .4].map(k => el('rect', {class: 'gc-whw', x: x + w * k - w * .025, y: y - w * .22, width: w * .05, height: w * .09, fill: mix(14)})).join('');
+      wh = `<g>
+        ${el('rect', {x: x - w / 2, y: y - w * .3, width: w, height: w * .3, fill: wc})}
+        ${el('rect', {x: x - w * .53, y: y - w * .33, width: w * 1.06, height: w * .04, fill: wl})}
+        ${el('rect', {x: x - w * .16, y: y - w * .4, width: w * .32, height: w * .4, fill: wl})}
+        ${el('path', {d: `M${x - w * .19},${y - w * .4} L${x},${y - w * .52} L${x + w * .19},${y - w * .4}Z`, fill: wl})}
+        ${[-.11, -.04, .04, .11].map(k => el('line', {x1: x + w * k, x2: x + w * k, y1: y - w * .37, y2: y, stroke: mix(30), 'stroke-width': 1})).join('')}
+        ${el('line', {x1: x, x2: x, y1: y - w * .52, y2: y - w * .52 - fs * .8, stroke: wl, 'stroke-width': 1})}
+        ${el('rect', {x: x, y: y - w * .52 - fs * .8, width: fs * .55, height: fs * .32, fill: wl})}
         ${wins}</g>`;
     }
-    s += `<g id="gc-back"><g class="e-b">${stars}
-      <g mask="url(#gc-fh)"><g mask="url(#gc-fv)">
-      ${el('path', {d: `M-2,${hA0} Q${W * .28},${hAy} ${W * .5},${hAy + H * .02} T${W + 2},${hA1} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: 'url(#gc-hA)', filter: 'url(#gc-p2)'})}
+    s += `<g id="gc-back"><g class="e-b">
+      ${el('path', {d: `M-2,${hA0} Q${W * .28},${hAy} ${W * .5},${hAy + H * .02} T${W + 2},${hA1} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: mix(6)})}
       ${wh}
-      ${el('path', {d: `M-2,${hB0} Q${W * .28},${hb} ${W * .38},${hb} L${W * .62},${hb} Q${W * .78},${hb} ${W + 2},${hB1} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: 'url(#gc-hB)', filter: 'url(#gc-p2)'})}
-      </g></g>
+      ${el('path', {d: `M-2,${hB0} Q${W * .28},${hb} ${W * .38},${hb} L${W * .62},${hb} Q${W * .78},${hb} ${W + 2},${hB1} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: mix(11)})}
     </g></g>`;
 
-    // ---- tap halos sit behind the pieces
+    // ---- tap marks sit behind the pieces: a flat gold disc
     const HL = [[ncx, ny0 + bh * .55, bw * .72], [pcx, py0 + ph * .5, pw * .66], [prX, (hcy - hr + fly) / 2, (fly - hcy + hr) * .62], [fcx, fy0 + fh2 * .4, fxw * .66]];
-    s += `<g id="gc-halos" class="e-g">${HL.map(([x, y, r]) => `<g class="gc-halo" opacity="0">${el('circle', {class: 'gc-hc', cx: x, cy: y, r, fill: 'url(#gc-halo)'})}</g>`).join('')}</g>`;
+    s += `<g id="gc-halos" class="e-g">${HL.map(([x, y, r]) => `<g class="gc-halo" opacity="0">${el('circle', {class: 'gc-hc', cx: x, cy: y, r, fill: GOLD, 'fill-opacity': .13})}</g>`).join('')}</g>`;
 
-    // ---- middle plane: the NSA ledge, the code panel, the printer, the chain
+    // ---- middle plane: the NSA ledge, the code slip, the printer, the chain
     const sf = Math.max(12, Math.min(bh * .24, fs * 1.5)), sBase = ny0 + bh * .2 + sf * 1.02;
     const wTop = sBase + fs * .35, wBot = nyb - bh * .1, rowsN = wBot - wTop > fs * 1.7 ? 2 : 1, rowH = (wBot - wTop) / rowsN, gap = bw / 15;
     let wins = '';
-    for (let r = 0; r < rowsN; r++) for (let k = 0; k < 7; k++) wins += el('rect', {class: 'gc-win', x: nx + gap * (1 + 2 * k), y: wTop + r * rowH + rowH * .18, width: gap, height: rowH * .64, fill: '#2a3753'});
+    for (let r = 0; r < rowsN; r++) for (let k = 0; k < 7; k++) wins += el('rect', {class: 'gc-win', x: nx + gap * (1 + 2 * k), y: wTop + r * rowH + rowH * .18, width: gap, height: rowH * .64, fill: mix(22)});
     const waves = [.6, 1, 1.4].map(m => { const d = fs * m; return el('path', {class: 'gc-wave', d: `M${tx + d * .5},${ty - d * .87} A${d},${d} 0 0 1 ${tx + d * .5},${ty + d * .87}`, fill: 'none', stroke: GOLD, 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: 0}); }).join('');
     const cliff = `M-2,${nyb} L${rx},${nyb} Q${rx + fs * 1.2},${nyb} ${rx + fs * .5},${nyb + dp * .35} Q${rx - fs * .3},${nyb + dp * .68} ${rx - W * .08},${nyb + dp * .84} Q${W * .1},${nyb + dp * 1.08} -2,${nyb + dp}Z`;
     const L = [
@@ -209,13 +184,14 @@
     ];
     const lineAttrs = {fill: 'none', 'stroke-linecap': 'round'};
     const thTop = wide ? 0 : cy0 + chH;
+    const thread = mix(40), band = mix(55);
     s += `<g id="gc-mid">
-      <g class="e-m" mask="url(#gc-fh)"><g filter="url(#gc-p2)">${el('path', {d: cliff, fill: 'url(#gc-cl)'})}</g>${el('path', {d: `M0,${nyb + .8} L${rx},${nyb + .8}`, stroke: '#647aa3', 'stroke-width': 1.4, fill: 'none'})}</g>
-      <g class="e-m" filter="url(#gc-p1)">
-        ${el('rect', {x: nx + bw * .14, y: ny0, width: bw * .72, height: bh * .22, fill: 'url(#gc-cr2)'})}
-        ${el('rect', {x: nx, y: ny0 + bh * .2, width: bw, height: bh * .8, fill: 'url(#gc-cr)'})}
-        ${el('rect', {x: nx - bw * .03, y: ny0 + bh * .2, width: bw * 1.06, height: Math.max(2, bh * .05), fill: '#b9a77f'})}
-        ${el('rect', {x: nx - bw * .04, y: nyb - Math.max(2, bh * .05), width: bw * 1.08, height: Math.max(2, bh * .05), fill: '#b9a77f'})}
+      <g class="e-m">${el('path', {d: cliff, fill: mix(15)})}</g>
+      <g class="e-m">
+        ${el('rect', {x: nx + bw * .14, y: ny0, width: bw * .72, height: bh * .22, fill: CREAMD})}
+        ${el('rect', {x: nx, y: ny0 + bh * .2, width: bw, height: bh * .8, fill: CREAM})}
+        ${el('rect', {x: nx - bw * .03, y: ny0 + bh * .2, width: bw * 1.06, height: Math.max(2, bh * .05), fill: band})}
+        ${el('rect', {x: nx - bw * .04, y: nyb - Math.max(2, bh * .05), width: bw * 1.08, height: Math.max(2, bh * .05), fill: band})}
         ${el('text', {class: 'sign', x: ncx, y: sBase, 'text-anchor': 'middle', 'font-size': sf, fill: NIGHT}, 'NSA')}
         ${wins}
         ${el('line', {x1: ax, y1: ny0, x2: ax, y2: ay + fs * .4, stroke: CREAMD, 'stroke-width': 2.2})}
@@ -225,30 +201,24 @@
       ${el('circle', {id: 'gc-beacon', cx: tx, cy: ty, r: fs * .18, fill: GOLD})}
       ${waves}
       <g class="e-m"><g id="gc-swing"><g id="gc-idle">
-        ${el('line', {x1: cx0 + chW * .18, y1: 0, x2: cx0 + chW * .18, y2: cy0, stroke: CREAM, 'stroke-opacity': .35, 'stroke-width': 1})}
-        ${el('line', {x1: cx0 + chW * .82, y1: 0, x2: cx0 + chW * .82, y2: cy0, stroke: CREAM, 'stroke-opacity': .35, 'stroke-width': 1})}
-        <g filter="url(#gc-p1)">
-          ${el('rect', {x: cx0, y: cy0, width: chW, height: chH, rx: fs * .45, fill: '#111a29'})}
-          ${el('rect', {id: 'gc-edge', x: cx0 + 3, y: cy0 + 3, width: chW - 6, height: chH - 6, rx: fs * .3, fill: 'none', stroke: GOLD, 'stroke-opacity': .3, 'stroke-width': 1.2})}
-          ${[[.18, 0], [.82, 0]].map(([k]) => el('circle', {cx: cx0 + chW * k, cy: cy0 + fs * .32, r: 1.6, fill: '#46536d'})).join('')}
-          ${el('text', {id: 'gc-t1', class: 'mono', x: cx0 + fs * .75, y: cy0 + fs * 1.35, 'font-size': fs, fill: GOLD, opacity: .7}, 'GOLD CODES')}
-          ${el('text', {id: 'gc-code', class: 'mono', x: cx0 + fs * .75, y: cy0 + fs * 2.95, 'font-size': fs, fill: GOLD, 'letter-spacing': '.08em'}, '·········')}
-        </g>
+        ${el('line', {x1: cx0 + chW * .18, y1: 0, x2: cx0 + chW * .18, y2: cy0, stroke: thread, 'stroke-width': 1})}
+        ${el('line', {x1: cx0 + chW * .82, y1: 0, x2: cx0 + chW * .82, y2: cy0, stroke: thread, 'stroke-width': 1})}
+        ${el('rect', {x: cx0, y: cy0, width: chW, height: chH, rx: fs * .3, fill: NIGHT})}
+        ${el('rect', {id: 'gc-edge', x: cx0 + 3, y: cy0 + 3, width: chW - 6, height: chH - 6, rx: fs * .2, fill: 'none', stroke: GOLD, 'stroke-opacity': .3, 'stroke-width': 1.2})}
+        ${el('text', {id: 'gc-t1', class: 'ttl', x: cx0 + fs * .75, y: cy0 + fs * 1.35, 'font-size': fs, fill: GOLD, opacity: .7}, 'Gold codes')}
+        ${el('text', {id: 'gc-code', class: 'mono', x: cx0 + fs * .75, y: cy0 + fs * 2.95, 'font-size': fs, fill: GOLD}, '·········')}
       </g></g></g>
       <g class="e-m"><g id="gc-printer">
-        ${el('line', {x1: px0 + pw * .15, y1: thTop, x2: px0 + pw * .15, y2: py0, stroke: CREAM, 'stroke-opacity': .35, 'stroke-width': 1})}
-        ${el('line', {x1: px0 + pw * .85, y1: thTop, x2: px0 + pw * .85, y2: py0, stroke: CREAM, 'stroke-opacity': .35, 'stroke-width': 1})}
-        <g filter="url(#gc-p1)">
-          ${el('rect', {x: pcx - pw * .28, y: py0 - fs * .95, width: pw * .56, height: fs * 1.3, fill: '#fbf6ea'})}
-          ${[.3, .6].map(k => el('line', {x1: pcx - pw * .2, x2: pcx + pw * .12, y1: py0 - fs * .95 + fs * k, y2: py0 - fs * .95 + fs * k, stroke: '#cdbd98', 'stroke-width': 1})).join('')}
-          ${el('rect', {x: px0, y: py0, width: pw, height: ph, rx: fs * .5, fill: 'url(#gc-cr)'})}
-          ${el('rect', {x: px0, y: py0, width: pw, height: ph * .24, rx: fs * .5, fill: '#fff6e2', opacity: .55})}
-          ${[0, 1, 2].map(k => el('line', {x1: px0 + pw * .08, x2: px0 + pw * .3, y1: py0 + ph * (.36 + k * .13), y2: py0 + ph * (.36 + k * .13), stroke: '#a8966f', 'stroke-width': 1.4, 'stroke-linecap': 'round'})).join('')}
-          ${el('rect', {x: pcx - pw * .36, y: slotY - fs * .42, width: pw * .72, height: fs * .3, rx: fs * .15, fill: NIGHT})}
-          ${el('circle', {id: 'gc-led', cx: px0 + pw * .86, cy: py0 + ph * .4, r: fs * .28, fill: '#5b6a86'})}
-        </g>
+        ${el('line', {x1: px0 + pw * .15, y1: thTop, x2: px0 + pw * .15, y2: py0, stroke: thread, 'stroke-width': 1})}
+        ${el('line', {x1: px0 + pw * .85, y1: thTop, x2: px0 + pw * .85, y2: py0, stroke: thread, 'stroke-width': 1})}
+        ${el('rect', {x: pcx - pw * .28, y: py0 - fs * .95, width: pw * .56, height: fs * 1.3, fill: CREAM})}
+        ${[.3, .6].map(k => el('line', {x1: pcx - pw * .2, x2: pcx + pw * .12, y1: py0 - fs * .95 + fs * k, y2: py0 - fs * .95 + fs * k, stroke: band, 'stroke-width': 1})).join('')}
+        ${el('rect', {x: px0, y: py0, width: pw, height: ph, rx: fs * .4, fill: CREAMD})}
+        ${[0, 1, 2].map(k => el('line', {x1: px0 + pw * .08, x2: px0 + pw * .3, y1: py0 + ph * (.36 + k * .13), y2: py0 + ph * (.36 + k * .13), stroke: mix(40), 'stroke-width': 1.4, 'stroke-linecap': 'round'})).join('')}
+        ${el('rect', {x: pcx - pw * .36, y: slotY - fs * .42, width: pw * .72, height: fs * .3, rx: fs * .15, fill: NIGHT})}
+        ${el('circle', {id: 'gc-led', cx: px0 + pw * .86, cy: py0 + ph * .4, r: fs * .28, fill: mix(35)})}
       </g></g>
-      <g class="e-g">${L.map(d => el('path', {d, ...lineAttrs, stroke: CREAM, 'stroke-opacity': .25, 'stroke-width': 1.6, 'stroke-dasharray': '2 6'})).join('')}</g>
+      <g class="e-g">${L.map(d => el('path', {d, ...lineAttrs, stroke: mix(40), 'stroke-width': 1.4, 'stroke-dasharray': '2 6'})).join('')}</g>
       <g>${L.map(d => el('path', {class: 'gc-line', d, ...lineAttrs, stroke: GOLD, 'stroke-width': 2.4})).join('')}</g>
       ${cap(0)}${cap(1)}
     </g>`;
@@ -258,53 +228,46 @@
       return el('line', {class: 'gc-ray', x1: fcx + Math.cos(a) * r1, y1: fy0 + Math.sin(a) * r1, x2: fcx + Math.cos(a) * r2, y2: fy0 + Math.sin(a) * r2, stroke: GOLD, 'stroke-width': 2.2, 'stroke-linecap': 'round'}); }).join('');
     const sr = Math.min(fh2 * .44, fs * 1.6), sx = fcx, sy2 = fy0 + fh2 * .58;
     const ruff = Array.from({length: 32}, (_, k) => { const a = k * Math.PI / 16, r = k % 2 ? sr * .96 : sr * 1.14; return `${(Math.cos(a) * r).toFixed(1)},${(Math.sin(a) * r).toFixed(1)}`; }).join(' ');
+    const seam = mix(26);
     s += `<g id="gc-front">
-      <g class="e-f" mask="url(#gc-fh)"><g mask="url(#gc-fv)">
-        <g filter="url(#gc-p2)">${el('path', {d: `M-2,${fly} Q${W * .5},${fly - fs * .6} ${W + 2},${fly} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: 'url(#gc-fl)'})}</g>
-        ${el('path', {d: `M-2,${fly + .8} Q${W * .5},${fly - fs * .6 + .8} ${W + 2},${fly + .8}`, stroke: '#6a80a8', 'stroke-width': 1.4, fill: 'none'})}
-      </g></g>
-      <g class="e-f"><g id="gc-pres" filter="url(#gc-p1)">
+      <g class="e-f">${el('path', {d: `M-2,${fly} Q${W * .5},${fly - fs * .6} ${W + 2},${fly} L${W + 2},${H + 2} L-2,${H + 2}Z`, fill: mix(18)})}</g>
+      <g class="e-f"><g id="gc-pres">
         ${el('rect', {x: prX - hr * .45, y: hcy + hr * .5, width: hr * .9, height: sy - hcy - hr * .5 + 3, fill: CREAMD})}
-        ${el('path', {d: `M${prX - bw2 / 2},${fly} L${prX - bw2 / 2},${sy + bw2 * .25} Q${prX - bw2 / 2},${sy} ${prX - bw2 * .2},${sy} L${prX + bw2 * .2},${sy} Q${prX + bw2 / 2},${sy} ${prX + bw2 / 2},${sy + bw2 * .25} L${prX + bw2 / 2},${fly}Z`, fill: 'url(#gc-suit)'})}
-        ${el('path', {d: `M${prX - bw2 * .34},${sy + hh * .3} L${prX - bw2 * .36},${fly} M${prX + bw2 * .34},${sy + hh * .3} L${prX + bw2 * .36},${fly}`, stroke: '#2b3750', 'stroke-width': 1.3, fill: 'none'})}
+        ${el('path', {d: `M${prX - bw2 / 2},${fly} L${prX - bw2 / 2},${sy + bw2 * .25} Q${prX - bw2 / 2},${sy} ${prX - bw2 * .2},${sy} L${prX + bw2 * .2},${sy} Q${prX + bw2 / 2},${sy} ${prX + bw2 / 2},${sy + bw2 * .25} L${prX + bw2 / 2},${fly}Z`, fill: NIGHT})}
+        ${el('path', {d: `M${prX - bw2 * .34},${sy + hh * .3} L${prX - bw2 * .36},${fly} M${prX + bw2 * .34},${sy + hh * .3} L${prX + bw2 * .36},${fly}`, stroke: seam, 'stroke-width': 1.3, fill: 'none'})}
         ${el('path', {d: `M${prX - bw2 * .15},${sy} L${prX + bw2 * .15},${sy} L${prX},${sy + hh * .42}Z`, fill: CREAM})}
-        ${el('path', {d: `M${prX - fs * .25},${sy + 1} L${prX + fs * .25},${sy + 1} L${prX + fs * .14},${sy + fs * .6} L${prX + fs * .3},${sy + hh * .36} L${prX},${sy + hh * .44} L${prX - fs * .3},${sy + hh * .36} L${prX - fs * .14},${sy + fs * .6}Z`, fill: '#a8343a'})}
-        ${el('path', {d: `M${prX - bw2 * .16},${sy} L${prX - bw2 * .03},${sy + hh * .5} M${prX + bw2 * .16},${sy} L${prX + bw2 * .03},${sy + hh * .5}`, stroke: '#34405a', 'stroke-width': 1.5, fill: 'none'})}
-        ${el('path', {d: `M${pkX - fs * .9},${pkY} L${pkX + fs * .9},${pkY}`, stroke: '#3a4762', 'stroke-width': 1.5, 'stroke-linecap': 'round'})}
-        ${el('circle', {cx: prX - bw2 * .3, cy: sy + hh * .2, r: Math.max(1.5, fs * .14), fill: GOLD, opacity: .8})}
-        ${el('circle', {cx: prX, cy: hcy, r: hr, fill: 'url(#gc-face)'})}
-        ${el('path', {d: `M${prX - hr},${hcy - hr * .05} Q${prX - hr * 1.05},${hcy - hr * 1.15} ${prX},${hcy - hr * 1.08} Q${prX + hr * 1.1},${hcy - hr * 1.1} ${prX + hr},${hcy - hr * .1} Q${prX + hr * .4},${hcy - hr * .75} ${prX - hr},${hcy - hr * .05}Z`, fill: '#c9c1b0'})}
+        ${el('path', {d: `M${prX - fs * .25},${sy + 1} L${prX + fs * .25},${sy + 1} L${prX + fs * .14},${sy + fs * .6} L${prX + fs * .3},${sy + hh * .36} L${prX},${sy + hh * .44} L${prX - fs * .3},${sy + hh * .36} L${prX - fs * .14},${sy + fs * .6}Z`, fill: TIE})}
+        ${el('path', {d: `M${prX - bw2 * .16},${sy} L${prX - bw2 * .03},${sy + hh * .5} M${prX + bw2 * .16},${sy} L${prX + bw2 * .03},${sy + hh * .5}`, stroke: seam, 'stroke-width': 1.5, fill: 'none'})}
+        ${el('path', {d: `M${pkX - fs * .9},${pkY} L${pkX + fs * .9},${pkY}`, stroke: mix(34), 'stroke-width': 1.5, 'stroke-linecap': 'round'})}
+        ${el('circle', {cx: prX, cy: hcy, r: hr, fill: mix(88)})}
+        ${el('path', {d: `M${prX - hr},${hcy - hr * .05} Q${prX - hr * 1.05},${hcy - hr * 1.15} ${prX},${hcy - hr * 1.08} Q${prX + hr * 1.1},${hcy - hr * 1.1} ${prX + hr},${hcy - hr * .1} Q${prX + hr * .4},${hcy - hr * .75} ${prX - hr},${hcy - hr * .05}Z`, fill: mix(58)})}
       </g></g>
-      <g class="e-f"><g id="gc-case" filter="url(#gc-p1)">
-        ${el('path', {d: `M${fcx - fxw * .18},${fy0} C${fcx - fxw * .18},${fy0 - fh2 * .35} ${fcx + fxw * .18},${fy0 - fh2 * .35} ${fcx + fxw * .18},${fy0}`, stroke: '#0c1016', 'stroke-width': fs * .42, fill: 'none', 'stroke-linecap': 'round'})}
-        ${el('rect', {x: fx0, y: fy0, width: fxw, height: fh2, rx: fh2 * .14, fill: 'url(#gc-lea)'})}
-        ${el('rect', {x: fx0 + fs * .35, y: fy0 + fs * .35, width: fxw - fs * .7, height: fh2 - fs * .7, rx: fh2 * .1, fill: 'none', stroke: '#465165', 'stroke-width': 1, 'stroke-dasharray': '3 3'})}
-        ${el('circle', {cx: fcx, cy: fy0 + fh2 * .62, r: fs * .32, fill: 'none', stroke: GOLD, 'stroke-opacity': .6, 'stroke-width': 1.2})}
-        ${el('rect', {id: 'gc-inner', x: fx0 + fs * .4, y: fy0, width: fxw - fs * .8, height: fh2 * .32, rx: fs * .2, fill: 'url(#gc-in)', opacity: 0})}
-        <g id="gc-lid">${el('rect', {x: fx0, y: fy0, width: fxw, height: fh2 * .32, rx: fh2 * .14, fill: '#2b3342'})}${el('line', {x1: fx0 + fh2 * .14, x2: fx0 + fxw - fh2 * .14, y1: fy0 + 1.2, y2: fy0 + 1.2, stroke: '#5a6578', 'stroke-width': 1.2})}</g>
-        ${[-1, 1].map(sg => el('rect', {x: fcx + sg * fxw * .28 - fs * .35, y: fy0 + fh2 * .32 - fs * .3, width: fs * .7, height: fs * .6, rx: 2, fill: 'url(#gc-gd)'})).join('')}
+      <g class="e-f"><g id="gc-case">
+        ${el('path', {d: `M${fcx - fxw * .18},${fy0} C${fcx - fxw * .18},${fy0 - fh2 * .35} ${fcx + fxw * .18},${fy0 - fh2 * .35} ${fcx + fxw * .18},${fy0}`, stroke: NIGHT, 'stroke-width': fs * .42, fill: 'none', 'stroke-linecap': 'round'})}
+        ${el('rect', {x: fx0, y: fy0, width: fxw, height: fh2, rx: fh2 * .12, fill: NIGHT})}
+        ${el('rect', {id: 'gc-inner', x: fx0 + fs * .4, y: fy0, width: fxw - fs * .8, height: fh2 * .32, rx: fs * .2, fill: GOLD, opacity: 0})}
+        <g id="gc-lid">${el('rect', {x: fx0, y: fy0, width: fxw, height: fh2 * .32, rx: fh2 * .12, fill: mix(9)})}</g>
+        ${[-1, 1].map(sg => el('rect', {x: fcx + sg * fxw * .28 - fs * .35, y: fy0 + fh2 * .32 - fs * .3, width: fs * .7, height: fs * .6, rx: 2, fill: GOLD})).join('')}
       </g></g>
       <g transform="translate(${sx.toFixed(1)},${sy2.toFixed(1)})"><g id="gc-seal" opacity="0">
         ${el('polygon', {points: ruff, fill: '#c8922c'})}
-        ${el('circle', {r: sr, fill: 'url(#gc-gd)', stroke: '#8a5f18', 'stroke-width': 1})}
-        ${el('circle', {r: sr * .76, fill: 'none', stroke: '#8a5f18', 'stroke-width': 1, 'stroke-dasharray': '2 2.4', opacity: .75})}
+        ${el('circle', {r: sr, fill: GOLD})}
         ${el('path', {id: 'gc-check', d: `M${-sr * .38},${sr * .02} L${-sr * .1},${sr * .3} L${sr * .42},${-sr * .3}`, fill: 'none', stroke: NIGHT, 'stroke-width': Math.max(2, sr * .17), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'})}
       </g></g>
       <g>${rays}</g>
       ${cap(2)}${cap(3)}
     </g>`;
 
-    // ---- effects: the card, the spark, the pulse rings
+    // ---- moving parts: the plastic card, the spark, the tap rings
     const dash = [0, 1, 2, 3].map(k => el('rect', {class: 'gc-dash', x: -cw / 2 + cw * (.1 + k * .2), y: -ch / 2 + ch * .72, width: cw * .15, height: ch * .09, rx: 1, fill: NIGHT, opacity: 0})).join('');
     s += `<g id="gc-fx">
-      <g id="gc-wrap" clip-path="url(#gc-clip)"><g id="gc-card" opacity="0" filter="url(#gc-p1)">
-        ${el('rect', {x: -cw / 2, y: -ch / 2, width: cw, height: ch, rx: ch * .12, fill: 'url(#gc-cd)', stroke: '#fff8e6', 'stroke-opacity': .6})}
-        ${el('rect', {x: -cw / 2, y: -ch / 2 + ch * .14, width: cw, height: ch * .14, fill: 'url(#gc-gd)'})}
-        ${el('rect', {x: -cw / 2 + cw * .1, y: -ch / 2 + ch * .38, width: cw * .19, height: ch * .24, rx: 2, fill: 'url(#gc-gd)', stroke: '#9a6a1c', 'stroke-width': .8})}
-        ${el('circle', {cx: cw / 2 - cw * .16, cy: -ch / 2 + ch * .5, r: ch * .12, fill: 'none', stroke: '#a7741f', 'stroke-width': 1.2})}
+      <g id="gc-wrap" clip-path="url(#gc-clip)"><g id="gc-card" opacity="0">
+        ${el('rect', {x: -cw / 2, y: -ch / 2, width: cw, height: ch, rx: ch * .12, fill: CREAM, stroke: NIGHT, 'stroke-width': 1})}
+        ${el('rect', {x: -cw / 2 + .5, y: -ch / 2 + ch * .14, width: cw - 1, height: ch * .14, fill: GOLD})}
+        ${el('rect', {x: -cw / 2 + cw * .1, y: -ch / 2 + ch * .38, width: cw * .19, height: ch * .24, rx: 2, fill: GOLD})}
         ${dash}
       </g></g>
-      ${el('circle', {id: 'gc-spark', cx: tx, cy: ty, r: fs * .38, fill: '#fff3c4', filter: 'url(#gc-glow)', opacity: 0})}
+      ${el('circle', {id: 'gc-spark', cx: tx, cy: ty, r: fs * .38, fill: '#fff3c4', stroke: GOLD, 'stroke-width': 2, opacity: 0})}
       <g id="gc-pulses">${HL.map(([x, y, r]) => `<g class="gc-pg" opacity="0">${el('circle', {class: 'gc-pulse', cx: x, cy: y, r: r * .7, fill: 'none', stroke: GOLD, 'stroke-width': 1.6, opacity: .6})}</g>`).join('')}</g>
     </g>`;
 
@@ -321,7 +284,6 @@
     if (!Kit.calm) {
       $$('.gc-pulse').forEach((c, i) => { const r0 = +c.getAttribute('r'); gsap.fromTo(c, {attr: {r: r0 * .85}, opacity: .9}, {attr: {r: r0 * 1.2}, opacity: 0, duration: 1.5, repeat: -1, ease: 'power2.out', delay: i * .1}); });
       $$('.gc-hc').forEach(c => { const r0 = +c.getAttribute('r'); gsap.fromTo(c, {attr: {r: r0 * .92}}, {attr: {r: r0 * 1.1}, duration: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'}); });
-      R.stars.forEach(st => gsap.to(st, {opacity: .08 + Math.random() * .2, duration: 1.2 + Math.random() * 2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Math.random() * 2}));
       gsap.fromTo(R.idle, {rotation: -.7, svgOrigin: G.chipO}, {rotation: .7, svgOrigin: G.chipO, duration: 2.8, repeat: -1, yoyo: true, ease: 'sine.inOut'});
       gsap.to(R.beacon, {opacity: .25, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut'});
     }
@@ -378,8 +340,7 @@
         .fromTo(R.rays, {drawSVG: '0% 0%'}, {drawSVG: '0% 100%', duration: .45, stagger: .025, ease: 'expo.out'}, 2.55)
         .to(R.rays, {drawSVG: '100% 100%', duration: .6, stagger: .02, ease: 'power2.in'}, 3.1)
         .to(R.L, {attr: {'stroke-width': 3.2}, duration: .4, ease: 'power2.out'}, 2.55)
-        .set(R.L, {attr: {filter: 'url(#gc-glow)'}}, 2.55)
-        .to(R.t1, {duration: .7, scrambleText: {text: 'AUTHENTICATED', chars: 'ABCDEFGHJKLMNPQRSTUVWXYZ', speed: .6}}, 2.6)
+        .to(R.t1, {duration: .7, scrambleText: {text: 'Authenticated', chars: 'abcdefghijklmnopqrstuvwxyz', speed: .6}}, 2.6)
         .to(R.edge, {attr: {'stroke-width': 2.2}, duration: .3}, 2.6)
         .fromTo(R.swing, {rotation: 4, svgOrigin: G.chipO}, {rotation: 0, svgOrigin: G.chipO, duration: 1.6, ease: 'elastic.out(1,.25)'}, 2.6)
         .fromTo(R.seal, {scale: 2.8, opacity: 0, rotation: -35, transformOrigin: '50% 50%'}, {scale: 1, opacity: 1, rotation: -10, duration: .6, ease: 'back.out(2.4)'}, 2.7)
@@ -431,7 +392,7 @@
   }
   svg.addEventListener('click', () => go(false));
 
-  // Depth: the paper planes slide apart under the finger.
+  // Depth: the planes slide apart under the finger.
   svg.addEventListener('pointermove', e => {
     if (Kit.calm || !R.back) return;
     const b = svg.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5;

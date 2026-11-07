@@ -1,10 +1,10 @@
 <!doctype html>
 <!-- slug: economics-the-great-split -->
-<!-- Look: a field notebook sketch printed straight on the card. Pencil pumpjacks on a sepia watercolour Orinoco Belt, handwritten name tags, a red rubber stamp.
-     Interaction: drag the pencil bead along the years. The output axis is the timeline. Each stretch changes the picture: foreign operators, the 2007 ultimatum, the split, the long slide.
-     Wow: the stamp slams down and the page thumps, a red tear runs from the stamp through the belt and splits its name in two, the operators' tags fly off,
-     hard hats and coins float away from the wells, then a red wash blooms under the falling output line and gets circled in ink.
-     Layout: every band is budgeted in px from the stage height. Short stages switch to a compact plan (one-line stamp, tags share the top row). Hidden things use autoAlpha. -->
+<!-- Look: a flat cross-section of the Orinoco Belt from a printed book. Flat ink pumpjacks stand on a band of soil above a dark seam of oil. Plain signboards on posts carry the operators' names, and a red rubber stamp comes down from above.
+     Interaction: drag the bead along the years. The output axis is the timeline. Each stretch changes the picture: foreign operators, the 2007 ultimatum, the split, the long slide.
+     Wow: the stamp comes down and the page thumps. A red tear runs from the stamp through the belt and splits its name in two. The operators' signs fly off,
+     and hard hats and coins float away from the wells. Then a flat red wash rises under the falling output line and gets circled in ink.
+     Layout: every band is budgeted in px from the stage height. Short stages switch to a compact plan (one-line stamp, signs share the top row). Hidden things use autoAlpha. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The great split</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -34,7 +34,8 @@
 (() => {
   gsap.registerPlugin(DrawSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say');
-  const P = {paper:'#FFE600', tagp:'#fbf6e9', ink:'#10100c', lead:'#3a3628', oil:'#2e1f12', oil2:'#7a5532', sand:'#b8893a', red:'#a82f1c', sky:'#a9c4c4', grass:'#5f7a2a', gold:'#e08a1a', rule:'#7fa3b8', hat:'#efe0b2'};
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+  const P = {paper: 'var(--c)', ink: 'var(--k)', lead: tint(70), soil: tint(24), oil: tint(86), pipe: tint(45), weight: tint(40), coin: tint(28), red: '#a82f1c'};
   const SAY = [
     'Drag the pencil. Before 2007, mostly American firms run the rich Orinoco Belt.',
     '2007, Chávez’s ultimatum, no bargaining: be the State’s minority partner, or leave.',
@@ -46,11 +47,21 @@
   const S = {t: .04, f: -1, prevF: -1, changed: 0, stampOn: false, end: false, dragging: false, touched: false};
   let R = {}, loops = [], glideTw = null;
 
-  const mk = (tag, a, p) => Kit.mk(tag, a, p);
-  const txt = (p, x, y, s, a = {}, font = 'hand') => {
+  // colours that use CSS variables go into style, the rest stay attributes
+  const CSSP = ['fill', 'stroke'];
+  const mk = (tag, a, p) => {
+    const css = {}, rest = {};
+    for (const k in a) { const v = a[k]; if (CSSP.includes(k) && typeof v === 'string' && /var\(|color-mix/.test(v)) css[k] = v; else rest[k] = v; }
+    const e = Kit.mk(tag, rest, p);
+    for (const k in css) e.style.setProperty(k, css[k]);
+    return e;
+  };
+  const txt = (p, x, y, s, a = {}, font = 'body') => {
     const {size, weight, ...rest} = a;
     const e = mk('text', Object.assign({x, y, fill: P.ink}, rest), p);
-    e.setAttribute('style', `font-family:var(--${font});font-size:${size || R.fs}px;font-weight:${weight || 600}`);
+    e.style.fontFamily = `var(--${font})`;
+    e.style.fontSize = `${size || R.fs}px`;
+    e.style.fontWeight = weight || 600;
     e.textContent = s; return e;
   };
   const pts2d = a => a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' L');
@@ -94,60 +105,33 @@
     R.gT = gL + gap; R.gB = H - tlB; R.gh = R.gB - R.gT; R.base = fs * (tiny ? .65 : .8);
     R.rowTop = rowTop;
 
-    // ---------- defs ----------
-    const defs = mk('defs', {}, svg);
-    const wc = mk('filter', {id: 'wc', x: '-10%', y: '-20%', width: '120%', height: '140%'}, defs);
-    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.035', numOctaves: 3, seed: 4, result: 'n'}, wc);
-    mk('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: 8, xChannelSelector: 'R', yChannelSelector: 'G', result: 'd'}, wc);
-    mk('feGaussianBlur', {in: 'd', stdDeviation: .7}, wc);
-    const pen = mk('filter', {id: 'pen', x: '-5%', y: '-5%', width: '110%', height: '110%'}, defs);
-    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: '.9', numOctaves: 1, seed: 2, result: 'n'}, pen);
-    mk('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: 1.6, xChannelSelector: 'R', yChannelSelector: 'G'}, pen);
-    const hatch = mk('pattern', {id: 'hatch', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)'}, defs);
-    mk('line', {x1: 0, y1: 0, x2: 0, y2: 5, stroke: '#000', 'stroke-width': 1, opacity: .28}, hatch);
-    const og = mk('linearGradient', {id: 'oilG', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    mk('stop', {offset: 0, 'stop-color': P.oil2}, og); mk('stop', {offset: 1, 'stop-color': P.oil}, og);
-
-    // ---------- landscape (drawn straight on the card) ----------
+    // ---------- the ground in cross-section ----------
     const scene = R.scene = mk('g', {}, svg);
-    mk('ellipse', {cx: W * .3, cy: pumpTop - fs * .2, rx: W * .12, ry: fs * .45, fill: '#fff', opacity: .45, filter: 'url(#wc)'}, scene);
-    mk('ellipse', {cx: W * .72, cy: rowTop + fs * .3, rx: W * .1, ry: fs * .35, fill: '#fff', opacity: .35, filter: 'url(#wc)'}, scene);
-    const sunY = tiny ? sTop + fs * .9 : sTop + fs * 1.3;
-    mk('circle', {cx: W * .92, cy: sunY, r: fs * .95, fill: P.gold, opacity: .5, filter: 'url(#wc)'}, scene);
-    mk('circle', {cx: W * .92, cy: sunY, r: fs * .7, fill: 'none', stroke: P.gold, 'stroke-width': 1, opacity: .9, filter: 'url(#pen)'}, scene);
     const wav = (y0, amp, ph, fq = .9) => { let d = ''; for (let i = 0; i <= 24; i++) { const x = W * i / 24; d += (i ? ' L' : 'M') + x.toFixed(1) + ',' + (y0 + amp * Math.sin(i * fq + ph)).toFixed(1); } return d; };
-    mk('path', {d: wav(gy - fs * .75, fs * .25, 2, .5) + ` L${W},${gy} L0,${gy}Z`, fill: P.grass, opacity: .22, filter: 'url(#wc)'}, scene);
-    mk('path', {d: `M0,${gy} L${W},${gy} L${W},${oB + 4} L0,${oB + 4}Z`, fill: P.sand, opacity: .45, filter: 'url(#wc)'}, scene);
-    mk('path', {d: wav(gy - fs * .3, 2, 0) + ` L${W},${gy} L0,${gy}Z`, fill: P.grass, opacity: .55, filter: 'url(#wc)'}, scene);
+    mk('path', {d: wav(gy, 1.2, .3) + ` L${W},${oB + 4} L0,${oB + 4}Z`, fill: P.soil}, scene);
     const amp = Math.min(3, bt * .1), top = [], bot = [];
     for (let i = 0; i <= 24; i++) { const x = W * i / 24; top.push([x, oT + amp * Math.sin(i * .9 + 1)]); bot.push([x, oB + amp * Math.sin(i * .7 + 2.4)]); }
     const oil = 'M' + pts2d(top) + ' L' + pts2d(bot.reverse()) + 'Z';
-    mk('path', {d: oil, fill: 'url(#oilG)', opacity: .92, filter: 'url(#wc)'}, scene);
-    mk('path', {d: oil, fill: 'url(#hatch)'}, scene);
+    mk('path', {d: oil, fill: P.oil}, scene);
     const by = oT + bt * .5 + fs * .33;
-    R.beltL = txt(scene, x7 - fs * .55, by, 'the very rich', {'text-anchor': 'end', fill: '#f6ead0', weight: 700});
-    R.beltR = txt(scene, x7 + fs * .55, by, 'Orinoco Belt', {fill: '#f6ead0', weight: 700});
-    R.ground = mk('path', {d: wav(gy, 1.2, .3), fill: 'none', stroke: P.ink, 'stroke-width': 1.8, 'stroke-linecap': 'round', filter: 'url(#pen)'}, scene);
-    let tufts = '';
-    [.05, .3, .45, .52, .74, .97].forEach((p, k) => { const x = W * p, h = fs * (.3 + (k % 3) * .08); tufts += `M${x},${gy} l${-h * .4},${-h} M${x},${gy} l${h * .1},${-h * 1.2} M${x},${gy} l${h * .5},${-h * .8} `; });
-    mk('path', {d: tufts, fill: 'none', stroke: P.grass, 'stroke-width': 1.1, 'stroke-linecap': 'round'}, scene);
+    R.beltL = txt(scene, x7 - fs * .55, by, 'the very rich', {'text-anchor': 'end', fill: P.paper});
+    R.beltR = txt(scene, x7 + fs * .55, by, 'Orinoco Belt', {fill: P.paper});
+    R.ground = mk('path', {d: wav(gy, 1.2, .3), fill: 'none', stroke: P.ink, 'stroke-width': 2, 'stroke-linecap': 'round'}, scene);
 
-    // ---------- pumpjacks ----------
+    // ---------- pumpjacks, flat ink silhouettes ----------
     const xs = [.17, .6, .86];
     R.jacks = []; R.beams = []; R.wells = [];
     xs.forEach(p => {
       const x = W * p;
       const j = mk('g', {}, scene);
-      mk('ellipse', {cx: x, cy: gy + 2, rx: .5 * s, ry: .07 * s, fill: P.ink, opacity: .18, filter: 'url(#wc)'}, j);
-      mk('line', {x1: x + .475 * s, x2: x + .475 * s, y1: gy, y2: oT + bt * .4, stroke: P.lead, 'stroke-width': 1, opacity: .6}, j);
-      R.wells.push(mk('line', {x1: x + .475 * s, x2: x + .475 * s, y1: gy, y2: oT + bt * .4, stroke: P.oil2, 'stroke-width': 2, 'stroke-dasharray': '2 4', 'stroke-linecap': 'round'}, j));
+      mk('line', {x1: x + .475 * s, x2: x + .475 * s, y1: gy, y2: oT + bt * .4, stroke: P.pipe, 'stroke-width': 3, 'stroke-linecap': 'round'}, j);
+      R.wells.push(mk('line', {x1: x + .475 * s, x2: x + .475 * s, y1: gy, y2: oT + bt * .4, stroke: P.ink, 'stroke-width': 1.6, 'stroke-dasharray': '2 4', 'stroke-linecap': 'round'}, j));
       mk('rect', {x: x - .45 * s, y: gy - .06 * s, width: .9 * s, height: .06 * s, fill: P.ink}, j);
-      mk('path', {d: `M${x - .2 * s},${gy - .06 * s} L${x},${py} L${x + .2 * s},${gy - .06 * s} M${x - .1 * s},${gy - .32 * s} H${x + .1 * s}`, fill: 'none', stroke: P.ink, 'stroke-width': 2, 'stroke-linejoin': 'round', filter: 'url(#pen)'}, j);
-      mk('circle', {cx: x - .3 * s, cy: gy - .2 * s, r: .13 * s, fill: P.gold, opacity: .7, filter: 'url(#wc)'}, j);
-      mk('circle', {cx: x - .3 * s, cy: gy - .2 * s, r: .13 * s, fill: 'none', stroke: P.ink, 'stroke-width': 1.5}, j);
-      mk('line', {x1: x - .3 * s, y1: gy - .2 * s, x2: x - .44 * s, y2: py + .03 * s, stroke: P.ink, 'stroke-width': 1.4}, j);
+      mk('path', {d: `M${x - .2 * s},${gy - .06 * s} L${x},${py} L${x + .2 * s},${gy - .06 * s} M${x - .1 * s},${gy - .32 * s} H${x + .1 * s}`, fill: 'none', stroke: P.ink, 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, j);
+      mk('circle', {cx: x - .3 * s, cy: gy - .2 * s, r: .13 * s, fill: P.weight, stroke: P.ink, 'stroke-width': 1.6}, j);
+      mk('line', {x1: x - .3 * s, y1: gy - .2 * s, x2: x - .44 * s, y2: py + .03 * s, stroke: P.ink, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, j);
       mk('rect', {x: x + .44 * s, y: gy - .14 * s, width: .07 * s, height: .08 * s, fill: P.ink}, j);
-      mk('line', {x1: x + .475 * s, y1: py + .16 * s, x2: x + .475 * s, y2: gy - .12 * s, stroke: P.lead, 'stroke-width': 1.2}, j);
+      mk('line', {x1: x + .475 * s, y1: py + .16 * s, x2: x + .475 * s, y2: gy - .12 * s, stroke: P.ink, 'stroke-width': 1.2}, j);
       const b = mk('g', {}, j);
       mk('rect', {x: x - .5 * s, y: py - .025 * s, width: .95 * s, height: .055 * s, rx: 1, fill: P.ink}, b);
       mk('rect', {x: x - .52 * s, y: py - .05 * s, width: .1 * s, height: .1 * s, fill: P.ink}, b);
@@ -158,13 +142,13 @@
       R.jacks.push(j); R.beams.push(b);
     });
 
-    // ---------- operators' tags ----------
+    // ---------- operators' signboards ----------
     const tagL = mk('g', {}, svg);
     const names = ['ExxonMobil', 'US major', 'Western co.'];
     const pad = fs * .45, hs = fs * .5, ty = rowTop + fs * 1.02;
     const T = names.map((n, i) => {
       const g = mk('g', {}, tagL), inner = mk('g', {}, g);
-      const t = txt(inner, 0, ty, n, {weight: 700});
+      const t = txt(inner, 0, ty, n);
       return {g, inner, t, w: t.getComputedTextLength() + 2 * pad + hs, c: W * xs[i], px: W * xs[i]};
     });
     let prevR = null;
@@ -174,11 +158,10 @@
     R.tags = []; R.tagInner = [];
     T.forEach(o => {
       const mid = o.l + o.w / 2;
-      const postL = mk('line', {x1: mid, y1: rowTop + rowH, x2: o.px, y2: py - .06 * s, stroke: P.lead, 'stroke-width': 1}, o.inner);
-      const r = mk('rect', {x: o.l, y: rowTop, width: o.w, height: rowH, rx: 3, fill: P.tagp, stroke: P.ink, 'stroke-width': 1.2}, o.inner);
+      const postL = mk('line', {x1: mid, y1: rowTop + rowH, x2: o.px, y2: py - .06 * s, stroke: P.ink, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, o.inner);
+      const r = mk('rect', {x: o.l, y: rowTop, width: o.w, height: rowH, rx: 2, fill: P.paper, stroke: P.ink, 'stroke-width': 1.6}, o.inner);
       o.inner.insertBefore(postL, o.t); o.inner.insertBefore(r, o.t);
-      mk('circle', {cx: o.l + pad * .55 + hs * .25, cy: rowTop + rowH / 2, r: 1.8, fill: P.paper, stroke: P.ink, 'stroke-width': .8}, o.inner);
-      o.t.setAttribute('x', o.l + pad + hs);
+      o.t.setAttribute('x', o.l + pad + hs / 2);
       gsap.set(o.inner, {svgOrigin: `${o.px} ${py}`});
       gsap.set(o.g, {svgOrigin: `${mid} ${rowTop + rowH / 2}`});
       R.tags.push(o.g); R.tagInner.push(o.inner);
@@ -191,11 +174,11 @@
       const x = W * p + (k ? .28 : -.12) * s, y = py - .12 * s, r = fs * .36;
       const g = mk('g', {}, iconL);
       if (k) {
-        mk('circle', {cx: x, cy: y, r, fill: P.gold, stroke: P.ink, 'stroke-width': 1.2}, g);
-        mk('line', {x1: x, x2: x, y1: y - r * .5, y2: y + r * .5, stroke: P.ink, 'stroke-width': 1.2}, g);
+        mk('circle', {cx: x, cy: y, r, fill: P.coin, stroke: P.ink, 'stroke-width': 1.4}, g);
+        mk('circle', {cx: x, cy: y, r: r * .62, fill: 'none', stroke: P.ink, 'stroke-width': 1}, g);
       } else {
-        mk('path', {d: `M${x - r},${y + r * .35} A${r},${r * .95} 0 0 1 ${x + r},${y + r * .35} Z`, fill: P.hat, stroke: P.ink, 'stroke-width': 1.2}, g);
-        mk('line', {x1: x - r * 1.35, x2: x + r * 1.35, y1: y + r * .35, y2: y + r * .35, stroke: P.ink, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, g);
+        mk('path', {d: `M${x - r},${y + r * .35} A${r},${r * .95} 0 0 1 ${x + r},${y + r * .35} Z`, fill: P.paper, stroke: P.ink, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, g);
+        mk('line', {x1: x - r * 1.35, x2: x + r * 1.35, y1: y + r * .35, y2: y + r * .35, stroke: P.ink, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
       }
       gsap.set(g, {autoAlpha: 0, svgOrigin: `${x} ${y}`});
       const dy = -Math.max(fs * .8, Math.min(fs * 3, y - sBot - fs));
@@ -207,46 +190,44 @@
     let td = `M${x7},${(sBot + 1).toFixed(1)}`, yy = sBot + 1, k = 0;
     while (yy < oB + 3) { yy = Math.min(yy + fs * .55, oB + 3); td += ` L${(x7 + (k++ % 2 ? -1 : 1) * fs * .26).toFixed(1)},${yy.toFixed(1)}`; }
     R.crack = mk('path', {d: td, fill: 'none', stroke: P.paper, 'stroke-width': fs * .36, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
-    R.tear = mk('path', {d: td, fill: 'none', stroke: P.red, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    R.tear = mk('path', {d: td, fill: 'none', stroke: P.red, 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
     R.tearEls = [R.crack, R.tear];
     gsap.set(R.tearEls, {drawSVG: '0%'});
 
     // ---------- the stamp ----------
     R.stamp = mk('g', {}, svg);
     const sx = W / 2;
-    const l1 = txt(R.stamp, sx, l1y, tiny ? 'PLENA SOBERANÍA PETROLERA · 2007' : 'PLENA SOBERANÍA PETROLERA', {'text-anchor': 'middle', fill: P.red, weight: 800, size: ms}, 'mono');
+    const l1 = txt(R.stamp, sx, l1y, tiny ? 'PLENA SOBERANÍA PETROLERA · 2007' : 'PLENA SOBERANÍA PETROLERA', {'text-anchor': 'middle', fill: P.red, weight: 800, size: ms}, 'display');
     if (tiny && l1.getComputedTextLength() > W - fs * 2.2) l1.textContent = 'PLENA SOBERANÍA PETROLERA';
     let sw = l1.getComputedTextLength();
-    if (!tiny) { const l2 = txt(R.stamp, sx, l2y, '“full oil sovereignty” · 2007', {'text-anchor': 'middle', fill: P.red, weight: 700}); sw = Math.max(sw, l2.getComputedTextLength()); }
+    if (!tiny) { const l2 = txt(R.stamp, sx, l2y, '“full oil sovereignty” · 2007', {'text-anchor': 'middle', fill: P.red}); sw = Math.max(sw, l2.getComputedTextLength()); }
     sw = Math.min(W - 8, sw + fs * 1.2);
-    const so = mk('rect', {x: sx - sw / 2, y: sTop, width: sw, height: sBot - sTop, rx: 3, fill: P.paper, 'fill-opacity': .88, stroke: P.red, 'stroke-width': 2, filter: 'url(#pen)'}, R.stamp);
-    const si = mk('rect', {x: sx - sw / 2 + 3, y: sTop + 3, width: sw - 6, height: sBot - sTop - 6, rx: 2, fill: 'none', stroke: P.red, 'stroke-width': .8, opacity: .8}, R.stamp);
-    R.stamp.insertBefore(si, R.stamp.firstChild); R.stamp.insertBefore(so, R.stamp.firstChild);
-    R.stampRects = [so, si];
-    R.specks = [[sx + sw / 2 - 2, sBot + 2.5, 1.6], [sx - sw / 2 + 6, sBot + 2, 1.1], [sx + sw * .18, sBot + 3, 1.3], [sx - sw * .3, sTop + 1.5, 1]].map(([x, y, r]) => mk('circle', {cx: x, cy: y, r, fill: P.red, opacity: .8}, R.stamp));
+    const so = mk('rect', {x: sx - sw / 2, y: sTop, width: sw, height: sBot - sTop, rx: 4, fill: P.paper, stroke: P.red, 'stroke-width': 2.6}, R.stamp);
+    R.stamp.insertBefore(so, R.stamp.firstChild);
+    R.stampRects = [so];
+    R.specks = [];
     gsap.set(R.stamp, {svgOrigin: `${sx} ${(sTop + sBot) / 2}`, rotation: -2, autoAlpha: 0});
 
     // ---------- the graph (its x axis is the timeline) ----------
     const g = mk('g', {}, svg);
     txt(g, R.X0 + fs * .45, gL, 'oil output (shape only)', {fill: P.lead});
-    R.axis = mk('path', {d: `M${R.X0},${R.gT - fs * .25} V${R.gB} H${R.X1 + fs * .2}`, fill: 'none', stroke: P.ink, 'stroke-width': 1.8, 'stroke-linecap': 'round', filter: 'url(#pen)'}, g);
-    R.d7 = mk('line', {x1: x7, x2: x7, y1: R.gT - fs * .25, y2: R.gB, stroke: P.red, 'stroke-width': 1.2, 'stroke-dasharray': '4 4', opacity: .55}, g);
-    for (let i = 0; i <= 12; i++) { const x = cx(i / 12); mk('line', {x1: x, x2: x, y1: R.gB, y2: R.gB + fs * .3, stroke: P.ink, 'stroke-width': 1}, g); }
+    R.axis = mk('path', {d: `M${R.X0},${R.gT - fs * .25} V${R.gB} H${R.X1 + fs * .2}`, fill: 'none', stroke: P.ink, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    R.d7 = mk('line', {x1: x7, x2: x7, y1: R.gT - fs * .25, y2: R.gB, stroke: P.red, 'stroke-width': 1.4, 'stroke-dasharray': '4 4', opacity: .55}, g);
     const N = 120, pts = [];
     for (let i = 0; i <= N; i++) { const t = i / N; pts.push([cx(t), cy(t)]); }
     R.cum = [0]; for (let i = 1; i <= N; i++) R.cum.push(R.cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
     const after = pts.filter((p, i) => i / N >= T7);
-    R.wash = mk('path', {d: `M${pts2d(after)} L${R.X1},${R.gB} L${x7},${R.gB}Z`, fill: P.red, opacity: 0, filter: 'url(#wc)'}, g);
-    R.curve = mk('path', {d: 'M' + pts2d(pts), fill: 'none', stroke: P.ink, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    R.wash = mk('path', {d: `M${pts2d(after)} L${R.X1},${R.gB} L${x7},${R.gB}Z`, fill: P.red, opacity: 0}, g);
+    R.curve = mk('path', {d: 'M' + pts2d(pts), fill: 'none', stroke: P.ink, 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
     const rx0 = cx(.86), ry0 = cy(.86);
     const rry = Math.min(Math.max(fs * .7, (R.gh - R.base) * .3 + fs * .3), R.gB - ry0 + fs * .2);
-    R.ring = mk('ellipse', {cx: rx0, cy: ry0, rx: (R.X1 - R.X0) * .13, ry: rry, fill: 'none', stroke: P.red, 'stroke-width': 2, transform: `rotate(-8 ${rx0} ${ry0})`}, g);
+    R.ring = mk('ellipse', {cx: rx0, cy: ry0, rx: (R.X1 - R.X0) * .13, ry: rry, fill: 'none', stroke: P.red, 'stroke-width': 2.2, 'stroke-linecap': 'round', transform: `rotate(-8 ${rx0} ${ry0})`}, g);
     gsap.set(R.ring, {drawSVG: '0%'});
 
     // timeline labels
     const ly = R.gB + fs * (tiny ? 1.45 : 1.5);
     txt(g, R.X0, ly, 'before', {fill: P.lead});
-    const y07 = txt(g, x7, ly, '2007', {'text-anchor': 'middle', fill: P.red, weight: 800}, 'mono');
+    const y07 = txt(g, x7, ly, '2007', {'text-anchor': 'middle', fill: P.red, weight: 800}, 'display');
     const later = txt(g, R.X1, ly, 'later', {'text-anchor': 'end', fill: P.lead});
     const spx = x7 + y07.getComputedTextLength() / 2 + fs * .45;
     R.split = txt(g, spx, ly, 'the great split', {fill: P.red, weight: 700});
@@ -264,20 +245,19 @@
       if (nx + nw > W - 4) n.remove();
       else {
         const ax = nx + nw + fs * .35;
-        if (ax + fs * .9 < W - 4) mk('path', {d: `M${ax},${ty - fs * .15} q${fs * .5},${-fs * .1} ${fs * .8},${-fs * .7} m${-fs * .38},${fs * .05} l${fs * .38},${-fs * .05} l${fs * .02},${fs * .38}`, fill: 'none', stroke: P.red, 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, n);
+        if (ax + fs * .9 < W - 4) mk('path', {d: `M${ax},${ty - fs * .15} q${fs * .5},${-fs * .1} ${fs * .8},${-fs * .7} m${-fs * .38},${fs * .05} l${fs * .38},${-fs * .05} l${fs * .02},${fs * .38}`, fill: 'none', stroke: P.red, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, n);
         gsap.set(n, {autoAlpha: 0}); R.note = n;
       }
     }
 
-    // ---------- the pencil bead ----------
-    R.cursor = mk('line', {stroke: P.red, 'stroke-width': 1, 'stroke-dasharray': '2 3', opacity: .8}, svg);
+    // ---------- the bead ----------
+    R.cursor = mk('line', {stroke: P.red, 'stroke-width': 1.2, 'stroke-dasharray': '2 3', opacity: .8}, svg);
     R.dot = mk('circle', {r: fs * .28, fill: P.red}, svg);
     R.handle = mk('g', {}, svg);
     const hb = R.gB;
-    mk('circle', {cx: 0, cy: hb, r: fs * .95, fill: P.red, opacity: .16, filter: 'url(#wc)'}, R.handle);
     R.halo = mk('circle', {cx: 0, cy: hb, r: fs * .7, fill: 'none', stroke: P.red, 'stroke-width': 1.5}, R.handle);
-    mk('path', {d: `M${-fs * 1.0},${hb - fs * .28} l${-fs * .28},${fs * .28} l${fs * .28},${fs * .28} M${fs * 1.0},${hb - fs * .28} l${fs * .28},${fs * .28} l${-fs * .28},${fs * .28}`, fill: 'none', stroke: P.lead, 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .75}, R.handle);
-    mk('circle', {cx: 0, cy: hb, r: fs * .55, fill: P.paper, stroke: P.red, 'stroke-width': 2.2}, R.handle);
+    mk('path', {d: `M${-fs * 1.0},${hb - fs * .28} l${-fs * .28},${fs * .28} l${fs * .28},${fs * .28} M${fs * 1.0},${hb - fs * .28} l${fs * .28},${fs * .28} l${-fs * .28},${fs * .28}`, fill: 'none', stroke: P.lead, 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, R.handle);
+    mk('circle', {cx: 0, cy: hb, r: fs * .55, fill: P.paper, stroke: P.red, 'stroke-width': 2.4}, R.handle);
     mk('path', {d: `M${-fs * .2},${hb + fs * .13} L0,${hb - fs * .24} L${fs * .2},${hb + fs * .13}Z`, fill: P.ink}, R.handle);
 
     // ---------- living loops ----------
@@ -330,7 +310,7 @@
       S.stampOn = true;
       gsap.fromTo(R.stamp, {autoAlpha: 0, scale: 1.6, rotation: -8}, {autoAlpha: 1, scale: 1, rotation: -2, duration: .4 * d, ease: 'back.out(1.8)', overwrite: true});
       gsap.fromTo(R.stampRects, {drawSVG: '0%'}, {drawSVG: '100%', duration: .55 * d, delay: .1 * d, ease: 'power2.inOut', overwrite: true});
-      gsap.fromTo(R.specks, {scale: 0}, {scale: 1, transformOrigin: '50% 50%', duration: .3 * d, delay: .32 * d, stagger: .03 * d, ease: 'back.out(3)', overwrite: true});
+      if (R.specks.length) gsap.fromTo(R.specks, {scale: 0}, {scale: 1, transformOrigin: '50% 50%', duration: .3 * d, delay: .32 * d, stagger: .03 * d, ease: 'back.out(3)', overwrite: true});
       if (d) gsap.fromTo(R.scene, {y: 0}, {y: fs * .18, duration: .07, delay: .36, yoyo: true, repeat: 1, ease: 'power1.out', overwrite: true});
     } else if (f < 1 && S.stampOn) {
       S.stampOn = false;
@@ -359,12 +339,12 @@
     if (dull && was >= 0 && was < 3 && d) leave();
     if (!dull) R.icons.forEach(ic => { gsap.killTweensOf(ic.g); gsap.set(ic.g, {autoAlpha: 0}); });
 
-    // 4 · the end: the wash blooms and gets circled
+    // 4 · the end: the wash rises and gets circled
     if (f === 4 && !S.end) {
       S.end = true; Kit.show('keep');
       const wow = () => {
-        if (!d) { gsap.set(R.wash, {opacity: .32, scaleY: 1}); gsap.set(R.ring, {drawSVG: '100%'}); return; }
-        gsap.fromTo(R.wash, {opacity: 0, scaleY: 0}, {opacity: .32, scaleY: 1, transformOrigin: '50% 100%', duration: 1.2, ease: 'expo.out', overwrite: true});
+        if (!d) { gsap.set(R.wash, {opacity: .28, scaleY: 1, svgOrigin: `${R.x7} ${R.gB}`}); gsap.set(R.ring, {drawSVG: '100%'}); return; }
+        gsap.fromTo(R.wash, {opacity: 0, scaleY: 0}, {opacity: .28, scaleY: 1, svgOrigin: `${R.x7} ${R.gB}`, duration: 1.2, ease: 'expo.out', overwrite: true});
         gsap.fromTo(R.ring, {drawSVG: '0%'}, {drawSVG: '100%', duration: .85, delay: .3, ease: 'power2.inOut', overwrite: true});
         gsap.fromTo(R.dot, {scale: 1}, {scale: 1.8, transformOrigin: '50% 50%', duration: .22, delay: 1, yoyo: true, repeat: 1, ease: 'power2.out'});
       };

@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-granite-near-diamond -->
-<!-- Look: a dusty green chalkboard ground. A hand-chalked hardness scale with two empty tubes, a speckled granite lump and a faceted diamond.
-     Interaction: flip the switch and a crystal flies off that stone along a curved chalk arrow, lands in its tube and fills it to its rung: granite's quartz to 7, diamond to 10.
+<!-- Look: a page from a printed geology book on the card's dark green. A plain hardness scale with two empty columns, a flat speckled granite lump (white quartz, pink feldspar, dark mica) and a flat-faceted diamond.
+     Interaction: flip the switch and a crystal flies off that stone along a curved arrow, lands in its column and fills it to its rung: granite's quartz to 7, diamond to 10.
      Wow: with both up, a dolerite ball swings in on an arc and pounds the granite in bursts of dust. The caption turns to "5 mm per hour". -->
 <title>Granite, nearly diamond</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -12,11 +12,11 @@
 <style>
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block;background:none}
-.hand{font-family:var(--hand)}
-#sw{position:relative;display:grid;grid-template-columns:1fr 1fr;flex:none;background:#14261e;border-radius:99px;padding:.6cqh;box-shadow:inset 0 .3cqh .9cqh rgba(0,0,0,.5),0 0 0 .3cqh #6d4b2e}
-.sb{position:relative;z-index:1;font:700 max(2.2cqh,14px)/1 var(--hand);color:#f6f3e8;background:none;border:0;padding:1.3cqh 0;cursor:pointer;letter-spacing:.03em;opacity:.8;transition:color .2s,opacity .2s}
+.lbl{font-family:var(--body)}
+#sw{position:relative;display:grid;grid-template-columns:1fr 1fr;flex:none;background:color-mix(in srgb, var(--k) 8%, var(--c));border-radius:99px;padding:.6cqh;box-shadow:0 0 0 .3cqh color-mix(in srgb, var(--k) 35%, var(--c))}
+.sb{position:relative;z-index:1;font:700 max(2.2cqh,14px)/1 var(--body);color:#f6f3e8;background:none;border:0;padding:1.3cqh 0;cursor:pointer;opacity:.8;transition:color .2s,opacity .2s}
 .sb.on{opacity:1;color:#1b3229}
-#knob{position:absolute;top:.6cqh;bottom:.6cqh;left:.6cqh;width:calc(50% - .6cqh);border-radius:99px;background:#f6f3e8;opacity:0;box-shadow:0 .3cqh .8cqh rgba(0,0,0,.45)}
+#knob{position:absolute;top:.6cqh;bottom:.6cqh;left:.6cqh;width:calc(50% - .6cqh);border-radius:99px;background:#f6f3e8;opacity:0}
 #say{overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Flip the switch · compare" style="--c:#1f382e;--k:#f6f3e8;--edge:#0f1f18">
@@ -41,14 +41,20 @@
 gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), sw = Kit.$('sw'), knob = Kit.$('knob');
-  const CH = '#f6f3e8', PINK = '#f3a9b9', BLUE = '#a9dcf5', YEL = '#f6e27f';
+  const cs = getComputedStyle(Kit.$('card'));
+  const CH = (cs.getPropertyValue('--k').trim() || '#f6f3e8'), CC = (cs.getPropertyValue('--c').trim() || '#1f382e');
+  const PINK = '#f3a9b9', BLUE = '#a9dcf5';
+  const hx = h => { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); };
+  const mix = (a, b, n) => { const A = hx(a), B = hx(b), t = n / 100; return '#' + A.map((v, i) => Math.round(v * t + B[i] * (1 - t)).toString(16).padStart(2, '0')).join(''); };
+  const INK = CH;
+  const STONE = mix(CH, CC, 52), MICA = mix('#000000', CC, 45), FELD = '#e3a3a8';
   const SPEC = {g: {n: 7, col: '#f7d3dc'}, d: {n: 10, col: BLUE}};
   const seen = {g: false, d: false}, want = {g: false, d: false};
   let revealed = false, hammered = false, S = null, loops = [], lastW = 0, lastH = 0;
   const rng = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
   const mk = (t, a, p) => Kit.mk(t, a, p);
   const txt = (p, x, y, s, a = {}) => {
-    const e = mk('text', Object.assign({x, y, fill: CH, class: 'hand', 'font-size': S.fs}, a), p); e.textContent = s;
+    const e = mk('text', Object.assign({x, y, fill: CH, class: 'lbl', 'font-size': S.fs}, a), p); e.textContent = s;
     const w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
     const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
     const sh = Math.max(10 - left, Math.min(0, S.W - 10 - (left + w)));
@@ -73,28 +79,9 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     S = {W, H, fs, sx, yR, step, r, gy, gx, dx, el: {}, intro: {lines: [], nums: []}};
 
     const defs = mk('defs', {}, svg);
-    defs.innerHTML = `
-      <radialGradient id="gran" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#a8a49c"/><stop offset="1" stop-color="#4a4844"/></radialGradient>
-      <radialGradient id="lit" cx=".3" cy=".22" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-      <linearGradient id="dia" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2fbff"/><stop offset=".55" stop-color="#9fd6f2"/><stop offset="1" stop-color="#4f93b8"/></linearGradient>
-      <radialGradient id="ball" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#6b6e70"/><stop offset="1" stop-color="#1c1e20"/></radialGradient>
-      <filter id="chalk" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}">
-        <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="d"/>
-        <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.5 1.55" result="m"/>
-        <feComposite in="d" in2="m" operator="in"/>
-      </filter>
-      <filter id="chalkB" x="-15%" y="-15%" width="130%" height="130%">
-        <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-      <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${Math.max(6, W * .03)}"/></filter>
-      <filter id="soft" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="3"/></filter>
-      <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
 
     const root = mk('g', {}, svg);
 
-    // No board panel: the scene is drawn straight on the card's ground.
     // (random draws kept so the stones keep their exact shapes)
     for (let i = 0; i < 7; i++) {
       const rx = W * (.12 + .16 * R()), ry = H * (.03 + .04 * R());
@@ -102,85 +89,78 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     }
     for (let i = 0; i < 3; i++) { R(); }
 
-    const board = mk('g', {filter: 'url(#chalk)'}, root);
-    const tt = txt(board, Math.max(16, W * .06), fs * 1.9, 'Hardness scale', {'font-size': fs * 1.12, 'font-weight': 700});
+    const board = mk('g', {}, root);
+    const tt = txt(board, Math.max(16, W * .06), fs * 1.9, 'Hardness scale', {'font-weight': 700});
     const tw = tt.getComputedTextLength(), tx = +tt.getAttribute('x');
-    S.intro.title = mk('path', {d: wob(tx, fs * 2.35, tx + tw, fs * 2.25, R, 2), stroke: YEL, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round'}, board);
+    S.intro.title = mk('path', {d: wob(tx, fs * 2.35, tx + tw, fs * 2.25, R, 2), stroke: INK, 'stroke-width': 1.6, fill: 'none', opacity: .5, 'stroke-linecap': 'round'}, board);
 
-    // Two empty tubes, rungs, numbers (thinned out when rungs get tight).
+    // Two empty columns, rungs, numbers (thinned out when rungs get tight).
     const tubes = [[sx - fs * 1.95, 'g'], [sx + fs * 1.2, 'd']];
     const bars = {};
     tubes.forEach(([x, k]) => {
       const w = fs * .75, y0 = yR(10) - step * .45, y1 = bot + step * .35;
-      bars[k] = mk('rect', {x, y: yR(SPEC[k].n), width: w, height: y1 - yR(SPEC[k].n), rx: w * .3, fill: SPEC[k].col, opacity: .9}, board);
+      bars[k] = mk('rect', {x, y: yR(SPEC[k].n), width: w, height: y1 - yR(SPEC[k].n), rx: w * .3, fill: SPEC[k].col}, board);
       gsap.set(bars[k], {scaleY: 0, transformOrigin: '50% 100%'});
-      const tube = mk('path', {d: `M${x},${y0} L${x},${y1 - w * .3} Q${x},${y1} ${x + w * .3},${y1} L${x + w - w * .3},${y1} Q${x + w},${y1} ${x + w},${y1 - w * .3} L${x + w},${y0}`, stroke: CH, 'stroke-width': 1.4, fill: 'none', opacity: .55, 'stroke-linecap': 'round'}, board);
+      const tube = mk('path', {d: `M${x},${y0} L${x},${y1 - w * .3} Q${x},${y1} ${x + w * .3},${y1} L${x + w - w * .3},${y1} Q${x + w},${y1} ${x + w},${y1 - w * .3} L${x + w},${y0}`, stroke: CH, 'stroke-width': 1.6, fill: 'none', opacity: .6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, board);
       S.intro.lines.push(tube);
     });
     const tight = step < fs * 1.45;
     for (let n = 1; n <= 10; n++) {
       const y = yR(n), shown = !tight || n % 3 === 1;
-      for (const s of [-1, 1]) { const l = mk('path', {d: wob(sx + s * fs * (shown ? .62 : .3), y, sx + s * fs * 1.08, y, R, .6), stroke: CH, 'stroke-width': 1.5, fill: 'none', opacity: shown ? .8 : .5, 'stroke-linecap': 'round'}, board); S.intro.lines.push(l); }
+      for (const s of [-1, 1]) { const l = mk('path', {d: wob(sx + s * fs * (shown ? .62 : .3), y, sx + s * fs * 1.08, y, R, .6), stroke: CH, 'stroke-width': 1.5, fill: 'none', opacity: shown ? .7 : .4, 'stroke-linecap': 'round'}, board); S.intro.lines.push(l); }
       if (!shown) continue;
-      const nm = txt(board, sx, y + fs * .36, String(n), {'text-anchor': 'middle', 'font-weight': 700});
+      const nm = txt(board, sx, y + fs * .36, String(n), {'text-anchor': 'middle', 'font-weight': 600});
       S.intro.nums.push(nm);
       if (n === SPEC.g.n) S.el.gNum = nm;
       if (n === SPEC.d.n) S.el.dNum = nm;
     }
 
-    // ---- Granite ----
+    // ---- Granite: a flat speckled lump ----
     const gG = mk('g', {transform: `translate(${gx},${gy})`}, root);
     const gIn = mk('g', {}, gG);
-    mk('ellipse', {cx: 0, cy: r * .95, rx: r * .95, ry: r * .15, fill: '#000', opacity: .32, filter: 'url(#soft)'}, gIn);
     const poly = [];
     for (let i = 0; i < 11; i++) { const a = i / 11 * Math.PI * 2 - Math.PI / 2, rad = r * (.82 + .26 * R()); poly.push([Math.cos(a) * rad, Math.sin(a) * rad * .86 + r * .05]); }
     mk('clipPath', {id: 'gclip'}, defs).appendChild(mk('polygon', {points: pts(poly)}, svg));
     const inside = mk('g', {'clip-path': 'url(#gclip)'}, gIn);
-    mk('rect', {x: -r * 1.3, y: -r * 1.3, width: r * 2.6, height: r * 2.6, fill: 'url(#gran)'}, inside);
+    mk('rect', {x: -r * 1.3, y: -r * 1.3, width: r * 2.6, height: r * 2.6, fill: STONE}, inside);
     const quartz = [];
     for (let i = 0; i < 80; i++) {
       const cx = (R() - .5) * r * 2.2, cy = (R() - .5) * r * 2.2, s = r * (.05 + .1 * R()), t = R();
       const shape = []; const m = 3 + Math.floor(R() * 3);
       for (let j = 0; j < m; j++) { const a = j / m * Math.PI * 2 + R(); shape.push([cx + Math.cos(a) * s * (.6 + R() * .6), cy + Math.sin(a) * s * (.6 + R() * .6)]); }
-      const fill = t < .4 ? '#f1efe9' : t < .74 ? '#d48a88' : '#17171a';
-      const e = mk('polygon', {points: pts(shape), fill, opacity: t < .4 ? .92 : .85}, inside);
+      const fill = t < .4 ? CH : t < .74 ? FELD : MICA;
+      const e = mk('polygon', {points: pts(shape), fill, opacity: t < .4 ? .92 : 1}, inside);
       if (t < .4) quartz.push(e);
     }
-    const crater = mk('ellipse', {cx: -r * .42, cy: -r * .55, rx: r * .2, ry: r * .13, fill: '#141414', opacity: .8, transform: `rotate(-35 ${-r * .42} ${-r * .55})`}, inside);
+    const crater = mk('ellipse', {cx: -r * .42, cy: -r * .55, rx: r * .2, ry: r * .13, fill: mix('#000000', CC, 70), transform: `rotate(-35 ${-r * .42} ${-r * .55})`}, inside);
     gsap.set(crater, {scale: 0, transformOrigin: '50% 50%'});
-    mk('rect', {x: -r * 1.3, y: -r * 1.3, width: r * 2.6, height: r * 2.6, fill: 'url(#lit)'}, inside);
-    mk('polygon', {points: pts(poly), fill: 'none', stroke: CH, 'stroke-width': 2.2, 'stroke-linejoin': 'round', filter: 'url(#chalkB)'}, gIn);
+    mk('polygon', {points: pts(poly), fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, gIn);
     const capY1 = gy + r * .95 + fs * 1.3, capY2 = capY1 + fs * .2 + capFs * 1.3;
-    const gc = mk('g', {filter: 'url(#chalk)'}, root);
-    txt(gc, gx, capY1, 'GRANITE', {'text-anchor': 'middle', 'font-weight': 800, 'letter-spacing': 1});
-    const cap2 = txt(gc, gx, capY2, hammered ? '5 mm per hour' : 'full of quartz', {'text-anchor': 'middle', opacity: .8, 'font-size': capFs});
+    const gc = mk('g', {}, root);
+    txt(gc, gx, capY1, 'Granite', {'text-anchor': 'middle', 'font-weight': 700});
+    const cap2 = txt(gc, gx, capY2, hammered ? '5 mm per hour' : 'full of quartz', {'text-anchor': 'middle', opacity: .75});
 
-    // ---- Diamond ----
+    // ---- Diamond: flat facets ----
     const dG = mk('g', {transform: `translate(${dx},${gy})`}, root);
     const dIn = mk('g', {}, dG);
-    mk('ellipse', {cx: 0, cy: r * .95, rx: r * .7, ry: r * .12, fill: '#000', opacity: .3, filter: 'url(#soft)'}, dIn);
     const P = (x, y) => [x * r, y * r];
     const outline = [P(-.45, -.55), P(.45, -.55), P(.95, -.15), P(0, .85), P(-.95, -.15)];
-    mk('polygon', {points: pts(outline), fill: 'url(#dia)', opacity: .9}, dIn);
-    mk('polygon', {points: pts([P(-.45, -.55), P(0, -.15), P(-.48, -.15)]), fill: '#fff', opacity: .5}, dIn);
-    mk('polygon', {points: pts([P(.45, -.55), P(.95, -.15), P(.48, -.15)]), fill: '#fff', opacity: .22}, dIn);
-    mk('polygon', {points: pts([P(.48, -.15), P(.95, -.15), P(0, .85)]), fill: '#1f5b7c', opacity: .35}, dIn);
-    mk('polygon', {points: pts([P(-.48, -.15), P(0, -.15), P(0, .85)]), fill: '#fff', opacity: .25}, dIn);
+    const D_LIGHT = mix(CH, BLUE, 55), D_DARK = '#74b4d8', D_LINE = '#3f7fa3';
+    mk('polygon', {points: pts(outline), fill: BLUE}, dIn);
+    mk('polygon', {points: pts([P(-.45, -.55), P(0, -.15), P(-.48, -.15)]), fill: D_LIGHT}, dIn);
+    mk('polygon', {points: pts([P(-.48, -.15), P(0, -.15), P(0, .85)]), fill: D_LIGHT}, dIn);
+    mk('polygon', {points: pts([P(.48, -.15), P(.95, -.15), P(0, .85)]), fill: D_DARK}, dIn);
     const facets = [[-.45, -.55, 0, -.15], [0, -.15, .45, -.55], [-.45, -.55, -.48, -.15], [.45, -.55, .48, -.15], [-.95, -.15, .95, -.15], [-.48, -.15, 0, .85], [.48, -.15, 0, .85], [0, -.15, 0, .85]];
-    const fg = mk('g', {stroke: CH, 'stroke-width': 1.1, fill: 'none', opacity: .85, filter: 'url(#chalkB)'}, dIn);
+    const fg = mk('g', {stroke: D_LINE, 'stroke-width': 1.1, fill: 'none', 'stroke-linecap': 'round'}, dIn);
     facets.forEach(([a, b, c, d]) => mk('line', {x1: a * r, y1: b * r, x2: c * r, y2: d * r}, fg));
-    mk('polygon', {points: pts(outline), fill: 'none', stroke: CH, 'stroke-width': 2.2, 'stroke-linejoin': 'round', filter: 'url(#chalkB)'}, dIn);
+    mk('polygon', {points: pts(outline), fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, dIn);
     const sparks = [];
-    [[-.7, -.7, .16], [.78, -.55, .11], [.35, .3, .09]].forEach(([x, y, s]) => {
-      const q = s * r;
-      sparks.push(mk('path', {d: `M${x * r},${y * r - q} Q${x * r},${y * r} ${x * r + q},${y * r} Q${x * r},${y * r} ${x * r},${y * r + q} Q${x * r},${y * r} ${x * r - q},${y * r} Q${x * r},${y * r} ${x * r},${y * r - q}Z`, fill: '#fff', filter: 'url(#glow)'}, dIn));
-    });
-    const dc = mk('g', {filter: 'url(#chalk)'}, root);
-    txt(dc, dx, capY1, 'DIAMOND', {'text-anchor': 'middle', 'font-weight': 800, 'letter-spacing': 1});
-    txt(dc, dx, capY2, 'the top of the scale', {'text-anchor': 'middle', opacity: .8, 'font-size': capFs});
+    const dc = mk('g', {}, root);
+    txt(dc, dx, capY1, 'Diamond', {'text-anchor': 'middle', 'font-weight': 700});
+    txt(dc, dx, capY2, 'the top of the scale', {'text-anchor': 'middle', opacity: .75});
 
     // ---- Arrows and travellers ----
-    const arrows = mk('g', {filter: 'url(#chalk)'}, root);
+    const arrows = mk('g', {}, root);
     const fx = mk('g', {}, root);
     const mkArrow = (sxp, syp, c1, c2, ex, ey, col) => {
       const path = mk('path', {d: `M${sxp},${syp} C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${ex},${ey}`, stroke: col, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', opacity: 0}, arrows);
@@ -193,13 +173,13 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     const aG = mkArrow(gx + r * .1, gy - r * .9, [gx, Math.max(8, yR(7) - step * 2.4)], [bxG, Math.max(8, yR(7) - step * 2.4)], bxG, yR(7) - fs * .35, '#f7d3dc');
     const aD = mkArrow(dx - r * .05, gy - r * .7, [dx, Math.max(8, top - step * .2)], [bxD, Math.max(6, top - step * 1.5)], bxD, yR(10) - fs * .35, BLUE);
     const chip = (k, [x, y]) => {
-      const g = mk('g', {filter: 'url(#glow)', opacity: 0}, root), s = fs * .5;
-      if (k === 'g') mk('polygon', {points: pts([[0, -s], [s * .87, -s * .5], [s * .87, s * .5], [0, s], [-s * .87, s * .5], [-s * .87, -s * .5]]), fill: '#fbfaf5', stroke: PINK, 'stroke-width': 1}, g);
-      else mk('polygon', {points: pts([[0, -s * 1.1], [s * .8, 0], [0, s * 1.1], [-s * .8, 0]]), fill: BLUE, stroke: '#fff', 'stroke-width': 1}, g);
+      const g = mk('g', {opacity: 0}, root), s = fs * .5;
+      if (k === 'g') mk('polygon', {points: pts([[0, -s], [s * .87, -s * .5], [s * .87, s * .5], [0, s], [-s * .87, s * .5], [-s * .87, -s * .5]]), fill: CH, stroke: PINK, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, g);
+      else mk('polygon', {points: pts([[0, -s * 1.1], [s * .8, 0], [0, s * 1.1], [-s * .8, 0]]), fill: BLUE, stroke: D_LINE, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, g);
       gsap.set(g, {x, y});
       return g;
     };
-    const ring = n => { const y = yR(n), rx = fs * (n === 10 ? 1.02 : .82), ry = Math.min(fs * .72, step * 1.4); return mk('path', {d: `M${sx - rx},${y + 1} a${rx},${ry} 0 1,0 ${rx * 2},-2 a${rx},${ry} 0 1,0 ${-rx * 2 - 3},4`, stroke: YEL, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', opacity: 0}, board); };
+    const ring = n => { const y = yR(n), rx = fs * (n === 10 ? 1.02 : .82), ry = Math.min(fs * .72, step * 1.4); return mk('path', {d: `M${sx - rx},${y + 1} a${rx},${ry} 0 1,0 ${rx * 2},-2 a${rx},${ry} 0 1,0 ${-rx * 2 - 3},4`, stroke: INK, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', opacity: 0}, board); };
 
     // ---- Dolerite ball for the finale ----
     const br = r * .3;
@@ -207,12 +187,11 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     const hit = [gx - r * .42 - br * .55, gy - r * .55 - br * .55];
     const swing = mk('path', {d: `M${rest[0]},${rest[1]} Q${rest[0] - r * .25},${(rest[1] + hit[1]) / 2 + r * .2} ${hit[0]},${hit[1]}`, fill: 'none', stroke: 'none'}, root);
     const ball = mk('g', {opacity: 0}, root);
-    mk('circle', {cx: 0, cy: 0, r: br, fill: 'url(#ball)'}, ball);
-    mk('circle', {cx: 0, cy: 0, r: br, fill: 'none', stroke: CH, 'stroke-width': 1.6, filter: 'url(#chalkB)'}, ball);
-    for (let i = 0; i < 6; i++) mk('circle', {cx: (R() - .5) * br, cy: (R() - .5) * br, r: .8 + R(), fill: '#cfcac0', opacity: .5}, ball);
+    mk('circle', {cx: 0, cy: 0, r: br, fill: '#383b3a', stroke: INK, 'stroke-width': 1.6}, ball);
+    for (let i = 0; i < 6; i++) mk('circle', {cx: (R() - .5) * br, cy: (R() - .5) * br, r: .8 + R(), fill: '#8d918e'}, ball);
     gsap.set(ball, {x: rest[0], y: rest[1]});
-    const bl = mk('g', {filter: 'url(#chalk)', opacity: 0}, root);
-    const dl = txt(bl, rest[0], rest[1] - br - fs * .5, 'dolerite', {'text-anchor': 'middle', 'font-weight': 700, fill: YEL, 'font-size': capFs});
+    const bl = mk('g', {opacity: 0}, root);
+    const dl = txt(bl, rest[0], rest[1] - br - fs * .5, 'dolerite', {'text-anchor': 'middle', 'font-weight': 700});
     const dlw = dl.getComputedTextLength();
     if (rest[1] - br - fs * .5 - capFs < fs * 2.6 && rest[0] - br - 6 - dlw > 10) {
       dl.setAttribute('text-anchor', 'end'); dl.setAttribute('x', rest[0] - br - 6); dl.setAttribute('y', rest[1] + capFs * .35);
@@ -223,7 +202,6 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     Object.assign(S.el, {fx, ball, bl, swing, hit, rest, crater, cap2, gIn, dIn});
     S.intro.specs = [gIn, dIn];
 
-    if (!Kit.calm) sparks.forEach((s, i) => loops.push(gsap.fromTo(s, {scale: .3, transformOrigin: '50% 50%', opacity: .3}, {scale: 1, opacity: 1, duration: .9 + i * .3, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: i * .4})));
     ['g', 'd'].forEach(k => { if (want[k]) send(k, true); });
     if (hammered) pound(true);
   }
@@ -280,7 +258,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
   // The finale: a dolerite ball swings in on its arc and pounds the granite.
   function pound(instant) {
     const e = S.el;
-    const done = () => { e.cap2.textContent = '5 mm per hour'; e.cap2.setAttribute('fill', YEL); e.cap2.setAttribute('opacity', 1); };
+    const done = () => { e.cap2.textContent = '5 mm per hour'; e.cap2.setAttribute('fill', CH); e.cap2.setAttribute('font-weight', 700); e.cap2.setAttribute('opacity', 1); };
     if (instant || Kit.calm) { gsap.set(e.ball, {opacity: 1}); gsap.set(e.bl, {opacity: 1}); gsap.set(e.crater, {scale: 1}); done(); return; }
     const tl = gsap.timeline();
     tl.fromTo(e.ball, {opacity: 0, scale: .3, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .45, ease: 'back.out(2)'})

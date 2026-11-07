@@ -1,9 +1,12 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-sharks-food-chain -->
-<!-- Look: the whole card is deep ocean. A gradient runs from the sunlit surface down to a black seabed, with swaying caustic rays, marine snow, rising bubbles, a countershaded shark, an amber school and glowing small life on the floor.
+<!-- Look: a printed cross-section of the sea, like a page from a natural history book. Three flat bands of water, slightly darker
+     with depth, sit behind the three levels of the food chain: the shark's water, the fish's water and the seabed. A flat shark is
+     drawn with a dark back and a pale belly, the way real sharks are coloured. A flat amber school swims below it, with seagrass and
+     small krill on a dark seabed. A plain boat floats on a plain surface line.
      Interaction: drag the shark up along the fishing line to the boat. The school stops fleeing as it rises. Let go out of the water and the shark is gone; let go too early and it springs back.
-     Wow: a splash, then a red cascade front sinks through the levels. The school explodes into the shark's water and down to the seabed, the small life fades out, and IMBALANCE scrambles into place.
-     Legend: a clean column on the left that the fish never cross; when the stage gets short it folds into one row along the seabed, so it always stays readable. -->
+     Wow: a splash, then a flat red front sinks through the levels. The school spreads into the shark's water and down to the seabed, the small life fades out and the grass shrinks, and IMBALANCE scrambles into place.
+     Legend: a clean column on the left that the fish never cross, in the body font; when the stage gets short it folds into one row along the seabed, so it always stays readable. -->
 <title>Take the shark away</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -11,9 +14,7 @@
 <script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
-#card.card{background:
-  radial-gradient(120% 40% at 30% 0%,rgba(120,220,255,.22),transparent 70%),
-  linear-gradient(180deg,#0e5a78 0%,#08354f 30%,#04192b 70%,#020b15 100%)}
+#card.card{background:var(--c)}
 #card .q{color:#eaf7ff}
 #card .say{color:#cfe7f3}
 #card .say b{color:#ffcf6b}
@@ -21,7 +22,7 @@
 #sea{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #sea:active{cursor:grabbing}
 #why{display:flex;flex-direction:column;gap:.7cqh}
-#why .big{font:800 max(4.4cqh,24px)/1 var(--display);letter-spacing:.08em;color:#ff7a5c;text-shadow:0 0 1.6cqh rgba(255,110,80,.45);min-height:1em;margin:0}
+#why .big{font:800 max(4.4cqh,24px)/1 var(--display);letter-spacing:.02em;color:#ff7a5c;min-height:1em;margin:0}
 #why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);color:#dcefff;margin:0;overflow-wrap:anywhere}
 #card .keep{color:#eaf7ff;opacity:1}
 #card .keep b{color:#ffcf6b}
@@ -45,24 +46,36 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
 (() => {
   const cv = Kit.$('sea'), say = Kit.$('say');
   const R = Kit.rnd, clamp = (v, a, b) => Math.max(a, Math.min(b, v)), TAU = Math.PI * 2;
-  let x = null, W = 0, H = 0, fs = 12, MONO = 'monospace', L = 100, SURF = 0, HOME = {x: 0, y: 0}, FL = 14, BOAT = 0;
+  let x = null, W = 0, H = 0, fs = 12, BODY = 'sans-serif', L = 100, SURF = 0, HOME = {x: 0, y: 0}, FL = 14, BOAT = 0;
   let compact = false, GY = [0, 0, 0], UMIN = .04, FT0 = 0, FTB = 0, FB0 = 0, FBB = 0;
   const st = {show: 1, ox: 0, oy: 0, mid: 1, small: 1, wave: -1, splash: 0, hint: 1, glow: 0};
   const tgt = {tx: 0, ty: 0};
   let dragging = false, removed = false, done = false, started = false, last = 0, T = 0, grab = null, cascade = null, splashX = 0;
   const N0 = 11, MAXMID = 3.4;
-  const fish = [], dots = [], snow = [], fronds = [], bub = [];
-  for (let i = 0; i < 70; i++) snow.push({u: R(), v: R(), s: .3 + R() * .9, p: R() * TAU, r: .6 + R() * 1.2});
+  const AMBER = '#ffc35a', RED = '#ff7a5c';
+  const fish = [], dots = [], fronds = [];
   for (let i = 0; i < 90; i++) dots.push({u: .03 + R() * .94, v: .8 + R() * .14, p: R() * TAU, a: 1});
   for (let i = 0; i < 14; i++) fronds.push({u: .03 + i / 13 * .94 + (R() - .5) * .03, h: .55 + R() * .45, p: R() * TAU});
-  for (let i = 0; i < 16; i++) bub.push({u: .05 + R() * .9, v: .3 + R() * .65, s: .5 + R(), r: 1.2 + R() * 2.2, p: R() * TAU});
   const newFish = (u, v, born) => fish.push({u, v, d: R() < .5 ? -1 : 1, sp: .035 + R() * .03, p: R() * TAU, sc: born ? 0 : 1, die: false, c: R() < .5 ? 0 : 1, z: .82 + R() * .32});
   for (let i = 0; i < N0; i++) newFish(.3 + R() * .64, .47 + R() * .2, false);
+
+  // ---------- palette: the card's ink mixed into the card's colour ----------
+  const hx = h => { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16)); };
+  let KC = [234, 247, 255], CC = [6, 40, 63], EDGE = '#021420';
+  const mix = n => `rgb(${KC.map((v, i) => Math.round(v * n / 100 + CC[i] * (1 - n / 100))).join(',')})`;
+  let P = {};
 
   function layout() {
     const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
     fs = Math.max(12, Math.min(15, Math.min(W, H) * .036));
-    MONO = getComputedStyle(document.body).getPropertyValue('--mono').trim() || 'monospace';
+    const cs = getComputedStyle(Kit.$('card'));
+    BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
+    const k = cs.getPropertyValue('--k').trim(), c = cs.getPropertyValue('--c').trim(), e = cs.getPropertyValue('--edge').trim();
+    if (/^#[0-9a-f]{3,6}$/i.test(k)) KC = hx(k);
+    if (/^#[0-9a-f]{3,6}$/i.test(c)) CC = hx(c);
+    if (e) EDGE = e;
+    P = {w1: mix(15), w2: mix(9), w3: mix(4), line: mix(70), boat: mix(82), top: mix(52), fin: mix(40), belly: mix(90), gill: mix(30),
+         krill: mix(78), track: mix(24), text: mix(94), drop: mix(85)};
     SURF = Math.max(H * .1, fs * 2.8);
     L = Math.min(W * .5, H * .36);
     HOME = {x: W * .6, y: Math.max(H * .29, SURF + L * .4)};
@@ -113,117 +126,75 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
       if (f.u > .96) { f.u = .96; f.d = -1; }
     }
     dots.forEach((d, i) => { const on = i / dots.length < st.small ? 1 : 0; d.a += (on - d.a) * Math.min(1, dt * 3); d.u += Math.sin(T * .5 + d.p) * dt * .004; });
-    snow.forEach(s => { s.v += dt * .012 * s.s; s.u += Math.sin(T * .3 + s.p) * dt * .004; if (s.v > 1) { s.v = 0; s.u = R(); } });
-    bub.forEach(q => { q.v -= dt * .045 * q.s; q.u += Math.sin(T * 2 + q.p) * dt * .006; if (q.v * H < SURF + 3) { q.v = .9 + R() * .06; q.u = .05 + R() * .9; } });
   }
 
   // ---------- drawing ----------
-  function rays() {
-    x.save(); x.globalCompositeOperation = 'lighter';
-    for (let i = 0; i < 6; i++) {
-      const bx = W * (.06 + i * .18) + Math.sin(T * .3 + i * 1.7) * W * .04, w = W * (.05 + .025 * Math.sin(i * 2.1 + T * .4));
-      const g = x.createLinearGradient(0, SURF, 0, H * .88);
-      g.addColorStop(0, 'rgba(150,230,255,.13)'); g.addColorStop(1, 'rgba(150,230,255,0)');
-      x.fillStyle = g; x.beginPath();
-      x.moveTo(bx - w * .5, SURF); x.lineTo(bx + w * .5, SURF); x.lineTo(bx + w * 1.7 + W * .09, H * .88); x.lineTo(bx - w * .1 + W * .09, H * .88); x.fill();
-    }
-    x.lineWidth = 1.2;
-    for (let r = 0; r < 3; r++) {
-      x.strokeStyle = `rgba(180,240,255,${.2 - r * .05})`; x.beginPath();
-      for (let px = 0; px <= W; px += 7) {
-        const y = SURF + fs * (.9 + r * 1) + Math.sin(px * .045 + T * 1.6 + r * 2) * fs * .28 + Math.sin(px * .11 - T * 1.1 + r) * fs * .16;
-        px ? x.lineTo(px, y) : x.moveTo(px, y);
-      }
-      x.stroke();
-    }
-    x.restore();
+  const surfY = px => SURF + Math.sin(px * .03 + T * 1.4) * 2.2 + Math.sin(px * .08 - T) * 1.2;
+  function water() {
+    // three flat bands, one per level of the food chain, a little darker with depth
+    const y1 = H * .4, y2 = H * .74;
+    x.fillStyle = P.w3; x.fillRect(0, y2, W, H - y2);
+    x.fillStyle = P.w2; x.fillRect(0, y1, W, y2 - y1 + 1);
+    x.fillStyle = P.w1; x.beginPath(); x.moveTo(0, y1 + 1);
+    for (let px = 0; px <= W; px += 6) x.lineTo(px, surfY(px));
+    x.lineTo(W, surfY(W)); x.lineTo(W, y1 + 1); x.closePath(); x.fill();
   }
   function surface() {
     const glow = st.glow;
     x.save();
-    x.strokeStyle = `rgba(210,248,255,${.75 + glow * .25})`; x.lineWidth = 2 + glow * 2;
-    if (glow) { x.shadowColor = 'rgba(160,240,255,.9)'; x.shadowBlur = 14 * glow; }
+    x.strokeStyle = glow > .5 ? AMBER : P.line; x.lineWidth = 2 + glow * 1.5; x.lineJoin = 'round';
     x.beginPath();
-    for (let px = 0; px <= W; px += 6) { const y = SURF + Math.sin(px * .03 + T * 1.4) * 2.2 + Math.sin(px * .08 - T) * 1.2; px ? x.lineTo(px, y) : x.moveTo(px, y); }
+    for (let px = 0; px <= W; px += 6) { const y = surfY(px); px ? x.lineTo(px, y) : x.moveTo(px, y); }
     x.stroke(); x.restore();
-    const bx = BOAT, by = SURF + Math.sin(BOAT * .03 + T * 1.4) * 2.2, hw = Math.min(W * .11, 60), rock = Math.sin(T * 1.2) * .04;
-    // lantern glimmer on the water
-    x.save(); x.globalCompositeOperation = 'lighter';
-    for (let i = 0; i < 4; i++) {
-      const a = .28 - i * .06 + Math.sin(T * 3 + i) * .05, ww = hw * (.5 - i * .08);
-      x.fillStyle = `rgba(255,205,120,${Math.max(0, a)})`;
-      x.fillRect(bx - hw * .35 - ww / 2 + Math.sin(T * 2 + i * 1.3) * 3, by + fs * .75 + i * fs * .32, ww, 1.6);
-    }
-    x.restore();
+    const bx = BOAT, by = surfY(BOAT), hw = Math.min(W * .11, 60), rock = Math.sin(T * 1.2) * .04;
     x.save(); x.translate(bx, by); x.rotate(rock);
-    x.fillStyle = '#021019';
+    x.fillStyle = P.boat;
     x.beginPath(); x.moveTo(-hw, -fs * .25); x.lineTo(hw * 1.05, -fs * .45); x.lineTo(hw * .72, fs * .55); x.lineTo(-hw * .78, fs * .55); x.closePath(); x.fill();
     x.fillRect(-hw * .55, -fs * 1.05, hw * .55, fs * .82);
-    x.fillStyle = '#ffd27a'; x.fillRect(-hw * .45, -fs * .85, hw * .14, fs * .26); x.fillRect(-hw * .25, -fs * .85, hw * .14, fs * .26);
-    x.strokeStyle = '#021019'; x.lineWidth = 2; x.beginPath(); x.moveTo(hw * .3, -fs * .35); x.lineTo(hw * .3, -fs * 2.2); x.lineTo(hw * .95, -fs * .5); x.stroke();
-    x.fillStyle = 'rgba(255,90,70,.9)'; x.beginPath(); x.arc(hw * .3, -fs * 2.2, 1.8, 0, TAU); x.fill();
-    x.restore();
-  }
-  function bubbles() {
-    x.save(); x.lineWidth = 1;
-    bub.forEach(q => {
-      const py = q.v * H; if (py < SURF + 3) return;
-      const a = clamp((py - SURF) / (fs * 4), 0, 1) * .45;
-      x.strokeStyle = `rgba(200,245,255,${a})`; x.beginPath(); x.arc(q.u * W, py, q.r, 0, TAU); x.stroke();
-      x.fillStyle = `rgba(230,252,255,${a})`; x.beginPath(); x.arc(q.u * W - q.r * .35, py - q.r * .35, q.r * .3, 0, TAU); x.fill();
-    });
+    x.fillStyle = mix(0); x.fillRect(-hw * .45, -fs * .85, hw * .14, fs * .26); x.fillRect(-hw * .25, -fs * .85, hw * .14, fs * .26);
+    x.strokeStyle = P.boat; x.lineWidth = 2; x.lineJoin = 'round'; x.beginPath(); x.moveTo(hw * .3, -fs * .35); x.lineTo(hw * .3, -fs * 2.2); x.lineTo(hw * .95, -fs * .5); x.stroke();
     x.restore();
   }
   function seabed() {
     const b = 1 - st.small;
+    x.lineCap = 'round';
+    x.strokeStyle = mix(36 - 18 * b); x.lineWidth = Math.max(3, fs * .32);
     fronds.forEach(f => {
       const bx = f.u * W, by = H * .97, h = f.h * H * .15 * (.3 + .7 * st.small), sw = Math.sin(T * .9 + f.p) * h * .25;
-      x.lineCap = 'round';
-      x.strokeStyle = `hsl(${152 - 112 * b},${58 - 25 * b}%,${44 - 12 * b}%)`; x.lineWidth = Math.max(3, fs * .32);
       x.beginPath(); x.moveTo(bx, by); x.quadraticCurveTo(bx - sw * .4, by - h * .55, bx + sw, by - h); x.stroke();
-      x.strokeStyle = `hsla(${150 - 100 * b},70%,${70 - 25 * b}%,.45)`; x.lineWidth = 1.1;
-      x.beginPath(); x.moveTo(bx - 1, by); x.quadraticCurveTo(bx - sw * .4 - 1, by - h * .55, bx + sw - 1, by - h); x.stroke();
     });
-    const g = x.createLinearGradient(0, H * .9, 0, H);
-    g.addColorStop(0, '#062033'); g.addColorStop(1, '#010810');
-    x.fillStyle = g; x.beginPath(); x.moveTo(0, H);
+    x.fillStyle = EDGE; x.beginPath(); x.moveTo(0, H);
     for (let px = 0; px <= W; px += W / 18) x.lineTo(px, H * .955 + Math.sin(px * .021) * H * .018 + Math.sin(px * .067 + 1) * H * .01);
     x.lineTo(W, H); x.closePath(); x.fill();
-    x.save(); x.globalCompositeOperation = 'lighter';
+    // small life: little krill, curled
+    x.save(); x.strokeStyle = P.krill; x.lineWidth = 1.6; x.lineCap = 'round';
     dots.forEach(d => {
       if (d.a < .02) return;
-      const px = d.u * W, py = d.v * H + Math.sin(T * 1.1 + d.p) * 3, tw = .6 + .4 * Math.sin(T * 2 + d.p * 3);
-      x.fillStyle = `rgba(110,255,215,${.18 * d.a * tw})`; x.beginPath(); x.arc(px, py, 4.5, 0, TAU); x.fill();
-      x.fillStyle = `rgba(190,255,235,${.9 * d.a * tw})`; x.beginPath(); x.arc(px, py, 1.5, 0, TAU); x.fill();
+      const px = d.u * W, py = d.v * H + Math.sin(T * 1.1 + d.p) * 3;
+      x.globalAlpha = st.show * d.a;
+      x.beginPath(); x.arc(px, py, 2.6, d.p, d.p + Math.PI * 1.1); x.stroke();
     });
     x.restore();
-    if (compact) {
-      const d = x.createLinearGradient(0, H - fs * 3.2, 0, H);
-      d.addColorStop(0, 'rgba(1,8,16,0)'); d.addColorStop(1, 'rgba(1,8,16,.85)');
-      x.fillStyle = d; x.fillRect(0, H - fs * 3.2, W, fs * 3.2);
-    }
+    if (compact) { x.fillStyle = EDGE; x.fillRect(0, H - fs * 2.4, W, fs * 2.4); }
   }
   function drawFish(f) {
     const l = FL * f.sc * f.z; if (l < .6) return;
     const px = f.u * W, py = f.v * H, wag = Math.sin(T * 9 + f.p) * l * .08;
-    x.save(); x.translate(px, py); x.scale(f.d, 1); x.globalAlpha *= (.4 + .6 * f.sc) * (.75 + .25 * f.z);
-    x.fillStyle = f.c ? '#ff9b4a' : '#ffc35a';
+    x.save(); x.translate(px, py); x.scale(f.d, 1); x.globalAlpha *= .5 + .5 * f.sc;
+    x.fillStyle = f.c ? '#ffb24e' : AMBER;
     x.beginPath(); x.moveTo(-l * .38, 0); x.lineTo(-l * .72, -l * .22 + wag); x.lineTo(-l * .66, wag); x.lineTo(-l * .72, l * .22 + wag); x.closePath(); x.fill();
     x.beginPath(); x.moveTo(-l * .05, -l * .2); x.lineTo(-l * .22, -l * .3); x.lineTo(-l * .25, -l * .15); x.closePath(); x.fill();
     x.beginPath(); x.ellipse(0, 0, l * .5, l * .22, 0, 0, TAU); x.fill();
-    x.fillStyle = 'rgba(120,40,10,.35)'; x.beginPath(); x.ellipse(0, l * .07, l * .4, l * .1, 0, 0, TAU); x.fill();
-    x.fillStyle = 'rgba(255,245,210,.55)'; x.beginPath(); x.ellipse(l * .05, -l * .1, l * .3, l * .05, 0, 0, TAU); x.fill();
-    x.fillStyle = '#04121c'; x.beginPath(); x.arc(l * .3, -l * .04, Math.max(1, l * .05), 0, TAU); x.fill();
+    x.fillStyle = mix(0); x.beginPath(); x.arc(l * .3, -l * .04, Math.max(1, l * .05), 0, TAU); x.fill();
     x.restore();
   }
   function drawShark(cx, cy, len, ang, w) {
     x.save(); x.translate(cx, cy); x.rotate(ang); x.scale(len, len);
-    x.fillStyle = '#284456';
+    // far pectoral fin
+    x.fillStyle = P.fin;
     x.beginPath(); x.moveTo(.14, .06); x.quadraticCurveTo(.06, .12, -.01, .18); x.quadraticCurveTo(.04, .1, .03, .07); x.closePath(); x.fill();
-    x.shadowColor = 'rgba(0,8,16,.6)'; x.shadowBlur = 26; x.shadowOffsetY = 16;
-    const g = x.createLinearGradient(0, -.14, 0, .12);
-    g.addColorStop(0, '#3a5e73'); g.addColorStop(.42, '#7b9caf'); g.addColorStop(.6, '#c6d9e2'); g.addColorStop(1, '#eef6f8');
-    x.fillStyle = g; x.beginPath();
+    // body: dark back
+    x.fillStyle = P.top; x.beginPath();
     x.moveTo(.5, .02);
     x.quadraticCurveTo(.46, -.08, .3, -.1);
     x.lineTo(.12, -.11);
@@ -238,78 +209,82 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
     x.quadraticCurveTo(.32, .12, .44, .06);
     x.quadraticCurveTo(.5, .04, .5, .02);
     x.closePath(); x.fill();
-    x.shadowColor = 'transparent';
-    x.strokeStyle = 'rgba(220,245,255,.4)'; x.lineWidth = 1.3 / len;
-    x.beginPath(); x.moveTo(.46, -.035); x.quadraticCurveTo(.2, -.1, -.36, -.035); x.stroke();
-    x.strokeStyle = 'rgba(18,38,50,.55)'; x.lineWidth = 1.4 / len;
+    // pale belly (countershading)
+    x.save(); x.clip();
+    x.fillStyle = P.belly; x.beginPath();
+    x.moveTo(.6, .005); x.quadraticCurveTo(.15, -.045, -.42, .03 + w * .5); x.lineTo(-.42, .4); x.lineTo(.6, .4); x.closePath(); x.fill();
+    x.restore();
+    // gills, mouth
+    x.strokeStyle = P.gill; x.lineWidth = 1.4 / len; x.lineCap = 'round';
     for (let i = 0; i < 4; i++) { const gx = .28 - i * .028; x.beginPath(); x.moveTo(gx, -.05); x.quadraticCurveTo(gx - .016, 0, gx, .05); x.stroke(); }
-    x.fillStyle = '#5c7e91';
+    x.beginPath(); x.moveTo(.44, .055); x.quadraticCurveTo(.39, .075, .33, .066); x.stroke();
+    // near fins
+    x.fillStyle = P.fin;
     x.beginPath(); x.moveTo(.2, .07); x.quadraticCurveTo(.1, .14, .02, .24); x.quadraticCurveTo(.08, .12, .06, .08); x.closePath(); x.fill();
     x.beginPath(); x.moveTo(-.22, .08); x.lineTo(-.27, .13); x.lineTo(-.28, .075); x.closePath(); x.fill();
+    x.fillStyle = P.top;
     x.beginPath(); x.moveTo(-.26, -.06); x.lineTo(-.3, -.11); x.lineTo(-.31, -.05); x.closePath(); x.fill();
-    x.strokeStyle = 'rgba(18,30,38,.6)'; x.beginPath(); x.moveTo(.44, .055); x.quadraticCurveTo(.39, .075, .33, .066); x.stroke();
-    x.fillStyle = '#061016'; x.beginPath(); x.arc(.385, -.025, .013, 0, TAU); x.fill();
-    x.fillStyle = 'rgba(255,255,255,.8)'; x.beginPath(); x.arc(.389, -.03, .004, 0, TAU); x.fill();
+    x.fillStyle = mix(0); x.beginPath(); x.arc(.385, -.025, .013, 0, TAU); x.fill();
     x.restore();
   }
   function fishingLine(sp) {
     if (removed) return;
     const a = st.hint * .9 + (dragging ? .4 : 0); if (a < .02) return;
     const sx = sp.x - L * .03, sy = sp.y - L * .3, ex = BOAT + Math.min(W * .11, 60) * .95, ey = SURF - fs * .5, cxp = ex, cyp = sy - L * .1;
-    x.save(); x.strokeStyle = `rgba(230,250,255,${.45 * Math.min(1, a)})`; x.lineWidth = 1.3; x.setLineDash([5, 6]); x.lineDashOffset = -T * 22;
-    x.beginPath(); x.moveTo(sx, sy); x.quadraticCurveTo(cxp, cyp, ex, ey); x.stroke(); x.setLineDash([]);
+    x.save(); x.globalAlpha *= .7 * Math.min(1, a); x.strokeStyle = P.line; x.lineWidth = 1.3;
+    x.beginPath(); x.moveTo(sx, sy); x.quadraticCurveTo(cxp, cyp, ex, ey); x.stroke();
+    x.restore();
     const t = (T * .45) % 1, q = (p0, p1, p2) => (1 - t) * (1 - t) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
     const px = q(sx, cxp, ex), py = q(sy, cyp, ey), ang = Math.atan2(2 * (1 - t) * (cyp - sy) + 2 * t * (ey - cyp), 2 * (1 - t) * (cxp - sx) + 2 * t * (ex - cxp));
-    x.translate(px, py); x.rotate(ang); x.fillStyle = `rgba(255,207,107,${Math.min(1, a) * Math.sin(t * Math.PI)})`;
+    x.save(); x.translate(px, py); x.rotate(ang); x.globalAlpha *= Math.min(1, a) * Math.sin(t * Math.PI); x.fillStyle = AMBER;
     x.beginPath(); x.moveTo(fs * .55, 0); x.lineTo(-fs * .3, -fs * .35); x.lineTo(-fs * .3, fs * .35); x.closePath(); x.fill();
     x.restore();
   }
   function splash() {
     const s = st.splash; if (s <= 0 || s >= 1) return;
     x.save(); x.globalAlpha *= 1 - s;
-    for (let i = 0; i < 3; i++) { x.strokeStyle = 'rgba(220,250,255,.9)'; x.lineWidth = 2; x.beginPath(); x.ellipse(splashX, SURF + 2, W * .12 * s * (1 + i * .5), fs * .5 * s * (1 + i * .3), 0, 0, TAU); x.stroke(); }
-    x.fillStyle = 'rgba(220,250,255,.95)';
-    for (let i = 0; i < 9; i++) { const a = -Math.PI * (.15 + .7 * i / 8), r = W * .14 * s; x.beginPath(); x.arc(splashX + Math.cos(a) * r, SURF + Math.sin(a) * r * .9 + s * s * fs * 3, 2.2, 0, TAU); x.fill(); }
+    x.strokeStyle = P.drop; x.lineWidth = 2;
+    for (let i = 0; i < 2; i++) { x.beginPath(); x.ellipse(splashX, SURF + 2, W * .12 * s * (1 + i * .5), fs * .5 * s * (1 + i * .3), 0, 0, TAU); x.stroke(); }
+    x.fillStyle = P.drop;
+    for (let i = 0; i < 9; i++) { const a = -Math.PI * (.15 + .7 * i / 8), r = W * .14 * s; x.beginPath(); x.arc(splashX + Math.cos(a) * r, SURF + Math.sin(a) * r * .9 + s * s * fs * 3, 2.4, 0, TAU); x.fill(); }
     x.restore();
   }
   function waveBand() {
     const w = st.wave; if (w <= 0 || w >= 1) return;
-    const y = SURF + (H - SURF) * w, a = Math.sin(w * Math.PI), h = fs * 3;
-    x.save(); x.globalCompositeOperation = 'lighter';
-    const g = x.createLinearGradient(0, y - h, 0, y + h);
-    g.addColorStop(0, 'rgba(255,90,70,0)'); g.addColorStop(.5, `rgba(255,110,80,${.32 * a})`); g.addColorStop(1, 'rgba(255,90,70,0)');
-    x.fillStyle = g; x.beginPath(); x.moveTo(0, y - h);
+    const y = SURF + (H - SURF) * w, a = Math.sin(w * Math.PI), h = fs * 1.6;
+    x.save();
+    x.globalAlpha *= .22 * a; x.fillStyle = RED; x.beginPath(); x.moveTo(0, y - h);
     for (let px = 0; px <= W; px += 12) x.lineTo(px, y - h + Math.sin(px * .05 + T * 3) * 3);
-    x.lineTo(W, y + h); x.lineTo(0, y + h); x.closePath(); x.fill();
+    x.lineTo(W, y); x.lineTo(0, y); x.closePath(); x.fill();
     x.restore();
+    x.save(); x.globalAlpha *= a; x.strokeStyle = RED; x.lineWidth = 2.5; x.beginPath();
+    for (let px = 0; px <= W; px += 12) { const yy = y + Math.sin(px * .05 + T * 3) * 3; px ? x.lineTo(px, yy) : x.moveTo(px, yy); }
+    x.stroke(); x.restore();
   }
   function gauge(X0, bw, y, text, v, max, col) {
     const bh = Math.max(4, fs * .42), by = y + fs * .45;
     x.save();
-    x.font = `700 ${fs}px ${MONO}`; x.textBaseline = 'alphabetic';
-    x.shadowColor = 'rgba(0,10,20,.95)'; x.shadowBlur = 8;
-    x.fillStyle = 'rgba(234,247,255,.95)'; x.fillText(text, X0, y); x.fillText(text, X0, y);
-    x.shadowBlur = 0;
+    x.font = `600 ${fs}px ${BODY}`; x.textBaseline = 'alphabetic';
+    x.fillStyle = P.text; x.fillText(text, X0, y);
     const rr = (px, py, w, h, c) => { x.fillStyle = c; x.beginPath(); x.roundRect ? x.roundRect(px, py, Math.max(0, w), h, h / 2) : x.rect(px, py, Math.max(0, w), h); x.fill(); };
-    rr(X0, by, bw, bh, 'rgba(255,255,255,.14)');
+    rr(X0, by, bw, bh, P.track);
     rr(X0, by, bw * clamp(v / max, 0, 1), bh, col);
-    if (max > 1) { x.fillStyle = 'rgba(234,247,255,.9)'; x.fillRect(X0 + bw / max - 1, by - 3, 2, bh + 6); }
+    if (max > 1) { x.fillStyle = P.text; x.fillRect(X0 + bw / max - 1, by - 3, 2, bh + 6); }
     x.restore();
   }
   function labels() {
     const pr = presence(), b = boom();
-    const mc = b > .25 ? `hsl(${38 - 30 * b},100%,${62 - 4 * b}%)` : '#ffc35a';
     const items = [
-      [pr < .02 ? 'SHARKS ✕' : 'SHARKS', pr < .02 ? 'SHARK ✕' : 'SHARK', pr, 1, pr < .5 ? '#ff7a5c' : '#9fd6ee'],
-      [b > .3 ? 'MID FISH ▲' : 'MID FISH', b > .3 ? 'FISH ▲' : 'FISH', st.mid, MAXMID, mc],
-      [st.small < .6 ? 'SMALL LIFE ▼' : 'SMALL LIFE', st.small < .6 ? 'SMALL ▼' : 'SMALL', st.small, 1, st.small < .6 ? '#ff7a5c' : '#6effd3']
+      [pr < .02 ? 'Sharks ✕' : 'Sharks', pr < .02 ? 'Shark ✕' : 'Shark', pr, 1, pr < .5 ? RED : P.belly],
+      [b > .3 ? 'Mid fish ▲' : 'Mid fish', b > .3 ? 'Fish ▲' : 'Fish', st.mid, MAXMID, b > .3 ? RED : AMBER],
+      [st.small < .6 ? 'Small life ▼' : 'Small life', st.small < .6 ? 'Small ▼' : 'Small', st.small, 1, st.small < .6 ? RED : P.krill]
     ];
     const X0 = Math.max(6, W * .03);
     if (!compact) {
       items.forEach((it, i) => gauge(X0, W * .24, GY[i], it[0], it[2], it[3], it[4]));
     } else {
       const colW = (W - 2 * X0) / 3;
-      x.font = `700 ${fs}px ${MONO}`;
+      x.font = `600 ${fs}px ${BODY}`;
       items.forEach((it, i) => {
         const t = x.measureText(it[0]).width > colW - fs * .6 ? it[1] : it[0];
         gauge(X0 + i * colW, colW - fs * 1.2, H - fs * 1.15, t, it[2], it[3], it[4]);
@@ -323,10 +298,7 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
       update(dt);
       x.clearRect(0, 0, W, H);
       x.save(); x.globalAlpha = st.show;
-      rays(); surface();
-      x.fillStyle = 'rgba(210,240,255,.4)';
-      snow.forEach(s => { x.beginPath(); x.arc(s.u * W, SURF + s.v * (H - SURF), s.r, 0, TAU); x.fill(); });
-      bubbles();
+      water(); surface();
       seabed();
       fish.forEach(drawFish);
       waveBand();

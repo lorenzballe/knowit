@@ -8,7 +8,13 @@
 <style>
 #stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
 #sec{flex:1;min-height:0;width:100%;display:block;color:var(--k);touch-action:none;cursor:grab}
-#read{font:700 max(1.9cqh,12px)/1.25 var(--mono);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:1.4cqh;padding:1.1cqh 3.5cqw;min-height:2.6em;display:flex;align-items:center;overflow-wrap:anywhere}
+#sec text{font-family:var(--body)}
+#sec .ice{fill:color-mix(in srgb,var(--k) 7%,var(--c));stroke:color-mix(in srgb,var(--k) 55%,var(--c))}
+#sec .west{fill:color-mix(in srgb,var(--k) 38%,var(--c))}
+#sec .westl{stroke:color-mix(in srgb,var(--k) 62%,var(--c))}
+#sec .bit{fill:var(--c);stroke:var(--k)}
+#sec .grip{fill:none;stroke:var(--k)}
+#read{font:600 max(1.9cqh,12px)/1.3 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:1.4cqh;padding:1.1cqh 3.5cqw;min-height:2.6em;display:flex;align-items:center;overflow-wrap:anywhere}
 #read.hot{background:#7a2d4a;color:#fff}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0}
@@ -45,40 +51,61 @@ function txt(x,y,s,attrs,parent){
 function draw(){
   G = geo(); const {W,H,f,g,r,sedBot,dx,fs} = G;
   svg.innerHTML = '';
-  // ghost ice sheet
-  Kit.mk('path',{d:`M${W*.02} ${g} Q${W*.5} ${-H*.14} ${W*.98} ${g}`,fill:'currentColor','fill-opacity':.05,stroke:'currentColor','stroke-opacity':.45,'stroke-dasharray':'5 5','stroke-width':1.5},svg);
-  txt(W*.5,H*.16,'ice sheet, lifted away',{opacity:.6,'font-weight':500});
-  // east: craton then sediment
+  // the ice sheet that has been taken off: a pale dashed outline
+  Kit.mk('path',{class:'ice',d:`M${W*.02} ${g} Q${W*.5} ${-H*.14} ${W*.98} ${g}`,'stroke-dasharray':'6 5','stroke-width':1.5},svg);
+  txt(W*.5,H*.16,'ice sheet, lifted away',{'font-weight':500,opacity:.75});
+
+  // East: the old craton, folded bands of gneiss
   const crat = Kit.mk('rect',{x:W*.36,y:sedBot,width:W*.64,height:H-sedBot,fill:'#6e2743'},svg);
   G.crat = crat;
-  for(let i=1;i<7;i++){
-    const y = sedBot + i*(H-sedBot)/7; let p = `M${W*.36} ${y}`;
-    for(let x=W*.36;x<=W;x+=W*.06) p += ` Q${x+W*.015} ${y+(i%2?6:-6)} ${x+W*.03} ${y} T${x+W*.06} ${y}`;
-    Kit.mk('path',{d:p,fill:'none',stroke:'#b9577a','stroke-width':1.4,opacity:.7},svg);
+  const cH = H - sedBot, x0 = W*.36, x1 = W;
+  for(let i=0;i<5;i++){
+    const y = sedBot + (i+.7)*cH/5.4, a = cH*(.05 + .02*(i%3)), ph = i*.9;
+    let p = '';
+    for(let k=0;k<=24;k++){
+      const x = x0 + (x1-x0)*k/24;
+      const yy = y + a*Math.sin(k/24*Math.PI*2.2 + ph) + a*.35*Math.sin(k/24*Math.PI*5 + ph*2);
+      p += (k ? ' L' : 'M') + x.toFixed(1) + ' ' + yy.toFixed(1);
+    }
+    Kit.mk('path',{d:p,fill:'none',stroke:'#8d3d5f','stroke-width':Math.max(3,cH*.035),'stroke-linejoin':'round','stroke-linecap':'butt'},svg);
   }
+  // younger sediments on top: flat beds of sand and mud
   Kit.mk('rect',{x:W*.36,y:g,width:W*.64,height:sedBot-g,fill:'#e3b866'},svg);
-  for(let i=0;i<40;i++) Kit.mk('circle',{cx:W*.37+Kit.rnd()*W*.62,cy:g+3+Kit.rnd()*(sedBot-g-6),r:1.2,fill:'#9a7330'},svg);
-  // west block
-  Kit.mk('path',{d:`M0 ${g+.06*r} L${W*.1} ${g+.02*r} L${W*.2} ${g+.07*r} L${W*.3} ${g+.01*r} L${W*.41} ${g} L${W*.37} ${H} L0 ${H}Z`,fill:'#7e8f9e'},svg);
-  for(let i=1;i<5;i++){
-    const y = g + .1*r + i*r*.17;
-    Kit.mk('path',{d:`M0 ${y} Q${W*.1} ${y-r*.12} ${W*.2} ${y} T${W*.38} ${y}`,fill:'none',stroke:'#5d6c79','stroke-width':1.6},svg);
+  for(let i=1;i<3;i++){
+    const y = g + i*(sedBot-g)/3;
+    Kit.mk('path',{d:`M${W*.36} ${y} Q${W*.6} ${y+2} ${W*.8} ${y-1} T${W} ${y+1}`,fill:'none',stroke:'#c4964a','stroke-width':1.5},svg);
   }
+
+  // West: a jumble of tilted, faulted blocks
+  Kit.mk('path',{class:'west',d:`M0 ${g+.06*r} L${W*.1} ${g+.02*r} L${W*.2} ${g+.07*r} L${W*.3} ${g+.01*r} L${W*.41} ${g} L${W*.37} ${H} L0 ${H}Z`},svg);
+  const blocks = [[0,W*.12,0,.10],[W*.12,W*.25,r*.07,-.12],[W*.25,W*.37,-r*.04,.16]];
+  for(let i=0;i<4;i++){
+    const base = g + .2*r + i*r*.2;
+    blocks.forEach(([a,b,off,sl])=>{
+      const ya = base+off, yb = base+off+sl*(b-a);
+      if(Math.max(ya,yb) > H-2) return;
+      Kit.mk('line',{class:'westl',x1:a+2,y1:ya,x2:b-2,y2:yb,'stroke-width':1.8,'stroke-linecap':'round'},svg);
+    });
+  }
+  Kit.mk('line',{class:'westl',x1:W*.12,y1:g+.03*r,x2:W*.105,y2:H,'stroke-width':2},svg);
+  Kit.mk('line',{class:'westl',x1:W*.25,y1:g+.05*r,x2:W*.265,y2:H,'stroke-width':2},svg);
   txt(W*.18,g+.42*r,'built',{fill:'#fff'}); txt(W*.18,g+.42*r+fs*1.35,'differently',{fill:'#fff'});
+
   // layer labels
   txt(W*.43,(g+sedBot)/2+fs*.35,'younger sediments',{'text-anchor':'start',fill:'#3a2a10'});
   txt(W*.43,sedBot+.3*r,'ancient craton',{'text-anchor':'start',fill:'#fff'});
   txt(W*.43,sedBot+.3*r+fs*1.35,'igneous + metamorphic',{'text-anchor':'start',fill:'#fff','font-weight':500});
   // region names
-  txt(W*.19,g-H*.04,'WEST',{'font-size':Math.max(12,f)});
-  txt(W*.62,g-H*.04,'EAST',{'font-size':Math.max(12,f)});
-  // rig
+  txt(W*.19,g-H*.04,'West');
+  txt(W*.62,g-H*.04,'East');
+
+  // drill rig: a plain little derrick
   const rt = g - H*.08;
-  Kit.mk('path',{d:`M${dx-W*.04} ${g} L${dx} ${rt} L${dx+W*.04} ${g} M${dx-W*.025} ${g-H*.03} L${dx+W*.025} ${g-H*.03}`,fill:'none',stroke:'currentColor','stroke-width':2.2,'stroke-linejoin':'round'},svg);
+  Kit.mk('path',{d:`M${dx-W*.04} ${g} L${dx} ${rt} L${dx+W*.04} ${g} M${dx-W*.025} ${g-H*.03} L${dx+W*.025} ${g-H*.03}`,fill:'none',stroke:'currentColor','stroke-width':2.2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
   G.hole = Kit.mk('line',{x1:dx,y1:g,x2:dx,y2:g,stroke:'#1a1a1a','stroke-width':7,'stroke-linecap':'round'},svg);
   G.pipe = Kit.mk('line',{x1:dx,y1:rt,x2:dx,y2:g,stroke:'#fff','stroke-width':2.5},svg);
-  G.ring = Kit.mk('circle',{cx:dx,cy:g,r:Math.max(14,f*1.1),fill:'none',stroke:'#ff7aa8','stroke-width':3},svg);
-  G.bit = Kit.mk('path',{d:'',fill:'#fff',stroke:'#1a1a1a','stroke-width':1.5},svg);
+  G.ring = Kit.mk('circle',{class:'grip',cx:dx,cy:g,r:Math.max(14,f*1.1),'stroke-width':2},svg);
+  G.bit = Kit.mk('path',{class:'bit',d:'','stroke-width':1.8,'stroke-linejoin':'round'},svg);
   place();
 }
 function place(){

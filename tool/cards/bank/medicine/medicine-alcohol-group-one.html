@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: medicine-alcohol-group-one -->
-<!-- Look: a Swiss poster on warm newsprint. Strict grid, one hot red, a giant drawn "?" with a halftone print shadow, a wine glass on the baseline.
-     Interaction: each tap files one more study into the evidence column, and the "?" fills with red ink from the bottom up. The stack climbs toward the "sufficient" line, because that is what decides the class.
-     Wow: the evidence crosses the line, the "?" spins away, a huge red 1 is written in its place, the red rule sweeps the baseline, and cigarette smoke slides in on the same row. -->
+<!-- Look: a page from a printed health book on warm newsprint. One hot red, a big hollow "?" drawn like a printed letter, a plain wine glass on the baseline.
+     Interaction: each tap files one more study (a paper sheet with a folded corner) onto the evidence pile, and the "?" fills with red ink from the bottom up. The pile climbs toward the "sufficient" line, because that is what decides the class.
+     Wow: the evidence crosses the line, the "?" spins away, a huge red 1 is written in its place, the red rule sweeps the baseline, and a cigarette slides in on the same row. -->
 <title>Alcohol: Group 1</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -46,7 +46,9 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), card = Kit.$('card'), say = Kit.$('say');
+  // Ink, card colour and flat tints of ink on the card (color-mix of --k into --c, precomputed so GSAP can tween them).
   const INK = '#121212', RED = '#e8261c', PAPER = '#f7f4ec', GROUND = '#f2eee4', N = 6, T = .165;
+  const TINT = '#dcd8ce', MID = '#a19d95', TAN = '#d6a764';
   const G = window.gsap;
   if (G) { const p = [window.ScrambleTextPlugin, window.SplitText, window.DrawSVGPlugin].filter(Boolean); if (p.length) G.registerPlugin(...p); }
   let n = 0, done = false, busy = false, built = false, W = 0, H = 0, fs = 12, R = {};
@@ -57,7 +59,7 @@
     e.textContent = s; return e;
   };
   const tw = (el, est) => { let v = 0; try { v = el.getComputedTextLength(); } catch (e) {} return v > 0 ? v : est; };
-  const mono = (sz, extra = {}) => Object.assign({style: 'font-family:var(--mono)', 'font-weight': 600, 'letter-spacing': '.06em', 'font-size': sz}, extra);
+  const body = (extra = {}) => Object.assign({style: 'font-family:var(--body)', 'font-weight': 600, 'font-size': fs}, extra);
   const disp = (sz, extra = {}) => Object.assign({style: 'font-family:var(--display)', 'font-weight': 900, 'letter-spacing': '-.01em', 'font-size': sz}, extra);
   const ROUND = {fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'};
 
@@ -66,14 +68,13 @@
     q: (X, Y, S) => `M${X(.12)},${Y(.27)} A${S(.19)},${S(.19)} 0 1 1 ${X(.432)},${Y(.416)} Q${X(.31)},${Y(.5)} ${X(.31)},${Y(.6)} L${X(.31)},${Y(.64)}`,
     one: (X, Y) => `M${X(.12)},${Y(.25)} L${X(.36)},${Y(.085)} L${X(.36)},${Y(.915)} M${X(.15)},${Y(.915)} L${X(.57)},${Y(.915)}`
   };
+  // A printed letter: one even ink outline around a flat body, nothing else.
   function glyph(p, key, x0, top, h, base, level) {
     const X = u => (x0 + u * h).toFixed(2), Y = u => (top + u * h).toFixed(2), S = u => (u * h).toFixed(2);
-    const d = PATHS[key](X, Y, S), w = T * h, sw = Math.max(1.8, h * .009), off = h * .035;
+    const d = PATHS[key](X, Y, S), w = T * h, sw = Math.max(1.8, h * .009);
     const g = mk('g', {}, p), o = {g};
     const dot = key === 'q' ? [x0 + .31 * h, top + .86 * h, .085 * h] : null;
-    o.sh = mk('g', {transform: `translate(${off.toFixed(2)},${(off * .6).toFixed(2)})`, opacity: .6}, g);
-    mk('path', Object.assign({d, stroke: 'url(#dots)', 'stroke-width': w + sw * 2}, ROUND), o.sh);
-    if (dot) mk('circle', {cx: dot[0], cy: dot[1], r: dot[2] + sw, fill: 'url(#dots)'}, o.sh);
+    o.sh = mk('g', {}, g);
     o.outer = mk('path', Object.assign({d, stroke: INK, 'stroke-width': w + sw * 2}, ROUND), g);
     o.inner = mk('path', Object.assign({d, stroke: base, 'stroke-width': w}, ROUND), g);
     if (dot) { o.dotO = mk('circle', {cx: dot[0], cy: dot[1], r: dot[2] + sw, fill: INK}, g); mk('circle', {cx: dot[0], cy: dot[1], r: dot[2], fill: base}, g); }
@@ -85,40 +86,38 @@
       const rg = mk('g', {'clip-path': `url(#${id})`}, g);
       mk('path', Object.assign({d, stroke: RED, 'stroke-width': w}, ROUND), rg);
       if (dot) mk('circle', {cx: dot[0], cy: dot[1], r: dot[2], fill: RED}, rg);
-      // a little ink meniscus on the rising level
-      o.men = mk('line', {x1: x0, x2: x0 + h * .64, y1: 0, y2: 0, stroke: '#fff', 'stroke-opacity': .5, 'stroke-width': 1.2}, rg);
+      // the ink level marker (kept for the animation, not drawn)
+      o.men = mk('line', {x1: x0, x2: x0 + h * .64, y1: 0, y2: 0, stroke: 'none'}, rg);
       G && G.set(o.men, {attr: {y1: o.lvlY(level), y2: o.lvlY(level)}});
       if (!G) { o.men.setAttribute('y1', o.lvlY(level)); o.men.setAttribute('y2', o.lvlY(level)); }
     }
     return o;
   }
 
+  // A plain wine glass: one outline, flat red wine, a stem and a foot.
   function glass(p, cx, top, h) {
     const g = mk('g', {}, p), w = h * .62, bh = h * .56, L = cx - w / 2, Rr = cx + w / 2;
     const side = `M${L},${top} C${L},${top + bh * .8} ${cx - w * .22},${top + bh} ${cx},${top + bh} C${cx + w * .22},${top + bh} ${Rr},${top + bh * .8} ${Rr},${top}`;
     const cp = mk('clipPath', {id: 'bowlclip'}, g); mk('path', {d: side + ' Z'}, cp);
-    const wy = top + bh * .3;
-    mk('rect', {x: L - 2, y: wy, width: w + 4, height: bh, fill: 'url(#wine)', 'clip-path': 'url(#bowlclip)'}, g);
-    mk('ellipse', {cx, cy: wy, rx: w * .48, ry: Math.max(1.5, h * .035), fill: '#f0465a', 'clip-path': 'url(#bowlclip)'}, g);
-    mk('path', {d: `M${L + w * .17},${top + bh * .14} Q${L + w * .13},${top + bh * .55} ${cx - w * .14},${top + bh * .8}`, stroke: '#fff', 'stroke-width': 2, fill: 'none', opacity: .75, 'stroke-linecap': 'round'}, g);
-    mk('path', {d: side, fill: 'none', stroke: INK, 'stroke-width': 1.7}, g);
-    mk('ellipse', {cx, cy: top, rx: w / 2, ry: Math.max(1.5, h * .035), fill: 'none', stroke: INK, 'stroke-width': 1.4}, g);
-    mk('line', {x1: cx, x2: cx, y1: top + bh, y2: top + h * .94, stroke: INK, 'stroke-width': 2}, g);
-    mk('ellipse', {cx, cy: top + h * .95, rx: w * .38, ry: Math.max(1.6, h * .035), fill: INK}, g);
+    const wy = top + bh * .32;
+    mk('rect', {x: L - 2, y: wy, width: w + 4, height: bh, fill: RED, 'clip-path': 'url(#bowlclip)'}, g);
+    mk('path', {d: side + ' Z', fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, g);
+    mk('line', {x1: cx, x2: cx, y1: top + bh, y2: top + h * .94, stroke: INK, 'stroke-width': 2.2}, g);
+    mk('path', {d: `M${cx - w * .36},${top + h * .97} Q${cx},${top + h * .9} ${cx + w * .36},${top + h * .97} Z`, fill: INK, stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, g);
     return g;
   }
 
+  // A plain cigarette: tan filter, white paper, grey ash, a red ember, and a thread of smoke.
   function cig(p, xs, L, cy, th, ceil) {
     const g = mk('g', {}, p), y0 = cy - th / 2;
-    mk('rect', {x: xs, y: y0, width: L * .28, height: th, fill: '#d98a3a', stroke: INK, 'stroke-width': 1.2}, g);
-    for (let i = 1; i < 5; i++) mk('circle', {cx: xs + L * .055 * i, cy: cy + (i % 2 ? -th * .18 : th * .18), r: .9, fill: '#8a4a12'}, g);
-    mk('rect', {x: xs + L * .28, y: y0, width: L * .66, height: th, fill: '#fbfaf6', stroke: INK, 'stroke-width': 1.2}, g);
-    mk('rect', {x: xs + L * .94, y: y0, width: L * .06, height: th, fill: '#8d8780', stroke: INK, 'stroke-width': 1.2}, g);
-    mk('circle', {cx: xs + L, cy, r: th * .75, fill: 'url(#ember)'}, g);
+    mk('rect', {x: xs, y: y0, width: L * .28, height: th, fill: TAN, stroke: INK, 'stroke-width': 1.2}, g);
+    mk('rect', {x: xs + L * .28, y: y0, width: L * .66, height: th, fill: PAPER, stroke: INK, 'stroke-width': 1.2}, g);
+    mk('rect', {x: xs + L * .94, y: y0, width: L * .06, height: th, fill: MID, stroke: INK, 'stroke-width': 1.2}, g);
+    mk('rect', {x: xs + L - 1, y: y0 + th * .2, width: Math.max(2, th * .35), height: th * .6, fill: RED}, g);
     const sy = y0 - 2, rise = sy - ceil, a = th * .7;
     if (rise > 8) [[0, 0], [a * .9, .9], [-a * .7, 1.8]].forEach(([dx, dl]) => {
       const sx = xs + L + dx * .3;
-      mk('path', {d: `M${sx},${sy} c${a},${-rise * .3} ${-a},${-rise * .5} ${dx * .4},${-rise * .7} s${a * .8},${-rise * .2} 0,${-rise * .3}`, stroke: INK, 'stroke-width': 1.3, fill: 'none', 'stroke-linecap': 'round', class: 'smk', style: `animation-delay:${dl}s`}, g);
+      mk('path', {d: `M${sx},${sy} c${a},${-rise * .3} ${-a},${-rise * .5} ${dx * .4},${-rise * .7} s${a * .8},${-rise * .2} 0,${-rise * .3}`, stroke: MID, 'stroke-width': 1.4, fill: 'none', 'stroke-linecap': 'round', class: 'smk', style: `animation-delay:${dl}s`}, g);
     });
     return g;
   }
@@ -130,22 +129,13 @@
     const m = Math.max(12, fs * .9), lab = Math.max(12, fs * .95), labMax = Math.max(lab, m);
     const colX = Math.round(W * .6), mx0 = colX + Math.max(10, W * .035), mw = Math.max(20, W - mx0);
 
-    const defs = mk('defs', {}, svg);
-    const g1 = mk('linearGradient', {id: 'wine', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    mk('stop', {offset: 0, 'stop-color': '#d81c30'}, g1); mk('stop', {offset: 1, 'stop-color': '#5a0610'}, g1);
-    const g2 = mk('radialGradient', {id: 'ember'}, defs);
-    mk('stop', {offset: 0, 'stop-color': '#fff3b0'}, g2); mk('stop', {offset: .45, 'stop-color': '#ff6a1a'}, g2); mk('stop', {offset: 1, 'stop-color': '#c0140f', 'stop-opacity': .2}, g2);
-    const pat = mk('pattern', {id: 'dots', width: 5, height: 5, patternUnits: 'userSpaceOnUse'}, defs);
-    mk('circle', {cx: 2.5, cy: 2.5, r: 1, fill: INK}, pat);
-
     // Masthead (left column, one line if it fits)
     const mastY = Math.round(fs * 1.3);
-    mk('rect', {x: 0, y: mastY - fs * .8, width: fs * .62, height: fs * .62, fill: RED}, svg);
-    const ix = fs * .95, iarc = txt(svg, ix, mastY, 'IARC', disp(fs * 1.25));
-    const iw = tw(iarc, fs * 1.25 * 2.6);
-    const ag = txt(svg, ix + iw + fs * .6, mastY, 'AGENT: ALCOHOL', mono(m));
+    const ix = 0, iarc = txt(svg, ix, mastY, 'IARC', body({'font-weight': 800}));
+    const iw = tw(iarc, fs * 2.6);
+    const ag = txt(svg, ix + iw + fs * .45, mastY, 'Agent: alcohol', body({'font-weight': 500}));
     let mBot = mastY + fs * .35;
-    if (ix + iw + fs * .6 + tw(ag, m * .66 * 14) > colX - 8) { ag.setAttribute('x', 0); ag.setAttribute('y', mastY + fs * 1.4); mBot = mastY + fs * 1.75; }
+    if (ix + iw + fs * .45 + tw(ag, fs * .55 * 14) > colX - 8) { ag.setAttribute('x', 0); ag.setAttribute('y', mastY + fs * 1.4); mBot = mastY + fs * 1.75; }
 
     // Threshold position (needed before rows so the stack always keeps room)
     const hY = mastY;
@@ -159,51 +149,48 @@
     const bY = Math.round(H - rowH - fs * .5);
     const mY = mBot + fs * .55;
 
-    // Grid
+    // The baseline everything stands on
     const grid = mk('g', {stroke: INK}, svg);
     R.lines = [
-      mk('line', {x1: 0, x2: W, y1: bY, y2: bY, 'stroke-width': 2.2}, grid),
-      mk('line', {x1: colX, x2: colX, y1: 0, y2: bY, 'stroke-width': 1, 'stroke-opacity': .22}, grid),
-      mk('line', {x1: 0, x2: W, y1: .5, y2: .5, 'stroke-width': 1, 'stroke-opacity': .22}, grid)
+      mk('line', {x1: 0, x2: W, y1: bY, y2: bY, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, grid)
     ];
-    // registration mark where the grid meets
-    const rm = mk('g', {stroke: INK, 'stroke-width': 1, fill: 'none'}, svg);
-    mk('circle', {cx: colX, cy: bY, r: 4.5}, rm);
-    mk('line', {x1: colX - 8, x2: colX + 8, y1: bY, y2: bY}, rm);
-    mk('line', {x1: colX, x2: colX, y1: bY - 8, y2: bY + 8}, rm);
 
     // The numeral
     let h = Math.max(24, Math.min(bY - 3 - mY, (colX - 12) / .64));
     const gTop = bY - 3 - h, gx0 = -.03 * h;
     R.gh = h; R.gTop = gTop; R.gx0 = gx0;
     const gS = Math.min(fs * 2.4, (colX - 12) / 4.2);
-    if (gTop - mY >= gS * 1.15 + fs * .3) R.word = txt(svg, 0, gTop - fs * .35, 'GROUP', disp(gS, {'letter-spacing': '-.02em', fill: done ? RED : INK}));
+    if (gTop - mY >= gS * 1.15 + fs * .3) R.word = txt(svg, 0, gTop - fs * .35, 'Group', disp(gS, {'letter-spacing': '-.02em', fill: done ? RED : INK}));
     R.glyph = done ? glyph(svg, 'one', gx0, gTop, h, RED) : glyph(svg, 'q', gx0, gTop, h, GROUND, n / N);
 
     // Right column: header + threshold
-    txt(svg, mx0, hY, 'EVIDENCE', disp(Math.max(12, fs)));
-    R.stat = txt(svg, W, hY, `${done ? N : n}/${N}`, mono(m, {'text-anchor': 'end', fill: done ? RED : INK, 'font-weight': 700}));
-    R.suf = txt(svg, mx0, tY - fs * .45, 'SUFFICIENT', mono(m, {fill: done ? RED : INK, 'font-weight': 700}));
+    txt(svg, mx0, hY, 'Evidence', body({'font-weight': 800}));
+    R.stat = txt(svg, W, hY, `${done ? N : n}/${N}`, body({'text-anchor': 'end', fill: done ? RED : INK, 'font-weight': 700}));
+    R.suf = txt(svg, mx0, tY - fs * .45, 'Sufficient', body({fill: done ? RED : INK, 'font-weight': 700}));
     R.thr = done
       ? mk('line', {x1: colX, x2: W, y1: tY, y2: tY, stroke: RED, 'stroke-width': 2.6}, svg)
-      : mk('line', {x1: colX, x2: W, y1: tY, y2: tY, stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '4 4'}, svg);
+      : mk('line', {x1: colX, x2: W, y1: tY, y2: tY, stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '5 4'}, svg);
     R.tick = mk('path', {d: `M${colX},${tY} l6,-4 v8 z`, fill: done ? RED : INK}, svg);
 
-    // The evidence column
+    // The evidence pile: each study is a filed paper sheet with a folded corner
     const stackH = Math.max(N * 3, bY - 2 - tY), sh = stackH / N;
     const gap = Math.min(Math.max(2, sh * .14), sh * .45), hh = Math.max(1, sh - gap);
     R.bars = []; R.slots = []; R.sh = sh;
+    const c = Math.min(hh * .4, 9);
     for (let i = 0; i < N; i++) {
       const y0 = bY - 2 - (i + 1) * sh + gap * .5;
+      const nudge = (i % 2 ? -1 : 1) * Math.min(3, mw * .015);
       const g = mk('g', {}, svg);
       if (i < n) {
-        mk('rect', {x: mx0, y: y0, width: mw, height: hh, fill: done ? RED : INK}, g);
-        if (hh >= m * 1.2) txt(g, mx0 + fs * .5, y0 + hh / 2 + m * .36, `STUDY ${String(i + 1).padStart(2, '0')}`, mono(m, {fill: PAPER}));
-        else mk('rect', {x: mx0 + 4, y: y0 + hh / 2 - .5, width: mw * .35, height: 1, fill: PAPER, opacity: .6}, g);
+        const x = mx0 + nudge, ww = mw - Math.abs(nudge);
+        mk('path', {d: `M${x},${y0} h${ww - c} l${c},${c} v${hh - c} h${-ww} z`, fill: done ? RED : INK}, g);
+        mk('path', {d: `M${x + ww - c},${y0} v${c} h${c} z`, fill: PAPER, opacity: .45}, g);
+        if (hh >= m * 1.2) txt(g, x + fs * .6, y0 + hh / 2 + fs * .36, `Study ${i + 1}`, body({fill: PAPER}));
+        else mk('rect', {x: x + 5, y: y0 + hh / 2 - .6, width: ww * .35, height: 1.2, fill: PAPER, opacity: .6}, g);
         R.bars.push(g);
       } else {
-        mk('rect', {x: mx0 + .5, y: y0 + .5, width: Math.max(1, mw - 1), height: Math.max(1, hh - 1), fill: 'none', stroke: INK, 'stroke-opacity': .35, 'stroke-dasharray': '3 3'}, g);
-        if (i === n && !done && hh >= m * 1.2) txt(g, mx0 + mw / 2, y0 + hh / 2 + m * .36, '+ TAP', mono(m, {'text-anchor': 'middle', class: 'pulse'}));
+        mk('rect', {x: mx0 + .5, y: y0 + .5, width: Math.max(1, mw - 1), height: Math.max(1, hh - 1), fill: 'none', stroke: INK, 'stroke-opacity': .3, 'stroke-dasharray': '4 3'}, g);
+        if (i === n && !done && hh >= m * 1.2) txt(g, mx0 + mw / 2, y0 + hh / 2 + fs * .36, '+ Tap', body({'text-anchor': 'middle', fill: MID, class: 'pulse'}));
       }
       R.slots.push(g);
     }
@@ -212,33 +199,33 @@
     const rT = bY + fs * .5, ih = Math.max(18, H - 2 - rT), cyR = rT + ih * .5;
     const gx = ih * .31 + 2;
     R.glass = glass(svg, gx, rT, ih);
-    const aL = txt(svg, gx + ih * .31 + fs * .6, cyR + lab * .36, 'ALCOHOL', {'font-weight': 800, 'font-size': lab});
-    const aEnd = gx + ih * .31 + fs * .6 + tw(aL, lab * .7 * 7);
+    const aL = txt(svg, gx + ih * .31 + fs * .6, cyR + fs * .36, 'Alcohol', body({'font-weight': 700}));
+    const aEnd = gx + ih * .31 + fs * .6 + tw(aL, fs * .6 * 7);
     const ls = labMax * 1.4, oneLine = ih < ls + labMax * 1.3;
     const y1 = cyR - ls / 2 + labMax * .36, y2 = y1 + ls, yOne = cyR + labMax * .36;
     if (done) {
       if (oneLine) {
-        R.cigL = [txt(svg, W, yOne, 'CIGARETTE SMOKE', {'text-anchor': 'end', 'font-weight': 800, 'font-size': lab})];
+        R.cigL = [txt(svg, W, yOne, 'Cigarette smoke', body({'text-anchor': 'end', 'font-weight': 700}))];
       } else {
         R.cigL = [
-          txt(svg, W, y1, 'CIGARETTE', {'text-anchor': 'end', 'font-weight': 800, 'font-size': lab}),
-          txt(svg, W, y2, 'SMOKE', {'text-anchor': 'end', 'font-weight': 800, 'font-size': lab})
+          txt(svg, W, y1, 'Cigarette', body({'text-anchor': 'end', 'font-weight': 700})),
+          txt(svg, W, y2, 'smoke', body({'text-anchor': 'end', 'font-weight': 700}))
         ];
       }
-      const lw = oneLine ? tw(R.cigL[0], lab * .72 * 15) : Math.max(tw(R.cigL[0], lab * .72 * 9), tw(R.cigL[1], lab * .72 * 5));
+      const lw = oneLine ? tw(R.cigL[0], fs * .6 * 15) : Math.max(tw(R.cigL[0], fs * .6 * 9), tw(R.cigL[1], fs * .6 * 5));
       const th = Math.max(6, ih * .15), cEnd = W - lw - fs * .7 - th * .75;
       let L = Math.min(ih * 1.5, W * .2);
       L = Math.max(24, Math.min(L, cEnd - aEnd - fs * 1.2));
       R.cig = cig(svg, cEnd - L, L, rT + ih * .72, th, rT + 1);
     } else {
-      R.tease = mk('g', {opacity: .5}, svg);
-      if (oneLine) txt(R.tease, W, yOne, 'SAME GROUP AS ???', mono(m, {'text-anchor': 'end'}));
+      R.tease = mk('g', {}, svg);
+      if (oneLine) txt(R.tease, W, yOne, 'Same group as ???', body({'text-anchor': 'end', fill: MID}));
       else {
-        txt(R.tease, W, y1, 'SAME GROUP', mono(m, {'text-anchor': 'end'}));
-        txt(R.tease, W, y2, 'AS ???', mono(m, {'text-anchor': 'end'}));
+        txt(R.tease, W, y1, 'Same group', body({'text-anchor': 'end', fill: MID}));
+        txt(R.tease, W, y2, 'as ???', body({'text-anchor': 'end', fill: MID}));
       }
     }
-    if (done) R.ul = mk('line', {x1: 0, x2: W, y1: bY, y2: bY, stroke: RED, 'stroke-width': 4}, svg);
+    if (done) R.ul = mk('line', {x1: 0, x2: W, y1: bY, y2: bY, stroke: RED, 'stroke-width': 4, 'stroke-linecap': 'round'}, svg);
   }
 
   function scramble(el, text, dur, chars) {

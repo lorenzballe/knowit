@@ -47,25 +47,57 @@ rowsOrder.forEach(r => { for (let c = 0; c < COLS; c++) order.push(r * COLS + c)
 let done = 0, nights = 0, finished = false;
 let J = [], G = {}, geo = null;
 
-const PLATE = '#d6e6ff', HOT = '#ffb03b', COLD = '#5a6688', INK = '#10100c';
+// Flat palette: the card's ink, the card's colour and their mixes, plus one meaning colour (the hot weld)
+// and the pale steel of a finished plate.
+const HOT = '#ff9a1f';
+let PLATE = '#efe9d8', COLD = '#4a5560', TOWER = '#1d2a33', BRACE = '#3b4a55';
+
+function parseCol(s, fb) {
+  s = (s || '').trim();
+  let m = s.match(/^#([0-9a-f]{3})$/i);
+  if (m) return m[1].split('').map(h => parseInt(h + h, 16));
+  m = s.match(/^#([0-9a-f]{6})/i);
+  if (m) return [0, 2, 4].map(i => parseInt(m[1].slice(i, i + 2), 16));
+  m = s.match(/rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)/i);
+  if (m) return [+m[1], +m[2], +m[3]];
+  return fb;
+}
+function mix(a, b, p) {
+  const v = a.map((x, i) => Math.round(x * p + b[i] * (1 - p)));
+  return '#' + v.map(x => x.toString(16).padStart(2, '0')).join('');
+}
+function palette() {
+  const cs = getComputedStyle(Kit.$('card'));
+  const k = parseCol(cs.getPropertyValue('--k'), [16, 16, 12]);
+  const c = parseCol(cs.getPropertyValue('--c'), [0, 160, 255]);
+  TOWER = mix(k, c, .86);
+  BRACE = mix(k, c, .62);
+  COLD = mix(k, c, .48);
+}
 
 function draw() {
   const svg = Kit.$('svg');
   svg.innerHTML = '';
+  palette();
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 12);
-  // stars + moon
-  for (let i = 0; i < 26; i++) Kit.mk('circle', {cx: ((i * 97) % 100) / 100 * W, cy: ((i * 53) % 100) / 100 * H * .9, r: 1 + (i % 3) * .4, fill: '#fff', opacity: .5 + (i % 4) * .1}, svg);
-  Kit.mk('circle', {cx: W * .9, cy: H * .08, r: Math.min(W, H) * .035, fill: '#f4ecc8'}, svg);
+  const lab = fs * .9;
+  const body = w => `font-family:var(--body);font-weight:${w};fill:var(--k)`;
 
   const th = H * .88, tw = Math.min(W * .44, th * .42);
   const cx = W * .66, tx = cx - tw / 2, ty = H * .07;
   const rg = th / ROWS, cg = tw / COLS;
   geo = {fs, W, H};
-  // tower body
-  Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, fill: '#1c2648', stroke: '#3a4878', 'stroke-width': 1.5}, svg);
-  // chevron braces
-  const br = Kit.mk('g', {stroke: '#3d4c80', 'stroke-width': 1, fill: 'none'}, svg);
+
+  // a crescent moon: it is night work
+  const mr = Math.min(W, H) * .035, mx = W * .9, my = H * .08;
+  Kit.mk('circle', {cx: mx, cy: my, r: mr, fill: PLATE}, svg);
+  Kit.mk('circle', {cx: mx + mr * .5, cy: my - mr * .3, r: mr * .9, style: 'fill:var(--c)'}, svg);
+
+  // tower body, flat
+  Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, fill: TOWER}, svg);
+  // chevron braces, the tower's real structure
+  const br = Kit.mk('g', {stroke: BRACE, 'stroke-width': 1.2, fill: 'none', 'stroke-linejoin': 'round'}, svg);
   for (let r = 0; r < ROWS; r++) {
     const y0 = ty + r * rg, y1 = y0 + rg;
     for (let c = 0; c < COLS; c++) {
@@ -73,31 +105,34 @@ function draw() {
       Kit.mk('path', {d: `M${x0} ${y1} L${xm} ${y0 + rg * .5} L${x1} ${y1}`}, br);
     }
   }
+  // ground
+  Kit.mk('line', {x1: tx - tw * .25, y1: ty + th, x2: tx + tw * 1.25, y2: ty + th, style: 'stroke:var(--k)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+
   // floor 30 marker
   const y30 = ty + R30 * rg + rg * .5;
   const barBottom = H * .1 + fs * 6.6 + fs * .5;
   const ly = Math.max(y30 - fs * .15, barBottom + fs * 1.6);
   const lm = ly - fs * .35;
-  Kit.mk('rect', {x: tx - 3, y: ty + R30 * rg, width: tw + 6, height: rg, fill: 'none', stroke: HOT, 'stroke-width': 1.5, rx: 2}, svg);
-  Kit.mk('path', {d: `M${tx - 22} ${lm} L${tx - 14} ${lm} L${tx - 7} ${y30}`, stroke: INK, 'stroke-width': 2, fill: 'none'}, svg);
+  Kit.mk('rect', {x: tx - 3, y: ty + R30 * rg, width: tw + 6, height: rg, fill: 'none', stroke: HOT, 'stroke-width': 2}, svg);
+  Kit.mk('path', {d: `M${tx - 22} ${lm} L${tx - 14} ${lm} L${tx - 7} ${y30}`, style: 'stroke:var(--k)', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
   const lx = tx - 26;
-  Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'end', fill: INK, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg).textContent = 'Floor 30';
-  Kit.mk('text', {x: lx, y: ly + fs * 1.3, 'text-anchor': 'end', fill: INK, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .9}, svg).textContent = 'rank #1';
+  Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'end', style: body(700), 'font-size': lab}, svg).textContent = 'Floor 30';
+  Kit.mk('text', {x: lx, y: ly + fs * 1.3, 'text-anchor': 'end', style: body(500), 'font-size': lab}, svg).textContent = 'rank #1';
 
   // counter
   const left = W * .06;
-  Kit.mk('text', {x: left, y: H * .1, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .85, 'letter-spacing': '.06em'}, svg).textContent = 'JOINTS';
-  Kit.mk('text', {x: left, y: H * .1 + fs * 1.15, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs * .85, 'letter-spacing': '.06em'}, svg).textContent = 'WELDED';
-  G.count = Kit.mk('text', {x: left, y: H * .1 + fs * 4, fill: INK, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.6}, svg);
-  G.night = Kit.mk('text', {x: left, y: H * .1 + fs * 5.6, fill: INK, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .9}, svg);
-  // bar
+  Kit.mk('text', {x: left, y: H * .1, style: body(600), 'font-size': lab}, svg).textContent = 'Joints';
+  Kit.mk('text', {x: left, y: H * .1 + fs * 1.15, style: body(600), 'font-size': lab}, svg).textContent = 'welded';
+  G.count = Kit.mk('text', {x: left, y: H * .1 + fs * 4, style: 'font-family:var(--display);font-weight:800;fill:var(--k)', 'font-size': fs * 2.6}, svg);
+  G.night = Kit.mk('text', {x: left, y: H * .1 + fs * 5.6, style: body(500), 'font-size': lab}, svg);
+  // progress through the list
   const by = H * .1 + fs * 6.6, bw = Math.max(20, tx - 30 - left);
-  Kit.mk('rect', {x: left, y: by, width: bw, height: fs * .5, rx: fs * .25, fill: '#26315a'}, svg);
-  G.bar = Kit.mk('rect', {x: left, y: by, width: bw * done / N, height: fs * .5, rx: fs * .25, fill: HOT}, svg);
+  Kit.mk('rect', {x: left, y: by, width: bw, height: fs * .5, fill: COLD}, svg);
+  G.bar = Kit.mk('rect', {x: left, y: by, width: bw * done / N, height: fs * .5, fill: HOT}, svg);
   geo.bw = bw;
   // bottom-left note
-  G.note = Kit.mk('text', {x: left, y: H * .93, fill: INK, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .85}, svg);
-  G.note2 = Kit.mk('text', {x: left, y: H * .93 - fs * 1.3, fill: INK, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * .85}, svg);
+  G.note = Kit.mk('text', {x: left, y: H * .93, style: body(500), 'font-size': lab}, svg);
+  G.note2 = Kit.mk('text', {x: left, y: H * .93 - fs * 1.3, style: body(500), 'font-size': lab}, svg);
 
   // joints
   const jr = Math.max(1.6, Math.min(cg, rg) * .2);
@@ -159,11 +194,12 @@ function weld() {
   }
 }
 
+// welding sparks: short flat strokes in the weld colour
 function sparks(x, y) {
   if (!G.fx) return;
   for (let s = 0; s < 5; s++) {
     const a = Kit.rnd() * Math.PI * 2, d = geo.jr * (3 + Kit.rnd() * 4);
-    const l = Kit.mk('line', {x1: x, y1: y, x2: x, y2: y, stroke: '#ffe08a', 'stroke-width': 1.4, 'stroke-linecap': 'round'}, G.fx);
+    const l = Kit.mk('line', {x1: x, y1: y, x2: x, y2: y, stroke: HOT, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, G.fx);
     gsap.to(l, {attr: {x2: x + Math.cos(a) * d, y2: y + Math.sin(a) * d}, opacity: 0, duration: .4, ease: 'power2.out', onComplete: () => l.remove()});
   }
 }

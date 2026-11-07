@@ -17,15 +17,17 @@
 .bar{display:grid;grid-template-columns:29cqw 1fr 12cqw;align-items:center;gap:2.2cqw;font:700 max(1.5cqh,11.5px)/1 var(--body)}
 .bar .k{display:flex;align-items:center;gap:1.6cqw;white-space:nowrap}
 .bar .k i{flex:none;width:max(1.1cqh,8px);height:max(1.1cqh,8px);border-radius:50%;background:var(--col)}
-.bar .track{position:relative;height:max(.9cqh,6px);border-radius:99px;background:rgba(255,255,255,.16)}
+.bar .track{position:relative;height:max(.9cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 18%,var(--c))}
 .bar .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:99px;background:var(--col)}
-.bar.done .fill::after{content:"";position:absolute;right:calc(max(.9cqh,6px) * -.6);top:50%;width:max(1.7cqh,11px);height:max(1.7cqh,11px);border-radius:50%;transform:translateY(-50%);background:var(--col);box-shadow:0 0 0 max(.35cqh,2px) var(--c)}
+.bar.done .fill::after{content:"";position:absolute;right:calc(max(.9cqh,6px) * -.6);top:50%;width:max(1.7cqh,11px);height:max(1.7cqh,11px);border-radius:50%;transform:translateY(-50%);background:var(--col);border:max(.35cqh,2px) solid var(--c);box-sizing:content-box;margin-right:calc(max(.35cqh,2px) * -1)}
 .bar .v{text-align:right;font-variant-numeric:tabular-nums;opacity:.5}
 .bar.done .v{opacity:1}
 #opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw}
 .opt{font:700 max(1.85cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 10%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 32%,transparent);border-radius:1.6cqh;padding:1.3cqh 3cqw;cursor:pointer}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
-.bhead{display:flex;justify-content:space-between;font:800 max(1.4cqh,11.5px)/1 var(--body);letter-spacing:.1em;opacity:.7;margin-bottom:.2cqh}
+.bhead{display:flex;justify-content:space-between;font:700 max(1.4cqh,11.5px)/1 var(--body);letter-spacing:0;opacity:.75;margin-bottom:.2cqh}
+.bhead span{display:inline-block;text-transform:lowercase}
+.bhead span::first-letter{text-transform:uppercase}
 
 .answered .q{font-size:max(2.5cqh,15px)}
 @container (max-height:520px){
@@ -48,8 +50,8 @@
       </div>
       <div id="bars" class="gone">
         <div class="bhead"><span>STARTED OFF BY</span><span>PARTED IN YEAR</span></div>
-        <div class="bar" style="--col:#6FF2C2" data-k="0"><span class="k"><i></i>1,000,000 km</span><span class="track"><span class="fill"></span></span><span class="v">–</span></div>
-        <div class="bar" style="--col:#FF9CC2" data-k="1"><span class="k"><i></i>1,000 km</span><span class="track"><span class="fill"></span></span><span class="v">–</span></div>
+        <div class="bar" style="--col:#13205C" data-k="0"><span class="k"><i></i>1,000,000 km</span><span class="track"><span class="fill"></span></span><span class="v">–</span></div>
+        <div class="bar" style="--col:#FF8A65" data-k="1"><span class="k"><i></i>1,000 km</span><span class="track"><span class="fill"></span></span><span class="v">–</span></div>
         <div class="bar" style="--col:#FFD34D" data-k="2"><span class="k"><i></i>1 km</span><span class="track"><span class="fill"></span></span><span class="v">–</span></div>
       </div>
     </div>
@@ -65,7 +67,7 @@
   // ---------- the physics: G = 1 with lengths in AU and masses in Suns, so 2π time units are a year ----------
   const M = [3, 4, 5], TAU = 2 * Math.PI, AU = 149597870.7;
   const GAPS = [1e6, 1e3, 1];                          // km: how far the coloured copies start off
-  const COL = ['#FFFFFF', '#6FF2C2', '#FF9CC2', '#FFD34D'];
+  const COL = ['#FFFFFF', '#13205C', '#FF8A65', '#FFD34D'];   // [0] becomes the card's ink at fit()
   const ETA = 0.004, HMAX = 0.01, PART = 0.2, END = 10 * TAU, SAMPLE = 0.08, NTR = 34;
   const N = 1 + GAPS.length;
   const k1 = new Float64Array(12), k2 = new Float64Array(12), k3 = new Float64Array(12), k4 = new Float64Array(12), tmp = new Float64Array(12);
@@ -114,7 +116,8 @@
   // ---------- the page ----------
   const cv = Kit.$('sky'), say = Kit.$('say'), card = Kit.$('card');
   const rows = [...document.querySelectorAll('.bar')];
-  let x, W, H, sc, cx, cy, field = [], running = false, done = false, fast = false, last = 0;
+  let x, W, H, sc, cx, cy, running = false, done = false, fast = false, last = 0;
+  let INK = '#FFFFFF', BG = '#2B5CFF', BODY = 'Figtree', DISPLAY = 'Fraunces';
   const yr = tt => tt / TAU, f1 = v => v.toFixed(1), half = v => (Math.round(v * 2) / 2).toFixed(1);
 
   function part(k) {
@@ -138,12 +141,15 @@
 
   function fit() {
     ({x, W, H} = Kit.fitCanvas(cv));
+    const cs = getComputedStyle(card);
+    INK = cs.getPropertyValue('--k').trim() || INK;
+    BG = cs.getPropertyValue('--c').trim() || BG;
+    BODY = cs.getPropertyValue('--body').trim() || BODY;
+    DISPLAY = cs.getPropertyValue('--display').trim() || DISPLAY;
+    COL[0] = INK;
     // The dance stays within about -3.9..3.4 AU across and -4.5..4.0 AU up and down until a star is flung out.
     sc = Math.min(W / 8.4, H / 9.6);
     cx = W / 2 + .25 * sc; cy = H / 2 - .25 * sc;
-    field = [];
-    let s = 11; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
-    for (let i = 0; i < 70; i++) field.push([r() * W, r() * H, r() < .15 ? 1.3 : .7, .25 + r() * .45]);
   }
   const P = (px, py) => [cx + px * sc, cy - py * sc];
   const rad = i => Math.max(2.8, sc * .115) * Math.cbrt(M[i] / 4);
@@ -152,26 +158,25 @@
     if (!x) return;
     x.clearRect(0, 0, W, H);
     x.save();
-    for (const [fx, fy, fr, fa] of field) { x.globalAlpha = fa; x.fillStyle = '#fff'; x.beginPath(); x.arc(fx, fy, fr, 0, TAU); x.fill(); }
-    x.globalAlpha = 1;
     const fs = Math.max(11.5, Math.min(H * .05, 14));
-    // The triangle they start on, before they move.
-    if (t === 0) {
-      x.setLineDash([3, 5]); x.strokeStyle = 'rgba(255,255,255,.5)'; x.lineWidth = 1.2;
-      x.beginPath(); [[1, 3], [-2, -1], [1, -1], [1, 3]].forEach(([a, b], i) => { const [px, py] = P(a, b); i ? x.lineTo(px, py) : x.moveTo(px, py); }); x.stroke(); x.setLineDash([]);
-    }
-    // Trails, the coloured copies under the exact one.
-    const order = [1, 2, 3, 0];
     x.lineCap = 'round'; x.lineJoin = 'round';
+    // The triangle they start on, before they move: sides 3, 4 and 5 AU.
+    if (t === 0) {
+      x.setLineDash([2, 6]); x.strokeStyle = INK; x.globalAlpha = .55; x.lineWidth = 1.5;
+      x.beginPath(); [[1, 3], [-2, -1], [1, -1], [1, 3]].forEach(([a, b], i) => { const [px, py] = P(a, b); i ? x.lineTo(px, py) : x.moveTo(px, py); }); x.stroke(); x.setLineDash([]);
+      x.globalAlpha = 1;
+    }
+    // Trails, the coloured copies under the exact one: plain lines, older parts lighter.
+    const order = [1, 2, 3, 0];
     for (const k of order) {
       const tr = trails[k]; if (tr.length < 2) continue;
       x.strokeStyle = COL[k];
-      const runs = 6, per = Math.ceil((tr.length - 1) / runs);
+      const runs = 4, per = Math.ceil((tr.length - 1) / runs);
       for (let i = 0; i < 3; i++) {
-        x.lineWidth = Math.max(1.4, rad(i) * .5);
+        x.lineWidth = Math.max(1.5, rad(i) * .45);
         for (let q = 0; q < runs; q++) {
           const a = q * per, b = Math.min(tr.length - 1, a + per); if (b <= a) continue;
-          x.globalAlpha = .6 * (q + 1) / runs;
+          x.globalAlpha = .25 + .6 * (q + 1) / runs;
           x.beginPath();
           for (let n = a; n <= b; n++) { const [px, py] = P(tr[n][2 * i], tr[n][2 * i + 1]); n === a ? x.moveTo(px, py) : x.lineTo(px, py); }
           x.stroke();
@@ -179,15 +184,14 @@
       }
     }
     x.globalAlpha = 1;
-    // The stars, and an arrow on the edge for any star flung out of the frame.
+    // The stars: flat discs, sized by mass, edged in the page colour so stacked copies stay apart.
     const now = performance.now(), pad = 9;
     for (const k of order) for (let i = 0; i < 3; i++) {
       const [px, py] = P(C[k][2 * i], C[k][2 * i + 1]), r = rad(i);
       if (px < -r || px > W + r || py < -r || py > H + r) { edge(px, py, COL[k], pad); continue; }
-      const gl = x.createRadialGradient(px, py, 0, px, py, r * 3.4);
-      gl.addColorStop(0, COL[k] + '88'); gl.addColorStop(1, COL[k] + '00');
-      x.fillStyle = gl; x.beginPath(); x.arc(px, py, r * 3.4, 0, TAU); x.fill();
-      x.fillStyle = COL[k]; x.beginPath(); x.arc(px, py, r, 0, TAU); x.fill();
+      x.beginPath(); x.arc(px, py, r, 0, TAU);
+      x.fillStyle = COL[k]; x.fill();
+      x.lineWidth = 1.5; x.strokeStyle = BG; x.stroke();
     }
     // A ring where a copy has just parted from the exact one.
     for (const f of flashes) {
@@ -196,31 +200,32 @@
       for (let i = 0; i < 3; i++) { const [px, py] = P(C[f.k + 1][2 * i], C[f.k + 1][2 * i + 1]); x.beginPath(); x.arc(px, py, rad(i) * (1.5 + 3.5 * a), 0, TAU); x.stroke(); }
       x.globalAlpha = 1;
     }
-    x.fillStyle = '#fff'; x.textBaseline = 'alphabetic';
+    x.fillStyle = INK; x.textBaseline = 'alphabetic';
+    const lab = `600 ${fs}px ${BODY}`;
     // Their masses, at the start.
     if (t === 0) {
-      x.font = `700 ${fs}px Figtree`;
+      x.font = lab;
       if (H < 150) { x.textAlign = 'right'; x.fillText('3, 4 and 5 Suns, at rest', W - 12, H - 10); }
       else {
-        const lab = [['3 Suns', 1, 3, 'left', 12, 4], ['4 Suns', -2, -1, 'left', -6, -16], ['5 Suns', 1, -1, 'left', 12, 4]];
-        for (const [s, a, b, al, dx, dy] of lab) { const [px, py] = P(a, b); x.textAlign = al; x.fillText(s, px + dx, py + dy); }
+        const ls = [['3 Suns', 1, 3, 'left', 12, 4], ['4 Suns', -2, -1, 'left', -6, -16], ['5 Suns', 1, -1, 'left', 12, 4]];
+        for (const [s, a, b, al, dx, dy] of ls) { const [px, py] = P(a, b); x.textAlign = al; x.fillText(s, px + dx, py + dy); }
       }
     }
     // The clock, top left.
     x.textAlign = 'left';
     if (H < 150) {
-      x.font = `800 ${Math.max(11.5, fs * .9)}px Figtree`;
-      x.fillText('YEAR ' + f1(yr(t)), 12, 10 + fs * .9);
+      x.font = lab;
+      x.fillText('Year ' + f1(yr(t)), 12, 10 + fs * .9);
     } else {
-      x.font = `800 ${Math.max(11.5, fs * .85)}px Figtree`; x.globalAlpha = .7;
-      x.fillText('YEAR', 12, 12 + fs * .9); x.globalAlpha = 1;
+      x.font = lab; x.globalAlpha = .8;
+      x.fillText('Year', 12, 12 + fs * .9); x.globalAlpha = 1;
       const big = H < 200 ? fs * 1.3 : fs * 1.7;
-      x.font = `800 ${big}px Fraunces`;
+      x.font = `700 ${big}px ${DISPLAY}`;
       x.fillText(f1(yr(t)), 12, 14 + fs * .9 + big * .95);
     }
-    // What white is, top right, once they move.
+    // What the ink colour is, top right, once they move.
     if (t > 0) {
-      x.textAlign = 'right'; x.font = `700 ${Math.max(11.5, fs * .85)}px Figtree`;
+      x.textAlign = 'right'; x.font = lab;
       const lw = x.measureText('the exact start').width;
       x.fillText('the exact start', W - 12, 12 + fs * .9);
       x.beginPath(); x.arc(W - 12 - lw - 9, 12 + fs * .9 - fs * .32, 4, 0, TAU); x.fill();
@@ -229,9 +234,9 @@
     // The scale, bottom left: one Earth-Sun distance.
     const by = H - 12;
     if (H >= 150) {
-    x.strokeStyle = 'rgba(255,255,255,.8)'; x.lineWidth = 1.5;
+    x.strokeStyle = INK; x.lineWidth = 1.5; x.globalAlpha = .8;
     x.beginPath(); x.moveTo(12, by - 4); x.lineTo(12, by); x.lineTo(12 + sc, by); x.lineTo(12 + sc, by - 4); x.stroke();
-    x.font = `600 ${Math.max(11.5, fs * .85)}px Figtree`; x.globalAlpha = .8;
+    x.font = lab;
     x.fillText('150 million km', 18 + sc, by); x.globalAlpha = 1;
     }
     x.restore();
@@ -240,10 +245,9 @@
   function edge(px, py, col, pad) {
     const dx = px - W / 2, dy = py - H / 2, k = Math.min((W / 2 - pad) / Math.abs(dx || 1e-9), (H / 2 - pad) / Math.abs(dy || 1e-9));
     const ex = W / 2 + dx * k, ey = H / 2 + dy * k, a = Math.atan2(dy, dx), s = 7;
-    x.fillStyle = col; x.strokeStyle = '#2B5CFF'; x.lineWidth = 1.5; x.globalAlpha = .95;
+    x.fillStyle = col; x.strokeStyle = BG; x.lineWidth = 1.5;
     x.beginPath(); x.moveTo(ex + Math.cos(a) * s, ey + Math.sin(a) * s);
-    x.lineTo(ex + Math.cos(a + 2.5) * s, ey + Math.sin(a + 2.5) * s); x.lineTo(ex + Math.cos(a - 2.5) * s, ey + Math.sin(a - 2.5) * s); x.closePath(); x.stroke(); x.fill();
-    x.globalAlpha = 1;
+    x.lineTo(ex + Math.cos(a + 2.5) * s, ey + Math.sin(a + 2.5) * s); x.lineTo(ex + Math.cos(a - 2.5) * s, ey + Math.sin(a - 2.5) * s); x.closePath(); x.fill(); x.stroke();
   }
 
   function frame(now) {

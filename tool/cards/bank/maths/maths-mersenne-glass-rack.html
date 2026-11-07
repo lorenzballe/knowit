@@ -1,27 +1,27 @@
 <!doctype html>
 <!-- slug: maths-mersenne-glass-rack -->
-<!-- Look: a laboratory rack of glass test tubes on a deep teal card. Teal liquid is the conjecture's prediction, gold beads are the Mersenne primes found; the tubes breathe, shimmer and bubble, and each filled tube casts a soft glow on the rack.
-     Interaction: drag the spirit-level bubble to double p again and again. Each new tube fills and sloshes, and its gold beads bounce in. Past the biggest prime found, the tubes still fill but hold "?". Dragging fast stirs the glass.
-     Wow: at the end the two racks pour into one long rack. Every liquid surface lines up on one glowing line that runs to a glowing ∞ (p → ∞), and every tube surges at once. -->
+<!-- Look: a printed-book diagram on a flat deep teal page. A shelf of plain jars, one for each doubling of p. Flat teal water shows what the conjecture predicts, flat gold counters are the Mersenne primes found. No glass shine and no glow.
+     Interaction: drag the level bubble to double p again and again. Each new jar fills and sloshes, and its gold counters drop in. Past the biggest prime found, the jars still fill but hold "?". Dragging fast stirs the water.
+     Wow: at the end the two shelves become one long shelf. A single straight line joins every water level and runs to ∞ (p → ∞), and every jar surges at once. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Mersenne primes, forever?</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#card{background:radial-gradient(130% 70% at 50% 38%,#16444d 0%,#0c2630 58%,#071a20 100%)}
+#card{background:var(--c)}
 #stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:.8cqh}
-#read{display:flex;flex-wrap:wrap;align-items:center;gap:.5cqh 4cqw;font:600 max(1.7cqh,12px)/1.25 var(--mono);color:var(--k)}
-#rp{flex:1 1 100%;opacity:.85}
+#read{display:flex;flex-wrap:wrap;align-items:center;gap:.5cqh 4cqw;font:500 max(1.8cqh,13px)/1.3 var(--body);color:var(--k)}
+#rp{flex:1 1 100%;opacity:.8}
 .chip{white-space:nowrap}
-.chip b{font-weight:800}
-.chip i{display:inline-block;width:1.05em;height:1.05em;border-radius:50%;vertical-align:-.16em;margin-right:.45em}
-.chip.g i{background:radial-gradient(circle at 35% 32%,#fffbe6,#ffcf5a 42%,#c27410);box-shadow:0 0 .5em rgba(255,200,80,.6)}
-.chip.l i{border-radius:.2em .2em .55em .55em;background:linear-gradient(90deg,#22b89a,#7ff7df 45%,#148c78)}
+.chip b{font-weight:700}
+.chip i{display:inline-block;width:.95em;height:.95em;border-radius:50%;vertical-align:-.12em;margin-right:.45em}
+.chip.g i{background:#f0b94a}
+.chip.l i{border-radius:.12em .12em .3em .3em;background:#41c7aa}
 #wrap{flex:1;min-height:0;position:relative}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
 #why{display:flex;flex-direction:column;gap:.5cqh}
-#why .big{color:#a8fff0}
+#why .big{color:#8fe6d3}
 .q{overflow-wrap:break-word}
 .answered .q{font-size:max(2.3cqh,14px)}
 .answered #rp{display:none}
@@ -62,12 +62,31 @@
 
   const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say');
   const css = getComputedStyle(card);
-  const MONO = css.getPropertyValue('--mono').trim() || 'monospace';
+  const BODY = css.getPropertyValue('--body').trim() || 'sans-serif';
   const HAND = css.getPropertyValue('--hand').trim() || 'cursive';
   const DISP = css.getPropertyValue('--display').trim() || 'serif';
   const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
   const sup = n => String(n).split('').map(d => SUP[+d]).join('');
   const cl = v => Math.max(0, Math.min(1, v));
+
+  // ---------- flat palette: ink, card colour, their tints, and two meaning colours ----------
+  const hex = s => { s = (s || '').trim().replace('#', ''); if (s.length === 3) s = s.split('').map(c => c + c).join(''); const n = parseInt(s, 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+  const mix = (a, b, t) => { const A = hex(a), B = hex(b); return 'rgb(' + A.map((v, i) => Math.round(v * t + B[i] * (1 - t))).join(',') + ')'; };
+  const K = css.getPropertyValue('--k').trim() || '#e9fbf6', C = css.getPropertyValue('--c').trim() || '#0c2630';
+  const WATER = '#41c7aa', GOLD = '#f0b94a';
+  const COL = {
+    k: K, c: C, water: WATER, gold: GOLD,
+    waterGhost: mix(WATER, C, .45),
+    glass: mix(K, C, .07),
+    hi: mix(K, C, .1),
+    line: mix(K, C, .62),
+    lineGhost: mix(K, C, .34),
+    label: mix(K, C, .68),
+    shelf: mix(K, C, .26),
+    track: mix(K, C, .1),
+    trackFill: mix(WATER, C, .6),
+    level: mix(K, WATER, .45)
+  };
 
   const T = [null];
   for (let b = 1; b <= LAST; b++) T.push({f: 0, e: 0, inn: 1, on: false, beads: Array.from({length: cnt[b]}, () => ({o: 1, a: 0}))});
@@ -101,9 +120,11 @@
 
   const tubeX = b => G.mode ? G.x0 + G.slot * (b - .5) : G.x0 + G.slot * (((b - 1) % PER) + .5);
   const rowOf = b => (G.mode || b <= PER) ? 0 : 1;
+  // a plain jar: straight sides, flat bottom, softly rounded corners
   function tubePath(tx, top, bot, tw) {
-    const l = tx - tw / 2, rr = tw / 2;
-    x.beginPath(); x.moveTo(l, top); x.lineTo(l, bot - rr); x.arc(tx, bot - rr, rr, Math.PI, 0, true); x.lineTo(l + tw, top);
+    const l = tx - tw / 2, rr = Math.min(tw * .3, 5);
+    x.beginPath(); x.moveTo(l, top); x.lineTo(l, bot - rr); x.quadraticCurveTo(l, bot, l + rr, bot);
+    x.lineTo(l + tw - rr, bot); x.quadraticCurveTo(l + tw, bot, l + tw, bot - rr); x.lineTo(l + tw, top);
   }
   function rrect(x0, y0, w, h, r) {
     x.beginPath(); x.moveTo(x0 + r, y0); x.arcTo(x0 + w, y0, x0 + w, y0 + h, r); x.arcTo(x0 + w, y0 + h, x0, y0 + h, r); x.arcTo(x0, y0 + h, x0, y0, r); x.arcTo(x0, y0, x0 + w, y0, r); x.closePath();
@@ -167,100 +188,81 @@
   }
 
   // ---------- drawing ----------
-  function drawTube(b, t, shim, cur) {
+  function drawTube(b, t, cur) {
     const S = T[b], tx = tubeX(b), {u, tw, r} = G;
     const bot = G.bot[rowOf(b)] + (1 - S.inn) * G.drop, top = bot - 6.4 * u, ghost = b > KNOWN;
     const A = cl(S.inn);
     x.globalAlpha = A;
+    // the jar p has just reached sits on a pale patch of page
     if (cur === b && !done && P > .2) {
-      const cy = (top + bot) / 2, g = x.createRadialGradient(tx, cy, 0, tx, cy, tw * 2.4);
-      g.addColorStop(0, 'rgba(94,242,208,.30)'); g.addColorStop(1, 'rgba(94,242,208,0)');
-      x.fillStyle = g; x.fillRect(tx - tw * 2.5, top - tw, tw * 5, bot - top + tw * 2);
+      rrect(tx - tw * .95, top - u * .6, tw * 1.9, bot - top + u * .6 + 2, Math.min(6, tw * .4));
+      x.fillStyle = COL.hi; x.fill();
     }
-    // glow the liquid casts onto the rack
-    if (S.f > .05) {
-      const gy = bot + 1, rg = tw * 1.4, g = x.createRadialGradient(tx, gy, 0, tx, gy, rg);
-      g.addColorStop(0, `rgba(94,242,208,${(.3 + fx.pulse * .3) * cl(S.f) * (ghost ? .55 : 1)})`); g.addColorStop(1, 'rgba(94,242,208,0)');
-      x.fillStyle = g; x.fillRect(tx - rg, gy - rg, rg * 2, rg * 2);
-    }
-    tubePath(tx, top, bot, tw); x.fillStyle = 'rgba(200,245,238,.05)'; x.fill();
+    tubePath(tx, top, bot, tw); x.closePath(); x.fillStyle = COL.glass; x.fill();
     x.save(); tubePath(tx, top, bot, tw); x.closePath(); x.clip();
     if (S.f > .002) {
       const h = S.f * EG * u;
       const tilt = Math.sin(t * 7 + b * 1.3) * S.e * u * .45 + Math.sin(t * 1.4 + b * .8) * u * .07;
-      const sy = bot - h + Math.sin(t * 2.2 + b) * u * .03;
+      const sy = bot - h;
       const l = tx - tw / 2 - 1, rr = tx + tw / 2 + 1;
-      const lg = x.createLinearGradient(l, 0, rr, 0), al = ghost ? .45 : .88;
-      lg.addColorStop(0, `rgba(34,184,154,${al})`); lg.addColorStop(.45, `rgba(127,247,223,${al})`); lg.addColorStop(1, `rgba(16,128,110,${al})`);
-      x.beginPath(); x.moveTo(l, sy + tilt); x.quadraticCurveTo(tx, sy + u * .16, rr, sy - tilt); x.lineTo(rr, bot + 2); x.lineTo(l, bot + 2); x.closePath(); x.fillStyle = lg; x.fill();
-      x.beginPath(); x.moveTo(l, sy + tilt); x.quadraticCurveTo(tx, sy + u * .16, rr, sy - tilt);
-      x.strokeStyle = 'rgba(225,255,249,.95)'; x.lineWidth = 1.3; x.stroke();
-      x.fillStyle = 'rgba(255,255,255,.55)';
-      for (const q of bubbles) if (q.b === b && q.h < h - 1) { x.beginPath(); x.arc(tx + q.dx, bot - q.h, q.r, 0, 7); x.fill(); }
+      x.beginPath(); x.moveTo(l, sy + tilt); x.quadraticCurveTo(tx, sy + u * .12, rr, sy - tilt); x.lineTo(rr, bot + 2); x.lineTo(l, bot + 2); x.closePath();
+      x.fillStyle = ghost ? COL.waterGhost : COL.water; x.fill();
     }
     S.beads.forEach((bd, i) => {
       if (bd.a <= .01) return;
       const cy = bot - u * (i + .5) - 1 - bd.o * (bot - top), rad = r * (1 + fx.pulse * .18);
-      const g = x.createRadialGradient(tx - rad * .35, cy - rad * .4, rad * .1, tx, cy, rad);
-      g.addColorStop(0, '#fffbe6'); g.addColorStop(.42, '#ffcf5a'); g.addColorStop(1, '#c27410');
-      x.globalAlpha = A * cl(bd.a); x.shadowColor = 'rgba(255,200,80,.85)'; x.shadowBlur = 6 + fx.pulse * 12;
-      x.beginPath(); x.arc(tx, cy, rad, 0, 7); x.fillStyle = g; x.fill(); x.shadowBlur = 0;
+      x.globalAlpha = A * cl(bd.a);
+      x.beginPath(); x.arc(tx, cy, rad, 0, 7); x.fillStyle = COL.gold; x.fill();
+      x.strokeStyle = COL.c; x.lineWidth = 1; x.stroke();
     });
     x.globalAlpha = A;
     if (ghost && S.f > .3 && !G.mode) {
-      x.fillStyle = `rgba(233,251,246,${.9 * cl(S.f)})`; x.font = `800 ${Math.max(12, u * 1.15)}px ${MONO}`;
+      x.globalAlpha = A * cl(S.f); x.fillStyle = COL.k; x.font = `700 ${Math.max(12, u * 1.15)}px ${BODY}`;
       x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('?', tx, bot - EG * u * .5);
     }
     x.restore();
     x.globalAlpha = A;
-    x.lineWidth = 1;
-    if (tw > 8) for (let g = 1; g <= 5; g++) { const gy = bot - u * g; x.beginPath(); x.moveTo(tx + tw / 2 - tw * .28, gy); x.lineTo(tx + tw / 2, gy); x.strokeStyle = 'rgba(233,251,246,.22)'; x.stroke(); }
     if (ghost) x.setLineDash(G.mode ? [2, 2] : [3, 3]);
-    tubePath(tx, top, bot, tw); x.strokeStyle = ghost ? 'rgba(220,250,245,.38)' : 'rgba(220,250,245,.58)'; x.lineWidth = G.mode ? 1 : 1.2; x.stroke();
+    tubePath(tx, top, bot, tw); x.strokeStyle = ghost ? COL.lineGhost : COL.line; x.lineWidth = G.mode ? 1.1 : 1.6; x.lineJoin = 'round'; x.stroke();
     x.setLineDash([]);
-    const near = Math.max(0, 1 - Math.abs(tx - shim) / (W * .12));
-    x.beginPath(); x.moveTo(tx - tw * .22, top + u * .5); x.lineTo(tx - tw * .22, bot - tw * .65);
-    x.strokeStyle = `rgba(255,255,255,${.2 + .55 * near})`; x.lineWidth = Math.max(1, tw * .14); x.lineCap = 'round'; x.stroke(); x.lineCap = 'butt';
-    x.beginPath(); x.ellipse(tx, top, tw / 2 + (G.mode ? .8 : 1.5), Math.max(1.2, tw * .14), 0, 0, 7); x.strokeStyle = 'rgba(230,255,250,.6)'; x.lineWidth = 1.1; x.stroke();
+    // a plain lip at the mouth
+    const lip = G.mode ? 1 : 2;
+    x.beginPath(); x.moveTo(tx - tw / 2 - lip, top); x.lineTo(tx + tw / 2 + lip, top);
+    x.strokeStyle = ghost ? COL.lineGhost : COL.line; x.lineWidth = G.mode ? 1.4 : 2.2; x.lineCap = 'round'; x.stroke(); x.lineCap = 'butt';
     const labs = G.mode ? [1, 10, 20, 29] : [1, 5, 10, 15, 16, 20, 25, 29];
     if (labs.includes(b)) {
-      x.fillStyle = 'rgba(233,251,246,.62)'; x.font = `600 ${G.fs}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+      x.fillStyle = COL.label; x.font = `500 ${G.fs}px ${BODY}`; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
       x.fillText('2' + sup(b), tx, bot + G.lab * .78);
     }
     x.globalAlpha = 1;
   }
 
   function drawRack(k) {
-    const {x0, slot, u, fs} = G, bot = G.bot[k], top = bot - 6.4 * u;
-    let xs, xe, fade;
-    if (G.mode) { xs = x0 - slot * .1; xe = G.x1 + slot * .4; fade = true; }
-    else { xs = x0 - slot * .08; xe = k ? x0 + slot * 14.9 : G.x1 + slot * .08; fade = !!k; }
-    const g = x.createLinearGradient(xs, 0, xe, 0);
-    g.addColorStop(0, 'rgba(170,240,228,.13)'); g.addColorStop(.85, 'rgba(170,240,228,.13)'); g.addColorStop(1, fade ? 'rgba(170,240,228,0)' : 'rgba(170,240,228,.13)');
+    const {x0, slot, u, fs} = G, bot = G.bot[k];
+    let xs, xe;
+    if (G.mode) { xs = x0 - slot * .1; xe = G.x1 + slot * .4; }
+    else { xs = x0 - slot * .08; xe = k ? x0 + slot * 14.9 : G.x1 + slot * .08; }
     const ph = Math.max(2, Math.min(u * .5, fs * .45));
-    rrect(xs, bot + 2, xe - xs, ph, ph / 2); x.fillStyle = g; x.fill();
-    x.beginPath(); x.moveTo(xs + ph, bot + 2.5); x.lineTo(xe - ph, bot + 2.5); x.strokeStyle = 'rgba(255,255,255,.22)'; x.lineWidth = 1; x.stroke();
-    const hy = top + u * 1.3;
-    rrect(xs, hy, xe - xs, ph * .8, ph * .4); x.fillStyle = g; x.fill();
+    rrect(xs, bot + 1.5, xe - xs, ph, Math.min(2, ph / 2)); x.fillStyle = COL.shelf; x.fill();
   }
 
   function drawInf(t) {
     const {u, tw, fs} = G;
     if (!G.mode) {
       const tx = G.x0 + G.slot * 14.5, bot = G.bot[1], top = bot - 6.4 * u;
-      x.globalAlpha = .22; x.setLineDash([3, 4]);
-      tubePath(tx, top, bot, tw); x.strokeStyle = '#dff'; x.lineWidth = 1.2; x.stroke(); x.setLineDash([]);
-      x.globalAlpha = .5; x.fillStyle = '#e9fbf6'; x.font = `700 ${fs}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'middle';
-      x.fillText('…', tx, bot - EG * u * .5); x.globalAlpha = 1;
+      x.setLineDash([3, 4]);
+      tubePath(tx, top, bot, tw); x.strokeStyle = COL.lineGhost; x.lineWidth = 1.4; x.stroke(); x.setLineDash([]);
+      x.fillStyle = COL.label; x.font = `700 ${fs}px ${BODY}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.fillText('…', tx, bot - EG * u * .5);
       return;
     }
     if (rev.inf <= 0) return;
     const size = infSize(), cx = G.infX, cy = G.bot[0] - EG * u;
     x.save(); x.translate(cx, cy); x.scale(rev.inf, rev.inf);
-    x.globalAlpha = cl(rev.inf); x.shadowColor = '#5ef2d0'; x.shadowBlur = 14 + Math.sin(t * 2.4) * 5;
-    x.fillStyle = '#b8fff2'; x.font = `800 ${size}px ${DISP}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.globalAlpha = cl(rev.inf);
+    x.fillStyle = COL.level; x.font = `700 ${size}px ${DISP}`; x.textAlign = 'center'; x.textBaseline = 'middle';
     x.fillText('∞', 0, 0); x.restore();
-    x.globalAlpha = .62 * cl(rev.inf); x.fillStyle = '#e9fbf6'; x.font = `600 ${fs}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+    x.globalAlpha = cl(rev.inf); x.fillStyle = COL.label; x.font = `500 ${fs}px ${BODY}`; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
     x.fillText('p→∞', cx, G.bot[0] + G.lab * .78); x.globalAlpha = 1;
   }
 
@@ -269,34 +271,22 @@
     const {x0, slot, tw, u} = G, p = cl(rev.line);
     const y = G.bot[0] - EG * u, xs = x0 + slot * .5 - tw, xe = G.infX - infSize() * .62;
     const xp = xs + (xe - xs) * p;
-    x.save(); x.shadowColor = '#5ef2d0'; x.shadowBlur = 12;
-    x.beginPath(); x.moveTo(xs, y); x.lineTo(xp, y); x.strokeStyle = 'rgba(184,255,242,.95)'; x.lineWidth = 2; x.stroke();
-    const sx = p < 1 ? xp : xs + (xe - xs) * ((t * .3) % 1);
-    const g = x.createRadialGradient(sx, y, 0, sx, y, 10); g.addColorStop(0, 'rgba(255,255,255,.95)'); g.addColorStop(1, 'rgba(255,255,255,0)');
-    x.fillStyle = g; x.fillRect(sx - 11, y - 11, 22, 22);
-    x.restore();
+    x.beginPath(); x.moveTo(xs, y); x.lineTo(xp, y); x.strokeStyle = COL.level; x.lineWidth = 2; x.lineCap = 'round'; x.stroke(); x.lineCap = 'butt';
   }
 
   function drawSlider(t) {
     if (G.mode) return;
     const {x0, x1, ys, sh, fs} = G, y0 = ys - sh / 2;
-    rrect(x0, y0, x1 - x0, sh, sh / 2); x.fillStyle = 'rgba(200,245,238,.07)'; x.fill();
+    rrect(x0, y0, x1 - x0, sh, sh / 2); x.fillStyle = COL.track; x.fill();
     const bx = pToX(P) + hint.dx;
     x.save(); rrect(x0, y0, x1 - x0, sh, sh / 2); x.clip();
-    const g = x.createLinearGradient(0, y0, 0, y0 + sh); g.addColorStop(0, 'rgba(127,247,223,.55)'); g.addColorStop(1, 'rgba(22,140,120,.55)');
-    x.fillStyle = g; x.fillRect(x0, y0, Math.max(0, bx - x0), sh);
+    x.fillStyle = COL.trackFill; x.fillRect(x0, y0, Math.max(0, bx - x0), sh);
     x.restore();
-    x.strokeStyle = 'rgba(233,251,246,.35)'; x.lineWidth = 1;
-    for (let b = 1; b <= LAST; b++) { const px = pToX(b - .5); x.beginPath(); x.moveTo(px, y0 + 2); x.lineTo(px, y0 + sh * .3); x.stroke(); }
-    rrect(x0, y0, x1 - x0, sh, sh / 2); x.strokeStyle = 'rgba(220,250,245,.55)'; x.lineWidth = 1.2; x.stroke();
-    x.beginPath(); x.moveTo(x0 + sh * .6, y0 + 2.2); x.lineTo(x1 - sh * .6, y0 + 2.2); x.strokeStyle = 'rgba(255,255,255,.28)'; x.stroke();
+    rrect(x0, y0, x1 - x0, sh, sh / 2); x.strokeStyle = COL.line; x.lineWidth = 1.5; x.stroke();
     const wob = Math.sin(t * 3) * .04, rx = sh * .85 * (1 + wob), ry = sh * .3 * (1 - wob);
-    const bg = x.createRadialGradient(bx - rx * .3, ys - ry * .4, 1, bx, ys, rx);
-    bg.addColorStop(0, 'rgba(255,255,255,.95)'); bg.addColorStop(1, 'rgba(255,255,255,.35)');
-    x.save(); x.shadowColor = 'rgba(184,255,242,.9)'; x.shadowBlur = 10;
-    x.beginPath(); x.ellipse(bx, ys, rx, ry, 0, 0, 7); x.fillStyle = bg; x.fill(); x.restore();
+    x.beginPath(); x.ellipse(bx, ys, rx, ry, 0, 0, 7); x.fillStyle = COL.k; x.fill();
     if (hint.a > .01) {
-      x.globalAlpha = cl(hint.a); x.fillStyle = '#e9fbf6'; x.font = `700 ${Math.max(13, fs * 1.05)}px ${HAND}`;
+      x.globalAlpha = cl(hint.a); x.fillStyle = COL.k; x.font = `700 ${Math.max(13, fs * 1.05)}px ${HAND}`;
       x.textAlign = 'left'; x.textBaseline = 'middle'; x.fillText('drag →', bx + rx + 8, ys + 1); x.globalAlpha = 1;
     }
   }
@@ -306,16 +296,11 @@
     if (!x || !W) return;
     const t = now / 1000, dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
     const decay = Math.pow(.18, dt);
-    for (let b = 1; b <= LAST; b++) {
-      const S = T[b]; S.e *= decay;
-      if (S.f > .5 && Math.random() < dt * .9) bubbles.push({b, dx: (Math.random() - .5) * G.tw * .45, h: 1, v: G.u * (.6 + Math.random() * .7), r: Math.min(.7 + Math.random() * 1.1, G.tw * .15)});
-    }
-    for (let i = bubbles.length - 1; i >= 0; i--) { const q = bubbles[i]; q.h += q.v * dt; if (q.h > T[q.b].f * EG * G.u) bubbles.splice(i, 1); }
+    for (let b = 1; b <= LAST; b++) T[b].e *= decay;
     x.clearRect(0, 0, W, H);
-    const shim = ((t * .16) % 1.5 - .25) * W;
     const cur = done ? -1 : Math.max(1, Math.min(LAST, Math.round(P)));
-    for (let b = 1; b <= LAST; b++) drawTube(b, t, shim, cur);
     drawRack(0); if (!G.mode) drawRack(1);
+    for (let b = 1; b <= LAST; b++) drawTube(b, t, cur);
     drawInf(t); drawLevels(t); drawSlider(t);
   }
 

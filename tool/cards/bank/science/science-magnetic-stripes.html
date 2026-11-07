@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: science-magnetic-stripes -->
-<!-- Look: a paper cut-out collage cross-section (teal sea, cream and ink crust, orange mantle) with torn edges and stop-motion jitter.
-     Interaction: drag to pull the seafloor apart; each pull drops two fresh rock slabs (Matter.js) into the ridge, hot, which freeze the compass direction; tap the compass to flip Earth's field.
-     Wow: the slabs shoot upward from the ridge outward and the cross-section becomes the famous map of dark (normal) and light (reversed) bands. -->
+<!-- Look: a printed textbook cross-section in flat colour: the sea in tints of the card colour, a plain crust, a red-orange mantle and a yellow magma plume, all with one even ink outline. The compass is a plain cream dial.
+     Interaction: drag to pull the seafloor apart. Each pull drops two fresh rock slabs (Matter.js) into the ridge. They come in hot and freeze the compass direction. Tap the compass to flip Earth's field.
+     Wow: the slabs shoot upward from the ridge outward, and the cross-section becomes the famous map of dark (normal) and light (reversed) bands. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The seafloor's tape recorder</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -34,13 +34,15 @@
 (() => {
   const {Engine, Bodies, Body, Composite} = Matter;
   const cv = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const RED = '#e2402f', DARK = '#1c1a21', LIGHT = '#f4ecd9', FIBER = '#fffaf0', INK = '#16130f', TAG = '#f6c544';
+  // meaning colours: HOT (mantle, north end of a needle) and MAGMA (molten rock); LIGHT is plain paper
+  const HOT = '#e2502f', MAGMA = '#ffc145', LIGHT = '#f4ecd9';
+  let K = 'rgb(22,19,15)', SEA1 = '', SEA2 = '', CRUST = '';
   const MAXP = 8;
   const WHY = 'Cooling lava\'s magnetite grains freeze along Earth\'s field, like tiny compasses. <b>Dark bands</b> froze when it pointed as today (normal); <b>light bands</b> when it was reversed. The mirrored stripes show the field has flipped many times.';
   const engine = Engine.create(); engine.gravity.y = 1.1;
   const world = engine.world;
   let ctx = null, W = 0, H = 0, fs = 12, cx = 0, bw = 20, bh = 30, yTop = 0, R = 30, ccx = 0, ccy = 0;
-  let HAND = 'cursive', MONO = 'monospace', grain = null, pattern = null;
+  let HAND = 'cursive', BODY = 'sans-serif';
   let blocks = [], chips = [], hist = [], pol = 1, flips = 0, spreading = false, revealed = false, touched = false, seedN = 1, looping = false;
   const st = {ca: 0, mapT: 0, lab: 0, water: 1, comp: 1, crust: 1};
 
@@ -48,69 +50,51 @@
   const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
   const backOut = t => { const c = 1.6; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
 
-  // ---------- paper helpers ----------
-  function torn(x0, y0, x1, y1, seed, amp) {
-    let i = 0; const s = 5, s2 = 8;
-    ctx.beginPath();
-    ctx.moveTo(x0, y0 + (hr(seed) - .5) * amp);
-    for (let x = x0 + s; x < x1; x += s) ctx.lineTo(x, y0 + (hr(seed + ++i) - .5) * amp);
-    ctx.lineTo(x1 + (hr(seed + 99) - .5) * amp * .5, y0);
-    for (let y = y0 + s2; y < y1; y += s2) ctx.lineTo(x1 + (hr(seed + ++i) - .5) * amp * .6, y);
-    ctx.lineTo(x1, y1);
-    for (let x = x1 - s; x > x0; x -= s) ctx.lineTo(x, y1 + (hr(seed + ++i) - .5) * amp * .5);
-    ctx.lineTo(x0, y1);
-    for (let y = y1 - s2; y > y0; y -= s2) ctx.lineTo(x0 + (hr(seed + ++i) - .5) * amp * .6, y);
-    ctx.closePath();
+  // ---------- the card's own ink and colour ----------
+  function rgbOf(v) {
+    const el = document.createElement('i'); el.style.color = v; card.appendChild(el);
+    const s = getComputedStyle(el).color; el.remove();
+    const m = s.match(/[\d.]+/g); if (!m || m.length < 3) return null;
+    let n = m.slice(0, 3).map(Number);
+    if (/color\(/.test(s)) n = n.map(x => x * 255);
+    return n;
   }
-  function paper(x0, y0, x1, y1, seed, amp, col, shadow = 3) {
-    ctx.fillStyle = 'rgba(20,12,6,.3)';
-    ctx.save(); ctx.translate(shadow * .8, shadow); torn(x0, y0, x1, y1, seed, amp); ctx.fill(); ctx.restore();
-    ctx.fillStyle = FIBER; torn(x0 - 1.3, y0 - 1.3, x1 + 1.3, y1 + 1, seed + 500, amp * 1.3); ctx.fill();
-    ctx.fillStyle = col; torn(x0, y0, x1, y1, seed, amp); ctx.fill();
+  function colours() {
+    const k = rgbOf('var(--k)') || [22, 19, 15], c = rgbOf('var(--c)') || [0, 229, 160];
+    const mix = p => 'rgb(' + k.map((v, i) => Math.round(v * p + c[i] * (1 - p))).join(',') + ')';
+    K = mix(1); SEA1 = mix(.12); SEA2 = mix(.26); CRUST = mix(.55);
   }
-  function tornCircle(r, amp, seed) {
-    ctx.beginPath();
-    for (let i = 0; i <= 44; i++) { const a = i / 44 * Math.PI * 2, rr = r + (hr(seed + i % 44) - .5) * amp; i ? ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr) : ctx.moveTo(Math.cos(a) * rr, Math.sin(a) * rr); }
-    ctx.closePath();
-  }
-  function edge(y0, y1, amp, seed, col) {
-    let i = 0;
-    ctx.beginPath(); ctx.moveTo(-4, y1);
-    for (let x = -4; x <= W + 8; x += 7) ctx.lineTo(x, y0 + Math.sin(x * .017 + seed) * amp + (hr(seed + i++) - .5) * amp * .6);
-    ctx.lineTo(W + 8, y1); ctx.closePath();
-    ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.28)'; ctx.shadowBlur = 6; ctx.shadowOffsetY = -2;
-    ctx.fillStyle = col; ctx.fill(); ctx.restore();
-    ctx.strokeStyle = 'rgba(255,250,235,.32)'; ctx.lineWidth = 1.2; ctx.stroke();
+
+  // ---------- simple flat shapes ----------
+  function block(x0, y0, x1, y1, col, lw = 1.5) {
+    ctx.fillStyle = col; ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+    ctx.strokeStyle = K; ctx.lineWidth = lw; ctx.lineJoin = 'round'; ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
   }
   function needle(x, y, L, ang, wd, tail, alpha = 1) {
     ctx.save(); ctx.globalAlpha *= alpha; ctx.translate(x, y); ctx.rotate(ang);
-    ctx.beginPath(); ctx.moveTo(0, -L / 2); ctx.lineTo(wd, 0); ctx.lineTo(-wd, 0); ctx.closePath(); ctx.fillStyle = RED; ctx.fill();
+    ctx.beginPath(); ctx.moveTo(0, -L / 2); ctx.lineTo(wd, 0); ctx.lineTo(-wd, 0); ctx.closePath(); ctx.fillStyle = HOT; ctx.fill();
     ctx.beginPath(); ctx.moveTo(0, L / 2); ctx.lineTo(wd, 0); ctx.lineTo(-wd, 0); ctx.closePath(); ctx.fillStyle = tail; ctx.fill();
     ctx.restore();
   }
-  function tagW(text, size) { ctx.font = `700 ${size}px ${HAND}`; return ctx.measureText(text).width + size * 1.1; }
-  function tag(text, x, y, o = {}) {
-    const size = o.size || fs * 1.2;
-    ctx.font = `700 ${size}px ${HAND}`;
-    const w = ctx.measureText(text).width + size * 1.1, h = size * 1.45;
+  // a plain printed label: cream box, ink outline, optional colour swatch and pointer
+  function boxW(text, size, sw) { ctx.font = `600 ${size}px ${BODY}`; return ctx.measureText(text).width + size * 1.2 + (sw ? size * 1.2 : 0); }
+  function box(text, x, y, o = {}) {
+    const size = o.size || fs, w = boxW(text, size, o.sw), h = size * 1.6;
     const tx = clamp(x, w / 2 + 4, W - w / 2 - 4);
-    if (o.px != null) {
-      const px = o.px;
-      ctx.fillStyle = 'rgba(20,12,6,.3)'; ctx.beginPath(); ctx.moveTo(px - size * .4 + 2, y + h / 2); ctx.lineTo(px + size * .4 + 2, y + h / 2); ctx.lineTo(px + 2, y + h / 2 + size * .55 + 2); ctx.closePath(); ctx.fill();
-    }
-    ctx.save(); ctx.translate(tx, y); ctx.rotate(o.rot || 0);
-    paper(-w / 2, -h / 2, w / 2, h / 2, o.seed || 7, 2.6, o.bg || TAG, 2.5);
-    ctx.fillStyle = o.fg || INK; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(text, 0, size * .05);
+    ctx.save(); ctx.translate(tx, y);
+    block(-w / 2, -h / 2, w / 2, h / 2, LIGHT);
+    let txX = 0;
+    if (o.sw) { const s = size * .8, sx = -w / 2 + size * .5; block(sx, -s / 2, sx + s, s / 2, o.sw, 1.2); txX = size * .6; }
+    ctx.fillStyle = K; ctx.font = `600 ${size}px ${BODY}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(text, txX, size * .05);
     ctx.restore();
-    if (o.px != null) { const px = o.px; ctx.fillStyle = o.bg || TAG; ctx.beginPath(); ctx.moveTo(px - size * .4, y + h / 2 - 1); ctx.lineTo(px + size * .4, y + h / 2 - 1); ctx.lineTo(px, y + h / 2 + size * .55); ctx.closePath(); ctx.fill(); }
+    if (o.px != null) {
+      const px = o.px, yb = y + h / 2, a = size * .4;
+      ctx.fillStyle = LIGHT; ctx.beginPath(); ctx.moveTo(px - a, yb - 1); ctx.lineTo(px + a, yb - 1); ctx.lineTo(px, yb + size * .6); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = K; ctx.lineWidth = 1.5; ctx.lineJoin = 'round';
+      ctx.beginPath(); ctx.moveTo(px - a, yb); ctx.lineTo(px, yb + size * .6); ctx.lineTo(px + a, yb); ctx.stroke();
+    }
     return tx;
-  }
-  function makeGrain() {
-    grain = document.createElement('canvas'); grain.width = grain.height = 120;
-    const g = grain.getContext('2d'), d = g.createImageData(120, 120);
-    for (let i = 0; i < d.data.length; i += 4) { const v = Math.random() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = Math.random() * 90; }
-    g.putImageData(d, 0, 0);
   }
 
   // ---------- layout & physics world ----------
@@ -119,15 +103,14 @@
     const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
     const cs = getComputedStyle(card);
     HAND = cs.getPropertyValue('--hand').trim() || 'cursive';
-    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
+    colours();
     fs = Math.max(12, Math.min(15, W / 26));
     cx = W / 2; bw = W / (2 * MAXP);
     bh = Math.max(26, Math.min(H * .14, 70));
     yTop = Math.min(H * .6, H - bh - fs * 3);
     R = Math.max(24, Math.min(44, Math.min(W, H) * .1));
     ccx = R + fs * .9; ccy = R + fs * .8;
-    if (!grain) makeGrain();
-    pattern = ctx.createPattern(grain, 'repeat');
     rebuild();
     if (!looping) { looping = true; requestAnimationFrame(frame); }
     draw(performance.now());
@@ -226,137 +209,61 @@
   }
 
   // ---------- drawing ----------
-  function drawFish(t) {
-    const a = 1 - st.mapT; if (a <= .01) return;
-    const tq = Kit.calm ? 4000 : Math.floor(t / 125) * 125;
-    const fish = [{sp: .018, y: .3, sz: 1, col: '#ff8a5c', o: .15, dir: 1}, {sp: .012, y: .5, sz: .75, col: TAG, o: .65, dir: -1}, {sp: .015, y: .38, sz: .6, col: '#f7efdc', o: .4, dir: -1}];
-    ctx.save(); ctx.globalAlpha = a * .9;
-    fish.forEach((f, i) => {
-      const span = W + 120, p = ((tq * f.sp + f.o * span) % span) - 60;
-      const x = f.dir > 0 ? p : W - p, y = yTop * f.y + Math.sin(tq / 700 + i * 2) * fs * .4;
-      const L = fs * 1.5 * f.sz;
-      ctx.save(); ctx.translate(x, y); ctx.scale(f.dir, 1); ctx.rotate(Math.sin(tq / 400 + i) * .06);
-      ctx.fillStyle = 'rgba(0,20,30,.25)';
-      ctx.beginPath(); ctx.ellipse(2, 3, L, L * .45, 0, 0, 7); ctx.fill();
-      ctx.fillStyle = f.col;
-      ctx.beginPath(); ctx.moveTo(-L * .8, 0); ctx.lineTo(-L * 1.55, -L * .45); ctx.lineTo(-L * 1.4, 0); ctx.lineTo(-L * 1.55, L * .45); ctx.closePath(); ctx.fill();
-      ctx.beginPath(); ctx.ellipse(0, 0, L, L * .45, 0, 0, 7); ctx.fill();
-      ctx.fillStyle = 'rgba(0,0,0,.14)'; ctx.beginPath(); ctx.ellipse(0, L * .14, L * .85, L * .22, 0, 0, Math.PI); ctx.fill();
-      ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(L * .55, -L * .08, Math.max(1.4, L * .09), 0, 7); ctx.fill();
-      ctx.restore();
-    });
-    ctx.restore();
+  function seaPath(y0, amp, ph) {
+    ctx.beginPath(); ctx.moveTo(-4, yTop + 2);
+    for (let x = -4; x <= W + 8; x += 8) ctx.lineTo(x, y0 + Math.sin(x * .02 + ph) * amp);
+    ctx.lineTo(W + 8, yTop + 2); ctx.closePath();
   }
-  function drawSnow(t) {
-    ctx.save(); ctx.fillStyle = 'rgba(255,250,235,.55)';
-    for (let i = 0; i < 18; i++) {
-      const ph = Kit.calm ? hr(i) : ((t / 14000 + hr(i * 3)) % 1);
-      ctx.globalAlpha = .6 * (1 - st.mapT);
-      ctx.fillRect(hr(i * 7.3) * W + Math.sin(ph * 6 + i) * 4, ph * yTop * .9, 1.6, 1.6);
-    }
-    ctx.restore();
+  function drawWater() {
+    const off = (1 - st.water) * H * .5;
+    // the sea, shallow then deep, with an inked surface
+    seaPath(yTop * .12 + off, fs * .22, 0);
+    ctx.fillStyle = SEA1; ctx.fill();
+    ctx.strokeStyle = K; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+    seaPath(yTop * .55 + off * 1.4, fs * .12, 2);
+    ctx.fillStyle = SEA2; ctx.fill();
   }
-  function drawWater(t, jit) {
-    // the sea: stacked torn paper layers, drawn straight on the card
-    const layers = [['#4aa3a8', .12, 5, 40], ['#2f8a96', .34, 7, 57], ['#22707e', .56, 9, 74], ['#124050', .78, 11, 91]];
-    layers.forEach(([c, f, amp, sd], i) => {
-      const y0 = yTop * f + (1 - st.water) * H * .5 * (1 + i * .4) + (jit % 2) * .6;
-      edge(y0, yTop + 2, amp, sd, c);
-      if (i === 0) { drawSnow(t); drawFish(t); }
-    });
-    if (st.mapT < .6) {
-      ctx.save(); ctx.strokeStyle = 'rgba(255,250,235,.55)'; ctx.lineWidth = 1.2;
-      for (let i = 0; i < 6; i++) {
-        const ph = (t / 2800 + i / 6) % 1, y = yTop - 6 - ph * yTop * .6, x = cx + Math.sin(ph * 9 + i) * bw * .7;
-        ctx.globalAlpha = (1 - ph) * .7 * (1 - st.mapT / .6);
-        ctx.beginPath(); ctx.arc(x, y, 1.5 + i % 3, 0, 7); ctx.stroke();
-      }
-      ctx.restore();
-    }
-  }
-  function drawMantle(t, jit) {
+  function drawMantle(t) {
     const oy = (1 - st.crust) * (H - yTop);
-    const g = ctx.createLinearGradient(0, yTop, 0, H);
-    g.addColorStop(0, '#f39a3d'); g.addColorStop(1, '#a8361b');
-    paper(-6, yTop + bh * .5, W + 6, H, 150, 3, g, 2);
-    ctx.save(); ctx.beginPath(); ctx.rect(0, yTop + bh * .5, W, H); ctx.clip();
-    edge(yTop + bh + (H - yTop - bh) * .45 + oy * .3, H + 4, 5, 77, 'rgba(160,48,22,.45)');
-    edge(yTop + bh + (H - yTop - bh) * .78 + oy * .2, H + 4, 4, 91, 'rgba(120,30,14,.5)');
-    // rock speckles
-    ctx.save(); ctx.fillStyle = 'rgba(90,20,6,.28)';
-    for (let i = 0; i < 40; i++) { const x = hr(i * 5.1) * W, y = yTop + bh + hr(i * 9.7) * (H - yTop - bh) + oy; ctx.beginPath(); ctx.arc(x, y, 1 + hr(i) * 1.8, 0, 7); ctx.fill(); }
-    ctx.restore();
-    ctx.restore();
+    ctx.fillStyle = HOT; ctx.fillRect(0, yTop + bh * .5, W, H - yTop);
     // the slow mantle currents, rising at the ridge and turning out under the plates
-    ctx.save(); ctx.strokeStyle = 'rgba(255,224,160,.75)'; ctx.fillStyle = 'rgba(255,224,160,.75)';
-    ctx.lineWidth = Math.max(3, fs * .32); ctx.lineCap = 'round';
-    ctx.shadowColor = 'rgba(80,20,0,.35)'; ctx.shadowBlur = 4; ctx.shadowOffsetY = 2;
-    const curves = [];
+    ctx.save(); ctx.strokeStyle = LIGHT; ctx.fillStyle = LIGHT;
+    ctx.lineWidth = Math.max(3, fs * .3); ctx.lineCap = 'round';
+    if (!Kit.calm) { ctx.setLineDash([fs * .9, fs * .55]); ctx.lineDashOffset = -t / 45; }
+    const heads = [];
     for (const s of [-1, 1]) {
       const x0 = cx + s * bw * 1.1, y0 = H - fs * .5 + oy, x1 = cx + s * W * .32, y1 = yTop + bh + fs * 1.1 + oy;
-      curves.push([x0, y0, x1, y1]);
+      heads.push([s, x1, y1]);
       ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(x0, y1, x1, y1); ctx.stroke();
-      const a = fs * .55; ctx.beginPath(); ctx.moveTo(x1 + s * a, y1); ctx.lineTo(x1 - s * a * .3, y1 - a * .7); ctx.lineTo(x1 - s * a * .3, y1 + a * .7); ctx.closePath(); ctx.fill();
     }
+    ctx.setLineDash([]);
+    heads.forEach(([s, x1, y1]) => { const a = fs * .55; ctx.beginPath(); ctx.moveTo(x1 + s * a, y1); ctx.lineTo(x1 - s * a * .3, y1 - a * .7); ctx.lineTo(x1 - s * a * .3, y1 + a * .7); ctx.closePath(); ctx.fill(); });
     ctx.restore();
-    // flowing pulses along the currents
-    if (!Kit.calm) {
-      ctx.save(); ctx.strokeStyle = 'rgba(255,252,230,.9)'; ctx.lineWidth = Math.max(1.5, fs * .14); ctx.lineCap = 'round';
-      ctx.setLineDash([fs * .5, fs * 1.4]); ctx.lineDashOffset = -t / 45;
-      curves.forEach(([x0, y0, x1, y1]) => { ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(x0, y1, x1, y1); ctx.stroke(); });
-      ctx.restore();
-    }
     // the plume of magma under the ridge
     const top = yTop - 2 + oy, gw = bw * .8;
-    const pg = ctx.createLinearGradient(0, top, 0, H);
-    pg.addColorStop(0, '#fff1a8'); pg.addColorStop(.4, '#ffc04a'); pg.addColorStop(1, '#ff7a22');
-    paper(cx - gw, top, cx + gw, H + 10, 300 + (jit % 3), 3, pg, 2);
-    // rising embers in the plume
-    ctx.save(); ctx.fillStyle = 'rgba(255,255,235,.85)';
-    for (let i = 0; i < 7; i++) {
-      const ph = Kit.calm ? hr(i * 2) : ((t / 1900 + i / 7) % 1), y = H - ph * (H - top - 4);
-      ctx.globalAlpha = Math.sin(ph * Math.PI) * .8;
-      ctx.beginPath(); ctx.arc(cx + Math.sin(ph * 7 + i * 2) * gw * .5, y, 1.2 + (i % 3) * .6, 0, 7); ctx.fill();
-    }
-    ctx.restore();
-    ctx.save(); ctx.globalCompositeOperation = 'lighter';
-    const pr = bw * 2.6 * (1 + Math.sin(t / 420) * .08);
-    const rg = ctx.createRadialGradient(cx, yTop, 0, cx, yTop, pr);
-    rg.addColorStop(0, 'rgba(255,190,80,.55)'); rg.addColorStop(1, 'rgba(255,120,30,0)');
-    ctx.fillStyle = rg; ctx.fillRect(cx - pr, yTop - pr, pr * 2, pr * 2);
-    ctx.restore();
+    ctx.fillStyle = MAGMA; ctx.fillRect(cx - gw, top, gw * 2, H - top + 10);
+    ctx.strokeStyle = K; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(cx - gw, top); ctx.lineTo(cx - gw, H + 2); ctx.moveTo(cx + gw, top); ctx.lineTo(cx + gw, H + 2); ctx.stroke();
   }
-  function drawFloor(jit) {
+  function drawFloor() {
     const oy = (1 - st.crust) * (H - yTop + bh), gap = bw * .4;
-    paper(-12, yTop + oy, cx - gap, yTop + bh + oy, 211 + (jit % 2), 3, '#625a52');
-    paper(cx + gap, yTop + oy, W + 12, yTop + bh + oy, 233 + (jit % 2), 3, '#625a52');
-    // sediment layers on the old crust
-    ctx.save(); ctx.strokeStyle = 'rgba(255,245,225,.12)'; ctx.lineWidth = 1;
-    for (let i = 1; i < 3; i++) { const y = yTop + oy + bh * i / 3; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cx - gap - 4, y + 1); ctx.moveTo(cx + gap + 4, y + 1); ctx.lineTo(W, y); ctx.stroke(); }
-    ctx.restore();
+    block(-12, yTop + oy, cx - gap, yTop + bh + oy, CRUST);
+    block(cx + gap, yTop + oy, W + 12, yTop + bh + oy, CRUST);
   }
-  function drawBlock(b, t, jit) {
+  function drawBlock(b, t) {
     if (!b.body) return;
     const p = b.body.position;
     if (p.x < -bw * 2 || p.x > W + bw * 2) return;
     const rise = backOut(clamp((st.mapT - b.k * .06) / .52));
     const ext = st.mapT > 0 ? rise * (yTop - fs * .5) : 0;
     const w = bw * .99, x0 = -w / 2, x1 = w / 2, y0 = -bh / 2 - ext, y1 = bh / 2;
-    const jx = Kit.calm ? 0 : (hr(b.seed * 3.1 + jit) - .5) * 1.1, ja = Kit.calm ? 0 : (hr(b.seed + jit * 1.7) - .5) * .014;
     const heat = clamp(1 - (t - b.t0) / 1300);
-    ctx.save(); ctx.translate(p.x + jx, p.y); ctx.rotate(b.body.angle + ja);
-    paper(x0, y0, x1, y1, b.seed, 2.4, b.pol ? DARK : LIGHT, 3);
-    const sh = ctx.createLinearGradient(0, y0, 0, y1);
-    sh.addColorStop(0, 'rgba(255,255,255,.1)'); sh.addColorStop(1, 'rgba(0,0,0,.16)');
-    ctx.fillStyle = sh; torn(x0, y0, x1, y1, b.seed, 2.4); ctx.fill();
-    // paper fibres
-    ctx.strokeStyle = b.pol ? 'rgba(255,255,255,.06)' : 'rgba(60,40,20,.07)'; ctx.lineWidth = 1;
-    for (let i = 0; i < 4; i++) { const xx = x0 + w * (.15 + hr(b.seed + i * 3) * .7); ctx.beginPath(); ctx.moveTo(xx, y0 + 4); ctx.lineTo(xx + (hr(b.seed + i) - .5) * 3, y1 - 4); ctx.stroke(); }
-    if (heat > 0) {
-      ctx.fillStyle = `rgba(255,${120 + heat * 70 | 0},40,${heat * .9})`; torn(x0, y0, x1, y1, b.seed, 2.4); ctx.fill();
-    }
+    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(b.body.angle);
+    block(x0, y0, x1, y1, b.pol ? K : LIGHT);
+    // fresh lava is still molten: it cools to its final colour
+    if (heat > 0) { ctx.save(); ctx.globalAlpha *= heat * .9; ctx.fillStyle = MAGMA; ctx.fillRect(x0, y0, w, y1 - y0); ctx.restore(); }
     const base = b.pol ? 0 : Math.PI, wig = Math.sin(t * .03 + b.seed) * heat * 1.3;
-    needle(0, 0, Math.min(bh * .62, bw * 2.2), base + wig, Math.max(2, bw * .16), b.pol ? LIGHT : DARK, 1 - heat * .75);
+    needle(0, 0, Math.min(bh * .62, bw * 2.2), base + wig, Math.max(2, bw * .16), b.pol ? LIGHT : K, 1 - heat * .75);
     ctx.restore();
   }
   function drawChip(c, t) {
@@ -364,54 +271,45 @@
     const a0 = c.angle + Math.PI / 2, tg = c.pol ? 0 : Math.PI, k = clamp((life - .3) / .3);
     const d = ((tg - a0 + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
     const alpha = life < 0 ? 0 : life > .7 ? clamp((1 - life) / .3) : 1;
-    needle(c.position.x, c.position.y, Math.max(6, bw * .38), a0 + d * k, Math.max(1.6, bw * .09), '#f7efdc', alpha);
+    needle(c.position.x, c.position.y, Math.max(6, bw * .38), a0 + d * k, Math.max(1.6, bw * .09), LIGHT, alpha);
   }
-  function drawCompass(t, jit) {
+  function drawCompass(t) {
     const a = 1 - st.mapT; if (a <= .01) return;
     ctx.save(); ctx.globalAlpha = a;
+    // a plain ring that widens to say "tap me", only until the first flip
     if (hist.length && flips === 0 && !revealed) {
-      const ph = (t / 1300) % 1;
-      ctx.strokeStyle = `rgba(246,197,68,${1 - ph})`; ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.arc(ccx, ccy, R * (1.1 + ph * .35), 0, 7); ctx.stroke();
+      const ph = Kit.calm ? .3 : (t / 1300) % 1;
+      ctx.save(); ctx.globalAlpha *= 1 - ph; ctx.strokeStyle = K; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(ccx, ccy, R * (1.1 + ph * .35), 0, 7); ctx.stroke(); ctx.restore();
     }
-    ctx.save(); ctx.translate(ccx, ccy); ctx.scale(st.comp, st.comp); ctx.rotate(Kit.calm ? 0 : (hr(jit * .7) - .5) * .04);
-    ctx.fillStyle = 'rgba(0,0,0,.32)'; ctx.save(); ctx.translate(3, 4); tornCircle(R * 1.08, 3, 11); ctx.fill(); ctx.restore();
-    ctx.fillStyle = FIBER; tornCircle(R * 1.1, 3.4, 31); ctx.fill();
-    ctx.fillStyle = TAG; tornCircle(R * 1.04, 2.6, 11); ctx.fill();
-    ctx.fillStyle = '#f7efdc'; ctx.beginPath(); ctx.arc(0, 0, R * .84, 0, 7); ctx.fill();
-    ctx.strokeStyle = INK; ctx.lineWidth = 1.2;
-    for (let i = 0; i < 16; i++) { const an = i / 16 * Math.PI * 2, r0 = R * (i % 4 ? .76 : .68); ctx.beginPath(); ctx.moveTo(Math.cos(an) * r0, Math.sin(an) * r0); ctx.lineTo(Math.cos(an) * R * .82, Math.sin(an) * R * .82); ctx.stroke(); }
-    ctx.fillStyle = INK; ctx.font = `800 ${Math.max(12, R * .34)}px ${MONO}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('N', 0, -R * .5); ctx.fillText('S', 0, R * .5);
-    ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 3; ctx.shadowOffsetY = 2;
-    needle(0, 0, R * 1.45, st.ca, R * .17, '#2a2a30'); ctx.restore();
-    ctx.fillStyle = TAG; ctx.beginPath(); ctx.arc(0, 0, R * .09, 0, 7); ctx.fill();
+    ctx.save(); ctx.translate(ccx, ccy); ctx.scale(st.comp, st.comp);
+    ctx.fillStyle = LIGHT; ctx.beginPath(); ctx.arc(0, 0, R, 0, 7); ctx.fill();
+    ctx.strokeStyle = K; ctx.lineWidth = Math.max(2, R * .07); ctx.stroke();
+    ctx.fillStyle = K; ctx.font = `700 ${Math.max(12, R * .3)}px ${BODY}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('N', 0, -R * .62); ctx.fillText('S', 0, R * .64);
+    needle(0, 0, R * 1.2, st.ca, R * .16, K);
+    ctx.fillStyle = K; ctx.beginPath(); ctx.arc(0, 0, R * .08, 0, 7); ctx.fill();
     ctx.restore();
-    // readout chip
-    const txt = pol ? 'FIELD: NORMAL' : 'FIELD: REVERSED';
-    ctx.font = `800 ${fs}px ${MONO}`; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-    const tw = ctx.measureText(txt).width, by = ccy + R + fs * 1.5;
-    ctx.fillStyle = 'rgba(22,19,15,.88)';
-    ctx.fillRect(fs * .6 - fs * .4, by - fs * 1.05, tw + fs * .8, fs * 1.5);
-    ctx.fillStyle = '#fff4d6';
-    ctx.fillText(txt, fs * .6, by);
+    // what the compass shows, in words
+    ctx.font = `600 ${fs}px ${BODY}`; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = K;
+    ctx.fillText(pol ? 'Field: normal' : 'Field: reversed', fs * .6, ccy + R + fs * 1.5);
     ctx.restore();
   }
   function drawHints(t) {
     if (touched || revealed) return;
     const y = yTop - fs * 1.4, n = Kit.calm ? 0 : Math.sin(t / 260) * 4;
     ctx.save(); ctx.font = `700 ${fs * 1.25}px ${HAND}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#fff4d6'; ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 4;
+    ctx.fillStyle = K;
     ctx.fillText('pull apart', cx, y);
     const hw = ctx.measureText('pull apart').width / 2 + fs * .6;
-    ctx.strokeStyle = '#fff4d6'; ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = K; ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     for (const s of [-1, 1]) {
       const x = cx + s * (hw + n);
       ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + s * fs * 1.3, y); ctx.moveTo(x + s * fs * .8, y - fs * .45); ctx.lineTo(x + s * fs * 1.3, y); ctx.lineTo(x + s * fs * .8, y + fs * .45); ctx.stroke();
     }
     ctx.restore();
   }
-  // find a band of the right colour under a tag, to aim its pointer at
+  // find a band of the right colour under a label, to aim its pointer at
   function aim(pl, x, w, size) {
     const lo = x - w / 2 + size * .7, hi = x + w / 2 - size * .7;
     let best = null, bd = 1e9;
@@ -422,38 +320,33 @@
     if (st.lab <= 0) return;
     ctx.save(); ctx.globalAlpha = clamp(st.lab);
     const s = .6 + .4 * st.lab, ys = v => v * s + (1 - s) * yTop * .5;
-    // the key: two tags on one row if they fit, else stacked
-    const ks = fs * 1.2, kh = ks * 1.45, tD = 'dark = NORMAL, like today', tL = 'light = REVERSED';
-    const wD = tagW(tD, ks), wL = tagW(tL, ks), gap = fs;
+    // the key: two labels on one row if they fit, else stacked
+    const ks = fs, kh = ks * 1.6, tD = 'dark = normal, like today', tL = 'light = reversed';
+    const wD = boxW(tD, ks, true), wL = boxW(tL, ks, true), gap = fs;
     let xD, xL, yD, yL;
     if (wD + wL + gap + 8 <= W) { const tot = wD + wL + gap; xD = cx - tot / 2 + wD / 2; xL = xD + wD / 2 + gap + wL / 2; yD = yL = kh * .5 + fs * .5; }
     else { xD = xL = cx; yD = kh * .5 + fs * .5; yL = yD + kh + ks * .7; }
-    const rD = tag(tD, xD, ys(yD), {seed: 17, rot: -.02, size: ks});
-    const pD = aim(1, rD, wD, ks);
-    if (pD != null) tag(tD, xD, ys(yD), {seed: 17, rot: -.02, size: ks, px: pD});
-    const rL = tag(tL, xL, ys(yL), {seed: 23, rot: .025, size: ks, bg: '#ff8a5c'});
-    const pL = aim(0, rL, wL, ks);
-    if (pL != null) tag(tL, xL, ys(yL), {seed: 23, rot: .025, size: ks, bg: '#ff8a5c', px: pL});
+    const rD = clamp(xD, wD / 2 + 4, W - wD / 2 - 4), rL = clamp(xL, wL / 2 + 4, W - wL / 2 - 4);
+    const pD = aim(1, rD, wD, ks), pL = aim(0, rL, wL, ks);
+    box(tD, xD, ys(yD), {size: ks, sw: K, px: pD});
+    box(tL, xL, ys(yL), {size: ks, sw: LIGHT, px: pL});
     // the time axis: one row in the mantle, never overlapping
-    let bs = fs * 1.1; const tO1 = '◀ older', tO2 = 'older ▶', tR = 'ridge: new rock';
-    let wO = tagW(tO1, bs), wR = tagW(tR, bs);
-    while (bs > 12 && wO * 2 + wR + fs * 2 + 12 > W) { bs -= .5; wO = tagW(tO1, bs); wR = tagW(tR, bs); }
+    let bs = fs; const tO1 = '◀ older', tO2 = 'older ▶', tR = 'ridge: new rock';
+    let wO = boxW(tO1, bs), wR = boxW(tR, bs);
+    while (bs > 12 && wO * 2 + wR + fs * 2 + 12 > W) { bs -= .5; wO = boxW(tO1, bs); wR = boxW(tR, bs); }
     const yb = yTop + bh + (H - yTop - bh) * .55;
-    tag(tO1, 6 + wO / 2, yb, {seed: 41, size: bs, bg: FIBER, rot: -.015});
-    tag(tO2, W - 6 - wO / 2, yb, {seed: 43, size: bs, bg: FIBER, rot: .015});
-    tag(tR, cx, yb, {seed: 47, size: bs, bg: FIBER});
+    box(tO1, 6 + wO / 2, yb, {size: bs});
+    box(tO2, W - 6 - wO / 2, yb, {size: bs});
+    box(tR, cx, yb, {size: bs});
     ctx.restore();
   }
   function draw(t) {
     if (!ctx) return;
-    const jit = Kit.calm ? 0 : Math.floor(t / 125);
     ctx.clearRect(0, 0, W, H);
-    drawWater(t, jit); drawMantle(t, jit); drawFloor(jit);
-    blocks.forEach(b => drawBlock(b, t, jit));
+    drawWater(); drawMantle(t); drawFloor();
+    blocks.forEach(b => drawBlock(b, t));
     chips.forEach(c => drawChip(c, t));
-    drawCompass(t, jit); drawHints(t); drawLabels();
-    // paper grain only on the drawn pieces, never on the bare card
-    if (pattern) { ctx.save(); ctx.globalCompositeOperation = 'source-atop'; ctx.globalAlpha = .09; ctx.fillStyle = pattern; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+    drawCompass(t); drawHints(t); drawLabels();
   }
   function frame(t) {
     Engine.update(engine, 1000 / 60);

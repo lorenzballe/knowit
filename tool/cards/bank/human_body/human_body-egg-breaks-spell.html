@@ -37,11 +37,15 @@ for (let i = 0; i < N; i++) {
     ph: Kit.rnd() * 6.28, op: 1, tailOp: 1, chosen: false, el: null});
 }
 let G = null, waves = [], phase = 'idle', entered = false;
+const tint = n => `color-mix(in srgb,var(--k) ${n}%,var(--c))`;
+const CREAM = '#fff4e3';
 
 function spermShape(g, R) {
   const h = R * .13;
-  const tail = Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': Math.max(1.2, R * .022), 'stroke-linecap': 'round'}, g);
-  const head = Kit.mk('ellipse', {cx: 0, cy: 0, rx: h * .62, ry: h * .4, fill: '#fff', stroke: 'var(--k)', 'stroke-width': Math.max(1, R * .014)}, g);
+  const tail = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(1.4, R * .024), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  const head = Kit.mk('ellipse', {cx: 0, cy: 0, rx: h * .62, ry: h * .42, fill: 'var(--k)'}, g);
+  // the cap at the tip of the head (acrosome), flat, so the head reads as a cell and not a dot
+  Kit.mk('path', {d: `M${h * .05},${-h * .36} A${h * .62},${h * .42} 0 0 1 ${h * .05},${h * .36} Z`, fill: tint(55)}, g);
   return {tail, head, h};
 }
 
@@ -59,31 +63,38 @@ Kit.onShow.card = () => {
   const wsw = Math.max(2, R * .035);
   const wMax = Math.min(R * 2.3, room - wsw);
   // status
-  G.status = Kit.mk('text', {x: cx, y: fs * 1.3, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800,
+  G.status = Kit.mk('text', {x: cx, y: fs * 1.3, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700,
     'font-family': 'var(--body)', fill: 'var(--k)'}, svg);
-  // waves (chemical signals)
+  // waves (chemical signals): rings of little molecules drifting outward from the egg
   const wg = Kit.mk('g', {}, svg);
-  waves = [0, 1, 2].map(() => Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#fff', 'stroke-width': wsw, opacity: 0}, wg));
+  waves = [0, 1, 2].map(() => Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: 'var(--k)', 'stroke-width': wsw * 1.3,
+    'stroke-linecap': 'round', 'stroke-dasharray': `0 ${wsw * 3.6}`, opacity: 0}, wg));
   if (!entered) {
     if (Kit.calm) waves.forEach((w, i) => { w.setAttribute('r', Math.min(R * (1.35 + i * .3), wMax)); w.setAttribute('opacity', .45 - i * .12); });
     else waves.forEach((w, i) => gsap.fromTo(w, {attr: {r: R * 1.05}, opacity: .8}, {attr: {r: wMax}, opacity: 0, duration: 2.4, ease: 'sine.out', repeat: -1, delay: i * .8}));
   }
-  // corona radiata: the "forest"
+  // corona radiata: the "forest" of follicle cells, each a soft blob with its own nucleus
   const cg = Kit.mk('g', {}, svg);
   for (let i = 0; i < 46; i++) {
     const a = i / 46 * Math.PI * 2, rr = R * (1.13 + .08 * Math.sin(i * 2.7));
-    Kit.mk('circle', {cx: cx + Math.cos(a) * rr, cy: cy + Math.sin(a) * rr, r: R * (.045 + .02 * Math.abs(Math.sin(i * 1.3))),
-      fill: 'color-mix(in srgb,var(--k) 22%,transparent)'}, cg);
+    const r = R * (.045 + .02 * Math.abs(Math.sin(i * 1.3)));
+    const x = cx + Math.cos(a) * rr, y = cy + Math.sin(a) * rr;
+    Kit.mk('ellipse', {cx: x, cy: y, rx: r * 1.15, ry: r * .9, fill: tint(30),
+      transform: `rotate(${(a * 180 / Math.PI + 90 + (i % 3 - 1) * 14).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})`}, cg);
+    Kit.mk('circle', {cx: x, cy: y, r: r * .32, fill: tint(55)}, cg);
   }
   // zona pellucida: the wall
-  G.glow = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#fff', 'stroke-width': R * .2, opacity: entered ? 0 : .3}, svg);
-  G.zona = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: entered ? 'var(--k)' : '#fff', 'stroke-width': R * (entered ? .12 : .08)}, svg);
-  G.seal = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#fff', 'stroke-width': R * .03,
+  G.glow = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: 'none', opacity: 0}, svg);
+  G.zona = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: entered ? 'var(--k)' : tint(70), 'stroke-width': R * (entered ? .12 : .08)}, svg);
+  G.seal = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: 'var(--c)', 'stroke-width': R * .03, 'stroke-linecap': 'round',
     'stroke-dasharray': `${R * .12} ${R * .1}`, opacity: entered ? .8 : 0}, svg);
-  G.egg = Kit.mk('circle', {cx, cy, r: R * .93, fill: '#fff4e3'}, svg);
-  Kit.mk('circle', {cx: cx - R * .22, cy: cy - R * .18, r: R * .24, fill: 'color-mix(in srgb,var(--k) 18%,#fff4e3)'}, svg);
+  G.egg = Kit.mk('circle', {cx, cy, r: R * .93, fill: CREAM}, svg);
+  // nucleus
+  Kit.mk('circle', {cx: cx - R * .22, cy: cy - R * .18, r: R * .24, fill: `color-mix(in srgb,var(--c) 22%,${CREAM})`,
+    stroke: `color-mix(in srgb,var(--c) 45%,${CREAM})`, 'stroke-width': Math.max(1.2, R * .018)}, svg);
+  Kit.mk('circle', {cx: cx - R * .27, cy: cy - R * .22, r: R * .065, fill: `color-mix(in srgb,var(--c) 50%,${CREAM})`}, svg);
   Kit.mk('text', {x: cx, y: cy + R * .55, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700,
-    'font-family': 'var(--body)', fill: '#5a4636'}, svg).textContent = 'EGG';
+    'font-family': 'var(--body)', fill: '#5a4636'}, svg).textContent = 'Egg';
   // sperm
   const sg = Kit.mk('g', {}, svg);
   sperm.forEach(s => { s.el = Kit.mk('g', {}, sg); Object.assign(s, spermShape(s.el, R)); });
@@ -127,7 +138,7 @@ function breakSpell() {
   gsap.to(G.glow, {opacity: 0, duration: .25});
   gsap.to(G.zona, {attr: {stroke: 'var(--k)', 'stroke-width': G.R * .12}, duration: .3});
   gsap.to(G.seal, {opacity: .8, duration: .4, delay: .15});
-  gsap.fromTo(G.egg, {attr: {fill: '#ffffff'}}, {attr: {fill: '#fff4e3'}, duration: .8});
+  gsap.fromTo(G.egg, {attr: {fill: '#ffffff'}}, {attr: {fill: CREAM}, duration: .8});
   setStatus();
   if (!Kit.calm) gsap.fromTo(G.status, {opacity: 0}, {opacity: 1, duration: .4});
   sperm.filter(s => !s.chosen).forEach((s, i) => {

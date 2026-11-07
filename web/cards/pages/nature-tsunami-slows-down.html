@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-tsunami-slows-down -->
-<!-- Look: a night observatory over the sea: ink-black sky, fine twinkling stars, a pale moon laying a shimmering path on the water, two glowing instrument rings (speed, height) above a cross-section of ocean and rising shelf.
+<!-- Look: a page from a printed science book: a flat cross-section of the sea, with water in one solid blue and the sea floor rising in solid ink tints to a small town of houses. Above the water, a speed arrow and a height bar are drawn plainly.
      Interaction: bet on what the wave's speed does near the coast and say how sure you are. The wave then crosses from deep to shallow water, dropping a dot at every equal tick of time. After that, drag it anywhere to replay.
-     Wow moment: the dots bunch up as the wave brakes, the speed ring drains while the height ring fills, the crest towers over the town throwing spray, and "Slower, and taller" scrambles into place. -->
+     Wow moment: the dots bunch up as the wave brakes, the speed arrow shrinks while the height bar grows, the crest rises over the town throwing spray, and "Slower, and taller" scrambles into place. -->
 <title>Why a tsunami grows at the coast</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -14,12 +14,12 @@
 #pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;overflow:visible}
 .done #pic{cursor:ew-resize}
 #opts{display:flex;gap:2cqw}
-.opt{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:rgba(98,230,255,.07);border:0;box-shadow:inset 0 0 0 max(.2cqh,1px) rgba(98,230,255,.38);border-radius:1.6cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere;transition:background .15s,box-shadow .15s}
-.opt.on{background:#62e6ff;color:#041322;box-shadow:0 0 2.4cqh rgba(98,230,255,.55)}
+.opt{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 6%,var(--c));border:0;box-shadow:inset 0 0 0 max(.2cqh,1px) color-mix(in srgb,var(--k) 30%,var(--c));border-radius:1.6cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere;transition:background .15s,box-shadow .15s}
+.opt.on{background:#7cc4ea;color:#06121f;box-shadow:inset 0 0 0 max(.2cqh,1px) #7cc4ea}
 #why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{color:#a6f2ff;text-shadow:0 0 1.6cqh rgba(98,230,255,.55);min-height:1.1em}
+#why .big{color:#9fd4f0;min-height:1.1em}
 #why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);color:var(--k)}
-#why .body b,.say b{color:#8eeeff}
+#why .body b,.say b{color:#9fd4f0}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Bet · how sure · watch" style="--c:#060a14;--k:#eaf0ff;--edge:#01030a">
   <div class="in">
@@ -46,7 +46,9 @@
   if (window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
   if (window.SplitText) gsap.registerPlugin(SplitText);
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), opts = Kit.$('opts');
-  const CY = '#62e6ff', AM = '#ffb54d', INK = '#eaf0ff', MUTE = 'rgba(234,240,255,.62)';
+  // flat colours: the sea (wave and speed), amber (height), and tints of the card's ink
+  const CY = '#7cc4ea', AM = '#f0a646', SEA = '#1f4f7a', DOT = '#d9eefa', INK = '#eaf0ff', MUTE = 'rgba(234,240,255,.66)';
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const RIGHT = 2;
   let pick = -1, phase = 'bet', tween = null, twinkles = [];
   const st = {t: 0, bob: 0};
@@ -69,26 +71,34 @@
   const beachY = x => { const f0 = seaY + 3 + D(1) * depthPx; return f0 + (seaY - H * .06 - f0) * smooth(XS, W * .97, x); };
   const floorY = x => x <= XS ? seaY + 3 + D(Math.max(0, uOf(x))) * depthPx : beachY(x);
   const mk = (t, a, p) => Kit.mk(t, a, p);
-  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--mono);letter-spacing:.06em'}, a), p); e.textContent = s; return e; };
-  const P = (cx, cy, r, a) => [(cx + r * Math.cos(a)).toFixed(1), (cy + r * Math.sin(a)).toFixed(1)];
-  const arc = (cx, cy, r, f) => { const a0 = .75 * Math.PI, a1 = a0 + 1.5 * Math.PI * Math.max(.015, Math.min(1, f)); return `M${P(cx, cy, r, a0)}A${r},${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${P(cx, cy, r, a1)}`; };
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--body)'}, a), p); e.textContent = s; return e; };
 
-  function gauge(cx, cy, r, col, name, parent) {
-    const g = mk('g', {class: 'gauge'}, parent);
-    mk('circle', {cx, cy, r: r * 1.13, fill: 'none', stroke: col, 'stroke-opacity': .18, 'stroke-width': 1}, g);
-    const spin = mk('circle', {cx, cy, r: r * 1.13, fill: 'none', stroke: col, 'stroke-opacity': .55, 'stroke-width': 1.4, 'stroke-dasharray': `2 ${(r * .19).toFixed(1)}`}, g);
-    for (let i = 0; i <= 28; i++) {
-      const a = .75 * Math.PI + 1.5 * Math.PI * i / 28, big = i % 7 === 0;
-      const p0 = P(cx, cy, r * (big ? .7 : .76), a), p1 = P(cx, cy, r * .82, a);
-      mk('line', {x1: p0[0], y1: p0[1], x2: p1[0], y2: p1[1], stroke: INK, 'stroke-opacity': big ? .6 : .25, 'stroke-width': big ? 1.4 : 1}, g);
-    }
-    mk('path', {d: arc(cx, cy, r * .95, 1), fill: 'none', stroke: col, 'stroke-opacity': .14, 'stroke-width': Math.max(3, r * .09), 'stroke-linecap': 'round'}, g);
-    const val = mk('path', {d: arc(cx, cy, r * .95, .5), fill: 'none', stroke: col, 'stroke-width': Math.max(3, r * .09), 'stroke-linecap': 'round', filter: 'url(#glow)'}, g);
-    const knob = mk('circle', {r: Math.max(2.5, r * .07), fill: '#fff', filter: 'url(#glow)'}, g);
-    const word = txt(g, cx, cy + fs * .4, '', {'text-anchor': 'middle', 'font-size': fs * 1.15, 'font-weight': 700, fill: col});
-    txt(g, cx, cy + r * .8 + fs * .35, name, {'text-anchor': 'middle', fill: MUTE, 'font-size': Math.max(12, fs * .92)});
-    if (!Kit.calm) twinkles.push(gsap.to(spin, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 40, repeat: -1, ease: 'none'}));
-    return {g, val, knob, word, cx, cy, r};
+  // speed: a plain arrow whose length is the speed
+  function speedMeter(x0, cy, len, r, parent) {
+    const g = mk('g', {class: 'gauge'}, parent), t = Math.max(5, fs * .75), hh = t * 1.1, hl = t * 1.2;
+    txt(g, x0, cy - r * .55, 'Speed', {fill: MUTE});
+    mk('rect', {x: x0, y: cy - t / 2, width: len, height: t, rx: t / 2, style: `fill:${tint(12)}`}, g);
+    const val = mk('path', {fill: CY}, g);
+    const word = txt(g, x0, cy + r * .55 + fs * .35, '', {'font-weight': 700, fill: CY});
+    const set = v => {
+      const L = Math.max(hl + 2, len * Math.max(.015, Math.min(1, v))), xe = x0 + L, xn = xe - hl;
+      val.setAttribute('d', `M${x0},${(cy - t / 2).toFixed(1)}H${xn.toFixed(1)}V${(cy - hh).toFixed(1)}L${xe.toFixed(1)},${cy.toFixed(1)}L${xn.toFixed(1)},${(cy + hh).toFixed(1)}V${(cy + t / 2).toFixed(1)}H${x0}Z`);
+    };
+    return {g, val, word, set, r};
+  }
+  // height: a column of water standing on a line, as tall as the wave
+  function heightMeter(cx, cy, r, parent) {
+    const g = mk('g', {class: 'gauge'}, parent), w = Math.max(10, fs * 1.4), base = cy + r * .75, full = r * 1.5;
+    mk('rect', {x: cx - w / 2, y: base - full, width: w, height: full, style: `fill:${tint(12)}`}, g);
+    const val = mk('rect', {x: cx - w / 2, width: w, fill: AM}, g);
+    mk('line', {x1: cx - w, x2: cx + w, y1: base, y2: base, stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, g);
+    txt(g, cx, base + fs * 1.3, 'Height', {'text-anchor': 'middle', fill: MUTE});
+    const word = txt(g, cx + w / 2 + fs * .5, cy + fs * .35, '', {'font-weight': 700, fill: AM});
+    const set = v => {
+      const h = full * Math.max(.015, Math.min(1, v));
+      val.setAttribute('y', (base - h).toFixed(1)); val.setAttribute('height', h.toFixed(1));
+    };
+    return {g, val, word, set, r};
   }
 
   function layout() {
@@ -100,79 +110,36 @@
     seaY = H * .52; X0 = W * .03; XS = W * .86; depthPx = H - 4 - seaY - 3; A0 = H * .025;
     xLand = XS; while (xLand < W && beachY(xLand) > seaY) xLand += 1;
 
-    const defs = mk('defs', {}, svg);
-    const fl = mk('filter', {id: 'glow', x: '-60%', y: '-60%', width: '220%', height: '220%'}, defs);
-    mk('feGaussianBlur', {stdDeviation: 2.6, result: 'b'}, fl);
-    const fm = mk('feMerge', {}, fl); mk('feMergeNode', {in: 'b'}, fm); mk('feMergeNode', {in: 'SourceGraphic'}, fm);
-    const sea = mk('linearGradient', {id: 'sea', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    [[0, '#0f4673', .95], [.35, '#08264a', .95], [1, '#030b18', 1]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, sea));
-    const bed = mk('linearGradient', {id: 'bed', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    [[0, '#232a44'], [1, '#0a0d19']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, bed));
-    const halo = mk('radialGradient', {id: 'halo'}, defs);
-    [[0, '#fff6d8', .5], [.4, '#9fb8ff', .12], [1, '#9fb8ff', 0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, halo));
-    const crestG = mk('radialGradient', {id: 'crest'}, defs);
-    [[0, CY, .45], [1, CY, 0]].forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, crestG));
-
-    // the sky: a fine star field
-    const stars = mk('g', {class: 'stars'}, svg);
-    const n = Math.min(140, Math.round(W * seaY / 1300));
-    for (let i = 0; i < n; i++) {
-      const s = mk('circle', {cx: (Kit.rnd() * W).toFixed(1), cy: (2 + Kit.rnd() * (seaY - fs * 1.2)).toFixed(1), r: (.35 + Kit.rnd() ** 3 * 1.2).toFixed(2), fill: Kit.rnd() < .15 ? '#cfe0ff' : '#fff', opacity: (.25 + Kit.rnd() * .7).toFixed(2)}, stars);
-      if (!Kit.calm && i % 7 === 0) twinkles.push(gsap.to(s, {opacity: .1, duration: 1 + Kit.rnd() * 2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Kit.rnd() * 2}));
-    }
-    // the instrument rings on the left, the moon over the coast
+    // the two measures, above the water on the left
     const r = Math.max(20, Math.min(W * .115, (seaY - fs * 1.4) / 2.4, 70)), cy = r * 1.13 + 3;
-    const mr = Math.max(5, Math.min(fs * .85, r * .32)), mx = W * .7, my = Math.max(mr * 2.2, cy - r * .35);
-    mk('circle', {cx: mx, cy: my, r: mr * 5, fill: 'url(#halo)'}, svg);
-    mk('circle', {cx: mx, cy: my, r: mr, fill: '#f4efdc'}, svg);
-    mk('circle', {cx: mx + mr * .35, cy: my - mr * .2, r: mr * .9, fill: '#060a14', opacity: .9}, svg);
-    G.speed = gauge(W * .17, cy, r, CY, 'SPEED', svg);
-    G.height = gauge(W * .45, cy, r, AM, 'HEIGHT', svg);
+    G.speed = speedMeter(W * .055, cy, W * .25, r, svg);
+    G.height = heightMeter(W * .45, cy, r, svg);
 
     // the sea, then the sea floor and the coast on top of it
-    G.sea = mk('path', {fill: 'url(#sea)'}, svg);
-    // the moon's path on the water
-    G.glint = mk('g', {}, svg);
-    for (let i = 0; i < 7; i++) {
-      const w = mr * (2.4 - i * .25) * (.7 + Kit.rnd() * .6), y = seaY + 3 + i * Math.max(3, fs * .3), x = mx + (Kit.rnd() - .5) * mr;
-      const l = mk('line', {x1: (x - w / 2).toFixed(1), x2: (x + w / 2).toFixed(1), y1: y.toFixed(1), y2: y.toFixed(1), stroke: '#fff3cf', 'stroke-opacity': (.38 - i * .045).toFixed(2), 'stroke-width': 1.1, 'stroke-linecap': 'round'}, G.glint);
-      if (!Kit.calm) twinkles.push(gsap.to(l, {attr: {'stroke-opacity': .05}, duration: .8 + Kit.rnd() * 1.4, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Kit.rnd()}));
-    }
-    // faint currents in the deep
-    for (let i = 0; i < 5; i++) {
-      const y = seaY + depthPx * (.3 + i * .13), x = W * (.05 + Kit.rnd() * .3), w = W * (.08 + Kit.rnd() * .12);
-      const c = mk('path', {d: `M${x.toFixed(1)},${y.toFixed(1)}q${(w / 4).toFixed(1)},-3 ${(w / 2).toFixed(1)},0t${(w / 2).toFixed(1)},0`, fill: 'none', stroke: '#6fb6ff', 'stroke-opacity': .12, 'stroke-width': 1}, svg);
-      if (!Kit.calm) twinkles.push(gsap.to(c, {x: W * .05, duration: 5 + Kit.rnd() * 4, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
-    }
+    G.sea = mk('path', {fill: SEA}, svg);
     let bd = `M0,${floorY(0).toFixed(1)}`;
     for (let x = 0; x <= W + .1; x += 4) bd += `L${x.toFixed(1)},${floorY(x).toFixed(1)}`;
-    mk('path', {d: bd + `L${W},${H}L0,${H}Z`, fill: 'url(#bed)'}, svg);
-    mk('path', {d: bd, fill: 'none', stroke: '#8aa6ff', 'stroke-opacity': .45, 'stroke-width': 1.2}, svg);
-    for (let i = 0; i < Math.round(W / 3); i++) {
-      const x = Kit.rnd() * W, y0 = floorY(x) + 4; if (y0 > H - 3) continue;
-      mk('circle', {cx: x.toFixed(1), cy: (y0 + Kit.rnd() * (H - y0)).toFixed(1), r: (.5 + Kit.rnd() * .7).toFixed(2), fill: '#9fb0e6', opacity: (.1 + Kit.rnd() * .25).toFixed(2)}, svg);
-    }
-    // a little town with its lights on
+    const ground = mk('g', {class: 'ground'}, svg);
+    mk('path', {d: bd + `L${W},${H}L0,${H}Z`, style: `fill:${tint(16)}`}, ground);
+    mk('path', {d: bd, fill: 'none', style: `stroke:${tint(42)}`, 'stroke-width': Math.max(3, fs * .3), 'stroke-linejoin': 'round'}, ground);
+    // a little town on the shore
     [.905, .935, .963].forEach((p, i) => {
       const x = W * p, b = beachY(x) + 1, w = fs * (i === 1 ? 1 : .8), h = fs * (i === 1 ? .9 : .7);
-      mk('path', {d: `M${x - w / 2},${b}V${b - h}L${x},${b - h - w * .45}L${x + w / 2},${b - h}V${b}Z`, fill: '#1b2138', stroke: '#8aa6ff', 'stroke-opacity': .5, 'stroke-width': 1}, svg);
-      const win = mk('rect', {x: x - w * .14, y: b - h * .62, width: w * .28, height: h * .3, fill: AM, filter: 'url(#glow)'}, svg);
-      if (!Kit.calm && i === 2) twinkles.push(gsap.to(win, {opacity: .55, duration: .18, repeat: -1, yoyo: true, repeatDelay: 3.4, ease: 'steps(1)'}));
+      mk('path', {d: `M${x - w / 2},${b}V${b - h}L${x},${b - h - w * .45}L${x + w / 2},${b - h}V${b}Z`, style: `fill:${tint(i === 1 ? 62 : 48)}`}, ground);
+      mk('rect', {x: x - w * .14, y: b - h * .62, width: w * .28, height: h * .3, fill: AM}, ground);
     });
     txt(svg, W - 3, beachY(W * .93) - fs * 2.1, 'coast', {'text-anchor': 'end', fill: MUTE});
     txt(svg, X0 + 3, seaY + fs * 2.4, 'deep ocean', {fill: MUTE});
     txt(svg, xOf(.78), seaY + fs * 2.4, 'shallow', {'text-anchor': 'end', fill: MUTE});
-    G.legend = txt(svg, X0 + 3, seaY + fs * 3.8, '• = equal time steps', {fill: CY, opacity: phase === 'bet' ? 0 : 1});
+    G.legend = txt(svg, X0 + 3, seaY + fs * 3.8, '• = equal time steps', {fill: DOT, opacity: phase === 'bet' ? 0 : 1});
 
-    G.surf = mk('path', {fill: 'none', stroke: '#8ff0ff', 'stroke-width': 1.7, filter: 'url(#glow)', 'stroke-linejoin': 'round'}, svg);
-    G.glowC = mk('ellipse', {fill: 'url(#crest)'}, svg);
+    G.surf = mk('path', {fill: 'none', stroke: CY, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
     G.spray = mk('g', {}, svg);
     G.dots = mk('g', {}, svg);
+    // a small pointer marking the wave
     G.ret = mk('g', {}, svg);
     const rr = fs * .62;
-    mk('circle', {r: rr, fill: 'none', stroke: '#fff', 'stroke-width': 1.3, 'stroke-dasharray': '3 2.2'}, G.ret);
-    [[0, -1], [0, 1], [-1, 0], [1, 0]].forEach(([a, b]) => mk('line', {x1: a * rr * .45, y1: b * rr * .45, x2: a * rr * 1.45, y2: b * rr * 1.45, stroke: '#fff', 'stroke-width': 1.3}, G.ret));
-    G.stem = mk('line', {stroke: '#fff', 'stroke-opacity': .55, 'stroke-width': 1, 'stroke-dasharray': '2 2'}, svg);
+    mk('path', {d: `M${(-rr * .6).toFixed(1)},${(-rr).toFixed(1)}L${(rr * .6).toFixed(1)},${(-rr).toFixed(1)}L0,0Z`, fill: INK, 'stroke-linejoin': 'round'}, G.ret);
     draw();
   }
 
@@ -189,30 +156,26 @@
     G.sea.setAttribute('d', path + `L${W},${H}L0,${H}Z`);
     G.surf.setAttribute('d', surf);
     const top = seaY - A;
-    Object.entries({cx: xc, cy: top + A * .5, rx: s * 1.4, ry: A * .9 + fs}).forEach(([k, v]) => G.glowC.setAttribute(k, v.toFixed(1)));
-    G.ret.setAttribute('transform', `translate(${xc.toFixed(1)},${(top - fs * 1.7).toFixed(1)})`);
-    Object.entries({x1: xc, x2: xc, y1: top - fs * 1.05, y2: top - 3}).forEach(([k, v]) => G.stem.setAttribute(k, v.toFixed(1)));
+    G.ret.setAttribute('transform', `translate(${xc.toFixed(1)},${(top - fs * .5).toFixed(1)})`);
     // spray flung off the crest once it rears up
     const ht = AMP(u) / AMAX;
     G.spray.innerHTML = '';
     if (ht > .4) for (let i = 0; i < 9; i++) {
       const ph = (st.bob * .35 + i * .37) % 1, k = (ht - .4) / .6;
       const x = xc + sF * (.15 + (i % 3) * .2) + ph * sF * .5, y = top + 2 - Math.sin(ph * Math.PI) * fs * .9 * k;
-      mk('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: (.7 + (i % 3) * .35).toFixed(2), fill: '#dffaff', opacity: ((1 - ph) * .85 * k).toFixed(2)}, G.spray);
+      mk('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: (.9 + (i % 3) * .4).toFixed(2), fill: DOT, opacity: ((1 - ph) * k).toFixed(2)}, G.spray);
     }
     // one dot for every equal tick of time: they bunch up as the wave brakes
     G.dots.innerHTML = '';
     if (phase !== 'bet') for (let k = 0; k * TK <= st.t + 1e-6; k++) {
       const x = xOf(uAt(k * TK));
-      mk('line', {x1: x, x2: x, y1: seaY + 2, y2: seaY + fs * .7, stroke: CY, 'stroke-opacity': .6, 'stroke-width': 1}, G.dots);
-      mk('circle', {cx: x, cy: seaY + fs * .95, r: 2.4, fill: CY, filter: 'url(#glow)'}, G.dots);
+      mk('line', {x1: x, x2: x, y1: seaY + 2, y2: seaY + fs * .7, stroke: DOT, 'stroke-opacity': .6, 'stroke-width': 1}, G.dots);
+      mk('circle', {cx: x, cy: seaY + fs * .95, r: 2.6, fill: DOT}, G.dots);
     }
-    // the rings
+    // the measures
     const sp = Math.sqrt(d);
     [[G.speed, sp, sp > .75 ? 'fast' : sp > .45 ? 'slower' : 'slow'], [G.height, ht, ht < .35 ? 'low' : ht < .7 ? 'taller' : 'tall']].forEach(([g, v, w]) => {
-      g.val.setAttribute('d', arc(g.cx, g.cy, g.r * .95, v));
-      const p = P(g.cx, g.cy, g.r * .95, .75 * Math.PI + 1.5 * Math.PI * Math.max(.015, v));
-      g.knob.setAttribute('cx', p[0]); g.knob.setAttribute('cy', p[1]);
+      g.set(v);
       const ww = g.r >= 30 ? w : '';
       if (g.word.textContent !== ww) g.word.textContent = ww;
     });
@@ -262,13 +225,10 @@
     if (window.ScrambleTextPlugin) { word.textContent = ''; gsap.to(word, {duration: 1.1, scrambleText: {text: target, chars: 'SLOWERTALLHIGH', speed: .5, revealDelay: .25}, ease: 'power2.out'}); }
     else gsap.from(word, {opacity: 0, y: 8, duration: .6, ease: 'power3.out'});
     gsap.from('#why .body', {opacity: 0, y: 8, duration: .6, delay: .35, ease: 'power3.out'});
-    // the wow: a ring bursts off the towering crest, the gauges flare (after the stage settles)
+    // the wow: the two measures give a little jolt (after the stage settles)
     gsap.delayedCall(.08, () => {
       if (!G.speed) return;
-      const u = uAt(st.t), x = xOf(u), y = seaY - A0 * AMP(u);
-      const ring = mk('circle', {cx: x, cy: y, r: 4, fill: 'none', stroke: AM, 'stroke-width': 2.5, filter: 'url(#glow)'}, svg);
-      gsap.to(ring, {attr: {r: fs * 5}, opacity: 0, duration: 1.2, ease: 'expo.out', onComplete: () => ring.remove()});
-      [G.speed, G.height].forEach((g, i) => gsap.fromTo(g.val, {attr: {'stroke-width': g.r * .22}}, {attr: {'stroke-width': Math.max(3, g.r * .09)}, duration: 1, delay: i * .12, ease: 'elastic.out(1,.4)'}));
+      [G.speed, G.height].forEach((g, i) => gsap.fromTo(g.val, {scale: 1.15, transformOrigin: i ? '50% 100%' : '0% 50%'}, {scale: 1, duration: 1, delay: i * .12, ease: 'elastic.out(1,.4)'}));
     });
   }
 
@@ -295,7 +255,7 @@
       const sp = new SplitText('.q', {type: 'words,chars'});
       tl.from(sp.chars, {opacity: 0, y: 6, duration: .4, stagger: .012, onComplete: () => sp.revert()}, 0);
     }
-    tl.from('#pic .stars circle', {opacity: 0, duration: .8, stagger: {each: .006, from: 'random'}}, 0)
+    tl.from('#pic .ground', {opacity: 0, duration: .8}, 0)
       .from('#pic .gauge', {opacity: 0, scale: .6, transformOrigin: '50% 50%', duration: .9, stagger: .12, ease: 'back.out(1.6)'}, .15)
       .from(G.sea, {opacity: 0, y: 20, duration: .9}, .2)
       .from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .45}, .45);

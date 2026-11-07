@@ -9,28 +9,19 @@
 #view{position:relative;flex:1 1 0;min-height:0;overflow:hidden;background:none}
 #sky{position:absolute;inset:0;width:100%;height:100%;display:block}
 #sky text{font-family:var(--body);font-weight:700}
-#cap{position:absolute;left:3.4cqw;top:1.2cqh;margin:0;font:700 max(1.7cqh,12px)/1.2 var(--body);letter-spacing:.03em;color:var(--k);pointer-events:none}
+#cap{position:absolute;left:3.4cqw;top:1.2cqh;margin:0;font:700 max(1.7cqh,12px)/1.2 var(--body);letter-spacing:0;color:var(--k);pointer-events:none}
 #dock{flex:none}
 #opts{display:flex;gap:1.6cqw}
 .opt{flex:1 1 auto;min-height:max(6.4cqh,40px);font:700 max(2.1cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:.9cqh 2cqw;cursor:pointer}
 .opt.on{background:var(--k);color:var(--c);box-shadow:none}
 #why{margin:0;font:500 max(2.2cqh,13px)/1.35 var(--body);color:var(--k)}
-#track{--kh:max(6cqh,42px);position:relative;height:var(--kh);border-radius:99px;background:#06060c;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;outline-offset:.4cqh;transition:opacity .4s}
+#track{--kh:max(6cqh,42px);position:relative;height:var(--kh);border-radius:99px;background:#0b0d1a;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;outline-offset:.4cqh;transition:opacity .4s}
 #boost.wait{pointer-events:none}
 #boost.wait #track{opacity:.35}
-#fill{position:absolute;inset:0;border-radius:99px;background:linear-gradient(90deg,#3d0603,#a81c0b 28%,#ff6d27 55%,#ffc98a 80%,#fff6e8);clip-path:inset(0 100% 0 0 round 99px)}
+#fill{position:absolute;inset:0;border-radius:99px;background:linear-gradient(90deg,#4a0603 0 20%,#c4230f 20% 40%,#ff8a3a 40% 60%,#ffd7a0 60% 80%,#fff6ea 80% 100%);clip-path:inset(0 100% 0 0 round 99px)}
 #chev{position:absolute;right:6%;top:50%;transform:translateY(-50%);font:700 max(2.2cqh,14px)/1 var(--body);letter-spacing:.25em;color:#f4eee4;opacity:.6;pointer-events:none}
-#knob{position:absolute;left:0;top:0;width:var(--kh);height:var(--kh);border-radius:50%;background:#fff6e8;box-shadow:inset 0 0 0 .3cqh #06060c,0 .4cqh 1.2cqh rgba(0,0,0,.45);display:grid;place-items:center}
+#knob{position:absolute;left:0;top:0;width:var(--kh);height:var(--kh);border-radius:50%;background:#fff6e8;box-shadow:inset 0 0 0 .3cqh #0b0d1a;display:grid;place-items:center}
 #dot{display:block;width:40%;height:40%;border-radius:50%;background:#4a0603}
-#sky .tw{animation:tw 2.8s ease-in-out infinite alternate}
-#sky .pulse{animation:pulse 1.9s ease-in-out infinite}
-#sky.lit .spin{animation:spin 18s linear infinite}
-#sky.lit #things{filter:drop-shadow(0 0 4px rgba(255,196,128,.7))}
-@keyframes tw{from{opacity:.12}to{opacity:.9}}
-@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
-@keyframes spin{to{stroke-dashoffset:-280}}
-.calm #sky .tw,.calm #sky .pulse,.calm #sky .spin{animation:none}
-@media (prefers-reduced-motion:reduce){#sky .tw,#sky .pulse,#sky .spin{animation:none}}
 </style>
 <article class="card" id="card" data-topic="space" data-kind="Pick one · how sure">
   <div class="in">
@@ -79,6 +70,7 @@ function mix(stops, u) {
 const Z = Math.pow(2, -9), remain = t => (Math.pow(2, -9 * t) - Z) / (1 - Z);
 const fallLook = t => ({c: mix(FALL, smooth((t - .08) / .78)), o: 1 - smooth((t - .4) / .58)});
 
+// kept so the random sequence of the specks below stays the same; the sky itself is left plain
 const STARS = Array.from({length: 170}, () => [Kit.rnd(), Kit.rnd(), Kit.rnd(), Kit.rnd()]);
 const THINGS = [
   {kind: 'astro', ang: 152, rot0: 16, spin: -70, k: 1},
@@ -89,36 +81,43 @@ const THINGS = [
 ];
 const SPECKS = Array.from({length: 30}, () => ({ang: Kit.rnd() * 360, t0: Kit.rnd() * 2.3, dur: 1.5 + Kit.rnd() * .8, r: .035 + Kit.rnd() * .05, k: .45 + Kit.rnd() * .55}));
 
-const INK = '#12172a';
+const INK = '#0b0d1a';
+// Flat cut-paper figures: one solid colour (the light they send) with a dark outline.
 function glyph(kind, parent) {
   const g = Kit.mk('g', {}, parent), add = (tag, a) => Kit.mk(tag, a, g), C = 'currentColor';
-  const line = (d, w) => add('path', {d, stroke: C, 'stroke-width': w, 'stroke-linecap': 'round', fill: 'none'});
+  const shape = (tag, a) => add(tag, Object.assign({fill: C, stroke: INK, 'stroke-width': 3, 'stroke-linejoin': 'round'}, a));
+  const limb = (d, w) => {
+    add('path', {d, stroke: INK, 'stroke-width': w + 6, 'stroke-linecap': 'round', fill: 'none'});
+    add('path', {d, stroke: C, 'stroke-width': w, 'stroke-linecap': 'round', fill: 'none'});
+  };
+  const ink = (d, w) => add('path', {d, stroke: INK, 'stroke-width': w, 'stroke-linecap': 'round', fill: 'none'});
   if (kind === 'astro') {
-    add('rect', {x: -27, y: -17, width: 54, height: 44, rx: 11, fill: C, opacity: .7});
-    line('M-21 -5 L-37 15 M21 -5 L35 -19', 12);
-    line('M-10 26 L-14 45 M10 26 L16 43', 13);
-    add('rect', {x: -21, y: -15, width: 42, height: 45, rx: 13, fill: C});
-    add('circle', {cx: 0, cy: -30, r: 19, fill: C});
+    shape('rect', {x: -27, y: -17, width: 54, height: 44, rx: 11});
+    limb('M-21 -5 L-37 15 M21 -5 L35 -19', 12);
+    limb('M-10 26 L-14 45 M10 26 L16 43', 13);
+    shape('rect', {x: -21, y: -15, width: 42, height: 45, rx: 13});
+    shape('circle', {cx: 0, cy: -30, r: 19});
     add('rect', {x: -13, y: -38, width: 26, height: 17, rx: 8.5, fill: INK});
-    add('rect', {x: -8, y: -1, width: 16, height: 9, rx: 2, fill: INK, opacity: .3});
+    add('rect', {x: -8, y: -1, width: 16, height: 9, rx: 2, fill: 'none', stroke: INK, 'stroke-width': 2.5});
   } else if (kind === 'rocket') {
-    add('path', {d: 'M-15 6 L-29 31 L-14 26 Z M15 6 L29 31 L14 26 Z', fill: C, opacity: .8});
-    add('rect', {x: -8, y: 22, width: 16, height: 8, rx: 2, fill: C, opacity: .65});
-    add('path', {d: 'M0 -50 C15 -34 17 -10 15 23 L-15 23 C-17 -10 -15 -34 0 -50 Z', fill: C});
+    shape('path', {d: 'M-15 6 L-29 31 L-14 26 Z M15 6 L29 31 L14 26 Z'});
+    shape('rect', {x: -8, y: 22, width: 16, height: 8, rx: 2});
+    shape('path', {d: 'M0 -50 C15 -34 17 -10 15 23 L-15 23 C-17 -10 -15 -34 0 -50 Z'});
+    ink('M-15 8 H15', 3);
     add('circle', {cx: 0, cy: -13, r: 7.5, fill: INK});
   } else if (kind === 'sat') {
-    line('M-19 0 H19', 4);
-    add('rect', {x: -49, y: -10, width: 30, height: 20, rx: 2, fill: C, opacity: .9});
-    add('rect', {x: 19, y: -10, width: 30, height: 20, rx: 2, fill: C, opacity: .9});
-    add('path', {d: 'M-39 -10 V10 M-29 -10 V10 M29 -10 V10 M39 -10 V10 M-49 0 H-19 M19 0 H49', stroke: INK, 'stroke-width': 1.8, opacity: .45, fill: 'none'});
-    add('rect', {x: -12, y: -15, width: 24, height: 31, rx: 4, fill: C});
-    add('path', {d: 'M-12 -16 Q0 -34 12 -16 Z', fill: C, opacity: .85});
-    line('M0 -26 V-37', 2.5);
-    add('circle', {cx: 0, cy: -39, r: 3.5, fill: C});
+    ink('M-19 0 H19', 4);
+    shape('rect', {x: -49, y: -10, width: 30, height: 20, rx: 2});
+    shape('rect', {x: 19, y: -10, width: 30, height: 20, rx: 2});
+    ink('M-39 -10 V10 M-29 -10 V10 M29 -10 V10 M39 -10 V10 M-49 0 H-19 M19 0 H49', 2);
+    shape('rect', {x: -12, y: -15, width: 24, height: 31, rx: 4});
+    shape('path', {d: 'M-12 -16 Q0 -34 12 -16 Z'});
+    ink('M0 -26 V-37', 2.5);
+    shape('circle', {cx: 0, cy: -39, r: 3.5, 'stroke-width': 2});
   } else {
-    add('path', {d: kind === 'rock' ? 'M-30 -8 L-18 -29 L5 -33 L27 -21 L33 3 L22 27 L-3 33 L-27 22 Z' : 'M-27 -5 L-11 -27 L15 -25 L30 0 L18 25 L-12 27 Z', fill: C, stroke: C, 'stroke-width': 7, 'stroke-linejoin': 'round'});
-    add('circle', {cx: -9, cy: -9, r: 7, fill: INK, opacity: .28});
-    add('circle', {cx: 11, cy: 10, r: 8.5, fill: INK, opacity: .22});
+    shape('path', {d: kind === 'rock' ? 'M-30 -8 L-18 -29 L5 -33 L27 -21 L33 3 L22 27 L-3 33 L-27 22 Z' : 'M-27 -5 L-11 -27 L15 -25 L30 0 L18 25 L-12 27 Z', 'stroke-width': 3.5});
+    add('circle', {cx: -9, cy: -9, r: 7, fill: 'none', stroke: INK, 'stroke-width': 2.5});
+    add('circle', {cx: 11, cy: 10, r: 8.5, fill: 'none', stroke: INK, 'stroke-width': 2.5});
   }
   return g;
 }
@@ -142,37 +141,26 @@ function render() {
   svg.textContent = '';
   const mk = (tag, a, p) => Kit.mk(tag, a, p || svg);
   const cx = W / 2, cy = geo.cy, R = geo.R, s = R * .52;
-  const defs = mk('defs');
-  const grad = (id, stops, at) => { const gr = mk('radialGradient', Object.assign({id}, at || {}), defs); stops.forEach(([o, c, a]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, gr)); };
-  grad('halo', [[.5, '#ffffff', 0], [.56, '#ffffff', .55], [.64, '#dbe6ff', .22], [.8, '#bcd0ff', .08], [1, '#bcd0ff', 0]], {gradientUnits: 'userSpaceOnUse', cx: cx.toFixed(1), cy: cy.toFixed(1), r: (R * 1.8).toFixed(1)});
-  grad('glint', [[0, '#ff6a2b', .95], [.5, '#ff4a1f', .4], [1, '#ff4a1f', 0]]);
-  const sky = mk('g');
-  const n = Math.min(STARS.length, Math.round(W * H / 620));
-  for (let i = 0; i < n; i++) {
-    const [x, y, r, a] = STARS[i];
-    const at = {cx: (2 + x * (W - 4)).toFixed(1), cy: (2 + y * (H - 4)).toFixed(1), r: (.3 + r * r * 1.3).toFixed(2), fill: a > .88 ? '#ffe3bd' : a < .1 ? '#e4ecff' : '#fff', opacity: (.18 + a * .62).toFixed(2)};
-    if (i % 6 === 0) { at.class = 'tw'; at.style = `animation-delay:${(-a * 2.8).toFixed(2)}s`; }
-    mk('circle', at, sky);
-  }
-  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#halo)'});
+  // The piled-up light: one flat pale ring hugging the edge, shown once it is boosted.
   const screen = mk('g', {opacity: 0});
-  const band = mk('circle', {cx, cy, r: R + s * .44, fill: 'none', stroke: '#ffc477', 'stroke-width': (s * 1.02).toFixed(1), opacity: .16}, screen);
-  mk('circle', {cx, cy, r: R + s * .1, fill: 'none', stroke: '#ffd9a6', 'stroke-width': 1, opacity: .6, 'stroke-dasharray': '2 5', class: 'spin'}, screen);
-  mk('circle', {cx, cy, r: R + s * .84, fill: 'none', stroke: '#ffd9a6', 'stroke-width': 1, opacity: .4, 'stroke-dasharray': '1 6', class: 'spin'}, screen);
+  const band = mk('circle', {cx, cy, r: R + s * .44, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': (s * 1.02).toFixed(1), opacity: .16}, screen);
   const glints = mk('g');
-  mk('circle', {cx, cy, r: R, fill: '#000'});
-  mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#e8f0ff', 'stroke-width': Math.max(1, R * .018).toFixed(2), opacity: .6});
+  // The hole: a plain black disc with a clean pale rim.
+  mk('circle', {cx, cy, r: R, fill: INK});
+  mk('circle', {cx, cy, r: R, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': Math.max(1.5, R * .022).toFixed(2)});
   const fs = Math.max(12, f * .78), lab = mk('g', {opacity: phase === 'bet' ? 1 : 0}), ar = R + fs * .95 + 2;
   mk('path', {id: 'edgeArc', d: `M${(cx - ar).toFixed(1)} ${cy.toFixed(1)} A${ar.toFixed(1)} ${ar.toFixed(1)} 0 0 0 ${(cx + ar).toFixed(1)} ${cy.toFixed(1)}`, fill: 'none'}, lab);
-  const tx = mk('text', {'font-size': fs.toFixed(1), fill: '#ffffff', 'text-anchor': 'middle', 'letter-spacing': '.16em', stroke: '#2B5CFF', 'stroke-width': 3, 'paint-order': 'stroke'}, lab);
-  mk('textPath', {href: '#edgeArc', startOffset: '50%'}, tx).textContent = 'THE EDGE';
+  const tx = mk('text', {'font-size': fs.toFixed(1), style: 'fill:var(--k)', 'text-anchor': 'middle'}, lab);
+  mk('textPath', {href: '#edgeArc', startOffset: '50%'}, tx).textContent = 'The edge';
   const specks = mk('g'), things = mk('g', {id: 'things'});
   const edge = (dx, dy) => Math.min(dx > 1e-6 ? (W - cx) / dx : dx < -1e-6 ? -cx / dx : 1e9, dy > 1e-6 ? (H - cy) / dy : dy < -1e-6 ? -cy / dy : 1e9);
   scene = {cx, cy, screen, band, lab, things: [], specks: []};
   THINGS.forEach((T, i) => {
     const a = T.ang * Math.PI / 180, dx = Math.cos(a), dy = Math.sin(a), d = edge(dx, dy), rEnd = R + s * T.k * .44;
-    const gl = mk('g', {opacity: 0}, glints);
-    mk('circle', {cx: (cx + dx * (R + s * .06)).toFixed(1), cy: (cy + dy * (R + s * .06)).toFixed(1), r: (s * .55).toFixed(1), fill: 'url(#glint)', class: 'pulse'}, gl);
+    // where it stalls, its last light lies on the rim as a short dark-red smear
+    const gl = mk('g', {opacity: 0}, glints), rg = R + s * .07, h = .2;
+    const px = u => (cx + Math.cos(u) * rg).toFixed(1), py = u => (cy + Math.sin(u) * rg).toFixed(1);
+    mk('path', {d: `M${px(a - h)} ${py(a - h)} A${rg.toFixed(1)} ${rg.toFixed(1)} 0 0 1 ${px(a + h)} ${py(a + h)}`, fill: 'none', stroke: '#cf200e', 'stroke-width': Math.max(2, s * .12).toFixed(1), 'stroke-linecap': 'round'}, gl);
     scene.things.push(Object.assign({}, T, {dx, dy, rEnd, rStart: i ? d + s * .9 : Math.max(rEnd + s * 1.3, d - s * .9), sc: s * T.k / 100, gl, el: glyph(T.kind, things)}));
   });
   SPECKS.forEach(P => {

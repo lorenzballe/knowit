@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: nature-europe-slab-swing -->
-<!-- Look: a night observatory over the young Mediterranean. An ink-black sky with a fine star field. Europe is a dusky landmass with a cyan coastline, the torn-off slab is rimmed in pulsing amber, and glowing instrument rings and a dial sit at the Gulf of Genoa pivot. A HUD clock in the corner counts the millions of years.
-     Interaction: aim first. Pick which way the slab swings and say how sure you are, then launch it. If you pick clockwise, the slab rams into France and bounces back. Then the real move plays: the slab hinges on Genoa like a compass leg while the clock counts 25 → 20 Ma.
-     Wow: behind the slab the crust tears in glowing cracks, sinks, then floods blue into the Ligurian Sea, with ripples drifting across it. A shockwave rings out from the pivot, and the scrambled event chips Flip into their true order. -->
+<!-- Look: a page from a printed atlas of the young Mediterranean. Warm paper, Europe in a flat ink tint with one firm coastline, the torn-off slab in flat terracotta, a drawing pin at the Gulf of Genoa where it hinges. The age is set in the display face in the corner.
+     Interaction: aim first. Pick which way the slab swings and say how sure you are, then launch it. If you pick clockwise, the slab rams into France and the coast flashes red. Then the real move plays: the slab hinges on Genoa like a compass leg while the clock counts 25 → 20 Ma.
+     Wow: behind the slab the crust tears, sinks into a dark hollow, then fills with flat sea blue: the Ligurian Sea, drawn with engraved water lines. The scrambled event chips Flip into their true order. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The slab that swung like a compass</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -10,32 +10,23 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
 <style>
-#card{background:radial-gradient(120% 60% at 78% 8%,#14224f 0%,rgba(20,34,79,0) 62%),radial-gradient(90% 55% at 8% 92%,#1b1340 0%,rgba(27,19,64,0) 60%),var(--c)}
+#card{background:var(--c)}
 #stage{display:flex;position:relative;flex:1;min-height:0}
 #map{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
 #aim{display:flex;gap:2.4cqw}
-.aimb{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;white-space:nowrap;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:rgba(143,227,255,.06);border:0;border-radius:99px;padding:1.3cqh 2cqw;cursor:pointer;box-shadow:inset 0 0 0 1.5px rgba(143,227,255,.45),0 0 1.6cqh rgba(143,227,255,.12);transition:transform .12s cubic-bezier(.2,.8,.2,1),background .2s,color .2s}
+.aimb{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;white-space:nowrap;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:transparent;border:0;border-radius:99px;padding:1.3cqh 2cqw;cursor:pointer;box-shadow:inset 0 0 0 1.5px var(--k);transition:transform .12s cubic-bezier(.2,.8,.2,1),background .2s,color .2s}
 .aimb:active{transform:scale(.96)}
-.aimb b{font-family:var(--mono);margin-right:1.2cqw;color:#8fe3ff}
-.aimb.on{background:#8fe3ff;color:#06101f;box-shadow:0 0 2.4cqh rgba(143,227,255,.6)}
-.aimb.on b{color:#06101f}
+.aimb b{font-family:var(--body);margin-right:1.2cqw;color:inherit}
+.aimb.on{background:var(--k);color:var(--c)}
+.aimb.on b{color:var(--c)}
 .aimb:disabled{cursor:default}
 #chain{display:flex;flex-wrap:wrap;gap:.8cqh 1.6cqw}
-.chip{font:700 max(1.6cqh,12px)/1 var(--body);color:#9fb4d8;padding:.75cqh 2.4cqw;border-radius:99px;box-shadow:inset 0 0 0 1.5px rgba(143,227,255,.25);display:inline-flex;gap:1.2cqw;align-items:center;white-space:nowrap;flex:0 0 auto}
-.chip i{font-style:normal;font-family:var(--mono);opacity:.7}
-.chip.lit{color:#06101f;background:#8fe3ff;box-shadow:0 0 1.4cqh rgba(143,227,255,.5)}
+.chip{font:700 max(1.6cqh,12px)/1 var(--body);color:color-mix(in srgb,var(--k) 70%,var(--c));padding:.75cqh 2.4cqw;border-radius:99px;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 30%,var(--c));display:inline-flex;gap:1.2cqw;align-items:center;white-space:nowrap;flex:0 0 auto}
+.chip i{font-style:normal;font-family:var(--body);opacity:.7}
+.chip.lit{color:var(--c);background:var(--k);box-shadow:none}
 #why .body{font-size:max(1.9cqh,13px)}
-.tw{animation:tw 3.2s ease-in-out infinite}
-@keyframes tw{50%{opacity:.12}}
-.spin{animation:spin 22s linear infinite;transform-box:fill-box;transform-origin:center}
-@keyframes spin{to{transform:rotate(360deg)}}
-.pulse{animation:pulse 2.4s ease-in-out infinite}
-@keyframes pulse{50%{stroke-opacity:.4}}
-.flow{animation:flow 3s linear infinite}
-@keyframes flow{to{stroke-dashoffset:-20}}
-.kit-calm .tw,.kit-calm .spin,.kit-calm .pulse,.kit-calm .flow{animation:none}
 </style>
-<article class="card" id="card" style="--c:#070b18;--k:#eef3ff;--edge:#02040a" data-topic="nature" data-kind="Aim and launch · plate motion">
+<article class="card" id="card" style="--c:#efe7d6;--k:#24323a;--edge:#d6c9ae" data-topic="nature" data-kind="Aim and launch · plate motion">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">LAUNCH THE SLAB</span></div>
     <h2 class="q">Which way did a slab of Europe swing, 25 million years ago?</h2>
@@ -67,7 +58,10 @@
   const svg = Kit.$('map'), say = Kit.$('say');
   const RIGHT = 1, NAMES = ['Clockwise', 'Anticlockwise'];
   const T0 = 48, T1 = 6, D = Math.PI / 180;
-  const CY = '#8fe3ff', AMB = '#ffc46b', NIGHT = '#070b18';
+  const cs = getComputedStyle(Kit.$('card'));
+  const INK = cs.getPropertyValue('--k').trim() || '#24323a', PAPER = cs.getPropertyValue('--c').trim() || '#efe7d6';
+  const MUTED = '#6a7272', SLAB = '#c7693f', RIFT = '#6e4130', TEAR = '#f0c4a2', SEA = '#8db3cb', SEAINK = '#33617f', RED = '#c0392b';
+  const tint = n => `fill:color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const st = {s: 0, nud: 0};
   let W = 0, H = 0, fs = 12, P = [0, 0], L = 100, w = 26, edge = [], far = [], coastE = [], cracks = [], compact = false;
   let G = {}, pick = -1, launched = false, done = false, tl = null, lastSize = '', sinkSaid = false;
@@ -89,11 +83,10 @@
     }
     return d || 'M0,0';
   };
-  const T = (p, x, y, t, a = {}, font = 'mono') => {
-    const e = mk('text', Object.assign({x, y, fill: '#eef3ff', 'font-size': fs, 'font-weight': 700, style: `font-family:var(--${font})`, 'paint-order': 'stroke', stroke: NIGHT, 'stroke-width': 3, 'stroke-linejoin': 'round'}, a), p);
+  const T = (p, x, y, t, a = {}, font = 'body') => {
+    const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 600, style: `font-family:var(--${font})`, 'paint-order': 'stroke', stroke: PAPER, 'stroke-width': 3, 'stroke-linejoin': 'round'}, a), p);
     e.textContent = t; return e;
   };
-  const grad = (id, type, attrs, stops, defs) => { const g = mk(type, Object.assign({id}, attrs), defs); stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g)); };
 
   function layout() {
     svg.innerHTML = ''; G = {};
@@ -123,132 +116,101 @@
     const tail = [[Math.max(0, E[0] - W * .03), cy(E[1] + fs * .6)], [0, cy(E[1] + fs * 1.6)]];
     const coast = [...coastR, P.slice(), ...coastE, ...tail];
 
-    // ---- defs ----
+    // ---- defs: just the arrowhead ----
     const defs = mk('defs', {}, svg);
-    grad('landG', 'linearGradient', {x1: 0, y1: 0, x2: .4, y2: 1}, [[0, '#1d2a52'], [1, '#101831']], defs);
-    grad('slabG', 'linearGradient', {x1: 0, y1: 0, x2: 1, y2: 1}, [[0, '#4a3b74'], [.55, '#2a2758'], [1, '#1b1d45']], defs);
-    grad('riftG', 'radialGradient', {gradientUnits: 'userSpaceOnUse', cx: P[0], cy: P[1], r: L}, [[0, '#6a2636'], [1, '#22101c']], defs);
-    grad('waterG', 'radialGradient', {gradientUnits: 'userSpaceOnUse', cx: P[0], cy: P[1], r: L * 1.05}, [[0, '#6ad6ff'], [.45, '#1f7ae0'], [1, '#0b3784']], defs);
-    grad('coreG', 'radialGradient', {}, [[0, '#ffffff'], [.5, CY], [1, CY, 0]], defs);
-    const pat = mk('pattern', {id: 'dots', width: 7, height: 7, patternUnits: 'userSpaceOnUse'}, defs);
-    mk('circle', {cx: 3.5, cy: 3.5, r: .6, fill: '#cfe6ff', opacity: .16}, pat);
-    const fl = mk('filter', {id: 'glow', filterUnits: 'userSpaceOnUse', x: -60, y: -60, width: W + 120, height: H + 120}, defs);
-    mk('feGaussianBlur', {stdDeviation: 3, result: 'b'}, fl);
-    const mg = mk('feMerge', {}, fl); mk('feMergeNode', {in: 'b'}, mg); mk('feMergeNode', {in: 'SourceGraphic'}, mg);
-    const mr = mk('marker', {id: 'arr', viewBox: '0 0 10 10', refX: 5, refY: 5, markerWidth: 4.5, markerHeight: 4.5, orient: 'auto-start-reverse'}, defs);
-    mk('path', {d: 'M0,1 L9,5 L0,9 z', fill: CY}, mr);
+    const mr = mk('marker', {id: 'arr', viewBox: '0 0 10 10', refX: 5, refY: 5, markerWidth: 4, markerHeight: 4, orient: 'auto-start-reverse'}, defs);
+    mk('path', {d: 'M0,1 L9,5 L0,9 z', fill: INK}, mr);
 
-    // ---- the sky ----
+    // ---- the unmapped ground beyond the coast: plain paper ----
     G.stars = mk('g', {}, svg);
-    const n = Math.round(W * H / 1000), tints = ['#ffffff', '#bcd8ff', '#ffe1b0'];
-    for (let i = 0; i < n; i++) {
-      const tw = rnd() < .18;
-      mk('circle', {cx: (2 + rnd() * (W - 4)).toFixed(1), cy: (2 + rnd() * (H - 4)).toFixed(1), r: (.3 + Math.pow(rnd(), 3) * 1.3).toFixed(2), fill: tints[Math.floor(rnd() * 3)], opacity: (.25 + rnd() * .6).toFixed(2), class: tw ? 'tw' : '', style: tw ? `animation-delay:${(rnd() * 3).toFixed(2)}s` : ''}, G.stars);
-    }
-    for (let i = 0; i < 4; i++) {
-      const r = 4 + rnd() * 3, x = Math.min(W - r - 2, W * (.62 + rnd() * .34)), y = Math.min(H - r - 2, P[1] + L * (.15 + rnd() * .85));
-      mk('path', {d: `M${x - r},${y} H${x + r} M${x},${y - r} V${y + r}`, stroke: '#dfeaff', 'stroke-width': .7, opacity: .7, class: 'tw', style: `animation-delay:${i * .7}s`}, G.stars);
-      mk('circle', {cx: x, cy: y, r: 1.2, fill: '#ffffff'}, G.stars);
-    }
-
-    // ---- faint instrument rings, cut to the map ----
-    G.grid = mk('g', {fill: 'none', stroke: CY}, svg);
-    [[.28, .1, ''], [.92, .08, '2 6'], [1.28, .07, ''], [1.7, .05, '1 5']].forEach(([k, o, da]) => mk('path', {d: ring(P[0], P[1], L * k), opacity: o, 'stroke-dasharray': da, 'stroke-width': 1}, G.grid));
+    mk('rect', {x: 0, y: 0, width: W, height: H, style: tint(4)}, G.stars);
 
     // ---- Europe ----
     G.land = mk('g', {}, svg);
     const landPts = pts([[0, 0], [W, 0], ...coast]);
-    mk('polygon', {points: landPts, fill: 'url(#landG)'}, G.land);
-    mk('polygon', {points: landPts, fill: 'url(#dots)'}, G.land);
-    G.coastGlow = mk('polyline', {points: pts(coast), fill: 'none', stroke: CY, 'stroke-width': 1.8, opacity: .85, filter: 'url(#glow)', 'stroke-linejoin': 'round'}, G.land);
-    mk('polyline', {points: pts(coast), fill: 'none', stroke: '#e6f8ff', 'stroke-width': .8, opacity: .8}, G.land);
+    mk('polygon', {points: landPts, style: tint(16)}, G.land);
+    G.coastGlow = mk('polyline', {points: pts(coast), fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, G.land);
 
     // ---- the gap the slab leaves: rift floor, cracks, then water ----
     G.wedge = mk('g', {}, svg);
-    G.rift = mk('polygon', {fill: 'url(#riftG)', opacity: 0}, G.wedge);
-    G.cracks = mk('g', {fill: 'none', stroke: '#ff9a62', 'stroke-width': 1.3, 'stroke-linejoin': 'round', filter: 'url(#glow)'}, G.wedge);
+    G.rift = mk('polygon', {fill: RIFT, opacity: 0}, G.wedge);
+    G.cracks = mk('g', {fill: 'none', stroke: TEAR, 'stroke-width': 1.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, G.wedge);
     cracks = [];
     for (let k = 0; k < 11; k++) {
       const f0 = .08 + rnd() * .84, r0 = L * (.08 + rnd() * .3), r1 = Math.min(L * .97, r0 + L * (.25 + rnd() * .45)), p = [];
       for (let i = 0; i <= 7; i++) p.push([clamp(f0 + (rnd() - .5) * .14), r0 + (r1 - r0) * i / 7]);
       cracks.push({p, o: .5 + rnd() * .5, el: mk('polyline', {}, G.cracks)});
     }
-    G.water = mk('polygon', {fill: 'url(#waterG)', opacity: 0}, G.wedge);
-    G.waterEdge = mk('polygon', {fill: 'none', stroke: CY, 'stroke-width': 1.2, opacity: 0, filter: 'url(#glow)'}, G.wedge);
-    G.flash = mk('polygon', {fill: '#c8f3ff', opacity: 0}, G.wedge);
-    G.rip = mk('g', {fill: 'none', stroke: '#c9f3ff', 'stroke-linecap': 'round'}, svg);
+    G.water = mk('polygon', {fill: SEA, opacity: 0}, G.wedge);
+    G.waterEdge = mk('polygon', {fill: 'none', stroke: SEAINK, 'stroke-width': 1.2, 'stroke-linejoin': 'round', opacity: 0}, G.wedge);
+    G.flash = mk('polygon', {fill: '#ffffff', opacity: 0}, G.wedge);
+    G.rip = mk('g', {fill: 'none', stroke: SEAINK, 'stroke-linecap': 'round'}, svg);
     if (done) {
+      // engraved water lines, as on an old printed map
       [.3, .52, .74, .93].forEach((k, i) => {
         const r = L * k, a1 = rot(0, r, T1 + 6), a2 = rot(0, r, T0 - 6);
-        mk('path', {d: `M${a1[0].toFixed(1)},${a1[1].toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 0 1 ${a2[0].toFixed(1)},${a2[1].toFixed(1)}`, 'stroke-width': 1, opacity: .32 - i * .04, 'stroke-dasharray': '4 8', class: 'flow', style: `animation-duration:${2.4 + i * .7}s`}, G.rip);
+        mk('path', {d: `M${a1[0].toFixed(1)},${a1[1].toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 0 1 ${a2[0].toFixed(1)},${a2[1].toFixed(1)}`, 'stroke-width': .9, opacity: .45 - i * .05}, G.rip);
       });
     }
 
-    // ---- the dial of time around the hinge ----
-    G.dial = mk('g', {stroke: CY, 'stroke-linecap': 'round'}, svg);
+    // ---- the dial of time: one pencil arc from where the slab starts to where it ends ----
+    G.dial = mk('g', {stroke: INK, 'stroke-linecap': 'round', fill: 'none'}, svg);
     const RD = L * .45;
-    for (let a = T1 - 3; a <= T0 + 6.01; a += 3) {
-      const major = Math.round(a - T1) % 9 === 0, l = major ? 9 : 4.5;
-      const p1 = rot(0, RD - l / 2, a), p2 = rot(0, RD + l / 2, a);
-      mk('line', {x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], 'stroke-width': major ? 1.6 : 1, opacity: major ? .75 : .45}, G.dial);
-    }
-    const da = rot(0, RD, T1 - 3), db = rot(0, RD, T0 + 6);
-    mk('path', {d: `M${da[0]},${da[1]} A${RD},${RD} 0 0 1 ${db[0]},${db[1]}`, fill: 'none', 'stroke-width': 1, opacity: .4}, G.dial);
+    const da = rot(0, RD, T1), db = rot(0, RD, T0);
+    mk('path', {d: `M${da[0]},${da[1]} A${RD},${RD} 0 0 1 ${db[0]},${db[1]}`, 'stroke-width': 1, 'stroke-dasharray': '3 4', opacity: .45}, G.dial);
+    [T1, T0].forEach(a => { const p1 = rot(0, RD - 4, a), p2 = rot(0, RD + 4, a); mk('line', {x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], 'stroke-width': 1.2, opacity: .6}, G.dial); });
 
     // ---- the slab ----
     G.blockWrap = mk('g', {}, svg);
     G.block = mk('g', {}, G.blockWrap);
     const slab = pts([...edge, ...far.slice().reverse()]);
-    mk('polygon', {points: slab, fill: 'url(#slabG)'}, G.block);
-    mk('polygon', {points: slab, fill: 'url(#dots)'}, G.block);
-    [.28, .56].forEach(k => mk('polygon', {points: pts([...edge.map((e, i) => [e[0] + (far[i][0] - e[0]) * k * .5, e[1]]), ...far.map((q, i) => [q[0] - (q[0] - edge[i][0]) * k * .5, q[1]]).reverse()]), fill: 'none', stroke: '#c9b8ff', 'stroke-width': 1, opacity: .2}, G.block));
-    G.rim = mk('polygon', {points: slab, fill: 'none', stroke: AMB, 'stroke-width': 1.6, filter: 'url(#glow)', 'stroke-linejoin': 'round', class: launched ? '' : 'pulse'}, G.block);
-    G.seam = mk('polyline', {points: pts([P, ...coastE]), fill: 'none', stroke: '#fff4d6', 'stroke-width': 3, opacity: 0, filter: 'url(#glow)'}, svg);
+    mk('polygon', {points: slab, fill: SLAB}, G.block);
+    G.rim = mk('polygon', {points: slab, fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round', class: launched ? '' : 'pulse'}, G.block);
+    G.seam = mk('polyline', {points: pts([P, ...coastE]), fill: 'none', stroke: RED, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: 0}, svg);
 
     // ---- the aim arrow ----
     G.aim = mk('g', {}, svg);
 
-    // ---- the hinge ----
+    // ---- the hinge: a drawing pin at Genoa ----
     G.rings = mk('g', {}, svg);
-    mk('circle', {cx: P[0], cy: P[1], r: fs * .9, fill: 'url(#coreG)', opacity: .9}, G.rings);
-    mk('circle', {cx: P[0], cy: P[1], r: fs * .62, fill: 'none', stroke: CY, 'stroke-width': 1.4, opacity: .9}, G.rings);
-    mk('circle', {cx: P[0], cy: P[1], r: 2.6, fill: '#ffffff'}, G.rings);
-    mk('circle', {cx: P[0], cy: P[1], r: Math.min(fs * 1.35, P[1] - 2), fill: 'none', stroke: CY, 'stroke-width': 1.2, 'stroke-dasharray': '2 4', opacity: .8, class: 'spin'}, svg);
+    mk('circle', {cx: P[0], cy: P[1], r: fs * .5, fill: INK}, G.rings);
+    mk('circle', {cx: P[0], cy: P[1], r: fs * .18, fill: PAPER}, G.rings);
 
-    // ---- the bead riding the dial, and the clock in the corner ----
-    G.bead = mk('circle', {r: 4, fill: '#ffffff', stroke: CY, 'stroke-width': 2, filter: 'url(#glow)'}, svg);
+    // ---- the bead riding the dial, and the age in the corner ----
+    G.bead = mk('circle', {r: 3.2, fill: INK}, svg);
     G.hud = mk('g', {}, svg);
     const ry = compact ? fs * 1.15 : H - fs * .65;
-    G.read = T(G.hud, W - 6, ry, '25.0 Ma', {'text-anchor': 'end', fill: '#ffffff', 'font-size': fs * 1.2});
+    G.read = T(G.hud, W - 6, ry, '25.0 Ma', {'text-anchor': 'end', 'font-size': fs * 1.35, 'font-weight': 700}, 'display');
 
     // ---- labels ----
     G.labels = mk('g', {}, svg);
-    T(G.labels, W * .05, compact ? fs * 1.15 : fs * 1.5, 'EUROPE', {'letter-spacing': '.3em', fill: '#cfe6ff'});
+    T(G.labels, W * .05, compact ? fs * 1.15 : fs * 1.5, 'Europe', {'font-weight': 700, stroke: 'none'});
     if (!compact) {
-      T(G.labels, W * .05, fs * 3.35, "today's France", {fill: '#9fb4d8', 'font-weight': 400, 'font-size': fs * 1.05}, 'hand');
-      T(G.labels, P[0] - fs * .5, P[1] - fs * 2.1, 'PIVOT · GULF OF GENOA', {fill: CY});
-      T(G.labels, W - 6, P[1] + L * .45, 'TYRRHENIAN', {'text-anchor': 'end', 'letter-spacing': '.14em', fill: '#9fb4d8'});
-      if (L > fs * 5) T(G.labels, W - 6, P[1] + L * .45 + fs * 1.35, 'not a sea yet', {'text-anchor': 'end', fill: '#7f93b8', 'font-weight': 400}, 'hand');
-      const era = T(G.labels, 6, H - fs * .65, 'LATE OLIGOCENE → EARLY MIOCENE', {fill: '#7f93b8', 'font-weight': 600, 'font-size': Math.max(12, fs * .9)});
-      let rw = 7 * fs * 1.2 * .62; try { rw = G.read.getComputedTextLength() || rw; } catch (e) {}
+      T(G.labels, W * .05, fs * 3.0, "today's France", {fill: MUTED, 'font-weight': 400, stroke: 'none'});
+      T(G.labels, P[0] - fs * .5, P[1] - fs * 2.1, 'Pivot · Gulf of Genoa', {stroke: 'none'});
+      T(G.labels, W - 6, P[1] + L * .45, 'Tyrrhenian', {'text-anchor': 'end'});
+      if (L > fs * 5) T(G.labels, W - 6, P[1] + L * .45 + fs * 1.35, 'not a sea yet', {'text-anchor': 'end', fill: MUTED, 'font-weight': 400});
+      const era = T(G.labels, 6, H - fs * .65, 'Late Oligocene → early Miocene', {fill: MUTED, 'font-weight': 400});
+      let rw = 7 * fs * 1.35 * .6; try { rw = G.read.getComputedTextLength() || rw; } catch (e) {}
       const avail = W - 12 - rw - fs;
-      const len = () => { try { return era.getComputedTextLength(); } catch (e) { return era.textContent.length * Math.max(12, fs * .9) * .62; } };
-      if (len() > avail) era.textContent = 'OLIGOCENE → MIOCENE';
+      const len = () => { try { return era.getComputedTextLength(); } catch (e) { return era.textContent.length * fs * .55; } };
+      if (len() > avail) era.textContent = 'Oligocene → Miocene';
       if (len() > avail) era.remove();
       if (!launched) {
         const sp = rot(w * 1.15, L * .55, T0);
-        G.slabLbl = T(G.labels, sp[0], sp[1], 'the slab', {fill: AMB, 'font-size': fs * 1.15, 'text-anchor': 'middle'}, 'hand');
+        G.slabLbl = T(G.labels, sp[0], sp[1], 'the slab', {fill: '#8a3f1f', 'text-anchor': 'middle'});
       }
     }
     if (done) {
       G.lig = mk('g', {}, svg);
       const mid = (T0 + T1) / 2;
+      const sea = {'text-anchor': 'middle', fill: SEAINK, stroke: SEA, 'font-style': 'italic'};
       if (!compact && L > fs * 5) {
         const c = rot(0, L * .84, mid);
-        [['LIGURIAN', -.45], ['SEA', 1.45]].forEach(([t, dy]) => T(G.lig, c[0], c[1] + fs * dy, t, {'text-anchor': 'middle', 'letter-spacing': '.18em', fill: '#eaf9ff', stroke: '#0b3784'}));
+        [['Ligurian', -.45], ['Sea', 1.45]].forEach(([t, dy]) => T(G.lig, c[0], c[1] + fs * dy, t, sea));
       } else {
         const c = rot(0, L * .62, mid);
-        T(G.lig, Math.max(fs * 3.6, c[0]), c[1] + fs * .35, 'LIGURIAN SEA', {'text-anchor': 'middle', 'letter-spacing': '.06em', fill: '#eaf9ff', stroke: '#0b3784'});
+        T(G.lig, Math.max(fs * 3.6, c[0]), c[1] + fs * .35, 'Ligurian Sea', sea);
       }
     }
     G.shock = mk('g', {fill: 'none'}, svg);
@@ -262,7 +224,7 @@
     if (pick < 0 || launched) return;
     const R = L * .86, a1 = T0 + (pick ? -2 : 2), a2 = pick ? T0 - 18 : T0 + 11;
     const p1 = rot(0, R, a1), p2 = rot(0, R, a2);
-    G.arrow = mk('path', {d: `M${p1[0]},${p1[1]} A${R},${R} 0 0 ${pick ? 0 : 1} ${p2[0]},${p2[1]}`, fill: 'none', stroke: CY, 'stroke-width': 2.2, 'stroke-dasharray': '5 5', 'stroke-linecap': 'round', 'marker-end': 'url(#arr)', filter: 'url(#glow)'}, G.aim);
+    G.arrow = mk('path', {d: `M${p1[0]},${p1[1]} A${R},${R} 0 0 ${pick ? 0 : 1} ${p2[0]},${p2[1]}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '6 5', 'stroke-linecap': 'round', 'marker-end': 'url(#arr)'}, G.aim);
   }
 
   function light(i) {
@@ -281,7 +243,7 @@
     const rift = clamp(s / .1), water = clamp((s - .3) / .45);
     G.rift.setAttribute('points', wedge); G.rift.setAttribute('opacity', rift.toFixed(3));
     G.water.setAttribute('points', wedge); G.water.setAttribute('opacity', (water * .94).toFixed(3));
-    G.waterEdge.setAttribute('points', wedge); G.waterEdge.setAttribute('opacity', (water * .55).toFixed(3));
+    G.waterEdge.setAttribute('points', wedge); G.waterEdge.setAttribute('opacity', (water * .8).toFixed(3));
     G.flash.setAttribute('points', wedge);
     cracks.forEach(c => {
       c.el.setAttribute('points', pts(c.p.map(([ff, r]) => rot(0, r, T0 + (a - T0) * ff))));
@@ -299,14 +261,14 @@
   function bump() {
     Kit.haptic('light');
     say.innerHTML = 'Clockwise rams it into France: <b>no room that way.</b>';
-    gsap.fromTo(G.coastGlow, {attr: {stroke: '#ff5a5a', 'stroke-width': 4}}, {attr: {stroke: CY, 'stroke-width': 1.8}, duration: 1, ease: 'power2.out'});
+    gsap.fromTo(G.coastGlow, {attr: {stroke: RED, 'stroke-width': 4}}, {attr: {stroke: INK, 'stroke-width': 1.4}, duration: 1, ease: 'power2.out'});
     gsap.fromTo(G.rings.children, {scale: 1.4, transformOrigin: '50% 50%'}, {scale: 1, duration: .6, ease: 'elastic.out(1,.4)'});
   }
 
   function detach() {
     light(0); Kit.haptic('light');
     say.innerHTML = 'It tears free and swings anticlockwise, <b>hinged on Genoa like a compass.</b>';
-    if (!Kit.calm) gsap.fromTo(G.seam, {opacity: 1, attr: {'stroke-width': 5}}, {opacity: 0, attr: {'stroke-width': 1}, duration: 1.1, ease: 'power3.out'});
+    if (!Kit.calm) gsap.fromTo(G.seam, {opacity: 1, attr: {'stroke-width': 4}}, {opacity: 0, attr: {'stroke-width': 1}, duration: 1.1, ease: 'power3.out'});
   }
 
   function launch() {
@@ -340,12 +302,12 @@
       const state = Flip.getState(chips); order();
       Flip.from(state, {duration: .8, ease: 'power3.inOut', stagger: .05, onComplete: () => gsap.set(chips, {clearProps: 'transform'})});
     } else order();
-    for (let k = 0; k < 3; k++) {
-      const o = {r: 6, op: .9}, c = mk('path', {d: ring(P[0], P[1], 6), stroke: k ? CY : '#ffffff', 'stroke-width': 2 - k * .5}, G.shock);
-      gsap.to(o, {r: L * 1.2, op: 0, duration: 1.2, delay: k * .12, ease: 'expo.out', onUpdate: () => { c.setAttribute('d', ring(P[0], P[1], o.r)); c.setAttribute('opacity', o.op.toFixed(3)); }, onComplete: () => c.remove()});
+    {
+      const o = {r: 6, op: .6}, c = mk('path', {d: ring(P[0], P[1], 6), stroke: INK, 'stroke-width': 1.2}, G.shock);
+      gsap.to(o, {r: L * 1.2, op: 0, duration: 1.2, ease: 'expo.out', onUpdate: () => { c.setAttribute('d', ring(P[0], P[1], o.r)); c.setAttribute('opacity', o.op.toFixed(3)); }, onComplete: () => c.remove()});
     }
-    gsap.fromTo(G.flash, {opacity: .75}, {opacity: 0, duration: 1.3, ease: 'power2.out'});
-    gsap.fromTo(G.rim, {attr: {'stroke-width': 4}}, {attr: {'stroke-width': 1.6}, duration: 1.2, ease: 'power3.out'});
+    gsap.fromTo(G.flash, {opacity: .5}, {opacity: 0, duration: 1.3, ease: 'power2.out'});
+    gsap.fromTo(G.rim, {attr: {'stroke-width': 3}}, {attr: {'stroke-width': 1.4}, duration: 1.2, ease: 'power3.out'});
     gsap.from(G.rip.children, {opacity: 0, duration: 1.2, stagger: .15, delay: .4, ease: 'power2.out'});
     if (G.lig) gsap.from(G.lig.children, {opacity: 0, duration: .8, stagger: .14, delay: .25, ease: 'power2.out'});
     gsap.from(G.read, {scale: 1.25, transformOrigin: '100% 50%', duration: .7, ease: 'back.out(3)'});

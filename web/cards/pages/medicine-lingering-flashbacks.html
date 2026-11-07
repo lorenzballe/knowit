@@ -41,18 +41,24 @@ let P = null, done = false, clock = 1;
 const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
 function level(v){ const i = Math.min(5, Math.floor(v)), r = v - i; return LEV[i] + (LEV[i+1] - LEV[i]) * r; }
 
+// flat palette: card ink, card colour, their tints, and one "distortion" pair
+const INK = 'var(--k)';
+const tint = n => `color-mix(in srgb,var(--k) ${n}%,var(--c))`;
+const TRAIL_A = '#ffd84a', TRAIL_B = '#4b2a7a';
+
 function cacti(g, w, h, ghost){
-  const fillA = ghost || '#c9f5c4', fillB = ghost || '#e6ffd6';
-  // tall cactus
+  const body = ghost || INK;
+  // saguaro
   const cx = w*.26, base = h*.86, tw = w*.075;
-  Kit.mk('rect', {x: cx - tw/2, y: h*.36, width: tw, height: base - h*.36, rx: tw/2, fill: fillA}, g);
-  Kit.mk('path', {d: `M${cx-tw/2} ${h*.62} h${-w*.07} v${-h*.14}`, fill: 'none', stroke: fillA, 'stroke-width': tw*.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
-  Kit.mk('path', {d: `M${cx+tw/2} ${h*.55} h${w*.07} v${-h*.12}`, fill: 'none', stroke: fillA, 'stroke-width': tw*.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  Kit.mk('rect', {x: cx - tw/2, y: h*.36, width: tw, height: base - h*.36, rx: tw/2, style: `fill:${body}`}, g);
+  Kit.mk('path', {d: `M${cx-tw/2} ${h*.62} h${-w*.07} v${-h*.14}`, fill: 'none', style: `stroke:${body}`, 'stroke-width': tw*.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  Kit.mk('path', {d: `M${cx+tw/2} ${h*.55} h${w*.07} v${-h*.12}`, fill: 'none', style: `stroke:${body}`, 'stroke-width': tw*.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+  if (!ghost) Kit.mk('path', {d: `M${cx} ${h*.4} V${base - h*.03}`, fill: 'none', style: `stroke:${tint(60)}`, 'stroke-width': Math.max(1, w*.008), 'stroke-linecap': 'round'}, g);
   // peyote button
   const px = w*.64, py = h*.84, rx = w*.15, ry = h*.09;
-  Kit.mk('ellipse', {cx: px, cy: py, rx, ry, fill: fillB}, g);
-  if (!ghost) for (let k = -2; k <= 2; k++) Kit.mk('path', {d: `M${px + k*rx*.18} ${py - ry*.95} Q${px + k*rx*.45} ${py} ${px + k*rx*.3} ${py + ry*.9}`, fill: 'none', stroke: '#2f6b3c', 'stroke-width': Math.max(1, w*.008)}, g);
-  Kit.mk('circle', {cx: px, cy: py - ry*.9, r: Math.max(3, w*.03), fill: ghost || '#ff9bd0'}, g);
+  Kit.mk('ellipse', {cx: px, cy: py, rx, ry, style: `fill:${body}`}, g);
+  if (!ghost) for (let k = -2; k <= 2; k++) Kit.mk('path', {d: `M${px + k*rx*.18} ${py - ry*.95} Q${px + k*rx*.45} ${py} ${px + k*rx*.3} ${py + ry*.9}`, fill: 'none', style: `stroke:${tint(55)}`, 'stroke-width': Math.max(1, w*.008), 'stroke-linecap': 'round'}, g);
+  Kit.mk('circle', {cx: px, cy: py - ry*.9, r: Math.max(3, w*.03), style: `fill:${ghost || 'var(--c)'};stroke:${ghost || INK}`, 'stroke-width': Math.max(1, w*.008)}, g);
 }
 
 function panel(i, x0, top, pw, ph, fs){
@@ -61,27 +67,38 @@ function panel(i, x0, top, pw, ph, fs){
   const turb = Kit.mk('feTurbulence', {type: 'turbulence', baseFrequency: '0.012 0.02', numOctaves: 2, seed: 3 + i, result: 'n'}, fl);
   const disp = Kit.mk('feDisplacementMap', {in: 'SourceGraphic', in2: 'n', scale: 0, xChannelSelector: 'R', yChannelSelector: 'G', result: 'dd'}, fl);
   const hue = Kit.mk('feColorMatrix', {in: 'dd', type: 'hueRotate', values: 0}, fl);
+  const cr = Math.max(6, fs*.6);
+  const clip = Kit.mk('clipPath', {id: 'cl'+i}, defs);
+  Kit.mk('rect', {x: 0, y: 0, width: pw, height: ph, rx: cr}, clip);
 
   const title = Kit.mk('text', {x: x0 + pw/2, y: top - fs*.55, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, style: 'fill:var(--k);font-family:var(--body)'}, svg);
   title.textContent = i ? 'A rare few' : 'Most users';
 
   const outer = Kit.mk('g', {transform: `translate(${x0},${top})`}, svg);
-  const sc = Kit.mk('g', {filter: `url(#d${i})`}, outer);
+  const win = Kit.mk('g', {'clip-path': `url(#cl${i})`}, outer);
+  // sky: the card colour, a little lighter
+  Kit.mk('rect', {x: 0, y: 0, width: pw, height: ph, style: `fill:${tint(12)}`}, win);
+  const sc = Kit.mk('g', {filter: `url(#d${i})`}, win);
   const sx = pw*.68, sy = ph*.28, sr = Math.min(pw, ph)*.07;
-  const halos = [0,1,2].map(k => Kit.mk('circle', {cx: sx, cy: sy, r: sr*(1.6 + k*.6), fill: 'none', stroke: '#ffe27a', 'stroke-width': Math.max(2, sr*.18), opacity: 0}, sc));
-  Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: '#ffe27a'}, sc);
-  Kit.mk('path', {d: `M${pw*.02} ${ph*.7} Q${pw*.25} ${ph*.52} ${pw*.55} ${ph*.66} T${pw*.98} ${ph*.62} V${ph*.88} H${pw*.02}Z`, fill: '#a3160d'}, sc);
-  Kit.mk('path', {d: `M${pw*.02} ${ph*.9} Q${pw*.02} ${ph*.78} ${pw*.2} ${ph*.79} Q${pw*.5} ${ph*.76} ${pw*.8} ${ph*.79} Q${pw*.98} ${ph*.78} ${pw*.98} ${ph*.9} Q${pw*.98} ${ph*.99} ${pw*.8} ${ph*.99} H${pw*.2} Q${pw*.02} ${ph*.99} ${pw*.02} ${ph*.9}Z`, fill: '#ffd9a0'}, sc);
-  const gA = Kit.mk('g', {opacity: 0}, sc); cacti(gA, pw, ph, '#ffe14d');
-  const gB = Kit.mk('g', {opacity: 0}, sc); cacti(gB, pw, ph, '#2ee6ff');
+  // halos around the sun: a real HPPD symptom, drawn as plain rings
+  const halos = [0,1,2].map(k => Kit.mk('circle', {cx: sx, cy: sy, r: sr*(1.6 + k*.6), fill: 'none', style: `stroke:${TRAIL_A}`, 'stroke-width': Math.max(2, sr*.18), opacity: 0}, sc));
+  Kit.mk('circle', {cx: sx, cy: sy, r: sr, style: `fill:${INK}`}, sc);
+  // mesa and sand
+  Kit.mk('path', {d: `M${-pw*.05} ${ph*.7} Q${pw*.25} ${ph*.52} ${pw*.55} ${ph*.66} T${pw*1.05} ${ph*.62} V${ph*1.05} H${-pw*.05}Z`, style: `fill:${tint(35)}`}, sc);
+  Kit.mk('path', {d: `M${-pw*.05} ${ph*.8} Q${pw*.2} ${ph*.77} ${pw*.5} ${ph*.79} T${pw*1.05} ${ph*.78} V${ph*1.05} H${-pw*.05}Z`, style: `fill:${tint(65)}`}, sc);
+  // after-images: two flat copies that slide apart
+  const gA = Kit.mk('g', {opacity: 0}, sc); cacti(gA, pw, ph, TRAIL_A);
+  const gB = Kit.mk('g', {opacity: 0}, sc); cacti(gB, pw, ph, TRAIL_B);
   cacti(Kit.mk('g', {}, sc), pw, ph, null);
+  // the window frame stays still while the view inside warps
+  Kit.mk('rect', {x: 0, y: 0, width: pw, height: ph, rx: cr, fill: 'none', style: `stroke:${INK}`, 'stroke-width': Math.max(2, fs*.14)}, outer);
 
   const y1 = top + ph + fs*1.35, y2 = y1 + fs*1.5;
   const stat = Kit.mk('text', {x: x0 + pw/2, y: y1, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'}, svg);
-  const lb = Kit.mk('text', {x: x0, y: y2, 'font-size': Math.max(12, fs*.85), style: 'fill:var(--muted);font-family:var(--body)'}, svg);
+  const lb = Kit.mk('text', {x: x0, y: y2, 'font-size': Math.max(12, fs*.85), style: `fill:${tint(80)};font-family:var(--body)`}, svg);
   lb.textContent = 'in body';
   const bx = x0 + fs*4.4, bw = Math.max(20, pw - fs*4.4), bh = fs*.55;
-  Kit.mk('rect', {x: bx, y: y2 - bh, width: bw, height: bh, rx: bh/2, style: 'fill:color-mix(in srgb,var(--k) 15%,transparent)'}, svg);
+  Kit.mk('rect', {x: bx, y: y2 - bh, width: bw, height: bh, rx: bh/2, style: `fill:${tint(30)}`}, svg);
   const bar = Kit.mk('rect', {x: bx, y: y2 - bh, width: bw, height: bh, rx: bh/2, style: 'fill:var(--k)'}, svg);
   return {turb, disp, hue, halos, gA, gB, stat, bar, bw, pw, sr};
 }

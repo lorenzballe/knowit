@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: maths-pivotal-voter-dictator -->
-<!-- Look: a night-time glass lab. Nine test tubes in a rack and one tall cylinder for society, each holding three translucent layers (A amber, B mint, C rose) that slosh and bubble.
-     Interaction: scrub a glass rail through Profiles 0–9. Each step, one more voter's B layer rises through their tube from last to first, while society's B stays stuck at the bottom.
-     Wow: at voter 6 a single tube tips it. Sparks fly up a glowing arrow, society's B springs to the top with an elastic surge, and the tube is crowned "THE DICTATOR". -->
+<!-- Look: a page from a book about voting. Nine paper ballot slips stand in a row, one for each voter. Each slip has three ranked rows: A and C in two plain paper greys, and B as one flat mint row. A larger sheet shows society's ranking. There are no glass, glows or sparks.
+     Interaction: scrub the rail through Profiles 0–9. Each step, one more voter's B row slides from the bottom of their slip to the top, while society's B stays at the bottom.
+     Wow: at voter 6 a single slip tips it. A small mint slip travels along a hand-drawn arrow, society's B jumps to the top, and the slip is circled by hand and labelled "The dictator". -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The hidden dictator</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -10,7 +10,13 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex:1;min-height:0;overflow:hidden;background:none;box-shadow:none;border:0;border-radius:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;--b:#46d4af}
+#pic .paper{fill:var(--k)}
+#pic .rowA{fill:color-mix(in srgb,var(--k) 78%,var(--c))}
+#pic .rowC{fill:color-mix(in srgb,var(--k) 56%,var(--c))}
+#pic .rowB{fill:var(--b)}
+#pic .track{fill:color-mix(in srgb,var(--k) 18%,var(--c))}
+#pic .notch{fill:color-mix(in srgb,var(--k) 45%,var(--c))}
 .say{overflow-wrap:anywhere}
 </style>
 <article class="card" id="card" data-topic="maths" data-kind="Scrub the profiles · pivotal voter" style="--c:#0b1828;--k:#eaf4ff;--edge:#050b14">
@@ -18,7 +24,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SCRUB THE VOTERS</span></div>
     <h2 class="q">How does Arrow's proof find a hidden dictator?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" data-drag role="img" aria-label="Nine voters' test tubes, each with three liquid layers A, B and C, a tall cylinder showing society's ranking, and a rail of profiles from 0 to 9."></svg>
+      <svg id="pic" data-drag role="img" aria-label="Nine voters' ballot slips, each ranking A, B and C, a larger sheet showing society's ranking, and a rail of profiles from 0 to 9."></svg>
     </div>
     <p class="say" id="say">Every voter ranks B last, so society must too. <b>Drag the rail:</b> one voter at a time lifts B to the top.</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Change one vote at a time, and some single voter ends up deciding for everyone.</div>
@@ -30,13 +36,11 @@
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
   const N = 9, PIVOT = 6;
-  const COL = {A: '#ffb547', B: '#38f2c6', C: '#ff5f93'};
-  const DEEP = {A: '#b8600f', B: '#078a74', C: '#a8164f'};
-  const LITE = {A: '#ffe1a8', B: '#c6fff0', C: '#ffc2d6'};
-  const INK = '#eaf4ff', MUTE = 'rgba(234,244,255,.62)', DARK = '#08131f';
+  const INK = 'var(--k)', DARK = 'var(--c)', BCOL = 'var(--b)';
+  const MUTE = 'color-mix(in srgb, var(--k) 62%, var(--c))';
   const pairs = ['AC', 'CA', 'AC', 'AC', 'CA', 'CA', 'AC', 'CA', 'AC'];
 
-  const mkV = (order, base) => ({slots: {[order[0]]: 0, [order[1]]: 1, B: 2}, order, up: false, amp: base, base, ph: Kit.rnd() * 6.28, bub: Kit.rnd(), fill: 1, el: null});
+  const mkV = (order, base) => ({slots: {[order[0]]: 0, [order[1]]: 1, B: 2}, order, up: false, amp: base, base, ph: Kit.rnd() * 6.28, fill: 1, el: null});
   const tubes = pairs.map(o => mkV(o, 1.4));
   const soc = mkV('AC', .9);
   const all = [...tubes, soc];
@@ -44,72 +48,54 @@
   let k = 0, found = false, touched = false;
   let W = 0, H = 0, fs = 12, x0 = 0, step = 0, railY = 0, hr = 14, R = {}, uid = 0;
 
-  const T = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, a), parent); e.textContent = t; return e; };
+  const paint = (el, o) => { Object.assign(el.style, o); return el; };
+  const T = (parent, x, y, t, a = {}) => {
+    const {fill = INK, ...rest} = a;
+    const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 600}, rest), parent);
+    e.style.fill = fill; e.textContent = t; return e;
+  };
 
-  // ---------- the glass ----------
   function defs() {
     const d = Kit.mk('defs', {}, svg);
-    const lin = (id, stops, v) => { const g = Kit.mk('linearGradient', Object.assign({id}, v ? {x1: 0, y1: 0, x2: 0, y2: 1} : {x1: 0, y1: 0, x2: 1, y2: 0}), d); stops.forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op ?? 1}, g)); };
-    lin('glass', [[0, '#cfe6ff', .18], [.3, '#cfe6ff', .03], [.75, '#cfe6ff', .02], [1, '#cfe6ff', .15]]);
-    lin('shine', [[0, '#ffffff', .75], [.6, '#ffffff', .12], [1, '#ffffff', 0]], true);
-    lin('rack', [[0, '#bcd8ff', .26], [1, '#bcd8ff', .07]], true);
-    lin('railfill', [[0, DEEP.B], [1, COL.B]]);
-    lin('floor', [[0, '#9fd8ff', 0], [.5, '#9fd8ff', .38], [1, '#9fd8ff', 0]]);
-    for (const L of 'ABC') lin('liq' + L, [[0, DEEP[L]], [.3, COL[L]], [.48, LITE[L]], [.7, COL[L]], [1, DEEP[L]]]);
-    const rg = Kit.mk('radialGradient', {id: 'ped'}, d);
-    Kit.mk('stop', {offset: 0, 'stop-color': COL.B, 'stop-opacity': .55}, rg);
-    Kit.mk('stop', {offset: 1, 'stop-color': COL.B, 'stop-opacity': 0}, rg);
-    const f = Kit.mk('filter', {id: 'glow', x: '-60%', y: '-60%', width: '220%', height: '220%'}, d);
-    Kit.mk('feGaussianBlur', {stdDeviation: 4, result: 'b'}, f);
-    const m = Kit.mk('feMerge', {}, f); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
     const mk = Kit.mk('marker', {id: 'head', viewBox: '0 0 10 10', refX: 7, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse'}, d);
-    Kit.mk('path', {d: 'M0,0 L10,5 L0,10 Z', fill: COL.B}, mk);
+    paint(Kit.mk('path', {d: 'M0,0 L10,5 L0,10 Z'}, mk), {fill: BCOL});
   }
 
+  // ---------- a paper slip with three ranked rows ----------
   function vessel(v, cx, top, bot, w, isSoc, letters, lsz) {
     const id = 'cl' + (uid++), g = Kit.mk('g', {}, svg);
-    const r = isSoc ? w * .14 : w / 2;
-    const shape = isSoc
-      ? `M${cx - w / 2},${top} V${bot - r} Q${cx - w / 2},${bot} ${cx - w / 2 + r},${bot} H${cx + w / 2 - r} Q${cx + w / 2},${bot} ${cx + w / 2},${bot - r} V${top} Z`
-      : `M${cx - w / 2},${top} V${bot - r} A${r},${r} 0 0 0 ${cx + w / 2},${bot - r} V${top} Z`;
-    const cp = Kit.mk('clipPath', {id}, g); Kit.mk('path', {d: shape}, cp);
-    Kit.mk('ellipse', {cx, cy: bot + w * .1, rx: w * .7, ry: w * .13, fill: '#000', opacity: .4}, g);
-    Kit.mk('path', {d: shape, fill: 'url(#glass)'}, g);
-    const clip = Kit.mk('g', {'clip-path': `url(#${id})`}, g);
-    const rot = Kit.mk('g', {}, clip);
-    const ly0 = top + (bot - top) * (isSoc ? .1 : .14), sh = (bot - ly0) / 3, lw = w + 6, lx = cx - lw / 2;
-    const back = Kit.mk('rect', {x: lx, width: lw, fill: '#5d7fa6', opacity: .28}, rot);
+    if (v.tilt == null) v.tilt = isSoc ? -.6 : (Kit.rnd() - .5) * 2.4;
+    const inner = Kit.mk('g', {}, g);
+    const pad = Math.max(2.5, w * (isSoc ? .09 : .11));
+    Kit.mk('rect', {x: cx - w / 2, y: top, width: w, height: bot - top, rx: Math.min(3, w * .06), class: 'paper'}, inner);
+    const ly0 = top + pad, sh = (bot - pad - ly0) / 3, rw = Math.max(1, w - 2 * pad), gap = Math.max(1.5, Math.min(4, sh * .07));
+    const cp = Kit.mk('clipPath', {id}, g); Kit.mk('rect', {x: cx - w / 2, y: ly0, width: w, height: 3 * sh}, cp);
+    const rows = Kit.mk('g', {'clip-path': `url(#${id})`}, inner);
     const rr = {};
-    for (const L of ['A', 'C', 'B']) rr[L] = {rect: Kit.mk('rect', {fill: `url(#liq${L})`}, rot)};
-    const men = Kit.mk('rect', {x: lx, width: lw, height: 2, fill: '#fff', opacity: .55}, rot);
-    const lg = Kit.mk('g', {}, clip);
-    if (letters) for (const L of ['A', 'C', 'B']) rr[L].txt = T(lg, cx, 0, L, {'text-anchor': 'middle', fill: DARK, 'font-family': 'var(--mono)', 'font-weight': 800, 'font-size': lsz});
-    const bub = Kit.mk('circle', {r: Math.max(1.6, w * .08), fill: '#fff', opacity: 0}, clip);
-    const bub2 = Kit.mk('circle', {r: Math.max(1.2, w * .055), fill: '#fff', opacity: 0}, clip);
-    Kit.mk('path', {d: shape, fill: 'none', stroke: '#d6ecff', 'stroke-opacity': .55, 'stroke-width': isSoc ? 1.8 : 1.4}, g);
-    Kit.mk('rect', {x: cx - w * .36, y: top + w * .3, width: w * .13, height: (bot - top) * .78, rx: w * .06, fill: 'url(#shine)', opacity: .8}, g);
-    Kit.mk('rect', {x: cx + w * .26, y: top + w * .5, width: w * .05, height: (bot - top) * .5, rx: w * .03, fill: '#fff', opacity: .18}, g);
-    Kit.mk('ellipse', {cx, cy: top, rx: w / 2 + 2.5, ry: Math.max(2.5, w * .14), fill: 'rgba(220,240,255,.06)', stroke: '#e6f4ff', 'stroke-opacity': .7, 'stroke-width': 1.4}, g);
-    v.el = {g, rot, rr, men, back, bub, bub2, cx, top, bot, w, ly0, sh, isSoc, lsz};
+    for (const L of ['A', 'C', 'B']) {
+      const rg = Kit.mk('g', {}, rows);
+      rr[L] = {rect: Kit.mk('rect', {x: cx - rw / 2, width: rw, height: Math.max(1, sh - gap), rx: 1.5, class: 'row' + L}, rg)};
+      if (letters) rr[L].txt = T(rg, cx, 0, L, {'text-anchor': 'middle', fill: DARK, 'font-weight': 800, 'font-size': lsz});
+    }
+    v.el = {g, inner, rr, cx, top, bot, w, rw, ly0, sh, gap, isSoc, lsz, tilt: v.tilt};
   }
 
-  // ---------- two compositions: tall lab, or compact bench ----------
+  // ---------- two compositions: tall page, or compact strip ----------
   function planTall() {
     const h = fs * 1.05, pad = Math.max(12, W * .045, h * 1.35 + 3);
     const rY = H - fs * 1.45, top0 = fs * 1.7;
     const socH = Math.max(fs * 5.6, H * .34), socBot = top0 + socH;
     const tubeTop = socBot + fs * 2.8, tubeBot = rY - fs * 3, th = tubeBot - tubeTop;
-    const stp = (W - 2 * pad) / N, tw = Math.min(stp * .6, th * .3);
+    const stp = (W - 2 * pad) / N, tw = Math.min(stp * .72, th * .5);
     const tsh = (tubeBot - (tubeTop + th * .14)) / 3, ssh = socH * .9 / 3;
     if (tsh < fs * 1.2 || ssh < fs * 1.5) return null;
     const chipY = tubeTop - fs * 1.15, maxY = chipY - fs * .8 - 4;
-    const sx = W * .22, sw = Math.min(W * .17, socH * .42);
+    const sx = W * .22, sw = Math.min(W * .2, socH * .5);
     const rx = Math.max(W * .45, sx + sw / 2 + fs * 2.2);
     const ys = [1.1, 3.3, 4.9, 6.4].map(d => top0 + fs * d);
     if (ys[3] + fs * .3 > maxY) return null;
-    const dotsY = top0 + fs * 7.6;
     return {tall: true, hr: h, x0: pad, step: stp, railY: rY, socTop: top0, socBot, sx, sw, socL: Math.min(fs * 1.35, ssh * .8),
-      tubeTop, tubeBot, tw, letters: true, numY: tubeBot + fs * 1.3, chipY, rx, ys, dotsY, dots: dotsY + fs * .4 < maxY};
+      tubeTop, tubeBot, tw, letters: true, numY: tubeBot + fs * 1.3, chipY, rx, ys};
   }
   function planCompact() {
     const h = fs * .85, lab = fs * 1.9, m = Math.max(8, W * .025);
@@ -119,7 +105,7 @@
     const xR0 = sx + sw / 2 + fs * 1.5, xR1 = W - h - 4;
     const stp = (xR1 - xR0) / N;
     const chipY = fs * 1.15, tubeTop = chipY + fs * 1.35, rY = H - fs * 1.0, numY = rY - fs * 1.15, tubeBot = numY - fs * 1.2;
-    const th = tubeBot - tubeTop, tw = Math.max(6, Math.min(stp * .62, th * .34));
+    const th = tubeBot - tubeTop, tw = Math.max(6, Math.min(stp * .7, th * .4));
     const tsh = (tubeBot - (tubeTop + th * .14)) / 3, ssh = (socBot - socTop) * .9 / 3;
     return {tall: false, hr: h, x0: xR0, step: stp, railY: rY, socTop, socBot, sx, sw, socL: Math.max(fs, Math.min(fs * 1.2, ssh * .8)),
       tubeTop, tubeBot, tw, letters: tsh >= fs * 1.15, numY, chipY};
@@ -135,66 +121,56 @@
     x0 = P.x0; step = P.step; railY = P.railY; hr = P.hr;
     const {sx, sw, tw, tubeTop, tubeBot} = P, th = tubeBot - tubeTop;
 
-    // backdrop: faint lab grid and drifting motes
-    const grid = Kit.mk('g', {opacity: .06}, svg);
-    for (let i = 0; i < N; i++) { const x = x0 + (i + .5) * step; Kit.mk('line', {x1: x, x2: x, y1: 0, y2: H, stroke: '#bcd8ff', 'stroke-width': 1}, grid); }
-    R.motes = Array.from({length: 14}, () => ({c: Kit.mk('circle', {r: .6 + Kit.rnd() * 1.3, fill: '#bfe9ff', opacity: 0}, svg), x: 6 + Kit.rnd() * (W - 12), sp: .02 + Kit.rnd() * .04, o: Kit.rnd(), ph: Kit.rnd() * 6}));
-
-    // society's cylinder
-    if (P.tall) R.ped = Kit.mk('ellipse', {cx: sx, cy: P.socBot + fs * .25, rx: sw * .95, ry: fs * .45, fill: 'url(#ped)', opacity: .35}, svg);
+    // society's sheet
     vessel(soc, sx, P.socTop, P.socBot, sw, true, true, P.socL);
     const se = soc.el;
-    for (let i = 0; i < 9; i++) { const y = se.ly0 + (i + .5) * se.sh / 3; Kit.mk('line', {x1: sx + sw / 2 - (i % 3 === 1 ? sw * .22 : sw * .12), x2: sx + sw / 2 - 1, y1: y, y2: y, stroke: '#e6f4ff', 'stroke-opacity': .45, 'stroke-width': 1}, se.g); }
-    ['1st', '2nd', '3rd'].forEach((t, i) => T(svg, sx - sw / 2 - 6, se.ly0 + (i + .5) * se.sh + fs * .35, t, {'text-anchor': 'end', fill: MUTE, 'font-family': 'var(--mono)', 'font-weight': 600}));
-    R.flash = Kit.mk('rect', {x: sx - sw / 2 - 4, y: P.socTop - 4, width: sw + 8, height: P.socBot - P.socTop + 8, rx: sw * .2, fill: 'none', stroke: COL.B, 'stroke-width': 3, opacity: 0, filter: 'url(#glow)'}, svg);
+    ['1st', '2nd', '3rd'].forEach((t, i) => T(svg, sx - sw / 2 - 8, se.ly0 + (i + .5) * se.sh + fs * .35, t, {'text-anchor': 'end', fill: MUTE}));
+    R.flash = paint(Kit.mk('rect', {x: sx - sw / 2 - 5, y: P.socTop - 5, width: sw + 10, height: P.socBot - P.socTop + 10, rx: 4, fill: 'none', 'stroke-width': 2.5, opacity: 0}, svg), {stroke: BCOL});
 
-    // the readout
+    // the caption beside it
     let chipMin = 4;
     if (P.tall) {
       const rx = P.rx;
-      R.title = T(svg, rx, P.ys[0], "SOCIETY'S RANKING", {fill: MUTE, 'font-family': 'var(--mono)', 'font-weight': 600, 'letter-spacing': '.06em'});
+      R.title = T(svg, rx, P.ys[0], "Society's ranking", {fill: MUTE});
       R.prof = T(svg, rx, P.ys[1], '', {'font-family': 'var(--display)', 'font-size': fs * 1.7, 'font-weight': 800});
-      R.line = T(svg, rx, P.ys[2], '', {fill: MUTE, 'font-weight': 600});
-      R.soc = T(svg, rx, P.ys[3], '', {'font-weight': 800});
-      if (P.dots) R.dots = Array.from({length: N}, (_, i) => Kit.mk('circle', {cx: rx + fs * .32 + i * fs * .95, cy: P.dotsY, r: fs * .28, fill: 'none', stroke: COL.B, 'stroke-opacity': .6, 'stroke-width': 1.2}, svg));
+      R.line = T(svg, rx, P.ys[2], '', {fill: MUTE});
+      R.soc = T(svg, rx, P.ys[3], '', {'font-weight': 700});
     } else {
-      R.socLab = T(svg, sx, fs * 1.25, 'SOCIETY', {'text-anchor': 'middle', fill: MUTE, 'font-family': 'var(--mono)', 'font-weight': 700, 'letter-spacing': '.06em'});
+      R.socLab = T(svg, sx, fs * 1.25, 'Society', {'text-anchor': 'middle', fill: MUTE});
       chipMin = sx + R.socLab.getComputedTextLength() / 2 + 8;
     }
 
-    // the bench and the nine voters
-    Kit.mk('rect', {x: x0, y: tubeBot + tw * .1, width: N * step, height: 1.5, fill: 'url(#floor)'}, svg);
+    // the nine ballot slips
     tubes.forEach((v, i) => vessel(v, x0 + (i + .5) * step, tubeTop, tubeBot, tw, false, P.letters, fs));
-    const neck = tubes[0].el.ly0 - tubeTop, rh0 = Math.max(5, Math.min(fs * .6, neck * .6));
-    Kit.mk('rect', {x: x0 + step * .08, y: tubeTop + neck * .5 - rh0 / 2, width: N * step - step * .16, height: rh0, rx: rh0 / 2, fill: 'url(#rack)', stroke: '#cfe6ff', 'stroke-opacity': .3}, svg);
-    R.nums = tubes.map((v, i) => T(svg, x0 + (i + .5) * step, P.numY, String(i + 1), {'text-anchor': 'middle', fill: MUTE, 'font-family': 'var(--mono)'}));
+    R.nums = tubes.map((v, i) => T(svg, x0 + (i + .5) * step, P.numY, String(i + 1), {'text-anchor': 'middle', fill: MUTE}));
 
-    // the pivot: a ring, a chip, an arrow up to society, sparks
+    // the pivot: a hand-drawn loop, a hand-written note, an arrow up to society
     const pcx = x0 + (PIVOT - .5) * step, chipY = P.chipY;
-    R.ring = Kit.mk('rect', {x: pcx - tw / 2 - 5, y: tubeTop - 5, width: tw + 10, height: th + 10, rx: tw / 2 + 5, fill: 'none', stroke: COL.B, 'stroke-width': 2, opacity: found ? .8 : 0, filter: 'url(#glow)'}, svg);
+    const bx = pcx - tw / 2 - 5, by = tubeTop - 5, bw = tw + 10, bh = th + 10, c = Math.min(7, bw * .25);
+    R.ring = paint(Kit.mk('path', {
+      d: `M${pcx - 2},${by + 1} H${bx + bw - c} Q${bx + bw},${by} ${bx + bw + 1},${by + c} V${by + bh - c} Q${bx + bw},${by + bh} ${bx + bw - c},${by + bh + 1} H${bx + c} Q${bx},${by + bh} ${bx - 1},${by + bh - c} V${by + c} Q${bx},${by - 1} ${bx + c + 1},${by - 2} H${pcx + 7}`,
+      fill: 'none', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: found ? 1 : 0}, svg), {stroke: BCOL});
     R.chip = Kit.mk('g', {opacity: found ? 1 : 0}, svg);
-    const ct = T(R.chip, pcx, chipY + fs * .36, 'THE DICTATOR', {'text-anchor': 'middle', fill: DARK, 'font-family': 'var(--mono)', 'font-weight': 800, 'letter-spacing': '.05em'});
-    const cw = ct.getComputedTextLength() + fs * 1.2;
+    const ct = T(R.chip, pcx, chipY + fs * .4, 'The dictator', {'text-anchor': 'middle', fill: BCOL, 'font-family': 'var(--hand)', 'font-size': fs * 1.35, 'font-weight': 400});
+    const cw = ct.getComputedTextLength() + fs * .6;
     const cxl = Math.max(chipMin, Math.min(W - 4 - cw, pcx - cw / 2));
     ct.setAttribute('x', cxl + cw / 2);
-    R.chip.insertBefore(Kit.mk('rect', {x: cxl, y: chipY - fs * .8, width: cw, height: fs * 1.6, rx: fs * .8, fill: COL.B, filter: 'url(#glow)'}), ct);
     const ax = cxl - 3, ay = chipY, ex = sx + sw / 2 + 7, ey = se.ly0 + se.sh * .5;
     const mx = P.tall ? ex + (P.rx - ex) * .55 : ex + (ax - ex) * .4;
-    R.arrow = Kit.mk('path', {d: `M${ax},${ay} C${mx},${ay} ${mx},${ey} ${ex},${ey}`, fill: 'none', stroke: COL.B, 'stroke-width': 2, 'stroke-linecap': 'round', 'marker-end': 'url(#head)', opacity: found ? 1 : 0}, svg);
+    R.arrow = paint(Kit.mk('path', {d: `M${ax},${ay} C${mx},${ay + 2} ${mx - 2},${ey} ${ex},${ey}`, fill: 'none', 'stroke-width': 2, 'stroke-linecap': 'round', 'marker-end': 'url(#head)', opacity: found ? 1 : 0}, svg), {stroke: BCOL});
     R.alen = R.arrow.getTotalLength();
     R.sparks = Kit.mk('g', {}, svg);
 
     // the rail of profiles
-    const rx0 = x0, rx1 = x0 + N * step, rh = Math.max(6, fs * .5);
-    Kit.mk('rect', {x: rx0 - rh / 2, y: railY - rh / 2, width: rx1 - rx0 + rh, height: rh, rx: rh / 2, fill: 'rgba(200,225,255,.08)', stroke: '#cfe6ff', 'stroke-opacity': .35}, svg);
-    R.fill = Kit.mk('rect', {x: rx0 - rh / 2, y: railY - rh / 2 + 1, height: rh - 2, rx: rh / 2 - 1, fill: 'url(#railfill)'}, svg);
+    const rx0 = x0, rx1 = x0 + N * step, rh = Math.max(4, fs * .34);
+    Kit.mk('rect', {x: rx0 - rh / 2, y: railY - rh / 2, width: rx1 - rx0 + rh, height: rh, rx: rh / 2, class: 'track'}, svg);
+    R.fill = paint(Kit.mk('rect', {x: rx0 - rh / 2, y: railY - rh / 2, height: rh, rx: rh / 2}, svg), {fill: BCOL});
     R.rh = rh;
-    for (let i = 0; i <= N; i++) Kit.mk('circle', {cx: rx0 + i * step, cy: railY, r: 1.8, fill: '#e6f4ff', opacity: .5}, svg);
+    for (let i = 0; i <= N; i++) Kit.mk('circle', {cx: rx0 + i * step, cy: railY, r: 1.6, class: 'notch'}, svg);
     R.handle = Kit.mk('g', {}, svg);
-    R.halo = Kit.mk('circle', {r: hr, fill: 'none', stroke: COL.B, 'stroke-width': 2, opacity: 0}, R.handle);
-    Kit.mk('circle', {r: hr, fill: 'rgba(16,40,60,.88)', stroke: '#e6f4ff', 'stroke-opacity': .8, 'stroke-width': 1.5}, R.handle);
-    Kit.mk('ellipse', {cx: -hr * .3, cy: -hr * .42, rx: hr * .42, ry: hr * .2, fill: '#fff', opacity: .3}, R.handle);
-    R.hnum = T(R.handle, 0, fs * .36, '0', {'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 800});
+    R.halo = paint(Kit.mk('circle', {r: hr, fill: 'none', 'stroke-width': 1.5, opacity: 0}, R.handle), {stroke: BCOL});
+    Kit.mk('circle', {r: hr, class: 'paper'}, R.handle);
+    R.hnum = T(R.handle, 0, fs * .36, '0', {'text-anchor': 'middle', fill: DARK, 'font-weight': 800});
     texts();
   }
 
@@ -204,18 +180,16 @@
       R.prof.textContent = `Profile ${k}`;
       R.line.textContent = `B first: ${k} of ${N} voters`;
       R.soc.textContent = soc.up ? 'Society: B first!' : 'Society: B last';
-      R.soc.setAttribute('fill', soc.up ? COL.B : INK);
+      R.soc.style.fill = soc.up ? BCOL : INK;
     }
-    if (R.dots) R.dots.forEach((d, i) => d.setAttribute('fill', i < k ? COL.B : 'none'));
-    if (R.socLab) R.socLab.setAttribute('fill', soc.up ? COL.B : MUTE);
-    if (R.ped) R.ped.setAttribute('opacity', soc.up ? 1 : .35);
-    R.nums.forEach((n, i) => { n.setAttribute('fill', i < k ? COL.B : MUTE); n.setAttribute('font-weight', i === PIVOT - 1 && found ? 800 : 600); });
+    if (R.socLab) R.socLab.style.fill = soc.up ? BCOL : MUTE;
+    R.nums.forEach((n, i) => { n.style.fill = i < k ? BCOL : MUTE; n.setAttribute('font-weight', i === PIVOT - 1 && found ? 800 : 600); });
     if (k >= PIVOT && found) say.innerHTML = `<b>Voter ${PIVOT} alone flipped society's B from last to first.</b> Someone always must, and Arrow's proof shows that pivotal voter is a dictator.`;
     else if (k === 0) say.innerHTML = 'Every voter ranks B last, so society must too. <b>Drag the rail:</b> one voter at a time lifts B to the top.';
     else say.innerHTML = `<b>${k} of ${N}</b> voters now put B first, yet society still ranks B last. <b>Keep dragging.</b>`;
   }
 
-  // ---------- moving the liquids ----------
+  // ---------- moving the rows ----------
   function setB(v, up, dur, ease, delay = 0) {
     if (v.up === up) return;
     v.up = up;
@@ -249,13 +223,12 @@
     tl.fromTo(R.ring, {opacity: 0}, {opacity: .85, duration: .5, ease: 'power2.out'}, .1)
       .fromTo(R.chip, {opacity: 0, scale: .3, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .7, ease: 'back.out(2.4)'}, .35)
       .fromTo(R.arrow, {opacity: 1, strokeDasharray: R.alen, strokeDashoffset: R.alen}, {strokeDashoffset: 0, duration: .65, ease: 'power3.inOut'}, .45);
-    const path = R.arrow, alen = R.alen, sp = R.sparks;
-    for (let i = 0; i < 11; i++) {
-      const c = Kit.mk('circle', {r: 1.5 + Kit.rnd() * 2.2, fill: i % 3 ? COL.B : '#fff', filter: 'url(#glow)', opacity: 0}, sp), o = {d: 0};
-      tl.to(o, {d: 1, duration: .7, ease: 'power2.in', onStart: () => c.setAttribute('opacity', 1),
-        onUpdate: () => { const pt = path.getPointAtLength(o.d * alen); c.setAttribute('cx', pt.x + Math.sin(o.d * 9 + i) * 3); c.setAttribute('cy', pt.y + Math.cos(o.d * 7 + i) * 3); },
-        onComplete: () => c.remove()}, .6 + i * .045);
-    }
+    // the pivotal vote carried up to society: one small mint slip along the arrow
+    const path = R.arrow, alen = R.alen, s = fs * .9;
+    const c = paint(Kit.mk('rect', {x: -s * .4, y: -s * .28, width: s * .8, height: s * .56, rx: 1, opacity: 0}, R.sparks), {fill: BCOL}), o = {d: 0};
+    tl.to(o, {d: 1, duration: .45, ease: 'power2.inOut', onStart: () => c.setAttribute('opacity', 1),
+      onUpdate: () => { const pt = path.getPointAtLength(o.d * alen); c.setAttribute('transform', `translate(${pt.x},${pt.y})`); },
+      onComplete: () => c.remove()}, .7);
     tl.add(() => {
       setB(soc, true, 1.5, 'elastic.out(1,.42)'); soc.amp = 9; Kit.haptic('success'); texts();
       gsap.fromTo(R.flash, {opacity: 1, scale: 1, transformOrigin: '50% 50%'}, {opacity: 0, scale: 1.2, duration: 1.1, ease: 'expo.out'});
@@ -263,43 +236,24 @@
     }, 1.15);
   }
 
-  // ---------- the ambient loop ----------
+  // ---------- the loop ----------
   function render(t) {
     for (const v of all) {
       const e = v.el; if (!e) continue;
       v.amp += (v.base - v.amp) * .035;
-      const a = Kit.calm ? 0 : v.amp * Math.sin(t * 2.5 + v.ph) + .4 * Math.sin(t * .7 + v.ph * 2);
-      const cy = (e.ly0 + e.bot) / 2;
-      e.rot.setAttribute('transform', `translate(${e.cx},${cy}) skewY(${a.toFixed(3)}) translate(${-e.cx},${-cy})`);
-      const lvl = e.bot - v.fill * (e.bot - e.ly0), surf = Math.max(e.ly0, lvl), lw = e.w + 6;
-      e.back.setAttribute('y', surf); e.back.setAttribute('height', Math.max(0, e.bot + 2 - surf));
-      e.men.setAttribute('y', surf - 1); e.men.setAttribute('opacity', v.fill > .02 ? .55 : 0);
+      const wob = Kit.calm ? 0 : Math.max(0, v.amp - v.base) * .3 * Math.sin(t * 8 + v.ph);
+      const dy = (1 - v.fill) * -fs * 2;
+      e.inner.setAttribute('transform', `translate(0,${dy.toFixed(2)}) rotate(${(e.tilt + wob).toFixed(3)} ${e.cx} ${e.bot})`);
+      e.inner.setAttribute('opacity', Math.min(1, v.fill * 1.5).toFixed(3));
       for (const L of 'ACB') {
-        const s = v.slots[L], r = e.rr[L], yT = e.ly0 + s * e.sh, hh = e.sh + 1 + Math.max(0, s - 1) * e.w * .3;
-        let wd = lw, rx = 0;
-        if (L === 'B') { const m = s - Math.floor(s), b = Math.sin(Math.PI * m); wd = lw * (1 - b) + e.w * .72 * b; rx = b * e.w * .36; }
-        const y0 = Math.max(yT, lvl), h = Math.max(0, yT + hh - y0);
-        r.rect.setAttribute('x', e.cx - wd / 2); r.rect.setAttribute('y', y0); r.rect.setAttribute('width', wd);
-        r.rect.setAttribute('height', h); r.rect.setAttribute('rx', Math.min(rx, h / 2));
-        if (r.txt) {
-          r.txt.setAttribute('y', yT + e.sh / 2 + e.lsz * .35);
-          r.txt.setAttribute('opacity', Math.max(0, Math.min(1, (yT + e.sh * .6 - lvl) / (e.sh * .3))).toFixed(3));
-        }
-        if (L === 'B' && e.isSoc) r.rect.setAttribute('filter', s < .5 ? 'url(#glow)' : 'none');
+        const s = v.slots[L], r = e.rr[L], yT = e.ly0 + s * e.sh;
+        let wd = e.rw;
+        if (L === 'B') { const m = s - Math.floor(s), b = Math.sin(Math.PI * m); wd = e.rw * (1 - .14 * b); }
+        r.rect.setAttribute('x', e.cx - wd / 2); r.rect.setAttribute('width', wd);
+        r.rect.setAttribute('y', yT + e.gap / 2);
+        if (r.txt) r.txt.setAttribute('y', yT + e.sh / 2 + e.lsz * .35);
       }
-      [[e.bub, .17, 0], [e.bub2, .23, .5]].forEach(([c, sp, off]) => {
-        const pr = Kit.calm ? .5 : ((t * sp + v.bub + off) % 1);
-        c.setAttribute('cy', e.bot - e.w * .3 - pr * Math.max(0, e.bot - surf - e.w * .3));
-        c.setAttribute('cx', e.cx + Math.sin(t * 3 + v.ph + off * 4) * e.w * .14);
-        c.setAttribute('opacity', (Math.sin(pr * Math.PI) * .55 * v.fill).toFixed(3));
-      });
     }
-    if (R.motes) R.motes.forEach(m => {
-      const pr = Kit.calm ? m.o : (t * m.sp + m.o) % 1;
-      m.c.setAttribute('cx', m.x + Math.sin(t * .5 + m.ph) * 6);
-      m.c.setAttribute('cy', 4 + (H - 8) * (1 - pr));
-      m.c.setAttribute('opacity', (Kit.calm ? .15 : Math.sin(pr * Math.PI) * .4).toFixed(3));
-    });
     if (R.handle) {
       const hx = x0 + st.p * step;
       R.handle.setAttribute('transform', `translate(${hx},${railY})`);
@@ -307,7 +261,6 @@
       R.hnum.textContent = String(Math.round(st.p));
       const br = touched || Kit.calm ? 0 : (t * .8) % 1;
       R.halo.setAttribute('r', hr * (1 + br * .6)); R.halo.setAttribute('opacity', touched ? 0 : (1 - br) * .7);
-      if (found && !Kit.calm) R.ring.setAttribute('stroke-opacity', .55 + .45 * Math.sin(t * 3));
     }
   }
   const loop = ms => { render(ms / 1000); requestAnimationFrame(loop); };

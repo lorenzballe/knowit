@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: science-pressure-at-depth -->
-<!-- Look: a chalkboard lecture. Live chalk strokes, blue chalk shading that thickens with depth, a teacher's pink arrow, an Eiffel Tower drawn in chalk standing on a 1 m² tile of hull, and the Titanic lying in two pieces on the seabed.
-     Interaction: drag the little sub down the plumb line. The chalk sum "1 + depth ÷ 10" rewrites itself, the yellow squeeze arrows round the hull grow, bubbles rise, and the tower fills (by area) with the tonnes pressing on one square metre.
-     Wow: at the Titanic the teacher's chalk rings "381 atm", dust bursts off the board, the sub creaks and the whole tower is traced in yellow chalk: almost half of it now sits on 1 m². -->
+<!-- Look: a printed science-book cross-section. Flat bands of sea that grow bluer with every kilometre, a little flat sub on a plumb line, the Titanic lying in two pieces on the seabed, and a flat Eiffel Tower standing on a 1 m² slab of hull.
+     Interaction: drag the little sub down the plumb line. The sum "1 + depth ÷ 10" rewrites itself, the yellow squeeze arrows round the hull grow, bubbles rise, and the tower fills (by area) with the tonnes pressing on one square metre.
+     Wow: at the Titanic a pink pen rings "381 atm", the sub creaks and squeezes out bubbles, and the whole tower is traced in yellow: almost half of it now sits on 1 m². -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pressure at 3800 m</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -26,7 +26,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO THE DEEP</span></div>
     <h2 class="q">How hard does the sea press, on the way down to the Titanic?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A chalkboard: a small submarine on a depth line from the surface to the Titanic at 3800 m, a live sum of the pressure, and an Eiffel Tower standing on one square metre of hull, filling with the weight that presses on it."></svg>
+      <svg id="pic" role="img" aria-label="A cross-section of the sea: a small submarine on a depth line from the surface to the Titanic at 3800 m, a live sum of the pressure, and an Eiffel Tower standing on one square metre of hull, filling with the weight that presses on it."></svg>
     </div>
     <p class="say" id="say"><b>Drag the sub down</b> toward the Titanic, 3,800 m below.</p>
     <div id="why" class="gone"><p class="body">Every 10 m of water adds <b>one atmosphere</b>, plus one for the air: 301 at 3,000 m, <b>381</b> at the Titanic. Each square metre of hull bears some <b>3,800 tonnes</b>, almost half the 8,000-tonne Eiffel Tower.</p></div>
@@ -39,7 +39,9 @@
 (() => {
   if (typeof DrawSVGPlugin !== 'undefined') gsap.registerPlugin(DrawSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const CH = '#f4f1e8', YE = '#f5d76e', BL = '#8ec9e0', PK = '#f2a5aa', HULL = '#2b3a35';
+  const CH = '#f1eee4', YE = '#f5d76e', BL = '#8ec9e0', PK = '#f2a5aa', HULL = '#2b3a35';
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+  const blue = n => `color-mix(in srgb, ${BL} ${n}%, var(--c))`;
   const MAX = 3800, TOWER = 8000;
   const st = {d: 0};
   let revealed = false, touched = false, said = 0, built = false, compact = false;
@@ -85,31 +87,15 @@
     subRx = fs * 1.35; subRy = fs * .62;
 
     const defs = Kit.mk('defs', {}, svg);
-    defs.innerHTML = `
-      <filter id="chalk" filterUnits="userSpaceOnUse" x="-20" y="-20" width="${W + 40}" height="${H + 40}">
-        <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="3" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="d"/>
-        <feTurbulence type="fractalNoise" baseFrequency="2.2" numOctaves="1" seed="9" result="g"/>
-        <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.3 0 0 0 1.3" result="ga"/>
-        <feComposite in="d" in2="ga" operator="in"/>
-      </filter>
-      <filter id="smudge" filterUnits="userSpaceOnUse" x="-40" y="-40" width="${W + 80}" height="${H + 80}"><feGaussianBlur stdDeviation="${fs * 1.6}"/></filter>
-      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><line x1="0" y1="0" x2="0" y2="6" stroke="${YE}" stroke-width="2.4"/></pattern>
-      <pattern id="lattice" width="${fs * .9}" height="${fs * .9}" patternUnits="userSpaceOnUse"><path d="M0,0 L${fs * .9},${fs * .9} M${fs * .9},0 L0,${fs * .9}" stroke="${CH}" stroke-width=".9" opacity=".32"/></pattern>
-      <clipPath id="towerClip"><path id="towerShape"/></clipPath>`;
+    defs.innerHTML = `<clipPath id="towerClip"><path id="towerShape"/></clipPath>`;
 
-    // Dusty smudges of old lessons, rubbed off the board.
-    const sm = Kit.mk('g', {filter: 'url(#smudge)', opacity: .9}, svg);
-    [[W * .7, H * .3, W * .28, fs * 2.2, .06], [W * .2, H * .62, W * .2, fs * 3, .05], [W * .55, H * .88, W * .3, fs * 1.4, .05]].forEach(([x, y, rx, ry, o]) =>
-      Kit.mk('ellipse', {cx: x, cy: y, rx, ry, fill: CH, opacity: o}, sm));
-
-    const g = Kit.mk('g', {filter: 'url(#chalk)'}, svg);
+    const g = Kit.mk('g', {}, svg);
     const tx = Kit.mk('g', {id: 'words'}, svg);
     E.dust = Kit.mk('g', {}, svg);
-    const small = Math.max(12, fs * .88), mono = 'font-family:var(--mono)', hand = 'font-family:var(--hand)', disp = 'font-family:var(--display)';
+    const small = Math.max(12, fs * .88), body = 'font-family:var(--body)', disp = 'font-family:var(--display)';
 
     // ---------- the depth column: labels, plumb line, sea ----------
-    const probe = T(tx, 0, 0, '3000 m', {'font-size': small, style: mono});
+    const probe = T(tx, 0, 0, '3000 m', {'font-size': small, 'font-weight': 600, style: body});
     const labW = probe.getComputedTextLength(); probe.remove();
     const labR = pad + labW;
     colX = labR + fs * 2.1;
@@ -120,45 +106,43 @@
     y1 = sb - fs * 3.4;
     const step = (y1 - y0) / 3.8 >= small * 1.45 ? 1000 : 2000;
 
-    const shade = Kit.mk('g', {}, g);
-    for (let y = y0 + fs * .7; y < sb - fs * .3; y += fs * .62) {
-      const fr = clamp((y - y0) / (sb - y0), 0, 1), n = 2 + Math.round(fr * 5);
-      for (let i = 0; i < n; i++) {
-        const len = fs * (.5 + Kit.rnd() * 1.3), x = pad + Kit.rnd() * (seaR - pad - len);
-        Kit.mk('line', {x1: x, y1: y, x2: x + len, y2: y + (Kit.rnd() - .5) * 2, stroke: BL, 'stroke-width': 1.6 + fr * 1.4, 'stroke-linecap': 'round', opacity: (.1 + fr * .42).toFixed(2), class: 'dash'}, shade);
-      }
+    // The sea in flat bands: the deeper, the more water on top, the bluer.
+    const sea = Kit.mk('g', {}, g);
+    const NB = 8;
+    for (let i = 0; i < NB; i++) {
+      const ya = y0 + (sb - y0) * i / NB, yb = y0 + (sb - y0) * (i + 1) / NB;
+      Kit.mk('rect', {x: pad, y: ya, width: seaR - pad, height: yb - ya + .6, class: 'dash', style: `fill:${blue(12 + i * 7)}`}, sea);
     }
-    P(g, wobble(pad, seaR, y0, fs * .18, 14), {stroke: BL, 'stroke-width': 2.4, class: 'draw'});
-    P(g, `M${colX},${y0} V${y1}`, {'stroke-width': 1.3, opacity: .55, class: 'draw'});
+    P(g, wobble(pad, seaR, y0, fs * .1, 10), {stroke: BL, 'stroke-width': 2.6, class: 'draw'});
+    P(g, `M${colX},${y0} V${y1}`, {'stroke-width': 1.3, opacity: .7, class: 'draw'});
     E.ticks = [];
     for (let m = 0; m <= 3000; m += step) {
       const y = yOf(m);
       P(g, `M${colX - fs * .45},${y} L${colX + fs * .45},${y}`, {'stroke-width': 1.8, class: 'draw'});
-      E.ticks.push({y, e: T(tx, labR, y + small * .35, `${m} m`, {'text-anchor': 'end', 'font-size': small, style: mono, opacity: .82})});
+      E.ticks.push({y, e: T(tx, labR, y + small * .35, `${m} m`, {'text-anchor': 'end', 'font-size': small, 'font-weight': 600, style: body, opacity: .9})});
     }
 
     // The seabed, and the Titanic lying in two pieces.
-    P(g, wobble(pad, seaR, sb, fs * .2, 12), {'stroke-width': 2.2, class: 'draw'});
+    Kit.mk('path', {d: wobble(pad, seaR, sb, fs * .12, 8) + ` L${seaR},${sb + fs * .45} L${pad},${sb + fs * .45} Z`, style: `fill:${tint(30)}`}, g);
+    const shipF = `fill:${tint(62)}`;
     const b0 = colX - fs * .2, b1 = Math.min(seaR - fs * .2, colX + fs * 3);
-    P(g, `M${b0},${sb - fs * .1} L${b1 - fs * .7},${sb - fs * .2} L${b1},${sb - fs * 1.2} L${b0 + fs * .35},${sb - fs * .95} l${-fs * .2},${fs * .25} l${fs * .15},${fs * .22} l${-fs * .22},${fs * .18} Z`, {'stroke-width': 1.8, fill: 'rgba(244,241,232,.12)', class: 'draw'});
-    P(g, `M${b0 + fs * .4},${sb - fs * .62} L${b1 - fs * .5},${sb - fs * .78}`, {'stroke-width': 1, opacity: .6, class: 'draw'});
-    P(g, `M${b0 + fs * 1.5},${sb - fs * 1.02} l${fs * .3},${-fs * .95}`, {'stroke-width': 1.4, class: 'draw'});
-    for (let i = 0; i < 3; i++) Kit.mk('circle', {cx: b0 + fs * (.9 + i * .55), cy: sb - fs * .45, r: fs * .09, fill: CH, opacity: .7}, g);
+    P(g, `M${b0},${sb - fs * .1} L${b1 - fs * .7},${sb - fs * .2} L${b1},${sb - fs * 1.2} L${b0 + fs * .35},${sb - fs * .95} l${-fs * .2},${fs * .25} l${fs * .15},${fs * .22} l${-fs * .22},${fs * .18} Z`, {'stroke-width': 1.6, style: shipF, class: 'draw'});
+    P(g, `M${b0 + fs * 1.5},${sb - fs * 1.02} l${fs * .3},${-fs * .95}`, {'stroke-width': 1.6, class: 'draw'});
+    for (let i = 0; i < 3; i++) Kit.mk('circle', {cx: b0 + fs * (.9 + i * .55), cy: sb - fs * .5, r: fs * .1, style: 'fill:var(--c)'}, g);
     const s0 = pad + fs * .2, s1 = colX - fs * 1.1;
     if (s1 - s0 > fs * 1.6) {
-      P(g, `M${s0},${sb - fs * .1} L${s1},${sb - fs * .12} l${fs * .2},${-fs * .25} l${-fs * .18},${-fs * .2} l${fs * .1},${-fs * .3} L${s0 + fs * .35},${sb - fs * .82} Z`, {'stroke-width': 1.7, fill: 'rgba(244,241,232,.1)', class: 'draw'});
-      P(g, `M${(s0 + s1) / 2 - fs * .3},${sb - fs * .8} l${fs * .12},${-fs * .55} l${fs * .45},0 l${-fs * .02},${fs * .55}`, {'stroke-width': 1.4, class: 'draw'});
+      P(g, `M${(s0 + s1) / 2 - fs * .3},${sb - fs * .8} l${fs * .12},${-fs * .55} l${fs * .45},0 l${-fs * .02},${fs * .55}`, {'stroke-width': 1.4, style: shipF, class: 'draw'});
+      P(g, `M${s0},${sb - fs * .1} L${s1},${sb - fs * .12} l${fs * .2},${-fs * .25} l${-fs * .18},${-fs * .2} l${fs * .1},${-fs * .3} L${s0 + fs * .35},${sb - fs * .82} Z`, {'stroke-width': 1.6, style: shipF, class: 'draw'});
     }
-    for (let i = 0; i < 5; i++) Kit.mk('circle', {cx: s1 + fs * .2 + Kit.rnd() * (b0 - s1), cy: sb - fs * (.1 + Kit.rnd() * .25), r: .8 + Kit.rnd() * 1.4, fill: CH, opacity: .55}, g);
-    fitT(tx, pad, sb + fs * 1.55, 'Titanic · 3,800 m', {'font-size': Math.max(12, fs * 1.05), style: hand});
+    fitT(tx, pad, sb + fs * 1.55, 'Titanic · 3,800 m', {'font-size': small, 'font-weight': 600, style: body});
 
-    // ---------- the chalk sum ----------
-    const s1z = Math.max(12, fs), eSz = Math.max(12, fs * .95);
+    // ---------- the sum ----------
+    const s1z = Math.max(12, fs), eSz = small;
     let f2z = compact ? fs * 1.6 : fs * 1.95;
     const fa = compact ? 'start' : 'middle', fx = compact ? rx0 + fs * .5 : (rx0 + rx1) / 2;
-    E.f1 = T(tx, fx, 0, '1 + 3800 ÷ 10', {'text-anchor': fa, 'font-size': s1z, style: mono, opacity: .9});
+    E.f1 = T(tx, fx, 0, '1 + 3800 ÷ 10', {'text-anchor': fa, 'font-size': s1z, 'font-weight': 600, style: body, opacity: .9});
     E.f2 = T(tx, fx, 0, '= 381 atm', {'text-anchor': fa, 'font-size': f2z, 'font-weight': 800, style: disp});
-    E.f3 = T(tx, fx, 0, compact ? '≈ 3,800 t / m²' : '≈ 3,800 t on 1 m²', {'text-anchor': fa, 'font-size': s1z, style: mono, fill: YE});
+    E.f3 = T(tx, fx, 0, compact ? '≈ 3,800 t / m²' : '≈ 3,800 t on 1 m²', {'text-anchor': fa, 'font-size': s1z, 'font-weight': 600, style: body, fill: YE});
     const room = compact ? (rx1 - fx) - fs * 5.5 : (rx1 - rx0) - fs * 1.8;
     let w2 = E.f2.getComputedTextLength();
     if (w2 + fs * .8 > room) { f2z = Math.max(fs * 1.3, f2z * room / (w2 + fs * .8)); E.f2.setAttribute('font-size', f2z); w2 = E.f2.getComputedTextLength(); }
@@ -166,11 +150,11 @@
     yy = stack(E.f2, yy + fs * .45);
     const formB = stack(E.f3, yy + fs * .45);
 
-    const e1 = T(tx, 0, 0, 'Eiffel Tower', {'font-size': eSz, style: hand});
-    const e2 = T(tx, 0, 0, '≈ 8,000 t', {'font-size': eSz, style: mono, opacity: .85});
+    const e1 = T(tx, 0, 0, 'Eiffel Tower', {'font-size': eSz, 'font-weight': 600, style: body});
+    const e2 = T(tx, 0, 0, '≈ 8,000 t', {'font-size': eSz, 'font-weight': 600, style: body, opacity: .85});
     const eW = Math.max(e1.getComputedTextLength(), e2.getComputedTextLength());
 
-    // ---------- the 1 m² tile and the Eiffel Tower standing on it ----------
+    // ---------- the 1 m² slab and the Eiffel Tower standing on it ----------
     if (compact) {
       const eTop = formB + fs * .5;
       [e1, e2].forEach(e => e.setAttribute('x', fx));
@@ -196,8 +180,7 @@
     cum = cum.map(v => v / cum[NA]);
 
     const h0 = hw(0);
-    P(g, `M${cx - B - fs * .5},${yB + fs * .05} L${cx + B + fs * .5},${yB + fs * .05} L${cx + B + fs * .05},${yB + fs * 1.05} L${cx - B - fs * .95},${yB + fs * 1.05} Z`, {'stroke-width': 2, fill: 'rgba(244,241,232,.1)', class: 'draw'});
-    P(g, `M${cx - B * .35},${yB + fs * .05} l${-fs * .45},${fs}  M${cx + B * .35},${yB + fs * .05} l${-fs * .45},${fs}`, {'stroke-width': 1, opacity: .45, class: 'draw'});
+    P(g, `M${cx - B - fs * .5},${yB + fs * .05} L${cx + B + fs * .5},${yB + fs * .05} L${cx + B + fs * .05},${yB + fs * 1.05} L${cx - B - fs * .95},${yB + fs * 1.05} Z`, {'stroke-width': 2, style: `fill:${tint(34)}`, class: 'draw'});
 
     let s = '';
     const N = 26;
@@ -207,23 +190,23 @@
     s += ` L${cx + h0 * .6},${yB} Q${cx},${yB - th * .17} ${cx - h0 * .6},${yB} Z`;
     svg.querySelector('#towerShape').setAttribute('d', s);
 
+    Kit.mk('path', {d: s, style: `fill:${tint(16)}`}, g);
     const inT = Kit.mk('g', {'clip-path': 'url(#towerClip)'}, g);
-    Kit.mk('rect', {x: cx - B - 4, y: yT - fs, width: 2 * B + 8, height: th + fs * 2, fill: 'url(#lattice)'}, inT);
     E.fillBase = Kit.mk('rect', {x: cx - B - 4, y: yB, width: 2 * B + 8, height: 0, fill: YE, opacity: .2}, inT);
-    E.fill = Kit.mk('rect', {x: cx - B - 4, y: yB, width: 2 * B + 8, height: 0, fill: 'url(#hatch)'}, inT);
+    E.fill = Kit.mk('rect', {x: cx - B - 4, y: yB, width: 2 * B + 8, height: 0, fill: YE}, inT);
     E.outline = P(g, s, {'stroke-width': 2.3, class: 'draw'});
     [.2, .47, .8].forEach(t => {
       const y = yB - t * th, w = hw(t) + fs * .4;
-      P(g, `M${cx - w},${y} L${cx + w},${y} M${cx - w + fs * .15},${y + fs * .32} L${cx + w - fs * .15},${y + fs * .32}`, {'stroke-width': 1.7, class: 'draw'});
+      P(g, `M${cx - w},${y} L${cx + w},${y} M${cx - w + fs * .15},${y + fs * .32} L${cx + w - fs * .15},${y + fs * .32}`, {'stroke-width': 1.8, class: 'draw'});
     });
-    P(g, `M${cx},${yT - fs * .4} V${yT - fs * 1.2}`, {'stroke-width': 1.4, class: 'draw'});
+    P(g, `M${cx},${yT - fs * .4} V${yT - fs * 1.2}`, {'stroke-width': 1.6, class: 'draw'});
     E.level = P(g, '', {stroke: YE, 'stroke-width': 2.6});
     E.glow = P(g, s, {stroke: YE, 'stroke-width': 3, opacity: 0});
-    fitT(tx, cx - fs * .2, yB + fs * 2.45, '1 m² of hull', {'text-anchor': 'middle', 'font-size': Math.max(12, fs * 1.05), style: hand, fill: PK});
+    fitT(tx, cx - fs * .2, yB + fs * 2.45, '1 m² of hull', {'text-anchor': 'middle', 'font-size': small, 'font-weight': 600, style: body, fill: PK});
 
-    // ---------- the teacher's arrow: from the sub to one square metre of its hull ----------
-    E.tArrow = P(g, '', {stroke: PK, 'stroke-width': 2, opacity: .85});
-    E.tHead = P(g, '', {stroke: PK, 'stroke-width': 2, opacity: .85});
+    // ---------- the pink arrow: from the sub to one square metre of its hull ----------
+    E.tArrow = P(g, '', {stroke: PK, 'stroke-width': 2});
+    E.tHead = P(g, '', {stroke: PK, 'stroke-width': 2});
 
     // ---------- bubbles and the sub, squeezed from every side ----------
     E.bub = Kit.mk('g', {}, g);
@@ -232,10 +215,10 @@
     E.bob = Kit.mk('g', {}, E.subIn);
     E.arrows = [];
     for (let i = 0; i < 8; i++) E.arrows.push(P(E.bob, '', {stroke: YE, 'stroke-width': 2}));
+    P(E.bob, `M${-subRx * .3},${-subRy * .7} L${-subRx * .2},${-subRy - fs * .42} L${subRx * .22},${-subRy - fs * .42} L${subRx * .28},${-subRy * .7}`, {'stroke-width': 1.8, fill: HULL});
     Kit.mk('ellipse', {cx: 0, cy: 0, rx: subRx, ry: subRy, fill: HULL, stroke: CH, 'stroke-width': 2.2}, E.bob);
     P(E.bob, `M${-subRx},0 l${-fs * .45},${-fs * .45} l0,${fs * .9} Z`, {'stroke-width': 1.8, fill: HULL});
-    Kit.mk('circle', {cx: subRx * .55, cy: -fs * .05, r: fs * .28, fill: 'rgba(142,201,224,.35)', stroke: CH, 'stroke-width': 1.6}, E.bob);
-    P(E.bob, `M${-subRx * .55},${-subRy * .55} Q0,${-subRy * 1.05} ${subRx * .3},${-subRy * .7}`, {'stroke-width': 1, opacity: .6});
+    Kit.mk('circle', {cx: subRx * .55, cy: -fs * .05, r: fs * .28, fill: BL, stroke: CH, 'stroke-width': 1.6}, E.bob);
     E.hint = Kit.mk('g', {class: 'hint', opacity: touched ? 0 : 1}, E.sub);
     P(E.hint, `M0,${fs * 1.35} v${fs * 1.3} m${-fs * .38},${-fs * .45} l${fs * .38},${fs * .45} l${fs * .38},${-fs * .45}`, {stroke: YE, 'stroke-width': 2.4});
     if (!Kit.calm) gsap.to(E.bob, {y: fs * .16, duration: 1.6, yoyo: true, repeat: -1, ease: 'sine.inOut'});
@@ -263,15 +246,15 @@
       const r1 = [ux * Math.cos(.55) - uy * Math.sin(.55), ux * Math.sin(.55) + uy * Math.cos(.55)];
       const r2 = [ux * Math.cos(-.55) - uy * Math.sin(-.55), ux * Math.sin(-.55) + uy * Math.cos(-.55)];
       p.setAttribute('d', `M${sx.toFixed(1)},${sy2.toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)} M${(ex + r1[0] * hl).toFixed(1)},${(ey + r1[1] * hl).toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)} L${(ex + r2[0] * hl).toFixed(1)},${(ey + r2[1] * hl).toFixed(1)}`);
-      p.setAttribute('stroke-width', (1.4 + fr * 1.8).toFixed(2));
-      p.setAttribute('opacity', (.45 + fr * .55).toFixed(2));
+      p.setAttribute('stroke-width', (1.6 + fr * 1.8).toFixed(2));
+      p.setAttribute('opacity', (.55 + fr * .45).toFixed(2));
     });
     // Depth labels step aside when the squeezed sub swells past them.
     E.ticks.forEach(({y, e}) => {
       const prox = clamp((Math.abs(y - sy) - fs * .4) / (fs * 1.2), 0, 1);
-      e.setAttribute('opacity', (.82 * (1 - (1 - prox) * Math.min(.85, fr * 1.6))).toFixed(2));
+      e.setAttribute('opacity', (.9 * (1 - (1 - prox) * Math.min(.85, fr * 1.6))).toFixed(2));
     });
-    // The chalk sum.
+    // The sum.
     const tonnes = a * 10, tt = tonnes >= 1000 ? Math.round(tonnes / 100) * 100 : Math.round(tonnes), ts = tt.toLocaleString('en-US');
     E.f1.textContent = `1 + ${Math.round(d)} ÷ 10`;
     E.f2.textContent = `= ${Math.round(a)} atm`;
@@ -282,7 +265,7 @@
     const lw = hw(t) + fs * .55;
     E.level.setAttribute('d', `M${cx - lw},${ly} L${cx + lw},${ly}`);
     E.level.setAttribute('opacity', ff > .01 ? 1 : 0);
-    // The teacher's arrow follows the sub down, then runs along the board to the tile.
+    // The pink arrow follows the sub down, then runs across to the slab.
     const sx = colX + subRx + fs * .6, ex = cx - B - fs * 1.0, ey = yB + fs * .55;
     const c1x = Math.min(sx + fs, ex - fs), c1y = sy + (ey - sy) * .9, c2x = sx + (ex - sx) * .6, c2y = ey;
     E.tArrow.setAttribute('d', `M${sx},${sy} C${c1x},${c1y} ${c2x},${c2y} ${ex},${ey}`);
@@ -310,15 +293,15 @@
     gsap.fromTo(E.ring, {drawSVG: '0%'}, {drawSVG: '100%', duration: .9, ease: 'power3.inOut'});
     gsap.fromTo(E.glow, {drawSVG: '0%', opacity: 1}, {drawSVG: '100%', duration: 1.6, ease: 'power2.inOut', delay: .3, onComplete: () => gsap.to(E.glow, {opacity: 0, duration: .9})});
     gsap.fromTo(E.f2, {scale: 1.25, transformOrigin: '50% 60%'}, {scale: 1, duration: .9, ease: 'elastic.out(1,.45)'});
-    gsap.fromTo([E.fill, E.fillBase], {opacity: .3}, {opacity: i => i ? .2 : 1, duration: .5, ease: 'power2.out', delay: 1.8, repeat: 1, yoyo: true});
+    gsap.fromTo([E.fill, E.fillBase], {opacity: i => i ? .2 : 1}, {opacity: .45, duration: .5, ease: 'power2.out', delay: 1.8, repeat: 1, yoyo: true});
     // The hull creaks.
     gsap.fromTo(E.bob, {x: -1.8}, {x: 1.8, duration: .05, repeat: 11, yoyo: true, ease: 'none', delay: .2, onComplete: () => gsap.set(E.bob, {x: 0})});
-    // Chalk dust knocked off the board.
-    const b = E.f2.getBBox(), dcx = b.x + b.width / 2, dcy = b.y + b.height / 2;
+    // Bubbles squeezed out of the hull.
+    const bx = colX, by = yOf(st.d);
     E.dust.innerHTML = '';
-    for (let i = 0; i < 24; i++) {
-      const c = Kit.mk('circle', {cx: dcx + (Kit.rnd() - .5) * b.width * 1.1, cy: dcy + (Kit.rnd() - .5) * fs * 2, r: .8 + Kit.rnd() * 2.2, fill: i % 3 ? CH : PK, opacity: .9}, E.dust);
-      gsap.to(c, {attr: {cx: '+=' + (Kit.rnd() - .5) * fs * 5, cy: '+=' + (fs * 1.5 + Kit.rnd() * fs * 4)}, opacity: 0, duration: 1.2 + Kit.rnd(), ease: 'power2.out', delay: .5 + Kit.rnd() * .4});
+    for (let i = 0; i < 12; i++) {
+      const c = Kit.mk('circle', {cx: bx + (Kit.rnd() - .5) * subRx * 1.6, cy: by - subRy * .5, r: 1.2 + Kit.rnd() * 2, fill: 'none', stroke: CH, 'stroke-width': 1.2, opacity: .9}, E.dust);
+      gsap.to(c, {attr: {cx: '+=' + (Kit.rnd() - .5) * fs * 2, cy: '-=' + (fs * 1.5 + Kit.rnd() * fs * 3)}, opacity: 0, duration: 1.2 + Kit.rnd(), ease: 'power2.out', delay: .5 + Kit.rnd() * .4});
     }
   }
 
@@ -327,7 +310,7 @@
     if (!built || Kit.calm || document.hidden || !E.bub) return;
     const sy = yOf(st.d);
     if (sy - y0 < fs * 1.6) return;
-    const c = Kit.mk('circle', {cx: colX + (Kit.rnd() - .3) * fs * .8, cy: sy - subRy - fs * .3, r: 1 + Kit.rnd() * 1.7, fill: 'none', stroke: CH, 'stroke-width': 1, opacity: .7}, E.bub);
+    const c = Kit.mk('circle', {cx: colX + (Kit.rnd() - .3) * fs * .8, cy: sy - subRy - fs * .3, r: 1 + Kit.rnd() * 1.7, fill: 'none', stroke: CH, 'stroke-width': 1, opacity: .8}, E.bub);
     const rise = Math.min(fs * (2 + Kit.rnd() * 2.5), sy - y0 - fs * .8);
     gsap.to(c, {attr: {cy: '-=' + rise, cx: '+=' + (Kit.rnd() - .5) * fs}, opacity: 0, duration: 1.6 + Kit.rnd(), ease: 'sine.out', onComplete: () => c.remove()});
   }, 700);

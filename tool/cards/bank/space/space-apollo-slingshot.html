@@ -38,6 +38,7 @@ const add=(a,b)=>({x:a.x+b.x,y:a.y+b.y}), sub=(a,b)=>({x:a.x-b.x,y:a.y-b.y}), mu
 const len=a=>Math.hypot(a.x,a.y), nrm=a=>{const l=len(a)||1;return{x:a.x/l,y:a.y/l}}, rp=u=>({x:-u.y,y:u.x});
 const dot=(a,b)=>a.x*b.x+a.y*b.y, lerp=(a,b,t)=>({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t});
 const mk=(t,a,p)=>Kit.mk(t,a,p);
+const tint=n=>`color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 
 function cr(p){let d=`M${p[0].x},${p[0].y}`;for(let i=0;i<p.length-1;i++){const p0=p[i-1]||p[i],p1=p[i],p2=p[i+1],p3=p[i+2]||p2;
   const c1=add(p1,mul(sub(p2,p0),1/6)),c2=sub(p2,mul(sub(p3,p1),1/6));d+=` C${c1.x},${c1.y} ${c2.x},${c2.y} ${p2.x},${p2.y}`;}return d;}
@@ -56,17 +57,29 @@ function draw(){
   [['mk',getComputedStyle(sv).color||'#111'],['mo',ORANGE]].forEach(([id,c])=>{
     const mm=mk('marker',{id,viewBox:'0 0 10 10',refX:7,refY:5,markerWidth:4,markerHeight:4,orient:'auto-start-reverse'},defs);
     mk('path',{d:'M0,0 L10,5 L0,10 z',style:id==='mk'?'fill:var(--k)':`fill:${ORANGE}`},mm);});
-  // stars
-  let s=7;const rnd=()=>(s=(s*16807)%2147483647)/2147483647;
-  for(let i=0;i<40;i++)mk('circle',{cx:rnd()*W,cy:rnd()*H,r:.6+rnd()*1.1,style:'fill:var(--k)',opacity:.18},sv);
+  const ec=mk('clipPath',{id:'eclip'},defs); mk('circle',{cx:E.x,cy:E.y,r:E.r},ec);
   gPath=mk('g',{},sv);
-  mk('circle',{cx:E.x,cy:E.y,r:E.r,fill:BLUE,style:'stroke:var(--k)','stroke-width':2},sv);
-  label('Earth',{x:E.x,y:E.y},'middle','#fff',sv);
-  mk('circle',{cx:M.x,cy:M.y,r:M.r,fill:'#c9c9c9',style:'stroke:var(--k)','stroke-width':2},sv);
+  // Earth: flat disc with two simple land masses
+  const R=E.r;
+  mk('circle',{cx:E.x,cy:E.y,r:R,style:`fill:${tint(28)}`},sv);
+  const land=mk('g',{'clip-path':'url(#eclip)',style:`fill:${tint(52)}`},sv);
+  mk('path',{d:`M${E.x-1.1*R},${E.y-.55*R} C${E.x-.7*R},${E.y-.95*R} ${E.x-.15*R},${E.y-.85*R} ${E.x-.05*R},${E.y-.5*R} C${E.x+.05*R},${E.y-.2*R} ${E.x-.4*R},${E.y-.15*R} ${E.x-.55*R},${E.y+.1*R} C${E.x-.7*R},${E.y+.35*R} ${E.x-1.1*R},${E.y+.2*R} ${E.x-1.1*R},${E.y-.55*R}z`},land);
+  mk('path',{d:`M${E.x+.25*R},${E.y+.25*R} C${E.x+.55*R},${E.y+.05*R} ${E.x+.95*R},${E.y+.2*R} ${E.x+1.05*R},${E.y+.5*R} C${E.x+.9*R},${E.y+.95*R} ${E.x+.35*R},${E.y+1.05*R} ${E.x+.2*R},${E.y+.75*R} C${E.x+.1*R},${E.y+.55*R} ${E.x+.1*R},${E.y+.35*R} ${E.x+.25*R},${E.y+.25*R}z`},land);
+  mk('circle',{cx:E.x,cy:E.y,r:R,fill:'none',style:'stroke:var(--k)','stroke-width':2},sv);
+  label('Earth',{x:E.x,y:E.y},'middle','#fff',sv).setAttribute('style','fill:var(--k)');
+  // Moon: pale flat disc with a few craters
+  const r=M.r;
+  mk('circle',{cx:M.x,cy:M.y,r,style:`fill:${tint(82)};stroke:var(--k)`,'stroke-width':2},sv);
+  [[-.5,-.5,.2],[.48,.48,.24],[.56,-.42,.13],[-.55,.5,.12]].forEach(([a,b,c])=>
+    mk('circle',{cx:M.x+a*r,cy:M.y+b*r,r:c*r,style:`fill:${tint(66)}`},sv));
   label('Moon',{x:M.x,y:M.y},'middle','#222',sv).setAttribute('font-size',Math.max(12,Math.min(fs,M.r*.62)));
   gDyn=mk('g',{},sv);
   ship=mk('g',{},sv);
-  shipTri=mk('path',{d:`M${G.sw*4},0 L${-G.sw*2.6},${G.sw*2.4} L${-G.sw*1.6},0 L${-G.sw*2.6},${-G.sw*2.4}z`,style:'fill:var(--k)',stroke:'#fff','stroke-width':1},ship);
+  // a small flat Apollo silhouette: service module + command cone, pointing along +x
+  const s=G.sw;
+  mk('rect',{x:-s*2.6,y:-s*1.3,width:s*2.8,height:s*2.6,rx:s*.3,style:'fill:var(--k)'},ship);
+  mk('path',{d:`M${-s*3.4},${-s*.8} L${-s*2.6},${-s*.5} L${-s*2.6},${s*.5} L${-s*3.4},${s*.8}z`,style:'fill:var(--k)'},ship);
+  shipTri=mk('path',{d:`M${s*.4},${-s*1.4} L${s*3.6},${-s*.25} Q${s*4},0 ${s*3.6},${s*.25} L${s*.4},${s*1.4}z`,style:'fill:var(--k)'},ship);
   if(state==='home')drawHome(); else {drawDyn(); placeShip(S,dir0Now());}
 }
 function dir0Now(){return nrm(sub(handle(),G.S));}
@@ -75,15 +88,16 @@ function placeShip(p,u){ship.setAttribute('transform',`translate(${p.x},${p.y}) 
 
 function drawDyn(){
   gDyn.innerHTML='';const {S,T0,rb,d,fs,sw}=G, Hp=handle(), u=nrm(sub(Hp,S));
-  mk('line',{x1:Hp.x,y1:Hp.y,x2:Hp.x+u.x*d*1.15,y2:Hp.y+u.y*d*1.15,style:'stroke:var(--k)','stroke-width':1.5,'stroke-dasharray':'4 6',opacity:.5},gDyn);
-  mk('circle',{cx:T0.x,cy:T0.y,r:rb,fill:'none',stroke:ORANGE,'stroke-width':1.6,'stroke-dasharray':'3 4',opacity:.85},gDyn);
+  mk('line',{x1:Hp.x,y1:Hp.y,x2:Hp.x+u.x*d*1.15,y2:Hp.y+u.y*d*1.15,style:`stroke:${tint(50)}`,'stroke-width':1.5,'stroke-dasharray':'4 6','stroke-linecap':'round'},gDyn);
+  // how far the weak LEM thrusters can push the aim: a flat patch
+  mk('circle',{cx:T0.x,cy:T0.y,r:rb,style:`fill:${tint(16)};stroke:${tint(40)}`,'stroke-width':1.5},gDyn);
   arrow(S,Hp,'var(--k)',sw*1.3,'mk',gDyn).setAttribute('style','stroke:var(--k)');
   if(len(sub(Hp,T0))>4)arrow(T0,Hp,ORANGE,sw*1.2,'mo',gDyn);
   label('LEM thrust',{x:T0.x+rb+6,y:T0.y+rb*.75},'start',ORANGE,gDyn);
   label('Apollo 13',{x:S.x-fs*.7,y:S.y+fs*.4},'end','var(--k)',gDyn).setAttribute('style','fill:var(--k)');
   if(state==='aim'){
     const ring=mk('circle',{id:'ring',cx:Hp.x,cy:Hp.y,r:Math.max(10,G.m*.035),fill:'none',stroke:ORANGE,'stroke-width':2},gDyn);
-    mk('circle',{id:'hdl',cx:Hp.x,cy:Hp.y,r:Math.max(10,G.m*.035),fill:ORANGE,stroke:'#fff','stroke-width':2.5},gDyn);
+    mk('circle',{id:'hdl',cx:Hp.x,cy:Hp.y,r:Math.max(10,G.m*.035),fill:ORANGE,style:'stroke:var(--k)','stroke-width':2.5},gDyn);
     G.ring=ring;
   }
   placeShip(S,u);

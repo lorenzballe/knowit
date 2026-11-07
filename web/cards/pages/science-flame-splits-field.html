@@ -33,12 +33,13 @@ const NS = 'http://www.w3.org/2000/svg';
 const s = {v: 0};
 let on = false, done = false, G = null, T = 0, ticking = false;
 const found = {L: false, R: false};
-const POS = '#d92b3a', NEG = '#1f56d6';
-const INK = '#10100c';
+const POS = '#c8283a', NEG = '#1f4fc4';
+const INK = 'var(--k)';
+const FLAME = '#ee7a1a', CORE = '#ffcf3a', WAX = '#f3ead8';
 let parts = [];
 
 function txt(parent, x, y, str, size, fill, weight, anchor) {
-  const t = Kit.mk('text', {x, y, 'font-size': size, fill, 'font-weight': weight || 700, 'text-anchor': anchor || 'middle', 'font-family': 'var(--body)', 'dominant-baseline': 'middle'}, parent);
+  const t = Kit.mk('text', {x, y, 'font-size': size, 'font-weight': weight || 700, 'text-anchor': anchor || 'middle', 'font-family': 'var(--body)', 'dominant-baseline': 'middle', style: `fill:${fill}`}, parent);
   t.textContent = str; return t;
 }
 
@@ -48,46 +49,53 @@ function build() {
   const fs = Math.max(f, 13);
   const top = Math.max(H * 0.14, fs * 2.6);
   G = {W, H, fs, cx: W / 2, by: H * 0.72, fh: Math.min(H * 0.42, W * 0.5), pw: Math.max(W * 0.028, 7), px: [W * 0.08, W * 0.92], top, bot: H * 0.66};
-  const defs = Kit.mk('defs', {}, svg);
-  const lg = Kit.mk('linearGradient', {id: 'fg', x1: 0, y1: 1, x2: 0, y2: 0}, defs);
-  [['0%', '#2f4fd6'], ['14%', '#ff6a00'], ['55%', '#ff9d00'], ['100%', '#ffc21a']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, lg));
-  const fl = Kit.mk('filter', {id: 'blur', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
-  Kit.mk('feGaussianBlur', {stdDeviation: fs * 0.9}, fl);
+  const sw = Math.max(fs * 0.13, 1.6);
 
-  // plates
+  // plates: two flat metal sheets, coloured by their charge when the field is on
   G.px.forEach((x, i) => {
     const col = i ? POS : NEG;
-    Kit.mk('rect', {x: x - G.pw / 2, y: top, width: G.pw, height: G.bot - top, rx: G.pw / 2, fill: INK, opacity: .35}, svg);
-    Kit.mk('rect', {x: x - G.pw / 2, y: top, width: G.pw, height: G.bot - top, rx: G.pw / 2, fill: col, opacity: 0, class: 'plateglow'}, svg);
-    Kit.mk('circle', {cx: x, cy: top - fs * 1.25, r: fs * 0.95, fill: col}, svg);
+    Kit.mk('rect', {x: x - G.pw / 2, y: top, width: G.pw, height: G.bot - top, rx: G.pw * 0.2, style: 'fill:color-mix(in srgb,var(--k) 45%,var(--c))'}, svg);
+    Kit.mk('rect', {x: x - G.pw / 2, y: top, width: G.pw, height: G.bot - top, rx: G.pw * 0.2, fill: col, opacity: 0, class: 'plateglow'}, svg);
+    Kit.mk('line', {x1: x, y1: top, x2: x, y2: top - fs * 0.4, 'stroke-width': sw, style: 'stroke:var(--k)'}, svg);
+    Kit.mk('circle', {cx: x, cy: top - fs * 1.25, r: fs * 0.95, fill: col, 'stroke-width': sw, style: 'stroke:var(--k)'}, svg);
     txt(svg, x, top - fs * 1.2, i ? '+' : '−', fs * 1.4, '#ffffff', 800);
   });
+
   // candle
   const ct = G.by + G.fh * 0.09, cw = Math.max(W * 0.11, 26);
-  Kit.mk('rect', {x: G.cx - cw / 2, y: ct, width: cw, height: H - ct + fs, rx: cw * 0.15, fill: '#efe6d6', stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1.5}, svg);
-  Kit.mk('ellipse', {cx: G.cx, cy: ct, rx: cw / 2, ry: cw * 0.12, fill: '#fbf5ea', stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1.5}, svg);
-  Kit.mk('line', {x1: G.cx, y1: ct, x2: G.cx, y2: G.by - G.fh * 0.03, stroke: '#2a2420', 'stroke-width': Math.max(fs * 0.18, 2.5), 'stroke-linecap': 'round'}, svg);
-  // flame
-  G.glowL = Kit.mk('path', {fill: '#ff7a1e', opacity: .45, filter: 'url(#blur)'}, svg);
-  G.glowR = Kit.mk('path', {fill: '#ff7a1e', opacity: .45, filter: 'url(#blur)'}, svg);
-  G.L = Kit.mk('path', {fill: 'url(#fg)', opacity: .95, 'data-side': 'L', 'stroke-width': Math.max(fs * 0.16, 2), stroke: 'none'}, svg);
-  G.R = Kit.mk('path', {fill: 'url(#fg)', opacity: .95, 'data-side': 'R', 'stroke-width': Math.max(fs * 0.16, 2), stroke: 'none'}, svg);
-  G.blue = Kit.mk('ellipse', {fill: '#2f4fd6', opacity: .7}, svg);
-  // ions
-  G.pg = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: G.cx - cw / 2, y: ct, width: cw, height: H - ct + fs, rx: cw * 0.08, fill: WAX, 'stroke-width': sw, style: 'stroke:var(--k)'}, svg);
+  // a drip of wax down the front
+  const dx = G.cx + cw * 0.18, dw = cw * 0.14;
+  Kit.mk('path', {d: `M${dx - dw},${ct} V${ct + cw * 0.55} a${dw},${dw} 0 0 0 ${dw * 2},0 V${ct}Z`, fill: '#e6d8bd'}, svg);
+  Kit.mk('line', {x1: G.cx - cw / 2, y1: ct, x2: G.cx + cw / 2, y2: ct, 'stroke-width': sw, style: 'stroke:var(--k)'}, svg);
+  Kit.mk('line', {x1: G.cx, y1: ct, x2: G.cx, y2: G.by - G.fh * 0.03, 'stroke-width': Math.max(fs * 0.18, 2.5), 'stroke-linecap': 'round', style: 'stroke:var(--k)'}, svg);
+
+  // flame: flat outer body with a flat yellow core
+  G.L = Kit.mk('path', {fill: FLAME, 'data-side': 'L', 'stroke-width': Math.max(fs * 0.16, 2), 'stroke-linejoin': 'round'}, svg);
+  G.R = Kit.mk('path', {fill: FLAME, 'data-side': 'R', 'stroke-width': Math.max(fs * 0.16, 2), 'stroke-linejoin': 'round'}, svg);
+  G.cL = Kit.mk('path', {fill: CORE, 'pointer-events': 'none'}, svg);
+  G.cR = Kit.mk('path', {fill: CORE, 'pointer-events': 'none'}, svg);
+
+  // ions: small charged dots marked with their sign
+  G.pg = Kit.mk('g', {'pointer-events': 'none'}, svg);
   parts = [];
   for (let i = 0; i < 30; i++) {
-    const p = {q: i % 2 ? -1 : 1, el: Kit.mk('circle', {r: Math.max(fs * 0.2, 3), fill: i % 2 ? NEG : POS, opacity: 0}, G.pg)};
+    const neg = i % 2;
+    const el = Kit.mk('g', {opacity: 0}, G.pg);
+    Kit.mk('circle', {r: 1, fill: neg ? NEG : POS}, el);
+    Kit.mk('path', {d: neg ? 'M-.5,0H.5' : 'M-.5,0H.5M0,-.5V.5', stroke: '#ffffff', 'stroke-width': .28, 'stroke-linecap': 'round', fill: 'none'}, el);
+    const p = {q: neg ? -1 : 1, el};
     spawn(p, true); parts.push(p);
   }
+
   // labels
   const ly = top + fs * 1.1;
   G.labL = Kit.mk('g', {opacity: found.L ? 1 : 0}, svg);
-  txt(G.labL, W * 0.31, ly, 'Positive ions', fs, POS, 800);
-  txt(G.labL, W * 0.31, ly + fs * 1.4, '← to − plate', fs * 0.92, INK, 600);
+  txt(G.labL, W * 0.31, ly, 'Positive ions', fs, POS, 700);
+  txt(G.labL, W * 0.31, ly + fs * 1.4, '← to − plate', fs, INK, 500);
   G.labR = Kit.mk('g', {opacity: found.R ? 1 : 0}, svg);
-  txt(G.labR, W * 0.69, ly, 'Negative ions', fs, NEG, 800);
-  txt(G.labR, W * 0.69, ly + fs * 1.4, 'to + plate →', fs * 0.92, INK, 600);
+  txt(G.labR, W * 0.69, ly, 'Negative ions', fs, NEG, 700);
+  txt(G.labR, W * 0.69, ly + fs * 1.4, 'to + plate →', fs, INK, 500);
   render(0);
 }
 
@@ -98,12 +106,14 @@ function spawn(p, first) {
   p.vx = 0; p.age = first ? Kit.rnd() : 0;
 }
 
-function lobe(dir, sway) {
+function lobe(dir, sway, k) {
+  k = k || 1;
   const {cx, by, fh, W} = G, v = s.v;
   const bx = cx, byy = by;
-  const tx = cx + dir * v * W * 0.32 + sway * (1 - v), ty = by - fh * (1 - 0.58 * v);
+  const tx0 = cx + dir * v * W * 0.32 + sway * (1 - v), ty0 = by - fh * (1 - 0.58 * v);
+  const tx = bx + (tx0 - bx) * k, ty = byy + (ty0 - byy) * k;
   const dx = tx - bx, dy = ty - byy, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, nx = -uy, ny = ux;
-  const w = fh * 0.24 * (1 - 0.2 * v);
+  const w = fh * 0.24 * (1 - 0.2 * v) * k;
   const p = (a, b) => `${a.toFixed(1)},${b.toFixed(1)}`;
   const c1 = p(bx + nx * w * 1.2 + ux * L * .08, byy + ny * w * 1.2 + uy * L * .08);
   const c2 = p(tx - ux * L * .38 + nx * w * .95, ty - uy * L * .38 + ny * w * .95);
@@ -115,15 +125,13 @@ function lobe(dir, sway) {
 function render(dt) {
   if (!G) return;
   const sway = Kit.calm ? 0 : Math.sin(T * 6.5) * G.fh * 0.025 + Math.sin(T * 11) * G.fh * 0.01;
-  const dl = lobe(-1, sway), dr = lobe(1, sway);
-  G.L.setAttribute('d', dl); G.R.setAttribute('d', dr);
-  G.glowL.setAttribute('d', dl); G.glowR.setAttribute('d', dr);
-  G.L.setAttribute('stroke', found.L ? POS : 'none');
-  G.R.setAttribute('stroke', found.R ? NEG : 'none');
-  const w = G.fh * 0.24;
-  G.blue.setAttribute('cx', G.cx); G.blue.setAttribute('cy', G.by - G.fh * 0.05);
-  G.blue.setAttribute('rx', w * (0.55 + 0.6 * s.v)); G.blue.setAttribute('ry', G.fh * 0.07);
-  document.querySelectorAll('.plateglow').forEach(e => e.setAttribute('opacity', s.v * 0.55));
+  G.L.setAttribute('d', lobe(-1, sway)); G.R.setAttribute('d', lobe(1, sway));
+  G.cL.setAttribute('d', lobe(-1, sway, 0.55)); G.cR.setAttribute('d', lobe(1, sway, 0.55));
+  G.L.style.stroke = found.L ? POS : 'var(--k)';
+  G.R.style.stroke = found.R ? NEG : 'var(--k)';
+  G.L.setAttribute('stroke-width', found.L ? Math.max(G.fs * 0.2, 2.5) : Math.max(G.fs * 0.1, 1.5));
+  G.R.setAttribute('stroke-width', found.R ? Math.max(G.fs * 0.2, 2.5) : Math.max(G.fs * 0.1, 1.5));
+  document.querySelectorAll('.plateglow').forEach(e => e.setAttribute('opacity', s.v));
   const A = G.W * 1.6, up = G.H * 0.16;
   parts.forEach(p => {
     if (dt > 0) {
@@ -133,9 +141,9 @@ function render(dt) {
       if (p.x < G.px[0] + G.pw || p.x > G.px[1] - G.pw || p.y < G.top * 0.6) spawn(p);
     }
     const side = p.q > 0 ? 'L' : 'R';
-    p.el.setAttribute('cx', p.x.toFixed(1)); p.el.setAttribute('cy', p.y.toFixed(1));
-    p.el.setAttribute('opacity', (s.v * Math.min(1, p.age * 3) * (found[side] ? 1 : 0.7)).toFixed(2));
-    p.el.setAttribute('r', Math.max(G.fs * (found[side] ? 0.28 : 0.2), 3));
+    const r = Math.max(G.fs * (found[side] ? 0.34 : 0.26), 4);
+    p.el.setAttribute('transform', `translate(${p.x.toFixed(1)},${p.y.toFixed(1)}) scale(${r.toFixed(2)})`);
+    p.el.setAttribute('opacity', (s.v * Math.min(1, p.age * 3) * (found[side] ? 1 : 0.75)).toFixed(2));
   });
 }
 

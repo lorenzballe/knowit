@@ -32,13 +32,20 @@
 <script>
 const st = {sun: 0, atm: 0, moon: 0};
 let done = false;
-const STARS = Array.from({length: 40}, () => ({x: Kit.rnd(), y: Kit.rnd(), s: .5 + Kit.rnd() * 1.2, o: .3 + Kit.rnd() * .6}));
 const CAP = {
   sun: '<b>The Sun.</b> Its light races towards Earth. Earth blocks it, leaving a cone of shadow behind.',
   atm: '<b>The atmosphere.</b> Light grazing Earth\'s edge crosses the air. It bends (refraction) into the shadow, and the air filters it: only the red gets through.',
   moonDark: '<b>The Moon.</b> It sits inside Earth\'s shadow: the Sun\'s rays can\'t hit it directly. So what lights it?',
   moonRed: '<b>The Moon.</b> No direct sunlight reaches it here. It glows only with the red light bent around Earth.'
 };
+
+// flat palette: ink, card colour, their tints, plus two meaning colours (sunlight, red light)
+const INK = 'var(--k)';
+const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+const SHADE = 'color-mix(in srgb, var(--c) 55%, #08113d)';
+const SUN = '#ffcf45';
+const RED = '#e0523a';
+const RED_DK = '#a8341f';
 
 function draw(fresh) {
   const svg = Kit.$('pic');
@@ -50,86 +57,84 @@ function draw(fresh) {
   const anim = !Kit.calm && fresh;
   const lit = st.sun && st.atm;
 
-  const defs = m('defs', {});
-  const sg = m('radialGradient', {id: 'sg'}, defs);
-  m('stop', {offset: '0%', 'stop-color': '#fff6c8'}, sg);
-  m('stop', {offset: '55%', 'stop-color': '#ffd24a'}, sg);
-  m('stop', {offset: '100%', 'stop-color': '#ffb020', 'stop-opacity': 0}, sg);
-  const flt = m('filter', {id: 'glow', x: '-100%', y: '-100%', width: '300%', height: '300%'}, defs);
-  m('feGaussianBlur', {stdDeviation: Math.max(2, Math.min(W, H) * .012)}, flt);
-
-  STARS.forEach(s => m('circle', {cx: s.x * W, cy: s.y * H, r: s.s, fill: '#fff', opacity: s.o * .7}));
-
   const ey = H / 2, r = Math.min(H * .22, W * .13), ra = r * 1.15;
   const ex = W * .43, sx = W * .1, sunR = r * .62;
   const mx = W * .84, my = ey, mr = r * .4;
 
-  // shadow cone
-  m('polygon', {points: `${ex},${ey - r} ${ex},${ey + r} ${W},${ey + r * .62} ${W},${ey - r * .62}`, fill: '#0b1026', opacity: .5});
+  // Earth's shadow: one flat, darker wedge behind Earth
+  m('polygon', {points: `${ex},${ey - r} ${ex},${ey + r} ${W},${ey + r * .62} ${W},${ey - r * .62}`, style: `fill:${SHADE};opacity:.55`});
 
   const rays = m('g', {});
-  const path = (d, a) => m('path', Object.assign({d, fill: 'none', 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0}, a), rays);
+  const path = (d, a, style) => m('path', Object.assign({d, fill: 'none', 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0, style}, a), rays);
   const grow = (el, delay) => gsap.fromTo(el, {attr: {'stroke-dashoffset': 1}}, {attr: {'stroke-dashoffset': 0}, duration: .8, delay, ease: 'power2.inOut'});
   const sw = Math.max(2, r * .07);
 
   if (st.sun) {
     [-1, 1].forEach(s => {
       const A = [sx + sunR * .6, ey + s * sunR * .55], B = [ex, ey + s * ra * .93];
-      const w = path(`M${A[0]},${A[1]} L${B[0]},${B[1]}`, {stroke: '#fff3c4', 'stroke-width': sw});
+      const w = path(`M${A[0]},${A[1]} L${B[0]},${B[1]}`, {'stroke-width': sw}, `stroke:${SUN}`);
       if (anim && fresh === 'sun') grow(w, 0);
-      // blocked rays hitting Earth
+      // rays stopped by Earth
       const C = [ex - r * .82, ey + s * r * .5];
-      const bl = path(`M${A[0]},${A[1] - s * sunR * .3} L${C[0]},${C[1]}`, {stroke: '#fff3c4', 'stroke-width': sw * .8, opacity: .55});
+      const bl = path(`M${A[0]},${A[1] - s * sunR * .3} L${C[0]},${C[1]}`, {'stroke-width': sw * .8}, `stroke:${SUN};opacity:.6`);
       if (anim && fresh === 'sun') grow(bl, .1);
       if (lit) {
         const dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy), u = [dx / L, dy / L];
         const len = r * .55;
         const d0 = (anim && (fresh === 'atm' || fresh === 'sun')) ? (fresh === 'sun' ? .8 : 0) : 0;
-        [['#bfe0ff', 0], ['#8cf0b0', .5]].forEach(([c, k]) => {
+        // the other colours: scattered away, short and pale
+        [[70, 0], [45, .5]].forEach(([n, k]) => {
           const e = [B[0] + u[0] * len, B[1] + u[1] * len + s * k * r * .12];
-          const st2 = path(`M${B[0]},${B[1]} L${e[0]},${e[1]}`, {stroke: c, 'stroke-width': sw * .8, opacity: .7});
+          const st2 = path(`M${B[0]},${B[1]} L${e[0]},${e[1]}`, {'stroke-width': sw * .7, 'stroke-dasharray': 1}, `stroke:${tint(n)}`);
           if (anim) grow(st2, d0);
         });
+        // red light bent into the shadow
         const M = [mx, my + s * mr * .25];
         const cx1 = ex + (mx - ex) * .35, cy1 = B[1];
-        const red = path(`M${B[0]},${B[1]} Q${cx1},${cy1} ${M[0]},${M[1]}`, {stroke: '#ff5a3c', 'stroke-width': sw * 1.2});
+        const red = path(`M${B[0]},${B[1]} Q${cx1},${cy1} ${M[0]},${M[1]}`, {'stroke-width': sw * 1.2}, `stroke:${RED}`);
         if (anim) grow(red, d0 + .15);
       }
     });
   }
 
-  // Earth + atmosphere
-  const atmRing = m('circle', {cx: ex, cy: ey, r: (r + ra) / 2, fill: 'none', stroke: st.atm ? '#ff9a6c' : '#9cc4ff', 'stroke-width': ra - r + 2, opacity: st.atm ? .65 : .45});
-  if (anim && fresh === 'atm') gsap.from(atmRing, {attr: {stroke: '#9cc4ff'}, opacity: .45, duration: .6});
-  m('circle', {cx: ex, cy: ey, r, fill: '#1546b8'});
-  m('path', {d: `M${ex - r * .5},${ey - r * .5} q${r * .3},${-r * .2} ${r * .5},${r * .1} q${r * .1},${r * .4} ${-r * .3},${r * .5} q${-r * .4},${-r * .1} ${-r * .2},${-r * .6}z`, fill: '#3fa66b', opacity: .9});
-  m('path', {d: `M${ex + r * .1},${ey + r * .2} q${r * .4},${-r * .1} ${r * .55},${r * .25} q${-r * .15},${r * .35} ${-r * .45},${r * .3}z`, fill: '#3fa66b', opacity: .9});
-  m('path', {d: `M${ex},${ey - r} A${r},${r} 0 0 1 ${ex},${ey + r}z`, fill: '#0b1026', opacity: .5});
+  // Earth + atmosphere (a thin band of air around the globe)
+  m('circle', {cx: ex, cy: ey, r: (r + ra) / 2, fill: 'none', 'stroke-width': ra - r + 2, style: `stroke:${tint(40)}`});
+  const atmRed = m('circle', {cx: ex, cy: ey, r: (r + ra) / 2, fill: 'none', 'stroke-width': ra - r + 2, style: `stroke:${RED};opacity:${st.atm ? .85 : 0}`});
+  if (anim && fresh === 'atm') gsap.from(atmRed, {opacity: 0, duration: .6});
+  m('circle', {cx: ex, cy: ey, r, style: `fill:${tint(18)}`});
+  m('path', {d: `M${ex - r * .5},${ey - r * .5} q${r * .3},${-r * .2} ${r * .5},${r * .1} q${r * .1},${r * .4} ${-r * .3},${r * .5} q${-r * .4},${-r * .1} ${-r * .2},${-r * .6}z`, style: `fill:${tint(55)}`});
+  m('path', {d: `M${ex + r * .1},${ey + r * .2} q${r * .4},${-r * .1} ${r * .55},${r * .25} q${-r * .15},${r * .35} ${-r * .45},${r * .3}z`, style: `fill:${tint(55)}`});
+  // night side
+  m('path', {d: `M${ex},${ey - r} A${r},${r} 0 0 1 ${ex},${ey + r}z`, style: `fill:${SHADE};opacity:.6`});
 
-  // Sun
-  m('circle', {cx: sx, cy: ey, r: sunR * 1.6, fill: 'url(#sg)', opacity: .7});
-  m('circle', {cx: sx, cy: ey, r: sunR, fill: '#ffd24a'});
+  // Sun: a flat disc
+  m('circle', {cx: sx, cy: ey, r: sunR, style: `fill:${SUN}`});
 
-  // Moon
-  const halo = m('circle', {cx: mx, cy: my, r: mr * 1.35, fill: '#ff5a3c', filter: 'url(#glow)', opacity: lit ? .55 : 0});
-  const moon = m('circle', {cx: mx, cy: my, r: mr, fill: lit ? '#d4452c' : '#aeb4c6'});
+  // Moon: grey disc, red disc on top when lit
+  const grey = m('g', {});
+  m('circle', {cx: mx, cy: my, r: mr, style: `fill:${tint(70)}`}, grey);
+  m('circle', {cx: mx - mr * .3, cy: my - mr * .25, r: mr * .22, style: `fill:${tint(52)}`}, grey);
+  m('circle', {cx: mx + mr * .35, cy: my + mr * .3, r: mr * .15, style: `fill:${tint(52)}`}, grey);
+  const redMoon = m('g', {style: `opacity:${lit ? 1 : 0}`});
+  const moon = m('circle', {cx: mx, cy: my, r: mr, style: `fill:${RED}`}, redMoon);
+  m('circle', {cx: mx - mr * .3, cy: my - mr * .25, r: mr * .22, style: `fill:${RED_DK}`}, redMoon);
+  m('circle', {cx: mx + mr * .35, cy: my + mr * .3, r: mr * .15, style: `fill:${RED_DK}`}, redMoon);
   if (anim && lit && (fresh === 'atm' || fresh === 'sun')) {
-    gsap.from(moon, {attr: {fill: '#aeb4c6'}, duration: .7, delay: .9});
-    gsap.from(halo, {opacity: 0, duration: .7, delay: .9});
+    gsap.from(redMoon, {opacity: 0, duration: .7, delay: .9});
   }
-  if (anim && fresh === 'moon') gsap.from(moon, {attr: {r: mr * 1.25}, duration: .5, ease: 'back.out(3)'});
+  if (anim && fresh === 'moon') gsap.from([grey, redMoon], {scale: 1.25, svgOrigin: `${mx} ${my}`, duration: .5, ease: 'back.out(3)'});
 
-  // labels
-  const lab = (x, y, t, on) => m('text', {x, y, 'text-anchor': 'middle', fill: on ? '#ffffff' : '#dbe3ff', style: `font:700 ${fs}px var(--body)`}).textContent = t;
+  // labels: body font, sentence case, one size
+  const lab = (x, y, t, on) => m('text', {x, y, 'text-anchor': 'middle', style: `fill:${on ? INK : tint(80)};font:600 ${fs}px var(--body)`}).textContent = t;
   lab(Math.max(sx, fs * 2.2), ey + sunR + fs * 1.5, 'Sun', st.sun);
   lab(ex, ey - ra - fs * .7, 'Atmosphere', st.atm);
   lab(Math.min(mx, W - fs * 2.2), my + mr + fs * 1.6, 'Moon', st.moon);
 
-  // hint rings + hotspots
+  // tap hints + hotspots
   const parts = [['sun', sx, ey, sunR * 1.3], ['atm', ex, ey, ra * 1.12], ['moon', mx, my, Math.max(mr * 1.6, 22)]];
   parts.forEach(([p, x, y, rr]) => {
     if (!st[p]) {
-      const ring = m('circle', {cx: x, cy: y, r: rr, fill: 'none', stroke: '#ffffff', 'stroke-width': 1.5, 'stroke-dasharray': '4 5', opacity: .6});
+      const ring = m('circle', {cx: x, cy: y, r: rr, fill: 'none', 'stroke-width': 1.5, 'stroke-dasharray': '4 5', 'stroke-linecap': 'round', style: `stroke:${INK}`, opacity: .6});
       if (!Kit.calm) gsap.to(ring, {opacity: .15, duration: .9, repeat: -1, yoyo: true, ease: 'sine.inOut'});
     }
   });
