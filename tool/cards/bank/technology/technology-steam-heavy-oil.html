@@ -10,11 +10,12 @@
 #ctrl{display:flex;flex-direction:column;gap:.9cqh;padding-top:1.2cqh}
 .row{display:flex;align-items:center;gap:3cqw}
 .row b{font:700 max(1.9cqh,13px)/1 var(--body);color:var(--k);min-width:12cqw}
-.row .lv{font:700 max(1.7cqh,12px)/1 var(--mono);color:var(--k);min-width:10cqw;text-align:right}
-#steam{flex:1;-webkit-appearance:none;appearance:none;height:max(1.3cqh,8px);border-radius:1cqh;background:linear-gradient(90deg,#5b6b78,#f2a33a 60%,#e2462a);outline:none;margin:0}
-#steam::-webkit-slider-thumb{-webkit-appearance:none;width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:#fff;box-shadow:0 0 0 .35cqh var(--k),0 .4cqh 1cqh rgba(0,0,0,.3);cursor:grab}
-#steam::-moz-range-thumb{width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:#fff;border:.35cqh solid var(--k);cursor:grab}
-#state{font:600 max(1.7cqh,12px)/1.3 var(--mono);color:var(--k);opacity:.85}
+.row .lv{display:inline-block;font:700 max(1.8cqh,12px)/1 var(--body);color:var(--k);min-width:10cqw;text-align:right;text-transform:lowercase}
+.row .lv::first-letter{text-transform:uppercase}
+#steam{flex:1;-webkit-appearance:none;appearance:none;height:max(1.1cqh,7px);border-radius:1cqh;background:color-mix(in srgb, var(--k) 28%, var(--c));outline:none;margin:0}
+#steam::-webkit-slider-thumb{-webkit-appearance:none;width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:#e0532a;border:.35cqh solid var(--k);box-sizing:border-box;cursor:grab}
+#steam::-moz-range-thumb{width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:#e0532a;border:.35cqh solid var(--k);box-sizing:border-box;cursor:grab}
+#state{font:500 max(1.75cqh,12px)/1.3 var(--body);color:var(--k);opacity:.85}
 #why{display:flex;flex-direction:column;gap:1cqh;padding-top:1.2cqh}
 #why .big{font:800 max(2.8cqh,18px)/1.1 var(--display)}
 #why .body{font:500 max(1.75cqh,12px)/1.35 var(--body)}
@@ -55,16 +56,34 @@ const P = [], SAND = [], puffs = [], rising = [];
   for (let i = 0; i < 260; i++) SAND.push({u: Kit.rnd(), v: RES0 + Kit.rnd() * (RES1 - RES0), a: Kit.rnd()});
 })();
 const BANDS = [
-  {v: SURF, a: .006, k: 9, c: '#10100c'},
-  {v: .22, a: .012, k: 5, c: '#10100c'},
-  {v: .32, a: .014, k: 4, c: '#10100c'},
-  {v: .42, a: .01, k: 6, c: '#10100c'},
-  {v: RES0, a: 0, k: 1, c: '#10100c'},
-  {v: RES1, a: 0, k: 1, c: '#10100c'}
+  {v: SURF, a: .006, k: 9},
+  {v: .22, a: .012, k: 5},
+  {v: .32, a: .014, k: 4},
+  {v: .42, a: .01, k: 6},
+  {v: RES0, a: 0, k: 1},
+  {v: RES1, a: 0, k: 1}
 ];
-function lerpC(a, b, t) {
-  const pa = a.match(/\w\w/g).map(h => parseInt(h, 16)), pb = b.match(/\w\w/g).map(h => parseInt(h, 16));
-  return 'rgb(' + pa.map((v, i) => Math.round(v + (pb[i] - v) * t)).join(',') + ')';
+// flat palette: card ink, card colour, their tints, plus heat and sand
+const HEAT = '#e0532a', SANDC = '#ecdcae', GRAIN = '#c9b07a', OIL = '#1d140d', OILWARM = '#7a3b0c';
+const C = {k: '#10100c', c: '#00a0ff', t18: '#2a7fb0', t28: '#2a6f9a', t22: '#2a779f', t50: '#1f4f6a', t40: '#24587a', t65: '#1a3a4c', light: '#d8eefc', font: 'Figtree, sans-serif'};
+function toRgb(s) {
+  if (s.startsWith('color(')) {
+    const n = s.match(/[\d.]+/g).map(Number);
+    return 'rgb(' + n.slice(0, 3).map(v => Math.round(v * 255)).join(',') + ')';
+  }
+  return s;
+}
+function palette() {
+  const card = Kit.$('card'), p = document.createElement('span');
+  p.style.display = 'none'; card.appendChild(p);
+  const f = s => { p.style.color = ''; p.style.color = s; return toRgb(getComputedStyle(p).color); };
+  const mix = n => f(`color-mix(in srgb, var(--k) ${n}%, var(--c))`);
+  C.k = f('var(--k)'); C.c = f('var(--c)');
+  C.t18 = mix(18); C.t22 = mix(24); C.t28 = mix(32); C.t40 = mix(42); C.t50 = mix(55); C.t65 = mix(68);
+  C.light = f('color-mix(in srgb, #fff 72%, var(--c))');
+  p.remove();
+  const b = getComputedStyle(card).getPropertyValue('--body').trim();
+  if (b) C.font = b;
 }
 function step(dt) {
   T += dt;
@@ -102,82 +121,115 @@ function step(dt) {
   }
   if (!done && collected >= 30) finish();
 }
-function band(x, W, H, b) {
-  // strata drawn as contour lines only, no filled ground
+const yAt = (b, u, H) => (b.v + b.a * Math.sin(u * b.k + b.v * 20)) * H;
+function layer(x, W, H, top, bot, fill) {
+  // a stratum filled flat between two boundaries (bot = null means the bottom of the canvas)
   x.beginPath();
-  for (let i = 0; i <= 40; i++) { const u = i / 40; const y = (b.v + b.a * Math.sin(u * b.k + b.v * 20)) * H; i ? x.lineTo(u * W, y) : x.moveTo(0, y); }
-  x.strokeStyle = 'rgba(16,16,12,.6)'; x.lineWidth = 2; x.stroke();
+  for (let i = 0; i <= 40; i++) { const u = i / 40, y = yAt(top, u, H); i ? x.lineTo(u * W, y) : x.moveTo(0, y); }
+  if (bot) for (let i = 40; i >= 0; i--) { const u = i / 40; x.lineTo(u * W, yAt(bot, u, H)); }
+  else { x.lineTo(W, H); x.lineTo(0, H); }
+  x.closePath(); x.fillStyle = fill; x.fill();
+}
+function line(x, W, H, b) {
+  x.beginPath();
+  for (let i = 0; i <= 40; i++) { const u = i / 40, y = yAt(b, u, H); i ? x.lineTo(u * W, y) : x.moveTo(0, y); }
+  x.strokeStyle = C.k; x.lineWidth = 1.5; x.stroke();
 }
 function draw() {
   if (!G) return;
   const {x, W, H} = G, fs = Math.max(12, Math.min(W, H) * .036);
   x.clearRect(0, 0, W, H);
-  BANDS.forEach(b => band(x, W, H, b));
+  x.lineJoin = 'round'; x.lineCap = 'round';
+  // the ground in cross-section, layer by layer
+  layer(x, W, H, BANDS[0], BANDS[1], C.t18);
+  layer(x, W, H, BANDS[1], BANDS[2], C.t28);
+  layer(x, W, H, BANDS[2], BANDS[3], C.t22);
+  layer(x, W, H, BANDS[3], BANDS[4], C.t50);   // cap rock
+  layer(x, W, H, BANDS[4], BANDS[5], SANDC);   // oil sands
+  layer(x, W, H, BANDS[5], null, C.t40);
+  BANDS.forEach(b => line(x, W, H, b));
   // sand grains
-  x.fillStyle = 'rgba(255,236,170,.85)';
-  for (const s of SAND) { x.beginPath(); x.arc(s.u * W, s.v * H, .8 + s.a * 1.2, 0, 7); x.fill(); }
-  // heated zone
+  x.fillStyle = GRAIN;
+  for (const s of SAND) { x.beginPath(); x.arc(s.u * W, s.v * H, .7 + s.a * 1, 0, 7); x.fill(); }
+  // heated zone: a flat warm patch around the steam outlet, hotter at the core
   x.save(); x.beginPath(); x.rect(0, RES0 * H, W, (RES1 - RES0) * H); x.clip();
   if (heat > .01) {
-    const R = heat * .5 * W, g = x.createRadialGradient(INJ.u * W, INJ.v * H, 0, INJ.u * W, INJ.v * H, R);
-    g.addColorStop(0, 'rgba(255,110,30,.75)'); g.addColorStop(.55, 'rgba(255,150,50,.35)'); g.addColorStop(1, 'rgba(255,160,60,0)');
-    x.fillStyle = g; x.fillRect(0, 0, W, H);
+    const R = heat * .5 * W;
+    x.fillStyle = HEAT;
+    x.globalAlpha = .28; x.beginPath(); x.arc(INJ.u * W, INJ.v * H, R, 0, 7); x.fill();
+    x.globalAlpha = .32; x.beginPath(); x.arc(INJ.u * W, INJ.v * H, R * .55, 0, 7); x.fill();
+    x.globalAlpha = 1;
   }
-  // oil blobs
+  // oil blobs: dark and stiff when cold, warm brown and runny when hot
   const br = Math.max(3, Math.min(W, H) * .013);
   for (const p of P) {
     if (p.taken) continue;
-    x.fillStyle = lerpC('1c140e', '7a3b0c', Math.min(1, p.h * 1.3));
-    x.beginPath(); x.ellipse(p.u * W, p.v * H, br * p.s * (1 + p.h * .3), br * p.s * (1 - p.h * .15), 0, 0, 7); x.fill();
-  }
-  for (const q of puffs) {
-    const a = Math.max(0, .8 - q.life / 1.3 * .8);
-    x.fillStyle = `rgba(255,255,255,${a})`;
-    x.beginPath(); x.arc(q.u * W, q.v * H, br * (1 + q.life * 1.6) * q.r, 0, 7); x.fill();
-  }
-  x.restore();
-  // pipes
-  const pw = Math.max(5, W * .02), sy = SURF * H;
-  x.fillStyle = lerpC('4a5560', 'e2462a', steam);
-  x.fillRect(INJ.u * W - pw / 2, sy - H * .03, pw, INJ.v * H - sy + H * .03);
-  x.fillStyle = '#10100c';
-  x.fillRect(PROD.u * W - pw / 2, sy - H * .03, pw, PROD.v * H - sy + H * .03);
-  x.fillStyle = '#111';
-  for (const r of rising) { x.beginPath(); x.arc(PROD.u * W, r.v * H, pw * .38, 0, 7); x.fill(); }
-  // steam outlet ring
-  if (steam > .02) { x.strokeStyle = `rgba(255,255,255,${.5 + .4 * Math.sin(T * 8)})`; x.lineWidth = 2; x.beginPath(); x.arc(INJ.u * W, INJ.v * H, pw * 1.2, 0, 7); x.stroke(); }
-  // surface: boiler and tank
-  const bh = H * .095, by = sy - bh - H * .02, bw = W * .2;
-  const bx = INJ.u * W - pw / 2 - bw - W * .03, tx = PROD.u * W + pw / 2 + W * .03;
-  x.fillStyle = lerpC('4a5560', 'c8452b', steam);
-  x.fillRect(bx + bw, by + bh * .4, INJ.u * W - (bx + bw), pw * .8);
-  x.fillStyle = '#10100c';
-  x.fillRect(PROD.u * W, by + bh * .4, tx - PROD.u * W, pw * .8);
-  x.fillStyle = lerpC('4a5560', 'c8452b', steam); x.fillRect(bx, by, bw, bh);
-  x.fillStyle = '#fff'; x.font = `800 ${fs}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
-  x.fillText('STEAM', bx + bw / 2, by + bh / 2);
-  if (steam > .02) {
-    for (let i = 0; i < 3; i++) {
-      const t = (T * .8 + i / 3) % 1;
-      x.fillStyle = `rgba(255,255,255,${(1 - t) * .8 * steam})`;
-      x.beginPath(); x.arc(bx + bw * .2 + t * 8, by - t * H * .05, 3 + t * 6, 0, 7); x.fill();
+    const rx = br * p.s * (1 + p.h * .3), ry = br * p.s * (1 - p.h * .15);
+    x.fillStyle = OIL;
+    x.beginPath(); x.ellipse(p.u * W, p.v * H, rx, ry, 0, 0, 7); x.fill();
+    if (p.h > .02) {
+      x.globalAlpha = Math.min(1, p.h * 1.3); x.fillStyle = OILWARM;
+      x.beginPath(); x.ellipse(p.u * W, p.v * H, rx, ry, 0, 0, 7); x.fill();
+      x.globalAlpha = 1;
     }
   }
-  x.fillStyle = '#f6f6f2'; x.fillRect(tx, by, bw, bh);
-  const fill = Math.min(1, collected / 40);
-  x.fillStyle = '#16100b'; x.fillRect(tx, by + bh * (1 - fill), bw, bh * fill);
-  x.strokeStyle = '#10100c'; x.lineWidth = 2; x.strokeRect(tx, by, bw, bh);
-  x.fillStyle = fill > .55 ? '#fff' : '#10100c';
-  x.fillText('OIL OUT', tx + bw / 2, by + bh / 2);
-  // labels
-  x.textAlign = 'left'; x.font = `700 ${fs}px sans-serif`;
-  const lab = (t, lx, ly, bg, fg) => {
-    const w = x.measureText(t).width;
-    x.fillStyle = bg; x.beginPath(); x.roundRect ? x.roundRect(lx - 6, ly - fs * .75, w + 12, fs * 1.5, 6) : x.rect(lx - 6, ly - fs * .75, w + 12, fs * 1.5); x.fill();
-    x.fillStyle = fg; x.fillText(t, lx, ly);
+  // steam leaving the injector
+  x.fillStyle = '#fff';
+  for (const q of puffs) {
+    x.globalAlpha = Math.max(0, .7 - q.life / 1.3 * .7);
+    x.beginPath(); x.arc(q.u * W, q.v * H, br * (1 + q.life * 1.6) * q.r, 0, 7); x.fill();
+  }
+  x.globalAlpha = 1;
+  x.restore();
+  // wells
+  const pw = Math.max(5, W * .02), sy = SURF * H;
+  const ix = INJ.u * W - pw / 2, iy = sy - H * .03, ih = INJ.v * H - sy + H * .03;
+  x.fillStyle = C.t65; x.fillRect(ix, iy, pw, ih);
+  if (steam > .01) { x.globalAlpha = steam; x.fillStyle = HEAT; x.fillRect(ix, iy, pw, ih); x.globalAlpha = 1; }
+  const px0 = PROD.u * W - pw / 2, ph = PROD.v * H - sy + H * .03;
+  x.fillStyle = C.light; x.fillRect(px0, iy, pw, ph);
+  x.strokeStyle = C.k; x.lineWidth = 2; x.strokeRect(px0, iy, pw, ph);
+  x.fillStyle = OIL;
+  for (const r of rising) { x.beginPath(); x.arc(PROD.u * W, r.v * H, pw * .32, 0, 7); x.fill(); }
+  // surface: steam plant and storage tank
+  const bh = H * .095, by = sy - bh - H * .02, bw = W * .2;
+  const bx = INJ.u * W - pw / 2 - bw - W * .03, tx = PROD.u * W + pw / 2 + W * .03;
+  const hot = (fx, fy, fw, fh) => {
+    x.fillStyle = C.t65; x.fillRect(fx, fy, fw, fh);
+    if (steam > .01) { x.globalAlpha = steam; x.fillStyle = HEAT; x.fillRect(fx, fy, fw, fh); x.globalAlpha = 1; }
   };
-  lab('Cap rock', W * .04, (.42 + RES0) / 2 * H + H * .01, 'rgba(16,16,12,.8)', '#fff');
-  lab('Extra-heavy oil sands', W * .04, RES1 * H - fs * 1.2, 'rgba(255,248,230,.9)', '#2a1e12');
+  hot(bx + bw, by + bh * .4, INJ.u * W - (bx + bw), pw * .8);
+  x.fillStyle = C.k;
+  x.fillRect(PROD.u * W, by + bh * .4, tx - PROD.u * W, pw * .8);
+  // plant: a low shed with a chimney
+  const chx = bx + bw * .14, chw = bw * .12, chh = bh * .45;
+  hot(chx, by - chh, chw, chh);
+  hot(bx, by, bw, bh);
+  x.strokeStyle = C.k; x.lineWidth = 2;
+  x.strokeRect(chx, by - chh, chw, chh); x.strokeRect(bx, by, bw, bh);
+  x.fillStyle = '#fff'; x.font = `700 ${fs}px ${C.font}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillText('Steam', bx + bw / 2, by + bh / 2);
+  if (steam > .02) {
+    x.fillStyle = '#fff';
+    for (let i = 0; i < 3; i++) {
+      const t = (T * .8 + i / 3) % 1;
+      x.globalAlpha = (1 - t) * .8 * steam;
+      x.beginPath(); x.arc(chx + chw / 2 + t * 8, by - chh - 2 - t * H * .05, 3 + t * 6, 0, 7); x.fill();
+    }
+    x.globalAlpha = 1;
+  }
+  // tank: a flat cylinder that fills with oil
+  const fill = Math.min(1, collected / 40), lid = Math.min(bh * .14, bw * .1);
+  x.fillStyle = C.light; x.fillRect(tx, by, bw, bh);
+  x.fillStyle = OIL; x.fillRect(tx, by + bh * (1 - fill), bw, bh * fill);
+  x.strokeStyle = C.k; x.lineWidth = 2; x.strokeRect(tx, by, bw, bh);
+  x.fillStyle = C.light; x.beginPath(); x.ellipse(tx + bw / 2, by, bw / 2, lid, 0, 0, 7); x.fill(); x.stroke();
+  x.fillStyle = fill > .55 ? '#fff' : C.k;
+  x.fillText('Oil out', tx + bw / 2, by + bh / 2);
+  // labels, written on the layers they name
+  x.textAlign = 'left'; x.font = `600 ${fs}px ${C.font}`; x.fillStyle = SANDC;
+  x.fillText('Cap rock', W * .04, (.42 + RES0) / 2 * H + H * .01);
+  x.fillText('Extra-heavy oil sands', W * .04, (RES1 + 1) / 2 * H);
 }
 function tick() { step(Math.min(.05, gsap.ticker.deltaRatio() / 60)); draw(); }
 gsap.ticker.add(tick);
@@ -201,7 +253,7 @@ function finish() {
   Kit.haptic('success');
   if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
 }
-Kit.onShow.card = () => { G = Kit.fitCanvas(cv); draw(); };
+Kit.onShow.card = () => { palette(); G = Kit.fitCanvas(cv); draw(); };
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cv', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   const s = Kit.$('steam'); s.value = 100; s.dispatchEvent(new Event('input', {bubbles: true}));

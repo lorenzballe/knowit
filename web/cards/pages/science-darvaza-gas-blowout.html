@@ -41,6 +41,11 @@ const CAP = [
   ''
 ];
 
+// palette: ink, card colour, one earth colour (sand) mixed with ink, one gas colour
+const SAND = '#dcab62', GAS = '#8fc6ea';
+const earth = n => `color-mix(in srgb, var(--k) ${n}%, ${SAND})`;
+const st = o => Object.entries(o).map(([k, v]) => `${k}:${v}`).join(';');
+
 function draw() {
   const svg = Kit.$('pic'); svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
@@ -49,47 +54,56 @@ function draw() {
   const roofBot = cy - ry * .45;
   const roofPts = `${cx - rx * .62},${gy} ${cx + rx * .62},${gy} ${cx + rx * .86},${roofBot} ${cx - rx * .86},${roofBot}`;
   Object.assign(E, {W, H, gy, cx, cy, rx, ry, roofBot});
+  const sw = Math.max(2, W * .006);
+  const label = (x, y, txt, col, g, extra = {}) => {
+    const t = Kit.mk('text', Object.assign({x, y, 'font-size': fs, style: st({'font-family': 'var(--body)', 'font-weight': 600, fill: col})}, extra), g);
+    t.textContent = txt; return t;
+  };
 
-  // sky: none, the drawing sits on the card; a few ink specks as stars
   const defs = Kit.mk('defs', {}, svg);
-  for (let i = 0; i < 18; i++) Kit.mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * gy * .7, r: .8 + Kit.rnd(), fill: '#10100c', opacity: .35}, svg);
 
-  // strata
-  const strata = [[gy, gy + H * .1, '#e2b46c'], [gy + H * .1, gy + H * .24, '#bd7d47'], [gy + H * .24, gy + H * .38, '#8f5934'], [gy + H * .38, H, '#5b3823']];
-  const layers = g => strata.forEach(([a, b, c]) => Kit.mk('rect', {x: 0, y: a, width: W, height: b - a, fill: c}, g));
+  // strata: a cross-section of desert ground, sand on top, darker rock below
+  const strata = [[gy, gy + H * .1, earth(0)], [gy + H * .1, gy + H * .24, earth(18)], [gy + H * .24, gy + H * .38, earth(34)], [gy + H * .38, H, earth(52)]];
+  const layers = g => strata.forEach(([a, b, c]) => Kit.mk('rect', {x: 0, y: a, width: W, height: b - a + .5, style: st({fill: c})}, g));
   layers(svg);
-  Kit.mk('text', {x: W * .04, y: gy + H * .07, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: '#5b3823'}, svg).textContent = 'sand';
-  Kit.mk('text', {x: W * .04, y: gy + H * .32, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: '#f2dcc0'}, svg).textContent = 'rock';
+  // the desert surface, drawn as one plain ink line either side of the drill site
+  Kit.mk('path', {d: `M0,${gy} L${cx - rx * .62},${gy} M${cx + rx * .62},${gy} L${W},${gy}`, style: st({stroke: 'var(--k)', 'stroke-width': sw, fill: 'none'})}, svg);
+  label(W * .04, gy + H * .07, 'sand', 'var(--k)', svg);
+  label(W * .04, gy + H * .32, 'rock', earth(0), svg);
 
-  // the void (hidden behind roof and gas)
-  Kit.mk('polygon', {points: roofPts, fill: '#21140c'}, svg);
-  Kit.mk('ellipse', {cx, cy, rx, ry, fill: '#1a0f09'}, svg);
+  // the void (shown once the ground starts to crack)
+  E.hole = Kit.mk('g', {opacity: step >= 2 ? 1 : 0}, svg);
+  Kit.mk('polygon', {points: roofPts, style: st({fill: earth(82)})}, E.hole);
+  Kit.mk('ellipse', {cx, cy, rx, ry, style: st({fill: earth(88)})}, svg);
 
-  // rubble at the bottom (end state)
+  // rubble at the bottom (end state): broken ground and the wrecked rig
   E.rubble = Kit.mk('g', {opacity: step >= 3 ? 1 : 0}, svg);
   let rp = `${cx - rx * .9},${cy + ry * .35} `;
   for (let i = 0; i <= 10; i++) rp += `${cx - rx * .85 + i * rx * .17},${cy + ry * (.05 - Kit.rnd() * .45)} `;
   rp += `${cx + rx * .9},${cy + ry * .35} ${cx},${cy + ry}`;
-  Kit.mk('polygon', {points: rp, fill: '#a0663b'}, E.rubble);
-  for (let i = 0; i < 7; i++) Kit.mk('circle', {cx: cx - rx * .6 + Kit.rnd() * rx * 1.2, cy: cy + ry * (Kit.rnd() * .5), r: 2 + Kit.rnd() * W * .012, fill: '#d7a56a'}, E.rubble);
-  Kit.mk('path', {d: `M${cx - rx * .3},${cy + ry * .2} l${rx * .22},${-ry * .5} l${rx * .14},${ry * .45}`, stroke: '#cfd6e2', 'stroke-width': Math.max(2, W * .006), fill: 'none'}, E.rubble);
-
-  // gas
-  E.gas = Kit.mk('g', {opacity: step >= 2 ? 0 : 1}, svg);
-  Kit.mk('ellipse', {cx, cy, rx, ry, fill: '#7fc4ff'}, E.gas);
-  for (let i = 0; i < 22; i++) {
-    const a = Kit.rnd() * 6.28, r = Math.sqrt(Kit.rnd()) * .8;
-    Kit.mk('circle', {cx: cx + Math.cos(a) * rx * r, cy: cy + Math.sin(a) * ry * r, r: Math.max(2, W * .008), fill: '#e8f6ff', opacity: .8}, E.gas);
+  Kit.mk('polygon', {points: rp, style: st({fill: earth(26)})}, E.rubble);
+  for (let i = 0; i < 6; i++) {
+    const x = cx - rx * .6 + Kit.rnd() * rx * 1.2, y = cy + ry * (Kit.rnd() * .5), s = 3 + Kit.rnd() * W * .014;
+    Kit.mk('polygon', {points: `${x - s},${y + s * .5} ${x - s * .3},${y - s * .7} ${x + s},${y - s * .2} ${x + s * .6},${y + s * .6}`, style: st({fill: earth(8)})}, E.rubble);
   }
-  Kit.mk('text', {x: cx, y: cy + fs * .35, 'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, fill: '#0d2a45'}, E.gas).textContent = 'gas under pressure';
+  Kit.mk('path', {d: `M${cx - rx * .3},${cy + ry * .2} l${rx * .22},${-ry * .5} l${rx * .14},${ry * .45} M${cx - rx * .19},${cy - ry * .05} l${rx * .17},${ry * .02}`, style: st({stroke: 'var(--k)', 'stroke-width': sw, fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'})}, E.rubble);
 
-  // roof
+  // gas pocket, with small arrows for the pressure pushing up
+  E.gas = Kit.mk('g', {opacity: step >= 2 ? 0 : 1}, svg);
+  Kit.mk('ellipse', {cx, cy, rx, ry, style: st({fill: GAS})}, E.gas);
+  const aw = Math.max(5, W * .016);
+  [[cx - rx * .76, cy + ry * .1], [cx + rx * .76, cy + ry * .1], [cx - rx * .3, cy + ry * .62], [cx + rx * .3, cy + ry * .62]].forEach(([x, y]) =>
+    Kit.mk('path', {d: `M${x},${y + aw * 1.3} L${x},${y - aw * .6} M${x - aw * .7},${y + aw * .1} L${x},${y - aw * .7} L${x + aw * .7},${y + aw * .1}`, style: st({stroke: 'var(--k)', 'stroke-width': sw * .8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'})}, E.gas));
+  label(cx, cy + fs * .35, 'gas under pressure', 'var(--k)', E.gas, {'text-anchor': 'middle'});
+
+  // roof: the block of ground above the pocket
   const clip = Kit.mk('clipPath', {id: 'roofc'}, defs);
   Kit.mk('polygon', {points: roofPts}, clip);
   E.roof = Kit.mk('g', {}, svg);
   const rin = Kit.mk('g', {'clip-path': 'url(#roofc)'}, E.roof);
   layers(rin);
-  E.cracks = Kit.mk('g', {opacity: step >= 2 ? 1 : 0, stroke: '#1a0f09', 'stroke-width': Math.max(2, W * .006), fill: 'none', 'stroke-linecap': 'round'}, E.roof);
+  Kit.mk('line', {x1: cx - rx * .62, y1: gy, x2: cx + rx * .62, y2: gy, style: st({stroke: 'var(--k)', 'stroke-width': sw})}, E.roof);
+  E.cracks = Kit.mk('g', {opacity: step >= 2 ? 1 : 0, style: st({stroke: 'var(--k)', 'stroke-width': sw, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'})}, E.roof);
   Kit.mk('path', {d: `M${cx - rx * .62},${gy} l${rx * .05},${(roofBot - gy) * .3} l${-rx * .06},${(roofBot - gy) * .3} l${rx * .1},${(roofBot - gy) * .4}`}, E.cracks);
   Kit.mk('path', {d: `M${cx + rx * .62},${gy} l${-rx * .06},${(roofBot - gy) * .35} l${rx * .08},${(roofBot - gy) * .3} l${rx * .08},${(roofBot - gy) * .35}`}, E.cracks);
   Kit.mk('path', {d: `M${cx - rx * .2},${roofBot} l${rx * .1},${-(roofBot - gy) * .3} l${rx * .15},${-(roofBot - gy) * .15}`}, E.cracks);
@@ -97,16 +111,15 @@ function draw() {
 
   // pipe
   E.py = cy - ry * .6;
-  E.pipe = Kit.mk('line', {x1: cx, y1: gy - 2, x2: cx, y2: step >= 1 ? E.py : gy + H * .05, stroke: '#cfd6e2', 'stroke-width': Math.max(3, W * .01), 'stroke-linecap': 'round', opacity: step >= 3 ? 0 : 1}, svg);
+  E.pipe = Kit.mk('line', {x1: cx, y1: gy - 2, x2: cx, y2: step >= 1 ? E.py : gy + H * .05, style: st({stroke: 'var(--k)', 'stroke-width': Math.max(3, W * .009), 'stroke-linecap': 'round'}), opacity: step >= 3 ? 0 : 1}, svg);
 
-  // rig
+  // rig: a plain ink derrick on a deck
   const h = H * .19, w = W * .075;
   const rigO = Kit.mk('g', {transform: `translate(${cx},${gy})`}, svg);
   E.rig = Kit.mk('g', {}, rigO);
-  const sw = Math.max(2, W * .006);
-  Kit.mk('path', {d: `M${-w},0 L${-w * .15},${-h} L${w * .15},${-h} L${w},0 M${-w * .72},${-h * .3} L${w * .72},${-h * .3} M${-w * .45},${-h * .6} L${w * .45},${-h * .6} M${-w * .72},${-h * .3} L${w * .45},${-h * .6} M${w * .72},${-h * .3} L${-w * .45},${-h * .6}`, stroke: '#10100c', 'stroke-width': sw, fill: 'none', 'stroke-linejoin': 'round'}, E.rig);
-  Kit.mk('rect', {x: -w * 1.4, y: -h * .08, width: w * 2.8, height: h * .08, rx: 2, fill: '#ff8a3d'}, E.rig);
-  Kit.mk('rect', {x: -w * .3, y: -h * 1.08, width: w * .6, height: h * .08, fill: '#ff8a3d'}, E.rig);
+  Kit.mk('path', {d: `M${-w},0 L${-w * .15},${-h} L${w * .15},${-h} L${w},0 M${-w * .72},${-h * .3} L${w * .72},${-h * .3} M${-w * .45},${-h * .6} L${w * .45},${-h * .6} M${-w * .72},${-h * .3} L${w * .45},${-h * .6} M${w * .72},${-h * .3} L${-w * .45},${-h * .6}`, style: st({stroke: 'var(--k)', 'stroke-width': sw, fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'})}, E.rig);
+  Kit.mk('rect', {x: -w * 1.4, y: -h * .08, width: w * 2.8, height: h * .08, style: st({fill: 'var(--k)'})}, E.rig);
+  Kit.mk('rect', {x: -w * .3, y: -h * 1.08, width: w * .6, height: h * .08, style: st({fill: 'var(--k)'})}, E.rig);
   if (step >= 3) gsap.set(E.rig, {opacity: 0});
 
   E.fx = Kit.mk('g', {}, svg);
@@ -116,7 +129,7 @@ function draw() {
   if (step < 3) {
     const [tx, ty] = targets[step], r = Math.max(26, Math.min(W, H) * .085);
     const hs = Kit.mk('g', {class: 'hit'}, svg);
-    E.ring = Kit.mk('circle', {cx: tx, cy: ty, r, fill: 'none', stroke: step === 0 ? '#10100c' : '#fff', 'stroke-width': Math.max(2.5, W * .007), 'stroke-dasharray': '6 5'}, hs);
+    E.ring = Kit.mk('circle', {cx: tx, cy: ty, r, style: st({fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2.5, W * .007), 'stroke-dasharray': '6 5'})}, hs);
     Kit.mk('circle', {cx: tx, cy: ty, r: r * 1.15, fill: 'transparent'}, hs);
     hs.addEventListener('click', advance);
     E.hs = hs;
@@ -141,11 +154,12 @@ function advance() {
     step = 2; setText();
     const tl = gsap.timeline({onComplete: done});
     for (let i = 0; i < 26; i++) {
-      const c = Kit.mk('circle', {cx: E.cx + (Kit.rnd() - .5) * 10, cy: E.py, r: Math.max(2.5, E.W * .012), fill: '#bfe3ff'}, E.fx);
+      const c = Kit.mk('circle', {cx: E.cx + (Kit.rnd() - .5) * 10, cy: E.py, r: Math.max(2.5, E.W * .012), style: st({fill: GAS})}, E.fx);
       tl.to(c, {attr: {cy: -10, cx: E.cx + (Kit.rnd() - .5) * E.W * .5}, opacity: 0, duration: d(1.1), ease: 'power2.out'}, d(i * .04));
     }
     tl.to(E.gas, {opacity: 0, duration: d(1.2)}, 0);
     tl.to(E.cracks, {opacity: 1, duration: d(.4)}, d(.7));
+    tl.to(E.hole, {opacity: 1, duration: d(.4)}, d(.7));
     tl.to(E.roof, {x: 2, repeat: 7, yoyo: true, duration: d(.05)}, d(.8));
   } else {
     step = 3; setText();

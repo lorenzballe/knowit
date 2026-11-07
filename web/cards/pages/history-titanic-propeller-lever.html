@@ -40,6 +40,11 @@ const rad = d => d * Math.PI / 180;
 const rot = (p, d) => { const t = rad(d), c = Math.cos(t), s = Math.sin(t); return [p[0]*c - p[1]*s, p[0]*s + p[1]*c]; };
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
+// Flat palette: ink, card colour tints, and two meaning colours (sea blue, hull red)
+const INK = 'var(--k)';
+const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+const SEA = '#1f4f6e', RED = '#b8321f', PAPER = '#f4eedf';
+
 function build() {
   const svg = Kit.$('sea');
   while (svg.firstChild) svg.removeChild(svg.firstChild);
@@ -51,72 +56,66 @@ function build() {
   const Bx = W / 2, By = waterY;
   const m = (t, a, p) => Kit.mk(t, a, p);
 
-  const defs = m('defs', {}, svg);
-  const glow = m('radialGradient', {id: 'glow'}, defs);
-  m('stop', {offset: 0, 'stop-color': '#fff3c4', 'stop-opacity': 1}, glow);
-  m('stop', {offset: .5, 'stop-color': '#d92b14', 'stop-opacity': .6}, glow);
-  m('stop', {offset: 1, 'stop-color': '#d92b14', 'stop-opacity': 0}, glow);
-
-  for (let i = 0; i < 40; i++) m('circle', {cx: Kit.rnd()*W, cy: Kit.rnd()*waterY*0.9, r: .5 + Kit.rnd()*1.1, fill: '#10100c', opacity: .12 + Kit.rnd()*.25}, svg);
-
   const ship = m('g', {}, svg);
   // Bow half
   const bow = m('g', {}, ship);
-  m('path', {d: `M${-L/2},${-0.8*h} L0,${-0.7*h} L0,${0.3*h} L${-L/2+0.07*L},${0.3*h} Q${-L/2+0.02*L},${0.1*h} ${-L/2},${-0.8*h}Z`, fill: '#0c0c10', stroke: '#10100c', 'stroke-width': 1}, bow);
-  m('rect', {x: -L/2+0.08*L, y: 0.14*h, width: L/2-0.08*L, height: 0.16*h, fill: '#a3242a'}, bow);
-  m('rect', {x: -0.38*L, y: -1.05*h, width: 0.38*L, height: 0.35*h, fill: '#f2eee2'}, bow);
+  m('path', {d: `M${-L/2},${-0.8*h} L0,${-0.7*h} L0,${0.3*h} L${-L/2+0.07*L},${0.3*h} Q${-L/2+0.02*L},${0.1*h} ${-L/2},${-0.8*h}Z`, style: `fill:${INK};stroke:${INK};stroke-width:1;stroke-linejoin:round`}, bow);
+  m('rect', {x: -L/2+0.08*L, y: 0.14*h, width: L/2-0.08*L, height: 0.16*h, style: `fill:${RED}`}, bow);
+  m('rect', {x: -0.38*L, y: -1.05*h, width: 0.38*L, height: 0.35*h, style: `fill:${PAPER};stroke:${INK};stroke-width:1.2`}, bow);
   for (const x of [-0.32, -0.19, -0.06]) {
-    m('rect', {x: x*L, y: -1.95*h, width: 0.045*L, height: 0.9*h, fill: '#b8431b'}, bow);
-    m('rect', {x: x*L, y: -1.95*h, width: 0.045*L, height: 0.22*h, fill: '#111'}, bow);
+    m('rect', {x: x*L, y: -1.95*h, width: 0.045*L, height: 0.9*h, style: `fill:${tint(28)};stroke:${INK};stroke-width:1.2`}, bow);
+    m('rect', {x: x*L, y: -1.95*h, width: 0.045*L, height: 0.22*h, style: `fill:${INK}`}, bow);
   }
   // Stern half
   const stern = m('g', {}, ship);
   const px = L/2 - 0.1*L, py = 0.45*h, pr = 0.34*h;
-  m('line', {x1: L/2-0.22*L, y1: 0.28*h, x2: px, y2: py, stroke: '#555', 'stroke-width': 2}, stern);
-  m('path', {d: `M0,${-0.7*h} L${L/2-0.03*L},${-0.7*h} Q${L/2},${-0.4*h} ${L/2-0.05*L},${0.1*h} L${L/2-0.1*L},${0.3*h} L0,${0.3*h}Z`, fill: '#0c0c10', stroke: '#10100c', 'stroke-width': 1}, stern);
-  m('rect', {x: 0, y: 0.14*h, width: L/2-0.11*L, height: 0.16*h, fill: '#a3242a'}, stern);
-  m('rect', {x: 0, y: -1.05*h, width: 0.26*L, height: 0.35*h, fill: '#f2eee2'}, stern);
-  m('rect', {x: 0.09*L, y: -1.95*h, width: 0.045*L, height: 0.9*h, fill: '#b8431b'}, stern);
-  m('rect', {x: 0.09*L, y: -1.95*h, width: 0.045*L, height: 0.22*h, fill: '#111'}, stern);
-  m('rect', {x: L/2-0.075*L, y: 0.05*h, width: 0.03*L, height: 0.55*h, fill: '#2a2a30'}, stern);
+  m('line', {x1: L/2-0.22*L, y1: 0.28*h, x2: px, y2: py, style: `stroke:${INK};stroke-width:2;stroke-linecap:round`}, stern);
+  m('path', {d: `M0,${-0.7*h} L${L/2-0.03*L},${-0.7*h} Q${L/2},${-0.4*h} ${L/2-0.05*L},${0.1*h} L${L/2-0.1*L},${0.3*h} L0,${0.3*h}Z`, style: `fill:${INK};stroke:${INK};stroke-width:1;stroke-linejoin:round`}, stern);
+  m('rect', {x: 0, y: 0.14*h, width: L/2-0.11*L, height: 0.16*h, style: `fill:${RED}`}, stern);
+  m('rect', {x: 0, y: -1.05*h, width: 0.26*L, height: 0.35*h, style: `fill:${PAPER};stroke:${INK};stroke-width:1.2`}, stern);
+  m('rect', {x: 0.09*L, y: -1.95*h, width: 0.045*L, height: 0.9*h, style: `fill:${tint(28)};stroke:${INK};stroke-width:1.2`}, stern);
+  m('rect', {x: 0.09*L, y: -1.95*h, width: 0.045*L, height: 0.22*h, style: `fill:${INK}`}, stern);
+  m('rect', {x: L/2-0.075*L, y: 0.05*h, width: 0.03*L, height: 0.55*h, style: `fill:${INK}`}, stern);
+  // Three bronze propellers, drawn flat as three blades each
   const props = m('g', {}, stern);
+  const blade = `M0,0 C${pr*0.35},${-pr*0.25} ${pr*0.3},${-pr*0.85} 0,${-pr} C${-pr*0.3},${-pr*0.85} ${-pr*0.25},${-pr*0.3} 0,0Z`;
   for (const [dx, dy] of [[-0.035*L, -0.05*h], [0, 0.08*h], [0.035*L, -0.05*h]]) {
     const g = m('g', {transform: `translate(${px+dx},${py+dy})`}, props);
-    m('ellipse', {cx: 0, cy: 0, rx: pr*0.35, ry: pr, fill: '#f2eee2', stroke: '#6b4a12', 'stroke-width': .8}, g);
-    m('ellipse', {cx: 0, cy: 0, rx: pr, ry: pr*0.35, fill: '#f2eee2', stroke: '#6b4a12', 'stroke-width': .8}, g);
-    m('circle', {cx: 0, cy: 0, r: pr*0.2, fill: '#6b4a12'}, g);
+    for (const ang of [0, 120, 240]) m('path', {d: blade, transform: `rotate(${ang + 15})`, style: `fill:${tint(42)};stroke:${INK};stroke-width:1;stroke-linejoin:round`}, g);
+    m('circle', {cx: 0, cy: 0, r: pr*0.2, style: `fill:${INK}`}, g);
   }
-  const ring = m('circle', {cx: px, cy: py, r: pr*2.1, fill: 'none', stroke: '#10100c', 'stroke-width': 2, 'stroke-dasharray': '4 3', opacity: 0}, stern);
+  const ring = m('circle', {cx: px, cy: py, r: pr*2.1, opacity: 0, style: `fill:none;stroke:${INK};stroke-width:1.6`}, stern);
   // Crack at the joint
-  const crack = m('path', {d: `M0,${-0.7*h} l${h*0.12},${h*0.2} l${-h*0.18},${h*0.2} l${h*0.15},${h*0.22} l${-h*0.1},${h*0.2}`, fill: 'none', stroke: '#d92b14', 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: 0}, ship);
+  const crack = m('path', {d: `M0,${-0.7*h} l${h*0.12},${h*0.2} l${-h*0.18},${h*0.2} l${h*0.15},${h*0.22} l${-h*0.1},${h*0.2}`, opacity: 0, style: `fill:none;stroke:${RED};stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round`}, ship);
 
-  const sGlow = m('circle', {r: h*1.6, fill: 'url(#glow)', opacity: 0}, svg);
+  // Stress at the joint: a flat, quiet patch of red
+  const sGlow = m('circle', {r: h*1.2, opacity: 0, style: `fill:${RED};fill-opacity:.28`}, svg);
 
-  // Water over the hull
-  m('rect', {x: 0, y: waterY, width: W, height: H-waterY, fill: '#0a4a74'}, svg);
+  // Sea over the hull: one flat shape with a soft, hand-drawn wave edge
   let wd = `M0,${waterY}`;
-  for (let x = 0; x <= W; x += 12) wd += ` L${x},${waterY + Math.sin(x/9)*1.6}`;
-  m('path', {d: wd, fill: 'none', stroke: '#7fd3ff', 'stroke-width': 1.6, opacity: .9}, svg);
+  for (let x = 0; x <= W + 12; x += 12) wd += ` L${Math.min(x, W)},${waterY + Math.sin(x/14)*2}`;
+  wd += ` L${W},${H} L0,${H}Z`;
+  m('path', {d: wd, style: `fill:${SEA}`}, svg);
 
   // Weight arrow and label
   const arr = m('g', {opacity: 0}, svg);
-  const arrLine = m('line', {stroke: '#10100c', 'stroke-width': 3, 'stroke-linecap': 'round'}, arr);
-  const arrHead = m('path', {fill: '#10100c'}, arr);
-  const wl = m('text', {fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, arr);
+  const arrLine = m('line', {style: `stroke:${INK};stroke-width:3;stroke-linecap:round`}, arr);
+  const arrHead = m('path', {style: `fill:${INK}`}, arr);
+  const wl = m('text', {'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, style: `fill:${INK}`}, arr);
   const wl1 = m('tspan', {}, wl); wl1.textContent = '3 propellers';
   const wl2 = m('tspan', {dy: fs*1.35}, wl); wl2.textContent = '≈100 t each';
 
-  const bendT = m('text', {fill: '#ffe3b0', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, opacity: 0}, svg);
+  const bendT = m('text', {'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, opacity: 0, style: `fill:${PAPER}`}, svg);
   bendT.textContent = 'hull strains here';
 
-  const t1 = m('text', {x: fs*0.8, y: fs*1.5, fill: '#10100c', 'font-size': fs*1.15, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
-  const t2 = m('text', {x: fs*0.8, y: fs*3.1, fill: '#10100c', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 600}, svg);
+  const t1 = m('text', {x: fs*0.8, y: fs*1.5, 'font-size': fs*1.15, 'font-family': 'var(--display)', 'font-weight': 700, style: `fill:${INK}`}, svg);
+  const t2 = m('text', {x: fs*0.8, y: fs*3.1, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 600, style: `fill:${INK}`}, svg);
 
   // Drag handle on the bow tip
   const hand = m('g', {}, svg);
-  m('circle', {r: fs*1.5, fill: '#10100c', opacity: .25}, hand);
-  m('circle', {r: fs*0.9, fill: '#10100c', stroke: '#fff', 'stroke-width': 2}, hand);
-  m('path', {d: `M${-fs*0.4},${-fs*0.15} L0,${fs*0.35} L${fs*0.4},${-fs*0.15}`, fill: 'none', stroke: '#FFB000', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hand);
+  m('circle', {r: fs*1.5, opacity: .5, style: `fill:none;stroke:${INK};stroke-width:2`}, hand);
+  m('circle', {r: fs*0.9, style: `fill:${INK};stroke:${PAPER};stroke-width:2`}, hand);
+  m('path', {d: `M${-fs*0.4},${-fs*0.15} L0,${fs*0.35} L${fs*0.4},${-fs*0.15}`, style: `fill:none;stroke:var(--c);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round`}, hand);
   const handIn = hand.children[0];
 
   G = {svg, W, H, fs, L, h, Bx, By, waterY, ship, bow, stern, crack, sGlow, ring, arr, arrLine, arrHead, wl, wl1, wl2, bendT, t1, t2, hand, handIn, px, py};
@@ -143,7 +142,7 @@ function render() {
   G.crack.setAttribute('opacity', stress > .35 ? Math.min(1, (stress - .35) * 2) * (1 - br) : 0);
   const J = world([0, -0.2*h], 's');
   G.sGlow.setAttribute('cx', J[0]); G.sGlow.setAttribute('cy', J[1]);
-  G.sGlow.setAttribute('opacity', (stress * 0.9 + br * (1 - br) * 2).toFixed(2));
+  G.sGlow.setAttribute('opacity', Math.min(1, stress * 0.9 + br * (1 - br) * 2).toFixed(2));
   G.ring.setAttribute('opacity', out * (1 - br));
 
   // Weight arrow, always straight down

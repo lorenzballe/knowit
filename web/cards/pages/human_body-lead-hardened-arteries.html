@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- slug: human_body-lead-hardened-arteries -->
-<!-- Look: a museum diorama in cut paper on cream. Tissue planes sit behind a sliced artery specimen (cut at both ends) that shows its layers, with soft drop shadows and gentle pointer parallax between the planes.
+<!-- Look: a page from an anatomy book. An artery specimen cut open lengthwise lies on a flat band of pale tissue. It is painted in flat ink and tints of the card colour, with blood red and lead grey as the only extra colours. Its cut face shows the wall layers.
      Interaction: drag the Pb token to put lead into the blood. Grey specks flow in, settle in the wall and narrow it. The wall greys, its wavy elastic fibres straighten, it stops stretching, and the stretch trace above it flattens beat by beat.
      Wow: at full lead the trace goes flat. Three paper museum tags drop on strings that draw themselves: 250,000 a year, 25M over a century, ~100M worldwide. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -33,6 +33,8 @@
   if (HAS_DRAW) gsap.registerPlugin(DrawSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say');
   const INK = '#2b1714';
+  const RED = '#b8322f', LEAD = '#5d5650';
+  const TINT = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const S = {lead: 0, target: 0, t: 0, revealed: false, tagsShown: false, animTags: false, touched: false, step: 0, q: 0};
   const K = {v: 0};
   let W = 0, H = 0, fs = 12, ready = false, G = {}, E = {}, cells = [], specks = [], deps = [], trace = [], traceAcc = 0, xs = [], nudgeTw = null, entered = false;
@@ -61,23 +63,6 @@
     fs = Math.max(12, Math.min(15, W / 26));
     const ls = Math.max(12, fs * .85);
     let seed = 11; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
-
-    // ---------- defs: paper shadows, grain, gradients ----------
-    const defs = mk('defs', {}, svg);
-    const shadow = (id, dy, b, o) => { const fl = mk('filter', {id, x: '-20%', y: '-30%', width: '140%', height: '170%'}, defs); mk('feDropShadow', {dx: 0, dy, stdDeviation: b, 'flood-color': '#4a2414', 'flood-opacity': o}, fl); };
-    shadow('s1', 2, 1.8, .28); shadow('s2', 4, 4, .26); shadow('s3', 6, 5, .3);
-    const gr = mk('filter', {id: 'grain', x: 0, y: 0, width: '100%', height: '100%'}, defs);
-    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .85, numOctaves: 2, seed: 4, result: 'n'}, gr);
-    mk('feColorMatrix', {in: 'n', type: 'matrix', values: '0 0 0 0 .35  0 0 0 0 .2  0 0 0 0 .1  0 0 0 .12 0', result: 'a'}, gr);
-    mk('feComposite', {in: 'a', in2: 'SourceGraphic', operator: 'in', result: 'g'}, gr);
-    const mg = mk('feMerge', {}, gr); mk('feMergeNode', {in: 'SourceGraphic'}, mg); mk('feMergeNode', {in: 'g'}, mg);
-    const lin = (id, stops) => { const g = mk('linearGradient', {id, x1: 0, y1: 0, x2: 0, y2: 1}, defs); stops.forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, g)); };
-    const rad = (id, stops, cx = .5, cy = .5) => { const g = mk('radialGradient', {id, cx, cy, r: .65}, defs); stops.forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, g)); };
-    lin('lum', [[0, '#470710'], [.5, '#7e131c'], [1, '#470710']]);
-    rad('rbc', [[0, '#a51b26'], [.55, '#d23a43'], [1, '#e9646a']]);
-    rad('pb', [[0, '#c4beb8'], [.55, '#77706a'], [1, '#433e3a']], .35, .3);
-    rad('deep', [[0, '#1c0204'], [1, '#5a0a12']], .6, .5);
-    rad('capShade', [[0, 'rgba(255,255,255,0)'], [.7, 'rgba(90,40,30,.05)'], [1, 'rgba(90,40,30,.28)']], .2, .45);
 
     // ---------- layout: everything stays inside the stage ----------
     const m = Math.max(14, W * .05);
@@ -121,82 +106,70 @@
     G.track = mk('g', {}, root);
     G.pTags = mk('g', {}, root); G.tags = mk('g', {}, G.pTags);
 
-    // ---------- back plane: tissue cut from paper, with capillaries ----------
-    const blob = (cx, cyy, rx, ry, n) => { const p = []; for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2, k = 1 + (rnd() - .5) * .22; p.push([cx + Math.cos(a) * rx * k, cyy + Math.sin(a) * ry * k]); } return closed(p); };
-    const bl = [[W * .31, cy - R * .15, W * .22, R * 2.1, '#e8d3b6'], [W * .72, cy + R * .35, W * .21, R * 1.9, '#e1c6a2']].map(([a, b, c, d, col]) => {
-      const ry = Math.max(R * 1.2, Math.min(d, Math.min(b - 4, H - 4 - b) / 1.2));
-      const g = mk('g', {filter: 'url(#s2)'}, G.back);
-      mk('path', {d: blob(a, b, c, ry, 9), fill: col, filter: 'url(#grain)'}, g);
-      return {y: b, ry};
-    });
+    // ---------- back plane: the band of body tissue the artery runs through ----------
+    {
+      const bx0 = m * .45, bx1 = W - m * .45, bh = R * 1.45, p = [];
+      const n = 7;
+      for (let i = 0; i <= n; i++) p.push([bx0 + (bx1 - bx0) * i / n, cy - bh * (1 + (rnd() - .5) * .16)]);
+      for (let i = n; i >= 0; i--) p.push([bx0 + (bx1 - bx0) * i / n, cy + bh * (1 + (rnd() - .5) * .16)]);
+      mk('path', {d: closed(p), fill: TINT(7)}, G.back);
+    }
     G.caps = [];
-    const a1 = bl[0].y - bl[0].ry * .85, b1 = bl[0].y + bl[0].ry * .85, a2 = bl[1].y - bl[1].ry * .85, b2 = bl[1].y + bl[1].ry * .85;
-    const capD = [
-      `M${f1(W * .2)},${f1(a1)} C${f1(W * .12)},${f1(cy - R * .6)} ${f1(W * .28)},${f1(cy + R * .4)} ${f1(W * .21)},${f1(b1)}`,
-      `M${f1(W * .185)},${f1(Math.max(a1, cy - R * .7))} Q${f1(W * .12)},${f1(cy - R * .3)} ${f1(W * .1)},${f1(cy + R * .3)}`,
-      `M${f1(W * .64)},${f1(a2)} C${f1(W * .72)},${f1(cy - R * .8)} ${f1(W * .58)},${f1(cy + R * .5)} ${f1(W * .68)},${f1(b2)}`,
-      `M${f1(W * .67)},${f1(Math.max(a2, cy - R * .9))} Q${f1(W * .78)},${f1(Math.max(a2, cy - R))} ${f1(W * .86)},${f1(Math.max(a2 + R * .3, cy - R * 1.25))}`
-    ];
-    capD.forEach((d, i) => G.caps.push(mk('path', {d, fill: 'none', stroke: '#c47f72', 'stroke-width': i % 2 ? 1.2 : 1.8, 'stroke-linecap': 'round', opacity: .75}, G.back)));
 
     // ---------- top plane: how much the wall stretches with each beat ----------
     if (!tagMode) {
-      txt(G.top, m, titleY, 'WALL STRETCH PER BEAT', {'font-family': 'var(--mono)', 'font-size': ls, 'font-weight': 700, fill: INK, opacity: .72, 'letter-spacing': '.04em'});
-      E.status = txt(G.top, W - m, titleY, 'SOFT', {'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': ls, 'font-weight': 800, fill: '#b8322f'});
-      mk('line', {x1: m, x2: W - m, y1: traceBase, y2: traceBase, stroke: INK, 'stroke-opacity': .25, 'stroke-width': 1, 'stroke-dasharray': '3 4'}, G.top);
-      E.trace = mk('polyline', {fill: 'none', stroke: '#b8322f', 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, G.top);
-      E.head = mk('circle', {r: 3.2, fill: '#b8322f'}, G.top);
+      txt(G.top, m, titleY, 'Wall stretch per beat', {'font-family': 'var(--body)', 'font-size': ls, 'font-weight': 700, fill: INK, opacity: .75});
+      E.status = txt(G.top, W - m, titleY, 'Soft', {'text-anchor': 'end', 'font-family': 'var(--body)', 'font-size': ls, 'font-weight': 800, fill: RED});
+      mk('line', {x1: m, x2: W - m, y1: traceBase, y2: traceBase, stroke: INK, 'stroke-opacity': .2, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, G.top);
+      E.trace = mk('polyline', {fill: 'none', stroke: RED, 'stroke-width': 2.4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, G.top);
+      E.head = mk('circle', {r: 3.4, fill: RED}, G.top);
     }
 
     // ---------- the artery specimen, cut open lengthwise ----------
-    E.cap = mk('ellipse', {stroke: 'rgba(70,25,20,.45)', 'stroke-width': 1.1, filter: 'url(#s1)'}, G.art);
-    E.capSh = mk('ellipse', {fill: 'url(#capShade)'}, G.art);
-    E.lumen = mk('path', {fill: 'url(#lum)'}, G.art);
+    E.cap = mk('ellipse', {stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1.4}, G.art);
+    E.lumen = mk('path', {fill: '#7a1d1e'}, G.art);
     const gc = mk('g', {}, G.art);
     const crx = Math.max(3.5, Math.min(fs * .62, r * .24)), cry = crx * .62;
     cells = [];
     const nc = Math.round(W / 20);
     for (let i = 0; i < nc; i++) {
       const g = mk('g', {}, gc);
-      mk('ellipse', {rx: crx, ry: cry, fill: 'url(#rbc)', stroke: '#7a1019', 'stroke-width': .5}, g);
-      mk('ellipse', {rx: crx * .45, ry: cry * .4, fill: 'rgba(110,8,18,.35)'}, g);
-      mk('ellipse', {cx: -crx * .3, cy: -cry * .45, rx: crx * .3, ry: cry * .15, fill: 'rgba(255,255,255,.35)'}, g);
+      mk('ellipse', {rx: crx, ry: cry, fill: '#d0453a'}, g);
+      mk('ellipse', {rx: crx * .45, ry: cry * .4, fill: '#a9302c'}, g);
       cells.push({el: g, x: x0 + rnd() * (x1 - x0), lane: (rnd() * 2 - 1) * .9, ph: rnd() * 6, sp: .85 + rnd() * .3, ry: cry, rx: crx});
     }
     const gs = mk('g', {}, G.art);
     specks = [];
-    for (let i = 0; i < 24; i++) specks.push({el: mk('circle', {r: Math.max(1.8, fs * .17), fill: '#5c5753', stroke: '#2d2a28', 'stroke-width': .5}, gs), x: x0 + rnd() * (x1 - x0), lane: (rnd() * 2 - 1) * .85, sp: 1 + rnd() * .3});
+    for (let i = 0; i < 24; i++) specks.push({el: mk('circle', {r: Math.max(1.8, fs * .17), fill: '#9d968f'}, gs), x: x0 + rnd() * (x1 - x0), lane: (rnd() * 2 - 1) * .85, sp: 1 + rnd() * .3});
 
-    const wall = mk('g', {filter: 'url(#s1)'}, G.art);
+    const wall = mk('g', {}, G.art);
     E.adv = mk('path', {}, wall);
     E.med = mk('path', {}, wall);
-    E.fib = mk('path', {fill: 'none', stroke: 'rgba(255,255,255,.34)', 'stroke-width': 1, 'stroke-dasharray': '4 4', 'stroke-linecap': 'round'}, wall);
+    E.fib = mk('path', {fill: 'none', stroke: '#f6d6c6', 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .85}, wall);
     E.int = mk('path', {}, wall);
-    E.plaque = mk('path', {fill: '#c9c0b5', stroke: '#8f857b', 'stroke-width': .8, filter: 'url(#s1)'}, G.art);
+    E.plaque = mk('path', {fill: '#c3bab0', stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1}, G.art);
     const gd = mk('g', {}, G.art);
     deps = [];
     const nd = Math.round(W / 7);
-    for (let i = 0; i < nd; i++) deps.push({el: mk('circle', {r: Math.max(1.6, fs * .16 * (.8 + rnd() * .6)), fill: '#615b56'}, gd), i: 1 + Math.floor(rnd() * (N - 1)), s: rnd() < .5 ? -1 : 1, fr: .15 + rnd() * .75});
-    E.outline = mk('path', {fill: 'none', stroke: 'rgba(70,25,20,.45)', 'stroke-width': 1.1}, G.art);
+    for (let i = 0; i < nd; i++) deps.push({el: mk('circle', {r: Math.max(1.6, fs * .16 * (.8 + rnd() * .6)), fill: LEAD}, gd), i: 1 + Math.floor(rnd() * (N - 1)), s: rnd() < .5 ? -1 : 1, fr: .15 + rnd() * .75});
+    E.outline = mk('path', {fill: 'none', stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, G.art);
 
     // the cut face at the near end
-    const face = mk('g', {filter: 'url(#s3)'}, G.art);
+    const face = mk('g', {}, G.art);
     E.f = {};
-    ['adv', 'med', 'int', 'pl', 'lum', 'deep'].forEach(k => E.f[k] = mk('ellipse', {cx: x0, stroke: 'rgba(70,25,20,.35)', 'stroke-width': .8}, face));
-    E.f.lum.setAttribute('fill', 'url(#lum)'); E.f.deep.setAttribute('fill', 'url(#deep)'); E.f.deep.setAttribute('stroke', 'none');
+    ['adv', 'med', 'int', 'pl', 'lum', 'deep'].forEach(k => E.f[k] = mk('ellipse', {cx: x0, stroke: INK, 'stroke-opacity': .55, 'stroke-width': 1}, face));
+    E.f.lum.setAttribute('fill', '#7a1d1e'); E.f.deep.setAttribute('fill', '#4a0f12'); E.f.deep.setAttribute('stroke', 'none');
 
     // ---------- the track and the lead token ----------
-    E.trackLine = mk('line', {x1: G.tx0, x2: G.tx1, y1: trackY, y2: trackY, stroke: INK, 'stroke-opacity': .22, 'stroke-width': 4, 'stroke-linecap': 'round'}, G.track);
-    for (let i = 0; i <= 4; i++) mk('circle', {cx: G.tx0 + (G.tx1 - G.tx0) * i / 4, cy: trackY, r: 2, fill: INK, opacity: .35}, G.track);
-    E.trackFill = mk('line', {x1: G.tx0, y1: trackY, y2: trackY, stroke: '#625b55', 'stroke-width': 5, 'stroke-linecap': 'round'}, G.track);
+    E.trackLine = mk('line', {x1: G.tx0, x2: G.tx1, y1: trackY, y2: trackY, stroke: TINT(18), 'stroke-width': 5, 'stroke-linecap': 'round'}, G.track);
+    E.trackFill = mk('line', {x1: G.tx0, y1: trackY, y2: trackY, stroke: LEAD, 'stroke-width': 5, 'stroke-linecap': 'round'}, G.track);
     if (showLabels) {
-      txt(G.track, m, tlY, 'no lead', {'font-family': 'var(--mono)', 'font-size': ls, 'font-weight': 700, fill: INK, opacity: .72});
-      txt(G.track, W - m, tlY, 'lots of lead', {'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': ls, 'font-weight': 700, fill: INK, opacity: .72});
+      txt(G.track, m, tlY, 'no lead', {'font-family': 'var(--body)', 'font-size': ls, 'font-weight': 700, fill: INK, opacity: .75});
+      txt(G.track, W - m, tlY, 'lots of lead', {'text-anchor': 'end', 'font-family': 'var(--body)', 'font-size': ls, 'font-weight': 700, fill: INK, opacity: .75});
     }
     E.knobPos = mk('g', {}, G.track);
-    E.knob = mk('g', {filter: 'url(#s2)'}, E.knobPos);
-    mk('circle', {r: kr, fill: 'url(#pb)', stroke: '#2e2a27', 'stroke-width': 1}, E.knob);
-    mk('circle', {r: kr * .78, fill: 'none', stroke: 'rgba(255,255,255,.25)', 'stroke-width': 1}, E.knob);
+    E.knob = mk('g', {}, E.knobPos);
+    mk('circle', {r: kr, fill: '#6b645e', stroke: INK, 'stroke-width': 1.6}, E.knob);
     txt(E.knob, 0, kr * .32, 'Pb', {'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-size': Math.max(12, kr * .9), 'font-weight': 800, fill: '#fff'});
 
     // gentle parallax, small enough to stay inside the margins
@@ -237,17 +210,18 @@
     E.adv.setAttribute('d', band(r2, ro, -1) + band(r2, ro, 1));
     E.fib.setAttribute('d', line(rf, -1) + line(rf, 1));
     E.outline.setAttribute('d', line(ro, -1) + line(ro, 1));
-    const cMed = mix('#d4473f', '#8b7f77', L), cAdv = mix('#f3cdb4', '#cbbcae', L), cInt = mix('#fbe3da', '#d6cdc4', L);
+    const cMed = mix('#cf4a3e', '#8b7f77', L), cAdv = mix('#efcdb2', '#cbbcae', L), cInt = mix('#f8e2d6', '#d6cdc4', L);
     E.med.setAttribute('fill', cMed); E.adv.setAttribute('fill', cAdv); E.int.setAttribute('fill', cInt);
+    E.fib.setAttribute('stroke', mix('#f6d6c6', '#b5aca4', L));
 
     // the rounded far end of the specimen
-    [E.cap, E.capSh].forEach(el => { el.setAttribute('cx', f1(x1)); el.setAttribute('cy', f1(cs[N])); el.setAttribute('rx', f1((R + d) * kk)); el.setAttribute('ry', f1(R + d)); });
+    E.cap.setAttribute('cx', f1(x1)); E.cap.setAttribute('cy', f1(cs[N])); E.cap.setAttribute('rx', f1((R + d) * kk)); E.cap.setAttribute('ry', f1(R + d));
     E.cap.setAttribute('fill', cAdv);
 
     // the cut face
     const c0 = cs[0], ell = (el, cyy, ry, fill) => { el.setAttribute('cy', f1(cyy)); el.setAttribute('ry', f1(ry)); el.setAttribute('rx', f1(ry * kk)); if (fill) el.setAttribute('fill', fill); };
     ell(E.f.adv, c0, R + d, cAdv); ell(E.f.med, c0, r + .7 * T + d, cMed); ell(E.f.int, c0, r + .12 * T + d, cInt);
-    ell(E.f.pl, c0, r + d, L > .02 ? '#c9c0b5' : cInt);
+    ell(E.f.pl, c0, r + d, L > .02 ? '#c3bab0' : cInt);
     const lc = c0 + (lb[0] - lt[0]) / 2, lr = (lt[0] + lb[0]) / 2;
     ell(E.f.lum, lc, lr); ell(E.f.deep, lc, lr * .72);
     E.f.deep.setAttribute('cx', f1(x0 + lr * kk * .25));
@@ -288,11 +262,11 @@
       const n0 = TN - trace.length;
       trace.forEach((val, i) => { pts += f1(G.m + tw * (n0 + i) / (TN - 1)) + ',' + f1(G.traceBase - val * amp) + ' '; });
       E.trace.setAttribute('points', pts);
-      const tc = mix('#b8322f', '#5d5650', L);
+      const tc = mix(RED, LEAD, L);
       E.trace.setAttribute('stroke', tc); E.head.setAttribute('fill', tc);
       E.head.setAttribute('cx', f1(W - G.m)); E.head.setAttribute('cy', f1(G.traceBase - trace[trace.length - 1] * amp));
-      const st = L < .3 ? 'SOFT' : L < .75 ? 'STIFFENING' : 'HARD';
-      if (E.status.textContent !== st) { E.status.textContent = st; E.status.setAttribute('fill', L < .3 ? '#b8322f' : L < .75 ? '#7c4a3e' : '#4f4843'); }
+      const st = L < .3 ? 'Soft' : L < .75 ? 'Stiffening' : 'Hard';
+      if (E.status.textContent !== st) { E.status.textContent = st; E.status.setAttribute('fill', L < .3 ? RED : L < .75 ? '#7c4a3e' : '#4f4843'); }
     }
 
     // the token
@@ -306,20 +280,20 @@
     G.tags.innerHTML = '';
     const m = G.m, {colW, tw, ns, cs, ty, th} = G.tag;
     const data = [
-      {n: 250000, fmt: v => Math.round(v).toLocaleString('en-US'), cap: ['heart deaths', 'a year, US'], col: '#c23a3f'},
-      {n: 25, fmt: v => Math.round(v) + 'M', cap: ['over a', 'century, US'], col: '#9e2228'},
-      {n: 100, fmt: v => '~' + Math.round(v) + 'M', cap: ['worldwide,', 'maybe'], col: '#6e1418'}
+      {n: 250000, fmt: v => Math.round(v).toLocaleString('en-US'), cap: ['heart deaths', 'a year, US'], col: RED},
+      {n: 25, fmt: v => Math.round(v) + 'M', cap: ['over a', 'century, US'], col: RED},
+      {n: 100, fmt: v => '~' + Math.round(v) + 'M', cap: ['worldwide,', 'maybe'], col: RED}
     ];
     const rots = [-2.2, 1.6, -1.1];
     const tl = anim ? gsap.timeline() : null;
     data.forEach((t, i) => {
       const cx = m + colW * (i + .5);
       const pend = mk('g', {}, G.tags);
-      const str = mk('line', {x1: cx, x2: cx, y1: 3, y2: ty + fs * .5, stroke: '#5a3a2e', 'stroke-width': 1.2}, pend);
+      const str = mk('line', {x1: cx, x2: cx, y1: 3, y2: ty + fs * .5, stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.3, 'stroke-linecap': 'round'}, pend);
       const body = mk('g', {}, pend);
-      mk('rect', {x: cx - tw / 2, y: ty, width: tw, height: th, rx: 3, fill: '#fbf4e8', stroke: 'rgba(80,40,30,.18)', filter: 'url(#s3)'}, body);
-      mk('rect', {x: cx - tw / 2, y: ty + th - fs * .3, width: tw, height: fs * .3, fill: t.col}, body);
-      mk('circle', {cx, cy: ty + fs * .5, r: fs * .18, fill: '#e2cdb0', stroke: '#8a6a55', 'stroke-width': .8}, body);
+      mk('rect', {x: cx - tw / 2, y: ty, width: tw, height: th, rx: 3, fill: '#fbf4e8', stroke: INK, 'stroke-opacity': .55, 'stroke-width': 1.3}, body);
+      mk('rect', {x: cx - tw / 2 + .65, y: ty + th - fs * .3, width: tw - 1.3, height: fs * .3 - .65, fill: t.col}, body);
+      mk('circle', {cx, cy: ty + fs * .5, r: fs * .18, fill: TINT(14), stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1}, body);
       const ny = ty + fs * .95 + ns * .8;
       const num = txt(body, cx, ny, t.fmt(t.n), {'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-size': f1(ns), 'font-weight': 800, fill: t.col});
       try { const w = num.getComputedTextLength(); if (w > tw * .88) num.setAttribute('font-size', f1(Math.max(12, ns * tw * .88 / w))); } catch (e) {}
@@ -397,7 +371,7 @@
     entered = true;
     const tl = gsap.timeline();
     tl.from(G.back.children, {y: 18, opacity: 0, duration: .9, stagger: .12, ease: 'power3.out'});
-    if (HAS_DRAW) tl.from(G.caps, {drawSVG: '0%', duration: 1, stagger: .12, ease: 'power2.inOut'}, .25);
+    if (HAS_DRAW && G.caps.length) tl.from(G.caps, {drawSVG: '0%', duration: 1, stagger: .12, ease: 'power2.inOut'}, .25);
     tl.from(G.art, {y: 12, opacity: 0, duration: 1.1, ease: 'expo.out'}, .35);
     if (HAS_DRAW) tl.from(E.outline, {drawSVG: '0%', duration: 1.2, ease: 'power2.inOut'}, .4);
     tl.from(G.top, {opacity: 0, duration: .6, ease: 'power3.out'}, .7);

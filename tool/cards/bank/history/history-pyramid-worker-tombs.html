@@ -70,56 +70,57 @@ function draw() {
   const mask = mk('mask', {id, maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
   mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#fff'}, mask);
   const holes = mk('g', {}, mask);
+  const line = Math.max(2, f * .14);
 
   // sky
   mk('rect', {x: 0, y: 0, width: W, height: g, style: `fill:${ink(5)}`});
-  // pyramid
-  const px = W * 0.74, pw = Math.min(W * 0.5, g * 1.7);
-  mk('polygon', {points: `${px},${g - pw * 0.6} ${px + pw / 2},${g} ${px - pw / 2},${g}`, style: `fill:${ink(22)};stroke:var(--k);stroke-width:${Math.max(2, f * .14)};stroke-linejoin:round`});
-  for (let i = 1; i < 6; i++) {
-    const y = g - pw * 0.6 * i / 6, hw = pw / 2 * (1 - i / 6);
-    mk('line', {x1: px - hw, x2: px + hw, y1: y, y2: y, style: `stroke:${ink(40)};stroke-width:1`});
-  }
-  // soil
-  mk('rect', {x: 0, y: g, width: W, height: H - g, style: `fill:${ink(34)}`});
-  mk('line', {x1: 0, x2: W, y1: g, y2: g, style: `stroke:var(--k);stroke-width:${Math.max(2, f * .14)}`});
+  // pyramid: one sunlit face, one shaded face, flat
+  const px = W * 0.74, pw = Math.min(W * 0.5, g * 1.7), top = g - pw * 0.6, split = px + pw * 0.1;
+  mk('polygon', {points: `${px},${top} ${split},${g} ${px - pw / 2},${g}`, style: `fill:${ink(16)}`});
+  mk('polygon', {points: `${px},${top} ${px + pw / 2},${g} ${split},${g}`, style: `fill:${ink(32)}`});
+  mk('polygon', {points: `${px},${top} ${px + pw / 2},${g} ${px - pw / 2},${g}`, style: `fill:none;stroke:var(--k);stroke-width:${line};stroke-linejoin:round`});
 
-  // tomb chamber
+  // ground in cross-section: two flat layers with a slightly uneven seam
+  mk('rect', {x: 0, y: g, width: W, height: H - g, style: `fill:${ink(34)}`});
+  const ly = g + (H - g) * 0.86;
+  mk('path', {d: `M0 ${ly} Q${W * .2} ${ly - f * .25} ${W * .45} ${ly + f * .1} T${W} ${ly - f * .1} L${W} ${H} L0 ${H} Z`, style: `fill:${ink(42)}`});
+  mk('line', {x1: 0, x2: W, y1: g, y2: g, style: `stroke:var(--k);stroke-width:${line}`});
+
+  // tomb chamber of mud brick
   const cx = W * 0.42, cw = Math.min(W * 0.68, (H - g) * 1.9), ch = (H - g) * 0.52;
   const tx = cx - cw / 2, ty = g + (H - g) * 0.24;
   const sw = Math.max(3, f * .3);
-  mk('rect', {x: tx, y: ty, width: cw, height: ch, rx: f * .3, style: `fill:var(--c);stroke:var(--k);stroke-width:${sw}`});
-  // stone blocks of the wall
-  const bh = ch / 3;
-  for (let r = 0; r < 3; r++) {
-    mk('line', {x1: tx, x2: tx + cw, y1: ty + bh * r, y2: ty + bh * r, style: `stroke:${ink(14)};stroke-width:1`});
+  mk('rect', {x: tx, y: ty, width: cw, height: ch, rx: f * .3, style: `fill:${ink(9)};stroke:var(--k);stroke-width:${sw}`});
+  const bh = ch / 3, joint = `stroke:${ink(24)};stroke-width:${Math.max(1, f * .07)}`;
+  for (let r = 1; r < 3; r++)
+    mk('line', {x1: tx + sw / 2, x2: tx + cw - sw / 2, y1: ty + bh * r, y2: ty + bh * r, style: joint});
+  for (let r = 0; r < 3; r++)
     for (let c = 1; c < 6; c++) {
       const x = tx + cw * (c - (r % 2) * 0.5) / 6;
-      mk('line', {x1: x, x2: x, y1: ty + bh * r, y2: ty + bh * (r + 1), style: `stroke:${ink(14)};stroke-width:1`});
+      mk('line', {x1: x, x2: x, y1: ty + bh * r + (r ? 0 : sw / 2), y2: ty + bh * (r + 1) - (r === 2 ? sw / 2 : 0), style: joint});
     }
-  }
-  // skeleton, laid out with care
-  const sk = mk('g', {style: `stroke:var(--k);fill:none;stroke-linecap:round;stroke-width:${Math.max(2, f * .16)}`});
+
+  // the worker, wrapped in linen on a reed mat, with bread and beer for the afterlife
   const L = cw * 0.78, sx = cx - L / 2, sy = ty + ch * 0.55, u = L / 10;
-  mk('circle', {cx: sx + u * .55, cy: sy, r: u * .55, style: 'fill:var(--c)'}, sk);
-  mk('line', {x1: sx + u * 1.1, y1: sy, x2: sx + u * 5, y2: sy}, sk);
-  for (let i = 0; i < 4; i++) {
-    const x = sx + u * (1.7 + i * .7), h = u * (.55 - i * .05);
-    mk('path', {d: `M${x} ${sy - h} Q${x + u * .25} ${sy} ${x} ${sy + h}`}, sk);
+  const sk = mk('g', {style: `stroke:var(--k);stroke-linecap:round;stroke-linejoin:round;stroke-width:${Math.max(2, f * .14)}`});
+  mk('rect', {x: sx + u * .1, y: sy + u * .68, width: u * 7.1, height: u * .26, rx: u * .1, style: `fill:${ink(38)}`}, sk);
+  mk('path', {d: `M${sx + u * 1.5} ${sy - u * .6} L${sx + u * 6.2} ${sy - u * .42} Q${sx + u * 7.05} ${sy} ${sx + u * 6.2} ${sy + u * .42} L${sx + u * 1.5} ${sy + u * .6} Q${sx + u * 1.2} ${sy} ${sx + u * 1.5} ${sy - u * .6} Z`, style: 'fill:var(--c)'}, sk);
+  for (const k of [2.6, 3.6, 4.6, 5.5]) {
+    const hh = u * (.6 - (k - 1.5) / 4.7 * .18) - u * .06;
+    mk('line', {x1: sx + u * k, x2: sx + u * (k + .12), y1: sy - hh, y2: sy + hh, style: `stroke:${ink(45)};stroke-width:${Math.max(1, f * .08)}`}, sk);
   }
-  mk('ellipse', {cx: sx + u * 5.4, cy: sy, rx: u * .45, ry: u * .6}, sk);
-  mk('line', {x1: sx + u * 5.8, y1: sy - u * .3, x2: sx + u * 9.6, y2: sy - u * .25}, sk);
-  mk('line', {x1: sx + u * 5.8, y1: sy + u * .3, x2: sx + u * 9.6, y2: sy + u * .25}, sk);
-  // arms folded across the chest
-  mk('path', {d: `M${sx + u * 1.6} ${sy - u * .7} L${sx + u * 3.2} ${sy - u * .5} L${sx + u * 2.4} ${sy + u * .35}`}, sk);
-  mk('path', {d: `M${sx + u * 1.6} ${sy + u * .7} L${sx + u * 3.2} ${sy + u * .5} L${sx + u * 2.4} ${sy - u * .35}`}, sk);
+  mk('circle', {cx: sx + u * .85, cy: sy, r: u * .6, style: 'fill:var(--c)'}, sk);
+  const jx = sx + u * 8;
+  mk('path', {d: `M${jx - u * .22} ${sy - u * 1.0} L${jx + u * .22} ${sy - u * 1.0} Q${jx + u * .62} ${sy - u * .25} ${jx + u * .18} ${sy + u * .9} L${jx - u * .18} ${sy + u * .9} Q${jx - u * .62} ${sy - u * .25} ${jx - u * .22} ${sy - u * 1.0} Z`, style: `fill:${ink(30)}`}, sk);
+  const bx = sx + u * 9.3;
+  mk('ellipse', {cx: bx, cy: sy + u * .32, rx: u * .34, ry: u * .24, style: `fill:${ink(18)}`}, sk);
+  mk('path', {d: `M${bx - u * .55} ${sy + u * .45} Q${bx} ${sy + u * 1.15} ${bx + u * .55} ${sy + u * .45} Z`, style: `fill:${ink(30)}`}, sk);
 
   // sand cover, brushed away through the mask
   const cover = mk('g', {mask: `url(#${id})`});
   mk('rect', {x: 0, y: g + sw / 2 + 1, width: W, height: H - g, style: `fill:${ink(46)}`}, cover);
-  const rand = (() => { let s = 7; return () => (s = (s * 9301 + 49297) % 233280) / 233280; })();
-  for (let i = 0; i < 140; i++)
-    mk('circle', {cx: rand() * W, cy: g + 4 + rand() * (H - g), r: 1 + rand() * f * .12, style: `fill:${ink(rand() < .5 ? 65 : 25)}`}, cover);
+  const cy2 = g + (H - g) * 0.62;
+  mk('path', {d: `M0 ${cy2} Q${W * .3} ${cy2 + f * .3} ${W * .55} ${cy2 - f * .05} T${W} ${cy2 + f * .15} L${W} ${H} L0 ${H} Z`, style: `fill:${ink(52)}`}, cover);
   const hint = mk('text', {x: cx, y: ty + ch / 2, 'text-anchor': 'middle', 'dominant-baseline': 'middle', opacity: S.answered && !S.done ? 1 : 0, style: `font:700 ${Math.max(13, f)}px var(--body);fill:var(--c)`}, cover);
   hint.textContent = 'Brush here ✋';
 

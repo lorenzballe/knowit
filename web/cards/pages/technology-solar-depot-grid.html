@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: technology-solar-depot-grid -->
-<!-- Look: a night-to-day navy card. A depot with a 30 kW solar roof, a two-car train, a pylon and a small town, with energy drawn as hundreds of glowing amber sparks.
-     Interaction: drag the sun across the sky. The sparks run from the panels into the storage bank, then fill the convoy's battery. Once the convoy is full, they run out along the wire to the grid, and the town's windows light up.
-     Wow: when the convoy is full and the surplus is selling, every spark leaves the roof and settles into a glowing "30 kW", and the depot pulses like a small power plant. -->
+<!-- Look: a night-to-day navy card painted like a page from a picture science book. A depot with a 30 kW solar roof, a two-car train, a pylon and a small town, all in flat cream and navy tints, with energy drawn as hundreds of small flat amber dots.
+     Interaction: drag the sun across the sky. The dots run from the panels into the storage bank, then fill the convoy's battery. Once the convoy is full, they run out along the wire to the grid, and the town's windows light up.
+     Wow: when the convoy is full and the surplus is selling, every dot leaves the roof and settles into a big amber "30 kW", and the depot's panels pulse like a small power plant. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The depot that sells sunshine</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -31,34 +31,39 @@
 <script>
 (() => {
   const cv = Kit.$('pic'), card = Kit.$('card'), sayEl = Kit.$('say');
-  const CREAM = '#f3ead6', AMBER = '#ffc54d';
+  const AMBER = '#ffc54d', PANEL = '#2f5f9c';
+  let CREAM = '#f3ead6', NAVY = '#0c1a2b';
   const TRAIN_N = 300, SOLD_T = 260, SUN_END = .93;
   const st = {s: .12, train: 0, sold: 0, store: 0, phase: 'run', touched: false, rev: 0, wave: 0, acc: 0, glow: 0};
   const E = {ground: 0, depot: 0, panels: 0, train: 0, pylon: 0};
   const flags = {};
-  let x, W = 0, H = 0, fs = 12, L = {}, ready = false, MONO = 'monospace', DISP = 'sans-serif', HAND = 'cursive';
-  let P = [], stars = [], flashes = [], textPts = [], sub = {}, houses = [];
+  let x, W = 0, H = 0, fs = 12, L = {}, ready = false, BODY = 'sans-serif', DISP = 'sans-serif', HAND = 'cursive';
+  let P = [], flashes = [], textPts = [], sub = {}, houses = [], pal = {};
 
   const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
   const bright = () => Math.max(0, Math.sin(Math.PI * st.s));
 
-  // A glowing spark, drawn once and stamped hundreds of times.
-  const sprite = (() => {
-    const c = document.createElement('canvas'); c.width = c.height = 32; const g = c.getContext('2d');
-    const gr = g.createRadialGradient(16, 16, 0, 16, 16, 16);
-    gr.addColorStop(0, 'rgba(255,250,225,1)'); gr.addColorStop(.22, 'rgba(255,208,100,.95)');
-    gr.addColorStop(.55, 'rgba(255,150,40,.28)'); gr.addColorStop(1, 'rgba(255,140,30,0)');
-    g.fillStyle = gr; g.beginPath(); g.arc(16, 16, 16, 0, 7); g.fill(); return c;
-  })();
+  // flat tints of the card's ink and colour, like color-mix(in srgb, ...)
+  const hex = h => { h = h.replace('#', '').trim(); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) || 0); };
+  const mix = (a, b, t) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`; };
 
   function layout() {
     const oW = W, oH = H;
     const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
     if (!W || !H) return;
     const cs = getComputedStyle(card);
-    MONO = cs.getPropertyValue('--mono').trim() || 'monospace';
+    BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
     DISP = cs.getPropertyValue('--display').trim() || 'sans-serif';
     HAND = cs.getPropertyValue('--hand').trim() || 'cursive';
+    const kc = cs.getPropertyValue('--k').trim(), cc = cs.getPropertyValue('--c').trim();
+    if (/^#[0-9a-f]{3,6}$/i.test(kc)) CREAM = kc;
+    if (/^#[0-9a-f]{3,6}$/i.test(cc)) NAVY = cc;
+    pal = {
+      wall: mix(NAVY, CREAM, .17), roof: mix(NAVY, CREAM, .08), house: mix(NAVY, CREAM, .14),
+      door: mix(NAVY, '#000000', .45), win: mix(NAVY, '#000000', .25), line: mix(NAVY, CREAM, .55),
+      wheel: mix(NAVY, '#000000', .2), train: mix(CREAM, NAVY, .04), trainLow: mix(CREAM, NAVY, .25),
+      sunDim: mix(AMBER, NAVY, .35)
+    };
     if (oW && oH && P.length) P.forEach(p => { p.x *= W / oW; p.y *= H / oH; p.tx *= W / oW; p.ty *= H / oH; });
     fs = Math.max(12, Math.min(14, W / 28));
     const G = H - fs * 3.2;
@@ -77,7 +82,6 @@
       sunR, skyT: H * .05 + sunR, skyB: roofHigh - sunR - fs * 1.4
     };
     const t = L.tr; L.gauge = {x: t.x0 + W * .02, y: t.top + carH * .6, w: t.x1 - t.x0 - t.nose - W * .03, h: Math.max(4, carH * .14)};
-    if (!stars.length) for (let i = 0; i < 80; i++) stars.push({u: Kit.rnd(), v: Kit.rnd(), r: .4 + Kit.rnd() * 1.1, ph: Kit.rnd() * 6});
     // a little town beyond the pylon: the "local grid"
     houses = [];
     const hx = [[.815, .05, .055], [.865, .045, .085], [.915, .05, .06], [.96, .045, .075]];
@@ -195,45 +199,35 @@
   // ---------- drawing ----------
   function poly(pts) { x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.closePath(); }
   function rr(a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
-  function lab(t, xx, y, align, a, weight = 700) { x.font = `${weight} ${fs}px ${MONO}`; x.textAlign = align; x.textBaseline = 'alphabetic'; x.globalAlpha = a; x.fillStyle = CREAM; x.fillText(t, xx, y); x.globalAlpha = 1; }
+  function lab(t, xx, y, align, a, weight = 700) { x.font = `${weight} ${fs}px ${BODY}`; x.textAlign = align; x.textBaseline = 'alphabetic'; x.globalAlpha = a; x.fillStyle = CREAM; x.fillText(t, xx, y); x.globalAlpha = 1; }
 
   function drawSky(t, b) {
-    // a warm haze along the horizon as the day rises (no box: it fades into the card)
-    if (b > .02) {
-      const hz = x.createRadialGradient(W * .5, L.G, 0, W * .5, L.G, W * .75);
-      hz.addColorStop(0, `rgba(255,170,70,${.12 * b})`); hz.addColorStop(1, 'rgba(255,170,70,0)');
-      x.fillStyle = hz; x.fillRect(0, 0, W, L.G);
-    }
-    stars.forEach(s => {
-      const a = (1 - b * .85) * .7 * (.6 + .4 * Math.sin(t * .0015 + s.ph));
-      if (a < .03) return;
-      x.globalAlpha = a; x.fillStyle = CREAM; x.beginPath(); x.arc(s.u * W, s.v * L.roofHigh * .9, s.r, 0, 7); x.fill();
-    });
-    x.globalAlpha = 1;
     const [sx, sy] = sunXY(st.s), R = L.sunR;
-    x.save(); x.globalCompositeOperation = 'lighter';
-    for (let i = 0; i < 5; i++) {
-      const [rx, ry] = roofPt(.1 + i * .2, .5);
-      const g = x.createLinearGradient(sx, sy, rx, ry); g.addColorStop(0, `rgba(255,200,90,${.16 * b})`); g.addColorStop(1, 'rgba(255,200,90,0)');
-      x.strokeStyle = g; x.lineWidth = R * .5; x.beginPath(); x.moveTo(sx, sy); x.lineTo(rx, ry); x.stroke();
+    // sunlight falling on the roof: a few plain dashed lines, stronger at noon
+    if (b > .05) {
+      x.save(); x.strokeStyle = AMBER; x.globalAlpha = .45 * b; x.lineWidth = 1.5; x.lineCap = 'round';
+      x.setLineDash([3, 7]);
+      for (let i = 0; i < 3; i++) {
+        const [rx, ry] = roofPt(.2 + i * .3, .6);
+        const d = Math.hypot(rx - sx, ry - sy) || 1, ux = (rx - sx) / d, uy = (ry - sy) / d;
+        x.beginPath(); x.moveTo(sx + ux * R * 1.9, sy + uy * R * 1.9); x.lineTo(rx - ux * fs * .4, ry - uy * fs * .4); x.stroke();
+      }
+      x.restore();
     }
-    const gl = x.createRadialGradient(sx, sy, R * .5, sx, sy, R * 6);
-    gl.addColorStop(0, `rgba(255,190,80,${.1 + .38 * b})`); gl.addColorStop(1, 'rgba(255,170,60,0)');
-    x.fillStyle = gl; x.beginPath(); x.arc(sx, sy, R * 6, 0, 7); x.fill();
+    // the sun: a flat disc with short rays; it warms from dull orange at dawn to full amber at noon
+    const col = b > .5 ? AMBER : mix(pal.sunDim ? '#b4733a' : AMBER, AMBER, b * 2);
+    x.save(); x.translate(sx, sy);
+    x.strokeStyle = col; x.lineWidth = Math.max(2, R * .16); x.lineCap = 'round';
+    for (let i = 0; i < 10; i++) {
+      const a = i * Math.PI / 5 + .15;
+      x.beginPath(); x.moveTo(Math.cos(a) * R * 1.3, Math.sin(a) * R * 1.3);
+      x.lineTo(Math.cos(a) * R * (1.45 + .4 * b), Math.sin(a) * R * (1.45 + .4 * b)); x.stroke();
+    }
+    x.fillStyle = col; x.beginPath(); x.arc(0, 0, R, 0, 7); x.fill();
     x.restore();
-    x.save(); x.translate(sx, sy); x.rotate(t * .0003);
-    x.strokeStyle = `rgba(255,214,120,${.35 + .5 * b})`; x.lineWidth = 2; x.lineCap = 'round';
-    for (let i = 0; i < 12; i++) { x.rotate(Math.PI / 6); x.beginPath(); x.moveTo(R * 1.3, 0); x.lineTo(R * (1.45 + .55 * b), 0); x.stroke(); }
-    x.restore();
-    const sg = x.createRadialGradient(sx - R * .3, sy - R * .3, 1, sx, sy, R);
-    sg.addColorStop(0, '#fffbe6'); sg.addColorStop(.5, '#ffd56a'); sg.addColorStop(1, '#ff9f2e');
-    x.fillStyle = sg; x.beginPath(); x.arc(sx, sy, R, 0, 7); x.fill();
     if (!st.touched && st.phase === 'run') {
-      const pu = (t * .001) % 1;
-      x.strokeStyle = `rgba(243,234,214,${.7 * (1 - pu)})`; x.lineWidth = 2;
-      x.beginPath(); x.arc(sx, sy, R * (1.2 + pu * 1.4), 0, 7); x.stroke();
-      x.font = `700 ${Math.max(14, fs * 1.25)}px ${HAND}`; x.fillStyle = CREAM; x.textAlign = 'left'; x.textBaseline = 'middle';
-      x.fillText('drag me →', sx + R * 2 + Math.sin(t * .004) * 3, sy);
+      x.font = `400 ${Math.max(14, fs * 1.25)}px ${HAND}`; x.fillStyle = CREAM; x.textAlign = 'left'; x.textBaseline = 'middle';
+      x.fillText('drag me →', sx + R * 2.1 + Math.sin(t * .004) * 3, sy);
     }
   }
 
@@ -241,22 +235,18 @@
     const e = E.pylon; if (e <= 0) return;
     const G = L.G, on = clamp(st.sold / SOLD_T * 1.3);
     x.save(); x.globalAlpha = e;
-    houses.forEach((h, i) => {
+    houses.forEach(h => {
       const top = G - h.h * e;
-      x.fillStyle = '#16263d'; x.strokeStyle = 'rgba(159,179,201,.45)'; x.lineWidth = 1;
+      x.fillStyle = pal.house;
       if (h.roof === 'gable') poly([[h.x, G], [h.x, top], [h.x + h.w / 2, top - h.w * .35], [h.x + h.w, top], [h.x + h.w, G]]);
       else poly([[h.x, G], [h.x, top], [h.x + h.w, top], [h.x + h.w, G]]);
-      x.fill(); x.stroke();
+      x.fill();
       const ww = h.w * .22, wh = Math.max(3, h.h * .2);
       [[.2, .3], [.58, .3]].forEach(([u, v], j) => {
         const lit = clamp((on - h.lit[j] * .7) * 3);
         const wx = h.x + h.w * u, wy = top + h.h * v;
-        x.fillStyle = lit > .05 ? `rgba(255,${190 + 30 * lit | 0},90,${.25 + .7 * lit})` : 'rgba(10,20,34,.9)';
+        x.fillStyle = lit > .05 ? mix(NAVY, AMBER, .3 + .7 * lit) : pal.win;
         x.fillRect(wx, wy, ww, wh);
-        if (lit > .3) {
-          x.save(); x.globalCompositeOperation = 'lighter'; x.globalAlpha = e * lit * (.35 + .1 * Math.sin(t * .004 + i + j));
-          x.drawImage(sprite, wx + ww / 2 - ww * 2, wy + wh / 2 - ww * 2, ww * 4, ww * 4); x.restore();
-        }
       });
     });
     x.restore();
@@ -265,25 +255,27 @@
   function drawPylon() {
     const p = L.py, e = E.pylon; if (e <= 0) return;
     const G = L.G, top = G - (G - p.top) * e;
-    x.save(); x.strokeStyle = '#9fb3c9'; x.lineWidth = 1.6; x.lineJoin = 'round';
+    x.save(); x.strokeStyle = pal.line; x.lineWidth = 1.8; x.lineJoin = 'round'; x.lineCap = 'round';
     const lx = y => p.x - p.w * (1 - (G - y) / (G - top) * .8), rx = y => p.x + p.w * (1 - (G - y) / (G - top) * .8);
     x.beginPath(); x.moveTo(p.x - p.w, G); x.lineTo(p.x - p.w * .2, top); x.lineTo(p.x + p.w * .2, top); x.lineTo(p.x + p.w, G); x.stroke();
-    x.lineWidth = 1; x.globalAlpha = .7; x.beginPath();
-    const n = 6;
+    x.lineWidth = 1.1; x.beginPath();
+    const n = 4;
     for (let i = 0; i < n; i++) { const y0 = G - (G - top) * i / n, y1 = G - (G - top) * (i + 1) / n; x.moveTo(lx(y0), y0); x.lineTo(rx(y1), y1); x.moveTo(rx(y0), y0); x.lineTo(lx(y1), y1); }
-    x.stroke(); x.globalAlpha = 1;
+    x.stroke();
     if (e > .95) {
       const ay = p.armY, al = L.armL[0], ar = L.armR[0];
-      x.lineWidth = 2; x.beginPath(); x.moveTo(al, ay); x.lineTo(ar, ay); x.moveTo(p.x - W * .035, ay + H * .045); x.lineTo(p.x + W * .035, ay + H * .045); x.stroke();
-      x.fillStyle = '#cfe0f2'; [al, ar].forEach(a => { x.beginPath(); x.arc(a, ay + 3, 2.5, 0, 7); x.fill(); });
+      x.lineWidth = 2.2; x.beginPath(); x.moveTo(al, ay); x.lineTo(ar, ay); x.moveTo(p.x - W * .035, ay + H * .045); x.lineTo(p.x + W * .035, ay + H * .045); x.stroke();
+      x.fillStyle = pal.line; [al, ar].forEach(a => { x.fillRect(a - 1.5, ay, 3, 6); });
       const wire = (a, b, c, d, sag) => { x.beginPath(); x.moveTo(a, b); x.quadraticCurveTo((a + c) / 2, (b + d) / 2 + sag, c, d); x.stroke(); };
       const m = L.mast;
       for (const pass of [0, 1]) {
         if (pass && st.glow < .05) continue;
-        x.strokeStyle = pass ? `rgba(255,197,77,${.75 * st.glow})` : 'rgba(159,179,201,.75)';
-        x.lineWidth = pass ? 3 : 1.3;
-        wire(m[0], m[1], al, ay + 3, H * .05); wire(ar, ay + 3, W + 2, L.wireEnd, H * .025);
+        x.strokeStyle = pass ? AMBER : pal.line;
+        x.globalAlpha = pass ? clamp(st.glow) : 1;
+        x.lineWidth = pass ? 2.6 : 1.3;
+        wire(m[0], m[1], al, ay + 6, H * .05); wire(ar, ay + 6, W + 2, L.wireEnd, H * .025);
       }
+      x.globalAlpha = 1;
     }
     x.restore();
   }
@@ -291,42 +283,41 @@
   function drawDepot(t, b) {
     const e = E.depot; if (e <= 0) return;
     x.save(); x.globalAlpha = e; x.translate(0, (1 - e) * H * .06);
-    const {x0, x1, wallTop, roofHigh, G} = L;
+    const {x0, x1, wallTop, G} = L;
+    // roof slab
     poly([roofPt(0, 0), roofPt(1, 0), roofPt(1, 1), roofPt(0, 1)]);
-    x.fillStyle = '#0a1422'; x.fill(); x.strokeStyle = 'rgba(159,179,201,.5)'; x.lineWidth = 1; x.stroke();
-    const rows = 3, cols = 9, gu = .006, gv = .05;
+    x.fillStyle = pal.roof; x.fill();
+    // panels: flat blue, a single cell line; the strip under the sun turns pale where the light falls
+    const rows = 3, cols = 9, gu = .008, gv = .06;
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
       const pi = clamp((E.panels * 1.6 - (c / cols) * .5 - r * .1) / .5); if (pi <= 0) continue;
       const u0 = c / cols + gu, u1 = (c + 1) / cols - gu, v0 = r / rows + gv, v1 = v0 + ((r + 1) / rows - gv - v0) * pi;
       const A = roofPt(u0, v0), B = roofPt(u1, v0), C = roofPt(u1, v1), D = roofPt(u0, v1);
-      const g = x.createLinearGradient(A[0], A[1], D[0], D[1]); g.addColorStop(0, '#2c66b0'); g.addColorStop(1, '#173a6c');
-      poly([A, B, C, D]); x.fillStyle = g; x.fill();
       const uc = (u0 + u1) / 2;
       let gl = b * .55 * Math.exp(-((uc - st.s) ** 2) / .02);
       if (st.phase === 'reveal') gl += .25 * (1 - st.wave) + .08 * (1 + Math.sin(t * .003 - c * .5));
-      if (gl > .02) { x.fillStyle = `rgba(255,236,190,${Math.min(.8, gl)})`; x.fill(); }
-      x.strokeStyle = 'rgba(150,200,255,.35)'; x.lineWidth = .7; x.beginPath();
-      const M1 = roofPt(uc, v0), M2 = roofPt(uc, v1), N1 = roofPt(u0, (v0 + v1) / 2), N2 = roofPt(u1, (v0 + v1) / 2);
-      x.moveTo(M1[0], M1[1]); x.lineTo(M2[0], M2[1]); x.moveTo(N1[0], N1[1]); x.lineTo(N2[0], N2[1]); x.stroke();
+      poly([A, B, C, D]); x.fillStyle = gl > .02 ? mix(PANEL, CREAM, Math.min(.6, gl * .8)) : PANEL; x.fill();
+      x.strokeStyle = pal.roof; x.lineWidth = 1; x.beginPath();
+      const M1 = roofPt(uc, v0), M2 = roofPt(uc, v1);
+      x.moveTo(M1[0], M1[1]); x.lineTo(M2[0], M2[1]); x.stroke();
     }
-    x.strokeStyle = '#9fb3c9'; x.lineWidth = 1.6; x.beginPath(); x.moveTo(L.mast[0], L.mast[1]); x.lineTo(L.mast[0], wallTop); x.stroke();
-    const fg = x.createLinearGradient(0, wallTop, 0, G); fg.addColorStop(0, '#24406a'); fg.addColorStop(1, '#14243b');
-    x.fillStyle = fg; x.fillRect(x0, wallTop, x1 - x0, G - wallTop);
-    x.fillStyle = 'rgba(243,234,214,.75)'; x.fillRect(x0 - 2, wallTop - 1, x1 - x0 + 4, 3);
-    x.strokeStyle = 'rgba(243,234,214,.06)'; x.lineWidth = 1; x.beginPath();
-    for (let y = wallTop + H * .025; y < G; y += H * .025) { x.moveTo(x0, y); x.lineTo(x1, y); }
-    x.stroke();
-    const o = L.open, og = x.createLinearGradient(0, o.top, 0, G);
-    og.addColorStop(0, '#050b14'); og.addColorStop(1, `rgba(255,170,60,${.12 + st.store * .35})`);
-    x.fillStyle = '#050b14'; x.fillRect(o.a, o.top, o.b - o.a, G - o.top);
-    x.fillStyle = og; x.fillRect(o.a, o.top, o.b - o.a, G - o.top);
-    x.strokeStyle = 'rgba(243,234,214,.35)'; x.strokeRect(o.a, o.top, o.b - o.a, G - o.top);
+    // the cable mast that takes the roof's power to the wire
+    x.strokeStyle = pal.line; x.lineWidth = 1.8; x.beginPath(); x.moveTo(L.mast[0], L.mast[1]); x.lineTo(L.mast[0], wallTop); x.stroke();
+    // walls and eave
+    x.fillStyle = pal.wall; x.fillRect(x0, wallTop, x1 - x0, G - wallTop);
+    x.fillStyle = CREAM; x.fillRect(x0 - 3, wallTop - 1, x1 - x0 + 6, 3);
+    // the shed opening, warming with amber as the storage gives out power
+    const o = L.open;
+    x.fillStyle = pal.door; x.fillRect(o.a, o.top, o.b - o.a, G - o.top);
+    x.globalAlpha = e * (.1 + st.store * .3); x.fillStyle = AMBER; x.fillRect(o.a, o.top, o.b - o.a, G - o.top);
+    x.globalAlpha = e;
+    // the storage battery, cells filling in amber
     const s = L.sto;
-    rr(s.x, s.y, s.w, s.h, 4); x.fillStyle = '#0a1422'; x.fill(); x.strokeStyle = CREAM; x.lineWidth = 1.5; x.stroke();
-    x.fillStyle = CREAM; x.fillRect(s.x + s.w * .38, s.y - 4, s.w * .24, 4);
+    rr(s.x, s.y, s.w, s.h, 4); x.fillStyle = pal.door; x.fill(); x.strokeStyle = CREAM; x.lineWidth = 2; x.stroke();
+    x.fillStyle = CREAM; x.fillRect(s.x + s.w * .36, s.y - 5, s.w * .28, 5);
     for (let i = 0; i < 4; i++) {
       const cy = s.y + s.h * (.1 + i * .21), lv = clamp(st.store * 1.4 - (3 - i) * .2 + .15);
-      x.fillStyle = `rgba(255,197,77,${.12 + lv * .85})`; x.fillRect(s.x + s.w * .14, cy, s.w * .72, s.h * .16);
+      x.fillStyle = mix(NAVY, AMBER, .15 + lv * .85); x.fillRect(s.x + s.w * .16, cy, s.w * .68, s.h * .16);
     }
     x.restore();
   }
@@ -337,73 +328,69 @@
     x.save(); x.translate(ox, 0);
     const mid = (t.x0 + t.x1) / 2, gap = W * .008;
     const cars = [[t.x0, mid - gap, false], [mid + gap, t.x1, true]];
-    x.fillStyle = '#556b84'; x.fillRect(mid - gap - 1, bot - t.h * .35, gap * 2 + 2, t.h * .12);
+    x.fillStyle = pal.trainLow; x.fillRect(mid - gap - 1, bot - t.h * .35, gap * 2 + 2, t.h * .12);
     cars.forEach(([a, b, nose]) => {
       const pts = nose ? [[a, t.top], [b - t.nose, t.top], [b, t.top + t.h * .62], [b, bot], [a, bot]] : [[a, t.top], [b, t.top], [b, bot], [a, bot]];
-      const g = x.createLinearGradient(0, t.top, 0, bot); g.addColorStop(0, '#f4f6f7'); g.addColorStop(.7, '#c9d3da'); g.addColorStop(1, '#97a6b2');
-      poly(pts); x.fillStyle = g; x.fill();
-      x.fillStyle = '#2c66b0';
-      for (let k = 0; k < 4; k++) { const w = (b - a - (nose ? t.nose : 0)) / 4; x.fillRect(a + k * w + 2, t.top - t.h * .07, w - 4, t.h * .07); }
+      poly(pts); x.fillStyle = pal.train; x.fill();
+      // a darker skirt along the bottom
+      x.save(); poly(pts); x.clip(); x.fillStyle = pal.trainLow; x.fillRect(a, bot - t.h * .18, b - a, t.h * .18); x.restore();
+      // roof battery boxes
+      x.fillStyle = PANEL;
+      for (let k = 0; k < 4; k++) { const w = (b - a - (nose ? t.nose : 0)) / 4; x.fillRect(a + k * w + 2, t.top - t.h * .08, w - 4, t.h * .08); }
       const wy = t.top + t.h * .17, wh = t.h * .3, we = b - (nose ? t.nose * .95 : 0) - 4;
-      x.fillStyle = '#10223a'; x.fillRect(a + 4, wy, we - a - 4, wh);
-      x.strokeStyle = 'rgba(200,220,240,.35)'; x.lineWidth = 1; x.beginPath();
+      x.fillStyle = NAVY; x.fillRect(a + 4, wy, we - a - 4, wh);
+      x.strokeStyle = pal.train; x.lineWidth = 2; x.beginPath();
       for (let wx = a + 4 + (we - a) / 5; wx < we - 3; wx += (we - a) / 5) { x.moveTo(wx, wy); x.lineTo(wx, wy + wh); }
       x.stroke();
       if (nose) {
-        poly([[b - t.nose * .95, wy], [b - t.nose * .3, wy], [b - t.nose * .02, wy + wh * 1.05], [b - t.nose * .95, wy + wh]]); x.fillStyle = '#10223a'; x.fill();
-        // headlight
-        x.save(); x.globalCompositeOperation = 'lighter'; x.globalAlpha = .4 + .5 * st.train;
-        const hs = t.h * .35; x.drawImage(sprite, b - hs * .9, bot - t.h * .28 - hs / 2, hs, hs); x.restore();
+        poly([[b - t.nose * .95, wy], [b - t.nose * .3, wy], [b - t.nose * .02, wy + wh * 1.05], [b - t.nose * .95, wy + wh]]); x.fillStyle = NAVY; x.fill();
+        // headlight: lights up as the convoy charges
+        x.fillStyle = mix(pal.trainLow, AMBER, .3 + .7 * st.train);
+        x.beginPath(); x.arc(b - t.h * .14, bot - t.h * .28, t.h * .07, 0, 7); x.fill();
       }
-      x.fillStyle = '#20262d';
+      x.fillStyle = pal.wheel;
       [a + (b - a) * .14, a + (b - a) * .24, b - (b - a) * .24, b - (b - a) * .14].forEach(wx => { x.beginPath(); x.arc(wx, bot + t.h * .02, t.h * .1, 0, 7); x.fill(); });
     });
+    // the convoy's battery, filling left to right
     const g = L.gauge;
-    rr(g.x, g.y, g.w, g.h, g.h / 2); x.fillStyle = 'rgba(10,20,34,.85)'; x.fill();
+    rr(g.x, g.y, g.w, g.h, g.h / 2); x.fillStyle = NAVY; x.fill();
     if (st.train > 0) {
       x.save(); rr(g.x, g.y, g.w, g.h, g.h / 2); x.clip();
-      const fg = x.createLinearGradient(g.x, 0, g.x + g.w, 0); fg.addColorStop(0, '#ff9f2e'); fg.addColorStop(1, '#ffe08a');
-      x.fillStyle = fg; x.fillRect(g.x, g.y, g.w * st.train, g.h); x.restore();
-      x.save(); x.globalCompositeOperation = 'lighter'; x.globalAlpha = .5;
-      x.drawImage(sprite, g.x + g.w * st.train - g.h * 2, g.y + g.h / 2 - g.h * 2, g.h * 4, g.h * 4); x.restore();
+      x.fillStyle = AMBER; x.fillRect(g.x, g.y, g.w * st.train, g.h); x.restore();
     }
     x.restore();
   }
 
   function drawGround() {
     const e = E.ground, G = L.G; if (e <= 0) return;
-    x.strokeStyle = 'rgba(243,234,214,.6)'; x.lineWidth = 2;
+    x.strokeStyle = CREAM; x.globalAlpha = .7; x.lineWidth = 2;
     x.beginPath(); x.moveTo(0, G); x.lineTo(W * e, G); x.stroke();
-    x.strokeStyle = 'rgba(243,234,214,.2)'; x.lineWidth = 2; x.beginPath();
-    for (let xx = 4; xx < W * e; xx += fs * .9) { x.moveTo(xx, G + 2); x.lineTo(xx - 3, G + 6); }
-    x.stroke();
+    x.globalAlpha = 1;
   }
 
   function drawLabels() {
     const a = Math.min(E.ground, E.train), r1 = L.G + fs * 1.45, r2 = L.G + fs * 2.65;
     if (a <= 0) return;
     const sc = L.sto.x + L.sto.w / 2, tc = (L.tr.x0 + L.tr.x1 - L.tr.nose) / 2;
-    lab('STORAGE', sc, r1, 'center', a * .9);
-    lab('batteries', sc, r2, 'center', a * .6, 500);
-    lab('CONVOY', tc, r1, 'center', a);
-    lab(`${Math.round(st.train * 100)}% charged`, tc, r2, 'center', st.train >= 1 ? a : a * .75, st.train >= 1 ? 800 : 500);
-    lab('LOCAL GRID', W - 4, r1, 'right', a);
-    lab(st.train < 1 ? 'waiting…' : 'surplus sold', W - 4, r2, 'right', st.train < 1 ? a * .5 : a, st.train < 1 ? 500 : 800);
+    lab('Storage', sc, r1, 'center', a * .9);
+    lab('batteries', sc, r2, 'center', a * .6, 400);
+    lab('Convoy', tc, r1, 'center', a);
+    lab(`${Math.round(st.train * 100)}% charged`, tc, r2, 'center', st.train >= 1 ? a : a * .7, st.train >= 1 ? 700 : 400);
+    lab('Local grid', W - 4, r1, 'right', a);
+    lab(st.train < 1 ? 'waiting…' : 'surplus sold', W - 4, r2, 'right', st.train < 1 ? a * .5 : a, st.train < 1 ? 400 : 700);
     const ra = E.panels * (1 - st.rev);
-    if (ra > .02) { const [cx, cy] = roofPt(.5, 1); lab('30 kW SOLAR ROOF', cx, cy - fs * .55, 'center', ra * .9); }
+    if (ra > .02) { const [cx, cy] = roofPt(.5, 1); lab('30 kW solar roof', cx, cy - fs * .55, 'center', ra * .9, 600); }
   }
 
   function drawParticles(t) {
-    // the crisp "30 kW" under the sparks, so the number reads cleanly
+    // the solid "30 kW" under the dots, so the number reads cleanly
     if (st.rev > 0 && sub.fz) {
       x.save(); x.font = `800 ${sub.fz}px ${DISP}`; x.textAlign = 'center'; x.textBaseline = 'middle';
-      const g = x.createLinearGradient(0, sub.cy - sub.fz / 2, 0, sub.cy + sub.fz / 2);
-      g.addColorStop(0, '#fff4cf'); g.addColorStop(.6, '#ffc54d'); g.addColorStop(1, '#ff9f2e');
-      x.shadowColor = 'rgba(255,160,40,.85)'; x.shadowBlur = fs * (1.1 + .4 * Math.sin(t * .003));
-      x.globalAlpha = st.rev * .95; x.fillStyle = g; x.fillText('30 kW', sub.cx, sub.cy);
+      x.globalAlpha = st.rev * .95; x.fillStyle = AMBER; x.fillText('30 kW', sub.cx, sub.cy);
       x.restore();
     }
-    x.save(); x.globalCompositeOperation = 'lighter';
+    // energy: small flat amber dots
+    x.save(); x.fillStyle = AMBER;
     for (const p of P) {
       if (p.a <= 0) continue;
       let px = p.x, py = p.y, s = p.r * fs * .7, al = Math.min(1, p.a);
@@ -412,20 +399,13 @@
         s *= 1 - st.rev * .55; al *= 1 - st.rev * (.55 - .3 * Math.sin(t * .004 + p.ph * 3));
       }
       x.globalAlpha = al;
-      x.drawImage(sprite, px - s, py - s, s * 2, s * 2);
-    }
-    x.globalAlpha = 1;
-    flashes.forEach(f => { x.strokeStyle = `rgba(255,220,140,${1 - f.t})`; x.lineWidth = 1.2; x.beginPath(); x.arc(f.x, f.y, 2 + f.t * fs, 0, 7); x.stroke(); });
-    if (st.phase === 'reveal' && st.wave > 0 && st.wave < 1) {
-      const [cx, cy] = roofPt(.5, .5);
-      x.strokeStyle = `rgba(255,197,77,${.6 * (1 - st.wave)})`; x.lineWidth = 3;
-      x.beginPath(); x.arc(cx, cy, st.wave * W * .9, 0, 7); x.stroke();
+      x.beginPath(); x.arc(px, py, Math.max(1, s * .3), 0, 7); x.fill();
     }
     x.restore();
     if (st.rev > 0) {
-      let f = fs * 1.05; x.font = `700 ${f}px ${MONO}`;
+      let f = fs; x.font = `600 ${f}px ${BODY}`;
       const txt = 'charges the train · sells the rest', maxW = W * .7;
-      const w = x.measureText(txt).width; if (w > maxW) { f = Math.max(12, f * maxW / w); x.font = `700 ${f}px ${MONO}`; }
+      const w = x.measureText(txt).width; if (w > maxW) { f = Math.max(12, f * maxW / w); x.font = `600 ${f}px ${BODY}`; }
       const tw = x.measureText(txt).width, cx = clamp(sub.x, tw / 2 + 4, W - tw / 2 - 4);
       x.globalAlpha = st.rev; x.fillStyle = CREAM; x.textAlign = 'center'; x.textBaseline = 'middle';
       x.fillText(txt, cx, sub.y + (1 - st.rev) * 6); x.globalAlpha = 1;

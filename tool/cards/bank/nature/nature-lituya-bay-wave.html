@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-lituya-bay-wave -->
-<!-- Look: a risograph print in two inks, deep magenta and dark teal, printed straight on the card. Halftone dots, grain, fjord ridges, birds and a plate printed slightly off register.
-     Interaction: drag the teal crest to bet the wave's height. The d3 scale zooms out as you lift, so the house shrinks under your bet. Then say how sure you are.
-     Wow: the axis morphs out to 600 m, a magenta 525 m wave prints over your bet with a splash and a jolt, and the house is a speck circled in magenta. -->
+<!-- Look: a flat cut-paper cross-section of Lituya Bay. The fjord walls are two flat tints of the card ink, the sea is a flat band, the wave curls in solid shapes, and the house is a small ink cut-out. One meaning colour, magenta, marks the real wave.
+     Interaction: drag the crest to bet the wave's height. The d3 scale zooms out as you lift, so the house shrinks under your bet. Then say how sure you are.
+     Wow: the axis morphs out to 600 m, a magenta 525 m wave rises behind your bet with a splash and a jolt, and the house is a speck circled in magenta. -->
 <title>The tallest wave</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -15,15 +15,13 @@
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
 .mono{font-family:var(--mono)}
 .hand{font-family:var(--hand)}
-.halo{paint-order:stroke;stroke:#00D451;stroke-width:3.2px;stroke-linejoin:round}
+.lbl{font-family:var(--body);letter-spacing:0;text-transform:none}
+.halo{paint-order:stroke;stroke:var(--c);stroke-width:3.2px;stroke-linejoin:round}
 .hintg{animation:nudge 1.3s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateY(-5px)}}
 .foamA{animation:foam 1.6s linear infinite}
 @keyframes foam{to{stroke-dashoffset:-12}}
-.bird{animation:flap 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-.bird:nth-child(2){animation-delay:-.8s}.bird:nth-child(3){animation-delay:-1.5s}
-@keyframes flap{50%{transform:translateY(-3px) scaleY(.6)}}
-.kit-calm .hintg,.kit-calm .foamA,.kit-calm .bird{animation:none}
+.kit-calm .hintg,.kit-calm .foamA{animation:none}
 </style>
 <article class="card" id="card" data-topic="nature" data-kind="Drag your bet · how sure">
   <div class="in">
@@ -43,7 +41,8 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say');
-  const TEAL = '#06503c', TEALD = '#10100c', PINK = '#c4006e', PAPER = '#f6efe1', GROUND = '#00D451';
+  const K = 'var(--k)', C = 'var(--c)', T = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
+  const PINK = '#c4006e', PINKD = '#8a004d', FOAM = '#fbf7ee';
   const REAL = 525, HOUSE_M = 8;
   const S = {frac: .3, D: 98, g: 29, grow: 1, house: 1, real: 0, ring: 0};
   const Dof = f => 40 * Math.pow(20, f);
@@ -61,23 +60,17 @@
       foam: `M${cx - w * .14},${t + h * .07} Q${cx},${t - 1} ${cx + w * .2},${t + h * .2}`};
   }
 
-  function grain() {
-    const c = document.createElement('canvas'), w = Math.ceil(W / 1.5), h = Math.ceil(H / 1.5);
-    c.width = w; c.height = h;
-    const x = c.getContext('2d'), im = x.createImageData(w, h);
-    for (let i = 0; i < im.data.length; i += 4) {
-      const r = Kit.rnd(); im.data[i] = 40; im.data[i + 1] = 30; im.data[i + 2] = 50; im.data[i + 3] = r > .82 ? Math.pow(Kit.rnd(), 2) * 120 : 0;
-    }
-    x.putImageData(im, 0, 0);
-    return c.toDataURL();
-  }
-
+  // the steep walls of the fjord, as a flat cut-paper silhouette
   function ridge(base, hgt, seed, n) {
     let d = `M-4,${base}`, s = seed;
     const r = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
-    for (let i = 0; i <= n; i++) {
-      const x = (i / n) * (W + 8) - 4, y = base - hgt * (i % 2 ? .45 + r() * .55 : .1 + r() * .3);
-      d += ` L${x},${y}`;
+    let px = -4, py = base - hgt * .3;
+    d += ` L${px},${py}`;
+    for (let i = 1; i <= n; i++) {
+      const x = (i / n) * (W + 8) - 4, y = base - hgt * (i % 2 ? .5 + r() * .5 : .15 + r() * .3);
+      const mx = (px + x) / 2, my = Math.min(py, y) - hgt * .04;
+      d += ` Q${mx},${my} ${x},${y}`;
+      px = x; py = y;
     }
     return d + ` L${W + 4},${base} Z`;
   }
@@ -91,72 +84,55 @@
     GY = H - Math.max(fs * 1.6, H * .09);
     TOP = Math.max(fs * 2, Math.min(fs * 3.4, H * .26));
     const defs = mk('defs', {}, svg);
-    const pat = (id, col, rot, r, a) => { const p = mk('pattern', {id, width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: `rotate(${rot})`}, defs); mk('rect', {width: 5, height: 5, fill: col, opacity: a}, p); mk('circle', {cx: 2.5, cy: 2.5, r, fill: col}, p); };
-    pat('dotT', TEAL, 30, 1.45, .32); pat('dotP', PINK, -15, 1.65, .38); pat('dotS', PINK, 10, 1.2, 0);
-    pat('dotM', TEAL, 45, .95, 0); pat('dotMP', PINK, -30, .8, 0);
-    E.seaPat = mk('pattern', {id: 'seaT', width: 8, height: 6, patternUnits: 'userSpaceOnUse'}, defs);
-    mk('rect', {width: 8, height: 6, fill: TEAL, opacity: .45}, E.seaPat); mk('line', {x1: 0, x2: 5, y1: 3, y2: 3, stroke: TEAL, 'stroke-width': 1.8}, E.seaPat);
-    const fl = mk('filter', {id: 'ink', x: '-5%', y: '-5%', width: '110%', height: '110%'}, defs);
-    mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .9, numOctaves: 2, seed: 3}, fl);
-    mk('feDisplacementMap', {in: 'SourceGraphic', scale: 2.2}, fl);
-    // one text, two plates: a dark copy printed off register under the magenta
-    const mis = mk('filter', {id: 'mis', x: '-10%', y: '-20%', width: '120%', height: '140%'}, defs);
-    mk('feOffset', {in: 'SourceAlpha', dx: -1.8, dy: 1.6, result: 'o'}, mis);
-    mk('feFlood', {'flood-color': TEALD}, mis);
-    mk('feComposite', {in2: 'o', operator: 'in', result: 's'}, mis);
-    mk('feBlend', {in: 'SourceGraphic', in2: 's', mode: 'multiply'}, mis);
+    // the sea: a flat band with small ripples that drift
+    E.seaPat = mk('pattern', {id: 'seaT', width: 8, height: 9, patternUnits: 'userSpaceOnUse'}, defs);
+    mk('rect', {width: 8, height: 9, style: `fill:${T(40)}`}, E.seaPat);
+    mk('path', {d: 'M1,5 q2,-2.2 4,0', fill: 'none', style: `stroke:${T(62)};stroke-width:1.5;stroke-linecap:round`}, E.seaPat);
 
-    // halftone sun, pink plate
-    const sr = Math.min(W, H) * .16;
-    mk('circle', {cx: W * .19, cy: Math.max(sr + 6, H * .2), r: sr, fill: 'url(#dotS)', style: 'mix-blend-mode:multiply', opacity: .5}, svg);
-    // birds
-    const bg = mk('g', {fill: 'none', stroke: TEALD, 'stroke-width': 1.4, 'stroke-linecap': 'round', opacity: .75}, svg);
-    [[.36, .14, 1], [.42, .2, .75], [.31, .24, .6]].forEach(([x, y, s]) => {
-      const k = fs * .5 * s, bx = W * x, by = Math.max(10, H * y);
-      mk('path', {class: 'bird', d: `M${bx - k},${by - k * .4} Q${bx - k * .4},${by - k * .6} ${bx},${by} Q${bx + k * .4},${by - k * .6} ${bx + k},${by - k * .4}`}, bg);
-    });
-    // fjord walls of Lituya Bay, far and faint
+    // fjord walls of Lituya Bay, the far one paler
     const hm = Math.min(H * .2, (GY - TOP) * .38);
-    mk('path', {d: ridge(GY, hm, 7, 9), fill: 'url(#dotMP)', opacity: .55, transform: 'translate(1.6,-1.2)', style: 'mix-blend-mode:multiply'}, svg);
-    mk('path', {d: ridge(GY, hm * .72, 31, 13), fill: 'url(#dotM)', stroke: TEAL, 'stroke-width': 1, 'stroke-opacity': .35, opacity: .6, style: 'mix-blend-mode:multiply'}, svg);
+    mk('path', {d: ridge(GY, hm, 7, 7), style: `fill:${T(13)}`}, svg);
+    mk('path', {d: ridge(GY, hm * .72, 31, 9), style: `fill:${T(24)}`}, svg);
 
     E.axis = mk('g', {}, svg);
-    E.teal = mk('g', {filter: 'url(#ink)', style: 'mix-blend-mode:multiply'}, svg);
-    E.pink = mk('g', {filter: 'url(#ink)', transform: 'translate(1.6,-1.2)', style: 'mix-blend-mode:multiply'}, svg);
+    E.pink = mk('g', {}, svg);
+    E.teal = mk('g', {}, svg);
+    E.top = mk('g', {}, svg);
     E.lab = mk('g', {}, svg);
 
-    // teal plate: guess wave, house, sea
-    E.gLine = mk('line', {stroke: TEAL, 'stroke-width': 1.4, 'stroke-dasharray': '4 4'}, E.teal);
-    E.gBody = mk('path', {fill: 'url(#dotT)', stroke: TEAL, 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, E.teal);
-    E.gBar = mk('path', {fill: TEAL, opacity: .7}, E.teal);
-    E.gFoam = mk('path', {class: 'foamA', fill: 'none', stroke: PAPER, 'stroke-width': 2.6, 'stroke-dasharray': '1 5', 'stroke-linecap': 'round'}, E.teal);
-    E.house = mk('g', {}, E.teal);
-    mk('path', {d: 'M.5,0 L1.06,.44 L.94,.44 L.94,1 L.06,1 L.06,.44 L-.06,.44 Z M.7,.1 L.82,.1 L.82,.3 L.7,.2 Z', fill: TEALD}, E.house);
-    mk('rect', {x: .42, y: .68, width: .16, height: .32, fill: PAPER}, E.house);
-    E.sea = mk('rect', {x: -4, y: GY, width: W + 8, height: H - GY + 4, fill: 'url(#seaT)'}, E.teal);
-    mk('line', {x1: 0, x2: W, y1: GY, y2: GY, stroke: TEAL, 'stroke-width': 2}, E.teal);
-
-    // pink plate: lit windows, the real wave, the ring
-    E.win = mk('g', {}, E.pink);
-    mk('rect', {x: .16, y: .52, width: .2, height: .16, fill: PINK}, E.win); mk('rect', {x: .64, y: .52, width: .2, height: .16, fill: PINK}, E.win);
+    // the real wave, behind the bet
     E.rLine = mk('line', {stroke: PINK, 'stroke-width': 1.6, 'stroke-dasharray': '6 4'}, E.pink);
-    E.rBody = mk('path', {fill: 'url(#dotP)', stroke: PINK, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, E.pink);
-    E.rBar = mk('path', {fill: PINK, opacity: .8}, E.pink);
-    E.rFoam = mk('path', {class: 'foamA', fill: 'none', stroke: PAPER, 'stroke-width': 2.8, 'stroke-dasharray': '1 5', 'stroke-linecap': 'round'}, E.pink);
-    E.ring = mk('circle', {fill: 'none', stroke: PINK, 'stroke-width': 2.4}, E.pink);
-    E.splash = mk('g', {}, E.pink);
+    E.rBody = mk('path', {fill: PINK, stroke: PINKD, 'stroke-width': 2, 'stroke-linejoin': 'round'}, E.pink);
+    E.rBar = mk('path', {fill: PINKD}, E.pink);
+    E.rFoam = mk('path', {class: 'foamA', fill: 'none', stroke: FOAM, 'stroke-width': 2.6, 'stroke-dasharray': '1 5', 'stroke-linecap': 'round'}, E.pink);
+
+    // your bet wave, the house, the sea
+    E.gLine = mk('line', {'stroke-width': 1.4, 'stroke-dasharray': '4 4', style: `stroke:${K}`}, E.teal);
+    E.gBody = mk('path', {'stroke-width': 2, 'stroke-linejoin': 'round', style: `fill:${T(60)};stroke:${K}`}, E.teal);
+    E.gBar = mk('path', {style: `fill:${K}`}, E.teal);
+    E.gFoam = mk('path', {class: 'foamA', fill: 'none', stroke: FOAM, 'stroke-width': 2.4, 'stroke-dasharray': '1 5', 'stroke-linecap': 'round'}, E.teal);
+    E.house = mk('g', {}, E.teal);
+    mk('path', {d: 'M.5,0 L1.06,.44 L.94,.44 L.94,1 L.06,1 L.06,.44 L-.06,.44 Z M.7,.1 L.82,.1 L.82,.3 L.7,.2 Z', style: `fill:${K}`}, E.house);
+    mk('rect', {x: .42, y: .68, width: .16, height: .32, style: `fill:${C}`}, E.house);
+    E.win = mk('g', {}, E.teal);
+    mk('rect', {x: .16, y: .52, width: .2, height: .16, style: `fill:${C}`}, E.win); mk('rect', {x: .64, y: .52, width: .2, height: .16, style: `fill:${C}`}, E.win);
+    E.sea = mk('rect', {x: -4, y: GY, width: W + 8, height: H - GY + 4, fill: 'url(#seaT)'}, E.teal);
+    mk('line', {x1: 0, x2: W, y1: GY, y2: GY, 'stroke-width': 2, style: `stroke:${K}`}, E.teal);
+
+    // the ring round the house, and the splash
+    E.ring = mk('circle', {fill: 'none', stroke: PINK, 'stroke-width': 2.4}, E.top);
+    E.splash = mk('g', {}, E.top);
 
     // labels
-    E.gPill = mk('rect', {fill: GROUND, rx: 4, opacity: .92}, E.lab);
-    E.gTag = mk('text', {class: 'mono', fill: TEALD, 'font-size': fs, 'font-weight': 700, 'text-anchor': 'end'}, E.lab);
-    E.hLab = mk('text', {class: 'hand halo', fill: TEALD, 'font-size': fs * 1.15}, E.lab);
-    E.rText = mk('text', {fill: PINK, 'font-size': big, 'font-weight': 800, 'text-anchor': 'middle', 'font-family': 'var(--display)', filter: 'url(#mis)'}, E.lab);
+    E.gPill = mk('rect', {style: 'display:none'}, E.lab);
+    E.gTag = mk('text', {class: 'lbl halo', 'font-size': fs, 'font-weight': 700, 'text-anchor': 'end', style: `fill:${K}`}, E.lab);
+    E.hLab = mk('text', {class: 'hand halo', 'font-size': fs * 1.15, style: `fill:${K}`}, E.lab);
+    E.rText = mk('text', {class: 'halo', fill: PINK, 'font-size': big, 'font-weight': 800, 'text-anchor': 'middle', 'font-family': 'var(--display)'}, E.lab);
     E.hint = mk('g', {class: 'hintg'}, E.lab);
-    E.hintP = mk('path', {fill: 'none', stroke: TEALD, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.hint);
-    E.hintT = mk('text', {class: 'hand halo', fill: TEALD, 'font-size': fs * 1.15, 'text-anchor': 'start'}, E.hint);
+    E.hintP = mk('path', {fill: 'none', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: `stroke:${K}`}, E.hint);
+    E.hintT = mk('text', {class: 'hand halo', 'font-size': fs * 1.15, 'text-anchor': 'start', style: `fill:${K}`}, E.hint);
     if (touched) E.hint.style.display = 'none';
 
-    mk('image', {href: grain(), x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'none', style: 'mix-blend-mode:multiply;pointer-events:none', opacity: .7}, svg);
     render();
   }
 
@@ -183,8 +159,8 @@
       if (yy > GY - fs * .6) return;
       const txt = `${m} m`, tR = W - fs * .75, tL = tR - txt.length * fs * .62 - 4;
       if (ringOn && tL < hlR && yy + fs * .35 + 3 > hlT) return;
-      mk('line', {x1: W - fs * .55, x2: W, y1: yy, y2: yy, stroke: TEALD, 'stroke-width': 1.4}, E.axis);
-      const t = mk('text', {x: tR, y: yy + fs * .35, 'text-anchor': 'end', fill: TEALD, 'font-size': fs, class: 'mono halo', 'font-weight': 600, opacity: .85}, E.axis);
+      mk('line', {x1: W - fs * .55, x2: W, y1: yy, y2: yy, 'stroke-width': 1.6, style: `stroke:${K}`}, E.axis);
+      const t = mk('text', {x: tR, y: yy + fs * .35, 'text-anchor': 'end', 'font-size': fs, class: 'lbl halo', 'font-weight': 600, style: `fill:${K}`}, E.axis);
       t.textContent = txt;
     });
     const axisL = W - fs * 4.6;
@@ -192,6 +168,9 @@
     // your bet
     const gx = GX(), gh = Math.max(0, GY - yOf(S.g * S.grow)), gw = wave(gx, gh);
     E.gBody.setAttribute('d', gw.body); E.gBar.setAttribute('d', gw.barrel); E.gFoam.setAttribute('d', gw.foam);
+    // a bet taller than the truth turns to an outline, so the real wave shows through
+    const over = done && S.g > REAL && S.real > .5;
+    E.gBody.style.fillOpacity = over ? 0 : ''; E.gBar.style.opacity = over ? 0 : '';
     E.gLine.setAttribute('x1', gx); E.gLine.setAttribute('x2', axisL); E.gLine.setAttribute('y1', gw.t); E.gLine.setAttribute('y2', gw.t);
     const tagY = Math.min(GY - fs * .5, gw.t + fs * .35), tagX = gx - fs * .8, tagTxt = `bet: ${fmt(S.g)} m`;
     E.gTag.setAttribute('x', tagX); E.gTag.setAttribute('y', tagY); E.gTag.textContent = tagTxt;
@@ -233,7 +212,7 @@
     if (!E.splash) return;
     const cx = RX(), t = GY - (REAL / S.D) * (GY - TOP);
     for (let i = 0; i < 18; i++) {
-      const c = mk('circle', {cx, cy: t, r: 1.5 + Kit.rnd() * 3.5, fill: PINK}, E.splash);
+      const c = mk('circle', {cx, cy: t, r: 1.5 + Kit.rnd() * 3.5, fill: i % 3 ? PINK : FOAM}, E.splash);
       const a = -Math.PI * (.1 + Kit.rnd() * .8), d = fs * (2 + Kit.rnd() * 4);
       gsap.fromTo(c, {attr: {cx, cy: t}, opacity: 1}, {attr: {cx: cx + Math.cos(a) * d * 1.4, cy: t + Math.sin(a) * d + fs * 2}, opacity: 0, duration: 1 + Kit.rnd() * .6, ease: 'power2.out', onComplete: () => c.remove()});
     }

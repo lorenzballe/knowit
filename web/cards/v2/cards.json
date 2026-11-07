@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611041024,
- "built": "2026-11-04T10:24:42Z",
+ "version": 202611072330,
+ "built": "2026-11-07T23:30:51Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -34199,8 +34199,8 @@
     "touch": "drags",
     "label": "A draggable timeline titled 'The resource curse', asking why the DR Congo is poor despite its gold and cobalt. It shows riches taken through exploitation and conflict, with the wealth flowing out past the people.",
     "ground": "#0d2326",
-    "page": "pages/economics-resource-curse-flask.html?v=effd1bf42b5a",
-    "bytes": 29629
+    "page": "pages/economics-resource-curse-flask.html?v=7168fd95fa6b",
+    "bytes": 22812
    },
    "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=I-MMteT9YTM&t=132s",
@@ -35677,8 +35677,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A timeline-style page titled The great split. It asks what happened in 2007 that changed Venezuela's oil industry for good. The reader drags a pencil across the page to reveal the answer.",
-    "page": "pages/economics-the-great-split.html?v=1a3e49b34384",
-    "bytes": 29664
+    "page": "pages/economics-the-great-split.html?v=01b12b51e669",
+    "bytes": 26544
    },
    "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=pp21fmWKe48&t=574s",
@@ -43158,8 +43158,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A before-and-after picture of a mine tunnel inside a mountain turned into an apple store. A slider runs between them. The prompt asks the reader to drag the slider to turn the mine's empty void into a store.",
-    "page": "pages/food-mine-apple-cells.html?v=290386cdba7f",
-    "bytes": 7665
+    "page": "pages/food-mine-apple-cells.html?v=6b633eebaa0d",
+    "bytes": 8590
    },
    "source": "Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=YEMGl9gG9Zk&t=157s",
@@ -53154,8 +53154,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Map of the Gaza Strip. Tap the strip to watch Israeli settlers leave it. The question asks what Israel still controls in Gaza after withdrawing.",
-    "page": "pages/history-gaza-kept-controls.html?v=4ee822b4150d",
-    "bytes": 27040
+    "page": "pages/history-gaza-kept-controls.html?v=ed2504eec8c4",
+    "bytes": 20663
    },
    "source": "Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=hBImPpGnYKE&t=919s",
@@ -53232,8 +53232,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "The Gold Codes page shows a plastic card and a nuclear football briefcase with a screen. It asks the reader to drag the president's plastic card into the football and line up the row that matches the screen.",
-    "page": "pages/history-gold-codes-card.html?v=cc0e05239337",
-    "bytes": 34192
+    "page": "pages/history-gold-codes-card.html?v=df40296ac4a5",
+    "bytes": 25721
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=107s",
@@ -56439,8 +56439,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Four cards to put in order: a research rocket lifts off from Norway; radar reads it as a nuclear missile; an alarm sounds; the nuclear briefcase goes into operational mode. Tap them in the order they happened.",
-    "page": "pages/history-norwegian-rocket-alarm.html?v=ae7b63621bae",
-    "bytes": 32794
+    "page": "pages/history-norwegian-rocket-alarm.html?v=22cf4047dfe4",
+    "bytes": 28614
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=448s",
@@ -56479,8 +56479,8 @@
     "touch": "taps",
     "label": "Interactive flowchart with a glowing piece to tap, one link at a time. Question: who makes the nuclear launch codes, and how do they reach the president?",
     "ground": "#1b2537",
-    "page": "pages/history-nsa-gold-codes.html?v=fcbe465c62e2",
-    "bytes": 37527
+    "page": "pages/history-nsa-gold-codes.html?v=4e022c127da9",
+    "bytes": 31955
    },
    "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=107s",
@@ -58146,8 +58146,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Multiple-choice card asking what the workers' graves near the pyramids say about who they were. Options: slaves dumped where they fell; skilled workers honoured in death; no graves left; skilled workers, not slaves. The reader picks one, then rates how sure they are.",
-    "page": "pages/history-pyramid-worker-tombs.html?v=ed8001e691d3",
-    "bytes": 10588
+    "page": "pages/history-pyramid-worker-tombs.html?v=f1857fa0b046",
+    "bytes": 11416
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
    "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=100s",
@@ -60098,8 +60098,8 @@
     "touch": "taps",
     "label": "A sorting game titled 'Three inventions, millions of deaths'. Three inventions (leaded gas, CFC Freon, and a pulley bed lift) must be sorted into two sides: harmed millions (the whole world) or killed only him (its inventor). Tap a card to sort it.",
     "graded": false,
-    "page": "pages/history-three-deadly-inventions.html?v=7ca72ef5d3cd",
-    "bytes": 17620
+    "page": "pages/history-three-deadly-inventions.html?v=d234672da7e9",
+    "bytes": 15184
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA",
@@ -60214,8 +60214,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Illustration of the Titanic with its stern raised as the bow sinks, and three propellers hanging out of the water. The page asks the reader to drag the ship's bow down into the sea and see how the propellers' weight snaps the hull.",
-    "page": "pages/history-titanic-propeller-lever.html?v=8e73e00ea3be",
-    "bytes": 12010
+    "page": "pages/history-titanic-propeller-lever.html?v=b82cd8b6d69d",
+    "bytes": 12236
    },
    "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=hR2yfGGHniY&t=485s",
@@ -60373,8 +60373,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A scale with four stars to tap. Left side: Western interest and Jewish influence and unity. Right side: Arab division and WWII alignment with Germany. Arabs are 60% of the population. Tap each star to see which way the scale tips.",
-    "page": "pages/history-un-partition-scale.html?v=65c21cef98d8",
-    "bytes": 21657
+    "page": "pages/history-un-partition-scale.html?v=a579f8a99236",
+    "bytes": 17350
    },
    "source": "Geopop, “Le ragioni storiche della questione israelo-palestinese. Perché si fanno la guerra? La spiegazione” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=hBImPpGnYKE&t=558s",
@@ -60493,8 +60493,8 @@
     "label": "A page asking how long the Vajont wave took to wipe out more than ten villages. A pink draggable marker sets a time guess on a scale, followed by a choice of how sure the reader is.",
     "graded": false,
     "ground": "#1a0b10",
-    "page": "pages/history-vajont-four-minutes.html?v=e38562f9979b",
-    "bytes": 26894
+    "page": "pages/history-vajont-four-minutes.html?v=ca0d35c519b4",
+    "bytes": 25428
    },
    "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=xUtCwhN8-pQ&t=20s",
@@ -60652,8 +60652,8 @@
     "touch": "drags",
     "label": "A draggable marker asks the reader to guess the mercury level at a mountain's summit, to test Pascal's idea that air has weight. The page shows the mercury sinking as a summit has less air above it.",
     "graded": false,
-    "page": "pages/history-weighing-the-air.html?v=f410762752a2",
-    "bytes": 16613
+    "page": "pages/history-weighing-the-air.html?v=8031ee0c404c",
+    "bytes": 16052
    },
    "source": "Veritasium, “World's Longest Straw” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=HUmZrtiXDik",
@@ -65480,8 +65480,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Interactive page about fertilisation. Tap a sperm to send it through the egg's wall, then see the egg switch off its chemical attraction signals and close its wall so the other sperm cannot get in.",
-    "page": "pages/human_body-egg-breaks-spell.html?v=10e3394fec03",
-    "bytes": 8542
+    "page": "pages/human_body-egg-breaks-spell.html?v=49d33c7b6d0c",
+    "bytes": 9450
    },
    "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=vCWzf0yxik8&t=193s",
@@ -68398,8 +68398,8 @@
     "touch": "drags",
     "label": "Asks whether grandparents' lives can affect your DNA activity, with two choices: No, your DNA starts fresh, or Yes, a little, some marks pass down. A strand to rub shows a grandparent's life leaving marks on her DNA.",
     "graded": false,
-    "page": "pages/human_body-inherited-gene-switches.html?v=a3fdf9632c9f",
-    "bytes": 26364
+    "page": "pages/human_body-inherited-gene-switches.html?v=49e4fd3e2b32",
+    "bytes": 20415
    },
    "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
    "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=285s",
@@ -68475,8 +68475,8 @@
     "touch": "drags",
     "label": "A diagram of an artery with a Pb token to drag into the blood, asking how leaded gasoline causes heart disease. The artery wall moves with each heartbeat.",
     "ground": "#f1e2cb",
-    "page": "pages/human_body-lead-hardened-arteries.html?v=2d363b5f438d",
-    "bytes": 27032
+    "page": "pages/human_body-lead-hardened-arteries.html?v=64445aa5cf53",
+    "bytes": 23818
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=1139s",
@@ -72134,8 +72134,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A glowing radioactive atom sits outside a body outline. The reader drags it down, past the skin and into a cell, to see how close range changes where its radiation lands.",
-    "page": "pages/human_body-radioactive-atom-inside.html?v=26c7d89867e4",
-    "bytes": 8364
+    "page": "pages/human_body-radioactive-atom-inside.html?v=9666272a6f67",
+    "bytes": 9490
    },
    "source": "Veritasium, “Radiation vs Radioactive Atoms” (YouTube, 2011)",
    "reference": "https://www.youtube.com/watch?v=sehKAccM8p0&t=139s",
@@ -90036,8 +90036,8 @@
     "touch": "taps",
     "label": "Multiple-choice quiz titled 'Abolished: the switch'. It says that in 2019 an EU vote targeted summer time and asks what the vote abolished. Options: summer time itself, the switch between the two, or winter time.",
     "ground": "#0c1a21",
-    "page": "pages/life-permanent-time-choice.html?v=b4d873938b61",
-    "bytes": 20930
+    "page": "pages/life-permanent-time-choice.html?v=1c3f77ac0de5",
+    "bytes": 16657
    },
    "source": "Geopop, “Dall'ora legale all'ora solare: i pro e contro del cambio orario e perché si parla di abolizione” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=Fu6AT5WLgJg&t=263s",
@@ -96327,8 +96327,8 @@
     "touch": "drags",
     "label": "A dial labelled HAKEN 1961 that the reader drags to feed bigger knots to Haken's scanner, while a clock shows how long the run takes. Asks how long the knot check takes as knots grow.",
     "ground": "#0c0716",
-    "page": "pages/maths-hakens-knot-scanner.html?v=30faea4d9321",
-    "bytes": 22321
+    "page": "pages/maths-hakens-knot-scanner.html?v=5050ba11480d",
+    "bytes": 18401
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=644s",
@@ -96521,8 +96521,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Two knot diagrams, labeled Knot A and Knot B, with a question mark between them. The page asks whether they are the same knot, offering the choices 'Same knot' or 'Different knots', then asks the reader to bet and say how sure they are.",
-    "page": "pages/maths-knot-equivalence.html?v=27e51eee077f",
-    "bytes": 20693
+    "page": "pages/maths-knot-equivalence.html?v=6944baa78a6e",
+    "bytes": 16638
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=220s",
@@ -97140,8 +97140,8 @@
     "touch": "drags",
     "label": "A world map in Mercator projection with Russia and Africa. The reader is asked to drag Russia down to the equator to see whether Russia still looks bigger than Africa.",
     "ground": "#060912",
-    "page": "pages/maths-mercator-russia.html?v=231e469246e1",
-    "bytes": 18284
+    "page": "pages/maths-mercator-russia.html?v=2296a2e8caab",
+    "bytes": 14842
    },
    "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=cKRRHQStYH0&t=71s",
@@ -97219,8 +97219,8 @@
     "touch": "drags",
     "label": "Glass tubes stacked for each doubling of p, with gold beads marking the Mersenne primes found so far. The level never drops as p doubles. Drag the glass to double p again and again.",
     "ground": "#0c2630",
-    "page": "pages/maths-mersenne-glass-rack.html?v=5f5f92016e51",
-    "bytes": 21989
+    "page": "pages/maths-mersenne-glass-rack.html?v=008bc4212a43",
+    "bytes": 19062
    },
    "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=1308s",
@@ -98509,8 +98509,8 @@
     "touch": "drags",
     "label": "A draggable rail for moving candidate B to the top of a voter's ranking, one voter at a time, asking which single voter ends up deciding the society-wide result.",
     "ground": "#0b1828",
-    "page": "pages/maths-pivotal-voter-dictator.html?v=5118b635a29e",
-    "bytes": 23791
+    "page": "pages/maths-pivotal-voter-dictator.html?v=f9044fc7dc65",
+    "bytes": 18194
    },
    "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=957s",
@@ -100359,8 +100359,8 @@
     "touch": "taps",
     "label": "Page asks how the international cancer agency classifies alcohol. Each tap adds one study until the evidence is sufficient, then reveals Group 1: carcinogenic to humans, listed alongside cigarette smoke.",
     "ground": "#f2eee4",
-    "page": "pages/medicine-alcohol-group-one.html?v=619b7177bfde",
-    "bytes": 20914
+    "page": "pages/medicine-alcohol-group-one.html?v=20733d4f6819",
+    "bytes": 19683
    },
    "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=205s",
@@ -106951,8 +106951,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A slider labelled 'Time since last use' starts at 'just taken'. Drag it forward to see two views of one scene. The drug leaves both, but in one view a trippy visual distortion stays for months.",
-    "page": "pages/medicine-lingering-flashbacks.html?v=618b59541d4f",
-    "bytes": 8727
+    "page": "pages/medicine-lingering-flashbacks.html?v=35489d81cfac",
+    "bytes": 9809
    },
    "source": "Geopop, “Peyote e allucinazioni: la verità scientifica sul cactus psichedelico” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=tfQTsycN6KQ&t=638s",
@@ -108724,8 +108724,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A lab test card asking why 'pink cocaine' is a misleading name. Tests check the two substances the name promises, cocaine and 2C-B, against ketamine, MDMA, caffeine and opioids, which the name does not mention.",
-    "page": "pages/medicine-pink-cocaine-name.html?v=4f6c00b79d52",
-    "bytes": 20585
+    "page": "pages/medicine-pink-cocaine-name.html?v=f5ed9d9e93f8",
+    "bytes": 17234
    },
    "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=meoJvw-9tM4&t=208s",
@@ -128811,8 +128811,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A cave cross-section with numbered glowing spots marking the steps of a rescue, with an injured caver at the bottom. The question asks the shortest possible rescue time. Tapping spot 1 starts a clock that runs through the steps.",
-    "page": "pages/nature-cave-rescue-time.html?v=35e3000a4d63",
-    "bytes": 8588
+    "page": "pages/nature-cave-rescue-time.html?v=69a3deeddbe8",
+    "bytes": 9388
    },
    "source": "Geopop, “SPELEOLOGIA: ME LA SONO FATTA UN PO' SOTTO, MA CHE AVVENTURA! 🎬” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=alSGiLnBsnQ&t=290s",
@@ -132375,8 +132375,8 @@
     "touch": "taps",
     "label": "Quiz page: a slab of Europe swung 25 million years ago. Which way did it swing, clockwise or anticlockwise? A five-step diagram shows the crust tearing, the slab breaking off and swinging, the floor sinking, and the sea flooding in.",
     "ground": "#070b18",
-    "page": "pages/nature-europe-slab-swing.html?v=03c2d6414718",
-    "bytes": 26204
+    "page": "pages/nature-europe-slab-swing.html?v=4fb58fadff4a",
+    "bytes": 21997
    },
    "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=DTOssDc8keo&t=777s",
@@ -134551,8 +134551,8 @@
     "touch": "drags",
     "label": "A wave-height guessing game. The page shows a tsunami wave, and the reader drags its crest upward to the height they think the 1958 Lituya Bay, Alaska wave reached.",
     "graded": false,
-    "page": "pages/nature-lituya-bay-wave.html?v=95cbda534b2d",
-    "bytes": 19674
+    "page": "pages/nature-lituya-bay-wave.html?v=8ad494a1dfa6",
+    "bytes": 17470
    },
    "source": "Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=bEL4wbv_nOo&t=17s",
@@ -136792,8 +136792,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Page asks where natural glass, like obsidian, comes from. Four choices: magma that cools very fast in the air; magma that cools slowly deep underground; crystals pressed together under the sea; magma cooled in a hurry. The reader picks one, then a volcano animation shows the answer.",
-    "page": "pages/nature-obsidian-natural-glass.html?v=c91d786e175c",
-    "bytes": 8888
+    "page": "pages/nature-obsidian-natural-glass.html?v=e41e6bee95b2",
+    "bytes": 9756
    },
    "source": "Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=QB4WuTk_ja8&t=258s",
@@ -137645,8 +137645,8 @@
     "touch": "drags",
     "label": "A map of the Pacific Ocean with a swirling haze marking floating plastic. The question asks how big this plastic island is compared to a country. A draggable outline of France can be dropped onto the haze at the same map scale.",
     "ground": "#06324d",
-    "page": "pages/nature-plastic-patch-france.html?v=924e11d91c8e",
-    "bytes": 23593
+    "page": "pages/nature-plastic-patch-france.html?v=50c3d6406095",
+    "bytes": 19670
    },
    "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=Lgr3FBt_QM8",
@@ -139534,8 +139534,8 @@
     "touch": "drags",
     "label": "Interactive card titled 'Take the shark away' asks why losing sharks would throw the whole sea off balance. A draggable shark is shown; the reader drags it up to a boat to remove it from the ocean.",
     "ground": "#06283f",
-    "page": "pages/nature-sharks-food-chain.html?v=b34b2e1030e1",
-    "bytes": 25191
+    "page": "pages/nature-sharks-food-chain.html?v=1b6fa4f730b5",
+    "bytes": 22549
    },
    "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=138s",
@@ -140748,8 +140748,8 @@
     "touch": "drags",
     "label": "Question page asking where most of a tree's mass originates, with a draggable knob to guess how much came from the soil. The reveal states that about 95% of dry mass comes from air, via carbon dioxide taken in.",
     "graded": false,
-    "page": "pages/nature-trees-from-air.html?v=94ad5d4dbabb",
-    "bytes": 21202
+    "page": "pages/nature-trees-from-air.html?v=2b7cb57298b6",
+    "bytes": 22472
    },
    "source": "Veritasium, “Where Do Trees Get Their Mass?” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=2KZb2_vcNTg",
@@ -140945,8 +140945,8 @@
     "touch": "drags",
     "label": "A question asks what happens to a tsunami's speed as it approaches the coast, with three choices: it speeds up, stays the same, or slows down. A wave replay control lets the reader watch the wave move into shallow water.",
     "ground": "#060a14",
-    "page": "pages/nature-tsunami-slows-down.html?v=10eb1f20459e",
-    "bytes": 21361
+    "page": "pages/nature-tsunami-slows-down.html?v=7ab0d587a872",
+    "bytes": 16481
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=893s",
@@ -142020,8 +142020,8 @@
     "touch": "drags",
     "label": "A thermometer you drag upward from +20 °C toward +38 °C, set against a snow-covered city, asking what unusual summer temperatures Yakutsk has recorded.",
     "ground": "#0a2234",
-    "page": "pages/nature-yakutsk-heat-spikes.html?v=fb4647b443d4",
-    "bytes": 27433
+    "page": "pages/nature-yakutsk-heat-spikes.html?v=ea1d304dc204",
+    "bytes": 23648
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=332s",
@@ -170570,8 +170570,8 @@
     "touch": "drags",
     "label": "Titled The road that climbs downhill, an optical illusion page asks why a downhill road looks uphill. A swing-the-needle control asks whether the road's middle stretch is going up or down, with a short explanation about judging slope against nearby road when no horizon is visible.",
     "ground": "#17231d",
-    "page": "pages/psychology-gravity-hill.html?v=edde457ba3e4",
-    "bytes": 28070
+    "page": "pages/psychology-gravity-hill.html?v=d892b73dae35",
+    "bytes": 22838
    },
    "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=GDR2odTE7dM&t=918s",
@@ -175912,8 +175912,8 @@
     "label": "A slot machine screen with a spin button. The heading asks why flashing lights and frequent small wins keep players playing. Tap the machine to spin; each spin costs one coin from your pocket.",
     "graded": false,
     "ground": "#1b1423",
-    "page": "pages/psychology-slot-reward-loop.html?v=c87a39b7ed63",
-    "bytes": 33893
+    "page": "pages/psychology-slot-reward-loop.html?v=86d355087cba",
+    "bytes": 29832
    },
    "source": "Geopop, “Slot machine, la tecnologia che c'è dietro e i meccanismi che ci spingono a continuare a giocare” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=5x3OF3zIuAc",
@@ -176085,8 +176085,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A labelled tube shown spinning, with two buttons, Press the O and Press the X. The question asks why you only see the side you press.",
-    "page": "pages/psychology-spinning-tube.html?v=b04971a91770",
-    "bytes": 7676
+    "page": "pages/psychology-spinning-tube.html?v=a43cda366e73",
+    "bytes": 9286
    },
    "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=wQTVcaA3PQw&t=18s",
@@ -179640,8 +179640,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Cross-section diagram of Antarctica with the ice sheet lifted away, showing an ancient craton under younger layers. The reader is asked to drag a drill bit down through East Antarctica to see how old its rocks are.",
-    "page": "pages/science-antarctica-ancient-craton.html?v=4a43fd2d001f",
-    "bytes": 7686
+    "page": "pages/science-antarctica-ancient-craton.html?v=6ddecb6e0a92",
+    "bytes": 8803
    },
    "source": "Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=nCRYmQqs-yc&t=90s",
@@ -180651,8 +180651,8 @@
     "touch": "taps",
     "label": "A bouncing egg with a TAP TO FIZZ heading. It asks what causes the tiny bubbles that let the egg bounce, and says tapping React lets the shell and vinegar meet one step at a time.",
     "ground": "#070b1c",
-    "page": "pages/science-bouncing-egg-bubbles.html?v=50278cbef567",
-    "bytes": 22874
+    "page": "pages/science-bouncing-egg-bubbles.html?v=9bfbcc0cea10",
+    "bytes": 18496
    },
    "source": "Geopop, “L'uovo che rimbalza!” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=CKE7qFWpADI&t=28s",
@@ -181200,8 +181200,8 @@
     "touch": "taps",
     "label": "Four step cards describing how CFCs destroy ozone, to be tapped in the order they happen: a chlorine atom breaks free, the CFC drifts up to the stratosphere, the chlorine breaks an ozone molecule, a UV photon hits the CFC.",
     "ground": "#f5ecdc",
-    "page": "pages/science-cfc-ozone-hole.html?v=6ea6547c5054",
-    "bytes": 22397
+    "page": "pages/science-cfc-ozone-hole.html?v=bb32f048630e",
+    "bytes": 18947
    },
    "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=1261s",
@@ -183712,8 +183712,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A desert near Darvaza, Turkmenistan, with a drill rig on the sand. The question asks how a pressure blowout during gas drilling formed the Darvaza crater. Tap the drill rig to start drilling.",
-    "page": "pages/science-darvaza-gas-blowout.html?v=a8cf24158e36",
-    "bytes": 10586
+    "page": "pages/science-darvaza-gas-blowout.html?v=96c88375e1b0",
+    "bytes": 11953
    },
    "source": "Geopop, “La \"Porta dell'Inferno\", come si è formata e perché dopo 50 anni brucia nel deserto in Turkmenistan?” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=5hk3wTF3Ti0",
@@ -183906,8 +183906,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Two stones, one labelled real diamond and one fake stone, being dragged back and forth across a sheet of sandpaper. The question asks what happens when a real diamond is rubbed on sandpaper.",
-    "page": "pages/science-diamond-sandpaper-test.html?v=b53aa8adc9b3",
-    "bytes": 10614
+    "page": "pages/science-diamond-sandpaper-test.html?v=826be22caa75",
+    "bytes": 10502
    },
    "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=5RAJM6Yi5wc",
@@ -184430,8 +184430,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A glass of water filling toward the brim, titled Fill the Glass. A brass knob slides along a timeline from 1960 to 2025 to raise CO₂ in the air, and the glass fills as more energy is absorbed.",
-    "page": "pages/science-energy-glass.html?v=dfb5538348a7",
-    "bytes": 28613
+    "page": "pages/science-energy-glass.html?v=31b1f8aa3565",
+    "bytes": 25111
    },
    "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=TU196LhDGT4&t=89s",
@@ -185978,8 +185978,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A gauge showing a candle flame beside a slider for gravity, running from 0 g (float) through 1 g (Earth) to 2 g. The reader slides gravity until the flame matches a mystery flame, then checks their guess.",
-    "page": "pages/science-flame-gravity-meter.html?v=e834c723c7af",
-    "bytes": 8084
+    "page": "pages/science-flame-gravity-meter.html?v=b333ad1faa6b",
+    "bytes": 9163
    },
    "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
    "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=336s",
@@ -186133,8 +186133,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A candle flame sits between two charged plates. Switch on the field and the flame splits into two wings, like a butterfly. Tap each half of the flame to explore it.",
-    "page": "pages/science-flame-splits-field.html?v=1e5bfe2daf5d",
-    "bytes": 10292
+    "page": "pages/science-flame-splits-field.html?v=14aef0ece245",
+    "bytes": 10662
    },
    "source": "Veritasium, “What's In A Candle Flame?” (YouTube, 2012)",
    "reference": "https://www.youtube.com/watch?v=a7_8Gc_Llr8&t=17s",
@@ -187326,8 +187326,8 @@
     "touch": "taps",
     "label": "Two stones, granite and diamond, are shown on a hardness scale. A flip switch sends each stone up the scale. The question asks how granite's hardness compares to diamond's.",
     "ground": "#1f382e",
-    "page": "pages/science-granite-near-diamond.html?v=e1bff21a6377",
-    "bytes": 23969
+    "page": "pages/science-granite-near-diamond.html?v=953897e7a7fb",
+    "bytes": 21226
    },
    "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
    "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=231s",
@@ -187404,8 +187404,8 @@
     "touch": "taps",
     "label": "Two touching grapes sit in a microwave beam. The question asks what microwaves do once they get inside a grape. Options: A) pass straight through and out, B) get trapped, bouncing around inside, C) bounce off the skin and never get in.",
     "ground": "#151a30",
-    "page": "pages/science-grape-microwave-trap.html?v=dcb5711cca83",
-    "bytes": 19748
+    "page": "pages/science-grape-microwave-trap.html?v=b37b76b005e4",
+    "bytes": 17587
    },
    "source": "Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=wCrtk-pyP0I&t=194s",
@@ -188480,8 +188480,8 @@
     "touch": "drags",
     "label": "A lit cigarette ember under a 'Hold to draw' prompt. The question asks what chemical and physical changes happen at the tip when you draw on it, with four processes listed as options.",
     "ground": "#070b1d",
-    "page": "pages/science-heat-of-a-drag.html?v=19b9ba8203b3",
-    "bytes": 24623
+    "page": "pages/science-heat-of-a-drag.html?v=2a2800d6e35a",
+    "bytes": 20668
    },
    "source": "Geopop, “5 curiosità sulle sigarette che forse non sapevi” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=lKBS9b924KA&t=56s",
@@ -191564,8 +191564,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "Interactive diagram of the ocean floor shown as dark and light stripes. Drag sideways to pull the seafloor apart, and tap a compass to flip Earth's magnetic field. The page asks what the dark and light stripes record.",
-    "page": "pages/science-magnetic-stripes.html?v=2a40bbbab3b5",
-    "bytes": 29213
+    "page": "pages/science-magnetic-stripes.html?v=93248a3bd964",
+    "bytes": 21921
    },
    "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=194s",
@@ -192278,8 +192278,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A light path with a drag control that makes light slower one way and faster back. Asks the reader to send a signal to Mark on Mars.",
-    "page": "pages/science-one-way-light.html?v=02b388635071",
-    "bytes": 25634
+    "page": "pages/science-one-way-light.html?v=bccb5c494a30",
+    "bytes": 21830
    },
    "source": "Veritasium, “Why No One Has Measured The Speed Of Light” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=pTn6Ewhb27k&t=286s",
@@ -193860,8 +193860,8 @@
     "touch": "drags",
     "label": "Drag a submarine down a depth scale toward the Titanic, 3,800 m below, asking how hard the sea presses on the way. Pressure readings rise with depth, and the hull load per square metre is compared with the 8,000-tonne Eiffel Tower.",
     "ground": "#1e2b27",
-    "page": "pages/science-pressure-at-depth.html?v=f3a267f6b3f8",
-    "bytes": 25411
+    "page": "pages/science-pressure-at-depth.html?v=cbb08bfc8b10",
+    "bytes": 23339
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=360s",
@@ -195027,8 +195027,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A hand pushes a globe away from its axis, with arrows showing the torque and the spin that builds up. Asks how pushing the globe makes it spin like Earth. Tap the globe to push it and watch the spin grow.",
-    "page": "pages/science-push-spins-globe.html?v=5049f89ce11b",
-    "bytes": 9343
+    "page": "pages/science-push-spins-globe.html?v=13bd728fea48",
+    "bytes": 9493
    },
    "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
    "reference": "https://www.youtube.com/watch?v=9zso7ChaQXQ",
@@ -198539,8 +198539,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A water reservoir covered in black balls. A counter reads 0 balls, and red specks sit under the surface. A Sweep to pour control adds balls so the reader can watch the specks. The question asked is why the balls are black.",
-    "page": "pages/science-shade-balls.html?v=0ca486d826ec",
-    "bytes": 22151
+    "page": "pages/science-shade-balls.html?v=08b32d93be3c",
+    "bytes": 21956
    },
    "source": "Veritasium, “Why Are 96,000,000 Black Balls on This Reservoir?” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=uxPdPpi5W4o",
@@ -199903,8 +199903,8 @@
     "label": "Shows a Teflon pan coating as a very long chain of tens of thousands of atoms, and PFOA as a short molecule of 5 to 10 carbons. Asks which one can get into your blood, then how sure you are.",
     "graded": false,
     "ground": "#070a14",
-    "page": "pages/science-teflon-vs-pfoa.html?v=3342b01d85ec",
-    "bytes": 24727
+    "page": "pages/science-teflon-vs-pfoa.html?v=426e08ffcdde",
+    "bytes": 21309
    },
    "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=2024s",
@@ -200236,8 +200236,8 @@
     "touch": "drags",
     "label": "A scrubbable picture comparing thermite and explosives over time, with both starting as a solid powder. It asks why thermite is controllable when explosives are not.",
     "ground": "#0c1426",
-    "page": "pages/science-thermite-control.html?v=c168cfcbe5f0",
-    "bytes": 27598
+    "page": "pages/science-thermite-control.html?v=a6a698a14e62",
+    "bytes": 24078
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1308s",
@@ -201528,8 +201528,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A row of three icons, vocal cords, air, and a wine glass, joined by arrows, under the question: how does a voice's energy reach a wine glass? A low-to-high scale sits above the diagram.",
-    "page": "pages/science-vibration-chain.html?v=969ea7f7fb84",
-    "bytes": 9622
+    "page": "pages/science-vibration-chain.html?v=20d23869383d",
+    "bytes": 10906
    },
    "source": "Geopop, “Si può rompere un calice di vetro solo con la voce?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=w7MQKNWAlpA",
@@ -202957,8 +202957,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A cross-section of Apollo 13's oxygen tank showing a glowing stirrer fan. Tap the fan to start the chain of events that led to the tank's explosion, in order.",
-    "page": "pages/space-apollo13-tank-fire.html?v=fb8fe63173a7",
-    "bytes": 38774
+    "page": "pages/space-apollo13-tank-fire.html?v=f209a31fd41d",
+    "bytes": 34429
    },
    "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=TSsregL8H2o&t=657s",
@@ -202996,8 +202996,8 @@
     "touch": "drags",
     "label": "Interactive diagram of Apollo 13's path around the Moon. An orange dot can be dragged to fire the lunar module's thrusters, then released, to show how a small nudge lets the Moon's gravity swing the ship home.",
     "ground": "#0b1026",
-    "page": "pages/space-apollo-slingshot.html?v=3d53940d616a",
-    "bytes": 10853
+    "page": "pages/space-apollo-slingshot.html?v=f3913ed78a13",
+    "bytes": 12212
    },
    "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=TSsregL8H2o&t=465s",
@@ -203629,8 +203629,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A view of the night sky in which the Milky Way is bent, stretched and warped into curves. The page asks what the outside world would look like from inside a black hole. Slide to fall toward the black hole and watch the sky bend.",
-    "page": "pages/space-black-hole-sky.html?v=d9da04c22be6",
-    "bytes": 7806
+    "page": "pages/space-black-hole-sky.html?v=4101042b7676",
+    "bytes": 7682
    },
    "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=DZJ1sHAvsu8&t=364s",
@@ -205798,8 +205798,8 @@
     "touch": "drags",
     "label": "Shows a round Earth far from a black hole, with a draggable Earth to move toward it. Asks: what would happen to Earth if it fell into a black hole? Page 1 of 5.",
     "ground": "#f3ead5",
-    "page": "pages/space-earth-spaghettified.html?v=291e131ccb40",
-    "bytes": 25759
+    "page": "pages/space-earth-spaghettified.html?v=d112b4b4c407",
+    "bytes": 19334
    },
    "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=DZJ1sHAvsu8&t=197s",
@@ -207299,8 +207299,8 @@
     "touch": "taps",
     "label": "Four copies of three orbiting stars, released at rest with starting errors of 1,000,000 km, 1,000 km and 1 km. The page asks how much longer each copy can be predicted, with options a million times, a thousand times, ten times, or less than twice.",
     "graded": false,
-    "page": "pages/space-four-copies.html?v=232e6b5c3606",
-    "bytes": 17406
+    "page": "pages/space-four-copies.html?v=0b100e95fdf9",
+    "bytes": 17367
    },
    "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=XKSjCOKDtpk",
@@ -207377,8 +207377,8 @@
     "touch": "drags",
     "label": "A dark page titled Black Holes asks what a black hole's edge would show to someone with perfect eyes. Three options are offered: seen from afar, nothing; the last one in; all that ever fell in. The reader picks one and then states how sure they are.",
     "graded": false,
-    "page": "pages/space-frozen-horizon-light-2.html?v=9ceb7de398b3",
-    "bytes": 19242
+    "page": "pages/space-frozen-horizon-light-2.html?v=855f267c4c94",
+    "bytes": 18002
    },
    "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M",
@@ -208029,8 +208029,8 @@
     "touch": "drags",
     "label": "Two clocks side by side: one on Earth and one on the right that you drag up into orbit. Watch both clocks run, then apply Einstein's correction to see whether they stay in step.",
     "ground": "#0b1026",
-    "page": "pages/space-gps-relativity-clocks.html?v=7c466a3b9f50",
-    "bytes": 12076
+    "page": "pages/space-gps-relativity-clocks.html?v=232ff443d7f7",
+    "bytes": 12490
    },
    "source": "Geopop, “Sai come funziona il GPS? FIGO! NON LO SAPEVO!” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=ac5iJvjd2pI&t=264s",
@@ -208068,8 +208068,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A space elevator scene asks what a potential application of graphene in space is. Hold the lift button to send a platform up a graphene cable while watching the fuel gauge.",
-    "page": "pages/space-graphene-space-elevator.html?v=92977d42f340",
-    "bytes": 10048
+    "page": "pages/space-graphene-space-elevator.html?v=ffc12d074011",
+    "bytes": 10344
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=225s",
@@ -208146,8 +208146,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A clock counting down, with the Earth circling an empty spot in space. Asks when Earth would stop feeling the Sun's pull if the Sun vanished. A button makes the Sun vanish 8 min 20 s later.",
-    "page": "pages/space-gravity-delay.html?v=173e1b34ddc6",
-    "bytes": 9128
+    "page": "pages/space-gravity-delay.html?v=818d8d3baf9d",
+    "bytes": 9347
    },
    "source": "Geopop, “Come potremmo sopravvivere se il Sole scomparisse: gli scenari di una Terra senza luce” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=WEyRS1_p2PA&t=126s",
@@ -208667,8 +208667,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A hilltop-shaped landscape, not to scale, with five flat spots and saddles, labelled with the Lagrange points, and Earth shown turning nearby. The question asks where a spacecraft can park for free. The reader taps one spot to pick it.",
-    "page": "pages/space-lagrange-hilltops.html?v=ded74ff3fb7c",
-    "bytes": 15174
+    "page": "pages/space-lagrange-hilltops.html?v=93b6edcb3840",
+    "bytes": 14978
    },
    "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=XKSjCOKDtpk",
@@ -211386,8 +211386,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Shows a flag on a pole with two timers, Moon (no air) and Earth (air), each reading seconds. Asks the reader to plant the pole on the Moon and time how long the flag keeps moving.",
-    "page": "pages/space-moon-flag-wave.html?v=996f92afae77",
-    "bytes": 9018
+    "page": "pages/space-moon-flag-wave.html?v=4872aaef031a",
+    "bytes": 10567
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=FeVJxB41oNY&t=77s",
@@ -211817,8 +211817,8 @@
     "touch": "drags",
     "label": "The Earth's orbit drawn to scale on a night sky, with the months around it. You drag the Earth to where you think it passes nearest the Sun; then it runs on to early January and the two distances appear.",
     "ground": "#0b1026",
-    "page": "pages/space-nearest-day.html?v=817f125830d5",
-    "bytes": 14818
+    "page": "pages/space-nearest-day.html?v=aa64e8a7cfc4",
+    "bytes": 14716
    },
    "source": "NASA Earth fact sheet; U.S. Naval Observatory",
    "source_kind": "institution",
@@ -212481,8 +212481,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Diagram of Earth between the Sun and the Moon during a lunar eclipse. Tap the Sun, the atmosphere or the Moon to see how Earth's air bends and filters sunlight so that only red light reaches the Moon.",
-    "page": "pages/space-red-moon-eclipse.html?v=6a73f2d9757a",
-    "bytes": 9322
+    "page": "pages/space-red-moon-eclipse.html?v=bb47d63b2241",
+    "bytes": 9668
    },
    "source": "Geopop, “Eclissi lunare: la spiegazione semplice per capire come avviene” (YouTube, 2018)",
    "reference": "https://www.youtube.com/watch?v=Uba7HtQ3MiM&t=105s",
@@ -213052,8 +213052,8 @@
     "touch": "drags",
     "label": "An Earth orbit diagram with distant stars behind it. Earth is dragged once round the Sun in a toy year of 4 days. The page asks why the stars see Earth spin 366.24 times a year, not 365.24, and has the reader count the spins two ways.",
     "ground": "#14243a",
-    "page": "pages/space-sidereal-extra-spin.html?v=334804ce460f",
-    "bytes": 25854
+    "page": "pages/space-sidereal-extra-spin.html?v=1d907f0cd95d",
+    "bytes": 22516
    },
    "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=691s",
@@ -213603,8 +213603,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "An interactive page asking why a stopped Earth would wipe out all life. A slider labelled Earth's spin, at 100%, shows a magnetic shield around the planet. Dragging the spin to zero makes the shield disappear.",
-    "page": "pages/space-spin-magnetic-shield.html?v=999838647313",
-    "bytes": 8794
+    "page": "pages/space-spin-magnetic-shield.html?v=f51144413f8d",
+    "bytes": 10409
    },
    "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=OSECBud3lD4&t=479s",
@@ -215561,8 +215561,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A 3D diagram of Earth with two donut-shaped radiation belts around its middle and a spacecraft path skimming the thin outer edge. Tap a route to fly it and watch its radiation bar fill.",
-    "page": "pages/space-van-allen-donut.html?v=6db6d309c558",
-    "bytes": 9371
+    "page": "pages/space-van-allen-donut.html?v=12c33c25a20c",
+    "bytes": 9802
    },
    "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=FeVJxB41oNY&t=338s",
@@ -231092,8 +231092,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A pipe loop under the ground next to a counter reading 'Water swapped with the aquifer: 0 L' and a hold-to-run button. Asks why closed-loop geothermal systems do not exchange fluids with groundwater.",
-    "page": "pages/technology-closed-loop-geothermal.html?v=3053b7d41d60",
-    "bytes": 8287
+    "page": "pages/technology-closed-loop-geothermal.html?v=c0fc319df54a",
+    "bytes": 8801
    },
    "source": "Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=1HiwKPHVc-8&t=233s",
@@ -233542,8 +233542,8 @@
     "label": "A phone with a graphene battery and a lightning bolt icon. The question asks how fast it could charge from empty to full. The reader places a bet on a time axis, then rates how sure they are.",
     "graded": false,
     "ground": "#f4efe4",
-    "page": "pages/technology-graphene-fast-charge.html?v=7d5c02be53c6",
-    "bytes": 18906
+    "page": "pages/technology-graphene-fast-charge.html?v=9c7e9470120c",
+    "bytes": 15870
    },
    "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=207s",
@@ -235548,8 +235548,8 @@
     "touch": "taps",
     "label": "Interactive page titled Material fatigue, asking what repeated high-pressure cycles do to a hull. A Dive button sends a submersible down to crushing pressure and back up while a gold line is watched.",
     "ground": "#06192f",
-    "page": "pages/technology-material-fatigue.html?v=fb4ad84be3d1",
-    "bytes": 25893
+    "page": "pages/technology-material-fatigue.html?v=4fa96e76789b",
+    "bytes": 23684
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=628s",
@@ -235942,8 +235942,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Card reveals that over 200 structural joints were welded overnight by a night crew, ranked by importance, starting with the 30th floor. It asks how many joints were welded overnight and which came first.",
-    "page": "pages/technology-night-weld-ranking.html?v=3ca27a842a97",
-    "bytes": 9499
+    "page": "pages/technology-night-weld-ranking.html?v=254d550ff2e3",
+    "bytes": 10478
    },
    "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=1270s",
@@ -238893,8 +238893,8 @@
     "touch": "drags",
     "label": "A depot roof with solar panels sits under a sun the reader can drag across the sky. Arrows show energy flowing from the roof to the convoy's batteries and, once the train is full, out to the local grid. The page asks what two jobs the 30 kW solar roof does.",
     "ground": "#0c1a2b",
-    "page": "pages/technology-solar-depot-grid.html?v=0f8ceef529f4",
-    "bytes": 28777
+    "page": "pages/technology-solar-depot-grid.html?v=d8fc948aa735",
+    "bytes": 26330
    },
    "source": "Geopop, “Il primo treno solare” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=1famKvkfFKM&t=47s",
@@ -239088,8 +239088,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "Card titled Heavy Oil asking why Venezuela's extra-heavy oil needs steam to come out of the ground. A pump is shown running with nothing coming up, and a slider lets the reader move the steam from OFF to on.",
-    "page": "pages/technology-steam-heavy-oil.html?v=434194687d2d",
-    "bytes": 11090
+    "page": "pages/technology-steam-heavy-oil.html?v=89452e64308c",
+    "bytes": 13439
    },
    "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
    "reference": "https://www.youtube.com/watch?v=pp21fmWKe48&t=398s",
@@ -239845,8 +239845,8 @@
     "touch": "drags",
     "label": "Question card asking how thermite can destroy data. Press and hold to heat a drive's magnets past their Curie temperature, then let go so it cools.",
     "ground": "#efe6d0",
-    "page": "pages/technology-thermite-curie-wipe.html?v=4406c9057a23",
-    "bytes": 23486
+    "page": "pages/technology-thermite-curie-wipe.html?v=4141562b3953",
+    "bytes": 19909
    },
    "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1013s",
@@ -241345,8 +241345,8 @@
     "kit": 1,
     "touch": "taps",
     "label": "A cross-section diagram of a tunnel dug through volcanic rock, with the water level marked. A switch toggles between 'Rock as it is' and 'Just dig'. The question asks how high the water would rise if the tunnel were dug.",
-    "page": "pages/technology-tunnel-water-table.html?v=bf3a31c3ca93",
-    "bytes": 7042
+    "page": "pages/technology-tunnel-water-table.html?v=dd76c684eaf4",
+    "bytes": 8894
    },
    "source": "Geopop, “Alta Velocità Napoli-Bari: siamo andati a vedere come la stanno scavando attraverso gli Appennini” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=mJXC1Sn-xDM&t=181s",
@@ -242105,8 +242105,8 @@
     "kit": 1,
     "touch": "drags",
     "label": "A house sits on frozen ground. The reader drags it upward to lift it about 1.5 m off the ground, showing piles beneath. The question asks how Yakutsk's buildings keep from melting the frozen ground.",
-    "page": "pages/technology-yakutsk-stilt-houses.html?v=bbdfda11b08d",
-    "bytes": 8942
+    "page": "pages/technology-yakutsk-stilt-houses.html?v=bf2e6b167a8f",
+    "bytes": 9113
    },
    "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=252s",
@@ -256272,7 +256272,28 @@
   "444": "thinking-z16",
   "445": "thinking-5",
   "446": "thinking-h21",
-  "447": "thinking-h5"
+  "447": "thinking-h5",
+  "448": "thinking-e2",
+  "449": "thinking-v1",
+  "450": "thinking-k1",
+  "451": "thinking-r1",
+  "452": "thinking-z15",
+  "453": "thinking-h9",
+  "454": "thinking-b1",
+  "455": "thinking-z37",
+  "456": "thinking-e1",
+  "457": "thinking-z28",
+  "458": "thinking-p1",
+  "459": "thinking-h3",
+  "460": "thinking-z6",
+  "461": "thinking-z20",
+  "462": "thinking-h14",
+  "463": "thinking-z17",
+  "464": "thinking-z38",
+  "465": "thinking-h19",
+  "466": "thinking-14",
+  "467": "thinking-h10",
+  "468": "thinking-i1"
  },
  "commons": {
   "1": [
@@ -260744,6 +260765,216 @@
    "art-florence-6",
    "psychology-anger-2",
    "philosophy-how-do-you-know-3"
+  ],
+  "448": [
+   "nature-twin-landslide-tsunami",
+   "music-copyright-1",
+   "science-cold-deodorant-spray",
+   "history-swiss-cushion-state",
+   "life-learning-3",
+   "language-euphemisms-1",
+   "technology-chips-11",
+   "thinking-eyes-dont-tell"
+  ],
+  "449": [
+   "medicine-detox-1",
+   "science-underground-crystal-cavities",
+   "music-rhythm-11",
+   "pop_culture-parasocial-bonds-1",
+   "philosophy-thought-experiments-2",
+   "psychology-remembering-better-2",
+   "thinking-hidden-popcorn",
+   "food-meat-1"
+  ],
+  "450": [
+   "technology-night-weld-ranking",
+   "pop_culture-villains-3",
+   "art-power-patrons-3",
+   "history-vesuvius-first-film",
+   "medicine-pink-cocaine-name",
+   "food-resveratrol-wine-flood",
+   "nature-feedback-loops-4",
+   "psychology-spinning-tube-trick-1"
+  ],
+  "451": [
+   "nature-gulf-stream-storms",
+   "science-granite-near-diamond",
+   "space-quake-shortened-day",
+   "technology-flip-vertical-stability",
+   "philosophy-freedom-1",
+   "art-public-statues-3",
+   "psychology-memory-and-stress-1",
+   "maths-pivotal-voter-dictator"
+  ],
+  "452": [
+   "psychology-hindsight-1",
+   "history-borgia-alberoni-occupations",
+   "science-carbon-in-steel",
+   "food-calories-1",
+   "life-arguments-2",
+   "pop_culture-brand-loyalty-1",
+   "human_body-body-clock-1",
+   "sport-sprint-11"
+  ],
+  "453": [
+   "space-graphene-space-elevator",
+   "cinema-uncanny-valley-1",
+   "nature-vesuvius-1631-shape",
+   "history-putins-domestic-mirror",
+   "human_body-miracle-cures-1",
+   "science-xenon-blind-control",
+   "pop_culture-what-reality-tv-hides-1",
+   "weird_facts-still-on-the-books-9"
+  ],
+  "454": [
+   "science-energy-3",
+   "medicine-false-positives-3",
+   "psychology-spinning-tube",
+   "food-gut-health-claims-1",
+   "cinema-fake-or-real-3",
+   "language-spin-4",
+   "technology-checking-a-source-1",
+   "economics-correlation-in-markets-4"
+  ],
+  "455": [
+   "human_body-hangover-headache-dehydration",
+   "medicine-reading-results-2",
+   "music-sampling-2",
+   "maths-compounding-3",
+   "art-public-statues-2",
+   "science-zero-g-thrust",
+   "cinema-shots-and-angles-1",
+   "history-un-partition-scale"
+  ],
+  "456": [
+   "life-apologies-2",
+   "technology-passwords-1",
+   "philosophy-fairness-4",
+   "science-sulfur-brittle-steel",
+   "weird_facts-goosebumps-5",
+   "psychology-authority-2",
+   "human_body-heart-rate-1",
+   "nature-sea-level-drop"
+  ],
+  "457": [
+   "cinema-music-and-mood-2",
+   "science-telephoto-steep-bridge",
+   "maths-feigenbaum-ratio-ladder",
+   "space-martian-weather-2",
+   "technology-punctured-vine-robot",
+   "history-gaza-kept-controls",
+   "food-bread-and-history-2",
+   "psychology-fear-12"
+  ],
+  "458": [
+   "technology-twin-tunnel-links",
+   "space-space-junk-1",
+   "sport-regression-2",
+   "weird_facts-octopuses-11",
+   "science-quantum-nonsense-1",
+   "human_body-highway-hypnosis",
+   "nature-gulf-stream-storms-2",
+   "maths-padic-own-squares"
+  ],
+  "459": [
+   "music-rhythm-in-the-body-2",
+   "nature-6",
+   "science-pseudoscience-3",
+   "psychology-memory-and-stress-2",
+   "history-pompeii-flow-density",
+   "technology-steam-heavy-oil",
+   "human_body-supplements-3",
+   "maths-one-seventh-10adic"
+  ],
+  "460": [
+   "medicine-soft-robot-throat",
+   "science-shade-balls",
+   "philosophy-hidden-premises-2",
+   "cinema-film-preservation-3",
+   "history-greenland-compact",
+   "pop_culture-parasocial-bonds-3",
+   "life-mortality-4",
+   "technology-fire-contains-methane"
+  ],
+  "461": [
+   "psychology-lead-crime-echo",
+   "science-fusion-fuel-grams",
+   "nature-xylem-no-bubbles",
+   "space-astrology-or-astronomy-4",
+   "economics-inflation-2",
+   "history-bakelite-fossil-plastic",
+   "technology-yellow-button-anomaly",
+   "sport-hot-hand-3"
+  ],
+  "462": [
+   "psychology-decision-fatigue-3",
+   "science-graphene-one-atom",
+   "music-one-hit-wonders-3",
+   "space-apollo13-tank-fire",
+   "history-san-marino-small",
+   "life-practice-that-works-2",
+   "human_body-bmi-1",
+   "technology-printed-micro-machines"
+  ],
+  "463": [
+   "space-earth-from-above-3",
+   "maths-algorithms-3",
+   "history-sand-to-sword",
+   "medicine-shared-decisions-4",
+   "human_body-miracle-cures-2",
+   "psychology-authority-3",
+   "science-heat-feeds-extremes",
+   "pop_culture-spoilers-3"
+  ],
+  "464": [
+   "nature-thermal-inversion-lid",
+   "space-red-moon-eclipse",
+   "history-gold-codes-card",
+   "thinking-weight-of-disproof",
+   "psychology-misconception-memory",
+   "music-sampling-3",
+   "sport-confidence-1",
+   "life-curiosity-1"
+  ],
+  "465": [
+   "economics-tragedy-of-the-commons-1",
+   "life-limits-3",
+   "music-loudness-war-3",
+   "space-sizes-3",
+   "technology-sky-airspace-blocks",
+   "science-hotter-than-sun",
+   "maths-collatz-peak",
+   "psychology-multitasking-4"
+  ],
+  "466": [
+   "sport-bad-stats-1",
+   "history-elevator-fall-record",
+   "economics-fine-print-2",
+   "language-words-and-thought-2",
+   "technology-steel-softens-first",
+   "science-sardinia-stable-block",
+   "food-taste-and-smell-1",
+   "music-labels-2"
+  ],
+  "467": [
+   "maths-projections-4",
+   "medicine-firefighters-blood-donation",
+   "science-aharonov-bohm",
+   "nature-coevolution-1",
+   "human_body-longevity-11",
+   "technology-graphene-flagship-billion",
+   "psychology-phones-and-focus-1",
+   "art-colour-and-mood-2"
+  ],
+  "468": [
+   "science-paper-plastic-cycles",
+   "human_body-neurons-11",
+   "technology-vine-robot-sand",
+   "cinema-sequels-2",
+   "nature-cave-rescue-time",
+   "medicine-smoking-2",
+   "psychology-room-you-hear",
+   "history-silent-death-penalty"
   ]
  }
 }

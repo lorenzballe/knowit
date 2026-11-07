@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: science-teflon-vs-pfoa -->
-<!-- Look: night observatory. An ink-black sky with a fine star field. The gut wall is a glowing instrument ring with pores, around a crimson "bloodstream" nebula. Ice-blue Teflon chain, amber PFOA.
-     Interaction: bet which molecule gets into your blood. Picking lights your choice up in the sky. Then say how sure you are, and both molecules make the trip.
-     Wow: the endless Teflon chain bumps the ring, flashes it red, and streams away. Tiny PFOA slips through a pore, a protein grabs its acid end, and "5–10" carbons scrambles into place as it orbits. -->
+<!-- Look: a page from a biology book, printed flat on the card's night ink. The gut wall is a cross-section, a ring of lining cells with small gaps between them, around a flat red bloodstream with a few blood cells. The Teflon chain is drawn plainly as carbon beads with fluorine on each side, in the card's ink. PFOA is the same in amber, with a red acid end.
+     Interaction: bet which molecule gets into your blood. Picking lights your choice up. Then say how sure you are, and both molecules make the trip.
+     Wow: the endless Teflon chain bumps the wall, which turns red, and the chain streams away. Tiny PFOA slips through a gap, a protein grabs its acid end, and "5–10" carbons scrambles into place as it goes round in the blood. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Too big to get in</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -12,32 +12,32 @@
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <script src="kit/vendor/gsap-plugins/SplitText.min.js"></script>
 <style>
-#card{background:
-  radial-gradient(1.2px 1.2px at 14% 9%,#fffc 50%,transparent 60%),
-  radial-gradient(1px 1px at 82% 6%,#fff9 50%,transparent 60%),
-  radial-gradient(1px 1px at 63% 14%,#cfe0ff99 50%,transparent 60%),
-  radial-gradient(1.3px 1.3px at 92% 72%,#ffe9c4aa 50%,transparent 60%),
-  radial-gradient(1px 1px at 6% 66%,#fff8 50%,transparent 60%),
-  radial-gradient(1px 1px at 38% 88%,#dfe9ff88 50%,transparent 60%),
-  radial-gradient(1px 1px at 72% 94%,#fff7 50%,transparent 60%),
-  radial-gradient(130% 75% at 50% 42%,#141c3a 0%,#080b18 55%,#03040a 100%)}
+#card{background:var(--c)}
 #stage{display:flex;flex:1;min-height:0;overflow:hidden}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;overflow:hidden}
 #opts{display:flex;gap:2.2cqw}
-.opt{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;font:700 max(2.1cqh,14px)/1.15 var(--body);color:var(--k);text-align:left;background:rgba(140,190,255,.07);border:0;box-shadow:inset 0 0 0 1px rgba(150,200,255,.32);border-radius:1.6cqh;padding:1.2cqh 2.4cqw;cursor:pointer;transition:transform .12s ease-out,background .2s,box-shadow .2s}
-.opt small{display:block;max-width:100%;font:500 max(1.5cqh,12px)/1.2 var(--body);color:rgba(220,232,255,.66);margin-top:.4cqh}
+.opt{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;font:700 max(2.1cqh,14px)/1.15 var(--body);color:var(--k);text-align:left;background:color-mix(in srgb,var(--k) 6%,var(--c));border:0;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 28%,var(--c));border-radius:1.6cqh;padding:1.2cqh 2.4cqw;cursor:pointer;transition:transform .12s ease-out,background .2s,box-shadow .2s}
+.opt small{display:block;max-width:100%;font:500 max(1.5cqh,12px)/1.2 var(--body);color:color-mix(in srgb,var(--k) 62%,var(--c));margin-top:.4cqh}
 .opt:active{transform:scale(.96)}
-.opt.on{background:#8fcbff;color:#070a14;box-shadow:0 0 2.6cqh rgba(143,203,255,.55)}
-.opt.on small{color:#1a2a4a}
+.opt.on{background:var(--k);color:var(--c);box-shadow:inset 0 0 0 1.5px var(--k)}
+.opt.on small{color:color-mix(in srgb,var(--c) 70%,var(--k))}
 #why{display:flex;flex-direction:column;gap:.8cqh}
-#why .big{color:#fff;text-shadow:0 0 2cqh rgba(143,203,255,.45)}
+#why .big{color:var(--k)}
 #why .body{overflow-wrap:break-word}
-.lab{font-family:var(--mono);letter-spacing:.02em}
-.tw{animation:tw 3.2s ease-in-out infinite}
-@keyframes tw{50%{opacity:.12}}
-.pp{animation:pp 2.4s ease-in-out infinite}
-@keyframes pp{50%{opacity:.2}}
-.kit-calm .tw,.kit-calm .pp{animation:none}
+.lab{font-family:var(--body);font-weight:600}
+.num{font-family:var(--display);font-weight:700}
+.f-k{fill:var(--k)}
+.f-k6{fill:color-mix(in srgb,var(--k) 60%,var(--c))}
+.f-k5{fill:color-mix(in srgb,var(--k) 50%,var(--c))}
+.f-blood{fill:color-mix(in srgb,#ef5b63 30%,var(--c))}
+.f-red{fill:#ef5b63}
+.f-amb{fill:#f4b56a}
+.s-k{stroke:var(--k)}
+.s-k6{stroke:color-mix(in srgb,var(--k) 60%,var(--c))}
+.s-k3{stroke:color-mix(in srgb,var(--k) 32%,var(--c))}
+.s-k2{stroke:color-mix(in srgb,var(--k) 20%,var(--c))}
+.s-red{stroke:#ef5b63}
+.s-amb{stroke:#f4b56a}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Pick one · how sure" style="--c:#070a14;--k:#eaf0ff;--edge:#02030a">
   <div class="in">
@@ -64,7 +64,6 @@
 const plug = [window.DrawSVGPlugin, window.ScrambleTextPlugin, window.SplitText].filter(Boolean);
 if (plug.length) gsap.registerPlugin(...plug);
 const svg = Kit.$('pic'), stage = Kit.$('stage');
-const ICE = '#8fcbff', ICE2 = '#e3f0ff', MINT = '#7dffc4', ROSE = '#ff5c8a', AMBER = '#ffc48a', VIO = '#b9a0ff';
 const RIGHT = 1;
 let pick = -1, state = 'idle', revealing = false, G = {}, E = {}, tl = null, orbit = null, loops = [], lastW = 0, lastH = 0, built = false;
 const pose = {x: 0, y: 0, rot: 0}, orb = {a: 0, rr: 0, rot: 0}, C = {flow: 0, ph: 0, speed: 0, t: 0};
@@ -84,7 +83,7 @@ function drawChain() {
     const x = xs[i], y = yc + A * Math.sin(k * x + C.ph), xx = x.toFixed(1);
     c += xx + ',' + y.toFixed(1) + ' '; u += xx + ',' + (y - o).toFixed(1) + ' '; d += xx + ',' + (y + o).toFixed(1) + ' ';
   }
-  [E.chGlow, E.chBond, E.chBack, E.chC].forEach(e => e.setAttribute('points', c));
+  [E.chBond, E.chBack, E.chC].forEach(e => e.setAttribute('points', c));
   E.chF1.setAttribute('points', u); E.chF2.setAttribute('points', d);
   const off = -(C.flow % s);
   [E.chC, E.chF1, E.chF2].forEach(e => e.setAttribute('stroke-dashoffset', off.toFixed(2)));
@@ -95,7 +94,6 @@ gsap.ticker.add((t, dt) => {
   const ds = Math.min(dt, 50) / 1000;
   C.flow += C.speed * ds; C.ph -= .7 * ds; C.t += ds;
   drawChain();
-  if (E.dash) E.dash.setAttribute('stroke-dashoffset', (-C.t * G.s * 1.4).toFixed(1));
 });
 
 // labels never collide, never leave the stage, inner ones stay inside the bloodstream
@@ -154,106 +152,76 @@ function build() {
   const thp = Math.atan2(y0 - cy, x0 - cx);
   G = {W, H, fs, s, A, M, yc, yb, R, cx, cy, per, xs, mode, B, x0, y0, thp};
 
-  // defs
   const defs = Kit.mk('defs', {}, svg);
-  const fl = Kit.mk('filter', {id: 'gl', x: '-60%', y: '-60%', width: '220%', height: '220%'}, defs);
-  Kit.mk('feGaussianBlur', {stdDeviation: Math.max(.6, s * .28).toFixed(2), result: 'b'}, fl);
-  const fm = Kit.mk('feMerge', {}, fl); Kit.mk('feMergeNode', {in: 'b'}, fm); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, fm);
-  const rg = Kit.mk('radialGradient', {id: 'blood'}, defs);
-  [[0, '#ff3d6b', .55], [.55, '#a3154c', .22], [1, '#5a0a2c', 0]].forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, rg));
-  const rg2 = Kit.mk('radialGradient', {id: 'halo'}, defs);
-  [[0, ICE, 0], [.72, ICE, 0], [.86, ICE, .13], [1, ICE, 0]].forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, rg2));
 
-  // star field
-  E.stars = Kit.mk('g', {}, svg);
-  const n = Math.round(W * H / 650);
-  for (let i = 0; i < n; i++) {
-    const r = Kit.rnd(), rr = .25 + r * r * 1.1;
-    const c = Kit.mk('circle', {cx: (rr + Kit.rnd() * (W - 2 * rr)).toFixed(1), cy: (rr + Kit.rnd() * (H - 2 * rr)).toFixed(1), r: rr.toFixed(2), fill: r > .9 ? '#ffe9c4' : '#dfe9ff', opacity: (.2 + Kit.rnd() * .55).toFixed(2)}, E.stars);
-    if (Kit.rnd() < .25) { c.setAttribute('class', 'tw'); c.style.animationDelay = (-Kit.rnd() * 3).toFixed(2) + 's'; }
-  }
-
-  // the instrument: gut wall ring around the bloodstream
+  // the gut wall in cross-section: a ring of lining cells around the bloodstream
   const arc = (r, a0, a1, sweep = 1) => { const p = a => `${(cx + r * Math.cos(a)).toFixed(2)},${(cy + r * Math.sin(a)).toFixed(2)}`; return `M${p(a0)}A${r},${r} 0 ${Math.abs(a1 - a0) > Math.PI ? 1 : 0} ${sweep} ${p(a1)}`; };
   const ring = Kit.mk('g', {}, svg);
-  Kit.mk('circle', {cx, cy, r: R + M, fill: 'url(#halo)'}, ring);
-  E.disc = Kit.mk('circle', {cx, cy, r: R * .84, fill: 'url(#blood)', opacity: .6}, ring);
-  E.cells = Kit.mk('g', {}, ring);
-  const cr = Math.max(1, R * .028);
+  E.disc = Kit.mk('circle', {cx, cy, r: R - .48 * s, class: 'f-blood', opacity: .6}, ring);
+  // red blood cells, flat discs drifting round
+  E.cells = Kit.mk('g', {}, ring); E.stars = E.cells;
+  const cr = Math.max(1.4, R * .05);
   for (let i = 0; i < 18; i++) {
     const a = Kit.rnd() * Math.PI * 2, rr = R * (.42 + Kit.rnd() * .34), x = cx + rr * Math.cos(a), y = cy + rr * Math.sin(a);
-    Kit.mk('ellipse', {cx: x, cy: y, rx: cr, ry: cr * .65, fill: '#ff6b8a', opacity: (.2 + Kit.rnd() * .35).toFixed(2), transform: `rotate(${deg(a).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})`}, E.cells);
+    Kit.mk('ellipse', {cx: x, cy: y, rx: cr, ry: cr * .62, class: 'f-red', opacity: (.55 + Kit.rnd() * .35).toFixed(2), transform: `rotate(${(deg(a) + Kit.rnd() * 60 - 30).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})`}, E.cells);
   }
-  Kit.mk('circle', {cx, cy, r: R * .86, fill: 'none', stroke: ICE, 'stroke-opacity': .3, 'stroke-width': 1}, ring);
-  E.ticks = Kit.mk('g', {}, ring);
-  for (let k = 0; k < 60; k++) { const a = rad(k * 6), r0 = R * .86, r1 = r0 - (k % 5 ? R * .03 : R * .07); Kit.mk('line', {x1: cx + r0 * Math.cos(a), y1: cy + r0 * Math.sin(a), x2: cx + r1 * Math.cos(a), y2: cy + r1 * Math.sin(a), stroke: ICE, 'stroke-opacity': k % 5 ? .3 : .6, 'stroke-width': 1}, E.ticks); }
-  // a slow scanner sweeping the bloodstream
-  E.scan = Kit.mk('g', {}, ring);
-  [[44, .1], [26, .22], [10, .6]].forEach(([sp, op]) => Kit.mk('path', {d: arc(R * .925, rad(-sp), 0), fill: 'none', stroke: ICE, 'stroke-opacity': op, 'stroke-width': Math.max(1, s * .2), 'stroke-linecap': 'round'}, E.scan));
   const g = .8 * s / R, gaps = [...Array(8)].map((_, k) => thp + k * Math.PI / 4);
-  const mem = Kit.mk('g', {filter: 'url(#gl)'}, ring);
+  const ew = Math.max(1, Math.min(1.6, s * .16));
   gaps.forEach((ga) => {
     const a0 = ga + g, a1 = ga + Math.PI / 4 - g;
-    Kit.mk('path', {d: arc(R, a0, a1), fill: 'none', stroke: ICE, 'stroke-opacity': .14, 'stroke-width': s * .95}, ring);
-    [-.48, .48].forEach(o => Kit.mk('path', {d: arc(R + o * s, a0, a1), class: 'mem', fill: 'none', stroke: ICE, 'stroke-width': Math.max(1, Math.min(1.5, s * .15)), 'stroke-linecap': 'round'}, mem));
+    Kit.mk('path', {d: arc(R, a0, a1), fill: 'none', class: 's-k2', 'stroke-width': s * .95}, ring);
+    [-.48, .48].forEach(o => Kit.mk('path', {d: arc(R + o * s, a0, a1), class: 'mem s-k6', fill: 'none', 'stroke-width': ew, 'stroke-linecap': 'round'}, ring));
   });
-  for (let j = 0; j < 120; j++) {
-    const a = rad(j * 3); if (gaps.some(ga => Math.abs(Math.atan2(Math.sin(a - ga), Math.cos(a - ga))) < g * 1.3)) continue;
-    Kit.mk('line', {x1: cx + (R - .38 * s) * Math.cos(a), y1: cy + (R - .38 * s) * Math.sin(a), x2: cx + (R + .38 * s) * Math.cos(a), y2: cy + (R + .38 * s) * Math.sin(a), stroke: ICE, 'stroke-opacity': .28, 'stroke-width': .8}, ring);
+  // walls between the lining cells
+  E.ticks = Kit.mk('g', {}, ring);
+  for (let j = 0; j < 72; j++) {
+    const a = rad(j * 5 + 2.5); if (gaps.some(ga => Math.abs(Math.atan2(Math.sin(a - ga), Math.cos(a - ga))) < g * 1.6)) continue;
+    Kit.mk('line', {x1: cx + (R - .48 * s) * Math.cos(a), y1: cy + (R - .48 * s) * Math.sin(a), x2: cx + (R + .48 * s) * Math.cos(a), y2: cy + (R + .48 * s) * Math.sin(a), class: 's-k3', 'stroke-width': Math.max(.8, ew * .8)}, E.ticks);
   }
-  gaps.forEach((ga, k) => {
-    const p = Kit.mk('circle', {cx: cx + R * Math.cos(ga), cy: cy + R * Math.sin(ga), r: Math.max(1, s * (k ? .14 : .2)), fill: k ? ICE : MINT, opacity: k ? .6 : .9, class: 'pp'}, ring);
-    p.style.animationDelay = (-k * .3).toFixed(1) + 's';
-  });
-  E.dash = Kit.mk('circle', {cx, cy, r: R + .82 * s, fill: 'none', stroke: ICE, 'stroke-opacity': .3, 'stroke-width': Math.max(.6, s * .1), 'stroke-dasharray': `${(s * .3).toFixed(2)} ${(s * .7).toFixed(2)}`}, ring);
-  E.flash = Kit.mk('path', {d: arc(R, rad(-132), rad(-48)), fill: 'none', stroke: '#ff5a6e', 'stroke-width': s * 1.05, 'stroke-linecap': 'round', opacity: 0, filter: 'url(#gl)'}, ring);
-  E.poreFx = Kit.mk('circle', {cx: cx + R * Math.cos(thp), cy: cy + R * Math.sin(thp), r: s * .4, fill: 'none', stroke: ROSE, 'stroke-width': 2, opacity: 0}, ring);
-  E.shock = Kit.mk('circle', {cx, cy, r: R * .15, fill: 'none', stroke: '#ff7a9a', 'stroke-width': 2, opacity: 0}, ring);
+  E.flash = Kit.mk('path', {d: arc(R, rad(-132), rad(-48)), fill: 'none', class: 's-red', 'stroke-width': s * 1.05, 'stroke-linecap': 'round', opacity: 0}, ring);
+  E.poreFx = Kit.mk('circle', {cx: cx + R * Math.cos(thp), cy: cy + R * Math.sin(thp), r: s * .4, fill: 'none', class: 's-red', 'stroke-width': 1.5, opacity: 0}, ring);
+  E.shock = Kit.mk('circle', {cx, cy, r: R * .15, fill: 'none', class: 's-red', 'stroke-width': 1.5, opacity: 0}, ring);
   const gr = R + M + fs * .3;
   if (gr * rad(60) > fs * 5.9 + 4) {
     Kit.mk('path', {id: 'gwp', d: arc(gr, rad(74), rad(14), 0), fill: 'none'}, defs);
-    E.gw = Kit.mk('text', {class: 'lab', fill: ICE, 'font-size': fs, 'font-weight': 700, 'letter-spacing': '.14em'}, ring);
-    const tp = Kit.mk('textPath', {href: '#gwp'}, E.gw); tp.textContent = 'GUT WALL';
+    E.gw = Kit.mk('text', {class: 'lab f-k6', 'font-size': fs}, ring);
+    const tp = Kit.mk('textPath', {href: '#gwp'}, E.gw); tp.textContent = 'Gut wall';
   }
 
-  // the readout in the middle of the bloodstream
-  E.bl = txt(ring, cx, cy - .66 * B - .3 * fs - 3, 'BLOODSTREAM', {fill: '#ff9ab0', 'font-size': fs, 'font-weight': 700, 'text-anchor': 'middle', 'letter-spacing': '.12em'});
-  E.num = txt(ring, cx, cy + B * .36, '5–10', {fill: '#fff', 'font-size': B, 'font-weight': 700, 'text-anchor': 'middle', filter: 'url(#gl)', opacity: .85});
-  E.carb = txt(ring, cx, cy + .66 * B + 1.02 * fs + 3, 'carbons', {fill: AMBER, 'font-size': fs, 'font-weight': 700, 'text-anchor': 'middle', opacity: 0});
+  // words inside the bloodstream
+  E.bl = txt(ring, cx, cy - .66 * B - .3 * fs - 3, 'Bloodstream', {class: 'lab f-red', 'font-size': fs, 'text-anchor': 'middle'});
+  E.num = txt(ring, cx, cy + B * .36, '5–10', {class: 'num f-k', 'font-size': B, 'text-anchor': 'middle', opacity: .85});
+  E.carb = txt(ring, cx, cy + .66 * B + 1.02 * fs + 3, 'carbons', {class: 'lab f-amb', 'font-size': fs, 'text-anchor': 'middle', opacity: 0});
 
-  // Teflon: a chain far longer than the sky, streaming past
+  // Teflon: a chain far longer than the page, streaming past
   E.tef = Kit.mk('g', {}, svg); E.tefIn = Kit.mk('g', {}, E.tef);
   const pl = (a) => Kit.mk('polyline', Object.assign({fill: 'none', 'stroke-linejoin': 'round'}, a), E.tefIn);
-  E.chGlow = pl({stroke: ICE, 'stroke-opacity': .13, 'stroke-width': s * 1.8, 'stroke-linecap': 'round'});
-  E.chBond = pl({stroke: MINT, 'stroke-opacity': .4, 'stroke-width': s * 1.1, 'stroke-dasharray': `${(s * .12).toFixed(2)} ${(s * .88).toFixed(2)}`});
-  E.chBack = pl({stroke: ICE2, 'stroke-opacity': .8, 'stroke-width': Math.max(.8, s * .16)});
-  E.chF1 = pl({stroke: MINT, 'stroke-opacity': .9, 'stroke-width': s * .36, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${s.toFixed(2)}`});
-  E.chF2 = pl({stroke: MINT, 'stroke-opacity': .9, 'stroke-width': s * .36, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${s.toFixed(2)}`});
-  E.chC = pl({stroke: '#eef6ff', 'stroke-width': s * .58, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${s.toFixed(2)}`});
-  E.tl1 = txt(svg, 0, ly1, 'TEFLON · 10,000s+ atoms long', {fill: ICE2, 'font-size': fs, 'font-weight': 700});
-  E.tl2 = txt(svg, 0, ly2, 'too big → flushed out', {fill: '#ff8a9a', 'font-size': fs, 'font-weight': 700, opacity: 0});
+  E.chBond = pl({class: 's-k3', 'stroke-width': s * 1.1, 'stroke-dasharray': `${(s * .12).toFixed(2)} ${(s * .88).toFixed(2)}`});
+  E.chBack = pl({class: 's-k6', 'stroke-width': Math.max(.8, s * .16)});
+  E.chF1 = pl({class: 's-k6', 'stroke-width': s * .36, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${s.toFixed(2)}`});
+  E.chF2 = pl({class: 's-k6', 'stroke-width': s * .36, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${s.toFixed(2)}`});
+  E.chC = pl({class: 's-k', 'stroke-width': s * .58, 'stroke-linecap': 'round', 'stroke-dasharray': `0 ${s.toFixed(2)}`});
+  E.tl1 = txt(svg, 0, ly1, 'Teflon · 10,000s+ atoms long', {class: 'lab f-k', 'font-size': fs});
+  E.tl2 = txt(svg, 0, ly2, 'too big → flushed out', {class: 'lab f-red', 'font-size': fs, opacity: 0});
 
   // PFOA: eight carbons and an acid head
-  E.pf = Kit.mk('g', {}, svg); E.pfIn = Kit.mk('g', {filter: 'url(#gl)'}, E.pf);
+  E.pf = Kit.mk('g', {}, svg); E.pfIn = Kit.mk('g', {}, E.pf);
   const bp = [...Array(8)].map((_, i) => [-3.5 * s + i * s, (i % 2 ? .2 : -.2) * s]);
-  E.prot = Kit.mk('path', {d: blob(5.75 * s, 0, .95 * s), fill: VIO, opacity: .9}, E.pfIn);
-  Kit.mk('polyline', {points: [[-4.25 * s, bp[0][1]], ...bp, [4.6 * s, 0]].map(p => p.map(v => v.toFixed(2)).join(',')).join(' '), fill: 'none', stroke: '#ffe2c2', 'stroke-width': s * .16, 'stroke-linejoin': 'round'}, E.pfIn);
-  bp.forEach(([x, y]) => { [-1, 1].forEach(sg => Kit.mk('circle', {cx: x, cy: y + sg * s * .55, r: s * .17, fill: MINT}, E.pfIn)); Kit.mk('circle', {cx: x, cy: y, r: s * .28, fill: '#ffe2c2'}, E.pfIn); });
-  Kit.mk('circle', {cx: -4.25 * s, cy: bp[0][1], r: s * .17, fill: MINT}, E.pfIn);
-  Kit.mk('circle', {cx: 4.6 * s, cy: 0, r: s * .45, fill: ROSE}, E.pfIn);
-  Kit.mk('circle', {cx: 4.6 * s, cy: 0, r: s * .18, fill: '#fff', opacity: .85}, E.pfIn);
+  E.prot = Kit.mk('path', {d: blob(5.75 * s, 0, .95 * s), class: 'f-k5'}, E.pfIn);
+  Kit.mk('polyline', {points: [[-4.25 * s, bp[0][1]], ...bp, [4.6 * s, 0]].map(p => p.map(v => v.toFixed(2)).join(',')).join(' '), fill: 'none', class: 's-amb', 'stroke-width': s * .16, 'stroke-linejoin': 'round'}, E.pfIn);
+  bp.forEach(([x, y]) => { [-1, 1].forEach(sg => Kit.mk('circle', {cx: x, cy: y + sg * s * .55, r: s * .17, class: 'f-k6'}, E.pfIn)); Kit.mk('circle', {cx: x, cy: y, r: s * .28, class: 'f-amb'}, E.pfIn); });
+  Kit.mk('circle', {cx: -4.25 * s, cy: bp[0][1], r: s * .17, class: 'f-k6'}, E.pfIn);
+  Kit.mk('circle', {cx: 4.6 * s, cy: 0, r: s * .45, class: 'f-red'}, E.pfIn);
   gsap.set(E.prot, {scale: 0, transformOrigin: '50% 50%'});
-  E.pl = txt(svg, 0, ly3, 'PFOA · 5–10 carbons', {fill: AMBER, 'font-size': fs, 'font-weight': 700});
+  E.pl = txt(svg, 0, ly3, 'PFOA · 5–10 carbons', {class: 'lab f-amb', 'font-size': fs});
 
   guard();
   E.num.textContent = '?';
   pose.x = x0; pose.y = y0; pose.rot = 0; setPose();
   C.speed = state === 'done' ? s * 1.8 : s * .9; drawChain();
-  E.dash.setAttribute('stroke-dashoffset', 0);
 
   if (!Kit.calm) {
     loops.push(gsap.to(E.cells, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 70, ease: 'none', repeat: -1}));
-    loops.push(gsap.to(E.scan, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 9, ease: 'none', repeat: -1}));
   }
 }
 

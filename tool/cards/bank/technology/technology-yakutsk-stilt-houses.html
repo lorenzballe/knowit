@@ -30,7 +30,14 @@
 const st = {g: 0};
 let done = false, D = null, drag = null;
 const SVGNS = 'http://www.w3.org/2000/svg';
-const INK = '#10100c';
+const INK = 'var(--k)';
+const GROUND = 'color-mix(in srgb, var(--k) 32%, var(--c))';
+const ICE = 'color-mix(in srgb, #ffffff 55%, var(--c))';
+const SNOW = 'color-mix(in srgb, #ffffff 88%, var(--c))';
+const WALL = 'color-mix(in srgb, #ffffff 82%, var(--c))';
+const PILE = 'color-mix(in srgb, var(--k) 80%, var(--c))';
+const WARM = '#f0883e';   // heat
+const MUD = '#9b5a2e';    // thawed ground
 
 function build(){
   const svg = Kit.$('pic');
@@ -40,55 +47,60 @@ function build(){
   const gy = H * .40, pb = H * .94, m = (pb - gy) / 10;
   const hw = Math.min(W * .40, H * .36), hh = H * .13, rh = H * .07, hx = W * .5 - hw / 2;
   const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const txt = (a, p) => mk('text', Object.assign({'font-size': fs, style: `fill:${INK};font-family:var(--body);font-weight:600`}, a), p);
 
   const defs = mk('defs', {});
   const cp = mk('clipPath', {id: 'gclip'}, defs);
   mk('rect', {x: 0, y: gy, width: W, height: H - gy}, cp);
 
   const root = mk('g', {});
-  // sky (no backdrop): stars drawn in white on the card
-  for (let i = 0; i < 26; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * gy * .9, r: Math.max(.8, Kit.rnd() * 1.6), fill: '#ffffff', opacity: .35 + Kit.rnd() * .4}, root);
-  const sky = mk('text', {x: W * .04, y: H * .02 + fs * 1.1, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  // air label
+  const sky = txt({x: W * .04, y: H * .02 + fs * 1.1}, root);
   sky.textContent = 'air: down to −63 °C';
-  // ground (no panel): ice cracks only
-  for (let i = 0; i < 18; i++) {
-    const x = Kit.rnd() * W, y = gy + H * .03 + Kit.rnd() * (H - gy - H * .05), l = W * (.03 + Kit.rnd() * .05);
-    mk('path', {d: `M${x} ${y} l${l * .5} ${l * .25} l${l * .5} ${-l * .15}`, stroke: '#ffffff', 'stroke-opacity': .6, 'stroke-width': 1.4, fill: 'none'}, root);
+  // ground in cross-section: frozen soil with ice lenses
+  mk('rect', {x: 0, y: gy, width: W, height: H - gy, style: `fill:${GROUND}`}, root);
+  const rows = 6, cols = 5;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const x = (c + .5 + (r % 2 ? .5 : 0) + (Kit.rnd() - .5) * .4) / cols * W;
+    const y = gy + (H - gy) * (r + .6 + (Kit.rnd() - .5) * .3) / (rows + .4);
+    const l = W * (.025 + Kit.rnd() * .025);
+    mk('path', {d: `M${x - l} ${y} Q${x} ${y - l * .28} ${x + l} ${y} Q${x} ${y + l * .18} ${x - l} ${y} Z`, style: `fill:${ICE}`}, root);
   }
   // thaw bulb
-  const thaw = mk('ellipse', {cx: W / 2, cy: gy, rx: hw * .78, ry: 0, fill: '#a8642f', 'clip-path': 'url(#gclip)'}, root);
-  mk('rect', {x: 0, y: gy - 3, width: W, height: 6, fill: '#ffffff'}, root);
-  const pf = mk('text', {x: W * .04, y: gy + fs * 2.1, fill: INK, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  const thaw = mk('ellipse', {cx: W / 2, cy: gy, rx: hw * .78, ry: 0, style: `fill:${MUD}`, 'clip-path': 'url(#gclip)'}, root);
+  // snow on the surface
+  mk('path', {d: `M0 ${gy - 3} Q${W * .25} ${gy - 5} ${W * .5} ${gy - 3} T${W} ${gy - 3} L${W} ${gy + 3} L0 ${gy + 3} Z`, style: `fill:${SNOW}`}, root);
+  const pf = txt({x: W * .04, y: gy + fs * 2.1}, root);
   pf.textContent = 'permafrost';
   // pile depth label
-  const t1 = mk('text', {x: W * .96, y: (gy + pb) / 2 + fs * 1.4, fill: INK, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  const t1 = txt({x: W * .96, y: (gy + pb) / 2 + fs * 1.4, 'text-anchor': 'end'}, root);
   t1.textContent = 'piles';
-  const t2 = mk('text', {x: W * .96, y: (gy + pb) / 2 + fs * 3.2, fill: INK, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, root);
+  const t2 = txt({x: W * .96, y: (gy + pb) / 2 + fs * 3.2, 'text-anchor': 'end'}, root);
   t2.textContent = '~10 m';
   // piles (static, anchored deep)
   const piles = [];
   [.12, .5, .88].forEach(p => {
-    piles.push(mk('rect', {x: hx + hw * p - hw * .03, y: gy, width: hw * .06, height: pb - gy, fill: '#7a4a24', stroke: '#4a2a10', 'stroke-width': 1}, root));
+    piles.push(mk('rect', {x: hx + hw * p - hw * .03, y: gy, width: hw * .06, height: pb - gy, style: `fill:${PILE}`}, root));
   });
-  // cold air arrows
+  // cold air arrow under the house
   const cold = mk('g', {opacity: 0}, root);
-  const arrow = mk('path', {d: '', stroke: '#ffffff', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, cold);
+  const arrow = mk('path', {d: '', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: `stroke:${SNOW}`}, cold);
   // house
   const house = mk('g', {}, root);
   const heat = mk('g', {opacity: 1}, house);
   [.25, .5, .75].forEach(p => {
     const x = hx + hw * p, s = hw * .05;
-    mk('path', {d: `M${x} ${gy + 4} q${s} ${H * .02} 0 ${H * .04} q${-s} ${H * .02} 0 ${H * .04}`, stroke: '#ff7a3d', 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round'}, heat);
+    mk('path', {d: `M${x} ${gy + 4} q${s} ${H * .02} 0 ${H * .04} q${-s} ${H * .02} 0 ${H * .04}`, stroke: WARM, 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round'}, heat);
   });
-  mk('rect', {x: hx, y: gy - hh, width: hw, height: hh, fill: '#e9c27a', stroke: '#5a3a14', 'stroke-width': 2}, house);
-  mk('path', {d: `M${hx - hw * .08} ${gy - hh} L${W / 2} ${gy - hh - rh} L${hx + hw * 1.08} ${gy - hh} Z`, fill: '#3b5b7a', stroke: '#1e3248', 'stroke-width': 2}, house);
-  [.18, .62].forEach(p => mk('rect', {x: hx + hw * p, y: gy - hh * .72, width: hw * .2, height: hh * .38, fill: '#ffd65a', stroke: '#5a3a14', 'stroke-width': 1.5}, house));
-  mk('rect', {x: hx + hw * .44, y: gy - hh * .55, width: hw * .13, height: hh * .55, fill: '#7a4a24'}, house);
-  const hint = mk('text', {x: W / 2, y: gy - hh - rh - fs * .5, fill: INK, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, house);
+  mk('rect', {x: hx, y: gy - hh, width: hw, height: hh, 'stroke-width': 2, 'stroke-linejoin': 'round', style: `fill:${WALL};stroke:${INK}`}, house);
+  mk('path', {d: `M${hx - hw * .08} ${gy - hh} L${W / 2} ${gy - hh - rh} L${hx + hw * 1.08} ${gy - hh} Z`, 'stroke-width': 2, 'stroke-linejoin': 'round', style: `fill:${INK};stroke:${INK}`}, house);
+  [.18, .62].forEach(p => mk('rect', {x: hx + hw * p, y: gy - hh * .72, width: hw * .2, height: hh * .38, fill: WARM, 'stroke-width': 1.5, style: `stroke:${INK}`}, house));
+  mk('rect', {x: hx + hw * .44, y: gy - hh * .55, width: hw * .13, height: hh * .55, style: `fill:${INK}`}, house);
+  const hint = txt({x: W / 2, y: gy - hh - rh - fs * .5, 'text-anchor': 'middle'}, house);
   hint.textContent = '↑ drag';
-  // gap readout
-  const dim = mk('line', {x1: hx - W * .05, x2: hx - W * .05, y1: gy, y2: gy, stroke: INK, 'stroke-width': 2}, root);
-  const read = mk('text', {x: hx - W * .07, y: gy, fill: INK, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, root);
+  // gap measure
+  const dim = mk('line', {x1: hx - W * .05, x2: hx - W * .05, y1: gy, y2: gy, 'stroke-width': 2, style: `stroke:${INK}`}, root);
+  const read = txt({x: hx - W * .07, y: gy, 'text-anchor': 'end'}, root);
 
   D = {W, H, gy, m, hw, hh, hx, pb, thaw, house, heat, cold, arrow, dim, read, hint, piles, fs};
   render();

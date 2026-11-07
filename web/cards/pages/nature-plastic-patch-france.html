@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-plastic-patch-france -->
-<!-- Look: a top-down chart of the deep Pacific. The whole card is the deep water, with shimmering caustics, light shafts, marine snow, a compass and the dotted currents of the gyre. Inside, a slow clockwise swirl of coloured plastic: fragments, bottles, six-pack rings and bags.
-     Interaction: you pick up a tricolour France waiting in its tray. It grows to the same map scale as the patch, and you drag it onto the haze of plastic. The outline lights up gold when it fits.
+<!-- Look: a page from a printed atlas. The card is the open Pacific, drawn as one flat sheet of the card's colour. The patch is a pale flat shape with a dashed edge, ringed by three plain arrows for the clockwise gyre. Inside it, a slow clockwise swirl of flat plastic pieces in the ink's tints and one coral: fragments, bottles, six-pack rings and bags.
+     Interaction: you pick up a France in flat tricolour stripes waiting in its tray. It grows to the same map scale as the patch, and you drag it onto the plastic. The outline turns gold when it fits.
      Wow: France glides into place and a gold border draws around it. A ripple runs through the debris, and "FRANCE" assembles letter by letter out of scrambled plastic shapes. The scene recomposes so the word and the map never overlap. -->
 <title>An island the size of France</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -14,15 +14,14 @@
 #stage{position:relative;flex:1;min-height:0;overflow:hidden;background:none;border-radius:0;box-shadow:none}
 #sea{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #sea.drag{cursor:grabbing}
-#blob{fill:none;stroke:rgba(190,235,250,.45);stroke-width:1.4;stroke-dasharray:4 5;transition:stroke .2s,stroke-width .2s;animation:dash 3s linear infinite}
+#blob{fill:color-mix(in srgb,var(--k) 10%,var(--c));stroke:color-mix(in srgb,var(--k) 55%,var(--c));stroke-width:1.5;stroke-dasharray:5 5;stroke-linejoin:round;transition:stroke .2s,stroke-width .2s;animation:dash 3s linear infinite}
 #blob.hot{stroke:#ffd166;stroke-width:2.6}
-@keyframes dash{to{stroke-dashoffset:-18}}
+@keyframes dash{to{stroke-dashoffset:-20}}
 .kit-calm #blob{animation:none}
 #reveal{position:absolute;left:0;right:0;top:2.4cqh;text-align:center;pointer-events:none}
 #reveal.side{right:auto;text-align:left}
-#reveal small{display:block;font:600 max(1.5cqh,12px)/1.3 var(--mono);color:#9fe0ef;letter-spacing:.2em;margin-bottom:.6cqh}
-#reveal.side small{letter-spacing:.14em}
-#word{display:inline-block;min-height:1em;font:800 28px/1 var(--display);color:#fff6dc;letter-spacing:.06em;white-space:nowrap;text-shadow:0 0 2.4cqh rgba(255,200,90,.55),0 .3cqh .6cqh rgba(0,0,0,.45)}
+#reveal small{display:block;font:600 max(1.7cqh,13px)/1.3 var(--body);color:color-mix(in srgb,var(--k) 70%,var(--c));margin-bottom:.6cqh}
+#word{display:inline-block;min-height:1em;font:800 28px/1 var(--display);color:#ffd166;letter-spacing:.02em;white-space:nowrap}
 #why{margin:0}
 .say,#why{font-size:max(1.9cqh,13px)}
 </style>
@@ -32,7 +31,7 @@
     <h2 class="q">How big is the plastic island in the Pacific, compared to a country?</h2>
     <div class="stagebox" id="stage">
       <svg id="sea" role="img" aria-label="A chart of the Pacific with a haze of floating plastic, and an outline of France at the same scale to drag onto it."></svg>
-      <div id="reveal" class="gone"><small>ROUGHLY THE AREA OF</small><span id="word"></span></div>
+      <div id="reveal" class="gone"><small>Roughly the area of</small><span id="word"></span></div>
     </div>
     <p class="say" id="say">That swirling haze is floating plastic. <b>Drag France onto it</b>, drawn at the same map scale.</p>
     <p class="body gone" id="why">France covers it almost edge to edge: this "island" of floating plastic spreads over about as much ocean as the whole country.</p>
@@ -46,6 +45,7 @@
   ['DrawSVGPlugin','ScrambleTextPlugin','SplitText'].forEach(n => { if (window[n]) gsap.registerPlugin(window[n]); });
   const svg = Kit.$('sea'), R = Kit.rnd, TAU = Math.PI * 2;
   const dur = v => Kit.calm ? 0 : v;
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 
   // France, in a unit box (x east, y south).
   const FR = [[.46,.02],[.53,.04],[.58,.09],[.66,.11],[.70,.16],[.78,.17],[.86,.20],[.93,.22],[.90,.30],[.88,.38],[.84,.42],[.80,.47],[.82,.53],[.86,.56],[.85,.63],[.88,.70],[.86,.76],[.93,.80],[.86,.85],[.78,.87],[.72,.89],[.66,.86],[.60,.88],[.55,.93],[.54,.99],[.46,.97],[.38,.95],[.30,.93],[.24,.90],[.27,.80],[.29,.70],[.27,.62],[.22,.56],[.18,.50],[.11,.47],[.03,.43],[.02,.38],[.09,.36],[.17,.36],[.24,.35],[.27,.30],[.25,.22],[.30,.24],[.36,.26],[.41,.22],[.43,.12],[.44,.05]];
@@ -53,7 +53,8 @@
   // The patch: a soft irregular blob of about the same area.
   const BX = 1.08, BY = .92;
   const blobR = t => .44 * (1 + .09 * Math.sin(3 * t + 1) + .06 * Math.sin(5 * t + 2.2) + .04 * Math.sin(2 * t + .4));
-  const COLS = ['#eaf6fa','#7fd3e6','#f2c94c','#ff8a65','#9be7c4','#5aa9e6','#ffffff','#f7a1c4'];
+  // Plastic: pale tints of the ink, with one coral for the coloured pieces.
+  const COLS = ['var(--k)', tint(80), tint(62), tint(80), 'var(--k)', '#ff8a65', tint(62), '#ff8a65'];
   const P = [];
   for (let i = 0; i < 300; i++) {
     const t = R() * TAU; let r = blobR(t) * Math.pow(R(), .55);
@@ -65,8 +66,6 @@
     const t = R() * TAU;
     P.push({t, r: blobR(t) * (.15 + R() * .75), k: 4 + (i % 3), c: COLS[Math.floor(R() * COLS.length)], z: .016 + R() * .008, rot: R() * 360, o: .55 + R() * .35});
   }
-  const SNOW = Array.from({length: 46}, () => ({x: R(), y: R(), r: .5 + R() * 1.5, d: 7 + R() * 9, o: .12 + R() * .4}));
-  const CA = Array.from({length: 24}, () => ({x: R(), y: R(), rx: 8 + R() * 20, ry: 4 + R() * 8, a: R() * 180, o: .1 + R() * .18}));
 
   let W = 0, H = 0, S = 0, cx = 0, cy = 0, tx = 0, ty = 0, fs = 12, room = 0;
   let dropped = false, dragging = false, entered = false, busy = false, pending = false;
@@ -78,7 +77,6 @@
   const frD = () => 'M' + FR.map(([x, y]) => `${((x - FCX) * S).toFixed(1)},${((y - FCY) * S).toFixed(1)}`).join('L') + 'Z';
   const render = () => tok && tok.setAttribute('transform', `translate(${st.x.toFixed(1)} ${st.y.toFixed(1)}) scale(${st.s.toFixed(3)})`);
   const near = (x, y) => Math.hypot(x - cx, y - cy) < S * .3;
-  const clampX = x => Math.max(0, Math.min(W, x));
 
   // Where France and the patch sit once dropped: word on top, or word on the left.
   function placeDropped() {
@@ -108,64 +106,35 @@
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     if (!W || !H) return;
     fs = Math.max(12, Math.min(15, W / 26));
-    const lf = Math.max(12, fs * .9);
     if (dropped) placeDropped();
     else { S = Math.min(W * .62, H * .4); cx = W * .5; cy = H * .5; }
     room = Math.min(cx, W - cx, cy, H - cy) - 3;
     tx = Math.max(W * .2, S * .36 + 4); ty = Math.min(H * .84, H - S * .36 - 4);
 
+    // The flag: three flat stripes.
     const defs = mk('defs', {}, svg);
-    const lin = (id, stops, a = {x1: 0, y1: 0, x2: 0, y2: 1}) => { const g = mk('linearGradient', Object.assign({id}, a), defs); stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g)); };
-    const rad = (id, stops) => { const g = mk('radialGradient', {id}, defs); stops.forEach(([o, c, op = 1]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g)); };
-    lin('ray', [[0, '#c8f6ff', .18], [1, '#c8f6ff', 0]]);
-    lin('tri', [[0, '#1f5fbf'], [.34, '#1f5fbf'], [.34, '#f4f7fb'], [.66, '#f4f7fb'], [.66, '#e8443a'], [1, '#e8443a']], {x1: 0, y1: 0, x2: 1, y2: 0});
-    rad('haze', [[0, '#a8e6f0', .3], [.6, '#6cc6dc', .1], [1, '#6cc6dc', 0]]);
-    rad('goldg', [[0, '#ffd166', .55], [.7, '#ffb347', .12], [1, '#ffb347', 0]]);
-    const fb = mk('filter', {id: 'soft', x: '-20%', y: '-20%', width: '140%', height: '140%'}, defs); mk('feGaussianBlur', {stdDeviation: 1.4}, fb);
-    const fg = mk('filter', {id: 'glow', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
-    mk('feGaussianBlur', {stdDeviation: 3, result: 'b'}, fg); const fm = mk('feMerge', {}, fg); mk('feMergeNode', {in: 'b'}, fm); mk('feMergeNode', {in: 'SourceGraphic'}, fm);
-    const fsh = mk('filter', {id: 'lift', x: '-30%', y: '-30%', width: '160%', height: '160%'}, defs);
-    mk('feDropShadow', {dx: 0, dy: 6, stdDeviation: 7, 'flood-color': '#000814', 'flood-opacity': .6}, fsh);
+    const g3 = mk('linearGradient', {id: 'tri', x1: 0, y1: 0, x2: 1, y2: 0}, defs);
+    [[0, '#2a5db0'], [.34, '#2a5db0'], [.34, '#f4f1ea'], [.66, '#f4f1ea'], [.66, '#e4473b'], [1, '#e4473b']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, g3));
 
-    // Chart lines, light (the water is the card itself).
-    const grid = mk('g', {stroke: 'rgba(160,220,255,.07)', 'stroke-width': 1, 'stroke-dasharray': '2 6'}, svg);
-    const step = S * .5;
-    for (let x = cx % step; x < W; x += step) mk('line', {x1: x, x2: x, y1: 0, y2: H}, grid);
-    for (let y = cy % step; y < H; y += step) mk('line', {x1: 0, x2: W, y1: y, y2: y}, grid);
-    const rays = mk('g', {}, svg);
-    for (let i = 0; i < 5; i++) {
-      const x0 = W * (.04 + .2 * i), w0 = W * .05, sk = W * .1, yb = H * .78;
-      const pts = [[x0, 0], [x0 + w0, 0], [x0 + w0 + sk + W * .08, yb], [x0 + sk, yb]].map(([x, y]) => `${clampX(x).toFixed(1)},${y.toFixed(1)}`).join(' ');
-      const r = mk('polygon', {points: pts, fill: 'url(#ray)', opacity: .5}, rays);
-      if (!Kit.calm) amb.push(gsap.to(r, {opacity: .12, duration: 3 + i * .7, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: i * .4}));
-    }
-    const caus = mk('g', {filter: 'url(#soft)', fill: 'none', stroke: '#c9f4ff'}, svg);
-    CA.forEach((c, i) => {
-      const m = c.rx * 1.4 + 3, x = m + c.x * (W - 2 * m), y = m + c.y * H * .34;
-      const e = mk('ellipse', {cx: x, cy: y, rx: c.rx, ry: c.ry, 'stroke-width': 1.6, opacity: c.o, transform: `rotate(${c.a} ${x} ${y})`}, caus);
-      if (!Kit.calm) amb.push(gsap.to(e, {attr: {rx: c.rx * 1.35, ry: c.ry * .7}, opacity: c.o * .3, duration: 1.8 + (i % 5) * .5, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: (i % 7) * .3}));
-    });
-
-    // The patch: haze, gold flash, gyre currents and the rotating swirl of debris.
+    // The patch: a flat pale shape, the gyre's arrows and the rotating swirl of debris.
     patchG = mk('g', {}, svg);
-    mk('ellipse', {cx, cy, rx: Math.min(S * .71, room), ry: Math.min(S * .61, room), fill: 'url(#haze)'}, patchG);
-    glowE = mk('ellipse', {cx, cy, rx: Math.min(S * .7, room), ry: Math.min(S * .66, room), fill: 'url(#goldg)', opacity: dropped ? .45 : 0}, patchG);
+    glowE = mk('ellipse', {cx, cy, rx: Math.min(S * .7, room), ry: Math.min(S * .66, room), fill: '#ffd166', 'fill-opacity': .12, opacity: dropped ? .45 : 0}, patchG);
     pg = mk('g', {}, patchG);
     const bs = Math.min(1, room / (.58 * S));
     const bp = []; for (let i = 0; i < 72; i++) { const t = i / 72 * TAU, r = blobR(t) * S * bs; bp.push(`${(cx + Math.cos(t) * r * BX).toFixed(1)},${(cy + Math.sin(t) * r * BY).toFixed(1)}`); }
     blob = mk('path', {id: 'blob', d: 'M' + bp.join('L') + 'Z'}, pg);
-    // Clockwise currents of the North Pacific gyre.
+    // Clockwise currents of the North Pacific gyre: three plain arrows.
     const ga = Math.min(.66 * S, (room - 8) / BX);
     if (ga > S * .45) {
-      const cur = mk('g', {fill: 'none', stroke: 'rgba(190,235,250,.38)', 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, pg);
+      const cur = mk('g', {fill: 'none', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', style: `stroke:${tint(45)}`}, pg);
       for (let i = 0; i < 3; i++) {
         const a0 = i * TAU / 3 + .35, a1 = a0 + 1.15, pts = [];
         for (let j = 0; j <= 24; j++) { const a = a0 + (a1 - a0) * j / 24; pts.push(`${(cx + Math.cos(a) * ga * BX).toFixed(1)},${(cy + Math.sin(a) * ga * BY).toFixed(1)}`); }
-        mk('path', {d: 'M' + pts.join('L'), 'stroke-dasharray': '1 5'}, cur);
+        mk('path', {d: 'M' + pts.join('L')}, cur);
         const ex = cx + Math.cos(a1) * ga * BX, ey = cy + Math.sin(a1) * ga * BY;
         let vx = -Math.sin(a1) * BX, vy = Math.cos(a1) * BY; const l = Math.hypot(vx, vy); vx /= l; vy /= l;
-        const h = Math.max(5, S * .035);
-        mk('path', {d: `M${ex - vx * h + vy * h * .6},${ey - vy * h - vx * h * .6}L${ex},${ey}L${ex - vx * h - vy * h * .6},${ey - vy * h + vx * h * .6}`, 'stroke-width': 1.6, stroke: 'rgba(190,235,250,.6)'}, cur);
+        const h = Math.max(6, S * .04);
+        mk('path', {d: `M${ex - vx * h + vy * h * .6},${ey - vy * h - vx * h * .6}L${ex},${ey}L${ex - vx * h - vy * h * .6},${ey - vy * h + vx * h * .6}`}, cur);
       }
     }
     parts = [];
@@ -173,20 +142,22 @@
       const z = Math.max(1, p.z * S);
       if (p.r * S * BX + z * 2 > room) return;
       const x = cx + Math.cos(p.t) * p.r * S * BX, y = cy + Math.sin(p.t) * p.r * S * BY;
+      const col = `color:${p.c}`;
       let e;
-      if (p.k === 0) e = mk('circle', {cx: x, cy: y, r: z * .7, fill: p.c}, pg);
-      else if (p.k === 1) e = mk('rect', {x: x - z * .6, y: y - z * .4, width: z * 1.2, height: z * .8, rx: z * .15, fill: p.c, transform: `rotate(${p.rot} ${x} ${y})`}, pg);
-      else if (p.k === 2) e = mk('line', {x1: x - z, y1: y, x2: x + z, y2: y, stroke: p.c, 'stroke-width': Math.max(1, z * .35), 'stroke-linecap': 'round', transform: `rotate(${p.rot} ${x} ${y})`}, pg);
-      else if (p.k === 3) e = mk('circle', {cx: x, cy: y, r: z * .75, fill: 'none', stroke: p.c, 'stroke-width': Math.max(.8, z * .3)}, pg);
+      if (p.k === 0) e = mk('circle', {cx: x, cy: y, r: z * .7, fill: 'currentColor', style: col}, pg);
+      else if (p.k === 1) e = mk('rect', {x: x - z * .6, y: y - z * .4, width: z * 1.2, height: z * .8, fill: 'currentColor', style: col, transform: `rotate(${p.rot} ${x} ${y})`}, pg);
+      else if (p.k === 2) e = mk('line', {x1: x - z, y1: y, x2: x + z, y2: y, stroke: 'currentColor', style: col, 'stroke-width': Math.max(1, z * .35), 'stroke-linecap': 'round', transform: `rotate(${p.rot} ${x} ${y})`}, pg);
+      else if (p.k === 3) e = mk('circle', {cx: x, cy: y, r: z * .75, fill: 'none', stroke: 'currentColor', style: col, 'stroke-width': Math.max(.8, z * .3)}, pg);
       else {
-        e = mk('g', {transform: `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${p.rot.toFixed(0)})`}, pg);
+        e = mk('g', {transform: `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${p.rot.toFixed(0)})`, style: col}, pg);
         if (p.k === 4) { // bottle
-          mk('rect', {x: -z * .45, y: -z * .8, width: z * .9, height: z * 1.7, rx: z * .3, fill: p.c, 'fill-opacity': .75}, e);
-          mk('rect', {x: -z * .2, y: -z * 1.15, width: z * .4, height: z * .45, rx: z * .1, fill: '#ffffff', 'fill-opacity': .9}, e);
+          mk('rect', {x: -z * .45, y: -z * .8, width: z * .9, height: z * 1.7, rx: z * .3, fill: 'currentColor'}, e);
+          mk('rect', {x: -z * .2, y: -z * 1.15, width: z * .4, height: z * .45, rx: z * .1, fill: 'currentColor'}, e);
         } else if (p.k === 5) { // six-pack rings
-          [-1, 0, 1].forEach(k => mk('ellipse', {cx: k * z * .62, cy: 0, rx: z * .34, ry: z * .44, fill: 'none', stroke: p.c, 'stroke-width': Math.max(.8, z * .14)}, e));
+          [-1, 0, 1].forEach(k => mk('ellipse', {cx: k * z * .62, cy: 0, rx: z * .34, ry: z * .44, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(.8, z * .14)}, e));
         } else { // bag
-          mk('path', {d: `M${-z * .7},${-z * .5}Q0,${-z * .9} ${z * .7},${-z * .5}L${z * .55},${z * .6}Q0,${z * .9} ${-z * .55},${z * .6}Z`, fill: '#eaf6fa', 'fill-opacity': .32, stroke: '#eaf6fa', 'stroke-opacity': .6, 'stroke-width': .8}, e);
+          e.setAttribute('style', 'color:var(--k)');
+          mk('path', {d: `M${-z * .7},${-z * .5}Q0,${-z * .9} ${z * .7},${-z * .5}L${z * .55},${z * .6}Q0,${z * .9} ${-z * .55},${z * .6}Z`, fill: 'currentColor', 'fill-opacity': .3, stroke: 'currentColor', 'stroke-width': 1}, e);
         }
       }
       e.setAttribute('opacity', p.o); e._d = p.r; e._o = p.o;
@@ -194,41 +165,28 @@
     });
     if (!Kit.calm) amb.push(gsap.to(pg, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 160, repeat: -1, ease: 'none'}));
 
-    // Marine snow drifting through the whole scene.
-    const sn = mk('g', {fill: '#d8f5ff'}, svg);
-    SNOW.forEach(s => {
-      const x = s.r + 2 + s.x * (W - 14 - 2 * s.r), y = H * .14 + s.r + 2 + s.y * (H * .86 - 2 * s.r - 4);
-      const e = mk('circle', {cx: x, cy: y, r: s.r, opacity: s.o}, sn);
-      if (!Kit.calm) amb.push(gsap.to(e, {attr: {cy: y - H * .14, cx: x + 10}, opacity: s.o * .3, duration: s.d, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
-    });
-
-    // Chart furniture: ocean name and a compass.
-    olab = txt(svg, fs, fs * 1.7, 'PACIFIC OCEAN', {fill: 'rgba(190,235,250,.6)', 'font-size': lf, 'font-weight': 600, 'letter-spacing': '.22em', style: 'font-family:var(--mono)'});
+    // Atlas lettering: the ocean's name and the patch's name.
+    olab = txt(svg, fs, fs * 1.7, 'Pacific Ocean', {'font-size': fs, 'font-weight': 600, 'font-style': 'italic', style: `font-family:var(--body);fill:${tint(60)}`});
     comp = mk('g', {}, svg);
-    const kx = W - fs * 1.5, ky = fs * 2.7, kr = fs * .75;
-    mk('circle', {cx: kx, cy: ky, r: kr, fill: 'none', stroke: 'rgba(190,235,250,.35)', 'stroke-width': 1}, comp);
-    mk('polygon', {points: `${kx},${ky - kr * .95} ${kx + kr * .3},${ky} ${kx - kr * .3},${ky}`, fill: '#ffd166', opacity: .85}, comp);
-    mk('polygon', {points: `${kx},${ky + kr * .95} ${kx + kr * .3},${ky} ${kx - kr * .3},${ky}`, fill: 'rgba(190,235,250,.45)'}, comp);
-    txt(comp, kx, ky - kr - 4, 'N', {fill: 'rgba(190,235,250,.75)', 'font-size': 12, 'font-weight': 700, 'text-anchor': 'middle', style: 'font-family:var(--mono)'});
     let top = Infinity; for (let i = 0; i < 72; i++) { const t = i / 72 * TAU; top = Math.min(top, cy + Math.sin(t) * blobR(t) * S * BY); }
-    plab = txt(svg, cx, top - fs * .8, 'THE PLASTIC PATCH', {fill: '#bfeaf5', 'font-size': lf, 'font-weight': 700, 'letter-spacing': '.16em', 'text-anchor': 'middle', style: 'font-family:var(--mono)'});
+    plab = txt(svg, cx, top - fs * .8, 'The plastic patch', {'font-size': fs, 'font-weight': 700, 'text-anchor': 'middle', style: 'font-family:var(--body);fill:var(--k)'});
     if (dropped) [olab, plab, comp].forEach(e => e.setAttribute('opacity', 0));
 
     // The tray, and France.
     trayG = mk('g', {opacity: dropped ? 0 : 1}, svg);
     if (!dropped) {
-      mk('circle', {cx: tx, cy: ty, r: S * .24, fill: 'rgba(255,209,102,.06)', stroke: 'rgba(255,209,102,.35)', 'stroke-dasharray': '3 4'}, trayG);
+      mk('circle', {cx: tx, cy: ty, r: S * .24, stroke: '#ffd166', 'stroke-width': 1.5, style: `fill:${tint(10)}`}, trayG);
       pulse = mk('circle', {cx: tx, cy: ty, r: S * .24, fill: 'none', stroke: '#ffd166', 'stroke-width': 1.5, opacity: 0}, trayG);
       const lx = tx + S * .27;
-      txt(trayG, lx, ty - fs * .25, 'FRANCE', {fill: '#ffd166', 'font-size': fs, 'font-weight': 700, 'letter-spacing': '.16em', style: 'font-family:var(--mono)'});
-      txt(trayG, lx, ty + fs * 1.15, 'same map scale', {fill: '#cfe9f2', 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body)'});
+      txt(trayG, lx, ty - fs * .25, 'France', {fill: '#ffd166', 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'});
+      txt(trayG, lx, ty + fs * 1.15, 'same map scale', {'font-size': fs, 'font-weight': 600, style: `font-family:var(--body);fill:${tint(80)}`});
       startPulse();
     }
 
-    tok = mk('g', {filter: 'url(#lift)'}, svg);
-    fr = mk('path', {d: frD(), fill: 'url(#tri)', 'fill-opacity': dropped ? .42 : .88, stroke: '#ffffff', 'stroke-width': 1.6, 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'}, tok);
-    mk('ellipse', {cx: (.965 - FCX) * S, cy: (.9 - FCY) * S, rx: .022 * S, ry: .055 * S, fill: '#e8443a', 'fill-opacity': .85, stroke: '#fff', 'stroke-width': 1.2, 'vector-effect': 'non-scaling-stroke'}, tok);
-    gold = mk('path', {d: frD(), fill: 'none', stroke: '#ffd166', 'stroke-width': 3, 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke', filter: 'url(#glow)'}, tok);
+    tok = mk('g', {}, svg);
+    fr = mk('path', {d: frD(), fill: 'url(#tri)', 'fill-opacity': dropped ? .42 : .88, stroke: '#f4f1ea', 'stroke-width': 1.6, 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'}, tok);
+    mk('ellipse', {cx: (.965 - FCX) * S, cy: (.9 - FCY) * S, rx: .022 * S, ry: .055 * S, fill: '#e4473b', 'fill-opacity': .85, stroke: '#f4f1ea', 'stroke-width': 1.2, 'vector-effect': 'non-scaling-stroke'}, tok);
+    gold = mk('path', {d: frD(), fill: 'none', stroke: '#ffd166', 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'vector-effect': 'non-scaling-stroke'}, tok);
     gsap.set(gold, {drawSVG: dropped ? '100%' : '0%'});
     if (dropped) { st.x = cx; st.y = cy; st.s = 1; }
     else { st.x = tx; st.y = ty; st.s = .34; dragging = false; svg.classList.remove('drag'); }

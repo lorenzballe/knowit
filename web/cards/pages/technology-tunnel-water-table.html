@@ -46,36 +46,70 @@ function draw(){
   const s = H*0.12, yw = H*0.33;
   const r = Math.min(W*0.2, H*0.19), cx = W*0.62, cy = H*0.68, bot = cy + r*0.55, top = cy - r;
   const tp = `M${cx-r},${bot} L${cx-r},${cy} A${r} ${r} 0 0 1 ${cx+r},${cy} L${cx+r},${bot} Z`;
+  const ax = cx + r + Math.min(18, W*0.05);
   const defs = Kit.mk('defs', {}, svg);
   const cp = Kit.mk('clipPath', {id:'tclip'}, defs); Kit.mk('path', {d:tp}, cp);
-  Kit.mk('line', {x1:0,y1:s,x2:W,y2:s,'stroke-width':3,style:'stroke:var(--k)'}, svg);
-  // pores
-  const R = lcg(7), n = Math.round(W*H/520);
-  for (let i=0;i<n;i++){
-    const x = R()*W, y = s + 6 + R()*(H-s-10), rr = 1.2 + R()*2.2;
-    const inT = Math.abs(x-cx) < r+4 && y > top-4 && y < bot+4;
-    if (inT) continue;
-    Kit.mk('circle', {cx:x,cy:y,r:rr, fill: y>yw ? BLUE : 'none', opacity: y>yw ? .6 : .45,
-      style: y>yw ? '' : 'stroke:var(--k)', 'stroke-width':1}, svg);
+  const cDry = Kit.mk('clipPath', {id:'dryclip'}, defs); Kit.mk('rect', {x:0,y:s,width:W,height:Math.max(0,yw-s)}, cDry);
+  const cWet = Kit.mk('clipPath', {id:'wetclip'}, defs); Kit.mk('rect', {x:0,y:yw,width:W,height:Math.max(0,H-yw)}, cWet);
+
+  // ground cross-section: dry rock above the water table, soaked rock below
+  Kit.mk('rect', {x:0,y:s,width:W,height:yw-s,style:'fill:color-mix(in srgb,var(--k) 9%,var(--c))'}, svg);
+  Kit.mk('rect', {x:0,y:yw,width:W,height:H-yw,style:`fill:color-mix(in srgb,${BLUE} 24%,var(--c))`}, svg);
+
+  // cracks in the rock: empty above the water table, full of water below it
+  const R = lcg(7), n = Math.max(10, Math.round(W*H/7000));
+  const boxes = [
+    [0, yw - fs*1.6, 12 + fs*10, yw + fs*4.2],
+    [0, H - fs*2.1, 12 + fs*11.5, H],
+    [cx - r - 12, top - 12, ax + 14, bot + 12],
+    [ax - 12, yw - 4, ax + 12, bot]
+  ];
+  const hits = pts => pts.some(([x,y]) => boxes.some(b => x > b[0] && x < b[2] && y > b[1] && y < b[3]));
+  const dryG = Kit.mk('g', {'clip-path':'url(#dryclip)', fill:'none','stroke-width':2.5,'stroke-linecap':'round','stroke-linejoin':'round', style:'stroke:color-mix(in srgb,var(--k) 38%,var(--c))'}, svg);
+  const wetG = Kit.mk('g', {'clip-path':'url(#wetclip)', fill:'none','stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round', stroke:BLUE}, svg);
+  let made = 0;
+  for (let i=0; i<n*6 && made<n; i++){
+    let x = R()*W, y = s + 10 + R()*(H - s - 16);
+    let a = R()*Math.PI*2;
+    const pts = [[x,y]];
+    const segs = 2 + Math.floor(R()*3);
+    for (let k=0;k<segs;k++){
+      const len = Math.min(W,H)*(0.035 + R()*0.05);
+      a += (R()-0.5)*1.4;
+      x += Math.cos(a)*len; y += Math.sin(a)*len;
+      pts.push([x,y]);
+    }
+    if (pts.some(([,py]) => py < s + 6)) continue;
+    if (hits(pts)) continue;
+    const d = 'M' + pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
+    Kit.mk('path', {d}, dryG);
+    Kit.mk('path', {d}, wetG);
+    made++;
   }
-  // water table line
-  Kit.mk('line', {x1:0,y1:yw,x2:W,y2:yw,stroke:BLUE,'stroke-width':3,'stroke-dasharray':'9 6'}, svg);
+
+  // ground surface
+  Kit.mk('line', {x1:0,y1:s,x2:W,y2:s,'stroke-width':3,style:'stroke:var(--k)'}, svg);
+
+  // water table: a gently wavy line
+  let wd = `M0,${yw}`; const wl = Math.max(28, W/14);
+  for (let x=0; x<W; x+=wl) wd += ` Q${x+wl/4},${yw-2.5} ${x+wl/2},${yw} T${x+wl},${yw}`;
+  Kit.mk('path', {d:wd, fill:'none', stroke:BLUE, 'stroke-width':3, 'stroke-linecap':'round'}, svg);
+
   // tunnel
   const plug = Kit.mk('path', {d:tp, style:'fill:none'}, svg);
   const air = Kit.mk('path', {d:tp, style:'fill:var(--c)', opacity: dug?1:0}, svg);
   const wg = Kit.mk('g', {'clip-path':'url(#tclip)'}, svg);
   const full = bot - top;
   const water = Kit.mk('rect', {x:cx-r-2,width:2*r+4, y: dug?top:bot, height: dug?full:0, fill:BLUE}, wg);
-  const outline = Kit.mk('path', {d:tp, fill:'none','stroke-width':3,
+  const outline = Kit.mk('path', {d:tp, fill:'none','stroke-width':3,'stroke-linejoin':'round',
     'stroke-dasharray': dug?'none':'8 6', style:'stroke:var(--k)'}, svg);
   const tLab = Kit.mk('text', {x:cx,y:cy+fs*0.2,'text-anchor':'middle','font-size':fs,'font-weight':700,
     style:`font-family:var(--body);fill:${dug?'#fff':'var(--k)'}`}, svg);
   tLab.textContent = dug ? 'flooded' : 'tunnel to dig';
   // arrow from crown up to the line
   const ag = Kit.mk('g', {opacity: dug?1:0}, svg);
-  const ax = cx + r + Math.min(18, W*0.05);
-  Kit.mk('line', {x1:ax,y1:top+r*0.4,x2:ax,y2:yw+10,stroke:BLUE,'stroke-width':3}, ag);
-  Kit.mk('path', {d:`M${ax-7},${yw+14} L${ax},${yw+2} L${ax+7},${yw+14} Z`, fill:BLUE}, ag);
+  Kit.mk('line', {x1:ax,y1:top+r*0.4,x2:ax,y2:yw+10,stroke:BLUE,'stroke-width':3,'stroke-linecap':'round'}, ag);
+  Kit.mk('path', {d:`M${ax-7},${yw+14} L${ax},${yw+2} L${ax+7},${yw+14} Z`, fill:BLUE, stroke:BLUE, 'stroke-width':1.5, 'stroke-linejoin':'round'}, ag);
   // labels
   const L = (x,y,t,st,w=700,a='start') => { const e = Kit.mk('text',{x,y,'font-size':fs,'font-weight':w,'text-anchor':a,style:'font-family:var(--body);'+st},svg); e.textContent=t; return e; };
   L(12, s - fs*0.5, 'Ground surface', 'fill:var(--k)', 600);

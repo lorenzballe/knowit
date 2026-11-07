@@ -45,28 +45,25 @@
   const mk = (tag, at, p) => Kit.mk(tag, at, p || svg);
   const txt = (p, x, y, s, at) => { const e = mk('text', Object.assign({x, y, fill: INK}, at), p); e.textContent = s; return e; };
   const cm = v => v.toFixed(1) + ' cm';
+  // Flat tints of the card's ink into the card's colour.
+  const tint = n => `color-mix(in srgb, var(--k, ${INK}) ${n}%, var(--c))`;
+  const BODY = 'font-family:var(--body)', DISPLAY = 'font-family:var(--display)';
 
   function draw() {
     svg.innerHTML = '';
     const {W, H} = Kit.fitSvg(svg);
     const fs = Math.max(11.5, Math.min(13, H / 24)), big = Math.max(21, Math.min(30, H / 11)), tall = H >= 200;
-    const CARD = getComputedStyle(card).getPropertyValue('--c').trim() || '#FFB000';
     // ---- the tube, at the right of its column: the gap label on its left, the scale on its right ----
     const bw = Math.max(70, W * .24), tw = Math.max(12, W * .04), tx = bw - tw - 15;
     const yIn = 4, y0 = H - 9, y80 = yIn + 6;
     const ycm = v => y0 - v / 80 * (y0 - y80);
-    const defs = mk('defs', {});
-    const mg = mk('linearGradient', {id: 'hg', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
-    [['0', '#4a4d55'], ['.45', '#d9dce2'], ['1', '#5d616a']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, mg));
-    const hp = mk('pattern', {id: 'hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(35)'}, defs);
-    mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: INK, 'stroke-width': 1, 'stroke-opacity': .22}, hp);
     // ---- the readings, top left of the sky (two lines more where there is room) ----
     const gx = bw + 6, SW = W - gx, rx = gx + 2;
     const y1 = fs + 1, y2 = y1 + fs * .3 + big * .95 + 3, y3 = y2 + big * .33 + fs * 1.05, y4 = y3 + fs * 1.4;
-    const head = txt(svg, rx, y1, '', {'font-size': fs * .95, 'font-weight': 800, 'font-family': 'Figtree', 'letter-spacing': '.08em', opacity: .75});
-    const val = txt(svg, rx, y2, '', {'font-size': big, 'font-weight': 800, 'font-family': 'Fraunces'});
-    const old = tall ? txt(svg, rx, y3, '', {'font-size': fs, 'font-weight': 600, 'font-family': 'Figtree', opacity: .8}) : null;
-    const fri = tall ? txt(svg, rx, y4, '', {'font-size': fs, 'font-weight': 600, 'font-family': 'Figtree', opacity: .8}) : null;
+    const head = txt(svg, rx, y1, '', {'font-size': fs, 'font-weight': 700, style: BODY});
+    const val = txt(svg, rx, y2, '', {'font-size': big, 'font-weight': 700, style: DISPLAY});
+    const old = tall ? txt(svg, rx, y3, '', {'font-size': fs, 'font-weight': 500, style: BODY}) : null;
+    const fri = tall ? txt(svg, rx, y4, '', {'font-size': fs, 'font-weight': 500, style: BODY}) : null;
     const wide = Math.max(fs * 13, big * 4.2);
     const readBottom = (tall ? y4 : y2) + fs * .35, readRight = rx + wide;
     // ---- the mountain, wholly inside the frame ----
@@ -76,29 +73,29 @@
     const yAlt = f => yG - f * (yG - yS);
     const hwL = SW * .6, hwR = Math.min(SW * .6, W - 4 - sx);
     const flank = (f, side) => sx + side * (side < 0 ? hwL : hwR) * Math.pow(1 - f, .62);
-    // A lower puy behind, for depth.
+    // A lower puy behind, in a paler tint.
     const bcx = gx + SW * .26, bhw = SW * .25, by = yAlt(.4);
-    mk('path', {d: `M${gx},${yG} C${bcx - bhw * .5},${yG} ${bcx - bhw * .5},${by} ${bcx},${by} S${bcx + bhw * .55},${yG} ${bcx + bhw},${yG}Z`, fill: '#FFC54A', stroke: INK, 'stroke-width': 1.4, 'stroke-opacity': .5});
-    // The Puy de Dôme, closed down to the ground on both sides.
+    mk('path', {d: `M${gx},${yG} C${bcx - bhw * .5},${yG} ${bcx - bhw * .5},${by} ${bcx},${by} S${bcx + bhw * .55},${yG} ${bcx + bhw},${yG}Z`, style: `fill:${tint(8)};stroke:${tint(45)}`, 'stroke-width': 1.4, 'stroke-linejoin': 'round'});
+    // The Puy de Dôme, closed down to the ground on both sides, one flat fill.
     const pts = [];
     for (let i = 0; i <= 28; i++) { const f = i / 28; pts.push([flank(f, -1), yAlt(f)]); }
     for (let i = 27; i >= 0; i--) { const f = i / 28; pts.push([flank(f, 1), yAlt(f)]); }
     const dome = 'M' + pts.map(p => p.map(v => v.toFixed(1)).join(',')).join('L') + 'Z';
-    mk('path', {d: dome, fill: '#F29A00'});
-    mk('path', {d: dome, fill: 'url(#hatch)'});
-    mk('path', {d: dome, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'});
+    mk('path', {d: dome, style: `fill:${tint(20)}`, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'});
     // The ground and Clermont at its foot.
-    mk('line', {x1: gx - 2, y1: yG, x2: W - 1, y2: yG, stroke: INK, 'stroke-width': 2});
+    mk('line', {x1: gx - 2, y1: yG, x2: W - 1, y2: yG, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'});
     const hs = Math.max(7, Math.min(10, H / 32));
     [[.0, 1], [.06, 1.2], [.13, .9]].forEach(([fx, k]) => {
       const x = gx + SW * fx, w = hs * 1.2 * k, h = hs * k;
-      mk('path', {d: `M${x},${yG} V${yG - h} L${x + w / 2},${yG - h - hs * .7 * k} L${x + w},${yG - h} V${yG}Z`, fill: '#FFD27A', stroke: INK, 'stroke-width': 1.3, 'stroke-linejoin': 'round'});
+      mk('path', {d: `M${x},${yG} V${yG - h} L${x + w / 2},${yG - h - hs * .7 * k} L${x + w},${yG - h} V${yG}Z`, style: `fill:${tint(6)}`, stroke: INK, 'stroke-width': 1.3, 'stroke-linejoin': 'round'});
     });
-    // The garden: the friar and the tube that stays.
+    // The garden: the friar in his robe, and the tube that stays beside him.
     const fx0 = gx + SW * .21;
-    mk('line', {x1: fx0 + 4, y1: yG, x2: fx0 + 4, y2: yG - hs * 1.7, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'});
-    mk('circle', {cx: fx0, cy: yG - hs * 1.25, r: 2.6, fill: INK});
-    mk('path', {d: `M${fx0},${yG - hs * 1.25 + 2} V${yG}`, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'});
+    mk('path', {d: `M${fx0 - 3.6},${yG} L${fx0 - 1.4},${yG - hs * 1.15} L${fx0 + 1.4},${yG - hs * 1.15} L${fx0 + 3.6},${yG}Z`, fill: INK, 'stroke-linejoin': 'round'});
+    mk('circle', {cx: fx0, cy: yG - hs * 1.15 - 2.6, r: 2.5, fill: INK});
+    const ftH = hs * 1.9, ftx = fx0 + 6;
+    mk('rect', {x: ftx, y: yG - ftH * .87, width: 2.4, height: ftH * .87, style: `fill:${tint(70)}`});
+    mk('rect', {x: ftx, y: yG - ftH, width: 2.4, height: ftH, rx: 1.2, fill: 'none', stroke: INK, 'stroke-width': 1.1});
     // The path: from the garden, switchbacks up the west flank to the summit.
     const path = [], g0 = [gx + SW * .3, yG - 1];
     for (let i = 0; i <= 60; i++) {
@@ -106,17 +103,17 @@
       const px = f === 1 ? sx : L + wdt * zig * (1 - f), blend = Math.min(1, f / .08);
       path.push([g0[0] * (1 - blend) + px * blend, yAlt(f) - (1 - f)]);
     }
-    mk('path', {d: 'M' + path.map(p => p.map(v => v.toFixed(1)).join(',')).join('L'), fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '1.5 4', 'stroke-linecap': 'round', opacity: .75});
-    // ---- the air left below the climber, and its share on a solid pill ----
+    mk('path', {d: 'M' + path.map(p => p.map(v => v.toFixed(1)).join(',')).join('L'), fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '1.5 4', 'stroke-linecap': 'round'});
+    // ---- the air left below the climber: a flat band, its share written on it ----
     const bandRect = mk('rect', {x: gx - 2, width: W - gx + 1, fill: INK, 'fill-opacity': .1});
     const bandLine = mk('line', {x1: gx - 2, x2: W - 1, stroke: INK, 'stroke-width': 1.2, 'stroke-dasharray': '4 4'});
-    const pillH = fs * 1.75, pill = mk('rect', {x: gx + 6, height: pillH, rx: pillH / 2, fill: INK});
-    const pillTxt = txt(svg, gx + 6 + fs * .6, 0, '', {'font-size': fs, 'font-weight': 800, 'font-family': 'Figtree', fill: CARD});
-    // ---- the tube ----
-    mk('rect', {x: tx - 5, y: y0 - 2, width: tw + 10, height: H - y0 + 1, rx: 3, fill: 'url(#hg)', stroke: INK, 'stroke-width': 1.6});
-    for (let v = 0; v <= 75; v += 5) { const y = ycm(v), l = v % 10 ? 4 : 7; mk('line', {x1: tx + tw + 2, y1: y, x2: tx + tw + 2 + l, y2: y, stroke: INK, 'stroke-width': 1.2, opacity: .6}); }
-    const merc = mk('rect', {x: tx + 2, width: tw - 4, fill: 'url(#hg)'});
-    mk('path', {d: `M${tx},${y0} V${yIn + tw / 2} A${tw / 2},${tw / 2} 0 0 1 ${tx + tw},${yIn + tw / 2} V${y0}`, fill: 'rgba(255,255,255,.28)', stroke: INK, 'stroke-width': 2});
+    const pillH = fs * 1.75;
+    const pillTxt = txt(svg, gx + 8, 0, '', {'font-size': fs, 'font-weight': 700, style: BODY});
+    // ---- the tube, standing in its dish of mercury ----
+    const merc = mk('rect', {x: tx, width: tw, style: `fill:${tint(70)}`});
+    mk('path', {d: `M${tx},${y0} V${yIn + tw / 2} A${tw / 2},${tw / 2} 0 0 1 ${tx + tw},${yIn + tw / 2} V${y0}`, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'});
+    mk('path', {d: `M${tx - 11},${y0 - 3} L${tx - 8},${H - 1} H${tx + tw + 8} L${tx + tw + 11},${y0 - 3}Z`, style: `fill:${tint(70)}`, stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round'});
+    for (let v = 10; v <= 70; v += 10) { const y = ycm(v); mk('line', {x1: tx + tw + 2, y1: y, x2: tx + tw + 8, y2: y, stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round'}); }
     const gLine = mk('line', {x1: tx - 9, x2: tx + tw + 9, y1: ycm(GARDEN), y2: ycm(GARDEN), stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '3 3'});
     // The reader's guess: a white bar across the tube with a handle.
     const gq = mk('g', {});
@@ -124,14 +121,14 @@
     mk('line', {x1: tx - 6, x2: tx + tw + 6, y1: 0, y2: 0, stroke: INK, 'stroke-width': 1, 'stroke-linecap': 'round'}, gq);
     const gHalo = mk('circle', {cx: tx - 12, cy: 0, r: 8, fill: '#fff', stroke: INK, 'stroke-width': 1.6}, gq);
     const brk = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.6});
-    const brkTxt = txt(svg, tx - 10, 0, '', {'font-size': fs, 'font-weight': 800, 'font-family': 'Figtree', 'text-anchor': 'end'});
-    // ---- the climber ----
+    const brkTxt = txt(svg, tx - 10, 0, '', {'font-size': fs, 'font-weight': 700, 'text-anchor': 'end', style: BODY});
+    // ---- the climber, his tube over the shoulder ----
     const who = mk('g', {});
-    const halo = mk('circle', {r: 15, fill: INK, 'fill-opacity': .12, stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1.2}, who);
+    const halo = mk('circle', {r: 15, style: `fill:${tint(14)}`}, who);
     mk('circle', {cx: 0, cy: -9, r: 3.2, fill: INK}, who);
     mk('path', {d: 'M0,-6 L0,2 M0,2 L-3,8 M0,2 L3,8 M0,-3 L-4,1', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', fill: 'none'}, who);
     mk('line', {x1: -1, y1: -13, x2: 6, y2: 4, stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, who);
-    G = {fs, H, yG, yS, yAlt, ycm, y0, y80, tx, tw, path, merc, gLine, gq, gHalo, brk, brkTxt, head, val, old, fri, who, bandRect, bandLine, pill, pillH, pillTxt};
+    G = {fs, H, yG, yS, yAlt, ycm, y0, y80, tx, tw, path, merc, gLine, gq, gHalo, brk, brkTxt, head, val, old, fri, who, bandRect, bandLine, pillH, pillTxt};
     hint = phase === 'guess' ? gHalo : halo;
     place();
   }
@@ -139,7 +136,7 @@
   // Everything that follows the reader: the guess first, then the climber's height.
   function place() {
     if (!G) return;
-    const {fs, yG, yAlt, ycm, y0, tx, tw, path, merc, gLine, gq, brk, brkTxt, head, val, old, fri, who, bandRect, bandLine, pill, pillH, pillTxt} = G;
+    const {fs, yG, yAlt, ycm, y0, tx, tw, path, merc, gLine, gq, brk, brkTxt, head, val, old, fri, who, bandRect, bandLine, pillH, pillTxt} = G;
     const n = path.length - 1, i = Math.min(n, Math.round(a * n)), [px, py] = path[i];
     who.setAttribute('transform', `translate(${px.toFixed(1)},${(py - 8).toFixed(1)})`);
     const v = level(a), ym = ycm(v);
@@ -147,12 +144,12 @@
     gq.setAttribute('transform', `translate(0,${ycm(guess).toFixed(1)})`);
     gq.setAttribute('opacity', phase === 'guess' ? 1 : .85);
     if (phase === 'guess') {
-      head.textContent = 'YOUR GUESS FOR THE TOP';
+      head.textContent = 'Your guess for the top';
       val.textContent = moved ? cm(guess) : '?';
       if (old) old.textContent = 'in the garden: 71.2 cm';
       if (fri) fri.textContent = '';
     } else {
-      head.textContent = 'PÉRIER’S TUBE';
+      head.textContent = 'Périer’s tube';
       val.textContent = cm(v);
       if (old) old.textContent = a <= .001 ? '26 pouces 3½ lignes' : a >= .999 ? '23 pouces 2 lignes' : `${Math.round(a * 100) * 10} m up`;
       if (fri) fri.textContent = 'the friar’s, in the garden: 71.2';
@@ -169,10 +166,8 @@
     const yb = yAlt(a), share = Math.round((1 - v / GARDEN) * 100), showBand = a > .04, room = yG - yb > pillH + 10;
     bandRect.setAttribute('y', yb.toFixed(1)); bandRect.setAttribute('height', Math.max(0, yG - yb).toFixed(1));
     bandLine.setAttribute('y1', yb.toFixed(1)); bandLine.setAttribute('y2', yb.toFixed(1));
-    bandRect.setAttribute('opacity', showBand ? 1 : 0); bandLine.setAttribute('opacity', showBand ? .7 : 0);
+    bandRect.setAttribute('opacity', showBand ? 1 : 0); bandLine.setAttribute('opacity', showBand ? 1 : 0);
     pillTxt.textContent = showBand && room ? `air below him: ${share}%` : '';
-    const pw = pillTxt.textContent ? pillTxt.getComputedTextLength() + fs * 1.2 : 0;
-    pill.setAttribute('width', pw.toFixed(1)); pill.setAttribute('y', (yb + 5).toFixed(1)); pill.setAttribute('opacity', pw ? 1 : 0);
     pillTxt.setAttribute('y', (yb + 5 + pillH / 2 + fs * .36).toFixed(1));
   }
 

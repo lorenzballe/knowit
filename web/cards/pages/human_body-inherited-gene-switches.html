@@ -1,8 +1,12 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: human_body-inherited-gene-switches -->
-<!-- Look: a Victorian brass "heredity meter", printed straight on the card. Three engraved tiers (grandparent, parent, you). Each has a brass double helix with depth (back strand sunk, front strand polished), base-pair rungs, end clamps, amber gene lamps glowing inside each loop, and an ivory dial with a damped needle.
-     Interaction: rub along the grandparent's strand to live a life. Each stroke throws glowing cyan marks onto her DNA. Her gene lamps dim and her needle swings down, while brass dust swirls from your finger. Then guess whether any of it reaches you.
-     Wow: the marks lift off in arcs and rain down the family line. Fewer land on each generation, your needle swings a little, then a brass glint sweeps the instrument. On short screens the instrument re-lays itself into compact rows, with side labels and brass readout plates, so nothing collides. -->
+<!-- Look: a page from a biology book. Three generations (grandparent, parent, you) stacked like a family tree, joined by plain lines.
+     Each one has a flat ribbon of DNA drawn in the card's ink, with five genes shown as round spots on it. A lit gene is a solid yellow spot. A dimmed gene fades into the page.
+     Next to each strand is a flat meter: a disc with a yellow arc and an ink needle that shows how active that person's genes are.
+     Interaction: rub along the grandparent's strand to live a life. Each stroke pins a mark on her DNA. The marks are drawn the way textbooks draw methyl tags: small lollipops on a stick.
+     Her genes fade and her needle drops. Then guess whether any of it reaches you.
+     Reveal: the lollipop marks drop down the family line. Fewer land on each generation, and your needle dips a little.
+     On short screens the drawing switches to compact rows with the names at the side, so nothing collides. -->
 <title>Inherited switches</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -12,11 +16,11 @@
 #cvbox{flex:1;min-height:0;position:relative}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
 #opts{display:flex;gap:2.4cqw;padding:1.1cqh 3.4cqw 1.6cqh}
-.opt{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.2 var(--body);color:#2a1906;text-align:center;background:linear-gradient(#f8e7ae,#d2a650 55%,#8f6a28);border:0;border-radius:1.4cqh;padding:1.3cqh 2.6cqw;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 .45cqh 0 #4a3412,0 .8cqh 1.6cqh rgba(0,0,0,.4);transition:transform .12s cubic-bezier(.2,.9,.3,1.4);overflow-wrap:anywhere}
+.opt{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.2 var(--body);color:var(--k);text-align:center;background:color-mix(in srgb,var(--k) 16%,var(--c));border:2px solid var(--k);border-radius:1.4cqh;padding:1.3cqh 2.6cqw;cursor:pointer;transition:transform .12s cubic-bezier(.2,.9,.3,1.4);overflow-wrap:anywhere}
 .opt:active{transform:translateY(.3cqh)}
-.opt.on{background:linear-gradient(#c9fff5,#5fd6c2 60%,#2a8f80);color:#06231e}
-.opt small{display:block;font:600 max(1.5cqh,12px)/1.2 var(--body);opacity:.8;margin-top:.3cqh}
-#why{display:flex;flex-direction:column;gap:.35cqh;padding:.9cqh 4.2cqw 1.3cqh;border-top:1px solid rgba(255,255,255,.45);background:none}
+.opt.on{background:var(--k);color:var(--c)}
+.opt small{display:block;font:600 max(1.5cqh,12px)/1.2 var(--body);opacity:.85;margin-top:.3cqh}
+#why{display:flex;flex-direction:column;gap:.35cqh;padding:.9cqh 4.2cqw 1.3cqh;border-top:1.5px solid color-mix(in srgb,var(--k) 45%,var(--c));background:none}
 #why .big{color:var(--k);font-size:max(2.3cqh,15px)}
 #why .body{color:var(--k);font-size:max(1.7cqh,12.5px);line-height:1.28}
 #why b{color:var(--k);text-decoration:underline;text-underline-offset:2px}
@@ -26,7 +30,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PASSED DOWN</span></div>
     <h2 class="q">Can grandparents' lives affect your DNA activity?</h2>
     <div class="stagebox" id="stage">
-      <div id="cvbox"><canvas id="cv" role="img" aria-label="A brass instrument with three tiers, grandparent, parent and you. Each has a DNA double helix with glowing gene lamps and a dial showing how active the genes are."></canvas></div>
+      <div id="cvbox"><canvas id="cv" role="img" aria-label="A family line of three generations, grandparent, parent and you. Each has a strand of DNA with five genes shown as yellow spots, and a meter showing how active the genes are."></canvas></div>
       <div id="opts" class="gone">
         <button class="opt" data-i="0">No<small>your DNA starts fresh</small></button>
         <button class="opt" data-i="1">Yes, a little<small>some marks pass down</small></button>
@@ -43,21 +47,37 @@
 <script>
 (() => {
   const cv = Kit.$('cv'), say = Kit.$('say');
-  const BR = '#d4ac55', BRL = '#f6e2a0', BRD = '#6e4f1d';
   const GENES = [.1, .3, .5, .7, .9], BASE = [.95, .84, .9, .86, .97];
   const TURNS = 2.5, MAXM = 70, TW = Math.PI * 2 * TURNS;
-  const NAMES = ['I · GRANDPARENT', 'II · PARENT', 'III · YOU'], SHORT = ['GRANDPARENT', 'PARENT', 'YOU'];
+  const NAMES = ['Grandparent', 'Parent', 'You'];
   const tiers = NAMES.map(name => ({name, marks: [], ang: -1, vel: 0, flash: 0, on: 1}));
-  let x = null, W = 0, H = 0, fs = 12, bg = null, G = {}, MONO = 'monospace';
-  let step = 'live', touched = false, down = false, px = -999, py = -999, lastE = null, now = 0, mid = 0, glint = {v: -1};
-  const flyers = [], dust = [];
+  let x = null, W = 0, H = 0, fs = 12, bg = null, G = {}, BODY = 'sans-serif', DISPLAY = 'serif', C = null;
+  let step = 'live', touched = false, down = false, px = -999, py = -999, lastE = null, now = 0, mid = 0;
+  const flyers = [];
   const clampu = u => Math.max(.03, Math.min(.97, u));
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const hx = u => G.hx0 + u * (G.hx1 - G.hx0);
   const hp = (i, u, s) => { const t = tiers[i]; return [hx(u), t.cy + s * t.amp * Math.sin(u * TW)]; };
   const front = (u, s) => s * Math.cos(u * TW) > 0;
 
-  function setSpacing(c, v) { if ('letterSpacing' in c) c.letterSpacing = v; }
+  // ---------- colours: the card's ink and colour, their tints, plus two flat meaning colours ----------
+  function rgbOf(str, fb) {
+    const k = document.createElement('canvas'); k.width = k.height = 1; const c = k.getContext('2d');
+    c.fillStyle = fb; try { c.fillStyle = str || fb; } catch (e) {} c.fillRect(0, 0, 1, 1);
+    const d = c.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2]];
+  }
+  const mixA = (a, b, t) => a.map((v, n) => Math.round(v * t + b[n] * (1 - t)));
+  const css = a => `rgb(${a[0]},${a[1]},${a[2]})`;
+  function readColours() {
+    const cs = getComputedStyle(Kit.$('card'));
+    const k = rgbOf(cs.getPropertyValue('--k').trim(), '#ffffff'), c = rgbOf(cs.getPropertyValue('--c').trim(), '#ff2d55');
+    const ON = [255, 214, 74], MARK = [38, 24, 56];
+    C = {k, c, ON, MARK, dim: mixA(k, c, .26),
+      ink: css(k), back: css(mixA(k, c, .5)), rung: css(mixA(k, c, .38)), disc: css(mixA(k, c, .15)), track: css(mixA(k, c, .32)),
+      on: css(ON), mark: css(MARK)};
+    BODY = (cs.getPropertyValue('--body') || '').trim() || 'sans-serif';
+    DISPLAY = (cs.getPropertyValue('--display') || '').trim() || BODY;
+  }
 
   // ---------- geometry: stacked tiers when tall, compact rows when short ----------
   function geo() {
@@ -68,142 +88,86 @@
       const R = Math.max(16, Math.min(th * .4, W * .13, th - (top + (th - top) / 2) - 5));
       G.R = R; G.gcx = W - R - W * .045; G.hx0 = W * .06; G.hx1 = G.gcx - R - W * .06;
     } else {
-      x.font = `700 ${fs}px ${MONO}`; setSpacing(x, '1px');
-      const lw = Math.max(...SHORT.map(n => x.measureText(n).width)); setSpacing(x, '0px');
+      x.font = `600 ${fs}px ${BODY}`;
+      const lw = Math.max(...NAMES.map(n => x.measureText(n).width));
       tiers.forEach((t, i) => { t.y0 = i * th; t.cy = t.y0 + th / 2; t.amp = clamp(th * .24, 5, 18); });
       const R = Math.max(8, Math.min(th * .44, W * .085));
       G.R = R; G.gcx = W - R - W * .035; G.hx0 = W * .04 + lw + 14; G.hx1 = G.gcx - R - W * .06;
     }
     if (G.R < 26) {
-      x.font = `700 ${fs}px ${MONO}`;
+      x.font = `700 ${fs}px ${DISPLAY}`;
       const pw = x.measureText('100%').width + 12;
       G.plate = {w: pw, x: G.gcx - G.R - 8 - pw};
       G.hx1 = G.plate.x - 12;
     }
   }
 
-  // ---------- the static instrument, painted once per size (no backdrop: transparent) ----------
+  // ---------- the static page drawing, painted once per size (transparent backdrop) ----------
   function paintBg() {
     const dpr = window.devicePixelRatio || 1;
     bg = document.createElement('canvas'); bg.width = Math.ceil(W * dpr); bg.height = Math.ceil(H * dpr);
     const c = bg.getContext('2d'); c.scale(dpr, dpr);
+    c.lineCap = 'round'; c.lineJoin = 'round';
 
     tiers.forEach((t, i) => {
-      // recessed bed behind each helix
-      const bedH = t.amp * 2 + 10, bx = G.hx0 - 10, bw = G.hx1 - G.hx0 + 20;
-      const bd = c.createLinearGradient(0, t.cy - bedH / 2, 0, t.cy + bedH / 2);
-      bd.addColorStop(0, 'rgba(90,0,30,.34)'); bd.addColorStop(1, 'rgba(90,0,30,.14)');
-      c.fillStyle = bd; rr(c, bx, t.cy - bedH / 2, bw, bedH, bedH / 2); c.fill();
-      c.strokeStyle = 'rgba(255,255,255,.3)'; c.lineWidth = 1; c.stroke();
-
-      if (i) {
-        const y = t.y0, sr = Math.min(4.5, G.th * .09 + 1);
-        c.fillStyle = 'rgba(90,0,30,.45)'; c.fillRect(W * .04, y + 1, W * .92, 2);
-        const rg = c.createLinearGradient(0, y - 2, 0, y + 2); rg.addColorStop(0, BRL); rg.addColorStop(1, BRD);
-        c.fillStyle = rg; c.fillRect(W * .04, y - 1.25, W * .92, 2.5);
-        [W * .04, W * .96].forEach(sx => screw(c, sx, y, sr));
+      // family-tree line down to the next generation
+      if (i < 2) {
+        const n = tiers[i + 1], ux = hx(.5), y0 = t.cy + t.amp + 7, y1 = n.cy - n.amp - 7;
+        if (y1 - y0 > 6) {
+          c.strokeStyle = C.track; c.lineWidth = 1.6;
+          c.beginPath(); c.moveTo(ux, y0); c.lineTo(ux, y1); c.stroke();
+          const ah = Math.min(5, (y1 - y0) * .3);
+          c.beginPath(); c.moveTo(ux - ah, y1 - ah); c.lineTo(ux, y1); c.lineTo(ux + ah, y1 - ah); c.stroke();
+        }
       }
-      // engraved tier name
-      c.font = `700 ${fs}px ${MONO}`;
-      const [lx, ly, nm] = G.stacked ? [G.hx0, t.y0 + fs * 1.35, t.name] : [W * .04, t.cy + fs * .36, SHORT[i]];
-      setSpacing(c, G.stacked ? '2px' : '1px');
-      c.fillStyle = 'rgba(90,0,30,.55)'; c.fillText(nm, lx + 1, ly + 1);
-      c.fillStyle = '#ffffff'; c.fillText(nm, lx, ly);
-      setSpacing(c, '0px');
-      // the lineage conduit down to the next tier
-      if (G.stacked && i < 2) {
-        const n = tiers[i + 1], ux = hx(.5);
-        c.setLineDash([2, 5]); c.strokeStyle = 'rgba(255,255,255,.6)'; c.lineWidth = 1.4;
-        c.beginPath(); c.moveTo(ux, t.cy + t.amp + 8); c.bezierCurveTo(ux + W * .12, t.cy + G.th * .35, ux - W * .12, n.cy - G.th * .35, ux, n.cy - n.amp - 8); c.stroke(); c.setLineDash([]);
-      }
+      // name, in the body font
+      c.font = `600 ${fs}px ${BODY}`; c.fillStyle = C.ink; c.textAlign = 'start';
+      const [lx, ly] = G.stacked ? [G.hx0, t.y0 + fs * 1.35] : [W * .04, t.cy + fs * .36];
+      c.fillText(t.name, lx, ly);
       helix(c, i);
-      gaugeBg(c, G.gcx, t.cy, G.R);
-      if (G.plate) {
-        const ph = fs * 1.75, pyy = t.cy - ph / 2;
-        c.fillStyle = '#0d0805'; rr(c, G.plate.x, pyy, G.plate.w, ph, 4); c.fill();
-        const pg = c.createLinearGradient(0, pyy, 0, pyy + ph); pg.addColorStop(0, BRL); pg.addColorStop(1, BRD);
-        c.strokeStyle = pg; c.lineWidth = 1.4; c.stroke();
-      }
+      // meter face: a flat disc with an arc track
+      const R = G.R, cx = G.gcx, cy = t.cy;
+      c.fillStyle = C.disc; c.beginPath(); c.arc(cx, cy, R, 0, 7); c.fill();
+      c.strokeStyle = C.track; c.lineWidth = Math.max(2.5, R * .14); c.lineCap = 'round';
+      c.beginPath(); c.arc(cx, cy, R * .7, A(-65), A(65)); c.stroke();
     });
   }
-  function rr(c, x0, y0, w, h, r) { r = Math.min(r, h / 2, w / 2); c.beginPath(); c.moveTo(x0 + r, y0); c.arcTo(x0 + w, y0, x0 + w, y0 + h, r); c.arcTo(x0 + w, y0 + h, x0, y0 + h, r); c.arcTo(x0, y0 + h, x0, y0, r); c.arcTo(x0, y0, x0 + w, y0, r); c.closePath(); }
+  const A = d => (d - 90) * Math.PI / 180;
 
   function strandPath(i, s, isFront) {
     const p = new Path2D(), N = Math.max(90, (G.hx1 - G.hx0) | 0);
+    let open = false;
     for (let k = 0; k < N; k++) {
       const u0 = k / N, u1 = (k + 1) / N;
-      if (front((u0 + u1) / 2, s) !== isFront) continue;
-      const [a, b] = hp(i, u0, s), [c2, d] = hp(i, u1, s); p.moveTo(a, b); p.lineTo(c2, d);
+      if (front((u0 + u1) / 2, s) !== isFront) { open = false; continue; }
+      const [a, b] = hp(i, u0, s), [c2, d] = hp(i, u1, s);
+      if (!open) { p.moveTo(a, b); open = true; } p.lineTo(c2, d);
     }
     return p;
   }
   function helix(c, i) {
-    const t = tiers[i]; c.lineCap = 'round';
-    // back strands: sunk, darker
-    [-1, 1].forEach(s => {
-      const p = strandPath(i, s, false);
-      c.strokeStyle = 'rgba(90,0,30,.45)'; c.lineWidth = 3.6; c.stroke(p);
-      c.strokeStyle = '#b8294f'; c.lineWidth = 1.8; c.stroke(p);
-    });
-    // base-pair rungs, two-tone
-    const cols = [['#ffe3a0', '#7a3a24'], ['#7a3a24', '#ffe3a0'], ['#fff3c8', '#6e4f1d'], ['#6e4f1d', '#fff3c8']];
+    const t = tiers[i], lw = clamp(t.amp * .16, 2, 3.4);
+    c.lineCap = 'round'; c.lineJoin = 'round';
+    // back strands: a paler tint of the ink
+    [-1, 1].forEach(s => { c.strokeStyle = C.back; c.lineWidth = lw * .8; c.stroke(strandPath(i, s, false)); });
+    // base-pair rungs
     const nR = Math.round(TURNS * 2 * 7);
+    c.strokeStyle = C.rung; c.lineWidth = Math.max(1.2, lw * .5);
     for (let k = 1; k < nR; k++) {
       const u = k / nR, [ax, ay] = hp(i, u, 1), [, by] = hp(i, u, -1);
       if (Math.abs(ay - by) < 3) continue;
-      const my = (ay + by) / 2, cc = cols[k % 4];
-      c.lineWidth = 1.5; c.globalAlpha = .85;
-      c.strokeStyle = cc[0]; c.beginPath(); c.moveTo(ax, ay); c.lineTo(ax, my - .5); c.stroke();
-      c.strokeStyle = cc[1]; c.beginPath(); c.moveTo(ax, my + .5); c.lineTo(ax, by); c.stroke();
-      c.globalAlpha = 1;
+      c.beginPath(); c.moveTo(ax, ay); c.lineTo(ax, by); c.stroke();
     }
-    // front strands: polished brass with a highlight
-    [-1, 1].forEach(s => {
-      const p = strandPath(i, s, true);
-      c.strokeStyle = 'rgba(60,0,20,.7)'; c.lineWidth = 4.8; c.stroke(p);
-      const sg = c.createLinearGradient(0, t.cy - t.amp, 0, t.cy + t.amp); sg.addColorStop(0, BRL); sg.addColorStop(.5, BR); sg.addColorStop(1, '#a8782a');
-      c.strokeStyle = sg; c.lineWidth = 2.6; c.stroke(p);
-      c.save(); c.translate(0, -.7); c.strokeStyle = 'rgba(255,246,214,.7)'; c.lineWidth = .8; c.stroke(p); c.restore();
-    });
-    // end clamps where the strands meet
-    const br = Math.max(3, Math.min(5.5, t.amp * .3));
-    [[G.hx0, -1], [G.hx1, 1]].forEach(([ex, d]) => {
-      const rg = c.createLinearGradient(0, t.cy - 2, 0, t.cy + 2); rg.addColorStop(0, BRL); rg.addColorStop(1, BRD);
-      c.fillStyle = rg; c.fillRect(Math.min(ex, ex + d * 9), t.cy - 1.5, 9, 3);
-      screw(c, ex, t.cy, br);
-    });
-  }
-  function gaugeBg(c, cx, cy, R) {
-    c.save(); c.shadowColor = 'rgba(90,0,30,.55)'; c.shadowBlur = Math.min(10, R * .4); c.shadowOffsetY = Math.min(3, R * .12);
-    const bz = c.createLinearGradient(cx - R, cy - R, cx + R, cy + R); bz.addColorStop(0, BRL); bz.addColorStop(.45, BR); bz.addColorStop(1, '#4e3710');
-    c.fillStyle = bz; c.beginPath(); c.arc(cx, cy, R, 0, 7); c.fill(); c.restore();
-    c.strokeStyle = 'rgba(255,240,190,.5)'; c.lineWidth = 1; c.beginPath(); c.arc(cx, cy, R * .93, 0, 7); c.stroke();
-    const fc = c.createRadialGradient(cx - R * .2, cy - R * .3, R * .1, cx, cy, R * .86); fc.addColorStop(0, '#fbf3dc'); fc.addColorStop(1, '#d6c393');
-    c.fillStyle = fc; c.beginPath(); c.arc(cx, cy, R * .84, 0, 7); c.fill();
-    const A = d => (d - 90) * Math.PI / 180;
-    c.strokeStyle = '#a33a26'; c.lineWidth = Math.max(1.2, R * .07); c.beginPath(); c.arc(cx, cy, R * .66, A(-65), A(-35)); c.stroke();
-    const n = R > 20 ? 12 : 6;
-    for (let k = 0; k <= n; k++) {
-      const d = -65 + k * 130 / n, a = A(d), big = k % 3 === 0 || n === 6 && k % 2 === 0, r0 = R * (big ? .55 : .61), r1 = R * .72;
-      c.strokeStyle = '#3a2610'; c.lineWidth = big ? 1.4 : .8; c.beginPath();
-      c.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); c.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); c.stroke();
-    }
-    if (R > 22) [0, 1, 2, 3].forEach(k => screw(c, cx + Math.cos(k * Math.PI / 2 + .78) * R * .89, cy + Math.sin(k * Math.PI / 2 + .78) * R * .89, Math.max(1.6, R * .045)));
-  }
-  function screw(c, sx, sy, r) {
-    const sg = c.createRadialGradient(sx - r * .3, sy - r * .3, 0, sx, sy, r); sg.addColorStop(0, BRL); sg.addColorStop(1, BRD);
-    c.fillStyle = sg; c.beginPath(); c.arc(sx, sy, r, 0, 7); c.fill();
-    c.strokeStyle = 'rgba(40,25,8,.8)'; c.lineWidth = Math.max(.8, r * .25); c.beginPath(); c.moveTo(sx - r * .6, sy - r * .3); c.lineTo(sx + r * .6, sy + r * .3); c.stroke();
+    // front strands: solid ink
+    [-1, 1].forEach(s => { c.strokeStyle = C.ink; c.lineWidth = lw; c.stroke(strandPath(i, s, true)); });
   }
 
   function layout() {
     const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H;
     if (W < 10 || H < 10) return;
-    MONO = (getComputedStyle(document.body).getPropertyValue('--mono') || 'monospace').trim() || 'monospace';
+    readColours();
     fs = Math.max(12, Math.min(14, W / 28));
     geo(); paintBg();
-    if (!dust.length) for (let k = 0; k < 300; k++) dust.push({x: Kit.rnd() * W, y: Kit.rnd() * H, vx: 0, vy: 0, r: .5 + Kit.rnd() * 1.4, a: .15 + Kit.rnd() * .45, p: Kit.rnd() * 9});
-    else dust.forEach(d => { d.x = Math.min(d.x, W); d.y = Math.min(d.y, H); });
     draw();
   }
 
@@ -250,7 +214,7 @@
     say.innerHTML = 'Her genes dim, yet her DNA code is untouched. <b>Will any of these marks reach you?</b>';
   }
 
-  // ---------- the reveal: marks rain down the family line ----------
+  // ---------- the reveal: marks drop down the family line ----------
   function reveal() {
     step = 'reveal';
     const rng = Kit.rnd, P = [], toYou = [];
@@ -265,7 +229,7 @@
   function finish() {
     step = 'done'; Kit.haptic('success'); Kit.show('why'); Kit.show('keep');
     tiers.forEach(t => t.flash = 1);
-    if (!Kit.calm) { gsap.fromTo(glint, {v: -0.3}, {v: 1.3, duration: 1.6, ease: 'power2.inOut'}); gsap.from('#why > *', {opacity: 0, y: 10, stagger: .1, duration: .55, ease: 'power3.out'}); }
+    if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 10, stagger: .1, duration: .55, ease: 'power3.out'});
   }
 
   // ---------- the frame ----------
@@ -282,89 +246,72 @@
       else { t.vel += (90 * (target - t.ang) - 6.5 * t.vel) * dt; t.ang += t.vel * dt; }
       t.flash = Math.max(0, t.flash - dt * 1.6);
     });
-    if (!Kit.calm) dust.forEach(d => {
-      d.vx += Math.sin(now * .7 + d.p) * .012; d.vy += Math.cos(now * .5 + d.p * 1.3) * .012 - .003;
-      const dx = d.x - px, dy = d.y - py, r2 = dx * dx + dy * dy;
-      if (r2 < 4900 && r2 > 1) { const q = Math.sqrt(r2), f = (down ? 1.6 : .6) * (1 - q / 70); d.vx += dx / q * f + (-dy / q) * f * .6; d.vy += dy / q * f + (dx / q) * f * .6; }
-      d.vx *= .95; d.vy *= .95; d.x += d.vx; d.y += d.vy;
-      if (d.x < 0) d.x += W; if (d.x > W) d.x -= W; if (d.y < 0) d.y += H; if (d.y > H) d.y -= H;
-    });
     draw(); requestAnimationFrame(frame);
   }
 
+  // a methyl mark, drawn the textbook way: a short stick with a ball on the end
+  function lolly(X, Y, dir, L, r) {
+    x.beginPath(); x.moveTo(X, Y); x.lineTo(X, Y + dir * L); x.stroke();
+    x.beginPath(); x.arc(X, Y + dir * (L + r * .6), r, 0, 7); x.fill();
+  }
+
   function draw() {
-    if (!x || !bg) return;
+    if (!x || !bg || !C) return;
     x.clearRect(0, 0, W, H); x.drawImage(bg, 0, 0, W, H);
+    x.lineCap = 'round'; x.lineJoin = 'round';
     const G5 = tiers.map((t, i) => genes(i));
-    // gene lamps: halo glow inside each helix loop
-    x.save(); x.globalCompositeOperation = 'lighter';
+    // genes: solid yellow when active, fading into the page as they are switched down
     tiers.forEach((t, i) => {
+      const gr = Math.min(5.5, t.amp * .5 + 1.5);
       GENES.forEach((u, k) => {
-        const flick = .94 + .06 * Math.sin(now * 7 + k * 2.1 + i), b = G5[i][k] * t.on * flick, X = hx(u), Y = t.cy, rr2 = t.amp * 1.3 + 4;
-        const gl = x.createRadialGradient(X, Y, 0, X, Y, rr2);
-        gl.addColorStop(0, `rgba(255,205,110,${.75 * b})`); gl.addColorStop(.35, `rgba(255,160,50,${.35 * b})`); gl.addColorStop(1, 'rgba(255,140,30,0)');
-        x.fillStyle = gl; x.beginPath(); x.arc(X, Y, rr2, 0, 7); x.fill();
+        const b = clamp(G5[i][k] * t.on, 0, 1), X = hx(u), Y = t.cy;
+        x.fillStyle = css(mixA(C.ON, C.dim, b)); x.beginPath(); x.arc(X, Y, gr, 0, 7); x.fill();
+        x.strokeStyle = C.ink; x.lineWidth = 1.3; x.stroke();
       });
     });
-    x.restore();
+    // marks: lollipops pinned to the strands (paler on the back strand)
     tiers.forEach((t, i) => {
-      const sock = Math.min(4.6, t.amp * .55 + 1);
-      GENES.forEach((u, k) => {
-        const b = G5[i][k] * t.on, X = hx(u), Y = t.cy;
-        x.fillStyle = '#2a1a0a'; x.beginPath(); x.arc(X, Y, sock, 0, 7); x.fill();
-        x.strokeStyle = 'rgba(212,172,85,.9)'; x.lineWidth = .8; x.stroke();
-        x.fillStyle = `rgba(255,${180 + 60 * b | 0},${90 + 100 * b | 0},${.25 + .75 * b})`; x.beginPath(); x.arc(X, Y, sock * (.45 + b * .4), 0, 7); x.fill();
+      const L = Math.min(7, t.amp * .4 + 2), r = Math.min(2.8, t.amp * .16 + 1.3);
+      t.marks.forEach(m => {
+        const [X, Y0] = hp(i, m.u, m.s), Y = Y0 + Math.sin(now * 3 + m.id) * .7;
+        const dir = m.s * Math.sin(m.u * TW) >= 0 ? 1 : -1;
+        x.globalAlpha = front(m.u, m.s) ? 1 : .55;
+        x.strokeStyle = C.mark; x.fillStyle = C.mark; x.lineWidth = 1.4;
+        lolly(X, Y, dir, L, r);
       });
     });
-    // marks: cyan beads clinging to the strands (dimmer on the back strand)
-    x.save(); x.globalCompositeOperation = 'lighter';
-    tiers.forEach((t, i) => { const gr = Math.min(8, t.amp * .7 + 3); t.marks.forEach(m => {
-      const [X, Y0] = hp(i, m.u, m.s), Y = Y0 + Math.sin(now * 3 + m.id) * .7, f = front(m.u, m.s) ? 1 : .55;
-      const gl = x.createRadialGradient(X, Y, 0, X, Y, gr); gl.addColorStop(0, `rgba(160,255,240,${.9 * f})`); gl.addColorStop(1, 'rgba(60,200,190,0)');
-      x.fillStyle = gl; x.beginPath(); x.arc(X, Y, gr, 0, 7); x.fill();
-    }); });
+    x.globalAlpha = 1;
+    // marks on their way: a ball with a short trail
     flyers.forEach(f => {
       const t = (now - f.t0) / f.dur; if (t < 0) return;
       const [X, Y] = flyPos(f, t);
-      x.strokeStyle = 'rgba(127,240,220,.7)'; x.lineWidth = 2; x.lineCap = 'round'; x.beginPath();
-      for (let k = 0; k <= 6; k++) { const [a, b] = flyPos(f, t - k * .03); k ? x.lineTo(a, b) : x.moveTo(a, b); } x.stroke();
-      const gl = x.createRadialGradient(X, Y, 0, X, Y, 10); gl.addColorStop(0, 'rgba(210,255,248,1)'); gl.addColorStop(1, 'rgba(60,200,190,0)');
-      x.fillStyle = gl; x.beginPath(); x.arc(X, Y, 10, 0, 7); x.fill();
+      x.strokeStyle = C.mark; x.lineWidth = 1.6; x.globalAlpha = .5; x.beginPath();
+      for (let k = 0; k <= 5; k++) { const [a, b] = flyPos(f, t - k * .03); k ? x.lineTo(a, b) : x.moveTo(a, b); } x.stroke();
+      x.globalAlpha = 1; x.fillStyle = C.mark; x.beginPath(); x.arc(X, Y, 3, 0, 7); x.fill();
     });
-    dust.forEach(d => { x.fillStyle = `rgba(255,255,255,${d.a * (.6 + .4 * Math.sin(now * 2 + d.p))})`; x.beginPath(); x.arc(d.x, d.y, d.r, 0, 7); x.fill(); });
-    x.restore();
-    tiers.forEach((t, i) => t.marks.forEach(m => { const [X, Y] = hp(i, m.u, m.s); x.fillStyle = front(m.u, m.s) ? '#d8fff8' : 'rgba(180,240,232,.8)'; x.beginPath(); x.arc(X, Y + Math.sin(now * 3 + m.id) * .7, Math.min(2.3, t.amp * .25 + .8), 0, 7); x.fill(); }));
-    // gauges: needle, readout, glass
+    // meters: yellow arc for activity, ink needle, the number
     tiers.forEach((t, i) => {
       const R = G.R, cx = G.gcx, cy = t.cy, a = Math.max(-1.15, Math.min(1.15, t.ang)) * 65 * Math.PI / 180;
       const g = G5[i], pct = Math.round(g.reduce((p, q) => p + q, 0) / g.length * 100);
-      x.font = `700 ${fs}px ${MONO}`; x.textAlign = 'center';
-      if (G.plate) {
-        x.fillStyle = t.flash > .05 ? `rgb(${246 - 90 * t.flash | 0},${226 + 20 * t.flash | 0},${160 + 70 * t.flash | 0})` : BRL;
-        x.fillText(pct + '%', G.plate.x + G.plate.w / 2, cy + fs * .36);
-      } else { x.fillStyle = '#3a2610'; x.fillText(pct + '%', cx, cy + R * .5); }
+      const endA = Math.max(A(-65), Math.min(A(65), a - Math.PI / 2));
+      if (endA > A(-65) + .01) { x.strokeStyle = C.on; x.lineWidth = Math.max(2.5, R * .14); x.beginPath(); x.arc(cx, cy, R * .7, A(-65), endA); x.stroke(); }
       const nx = Math.sin(a), ny = -Math.cos(a);
-      x.save(); x.shadowColor = 'rgba(0,0,0,.45)'; x.shadowBlur = 3; x.shadowOffsetX = 1.5; x.shadowOffsetY = 2;
-      x.strokeStyle = '#1d120a'; x.lineWidth = R > 20 ? 2 : 1.5; x.lineCap = 'round'; x.beginPath();
-      x.moveTo(cx - nx * R * .14, cy - ny * R * .14); x.lineTo(cx + nx * R * .72, cy + ny * R * .72); x.stroke();
-      x.strokeStyle = '#a33a26'; x.lineWidth = 1.2; x.beginPath(); x.moveTo(cx + nx * R * .45, cy + ny * R * .45); x.lineTo(cx + nx * R * .72, cy + ny * R * .72); x.stroke();
-      x.restore();
-      const hub = x.createRadialGradient(cx - 1, cy - 1, 0, cx, cy, Math.max(2.5, R * .11)); hub.addColorStop(0, BRL); hub.addColorStop(1, BRD);
-      x.fillStyle = hub; x.beginPath(); x.arc(cx, cy, Math.max(2.2, R * .1), 0, 7); x.fill();
-      x.fillStyle = 'rgba(255,255,255,.16)'; x.beginPath(); x.ellipse(cx - R * .2, cy - R * .38, R * .5, R * .22, -.5, 0, 7); x.fill();
-      if (t.flash > 0) { x.strokeStyle = `rgba(190,255,245,${t.flash * .95})`; x.lineWidth = 1.5 + t.flash * 2.5; x.beginPath(); x.arc(cx, cy, R + 2 + (1 - t.flash) * 5, 0, 7); x.stroke(); }
+      x.strokeStyle = C.ink; x.lineWidth = R > 20 ? 2.4 : 1.8; x.beginPath();
+      x.moveTo(cx - nx * R * .12, cy - ny * R * .12); x.lineTo(cx + nx * R * .78, cy + ny * R * .78); x.stroke();
+      x.fillStyle = C.ink; x.beginPath(); x.arc(cx, cy, Math.max(2.2, R * .09), 0, 7); x.fill();
+      x.font = `700 ${fs}px ${DISPLAY}`; x.textAlign = 'center'; x.fillStyle = C.ink;
+      if (G.plate) x.fillText(pct + '%', G.plate.x + G.plate.w / 2, cy + fs * .36);
+      else x.fillText(pct + '%', cx, cy + R * .55);
+      if (t.flash > 0) { x.globalAlpha = t.flash; x.strokeStyle = C.mark; x.lineWidth = 2; x.beginPath(); x.arc(cx, cy, R + 3, 0, 7); x.stroke(); x.globalAlpha = 1; }
       x.textAlign = 'start';
     });
-    // the hint: a glowing ring travelling along her strand
+    // the hint: a fingertip rubbing back and forth along her strand
     if (!touched && step === 'live') {
-      const u = .15 + .7 * (.5 + .5 * Math.sin(now * 1.6)), X = hx(u), Y = tiers[0].cy, p = .5 + .5 * Math.sin(now * 5);
-      x.strokeStyle = `rgba(190,255,245,${.6 + .4 * p})`; x.lineWidth = 2; x.beginPath(); x.arc(X, Y, 12 + p * 5, 0, 7); x.stroke();
-      x.fillStyle = 'rgba(190,255,245,.4)'; x.beginPath(); x.arc(X, Y, 7, 0, 7); x.fill();
-    }
-    if (glint.v > -0.3 && glint.v < 1.3) {
-      const gx = glint.v * (W + H) - H * .5, gg = x.createLinearGradient(gx - 60, 0, gx + 60, H * .4);
-      gg.addColorStop(0, 'rgba(255,240,200,0)'); gg.addColorStop(.5, 'rgba(255,240,200,.22)'); gg.addColorStop(1, 'rgba(255,240,200,0)');
-      x.save(); x.globalCompositeOperation = 'lighter'; x.fillStyle = gg; x.fillRect(0, 0, W, H); x.restore();
+      const uAt = tt => .15 + .7 * (.5 + .5 * Math.sin(tt * 1.6));
+      const X = hx(uAt(now)), Y = tiers[0].cy;
+      x.strokeStyle = C.ink; x.globalAlpha = .45; x.lineWidth = 3; x.beginPath(); x.moveTo(hx(uAt(now - .22)), Y); x.lineTo(X, Y); x.stroke();
+      x.globalAlpha = .85; x.fillStyle = C.ink; x.beginPath(); x.arc(X, Y, 8, 0, 7); x.fill();
+      x.globalAlpha = 1; x.strokeStyle = C.mark; x.lineWidth = 1.5; x.stroke();
     }
   }
 

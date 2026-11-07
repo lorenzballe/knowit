@@ -8,7 +8,7 @@
 #stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
 #wrap{position:relative;flex:1;min-height:0;touch-action:none}
 #sky{position:absolute;inset:0;width:100%;height:100%;display:block}
-#tagline{position:absolute;left:3cqw;top:1.4cqh;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--k);letter-spacing:.06em;text-transform:uppercase;pointer-events:none}
+#tagline{position:absolute;left:3cqw;top:1.4cqh;font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--k);pointer-events:none}
 #ctl{display:flex;flex-direction:column;gap:.6cqh}
 #fall{width:100%;height:max(4cqh,28px);accent-color:var(--k);cursor:pointer;margin:0}
 .ends{display:flex;justify-content:space-between;font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
@@ -41,59 +41,70 @@
 const cv = Kit.$('sky'), slider = Kit.$('fall');
 const S = {t: 0};
 let x, W = 0, H = 0, bw, bh, buf, bctx, srcPix, out, done = false;
+// warm light of the ring of bent starlight around the black hole (the one meaning colour)
+const RING = [255, 200, 120];
+
+function rgbOf(v) {
+  const e = document.createElement('i');
+  e.style.color = v; e.style.display = 'none';
+  Kit.$('card').appendChild(e);
+  const m = (getComputedStyle(e).color.match(/[\d.]+/g) || [255, 255, 255]).map(Number);
+  e.remove();
+  return m.slice(0, 3);
+}
 
 function drawSky(c, w, h) {
   const s = c.getContext('2d');
   s.clearRect(0, 0, w, h);
-  // faint grid so the bending is easy to read
-  s.strokeStyle = 'rgba(255,255,255,.16)'; s.lineWidth = 1;
-  const step = Math.max(w, h) / 9;
-  for (let gx = step / 2; gx < w; gx += step) { s.beginPath(); s.moveTo(gx, 0); s.lineTo(gx, h); s.stroke(); }
-  for (let gy = step / 2; gy < h; gy += step) { s.beginPath(); s.moveTo(0, gy); s.lineTo(w, gy); s.stroke(); }
-  // background stars
-  const n = Math.round(w * h / 90);
+  const K = rgbOf('var(--k)'), C = rgbOf('var(--c)');
+  const mix = p => `rgb(${[0, 1, 2].map(i => Math.round(K[i] * p + C[i] * (1 - p))).join(',')})`;
+  const dust = `rgb(${C.map(v => Math.round(v * .55)).join(',')})`;
+
+  // scattered stars of the night sky, small flat dots
+  const n = Math.round(w * h / 420);
+  s.fillStyle = mix(.75);
   for (let i = 0; i < n; i++) {
-    const a = Kit.rnd() * .7 + .2;
-    s.fillStyle = `rgba(255,255,255,${a})`;
-    s.fillRect(Kit.rnd() * w, Kit.rnd() * h, 1, 1);
+    s.beginPath(); s.arc(Kit.rnd() * w, Kit.rnd() * h, .6 + Kit.rnd() * .6, 0, 7); s.fill();
   }
-  // the Milky Way band
+
+  // the Milky Way band, drawn as flat layered strips with uneven edges
   s.save(); s.translate(w / 2, h / 2); s.rotate(-0.42);
   const D = Math.hypot(w, h), bwid = Math.min(w, h) * .2;
-  const g = s.createLinearGradient(0, -bwid * 1.6, 0, bwid * 1.6);
-  g.addColorStop(0, 'rgba(255,215,170,0)');
-  g.addColorStop(.3, 'rgba(255,215,170,.25)');
-  g.addColorStop(.5, 'rgba(255,215,170,.7)');
-  g.addColorStop(.7, 'rgba(255,215,170,.25)');
-  g.addColorStop(1, 'rgba(255,215,170,0)');
-  s.fillStyle = g; s.fillRect(-D, -bwid * 1.6, D * 2, bwid * 3.2);
-  const m = Math.round(w * h / 12);
+  const edge = (off, amp, ph) => u => off + amp * (Math.sin(u / bwid * .9 + ph) * .6 + Math.sin(u / bwid * 2.3 + ph * 2) * .4);
+  const strip = (top, bot, fill) => {
+    s.beginPath();
+    for (let u = -D; u <= D; u += 4) s.lineTo(u, top(u));
+    for (let u = D; u >= -D; u -= 4) s.lineTo(u, bot(u));
+    s.closePath(); s.fillStyle = fill; s.fill();
+  };
+  strip(edge(-bwid * .78, bwid * .2, 0), edge(bwid * .78, bwid * .2, 1.7), mix(.22));
+  strip(edge(-bwid * .36, bwid * .1, 2.1), edge(bwid * .36, bwid * .1, .6), mix(.45));
+  // crowded stars along the band
+  const m = Math.round(w * h / 45);
+  s.fillStyle = mix(.92);
   for (let i = 0; i < m; i++) {
-    const u = (Kit.rnd() * 2 - 1) * D, v = Kit.gauss() * bwid * .45;
-    const a = Math.random() * .6 + .3;
-    s.fillStyle = Kit.rnd() < .25 ? `rgba(255,210,160,${a})` : `rgba(255,255,255,${a})`;
-    s.fillRect(u, v, 1, 1);
+    const u = (Kit.rnd() * 2 - 1) * D, v = Kit.gauss() * bwid * .38;
+    const r = Kit.rnd() < .15 ? 1.1 : .7;
+    s.beginPath(); s.arc(u, v, r, 0, 7); s.fill();
   }
   // dark dust lane
-  s.strokeStyle = 'rgba(10,25,100,.5)'; s.lineWidth = bwid * .16; s.beginPath();
-  for (let u = -D; u <= D; u += 6) { const v = Math.sin(u / bwid * 1.3) * bwid * .12; u === -D ? s.moveTo(u, v) : s.lineTo(u, v); }
-  s.stroke();
+  const mid = u => Math.sin(u / bwid * 1.3) * bwid * .12;
+  strip(u => mid(u) - bwid * (.06 + .035 * Math.sin(u / bwid * 3.1)),
+        u => mid(u) + bwid * (.06 + .035 * Math.cos(u / bwid * 2.7)), dust);
   s.restore();
-  // a few bright stars
-  const cols = [[255,255,255],[255,217,160],[214,228,255]];
+
+  // a few bright stars, slightly bigger flat dots
   for (let i = 0; i < 14; i++) {
-    const px = Kit.rnd() * w, py = Kit.rnd() * h, r = 1 + Kit.rnd() * 1.4;
-    const c3 = cols[i % 3];
-    const gg = s.createRadialGradient(px, py, 0, px, py, r * 3);
-    gg.addColorStop(0, `rgba(${c3[0]},${c3[1]},${c3[2]},1)`); gg.addColorStop(1, `rgba(${c3[0]},${c3[1]},${c3[2]},0)`);
-    s.fillStyle = gg; s.beginPath(); s.arc(px, py, r * 3, 0, 7); s.fill();
+    const px = Kit.rnd() * w, py = Kit.rnd() * h, r = 1.6 + Kit.rnd() * 1.4;
+    s.fillStyle = i % 4 === 1 ? `rgb(${RING.join(',')})` : mix(1);
+    s.beginPath(); s.arc(px, py, r, 0, 7); s.fill();
   }
 }
 
 function build() {
   const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
   if (!W || !H) return;
-  bw = Math.max(40, Math.round(W / 2)); bh = Math.max(40, Math.round(H / 2));
+  bw = Math.max(40, Math.round(W * .8)); bh = Math.max(40, Math.round(H * .8));
   const src = document.createElement('canvas'); src.width = bw; src.height = bh;
   drawSky(src, bw, bh);
   srcPix = src.getContext('2d').getImageData(0, 0, bw, bh).data;
@@ -106,29 +117,18 @@ function render() {
   if (!out) return;
   const t = S.t, d = out.data, cx = bw / 2, cy = bh / 2;
   const E = Math.pow(t, 1.25) * .44 * Math.min(bw, bh);
-  const E2 = E * E, sh = E * .6, sh2 = sh * sh, rw = Math.max(1.2, E * .05);
+  const E2 = E * E, sh = E * .6, sh2 = sh * sh, rw = Math.max(1.2, E * .04);
+  const ro = sh + rw, ro2 = ro * ro;
   for (let j = 0; j < bh; j++) {
     for (let i = 0; i < bw; i++) {
       const dx = i - cx + .5, dy = j - cy + .5, r2 = dx * dx + dy * dy, k = (j * bw + i) * 4;
       if (E > .5 && r2 < sh2) { d[k] = d[k + 1] = d[k + 2] = 0; d[k + 3] = 255; continue; }
+      if (E > .5 && r2 < ro2) { d[k] = RING[0]; d[k + 1] = RING[1]; d[k + 2] = RING[2]; d[k + 3] = 255; continue; }
       const f = E > .5 ? 1 - E2 / Math.max(r2, 1e-3) : 1;
       let sx = Math.floor(cx + dx * f), sy = Math.floor(cy + dy * f);
       sx = ((sx % bw) + bw) % bw; sy = ((sy % bh) + bh) % bh;
       const q = (sy * bw + sx) * 4;
-      let R = srcPix[q], G = srcPix[q + 1], B = srcPix[q + 2];
-      const a = srcPix[q + 3] / 255;
-      if (E > .5) {
-        const rr = Math.sqrt(r2), gl = Math.min(1, Math.exp(-Math.pow((rr - sh) / rw, 2)));
-        if (gl > .004) {
-          const A = a + gl - a * gl;
-          R = (R * a * (1 - gl) + 255 * gl) / A;
-          G = (G * a * (1 - gl) + 190 * gl) / A;
-          B = (B * a * (1 - gl) + 110 * gl) / A;
-          d[k] = R; d[k + 1] = G; d[k + 2] = B; d[k + 3] = A * 255;
-          continue;
-        }
-      }
-      d[k] = R; d[k + 1] = G; d[k + 2] = B; d[k + 3] = srcPix[q + 3];
+      d[k] = srcPix[q]; d[k + 1] = srcPix[q + 1]; d[k + 2] = srcPix[q + 2]; d[k + 3] = srcPix[q + 3];
     }
   }
   bctx.putImageData(out, 0, 0);
