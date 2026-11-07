@@ -29,13 +29,16 @@
 <script>
 const MIN = -273, MAX = 50, TRUE = -269;
 const INK = '#10100c';
+const COLD = '#2a5bd7', HOT = '#d8471f';
+const PLASMA = '#f08a2c', PLASMA_HI = '#ffd77a';
+const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 let v = 0, moved = false, revealed = false, entered = false;
 let G = null, flick = null;
 const fmt = n => (n < 0 ? '−' : '') + Math.abs(Math.round(n));
 const lerp = (a, b, t) => a + (b - a) * t;
 function coilColor(val){
   const t = (val - MIN) / (MAX - MIN);
-  const c1 = [20, 60, 230], c2 = [214, 70, 20];
+  const c1 = [42, 91, 215], c2 = [216, 71, 31];
   const c = c1.map((x, i) => Math.round(lerp(x, c2[i], Math.pow(t, .8))));
   return `rgb(${c.join(',')})`;
 }
@@ -44,11 +47,6 @@ function draw(){
   svg.innerHTML = '';
   const {W, H, f} = Kit.fitSvg(svg);
   const fs = Math.max(f, 12);
-  const defs = Kit.mk('defs', {}, svg);
-  defs.innerHTML = `
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${fs*.45}"/></filter>
-    <filter id="iceg" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${fs*.3}"/></filter>
-    <linearGradient id="bar" x1="0" x2="1"><stop offset="0" stop-color="#1e5bff"/><stop offset=".55" stop-color="#6ad1ff"/><stop offset=".85" stop-color="#ffd36a"/><stop offset="1" stop-color="#ff6a3d"/></linearGradient>`;
 
   const compact = H < fs*11;
   const tiny = H < fs*7.5;
@@ -65,56 +63,60 @@ function draw(){
   const ri = rx*.55, riy = ry*.55;
   const rm = (rx+ri)/2, rmy = (ry+riy)/2;
 
-  // labels top
-  const txt = (s, x, y, o) => { const t = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, o||{}), svg); t.textContent = s; return t; };
+  const txt = (s, x, y, o) => { const t = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 600}, o||{}), svg); t.textContent = s; return t; };
   if (!compact){
-    txt('PLASMA', cx, topY, {'font-size': fs*.8, fill: INK, 'letter-spacing': '.12em'});
-    txt('150,000,000 °C', cx, topY + fs*1.35, {'font-family': 'var(--mono)', fill: INK});
-    Kit.mk('line', {x1: cx, y1: topY + fs*1.7, x2: cx, y2: cy - rmy - fs*.2, stroke: INK, 'stroke-width': 1.5, 'stroke-dasharray': '3 3', opacity: .7}, svg);
+    txt('Plasma', cx, topY, {'font-weight': 500});
+    txt('150,000,000 °C', cx, topY + fs*1.35, {'font-weight': 700});
+    Kit.mk('line', {x1: cx, y1: topY + fs*1.75, x2: cx, y2: cy - rmy, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
   }
 
-  // tube
+  // the hollow ring (vacuum vessel), seen from above
   const ell = (a, b) => `M${cx-a},${cy}a${a},${b} 0 1,0 ${2*a},0a${a},${b} 0 1,0 ${-2*a},0Z`;
-  Kit.mk('path', {d: ell(rx, ry) + ell(ri, riy), 'fill-rule': 'evenodd', fill: '#18223d', stroke: '#2f3d63', 'stroke-width': 1.5}, svg);
-  // plasma
+  Kit.mk('path', {d: ell(rx, ry) + ell(ri, riy), 'fill-rule': 'evenodd', style: `fill:${tint(78)}`, stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+
+  // the plasma floating inside it: a flat hot band that never touches the walls
   const pw = (rx - ri)*.42;
-  Kit.mk('ellipse', {cx, cy, rx: rm, ry: rmy, fill: 'none', stroke: '#ff5fb7', 'stroke-width': pw*1.6, filter: 'url(#glow)', opacity: .8}, svg);
-  Kit.mk('ellipse', {cx, cy, rx: rm, ry: rmy, fill: 'none', stroke: '#fff4fb', 'stroke-width': pw*.7}, svg);
+  Kit.mk('ellipse', {cx, cy, rx: rm, ry: rmy, fill: 'none', stroke: PLASMA, 'stroke-width': pw}, svg);
   const per = Math.PI*(3*(rm+rmy) - Math.sqrt((3*rm+rmy)*(rm+3*rmy)));
-  const hl = Kit.mk('ellipse', {cx, cy, rx: rm, ry: rmy, fill: 'none', stroke: '#ffffff', 'stroke-width': pw*.9, 'stroke-dasharray': `${per*.12} ${per*.38}`, filter: 'url(#iceg)'}, svg);
-  // coils
-  const col = revealed ? 'rgb(30,91,255)' : coilColor(v);
+  const hl = Kit.mk('ellipse', {cx, cy, rx: rm, ry: rmy, fill: 'none', stroke: PLASMA_HI, 'stroke-width': pw*.38, 'stroke-linecap': 'round', 'stroke-dasharray': `${per*.12} ${per*.38}`}, svg);
+
+  // magnet coils wrapped around the ring
+  const col = revealed ? COLD : coilColor(v);
   const coils = [], glows = [];
+  const cw = Math.max(fs*.55, 6);
   for (let i = 0; i < 14; i++){
     const a = i/14*Math.PI*2 + .11;
     const e = .12;
     const x1 = cx + ri*(1-e)*Math.cos(a), y1 = cy + riy*(1-e)*Math.sin(a);
     const x2 = cx + rx*(1+e)*Math.cos(a), y2 = cy + ry*(1+e)*Math.sin(a);
-    const g = Kit.mk('line', {x1, y1, x2, y2, stroke: col, 'stroke-width': fs*1.1, 'stroke-linecap': 'round', filter: 'url(#iceg)', opacity: revealed ? .8 : 0}, svg);
-    const l = Kit.mk('line', {x1, y1, x2, y2, stroke: col, 'stroke-width': Math.max(fs*.55, 6), 'stroke-linecap': 'round'}, svg);
+    // frost on the chilled coils (shown after the answer)
+    const g = Kit.mk('line', {x1, y1, x2, y2, stroke: '#cfe0ff', 'stroke-width': cw + fs*.5, 'stroke-linecap': 'round', opacity: revealed ? 1 : 0}, svg);
+    const l = Kit.mk('line', {x1, y1, x2, y2, stroke: col, 'stroke-width': cw, 'stroke-linecap': 'round'}, svg);
     glows.push(g); coils.push(l);
   }
-  // magnet label
-  const ml = txt(revealed ? 'MAGNETS · −269 °C' : (moved ? `MAGNETS · ${fmt(v)} °C ?` : 'MAGNETS · ? °C'), cx, magY, {fill: INK, 'font-family': 'var(--mono)'});
+  const ml = txt(revealed ? 'Magnets · −269 °C' : (moved ? `Magnets · ${fmt(v)} °C ?` : 'Magnets · ? °C'), cx, magY, {fill: INK});
   if (tiny) ml.setAttribute('display', 'none');
 
-  // scale
+  // thermometer scale: a flat column filled from absolute zero up to the guess
   const x0 = pad, x1 = W - pad;
   const X = val => x0 + (val - MIN)/(MAX - MIN)*(x1 - x0);
-  Kit.mk('rect', {x: x0, y: scaleY - fs*.28, width: x1 - x0, height: fs*.56, rx: fs*.28, fill: 'url(#bar)'}, svg);
+  const th = fs*.56;
+  Kit.mk('rect', {x: x0, y: scaleY - th/2, width: x1 - x0, height: th, rx: th/2, style: `fill:${tint(14)}`, stroke: INK, 'stroke-width': 1.5}, svg);
+  const colEnd = revealed ? X(TRUE) : X(v);
+  const column = Kit.mk('rect', {x: x0, y: scaleY - th/2, width: Math.max(colEnd - x0, th), height: th, rx: th/2, fill: col, stroke: INK, 'stroke-width': 1.5}, svg);
   [-200, -100, 0].forEach(t => {
-    Kit.mk('line', {x1: X(t), y1: scaleY + fs*.4, x2: X(t), y2: scaleY + fs*.8, stroke: INK, 'stroke-width': 1.5}, svg);
-    txt(t === 0 ? '0 °C' : fmt(t), X(t), scaleY + r + fs*1.05, {'font-size': Math.max(fs*.8, 12), fill: INK, 'font-weight': 500});
+    Kit.mk('line', {x1: X(t), y1: scaleY + fs*.4, x2: X(t), y2: scaleY + fs*.8, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, svg);
+    txt(t === 0 ? '0 °C' : fmt(t), X(t), scaleY + r + fs*1.05, {fill: INK, 'font-weight': 500});
   });
   const hx = X(v);
   const handle = Kit.mk('circle', {cx: hx, cy: scaleY, r, fill: revealed ? 'none' : '#fff', stroke: INK, 'stroke-width': 2.5, opacity: revealed ? .6 : 1}, svg);
   const clampX = x => Math.min(Math.max(x, fs*2.6), W - fs*2.6);
-  const ro = txt(revealed ? '' : (moved ? `${fmt(v)} °C` : 'drag me'), clampX(hx), scaleY - r - fs*.5, {'font-family': 'var(--mono)'});
+  const ro = txt(revealed ? '' : (moved ? `${fmt(v)} °C` : 'drag me'), clampX(hx), scaleY - r - fs*.5, {'font-weight': 700});
   const tm = Kit.mk('g', {opacity: revealed ? 1 : 0}, svg);
-  Kit.mk('circle', {cx: X(TRUE), cy: scaleY, r: r*.8, fill: '#1e5bff', stroke: INK, 'stroke-width': 2.5}, tm);
-  const tt = Kit.mk('text', {x: clampX(X(TRUE)) + fs*.6, y: scaleY - r - fs*.5, 'text-anchor': 'middle', fill: INK, 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700}, tm);
+  Kit.mk('circle', {cx: X(TRUE), cy: scaleY, r: r*.8, fill: COLD, stroke: INK, 'stroke-width': 2.5}, tm);
+  const tt = Kit.mk('text', {x: Math.max(X(TRUE) - r*.8, 2), y: scaleY - r - fs*.5, 'text-anchor': 'start', fill: INK, 'font-family': 'var(--body)', 'font-size': fs, 'font-weight': 700}, tm);
   tt.textContent = 'real: −269 °C';
-  G = {svg, X, x0, x1, handle, ro, ml, coils, glows, tm, hl, per, clampX, fs};
+  G = {svg, X, x0, x1, handle, ro, ml, coils, glows, tm, hl, per, clampX, fs, column, th};
   if (flick) flick.kill();
   if (entered && !Kit.calm) startFlick();
 }
@@ -131,8 +133,9 @@ function setV(clientX){
   if (!moved){ moved = true; sure.on(); }
   const hx = G.X(v), col = coilColor(v);
   G.handle.setAttribute('cx', hx);
+  G.column.setAttribute('width', Math.max(hx - G.x0, G.th)); G.column.setAttribute('fill', col);
   G.ro.setAttribute('x', G.clampX(hx)); G.ro.textContent = `${fmt(v)} °C`;
-  G.ml.textContent = `MAGNETS · ${fmt(v)} °C ?`; G.ml.setAttribute('fill', INK);
+  G.ml.textContent = `Magnets · ${fmt(v)} °C ?`; G.ml.setAttribute('fill', INK);
   G.coils.forEach(c => c.setAttribute('stroke', col));
 }
 let dragging = false, lastTick = null;
