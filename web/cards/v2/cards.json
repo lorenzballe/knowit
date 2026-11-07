@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611071347,
- "built": "2026-11-07T13:47:19Z",
+ "version": 202611071528,
+ "built": "2026-11-07T15:28:26Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -60743,12 +60743,12 @@
    "topic": "history",
    "genre": "history.decisions_that_changed_history",
    "strand": "history.decisions_that_changed_history.small_causes_big_effects",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How large was the Tsar Bomba's mushroom cloud?",
-   "answer": "The bomb burst 4 km above the ground. Its cloud was 40 km wide and 64 km high, about seven times the height of Mount Everest.",
-   "move": "Tsar Bomba's cloud: 64 km high and 40 km wide, about 7 Everests tall.",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "estimation",
+   "question": "How high did the Tsar Bomba's mushroom cloud rise?",
+   "answer": "The Tsar Bomba's cloud rose 64 km high and spanned about 40 km wide. The bomb was dropped from about 10 km and went off at 4 km. That height is roughly seven Everests stacked.",
+   "move": "Past mountains and planes, our eye stops measuring: count in heights you know.",
    "keywords": [
     "tsar_bomba",
     "mount_everest",
@@ -60769,14 +60769,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A drag interaction. A bead slides along a scale beside a silhouette of Mount Everest, and a mushroom cloud rises as the bead moves. The question asks how large the Tsar Bomba's mushroom cloud was, compared with Everest.",
-    "ground": "#efe5cc",
-    "page": "pages/history-tsar-cloud-height.html?v=aef0a6754de9",
-    "bytes": 22508
+    "label": "Interactive page: a draggable mushroom cloud asks the reader to guess how high the Tsar Bomba's cloud rose, then rate their confidence. The reveal shows the cloud at 64 km high and 40 km wide, beside a scaled Everest silhouette.",
+    "page": "pages/history-tsar-cloud-height.html?v=f739629aa454",
+    "bytes": 18343
    },
    "source": "Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=tesv0xoNhCo&t=436s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "history-turing-weather-crib",
@@ -97327,11 +97326,11 @@
    "genre": "maths.shapes",
    "strand": "maths.shapes.area_and_volume",
    "kind": "page",
-   "difficulty": "medium",
-   "principle": "none",
-   "question": "Kepler said in 1611 how to stack spheres best. How long until proof?",
-   "answer": "Kepler stated in 1611 that stacking spheres like supermarket oranges fills about 74% of space, the best possible, but he never proved it. The formal proof was published in 2017, about 400 years later.",
-   "move": "An answer can look obvious and still take centuries to prove.",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "How long did it take to formally prove Kepler's sphere packing conjecture?",
+   "answer": "The formal proof was published in 2017, about 400 years after Kepler stated the conjecture in 1611. Kepler stated it as fact but never proved it. Seeing his stackings are tight is easy; showing that no other stack is tighter is the hard part.",
+   "move": "Showing one arrangement is good is easy; showing it is the best means ruling out every other one, and there are infinitely many.",
    "keywords": [
     "kepler",
     "sphere packing",
@@ -97351,15 +97350,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A dial with a needle starting at 1611. The reader swings it to the year they think the sphere-packing proof was finished, asking how long it took to prove Kepler's 1611 claim about stacking spheres.",
-    "graded": false,
-    "ground": "#17130e",
-    "page": "pages/maths-kepler-proof-dial.html?v=af96de1ab3e4",
-    "bytes": 25659
+    "label": "Timeline from 1611 to 2017 with a draggable pin. The reader drags the pin to the year the formal proof of Kepler's sphere packing conjecture was published.",
+    "page": "pages/maths-kepler-proof-dial.html?v=31663e5cc03f",
+    "bytes": 17912
    },
    "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=126s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "maths-knot-equivalence",
@@ -181003,12 +181000,12 @@
    "topic": "science",
    "genre": "science.physics",
    "strand": "science.physics.why_things_fall",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How can a falling sphere slip through liquid like a torpedo?",
-   "answer": "Heat the right sphere so that it is wrapped in air. Once wrapped, the sphere meets the liquid as a torpedo rather than a ball, so it can slice through the water as it falls.",
-   "move": "Wrap a sphere in air and the liquid meets a torpedo, not a ball.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "A falling ball is wrapped in air. What shape does the water feel?",
+   "answer": "The researchers combined two tricks: the Leidenfrost effect and superhydrophobicity, a water-repelling surface. Together they trap air around a dropped sphere, which then slices through the liquid as a torpedo shape.",
+   "move": "To cut drag, change the shape the liquid touches, not the thing inside.",
    "keywords": [
     "sphere",
     "torpedo",
@@ -181029,14 +181026,13 @@
    "web": {
     "kit": 1,
     "touch": "taps",
-    "label": "Two spheres sit above a liquid. The question asks how a falling sphere can slip through liquid like a torpedo. The reader taps the right sphere to heat it, then drops both spheres into the liquid to compare how they fall.",
-    "ground": "#0d2b36",
-    "page": "pages/science-air-torpedo-sphere.html?v=58f7df01a1c9",
-    "bytes": 20391
+    "label": "A falling ball wrapped in air, with the question of which shape the water feels. The reader taps one of the offered shapes to show the air shape that really forms as the ball falls.",
+    "page": "pages/science-air-torpedo-sphere.html?v=e11fa8fb1221",
+    "bytes": 14711
    },
    "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
    "reference": "https://www.youtube.com/watch?v=EQCzO4RfZAM&t=302s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-air-wrapped-drag",
@@ -188161,12 +188157,12 @@
    "topic": "science",
    "genre": "science.cold_and_heat",
    "strand": "science.cold_and_heat.absolute_zero",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why do cooled rocks keep the magnetic direction they had while hot?",
-   "answer": "Magnetite and hematite grains line up with Earth's field while the rock is hot. Below the Curie point they lock in place, so when the field later reverses, the cooled rock keeps pointing the old way.",
-   "move": "A cooled lava is a frozen compass: it keeps the field it set in.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Earth's field flipped. Which way does the old rock's magnet point now?",
+   "answer": "The old rock's magnet still points the old way. While the rock is hot, its magnetic domains take the direction of Earth's field. Below the Curie point they lock in place, so the recorded direction cannot change even if the field later reverses.",
+   "move": "A record holds the moment it set, not the present: ask when it froze.",
    "keywords": [
     "lava",
     "magnetite",
@@ -188187,14 +188183,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A diagram of two lavas and Earth's magnetic field. A prompt asks the reader to hold the picture to cool the right lava below its Curie point, and the card explains how the cooled rock keeps its old field direction.",
-    "ground": "#14110f",
-    "page": "pages/science-frozen-compass.html?v=eb675593695c",
-    "bytes": 18998
+    "label": "A magnified grain of old rock with an arrow showing its magnetic direction. The reader drags the arrow to where the rock's magnet points today, after Earth's magnetic field has flipped.",
+    "page": "pages/science-frozen-compass.html?v=cd60c48e8207",
+    "bytes": 15303
    },
    "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=86s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-fukushima-hydrogen-blast",
@@ -193280,11 +193275,11 @@
    "genre": "science.physics",
    "strand": "science.physics.energy",
    "kind": "page",
-   "difficulty": "medium",
-   "principle": "none",
-   "question": "Little Boy carried 64 kg of uranium-235. How much of it actually fissioned?",
-   "answer": "Only 1.5% of Little Boy's 64 kg of uranium-235 split, which is less than 1 kg. The other 98.5% never reacted; it was blown apart and fell back as radioactive debris.",
-   "move": "Little Boy wasted 98.5% of its uranium: the gun-type bomb is inefficient.",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "Little Boy carried 64 kg of uranium-235. How much of it actually split?",
+   "answer": "Under 1 kg. Just 1.5%. Gun-type bombs like Little Boy had low efficiency: 98.5% of the 64 kg of U-235 took no part in the reaction and fell as radioactive debris.",
+   "move": "A bomb's mass is not its yield; ask how much of it reacts.",
    "keywords": [
     "little boy",
     "uranium-235",
@@ -193304,16 +193299,14 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Asks how much of Little Boy's 64 kg of uranium-235 fissioned, with three tappable guesses: 50% (32 kg), 15% (about 10 kg), and 1.5% (about 1 kg). Reveals that only 1.5% split and the other 98.5% fell as debris.",
-    "graded": false,
-    "ground": "#13151d",
-    "page": "pages/science-little-boy-waste.html?v=0094c119deee",
-    "bytes": 18439
+    "touch": "drags",
+    "label": "A grid of 64 squares, each 1 kg of uranium-235, that the reader drags across to estimate how many kg split. Below it are confidence buttons from 50% to 90% and a Reveal button.",
+    "page": "pages/science-little-boy-waste.html?v=1692fc3124a0",
+    "bytes": 18426
    },
    "source": "Geopop, “La bomba atomica di Oppenheimer - Animazione 3D di come funziona e com'è fatta dentro” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=oDETa3ktK8M&t=200s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-lowside-vs-highside",
@@ -203949,12 +203942,12 @@
    "topic": "science",
    "genre": "science.numbers_and_chance",
    "strand": "science.numbers_and_chance.risk_in_numbers",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How deep must an undersea volcano be to pose little tsunami risk?",
-   "answer": "A submarine crater deeper than 500–600 m carries a very low tsunami risk. The 1 200 m volcano is well past that threshold, while Marsili, at 500 m and more, sits right at its edge.",
-   "move": "A submarine crater deeper than 500–600 m carries a very low tsunami risk.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "How deep must an undersea volcano's crater be for its tsunami risk to be very low?",
+   "answer": "Deeper than 500–600 m, the tsunami risk is very low. An eruption shoves the water column, but the energy disperses in the water. From the Marsili, just over 500 m down, only some pumice would come up.",
+   "move": "Judge an undersea volcano by the water above its crater.",
    "keywords": [
     "tsunami",
     "submarine volcano",
@@ -203973,15 +203966,15 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "The page asks how deep an undersea volcano must be to pose little tsunami risk, with two choices: a volcano 1 200 m deep, or Marsili at 500 m and more. A switch sets off one volcano, then the other.",
-    "ground": "#efe5cc",
-    "page": "pages/science-volcano-depth-tsunami.html?v=a0ad94da7308",
-    "bytes": 30081
+    "touch": "drags",
+    "label": "A drag-to-guess page with a cross-section of an undersea volcano. The reader drags its top up or down to the depth where they think tsunami risk turns very low, then reads the reveal: 500–600 m.",
+    "ground": "#dcecea",
+    "page": "pages/science-volcano-depth-tsunami.html?v=f25e2d3b396c",
+    "bytes": 19941
    },
    "source": "Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=qTd62yuSOQM&t=563s",
-   "written": "2026-11-04"
+   "written": "2026-11-07"
   },
   {
    "id": "science-water-meets-lava",

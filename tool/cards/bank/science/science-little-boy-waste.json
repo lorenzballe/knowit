@@ -4,11 +4,11 @@
   "genre": "science.physics",
   "strand": "science.physics.energy",
   "kind": "page",
-  "difficulty": "medium",
-  "principle": "none",
-  "question": "Little Boy carried 64 kg of uranium-235. How much of it actually fissioned?",
-  "answer": "Only 1.5% of Little Boy's 64 kg of uranium-235 split, which is less than 1 kg. The other 98.5% never reacted; it was blown apart and fell back as radioactive debris.",
-  "move": "Little Boy wasted 98.5% of its uranium: the gun-type bomb is inefficient.",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Little Boy carried 64 kg of uranium-235. How much of it actually split?",
+  "answer": "Under 1 kg. Just 1.5%. Gun-type bombs like Little Boy had low efficiency: 98.5% of the 64 kg of U-235 took no part in the reaction and fell as radioactive debris.",
+  "move": "A bomb's mass is not its yield; ask how much of it reacts.",
   "keywords": [
     "little boy",
     "uranium-235",
@@ -28,12 +28,10 @@
   "figure": "none",
   "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Asks how much of Little Boy's 64 kg of uranium-235 fissioned, with three tappable guesses: 50% (32 kg), 15% (about 10 kg), and 1.5% (about 1 kg). Reveals that only 1.5% split and the other 98.5% fell as debris.",
-    "graded": false,
-    "ground": "#13151d"
+    "touch": "drags",
+    "label": "A grid of 64 squares, each 1 kg of uranium-235, that the reader drags across to estimate how many kg split. Below it are confidence buttons from 50% to 90% and a Reveal button."
   },
   "source": "Geopop, “La bomba atomica di Oppenheimer - Animazione 3D di come funziona e com'è fatta dentro” (YouTube, 2022)",
   "reference": "https://www.youtube.com/watch?v=oDETa3ktK8M&t=200s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

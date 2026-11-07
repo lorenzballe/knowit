@@ -3,12 +3,12 @@
   "topic": "science",
   "genre": "science.cold_and_heat",
   "strand": "science.cold_and_heat.absolute_zero",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "Why do cooled rocks keep the magnetic direction they had while hot?",
-  "answer": "Magnetite and hematite grains line up with Earth's field while the rock is hot. Below the Curie point they lock in place, so when the field later reverses, the cooled rock keeps pointing the old way.",
-  "move": "A cooled lava is a frozen compass: it keeps the field it set in.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Earth's field flipped. Which way does the old rock's magnet point now?",
+  "answer": "The old rock's magnet still points the old way. While the rock is hot, its magnetic domains take the direction of Earth's field. Below the Curie point they lock in place, so the recorded direction cannot change even if the field later reverses.",
+  "move": "A record holds the moment it set, not the present: ask when it froze.",
   "keywords": [
     "lava",
     "magnetite",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A diagram of two lavas and Earth's magnetic field. A prompt asks the reader to hold the picture to cool the right lava below its Curie point, and the card explains how the cooled rock keeps its old field direction.",
-    "ground": "#14110f"
+    "label": "A magnified grain of old rock with an arrow showing its magnetic direction. The reader drags the arrow to where the rock's magnet points today, after Earth's magnetic field has flipped."
   },
   "source": "Geopop, “INVERSIONE DEI POLI MAGNETICI E PALEOMAGNETISMO - LA DIMOSTRAZIONE GEOLOGICA” (YouTube, 2019)",
   "reference": "https://www.youtube.com/watch?v=qjTnrecXtSU&t=86s",
-  "written": "2026-11-04"
+  "written": "2026-11-07"
 }

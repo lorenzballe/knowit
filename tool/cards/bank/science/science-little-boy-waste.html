@@ -1,289 +1,292 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: science-little-boy-waste -->
-<!-- Look: a night-time isometric miniature: 64 one-kilo uranium blocks stacked on a faint floor grid, two tiny technicians pottering in front.
-     Interaction: pick a share (50%, 15%, 1.5%) and that many blocks fly to the glowing fission pad (Flip); then say how sure you are.
-     Wow: everything regroups into the truth: one lone block ignites in a white-amber bloom and keeps glowing and throwing embers, while the other 63 tumble into a grey, speckled heap of debris under a drizzle of fallout. -->
+<!-- slug: history-little-boy-efficiency -->
+<!-- Design note.
+     Thought to carry: a bomb's mass is not its yield; ask how much of it reacts.
+     Front: Little Boy's 64 kg of uranium-235 as an 8×8 slab of 1 kg squares. The reader drags to fill how many kilograms they think split and watches a live count. They pick how sure they are, then press Reveal to lock the guess.
+     Back: the same slab. The 63 squares that never split drop together as one block. One square stays up, filled 96% red (0.96 kg, which is 1.5% of 64 kg), and an enlarged copy beside it shows that "under 1 kg" is less than one square. The reader's guess is a dashed outline over the same slab, with the gap labelled. Three labels only.
+     Front gives nothing away: it shows only the 64 kg and the reader's own number. -->
 <title>Little Boy's wasted uranium</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/Flip.min.js"></script>
 <style>
-#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
-#world{position:relative;flex:1;min-height:0;width:100%;overflow:hidden}
-#bg,#figs{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-#figs{z-index:900;overflow:hidden}
-.cube{position:absolute;will-change:transform}
-.cube svg{display:block;width:100%;height:100%;overflow:visible}
-.cube polygon{stroke:#0a0c11;stroke-width:2.4;stroke-linejoin:round}
-.cube .t{fill:#c6cca2}.cube .l{fill:#868e6b}.cube .r{fill:#5b614a}
-.cube .e{fill:none;stroke:rgba(255,255,236,.32);stroke-width:2.2;stroke-linecap:round}
-.cube .sp{fill:#9dff7e;opacity:0;transition:opacity .6s}
-.cube.g .t{fill:#ffe39a}.cube.g .l{fill:#d9a648}.cube.g .r{fill:#a8762a}
-.cube.g{filter:drop-shadow(0 0 .5cqh rgba(255,200,90,.55))}
-.cube.hot .t{fill:#fffbea}.cube.hot .l{fill:#ffd36b}.cube.hot .r{fill:#ff9a3c}
-.cube.hot{filter:drop-shadow(0 0 .6cqh #ffd36b) drop-shadow(0 0 2.2cqh #ff8a2a)}
-.cube.dead .t{fill:#636872}.cube.dead .l{fill:#41454e}.cube.dead .r{fill:#2c2f36}
-.cube.dead .sp{opacity:.95}
-.lab{position:absolute;z-index:950;font:600 max(1.5cqh,12px)/1.3 var(--mono);color:var(--k);text-align:center;letter-spacing:.02em;white-space:nowrap}
-.lab b{color:#ffcf6a;font-weight:800}.lab i{font-style:normal;color:#9dff7e;font-weight:800}
-#opts{display:flex;gap:2.4cqw;flex:none}
-.opt{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5cqh;color:var(--k);background:color-mix(in srgb,var(--k) 7%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 28%,transparent);border-radius:1.8cqh;padding:1.2cqh 1cqw;margin:0;cursor:pointer;transition:transform .12s,background .2s}
-.opt:active{transform:scale(.96)}
-.opt .v{font:800 max(3cqh,20px)/1.05 var(--display);white-space:nowrap}
-.opt .c{font:600 max(1.4cqh,12px)/1.2 var(--body);opacity:.75;white-space:nowrap}
-.opt.on{background:#ffcf6a;color:#14161f;box-shadow:inset 0 0 0 .22cqh #ffe39a}
-#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
-#why .big{color:#ffcf6a}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden;transition:visibility 0s linear .38s}
+.kit-calm .turn,.kit-calm .turn.over>.front{transition:none}
+
+.face .stagebox{flex:1 1 auto;min-height:0;display:flex;background:none;border:0;box-shadow:none;padding:0}
+.face .stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block;background:none}
+#pic{touch-action:none;cursor:pointer}
+
+/* front: instruction, confidence, commit */
+.front .say{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:.6cqh 0 0;overflow-wrap:anywhere;color:var(--k,#111)}
+.conf{margin:1.4cqh 0 0}
+.conf .lab{font:700 max(1.8cqh,14px)/1.2 var(--body);margin:0 0 7px;color:var(--k,#111);letter-spacing:0;text-transform:none}
+.chips{display:flex;gap:8px}
+.chips button{flex:1 1 0;min-width:0;height:40px;padding:0;border-radius:999px;border:1.6px solid var(--k,#111);background:transparent;color:var(--k,#111);font:700 15px/1 var(--body);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.chips button[aria-pressed="true"]{background:var(--k,#111);color:#fff}
+.chips button:disabled{cursor:default}
+.go{align-self:flex-start;max-width:calc(100% - 100px);margin-top:1.4cqh;height:44px;padding:0 30px;border:0;border-radius:999px;background:var(--k,#111);color:#fff;font:700 16px/1 var(--body);cursor:pointer}
+.go:disabled{opacity:.3;cursor:default}
+
+/* back */
+.back .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0 0 .8cqh}
+.back .body{font:500 max(1.85cqh,13px)/1.34 var(--body);margin:.8cqh 0;overflow-wrap:anywhere}
+.back .keep{font-size:max(1.8cqh,13px)}
+.back .keep b{letter-spacing:0;text-transform:none}
+.back .foot{padding-right:100px}
+.src{overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure" style="--c:#13151d;--k:#f2ecdf;--edge:#07080c">
+<article class="card" id="card" data-topic="science" data-kind="Fill the squares · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">LITTLE BOY</span></div>
-    <h2 class="q">Little Boy carried 64 kg of uranium-235. How much of it actually fissioned?</h2>
-    <div class="stagebox" id="stage">
-      <div id="world" role="img" aria-label="64 blocks of uranium, one kilo each, stacked on an isometric floor beside a fission pad.">
-        <svg id="bg"></svg>
-        <div class="lab" id="lc"></div><div class="lab" id="lp"></div><div class="lab" id="lm"></div>
-        <svg id="figs"></svg>
-      </div>
-      <div id="opts">
-        <button class="opt" data-i="0"><span class="v">50%</span><span class="c">32 kg</span></button>
-        <button class="opt" data-i="1"><span class="v">15%</span><span class="c">about 10 kg</span></button>
-        <button class="opt" data-i="2"><span class="v">1.5%</span><span class="c">about 1 kg</span></button>
-      </div>
-      <div id="why" class="gone"><p class="big">Only 1.5%</p><p class="body">Less than 1 kg of its 64 kg split. The other 98.5% never reacted: it was blown apart and fell back as radioactive debris.</p></div>
+    <div class="label"><svg></svg><span class="t"></span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Little Boy carried 64 kg of uranium-235. How much of it actually split?</h2>
+        <div class="stagebox" id="stage"><svg id="pic" data-drag role="img" aria-label="An eight by eight slab of squares, each one kilogram of uranium-235. Drag to fill your guess."></svg></div>
+        <p class="say" id="say">Each square is 1 kg of uranium-235. Drag across them to fill how many kilograms you think split.</p>
+        <div class="conf" id="sure">
+          <p class="lab">How sure are you?</p>
+          <div class="chips">
+            <button type="button" data-v="50" aria-pressed="false">50%</button>
+            <button type="button" data-v="60" aria-pressed="false">60%</button>
+            <button type="button" data-v="70" aria-pressed="false">70%</button>
+            <button type="button" data-v="80" aria-pressed="false">80%</button>
+            <button type="button" data-v="90" aria-pressed="false">90%</button>
+          </div>
+        </div>
+        <button type="button" class="go" id="go" disabled>Reveal</button>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Under 1 kg. Just 1.5%.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="The same slab: one square, 96% red, stays up; the other 63 squares drop as one block of uranium-235 that never split. Your guess is outlined."></svg></div>
+        <p class="body">Gun-type bombs like Little Boy had low efficiency: 98.5% of the 64 kg of U-235 took no part in the reaction and fell as radioactive debris.</p>
+        <div class="keep"><b>What to keep</b> A bomb's mass is not its yield; ask how much of it reacts.</div>
+        <div class="foot"><span class="src">Source · Geopop, “La bomba atomica di Oppenheimer - Animazione 3D di come funziona e com'è fatta dentro” (YouTube, 2022).</span></div>
+      </section>
     </div>
-    <div id="sure"></div>
-    <p class="say" id="say">Each block is 1 kg. <b>Tap how much you think split.</b></p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Little Boy wasted 98.5% of its uranium: the gun-type bomb is inefficient.</div>
-    <div class="foot"><span class="src">Source · Geopop, “La bomba atomica di Oppenheimer - Animazione 3D di come funziona e com'è fatta dentro” (YouTube, 2022)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
-gsap.registerPlugin(Flip);
-const RIGHT = 2;
-const CH = [{k: 32, v: '50%', kg: '32 kg'}, {k: 10, v: '15%', kg: '~10 kg'}, {k: 1, v: '1.5%', kg: '~1 kg'}];
-let pick = -1, mode = 'start', K = 0;
-const world = Kit.$('world'), bg = Kit.$('bg'), figs = Kit.$('figs');
-const LC = Kit.$('lc'), LP = Kit.$('lp'), LM = Kit.$('lm');
-
-// ---------- the blocks ----------
-const CUBE = '<svg viewBox="0 0 100 100"><polygon class="l" points="0,25 50,50 50,100 0,75"/><polygon class="r" points="50,50 100,25 100,75 50,100"/><polygon class="t" points="50,0 100,25 50,50 0,25"/><path class="e" d="M4,25 L50,2 L96,25"/><circle class="sp" cx="22" cy="58" r="4"/><circle class="sp" cx="72" cy="52" r="3.2"/><circle class="sp" cx="64" cy="80" r="2.6"/><circle class="sp" cx="48" cy="22" r="3"/></svg>';
-const cubes = [...Array(64)].map(() => { const d = document.createElement('div'); d.className = 'cube'; d.innerHTML = CUBE; world.insertBefore(d, LC); return d; });
-
-// The debris heap: 33 + 16 + 9 + 4 + 1 = 63 blocks, slumped.
-const HEAP = [];
-for (let x = 0; x < 6; x++) for (let y = 0; y < 6; y++) if (!((x === 0 && y === 5) || (x === 5 && y === 0) || (x === 3 && y === 5))) HEAP.push([x, y, 0]);
-[[4, 1, 1], [3, 1.5, 2], [2, 2, 3], [1, 2.5, 4]].forEach(([n, o, z]) => { for (let x = 0; x < n; x++) for (let y = 0; y < n; y++) HEAP.push([x + o, y + o, z]); });
-const perm = HEAP.map((_, i) => i);
-for (let i = perm.length - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [perm[i], perm[j]] = [perm[j], perm[i]]; }
-
-let W = 300, H = 300, s = 30, baseY = 200, lh = 16, padX = 0, mainX = 0;
-const slot4 = n => [Math.floor((n % 16) / 4), n % 4, Math.floor(n / 16)];
-function cell(cx, nx, ny, gx, gy, gz) {
-  const ox = cx - (nx - ny) * s / 4, oy = baseY - s - (nx + ny - 2) * s / 4;
-  return {x: ox + (gx - gy) * s / 2 - s / 2, y: oy + (gx + gy) * s / 4 - gz * s / 2, z: 10 + Math.round((gx + gy + gz) * 4)};
-}
-function where(i) {
-  if (mode === 'start') return cell(W / 2, 4, 4, ...slot4(63 - i));
-  if (mode === 'guess') {
-    if (i < K) { const f = K <= 1 ? 1 : K <= 12 ? 3 : 4, a = f * f; return cell(padX, f, f, Math.floor((i % a) / f), i % f, Math.floor(i / a)); }
-    return cell(mainX, 4, 4, ...slot4(63 - i));
-  }
-  if (i === 0) return cell(padX, 1, 1, 0, 0, 0);
-  if (mode === 'gather') return cell(mainX, 4, 4, ...slot4(63 - i));
-  return cell(mainX, 6, 6, ...HEAP[perm[i - 1]]);
-}
-function place() {
-  cubes.forEach((c, i) => { const p = where(i); Object.assign(c.style, {left: p.x + 'px', top: p.y + 'px', width: s + 'px', height: s + 'px', zIndex: p.z}); });
-  const top = baseY + s * .3;
-  Object.assign(LC.style, {left: '0px', width: W + 'px', top: top + 'px'});
-  Object.assign(LP.style, {left: '0px', width: W * .4 + 'px', top: top + 'px'});
-  Object.assign(LM.style, {left: W * .42 + 'px', width: W * .58 + 'px', top: top + 'px'});
-}
-function flipTo(m, vars) {
-  gsap.killTweensOf(cubes);
-  const st = Flip.getState(cubes);
-  mode = m; place();
-  if (Kit.calm) return;
-  Flip.from(st, vars);
-}
-function labels() {
-  const set = (el, html) => { el.innerHTML = html; el.style.opacity = html ? 1 : 0; if (html && !Kit.calm) gsap.fromTo(el, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .5, ease: 'power3.out'}); };
-  if (mode === 'start') { set(LC, 'uranium-235 · <b>64 kg</b><br>each block = 1 kg'); set(LP, ''); set(LM, ''); }
-  else if (mode === 'guess') { const c = CH[pick]; set(LC, ''); set(LP, `your guess<br><b>${c.kg} split</b>`); set(LM, `${64 - K} kg<br>didn't react`); }
-  else { set(LC, ''); set(LP, '<b>1.5% split</b><br>under 1 kg'); set(LM, '<i>98.5% · 63 kg</i><br>never reacted'); }
-}
-
-// ---------- the floor, the pad, the figures ----------
-let figEls = [], bloom = null, ring = null, padMark = null, rainG = null, halo = null, haloTw = null, lastW = 0, lastH = 0;
-function draw() {
-  const r = Kit.fitSvg(bg); W = r.W; H = r.H; Kit.fitSvg(figs);
-  lastW = W; lastH = H;
-  lh = Math.max(12, parseFloat(getComputedStyle(LC).fontSize) || 12) * 1.3;
-  s = Math.max(14, Math.min(W / 10.5, (H - 2 * lh - 8) / 4.8));
-  const block = 4.4 * s + .3 * s + 2 * lh;
-  baseY = Math.max(4.4 * s, (H - block) / 2 + 4.4 * s);
-  padX = 2 * s + 4; mainX = W - 3.15 * s - 4;
-
-  bg.innerHTML = ''; figs.innerHTML = '';
-  const defs = Kit.mk('defs', {}, bg);
-  const pool = Kit.mk('radialGradient', {id: 'pool'}, defs);
-  Kit.mk('stop', {offset: 0, 'stop-color': '#3a3f58', 'stop-opacity': .55}, pool);
-  Kit.mk('stop', {offset: 1, 'stop-color': '#3a3f58', 'stop-opacity': 0}, pool);
-  const hg = Kit.mk('radialGradient', {id: 'halo'}, defs);
-  [[0, '#ffe39a', .75], [.45, '#ff9a3c', .28], [1, '#ff6a1a', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, hg));
-  Kit.mk('ellipse', {cx: W / 2, cy: baseY - s * .8, rx: W * .5, ry: s * 2.5, fill: 'url(#pool)'}, bg);
-  // isometric floor tiles, fading out from the middle
-  const ox = W / 2, oy = baseY - 2 * s, g = Kit.mk('g', {fill: 'none', stroke: '#f2ecdf', 'stroke-width': 1}, bg);
-  for (let i = -8; i < 12; i++) for (let j = -8; j < 12; j++) {
-    const x = ox + (i - j) * s / 2, y = oy + (i + j) * s / 4;
-    const d = Math.hypot((x - W / 2) / (W * .5), (y - baseY + s) / (s * 2.5));
-    const a = .16 * (1 - d); if (a < .012) continue;
-    Kit.mk('path', {d: `M${x},${y} l${s / 2},${s / 4} l${-s / 2},${s / 4} l${-s / 2},${-s / 4}Z`, 'stroke-opacity': a.toFixed(3)}, g);
-  }
-  // the fission pad + the glow that stays under the one burning kilo
-  const pc = baseY - s / 4, k = 1.7;
-  halo = Kit.mk('ellipse', {cx: padX, cy: baseY - s * .35, rx: s * 1.5, ry: s * 1.0, fill: 'url(#halo)', opacity: mode === 'truth' ? .9 : 0}, bg);
-  padMark = Kit.mk('g', {opacity: mode === 'start' ? 0 : 1}, bg);
-  Kit.mk('path', {d: `M${padX},${pc - s / 4 * k} l${s / 2 * k},${s / 4 * k} l${-s / 2 * k},${s / 4 * k} l${-s / 2 * k},${-s / 4 * k}Z`, fill: 'rgba(255,190,80,.12)', stroke: '#ffcf6a', 'stroke-width': 1.6, 'stroke-dasharray': '4 3'}, padMark);
-
-  // flash pieces, above the blocks (kept inside the scene; reset after use)
-  const fd = Kit.mk('defs', {}, figs), bl = Kit.mk('radialGradient', {id: 'bl'}, fd);
-  [[0, '#ffffff', 1], [.25, '#fff1b8', .9], [.55, '#ff9a3c', .35], [1, '#ff6a1a', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, bl));
-  const fx = padX, fy = baseY - s * .55;
-  bloom = Kit.mk('circle', {cx: fx, cy: fy, r: 0, fill: 'url(#bl)', opacity: 0}, figs);
-  ring = Kit.mk('circle', {cx: fx, cy: fy, r: 0, fill: 'none', stroke: '#ffe9b0', 'stroke-width': 2.5, opacity: 0}, figs);
-  rainG = Kit.mk('g', {}, figs);
-
-  // two tiny technicians
-  const h = Math.max(13, s * .52);
-  figEls = [0, 1].map(n => {
-    const gg = Kit.mk('g', {}, figs);
-    Kit.mk('ellipse', {cx: 0, cy: 0, rx: h * .22, ry: h * .07, fill: 'rgba(0,0,0,.45)'}, gg);
-    const body = Kit.mk('g', {}, gg);
-    Kit.mk('path', {d: `M${-h * .07},0 L${-h * .05},${-h * .36} M${h * .07},0 L${h * .05},${-h * .36}`, stroke: '#2a2d38', 'stroke-width': Math.max(1.6, h * .09), 'stroke-linecap': 'round'}, body);
-    Kit.mk('path', {d: `M${-h * .16},${-h * .32} L${-h * .12},${-h * .74} Q0,${-h * .8} ${h * .12},${-h * .74} L${h * .16},${-h * .32}Z`, fill: '#f2ecdf', stroke: '#0a0c11', 'stroke-width': 1}, body);
-    Kit.mk('circle', {cx: 0, cy: -h * .88, r: h * .13, fill: '#e7c39c', stroke: '#0a0c11', 'stroke-width': 1}, body);
-    Kit.mk('path', {d: `M${-h * .14},${-h * .9} A${h * .14},${h * .14} 0 0 1 ${h * .14},${-h * .9}Z`, fill: n ? '#ffcf6a' : '#5b8cff'}, body);
-    if (n) Kit.mk('rect', {x: h * .1, y: -h * .62, width: h * .16, height: h * .2, rx: 1, fill: '#ffcf6a', stroke: '#0a0c11', 'stroke-width': .8}, body);
-    return {g: gg, body};
-  });
-  place(); posFigs();
-  if (mode === 'truth') { rain(true); glow(); }
-}
-const walk = [{p: 0, face: 1}, {p: .5, face: -1}], hop = {y: 0};
-function posFigs() {
-  if (!figEls.length) return;
-  const lane = baseY + s * .18;
-  const A = walk[0], xa = W * .06 + A.p * W * .26, ya = lane + (A.p - .5) * s * .25;
-  const ba = Math.abs(Math.sin(A.p * 40)) * 1.6;
-  figEls[0].g.setAttribute('transform', `translate(${xa},${ya})`);
-  figEls[0].body.setAttribute('transform', `translate(0,${-ba - hop.y}) scale(${A.face},1)`);
-  const xb = W * .5 + Math.sin(walk[1].p * 6.28) * s * .25;
-  figEls[1].g.setAttribute('transform', `translate(${xb},${lane - s * .02})`);
-  figEls[1].body.setAttribute('transform', `translate(0,${-hop.y * .8}) scale(${walk[1].face},1)`);
-}
-let walking = false;
-function startWalk() {
-  if (walking || Kit.calm) return; walking = true;
-  gsap.to(walk[0], {p: 1, duration: 4.2, ease: 'sine.inOut', yoyo: true, repeat: -1, onUpdate: posFigs, onRepeat() { walk[0].face *= -1; }});
-  gsap.to(walk[1], {p: 1, duration: 6, ease: 'none', repeat: -1, onUpdate: posFigs, onRepeat() { walk[1].face *= -1; }});
-}
-// the one burning kilo keeps breathing
-function glow() {
-  if (!halo) return;
-  if (haloTw) haloTw.kill();
-  halo.setAttribute('opacity', .9);
-  if (!Kit.calm) haloTw = gsap.fromTo(halo, {opacity: .55}, {opacity: 1, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: -1});
-}
-// green fallout drifting onto the heap, amber embers rising from the lone block
-function rain(on) {
-  if (!rainG) return; gsap.killTweensOf(rainG.children); rainG.innerHTML = '';
-  if (!on) return;
-  const top = Math.max(s * .3, baseY - s * 5);
-  for (let i = 0; i < 18; i++) {
-    const x = mainX + (Kit.rnd() - .5) * s * 5.2, y1 = baseY - s * (.6 + Kit.rnd() * 1.6);
-    const c = Kit.mk('circle', {cx: x, cy: y1, r: Math.max(1.4, s * .05), fill: '#9dff7e', opacity: .8}, rainG);
-    if (!Kit.calm) gsap.fromTo(c, {attr: {cy: top}, opacity: 0}, {attr: {cy: y1}, opacity: .85, duration: 1.6 + Kit.rnd() * 1.4, ease: 'power1.in', repeat: -1, delay: Kit.rnd() * 2, repeatDelay: Kit.rnd()});
-  }
-  const ey = baseY - s * .7;
-  for (let i = 0; i < 9; i++) {
-    const x = padX + (Kit.rnd() - .5) * s * .9;
-    const c = Kit.mk('circle', {cx: x, cy: ey, r: Math.max(1.3, s * .045), fill: '#ffcf6a', opacity: Kit.calm ? 0 : 0}, rainG);
-    if (!Kit.calm) gsap.fromTo(c, {attr: {cy: ey, cx: x}, opacity: 1}, {attr: {cy: ey - s * (1.4 + Kit.rnd()), cx: x + (Kit.rnd() - .5) * s * .8}, opacity: 0, duration: 1.4 + Kit.rnd(), ease: 'power1.out', repeat: -1, delay: Kit.rnd() * 1.5});
-  }
-}
-
-// ---------- the story ----------
-function guess(i) {
-  K = CH[i].k;
-  cubes.forEach((c, n) => c.classList.toggle('g', n < K));
-  flipTo('guess', {duration: .85, ease: 'power3.inOut', stagger: {each: .012, from: 'start'}});
-  if (!Kit.calm) gsap.to(padMark, {opacity: 1, duration: .5}); else padMark.setAttribute('opacity', 1);
-  labels();
-}
-function truth() {
-  cubes.forEach(c => c.classList.remove('g'));
-  padMark.setAttribute('opacity', 1);
-  if (Kit.calm) { mode = 'truth'; cubes[0].classList.add('hot'); cubes.forEach((c, n) => n && c.classList.add('dead')); place(); labels(); rain(true); glow(); return; }
-  flipTo('gather', {duration: .7, ease: 'power3.inOut', stagger: .004});
-  gsap.delayedCall(.72, () => {
-    cubes[0].classList.add('hot'); Kit.haptic('success');
-    const R = Math.min(W, H) * .6;
-    gsap.fromTo(bloom, {attr: {r: s * .3}, opacity: 1}, {attr: {r: R}, opacity: 0, duration: 1.3, ease: 'expo.out', onComplete() { bloom.setAttribute('r', 0); }});
-    gsap.fromTo(ring, {attr: {r: s * .4}, opacity: .9}, {attr: {r: R * 1.2}, opacity: 0, duration: 1.1, ease: 'power2.out', onComplete() { ring.setAttribute('r', 0); }});
-    gsap.fromTo(cubes[0], {scale: 1.35}, {scale: 1, duration: .9, ease: 'elastic.out(1,.4)'});
-    gsap.fromTo(hop, {y: 0}, {y: s * .35, duration: .18, ease: 'power2.out', yoyo: true, repeat: 1, onUpdate: posFigs});
-    glow();
-  });
-  gsap.delayedCall(1.0, () => {
-    cubes.forEach((c, n) => n && c.classList.add('dead'));
-    flipTo('truth', {duration: 1.15, ease: 'bounce.out', stagger: {each: .01, from: 'random'}});
-    labels(); rain(true);
-  });
-}
-
-// when the text below grows or shrinks, the miniature re-fits itself smoothly
-new ResizeObserver(() => {
-  if (!figEls.length) return;
-  const r = world.getBoundingClientRect();
-  if (Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 1) return;
-  const st = Flip.getState(cubes);
-  gsap.killTweensOf(cubes);
-  draw();
-  if (!Kit.calm) Flip.from(st, {duration: .45, ease: 'power2.out'});
-}).observe(world);
-
-const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-  const ok = pick === RIGHT, said = CH[pick].v;
-  Kit.answer({choice: said, correct: ok, sure: pct});
-  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
-  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
-  Kit.show('keep');
-  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, stagger: .1, duration: .5, ease: 'power3.out'});
-  truth();
-});
-Kit.$('opts').addEventListener('click', e => {
-  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
-  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
-  guess(pick); sure.on();
-});
-
-Kit.onShow.card = () => { draw(); if (mode === 'start') labels(); };
-Kit.onEnter.card = () => {
-  startWalk();
-  if (Kit.calm) return;
-  gsap.from(bg, {opacity: 0, duration: .8, ease: 'power2.out'});
-  if (mode === 'start') gsap.from(cubes, {y: -H * .5, opacity: 0, duration: .7, ease: 'back.out(1.6)', stagger: {each: .018, from: 'end'}});
-  gsap.from('.opt', {opacity: 0, stagger: .07, duration: .45, delay: .5, ease: 'power2.out'});
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
 };
-Kit.play.card = async () => {
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  Kit.$('opts').children[0].click(); await wait(Kit.calm ? 80 : 900);
-  Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(Kit.calm ? 150 : 2700);
-};
+(() => {
+  const card = Kit.$('card'), pic = Kit.$('pic'), pic2 = Kit.$('pic2'), say = Kit.$('say'), go = Kit.$('go');
+  const chips = [...Kit.$('sure').querySelectorAll('[data-v]')];
+  const PAPER = '#ffffff', RED = '#ff4b2b';
+  const ink = () => (getComputedStyle(card).getPropertyValue('--k') || '').trim() || '#111';
+  let n = 0, pct = 0, touched = false, answered = false, turned = false, tl = null;
+  let fs = 13, s = 20, gx = 0, gy = 0, rects = [], heroT = null, subT = null;
+
+  // solid colours only: the "never split" fill is ink mixed into the card colour, no transparency
+  function palette() {
+    const p = document.createElement('span'); p.style.color = ink(); card.appendChild(p);
+    const num = c => { const m = String(c).match(/[\d.]+/g); return m && m.length >= 3 && (m.length < 4 || +m[3] > 0) ? m.slice(0, 3).map(Number) : null; };
+    const k = num(getComputedStyle(p).color) || [17, 17, 17]; p.remove();
+    let b = null;
+    for (const el of [card, card.querySelector('.in')]) { if (el && (b = num(getComputedStyle(el).backgroundColor))) break; }
+    b = b || [255, 176, 0];
+    const mix = t => `rgb(${k.map((v, i) => Math.round(v * t + b[i] * (1 - t))).join(',')})`;
+    return {K: `rgb(${k.join(',')})`, NS: mix(.17), STK: mix(.55)};
+  }
+
+  const txt = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree, sans-serif', 'font-size': fs, 'font-weight': 700}, a), parent); e.style.fill = ink(); e.textContent = t; return e; };
+  const width = (e, chars, size) => { let w = 0; try { w = e.getComputedTextLength(); } catch (_) {} return w > 0 ? w : chars * (size || fs) * .58; };
+  function wrap(parent, text, maxW, a = {}) {
+    const probe = txt(parent, 0, -999, '', a), lines = []; let cur = '';
+    text.split(' ').forEach(w => { const t = cur ? cur + ' ' + w : w; probe.textContent = t;
+      if (cur && width(probe, t.length) > maxW) { lines.push(cur); cur = w; } else cur = t; });
+    if (cur) lines.push(cur); probe.remove(); return lines;
+  }
+  const block = (parent, x, y, lines, lh, a) => lines.forEach((l, i) => txt(parent, x, y + i * lh, l, a));
+
+  // ---------- front: the slab, and the reader's guess ----------
+  function drawFront() {
+    pic.innerHTML = ''; rects = [];
+    const f = Kit.fitSvg(pic), W = f.W, H = f.H, P = palette();
+    fs = Math.max(12, Math.min(14, f.f || 13));
+    const hero = Math.max(30, Math.min(H * .13, 52));
+    const top = hero * 1.32 + fs * 2.1 + 2, bot = 4;
+    s = Math.floor(Math.min(W * .86, H - top - bot, 8 * 44) / 8);
+    gx = (W - 8 * s) / 2; gy = top + Math.max(0, (H - top - bot - 8 * s) / 2);
+    const subY = gy - fs * .8, heroY = subY - fs * 1.1 - hero * .32;
+    heroT = txt(pic, W / 2, heroY, '? kg', {'text-anchor': 'middle', 'font-size': hero, 'font-weight': 800});
+    heroT.style.fontFamily = 'var(--display)';
+    subT = txt(pic, W / 2, subY, 'split, out of 64 kg', {'text-anchor': 'middle', 'font-weight': 600});
+    const g = Kit.mk('g', {}, pic), gap = Math.max(2, s * .12);
+    for (let i = 0; i < 64; i++) {
+      const c = i % 8, r = (i / 8) | 0;
+      rects.push(Kit.mk('rect', {x: gx + c * s + gap / 2, y: gy + r * s + gap / 2, width: s - gap, height: s - gap, rx: s * .08, 'stroke-width': 1.3}, g));
+    }
+    paintFront(P);
+  }
+  function paintFront(P = palette()) {
+    rects.forEach((e, i) => { const on = i < n; e.style.fill = on ? PAPER : P.NS; e.style.stroke = on ? P.K : P.STK; });
+    if (heroT) heroT.textContent = touched ? `${n} kg` : '? kg';
+    if (subT) subT.textContent = touched ? `split, out of 64 kg (${(n / 64 * 100).toFixed(n < 7 ? 1 : 0)}%)` : 'split, out of 64 kg';
+  }
+  const ready = () => { go.disabled = answered || !(touched && pct); };
+  function fromPoint(e) {
+    const b = pic.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
+    const c = Math.max(0, Math.min(7, Math.floor((x - gx) / s))), r = Math.max(0, Math.min(7, Math.floor((y - gy) / s)));
+    const v = r * 8 + c + 1;
+    if (v !== n) { n = v; Kit.haptic('selection'); }
+    touched = true; paintFront(); ready();
+  }
+  let dragging = false;
+  pic.addEventListener('pointerdown', e => { if (answered) return; dragging = true; try { pic.setPointerCapture(e.pointerId); } catch (_) {} fromPoint(e); });
+  pic.addEventListener('pointermove', e => { if (dragging) fromPoint(e); });
+  const end = () => { if (!dragging) return; dragging = false;
+    say.textContent = pct ? 'Adjust if you like, then press Reveal.' : 'Adjust if you like. Now pick how sure you are, then press Reveal.'; };
+  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+  chips.forEach(b => b.addEventListener('click', () => {
+    if (answered) return; pct = +b.dataset.v;
+    chips.forEach(c => c.setAttribute('aria-pressed', c === b ? 'true' : 'false'));
+    Kit.haptic('selection'); ready();
+    if (touched) say.textContent = 'Press Reveal to lock in your guess.';
+  }));
+  go.addEventListener('click', () => {
+    if (answered || !touched || !pct) return; answered = true;
+    const ok = n <= 1;
+    Kit.answer({choice: `${n} kg`, correct: ok, sure: pct});
+    chips.forEach(c => c.disabled = true); go.disabled = true;
+    say.textContent = `Locked in: ${n} kg, ${pct}% sure.`;
+    setTimeout(() => Turn.over(), 600);
+  });
+
+  // ---------- back: the same slab, as it really went ----------
+  function drawBack(anim) {
+    if (tl) { tl.kill(); tl = null; }
+    pic2.innerHTML = '';
+    const f = Kit.fitSvg(pic2), W = f.W, H = f.H, P = palette();
+    fs = Math.max(12, Math.min(14, f.f || 13));
+    const pad = 4, lh = fs * 1.25, gut = Math.max(12, fs), sw = fs * .85;
+    const C = Math.max(92, Math.min(132, W * .3));
+    const LEG = 'Never split: 98.5%';
+    const BOLD = {'font-weight': 800}, REG = {'font-weight': 700};
+
+    // size the grid so that grid + legend fit beside the left annotation column
+    let S = 0, leg = [''];
+    for (let k = 0; k < 2; k++) {
+      const legH = fs * .9 + leg.length * lh;
+      S = Math.floor(Math.min((W - 2 * pad - C - gut) / 8, (H - 2 * pad - legH) / 8.2, 40));
+      leg = wrap(pic2, LEG, 8 * S - sw - 7, REG);
+    }
+    const d = S * .2, gap = Math.max(2, S * .12), legH = fs * .9 + leg.length * lh;
+    const loupeLines = wrap(pic2, '0.96 kg split: just under one square', C, BOLD);
+    const gapText = n <= 1 ? `You guessed ${n} kg: about what split.` : `You guessed ${n} kg; ${n - 1} of them never split.`;
+    const gapLines = wrap(pic2, gapText, C, REG);
+    const colFixed = fs * .7 + loupeLines.length * lh + fs * 1.2 + gapLines.length * lh;
+    const L = Math.max(36, Math.min(C - 4, S * 2.8, H - 2 * pad - colFixed));
+    const needH = Math.max(8.2 * S + legH, L + colFixed);
+    const x0 = (W - (C + gut + 8 * S)) / 2, colR = x0 + C;
+    gx = colR + gut;
+    const gy0 = pad + Math.max(0, (H - 2 * pad - needH) / 2);
+
+    // the 63 squares that never split: one orderly block, one solid fill
+    const g = Kit.mk('g', {}, pic2);
+    for (let i = 1; i < 64; i++) {
+      const c = i % 8, r = (i / 8) | 0;
+      const e = Kit.mk('rect', {x: gx + c * S + gap / 2, y: gy0 + r * S + gap / 2, width: S - gap, height: S - gap, rx: S * .08, 'stroke-width': 1.3}, g);
+      e.style.fill = P.NS; e.style.stroke = P.STK;
+    }
+    // the one square that stays up: 96% red, a thin sliver left unsplit
+    const cx = gx + gap / 2, cy = gy0 + gap / 2, w = S - gap;
+    const defs = Kit.mk('defs', {}, pic2);
+    const cp0 = Kit.mk('clipPath', {id: 'lb-c0'}, defs); Kit.mk('rect', {x: cx, y: cy, width: w, height: w, rx: S * .08}, cp0);
+    const lx = colR - L, ly = gy0;
+    const cp1 = Kit.mk('clipPath', {id: 'lb-c1'}, defs); Kit.mk('rect', {x: lx, y: ly, width: L, height: L, rx: L * .06}, cp1);
+    const cell = Kit.mk('g', {}, pic2);
+    const cb = Kit.mk('rect', {x: cx, y: cy, width: w, height: w, rx: S * .08}, cell); cb.style.fill = P.NS;
+    const red0 = Kit.mk('rect', {x: cx, y: cy, width: anim ? 0 : w * .96, height: w, fill: RED, 'clip-path': 'url(#lb-c0)'}, cell);
+    const co = Kit.mk('rect', {x: cx, y: cy, width: w, height: w, rx: S * .08, fill: 'none', 'stroke-width': 1.5}, cell); co.style.stroke = P.K;
+
+    // the reader's guess: a dashed outline over the first n squares
+    const lastRow = Math.floor((n - 1) / 8);
+    function pts(p) {
+      const D = d * p, x = gx, y = gy0, R = Math.floor(n / 8), m = n % 8;
+      if (n <= 1) return `${x},${y} ${x + S},${y} ${x + S},${y + S} ${x},${y + S}`;
+      const Q = [[x, y], [x + S, y], [x + S, y + D]];
+      if (R === 0) Q.push([x + m * S, y + D], [x + m * S, y + D + S], [x, y + D + S]);
+      else {
+        Q.push([x + 8 * S, y + D], [x + 8 * S, y + D + R * S]);
+        if (m) Q.push([x + m * S, y + D + R * S], [x + m * S, y + D + (R + 1) * S], [x, y + D + (R + 1) * S]);
+        else Q.push([x, y + D + R * S]);
+      }
+      return Q.map(q => q.join(',')).join(' ');
+    }
+    const guess = Kit.mk('polygon', {points: pts(0), fill: 'none', 'stroke-width': 1.8, 'stroke-dasharray': '5 4', 'stroke-linejoin': 'round'}, pic2);
+    guess.style.stroke = P.K;
+    const setDrop = p => { g.setAttribute('transform', `translate(0 ${d * p})`); guess.setAttribute('points', pts(p)); };
+
+    // the red square, enlarged, so "under 1 kg" reads as less than one square
+    const lp = Kit.mk('g', {}, pic2);
+    [[colR, ly, cx, cy], [colR, ly + L, cx, cy + w]].forEach(([a, b, c2, d2]) => {
+      const l = Kit.mk('line', {x1: a, y1: b, x2: c2, y2: d2, 'stroke-width': 1}, lp); l.style.stroke = P.K; });
+    const lb = Kit.mk('rect', {x: lx, y: ly, width: L, height: L, rx: L * .06}, lp); lb.style.fill = P.NS;
+    const red1 = Kit.mk('rect', {x: lx, y: ly, width: anim ? 0 : L * .96, height: L, fill: RED, 'clip-path': 'url(#lb-c1)'}, lp);
+    const lo = Kit.mk('rect', {x: lx, y: ly, width: L, height: L, rx: L * .06, fill: 'none', 'stroke-width': 1.8}, lp); lo.style.stroke = P.K;
+    const lbTop = ly + L + fs * .7;
+    block(lp, colR, lbTop + fs * .95, loupeLines, lh, Object.assign({'text-anchor': 'end'}, BOLD));
+    const lbBottom = lbTop + loupeLines.length * lh;
+
+    // gap label, tied to the guess outline's left edge
+    const gl = Kit.mk('g', {}, pic2);
+    const ty = n <= 1 ? gy0 + S / 2 : gy0 + d + (lastRow + .5) * S;
+    const gh = gapLines.length * lh;
+    const gTop = Math.min(H - pad - gh, Math.max(ty - gh / 2, lbBottom + fs * 1.2));
+    block(gl, colR, gTop + fs * .95, gapLines, lh, Object.assign({'text-anchor': 'end'}, REG));
+    const ld = Kit.mk('line', {x1: colR + 3, y1: gTop + fs * .6, x2: gx - 3, y2: ty, 'stroke-width': 1.2}, gl); ld.style.stroke = P.K;
+
+    // legend: grid's left edge, the exact square fill
+    const lg = Kit.mk('g', {}, pic2);
+    const b0 = gy0 + d + 8 * S + fs * .9 + fs * .95;
+    const swr = Kit.mk('rect', {x: gx + gap / 2, y: b0 - fs * .8, width: sw, height: sw, rx: S * .08 * sw / w, 'stroke-width': 1.3}, lg);
+    swr.style.fill = P.NS; swr.style.stroke = P.STK;
+    block(lg, gx + gap / 2 + sw + 7, b0, leg, lh, REG);
+
+    if (!anim || Kit.calm || typeof gsap === 'undefined') { setDrop(1); return; }
+    setDrop(0);
+    gsap.set([lp, gl, lg], {opacity: 0});
+    const pr = {p: 0};
+    tl = gsap.timeline({delay: .35});
+    tl.to(pr, {p: 1, duration: .6, ease: 'power2.in', onUpdate: () => setDrop(pr.p)}, .5)
+      .to(lg, {opacity: 1, duration: .4, ease: 'power2.out'}, 1.15)
+      .to(red0, {attr: {width: w * .96}, duration: .6, ease: 'power3.out'}, 1.5)
+      .to(lp, {opacity: 1, duration: .35, ease: 'power2.out'}, 1.9)
+      .to(red1, {attr: {width: L * .96}, duration: .7, ease: 'power3.out'}, 2.0)
+      .to(gl, {opacity: 1, duration: .4, ease: 'power2.out'}, 2.8);
+  }
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined' || touched) return;
+    gsap.from(rects, {opacity: 0, scale: .6, transformOrigin: '50% 50%', duration: .45, ease: 'power3.out', stagger: {grid: [8, 8], from: 0, amount: .6}});
+  };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const b = pic.getBoundingClientRect();
+    const x = b.left + gx + s * 5.5, y = b.top + gy + s * 3.5;
+    pic.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+    pic.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+    await wait(120);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(120);
+    go.click();
+    await wait(Kit.calm ? 1000 : 4600);
+  };
+})();
 Kit.single();
 </script>
 </html>

@@ -1,431 +1,292 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: science-volcano-depth-tsunami -->
-<!-- Look: a mid-century textbook plate, "Fig. 7", printed straight onto cream paper. The sea and rock fade into the page at the edges, so there is no box. Ochre cones with halftone shadows, a teal halftone sea, a red-hatched 500–600 m band, a little fishing boat, gulls, and rubber-stamp verdicts.
-     Interaction: flip a two-way switch to set off either cone, one 200 m down and Marsili just over 500 m down. The same blast plays out in two very different ways.
-     Wow: the shallow blast shoves the whole water column up. The sea domes, spray flies under real gravity (Physics2D), and a tsunami crest runs off both ways and lifts the boat. The deep blast's debris stalls in the water's drag, and only pumice bobs up.
-     Labels are placed by a collision pass, so they never stack on any phone. The plate re-fits when the text below it grows. -->
-<title>How deep is safe?</title>
+<!doctype html>
+<!-- slug: science-undersea-volcano-depth -->
+<!-- Design note.
+     Thought to carry: judge an undersea volcano by the water above its crater. The eruption shoves the water column, but the energy disperses in the water, and with the crater deeper than 500–600 m the tsunami risk is very low.
+     Front: a flat sea in cross-section with a depth scale (0 to 1,500 m), a boat on top and a volcano you drag up or down. The crater starts at 1,000 m. One label: the crater depth.
+     Back: the same scale and only four labels. A cone at 200 m whose push reaches the top and lifts it; the Marsili, just over 500 m down, whose push stays low and sends up only pumice; the 500–600 m band behind both; the reader's guess as a coral line with the confidence they chose. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How deep must an undersea volcano be for its tsunami risk to be very low?</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/Physics2DPlugin.min.js"></script>
+<script src="kit/vendor/gsap-plugins/MotionPathPlugin.min.js"></script>
 <style>
-#card{background-image:radial-gradient(circle,color-mix(in srgb,var(--k) 6%,transparent) .7px,transparent 1px);background-size:5px 5px}
-#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
-#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
-#sw{position:relative;display:flex;align-self:center;width:min(100%,92cqw);border-radius:99px;background:color-mix(in srgb,var(--k) 8%,transparent);box-shadow:inset 0 0 0 max(.22cqh,1.5px) color-mix(in srgb,var(--k) 40%,transparent);padding:max(.5cqh,3px);flex:none}
-.side{flex:1;min-width:0;position:relative;z-index:1;font:700 max(1.9cqh,13px)/1.1 var(--body);color:var(--k);background:none;border:0;padding:max(1.3cqh,9px) 1.5cqw;border-radius:99px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:1.6cqw;white-space:nowrap;transition:color .2s}
-.side i{font:800 max(1.5cqh,12px)/1 var(--mono);font-style:normal;display:inline-grid;place-items:center;width:max(2.5cqh,18px);height:max(2.5cqh,18px);border-radius:50%;background:#c2412c;color:#f6eedb;flex:none}
-.side.on{color:#f6eedb}
-#knob{position:absolute;top:max(.5cqh,3px);bottom:max(.5cqh,3px);left:max(.5cqh,3px);width:calc(50% - max(.5cqh,3px));border-radius:99px;background:var(--k);opacity:0;box-shadow:0 .3cqh .8cqh rgba(43,38,32,.25)}
-.say b{color:#a8341f}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;gap:1.1cqh;transition:visibility 0s linear .37s}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.turn:not(.over)>.back{visibility:hidden}
+.turn.over>.front{visibility:hidden}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ns-resize}
+.front .sayrow{min-height:46px;padding-right:104px;box-sizing:border-box;flex:0 0 auto}
+.front .sayrow .say{margin:0;padding:0;max-width:100%;overflow-wrap:anywhere}
+.back .foot{min-height:46px;padding-right:104px;box-sizing:border-box}
+.back .big{font-size:max(3.1cqh,19px);line-height:1.12;margin-bottom:6px}
+.back .big .nb{white-space:nowrap}
+.back .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+.back .keep{font-size:max(1.8cqh,13px);line-height:1.3}
+.src{overflow-wrap:anywhere}
+#sure{color:var(--k)}
+#sure *{opacity:1!important}
+#sure *:not(button){color:var(--k)!important}
+#sure button{color:var(--k)!important;border:1.5px solid rgba(16,38,46,.6)!important;background:rgba(255,255,255,.45);font-weight:700}
+#sure button *{color:inherit!important}
+#sure button[aria-pressed="true"],#sure button[aria-checked="true"],#sure button.on,#sure button.sel,#sure button.picked,#sure button.is-on{background:var(--k)!important;color:#fff!important;border-color:var(--k)!important}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Flip the switch · two volcanoes" style="--c:#efe5cc;--k:#2b2620;--edge:#cdb98c">
+<article class="card" id="card" data-topic="science" data-kind="Drag the volcano · how sure" style="--c:#dcecea;--k:#10262e;--edge:#b3d0cd">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">UNDERWATER VOLCANO</span></div>
-    <h2 class="q">How deep must an undersea volcano be to pose little tsunami risk?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="Cross-section of the sea with two submarine volcanoes: one with its crater 200 metres down, and Marsili, just over 500 metres down. A red band marks 500 to 600 metres."></svg>
-      <div id="sw">
-        <span id="knob"></span>
-        <button class="side" data-i="0"><i>1</i>200 m deep</button>
-        <button class="side" data-i="1"><i>2</i>Marsili, 500 m+</button>
-      </div>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE VOLCANO</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">How deep must an undersea volcano's crater be for its tsunami risk to be very low?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A sea in cross-section, 0 to 1,500 metres deep, with a boat on top and an undersea volcano whose crater depth you set by dragging."></svg></div>
+        <div class="sure" id="sure"></div>
+        <div class="sayrow"><p class="say" id="say">Drag the volcano's top up or down to where you think the tsunami risk turns very low.</p></div>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Deeper than <span class="nb">500–600&nbsp;m</span>, the tsunami risk is very low</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="On the same 0 to 1,500 metre scale: an eruption 200 metres down moves the water column up to the surface, while from the Marsili, just over 500 metres down, only some pumice reaches the top. Your guess is marked against the 500 to 600 metre band."></svg></div>
+        <p class="body">An eruption shoves the water column, but the energy disperses in the water. From the Marsili, just over 500 m down, only some pumice would come up.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Judge an undersea volcano by the water above its crater.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019).</span></div>
+      </section>
     </div>
-    <p class="say" id="say">Flip the switch to set off <b>one volcano, then the other.</b></p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A submarine crater deeper than 500–600 m carries a very low tsunami risk.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Tsunami: come si forma e quando si parla di rischio maremoto” (YouTube, 2019)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  gsap.registerPlugin(Physics2DPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), knob = Kit.$('knob');
-  const C = {paper:'#efe5cc', ink:'#2b2620', ochre:'#d39a45', ochreL:'#ecc985', ochreD:'#94622a', tealL:'#9cc9bd', tealD:'#1d4a4e', red:'#c2412c', cream:'#f6eedb'};
-  const D = 900;                                        // the sea floor in the plate, metres
-  const CASES = [{d:200, cx:.34, b:.2, cw:.028}, {d:520, cx:.77, b:.17, cw:.03}];
-  const done = [false, false];
-  let W = 0, H = 0, fs = 12, S = 0, F = 0, k = 1, busy = false, ticking = false, lw = 0, lh = 0;
-  let bumps = [], L = {}, pumOff = [], amb = [], placed = [], boatX = 0;
-  const R = Kit.rnd;
-  const yd = m => S + m * k;
-  const wait = ms => new Promise(r => setTimeout(r, ms));
+  gsap.registerPlugin(MotionPathPlugin);
+  const CORAL = '#e4572e', AMBER = '#f2b630', INK = '#10262e', ROCK = '#2e2a27', FOAM = '#fbf7ee', SEA = '#86c0c9';
+  const MAXM = 1500;
+  const fmt = m => Math.round(m).toLocaleString('en-US');
+  const FS = W => Math.max(12, Math.min(13.5, W / 27));
+  const S = {depth: 1000, touched: false, locked: false, guess: null, pct: null, turned: false};
+  let F = {}, tl = null;
 
-  function text(parent, x, y, t, a = {}) {
-    const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700, fill: C.cream, stroke: C.tealD, 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'}, a), parent);
-    e.textContent = t; return e;
+  const txt = (p, x, y, t, fs, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body)'}, a), p); e.textContent = t; return e; };
+  const tw = (e, fs, t) => { let w = 0; try { w = e.getComputedTextLength(); } catch (_) {} return w || t.length * fs * .56; };
+  const hit = (a, b, m = 3) => a && b && a.x0 < b.x1 + m && b.x0 < a.x1 + m && a.y0 < b.y1 + m && b.y0 < a.y1 + m;
+  const bb = e => { try { const b = e.getBBox(); if (b && (b.width || b.height)) return {x0: b.x, x1: b.x + b.width, y0: b.y, y1: b.y + b.height}; } catch (_) {} return null; };
+  const union = (...bs) => bs.filter(Boolean).reduce((a, b) => ({x0: Math.min(a.x0, b.x0), x1: Math.max(a.x1, b.x1), y0: Math.min(a.y0, b.y0), y1: Math.max(a.y1, b.y1)}));
+  function pill(p, text, fs, fill) {
+    const g = Kit.mk('g', {}, p);
+    const r = Kit.mk('rect', {fill}, g);
+    const e = Kit.mk('text', {fill: '#fff', 'font-size': fs, 'font-weight': 800, style: 'font-family:var(--body)'}, g);
+    e.textContent = text;
+    const pad = fs * .6, h = fs * 1.65, w = tw(e, fs, text) + 2 * pad;
+    r.setAttribute('width', w); r.setAttribute('height', h); r.setAttribute('rx', h / 2); r.setAttribute('y', -h / 2);
+    e.setAttribute('x', pad); e.setAttribute('y', fs * .36);
+    const o = {g, w, h, box: null, at(x0, cy) { g.setAttribute('transform', `translate(${x0},${cy})`); o.box = {x0, x1: x0 + w, y0: cy - h / 2, y1: cy + h / 2}; return o; }};
+    return o;
   }
-  function disc(parent, x, y, n) {
-    Kit.mk('circle', {cx: x, cy: y, r: fs * .62, fill: C.red, stroke: C.cream, 'stroke-width': 1.2}, parent);
-    const t = Kit.mk('text', {x, y: y + fs * .32, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 800, 'font-size': Math.max(12, fs * .85), fill: C.cream}, parent);
-    t.textContent = n;
+  function seaPath(x0, W, H, Y0, fs) {
+    let d = `M${x0},${Y0}`; const per = fs * 3; let i = 0;
+    for (let x = x0; x < W; x += per / 2, i++) d += ` Q${x + per / 4},${Y0 + (i % 2 ? 2 : -2)} ${Math.min(W, x + per / 2)},${Y0}`;
+    return d + ` L${W},${H} L${x0},${H} Z`;
   }
-  // A numbered chip: red disc + label. align 'start' puts the disc at x, 'middle' centres the pair on x.
-  function chip(g, x, y, n, label, align = 'start', a = {}) {
-    const d = fs * 1.24, gap = fs * .32;
-    let w = 0, t = null;
-    if (label) { t = text(g, 0, y, label, a); w = t.getComputedTextLength() + gap; }
-    const x0 = align === 'middle' ? x - (d + w) / 2 : x;
-    if (t) t.setAttribute('x', x0 + d + gap);
-    disc(g, x0 + d / 2, y - fs * .35, n);
-  }
-  function clampG(g) {
-    const b = g.getBBox(), dx = Math.max(3 - b.x, Math.min(0, W - 3 - (b.x + b.width)));
-    if (dx) g.setAttribute('transform', `translate(${dx},0)`);
-    return {x: b.x + dx, y: b.y, w: b.width, h: b.height};
-  }
-  const hit = (a, b) => a.x < b.x + b.w + 3 && b.x < a.x + a.w + 3 && a.y < b.y + b.h + 2 && b.y < a.y + a.h + 2;
-  // Try each way of drawing a label in turn; keep the first one that fits clear of everything already placed.
-  function tryPlace(builders, lo = S + 2, hi = F - 1) {
-    for (const build of builders) {
-      const g = Kit.mk('g', {class: 'lab'}, L.labels);
-      build(g);
-      const box = clampG(g);
-      if (box.y >= lo && box.y + box.h <= hi && !placed.some(p => hit(p, box))) { placed.push(box); return g; }
-      g.remove();
+  function cone(cx, ys, yb, hwT, hwB, seed) {
+    const N = 12, L = [], R = [];
+    for (let i = 0; i <= N; i++) {
+      const t = i / N, y = yb + (ys - yb) * t, hw = hwT + (hwB - hwT) * Math.pow(1 - t, 1.8);
+      const j = (i > 0 && i < N) ? Math.sin(i * 2.3 + seed) * 1.1 : 0;
+      L.push(`${(cx - hw + j).toFixed(1)},${y.toFixed(1)}`); R.unshift(`${(cx + hw + Math.sin(i * 1.7 + seed) * 1.1 * (i > 0 && i < N)).toFixed(1)},${y.toFixed(1)}`);
     }
-    return null;
+    const c = hwT * .7;
+    return `M${L.join(' L')} L${cx - hwT * .45},${ys + c} L${cx + hwT * .45},${ys + c} L${R.join(' L')} Z`;
+  }
+  function seabed(x0, W, H, yb) {
+    let d = `M${x0},${yb}`;
+    for (let i = 1; i <= 10; i++) d += ` L${x0 + (W - x0) * i / 10},${yb + Math.sin(i * 1.9) * 1.4}`;
+    return d + ` L${W},${H} L${x0},${H} Z`;
+  }
+  // the same depth scale on both faces; figures thin out when the scale is squeezed
+  function ticks(p, GX, Y0, PX, fs) {
+    const g = Kit.mk('g', {}, p), ls = Math.max(12, fs * .92);
+    const step = [250, 500, 750, 1500].find(s => s * PX >= ls * 1.45) || 1500;
+    for (let m = 0; m <= MAXM; m += 250) {
+      const y = Y0 + m * PX;
+      if (m > 0 && m < MAXM) Kit.mk('line', {x1: GX, x2: GX + (m % 500 ? fs * .45 : fs * .8), y1: y, y2: y, stroke: INK, 'stroke-width': 1.2}, g);
+      if (m % step === 0) txt(g, GX - fs * .3, y + ls * .35, m === 0 ? '0 m' : fmt(m), ls, {'text-anchor': 'end', 'font-weight': 500});
+    }
+    return g;
   }
 
-  function layout() {
-    amb.forEach(t => t.kill()); amb = [];
-    if (L.pum) gsap.killTweensOf([...L.pum.children]);
-    svg.innerHTML = ''; placed = [];
-    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    lw = svg.clientWidth; lh = svg.clientHeight;
-    fs = Math.max(12, Math.min(14, W / 27));
-    S = Math.max(H * .17, fs * 3.3);
-    F = H - Math.max(H * .12, fs * 2.3);
-    k = (F - S) / D;
-    const ew = Math.max(10, W * .035), fb = F + (H - F) * .6;
-    const defs = Kit.mk('defs', {}, svg);
-    defs.innerHTML = `
-      <linearGradient id="gSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a6cfc2"/><stop offset=".4" stop-color="#4e8f89"/><stop offset="1" stop-color="#173f43"/></linearGradient>
-      <linearGradient id="gFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".9"/></linearGradient>
-      <mask id="mDots" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="0" y="${S - 30}" width="${W}" height="${H - S + 30}" fill="url(#gFade)"/></mask>
-      <linearGradient id="gEL" x1="0" x2="1"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
-      <linearGradient id="gER" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000"/></linearGradient>
-      <linearGradient id="gEB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000"/></linearGradient>
-      <mask id="mPlate" maskUnits="userSpaceOnUse" x="-10" y="-60" width="${W + 20}" height="${H + 70}">
-        <rect x="-10" y="-60" width="${W + 20}" height="${H + 70}" fill="#fff"/>
-        <rect x="0" y="-60" width="${ew}" height="${H + 70}" fill="url(#gEL)"/>
-        <rect x="${W - ew}" y="-60" width="${ew}" height="${H + 70}" fill="url(#gER)"/>
-        <rect x="-10" y="${fb}" width="${W + 20}" height="${H - fb}" fill="url(#gEB)"/>
-        <rect x="-10" y="${H - .5}" width="${W + 20}" height="10" fill="#000"/>
-      </mask>
-      <pattern id="dotT" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.3" fill="#0f3033"/></pattern>
-      <pattern id="dotO" width="4.6" height="4.6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="2.3" cy="2.3" r="1.25" fill="#7a4d1d"/></pattern>
-      <pattern id="dotS" width="4.2" height="4.2" patternUnits="userSpaceOnUse" patternTransform="rotate(15)"><circle cx="2.1" cy="2.1" r="1.3" fill="#d39a45"/></pattern>
-      <pattern id="dotK" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(20)"><circle cx="2.5" cy="2.5" r="1.1" fill="#1e140c" opacity=".55"/></pattern>
-      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#c2412c" stroke-width="1.3"/></pattern>
-      <linearGradient id="gCone" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${C.ochreL}"/><stop offset=".5" stop-color="${C.ochre}"/><stop offset="1" stop-color="${C.ochreD}"/></linearGradient>
-      <linearGradient id="gRock" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6e4b30"/><stop offset="1" stop-color="#3a271a"/></linearGradient>
-      <radialGradient id="gMag"><stop offset="0" stop-color="#f6b866"/><stop offset=".55" stop-color="#c2412c"/><stop offset="1" stop-color="#6e2016"/></radialGradient>
-      <linearGradient id="gCol" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${C.cream}" stop-opacity=".85"/><stop offset="1" stop-color="${C.cream}" stop-opacity=".35"/></linearGradient>`;
-    for (const n of ['sky', 'seaG', 'band', 'rock', 'cones', 'amb', 'labels', 'fx', 'surfG', 'boat', 'pum', 'stamps']) L[n] = Kit.mk('g', {id: 'L' + n}, svg);
-    for (const n of ['seaG', 'band', 'rock', 'surfG']) L[n].setAttribute('mask', 'url(#mPlate)');
-
-    // The sky: a halftone sun with a slow dotted halo, and two gulls.
-    const sr = Math.min(S * .28, W * .048), sx = W * .585, sy = S * .46;
-    const halo = Kit.mk('circle', {cx: sx, cy: sy, r: sr * 1.32, fill: 'none', stroke: C.ochre, 'stroke-width': 1.4, 'stroke-dasharray': '1.5 4.5', 'stroke-linecap': 'round', opacity: .8}, L.sky);
-    Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: 'url(#dotS)'}, L.sky);
-    Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: 'none', stroke: C.ochre, 'stroke-width': 1.2}, L.sky);
-    const gulls = [[W * .085, S * .3, 1], [W * .155, S * .17, .75]].map(([x, y, s]) =>
-      Kit.mk('path', {d: `M${x - 6 * s},${y} q${3 * s},${-4 * s} ${6 * s},0 q${3 * s},${-4 * s} ${6 * s},0`, fill: 'none', stroke: C.ink, 'stroke-width': 1.3, 'stroke-linecap': 'round'}, L.sky));
-    if (!Kit.calm) {
-      amb.push(gsap.to(halo, {rotation: 360, svgOrigin: `${sx} ${sy}`, duration: 40, repeat: -1, ease: 'none'}));
-      gulls.forEach((g, j) => {
-        amb.push(gsap.to(g, {scaleY: .45, transformOrigin: '50% 60%', duration: .42 + j * .08, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
-        amb.push(gsap.to(g, {x: 7 - j * 12, y: -2 + j * 3, duration: 3.4 + j, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
-      });
+  // ---------- front ----------
+  function drawFront() {
+    const svg = Kit.$('pic'); svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = FS(W);
+    const GX = fs * 2.9, SW = W - GX, Y0 = fs * 2.2, YB = H - fs * .5, PX = (YB - Y0) / MAXM, cx = GX + SW * .6;
+    F = {svg, W, H, fs, GX, SW, Y0, YB, PX, cx};
+    Kit.mk('path', {d: seaPath(GX, W, H, Y0, fs), fill: SEA}, svg);
+    F.vol = Kit.mk('g', {}, svg);
+    Kit.mk('path', {d: seabed(GX, W, H, YB), fill: ROCK}, svg);
+    ticks(svg, GX, Y0, PX, fs);
+    const s = fs / 13, b = Kit.mk('g', {}, svg);
+    Kit.mk('path', {d: `M${cx - 15 * s},${Y0 - 2 * s} L${cx + 16 * s},${Y0 - 2 * s} L${cx + 11 * s},${Y0 + 4 * s} L${cx - 11 * s},${Y0 + 4 * s} Z`, fill: FOAM, stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, b);
+    Kit.mk('rect', {x: cx - 6 * s, y: Y0 - 10 * s, width: 6 * s, height: 8 * s, rx: 2 * s, fill: INK}, b);
+    Kit.mk('circle', {cx: cx - 3 * s, cy: Y0 - 13.5 * s, r: 3.6 * s, fill: INK}, b);
+    F.gl = Kit.mk('g', {}, svg);
+    render();
+  }
+  function render() {
+    if (!F.vol) return;
+    const {W, fs, GX, SW, Y0, YB, PX, cx} = F, ys = Y0 + S.depth * PX, hwT = Math.max(8, SW * .04), hwB = Math.min(W * .36, SW * .6 - fs * 1.4);
+    F.vol.innerHTML = ''; F.gl.innerHTML = '';
+    Kit.mk('path', {d: cone(cx, ys, YB + 2, hwT, hwB, 1), fill: ROCK}, F.vol);
+    Kit.mk('line', {x1: GX + fs * .9, x2: cx - hwT, y1: ys, y2: ys, stroke: CORAL, 'stroke-width': 2, 'stroke-dasharray': '5 4'}, F.gl);
+    const c = pill(F.gl, `crater at ${fmt(Math.round(S.depth / 10) * 10)} m`, fs, CORAL);
+    c.at(Math.max(GX + fs * .9, cx - hwT - fs * .6 - c.w), Math.max(Y0 + c.h / 2 + 2, ys));
+    if (!S.touched) {
+      const ax = cx, a0 = ys - fs * .7, a1 = Math.max(Y0 + fs * 1.4, ys - fs * 3);
+      if (a0 - a1 > fs) Kit.mk('path', {d: `M${ax},${a0} V${a1} m-5,6 l5,-6 l5,6 M${ax - 5},${a0 - 6} l5,6 l5,-6`, stroke: FOAM, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, F.gl);
     }
+  }
 
-    // The sea, its surface redrawn every frame.
-    L.sea = Kit.mk('path', {fill: 'url(#gSea)'}, L.seaG);
-    L.seaDots = Kit.mk('path', {fill: 'url(#dotT)', mask: 'url(#mDots)', opacity: .55}, L.seaG);
-    L.surf = Kit.mk('path', {fill: 'none', stroke: C.ink, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, L.surfG);
+  // ---------- drag ----------
+  const svg = Kit.$('pic'); let dragging = false;
+  const setFrom = e => { const r = svg.getBoundingClientRect(); S.depth = Math.max(30, Math.min(MAXM - 50, (e.clientY - r.top - F.Y0) / F.PX)); render(); };
+  svg.addEventListener('pointerdown', e => { if (S.locked) return; gsap.killTweensOf(S); dragging = true; S.touched = true; svg.setPointerCapture(e.pointerId); setFrom(e); });
+  svg.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+  const end = () => { if (!dragging) return; dragging = false; commit(); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  let asked = false;
+  function commit() {
+    if (asked) return; asked = true; Kit.haptic('selection'); sure.on();
+    Kit.$('say').textContent = 'Settled on a depth? Say how sure you are.';
+  }
 
-    // A little fishing boat that rides the surface.
-    boatX = W * .145;
-    const s = fs / 13;
-    L.boatG = Kit.mk('g', {}, L.boat);
-    Kit.mk('line', {x1: 1 * s, y1: -3 * s, x2: 1 * s, y2: -17 * s, stroke: C.ink, 'stroke-width': 1.3}, L.boatG);
-    Kit.mk('path', {d: `M${1 * s},${-17 * s} L${7 * s},${-14.5 * s} L${1 * s},${-12 * s}Z`, fill: C.red, stroke: C.ink, 'stroke-width': .8}, L.boatG);
-    Kit.mk('rect', {x: -7 * s, y: -8 * s, width: 7 * s, height: 5.5 * s, fill: C.cream, stroke: C.ink, 'stroke-width': 1.1}, L.boatG);
-    Kit.mk('path', {d: `M${-13 * s},${-3 * s} L${13 * s},${-3 * s} L${9 * s},${3 * s} L${-9 * s},${3 * s}Z`, fill: C.ochre, stroke: C.ink, 'stroke-width': 1.3, 'stroke-linejoin': 'round'}, L.boatG);
-    Kit.mk('line', {x1: -11 * s, y1: -.6 * s, x2: 11 * s, y2: -.6 * s, stroke: C.red, 'stroke-width': 1.4}, L.boatG);
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    if (S.locked) return; S.locked = true;
+    const d = Math.round(S.depth / 10) * 10, ok = d >= 400 && d <= 700; S.guess = d; S.pct = pct;
+    Kit.answer({choice: `${fmt(d)} m`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${fmt(d)} m, ${ok ? 'right' : 'off'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
 
-    // The line: 500–600 m.
-    const y5 = yd(500), y6 = yd(600);
-    Kit.mk('rect', {x: 0, y: y5, width: W, height: y6 - y5, fill: 'url(#hatch)', opacity: .5, class: 'bandp'}, L.band);
-    for (const y of [y5, y6]) Kit.mk('line', {x1: 0, x2: W, y1: y, y2: y, stroke: C.red, 'stroke-width': 1.6, 'stroke-dasharray': '7 4', class: 'bandp'}, L.band);
+  // ---------- back ----------
+  function drawBack(anim) {
+    if (tl) { tl.kill(); tl = null; }
+    const svg = Kit.$('pic2'); svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H, fs = FS(W), LH = fs * 1.45;
+    const GX = fs * 2.9, SW = W - GX, hh = fs * .8;
+    const l1 = fs * .95, l2 = l1 + LH, Y0 = l2 + fs * .9 + hh + 2, YB = H - fs * .5, PX = (YB - Y0) / MAXM, y = m => Y0 + m * PX;
+    const defs = Kit.mk('defs', {}, svg), cp = Kit.mk('clipPath', {id: 'wc'}, defs);
+    Kit.mk('rect', {x: GX, y: Y0 - 1, width: SW, height: H}, cp);
 
-    // The rock under the sea floor, melting into the page below.
-    let fp = `M0,${F}`;
-    for (let x = 0; x <= W; x += W / 12) fp += ` L${x},${F + Math.sin(x * .05) * 2.5 + (R() - .5) * 2}`;
-    Kit.mk('path', {d: fp + ` L${W},${H} L0,${H}Z`, fill: 'url(#gRock)'}, L.rock);
-    Kit.mk('path', {d: fp + ` L${W},${H} L0,${H}Z`, fill: 'url(#dotK)', opacity: .7}, L.rock);
-    Kit.mk('path', {d: fp, fill: 'none', stroke: C.ink, 'stroke-width': 1.6}, L.rock);
-    [.35, .7].forEach((t, j) => {
-      let d = `M0,${F + (H - F) * t}`;
-      for (let x = 0; x <= W; x += W / 8) d += ` L${x},${F + (H - F) * t + Math.sin(x * .03 + j * 2) * 3}`;
-      Kit.mk('path', {d, fill: 'none', stroke: C.ochreD, 'stroke-width': 1, opacity: .6}, L.rock);
+    Kit.mk('path', {d: seaPath(GX, W, H, Y0, fs), fill: SEA}, svg);
+    const band = Kit.mk('rect', {x: GX, y: y(500), width: SW, height: 100 * PX, fill: AMBER, 'shape-rendering': 'crispEdges'}, svg);
+
+    const cx1 = GX + SW * .5, cx2 = GX + SW * .84, hwT = Math.max(6, SW * .024), hwB = SW * .14;
+    const ys1 = y(200), ys2 = y(510), f1 = ys1 + hwT * .7, f2 = ys2 + hwT * .7;
+
+    // the eruption's push: from 200 m it reaches the top; from the Marsili it stays in the water
+    const arcsG = Kit.mk('g', {'clip-path': 'url(#wc)'}, svg), A1 = [], A2 = [];
+    const th = 26 * Math.PI / 180, sn = Math.sin(th), cs = Math.cos(th);
+    const arc = (cx, cy, r) => `M${(cx - r * sn).toFixed(1)},${(cy - r * cs).toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 0 1 ${(cx + r * sn).toFixed(1)},${(cy - r * cs).toFixed(1)}`;
+    const D1 = f1 - Y0, n1 = Math.max(3, Math.min(7, Math.round(D1 / (fs * .6)))), st = D1 / n1;
+    for (let k = 1; k <= n1; k++) A1.push(Kit.mk('path', {d: arc(cx1, f1, st * k), fill: 'none', stroke: FOAM, 'stroke-width': 3, 'stroke-linecap': 'round'}, arcsG));
+    const D2 = f2 - Y0, n2 = Math.max(2, Math.min(3, Math.floor(D2 * .3 / st)));
+    for (let k = 1; k <= n2; k++) A2.push(Kit.mk('path', {d: arc(cx2, f2, st * k), fill: 'none', stroke: FOAM, 'stroke-width': 3 - k * .6, opacity: 1 - .3 * (k - 1), 'stroke-linecap': 'round'}, arcsG));
+
+    // the surface, lifted above the shallow cone
+    const hw = Math.min(SW * .16, fs * 4.5);
+    const hump = Kit.mk('path', {d: `M${cx1 - hw},${Y0 + 1} C${cx1 - hw * .4},${Y0 + 1} ${cx1 - hw * .35},${Y0 - hh} ${cx1},${Y0 - hh} C${cx1 + hw * .35},${Y0 - hh} ${cx1 + hw * .4},${Y0 + 1} ${cx1 + hw},${Y0 + 1} Z`, fill: SEA}, svg);
+    const c1 = Kit.mk('path', {d: cone(cx1, ys1, YB + 2, hwT, hwB, 2), fill: ROCK}, svg);
+    const c2 = Kit.mk('path', {d: cone(cx2, ys2, YB + 2, hwT, hwB, 3), fill: ROCK}, svg);
+    Kit.mk('path', {d: seabed(GX, W, H, YB), fill: ROCK}, svg);
+    ticks(svg, GX, Y0, PX, fs);
+
+    // pumice from the Marsili, rising to float on top
+    const pum = [];
+    [-1.4, -.45, .45, 1.4].forEach((k, i) => {
+      const el = Kit.mk('ellipse', {cx: 0, cy: 0, rx: fs * .32, ry: fs * .24, fill: FOAM, stroke: INK, 'stroke-width': .9}, svg);
+      const pts = [{x: cx2, y: f2 - 2}, {x: cx2 + fs * (.8 - i * .3), y: f2 - D2 * .35}, {x: cx2 - fs * (.6 - i * .2), y: f2 - D2 * .7}, {x: cx2 + k * fs * .9, y: Y0 - 1}];
+      gsap.set(el, {x: pts[3].x, y: pts[3].y}); pum.push({el, pts});
     });
-    L.glow = []; L.cond = []; L.mag = [];
-    CASES.forEach((c, i) => {
-      L.mag[i] = Kit.mk('ellipse', {cx: c.cx * W, cy: F + (H - F) * .66, rx: W * .06, ry: (H - F) * .32, fill: 'url(#gMag)', stroke: C.ink, 'stroke-width': 1.2}, L.rock);
-      cone(c, i);
-      // Ambient: the vents breathe a few bubbles.
-      if (!Kit.calm) for (let j = 0; j < 3; j++) {
-        const b = Kit.mk('circle', {cx: c.cx * W + (j - 1) * 2, cy: yd(c.d) + 2, r: 1.3 + j * .5, fill: 'none', stroke: C.cream, 'stroke-width': 1, opacity: 0}, L.amb);
-        amb.push(gsap.timeline({repeat: -1, delay: j * 1.1 + i * .6, repeatDelay: 1.4 + R()})
-          .fromTo(b, {y: 0, x: 0, opacity: 0}, {y: -fs * 1.4, x: (R() - .5) * 6, opacity: .85, duration: .7, ease: 'power1.out'})
-          .to(b, {y: -fs * (3 + j), x: (R() - .5) * 10, opacity: 0, duration: 1.6, ease: 'none'}));
-      }
+
+    // labels 1 and 2: the two cones, same baseline, each with a leader
+    const top = Kit.mk('g', {}, svg);
+    const rA = txt(top, W - 2, l1, 'Marsili, ~500 m', fs, {'text-anchor': 'end'}), rB = txt(top, W - 2, l2, 'some pumice', fs, {'text-anchor': 'end', 'font-weight': 500});
+    const wR = Math.max(tw(rA, fs, 'Marsili, ~500 m'), tw(rB, fs, 'some pumice'));
+    const lA = txt(top, 0, l1, 'Cone at 200 m', fs, {'text-anchor': 'end'}), lB = txt(top, 0, l2, 'water column moves', fs, {'text-anchor': 'end', 'font-weight': 500});
+    const wL = Math.max(tw(lA, fs, 'Cone at 200 m'), tw(lB, fs, 'water column moves'));
+    const xL = Math.max(wL + 2, Math.min(cx1 + fs * 1.5, W - 2 - wR - fs * 1.2));
+    lA.setAttribute('x', xL); lB.setAttribute('x', xL);
+    Kit.mk('line', {x1: Math.min(cx1, xL - fs), x2: cx1, y1: l2 + fs * .45, y2: Y0 - hh - 3, stroke: INK, 'stroke-width': 1.2}, top);
+    Kit.mk('line', {x1: cx2, x2: cx2, y1: l2 + fs * .45, y2: Y0 - fs * .55, stroke: INK, 'stroke-width': 1.2}, top);
+    const topBoxes = [
+      union({x0: xL - wL, x1: xL, y0: 0, y1: l2 + fs * .3}, bb(lA), bb(lB)),
+      union({x0: W - 2 - wR, x1: W - 2, y0: 0, y1: l2 + fs * .3}, bb(rA), bb(rB))
+    ];
+
+    // the reader's guess line, under the labels
+    const G = S.guess == null ? 1000 : S.guess, pct = S.pct;
+    const gg = Kit.mk('g', {}, svg), gy = y(G);
+    Kit.mk('line', {x1: GX, x2: W, y1: gy, y2: gy, stroke: CORAL, 'stroke-width': 2, 'stroke-dasharray': '5 4'}, gg);
+
+    // label 3: the band figure
+    const bl = Kit.mk('g', {}, svg), bx = GX + fs * 1.1;
+    const bandIn = 100 * PX >= fs * 1.25, by = bandIn ? y(550) + fs * .36 : y(500) - fs * .35;
+    const bt = txt(bl, bx, by, '500–600 m', fs, {'font-weight': 800, style: 'font-family:var(--display)'});
+    const blBox = union({x0: bx, x1: bx + tw(bt, fs, '500–600 m'), y0: by - fs * .85, y1: by + fs * .25}, bb(bt));
+
+    // label 4: the guess and the confidence chosen, placed where it touches nothing
+    const gp = pill(gg, pct != null ? `you said ${fmt(G)} m · ${pct}% sure` : `you said ${fmt(G)} m`, fs, CORAL);
+    const occ = [blBox, ...topBoxes];
+    const xLeft = Math.max(GX + 2, Math.min(GX + fs * .9, W - 2 - gp.w)), xRight = Math.max(GX + 2, W - 2 - gp.w);
+    const fits = (x0, cy) => { gp.at(x0, cy); const b = gp.box; return b.y0 >= Y0 + 1 && b.y1 <= H - 1 && !occ.some(o => hit(b, o)); };
+    const offs = [0]; for (let d = 2; d <= H; d += 2) offs.push(d, -d);
+    let gx0 = xLeft, gcy = null;
+    for (const o of offs) { if (Math.abs(o) > gp.h * 1.3) break; if (fits(xLeft, gy + o)) { gcy = gy + o; break; } }
+    if (gcy == null) for (const o of offs) {
+      if (fits(xRight, gy + o)) { gx0 = xRight; gcy = gy + o; break; }
+      if (fits(xLeft, gy + o)) { gx0 = xLeft; gcy = gy + o; break; }
+    }
+    if (gcy == null) { gx0 = xLeft; gcy = Math.max(Y0 + gp.h / 2 + 1, Math.min(H - gp.h / 2 - 1, gy)); }
+    gp.at(gx0, gcy);
+    if (Math.abs(gcy - gy) > gp.h / 2) {
+      const lx = gx0 + fs * .9, ln = Kit.mk('line', {x1: lx, x2: lx, y1: gcy + (gy > gcy ? gp.h / 2 : -gp.h / 2), y2: gy, stroke: CORAL, 'stroke-width': 1.5}, gg);
+      gg.insertBefore(ln, gp.g);
+    }
+
+    tl = gsap.timeline();
+    tl.from(band, {opacity: 0, duration: .5, ease: 'power2.out'}, 0)
+      .from(bl, {opacity: 0, duration: .4}, .3)
+      .from([c1, c2], {y: (YB - Y0) * .2, opacity: 0, duration: .7, ease: 'power3.out', stagger: .12}, .2);
+    A1.forEach((el, k) => tl.from(el, {opacity: 0, duration: .25}, 1 + k * .12));
+    A2.forEach((el, k) => tl.from(el, {opacity: 0, duration: .25}, 1 + k * .12));
+    tl.from(hump, {scaleY: 0, transformOrigin: '50% 100%', duration: .7, ease: 'power2.out'}, 1 + n1 * .12);
+    pum.forEach(({el, pts}, i) => {
+      tl.fromTo(el, {x: pts[0].x, y: pts[0].y, opacity: 0}, {opacity: 1, duration: .2}, 1.5 + i * .2)
+        .to(el, {motionPath: {path: pts, curviness: 1.3}, duration: 1.8, ease: 'power1.out'}, 1.5 + i * .2);
     });
-
-    // The caption, printed on the rock.
-    const capG = Kit.mk('g', {}, L.labels);
-    const cap = text(capG, fs * .9, F + (H - F) * .42 + fs * .35, 'FIG. 7 — Two cones, in section', {fill: C.cream, stroke: '#2a1c12', 'font-weight': 600, 'font-size': 12, 'letter-spacing': '.04em'});
-    placed.push(clampG(capG));
-
-    // The depth ruler: thinned out when the plate is short.
-    const step = 200 * k >= fs * 1.5 ? 200 : 400, tx = ew * .55;
-    for (let m = 100; m <= 800; m += 100) {
-      const y = yd(m), major = m % step === 0;
-      if (!major && 100 * k < 5) continue;
-      for (const [st, sw] of [[C.tealD, 3.2], [C.cream, 1.4]])
-        Kit.mk('line', {x1: tx, x2: tx + (major ? 8 : 4), y1: y, y2: y, stroke: st, 'stroke-width': sw, 'stroke-linecap': 'round'}, L.labels);
-      if (major) tryPlace([g => text(g, tx + 11, y + fs * .35, `${m} m`, {'font-size': 12})]);
-    }
-
-    // Callout ②, Marsili.
-    const c1 = CASES[1], x2 = c1.cx * W, r2 = yd(c1.d), cw2 = c1.cw * W;
-    tryPlace([
-      g => { chip(g, x2, r2 - fs * .75 - fs * 1.55, '2', 'Marsili', 'middle'); text(g, x2, r2 - fs * .75, 'just over 500 m', {'text-anchor': 'middle', 'font-weight': 600, 'font-size': 12}); },
-      g => chip(g, x2, r2 - fs * .75, '2', 'Marsili', 'middle'),
-      g => chip(g, x2 + cw2 + fs * .5, r2 + fs * .1, '2', 'Marsili'),
-      g => chip(g, x2, r2 - fs * .5, '2', '', 'middle'),
-      g => chip(g, x2 + cw2 + fs * .3, r2 + fs * .6, '2', '')
-    ], S + 2, F + fs);
-
-    // Callout ①, 200 m down.
-    const c0 = CASES[0], x1 = c0.cx * W, r1 = yd(c0.d), cw1 = c0.cw * W, cx1 = x1 + cw1 + fs * .7;
-    tryPlace([0, .9, 1.8].map(u => g => chip(g, cx1, r1 + fs * .35 - fs * u, '1', '200 m down'))
-      .concat([g => chip(g, cx1, r1 + fs * .35, '1', ''), g => chip(g, x1 - cw1 - fs * 1.9, r1 + fs * .35, '1', '')]), S + 2, F + fs);
-
-    // The band's name, between the two cones.
-    const bx = W * .575, bA = {'text-anchor': 'middle', fill: '#ffd9cf', stroke: '#7a2418', 'font-weight': 800};
-    tryPlace([g => text(g, bx, y6 + fs * 1.25, '500–600 m', bA), g => text(g, bx, y5 - fs * .5, '500–600 m', bA), g => text(g, bx, y6 + fs * 1.25, '500–600 m', Object.assign({}, bA, {x: W * .62}))]);
-
-    // Sea level, just under the surface.
-    const slA = {'font-weight': 600, 'font-size': 12};
-    tryPlace([g => text(g, W - ew - 2, S + fs * 1.35, 'sea level', Object.assign({'text-anchor': 'end'}, slA)), g => text(g, tx + 11, S + fs * 1.35, 'sea level', slA)]);
-
-    // What has already happened stays on the plate.
-    if (done[0]) stamp(0, false);
-    if (done[1]) { stamp(1, false); pumice(true); }
-    frame();
+    tl.from(top, {opacity: 0, duration: .4}, 2.2)
+      .from(gg, {opacity: 0, duration: .45, ease: 'power2.out'}, 2.8);
+    if (!anim) tl.progress(1);
   }
 
-  function cone(c, i) {
-    const cx = c.cx * W, ys = yd(c.d), b = c.b * W, cw = c.cw * W, cn = Math.max(5, fs * .5), h = F - ys;
-    const g = Kit.mk('g', {class: 'cone'}, L.cones);
-    const right = `Q${cx + b * .32},${F - h * .18} ${cx + b},${F + 3}`;
-    const outline = `M${cx - b},${F + 3} Q${cx - b * .32},${F - h * .18} ${cx - cw - 3},${ys} L${cx - cw * .45},${ys + cn} L${cx + cw * .45},${ys + cn} L${cx + cw + 3},${ys} ${right}Z`;
-    Kit.mk('path', {d: outline, fill: 'url(#gCone)'}, g);
-    Kit.mk('path', {d: `M${cx + cw * .45},${ys + cn} L${cx + cw + 3},${ys} ${right} L${cx + b * .16},${F + 3}Z`, fill: 'url(#dotO)', opacity: .85}, g);
-    const half = y => {
-      let lo = 0, hi = 1;
-      for (let n = 0; n < 24; n++) { const s = (lo + hi) / 2, yy = (1 - s) ** 2 * F + 2 * s * (1 - s) * (F - h * .18) + s * s * ys; if (yy > y) lo = s; else hi = s; }
-      const s = (lo + hi) / 2; return cx - ((1 - s) ** 2 * (cx - b) + 2 * s * (1 - s) * (cx - b * .32) + s * s * (cx - cw - 3));
-    };
-    [.3, .55, .78].forEach(t => {
-      const y = ys + h * t, hw = half(y) - 2;
-      Kit.mk('path', {d: `M${cx - hw},${y} Q${cx},${y + fs * .45} ${cx + hw},${y}`, fill: 'none', stroke: C.ochreD, 'stroke-width': 1, opacity: .75}, g);
-    });
-    L.cond[i] = Kit.mk('path', {d: `M${cx},${F + 4} L${cx},${ys + cn}`, stroke: C.red, 'stroke-width': 2.6, opacity: .7, 'stroke-linecap': 'round'}, g);
-    Kit.mk('path', {d: outline, fill: 'none', stroke: C.ink, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
-    L.glow[i] = Kit.mk('ellipse', {cx, cy: ys + cn, rx: cw * 1.1, ry: cn * .9, fill: '#ffb35c', opacity: 0}, g);
-  }
-
-  // ---------- the sea surface ----------
-  function surfY(x, t) {
-    let y = S + Math.sin(x * .045 + t * 1.6) * .9 + Math.sin(x * .017 - t * .9) * .7;
-    for (const b of bumps) { const u = (x - b.x) / b.w; y -= b.a * Math.exp(-u * u); }
-    return y;
-  }
-  function frame() {
-    if (!L.sea || !W) return;
-    const t = Kit.calm ? 0 : performance.now() / 1000;
-    let d = `M0,${surfY(0, t).toFixed(1)}`;
-    for (let x = 5; x < W + 5; x += 5) { const xx = Math.min(x, W); d += `L${xx},${surfY(xx, t).toFixed(1)}`; }
-    L.surf.setAttribute('d', d);
-    const fill = d + `L${W},${H}L0,${H}Z`;
-    L.sea.setAttribute('d', fill); L.seaDots.setAttribute('d', fill);
-    if (L.boatG) {
-      const by = surfY(boatX, t), sl = (surfY(boatX + 6, t) - surfY(boatX - 6, t)) / 12;
-      L.boatG.setAttribute('transform', `translate(${boatX.toFixed(1)},${(by - 1).toFixed(1)}) rotate(${(Math.atan(sl) * 57.3).toFixed(1)})`);
-    }
-  }
-
-  // ---------- the verdicts ----------
-  function stamp(i, animate) {
-    const old = svg.querySelector('#stamp' + i); if (old) old.remove();
-    const hot = i === 0, col = hot ? C.red : '#2f6e69', word = hot ? 'TSUNAMI RISK' : 'LOW RISK';
-    const g = Kit.mk('g', {id: 'stamp' + i}, L.stamps);
-    const t = Kit.mk('text', {x: 0, y: fs * .38, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 800, 'font-size': Math.max(12, fs * 1.02), fill: col, 'letter-spacing': '.06em'}, g);
-    t.textContent = word;
-    const w = t.getComputedTextLength() + fs * 1.3, h = fs * 1.9;
-    g.insertBefore(Kit.mk('rect', {x: -w / 2, y: -h / 2, width: w, height: h, rx: 2, fill: C.paper, 'fill-opacity': .92, stroke: col, 'stroke-width': 2.2}), t);
-    g.insertBefore(Kit.mk('rect', {x: -w / 2 + 3, y: -h / 2 + 3, width: w - 6, height: h - 6, rx: 1, fill: 'none', stroke: col, 'stroke-width': .8}), t);
-    const cx = Math.max(w / 2 + 6, Math.min(W - w / 2 - 6, CASES[i].cx * W)), cy = S * .46;
-    const rot = hot ? -6 : 5;
-    gsap.set(g, {x: cx, y: cy, rotation: rot});
-    if (animate && !Kit.calm) {
-      gsap.from(g, {scale: 2.8, opacity: 0, rotation: rot - 18, duration: .6, ease: 'back.out(2.4)'});
-      gsap.fromTo(svg, {x: 0}, {x: hot ? 3 : 1.5, duration: .05, repeat: 5, yoyo: true, delay: .32, ease: 'power1.inOut', onComplete: () => gsap.set(svg, {x: 0})});
-    }
-  }
-
-  function pumice(still) {
-    gsap.killTweensOf([...L.pum.children]);
-    L.pum.innerHTML = '';
-    const c = CASES[1], x0 = c.cx * W, ys = yd(c.d);
-    if (!pumOff.length) pumOff = [-.07, -.03, .01, .045, .08].map(v => v + (R() - .5) * .015);
-    pumOff.forEach((o, j) => {
-      const g = Kit.mk('g', {}, L.pum), r = fs * (.3 + R() * .14);
-      let pts = '';
-      for (let a = 0; a < 7; a++) { const ang = a / 7 * Math.PI * 2, rr = r * (.7 + R() * .45); pts += `${Math.cos(ang) * rr},${Math.sin(ang) * rr * .8} `; }
-      Kit.mk('polygon', {points: pts, fill: C.ochreL, stroke: C.ink, 'stroke-width': 1}, g);
-      Kit.mk('circle', {cx: r * .2, cy: -r * .1, r: r * .16, fill: C.ochreD}, g);
-      const ex = x0 + o * W, ey = S - 1;
-      if (still || Kit.calm) gsap.set(g, {x: ex, y: ey, rotation: j * 37});
-      else gsap.fromTo(g, {x: x0, y: ys - 4, scale: .4, rotation: 0}, {x: ex, y: ey, scale: 1, rotation: j * 37 + 90, duration: 2 + j * .22, delay: .45 + j * .12, ease: 'power2.out'});
-      if (!Kit.calm) gsap.to(g, {y: ey - 2.2, duration: 1.1 + j * .1, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: still ? j * .2 : 2.7 + j * .3});
-    });
-  }
-
-  // ---------- the eruptions ----------
-  function column(i, reach, peak) {
-    const c = CASES[i], x0 = c.cx * W, ys = yd(c.d), cw = c.cw * W;
-    const p = Kit.mk('path', {d: `M${x0 - cw},${ys} L${x0 + cw},${ys} L${x0 + W * .1},${S + 1} L${x0 - W * .1},${S + 1}Z`, fill: 'url(#gCol)', opacity: 0}, L.fx);
-    gsap.set(p, {scaleY: 0, transformOrigin: '50% 100%'});
-    return {p, tl: gsap.timeline()
-      .to(p, {opacity: peak, scaleY: reach, duration: reach > .9 ? .5 : .8, ease: reach > .9 ? 'power3.in' : 'expo.out'})
-      .to(p, {opacity: 0, duration: .9, ease: 'power2.out', onComplete: () => p.remove()}, reach > .9 ? '+=.25' : '-=.2')};
-  }
-
-  function eruptShallow() {
-    const c = CASES[0], x0 = c.cx * W, ys = yd(c.d);
-    const tl = gsap.timeline({onComplete: () => finish(0)});
-    tl.to(L.glow[0], {opacity: 1, duration: .2, ease: 'power2.out'}, 0)
-      .to(L.mag[0], {scale: 1.12, transformOrigin: '50% 50%', duration: .2, yoyo: true, repeat: 1, ease: 'power2.out'}, 0)
-      .to(L.cond[0], {attr: {'stroke-width': 6}, opacity: 1, duration: .25, ease: 'power3.out'}, 0)
-      .add(column(0, 1, .55).tl, .1);
-    for (let n = 0; n < 12; n++) {
-      const b = Kit.mk('circle', {cx: x0 + (R() - .5) * c.cw * W, cy: ys, r: 1.5 + R() * 3, fill: 'none', stroke: C.cream, 'stroke-width': 1.2}, L.fx);
-      tl.to(b, {y: S - ys + 2, x: (R() - .5) * W * .12, scale: 1.8, transformOrigin: '50% 50%', duration: .45 + R() * .2, ease: 'power2.in', onComplete: () => b.remove()}, .1 + n * .02);
-    }
-    const dome = {x: x0, a: 0, w: W * .09}; bumps.push(dome);
-    tl.to(dome, {a: Math.min(H * .075, S * .5), duration: .45, ease: 'power3.out'}, .6)
-      .call(() => { Kit.haptic('light'); spray(x0); }, null, .6)
-      .call(() => {
-        const a = dome.a * .65, l = {x: x0, a: 0, w: W * .075}, r = {x: x0, a: 0, w: W * .075};
-        bumps.push(l, r);
-        gsap.to(dome, {a: 0, duration: .45, ease: 'power2.in', onComplete: () => { bumps = bumps.filter(b => b !== dome); }});
-        gsap.to([l, r], {a, duration: .45, ease: 'power2.out'});
-        gsap.to(l, {x: -W * .3, duration: 2.6, ease: 'sine.in'});
-        gsap.to(r, {x: W * 1.3, duration: 2.6, ease: 'sine.in', onComplete: () => { bumps = bumps.filter(b => b !== l && b !== r); }});
-      }, null, 1.1)
-      .call(() => stamp(0, true), null, 1.25)
-      .to(L.glow[0], {opacity: 0, duration: .8, ease: 'power2.out'}, 1)
-      .to(L.cond[0], {attr: {'stroke-width': 2.6}, opacity: .7, duration: .8, ease: 'power2.out'}, 1);
-  }
-
-  function spray(x0) {
-    for (let n = 0; n < 34; n++) {
-      const d = Kit.mk('circle', {cx: x0 + (R() - .5) * W * .07, cy: S - Math.min(H * .06, S * .4), r: 1.2 + R() * 2.6, fill: R() < .5 ? C.cream : C.tealL, stroke: C.tealD, 'stroke-width': .6}, L.fx);
-      gsap.to(d, {duration: 1.6, ease: 'none', physics2D: {velocity: Math.max(H, 260) * (.4 + R() * .5), angle: -90 + (R() - .5) * 90, gravity: Math.max(H, 260) * 1.7}});
-      gsap.to(d, {opacity: 0, delay: 1 + R() * .3, duration: .5, ease: 'power2.in', onComplete: () => d.remove()});
-    }
-  }
-
-  function eruptDeep() {
-    const c = CASES[1], x0 = c.cx * W, ys = yd(c.d);
-    const tl = gsap.timeline({onComplete: () => finish(1)});
-    tl.to(L.glow[1], {opacity: 1, duration: .2, ease: 'power2.out'}, 0)
-      .to(L.mag[1], {scale: 1.12, transformOrigin: '50% 50%', duration: .2, yoyo: true, repeat: 1, ease: 'power2.out'}, 0)
-      .to(L.cond[1], {attr: {'stroke-width': 6}, opacity: 1, duration: .25, ease: 'power3.out'}, 0)
-      .add(column(1, .45, .5).tl, .1);
-    // The blast's energy spreading out into the water.
-    for (let n = 0; n < 3; n++) {
-      const ring = Kit.mk('circle', {cx: x0, cy: ys, r: 4, fill: 'none', stroke: C.cream, 'stroke-width': 2.2, opacity: .9}, L.fx);
-      tl.to(ring, {attr: {r: W * (.16 + n * .05), 'stroke-width': .4}, opacity: 0, duration: 1.7, ease: 'expo.out', onComplete: () => ring.remove()}, .1 + n * .25);
-    }
-    // Debris thrown hard, but the water's drag stops it dead.
-    for (let n = 0; n < 20; n++) {
-      const a = Kit.mk('circle', {cx: x0 + (R() - .5) * c.cw * W, cy: ys, r: 1.2 + R() * 2.4, fill: '#3b2a1e'}, L.fx);
-      tl.to(a, {duration: 2.2, ease: 'none', physics2D: {velocity: (ys - S) * (2.2 + R() * 1.8), angle: -90 + (R() - .5) * 110, friction: .075, gravity: -H * .04}}, .12)
-        .to(a, {opacity: 0, duration: .8, ease: 'power2.in', onComplete: () => a.remove()}, 1.3 + R() * .5);
-    }
-    tl.call(() => pumice(false), null, 0);
-    const blip = {x: x0, a: 0, w: W * .05}; bumps.push(blip);
-    tl.to(blip, {a: 2.2, duration: .6, ease: 'sine.inOut', yoyo: true, repeat: 1, onComplete: () => { bumps = bumps.filter(b => b !== blip); }}, 1.6)
-      .to(L.glow[1], {opacity: 0, duration: .9, ease: 'power2.out'}, .7)
-      .to(L.cond[1], {attr: {'stroke-width': 2.6}, opacity: .7, duration: .9, ease: 'power2.out'}, .7)
-      .call(() => stamp(1, true), null, 2);
-  }
-
-  // ---------- the switch ----------
-  const sides = [...Kit.$('sw').querySelectorAll('.side')];
-  function finish(i) {
-    busy = false;
-    if (done[0] && done[1]) {
-      say.innerHTML = 'Below <b>500–600 m</b>, the blast’s energy spreads out in the water. Shallower, it lifts the whole column: a tsunami.';
-      if (Kit.$('keep').classList.contains('gone')) { Kit.show('keep'); Kit.haptic('success'); card.classList.add('answered'); }
-    } else if (i === 0) {
-      say.innerHTML = '① 200 m down: the whole water column heaves up and runs off as a tsunami. <b>Now flip to ②.</b>';
-    } else {
-      say.innerHTML = '② Marsili, just over 500 m: the energy dies out in the water. Only pumice floats up. <b>Now flip to ①.</b>';
-    }
-    setTimeout(refit, 60);
-  }
-  function fire(i) {
-    if (busy || !W) return;
-    busy = true; done[i] = true;
-    Kit.haptic('selection');
-    sides.forEach((s, j) => s.classList.toggle('on', j === i));
-    gsap.to(knob, {xPercent: i * 100, opacity: 1, duration: .45, ease: 'back.out(1.7)'});
-    if (Kit.calm) { layout(); finish(i); return; }
-    i === 0 ? eruptShallow() : eruptDeep();
-  }
-  sides.forEach(s => s.addEventListener('click', () => fire(+s.dataset.i)));
-
-  // Re-draw the plate at its new size when the text under it grows, instead of shrinking it.
-  function refit() {
-    if (!W || busy) return;
-    if (Math.abs(svg.clientWidth - lw) < 2 && Math.abs(svg.clientHeight - lh) < 2) return;
-    layout();
-  }
-  let rq = 0;
-  if (window.ResizeObserver) new ResizeObserver(() => { cancelAnimationFrame(rq); rq = requestAnimationFrame(refit); }).observe(svg);
-
-  Kit.onShow.card = layout;
+  document.addEventListener('turned', () => { S.turned = true; setTimeout(() => drawBack(!Kit.calm), Kit.calm ? 0 : 320); });
+  Kit.onShow.card = () => { drawFront(); if (S.turned) drawBack(false); };
   Kit.onEnter.card = () => {
-    if (Kit.calm) { frame(); return; }
-    if (!ticking) { ticking = true; gsap.ticker.add(frame); }
-    gsap.from('#pic .cone', {scaleY: 0, transformOrigin: '50% 100%', duration: 1.1, ease: 'expo.out', stagger: .18});
-    gsap.from('#pic .bandp', {opacity: 0, duration: .8, ease: 'power2.out', delay: .5, stagger: .1});
-    gsap.from('#pic .lab', {opacity: 0, y: 6, duration: .5, ease: 'power3.out', delay: .7, stagger: .04});
-    gsap.from('.side', {opacity: 0, y: 8, duration: .45, ease: 'power3.out', delay: .9, stagger: .08});
+    if (Kit.calm || S.touched) return;
+    gsap.fromTo(S, {depth: 1300}, {depth: 1000, duration: 1.1, ease: 'power3.out', onUpdate: render});
   };
   Kit.play.card = async () => {
-    sides[0].click();
-    await wait(Kit.calm ? 80 : 2300);
-    sides[1].click();
-    await wait(Kit.calm ? 80 : 3200);
+    const w = ms => new Promise(r => setTimeout(r, ms));
+    gsap.killTweensOf(S); S.depth = 900; S.touched = true; render(); commit();
+    await w(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await w(Kit.calm ? 1000 : 5000);
   };
 })();
 Kit.single();
