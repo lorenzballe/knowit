@@ -1,7 +1,7 @@
 {
  "format": 2,
- "version": 202611071901,
- "built": "2026-11-07T19:01:22Z",
+ "version": 202611080025,
+ "built": "2026-11-08T00:25:53Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -85293,12 +85293,12 @@
    "topic": "life",
    "genre": "life.decisions",
    "strand": "life.decisions.risk_taking",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "After a nuclear blast, why wait 48 hours before leaving shelter?",
-   "answer": "The first 48 hours are when fallout is at its most intense. Staying sheltered through that window spares you the most lethal dose. Even after, wait for the authorities' all-clear if you can.",
-   "move": "After a blast, stay sheltered at least 48 hours: that is when fallout peaks.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "You survived the blast in a shelter. When should you step outside?",
+   "answer": "Fallout radiation is most intense in the first 48 hours after a blast. Wait at least that long before going outside and moving away, or until authorities give the all-clear. Waiting is the move, not doing nothing.",
+   "move": "When a danger fades with time, waiting is not doing nothing: it is the move.",
    "keywords": [
     "nuclear-blast",
     "fallout",
@@ -85318,14 +85318,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A shelter scene with a clock and a gold bead to drag through 48 hours, and a door to tap to try leaving. The page asks why you should wait 48 hours before going out after a nuclear blast.",
-    "ground": "#15102a",
-    "page": "pages/life-48-hour-shelter.html?v=8677fccdbaf7",
-    "bytes": 21500
+    "label": "Interactive dial titled Wait it out. After surviving a blast in a shelter, the reader drags to the hour they would open the door. The card explains that fallout radiation peaks in the first 48 hours, so waiting at least that long, or until the all-clear, is the move.",
+    "page": "pages/life-48-hour-shelter.html?v=6ee4a4597ccf",
+    "bytes": 18216
    },
    "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
    "reference": "https://www.youtube.com/watch?v=VNWX06NkitE&t=418s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "life-apologies-1",
@@ -97398,12 +97397,12 @@
    "topic": "maths",
    "genre": "maths.shapes",
    "strand": "maths.shapes.projections",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How did a failed theory of atoms become a useful science?",
-   "answer": "Knot theory began as a failed theory of atoms, starting with Kelvin's atoms. Since then it has found uses in material science, medicine, and even preventing headphone tangles.",
-   "move": "Maths done for pure curiosity can wait a century, then find real uses.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Kelvin's knotted atoms failed. How long did knot maths wait for a real job?",
+   "answer": "Knot theory waited about a century for a real job. Kelvin's knotted atoms failed, but the maths lived on. Today it reaches headphone tangles, catheters, materials and chemotherapy.",
+   "move": "When a theory dies, ask what maths it left behind. That part may outlive it by a century.",
    "keywords": [
     "kelvin",
     "knot theory",
@@ -97424,14 +97423,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A blueprint-style timeline with three icons: a vortex ring for atoms, a DNA strand for medicine, and a pair of headphones for technology. A draggable knot moves down it from Kelvin's atoms to today, under the question of how a failed theory of atoms became a useful science.",
-    "ground": "#12406f",
-    "page": "pages/maths-knot-theory-renaissance.html?v=c49f23d3cc5f",
-    "bytes": 27367
+    "label": "A grid of dots in rows of ten, each dot one year after Kelvin's knotted-atom theory failed. The reader taps dots to guess how many years knot maths waited for a real job. The reveal shows it waited about a century.",
+    "page": "pages/maths-knot-theory-renaissance.html?v=ba97beca01af",
+    "bytes": 20469
    },
    "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
    "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=1909s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "maths-knot-tricolorability",
@@ -140690,12 +140688,12 @@
    "topic": "nature",
    "genre": "nature.systems_thinking",
    "strand": "nature.systems_thinking.chain_reactions",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why would losing sharks throw the whole sea off balance?",
-   "answer": "Sharks sit at the top of the food chain and keep the fish below them in check. Take them away and their prey multiply, so every level beneath tips out of balance. Yet about 100 million sharks and rays die every year.",
-   "move": "A top predator is the brake: remove it and the whole food web runs out of balance.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "No more sharks. What happens to the fish they eat?",
+   "answer": "Sharks at the top of the food chain keep the fish below them in check. Take them away and those fish multiply unchecked, and the whole sea, with it the planet's ecosystem, tips out of balance. About 100 million sharks and rays die every year.",
+   "move": "The predator at the top is the regulator: remove it and its prey explodes.",
    "keywords": [
     "sharks",
     "rays",
@@ -140715,15 +140713,15 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "drags",
-    "label": "Interactive card titled 'Take the shark away' asks why losing sharks would throw the whole sea off balance. A draggable shark is shown; the reader drags it up to a boat to remove it from the ocean.",
-    "ground": "#06283f",
-    "page": "pages/nature-sharks-food-chain.html?v=b34b2e1030e1",
-    "bytes": 25191
+    "touch": "taps",
+    "label": "Question asking what happens to the fish that sharks eat if sharks are removed from the top of the ocean food chain. Three choices are offered: More, Fewer, or About the same. The reader picks one, and the page then reveals the answer.",
+    "ground": "#8fd0dc",
+    "page": "pages/nature-sharks-food-chain.html?v=50c2088450b6",
+    "bytes": 13143
    },
    "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
    "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=138s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "nature-sharks-overfishing-toll",
@@ -142589,10 +142587,10 @@
    "strand": "nature.systems_thinking.chain_reactions",
    "kind": "page",
    "difficulty": "medium",
-   "principle": "none",
-   "question": "How long before Vesuvius erupts do the earthquakes begin?",
-   "answer": "Fumaroles grow stronger several months before Vesuvius erupts. Earthquakes and swelling ground come only 1–2 weeks before, because the magma is rising. About 700,000 people live in the red zone around the volcano.",
-   "move": "Fumaroles warn months ahead; quakes and swelling, 1–2 weeks: magma on the move.",
+   "principle": "reflection",
+   "question": "How long before Vesuvius erupts do quakes and ground deformation begin?",
+   "answer": "Steam vents become visible months ahead of a Vesuvius eruption. Quakes and ground deformation, which signal magma rising, appear only in the last 1 to 2 weeks.",
+   "move": "The first warning to show is not the one that marks the magma rising. That one comes last.",
    "keywords": [
     "vesuvius",
     "magma",
@@ -142613,15 +142611,13 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A timeline asking when earthquakes begin before a Vesuvius eruption. The reader drags a blue flag along the timeline to the point where they think the quakes start.",
-    "graded": false,
-    "ground": "#efe3c8",
-    "page": "pages/nature-vesuvius-warning-signs.html?v=787bd8db26d8",
-    "bytes": 27873
+    "label": "A timeline with a draggable pin. The reader drags the pin to when quakes and ground deformation start before a Vesuvius eruption, with steam vents appearing months earlier.",
+    "page": "pages/nature-vesuvius-warning-signs.html?v=d30ea2df0c88",
+    "bytes": 22352
    },
    "source": "Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)",
    "reference": "https://www.youtube.com/watch?v=JxXQOLGsJuM&t=216s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "nature-water-carves-caves",
@@ -184232,12 +184228,12 @@
    "topic": "science",
    "genre": "science.cold_and_heat",
    "strand": "science.cold_and_heat.cold_myths",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How can a low temperature keep a flow smooth and laminar?",
-   "answer": "A low Reynolds number means laminar flow. Cold water lowers the Reynolds number by being thicker and slower, so the flow stays smooth and laminar.",
-   "move": "A low Reynolds number means laminar flow, and cold water lowers it by being thicker and slower.",
+   "kind": "page",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "Which water is more likely to pour in one smooth stream, cold or hot?",
+   "answer": "Cold, probably. A stream stays smooth while its Reynolds number, speed weighed against viscosity, stays low. Cold changes the water's viscosity and can also slow the flow, and both lower that number.",
+   "move": "Smooth or rough is a ratio, not just a speed: cool the water and the stream tends to calm.",
    "keywords": [
     "laminar flow",
     "reynolds number",
@@ -184257,15 +184253,14 @@
    "figure": "none",
    "web": {
     "kit": 1,
-    "touch": "taps",
-    "label": "Interactive page: a blue valve to tap, which makes water colder one step at a time. The page asks how a low temperature can keep a flow smooth and laminar.",
-    "ground": "#17262a",
-    "page": "pages/science-cold-laminar-flow-6.html?v=d1c5a857b686",
-    "bytes": 28673
+    "touch": "drags",
+    "label": "A water tap being dragged open, with its knob marked cold and hot. The question asks which water is more likely to pour in one smooth stream: cold, hot, or no difference.",
+    "page": "pages/science-cold-laminar-flow-6.html?v=054e52f1d73f",
+    "bytes": 17861
    },
    "source": "Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019)",
    "reference": "https://www.youtube.com/watch?v=I3IpKEtWqvU&t=413s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "science-cold-myths-1",
@@ -195919,12 +195914,12 @@
    "topic": "science",
    "genre": "science.physics",
    "strand": "science.physics.gravity",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "How hard does the sea press, on the way down to the Titanic?",
-   "answer": "Every 10 m of water adds one atmosphere, plus one for the air: 301 at 3,000 m, 381 at the Titanic. Each square metre of hull bears some 3,800 tonnes, almost half the 8,000-tonne Eiffel Tower.",
-   "move": "Every 10 m down adds one atmosphere, and the sea never stops adding.",
+   "kind": "page",
+   "difficulty": "medium",
+   "principle": "computation",
+   "question": "On the dive to the Titanic, 3,800 m down, at 3,000 m: what presses on 1 m²?",
+   "answer": "At 3,000 m the pressure is 301 atmospheres: one for every 10 m of water, plus one from the air. That is about 3,000 tonnes on each square metre, a third of the Eiffel Tower's weight.",
+   "move": "Deep pressure is plain counting: every 10 m of water, one more atmosphere.",
    "keywords": [
     "titanic",
     "ocean",
@@ -195945,14 +195940,14 @@
    "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "Drag a submarine down a depth scale toward the Titanic, 3,800 m below, asking how hard the sea presses on the way. Pressure readings rise with depth, and the hull load per square metre is compared with the 8,000-tonne Eiffel Tower.",
-    "ground": "#1e2b27",
-    "page": "pages/science-pressure-at-depth.html?v=f3a267f6b3f8",
-    "bytes": 25411
+    "label": "A tower drawn beside a one-square-metre patch at 3,000 m depth, on the way to the Titanic at 3,800 m. The reader drags the tower up to show how much of its weight presses on that square metre.",
+    "ground": "#eef0ea",
+    "page": "pages/science-pressure-at-depth.html?v=59d384ab5726",
+    "bytes": 18876
    },
    "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
    "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=360s",
-   "written": "2026-11-04"
+   "written": "2026-11-08"
   },
   {
    "id": "science-pressure-in-tons",

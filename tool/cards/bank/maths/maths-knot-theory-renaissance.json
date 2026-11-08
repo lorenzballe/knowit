@@ -3,12 +3,12 @@
   "topic": "maths",
   "genre": "maths.shapes",
   "strand": "maths.shapes.projections",
-  "kind": "read",
-  "difficulty": "easy",
-  "principle": "none",
-  "question": "How did a failed theory of atoms become a useful science?",
-  "answer": "Knot theory began as a failed theory of atoms, starting with Kelvin's atoms. Since then it has found uses in material science, medicine, and even preventing headphone tangles.",
-  "move": "Maths done for pure curiosity can wait a century, then find real uses.",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Kelvin's knotted atoms failed. How long did knot maths wait for a real job?",
+  "answer": "Knot theory waited about a century for a real job. Kelvin's knotted atoms failed, but the maths lived on. Today it reaches headphone tangles, catheters, materials and chemotherapy.",
+  "move": "When a theory dies, ask what maths it left behind. That part may outlive it by a century.",
   "keywords": [
     "kelvin",
     "knot theory",
@@ -29,10 +29,9 @@
   "web": {
     "kit": 1,
     "touch": "drags",
-    "label": "A blueprint-style timeline with three icons: a vortex ring for atoms, a DNA strand for medicine, and a pair of headphones for technology. A draggable knot moves down it from Kelvin's atoms to today, under the question of how a failed theory of atoms became a useful science.",
-    "ground": "#12406f"
+    "label": "A grid of dots in rows of ten, each dot one year after Kelvin's knotted-atom theory failed. The reader taps dots to guess how many years knot maths waited for a real job. The reveal shows it waited about a century."
   },
   "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
   "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=1909s",
-  "written": "2026-11-04"
+  "written": "2026-11-08"
 }

@@ -1,327 +1,256 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- slug: life-48-hour-shelter -->
-<!-- Look: a cathedral rose window on a night-indigo card, leaded glass and gold rims studded at every hour; its 48 outer tiles are the hours, its warm petals the fallout outside, an arched glass door in the centre.
-     Interaction: drag the gold bead round the clock and each hour's tile lights up; tap the door to try leaving and the window flares red, because outside it is still the peak.
-     Wow: at hour 48 a gold ring bursts out, the whole window sweeps from ember red to cool blue, the falling dust thins and the door swings open onto slowly turning rays of light. -->
-<title>The 48-hour window</title>
+<!-- slug: science-wait-out-fallout -->
+<!-- Thought to carry: surviving the moment of a disaster is not the same as being past its worst; when a danger peaks later and fades with time, waiting is the move.
+     Front: a plain house with you inside, the door shut, a ribbon of days and nights below. Drag along the hours to when you would step out while the sun and moon cross the sky. Then say how sure you are.
+     Back: the same house, small at the left, door open, you in the doorway. Outside it the fallout runs along the ground, high, falling, flattening. A line at your hour cuts the curve, and a darker fill shows the part of the worst window you would have walked into.
+     The front shows no fallout, no mark at 48 h and no verdict: only an empty sky and an hour you choose, so the reader commits to their own instinct. -->
+<title>Wait it out</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
-#pic:active{cursor:grabbing}
-#door{cursor:pointer}
-#why{font:600 max(2.05cqh,13px)/1.35 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
-#why b{color:#f2c86a}
-.say b{color:#f2c86a}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+/* only one face is ever really there: the back waits hidden, the front leaves halfway through the turn */
+.turn:not(.over)>.back{visibility:hidden}
+.turn.over>.front{visibility:hidden;transition:visibility 0s .38s}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+.stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block;background:none}
+#pic{touch-action:none;cursor:ew-resize}
+/* the instruction stays clear of the save and share corner */
+.card .turn .front p.say{width:calc(100% - 104px);max-width:calc(100% - 104px);padding-right:0;box-sizing:border-box;margin-right:auto}
+.card .turn .back .foot{padding-right:100px}
+/* the confidence pills read as live buttons: black outline, black text, the chosen one filled */
+.card #sure [data-v]{background:transparent!important;border:2px solid var(--k)!important;color:var(--k)!important;opacity:1!important;font-weight:700;box-shadow:none!important}
+.card #sure [data-v].mine{background:var(--k)!important;color:#fff!important}
+.card #sure :not([data-v]):not([data-v] *){color:var(--k);opacity:1}
+.back .big{margin:0 0 .6cqh;font-size:clamp(24px,min(4.4cqh,6.8vw),40px);line-height:1.02}
+.back .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:.8cqh 0}
+.back .body b{font-weight:800}
+.face .q,.face .say,.face .body,.face .keep{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="life" data-kind="Turn the clock · fallout" style="--c:#15102a;--k:#f6eedd;--edge:#0a0716">
+<article class="card" id="card" data-topic="life" data-kind="Drag the hours · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">48 HOURS</span></div>
-    <h2 class="q">After a nuclear blast, why wait 48 hours before leaving shelter?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A stained-glass rose window shaped like a 48-hour clock, with a glass door at its centre."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK THE HOUR</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">You survived the blast in a shelter. When should you step outside?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="A house with you inside and the door shut, the sun or moon in the sky, and a ribbon of four days and nights to drag along."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say"><b>Drag</b> to the hour you would open the door.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Wait at least 48 hours.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Your house with the door open. Outside, the fallout is most intense in the first 48 hours and much weaker after. A line marks the hour you chose."></svg></div>
+        <p class="body" id="body">Fallout radiation is most intense in the first 48 hours. Wait at least that long before you go out and move away, or ideally until the authorities give the all-clear.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> When a danger fades with time, waiting is not doing nothing: it is the move.</div>
+        <div class="foot"><span class="src">Source · Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)</span></div>
+      </section>
     </div>
-    <p class="say" id="say">You are sheltered. <b>Drag the gold bead round the clock</b> to let the hours pass. Tap the door to try leaving.</p>
-    <p class="body gone" id="why">For the first <b>48 hours</b> the fallout outside is at its most intense. Staying in through that window spares you the most lethal dose. Even after, wait for the authorities' all-clear if you can.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>After a blast, stay sheltered at least 48 hours: that is when fallout peaks.</div>
-    <div class="foot"><span class="src">Source · Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  const svg = Kit.$('pic'), say = Kit.$('say');
-  const LEAD = '#0b0814', GOLD = '#e9c46c', INK = '#f6eedd';
-  const D = x => Kit.calm ? 0 : x;
-  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  const MAX = 96, SUN = '#ffcc4d', WHITE = '#ffffff', FILL = '#0A7A55', DEEP = '#06422E';
+  let hrs = 0, pct = null, touched = false, locked = false, turned = false;
+  let W = 0, H = 0, fs = 13, R = {}, G = {};
 
-  function hex(h, s, l) {
-    s /= 100; l /= 100; h = ((h % 360) + 360) % 360;
-    const k = n => (n + h / 30) % 12, a = s * Math.min(l, 1 - l);
-    const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-    return '#' + [f(0), f(8), f(4)].map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join('');
+  const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: ink(), 'font-family': 'Figtree, sans-serif', 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
+  const said = h => h === 0 ? 'Right away' : `After ${h} h`;
+  const heroOf = h => h === 0 ? 'Right away' : h >= MAX ? 'After 4 days' : `On day ${Math.floor(h / 24) + 1}`;
+
+  // The ribbon of time: four days from a midday blast, nights shaded, a tick at each day, only the two ends named.
+  function ribbon(p, w, h) {
+    const k = ink(), x0 = fs * 1.2, x1 = w - fs * 1.2, rh = fs * .9, y = h - fs * 2.3 - rh;
+    const X = t => x0 + (x1 - x0) * t / MAX;
+    Kit.mk('rect', {x: x0, y, width: x1 - x0, height: rh, rx: rh / 2, fill: WHITE}, p);
+    for (let n = 6; n < MAX - 12; n += 24) Kit.mk('rect', {x: X(n), y, width: X(n + 12) - X(n), height: rh, fill: k, opacity: .18}, p);
+    Kit.mk('rect', {x: x0, y, width: x1 - x0, height: rh, rx: rh / 2, fill: 'none', stroke: k, 'stroke-width': 1.4}, p);
+    for (let t = 24; t < MAX; t += 24) Kit.mk('line', {x1: X(t), x2: X(t), y1: y + rh, y2: y + rh + fs * .45, stroke: k, 'stroke-width': 1.4}, p);
+    txt(p, 0, y + rh + fs * 1.5, 'blast', {'font-weight': 600});
+    txt(p, w, y + rh + fs * 1.5, '4 days', {'font-weight': 600, 'text-anchor': 'end'});
+    return {x0, x1, y, rh, X};
   }
 
-  // The glass: 48 hours, two rows of tiles each, with their own unlit, ember and cool colour.
-  const TILES = [];
-  for (let i = 0; i < 48; i++) for (let j = 0; j < 2; j++) TILES.push({
-    i, j, lit: false,
-    dim: hex(220 + Kit.rnd() * 80, 32, 17 + Kit.rnd() * 10),
-    warm: hex(358 + Kit.rnd() * 40, 90, 47 + Kit.rnd() * 13),
-    cool: hex(172 + Kit.rnd() * 50, 64, 48 + Kit.rnd() * 14)
-  });
-  const PW = ['#e8322a', '#ff7a1a'], PC = ['#2fb3c9', '#6fdcae'], DW = '#ffc23d', DC = '#c4ecff';
-  const DUST = Array.from({length: 46}, () => ({x: Kit.rnd(), y: Kit.rnd(), s: .5 + Kit.rnd(), r: .6 + Kit.rnd() * 1.4, p: Kit.rnd() * 6}));
-
-  let W = 0, H = 0, fs = 13, cx = 0, cy = 0, R = 100, Rg = 107, rt = 75, dcy = 0;
-  let hours = 0, done = false, touched = false, dragging = false, prevA = 0, lastSix = 0;
-  const st = {I: 1};
-  const S = {};
-
-  const P = (a, r) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
-  const angOf = h => -Math.PI / 2 + h / 48 * Math.PI * 2;
-  function sector(a0, a1, r0, r1) {
-    const [x0, y0] = P(a0, r1), [x1, y1] = P(a1, r1), [x2, y2] = P(a1, r0), [x3, y3] = P(a0, r0);
-    return `M${x0},${y0}A${r1},${r1} 0 0 1 ${x1},${y1}L${x2},${y2}A${r0},${r0} 0 0 0 ${x3},${y3}Z`;
-  }
-  const T = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--mono);font-weight:700'}, a), p); e.textContent = t; return e; };
-  const grad = (defs, id, type, attrs, stops) => {
-    const g = Kit.mk(type, Object.assign({id}, attrs), defs);
-    stops.forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g));
-    return g;
-  };
-
-  function layout() {
-    gsap.killTweensOf(svg.querySelectorAll('*'));
+  // ---------- the front ----------
+  function drawFront() {
     svg.innerHTML = '';
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
-    fs = Math.max(12, Math.min(15, f.f || 13));
-    // Rg = outer gold rim. Room for side labels, top label, and the two readout lines below "24 h".
-    Rg = Math.max(44, Math.min(W / 2 - fs * 3.4, (H - fs * 7) / 2));
-    R = Rg / 1.075;
-    cx = W / 2;
-    cy = Math.max(0, (H - (2 * Rg + fs * 6.8)) / 2) + fs * 1.4 + Rg;
-    rt = R * .745;
+    fs = Math.max(12, Math.min(14, W / 27));
+    const k = ink();
+    G.scene = Kit.mk('g', {id: 'scene'}, svg);
+    R = ribbon(G.scene, W, H);
+    const GY = R.y - fs * 2.3;
+    // the sub line sits fully below the hero's descenders; both share the question's left edge
+    const heroFs = fs * (H < 270 ? 2.1 : 2.5), heroY = heroFs * .92, subY = heroY + heroFs * .34 + fs * 1.2;
+    const sr = fs * .72, rays = sr * 1.75, yHi = subY + fs * .45 + rays;
+    const hw = Math.max(fs * 4, Math.min(W * .5, (GY - (yHi + fs * 1.7)) / .92));
+    const hh = hw * .62, rf = hw * .3, hx0 = W / 2 - hw / 2, hx1 = hx0 + hw;
+    G.sky = Kit.mk('g', {}, G.scene);
+    Kit.mk('line', {x1: 0, x2: W, y1: GY, y2: GY, stroke: k, 'stroke-width': 2}, G.scene);
+    const house = Kit.mk('g', {id: 'house'}, G.scene);
+    Kit.mk('rect', {x: hx0, y: GY - hh, width: hw, height: hh, fill: WHITE, stroke: k, 'stroke-width': 2}, house);
+    Kit.mk('path', {d: `M${hx0 - hw * .06},${GY - hh} L${W / 2},${GY - hh - rf} L${hx1 + hw * .06},${GY - hh} Z`, fill: k, 'stroke-linejoin': 'round', stroke: k, 'stroke-width': 2}, house);
+    const ws = hh * .26, wx = hx0 + hw * .1;
+    Kit.mk('rect', {x: wx, y: GY - hh * .72, width: ws, height: ws, fill: k}, house);
+    Kit.mk('line', {x1: wx + ws / 2, x2: wx + ws / 2, y1: GY - hh * .72, y2: GY - hh * .72 + ws, stroke: WHITE, 'stroke-width': 2}, house);
+    const dw = hw * .16, dh = hh * .58, dx = hx1 - hw * .27;
+    Kit.mk('rect', {x: dx, y: GY - dh, width: dw, height: dh, fill: k}, house);
+    Kit.mk('circle', {cx: dx + dw * .2, cy: GY - dh * .48, r: Math.max(1.6, dw * .06), fill: WHITE}, house);
+    // you, inside, door shut
+    const px = hx0 + hw * .5, bh = hh * .36, bw = hw * .11, hr = hw * .055;
+    Kit.mk('rect', {x: px - bw / 2, y: GY - bh, width: bw, height: bh, rx: bw * .45, fill: k}, house);
+    Kit.mk('circle', {cx: px, cy: GY - bh - hr * 1.15, r: hr, fill: k}, house);
+    Kit.mk('circle', {cx: px + hr * .35, cy: GY - bh - hr * 1.25, r: Math.max(1.2, hr * .16), fill: WHITE}, house);
+    // the hour chosen
+    G.hero = txt(G.scene, 0, heroY, '', {'font-size': heroFs, 'font-weight': 800});
+    G.hero.style.fontFamily = 'var(--display)';
+    G.sub = txt(G.scene, 0, subY, '', {'font-weight': 600});
+    G.geo = {GY, hh, yHi, sr, rays};
+    G.handle = Kit.mk('g', {}, G.scene);
+    Kit.mk('circle', {cx: 0, cy: 0, r: fs * .95, fill: k, stroke: WHITE, 'stroke-width': 3}, G.handle);
+    G.nudge = txt(G.handle, -R.x0, -fs * 1.4, 'drag →', {'font-weight': 700});
+    if (touched) G.nudge.remove();
+    setH(hrs);
+  }
 
-    const defs = Kit.mk('defs', {}, svg);
-    grad(defs, 'hw', 'radialGradient', {}, [[0, '#ff6a2a', .55], [.55, '#ff3a1e', .22], [1, '#ff3a1e', 0]]);
-    grad(defs, 'hc', 'radialGradient', {}, [[0, '#7fe6ff', .5], [.55, '#3fb8d8', .2], [1, '#3fb8d8', 0]]);
-    grad(defs, 'sheen', 'radialGradient', {cx: .32, cy: .26, r: .8}, [[0, '#ffffff', .32], [.45, '#ffffff', .06], [1, '#000000', .28]]);
-    grad(defs, 'dl', 'radialGradient', {cx: .5, cy: .7, r: .8}, [[0, '#fffdf0'], [.6, '#ffe7a6'], [1, '#f4b94e']]);
-    grad(defs, 'spill', 'radialGradient', {}, [[0, '#fff3c4', .9], [.5, '#ffd77a', .35], [1, '#ffd77a', 0]]);
-    grad(defs, 'ray', 'radialGradient', {}, [[0, '#fff1bf', .55], [1, '#fff1bf', 0]]);
-    grad(defs, 'red', 'radialGradient', {}, [[0, '#ff2a1a', .75], [.7, '#ff2a1a', .25], [1, '#ff2a1a', 0]]);
-    grad(defs, 'med', 'radialGradient', {cx: .5, cy: .45, r: .6}, [[0, '#2a2048'], [1, '#140e26']]);
-    const fg = Kit.mk('filter', {id: 'grain', x: 0, y: 0, width: 1, height: 1}, defs);
-    Kit.mk('feTurbulence', {type: 'fractalNoise', baseFrequency: .85, numOctaves: 2, seed: 4}, fg);
-    Kit.mk('feColorMatrix', {type: 'matrix', values: '0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.1 -.5'}, fg);
-    Kit.mk('feComposite', {in2: 'SourceGraphic', operator: 'in'}, fg);
-
-    // Fallout dust, drifting down past the window.
-    S.dust = Kit.mk('g', {opacity: .7}, svg);
-    DUST.forEach(d => d.el = Kit.mk('circle', {r: d.r * fs * .14, fill: '#e6dcae'}, S.dust));
-
-    // Halo of light the glass throws on the night.
-    S.hw = Kit.mk('circle', {cx, cy, r: R * 1.34, fill: 'url(#hw)'}, svg);
-    S.hc = Kit.mk('circle', {cx, cy, r: R * 1.34, fill: 'url(#hc)', opacity: 0}, svg);
-
-    // The lead and gold of the window.
-    Kit.mk('circle', {cx, cy, r: R * 1.04, fill: 'none', stroke: GOLD, 'stroke-width': fs * .22, opacity: .9}, svg);
-    Kit.mk('circle', {cx, cy, r: Rg, fill: 'none', stroke: GOLD, 'stroke-width': fs * .07, opacity: .5}, svg);
-    Kit.mk('circle', {cx, cy, r: R * 1.02, fill: LEAD}, svg);
-
-    // The 48 hour tiles.
-    S.win = Kit.mk('g', {}, svg);
-    const lw = Math.max(1.3, R * .013);
-    TILES.forEach(t => {
-      const a0 = angOf(t.i), a1 = angOf(t.i + 1);
-      const r0 = t.j ? R * .9 : R * .8, r1 = t.j ? R : R * .9;
-      t.el = Kit.mk('path', {d: sector(a0, a1, r0, r1), fill: t.lit ? (done ? t.cool : t.warm) : t.dim, stroke: LEAD, 'stroke-width': lw, 'stroke-linejoin': 'round'}, S.win);
-    });
-    [0, 12, 24, 36].forEach(h => { const a = angOf(h), [x0, y0] = P(a, R * .8), [x1, y1] = P(a, R * 1.02); Kit.mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, stroke: GOLD, 'stroke-width': fs * .16, 'stroke-linecap': 'round'}, S.win); });
-
-    // Gold studs on the rim, one per hour; every sixth a larger rivet.
-    S.studs = [];
-    for (let h = 0; h < 48; h++) {
-      const [x, y] = P(angOf(h), R * 1.04), big = h % 6 === 0;
-      S.studs.push(Kit.mk('circle', {cx: x, cy: y, r: fs * (big ? .2 : .11), fill: big ? '#fff1c2' : GOLD, stroke: LEAD, 'stroke-width': big ? 1 : .6}, svg));
+  function setH(v) {
+    hrs = Math.round(Math.max(0, Math.min(MAX, v)));
+    if (!G.handle) return;
+    G.handle.setAttribute('transform', `translate(${R.X(hrs)},${R.y + R.rh / 2})`);
+    const clock = (12 + hrs) % 24, night = clock < 6 || clock >= 18;
+    G.hero.textContent = heroOf(hrs);
+    G.sub.textContent = hrs === 0 ? 'the moment after the blast' : `${hrs} hour${hrs === 1 ? '' : 's'} after, ${night ? 'at night' : 'by day'}`;
+    // sun or moon crossing the sky, always clear of the roof
+    G.sky.innerHTML = '';
+    const k = ink(), {GY, hh, yHi, sr} = G.geo;
+    const p = night ? ((clock - 18 + 24) % 24) / 12 : (clock - 6) / 12;
+    const cy0 = GY - hh * .5, sx = W / 2 - W * .42 * Math.cos(Math.PI * p), sy = cy0 - (cy0 - yHi) * Math.sin(Math.PI * p);
+    if (night) {
+      Kit.mk('path', {d: `M${sx},${sy - sr} A${sr} ${sr} 0 0 0 ${sx},${sy + sr} A${sr * .55} ${sr} 0 0 1 ${sx},${sy - sr} Z`, fill: WHITE, stroke: k, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, G.sky);
+    } else {
+      for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; Kit.mk('line', {x1: sx + Math.cos(a) * sr * 1.3, y1: sy + Math.sin(a) * sr * 1.3, x2: sx + Math.cos(a) * sr * 1.7, y2: sy + Math.sin(a) * sr * 1.7, stroke: k, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, G.sky); }
+      Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: SUN, stroke: k, 'stroke-width': 1.6}, G.sky);
     }
-
-    // The track for the bead.
-    Kit.mk('circle', {cx, cy, r: rt, fill: 'none', stroke: GOLD, 'stroke-width': fs * .12, 'stroke-dasharray': `${fs * .1} ${fs * .45}`, 'stroke-linecap': 'round', opacity: .55}, svg);
-    S.arc = Kit.mk('path', {fill: 'none', stroke: GOLD, 'stroke-width': fs * .3, 'stroke-linecap': 'round'}, svg);
-    [0, 12, 24, 36].forEach(h => { const [x, y] = P(angOf(h), rt); Kit.mk('rect', {x: x - fs * .2, y: y - fs * .2, width: fs * .4, height: fs * .4, fill: GOLD, transform: `rotate(45 ${x} ${y})`}, svg); });
-
-    // The petals: the fallout outside, flickering while it is at its peak.
-    Kit.mk('circle', {cx, cy, r: R * .69, fill: 'none', stroke: GOLD, 'stroke-width': fs * .1, opacity: .7}, svg);
-    S.pet = Kit.mk('g', {}, svg); S.petals = []; S.dia = [];
-    const N = 16, r0 = R * .42, r1 = R * .675, rm = (r0 + r1) / 2, w = Math.PI / N * .78;
-    for (let k = 0; k < N; k++) {
-      const a = k / N * Math.PI * 2 - Math.PI / 2;
-      const [ax, ay] = P(a, r0), [bx, by] = P(a, r1), [lx, ly] = P(a - w, rm * 1.05), [rx, ry] = P(a + w, rm * 1.05);
-      S.petals.push(Kit.mk('path', {d: `M${ax},${ay}Q${lx},${ly} ${bx},${by}Q${rx},${ry} ${ax},${ay}Z`, fill: done ? PC[k % 2] : PW[k % 2], stroke: LEAD, 'stroke-width': lw}, S.pet));
-      // a thin gold vein down each petal
-      const [vx, vy] = P(a, r0 + (r1 - r0) * .2), [ux, uy] = P(a, r1 - (r1 - r0) * .18);
-      Kit.mk('line', {x1: vx, y1: vy, x2: ux, y2: uy, stroke: '#ffe2a0', 'stroke-width': lw * .6, opacity: .45, 'stroke-linecap': 'round'}, S.pet);
-      const b = a + Math.PI / N, [dx, dy] = P(b, R * .62), s = R * .045;
-      S.dia.push(Kit.mk('rect', {x: dx - s, y: dy - s, width: 2 * s, height: 2 * s, fill: done ? DC : DW, stroke: LEAD, 'stroke-width': lw * .8, transform: `rotate(${b * 180 / Math.PI + 45} ${dx} ${dy})`}, S.pet));
-      const [qx, qy] = P(b, R * .47);
-      Kit.mk('circle', {cx: qx, cy: qy, r: R * .018, fill: GOLD, opacity: .8}, S.pet);
-    }
-
-    // Light and grain over the glass.
-    Kit.mk('circle', {cx, cy, r: R, fill: 'url(#sheen)', 'pointer-events': 'none'}, svg);
-    Kit.mk('circle', {cx, cy, r: R, fill: '#fff', opacity: .16, filter: 'url(#grain)', 'pointer-events': 'none'}, svg);
-
-    // The medallion and the door.
-    Kit.mk('circle', {cx, cy, r: R * .4, fill: 'url(#med)', stroke: GOLD, 'stroke-width': fs * .1}, svg);
-    Kit.mk('circle', {cx, cy, r: R * .365, fill: 'none', stroke: GOLD, 'stroke-width': fs * .05, 'stroke-dasharray': `${fs * .08} ${fs * .3}`, opacity: .6}, svg);
-    S.red = Kit.mk('circle', {cx, cy, r: R * 1.1, fill: 'url(#red)', opacity: 0, 'pointer-events': 'none'}, svg);
-    S.door = Kit.mk('g', {id: 'door'}, svg);
-    const dw = R * .34, dh = R * .52; dcy = cy + R * .03;
-    const x0 = cx - dw / 2, x1 = cx + dw / 2, yb = dcy + dh / 2, ya = dcy - dh / 2 + dw / 2;
-    const arch = `M${x0},${yb}V${ya}A${dw / 2},${dw / 2} 0 0 1 ${x1},${ya}V${yb}Z`;
-    Kit.mk('circle', {cx, cy, r: R * .39, fill: 'transparent'}, S.door);
-    S.spill = Kit.mk('g', {opacity: done ? 1 : 0, 'pointer-events': 'none'}, S.door);
-    S.rays = Kit.mk('g', {}, S.spill);
-    for (let k = 0; k < 14; k++) {
-      const a = k / 14 * Math.PI * 2, ww = .09, rr = R * .78;
-      Kit.mk('path', {d: `M${cx},${dcy}L${cx + rr * Math.cos(a - ww)},${dcy + rr * Math.sin(a - ww)}L${cx + rr * Math.cos(a + ww)},${dcy + rr * Math.sin(a + ww)}Z`, fill: 'url(#ray)'}, S.rays);
-    }
-    Kit.mk('circle', {cx, cy: dcy, r: R * .62, fill: 'url(#spill)'}, S.spill);
-    Kit.mk('path', {d: arch, fill: 'url(#dl)'}, S.door);
-    const cp = Kit.mk('clipPath', {id: 'dclip'}, defs); Kit.mk('path', {d: arch}, cp);
-    S.leaf = Kit.mk('g', {}, S.door);
-    const lg = Kit.mk('g', {'clip-path': 'url(#dclip)'}, S.leaf);
-    const top = dcy - dh / 2, ph = dh / 3, cols = ['#7a2348', '#4b2c74', '#8c3a2a', '#2f3f7a', '#6a2a5e', '#7a2348'];
-    for (let r = 0; r < 3; r++) for (let c = 0; c < 2; c++) Kit.mk('rect', {x: x0 + c * dw / 2, y: top + r * ph, width: dw / 2, height: ph, fill: cols[r * 2 + c], stroke: LEAD, 'stroke-width': lw}, lg);
-    Kit.mk('path', {d: arch, fill: 'url(#sheen)', opacity: .7}, lg);
-    Kit.mk('path', {d: arch, fill: 'none', stroke: GOLD, 'stroke-width': fs * .14}, S.leaf);
-    Kit.mk('circle', {cx: x1 - dw * .16, cy: dcy + dh * .08, r: fs * .2, fill: GOLD}, S.leaf);
-    Kit.mk('line', {x1: x0 - dw * .12, y1: yb, x2: x1 + dw * .12, y2: yb, stroke: GOLD, 'stroke-width': fs * .14, 'stroke-linecap': 'round'}, S.door);
-    S.hinge = `${x0} ${dcy}`;
-    gsap.set(S.leaf, {scaleX: done ? .06 : 1, svgOrigin: S.hinge});
-
-    // Hour labels and the readout, stacked with clear gaps below the rim.
-    T(svg, cx, cy - Rg - fs * .55, '0 · 48 h', {'text-anchor': 'middle', opacity: .75});
-    T(svg, cx + Rg + fs * .45, cy + fs * .35, '12 h', {opacity: .75});
-    T(svg, cx - Rg - fs * .45, cy + fs * .35, '36 h', {'text-anchor': 'end', opacity: .75});
-    T(svg, cx, cy + Rg + fs * 1.2, '24 h', {'text-anchor': 'middle', opacity: .75});
-    S.r1 = T(svg, cx, cy + Rg + fs * 3.25, '', {'text-anchor': 'middle', fill: GOLD, 'font-size': fs * 1.15, style: 'font-family:var(--mono);font-weight:800;letter-spacing:.08em'});
-    S.r2 = T(svg, cx, cy + Rg + fs * 4.85, '', {'text-anchor': 'middle', style: 'font-family:var(--body);font-weight:700'});
-
-    // The bead, and the burst for the reveal.
-    S.bead = Kit.mk('g', {}, svg);
-    S.hint = Kit.mk('circle', {r: fs * .8, fill: 'none', stroke: GOLD, 'stroke-width': 2, opacity: 0}, S.bead);
-    Kit.mk('circle', {r: fs * .78, fill: GOLD, stroke: LEAD, 'stroke-width': 2}, S.bead);
-    Kit.mk('circle', {r: fs * .3, cx: -fs * .22, cy: -fs * .22, fill: '#fff8e0', opacity: .85}, S.bead);
-    S.burst = Kit.mk('circle', {cx, cy, r: R * .4, fill: 'none', stroke: GOLD, 'stroke-width': fs * .35, opacity: 0, 'pointer-events': 'none'}, svg);
-    S.burst2 = Kit.mk('circle', {cx, cy, r: R * .4, fill: 'none', stroke: '#bff2ff', 'stroke-width': fs * .15, opacity: 0, 'pointer-events': 'none'}, svg);
-
-    if (!touched && !Kit.calm) gsap.fromTo(S.hint, {attr: {r: fs * .8}, opacity: .9}, {attr: {r: fs * 2.1}, opacity: 0, duration: 1.4, ease: 'power2.out', repeat: -1});
-    drawBead(); text(); paintDust(0);
   }
 
-  function drawBead() {
-    if (!S.bead) return;
-    const a = angOf(hours), [x, y] = P(a, rt), [tx, ty] = P(angOf(0), rt);
-    S.bead.setAttribute('transform', `translate(${x},${y})`);
-    let d = '';
-    if (hours >= 47.98) d = `M${tx},${ty}A${rt},${rt} 0 1 1 ${cx},${cy + rt}A${rt},${rt} 0 1 1 ${tx},${ty}`;
-    else if (hours > .05) d = `M${tx},${ty}A${rt},${rt} 0 ${hours > 24 ? 1 : 0} 1 ${x},${y}`;
-    S.arc.setAttribute('d', d);
-  }
-  function text(msg) {
-    if (!S.r1) return;
-    S.r1.textContent = done ? '48 HOURS PASSED' : `HOUR ${Math.floor(hours)} / 48`;
-    S.r2.textContent = msg || (done ? 'the peak of the fallout is over' : 'fallout outside: at its most intense');
-    S.r2.setAttribute('fill', msg ? '#ff8a6a' : INK);
-  }
-  function tiles() {
-    const n = Math.floor(hours + 1e-6);
-    TILES.forEach(t => {
-      const lit = t.i < n; if (lit === t.lit) return; t.lit = lit;
-      if (lit) gsap.fromTo(t.el, {fill: '#fff4cc'}, {fill: t.warm, duration: D(.55), ease: 'power3.out', delay: t.j * .04});
-      else gsap.to(t.el, {fill: t.dim, duration: D(.3), ease: 'power2.out'});
-    });
-  }
-  function setHours(v) {
-    if (done) return;
-    hours = Math.max(0, Math.min(48, v));
-    const six = Math.floor(hours / 6);
-    if (six !== lastSix) {
-      lastSix = six; Kit.haptic('selection');
-      const s = S.studs && S.studs[(six * 6) % 48];
-      if (s && !Kit.calm) gsap.fromTo(s, {attr: {r: fs * .45}}, {attr: {r: fs * .2}, duration: .5, ease: 'back.out(3)'});
-    }
-    drawBead(); tiles(); text();
-    if (hours >= 47.95) reveal();
-  }
-
-  function doorTap() {
-    if (done) return;
-    Kit.haptic('light');
-    gsap.fromTo(S.red, {opacity: .95}, {opacity: 0, duration: D(1.1), ease: 'power2.out'});
-    gsap.fromTo(S.door, {x: -fs * .5}, {x: 0, duration: D(.6), ease: 'elastic.out(1,.25)'});
-    gsap.fromTo(S.petals, {scale: 1.08, svgOrigin: `${cx} ${cy}`}, {scale: 1, svgOrigin: `${cx} ${cy}`, duration: D(.5), ease: 'back.out(3)'});
-    text('too soon: fallout at its peak');
-    say.innerHTML = `Hour ${Math.floor(hours)}. Outside, the fallout is at its most intense right now. <b>Keep the door shut and keep turning.</b>`;
-  }
-
-  function reveal() {
-    done = true; touched = true; hours = 48; drawBead(); Kit.haptic('success');
-    gsap.killTweensOf(S.hint); gsap.set(S.hint, {opacity: 0});
-    text();
-    gsap.fromTo(S.burst, {attr: {r: R * .4}, opacity: 1}, {attr: {r: R * 1.45}, opacity: 0, duration: D(1.5), ease: 'expo.out'});
-    gsap.fromTo(S.burst2, {attr: {r: R * .4}, opacity: .9}, {attr: {r: R * 1.3}, opacity: 0, duration: D(1.8), ease: 'expo.out', delay: D(.25)});
-    TILES.forEach(t => { t.lit = true; gsap.fromTo(t.el, {fill: '#ffffff'}, {fill: t.cool, duration: D(.6), ease: 'power2.out', delay: D(.15 + t.i * .022 + t.j * .06)}); });
-    S.studs.forEach((s, h) => gsap.fromTo(s, {fill: '#ffffff'}, {fill: h % 6 ? GOLD : '#fff1c2', duration: D(.5), delay: D(.15 + h * .022)}));
-    S.petals.forEach((p, k) => gsap.to(p, {fill: PC[k % 2], duration: D(.8), ease: 'power2.inOut', delay: D(.5 + k * .03)}));
-    S.dia.forEach(p => gsap.to(p, {fill: DC, duration: D(.8), delay: D(.7)}));
-    gsap.to(st, {I: .14, duration: D(2.6), ease: 'expo.out', delay: D(.2)});
-    gsap.to(S.leaf, {scaleX: .06, svgOrigin: S.hinge, duration: D(1.2), ease: 'power3.inOut', delay: D(1)});
-    gsap.fromTo(S.spill, {opacity: 0, scale: .5, svgOrigin: `${cx} ${dcy}`}, {opacity: 1, scale: 1, svgOrigin: `${cx} ${dcy}`, duration: D(1.4), ease: 'expo.out', delay: D(1.3)});
-    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
-    if (!Kit.calm) gsap.fromTo(['#why', '#keep'], {opacity: 0, y: 8}, {opacity: 1, y: 0, stagger: .12, duration: .5, ease: 'power3.out', delay: .4, clearProps: 'opacity,transform'});
-  }
-
-  // ---------- the ambient loop: dust falls, petals flicker, the halo breathes, rays turn ----------
-  function paintDust(t) {
-    const I = st.I;
-    DUST.forEach(d => {
-      d.el.setAttribute('cx', (d.x * W + Math.sin(t * .6 + d.p) * fs * .8).toFixed(1));
-      d.el.setAttribute('cy', (d.y * H).toFixed(1));
-    });
-    if (S.dust) S.dust.setAttribute('opacity', (.12 + .62 * I).toFixed(3));
-    if (S.hw) { S.hw.setAttribute('opacity', (I * (.7 + .3 * Math.sin(t * 2.1))).toFixed(3)); S.hc.setAttribute('opacity', ((1 - I) * (.75 + .2 * Math.sin(t * .9))).toFixed(3)); }
-    if (S.petals) S.petals.forEach((p, k) => p.setAttribute('opacity', (1 - (.12 + .2 * I) * (.5 + .5 * Math.sin(t * (1.2 + 5 * I) + k * 1.7))).toFixed(3)));
-    if (S.rays) S.rays.setAttribute('transform', `rotate(${(t * 6).toFixed(2)} ${cx} ${dcy})`);
-  }
-  let last = 0, running = false;
-  function loop(ms) {
-    const t = ms / 1000, dt = Math.min(.05, last ? t - last : .016); last = t;
-    DUST.forEach(d => { d.y += dt * (.012 + .07 * st.I) * d.s; if (d.y > 1.02) { d.y = -.02; d.x = Kit.rnd(); } });
-    paintDust(t);
-    requestAnimationFrame(loop);
-  }
-  const start = () => { if (!running && !Kit.calm) { running = true; requestAnimationFrame(loop); } };
-
-  // ---------- the drag round the clock ----------
-  const ang = e => { const r = svg.getBoundingClientRect(); return ((Math.atan2(e.clientY - r.top - cy, e.clientX - r.left - cx) + Math.PI / 2) / (Math.PI * 2) + 1) % 1; };
+  let drag = false;
+  const fromX = e => { const r = svg.getBoundingClientRect(); return (e.clientX - r.left - R.x0) / (R.x1 - R.x0) * MAX; };
   svg.addEventListener('pointerdown', e => {
-    if (e.target.closest('#door')) { doorTap(); return; }
-    if (done) return;
-    dragging = true; prevA = ang(e); svg.setPointerCapture(e.pointerId);
-    if (!touched) { touched = true; gsap.killTweensOf(S.hint); gsap.to(S.hint, {opacity: 0, duration: .2}); }
-    gsap.fromTo(S.bead.children[1], {attr: {r: fs * .95}}, {attr: {r: fs * .78}, duration: .4, ease: 'back.out(3)'});
+    if (locked) return; drag = true; svg.setPointerCapture && svg.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; G.nudge && G.nudge.remove(); }
+    setH(fromX(e)); Kit.haptic('selection');
   });
-  svg.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    const a = ang(e); let d = a - prevA; if (d > .5) d -= 1; if (d < -.5) d += 1; prevA = a;
-    setHours(hours + d * 48);
-  });
-  const end = () => { dragging = false; };
-  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  svg.addEventListener('pointermove', e => { if (drag && !locked) { const o = hrs; setH(fromX(e)); if (o !== hrs && hrs % 24 === 0) Kit.haptic('selection'); } });
+  const up = () => { drag = false; };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
 
-  Kit.onShow.card = layout;
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', v => {
+    locked = true; pct = v;
+    const b = Kit.$('sure').querySelector(`[data-v="${v}"]`); if (b) b.classList.add('mine');
+    const ok = hrs >= 48, s = said(hrs);
+    Kit.answer({choice: s, correct: ok, sure: v});
+    sure.grade(ok, v, `${s}, ${ok ? 'right' : 'too soon'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  sure.on();
+
+  // ---------- the back ----------
+  // a deliberately plain shape: high, falling, flattening. No axis, no units. Four labels only.
+  const fall = t => Math.pow(1 + t / 12, -1.5);
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), w = f.W, h = f.H, k = ink();
+    fs = Math.max(12, Math.min(14, w / 27));
+    const base = h - fs * 2.6, bandB = fs * 1.45, yTop = bandB + fs * 1.1, ch = Math.max(fs * 2, base - yTop);
+    const hh = Math.min(ch * .55, w * .14), rf = hh * .5, hw = hh * 1.3, hx0 = 0, hx1 = hx0 + hw;
+    const X0 = hx1 + hw * .14, X1 = w - fs * .4, X = t => X0 + (X1 - X0) * t / MAX, Y = t => base - ch * fall(t);
+    const gF = Kit.mk('g', {}, svg2), gC = Kit.mk('g', {}, svg2), gH = Kit.mk('g', {}, svg2), g48 = Kit.mk('g', {}, svg2), gYou = Kit.mk('g', {}, svg2);
+    const f1 = n => n.toFixed(1);
+    const shape = (a, b) => { let d = `M${f1(X(a))},${f1(base)} L${f1(X(a))},${f1(Y(a))}`; for (let t = a + .5; t < b; t += .5) d += ` L${f1(X(t))},${f1(Y(t))}`; return d + ` L${f1(X(b))},${f1(Y(b))} L${f1(X(b))},${f1(base)} Z`; };
+    // the fallout outside, flat green; the slice of the worst window that concerns you, darker
+    const area = Kit.mk('path', {d: shape(0, MAX), fill: FILL}, gF);
+    const [a, b] = hrs < 48 ? [hrs, 48] : [0, 48];
+    const deep = Kit.mk('path', {d: shape(a, b), fill: DEEP}, gF);
+    let d = `M${f1(X(0))},${f1(Y(0))}`;
+    for (let t = .5; t <= MAX; t += .5) d += ` L${f1(X(t))},${f1(Y(t))}`;
+    const line = Kit.mk('path', {d, fill: 'none', stroke: k, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, gC);
+    // the ground, and the same house, door open, you in the doorway
+    Kit.mk('line', {x1: 0, x2: w, y1: base, y2: base, stroke: k, 'stroke-width': 2}, gH);
+    Kit.mk('rect', {x: hx0 + hw * .06, y: base - hh, width: hw * .88, height: hh, fill: WHITE, stroke: k, 'stroke-width': 2}, gH);
+    Kit.mk('path', {d: `M${hx0},${base - hh} L${hx0 + hw / 2},${base - hh - rf} L${hx1},${base - hh} Z`, fill: k, stroke: k, 'stroke-width': 2, 'stroke-linejoin': 'round'}, gH);
+    const ws = hh * .26;
+    Kit.mk('rect', {x: hx0 + hw * .18, y: base - hh * .74, width: ws, height: ws, fill: k}, gH);
+    const dw = hw * .26, dh = hh * .66, dx = hx1 - hw * .16 - dw;
+    Kit.mk('rect', {x: dx, y: base - dh, width: dw, height: dh, fill: k}, gH);
+    Kit.mk('path', {d: `M${dx + dw},${base - dh} L${dx + dw * 1.45},${base - dh - fs * .2} L${dx + dw * 1.45},${base + fs * .2} L${dx + dw},${base} Z`, fill: k, stroke: WHITE, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, gH);
+    const fb = dw * .44, fh = dh * .5, fr = dw * .17, fx = dx + dw * .5;
+    Kit.mk('rect', {x: fx - fb / 2, y: base - fh, width: fb, height: fh, rx: fb * .45, fill: SUN, stroke: k, 'stroke-width': 1.2}, gH);
+    Kit.mk('circle', {cx: fx, cy: base - fh - fr * 1.25, r: fr, fill: SUN, stroke: k, 'stroke-width': 1.2}, gH);
+    // the 48 h line, with its tag on the ground
+    const x48 = X(48);
+    Kit.mk('line', {x1: x48, x2: x48, y1: yTop, y2: base, stroke: k, 'stroke-width': 2, 'stroke-dasharray': '5 4'}, g48);
+    const pt = txt(g48, x48, base + fs * .36, '48 h', {'font-weight': 800, 'text-anchor': 'middle', fill: WHITE});
+    const pw = pt.getComputedTextLength() + fs * .9, ph = fs * 1.45;
+    g48.insertBefore(Kit.mk('rect', {x: x48 - pw / 2, y: base - ph / 2, width: pw, height: ph, rx: ph / 2, fill: k}, g48), pt);
+    // the two sides, named once, below the ground
+    const ly = base + fs * 1.95;
+    txt(g48, (X(0) + x48) / 2, ly, 'most intense', {'text-anchor': 'middle', 'font-weight': 700});
+    txt(g48, (x48 + X(MAX)) / 2, ly, 'much weaker', {'text-anchor': 'middle', 'font-weight': 600});
+    // your hour: a line that cuts the curve, the one warm mark where it does
+    const xh = X(hrs);
+    Kit.mk('line', {x1: xh, x2: xh, y1: bandB + fs * .2, y2: base, stroke: k, 'stroke-width': 2}, gYou);
+    Kit.mk('circle', {cx: xh, cy: Y(hrs), r: fs * .58, fill: SUN, stroke: k, 'stroke-width': 2}, gYou);
+    const t1 = txt(gYou, 0, fs * 1.05, hrs === 0 ? 'you step out: right away' : `you step out: ${hrs} h`, {'font-weight': 800});
+    const bw = t1.getComputedTextLength();
+    t1.setAttribute('x', Math.max(0, Math.min(w - bw, xh - bw / 2)));
+    if (!animate || Kit.calm) return;
+    const L = line.getTotalLength();
+    line.style.strokeDasharray = L; line.style.strokeDashoffset = L;
+    gsap.timeline()
+      .from(gH, {opacity: 0, y: 6, duration: .45, ease: 'power2.out'})
+      .to(line.style, {strokeDashoffset: 0, duration: 1.2, ease: 'power3.out'}, '+=.1')
+      .from(area, {opacity: 0, duration: .6, ease: 'power2.out'}, '-=.9')
+      .from(g48, {opacity: 0, duration: .4, ease: 'power2.out'}, '-=.4')
+      .from(deep, {opacity: 0, duration: .5, ease: 'power2.out'})
+      .from(gYou, {opacity: 0, y: -6, duration: .45, ease: 'power3.out'}, '-=.2');
+  }
+
+  function writeBody() {
+    const v = hrs === 0 ? 'Right away, you step into the worst of it.'
+      : hrs < 48 ? `At ${hrs} h you are still inside the worst window.`
+      : `At ${hrs} h the worst window is behind you.`;
+    Kit.$('body').innerHTML = `<b>${v}</b> ${pct != null ? `You were ${pct}% sure. ` : ''}Fallout radiation is most intense in the first 48 hours. Wait at least that long before you go out and move away, or ideally until the authorities give the all-clear.`;
+  }
+
+  document.addEventListener('turned', () => { turned = true; writeBody(); requestAnimationFrame(() => drawBack(true)); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
   Kit.onEnter.card = () => {
-    start();
     if (Kit.calm) return;
-    const o = `${cx} ${cy}`;
-    gsap.from(TILES.map(t => t.el), {opacity: 0, scale: .82, svgOrigin: o, duration: .5, ease: 'power3.out', stagger: .008});
-    gsap.from(S.studs, {opacity: 0, duration: .3, stagger: .012, delay: .2});
-    gsap.from(S.petals, {scale: 0, opacity: 0, svgOrigin: o, duration: .7, ease: 'back.out(1.6)', stagger: .03, delay: .3});
-    gsap.from(S.door, {opacity: 0, y: fs, duration: .6, ease: 'power3.out', delay: .6});
-    gsap.from(S.bead, {opacity: 0, duration: .5, ease: 'power2.out', delay: .9});
+    gsap.from('#house', {opacity: 0, y: 12, duration: .6, ease: 'power3.out'});
+    gsap.from([G.hero, G.sub, G.handle], {opacity: 0, duration: .5, delay: .3, stagger: .08, ease: 'power2.out'});
   };
   Kit.play.card = async () => {
-    start(); touched = true;
-    for (const h of [6, 12, 18, 24]) { setHours(h); await wait(Kit.calm ? 30 : 110); }
-    doorTap(); await wait(Kit.calm ? 60 : 350);
-    for (const h of [30, 36, 42, 48]) { setHours(h); await wait(Kit.calm ? 30 : 110); }
-    await wait(Kit.calm ? 100 : 2800);
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const r = svg.getBoundingClientRect(), x = r.left + R.X(12), y = r.top + R.y + R.rh / 2;
+    const ev = (type, cx) => svg.dispatchEvent(new PointerEvent(type, {clientX: cx, clientY: y, pointerId: 1, bubbles: true}));
+    ev('pointerdown', r.left + R.X(2)); ev('pointermove', x); ev('pointerup', x);
+    await wait(150);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 900 : 3400);
   };
 })();
 Kit.single();

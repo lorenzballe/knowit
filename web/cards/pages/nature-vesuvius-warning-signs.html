@@ -1,405 +1,332 @@
-<!doctype html>
-<!-- slug: nature-vesuvius-warning-signs -->
-<!-- Design note. Look: a paper cut-out collage of Vesuvius and the Bay of Naples. Torn edges, flat bold shapes and an 8 fps stop-motion "boil" on every edge. The scene sits straight on the card, with no backdrop.
-     Interaction: drag a blue paper flag along a masking-tape timeline to guess when the earthquakes begin, then say how sure you are.
-     Wow: real Matter.js paper scraps fall and pile up. The sun sets behind the cone. Fumarole clouds spread across the months. Quake and swelling scraps crowd into the last two weeks while the cone swells and shakes. Then it erupts and throws lava scraps. -->
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vesuvius gives warning</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-vesuvius-warning-signs -->
+<!-- Design note.
+     Thought to carry: the first sign to show is not the one that marks the magma rising. That one comes last.
+     Front: Vesuvius under the headline, its plumbing a dashed silhouette below ground. Dragging the pin toward "eruption" lifts a red magma blob up the channel and thickens the steam. Four labels: the red-zone population, "drag me", and the two ends of the year.
+     Back: the same mountain, cut open and red inside. A chamber, a channel up to the summit, quakes along its walls, and a dashed red outline for the deformed ground. Below it, three bars on the same year, labelled right where they start: steam vents, quakes + ground deformation, and the reader's pin. One red bracket names the window. Four labels, no axis grid, no panel.
+     Facts follow the brief: fumaroles become more visible months ahead; quakes and ground deformation appear one to two weeks before and signal magma ascent. The card does not claim the magma gives no earlier sign.
+     Layout: the back has one paragraph instead of two, so the stage has room. The mountain and houses scale down together on short stages and always end above the chart.
+     The pin row sits further below the quakes row, so "your guess" above the pin always clears the quakes label. -->
+<title>When Vesuvius warns</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/matter.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-#why{display:flex;flex-direction:column;gap:.8cqh}
-#why .body{font:500 max(1.85cqh,12.5px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
-.answered .q{font-size:max(2.5cqh,15px)}
-.say{overflow-wrap:anywhere}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg);visibility:hidden;transition:visibility 0s linear .37s}
+.turn>.front{visibility:visible;transition:visibility 0s linear .37s}
+.turn.over>.back{visibility:visible}
+.turn.over>.front{visibility:hidden}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn,.kit-calm .turn>.face{transition:none}
+.stagebox{flex:1 1 auto;min-height:0;display:flex}
+#pic,#pic2{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+.front .q{margin-bottom:12px}
+.front .stagebox{margin-bottom:24px}
+.front .sure{margin:0 0 24px}
+.front .say{margin:0}
+.front::after{content:'';flex:0 0 max(5cqh,40px)}
+/* the confidence pills: legible, never greyed */
+#sure,#sure *{opacity:1!important}
+#sure *{color:#111}
+#sure [data-v]{background:transparent!important;border:1.5px solid rgba(17,17,17,.7)!important;color:#111!important;box-shadow:none!important}
+#sure [data-v].pick{background:#111!important;border-color:#111!important;color:#fff!important}
+.back .big{font-size:clamp(28px,4.8cqh,54px);line-height:1;margin:0 0 1.4cqh}
+.back .stagebox{margin-bottom:1.4cqh}
+.back .pay{font-size:max(1.9cqh,13px);line-height:1.32;font-weight:600;margin:0 0 1.4cqh}
+.back .pay b{font-weight:800}
+.foot{padding-right:112px}
+.q,.say,.pay,.keep{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Drag the pin · how sure" style="--c:#efe3c8;--k:#211a15;--edge:#c9b089">
+<article class="card" id="card" data-topic="nature" data-kind="Drag the pin · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">VESUVIUS</span></div>
-    <h2 class="q">How long before Vesuvius erupts do the earthquakes begin?</h2>
-    <div class="stagebox" id="stage">
-      <canvas id="pic" role="img" aria-label="A paper cut-out Vesuvius by the bay, above a timeline from six months before the eruption to the eruption, with a blue flag to drag."></canvas>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANO WARNINGS</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">How long before Vesuvius erupts do quakes and ground deformation begin?</h2>
+        <div class="stagebox"><svg id="pic" role="img" aria-label="Vesuvius with steam rising from its crater, houses at its foot, a dashed outline of its magma channel underground, and a timeline of the year before an eruption with a pin to drag."></svg></div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Its steam vents become more visible months ahead. <b>Drag the pin</b> to when quakes and ground deformation start.</p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Only 1 to 2 weeks before.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Vesuvius cut open: magma rising from a chamber up a channel, quakes along its walls, the ground deforming. Below, three bars on the same year: steam vents from months before the eruption, quakes and ground deformation only in the last one to two weeks, and your guess."></svg></div>
+        <p class="pay" id="pay">Steam vents show months ahead. <b>Quakes and ground deformation, which signal the magma rising, come only in the last 1–2 weeks.</b></p>
+        <div class="keep"><b>WHAT TO KEEP</b> The first warning to show is not the one that marks the magma rising. That one comes last.</div>
+        <div class="foot"><span class="src">Source · Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020).</span></div>
+      </section>
     </div>
-    <div id="sure"></div>
-    <p class="say" id="say">Drag the blue flag to when you think <b>the quakes begin</b>.</p>
-    <div id="why" class="gone"><p class="body"><b>Fumaroles grow stronger several months ahead. Earthquakes and swelling ground come only 1–2 weeks before:</b> the magma is rising. About 700,000 people live in the red zone around it.</p></div>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fumaroles warn months ahead; quakes and swelling, 1–2 weeks: magma on the move.</div>
-    <div class="foot"><span class="src">Source · Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020)</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
+</script>
+<script>
 (() => {
-  const cv = Kit.$('pic'), card = Kit.$('card'), say = Kit.$('say'), M = Matter;
-  const PAL = {ink:'#211a15', paper:'#f8f1df', red:'#d8432a', ochre:'#e3a23a', blue:'#2b4f88', olive:'#55633c', oliveL:'#6d7d48',
-    cloud:'#f5f2ea', cloudG:'#b9b2a6', sun:'#f08a2c', lava:'#ef5a24', ash:'#4a3f3a', ashL:'#6f5f55', somma:'#342b27',
-    sea:'#5f8ea6', seaL:'#86b2c2', pine:'#3d5634', pineL:'#58744a'};
-  let x = null, W = 0, H = 0, fs = 12, u = 20, gy = 0, sh = 24, x0 = 0, x1 = 0, gB = 0, mono = 'monospace', oneLine = false;
-  let engine = null, pieces = [], gen = 0, houses = [], grain = null, loop = false, pinPx = null, nQ = 20, nF = 10;
-  let guess = 60, touched = false, locked = false, revealed = false, done = false, boil = 0, bt = 0, drag = false;
-  const A = {vol:1, town:1, strip:1, pin:1, sun:1, sky:1, sunY:0, fum:.35, swell:0, plume:0, band:0, tag1:0, tag2:0, shake:0, lift:0};
-  // timeline: log scale that leaves room for the final weeks
-  const LN = Math.log1p(60);
-  const fr = d => 1 - Math.log1p(d / 3) / LN;
-  const xOf = d => x0 + fr(d) * (x1 - x0);
-  const dOf = px => 3 * Math.expm1((1 - Math.max(0, Math.min(1, (px - x0) / (x1 - x0)))) * LN);
-  const fmt = d => d >= 45 ? `${Math.round(d / 30)} months` : d >= 10.5 ? `${Math.round(d / 7)} weeks` : d >= 1.5 ? `${Math.round(d)} days` : '1 day';
-  const mul = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-  const hash = s => { let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0; return h; };
-  const clamp = v => Math.max(0, Math.min(1, v));
+  const card = Kit.$('card'), pic = Kit.$('pic'), pic2 = Kit.$('pic2');
+  const GUESS = '#ffffff', MAG = '#d23a1c', MAGT = '#a8240e';
+  let INK = '#111', C = '#ccc';
+  const YEAR = 365;
+  let guess = 180, touched = false, locked = false;
+  let G = {};
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const colours = () => { const s = getComputedStyle(card); INK = s.getPropertyValue('--k').trim() || INK; C = s.getPropertyValue('--c').trim() || C; };
+  const fmt = d => d >= 45 ? `${Math.round(d / 30.4)} months` : d >= 14 ? `${Math.round(d / 7)} weeks` : `${Math.max(1, Math.round(d))} day${Math.round(d) > 1 ? 's' : ''}`;
 
-  // ---------- torn paper ----------
-  function torn(pts, seed, amp, seg = 6) {
-    const r = mul(seed), out = [];
-    for (let i = 0; i < pts.length; i++) {
-      const [ax, ay] = pts[i], [bx, by] = pts[(i + 1) % pts.length];
-      const L = Math.hypot(bx - ax, by - ay) || 1, n = Math.max(1, Math.ceil(L / seg)), nx = -(by - ay) / L, ny = (bx - ax) / L;
-      for (let k = 0; k < n; k++) { const t = k / n, o = (r() - .5) * 2 * amp * (k ? 1 : .4); out.push([ax + (bx - ax) * t + nx * o, ay + (by - ay) * t + ny * o]); }
-    }
-    return out;
-  }
-  const cache = {};
-  function shape(key, make, amp, seg) { const c = cache[key] || (cache[key] = []); if (!c[boil]) c[boil] = torn(make(), hash(key) + boil * 977, amp, seg); return c[boil]; }
-  const circlePts = (r, n, wob = 0, ph = 0, off = 0, sy = 1) => Array.from({length: n}, (_, i) => { const a = off + i * 2 * Math.PI / n, rr = r * (1 + wob * Math.sin(4 * a + ph)); return [Math.cos(a) * rr, Math.sin(a) * rr * sy]; });
-  const rectTL = (a, b, w, h) => [[a, b], [a + w, b], [a + w, b + h], [a, b + h]];
-  function path(p) { x.beginPath(); p.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); x.closePath(); }
-  function paperFill(p, col, d = 1) {
-    x.save(); x.translate(d * 1.4, d * 2.1); path(p); x.fillStyle = 'rgba(60,35,12,.26)'; x.fill(); x.restore();
-    path(p); x.fillStyle = col; x.fill();
-    if (grain) { x.save(); x.globalAlpha = .17; x.fillStyle = grain; x.fill(); x.restore(); }
-    x.save(); x.globalAlpha = .4; x.strokeStyle = '#fffaf0'; x.lineWidth = 1; x.stroke(); x.restore();
-  }
-  function label(s, X, Y, o = {}) {
-    x.font = `${o.w || 700} ${o.size || fs}px ${mono}`; x.textAlign = o.align || 'left'; x.textBaseline = 'middle';
-    x.fillStyle = o.col || PAL.ink; x.fillText(s, X, Y);
-  }
-  function makeGrain() {
-    const c = document.createElement('canvas'); c.width = c.height = 90;
-    const g = c.getContext('2d'), im = g.createImageData(90, 90), r = mul(3);
-    for (let i = 0; i < im.data.length; i += 4) { const v = r() < .5 ? 0 : 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = r() * 70; }
-    g.putImageData(im, 0, 0); grain = x.createPattern(c, 'repeat');
+  function txt(p, g, x, y, t, a = {}) {
+    const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-size': g.fs, 'font-weight': 700, 'font-family': 'var(--body)'}, a), p);
+    e.style.fontFamily = 'var(--body)'; e.textContent = t;
+    const w = e.getComputedTextLength(), an = a['text-anchor'] || 'start';
+    const left = an === 'end' ? x - w : an === 'middle' ? x - w / 2 : x;
+    const lo = a._lo != null ? a._lo : 1, hi = a._hi != null ? a._hi : g.W - 1;
+    const sh = Math.max(lo - left, Math.min(0, hi - (left + w)));
+    if (sh) e.setAttribute('x', x + sh);
+    e.removeAttribute('_lo'); e.removeAttribute('_hi');
+    e._l = left + sh; e._r = left + sh + w;
+    return e;
   }
 
-  // ---------- physics pieces ----------
-  function addPiece(kind, px, py, ang) {
-    const o = {friction: .9, frictionStatic: 1, restitution: .04, frictionAir: .015, angle: ang}, d = {kind};
-    if (kind === 'f') { d.r = u * .62; d.b = M.Bodies.circle(px, py, d.r * .9, o); d.pts = circlePts(d.r, 14, .14, pieces.length); d.col = PAL.cloud; }
-    else if (kind === 'q') { d.w = u * 1.5; d.h = u * .72; d.b = M.Bodies.rectangle(px, py, d.w, d.h, o); d.pts = rectTL(-d.w / 2, -d.h / 2, d.w, d.h); d.col = PAL.red; }
-    else if (kind === 'd') { d.w = u * 1.15; d.h = u * .85; d.b = M.Bodies.rectangle(px, py, d.w, d.h, o); d.pts = rectTL(-d.w / 2, -d.h / 2, d.w, d.h); d.col = PAL.ochre; }
-    else { d.r = u * .36; d.b = M.Bodies.polygon(px, py, 5, d.r, o); d.pts = circlePts(d.r, 5, 0, 0, Math.PI / 5); d.col = PAL.lava; }
-    d.seed = pieces.length * 31 + 7; d.v = [];
-    M.Composite.add(engine.world, d.b); pieces.push(d); return d;
+  // Vesuvius: Monte Somma's old rim on the left, the Gran Cono with its crater on the right.
+  const PROFILE = [[0,0],[.08,.05],[.18,.24],[.27,.57],[.33,.8],[.37,.83],[.41,.7],[.47,.66],[.52,.8],[.57,.96],[.6,1],[.635,.94],[.67,1],[.7,.96],[.76,.7],[.84,.36],[.92,.12],[1,0]];
+  function vpath(cx, gy, vw, vh, lift = 0) {
+    const P = PROFILE.map(([t, f]) => [cx - vw / 2 + t * vw, gy - f * vh - lift * Math.sin(Math.PI * t)]);
+    let d = `M${P[0][0]},${P[0][1]}`;
+    for (let i = 1; i < P.length - 1; i++) { const m = [(P[i][0] + P[i + 1][0]) / 2, (P[i][1] + P[i + 1][1]) / 2]; d += ` Q${P[i][0]},${P[i][1]} ${m[0]},${m[1]}`; }
+    return d + ` L${P[P.length - 1][0]},${P[P.length - 1][1]}`;
   }
-  function drawPiece(d) {
-    const b = d.b; x.save(); x.translate(b.position.x, b.position.y); x.rotate(b.angle);
-    const p = d.v[boil] || (d.v[boil] = torn(d.pts, d.seed + boil * 977, u * .05, u * .28));
-    paperFill(p, d.col, 1.2);
-    x.lineCap = 'round'; x.lineJoin = 'round';
-    if (d.kind === 'f') { x.strokeStyle = PAL.cloudG; x.lineWidth = Math.max(1.4, u * .09); x.beginPath(); x.arc(0, d.r * .15, d.r * .5, .15 * Math.PI, .85 * Math.PI); x.stroke(); }
-    else if (d.kind === 'q') { x.strokeStyle = PAL.paper; x.lineWidth = Math.max(1.4, u * .085); x.beginPath(); const n = 7; for (let k = 0; k <= n; k++) { const X = -d.w * .38 + k * d.w * .76 / n, Y = (k === 0 || k === n) ? 0 : (k % 2 ? -1 : 1) * d.h * .27; k ? x.lineTo(X, Y) : x.moveTo(X, Y); } x.stroke(); }
-    else if (d.kind === 'd') { x.strokeStyle = PAL.ink; x.lineWidth = Math.max(1.4, u * .085); x.beginPath(); x.moveTo(-d.w * .38, d.h * .22); x.lineTo(d.w * .38, d.h * .22); x.moveTo(-d.w * .3, d.h * .22); x.quadraticCurveTo(0, -d.h * .55, d.w * .3, d.h * .22); x.stroke(); }
-    else { x.fillStyle = '#a3260f'; x.beginPath(); x.arc(0, 0, d.r * .35, 0, 7); x.fill(); }
-    x.restore();
-  }
-  function plan() {
-    const r = mul(99), f = [], q = [], fe = fr(25);
-    for (let i = 0; i < nF; i++) f.push(.02 + (fe - .04) * (i + r() * .8) / nF);
-    const a = fr(14), b = fr(.4);
-    for (let i = 0; i < nQ; i++) q.push({k: i % 3 === 2 ? 'd' : 'q', fr: a + (b - a) * Math.pow(r(), .85)});
-    q.sort((m, n) => m.fr - n.fr);
-    return {f, q};
-  }
+  const craterAt = (cx, gy, vw, vh) => [cx - vw / 2 + .635 * vw, gy - .92 * vh];
 
-  // ---------- little scenery ----------
-  function cloudAt(X, Y, s, key) {
-    x.save(); x.translate(X, Y);
-    [[-.55, .05, .42], [.5, .08, .38], [0, -.18, .55]].forEach(([a, b, r], i) => {
-      x.save(); x.translate(a * s, b * s); paperFill(shape(key + i, () => circlePts(r * s, 14, .06, i), s * .03, s * .18), i === 2 ? '#fbf8ef' : PAL.cloud, .9); x.restore();
+  function mountain(svg, g, cls) {
+    const {cx, GY, vw, vh, fs, W} = g, hk = g.hk || 1;
+    const v = Kit.mk('g', {class: cls}, svg);
+    Kit.mk('path', {d: vpath(cx, GY, vw, vh) + ' Z', fill: INK}, v);
+    const hs = Kit.mk('g', {class: cls + 'h'}, svg), hw = fs * .95 * hk, hh = fs * .62 * hk, xs = [];
+    for (let x = fs * 1.2; x < W - fs; x += hw * 2.15) xs.push(x);
+    xs.forEach((x, i) => {
+      const s = i % 3 === 1 ? 1.15 : 1, w = hw * s, h = hh * s, y = GY;
+      Kit.mk('path', {d: `M${x - w / 2},${y} V${y - h} L${x},${y - h - w * .5} L${x + w / 2},${y - h} V${y} Z`, fill: C, stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, hs);
     });
-    x.restore();
-  }
-  function bird(X, Y, s, f) {
-    x.strokeStyle = PAL.ink; x.lineWidth = Math.max(1.5, s * .22); x.lineCap = 'round'; x.beginPath();
-    x.moveTo(X - s, Y - s * (.15 + .45 * f)); x.quadraticCurveTo(X - s * .4, Y - s * .55, X, Y);
-    x.quadraticCurveTo(X + s * .4, Y - s * .55, X + s, Y - s * (.15 + .45 * f)); x.stroke();
-  }
-  function pine(X, h, s, key) {
-    x.strokeStyle = '#3a2a1f'; x.lineWidth = Math.max(2, s * .16); x.lineCap = 'round';
-    x.beginPath(); x.moveTo(X, gy); x.quadraticCurveTo(X + s * .25, gy - h * .55, X + s * .1, gy - h); x.stroke();
-    x.save(); x.translate(X + s * .1, gy - h - s * .15);
-    paperFill(shape(key, () => circlePts(s * 1.15, 18, .1, 2, 0, .42), s * .05, s * .22), PAL.pine, 1.2);
-    x.translate(-s * .25, -s * .12);
-    paperFill(shape(key + 'l', () => circlePts(s * .6, 12, .08, 5, 0, .35), s * .04, s * .2), PAL.pineL, .4);
-    x.restore();
+    Kit.mk('line', {x1: 0, x2: W, y1: GY, y2: GY, stroke: INK, 'stroke-width': 2}, svg);
+    return {xs, crater: craterAt(cx, GY, vw, vh)};
   }
 
-  // ---------- the scene ----------
-  function draw(t) {
-    if (!x || !W) return;
-    const tt0 = Kit.calm ? 0 : t;
-    x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, cv.width, cv.height);
-    const dpr = cv.width / W; x.setTransform(dpr, 0, 0, dpr, 0, 0);
-    x.save();
-    if (A.shake > .3 && !Kit.calm) { const r = mul(bt * 13 + 5); x.translate((r() - .5) * A.shake, (r() - .5) * A.shake * .6); A.shake *= .93; } else A.shake = 0;
-
-    const cx = W * .79, py = H * .3, vh = gy - py;
-
-    // the sun, which sinks behind the cone when the warnings start
-    const sr = Math.min(W, H) * .055;
-    if (A.sunY < .999) {
-      x.save(); x.translate(W * .54, H * .13 + (gy - vh * .05 - H * .13) * A.sunY); x.scale(A.sun, A.sun);
-      paperFill(shape('sun', () => circlePts(sr, 20), sr * .06, 5), PAL.sun, 1.2);
-      paperFill(shape('sun2', () => circlePts(sr * .55, 14), sr * .05, 5), '#f7b452', .5);
-      x.restore();
-    }
-
-    // sky: drifting paper clouds and gulls
-    if (A.sky > .01) {
-      x.save(); x.globalAlpha = A.sky;
-      const sw = Math.sin(tt0 / 2400) * u * .4;
-      cloudAt(W * .2 + sw, H * .1 + (1 - A.sky) * -H * .1, u * 1.15, 'c1');
-      cloudAt(W * .87 - sw * .8, H * .1 + (1 - A.sky) * -H * .1, u * .95, 'c2');
-      const fl = Kit.calm ? .5 : (Math.sin(tt0 / 170) + 1) / 2, fl2 = Kit.calm ? .2 : (Math.sin(tt0 / 150 + 2) + 1) / 2;
-      bird(W * .3 + Math.sin(tt0 / 1900) * u * .8, H * .19 + Math.cos(tt0 / 1300) * u * .2, u * .32, fl);
-      bird(W * .38 + Math.sin(tt0 / 1900 + 1) * u * .8, H * .15 + Math.cos(tt0 / 1100) * u * .2, u * .24, fl2);
-      x.restore();
-    }
-
-    // the Bay of Naples behind the town
-    const sy = gy - u * 2.05;
-    paperFill(shape('sea', () => [[W * .02, sy + 2], [W * .3, sy], [W * .54, sy + 1], [W * .54, gy], [W * .02, gy]], 1.6, 7), PAL.sea, 1);
-    x.save(); x.strokeStyle = PAL.seaL; x.lineWidth = Math.max(1.4, u * .07); x.lineCap = 'round';
-    for (let i = 0; i < 5; i++) {
-      const wx = W * (.06 + i * .09) + Math.sin(tt0 / 900 + i * 1.7) * u * .25, wy = sy + u * (.35 + (i % 2) * .3);
-      x.beginPath(); x.arc(wx, wy + u * .18, u * .2, 1.15 * Math.PI, 1.85 * Math.PI); x.arc(wx + u * .38, wy + u * .18, u * .2, 1.15 * Math.PI, 1.85 * Math.PI); x.stroke();
-    }
-    x.restore();
-    // a little sailboat bobbing on the horizon
-    { const bx = W * .33 + Math.sin(tt0 / 3100) * u * .9, by = sy + u * .25 + Math.sin(tt0 / 420) * u * .05;
-      x.save(); x.translate(bx, by); x.rotate(Kit.calm ? 0 : Math.sin(tt0 / 520) * .06);
-      paperFill(shape('sail', () => [[0, -u * .2], [0, -u * 1.15], [u * .55, -u * .2]], .8, 4), PAL.paper, .7);
-      paperFill(shape('sail2', () => [[-u * .06, -u * .2], [-u * .06, -u * .85], [-u * .4, -u * .2]], .7, 4), '#f3c9a3', .5);
-      paperFill(shape('hull', () => [[-u * .62, -u * .2], [u * .7, -u * .2], [u * .45, u * .1], [-u * .42, u * .1]], .8, 4), PAL.red, .7);
-      x.restore(); }
-
-    // the volcano, swelling around its base
-    x.save(); x.beginPath(); x.rect(-W, -H * 2, W * 3, gy + H * 2 + 3); x.clip();
-    x.translate(0, (1 - A.vol) * H * .75);
-    const s = A.swell; x.translate(cx, gy); x.scale(1 + .03 * s, 1 + .1 * s); x.translate(-cx, -gy);
-    if (A.plume > .01) for (let i = 6; i >= 0; i--) {
-      const tt = i / 6, r = u * (.7 + 1.7 * tt), px = cx + Math.sin(i * 1.9) * u * .35 + tt * u * .6, pyy = py - (py - H * .06) * tt;
-      const bob = Kit.calm ? 0 : Math.sin(tt0 / 700 + i) * u * .08;
-      x.save(); x.translate(px + bob, py + (pyy - py) * A.plume); x.scale(A.plume, A.plume);
-      paperFill(shape('pl' + i, () => circlePts(r, 16, .12, i), r * .05, r * .25), i % 2 ? '#6f655e' : '#544a44', 2); x.restore();
-    }
-    paperFill(shape('somma', () => [[W * .38, gy], [W * .5, gy - vh * .5], [W * .58, gy - vh * .76], [W * .64, gy - vh * .72], [W * .7, gy - vh * .6], [W * .8, gy]], 2.2, 7), PAL.somma, 2);
-    paperFill(shape('cone', () => [[W * .48, gy], [W * .6, gy - vh * .55], [W * .73, py + vh * .03], [W * .76, py], [W * .82, py + vh * .01], [W * .85, py + vh * .05], [W * .93, gy - vh * .4], [W * .975, gy + 2]], 2.2, 7), PAL.ash, 2);
-    paperFill(shape('lit', () => [[W * .48, gy], [W * .6, gy - vh * .55], [W * .73, py + vh * .03], [W * .745, py + vh * .22], [W * .66, gy - vh * .28], [W * .6, gy]], 1.8, 7), PAL.ashL, .6);
-    paperFill(shape('st1', () => [[W * .7, py + vh * .18], [W * .718, py + vh * .18], [W * .665, gy - vh * .14], [W * .64, gy - vh * .14]], 1, 5), '#3a302b', .4);
-    paperFill(shape('st2', () => [[W * .85, py + vh * .2], [W * .866, py + vh * .2], [W * .915, gy - vh * .12], [W * .89, gy - vh * .12]], 1, 5), '#3a302b', .4);
-    paperFill(shape('crater', () => [[W * .735, py + 2], [W * .79, py - u * .15], [W * .845, py + 4], [W * .79, py + vh * .06]], 1.2, 5), '#231c19', .5);
-    if (A.plume > .01) { const k = A.plume; paperFill(torn([[cx - u * .6, py + 2], [cx - u * .15, py - u * 1.4 * k], [cx + u * .15, py - u * .6 * k], [cx + u * .45, py - u * 1.2 * k], [cx + u * .6, py + 2]], 500 + boil * 977, u * .06, u * .3), PAL.lava, 1); }
-    if (A.fum > 0) for (let i = 0; i < 3; i++) {
-      const ph = Kit.calm ? i / 3 + .15 : ((t / 2600) + i / 3) % 1;
-      x.save(); x.globalAlpha = A.fum * (1 - ph) * (1 - Math.min(1, A.plume)); x.translate(cx + (i - 1) * u * .5 + ph * u * .6, py - u * .3 - ph * u * 2.6);
-      const k = .5 + ph; x.scale(k, k); paperFill(shape('w' + i, () => circlePts(u * .45, 12, .15, i), u * .03, u * .2), PAL.cloud, 1); x.restore();
-    }
-    x.restore();
-
-    // stone pines and the town at its foot
-    x.save(); x.translate(0, (1 - clamp(A.town * 1.4)) * u * 3);
-    pine(W * .455, u * 2.2, u, 'p1'); pine(W * .19, u * 2.5, u * .85, 'p2');
-    x.restore();
-    houses.forEach((h, i) => {
-      const k = clamp(A.town * 1.8 - i * .15); if (k <= 0) return;
-      x.save(); x.translate(h.x, gy); x.scale(1, k);
-      paperFill(shape('h' + i, () => rectTL(0, -h.h, h.w, h.h), 1.1, 5), h.col, 1.2);
-      paperFill(shape('r' + i, () => [[-u * .12, -h.h], [h.w + u * .12, -h.h], [h.w / 2, -h.h - u * .55]], 1.1, 5), h.roof, 1);
-      x.fillStyle = PAL.ink; x.fillRect(h.w * .22, -h.h * .7, u * .2, u * .24); x.fillRect(h.w * .6, -h.h * .7, u * .2, u * .24);
-      if (h.door) { x.fillStyle = '#6b3b25'; x.fillRect(h.w * .4, -u * .38, u * .22, u * .38); }
-      x.restore();
-    });
-
-    // the ground: a torn strip of meadow, not a box
-    paperFill(shape('gnd', () => [[W * .012, gy + 3], [W * .2, gy - 3], [W * .5, gy - 1], [W * .78, gy - 4], [W * .988, gy + 2], [W * .985, gB], [W * .5, gB + 2], [W * .015, gB]], 2.4, 7), PAL.olive, 1.2);
-    for (let i = 0; i < 6; i++) {
-      const gx = W * (.08 + i * .165), gw = u * (1.1 + (i % 3) * .4);
-      paperFill(shape('tuft' + i, () => [[gx, gB - 2], [gx + gw * .3, gB - u * .35], [gx + gw * .7, gB - u * .3], [gx + gw, gB - 2]], .8, 4), PAL.oliveL, .3);
-    }
-    x.save(); x.translate(-(1 - A.strip) * W * 1.2, 0);
-    paperFill(shape('strip', () => rectTL(x0 - fs * .7, gy, x1 - x0 + fs * 1.4, sh), 1.6, 6), PAL.paper, 1.5);
-    if (A.band > 0) {
-      const a = xOf(14), b = xOf(7), w = (b - a) * Math.min(1, A.band);
-      x.fillStyle = '#f4a283'; x.fillRect(a, gy + 2, w, sh - 4);
-      paperFill(torn(rectTL(a, gy + sh + 3, w, Math.max(4, sh * .22)), 77 + boil * 977, 1.1, 5), PAL.red, .8);
-    }
-    x.strokeStyle = PAL.ink; x.lineWidth = 1;
-    [150, 120, 90, 60].forEach(d => { const X = xOf(d); x.beginPath(); x.moveTo(X, gy); x.lineTo(X, gy + sh * .18); x.stroke(); });
-    x.lineWidth = 1.6;
-    [[180, '6 mo', 'left'], [30, '1 mo', 'center'], [14, '2 wk', 'center'], [7, '1 wk', 'center'], [0, 'erupts', 'right']].forEach(([d, s, al]) => {
-      const X = xOf(d); x.beginPath(); x.moveTo(X, gy); x.lineTo(X, gy + sh * .3); x.stroke();
-      label(s, al === 'left' ? X + 3 : al === 'right' ? X - 3 : X, gy + sh * .68, {align: al, w: 700});
-    });
-    x.restore();
-
-    pieces.forEach(drawPiece);
-
-    // the reader's flag
-    const target = xOf(guess);
-    pinPx = pinPx == null || Kit.calm ? target : pinPx + (target - pinPx) * .45;
-    const px = pinPx, top = gy - Math.max(H * .2, fs * 2.6);
-    x.save(); x.translate(0, -(1 - A.pin) * H * .6);
-    x.strokeStyle = PAL.ink; x.lineWidth = Math.max(2, u * .11); x.lineCap = 'round';
-    x.beginPath(); x.moveTo(px, gy + sh * .2); x.lineTo(px, top); x.stroke();
-    const s2 = !touched ? 'drag me' : revealed ? 'you: ' + fmt(guess) : fmt(guess) + ' before';
-    x.font = `800 ${fs}px ${mono}`;
-    const fw = x.measureText(s2).width + fs * 1.6, fh = fs * 1.9, flip = px + fw > W - 4;
-    const wave = Kit.calm || drag ? 0 : Math.sin(t / 380) * .025;
-    x.save(); x.translate(px, top); x.rotate((flip ? 1 : -1) * (.08 * A.lift + wave));
-    const fp = flip ? [[0, 0], [-fw, 0], [-fw + fs * .5, fh / 2], [-fw, fh], [0, fh]] : [[0, 0], [fw, 0], [fw - fs * .5, fh / 2], [fw, fh], [0, fh]];
-    paperFill(torn(fp, 300 + boil * 977, 1.1, 6), PAL.blue, 1.5);
-    label(s2, flip ? -fw + fs * .8 : fs * .55, fh / 2, {col: PAL.paper, w: 800});
-    x.fillStyle = PAL.red; x.beginPath(); x.arc(0, 0, Math.max(3.5, u * .19), 0, 7); x.fill();
-    x.restore();
-    if (!touched && !locked) {
-      const b = Kit.calm ? 0 : Math.sin(t / 260) * 3, ay = top + fh + fs * 1.3, hw = fs * 1.8;
-      x.strokeStyle = PAL.ink; x.lineWidth = 2.2; x.lineJoin = 'round'; x.beginPath();
-      x.moveTo(px - hw - b, ay); x.lineTo(px + hw + b, ay);
-      x.moveTo(px - hw - b + 6, ay - 5); x.lineTo(px - hw - b, ay); x.lineTo(px - hw - b + 6, ay + 5);
-      x.moveTo(px + hw + b - 6, ay - 5); x.lineTo(px + hw + b, ay); x.lineTo(px + hw + b - 6, ay + 5); x.stroke();
-    }
-    x.restore();
-
-    // the two lessons, in their own rows of sky
-    const t1y = H * .04, t1h = fs * (1.25 * (oneLine ? 1 : 2) + 1.05), t2y = Math.max(H * .2, t1y + t1h + fs * .6);
-    tag(A.tag1, x0, t1y, oneLine ? ['FUMAROLES · months before'] : ['FUMAROLES', 'months before'], PAL.cloud, PAL.ink, -.035, 'tg1');
-    tag(A.tag2, oneLine ? x0 + W * .1 : W * .24, t2y, oneLine ? ['QUAKES + SWELLING · 1–2 wk'] : ['QUAKES + SWELLING', '1–2 weeks before'], PAL.red, PAL.paper, .03, 'tg2');
-    x.restore();
-  }
-  function tag(k, X, Y, lines, col, tc, rot, key) {
-    if (k <= 0) return;
-    let mw = 0; lines.forEach((l, i) => { x.font = `${i ? 600 : 800} ${fs}px ${mono}`; mw = Math.max(mw, x.measureText(l).width); });
-    const w = mw + fs * 1.3, h = fs * (1.25 * lines.length + 1.05); X = Math.max(4, Math.min(X, W * .64 - w));
-    x.save(); x.globalAlpha = Math.min(1, k * 1.5); x.translate(X + w / 2, Y + h / 2 - (1 - k) * H * .15); x.rotate(rot * (2 - Math.min(1, k)));
-    paperFill(shape(key, () => rectTL(-w / 2, -h / 2, w, h), 1.5, 6), col, 1.6);
-    x.save(); x.rotate(-.3); x.fillStyle = 'rgba(255,250,232,.62)'; x.fillRect(-w / 2 - fs * .2, -h / 2 + fs * .1, fs * 2.2, fs * .8); x.restore();
-    lines.forEach((l, i) => label(l, -w / 2 + fs * .65, -h / 2 + fs * (1.15 + 1.25 * i), {col: tc, w: i ? 600 : 800}));
-    x.restore();
-  }
-
-  // ---------- build at the real size ----------
-  function build() {
-    gen++;
-    const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H; if (!W || !H) return;
-    fs = Math.max(12, Math.min(15, H * .042, W * .04));
-    u = Math.max(10, Math.min(W * .055, H * .062));
-    gy = Math.round(H * .79); sh = Math.max(fs * 1.9, H * .08); x0 = W * .05; x1 = W * .95;
-    gB = Math.min(H - 4, gy + sh + Math.max(10, H * .07));
-    oneLine = H < fs * 16;
-    nQ = Math.round(Math.max(12, Math.min(21, W * H / 13000))); nF = Math.round(nQ * .5);
-    mono = getComputedStyle(card).getPropertyValue('--mono').trim() || 'monospace';
-    for (const k in cache) delete cache[k];
-    makeGrain();
-    houses = []; const r = mul(5); let hx = W * .07;
-    const cols = ['#f6e7c1', '#e98a5e', '#f3d27a', '#dccdb0'];
-    for (let i = 0; i < 6 && hx < W * .4; i++) { const w = u * (.9 + r() * .5), h = u * (.7 + r() * .6); houses.push({x: hx, w, h, col: cols[i % 4], roof: i % 2 ? '#a8402a' : '#7a3527', door: i % 2 === 0}); hx += w + u * (.25 + r() * .3); }
-    engine = M.Engine.create({enableSleeping: true}); engine.positionIterations = 10; engine.velocityIterations = 8;
-    M.Composite.add(engine.world, [
-      M.Bodies.rectangle(W / 2, gy + 500, W * 3, 1000, {isStatic: true, friction: 1}),
-      M.Bodies.rectangle(-30 + W * .015, gy - H * 3, 60, H * 8, {isStatic: true}),
-      M.Bodies.rectangle(W + 30 - W * .015, gy - H * 3, 60, H * 8, {isStatic: true})]);
-    pieces = []; pinPx = null;
-    if (revealed) settle();
-    draw(performance.now()); startLoop();
-  }
-  function startLoop() { if (loop) return; loop = true; requestAnimationFrame(frame); }
-  function frame(t) {
-    if (revealed && engine) M.Engine.update(engine, 1000 / 60);
-    if (!Kit.calm) { bt = Math.floor(t / 125); boil = bt % 3; }
-    draw(t); requestAnimationFrame(frame);
-  }
-
-  // ---------- the reveal ----------
-  const crater = () => [W * .79, gy - (gy - H * .3) * 1.1 - u * .4];
-  function reveal() {
-    revealed = true; startLoop();
-    if (Kit.calm) { settle(); return; }
-    const g = gen, P = plan(), at = (ms, fn) => setTimeout(() => { if (g === gen && !done) fn(); }, ms);
-    gsap.to(A, {sky: 0, duration: .8, ease: 'power2.in'});
-    gsap.to(A, {sunY: 1, duration: 2.2, ease: 'power1.in'});
-    gsap.to(A, {fum: 1, duration: 1.2, ease: 'power2.out'});
-    P.f.forEach((f, i) => at(i * 130, () => addPiece('f', x0 + f * (x1 - x0), -u * 1.5, Kit.rnd() * 6)));
-    at(700, () => gsap.to(A, {tag1: 1, duration: .7, ease: 'back.out(1.7)'}));
-    at(1900, () => { gsap.to(A, {band: 1, duration: .6, ease: 'power3.out'}); gsap.to(A, {swell: 1, duration: 2.1, ease: 'power2.in'}); Kit.haptic('light'); });
-    P.q.forEach((q, i) => at(1900 + i * 95, () => { addPiece(q.k, x0 + q.fr * (x1 - x0), -u * 1.5, (Kit.rnd() - .5) * 1.2); if (q.k === 'q') A.shake = Math.max(A.shake, 3 + i * .25); }));
-    at(2500, () => gsap.to(A, {tag2: 1, duration: .7, ease: 'back.out(1.7)'}));
-    at(4100, () => {
-      gsap.to(A, {plume: 1, duration: 1, ease: 'back.out(1.4)'}); A.shake = 14; Kit.haptic('success');
-      const r = mul(41), [cx, cy] = crater(), k = Math.sqrt(H / 420);
-      for (let i = 0; i < 12; i++) M.Body.setVelocity(addPiece('l', cx + (r() - .5) * u, cy, r() * 6).b, {x: (r() - .65) * 8 * k, y: -(6 + r() * 6) * k});
+  // steam: t = 0 faint and short, t = 1 thick and tall
+  function plumes(p, kx, ky, fs, t) {
+    p.innerHTML = '';
+    [[-.75, 1], [.15, 1.35], [.95, .95]].forEach(([dx, s]) => {
+      const x = kx + dx * fs, y = ky - fs * .35, a = fs * .42 * (.8 + .4 * t), b = fs * .5 * s * (.7 + .6 * t);
+      Kit.mk('path', {d: `M${x},${y} q${a},${-b} 0,${-2 * b} q${-a},${-b} 0,${-2 * b}`, stroke: INK, 'stroke-width': 1.6 + 2.8 * t, fill: 'none', 'stroke-linecap': 'round', opacity: .5 + .45 * t}, p);
     });
   }
-  function settle() {
-    revealed = true; done = true; gsap.killTweensOf(A);
-    Object.assign(A, {vol: 1, town: 1, strip: 1, pin: 1, sun: 1, sky: 0, sunY: 1, fum: 1, swell: 1, plume: 1, band: 1, tag1: 1, tag2: 1, shake: 0, lift: 0});
-    pieces.forEach(p => M.Composite.remove(engine.world, p.b)); pieces = [];
-    const P = plan(), r = mul(41);
-    P.f.forEach((f, i) => addPiece('f', x0 + f * (x1 - x0), gy - u * 2 - (i % 3) * u * 1.4, i));
-    P.q.forEach((q, i) => addPiece(q.k, x0 + q.fr * (x1 - x0), gy - u * 2 - i * u * 1.1, (r() - .5) * 1.2));
-    for (let i = 0; i < 12; i++) addPiece('l', xOf(10) + r() * (x1 - xOf(10)), gy - u * 30 - i * u, r() * 6);
-    for (let i = 0; i < 700; i++) M.Engine.update(engine, 1000 / 60);
-  }
 
-  // ---------- touch ----------
+  // the magma's way up: a tapering, slightly irregular channel from the chamber to the crater floor
+  function channel(kx, ky, yb, fs) {
+    const at = u => ({y: yb + (ky - yb) * u, c: kx + fs * .22 * Math.sin(u * 5 + .5) * (1 - u), hw: fs * (.58 - .36 * u) + fs * .06 * Math.sin(u * 19 + 1) * (1 - u * .5)});
+    const L = [], R = [];
+    for (let i = 0; i <= 24; i++) { const q = at(i / 24); L.push([q.c - q.hw, q.y]); R.push([q.c + q.hw, q.y]); }
+    return {at, L, R};
+  }
+  const line = pts => 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' L');
+  const lens = (x, y, rx, ry) => `M${x - rx},${y} Q${x},${y - ry * 2} ${x + rx},${y} Q${x},${y + ry * 2} ${x - rx},${y} Z`;
+
+  const xOf = (g, d) => g.x1 - (d / YEAR) * (g.x1 - g.x0);
+
+  // ---------- the front ----------
+  function front() {
+    colours(); pic.innerHTML = '';
+    const {W, H} = Kit.fitSvg(pic), fs = clamp(W / 27, 12, 14), R = 14;
+    const x0 = R + 2, x1 = W - R - 2, TY = H - R - fs * 1.45, UB = TY - R - fs * 2.3, P = fs * 4;
+    let vw = W * .86, vh = vw * .36, D = UB - P - vh, top = 0;
+    const Dmin = fs * 3.6, Dmax = fs * 17;
+    if (D < Dmin) { vh = Math.max(fs * 4, UB - P - Dmin); vw = Math.min(W * .86, vh / .36); D = UB - P - vh; }
+    if (D > Dmax) { top = (D - Dmax) / 2; D = Dmax; }
+    const GY = top + P + vh;
+    G = {W, H, fs, R, x0, x1, TY, GY, vw, vh, cx: W / 2, hk: 1};
+    const m = mountain(pic, G, 'fv'), [kx, ky] = m.crater;
+    // the plumbing below, drawn as a dashed silhouette: nothing in it is a sign yet
+    const rx = Math.min(fs * 2.6, vw * .2), ry = Math.min(D * .2, fs * 1.6), cy = GY + D * .64, yb = cy - ry * .9;
+    const ch = channel(kx, ky, yb, fs);
+    const u = Kit.mk('g', {class: 'fu'}, pic);
+    Kit.mk('path', {d: lens(kx, cy, rx, ry), fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '4 4'}, u);
+    [ch.L, ch.R].forEach(w => {
+      const under = w.filter((p, i) => p[1] >= GY || (w[i - 1] && w[i - 1][1] >= GY));
+      const cone = w.filter((p, i) => p[1] <= GY || (w[i + 1] && w[i + 1][1] <= GY));
+      if (under.length > 1) Kit.mk('path', {d: line(under), fill: 'none', stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '4 4'}, u);
+      if (cone.length > 1) Kit.mk('path', {d: line(cone), fill: 'none', stroke: C, 'stroke-width': 1.4, 'stroke-dasharray': '4 4'}, u);
+    });
+    G.blob = Kit.mk('path', {fill: MAG, class: 'fu'}, pic);
+    G.plumeG = Kit.mk('g', {class: 'fvw'}, pic);
+    Object.assign(G, {kx, ky, cy, ry, yb, ch});
+    // the people at its foot
+    const hx = m.xs[0], hy = GY - fs * .62 - fs * .95 * .5, ly = Math.max(top + fs * 1.3, GY - vh * .95);
+    txt(pic, G, 0, ly, '700,000 people', {class: 'fl', 'font-weight': 800, _lo: 0});
+    txt(pic, G, 0, ly + fs * 1.3, 'live in the red zone', {class: 'fl', 'font-weight': 600, _lo: 0});
+    Kit.mk('line', {x1: hx, x2: hx, y1: ly + fs * 1.75, y2: hy - 3, stroke: INK, 'stroke-width': 1, class: 'fl'}, pic);
+    // the year before the eruption
+    const a = Kit.mk('g', {class: 'fax'}, pic);
+    Kit.mk('line', {x1: x0, x2: x1, y1: TY, y2: TY, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, a);
+    for (let k = 0; k <= 12; k++) { const x = x0 + (x1 - x0) * k / 12; Kit.mk('line', {x1: x, x2: x, y1: TY - 4, y2: TY + 4, stroke: INK, 'stroke-width': 1.2}, a); }
+    Kit.mk('circle', {cx: x1, cy: TY, r: fs * .32, fill: INK}, a);
+    txt(pic, G, x0 - R + 2, TY + R + fs * 1.15, 'a year before', {'font-weight': 600, class: 'fax', _lo: 0});
+    txt(pic, G, W, TY + R + fs * 1.15, 'eruption', {'text-anchor': 'end', 'font-weight': 800, class: 'fax', _hi: W});
+    G.pinG = Kit.mk('g', {class: 'fpin'}, pic);
+    update();
+  }
+  function update() {
+    const g = G; if (!g.pinG) return;
+    const t = 1 - (guess - 1) / (YEAR - 1);
+    plumes(g.plumeG, g.kx, g.ky, g.fs, t);
+    // the blob climbs with the pin
+    let y, bx, rx;
+    if (t < .12) { y = g.cy - (g.cy - g.yb) * (t / .12); bx = g.kx; rx = g.fs * .9; }
+    else { const q = g.ch.at((t - .12) / .88 * .88); y = q.y; bx = q.c; rx = Math.max(q.hw, g.fs * .3); }
+    const ryb = Math.max(rx * 1.25, g.fs * .5);
+    g.blob.setAttribute('d', `M${bx - rx},${y} Q${bx - rx},${y - ryb * 1.3} ${bx},${y - ryb * 1.6} Q${bx + rx},${y - ryb * 1.3} ${bx + rx},${y} Q${bx + rx},${y + ryb} ${bx},${y + ryb} Q${bx - rx},${y + ryb} ${bx - rx},${y} Z`);
+    // the pin
+    const p = g.pinG; p.innerHTML = '';
+    const x = xOf(g, guess), {TY, fs, x1, R} = g;
+    Kit.mk('rect', {x, y: TY - fs * .26, width: Math.max(0, x1 - x), height: fs * .52, rx: fs * .26, fill: GUESS, stroke: INK, 'stroke-width': 1.2}, p);
+    Kit.mk('circle', {cx: x, cy: TY, r: R, fill: GUESS, stroke: INK, 'stroke-width': 2}, p);
+    if (!touched) for (const s of [-1, 1]) {
+      const ax = x + s * (R + 6);
+      Kit.mk('path', {d: `M${ax},${TY - 5} l${s * 5},5 l${-s * 5},5`, stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p);
+    }
+    txt(p, g, x, TY - R - 8, touched ? `your guess: ${fmt(guess)} before` : 'drag me', {'text-anchor': 'middle', 'font-weight': 800});
+  }
+  const dayFrom = e => { const r = pic.getBoundingClientRect(); return clamp((G.x1 - (e.clientX - r.left)) / (G.x1 - G.x0) * YEAR, 1, YEAR); };
+  let drag = false;
+  pic.addEventListener('pointerdown', e => { if (locked) return; drag = true; try { pic.setPointerCapture(e.pointerId); } catch (_) {} touched = true; guess = dayFrom(e); update(); Kit.haptic('selection'); });
+  pic.addEventListener('pointermove', e => { if (drag && !locked) { guess = dayFrom(e); update(); } });
+  const end = () => { if (!drag) return; drag = false; if (!locked) sure.on(); };
+  pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
   const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
-    locked = true; drag = false;
-    const ok = guess >= 6 && guess <= 18, said = fmt(guess) + ' before';
+    if (locked) return; locked = true;
+    const b = Kit.$('sure').querySelector(`[data-v="${pct}"]`); if (b) b.classList.add('pick');
+    const said = `${fmt(guess)} before`, ok = guess <= 21;
     Kit.answer({choice: said, correct: ok, sure: pct});
-    card.classList.add('answered'); Kit.hide('say'); Kit.show('why');
-    sure.grade(ok, pct, `${said}, ${ok ? 'right' : guess > 18 ? 'too early' : 'too late'}`);
-    Kit.show('keep');
-    setTimeout(() => { if (!revealed) reveal(); }, 260);
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    const pay = Kit.$('pay'); pay.textContent = '';
+    const lead = document.createTextNode(ok
+      ? `You were ${pct}% sure of ${fmt(guess)}, and right. Steam vents show months ahead. `
+      : `You were ${pct}% sure of ${fmt(guess)}. Steam vents show months ahead. `);
+    const strong = document.createElement('b');
+    strong.textContent = 'Quakes and ground deformation, which signal the magma rising, come only in the last 1–2 weeks.';
+    pay.append(lead, strong);
+    setTimeout(() => Turn.over(), 700);
   });
-  function setFrom(e) {
-    const r = cv.getBoundingClientRect(), before = fmt(guess);
-    guess = dOf(e.clientX - r.left);
-    if (!touched) { touched = true; sure.on(); say.innerHTML = 'Happy with it? <b>Say how sure you are.</b>'; Kit.haptic('selection'); }
-    else if (fmt(guess) !== before) Kit.haptic('selection');
-  }
-  cv.addEventListener('pointerdown', e => {
-    if (locked || !x) return; drag = true; startLoop();
-    try { cv.setPointerCapture(e.pointerId); } catch (_) {}
-    gsap.to(A, {lift: 1, duration: .12, ease: 'power3.out'}); setFrom(e);
-  });
-  cv.addEventListener('pointermove', e => { if (drag && !locked) setFrom(e); });
-  const up = () => { if (!drag) return; drag = false; gsap.to(A, {lift: 0, duration: .6, ease: 'elastic.out(1,.4)'}); };
-  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
 
-  Kit.onShow.card = build;
+  // ---------- the back ----------
+  function back(anim) {
+    colours(); pic2.innerHTML = '';
+    const {W, H} = Kit.fitSvg(pic2), fs = clamp(W / 27, 12, 14);
+    // the chart: three rows on the same year, labelled where each bar starts
+    const RH = fs * 2.3, bh = fs * .8, r = fs * .55;
+    const BOT = bh / 2 + 9 + fs * 1.35;
+    // the pin row sits lower, so "your guess" above its dot clears the quakes label
+    const y3 = H - BOT, y2 = y3 - RH - fs * 1.1, y1 = y2 - RH;
+    const g = {W, H, fs, x0: r + 2, x1: W - fs * .5};
+
+    // the scene above it: scaled as one piece so it always ends above the chart
+    const A = y1 - fs * .6 - fs * 1.3;
+    const k = clamp(A / (fs * 13), .4, 1), cfs = fs * k;
+    const P = cfs * 3.6, D = clamp(A * .24, cfs * 1.6, fs * 6);
+    let vh = Math.min(W * .86 * .36, A - P - D);
+    const scene = vh >= fs * 2;
+    let plG = null, chamber = null, cr = null, swell = null, quakes = [], top = 0, full = 0, cy = 0, ry = 0;
+    if (scene) {
+      const vw = Math.min(W * .86, vh / .36);
+      const off = Math.max(0, (A - P - vh - D) / 2), GY = off + P + vh;
+      Object.assign(g, {GY, vw, vh, cx: W / 2, hk: clamp(vh / (fs * 5), .55, 1)});
+      const [kx, ky] = craterAt(g.cx, GY, vw, vh);
+      const rx = Math.min(fs * 2.6, vw * .2);
+      ry = Math.min(D * .24, fs * 1.6); cy = GY + D * .6;
+      const yb = cy - ry * .6;
+      chamber = Kit.mk('path', {d: lens(kx, cy, rx, ry), fill: MAG}, pic2);
+      mountain(pic2, g, 'bv');
+      // the channel, revealed upward
+      const defs = Kit.mk('defs', {}, pic2), clip = Kit.mk('clipPath', {id: 'riseclip'}, defs);
+      top = ky - 2; full = cy + ry - top;
+      cr = Kit.mk('rect', {x: 0, y: top, width: W, height: full}, clip);
+      const ch = channel(kx, ky, yb, cfs);
+      Kit.mk('path', {d: line(ch.L) + ' L' + ch.R.slice().reverse().map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' L') + ' Z', fill: MAG, 'clip-path': 'url(#riseclip)'}, pic2);
+      // quakes along its walls
+      [[.18, -1], [.38, 1], [.62, -1], [.8, 1]].forEach(([u, s]) => {
+        const q = ch.at(u), x = q.c + s * (q.hw + 3), y = q.y, st = cfs * .3, a = cfs * .28;
+        let d = `M${x},${y} l${s * st * .5},${-a}`;
+        for (let i = 1; i < 4; i++) d += ` l${s * st},${i % 2 ? a * 2 : -a * 2}`;
+        quakes.push(Kit.mk('path', {d, stroke: MAG, 'stroke-width': 1.8, fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, pic2));
+      });
+      // the ground deforms
+      swell = Kit.mk('path', {d: vpath(g.cx, GY, vw, vh, cfs * .5), fill: 'none', stroke: MAG, 'stroke-width': 2, 'stroke-dasharray': '5 4', 'stroke-linecap': 'round'}, pic2);
+      plG = Kit.mk('g', {}, pic2); plumes(plG, kx, ky, cfs, .8);
+    }
+
+    const {x1} = g, q14 = xOf(g, 14), s6 = xOf(g, 6 * 30.4), gapL = fs * .6;
+    // row 1: steam vents, from months out
+    const steam = Kit.mk('rect', {x: s6, y: y1 - bh / 2, width: x1 - s6, height: bh, rx: bh / 2, fill: INK}, pic2);
+    const steamL = txt(pic2, g, s6 - gapL, y1 + fs * .35, 'steam vents', {'text-anchor': 'end', 'font-weight': 800, _lo: 0});
+    // row 2: quakes + ground deformation, only at the end
+    const qBar = Kit.mk('rect', {x: q14, y: y2 - bh / 2, width: x1 - q14, height: bh, rx: 2, fill: MAG}, pic2);
+    const qL = txt(pic2, g, q14 - gapL, y2 + fs * .35, 'quakes + ground deformation', {'text-anchor': 'end', 'font-weight': 800, _lo: 0});
+    // row 3: the reader's pin, and the window it was aiming for
+    const px = xOf(g, guess), gg = Kit.mk('g', {}, pic2), tg = Kit.mk('g', {}, pic2), ag = Kit.mk('g', {}, pic2);
+    const a0 = px + r + 3, a1 = q14 - 3, arrow = guess > 14 && a1 - a0 > fs * 1.6;
+    Kit.mk('line', {x1: 0, x2: x1, y1: y3, y2: y3, stroke: INK, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, gg);
+    const by = y3 + bh / 2 + 4;
+    Kit.mk('path', {d: `M${q14},${by} v5 H${x1} v-5`, fill: 'none', stroke: MAG, 'stroke-width': 1.8, 'stroke-linejoin': 'round'}, tg);
+    txt(tg, g, x1, by + 5 + fs * 1.1, '1–2 weeks before eruption', {'text-anchor': 'end', 'font-weight': 800, fill: MAGT, _lo: 0});
+    if (arrow) {
+      Kit.mk('line', {x1: a0, x2: a1, y1: y3, y2: y3, stroke: GUESS, 'stroke-width': 3}, ag);
+      Kit.mk('line', {x1: a0, x2: a1, y1: y3, y2: y3, stroke: INK, 'stroke-width': 1.3}, ag);
+      Kit.mk('path', {d: `M${a0 + 6},${y3 - 4} L${a0},${y3} L${a0 + 6},${y3 + 4} M${a1 - 6},${y3 - 4} L${a1},${y3} L${a1 - 6},${y3 + 4}`, fill: 'none', stroke: INK, 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, ag);
+    }
+    Kit.mk('circle', {cx: px, cy: y3, r, fill: GUESS, stroke: INK, 'stroke-width': 2}, gg);
+    txt(gg, g, px, y3 - r - 6, 'your guess', {'text-anchor': 'middle', 'font-weight': 700, _lo: 0});
+
+    if (!anim) return;
+    const tl = gsap.timeline();
+    tl.from([steam, steamL], {opacity: 0, duration: .5}, .2);
+    if (plG) tl.from(plG, {opacity: 0, duration: .5}, '<');
+    if (scene) {
+      tl.from(chamber, {opacity: 0, duration: .35}, '+=.1')
+        .fromTo(cr, {attr: {y: cy + ry, height: 0}}, {attr: {y: top, height: full}, duration: 1, ease: 'power2.inOut'})
+        .from(swell, {opacity: 0, duration: .4}, '-=.3')
+        .from(quakes, {opacity: 0, stagger: .07, duration: .2}, '<');
+    }
+    tl.from(qBar, {scaleX: 0, transformOrigin: '100% 50%', duration: .4, ease: 'power3.out'}, scene ? '<' : '+=.2')
+      .from(qL, {opacity: 0, duration: .3}, '<')
+      .from(gg, {opacity: 0, duration: .3})
+      .from([tg, ag], {opacity: 0, duration: .35});
+  }
+
+  document.addEventListener('turned', () => { back(!Kit.calm && typeof gsap !== 'undefined'); });
+  Kit.onShow.card = () => { front(); back(false); };
   Kit.onEnter.card = () => {
-    startLoop(); if (Kit.calm || revealed) return;
+    if (Kit.calm) return;
     gsap.timeline()
-      .fromTo(A, {strip: 0}, {strip: 1, duration: .7, ease: 'power3.out'})
-      .fromTo(A, {vol: 0}, {vol: 1, duration: 1, ease: 'back.out(1.25)'}, .15)
-      .fromTo(A, {town: 0}, {town: 1, duration: .9, ease: 'power2.out'}, .55)
-      .fromTo(A, {sun: 0}, {sun: 1, duration: .8, ease: 'elastic.out(1,.5)'}, .6)
-      .fromTo(A, {sky: 0}, {sky: 1, duration: .8, ease: 'power2.out'}, .7)
-      .fromTo(A, {pin: 0}, {pin: 1, duration: .8, ease: 'bounce.out'}, .9);
+      .from('#pic .fv', {y: 14, opacity: 0, duration: .6, ease: 'power3.out'})
+      .from('#pic .fvh path', {opacity: 0, y: 5, stagger: .03, duration: .3, ease: 'power2.out'}, '-=.2')
+      .from('#pic .fu, #pic .fvw', {opacity: 0, duration: .5}, '-=.1')
+      .from('#pic .fl, #pic .fax, #pic .fpin', {opacity: 0, duration: .4, stagger: .04}, '-=.2');
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    const r = cv.getBoundingClientRect(), cy = r.top + gy - H * .1;
-    const ev = (type, X) => cv.dispatchEvent(new PointerEvent(type, {clientX: X, clientY: cy, bubbles: true, pointerId: 1, isPrimary: true}));
-    ev('pointerdown', r.left + xOf(40)); ev('pointermove', r.left + xOf(10)); ev('pointerup', r.left + xOf(10));
-    await wait(150);
-    Kit.$('sure').querySelector('[data-v="80"]').click();
-    await wait(400);
-    if (!done) settle();
-    await wait(300);
+    const r = pic.getBoundingClientRect(), y = r.top + G.TY;
+    const at = d => r.left + xOf(G, d);
+    const ev = (t, x) => pic.dispatchEvent(new PointerEvent(t, {bubbles: true, clientX: x, clientY: y, pointerId: 1}));
+    ev('pointerdown', at(240)); await wait(120); ev('pointermove', at(150)); await wait(120); ev('pointermove', at(90)); ev('pointerup', at(90));
+    await wait(200);
+    const b = Kit.$('sure').querySelector('[data-v="80"]'); if (b) b.click();
+    await wait(Kit.calm ? 1200 : 5200);
   };
 })();
 Kit.single();

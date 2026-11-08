@@ -1,417 +1,284 @@
 <!doctype html>
-<!-- slug: science-cold-laminar-flow -->
-<!-- Look: a brass Reynolds meter, engraved ticks and a cream enamel face, printed on dark slate beside a wall-mounted brass tap whose stream turns from milky warm froth to an icy glass rod.
-     Interaction: each tap on the blue valve makes the water one step colder. It gets thicker and slower, the gauges slide, the needle swings down with a damped elastic swing, and the stream morphs (MorphSVG) toward laminar. As it calms, parallel layers (laminae) appear inside the stream and slide past each other, the middle one fastest.
-     Wow: on the last step the stream settles into a still glass column, frost blooms on the spout, a light sweeps across the dial glass, the LAMINAR band flares, and a glint runs down the water.
-     Physics note: for water, cold RAISES viscosity. The brief's "reduces viscosity" would raise Re = speed × width ÷ viscosity, so the card states the direction that actually lowers Re. -->
+<!-- slug: science-cold-smooth-stream -->
+<!-- Design note.
+     Thought to carry: whether a stream pours smooth or rough depends on a ratio (the Reynolds number), speed against viscosity.
+       Cold acts on that ratio in two ways, as the brief says: through the water's viscosity, and by possibly lowering flow speed.
+       Both lower the Reynolds number, so cold can favor a smooth stream.
+     Front: one kitchen tap over a sink. Dragging opens the tap (the only number shown is the opening); tapping the knob switches it
+       between cold and hot. The drawn stream is neutral and identical for both temperatures, so the front never gives the answer away.
+     Back: the same tap twice, cold and hot. Cold falls as a clear rod, hot tears into a rope. Two labels only. The body text is
+       shortened so the drawing keeps its room on small phones.
+     Hedging: the video says "probabilmente" and "potrebbe essere", so the answer reads "Probably cold" and the text says "can favor".
+     FACT CHECK, FOR THE EDITOR: the brief says "Cold reduces fluid viscosity". That is physically backwards, and it contradicts the
+       brief's own conclusion (a lower viscosity would RAISE the Reynolds number, not lower it). Cold water is MORE viscous.
+       The card must not print a false claim, and it must not contradict the brief either, so it no longer states the direction:
+       it says cold "changes" the viscosity and that this, with a slower flow, lowers the Reynolds number. Both are true and both
+       are in the brief. The "What to keep" line no longer rests on "thicken it".
+       Please correct the brief to: "Cold raises fluid viscosity and can also lower flow speed, both decreasing Reynolds number."
+       Once it is corrected, the body can say "Cold water is more viscous" again. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Cold keeps it laminar</title>
+<title>Why a cold stream can stay smooth</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
 <script src="kit/vendor/gsap.min.js"></script>
-<script src="kit/vendor/gsap-plugins/MorphSVGPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.6s ease-out infinite}
-@keyframes pulse{0%{transform:scale(.85);opacity:.9}100%{transform:scale(1.5);opacity:0}}
-.steam{animation:steam 2.8s ease-out infinite;opacity:0}
-@keyframes steam{0%{opacity:0;transform:translateY(0)}30%{opacity:.7}100%{opacity:0;transform:translateY(-18px)}}
-.kit-calm .steam{opacity:.5;animation:none}
-.kit-calm .pulse{animation:none;opacity:.6}
-.say b{color:#9fdcf5}
-.answered .q{font-size:max(2.5cqh,15px)}
-.answered .say{font-size:max(1.9cqh,13px)}
+.turn{position:relative;flex:1 1 auto;min-height:0;display:grid;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.22,.8,.24,1)}
+.card .in{perspective:1600px}
+.turn>.face{grid-area:1/1;display:flex;flex-direction:column;min-height:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.turn>.back{transform:rotateY(180deg)}
+.turn.over{transform:rotateY(180deg)}
+.kit-calm .turn{transition:none}
+/* Keep the bottom strip of BOTH faces empty, full width: the save and share sit there,
+   and a turned face is mirrored, so a one-sided margin would not protect the corner. */
+.turn>.face::after{content:"";flex:0 0 48px}
+
+.face .stagebox{flex:1;min-height:0;display:flex}
+.face .stagebox svg{flex:1;min-width:0;width:100%;height:100%;display:block}
+#pic{touch-action:none;cursor:ew-resize}
+#pic [data-temp]{cursor:pointer}
+#opts{display:flex;gap:2.4cqw;margin:1cqh 0 .6cqh}
+.opt{flex:1;font:700 max(2.1cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.front .say{margin:.6cqh 0 0;padding-right:0}
+.back .big{margin:0 0 1cqh}
+.back .body{margin:1.4cqh 0 1cqh;font-size:clamp(13px,2.05cqh,16px);line-height:1.4}
+.back .foot{margin:1cqh 0 0;padding-right:0}
+.face .q,.face .body,.face .say,.face .keep{overflow-wrap:break-word}
 </style>
-<article class="card" id="card" style="--c:#17262a;--k:#f3e8cc;--edge:#0b1416" data-topic="science" data-kind="Tap to cool · the Reynolds meter">
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
   <div class="in">
-    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO COOL</span></div>
-    <h2 class="q">How can a low temperature keep a flow smooth and laminar?</h2>
-    <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A brass tap pouring a frothy stream into a basin, beside a brass dial measuring the Reynolds number from laminar to turbulent, and gauges for temperature, viscosity and speed."></svg>
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLOW</span></div>
+    <div class="turn">
+      <section class="face front">
+        <h2 class="q">Which water is more likely to pour in one smooth stream, cold or hot?</h2>
+        <div class="stagebox"><svg id="pic" data-drag role="group" aria-label="A kitchen tap pouring a stream into a sink. Drag to open the tap; tap the knob to switch between cold and hot."></svg></div>
+        <div id="opts">
+          <button class="opt" data-i="0">Cold</button>
+          <button class="opt" data-i="1">Hot</button>
+          <button class="opt" data-i="2">No difference</button>
+        </div>
+        <div class="sure" id="sure"></div>
+        <p class="say" id="say">Drag to open the tap, tap its knob for cold or hot. <b>Then pick.</b></p>
+      </section>
+      <section class="face back" aria-hidden="true">
+        <p class="big">Probably cold.</p>
+        <div class="stagebox"><svg id="pic2" role="img" aria-label="Two taps side by side. The cold one pours a smooth, clear stream; the hot one pours a stream that tears into a rough rope and splashes."></svg></div>
+        <p class="body">A stream stays smooth while its Reynolds number stays low: speed weighed against viscosity. Cold changes the water's viscosity and can also slow the flow. Both lower that number.</p>
+        <div class="keep"><b>WHAT TO KEEP</b> Smooth or rough is a ratio, not just a speed: cool the water and the stream tends to calm.</div>
+        <div class="foot"><span class="src">Source · Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019).</span></div>
+      </section>
     </div>
-    <p class="say" id="say">Tap the <b>blue valve</b> to make the water colder, one step at a time.</p>
-    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A low Reynolds number means laminar flow, and cold water lowers it by being thicker and slower.</div>
-    <div class="foot"><span class="src">Source · Geopop, “FLUSSO LAMINARE STAZIONARIO - Ecco la spiegazione scientifica e l'esperimento in casa” (YouTube, 2019).</span></div>
   </div>
 </article>
 <script src="kit/astute-card.js"></script>
 <script>
+const Turn = {
+  over() { const t = document.querySelector('.turn'); if (!t || t.classList.contains('over')) return;
+    t.classList.add('over'); t.querySelector('.front').setAttribute('aria-hidden', 'true'); t.querySelector('.back').removeAttribute('aria-hidden');
+    Kit.haptic('light'); document.dispatchEvent(new Event('turned')); }
+};
 (() => {
-  gsap.registerPlugin(MorphSVGPlugin);
-  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const NS = 4, ENGRAVE = '#3a2810', INKC = '#f3e8cc';
-  // Relative Reynolds number: speed falls and viscosity rises with each colder step.
-  const reOf = k => (1 - .15 * k) / (1 + .5 * k);
-  const RE_MIN = reOf(NS);
-  const lamOf = k => (1 - reOf(k)) / (1 - RE_MIN);
-  const vOf = k => .06 + .84 * reOf(k);
-  const rotOf = k => -120 + 240 * vOf(k);
-  const NOISE = Array.from({length: 200}, () => Kit.rnd());
-  const st = {lam: 0, warm: 1};
-  let s = 0, W = 0, H = 0, fs = 12, cx = 0, cy = 0, R = 0, sx = 0, y0 = 0, yb = 0, w0 = 6, vx = 0, vy = 0;
-  let E = {}, loops = [], entered = false;
+  const RIGHT = 0;
+  const COLD = {fill: '#a9d2f7', edge: '#1f62b8', ink: '#17468a'}, HOT = {fill: '#f6b49c', edge: '#c4471d', ink: '#a8340f'};
+  const svg = Kit.$('pic'), svg2 = Kit.$('pic2');
+  let K = '#111', fs = 13, open = .3, len = 1, temp = 0, touched = false, pick = -1, turned = false;
+  let F = null, B = null, T = 0;
+  const RAD = Math.PI / 180;
 
-  const mk = (t, a, p) => Kit.mk(t, a, p);
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const f2 = p => p[0].toFixed(1) + ',' + p[1].toFixed(1);
-  const txt = (p, x, y, t, a = {}, style = '') => {
-    const e = mk('text', Object.assign({x, y, 'font-size': fs}, a), p);
-    e.setAttribute('style', `font-family:var(--mono);fill:${INKC};${style}`);
-    e.textContent = t; return e;
-  };
-  const grad = (defs, id, stops, a = {}) => {
-    const g = mk(a.radial ? 'radialGradient' : 'linearGradient', Object.assign({id}, a.attrs || {}), defs);
-    stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g));
-    return g;
-  };
-  // Catmull-Rom through points, as cubic Béziers.
-  const cr = pts => {
-    let d = '';
-    for (let i = 0; i < pts.length - 1; i++) {
-      const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
-      d += ` C${f2([p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6])} ${f2([p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6])} ${f2(p2)}`;
-    }
-    return d;
-  };
-  function edges(turb) {
-    const n = 28, Rr = [], Ll = [], Hh = [];
-    for (let i = 0; i <= n; i++) {
-      const t = i / n, y = y0 + (yb - y0) * t;
-      let c = sx, wr, wl;
-      if (!turb) { wr = wl = w0 * (.6 + .4 / Math.sqrt(1 + 5 * t)); }
-      else {
-        const g = Math.sqrt(t), base = w0 * (1 + 1.7 * t);
-        wr = base * (1 + g * (.34 * Math.sin(t * 21 + .6) + .5 * (NOISE[i] - .5)));
-        wl = base * (1 + g * (.34 * Math.sin(t * 17 + 2.1) + .5 * (NOISE[i + 40] - .5)));
-        c = sx + w0 * .9 * t * Math.sin(t * 9 + .4);
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const smooth = (a, b, v) => { const x = clamp((v - a) / (b - a)); return x * x * (3 - 2 * x); };
+  const chaosOf = o => smooth(.42, .8, o);
+  const nz = (a, b) => .5 * Math.sin(a * 1.7 + b) + .3 * Math.sin(a * 3.1 - b * 1.3 + 1) + .2 * Math.sin(a * 5.3 + b * 2.1 + 2);
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: K, 'font-family': 'Figtree, sans-serif', 'font-size': fs, 'font-weight': 700}, a), p); e.textContent = t; return e; };
+  const width = e => { try { return e.getComputedTextLength(); } catch (_) { return e.textContent.length * fs * .58; } };
+
+  // Where everything sits inside a box: counter, basin, faucet, spout.
+  function geom(b, cyF, ybF) {
+    const u = Math.min(b.w * .9, b.h * .8), cx = b.x + b.w / 2, bw = Math.min(b.w * .4, u * .5);
+    const cy = b.y + b.h * cyF, yb = b.y + b.h * ybF, p = Math.max(7, u * .055);
+    const bx = cx + bw * .85, sx = cx - bw * .12, R = (bx - sx) / 2, top = b.y + b.h * .05 + p / 2;
+    const sy = top + R + p * 1.3, yE = cy + (yb - cy) * .68, hy = cy - Math.max(p * 2.2, b.h * .13);
+    return {u, cx, bw, cy, yb, p, bx, sx, R, top, sy, yE, hy};
+  }
+  function sink(g, G) {
+    Kit.mk('path', {d: `M${G.cx - G.bw},${G.cy} C${G.cx - G.bw},${G.yb} ${G.cx + G.bw},${G.yb} ${G.cx + G.bw},${G.cy}Z`, fill: K, 'fill-opacity': .08, stroke: K, 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+  }
+  function faucet(g, G, knobFill) {
+    const d = `M${G.bx},${G.cy} V${G.top + G.R} A${G.R},${G.R} 0 0 0 ${G.sx},${G.top + G.R} V${G.sy}`;
+    Kit.mk('path', {d, fill: 'none', stroke: K, 'stroke-width': G.p}, g);
+    Kit.mk('path', {d, fill: 'none', stroke: '#fff', 'stroke-width': Math.max(2, G.p - 3.4)}, g);
+    Kit.mk('rect', {x: G.sx - G.p * .7, y: G.sy - 1, width: G.p * 1.4, height: G.p * .55, rx: 1.5, fill: K}, g);
+    Kit.mk('rect', {x: G.bx - G.p * 1.2, y: G.cy - G.p * .75, width: G.p * 2.4, height: G.p * .75, rx: 2, fill: K}, g);
+    const lever = Kit.mk('g', {}, g), ll = G.u * .17;
+    Kit.mk('rect', {x: 0, y: -G.p * .28, width: ll, height: G.p * .56, rx: G.p * .28, fill: K}, lever);
+    const knob = Kit.mk('circle', {cx: ll, cy: 0, r: G.p * .5, fill: knobFill || K, stroke: K, 'stroke-width': 1.5}, lever);
+    Kit.mk('circle', {cx: 0, cy: 0, r: G.p * .62, fill: K}, lever);
+    return {lever, knob, ll};
+  }
+  const leverAngle = o => -12 - o * 50;
+  const setLever = (lv, G, o) => lv.setAttribute('transform', `translate(${G.bx},${G.hy}) rotate(${leverAngle(o)})`);
+
+  // A falling stream: a smooth tapering rod when calm; a torn rope ending in one crown splash when not.
+  function mkStream(g, fill, edge, fo) {
+    const pool = Kit.mk('ellipse', {fill, 'fill-opacity': Math.min(1, fo + .2), stroke: edge, 'stroke-width': 1.2}, g);
+    const splash = Kit.mk('path', {fill, 'fill-opacity': Math.min(1, fo + .2), stroke: edge, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, g);
+    const body = Kit.mk('path', {fill, 'fill-opacity': fo, stroke: edge, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, g);
+    const hi = Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-linecap': 'round'}, g);
+    return {set(o, t) {
+      const full = o.yE - o.sy, L = full * o.len, N = 30, lt = [], rt = [], ch = o.chaos;
+      if (L < 1) { body.setAttribute('d', ''); hi.setAttribute('d', ''); splash.setAttribute('d', ''); pool.setAttribute('opacity', 0); return; }
+      let cEnd = 0;
+      for (let i = 0; i <= N; i++) {
+        const s = i / N * o.len, y = o.sy + s * full, hw = o.w0 / 2 / Math.sqrt(1 + 2.2 * s);
+        const a = ch * o.w0 * (.12 + 1.1 * s), ph = s * 9 - t * 7;
+        const c = ch * o.w0 * .55 * s * nz(s * 3.5 - t * 2.6, 5);
+        lt.push([o.sx + c - hw * (1 + ch * .6 * nz(ph, 1)) + a * .5 * nz(ph * 1.3, 0), y]);
+        rt.push([o.sx + c + hw * (1 + ch * .6 * nz(ph, 3)) + a * .5 * nz(ph * 1.2, 2), y]);
+        cEnd = c;
       }
-      Rr.push([c + wr, y]); Ll.push([c - wl, y]);
-      Hh.push([c - wl * .42 + (turb ? w0 * .7 * Math.sqrt(t) * (NOISE[i + 80] - .5) : 0), y]);
-    }
-    return {Rr, Ll, Hh};
-  }
-  const shapeD = e => { const L = [...e.Ll].reverse(); return `M${f2(e.Rr[0])}${cr(e.Rr)} L${f2(L[0])}${cr(L)} Z`; };
-  const hiD = e => { const h = e.Hh.slice(2, -3); return `M${f2(h[0])}${cr(h)}`; };
-
-  const ang = v => 210 - 240 * v;
-  const P = (a, r) => [cx + r * Math.cos(a * Math.PI / 180), cy - r * Math.sin(a * Math.PI / 180)];
-  const arcD = (v1, v2, r) => { const p1 = P(ang(v1), r), p2 = P(ang(v2), r); return `M${f2(p1)} A${r},${r} 0 ${(v2 - v1) * 240 > 180 ? 1 : 0} 1 ${f2(p2)}`; };
-
-  function layout() {
-    loops.forEach(t => t.kill()); loops = [];
-    if (E.mT) { E.mT.kill(); E.hT.kill(); }
-    svg.innerHTML = ''; E = {};
-    const fit = Kit.fitSvg(svg); W = fit.W; H = fit.H;
-    fs = clamp(fit.f || 13, 12, 15);
-    const defs = mk('defs', {}, svg);
-    grad(defs, 'brass', [[0, '#fbe6a2'], [.32, '#d6a748'], [.6, '#8a6020'], [.84, '#ecc86e'], [1, '#a8772a']], {attrs: {x1: 0, y1: 0, x2: 1, y2: 1}});
-    grad(defs, 'brassIn', [[0, '#7a5419'], [.5, '#c99a3e'], [1, '#f5dc90']], {attrs: {x1: 0, y1: 0, x2: 1, y2: 1}});
-    grad(defs, 'brassV', [[0, '#fae39b'], [.45, '#c59338'], [1, '#6d4a16']], {attrs: {x1: 0, y1: 0, x2: 0, y2: 1}});
-    grad(defs, 'brassH', [[0, '#6d4a16'], [.35, '#f3d688'], [.7, '#b8862f'], [1, '#5a3c10']], {attrs: {x1: 0, y1: 0, x2: 1, y2: 0}});
-    grad(defs, 'face', [[0, '#fdf8e8'], [.7, '#efe2bd'], [1, '#d3bf8c']], {radial: 1, attrs: {cx: .42, cy: .36, r: .72}});
-    const wg = grad(defs, 'water', [[0, '#efe6d8', .92], [1, '#c9d8dc', .88]], {attrs: {x1: 0, y1: 0, x2: 0, y2: 1}});
-    E.ws0 = wg.children[0]; E.ws1 = wg.children[1];
-    const blur = mk('filter', {id: 'soft', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
-    mk('feGaussianBlur', {stdDeviation: 2.2}, blur);
-    const blurS = mk('filter', {id: 'softS', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
-    mk('feGaussianBlur', {stdDeviation: 1.2}, blurS);
-
-    // ---------- the tap, the stream, the basin ----------
-    const colW = W * .35;
-    sx = colW * .56;
-    const pt = clamp(colW * .11, 9, 16), vr = clamp(colW * .14, 13, 21);
-    vx = Math.max(vr + 6, sx * .42);
-    vy = fs * 1.3 + 6 + vr;
-    const py = vy + vr + 3 + pt / 2, br = pt * 1.3;
-    y0 = py + br + pt * .9; w0 = clamp(colW * .07, 6, 11);
-    const rxP = Math.min(colW * .4, sx - 3), ryP = rxP * .24;
-    yb = H - ryP * 2.7 - 6;
-
-    const tap = mk('g', {}, svg); E.tap = tap;
-    // wall flange
-    mk('rect', {x: 0, y: py - pt * 1.05, width: pt * .6, height: pt * 2.1, rx: 2, fill: 'url(#brassH)', stroke: '#2a1a07', 'stroke-width': 1}, tap);
-    [-.65, .65].forEach(k => mk('circle', {cx: pt * .3, cy: py + k * pt, r: pt * .1, fill: '#3b2808'}, tap));
-    const pipeD = `M${pt * .55},${py} H${sx - br} A${br},${br} 0 0 1 ${sx},${py + br} V${y0 - pt * .5}`;
-    mk('path', {d: pipeD, fill: 'none', stroke: '#2a1a07', 'stroke-width': pt + 3, 'stroke-linecap': 'butt'}, tap);
-    mk('path', {d: pipeD, fill: 'none', stroke: 'url(#brassV)', 'stroke-width': pt}, tap);
-    mk('path', {d: pipeD, fill: 'none', stroke: '#fff6d0', 'stroke-opacity': .55, 'stroke-width': pt * .18, transform: `translate(${-pt * .22},${-pt * .24})`}, tap);
-    // a collar on the pipe, a flange and the nozzle
-    mk('rect', {x: vx + vr * .9, y: py - pt * .62, width: pt * .45, height: pt * 1.24, rx: 1.5, fill: 'url(#brassV)', stroke: '#2a1a07', 'stroke-width': 1}, tap);
-    mk('rect', {x: sx - pt * .82, y: y0 - pt * .9, width: pt * 1.64, height: pt * .62, rx: pt * .15, fill: 'url(#brass)', stroke: '#2a1a07', 'stroke-width': 1}, tap);
-    mk('ellipse', {cx: sx, cy: y0 - pt * .26, rx: pt * .62, ry: pt * .2, fill: '#1a1006'}, tap);
-    // the cold valve
-    mk('rect', {x: vx - pt * .22, y: vy, width: pt * .44, height: py - vy, fill: 'url(#brassV)', stroke: '#2a1a07', 'stroke-width': 1}, tap);
-    mk('rect', {x: vx - pt * .42, y: py - pt * .5 - pt * .35, width: pt * .84, height: pt * .38, rx: 1.5, fill: 'url(#brass)', stroke: '#2a1a07', 'stroke-width': .8}, tap);
-    E.pulse = mk('circle', {cx: vx, cy: vy, r: vr, fill: 'none', stroke: '#7cc8f0', 'stroke-width': 2, class: 'pulse'}, tap);
-    const valve = mk('g', {}, tap); E.valve = valve;
-    mk('circle', {cx: vx, cy: vy, r: vr, fill: 'none', stroke: '#0e2a3d', 'stroke-width': vr * .38}, valve);
-    mk('circle', {cx: vx, cy: vy, r: vr, fill: 'none', stroke: '#3f97cf', 'stroke-width': vr * .28}, valve);
-    mk('circle', {cx: vx - vr * .1, cy: vy - vr * .1, r: vr, fill: 'none', stroke: '#bfe7ff', 'stroke-opacity': .55, 'stroke-width': vr * .07}, valve);
-    for (let i = 0; i < 4; i++) {
-      const a = i * Math.PI / 2 + Math.PI / 4;
-      mk('line', {x1: vx, y1: vy, x2: vx + Math.cos(a) * vr, y2: vy + Math.sin(a) * vr, stroke: '#2e7fb3', 'stroke-width': vr * .17, 'stroke-linecap': 'round'}, valve);
-    }
-    mk('circle', {cx: vx, cy: vy, r: vr * .3, fill: 'url(#brass)', stroke: '#2a1a07', 'stroke-width': 1}, valve);
-    gsap.set(valve, {rotation: s * 90, svgOrigin: `${vx} ${vy}`});
-    // "COLDER" sits above the valve, clear of everything else
-    const lbl = txt(tap, vx, fs + 1, 'COLDER', {'text-anchor': 'middle', 'font-weight': 700}, 'fill:#9fdcf5;letter-spacing:.08em');
-    const lw = lbl.getComputedTextLength();
-    lbl.setAttribute('x', Math.max(lw / 2 + 2, Math.min(vx, colW - lw / 2 - 2)));
-    E.lbl = lbl;
-
-    // basin back
-    const basin = mk('g', {}, svg); E.basin = basin;
-    mk('ellipse', {cx: sx + 2, cy: yb + ryP * 2.3, rx: rxP * .9, ry: ryP * .5, fill: '#000', opacity: .45, filter: 'url(#soft)'}, basin);
-    mk('path', {d: `M${sx - rxP - 3},${yb} A${rxP + 3},${ryP * 2.4} 0 0 0 ${sx + rxP + 3},${yb} Z`, fill: 'url(#brass)', stroke: '#2a1a07', 'stroke-width': 1.2}, basin);
-    mk('path', {d: `M${sx - rxP * .7},${yb + ryP * 1.2} A${rxP * .9},${ryP * 1.9} 0 0 0 ${sx + rxP * .2},${yb + ryP * 2.1}`, fill: 'none', stroke: '#fff3c4', 'stroke-opacity': .5, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, basin);
-    mk('ellipse', {cx: sx, cy: yb, rx: rxP + 3, ry: ryP + 2, fill: '#5a3d12', stroke: '#f2d690', 'stroke-width': 1.4}, basin);
-    E.pool = mk('ellipse', {cx: sx, cy: yb + 1, rx: rxP - 1, ry: ryP - 1, fill: 'url(#water)'}, basin);
-    const rip = mk('g', {}, basin); E.rip = rip;
-    for (let i = 0; i < 3; i++) {
-      const e = mk('ellipse', {cx: sx, cy: yb + 1, rx: w0 * 2, ry: w0 * .5, fill: 'none', stroke: '#eaf8ff', 'stroke-width': 1.1, opacity: .7}, rip);
-      if (!Kit.calm) loops.push(gsap.fromTo(e, {attr: {rx: w0 * 1.2, ry: w0 * .3}, opacity: .8}, {attr: {rx: rxP * .9, ry: ryP * .85}, opacity: 0, duration: 2.6, ease: 'power1.out', repeat: -1, delay: i * .87}));
-      else gsap.set(e, {attr: {rx: w0 * 1.6 + i * rxP * .25, ry: w0 * .4 + i * ryP * .25}});
-    }
-
-    // the stream itself: one shape, morphed from froth to glass
-    const turbE = edges(true), lamE = edges(false);
-    const sg = mk('g', {}, svg); E.sg = sg;
-    E.stream = mk('path', {d: shapeD(turbE), fill: 'url(#water)', stroke: '#ffffff', 'stroke-opacity': .35, 'stroke-width': 1}, sg);
-    E.hi = mk('path', {d: hiD(turbE), fill: 'none', stroke: '#ffffff', 'stroke-width': Math.max(1.5, w0 * .28), 'stroke-linecap': 'round'}, sg);
-    E.mT = gsap.to(E.stream, {morphSVG: shapeD(lamE), duration: 1, ease: 'none', paused: true});
-    E.hT = gsap.to(E.hi, {morphSVG: hiD(lamE), duration: 1, ease: 'none', paused: true});
-    // laminae: parallel layers sliding past each other, the middle one fastest
-    const sl = mk('g', {opacity: 0}, sg); E.sl = sl;
-    [[-.55, 1.25], [0, .8], [.55, 1.25]].forEach(([o, dur], i) => {
-      const pts = lamE.Rr.slice(1, -1).map(p => [sx + o * (p[0] - sx) * .85, p[1]]);
-      const per = w0 * 3.6;
-      const p = mk('path', {d: `M${f2(pts[0])}${cr(pts)}`, fill: 'none', stroke: i === 1 ? '#ffffff' : '#e4f6ff', 'stroke-opacity': .8, 'stroke-width': i === 1 ? 1.4 : 1, 'stroke-linecap': 'round', 'stroke-dasharray': `${w0 * 1.3} ${per - w0 * 1.3}`, 'stroke-dashoffset': i * w0}, sl);
-      if (!Kit.calm) loops.push(gsap.fromTo(p, {attr: {'stroke-dashoffset': i * w0}}, {attr: {'stroke-dashoffset': i * w0 - per * 2}, duration: dur, ease: 'none', repeat: -1}));
-    });
-    E.impact = mk('ellipse', {cx: sx, cy: yb + 1, rx: w0 * 1.5, ry: w0 * .42, fill: 'url(#water)', stroke: '#ffffff', 'stroke-opacity': .7, 'stroke-width': 1}, sg);
-    E.glint = mk('ellipse', {cx: sx - w0 * .25, cy: y0, rx: w0 * .35, ry: w0 * 1.8, fill: '#ffffff', opacity: 0, filter: 'url(#softS)'}, sg);
-
-    // froth: bubbles along the churning edges and a splash in the basin
-    const foam = mk('g', {}, svg); E.foam = foam;
-    for (let i = 0; i < 34; i++) {
-      const k = 3 + Math.floor(NOISE[i + 5] * 25), side = i % 2 ? turbE.Rr : turbE.Ll, p = side[k];
-      const r = w0 * (.16 + .34 * NOISE[i + 50]);
-      const c = mk('circle', {cx: p[0] + (NOISE[i + 70] - .5) * w0, cy: p[1], r, fill: '#fbfdff', 'fill-opacity': .85, stroke: '#cfe6ee', 'stroke-width': .8}, foam);
-      if (!Kit.calm) loops.push(gsap.to(c, {attr: {cy: p[1] - 2 - NOISE[i + 90] * 6, r: r * 1.3}, duration: .25 + NOISE[i + 20] * .4, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
-    }
-    for (let i = 0; i < 16; i++) {
-      const a = Math.PI + NOISE[i + 140] * Math.PI, d = w0 * (1.5 + NOISE[i + 160] * 2.6);
-      const r = w0 * (.18 + .3 * NOISE[i + 180]);
-      const c = mk('circle', {cx: sx + Math.cos(a) * d * 1.2, cy: yb + Math.sin(a) * d * .55, r, fill: '#ffffff', 'fill-opacity': .9}, foam);
-      if (!Kit.calm) loops.push(gsap.to(c, {attr: {cy: '-=' + (3 + NOISE[i + 120] * 7)}, duration: .3 + NOISE[i + 30] * .35, repeat: -1, yoyo: true, ease: 'power1.inOut'}));
-    }
-
-    // steam: the sign of warm water
-    const steam = mk('g', {}, svg); E.steam = steam;
-    [[-1, .45, 0], [1, .6, .9], [-1, .78, 1.8], [1, .3, 1.3]].forEach(([dx, t, d]) => {
-      const x = sx + dx * w0 * 3.2, y = y0 + (yb - y0) * t, a = w0 * .7;
-      mk('path', {d: `M${x},${y} q${a},-${a * 1.2} 0,-${a * 2.4} q-${a},-${a * 1.2} 0,-${a * 2.4}`, fill: 'none', stroke: '#f6efe2', 'stroke-width': 1.6, 'stroke-linecap': 'round', class: 'steam', style: `animation-delay:${d}s`}, steam);
-    });
-
-    // frost crystals for the end
-    const frost = mk('g', {}, svg); E.frost = [];
-    [[sx - pt * 1.1, y0 - pt * .6, 1], [sx + pt * 1.15, y0 - pt * .2, .8], [sx - br * .6, py - pt * .2, .7], [sx + pt * .9, py + br * .3, .9], [vx + vr * 1.6, py + pt * .1, .65]].forEach(([x, y, k]) => {
-      const g = mk('g', {}, frost), r = pt * .55 * k;
-      for (let j = 0; j < 3; j++) {
-        const a = j * Math.PI / 3;
-        mk('line', {x1: x - Math.cos(a) * r, y1: y - Math.sin(a) * r, x2: x + Math.cos(a) * r, y2: y + Math.sin(a) * r, stroke: '#e6f7ff', 'stroke-width': 1.4, 'stroke-linecap': 'round'}, g);
-      }
-      mk('circle', {cx: x, cy: y, r: r * .22, fill: '#e6f7ff'}, g);
-      gsap.set(g, {scale: s >= NS ? 1 : 0, opacity: s >= NS ? 1 : 0, svgOrigin: `${x} ${y}`});
-      E.frost.push(g);
-    });
-
-    // ---------- the Reynolds meter ----------
-    const ax0 = colW + 4, aw = W - colW - 6;
-    const rowH = clamp(H * .07, fs * 1.75, fs * 2.2), rowsH = rowH * 3, lgH = fs * 1.7;
-    R = Math.max(30, Math.min(aw / 2 / 1.08 - 1, (H - rowsH - lgH - 6) / 2.16));
-    cx = ax0 + aw / 2;
-    const block = 2.16 * R + lgH + rowsH, top = Math.max(2, (H - block) / 2);
-    cy = top + 1.08 * R;
-    const D = mk('g', {}, svg); E.dial = D;
-    for (let i = 0; i < 3; i++) mk('circle', {cx, cy, r: R * (1.03 + i * .025), fill: 'none', stroke: INKC, 'stroke-opacity': .08 - .02 * i, 'stroke-width': 1}, D);
-    mk('circle', {cx: cx + 2, cy: cy + R * .05, r: R * .97, fill: '#000', opacity: .5, filter: 'url(#soft)'}, D);
-    mk('circle', {cx, cy, r: R, fill: 'url(#brass)', stroke: '#2a1a07', 'stroke-width': 1.2}, D);
-    mk('circle', {cx, cy, r: R * .905, fill: 'url(#brassIn)', stroke: '#3b2808', 'stroke-width': .8}, D);
-    mk('circle', {cx, cy, r: R * .845, fill: 'url(#face)', stroke: '#6b4a18', 'stroke-width': 1}, D);
-    if (R > 48) [45, 135, 225, 315].forEach(a => {
-      const p = P(a, R * .952), r = R * .028;
-      mk('circle', {cx: p[0], cy: p[1], r, fill: 'url(#brassIn)', stroke: '#3b2808', 'stroke-width': .7}, D);
-      mk('line', {x1: p[0] - r * .7, y1: p[1] + r * .3, x2: p[0] + r * .7, y2: p[1] - r * .3, stroke: '#3b2808', 'stroke-width': .8}, D);
-    });
-    // zones
-    const zones = [[0, .33, '#2f8f83'], [.33, .6, '#d89a2b'], [.6, 1, '#b9432f']];
-    E.zones = zones.map(([a, b, c]) => mk('path', {d: arcD(a, b, R * .73), fill: 'none', stroke: c, 'stroke-width': R * .065}, D));
-    E.ticks = [];
-    for (let i = 0; i <= 40; i++) {
-      const v = i / 40, a = ang(v), big = i % 5 === 0;
-      const p1 = P(a, R * (big ? .765 : .79)), p2 = P(a, R * .835);
-      E.ticks.push(mk('line', {x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: ENGRAVE, 'stroke-width': big ? 1.6 : .8}, D));
-    }
-    // engraved: "Re" above the hub, and its formula below when the face is big enough
-    const face = mk('g', {}, D), ef = 'font-weight:700;fill:' + ENGRAVE, rf = R * .845;
-    const reS = clamp(R * .2, 12, fs * 1.35);
-    txt(face, cx, cy - R * .3, 'Re', {'text-anchor': 'middle', 'font-size': reS}, ef + ';letter-spacing:.04em');
-    const y2 = cy + R * .2 + fs * .95, y3 = y2 + fs * 1.5;
-    const num = txt(face, cx, y2, 'speed × width', {'text-anchor': 'middle'}, ef);
-    const den = txt(face, cx, y3, 'viscosity', {'text-anchor': 'middle'}, ef);
-    const nw = num.getComputedTextLength(), dw = den.getComputedTextLength();
-    const avail = y => {
-      const d = y - cy; let a = Math.sqrt(Math.max(0, rf * rf - d * d)) - 4;
-      if (d > R * .26 && d < R * .47) a = Math.min(a, R * .58 - 3);
-      return a;
-    };
-    const boxOk = (yb_, w) => [yb_ - fs * .8, yb_ - fs * .3, yb_ + fs * .3].every(y => avail(y) >= w / 2);
-    if (y3 + fs * .35 < cy + rf - 3 && boxOk(y2, nw) && boxOk(y3, dw)) {
-      mk('line', {x1: cx - nw / 2, x2: cx + nw / 2, y1: y2 + fs * .42, y2: y2 + fs * .42, stroke: ENGRAVE, 'stroke-width': 1.2}, face);
-    } else { num.remove(); den.remove(); }
-    // the needle, with a soft shadow and a damped swing
-    const jit = mk('g', {}, D); E.jit = jit;
-    const needle = mk('g', {}, jit); E.needle = needle;
-    const nd = `M${cx},${cy - R * .76} L${cx + R * .032},${cy} L${cx},${cy + R * .17} L${cx - R * .032},${cy} Z`;
-    mk('path', {d: nd, fill: '#000', opacity: .35, transform: `translate(2,3)`, filter: 'url(#softS)'}, needle);
-    mk('path', {d: nd, fill: '#1e140a'}, needle);
-    mk('circle', {cx, cy: cy + R * .14, r: R * .045, fill: 'url(#brass)', stroke: '#2a1a07', 'stroke-width': .8}, needle);
-    gsap.set(needle, {rotation: rotOf(s), svgOrigin: `${cx} ${cy}`});
-    mk('circle', {cx, cy, r: R * .075, fill: 'url(#brass)', stroke: '#2a1a07', 'stroke-width': 1}, D);
-    mk('circle', {cx: cx - R * .02, cy: cy - R * .02, r: R * .025, fill: '#fff4cc', opacity: .8}, D);
-    // the glass: a curved glint, and a light sweep for the reveal (its gradient moves, the shape stays put)
-    const g1 = P(150, R * .8), g2 = P(62, R * .8);
-    mk('path', {d: `M${f2(g1)} A${R * .8},${R * .8} 0 0 1 ${f2(g2)} A${R * .98},${R * .98} 0 0 0 ${f2(g1)} Z`, fill: '#ffffff', opacity: .22}, D);
-    E.sweep = grad(defs, 'sweep', [[0, '#fff', 0], [.5, '#fff', .6], [1, '#fff', 0]], {attrs: {gradientUnits: 'userSpaceOnUse', x1: cx - R * 2.2, y1: cy - R * .25, x2: cx - R * 1.6, y2: cy + R * .25}});
-    E.bandC = mk('circle', {cx, cy, r: rf, fill: 'url(#sweep)', opacity: 0}, D);
-
-    // the zone legend, under the arc ends
-    const lg = mk('g', {}, svg); E.lg = lg;
-    const zl = Math.max(12, fs * .92), ly = top + 2.16 * R + fs * 1.15;
-    E.lgL = txt(lg, 0, ly, 'LAMINAR', {'font-size': zl, 'font-weight': 700}, 'fill:#5cc6b4;letter-spacing:.06em');
-    E.lgT = txt(lg, 0, ly, 'TURBULENT', {'font-size': zl, 'font-weight': 700, 'text-anchor': 'end'}, 'fill:#e47a5f;letter-spacing:.06em');
-    const lL = E.lgL.getComputedTextLength(), lT = E.lgT.getComputedTextLength();
-    E.lgL.setAttribute('x', Math.max(ax0 + 2, Math.min(cx - R * .92, cx - 8 - lL)));
-    E.lgT.setAttribute('x', Math.min(W - 2, Math.max(cx + R * .92, cx + 8 + lT)));
-
-    // ---------- three gauges: temperature, viscosity, speed ----------
-    const rows = mk('g', {}, svg); E.rowsG = rows;
-    const x0 = colW + 10, names = ['TEMP', 'VISCOSITY', 'SPEED'], rowsTop = top + 2.16 * R + lgH;
-    const rowY = i => rowsTop + rowH * (i + .5);
-    const labels = names.map((n, i) => txt(rows, x0, rowY(i) + fs * .35, n, {'font-weight': 700}, 'letter-spacing:.04em'));
-    const lmax = Math.max(...labels.map(l => l.getComputedTextLength()));
-    const hh = Math.max(6, fs * .55), xb = x0 + lmax + fs * .7, bw = Math.max(30, W - 6 - xb - hh);
-    const vals = [k => 1 - .8 * k / NS, k => (1 + .5 * k) / 3, k => 1 - .15 * k];
-    const cols = [k => gsap.utils.interpolate('#e0683c', '#5fb8ea', k / NS), () => '#e3aa3f', () => '#5fc4b2'];
-    E.rows = names.map((n, i) => {
-      const y = rowY(i);
-      mk('rect', {x: xb, y: y - hh / 2, width: bw, height: hh, rx: hh / 2, fill: '#0a1416', stroke: '#000', 'stroke-opacity': .5, 'stroke-width': 1}, rows);
-      mk('line', {x1: xb + hh / 2, x2: xb + bw - hh / 2, y1: y + hh / 2 + 1, y2: y + hh / 2 + 1, stroke: INKC, 'stroke-opacity': .12, 'stroke-width': 1}, rows);
-      for (let j = 0; j <= 4; j++) mk('line', {x1: xb + bw * j / 4, x2: xb + bw * j / 4, y1: y - hh / 2 - 4, y2: y - hh / 2 - 1, stroke: INKC, 'stroke-opacity': .35, 'stroke-width': 1}, rows);
-      const fill = mk('rect', {x: xb, y: y - hh / 2, width: bw * vals[i](s), height: hh, rx: hh / 2, fill: cols[i](s)}, rows);
-      const knob = mk('circle', {cx: xb + bw * vals[i](s), cy: y, r: hh * .95, fill: 'url(#brass)', stroke: '#2a1a07', 'stroke-width': 1}, rows);
-      return {fill, knob, xb, bw, val: vals[i], col: cols[i]};
-    });
-
-    if (s >= NS) { gsap.set([E.pulse, E.lbl], {opacity: 0}); }
-    apply();
+      const P = q => q[0].toFixed(1) + ',' + q[1].toFixed(1);
+      body.setAttribute('d', 'M' + lt.map(P).join('L') + 'L' + rt.reverse().map(P).join('L') + 'Z');
+      const ho = clamp(1 - ch * 1.9) * .85;
+      const h0 = o.sx - o.w0 * .16, hw0 = Math.max(1, o.w0 * .16);
+      hi.setAttribute('d', ho > .02 ? `M${h0},${o.sy + 3} L${o.sx - o.w0 * .08},${o.sy + L * .9}` : '');
+      hi.setAttribute('stroke-width', hw0); hi.setAttribute('opacity', ho);
+      const done = o.len > .97, x0 = o.sx + cEnd;
+      pool.setAttribute('opacity', done ? 1 : 0);
+      const rx = o.w0 * (1.1 + ch * 1.1);
+      pool.setAttribute('cx', x0); pool.setAttribute('cy', o.yE); pool.setAttribute('rx', rx); pool.setAttribute('ry', rx * .26);
+      const sp = done ? clamp((ch - .4) * 2.5) : 0;
+      if (sp > .01) {
+        const sw = rx * 1.15, n = 4;
+        let d = `M${(x0 - sw).toFixed(1)},${o.yE}`;
+        for (let i = 0; i < n; i++) {
+          const xa = x0 - sw + (i + .5) * 2 * sw / n, xb = x0 - sw + (i + 1) * 2 * sw / n;
+          const h = o.w0 * (1 + 1.2 * ch) * sp * (i === 0 || i === n - 1 ? 1 : .62) * (1 + .1 * Math.sin(t * 7 + i * 1.9));
+          d += ` L${xa.toFixed(1)},${(o.yE - h).toFixed(1)} L${xb.toFixed(1)},${(o.yE - (i < n - 1 ? h * .22 : 0)).toFixed(1)}`;
+        }
+        d += ` Q${x0.toFixed(1)},${(o.yE + rx * .5).toFixed(1)} ${(x0 - sw).toFixed(1)},${o.yE}Z`;
+        splash.setAttribute('d', d);
+      } else splash.setAttribute('d', '');
+    }};
   }
 
-  function apply() {
-    if (!E.mT) return;
-    E.mT.progress(st.lam); E.hT.progress(st.lam);
-    E.foam.style.opacity = Math.pow(1 - st.lam, 1.3);
-    E.steam.style.opacity = st.warm * .9;
-    E.rip.style.opacity = st.lam;
-    E.sl.setAttribute('opacity', (Math.pow(st.lam, 2) * .85).toFixed(3));
-    E.hi.setAttribute('opacity', .35 + .5 * st.lam);
-    const c = 1 - st.warm, I = gsap.utils.interpolate;
-    E.ws0.setAttribute('stop-color', I('#efe6d8', '#d6f3ff', c));
-    E.ws1.setAttribute('stop-color', I('#c4d3d6', '#4fb0e6', c));
+  // ---------- front ----------
+  function drawFront() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg), W = f.W, H = f.H; fs = Math.max(12, Math.min(14, f.f || 13));
+    K = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+    const G = geom({x: 0, y: 0, w: W, h: H}, .8, .97);
+    Kit.mk('line', {x1: W * .03, x2: W * .97, y1: G.cy, y2: G.cy, stroke: K, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+    sink(svg, G);
+    const sg = Kit.mk('g', {}, svg), stream = mkStream(sg, K, K, .16);
+    const tap = faucet(svg, G);
+    const hit = Kit.mk('circle', {cx: tap.ll, cy: 0, r: Math.max(22, G.p * 1.6), fill: '#000', 'fill-opacity': 0, 'data-temp': 1, tabindex: 0, role: 'button', 'aria-label': 'Switch the tap between cold and hot'}, tap.lever);
+    hit.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setTemp(1 - temp); } });
+    const pct = txt(svg, G.bx - G.p * 1.7, G.hy + fs * 1.9, '', {'text-anchor': 'end', 'font-weight': 700});
+    const tl = txt(svg, 0, 0, '', {'text-anchor': 'middle', 'font-weight': 800, 'data-temp': 1});
+    F = {G, stream, lever: tap.lever, knob: tap.knob, ll: tap.ll, pct, tl, W};
+    renderFront();
   }
+  function renderFront() {
+    if (!F) return;
+    const G = F.G, ch = chaosOf(open), k = temp ? HOT : COLD;
+    F.stream.set({sx: G.sx, sy: G.sy, yE: G.yE, w0: G.p * (.5 + .55 * open), chaos: ch, len}, T);
+    setLever(F.lever, G, open);
+    F.knob.setAttribute('fill', k.edge);
+    F.pct.textContent = `${Math.round(open * 100)}% open`;
+    const word = temp ? 'hot' : 'cold';
+    if (F.tl.textContent !== word) F.tl.textContent = word;
+    F.tl.setAttribute('fill', k.ink);
+    const a = leverAngle(open) * RAD, kx = G.bx + F.ll * Math.cos(a), ky = G.hy + F.ll * Math.sin(a);
+    const hw = width(F.tl) / 2;
+    F.tl.setAttribute('x', clamp(kx, hw + 2, F.W - hw - 2));
+    F.tl.setAttribute('y', ky - G.p * .5 - 7);
+  }
+  function setTemp(v) { temp = v; Kit.haptic('selection'); renderFront(); }
 
-  function setBars(anim) {
-    E.rows.forEach(r => {
-      const w = r.bw * r.val(s);
-      if (anim && !Kit.calm) {
-        gsap.to(r.fill, {attr: {width: w}, duration: .9, ease: 'power3.out'});
-        gsap.to(r.fill, {attr: {fill: r.col(s)}, duration: .9});
-        gsap.to(r.knob, {attr: {cx: r.xb + w}, duration: .9, ease: 'back.out(1.6)'});
-      } else { gsap.set(r.fill, {attr: {width: w, fill: r.col(s)}}); gsap.set(r.knob, {attr: {cx: r.xb + w}}); }
+  // ---------- back: the same tap twice, cold and hot, one word under each ----------
+  function drawBack(animate) {
+    svg2.innerHTML = '';
+    const f = Kit.fitSvg(svg2), W = f.W, H = f.H; fs = Math.max(12, Math.min(14, f.f || 13));
+    const labY = H - 4, yb = labY - fs - 10;
+    const Gs = [0, 1].map(i => geom({x: i * W / 2, y: 0, w: W / 2, h: yb}, .8, 1));
+    const base = Kit.mk('g', {}, svg2);
+    Kit.mk('line', {x1: W * .03, x2: W * .97, y1: Gs[0].cy, y2: Gs[0].cy, stroke: K, 'stroke-width': 2, 'stroke-linecap': 'round'}, base);
+    const kinds = [COLD, HOT], streams = [], taps = [], labs = [];
+    Gs.forEach((G, i) => {
+      const k = kinds[i];
+      const g = Kit.mk('g', {}, svg2);
+      sink(g, G);
+      const sg = Kit.mk('g', {}, g);
+      streams.push(mkStream(sg, k.fill, k.edge, 1));
+      setLever(faucet(g, G, k.edge).lever, G, .6);
+      taps.push(g);
+      const lab = txt(svg2, G.cx, labY, i ? 'hot: rough' : 'cold: smooth', {'text-anchor': 'middle', 'font-weight': 800, fill: k.ink});
+      if (width(lab) > W / 2 - 8) lab.setAttribute('font-size', 12);
+      labs.push(lab);
     });
-  }
-
-  const MSG = [
-    '',
-    'Colder water is <b>thicker</b>: its viscosity goes up, and the needle falls. <b>Again.</b>',
-    'Thicker water also comes out <b>slower</b>. Less speed, more viscosity: a smaller Reynolds number.',
-    'The swirls now die out before they can grow. <b>One more.</b>',
-    'Cold water is thicker and slower. Re = speed × width ÷ viscosity, so both pull it down, and small swirls fade instead of growing into froth.'
-  ];
-
-  function go() {
-    if (s >= NS) return;
-    s++;
-    Kit.haptic(s === NS ? 'success' : 'light');
-    if (Kit.calm) gsap.set(E.valve, {rotation: s * 90, svgOrigin: `${vx} ${vy}`});
-    else gsap.to(E.valve, {rotation: s * 90, svgOrigin: `${vx} ${vy}`, duration: .55, ease: 'back.out(2.2)'});
-    const lam = lamOf(s), warm = 1 - s / NS;
-    if (Kit.calm) { st.lam = lam; st.warm = warm; apply(); gsap.set(E.needle, {rotation: rotOf(s), svgOrigin: `${cx} ${cy}`}); }
-    else {
-      gsap.to(st, {lam, warm, duration: 1.3, ease: 'power3.out', onUpdate: apply, overwrite: true});
-      gsap.to(E.needle, {rotation: rotOf(s), svgOrigin: `${cx} ${cy}`, duration: 2.8, ease: 'elastic.out(1,0.28)', overwrite: true});
+    const still = !animate || Kit.calm;
+    B = {Gs, streams, len: still ? 1 : 0};
+    renderBack();
+    if (!still) {
+      gsap.timeline()
+        .from([base, ...taps], {opacity: 0, y: 8, duration: .5, stagger: .08, ease: 'power3.out'})
+        .to(B, {len: 1, duration: 1.1, ease: 'power2.out'}, '+=.1')
+        .from(labs, {opacity: 0, y: 6, duration: .45, stagger: .15, ease: 'power3.out'}, '-=.4');
     }
-    setBars(true);
-    say.innerHTML = MSG[s];
-    if (s === NS) wow();
+  }
+  function renderBack() {
+    if (!B) return;
+    B.Gs.forEach((G, i) => B.streams[i].set({sx: G.sx, sy: G.sy, yE: G.yE, w0: G.p * .9, chaos: i ? .88 : .03, len: B.len}, T));
   }
 
-  function wow() {
-    card.classList.add('answered'); Kit.show('keep');
-    if (Kit.calm) { gsap.set(E.frost, {scale: 1, opacity: 1}); gsap.set([E.pulse, E.lbl], {opacity: 0}); return; }
-    gsap.to([E.pulse, E.lbl], {opacity: 0, duration: .4});
-    gsap.to(E.frost, {scale: 1, opacity: 1, duration: .7, ease: 'back.out(2.5)', stagger: .09, delay: .5});
-    gsap.timeline({delay: .9})
-      .set(E.bandC, {opacity: 1})
-      .fromTo(E.sweep, {attr: {x1: cx - R * 2.2, x2: cx - R * 1.6}}, {attr: {x1: cx + R * 1.6, x2: cx + R * 2.2}, duration: 1.3, ease: 'power2.inOut'})
-      .set(E.bandC, {opacity: 0});
-    gsap.timeline({delay: 1.1})
-      .fromTo(E.glint, {attr: {cy: y0 + w0 * 2}, opacity: 0}, {attr: {cy: yb - w0 * 2}, duration: 1.2, ease: 'power2.in'})
-      .to(E.glint, {opacity: .9, duration: .3, ease: 'power1.out'}, 0)
-      .to(E.glint, {opacity: 0, duration: .3}, .9);
-    gsap.fromTo(E.zones[0], {attr: {'stroke-width': R * .065}}, {attr: {'stroke-width': R * .11}, duration: .35, yoyo: true, repeat: 1, ease: 'power2.out', delay: 1.4});
-    gsap.fromTo(E.lgL, {fill: '#5cc6b4'}, {fill: '#d4fff6', duration: .35, yoyo: true, repeat: 1, ease: 'power2.out', delay: 1.4});
-  }
-
-  // A turbulent flow makes the needle tremble; a laminar one leaves it still.
-  gsap.ticker.add(time => {
-    if (!E.jit || Kit.calm) return;
-    const a = (1 - st.lam) * 3 * Math.sin(time * 21) * Math.cos(time * 6.7);
-    E.jit.setAttribute('transform', `rotate(${a.toFixed(2)} ${cx} ${cy})`);
+  // ---------- the drag opens the tap; a tap on the knob switches cold and hot ----------
+  let drag = null;
+  svg.addEventListener('pointerdown', e => {
+    if (e.target.closest && e.target.closest('[data-temp]')) { setTemp(1 - temp); return; }
+    drag = {x: e.clientX, y: e.clientY, o: open}; touched = true; svg.setPointerCapture(e.pointerId);
   });
+  svg.addEventListener('pointermove', e => {
+    if (!drag || !F) return;
+    const nv = clamp(drag.o + ((e.clientX - drag.x) - (e.clientY - drag.y)) / (F.W * .6), .08, 1);
+    if (Math.round(nv * 10) !== Math.round(open * 10)) Kit.haptic('selection');
+    open = nv;
+    if (Kit.calm) renderFront();
+  });
+  const end = () => { drag = null; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
-  svg.addEventListener('pointerdown', e => { e.preventDefault(); go(); });
+  // ---------- answer, sure, turn ----------
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    setTimeout(() => Turn.over(), 700);
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+    Kit.$('say').innerHTML = 'Now say how sure you are.';
+    sure.on();
+  });
+  document.addEventListener('turned', () => { turned = true; drawBack(true); });
 
-  Kit.onShow.card = layout;
+  gsap.ticker.add(() => { if (!Kit.calm) T += gsap.ticker.deltaRatio() / 60; renderFront(); if (turned) renderBack(); });
+
+  Kit.onShow.card = () => { drawFront(); if (turned) drawBack(false); };
   Kit.onEnter.card = () => {
-    if (entered || Kit.calm || !E.dial) return; entered = true;
-    const tl = gsap.timeline();
-    tl.from(E.dial, {scale: .82, opacity: 0, transformOrigin: '50% 50%', duration: 1, ease: 'expo.out'})
-      .from(E.ticks, {opacity: 0, duration: .25, stagger: .012}, .2)
-      .from(E.lg, {opacity: 0, duration: .5}, .5)
-      .from(E.tap, {x: -40, opacity: 0, duration: .8, ease: 'power3.out'}, 0)
-      .from(E.basin, {y: 16, opacity: 0, duration: .7, ease: 'power3.out'}, .1)
-      .from(E.sg, {scaleY: 0, svgOrigin: `${sx} ${y0}`, duration: .9, ease: 'power2.in'}, .45)
-      .from(E.foam, {opacity: 0, duration: .5}, 1.1)
-      .from(E.rowsG.children, {opacity: 0, x: 12, duration: .5, stagger: .025, ease: 'power3.out'}, .5)
-      .fromTo(E.needle, {rotation: -120, svgOrigin: `${cx} ${cy}`}, {rotation: rotOf(s), svgOrigin: `${cx} ${cy}`, duration: 2.4, ease: 'elastic.out(1,0.3)'}, .55);
+    if (Kit.calm) return;
+    len = 0; const z = {len: 0, open: .1};
+    gsap.to(z, {len: 1, open: .3, duration: 1.2, ease: 'power2.out', delay: .2, onUpdate: () => { len = z.len; if (!touched) open = z.open; }});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .5, ease: 'power3.out'});
   };
   Kit.play.card = async () => {
     const wait = ms => new Promise(r => setTimeout(r, ms));
-    for (let i = 0; i < NS; i++) { go(); await wait(Kit.calm ? 60 : 380); }
-    await wait(Kit.calm ? 100 : 1600);
+    len = 1; open = .85; temp = 1; renderFront();
+    await wait(Kit.calm ? 60 : 300);
+    Kit.$('opts').children[1].click();
+    await wait(100);
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await wait(Kit.calm ? 1000 : 3200);
   };
 })();
 Kit.single();
