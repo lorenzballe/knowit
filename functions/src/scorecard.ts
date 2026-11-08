@@ -467,6 +467,24 @@ export async function readTotals(db: Firestore): Promise<Map<string, Counted>> {
   return out;
 }
 
+// ── How the crowd answers, for the phones ───────────────────────────────
+
+/**
+ * What every phone may know of how readers answer: for each card answered by
+ * [MIN_ANSWERS] readers or more, how many first answers and how many of them
+ * were right. Counts only, as the scorecard keeps them: nothing about who,
+ * and nothing on a card too few readers met for a share to mean anything, so
+ * no one reader's answer can be read back out of it. The phone says "64% got
+ * it wrong" from this (lib/sync/crowd.dart).
+ */
+export function crowdOf(totals: Map<string, Counted>, min = MIN_ANSWERS): Record<string, [number, number]> {
+  const out: Record<string, [number, number]> = {};
+  for (const [id, c] of [...totals.entries()].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) {
+    if (c.tally.answers >= min) out[id] = [c.tally.answers, Math.min(c.tally.right, c.tally.answers)];
+  }
+  return out;
+}
+
 /** Every report readers have made, as the server reads them. */
 export async function readReports(db: Firestore): Promise<Report[]> {
   const snap = await db.collectionGroup('reports').get();
@@ -531,6 +549,8 @@ export async function runScorecard(db: Firestore, bank: Bank, nowMs: number): Pr
     ...assessment,
   });
   await db.collection('quality').doc('notes').set({ at: nowMs, cards: notesOf(standing(bank, reports)) });
+  // Beside Explore's lists, which every signed-in phone reads (firestore.rules, explore/{doc}).
+  await db.collection('explore').doc('crowd').set({ at: nowMs, min: MIN_ANSWERS, cards: crowdOf(totals) });
   return { days: counted, readers, assessment };
 }
 

@@ -298,6 +298,7 @@ class ServedExplore {
     this.mine = const [],
     this.forYou = const [],
     this.local = const [],
+    this.crowd = const {},
     this.fromCache = false,
   });
 
@@ -329,7 +330,21 @@ class ServedExplore {
   /// the server found them from the place in the reader's backup. Empty
   /// without one, or before any card is written for it.
   final List<Pill> local;
+
+  /// How readers answered each card, as the scorecard counted them
+  /// (functions/src/scorecard.ts, crowdOf): first answers and how many were
+  /// right, by card. Only cards enough readers answered are here, and nothing
+  /// about who answered: a count, never a person.
+  final Map<String, ({int answers, int right})> crowd;
   final bool fromCache;
+
+  /// The share of readers who got [pillId] wrong, 0 to 1, or null when too
+  /// few answered it for the number to mean anything.
+  double? wrongShare(String pillId) {
+    final c = crowd[pillId];
+    if (c == null || c.answers <= 0) return null;
+    return (c.answers - c.right).clamp(0, c.answers) / c.answers;
+  }
 
   /// Reads explore/latest, and the reader's own shelf when there is one.
   ///
@@ -402,6 +417,18 @@ class ServedExplore {
           for (final Pill c in cards(p?['local']))
             if (c.isAboutAPlace) c,
         ],
+        crowd: {
+          if (global['crowd'] case final Map raw)
+            for (final e in raw.entries)
+              if (e.key is String &&
+                  e.value is List &&
+                  (e.value as List).length == 2 &&
+                  (e.value as List).every((n) => n is num))
+                e.key as String: (
+                  answers: ((e.value as List)[0] as num).round(),
+                  right: ((e.value as List)[1] as num).round(),
+                ),
+        },
         fromCache: fromCache,
       );
     } catch (error) {

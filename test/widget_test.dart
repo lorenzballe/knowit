@@ -51,6 +51,8 @@ import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/premium.dart';
 import 'package:astuto/widgets/ui.dart';
 
+import 'shelves_explore.dart';
+
 /// Pumps a few frames so the async `SharedPreferences` load settles.
 
 Future<void> _settle(WidgetTester tester) async {
@@ -359,6 +361,9 @@ Future<void> _hold(WidgetTester tester, Finder card) async {
 }
 
 void main() {
+  // The shelves played here stand where Explore had them before the
+  // strategic Explore.
+  useShelvesExplore();
   // Run against a real handset surface rather than the 800x600 default, so
   // layouts are exercised at the size they actually ship at.
   setUp(() {

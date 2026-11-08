@@ -904,7 +904,9 @@ class SeriesBlock extends ExploreBlock with SectionLayout {
   }
 }
 
-/// Sixty seconds: eight claims against the clock.
+/// Sixty seconds: eight claims against the clock. A round that beats the
+/// reader's record keeps it (`AppState.sixtyBest`), for the quick games to
+/// show.
 class SixtyBlock extends ExploreBlock with SectionLayout {
   const SixtyBlock();
 
@@ -928,6 +930,7 @@ class SixtyBlock extends ExploreBlock with SectionLayout {
         pills: mix.sixty,
         onOpen: _opener(host, section),
         onShown: _shower(host, section),
+        onFinished: host.app.noteSixtyRound,
       ),
     );
   }

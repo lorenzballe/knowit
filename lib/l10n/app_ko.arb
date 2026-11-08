@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "바로잡습니다",
   "screensFrontPuzzle": "오늘의 퍼즐",
   "screensFrontEnd": "오늘 판은 여기까지",
-  "screensFrontTomorrow": "내일 판은 아침에 나와요"
+  "screensFrontTomorrow": "내일 판은 아침에 나와요",
+  "exploreDayRead": "오늘: {of}개 중 {read}개 읽음",
+  "exploreDayLeft": "{n, plural, other{{n}개 남음}}",
+  "exploreDayDone": "모두 읽음",
+  "exploreDayOpen": "오늘의 카드로 가기",
+  "exploreSixtyRecord": "최고 기록 {n}/{of}",
+  "exploreSixtyFirst": "기록을 세워 보세요",
+  "exploreGameNone": "지금은 할 수 있는 게임이 없어요. 내일 다시 오세요.",
+  "exploreSubjectLevel": "{subject}, 레벨 {n}",
+  "exploreBecauseSaved": "보관한 ‘{question}’ 때문에"
 }

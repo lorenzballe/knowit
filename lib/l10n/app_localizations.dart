@@ -6455,6 +6455,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tomorrow\'s is out in the morning'**
   String get screensFrontTomorrow;
+
+  /// Explore, the panel of the reader's day at the top: how many of today's cards are read, of how many.
+  ///
+  /// In en, this message translates to:
+  /// **'Today: {read} of {of} read'**
+  String exploreDayRead(int read, int of);
+
+  /// Explore, the panel of the reader's day: after 'Today: 3 of 5 read ·', how many of today's cards are still to read.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 left} other{{n} left}}'**
+  String exploreDayLeft(int n);
+
+  /// Explore, the panel of the reader's day: after 'Today: 5 of 5 read ·', once the day's cards are all read.
+  ///
+  /// In en, this message translates to:
+  /// **'all read'**
+  String get exploreDayDone;
+
+  /// Explore, the panel of the reader's day: what a tap on it does, said to a screen reader.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to today\'s cards'**
+  String get exploreDayOpen;
+
+  /// Explore, the quick games: on the Sixty seconds tile, the most claims the reader ever got right in one round, of eight.
+  ///
+  /// In en, this message translates to:
+  /// **'Your record {n}/{of}'**
+  String exploreSixtyRecord(int n, int of);
+
+  /// Explore, the quick games: on the Sixty seconds tile, before the reader has played a round.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your record'**
+  String get exploreSixtyFirst;
+
+  /// Explore: a game opened on a page of its own, when it has nothing to play right now.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to play here right now. Come back tomorrow.'**
+  String get exploreGameNone;
+
+  /// Explore, the subjects with their levels: one subject's ring, said to a screen reader. The level is 1 to 10.
+  ///
+  /// In en, this message translates to:
+  /// **'{subject}, level {n}'**
+  String exploreSubjectLevel(String subject, int n);
+
+  /// Explore, cards like the ones the reader saved: the reason over the row, with the start of the saved card's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Because you saved “{question}”'**
+  String exploreBecauseSaved(String question);
 }
 
 class _AppLocalizationsDelegate

@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "Sprostowania",
   "screensFrontPuzzle": "Łamigłówka dnia",
   "screensFrontEnd": "To całe dzisiejsze wydanie",
-  "screensFrontTomorrow": "Jutrzejsze ukaże się rano"
+  "screensFrontTomorrow": "Jutrzejsze ukaże się rano",
+  "exploreDayRead": "Dziś: przeczytane {read} z {of}",
+  "exploreDayLeft": "{n, plural, =1{została 1} few{zostały {n}} many{zostało {n}} other{zostało {n}}}",
+  "exploreDayDone": "wszystkie przeczytane",
+  "exploreDayOpen": "Przejdź do dzisiejszych kart",
+  "exploreSixtyRecord": "Twój rekord {n}/{of}",
+  "exploreSixtyFirst": "Ustanów swój rekord",
+  "exploreGameNone": "Na razie nie ma tu w co grać. Wróć jutro.",
+  "exploreSubjectLevel": "{subject}, poziom {n}",
+  "exploreBecauseSaved": "Podobne do zachowanej: „{question}”"
 }

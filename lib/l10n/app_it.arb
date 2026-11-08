@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "Rettifiche",
   "screensFrontPuzzle": "Il rompicapo del giorno",
   "screensFrontEnd": "Questa è l'edizione di oggi",
-  "screensFrontTomorrow": "Quella di domani esce al mattino"
+  "screensFrontTomorrow": "Quella di domani esce al mattino",
+  "exploreDayRead": "Oggi: {read} su {of} lette",
+  "exploreDayLeft": "{n, plural, =1{ne manca 1} other{ne mancano {n}}}",
+  "exploreDayDone": "tutte lette",
+  "exploreDayOpen": "Vai alle carte di oggi",
+  "exploreSixtyRecord": "Il tuo record {n}/{of}",
+  "exploreSixtyFirst": "Stabilisci il tuo record",
+  "exploreGameNone": "Per ora qui non c'è niente da giocare. Torna domani.",
+  "exploreSubjectLevel": "{subject}, livello {n}",
+  "exploreBecauseSaved": "Perché hai salvato «{question}»"
 }

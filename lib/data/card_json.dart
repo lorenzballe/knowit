@@ -141,6 +141,11 @@ Map<String, Object?> webToJson(WebFace web, {required Challenge challenge}) => {
     'page': web.page,
     if (web.bytes > 0) 'bytes': web.bytes,
   },
+  if (web.thumbs case final WebThumbs thumbs)
+    'thumbs': {
+      if (thumbs.front case final String front) 'front': front,
+      if (thumbs.back case final String back) 'back': back,
+    },
 };
 
 /// What a card may name as its page: a file under the bank's `pages/`, and
@@ -148,6 +153,28 @@ Map<String, Object?> webToJson(WebFace web, {required Challenge challenge}) => {
 final RegExp _pageRef = RegExp(
   r'^pages/[a-z0-9_-]+\.html(\?v=[0-9a-f]{6,64})?$',
 );
+
+/// What a card may name as a picture of its page: a WebP under the bank's
+/// `thumbs/`, front or back, and the hash of the page it was taken from.
+final RegExp _thumbRef = RegExp(
+  r'^thumbs/[a-z0-9_-]+-(front|back)\.webp(\?v=[0-9a-f]{6,64})?$',
+);
+
+/// A free card's pictures from their JSON object, or null when it names
+/// none. A side that is not a picture of the bank's is left out rather than
+/// refusing the card: without its picture a card is drawn as it always was.
+WebThumbs? thumbsFromJson(Object? raw) {
+  if (raw is! Map) return null;
+  String? side(String key) {
+    final Object? ref = raw[key];
+    return ref is String && _thumbRef.hasMatch(ref) ? ref : null;
+  }
+
+  final String? front = side('front');
+  final String? back = side('back');
+  if (front == null && back == null) return null;
+  return WebThumbs(front: front, back: back);
+}
 
 /// A colour as the bank writes one: `#rrggbb`.
 String colourHex(Color c) =>
@@ -199,6 +226,7 @@ WebFace? webFromJson(Object? raw, {Object? id}) {
     touch: way ?? WebTouch.taps,
     label: label,
     ground: colour,
+    thumbs: thumbsFromJson(raw['thumbs']),
   );
 }
 

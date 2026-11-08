@@ -168,7 +168,10 @@ export async function assembleExplore(bank: Bank, nowMs: number): Promise<void> 
     }
   }
   const doc = buildGlobalExplore(bank, tallies, totals, day, nowMs);
-  await db.collection('explore').doc('latest').set(doc);
+  // How the crowd answers, as the scorecard last published it (scorecard.ts, crowdOf): counts
+  // only, on cards enough readers answered. It rides on the lists every phone already reads.
+  const crowd = (await db.collection('explore').doc('crowd').get()).get('cards');
+  await db.collection('explore').doc('latest').set({ ...doc, crowd: crowd && typeof crowd === 'object' ? crowd : {} });
   logger.info('explore assembled', { day, bank: bank.version, week: doc.topWeek.length, loved: doc.loved.length });
 }
 

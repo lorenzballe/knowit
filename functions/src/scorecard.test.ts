@@ -252,3 +252,19 @@ test('what is stored fits a document: the least-met cards give way, never a flag
   assert.equal(notes[fact.id][0].note, 'note 0', 'newest first');
   assert.equal(notes[hard.id], undefined, 'a report with no note has nothing to read');
 });
+
+test('the crowd the phones read: counts only, and only on cards enough readers answered', async () => {
+  const { crowdOf, emptyTally, MIN_ANSWERS } = await import('./scorecard.js');
+  const counted = (answers: number, right: number) => ({ tally: { ...emptyTally(), answers, right, readers: answers }, picks: [] });
+  const totals = new Map([
+    ['b-card', counted(MIN_ANSWERS, 10)],
+    ['a-card', counted(MIN_ANSWERS + 20, 50)],
+    ['few', counted(MIN_ANSWERS - 1, 3)],
+  ]);
+  const crowd = crowdOf(totals);
+  assert.deepEqual(Object.keys(crowd), ['a-card', 'b-card']);
+  assert.deepEqual(crowd['a-card'], [MIN_ANSWERS + 20, 50]);
+  assert.deepEqual(crowd['b-card'], [MIN_ANSWERS, 10]);
+  // Nothing but the two counts travels: no reader, no day, no option picked.
+  assert.ok(Object.values(crowd).every((v) => v.length === 2));
+});

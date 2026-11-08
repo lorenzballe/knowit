@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "Rectificatifs",
   "screensFrontPuzzle": "L'énigme du jour",
   "screensFrontEnd": "C'était l'édition du jour",
-  "screensFrontTomorrow": "Celle de demain sort au matin"
+  "screensFrontTomorrow": "Celle de demain sort au matin",
+  "exploreDayRead": "Aujourd'hui : {read} sur {of} lues",
+  "exploreDayLeft": "{n, plural, =1{encore 1} other{encore {n}}}",
+  "exploreDayDone": "toutes lues",
+  "exploreDayOpen": "Aller aux cartes du jour",
+  "exploreSixtyRecord": "Ton record {n}/{of}",
+  "exploreSixtyFirst": "Établis ton record",
+  "exploreGameNone": "Rien à jouer ici pour l'instant. Reviens demain.",
+  "exploreSubjectLevel": "{subject}, niveau {n}",
+  "exploreBecauseSaved": "Parce que tu as gardé « {question} »"
 }
