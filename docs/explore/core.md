@@ -329,6 +329,90 @@ Fields: `html` (required, one page or one per language, at most 200 KB each),
  "html": {"en": "<!doctype html>…", "it": "<!doctype html>…"}}
 ```
 
+## The reader's own
+
+Four blocks that work out what they show from the reader alone — their day,
+their play, their reading, their saves — and so read no `source`. They open
+the build's own Explore since the strategic Explore, between the day's
+challenge (`bets-day`) and the set the reader is filling (`purpose.set`). A
+build older than them passes over all four (docs/REMOTE.md, rule 3).
+
+### `your-day`
+
+The reader's day in a panel: "Today: 3 of 5 read · 2 left", a bar for each of
+the five (the read ones filled), the week from Monday to Sunday as dots — a day
+finished lit in the streak's orange, today ringed until it is — and the streak
+("12 days") by a flame. A tap goes to Today. A second set dealt after the five
+does not lengthen the day: the panel counts the five. Not drawn while Explore
+is narrowed to a subject, nor before a day has been dealt.
+
+Fields: `title`, `subtitle` (none by default: the panel says what it is).
+
+```json
+{"id": "your-day", "block": "your-day", "gap": 4}
+```
+
+### `quick-games`
+
+Four games as four colourful tiles, two by two: Sixty seconds, Spot the false
+one, True or false and Which is bigger, each called by the game's own name in
+the reader's language. A tap opens the game on a page of its own, drawn by the
+same block as its shelf (`sixty`, `spot-false`, `true-false` without the spot
+under it, `bets-bigger`) for the same host, so a round played there is the
+day's round and an answer is recorded as any answer is; its cards are noted
+under the section's id and the game's (`quick-games-sixty`). The Sixty seconds
+tile says the reader's record, the most right in one round, kept for good
+("Your record 6/8"; "Set your record" before the first round). A game with
+nothing to play today has no tile; with none, there is no section.
+
+Fields: `title`, `subtitle`, `games` (one to four of `sixty`, `spot-false`,
+`true-false`, `bets-bigger`, in the order shown; all four by default).
+
+```json
+{"id": "quick-games", "block": "quick-games",
+ "title": {"en": "Quick games", "it": "Giochi veloci"},
+ "games": ["sixty", "spot-false", "true-false", "bets-bigger"]}
+```
+
+### `subject-levels`
+
+The subjects the reader has read anything of, four to a row, each a ring in the
+subject's colour round a level from 1 to 10, the subject's name under it, the
+furthest on first. A tap narrows Explore to the subject, as its chip does; the
+subject in view sits on its tint. A reader who has read nothing has no section.
+
+The level is reckoned from points: a card of the subject read is 1, a card
+answered right 2 more. Level n is reached at 3 × (n − 1)² points — 3 for level
+2, 12 for 3, 27 for 4, 48 for 5, 75 for 6, 108 for 7, 147 for 8, 192 for 9, 243
+for 10 — so the first levels come in a day or two and the tenth takes most of a
+subject's few hundred cards. Points only grow, so a level never goes down; the
+ring fills toward the next level.
+
+Fields: `title`, `subtitle`, `limit` (subjects shown, 8 by default, at most
+20).
+
+```json
+{"id": "subject-levels", "block": "subject-levels", "limit": 8,
+ "title": {"en": "Your subjects", "it": "Le tue materie"}}
+```
+
+### `like-saved`
+
+A row of medium tiles of cards like one the reader saved, not read yet, under
+a chip that says which: "Because you saved ‘How far away is the Moon…’". The row
+follows the most recent save (of the last six) that has any; a card is alike by
+points — the same strand 4, one also about the other's strand 3, the same genre
+2, each keyword shared 1 — and needs 3. Drawn from the whole bank in the day's
+order, narrowed to the subject in view. With nothing saved, or nothing like it
+left unread, there is no section.
+
+Fields: `title`, `subtitle`, `limit` (cards, 8 by default).
+
+```json
+{"id": "like-saved", "block": "like-saved",
+ "title": {"en": "More like what you saved", "it": "Altre come quelle che hai salvato"}}
+```
+
 ## The shelves Explore always had
 
 Each draws its shelf exactly as Explore drew it, from the same reckoning

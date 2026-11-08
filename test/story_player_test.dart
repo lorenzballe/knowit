@@ -28,6 +28,8 @@ import 'package:astuto/state/explore_play.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/explore/story_player.dart';
 
+import 'shelves_explore.dart';
+
 /// The faces the app ships, so what is measured is what a reader sees.
 Future<void> _loadFonts() async {
   const faces = {
@@ -211,6 +213,9 @@ Future<void> _toTheEnd(WidgetTester tester, Pill pill) async {
 }
 
 void main() {
+  // The shelves played here stand where Explore had them before the
+  // strategic Explore.
+  useShelvesExplore();
   setUpAll(_loadFonts);
 
   setUp(ExplorePlay.resetForTest);

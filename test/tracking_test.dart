@@ -37,6 +37,8 @@ import 'package:astuto/sync/trace.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/place_it.dart';
 
+import 'shelves_explore.dart';
+
 /// Keeps what the app measures, to be read back.
 class _Recorder implements AnalyticsSink {
   final List<(String, Map<String, Object>)> events = [];
@@ -272,6 +274,9 @@ Future<AppState> _ready([Map<String, Object> prefs = const {}]) async {
 }
 
 void main() {
+  // The shelves played here stand where Explore had them before the
+  // strategic Explore.
+  useShelvesExplore();
   TestWidgetsFlutterBinding.ensureInitialized();
 
   late _Recorder sink;

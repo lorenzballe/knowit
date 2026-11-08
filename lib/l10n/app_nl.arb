@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "Rectificaties",
   "screensFrontPuzzle": "De puzzel van de dag",
   "screensFrontEnd": "Dat was de editie van vandaag",
-  "screensFrontTomorrow": "Die van morgen verschijnt 's ochtends"
+  "screensFrontTomorrow": "Die van morgen verschijnt 's ochtends",
+  "exploreDayRead": "Vandaag: {read} van {of} gelezen",
+  "exploreDayLeft": "{n, plural, =1{nog 1} other{nog {n}}}",
+  "exploreDayDone": "alles gelezen",
+  "exploreDayOpen": "Naar de kaarten van vandaag",
+  "exploreSixtyRecord": "Je record {n}/{of}",
+  "exploreSixtyFirst": "Zet je record neer",
+  "exploreGameNone": "Hier valt nu niets te spelen. Kom morgen terug.",
+  "exploreSubjectLevel": "{subject}, niveau {n}",
+  "exploreBecauseSaved": "Omdat je ‘{question}’ bewaarde"
 }

@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "更正",
   "screensFrontPuzzle": "今日谜题",
   "screensFrontEnd": "今天这一期就到这里",
-  "screensFrontTomorrow": "明天的一期早上发布"
+  "screensFrontTomorrow": "明天的一期早上发布",
+  "exploreDayRead": "今天：已读 {read}/{of}",
+  "exploreDayLeft": "{n, plural, other{还剩 {n} 张}}",
+  "exploreDayDone": "全部读完",
+  "exploreDayOpen": "前往今天的卡片",
+  "exploreSixtyRecord": "最佳纪录 {n}/{of}",
+  "exploreSixtyFirst": "创造你的纪录",
+  "exploreGameNone": "现在这里没有可玩的。明天再来。",
+  "exploreSubjectLevel": "{subject}，等级 {n}",
+  "exploreBecauseSaved": "因为你收藏了“{question}”"
 }

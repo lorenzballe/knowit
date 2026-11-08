@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "Correções",
   "screensFrontPuzzle": "O enigma do dia",
   "screensFrontEnd": "Esta é a edição de hoje",
-  "screensFrontTomorrow": "A de amanhã sai de manhã"
+  "screensFrontTomorrow": "A de amanhã sai de manhã",
+  "exploreDayRead": "Hoje: {read} de {of} lidas",
+  "exploreDayLeft": "{n, plural, =1{falta 1} other{faltam {n}}}",
+  "exploreDayDone": "todas lidas",
+  "exploreDayOpen": "Ir para as cartas de hoje",
+  "exploreSixtyRecord": "O teu recorde {n}/{of}",
+  "exploreSixtyFirst": "Faz o teu recorde",
+  "exploreGameNone": "Agora não há nada para jogar aqui. Volta amanhã.",
+  "exploreSubjectLevel": "{subject}, nível {n}",
+  "exploreBecauseSaved": "Porque guardaste “{question}”"
 }

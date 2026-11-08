@@ -4683,4 +4683,50 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get screensFrontTomorrow => 'Завтрашний выйдет утром';
+
+  @override
+  String exploreDayRead(int read, int of) {
+    return 'Сегодня: прочитано $read из $of';
+  }
+
+  @override
+  String exploreDayLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'осталось $n',
+      many: 'осталось $n',
+      few: 'осталось $n',
+      one: 'осталась $n',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreDayDone => 'все прочитаны';
+
+  @override
+  String get exploreDayOpen => 'К сегодняшним карточкам';
+
+  @override
+  String exploreSixtyRecord(int n, int of) {
+    return 'Твой рекорд $n/$of';
+  }
+
+  @override
+  String get exploreSixtyFirst => 'Поставь свой рекорд';
+
+  @override
+  String get exploreGameNone =>
+      'Сейчас здесь не во что играть. Возвращайся завтра.';
+
+  @override
+  String exploreSubjectLevel(String subject, int n) {
+    return '$subject, уровень $n';
+  }
+
+  @override
+  String exploreBecauseSaved(String question) {
+    return 'Похоже на сохранённое: «$question»';
+  }
 }

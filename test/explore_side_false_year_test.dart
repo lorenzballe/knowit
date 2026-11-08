@@ -32,6 +32,8 @@ import 'package:astuto/widgets/explore/spot_the_false.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/signature_shelves.dart';
 
+import 'shelves_explore.dart';
+
 const _shots = bool.fromEnvironment('SHOTS');
 
 Future<void> _settle(WidgetTester tester) async {
@@ -137,6 +139,9 @@ Future<void> _loadRealFonts() async {
 }
 
 void main() {
+  // The shelves played here stand where Explore had them before the
+  // strategic Explore.
+  useShelvesExplore();
   final List<Pill> bank = PillBank.cards;
 
   // Read from disk, which a widget test's own clock would never let finish.

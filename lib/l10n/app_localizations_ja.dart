@@ -4319,4 +4319,46 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get screensFrontTomorrow => '明日の号は朝に届きます';
+
+  @override
+  String exploreDayRead(int read, int of) {
+    return '今日：$of枚中$read枚読了';
+  }
+
+  @override
+  String exploreDayLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '残り$n枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exploreDayDone => 'すべて読了';
+
+  @override
+  String get exploreDayOpen => '今日のカードへ';
+
+  @override
+  String exploreSixtyRecord(int n, int of) {
+    return '自己ベスト $n/$of';
+  }
+
+  @override
+  String get exploreSixtyFirst => '記録をつくろう';
+
+  @override
+  String get exploreGameNone => '今は遊べるものがありません。また明日。';
+
+  @override
+  String exploreSubjectLevel(String subject, int n) {
+    return '$subject、レベル$n';
+  }
+
+  @override
+  String exploreBecauseSaved(String question) {
+    return '「$question」を保存したから';
+  }
 }

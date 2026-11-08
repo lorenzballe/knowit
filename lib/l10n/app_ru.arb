@@ -1055,5 +1055,14 @@
   "screensFrontCorrections": "Поправки",
   "screensFrontPuzzle": "Задача дня",
   "screensFrontEnd": "Это сегодняшний выпуск",
-  "screensFrontTomorrow": "Завтрашний выйдет утром"
+  "screensFrontTomorrow": "Завтрашний выйдет утром",
+  "exploreDayRead": "Сегодня: прочитано {read} из {of}",
+  "exploreDayLeft": "{n, plural, one{осталась {n}} few{осталось {n}} many{осталось {n}} other{осталось {n}}}",
+  "exploreDayDone": "все прочитаны",
+  "exploreDayOpen": "К сегодняшним карточкам",
+  "exploreSixtyRecord": "Твой рекорд {n}/{of}",
+  "exploreSixtyFirst": "Поставь свой рекорд",
+  "exploreGameNone": "Сейчас здесь не во что играть. Возвращайся завтра.",
+  "exploreSubjectLevel": "{subject}, уровень {n}",
+  "exploreBecauseSaved": "Похоже на сохранённое: «{question}»"
 }

@@ -27,6 +27,8 @@ import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/state/explore_play.dart';
 import 'package:astuto/widgets/explore/work_it_out.dart';
 
+import 'shelves_explore.dart';
+
 const _shots = bool.fromEnvironment('SHOTS');
 
 /// Every way Work it out plays a number, by the name its places are keyed
@@ -211,6 +213,9 @@ Future<void> _shoot(String name) async {
 }
 
 void main() {
+  // The shelves played here stand where Explore had them before the
+  // strategic Explore.
+  useShelvesExplore();
   // Outside the test body: FontLoader needs real asynchrony.
   setUpAll(() async {
     if (_shots) await _loadFonts();

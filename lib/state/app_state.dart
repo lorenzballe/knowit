@@ -75,6 +75,7 @@ class AppState extends ChangeNotifier {
 
   static const _kStreak = 'knowit.streak';
   static const _kBestStreak = 'knowit.bestStreak';
+  static const _kSixtyBest = 'knowit.sixtyBest';
   static const _kLastCompletion = 'knowit.lastCompletionDate';
   static const _kFreezes = 'knowit.freezes';
   static const _kFrozeOn = 'knowit.frozeOn';
@@ -139,6 +140,12 @@ class AppState extends ChangeNotifier {
 
   int streak = 0;
   int bestStreak = 0;
+
+  /// The most claims the reader has ever got right in one round of Sixty
+  /// seconds on Explore, 0 before the first round. The round itself is a
+  /// day's play (ExplorePlay) and starts clean every morning; the record is
+  /// what outlasts it, so the game has something to beat tomorrow.
+  int sixtyBest = 0;
   String? lastCompletionDate;
 
   /// Days the reader can miss without losing the streak. Earned by keeping
@@ -452,6 +459,7 @@ class AppState extends ChangeNotifier {
   Future<void> _restore() async {
     streak = _prefs.getInt(_kStreak) ?? 0;
     bestStreak = _prefs.getInt(_kBestStreak) ?? 0;
+    sixtyBest = _prefs.getInt(_kSixtyBest) ?? 0;
     lastCompletionDate = _prefs.getString(_kLastCompletion);
     freezes = _prefs.getInt(_kFreezes) ?? 1;
     frozeOn = _prefs.getString(_kFrozeOn);
@@ -930,6 +938,15 @@ class AppState extends ChangeNotifier {
       sure: sure,
       streak: liveStreak,
     );
+  }
+
+  /// A round of Sixty seconds ended with [right] claims right: kept as the
+  /// record when it beats it. A round that only ties it changes nothing.
+  Future<void> noteSixtyRound(int right) async {
+    if (right <= sixtyBest) return;
+    sixtyBest = right;
+    await _prefs.setInt(_kSixtyBest, sixtyBest);
+    notifyListeners();
   }
 
   // ── Streak ────────────────────────────────────────────────────────────
@@ -3003,6 +3020,7 @@ class AppState extends ChangeNotifier {
     _profileSent = null;
     streak = 0;
     bestStreak = 0;
+    sixtyBest = 0;
     lastCompletionDate = null;
     completedDates = [];
     savedIds = [];
