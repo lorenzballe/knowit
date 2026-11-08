@@ -287,4 +287,21 @@ void main() {
       );
     },
   );
+
+  test('how the crowd answered rides on Explore: counts only, a share when enough answered', () {
+    final ServedExplore? got = ServedExplore.parse({
+      'day': '2026-11-08',
+      'crowd': {
+        'a-card': [50, 18],
+        'odd': [3],
+        'words': ['x', 'y'],
+      },
+    }, null);
+    expect(got, isNotNull);
+    expect(got!.crowd.keys, ['a-card']);
+    expect(got.wrongShare('a-card'), closeTo(0.64, 1e-9));
+    expect(got.wrongShare('never-answered'), isNull);
+    // A server from before the crowd was published: nothing, and no share.
+    expect(ServedExplore.parse({'day': '2026-11-08'}, null)!.crowd, isEmpty);
+  });
 }
