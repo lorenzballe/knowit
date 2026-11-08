@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- slug: science-cfc-ozone-hole -->
-<!-- Look: a risograph print on cream paper, two inks (fluorescent pink, teal) overprinting with grain, halftone dots and slight misregistration.
+<!-- Look: a printed science-book cross-section of the sky: flat cream stratosphere band, flat ground, plain atoms in two meaning colours (teal oxygen, pink chlorine), ink outlines.
      Interaction: tap the four steps in the order you think they happen, say how sure you are; the chips Flip into the true order and the print acts each one out.
      Wow: a UV photon wiggles from the sun, snaps a chlorine atom off the CFC, and the chlorine darts into an ozone molecule and bursts it apart. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -17,7 +17,7 @@
 #pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
 #opts{display:flex;flex-direction:column;gap:.9cqh;flex:none}
 .opt{display:flex;align-items:center;gap:3cqw;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:rgba(0,129,139,.06);border:0;border-radius:1cqh;padding:1.05cqh 3.4cqw;cursor:pointer;box-shadow:inset 0 0 0 2px #00818b,3px 3px 0 0 rgba(255,61,151,.7);transition:background .15s,box-shadow .15s;overflow-wrap:anywhere}
-.opt .n{flex:none;width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:50%;display:grid;place-items:center;font:700 max(1.7cqh,12px)/1 var(--mono);box-shadow:inset 0 0 0 2px #00818b;color:var(--k)}
+.opt .n{flex:none;width:max(3.2cqh,22px);height:max(3.2cqh,22px);border-radius:50%;display:grid;place-items:center;font:700 max(1.7cqh,12px)/1 var(--body);box-shadow:inset 0 0 0 2px #00818b;color:var(--k)}
 .opt.picked{background:rgba(0,129,139,.16)}
 .opt.picked .n,.opt.ok .n{background:#00818b;color:#f5ecdc;box-shadow:2px 1.5px 0 #ff3d97}
 .opt.no .n{background:#ff3d97;color:#14303a;box-shadow:2px 1.5px 0 #00818b}
@@ -31,7 +31,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PUT IN ORDER</span></div>
     <h2 class="q">How do CFCs destroy the ozone layer?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A risograph sky: a CFC molecule on the ground, the sun, and ozone molecules floating in the stratosphere."></svg>
+      <svg id="pic" role="img" aria-label="A cross-section of the sky: a CFC molecule on the ground, the sun, and ozone molecules floating in the stratosphere."></svg>
       <div id="opts">
         <button class="opt" data-i="2"><span class="n"></span><span>A chlorine atom breaks free</span></button>
         <button class="opt" data-i="0"><span class="n"></span><span>The CFC drifts up to the stratosphere</span></button>
@@ -52,6 +52,7 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
 (() => {
   const svg = Kit.$('pic'), box = Kit.$('opts'), say = Kit.$('say');
   const PINK = '#ff3d97', TEAL = '#00818b', INK = '#14303a', PAPER = '#f5ecdc';
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const SHORT = ['rises', 'UV hits', 'Cl breaks free', 'ozone broken'];
   const TELL = [
     'Light and stable, the CFC climbs into the stratosphere, and stays 50 to 100 years.',
@@ -63,19 +64,18 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
   const done = new Promise(res => doneRes = res);
   const mk = (t, a, p) => Kit.mk(t, a, p);
 
-  // A label in one text element; the pink plate is printed by a misregistration filter.
+  // A short label in the body font, sentence case, one size.
   function label(p, x, y, s, o = {}) {
-    const t = mk('text', {x, y, fill: INK, 'font-size': fs, 'font-weight': 700, 'text-anchor': o.anchor || 'middle', filter: 'url(#mis)', style: 'font-family:var(--mono)'}, p);
+    const t = mk('text', {x, y, fill: INK, 'font-size': fs, 'font-weight': 600, 'text-anchor': o.anchor || 'middle', style: 'font-family:var(--body)'}, p);
     t.textContent = s;
     if (o.op != null) t.setAttribute('opacity', o.op);
     return t;
   }
-  // An atom: grainy ink disc, an off-register ring in the other ink, a paper glint.
-  function atom(p, x, y, rad, col, alt) {
+  // An atom: a flat disc with an even ink outline.
+  function atom(p, x, y, rad, col) {
     const g = mk('g', {}, p);
-    mk('circle', {cx: x + rad * .16 + .8, cy: y + rad * .12 + .6, r: rad, fill: 'none', stroke: alt, 'stroke-width': Math.max(1.2, rad * .16)}, g);
-    mk('circle', {cx: x, cy: y, r: rad, fill: col, filter: 'url(#grain)', style: 'mix-blend-mode:multiply'}, g);
-    mk('circle', {cx: x - rad * .34, cy: y - rad * .36, r: rad * .28, fill: PAPER, opacity: .6}, g);
+    const c = mk('circle', {cx: x, cy: y, r: rad, stroke: INK, 'stroke-width': Math.max(1.3, rad * .14)}, g);
+    c.style.fill = col;
     return g;
   }
   const bond = (p, x1, y1, x2, y2) => mk('line', {x1, y1, x2, y2, stroke: INK, 'stroke-width': Math.max(2, r * .28), 'stroke-linecap': 'round'}, p);
@@ -91,53 +91,31 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     if (W < 20 || H < 20) return;
     fs = Math.max(12, Math.min(14, W / 27));
     r = Math.max(6, Math.min(W * .032, H * .032, 11));
-    const defs = mk('defs', {}, svg);
-    defs.innerHTML = `<filter id="grain" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.85" result="a"/><feComposite in="SourceGraphic" in2="a" operator="in"/></filter>
-<filter id="mis" x="-10%" y="-40%" width="125%" height="190%"><feOffset in="SourceAlpha" dx="1.3" dy="1" result="o"/><feFlood flood-color="${PINK}" flood-opacity=".8"/><feComposite in2="o" operator="in" result="p"/><feMerge><feMergeNode in="p"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-<pattern id="dP" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(20)"><circle cx="3.5" cy="3.5" r="1.5" fill="${PINK}"/></pattern>
-<pattern id="dT" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-15)"><circle cx="3" cy="3" r="1.4" fill="${TEAL}"/></pattern>`;
 
     const y0 = H * .035, y1 = H * .5, GY = H * .9;
-    // The stratosphere: a halftone band of pink with wavy edges.
+    // The stratosphere: one flat pale band with gently uneven edges.
     S.band = mk('g', {}, svg);
-    const top = wave(y0, H * .012, 0), bot = wave(y1, H * .015, 2).reverse();
+    const top = wave(y0, H * .008, 0), bot = wave(y1, H * .01, 2).reverse();
     const bd = poly(top) + poly(bot).replace('M', 'L') + 'Z';
-    mk('path', {d: bd, fill: PINK, opacity: .12, style: 'mix-blend-mode:multiply'}, S.band);
-    mk('path', {d: bd, fill: 'url(#dP)', opacity: .38}, S.band);
-    mk('path', {d: poly(wave(y1, H * .015, 2)), fill: 'none', stroke: TEAL, 'stroke-width': 1.4, 'stroke-dasharray': '2 5', 'stroke-linecap': 'round'}, S.band);
-    // Little printed sparkles in the thin air.
+    mk('path', {d: bd, style: `fill:${tint(9)}`}, S.band);
     S.spk = [];
-    [[.42, .44], [.53, .19], [.74, .27], [.04, .43]].forEach(([fx, fy], i) => {
-      const g = mk('g', {}, S.band), x = W * fx, y = H * fy, k = r * .55;
-      mk('path', {d: `M${x - k},${y}H${x + k}M${x},${y - k}V${y + k}`, stroke: i % 2 ? PINK : TEAL, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
-      S.spk.push(g);
-    });
-    S.zl = label(S.band, fs * .5, y0 + fs * 1.15, 'OZONE LAYER', {anchor: 'start'});
+    S.zl = label(S.band, fs * .5, y0 + fs * 1.15, 'Ozone layer', {anchor: 'start'});
 
-    // Clouds and hills below, printed in both inks.
-    const cloud = (cx, cy, s) => { const g = mk('g', {}, svg);
-      [[-1.1, .2, .8], [0, -.2, 1.05], [1.1, .25, .75], [.3, .45, .8]].forEach(([dx, dy, k]) => {
-        mk('circle', {cx: cx + dx * s + 2, cy: cy + dy * s + 1.5, r: k * s, fill: 'none', stroke: PINK, 'stroke-width': 1.3, opacity: .7}, g);
-        mk('circle', {cx: cx + dx * s, cy: cy + dy * s, r: k * s, fill: TEAL, opacity: .22, filter: 'url(#grain)', style: 'mix-blend-mode:multiply'}, g);
-      }); return g; };
-    S.clouds = [cloud(W * .18, H * .66, r * 1.6), cloud(W * .84, H * .6, r * 1.3)];
+    // The ground: one flat hill.
+    S.clouds = [];
     S.hills = mk('g', {}, svg);
     const hb = `M-4,${H + 4} L-4,${GY - H * .03} Q${W * .25},${GY - H * .1} ${W * .5},${GY - H * .02} T${W + 4},${GY - H * .05} L${W + 4},${H + 4}Z`;
-    mk('path', {d: hb, fill: TEAL, opacity: .22, style: 'mix-blend-mode:multiply'}, S.hills);
-    mk('path', {d: hb, fill: 'url(#dT)', opacity: .7}, S.hills);
-    const hf = `M-4,${H + 4} L-4,${GY + H * .04} Q${W * .35},${GY - H * .03} ${W * .7},${GY + H * .03} T${W + 4},${GY + H * .01} L${W + 4},${H + 4}Z`;
-    mk('path', {d: hf, fill: PINK, opacity: .32, filter: 'url(#grain)', style: 'mix-blend-mode:multiply'}, S.hills);
+    mk('path', {d: hb, style: `fill:${tint(22)}`}, S.hills);
 
-    // The sun, with slowly turning rays.
+    // The sun: a flat disc with short, still rays.
     P.sun = {x: W * .86, y: H * .13}; P.R = Math.min(W, H) * .075;
     S.sun = mk('g', {}, svg);
     S.rays = mk('g', {}, S.sun);
-    for (let k = 0; k < 12; k++) { const a = k / 12 * Math.PI * 2, c = Math.cos(a), s = Math.sin(a), l = k % 2 ? 1.5 : 1.7;
-      mk('line', {x1: P.sun.x + c * P.R * 1.25, y1: P.sun.y + s * P.R * 1.25, x2: P.sun.x + c * P.R * l, y2: P.sun.y + s * P.R * l, stroke: TEAL, 'stroke-width': 2, 'stroke-linecap': 'round'}, S.rays); }
-    atom(S.sun, P.sun.x, P.sun.y, P.R, PINK, TEAL);
-    mk('circle', {cx: P.sun.x, cy: P.sun.y, r: P.R * .7, fill: 'url(#dT)', opacity: .35}, S.sun);
+    for (let k = 0; k < 8; k++) { const a = k / 8 * Math.PI * 2 + .2, c = Math.cos(a), s = Math.sin(a);
+      mk('line', {x1: P.sun.x + c * P.R * 1.3, y1: P.sun.y + s * P.R * 1.3, x2: P.sun.x + c * P.R * 1.62, y2: P.sun.y + s * P.R * 1.62, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, S.rays); }
+    atom(S.sun, P.sun.x, P.sun.y, P.R, `color-mix(in srgb, ${PINK} 30%, var(--c))`);
 
-    // Ozone: three O atoms, bent.
+    // Ozone: three oxygen atoms, bent.
     const OZ = [[.3, .3], [.1, .2], [.46, .14], [.85, .41], [.64, .08]];
     S.ozW = [];
     OZ.forEach(([fx, fy], i) => {
@@ -147,11 +125,11 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
         P.A = {x, y, c2};
         S.b02 = bond(w, ...c0, ...c2);
         S.o2 = mk('g', {}, w); bond(S.o2, ...c0, ...c1);
-        atom(S.o2, ...c0, r, TEAL, PINK); atom(S.o2, ...c1, r, TEAL, PINK);
-        S.a2 = atom(w, ...c2, r, TEAL, PINK);
+        atom(S.o2, ...c0, r, TEAL); atom(S.o2, ...c1, r, TEAL);
+        S.a2 = atom(w, ...c2, r, TEAL);
       } else {
         bond(w, ...c0, ...c1); bond(w, ...c0, ...c2);
-        [c0, c1, c2].forEach(c => atom(w, ...c, r, TEAL, PINK));
+        [c0, c1, c2].forEach(c => atom(w, ...c, r, TEAL));
       }
     });
     S.ozLab = label(svg, P.A.x - r * 2.7 - 4, P.A.y + r * .55 + fs * .35, 'ozone', {anchor: 'end'});
@@ -177,12 +155,12 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     S.cfc = mk('g', {}, svg);
     S.bCl = bond(S.cfc, 0, 0, r * 2.2, -r * 1.2);
     bond(S.cfc, 0, 0, -r * 2.2, -r * 1.2); bond(S.cfc, 0, 0, -r * 1.9, r * 1.6); bond(S.cfc, 0, 0, r * 1.9, r * 1.6);
-    atom(S.cfc, -r * 2.2, -r * 1.2, r * 1.3, PINK, TEAL);
-    atom(S.cfc, -r * 1.9, r * 1.6, r * .95, TEAL, PINK); atom(S.cfc, r * 1.9, r * 1.6, r * .95, TEAL, PINK);
-    atom(S.cfc, 0, 0, r * 1.15, INK, PINK);
+    atom(S.cfc, -r * 2.2, -r * 1.2, r * 1.3, PINK);
+    atom(S.cfc, -r * 1.9, r * 1.6, r * .95, tint(18)); atom(S.cfc, r * 1.9, r * 1.6, r * .95, tint(18));
+    atom(S.cfc, 0, 0, r * 1.15, INK);
     S.cfcLab = label(S.cfc, r * 4.3, fs * .35, 'CFC', {anchor: 'start'});
     S.clg = mk('g', {}, svg);
-    atom(S.clg, 0, 0, r * 1.3, PINK, TEAL);
+    atom(S.clg, 0, 0, r * 1.3, PINK);
     S.clLab = label(S.clg, 0, -r * 1.3 - fs * .5, 'Cl', {op: 0});
     gsap.set(S.cfc, {x: P.S0.x, y: P.S0.y});
     gsap.set(S.clg, {x: P.S0.x + r * 2.2, y: P.S0.y - r * 1.2});
@@ -194,28 +172,24 @@ gsap.registerPlugin(Flip, DrawSVGPlugin);
     const a0 = P.R * 1.7, a1 = L - r * 1.5; let d = '';
     for (let k = 0; k <= 80; k++) { const s = a0 + (a1 - a0) * k / 80, tp = Math.pow(Math.sin(Math.PI * k / 80), .6), w = Math.sin(k / 80 * Math.PI * 12) * r * .55 * tp;
       d += (k ? 'L' : 'M') + (sx + ux * s + nx * w).toFixed(1) + ',' + (sy + uy * s + ny * w).toFixed(1); }
-    S.ph = [mk('path', {d, fill: 'none', stroke: TEAL, 'stroke-width': Math.max(2.5, r * .32), 'stroke-linecap': 'round', transform: 'translate(1.6,1.2)', opacity: .8}, svg),
-            mk('path', {d, fill: 'none', stroke: PINK, 'stroke-width': Math.max(2.5, r * .32), 'stroke-linecap': 'round'}, svg)];
+    S.ph = [mk('path', {d, fill: 'none', stroke: PINK, 'stroke-width': Math.max(2.5, r * .3), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg)];
     gsap.set(S.ph, {drawSVG: '0% 0%'});
     const ms = (a0 + a1) / 2;
     S.uv = label(svg, sx + ux * ms - nx * fs * 1.7, sy + uy * ms - ny * fs * 1.7 + fs * .35, 'UV', {op: 0});
-    S.flash = mk('circle', {cx: P.cl0.x, cy: P.cl0.y, r: 0, fill: 'none', stroke: PINK, 'stroke-width': 3, opacity: 0}, svg);
-    // The burst at the hit.
+    S.flash = mk('circle', {cx: P.cl0.x, cy: P.cl0.y, r: 0, fill: 'none', stroke: INK, 'stroke-width': 2, opacity: 0}, svg);
+    // The snap at the hit: one ring and a few fragments flung out.
     P.hit = {x: (P.A.c2[0] + r * .6 + P.T.x) / 2, y: P.T.y};
-    S.ring = mk('circle', {cx: P.hit.x, cy: P.hit.y, r: 0, fill: 'none', stroke: PINK, 'stroke-width': 3.5, opacity: 0}, svg);
-    S.ring2 = mk('circle', {cx: P.hit.x + 2, cy: P.hit.y + 1.5, r: 0, fill: 'none', stroke: TEAL, 'stroke-width': 2, opacity: 0}, svg);
+    S.ring = mk('circle', {cx: P.hit.x, cy: P.hit.y, r: 0, fill: 'none', stroke: INK, 'stroke-width': 2.2, opacity: 0}, svg);
+    S.ring2 = mk('circle', {cx: P.hit.x, cy: P.hit.y, r: 0, fill: 'none', stroke: PINK, 'stroke-width': 2, opacity: 0}, svg);
     S.sp = []; P.sp = [];
-    for (let k = 0; k < 12; k++) { const a = k / 12 * Math.PI * 2 + .3, d2 = r * (2.6 + (k % 3) * 1.1);
-      S.sp.push(mk('circle', {cx: P.hit.x, cy: P.hit.y, r: Math.max(1.6, r * .22), fill: k % 2 ? PINK : TEAL, opacity: 0}, svg));
+    for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2 + .3, d2 = r * (2.8 + (k % 2) * 1.2);
+      S.sp.push(mk('circle', {cx: P.hit.x, cy: P.hit.y, r: Math.max(1.6, r * .2), fill: INK, opacity: 0}, svg));
       P.sp.push({x: P.hit.x + Math.cos(a) * d2, y: P.hit.y + Math.sin(a) * d2}); }
 
     if (phase === 'done') { tl = makeChain(false); tl.progress(1); }
     else if (phase === 'playing') { tl = makeChain(true); tl.eventCallback('onComplete', finishUI); tl.seek(keepT, true); }
     if (!Kit.calm) {
       S.ozW.forEach((w, i) => bobs.push(gsap.to(w, {y: r * .35, duration: 1.8 + i * .37, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .2})));
-      bobs.push(gsap.to(S.rays, {rotation: 360, svgOrigin: `${P.sun.x} ${P.sun.y}`, duration: 40, repeat: -1, ease: 'none'}));
-      S.spk.forEach((g, i) => bobs.push(gsap.to(g, {opacity: .25, duration: 1.1 + i * .3, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .4})));
-      S.clouds.forEach((c, i) => bobs.push(gsap.to(c, {x: (i ? -1 : 1) * r * .8, duration: 5 + i, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
     }
   }
 

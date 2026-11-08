@@ -12,7 +12,7 @@
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
 .say{overflow-wrap:anywhere}
-.lab{font-family:var(--body);font-weight:800;letter-spacing:.06em}
+.lab{font-family:var(--body);font-weight:700;letter-spacing:0}
 </style>
 <article class="card" id="card" data-topic="space" data-kind="Drag · see">
   <div class="in">
@@ -32,6 +32,7 @@
 <script>
 const NS = 'http://www.w3.org/2000/svg';
 const RED = '#ff5a4e', GREEN = '#2fbf71';
+const TINT = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 const S = {orbit: false, gap: 0, fixed: false, T: 0, offered: false, done: false};
 let G = null, drag = null;
 
@@ -42,26 +43,34 @@ function buildClock(parent, r, isSat) {
   const g = mk('g', {}, parent);
   const o = {g};
   if (isSat) {
-    // solar panels
-    mk('line', {x1: -r * 1.9, y1: 0, x2: r * 1.9, y2: 0, stroke: 'var(--k)', 'stroke-width': Math.max(2, r * .07)}, g);
+    // a flat satellite: strut and two plain solar panels
+    mk('line', {x1: -r * 1.9, y1: 0, x2: r * 1.9, y2: 0, stroke: 'var(--k)', 'stroke-width': Math.max(2.5, r * .08), 'stroke-linecap': 'round'}, g);
     [-1, 1].forEach(s => {
-      mk('rect', {x: s > 0 ? r * 1.15 : -r * 1.95, y: -r * .42, width: r * .8, height: r * .84, rx: r * .06,
-        fill: 'color-mix(in srgb,var(--k) 75%,transparent)', stroke: 'var(--k)', 'stroke-width': 1.5}, g);
-      for (let i = 1; i < 3; i++) mk('line', {x1: (s > 0 ? r * 1.15 : -r * 1.95) + r * .8 * i / 3, y1: -r * .42, x2: (s > 0 ? r * 1.15 : -r * 1.95) + r * .8 * i / 3, y2: r * .42, stroke: 'var(--c)', 'stroke-width': 1, opacity: .6}, g);
+      const x0 = s > 0 ? r * 1.15 : -r * 1.95;
+      mk('rect', {x: x0, y: -r * .42, width: r * .8, height: r * .84, rx: r * .04,
+        fill: TINT(35), stroke: 'var(--k)', 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+      mk('line', {x1: x0 + r * .4, y1: -r * .42, x2: x0 + r * .4, y2: r * .42, stroke: 'var(--k)', 'stroke-width': 1.5}, g);
+      mk('line', {x1: x0, y1: 0, x2: x0 + r * .8, y2: 0, stroke: 'var(--k)', 'stroke-width': 1.5}, g);
     });
   }
-  o.ring = mk('circle', {r: r * 1.08, fill: 'none', stroke: GREEN, 'stroke-width': r * .1, opacity: 0}, g);
-  mk('circle', {r, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': Math.max(3, r * .1)}, g);
+  o.ring = mk('circle', {r: r * 1.12, fill: 'none', stroke: GREEN, 'stroke-width': r * .1, opacity: 0}, g);
+  // a plain paper clock face
+  mk('circle', {r, fill: 'var(--k)', stroke: TINT(55), 'stroke-width': Math.max(3, r * .1)}, g);
   for (let i = 0; i < 12; i++) {
-    const [x1, y1] = pt(i * 30, r * .78), [x2, y2] = pt(i * 30, r * .9);
-    mk('line', {x1, y1, x2, y2, stroke: 'var(--k)', 'stroke-width': i % 3 ? 1.5 : 3, 'stroke-linecap': 'round'}, g);
+    if (i % 3) {
+      const [x, y] = pt(i * 30, r * .8);
+      mk('circle', {cx: x, cy: y, r: Math.max(1.2, r * .035), fill: 'var(--c)'}, g);
+    } else {
+      const [x1, y1] = pt(i * 30, r * .7), [x2, y2] = pt(i * 30, r * .86);
+      mk('line', {x1, y1, x2, y2, stroke: 'var(--c)', 'stroke-width': Math.max(2.5, r * .07), 'stroke-linecap': 'round'}, g);
+    }
   }
   if (isSat) {
-    o.wedge = mk('path', {fill: RED, opacity: .35}, g);
-    o.ghost = mk('line', {x1: 0, y1: 0, stroke: 'var(--k)', 'stroke-width': Math.max(2, r * .06), 'stroke-dasharray': '3 4', opacity: .55, 'stroke-linecap': 'round'}, g);
+    o.wedge = mk('path', {fill: `color-mix(in srgb, ${RED} 30%, var(--k))`}, g);
+    o.ghost = mk('line', {x1: 0, y1: 0, stroke: 'var(--c)', 'stroke-width': Math.max(2, r * .05), 'stroke-dasharray': '2 4', opacity: .55, 'stroke-linecap': 'round'}, g);
   }
-  o.hand = mk('line', {x1: 0, y1: 0, stroke: isSat ? RED : 'var(--k)', 'stroke-width': Math.max(3, r * .1), 'stroke-linecap': 'round'}, g);
-  mk('circle', {r: Math.max(3, r * .09), fill: 'var(--k)'}, g);
+  o.hand = mk('line', {x1: 0, y1: 0, stroke: isSat ? RED : 'var(--c)', 'stroke-width': Math.max(3, r * .1), 'stroke-linecap': 'round'}, g);
+  mk('circle', {r: Math.max(3, r * .09), fill: 'var(--c)'}, g);
   o.r = r;
   return o;
 }
@@ -79,46 +88,42 @@ Kit.onShow.card = () => {
   const gy = surf(g0x) - r - 4, sy = surf(sStartX) - r - 4;
   const orbitX = W * .7;
 
-  // stars
-  for (let i = 0; i < 26; i++) {
-    const x = ((i * 73) % 97) / 97 * W, y = ((i * 41) % 89) / 89 * top * .9;
-    mk('circle', {cx: x, cy: y, r: 1 + (i % 3) * .5, fill: 'var(--k)', opacity: .25}, svg);
-  }
   // orbit (visible arc only)
   const ro = cy - orbitY;
   const oy = x => cy - Math.sqrt(ro * ro - (x - cx) * (x - cx));
-  mk('path', {d: `M0,${oy(0)} A${ro},${ro} 0 0 1 ${W},${oy(W)}`, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-dasharray': '6 8', opacity: .4}, svg);
+  mk('path', {d: `M0,${oy(0)} A${ro},${ro} 0 0 1 ${W},${oy(W)}`, fill: 'none', stroke: TINT(45), 'stroke-width': 2.5, 'stroke-dasharray': '1 8', 'stroke-linecap': 'round'}, svg);
   // earth (visible cap only)
   mk('path', {d: `M0,${surf(0)} A${R},${R} 0 0 1 ${W},${surf(W)} L${W},${H} L0,${H} Z`, fill: 'var(--k)'}, svg);
 
   // signal
-  const sig = mk('line', {stroke: RED, 'stroke-width': 2, 'stroke-dasharray': '5 6', opacity: 0}, svg);
+  const sig = mk('line', {stroke: RED, 'stroke-width': 2.5, 'stroke-dasharray': '6 6', 'stroke-linecap': 'round', opacity: 0}, svg);
   // true position
   const ty = surf(trueX);
-  mk('path', {d: `M${trueX},${ty} l0,${-fs * 1.4} l${fs * .9},${fs * .35} l${-fs * .9},${fs * .35}`, fill: GREEN, stroke: GREEN, 'stroke-width': 2}, svg);
-  mk('text', {x: trueX, y: ty + fs * 1.45, 'text-anchor': 'middle', fill: 'var(--c)', 'font-size': fs, class: 'lab'}, svg).textContent = 'YOU';
-  const fixDot = mk('circle', {r: fs * .45, fill: RED, stroke: 'var(--c)', 'stroke-width': 2, opacity: 0}, svg);
+  mk('line', {x1: trueX, y1: ty, x2: trueX, y2: ty - fs * 1.4, stroke: 'var(--c)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+  mk('path', {d: `M${trueX},${ty - fs * 1.4} l${fs * .9},${fs * .32} l${-fs * .9},${fs * .38} Z`, fill: GREEN, 'stroke-linejoin': 'round'}, svg);
+  mk('text', {x: trueX, y: ty + fs * 1.45, 'text-anchor': 'middle', fill: 'var(--c)', 'font-size': fs, class: 'lab'}, svg).textContent = 'You';
+  const fixDot = mk('circle', {r: fs * .45, fill: RED, stroke: 'var(--k)', 'stroke-width': 2, opacity: 0}, svg);
   const fixLab = mk('text', {'text-anchor': 'middle', fill: RED, 'font-size': fs, class: 'lab', opacity: 0}, svg);
-  fixLab.textContent = 'GPS FIX';
+  fixLab.textContent = 'GPS fix';
 
-  // ground clock
-  mk('rect', {x: g0x - r * .15, y: gy + r - 2, width: r * .3, height: 8, fill: 'var(--k)'}, svg);
+  // ground clock on its post
+  mk('rect', {x: g0x - r * .1, y: gy + r - 2, width: r * .2, height: 8, fill: TINT(55)}, svg);
   const ground = buildClock(svg, r, false);
   ground.g.setAttribute('transform', `translate(${g0x},${gy})`);
-  mk('text', {x: g0x, y: surf(g0x) + fs * 1.45, 'text-anchor': 'middle', fill: 'var(--c)', 'font-size': fs, class: 'lab'}, svg).textContent = 'ON EARTH';
+  mk('text', {x: g0x, y: surf(g0x) + fs * 1.45, 'text-anchor': 'middle', fill: 'var(--c)', 'font-size': fs, class: 'lab'}, svg).textContent = 'On Earth';
 
   // hint arrow
   const hint = mk('g', {opacity: S.orbit ? 0 : .7}, svg);
   const hx = (sStartX + orbitX) / 2 + r * 1.4;
-  mk('path', {d: `M${hx},${sy - r * 1.3} L${hx},${orbitY + r * .4}`, stroke: 'var(--k)', 'stroke-width': 2.5, 'stroke-dasharray': '4 6', fill: 'none'}, hint);
-  mk('path', {d: `M${hx - 7},${orbitY + r * .4 + 9} L${hx},${orbitY + r * .4} L${hx + 7},${orbitY + r * .4 + 9}`, stroke: 'var(--k)', 'stroke-width': 2.5, fill: 'none', 'stroke-linecap': 'round'}, hint);
+  mk('path', {d: `M${hx},${sy - r * 1.3} L${hx},${orbitY + r * .4}`, stroke: 'var(--k)', 'stroke-width': 2.5, 'stroke-dasharray': '4 6', 'stroke-linecap': 'round', fill: 'none'}, hint);
+  mk('path', {d: `M${hx - 7},${orbitY + r * .4 + 9} L${hx},${orbitY + r * .4} L${hx + 7},${orbitY + r * .4 + 9}`, stroke: 'var(--k)', 'stroke-width': 2.5, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
 
   // satellite clock
   const satWrap = mk('g', {id: 'sat'}, svg);
   mk('circle', {r: r * 2.1, fill: 'transparent'}, satWrap);
   const sat = buildClock(satWrap, r, true);
   const satLab = mk('text', {y: -r - fs * .7, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': fs, class: 'lab'}, satWrap);
-  satLab.textContent = 'SATELLITE';
+  satLab.textContent = 'Satellite';
   const stepLab = mk('text', {y: r + fs * 1.35, 'text-anchor': 'middle', fill: RED, 'font-size': fs, class: 'lab', opacity: 0}, satWrap);
 
   G = {W, H, fs, r, surf, trueX, orbitX, orbitY, sStartX, sy, ground, sat, satWrap, sig, fixDot, fixLab, stepLab, hint, satLab,
@@ -180,14 +185,15 @@ function render() {
   G.fixLab.setAttribute('opacity', vis && S.gap > 4 ? 1 : 0);
   G.sig.setAttribute('x1', G.satX); G.sig.setAttribute('y1', G.satY + r);
   G.sig.setAttribute('x2', fx); G.sig.setAttribute('y2', fy);
-  G.sig.setAttribute('opacity', vis ? .8 : 0);
+  G.sig.setAttribute('opacity', vis ? 1 : 0);
 
   if (S.fixed) {
-    G.stepLab.textContent = 'IN STEP ✓'; G.stepLab.setAttribute('fill', GREEN); G.stepLab.setAttribute('opacity', 1);
+    G.stepLab.textContent = 'In step ✓'; G.stepLab.setAttribute('fill', GREEN); G.stepLab.setAttribute('opacity', 1);
     sat.ring.setAttribute('opacity', 1); sat.hand.setAttribute('stroke', GREEN);
     G.fixDot.setAttribute('fill', GREEN);
+    G.sig.setAttribute('stroke', GREEN);
   } else if (S.orbit && S.gap > 4) {
-    G.stepLab.textContent = 'OUT OF STEP'; G.stepLab.setAttribute('opacity', 1);
+    G.stepLab.textContent = 'Out of step'; G.stepLab.setAttribute('opacity', 1);
   }
 }
 

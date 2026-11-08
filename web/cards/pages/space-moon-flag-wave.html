@@ -8,13 +8,14 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #view{position:relative;flex:1;min-height:0;background:none}
 #view canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#probe{position:absolute;width:0;height:0;overflow:hidden;visibility:hidden}
 #ctl{display:flex;flex-direction:column;gap:1cqh}
 #modes{display:flex;gap:2cqw}
 .md{flex:1;font:700 max(1.9cqh,13px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 2cqw;cursor:pointer}
 .md.on{background:var(--k);color:var(--c);box-shadow:none}
 #plant{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer}
 #plant:disabled{opacity:.45;cursor:default}
-#res{display:flex;gap:2cqw;font:700 max(1.8cqh,12px)/1.25 var(--mono);color:var(--k)}
+#res{display:flex;gap:2cqw;font:700 max(1.8cqh,12px)/1.25 var(--body);color:var(--k)}
 #res span{flex:1;padding:.8cqh 2cqw;border-radius:1.2cqh;background:color-mix(in srgb,var(--k) 8%,transparent);overflow-wrap:anywhere}
 #why{display:flex;flex-direction:column;gap:.8cqh}
 #why .big{font:800 max(2.4cqh,15px)/1.15 var(--display);margin:0}
@@ -25,7 +26,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">MOON LANDING</span></div>
     <h2 class="q">Why does the flag seem to wave on the airless Moon?</h2>
     <div class="stagebox" id="stage">
-      <div id="view"><canvas id="cv"></canvas></div>
+      <div id="view"><canvas id="cv"></canvas><span id="probe"></span></div>
       <div id="res"><span id="rv">Moon: — s</span><span id="ra">Earth: — s</span></div>
       <div id="ctl">
         <div id="modes"><button class="md on" data-m="vac">Moon · no air</button><button class="md" data-m="air">Earth · air</button></div>
@@ -44,65 +45,107 @@
 <script src="kit/astute-card.js"></script>
 <script>
 const cv = Kit.$('cv');
-let G = null, stars = [], dust = [];
+let G = null, dust = [], PAL = null;
 let mode = 'vac', run = null, speed = 1, simT = 0, last = 0;
 const res = {vac: null, air: null};
-const P = {vac: {tau: 2.6, w: 2.1, name: 'NO AIR'}, air: {tau: .34, w: 3.4, name: 'AIR'}};
+const P = {vac: {tau: 2.6, w: 2.1, name: 'No air'}, air: {tau: .34, w: 3.4, name: 'Air'}};
 
 function amp(e, tau){ return (1 - Math.exp(-e / .18)) * Math.exp(-e / tau); }
 
+// resolve the card's ink and colour, and mix flat tints from them
+function rgbOf(v){
+  const p = Kit.$('probe'); p.style.color = ''; p.style.color = v;
+  const m = getComputedStyle(p).color.match(/[\d.]+/g) || ['255', '255', '255'];
+  return m.slice(0, 3).map(Number);
+}
+function mix(a, b, t){ return `rgb(${a.map((k, i) => Math.round(k * t + b[i] * (1 - t)))})`; }
+function palette(){
+  const K = rgbOf('var(--k)'), C = rgbOf('var(--c)');
+  const cs = getComputedStyle(Kit.$('card'));
+  const body = (cs.getPropertyValue('--body') || '').trim() || 'Figtree, sans-serif';
+  PAL = {
+    ink: mix(K, C, 1), body,
+    vac: {top: mix(K, C, .42), deep: mix(K, C, .26), pit: mix(K, C, .3), dust: mix(K, C, .7)},
+    air: {top: '#a8845a', deep: '#7f6142', pit: '#94734d', dust: '#cfb083'}
+  };
+}
+
+// a gently uneven surface line (fixed, so it never jitters)
+function surf(xn){ return Math.sin(xn * 9.1 + .7) * .5 + Math.sin(xn * 23.3 + 2.1) * .25; }
+
 function draw(){
   if (!G) return;
+  if (!PAL) palette();
   const {x, W, H} = G, f = Math.max(12, H * .042);
+  const pal = PAL[mode];
   x.clearRect(0, 0, W, H);
-  if (mode === 'vac') { x.fillStyle = '#fff'; stars.forEach(s => { x.globalAlpha = s.a; x.fillRect(s.x * W, s.y * H, s.r, s.r); }); x.globalAlpha = 1; }
-  const gy = H * .8;
-  x.fillStyle = mode === 'vac' ? '#9a9890' : '#9c8a6a'; x.fillRect(0, gy, W, H - gy);
-  x.fillStyle = 'rgba(0,0,0,.18)';
-  for (let i = 0; i < 9; i++) { x.beginPath(); x.ellipse(((i * 137) % 100) / 100 * W, gy + (H - gy) * (.3 + (i % 3) * .22), W * .04, H * .012, 0, 0, 7); x.fill(); }
+
+  // ground, seen as a cross-section: loose top soil over a darker packed layer
+  const gy = H * .8, bump = H * .008;
+  x.fillStyle = pal.top;
+  x.beginPath(); x.moveTo(0, H);
+  for (let i = 0; i <= 40; i++) { const xn = i / 40; x.lineTo(xn * W, gy + surf(xn) * bump); }
+  x.lineTo(W, H); x.closePath(); x.fill();
+  const dy = gy + (H - gy) * .42;
+  x.fillStyle = pal.deep;
+  x.beginPath(); x.moveTo(0, H);
+  for (let i = 0; i <= 40; i++) { const xn = i / 40; x.lineTo(xn * W, dy + Math.sin(xn * 13 + 1.3) * bump * .8); }
+  x.lineTo(W, H); x.closePath(); x.fill();
+  // a few shallow hollows in the surface
+  x.fillStyle = pal.pit;
+  [[.55, .05], [.8, .035], [.08, .03]].forEach(([cx, rw]) => {
+    x.beginPath(); x.ellipse(cx * W, gy + surf(cx) * bump + H * .012, W * rw, H * .009, 0, 0, 7); x.fill();
+  });
 
   let e = run ? simT - run.t0 : 99, tau = run ? P[run.m].tau : 1, w = run ? P[run.m].w : 2;
   const A = run ? amp(e, tau) : 0;
   const shake = run ? Math.exp(-e / .22) * Math.sin(e * 42) : 0;
   const px = W * .26 + shake * W * .012;
   const top = H * .14, fw = Math.min(W * .58, H * .9), fh = fw * .56;
-  // pole
-  x.strokeStyle = '#e9e9ec'; x.lineWidth = Math.max(3, W * .011); x.lineCap = 'round';
-  x.beginPath(); x.moveTo(W * .26, gy + H * .02); x.lineTo(px, top); x.stroke();
-  x.beginPath(); x.moveTo(px, top + 2); x.lineTo(px + fw, top + 2); x.stroke();
-  // flag in slices
-  const N = 44, ys = [];
-  for (let i = 0; i <= N; i++) { const u = i / N; ys.push(u); }
+
+  // flag in slices (drawn before the pole so the rod sits on top of the hem)
+  const N = 44;
+  const RED = [196, 52, 52], WHITE = [244, 240, 230], NAVY = [34, 44, 96];
   for (let i = 0; i < N; i++) {
     const u0 = i / N, u1 = (i + 1) / N;
     const ph0 = u0 * 7 - simT * w, ph1 = u1 * 7 - simT * w;
     const d0 = A * u0 * Math.sin(ph0) * fh * .14, d1 = A * u1 * Math.sin(ph1) * fh * .14;
     const sx0 = A * u0 * Math.cos(ph0) * fw * .02, sx1 = A * u1 * Math.cos(ph1) * fw * .02;
-    const light = 1 + .32 * A * Math.cos(u0 * 7 - simT * w);
+    // folds: the side of each ripple turned away goes a step darker, flat
+    const fold = A * Math.cos(ph0) < -.12 ? .84 : 1;
     const X0 = px + u0 * fw + sx0 + shake * W * .006 * (1 - u0), X1 = px + u1 * fw + sx1 + shake * W * .006 * (1 - u1) + .6;
     for (let s = 0; s < 13; s++) {
       const v0 = s / 13, v1 = (s + 1) / 13;
       const canton = u0 < .4 && s < 7;
-      const base = canton ? [40, 60, 140] : (s % 2 ? [245, 245, 245] : [200, 30, 45]);
-      const c = base.map(k => Math.min(255, Math.round(k * light)));
-      x.fillStyle = `rgb(${c})`;
+      const base = canton ? NAVY : (s % 2 ? WHITE : RED);
+      x.fillStyle = `rgb(${base.map(k => Math.round(k * fold))})`;
       x.beginPath();
       x.moveTo(X0, top + v0 * fh + d0 * v0); x.lineTo(X1, top + v0 * fh + d1 * v0);
-      x.lineTo(X1, top + v1 * fh + d1 * v1); x.lineTo(X0, top + v1 * fh + d0 * v1);
+      x.lineTo(X1, top + v1 * fh + d1 * v1 + .6); x.lineTo(X0, top + v1 * fh + d0 * v1 + .6);
       x.closePath(); x.fill();
     }
   }
-  // dust (falls in clean arcs)
-  x.fillStyle = mode === 'vac' ? '#c9c6bc' : '#b9a581';
+
+  // pole and the top rod that holds the cloth out
+  x.strokeStyle = PAL.ink; x.lineWidth = Math.max(3, W * .011); x.lineCap = 'round';
+  x.beginPath(); x.moveTo(W * .26, gy + H * .02); x.lineTo(px, top); x.stroke();
+  x.beginPath(); x.moveTo(px, top + 2); x.lineTo(px + fw, top + 2); x.stroke();
+  // where the pole went in: a small heap of turned soil
+  x.fillStyle = pal.deep;
+  x.beginPath(); x.ellipse(W * .26, gy + surf(.26) * bump + H * .006, W * .03, H * .01, 0, 0, 7); x.fill();
+
+  // dust kicked up by the planting
+  x.fillStyle = pal.dust;
   dust.forEach(d => { if (d.y < gy + 2) { x.globalAlpha = d.o; x.beginPath(); x.arc(d.x, d.y, d.r, 0, 7); x.fill(); } });
   x.globalAlpha = 1;
-  // labels
-  x.font = `700 ${f}px ${getComputedStyle(document.body).getPropertyValue('--mono') || 'monospace'}`;
-  x.fillStyle = '#fff'; x.textBaseline = 'top';
+
+  // labels, in the lower soil band
+  x.font = `700 ${f}px ${PAL.body}`;
+  x.fillStyle = PAL.ink; x.textBaseline = 'top';
   x.textAlign = 'right'; x.fillText(P[mode].name, W - f * .7, H - f * 1.7);
   x.textAlign = 'left';
   const moving = run && !run.done ? Math.min(e, 99) : (run ? run.T : 0);
-  x.fillText(run ? `moving ${moving.toFixed(1)} s` : 'ready', f * .7, H - f * 1.7);
+  x.fillText(run ? `Moving ${moving.toFixed(1)} s` : 'Ready', f * .7, H - f * 1.7);
 }
 
 function tick(){
@@ -148,7 +191,7 @@ Kit.$('plant').addEventListener('click', () => {
 
 Kit.onShow.card = () => {
   G = Kit.fitCanvas(cv);
-  if (!stars.length) for (let i = 0; i < 70; i++) stars.push({x: Kit.rnd(), y: Kit.rnd() * .75, r: Kit.rnd() < .2 ? 2 : 1, a: .3 + Kit.rnd() * .7});
+  palette();
   draw();
 };
 gsap.ticker.add(tick);

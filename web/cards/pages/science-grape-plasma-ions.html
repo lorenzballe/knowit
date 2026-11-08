@@ -38,15 +38,42 @@
 const RIGHT = 1, D = 3.4;
 let pick = -1, ctx = null, W = 0, H = 0;
 let running = false, t = 0, last = 0, clock = 0, done = false;
-const WEAK = '#3d4a44', STRONG = '#8a3a00';
 
+// flat palette, read from the card's own ink and colour
+const GRAPE = [92, 40, 110], PLASMA = [214, 0, 120];
+let K = [16, 16, 12], C = [0, 230, 160], FB = 'sans-serif', FH = 'cursive';
+function toRGB(v, fb){
+  const c = document.createElement('canvas').getContext('2d');
+  c.fillStyle = '#000'; c.fillStyle = (v || '').trim() || fb;
+  const s = c.fillStyle;
+  if (s[0] === '#') return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16));
+  const m = s.match(/[\d.]+/g); return m ? m.slice(0, 3).map(Number) : [0, 0, 0];
+}
+function readPalette(){
+  const cs = getComputedStyle(Kit.$('card'));
+  K = toRGB(cs.getPropertyValue('--k'), '#10100c');
+  C = toRGB(cs.getPropertyValue('--c'), '#00e6a0');
+  FB = cs.getPropertyValue('--body').trim() || 'sans-serif';
+  FH = cs.getPropertyValue('--hand').trim() || FB;
+}
+const mixKC = n => `rgb(${K.map((k, i) => Math.round(k * n / 100 + C[i] * (100 - n) / 100)).join(',')})`;
+const mixWith = (a, n) => `rgb(${a.map((v, i) => Math.round(v * n + C[i] * (1 - n))).join(',')})`;
+const rgba = (c, a) => `rgba(${c.join(',')},${a})`;
+
+// air molecules sit in a tidy, evenly spaced packing around the gap (not a random spray)
 function mkSide(strong){
-  const m = [];
-  while (m.length < 30){
-    const x = (Kit.rnd() - .5) * 2.4, y = (Kit.rnd() - .5) * 3.0;
-    if (Math.hypot(x - 1.25, y) < 1.1 || Math.hypot(x + 1.25, y) < 1.1) continue;
-    m.push({x, y, ion: false, e: 0, fl: 0, j: Kit.rnd() * 6, ex: 0, ey: 0});
+  const cand = [], sp = .36;
+  for (let r = -6; r <= 6; r++){
+    const y = r * sp * .866;
+    for (let c = -5; c <= 5; c++){
+      const x = c * sp + (r & 1 ? sp / 2 : 0);
+      if (Math.abs(x) > 1.2) continue;
+      if (Math.hypot(x - 1.25, y) < 1.12 || Math.hypot(x + 1.25, y) < 1.12) continue;
+      cand.push({x, y});
+    }
   }
+  cand.sort((a, b) => Math.hypot(a.x, a.y) - Math.hypot(b.x, b.y));
+  const m = cand.slice(0, 30).map((q, i) => ({x: q.x, y: q.y, ion: false, e: 0, fl: 0, j: (i * 2.39996) % 6.283, ex: 0, ey: 0}));
   return {strong, m};
 }
 const S = [mkSide(false), mkSide(true)];
@@ -58,7 +85,7 @@ function step(dt){
   if (t > .08) for (const p of s.m){
     if (!p.ion){
       const w = Math.exp(-(p.x * p.x + p.y * p.y) / .9);
-      if (Kit.rnd() < (0.6 + 5 * w) * dt * (0.4 + 2 * t)){ p.ion = true; p.fl = 1; p.ex = (Kit.rnd() - .5) * .3; p.ey = (Kit.rnd() - .5) * .3; }
+      if (Kit.rnd() < (0.6 + 5 * w) * dt * (0.4 + 2 * t)){ p.ion = true; p.fl = 1; p.ex = (Kit.rnd() < .5 ? -1 : 1) * .16; p.ey = -.1; }
     } else p.e = Math.min(1, p.e + dt * 0.9);
     p.fl = Math.max(0, p.fl - dt * 5);
   }
@@ -71,71 +98,96 @@ function draw(){
   clock += dt; step(dt);
   const x = ctx, pw = W / 2, fs = Math.max(12, H * .042), ph = clock * 2 * Math.PI * 1.3;
   const on = running || done, sgn = Math.sin(ph);
+  const INK = rgba(K, 1), SOFT = mixKC(45), FAINT = mixKC(14);
   x.clearRect(0, 0, W, H);
-  x.strokeStyle = 'rgba(16,16,12,.18)'; x.lineWidth = 1; x.beginPath(); x.moveTo(pw, H * .05); x.lineTo(pw, H * .95); x.stroke();
+  x.lineCap = 'round'; x.lineJoin = 'round';
+  x.strokeStyle = FAINT; x.lineWidth = 1.5; x.beginPath(); x.moveTo(pw, H * .05); x.lineTo(pw, H * .95); x.stroke();
+  x.textAlign = 'center'; x.textBaseline = 'middle';
   S.forEach((s, i) => {
     const cx = pw * (i + .5), cy = H * .47, R = Math.min(pw * .19, H * .15);
     let glow = 0, ions = 0; s.m.forEach(p => { glow += p.e; if (p.ion) ions++; }); glow /= s.m.length;
     // label
-    x.textAlign = 'center'; x.textBaseline = 'middle';
-    x.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
-    x.fillStyle = s.strong ? STRONG : WEAK;
-    x.fillText(s.strong ? 'STRONG FIELD' : 'WEAK FIELD', cx, H * .07);
-    // grapes
+    x.font = `700 ${fs}px ${FB}`;
+    x.fillStyle = s.strong ? INK : SOFT;
+    x.fillText(s.strong ? 'Strong field' : 'Weak field', cx, H * .07);
+    // plasma: one flat, slightly ragged blob behind the grape, growing with the energy taken in
+    if (glow > .01){
+      const pulse = Kit.calm ? 1 : 1 + .06 * Math.sin(clock * 9);
+      const r = R * (.4 + 1.3 * glow) * pulse;
+      x.fillStyle = mixWith(PLASMA, .25 + .5 * glow);
+      x.beginPath();
+      for (let k = 0; k <= 28; k++){
+        const a = k / 28 * Math.PI * 2;
+        const wob = 1 + .07 * Math.sin(5 * a + (Kit.calm ? 0 : clock * 3)) + .04 * Math.sin(9 * a - (Kit.calm ? 0 : clock * 5));
+        const px = cx + Math.cos(a) * r * wob * 1.1, py = cy - R * .08 + Math.sin(a) * r * wob;
+        k ? x.lineTo(px, py) : x.moveTo(px, py);
+      }
+      x.closePath(); x.fill();
+    }
+    // grape halves, joined by a strip of skin underneath
+    const gap = s.strong ? .8 : 1;
+    x.fillStyle = rgba(GRAPE, 1);
+    x.fillRect(cx - 1.25 * R, cy + R * .78, 2.5 * R, R * .14);
     [-1, 1].forEach(d => {
       const gx = cx + d * 1.25 * R;
-      const g = x.createRadialGradient(gx - R * .3, cy - R * .35, R * .1, gx, cy, R);
-      g.addColorStop(0, '#b06ae0'); g.addColorStop(1, '#4a1a78');
-      x.fillStyle = g; x.beginPath(); x.arc(gx, cy, R, 0, 7); x.fill();
+      x.fillStyle = rgba(GRAPE, 1); x.beginPath(); x.arc(gx, cy, R, 0, 7); x.fill();
+      // the cut face, turned toward the gap
+      x.fillStyle = 'rgb(176,150,170)';
+      x.beginPath(); x.ellipse(gx - d * R * .55, cy, R * .3 * gap, R * .78, 0, 0, 7); x.fill();
+      x.strokeStyle = INK; x.lineWidth = Math.max(1.5, R * .03);
+      x.beginPath(); x.arc(gx, cy, R, 0, 7); x.stroke();
     });
-    // plasma glow
-    if (glow > .01){
-      const pulse = Kit.calm ? 1 : 1 + .12 * Math.sin(clock * 9) + .06 * Math.sin(clock * 23);
-      const r = R * (.4 + 1.5 * glow) * pulse;
-      const g = x.createRadialGradient(cx, cy, 0, cx, cy, r);
-      g.addColorStop(0, `rgba(255,255,255,${.95 * glow})`); g.addColorStop(.35, `rgba(255,40,170,${.8 * glow})`); g.addColorStop(1, 'rgba(120,40,255,0)');
-      x.fillStyle = g; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
-    }
     // field arrows in the gap, flipping with the microwaves
-    const dir = on ? (sgn >= 0 ? 1 : -1) : 1, al = s.strong ? .95 : .5;
-    x.strokeStyle = s.strong ? `rgba(160,70,0,${on ? al : .45})` : `rgba(61,74,68,${on ? al : .35})`;
-    x.fillStyle = x.strokeStyle; x.lineWidth = s.strong ? Math.max(2, R * .07) : 1.2;
+    const dir = on ? (sgn >= 0 ? 1 : -1) : 1;
+    x.strokeStyle = s.strong ? INK : SOFT; x.fillStyle = x.strokeStyle;
+    x.lineWidth = s.strong ? Math.max(2.5, R * .08) : 1.5;
     for (let k = -1; k <= 1; k++){
       const ay = cy + k * R * .5, L = R * .55, a0 = cx - dir * L / 2, a1 = cx + dir * L / 2;
-      x.beginPath(); x.moveTo(a0, ay); x.lineTo(a1, ay); x.stroke();
-      const hs = s.strong ? R * .14 : R * .09;
-      x.beginPath(); x.moveTo(a1, ay); x.lineTo(a1 - dir * hs, ay - hs * .7); x.lineTo(a1 - dir * hs, ay + hs * .7); x.fill();
+      const hs = s.strong ? R * .16 : R * .1;
+      x.beginPath(); x.moveTo(a0, ay); x.lineTo(a1 - dir * hs * .6, ay); x.stroke();
+      x.beginPath(); x.moveTo(a1, ay); x.lineTo(a1 - dir * hs, ay - hs * .7); x.lineTo(a1 - dir * hs, ay + hs * .7); x.closePath(); x.fill();
     }
-    // air molecules, ions, electrons
+    // air molecules (two joined atoms), ions (+) with their torn-off electron (−)
     s.m.forEach(p => {
-      const jit = on ? R * .03 : R * .015;
+      const jit = Kit.calm ? 0 : (on ? R * .025 : R * .012);
       const bx = cx + p.x * R + Math.sin(clock * 7 + p.j) * jit, by = cy + p.y * R + Math.cos(clock * 6 + p.j * 2) * jit;
       const sw = Kit.calm ? 0 : Math.sin(ph);
+      const ar = Math.max(2.4, R * .065);
       if (!p.ion){
-        x.fillStyle = WEAK; x.beginPath(); x.arc(bx, by, Math.max(2, R * .07), 0, 7); x.fill();
+        const ca = Math.cos(p.j) * ar * .75, sa = Math.sin(p.j) * ar * .75;
+        x.fillStyle = s.strong ? INK : SOFT;
+        x.beginPath(); x.arc(bx - ca, by - sa, ar, 0, 7); x.fill();
+        x.beginPath(); x.arc(bx + ca, by + sa, ar, 0, 7); x.fill();
       } else {
+        const ir = Math.max(3.2, R * .085);
         const ix = bx + p.e * R * .1 * sw;
-        x.fillStyle = `rgba(214,90,0,${.25 + .4 * p.e})`; x.beginPath(); x.arc(ix, by, R * (.1 + .12 * p.e), 0, 7); x.fill();
-        x.fillStyle = '#c24e00'; x.beginPath(); x.arc(ix, by, Math.max(2.4, R * .08), 0, 7); x.fill();
-        const exx = bx + p.ex * R - p.e * R * .3 * sw, eyy = by + p.ey * R;
-        x.fillStyle = '#0050c8'; x.beginPath(); x.arc(exx, eyy, Math.max(1.6, R * .045), 0, 7); x.fill();
+        x.fillStyle = rgba(PLASMA, 1); x.beginPath(); x.arc(ix, by, ir, 0, 7); x.fill();
+        x.strokeStyle = INK; x.lineWidth = 1.2; x.stroke();
+        if (ir >= 5){
+          x.strokeStyle = rgba(C, 1); x.lineWidth = Math.max(1.2, ir * .28);
+          x.beginPath(); x.moveTo(ix - ir * .5, by); x.lineTo(ix + ir * .5, by); x.moveTo(ix, by - ir * .5); x.lineTo(ix, by + ir * .5); x.stroke();
+        }
+        // the electron, a short ink dash pulled the other way by the field
+        const exx = bx + p.ex * R - p.e * R * .3 * sw, eyy = by + p.ey * R, el = Math.max(3, R * .05);
+        x.strokeStyle = INK; x.lineWidth = Math.max(1.6, R * .035);
+        x.beginPath(); x.moveTo(exx - el, eyy); x.lineTo(exx + el, eyy); x.stroke();
         if (p.fl > 0){
-          x.strokeStyle = `rgba(16,16,12,${p.fl})`; x.lineWidth = 2; x.beginPath();
+          x.strokeStyle = rgba(K, p.fl); x.lineWidth = 2; x.beginPath();
           x.moveTo(bx - R * .2, by - R * .1); x.lineTo(bx - R * .03, by + R * .06); x.lineTo(bx + R * .05, by - R * .06); x.lineTo(bx + R * .22, by + R * .1); x.stroke();
         }
       }
     });
-    // readout
-    x.fillStyle = s.strong ? STRONG : WEAK;
-    x.font = `700 ${fs}px sans-serif`;
-    x.fillText(`IONS ${ions}`, cx, H * .79);
+    // count and energy bar
+    x.fillStyle = s.strong ? INK : SOFT;
+    x.font = `700 ${fs}px ${FB}`;
+    x.fillText(`Ions ${ions}`, cx, H * .79);
     const bw = pw * .66, bh = Math.max(6, H * .028), by0 = H * .87;
-    x.fillStyle = 'rgba(16,16,12,.15)'; x.fillRect(cx - bw / 2, by0, bw, bh);
-    x.fillStyle = s.strong ? '#d6007f' : WEAK; x.fillRect(cx - bw / 2, by0, bw * glow, bh);
-    if (s.strong && glow > .55){ x.fillStyle = '#10100c'; x.font = `800 ${fs * 1.05}px sans-serif`; x.fillText('PLASMA!', cx, H * .145); }
+    x.fillStyle = FAINT; x.fillRect(cx - bw / 2, by0, bw, bh);
+    x.fillStyle = s.strong ? rgba(PLASMA, 1) : SOFT; x.fillRect(cx - bw / 2, by0, bw * glow, bh);
+    if (s.strong && glow > .55){ x.fillStyle = INK; x.font = `700 ${fs * 1.25}px ${FH}`; x.fillText('Plasma!', cx, H * .145); }
   });
-  x.fillStyle = 'rgba(16,16,12,.7)'; x.font = `600 ${Math.max(12, H * .034)}px sans-serif`; x.textAlign = 'center';
-  x.fillText(on ? 'microwaves ON · energy taken in ↓' : 'microwaves off', W / 2, H * .965);
+  x.fillStyle = SOFT; x.font = `600 ${Math.max(12, H * .034)}px ${FB}`; x.textAlign = 'center';
+  x.fillText(on ? 'Microwaves on · energy taken in ↓' : 'Microwaves off', W / 2, H * .965);
 }
 
 function finish(){
@@ -152,7 +204,7 @@ const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
   Kit.answer({choice: said, correct: ok, sure: pct});
   Kit.hide('opts'); Kit.hide('say');
   if (Kit.calm){
-    S[1].m.forEach(p => { p.ion = true; p.e = 1; p.fl = 0; });
+    S[1].m.forEach(p => { p.ion = true; p.e = 1; p.fl = 0; p.ex = (p.x < 0 ? -1 : 1) * .16; p.ey = -.1; });
     t = 1; done = true; finish();
   } else { running = true; Kit.haptic('light'); }
 });
@@ -160,7 +212,7 @@ Kit.$('opts').addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
   pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
 });
-Kit.onShow.card = () => { const r = Kit.fitCanvas(Kit.$('cv')); ctx = r.x; W = r.W; H = r.H; draw(); };
+Kit.onShow.card = () => { readPalette(); const r = Kit.fitCanvas(Kit.$('cv')); ctx = r.x; W = r.W; H = r.H; draw(); };
 gsap.ticker.add(draw);
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => {

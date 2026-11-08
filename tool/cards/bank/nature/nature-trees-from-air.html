@@ -16,12 +16,16 @@
 #art{flex:1 1 0;min-height:0;width:100%;display:block;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;cursor:grab;outline:none;--soil:color-mix(in srgb,#9a6235 74%,var(--k))}
 #art.drag{cursor:grabbing}
 #art.over{cursor:default}
-#art .sil{fill:color-mix(in srgb,var(--k) 8%,var(--c))}
-#art .wood{fill:color-mix(in srgb,var(--k) 13%,var(--c))}
-#art .mol{fill:var(--k);stroke:var(--c)}
+#art .sil{fill:color-mix(in srgb,var(--k) 13%,var(--c))}
+#art .wood{fill:color-mix(in srgb,var(--k) 24%,var(--c))}
+#art .twig{fill:none;stroke:color-mix(in srgb,var(--k) 24%,var(--c));stroke-linecap:round;stroke-linejoin:round}
+#art .mol{fill:var(--k);stroke:var(--k)}
+#art .mc{fill:var(--c);stroke:var(--k)}
+#art .bond{fill:none;stroke:var(--k)}
 #art .amb{opacity:.55}
 #art .grain,#art .ground,#art .fsoil{fill:var(--soil)}
-#art .ring{fill:none;stroke:color-mix(in srgb,var(--k) 45%,var(--c))}
+#art .grain{stroke:none}
+#art .ring{fill:none;stroke:color-mix(in srgb,var(--k) 38%,var(--c))}
 #art .root{fill:none;stroke:color-mix(in srgb,var(--c) 55%,var(--soil));stroke-linecap:round}
 #art .track{fill:color-mix(in srgb,var(--k) 7%,var(--c));stroke:color-mix(in srgb,var(--k) 30%,var(--c))}
 #art .fair,#art .knob{fill:var(--k)}
@@ -57,6 +61,8 @@ const svg = Kit.$('art'), why = Kit.$('why'), say = Kit.$('say');
 // The tree, measured in tree heights: base at (0,0), top at y = -1.
 const LOBES = [[0,-.70,.27],[-.25,-.60,.20],[.25,-.62,.21],[-.13,-.85,.15],[.14,-.84,.16],[-.37,-.52,.12],[.37,-.54,.12]];
 const TRUNK = 'M-.13 0Q-.08-.02-.075-.14L-.065-.5H.065L.075-.14Q.08-.02.13 0Z';
+// The boughs that carry the crown, in the trunk's colour.
+const BOUGHS = ['M0-.46Q-.02-.6 0-.78', 'M-.03-.47Q-.14-.52-.27-.6', 'M.03-.47Q.15-.53.27-.62', 'M-.01-.6Q-.08-.7-.13-.82', 'M.01-.62Q.09-.72.14-.8', 'M-.16-.54Q-.27-.53-.36-.52', 'M.17-.56Q.28-.55.36-.54'];
 const half = y => y < -.14 ? .065 + .01 * (y + .5) / .36 : .075 + .055 * ((y + .14) / .14) ** 2;
 const inCanopy = (x, y, m) => LOBES.some(([a, b, r]) => (x - a) ** 2 + (y - b) ** 2 <= (r - m) ** 2);
 const inTrunk = (x, y, m) => y <= -.005 && y >= -.48 && Math.abs(x) <= half(y) - m;
@@ -105,10 +111,15 @@ function draw(force) {
   svg.textContent = '';
   const done = st.phase === 'done';
   const defs = Kit.mk('defs', {}, svg);
-  const m = Kit.mk('g', {id: 'co2', 'stroke-width': 1.1 / L.S}, defs);
-  for (const [x, r] of [[-.0145, .0081], [.0145, .0081], [0, .0072]]) Kit.mk('circle', {cx: x, cy: 0, r}, m);
-  Kit.mk('rect', {id: 'grain', x: -.013, y: -.013, width: .026, height: .026, rx: .0065}, defs);
-  Kit.mk('circle', {id: 'ring', r: .0105, 'stroke-width': 1.3 / L.S}, defs);
+  // A carbon dioxide molecule as a chemistry book draws it: O–C–O, two dark oxygens, a hollow carbon.
+  const m = Kit.mk('g', {id: 'co2'}, defs);
+  Kit.mk('path', {class: 'bond', d: 'M-.0145 0H.0145', 'stroke-width': .005}, m);
+  Kit.mk('circle', {cx: -.0148, cy: 0, r: .0082, 'stroke-width': 0}, m);
+  Kit.mk('circle', {cx: .0148, cy: 0, r: .0082, 'stroke-width': 0}, m);
+  Kit.mk('circle', {class: 'mc', cx: 0, cy: 0, r: .0058, 'stroke-width': .0028}, m);
+  // A clod of soil: a small uneven lump.
+  Kit.mk('path', {id: 'grain', d: 'M-.0125-.003Q-.011-.0125.0005-.0125Q.0125-.0115.0128.0005Q.0122.0118.002.0122Q-.0085.013-.0118.0065Q-.0135.002-.0125-.003Z'}, defs);
+  Kit.mk('circle', {id: 'ring', r: .0095, 'stroke-width': 1.2 / L.S}, defs);
   Kit.mk('rect', {x: L.xa, y: L.barT, width: L.xb - L.xa, height: L.bh, rx: L.bh / 2}, Kit.mk('clipPath', {id: 'barclip'}, defs));
 
   // The air: a few CO2 molecules drifting beside the crown, clear of it.
@@ -124,11 +135,13 @@ function draw(force) {
     bob(ticking ? (performance.now() - t0) / 1000 : 0);
   }
 
-  // The tree: a pale silhouette, and its grains on top.
+  // The tree: a flat crown and trunk with its boughs, and its grains on top.
   const tg = E.tree = Kit.mk('g', {}, svg);
   Kit.mk('path', {class: 'wood', d: TRUNK}, tg);
   const sil = Kit.mk('g', {class: 'sil'}, tg);
   for (const [a, b, r] of LOBES) Kit.mk('circle', {cx: a, cy: b, r}, sil);
+  const bg0 = Kit.mk('g', {class: 'twig'}, tg);
+  BOUGHS.forEach((d, i) => Kit.mk('path', {d, 'stroke-width': i < 3 ? .04 : .026}, bg0));
   E.pg = Kit.mk('g', {}, tg);
   const k0 = Math.round(st.p * N);
   for (const s of slots) {
@@ -138,9 +151,13 @@ function draw(force) {
     put(s.el, s.x, s.y, s.rot);
   }
 
-  // The ground, drawn over the tree's foot so falling grains sink into it.
-  Kit.mk('rect', {class: 'ground', x: 0, y: L.gy, width: W, height: L.gh}, svg);
-  const rg = Kit.mk('g', {class: 'root', 'stroke-width': Math.max(1.3, L.S * .011)}, svg);
+  // The ground, drawn over the tree's foot so falling grains sink into it: a band of soil, its top a little uneven.
+  {
+    const R = prng(3), n = 14; let d = `M0 ${L.gy + L.gh}V${(L.gy + .6).toFixed(1)}`;
+    for (let i = 1; i <= n; i++) d += `L${(W * i / n).toFixed(1)} ${(L.gy + (R() - .5) * 1.8).toFixed(1)}`;
+    Kit.mk('path', {class: 'ground', d: d + `V${L.gy + L.gh}Z`}, svg);
+  }
+  const rg = Kit.mk('g', {class: 'root', 'stroke-width': Math.max(1.6, L.S * .013)}, svg);
   for (const [dx, ex, ey] of [[-.06, -.36, .7], [-.025, -.17, .92], [.025, .15, .88], [.06, .33, .66]])
     Kit.mk('path', {d: `M${L.cx + dx * L.S} ${L.gy + .5}Q${L.cx + ex * L.S * .45} ${L.gy + L.gh * .5} ${L.cx + ex * L.S} ${L.gy + L.gh * ey}`}, rg);
 

@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- slug: science-one-way-light -->
-<!-- Look: a Swiss poster printed straight on the card. A huge black numeral for the round trip, a strict grid, one hot red-orange accent. Earth is an engraved ink globe, Mars is a turning ball of fire.
-     Interaction: drag to split the 20-minute round trip unevenly, slower out and faster back. Send a pulse of hundreds of particles to Mark on Mars and watch it return. The clocks show a hidden offset.
+<!-- Look: a page from a printed astronomy book. A huge black numeral for the round trip, plain rules, one red-orange accent for the return leg and for Mars. Earth is a flat ink disc with pale land, Mars a flat red disc with darker patches; the signal is a bold ray with an arrowhead.
+     Interaction: drag to split the 20-minute round trip unevenly, slower out and faster back. Send a signal to Mark on Mars and watch it return. The clocks show a hidden offset.
      Wow: after two different splits, the numeral flares and a red hand-drawn ring circles it. Every trip measured 20 min, and Mark stamped 12:10 every time. The difference was hiding in the clocks. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Light, one way</title>
@@ -11,7 +11,7 @@
 <style>
 #stage{display:flex;flex:1;min-height:0;background:none;border:0;border-radius:0;box-shadow:none}
 #cv{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;background:none}
-#go{align-self:flex-start;background:#ff3b14;color:#fff;box-shadow:0 .5cqh 1.4cqh rgba(255,59,20,.35);font:800 max(2cqh,14px)/1.1 var(--body);border:0;border-radius:1.2cqh;padding:1.3cqh 4.5cqw;cursor:pointer}
+#go{align-self:flex-start;background:#ff3b14;color:#fff;box-shadow:none;font:800 max(2cqh,14px)/1.1 var(--body);border:0;border-radius:1.2cqh;padding:1.3cqh 4.5cqw;cursor:pointer}
 #go:disabled{opacity:.45}
 .say{overflow-wrap:break-word}
 </style>
@@ -32,27 +32,43 @@
 <script>
 (() => {
   const cv = Kit.$('cv'), say = Kit.$('say'), go = Kit.$('go');
-  const INK = '#10100c', HOT = '#c81e00', MUTE = 'rgba(16,16,12,.66)';
+  const HOT = '#c81e00', MARSDK = '#8f1600';
+  let INK = '#10100c', MUTE = 'rgba(16,16,12,.66)', RULE = 'rgba(16,16,12,.3)', TRACK = 'rgba(16,16,12,.3)', LANDC = 'rgba(255,255,255,.3)';
   const st = {s: .5, T: 0, intro: 1, flash: 0, wow: 0, mb: 0, eb: 0, out: 10, flight: false, pill: 0, rot: 0, hint: 1};
-  let ctx = null, W = 0, H = 0, fs = 12, DISP = 'sans-serif', BODY = 'sans-serif', L = {};
+  let ctx = null, W = 0, H = 0, fs = 12, DISP = 'sans-serif', BODY = 'sans-serif', HAND = 'cursive', L = {};
   let stamp = null, done = false, revealed = false, SEC = .16, sendS = .5, dragging = false;
-  const log = [], dust = [], pulse = [], sparks = [];
+  const log = [];
   const flashL = {a: 0, col: INK};
   const backOut = gsap.parseEase('back.out(1.8)'), expo = gsap.parseEase('expo.out');
   const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
-  const R = () => (Kit.rnd ? Kit.rnd() : Math.random());
-  const G = () => (Kit.gauss ? Kit.gauss() : (R() + R() + R() - 1.5) * 1.4);
 
-  for (let i = 0; i < 260; i++) dust.push({u: R(), v: R(), w: G(), z: .6 + R() * 1.1});
   // surface features: [longitude 0..1, latitude -1..1, size]
   const LAND = [[.05, -.3, .34], [.12, -.1, .28], [.1, .25, .22], [.42, -.35, .3], [.5, -.15, .36], [.55, .2, .26], [.48, .45, .18], [.78, .1, .24], [.84, -.25, .2]];
   const CRATER = [[.08, -.2, .2], [.25, .3, .14], [.4, -.05, .1], [.55, .4, .16], [.7, -.35, .12], [.85, .1, .19], [.95, .5, .09]];
+
+  // the card's ink and colour, and tints between them
+  const rgbOf = v => {
+    const d = document.createElement('i');
+    d.style.cssText = 'position:absolute;visibility:hidden;color:' + v;
+    Kit.$('card').appendChild(d);
+    const c = getComputedStyle(d).color; d.remove();
+    const n = (c.match(/-?[\d.]+/g) || []).map(Number);
+    if (n.length < 3) return null;
+    return c.startsWith('color(') ? n.slice(0, 3).map(x => x * 255) : n.slice(0, 3);
+  };
+  function paints() {
+    const k = rgbOf('var(--k)') || [16, 16, 12], c = rgbOf('var(--c)') || [0, 224, 160];
+    const mix = n => `rgb(${[0, 1, 2].map(i => Math.round(k[i] * n + c[i] * (1 - n))).join(',')})`;
+    INK = mix(1); MUTE = mix(.66); RULE = mix(.3); TRACK = mix(.28); LANDC = mix(.22);
+  }
 
   function layout() {
     const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
     const css = getComputedStyle(Kit.$('card'));
     DISP = css.getPropertyValue('--display').trim() || 'sans-serif';
     BODY = css.getPropertyValue('--body').trim() || 'sans-serif';
+    HAND = css.getPropertyValue('--hand').trim() || 'cursive';
+    paints();
     fs = clamp(W / 26, 12, 15);
     const pad = Math.max(14, W * .05), gx = Math.max(6, pad * .42);
     const colW = W / 2 - pad - fs * .6;
@@ -116,12 +132,12 @@
   }
 
   const txt = (s, x, y, o = {}) => {
-    ctx.font = `${o.w || 800} ${o.size || fs}px ${o.font || BODY}`;
+    ctx.font = `${o.w || 700} ${o.size || fs}px ${o.font || BODY}`;
     ctx.fillStyle = o.c || INK; ctx.textAlign = o.a || 'left'; ctx.textBaseline = 'alphabetic';
     ctx.fillText(s, x, y); return ctx.measureText(s).width;
   };
-  const fit = (arr, max, w = 800) => {
-    ctx.font = `${w} ${fs}px ${BODY}`;
+  const fit = (arr, max, w = 700, font = BODY, size = fs) => {
+    ctx.font = `${w} ${size}px ${font}`;
     for (const s of arr) if (ctx.measureText(s).width <= max) return s;
     return null;
   };
@@ -129,39 +145,17 @@
   const fmt = m => { m = Math.floor(m + 1e-6); const h = Math.floor(m / 60), mm = ((m % 60) + 60) % 60; return `${h}:${String(mm).padStart(2, '0')}`; };
   const speed = min => min <= 0 ? 'instant' : `${Math.round(10 / min * 100) / 100}c`;
 
-  function mkPulse() {
-    pulse.length = 0;
-    for (let i = 0; i < 280; i++) pulse.push({d: -Math.abs(G()) * .05, j: G() * .38, z: .5 + R() * 1.3});
-  }
-  function burst(x, y, n, cols, power = 3) {
-    for (let i = 0; i < n; i++) {
-      const a = R() * Math.PI * 2, v = (.4 + R()) * power;
-      sparks.push({x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, k: .012 + R() * .02, c: cols[i % cols.length], z: .8 + R() * 1.6});
-    }
-  }
-
+  // one leg of the signal: a bold ray with an arrowhead at its front
   function legDraw(dir, p, col) {
     const x0 = dir > 0 ? L.ex + L.r : L.mx - L.r, x1 = dir > 0 ? L.mx - L.r : L.ex + L.r, span = x1 - x0;
     const hx = x0 + span * clamp(p);
-    // the travelled wake
-    ctx.globalAlpha = .5; ctx.strokeStyle = col; ctx.lineWidth = 1.6; line(x0, L.ly, hx, L.ly);
-    ctx.lineCap = 'round'; ctx.globalAlpha = .34; ctx.lineWidth = 1; ctx.beginPath();
-    for (const q of pulse) {
-      const pp = clamp(p + q.d); if (pp <= 0 || pp >= 1) continue;
-      const env = Math.sin(Math.PI * pp), x = x0 + span * pp, y = L.ly + q.j * L.r * .9 * env;
-      ctx.moveTo(x - span * .05 * q.z * dir, y); ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-    ctx.globalAlpha = .9; ctx.fillStyle = col;
-    for (const q of pulse) {
-      const pp = clamp(p + q.d); if (pp <= 0 || pp >= 1) continue;
-      const env = Math.sin(Math.PI * pp), x = x0 + span * pp, y = L.ly + q.j * L.r * .9 * env, s = 1.1 * q.z;
-      ctx.fillRect(x - s / 2, y - s / 2, s, s);
-    }
-    const g = ctx.createRadialGradient(hx, L.ly, 0, hx, L.ly, L.r * .9);
-    g.addColorStop(0, col === HOT ? 'rgba(200,30,0,.45)' : 'rgba(16,16,12,.3)'); g.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.globalAlpha = 1; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(hx, L.ly, L.r * .9, 0, 7); ctx.fill();
-    ctx.fillStyle = col === HOT ? '#fff2ea' : '#fff'; ctx.beginPath(); ctx.arc(hx, L.ly, 1.8, 0, 7); ctx.fill();
+    if (p <= 0) return;
+    const a = Math.max(5, fs * .5);
+    ctx.strokeStyle = col; ctx.lineWidth = Math.max(2.5, fs * .2); ctx.lineCap = 'butt';
+    line(x0, L.ly, hx - dir * a * .6, L.ly);
+    ctx.fillStyle = col; ctx.beginPath();
+    ctx.moveTo(hx, L.ly); ctx.lineTo(hx - dir * a * 1.3, L.ly - a * .7); ctx.lineTo(hx - dir * a * 1.3, L.ly + a * .7);
+    ctx.closePath(); ctx.fill();
   }
 
   function features(x, y, s, list, rot, paint) {
@@ -173,56 +167,34 @@
     }
   }
 
+  // flat discs: Earth in ink with pale land, Mars in red with darker patches
   function planet(x, y, r, mars, bump) {
     const s = r * (1 + bump * .18);
-    ctx.save(); ctx.globalAlpha = .16; ctx.fillStyle = INK;
-    ctx.beginPath(); ctx.ellipse(x + s * .12, y + s * 1.1, s * .78, s * .11, 0, 0, 7); ctx.fill(); ctx.restore();
-    ctx.save(); ctx.beginPath(); ctx.arc(x, y, s, 0, 7); ctx.clip();
-    const g = ctx.createRadialGradient(x - s * .4, y - s * .45, s * .1, x, y, s);
-    if (mars) { g.addColorStop(0, '#ffb08a'); g.addColorStop(.45, '#ff3b14'); g.addColorStop(1, '#a81d00'); }
-    else { g.addColorStop(0, '#5a5a5a'); g.addColorStop(.5, '#212121'); g.addColorStop(1, '#050505'); }
-    ctx.fillStyle = g; ctx.fillRect(x - s, y - s, s * 2, s * 2);
+    ctx.save(); ctx.beginPath(); ctx.arc(x, y, s, 0, 7);
+    ctx.fillStyle = mars ? HOT : INK; ctx.fill(); ctx.clip();
     if (mars) {
-      ctx.fillStyle = 'rgba(150,30,0,.18)';
-      for (const k of [-.45, .15, .55]) { ctx.beginPath(); ctx.ellipse(x, y + k * s, s, s * .09, 0, 0, 7); ctx.fill(); }
-      features(x, y, s, CRATER, st.rot * 1.3, (cx, cy, rx, ry, c) => {
-        ctx.fillStyle = 'rgba(110,18,0,.42)'; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 7); ctx.fill();
-        ctx.strokeStyle = `rgba(255,200,170,${.35 * c})`; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.ellipse(cx + rx * .15, cy + ry * .15, rx, ry, 0, .2, 2.2); ctx.stroke();
+      features(x, y, s, CRATER, st.rot * 1.3, (cx, cy, rx, ry) => {
+        ctx.fillStyle = MARSDK; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 7); ctx.fill();
       });
-      ctx.fillStyle = 'rgba(255,246,236,.75)'; ctx.beginPath(); ctx.ellipse(x - s * .05, y - s * .93, s * .42, s * .16, 0, 0, 7); ctx.fill();
     } else {
       features(x, y, s, LAND, st.rot, (cx, cy, rx, ry) => {
-        ctx.fillStyle = 'rgba(255,255,255,.16)'; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 7); ctx.fill();
+        ctx.fillStyle = LANDC; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 7); ctx.fill();
       });
-      ctx.strokeStyle = 'rgba(255,255,255,.1)'; ctx.lineWidth = 1;
-      for (let k = -.85; k <= .86; k += .17) line(x - s, y + k * s, x + s, y + k * s);
     }
-    const sh = ctx.createLinearGradient(x - s, y - s, x + s, y + s);
-    sh.addColorStop(.42, 'rgba(0,0,0,0)'); sh.addColorStop(1, mars ? 'rgba(60,0,0,.5)' : 'rgba(0,0,0,.55)');
-    ctx.fillStyle = sh; ctx.fillRect(x - s, y - s, s * 2, s * 2);
-    ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.beginPath(); ctx.ellipse(x - s * .42, y - s * .5, s * .16, s * .09, -.6, 0, 7); ctx.fill();
     ctx.restore();
-    ctx.strokeStyle = mars ? 'rgba(160,20,0,.55)' : 'rgba(16,16,12,.4)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.arc(x, y, s * 1.35, -2.4, -.7); ctx.stroke();
-    ctx.beginPath(); ctx.arc(x, y, s * 1.06, 0, 7); ctx.stroke();
+    ctx.strokeStyle = INK; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(x, y, s, 0, 7); ctx.stroke();
   }
 
+  // Mark's note, written by hand when the signal reaches him
   function pill(s, xRight, yBase, h, k) {
-    ctx.font = `800 ${fs}px ${BODY}`;
-    const tw = ctx.measureText(s).width + fs * 1.1, y = yBase - h * .72;
-    ctx.save(); ctx.translate(xRight - tw / 2, y + h / 2); ctx.scale(k, k); ctx.translate(-(xRight - tw / 2), -(y + h / 2));
+    const size = h * .85;
+    ctx.font = `400 ${size}px ${HAND}`;
+    const tw = ctx.measureText(s).width, cx = xRight - tw / 2, cy = yBase - size * .35;
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(-.04); ctx.scale(k, k); ctx.translate(-cx, -cy);
     ctx.globalAlpha = clamp(k * 1.5);
-    ctx.fillStyle = HOT; ctx.beginPath(); ctx.roundRect(xRight - tw, y, tw, h, h / 2); ctx.fill();
-    txt(s, xRight - tw / 2, yBase, {a: 'center', c: '#fff'});
+    txt(s, xRight, yBase, {a: 'right', c: HOT, w: 400, font: HAND, size});
     ctx.restore(); ctx.globalAlpha = 1;
-  }
-
-  function dial(x, y, rr, min, col) {
-    ctx.strokeStyle = col; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(x, y, rr, 0, 7); ctx.stroke();
-    const a = (min / 60) * Math.PI * 2 - Math.PI / 2;
-    ctx.lineWidth = 1.6; line(x, y, x + Math.cos(a) * rr * .75, y + Math.sin(a) * rr * .75);
-    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 1.4, 0, 7); ctx.fill();
   }
 
   function draw() {
@@ -230,16 +202,10 @@
     const I = st.intro, ip = backOut(clamp(I * 1.5 - .3)), gl = expo(clamp(I)), pad = L.pad, now = performance.now() / 1000;
     ctx.globalAlpha = 1; ctx.clearRect(0, 0, W, H);
 
-    // strict grid
-    ctx.strokeStyle = 'rgba(16,16,12,.28)'; ctx.lineWidth = 1;
-    for (const y of [L.sp0, L.ck0, L.sl0]) line(L.gx, y, L.gx + (W - 2 * L.gx) * gl, y);
-    for (const x of [L.gx, W - L.gx]) line(x, 0, x, H * gl);
-    line(W / 2, 0, W / 2, L.sp0 * gl);
-    line(W / 2, L.ck0, W / 2, L.ck0 + (L.ck1 - L.ck0) * gl);
-    ctx.strokeStyle = INK; ctx.lineWidth = 1.4;
-    for (const [x, y] of [[L.gx, L.sp0], [W - L.gx, L.sp0], [L.gx, L.sl0], [W - L.gx, L.sl0]]) {
-      line(x - 5, y, x + 5, y); line(x, y - 5, x, y + 5);
-    }
+    // plain rules between the parts of the page
+    ctx.strokeStyle = RULE; ctx.lineWidth = 1; ctx.lineCap = 'butt';
+    for (const y of [L.sp0, L.ck0]) line(L.gx, y, L.gx + (W - 2 * L.gx) * gl, y);
+    line(W / 2, L.ck0 + fs * .4, W / 2, L.ck0 + fs * .4 + (L.ck1 - L.ck0 - fs * .8) * gl);
 
     // ---- the big numeral: minutes elapsed on Earth
     const shown = (st.flight || done) ? Math.floor(st.T + 1e-6) : 0;
@@ -258,67 +224,59 @@
         const w = 1 + .025 * Math.sin(a * 3), x = cx + Math.cos(a) * rx * w, y = cy + Math.sin(a) * ry * w - (a - a0) * .35;
         if (a === a0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
-      ctx.stroke();
+      ctx.stroke(); ctx.lineCap = 'butt';
     }
 
     // the round-trip log
     const entry = (e, y) => {
-      const w1 = txt(`${e.o} + ${e.b} `, L.lx, y, {w: 600});
-      txt('= 20', L.lx + w1, y, {w: 900, c: revealed ? HOT : INK});
+      const w1 = txt(`${e.o} + ${e.b} `, L.lx, y, {w: 500});
+      txt('= 20', L.lx + w1, y, {w: 800, c: revealed ? HOT : INK});
     };
     ctx.globalAlpha = clamp(I * 1.6);
     if (!L.compact) {
-      txt('ROUND TRIP, MIN', L.lx, fs * 1.35);
-      if (!log.length) txt('send a signal', L.lx, fs * 2.77, {w: 600, c: MUTE});
+      txt('Round trip, min', L.lx, fs * 1.35);
+      if (!log.length) txt('send a signal', L.lx, fs * 2.77, {w: 500, c: MUTE});
       log.slice(-L.nL).forEach((e, k) => entry(e, fs * 1.35 + (k + 1) * fs * 1.42));
     } else {
-      txt('ROUND TRIP, MIN', L.lx, fs * 1.1);
+      txt('Round trip, min', L.lx, fs * 1.1);
       const e = log[log.length - 1];
-      if (e) entry(e, fs * 2.25); else txt('send a signal', L.lx, fs * 2.25, {w: 600, c: MUTE});
+      if (e) entry(e, fs * 2.25); else txt('send a signal', L.lx, fs * 2.25, {w: 500, c: MUTE});
     }
     ctx.globalAlpha = 1;
 
-    // ---- space: dust drifting along a hidden preferred direction
-    ctx.fillStyle = INK;
-    for (const d of dust) {
-      const x = d.u * W, y = L.sp0 + 6 + d.v * (L.sp1 - L.sp0 - 12);
-      ctx.globalAlpha = .2 * d.z * clamp(I * 2); ctx.fillRect(x, y, d.z * 1.2, d.z * 1.2);
-    }
-    ctx.globalAlpha = 1;
-    ctx.setLineDash([3, 5]); ctx.strokeStyle = 'rgba(16,16,12,.45)'; ctx.lineWidth = 1;
+    // ---- the route between the planets
+    ctx.strokeStyle = TRACK; ctx.lineWidth = 1.5;
     const p0 = L.ex + L.r * 1.4, p1 = L.mx - L.r * 1.4;
-    line(p0, L.ly, p0 + (p1 - p0) * gl, L.ly); ctx.setLineDash([]);
+    line(p0, L.ly, p0 + (p1 - p0) * gl, L.ly);
 
-    // the pulse
+    // the signal
     if (st.flight) {
       const out = st.out;
       if (!stamp && out > 0) legDraw(1, st.T / out, INK);
       else if (stamp) {
-        ctx.globalAlpha = .3; ctx.strokeStyle = INK; ctx.lineWidth = 1.2; line(L.ex + L.r, L.ly, L.mx - L.r, L.ly);
+        ctx.strokeStyle = MUTE; ctx.lineWidth = 1.5; line(L.ex + L.r, L.ly, L.mx - L.r, L.ly);
         if (out < 20) legDraw(-1, (st.T - out) / (20 - out), HOT);
       }
-      ctx.globalAlpha = 1;
     }
     if (flashL.a > 0) {
-      ctx.globalAlpha = flashL.a; ctx.strokeStyle = flashL.col; ctx.lineWidth = 2 + 6 * flashL.a;
+      ctx.globalAlpha = flashL.a; ctx.strokeStyle = flashL.col; ctx.lineWidth = Math.max(3, fs * .25);
       line(L.ex + L.r, L.ly, L.mx - L.r, L.ly); ctx.globalAlpha = 1;
     }
 
     ctx.save(); ctx.translate(L.ex, L.ly); ctx.scale(ip, ip); planet(0, 0, L.r, false, st.eb); ctx.restore();
     ctx.save(); ctx.translate(L.mx, L.ly); ctx.scale(ip, ip); planet(0, 0, L.r, true, st.mb); ctx.restore();
 
-    for (const p of sparks) { ctx.globalAlpha = clamp(p.life); ctx.fillStyle = p.c; ctx.fillRect(p.x, p.y, p.z, p.z); }
     ctx.globalAlpha = clamp(I * 1.6);
 
     // leg labels
     const lo = Math.round(st.s * 20), lb = 20 - lo;
-    txt(`→ OUT ${lo} min · ${speed(lo)}`, W / 2, L.outY, {a: 'center'});
-    txt(`← BACK ${lb} min · ${speed(lb)}`, W / 2, L.backY, {a: 'center', c: HOT});
+    txt(`→ Out ${lo} min · ${speed(lo)}`, W / 2, L.outY, {a: 'center'});
+    txt(`← Back ${lb} min · ${speed(lb)}`, W / 2, L.backY, {a: 'center', c: HOT});
     if (!L.compact) {
-      txt('EARTH', pad, L.nameY);
-      if (stamp === null) txt('MARS · MARK', W - pad, L.nameY, {a: 'right', c: HOT});
+      txt('Earth', pad, L.nameY);
+      if (stamp === null) txt('Mars · Mark', W - pad, L.nameY, {a: 'right', c: HOT});
       else {
-        const s = fit([`MARK · GOT IT ${fmt(stamp)}`, `GOT IT ${fmt(stamp)}`], W - 2 * pad - fs * 6.5);
+        const s = fit([`Mark · got it ${fmt(stamp)}`, `got it ${fmt(stamp)}`], W - 2 * pad - fs * 6.5, 400, HAND, fs * 1.5 * .85);
         if (s) pill(s, W - pad, L.nameY, fs * 1.5, st.pill);
       }
     }
@@ -327,58 +285,49 @@
     const offLive = lo - 10;
     const offShow = st.flight ? st.out - 10 : offLive;
     const T = st.T;
-    const lab1 = L.compact ? 'EARTH' : 'EARTH CLOCK', lab2 = L.compact ? 'MARS' : 'MARS CLOCK';
-    const w1 = txt(lab1, pad, L.labY), w2 = txt(lab2, L.colR, L.labY);
-    if (!L.compact) {
-      const dr = fs * .5;
-      if (pad + w1 + dr * 3 < W / 2 - fs * .4) dial(W / 2 - fs * .6 - dr, L.labY - fs * .36, dr, T, INK);
-      if (L.colR + w2 + dr * 3 < W - pad) dial(W - pad - dr, L.labY - fs * .36, dr, T - offShow, HOT);
-    } else if (stamp !== null) {
+    const lab1 = L.compact ? 'Earth' : 'Earth clock', lab2 = L.compact ? 'Mars' : 'Mars clock';
+    txt(lab1, pad, L.labY); const w2 = txt(lab2, L.colR, L.labY);
+    if (L.compact && stamp !== null) {
       const x0 = L.colR + w2 + fs * .5;
-      const s = fit([`GOT IT ${fmt(stamp)}`, `GOT ${fmt(stamp)}`], W - pad - x0 - fs * 1.1);
+      const s = fit([`got it ${fmt(stamp)}`, `got ${fmt(stamp)}`], W - pad - x0, 400, HAND, fs * 1.3 * .85);
       if (s) pill(s, W - pad, L.labY, fs * 1.3, st.pill);
     }
     txt(fmt(720 + T), pad, L.digY, {size: L.ns, w: 900, font: DISP});
     txt(fmt(720 + T - offShow), L.colR, L.digY, {size: L.ns, w: 900, font: DISP});
     const es = done ? ['reply back at 12:20', 'back at 12:20'] : st.flight ? (stamp ? ['echo on its way', 'echo coming'] : ['sent at 12:00']) : ['you send at 12:00', 'send at 12:00'];
-    txt(fit(es, L.colW, 600) || es[es.length - 1], pad, L.subY, {w: 600, c: MUTE});
+    txt(fit(es, L.colW, 500) || es[es.length - 1], pad, L.subY, {w: 500, c: MUTE});
     const sg = `${offShow > 0 ? '+' : '−'}${Math.abs(offShow)}`;
     const ms = offShow === 0 ? ['in sync with Earth', 'in sync'] : [`secretly ${sg} min off`, `${sg} min off`];
     txt(fit(ms, L.colW) || ms[ms.length - 1], L.colR, L.subY, {c: HOT});
 
     // ---- the slider
     const t0 = L.tx0, t1 = L.tx1, mid = (t0 + t1) / 2, tx = t0 + (t1 - t0) * st.s;
-    txt('INSTANT OUT', pad, L.slLabY, {c: lo === 0 ? HOT : MUTE});
-    txt('EQUAL', mid, L.slLabY, {a: 'center', c: lo === 10 ? INK : MUTE});
-    txt('INSTANT BACK', W - pad, L.slLabY, {a: 'right', c: lo === 20 ? HOT : MUTE});
-    ctx.strokeStyle = INK; ctx.lineWidth = 2; line(t0, L.ty, t0 + (t1 - t0) * gl, L.ty);
-    ctx.lineWidth = 1;
-    for (let i = 0; i <= 20; i++) { const x = t0 + (t1 - t0) * i / 20, h = i === 10 ? 7 : i % 5 ? 2.5 : 4.5; line(x, L.ty - h, x, L.ty + h); }
-    ctx.fillStyle = HOT; ctx.fillRect(Math.min(tx, mid), L.ty - 2, Math.abs(tx - mid), 4);
+    txt('Instant out', pad, L.slLabY, {c: lo === 0 ? HOT : MUTE});
+    txt('Equal', mid, L.slLabY, {a: 'center', c: lo === 10 ? INK : MUTE});
+    txt('Instant back', W - pad, L.slLabY, {a: 'right', c: lo === 20 ? HOT : MUTE});
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = TRACK; ctx.lineWidth = 4; line(t0, L.ty, t0 + (t1 - t0) * gl, L.ty);
+    ctx.strokeStyle = INK; ctx.lineWidth = 2; line(mid, L.ty - 7, mid, L.ty + 7);
+    if (Math.abs(tx - mid) > .5) { ctx.strokeStyle = HOT; ctx.lineWidth = 4; line(mid, L.ty, tx, L.ty); }
     const hs = fs * (L.compact ? 1 : 1.15) * (dragging ? 1.18 : 1);
-    if (st.hint > .01 && !st.flight && !Kit.calm) {
-      const ph = (now * .8) % 1;
-      ctx.globalAlpha = (1 - ph) * .6 * st.hint; ctx.strokeStyle = HOT; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.arc(tx, L.ty, hs * (.6 + ph * .7), 0, 7); ctx.stroke();
+    if (st.hint > .01 && !st.flight) {
+      const k = Kit.calm ? 0 : Math.sin(now * 3) * fs * .12, d = hs * .85 + fs * .25 + k, c = fs * .32;
+      ctx.globalAlpha = st.hint * clamp(I * 1.6); ctx.strokeStyle = HOT; ctx.lineWidth = 2; ctx.lineJoin = 'round';
+      for (const sgn of [-1, 1]) {
+        const x = tx + sgn * d;
+        ctx.beginPath(); ctx.moveTo(x - sgn * c * .6, L.ty - c); ctx.lineTo(x, L.ty); ctx.lineTo(x - sgn * c * .6, L.ty + c); ctx.stroke();
+      }
       ctx.globalAlpha = clamp(I * 1.6);
     }
-    ctx.save(); ctx.shadowColor = 'rgba(200,30,0,.5)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 3;
-    ctx.fillStyle = HOT; ctx.fillRect(tx - hs / 2, L.ty - hs / 2, hs, hs); ctx.restore();
-    ctx.fillStyle = '#fff'; ctx.fillRect(tx - 1, L.ty - hs * .28, 2, hs * .56);
+    ctx.fillStyle = HOT; ctx.beginPath(); ctx.arc(tx, L.ty, hs / 2, 0, 7); ctx.fill();
+    ctx.strokeStyle = INK; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.lineCap = 'butt';
     ctx.globalAlpha = 1;
   }
 
   function frame() {
     if (!ctx) return;
-    if (!Kit.calm) {
-      st.rot += .0016;
-      const drift = (.5 - st.s) * .0035;
-      for (const d of dust) { d.u += drift * d.z + d.w * .00012; if (d.u > 1) d.u -= 1; if (d.u < 0) d.u += 1; }
-    }
-    for (let i = sparks.length - 1; i >= 0; i--) {
-      const p = sparks[i]; p.x += p.vx; p.y += p.vy; p.vx *= .955; p.vy = p.vy * .955 + .025; p.life -= p.k;
-      if (p.life <= 0) sparks.splice(i, 1);
-    }
+    if (!Kit.calm) st.rot += .0016;
     draw();
   }
 
@@ -400,12 +349,11 @@
 
   // ---- the launch
   function flashIt(col) {
-    flashL.col = col; flashL.a = 1;
+    flashL.col = col === HOT ? HOT : INK; flashL.a = 1;
     if (!Kit.calm) gsap.to(flashL, {a: 0, duration: .7, ease: 'expo.out'}); else flashL.a = 0;
   }
   function arriveMars() {
     stamp = 730; Kit.haptic('light');
-    burst(L.mx - L.r, L.ly, 110, [HOT, INK, HOT], 2.6);
     if (!Kit.calm) {
       gsap.fromTo(st, {mb: 1}, {mb: 0, duration: .9, ease: 'elastic.out(1,.4)'});
       gsap.fromTo(st, {pill: 0}, {pill: 1, duration: .5, ease: 'back.out(2.2)'});
@@ -414,7 +362,6 @@
   function arriveEarth() {
     st.flight = false; done = true; st.T = 20;
     log.push({o: st.out, b: 20 - st.out});
-    burst(L.ex + L.r, L.ly, 110, [INK, HOT, INK], 2.6);
     if (!Kit.calm) { gsap.fromTo(st, {eb: 1}, {eb: 0, duration: .9, ease: 'elastic.out(1,.4)'}); gsap.fromTo(st, {flash: 1}, {flash: 0, duration: 1.4, ease: 'expo.out'}); }
     go.disabled = false; go.textContent = 'Send again';
     const splits = new Set(log.map(e => e.o));
@@ -425,7 +372,7 @@
   function launch() {
     if (st.flight || revealed) return Promise.resolve();
     const out = Math.round(sendS * 20);
-    st.out = out; st.flight = true; done = false; stamp = null; st.pill = 0; st.T = 0; mkPulse();
+    st.out = out; st.flight = true; done = false; stamp = null; st.pill = 0; st.T = 0;
     go.disabled = true; Kit.haptic('light');
     return new Promise(res => {
       const fin = () => { arriveEarth(); res(); };
@@ -444,7 +391,6 @@
     say.innerHTML = 'Any split: 20 min round trip, 12:10 on Mars. <b>It all hides in the clocks.</b>';
     Kit.hide('go'); Kit.show('keep');
     if (Kit.calm) { st.wow = 1; return; }
-    burst(L.pad + L.nw / 2, L.by - L.sz * .36, 420, [HOT, HOT, INK], 4.2);
     gsap.timeline()
       .fromTo(st, {flash: 1}, {flash: .55, duration: 1.6, ease: 'power2.out'})
       .fromTo(st, {wow: 0}, {wow: 1, duration: 1.1, ease: 'power2.inOut'}, .15)

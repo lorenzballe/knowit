@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- slug: psychology-gravity-hill -->
-<!-- Look: a dusk forest road in side view, printed on deep green, two layers of trees and drifting fireflies, above a brass inclinometer with engraved ticks, a spirit-level vial, a blued needle and glass glare.
-     Interaction: swing the needle to guess the middle stretch's slope. A brass ball then rolls "uphill", and you brush about 700 leaves away with a finger.
+<!-- Look: a printed side view of a hill road through a dusk wood, in flat tints of the card's green and cream, cut off below like a cross-section of the ground; under it a flat paper protractor with a dark pointer and a small level vial.
+     Interaction: swing the needle to guess the middle stretch's slope. An amber ball then rolls "uphill", and you brush about 700 leaves away with a finger.
      Wow: a gust takes the last leaves, the true horizon draws in, the whole road tilts to the truth, the vial's bubble slides and the needle swings, damped, to downhill. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The road that climbs downhill</title>
@@ -19,7 +19,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">OPTICAL ILLUSION</span></div>
     <h2 class="q">Why does a downhill road appear to be uphill?</h2>
     <div class="stagebox" id="stage">
-      <canvas id="cv" data-drag role="img" aria-label="A forest road in side view. The middle stretch seems to climb. Below it is a brass inclinometer whose needle you swing to guess the slope."></canvas>
+      <canvas id="cv" data-drag role="img" aria-label="A forest road in side view. The middle stretch seems to climb. Below it is a slope gauge whose needle you swing to guess the slope."></canvas>
     </div>
     <p class="say" id="say">Swing the needle: is the middle stretch going <b>up</b> or <b>down</b>?</p>
     <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>With no horizon to see, the brain judges a slope against the road next to it.</div>
@@ -32,12 +32,16 @@
   const cv = Kit.$('cv'), card = Kit.$('card'), say = Kit.$('say');
   const oc = document.createElement('canvas');
   let ox = null, x = null, W = 0, H = 0, dpr = 1, fs = 12, SH = 0, L = 0, LS = 0, rw = 6, rb = 5;
-  let RC = {x: 0, y: 0}, D = {cx: 0, cy: 0, R: 60}, MONO = 'monospace';
+  let RC = {x: 0, y: 0}, D = {cx: 0, cy: 0, R: 60}, BODY = 'Figtree, sans-serif';
+  // flat palette: the card's ink and colour, their tints, and two meaning colours
+  let KC = [243, 231, 201], CC = [23, 35, 29], INK = '#17231d', EDGE = '#0b120e';
+  const AMBER = '#e2a93b', AMBER_D = '#8a5a10', RUST = '#b8492f', RUST_D = '#a63d26';
+  const hex = (s, fb) => { s = (s || '').trim(); if (!/^#[0-9a-f]{6}$/i.test(s)) return fb; return [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16)); };
+  const mix = n => { const t = n / 100; return `rgb(${KC.map((k, i) => Math.round(k * t + CC[i] * (1 - t))).join(',')})`; };
   // The slopes are illustrative: two steep stretches around a gentle one, all going down.
   const TRUE = [-14, -3, -14], FAKE = 11;
   const S = {rot: FAKE, intro: 1, dial: 1, rev: 0, hz: 0, bub: 0, phase: 'guess', guess: null, touched: false};
   let na = 0, nv = 0, nt = 0, parts = [], trees = [], back = [], bleaf = [], loose = 0, T = 0, lastT = 0, lastHap = 0;
-  const flies = Array.from({length: 16}, () => ({u: .05 + Kit.rnd() * .9, v: .12 + Kit.rnd() * .45, s: .4 + Kit.rnd() * .7, ph: Kit.rnd() * 6.28}));
   const ball = {s: 0, v: 0, on: false, al: 0};
   const rad = d => d * Math.PI / 180, cl = (v, a, b) => Math.max(a, Math.min(b, v));
   const dir = t => ({x: Math.cos(rad(t)), y: -Math.sin(rad(t))});
@@ -60,11 +64,13 @@
   // ---------- the forest: a far layer, then hundreds of near leaves, stored in units of the scene ----------
   function build() {
     parts = []; trees = []; back = []; bleaf = []; loose = 0;
+    const PB = [mix(6), mix(9), mix(13)];
+    const PF = [AMBER, mix(15), mix(23), mix(32), mix(43), mix(56)];
     for (let i = 0; i < 16; i++) back.push({u: (i + Kit.rnd()) / 16, v: .02 + Kit.rnd() * .12, w: .5 + Kit.rnd() * .7});
     for (let i = 0; i < 130; i++) {
       const k = Kit.rnd();
       bleaf.push({u: Kit.rnd() * 1.04 - .02, v: Math.abs(Kit.gauss()) * .16, r: 1.6 + Kit.rnd() * 2.6, a: Kit.rnd() * 6.28, ph: Kit.rnd() * 6.28,
-        col: k < .5 ? '#14281b' : k < .85 ? '#1a3523' : '#22432b'});
+        col: k < .5 ? PB[0] : k < .85 ? PB[1] : PB[2]});
     }
     const n = 10;
     for (let i = 0; i < n; i++) {
@@ -78,7 +84,7 @@
         const lim = roadY(hx, FAKE) - rw * 1.6 - SH * .02;
         if (hy > lim) hy = lim - Kit.rnd() * SH * .05;
         const k = Kit.rnd();
-        const col = k < .04 ? '#d9b35c' : k < .2 ? '#1d3a26' : k < .45 ? '#2e5636' : k < .72 ? '#3f6f43' : k < .92 ? '#55894f' : '#8fb562';
+        const col = k < .04 ? PF[0] : k < .2 ? PF[1] : k < .45 ? PF[2] : k < .72 ? PF[3] : k < .92 ? PF[4] : PF[5];
         parts.push({hu: hx / W, hv: hy / SH, u: hx / W, v: hy / SH, vu: 0, vv: 0, r: 1.4 + Kit.rnd() * 2.4, a: Kit.rnd() * 6.28, va: 0,
           ph: Kit.rnd() * 6.28, col, loose: false, gone: false, rel: 0, d: Kit.rnd() * .3 + hx / W * .3});
       }
@@ -88,7 +94,10 @@
   function layout() {
     const f = Kit.fitCanvas(cv); x = f.x; W = f.W; H = f.H; dpr = cv.width / W || 1;
     oc.width = cv.width; oc.height = cv.height; ox = oc.getContext('2d'); ox.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const m = getComputedStyle(card).getPropertyValue('--mono').trim(); MONO = m || 'monospace';
+    const cs = getComputedStyle(card);
+    BODY = cs.getPropertyValue('--body').trim() || 'Figtree, sans-serif';
+    KC = hex(cs.getPropertyValue('--k'), KC); CC = hex(cs.getPropertyValue('--c'), CC);
+    INK = mix(0); EDGE = cs.getPropertyValue('--edge').trim() || EDGE;
     fs = Math.max(12, Math.min(15, W / 28));
     SH = H * .6;
     RC = {x: W * .5, y: SH * .64}; L = W * .42; LS = W * .56;
@@ -103,11 +112,8 @@
   function drawScene() {
     const o = ox; o.clearRect(0, 0, W, H);
     const w = world(), hzY = -SH * .44, la = 1 - S.rev, sc = Math.max(1, W / 380);
-    // dusk glow where the horizon is
-    const hs = toScr({x: 0, y: hzY});
-    let g = o.createRadialGradient(hs.x, hs.y, 0, hs.x, hs.y, W * .75);
-    g.addColorStop(0, `rgba(240,196,110,${.18 + .2 * S.rev})`); g.addColorStop(.5, `rgba(240,170,90,${.06 + .06 * S.rev})`); g.addColorStop(1, 'rgba(240,196,110,0)');
-    o.fillStyle = g; o.beginPath(); o.arc(hs.x, hs.y, W * .75, 0, 6.283); o.fill();
+    // the picture is cut off cleanly, like a cross-section of the hill
+    o.save(); o.beginPath(); o.rect(0, 0, W, SH * 1.02); o.clip();
 
     // the far forest: thin trunks and a dark canopy, it thins as you brush
     const lb = la * S.intro * (1 - .55 * (parts.length ? loose / parts.length : 0));
@@ -115,7 +121,7 @@
       o.globalAlpha = lb; o.lineCap = 'round';
       for (const t of back) {
         const tx = t.u * W, by = roadY(tx, S.rot) - rw * .5;
-        o.strokeStyle = '#0e1912'; o.lineWidth = Math.max(1.2, W * .006 * t.w);
+        o.strokeStyle = EDGE; o.lineWidth = Math.max(1.2, W * .006 * t.w);
         o.beginPath(); o.moveTo(tx, t.v * SH); o.lineTo(tx, by); o.stroke();
       }
       for (const b of bleaf) {
@@ -128,72 +134,59 @@
     o.save(); o.translate(RC.x, RC.y); o.rotate(rad(-S.rot));
     // distant hills and the true level, once the trees are gone
     if (S.rev > 0) {
-      o.globalAlpha = S.rev * .9; o.beginPath(); o.moveTo(-W * 1.2, hzY);
+      o.globalAlpha = S.rev; o.beginPath(); o.moveTo(-W * 1.2, hzY);
       for (let i = 0; i <= 48; i++) { const xx = -W * 1.2 + i * W * 2.4 / 48; o.lineTo(xx, hzY - SH * (.02 + .03 * Math.abs(Math.sin(i * 1.7)) + .018 * Math.sin(i * .6))); }
-      o.lineTo(W * 1.2, hzY); o.closePath();
-      g = o.createLinearGradient(0, hzY - SH * .08, 0, hzY); g.addColorStop(0, '#34473a'); g.addColorStop(1, '#22302a');
-      o.fillStyle = g; o.fill(); o.globalAlpha = 1;
+      o.lineTo(W * 1.2, hzY); o.lineTo(W * 1.2, SH * 1.5); o.lineTo(-W * 1.2, SH * 1.5); o.closePath();
+      o.fillStyle = mix(8); o.fill(); o.globalAlpha = 1;
     }
     if (S.hz > 0) {
       const x0 = -W * .62, x1 = x0 + W * 1.24 * S.hz;
-      o.strokeStyle = '#f0c96a'; o.lineWidth = 1.6; o.setLineDash([8, 5]);
+      o.strokeStyle = AMBER; o.lineWidth = 2; o.lineCap = 'butt'; o.setLineDash([9, 6]);
       o.beginPath(); o.moveTo(x0, hzY); o.lineTo(x1, hzY); o.stroke(); o.setLineDash([]);
-      o.lineWidth = 1.4;
-      for (let i = 0; i <= 12; i++) { const xx = x0 + i * W * 1.24 / 12; if (xx > x1) break; o.beginPath(); o.moveTo(xx, hzY - 3); o.lineTo(xx, hzY + 3); o.stroke(); }
     }
     // the hillside under the road
     o.globalAlpha = S.intro;
     o.beginPath(); o.moveTo(w.A0.x, w.A0.y); o.lineTo(w.B0.x, w.B0.y); o.lineTo(w.B1.x, w.B1.y); o.lineTo(w.C1.x, w.C1.y);
     o.lineTo(w.C1.x, SH * 1.5); o.lineTo(w.A0.x, SH * 1.5); o.closePath();
-    g = o.createLinearGradient(0, w.A0.y, 0, SH * .5); g.addColorStop(0, '#3d3524'); g.addColorStop(1, '#1b2019');
-    o.fillStyle = g; o.fill();
+    o.fillStyle = mix(14); o.fill();
     const poly = dy => { o.beginPath(); o.moveTo(w.A0.x, w.A0.y + dy); o.lineTo(w.B0.x, w.B0.y + dy); o.lineTo(w.B1.x, w.B1.y + dy); o.lineTo(w.C1.x, w.C1.y + dy); };
     o.lineJoin = 'round'; o.lineCap = 'round';
-    for (let i = 0; i < 4; i++) { poly(rw * (2.4 + i * 2.3)); o.strokeStyle = `rgba(243,231,201,${.06 - i * .012})`; o.lineWidth = 1; o.stroke(); }
     o.globalAlpha = 1;
     // the road, drawn in as the scene builds
     const len = L + LS * 2;
     if (S.intro < 1) o.setLineDash([len * S.intro, len * 2]);
-    poly(0); o.strokeStyle = '#2b2e31'; o.lineWidth = rw; o.stroke();
-    poly(-rw / 2); o.strokeStyle = 'rgba(243,231,201,.6)'; o.lineWidth = 1.2; o.stroke();
-    poly(rw / 2); o.strokeStyle = '#5f7d3e'; o.lineWidth = 1.4; o.stroke();
+    poly(0); o.strokeStyle = EDGE; o.lineWidth = rw; o.stroke();
+    o.lineCap = 'butt';
     o.setLineDash(S.intro < 1 ? [0, 1e5] : [rw * 1.4, rw * 1.6]);
-    if (S.intro >= 1) { poly(0); o.strokeStyle = '#e9c766'; o.lineWidth = Math.max(1.4, rw * .16); o.stroke(); }
-    o.setLineDash([]);
+    if (S.intro >= 1) { poly(0); o.strokeStyle = mix(78); o.lineWidth = Math.max(1.4, rw * .16); o.stroke(); }
+    o.setLineDash([]); o.lineCap = 'round';
     // a bracket under the middle stretch
     const bk = rw * .9 + fs * .35, n = {x: -Math.sin(rad(TRUE[1])), y: -Math.cos(rad(TRUE[1]))};
-    o.strokeStyle = 'rgba(240,201,106,.85)'; o.lineWidth = 1.4; o.beginPath();
+    o.strokeStyle = mix(72); o.lineWidth = 1.6; o.beginPath();
     o.moveTo(w.B0.x - n.x * (bk - 4), w.B0.y - n.y * (bk - 4)); o.lineTo(w.B0.x - n.x * bk, w.B0.y - n.y * bk);
     o.lineTo(w.B1.x - n.x * bk, w.B1.y - n.y * bk); o.lineTo(w.B1.x - n.x * (bk - 4), w.B1.y - n.y * (bk - 4)); o.globalAlpha = S.intro; o.stroke(); o.globalAlpha = 1;
-    // the brass ball
+    // the ball
     if (ball.on) {
       const s = ball.s; let p;
       if (s <= 1) p = {x: w.B0.x + (w.B1.x - w.B0.x) * s, y: w.B0.y + (w.B1.y - w.B0.y) * s};
       else { const d = (s - 1) * L; p = {x: w.B1.x + w.c.x * d, y: w.B1.y + w.c.y * d}; }
       const off = rw / 2 + rb; p.x += n.x * off; p.y += n.y * off;
       o.globalAlpha = ball.al * cl((1.6 - s) / .3, 0, 1);
-      o.fillStyle = 'rgba(0,0,0,.35)'; o.beginPath(); o.ellipse(p.x, p.y + rb * .9, rb * .9, rb * .25, 0, 0, 6.283); o.fill();
-      g = o.createRadialGradient(p.x - rb * .35, p.y - rb * .4, rb * .1, p.x, p.y, rb);
-      g.addColorStop(0, '#fff3c4'); g.addColorStop(.4, '#e0b552'); g.addColorStop(1, '#7a5718');
-      o.fillStyle = g; o.beginPath(); o.arc(p.x, p.y, rb, 0, 6.283); o.fill();
-      const sp = s * L / rb; o.strokeStyle = 'rgba(70,45,10,.6)'; o.lineWidth = 1;
-      o.beginPath(); o.moveTo(p.x + Math.cos(sp) * rb * .8, p.y + Math.sin(sp) * rb * .8); o.lineTo(p.x - Math.cos(sp) * rb * .8, p.y - Math.sin(sp) * rb * .8); o.stroke();
+      o.fillStyle = AMBER; o.beginPath(); o.arc(p.x, p.y, rb, 0, 6.283); o.fill();
+      const sp = s * L / rb; o.strokeStyle = INK; o.lineWidth = 1.4;
+      o.beginPath(); o.moveTo(p.x + Math.cos(sp) * rb * .75, p.y + Math.sin(sp) * rb * .75); o.lineTo(p.x - Math.cos(sp) * rb * .75, p.y - Math.sin(sp) * rb * .75); o.stroke();
       o.globalAlpha = 1;
     }
     o.restore();
 
-    // trunks and canopy shade, standing in the view
+    // trunks, standing in the view
     if (la > 0) {
+      o.lineCap = 'round';
       for (const t of trees) {
         const tx = t.u * W, ty = t.v * SH, by = roadY(tx, S.rot) - rw * .5;
         o.globalAlpha = la * S.intro;
-        g = o.createRadialGradient(tx, ty, 0, tx, ty, W * .13); g.addColorStop(0, 'rgba(10,22,14,.7)'); g.addColorStop(1, 'rgba(10,22,14,0)');
-        o.fillStyle = g; o.beginPath(); o.arc(tx, ty, W * .13, 0, 6.283); o.fill();
-        const tw = Math.max(2, W * .012 * t.w);
-        o.strokeStyle = '#1a140d'; o.lineWidth = tw;
+        o.strokeStyle = EDGE; o.lineWidth = Math.max(2, W * .012 * t.w);
         o.beginPath(); o.moveTo(tx, ty + SH * .03); o.lineTo(tx, by); o.stroke();
-        o.strokeStyle = 'rgba(240,196,110,.14)'; o.lineWidth = Math.max(.8, tw * .3);
-        o.beginPath(); o.moveTo(tx + tw * .3, ty + SH * .06); o.lineTo(tx + tw * .3, by - rw * .4); o.stroke();
       }
       o.globalAlpha = 1;
     }
@@ -205,74 +198,48 @@
       o.fillStyle = p.col; o.beginPath();
       o.ellipse(p.u * W, p.v * SH, p.r * sc * 1.6 * s, p.r * sc * .85 * s, p.a, 0, 6.283); o.fill();
     }
-    // fireflies drifting in the dusk
-    for (const f of flies) {
-      const fx = (f.u + Math.sin(T * f.s + f.ph) * .03) * W, fy = (f.v + Math.cos(T * f.s * .8 + f.ph) * .04) * SH;
-      const a = S.intro * (.25 + .75 * Math.max(0, Math.sin(T * f.s * 2.2 + f.ph))) * (1 - .5 * S.rev);
-      o.globalAlpha = a * .35; o.fillStyle = '#f0c96a'; o.beginPath(); o.arc(fx, fy, 4.5, 0, 6.283); o.fill();
-      o.globalAlpha = a; o.fillStyle = '#fff0b8'; o.beginPath(); o.arc(fx, fy, 1.4, 0, 6.283); o.fill();
-    }
-    o.globalAlpha = 1;
     // labels
     o.textAlign = 'center'; o.textBaseline = 'alphabetic';
-    o.font = `700 ${fs}px ${MONO}`; o.fillStyle = 'rgba(240,201,106,.95)'; o.globalAlpha = S.intro;
-    const ml = toScr({x: 0, y: rw + fs * 1.8}); o.fillText('MIDDLE STRETCH', ml.x, ml.y);
+    o.font = `600 ${fs}px ${BODY}`; o.fillStyle = mix(82); o.globalAlpha = S.intro;
+    const ml = toScr({x: 0, y: rw + fs * 1.8}); o.fillText('Middle stretch', ml.x, ml.y);
     o.globalAlpha = 1;
     if (S.hz > .2) {
       o.globalAlpha = cl((S.hz - .2) / .5, 0, 1);
       const up = rw + rb * 2 + fs * .9;
       const la2 = {x: w.B0.x - w.a.x * LS * .28, y: w.B0.y - w.a.y * LS * .28 - up};
       const lc = {x: w.B1.x + w.c.x * LS * .28, y: w.B1.y + w.c.y * LS * .28 - up};
-      o.fillStyle = 'rgba(243,231,201,.9)';
+      o.fillStyle = mix(85);
       let p = toScr(la2); o.fillText('−14°', p.x, p.y);
       p = toScr(lc); o.fillText('−14°', p.x, p.y);
-      o.fillStyle = '#f0c96a'; p = toScr({x: 0, y: -up}); o.fillText('−3° · DOWN', p.x, p.y);
-      p = toScr({x: -W * .26, y: hzY - fs * .7}); o.fillText('TRUE LEVEL', p.x, p.y);
+      o.fillStyle = AMBER; p = toScr({x: 0, y: -up}); o.fillText('−3° · down', p.x, p.y);
+      p = toScr({x: -W * .26, y: hzY - fs * .7}); o.fillText('True level', p.x, p.y);
       o.globalAlpha = 1;
     }
-    // soften every edge into the card
-    o.globalCompositeOperation = 'destination-in';
-    g = o.createLinearGradient(0, 0, 0, SH * 1.05);
-    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(.05, '#000'); g.addColorStop(.8, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)');
-    o.fillStyle = g; o.fillRect(0, 0, W, H);
-    g = o.createLinearGradient(0, 0, W, 0);
-    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(.05, '#000'); g.addColorStop(.95, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)');
-    o.fillStyle = g; o.fillRect(0, 0, W, H);
-    o.globalCompositeOperation = 'source-over';
+    o.restore();
   }
 
-  // ---------- the inclinometer ----------
-  const fmt = s => { const r = Math.round(s); return r > 0 ? `+${r}° UP` : r < 0 ? `−${-r}° DOWN` : '0° LEVEL'; };
+  // ---------- the slope gauge: a flat paper protractor ----------
+  const fmt = s => { const r = Math.round(s); return r > 0 ? `+${r}° up` : r < 0 ? `−${-r}° down` : '0° level'; };
   const fmtS = s => { const r = Math.round(s); return r > 0 ? `+${r}°` : r < 0 ? `−${-r}°` : '0°'; };
   const dAng = s => rad(-90 + s * 70 / 15);
   function rr(cx, cy, w, h, r) { x.beginPath(); x.moveTo(cx - w / 2 + r, cy - h / 2); x.arcTo(cx + w / 2, cy - h / 2, cx + w / 2, cy + h / 2, r); x.arcTo(cx + w / 2, cy + h / 2, cx - w / 2, cy + h / 2, r); x.arcTo(cx - w / 2, cy + h / 2, cx - w / 2, cy - h / 2, r); x.arcTo(cx - w / 2, cy - h / 2, cx + w / 2, cy - h / 2, r); x.closePath(); }
   function needle(s, ghost) {
     const len = D.R * .86, tail = D.R * .18, w = Math.max(2.5, D.R * .03);
     x.save(); x.translate(D.cx, D.cy); x.rotate(dAng(s) + Math.PI / 2);
-    if (!ghost) { x.shadowColor = 'rgba(40,25,5,.45)'; x.shadowBlur = 4; x.shadowOffsetX = 2; x.shadowOffsetY = 3; }
     x.beginPath(); x.moveTo(-w, 0); x.lineTo(-w * .35, -len); x.lineTo(0, -len - w * 1.4); x.lineTo(w * .35, -len); x.lineTo(w, 0);
     x.lineTo(w * 1.7, tail); x.lineTo(-w * 1.7, tail); x.closePath();
-    if (ghost) { x.setLineDash([3, 3]); x.strokeStyle = 'rgba(58,42,16,.55)'; x.lineWidth = 1.2; x.stroke(); x.setLineDash([]); }
-    else {
-      const g = x.createLinearGradient(-w, 0, w, 0); g.addColorStop(0, '#0e1622'); g.addColorStop(.5, '#3a5272'); g.addColorStop(1, '#0e1622');
-      x.fillStyle = g; x.fill(); x.shadowColor = 'transparent';
-      x.beginPath(); x.moveTo(-w * .45, -len * .8); x.lineTo(-w * .35, -len); x.lineTo(0, -len - w * 1.4); x.lineTo(w * .35, -len); x.lineTo(w * .45, -len * .8); x.closePath();
-      x.fillStyle = '#c23a2c'; x.fill();
-    }
+    if (ghost) { x.setLineDash([3, 3]); x.strokeStyle = INK; x.globalAlpha *= .55; x.lineWidth = 1.3; x.stroke(); x.setLineDash([]); }
+    else { x.fillStyle = INK; x.fill(); }
     x.restore();
   }
   function vial(cx, cy, R) {
     const vy = cy - R * .36, hl = R * .23, hh = fs * .38;
-    rr(cx, vy, hl * 2 + 4, hh * 2 + 4, hh + 2); x.fillStyle = '#6b4c16'; x.fill();
-    rr(cx, vy, hl * 2, hh * 2, hh);
-    let g = x.createLinearGradient(0, vy - hh, 0, vy + hh);
-    g.addColorStop(0, '#e9eeb0'); g.addColorStop(.5, '#b9c46a'); g.addColorStop(1, '#7f8a3a');
-    x.fillStyle = g; x.fill();
+    rr(cx, vy, hl * 2, hh * 2, hh); x.fillStyle = mix(62); x.fill();
+    x.strokeStyle = INK; x.lineWidth = 1.5; x.stroke();
     const wob = Kit.calm ? 0 : (1 - S.rev) * .12 * Math.sin(T * 1.3);
     const bx = cx + cl(S.bub + wob, -.75, .75) * (hl - hh * 1.3);
-    x.fillStyle = 'rgba(255,253,235,.92)'; x.beginPath(); x.ellipse(bx, vy - hh * .1, hh * 1.25, hh * .62, 0, 0, 6.283); x.fill();
-    x.fillStyle = '#fff'; x.beginPath(); x.ellipse(bx - hh * .4, vy - hh * .35, hh * .4, hh * .18, 0, 0, 6.283); x.fill();
-    x.strokeStyle = 'rgba(58,42,16,.75)'; x.lineWidth = 1;
+    x.fillStyle = mix(100); x.beginPath(); x.ellipse(bx, vy, hh * 1.2, hh * .58, 0, 0, 6.283); x.fill();
+    x.strokeStyle = INK; x.lineWidth = 1.2;
     for (const sx of [-1, 1]) { x.beginPath(); x.moveTo(cx + sx * hh * 1.6, vy - hh); x.lineTo(cx + sx * hh * 1.6, vy + hh); x.stroke(); }
   }
   function drawDial() {
@@ -281,71 +248,43 @@
     x.save(); x.globalAlpha = cl(k, 0, 1); x.translate(0, (1 - k) * fs * 4);
     const dp = (r, b) => { x.beginPath(); x.arc(cx, cy, r, Math.PI, 0); x.lineTo(cx + r, cy + b); x.lineTo(cx - r, cy + b); x.closePath(); };
     const Ro = R * 1.07, bo = fs * 1.15;
-    x.save(); x.shadowColor = 'rgba(0,0,0,.55)'; x.shadowBlur = fs * 1.6; x.shadowOffsetY = fs * .5;
-    let g = x.createLinearGradient(cx - Ro, cy - Ro, cx + Ro, cy + bo);
-    g.addColorStop(0, '#f7e2a0'); g.addColorStop(.3, '#c99a3c'); g.addColorStop(.55, '#8a6420'); g.addColorStop(.8, '#e4bf68'); g.addColorStop(1, '#9a7228');
-    x.fillStyle = g; dp(Ro, bo); x.fill(); x.restore();
-    dp(R * .995, fs * 1.0); x.fillStyle = '#4e3810'; x.fill();
-    const Rf = R * .97, bf = fs * .92;
-    g = x.createRadialGradient(cx, cy - R * .45, R * .05, cx, cy - R * .2, R * 1.1);
-    g.addColorStop(0, '#f8ecc6'); g.addColorStop(.6, '#e3c98a'); g.addColorStop(1, '#b8964f');
-    dp(Rf, bf); x.fillStyle = g; x.fill();
-    // guilloché rings
-    x.save(); dp(Rf, bf); x.clip(); x.strokeStyle = 'rgba(90,62,18,.09)'; x.lineWidth = .7;
-    for (let r = fs * 1.2; r < Rf; r += 3.2) { x.beginPath(); x.arc(cx, cy, r, Math.PI, 0); x.stroke(); }
-    x.restore();
+    // the paper protractor
+    x.fillStyle = mix(92); dp(Ro, bo); x.fill();
     // down and up zones
-    x.lineWidth = R * .045;
-    x.strokeStyle = 'rgba(47,104,118,.6)'; x.beginPath(); x.arc(cx, cy, R * .875, dAng(-15), dAng(0)); x.stroke();
-    x.strokeStyle = 'rgba(166,60,40,.6)'; x.beginPath(); x.arc(cx, cy, R * .875, dAng(0), dAng(15)); x.stroke();
-    // engraved ticks
-    x.strokeStyle = '#3a2a10'; x.lineCap = 'round';
+    x.lineWidth = R * .06; x.lineCap = 'butt';
+    x.strokeStyle = AMBER; x.beginPath(); x.arc(cx, cy, R * .875, dAng(-15), dAng(0)); x.stroke();
+    x.strokeStyle = RUST; x.beginPath(); x.arc(cx, cy, R * .875, dAng(0), dAng(15)); x.stroke();
+    // the scale
+    x.strokeStyle = INK; x.lineCap = 'round';
     for (let s = -15; s <= 15; s++) {
       const a = dAng(s), maj = s % 5 === 0, r0 = maj ? R * .75 : R * .81, r1 = R * .9;
       x.lineWidth = maj ? 2 : 1; x.beginPath(); x.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); x.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); x.stroke();
     }
     // numerals, as many as the dial has room for
-    x.font = `700 ${fs}px ${MONO}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#3a2a10';
+    x.font = `600 ${fs}px ${BODY}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = INK;
     const rN = R * .73 - fs * .6;
     const nums = big ? [-15, -10, -5, 0, 5, 10, 15] : mid ? [-10, 0, 10] : [];
     for (const s of nums) { const a = dAng(s); x.fillText(String(Math.abs(s)), cx + Math.cos(a) * rN, cy + Math.sin(a) * rN); }
     if (big) vial(cx, cy, R);
-    x.font = `700 ${fs}px ${MONO}`;
-    const hr = fs * .8, wx = roomy ? R * .56 : (hr + Rf) / 2;
-    x.fillStyle = '#2a5e6b'; x.fillText(big ? 'DOWNHILL' : 'DOWN', cx - wx, cy + fs * .5);
-    x.fillStyle = '#93331f'; x.fillText(big ? 'UPHILL' : 'UP', cx + wx, cy + fs * .5);
-    // screws
-    if (big) for (const sx of [-1, 1]) {
-      const px = cx + sx * R * .88, py = cy + fs * .42, r = Math.max(2.5, fs * .3);
-      g = x.createRadialGradient(px - r * .3, py - r * .3, 0, px, py, r); g.addColorStop(0, '#f5dc98'); g.addColorStop(1, '#7a5718');
-      x.fillStyle = g; x.beginPath(); x.arc(px, py, r, 0, 6.283); x.fill();
-      x.strokeStyle = '#3a2a10'; x.lineWidth = 1; x.beginPath(); x.moveTo(px - r * .7, py + r * .3 * sx); x.lineTo(px + r * .7, py - r * .3 * sx); x.stroke();
-    }
+    x.font = `600 ${fs}px ${BODY}`;
+    const hr = fs * .8, Rf = R * .97, wx = roomy ? R * .56 : (hr + Rf) / 2;
+    x.fillStyle = AMBER_D; x.fillText(big ? 'Downhill' : 'Down', cx - wx, cy + fs * .5);
+    x.fillStyle = RUST_D; x.fillText(big ? 'Uphill' : 'Up', cx + wx, cy + fs * .5);
     if (S.phase === 'reveal' && S.guess !== null) needle(S.guess, true);
     needle(na, false);
     // hub
-    g = x.createRadialGradient(cx - hr * .3, cy - hr * .3, 0, cx, cy, hr); g.addColorStop(0, '#fff0c0'); g.addColorStop(.5, '#d0a248'); g.addColorStop(1, '#6e4e14');
-    x.fillStyle = g; x.beginPath(); x.arc(cx, cy, hr, 0, 6.283); x.fill();
-    x.fillStyle = '#2a1e0a'; x.beginPath(); x.arc(cx, cy, hr * .28, 0, 6.283); x.fill();
-    // glass glare
-    x.save(); dp(Rf, bf); x.clip();
-    g = x.createLinearGradient(cx - R, cy - R, cx, cy);
-    g.addColorStop(0, 'rgba(255,255,255,.32)'); g.addColorStop(.45, 'rgba(255,255,255,.06)'); g.addColorStop(.5, 'rgba(255,255,255,0)');
-    x.fillStyle = g; x.beginPath(); x.ellipse(cx - R * .3, cy - R * .55, R * .75, R * .4, -.5, 0, 6.283); x.fill();
-    x.restore();
-    // engraved readout plate
+    x.fillStyle = INK; x.beginPath(); x.arc(cx, cy, hr, 0, 6.283); x.fill();
+    x.fillStyle = mix(92); x.beginPath(); x.arc(cx, cy, hr * .3, 0, 6.283); x.fill();
+    // the reading, printed under the gauge
     let txt;
-    if (S.phase === 'guess') txt = S.touched ? fmt(nt) : 'DRAG THE NEEDLE';
-    else if (S.phase === 'roll' || S.rot > 3) txt = 'YOUR GUESS ' + fmt(S.guess);
-    else txt = `TRUE ${fmt(-3)} · YOU ${fmt(S.guess)}`;
-    x.font = `700 ${fs}px ${MONO}`;
-    if (x.measureText(txt).width + fs * 2 > W - 8 && S.phase === 'reveal') txt = `TRUE −3° · YOU ${fmtS(S.guess)}`;
-    const tw = Math.min(W - 4, x.measureText(txt).width + fs * 2), py = cy + fs * 2.0;
-    rr(cx, py, tw, fs * 1.55, fs * .4);
-    g = x.createLinearGradient(0, py - fs, 0, py + fs); g.addColorStop(0, '#3a2c12'); g.addColorStop(1, '#211809');
-    x.fillStyle = g; x.fill(); x.strokeStyle = '#c99a3c'; x.lineWidth = 1.2; x.stroke();
+    if (S.phase === 'guess') txt = S.touched ? fmt(nt) : 'Drag the needle';
+    else if (S.phase === 'roll' || S.rot > 3) txt = 'Your guess ' + fmt(S.guess);
+    else txt = `True ${fmt(-3)} · you ${fmt(S.guess)}`;
+    x.font = `600 ${fs}px ${BODY}`;
+    if (x.measureText(txt).width + fs * 2 > W - 8 && S.phase === 'reveal') txt = `True −3° · you ${fmtS(S.guess)}`;
+    const py = cy + fs * 2.0;
     x.globalAlpha = cl(k, 0, 1) * (S.phase === 'guess' && !S.touched && !Kit.calm ? .65 + .35 * Math.sin(T * 4) : 1);
-    x.fillStyle = '#f3e1a6'; x.textBaseline = 'middle'; x.fillText(txt, cx, py + 1);
+    x.fillStyle = mix(90); x.textBaseline = 'middle'; x.fillText(txt, cx, py + 1);
     x.restore();
   }
 

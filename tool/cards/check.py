@@ -72,7 +72,7 @@ KEY_ORDER = [
     "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
     "answer", "move", "ask", "end", "both", "trap", "hint", "steps", "simply", "counterpoint",
-    *TAG_KEYS, "place", "builds_on", "figure", "diagram", "scene", "web",
+    *TAG_KEYS, "traits", "place", "builds_on", "figure", "diagram", "scene", "web",
     "source", "source_kind", "reference", "quote", "written", "checked", "disabled",
 ]
 

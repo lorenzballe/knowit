@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: maths-hakens-knot-scanner -->
-<!-- Look: a thermal camera on a night-black card: the knot glows in ironbow false colour, a hot scan line sweeps it, HUD readouts in mono.
+<!-- Look: a page from a maths book on a night-dark card: the knot is drawn as a plain knot diagram, with a gap at every under-crossing. A ruled line moves down it, and the part already checked turns amber.
      Interaction: drag the dial to feed bigger knots. The scan crawls slower, and a d3 chart of run time keeps rescaling, so every bigger knot dwarfs all before it.
-     Wow: past the line the age of the universe drops into the chart, the frame whites out, and the scan freezes at 0.000000%. -->
+     Wow: past the line the age of the universe drops into the chart, the frame whites out, a rubber stamp lands, and the scan freezes at 0.000000%. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Haken's knot scanner</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -14,7 +14,7 @@
 #knot{flex:1.35 1 0;min-height:0;width:100%;display:block}
 #chart{flex:1 1 0;min-height:0;width:100%;display:block}
 #dial{flex:0 0 max(6.4cqh,44px);width:100%;display:block}
-#chart text,#dial text{font-family:var(--mono);fill:var(--k)}
+#chart text,#dial text{font-family:var(--body);fill:var(--k)}
 #why .body{font:500 max(1.95cqh,13px)/1.35 var(--body);color:var(--k);margin:0}
 .say b{color:#fcc22e}
 .answered .q{font-size:max(2.4cqh,15px)}
@@ -25,7 +25,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">HAKEN 1961</span></div>
     <h2 class="q">What was the first algorithm to tell any knot from the unknot?</h2>
     <div class="stagebox" id="stage" data-drag>
-      <canvas id="knot" role="img" aria-label="A knot glowing on a thermal camera while a scan line sweeps across it."></canvas>
+      <canvas id="knot" role="img" aria-label="A knot diagram with a scan line moving down across it."></canvas>
       <svg id="chart" role="img" aria-label="A chart: the answer is always sure, while the time to run explodes as knots get bigger."></svg>
       <svg id="dial" role="slider" aria-label="Knot size"></svg>
     </div>
@@ -39,13 +39,9 @@
 <script>
 (() => {
   const card = Kit.$('card'), cv = Kit.$('knot'), chart = Kit.$('chart'), dial = Kit.$('dial'), stage = Kit.$('stage');
-  const GROUND = '#0c0716', INK = '#f6efe6';
-  // Ironbow: the thermal camera's false colour, cold to white-hot.
-  const STOPS = [0, .15, .32, .5, .66, .82, 1];
-  const COLS = ['#07040d', '#2c0c62', '#7d1592', '#d42d4c', '#f46c12', '#fcc22e', '#fffbea'];
-  const hs = d3.scaleLinear().domain(STOPS).range(COLS).clamp(true);
-  const LUT = d3.range(256).map(i => { const c = d3.rgb(hs(i / 255)); return [c.r | 0, c.g | 0, c.b | 0]; });
-  const hc = (v, a = 1) => { const c = LUT[Math.max(0, Math.min(255, Math.round(v * 255)))]; return `rgba(${c[0]},${c[1]},${c[2]},${a})`; };
+  const GROUND = '#0c0716', INK = '#f6efe6', AMBER = '#fcc22e';
+  const mix = d3.interpolateRgb(GROUND, INK);
+  const MUTE = mix(.62), SOFT = mix(.38);
 
   // Knots to feed in: torus knots, sorted by how many crossings they have.
   const gcd = (a, b) => b ? gcd(b, a % b) : a;
@@ -64,7 +60,7 @@
   const S = {l: 0};
   let idx = 0, K = KN[0], P = [], ORDER = [], scan = 0, solved = false, revealed = false, touched = false;
   const intro = {d: 1}, surge = {v: 0}, pop = {s: 1}, stamp = {v: 0}, flash = {v: 0};
-  let CV = null, fs = 12, MONO = 'monospace', looping = false, nudge = null, hudW = 120;
+  let CV = null, fs = 12, BODY = 'sans-serif', DISPLAY = 'serif', looping = false, nudge = null, hudW = 120;
 
   function geom() {
     const {p, q} = K, N = Math.round(Math.min(1500, 300 + K.c * 24));
@@ -76,113 +72,81 @@
     ORDER = d3.range(N).sort((a, b) => (P[a][2] + P[a + 1][2]) - (P[b][2] + P[b + 1][2]));
   }
 
-  // widest HUD readout, so the knot can grow tall between the two HUD columns
+  // widest caption, so the knot can grow tall between the two caption columns
   function measureHud() {
     const c = CV.x; let w = 0;
-    c.font = `700 ${fs}px ${MONO}`;
-    for (const t of ['HAKEN · 1961', "THE UNIVERSE'S AGE", 'NOT THE UNKNOT ✓', 'A SURE YES OR NO']) w = Math.max(w, c.measureText(t).width);
-    c.font = `500 ${fs}px ${MONO}`;
-    for (const t of ['130+ PAGE PAPER', 'ETA: LONGER THAN', 'CROSSINGS']) w = Math.max(w, c.measureText(t).width);
-    c.font = `800 ${fs * 1.45}px ${MONO}`; w = Math.max(w, c.measureText('0.000000%').width);
+    c.font = `600 ${fs}px ${BODY}`;
+    for (const t of ['Haken · 1961', "the universe's age", 'Not the unknot ✓', 'A sure yes or no', '130+ page paper', 'ETA: longer than', 'Crossings']) w = Math.max(w, c.measureText(t).width);
+    c.font = `600 ${fs * 1.45}px ${DISPLAY}`; w = Math.max(w, c.measureText('0.000000%').width);
     hudW = w;
   }
 
-  // ---------- the thermal view ----------
+  // ---------- the knot diagram ----------
   function drawKnot() {
     if (!CV) return;
     const {x: c, W, H} = CV;
     c.clearRect(0, 0, W, H);
-    // two ways to fit: tall between the HUD columns, or wide between the HUD rows. Take the bigger.
+    // two ways to fit: tall between the caption columns, or wide between the caption rows. Take the bigger.
     const optA = Math.min(H - fs * .6, W - 2 * (hudW + 16));
     const optB = Math.min(W * .94, H - 2 * fs * 3.5);
     const box = Math.max(40, optA, optB);
     const s = Math.max(6, box / 6.7) * pop.s, cx = W / 2, cy = H / 2;
-    const lh = idx / (n - 1);
 
-    // heat haze around the subject
-    let g = c.createRadialGradient(cx, cy, s * .4, cx, cy, s * 3.7);
-    g.addColorStop(0, hc(.35 + .35 * lh, .2 + .22 * surge.v)); g.addColorStop(1, hc(.2, 0));
-    c.fillStyle = g; c.beginPath(); c.arc(cx, cy, s * 3.7, 0, 7); c.fill();
-
-    const y0 = cy - 3.15 * s, y1 = cy + 3.15 * s, sy = y0 + (y1 - y0) * scan, band = Math.max(7, s * .38);
-    const lw = Math.max(1.3, Math.min(7, s * .95 / (K.p + K.q)));
-    const N = P.length - 1, lim = N * intro.d, tube = lw > 2.2;
+    const y0 = cy - 3.15 * s, y1 = cy + 3.15 * s, sy = y0 + (y1 - y0) * scan;
+    const lw = Math.max(1.6, Math.min(7, s * .95 / (K.p + K.q)));
+    const N = P.length - 1, lim = N * intro.d, live = intro.d >= .999;
+    // over-crossings are drawn last, with a gap cut in the strand beneath
     for (const i of ORDER) {
       if (i > lim) continue;
       const a = P[i], b = P[i + 1];
       const ax = cx + a[0] * s, ay = cy + a[1] * s, bx = cx + b[0] * s, by = cy + b[1] * s;
-      const my = (ay + by) / 2, d = (my - sy) / band, boost = Math.exp(-d * d), z = (a[2] + b[2]) / 4 + .5;
-      const h = .2 + .42 * lh + .2 * z + .45 * boost + (my < sy ? .07 : 0) + .3 * surge.v;
+      const checked = live && (ay + by) / 2 < sy;
       c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by);
       c.strokeStyle = GROUND; c.lineWidth = lw + 3.4; c.lineCap = 'butt'; c.stroke();
-      c.strokeStyle = hc(h); c.lineWidth = lw; c.lineCap = 'round'; c.stroke();
-      if (tube) { c.strokeStyle = hc(Math.min(1, h + .3), .5 + .3 * z); c.lineWidth = lw * .34; c.stroke(); }
+      c.strokeStyle = checked ? AMBER : INK; c.lineWidth = lw; c.lineCap = 'round'; c.stroke();
     }
 
     // the scan line
     const xl = cx - 3.35 * s, xr = cx + 3.35 * s;
-    if (intro.d >= .999) {
-      c.globalCompositeOperation = 'lighter';
-      g = c.createLinearGradient(0, sy - band * 1.6, 0, sy + band * 1.6);
-      g.addColorStop(0, hc(.6, 0)); g.addColorStop(.5, hc(.75, .26)); g.addColorStop(1, hc(.6, 0));
-      c.fillStyle = g; c.fillRect(xl, sy - band * 1.6, xr - xl, band * 3.2);
-      c.globalCompositeOperation = 'source-over';
-      c.strokeStyle = hc(.95, .9); c.lineWidth = 1.2;
+    if (live) {
+      c.strokeStyle = INK; c.lineWidth = 1.5; c.lineCap = 'butt';
       c.beginPath(); c.moveTo(xl, sy); c.lineTo(xr, sy); c.stroke();
-      c.fillStyle = hc(1); c.beginPath(); c.moveTo(xl - 7, sy - 4); c.lineTo(xl - 1, sy); c.lineTo(xl - 7, sy + 4); c.fill();
+      c.fillStyle = INK; c.beginPath(); c.moveTo(xl - 8, sy - 5); c.lineTo(xl - 1, sy); c.lineTo(xl - 8, sy + 5); c.closePath(); c.fill();
     }
 
-    // sensor grain
-    for (let k = 0; k < 40; k++) {
-      const r = Math.sqrt(Math.random()) * s * 3.4, a = Math.random() * 6.283;
-      c.fillStyle = hc(.55 + Math.random() * .3, .1 + Math.random() * .18);
-      c.fillRect(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 1.5, 1.5);
-    }
+    // the frame whites out at the reveal
+    if (flash.v > .001) { c.fillStyle = `rgba(246,239,230,${flash.v})`; c.fillRect(0, 0, W, H); }
 
-    // viewfinder brackets and centre mark
-    const bl = s * .5, bx0 = Math.max(4, xl), bx1 = Math.min(W - 4, xr), by0 = Math.max(2, cy - 3.35 * s), by1 = Math.min(H - 2, cy + 3.35 * s);
-    c.strokeStyle = 'rgba(246,239,230,.55)'; c.lineWidth = 1.5; c.lineCap = 'square';
-    c.beginPath();
-    [[bx0, by0, 1, 1], [bx1, by0, -1, 1], [bx0, by1, 1, -1], [bx1, by1, -1, -1]].forEach(([x, y, sx, sy2]) => { c.moveTo(x, y + sy2 * bl); c.lineTo(x, y); c.lineTo(x + sx * bl, y); });
-    c.moveTo(cx - 5, cy); c.lineTo(cx + 5, cy); c.moveTo(cx, cy - 5); c.lineTo(cx, cy + 5);
-    c.stroke();
-
-    // flash at the reveal
-    if (flash.v > .001) {
-      g = c.createRadialGradient(cx, cy, 0, cx, cy, s * 4.2);
-      g.addColorStop(0, `rgba(255,251,234,${flash.v})`); g.addColorStop(.6, hc(.8, flash.v * .6)); g.addColorStop(1, hc(.6, 0));
-      c.fillStyle = g; c.beginPath(); c.arc(cx, cy, s * 4.2, 0, 7); c.fill();
-    }
-
-    // HUD readouts
-    c.textBaseline = 'alphabetic'; c.fillStyle = INK;
-    c.textAlign = 'left';
-    c.font = `700 ${fs}px ${MONO}`; c.fillText('HAKEN · 1961', 2, fs * 1.1);
-    c.globalAlpha = .72; c.font = `500 ${fs}px ${MONO}`; c.fillText('130+ PAGE PAPER', 2, fs * 2.5); c.globalAlpha = 1;
-    c.textAlign = 'right';
-    c.globalAlpha = .72; c.fillText('CROSSINGS', W - 2, fs * 1.1); c.globalAlpha = 1;
-    c.font = `800 ${fs * 1.7}px ${MONO}`; c.fillStyle = hc(.6 + .4 * lh); c.fillText(String(K.c), W - 2, fs * 3.05);
-
+    // captions
+    const LF = `600 ${fs}px ${BODY}`;
     const frozen = K.c >= CU;
-    c.textAlign = 'left'; c.fillStyle = INK;
-    c.globalAlpha = .72; c.font = `500 ${fs}px ${MONO}`; c.fillText('SCAN', 2, H - fs * 2.25); c.globalAlpha = 1;
-    c.font = `800 ${fs * 1.45}px ${MONO}`; c.fillStyle = frozen ? hc(.9) : INK;
-    c.fillText((scan * 100).toFixed(frozen ? 6 : 1) + '%', 2, H - fs * .35);
-    const v = frozen ? ['ETA: LONGER THAN', "THE UNIVERSE'S AGE"] : solved ? ['VERDICT:', 'NOT THE UNKNOT ✓'] : ['SCANNING…', 'A SURE YES OR NO'];
+    c.textBaseline = 'alphabetic';
+    c.textAlign = 'left'; c.font = LF;
+    c.fillStyle = INK; c.fillText('Haken · 1961', 2, fs * 1.1);
+    c.fillStyle = MUTE; c.fillText('130+ page paper', 2, fs * 2.5);
     c.textAlign = 'right';
-    c.globalAlpha = .72; c.fillStyle = INK; c.font = `500 ${fs}px ${MONO}`; c.fillText(v[0], W - 2, H - fs * 1.8); c.globalAlpha = 1;
-    c.font = `700 ${fs}px ${MONO}`; c.fillStyle = frozen ? hc(.88) : solved ? hc(.95) : INK; c.fillText(v[1], W - 2, H - fs * .35);
+    c.fillStyle = MUTE; c.fillText('Crossings', W - 2, fs * 1.1);
+    c.font = `600 ${fs * 1.7}px ${DISPLAY}`; c.fillStyle = frozen ? AMBER : INK; c.fillText(String(K.c), W - 2, fs * 3.05);
 
-    // the stamp
+    c.textAlign = 'left'; c.font = LF;
+    c.fillStyle = MUTE; c.fillText('Scan', 2, H - fs * 2.25);
+    c.font = `600 ${fs * 1.45}px ${DISPLAY}`; c.fillStyle = frozen ? AMBER : INK;
+    c.fillText((scan * 100).toFixed(frozen ? 6 : 1) + '%', 2, H - fs * .35);
+    const v = frozen ? ['ETA: longer than', "the universe's age"] : solved ? ['Verdict:', 'Not the unknot ✓'] : ['Scanning…', 'A sure yes or no'];
+    c.textAlign = 'right'; c.font = LF;
+    c.fillStyle = MUTE; c.fillText(v[0], W - 2, H - fs * 1.8);
+    c.fillStyle = frozen || solved ? AMBER : INK; c.fillText(v[1], W - 2, H - fs * .35);
+
+    // the rubber stamp
     if (stamp.v > .01) {
       const a = Math.min(1, stamp.v), sc = .8 + .2 * stamp.v, f2 = fs * 1.2;
-      c.save(); c.globalAlpha = a; c.translate(cx, cy); c.scale(sc, sc);
-      c.font = `800 ${f2}px ${MONO}`; c.textAlign = 'center';
-      const l1 = 'LONGER THAN THE', l2 = 'AGE OF THE UNIVERSE';
+      c.save(); c.globalAlpha = a; c.translate(cx, cy); c.rotate(-.07); c.scale(sc, sc);
+      c.font = `700 ${f2}px ${BODY}`; c.textAlign = 'center';
+      const l1 = 'Longer than the', l2 = 'age of the universe';
       const w = Math.max(c.measureText(l1).width, c.measureText(l2).width) + f2 * 1.4, h = f2 * 3.4;
-      c.fillStyle = 'rgba(12,7,22,.9)'; c.strokeStyle = hc(.85); c.lineWidth = 1.6;
-      c.beginPath(); if (c.roundRect) c.roundRect(-w / 2, -h / 2, w, h, 6); else c.rect(-w / 2, -h / 2, w, h); c.fill(); c.stroke();
-      c.fillStyle = hc(.92); c.fillText(l1, 0, -f2 * .2); c.fillStyle = INK; c.fillText(l2, 0, f2 * 1.15);
+      c.fillStyle = GROUND; c.strokeStyle = AMBER; c.lineWidth = 2.5;
+      c.beginPath(); c.rect(-w / 2, -h / 2, w, h); c.fill(); c.stroke();
+      c.fillStyle = AMBER; c.fillText(l1, 0, -f2 * .2); c.fillText(l2, 0, f2 * 1.15);
       c.restore();
     }
   }
@@ -198,40 +162,33 @@
     const B = CH - mb;
     xS = d3.scaleLinear([3, CMAX], [ml, CW - mr]); yS = d3.scaleLinear([0, domFor(K.c)], [B, mt]);
     const defs = Kit.mk('defs', {}, chart);
-    const lg = Kit.mk('linearGradient', {id: 'hg', gradientUnits: 'userSpaceOnUse', x1: 0, x2: 0, y1: B, y2: mt}, defs);
-    STOPS.forEach((s, i) => Kit.mk('stop', {offset: s, 'stop-color': COLS[i], 'stop-opacity': i ? .92 : 0}, lg));
-    const fl = Kit.mk('filter', {id: 'gl', x: '-100%', y: '-100%', width: '300%', height: '300%'}, defs);
-    Kit.mk('feGaussianBlur', {stdDeviation: 3.5}, fl);
     const cp = Kit.mk('clipPath', {id: 'cc'}, defs);
     clipR = Kit.mk('rect', {x: ml, y: mt - 16, width: CW - ml - mr + 14, height: B - mt + 16}, cp);
 
     // the sure line: it never moves
-    const t1 = Kit.mk('text', {x: ml, y: cfs * 1.15, 'font-size': cfs, 'font-weight': 700}, chart); t1.textContent = 'SURE OF THE ANSWER';
-    const t2 = Kit.mk('text', {x: CW - mr, y: cfs * 1.15, 'font-size': cfs, 'font-weight': 800, 'text-anchor': 'end', style: 'fill:#fffbea'}, chart); t2.textContent = '100%';
+    const t1 = Kit.mk('text', {x: ml, y: cfs * 1.15, 'font-size': cfs, 'font-weight': 600}, chart); t1.textContent = 'Sure of the answer';
+    const t2 = Kit.mk('text', {x: CW - mr, y: cfs * 1.15, 'font-size': cfs, 'font-weight': 700, 'text-anchor': 'end'}, chart); t2.textContent = '100%';
     const a0 = ml + t1.getComputedTextLength() + 8, a1 = CW - mr - t2.getComputedTextLength() - 8;
-    if (a1 > a0) Kit.mk('line', {x1: a0, x2: a1, y1: cfs * .75, y2: cfs * .75, stroke: '#fffbea', 'stroke-width': 2, 'stroke-dasharray': '1 4', 'stroke-linecap': 'round'}, chart);
+    if (a1 > a0) Kit.mk('line', {x1: a0, x2: a1, y1: cfs * .75, y2: cfs * .75, stroke: INK, 'stroke-width': 1.6}, chart);
 
-    for (const k of [.25, .5, .75]) Kit.mk('line', {x1: ml, x2: CW - mr, y1: B - (B - mt) * k, y2: B - (B - mt) * k, stroke: INK, 'stroke-opacity': .1, 'stroke-dasharray': '2 5'}, chart);
-    Kit.mk('line', {x1: ml, x2: CW - mr, y1: B, y2: B, stroke: INK, 'stroke-opacity': .5, 'stroke-width': 1.2}, chart);
-    Kit.mk('line', {x1: ml, x2: ml, y1: mt, y2: B, stroke: INK, 'stroke-opacity': .5, 'stroke-width': 1.2}, chart);
-    KN.forEach((k, i) => Kit.mk('line', {x1: xS(k.c), x2: xS(k.c), y1: B, y2: B + 4, stroke: i === UI ? '#fcc22e' : INK, 'stroke-opacity': i === UI ? 1 : .45}, chart));
-    const yl = Kit.mk('text', {x: 0, y: 0, 'font-size': cfs, 'font-weight': 600, 'text-anchor': 'middle', opacity: .78, transform: `translate(${cfs * 1.05},${(mt + B) / 2}) rotate(-90)`}, chart);
-    yl.textContent = 'TIME TO RUN →'; if (yl.getComputedTextLength() > B - mt) yl.textContent = 'TIME →';
+    Kit.mk('line', {x1: ml, x2: CW - mr, y1: B, y2: B, stroke: MUTE, 'stroke-width': 1.4}, chart);
+    Kit.mk('line', {x1: ml, x2: ml, y1: mt, y2: B, stroke: MUTE, 'stroke-width': 1.4}, chart);
+    Kit.mk('line', {x1: xS(CU), x2: xS(CU), y1: B, y2: B + 5, stroke: AMBER, 'stroke-width': 2}, chart);
+    const yl = Kit.mk('text', {x: 0, y: 0, 'font-size': cfs, 'font-weight': 600, 'text-anchor': 'middle', style: `fill:${MUTE}`, transform: `translate(${cfs * 1.05},${(mt + B) / 2}) rotate(-90)`}, chart);
+    yl.textContent = 'Time to run →'; if (yl.getComputedTextLength() > B - mt) yl.textContent = 'Time →';
     if (yl.getComputedTextLength() > B - mt) yl.textContent = '';
-    const xl = Kit.mk('text', {x: CW - mr, y: CH - cfs * .2, 'font-size': cfs, 'font-weight': 600, 'text-anchor': 'end', opacity: .78}, chart); xl.textContent = 'BIGGER KNOTS →';
+    const xl = Kit.mk('text', {x: CW - mr, y: CH - cfs * .2, 'font-size': cfs, 'font-weight': 600, 'text-anchor': 'end', style: `fill:${MUTE}`}, chart); xl.textContent = 'Bigger knots →';
 
     const g = Kit.mk('g', {'clip-path': 'url(#cc)'}, chart);
-    areaP = Kit.mk('path', {fill: 'url(#hg)'}, g);
-    lineP = Kit.mk('path', {fill: 'none', stroke: '#fcc22e', 'stroke-width': 2.2, 'stroke-linejoin': 'round'}, g);
-    uniL = Kit.mk('line', {x1: ml, x2: CW - mr, y1: -999, y2: -999, stroke: '#fffbea', 'stroke-width': 1.6, 'stroke-dasharray': '7 4'}, g);
-    uniT = Kit.mk('text', {x: ml + 6, y: -999, 'font-size': cfs, 'font-weight': 800, style: 'fill:#fffbea'}, g);
-    uniT.textContent = 'AGE OF THE UNIVERSE';
-    if (uniT.getComputedTextLength() > xS(CU) - ml - 18) uniT.textContent = 'UNIVERSE AGE';
-    dropL = Kit.mk('line', {x1: ml, x2: ml, y1: B, y2: B, stroke: '#fcc22e', 'stroke-opacity': .55, 'stroke-dasharray': '2 3'}, g);
+    areaP = Kit.mk('path', {style: 'fill:color-mix(in srgb, #fcc22e 26%, var(--c))'}, g);
+    lineP = Kit.mk('path', {fill: 'none', stroke: AMBER, 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, g);
+    uniL = Kit.mk('line', {x1: ml, x2: CW - mr, y1: -999, y2: -999, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '7 4'}, g);
+    uniT = Kit.mk('text', {x: ml + 6, y: -999, 'font-size': cfs, 'font-weight': 700}, g);
+    uniT.textContent = 'Age of the universe';
+    if (uniT.getComputedTextLength() > xS(CU) - ml - 18) uniT.textContent = 'Universe age';
+    dropL = Kit.mk('line', {x1: ml, x2: ml, y1: B, y2: B, stroke: SOFT, 'stroke-width': 1.2}, g);
     dotG = Kit.mk('g', {}, g);
-    const halo = Kit.mk('circle', {r: 9, fill: '#fcc22e', opacity: .55, filter: 'url(#gl)'}, dotG);
-    Kit.mk('circle', {r: 4.2, fill: '#fffbea'}, dotG);
-    if (!Kit.calm) gsap.to(halo, {attr: {r: 13}, opacity: .3, duration: .9, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+    Kit.mk('circle', {r: 5, fill: AMBER, stroke: GROUND, 'stroke-width': 2}, dotG);
     renderChart(0);
   }
   function renderChart(ms) {
@@ -251,33 +208,26 @@
   }
 
   // ---------- the dial ----------
-  let DW, DH, pad = 20, ty, thumbG, thumbIn, ring, glow, num;
+  let DW, DH, pad = 20, ty, thumbG, thumbIn, ring, num;
   function buildDial() {
     dial.innerHTML = '';
     const f = Kit.fitSvg(dial); DW = f.W; DH = f.H;
     const tr = Math.max(13, Math.min(DH * .38, 17)); pad = tr + 3; ty = DH / 2;
-    const defs = Kit.mk('defs', {}, dial);
-    const lg = Kit.mk('linearGradient', {id: 'dg', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
-    STOPS.forEach((s, i) => Kit.mk('stop', {offset: s, 'stop-color': COLS[i]}, lg));
-    const fl = Kit.mk('filter', {id: 'dgl', x: '-100%', y: '-100%', width: '300%', height: '300%'}, defs);
-    Kit.mk('feGaussianBlur', {stdDeviation: 4}, fl);
-    Kit.mk('rect', {x: pad, y: ty - 2.5, width: DW - 2 * pad, height: 5, rx: 2.5, fill: 'url(#dg)'}, dial);
-    KN.forEach((k, i) => {
-      const x = pad + i / (n - 1) * (DW - 2 * pad);
-      Kit.mk('line', i === UI ? {x1: x, x2: x, y1: ty - tr * .95, y2: ty + tr * .95, stroke: '#fffbea', 'stroke-width': 1.6, 'stroke-dasharray': '2 2'} : {x1: x, x2: x, y1: ty - 9, y2: ty - 5, stroke: INK, 'stroke-opacity': .45}, dial);
-    });
+    const xu = pad + UI / (n - 1) * (DW - 2 * pad);
+    // the track: plain up to the line, amber where the run outlasts the universe
+    Kit.mk('line', {x1: pad, x2: xu, y1: ty, y2: ty, stroke: SOFT, 'stroke-width': 4, 'stroke-linecap': 'round'}, dial);
+    Kit.mk('line', {x1: xu, x2: DW - pad, y1: ty, y2: ty, stroke: AMBER, 'stroke-width': 4, 'stroke-linecap': 'round'}, dial);
+    Kit.mk('line', {x1: xu, x2: xu, y1: ty - tr * .9, y2: ty + tr * .9, stroke: AMBER, 'stroke-width': 2}, dial);
     thumbG = Kit.mk('g', {}, dial);
     thumbIn = Kit.mk('g', {}, thumbG);
-    glow = Kit.mk('circle', {r: tr, fill: 'none', 'stroke-width': 5, filter: 'url(#dgl)'}, thumbIn);
-    ring = Kit.mk('circle', {r: tr, fill: GROUND, 'stroke-width': 3}, thumbIn);
-    num = Kit.mk('text', {'font-size': 12, 'font-weight': 800, 'text-anchor': 'middle', dy: '.36em'}, thumbIn);
+    ring = Kit.mk('circle', {r: tr, fill: INK, stroke: GROUND, 'stroke-width': 2}, thumbIn);
+    num = Kit.mk('text', {'font-size': 12, 'font-weight': 700, 'text-anchor': 'middle', dy: '.36em', style: `fill:${GROUND}`}, thumbIn);
     thumbLook(); placeThumb();
     if (!touched && !Kit.calm) startNudge();
   }
   function thumbLook() {
     if (!ring) return;
-    const col = hc(.45 + .55 * idx / (n - 1));
-    ring.setAttribute('stroke', col); glow.setAttribute('stroke', col); num.textContent = K.c;
+    ring.setAttribute('fill', idx >= UI ? AMBER : INK); num.textContent = K.c;
   }
   function placeThumb() { if (thumbG) thumbG.setAttribute('transform', `translate(${pad + S.l * (DW - 2 * pad)},${ty})`); }
   function startNudge() { if (nudge) nudge.kill(); nudge = gsap.to(thumbIn, {x: 7, duration: .55, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 1.6}); }
@@ -335,7 +285,9 @@
   }
 
   function layout() {
-    MONO = getComputedStyle(card).getPropertyValue('--mono').trim() || 'monospace';
+    const cs = getComputedStyle(card);
+    BODY = cs.getPropertyValue('--body').trim() || 'sans-serif';
+    DISPLAY = cs.getPropertyValue('--display').trim() || 'serif';
     CV = Kit.fitCanvas(cv);
     fs = Math.max(12, Math.min(14, CV.W / 27));
     measureHud();

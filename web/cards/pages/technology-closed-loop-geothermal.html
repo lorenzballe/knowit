@@ -9,7 +9,7 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #scene{flex:1;min-height:0;width:100%;display:block}
 #ctl{display:flex;flex-direction:column;align-items:center;gap:1cqh}
-#meter{font:600 max(1.7cqh,12px)/1.3 var(--mono);color:var(--k);text-align:center;margin:0}
+#meter{font:500 max(1.7cqh,12px)/1.3 var(--body);color:var(--k);text-align:center;margin:0}
 #meter b{font-weight:800}
 #hold{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.6cqh 8cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .15s}
 #hold.on{transform:scale(.95)}
@@ -43,7 +43,9 @@ const N = 24;
 const temps = Array.from({length: N}, (_, i) => i < N / 2 ? 0 : 0.6);
 const aq = Array.from({length: 40}, () => ({u: Kit.rnd(), v: 0.12 + Kit.rnd() * 0.76, s: 0.7 + Kit.rnd() * 0.6}));
 let G = null, base = 0, speed = 0, held = 0, travelled = 0, done = false, lastLaps = -1;
-const col = gsap.utils.interpolate('#4aa8ff', '#ff7a2f');
+const col = gsap.utils.interpolate('#1f5fc4', '#e2582a');
+const PAPER = '#f6f0e4', WARM = '#ef8a50';
+const mix = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
 
 Kit.onShow.card = () => {
   const svg = Kit.$('scene');
@@ -53,40 +55,42 @@ Kit.onShow.card = () => {
   const gy = H * 0.15, bh = H * 0.1, cx = W * 0.5, dx = Math.min(W * 0.08, H * 0.06);
   const xL = cx - dx, xR = cx + dx, yB = H * 0.9, r = dx;
   const aT = H * 0.33, aB = H * 0.5;
-  const defs = Kit.mk('defs', {}, svg);
-  // warm glow of the rock, fading into the card
-  const rg = Kit.mk('radialGradient', {id: 'glow', cx: 0.5, cy: 0.5, r: 0.5}, defs);
-  Kit.mk('stop', {offset: '0', 'stop-color': '#ff7a2f', 'stop-opacity': 0.85}, rg);
-  Kit.mk('stop', {offset: '0.6', 'stop-color': '#ff9a3f', 'stop-opacity': 0.4}, rg);
-  Kit.mk('stop', {offset: '1', 'stop-color': '#ffb050', 'stop-opacity': 0}, rg);
+  const x0 = W * 0.02, x1 = W * 0.98;
   const ge2 = Kit.mk('g', {}, svg);
   const g = Kit.mk('g', {}, svg);
-  // scene drawn right on the card: ground line, aquifer body, rock glow
-  Kit.mk('ellipse', {cx: cx, cy: yB - r * 0.5, rx: W * 0.42, ry: H * 0.17, fill: 'url(#glow)'}, ge2);
-  Kit.mk('rect', {x: W * 0.02, y: aT, width: W * 0.96, height: aB - aT, rx: (aB - aT) * 0.3, fill: '#1f5f8f'}, ge2);
-  Kit.mk('line', {x1: W * 0.02, y1: gy, x2: W * 0.98, y2: gy, stroke: '#10100c', 'stroke-width': 2.5, 'stroke-linecap': 'round'}, ge2);
-  // aquifer water
+  // cross-section of the ground: soil, water-bearing layer, rock
+  Kit.mk('rect', {x: x0, y: gy, width: x1 - x0, height: aT - gy, style: `fill:${mix(14)}`}, ge2);
+  Kit.mk('rect', {x: x0, y: aB, width: x1 - x0, height: H * 0.98 - aB, style: `fill:${mix(24)}`}, ge2);
+  // warm rock at depth, a flat lens of heat around the bottom of the loop
+  const wy = H * 0.68, wb = H * 0.98;
+  Kit.mk('path', {d: `M${x0},${wb} L${x0},${wy + H * 0.05} C${W * 0.2},${wy - H * 0.01} ${W * 0.32},${wy + H * 0.04} ${W * 0.5},${wy} S${W * 0.8},${wy + H * 0.035} ${x1},${wy + H * 0.02} L${x1},${wb} Z`, style: `fill:${WARM}`}, ge2);
+  // the aquifer, a band of water between soil and rock
+  Kit.mk('path', {d: `M${x0},${aT} C${W * 0.3},${aT - H * 0.012} ${W * 0.6},${aT + H * 0.012} ${x1},${aT} L${x1},${aB} C${W * 0.7},${aB + H * 0.012} ${W * 0.35},${aB - H * 0.012} ${x0},${aB} Z`, style: `fill:${mix(48)}`}, ge2);
+  // ground surface
+  Kit.mk('line', {x1: x0, y1: gy, x2: x1, y2: gy, 'stroke-width': 3, 'stroke-linecap': 'round', style: 'stroke:var(--k)'}, ge2);
+  // groundwater drifting through the layer: short flat streaks
   const aqG = Kit.mk('g', {}, ge2);
-  const aqDots = aq.map(() => Kit.mk('circle', {r: Math.max(2, H * 0.006), fill: '#9fd8ff', opacity: 0.85}, aqG));
-  // heat pump box
-  const box = Kit.mk('rect', {x: cx - W * 0.2, y: gy - bh, width: W * 0.4, height: bh, rx: bh * 0.2, fill: '#ffffff', stroke: '#10100c', 'stroke-width': 2}, g);
-  // pipe
+  const sw = Math.max(5, H * 0.016), sh = Math.max(1.5, H * 0.0045);
+  const aqDots = aq.map(() => Kit.mk('ellipse', {rx: sw, ry: sh, style: `fill:${mix(10)}`}, aqG));
+  // pipe: one plain sealed loop
   const d = `M${xL},${gy - bh * 0.55} L${xL},${yB - r} A${r},${r} 0 0 0 ${xR},${yB - r} L${xR},${gy - bh * 0.55} Z`;
   const pw = Math.max(8, dx * 0.55);
-  Kit.mk('path', {d, fill: 'none', stroke: '#1d2433', 'stroke-width': pw + 4, 'stroke-linejoin': 'round'}, g);
-  Kit.mk('path', {d, fill: 'none', stroke: '#e9edf2', 'stroke-width': pw, 'stroke-linejoin': 'round'}, g);
+  Kit.mk('path', {d, fill: 'none', 'stroke-width': pw + 5, 'stroke-linejoin': 'round', style: 'stroke:var(--k)'}, g);
+  Kit.mk('path', {d, fill: 'none', stroke: PAPER, 'stroke-width': pw, 'stroke-linejoin': 'round'}, g);
   const path = Kit.mk('path', {d, fill: 'none', stroke: 'none'}, g);
   const L = path.getTotalLength();
   const fl = Kit.mk('g', {}, g);
-  const dots = temps.map(() => Kit.mk('circle', {r: pw * 0.36, fill: '#4aa8ff'}, fl));
+  const dots = temps.map(() => Kit.mk('circle', {r: pw * 0.34, fill: '#1f5fc4'}, fl));
+  // heat pump box sits on top of the loop's ends
+  const box = Kit.mk('rect', {x: cx - W * 0.2, y: gy - bh, width: W * 0.4, height: bh, rx: bh * 0.12, fill: PAPER, 'stroke-width': 2.5, style: 'stroke:var(--k)'}, g);
   // labels
-  const T = (x, y, s, a, c) => { const t = Kit.mk('text', {x, y, 'text-anchor': a, fill: c, 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, g); t.textContent = s; return t; };
-  T(cx, gy - bh * 0.25, 'Heat pump', 'middle', '#1d2433');
-  T(W * 0.05, aT + (aB - aT) * 0.5 + fs * 0.35, 'Groundwater', 'start', '#ffffff');
-  T(xL - dx * 0.7, gy + (aT - gy) * 0.5 + fs * 0.35, 'cold ↓', 'end', '#10100c');
+  const T = (x, y, s, a, c) => { const t = Kit.mk('text', {x, y, 'text-anchor': a, 'font-size': fs, 'font-weight': 600, style: `fill:${c};font-family:var(--body)`}, g); t.textContent = s; return t; };
+  T(cx, gy - bh * 0.5 + fs * 0.35, 'Heat pump', 'middle', 'var(--k)');
+  T(W * 0.05, aT + (aB - aT) * 0.5 + fs * 0.35, 'Groundwater', 'start', PAPER);
+  T(xL - dx * 0.7, gy + (aT - gy) * 0.5 + fs * 0.35, 'cold ↓', 'end', 'var(--k)');
   T(xR + dx * 0.7, gy + (aT - gy) * 0.5 + fs * 0.35, '↑ warm', 'start', '#7a1d00');
-  T(xR + dx * 0.7, H * 0.66, 'Sealed loop', 'start', '#10100c');
-  T(xL - dx * 0.7, H * 0.84, 'Warm rock', 'end', '#10100c');
+  T(xR + dx * 0.7, H * 0.6, 'Sealed loop', 'start', 'var(--k)');
+  T(xL - dx * 0.7, H * 0.84, 'Warm rock', 'end', 'var(--k)');
   G = {W, H, gy, aT, aB, L, path, dots, aqDots, box};
   draw(0);
 };
@@ -110,7 +114,7 @@ function draw(dt) {
     c.setAttribute('cx', p.x); c.setAttribute('cy', p.y);
     c.setAttribute('fill', col(temps[i]));
   });
-  box.setAttribute('fill', gsap.utils.interpolate('#ffffff', '#ffc79a', Math.min(1, warmInBox * speed * 0.6)));
+  box.setAttribute('fill', gsap.utils.interpolate(PAPER, '#f7b98c', Math.min(1, warmInBox * speed * 0.6)));
   const laps = Math.floor(travelled / L);
   if (laps !== lastLaps) { lastLaps = laps; Kit.$('laps').textContent = laps; }
 }

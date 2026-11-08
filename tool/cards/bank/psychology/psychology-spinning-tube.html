@@ -39,41 +39,75 @@ let S = null, th = 0, pressed = null, clock = 0, lastSnap = 0;
 let trail = [], strip = [], hist = [];
 const tried = new Set();
 
+// palette: card ink (--k), card colour (--c) and flat tints between them
+let PAL = null;
+function rgbOf(s){ const m = String(s).match(/[\d.]+/g); return m && m.length >= 3 ? m.slice(0,3).map(Number) : null; }
+function pal(){
+  if (PAL) return PAL;
+  const card = Kit.$('card'), cs = getComputedStyle(card);
+  const p = document.createElement('i'); p.style.display = 'none'; card.appendChild(p);
+  p.style.color = 'var(--k)'; let k = rgbOf(getComputedStyle(p).color);
+  p.style.color = 'var(--c)'; let c = rgbOf(getComputedStyle(p).color);
+  p.remove();
+  if (!k) k = rgbOf(cs.color) || [255,255,255];
+  if (!cs.getPropertyValue('--c').trim() || !c) c = rgbOf(cs.backgroundColor) || [150,90,255];
+  const mix = n => 'rgb(' + k.map((v,i) => Math.round(v*n + c[i]*(1-n))).join(',') + ')';
+  const deep = n => 'rgb(' + c.map(v => Math.round(v*(1-n))).join(',') + ')';
+  const fam = v => cs.getPropertyValue(v).trim() || 'sans-serif';
+  PAL = {
+    ink: mix(1), soft: mix(.78), track: mix(.2), frame: mix(.16),
+    tube: mix(.9), mouth: deep(.35), line: deep(.6),
+    body: fam('--body'), display: fam('--display')
+  };
+  return PAL;
+}
+
 function rr(x, X, Y, w, h, r){ x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+w,Y,X+w,Y+h,r); x.arcTo(X+w,Y+h,X,Y+h,r); x.arcTo(X,Y+h,X,Y,r); x.arcTo(X,Y,X+w,Y,r); x.closePath(); }
 
+// a plain paper tube seen from the side, open end facing right
 function body(x, cx, cy, w, h){
-  const g = x.createLinearGradient(0, cy-h/2, 0, cy+h/2);
-  g.addColorStop(0,'#9c7444'); g.addColorStop(.35,'#e6c897'); g.addColorStop(.55,'#f1dbb0'); g.addColorStop(1,'#8a6438');
-  rr(x, cx-w/2, cy-h/2, w, h, h*.18); x.fillStyle = g; x.fill();
-  x.lineWidth = Math.max(1.5, h*.03); x.strokeStyle = '#5e4322'; x.stroke();
+  const P = pal(), e = h*.17, L = cx - w/2 + e, R = cx + w/2 - e, T = cy - h/2, B = cy + h/2;
+  const lw = Math.max(1.2, h*.035);
+  x.save();
+  x.lineJoin = 'round'; x.lineWidth = lw; x.strokeStyle = P.line;
+  x.beginPath(); x.moveTo(L, T); x.lineTo(R, T);
+  x.ellipse(R, cy, e, h/2, 0, -Math.PI/2, Math.PI/2);
+  x.lineTo(L, B);
+  x.ellipse(L, cy, e, h/2, 0, Math.PI/2, Math.PI*1.5);
+  x.closePath(); x.fillStyle = P.tube; x.fill(); x.stroke();
+  x.beginPath(); x.ellipse(R, cy, e*.92, h/2*.92, 0, 0, Math.PI*2);
+  x.fillStyle = P.mouth; x.fill();
+  x.beginPath(); x.ellipse(R, cy, e, h/2, 0, 0, Math.PI*2); x.stroke();
+  x.restore();
 }
 
 function letter(x, L, t, cx, cy, h, a){
   const p = t + OFF[L], c = Math.cos(p); if (c <= 0.02) return;
   x.save(); x.globalAlpha = Math.min(1, a);
   x.translate(cx, cy + Math.sin(p)*h*.42); x.scale(1, c);
-  x.fillStyle = COL[L]; x.font = `900 ${h*.72}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
+  x.fillStyle = COL[L]; x.font = `900 ${h*.72}px ${pal().display}`;
   x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(L, 0, h*.02);
   x.restore();
 }
 
 function draw(){
   if (!S) return;
-  const {x, W, H} = S, ink = getComputedStyle(Kit.$('card')).color;
+  const {x, W, H} = S, P = pal(), ink = P.ink;
   x.clearRect(0, 0, W, H);
-  const f = Math.max(12, Math.min(W*.042, H*.05));
-  x.font = `700 ${f}px sans-serif`; x.textBaseline = 'alphabetic'; x.textAlign = 'left'; x.fillStyle = ink;
-  // snapshots
-  x.globalAlpha = .7; x.fillText('EACH INSTANT, ONE IMAGE', 0, f); x.globalAlpha = 1;
+  const f = Math.max(12, Math.min(W*.042, H*.05)), FONT = `600 ${f}px ${P.body}`;
+  x.font = FONT; x.textBaseline = 'alphabetic'; x.textAlign = 'left';
+  // snapshots: one small photo per instant
+  x.fillStyle = P.soft; x.fillText('Each instant, one image', 0, f);
   const n = 8, gap = W*.015, tw = (W - gap*(n-1))/n, thh = Math.min(tw*.55, H*.1), sy = f*1.6 + thh/2 + 2;
   for (let i = 0; i < n; i++){
     const cx = i*(tw+gap) + tw/2, t = strip.length ? strip[Math.max(0, strip.length - n + i)] ?? th : th;
-    body(x, cx, sy, tw*.92, thh);
-    if (strip.length > i || !pressed) { letter(x,'O',t,cx,sy,thh,1); letter(x,'X',t,cx,sy,thh,1); }
+    x.fillStyle = P.frame; x.fillRect(cx - tw/2, sy - thh*.62, tw, thh*1.24);
+    body(x, cx, sy, tw*.84, thh*.86);
+    if (strip.length > i || !pressed) { letter(x,'O',t,cx,sy,thh*.86,1); letter(x,'X',t,cx,sy,thh*.86,1); }
   }
   // big view
   const barsH = f*3.6, top = sy + thh/2 + f*2.2, bot = H - barsH - f*.6;
-  x.fillStyle = ink; x.globalAlpha = .7; x.fillText('WHAT YOUR BRAIN STITCHES', 0, top - f*.5); x.globalAlpha = 1;
+  x.font = FONT; x.textAlign = 'left'; x.fillStyle = P.soft; x.fillText('What your brain stitches', 0, top - f*.5);
   const reg = bot - top, bh = Math.min(reg*.5, W*.3), bw = Math.min(W*.86, bh*2.6), cx = W/2, cy = top + reg*.62;
   body(x, cx, cy, bw, bh);
   if (!pressed) { letter(x,'O',th,cx,cy,bh,1); letter(x,'X',th,cx,cy,bh,1); }
@@ -81,10 +115,13 @@ function draw(){
   // finger
   if (pressed){
     const fw = bh*.34, fy = cy - bh/2 - reg*.02, fx = cx + bw*.18;
-    x.save(); rr(x, fx-fw/2, top + f*.2, fw, fy - top - f*.2, fw*.45);
-    x.fillStyle = '#f0c3a0'; x.fill(); x.lineWidth = 2; x.strokeStyle = '#7a4d33'; x.stroke();
-    rr(x, fx-fw*.3, fy - fw*.75, fw*.6, fw*.55, fw*.22); x.fillStyle = '#fbe3d2'; x.fill(); x.restore();
-    x.fillStyle = ink; x.font = `700 ${f}px sans-serif`; x.textAlign = 'right';
+    x.save(); x.lineJoin = 'round';
+    rr(x, fx-fw/2, top + f*.2, fw, fy - top - f*.2, fw*.45);
+    x.fillStyle = '#eebf9c'; x.fill(); x.lineWidth = Math.max(1.5, fw*.05); x.strokeStyle = '#6e4230'; x.stroke();
+    rr(x, fx-fw*.28, fy - fw*.72, fw*.56, fw*.5, fw*.2);
+    x.fillStyle = '#f8d9c4'; x.fill(); x.lineWidth = Math.max(1, fw*.035); x.stroke();
+    x.restore();
+    x.fillStyle = ink; x.font = FONT; x.textAlign = 'right';
     x.fillText('finger on ' + pressed, fx - fw*.8, top + f*1.4); x.textAlign = 'left';
   }
   // bars
@@ -93,8 +130,8 @@ function draw(){
   const lw = f*4.6, bx = lw, bwid = W - lw - f*3.4;
   [['O', po], ['X', px]].forEach(([L, p], i) => {
     const y = H - barsH + i*f*1.8 + f*.3;
-    x.fillStyle = ink; x.font = `700 ${f}px sans-serif`; x.fillText(L + ' seen', 0, y + f*.85);
-    rr(x, bx, y, bwid, f*1.1, f*.4); x.fillStyle = 'rgba(0,0,0,.1)'; x.fill();
+    x.fillStyle = ink; x.font = FONT; x.textAlign = 'left'; x.fillText(L + ' seen', 0, y + f*.85);
+    rr(x, bx, y, bwid, f*1.1, f*.4); x.fillStyle = P.track; x.fill();
     if (p > .005){ rr(x, bx, y, Math.max(f*.8, bwid*p), f*1.1, f*.4); x.fillStyle = COL[L]; x.fill(); }
     x.fillStyle = ink; x.fillText(pressed ? Math.round(p*100) + '%' : '–', bx + bwid + f*.4, y + f*.85);
   });
@@ -126,7 +163,7 @@ Kit.$('ctl').addEventListener('click', e => {
   if (Kit.calm) for (let i = 0; i < 60; i++) step(1/60);
 });
 
-Kit.onShow.card = () => { S = Kit.fitCanvas(Kit.$('cv')); draw(); };
+Kit.onShow.card = () => { PAL = null; S = Kit.fitCanvas(Kit.$('cv')); draw(); };
 Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
 Kit.play.card = async () => {
   Kit.$('ctl').children[0].click(); await new Promise(r => setTimeout(r, 900));

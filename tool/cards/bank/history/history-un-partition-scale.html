@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: history-un-partition-scale -->
-<!-- Look: a night observatory, drawn straight on the card. Fine star field and a brass balance whose pivot carries a dial ring, marked FAIR at the top.
-     Interaction: Arabs were 60% of the people, so the beam starts on their side. Tap each of the four "stars" (the video's reasons). Each card stays readable where it is and turns gold (+) or blue (−). A star flies from it onto the scale: two drop brass weights onto the Jewish pan, two drain the glow from the Arab pan's orbs. The people are still there, but their weight is gone.
-     Wow: on the last star the needle swings past FAIR with an elastic sway, the dial ring flares, a shooting star crosses the sky, and the why settles where the cards were. -->
+<!-- Look: a printed history-book illustration. A plain shopkeeper's balance drawn flat in ink on the card colour, with a half-moon dial behind the pivot marked "Fair". Little ink figures stand on the Arab pan: the people.
+     Interaction: Arabs were 60% of the people, so the beam starts on their side. Tap each of the four "stars" (the video's reasons). Each card stays readable where it is and turns ink-tinted (+) or blue (−). A star flies from it onto the scale: two drop ink weights onto the Jewish pan, two fade the Arab figures to blue outlines. The people are still there, but their weight is gone.
+     Wow: on the last star the needle swings past Fair with an elastic sway, its tip pulses, and the why settles where the cards were. -->
 <title>The 1947 scale</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -17,29 +17,33 @@
 #pool{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw;align-self:start}
 .chip{font:700 max(1.75cqh,12px)/1.15 var(--body);color:var(--k);text-align:left;display:flex;gap:1.8cqw;align-items:flex-start;
   background:none;border:0;border-radius:1.4cqh;padding:1cqh 2.4cqw;cursor:pointer;
-  box-shadow:inset 0 0 0 1.5px rgba(16,16,12,.55);overflow-wrap:anywhere;min-width:0;transition:background .5s,box-shadow .5s,color .5s}
+  box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--k) 60%,var(--c));overflow-wrap:anywhere;min-width:0;transition:background .5s,box-shadow .5s,color .5s}
 .chip .g{color:var(--k);flex:none;font-size:max(1.9cqh,13px);width:1.1em;text-align:center}
 .chip small{display:block;font:500 max(1.5cqh,12px)/1.2 var(--body);color:var(--k);opacity:.85;margin-top:.35cqh}
 #pool .chip:not(.in){animation:breathe 2.6s ease-in-out infinite}
 #pool .chip:nth-child(2){animation-delay:.6s}#pool .chip:nth-child(3){animation-delay:1.2s}#pool .chip:nth-child(4){animation-delay:1.8s}
-@keyframes breathe{50%{box-shadow:inset 0 0 0 2.5px rgba(16,16,12,.95)}}
+@keyframes breathe{50%{box-shadow:inset 0 0 0 2.5px var(--k)}}
 .chip.in{cursor:default}
-.chip.gold{color:var(--k);background:rgba(255,246,216,.5);box-shadow:inset 0 0 0 2px #10100c}
+.chip.gold{color:var(--k);background:color-mix(in srgb,var(--k) 12%,var(--c));box-shadow:inset 0 0 0 2px var(--k)}
 .chip.gold .g{color:var(--k)}.chip.gold small{color:var(--k)}
-.chip.cool{color:#10100c;background:rgba(27,42,120,.14);box-shadow:inset 0 0 0 2px #1b2a78}
-.chip.cool .g{color:#1b2a78}.chip.cool small{color:#10100c}
+.chip.cool{color:var(--k);background:color-mix(in srgb,#1b2a78 14%,var(--c));box-shadow:inset 0 0 0 2px #1b2a78}
+.chip.cool .g{color:#1b2a78}.chip.cool small{color:var(--k)}
 #why{align-self:start;display:flex;flex-direction:column;gap:.7cqh;padding:1.2cqh 3cqw;background:none;box-shadow:none}
 #why h3{margin:0;font:800 max(2.5cqh,16px)/1.1 var(--display);color:var(--k)}
 #why p{margin:0;font:500 max(1.6cqh,12px)/1.3 var(--body);color:var(--k)}
 #why p b{color:var(--k);font-weight:800}
 .ghost{visibility:hidden}
 .hid{display:none!important}
-.tw{animation:tw 3.2s ease-in-out infinite}
-@keyframes tw{50%{opacity:.12}}
-.spin{animation:spin 80s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.kit-calm .tw,.kit-calm .spin,.kit-calm #pool .chip{animation:none}
+.kit-calm #pool .chip{animation:none}
 .say b{font-weight:800}
+/* drawing */
+#sky .lb{font-family:var(--body);fill:var(--k)}
+#sky .dial{fill:color-mix(in srgb,var(--k) 12%,var(--c))}
+#sky .bowl{fill:color-mix(in srgb,var(--k) 30%,var(--c))}
+#sky .pv{fill:var(--c)}
+#sky .wt{fill:var(--k);stroke:var(--c);stroke-width:1.4;stroke-linejoin:round}
+#sky .wr{fill:none;stroke:var(--k)}
+#sky .ink{fill:var(--k)}
 </style>
 <article class="card" id="card" data-topic="history" data-kind="Tap the stars · the weighing">
   <div class="in">
@@ -73,12 +77,17 @@
   const ANG = [-10, -4, 2, 8, 14], DEG = Math.PI / 180;
   const S = {a: ANG[0], arr: 0, taps: 0};
   const placed = [];
-  const INK = '#10100c';
+  const INK = '#10100c', BLUE = '#1b2a78';
   let W = 0, H = 0, fs = 12, P = {x: 0, y: 0}, L = 0, hang = 0, pw = 0, R = 0, E = {}, lastSign = -1, done = false, lastSize = '';
   const mk = (t, a, p) => Kit.mk(t, a, p);
-  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'text-anchor': 'middle', 'font-family': 'var(--mono), monospace', 'font-size': fs}, a), p); e.textContent = s; return e; };
+  const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, 'text-anchor': 'middle', class: 'lb', 'font-size': fs}, a), p); e.textContent = s; return e; };
   const star4 = r => `M0,${-r} Q0,0 ${r},0 Q0,0 0,${r} Q0,0 ${-r},0 Q0,0 0,${-r}Z`;
   const cnt = k => placed.filter(s => s === k).length;
+  // a little standing figure: head and shoulders, feet on y = 0
+  const person = (p, cx, hh, w, a) => {
+    mk('circle', Object.assign({cx, cy: -hh * .8, r: hh * .19}, a), p);
+    mk('path', Object.assign({d: `M${cx - w / 2},0 Q${cx - w / 2},${-hh * .54} ${cx},${-hh * .55} Q${cx + w / 2},${-hh * .54} ${cx + w / 2},0 Z`}, a), p);
+  };
 
   function layout() {
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
@@ -94,87 +103,50 @@
     P = {x: W / 2, y: H - 6 - (drop + hang + pw * .17 + lab)};
     R = Math.max(20, Math.min(W * .14, (P.y - T - fs - 10) / 1.4));
 
-    svg.innerHTML = `<defs>
-      <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5a12"/><stop offset=".45" stop-color="#4a2f06"/><stop offset="1" stop-color="#1c1204"/></linearGradient>
-      <linearGradient id="gPillar" x1="0" x2="1"><stop offset="0" stop-color="#1c1204"/><stop offset=".5" stop-color="#6e4710"/><stop offset="1" stop-color="#1c1204"/></linearGradient>
-      <linearGradient id="gBowl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a4e0e"/><stop offset=".5" stop-color="#4a2f06"/><stop offset="1" stop-color="#1c1204"/></linearGradient>
-      <linearGradient id="gWt" x1="0" x2="1"><stop offset="0" stop-color="#2e1a02"/><stop offset=".35" stop-color="#a8701a"/><stop offset=".6" stop-color="#6e4710"/><stop offset="1" stop-color="#2a1802"/></linearGradient>
-      <radialGradient id="gHalo"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".6" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-      <radialGradient id="gOrb" cx="35%" cy="35%"><stop offset="0" stop-color="#f2f6ff"/><stop offset=".45" stop-color="#6f93f0"/><stop offset="1" stop-color="#1b2a78"/></radialGradient>
-      <linearGradient id="gShoot" x1="0" x2="1"><stop offset="0" stop-color="#10100c" stop-opacity="0"/><stop offset="1" stop-color="#10100c"/></linearGradient>
-      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
-    </defs>`;
-    E.sky = mk('rect', {width: W, height: H, fill: '#fff', opacity: 0}, svg);
-    // star field
-    E.stars = mk('g', {}, svg);
-    const rnd = Kit.rnd;
-    for (let i = 0; i < 150; i++) {
-      const r = Math.pow(rnd(), 3) * 1.4 + .25;
-      const c = mk('circle', {cx: 3 + rnd() * (W - 6), cy: 3 + rnd() * (H * .9), r, fill: rnd() < .2 ? '#fff' : INK, opacity: .3 + rnd() * .5}, E.stars);
-      if (rnd() < .4) { c.setAttribute('class', 'tw'); c.style.animationDelay = (-rnd() * 3.2).toFixed(2) + 's'; }
-    }
-    // faint constellations
-    for (const con of [[[.05, .9], [.1, .84], [.08, .76], [.04, .72]], [[.9, .88], [.95, .8], [.91, .74]]]) {
-      const pts = con.map(([x, y]) => [x * W, y * H]);
-      mk('polyline', {points: pts.map(p => p.join(',')).join(' '), fill: 'none', stroke: INK, 'stroke-width': .7, opacity: .4}, svg);
-      pts.forEach(([x, y]) => mk('circle', {cx: x, cy: y, r: 1.5, fill: INK}, svg));
-    }
-    E.shoot = mk('line', {x1: W * .62, y1: T + 6, x2: W * .92, y2: T + 6 + H * .05, stroke: 'url(#gShoot)', 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: 0}, svg);
-    // halo + instrument rings
-    E.hmax = Math.min(P.x, P.y, H - P.y) - 2;
-    E.halo = mk('circle', {cx: P.x, cy: P.y, r: Math.min(R * 2.3, E.hmax), fill: 'url(#gHalo)'}, svg);
+    // dial: a flat half-moon behind the pivot, one mark for "Fair"
     E.rings = mk('g', {}, svg);
-    const sp = mk('circle', {cx: P.x, cy: P.y, r: R * 1.4, fill: 'none', stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '2 6', opacity: .6, class: 'spin'}, E.rings);
-    sp.style.transformBox = 'view-box'; sp.style.transformOrigin = `${P.x}px ${P.y}px`;
-    mk('circle', {cx: P.x, cy: P.y, r: R * 1.18, fill: 'none', stroke: INK, 'stroke-width': .6, opacity: .45}, E.rings);
-    mk('circle', {cx: P.x, cy: P.y, r: R, fill: 'rgba(255,255,255,.18)', stroke: INK, 'stroke-width': 1.4, opacity: .9}, E.rings);
-    for (let d = -70; d <= 70; d += 10) {
-      const t = d * DEG, l = d === 0 ? R * .24 : R * .1, sx = Math.sin(t), cy = -Math.cos(t);
-      mk('line', {x1: P.x + sx * R, y1: P.y + cy * R, x2: P.x + sx * (R - l), y2: P.y + cy * (R - l), stroke: INK, 'stroke-width': d === 0 ? 2.2 : 1, opacity: d === 0 ? 1 : .7}, E.rings);
-    }
-    // FAIR mark above the dial, needle points to it
-    E.fair = txt(E.rings, P.x, P.y - R * 1.4 - 7, 'FAIR', {fill: INK, 'font-weight': 700, 'letter-spacing': '.14em'});
-    mk('path', {d: `M${P.x - 4},${P.y - R * 1.4 - 3} L${P.x + 4},${P.y - R * 1.4 - 3} L${P.x},${P.y - R * 1.18 - 1}Z`, fill: INK}, E.rings);
-    // pillar
-    mk('ellipse', {cx: P.x, cy: by + baseH / 2, rx: W * .14, ry: baseH * .6, fill: INK, opacity: .18, filter: 'url(#soft)'}, svg);
-    mk('polygon', {points: `${P.x - 3},${P.y} ${P.x + 3},${P.y} ${P.x + W * .026},${by} ${P.x - W * .026},${by}`, fill: 'url(#gPillar)'}, svg);
-    mk('rect', {x: P.x - W * .1, y: by, width: W * .2, height: baseH, rx: 3, fill: 'url(#gPillar)'}, svg);
+    mk('path', {d: `M${P.x - R},${P.y} A${R},${R} 0 0 1 ${P.x + R},${P.y} Z`, class: 'dial', stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, E.rings);
+    mk('line', {x1: P.x, y1: P.y - R, x2: P.x, y2: P.y - R * .78, stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, E.rings);
+    E.fair = txt(E.rings, P.x, P.y - R - 8, 'Fair', {'font-weight': 700});
+    // pillar and foot
+    mk('path', {d: `M${P.x - 2.5},${P.y} L${P.x + 2.5},${P.y} L${P.x + W * .022},${by + 1} L${P.x - W * .022},${by + 1} Z`, class: 'ink'}, svg);
+    mk('path', {d: `M${P.x - W * .1},${by + baseH} L${P.x - W * .085},${by} L${P.x + W * .085},${by} L${P.x + W * .1},${by + baseH} Z`, class: 'ink'}, svg);
     // needle
     E.needle = mk('g', {}, svg);
     mk('line', {x1: 0, y1: 0, x2: 0, y2: -R * .84, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'}, E.needle);
-    E.tip = mk('circle', {cx: 0, cy: -R * .84, r: 3, fill: INK}, E.needle);
+    E.tip = mk('circle', {cx: 0, cy: -R * .84, r: 3, class: 'ink'}, E.needle);
     // strings + pans
     E.side = {}; E.pan = {};
     for (const k of ['L', 'R']) {
-      const s1 = mk('line', {stroke: INK, 'stroke-width': 1, opacity: .75}, svg);
-      const s2 = mk('line', {stroke: INK, 'stroke-width': 1, opacity: .75}, svg);
+      const s1 = mk('line', {stroke: INK, 'stroke-width': 1.2}, svg);
+      const s2 = mk('line', {stroke: INK, 'stroke-width': 1.2}, svg);
       const g = mk('g', {}, svg);
-      mk('path', {d: `M${-pw / 2},0 Q0,${pw * .34} ${pw / 2},0 Z`, fill: 'url(#gBowl)', stroke: INK, 'stroke-width': 1.2}, g);
+      mk('path', {d: `M${-pw / 2},0 Q0,${pw * .34} ${pw / 2},0 Z`, class: 'bowl', stroke: INK, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
       const fx = mk('g', {}, g);
-      mk('line', {x1: -pw / 2, x2: pw / 2, y1: 0, y2: 0, stroke: INK, 'stroke-width': 1.6}, g);
+      mk('line', {x1: -pw / 2 - 2, x2: pw / 2 + 2, y1: 0, y2: 0, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'}, g);
       const load = mk('g', {}, g);
       const ly = pw * .17 + fs * 1.25;
-      txt(g, 0, ly, k === 'L' ? 'ARABS' : 'JEWS', {fill: INK, 'font-weight': 700, 'letter-spacing': '.1em'});
-      txt(g, 0, ly + fs * 1.4, k === 'L' ? '60% of people' : 'a minority', {fill: INK});
+      txt(g, 0, ly, k === 'L' ? 'Arabs' : 'Jews', {'font-weight': 700});
+      txt(g, 0, ly + fs * 1.4, k === 'L' ? '60% of people' : 'a minority', {'font-weight': 500});
       E.side[k] = {s1, s2, g, load, fx};
     }
-    // Arab orbs (the people)
+    // the Arab people on their pan
     E.orbs = [];
+    const hh = pw * .13, fw = pw * .085;
     for (let i = 0; i < 6; i++) {
-      const o = mk('g', {}, E.side.L.load), cx = -pw * .3 + i * pw * .12, cy = -pw * .05, r = pw * .052;
-      const c = mk('circle', {cx, cy, r, fill: 'url(#gOrb)'}, o);
-      const ring = mk('circle', {cx, cy, r: r * .92, fill: 'none', stroke: '#1b2a78', 'stroke-width': 1, opacity: 0}, o);
+      const o = mk('g', {}, E.side.L.load), cx = -pw * .3 + i * pw * .12;
+      const c = mk('g', {class: 'ink'}, o);
+      person(c, cx, hh, fw, {});
+      const ring = mk('g', {fill: 'none', stroke: BLUE, 'stroke-width': 1.3, opacity: 0}, o);
+      person(ring, cx, hh, fw, {});
       E.orbs.push({c, ring});
     }
     E.wts = [];
     // beam
     E.beam = mk('g', {}, svg);
-    mk('rect', {x: -L, y: -2.6, width: L * 2, height: 5.2, rx: 2.6, fill: 'url(#gGold)'}, E.beam);
-    for (const x of [-L, L]) mk('circle', {cx: x, cy: 0, r: 4, fill: INK}, E.beam);
-    mk('circle', {cx: P.x, cy: P.y, r: 7, fill: 'url(#gGold)', stroke: INK, 'stroke-width': 1}, svg);
-    mk('circle', {cx: P.x, cy: P.y, r: 2.4, fill: '#ffe2a0'}, svg);
-    E.flare = mk('circle', {cx: P.x, cy: P.y, r: R, fill: 'none', stroke: '#fff', 'stroke-width': 2, opacity: 0}, svg);
+    mk('rect', {x: -L, y: -2.4, width: L * 2, height: 4.8, rx: 2.4, class: 'ink'}, E.beam);
+    for (const x of [-L, L]) mk('circle', {cx: x, cy: 0, r: 4, class: 'ink'}, E.beam);
+    mk('circle', {cx: P.x, cy: P.y, r: 6.5, class: 'pv', stroke: INK, 'stroke-width': 2.2}, svg);
     E.fx = mk('g', {}, svg);
     // redraw what has already landed
     for (let i = 0; i < cnt('R'); i++) addWeight(i, false);
@@ -196,16 +168,15 @@
       E.pan[k] = {x: ex, y: py};
     }
     const sg = S.a >= 0 ? 1 : -1;
-    if (sg !== lastSign) { const first = lastSign === 0; lastSign = sg; if (!first && !Kit.calm && E.fair) gsap.fromTo(E.fair, {attr: {fill: '#ffffff'}}, {attr: {fill: INK}, duration: .7, ease: 'power2.out', overwrite: true}); }
+    if (sg !== lastSign) { const first = lastSign === 0; lastSign = sg; if (!first && !Kit.calm && E.fair) gsap.fromTo(E.fair, {opacity: .25}, {opacity: 1, duration: .7, ease: 'power2.out', overwrite: true}); }
   }
 
   function addWeight(i, anim) {
     const ws = [.42, .3], hs = [.15, .12];
     const w = pw * ws[i], h = pw * hs[i], y0 = i ? -pw * hs[0] : 0;
     const g = mk('g', {}, E.side.R.load);
-    mk('path', {d: `M${-w / 2},${y0} L${w / 2},${y0} L${w * .38},${y0 - h} L${-w * .38},${y0 - h}Z`, fill: 'url(#gWt)', stroke: INK, 'stroke-width': .8}, g);
-    mk('path', {d: star4(h * .32), fill: '#fff6d8', transform: `translate(0,${y0 - h / 2})`, filter: 'url(#glow)'}, g);
-    if (i === 1) mk('circle', {cx: 0, cy: y0 - h - pw * .03, r: pw * .028, fill: 'none', stroke: INK, 'stroke-width': 1.4}, g);
+    if (i === 1) mk('circle', {cx: 0, cy: y0 - h - pw * .03, r: pw * .028, class: 'wr', 'stroke-width': 1.8}, g);
+    mk('path', {d: `M${-w / 2},${y0} L${w / 2},${y0} L${w * .38},${y0 - h} L${-w * .38},${y0 - h}Z`, class: 'wt'}, g);
     E.wts.push(g);
     if (anim && !Kit.calm) gsap.from(g, {y: -hang * .6, opacity: 0, duration: .7, ease: 'bounce.out'});
   }
@@ -214,19 +185,19 @@
     const idx = [...(level >= 1 ? [0, 1, 2] : []), ...(level >= 2 ? [3, 4, 5] : [])];
     idx.forEach((i, n) => {
       const o = E.orbs[i]; if (!o) return;
-      if (anim && !Kit.calm) { gsap.to(o.c, {opacity: .2, duration: .6, delay: n * .06, ease: 'power2.out'}); gsap.to(o.ring, {opacity: .85, duration: .6, delay: n * .06}); }
-      else { o.c.setAttribute('opacity', .2); o.ring.setAttribute('opacity', .85); }
+      if (anim && !Kit.calm) { gsap.to(o.c, {opacity: .15, duration: .6, delay: n * .06, ease: 'power2.out'}); gsap.to(o.ring, {opacity: 1, duration: .6, delay: n * .06}); }
+      else { o.c.setAttribute('opacity', .15); o.ring.setAttribute('opacity', 1); }
     });
   }
 
   function pulse(k) {
     if (Kit.calm) return;
     const gold = k === 'R', o = E.side[k];
-    const c = mk('circle', {cx: 0, cy: 0, r: pw * .1, fill: 'none', stroke: gold ? '#fff' : '#1b2a78', 'stroke-width': 2, filter: 'url(#glow)'}, o.fx);
+    const c = mk('circle', {cx: 0, cy: 0, r: pw * .1, fill: 'none', stroke: gold ? INK : BLUE, 'stroke-width': 1.6}, o.fx);
     gsap.to(c, {attr: {r: pw * .48}, opacity: 0, duration: .9, ease: 'expo.out', onComplete: () => c.remove()});
     if (!gold) {
       for (let i = 0; i < 3; i++) {
-        const m = mk('circle', {cx: (i - 1) * pw * .14, cy: -pw * .05, r: 2, fill: '#1b2a78'}, o.fx);
+        const m = mk('circle', {cx: (i - 1) * pw * .14, cy: -pw * .05, r: 2, fill: BLUE}, o.fx);
         gsap.to(m, {attr: {cy: -hang * .7}, opacity: 0, duration: 1.1, delay: i * .08, ease: 'power2.out', onComplete: () => m.remove()});
       }
     }
@@ -238,8 +209,7 @@
     const k = W / sr.width || 1;
     const x0 = (cr.left + cr.width / 2 - sr.left) * k, y0 = (cr.top + cr.height / 2 - sr.top) * k;
     const st = mk('g', {}, E.fx);
-    mk('circle', {r: 7, fill: side === 'R' ? '#fff' : '#9fc0ff', opacity: .75, filter: 'url(#glow)'}, st);
-    mk('path', {d: star4(9), fill: INK}, st);
+    mk('path', {d: star4(9), fill: side === 'R' ? INK : BLUE}, st);
     const p = {t: 0};
     gsap.to(p, {t: 1, duration: .8, ease: 'power2.in', onUpdate() {
       const tg = E.pan[side], tx = tg.x, ty = tg.y - pw * .08;
@@ -271,14 +241,9 @@
     requestAnimationFrame(() => {
       layout();
       if (Kit.calm) return;
-      const hr = Math.min(R * 2.3, E.hmax), fr = Math.min(R * 3.2, E.hmax);
       const tl = gsap.timeline({delay: .15});
-      tl.fromTo(E.flare, {attr: {r: R}, opacity: .9}, {attr: {r: fr}, opacity: 0, duration: 1.3, ease: 'expo.out'})
-        .fromTo(E.halo, {attr: {r: hr}}, {attr: {r: fr}, duration: .5, ease: 'power3.out', yoyo: true, repeat: 1}, 0)
-        .fromTo(E.sky, {opacity: 0}, {opacity: .14, duration: .35, yoyo: true, repeat: 1, ease: 'power2.inOut'}, 0)
-        .fromTo(E.tip, {attr: {r: 3}}, {attr: {r: 7}, duration: .4, yoyo: true, repeat: 1, ease: 'back.out(3)'}, 0)
-        .fromTo(E.shoot, {opacity: 0, attr: {x1: W * .62, x2: W * .66}}, {opacity: 1, attr: {x1: W * .7, x2: W * .92}, duration: .5, ease: 'power2.in'}, .3)
-        .to(E.shoot, {opacity: 0, duration: .3}, .8)
+      tl.fromTo(E.tip, {attr: {r: 3}}, {attr: {r: 6}, duration: .4, yoyo: true, repeat: 1, ease: 'back.out(3)'}, 0)
+        .fromTo(E.fair, {opacity: .25}, {opacity: 1, duration: .8, ease: 'power2.out'}, 0)
         .from('#why > *', {opacity: 0, y: 12, stagger: .12, duration: .6, ease: 'power3.out'}, 0);
     });
   }
@@ -290,7 +255,7 @@
     chip.classList.add('in', side === 'R' ? 'gold' : 'cool');
     chip.querySelector('.g').textContent = side === 'R' ? '+' : '−';
     chip.querySelector('small').textContent = chip.dataset.p;
-    if (!Kit.calm) gsap.fromTo(chip, {filter: 'brightness(1.8)', scale: .95}, {filter: 'brightness(1)', scale: 1, duration: .6, ease: 'back.out(2)'});
+    if (!Kit.calm) gsap.fromTo(chip, {scale: .95}, {scale: 1, duration: .6, ease: 'back.out(2)'});
     S.taps++;
     say.innerHTML = chip.dataset.n;
     fly(chip, side, () => land(side));
@@ -304,7 +269,6 @@
   Kit.onShow.card = layout;
   Kit.onEnter.card = () => {
     if (Kit.calm || !E.beam) return;
-    gsap.from(E.stars, {opacity: 0, duration: 1.4, ease: 'power2.out'});
     gsap.from(E.rings, {opacity: 0, duration: 1, ease: 'power3.out'});
     gsap.fromTo(S, {a: 0}, {a: ANG[S.arr], duration: 1.8, delay: .3, ease: 'elastic.out(1,.4)', onUpdate: update});
     gsap.from('#pool .chip', {opacity: 0, y: 14, scale: .94, stagger: .09, duration: .6, delay: .2, ease: 'back.out(1.6)'});

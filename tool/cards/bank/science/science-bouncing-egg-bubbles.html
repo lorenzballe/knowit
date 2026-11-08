@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-bouncing-egg-bubbles -->
-<!-- Look: a night observatory. An egg floats in a glowing vinegar bath at the centre of instrument rings under a star field, and a d3 gauge ring tracks the calcium carbonate shell against the CO₂ gas.
-     Interaction: each tap of React eats pits into the shell. CO₂ bubbles fizz up through the vinegar, others cling inside the membrane, the egg turns translucent amber, and the gauge morphs from shell to gas.
-     Wow moment: the vinegar drains away and you drop the bubble-filled membrane. It squashes on the glowing floor, flashes the rings and bounces like rubber. -->
+<!-- Look: a printed kitchen-science page. A raw egg floats in a plain glass jar of vinegar on a table; a flat strip above the jar shows how much of the shell has turned into CO₂ gas.
+     Interaction: each tap of React eats pits into the shell. CO₂ bubbles rise through the vinegar, others cling inside the membrane, the egg turns translucent amber, and the strip fills from shell to gas.
+     Wow moment: the vinegar drains away and you drop the bubble-filled membrane. It squashes on the table and bounces like rubber. -->
 <title>The bouncing egg</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -13,14 +13,14 @@
   background:none;border:0;box-shadow:none}
 #pic{flex:1;min-height:0;width:100%;height:100%;display:block;cursor:pointer;touch-action:manipulation}
 #row{display:flex;align-items:center;gap:3cqw;margin-top:1.4cqh;flex-shrink:0;min-height:max(5.4cqh,40px)}
-#go{flex-shrink:0;font:800 max(2.1cqh,14px)/1 var(--body);letter-spacing:.02em;color:#c9f6ff;background:linear-gradient(180deg,#14214a,#070c1f);
+#go{flex-shrink:0;font:800 max(2.1cqh,14px)/1 var(--body);letter-spacing:.02em;color:var(--c);background:var(--k);
   border:0;border-radius:999px;padding:0 5.5cqw;height:max(5.4cqh,40px);margin:0;cursor:pointer;
-  box-shadow:inset 0 0 0 .25cqh rgba(127,232,255,.6);transition:transform .08s}
+  box-shadow:none;transition:transform .08s}
 #go:active{transform:scale(.95)}
-#go.drop{color:#2a1300;background:linear-gradient(180deg,#ffd27a,#ff9f3a);box-shadow:inset 0 0 0 .25cqh rgba(255,240,200,.6)}
+#go.drop{color:#2a1300;background:#f0a347;box-shadow:none}
 #pips{display:flex;align-items:center;gap:1.6cqw}
-.pip{width:max(1.1cqh,8px);height:max(1.1cqh,8px);border-radius:50%;background:color-mix(in srgb,var(--k) 18%,transparent);transition:background .3s,box-shadow .3s}
-.pip.on{background:#0e7f9c;box-shadow:0 0 0 2px rgba(127,232,255,.55)}
+.pip{width:max(1.1cqh,8px);height:max(1.1cqh,8px);border-radius:50%;background:color-mix(in srgb,var(--k) 18%,transparent);transition:background .3s}
+.pip.on{background:#8fd3ea}
 .say{font:600 max(1.95cqh,13px)/1.3 var(--body)}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Tap to react · drop it" style="--c:#070b1c;--k:#dff8ff;--edge:#02030a">
@@ -28,7 +28,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP TO FIZZ</span></div>
     <h2 class="q">What causes the tiny bubbles that let the egg bounce?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="An egg in vinegar inside glowing instrument rings. As the shell reacts, carbon dioxide bubbles form and the egg turns translucent, then it bounces on the floor."></svg>
+      <svg id="pic" role="img" aria-label="An egg in a glass jar of vinegar. As the shell reacts, carbon dioxide bubbles form and the egg turns translucent, then it bounces on the table."></svg>
     </div>
     <div id="row"><button id="go">React +</button><div id="pips"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div></div>
     <p class="say" id="say">The shell is calcium carbonate. The egg sits in vinegar. <b>Tap React</b> to let them meet, one step at a time.</p>
@@ -40,9 +40,12 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go'), row = Kit.$('row'), stage = Kit.$('stage'), pips = Kit.$('pips').children;
-  const ICE = '#7fe8ff', AMBER = '#ffb347', CREAM = '#f6ead6', INK = '#03050c', ACID = '#b8ffde';
+  // Flat meaning colours: CO₂ blue, egg amber; the shell is plain eggshell cream.
+  const BUB = '#8fd3ea', BUBLINE = '#3b7f99', AMBER = '#f0a347', CREAM = '#efe3cb', SHELLLINE = '#b89c72',
+        MEM = '#f2c27e', MEMLINE = '#c47a32', LIGHT = '#f9dcaa', YOLK = '#ec9620';
+  const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const TAU = Math.PI * 2;
-  let W = 0, H = 0, fs = 12, cx = 0, cy = 0, R = 0, th = 0, ery = 0, erx = 0, floorY = 0, D = 0;
+  let W = 0, H = 0, fs = 12, cx = 0, cy = 0, R = 0, th = 0, ery = 0, erx = 0, floorY = 0, D = 0, bw = 0;
   let step = 0, dropped = false, dropping = false, drained = false, built = false, freshNotes = false;
   let lastW = 0, lastH = 0;
   const st = {p: 0};
@@ -58,14 +61,10 @@
   ];
 
   const mk = (t, a, p) => Kit.mk(t, a, p);
-  const grad = (defs, id, type, attrs, stops) => {
-    const g = mk(type, Object.assign({id}, attrs), defs);
-    stops.forEach(([o, c, op]) => mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op == null ? 1 : op}, g));
-    return g;
-  };
-  const text = (p, x, y, t, a = {}, font = 'var(--mono)') => {
-    const e = mk('text', Object.assign({x, y, 'font-size': fs, fill: '#dff8ff', 'font-weight': 700,
-      style: `font-family:${font};paint-order:stroke;stroke:${INK};stroke-width:4px;stroke-linejoin:round`}, a), p);
+  const text = (p, x, y, t, a = {}, font = 'var(--body)') => {
+    const {fill = 'var(--k)', ...rest} = a;
+    const e = mk('text', Object.assign({x, y, 'font-size': fs, 'font-weight': 600,
+      style: `font-family:${font};fill:${fill}`}, rest), p);
     e.textContent = t; return e;
   };
   // An egg: an ellipse, a little wider at the bottom.
@@ -86,114 +85,68 @@
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     fs = Math.max(12, Math.min(15, W / 26));
     cx = W / 2; floorY = H - fs * 1.7;
-    // Keep the outermost ring marks (R + th*3.4) inside the stage width.
     R = Math.max(40, Math.min(W * .4, (W / 2 - 4) / 1.255, (floorY - fs * 3.2) / 2.3));
     th = Math.max(6, R * .075);
     cy = fs * 3 + R + th;
     ery = R * .55; erx = ery * .78;
     D = Math.max(0, floorY - (cy + ery));
 
+    // The jar: a plain kitchen jar with an open mouth.
+    const Jw = R * .8, m = Jw * .78, jt = cy - R * .92, jb = cy + R * .95, sh = jt + th * 2.4, rr = R * .2;
+    const jarD = `M${cx - m},${jt}L${cx - m},${jt + th * .5}Q${cx - Jw},${jt + th * .9} ${cx - Jw},${sh}L${cx - Jw},${jb - rr}Q${cx - Jw},${jb} ${cx - Jw + rr},${jb}L${cx + Jw - rr},${jb}Q${cx + Jw},${jb} ${cx + Jw},${jb - rr}L${cx + Jw},${sh}Q${cx + Jw},${jt + th * .9} ${cx + m},${jt + th * .5}L${cx + m},${jt}`;
+
     const defs = mk('defs', {}, svg);
-    grad(defs, 'neb', 'radialGradient', {cx: '80%', cy: '18%', r: '45%'}, [[0, '#6b3cff', .24], [1, '#6b3cff', 0]]);
-    grad(defs, 'neb2', 'radialGradient', {cx: '12%', cy: '85%', r: '40%'}, [[0, '#1fbf8f', .12], [1, '#1fbf8f', 0]]);
-    grad(defs, 'halo', 'radialGradient', {cx: '50%', cy: '50%', r: '50%'}, [[0, AMBER, .55], [.55, '#ff7a2a', .15], [1, '#ff7a2a', 0]]);
-    grad(defs, 'mem', 'radialGradient', {cx: '42%', cy: '38%', r: '65%'}, [[0, '#ffe3b0', .85], [.5, '#ffb35c', .55], [1, '#c2541c', .5]]);
-    grad(defs, 'yolk', 'radialGradient', {cx: '40%', cy: '35%', r: '60%'}, [[0, '#ffe066'], [.6, '#ff9d1f'], [1, '#d4620c']]);
-    grad(defs, 'shell', 'radialGradient', {cx: '38%', cy: '30%', r: '75%'}, [[0, '#fffaf1'], [.55, CREAM], [1, '#a88e6c']]);
-    grad(defs, 'bub', 'radialGradient', {cx: '35%', cy: '30%', r: '65%'}, [[0, '#ffffff', .95], [.35, ICE, .35], [1, ICE, .9]]);
-    grad(defs, 'floorGlow', 'linearGradient', {x1: 0, y1: 0, x2: 0, y2: 1}, [[0, ICE, .22], [1, ICE, 0]]);
-    grad(defs, 'vin', 'linearGradient', {x1: 0, y1: 0, x2: 0, y2: 1}, [[0, ACID, .3], [1, '#1fbf8f', .12]]);
-    const glow = mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
-    mk('feGaussianBlur', {stdDeviation: Math.max(2, th * .45), result: 'b'}, glow);
-    const mg = mk('feMerge', {}, glow); mk('feMergeNode', {in: 'b'}, mg); mk('feMergeNode', {in: 'SourceGraphic'}, mg);
     const clip = mk('clipPath', {id: 'eggclip'}, defs);
     mk('path', {d: eggPath(cx, cy)}, clip);
-    const Rb = R - th * .7;
     const bowl = mk('clipPath', {id: 'bowl'}, defs);
-    mk('circle', {cx, cy, r: Rb}, bowl);
+    mk('path', {d: jarD + 'Z'}, bowl);
     const mask = mk('mask', {id: 'shellmask', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H}, defs);
     mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#fff'}, mask);
     L.pits = mk('g', {}, mask);
 
-    // The sky: the card's own night ground shows through; only soft glows and stars here.
-    mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#neb)'}, svg);
-    mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#neb2)'}, svg);
-    L.stars = mk('g', {}, svg);
-    for (let i = 0; i < 150; i++) {
-      const r = Kit.rnd(), s = mk('circle', {cx: 2 + Kit.rnd() * (W - 4), cy: 2 + Kit.rnd() * (floorY - 6), r: .35 + r * r * 1.3, fill: r > .9 ? '#ffe9c4' : '#dfefff', opacity: .25 + Kit.rnd() * .6}, L.stars);
-      if (i < 18 && !Kit.calm) ambient.push(gsap.to(s, {opacity: .05, duration: 1.2 + Kit.rnd() * 2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Kit.rnd() * 2}));
-    }
-
-    // The floor: a glowing horizon.
+    // The table top.
     L.floor = mk('g', {}, svg);
-    mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: 'url(#floorGlow)'}, L.floor);
-    mk('line', {x1: fs, x2: W - fs, y1: floorY, y2: floorY, stroke: ICE, 'stroke-width': 1.4, opacity: .7}, L.floor);
-    for (let x = fs; x <= W - fs; x += fs * 1.6) mk('line', {x1: x, x2: x, y1: floorY + 2, y2: floorY + 5, stroke: ICE, 'stroke-width': 1, opacity: .45}, L.floor);
-    text(L.floor, fs, floorY + fs * 1.2, 'FLOOR', {'font-size': 12, fill: ICE, opacity: .8});
+    mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, style: `fill:${tint(12)}`}, L.floor);
+    mk('line', {x1: 0, x2: W, y1: floorY, y2: floorY, 'stroke-width': 1.6, style: `stroke:${tint(45)}`}, L.floor);
 
-    // The instrument rings.
+    // How much is still shell, how much has become gas: one flat strip above the jar.
+    bw = W - fs * 2;
     L.rings = mk('g', {}, svg);
-    const outer = mk('g', {}, L.rings);
-    mk('circle', {cx, cy, r: R + th * 2.6, fill: 'none', stroke: ICE, 'stroke-width': 1, opacity: .35, 'stroke-dasharray': '2 7'}, outer);
-    const ticks = mk('g', {}, L.rings);
-    for (let i = 0; i < 96; i++) {
-      const a = i / 96 * TAU, long = i % 8 === 0, r0 = R + th * .95, r1 = r0 + (long ? th * 1.1 : th * .5);
-      mk('line', {x1: cx + Math.cos(a) * r0, y1: cy + Math.sin(a) * r0, x2: cx + Math.cos(a) * r1, y2: cy + Math.sin(a) * r1, stroke: long ? ICE : '#9fb8e8', 'stroke-width': long ? 1.4 : .8, opacity: long ? .8 : .4}, ticks);
-    }
-    mk('circle', {cx, cy, r: R, fill: 'none', stroke: ICE, 'stroke-width': th, opacity: .09}, L.rings);
-    const inner = mk('g', {}, L.rings);
-    mk('circle', {cx, cy, r: R - th * 1.5, fill: 'none', stroke: '#a9c7ff', 'stroke-width': 1, opacity: .4, 'stroke-dasharray': '14 6 2 6'}, inner);
-    for (const [x1, y1, x2, y2] of [[cx - R - th * 3.4, cy, cx - R - th * 1.9, cy], [cx + R + th * 1.9, cy, cx + R + th * 3.4, cy], [cx, cy - R - th * 3.4, cx, cy - R - th * 1.9]])
-      mk('line', {x1, y1, x2, y2, stroke: ICE, 'stroke-width': 1.4, opacity: .7}, L.rings);
-    if (!Kit.calm) {
-      ambient.push(gsap.to(outer, {rotation: 360, svgOrigin: `${cx} ${cy}`, duration: 90, repeat: -1, ease: 'none'}));
-      ambient.push(gsap.to(inner, {rotation: -360, svgOrigin: `${cx} ${cy}`, duration: 50, repeat: -1, ease: 'none'}));
-    }
-    // The gauge: shell against gas, drawn by d3 from st.p.
-    L.gauge = mk('g', {transform: `translate(${cx},${cy})`, filter: 'url(#glow)'}, L.rings);
-    L.shellA = mk('path', {fill: CREAM}, L.gauge);
-    L.gasA = mk('path', {fill: ICE}, L.gauge);
+    L.gauge = mk('g', {transform: `translate(${cx},${fs * 2.05})`}, L.rings);
+    const bh = fs * .45;
+    L.shellA = mk('rect', {y: -bh / 2, height: bh, rx: bh / 2, fill: CREAM}, L.gauge);
+    L.gasA = mk('rect', {y: -bh / 2, height: bh, rx: bh / 2, fill: BUB}, L.gauge);
 
-    // The legend.
     L.legend = mk('g', {}, svg);
-    mk('circle', {cx: fs * 1.3, cy: fs * 1.55, r: fs * .32, fill: CREAM, filter: 'url(#glow)'}, L.legend);
-    text(L.legend, fs * 2, fs * 1.9, 'SHELL · CaCO₃', {fill: CREAM});
-    mk('circle', {cx: W - fs * 1.3, cy: fs * 1.55, r: fs * .32, fill: ICE, filter: 'url(#glow)'}, L.legend);
-    text(L.legend, W - fs * 2, fs * 1.9, 'CO₂ GAS', {fill: ICE, 'text-anchor': 'end'});
+    text(L.legend, fs, fs * 1.25, 'Shell, CaCO₃', {fill: CREAM});
+    text(L.legend, W - fs, fs * 1.25, 'CO₂ gas', {fill: BUB, 'text-anchor': 'end'});
 
     // The egg.
     L.shadow = mk('ellipse', {cx, cy: floorY + 2, rx: erx * .9, ry: fs * .3, fill: '#000', opacity: .12}, svg);
     L.mv = mk('g', {}, svg);
     L.sq = mk('g', {}, L.mv);
-    L.halo = mk('ellipse', {cx, cy, rx: erx * 1.9, ry: ery * 1.6, fill: 'url(#halo)'}, L.sq);
-    mk('path', {d: eggPath(cx, cy), fill: 'url(#mem)', stroke: '#ffd9a6', 'stroke-width': 1.6, opacity: .95}, L.sq);
-    // Fine veins of the membrane.
-    const veins = mk('g', {'clip-path': 'url(#eggclip)', fill: 'none', stroke: '#ffe8c4', 'stroke-width': .8, opacity: .35}, L.sq);
-    for (let i = 0; i < 5; i++) {
-      const a = Kit.rnd() * TAU, [x1, y1] = onEgg(a, 1), [x2, y2] = onEgg(a + 1.2 + Kit.rnd(), .4), [x3, y3] = onEgg(a + 2.4, 1);
-      mk('path', {d: `M${x1},${y1}Q${x2},${y2} ${x3},${y3}`}, veins);
-    }
-    L.yolk = mk('circle', {cx, cy: cy + ery * .12, r: erx * .5, fill: 'url(#yolk)'}, L.sq);
+    mk('path', {d: eggPath(cx, cy), fill: MEM, stroke: MEMLINE, 'stroke-width': 1.6}, L.sq);
+    // Light coming through the egg once the shell thins.
+    L.halo = mk('ellipse', {cx, cy: cy - ery * .05, rx: erx * .72, ry: ery * .78, fill: LIGHT}, L.sq);
+    L.yolk = mk('circle', {cx, cy: cy + ery * .12, r: erx * .5, fill: YOLK}, L.sq);
     L.bubs = mk('g', {'clip-path': 'url(#eggclip)'}, L.sq);
     stuck.forEach(b => drawBubble(b, false));
     L.shell = mk('g', {mask: 'url(#shellmask)'}, L.sq);
-    mk('path', {d: eggPath(cx, cy), fill: 'url(#shell)', stroke: '#fff3df', 'stroke-width': 1.2}, L.shell);
-    const spk = mk('g', {'clip-path': 'url(#eggclip)'}, L.shell);
-    for (let i = 0; i < 46; i++) { const [x, y] = onEgg(Kit.rnd() * TAU, Math.sqrt(Kit.rnd()) * .95); mk('circle', {cx: x, cy: y, r: .5 + Kit.rnd() * 1.1, fill: '#8a6f4f', opacity: .25 + Kit.rnd() * .3}, spk); }
+    mk('path', {d: eggPath(cx, cy), fill: CREAM, stroke: SHELLLINE, 'stroke-width': 1.4}, L.shell);
     L.rims = mk('g', {'clip-path': 'url(#eggclip)'}, L.shell);
     pits.forEach(p => drawPit(p, false));
-    mk('ellipse', {cx: cx - erx * .36, cy: cy - ery * .42, rx: erx * .16, ry: ery * .26, fill: '#fff', opacity: .5, transform: `rotate(24 ${cx - erx * .36} ${cy - ery * .42})`}, L.sq);
 
-    // The vinegar bath, in front of the egg like glass.
-    // The wave is redrawn in place (phase shift) so its geometry stays within the bowl.
-    L.bath = mk('g', {'clip-path': 'url(#bowl)'}, svg);
-    L.liq = mk('g', {}, L.bath);
+    // The vinegar in its jar, in front of the egg like glass.
+    // The wave is redrawn in place (phase shift) so its geometry stays within the jar.
+    L.bath = mk('g', {}, svg);
+    const inside = mk('g', {'clip-path': 'url(#bowl)'}, L.bath);
+    L.liq = mk('g', {}, inside);
     const lvl = cy - ery * 1.28, wl = fs * 3, amp = fs * .2, x0 = cx - R - wl * 2;
-    const xl = cx - Rb - 1, xr = cx + Rb + 1, yb = cy + Rb + 2;
+    const xl = cx - Jw - 1, xr = cx + Jw + 1, yb = jb + 2;
     const wv = {ph: 0};
     const wave = mk('g', {}, L.liq);
-    const body = mk('path', {fill: 'url(#vin)'}, wave);
-    const crest = mk('path', {fill: 'none', stroke: ACID, 'stroke-width': 1.6, opacity: .8}, wave);
+    const body = mk('path', {style: `fill:${tint(45)};fill-opacity:.3`}, wave);
+    const crest = mk('path', {fill: 'none', 'stroke-width': 1.6, style: `stroke:${tint(70)}`}, wave);
     const drawWave = () => {
       let d = '';
       for (let x = xl; ; x += 2) {
@@ -205,18 +158,21 @@
       body.setAttribute('d', d + `L${xr},${yb}L${xl},${yb}Z`);
     };
     drawWave();
-    const vt = 'VINEGAR · acid', vy = cy + R * .8;
-    if (fs * .62 * vt.length < 2 * Math.sqrt(Math.max(0, (R - th) ** 2 - (vy - cy) ** 2)) - fs)
-      text(L.liq, cx, vy, vt, {'text-anchor': 'middle', fill: ACID, 'font-size': 12});
+    const vt = 'Vinegar', vy = cy + R * .8;
+    if (fs * .55 * vt.length < 2 * Jw - fs)
+      text(L.liq, cx, vy, vt, {'text-anchor': 'middle', fill: tint(85)});
     if (!Kit.calm) ambient.push(gsap.to(wv, {ph: wl, duration: 2.4, repeat: -1, ease: 'none', onUpdate: drawWave}));
+    // The glass itself: one even line and a rim.
+    mk('path', {d: jarD, fill: 'none', 'stroke-width': Math.max(1.8, th * .3), 'stroke-linejoin': 'round', style: `stroke:${tint(70)}`}, L.bath);
+    mk('rect', {x: cx - m - th * .35, y: jt - th * .9, width: 2 * m + th * .7, height: th * 1.1, rx: th * .3, 'stroke-width': 1.6, style: `fill:${tint(25)};stroke:${tint(70)}`}, L.bath);
     if (drained) L.bath.setAttribute('opacity', 0);
 
     L.fx = mk('g', {}, svg);
     L.notes = mk('g', {opacity: dropped ? 1 : 0}, svg);
     const ly = floorY - ery * 1.3, lx = cx - erx * 1.15 - fs * .5;
-    mk('path', {d: `M${lx + fs * .3},${ly + fs * .55}L${cx - erx * .7},${floorY - ery * 1.05}`, stroke: '#ffd9a6', 'stroke-width': 1.2, fill: 'none', opacity: .8}, L.notes);
-    text(L.notes, lx, ly, 'membrane', {'text-anchor': 'end', fill: '#ffd9a6'});
-    text(L.notes, lx, ly + fs * 1.35, '+ CO₂ bubbles', {'text-anchor': 'end', fill: ICE});
+    mk('path', {d: `M${lx + fs * .3},${ly + fs * .55}L${cx - erx * .7},${floorY - ery * 1.05}`, stroke: MEM, 'stroke-width': 1.2, fill: 'none'}, L.notes);
+    text(L.notes, lx, ly, 'membrane', {'text-anchor': 'end', fill: MEM});
+    text(L.notes, lx, ly + fs * 1.35, '+ CO₂ bubbles', {'text-anchor': 'end', fill: BUB});
     text(L.notes, cx + erx * 1.15 + fs * .5, floorY - ery * .9, 'boing!', {'font-size': fs * 1.5, fill: AMBER}, 'var(--hand)');
 
     if (dropped) {
@@ -232,38 +188,43 @@
 
   function drawBubble(b, pop) {
     const [x, y] = onEgg(b.a, b.rf);
-    const c = mk('circle', {cx: x, cy: y, r: b.r * fs, fill: 'url(#bub)', stroke: ICE, 'stroke-width': .6, 'stroke-opacity': .8}, L.bubs);
+    const c = mk('circle', {cx: x, cy: y, r: b.r * fs, fill: BUB, stroke: BUBLINE, 'stroke-width': .8}, L.bubs);
     if (pop && !Kit.calm) gsap.from(c, {attr: {r: 0}, duration: .5, delay: Kit.rnd() * .5, ease: 'back.out(3)'});
   }
-  // A pit the acid eats into the shell, with a soft eroded rim.
+  // A pit the acid eats into the shell, with an eroded rim.
   function drawPit(p, pop) {
     const [x, y] = onEgg(p.a, p.rf), r = p.r * erx;
     const hole = mk('circle', {cx: x, cy: y, r, fill: '#000'}, L.pits);
-    const rim = mk('circle', {cx: x, cy: y, r, fill: 'none', stroke: '#b4946a', 'stroke-width': 2.4, opacity: .7}, L.rims);
+    const rim = mk('circle', {cx: x, cy: y, r, fill: 'none', stroke: SHELLLINE, 'stroke-width': 2}, L.rims);
     if (pop && !Kit.calm) gsap.from([hole, rim], {attr: {r: 0}, duration: .8, delay: Kit.rnd() * .3, ease: 'power3.out'});
   }
 
-  const angle = d3.scaleLinear().domain([0, 1]).range([0, TAU]);
+  const gx = d3.scaleLinear().domain([0, 1]);
   function update() {
     if (!built) return;
-    const p = st.p, arc = d3.arc().innerRadius(R - th / 2).outerRadius(R + th / 2).cornerRadius(th / 2);
-    const e = angle(1 - p), gap = p > .01 && p < .99 ? .08 : 0;
-    L.shellA.setAttribute('d', 1 - p > .004 ? arc({startAngle: 0, endAngle: Math.max(.001, e - gap / 2)}) : '');
-    L.gasA.setAttribute('d', p > .004 ? arc({startAngle: Math.min(TAU - .001, e + gap / 2), endAngle: TAU}) : '');
+    const p = st.p;
+    gx.range([-bw / 2, bw / 2]);
+    const xm = gx(1 - p), gap = p > .01 && p < .99 ? fs * .3 : 0;
+    const sw = 1 - p > .004 ? Math.max(0, xm - gap / 2 + bw / 2) : 0;
+    L.shellA.setAttribute('x', -bw / 2); L.shellA.setAttribute('width', sw);
+    L.shellA.setAttribute('display', sw > 0 ? 'inline' : 'none');
+    const gx0 = Math.min(bw / 2, xm + gap / 2), gw = p > .004 ? Math.max(0, bw / 2 - gx0) : 0;
+    L.gasA.setAttribute('x', gx0); L.gasA.setAttribute('width', gw);
+    L.gasA.setAttribute('display', gw > 0 ? 'inline' : 'none');
     L.shell.setAttribute('opacity', p > .76 ? Math.max(0, (1 - p) * 4 * .55) : 1 - p * .6);
     L.halo.setAttribute('opacity', p * .95);
     L.shadow.setAttribute('opacity', dropped ? .5 : .12);
   }
 
-  // Bubbles of CO₂ fizzing off the shell and rising through the vinegar.
+  // Bubbles of CO₂ leaving the shell and rising through the vinegar.
   function fizz(n) {
     if (Kit.calm) return;
     for (let i = 0; i < n; i++) {
       const [x, y] = onEgg(-Math.PI / 2 + (Kit.rnd() - .5) * 2.8, 1.02);
-      const c = mk('circle', {cx: x, cy: y, r: fs * (.15 + Kit.rnd() * .3), fill: 'url(#bub)', stroke: ICE, 'stroke-width': .7}, L.fx);
+      const c = mk('circle', {cx: x, cy: y, r: fs * (.15 + Kit.rnd() * .3), fill: 'none', stroke: BUB, 'stroke-width': 1.3}, L.fx);
       gsap.to(c, {attr: {cy: y - ery * (.6 + Kit.rnd() * 1.1), cx: x + (Kit.rnd() - .5) * fs * 3}, opacity: 0, duration: 1.3 + Kit.rnd() * 1.1, delay: Kit.rnd() * .35, ease: 'power2.out', onComplete: () => c.remove()});
     }
-    const t = text(L.fx, cx + erx * .9, cy - ery * .9, 'CO₂', {fill: ICE});
+    const t = text(L.fx, cx + erx * .9, cy - ery * .9, 'CO₂', {fill: BUB});
     gsap.fromTo(t, {opacity: 0, y: 6}, {opacity: 1, y: -fs * 1.2, duration: .5, ease: 'power3.out'});
     gsap.to(t, {opacity: 0, y: -fs * 3, duration: .8, delay: .9, ease: 'power2.in', onComplete: () => t.remove()});
   }
@@ -286,7 +247,7 @@
     Kit.haptic(big ? 'success' : 'light');
     if (Kit.calm) return;
     const rx = Math.min(erx * (big ? 3.4 : 2), W / 2 - 4);
-    const ring = mk('ellipse', {cx, cy: floorY, rx: erx * .6, ry: fs * .3, fill: 'none', stroke: big ? AMBER : ICE, 'stroke-width': 2}, L.fx);
+    const ring = mk('ellipse', {cx, cy: floorY, rx: erx * .6, ry: fs * .3, fill: 'none', stroke: big ? AMBER : BUB, 'stroke-width': 2}, L.fx);
     gsap.to(ring, {attr: {rx, ry: fs * (big ? 1 : .6)}, opacity: 0, duration: big ? .9 : .6, ease: 'expo.out', onComplete: () => ring.remove()});
     if (big) {
       gsap.fromTo(L.rings, {opacity: 1}, {opacity: .45, duration: .12, yoyo: true, repeat: 3, ease: 'power1.inOut'});
@@ -349,7 +310,6 @@
   let entered = false;
   Kit.onEnter.card = () => {
     if (entered || Kit.calm || !built) return; entered = true;
-    gsap.from(L.stars.children, {opacity: 0, duration: 1.2, stagger: {each: .006, from: 'random'}, ease: 'power2.out'});
     gsap.from(L.rings.children, {opacity: 0, scale: .82, svgOrigin: `${cx} ${cy}`, duration: 1, stagger: .08, ease: 'expo.out'});
     gsap.from(L.legend.children, {opacity: 0, y: -6, duration: .5, stagger: .06, delay: .3, ease: 'power3.out'});
     gsap.from(L.mv, {y: -fs * 3, opacity: 0, duration: .9, delay: .2, ease: 'back.out(1.7)'});

@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: nature-yakutsk-heat-spikes -->
-<!-- Look: an Arctic night: the whole card is deep polar water-blue. A cut-away slab of permafrost glows with slow ice caustics and twinkling crystals under a lit Soviet-block city on stilts, and a tall glass thermometer stands at the left.
-     Interaction: drag the mercury from the usual +20 °C summer high upward. The air motes turn from falling frost to rising heat, the sun reddens, rooftop frost melts, meltwater seeps down, steam lifts off the ground, the thaw front sinks into the permafrost, and the crystals melt as it passes.
-     Wow: at +38 °C the mercury overshoots with a burst, the number scrambles into place, the +35…+38 band lights up, and the houses lose their grip one by one and lean. -->
+<!-- Look: an Arctic night: the whole card is deep polar water-blue. A cut-away of frozen ground, painted flat like a page from a printed geography book, lies under a row of flat-roofed blocks on piles; a plain thermometer stands at the left.
+     Interaction: drag the mercury from the usual +20 °C summer high upward. The sun reddens, rooftop snow melts, meltwater seeps down, steam lifts off the ground, the thaw front sinks into the permafrost, and the ice lenses in the ground disappear as it passes.
+     Wow: at +38 °C the mercury overshoots, the number scrambles into place, the +35…+38 band lights up, and the houses lose their grip one by one and lean. -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Yakutsk's summer heat spikes</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -15,16 +15,15 @@
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
 #read{position:absolute;right:1cqw;top:.4cqh;text-align:right;pointer-events:none;color:var(--k)}
 #read .row{display:flex;align-items:flex-start;justify-content:flex-end;gap:.6cqw}
-#num{font:800 max(5.4cqh,28px)/1 var(--mono);letter-spacing:-.03em;color:#8fdcff;text-shadow:0 0 2.4cqh color-mix(in srgb,currentColor 45%,transparent);display:inline-block}
-#unit{font:700 max(2.2cqh,13px)/1 var(--mono);opacity:.75;margin-top:.5cqh}
+#num{font:800 max(5.4cqh,28px)/1 var(--display);letter-spacing:-.01em;color:#8fdcff;display:inline-block}
+#unit{font:600 max(2.2cqh,13px)/1 var(--body);opacity:.8;margin-top:.5cqh}
 #cap{font:600 max(1.6cqh,12px)/1.25 var(--body);color:#a8d2e4;margin-top:.5cqh;margin-left:auto;max-width:46cqw;min-height:2.5em}
-#cap b{font-family:var(--mono);font-weight:800;color:#ffb08a}
+#cap b{font-family:var(--body);font-weight:800;color:#ffb08a}
 #read.compact{display:flex;flex-direction:row-reverse;align-items:center;gap:8px}
 #read.compact #num{font-size:26px}
 #read.compact #unit{font-size:12px}
 #read.compact #cap{margin:0;max-width:34cqw;min-height:0}
-#pic .lab{font-family:var(--body);font-weight:700}
-#pic .mono{font-family:var(--mono);font-weight:600}
+#pic .lab{font-family:var(--body);font-weight:600}
 .pulse{animation:pulse 1.6s cubic-bezier(.2,.7,.3,1) infinite;transform-box:fill-box;transform-origin:center}
 @keyframes pulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.9);opacity:0}}
 .hint{animation:nudge 1.3s ease-in-out infinite}
@@ -57,6 +56,7 @@
   const svg = Kit.$('pic'), card = Kit.$('card'), say = Kit.$('say'), stage = Kit.$('stage'), read = Kit.$('read');
   const numEl = Kit.$('num'), capEl = Kit.$('cap');
   const INK = '#eaf6fb', WARM = '#ff8a5c', ICE = '#9fe3ff';
+  const PERMA = '#24526e', THAW = '#7a5232', WALL = '#4a6b80', FAR = 'color-mix(in srgb, var(--k) 10%, var(--c))';
   const S = {T: 20};
   let W, H, fs, GY, GB, D, sx0, tubeX, half, yT, yB, bulbY, bulbR, cx0, cw, hMax, compact = false, sw = 0, sh = 0;
   let el = {}, houses = [], air = [], ice = [], drips = [], steam = [], wins = [], roofs = [], thawY = 0, wph = 0, flick = 0;
@@ -71,7 +71,6 @@
   const tOf = y => 10 + (yB - y) / (yB - yT) * 30;
   const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
   const txt = (p, x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, fill: INK, class: 'lab'}, a), p); e.textContent = s; return e; };
-  const stops = (g, list) => list.forEach(([o, c, op = 1]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, g));
 
   function layout() {
     const prevTilt = houses.map(h => h.tilt);
@@ -101,28 +100,6 @@
 
     // ---------- defs ----------
     const defs = Kit.mk('defs', {}, svg);
-    let g = Kit.mk('linearGradient', {id: 'gPerma', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    stops(g, [[0, '#1f587a'], [.45, '#15405c', .95], [.8, '#0e2c42', .6], [1, '#0a2234', .1]]);
-    g = Kit.mk('linearGradient', {id: 'gThaw', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
-    stops(g, [[0, '#7a5232'], [.7, '#4f311b'], [1, '#3b2414']]);
-    g = Kit.mk('linearGradient', {id: 'gConc', x1: 0, y1: 0, x2: 1, y2: 1}, defs);
-    stops(g, [[0, '#46687f'], [1, '#1c3446']]);
-    g = Kit.mk('radialGradient', {id: 'gGlow'}, defs);
-    stops(g, [[0, '#ff7a45', .85], [.5, '#ff5a3c', .3], [1, '#ff5a3c', 0]]);
-    g = Kit.mk('radialGradient', {id: 'gHalo'}, defs);
-    stops(g, [[0, '#fff3c4', .55], [1, '#fff3c4', 0]]);
-    g = Kit.mk('radialGradient', {id: 'gSteam'}, defs);
-    stops(g, [[0, '#ffe2cc', .9], [1, '#ffe2cc', 0]]);
-    g = Kit.mk('linearGradient', {id: 'gGlass', x1: 0, y1: 0, x2: 1, y2: 0}, defs);
-    stops(g, [[0, '#eaf6fb', .14], [.5, '#eaf6fb', .03], [1, '#eaf6fb', .1]]);
-    const glow = Kit.mk('filter', {id: 'fGlow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
-    Kit.mk('feGaussianBlur', {stdDeviation: 3, result: 'b'}, glow);
-    const fm = Kit.mk('feMerge', {}, glow); Kit.mk('feMergeNode', {in: 'b'}, fm); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, fm);
-    const caus = Kit.mk('filter', {id: 'fCaus', x: 0, y: 0, width: 1, height: 1}, defs);
-    el.turb = Kit.mk('feTurbulence', {type: 'turbulence', baseFrequency: '0.012 0.028', numOctaves: 2, seed: 4, result: 'n'}, caus);
-    Kit.mk('feColorMatrix', {in: 'n', type: 'matrix', values: '0 0 0 0 .72  0 0 0 0 .93  0 0 0 0 1  1 0 0 0 0'}, caus);
-    const ct = Kit.mk('feComponentTransfer', {}, caus); Kit.mk('feFuncA', {type: 'table', tableValues: '0 0 .95 .1 0 0 0'}, ct);
-
     // the slab: a cut-away of ground with a torn left edge
     let sp = `M${W},${GY} L${sx0},${GY}`;
     for (let i = 1; i <= 9; i++) sp += ` L${(sx0 + (R() - .5) * fs * 1.3 + i * fs * .12).toFixed(1)},${(GY + D * i / 9).toFixed(1)}`;
@@ -132,34 +109,32 @@
     // ---------- sky ----------
     const sky = el.sky = Kit.mk('g', {}, svg);
     const sunX = cx0 + cw * .38, sunR = clamp(hMax * .26, 5, H * .045), sunY = GY - hMax * .6;
-    el.glowE = Kit.mk('ellipse', {cx: sunX, cy: GY, rx: cw * .5, ry: hMax * 1.2, fill: 'url(#gGlow)', opacity: .15}, sky);
-    el.halo = Kit.mk('circle', {cx: sunX, cy: sunY, r: Math.min(hMax * 1.05, sunY - 2), fill: 'url(#gHalo)'}, sky);
+    // warm air settling over the city: one flat wash that only appears with heat
+    el.glowE = Kit.mk('ellipse', {cx: sunX, cy: GY, rx: cw * .55, ry: hMax * 1.15, fill: WARM, opacity: 0}, sky);
     el.sun = Kit.mk('circle', {cx: sunX, cy: sunY, r: sunR, fill: '#fff3c4'}, sky);
-    for (let x = cx0 - fs * .5; x < W - 8;) { const w = fs * (1.4 + R() * 2.2), h = hMax * (.25 + R() * .45); Kit.mk('rect', {x, y: GY - h, width: Math.min(w, W - 2 - x), height: h, fill: '#8fc0dc', opacity: .08}, sky); x += w + fs * .3; }
+    for (let x = cx0 - fs * .5; x < W - 8;) { const w = fs * (1.4 + R() * 2.2), h = hMax * (.25 + R() * .45); Kit.mk('rect', {x, y: GY - h, width: Math.min(w, W - 2 - x), height: h, style: `fill:${FAR}`}, sky); x += w + fs * .3; }
 
     // ---------- ground ----------
     const slab = el.slab = Kit.mk('g', {}, svg);
-    Kit.mk('path', {d: sp, fill: 'url(#gPerma)'}, slab);
-    const lenses = Kit.mk('g', {'clip-path': 'url(#cSlab)', opacity: .35}, slab);
-    for (let i = 0; i < 14; i++) { const y = GY + D * (.15 + R() * .6), x = sx0 + R() * (W - sx0 - fs * 5), l = fs * (1.5 + R() * 3.5); Kit.mk('path', {d: `M${x.toFixed(1)},${y.toFixed(1)} q${(l / 2).toFixed(1)},${(-fs * .15).toFixed(1)} ${l.toFixed(1)},0`, stroke: ICE, 'stroke-width': 1, fill: 'none', 'stroke-linecap': 'round'}, lenses); }
-    el.caus = Kit.mk('rect', {x: sx0 - fs, y: GY, width: W - sx0 + fs, height: D, filter: 'url(#fCaus)', 'clip-path': 'url(#cSlab)', opacity: .34}, slab);
-    el.thaw = Kit.mk('path', {fill: 'url(#gThaw)', 'clip-path': 'url(#cSlab)'}, slab);
+    Kit.mk('path', {d: sp, fill: PERMA}, slab);
+    // ice lenses in the frozen ground: they vanish as the thaw reaches them
+    const lenses = Kit.mk('g', {'clip-path': 'url(#cSlab)'}, slab);
+    for (let i = 0; i < 18; i++) {
+      const y = GY + D * (.14 + R() * .76), x = sx0 + fs * .6 + R() * (W - sx0 - fs * 4), l = fs * (1.2 + R() * 2.6);
+      const e = Kit.mk('path', {d: `M${x.toFixed(1)},${y.toFixed(1)} q${(l / 2).toFixed(1)},${(-fs * .18).toFixed(1)} ${l.toFixed(1)},0`, stroke: '#bfe9fa', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round'}, lenses);
+      ice.push({e, y, ph: Math.PI / 2, sp: 0, o: 1});
+    }
+    el.thaw = Kit.mk('path', {fill: THAW, 'clip-path': 'url(#cSlab)'}, slab);
     // meltwater seeping down through the thawed layer
     const dg = Kit.mk('g', {'clip-path': 'url(#cSlab)'}, slab);
-    for (let i = 0; i < 14; i++) drips.push({e: Kit.mk('ellipse', {cx: 0, cy: 0, rx: 1.3, ry: 2.4, fill: '#9fd8f2', opacity: 0}, dg), x: sx0 + fs + R() * (W - sx0 - fs * 2), f: R(), v: .25 + R() * .35});
-    el.front = Kit.mk('path', {fill: 'none', stroke: '#7fc9e8', 'stroke-width': 2, filter: 'url(#fGlow)', 'clip-path': 'url(#cSlab)'}, slab);
-    const cryst = Kit.mk('g', {'clip-path': 'url(#cSlab)'}, slab);
-    for (let i = 0; i < 34; i++) {
-      const x = sx0 + fs * .8 + R() * (W - sx0 - fs * 1.6), y = GY + fs * .6 + R() * D * .8, r = 1.6 + R() * 2.6;
-      const e = Kit.mk('path', {d: `M0,${-r} L${r * .22},${-r * .22} L${r},0 L${r * .22},${r * .22} L0,${r} L${-r * .22},${r * .22} L${-r},0 L${-r * .22},${-r * .22}Z`, fill: '#dff6ff', transform: `translate(${x.toFixed(1)},${y.toFixed(1)})`}, cryst);
-      ice.push({e, y, ph: R() * 6.3, sp: .0015 + R() * .002, o: 1});
-    }
+    for (let i = 0; i < 14; i++) drips.push({e: Kit.mk('ellipse', {cx: 0, cy: 0, rx: 1.4, ry: 2.6, fill: '#9fd8f2', opacity: 0}, dg), x: sx0 + fs + R() * (W - sx0 - fs * 2), f: R(), v: .25 + R() * .35});
+    el.front = Kit.mk('path', {fill: 'none', stroke: '#7fc9e8', 'stroke-width': 2, 'stroke-linejoin': 'round', 'clip-path': 'url(#cSlab)'}, slab);
     // surface: a mossy crust with tufts
-    Kit.mk('path', {d: `M${sx0},${GY} L${W},${GY}`, stroke: '#b9d8cc', 'stroke-width': 1.6, opacity: .75}, slab);
-    el.moss = Kit.mk('g', {stroke: '#9cc7b4', 'stroke-width': 1.1, 'stroke-linecap': 'round', fill: 'none', opacity: .7}, slab);
-    for (let x = sx0 + fs * .6; x < W - 4; x += fs * (.7 + R() * 1.1)) Kit.mk('path', {d: `M${x.toFixed(1)},${GY} l${(-1 - R() * 1.5).toFixed(1)},${(-2 - R() * 3).toFixed(1)} M${x.toFixed(1)},${GY} l${(1 + R() * 1.5).toFixed(1)},${(-2 - R() * 3).toFixed(1)}`}, el.moss);
-    txt(slab, sx0 + fs * .9, GY + fs * 1.15, 'thaws in summer', {fill: '#f6dfc6', stroke: '#2a180c', 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'});
-    txt(slab, sx0 + fs * .9, clamp(GY + D * .86, GY + fs * 2.6, GB - 4), 'permafrost', {fill: '#c4ecfb', stroke: '#0c2b40', 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'});
+    Kit.mk('path', {d: `M${sx0},${GY} L${W},${GY}`, stroke: '#b9d8cc', 'stroke-width': 2}, slab);
+    el.moss = Kit.mk('g', {stroke: '#9cc7b4', 'stroke-width': 1.4, 'stroke-linecap': 'round', fill: 'none'}, slab);
+    for (let x = sx0 + fs * .6; x < W - 4; x += fs * (.9 + R() * 1.3)) Kit.mk('path', {d: `M${x.toFixed(1)},${GY} l${(-1 - R() * 1.5).toFixed(1)},${(-2 - R() * 3).toFixed(1)} M${x.toFixed(1)},${GY} l${(1 + R() * 1.5).toFixed(1)},${(-2 - R() * 3).toFixed(1)}`}, el.moss);
+    txt(slab, sx0 + fs * .9, GY + fs * 1.15, 'thaws in summer', {fill: '#f6dfc6', stroke: THAW, 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'});
+    txt(slab, sx0 + fs * .9, clamp(GY + D * .86, GY + fs * 2.6, GB - 4), 'permafrost', {fill: '#d4f1fc', stroke: PERMA, 'stroke-width': 3, 'paint-order': 'stroke', 'stroke-linejoin': 'round'});
 
     // ---------- houses on piles ----------
     const city = el.city = Kit.mk('g', {}, svg);
@@ -170,67 +145,56 @@
       const n = Math.max(3, Math.floor(w / (fs * 1.1))), tipY = GY + pd * D, tips = [];
       for (let i = 0; i < n; i++) {
         const px = x + w * (.08 + .84 * i / (n - 1));
-        Kit.mk('line', {x1: px, x2: px, y1: yb, y2: tipY, stroke: '#a9c2d2', 'stroke-width': Math.max(1.5, w * .018), 'stroke-linecap': 'round'}, inner);
-        tips.push(Kit.mk('circle', {cx: px, cy: tipY, r: 2.4, fill: ICE}, inner));
+        Kit.mk('line', {x1: px, x2: px, y1: yb, y2: tipY, stroke: '#b4c8d5', 'stroke-width': Math.max(2, w * .02), 'stroke-linecap': 'butt'}, inner);
+        tips.push(Kit.mk('circle', {cx: px, cy: tipY, r: 2.6, fill: ICE}, inner));
       }
-      Kit.mk('rect', {x, y: yb - h, width: w, height: h, fill: 'url(#gConc)'}, inner);
-      Kit.mk('rect', {x, y: yb - h, width: w * .08, height: h, fill: '#fff', opacity: .06}, inner);
-      roofs.push(Kit.mk('rect', {x: x - 1, y: yb - h - 2.5, width: w + 2, height: 3.5, rx: 1.5, fill: '#e6f6ff'}, inner));
+      Kit.mk('rect', {x, y: yb - h, width: w, height: h, fill: WALL}, inner);
+      roofs.push(Kit.mk('rect', {x: x - 1.5, y: yb - h - 3, width: w + 3, height: 4, fill: '#e6f6ff'}, inner));
       const cols = Math.max(2, Math.floor(w / (fs * .95))), rows = Math.max(1, Math.floor(h / (fs * 1.05)));
       const cwid = w / cols, rh = h * .82 / rows;
       for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
         const lit = R() < .42;
-        const e = Kit.mk('rect', {x: x + c * cwid + cwid * .25, y: yb - h + h * .12 + r * rh + rh * .2, width: cwid * .5, height: rh * .55, fill: lit ? '#ffcf7a' : '#132838', filter: lit && R() < .4 ? 'url(#fGlow)' : null}, inner);
+        const e = Kit.mk('rect', {x: x + c * cwid + cwid * .25, y: yb - h + h * .12 + r * rh + rh * .2, width: cwid * .5, height: rh * .55, fill: lit ? '#ffcf7a' : '#132838'}, inner);
         wins.push({e, lit});
       }
-      const ck = Kit.mk('path', {d: `M${x + w * (sign > 0 ? .7 : .3)},${yb - h} l${-fs * .3},${h * .25} l${fs * .35},${h * .15} l${-fs * .25},${h * .3}`, stroke: WARM, 'stroke-width': 1.6, fill: 'none', 'stroke-linejoin': 'round', opacity: 0}, inner);
+      const ck = Kit.mk('path', {d: `M${x + w * (sign > 0 ? .7 : .3)},${yb - h} l${-fs * .3},${h * .25} l${fs * .35},${h * .15} l${-fs * .25},${h * .3}`, stroke: WARM, 'stroke-width': 1.8, fill: 'none', 'stroke-linejoin': 'round', opacity: 0}, inner);
       const hs = {outer, inner, cx: x + w / 2, pd, sign, tipY, tips, crack: ck, tilt: prevTilt[hi] || 0, target: 0, shown: -1};
       houses.push(hs);
     });
 
     // ---------- steam off the warming ground ----------
     const sg = Kit.mk('g', {}, svg);
-    for (let i = 0; i < 9; i++) steam.push({e: Kit.mk('circle', {cx: 0, cy: 0, r: 0, fill: 'url(#gSteam)', opacity: 0}, sg), x: sx0 + fs + R() * (W - sx0 - fs * 2), f: R(), v: .15 + R() * .2, s: fs * (.5 + R() * .5)});
-
-    // ---------- air motes ----------
-    const motes = Kit.mk('g', {}, svg);
-    for (let i = 0; i < 26; i++) { const x = 4 + R() * (W - 8), y = 3 + R() * (GY - 6), r = .8 + R() * 1.5; air.push({e: Kit.mk('circle', {cx: x, cy: y, r, fill: '#cfefff', opacity: .5}, motes), x, y, ph: R() * 6.3, v: .6 + R() * .8}); }
+    for (let i = 0; i < 9; i++) steam.push({e: Kit.mk('circle', {cx: 0, cy: 0, r: 0, fill: '#f3e3d6', opacity: 0}, sg), x: sx0 + fs + R() * (W - sx0 - fs * 2), f: R(), v: .15 + R() * .2, s: fs * (.5 + R() * .5)});
 
     // ---------- thermometer ----------
     const th = el.th = Kit.mk('g', {}, svg);
-    for (let t = 10; t <= 40; t++) {
-      const y = yOf(t), big = t % 5 === 0;
-      Kit.mk('line', {x1: tubeX - half - (big ? 7 : 3.5), x2: tubeX - half - 1.5, y1: y, y2: y, stroke: INK, 'stroke-width': big ? 1.4 : .8, opacity: big ? .8 : .4}, th);
-      if (t % 10 === 0) txt(th, tubeX - half - 10, y + fs * .35, `+${t}`, {'text-anchor': 'end', class: 'mono', opacity: .8});
+    for (let t = 10; t <= 40; t += 5) {
+      const y = yOf(t), big = t % 10 === 0;
+      Kit.mk('line', {x1: tubeX - half - (big ? 7 : 4), x2: tubeX - half - 1.5, y1: y, y2: y, stroke: INK, 'stroke-width': 1.4, opacity: big ? .8 : .5}, th);
+      if (big) txt(th, tubeX - half - 10, y + fs * .35, `+${t}`, {'text-anchor': 'end', opacity: .8});
     }
-    Kit.mk('rect', {x: tubeX - half, y: yT - half * 1.4, width: half * 2, height: bulbY - yT + half * 1.4, rx: half, fill: 'url(#gGlass)', stroke: INK, 'stroke-opacity': .45, 'stroke-width': 1.3}, th);
-    Kit.mk('circle', {cx: tubeX, cy: bulbY, r: bulbR + 2.5, fill: 'url(#gGlass)', stroke: INK, 'stroke-opacity': .45, 'stroke-width': 1.3}, th);
-    el.merc = Kit.mk('rect', {x: tubeX - half * .55, width: half * 1.1, rx: half * .55, fill: '#8fdcff', filter: 'url(#fGlow)'}, th);
-    el.bulb = Kit.mk('circle', {cx: tubeX, cy: bulbY, r: bulbR - 1, fill: '#8fdcff', filter: 'url(#fGlow)'}, th);
-    Kit.mk('line', {x1: tubeX - half * .45, x2: tubeX - half * .45, y1: yT, y2: yB, stroke: '#fff', 'stroke-opacity': .3, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, th);
-    Kit.mk('circle', {cx: tubeX - bulbR * .35, cy: bulbY - bulbR * .35, r: bulbR * .22, fill: '#fff', opacity: .45}, th);
+    Kit.mk('rect', {x: tubeX - half, y: yT - half * 1.4, width: half * 2, height: bulbY - yT + half * 1.4, rx: half, style: 'fill:color-mix(in srgb, var(--k) 12%, var(--c))', stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.6}, th);
+    Kit.mk('circle', {cx: tubeX, cy: bulbY, r: bulbR + 2.5, style: 'fill:color-mix(in srgb, var(--k) 12%, var(--c))', stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.6}, th);
+    el.merc = Kit.mk('rect', {x: tubeX - half * .55, width: half * 1.1, rx: half * .55, fill: '#8fdcff'}, th);
+    el.bulb = Kit.mk('circle', {cx: tubeX, cy: bulbY, r: bulbR - 1, fill: '#8fdcff'}, th);
     const y20 = yOf(20), mx = tubeX + half * 2.6;
-    Kit.mk('line', {x1: tubeX + half + 2, x2: mx - 3, y1: y20, y2: y20, stroke: INK, 'stroke-width': 1.3, opacity: .7, 'stroke-dasharray': '2 2'}, th);
+    Kit.mk('line', {x1: tubeX + half + 2, x2: mx - 3, y1: y20, y2: y20, stroke: INK, 'stroke-width': 1.4, opacity: .7}, th);
     txt(th, mx, y20 + fs * .35, 'usual', {opacity: .85});
     const y35 = yOf(35), y38 = yOf(38);
     el.band = Kit.mk('g', {opacity: 0}, th);
-    el.bracket = Kit.mk('path', {d: `M${mx + 5},${y38} H${mx} V${y35} H${mx + 5}`, stroke: WARM, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', filter: 'url(#fGlow)'}, el.band);
-    if (!compact) txt(el.band, mx + fs * .7, (y35 + y38) / 2 + fs * .35, 'recent spikes', {fill: '#ffb08a', 'font-weight': 800});
+    el.bracket = Kit.mk('path', {d: `M${mx + 5},${y38} H${mx} V${y35} H${mx + 5}`, stroke: WARM, 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, el.band);
+    if (!compact) txt(el.band, mx + fs * .7, (y35 + y38) / 2 + fs * .35, 'recent spikes', {fill: '#ffb08a'});
     el.burstR = Math.max(half, Math.min(fs * 4, y38 - 2, tubeX - 2));
     el.burst = Kit.mk('circle', {cx: tubeX, cy: y38, r: 0, fill: 'none', stroke: '#ffb08a', 'stroke-width': 3, opacity: 0}, th);
     el.handle = Kit.mk('g', {}, th);
     Kit.mk('circle', {r: half * 2, fill: 'none', stroke: '#ffd8b8', 'stroke-width': 2, class: 'pulse'}, el.handle);
-    Kit.mk('circle', {r: half * 1.5, fill: 'rgba(10,34,52,.35)', stroke: INK, 'stroke-width': 2}, el.handle);
+    Kit.mk('circle', {r: half * 1.5, style: 'fill:var(--c)', stroke: INK, 'stroke-width': 2}, el.handle);
     Kit.mk('circle', {r: half * .55, fill: INK}, el.handle);
     el.hint = Kit.mk('path', {d: `M${-half * .8},${-half * 2.6} l${half * .8},${-half * .9} l${half * .8},${half * .9}`, stroke: INK, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', class: 'hint', opacity: touched ? 0 : 1}, el.handle);
 
     built = true;
     render();
     houses.forEach(h => { h.target = target(h); if (Kit.calm || !looping) h.tilt = h.target; h.shown = -1; applyHouse(h); });
-    if (!Kit.calm && hasG) {
-      const cz = {f: 0};
-      caustTw = gsap.to(cz, {f: 1, duration: 8, ease: 'sine.inOut', yoyo: true, repeat: -1, onUpdate: () => el.turb.setAttribute('baseFrequency', `${(.012 + .005 * cz.f).toFixed(4)} ${(.028 - .008 * cz.f).toFixed(4)}`)});
-    }
     startLoop();
   }
 
@@ -253,11 +217,10 @@
     thawY = GY + thawFrac(T) * D;
     drawThaw();
     el.front.setAttribute('stroke', col('#7fc9e8', '#ff7a45', k));
-    el.glowE.setAttribute('opacity', (.12 + .88 * Math.pow(k, 1.3)).toFixed(3));
+    el.glowE.setAttribute('opacity', (.3 * Math.pow(k, 1.3)).toFixed(3));
     el.sun.setAttribute('fill', col('#fff3c4', '#ff8a4a', k));
-    el.halo.setAttribute('opacity', (.5 + .5 * k).toFixed(3));
     el.moss.setAttribute('stroke', col('#9cc7b4', '#c9a06a', k));
-    roofs.forEach(r => r.setAttribute('fill', col('#e6f6ff', '#9db3c2', Math.min(1, k * 2.2))));
+    roofs.forEach(r => r.setAttribute('fill', col('#e6f6ff', '#6f8a9c', Math.min(1, k * 2.2))));
     el.band.setAttribute('opacity', revealed ? 1 : (clamp((T - 33) / 3, 0, 1) * .85).toFixed(3));
     houses.forEach(h => {
       h.target = target(h);

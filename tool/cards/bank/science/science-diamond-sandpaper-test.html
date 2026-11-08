@@ -13,9 +13,7 @@
 #wrap{flex:1;min-height:0;position:relative}
 #pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;color:var(--k)}
 #why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
-.spark{transform-box:fill-box;transform-origin:center;animation:tw 1.8s ease-in-out infinite}
-@keyframes tw{0%,100%{transform:scale(.55);opacity:.5}50%{transform:scale(1.1);opacity:1}}
-@media (prefers-reduced-motion:reduce){.spark{animation:none}}
+.spark{transition:opacity .2s linear}
 </style>
 <article class="card" id="card" data-topic="science" data-kind="Try it · rub and see">
   <div class="in">
@@ -59,33 +57,33 @@ function build() {
   const tipY = gy - gh * .55;
   const s = Math.max(40, Math.min(W * .42, (tipY - fs * 4.4) / .74));
   const x0 = W * .03, x1 = W * .97;
-  const ns = 'http://www.w3.org/2000/svg';
   const defs = Kit.mk('defs', {}, svg);
   const cp = Kit.mk('clipPath', {id: 'pav'}, defs);
   Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${.5*s},${-.5*s} 0,0`}, cp);
-  // sandpaper body
-  Kit.mk('rect', {x: x0, y: gy, width: x1 - x0, height: H * .97 - gy, rx: 6, fill: '#6b5440'}, svg);
-  const sp = Kit.mk('g', {}, svg);
-  SPECK.forEach(d => Kit.mk('circle', {cx: x0 + d.x * (x1 - x0), cy: gy + 4 + d.y * (H * .97 - gy - 8), r: d.r * 1.4, fill: d.r > .9 ? '#3a2d22' : '#8d7259'}, sp));
-  // grit bumps
-  const grit = GRIT.map(() => Kit.mk('path', {}, svg));
+  const sw = Math.max(1.5, s * .014);
+  // sandpaper sheet: flat paper backing, grit along its face
+  Kit.mk('rect', {x: x0, y: gy, width: x1 - x0, height: H * .97 - gy, rx: 4, fill: '#c99a5b', stroke: 'currentColor', 'stroke-width': sw * .9, 'stroke-linejoin': 'round'}, svg);
+  // grit grains
+  const grit = GRIT.map(() => Kit.mk('path', {'stroke-linejoin': 'round'}, svg));
   // stone
   const stone = Kit.mk('g', {}, svg);
-  const sw = Math.max(1.5, s * .014);
-  Kit.mk('ellipse', {cx: 0, cy: gh * .3, rx: s * .3, ry: gh * .25, fill: '#000', opacity: .18}, stone);
-  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${-.28*s},${-.72*s} ${.28*s},${-.72*s} ${.5*s},${-.5*s}`, fill: '#eef8ff'}, stone);
-  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} 0,${-.5*s} 0,0`, fill: '#b9daf1'}, stone);
-  Kit.mk('polygon', {points: `0,${-.5*s} ${.5*s},${-.5*s} 0,0`, fill: '#e2f1fb'}, stone);
+  const lite = 'color-mix(in srgb, var(--k) 14%, #ffffff)';
+  const mid = 'color-mix(in srgb, var(--k) 7%, #ffffff)';
+  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${-.28*s},${-.72*s} ${.28*s},${-.72*s} ${.5*s},${-.5*s}`, fill: mid}, stone);
+  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} 0,${-.5*s} 0,0`, fill: lite}, stone);
+  Kit.mk('polygon', {points: `0,${-.5*s} ${.5*s},${-.5*s} 0,0`, fill: '#ffffff'}, stone);
   Kit.mk('polygon', {points: `${-.28*s},${-.72*s} 0,${-.5*s} ${.28*s},${-.72*s}`, fill: '#ffffff'}, stone);
   const scr = Kit.mk('g', {'clip-path': 'url(#pav)'}, stone);
-  const scLines = SCR.map(d => Kit.mk('line', {x1: (d.u - d.dx / 2) * s, y1: -(d.v - d.dy / 2) * s, x2: (d.u + d.dx / 2) * s, y2: -(d.v + d.dy / 2) * s, stroke: '#4a5560', 'stroke-width': Math.max(1, s * .008), 'stroke-linecap': 'round', opacity: 0}, scr));
+  const scLines = SCR.map(d => Kit.mk('line', {x1: (d.u - d.dx / 2) * s, y1: -(d.v - d.dy / 2) * s, x2: (d.u + d.dx / 2) * s, y2: -(d.v + d.dy / 2) * s, stroke: 'currentColor', 'stroke-width': Math.max(1, s * .008), 'stroke-linecap': 'round', opacity: 0}, scr));
   const frost = Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${.5*s},${-.5*s} 0,0`, fill: '#ffffff', opacity: 0}, stone);
-  const L = (a, b, c, d) => Kit.mk('line', {x1: a * s, y1: b * s, x2: c * s, y2: d * s, stroke: 'currentColor', 'stroke-width': sw * .6, opacity: .55}, stone);
+  const L = (a, b, c, d) => Kit.mk('line', {x1: a * s, y1: b * s, x2: c * s, y2: d * s, stroke: 'currentColor', 'stroke-width': sw * .55, 'stroke-linecap': 'round'}, stone);
   L(-.28, -.72, -.25, -.5); L(.28, -.72, .25, -.5); L(0, 0, -.25, -.5); L(0, 0, .25, -.5);
   Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${-.28*s},${-.72*s} ${.28*s},${-.72*s} ${.5*s},${-.5*s} 0,0`, fill: 'none', stroke: 'currentColor', 'stroke-width': sw, 'stroke-linejoin': 'round'}, stone);
-  Kit.mk('line', {x1: -.5 * s, y1: -.5 * s, x2: .5 * s, y2: -.5 * s, stroke: 'currentColor', 'stroke-width': sw}, stone);
-  const k = s * .07;
-  const spark = Kit.mk('path', {class: 'spark', d: `M${-.16*s},${-.66*s-k} L${-.16*s+k*.25},${-.66*s-k*.25} L${-.16*s+k},${-.66*s} L${-.16*s+k*.25},${-.66*s+k*.25} L${-.16*s},${-.66*s+k} L${-.16*s-k*.25},${-.66*s+k*.25} L${-.16*s-k},${-.66*s} L${-.16*s-k*.25},${-.66*s-k*.25} Z`, fill: '#fff', stroke: '#9cc8e8', 'stroke-width': 1}, stone);
+  Kit.mk('line', {x1: -.5 * s, y1: -.5 * s, x2: .5 * s, y2: -.5 * s, stroke: 'currentColor', 'stroke-width': sw, 'stroke-linecap': 'round'}, stone);
+  // shine strokes beside the crown: the stone's brilliance (fades as a fake goes dull)
+  const cx = -.5 * s, cy = -.72 * s, r0 = s * .08, r1 = s * .2;
+  const ray = a => { const c = Math.cos(a), n = Math.sin(a); return `M${cx + c * r0},${cy + n * r0} L${cx + c * r1},${cy + n * r1}`; };
+  const spark = Kit.mk('path', {class: 'spark', d: [ray(-Math.PI * .58), ray(-Math.PI * .78), ray(-Math.PI * .98)].join(' '), fill: 'none', stroke: 'currentColor', 'stroke-width': sw, 'stroke-linecap': 'round'}, stone);
   // labels
   const t1 = Kit.mk('text', {x: W * .03, y: fs * 1.3, fill: 'currentColor', style: `font:700 ${fs}px var(--body)`}, svg);
   const t2 = Kit.mk('text', {x: W * .03, y: fs * 3.0, fill: 'currentColor', style: `font:700 ${fs}px var(--body)`}, svg);
@@ -93,7 +91,7 @@ function build() {
   render();
 }
 
-const col = gsap.utils.interpolate('#2a211b', '#b3a698');
+const col = gsap.utils.interpolate('#2b231c', '#ecdcb8');
 function render() {
   if (!G) return;
   const {W, gy, gh, tipY, s, x0, x1} = G, st = S.st[S.mode], p = Math.min(1, st.dist);

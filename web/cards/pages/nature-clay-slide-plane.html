@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-clay-slide-plane -->
-<!-- Look: a geological survey sheet on cream paper. Tilted rock strata carry contour lines and elevation tints, and the town of Niscemi sits on the plateau.
-     Interaction: each tap on the sky drops a springy cloud and rain. The water soaks the rock, which darkens to wet sand speckled with pore water, sinks to the clay and stops. The clay turns into a glossy film, and two gauges (weight above, clay grip) close in.
-     Wow: the gauges cross, the rock shudders, a crack snaps open and the whole slab slides off down the wet clay with an elastic jolt, while the slide plane draws itself as a dashed route. -->
+<!-- Look: a printed cross-section from a science book. Flat strata in tints of the card's ink, a grey-blue clay layer and the town of Niscemi on the plateau. Two arrows drawn inside the slab show the weight pulling it downhill and the clay's grip holding it back.
+     Interaction: each tap on the sky drops a springy cloud and rain. The water soaks the rock, which takes on a flat wet tint as it fills, sinks to the clay and stops. The clay gets a film of water on top. The weight arrow grows and the grip arrow shrinks.
+     Wow: the weight wins, the rock shudders, a crack snaps open and the whole slab slides off down the wet clay with an elastic jolt, while the slide plane draws itself as a dashed route. -->
 <title>The slippery layer</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -10,8 +10,17 @@
 <style>
 #stage{display:flex;flex:1;min-height:0}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer;overflow:hidden}
-.lab{font-family:var(--mono);font-weight:700}
-.halo{paint-order:stroke;stroke:#f1e9d6;stroke-width:3.5px;stroke-linejoin:round}
+.lab{font-family:var(--body);font-weight:600}
+.halo{paint-order:stroke;stroke:var(--c);stroke-width:3px;stroke-linejoin:round}
+#pic .rA{fill:color-mix(in srgb,var(--k) 13%,var(--c))}
+#pic .rB{fill:color-mix(in srgb,var(--k) 27%,var(--c))}
+#pic .deep{fill:color-mix(in srgb,var(--k) 40%,var(--c))}
+#pic .roof{fill:color-mix(in srgb,var(--k) 68%,var(--c))}
+#pic .tree{fill:color-mix(in srgb,var(--k) 55%,var(--c))}
+#pic .cloudf{fill:color-mix(in srgb,var(--k) 32%,var(--c))}
+#pic .paper{fill:var(--c)}
+#pic .ink{fill:var(--k)}
+#pic .clayf{fill:#8b98a5}
 .flow{animation:flow 1.1s linear infinite}
 @keyframes flow{to{stroke-dashoffset:-14}}
 .pulse{animation:pulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
@@ -44,7 +53,7 @@
   let W = 0, H = 0, fs = 12, G = {}, R = {};
   const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
   const mk = (t, a, p) => Kit.mk(t, a, p);
-  const txt = (p, x, y, t, a = {}) => { const e = mk('text', Object.assign({x, y, class: 'lab halo', 'font-size': fs, fill: INK}, a), p); e.textContent = t; return e; };
+  const txt = (p, x, y, t, a = {}) => { const e = mk('text', Object.assign({x, y, class: 'lab', 'font-size': fs, fill: INK}, a), p); e.textContent = t; return e; };
 
   // ---------- the hill ----------
   function geo() {
@@ -60,52 +69,39 @@
   const line = (F, x0 = 0, x1 = W, n = 80) => 'M' + pts(F, x0, x1, n).join('L');
   const band = (T, B, x0 = 0, x1 = W, n = 80) => 'M' + pts(T, x0, x1, n).join('L') + 'L' + pts(B, x0, x1, n).reverse().join('L') + 'Z';
 
-  function house(g, x, w, h, roof) {
+  function house(g, x, w, h) {
     const y0 = Math.min(S(x), S(x + w)), y1 = Math.max(S(x), S(x + w)) + 1.5, top = y0 - h;
-    mk('rect', {x, y: top, width: w, height: y1 - top, fill: '#fbf5e6', stroke: INK, 'stroke-width': .9}, g);
-    mk('rect', {x: x + w * .62, y: top, width: w * .38, height: y1 - top, fill: INK, opacity: .12}, g);
-    mk('path', {d: `M${x - 1.5},${top}L${x + w * .5},${top - h * .5}L${x + w + 1.5},${top}Z`, fill: roof, stroke: INK, 'stroke-width': .9, 'stroke-linejoin': 'round'}, g);
-    mk('rect', {x: x + w * .2, y: top + h * .3, width: w * .22, height: h * .28, fill: INK, opacity: .7}, g);
+    mk('rect', {x, y: top, width: w, height: y1 - top, class: 'paper', stroke: INK, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, g);
+    mk('path', {d: `M${x - 2},${top}L${x + w * .5},${top - h * .5}L${x + w + 2},${top}Z`, class: 'roof', stroke: INK, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, g);
+    mk('rect', {x: x + w * .22, y: top + h * .3, width: w * .22, height: h * .3, class: 'ink'}, g);
   }
   function tree(g, x, h) {
     const y = S(x);
-    mk('line', {x1: x, x2: x, y1: y + 1, y2: y - h * .3, stroke: INK, 'stroke-width': 1.2}, g);
-    mk('ellipse', {cx: x, cy: y - h * .62, rx: h * .17, ry: h * .42, fill: '#4b6a3c', stroke: INK, 'stroke-width': .8}, g);
-    mk('ellipse', {cx: x - h * .05, cy: y - h * .72, rx: h * .05, ry: h * .2, fill: '#8fae6e', opacity: .55}, g);
+    mk('line', {x1: x, x2: x, y1: y + 1, y2: y - h * .3, stroke: INK, 'stroke-width': 1.4, 'stroke-linecap': 'round'}, g);
+    mk('ellipse', {cx: x, cy: y - h * .62, rx: h * .17, ry: h * .42, class: 'tree', stroke: INK, 'stroke-width': 1.1}, g);
   }
 
   // Everything above the clay, drawn twice: once for the part that stays, once for the slab that will go.
   function upper(g) {
     const {tA} = G, hw = Math.max(14, W * .05), hh = hw * .78;
-    mk('path', {d: band(S, x => S(x) + tA), fill: '#e5c590'}, g);
-    mk('path', {d: band(S, x => S(x) + tA), fill: 'url(#dots)'}, g);
-    mk('path', {d: band(x => S(x) + tA, C), fill: '#c99b64'}, g);
-    mk('path', {d: band(x => S(x) + tA, C), fill: 'url(#dots2)'}, g);
-    // Soaking: the rock darkens to wet sand, warm, never grey.
-    R.dark.push(mk('path', {d: band(S, C), fill: '#4a2c14', opacity: 0}, g));
-    R.water.push(mk('path', {fill: '#3d6fa3', 'fill-opacity': .13}, g));
-    R.water.push(mk('path', {fill: 'url(#pore)'}, g));
-    [.36, .7].forEach((q, i) => mk('path', {d: line(x => S(x) + tA * q + Math.sin(x * .045 + i * 2) * 1.3), stroke: INK, 'stroke-opacity': .16, 'stroke-width': .8, fill: 'none'}, g));
-    mk('path', {d: line(x => S(x) + tA + G.tB * .5 + Math.sin(x * .05 + 1) * 1.2), stroke: INK, 'stroke-opacity': .16, 'stroke-width': .8, fill: 'none'}, g);
-    mk('path', {d: line(x => S(x) + tA), stroke: INK, 'stroke-opacity': .45, 'stroke-width': 1, fill: 'none'}, g);
-    R.wedge.push(mk('path', {fill: 'none', stroke: WATER, 'stroke-width': 1.6, 'stroke-opacity': .85, 'stroke-dasharray': '5 3'}, g));
-    [.015, .075, .135, .19].forEach((p, i) => house(g, W * p, hw, hh * (i % 2 ? 1.15 : 1), i % 3 ? '#b4532e' : '#9c4527'));
+    mk('path', {d: band(S, x => S(x) + tA), class: 'rA'}, g);
+    mk('path', {d: band(x => S(x) + tA, C), class: 'rB'}, g);
+    // Soaking: the rock darkens as it fills with water.
+    R.dark.push(mk('path', {d: band(S, C), fill: INK, opacity: 0}, g));
+    R.water.push(mk('path', {fill: WATER, 'fill-opacity': .2}, g));
+    mk('path', {d: line(x => S(x) + tA), stroke: INK, 'stroke-opacity': .5, 'stroke-width': 1.1, fill: 'none'}, g);
+    R.wedge.push(mk('path', {fill: 'none', stroke: WATER, 'stroke-width': 1.8, 'stroke-dasharray': '5 3'}, g));
+    [.015, .075, .135, .19].forEach((p, i) => house(g, W * p, hw, hh * (i % 2 ? 1.15 : 1)));
     tree(g, W * .262, hh * 2.1);
-    house(g, W * .445, hw, hh * 1.1, '#b4532e'); house(g, W * .52, hw * .9, hh, '#9c4527');
+    house(g, W * .445, hw, hh * 1.1); house(g, W * .52, hw * .9, hh);
     [.63, .745, .86].forEach(p => tree(g, W * p, hh * (1.6 + (p * 7 % 1) * .6)));
-    // Elevation tint along the ground: ochre on the plateau, greener down the valley.
-    mk('path', {d: line(S), stroke: 'url(#tint)', 'stroke-width': Math.max(4, H * .014), fill: 'none'}, g);
-    mk('path', {d: line(x => S(x) - Math.max(2, H * .007)), stroke: INK, 'stroke-width': .9, 'stroke-opacity': .55, fill: 'none'}, g);
-    // Grass tufts on the slope.
-    for (let x = W * .3; x < W - 6; x += W * .055) {
-      const y = S(x) - 2;
-      mk('path', {d: `M${x - 2.5},${y}l1.5,-4M${x},${y}v-5M${x + 2.5},${y}l-1.2,-4`, stroke: '#3f5f31', 'stroke-width': .9, 'stroke-linecap': 'round', fill: 'none'}, g);
-    }
+    mk('path', {d: line(S), stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round', fill: 'none'}, g);
   }
 
   function cloud(g, r) {
-    [[-.85, .2, .58], [0, -.18, .82], [.85, .15, .6], [.4, .35, .55], [-.35, .38, .55]].forEach(([dx, dy, rr]) => mk('circle', {cx: dx * r, cy: dy * r, r: rr * r, fill: '#6b7a8c', stroke: INK, 'stroke-width': .9}, g));
-    [[-.15, -.4, .38], [.62, -.08, .26]].forEach(([dx, dy, rr]) => mk('circle', {cx: dx * r, cy: dy * r, r: rr * r, fill: '#9eabba'}, g));
+    const puffs = [[-.85, .2, .58], [0, -.18, .82], [.85, .15, .6], [.4, .35, .55], [-.35, .38, .55]];
+    puffs.forEach(([dx, dy, rr]) => mk('circle', {cx: dx * r, cy: dy * r, r: rr * r, class: 'cloudf', stroke: INK, 'stroke-width': 2.2}, g));
+    puffs.forEach(([dx, dy, rr]) => mk('circle', {cx: dx * r, cy: dy * r, r: rr * r, class: 'cloudf'}, g));
   }
 
   function layout() {
@@ -118,34 +114,21 @@
     const {xc, c, tC} = G, P0 = [xc, S(xc)], P1 = [xc + c, C(xc + c)];
     const defs = mk('defs', {}, svg);
     defs.innerHTML = `
-      <pattern id="dots" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".9" fill="#7a5a30" opacity=".38"/><circle cx="6.5" cy="7" r=".6" fill="#7a5a30" opacity=".3"/></pattern>
-      <pattern id="dots2" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="2" r=".7" fill="#5a3d1e" opacity=".35"/><path d="M4 5.5h2" stroke="#5a3d1e" stroke-width=".6" opacity=".3"/></pattern>
-      <pattern id="pore" width="11" height="10" patternUnits="userSpaceOnUse"><path d="M3 2.2q1.3 1.8 0 2.6q-1.3-.8 0-2.6Z" fill="#2f74c0" opacity=".6"/><path d="M8.5 6.8q1 1.4 0 2q-1-.6 0-2Z" fill="#2f74c0" opacity=".45"/></pattern>
-      <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><path d="M0 0V8" stroke="#2b241c" stroke-width=".7" opacity=".16"/></pattern>
-      <linearGradient id="tint" gradientUnits="userSpaceOnUse" x1="0" x2="${W}" y1="0" y2="0"><stop offset="0" stop-color="#a8934f"/><stop offset=".38" stop-color="#93a057"/><stop offset="1" stop-color="#557f3e"/></linearGradient>
-      <linearGradient id="clayg" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="${G.Ytop}" y2="${H}"><stop offset="0" stop-color="#9aa4b0"/><stop offset="1" stop-color="#78838f"/></linearGradient>
       <clipPath id="vp" clipPathUnits="userSpaceOnUse"><rect x="0" y="0" width="${W}" height="${H}"/></clipPath>
       <clipPath id="cs" clipPathUnits="userSpaceOnUse"><path d="M0,0L${P0[0]},0L${P0[0]},${P0[1]}L${P1[0]},${P1[1]}L${W},${C(W)}L${W},${H}L0,${H}Z"/></clipPath>
       <clipPath id="cm" clipPathUnits="userSpaceOnUse"><path d="M${P0[0]},0L${W},0L${W},${Math.min(H, C(W))}L${P1[0]},${P1[1]}L${P0[0]},${P0[1]}Z"/></clipPath>
       <clipPath id="rc" clipPathUnits="userSpaceOnUse"><rect id="rrect" x="${xc}" y="0" width="0" height="${H}"/></clipPath>`;
     R.rrect = defs.querySelector('#rrect');
 
-    // Survey crosses, the sheet's title.
-    const grid = mk('g', {opacity: .28}, svg);
-    for (let gx = W / 6; gx < W; gx += W / 6) for (let gy = H * .12; gy < H; gy += H * .17) if (gy < S(gx) - 8) mk('path', {d: `M${gx - 4},${gy}h8M${gx},${gy - 4}v8`, stroke: INK, 'stroke-width': .8}, grid);
-    R.title = txt(svg, 6, fs + 4, 'SECTION A — A′', {opacity: .7, 'letter-spacing': '.08em'});
-
-    // The deep rock, with contour lines like a topographic sheet.
+    // The deep rock, with a few bedding lines that follow the tilt.
     const bed = mk('g', {}, svg); R.entr.push(bed);
-    mk('path', {d: band(x => C(x) + tC, () => H), fill: '#a3815f'}, bed);
-    mk('path', {d: band(x => C(x) + tC, () => H), fill: 'url(#hatch)'}, bed);
-    const sp = Math.max(11, H * .035);
-    for (let i = 1; C(0) + tC + i * sp < H - 2; i++) mk('path', {d: line(x => C(x) + tC + i * sp + Math.sin(x * .03 + i) * 1.6), stroke: INK, 'stroke-opacity': i % 4 ? .1 : .22, 'stroke-width': i % 4 ? .8 : 1.2, fill: 'none'}, bed);
+    mk('path', {d: band(x => C(x) + tC, () => H), class: 'deep'}, bed);
+    const sp = Math.max(24, H * .085);
+    for (let i = 1; i <= 3 && C(0) + tC + i * sp < H - 2; i++) mk('path', {d: line(x => C(x) + tC + i * sp), stroke: INK, 'stroke-opacity': .2, 'stroke-width': 1, fill: 'none'}, bed);
 
     // The clay.
     const clay = mk('g', {}, svg); R.entr.push(clay);
-    mk('path', {d: band(C, x => C(x) + tC), fill: 'url(#clayg)', stroke: INK, 'stroke-width': .9, 'stroke-opacity': .5}, clay);
-    mk('path', {d: line(x => C(x) + tC * .5 + Math.sin(x * .06) * 1), stroke: '#4c5561', 'stroke-opacity': .35, 'stroke-width': .8, fill: 'none', 'stroke-dasharray': '10 4'}, clay);
+    mk('path', {d: band(C, x => C(x) + tC), class: 'clayf', stroke: INK, 'stroke-width': 1.1, 'stroke-opacity': .7}, clay);
 
     // Above the clay: the part that stays and the slab that goes (kept inside the sheet).
     const wrap = mk('g', {'clip-path': 'url(#vp)'}, svg); R.entr.push(wrap);
@@ -153,15 +136,25 @@
     R.mass = mk('g', {}, wrap);
     upper(mk('g', {'clip-path': 'url(#cm)'}, R.mass));
 
-    // The water stopped by the clay: a glossy film.
+    // Two arrows inside the slab: the weight pulling it downhill, the clay's grip holding it back.
+    // The weight's label sits above the arrow, the grip's label below it, on the clay side.
+    const [dx0, dy0] = G.dir, ang = Math.atan2(dy0, dx0) * 180 / Math.PI, ax = W * .70, ay = S(ax) + (G.tA + G.tB) * .5;
+    const chip = mk('g', {transform: `translate(${ax.toFixed(1)},${ay.toFixed(1)}) rotate(${ang.toFixed(2)})`}, R.mass); R.entr.push(chip); R.chip = chip;
+    R.fl = Math.min(W * .19, 120); R.bw = R.fl;
+    R.load = mk('path', {class: 'ink', stroke: INK, 'stroke-width': 1, 'stroke-linejoin': 'round'}, chip);
+    R.grip = mk('path', {class: 'clayf', stroke: INK, 'stroke-width': 1.1, 'stroke-linejoin': 'round'}, chip);
+    txt(chip, 4, -fs * .75, 'Weight above clay');
+    txt(chip, -4, fs * 1.6, 'Clay grip', {'text-anchor': 'end'});
+
+    // The water stopped by the clay: a film on top of it.
     const filmG = mk('g', {'clip-path': 'url(#vp)'}, svg);
     R.film = mk('path', {d: line(C), stroke: WATER, fill: 'none', 'stroke-width': 0}, filmG);
-    R.gloss = mk('path', {d: line(x => C(x) - 1.3), stroke: '#e6f2ff', fill: 'none', 'stroke-width': 1, opacity: 0}, filmG);
-    R.flow = mk('path', {d: line(C), stroke: '#cfe6ff', fill: 'none', 'stroke-width': 1.6, 'stroke-dasharray': '2 12', 'stroke-linecap': 'round', class: 'flow', opacity: 0}, filmG);
+    R.gloss = mk('path', {d: '', fill: 'none', opacity: 0}, filmG);
+    R.flow = mk('path', {d: line(C), stroke: '#1d4f8a', fill: 'none', 'stroke-width': 1.6, 'stroke-dasharray': '2 12', 'stroke-linecap': 'round', class: 'flow', opacity: 0}, filmG);
 
     // The crack, waiting.
     const mx = (P0[0] + P1[0]) / 2 - 3, my = (P0[1] + P1[1]) / 2;
-    R.crack = mk('path', {d: `M${P0[0]},${P0[1]}L${mx + 5},${my - (P1[1] - P0[1]) * .2}L${mx},${my + 3}L${P1[0]},${P1[1]}`, stroke: INK, 'stroke-width': 2.2, fill: 'none', 'stroke-linejoin': 'round'}, svg);
+    R.crack = mk('path', {d: `M${P0[0]},${P0[1]}L${mx + 5},${my - (P1[1] - P0[1]) * .2}L${mx},${my + 3}L${P1[0]},${P1[1]}`, stroke: INK, 'stroke-width': 2.4, fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
     R.crackLen = R.crack.getTotalLength();
     R.crack.style.strokeDasharray = R.crackLen; R.crack.style.strokeDashoffset = R.crackLen;
     R.P = [P0, [mx, my], P1];
@@ -175,48 +168,45 @@
 
     // Labels: the layers on the plateau, the town, the callouts in the deep rock.
     const lab = mk('g', {}, svg);
-    txt(lab, 6, G.Ytop + G.tA * .5 + fs * .36, 'ROCK', {opacity: .85});
-    txt(lab, 6, G.Ytop + G.tA + G.tB * .5 + fs * .36, 'ROCK', {opacity: .85});
-    txt(lab, 6, C(0) + tC * .5 + fs * .36, 'CLAY', {fill: '#1f2833'});
+    txt(lab, 6, G.Ytop + G.tA * .5 + fs * .36, 'Rock');
+    txt(lab, 6, G.Ytop + G.tA + G.tB * .5 + fs * .36, 'Rock');
+    txt(lab, 6, C(0) + tC * .5 + fs * .36, 'Clay');
     const hh = Math.max(14, W * .05) * .78;
-    txt(lab, 6, G.Ytop - hh * 1.6 - 6, 'NISCEMI', {'letter-spacing': '.28em', opacity: .9});
+    txt(lab, 6, G.Ytop - hh * 1.6 - 6, 'Niscemi');
     // Two callouts on separate rows, never shown together.
-    const LS = fs * 1.65;                       // line spacing inside a callout
+    const LS = fs * 1.4;                        // line spacing inside a callout
     const floorY = C(0) + tC + fs * 1.6;
     const yA = Math.max(floorY, Math.min(H * .64, H - fs * 5.4)), yB = yA + fs * 3;
     const call = (x, y1, l1, l2, color) => {
       const g = mk('g', {opacity: 0, style: 'display:none'}, lab);
-      mk('path', {d: `M${x},${y1 - fs * 1.15}V${C(x) + tC * .2}`, stroke: INK, 'stroke-width': 1.1, 'stroke-dasharray': '2 3'}, g);
-      mk('circle', {cx: x, cy: C(x), r: 3.4, fill: color, stroke: PAPER, 'stroke-width': 1.4}, g);
-      txt(g, 6, y1, l1, {fill: color === WATER ? '#1d4f8a' : INK});
-      txt(g, 6, y1 + LS, l2, {'font-weight': 500});
+      mk('path', {d: `M${x},${y1 - fs * 1.15}V${C(x) + tC * .2}`, stroke: INK, 'stroke-width': 1.2}, g);
+      mk('circle', {cx: x, cy: C(x), r: 3.6, fill: color, stroke: PAPER, 'stroke-width': 1.4}, g);
+      txt(g, 6, y1, l1, {fill: color === WATER ? '#1d4f8a' : INK, class: 'lab halo'});
+      txt(g, 6, y1 + LS, l2, {'font-weight': 500, class: 'lab halo'});
       return g;
     };
-    R.c1 = call(W * .30, yA, 'WATER STOPS HERE', 'clay lets none through', WATER);
-    R.c2 = call(W * .47, yB, 'SLIDE PLANE', 'rock rides on wet clay', INK);
-
-    // Two gauges: what pushes down, what holds on.
-    const cw = Math.min(W * .48, 200), cx0 = W - cw - 4, chip = mk('g', {}, svg); R.entr.push(chip); R.chip = chip;
-    mk('rect', {x: cx0, y: 4, width: cw, height: fs * 5.2, rx: 8, fill: PAPER, 'fill-opacity': .93, stroke: INK, 'stroke-opacity': .3}, chip);
-    const bw = cw - 16; R.bw = bw;
-    const row = (y, t, col) => { txt(chip, cx0 + 8, y, t, {class: 'lab'}); mk('rect', {x: cx0 + 8, y: y + 5, width: bw, height: 6, rx: 3, fill: INK, opacity: .12}, chip); return mk('rect', {x: cx0 + 8, y: y + 5, width: 0, height: 6, rx: 3, fill: col}, chip); };
-    R.load = row(4 + fs * 1.4, 'WEIGHT ABOVE CLAY', '#b4532e');
-    R.grip = row(4 + fs * 3.75, 'CLAY GRIP', '#4f7a3a');
+    R.c1 = call(W * .30, yA, 'Water stops here', 'clay lets none through', WATER);
+    R.c2 = call(W * .47, yB, 'Slide plane', 'rock rides on wet clay', INK);
 
     // A cloud asking to be tapped.
     R.rainG = mk('g', {}, svg);
     if (!hinted && !broken) {
       R.hint = mk('g', {}, svg);
-      const inner = mk('g', {class: 'pulse', opacity: .85}, R.hint);
+      const inner = mk('g', {class: 'pulse'}, R.hint);
       R.hint.setAttribute('transform', `translate(${W * .62},${H * .30})`);
       cloud(inner, fs * 1.15);
-      txt(R.hint, 0, fs * 2.1, 'TAP', {'text-anchor': 'middle', 'letter-spacing': '.2em'});
+      txt(R.hint, 0, fs * 2.1, 'Tap', {'text-anchor': 'middle'});
       R.entr.push(R.hint);
     }
     update();
   }
 
   const vis = (g, o) => { g.setAttribute('opacity', o.toFixed(2)); g.style.display = o > .01 ? '' : 'none'; };
+  // A flat arrow along the slope: sg = 1 points downhill, -1 uphill.
+  const arrow = (el, L, sg) => {
+    L = Math.max(L, 12); const h = Math.min(11, L * .5), t = 2.8, w = 7;
+    el.setAttribute('d', `M0,${-t}H${(sg * (L - h)).toFixed(1)}V${-w}L${(sg * L).toFixed(1)},0L${(sg * (L - h)).toFixed(1)},${w}V${t}H0Z`);
+  };
 
   function update() {
     if (!W || !R.film) return;
@@ -226,10 +216,10 @@
     R.wedge.forEach(p => p.setAttribute('d', fr > .5 && fr < full - 1 ? line(wb) : ''));
     R.dark.forEach(p => p.setAttribute('opacity', (s * .2).toFixed(3)));
     R.film.setAttribute('stroke-width', (f2 * Math.max(5, H * .014)).toFixed(2));
-    R.gloss.setAttribute('opacity', (f2 * .85).toFixed(2));
+    R.gloss.setAttribute('opacity', '0');
     R.flow.setAttribute('opacity', f2.toFixed(2));
-    R.load.setAttribute('width', (R.bw * (.2 + .5 * s)).toFixed(1));
-    R.grip.setAttribute('width', (R.bw * (1 - .629 * f2)).toFixed(1));
+    arrow(R.load, R.fl * (.2 + .5 * s), 1);
+    arrow(R.grip, R.fl * (1 - .629 * f2), -1);
     const L = W * .2 * st.d;
     R.mass.setAttribute('transform', `translate(${(L * G.dir[0] + st.j * 2.4).toFixed(2)},${(L * G.dir[1]).toFixed(2)})`);
     R.crack.style.strokeDashoffset = R.crackLen * (1 - st.crack);
@@ -260,15 +250,15 @@
     gsap.to(inner, {opacity: 0, y: -8, duration: .6, delay: 1.1, ease: 'power2.in', onComplete: () => outer.remove()});
     for (let i = 0; i < 18; i++) {
       const dx = cl(cx + (Math.random() - .5) * W * .62, 4, W - 4), y0 = cy + fs * .9, yE = S(dx) - 2;
-      const l = mk('line', {x1: dx, x2: dx, y1: y0, y2: y0 + 9, stroke: WATER, 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: .9}, R.rainG);
+      const l = mk('line', {x1: dx, x2: dx, y1: y0, y2: y0 + 9, stroke: WATER, 'stroke-width': 1.6, 'stroke-linecap': 'round'}, R.rainG);
       gsap.to(l, {attr: {y1: yE - 9, y2: yE}, duration: .34 + Math.random() * .22, delay: .06 + i * .025, ease: 'power2.in', onComplete: () => {
         l.remove();
-        const sp = mk('ellipse', {cx: dx, cy: yE, rx: 0, ry: 0, fill: 'none', stroke: WATER, 'stroke-width': 1.1}, R.rainG);
+        const sp = mk('ellipse', {cx: dx, cy: yE, rx: 0, ry: 0, fill: 'none', stroke: WATER, 'stroke-width': 1.2}, R.rainG);
         gsap.to(sp, {attr: {rx: 5, ry: 1.8}, opacity: 0, duration: .4, ease: 'power2.out', onComplete: () => sp.remove()});
         // Some water seeps into the rock and sinks toward the clay.
         if (i % 3 === 0) {
-          const d = mk('circle', {cx: dx, cy: yE + 3, r: 1.6, fill: WATER, opacity: .85}, R.rainG);
-          gsap.to(d, {attr: {cy: C(dx) - 2}, opacity: .2, duration: 1.1, ease: 'power1.in', onComplete: () => d.remove()});
+          const d = mk('circle', {cx: dx, cy: yE + 3, r: 1.7, fill: WATER}, R.rainG);
+          gsap.to(d, {attr: {cy: C(dx) - 2}, opacity: .3, duration: 1.1, ease: 'power1.in', onComplete: () => d.remove()});
         }
       }});
     }
@@ -281,7 +271,7 @@
     if (!R.P) return;
     R.P.forEach((p, i) => {
       for (let n = 0; n < 3; n++) {
-        const c = mk('circle', {cx: p[0], cy: p[1], r: 2, fill: '#c9b38c', opacity: .85}, svg);
+        const c = mk('circle', {cx: p[0], cy: p[1], r: 2, class: 'rB'}, svg);
         gsap.to(c, {attr: {r: 7 + n * 3, cx: p[0] + (n - 1) * 8, cy: p[1] - 6 - n * 4}, opacity: 0, duration: .9 + n * .2, delay: i * .05, ease: 'power2.out', onComplete: () => c.remove()});
       }
     });

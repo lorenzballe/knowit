@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-telephoto-steep-bridge -->
-<!-- Look: a cyanotype blueprint. A side elevation of the true bridge sits above a live viewfinder, drawn in white hairlines on Prussian blue, with engineer's dimension arrows, amber cars, a starry sky and a lit far shore.
-     Interaction: drag the zoom ring from 0.5× to 5×. The camera backs away to keep the bridge framed, its angle of view narrows, and the viewfinder redraws the bridge in real perspective. Autofocus snaps onto the top car after every move. The gap between foot and top shrinks and the two cars grow alike.
-     Wow: at 5× the shutter snaps and a stamp lands on the elevation, SAME BRIDGE · SAME SLOPE, while the viewfinder shows a wall. -->
+<!-- Look: a page from a printed photography book. Above, a flat side view of the true bridge over the lake: a plain camera on a tripod, its angle of view as a pale amber wedge, and two arrows measuring the distance to the foot and to the top. Below, the photo the camera takes, painted in flat tints of the card's blue: sky, far shore, water, the bridge and two amber cars.
+     Interaction: drag the zoom ring from 0.5× to 5×. The camera backs away to keep the bridge framed, its angle of view narrows, and the photo redraws the bridge in real perspective. Autofocus snaps onto the top car after every move. The gap between foot and top shrinks and the two cars grow alike.
+     Wow: at 5× the shutter snaps and an amber slip lands on the side view, "Same bridge · same slope", while the photo shows a wall. -->
 <title>The bridge that climbs like a wall</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -10,7 +10,7 @@
 <style>
 #stage{flex:1;min-height:0;display:flex}
 #pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
-#pic text{font-family:var(--mono);letter-spacing:.05em;fill:#eaf4ff}
+#pic text{font-family:var(--body);fill:var(--k)}
 #why{display:flex;flex-direction:column}
 #why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0}
 .answered .q{font-size:max(2.5cqh,15px)}
@@ -36,8 +36,10 @@
 <script>
 (() => {
   const svg = Kit.$('pic'), card = Kit.$('card');
-  const INK = '#eaf4ff', DIM = 'rgba(234,244,255,.6)', SUN = '#ffd36b', TAIL = '#ff7a5c', DEEP = '#041630';
-  const DECK = '#123f70', FAS = '#0a2b50', KNOCK = '#0c3360';
+  // flat paints: the card's ink and colour, their tints, and one meaning colour (amber: the cars and what the camera sees)
+  const K = 'var(--k)', CC = 'var(--c)', EDGE = 'var(--edge)', SUN = '#f3b545', SUN2 = '#c98a22';
+  const M = p => `color-mix(in srgb, var(--k) ${p}%, var(--c))`;
+  const sty = (f, s, w) => `style="fill:${f || 'none'};stroke:${s || 'none'};stroke-width:${w == null ? 1 : w}"`;
   // The bridge, in metres: a smooth ramp up, a short top, a ramp down. It never changes.
   const HB = 40, A = 100, TOPEND = 130, END = 220, ROADW = 11, HC = 1.6, OX = 14, ZF = 4, ZT = 80;
   const prof = z => {
@@ -50,11 +52,6 @@
   const MAJ = [0.5, 1, 2, 3, 5];
   const st = {z: 1}, fx = {draw: 1, shut: 0, flash: 0, stamp: 0, glow: 0, vf: 1, af: 0};
   let W = 0, H = 0, fs = 12, G = {}, Lg = null, revealed = false, touched = false, lastTick = 1, CB = null;
-
-  // fixed sky: stars at infinity (they spread apart as the lens narrows), and lights on the far shore
-  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  const STARS = Array.from({length: 34}, () => [(rnd() * 2 - 1) * .3, .004 + rnd() * .34, .5 + rnd() * .9]);
-  const LIGHTS = Array.from({length: 46}, () => [(rnd() * 2 - 1) * 1300, .8 + rnd() * 2.2]);
 
   const n = v => v.toFixed(1);
   // clipping, so nothing ever spills out of its panel
@@ -91,7 +88,7 @@
   };
   const RC = (x, y, w, h, a = '') => `<rect x="${n(x)}" y="${n(y)}" width="${n(Math.max(0, w))}" height="${n(Math.max(0, h))}" ${a}/>`;
   const T = (x, y, s, a = '', size = fs) => `<text x="${n(x)}" y="${n(y)}" font-size="${n(size)}" ${a}>${s}</text>`;
-  const tw = (s, size = fs) => s.length * size * .66;
+  const tw = (s, size = fs) => s.length * size * .56;
   const hit = (a, b) => a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3];
 
   function layout() {
@@ -111,11 +108,7 @@
     const vw = G.vx1 - G.vx0, vh = vy1 - vy0;
     svg.innerHTML = `<defs>
       <clipPath id="eo-ce"><rect x="0" y="0" width="${n(W)}" height="${n(eh)}"/></clipPath>
-      <clipPath id="eo-cv"><rect x="${n(G.vx0)}" y="${n(vy0)}" width="${n(vw)}" height="${n(vh)}" rx="${n(fs * .8)}"/></clipPath>
-      <linearGradient id="eo-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#061f40"/><stop offset=".7" stop-color="#1c5590"/><stop offset="1" stop-color="#3f84c2"/></linearGradient>
-      <linearGradient id="eo-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14467a"/><stop offset="1" stop-color="#03122a"/></linearGradient>
-      <pattern id="eo-hat" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" stroke="#eaf4ff" stroke-opacity=".4" stroke-width="1"/></pattern>
-      <radialGradient id="eo-vig" cx=".5" cy=".45" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></radialGradient>
+      <clipPath id="eo-cv"><rect x="${n(G.vx0)}" y="${n(vy0)}" width="${n(vw)}" height="${n(vh)}" rx="${n(fs * .35)}"/></clipPath>
     </defs><g id="eo-L"></g>`;
     Lg = svg.querySelector('#eo-L');
     render();
@@ -132,9 +125,9 @@
     // ---------------- SIDE ELEVATION ----------------
     o.push(`<g clip-path="url(#eo-ce)">`);
     CB = [0, 0, W, eh];
-    o.push(RC(0, gy, W, eh - gy, `fill="#041a36" fill-opacity=".45"`));
-    o.push(L(0, gy, W, gy, `stroke="${INK}" stroke-width="1.3"`));
-    for (let x = 6; x < W; x += 7) o.push(L(x, gy + 1, x - 4, gy + 5, `stroke="${INK}" stroke-opacity=".3"`));
+    // the lake under the bridge, and the shore line
+    o.push(RC(0, gy, W, eh - gy, sty(M(9))));
+    o.push(L(0, gy, W, gy, sty(0, K, 1.5)));
     // the camera, backing off as the lens gets longer
     const t = Math.log(D / 30) / Math.LN10, xNear = bx0 - fs * 2.6;
     const xc = xNear - t * (xNear - fs * 2.2), yc = gy - cs * 1.25;
@@ -142,35 +135,36 @@
     const fP = [ex(ZF), ey(prof(ZF))], tP = [ex(ZT), ey(prof(ZT))];
     const aim = Math.atan2(ey(HB * .5) - yc, ex(70) - xt), R = W * 1.4;
     CB = [0, 0, W, gy];
+    // the angle of view: a pale wedge of what the lens takes in
     o.push(PG([[xt, yc], [xt + R * Math.cos(aim - half), yc + R * Math.sin(aim - half)], [xt + R * Math.cos(aim + half), yc + R * Math.sin(aim + half)]],
-      `fill="${SUN}" fill-opacity=".08" stroke="${SUN}" stroke-opacity=".6" stroke-dasharray="4 3" stroke-width="1"`));
+      `${sty(SUN, SUN, 1)} fill-opacity=".13" stroke-opacity=".6"`));
     CB = [0, 0, W, eh];
     // run and rise of the true ramp
-    o.push(L(ex(0), gy - .5, ex(A), gy - .5, `stroke="${SUN}" stroke-opacity=".55" stroke-dasharray="3 3"`));
-    o.push(L(ex(A), gy, ex(A), ey(HB), `stroke="${SUN}" stroke-opacity=".55" stroke-dasharray="3 3"`));
+    o.push(L(ex(0), gy - .5, ex(A), gy - .5, `${sty(0, SUN, 1)} stroke-opacity=".6" stroke-dasharray="3 3"`));
+    o.push(L(ex(A), gy, ex(A), ey(HB), `${sty(0, SUN, 1)} stroke-opacity=".6" stroke-dasharray="3 3"`));
     // the true profile: deck and piers
     const top = [], bot = [];
     for (let z = 0; z <= END; z += 2) { top.push([ex(z), ey(prof(z))]); bot.unshift([ex(z), ey(Math.max(0, prof(z) - 2.5))]); }
-    for (let z = 12; z < END; z += 16) if (prof(z) > 3) o.push(L(ex(z), ey(prof(z) - 2.5), ex(z), gy, `stroke="${INK}" stroke-opacity="${n(.7 * fx.draw)}" stroke-width="1.2"`));
-    o.push(`<path d="M${top.concat(bot).map(p => n(p[0]) + ',' + n(p[1])).join('L')}Z" pathLength="1" fill="url(#eo-hat)" fill-opacity="${n(fx.draw)}" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="${(1 - fx.draw).toFixed(3)}"/>`);
-    const sl = fx.glow ? `stroke="${SUN}" stroke-width="${n(1 + fx.glow)}"` : `stroke="${INK}" stroke-opacity=".75" stroke-width="1"`;
+    for (let z = 12; z < END; z += 16) if (prof(z) > 3) o.push(L(ex(z), ey(prof(z) - 2.5), ex(z), gy, `${sty(0, M(55), 2)} opacity="${n(fx.draw)}"`));
+    o.push(`<path d="M${top.concat(bot).map(p => n(p[0]) + ',' + n(p[1])).join('L')}Z" pathLength="1" style="fill:${M(60)};stroke:${K};stroke-width:1.5" fill-opacity="${n(fx.draw)}" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="${(1 - fx.draw).toFixed(3)}"/>`);
+    const sl = fx.glow ? sty(0, SUN, 1 + fx.glow) : `${sty(0, K, 1)} stroke-opacity=".75"`;
     o.push(L(xt, yc, fP[0], fP[1], sl), L(xt, yc, tP[0], tP[1], sl));
-    o.push(L(xc, yc + cs * .45, xc - cs * .55, gy, `stroke="${INK}" stroke-width="1.2"`), L(xc, yc + cs * .45, xc + cs * .55, gy, `stroke="${INK}" stroke-width="1.2"`), L(xc, yc + cs * .45, xc, gy, `stroke="${INK}" stroke-width="1"`));
-    o.push(RC(xc - cs * .65, yc - cs * .45, cs * 1.3, cs * .9, `rx="2" fill="${DEEP}" stroke="${INK}" stroke-width="1.2"`));
-    o.push(RC(xc - cs * .35, yc - cs * .7, cs * .5, cs * .25, `fill="${DEEP}" stroke="${INK}" stroke-width="1"`));
-    o.push(RC(xc + cs * .65, yc - cs * .3, lens, cs * .6, `fill="#16467a" stroke="${INK}" stroke-width="1.1"`));
-    for (let i = 1; i < 1 + zm * .8; i++) { const lx = xc + cs * .65 + lens * i / (2 + zm * .8); o.push(L(lx, yc - cs * .3, lx, yc + cs * .3, `stroke="${INK}" stroke-opacity=".5"`)); }
-    for (const p of [fP, tP]) o.push(`<circle cx="${n(p[0])}" cy="${n(p[1] - fs * .2)}" r="${n(fs * .24)}" fill="${SUN}" stroke="${DEEP}" stroke-width="1"/>`);
+    // tripod and a plain camera
+    o.push(L(xc, yc + cs * .45, xc - cs * .55, gy, sty(0, K, 1.4)), L(xc, yc + cs * .45, xc + cs * .55, gy, sty(0, K, 1.4)), L(xc, yc + cs * .45, xc, gy, sty(0, K, 1.2)));
+    o.push(RC(xc - cs * .65, yc - cs * .45, cs * 1.3, cs * .9, `rx="2" ${sty(K)}`));
+    o.push(RC(xc - cs * .35, yc - cs * .7, cs * .5, cs * .3, `rx="1" ${sty(K)}`));
+    o.push(RC(xc + cs * .65, yc - cs * .3, lens, cs * .6, sty(M(62), K, 1.2)));
+    for (let i = 1; i < 1 + zm * .8; i++) { const lx = xc + cs * .65 + lens * i / (2 + zm * .8); o.push(L(lx, yc - cs * .3, lx, yc + cs * .3, `${sty(0, CC, 1)} stroke-opacity=".6"`)); }
+    for (const p of [fP, tP]) o.push(`<circle cx="${n(p[0])}" cy="${n(p[1] - fs * .2)}" r="${n(fs * .24)}" ${sty(SUN, CC, 1)}/>`);
     // dimension lines: camera to the foot, camera to the top (labels sit past each arrow tip)
     if (!C) {
       const dim = (tipX, y, lab, from) => {
-        o.push(L(from[0], from[1] + fs * .1, from[0], y + fs * .35, `stroke="${INK}" stroke-opacity=".45" stroke-dasharray="2 2"`));
-        o.push(L(xt, y, tipX, y, `stroke="${INK}" stroke-width="1"`));
+        o.push(L(from[0], from[1] + fs * .1, from[0], y + fs * .35, `${sty(0, K, 1)} stroke-opacity=".45" stroke-dasharray="2 2"`));
+        o.push(L(xt, y, tipX, y, sty(0, K, 1.2)));
         const ah = fs * .35;
-        o.push(`<path d="M${n(xt + ah)},${n(y - ah * .6)}L${n(xt)},${n(y)}L${n(xt + ah)},${n(y + ah * .6)}M${n(tipX - ah)},${n(y - ah * .6)}L${n(tipX)},${n(y)}L${n(tipX - ah)},${n(y + ah * .6)}" fill="none" stroke="${INK}" stroke-width="1"/>`);
-        const w = tw(lab), x = tipX + fs * .45;
-        o.push(RC(x - 3, y - fs * .6, w + 6, fs * 1.2, `rx="2" fill="${KNOCK}"`));
-        o.push(T(x, y + fs * .36, lab));
+        o.push(`<path d="M${n(xt + ah)},${n(y - ah * .6)}L${n(xt)},${n(y)}L${n(xt + ah)},${n(y + ah * .6)}M${n(tipX - ah)},${n(y - ah * .6)}L${n(tipX)},${n(y)}L${n(tipX - ah)},${n(y + ah * .6)}" ${sty(0, K, 1.2)} stroke-linecap="round" stroke-linejoin="round"/>`);
+        const x = tipX + fs * .45;
+        o.push(T(x, y + fs * .36, lab, `style="fill:${K}"`));
       };
       dim(fP[0], gy + fs * 1.25, 'to foot', fP);
       dim(tP[0], gy + fs * 2.85, 'to top', tP);
@@ -178,18 +172,17 @@
     CB = null;
     o.push(`</g>`);
     // heading row: what you see, and the one number that matters
-    const rt = `TOP / FOOT DISTANCE ${ratio.toFixed(2)}`, pw = tw(rt) + fs * .7, px = W - fs * .6 - pw;
-    if (fs * .7 + tw('SIDE VIEW') + fs < px) o.push(T(fs * .7, fs * 1.25, 'SIDE VIEW', `style="fill:${DIM}"`));
-    o.push(RC(px, fs * .35, pw, fs * 1.25, `rx="3" fill="${KNOCK}" fill-opacity=".92" stroke="${INK}" stroke-opacity=".25"`));
-    o.push(T(px + fs * .35, fs * 1.3, rt, 'font-weight="700"'));
+    const rtA = 'Top / foot distance ', rv = ratio.toFixed(2), pw = tw(rtA + rv) + fs * .7, px = W - fs * .6 - pw;
+    if (fs * .7 + tw('Side view') + fs < px) o.push(T(fs * .7, fs * 1.25, 'Side view', `style="fill:${M(65)}"`));
+    o.push(T(px + fs * .35, fs * 1.3, `${rtA}<tspan font-weight="700" style="fill:${SUN}">${rv}</tspan>`, `style="fill:${K}"`));
 
-    // ---------------- VIEWFINDER ----------------
+    // ---------------- VIEWFINDER (the photo) ----------------
     const {vx0, vx1, vy0, vy1} = G, vw = vx1 - vx0, vh = vy1 - vy0;
     const bandH = C ? fs * 1.9 : fs * 2.5, zf = C ? fs * 1.35 : fs * 1.7;
     const P = (x, y, z) => { const d = z + D; return [(x - OX) / d, (y - HC) / d, d]; };
     let mnx = 1e9, mxx = -1e9, mny = 1e9, mxy = -1e9;
     for (let z = 0; z <= END; z += 4) { const y = prof(z); for (const x of [-ROADW / 2, ROADW / 2]) for (const yy of [y + 3.6, Math.max(0, y - 2.5)]) { const p = P(x, yy, z); mnx = Math.min(mnx, p[0]); mxx = Math.max(mxx, p[0]); mny = Math.min(mny, p[1]); mxy = Math.max(mxy, p[1]); } }
-    const fx0 = vx0 + fs * .7, fx1 = Math.max(fx0 + 10, vx1 - fs * 1.3 - tw('FOOT'));
+    const fx0 = vx0 + fs * .7, fx1 = Math.max(fx0 + 10, vx1 - fs * 1.3 - tw('Foot'));
     const fy0 = vy0 + bandH + fs * .25, fy1 = Math.max(fy0 + 6, vy1 - fs * .55);
     const k = Math.max(1e-3, Math.min((fx1 - fx0) / (mxx - mnx), (fy1 - fy0) / (mxy - mny)));
     const ox0 = (fx0 + fx1) / 2 - k * (mnx + mxx) / 2, oy0 = (fy0 + fy1) / 2 + k * (mny + mxy) / 2;
@@ -197,28 +190,25 @@
     const hz = Math.max(vy0, Math.min(vy1, oy0));
 
     o.push(`<g opacity="${n(fx.vf)}">`);
-    o.push(RC(vx0, vy0, vw, vh, `rx="${n(fs * .8)}" fill="${DEEP}"`));
+    o.push(RC(vx0, vy0, vw, vh, `rx="${n(fs * .35)}" ${sty(M(12))}`));
     o.push(`<g clip-path="url(#eo-cv)">`);
     CB = [vx0, vy0, vx1, vy1];
-    o.push(RC(vx0, vy0, vw, hz - vy0, `fill="url(#eo-sky)"`));
-    o.push(RC(vx0, hz, vw, vy1 - hz, `fill="url(#eo-sea)"`));
-    // stars at infinity: the long lens spreads them apart
-    for (const [ax, ay, r] of STARS) { const X = ox0 + ax * k, Y = oy0 - ay * k; if (X > vx0 + 2 && X < vx1 - 2 && Y > vy0 + 2 && Y < hz - 3) o.push(`<circle cx="${n(X)}" cy="${n(Y)}" r="${n(r)}" fill="${INK}" opacity="${n(.35 + r * .3)}"/>`); }
+    o.push(RC(vx0, vy0, vw, hz - vy0, sty(M(30))));
+    o.push(RC(vx0, hz, vw, vy1 - hz, sty(M(12))));
     // the far shore: a telephoto pulls it close and large
     const hill = [];
     for (let x = -3000; x <= 3000; x += 50) { const y = 7 + 5 * Math.sin(x * .004) + 3 * Math.sin(x * .013 + 1); hill.push(S(x, y, 1400)); }
     hill.push(S(3000, 0, 1400), S(-3000, 0, 1400));
-    o.push(PG(hill, `fill="#14497e" stroke="${INK}" stroke-opacity=".45" stroke-width=".8"`));
-    for (const [x, y] of LIGHTS) { const p = S(x, y, 1400); if (p[0] > vx0 + 1 && p[0] < vx1 - 1 && p[1] > vy0 + 1 && p[1] < vy1 - 1) o.push(`<circle cx="${n(p[0])}" cy="${n(p[1])}" r="${n(Math.max(.6, Math.min(2.2, k * .5 / 1400)))}" fill="${SUN}" opacity=".7"/>`); }
+    o.push(PG(hill, sty(M(19))));
     // water lines, fixed in the world: they bunch as the lens narrows
     let lastY = 1e9;
     for (let i = 0; i < 90; i++) {
       const z = -30 + 6 * Math.pow(i, 1.5), d = z + D; if (d < 1) continue;
       const Y = oy0 + k * HC / d; if (Y > vy1 + 2) continue;
       if (lastY - Y < 2.2 || Y - oy0 < 1) break; lastY = Y;
-      o.push(L(vx0, Y, vx1, Y, `stroke="${INK}" stroke-opacity="${n(Math.min(.3, (Y - oy0) / vh * 1.1))}" stroke-width=".8"`));
+      o.push(L(vx0, Y, vx1, Y, `${sty(0, M(32), .9)} stroke-opacity="${n(Math.min(1, (Y - oy0) / vh * 3.5))}"`));
     }
-    o.push(L(vx0, oy0, vx1, oy0, `stroke="${INK}" stroke-opacity=".5" stroke-width=".8"`));
+    o.push(L(vx0, oy0, vx1, oy0, sty(0, M(40), 1)));
 
     // the bridge, painted far to near
     const hw = ROADW / 2, items = [];
@@ -230,28 +220,26 @@
       const F0 = S(hw, Math.max(0, y0 - 2.5), z0), F1 = S(hw, Math.max(0, y1 - 2.5), z1);
       const lr0 = S(-hw, y0 + 1.1, z0), lr1 = S(-hw, y1 + 1.1, z1), rr0 = S(hw, y0 + 1.1, z0), rr1 = S(hw, y1 + 1.1, z1);
       const lw = Math.max(.7, Math.min(2.2, k * .3 / dm));
-      let s = PG([F0, F1, R1, R0], `fill="${FAS}" stroke="${FAS}" stroke-width=".8"`);
-      s += L(F0[0], F0[1], F1[0], F1[1], `stroke="${INK}" stroke-opacity=".45" stroke-width="${n(lw * .7)}"`);
-      s += PG([L0, L1, R1, R0], `fill="${DECK}" stroke="${DECK}" stroke-width=".8"`);
-      if (idx % 2 === 0) { const c0 = S(0, y0, z0), c1 = S(0, y1, z1); s += L(c0[0], c0[1], c1[0], c1[1], `stroke="${SUN}" stroke-opacity=".6" stroke-width="${n(lw * .8)}"`); }
-      s += L(L0[0], L0[1], L1[0], L1[1], `stroke="${INK}" stroke-width="${n(lw)}"`) + L(R0[0], R0[1], R1[0], R1[1], `stroke="${INK}" stroke-width="${n(lw)}"`);
-      s += L(lr0[0], lr0[1], lr1[0], lr1[1], `stroke="${INK}" stroke-opacity=".55" stroke-width="${n(lw * .6)}"`) + L(rr0[0], rr0[1], rr1[0], rr1[1], `stroke="${INK}" stroke-opacity=".7" stroke-width="${n(lw * .6)}"`);
-      if (idx % 2 === 0) s += L(R0[0], R0[1], rr0[0], rr0[1], `stroke="${INK}" stroke-opacity=".5" stroke-width="${n(lw * .5)}"`) + L(L0[0], L0[1], lr0[0], lr0[1], `stroke="${INK}" stroke-opacity=".4" stroke-width="${n(lw * .5)}"`);
+      let s = PG([F0, F1, R1, R0], sty(M(52), M(52), .8));
+      s += L(F0[0], F0[1], F1[0], F1[1], sty(0, M(80), lw * .7));
+      s += PG([L0, L1, R1, R0], sty(M(78), M(78), .8));
+      s += L(L0[0], L0[1], L1[0], L1[1], sty(0, K, lw)) + L(R0[0], R0[1], R1[0], R1[1], sty(0, K, lw));
+      s += L(lr0[0], lr0[1], lr1[0], lr1[1], `${sty(0, K, lw * .6)} stroke-opacity=".6"`) + L(rr0[0], rr0[1], rr1[0], rr1[1], `${sty(0, K, lw * .6)} stroke-opacity=".75"`);
+      if (idx % 2 === 0) s += L(R0[0], R0[1], rr0[0], rr0[1], `${sty(0, K, lw * .5)} stroke-opacity=".5"`) + L(L0[0], L0[1], lr0[0], lr0[1], `${sty(0, K, lw * .5)} stroke-opacity=".4"`);
       items.push({d: dm, s});
     }
     for (let z = 12; z < END; z += 16) if (prof(z) > 3) {
       const d = z + D, pw2 = Math.max(1, Math.min(10, 1.8 * k / d));
-      for (const x of [hw - .7, -hw + .7]) { const a = S(x, prof(z) - 2.5, z), b = S(x, 0, z); items.push({d: d + .01 + (x < 0 ? .02 : 0), s: L(a[0], a[1], b[0], b[1], `stroke="#1d5592" stroke-width="${n(pw2)}"`) + L(a[0] + pw2 / 2, a[1], b[0] + pw2 / 2, b[1], `stroke="${INK}" stroke-opacity=".55" stroke-width=".8"`)}); }
+      for (const x of [hw - .7, -hw + .7]) { const a = S(x, prof(z) - 2.5, z), b = S(x, 0, z); items.push({d: d + .01 + (x < 0 ? .02 : 0), s: L(a[0], a[1], b[0], b[1], sty(0, M(46), pw2))}); }
     }
     const cars = {};
     const car = (z, key) => {
       const y = prof(z), c = 2.8, cw = 1.6, ch = 2.4, d = z + D;
       const a = S(c - cw, y, z), b = S(c + cw, y + ch, z), ca = S(c - cw * .72, y + ch, z + 1.2), cb = S(c + cw * .72, y + ch + 1.1, z + 1.2);
       const w = Math.max(0, b[0] - a[0]), h = Math.max(0, a[1] - b[1]);
-      let s = RC(ca[0], cb[1], cb[0] - ca[0], ca[1] - cb[1] + 1, `rx="${n(w * .12)}" fill="#c99a3c" stroke="${DEEP}" stroke-width=".8"`);
-      s += RC(a[0], b[1], w, h, `rx="${n(w * .1)}" fill="${SUN}" stroke="${DEEP}" stroke-width="1"`);
-      s += RC(a[0] + w * .08, b[1] + h * .25, w * .2, h * .16, `fill="${TAIL}"`) + RC(b[0] - w * .28, b[1] + h * .25, w * .2, h * .16, `fill="${TAIL}"`);
-      s += RC(a[0] + w * .3, b[1] + h * .55, w * .4, h * .18, `fill="${DEEP}" opacity=".5"`);
+      let s = RC(ca[0], cb[1], cb[0] - ca[0], ca[1] - cb[1] + 1, `rx="${n(w * .12)}" ${sty(SUN2, EDGE, .8)}`);
+      s += RC(a[0], b[1], w, h, `rx="${n(w * .1)}" ${sty(SUN, EDGE, 1)}`);
+      s += RC(a[0] + w * .22, b[1] + h * .14, w * .56, h * .26, `${sty(EDGE)} opacity=".55"`);
       items.push({d: d - .2, s});
       cars[key] = {l: a[0], r: b[0], t: Math.min(b[1], cb[1]), b: a[1], h};
       return h;
@@ -263,40 +251,33 @@
     const ct = cars.T, afp = Math.max(fs * .3, ct.h * .35), ag = afp * (1 + fx.af * 1.4);
     {
       const x0 = ct.l - ag, x1 = ct.r + ag, y0 = ct.t - ag, y1 = ct.b + ag, cl = Math.max(3, Math.min(fs * .5, (x1 - x0) * .3));
-      const col = fx.af > .05 ? INK : SUN;
+      const col = fx.af > .05 ? K : SUN;
       let d = '';
       for (const [x, y, sx, sy] of [[x0, y0, 1, 1], [x1, y0, -1, 1], [x0, y1, 1, -1], [x1, y1, -1, -1]]) d += `M${n(x)},${n(y + sy * cl)}V${n(y)}H${n(x + sx * cl)}`;
-      o.push(`<path d="${d}" fill="none" stroke="${col}" stroke-width="1.4" opacity="${n(.55 + .45 * (1 - fx.af))}"/>`);
+      o.push(`<path d="${d}" ${sty(0, col, 1.5)} opacity="${n(.55 + .45 * (1 - fx.af))}"/>`);
     }
     // shutter blades and flash at the reveal
     if (fx.shut > 0) {
-      o.push(RC(vx0, vy0, vw, vh / 2 * fx.shut, `fill="${DEEP}"`));
-      o.push(RC(vx0, vy1 - vh / 2 * fx.shut, vw, vh / 2 * fx.shut, `fill="${DEEP}"`));
+      o.push(RC(vx0, vy0, vw, vh / 2 * fx.shut, sty(EDGE)));
+      o.push(RC(vx0, vy1 - vh / 2 * fx.shut, vw, vh / 2 * fx.shut, sty(EDGE)));
     }
-    if (fx.flash > 0) o.push(RC(vx0, vy0, vw, vh, `fill="#fff" opacity="${n(fx.flash)}"`));
-    o.push(RC(vx0, vy0, vw, vh, `fill="url(#eo-vig)"`));
+    if (fx.flash > 0) o.push(RC(vx0, vy0, vw, vh, `style="fill:#fff" opacity="${n(fx.flash)}"`));
     o.push(`</g>`);
-    // HUD: thirds, brackets, frame
-    for (const f3 of [1 / 3, 2 / 3]) { o.push(L(vx0 + vw * f3, vy0, vx0 + vw * f3, vy1, `stroke="${INK}" stroke-opacity=".1"`)); o.push(L(vx0, vy0 + vh * f3, vx1, vy0 + vh * f3, `stroke="${INK}" stroke-opacity=".1"`)); }
     CB = null;
-    const bi = fs * .45, bl = Math.min(fs * 1.1, vh * .3);
-    for (const [x, y, sx, sy] of [[vx0, vy0, 1, 1], [vx1, vy0, -1, 1], [vx0, vy1, 1, -1], [vx1, vy1, -1, -1]])
-      o.push(`<path d="M${n(x + sx * bi)},${n(y + sy * (bi + bl))}V${n(y + sy * bi)}H${n(x + sx * (bi + bl))}" fill="none" stroke="${INK}" stroke-width="1.6"/>`);
-    o.push(RC(vx0, vy0, vw, vh, `rx="${n(fs * .8)}" fill="none" stroke="${INK}" stroke-opacity=".5"`));
-    // top band: zoom + angle of view on the left, car-size readout on the right
+    o.push(RC(vx0, vy0, vw, vh, `rx="${n(fs * .35)}" ${sty(0, K, 1.4)} stroke-opacity=".7"`));
+    // top band: zoom + angle of view on the left, car sizes on the right
     const boxes = [], yb = vy0 + bandH - fs * .5;
-    const zt = `${zm.toFixed(1)}×`, zx = vx0 + fs * 1.0, zw = tw(zt, zf) * .95;
-    o.push(T(zx, yb, zt, `font-weight="800" stroke="${DEEP}" stroke-width="3" paint-order="stroke"`, zf));
+    const zt = `${zm.toFixed(1)}×`, zx = vx0 + fs * 1.0, zw = tw(zt, zf) * 1.05;
+    o.push(T(zx, yb, zt, `font-weight="700" style="font-family:var(--display);fill:${K}"`, zf));
     boxes.push([zx, yb - zf * .85, zx + zw, yb + zf * .2]);
     const pct = Math.round(hT / hF * 100);
-    let rl = `TOP CAR = ${pct}% OF FOOT CAR`;
-    const ang = `${Math.round(2 * half * 180 / Math.PI)}° VIEW`, aw = tw(ang);
-    if (zx + zw + fs * .8 + tw(rl) + fs * 1.4 > vx1) rl = `TOP CAR ${pct}% OF FOOT`;
-    const rw = tw(rl) + fs * .7, rx0 = vx1 - fs * .7 - rw, rcy = yb - fs * .38;
-    o.push(RC(rx0, rcy - fs * .68, rw, fs * 1.36, `rx="3" fill="${DEEP}" fill-opacity=".85" stroke="${SUN}" stroke-opacity=".6"`));
-    o.push(T(rx0 + fs * .35, rcy + fs * .36, rl, `font-weight="700" style="fill:${SUN}"`));
-    boxes.push([rx0, rcy - fs * .68, rx0 + rw, rcy + fs * .68]);
-    if (zx + zw + fs * .5 + aw + fs * .8 < rx0) { o.push(T(zx + zw + fs * .5, yb, ang, `style="fill:${DIM}" stroke="${DEEP}" stroke-width="3" paint-order="stroke"`)); boxes.push([zx + zw + fs * .5, yb - fs * .9, zx + zw + fs * .5 + aw, yb + fs * .25]); }
+    let rl = `Top car = ${pct}% of foot car`;
+    const ang = `${Math.round(2 * half * 180 / Math.PI)}° view`, aw = tw(ang);
+    if (zx + zw + fs * .8 + tw(rl) + fs * 1.4 > vx1) rl = `Top car ${pct}% of foot`;
+    const rw = tw(rl), rx0 = vx1 - fs * .8 - rw;
+    o.push(T(rx0, yb, rl.replace(`${pct}%`, `<tspan font-weight="700" style="fill:${SUN}">${pct}%</tspan>`), `font-weight="600" style="fill:${K}"`));
+    boxes.push([rx0, yb - fs * .95, rx0 + rw, yb + fs * .3]);
+    if (zx + zw + fs * .5 + aw + fs * .8 < rx0) { o.push(T(zx + zw + fs * .5, yb, ang, `style="fill:${M(72)}"`)); boxes.push([zx + zw + fs * .5, yb - fs * .9, zx + zw + fs * .5 + aw, yb + fs * .25]); }
     // car labels, placed where they collide with nothing
     const placeLab = (lab, c, pad) => {
       const w = tw(lab), ym = (c.t + c.b) / 2;
@@ -310,44 +291,41 @@
       }
       if (!pick) return;
       boxes.push(pick[3]);
-      o.push(T(pick[0], pick[1] + fs * .36, lab, `text-anchor="${pick[2]}" font-weight="700" stroke="${DEEP}" stroke-width="3" paint-order="stroke"`));
+      o.push(T(pick[0], pick[1] + fs * .36, lab, `text-anchor="${pick[2]}" font-weight="700" style="fill:${K};stroke:${CC};stroke-width:3;stroke-linejoin:round" paint-order="stroke"`));
     };
-    placeLab('TOP', cars.T, afp);
-    placeLab('FOOT', cars.F, fs * .1);
+    placeLab('Top', cars.T, afp);
+    placeLab('Foot', cars.F, fs * .1);
     o.push(`</g>`);
 
-    // stamp after the reveal
+    // after the reveal: an amber slip laid on the side view
     if (fx.stamp > 0) {
-      const sTxt = 'SAME BRIDGE · SAME SLOPE', sw = tw(sTxt) + fs * 1.2, sh = fs * 1.75;
+      const sTxt = 'Same bridge · same slope', sw = tw(sTxt) + fs * 1.2, sh = fs * 1.75;
       const lo = head + sh / 2 + fs * .55, hi = Math.max(lo, gy - sh / 2 - 2);
       const cy = Math.max(lo, Math.min(hi, ey(HB * .55)));
       const cxLo = Math.max(sw / 2 + 4, xt + fs * .6 + sw / 2), cxHi = W - sw / 2 - 4;
       const cx = Math.min(cxHi, Math.max(Math.min(cxLo, cxHi), ex(112)));
       const s = 1.35 - .35 * fx.stamp;
       o.push(`<g opacity="${n(Math.min(1, fx.stamp))}" transform="translate(${n(cx)},${n(cy)}) rotate(-3) scale(${s.toFixed(3)})">
-        ${RC(-sw / 2, -sh / 2, sw, sh, `rx="3" fill="${KNOCK}" fill-opacity=".94" stroke="${SUN}" stroke-width="2"`)}
-        ${RC(-sw / 2 + 3, -sh / 2 + 3, sw - 6, sh - 6, `rx="2" fill="none" stroke="${SUN}" stroke-opacity=".5" stroke-width="1"`)}
-        <text x="0" y="${n(fs * .36)}" font-size="${n(fs)}" font-weight="800" text-anchor="middle" style="fill:${SUN}">${sTxt}</text></g>`);
+        ${RC(-sw / 2, -sh / 2, sw, sh, `rx="2" ${sty(SUN)}`)}
+        <text x="0" y="${n(fs * .36)}" font-size="${n(fs)}" font-weight="800" text-anchor="middle" style="fill:${CC}">${sTxt}</text></g>`);
     }
 
     // ---------------- ZOOM RING ----------------
     const {tx0, tx1, ty} = G, tp = z => tx0 + (tx1 - tx0) * Math.log10(z / .5), kx = tp(zm), kr = fs * .78;
-    for (let z = .5; z <= 5.001; z += .25) o.push(L(tp(z), ty - fs * .25, tp(z), ty + fs * .25, `stroke="${INK}" stroke-opacity=".35"`));
-    o.push(L(tx0, ty, tx1, ty, `stroke="${INK}" stroke-opacity=".35" stroke-width="2"`));
-    o.push(L(tx0, ty, kx, ty, `stroke="${SUN}" stroke-width="3" stroke-linecap="round"`));
+    o.push(L(tx0, ty, tx1, ty, `${sty(0, M(30), 3)} stroke-linecap="round"`));
+    o.push(L(tx0, ty, kx, ty, `${sty(0, SUN, 3)} stroke-linecap="round"`));
     for (const z of MAJ) {
       const x = tp(z), on = zm >= z - .02;
-      o.push(L(x, ty - fs * .45, x, ty + fs * .45, `stroke="${on ? SUN : INK}" stroke-width="1.4"`));
-      o.push(T(x, ty - fs * .9, `${z}×`, `text-anchor="middle" font-weight="700" style="fill:${on ? SUN : INK}"`));
+      o.push(L(x, ty - fs * .4, x, ty + fs * .4, `${sty(0, on ? SUN : M(60), 1.6)} stroke-linecap="round"`));
+      o.push(T(x, ty - fs * .9, `${z}×`, `text-anchor="middle" font-weight="700" style="fill:${on ? SUN : K}"`));
     }
     if (!C) {
-      o.push(T(tx0 - fs * 1.2, ty + fs * 1.65, 'WIDE', `style="fill:${DIM}"`));
-      o.push(T(tx1 + fs * 1.2, ty + fs * 1.65, 'TELE', `text-anchor="end" style="fill:${DIM}"`));
+      o.push(T(tx0 - fs * 1.2, ty + fs * 1.65, 'Wide', `style="fill:${M(62)}"`));
+      o.push(T(tx1 + fs * 1.2, ty + fs * 1.65, 'Tele', `text-anchor="end" style="fill:${M(62)}"`));
     }
-    if (!touched) o.push(`<circle class="pulse" cx="${n(kx)}" cy="${n(ty)}" r="${n(kr)}" fill="none" stroke="${SUN}" stroke-width="2"/>`);
-    o.push(`<circle cx="${n(kx)}" cy="${n(ty)}" r="${n(kr)}" fill="${DEEP}" stroke="${SUN}" stroke-width="2.2"/>`);
-    o.push(`<circle cx="${n(kx)}" cy="${n(ty)}" r="${n(fs * .42)}" fill="none" stroke="${INK}" stroke-width="1.2"/>`);
-    o.push(`<circle cx="${n(kx)}" cy="${n(ty)}" r="${n(fs * .14)}" fill="${SUN}"/>`);
+    if (!touched) o.push(`<circle class="pulse" cx="${n(kx)}" cy="${n(ty)}" r="${n(kr)}" ${sty(0, SUN, 2)}/>`);
+    o.push(`<circle cx="${n(kx)}" cy="${n(ty)}" r="${n(kr)}" ${sty(CC, SUN, 2.5)}/>`);
+    o.push(`<circle cx="${n(kx)}" cy="${n(ty)}" r="${n(fs * .24)}" ${sty(SUN)}/>`);
 
     Lg.innerHTML = o.join('');
   }
