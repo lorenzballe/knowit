@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: science-granite-near-diamond -->
-<!-- Look: a page from a printed geology book on the card's dark green. A plain hardness scale with two empty columns, a flat speckled granite lump (white quartz, pink feldspar, dark mica) and a flat-faceted diamond.
+<!-- Look: a page from a printed geology book on the card's dark green. A plain hardness scale with two flat filled columns, a flat granite lump with big crystals (white quartz, pink feldspar, dark mica) and a diamond drawn in one flat blue with its facet lines, both with bold dark outlines.
      Interaction: flip the switch and a crystal flies off that stone along a curved arrow, lands in its column and fills it to its rung: granite's quartz to 7, diamond to 10.
      Wow: with both up, a dolerite ball swings in on an arc and pounds the granite in bursts of dust. The caption turns to "5 mm per hour". -->
 <title>Granite, nearly diamond</title>
@@ -13,7 +13,7 @@
 #stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
 #pic{flex:1;min-height:0;width:100%;display:block;background:none}
 .lbl{font-family:var(--body)}
-#sw{position:relative;display:grid;grid-template-columns:1fr 1fr;flex:none;background:color-mix(in srgb, var(--k) 8%, var(--c));border-radius:99px;padding:.6cqh;box-shadow:0 0 0 .3cqh color-mix(in srgb, var(--k) 35%, var(--c))}
+#sw{position:relative;display:grid;grid-template-columns:1fr 1fr;flex:none;background:color-mix(in srgb, var(--k) 8%, var(--c));border-radius:99px;padding:.6cqh;outline:.3cqh solid color-mix(in srgb, var(--k) 35%, var(--c))}
 .sb{position:relative;z-index:1;font:700 max(2.2cqh,14px)/1 var(--body);color:#f6f3e8;background:none;border:0;padding:1.3cqh 0;cursor:pointer;opacity:.8;transition:color .2s,opacity .2s}
 .sb.on{opacity:1;color:#1b3229}
 #knob{position:absolute;top:.6cqh;bottom:.6cqh;left:.6cqh;width:calc(50% - .6cqh);border-radius:99px;background:#f6f3e8;opacity:0}
@@ -47,7 +47,9 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
   const hx = h => { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); };
   const mix = (a, b, n) => { const A = hx(a), B = hx(b), t = n / 100; return '#' + A.map((v, i) => Math.round(v * t + B[i] * (1 - t)).toString(16).padStart(2, '0')).join(''); };
   const INK = CH;
-  const STONE = mix(CH, CC, 52), MICA = mix('#000000', CC, 45), FELD = '#e3a3a8';
+  const EDGE = mix('#000000', CC, 55);            // bold dark outline for the objects
+  const STONE = mix(CH, CC, 62), MICA = mix('#000000', CC, 45), FELD = '#e3a3a8';
+  const TRACK = mix(CH, CC, 13);
   const SPEC = {g: {n: 7, col: '#f7d3dc'}, d: {n: 10, col: BLUE}};
   const seen = {g: false, d: false}, want = {g: false, d: false};
   let revealed = false, hammered = false, S = null, loops = [], lastW = 0, lastH = 0;
@@ -61,7 +63,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     if (sh) e.setAttribute('x', x + sh);
     return e;
   };
-  const wob = (x1, y1, x2, y2, R, j = 1.4) => `M${x1},${y1} Q${(x1 + x2) / 2 + (R() - .5) * j * 2},${(y1 + y2) / 2 + (R() - .5) * j * 2} ${x2},${y2}`;
+  const line = (x1, y1, x2, y2) => `M${x1},${y1} L${x2},${y2}`;
   const pts = a => a.map(p => p.join(',')).join(' ');
 
   function draw() {
@@ -79,35 +81,28 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     S = {W, H, fs, sx, yR, step, r, gy, gx, dx, el: {}, intro: {lines: [], nums: []}};
 
     const defs = mk('defs', {}, svg);
-
     const root = mk('g', {}, svg);
-
-    // (random draws kept so the stones keep their exact shapes)
-    for (let i = 0; i < 7; i++) {
-      const rx = W * (.12 + .16 * R()), ry = H * (.03 + .04 * R());
-      R(); R();
-    }
-    for (let i = 0; i < 3; i++) { R(); }
 
     const board = mk('g', {}, root);
     const tt = txt(board, Math.max(16, W * .06), fs * 1.9, 'Hardness scale', {'font-weight': 700});
     const tw = tt.getComputedTextLength(), tx = +tt.getAttribute('x');
-    S.intro.title = mk('path', {d: wob(tx, fs * 2.35, tx + tw, fs * 2.25, R, 2), stroke: INK, 'stroke-width': 1.6, fill: 'none', opacity: .5, 'stroke-linecap': 'round'}, board);
+    S.intro.title = mk('path', {d: line(tx, fs * 2.4, tx + tw, fs * 2.4), stroke: INK, 'stroke-width': 1.6, fill: 'none', opacity: .35, 'stroke-linecap': 'round'}, board);
 
-    // Two empty columns, rungs, numbers (thinned out when rungs get tight).
+    // Two plain flat columns: an empty track and its fill. Rungs and numbers between them.
     const tubes = [[sx - fs * 1.95, 'g'], [sx + fs * 1.2, 'd']];
     const bars = {};
     tubes.forEach(([x, k]) => {
       const w = fs * .75, y0 = yR(10) - step * .45, y1 = bot + step * .35;
-      bars[k] = mk('rect', {x, y: yR(SPEC[k].n), width: w, height: y1 - yR(SPEC[k].n), rx: w * .3, fill: SPEC[k].col}, board);
+      mk('rect', {x, y: y0, width: w, height: y1 - y0, rx: 2, fill: TRACK}, board);
+      bars[k] = mk('rect', {x, y: yR(SPEC[k].n), width: w, height: y1 - yR(SPEC[k].n), rx: 2, fill: SPEC[k].col}, board);
       gsap.set(bars[k], {scaleY: 0, transformOrigin: '50% 100%'});
-      const tube = mk('path', {d: `M${x},${y0} L${x},${y1 - w * .3} Q${x},${y1} ${x + w * .3},${y1} L${x + w - w * .3},${y1} Q${x + w},${y1} ${x + w},${y1 - w * .3} L${x + w},${y0}`, stroke: CH, 'stroke-width': 1.6, fill: 'none', opacity: .6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, board);
-      S.intro.lines.push(tube);
+      const base = mk('path', {d: line(x - w * .3, y1, x + w * 1.3, y1), stroke: CH, 'stroke-width': 2, fill: 'none', opacity: .6, 'stroke-linecap': 'round'}, board);
+      S.intro.lines.push(base);
     });
     const tight = step < fs * 1.45;
     for (let n = 1; n <= 10; n++) {
       const y = yR(n), shown = !tight || n % 3 === 1;
-      for (const s of [-1, 1]) { const l = mk('path', {d: wob(sx + s * fs * (shown ? .62 : .3), y, sx + s * fs * 1.08, y, R, .6), stroke: CH, 'stroke-width': 1.5, fill: 'none', opacity: shown ? .7 : .4, 'stroke-linecap': 'round'}, board); S.intro.lines.push(l); }
+      for (const s of [-1, 1]) { const l = mk('path', {d: line(sx + s * fs * (shown ? .62 : .3), y, sx + s * fs * 1.08, y), stroke: CH, 'stroke-width': 1.6, fill: 'none', opacity: shown ? .6 : .3, 'stroke-linecap': 'round'}, board); S.intro.lines.push(l); }
       if (!shown) continue;
       const nm = txt(board, sx, y + fs * .36, String(n), {'text-anchor': 'middle', 'font-weight': 600});
       S.intro.nums.push(nm);
@@ -115,45 +110,42 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
       if (n === SPEC.d.n) S.el.dNum = nm;
     }
 
-    // ---- Granite: a flat speckled lump ----
+    // ---- Granite: a flat lump with big crystals ----
     const gG = mk('g', {transform: `translate(${gx},${gy})`}, root);
     const gIn = mk('g', {}, gG);
     const poly = [];
-    for (let i = 0; i < 11; i++) { const a = i / 11 * Math.PI * 2 - Math.PI / 2, rad = r * (.82 + .26 * R()); poly.push([Math.cos(a) * rad, Math.sin(a) * rad * .86 + r * .05]); }
+    for (let i = 0; i < 11; i++) { const a = i / 11 * Math.PI * 2 - Math.PI / 2, rad = r * (.84 + .22 * R()); poly.push([Math.cos(a) * rad, Math.sin(a) * rad * .86 + r * .05]); }
     mk('clipPath', {id: 'gclip'}, defs).appendChild(mk('polygon', {points: pts(poly)}, svg));
     const inside = mk('g', {'clip-path': 'url(#gclip)'}, gIn);
     mk('rect', {x: -r * 1.3, y: -r * 1.3, width: r * 2.6, height: r * 2.6, fill: STONE}, inside);
     const quartz = [];
-    for (let i = 0; i < 80; i++) {
-      const cx = (R() - .5) * r * 2.2, cy = (R() - .5) * r * 2.2, s = r * (.05 + .1 * R()), t = R();
-      const shape = []; const m = 3 + Math.floor(R() * 3);
-      for (let j = 0; j < m; j++) { const a = j / m * Math.PI * 2 + R(); shape.push([cx + Math.cos(a) * s * (.6 + R() * .6), cy + Math.sin(a) * s * (.6 + R() * .6)]); }
-      const fill = t < .4 ? CH : t < .74 ? FELD : MICA;
-      const e = mk('polygon', {points: pts(shape), fill, opacity: t < .4 ? .92 : 1}, inside);
+    for (let i = 0; i < 34; i++) {
+      const cx = (R() - .5) * r * 2.1, cy = (R() - .5) * r * 2.1, s = r * (.1 + .12 * R()), t = R();
+      const shape = []; const m = 4 + Math.floor(R() * 2);
+      for (let j = 0; j < m; j++) { const a = j / m * Math.PI * 2 + R() * .6; shape.push([cx + Math.cos(a) * s * (.7 + R() * .4), cy + Math.sin(a) * s * (.7 + R() * .4)]); }
+      const fill = t < .4 ? CH : t < .72 ? FELD : MICA;
+      const e = mk('polygon', {points: pts(shape), fill}, inside);
       if (t < .4) quartz.push(e);
     }
-    const crater = mk('ellipse', {cx: -r * .42, cy: -r * .55, rx: r * .2, ry: r * .13, fill: mix('#000000', CC, 70), transform: `rotate(-35 ${-r * .42} ${-r * .55})`}, inside);
+    const crater = mk('ellipse', {cx: -r * .42, cy: -r * .55, rx: r * .2, ry: r * .13, fill: EDGE, transform: `rotate(-35 ${-r * .42} ${-r * .55})`}, inside);
     gsap.set(crater, {scale: 0, transformOrigin: '50% 50%'});
-    mk('polygon', {points: pts(poly), fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, gIn);
+    mk('polygon', {points: pts(poly), fill: 'none', stroke: EDGE, 'stroke-width': 2.6, 'stroke-linejoin': 'round'}, gIn);
     const capY1 = gy + r * .95 + fs * 1.3, capY2 = capY1 + fs * .2 + capFs * 1.3;
     const gc = mk('g', {}, root);
     txt(gc, gx, capY1, 'Granite', {'text-anchor': 'middle', 'font-weight': 700});
     const cap2 = txt(gc, gx, capY2, hammered ? '5 mm per hour' : 'full of quartz', {'text-anchor': 'middle', opacity: .75});
 
-    // ---- Diamond: flat facets ----
+    // ---- Diamond: one flat blue, facet lines only ----
     const dG = mk('g', {transform: `translate(${dx},${gy})`}, root);
     const dIn = mk('g', {}, dG);
     const P = (x, y) => [x * r, y * r];
     const outline = [P(-.45, -.55), P(.45, -.55), P(.95, -.15), P(0, .85), P(-.95, -.15)];
-    const D_LIGHT = mix(CH, BLUE, 55), D_DARK = '#74b4d8', D_LINE = '#3f7fa3';
+    const D_LINE = '#3f7fa3';
     mk('polygon', {points: pts(outline), fill: BLUE}, dIn);
-    mk('polygon', {points: pts([P(-.45, -.55), P(0, -.15), P(-.48, -.15)]), fill: D_LIGHT}, dIn);
-    mk('polygon', {points: pts([P(-.48, -.15), P(0, -.15), P(0, .85)]), fill: D_LIGHT}, dIn);
-    mk('polygon', {points: pts([P(.48, -.15), P(.95, -.15), P(0, .85)]), fill: D_DARK}, dIn);
     const facets = [[-.45, -.55, 0, -.15], [0, -.15, .45, -.55], [-.45, -.55, -.48, -.15], [.45, -.55, .48, -.15], [-.95, -.15, .95, -.15], [-.48, -.15, 0, .85], [.48, -.15, 0, .85], [0, -.15, 0, .85]];
-    const fg = mk('g', {stroke: D_LINE, 'stroke-width': 1.1, fill: 'none', 'stroke-linecap': 'round'}, dIn);
+    const fg = mk('g', {stroke: D_LINE, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round'}, dIn);
     facets.forEach(([a, b, c, d]) => mk('line', {x1: a * r, y1: b * r, x2: c * r, y2: d * r}, fg));
-    mk('polygon', {points: pts(outline), fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'}, dIn);
+    mk('polygon', {points: pts(outline), fill: 'none', stroke: EDGE, 'stroke-width': 2.6, 'stroke-linejoin': 'round'}, dIn);
     const sparks = [];
     const dc = mk('g', {}, root);
     txt(dc, dx, capY1, 'Diamond', {'text-anchor': 'middle', 'font-weight': 700});
@@ -163,10 +155,10 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     const arrows = mk('g', {}, root);
     const fx = mk('g', {}, root);
     const mkArrow = (sxp, syp, c1, c2, ex, ey, col) => {
-      const path = mk('path', {d: `M${sxp},${syp} C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${ex},${ey}`, stroke: col, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', opacity: 0}, arrows);
+      const path = mk('path', {d: `M${sxp},${syp} C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${ex},${ey}`, stroke: col, 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', opacity: 0}, arrows);
       const a = fs * .45, ang = Math.atan2(ey - c2[1], ex - c2[0]);
       const ux = Math.cos(ang), uy = Math.sin(ang);
-      const head = mk('path', {d: `M${ex - ux * a - uy * a * .8},${ey - uy * a + ux * a * .8} L${ex},${ey} L${ex - ux * a + uy * a * .8},${ey - uy * a - ux * a * .8}`, stroke: col, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, arrows);
+      const head = mk('path', {d: `M${ex - ux * a - uy * a * .8},${ey - uy * a + ux * a * .8} L${ex},${ey} L${ex - ux * a + uy * a * .8},${ey - uy * a - ux * a * .8}`, stroke: col, 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0}, arrows);
       return {path, head, start: [sxp, syp], end: [ex, ey]};
     };
     const bxG = sx - fs * 1.575, bxD = sx + fs * 1.575;
@@ -174,12 +166,12 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     const aD = mkArrow(dx - r * .05, gy - r * .7, [dx, Math.max(8, top - step * .2)], [bxD, Math.max(6, top - step * 1.5)], bxD, yR(10) - fs * .35, BLUE);
     const chip = (k, [x, y]) => {
       const g = mk('g', {opacity: 0}, root), s = fs * .5;
-      if (k === 'g') mk('polygon', {points: pts([[0, -s], [s * .87, -s * .5], [s * .87, s * .5], [0, s], [-s * .87, s * .5], [-s * .87, -s * .5]]), fill: CH, stroke: PINK, 'stroke-width': 1.4, 'stroke-linejoin': 'round'}, g);
-      else mk('polygon', {points: pts([[0, -s * 1.1], [s * .8, 0], [0, s * 1.1], [-s * .8, 0]]), fill: BLUE, stroke: D_LINE, 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, g);
+      if (k === 'g') mk('polygon', {points: pts([[0, -s], [s * .87, -s * .5], [s * .87, s * .5], [0, s], [-s * .87, s * .5], [-s * .87, -s * .5]]), fill: CH, stroke: EDGE, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
+      else mk('polygon', {points: pts([[0, -s * 1.1], [s * .8, 0], [0, s * 1.1], [-s * .8, 0]]), fill: BLUE, stroke: EDGE, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, g);
       gsap.set(g, {x, y});
       return g;
     };
-    const ring = n => { const y = yR(n), rx = fs * (n === 10 ? 1.02 : .82), ry = Math.min(fs * .72, step * 1.4); return mk('path', {d: `M${sx - rx},${y + 1} a${rx},${ry} 0 1,0 ${rx * 2},-2 a${rx},${ry} 0 1,0 ${-rx * 2 - 3},4`, stroke: INK, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', opacity: 0}, board); };
+    const ring = n => { const y = yR(n), rx = fs * (n === 10 ? 1.02 : .82), ry = Math.min(fs * .72, step * 1.4); return mk('path', {d: `M${sx - rx},${y + 1} a${rx},${ry} 0 1,0 ${rx * 2},-2 a${rx},${ry} 0 1,0 ${-rx * 2 - 3},4`, stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', opacity: 0}, board); };
 
     // ---- Dolerite ball for the finale ----
     const br = r * .3;
@@ -187,8 +179,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     const hit = [gx - r * .42 - br * .55, gy - r * .55 - br * .55];
     const swing = mk('path', {d: `M${rest[0]},${rest[1]} Q${rest[0] - r * .25},${(rest[1] + hit[1]) / 2 + r * .2} ${hit[0]},${hit[1]}`, fill: 'none', stroke: 'none'}, root);
     const ball = mk('g', {opacity: 0}, root);
-    mk('circle', {cx: 0, cy: 0, r: br, fill: '#383b3a', stroke: INK, 'stroke-width': 1.6}, ball);
-    for (let i = 0; i < 6; i++) mk('circle', {cx: (R() - .5) * br, cy: (R() - .5) * br, r: .8 + R(), fill: '#8d918e'}, ball);
+    mk('circle', {cx: 0, cy: 0, r: br, fill: '#3a3d3b', stroke: CH, 'stroke-width': 2}, ball);
     gsap.set(ball, {x: rest[0], y: rest[1]});
     const bl = mk('g', {opacity: 0}, root);
     const dl = txt(bl, rest[0], rest[1] - br - fs * .5, 'dolerite', {'text-anchor': 'middle', 'font-weight': 700});
@@ -206,10 +197,11 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     if (hammered) pound(true);
   }
 
+  // Dust knocked off the granite by the dolerite.
   function burst(x, y, col, n = 12, spread = 1) {
     if (Kit.calm || !S) return;
     for (let i = 0; i < n; i++) {
-      const c = mk('circle', {cx: x, cy: y, r: .8 + Math.random() * 2.2, fill: col, opacity: .9}, S.el.fx);
+      const c = mk('circle', {cx: x, cy: y, r: 1 + Math.random() * 2, fill: col}, S.el.fx);
       gsap.to(c, {attr: {cx: x + (Math.random() - .5) * S.fs * 4 * spread, cy: y + (Math.random() - .75) * S.fs * 3 * spread}, opacity: 0, duration: .6 + Math.random() * .6, ease: 'power3.out', onComplete: () => c.remove()});
     }
   }
@@ -226,13 +218,13 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     }
     const tl = gsap.timeline();
     tl.set(e.bar, {scaleY: 0}).set(e.ring, {drawSVG: '0%', opacity: 1}).set(e.head, {opacity: 0});
-    if (k === 'g') tl.fromTo(e.quartz, {opacity: .92}, {opacity: 1, fill: '#ffffff', duration: .12, stagger: {each: .006, from: 'random'}, yoyo: true, repeat: 1}, 0);
+    if (k === 'g') tl.fromTo(e.quartz, {opacity: 1}, {opacity: 1, fill: '#f7d3dc', duration: .12, stagger: {each: .006, from: 'random'}, yoyo: true, repeat: 1}, 0);
     tl.fromTo(e.spec, {scale: 1, transformOrigin: '50% 60%'}, {scale: 1.07, duration: .14, ease: 'power2.out', yoyo: true, repeat: 1}, 0)
       .fromTo(e.path, {drawSVG: '0%', opacity: 1}, {drawSVG: '100%', duration: 1.05, ease: 'power2.inOut'}, .12)
       .fromTo(e.tr, {opacity: 1, scale: .4, transformOrigin: '50% 50%'}, {scale: 1, duration: .3, ease: 'back.out(3)'}, .12)
       .to(e.tr, {motionPath: {path: e.path, align: e.path, alignOrigin: [.5, .5]}, duration: 1.05, ease: 'power2.inOut'}, .12)
       .to(e.head, {opacity: 1, duration: .15}, 1.1)
-      .add(() => { burst(e.end[0], e.end[1], k === 'g' ? '#fbe3ea' : '#d9f2ff', 14); Kit.haptic('light'); }, 1.17)
+      .add(() => { Kit.haptic('light'); }, 1.17)
       .to(e.tr, {scale: 0, opacity: 0, duration: .35, ease: 'power3.in'}, 1.17)
       .to(e.bar, {scaleY: 1, duration: .8, ease: 'expo.out'}, 1.15)
       .to(e.ring, {drawSVG: '100%', duration: .5, ease: 'power2.out'}, 1.55)
@@ -266,7 +258,7 @@ gsap.registerPlugin(MotionPathPlugin, DrawSVGPlugin);
     for (let i = 0; i < 3; i++) {
       tl.to(e.ball, {motionPath: {path: e.swing, align: e.swing, alignOrigin: [.5, .5], start: 0, end: 1}, duration: .32, ease: 'power3.in'})
         .add(() => {
-          burst(e.hit[0] + S.r * .15, e.hit[1] + S.r * .15, '#e9e4da', 16, 1.2);
+          burst(e.hit[0] + S.r * .15, e.hit[1] + S.r * .15, STONE, 16, 1.2);
           Kit.haptic('light');
           gsap.fromTo(e.gIn, {x: -3}, {x: 0, duration: .45, ease: 'elastic.out(1.2,.3)'});
           gsap.to(e.crater, {scale: (i + 1) / 3, duration: .25, ease: 'power2.out'});

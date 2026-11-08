@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: science-pressure-at-depth -->
-<!-- Look: a printed science-book cross-section. Flat bands of sea that grow bluer with every kilometre, a little flat sub on a plumb line, the Titanic lying in two pieces on the seabed, and a flat Eiffel Tower standing on a 1 m² slab of hull.
-     Interaction: drag the little sub down the plumb line. The sum "1 + depth ÷ 10" rewrites itself, the yellow squeeze arrows round the hull grow, bubbles rise, and the tower fills (by area) with the tonnes pressing on one square metre.
-     Wow: at the Titanic a pink pen rings "381 atm", the sub creaks and squeezes out bubbles, and the whole tower is traced in yellow: almost half of it now sits on 1 m². -->
+<!-- Look: a page from a printed science book, on a pale sea-blue card with no box behind the drawing. There is one wavy blue line for the surface, a thin plumb line with depth marks, a low mound of seabed with the Titanic lying in two pieces, a small flat yellow sub, and a flat Eiffel Tower standing on a 1 m² slab of hull. Every shape is a solid fill with an even ink stroke. Orange means weight and pressure; a magenta pen links the sub to its square metre.
+     Interaction: drag the little sub down the plumb line. The sum "1 + depth ÷ 10" rewrites itself, the orange squeeze arrows round the hull grow, bubbles rise, and the tower fills (by area) with the tonnes pressing on one square metre.
+     Wow: at the Titanic a magenta pen rings "381 atm", the sub creaks and lets out bubbles, and the whole tower is traced in orange: almost half of it now sits on 1 m². -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pressure at 3800 m</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -10,18 +10,22 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <script src="kit/vendor/gsap-plugins/DrawSVGPlugin.min.js"></script>
 <style>
-#stage{display:flex;flex:1;min-height:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:visible}
+#stage{display:flex;flex:1;min-height:0;background:none!important;box-shadow:none!important;border:0!important}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;overflow:visible;background:none!important}
+/* Printed-book look: flat fills, no textures or filters, labels in the body font. */
+#pic,#pic *{filter:none!important}
+#pic text{font-family:var(--body)!important;letter-spacing:0!important;text-transform:none!important}
+#pic text.disp{font-family:var(--display)!important}
 #why{display:flex;flex-direction:column;gap:1cqh}
 #why .body{font:600 max(1.85cqh,12.5px)/1.32 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
-#why .body b{color:#f5d76e}
-.say b{color:#f5d76e}
+#why .body b{color:#b5401a}
+.say b{color:#b5401a}
 .hint{animation:nudge 1.3s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateY(5px)}}
 .kit-calm .hint{animation:none}
 .answered .q{font-size:max(2.5cqh,15px)}
 </style>
-<article class="card" id="card" data-topic="science" data-kind="Drag the sub down · the weight of water" style="--c:#1e2b27;--k:#f1eee4;--edge:#111a16">
+<article class="card" id="card" data-topic="science" data-kind="Drag the sub down · the weight of water" style="--c:#b3dbe0;--k:#12252c;--edge:#86bcc4">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO THE DEEP</span></div>
     <h2 class="q">How hard does the sea press, on the way down to the Titanic?</h2>
@@ -39,9 +43,9 @@
 (() => {
   if (typeof DrawSVGPlugin !== 'undefined') gsap.registerPlugin(DrawSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
-  const CH = '#f1eee4', YE = '#f5d76e', BL = '#8ec9e0', PK = '#f2a5aa', HULL = '#2b3a35';
+  // Ink, one weight colour (orange), one pen colour (magenta), the sea's blue, and the sub's yellow.
+  const CH = '#12252c', YE = '#d9572a', BL = '#2f74a3', PK = '#b02f68', HULL = '#12252c', SUB = '#f2c94c';
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
-  const blue = n => `color-mix(in srgb, ${BL} ${n}%, var(--c))`;
   const MAX = 3800, TOWER = 8000;
   const st = {d: 0};
   let revealed = false, touched = false, said = 0, built = false, compact = false;
@@ -80,6 +84,7 @@
     if (E.bob) gsap.killTweensOf(E.bob);
     svg.innerHTML = '';
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    svg.removeAttribute('filter');
     fs = Math.max(12, Math.min(16, f.f || W / 26));
     pad = fs * .5;
     compact = H < fs * 21;
@@ -106,29 +111,32 @@
     y1 = sb - fs * 3.4;
     const step = (y1 - y0) / 3.8 >= small * 1.45 ? 1000 : 2000;
 
-    // The sea in flat bands: the deeper, the more water on top, the bluer.
-    const sea = Kit.mk('g', {}, g);
-    const NB = 8;
-    for (let i = 0; i < NB; i++) {
-      const ya = y0 + (sb - y0) * i / NB, yb = y0 + (sb - y0) * (i + 1) / NB;
-      Kit.mk('rect', {x: pad, y: ya, width: seaR - pad, height: yb - ya + .6, class: 'dash', style: `fill:${blue(12 + i * 7)}`}, sea);
-    }
+    // The surface: one wavy blue line. The rest is open water on the card's own colour.
     P(g, wobble(pad, seaR, y0, fs * .1, 10), {stroke: BL, 'stroke-width': 2.6, class: 'draw'});
-    P(g, `M${colX},${y0} V${y1}`, {'stroke-width': 1.3, opacity: .7, class: 'draw'});
+    P(g, `M${colX},${y0} V${y1}`, {'stroke-width': 1.2, opacity: .55, class: 'draw'});
     E.ticks = [];
     for (let m = 0; m <= 3000; m += step) {
       const y = yOf(m);
-      P(g, `M${colX - fs * .45},${y} L${colX + fs * .45},${y}`, {'stroke-width': 1.8, class: 'draw'});
+      P(g, `M${colX - fs * .4},${y} L${colX + fs * .4},${y}`, {'stroke-width': 1.6, class: 'draw'});
       E.ticks.push({y, e: T(tx, labR, y + small * .35, `${m} m`, {'text-anchor': 'end', 'font-size': small, 'font-weight': 600, style: body, opacity: .9})});
     }
 
-    // The seabed, and the Titanic lying in two pieces.
-    Kit.mk('path', {d: wobble(pad, seaR, sb, fs * .12, 8) + ` L${seaR},${sb + fs * .45} L${pad},${sb + fs * .45} Z`, style: `fill:${tint(30)}`}, g);
-    const shipF = `fill:${tint(62)}`;
+    // The seabed: a low mound of mud, and the Titanic lying on it in two pieces.
+    {
+      const n = 10, amp = fs * .12, xa = pad, xb = seaR;
+      let d = `M${xa.toFixed(1)},${(sb + fs * .4).toFixed(1)}`;
+      for (let i = 0; i <= n; i++) {
+        const x = xa + (xb - xa) * i / n, k = Math.sin(Math.PI * i / n);
+        const y = sb + fs * .4 * (1 - Math.pow(k, .35)) + Math.sin(i * 1.7) * amp * k;
+        d += ` L${x.toFixed(1)},${y.toFixed(1)}`;
+      }
+      d += ` Q${((xa + xb) / 2).toFixed(1)},${(sb + fs * .75).toFixed(1)} ${xa.toFixed(1)},${(sb + fs * .4).toFixed(1)} Z`;
+      Kit.mk('path', {d, class: 'dash', style: `fill:${tint(22)}`}, g);
+    }
+    const shipF = `fill:${tint(45)}`;
     const b0 = colX - fs * .2, b1 = Math.min(seaR - fs * .2, colX + fs * 3);
     P(g, `M${b0},${sb - fs * .1} L${b1 - fs * .7},${sb - fs * .2} L${b1},${sb - fs * 1.2} L${b0 + fs * .35},${sb - fs * .95} l${-fs * .2},${fs * .25} l${fs * .15},${fs * .22} l${-fs * .22},${fs * .18} Z`, {'stroke-width': 1.6, style: shipF, class: 'draw'});
     P(g, `M${b0 + fs * 1.5},${sb - fs * 1.02} l${fs * .3},${-fs * .95}`, {'stroke-width': 1.6, class: 'draw'});
-    for (let i = 0; i < 3; i++) Kit.mk('circle', {cx: b0 + fs * (.9 + i * .55), cy: sb - fs * .5, r: fs * .1, style: 'fill:var(--c)'}, g);
     const s0 = pad + fs * .2, s1 = colX - fs * 1.1;
     if (s1 - s0 > fs * 1.6) {
       P(g, `M${(s0 + s1) / 2 - fs * .3},${sb - fs * .8} l${fs * .12},${-fs * .55} l${fs * .45},0 l${-fs * .02},${fs * .55}`, {'stroke-width': 1.4, style: shipF, class: 'draw'});
@@ -140,9 +148,9 @@
     const s1z = Math.max(12, fs), eSz = small;
     let f2z = compact ? fs * 1.6 : fs * 1.95;
     const fa = compact ? 'start' : 'middle', fx = compact ? rx0 + fs * .5 : (rx0 + rx1) / 2;
-    E.f1 = T(tx, fx, 0, '1 + 3800 ÷ 10', {'text-anchor': fa, 'font-size': s1z, 'font-weight': 600, style: body, opacity: .9});
-    E.f2 = T(tx, fx, 0, '= 381 atm', {'text-anchor': fa, 'font-size': f2z, 'font-weight': 800, style: disp});
-    E.f3 = T(tx, fx, 0, compact ? '≈ 3,800 t / m²' : '≈ 3,800 t on 1 m²', {'text-anchor': fa, 'font-size': s1z, 'font-weight': 600, style: body, fill: YE});
+    E.f1 = T(tx, fx, 0, '1 + 3800 ÷ 10', {'text-anchor': fa, 'font-size': s1z, 'font-weight': 600, style: body, opacity: .85});
+    E.f2 = T(tx, fx, 0, '= 381 atm', {'text-anchor': fa, 'font-size': f2z, 'font-weight': 800, style: disp, class: 'disp'});
+    E.f3 = T(tx, fx, 0, compact ? '≈ 3,800 t / m²' : '≈ 3,800 t on 1 m²', {'text-anchor': fa, 'font-size': s1z, 'font-weight': 700, style: body, fill: YE});
     const room = compact ? (rx1 - fx) - fs * 5.5 : (rx1 - rx0) - fs * 1.8;
     let w2 = E.f2.getComputedTextLength();
     if (w2 + fs * .8 > room) { f2z = Math.max(fs * 1.3, f2z * room / (w2 + fs * .8)); E.f2.setAttribute('font-size', f2z); w2 = E.f2.getComputedTextLength(); }
@@ -180,7 +188,8 @@
     cum = cum.map(v => v / cum[NA]);
 
     const h0 = hw(0);
-    P(g, `M${cx - B - fs * .5},${yB + fs * .05} L${cx + B + fs * .5},${yB + fs * .05} L${cx + B + fs * .05},${yB + fs * 1.05} L${cx - B - fs * .95},${yB + fs * 1.05} Z`, {'stroke-width': 2, style: `fill:${tint(34)}`, class: 'draw'});
+    // The slab: one square metre of hull, a flat block.
+    P(g, `M${cx - B - fs * .5},${yB + fs * .05} L${cx + B + fs * .5},${yB + fs * .05} L${cx + B + fs * .05},${yB + fs * 1.05} L${cx - B - fs * .95},${yB + fs * 1.05} Z`, {'stroke-width': 2, style: `fill:${tint(45)}`, class: 'draw'});
 
     let s = '';
     const N = 26;
@@ -190,21 +199,23 @@
     s += ` L${cx + h0 * .6},${yB} Q${cx},${yB - th * .17} ${cx - h0 * .6},${yB} Z`;
     svg.querySelector('#towerShape').setAttribute('d', s);
 
-    Kit.mk('path', {d: s, style: `fill:${tint(16)}`}, g);
+    // The tower: a flat silhouette that fills with flat orange, the weight on one square metre.
+    Kit.mk('path', {d: s, style: `fill:${tint(10)}`}, g);
     const inT = Kit.mk('g', {'clip-path': 'url(#towerClip)'}, g);
     E.fillBase = Kit.mk('rect', {x: cx - B - 4, y: yB, width: 2 * B + 8, height: 0, fill: YE, opacity: .2}, inT);
     E.fill = Kit.mk('rect', {x: cx - B - 4, y: yB, width: 2 * B + 8, height: 0, fill: YE}, inT);
     E.outline = P(g, s, {'stroke-width': 2.3, class: 'draw'});
-    [.2, .47, .8].forEach(t => {
-      const y = yB - t * th, w = hw(t) + fs * .4;
-      P(g, `M${cx - w},${y} L${cx + w},${y} M${cx - w + fs * .15},${y + fs * .32} L${cx + w - fs * .15},${y + fs * .32}`, {'stroke-width': 1.8, class: 'draw'});
+    // Two platforms, one bold line each.
+    [.2, .47].forEach(t => {
+      const y = yB - t * th, w = hw(t) + fs * .35;
+      P(g, `M${cx - w},${y} L${cx + w},${y}`, {'stroke-width': 2.4, class: 'draw'});
     });
     P(g, `M${cx},${yT - fs * .4} V${yT - fs * 1.2}`, {'stroke-width': 1.6, class: 'draw'});
-    E.level = P(g, '', {stroke: YE, 'stroke-width': 2.6});
+    E.level = P(g, '', {stroke: CH, 'stroke-width': 2.2});
     E.glow = P(g, s, {stroke: YE, 'stroke-width': 3, opacity: 0});
     fitT(tx, cx - fs * .2, yB + fs * 2.45, '1 m² of hull', {'text-anchor': 'middle', 'font-size': small, 'font-weight': 600, style: body, fill: PK});
 
-    // ---------- the pink arrow: from the sub to one square metre of its hull ----------
+    // ---------- the pen line: from the sub to one square metre of its hull ----------
     E.tArrow = P(g, '', {stroke: PK, 'stroke-width': 2});
     E.tHead = P(g, '', {stroke: PK, 'stroke-width': 2});
 
@@ -215,12 +226,14 @@
     E.bob = Kit.mk('g', {}, E.subIn);
     E.arrows = [];
     for (let i = 0; i < 8; i++) E.arrows.push(P(E.bob, '', {stroke: YE, 'stroke-width': 2}));
-    P(E.bob, `M${-subRx * .3},${-subRy * .7} L${-subRx * .2},${-subRy - fs * .42} L${subRx * .22},${-subRy - fs * .42} L${subRx * .28},${-subRy * .7}`, {'stroke-width': 1.8, fill: HULL});
-    Kit.mk('ellipse', {cx: 0, cy: 0, rx: subRx, ry: subRy, fill: HULL, stroke: CH, 'stroke-width': 2.2}, E.bob);
-    P(E.bob, `M${-subRx},0 l${-fs * .45},${-fs * .45} l0,${fs * .9} Z`, {'stroke-width': 1.8, fill: HULL});
-    Kit.mk('circle', {cx: subRx * .55, cy: -fs * .05, r: fs * .28, fill: BL, stroke: CH, 'stroke-width': 1.6}, E.bob);
+    // A plain flat sub: yellow body, fin and tail in ink outline, one round porthole.
+    const subA = {fill: SUB, stroke: CH, 'stroke-width': 1.6, 'stroke-linejoin': 'round'};
+    Kit.mk('path', Object.assign({d: `M${-subRx * .3},${-subRy * .6} L${-subRx * .2},${-subRy - fs * .42} L${subRx * .22},${-subRy - fs * .42} L${subRx * .28},${-subRy * .6} Z`}, subA), E.bob);
+    Kit.mk('path', Object.assign({d: `M${-subRx + fs * .15},0 l${-fs * .6},${-fs * .5} l0,${fs * 1} Z`}, subA), E.bob);
+    Kit.mk('ellipse', Object.assign({cx: 0, cy: 0, rx: subRx, ry: subRy}, subA), E.bob);
+    Kit.mk('circle', {cx: subRx * .5, cy: -fs * .03, r: fs * .27, fill: BL, stroke: HULL, 'stroke-width': 1.6}, E.bob);
     E.hint = Kit.mk('g', {class: 'hint', opacity: touched ? 0 : 1}, E.sub);
-    P(E.hint, `M0,${fs * 1.35} v${fs * 1.3} m${-fs * .38},${-fs * .45} l${fs * .38},${fs * .45} l${fs * .38},${-fs * .45}`, {stroke: YE, 'stroke-width': 2.4});
+    P(E.hint, `M0,${fs * 1.35} v${fs * 1.3} m${-fs * .38},${-fs * .45} l${fs * .38},${fs * .45} l${fs * .38},${-fs * .45}`, {stroke: CH, 'stroke-width': 2.4});
     if (!Kit.calm) gsap.to(E.bob, {y: fs * .16, duration: 1.6, yoyo: true, repeat: -1, ease: 'sine.inOut'});
 
     E.ring = P(g, '', {stroke: PK, 'stroke-width': 2.6, opacity: 0});
@@ -247,7 +260,7 @@
       const r2 = [ux * Math.cos(-.55) - uy * Math.sin(-.55), ux * Math.sin(-.55) + uy * Math.cos(-.55)];
       p.setAttribute('d', `M${sx.toFixed(1)},${sy2.toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)} M${(ex + r1[0] * hl).toFixed(1)},${(ey + r1[1] * hl).toFixed(1)} L${ex.toFixed(1)},${ey.toFixed(1)} L${(ex + r2[0] * hl).toFixed(1)},${(ey + r2[1] * hl).toFixed(1)}`);
       p.setAttribute('stroke-width', (1.6 + fr * 1.8).toFixed(2));
-      p.setAttribute('opacity', (.55 + fr * .45).toFixed(2));
+      p.setAttribute('opacity', (.6 + fr * .4).toFixed(2));
     });
     // Depth labels step aside when the squeezed sub swells past them.
     E.ticks.forEach(({y, e}) => {
@@ -265,7 +278,7 @@
     const lw = hw(t) + fs * .55;
     E.level.setAttribute('d', `M${cx - lw},${ly} L${cx + lw},${ly}`);
     E.level.setAttribute('opacity', ff > .01 ? 1 : 0);
-    // The pink arrow follows the sub down, then runs across to the slab.
+    // The pen line follows the sub down, then runs across to the slab.
     const sx = colX + subRx + fs * .6, ex = cx - B - fs * 1.0, ey = yB + fs * .55;
     const c1x = Math.min(sx + fs, ex - fs), c1y = sy + (ey - sy) * .9, c2x = sx + (ex - sx) * .6, c2y = ey;
     E.tArrow.setAttribute('d', `M${sx},${sy} C${c1x},${c1y} ${c2x},${c2y} ${ex},${ey}`);
@@ -300,7 +313,7 @@
     const bx = colX, by = yOf(st.d);
     E.dust.innerHTML = '';
     for (let i = 0; i < 12; i++) {
-      const c = Kit.mk('circle', {cx: bx + (Kit.rnd() - .5) * subRx * 1.6, cy: by - subRy * .5, r: 1.2 + Kit.rnd() * 2, fill: 'none', stroke: CH, 'stroke-width': 1.2, opacity: .9}, E.dust);
+      const c = Kit.mk('circle', {cx: bx + (Kit.rnd() - .5) * subRx * 1.6, cy: by - subRy * .5, r: 1.2 + Kit.rnd() * 2, fill: 'none', stroke: CH, 'stroke-width': 1.2, opacity: .8}, E.dust);
       gsap.to(c, {attr: {cx: '+=' + (Kit.rnd() - .5) * fs * 2, cy: '-=' + (fs * 1.5 + Kit.rnd() * fs * 3)}, opacity: 0, duration: 1.2 + Kit.rnd(), ease: 'power2.out', delay: .5 + Kit.rnd() * .4});
     }
   }
@@ -310,7 +323,7 @@
     if (!built || Kit.calm || document.hidden || !E.bub) return;
     const sy = yOf(st.d);
     if (sy - y0 < fs * 1.6) return;
-    const c = Kit.mk('circle', {cx: colX + (Kit.rnd() - .3) * fs * .8, cy: sy - subRy - fs * .3, r: 1 + Kit.rnd() * 1.7, fill: 'none', stroke: CH, 'stroke-width': 1, opacity: .8}, E.bub);
+    const c = Kit.mk('circle', {cx: colX + (Kit.rnd() - .3) * fs * .8, cy: sy - subRy - fs * .3, r: 1 + Kit.rnd() * 1.7, fill: 'none', stroke: CH, 'stroke-width': 1, opacity: .6}, E.bub);
     const rise = Math.min(fs * (2 + Kit.rnd() * 2.5), sy - y0 - fs * .8);
     gsap.to(c, {attr: {cy: '-=' + rise, cx: '+=' + (Kit.rnd() - .5) * fs}, opacity: 0, duration: 1.6 + Kit.rnd(), ease: 'sine.out', onComplete: () => c.remove()});
   }, 700);

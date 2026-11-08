@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: maths-mercator-russia -->
 <!--
-  Look: a page from a printed atlas. A flat dark sea, a plain Mercator graticule whose parallels spread apart toward the pole, land as flat coloured shapes: ochre Africa, coral Russia. A column of circles of the same real size grows up the left edge.
-  Interaction: drag Russia south. It keeps its real size, so the Mercator map redraws it smaller with every degree, the circle at its latitude darkens, and its label reads how much it was inflated.
+  Look: a page from a printed school atlas. The card is a pale, flat sea. The map has only its parallels, drawn as thin ink lines that spread apart toward the pole, plus a bold equator. The land is flat shapes: ochre Africa and coral Russia. A column of circles, all the same real size, grows up the left edge.
+  Interaction: drag Russia south. It keeps its real size, so the Mercator map draws it smaller with every degree. The circle at its latitude darkens, and the label on Russia says how much it was inflated.
   Wow: at the equator Russia drops onto Africa and fits inside its north. Both outlines thicken for a beat, and the "bigger" names flip into the true order.
 -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -21,21 +21,21 @@
 .pair{flex:none;display:flex;align-items:center;gap:1.4cqw}
 .chip{padding:.3cqh .4cqw;white-space:nowrap}
 .gt{color:var(--muted);font-style:normal;font-weight:500}
-.ru{order:0;color:#ef9580}
-.af{order:2;color:#e8bb6c}
+.ru{order:0;color:#b8432a}
+.af{order:2;color:#94650f}
 .gr{order:0;color:var(--k)}
 .au{order:2;color:var(--k)}
 .gt{order:1}
 .truth .ru,.truth .gr{order:2}
 .truth .af,.truth .au{order:0}
-.say b{color:#ef9580}
+.say b{color:#b8432a}
 #why{font:500 max(1.8cqh,13px)/1.35 var(--body);color:var(--k);margin:0}
-#why b{color:#e8bb6c}
+#why b{color:#94650f}
 .nudge{animation:nudge 1.3s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateY(5px)}}
 .kit-calm .nudge{animation:none}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Drag Russia south · true size" style="--c:#0f2236;--k:#eef1ff;--edge:#000000;--muted:#9fb0c8">
+<article class="card" id="card" data-topic="maths" data-kind="Drag Russia south · true size" style="--c:#a9d3e8;--k:#13212e;--edge:#000000;--muted:#3f5d72">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG RUSSIA</span></div>
     <h2 class="q">Why does Russia look bigger than Africa on most world maps?</h2>
@@ -60,8 +60,8 @@
   const svg = Kit.$('pic'), D = Math.PI / 180;
   const merc = la => Math.log(Math.tan(Math.PI / 4 + la * D / 2));
   const LON0 = -40, LON1 = 184, LAT0 = -50, LAT1 = 79.5;
-  // flat print colours: sea, ink, and the two lands
-  const SEA = '#0f2236', INK = '#eef1ff', RU = '#e8836b', RU_D = '#f3a593', AF = '#e3b25e', AF_D = '#c58f3a';
+  // flat atlas colours: sea (the card), ink, and the two lands with their darker coast lines
+  const SEA = '#a9d3e8', INK = '#13212e', RU = '#e2674b', RU_D = '#9e3a24', AF = '#e9b356', AF_D = '#9a6a16';
 
   // Simplified outlines, [longitude, latitude].
   const AFRICA = [[-17,21],[-16,28],[-10,30],[-6,36],[10,37],[11,33],[20,31],[25,32],[32,31],[34,28],[43,12],[51,12],[44,2],[40,-5],[40,-15],[35,-24],[32,-29],[27,-34],[20,-35],[18,-32],[12,-18],[13,-6],[9,-1],[9,4],[5,6],[-4,5],[-8,4],[-13,8],[-17,14]];
@@ -98,34 +98,30 @@
     ox = (W - wR * k) / 2; oy = (H - hR * k) / 2;
     const roomy = k * wR > fs * 22;
 
-    // ---- graticule: meridians every 30°, parallels every 15°, ever further apart toward the pole
+    // ---- parallels every 15°: thin printed lines that spread apart toward the pole (that IS the stretch)
     const gg = E.grat = Kit.mk('g', {}, svg);
-    for (let lo = -30; lo <= 180; lo += 30) {
-      const [x, y0] = proj(lo, LAT0), [, y1] = proj(lo, LAT1);
-      Kit.mk('line', {x1: x, x2: x, y1: y0, y2: y1, stroke: INK, 'stroke-opacity': .16, 'stroke-width': 1, class: 'gl'}, gg);
-    }
     for (const la of [-45, -30, -15, 15, 30, 45, 60, 75]) {
       const [x0, y] = proj(LON0, la), [x1] = proj(LON1, la);
-      Kit.mk('line', {x1: x0, x2: x1, y1: y, y2: y, stroke: INK, 'stroke-opacity': .16, 'stroke-width': 1, class: 'gl'}, gg);
+      Kit.mk('line', {x1: x0, x2: x1, y1: y, y2: y, stroke: INK, 'stroke-opacity': .22, 'stroke-width': 1, class: 'gl'}, gg);
     }
     const [ex0, ey] = proj(LON0, 0), [ex1] = proj(LON1, 0);
-    Kit.mk('line', {x1: ex0, x2: ex1, y1: ey, y2: ey, stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.5, class: 'gl'}, gg);
-    E.eq = txt(gg, ex1 - pad, ey - fs * .45, 'Equator', {'text-anchor': 'end', fill: INK, opacity: .85, class: 'gl'});
+    Kit.mk('line', {x1: ex0, x2: ex1, y1: ey, y2: ey, stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', class: 'gl'}, gg);
+    E.eq = txt(gg, ex1 - pad, ey - fs * .45, 'Equator', {'text-anchor': 'end', fill: INK, class: 'gl'});
 
     // ---- circles of the same real size, drawn up a meridian
     const tg = E.ts = Kit.mk('g', {}, svg);
     E.tsr = [];
     for (const la of RING_LATS) {
       const [x, y] = proj(-22, la), r = 4 * D * k / Math.cos(la * D), g = Kit.mk('g', {opacity: .6}, tg);
-      Kit.mk('circle', {cx: x, cy: y, r, fill: INK, 'fill-opacity': .14, stroke: INK, 'stroke-width': 1.3}, g);
+      Kit.mk('circle', {cx: x, cy: y, r, fill: '#7ea6bf', stroke: INK, 'stroke-width': 1.5}, g);
       g._la = la; E.tsr.push(g);
     }
     E.tsl = [];
     const [lx, ly] = proj(LON0, -46.5), gap = (merc(-35) - merc(-46.5)) * k;
     if (roomy && gap > fs * 1.2) {
       const lg = Kit.mk('g', {}, tg);
-      Kit.mk('circle', {cx: lx + pad + fs * .4, cy: ly - fs * .35, r: fs * .4, fill: INK, 'fill-opacity': .14, stroke: INK, 'stroke-width': 1.2}, lg);
-      txt(lg, lx + pad + fs * 1.2, ly, 'Rings: same real size', {fill: INK, opacity: .85});
+      Kit.mk('circle', {cx: lx + pad + fs * .4, cy: ly - fs * .35, r: fs * .4, fill: '#7ea6bf', stroke: INK, 'stroke-width': 1.3}, lg);
+      txt(lg, lx + pad + fs * 1.2, ly, 'Rings: same real size', {fill: INK});
       E.tsl.push(lg);
     }
 
@@ -134,22 +130,22 @@
     Kit.mk('path', {d: ad, fill: AF, stroke: 'none'}, ag);
     E.afGlow = Kit.mk('path', {d: ad, fill: 'none', stroke: AF_D, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, ag);
     const [alx, aly] = proj(25, -16);
-    txt(ag, alx, aly, 'Africa', {'text-anchor': 'middle', fill: SEA});
+    txt(ag, alx, aly, 'Africa', {'text-anchor': 'middle', fill: INK});
 
-    // ---- Russia: its Mercator ghost, then the movable one
-    E.ghost = Kit.mk('path', {d: pathOf(RUSSIA), fill: 'none', stroke: RU_D, 'stroke-width': 1.2, 'stroke-dasharray': '4 4', 'stroke-linejoin': 'round', opacity: dragged ? .5 : 0}, svg);
+    // ---- Russia: where Mercator draws it (dashed coast), then the movable one
+    E.ghost = Kit.mk('path', {d: pathOf(RUSSIA), fill: 'none', stroke: RU_D, 'stroke-width': 1.4, 'stroke-dasharray': '5 4', 'stroke-linejoin': 'round', opacity: dragged ? .5 : 0}, svg);
     const rgp = E.ru = Kit.mk('g', {}, svg);
-    E.rus = Kit.mk('path', {fill: RU, 'fill-opacity': .82, stroke: 'none'}, rgp);
+    E.rus = Kit.mk('path', {fill: RU, 'fill-opacity': .85, stroke: 'none'}, rgp);
     E.rusG = Kit.mk('path', {fill: 'none', stroke: RU_D, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, rgp);
     // the same real-size circle, carried along with Russia
-    E.ring = Kit.mk('circle', {fill: INK, 'fill-opacity': .18, stroke: INK, 'stroke-width': 1.4}, rgp);
+    E.ring = Kit.mk('circle', {fill: INK, 'fill-opacity': .16, stroke: INK, 'stroke-width': 1.5}, rgp);
     E.ringO = Kit.mk('circle', {fill: 'none', stroke: 'none'}, rgp);
-    E.dot = Kit.mk('circle', {r: 2.4, fill: INK}, rgp);
+    E.dot = Kit.mk('circle', {r: 2.6, fill: INK}, rgp);
     E.ro = Kit.mk('g', {}, rgp);
-    E.roBg = Kit.mk('rect', {rx: fs * .3, fill: SEA, 'fill-opacity': .85}, E.ro);
+    E.roBg = Kit.mk('rect', {fill: 'none', stroke: 'none'}, E.ro);
     E.roT = txt(E.ro, 0, 0, '', {'text-anchor': 'middle', fill: INK});
     E.hint = Kit.mk('g', {class: 'nudge', opacity: dragged ? 0 : 1}, rgp);
-    E.hintP = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.hint);
+    E.hintP = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.hint);
     E.fx = Kit.mk('g', {}, svg);
     draw();
   }
@@ -190,7 +186,7 @@
       gsap.to(E.hint, {opacity: 0, duration: .25});
       gsap.to(E.ghost, {opacity: .5, duration: .4});
     }
-    gsap.fromTo(E.ring, {attr: {'stroke-width': 3.5}}, {attr: {'stroke-width': 1.4}, duration: .5, ease: 'power3.out'});
+    gsap.fromTo(E.ring, {attr: {'stroke-width': 3.5}}, {attr: {'stroke-width': 1.5}, duration: .5, ease: 'power3.out'});
   });
   svg.addEventListener('pointermove', e => {
     if (!drag) return;
@@ -224,7 +220,7 @@
         // Russia lands: both outlines thicken for a beat
         gsap.fromTo(E.rusG, {attr: {'stroke-width': 4}}, {attr: {'stroke-width': 1.6}, duration: 1.2, ease: 'power3.out'});
         gsap.fromTo(E.afGlow, {attr: {'stroke-width': 5}}, {attr: {'stroke-width': 1.6}, duration: 1.4, ease: 'elastic.out(1,.4)'});
-        gsap.fromTo(E.ring, {attr: {'stroke-width': 5}}, {attr: {'stroke-width': 1.4}, duration: 1.2, ease: 'power3.out'});
+        gsap.fromTo(E.ring, {attr: {'stroke-width': 5}}, {attr: {'stroke-width': 1.5}, duration: 1.2, ease: 'power3.out'});
         gsap.fromTo(E.ro, {scale: 1.25, transformOrigin: '50% 50%'}, {scale: 1, duration: .7, ease: 'back.out(2.5)'});
       }, '-=.35')
       .add(flip, '-=.1');

@@ -1,12 +1,12 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-sharks-food-chain -->
-<!-- Look: a printed cross-section of the sea, like a page from a natural history book. Three flat bands of water, slightly darker
-     with depth, sit behind the three levels of the food chain: the shark's water, the fish's water and the seabed. A flat shark is
-     drawn with a dark back and a pale belly, the way real sharks are coloured. A flat amber school swims below it, with seagrass and
-     small krill on a dark seabed. A plain boat floats on a plain surface line.
-     Interaction: drag the shark up along the fishing line to the boat. The school stops fleeing as it rises. Let go out of the water and the shark is gone; let go too early and it springs back.
-     Wow: a splash, then a flat red front sinks through the levels. The school spreads into the shark's water and down to the seabed, the small life fades out and the grass shrinks, and IMBALANCE scrambles into place.
-     Legend: a clean column on the left that the fish never cross, in the body font; when the stage gets short it folds into one row along the seabed, so it always stays readable. -->
+<!-- Look: a page from a natural history book. The card is a clear mid-sea blue with open space all round. There's no dark panel.
+     One wavy surface line crosses the top, with a plain pale boat floating on it. One big flat shark has a deep slate back and a
+     pale belly, the way real sharks are coloured. Below it swims a school of plain amber fish. At the bottom a pale sandy seabed
+     holds a few single strands of darker seagrass and a handful of small pale curled krill. Nothing else.
+     Interaction: drag the shark up along the fishing line to the boat. The school stops fleeing as the shark rises. Let go out of the water and the shark is gone; let go too early and it springs back.
+     Wow: a splash, then a flat coral front sinks through the levels. The school spreads into the shark's water and down to the seabed, the small life fades out and the grass shrinks, and IMBALANCE scrambles into place.
+     Legend: a plain column on the left, in the body font, that the fish never cross. When the stage gets short it folds into one row along the seabed, so it always stays readable. -->
 <title>Take the shark away</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -15,19 +15,19 @@
 <script src="kit/vendor/gsap-plugins/ScrambleTextPlugin.min.js"></script>
 <style>
 #card.card{background:var(--c)}
-#card .q{color:#eaf7ff}
-#card .say{color:#cfe7f3}
+#card .q{color:#f4fbff}
+#card .say{color:#dcedf7}
 #card .say b{color:#ffcf6b}
 #stage{display:flex;flex:1;min-height:0;position:relative}
 #sea{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #sea:active{cursor:grabbing}
 #why{display:flex;flex-direction:column;gap:.7cqh}
-#why .big{font:800 max(4.4cqh,24px)/1 var(--display);letter-spacing:.02em;color:#ff7a5c;min-height:1em;margin:0}
-#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);color:#dcefff;margin:0;overflow-wrap:anywhere}
-#card .keep{color:#eaf7ff;opacity:1}
+#why .big{font:800 max(4.4cqh,24px)/1 var(--display);color:#ff9478;min-height:1em;margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);color:#e6f2fa;margin:0;overflow-wrap:anywhere}
+#card .keep{color:#f4fbff;opacity:1}
 #card .keep b{color:#ffcf6b}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Drag the shark out · the food chain" style="--c:#06283f;--k:#eaf7ff;--edge:#021420">
+<article class="card" id="card" data-topic="nature" data-kind="Drag the shark out · the food chain" style="--c:#1a5f92;--k:#f4fbff;--edge:#0c3352">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">PULL THE SHARK</span></div>
     <h2 class="q">Why would losing sharks throw the whole sea off balance?</h2>
@@ -52,17 +52,19 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
   const tgt = {tx: 0, ty: 0};
   let dragging = false, removed = false, done = false, started = false, last = 0, T = 0, grab = null, cascade = null, splashX = 0;
   const N0 = 11, MAXMID = 3.4;
-  const AMBER = '#ffc35a', RED = '#ff7a5c';
+  const AMBER = '#ffc35a', RED = '#ff9478';
   const fish = [], dots = [], fronds = [];
-  for (let i = 0; i < 90; i++) dots.push({u: .03 + R() * .94, v: .8 + R() * .14, p: R() * TAU, a: 1});
-  for (let i = 0; i < 14; i++) fronds.push({u: .03 + i / 13 * .94 + (R() - .5) * .03, h: .55 + R() * .45, p: R() * TAU});
-  const newFish = (u, v, born) => fish.push({u, v, d: R() < .5 ? -1 : 1, sp: .035 + R() * .03, p: R() * TAU, sc: born ? 0 : 1, die: false, c: R() < .5 ? 0 : 1, z: .82 + R() * .32});
+  // small life: a handful of krill, few enough to read as animals and not as specks
+  for (let i = 0; i < 9; i++) dots.push({u: .34 + i / 8 * .58 + (R() - .5) * .04, v: .83 + R() * .06, p: R() * TAU, d: R() < .5 ? -1 : 1, a: 1});
+  for (let i = 0; i < 5; i++) fronds.push({u: .32 + i / 4 * .6 + (R() - .5) * .04, h: .6 + R() * .4, p: R() * TAU});
+  const newFish = (u, v, born) => fish.push({u, v, d: R() < .5 ? -1 : 1, sp: .035 + R() * .03, p: R() * TAU, sc: born ? 0 : 1, die: false, z: .82 + R() * .32});
   for (let i = 0; i < N0; i++) newFish(.3 + R() * .64, .47 + R() * .2, false);
 
-  // ---------- palette: the card's ink mixed into the card's colour ----------
+  // ---------- palette: the card's ink and edge mixed into the card's colour ----------
   const hx = h => { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16)); };
-  let KC = [234, 247, 255], CC = [6, 40, 63], EDGE = '#021420';
-  const mix = n => `rgb(${KC.map((v, i) => Math.round(v * n / 100 + CC[i] * (1 - n / 100))).join(',')})`;
+  let KC = [244, 251, 255], CC = [26, 95, 146], EC = [12, 51, 82];
+  const blend = (A, n) => `rgb(${A.map((v, i) => Math.round(v * n / 100 + CC[i] * (1 - n / 100))).join(',')})`;
+  const mix = n => blend(KC, n), dk = n => blend(EC, n);
   let P = {};
 
   function layout() {
@@ -73,13 +75,13 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
     const k = cs.getPropertyValue('--k').trim(), c = cs.getPropertyValue('--c').trim(), e = cs.getPropertyValue('--edge').trim();
     if (/^#[0-9a-f]{3,6}$/i.test(k)) KC = hx(k);
     if (/^#[0-9a-f]{3,6}$/i.test(c)) CC = hx(c);
-    if (e) EDGE = e;
-    P = {w1: mix(15), w2: mix(9), w3: mix(4), line: mix(70), boat: mix(82), top: mix(52), fin: mix(40), belly: mix(90), gill: mix(30),
-         krill: mix(78), track: mix(24), text: mix(94), drop: mix(85)};
+    if (/^#[0-9a-f]{3,6}$/i.test(e)) EC = hx(e);
+    P = {line: mix(75), boat: mix(90), top: dk(70), fin: dk(50), belly: mix(92), gill: dk(45), eye: dk(100),
+         krill: mix(85), grass: dk(40), sand: mix(26), track: mix(35), text: mix(96), drop: mix(88)};
     SURF = Math.max(H * .1, fs * 2.8);
     L = Math.min(W * .5, H * .36);
     HOME = {x: W * .6, y: Math.max(H * .29, SURF + L * .4)};
-    FL = clamp(W * .045, 11, 22);
+    FL = clamp(W * .05, 12, 24);
     BOAT = W * .8;
     GY = [HOME.y - fs * .2, H * .5, H * .79];
     compact = H < fs * 13 || GY[1] - GY[0] < fs * 2.6 || GY[2] - GY[1] < fs * 2.6;
@@ -129,63 +131,68 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
   }
 
   // ---------- drawing ----------
-  const surfY = px => SURF + Math.sin(px * .03 + T * 1.4) * 2.2 + Math.sin(px * .08 - T) * 1.2;
-  function water() {
-    // three flat bands, one per level of the food chain, a little darker with depth
-    const y1 = H * .4, y2 = H * .74;
-    x.fillStyle = P.w3; x.fillRect(0, y2, W, H - y2);
-    x.fillStyle = P.w2; x.fillRect(0, y1, W, y2 - y1 + 1);
-    x.fillStyle = P.w1; x.beginPath(); x.moveTo(0, y1 + 1);
-    for (let px = 0; px <= W; px += 6) x.lineTo(px, surfY(px));
-    x.lineTo(W, surfY(W)); x.lineTo(W, y1 + 1); x.closePath(); x.fill();
-  }
+  const surfY = px => SURF + Math.sin(px * .03 + T * 1.4) * 2 + Math.sin(px * .08 - T) * 1;
   function surface() {
+    // the sea is the card itself: just one wavy line for the surface
     const glow = st.glow;
     x.save();
-    x.strokeStyle = glow > .5 ? AMBER : P.line; x.lineWidth = 2 + glow * 1.5; x.lineJoin = 'round';
+    x.strokeStyle = glow > .5 ? AMBER : P.line; x.lineWidth = 2.5; x.lineJoin = 'round'; x.lineCap = 'round';
     x.beginPath();
     for (let px = 0; px <= W; px += 6) { const y = surfY(px); px ? x.lineTo(px, y) : x.moveTo(px, y); }
     x.stroke(); x.restore();
+    // a small fishing boat, flat: hull, cabin, rod
     const bx = BOAT, by = surfY(BOAT), hw = Math.min(W * .11, 60), rock = Math.sin(T * 1.2) * .04;
     x.save(); x.translate(bx, by); x.rotate(rock);
     x.fillStyle = P.boat;
-    x.beginPath(); x.moveTo(-hw, -fs * .25); x.lineTo(hw * 1.05, -fs * .45); x.lineTo(hw * .72, fs * .55); x.lineTo(-hw * .78, fs * .55); x.closePath(); x.fill();
-    x.fillRect(-hw * .55, -fs * 1.05, hw * .55, fs * .82);
-    x.fillStyle = mix(0); x.fillRect(-hw * .45, -fs * .85, hw * .14, fs * .26); x.fillRect(-hw * .25, -fs * .85, hw * .14, fs * .26);
-    x.strokeStyle = P.boat; x.lineWidth = 2; x.lineJoin = 'round'; x.beginPath(); x.moveTo(hw * .3, -fs * .35); x.lineTo(hw * .3, -fs * 2.2); x.lineTo(hw * .95, -fs * .5); x.stroke();
+    x.beginPath(); x.moveTo(-hw, -fs * .3); x.lineTo(hw * 1.05, -fs * .45); x.quadraticCurveTo(hw * .85, fs * .5, hw * .6, fs * .55); x.lineTo(-hw * .7, fs * .55); x.closePath(); x.fill();
+    x.fillRect(-hw * .58, -fs * 1.1, hw * .6, fs * .9);
+    x.fillStyle = mix(0); x.fillRect(-hw * .46, -fs * .88, hw * .16, fs * .3); x.fillRect(-hw * .22, -fs * .88, hw * .16, fs * .3);
+    x.strokeStyle = P.boat; x.lineWidth = 2; x.lineCap = 'round'; x.beginPath(); x.moveTo(hw * .3, -fs * .4); x.lineTo(hw * .95, -fs * 1.9); x.stroke();
     x.restore();
   }
   function seabed() {
+    // a pale sandy floor, a tint of the ink
+    const floor = px => H * .955 + Math.sin(px * .021) * H * .015 + Math.sin(px * .067 + 1) * H * .006;
     const b = 1 - st.small;
+    // seagrass: one thick strand each, shrinking as the small life goes
     x.lineCap = 'round';
-    x.strokeStyle = mix(36 - 18 * b); x.lineWidth = Math.max(3, fs * .32);
+    x.strokeStyle = b > .5 ? dk(22) : P.grass; x.lineWidth = Math.max(5, fs * .45);
     fronds.forEach(f => {
-      const bx = f.u * W, by = H * .97, h = f.h * H * .15 * (.3 + .7 * st.small), sw = Math.sin(T * .9 + f.p) * h * .25;
+      const bx = f.u * W, by = floor(bx) + 2, h = f.h * H * .14 * (.3 + .7 * st.small), sw = Math.sin(T * .9 + f.p) * h * .22;
       x.beginPath(); x.moveTo(bx, by); x.quadraticCurveTo(bx - sw * .4, by - h * .55, bx + sw, by - h); x.stroke();
     });
-    x.fillStyle = EDGE; x.beginPath(); x.moveTo(0, H);
-    for (let px = 0; px <= W; px += W / 18) x.lineTo(px, H * .955 + Math.sin(px * .021) * H * .018 + Math.sin(px * .067 + 1) * H * .01);
-    x.lineTo(W, H); x.closePath(); x.fill();
-    // small life: little krill, curled
-    x.save(); x.strokeStyle = P.krill; x.lineWidth = 1.6; x.lineCap = 'round';
+    x.fillStyle = P.sand; x.beginPath(); x.moveTo(0, H);
+    for (let px = 0; px <= W; px += W / 24) x.lineTo(px, floor(px));
+    x.lineTo(W, floor(W)); x.lineTo(W, H); x.closePath(); x.fill();
+    // small life: krill, a curled body with a head
+    const r = Math.max(4, fs * .38);
+    x.save(); x.strokeStyle = P.krill; x.fillStyle = P.krill; x.lineWidth = Math.max(2.2, fs * .18); x.lineCap = 'round';
     dots.forEach(d => {
       if (d.a < .02) return;
       const px = d.u * W, py = d.v * H + Math.sin(T * 1.1 + d.p) * 3;
       x.globalAlpha = st.show * d.a;
-      x.beginPath(); x.arc(px, py, 2.6, d.p, d.p + Math.PI * 1.1); x.stroke();
+      x.save(); x.translate(px, py); x.scale(d.d, 1); x.rotate(Math.sin(T + d.p) * .2);
+      x.beginPath(); x.arc(0, 0, r, Math.PI * .95, Math.PI * 2.1); x.stroke();
+      x.beginPath(); x.arc(r * .95, r * .35, r * .3, 0, TAU); x.fill();
+      x.restore();
     });
     x.restore();
-    if (compact) { x.fillStyle = EDGE; x.fillRect(0, H - fs * 2.4, W, fs * 2.4); }
+    if (compact) {
+      // the legend sits on the sand
+      x.fillStyle = P.sand; x.beginPath(); x.moveTo(0, H);
+      for (let px = 0; px <= W; px += W / 24) x.lineTo(px, H - fs * 2.4 + Math.sin(px * .03) * 2);
+      x.lineTo(W, H); x.closePath(); x.fill();
+    }
   }
   function drawFish(f) {
     const l = FL * f.sc * f.z; if (l < .6) return;
     const px = f.u * W, py = f.v * H, wag = Math.sin(T * 9 + f.p) * l * .08;
     x.save(); x.translate(px, py); x.scale(f.d, 1); x.globalAlpha *= .5 + .5 * f.sc;
-    x.fillStyle = f.c ? '#ffb24e' : AMBER;
-    x.beginPath(); x.moveTo(-l * .38, 0); x.lineTo(-l * .72, -l * .22 + wag); x.lineTo(-l * .66, wag); x.lineTo(-l * .72, l * .22 + wag); x.closePath(); x.fill();
-    x.beginPath(); x.moveTo(-l * .05, -l * .2); x.lineTo(-l * .22, -l * .3); x.lineTo(-l * .25, -l * .15); x.closePath(); x.fill();
+    x.fillStyle = AMBER;
+    x.beginPath(); x.moveTo(-l * .36, 0); x.lineTo(-l * .7, -l * .24 + wag); x.lineTo(-l * .62, wag); x.lineTo(-l * .7, l * .24 + wag); x.closePath(); x.fill();
+    x.beginPath(); x.moveTo(-l * .02, -l * .18); x.lineTo(-l * .2, -l * .32); x.lineTo(-l * .26, -l * .14); x.closePath(); x.fill();
     x.beginPath(); x.ellipse(0, 0, l * .5, l * .22, 0, 0, TAU); x.fill();
-    x.fillStyle = mix(0); x.beginPath(); x.arc(l * .3, -l * .04, Math.max(1, l * .05), 0, TAU); x.fill();
+    x.fillStyle = P.eye; x.beginPath(); x.arc(l * .3, -l * .04, Math.max(1, l * .05), 0, TAU); x.fill();
     x.restore();
   }
   function drawShark(cx, cy, len, ang, w) {
@@ -193,7 +200,7 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
     // far pectoral fin
     x.fillStyle = P.fin;
     x.beginPath(); x.moveTo(.14, .06); x.quadraticCurveTo(.06, .12, -.01, .18); x.quadraticCurveTo(.04, .1, .03, .07); x.closePath(); x.fill();
-    // body: dark back
+    // body: dark slate back
     x.fillStyle = P.top; x.beginPath();
     x.moveTo(.5, .02);
     x.quadraticCurveTo(.46, -.08, .3, -.1);
@@ -209,14 +216,14 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
     x.quadraticCurveTo(.32, .12, .44, .06);
     x.quadraticCurveTo(.5, .04, .5, .02);
     x.closePath(); x.fill();
-    // pale belly (countershading)
+    // pale belly (countershading), one flat shape with a clean edge
     x.save(); x.clip();
     x.fillStyle = P.belly; x.beginPath();
     x.moveTo(.6, .005); x.quadraticCurveTo(.15, -.045, -.42, .03 + w * .5); x.lineTo(-.42, .4); x.lineTo(.6, .4); x.closePath(); x.fill();
     x.restore();
     // gills, mouth
-    x.strokeStyle = P.gill; x.lineWidth = 1.4 / len; x.lineCap = 'round';
-    for (let i = 0; i < 4; i++) { const gx = .28 - i * .028; x.beginPath(); x.moveTo(gx, -.05); x.quadraticCurveTo(gx - .016, 0, gx, .05); x.stroke(); }
+    x.strokeStyle = P.gill; x.lineWidth = 1.8 / len; x.lineCap = 'round';
+    for (let i = 0; i < 3; i++) { const gx = .27 - i * .03; x.beginPath(); x.moveTo(gx, -.02); x.quadraticCurveTo(gx - .016, .02, gx, .055); x.stroke(); }
     x.beginPath(); x.moveTo(.44, .055); x.quadraticCurveTo(.39, .075, .33, .066); x.stroke();
     // near fins
     x.fillStyle = P.fin;
@@ -224,16 +231,19 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
     x.beginPath(); x.moveTo(-.22, .08); x.lineTo(-.27, .13); x.lineTo(-.28, .075); x.closePath(); x.fill();
     x.fillStyle = P.top;
     x.beginPath(); x.moveTo(-.26, -.06); x.lineTo(-.3, -.11); x.lineTo(-.31, -.05); x.closePath(); x.fill();
-    x.fillStyle = mix(0); x.beginPath(); x.arc(.385, -.025, .013, 0, TAU); x.fill();
+    x.fillStyle = P.belly; x.beginPath(); x.arc(.385, -.025, .017, 0, TAU); x.fill();
+    x.fillStyle = P.eye; x.beginPath(); x.arc(.388, -.025, .01, 0, TAU); x.fill();
     x.restore();
   }
   function fishingLine(sp) {
     if (removed) return;
     const a = st.hint * .9 + (dragging ? .4 : 0); if (a < .02) return;
-    const sx = sp.x - L * .03, sy = sp.y - L * .3, ex = BOAT + Math.min(W * .11, 60) * .95, ey = SURF - fs * .5, cxp = ex, cyp = sy - L * .1;
-    x.save(); x.globalAlpha *= .7 * Math.min(1, a); x.strokeStyle = P.line; x.lineWidth = 1.3;
+    const hw = Math.min(W * .11, 60);
+    const sx = sp.x - L * .03, sy = sp.y - L * .3, ex = BOAT + hw * .95, ey = SURF - fs * 1.9, cxp = ex, cyp = sy - L * .1;
+    x.save(); x.globalAlpha *= .85 * Math.min(1, a); x.strokeStyle = P.line; x.lineWidth = 1.5;
     x.beginPath(); x.moveTo(sx, sy); x.quadraticCurveTo(cxp, cyp, ex, ey); x.stroke();
     x.restore();
+    // one amber arrow travels up the line: this is the way to drag
     const t = (T * .45) % 1, q = (p0, p1, p2) => (1 - t) * (1 - t) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
     const px = q(sx, cxp, ex), py = q(sy, cyp, ey), ang = Math.atan2(2 * (1 - t) * (cyp - sy) + 2 * t * (ey - cyp), 2 * (1 - t) * (cxp - sx) + 2 * t * (ex - cxp));
     x.save(); x.translate(px, py); x.rotate(ang); x.globalAlpha *= Math.min(1, a) * Math.sin(t * Math.PI); x.fillStyle = AMBER;
@@ -243,32 +253,38 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
   function splash() {
     const s = st.splash; if (s <= 0 || s >= 1) return;
     x.save(); x.globalAlpha *= 1 - s;
-    x.strokeStyle = P.drop; x.lineWidth = 2;
-    for (let i = 0; i < 2; i++) { x.beginPath(); x.ellipse(splashX, SURF + 2, W * .12 * s * (1 + i * .5), fs * .5 * s * (1 + i * .3), 0, 0, TAU); x.stroke(); }
     x.fillStyle = P.drop;
-    for (let i = 0; i < 9; i++) { const a = -Math.PI * (.15 + .7 * i / 8), r = W * .14 * s; x.beginPath(); x.arc(splashX + Math.cos(a) * r, SURF + Math.sin(a) * r * .9 + s * s * fs * 3, 2.4, 0, TAU); x.fill(); }
+    // a crown of flat drops thrown up from the surface
+    for (let i = 0; i < 7; i++) {
+      const a = -Math.PI * (.18 + .64 * i / 6), r = W * .12 * s;
+      const dx = splashX + Math.cos(a) * r, dy = SURF + Math.sin(a) * r * .9 + s * s * fs * 3, dr = Math.max(2.5, fs * .22) * (1 - s * .4);
+      x.beginPath(); x.ellipse(dx, dy, dr * .8, dr * 1.25, a + Math.PI / 2, 0, TAU); x.fill();
+    }
+    x.strokeStyle = P.drop; x.lineWidth = 2;
+    x.beginPath(); x.ellipse(splashX, SURF + 2, W * .12 * s, fs * .45 * s, 0, 0, TAU); x.stroke();
     x.restore();
   }
   function waveBand() {
+    // the coral front: one flat band with a wavy leading edge
     const w = st.wave; if (w <= 0 || w >= 1) return;
     const y = SURF + (H - SURF) * w, a = Math.sin(w * Math.PI), h = fs * 1.6;
     x.save();
-    x.globalAlpha *= .22 * a; x.fillStyle = RED; x.beginPath(); x.moveTo(0, y - h);
+    x.globalAlpha *= .25 * a; x.fillStyle = RED; x.beginPath(); x.moveTo(0, y - h);
     for (let px = 0; px <= W; px += 12) x.lineTo(px, y - h + Math.sin(px * .05 + T * 3) * 3);
     x.lineTo(W, y); x.lineTo(0, y); x.closePath(); x.fill();
     x.restore();
-    x.save(); x.globalAlpha *= a; x.strokeStyle = RED; x.lineWidth = 2.5; x.beginPath();
+    x.save(); x.globalAlpha *= a; x.strokeStyle = RED; x.lineWidth = 2.5; x.lineJoin = 'round'; x.beginPath();
     for (let px = 0; px <= W; px += 12) { const yy = y + Math.sin(px * .05 + T * 3) * 3; px ? x.lineTo(px, yy) : x.moveTo(px, yy); }
     x.stroke(); x.restore();
   }
   function gauge(X0, bw, y, text, v, max, col) {
-    const bh = Math.max(4, fs * .42), by = y + fs * .45;
+    const bh = Math.max(4, fs * .4), by = y + fs * .5;
     x.save();
-    x.font = `600 ${fs}px ${BODY}`; x.textBaseline = 'alphabetic';
+    x.font = `500 ${fs}px ${BODY}`; x.textBaseline = 'alphabetic';
     x.fillStyle = P.text; x.fillText(text, X0, y);
-    const rr = (px, py, w, h, c) => { x.fillStyle = c; x.beginPath(); x.roundRect ? x.roundRect(px, py, Math.max(0, w), h, h / 2) : x.rect(px, py, Math.max(0, w), h); x.fill(); };
-    rr(X0, by, bw, bh, P.track);
-    rr(X0, by, bw * clamp(v / max, 0, 1), bh, col);
+    // a plain bar: thin line for the room, a flat bar for how many
+    x.fillStyle = P.track; x.fillRect(X0, by + bh / 2 - 1, bw, 2);
+    x.fillStyle = col; x.fillRect(X0, by, Math.max(0, bw * clamp(v / max, 0, 1)), bh);
     if (max > 1) { x.fillStyle = P.text; x.fillRect(X0 + bw / max - 1, by - 3, 2, bh + 6); }
     x.restore();
   }
@@ -284,7 +300,7 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
       items.forEach((it, i) => gauge(X0, W * .24, GY[i], it[0], it[2], it[3], it[4]));
     } else {
       const colW = (W - 2 * X0) / 3;
-      x.font = `600 ${fs}px ${BODY}`;
+      x.font = `500 ${fs}px ${BODY}`;
       items.forEach((it, i) => {
         const t = x.measureText(it[0]).width > colW - fs * .6 ? it[1] : it[0];
         gauge(X0 + i * colW, colW - fs * 1.2, H - fs * 1.15, t, it[2], it[3], it[4]);
@@ -298,7 +314,7 @@ gsap.registerPlugin(SplitText, ScrambleTextPlugin);
       update(dt);
       x.clearRect(0, 0, W, H);
       x.save(); x.globalAlpha = st.show;
-      water(); surface();
+      surface();
       seabed();
       fish.forEach(drawFish);
       waveBand();

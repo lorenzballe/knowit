@@ -1,8 +1,8 @@
 <!doctype html>
 <!-- slug: maths-pivotal-voter-dictator -->
-<!-- Look: a page from a book about voting. Nine paper ballot slips stand in a row, one for each voter. Each slip has three ranked rows: A and C in two plain paper greys, and B as one flat mint row. A larger sheet shows society's ranking. There are no glass, glows or sparks.
+<!-- Look: a page from a book about voting, on a pale blue page. Nine white paper ballot slips with a thin ink outline stand on the lid of one plain ballot box, one slip per voter, numbered on the box's front. Each slip has three ranked rows: A and C in two light blue-greys, and B as one flat green row. A larger sheet shows society's ranking. There is no glass, glow, halo, panel or sparkle.
      Interaction: scrub the rail through Profiles 0–9. Each step, one more voter's B row slides from the bottom of their slip to the top, while society's B stays at the bottom.
-     Wow: at voter 6 a single slip tips it. A small mint slip travels along a hand-drawn arrow, society's B jumps to the top, and the slip is circled by hand and labelled "The dictator". -->
+     Wow: at voter 6 a single slip tips it. A small green slip travels along a hand-drawn arrow, society's B jumps to the top, and the slip is circled by hand and labelled "The dictator". -->
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The hidden dictator</title>
 <link rel="stylesheet" href="kit/fonts.css">
@@ -10,16 +10,17 @@
 <script src="kit/vendor/gsap.min.js"></script>
 <style>
 #stage{display:flex;flex:1;min-height:0;overflow:hidden;background:none;box-shadow:none;border:0;border-radius:0}
-#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;--b:#46d4af}
-#pic .paper{fill:var(--k)}
-#pic .rowA{fill:color-mix(in srgb,var(--k) 78%,var(--c))}
-#pic .rowC{fill:color-mix(in srgb,var(--k) 56%,var(--c))}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;--b:#12845e;--paper:#fffdf6}
+#pic .paper{fill:var(--paper);stroke:var(--k);stroke-width:1.5;stroke-linejoin:round}
+#pic .rowA{fill:color-mix(in srgb,var(--k) 8%,var(--c))}
+#pic .rowC{fill:color-mix(in srgb,var(--k) 30%,var(--c))}
 #pic .rowB{fill:var(--b)}
-#pic .track{fill:color-mix(in srgb,var(--k) 18%,var(--c))}
-#pic .notch{fill:color-mix(in srgb,var(--k) 45%,var(--c))}
+#pic .track{fill:color-mix(in srgb,var(--k) 20%,var(--c))}
+#pic .box{fill:color-mix(in srgb,var(--k) 12%,var(--c))}
+#pic .lid{fill:var(--k)}
 .say{overflow-wrap:anywhere}
 </style>
-<article class="card" id="card" data-topic="maths" data-kind="Scrub the profiles · pivotal voter" style="--c:#0b1828;--k:#eaf4ff;--edge:#050b14">
+<article class="card" id="card" data-topic="maths" data-kind="Scrub the profiles · pivotal voter" style="--c:#bfd9ee;--k:#13202c;--edge:#9cc0dd">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">SCRUB THE VOTERS</span></div>
     <h2 class="q">How does Arrow's proof find a hidden dictator?</h2>
@@ -36,7 +37,7 @@
 (() => {
   const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
   const N = 9, PIVOT = 6;
-  const INK = 'var(--k)', DARK = 'var(--c)', BCOL = 'var(--b)';
+  const INK = 'var(--k)', DARK = 'var(--c)', BCOL = 'var(--b)', PAPER = 'var(--paper)';
   const MUTE = 'color-mix(in srgb, var(--k) 62%, var(--c))';
   const pairs = ['AC', 'CA', 'AC', 'AC', 'CA', 'CA', 'AC', 'CA', 'AC'];
 
@@ -75,7 +76,7 @@
     for (const L of ['A', 'C', 'B']) {
       const rg = Kit.mk('g', {}, rows);
       rr[L] = {rect: Kit.mk('rect', {x: cx - rw / 2, width: rw, height: Math.max(1, sh - gap), rx: 1.5, class: 'row' + L}, rg)};
-      if (letters) rr[L].txt = T(rg, cx, 0, L, {'text-anchor': 'middle', fill: DARK, 'font-weight': 800, 'font-size': lsz});
+      if (letters) rr[L].txt = T(rg, cx, 0, L, {'text-anchor': 'middle', fill: L === 'B' ? PAPER : INK, 'font-weight': 800, 'font-size': lsz});
     }
     v.el = {g, inner, rr, cx, top, bot, w, rw, ly0, sh, gap, isSoc, lsz, tilt: v.tilt};
   }
@@ -140,8 +141,14 @@
       chipMin = sx + R.socLab.getComputedTextLength() / 2 + 8;
     }
 
-    // the nine ballot slips
+    // the nine ballot slips, standing on the lid of one ballot box
     tubes.forEach((v, i) => vessel(v, x0 + (i + .5) * step, tubeTop, tubeBot, tw, false, P.letters, fs));
+    const bxL = x0 + step * .08, bxR = x0 + N * step - step * .08, lidH = Math.max(3, fs * .28);
+    const boxBot = Math.min(P.numY + fs * .55, railY - hr - 4);
+    if (boxBot - tubeBot >= fs * 1.6) {
+      Kit.mk('rect', {x: bxL, y: tubeBot - 1, width: bxR - bxL, height: boxBot - tubeBot + 1, rx: 1.5, class: 'box'}, svg);
+    }
+    Kit.mk('rect', {x: bxL - 4, y: tubeBot - 1, width: bxR - bxL + 8, height: lidH, rx: 1, class: 'lid'}, svg);
     R.nums = tubes.map((v, i) => T(svg, x0 + (i + .5) * step, P.numY, String(i + 1), {'text-anchor': 'middle', fill: MUTE}));
 
     // the pivot: a hand-drawn loop, a hand-written note, an arrow up to society
@@ -166,11 +173,9 @@
     Kit.mk('rect', {x: rx0 - rh / 2, y: railY - rh / 2, width: rx1 - rx0 + rh, height: rh, rx: rh / 2, class: 'track'}, svg);
     R.fill = paint(Kit.mk('rect', {x: rx0 - rh / 2, y: railY - rh / 2, height: rh, rx: rh / 2}, svg), {fill: BCOL});
     R.rh = rh;
-    for (let i = 0; i <= N; i++) Kit.mk('circle', {cx: rx0 + i * step, cy: railY, r: 1.6, class: 'notch'}, svg);
     R.handle = Kit.mk('g', {}, svg);
-    R.halo = paint(Kit.mk('circle', {r: hr, fill: 'none', 'stroke-width': 1.5, opacity: 0}, R.handle), {stroke: BCOL});
     Kit.mk('circle', {r: hr, class: 'paper'}, R.handle);
-    R.hnum = T(R.handle, 0, fs * .36, '0', {'text-anchor': 'middle', fill: DARK, 'font-weight': 800});
+    R.hnum = T(R.handle, 0, fs * .36, '0', {'text-anchor': 'middle', fill: INK, 'font-weight': 800});
     texts();
   }
 
@@ -223,7 +228,7 @@
     tl.fromTo(R.ring, {opacity: 0}, {opacity: .85, duration: .5, ease: 'power2.out'}, .1)
       .fromTo(R.chip, {opacity: 0, scale: .3, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .7, ease: 'back.out(2.4)'}, .35)
       .fromTo(R.arrow, {opacity: 1, strokeDasharray: R.alen, strokeDashoffset: R.alen}, {strokeDashoffset: 0, duration: .65, ease: 'power3.inOut'}, .45);
-    // the pivotal vote carried up to society: one small mint slip along the arrow
+    // the pivotal vote carried up to society: one small green slip along the arrow
     const path = R.arrow, alen = R.alen, s = fs * .9;
     const c = paint(Kit.mk('rect', {x: -s * .4, y: -s * .28, width: s * .8, height: s * .56, rx: 1, opacity: 0}, R.sparks), {fill: BCOL}), o = {d: 0};
     tl.to(o, {d: 1, duration: .45, ease: 'power2.inOut', onStart: () => c.setAttribute('opacity', 1),
@@ -231,7 +236,7 @@
       onComplete: () => c.remove()}, .7);
     tl.add(() => {
       setB(soc, true, 1.5, 'elastic.out(1,.42)'); soc.amp = 9; Kit.haptic('success'); texts();
-      gsap.fromTo(R.flash, {opacity: 1, scale: 1, transformOrigin: '50% 50%'}, {opacity: 0, scale: 1.2, duration: 1.1, ease: 'expo.out'});
+      gsap.fromTo(R.flash, {opacity: 1}, {opacity: 0, duration: 1.4, delay: .3, ease: 'power2.in'});
       tubes.forEach((v, i) => { v.amp += Math.max(0, 6 - Math.abs(i - PIVOT + 1) * 1.5); });
     }, 1.15);
   }
@@ -259,8 +264,6 @@
       R.handle.setAttribute('transform', `translate(${hx},${railY})`);
       R.fill.setAttribute('width', Math.max(0, hx - x0 + R.rh * .5));
       R.hnum.textContent = String(Math.round(st.p));
-      const br = touched || Kit.calm ? 0 : (t * .8) % 1;
-      R.halo.setAttribute('r', hr * (1 + br * .6)); R.halo.setAttribute('opacity', touched ? 0 : (1 - br) * .7);
     }
   }
   const loop = ms => { render(ms / 1000); requestAnimationFrame(loop); };

@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: space-frozen-horizon-light -->
-<!-- Look: a museum diorama of a black hole. Hand-cut paper rings stack in depth and turn slowly, with soft shadows, paper stars, grain and gentle parallax. A small placard holds the count.
+<!-- Look: a printed science-book drawing. One plain black disc with a single white outline, the event horizon, alone on the card's own blue with lots of open space. The count sits as two plain lines of text.
      Interaction: tap around the hole to drop paper cut-outs in. Each one sends out little pulses of light. The pulses come further and further apart as it slows, reddens, flattens and fades at the edge. It never crosses.
-     Wow: "make the light visible" turns the horizon into a lit screen. Every fallen thing draws itself back, frozen on the edge, all at once. -->
+     Wow: "make the light visible" turns the horizon into a flat amber screen. Every fallen thing draws itself back on it, frozen on the edge, all at once. -->
 <title>Frozen at the edge</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -20,7 +20,7 @@
     <div class="label"><svg></svg><span class="t"></span><span class="tag">BLACK HOLES</span></div>
     <h2 class="q">If we could see light from a black hole's edge, what would we see?</h2>
     <div class="stagebox" id="stage">
-      <svg id="pic" role="img" aria-label="A black hole made of layered paper rings. Things dropped in slow down, redden and fade at its edge."></svg>
+      <svg id="pic" role="img" aria-label="A black hole drawn as a black disc. Things dropped in slow down, redden and fade at its edge."></svg>
     </div>
     <p class="say" id="say">Tap anywhere around the black hole to <b>drop something in</b>.</p>
     <button class="btn gone" id="see">Make the edge's light visible</button>
@@ -34,7 +34,9 @@
 (() => {
   gsap.registerPlugin(DrawSVGPlugin);
   const svg = Kit.$('pic'), say = Kit.$('say'), stage = Kit.$('stage');
-  const CREAM = '#f6ead2';
+  // Flat colours: the card's ink, near-black for the hole, one warm amber for light, a dark brown for outlines.
+  let INK = '#fff';
+  const HOLE = '#0e0d14', AMBER = '#ffc46b', DARK = '#2a1610';
   // Paper cut-outs, drawn in a 24-unit box, head pointing up.
   const SH = {
     astro: 'M0,-12a4.5,4.5 0 1,1 -0.01,0Z M-5,-6h10v10h-10Z M-8.5,-5h3v8h-3Z M5.5,-5h3v8h-3Z M-4.5,4h3.5v8h-3.5Z M1,4h3.5v8h-3.5Z',
@@ -45,7 +47,8 @@
   };
   const ORDER = ['astro', 'apple', 'rocket', 'sat', 'cat'];
   const NAME = {astro: 'An astronaut', apple: 'An apple', rocket: 'A rocket', sat: 'A satellite', cat: 'A cat'};
-  const CI = gsap.utils.interpolate(['#f6ead2', '#f4d9a8', '#ef8748', '#c62f2b', '#4e1216']);
+  // White paper reddening as it nears the edge.
+  const CI = gsap.utils.interpolate(['#ffffff', '#ffe0a0', '#ff9a4a', '#d6372c', '#5a1616']);
   const EO = gsap.parseEase('expo.out');
   let W = 0, H = 0, cx = 0, cy = 0, S = 0, rh = 0, sc = 1, fs = 12;
   let G = {}, Q = [], hz, holeC, photon, cnt1, cnt2, plate, label, scr, litTl = null, lastSize = '';
@@ -53,8 +56,6 @@
   const pips = new Set();
   const dropped = [];
   let revealed = false, litDone = false, landed = 0, n = 0;
-  let seed = 11;
-  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const wait = ms => new Promise(r => setTimeout(r, ms));
 
   const pt = (r, a) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
@@ -69,17 +70,7 @@
     const [x, y] = pt(r, a);
     g.setAttribute('transform', `translate(${x},${y}) rotate(${a * 180 / Math.PI + 90}) scale(${sc * k},${sc * k * sy})`);
   };
-  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, fill: CREAM, style: 'font-family:var(--mono);letter-spacing:.04em'}, a), p); e.textContent = t; return e; };
-  // A hand-cut paper disc: a circle with a slightly uneven edge.
-  const cut = r => {
-    const N = 132, p1 = rnd() * 6.28, p2 = rnd() * 6.28, k1 = 3 + Math.floor(rnd() * 3), k2 = 7 + Math.floor(rnd() * 5);
-    let d = '';
-    for (let i = 0; i < N; i++) {
-      const t = i / N * Math.PI * 2, rr = r * (1 + .009 * Math.sin(k1 * t + p1) + .005 * Math.sin(k2 * t + p2) + (rnd() - .5) * .004);
-      d += (i ? 'L' : 'M') + (cx + rr * Math.cos(t)).toFixed(1) + ',' + (cy + rr * Math.sin(t)).toFixed(1);
-    }
-    return d + 'Z';
-  };
+  const txt = (p, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-size': fs, fill: INK, 'font-weight': 600, style: 'font-family:var(--body)'}, a), p); e.textContent = t; return e; };
   const boxHit = (a, b) => a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
 
   function layout() {
@@ -87,6 +78,7 @@
     loops.forEach(t => t.kill()); loops = [];
     if (litTl) { litTl.kill(); litTl = null; }
     svg.innerHTML = '';
+    INK = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#fff';
     const f = Kit.fitSvg(svg); W = f.W; H = f.H;
     const bb = stage.getBoundingClientRect(); lastSize = Math.round(bb.width) + 'x' + Math.round(bb.height);
     fs = Math.max(12, Math.min(14, f.f || 13));
@@ -94,112 +86,61 @@
     cy = H / 2 + Math.max(0, (H - W) / 2) * .7;
     const pad = Math.max(8, fs * .7), pw = fs * 14.8, ph = fs * 3.4;
     let Rm = Math.min(cx, cy, H - cy) - Math.max(8, S * .045);
-    // The placard may cover the cool outer rings, never the hot ones.
+    // The count sits in the open space, never over the hole.
     const px = Math.min(Math.max(cx, pad), pad + pw), py = Math.min(Math.max(cy, pad), pad + ph);
     const dist = Math.hypot(cx - px, cy - py);
     Rm = Math.min(Rm, dist / .74);
     rh = Rm / 2.4; sc = rh * .36 / 24;
-    seed = 11;
-    const dy = S * .012, sd = S * .014;
-    svg.innerHTML = `<defs>
-      <radialGradient id="hg"><stop offset="0" stop-color="#000"/><stop offset=".78" stop-color="#050307"/><stop offset=".96" stop-color="#1a0a10"/><stop offset="1" stop-color="#2a0f12"/></radialGradient>
-      <radialGradient id="scrG"><stop offset="0" stop-color="#ffdcaa" stop-opacity="0"/><stop offset=".62" stop-color="#ffd2a0" stop-opacity=".05"/><stop offset=".9" stop-color="#ffd9a8" stop-opacity=".22"/><stop offset="1" stop-color="#ffe7c4" stop-opacity=".5"/></radialGradient>
-      <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="${dy}" stdDeviation="${sd}" flood-color="#000" flood-opacity=".6"/></filter>
-      <filter id="sho" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="1.4" stdDeviation="1" flood-color="#000" flood-opacity=".55"/></filter>
-      <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="${S * .009}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <filter id="blur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="${rh * .07}"/></filter>
-      <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 .95  0 0 0 0 .86  0 0 0 .09 0"/></filter>
-    </defs>`;
     G = {};
     for (const k of ['bg', 'rings', 'hole', 'obj', 'light', 'ui']) G[k] = Kit.mk('g', {}, svg);
 
-    // Paper stars scattered straight on the card, kept clear of the placard.
-    const clearOf = (x, y) => !(x < pad + pw + 8 && y < pad + ph + 8);
-    const stars = [];
-    for (let i = 0; i < 90; i++) {
-      const x = 3 + rnd() * (W - 6), y = 3 + rnd() * (H - 6), r = .5 + rnd() * 1.3, o = .25 + rnd() * .6;
-      if (!clearOf(x, y)) continue;
-      stars.push(Kit.mk('circle', {cx: x, cy: y, r, fill: '#fff', opacity: Math.max(.45, o), class: 'star'}, G.bg));
-    }
-    for (let i = 0; i < 7; i++) {
-      const s = S * (.01 + rnd() * .012), x = s + rnd() * (W - 2 * s), y = s + rnd() * (H - 2 * s);
-      if (!clearOf(x, y)) continue;
-      stars.push(Kit.mk('path', {d: `M${x},${y - s}Q${x},${y} ${x + s},${y}Q${x},${y} ${x},${y + s}Q${x},${y} ${x - s},${y}Q${x},${y} ${x},${y - s}Z`, fill: '#fff', opacity: .85, class: 'star'}, G.bg));
-    }
-
-    // Paper rings, hand-cut and stacked in depth: night blue to the hot amber edge.
-    const RF = [2.35, 1.98, 1.7, 1.47, 1.28, 1.12], RC = ['#1b2354', '#2b2d66', '#4b305f', '#7c2f47', '#b9503a', '#e8a052'];
-    const rings = RF.map((k, i) => {
-      const g = Kit.mk('g', {}, G.rings), r = rh * k, inner = rh * (RF[i + 1] || 1);
-      Kit.mk('path', {d: cut(r), fill: RC[i], stroke: 'rgba(255,240,220,.22)', 'stroke-width': 1, filter: 'url(#sh)', transform: `translate(0,${-i * S * .002})`}, g);
-      // a pencilled orbit and a few paper flecks riding each band
-      const mid = (r + inner) / 2;
-      Kit.mk('circle', {cx, cy, r: mid, fill: 'none', stroke: CREAM, 'stroke-width': .8, 'stroke-dasharray': '1.2 5', opacity: i > 3 ? .22 : .16}, g);
-      const nf = 2 + Math.floor(rnd() * 3);
-      for (let j = 0; j < nf; j++) {
-        const [x, y] = pt(mid + (rnd() - .5) * (r - inner) * .4, rnd() * 6.283);
-        Kit.mk('circle', {cx: x, cy: y, r: Math.max(.9, rh * (.012 + rnd() * .014)), fill: i > 3 ? '#ffe2b0' : CREAM, opacity: .55 + rnd() * .35}, g);
-      }
-      return g;
-    });
-
-    // The last light: a thin photon ring just outside the hole.
-    photon = Kit.mk('circle', {cx, cy, r: rh * 1.045, fill: 'none', stroke: '#ffd08a', 'stroke-width': 1.3, opacity: .55, filter: 'url(#glow)'}, G.hole);
-    // The hole, its horizon and its quiet label.
-    holeC = Kit.mk('circle', {cx, cy, r: rh, fill: 'url(#hg)', filter: 'url(#sh)'}, G.hole);
-    scr = Kit.mk('circle', {cx, cy, r: rh, fill: 'url(#scrG)', opacity: 0}, G.hole);
-    hz = Kit.mk('circle', {cx, cy, r: rh, fill: 'none', stroke: CREAM, 'stroke-width': 1, opacity: .4, transform: `rotate(-90 ${cx} ${cy})`}, G.hole);
+    // No zones, no rings: just the hole on the open page.
+    photon = Kit.mk('g', {}, G.hole);
+    // The hole, its horizon drawn as one plain outline, and its quiet label.
+    holeC = Kit.mk('circle', {cx, cy, r: rh, fill: HOLE}, G.hole);
+    scr = Kit.mk('circle', {cx, cy, r: rh, fill: AMBER, opacity: 0}, G.hole);
+    hz = Kit.mk('circle', {cx, cy, r: rh, fill: 'none', stroke: INK, 'stroke-width': Math.max(1.5, rh * .022), transform: `rotate(-90 ${cx} ${cy})`}, G.hole);
     const ar = rh * .7;
     Kit.mk('path', {id: 'arc', d: `M${cx - ar},${cy} A${ar},${ar} 0 0 0 ${cx + ar},${cy}`, fill: 'none'}, G.hole);
-    label = Kit.mk('text', {'font-size': fs, fill: CREAM, opacity: .55, style: 'font-family:var(--mono);letter-spacing:.16em'}, G.hole);
+    label = Kit.mk('text', {'font-size': fs, fill: INK, opacity: .75, style: 'font-family:var(--body)'}, G.hole);
     const tp = Kit.mk('textPath', {href: '#arc', startOffset: '50%', 'text-anchor': 'middle'}, label);
-    tp.textContent = 'EVENT HORIZON';
+    tp.textContent = 'Event horizon';
 
-    // The museum placard: what's in, and what anyone has ever seen cross.
-    plate = Kit.mk('rect', {x: pad, y: pad, width: pw, height: ph, rx: 6, fill: '#0c1030', 'fill-opacity': .84, stroke: 'rgba(246,234,210,.28)', 'stroke-width': 1, filter: 'url(#sho)'}, G.ui);
-    cnt1 = txt(G.ui, pad + fs * .75, pad + fs * 1.42, '');
-    cnt2 = txt(G.ui, pad + fs * .75, pad + fs * 2.82, '', {fill: '#ffc98a'});
+    // The count: what's in, and what anyone has ever seen cross. Plain text, no box.
+    plate = Kit.mk('rect', {x: pad, y: pad, width: pw, height: ph, fill: 'none', stroke: 'none'}, G.ui);
+    cnt1 = txt(G.ui, pad + fs * .2, pad + fs * 1.42, '');
+    cnt2 = txt(G.ui, pad + fs * .2, pad + fs * 2.82, '', {fill: AMBER});
     try {
-      cnt2.textContent = 'frozen on the edge: 8';
+      cnt2.textContent = 'Frozen on the edge: 8';
       plate.setAttribute('width', Math.min(W - 2 * pad, cnt2.getComputedTextLength() + fs * 1.5));
     } catch (e) {}
     count();
 
-    // The horizon label must fit its arc and stay clear of the placard.
+    // The horizon label must fit its arc and stay clear of the count.
     try {
       const room = Math.PI * ar * .9;
-      if (label.getComputedTextLength() > room) { label.setAttribute('style', 'font-family:var(--mono);letter-spacing:.04em'); }
       if (label.getComputedTextLength() > room || boxHit(label.getBBox(), plate.getBBox()) || rh < fs * 2.6) label.setAttribute('display', 'none');
     } catch (e) {}
-
-    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, filter: 'url(#grain)', 'pointer-events': 'none'}, svg);
 
     for (const d of dropped) { mkDrop(d); render(d); }
     if (revealed && litDone) drawLit(true);
 
-    // Depth parallax: far layers move less.
+    // Gentle depth: the hole moves a little less than the things falling.
     Q = [[G.bg, .15], [G.rings, .55], [G.hole, .8], [G.obj, 1], [G.light, 1]].map(([el, k]) => ({k, x: gsap.quickTo(el, 'x', {duration: .9, ease: 'power3'}), y: gsap.quickTo(el, 'y', {duration: .9, ease: 'power3'})}));
-
-    // Alive: the paper rings drift, the stars twinkle, the last light breathes.
-    if (!Kit.calm) {
-      rings.forEach((g, i) => loops.push(gsap.to(g, {rotation: (i % 2 ? -360 : 360), svgOrigin: `${cx} ${cy}`, duration: 70 + i * 22, repeat: -1, ease: 'none'})));
-      stars.forEach((s, i) => { if (i % 5 === 0) loops.push(gsap.to(s, {opacity: .2, duration: .9 + Math.random() * 1.8, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 1.4 + Math.random() * 2})); });
-      loops.push(gsap.to(photon, {opacity: .25, duration: 2.2, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
-    }
   }
 
   function count() {
     if (!cnt1) return;
-    cnt1.textContent = `fallen in: ${n}`;
-    cnt2.textContent = revealed ? `frozen on the edge: ${n}` : 'seen to cross: 0';
+    cnt1.textContent = `Fallen in: ${n}`;
+    cnt2.textContent = revealed ? `Frozen on the edge: ${n}` : 'Seen to cross: 0';
   }
   function figure(parent, d) {
-    const g = Kit.mk('g', {filter: 'url(#sho)'}, parent);
-    Kit.mk('path', {d: SH[d.k], fill: CREAM, stroke: '#2a1712', 'stroke-width': 1.1, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round'}, g);
+    const g = Kit.mk('g', {}, parent);
+    Kit.mk('path', {d: SH[d.k], fill: '#fff', stroke: DARK, 'stroke-width': 1.2, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round'}, g);
     return g;
   }
   function mkDrop(d) {
-    d.tr = Kit.mk('path', {stroke: CREAM, 'stroke-width': 1, fill: 'none', 'stroke-dasharray': '2 3'}, G.obj);
+    d.tr = Kit.mk('path', {stroke: INK, 'stroke-width': 1.2, fill: 'none', 'stroke-dasharray': '2 4', 'stroke-linecap': 'round'}, G.obj);
     d.g = figure(G.obj, d);
   }
   const rAt = d => { const e = edge(d.a); return e + (rh - e) * EO(d.t); };
@@ -211,7 +152,7 @@
     d.g.setAttribute('opacity', 1 - .55 * t * t);
     const [x0, y0] = pt(edge(d.a), d.a), [x1, y1] = pt(r, d.a);
     d.tr.setAttribute('d', `M${x0},${y0}L${x1},${y1}`);
-    d.tr.setAttribute('opacity', .38 - .3 * gsap.utils.clamp(0, 1, (t - .55) / .45));
+    d.tr.setAttribute('opacity', .5 - .4 * gsap.utils.clamp(0, 1, (t - .55) / .45));
   }
   // Pulses of light sent outward: further and further apart, redder and dimmer.
   function emit(d) {
@@ -219,7 +160,7 @@
     d.next = d.t + .035 + .24 * d.t * d.t;
     if (Kit.calm) return;
     const o = {r: rAt(d)}, e = edge(d.a);
-    const c = Kit.mk('circle', {r: Math.max(1.5, sc * 2.6), fill: CI(Math.min(1, d.t * 1.1)), opacity: .95 * (1 - .7 * d.t), filter: 'url(#glow)'}, G.obj);
+    const c = Kit.mk('circle', {r: Math.max(2, sc * 2.6), fill: CI(Math.min(1, d.t * 1.1)), opacity: .95 * (1 - .7 * d.t)}, G.obj);
     const pos = () => { const [x, y] = pt(o.r, d.a); c.setAttribute('cx', x); c.setAttribute('cy', y); };
     pos();
     const tw = gsap.to(o, {r: e, duration: 1.3, ease: 'none', onUpdate: pos, onComplete: () => { c.remove(); pips.delete(tw); }});
@@ -248,33 +189,33 @@
 
   function shimmer(rays, sils, halo) {
     if (Kit.calm) return;
-    rays.forEach((r, i) => loops.push(gsap.to(r, {opacity: .25, duration: 1.1 + (i % 3) * .35, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .06})));
-    sils.forEach((s, i) => loops.push(gsap.to(s, {fill: 'rgba(255,236,200,.34)', duration: 1.6 + (i % 2) * .5, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .2})));
-    loops.push(gsap.to(halo, {opacity: .3, duration: 2, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
+    rays.forEach((r, i) => loops.push(gsap.to(r, {opacity: .45, duration: 1.1 + (i % 3) * .35, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .06})));
+    sils.forEach((s, i) => loops.push(gsap.to(s, {fill: 'rgba(42,22,16,.34)', duration: 1.6 + (i % 2) * .5, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .2})));
+    loops.push(gsap.to(halo, {opacity: 1, duration: 2, yoyo: true, repeat: -1, ease: 'sine.inOut'}));
   }
 
   function drawLit(instant) {
     litDone = true;
     const L = G.light; L.innerHTML = '';
-    const halo = Kit.mk('circle', {cx, cy, r: rh * 1.02, fill: 'none', stroke: '#ffb26a', 'stroke-width': rh * .14, opacity: 0, filter: 'url(#blur)'}, L);
-    const scan = [.9, .74, .56, .36].map(k => Kit.mk('circle', {cx, cy, r: rh * k, fill: 'none', stroke: '#ffe4bc', 'stroke-width': .8, opacity: 0}, L));
-    const lit = Kit.mk('g', {filter: 'url(#glow)'}, L);
-    const ring = Kit.mk('circle', {cx, cy, r: rh, fill: 'none', stroke: '#ffdca6', 'stroke-width': 2.4, transform: `rotate(-90 ${cx} ${cy})`}, lit);
+    // No halo: the lit disc itself is the screen.
+    const halo = Kit.mk('g', {opacity: 0}, L);
+    const lit = Kit.mk('g', {}, L);
+    const ring = Kit.mk('circle', {cx, cy, r: rh, fill: 'none', stroke: DARK, 'stroke-width': 2.4, transform: `rotate(-90 ${cx} ${cy})`}, lit);
     const rays = [], sils = [];
     for (const d of dropped) {
+      // Three short strokes: its light leaving the edge.
       for (const da of [-.07, 0, .07]) {
-        const [x0, y0] = pt(rh * 1.05, d.a + da), [x1, y1] = pt(rh * (da ? 1.32 : 1.5), d.a + da);
-        rays.push(Kit.mk('path', {d: `M${x0},${y0}L${x1},${y1}`, stroke: '#ffe9c4', 'stroke-width': 1.3, opacity: .7, 'stroke-linecap': 'round', fill: 'none'}, lit));
+        const [x0, y0] = pt(rh * 1.1, d.a + da), [x1, y1] = pt(rh * (da ? 1.3 : 1.44), d.a + da);
+        rays.push(Kit.mk('path', {d: `M${x0},${y0}L${x1},${y1}`, stroke: AMBER, 'stroke-width': 2.4, opacity: 1, 'stroke-linecap': 'round', fill: 'none'}, lit));
       }
       const g = Kit.mk('g', {}, lit); place(g, rh * .82, d.a, 1, 1.1);
-      sils.push(Kit.mk('path', {d: SH[d.k], fill: 'rgba(255,236,200,0)', stroke: '#fff1d8', 'stroke-width': 1.6, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round'}, g));
+      sils.push(Kit.mk('path', {d: SH[d.k], fill: 'rgba(42,22,16,0)', stroke: DARK, 'stroke-width': 1.6, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round'}, g));
     }
     count();
     if (instant || Kit.calm) {
       G.obj.setAttribute('opacity', 0); label.setAttribute('opacity', 0); hz.setAttribute('opacity', 0);
-      scr.setAttribute('opacity', 1); halo.setAttribute('opacity', .55);
-      scan.forEach(s => s.setAttribute('opacity', .1));
-      sils.forEach(s => s.setAttribute('fill', 'rgba(255,236,200,.22)'));
+      scr.setAttribute('opacity', 1); halo.setAttribute('opacity', .7);
+      sils.forEach(s => s.setAttribute('fill', 'rgba(42,22,16,.18)'));
       shimmer(rays, sils, halo);
       return;
     }
@@ -283,10 +224,9 @@
       .to([label, hz], {opacity: 0, duration: .4}, 0)
       .fromTo(ring, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1.3, ease: 'power2.inOut'}, .1)
       .to(scr, {opacity: 1, duration: 1.3, ease: 'power2.out'}, .4)
-      .to(halo, {opacity: .55, duration: 1.2, ease: 'power2.out'}, .5)
-      .fromTo(scan, {opacity: 0, scale: .6, svgOrigin: `${cx} ${cy}`}, {opacity: .1, scale: 1, svgOrigin: `${cx} ${cy}`, duration: 1, ease: 'expo.out', stagger: .08}, .5)
+      .to(halo, {opacity: .7, duration: 1.2, ease: 'power2.out'}, .5)
       .fromTo(sils, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1.1, ease: 'power3.out', stagger: .16}, .6)
-      .to(sils, {fill: 'rgba(255,236,200,.22)', duration: .7, stagger: .16}, 1.25)
+      .to(sils, {fill: 'rgba(42,22,16,.18)', duration: .7, stagger: .16}, 1.25)
       .fromTo(rays, {drawSVG: '0%'}, {drawSVG: '100%', duration: .9, ease: 'expo.out', stagger: .05}, 1)
       .fromTo(G.rings, {scale: 1}, {scale: 1.035, svgOrigin: `${cx} ${cy}`, duration: .45, ease: 'power2.out', yoyo: true, repeat: 1}, .9)
       .fromTo(cnt2, {opacity: .2}, {opacity: 1, duration: .6}, 1.2);
@@ -337,11 +277,11 @@
   Kit.onShow.card = layout;
   Kit.onEnter.card = () => {
     if (Kit.calm || !G.rings) return;
-    gsap.from(G.rings.children, {scale: .7, opacity: 0, svgOrigin: `${cx} ${cy}`, duration: 1, ease: 'back.out(1.4)', stagger: .08});
+    if (G.rings.children.length) gsap.from(G.rings.children, {scale: .7, opacity: 0, svgOrigin: `${cx} ${cy}`, duration: 1, ease: 'back.out(1.4)', stagger: .08});
     gsap.from(holeC, {scale: 0, svgOrigin: `${cx} ${cy}`, duration: 1.1, ease: 'expo.out', delay: .4});
     gsap.fromTo(hz, {drawSVG: '0%'}, {drawSVG: '100%', duration: 1.4, ease: 'power2.inOut', delay: .8});
-    gsap.from(svg.querySelectorAll('.star'), {opacity: 0, duration: .8, stagger: {each: .01, from: 'random'}});
-    gsap.from([plate, cnt1, cnt2, label], {opacity: 0, y: 6, duration: .6, ease: 'power3.out', stagger: .1, delay: 1.1});
+    gsap.from(photon, {opacity: 0, duration: .8, delay: .9});
+    gsap.from([cnt1, cnt2, label], {opacity: 0, y: 6, duration: .6, ease: 'power3.out', stagger: .1, delay: 1.1});
   };
   Kit.play.card = async () => {
     [-2.2, -.6, .9, 2.4].forEach(a => drop(a, true));

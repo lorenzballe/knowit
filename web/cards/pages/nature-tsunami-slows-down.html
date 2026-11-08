@@ -1,8 +1,8 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- slug: nature-tsunami-slows-down -->
-<!-- Look: a page from a printed science book: a flat cross-section of the sea, with water in one solid blue and the sea floor rising in solid ink tints to a small town of houses. Above the water, a speed arrow and a height bar are drawn plainly.
+<!-- Look: a page from a printed science book on warm sand-coloured paper: a cut-out slice of the sea, with no box around it. The water is one flat blue resting on a brown slab of sea bed with a rough-cut lower edge. The bed rises to a small town of plain houses. Above the water there is a plain speed arrow and a height bar.
      Interaction: bet on what the wave's speed does near the coast and say how sure you are. The wave then crosses from deep to shallow water, dropping a dot at every equal tick of time. After that, drag it anywhere to replay.
-     Wow moment: the dots bunch up as the wave brakes, the speed arrow shrinks while the height bar grows, the crest rises over the town throwing spray, and "Slower, and taller" scrambles into place. -->
+     Wow moment: the dots bunch up as the wave brakes. The speed arrow shrinks while the height bar grows, the crest rises over the town throwing spray, and "Slower, and taller" scrambles into place. -->
 <title>Why a tsunami grows at the coast</title>
 <link rel="stylesheet" href="kit/fonts.css">
 <link rel="stylesheet" href="kit/astute-card.css">
@@ -15,13 +15,13 @@
 .done #pic{cursor:ew-resize}
 #opts{display:flex;gap:2cqw}
 .opt{flex:1;min-width:0;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 6%,var(--c));border:0;box-shadow:inset 0 0 0 max(.2cqh,1px) color-mix(in srgb,var(--k) 30%,var(--c));border-radius:1.6cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere;transition:background .15s,box-shadow .15s}
-.opt.on{background:#7cc4ea;color:#06121f;box-shadow:inset 0 0 0 max(.2cqh,1px) #7cc4ea}
+.opt.on{background:#1f5f94;color:#fdf3d6;box-shadow:inset 0 0 0 max(.2cqh,1px) #1f5f94}
 #why{display:flex;flex-direction:column;gap:.6cqh}
-#why .big{color:#9fd4f0;min-height:1.1em}
+#why .big{color:#1f5f94;min-height:1.1em}
 #why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);color:var(--k)}
-#why .body b,.say b{color:#9fd4f0}
+#why .body b,.say b{color:#1f5f94}
 </style>
-<article class="card" id="card" data-topic="nature" data-kind="Bet · how sure · watch" style="--c:#060a14;--k:#eaf0ff;--edge:#01030a">
+<article class="card" id="card" data-topic="nature" data-kind="Bet · how sure · watch" style="--c:#f3d98e;--k:#1b1410;--edge:#dcbf6c">
   <div class="in">
     <div class="label"><svg></svg><span class="t"></span><span class="tag">TSUNAMI</span></div>
     <h2 class="q">What happens to a tsunami's speed as it approaches the coast?</h2>
@@ -46,8 +46,8 @@
   if (window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
   if (window.SplitText) gsap.registerPlugin(SplitText);
   const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card'), opts = Kit.$('opts');
-  // flat colours: the sea (wave and speed), amber (height), and tints of the card's ink
-  const CY = '#7cc4ea', AM = '#f0a646', SEA = '#1f4f7a', DOT = '#d9eefa', INK = '#eaf0ff', MUTE = 'rgba(234,240,255,.66)';
+  // flat colours on sand paper: deep blue (wave and speed), flat sea blue, red-orange (height), and tints of the card's ink
+  const CY = '#1f5f94', AM = '#d5532a', SEA = '#3b86c0', DOT = '#fdf3d6', INK = '#1b1410', MUTE = 'rgba(27,20,16,.72)';
   const tint = n => `color-mix(in srgb, var(--k) ${n}%, var(--c))`;
   const RIGHT = 2;
   let pick = -1, phase = 'bet', tween = null, twinkles = [];
@@ -66,10 +66,14 @@
   const AMAX = AMP(UEND);
 
   // ---------- geometry ----------
-  let W = 0, H = 0, fs = 12, seaY = 0, X0 = 0, XS = 0, depthPx = 0, A0 = 0, xLand = 0, G = {}, lastW = 0, lastH = 0;
+  let W = 0, H = 0, fs = 12, seaY = 0, X0 = 0, XS = 0, depthPx = 0, A0 = 0, xLand = 0, LX = 0, G = {}, lastW = 0, lastH = 0;
   const xOf = u => X0 + u * (XS - X0), uOf = x => (x - X0) / (XS - X0);
   const beachY = x => { const f0 = seaY + 3 + D(1) * depthPx; return f0 + (seaY - H * .06 - f0) * smooth(XS, W * .97, x); };
   const floorY = x => x <= XS ? seaY + 3 + D(Math.max(0, uOf(x))) * depthPx : beachY(x);
+  // a little unevenness in the drawn sea bed, so it reads as rock and sand rather than a ruled curve
+  const bumpy = x => floorY(x) - (x < XS ? Math.abs(Math.sin(x * .09) * 1.4 + Math.sin(x * .031 + 1) * 1.8) : 0);
+  // the rough-cut underside of the slice of sea bed
+  const under = x => H - 3 - Math.abs(Math.sin(x * .043 + .6) * 2.2 + Math.sin(x * .11) * 1.2);
   const mk = (t, a, p) => Kit.mk(t, a, p);
   const txt = (p, x, y, s, a = {}) => { const e = mk('text', Object.assign({x, y, fill: INK, 'font-size': fs, style: 'font-family:var(--body)'}, a), p); e.textContent = s; return e; };
 
@@ -77,8 +81,8 @@
   function speedMeter(x0, cy, len, r, parent) {
     const g = mk('g', {class: 'gauge'}, parent), t = Math.max(5, fs * .75), hh = t * 1.1, hl = t * 1.2;
     txt(g, x0, cy - r * .55, 'Speed', {fill: MUTE});
-    mk('rect', {x: x0, y: cy - t / 2, width: len, height: t, rx: t / 2, style: `fill:${tint(12)}`}, g);
-    const val = mk('path', {fill: CY}, g);
+    mk('line', {x1: x0, x2: x0, y1: cy - hh, y2: cy + hh, stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
+    const val = mk('path', {fill: CY, 'stroke-linejoin': 'round'}, g);
     const word = txt(g, x0, cy + r * .55 + fs * .35, '', {'font-weight': 700, fill: CY});
     const set = v => {
       const L = Math.max(hl + 2, len * Math.max(.015, Math.min(1, v))), xe = x0 + L, xn = xe - hl;
@@ -89,9 +93,8 @@
   // height: a column of water standing on a line, as tall as the wave
   function heightMeter(cx, cy, r, parent) {
     const g = mk('g', {class: 'gauge'}, parent), w = Math.max(10, fs * 1.4), base = cy + r * .75, full = r * 1.5;
-    mk('rect', {x: cx - w / 2, y: base - full, width: w, height: full, style: `fill:${tint(12)}`}, g);
     const val = mk('rect', {x: cx - w / 2, width: w, fill: AM}, g);
-    mk('line', {x1: cx - w, x2: cx + w, y1: base, y2: base, stroke: INK, 'stroke-opacity': .6, 'stroke-width': 1.5, 'stroke-linecap': 'round'}, g);
+    mk('line', {x1: cx - w, x2: cx + w, y1: base, y2: base, stroke: INK, 'stroke-opacity': .7, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, g);
     txt(g, cx, base + fs * 1.3, 'Height', {'text-anchor': 'middle', fill: MUTE});
     const word = txt(g, cx + w / 2 + fs * .5, cy + fs * .35, '', {'font-weight': 700, fill: AM});
     const set = v => {
@@ -107,7 +110,9 @@
     const f = Kit.fitSvg(svg); W = f.W; H = f.H; if (!W || !H) return;
     lastW = W; lastH = H;
     fs = Math.max(12, Math.min(14, f.f || 12));
-    seaY = H * .52; X0 = W * .03; XS = W * .86; depthPx = H - 4 - seaY - 3; A0 = H * .025;
+    seaY = H * .52; X0 = W * .03; XS = W * .86; A0 = H * .025; LX = W * .012;
+    // the deep sea bed sits on a slab of earth, so the slice reads as an object, not a box
+    depthPx = (H - seaY) * .74;
     xLand = XS; while (xLand < W && beachY(xLand) > seaY) xLand += 1;
 
     // the two measures, above the water on the left
@@ -115,31 +120,33 @@
     G.speed = speedMeter(W * .055, cy, W * .25, r, svg);
     G.height = heightMeter(W * .45, cy, r, svg);
 
-    // the sea, then the sea floor and the coast on top of it
+    // the sea, then the sea bed and the coast on top of it
     G.sea = mk('path', {fill: SEA}, svg);
-    let bd = `M0,${floorY(0).toFixed(1)}`;
-    for (let x = 0; x <= W + .1; x += 4) bd += `L${x.toFixed(1)},${floorY(x).toFixed(1)}`;
+    let bd = `M${LX.toFixed(1)},${bumpy(LX).toFixed(1)}`;
+    for (let x = LX + 4; x <= W + .1; x += 4) bd += `L${x.toFixed(1)},${bumpy(x).toFixed(1)}`;
+    let ud = '';
+    for (let x = W; x >= LX - .1; x -= 6) ud += `L${x.toFixed(1)},${under(x).toFixed(1)}`;
     const ground = mk('g', {class: 'ground'}, svg);
-    mk('path', {d: bd + `L${W},${H}L0,${H}Z`, style: `fill:${tint(16)}`}, ground);
-    mk('path', {d: bd, fill: 'none', style: `stroke:${tint(42)}`, 'stroke-width': Math.max(3, fs * .3), 'stroke-linejoin': 'round'}, ground);
-    // a little town on the shore
+    mk('path', {d: bd + `L${W},${bumpy(W).toFixed(1)}` + ud + 'Z', style: `fill:${tint(62)}`}, ground);
+    mk('path', {d: bd, fill: 'none', style: `stroke:${tint(82)}`, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, ground);
+    // a little town on the shore: plain houses with a window
     [.905, .935, .963].forEach((p, i) => {
       const x = W * p, b = beachY(x) + 1, w = fs * (i === 1 ? 1 : .8), h = fs * (i === 1 ? .9 : .7);
-      mk('path', {d: `M${x - w / 2},${b}V${b - h}L${x},${b - h - w * .45}L${x + w / 2},${b - h}V${b}Z`, style: `fill:${tint(i === 1 ? 62 : 48)}`}, ground);
-      mk('rect', {x: x - w * .14, y: b - h * .62, width: w * .28, height: h * .3, fill: AM}, ground);
+      mk('path', {d: `M${x - w / 2},${b}V${b - h}L${x},${b - h - w * .45}L${x + w / 2},${b - h}V${b}Z`, style: `fill:${tint(i === 1 ? 90 : 78)}`}, ground);
+      mk('rect', {x: x - w * .14, y: b - h * .62, width: w * .28, height: h * .3, style: 'fill:var(--c)'}, ground);
     });
     txt(svg, W - 3, beachY(W * .93) - fs * 2.1, 'coast', {'text-anchor': 'end', fill: MUTE});
-    txt(svg, X0 + 3, seaY + fs * 2.4, 'deep ocean', {fill: MUTE});
-    txt(svg, xOf(.78), seaY + fs * 2.4, 'shallow', {'text-anchor': 'end', fill: MUTE});
+    txt(svg, X0 + 3, seaY + fs * 2.4, 'deep ocean', {fill: DOT});
+    txt(svg, xOf(.78), seaY + fs * 2.4, 'shallow', {'text-anchor': 'end', fill: DOT});
     G.legend = txt(svg, X0 + 3, seaY + fs * 3.8, '• = equal time steps', {fill: DOT, opacity: phase === 'bet' ? 0 : 1});
 
-    G.surf = mk('path', {fill: 'none', stroke: CY, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    G.surf = mk('path', {fill: 'none', stroke: CY, 'stroke-width': 2.2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
     G.spray = mk('g', {}, svg);
     G.dots = mk('g', {}, svg);
     // a small pointer marking the wave
     G.ret = mk('g', {}, svg);
     const rr = fs * .62;
-    mk('path', {d: `M${(-rr * .6).toFixed(1)},${(-rr).toFixed(1)}L${(rr * .6).toFixed(1)},${(-rr).toFixed(1)}L0,0Z`, fill: INK, 'stroke-linejoin': 'round'}, G.ret);
+    mk('path', {d: `M${(-rr * .6).toFixed(1)},${(-rr).toFixed(1)}L${(rr * .6).toFixed(1)},${(-rr).toFixed(1)}L0,0Z`, fill: INK, stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, G.ret);
     draw();
   }
 
@@ -147,13 +154,14 @@
     if (!G.sea || !W) return;
     const u = uAt(st.t), d = D(u), A = A0 * AMP(u), s = Math.max(W * .02, W * .075 * Math.sqrt(d)), xc = xOf(u);
     const sF = s * (1 - .5 * (1 - d)), sB = s * 1.2;
-    let path = '', surf = '';
-    for (let x = 0; x <= W + .1; x += 2.5) {
+    let path = '', surf = '', first = true;
+    for (let x = LX; x <= W + .1; x += 2.5) {
       const dx = x - xc, ss = dx > 0 ? sF : sB, y = seaY - A * Math.exp(-((dx / ss) ** 2)) + Math.sin(x * .045 + st.bob) * .7;
-      const seg = `${x ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`;
+      const seg = `${first ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`; first = false;
       path += seg; if (x <= xLand) surf += seg;
     }
-    G.sea.setAttribute('d', path + `L${W},${H}L0,${H}Z`);
+    const bed = (seaY + 3 + depthPx + 2).toFixed(1);
+    G.sea.setAttribute('d', path + `L${W},${bed}L${LX.toFixed(1)},${bed}Z`);
     G.surf.setAttribute('d', surf);
     const top = seaY - A;
     G.ret.setAttribute('transform', `translate(${xc.toFixed(1)},${(top - fs * .5).toFixed(1)})`);
@@ -163,13 +171,13 @@
     if (ht > .4) for (let i = 0; i < 9; i++) {
       const ph = (st.bob * .35 + i * .37) % 1, k = (ht - .4) / .6;
       const x = xc + sF * (.15 + (i % 3) * .2) + ph * sF * .5, y = top + 2 - Math.sin(ph * Math.PI) * fs * .9 * k;
-      mk('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: (.9 + (i % 3) * .4).toFixed(2), fill: DOT, opacity: ((1 - ph) * k).toFixed(2)}, G.spray);
+      mk('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: (1.2 + (i % 3) * .5).toFixed(2), fill: CY, opacity: ((1 - ph) * k).toFixed(2)}, G.spray);
     }
     // one dot for every equal tick of time: they bunch up as the wave brakes
     G.dots.innerHTML = '';
     if (phase !== 'bet') for (let k = 0; k * TK <= st.t + 1e-6; k++) {
       const x = xOf(uAt(k * TK));
-      mk('line', {x1: x, x2: x, y1: seaY + 2, y2: seaY + fs * .7, stroke: DOT, 'stroke-opacity': .6, 'stroke-width': 1}, G.dots);
+      mk('line', {x1: x, x2: x, y1: seaY + 2, y2: seaY + fs * .7, stroke: DOT, 'stroke-opacity': .8, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, G.dots);
       mk('circle', {cx: x, cy: seaY + fs * .95, r: 2.6, fill: DOT}, G.dots);
     }
     // the measures
